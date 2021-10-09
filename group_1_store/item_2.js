@@ -2486,7 +2486,10 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 
 		});
 		x: {
-			return
+			let maybe=true;
+			if(maybe){
+				return
+			}
 		}
 		var dom = document.querySelector("[id^='continueThread']")
 		var do_ar = Object.getOwnPropertyNames(dom)
