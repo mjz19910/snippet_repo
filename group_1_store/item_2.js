@@ -1,4 +1,7 @@
-function main() {
+const newLocal = function() {
+	console.log('run');
+};
+function main(window) {
 	var fnlist = [];
 	var fnname = [];
 	{
@@ -205,12 +208,12 @@ function main() {
 			});
 			wasm = window.wasm_inst.instance.exports;
 			let cachedTextDecoder = new TextDecoder("utf-8");
-			let cachegetUint8Memory = wasm.memory.buffer;
+			let wasm_memory_cache = wasm.memory.buffer;
 			function getUint8Memory() {
-				if (cachegetUint8Memory.buffer !== wasm.memory.buffer) {
-					cachegetUint8Memory = new Uint8Array(wasm.memory.buffer)
+				if (wasm_memory_cache.buffer !== wasm.memory.buffer) {
+					wasm_memory_cache = new Uint8Array(wasm.memory.buffer)
 				}
-				return cachegetUint8Memory
+				return wasm_memory_cache
 			}
 			function getStringFromWasm(ptr, len) {
 				return cachedTextDecoder.decode(getUint8Memory().subarray(ptr, ptr + len))
@@ -269,14 +272,14 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 		if (fr.rows.length == 0) {
 			fr.insertRow();
 		}
-		nrow = fr.rows[0];
+		frame_row = fr.rows[0];
 		let make_cell = function(c_row) {
 			if (c_row.cells.length == 0) {
 				return c_row.insertCell();
 			}
 			return c_row.cells[c_row.cells.length - 1];
 		}
-		cd = make_cell(nrow);
+		cd = make_cell(frame_row);
 		function run_for_cell(cd) {
 			[...cd.children].map(e=>e.remove());
 		}
@@ -289,8 +292,8 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 			extends: "iframe"
 		});
 		let create_iframe_cell_for_url = function(url) {
-			let nrow = fr.insertRow();
-			let cd = nrow.insertCell();
+			let frame_row = fr.insertRow();
+			let cd = frame_row.insertCell();
 			rr = document.createElement('iframe', {
 				is: 'iframe-ext'
 			});
@@ -306,9 +309,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 	}
 	cur.n = 'js_lex_with_regexp';
 	cur.f = function() {
-		let _function = function() {
-			console.log('run');
-		}
+		//let _function = newLocal
 		if (window.debugApi === undefined) {
 			debugApi = new DebugAPI;
 		}
@@ -440,14 +441,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 			}
 			code += ');';
 		}
-		;let peval = eval;
-		let peval_sym = Symbol('s');
-		function process_res_s1(f_p_r, ma_val, str, spl_parse) {
-			let nxlen = ma_val.length;
-			let nxs = str.slice(nxlen);
-			let r = nxs.split(spl_parse, 2);
-			f_p_r(r, spl_parse, nxs);
-		}
+		let p_eval_sym = Symbol('s');
 		function process_string_parse_d(str) {
 			let r = str.match(/"(?:(?:[0-9a-zA-Z]+|\\.|\\")+)?"/);
 			return r[0];
@@ -457,7 +451,6 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 			return r[0];
 		}
 		let func_process_result = function(state, res, spl_parse, str) {
-			let f_p_r = func_process_result;
 			let obj = {};
 			if (res.length < 2) {
 				obj.break_parse = true;
@@ -469,8 +462,8 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 			if (m0 == "]") {
 				debugger ;
 			}
-			let tidx = 'debugger,var,if,else,function'.split(',').indexOf(m1)
-			if (tidx > -1) {
+			let keyword_idx = 'debugger,var,if,else,function'.split(',').indexOf(m1)
+			if (keyword_idx > -1) {
 				obj.reset_count = true;
 			}
 			if (m0 === '' && m1 === '"') {
@@ -490,7 +483,6 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				obj.nx_len = m1.length;
 				return obj;
 			} else {
-				let obj = {};
 				let func;
 				try {
 					let src_url = '//' + '# sourceURL=snippet://eval/f_1.js?v=' + encodeURIComponent(m0);
@@ -499,8 +491,8 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				} catch (e) {
 					func = ()=>0;
 				}
-				func(obj, peval_sym);
-				if (obj[m0] === peval_sym) {
+				func(obj, p_eval_sym);
+				if (obj[m0] === p_eval_sym) {
 					obj.lex_cur = m0;
 					obj.nx_len = m0.length;
 					return obj;
@@ -1266,8 +1258,8 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 										break;
 									}
 								}
-								let frst_met = js_class_methods[0];
-								let fm_idx = jsfout.indexOf(frst_met[0]);
+								let first_met = js_class_methods[0];
+								let fm_idx = jsfout.indexOf(first_met[0]);
 								jsfout = jsfout.slice(0, fm_idx).concat(js_class_methods, jsfout.slice(-1));
 								let wt = jsfout.pop();
 								parse_stack.push([jsfout, jsfilt]);
@@ -1278,45 +1270,44 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 								jsfout.push(...js_out, ...js_tmp);
 							} else {
 								let wt = jsfout.join('');
-								let mlrx = /^((?![{}])(?![/][*])(?:.|[=;\n])+?)?([{}]|[\n]?\/\*)/m;
-								function parse_bracket_down(clen, skip_len) {
-									let cc = wt[clen], cur, cs;
-									cs = wt.slice(clen);
-									cur = cs.match(mlrx);
+								let block_match_rx = /^((?![{}])(?![/][*])(?:.|[=;\n])+?)?([{}]|[\n]?\/\*)/m;
+								function parse_bracket_down(cur_idx, skip_len) {
+									let cc = wt[cur_idx], cur, cs;
+									cs = wt.slice(cur_idx);
+									cur = cs.match(block_match_rx);
 									if (cur == null) {
-										return [clen, skip_len];
+										return [cur_idx, skip_len];
 									}
 									if (cur[2] == '{') {
 										if (cur[1])
 											skip_len = cur[1].length;
-										clen += cur[0].length;
-										cs = wt.slice(clen);
-										cur = cs.match(mlrx);
+										cur_idx += cur[0].length;
+										cs = wt.slice(cur_idx);
+										cur = cs.match(block_match_rx);
 										if (cur == null) {
-											return [clen, skip_len];
+											return [cur_idx, skip_len];
 										}
 										if (cur[2] == '/*') {
-											clen += cur[0].length;
-											cs = wt.slice(clen)
+											cur_idx += cur[0].length;
+											cs = wt.slice(cur_idx)
 											cur = cs.match(/((.|[\n])+?)?\*\//);
-											clen += cur[0].length;
-											cs = wt.slice(clen);
-											cur = cs.match(mlrx);
+											cur_idx += cur[0].length;
+											cs = wt.slice(cur_idx);
+											cur = cs.match(block_match_rx);
 										}
 										while (cur[2] == '{') {
-											let sk2;
-											[clen,sk2] = parse_bracket_down(clen + cur[0].length - 1);
-											cs = wt.slice(clen);
+											[cur_idx,] = parse_bracket_down(cur_idx + cur[0].length - 1);
+											cs = wt.slice(cur_idx);
 											if (cs.length == 0) {
-												return [clen, skip_len]
+												return [cur_idx, skip_len]
 											}
-											cur = cs.match(mlrx);
+											cur = cs.match(block_match_rx);
 											if (cur == null) {
-												return clen;
+												return cur_idx;
 											}
 										}
-										clen = clen + cur[0].length;
-										return [clen, skip_len];
+										cur_idx = cur_idx + cur[0].length;
+										return [cur_idx, skip_len];
 									}
 								}
 								let[len,skip_len] = parse_bracket_down(0);
@@ -1336,15 +1327,15 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 								let oci = 0
 								  , cc = 0
 								  , i = 0
-								for (let ocia = -1; i < jsfout.length; i++) {
-									let tcur = jsfout[i];
-									let ocur = ret[cc];
-									if (ocia < cc && ocur.length > tcur.length) {
-										oci += tcur.length;
-										ocia = cc;
+								for (let o_cia = -1; i < jsfout.length; i++) {
+									let t_cur = jsfout[i];
+									let o_cur = ret[cc];
+									if (o_cia < cc && o_cur.length > t_cur.length) {
+										oci += t_cur.length;
+										o_cia = cc;
 									}
-									let oc = ocur.slice(oci, oci + tcur.length);
-									if (oc == tcur) {
+									let oc = o_cur.slice(oci, oci + t_cur.length);
+									if (oc == t_cur) {
 										oci += oc.length;
 									} else if (oc == '') {
 										cc++;
@@ -1366,7 +1357,10 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 						jsfout.push(e);
 					}
 					fe_block(js_parse_block_enter);
-					return jsfilt;
+					let maybe=true;
+					if(maybe)
+						return jsfilt;
+					maybe=false;
 					let spf = func.toString().split(/([ .,{}()=;\?\:])/).forEach((e,x)=>{
 						let ls;
 						if (cs.length > 0) {
@@ -1375,7 +1369,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 						if (e == 'if') {
 							cs.push(e);
 							ss_sp = 'if';
-							return;
+							return x;
 						}
 						if (e.match(/\w/)) {
 							cs.push(e);
@@ -1439,15 +1433,17 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 						cs.push(e);
 					}
 					);
+					if(maybe)
+						return spf;
 					let fb = cs.slice(-3, -2)[0];
 					function f_down(arr) {
 						let stk = [];
-						let smnt = [stk];
+						let statement = [stk];
 						arr.forEach((e,x,a)=>{
 							stk.push(e)
 							function dep() {
 								stk = [];
-								smnt.push(stk)
+								statement.push(stk)
 							}
 							if (e == ',')
 								dep()
@@ -1455,66 +1451,66 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 								dep()
 							if (e == '?') {
 								let bg = stk.pop();
-								smnt.push([bg])
+								statement.push([bg])
 								dep();
 							}
 							if (e == ':') {
 								let bg = stk.pop();
-								smnt.push([bg])
+								statement.push([bg])
 								dep();
 							}
 							if (e == '{') {
 								let bg = stk.pop();
-								smnt.push([bg])
+								statement.push([bg])
 								dep();
 							}
 							if (e == '}') {
 								let en = stk.pop()
 								let ex = stk.pop();
-								let ts = smnt.pop();
+								let ts = statement.pop();
 								if (ex.length > 1) {
 									ex = f_down(ex);
 								}
-								smnt.push(ex);
-								smnt.push([en]);
-								smnt.push(ts);
+								statement.push(ex);
+								statement.push([en]);
+								statement.push(ts);
 							}
 						}
 						)
-						return smnt;
+						return statement;
 					}
-					let smnt = f_down(fb);
-					let acode = [];
-					function __smfe() {
-						for (let i = 0; i < smnt.length; i++) {
-							let e = smnt[i];
+					let statement = f_down(fb);
+					let res_code = [];
+					function __statement() {
+						for (let i = 0; i < statement.length; i++) {
+							let e = statement[i];
 							if (e[0] == 'var') {
-								acode.push(e);
+								res_code.push(e);
 								continue;
 							}
 							if (e.length == 1) {
-								acode.push(e[0])
+								res_code.push(e[0])
 								continue;
 							}
 							if (e[1] !== '.') {
-								acode.push(e);
+								res_code.push(e);
 								continue;
 							}
 							if (e[e.length - 1] == ',') {
 								if (e.slice(-3, -2).length > 0) {
-									acode.push([e.slice(0, -3).join(''), e.slice(-3, -2)[0].join(''), e.slice(-2).join('')]);
+									res_code.push([e.slice(0, -3).join(''), e.slice(-3, -2)[0].join(''), e.slice(-2).join('')]);
 									continue;
 								}
-								acode.push(e)
+								res_code.push(e)
 								continue;
 							} else {
-								acode.push([...e.slice(0, -2), ...e.slice(-2, -1)[0]]);
+								res_code.push([...e.slice(0, -2), ...e.slice(-2, -1)[0]]);
 								continue;
 							}
 						}
 					}
-					__smfe();
-					return [cs, acode, smnt];
+					__statement();
+					return [cs, res_code, statement];
 				}
 				//__nx_names,__for_code=get_code_formatted
 				{
@@ -1547,9 +1543,9 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				};
 				__w = w;
 				let dom = document.querySelector('#ctl-home')
-				let jqev = dom[jQuery.expando + '1'];
+				let jq_dom_data = dom[jQuery.expando + '1'];
 				//x.__name_list
-				x.f = jqev.events.click[0].handler;
+				x.f = jq_dom_data.events.click[0].handler;
 				__run(x.f, x.__all_vars);
 				ret = x.o;
 				w.game_scope = {
@@ -1574,6 +1570,8 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				x.fo.push([x.f, x.o]);
 				__add_set();
 				let cmc = __for_code(__m.click);
+				//???
+				`${cmc}`
 				x.f = x.o.u;
 				x(x.f, x.__all_vars);
 				x.f.call(Object.create(x.f.prototype));
@@ -1720,8 +1718,8 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				let f_for=function(func){
 				let o={};
 				o.max_x=-128,o.max_y=-128,o.min_x=128,o.min_y=128;
-				let spos=__g,r_x=find_closed_up_x(...spos)[0];
-				for(let s=find_closed_dn_x(...spos)[0],q=s;q<r_x;q++)for(let r=find_closed_up_y(...spos)[1],m=find_closed_dn_y(...spos)[1],j=m;j<r;j++){
+				let s_pos=__g,r_x=find_closed_up_x(...s_pos)[0];
+				for(let s=find_closed_dn_x(...s_pos)[0],q=s;q<r_x;q++)for(let r=find_closed_up_y(...s_pos)[1],m=find_closed_dn_y(...s_pos)[1],j=m;j<r;j++){
 				if(obj_arr.indexOf(func)==-1)obj_arr.push(func);
 				ff(o,func(q,j),func,[q,j],function(id,val){
 				if(id=='v+'){}
@@ -1765,13 +1763,13 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 	cur.f = function() {
 		function filterDescriptors(_obj) {
 			var obj = Object.getOwnPropertyDescriptors(_obj);
-			var cobj = Object.getPrototypeOf(_obj);
+			var c_obj = Object.getPrototypeOf(_obj);
 			var ret;
 			try {
-				if (cobj.constructor === Function) {
-					ret = cobj.constructor('"use strict"');
+				if (c_obj.constructor === Function) {
+					ret = c_obj.constructor('"use strict"');
 				} else {
-					ret = cobj.constructor();
+					ret = c_obj.constructor();
 				}
 			} catch (e) {
 				ret = e;
@@ -1983,7 +1981,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				if (!rr.has(e.map)) {
 					rr.set(e.map, e)
 					e.map.setCounts();
-					//console.log('tnew', dz,e.map.countFloors - e.map.countExplored);
+					//console.log('t_new', dz,e.map.countFloors - e.map.countExplored);
 					ret = brk;
 				}
 				var mp_no_exp = e.map.countFloors - e.map.countExplored;
@@ -1998,7 +1996,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				let z = r[1];
 				a[d] = z;
 				if (z[0] > 0)
-					console.log('hinfo', z[0], z[2]);
+					console.log('h_info', z[0], z[2]);
 				if (r[0] === brk) {
 					await w(60);
 				}
@@ -2416,9 +2414,9 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				dom = await new Promise(function(a) {
 					count++;
 					setTimeout(function t() {
-						var cdom = get_dom();
-						if (cdom) {
-							a(cdom);
+						var c_dom = get_dom();
+						if (c_dom) {
+							a(c_dom);
 							return
 						}
 						count++;
@@ -2453,11 +2451,11 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				return null;
 			}
 			count = 0;
-			var ndom = await new Promise(function(a) {
+			var n_dom = await new Promise(function(a) {
 				function t() {
-					var cdom = get_inner();
-					if (cdom) {
-						a(cdom);
+					var c_dom = get_inner();
+					if (c_dom) {
+						a(c_dom);
 						return
 					}
 					count++;
@@ -2467,16 +2465,16 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 			}
 			);
 			console.log('wb', count);
-			if (ndom) {
+			if (n_dom) {
 				console.log('ts');
 				return setTimeout(e=>{
 					dom = get_dom();
 					do_ar = Object.getOwnPropertyNames(dom);
 					root_new = dom[react_ii];
 					window.root_new = root_new;
-					ndom = get_inner();
-					ndom.click();
-					window.inner_dom = ndom;
+					n_dom = get_inner();
+					n_dom.click();
+					window.inner_dom = n_dom;
 					cint = setTimeout(function() {
 						cint = f(f)
 					}, 1500);
@@ -2512,7 +2510,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 			add_root(refs)
 		}
 		for (let j = 0; j < 2; j++) {
-			var srefs = [];
+			var s_refs = [];
 			let rar = [];
 			for (let i of refs) {
 				rar.push(i)
@@ -2522,7 +2520,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				if (typeof i == 'string') {
 					continue;
 				}
-				srefs.push(Object.entries(Object.getOwnPropertyDescriptors(i)).map(([n,e])=>{
+				s_refs.push(Object.entries(Object.getOwnPropertyDescriptors(i)).map(([n,e])=>{
 					if (e.get || e.set) {
 						var n = {};
 						if (e.get)
@@ -2554,9 +2552,9 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				}
 				))
 			}
-			console.log(j, srefs.length)
+			console.log(j, s_refs.length)
 		}
-		window.sr = srefs;
+		window.sr = s_refs;
 		return refs;
 	}
 	cur.n = "yet_another_merge_game";
@@ -2581,10 +2579,10 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 		fi_ob = Function.func_log[Function.func_log.length - 1].args;
 		cf = Function.func_log[Function.func_log.length - 1].args[0].toString();
 		console.log("el", cur._f.argv[0].split("\n")[3])
-		var errline = cur._f.argv[0].split("\n")[3]
+		var error_line = cur._f.argv[0].split("\n")[3]
 		var line_func_info
-		if (errline.includes("eval at createFunction")) {
-			line_func_info = errline.split(/(\(.+\))/g)[1].slice(1, -1).split(/(\(.+\))/g)[2].slice(2).split(":")
+		if (error_line.includes("eval at createFunction")) {
+			line_func_info = error_line.split(/(\(.+\))/g)[1].slice(1, -1).split(/(\(.+\))/g)[2].slice(2).split(":")
 		} else {
 			debugger ;
 		}
@@ -2592,7 +2590,6 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 		var line_num_idx = line_func_info[1] - 1
 		var fs_str = cf.split("\n")[line_num_idx];
 		var d_idx = fs_str.indexOf(String.fromCharCode(125), lnc) + 2;
-		var rsar = [];
 		var t_idx = fs_str.lastIndexOf(String.fromCharCode(123), lnc) - 1
 		var e_js_call = d_idx
 		console.log(fs_str.slice(t_idx, d_idx))
@@ -2672,9 +2669,9 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 					can_try_again = false,
 					ov && i < 120); i++) {
 						try {
-							let evts = fs_str.slice(cc - 2, end_char);
+							let events = fs_str.slice(cc - 2, end_char);
 							console.log(fs_str.slice(cc - 2, end_char + 32))
-							Array.s = evts;
+							Array.s = events;
 							Array._log = (...e)=>{
 								console.log(...e)
 							}
@@ -2689,10 +2686,10 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 							}
 							break
 						} catch (e) {
-							let uex = e.message == "Invalid or unexpected token";
-							let ueoi = e.message == "Unexpected end of input";
+							let is_token_error = e.message == "Invalid or unexpected token";
+							let is_eoi_error = e.message == "Unexpected end of input";
 							let aal = e.message.indexOf("after argument list") > 3;
-							let kno_err = uex || ueoi || aal;
+							let kno_err = is_token_error || is_eoi_error || aal;
 							if (kno_err) {
 								can_try_again = true
 								let c1 = ix_pc(String.fromCharCode(125));
@@ -2752,4 +2749,5 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 	return {...cur,_class:cur__class};
 	//# sourceURL=snippet:///%24_2
 }
-window.__ret=main();
+const window_type={}
+window.__ret=main(window_type);
