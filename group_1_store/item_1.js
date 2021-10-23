@@ -107,9 +107,9 @@ async function x() {
 		let con_desc = list_item.searchConnectorDescription;
 		let simple_loc = con_desc.simpleLocation;
 		let ser = simple_loc.serialized;
-		let unser = atob(ser);
-		let unser_vec = [...unser];
-		let bin_ser_data = unser_vec.map(e => e.charCodeAt(0));
+		let un_ser = atob(ser);
+		let un_ser_vec = [...un_ser];
+		let bin_ser_data = un_ser_vec.map(e => e.charCodeAt(0));
 		binary_data = new Uint8Array(bin_ser_data);
 		overflow = binary_data.length % 4;
 		b32_data = new Uint32Array(binary_data.buffer, 0, (binary_data.length - overflow) / 4);
