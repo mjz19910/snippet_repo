@@ -135,7 +135,7 @@ function main() {
 				this.info = info;
 			}
 		}
-		class RustTypeParamater {
+		class RustTypeParameter {
 			constructor(var_name, var_type) {
 				this.name = var_name;
 				this.type = var_type;
@@ -164,7 +164,7 @@ function main() {
 		}
 		rust_scope.crate.set('mem', rust_tmp);
 		let take_def = new RustFunctionDefinition('take',{
-			type_param: [new RustTypeParamater('T','Default')],
+			type_param: [new RustTypeParameter('T','Default')],
 			arg_def: [new RustFunctionArgument('dest',new RustType('&mut','T'))],
 			return_type: 'T'
 		})
@@ -324,7 +324,7 @@ function main() {
 			}
 		}
 		let cur_executer = null;
-		class ArrayDeque {
+		class ArrayDequeue {
 			constructor(cap) {
 				this.cap = cap;
 				this.inner = Array(cap);
@@ -415,7 +415,7 @@ function main() {
 		}
 		class TimeoutExecutor {
 			active = [];
-			task_queue = new ArrayDeque(4);
+			task_queue = new ArrayDequeue(4);
 			notifier = new AsyncNotifier;
 			waker_count = 0;
 			waker_new() {
