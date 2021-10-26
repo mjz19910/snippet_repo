@@ -5,3 +5,11 @@ def group1(key):
 def group2(key):
 	return f",{key.rev_printf("item_%s")}_"
 ```
+# cSpell comments
+```js
+
+// cSpell:disable-next-line
+// cSpell:disable
+// cSpell:enable
+// cSpell:enableCompoundWords
+```
