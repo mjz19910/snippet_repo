@@ -1,4 +1,4 @@
-x = function() {
+function x() {
 	var fmstr = t.toString();
 	var fms2 = fmstr.slice(0, fstr.indexOf("{}"[0]));
 	var fmnb = fmstr.slice(fstr.indexOf("{}"[0]));
@@ -32,12 +32,12 @@ x = function() {
 		tv: function() {
 			return {};
 		},
-		get_debug_data(){
+		get_debug_data() {
 			return {
 				id_imp,
 				id_mod,
 				fmnb,
-			}
+			};
 		}
 	};
-};
+}
