@@ -52,6 +52,7 @@ words:
   - retv
   - sarr
   - scount
+  - sfunc
   - sidx
   - singlequote
   - slen
