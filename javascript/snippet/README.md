@@ -8,8 +8,10 @@ def group2(key):
 # cSpell comments
 ```js
 
-// cSpell:disable-next-line
-// cSpell:disable
-// cSpell:enable
-// cSpell:enableCompoundWords
+// cspell:disable-next-line
+// cspell:disable
+// cspell:enable
+
+// this checks the spelling config for changes
+// cspell:enableCompoundWords
 ```
