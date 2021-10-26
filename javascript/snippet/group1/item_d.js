@@ -51,8 +51,7 @@ cint = setTimeout(function() {
 		var ds = performance.now();
 		e(e, ds);
 	}
-		, 600, function(rc, ds) {
-			var dr, dl;
+		, 600, function() {
 			console.log(player.tier1.cost.logarithm / player.points.logarithm);
 			reset_func(loop_func, 100);
 		});
