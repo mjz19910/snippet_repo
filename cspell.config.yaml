@@ -7,26 +7,32 @@ words:
   - bouncingdvdlogo
   - buyables
   - citv
+  - cmap
   - comlen
   - cxlen
   - dddbg
   - decodedata
+  - dname
   - doublequote
   - dslen
   - ducdat
   - dvdbouncinglogo
   - dvdlogo
   - Edef
+  - exdo_user
   - expando
   - Feross
+  - ffunc
   - fnlist
   - fnname
+  - found_objs
   - foward
   - gameiframe
   - genpower
   - googlejs
   - grps
   - idxoff
+  - ilen
   - jqts
   - jsfilt
   - jsfout
@@ -34,15 +40,20 @@ words:
   - mult
   - mults
   - nxfn
+  - objs
   - presfn
   - printf
+  - protos
   - punct
+  - retcp
+  - retv
   - sarr
   - sidx
   - singlequote
   - slen
   - sslen
   - sssx
+  - start_objs
   - stlen
   - symin
   - syms
