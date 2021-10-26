@@ -7,6 +7,13 @@ words:
   - absl
   - abslbin
   - absldec
+  - aend
+  - akadd
+  - anid
+  - arrmap
+  - astart
+  - asya
+  - asyfn
   - bouncingdvdlogo
   - buyables
   - cbfn
@@ -26,6 +33,7 @@ words:
   - dvdlogo
   - Edef
   - Elems
+  - evaler
   - exdo_user
   - expando
   - Feross
@@ -46,6 +54,7 @@ words:
   - jsfilt
   - jsfout
   - maxall
+  - mkadd
   - mlis
   - mnum
   - mquery
@@ -53,18 +62,23 @@ words:
   - mults
   - newcp
   - noframe
+  - nthis
   - nxfn
   - objs
   - odarr
   - percentgencur
+  - plen
   - precreate
   - presfn
   - printf
+  - probj
   - protos
   - punct
   - resa
   - retcp
+  - retpr
   - retv
+  - sargs
   - sarr
   - scount
   - sfunc
@@ -80,12 +94,17 @@ words:
   - syms
   - tarl
   - thecentralscrutinizer
+  - tkey
+  - tlele
   - tlen
+  - tlis
+  - tobj
   - trgfs
   - uerr
   - varg
   - webassembly
   - workch
+  - xarray
   - xmhrp
   - ZWNJ
 ignoreWords: []
