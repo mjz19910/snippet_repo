@@ -119,8 +119,9 @@ __cur.f = function() {
 		}
 		let use_functions = false;
 		if(use_functions) {
-			__run(e => 0, 'test', 1);
-			__run_noisy(e => 0, 'test', 1);
+			__run(() => 0, 'test', 1);
+			__run_noisy(() => 0, 'test', 1);
+			__add_set();
 		}
 	}
 	let ret = {
