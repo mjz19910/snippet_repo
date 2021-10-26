@@ -137,8 +137,7 @@ __cur.f = function() {
 		ex[i] = ret[i];
 	}
 	return ex;
-}
-	;
+};
 __cur.f = function() {
 	{
 		let tfn = (function() {
