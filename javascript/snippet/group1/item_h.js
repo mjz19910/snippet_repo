@@ -1,6 +1,7 @@
 __cur = {};
 __cur.f = function() {
-	debug = debug; debug.u = undebug;
+	debug = debug;
+	debug.u = undebug;
 	x: {
 		let x = debug;
 		x.fo = [];
@@ -33,7 +34,8 @@ __cur.f = function() {
 			iter_chars(b, '09');
 			x.__ident_start_chars = a;
 			x.__ident_chars = b;
-		}//__ident_start_chars&&__ident_chars
+		}
+		//__ident_start_chars&&__ident_chars
 		x.__all_vars = `{
 			let __nf=Symbol(1);
 			let __get=__e=>{try{return eval(__e)}catch(e){return __nf}};
@@ -100,15 +102,33 @@ __cur.f = function() {
 		let __nf = Symbol(2);
 		function __run(fn, bp_str, ...args) {
 			x(fn, bp_str);
-			try {return fn(...args);} catch {return __nf;}
+			try {
+				return fn(...args);
+			} catch {
+				return __nf;
+			}
 		}
 		function __run_noisy(fn, bp_str, ...args) {
 			x(fn, bp_str);
-			try {return fn(...args);} catch(e) {console.log(e); return __nf;}
+			try {
+				return fn(...args);
+			} catch(e) {
+				console.log(e);
+				return __nf;
+			}
+		}
+		let use_functions = false;
+		if(use_functions) {
+			__run(e => 0, 'test', 1);
+			__run_noisy(e => 0, 'test', 1);
 		}
 	}
-	let ret = {...debug};
-	let ex = (class extends null{}).prototype;
+	let ret = {
+		...debug
+	};
+	let ex = (class extends null {
+	}
+	).prototype;
 	delete ex.constructor;
 	delete ret.toString;
 	delete ret.u;
@@ -116,13 +136,17 @@ __cur.f = function() {
 		ex[i] = ret[i];
 	}
 	return ex;
-};
+}
+	;
 __cur.f = function() {
 	{
 		let tfn = (function() {
 			let dcl = 0;
-			ast = []; lps = [[], []]; alens = [];
-			sarr = [e => 76671 + Math.floor(Math.random() * 1024), e => Math.random() * 1]; arr = sarr.slice().map(e => e());
+			ast = [];
+			lps = [[], []];
+			alens = [];
+			sarr = [() => 76671 + Math.floor(Math.random() * 1024), e => Math.random() * 1];
+			arr = sarr.slice().map(e => e());
 			function iter_end() {
 				for(let dc, i = 0; lps.length < 12; i += 1) {
 					let a, cp, sl, de = false;
@@ -130,14 +154,21 @@ __cur.f = function() {
 					dc = 0;
 					try {
 						while(1) {
-							lc++;[a, b] = arr;
+							lc++;
+							[a, b] = arr;
 							al = arr.length;
 							let nx = sarr.slice().map(e => e());
-							arr[0] = nx[0]; arr[1] = nx[1];
+							arr[0] = nx[0];
+							arr[1] = nx[1];
 							arr.length = Math.floor(arr[0] * arr[1]);
-							if(!de) {sl = (arr.length); de = true;};
-							for(let j = 0; j < arr.length; j++) {arr[j] ??= 1;};
-							cp = arr.slice();
+							if(!de) {
+								sl = (arr.length);
+								de = true;
+							}
+							; for(let j = 0; j < arr.length; j++) {
+								arr[j] ??= 1;
+							}
+							; cp = arr.slice();
 							let c2 = ea.slice();
 							ea.length = 0;
 							let tlen = c2.length * 2;
@@ -150,31 +181,37 @@ __cur.f = function() {
 							let eas = ea.slice(0, Math.floor(Math.random() * (ea.length / 8)) - 1);
 							dcl = cp.length + ea.length;
 							a = arr.push(...cp, ...eas);
-							if(lps.length > 8192) {return ['oom', arr.length];};
-							arc = (() => class extends Array {})();
+							if(lps.length > 8192) {
+								return ['oom', arr.length];
+							}
+							; arc = (() => class extends Array {
+							}
+							)();
 							Object.setPrototypeOf(arc, Array);
 							Object.setPrototypeOf(arc.prototype, Array.prototype);
 							arc.prototype[Symbol.toStringTag] = 'e';
-							lps[lps.length - 1] = new arc;//[a,cp.length+eas.length,(dc++)];
+							lps[lps.length - 1] = new arc;
+							[a, cp.length + eas.length, (dc++)];
 							lps[lps.length - 1];
 						}
 					} catch {
 						lps.push(['c', a, dcl]);
 						lps.push([]);
 						alens.push([arr.length, dcl, sl, dc]);
-					};
-				};
+					}
+				}
 				lps.shift();
 				lps.pop();
 				ast[1] = 1;
 				return alens;
-			};
+			}
 			let ret = iter_end();
 			return ret;
-		});
+		}
+		);
 		let ret = tfn();
 		console.log(...lps);
 		console.log(...ret);
-	};
+	}
 };
 __cur.f();
