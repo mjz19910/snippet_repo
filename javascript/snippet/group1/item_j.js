@@ -36,6 +36,7 @@ x = function() {
 			return {
 				id_imp,
 				id_mod,
+				fmnb,
 			}
 		}
 	};
