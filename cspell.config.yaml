@@ -6,6 +6,7 @@ words:
   - Aboukhadijeh
   - bouncingdvdlogo
   - buyables
+  - chunksz
   - citv
   - cmap
   - comlen
@@ -19,6 +20,7 @@ words:
   - dvdbouncinglogo
   - dvdlogo
   - Edef
+  - Elems
   - exdo_user
   - expando
   - Feross
@@ -36,6 +38,7 @@ words:
   - jqts
   - jsfilt
   - jsfout
+  - maxall
   - mquery
   - mult
   - mults
@@ -48,6 +51,7 @@ words:
   - retcp
   - retv
   - sarr
+  - scount
   - sidx
   - singlequote
   - slen
