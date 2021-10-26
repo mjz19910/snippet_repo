@@ -4,6 +4,9 @@ dictionaryDefinitions: []
 dictionaries: []
 words:
   - Aboukhadijeh
+  - absl
+  - abslbin
+  - absldec
   - bouncingdvdlogo
   - buyables
   - chunksz
@@ -35,6 +38,7 @@ words:
   - genworkertime
   - googlejs
   - grps
+  - hostch
   - idxoff
   - ilen
   - jqts
@@ -45,6 +49,7 @@ words:
   - mquery
   - mult
   - mults
+  - newcp
   - noframe
   - nxfn
   - objs
@@ -74,6 +79,7 @@ words:
   - uerr
   - varg
   - webassembly
+  - workch
   - xmhrp
   - ZWNJ
 ignoreWords: []
