@@ -3,6 +3,25 @@ ignorePaths: []
 dictionaryDefinitions: []
 dictionaries: []
 words:
+  - Aboukhadijeh
+  - bouncingdvdlogo
   - buyables
+  - comlen
+  - cxlen
+  - decodedata
+  - doublequote
+  - dslen
+  - dvdbouncinglogo
+  - dvdlogo
+  - Feross
+  - idxoff
+  - punct
+  - sidx
+  - singlequote
+  - slen
+  - sslen
+  - stlen
+  - thecentralscrutinizer
+  - ZWNJ
 ignoreWords: []
 import: []

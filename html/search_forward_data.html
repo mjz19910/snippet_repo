@@ -1,0 +1,21 @@
+<html>
+
+<head>
+	<title>Google search forwarder "import.meta javascript"</title>
+</head>
+
+<body>
+	<script>
+		function run() {
+			let s = document.createElement('script');
+			let b = document.createElement('button');
+			b.innerText = 'Go to google search for "import.meta javascript"';
+			b.onclick = function () { location = window.ch() };
+			s.text = "function ch(){return 'https://google.com/search?q=import.meta+javascript'}";
+			document.body.replaceChildren(s, b)
+		}
+		run()
+	</script>
+</body>
+
+</html>
