@@ -21,6 +21,8 @@ words:
   - citv
   - cmap
   - comlen
+  - cres
+  - cstruct
   - cxlen
   - dddbg
   - decodedata
