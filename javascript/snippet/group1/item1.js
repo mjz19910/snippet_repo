@@ -1,7 +1,7 @@
 /**
  * @author mjz19910
  * @copyright MIT
- * @description read the library-ms xml format into a json compatable format
+ * @description read the library-ms xml format into a json compatible format
  * generally created by iterating over the xml tree, any time
  * a duplicate key is found on the object, change that value to an array of
  * the possible values that we found
