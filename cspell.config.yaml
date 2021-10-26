@@ -8,11 +8,13 @@ words:
   - buyables
   - comlen
   - cxlen
+  - dddbg
   - decodedata
   - doublequote
   - dslen
   - dvdbouncinglogo
   - dvdlogo
+  - Edef
   - Feross
   - idxoff
   - nxfn
@@ -23,8 +25,11 @@ words:
   - singlequote
   - slen
   - sslen
+  - sssx
   - stlen
+  - symin
   - thecentralscrutinizer
+  - trgfs
   - ZWNJ
 ignoreWords: []
 import: []
