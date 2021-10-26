@@ -627,7 +627,9 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 		}
 	}
 	if ("https://www.kongregate.com/games/cook1eegames/yet-another-merge-game") {
+		/* cspell: disable-next-line */
 		let rx = /https:\/\/www\.kongregate\.com\/games\/cook1eegames\/yet-another-merge-game/;
+		//@cspell-enable
 		let mx = ()=>location.origin + location.pathname;
 		let mto = new CustomInputMatcher(rx,mx);
 		cur.n = mto;
@@ -657,8 +659,11 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 				gameFunctions.maxUpgrades(game.matter, game.upgrades);
 			}, 150);
 			x: {
+				let time_disabled = true;
 				function time_main() {
-					return 0;
+					if(time_disabled){
+						return 0;
+					}
 					let tb = new Float64Array(1);
 					function time_base() {
 						let ps = performance.now();
@@ -1759,6 +1764,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 		}
 		cur__class[cur._ln] = n_class;
 	}
+	/* cspell: disable-next-line */
 	cur.n = "crazygames.com/game/lunar-atoms-tycoon";
 	cur.f = function() {
 		function filterDescriptors(_obj) {
@@ -2103,6 +2109,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 		}
 		return run();
 	}
+	/* cspell: disable-next-line */
 	cur.n = "debug_js_call_konggames"
 	cur.f = function() {
 		let raw_str = function(d, ...s) {
@@ -2393,10 +2400,11 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 	}
 	cur.n = "reddit"
 	cur.f = function() {
-		x: {
-			break x;
-			document.querySelector("[id^='continueThread']").__reactInternalInstance$fh55rrshmcw
-		}
+		//x: {
+		//	break x;
+		//	/* cspell: disable-next-line */
+		//	document.querySelector("[id^='continueThread']").__reactInternalInstance$fh55rrshmcw
+		//}
 		var dom = document.body.children["2x-container"];
 		dom = dom._reactRootContainer._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode
 		var do_ar = Object.getOwnPropertyNames(dom);
@@ -2643,10 +2651,12 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 						};
 					}
 					w_ext._e = function(...a) {
+						/* cspell: disable */
 						console.log("new Empty VNode", a.length)
 						return {
 							vnode: null
 						}
+						/* cspell: enable */
 					}
 					w_ext._s = function(...a) {
 						return a

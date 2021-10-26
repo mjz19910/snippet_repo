@@ -6,21 +6,38 @@ words:
   - Aboukhadijeh
   - bouncingdvdlogo
   - buyables
+  - citv
   - comlen
   - cxlen
   - dddbg
   - decodedata
   - doublequote
   - dslen
+  - ducdat
   - dvdbouncinglogo
   - dvdlogo
   - Edef
+  - expando
   - Feross
+  - fnlist
+  - fnname
+  - foward
+  - gameiframe
+  - genpower
+  - googlejs
+  - grps
   - idxoff
+  - jqts
+  - jsfilt
+  - jsfout
+  - mquery
+  - mult
+  - mults
   - nxfn
   - presfn
   - printf
   - punct
+  - sarr
   - sidx
   - singlequote
   - slen
@@ -28,8 +45,13 @@ words:
   - sssx
   - stlen
   - symin
+  - syms
   - thecentralscrutinizer
   - trgfs
+  - uerr
+  - varg
+  - webassembly
+  - xmhrp
   - ZWNJ
 ignoreWords: []
 import: []
