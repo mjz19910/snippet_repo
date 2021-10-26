@@ -46,6 +46,7 @@
         }
         wk.cb_t_fn = new Map()
         wk.cb_i_fn = new Map()
+		// cSpell:ignore msetTimeout
         window.msetTimeout = function(fn, w, ...c) {
             var stid = wk.jst++;
             if (w > 0) {
@@ -68,6 +69,7 @@
             });
             return stid
         }
+		// cSpell:ignore mclearTimeout
         window.mclearTimeout = function(w) {
             if (wk.cb_t_fn.has(w)) {
                 var cto = wk.cb_t_fn.get(w);
@@ -78,6 +80,7 @@
                 cto.fire = false
             }
         }
+		// cSpell:ignore msetInterval siid
         window.msetInterval = function(fn, w, ...c) {
             var siid = wk.jsi++;
             var cto = wk.cb_i_fn.set(siid, {
@@ -95,6 +98,7 @@
             });
             return siid
         }
+		// cSpell:ignore mclearInterval
         window.mclearInterval = function(w) {
             if (wk.cb_i_fn.has(w)) {
                 var cto = wk.cb_i_fn.get(w)
@@ -121,13 +125,13 @@
                 rf_no()
                 break;
             case 3:
-                // setTimeout_result (set interval id recived from worker)
+                // setTimeout_result (set interval id received from worker)
                 // {v:<msg_id>,t:{v:<stid>,t:<qst>}}}
                 var cto = wk.cb_t_fn.get(m.v.t);
                 cto.w_st = m.v.v
                 break;
             case 4:
-                // setInterval_result (set timeout id recived from worker)
+                // setInterval_result (set timeout id received from worker)
                 // {v:<msg_id>,t:{v:<stid>,t:<qsi>}}}
                 var cto = wk.cb_i_fn.get(m.v.t)
                 cto.w_si = m.v.v
@@ -288,6 +292,10 @@
                 }
             }
         }
+		let do_gen = false;
+		if (do_gen){
+			genworkertime(e=>0);
+		}
         wk.jst = setTimeout(function() {});
         wk.o_jst = wk.jst
         clearTimeout(wk.jst)

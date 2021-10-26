@@ -14,6 +14,7 @@ words:
   - dddbg
   - decodedata
   - dname
+  - dofn
   - doublequote
   - dslen
   - ducdat
@@ -31,6 +32,7 @@ words:
   - foward
   - gameiframe
   - genpower
+  - genworkertime
   - googlejs
   - grps
   - idxoff
@@ -39,15 +41,19 @@ words:
   - jsfilt
   - jsfout
   - maxall
+  - mnum
   - mquery
   - mult
   - mults
+  - noframe
   - nxfn
   - objs
+  - odarr
   - presfn
   - printf
   - protos
   - punct
+  - resa
   - retcp
   - retv
   - sarr
@@ -59,6 +65,7 @@ words:
   - sslen
   - sssx
   - start_objs
+  - stid
   - stlen
   - symin
   - syms
