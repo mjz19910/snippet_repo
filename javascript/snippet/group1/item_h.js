@@ -123,6 +123,7 @@ __cur.f = function() {
 			__run_noisy(() => 0, 'test', 1);
 			__add_set();
 		}
+		break x;
 	}
 	let ret = {
 		...debug
