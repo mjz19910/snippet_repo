@@ -9,7 +9,9 @@ words:
   - absldec
   - aend
   - akadd
+  - alens
   - anid
+  - argsar
   - arrmap
   - astart
   - asya
@@ -26,6 +28,7 @@ words:
   - cxlen
   - dddbg
   - decodedata
+  - decpart
   - dname
   - dofn
   - doublequote
@@ -40,12 +43,18 @@ words:
   - expando
   - Feross
   - ffunc
+  - fmar
+  - fmnb
+  - fmstr
   - fnlist
   - fnname
   - found_objs
   - foward
+  - fstr
   - gameiframe
+  - genfunc
   - genpower
+  - genret
   - genworkertime
   - googlejs
   - grps
@@ -65,9 +74,11 @@ words:
   - newcp
   - noframe
   - nthis
+  - nvitr
   - nxfn
   - objs
   - odarr
+  - outar
   - percentgencur
   - plen
   - precreate
