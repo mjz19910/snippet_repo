@@ -15,3 +15,7 @@ def group2(key):
 // this checks the spelling config for changes
 // cspell:enableCompoundWords
 ```
+
+# Commit format
+
+G{group number}: {description}
