@@ -15,8 +15,8 @@ class RustStdLibrary {
 	print(value) {
 		console.log(value);
 	}
-	start_process() {
-		this.processes.push(value);
+	start_process(new_process) {
+		this.processes.push(new_process);
 	}
 	poll_processes() {
 		if(!this.processes.length)
