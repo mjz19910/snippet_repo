@@ -13,7 +13,7 @@ if(typeof code == "undefined") {
 var rx = 0;
 var etn = 0;
 window.bp = 0;
-var parsejs = class {
+class parsejs {
     constructor(s) {
         this.state = {
             getargs: 0,
@@ -213,7 +213,7 @@ var parsejs = class {
         return s;
     }
     parse(s, state, d) {
-        let comments=[];
+        let comments = [];
         while(s != "") {
             rx++;
             var len = 1;
@@ -253,7 +253,8 @@ var parsejs = class {
                                 break;
                             }
                             c = s[++len];
-                        } while(c); while("gimuy".indexOf(s[len]) >= 0) {
+                        } while(c);
+                        while("gimuy".indexOf(s[len]) >= 0) {
                             flags += s[len];
                             len++;
                         }
@@ -332,7 +333,8 @@ var parsejs = class {
                     });
                     break;
                 case "{":
-                    if(state.pt == 1 || state.pt == 8 || state.pt == 10 || state.pt == 14) { // main,try,finally,catch
+                    if(state.pt == 1 || state.pt == 8 || state.pt == 10 || state.pt == 14) {
+                        // main,try,finally,catch
                         state.parast.push(state.pt);
                         state.pt = 5;
                         d++;
@@ -417,7 +419,8 @@ var parsejs = class {
                             off++;
                         }
                         off++;
-                    } while(s[off] != '"'); var string = s.substring(1, off);
+                    } while(s[off] != '"');
+                    var string = s.substring(1, off);
                     state.tok.push({
                         value: "primitive",
                         type: "String",
@@ -725,7 +728,7 @@ var parsejs = class {
     toString() {
         return state.tok;
     }
-};
+}
 if(typeof exports == "undefined") {
     parser = new parsejs();
     parser.parse(code, parser.state);
