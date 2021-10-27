@@ -32,77 +32,68 @@ G{group number as int}: {description}
 # CommitDSL
 - the DSL for my commit format
 ```
-syntax -raw (...(1))
-	...(1) is  ((...) as (inner token tree))
-syntax (...(1) as @word)
+syntax -u1 (...(1))
+	...(1) is -u1 ((...) as -ty (inner token tree))
+syntax -u1 (syntax -u0 (...(1)))
 	end
-syntax (...(1)) ((as) as @word with (group (3))) (...(2))
+syntax -u1 ((...(1)) as @word)
+	end
+syntax -u1 (...(1)) (as) (...(2))
 	...(1) is (list type)
 	...(2) is (syntax type)
-	(group (3)) (...(5))
-	...(5) is ((...) (...(6)) (...(7)) (...(8)) (...(9)))
-	...(6) is ((as) as @word)
-	...(7) is ((type) as @type)
-	...(8) is ((with) as @word)
-	...(9) is ((...(4)) as (group define))
-	...(4) is (group (...(10)))
-	...(10) is (type int)
-syntax() (...(1)) (...(2)) (...(3))
+syntax -u1 (syntax()) (...(1)) (...(2)) (...(3))
 	defines syntax using 3 match types
-	...(1) is (... (as type) @match (described by) (match start))
-	...(2) is (... (as type) @match (described by) (match while))
-	...(3) is (... (as type) @match (described by) (match end))
-syntax (...(1)) is (...(2))
+	...(1) is (-u1 (...) (as) (@match) -> @ret with (described by) (match start))
+	...(2) is (-u1 (...) (as) (@match) -> @ret with (described by) (match while))
+	...(3) is (-u1 (...) (as) (@match) -> @ret with (described by) (match end))
+syntax -u1 (...(1)) (is) (...(2))
 	defines is relation
 	can replace ...(1) with ...(2) and it does not change the meaning
-syntax @word
+syntax -u0 @word
 	a sequence of tokens that is wordlike(any char bounded by whitespace)
-syntax @word from ((description) as @word)
-	describes where the type is defined
 syntax() (/"/ as @match) (/[^"]/ as @match) (/"/ as @match)
 	regex matching the token for a string
 	this is a single char, but parses as a token pair containing a string
 	this starts the string, when it is encountered again
 	it goes back to the previous token pair
+syntax -u1 (token[])
+	define a token list
+	convert to token list
+syntax -u1 (describe) (() as (@raw token[]))
+	end
 describe ()
 	this can group tokens
-syntax (... as list of @word seperated by "|") as @word
+syntax -u1 ((...) as (list @word) (seperated by) "|") -> @ret as (@word with (type word[]))
 	end
-syntax -raw ((...(1))...(2))
+syntax -u0 ((...(1))...(2))
 	...(1)
 		tokens parse in description mode
 	...(2)
 		greedy, uses all tokens until token tree end
 		this is the token array that this syntax will match
-syntax -raw (...)
+syntax -u0 (...)
 	groups tokens into a a group
-syntax ((@word)[]) @requires (in description)
-	it defines something as an array
-syntax ((-) as @match) (...(1)) ((\n\n) as @match)
-	...(1) is ((...) include (match newline) as (syntax @match))
-	this marks the start of a description option
-syntax (...)
+syntax -u0 (...)
 	end
-syntax ([%(...)...])
-	%(...)
-		any word[] seperated by " "
+syntax -u1 ([%(...)...])
+	%(...) is ((@word with (type word[])) (seperated by) (whitespace))
 	...
-syntax [...]
+syntax -u0 [...]
 	an optional value
-syntax (%) is (syntax error)
+syntax -u0 (%) is (syntax error)
 	end
-syntax -raw %(...)[@suffix]
+syntax -u0 %(...)[@suffix]
 	@suffix is (...(1))
 	...(1)
 		- the inline suffix
 		- the word-like tokens
 		- (ends at) (current token tree @end)
 		- (ends at) whitespace
-syntax -raw %(...)t
+syntax -u0 %(...)t
 	... is (...(1))
 	...(1) is (token list)
 	- (token list) always (convert to string)
-syntax %(...)s (joined) (with) %(...(2))t
+syntax -u0 %(...)s (joined with) %(...(2))t
   the first part can be defined with %(...)
   [joined with...]
 ```
