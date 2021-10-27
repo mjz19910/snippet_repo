@@ -1,8 +1,10 @@
 # Group format, described in python3
 ```py3
 def group1(key):
+	# example $_1
 	return f"$_{key.rev_printf("item_%s")}"
 def group2(key):
+	# example ,1_
 	return f",{key.rev_printf("item_%s")}_"
 ```
 # cSpell comments
