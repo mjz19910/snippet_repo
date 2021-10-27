@@ -221,8 +221,10 @@ var parsejs = class {
 						var end = s.indexOf("\n");
 						//expectraw(s,len,"\n")
 						var comment = s.substring(2, end);
-						console.log(comment)
-							(function() {debugger;})(); len = end;
+						console.log(comment)(function() {
+							debugger;
+						})();
+						len = end;
 					} else {
 						var len = 1;
 						var c = s[1];
@@ -244,7 +246,8 @@ var parsejs = class {
 								break;
 							}
 							c = s[++len];
-						} while(c); while("gimuy".indexOf(s[len]) >= 0) {
+						} while(c);
+						while("gimuy".indexOf(s[len]) >= 0) {
 							flags += s[len];
 							len++;
 						}
@@ -409,7 +412,8 @@ var parsejs = class {
 							off++;
 						}
 						off++;
-					} while(s[off] != '"') ;var string = s.substring(1, off);
+					} while(s[off] != '"');
+					var string = s.substring(1, off);
 					state.tok.push({
 						value: "primitive",
 						type: "String",
@@ -718,7 +722,8 @@ var parsejs = class {
 	toString() {
 		return state.tok;
 	}
-};
+}
+	;
 if(typeof exports == "undefined") {
 	parser = new parsejs();
 	parser.parse(code, parser.state);
