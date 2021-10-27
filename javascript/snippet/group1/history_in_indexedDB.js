@@ -10,7 +10,6 @@ function ap_l(item) {
     list.appendChild(i);
 }
 function open_complete() {
-
     list = document.createElement("ul");
     document.body.prepend(list);
     tr = odb.result.transaction(['history'], "readonly");
