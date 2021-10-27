@@ -100,8 +100,7 @@ let comp_sci = new RustComputerScience;
 			on_receive_event(target_actor, transmitted_actor, activator, event_count) {
 				this.impl.process_event(target_actor, transmitted_actor, activator, event_count);
 			}
-		}
-		,
+		},
 		interface_type: {
 			on_receive_event: "@returns {void} @arg {RustActor} target_actor @arg {RustActor} transmitted_actor @arg {RustActivator} transmitted_actor @arg {number} event_count",
 			get_response: "@returns message",
