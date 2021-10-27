@@ -27,6 +27,7 @@ G{group number as int}: {description}
 - JSSnippet
 - CommitDSL
 - Yak
+- SnippetREADME
 
 # CommitDSL
 - the DSL for my commit format
