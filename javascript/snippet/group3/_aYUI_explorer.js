@@ -1,6 +1,6 @@
 //cspell:words objsx oneloop yuid
 objs = {};
-bad = [HTMLDivElement, HTMLHeadElement, HTMLElement, HTMLDocument, HTMLHtmlElement, HTMLAllCollection, HTMLCollection, HTMLBodyElement, HTMLAnchorElement, StyleSheetList];
+bad = [HTMLDivElement, HTMLHeadElement, HTMLElement, Document, HTMLHtmlElement, HTMLAllCollection, HTMLCollection, HTMLBodyElement, HTMLAnchorElement, StyleSheetList];
 bl: for(var j in YUI.Env) {
     var tar = YUI.Env[j];
     if(bad.indexOf(Object.getPrototypeOf(tar).constructor) > -1) {
