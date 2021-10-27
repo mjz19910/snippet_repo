@@ -1,6 +1,6 @@
 out = [];
 odb = indexedDB.open("history", 1);
-ap_l = function(item) {
+function ap_l(item) {
     var i = document.createElement('li');
     var l1 = document.createElement('div');
     var l2 = document.createElement('div');
@@ -9,13 +9,13 @@ ap_l = function(item) {
     i.append(l1, l2);
     list.appendChild(i);
 }
-    ;
-odb.onsuccess = function() {
+function open_complete() {
+
     list = document.createElement("ul");
     document.body.prepend(list);
     tr = odb.result.transaction(['history'], "readonly");
     cur = tr.objectStore("history").openCursor();
-    cur.onsuccess = function({target: {cursor: cursor}}) {
+    function cursor_done({target: {cursor: cursor}}) {
         if(cursor) {
             //cursor.continue();
             console.log(cursor.value);
@@ -27,7 +27,7 @@ odb.onsuccess = function() {
             console.log('Got all data, length:', out.length);
         }
     }
-        ;
+    cur.onsuccess = cursor_done;
     console.log(cur);
 }
-    ;
+odb.onsuccess = open_complete;
