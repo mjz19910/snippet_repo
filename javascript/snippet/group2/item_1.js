@@ -91,10 +91,10 @@ let comp_sci = new RustComputerScience;
 				std_lib.print(transmitted_actor.apply_value);
 			})
 		},
-		can: [/**/
-			"send message", /**/
-			"create actor", /**/
-			"create activator", /**/
+		can: [//
+			"send message", //
+			"create actor", //
+			"create activator", //
 		],
 		code_snippets: [//
 			"(apply: message (then-to: continuation))", //
