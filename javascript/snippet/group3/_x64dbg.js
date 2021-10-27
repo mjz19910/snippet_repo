@@ -1,7 +1,7 @@
-done = 0
-unkobj = {}
-console.t = {}
-var res=0;
+done = 0;
+unkobj = {};
+console.t = {};
+var res = 0;
 crashfn = function(e) {
     class ListInfo {
     }
@@ -14,7 +14,7 @@ crashfn = function(e) {
     }
     function ThreadVector_swigregister() {}
     function GetThreadInfoList() {
-        _.getThreadInfoList(1)
+        _.getThreadInfoList(1);
     }
     function BridgeInit() {}
     function BridgeStart() {}
@@ -27,7 +27,7 @@ crashfn = function(e) {
     function BridgeSettingFlush() {}
     function BridgeSettingRead(errorLine) {}
     function BridgeGetDbgVersion() {}
-    e`MAX_SETTING_SIZE``DBG_VERSION``Bridge[Init,Start,Alloc,Free,GetDbgVersion]``BridgeSetting[Get,GetUint,Set,SetUint,Flush,Read]``MAX_[LABEL,COMMENT,MODULE,IMPORT,BREAKPOINT,CONDITIONAL_[EXPR,TEXT],SCRIPT_LINE,THREAD_NAME,WATCH_NAME,STRING,ERROR,SECTION,COMMAND_LINE,MNEMONIC]._SIZE``PAGE_SIZE``[initialized,paused,running,stopped]``SEG_[DEFAULT,ES,DS,FS,GS,CS,SS]``flag[module,label,comment,bookmark,$function,loop,args,NoFuncOffset]``bp_[none,normal,hardware,memory,dll,exception]``FUNC_[NONE,BEGIN,MIDDLE,END,SINGLE]``LOOP_[NONE,BEGIN,MIDDLE,ENTRY,END,SINGLE]``XREF_[NONE,DATA,JMP,CALL]``ARG_[NONE,BEGIN,MIDDLE,END,SINGLE]`
+    e`MAX_SETTING_SIZE``DBG_VERSION``Bridge[Init,Start,Alloc,Free,GetDbgVersion]``BridgeSetting[Get,GetUint,Set,SetUint,Flush,Read]``MAX_[LABEL,COMMENT,MODULE,IMPORT,BREAKPOINT,CONDITIONAL_[EXPR,TEXT],SCRIPT_LINE,THREAD_NAME,WATCH_NAME,STRING,ERROR,SECTION,COMMAND_LINE,MNEMONIC]._SIZE``PAGE_SIZE``[initialized,paused,running,stopped]``SEG_[DEFAULT,ES,DS,FS,GS,CS,SS]``flag[module,label,comment,bookmark,$function,loop,args,NoFuncOffset]``bp_[none,normal,hardware,memory,dll,exception]``FUNC_[NONE,BEGIN,MIDDLE,END,SINGLE]``LOOP_[NONE,BEGIN,MIDDLE,ENTRY,END,SINGLE]``XREF_[NONE,DATA,JMP,CALL]``ARG_[NONE,BEGIN,MIDDLE,END,SINGLE]`;
 
     "DBG_ ARRAY START";
     e`DBG_[SCRIPT_LOAD[UNLOAD,RUN,STEP,BPTOGGLE,BPGET,CMDEXEC,ABORT,GETLINETYPE,SETIP,GETBRANCHINFO],SYMBOL_ENUM,ASSEMBLE_AT,
@@ -42,7 +42,7 @@ ENCODE_[TYPE,SIZE]._GET,
 ARGUMENT_[GET,OVERLAPS,ADD,DEL],SELCHANGED,
 GET_[THREAD_LIST,TIME_WASTED_COUNTER,STRING_AT,FUNCTIONS,XREF_COUNT_AT,XREF_TYPE_AT,
 WATCH_LIST,PROCESS_HANDLE,THREAD_HANDLE,PROCESS_ID,THREAD_ID,[PEB,TEB]._ADDRESS],
-ANALYZE_FUNCTION,MENU_PREPARE]`
+ANALYZE_FUNCTION,MENU_PREPARE]`;
     e`
 linecommand
 linebranch
@@ -142,135 +142,135 @@ ex_secondchance
 ex_all``hw_byte
 hw_word
 hw_dword
-hw_qword`
+hw_qword`;
     return function(e) {
-        return eval(e)
-    }
-}
-while (!done) {
+        return eval(e);
+    };
+};
+while(!done) {
     try {
-        res=crashfn((function() {
+        res = crashfn((function() {
             var fn = function(e) {
-                if (e[0].indexOf("\n") > -1) {
-                    var ar = e[0].split("\n")
-                    var dist = 1
-                    var results = []
-                    ar.forEach(e=>{
-                        if (results.indexOf(e.slice(0, dist)) == -1) {
-                            results.push(e)
+                if(e[0].indexOf("\n") > -1) {
+                    var ar = e[0].split("\n");
+                    var dist = 1;
+                    var results = [];
+                    ar.forEach(e => {
+                        if(results.indexOf(e.slice(0, dist)) == -1) {
+                            results.push(e);
                         }
                     }
-                    )
-                    console.log(results)
+                    );
+                    console.log(results);
                 } else {
-                    console.log(e)
+                    console.log(e);
                 }
-                return fn
+                return fn;
             };
-            return fn
+            return fn;
         }
-        )())
-        done = 1
-    } catch (e) {
+        )());
+        done = 1;
+    } catch(e) {
         addmessage = function(e) {
-            if (e.message.indexOf("' of undefined") > -1) {
-                var unqname = e.message.match(/.+'(.+)'.+/)[1]
-                if (typeof unkobj[unkobj] == "undefined")
-                    unkobj[unkobj] = {}
+            if(e.message.indexOf("' of undefined") > -1) {
+                var unqname = e.message.match(/.+'(.+)'.+/)[1];
+                if(typeof unkobj[unkobj] == "undefined")
+                    unkobj[unkobj] = {};
                 Object.defineProperty(unkobj[unkobj], unqname, {
                     get: function() {
                         console.t = +"." + unqname;
                         console.log(unqname);
-                        return JSON.parse(`{"${unqname}":{}}`)
+                        return JSON.parse(`{"${unqname}":{}}`);
                     },
                     set: function() {}
-                })
-                done = 0
+                });
+                done = 0;
             }
-        }
+        };
         adddef = function() {
-            if (e.message.indexOf(" is not defined") > -1) {
-                var unqobjt = e.message.slice(0, e.message.indexOf(" is not defined"))
+            if(e.message.indexOf(" is not defined") > -1) {
+                var unqobjt = e.message.slice(0, e.message.indexOf(" is not defined"));
                 Object.defineProperty(window, unqobjt, {
                     get: function() {
                         console.log(console.t);
                         console.t = unqobjt;
-                        return unkobj
+                        return unkobj;
                     },
                     set: function() {}
-                })
+                });
             } else {
-                done = 1
+                done = 1;
             }
-        }
-        adddef(e)
-        addmessage(e)
+        };
+        adddef(e);
+        addmessage(e);
         console.log(e);
-        t = e
+        t = e;
     }
 }
 (function() {
     var logger = function() {
-        var ar = Array.from(Object.keys(Object.getOwnPropertyDescriptors(window)))
-        var ard = ar.indexOf("done")
-        console.log(ar.slice(ard))
-    }
+        var ar = Array.from(Object.keys(Object.getOwnPropertyDescriptors(window)));
+        var ard = ar.indexOf("done");
+        console.log(ar.slice(ard));
+    };
     var waitforapi = function(cnt) {
-        var ar = Object.getOwnPropertyNames(window)
-        var ard = ar.indexOf("done")
-        console.before = ar.slice(ard)
-        if (console.notify_get) {
+        var ar = Object.getOwnPropertyNames(window);
+        var ard = ar.indexOf("done");
+        console.before = ar.slice(ard);
+        if(console.notify_get) {
             var result = console.notify_get();
-            console.log("consoleapi in:" + cnt)
-            console.log(result)
-            return
+            console.log("consoleapi in:" + cnt);
+            console.log(result);
+            return;
         }
-        setTimeout(waitforapi, 50, cnt + 1)
-    }
-    var ar = Object.getOwnPropertyNames(window)
-    var ar2 = ar
-    var ard = ar.indexOf("done")
-    var val = ar.slice(ard)
-    var capi
-    var gcapi
-    var scapi
-    console.log(val)
-    if (val.indexOf("$_") > -1) {
+        setTimeout(waitforapi, 50, cnt + 1);
+    };
+    var ar = Object.getOwnPropertyNames(window);
+    var ar2 = ar;
+    var ard = ar.indexOf("done");
+    var val = ar.slice(ard);
+    var capi;
+    var gcapi;
+    var scapi;
+    console.log(val);
+    if(val.indexOf("$_") > -1) {
         capi = {};
         gcapi = {};
-        scapi = {}
+        scapi = {};
         var capn = val.slice(3);
-        console.log(capn.length)
-        for (var i of capn) {
+        console.log(capn.length);
+        for(var i of capn) {
             var dsc = Object.getOwnPropertyDescriptor(window, i)
-              , gs = 0
-            if (dsc.get) {
-                gcapi[i] = dsc.get
-                gs = 1
+                , gs = 0;
+            if(dsc.get) {
+                gcapi[i] = dsc.get;
+                gs = 1;
             }
-            if (dsc.set) {
-                scapi[i] = dsc.set
-                gs = 1
+            if(dsc.set) {
+                scapi[i] = dsc.set;
+                gs = 1;
             }
-            if (!gs) {
-                capi[i] = dsc.value
+            if(!gs) {
+                capi[i] = dsc.value;
             }
         }
     }
-    if (console.before) {
+    if(console.before) {
         console.notify_get = function() {
-            var ar = Object.getOwnPropertyNames(window)
-            var ard = ar.indexOf("done")
-            var ary = ar2.indexOf("done")
-            var val = ar.slice(ard)
+            var ar = Object.getOwnPropertyNames(window);
+            var ard = ar.indexOf("done");
+            var ary = ar2.indexOf("done");
+            var val = ar.slice(ard);
             return [val, {
                 n: capi,
                 g: gcapi,
                 s: scapi
             }];
-        }
+        };
     } else {
-        waitforapi(1)
+        waitforapi(1);
     }
 }
-)()
+)();
