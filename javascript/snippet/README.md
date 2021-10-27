@@ -18,10 +18,11 @@ def group2(key):
 
 # Commit format
 
-G{group number}: {description}
+G{group number as int}: {description}
 {%(commit prefix)s joined with %(+)t}: {description}
 
 %(commit prefix) can be any of
+- G{int}
 - README 
 - JSSnippet
 - CommitDSL
