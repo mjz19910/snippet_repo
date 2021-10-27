@@ -65,7 +65,7 @@ syntax() (/"/ as @match) (/[^"]/ as @match) (/"/ as @match)
 	this starts the string, when it is encountered again
 	it goes back to the previous token pair
 describe ()
-	this can group types in description
+	this can group tokens
 syntax (... as list of @word seperated by "|") as @word
 	end
 syntax -raw ((...(1))...(2))
