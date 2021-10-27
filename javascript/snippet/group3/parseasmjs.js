@@ -1,3 +1,4 @@
+//cspell:words getargs idents keywordhandlers gethandler mclass fnbody parama parast parsebody parsebracket expectraw notreg charexpr gimuy jsonlike eatnext sethandler tryblock tryobj
 if(typeof exports != "undefined") {
 	v8 = require("v8");
 	util = require("util");
@@ -290,7 +291,7 @@ var parsejs = class {
 						break;
 					}
 					if(state.tok[state.tok.length - 1]) {
-						if(state.tok[state.tok.length - 1].value == "Seperator") {
+						if(state.tok[state.tok.length - 1].value == "Separator") {
 							state.tok.pop();
 							if(state.tok.length == 0) {
 								break;
@@ -298,12 +299,12 @@ var parsejs = class {
 						}
 						if(state.tok[state.tok.length - 1].value != "LBracket") {
 							state.tok.push({
-								value: "Seperator"
+								value: "Separator"
 							});
 						}
 					} else {
 						state.tok.push({
-							value: "Seperator"
+							value: "Separator"
 						});
 					}
 					break;
@@ -338,7 +339,7 @@ var parsejs = class {
 					}
 					break;
 				case "}":
-					if(state.tok.length > 1 && state.tok[state.tok.length - 1].value == "Seperator") {
+					if(state.tok.length > 1 && state.tok[state.tok.length - 1].value == "Separator") {
 						state.tok.pop();
 					}
 					if(state.pt == 0) {
@@ -452,7 +453,7 @@ var parsejs = class {
 						len = 2;
 					} else {
 						state.tok.push({
-							value: "Asignment"
+							value: "Assignment"
 						});
 					}
 					break;
