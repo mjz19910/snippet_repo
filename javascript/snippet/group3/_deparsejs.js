@@ -213,6 +213,7 @@ var parsejs = class {
         return s;
     }
     parse(s, state, d) {
+        let comments=[];
         while(s != "") {
             rx++;
             var len = 1;
@@ -223,6 +224,7 @@ var parsejs = class {
             if(s.charAt(0) == "/" && s.charAt(1) == "*") {
                 var end = s.indexOf('*/');
                 var comment = s.substring(2, end);
+                comments.push(comment);
                 s = s.slice(end + 2);
             }
             switch(s.charAt(0)) {
@@ -235,7 +237,6 @@ var parsejs = class {
                         var len = 1;
                         var c = s[1];
                         var off = 0;
-                        var notreg = 0;
                         var charexpr = 0;
                         var flags = "";
                         do {
