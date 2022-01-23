@@ -1,10 +1,6 @@
 interface Window {
 	// imported from typescript's inference
 	__ret:{
-		_class: {
-			[x: symbol]: typeof cur;
-		};
-		prototype: cur;
 		_lf: any;
 		_f: any;
 		f_on: boolean;
