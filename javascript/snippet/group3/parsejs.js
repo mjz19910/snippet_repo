@@ -4,14 +4,15 @@ if (typeof exports != "undefined") {
 }
 //console.log(util.inspect(this.state.tok[0],{depth:null,maxArrayLength:300}))
 var rx = 0
+void rx;
 var parsejs = class {
 	constructor(s) {
 		this.state = {
-			getargs: 0,
-			parsebody: 0,
-			parsebracket: 0,
+			get_args: 0,
+			parse_body: 0,
+			parse_bracket: 0,
 			pt: 0,
-			parast: [],
+			para_stack: [],
 			tok: [],
 			idents: []
 		}
@@ -52,35 +53,36 @@ var parsejs = class {
 				kwo.z.push(i)
 			}
 		}
-		this.keywordhandlers = new Map
-		let mclass = this.constructor
+		this.keyword_handlers = new Map
+		let m_class = this.constructor
 		for (i of Object.getOwnPropertyNames(Reflect.getPrototypeOf(this))) {
 			if (i.match(/eat_/)) {
-				this.keywordhandlers.set(i.substr(4), this[i].bind(this))
+				this.keyword_handlers.set(i.substr(4), this[i].bind(this))
 			}
 		}
 		this.state.primitives = ["null", "undefined", "true", "false", "NaN", "Infinity", "-Infinity", "String"]
 		if (s) {
-			let sethandler = function(n, fn) {
-				if (!this instanceof mclass) {
-					throw RangeError("this not instance of " + mclass)
+			function set_handler(n, fn) {
+				if (!this instanceof m_class) {
+					throw RangeError("this not instance of " + m_class)
 				}
 				if (typeof fn != "function") {
-					throw TypeError("sethandler called but parameter 2 is not a function")
+					throw TypeError("set_handler called but parameter 2 is not a function")
 				}
-				this.keywordhandlers.set(n, fn.bind(this))
+				this.keyword_handlers.set(n, fn.bind(this))
 			}
-			let gethandler = function(g) {
-				if (!this instanceof mclass) {
-					throw RangeError("this not instance of " + mclass)
+			function get_handler(g) {
+				if (!this instanceof m_class) {
+					throw RangeError("this not instance of " + m_class)
 				}
-				this.keywordhandlers.get(g)
+				this.keyword_handlers.get(g)
 			}
-			s(this, sethandler, gethandler)
+			s(this, set_handler, get_handler)
 		}
 	}
+	/**@arg {this["state"]} state */
 	eat_function(s, state) {
-		state.parast.push(state.pt)
+		state.para_stack.push(state.pt)
 		state.pt = 7
 		var save = state.tok
 		var named = 0
@@ -99,7 +101,7 @@ var parsejs = class {
 			}
 		s = this.parse(s, state, 1)
 		state.pt = 3
-		var parama = state.tok
+		var param_a = state.tok
 		if (s[0] != "{}"[0] && s.length != 0) {
 			while (1) {
 				if (s[0] == "{}"[0]) {
@@ -114,93 +116,98 @@ var parsejs = class {
 		}
 		s = s.slice(1)
 		state.tok = []
-		state.getargs = 0
-		state.parsebody = 1
+		state.get_args = 0
+		state.parse_body = 1
 		s = this.parse(s, state, 2)
-		var fnbody = state.tok
+		var function_body = state.tok
 		if (named) {
 			save.push({
 				value: "Function",
-				head: parama.slice(1),
-				body: fnbody,
-				name: parama[0].data,
+				head: param_a.slice(1),
+				body: function_body,
+				name: param_a[0].data,
 				named: true
 			})
 		} else {
 			save.push({
 				value: "Function",
-				head: parama,
-				body: fnbody,
+				head: param_a,
+				body: function_body,
 				named: false
 			})
 		}
 		state.tok = save;
-		state.parsebody = 0
-		if (state.parast.length > 0) {
-			state.pt = state.parast.pop()
+		state.parse_body = 0
+		if (state.para_stack.length > 0) {
+			state.pt = state.para_stack.pop()
 		}
 		return s
 	}
+	/**@arg {this["state"]} state */
 	eat_try(s, state) {
-		state.parast.push(state.pt)
+		state.para_stack.push(state.pt)
 		state.pt = 8
 		var save = state.tok
 		state.tok = []
 		s = this.parse(s, state, 1)
-		var tryblock = state.tok
-		var tryobj = {
+		var try_block = state.tok
+		var try_obj = {
 			value: "Try",
-			body: tryblock
+			body: try_block
 		}
 		if (s.substr(0, 5) == "catch") {
 			state.tok = []
 			s = s.slice(5)
 			state.pt = 12
-			s = this.eat_catch(s, state, tryobj)
+			s = this.eat_catch(s, state, try_obj)
 		}
 		if (s.substr(0, 7) == "finally") {
 			state.tok = []
 			s = s.slice(7)
 			state.pt = 9
 			s = this.eat_finally(s, state)
-			tryobj.finally = state.tok
+			try_obj.finally = state.tok
 		}
-		if (state.parast.length > 0) {
-			state.pt = state.parast.pop()
+		if (state.para_stack.length > 0) {
+			state.pt = state.para_stack.pop()
 		}
-		save.push(tryobj)
+		save.push(try_obj)
 		state.tok = save;
 		return s
 	}
-	eat_catch(s, state, tryobj) {
+	/**@arg {this["state"]} state */
+	eat_catch(s, state, try_obj) {
 		if (state.pt != 12)
 			throw SyntaxError("Unexpected token catch")
-		state.parast.push(state.pt)
+		state.para_stack.push(state.pt)
 		state.pt = 6
 		var save = state.tok
 		state.tok = []
 		s = this.parse(s, state, 1)
-		tryobj.catch = {
+		try_obj.catch = {
 			head: state.tok
 		}
 		state.tok = []
 		state.pt = 14
 		s = this.parse(s, state, 1)
-		tryobj.catch.body = state.tok
-		state.pt = state.parast.pop()
+		try_obj.catch.body = state.tok
+		state.pt = state.para_stack.pop()
 		return s
 	}
-	eat_finally(s, state, tryobj) {
+	/**@arg {this["state"]} state */
+	eat_finally(s, state, try_obj) {
+		void try_obj;
 		if (state.pt != 9)
 			throw SyntaxError("Unexpected token finally")
-		state.parast.push(state.pt)
+		state.para_stack.push(state.pt)
 		state.pt = 10
 		var save = state.tok
 		state.tok = []
 		s = this.parse(s, state, 1)
-		state.pt = state.parast.pop()
+		state.pt = state.para_stack.pop()
 		return s
 	}
+	/**@arg {this["state"]} state */
 	parse(s, state, d) {
 		while (s != "") {
 			rx++;
@@ -212,6 +219,7 @@ var parsejs = class {
 			if (s.charAt(0) == "/" && s.charAt(1) == "*") {
 				var end = s.indexOf('*/')
 				var comment = s.substring(2, end)
+				void comment;
 				s = s.slice(end + 2)
 			}
 			switch (s.charAt(0)) {
@@ -224,24 +232,26 @@ var parsejs = class {
 					var len = 1
 					var c = s[1]
 					var off = 0
-					var notreg = 0
-					var charexpr = 0
+					var not_reg = 0;
+					void not_reg;
+					var char_expr = 0
 					var flags = ""
 					do {
 						if (c == '[') {
-							charexpr = 1;
+							char_expr = 1;
 						} else if (c == ']') {
-							charexpr = 0;
+							char_expr = 0;
 						} else if (c == '\\') {
 							len += 2
 							c = s[len]
 							continue
-						} else if (!charexpr && c == '/') {
+						} else if (!char_expr && c == '/') {
 							len++
 							break;
 						}
 						c = s[++len]
 					} while (c);
+					//cspell:disable-next-line
 					while ("gimuy".indexOf(s[len]) >= 0) {
 						flags += s[len];
 						len++
@@ -276,10 +286,6 @@ var parsejs = class {
 				} else {
 					len = match[0].length
 				}
-				//if (state.parast.length < 2 || rx < (1300 / 4)) {
-				//    console.log.apply(0, ["ws", state.tok[state.tok.length - 1], state.tok[state.tok.length - 2]])
-				//    // if we found more than 40 tokens, quit telling what was before whitespace
-				//}
 				break
 			case "\n":
 			case ";":
@@ -287,7 +293,7 @@ var parsejs = class {
 					break
 				}
 				if (state.tok[state.tok.length - 1]) {
-					if (state.tok[state.tok.length - 1].value == "Seperator") {
+					if (state.tok[state.tok.length - 1].value == "Separator") {
 						state.tok.pop()
 						if (state.tok.length == 0) {
 							break
@@ -295,12 +301,12 @@ var parsejs = class {
 					}
 					if (state.tok[state.tok.length - 1].value != "LBracket") {
 						state.tok.push({
-							value: "Seperator"
+							value: "Separator"
 						})
 					}
 				} else {
 					state.tok.push({
-						value: "Seperator"
+						value: "Separator"
 					})
 				}
 				break
@@ -311,7 +317,7 @@ var parsejs = class {
 					// no tokens for this when in para mode 6
 				}
 				if (state.pt == 7) {
-					state.parast.push(state.pt)
+					state.para_stack.push(state.pt)
 					state.pt = 11
 					state.tok.push({
 						value: "LParan"
@@ -324,13 +330,13 @@ var parsejs = class {
 				break
 			case "{":
 				if (state.pt == 1 || state.pt == 8 || state.pt == 14) {
-					state.parast.push(state.pt)
+					state.para_stack.push(state.pt)
 					state.pt = 5
 					d++
 				} else {
-					state.parast.push(state.pt)
+					state.para_stack.push(state.pt)
 					state.pt = 4
-					// state parse jsonlike
+					// state parse json like
 					state.tok.push({
 						value: "LBracket"
 					})
@@ -338,7 +344,7 @@ var parsejs = class {
 				}
 				break
 			case "}":
-				if (state.tok.length > 1 && state.tok[state.tok.length - 1].value == "Seperator") {
+				if (state.tok.length > 1 && state.tok[state.tok.length - 1].value == "Separator") {
 					state.tok.pop()
 				}
 				if (state.pt == 0) {
@@ -348,11 +354,11 @@ var parsejs = class {
 					state.tok.push({
 						value: "RBracket"
 					})
-					state.pt = state.parast.pop()
+					state.pt = state.para_stack.pop()
 					break
 				}
 				if (state.pt == 5) {
-					state.pt = state.parast.pop()
+					state.pt = state.para_stack.pop()
 					return s.slice(1)
 				}
 				//console.log(state.tok.slice(state.tok.length > 20 ? state.tok.length - 20 : 0, state.tok.length))
@@ -360,7 +366,7 @@ var parsejs = class {
 				break
 			case ")":
 				if (state.pt == 11) {
-					state.pt = state.parast.pop();
+					state.pt = state.para_stack.pop();
 					state.tok.push({
 						value: "RParan"
 					})
@@ -452,7 +458,7 @@ var parsejs = class {
 					}
 				} else {
 					state.tok.push({
-						value: "Asignment"
+						value: "Assignment"
 					})
 				}
 				break
@@ -574,12 +580,12 @@ var parsejs = class {
 					len = 2
 				} else {
 					if (state.pt != 0) {
-						state.parast.push(state.pt)
+						state.para_stack.push(state.pt)
 					}
 					state.pt = 2
 					var save = state.tok
 					state.tok = []
-					state.parsebracket = 1
+					state.parse_bracket = 1
 					s = s.slice(1)
 					s = this.parse(s, state, 2)
 					// We already ate one bracket, recurse while specifying
@@ -589,9 +595,9 @@ var parsejs = class {
 						body: bracket
 					})
 					state.tok = save
-					state.parsebracket = 0
-					if (state.parast.length > 0) {
-						state.pt = state.parast.pop()
+					state.parse_bracket = 0
+					if (state.para_stack.length > 0) {
+						state.pt = state.para_stack.pop()
 					}
 					continue
 				}
@@ -685,9 +691,9 @@ var parsejs = class {
 				if (match) {
 					var hit = match[0]
 					if (state.keywords.has(hit)) {
-						if (this.keywordhandlers.has(hit)) {
+						if (this.keyword_handlers.has(hit)) {
 							s = s.slice(hit.length)
-							s = this.keywordhandlers.get(hit)(s, state)
+							s = this.keyword_handlers.get(hit)(s, state)
 							continue
 						} else {
 							state.tok.push({
@@ -719,8 +725,8 @@ var parsejs = class {
 		return state.tok
 	}
 }
-keywordexecuters = {}
-keywordexecuters.var = function(runscope) {
+keyword_executers = {}
+keyword_executers.var = function(runscope) {
 	var tokens = runscope.tok
 	var cur = tokens[runscope.i + 1]
 	var targ_s;
@@ -732,15 +738,15 @@ keywordexecuters.var = function(runscope) {
 	} else {
 		console.log("unexpected", cur)
 	}
-	if (cur.value == "Asignment" && tokens[runscope.i + 2].value == "bracket") {
-		var newscope = {
+	if (cur.value == "Assignment" && tokens[runscope.i + 2].value == "bracket") {
+		var new_scope = {
 			my: [],
 			up: null,
 			tok: tokens[runscope.i + 2].body,
 			i: 0
 		}
-		bracket_run(newscope)
-		runscope.my[targ_s] = newscope.my
+		bracket_run(new_scope)
+		runscope.my[targ_s] = new_scope.my
 		runscope.i++
 		return {
 			value: "brret"
@@ -770,22 +776,23 @@ bracket_run = function(runscope) {
 	}
 
 }
-tokcall = function(tokens) {
+function tok_call(tokens) {
 	var runscope = {
 		my: {},
 		up: window,
 		tok: tokens,
 		i: 0
-	}, argint, cur
+	}, arg_int, cur;
+	void arg_int;
 	var exec_drop_list = []
 	var did_eat = 0;
-	var retval = null
+	var ret_val = null
 	var did_ret = false;
 	while (did_ret === false) {
 		cur = tokens[runscope.i];
 		if (cur.value == "Function") {
-			argint = cur.head.slice(1, cur.head.length - 1);
-			var fn = function(...a) {
+			arg_int = cur.head.slice(1, cur.head.length - 1);
+			function fn(...a) {
 				if (this !== window) {
 					fn.call(this, ...a)
 				}
@@ -796,37 +803,37 @@ tokcall = function(tokens) {
 			}
 			exec_drop_list.push(fn)
 		}
-		if (cur.value == "keyword" && keywordexecuters.hasOwnProperty(cur.data)) {
-			var out_val = keywordexecuters[cur.data](runscope)
+		if (cur.value == "keyword" && keyword_executers.hasOwnProperty(cur.data)) {
+			var out_val = keyword_executers[cur.data](runscope)
 			if (out_val.value == "return") {
-				retval = out_val.data
+				ret_val = out_val.data
 			}
 			if (out_val.value == "continue") {
 				runscope.i++
 				continue
 			}
-			if (out_val.value == "brret") {
+			if (out_val.value == "br_ret") {
 				runscope.i += 2
 				continue
 			}
 		}
-		if (cur.value == "Seperator") {
+		if (cur.value == "Separator") {
 			runscope.i++
 			continue
 		}
 		console.log(cur)
 		break
 	}
-	if (retval === null && did_eat === 0) {
+	if (ret_val === null && did_eat === 0) {
 		return
 	}
-	return retval
+	return ret_val
 }
 if (typeof exports == "undefined") {
 	parser = new parsejs();
 	parser.parse(code, parser.state)
 	console.log(parser.state.tok)
-	ctor = tokcall(parser.state.tok)
+	ctor = tok_call(parser.state.tok)
 	ctor;
 } else {
 	exports.parsejs = parsejs

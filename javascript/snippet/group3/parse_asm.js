@@ -25,12 +25,13 @@ parse_obj["83"] = function(ar) {
 	console.log("mrm8 " + af + " " + m2 + " " + rest)
 	n_regs.push(ar[0], ar[1], ar[2], ar[3])
 	dist = ar[2]
-	if (noreg == 15) {
+	let no_reg=0;
+	if (no_reg == 15) {
 		val = ar[3]
 		console.log("cmp [" + map_regflags[af] + "+" + dist + "]," + val)
 		return ar.slice(4)
 	}
-	if (noreg == 29) {
+	if (no_reg == 29) {
 		console.log("sub " + map_regflags[af] + "," + dist)
 		return ar.slice(3)
 	}
