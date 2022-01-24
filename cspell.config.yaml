@@ -78,6 +78,7 @@ words:
   - newcp
   - noframe
   - nthis
+  - nuxt_visitor
   - nvitr
   - nxfn
   - objs

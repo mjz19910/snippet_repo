@@ -1,11 +1,38 @@
 # Group format, described in python3
 ```py3
-def group1(key):
-	# example $_1
-	return f"$_{key.rev_printf("item_%s")}"
-def group2(key):
-	# example ,1_
-	return f",{key.rev_printf("item_%s")}_"
+class PrintfReverse():
+	def __init__():
+		self.m_item_raw=False
+	def set_item_raw(flag):
+		self.m_item_raw=flag
+	def item_printf(format_str):
+		self.m_item_printf_format=format_str
+	def file_printf(format_str):
+		self.m_file_printf_format=format_str
+def group1(key, rev_key:PrintfReverse):
+	# example: $_1
+	# example: $nuxt_visitor
+	rev_key.item_printf("$%s")
+	rev_key.file_printf("item_%s.js")
+	return rev_key.build(key)
+def group2(key, rev_key:PrintfReverse):
+	# example: ,1_
+	rev_key.item_printf(",%s_")
+	rev_key.file_printf("item_%s.js")
+	return rev_key.build(key)
+def group3(key, rev_key:PrintfReverse):
+	# example: parsejs
+	rev_key.set_item_raw(True)
+	rev_key.file_printf("%s.js")
+	return rev_key.build(key)
+def group4(key, rev_key:PrintfReverse):
+	# example: get_node_require
+	# requires: electron DevTools
+	# req example: DevTools opened in an electron app
+	# electron app example: Visual Studio Code
+	rev_key.set_item_raw(True)
+	rev_key.file_printf("%s.js")
+	return rev_key.build(key)
 ```
 # cSpell comments
 ```js
@@ -13,9 +40,13 @@ def group2(key):
 // cspell:disable-next-line
 // cspell:disable
 // cspell:enable
+// spell:disable-next-line
+// spell:disable
+// spell:enable
 
 // this checks the spelling config for changes
 // cspell:enableCompoundWords
+// spell:enableCompoundWords
 ```
 
 # Commit format
