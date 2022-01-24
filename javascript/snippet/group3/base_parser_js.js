@@ -59,6 +59,8 @@ class parser_base {
 		var ptr = 0;
 		var lm = 0;
 		void lm;
+		var a_tok;
+		void a_tok;
 		var stk = state.stk;
 		var stk_a = [];
 		var stk_t = [];
@@ -167,7 +169,7 @@ class parser_base {
 					var nx = s.indexOf("'", ptr + 1);
 					console.log(nx);
 					var inner_str = s.slice(ptr + 1, nx);
-					var res_str = this.switch_parserfn_string_s(inner_str);
+					var res_str = this.switch_parser_fn_string_s(inner_str);
 					state.tok.push({
 						t: "S",
 						r: res_str
@@ -177,7 +179,7 @@ class parser_base {
 				case '"':
 					var nx = s.indexOf('"', ptr + 1);
 					var inner_str = s.slice(ptr + 1, nx);
-					var res_str = this.switch_parserfn_string_d(inner_str);
+					var res_str = this.switch_parser_fn_string_d(inner_str);
 					state.tok.push({
 						t: "SS",
 						r: res_str
@@ -272,16 +274,16 @@ class parser_base {
 						}
 					}
 					if (state.tok.length > 0 & state.tok[state.tok.length - 1] == "=") {
-						result = this.switch_parserfn_regex(s, ptr, state);
+						result = this.switch_parser_fn_regex(s, ptr, state);
 					}
 					if (state.tok.length > 0 & state.tok[state.tok.length - 1] == "!") {
-						result = this.switch_parserfn_regex(s, ptr, state);
+						result = this.switch_parser_fn_regex(s, ptr, state);
 					}
 					if (state.tok.length > 0 & state.tok[state.tok.length - 1] == ",") {
-						result = this.switch_parserfn_regex(s, ptr, state);
+						result = this.switch_parser_fn_regex(s, ptr, state);
 					}
 					if (state.tok.length > 0 & state.tok[state.tok.length - 1] == ":") {
-						result = this.switch_parserfn_regex(s, ptr, state);
+						result = this.switch_parser_fn_regex(s, ptr, state);
 					}
 					if (stk_a.length > sa_st) {
 						if (stk_a[stk_a.length - 1] == f_x) {
@@ -305,7 +307,7 @@ class parser_base {
 							r: c
 						});
 					}
-					var atok = state.tok;
+					a_tok = state.tok;
 					break;
 				case "\\":
 					if (s[ptr + 1] == "\\") {
@@ -333,7 +335,7 @@ class parser_base {
 	toString() {
 		return state.tok;
 	}
-	switch_parserfn_regex(s, ptr, state) {
+	switch_parser_fn_regex(s, ptr, state) {
 		var regex = "";
 		void regex;
 		var char_expr = 0;
@@ -360,7 +362,7 @@ class parser_base {
 		});
 		return ptr + rx_len;
 	}
-	switch_parserfn_string_d(s) {
+	switch_parser_fn_string_d(s) {
 		if (s.indexOf("\\x") == 0) {
 			var sar = s.slice(2).split("\\x");
 			s = sar.map(e=>{
@@ -372,7 +374,7 @@ class parser_base {
 		console.log(s);
 		return s;
 	}
-	switch_parserfn_string_s(s){
+	switch_parser_fn_string_s(s) {
 		return s;
 	}
 }
@@ -403,7 +405,7 @@ function run_code() {
 		p("yield");
 		ts.keywords = kwo;
 		ts.char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_$";
-		target.switch_parserfn_string_s = function(s) {
+		target.switch_parser_fn_string_s = function(s) {
 			return s;
 		}
 
