@@ -10,9 +10,9 @@ __cur.f = function() {
 		x.sarr = [];
 		x.ne = [];
 		function __add_set() {
-			for(c of Object.keys(x.o)) {
+			for (c of Object.keys(x.o)) {
 				let v = x.o[c];
-				if(!x.st.has(v)) {
+				if (!x.st.has(v)) {
 					x.st.add(v);
 					x.sarr.push(v);
 					x.ne.push(v);
@@ -21,9 +21,9 @@ __cur.f = function() {
 		}
 		{
 			let a = [];
-			let cca = (e => e.charCodeAt(0));
+			let cca = (e=>e.charCodeAt(0));
 			let iter_chars = function(a, s) {
-				for(let i = cca(s[0]); i < cca(s[1]); i++) {
+				for (let i = cca(s[0]); i < cca(s[1]); i++) {
 					a.push(String.fromCharCode(i));
 				}
 			};
@@ -112,15 +112,15 @@ __cur.f = function() {
 			x(fn, bp_str);
 			try {
 				return fn(...args);
-			} catch(e) {
+			} catch (e) {
 				console.log(e);
 				return __nf;
 			}
 		}
 		let use_functions = false;
-		if(use_functions) {
-			__run(() => 0, 'test', 1);
-			__run_noisy(() => 0, 'test', 1);
+		if (use_functions) {
+			__run(()=>0, 'test', 1);
+			__run_noisy(()=>0, 'test', 1);
 			__add_set();
 		}
 		break x;
@@ -134,11 +134,11 @@ __cur.f = function() {
 	delete ex.constructor;
 	delete ret.toString;
 	delete ret.u;
-	for(let i in ret) {
+	for (let i in ret) {
 		ex[i] = ret[i];
 	}
 	return ex;
-};
+}
 __cur.f = function() {
 	{
 		let tfn = (function() {
@@ -146,35 +146,35 @@ __cur.f = function() {
 			ast = [];
 			lps = [[], []];
 			alens = [];
-			sarr = [() => 76671 + Math.floor(Math.random() * 1024), e => Math.random() * 1];
-			arr = sarr.slice().map(e => e());
+			sarr = [()=>76671 + Math.floor(Math.random() * 1024), e=>Math.random() * 1];
+			arr = sarr.slice().map(e=>e());
 			function iter_end() {
-				for(let dc, i = 0; lps.length < 12; i += 1) {
+				for (let dc, i = 0; lps.length < 12; i += 1) {
 					let a, cp, sl, de = false;
 					let ea = [1];
 					dc = 0;
 					try {
-						while(1) {
+						while (1) {
 							lc++;
-							[a, b] = arr;
+							[a,b] = arr;
 							al = arr.length;
-							let nx = sarr.slice().map(e => e());
+							let nx = sarr.slice().map(e=>e());
 							arr[0] = nx[0];
 							arr[1] = nx[1];
 							arr.length = Math.floor(arr[0] * arr[1]);
-							if(!de) {
+							if (!de) {
 								sl = (arr.length);
 								de = true;
 							}
-							; for(let j = 0; j < arr.length; j++) {
+							for (let j = 0; j < arr.length; j++) {
 								arr[j] ??= 1;
 							}
-							; cp = arr.slice();
+							cp = arr.slice();
 							let c2 = ea.slice();
 							ea.length = 0;
 							let tlen = c2.length * 2;
-							for(let j = 0, oe = 0; j < tlen; j++) {
-								if(j < c2.length) {
+							for (let j = 0, oe = 0; j < tlen; j++) {
+								if (j < c2.length) {
 									ea[j] = c2[j];
 								}
 								ea[j] = c2[oe++];
@@ -182,10 +182,10 @@ __cur.f = function() {
 							let eas = ea.slice(0, Math.floor(Math.random() * (ea.length / 8)) - 1);
 							dcl = cp.length + ea.length;
 							a = arr.push(...cp, ...eas);
-							if(lps.length > 8192) {
+							if (lps.length > 8192) {
 								return ['oom', arr.length];
 							}
-							; arc = (() => class extends Array {
+							arc = (()=>class extends Array {
 							}
 							)();
 							Object.setPrototypeOf(arc, Array);
@@ -214,5 +214,5 @@ __cur.f = function() {
 		console.log(...lps);
 		console.log(...ret);
 	}
-};
+}
 __cur.f();
