@@ -6,7 +6,7 @@ function x() {
 	var idm_mod = fmar[0];
 	var idm_imp = fmar[2];
 	var fnm = fnb.replace(/[{}]/g, ""), idx_load;
-	if(fnm.slice(fnm.indexOf(idm_mod + ".exports=") + (idm_mod + ".exports=").length).indexOf(idm_imp) == 0) {
+	if (fnm.slice(fnm.indexOf(idm_mod + ".exports=") + (idm_mod + ".exports=").length).indexOf(idm_imp) == 0) {
 		idx_load = fnm.slice(11).replace(/[()]/g, "");
 	}
 	var fstr = ars[idx_load].toString();
@@ -17,14 +17,14 @@ function x() {
 	var id_imp = argsar[2];
 	var fnc = fnb.replace(/[{}]/g, "");
 	var outar = [];
-	fnc.split("()"[0]).map(e => e.split("()"[1])).forEach(e => e.forEach(e => outar.push(e)));
+	fnc.split("()"[0]).map(e=>e.split("()"[1])).forEach(e=>e.forEach(e=>outar.push(e)));
 	var outar2 = outar;
 	outar = [];
-	outar2.map(e => e.split(",")).forEach(e => e.forEach(e => outar.push(e)));
+	outar2.map(e=>e.split(",")).forEach(e=>e.forEach(e=>outar.push(e)));
 	let sk_val = 0;
 	// cspell:ignore APESTER
 	let custom_string = "window.APESTER.load";
-	if(outar.indexOf(custom_string) > 0) {
+	if (outar.indexOf(custom_string) > 0) {
 		sk_val = 1;
 	}
 	return {
