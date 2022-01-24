@@ -2,9 +2,9 @@
 {
 	function exclude_from(arr, remove_seq_vec) {
 		let ret = [];
-		for(let i = 0; i < arr.length; i++) {
+		for (let i = 0; i < arr.length; i++) {
 			let cur = arr[i];
-			if(!remove_seq_vec.includes(cur)) {
+			if (!remove_seq_vec.includes(cur)) {
 				ret.push(cur);
 			}
 		}
@@ -23,9 +23,9 @@
 //perl<is_a>
 {
 	//has same js_context
-	is_context = function(a, b) {
+	function is_context(a, b) {
 		return root_proto.run(a) === root_proto.run(b);
-	};
+	}
 }
 //js<is_context>
 {
@@ -34,30 +34,31 @@
 		"use strict";
 		let x;
 		x: {
-			if(window.root_proto) {
+			if (window.root_proto) {
 				break x;
 			}
 			x = class root_proto {
 				static run() {
-					if(!this) {
+					if (!this) {
 						throw new Error("Need to call with class");
 					}
-					if(this instanceof root_proto) {
-						if(a == undefined) {
+					if (this instanceof root_proto) {
+						if (a == undefined) {
 							return this.root_s;
 						}
 						let t = a + '';
-						if(t === '[object Object]') {
+						if (t === '[object Object]') {
 							return a;
 						} else {
 							return this.run(Object.getPrototypeOf(a), a);
 						}
-						if(p)
+						if (p)
 							return p;
 					}
 					throw Error("called with wrong type");
 				}
-			};
+			}
+			;
 			x.null_s = Symbol('null');
 		}
 		window.root_proto = x;
@@ -66,18 +67,18 @@
 }
 //js<window.root_proto>
 {
-	if(Window.all === undefined) {
+	if (Window.all === undefined) {
 		Window.all = Object.entries(window);
 	}
-	if(Window.all.length !== Object.keys(window).length) {
+	if (Window.all.length !== Object.keys(window).length) {
 		console.log('re_entry');
 		let d = Date.now();
 		let c = d - Date.now();
 		let cc = 0;
-		while(c < 1000) {
+		while (c < 1000) {
 			console.log(c);
 			c = Date.now() - d;
-			if(cc > 1000000) {
+			if (cc > 1000000) {
 				console.log('b');
 				break;
 			}
@@ -86,32 +87,32 @@
 	}
 	p = function(...e) {
 		console.log(...e);
-	};
+	}
 	let undef_keys = [];
 	let null_keys = [];
 	let q_keys = [];
-	for(q of Window.all) {
+	for (q of Window.all) {
 		let i = q[1];
-		if(i === undefined) {
+		if (i === undefined) {
 			undef_keys.push(q[0]);
 			continue;
 		}
-		if(i === null) {
+		if (i === null) {
 			null_keys.push(q[0]);
 			continue;
 		}
 		let len = Object.keys(Object.getPrototypeOf(i));
-		if(i instanceof Function) {
-			if(i.prototype) {
+		if (i instanceof Function) {
+			if (i.prototype) {
 				let fp = Object.keys(i.prototype);
-				if(fp.length == 0) {
+				if (fp.length == 0) {
 					let j = Object.getPrototypeOf(i.prototype);
 				} else {
 					console.log(fp.length);
 					try {
 						new i;
 						console.log('cstruct', q[0]);
-					} catch(e) {
+					} catch (e) {
 						p('cres', q[0], len, e.name);
 					}
 					p('fp', fp);
@@ -121,7 +122,7 @@
 			q_keys.push([q[0], Object.getPrototypeOf(i) === Function.prototype]);
 			continue;
 		}
-		if(i[Symbol.toPrimitive]) {
+		if (i[Symbol.toPrimitive]) {
 			console.log(i);
 		}
 
