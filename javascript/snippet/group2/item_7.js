@@ -50,14 +50,14 @@ function main() {
 	'use strict';
 	class Logger {
 		info_log_value(obj) {
-			if(obj.url) {
+			if (obj.url) {
 				console.info(obj.url, obj.result);
 				return;
 			}
 			console.info(obj.result);
 		}
 		info_object(obj) {
-			if(obj.filter) {
+			if (obj.filter) {
 				obj.result = obj.filter(obj.msg);
 				delete obj.msg;
 				this.info_log_value(obj);
@@ -68,7 +68,7 @@ function main() {
 			this.info_log_value(obj);
 		}
 		info(in_obj) {
-			if(typeof in_obj === 'object') {
+			if (typeof in_obj === 'object') {
 				this.info_object(in_obj);
 			}
 		}
@@ -90,7 +90,7 @@ function main() {
 				constructor() {
 					this.on_parse_type = {};
 					this.on_parse_rust_type_discriminant = new Map;
-					this.on_parse_type['rust block'] = (str, index) => this.parse_rust_cont(str, index);
+					this.on_parse_type['rust block'] = (str,index)=>this.parse_rust_cont(str, index);
 					let obj = {
 						start: {
 							type: 'string-find',
@@ -102,7 +102,7 @@ function main() {
 						},
 						on_hit: {
 							type: 'rest',
-							handler: (str, index) => this.parse_unix_file(str, index)
+							handler: (str,index)=>this.parse_unix_file(str, index)
 						}
 					};
 					this.on_parse_rust_type_discriminant.set('unix hash bang', obj);
@@ -118,10 +118,10 @@ function main() {
 				strip_tab_padding(str) {
 					let at = str.indexOf("first_class_comment_info pad_line");
 					let sv2 = ['', ''];
-					for(let i = 0; i < 32; i++) {
+					for (let i = 0; i < 32; i++) {
 						sv2[0] = sv2[1];
 						sv2[1] = str[at - i];
-						if(sv2[1] === '/' && sv2[0] === '/') {
+						if (sv2[1] === '/' && sv2[0] === '/') {
 							at -= i;
 							break;
 						}
@@ -129,37 +129,37 @@ function main() {
 					let tab_size = 4;
 					let char_len = at - str.lastIndexOf('\n', at) - 1;
 					let ws_start = str.slice(at - char_len, at);
-					let indent_len = ws_start.split('').reduce((a, b) => {
+					let indent_len = ws_start.split('').reduce((a,b)=>{
 						console.log(a, b);
-						if(b === '\t')
+						if (b === '\t')
 							b = tab_size;
-						if(b === ' ')
+						if (b === ' ')
 							b = 1;
 						let sum = a + b;
 						return sum;
 					}
-						, 0);
-					let no_indent = str.split('\n').map(e => {
+					, 0);
+					let no_indent = str.split('\n').map(e=>{
 						let c_indent = indent_len;
 						let sk = 0;
-						if(e === '') {
+						if (e === '') {
 							return e;
 						}
-						for(; ;) {
-							if(c_indent <= 0) {
+						for (; ; ) {
+							if (c_indent <= 0) {
 								return e.slice(sk);
 							}
-							if(e[sk] === '\t') {
+							if (e[sk] === '\t') {
 								c_indent -= tab_size;
 								sk++;
 								continue;
 							}
-							if(e[sk] === ' ') {
+							if (e[sk] === ' ') {
 								sk++;
 								c_indent--;
 								continue;
 							}
-							if(c_indent > 0) {
+							if (c_indent > 0) {
 								throw new Error('bad ' + c_indent + ' ' + e[sk]);
 							}
 						}
@@ -181,11 +181,11 @@ function main() {
 			let parser = new FirstClassCommentParser;
 			let stripped_str = parser.strip_tab_padding(str);
 			let idx = 0;
-			if(stripped_str[0] === '\n') {
+			if (stripped_str[0] === '\n') {
 				idx++;
 				let comment = stripped_str.slice(idx, stripped_str.indexOf('\n', idx));
 				console.log([comment]);
-				if(comment[0] == '/' && comment[1] == '/') {
+				if (comment[0] == '/' && comment[1] == '/') {
 					idx += 2;
 					let value = parser.get_ss_comment(comment);
 					idx += value.length + 1;
@@ -197,6 +197,7 @@ function main() {
 		}
 	}
 	let parse_state = new State;
+	// cspell:ignore template_varargs
 	logger.info({
 		filter: parse_state.parse_first_class_comment.bind(parse_state),
 		url: 'pg132/The-Modding-Tree/evolution',
