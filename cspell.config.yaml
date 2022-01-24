@@ -36,6 +36,7 @@ words:
   - doublequote
   - dslen
   - ducdat
+  - dups
   - dvdbouncinglogo
   - dvdlogo
   - Edef
@@ -52,6 +53,7 @@ words:
   - fnname
   - found_objs
   - foward
+  - froms
   - fstr
   - gameiframe
   - genfunc
@@ -91,6 +93,7 @@ words:
   - probj
   - protos
   - punct
+  - reqs
   - resa
   - retcp
   - retpr
