@@ -78,7 +78,8 @@ function main() {
 			}
 			process() {
 				this.count = 0;
-				let state={};
+				let state = {};
+				void state;
 				let range_f64 = new Float64Array(3);
 				let count = 0;
 				let start_value = this.result_vec[this.start_index];
@@ -91,8 +92,8 @@ function main() {
 				for (; count < 32; ) {
 					range_f64[0]++;
 					let min_diff = this.next_larger_perf_time(range_f64);
-					if(min_diff > range_f64[2] && min_diff < overflow_result){
-						console.log('strange',min_diff,min_diff - start_value);
+					if (min_diff > range_f64[2] && min_diff < overflow_result) {
+						console.log('strange', min_diff, min_diff - start_value);
 					}
 					if (min_diff >= range_f64[2]) {
 						continue;
@@ -247,6 +248,7 @@ function main() {
 		set_delay(delay) {
 			this.delay = delay;
 		}
+		//cspell:words set_handler_fptr fptr
 		set_handler_fptr(type, fptr) {
 			this.handler_map.set(type, fptr);
 		}
@@ -311,7 +313,7 @@ function main() {
 			this.worker_url = window.URL.createObjectURL(blob);
 			this.inner = new Worker(this.worker_url);
 			this.inner.onmessage = this.message_event_handler.bind(this);
-			window.__worker=this.inner;
+			window.__worker = this.inner;
 			this.handler_map = new Map;
 		}
 		on_response(user_message) {
