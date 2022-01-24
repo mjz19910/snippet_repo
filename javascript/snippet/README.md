@@ -71,8 +71,8 @@ syntax -u1 (...(1))
 	...(1) is -u1 ((...) as -ty (inner token tree))
 syntax -u1 (syntax -u0 (...(1)))
 	end
-syntax -u1 ((...(1)) as @word)
-	end
+syntax -u1 (...(1))
+	...(1) is (char) (word)
 syntax -u1 (...(1)) (as) (...(2))
 	...(1) is (list type)
 	...(2) is (syntax type)
