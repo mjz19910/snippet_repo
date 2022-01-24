@@ -1,3 +1,4 @@
+// cspell:words myhtml rcdata rawtext
 `
 // ***********
     // for ends
@@ -162,7 +163,7 @@ async function run() {
 		}
 		return res_arr;
 	}
-	stp = ["https://domain.glass/atl14s", "79", "-in-f31.1e100.net"];
+	stp = ["https", ":", "//", "domain.glass", "/", "atl,", "14", "s", "79", "-", "in", "-", "f", "31", ".", "1e100.net"];
 
 	url_arr ??= make_parr();
 
@@ -462,8 +463,9 @@ async function run() {
 	dp.token_result_arr = [];
 
 	let state = {};
+	void state;
 
-	for (let does_log=false; ; ) {
+	for (let does_log = false; ; ) {
 		let token_item = dp.mc.next_token();
 		if (dp.mc.index >= dp.mc.source.length) {
 			break;
@@ -472,16 +474,17 @@ async function run() {
 			console.log('unk', JSON.stringify(dp.mc.get(0)));
 			break;
 		}
-		let ptok = dp.mc.printable(token_item);
+		let printable_token = dp.mc.printable(token_item);
 		let s_obj = dp.mc.static_state_obj;
 		let sm = dp.mc.state_map;
+		void sm;
 		let sr = dp.mc.state_map_rev;
 		let cur_st = dp.mc.tokenize_state;
-		if(s_obj.TAG_OPEN == cur_st && ptok[1] === 'script'){
+		if (s_obj.TAG_OPEN == cur_st && printable_token[1] === 'script') {
 			dp.mc.index = dp.mc.source.indexOf('</script>') + 1;
 		}
-		if(does_log){
-			console.log('tok&state', cur_st,sr.get(cur_st), ptok);
+		if (does_log) {
+			console.log('tok&state', cur_st, sr.get(cur_st), printable_token);
 		}
 		token_item[2] = dp.mc.index;
 		dp.token_result_arr.push(token_item);
