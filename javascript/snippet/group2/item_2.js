@@ -1,13 +1,13 @@
 class FakeJavascriptObject {
-	constructor(vm){
-		this.vm=vm;
+	constructor(vm) {
+		this.vm = vm;
 	}
-	get_field(key){
-		if(key==='[[Realm]]'){
+	get_field(key) {
+		if (key === '[[Realm]]') {
 			return this.vm.realm;
 		}
 	}
-	todo(...var_arg){
+	todo(...var_arg) {
 		this.vm.todo(...var_arg);
 	}
 }
@@ -46,7 +46,7 @@ class RustBuilderTrait {
 			}
 		}
 	}
-	build_from_item(item){
+	build_from_item(item) {
 		this.children.push(item);
 	}
 	build() {
@@ -90,7 +90,7 @@ class RustExportBuilder extends RustBuilderTrait {
 		this.parent = null;
 		this.build_from_item({
 			...this.export_item,
-			export_key:this.export_as_value
+			export_key: this.export_as_value
 		});
 		return super.build();
 	}
@@ -124,9 +124,8 @@ class RustCrateBuilder extends RustBuilderTrait {
 }
 class FakeRealm {
 	//[[HostDefined]]
-	fake_host_defined_data = {}
-	get_field(key){
-		if(key === '[[HostDefined]]'){
+	fake_host_defined_data = {}get_field(key) {
+		if (key === '[[HostDefined]]') {
 			return this.fake_host_defined_data;
 		}
 	}
@@ -146,7 +145,7 @@ class RustFakeVM {
 	set_host_intrinsic(value) {
 		this.intrinsic_data.host = value;
 	}
-	todo(){
+	todo() {
 		console.log(new Error('todo'));
 	}
 }
@@ -207,4 +206,3 @@ let std_crate = std_crate_builder.build();
 rust_root_builder.add_crate_child(std_crate);
 rust_vm.active_root = rust_root_builder.build();
 rust_vm;
-//# sourceURL=snippet:///%2C2_
