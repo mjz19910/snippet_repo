@@ -4,7 +4,7 @@ class RustProcess {
 		this.callable = value;
 	}
 	run() {
-		if(this.callable) {
+		if (this.callable) {
 			this.callable();
 		}
 	}
@@ -19,10 +19,10 @@ class RustStdLibrary {
 		this.processes.push(new_process);
 	}
 	poll_processes() {
-		if(!this.processes.length)
+		if (!this.processes.length)
 			return 0;
-		for(let i = 0; i < 128; i++) {
-			if(!this.processes.length)
+		for (let i = 0; i < 128; i++) {
+			if (!this.processes.length)
 				return i;
 			let current_process = this.processes.shift();
 			current_process.run();
@@ -51,18 +51,18 @@ class RustActor {
 		return actor;
 	}
 	process_event(target_actor, transmitted_actor, activator, event_count) {
-		if(this.callable) {
+		if (this.callable) {
 			this.callable(target_actor, transmitted_actor, activator, event_count);
 		}
-		if(transmitted_actor.continuation) {
+		if (transmitted_actor.continuation) {
 			let result = transmitted_actor.compute_result();
 			let actor = transmitted_actor.continuation.then_to;
-			std_lib.start_process(() => {
+			std_lib.start_process(()=>{
 				actor.process_event(actor, result, activator, event_count + 1);
 			}
 			);
 		}
-		if(activator.is_root()) {
+		if (activator.is_root()) {
 			console.log('actor event', target_actor, transmitted_actor, activator, event_count);
 		}
 	}
@@ -84,22 +84,22 @@ let comp_sci = new RustComputerScience;
 	}
 	let item_data = {
 		url: "https://en.wikipedia.org/wiki/Actor_model",
-		uses: ["message", "cell", "optional semaphore", "activator",],
-		requires: ["start process",],
+		uses: ["message", "cell", "optional semaphore", "activator", ],
+		requires: ["start process", ],
 		default_actors: {
 			print: RustActor.fromCallable(function(_f, transmitted_actor, _a, _ec) {
 				std_lib.print(transmitted_actor.apply_value);
 			})
 		},
 		can: [//
-			"send message", //
-			"create actor", //
-			"create activator", //
+		"send message", //
+		"create actor", //
+		"create activator", //
 		],
 		code_snippets: [//
-			"(apply: message (then-to: continuation))", //
-			"<f (apply: x (then-to: (X(y) (1 + y)) )) a ec>", //
-			"<print (apply: 3) a 0>", //
+		"(apply: message (then-to: continuation))", //
+		"<f (apply: x (then-to: (X(y) (1 + y)) )) a ec>", //
+		"<print (apply: 3) a 0>", //
 		],
 		interface: new ActorInterface,
 		interface_type: {
@@ -111,11 +111,11 @@ let comp_sci = new RustComputerScience;
 		creates: ["actor", "activator"],
 		sends: ["message"],
 		tags: [//
-			"universal primitive of concurrent computation", "fork actor", //
-			"continuation is the actor to which another actor can be sent", //
+		"universal primitive of concurrent computation", "fork actor", //
+		"continuation is the actor to which another actor can be sent", //
 		]
 	};
-	let item = new RustModelDescription("Actor model", item_data);
+	let item = new RustModelDescription("Actor model",item_data);
 	comp_sci.addModel(item);
 }
 comp_sci.model_description_vec[0].data.default_actors.print.callable(null, {
