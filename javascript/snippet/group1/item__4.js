@@ -1,8 +1,8 @@
-let dddbg=function(trg,str){
+let dbg_create = function(trg, str) {
 	undebug(trg);
-	debug(trg,str.replace("//##INJECT","dddbg="+dddbg.toString()));
+	debug(trg, str.replace("//##INJECT", "dbg_create=" + dbg_create.toString()));
 };
-dddbg(EventTarget.prototype.addEventListener,`x:{
+dbg_create(EventTarget.prototype.addEventListener, `x:{
 	if(window.ev===undefined){
 		ev=[];1;
 		//##INJECT
@@ -54,7 +54,7 @@ dddbg(EventTarget.prototype.addEventListener,`x:{
 		console.log(e);
 	}
 0;}`);
-dddbg(Promise,`
+dbg_create(Promise, `
 	if(window.ev===undefined){ev=[]};
 	ev.cur='Promise<constructor>';
 	ev.next='Promise<Executor>';
@@ -66,7 +66,7 @@ dddbg(Promise,`
 	}
 	debug(arguments[0],'ev.cur=ev.next;ev.next=null;ev.push([ev.cur,this,...arguments]);0');0;
 `);
-dddbg(Function.prototype.call,`
+dbg_create(Function.prototype.call, `
 	if(typeof E==='function'){
 		do_Ebp();
 		console.log('Edef');
