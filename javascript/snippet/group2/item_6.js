@@ -434,7 +434,7 @@ async function kernel_main() {
 					break ib;
 				}
 				// too slow;
-				if(temp.pointGen.div(getPointGen()).toNumber() === 1){
+				if (temp.pointGen.div(getPointGen()).toNumber() === 1) {
 					break ib;
 				}
 				return 'done';
