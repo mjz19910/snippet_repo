@@ -520,7 +520,7 @@ var parsejs = class {
 				break
 			case ":":
 				if (state.pt == 4) {
-					state.tok[state.tok.length - 1].eatnext = true
+					state.tok[state.tok.length - 1].eat_next = true
 					break
 				}
 				state.tok.push({
@@ -726,30 +726,30 @@ var parsejs = class {
 	}
 }
 keyword_executers = {}
-keyword_executers.var = function(runscope) {
-	var tokens = runscope.tok
-	var cur = tokens[runscope.i + 1]
-	var targ_s;
+keyword_executers.var = function(run_scope) {
+	var tokens = run_scope.tok
+	var cur = tokens[run_scope.i + 1]
+	var t_arg_s;
 	if (cur.value == "ident") {
-		targ_s = cur.data
-		runscope.i++;
-		//parseing ident;;;
-		cur = tokens[runscope.i + 1]
+		t_arg_s = cur.data
+		run_scope.i++;
+		//parsing ident;;;
+		cur = tokens[run_scope.i + 1]
 	} else {
 		console.log("unexpected", cur)
 	}
-	if (cur.value == "Assignment" && tokens[runscope.i + 2].value == "bracket") {
+	if (cur.value == "Assignment" && tokens[run_scope.i + 2].value == "bracket") {
 		var new_scope = {
 			my: [],
 			up: null,
-			tok: tokens[runscope.i + 2].body,
+			tok: tokens[run_scope.i + 2].body,
 			i: 0
 		}
 		bracket_run(new_scope)
-		runscope.my[targ_s] = new_scope.my
-		runscope.i++
+		run_scope.my[t_arg_s] = new_scope.my
+		run_scope.i++
 		return {
-			value: "brret"
+			value: "br_ret"
 		}
 
 	}
@@ -758,18 +758,18 @@ keyword_executers.var = function(runscope) {
 	}
 
 }
-bracket_run = function(runscope) {
-	var tokens = runscope.tok
-	var cur = tokens[runscope.i]
+bracket_run = function(run_scope) {
+	var tokens = run_scope.tok
+	var cur = tokens[run_scope.i]
 	while (cur) {
 		if (cur.value == "primitive" && cur.type == "String") {
-			runscope.my.push(eval('"' + cur.data + '"'))
-			runscope.i++
-			cur = tokens[runscope.i]
+			run_scope.my.push(eval('"' + cur.data + '"'))
+			run_scope.i++
+			cur = tokens[run_scope.i]
 		}
 		if (cur && cur.value == "Operator" && cur.data == ",") {
-			runscope.i++
-			cur = tokens[runscope.i]
+			run_scope.i++
+			cur = tokens[run_scope.i]
 			continue
 		}
 		break
@@ -777,7 +777,7 @@ bracket_run = function(runscope) {
 
 }
 function tok_call(tokens) {
-	var runscope = {
+	var run_scope = {
 		my: {},
 		up: window,
 		tok: tokens,
@@ -789,7 +789,7 @@ function tok_call(tokens) {
 	var ret_val = null
 	var did_ret = false;
 	while (did_ret === false) {
-		cur = tokens[runscope.i];
+		cur = tokens[run_scope.i];
 		if (cur.value == "Function") {
 			arg_int = cur.head.slice(1, cur.head.length - 1);
 			function fn(...a) {
@@ -799,26 +799,26 @@ function tok_call(tokens) {
 				fn.call(null, ...a)
 			}
 			fn.call = function(tv, ...args) {
-				runscope.my.this = tv
+				run_scope.my.this = tv
 			}
 			exec_drop_list.push(fn)
 		}
 		if (cur.value == "keyword" && keyword_executers.hasOwnProperty(cur.data)) {
-			var out_val = keyword_executers[cur.data](runscope)
+			var out_val = keyword_executers[cur.data](run_scope)
 			if (out_val.value == "return") {
 				ret_val = out_val.data
 			}
 			if (out_val.value == "continue") {
-				runscope.i++
+				run_scope.i++
 				continue
 			}
 			if (out_val.value == "br_ret") {
-				runscope.i += 2
+				run_scope.i += 2
 				continue
 			}
 		}
 		if (cur.value == "Separator") {
-			runscope.i++
+			run_scope.i++
 			continue
 		}
 		console.log(cur)
