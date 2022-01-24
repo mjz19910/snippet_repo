@@ -58,6 +58,8 @@ G{group number as int}: {description}
 - G{int}
 - README 
 - JSSnippet
+- JSSnipReadme
+- JSSnipGroup{int}
 - CommitDSL
 - Yak
 - SnippetREADME
