@@ -97,7 +97,6 @@ async function x() {
 					continue;
 				}
 				append_from_childNodes(obj, cur_value_vec);
-				// obj[i.nodeName] = i.childNodes;
 			}
 			return obj;
 		}
