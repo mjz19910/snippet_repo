@@ -155,67 +155,6 @@ function main() {
 		cur.funcs=fnlist;
 		cur.names=fnname;
 	}
-	cur.n = new CustomInputMatcher(/https:\/\/ducdat0507.github.io/,()=>location.origin);
-	cur.f = async function() {
-		let mc = new MessageChannel;
-		let msg_clk = 'CLOCK_RUN';
-		let clk_priv = {
-			clk_id: []
-		};
-		mc.port1.onmessage = function(e) {
-			switch (e.data.msg_type) {
-			case msg_clk:
-				let ev = clk_priv.clk_id;
-				let f = ev[e.data.fn];
-				f();
-				ev.splice(e.data.fn, 1);
-				break;
-			default:
-				console.log('unk_msg', e.data)
-			}
-		}
-		let clk = {
-			t: function(e) {
-				setTimeout(e)
-			},
-			r: function(e) {
-				let ev = clk_priv.clk_id;
-				let id = ev.length;
-				ev.push(e);
-				mc.port2.postMessage({
-					msg_type: msg_clk,
-					fn: id
-				})
-			}
-		};
-		let lim = Math.max(6000, 10 * 10000 + 2000 - player.aspTime.buyables[21].toNumber());
-		for (let i = 0; ; ) {
-			let lb = layers.aspTime.buyables[22];
-			let idx = player.aspTime.buyables[22].toNumber() + 1
-			  , sc = lb.cost(new Decimal(idx))
-			  , ec = lb.cost(new Decimal(idx + 1))
-			  , r = ec.sub(sc);
-			let edc = Math.floor(r.toNumber() * 20);
-			for (let j = 0; j < edc; j++) {
-				buyBuyable('aspTime', 21)
-			}
-			i += edc;
-			let d = 0;
-			for (; d < 30; d++) {
-				let am22 = player.aspTime.buyables[22];
-				let am21 = player.aspTime.buyables[21];
-				let cs22 = lb.cost(am22);
-				buyBuyable('aspTime', 22);
-				if (am21.lt(cs22)) {
-					break;
-				}
-			}
-			await new Promise(clk.r);
-			if (player.aspTime.points.lt(layers.aspTime.buyables[21].cost(player.aspTime.buyables[21]))) {
-				break;
-			}
-		}
-	}
 	cur.n = '1000mines.com';
 	{
 		cur.f = function() {
