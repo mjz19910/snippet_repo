@@ -1,10 +1,10 @@
 /**
  * @author mjz19910
  * @copyright MIT
- * @description read the library-ms xml format into a json compatible format
- * generally created by iterating over the xml tree, any time
- * a duplicate key is found on the object, change that value to an array of
- * the possible values that we found
+ * @description Read the library-ms xml format into a json compatible format
+ * created by iterating over the xml tree.
+ * When a duplicate tag is found in the xml tree, convert the value corresponding to
+ * that tag into an array
  */
 async function x() {
 	let r;
