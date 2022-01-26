@@ -1,3 +1,7 @@
+/* spell:words
+--- version_list item 2 ---
+v1 (loc-f): snippet_repo_v2/javascript/final/__ret_do_cur_debugApi.js
+*/
 function main() {
 	var fnlist = [];
 	var fnname = [];
