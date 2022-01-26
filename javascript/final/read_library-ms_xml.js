@@ -8,8 +8,12 @@
  */
 async function x() {
 	let r;
-	//r=await fetch("Documents.library-ms");
-	r = await fetch("Workspaces.library-ms");
+	const open_workspace=true;
+	if(open_workspace){
+		r = await fetch("Workspaces.library-ms");
+	}else{
+		r = await fetch("Documents.library-ms");
+	}
 	let text = await r.text();
 	let dom_parser = new DOMParser;
 	xml_document = dom_parser.parseFromString(text, "application/xml");
