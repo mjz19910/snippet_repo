@@ -155,12 +155,6 @@ function main() {
 		cur.funcs=fnlist;
 		cur.names=fnname;
 	}
-	cur.n = 'history_length_logger';
-	cur.f = function(){
-		name=history.length.toString();
-		console.log(name,history.length);
-		history.go(-26);
-	}
 	cur.n = 'js_wasm_importing';
 	cur.f = function() {
 		/*location.origin==="https://wasmbyexample.dev/"*/
