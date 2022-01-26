@@ -1,7 +1,4 @@
-const newLocal = function() {
-	console.log('run');
-};
-function main(window) {
+function main() {
 	var fnlist = [];
 	var fnname = [];
 	{
@@ -309,7 +306,6 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 	}
 	cur.n = 'js_lex_with_regexp';
 	cur.f = function() {
-		//let _function = newLocal
 		if (window.debugApi === undefined) {
 			debugApi = new DebugAPI;
 		}
@@ -2759,5 +2755,4 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 	return {...cur,_class:cur__class};
 	//# sourceURL=snippet:///%24_2
 }
-const window_type={}
-window.__ret=main(window_type);
+window.__ret=main();
