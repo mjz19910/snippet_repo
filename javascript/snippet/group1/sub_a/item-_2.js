@@ -1,4 +1,4 @@
-/* spell:words
+/* spell:words Copypasta deinit
 --- version_list item 2 ---
 v1 (old-o): snippet_repo_v2/javascript/final/__ret_do_cur_debugApi.js
 v2 (cur-c): snippet_repo_v2/javascript/snippet/group1/sub_a/item-_2.js
@@ -40,7 +40,7 @@ write :: (package: *Create_Package, filename: string) -> bool {
 	// Maybe later there will be an endian flag here.
 	put(*header, cast(u32) 0);
 
-	// Offset to the tabel of contents, from the start of the file
+	// Offset to the table of contents, from the start of the file
 	// (64-bit unsigned integer). We fill in 0 for now, and we will
 	// back-patch it later if we are going to write as we go.
 
