@@ -1,3 +1,7 @@
+/* spell:words makiki99
+--- version_list item 2 ---
+v1 (spl-f): snippet_repo_v2/javascript/final/makiki99_prestige-frame.js
+*/
 function main() {
 	var fnlist = [];
 	var fnname = [];

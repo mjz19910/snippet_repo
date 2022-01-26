@@ -1,3 +1,7 @@
+/* spell:words
+--- version_list item 2 ---
+v1 (spl-f): snippet_repo_v2/javascript/final/yet_another_merge_game.js
+*/
 function main() {
 	var fnlist = [];
 	var fnname = [];

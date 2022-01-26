@@ -1,3 +1,7 @@
+/* spell:words debug_js_call_konggames
+--- version_list item 2 ---
+v1 (spl-f): snippet_repo_v2/javascript/final/debug_js_call_konggames.js
+*/
 function main() {
 	var fnlist = [];
 	var fnname = [];
@@ -155,7 +159,6 @@ function main() {
 		cur.funcs=fnlist;
 		cur.names=fnname;
 	}
-	/* cspell: disable-next-line */
 	cur.n = "debug_js_call_konggames"
 	cur.f = function() {
 		let raw_str = function(d, ...s) {
