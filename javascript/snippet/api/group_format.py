@@ -1,59 +1,95 @@
+from parse import parse
+import re
+
 class RevPrintf():
-	def __init__(self):
-		self.m_item_raw=False
-	def set_item_raw(self,flag):
-		self.m_item_raw=flag
-	def item_printf(self,format_str):
-		self.m_item_printf_format=format_str
-	def file_printf(self,format_str):
-		self.m_file_printf_format=format_str
+	def __init__(self, rev_format_str):
+		self.rev_format_str=rev_format_str
 class RevMatch():
-	def item_printf(self,format_str):
-		self.format_str=format_str
+	def set_conversion_rev_printf(
+		self,
+		snippet_name_format_str,
+		filename_format_str
+	):
+		self.snippet_name_format_str=snippet_name_format_str
+		self.filename_format_str=filename_format_str
 	def match(self,raw_regexp):
 		self.regexp_match=raw_regexp
-class RevExact():
-	def __init__(self):
-		pass
-def group1(key, rev_key:RevPrintf):
+class SnippetFilenameGenerator():
+	is_raw=False
+	def set_conversion(
+		self, snippet_name=None, filename=None, *,
+		raw=False, name_filter=None, append=None
+		):
+		self.append=append
+		self.name_filter=name_filter
+		self.is_raw=raw
+		self.snippet_name=snippet_name
+		self.filename=filename
+	def generate_filename(self, *, snippet_name):
+		if self.append:
+			return snippet_name+self.append
+		if self.is_raw:
+			if self.snippet_name == snippet_name:
+				return self.filename
+		if self.name_filter and not re.match(self.name_filter, snippet_name):
+			return None
+		parse_result=parse(self.snippet_name, snippet_name)
+		if not parse_result:
+			return None
+		return self.filename.format(parse_result.fixed[0])
+class GeneratorList():
+	items=[]
+	def add_generator(self, generator):
+		self.items.append(generator)
+	def generate_filename(self, *args, **kwargs):
+		for x in self.items:
+			res=x.generate_filename(*args, **kwargs)
+			if res:
+				return res
+def group1(key):
 	# example: $_1
 	# example: $nuxt_visitor
-	def dec_match() -> RevMatch:
-		rev_match=RevMatch()
-		rev_match.item_printf("$%s")
-		rev_match.match(r"$_\d")
-		rev_match.file_printf("sub_a/item-%s.js")
-		return rev_match
-	def exact1() -> RevExact:
-		rev_exact=RevExact()
-		rev_exact.set_item("$__")
-		rev_exact.set_file("sub_b/item-__.js")
-		return rev_exact
-	def alpha_match() -> RevMatch:
-		rev_match=RevMatch()
-		rev_match.item_printf("$%s")
-		rev_match.match(r"$_[a-z]")
-		rev_match.file_printf("sub_c/item-%s.js")
-		return rev_match
-	rev_key.add_match(dec_match())
-	rev_key.add_exact(exact1())
-	rev_key.add_match(alpha_match())
-	return rev_key.build(key)
-def group2(key, rev_key:RevPrintf):
+	def sub_a_dir() -> SnippetFilenameGenerator:
+		gen=SnippetFilenameGenerator()
+		gen.set_conversion("${}", "sub_a/item-{}.js", name_filter=r"\$_\d")
+		return gen
+	def sub_b_dir() -> SnippetFilenameGenerator:
+		gen=SnippetFilenameGenerator()
+		gen.set_conversion("$__", "sub_b/item-__.js", raw=True)
+		return gen
+	def sub_c_dir() -> SnippetFilenameGenerator:
+		gen=SnippetFilenameGenerator()
+		gen.set_conversion("${}", "sub_c/item-{}.js", name_filter=r"\$_[a-z]")
+		return gen
+	gen_list=GeneratorList()
+	gen_list.add_generator(sub_a_dir())
+	gen_list.add_generator(sub_b_dir())
+	gen_list.add_generator(sub_c_dir())
+	return gen_list.generate_filename(snippet_name=key)
+assert group1("$_1") == "sub_a/item-_1.js"
+assert group1("$__") == "sub_b/item-__.js"
+assert group1("$_a") == "sub_c/item-_a.js"
+def group2(key):
 	# example: ,1_
-	rev_key.item_printf(",%s_")
-	rev_key.file_printf("item_%s.js")
-	return rev_key.build(key)
-def group3(key, rev_key:RevPrintf):
+	gen=SnippetFilenameGenerator()
+	gen.set_conversion(",{}_", "item_{}.js")
+	return gen.generate_filename(snippet_name=key)
+assert group2(",1_") == "item_1.js"
+def group3(key):
 	# example: parsejs
-	rev_key.set_item_raw(True)
-	rev_key.file_printf("%s.js")
-	return rev_key.build(key)
-def group4(key, rev_key:RevPrintf):
+	gen=SnippetFilenameGenerator()
+	gen.set_conversion(append=".js")
+	return gen.generate_filename(snippet_name=key)
+def group4(key):
 	# example: get_node_require
-	# requires: electron DevTools
-	# req example: DevTools opened in an electron app
-	# electron app example: Visual Studio Code
-	rev_key.set_item_raw(True)
-	rev_key.file_printf("%s.js")
-	return rev_key.build(key)
+	# requires: DevTools attached to an electron app
+	# requires example: DevTools attached to Visual Studio Code
+	gen=SnippetFilenameGenerator()
+	gen.set_conversion(append=".js")
+	return gen.generate_filename(snippet_name=key)
+assert group3("parsejs") == "parsejs.js"
+assert group4("get_node_require") == "get_node_require.js"
+def main():
+	print("Passed")
+if __name__ == "__main__":
+	main()
