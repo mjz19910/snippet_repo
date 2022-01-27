@@ -1,4 +1,4 @@
-from parse import parse
+from parse import compile
 import re
 
 class RevPrintf():
@@ -25,6 +25,8 @@ class SnippetFilenameGenerator():
 		self.is_raw=raw
 		self.snippet_name=snippet_name
 		self.filename=filename
+		if snippet_name:
+			self.parser=compile(snippet_name)
 	def generate_filename(self, *, snippet_name):
 		if self.append:
 			return snippet_name+self.append
@@ -33,7 +35,7 @@ class SnippetFilenameGenerator():
 				return self.filename
 		if self.name_filter and not re.match(self.name_filter, snippet_name):
 			return None
-		parse_result=parse(self.snippet_name, snippet_name)
+		parse_result=self.parser.parse(snippet_name)
 		if not parse_result:
 			return None
 		return self.filename.format(parse_result.fixed[0])
