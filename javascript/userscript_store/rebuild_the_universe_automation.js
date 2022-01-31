@@ -11,6 +11,7 @@
 // @run-at	   document-start
 // @grant		none
 // ==/UserScript==
+// spell:words deref
 // spell:words adsbygoogle deinit totalAtome _targets_achi totalAchi tonext atomepersecond lightreset lightgray
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
@@ -34,7 +35,7 @@
 			if(this.attached){
 				let was_destroyed=this.destroy(true);
 				if(!was_destroyed){
-					throw new Error("Can't attach to new document, can't detach from old document saftly, the error might be because document.write is not equal to document_write_proxy");
+					throw new Error("Can't attach to new document, can't detach from old document safely, the error might be because document.write is not equal to document_write_proxy");
 				}
 			}
 			this.attached_document=document;
@@ -172,7 +173,7 @@
 					});
 					return local_id;
 				}
-				// If you caues any side effects, please
+				// If you cause any side effects, please
 				// wrap this call in try{}finally{} and
 				// revert all side effects...
 				verify_timer_type_tag(type_tag){
@@ -482,7 +483,7 @@
 			set_worker_state(worker_state){
 				this.worker_state=new WeakRef(worker_state);
 			}
-			// If you caues any side effects, please
+			// If you cause any side effects, please
 			// wrap this call in try{}finally{} and
 			// revert all side effects...
 			verify_timer_type_tag(type_tag){
@@ -609,7 +610,7 @@
 					return this.clear(timer_mode_tag, remote_id)
 				}
 				// we have to trust the user, go ahead and send the message
-				// anyway (this can technically send structured clonable objects)
+				// anyway (this can technically send structured cloneable objects)
 				if(timer_mode_tag === TIMER_SINGLE) {
 					tmp_worker_state.postMessage({
 						t: this.m_api_info.clear_single_msg_id,
@@ -1314,7 +1315,7 @@
 			if(self.do_special(null))self.special_delay(null);
 			else self.bonus_delay(null);
 		}
-		inital_special(self){
+		initial_special(self){
 			self.cint=setTimeout(self.special, self.delay*1.75, self);
 			self.delay_element.innerHTML=self.delay*1.75;
 			self.state_history_append(">");
@@ -1323,7 +1324,7 @@
 			if(self === null)self=this;
 			self.delay=~~(self.extra + ((self.extra * Math.pow(1.008, Math.log(totalAtome))) / 10));
 			self.delay_arr.push(self.delay);
-			self.cint=setTimeout(self.inital_special, self.extra*1.5, self);
+			self.cint=setTimeout(self.initial_special, self.extra*1.5, self);
 			self.delay_element.innerHTML=self.extra*1.5;
 			self.state_history_append("<");
 		}

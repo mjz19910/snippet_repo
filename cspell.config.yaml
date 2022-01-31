@@ -22,6 +22,7 @@ words:
   - chunksz
   - cint
   - citv
+  - cloneable
   - cmap
   - comlen
   - cres
@@ -72,6 +73,7 @@ words:
   - mkadd
   - mlis
   - mnum
+  - monospace
   - mquery
   - mult
   - mults
