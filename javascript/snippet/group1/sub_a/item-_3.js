@@ -5,22 +5,25 @@ v2 (cur-c): snippet_repo_v2/javascript/snippet/group1/sub_a/item-_3.js
 --- version_list end ---
 this snippet requires g_error_stack to be set
 */
+function get_location_from_error_stack_lines(error_lines, offset){
+	let cur_line=error_lines[offset];
+	let res=cur_line.match(/(?:\s+at )(?<res>.+)/);
+	if(res.groups.res.at(-1)==='()'[1]){
+		return res.groups.res.split(/(.+?)\((.+)\)/)[2];
+	}
+	return res.groups.res;
+}
+if(!window.g_error_stack_lines)g_error_stack_lines=g_error_stack.split("\n");
 if(!window.src_str_lines){
-	window.src_str_response=await fetch.__proxied_target__.call(window, g_error_stack.split("\n").slice(3)[0].split(/(?:\s+)(.+)/, 2)[1].split("at ")[1].split(/(.+?)\((.+)\)/)[2].split(/(.+):(.+?):(.+?)$/)[1]);
+	let url_str=get_location_from_error_stack_lines(g_error_stack_lines, 3);
+	let fetch_src_url=url_str.split(/(.+):(.+?):(.+?)$/)[1];
+	console.log('fetching', fetch_src_url);
+	window.src_str_response=await fetch.__proxied_target__.call(window, fetch_src_url);
 	window.src_str_lines=(await src_str_response.text()).split("\n");
 }
 function code_after_line_location_from_lines(lines, url_str){
 	let [,line, col]=url_str.match(/(?:.+):(.+?):(.+?)$/);
 	return lines[parseInt(line)-1].slice(parseInt(col)-1);
-}
-if(!window.g_error_stack_lines)g_error_stack_lines=g_error_stack.split("\n");
-function get_location_from_error_stack_lines(error_lines, offset){
-	let cur_line=error_lines[offset];
-	let res=cur_line.match(/(?:\s+at )(?<res>.+)/);
-	if(res.groups.res.at(-1)==='()'[1]){
-		return error_lines[offset].split(/(?:\s+)(.+)/, 2)[1].split("at ")[1].split(/(.+?)\((.+)\)/)[2];
-	}
-	return res.groups.res;
 }
 let source_location;
 let bad_loc=get_location_from_error_stack_lines(g_error_stack_lines, 3+4);
