@@ -6,7 +6,7 @@ v2 (cur-c): snippet_repo_v2/javascript/snippet/group1/sub_a/item-_2.js
 function raw_template(v) {
 	return v.raw[0];
 }
-let _module_jai_content = raw_template`
+let _module_jai_Simple_Package = raw_template`
 
 // create_*...
 
@@ -14,6 +14,11 @@ Create_Package :: struct {
 	data: String_Builder;
 
 	entries: [..] Entry_Info;
+}
+
+Entry_Info :: struct {
+	data: [] u8;
+	offset_from_start_of_file: u64;
 }
 
 init :: (using package: *Create_Package) {
@@ -24,7 +29,13 @@ deinit :: (using package: *Create_Package) {
 	array_reset(*entries);
 }
 
-add :: (package: *Create_Package, entry_name: string, data [] u8) {
+add :: (package: *Create_Package, entry_name: string, data [] u8) {  // entry_name must remain valid until after write() is called.
+	entry := array_add(*package.entries);
+	entry.data = data;
+
+	// We don't compute offset_from_start_of_data here because
+	// we want to allow for the user to sort the entries after
+	// they're all added, prior to writing.
 }
 
 write :: (package: *Create_Package, filename: string) -> bool {
@@ -60,21 +71,42 @@ write :: (package: *Create_Package, filename: string) -> bool {
 		return false;
 	}
 
+	offset_from_start_of_file: u64 = builder_string_length(*header);
+	for entry: package.entries {
+		success := file_write(*file, cast(string));
+		if !success {
+			log_error("In Simple_Package, unable to write entry #% ('%') to the file!\n", it_index+1, entry.name);
+			return false;
+		}
+
+		offset_from_start_of_file += cast(u64) entry.data.count;
+	}
+
+/*
 	success = file_write(*file, package.data);
 	if !success {
 		log_error("In Simple_Package, unable to write the body for file '%'\n", filename);
 		return false;
 	}
-
+*/
 
 	//
 	// Table of contents: 
 	//
 
-	// Number of files (64-bit unsigned integer):
+	// Special magic number to help you know you hit the table of contents
+	// (32-bit integer):
+	append(*table_of_contents, TABLE_OF_CONTENTS_MAGIC);
 
+	// Number of files (64-bit unsigned integer):
 	put(*table_of_contents, cast(u64) package.entries.count);
+
+	// For each file, a 4-byte unsigned integer indicating the length of the filename,
+	// followed by the filename (zero-terminated! the aforementioned length does not contain the zero),
+	// followed by an 8-byte integer indicating the size of the data entry,
+	// followed by an 8-byte integer indicating the offset of the entry from the start of the file.
 	for entry: package.entries {
+		
 	}
 
 	success = file_write(*file, table_of_contents);
@@ -97,6 +129,7 @@ Package :: struct {
 #scope_file
 
 MAGIC :: "simp";
+TABLE_OF_CONTENTS_MAGIC :: "toc!";
 
 FILE_VERSION :: 1;
 TARGET_IS_LITTLE_ENDIAN :: true;  // @Endian: Need a way to change this based on target CPU!
@@ -124,4 +157,34 @@ put :: (builder: *String_Builder, x: $T)
 	}
 }
 #import "Basic";
+#import "File";
 `;
+let _examples_create_jai_content=`
+#import "Simple_Package";
+#import "Basic";
+
+main :: () {
+	item1 := "Hello, Sailor!";
+
+
+	item2: [100] u8;
+	for 0..item2.count-1  item2[it] = xx it;
+
+	item3: [10] float;
+	for 0..item2.count-1  item2[it] = cast(float)(it*it);
+
+
+	package: Create_Package;
+	defer deinit(*package);
+
+	init(*package);
+
+	add(*package, "run_tree/data/item1", xx item1);
+
+	add(*package, "this is item2", xx item2);
+
+	add(*package, "item3, unimaginatively", xx item3);
+
+	write(*package, "test.package");
+}
+`
