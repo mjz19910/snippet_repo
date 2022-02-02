@@ -12,7 +12,7 @@ class EventHandlerMultiDispatch {
 	push_value(value) {
 		this.stack.push(value);
 	}
-	pop_value(){
+	pop_value() {
 		return this.stack.pop();
 	}
 	run(...run_arguments) {
@@ -27,14 +27,40 @@ class EventHandlerMultiDispatch {
 					this.push_value(this);
 					break;
 				}
-				case 'get':{
-					let obj=this.pop_value();
+				case 'get': {
+					let obj = this.pop_value();
 					this.push_value(obj[instruction_args[0]]);
 					break;
 				}
-				case 'call':{
-					let obj=this.pop_value();
-					obj[instruction_args[0]](...instruction_args[1]);
+				case 'call': {
+					let number_of_arguments = instruction_args[0];
+					let arg_arr = [];
+					for(let i = 0; i < number_of_arguments; i++) {
+						arg_arr.unshift(this.pop_value());
+					}
+					let name_to_call = this.pop_value();
+					let obj_base = this.pop_value();
+					let ret = obj_base[name_to_call](...arg_arr);
+					this.push_value(ret);
+					break;
+				}
+				case 'drop': {
+					let drop = this.pop_value();
+					void drop;
+					break;
+				}
+				case 'breakpoint': {
+					debugger;
+					break;
+				}
+				case 'push': {
+					for(let item of instruction_args) {
+						this.push_value(item);
+					}
+					break;
+				}
+				case 'push_window': {
+					this.push_value(window);
 					break;
 				}
 				default:
@@ -43,8 +69,9 @@ class EventHandlerMultiDispatch {
 			}
 			this.current_instruction++;
 		}
+		console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
 	}
-	dispatchEvent(event) {
+	handleEvent(event) {
 		this.reset();
 		this.run(event);
 	}
@@ -57,9 +84,10 @@ const test_obj = {
 	}
 };
 const handler_test = new EventHandlerMultiDispatch(test_obj, [
-	['push_self'],
-	['access', 'base_obj'],
-	['access', 'background_audio'],
-	['call', 'play', []]
+	['this'],
+	['get', 'base_obj'],
+	['get', 'background_audio'],
+	['push', 'play'],
+	['call', 0],
 ]);
 handler_test.run({});
