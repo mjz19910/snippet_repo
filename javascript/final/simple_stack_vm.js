@@ -1,13 +1,13 @@
-class EventHandlerMultiDispatch {
-	constructor(base_obj, action_list) {
+class SimpleStackVM {
+	constructor(base_obj, instructions) {
 		this.base_obj = base_obj;
-		this.action_list = action_list;
+		this.instructions = instructions;
 		this.stack = [];
-		this.current_instruction = 0;
+		this.instruction_pointer = 0;
 	}
 	reset() {
 		this.stack.length = 0;
-		this.current_instruction = 0;
+		this.instruction_pointer = 0;
 	}
 	push_value(value) {
 		this.stack.push(value);
@@ -16,8 +16,9 @@ class EventHandlerMultiDispatch {
 		return this.stack.pop();
 	}
 	run(...run_arguments) {
-		while(this.current_instruction < this.action_list.length) {
-			let [cur_opcode, ...instruction_args] = this.action_list[this.current_instruction];
+		while(this.instruction_pointer < this.instructions.length) {
+			let cur_instruction = this.instructions[this.instruction_pointer];
+			let [cur_opcode] = cur_instruction;
 			switch(cur_opcode) {
 				case 'push_args': {
 					this.push_value(run_arguments);
@@ -28,12 +29,13 @@ class EventHandlerMultiDispatch {
 					break;
 				}
 				case 'get': {
+					let name = this.pop_value();
 					let obj = this.pop_value();
-					this.push_value(obj[instruction_args[0]]);
+					this.push_value(obj[name]);
 					break;
 				}
 				case 'call': {
-					let number_of_arguments = instruction_args[0];
+					let number_of_arguments = cur_instruction[1];
 					let arg_arr = [];
 					for(let i = 0; i < number_of_arguments; i++) {
 						arg_arr.unshift(this.pop_value());
@@ -54,7 +56,8 @@ class EventHandlerMultiDispatch {
 					break;
 				}
 				case 'push': {
-					for(let item of instruction_args) {
+					for(let i=1;i < cur_instruction.length;i++) {
+						let item=cur_instruction[i];
 						this.push_value(item);
 					}
 					break;
@@ -67,7 +70,7 @@ class EventHandlerMultiDispatch {
 					console.log('unk opcode', cur_opcode);
 					throw new Error("halt");
 			}
-			this.current_instruction++;
+			this.instruction_pointer++;
 		}
 		console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
 	}
@@ -83,10 +86,12 @@ const test_obj = {
 		}
 	}
 };
-const handler_test = new EventHandlerMultiDispatch(test_obj, [
+const handler_test = new SimpleStackVM(test_obj, [
 	['this'],
-	['get', 'base_obj'],
-	['get', 'background_audio'],
+	['push', 'base_obj'],
+	['get'],
+	['push', 'background_audio'],
+	['get'],
 	['push', 'play'],
 	['call', 0],
 ]);
