@@ -5,7 +5,7 @@ class SimpleStackVM {
 		this.instruction_pointer = 0;
 		this.not_implemented_opcodes = [
 			'break', 'continue',
-			'await',
+			'await','yield',
 			'var', 'let', 'const',
 			'super', 'class', 'extends',
 			'try', 'catch', 'finally',
@@ -14,17 +14,14 @@ class SimpleStackVM {
 			'delete',
 			'for', 'while', 'do', 'if', 'else',
 			'enum',
-			'export', 'import',
-			'function',
+			'export', 'import','package',
+			'function','static',
 			'implements',
 			'interface',
-			'package',
 			'private',
 			'protected',
 			'public',
-			'static',
-			'with',
-			'yield'
+			'with'
 		];
 		this.return_value = void 0;
 	}
