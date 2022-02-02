@@ -1,4 +1,4 @@
-class SimpleStackVM {
+export class SimpleStackVM {
 	constructor(instructions) {
 		this.instructions = instructions;
 		this.stack = [];
@@ -18,17 +18,11 @@ class SimpleStackVM {
 	pop() {
 		return this.stack.pop();
 	}
-	throw_not_implemented(reason) {
-		throw new Error(`${reason} is not implemented`);
-	}
 	run(...run_arguments) {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let cur_instruction = this.instructions[this.instruction_pointer];
 			let [cur_opcode] = cur_instruction;
-			if(this.not_implemented_opcodes.includes(cur_opcode)) {
-				this.throw_not_implemented(cur_opcode);
-			}
 			switch(cur_opcode) {
 				case 'push': {
 					for(let i = 1; i < cur_instruction.length; i++) {
@@ -55,8 +49,8 @@ class SimpleStackVM {
 						arg_arr.unshift(this.pop());
 					}
 					let name_to_call = this.pop();
-					let obj_base = this.pop();
-					let ret = obj_base[name_to_call](...arg_arr);
+					let target = this.pop();
+					let ret = target[name_to_call](...arg_arr);
 					this.push(ret);
 					break;
 				}
@@ -71,6 +65,10 @@ class SimpleStackVM {
 				}
 				case 'push_args'/*Special*/: {
 					this.push(run_arguments);
+					break;
+				}
+				case 'this'/*Special*/: {
+					this.push(this);
 					break;
 				}
 				case 'push_window': {
@@ -91,30 +89,3 @@ class SimpleStackVM {
 		return this.return_value;
 	}
 }
-class EventHandlerVMDispatch extends SimpleStackVM {
-	constructor(instructions, target_obj) {
-		super(instructions);
-		this.target_obj = target_obj;
-	}
-	handleEvent(event) {
-		this.reset();
-		this.run(event);
-	}
-}
-const test_obj = {
-	background_audio: {
-		play() {
-			console.log('test success');
-		}
-	}
-};
-const handler_test = new EventHandlerVMDispatch([
-	['this'],
-	['push', 'base_obj'],
-	['get'],
-	['push', 'background_audio'],
-	['get'],
-	['push', 'play'],
-	['call', 0],
-], test_obj);
-handler_test.handleEvent({});
