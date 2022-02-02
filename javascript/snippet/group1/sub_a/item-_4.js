@@ -1,3 +1,7 @@
+/* spell:words
+-- version_list item 4 --
+v1 (cur-c): snippet_repo_v2/javascript/snippet/group1/sub_a/item-_4.js
+*/
 let dbg_create = function(trg, str) {
 	undebug(trg);
 	debug(trg, str.replace("//##INJECT", "dbg_create=" + dbg_create.toString()));
