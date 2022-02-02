@@ -30,9 +30,9 @@ class AutoState {
 	start() {
 		if (!player.generators_autobuyer[0][0]) {
 			let t=this;
-			this.setInterval(e=>tierGenerator(t.current_generator_autobuy++ % 8), 50);
-			this.setInterval(e=>tierMult(), 300);
-			this.setInterval(e=>buyMeta(), 300);
+			this.setInterval(()=>tierGenerator(t.current_generator_autobuy++ % 8), 50);
+			this.setInterval(()=>tierMult(), 300);
+			this.setInterval(()=>buyMeta(), 300);
 		}
 	}
 	destroy_cint() {
