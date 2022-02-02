@@ -3,32 +3,14 @@ class SimpleStackVM {
 		this.instructions = instructions;
 		this.stack = [];
 		this.instruction_pointer = 0;
-		this.not_implemented_opcodes = [
-			'break', 'continue',
-			'await','yield',
-			'var', 'let', 'const',
-			'super', 'class', 'extends',
-			'try', 'catch', 'finally',
-			'arguments',
-			'switch', 'case', 'default',
-			'delete',
-			'for', 'while', 'do', 'if', 'else',
-			'enum',
-			'export', 'import','package',
-			'function','static',
-			'implements',
-			'interface',
-			'private',
-			'protected',
-			'public',
-			'with'
-		];
 		this.return_value = void 0;
+		this.running = false;
 	}
 	reset() {
 		this.stack.length = 0;
 		this.instruction_pointer = 0;
 		this.return_value = void 0;
+		this.running = false;
 	}
 	push(value) {
 		this.stack.push(value);
@@ -40,7 +22,8 @@ class SimpleStackVM {
 		throw new Error(`${reason} is not implemented`);
 	}
 	run(...run_arguments) {
-		while(this.instruction_pointer < this.instructions.length) {
+		this.running = true;
+		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let cur_instruction = this.instructions[this.instruction_pointer];
 			let [cur_opcode] = cur_instruction;
 			if(this.not_implemented_opcodes.includes(cur_opcode)) {
@@ -77,82 +60,13 @@ class SimpleStackVM {
 					this.push(ret);
 					break;
 				}
-				case 'new': {
-					let number_of_arguments = cur_instruction[1];
-					let init_arr = [];
-					for(let i = 0; i < number_of_arguments; i++) {
-						init_arr.unshift(this.pop());
-					}
-					let constructor = this.pop();
-					let ret = new constructor(...init_arr);
-					this.push(ret);
-					break;
-				}
 				case 'return': {
 					let ret = this.pop();
 					this.return_value = ret;
-					this.returning = true;
 					break;
 				}
-				case 'import'/*Keywords*/: {
-					throw new Error("use dyn_import for dynamic imports, static imports are not implemented");
-				}
-				case 'delete': {
-					let name = this.pop();
-					let obj = this.pop();
-					this.push(delete obj[name]);
-					break;
-				}
-				case 'false': {
-					this.push(false);
-					break;
-				}
-				case 'true': {
-					this.push(true);
-					break;
-				}
-				case 'dyn_import': {
-					let module_spec = this.pop();
-					let import_promise = import(module_spec);
-					this.push(import_promise);
-					break;
-				}
-				case 'undefined': {
-					this.push(undefined);
-					break;
-				}
-				case 'void': {
-					this.push(void this.pop());
-					break;
-				}
-				case 'null': {
-					this.push(null);
-					break;
-				}
-				case 'throw': {
-					let error = this.pop();
-					error.vm_ip = this.instruction_pointer;
-					throw error;
-				}
-				case 'this': {
-					this.push(this);
-					break;
-				}
-				case 'typeof': {
-					let obj = this.pop();
-					this.push(typeof obj);
-					break;
-				}
-				case 'instanceof': {
-					let obj = this.pop();
-					let func = this.pop();
-					this.push(obj instanceof func);
-					break;
-				}
-				case 'in': {
-					let name = this.pop();
-					let obj = this.pop();
-					this.push(name in obj);
+				case 'halt':{
+					this.running=false;
 					break;
 				}
 				case 'push_args'/*Special*/: {
@@ -167,15 +81,9 @@ class SimpleStackVM {
 					debugger;
 					break;
 				}
-				case 'never': {
-					throw new Error("never was executed");
-				}
 				default:
 					console.log('unk opcode', cur_opcode);
 					throw new Error("halt");
-			}
-			if(this.returning) {
-				break;
 			}
 			this.instruction_pointer++;
 		}
