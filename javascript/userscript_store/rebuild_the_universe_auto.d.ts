@@ -231,7 +231,7 @@ declare module main {
 		validate_timer_type_tag(type_tag: TimerTypeTag): boolean;
 		validate_timer_state(main_state: TimerStateData): boolean;
 		fire(timer_mode_tag: TimerTypeTag, remote_id: number): void;
-		set(timer_mode_tag: TimerTypeTag, handler: TimerHandler, delay, target_arguments: any[]): number;
+		set(timer_mode_tag: TimerTypeTag, handler: TimerHandler, timeout:number, target_arguments: any[]): number;
 		is_main_state_stored_by_id(remote_id: number): boolean;
 		get_main_state_by_id(remote_id: number): TimerStateData;
 		store_main_state_by_id(remote_id: number, main_state: TimerStateData): void;
@@ -247,7 +247,7 @@ declare module main {
 		constructor(message: string);
 	}
 	function VERIFY(assert_result: boolean, assert_message: string): void;
-	function verify_worker_code_callback(verify_obj): void;
+	function verify_worker_code_callback(verify_obj:{}): void;
 	type TimerApiInfo = {
 		set_single_msg_id: 203,
 		set_repeating_msg_id: 204,
@@ -316,7 +316,7 @@ declare module main {
 		add_hit(index: number): void;
 		add_item(key: string): void;
 		reset(): void;
-		calc_compression_stats(arr: any[], win_size): any[];
+		calc_compression_stats(arr: any[], win_size:number): any[];
 		calc_for_stats_window_size(stats_arr: any[][], arr: any[], win_size: number): void;
 		calc_for_stats_index(stats_arr: any[][], arr: any[], index: number): void;
 	}
@@ -350,31 +350,33 @@ declare module main {
 		can_average(): boolean;
 		get_average(): number;
 	}
-	interface RecordType {
-		on_child_start(root): void;
-		on_child_run(root): void;
+	interface RecordType<T> {
+		children: RecordType<T>[];
+		constructor():RecordType<T>;
+		on_child_start(root:RecordType<T>): void;
+		on_child_run(root:RecordType<T>): void;
 	}
-	class BaseRecord {
-		root: RecordType;
-		constructor(root: RecordType);
+	class BaseRecord<T> {
+		root: BaseRecordRoot<T>;
+		constructor(root: BaseRecordRoot<T>);
 		start(): void;
 		run(): void;
 	}
-	class AsyncDelayRecord extends BaseRecord {
+	class AsyncDelayRecord<T> extends BaseRecord<T> {
 		cint: number;
 		target_obj: any;
 		target_get_member_name: string;
 		label: string;
 		timeout: number;
-		constructor(root: RecordType, target_obj: any, get_member_name: string, label: string);
+		constructor(root: BaseRecordRoot<T>, target_obj: any, get_member_name: string, label: string);
 		start(): void;
 		run(self?: this): void;
 	}
-	class AnyRecordRoot {
-		children: BaseRecord[];
+	class BaseRecordRoot<T> implements RecordType<T> {
+		children: RecordType<T>[];
 		constructor();
-		on_child_start(record: BaseRecord): void;
-		on_child_run(record: BaseRecord): void;
+		on_child_start(record: RecordType<T>): void;
+		on_child_run(record: RecordType<T>): void;
 	}
 	class AverageRatioRoot {
 		map: Map<string, AverageRatio>;
@@ -425,9 +427,9 @@ declare module main {
 		iter_count: number
 		epoch_len: number
 		background_audio: HTMLAudioElement;
-		state: AutoBuyState
+		state: AutoBuyState;
 		cint_arr: CIntItem[];
-		skip_save: boolean
+		skip_save: boolean;
 		state_history_arr: string[] | CompressedArray;
 		compressor: MulCompression;
 		constructor();
@@ -531,7 +533,7 @@ declare module main {
 		dec(cnt: number): Promise<void>;
 	}
 	function do_auto_unit_promote(): void;
-	function map_to_tuple(e: any, i: any): [typeof e, typeof this[typeof i]];
+	function map_to_tuple(this:string[], e: any, i: any): [typeof e, typeof this[typeof i]];
 	function to_tuple_arr(keys: any[], values: any): ReturnValue<typeof keys.map>;
 	function promise_exec(a: (value: void) => void): void;
 	function do_async_wait(delay: number): Promise<void>;

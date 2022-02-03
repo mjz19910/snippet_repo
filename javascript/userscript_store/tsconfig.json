@@ -3,6 +3,23 @@
 		"experimentalDecorators": true,
 		"target": "esnext",
 		"lib": ["esnext","DOM"],
-		"types": []
+		"types": [],
+		"declaration": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"outDir": "./lib",
+		"strict": true,
+		"typeRoots": [
+			"./node_modules/@types"
+		]
 	},
+	"include": [
+		"**/*"
+	],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts"
+	]
 }
