@@ -10,6 +10,7 @@ words:
   - aend
   - akadd
   - alens
+  - allspec
   - anid
   - argsar
   - arrmap
@@ -107,6 +108,7 @@ words:
   - retcp
   - retpr
   - retv
+  - sandboxed
   - sargs
   - sarr
   - scount
@@ -114,6 +116,7 @@ words:
   - sidx
   - singlequote
   - slen
+  - specialclick
   - sslen
   - sssx
   - start_objs
@@ -123,6 +126,7 @@ words:
   - syms
   - tarl
   - thecentralscrutinizer
+  - timeplayed
   - tkey
   - tlele
   - tlen
