@@ -676,10 +676,11 @@
 		}
 		destroy(){
 			let api_info=this.m_api_info;
-			window[api_info.set_single]=api_map.get(api_info.set_single);
-			window[api_info.init_repeating]=api_map.get(api_info.init_repeating);
-			window[api_info.deinit_single]=api_map.get(api_info.deinit_single);
-			window[api_info.deinit_repeating]=api_map.get(api_info.deinit_repeating);
+			let api_map=this.m_api_map;
+			window[api_info.set_single] = api_map.get(api_info.set_single);
+			window[api_info.set_repeating] = api_map.get(api_info.set_repeating);
+			window[api_info.clear_single] = api_map.get(api_info.clear_single);
+			window[api_info.clear_repeating] = api_map.get(api_info.clear_repeating);
 			for (var timer_map_entry of this.main_state_entries()) {
 				let remote_timer_id=timer_map_entry[0];
 				let main_state=timer_map_entry[1];
