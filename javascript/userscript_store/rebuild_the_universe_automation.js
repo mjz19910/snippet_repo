@@ -399,8 +399,8 @@
 				t: 202
 			});
 		}
-		set_promise_executor_handle(handle){
-			this.promise_executor_handle=handle;
+		set_executor_handle(handle){
+			this.executor_handle=handle;
 		}
 		on_result(result){
 			switch(result){
@@ -487,8 +487,8 @@
 				this.worker=null;
 				URL.revokeObjectURL(this.worker_url);
 				this.worker_url = null;
-				if(!this.promise_executor_handle.closed()){
-					this.promise_executor_handle.reject(new Error("Worker destroyed before it was connected"));
+				if(!this.executor_handle.closed()){
+					this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
 				}
 				this.connected=false;
 			};

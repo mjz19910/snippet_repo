@@ -417,7 +417,7 @@ declare module main {
 		worker_url: string;
 		constructor(worker_code_blob: Blob, timer: Timer, executor_handle: PromiseExecutorHandle);
 		init(): void;
-		set_promise_executor_handle(handle: PromiseExecutorHandle): void;
+		set_executor_handle(handle: PromiseExecutorHandle): void;
 		on_result(result: any): void;
 		dispatch_message(result: any): void;
 		postMessage(data: any): void;
