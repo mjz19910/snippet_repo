@@ -22,6 +22,7 @@
 	const TIMER_REPEATING=2;
 	const TIMER_TAG_COUNT=3;
 	const AUDIO_ELEMENT_VOLUME=0.58;
+	const cint_arr=[];
 	class DocumentWriteList {
 		constructor(){
 			this.list=[];
@@ -1387,7 +1388,16 @@
 			let action_data=localStorage.auto_buy_forced_action;
 			if(action_data)[forced_action, action_count]=action_data.split(",");
 			localStorage.auto_buy_delay_str=this.get_delay_arr_data(forced_action);
-			localStorage.auto_buy_forced_action=[forced_action, parseInt(action_count)-1];
+			if(action_count !== void 0){
+				action_count=parseInt(action_count);
+				if(Number.isFinite(action_count)){
+					if(action_count > 0){
+						localStorage.auto_buy_forced_action=[forced_action, action_count-1];
+					}else if(forced_action !== "NONE"){
+						localStorage.auto_buy_forced_action="NONE,0";
+					}
+				}
+			}
 		}
 		dom_pre_init(){
 			let style_string="";
@@ -2163,63 +2173,6 @@
 			configurable
 		});
 	}
-	function define_property_get_set(obj, name, get_set_obj, ...props){
-		let [
-			enumerable=true,
-			configurable=true
-		] = props;
-		Object.defineProperty(obj, name, {
-			...get_set_obj,
-			enumerable,
-			configurable
-		});
-	}
-	function define_property_get_void(obj, name, ...props){
-		let [
-			enumerable=true,
-			configurable=true
-		] = props;
-		let pd=Object.getOwnPropertyDescriptor(obj, name);
-		if(pd && pd.set){
-			let {set, enumerable, configurable} = pd;
-			Object.defineProperty(obj, name, {
-				get(){
-					return void 0;
-				},
-				set,
-				enumerable,
-				configurable
-			});
-		}
-		Object.defineProperty(obj, name, {
-			get(){
-				return void 0;
-			},
-			enumerable,
-			configurable
-		});
-	}
-	function define_property_set_callback(obj, name, set, ...props){
-		let [
-			enumerable=true,
-			configurable=true
-		] = props;
-		let pd=Object.getOwnPropertyDescriptor(obj, name);
-		if(pd && pd.get){
-			let {get, enumerable, configurable} = pd;
-			Object.defineProperty(obj, name, {
-				get,
-				set,
-				enumerable,
-				configurable
-			});
-		}
-		Object.defineProperty(obj, name, {
-			set,
-			enumerable,
-			configurable
-		});
-	}
 	function got_jquery(jquery_func){
 		define_property_value(window, '$', jquery_func);
 		let res=jquery_func('head');
@@ -2227,12 +2180,44 @@
 		r_proto.lazyload=function(...a){
 			console.log('lazyload', ...a);
 		}
+		return jquery_func;
+	}
+	function reload_if_def(obj, key){
+		if(obj[key]){
+			location.reload();
+			document.body.innerHTML="";
+			document.head.innerHTML="";
+			document.documentElement="";
+			debugger;
+			return true;
+		}
+		return false;
 	}
 	function proxy_jquery(){
-		should_replace_jquery=false;
-		define_property_get_void(window, '$');
-		define_property_set_callback(window, '$', got_jquery);
-
+		let val;
+		if(window.$){
+			let res=window.$('head');
+			let r_proto=Object.getPrototypeOf(res);
+			r_proto.lazyload=function(...a){
+				console.log('lazyload', ...a);
+			}
+			return;
+		}
+		Object.defineProperty(window, '$', {
+			get(){
+				if(val){
+					debugger;
+				}
+				return val;
+			},
+			set(value){
+				val=value;
+				got_jquery(value);
+				return true;
+			},
+			enumerable:true,
+			configurable:true
+		});
 	}
 	function pace_finish_proxy_apply(func, this_v, args){
 		auto_buy_obj.init();
@@ -2248,11 +2233,29 @@
 		}
 		Pace.bar.finish=new Proxy(Pace.bar.finish, {apply:pace_finish_proxy_apply});
 	}
-	function on_timers_moved() {
-		define_property_set_callback(window, '_SM_Data', function(value){
-			define_property_value(window, '_SM_Data', value);
+	function remove_cint_item(cint_arr, cint_item){
+		let idx=cint_arr.indexOf(cint_item);
+		cint_arr.splice(idx, 1);
+	}
+	function wait_for_game_data(cint_item=null){
+		if(cint_item){
+			remove_cint_item(cint_item);
+		}
+		if(window._SM_Data){
 			on_game_data_set();
-		})
+		}else{
+			let cint_item=[0, -1];
+			let cint=setTimeout(wait_for_game_data, 0, cint_item);
+			cint_item[1]=cint;
+			cint_arr.push(cint_item);
+		}
+	}
+	function on_timers_moved(timers) {
+		if(window._SM_Data){
+			on_game_data_set();
+		}else{
+			wait_for_game_data();
+		}
 		remove_bad_dom_script_element();
 	}
 	function dom_add_elm_filter(elm){
@@ -2271,6 +2274,7 @@
 	}
 	function main() {
 		let enable_proxy=true;
+		window.cint_arr=cint_arr;
 		if(enable_proxy){
 			proxy_jquery();
 		}
