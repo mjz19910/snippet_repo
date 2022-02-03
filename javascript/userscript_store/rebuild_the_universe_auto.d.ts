@@ -351,10 +351,9 @@ declare module main {
 		get_average(): number;
 	}
 	interface RecordType<T> {
-		children: RecordType<T>[];
-		constructor():RecordType<T>;
-		on_child_start(root:RecordType<T>): void;
-		on_child_run(root:RecordType<T>): void;
+		children: T[];
+		on_child_start(record:T): void;
+		on_child_run(record:T): void;
 	}
 	class BaseRecord<T> {
 		root: BaseRecordRoot<T>;
@@ -362,7 +361,7 @@ declare module main {
 		start(): void;
 		run(): void;
 	}
-	class AsyncDelayRecord<T> extends BaseRecord<T> {
+	class AsyncDelayRecord<T> extends BaseRecord<BaseRecordRoot<T>> {
 		cint: number;
 		target_obj: any;
 		target_get_member_name: string;
@@ -373,10 +372,10 @@ declare module main {
 		run(self?: this): void;
 	}
 	class BaseRecordRoot<T> implements RecordType<T> {
-		children: RecordType<T>[];
+		children: T[];
 		constructor();
-		on_child_start(record: RecordType<T>): void;
-		on_child_run(record: RecordType<T>): void;
+		on_child_start(record: T): void;
+		on_child_run(record: T): void;
 	}
 	class AverageRatioRoot {
 		map: Map<string, AverageRatio>;
@@ -543,7 +542,6 @@ declare module main {
 	//spell:words specialsbought atomsinvest checkspec specaps noti plurials updateprogress achiSpec
 	function specialclick_inject(that: typeof allspec[number]): void;
 	function on_page_is_loaded(): void;
-	var g_proxy_state;
 	type ProxySetHandler = [target: object, propertyKey: PropertyKey, value: any, receiver?: any];
 	type ProxyGetHandler = [target: object, propertyKey: PropertyKey, receiver?: any];
 	type ProxyApplyHandler = [target: Function, thisArgument: any, argumentsList: ArrayLike<any>];
