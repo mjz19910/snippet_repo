@@ -1046,6 +1046,7 @@
 			this.weight=weight;
 			this.human_duration=human_duration;
 		}
+		/**@arg {boolean} from_prev */
 		add(value, from_prev, debug=false){
 			if(from_prev){
 				if(debug)console.log("ratio", this.human_duration, (value*100).toFixed(5));
@@ -1114,11 +1115,13 @@
 	}
 	class AverageRatioRoot{
 		constructor(){
+			/**@type {Map<string, AverageRatio>} */
 			this.map=new Map;
-			this.sorted_keys=[];
+			/**@type {string[]} */
+			this.ordered_keys=[];
 		}
-		set_sorting_order(sorted_order){
-			this.sorted_keys=sorted_order;
+		set_ordered_keys(ordered_keys){
+			this.ordered_keys=ordered_keys;
 		}
 		can_average(key){
 			let ratio_calc=this.map.get(key);
@@ -1128,14 +1131,19 @@
 			let ratio_calc=this.map.get(key);
 			return ratio_calc.get_average();
 		}
+		/**@arg {[key:string, ratio:AverageRatio]} */
+		push_ratio([key, ratio_obj]){
+			this.ordered_keys.push(key);
+			this.map.set(key, ratio_obj);
+		}
 		push(value){
-			let cur=this.map.get(this.sorted_keys[0]);
+			let cur=this.map.get(this.ordered_keys[0]);
 			let res=cur.add(value, true, false);
-			for(let i=1;i<this.sorted_keys.length;i++){
+			for(let i=1;i<this.ordered_keys.length;i++){
 				let debug=false;
-				let key=this.sorted_keys[i];
+				let key=this.ordered_keys[i];
 				cur=this.map.get(key);
-				let prev=this.map.get(this.sorted_keys[i-1]);
+				let prev=this.map.get(this.ordered_keys[i-1]);
 				if(key === '5min')debug=true;
 				res=cur.add(prev.get_average(), res, debug);
 			}
@@ -1168,12 +1176,11 @@
 				}
 			}
 			this.prev_atomepersecond=atomepersecond;
-			this.avg.map.set('10sec', new AverageRatio(80, 80*6, .00, "10 seconds", [rep_val]))
-			this.avg.map.set('1min', new AverageRatio(6, 6*5*6, .65, "1 minute",[rep_val]));
-			this.avg.map.set('5min', new AverageRatio(5, 5*6*6, .15, "5 minutes",[rep_val]));
-			this.avg.map.set('30min', new AverageRatio(6, 6*6*4, .15, "30 minutes",[rep_val]));
-			this.avg.map.set('3hour', new AverageRatio(6, 6*4, .05, "3 hours",[rep_val]));
-			this.avg.set_sorting_order(['10sec','1min','5min','30min','3hour']);
+			this.avg.push_ratio(['10sec', new AverageRatio(80, 80 * 6, .00, "10 seconds", [1])]);
+			this.avg.push_ratio(['1min', new AverageRatio(6, 6 * 5 * 6, .65, "1 minute", [1])]);
+			this.avg.push_ratio(['5min', new AverageRatio(5, 5 * 6 * 6, .15, "5 minutes", [1])]);
+			this.avg.push_ratio(['30min', new AverageRatio(6, 6 * 6 * 4, .15, "30 minutes", [1])]);
+			this.avg.push_ratio(['3hour', new AverageRatio(6, 6 * 4, .05, "3 hours", [1])]);
 			this.is_init_complete=true;
 		}
 		calc_ratio(){
@@ -1469,7 +1476,7 @@
 			document.body.append(this.state_log_element);
 
 			// attach display_style_sheet
-			document.adoptedStyleSheets=[this.display_style_sheet];
+			document.adoptedStyleSheets = [...document.adoptedStyleSheets, this.display_style_sheet];
 		}
 		init_dom(){
 			// defs
