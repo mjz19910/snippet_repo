@@ -10,4 +10,4 @@ export type TokenTypeWhitespace=[TYPE_WHITESPACE, " "|"\n"|"\t"];
 export type TokenTypeSpecial=[TYPE_SPECIAL, "|"|"("|")"|"{"|"}"];
 export type TokenType=TokenTypeWord|TokenTypeWhitespace|TokenTypeSpecial;
 export type JS_BLOCK_OPEN_CHARS=First<"()"> | First<"{}">
-export type JS_BLOCK_CLOSE_CHARS=Exclude<"("|")", First<"()">>|Exclude<"{"|"}", First<"{}">>
+export type JS_BLOCK_CLOSE_CHAR=Exclude<"("|")", First<"()">>|Exclude<"{"|"}", First<"{}">>

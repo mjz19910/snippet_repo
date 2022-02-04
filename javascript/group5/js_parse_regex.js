@@ -4,7 +4,7 @@ const TAG_STATE_VAR_DEFINE = 2;
 const TAG_STATE_LET_DEFINE = 3;
 /**
  * @typedef {import("./js_parse_regex_1.js").JS_BLOCK_OPEN_CHARS} JS_BLOCK_OPEN_CHARS
- * @typedef {import("./js_parse_regex_1.js").JS_BLOCK_CLOSE_CHARS} JS_BLOCK_CLOSE_CHARS
+ * @typedef {import("./js_parse_regex_1.js").JS_BLOCK_CLOSE_CHARS2} JS_BLOCK_CLOSE_CHARS
  * @typedef {"|"|"("|")"|"{"|"}"|";"|"."|"="|":"} JS_SPECIAL_CHARS
  * @typedef {typeof TAG_STATE_IN_FUNCTION} StateInFunction
  * @typedef {typeof TAG_STATE_VAR_DEFINE} StateVarDefine

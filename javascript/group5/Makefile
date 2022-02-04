@@ -6,11 +6,24 @@
 # use make to keep the copies up to date
 .PHONY: all
 
-all: js_parse_regex_1.js js_parse_regex.ts
+all: js_parse_regex_1.js
 
-js_parse_regex_1.ts:
-	cp js_parse_regex.ts js_parse_regex_1.ts
-js_parse_regex_1.js:
+js_parse_regex_1.ts.update:
+	cp -u js_parse_regex_1.ts js_parse_regex.ts
+	cp -u js_parse_regex.ts js_parse_regex_1.ts
+js_parse_regex.ts.update:
+	cp -u js_parse_regex_1.ts js_parse_regex.ts
+	cp -u js_parse_regex.ts js_parse_regex_1.ts
+.SILENT: js_parse_regex.ts.update js_parse_regex_1.ts.update
+
+js_parse_regex.ts: js_parse_regex.ts.update
+js_parse_regex_1.ts: js_parse_regex_1.ts.update
+
+js_parse_regex_1.js: js_parse_regex_1.ts js_parse_regex.ts
 	tsc js_parse_regex_1.ts
-js_parse_regex.ts: js_parse_regex_1.ts
-	cp js_parse_regex_1.ts js_parse_regex.ts
+
+*.mtime:
+	touch $@
+
+clean:
+	rm *.mtime

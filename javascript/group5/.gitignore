@@ -1,3 +1,4 @@
 lib/
 js_parse_regex_1.ts
 js_parse_regex_1.js
+*.mtime
