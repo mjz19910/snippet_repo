@@ -1,0 +1,11 @@
+export type First<T extends string> = T extends `${infer U}${string}` ? U : ''
+export type TYPE_WORD = 1;
+export type TYPE_KEYWORD=2;
+export type TYPE_WHITESPACE = 3;
+export type TYPE_SPECIAL = 4;
+export type TYPE_MAX = 5;
+export type TYPE_VALID=TYPE_WORD|TYPE_SPECIAL|TYPE_WHITESPACE;
+export type TokenTypeWord=[TYPE_WORD, "function"|string];
+export type TokenTypeWhitespace=[TYPE_WHITESPACE, " "|"\n"|"\t"];
+export type TokenTypeSpecial=[TYPE_SPECIAL, "|"|"("|")"|"{"|"}"];
+export type TokenType=TokenTypeWord|TokenTypeWhitespace|TokenTypeSpecial;
