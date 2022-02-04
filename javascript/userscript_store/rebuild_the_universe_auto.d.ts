@@ -11,9 +11,6 @@
 // @run-at	   document-start
 // @grant		none
 // ==/UserScript==
-// spell:words deref
-// spell:words lazyload
-// spell:words adsbygoogle deinit totalAtome _targets_achi totalAchi tonext atomepersecond lightreset lightgray
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 interface WeakRef<T extends object> {
 	readonly [Symbol.toStringTag]: "WeakRef";
@@ -123,6 +120,8 @@ declare namespace ArrayTuringTools {
 	type RemoveFirst<T extends any[]> = T extends [any, ...infer U] ? U : []
 	type ReverseStr<U extends string> = U extends '' ? '' : `${ReverseStr<RemoveFirstStr<U>>}${FirstStr<U>}`
 	type ReverseArr<U extends any[]> = U extends [] ? [] : [...Reverse<RemoveFirst<U>>, First<U>];
+
+	type GReverse<T>= T extends any[] ? ReverseArr<T> : T extends string ? ReverseStr<T> : never;
 
 	type Reverse<U extends any[] | string> = U extends string ? ReverseStr<U> : U extends any[] ? ReverseArr<U> : never;
 	type Data = [1, 2, 3, 4];

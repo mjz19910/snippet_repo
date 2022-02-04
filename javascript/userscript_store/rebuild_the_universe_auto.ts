@@ -116,7 +116,7 @@ class RemoteTimer {
 	}
 }
 
-class RemoteWorkerState {
+export class RemoteWorkerState {
 	unique_script_id: number;
 	m_timer: RemoteTimer | null;
 	constructor() {
@@ -140,11 +140,13 @@ const TIMER_REPEATING = 2;
 const TIMER_TAG_COUNT = 3;
 const AUDIO_ELEMENT_VOLUME = 0.58;
 const cint_arr: any[] = [];
-type ProxyType00 = {other: DocumentWriteList, apply(this: ProxyType00, target: any, thisArg: any, argArray: any[]): any};
+export type ProxyType00 = {
+	other: DocumentWriteList;
+	apply(this: ProxyType00, target: any, thisArg: any, argArray: any[]): any;
+};
 class DocumentWriteList {
 	list: (string[] | null)[];
-	attached;
-	end_symbol;
+	attached; end_symbol;
 	constructor() {
 		this.list = [];
 		this.attached = false;
@@ -160,14 +162,14 @@ class DocumentWriteList {
 		this.document_write_proxy = new Proxy(document.write, proxy_for_write);
 		if(this.document_write_proxy) document.write = this.document_write_proxy;
 	}
-	document_write: Document['write'] | null;
-	attached_document: Document | null;
+	document_write?;
+	attached_document?;
 	write(target: (...text: string[]) => void, thisArg: any, argArray: string[]) {
 		console.assert(target === this.document_write);
 		console.assert(thisArg === this.attached_document);
 		this.list.push(argArray, null);
 	}
-	document_write_proxy: ((...text: string[]) => void) | null;
+	document_write_proxy?;
 	destroy(should_try_to_destroy: boolean) {
 		if(this.attached_document && this.document_write_proxy) {
 			console.assert(this.attached_document.write === this.document_write_proxy);
@@ -182,13 +184,13 @@ class DocumentWriteList {
 			}
 		}
 		if(this.document_write_proxy) {
-			this.document_write_proxy = null;
+			this.document_write_proxy = void 0;
 		}
 		if(this.document_write) {
-			this.document_write = null;
+			this.document_write = void 0;
 		}
 		if(this.attached_document) {
-			this.attached_document = null;
+			this.attached_document = void 0;
 		}
 		if(should_try_to_destroy) {
 			return true;
@@ -196,9 +198,9 @@ class DocumentWriteList {
 	}
 }
 class UniqueIdGenerator {
-	m_current: number;
-	constructor() {
-		this.m_current = -1;
+	m_current;
+	constructor(start: number) {
+		this.m_current = start;
 	}
 	set_current(current_value: number) {
 		this.m_current = current_value;
@@ -618,7 +620,7 @@ function worker_code_function(verify_callback: (a: {
 		}
 	}
 }
-export type SpecType={
+export type SpecType = {
 	name: 'Breit-Wheeler process'
 	desc: 'Convert pure light to matter.'
 	done: false | true
@@ -626,7 +628,7 @@ export type SpecType={
 }
 declare global {
 	export interface Window {
-		atomepersecond: number; 
+		atomepersecond: number;
 		//spell:words totalAtome lightreset totalAchi _targets_achi
 		totalAtome: number;
 		prestige: number;
@@ -679,7 +681,7 @@ declare global {
 		da: any[];
 		lightreset(): void;
 		specialclick(that: any): void;
-		g_worker_state?: WorkerState | undefined;
+		g_worker_state: WorkerState | undefined;
 	}
 	export var Window: {
 		prototype: Window;
@@ -838,7 +840,7 @@ class WorkerState {
 	}
 	static delete_old_global_state() {
 		let old_worker_state = this.get_global_state();
-		if(old_worker_state){
+		if(old_worker_state) {
 			this.destroy_old_worker_state(old_worker_state, 'delete_global_state');
 		}
 	}
@@ -891,29 +893,50 @@ interface MapObject<Props extends {[key: string]: unknown}> extends Map<keyof Pr
 	get<K extends keyof Props>(key: K): Props[K];
 	// ... rest of the methods ...
 }
-type TimerState={
+type TimerState = {
 	type: TimerTypeTag;
 }
+type FirstStr<T extends string> = T extends `${infer U}${string}` ? U : '';
+type RemoveFirstStr<T extends string> = T extends `${string}${infer U}` ? U : '';
+type AnyOfStr<T extends string> = T extends `${infer U}${infer X}` ? X extends '' ? never : U | AnyOfStr<X> : '';
+type AnyOfArr<T extends any[]> = T extends [infer U, ...infer X] ? X extends [] ? U :  U | AnyOfArr<X> : never;
+
+type AnyOf<T>= T extends any[] ? AnyOfArr<T> : T extends string ? AnyOfStr<T> : never;
+
+type FirstArr<T extends any[]> = T extends [infer U, ...any[]] ? U : [];
+type RemoveFirst<T extends any[]> = T extends [any, ...infer U] ? U : [];
+type ReverseStr<U extends string> = U extends '' ? '' : `${ReverseStr<RemoveFirstStr<U>>}${FirstStr<U>}`;
+type ReverseArr<U extends any[]> = U extends [] ? [] : [...ReverseArr<RemoveFirst<U>>, FirstArr<U>];
+type Reverse<T>= T extends any[] ? ReverseArr<T> : T extends string ? ReverseStr<T> : never;
+
 class Timer {
 	id_generator;
 	m_remote_id_to_main_state_map;
 	m_api_map: MapObject<ApiMapData>;
-	weak_worker_state: WeakRef<WorkerState>|null;
-	m_api_info: TimerApiInfo;
+	weak_worker_state: WeakRef<WorkerState> | null;
+	m_api_info: Partial<TimerApiInfo>;
 	base_id: number;
-	constructor(id_generator: UniqueIdGenerator, api_info: TimerApiInfo) {
-		this.id_generator = id_generator;
+	constructor(api_info: Partial<TimerApiInfo>) {
 		this.m_remote_id_to_main_state_map = new Map;
 		this.weak_worker_state = null;
 		this.m_api_map = new Map<keyof ApiMapData, ApiMapData[keyof ApiMapData]>() as MapObject<ApiMapData>;
 		this.m_api_info = api_info;
-		this.m_api_map.set(api_info.set_single, window[api_info.set_single]);
-		this.m_api_map.set(api_info.set_repeating, window[api_info.set_repeating]);
-		this.m_api_map.set(api_info.clear_single, window[api_info.clear_single]);
-		this.m_api_map.set(api_info.clear_repeating, window[api_info.clear_repeating]);
-		this.base_id = window[api_info.set_single](timer_nop);
-		window[api_info.clear_single](this.base_id);
-		this.id_generator.set_current(this.base_id);
+		if(api_info.set_single)
+			this.m_api_map.set(api_info.set_single, window[api_info.set_single]);
+		if(api_info.set_repeating) this.m_api_map.set(api_info.set_repeating, window[api_info.set_repeating]);
+		if(api_info.clear_single) this.m_api_map.set(api_info.clear_single, window[api_info.clear_single]);
+		if(api_info.clear_repeating) this.m_api_map.set(api_info.clear_repeating, window[api_info.clear_repeating]);
+		if(api_info.set_single && api_info.clear_single) {
+			this.base_id = window[api_info.set_single](timer_nop);
+			window[api_info.clear_single](this.base_id);
+		} else if(api_info.set_repeating && api_info.clear_repeating) {
+			this.base_id = window[api_info.set_repeating](timer_nop);
+			window[api_info.clear_repeating](this.base_id);
+		} else {
+			console.info('Timer ids not linked with underlying api');
+			this.base_id = 1;
+		}
+		this.id_generator = new UniqueIdGenerator(this.base_id);
 	}
 	set_worker_state(worker_state_value: WorkerState) {
 		this.weak_worker_state = new WeakRef(worker_state_value);
@@ -928,12 +951,17 @@ class Timer {
 	}
 	verify_timer_state(main_state: TimerState, remote_id: number) {
 		if(!this.validate_timer_state(main_state)) {
-			let worker_state = this.weak_worker_state?.deref();
-			worker_state?.postMessage({
-				t: this.m_api_info.clear_any_msg_id,
-				v: remote_id
-			});
-			throw new Error("Verify failed in Timer.verify_timer_state");
+			if(!this.weak_worker_state) throw new Error("Invalid state");
+			let worker_state = this.weak_worker_state.deref();
+			if(!worker_state) throw new Error("Invalid state");
+			if(this.m_api_info.clear_any_msg_id) {
+				worker_state.postMessage({
+					t: this.m_api_info.clear_any_msg_id,
+					v: remote_id
+				});
+			} else {
+				throw new Error("Verify failed in Timer.verify_timer_state");
+			}
 		}
 	}
 	validate_timer_type_tag(type_tag: TimerTypeTag) {
@@ -978,27 +1006,33 @@ class Timer {
 			delay
 		};
 		this.store_main_state_by_id(remote_id, main_state);
-		let worker_state = this.weak_worker_state?.deref();
-		if(worker_state) {
-			if(type === TIMER_SINGLE) {
-				worker_state.postMessage({
-					t: this.m_api_info.set_single_msg_id,
-					v: {
-						t: remote_id,
-						v: delay
-					}
-				} as RemoteWorkerMessage203);
+		if(!this.m_api_info.set_single_msg_id) throw new Error("Invalid state");
+		if(!this.m_api_info.set_repeating_msg_id) throw new Error("Invalid state");
+		if(!this.weak_worker_state) throw new Error("Invalid state");
+		let worker_state = this.weak_worker_state.deref();
+		if(!worker_state) throw new Error("Invalid state");
+		let types:[0, 203, 204]=[0, 203, 204];
+		let do_set_message_id:AnyOfArr<typeof types>=0;
+		if(type === TIMER_SINGLE)do_set_message_id=this.m_api_info.set_single_msg_id;
+		if(type === TIMER_REPEATING)do_set_message_id=this.m_api_info.set_repeating_msg_id;
+		if(do_set_message_id === 0)throw new Error("Invalid state");
+		worker_state.postMessage({
+			t: do_set_message_id,
+			v: {
+				t: remote_id,
+				v: delay
 			}
-			if(type === TIMER_REPEATING) {
-				worker_state.postMessage({
-					t: this.m_api_info.set_repeating_msg_id,
-					v: {
-						t: remote_id,
-						v: delay
-					}
-				} as RemoteWorkerMessage204);
-			}
+		});
+		if(type === TIMER_REPEATING) {
+			worker_state.postMessage({
+				t: this.m_api_info.set_repeating_msg_id,
+				v: {
+					t: remote_id,
+					v: delay
+				}
+			});
 		}
+
 		return remote_id;
 	}
 	is_main_state_stored_by_id(remote_id: any) {
@@ -1039,20 +1073,24 @@ class Timer {
 	}
 	force_clear(type: TimerTypeTag, remote_id: any) {
 		this.verify_timer_type_tag(type);
-		let worker_state = this.weak_worker_state?.deref();
+		if(!this.weak_worker_state)throw new Error("Invalid state");
+		let worker_state = this.weak_worker_state.deref();
 		let main_state = this.get_main_state_by_id(remote_id);
-		if(main_state?.active) {
+		if(main_state.active) {
 			return this.clear(type, remote_id);
 		}
 		// we have to trust the user, go ahead and send the message
 		// anyway (this can technically send structured cloneable objects)
+		if(!worker_state) throw new Error("Invalid state");
+		if(!this.m_api_info.clear_single_msg_id) throw new Error("Invalid state");
+		if(!this.m_api_info.clear_repeating_msg_id) throw new Error("Invalid state");
 		if(type === TIMER_SINGLE) {
-			worker_state?.postMessage({
+			worker_state.postMessage({
 				t: this.m_api_info.clear_single_msg_id,
 				v: remote_id
 			});
 		} else if(type === TIMER_REPEATING) {
-			worker_state?.postMessage({
+			worker_state.postMessage({
 				t: this.m_api_info.clear_repeating_msg_id,
 				v: remote_id
 			});
@@ -1061,15 +1099,20 @@ class Timer {
 	clear(type: TimerTypeTag, remote_id: number) {
 		this.verify_timer_type_tag(type);
 		let main_state = this.get_main_state_by_id(remote_id);
-		if(main_state?.active) {
-			let worker_state = this.weak_worker_state?.deref();
+		if(!main_state) return;
+		if(!this.weak_worker_state) throw new Error("Invalid state");
+		if(!this.m_api_info.clear_single_msg_id) throw new Error("Invalid state");
+		if(!this.m_api_info.clear_repeating_msg_id) throw new Error("Invalid state");
+		if(main_state.active) {
+			let worker_state = this.weak_worker_state.deref();
+			if(!worker_state) throw new Error("Invalid state");
 			if(main_state.type === TIMER_SINGLE) {
-				worker_state?.postMessage({
+				worker_state.postMessage({
 					t: this.m_api_info.clear_single_msg_id,
 					v: remote_id
 				});
 			} else if(main_state.type === TIMER_REPEATING) {
-				worker_state?.postMessage({
+				worker_state.postMessage({
 					t: this.m_api_info.clear_repeating_msg_id,
 					v: remote_id
 				});
@@ -1080,13 +1123,12 @@ class Timer {
 	destroy() {
 		let api_info = this.m_api_info;
 		let api_map = this.m_api_map;
-		window[api_info.set_single] = api_map.get(api_info.set_single);
-		window[api_info.set_repeating] = api_map.get(api_info.set_repeating);
-		window[api_info.clear_single] = api_map.get(api_info.clear_single);
-		window[api_info.clear_repeating] = api_map.get(api_info.clear_repeating);
+		if(api_info.set_single) window[api_info.set_single] = api_map.get(api_info.set_single);
+		if(api_info.set_repeating) window[api_info.set_repeating] = api_map.get(api_info.set_repeating);
+		if(api_info.clear_single) window[api_info.clear_single] = api_map.get(api_info.clear_single);
+		if(api_info.clear_repeating) window[api_info.clear_repeating] = api_map.get(api_info.clear_repeating);
 		for(var timer_map_entry of this.main_state_entries()) {
-			let remote_timer_id = timer_map_entry[0];
-			let main_state = timer_map_entry[1];
+			const [, main_state] = timer_map_entry;
 			if(main_state.type === TIMER_SINGLE) {
 				// if the timer might get reset when calling the function while
 				// the timer functions are reset to the underlying api
@@ -1127,8 +1169,7 @@ function move_timers_to_worker_promise_executor(
 		return;
 	});
 	const worker_code_blob = new Blob(["(", worker_code_function.toString(), ")()", "\n//# sourceURL=$__.0"]);
-	let id_generator = new UniqueIdGenerator;
-	let timer = new Timer(id_generator, {
+	let timer = new Timer({
 		set_single_msg_id: 203,
 		set_repeating_msg_id: 204,
 		clear_single_msg_id: 205,
@@ -1137,12 +1178,12 @@ function move_timers_to_worker_promise_executor(
 		clear_single: "clearTimeout",
 		set_repeating: "setInterval",
 		clear_repeating: "clearInterval"
-	} as any);
+	});
 	let executor_handle = new PromiseExecutorHandle<WorkerState>(executor_accept, executor_reject);
 	const worker_state = new WorkerState(worker_code_blob, timer, executor_handle);
 	const weak_worker_state = new WeakRef(worker_state);
 	const setTimeout_global = setTimeout;
-	function remoteSetTimeout(handler: TimerHandler, timeout=0, ...target_arguments: any[]) {
+	function remoteSetTimeout(handler: TimerHandler, timeout = 0, ...target_arguments: any[]) {
 		if(!worker_state) {
 			window.setTimeout = setTimeout_global;
 			console.log('lost worker_state in timer');
@@ -1175,7 +1216,7 @@ function move_timers_to_worker_promise_executor(
 			console.log('lost worker_state in timer');
 			return clearInterval_global(id);
 		}
-		if(id !== void 0)worker_state.timer.clear(TIMER_REPEATING, id);
+		if(id !== void 0) worker_state.timer.clear(TIMER_REPEATING, id);
 	}
 	window.setTimeout = remoteSetTimeout;
 	window.setInterval = remoteSetInterval;
@@ -1270,7 +1311,7 @@ class SimpleStackVMParser {
 		let parts, arr = [], i = 0;
 		do {
 			parts = this.match_regex.exec(string);
-			if(!parts)break;
+			if(!parts) break;
 			let res = this.raw_parse_handle_regexp_match(parts);
 			if(res) arr.push(res);
 		} while(i++ < parser_max_match_iter);
@@ -1365,10 +1406,10 @@ class SimpleStackVM {
 		this.return_value = void 0;
 		this.running = false;
 	}
-	push(value:any) {
+	push(value: any) {
 		this.stack.push(value);
 	}
-	pop():any {
+	pop(): any {
 		return this.stack.pop();
 	}
 	run(...run_arguments: any[]) {
@@ -1425,7 +1466,7 @@ class SimpleStackVM {
 					break;
 				}
 				case 'global'/*Special*/: {
-					if(window)this.push(window);
+					if(window) this.push(window);
 					else this.push(globalThis);
 					break;
 				}
@@ -1682,12 +1723,12 @@ class AverageRatioRoot {
 	}
 	can_average(key: string) {
 		let ratio_calc = this.map.get(key);
-		if(!ratio_calc)throw new Error("Missing AverageRatio");
+		if(!ratio_calc) throw new Error("Missing AverageRatio");
 		return ratio_calc.can_average();
 	}
 	get_average(key: string) {
 		let ratio_calc = this.map.get(key);
-		if(!ratio_calc)throw new Error("Missing AverageRatio");
+		if(!ratio_calc) throw new Error("Missing AverageRatio");
 		return ratio_calc.get_average();
 	}
 	push_ratio([key, ratio_obj]: [string, AverageRatio]) {
@@ -1696,16 +1737,16 @@ class AverageRatioRoot {
 	}
 	push(value: any) {
 		let cur = this.map.get(this.ordered_keys[0]);
-		if(!cur)throw new Error("Missing AverageRatio");
+		if(!cur) throw new Error("Missing AverageRatio");
 		let res = cur.add(value, true, false);
 		for(let i = 1;i < this.ordered_keys.length;i++) {
 			let debug = false;
 			let key = this.ordered_keys[i];
 			cur = this.map.get(key);
-			if(!cur)throw new Error("Missing AverageRatio");
+			if(!cur) throw new Error("Missing AverageRatio");
 			let prev = this.map.get(this.ordered_keys[i - 1]);
 			if(key === '5min') debug = true;
-			if(!prev)throw new Error("Missing AverageRatio");
+			if(!prev) throw new Error("Missing AverageRatio");
 			res = cur.add(prev.get_average(), res, debug);
 		}
 	}
@@ -1719,9 +1760,9 @@ class AutoBuyState {
 	val
 	ratio_mode
 	locked_cycles
-	root_node:AsyncNodeRoot;
+	root_node: AsyncNodeRoot;
 	is_init_complete
-	constructor(root:AsyncNodeRoot) {
+	constructor(root: AsyncNodeRoot) {
 		this.root_node = root;
 		this.debug = false;
 		this.arr = [];
@@ -1732,10 +1773,10 @@ class AutoBuyState {
 		this.ratio_mode = 0;
 		this.locked_cycles = 0;
 		this.is_init_complete = false;
-		this.avg=new AverageRatioRoot;
-		this.prev_atomepersecond=0;
-		this.ratio_mult=0;
-		this.div=0;
+		this.avg = new AverageRatioRoot;
+		this.prev_atomepersecond = 0;
+		this.ratio_mult = 0;
+		this.div = 0;
 	}
 	avg: AverageRatioRoot;
 	prev_atomepersecond: number;
@@ -1781,7 +1822,7 @@ class AutoBuyState {
 			console.assert(false, 'ratio result is not finite');
 			debugger;
 		}
-		if(new_ratio)this.ratio = new_ratio;
+		if(new_ratio) this.ratio = new_ratio;
 	}
 	update_ratio_mode() {
 		switch(this.ratio_mode) {
@@ -1895,16 +1936,16 @@ class AutoBuy {
 	extra: number;
 	iter_count: number;
 	epoch_len: number;
-	background_audio: HTMLAudioElement|null;
+	background_audio: HTMLAudioElement | null;
 	state: AutoBuyState;
 	cint_arr: any[];
 	skip_save: boolean;
 	state_history_arr: string[];
 	compressor: MulCompression;
 	epoch_start_time: number;
-	root_node:AsyncNodeRoot;
+	root_node: AsyncNodeRoot;
 	constructor() {
-		this.root_node=new AsyncNodeRoot;
+		this.root_node = new AsyncNodeRoot;
 		this.delay = 0;
 		this.extra = 0;
 		this.iter_count = 0;
@@ -1917,7 +1958,7 @@ class AutoBuy {
 		this.compressor = new MulCompression;
 		this.load_state_history_arr(["S"]);
 		this.epoch_start_time = Date.now();
-		this.delay_arr=[];
+		this.delay_arr = [];
 		this.display_style_sheet = new CSSStyleSheet;
 		this.history_element = document.createElement("div");
 		this.delay_element = document.createElement("div");
@@ -1925,13 +1966,13 @@ class AutoBuy {
 		this.percent_ratio_element = document.createElement("div");
 		this.percent_ratio_change_element = document.createElement("div");
 		this.state_log_element = document.createElement("div");
-		this.state_history_arr_max_len=80;
+		this.state_history_arr_max_len = 80;
 	}
 	pre_init() {
 		// find elements
 		// find background_audio by id
 		this.background_audio = document.querySelector("#background_audio");
-		if(!this.background_audio)throw new Error("No background audio");
+		if(!this.background_audio) throw new Error("No background audio");
 		// change the audio element's volume, and remove
 		// the event listener that will change the volume
 		this.background_audio.onloadeddata = null;
@@ -1942,7 +1983,7 @@ class AutoBuy {
 		this.dom_pre_init();
 	}
 	async async_pre_init() {
-		if(!this.background_audio)throw new Error("No background audio");
+		if(!this.background_audio) throw new Error("No background audio");
 		try {
 			await this.background_audio.play();
 			return;
@@ -2142,7 +2183,7 @@ class AutoBuy {
 		};
 		for(var i = 0;i < this.delay_arr.length;i++) {
 			this.extra += this.delay_arr[i];
-			if(max!==void 0) max = Math.max(this.delay_arr[i], max);
+			if(max !== void 0) max = Math.max(this.delay_arr[i], max);
 			else max = this.delay_arr[i];
 		};
 		void max;
@@ -2230,7 +2271,7 @@ class AutoBuy {
 		this.do_delay_inc([1.007], 40);
 		this.next_delay(this.main, this.extra, '+');
 	}
-	pre_total: number|undefined;
+	pre_total: number | undefined;
 	fast_unit() {
 		this.pre_total = window.totalAtome;
 		do_auto_unit_promote();
@@ -2278,7 +2319,7 @@ class AutoBuy {
 		this.next_delay(this.special, this.extra, '>');
 	}
 	reset_delay_trigger() {
-		if(this.background_audio){
+		if(this.background_audio) {
 			this.background_audio.muted = !this.background_audio.muted;
 		}
 		this.next_delay(this.reset_delay_start, 60 * 2 * 1000, 'trigger');
@@ -2290,7 +2331,7 @@ class AutoBuy {
 		window.lightreset();
 	}
 	reset_delay_init() {
-		if(this.background_audio){
+		if(this.background_audio) {
 			this.background_audio.muted = !this.background_audio.muted;
 		}
 		this.next_delay(this.reset_delay_start, 60 * 2 * 1000, 'reset_delay');
@@ -2435,8 +2476,8 @@ function array_sample_end(arr: string[], rem_target_len: number) {
 	arr = arr.slice(-300);
 	let rem_len = char_len_of(arr);
 	while(rem_len > rem_target_len) {
-		let item=arr.shift();
-		if(item !==void 0)rem_len -= item.length + 1;
+		let item = arr.shift();
+		if(item !== void 0) rem_len -= item.length + 1;
 	}
 	return arr;
 }
@@ -2449,14 +2490,14 @@ function specialclick_inject(that: number) {
 	let doc = window.doc;
 	if(allspec[that].done == undefined) allspec[that].done = false;
 	if(allspec[that].cost <= window.totalAtome && allspec[that].done == false) {
-		let sb=doc.getElementById('specialsbought');
-		if(!sb)throw new Error;
+		let sb = doc.getElementById('specialsbought');
+		if(!sb) throw new Error;
 		sb.innerText = window.rounding(++window.specialsbought, false, 0);
 		if(that == 74) {
 		}
 		window.atomsinvest += allspec[that].cost;
-		let ae=doc.getElementById('atomsinvest');
-		if(ae!==void 0 && ae !== null)ae.innerText = window.rounding(window.atomsinvest, false, 0);
+		let ae = doc.getElementById('atomsinvest');
+		if(ae !== void 0 && ae !== null) ae.innerText = window.rounding(window.atomsinvest, false, 0);
 		allspec[that].done = true;
 		window.totalAtome -= allspec[that].cost;
 		var diff1 = window.calcDiff(that);
@@ -2639,7 +2680,7 @@ function remove_cint_item(cint_arr: [1 | 2, number, string][], cint_item: [1 | 2
 	cint_arr.splice(idx, 1);
 }
 function timer_wait_for_game_data(p_cint_item: [1 | 2, number, string]) {
-	remove_cint_item(cint_arr, p_cint_item);WeakRef
+	remove_cint_item(cint_arr, p_cint_item); WeakRef
 	let cint_item = [0, -1];
 	let cint = setTimeout(wait_for_game_data, 0, cint_item);
 	cint_item[1] = cint;
@@ -2692,7 +2733,7 @@ function main() {
 	var prev_node_prototype_insertBefore = Node.prototype.insertBefore;
 	document.addEventListener('onContentLoaded', remove_bad_dom_script_element);
 	let seen_proto: any[] = [];
-	Node.prototype.insertBefore = function<T extends Node>(node:T, child:Node|null):T {
+	Node.prototype.insertBefore = function <T extends Node>(node: T, child: Node | null): T {
 		let res, p_res;
 		if(node instanceof HTMLScriptElement) {
 			let should_insert_1 = dom_add_elm_filter(node);

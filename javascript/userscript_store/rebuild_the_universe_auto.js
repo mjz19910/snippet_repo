@@ -780,7 +780,6 @@
 			if(!e.src)return;
 			if(new URL(e.src).origin != location.origin)return;
 			if(e.src.indexOf("ads") > -1 || e.src.indexOf("track") > -1)return e.remove();
-			//spell:disable-next-line
 			if(e.src.indexOf("opentracker") > -1){
 				debugger;
 				return e.remove();
@@ -948,15 +947,15 @@
 		}
 		/**@arg {string[]} instruction @arg {[number]} left @ret {InstructionType}*/
 		static cook_instruction(instruction, left){
-			const [m_opcode, ...m_parameters] = instruction;
+			const [m_opcode, ...m_paramaters] = instruction;
 			switch(m_opcode) {
 					// variable argument count
-				case 'push':left[0] = 0;return [m_opcode, ...m_parameters];
+				case 'push':left[0] = 0;return [m_opcode, ...m_paramaters];
 					// 2 arguments
-				case 'call':left[0] -= 2;if(typeof m_parameters[0] === 'number')return [m_opcode, m_parameters[0]];else throw new Error("TypeError: Call argument is not parameter count");
+				case 'call':left[0] -= 2;if(typeof m_paramaters[0] === 'number')return [m_opcode, m_paramaters[0]];else throw new Error("TypeError: Call argument is not paramater count");
 					// one argument
 				case 'drop':case 'get':case 'return':case 'halt':case 'push_args':case 'this':case 'global':case 'breakpoint':left[0]--;return [m_opcode];
-				default:console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_parameters);throw new Error("Unexpected opcode when cooking instructions");
+				default:console.info("Info: opcode=%o instruction_paramaters=%o", m_opcode, m_paramaters);throw new Error("Unexpected opcode when cooking instructions");
 			}
 		}
 		/*@arg {string[][]} raw_instructions @ret {InstructionType[]}*/
@@ -1305,7 +1304,7 @@
 						this.ratio_mode++;
 						this.locked_cycles=80*12;
 					}
-				}break;
+				} break;
 				case 1:{
 					if(this.ratio < .35){
 						this.ratio_mode--;
@@ -1315,7 +1314,7 @@
 						this.ratio_mode++;
 						this.locked_cycles=80*12;
 					}
-				}break;
+				} break;
 				case 2:{
 					if(this.ratio < .45){
 						this.ratio_mode--;
@@ -1325,7 +1324,7 @@
 						this.ratio_mode++;
 						this.locked_cycles=80*12;
 					}
-				}break;
+				} break;
 				case 3:
 				default:{
 					if(this.ratio < .9){
@@ -1335,11 +1334,10 @@
 					if(this.ratio > 1.5){
 						let offset=this.ratio_mode-3;
 						console.log(offset);
-						if(this.ratio_mode > 3)break;
 						this.ratio_mode++;
 						this.locked_cycles=80*12;
 					}
-				}break;
+				} break;
 			}
 		}
 		get_mul_modifier(){
@@ -1612,19 +1610,9 @@
 			this.state.init();
 			this.update_dom();
 			this.main();
-			let original_lightreset=lightreset;
+			this.original_map.set('lightreset', lightreset);
 			window.lightreset=lightreset_inject;
 			window.specialclick=specialclick_inject;
-			function lightreset_inject(){
-				t.state_history_clear_for_reset();
-				t.skip_save=true;
-				window.addEventListener('unload', function(){
-					t.skip_save=false;
-					localStorage.auto_buy_delay_str="300,300,300,300";
-					localStorage.long_wait=12000;
-				});
-				original_lightreset();
-			}
 		}
 		state_history_clear_for_reset(){
 			this.state_history_arr=["R"];
@@ -1971,7 +1959,17 @@
 	function char_len_of(arr){
 		return arr.reduce((a,b)=>a + b.length, 0) + arr.length;
 	}
-	//spell:words specialsbought atomsinvest checkspec specaps noti plurials updateprogress achiSpec
+	function lightreset_inject(){
+		g_auto_buy.state_history_clear_for_reset();
+		g_auto_buy.skip_save=true;
+		window.addEventListener('unload', function(){
+			g_auto_buy.skip_save=false;
+			localStorage.auto_buy_delay_str="300,300,300,300";
+			localStorage.long_wait=12000;
+		});
+		let original=g_auto_buy.original_map.get('lightreset');
+		original();
+	}
 	function specialclick_inject(that) {
 		if (allspec[that].done == undefined) allspec[that].done = false;
 		if (allspec[that].cost <= totalAtome && allspec[that].done == false) {
