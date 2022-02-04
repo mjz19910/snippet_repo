@@ -1633,14 +1633,14 @@ class AverageRatio {
 		return calc_ratio(this.arr);
 	}
 }
-class AsyncDelayRecord<T, C extends (this: T) => void> {
+class AsyncDelayNode<T, C extends (this: T) => void> {
 	root;
 	cint: number;
 	target_obj: T;
 	target_callback: C;
 	label: string;
 	timeout: number;
-	constructor(root: AnyRecordRoot, target_obj: T, target_callback: C, label: string) {
+	constructor(root: AsyncNodeRoot, target_obj: T, target_callback: C, label: string) {
 		this.root = root;
 		this.cint = -1;
 		this.target_obj = target_obj;
@@ -1657,7 +1657,7 @@ class AsyncDelayRecord<T, C extends (this: T) => void> {
 		this.target_callback.call(this.target_obj);
 	}
 }
-class AnyRecordRoot {
+class AsyncNodeRoot {
 	children: any[];
 	constructor() {
 		this.children = [];
@@ -1719,9 +1719,10 @@ class AutoBuyState {
 	val
 	ratio_mode
 	locked_cycles
-	record_root
+	root_node:AsyncNodeRoot;
 	is_init_complete
-	constructor() {
+	constructor(root:AsyncNodeRoot) {
+		this.root_node = root;
 		this.debug = false;
 		this.arr = [];
 		this.ratio = 0;
@@ -1730,7 +1731,6 @@ class AutoBuyState {
 		this.val = 1;
 		this.ratio_mode = 0;
 		this.locked_cycles = 0;
-		this.record_root = new AnyRecordRoot;
 		this.is_init_complete = false;
 		this.avg=new AverageRatioRoot;
 		this.prev_atomepersecond=0;
@@ -1741,7 +1741,7 @@ class AutoBuyState {
 	prev_atomepersecond: number;
 	init(): void {
 		if(window.atomepersecond === 0) {
-			new AsyncDelayRecord(this.record_root, this, this.init, 'not ready AutoBuyState.update').start();
+			new AsyncDelayNode(this.root_node, this, this.init, 'not ready AutoBuyState.update').start();
 			return;
 		}
 		this.val = window.totalAtome / window.atomepersecond;
@@ -1865,13 +1865,13 @@ class AutoBuyState {
 		this.ratio_mult = window.prestige;
 		this.div = 60 * this.ratio_mult * 8;
 		if(window.atomepersecond === 0) {
-			new AsyncDelayRecord(this.record_root, this, this.update, 'not ready AutoBuyState.update').start();
+			new AsyncDelayNode(this.root_node, this, this.update, 'not ready AutoBuyState.update').start();
 			return;
 		}
 		this.val = window.totalAtome / window.atomepersecond / this.div;
 		if(!Number.isFinite(this.val)) {
 			console.log('fail', this.div, window.atomepersecond, window.totalAtome);
-			new AsyncDelayRecord(this.record_root, this, this.update, 'not ready AutoBuyState.update').start();
+			new AsyncDelayNode(this.root_node, this, this.update, 'not ready AutoBuyState.update').start();
 			return;
 		}
 		this.val *= this.get_mul_modifier();
@@ -1902,13 +1902,15 @@ class AutoBuy {
 	state_history_arr: string[];
 	compressor: MulCompression;
 	epoch_start_time: number;
+	root_node:AsyncNodeRoot;
 	constructor() {
+		this.root_node=new AsyncNodeRoot;
 		this.delay = 0;
 		this.extra = 0;
 		this.iter_count = 0;
 		this.epoch_len = 0;
 		this.background_audio = null;
-		this.state = new AutoBuyState;
+		this.state = new AutoBuyState(this.root_node);
 		this.cint_arr = [];
 		this.skip_save = false;
 		this.state_history_arr = [];
@@ -2637,7 +2639,7 @@ function remove_cint_item(cint_arr: [1 | 2, number, string][], cint_item: [1 | 2
 	cint_arr.splice(idx, 1);
 }
 function timer_wait_for_game_data(p_cint_item: [1 | 2, number, string]) {
-	remove_cint_item(cint_arr, p_cint_item);
+	remove_cint_item(cint_arr, p_cint_item);WeakRef
 	let cint_item = [0, -1];
 	let cint = setTimeout(wait_for_game_data, 0, cint_item);
 	cint_item[1] = cint;

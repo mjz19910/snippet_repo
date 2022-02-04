@@ -15,6 +15,16 @@
 // spell:words lazyload
 // spell:words adsbygoogle deinit totalAtome _targets_achi totalAchi tonext atomepersecond lightreset lightgray
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
+interface WeakRef<T extends object> {
+	readonly [Symbol.toStringTag]: "WeakRef";
+
+	/**
+	 * Returns the WeakRef instance's target object, or undefined if the target object has been
+	 * reclaimed.
+	 */
+	deref(): T | undefined;
+}
+
 type TimerTypeTag = 1 | 2;
 declare namespace Remote {
 	type TimerTypeTag = 1 | 2;
@@ -139,8 +149,8 @@ interface ElementCSSInlineStyle {
 }
 
 // declare var window:Window;
-function timer_nop(): void;
-class WorkerState {
+declare function timer_nop(): void;
+declare class WorkerState {
 	rejected: boolean;
 	valid: boolean;
 	connected: boolean;
@@ -168,7 +178,7 @@ class WorkerState {
 	static get global_state_key(): "g_worker_state";
 	destroy(): void;
 }
-class TimerStateData {
+declare class TimerStateData {
 	type: TimerTypeTag;
 	active: boolean;
 	target_function: Function;
@@ -196,7 +206,7 @@ type message206 = {
 	t: 206,
 	v: number
 };
-class Timer {
+declare class Timer {
 	id_generator: UniqueIdGenerator;
 	m_remote_id_to_main_state_map: Map<number, TimerStateData>;
 	weak_worker_state: WeakRef<WorkerState>;
@@ -224,12 +234,12 @@ class Timer {
 	clear(timer_mode_tag: TimerTypeTag, remote_id: number): void;
 	destroy(): void;
 }
-class VerifyError extends Error {
+declare class VerifyError extends Error {
 	name: "VerifyError";
 	constructor(message: string);
 }
-function VERIFY(assert_result: boolean, assert_message: string): void;
-function verify_worker_code_callback(verify_obj: {}): void;
+declare function VERIFY(assert_result: boolean, assert_message: string): void;
+declare function verify_worker_code_callback(verify_obj: {}): void;
 type TimerApiInfo = {
 	set_single_msg_id: 203,
 	set_repeating_msg_id: 204,
@@ -240,21 +250,21 @@ type TimerApiInfo = {
 	set_repeating: "setInterval",
 	clear_repeating: "clearInterval"
 };
-function create_worker_state(worker_code_blob: Blob, timer: Timer, executor_handle: PromiseExecutorHandle): WorkerState;
-const setTimeout_global: typeof setTimeout;
-function remoteSetTimeout(handler: TimerHandler, timeout?: number, ...target_arguments: any[]): number;
-const clearTimeout_global: typeof clearTimeout;
-function remoteClearTimeout(id?: number): void;
-const setInterval_global: typeof setInterval;
-function remoteSetInterval(handler: TimerHandler, timeout?: number, ...target_arguments: any[]): number;
-const clearInterval_global: typeof clearInterval;
-function remoteClearInterval(id?: number): void;
-function move_timers_to_worker_promise_executor(executor_accept: (value: void) => void, executor_reject: (reason?: any) => void): {
+declare function create_worker_state(worker_code_blob: Blob, timer: Timer, executor_handle: PromiseExecutorHandle): WorkerState;
+declare const setTimeout_global: typeof setTimeout;
+declare function remoteSetTimeout(handler: TimerHandler, timeout?: number, ...target_arguments: any[]): number;
+declare const clearTimeout_global: typeof clearTimeout;
+declare function remoteClearTimeout(id?: number): void;
+declare const setInterval_global: typeof setInterval;
+declare function remoteSetInterval(handler: TimerHandler, timeout?: number, ...target_arguments: any[]): number;
+declare const clearInterval_global: typeof clearInterval;
+declare function remoteClearInterval(id?: number): void;
+declare function move_timers_to_worker_promise_executor(executor_accept: (value: void) => void, executor_reject: (reason?: any) => void): {
 	get(): WorkerState;
 };
-function remove_element_callback(e: HTMLScriptElement): void;
-function remove_bad_dom_script_element(): void;
-class EventHandlerDispatch {
+declare function remove_element_callback(e: HTMLScriptElement): void;
+declare function remove_bad_dom_script_element(): void;
+declare class EventHandlerDispatch {
 	target_obj: any;
 	target_name: string;
 	constructor(target_obj: any, target_name: string);
@@ -272,7 +282,8 @@ type InstructionType = StackInstructionTypeCategory
 	| TuringInstructionTypeCategory
 	| SpecialInstructionTypeCategory
 	| DebugInstructionTypeCategory;
-class SimpleStackVM<ReturnType, StackItemType> {
+
+declare class SimpleStackVM<ReturnType, StackItemType> {
 	instructions: InstructionType[];
 	instruction_pointer: number;
 	stack: StackItemType[];
@@ -284,12 +295,12 @@ class SimpleStackVM<ReturnType, StackItemType> {
 	pop(): StackItemType;
 	run(...run_arguments: any[]): ReturnType;
 }
-class EventHandlerVMDispatch extends SimpleStackVM<any, any> {
+declare class EventHandlerVMDispatch extends SimpleStackVM<any, any> {
 	target_obj: any;
 	constructor(instructions: InstructionType[], target_obj: any);
 	handleEvent(event: any): void;
 }
-class CompressionStatsCalculator {
+declare class CompressionStatsCalculator {
 	hit_counts: number[];
 	cache: string[];
 	constructor();
@@ -302,15 +313,15 @@ class CompressionStatsCalculator {
 	calc_for_stats_window_size(stats_arr: any[][], arr: any[], win_size: number): void;
 	calc_for_stats_index(stats_arr: any[][], arr: any[], index: number): void;
 }
-class BaseCompression {
+declare class BaseCompression {
 	did_compress(src: string[], dst: string[]): boolean;
 	did_decompress(src: string[], dst: string[]): boolean;
 	compress_result(src: string[], dst: string[]): [boolean, string[]];
 	decompress_result(src: string[], dst: string[]): [boolean, string[]];
 }
-class CompressedArray extends Array<string>{}
-class UncompressedArray extends Array<string>{}
-class MulCompression extends BaseCompression {
+declare class CompressedArray extends Array<string>{}
+declare class UncompressedArray extends Array<string>{}
+declare class MulCompression extends BaseCompression {
 	stats_calculator: CompressionStatsCalculator;
 	compression_stats: any[];
 	constructor();
@@ -318,8 +329,8 @@ class MulCompression extends BaseCompression {
 	try_decompress(arr: CompressedArray): [boolean, UncompressedArray];
 	compress_array(arr: UncompressedArray): CompressedArray;
 }
-function calc_ratio(arr: number[]): number | 0;
-class AverageRatio {
+declare function calc_ratio(arr: number[]): number | 0;
+declare class AverageRatio {
 	arr: number[];
 	history: number[];
 	count: number;
@@ -334,32 +345,32 @@ class AverageRatio {
 }
 interface RecordType<T> {
 	children: T[];
-	on_child_start(record: T): void;
-	on_child_run(record: T): void;
+	append_child(record: T): void;
+	remove_child(record: T): void;
 }
-class BaseRecord<T> {
-	root: BaseRecordRoot<T>;
-	constructor(root: BaseRecordRoot<T>);
+declare class BaseRecord<T> {
+	root: AsyncNodeRoot<T>;
+	constructor(root: AsyncNodeRoot<T>);
 	start(): void;
 	run(): void;
 }
-class AsyncDelayRecord<T> extends BaseRecord<BaseRecordRoot<T>> {
+declare class AsyncDelayNode<T> extends BaseRecord<AsyncNodeRoot<T>> {
 	cint: number;
 	target_obj: any;
 	target_get_member_name: string;
 	label: string;
 	timeout: number;
-	constructor(root: BaseRecordRoot<T>, target_obj: any, get_member_name: string, label: string);
+	constructor(root: AsyncNodeRoot<T>, target_obj: any, get_member_name: string, label: string);
 	start(): void;
 	run(self?: this): void;
 }
-class BaseRecordRoot<T> implements RecordType<T> {
+declare class AsyncNodeRoot<T> implements RecordType<T> {
 	children: T[];
 	constructor();
-	on_child_start(record: T): void;
-	on_child_run(record: T): void;
+	append_child(record: T): void;
+	remove_child(record: T): void;
 }
-class AverageRatioRoot {
+declare class AverageRatioRoot {
 	map: Map<string, AverageRatio>;
 	ordered_keys: string[];
 	constructor();
@@ -369,7 +380,7 @@ class AverageRatioRoot {
 	push_ratio(ratio_tuple: [key: string, ratio: AverageRatio]): void;
 	push(value: number): void;
 }
-class AutoBuyState {
+declare class AutoBuyState {
 	debug: boolean;
 	arr: number[];
 	ratio: number;
@@ -378,7 +389,7 @@ class AutoBuyState {
 	val: number;
 	ratio_mode: 0 | 1 | 2 | 3;
 	locked_cycles: number;
-	record_root: AnyRecordRoot;
+	root_node: AsyncNodeRoot<AsyncDelayNode<{}>>;
 	is_init_complete: boolean;
 	avg: AverageRatioRoot;
 	prev_atomepersecond: number;
@@ -395,14 +406,14 @@ class AutoBuyState {
 	update(): void;
 	reset(): void;
 }
-function auto_buy_unload_handler(): void;
+declare function auto_buy_unload_handler(): void;
 type TimeoutCintItem = [0, number, string];
 type CIntItem = TimeoutCintItem;
-var timeplayed: number;
-function lightreset(): void;
-function lightreset_inject(): void;
-function async_compress(self: AutoBuy): void;
-class AutoBuy {
+declare var timeplayed: number;
+declare function lightreset(): void;
+declare function lightreset_inject(): void;
+declare function async_compress(self: AutoBuy): void;
+declare class AutoBuy {
 	delay: number;
 	extra: number;
 	iter_count: number
@@ -472,8 +483,8 @@ class AutoBuy {
 	reset_delay_run(self?: this): void;
 	reset_delay_init(self?: this): void;
 }
-const auto_buy_obj: AutoBuy;
-class AsyncTrigger<S, W, N> {
+declare const auto_buy_obj: AutoBuy;
+declare class AsyncTrigger<S, W, N> {
 	m_set_flag: boolean;
 	trigger_handler: any;
 	promise_set: Promise<S>;
@@ -492,38 +503,38 @@ class AsyncTrigger<S, W, N> {
 	notified(): Promise<N>;
 }
 type PromiseResult<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
-class Sub<N, V>{
+declare class Sub<N, V>{
 	run(v: N, n: V): number;
 }
-class WhileDoLoop extends TypeRun<any> {}
-class IfStatement extends TypeRun<any> {}
-class TypeRun<T> {
+declare class WhileDoLoop extends TypeRun<any> {}
+declare class IfStatement extends TypeRun<any> {}
+declare class TypeRun<T> {
 	run_arg1(using_val: T): void;
 }
 //spell: disable-next-line
-class TypeRunOper<A, B> extends TypeRun<A | B>{
+declare class TypeRunOper<A, B> extends TypeRun<A | B>{
 	run_arg2(right: A, left: B): void;
 }
 //spell: disable-next-line
-class TypeRunLtEq<A, B> extends TypeRunOper<A, B>{}
-class AsyncSemaphore {
+declare class TypeRunLtEq<A, B> extends TypeRunOper<A, B>{}
+declare class AsyncSemaphore {
 	count: number;
 	notify_waiters_vec: AsyncTrigger<any, void, number>[];
 	constructor();
 	inc(cnt: number): Promise<void>;
 	dec(cnt: number): Promise<void>;
 }
-function do_auto_unit_promote(): void;
-function map_to_tuple(this: string[], e: any, i: any): [typeof e, typeof this[typeof i]];
-function to_tuple_arr(keys: any[], values: any): ReturnValue<typeof keys.map>;
-function promise_exec(a: (value: void) => void): void;
-function do_async_wait(delay: number): Promise<void>;
-function array_sample_end(arr: string[], rem_target_len: number): string[];
-function char_len_of<T extends string>(arr: T[]): number;
-var allspec: any[];
+declare function do_auto_unit_promote(): void;
+declare function map_to_tuple(this: string[], e: any, i: any): [typeof e, typeof this[typeof i]];
+declare function to_tuple_arr(keys: any[], values: any): ReturnValue<typeof keys.map>;
+declare function promise_exec(a: (value: void) => void): void;
+declare function do_async_wait(delay: number): Promise<void>;
+declare function array_sample_end(arr: string[], rem_target_len: number): string[];
+declare function char_len_of<T extends string>(arr: T[]): number;
+declare var allspec: any[];
 //spell:words specialsbought atomsinvest checkspec specaps noti plurials updateprogress achiSpec
-function specialclick_inject(that: typeof allspec[number]): void;
-function on_page_is_loaded(): void;
+declare function specialclick_inject(that: typeof allspec[number]): void;
+declare function on_page_is_loaded(): void;
 type ProxySetHandler = [target: object, propertyKey: PropertyKey, value: any, receiver?: any];
 type ProxyGetHandler = [target: object, propertyKey: PropertyKey, receiver?: any];
 type ProxyApplyHandler = [target: Function, thisArgument: any, argumentsList: ArrayLike<any>];
@@ -533,7 +544,7 @@ type P3T = [null, 3 | 12 | 8 | 4];
 type P4T = [...P1T | P2T | P3T, ...P1T | P2T | P3T];
 type ProxyFromType = (P1T[1] & P4T[1])[];
 type V1 = [...ProxyFromType];
-class ProxyHandlers {
+declare class ProxyHandlers {
 	count_arr: number[];
 	constructor(root: any);
 	so_init(): void;
@@ -578,41 +589,47 @@ class ProxyHandlers {
 		from: (string | number | null)[]
 	): PropertyDecorator;
 }
-class KeepSome extends Array {
+declare class KeepSome extends Array {
 	constructor();
 	push(value: any): number;
 	push_at<T extends 0>(index: T, value: any): number;
 	push_at<T extends number>(index: T, value: any): number | void;
 	push_va(...a: any[]): void;
 }
-function define_property_value(
+declare function define_property_value(
 	obj: any, name: any, value: any,
 	...props: [writable?: boolean, enumerable?: boolean, configurable?: boolean]
 ): void;
-function define_property_get_set(
+declare function define_property_get_set(
 	obj: any, name: any, get_set_obj: any,
 	...props: [enumerable: boolean, configurable: boolean]
 ): void;
-function define_property_get_void(
+declare function define_property_get_void(
 	obj: any, name: any,
 	...props: [enumerable?: boolean, configurable?: boolean]
 ): void;
-function define_property_set_callback(
+declare function define_property_set_callback(
 	obj: any, name: any, set: any,
 	...props: [enumerable?: boolean, configurable?: boolean]
 ): void;
-function got_jquery(
+declare function got_jquery(
 	jquery_func: (...jquery_args: unknown[]) => unknown
 ): void;
-function proxy_jquery(): void;
-function pace_finish_proxy_apply(
+declare function proxy_jquery(): void;
+declare function pace_finish_proxy_apply(
 	func: (value: WorkerState) => void,
 	this_v: any, args: any[]
 ): void;
-function on_game_data_set(): void;
-function on_timers_moved(): void;
-function dom_add_elm_filter(elm: HTMLScriptElement): boolean;
-function main(): void;
+declare function on_game_data_set(): void;
+declare function on_timers_moved(): void;
+declare function dom_add_elm_filter(elm: HTMLScriptElement): boolean;
+declare function main(): void;
+export type SpecType={
+	name: 'Breit-Wheeler process'
+	desc: 'Convert pure light to matter.'
+	done: false | true
+	cost: 100000
+}
 
 declare global {
 	export interface Window {
@@ -658,12 +675,12 @@ declare global {
 		Pace: {
 			bar: {
 				progress: number,
-				finish:Function;
+				finish: Function;
 			}
 		};
-		_SM_Data:any;
-		on_on_timers_moved_first:boolean;
-		document_write_list:DocumentWriteList;
+		_SM_Data: any;
+		on_on_timers_moved_first: boolean;
+		document_write_list: DocumentWriteList;
 		da: any[];
 		lightreset(): void;
 		specialclick(that: any): void;
@@ -680,7 +697,7 @@ declare global {
 		adoptedStyleSheets: CSSStyleSheet[];
 
 		// don't make an error, just do nothing
-		stop():void;
+		stop(): void;
 	}
 	interface CSSStyleSheet extends StyleSheet {
 		replace(string: string): Promise<CSSStyleSheet>

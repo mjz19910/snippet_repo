@@ -1083,7 +1083,7 @@
 			this.root.on_child_run(this);
 		}
 	}
-	class AsyncDelayRecord extends BaseRecord {
+	class AsyncDelayNode extends BaseRecord {
 		constructor(root, target_obj, get_member_name, label) {
 			super(root);
 			this.cint=-1;
@@ -1102,7 +1102,7 @@
 			this.target_obj[this.target_get_member_name]();
 		}
 	}
-	class AnyRecordRoot {
+	class AsyncNodeRoot {
 		constructor(){
 			this.children=[];
 		}
@@ -1151,7 +1151,8 @@
 		}
 	}
 	class AutoBuyState{
-		constructor(){
+		constructor(root){
+			this.root_node=root;
 			this.debug=false;
 			this.arr=[];
 			this.ratio=0;
@@ -1160,12 +1161,11 @@
 			this.val=1;
 			this.ratio_mode=0;
 			this.locked_cycles=0;
-			this.record_root=new AnyRecordRoot;
 			this.is_init_complete=false;
 		}
 		init(){
 			if(atomepersecond === 0){
-				new AsyncDelayRecord(this.record_root, this, 'init', 'not ready AutoBuyState.update').start();
+				new AsyncDelayNode(this.root_node, this, 'init', 'not ready AutoBuyState.update').start();
 				return;
 			}
 			this.avg=new AverageRatioRoot;
@@ -1288,13 +1288,13 @@
 			this.ratio_mult=prestige;
 			this.div=60*this.ratio_mult*8;
 			if(atomepersecond === 0){
-				new AsyncDelayRecord(this.record_root, this, 'update', 'not ready AutoBuyState.update').start();
+				new AsyncDelayNode(this.root_node, this, 'update', 'not ready AutoBuyState.update').start();
 				return;
 			}
 			this.val=totalAtome/atomepersecond/this.div;
 			if(!Number.isFinite(this.val)){
 				console.log('fail', this.div, atomepersecond, totalAtome);
-				new AsyncDelayRecord(this.record_root, this, 'update', 'not ready AutoBuyState.update').start();
+				new AsyncDelayNode(this.root_node, this, 'update', 'not ready AutoBuyState.update').start();
 				return;
 			}
 			this.val*=this.get_mul_modifier();
