@@ -86,6 +86,7 @@ words:
   - mults
   - newcp
   - nocheckin
+  - nodenext
   - noframe
   - nthis
   - nuxt_visitor

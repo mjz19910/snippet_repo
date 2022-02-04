@@ -1,6 +1,25 @@
 {
 	"compilerOptions": {
-		"lib":["es2020","dom"],
-		"types": []
-	}
+		"target": "esnext",
+		"lib": ["esnext","DOM"],
+		"types": [],
+		"strict": true,
+		"declaration": true,
+		"checkJs": true,
+		"allowJs": true,
+		"strictNullChecks": true,
+		"module":"nodenext",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"outDir": "./lib",
+		"typeRoots": [
+			"./node_modules/@types"
+		]
+	},
+	"include": ["**/*"],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts"
+	]
 }
