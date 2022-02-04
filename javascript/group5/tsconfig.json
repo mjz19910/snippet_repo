@@ -1,12 +1,8 @@
 {
 	"compilerOptions": {
-		"experimentalDecorators": true,
-		"target": "esnext",
-		"lib": ["esnext","DOM"],
-		"types": [],
 		"declaration": true,
-		//"module": "ESNext",
-		"module":"NodeNext",
+		"module": "commonjs",
+		"target": "esnext",
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"noImplicitAny": true,
