@@ -4,13 +4,82 @@ const code = `(function (rebuild) {
         g_worker_state: WorkerState;
     })(global = rebuild.global || (rebuild.global = {}));
 })(rebuild || (rebuild = {}));`;
+/**@arg {number} index */
+function step_template(index) {
+	switch(this.code[index]) {
+		case 'f': {
+			let chk = this.code.slice(index, index + "function".length);
+			if(chk === 'function') {
+				this.tokens.push("function");
+
+			}
+		} break;
+		default: {
+			console.log("??(\"%s\")", this.code[index]);
+		}
+	}
+}
 let parse_depth = 0;
 class Parser {
+	/**@arg {string} code */
 	constructor(code) {
 		this.code = code;
-		this.tokens=[];
+		/**@type {string[]} */
+		this.tokens = [];
 		this.step_index = 0;
-		this.steps = Array(255).fill('step_').map((e, dx) => e + (dx + 1));
+		/**@type {string[]} */
+		this.steps = [/**@arg {number} index */
+			function step_1(index) {
+				let ret = null;
+				let char = this.code[index];
+				switch(char) {
+					case "()"[0]: {
+						this.tokens.push(char);
+						switch(this.code[index + 1]) {
+							case 'f': {
+								this.step_index++;
+								ret = 1;
+							} break;
+						}
+					} break;
+					case "()"[1]: {
+						console.log(2);
+					} break;
+				}
+				return ret;
+			},
+			// "f"
+			/**@arg {number} index */
+			function step_2(index) {
+				switch(this.code[index]) {
+					case 'f': {
+						let chk = this.code.slice(index, index + "function".length);
+						if(chk === 'function') {
+							this.tokens.push("function");
+
+						}
+					} break;
+					default: {
+						console.log("??(\"%s\")", this.code[index]);
+					}
+				}
+			},
+			// `function${infer U}`
+			/**@arg {number} index */
+			function step_3(index) {
+				switch(this.code[index]) {
+					case 'f': {
+						let chk = this.code.slice(index, index + "function".length);
+						if(chk === 'function') {
+							this.tokens.push("function");
+
+						}
+					} break;
+					default: {
+						console.log("??(\"%s\")", this.code[index]);
+					}
+				}
+			}];
 	}
 	run() {
 		let index = 0;
@@ -27,44 +96,6 @@ class Parser {
 				continue;
 			}
 		}
-	}
-	step_1(index) {
-		let ret = null;
-		let char=this.code[index];
-		switch(char) {
-			case "()"[0]: {
-				this.tokens.push(char);
-				switch(this.code[index + 1]) {
-					case 'f': {
-						this.step_index++;
-						ret = 1;
-					} break;
-				}
-			} break;
-			case "()"[1]: {
-				console.log(2);
-			} break;
-		}
-		return ret;
-	}
-	// "f"
-	step_2(index) {
-		switch(this.code[index]) {
-			case 'f':{
-				let chk=this.code.slice(index, index+"function".length);
-				if(chk === 'function'){
-					this.tokens.push("function");
-
-				}
-			}break;
-			default:{
-				console.log("??(\"%s\")", this.code[index]);
-			}
-		}
-	}
-	// `function${infer U}`
-	step_3(index){
-
 	}
 }
 new Parser(code).run();

@@ -6,7 +6,7 @@
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"outDir": "./lib",
+		"outDir": "../typescript_lib",
 		"strict": true,
 		"typeRoots": [
 			"./node_modules/@types"
