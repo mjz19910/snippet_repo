@@ -1,20 +1,3 @@
-// ==UserScript==
-// @name		 rebuild the universe automation
-// @namespace	http://tampermonkey.net/
-// @version	  0.1
-// @description  try to take over the world!
-// @author	   You
-// @match		http://rebuildtheuniverse.com/*
-// @match		http://rebuildtheuniverse.com
-// @match		https://rebuildtheuniverse.com/*
-// @match		https://rebuildtheuniverse.com
-// @run-at	   document-start
-// @grant		none
-// ==/UserScript==
-// spell:words deref
-// spell:words lazyload
-// spell:words adsbygoogle deinit totalAtome _targets_achi totalAchi tonext atomepersecond lightreset lightgray
-/* eslint-disable no-undef,no-lone-blocks,no-eval */
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
 }
@@ -24,7 +7,6 @@ type RemoteTimerState = {
 	active: boolean;
 	id: number;
 }
-
 class RemoteTimer {
 	m_remote_to_local_timer_state_map: Map<number, RemoteTimerState>;
 	m_api_info: TimerApiInfo;
@@ -636,6 +618,88 @@ function worker_code_function(verify_callback: (a: {
 		}
 	}
 }
+export type SpecType={
+	name: 'Breit-Wheeler process'
+	desc: 'Convert pure light to matter.'
+	done: false | true
+	cost: 100000
+}
+declare global {
+	export interface Window {
+		atomepersecond: number; 
+		//spell:words totalAtome lightreset totalAchi _targets_achi
+		totalAtome: number;
+		prestige: number;
+		g_auto_buy: AutoBuy;
+		__testing__: false;
+		bonusAll(): void;
+		allspec: SpecType[];
+		specialclick(index: number): void;
+		lightreset(): void;
+		timeplayed: number;
+		totalAchi(): number;
+		_targets_achi: any[];
+		arUnit: any[];
+		Get_Unit_Type(v: any): any;
+		getUnitPromoCost(v: any): number;
+		Find_ToNext(v: number): number;
+		_targets: any[];
+		mainCalc(v: any): void;
+		tonext(v: number): void;
+		specialsbought: number;
+		doc: Document;
+		rounding(v: number, x: any, y: any): string;
+		atomsinvest: number;
+		calcDiff(v: number): number;
+		noti: boolean;
+		gritter: any;
+		toTitleCase(v: string): string;
+		cint_arr: string[];
+		//spell:words adsbygoogle
+		adsbygoogle: {
+			op: any,
+			push(v: number): void;
+		};
+		plurials(v: string): string;
+		arrayNames: string[];
+		updateprogress(v: any): void;
+		$: (val: any) => any;
+		seeUnit(v: number): any;
+		checkspec(): void;
+		achiSpec(): void;
+		Pace: {
+			bar: {
+				progress: number,
+				finish: Function;
+			}
+		};
+		_SM_Data: any;
+		on_on_timers_moved_first: boolean;
+		document_write_list: DocumentWriteList;
+		da: any[];
+		lightreset(): void;
+		specialclick(that: any): void;
+		g_worker_state?: WorkerState | undefined;
+	}
+	export var Window: {
+		prototype: Window;
+		new(): Window;
+	};
+	interface HTMLDivElement {
+		style: CSSStyleDeclaration;
+	}
+	interface Document {
+		adoptedStyleSheets: CSSStyleSheet[];
+
+		// don't make an error, just do nothing
+		stop(): void;
+	}
+	interface CSSStyleSheet extends StyleSheet {
+		replace(string: string): Promise<CSSStyleSheet>
+	}
+}
+
+export var window: Window & typeof globalThis;
 class WorkerState {
 	rejected: boolean
 	valid: boolean
@@ -643,8 +707,8 @@ class WorkerState {
 	worker_code: Blob;
 	timer: Timer;
 	executor_handle: PromiseExecutorHandle<WorkerState>
-	worker: Worker|null;
-	worker_url: string|null;
+	worker: Worker | null;
+	worker_url: string | null;
 	constructor(worker_code_blob: Blob, timer: Timer, executor_handle: PromiseExecutorHandle<WorkerState>) {
 		let has_blob = false;
 		if(worker_code_blob instanceof Blob) has_blob = true;
@@ -744,9 +808,9 @@ class WorkerState {
 		}
 	}
 	postMessage(data: RemoteWorkerMessage) {
-		if(this.worker){
+		if(this.worker) {
 			return this.worker.postMessage(data);
-		}else{
+		} else {
 			console.info("message lost %o", data);
 			throw new Error("Tried to post a message and worker was null");
 		}
@@ -774,7 +838,9 @@ class WorkerState {
 	}
 	static delete_old_global_state() {
 		let old_worker_state = this.get_global_state();
-		this.destroy_old_worker_state(old_worker_state, 'delete_global_state');
+		if(old_worker_state){
+			this.destroy_old_worker_state(old_worker_state, 'delete_global_state');
+		}
 	}
 	static destroy_old_worker_state(worker_state_value: WorkerState, before_destroy_call_name: keyof typeof WorkerState) {
 		if(before_destroy_call_name === 'delete_global_state') {
@@ -784,17 +850,15 @@ class WorkerState {
 		}
 		worker_state_value.destroy();
 	}
+
 	static get_global_state() {
 		return window[this.global_state_key];
 	}
 	static set_global_state(worker_state_value: WorkerState) {
-		this.maybe_delete_old_global_state_value(worker_state_value);
-		let win = (window as any as {[WorkerState.global_state_key]?: WorkerState});
-		win[this.global_state_key] = worker_state_value;
+		window[this.global_state_key] = worker_state_value;
 	}
 	static delete_global_state() {
-		let win = (window as any as {[WorkerState.global_state_key]?: WorkerState});
-		delete win[this.global_state_key];
+		delete window[this.global_state_key];
 	}
 	static get global_state_key(): "g_worker_state" {
 		return "g_worker_state";
@@ -803,8 +867,10 @@ class WorkerState {
 		if(this.worker) {
 			this.worker.terminate();
 			this.worker = null;
-			URL.revokeObjectURL(this.worker_url);
-			this.worker_url = null;
+			if(this.worker_url) {
+				URL.revokeObjectURL(this.worker_url);
+				this.worker_url = null;
+			}
 			if(!this.executor_handle.closed()) {
 				this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
 			}
@@ -825,14 +891,14 @@ interface MapObject<Props extends {[key: string]: unknown}> extends Map<keyof Pr
 	get<K extends keyof Props>(key: K): Props[K];
 	// ... rest of the methods ...
 }
-class TimerState {
+type TimerState={
 	type: TimerTypeTag;
 }
 class Timer {
 	id_generator;
 	m_remote_id_to_main_state_map;
 	m_api_map: MapObject<ApiMapData>;
-	weak_worker_state: WeakRef<WorkerState>;
+	weak_worker_state: WeakRef<WorkerState>|null;
 	m_api_info: TimerApiInfo;
 	base_id: number;
 	constructor(id_generator: UniqueIdGenerator, api_info: TimerApiInfo) {
@@ -862,8 +928,8 @@ class Timer {
 	}
 	verify_timer_state(main_state: TimerState, remote_id: number) {
 		if(!this.validate_timer_state(main_state)) {
-			let worker_state = this.weak_worker_state.deref();
-			worker_state.postMessage({
+			let worker_state = this.weak_worker_state?.deref();
+			worker_state?.postMessage({
 				t: this.m_api_info.clear_any_msg_id,
 				v: remote_id
 			});
@@ -912,7 +978,7 @@ class Timer {
 			delay
 		};
 		this.store_main_state_by_id(remote_id, main_state);
-		let worker_state = this.weak_worker_state.deref();
+		let worker_state = this.weak_worker_state?.deref();
 		if(worker_state) {
 			if(type === TIMER_SINGLE) {
 				worker_state.postMessage({
@@ -973,7 +1039,7 @@ class Timer {
 	}
 	force_clear(type: TimerTypeTag, remote_id: any) {
 		this.verify_timer_type_tag(type);
-		let worker_state = this.weak_worker_state.deref();
+		let worker_state = this.weak_worker_state?.deref();
 		let main_state = this.get_main_state_by_id(remote_id);
 		if(main_state?.active) {
 			return this.clear(type, remote_id);
@@ -981,12 +1047,12 @@ class Timer {
 		// we have to trust the user, go ahead and send the message
 		// anyway (this can technically send structured cloneable objects)
 		if(type === TIMER_SINGLE) {
-			worker_state.postMessage({
+			worker_state?.postMessage({
 				t: this.m_api_info.clear_single_msg_id,
 				v: remote_id
 			});
 		} else if(type === TIMER_REPEATING) {
-			worker_state.postMessage({
+			worker_state?.postMessage({
 				t: this.m_api_info.clear_repeating_msg_id,
 				v: remote_id
 			});
@@ -996,14 +1062,14 @@ class Timer {
 		this.verify_timer_type_tag(type);
 		let main_state = this.get_main_state_by_id(remote_id);
 		if(main_state?.active) {
-			let worker_state = this.weak_worker_state.deref();
+			let worker_state = this.weak_worker_state?.deref();
 			if(main_state.type === TIMER_SINGLE) {
-				worker_state.postMessage({
+				worker_state?.postMessage({
 					t: this.m_api_info.clear_single_msg_id,
 					v: remote_id
 				});
 			} else if(main_state.type === TIMER_REPEATING) {
-				worker_state.postMessage({
+				worker_state?.postMessage({
 					t: this.m_api_info.clear_repeating_msg_id,
 					v: remote_id
 				});
@@ -1041,8 +1107,8 @@ function VERIFY(assert_result: boolean, assert_message: string) {
 		throw new VerifyError(assert_message);
 	}
 }
-function move_timers_to_worker_promise_executor<T extends WorkerState>(
-	executor_accept: (value: T | null) => void,
+function move_timers_to_worker_promise_executor(
+	executor_accept: (value: WorkerState | null) => void,
 	executor_reject: (reason?: any) => void
 ) {
 	if(globalThis.hasOwnProperty('remote_worker_state')) {
@@ -1076,7 +1142,7 @@ function move_timers_to_worker_promise_executor<T extends WorkerState>(
 	const worker_state = new WorkerState(worker_code_blob, timer, executor_handle);
 	const weak_worker_state = new WeakRef(worker_state);
 	const setTimeout_global = setTimeout;
-	function remoteSetTimeout(handler: TimerHandler, timeout: number, ...target_arguments: any[]) {
+	function remoteSetTimeout(handler: TimerHandler, timeout=0, ...target_arguments: any[]) {
 		if(!worker_state) {
 			window.setTimeout = setTimeout_global;
 			console.log('lost worker_state in timer');
@@ -1085,13 +1151,13 @@ function move_timers_to_worker_promise_executor<T extends WorkerState>(
 		return worker_state.timer.set(TIMER_SINGLE, handler, timeout, target_arguments);
 	}
 	const clearTimeout_global = clearTimeout;
-	function remoteClearTimeout(id: number = void 0) {
+	function remoteClearTimeout(id: number | undefined): void {
 		if(!worker_state) {
 			window.clearTimeout = clearTimeout_global;
 			console.log('lost worker_state in timer');
 			return clearTimeout_global(id);
 		}
-		worker_state.timer.clear(TIMER_SINGLE, id);
+		if(id !== void 0) worker_state.timer.clear(TIMER_SINGLE, id);
 	}
 	const setInterval_global = setInterval;
 	function remoteSetInterval(handler: TimerHandler, timeout = 0, ...target_arguments: any[]) {
@@ -1103,13 +1169,13 @@ function move_timers_to_worker_promise_executor<T extends WorkerState>(
 		return worker_state.timer.set(TIMER_REPEATING, handler, timeout, target_arguments);
 	}
 	const clearInterval_global = clearInterval;
-	function remoteClearInterval(id: number) {
+	function remoteClearInterval(id?: number) {
 		if(!worker_state) {
 			window.clearInterval = clearInterval_global;
 			console.log('lost worker_state in timer');
 			return clearInterval_global(id);
 		}
-		worker_state.timer.clear(TIMER_REPEATING, id);
+		if(id !== void 0)worker_state.timer.clear(TIMER_REPEATING, id);
 	}
 	window.setTimeout = remoteSetTimeout;
 	window.setInterval = remoteSetInterval;
@@ -1140,31 +1206,18 @@ function remove_bad_dom_script_element() {
 	}
 	Array.prototype.forEach.call(document.querySelectorAll("script"), remove_element_callback);
 };
-type GetFn<T, U extends keyof T> = T extends T[U] ? {
-	[K in U]: (this: T) => void
-} : never;
 
-
-class EventHandlerDispatch<T extends {
-	[K in U]: (this: T, ev: Event) => void;
-}, U extends keyof T> {
-	target_obj: T
-	target_name: U;
-	target_fn: T[U];
-	constructor(target_obj: T, target_name: U) {
+class EventHandlerDispatch<T, U> {
+	target_obj;
+	target_fn;
+	constructor(target_obj: U, target_fn: (_event: T) => void) {
 		this.target_obj = target_obj;
-		this.target_name = target_name;
-		this.target_fn = this.target_obj[this.target_name];
+		this.target_fn = target_fn;
 	}
-	handleEvent<Z extends Event>(event: Z) {
-		this.target_obj[this.target_name](event);
+	handleEvent(event: T) {
+		this.target_fn.call(this.target_obj, event);
 	}
 }
-type TypeMaybe<T extends V, V> =
-	T extends Extract<T, infer U>
-	? U
-	: never
-
 class SimpleStackVMParser {
 	static match_regex = /(.+?)(;|$)/gm;
 	static parse_int_arg(cur: string[] | number[], arg_loc: number) {
@@ -1217,9 +1270,10 @@ class SimpleStackVMParser {
 		let parts, arr = [], i = 0;
 		do {
 			parts = this.match_regex.exec(string);
+			if(!parts)break;
 			let res = this.raw_parse_handle_regexp_match(parts);
 			if(res) arr.push(res);
-		} while(parts && i++ < parser_max_match_iter);
+		} while(i++ < parser_max_match_iter);
 		if(parts) {
 			console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);
 		}
@@ -1235,19 +1289,19 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 	static cook_instruction(instruction: string[], left: [number]): InstructionType {
-		const [m_opcode, ...m_paramaters] = instruction;
+		const [m_opcode, ...m_parameters] = instruction;
 		switch(m_opcode) {
 			// variable argument count
 			case 'push':
 				left[0] = 0;
-				return [m_opcode, ...m_paramaters];
+				return [m_opcode, ...m_parameters];
 			// 2 arguments
 			case 'call': {
-				if(typeof m_paramaters[0] === 'number') {
+				if(typeof m_parameters[0] === 'number') {
 					left[0] -= 2;
-					return [m_opcode, m_paramaters[0]];
+					return [m_opcode, m_parameters[0]];
 				} else {
-					throw new Error("TypeError: Call argument is not paramater count");
+					throw new Error("TypeError: Call argument is not parameter count");
 				}
 			} break;
 			// one argument
@@ -1257,12 +1311,12 @@ class SimpleStackVMParser {
 			case 'halt':
 			case 'push_args':
 			case 'this':
-			case 'push_window':
+			case 'global':
 			case 'breakpoint':
 				left[0]--;
 				return [m_opcode];
 			default:
-				console.info("Info: opcode=%o instruction_paramaters=%o", m_opcode, m_paramaters);
+				console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_parameters);
 				throw new Error("Unexpected opcode when cooking instructions");
 		}
 	}
@@ -1284,7 +1338,7 @@ type StackInstructionTypeCategory = ['push', ...any[]] | ['drop'];
 type ObjectInstructionTypeCategory = ['get'];
 type CallInstructionTypeCategory = ['call', number] | ['return'];
 type TuringInstructionTypeCategory = ['halt'];
-type SpecialInstructionTypeCategory = ['push_args'] | ['this'] | ['push_window'];
+type SpecialInstructionTypeCategory = ['push_args'] | ['this'] | ['global'];
 type DebugInstructionTypeCategory = ['breakpoint'];
 type InstructionType = StackInstructionTypeCategory
 	| ObjectInstructionTypeCategory
@@ -1296,7 +1350,7 @@ class SimpleStackVM {
 	instructions: InstructionType[];
 	stack: any[];
 	instruction_pointer: number;
-	return_value: any;
+	return_value?: any;
 	running: boolean;
 	constructor(instructions: InstructionType[]) {
 		this.instructions = instructions;
@@ -1311,17 +1365,17 @@ class SimpleStackVM {
 		this.return_value = void 0;
 		this.running = false;
 	}
-	push(value: string | any[] | (Window & typeof globalThis) | this) {
+	push(value:any) {
 		this.stack.push(value);
 	}
-	pop() {
+	pop():any {
 		return this.stack.pop();
 	}
 	run(...run_arguments: any[]) {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let cur_instruction = this.instructions[this.instruction_pointer];
-			let [cur_opcode] = cur_instruction;
+			let [cur_opcode, ...instruction_parameters] = cur_instruction;
 			switch(cur_opcode) {
 				case 'push'/*Stack*/: {
 					for(let i = 1;i < cur_instruction.length;i++) {
@@ -1342,7 +1396,7 @@ class SimpleStackVM {
 					break;
 				}
 				case 'call'/*Call*/: {
-					let number_of_arguments = cur_instruction[1] as any as number;
+					let number_of_arguments = instruction_parameters[0];
 					let arg_arr = [];
 					for(let i = 0;i < number_of_arguments;i++) {
 						arg_arr.unshift(this.pop());
@@ -1370,8 +1424,9 @@ class SimpleStackVM {
 					this.push(this);
 					break;
 				}
-				case 'push_window'/*Special*/: {
-					this.push(window);
+				case 'global'/*Special*/: {
+					if(window)this.push(window);
+					else this.push(globalThis);
 					break;
 				}
 				case 'breakpoint'/*Debug*/: {
@@ -1597,8 +1652,7 @@ class AsyncDelayRecord<T, C extends (this: T) => void> {
 		this.root.on_child_start(this);
 		this.cint = setTimeout(this.run, this.timeout, this);
 	}
-	run(self: this = null): void {
-		if(self) return self.run();
+	run(): void {
 		this.root.on_child_run(this);
 		this.target_callback.call(this.target_obj);
 	}
@@ -1628,10 +1682,12 @@ class AverageRatioRoot {
 	}
 	can_average(key: string) {
 		let ratio_calc = this.map.get(key);
+		if(!ratio_calc)throw new Error("Missing AverageRatio");
 		return ratio_calc.can_average();
 	}
 	get_average(key: string) {
 		let ratio_calc = this.map.get(key);
+		if(!ratio_calc)throw new Error("Missing AverageRatio");
 		return ratio_calc.get_average();
 	}
 	push_ratio([key, ratio_obj]: [string, AverageRatio]) {
@@ -1640,13 +1696,16 @@ class AverageRatioRoot {
 	}
 	push(value: any) {
 		let cur = this.map.get(this.ordered_keys[0]);
+		if(!cur)throw new Error("Missing AverageRatio");
 		let res = cur.add(value, true, false);
 		for(let i = 1;i < this.ordered_keys.length;i++) {
 			let debug = false;
 			let key = this.ordered_keys[i];
 			cur = this.map.get(key);
+			if(!cur)throw new Error("Missing AverageRatio");
 			let prev = this.map.get(this.ordered_keys[i - 1]);
 			if(key === '5min') debug = true;
+			if(!prev)throw new Error("Missing AverageRatio");
 			res = cur.add(prev.get_average(), res, debug);
 		}
 	}
@@ -1673,6 +1732,10 @@ class AutoBuyState {
 		this.locked_cycles = 0;
 		this.record_root = new AnyRecordRoot;
 		this.is_init_complete = false;
+		this.avg=new AverageRatioRoot;
+		this.prev_atomepersecond=0;
+		this.ratio_mult=0;
+		this.div=0;
 	}
 	avg: AverageRatioRoot;
 	prev_atomepersecond: number;
@@ -1681,7 +1744,6 @@ class AutoBuyState {
 			new AsyncDelayRecord(this.record_root, this, this.init, 'not ready AutoBuyState.update').start();
 			return;
 		}
-		this.avg = new AverageRatioRoot;
 		this.val = window.totalAtome / window.atomepersecond;
 		let rep_val = this.val / (100 * 4 * window.prestige);
 		if(Number.isFinite(rep_val)) {
@@ -1719,7 +1781,7 @@ class AutoBuyState {
 			console.assert(false, 'ratio result is not finite');
 			debugger;
 		}
-		this.ratio = new_ratio;
+		if(new_ratio)this.ratio = new_ratio;
 	}
 	update_ratio_mode() {
 		switch(this.ratio_mode) {
@@ -1833,7 +1895,7 @@ class AutoBuy {
 	extra: number;
 	iter_count: number;
 	epoch_len: number;
-	background_audio: HTMLAudioElement;
+	background_audio: HTMLAudioElement|null;
 	state: AutoBuyState;
 	cint_arr: any[];
 	skip_save: boolean;
@@ -1849,15 +1911,25 @@ class AutoBuy {
 		this.state = new AutoBuyState;
 		this.cint_arr = [];
 		this.skip_save = false;
-		this.state_history_arr = null;
+		this.state_history_arr = [];
 		this.compressor = new MulCompression;
 		this.load_state_history_arr(["S"]);
 		this.epoch_start_time = Date.now();
+		this.delay_arr=[];
+		this.display_style_sheet = new CSSStyleSheet;
+		this.history_element = document.createElement("div");
+		this.delay_element = document.createElement("div");
+		this.hours_played_element = document.createElement("div");
+		this.percent_ratio_element = document.createElement("div");
+		this.percent_ratio_change_element = document.createElement("div");
+		this.state_log_element = document.createElement("div");
+		this.state_history_arr_max_len=80;
 	}
 	pre_init() {
 		// find elements
 		// find background_audio by id
 		this.background_audio = document.querySelector("#background_audio");
+		if(!this.background_audio)throw new Error("No background audio");
 		// change the audio element's volume, and remove
 		// the event listener that will change the volume
 		this.background_audio.onloadeddata = null;
@@ -1868,6 +1940,7 @@ class AutoBuy {
 		this.dom_pre_init();
 	}
 	async async_pre_init() {
+		if(!this.background_audio)throw new Error("No background audio");
 		try {
 			await this.background_audio.play();
 			return;
@@ -1928,25 +2001,17 @@ class AutoBuy {
 	state_log_element: HTMLDivElement;
 	dom_pre_init() {
 		let style_string = "";
-		// css init
-		this.display_style_sheet = new CSSStyleSheet;
 		this.display_style_sheet.replace(`
 		#state_log > div {width:max-content}
 		#state_log {
 			top:0px;width:30px;position:fixed;z-index:101;
 			font-family:monospace;font-size:22px;color:lightgray;
 		}`);
-		this.history_element = document.createElement("div");
 		this.history_element.innerText = "?3";
-		this.delay_element = document.createElement("div");
 		this.delay_element.innerText = "0";
-		this.hours_played_element = document.createElement("div");
 		this.hours_played_element.innerText = "0.000 hours";
-		this.percent_ratio_element = document.createElement("div");
 		this.percent_ratio_element.innerText = 0..toFixed(2) + "%";
-		this.percent_ratio_change_element = document.createElement("div");
 		this.percent_ratio_change_element.innerText = 0..toExponential(3);
-		this.state_log_element = document.createElement("div");
 		this.state_log_element.id = "state_log";
 		this.state_log_element.style = style_string as any as CSSStyleDeclaration;
 		this.state_log_element.append(this.history_element);
@@ -1962,7 +2027,7 @@ class AutoBuy {
 		const font_size_px = 22;
 		let t = this;
 		this.state_history_arr_max_len = Math.floor(document.body.getClientRects()[0].width / (font_size_px * 0.55) / 2.1);
-		this.history_element.addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
+		this.history_element.addEventListener('click', new EventHandlerDispatch(this, this.history_element_click_handler));
 		this.delay_element.innerText = this.delay_arr[0].toString();
 		this.percent_ratio_element.addEventListener('click', function() {
 			t.state.reset();
@@ -2013,12 +2078,12 @@ class AutoBuy {
 		if(ratio_diff < 0) extra_diff_char = '';
 		this.percent_ratio_change_element.innerText = extra_diff_char + ratio_diff.toExponential(3);
 		this.history_element.innerText = array_sample_end(this.state_history_arr, this.state_history_arr_max_len).join(" ");
-		let cint = setTimeout(this.update_dom, 125, this);
-		this.cint_arr.push([1, cint, 'dom update_dom']);
+		// let cint = setTimeout(this.update_dom, 125, this);
+		// this.cint_arr.push([1, cint, 'dom update_dom']);
 	}
 	init() {
 		this.delay_arr = this.load_delay_arr();
-		setTimeout(this.delayed_init, 200, this);
+		// setTimeout(this.delayed_init, 200, this);
 	}
 	delayed_init() {
 		let t = this;
@@ -2075,7 +2140,8 @@ class AutoBuy {
 		};
 		for(var i = 0;i < this.delay_arr.length;i++) {
 			this.extra += this.delay_arr[i];
-			max = Math.max(this.delay_arr[i], max);
+			if(max!==void 0) max = Math.max(this.delay_arr[i], max);
+			else max = this.delay_arr[i];
 		};
 		void max;
 		return ~~(this.extra / this.delay_arr.length);
@@ -2162,7 +2228,7 @@ class AutoBuy {
 		this.do_delay_inc([1.007], 40);
 		this.next_delay(this.main, this.extra, '+');
 	}
-	pre_total: number;
+	pre_total: number|undefined;
 	fast_unit() {
 		this.pre_total = window.totalAtome;
 		do_auto_unit_promote();
@@ -2210,7 +2276,9 @@ class AutoBuy {
 		this.next_delay(this.special, this.extra, '>');
 	}
 	reset_delay_trigger() {
-		this.background_audio.muted = !this.background_audio.muted;
+		if(this.background_audio){
+			this.background_audio.muted = !this.background_audio.muted;
+		}
 		this.next_delay(this.reset_delay_start, 60 * 2 * 1000, 'trigger');
 	}
 	reset_delay_start() {
@@ -2220,7 +2288,9 @@ class AutoBuy {
 		window.lightreset();
 	}
 	reset_delay_init() {
-		this.background_audio.muted = !this.background_audio.muted;
+		if(this.background_audio){
+			this.background_audio.muted = !this.background_audio.muted;
+		}
 		this.next_delay(this.reset_delay_start, 60 * 2 * 1000, 'reset_delay');
 	}
 }
@@ -2347,7 +2417,7 @@ function do_auto_unit_promote() {
 		window.tonext(res);
 	}
 };
-function map_to_tuple(e: any, i: string | number) {
+function map_to_tuple(this: any, e: any, i: string | number) {
 	return [e, this[i]];
 }
 function to_tuple_arr(keys: any[], values: any[]) {
@@ -2363,7 +2433,8 @@ function array_sample_end(arr: string[], rem_target_len: number) {
 	arr = arr.slice(-300);
 	let rem_len = char_len_of(arr);
 	while(rem_len > rem_target_len) {
-		rem_len -= arr.shift().length + 1;
+		let item=arr.shift();
+		if(item !==void 0)rem_len -= item.length + 1;
 	}
 	return arr;
 }
@@ -2376,11 +2447,14 @@ function specialclick_inject(that: number) {
 	let doc = window.doc;
 	if(allspec[that].done == undefined) allspec[that].done = false;
 	if(allspec[that].cost <= window.totalAtome && allspec[that].done == false) {
-		doc.getElementById('specialsbought').innerText = window.rounding(++window.specialsbought, false, 0);
+		let sb=doc.getElementById('specialsbought');
+		if(!sb)throw new Error;
+		sb.innerText = window.rounding(++window.specialsbought, false, 0);
 		if(that == 74) {
 		}
 		window.atomsinvest += allspec[that].cost;
-		doc.getElementById('atomsinvest').innerText = window.rounding(window.atomsinvest, false, 0);
+		let ae=doc.getElementById('atomsinvest');
+		if(ae!==void 0 && ae !== null)ae.innerText = window.rounding(window.atomsinvest, false, 0);
 		allspec[that].done = true;
 		window.totalAtome -= allspec[that].cost;
 		var diff1 = window.calcDiff(that);
@@ -2502,6 +2576,7 @@ function got_jquery(jquery_func: (arg0: string) => any) {
 	define_property_value(window, '$', jquery_func);
 	let res = jquery_func('head');
 	let r_proto = Object.getPrototypeOf(res);
+	//cspell:words lazyload
 	r_proto.lazyload = function(...a: any) {
 		console.log('lazyload', ...a);
 	}
@@ -2615,39 +2690,36 @@ function main() {
 	var prev_node_prototype_insertBefore = Node.prototype.insertBefore;
 	document.addEventListener('onContentLoaded', remove_bad_dom_script_element);
 	let seen_proto: any[] = [];
-	Node.prototype.insertBefore = function(element_to_insert, element_reference, ...rest) {
+	Node.prototype.insertBefore = function<T extends Node>(node:T, child:Node|null):T {
 		let res, p_res;
-		console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
-		if(element_to_insert instanceof HTMLScriptElement) {
-			let should_insert_1 = dom_add_elm_filter(element_to_insert);
-			if(!should_insert_1) return element_to_insert;
+		if(node instanceof HTMLScriptElement) {
+			let should_insert_1 = dom_add_elm_filter(node);
+			if(!should_insert_1) return node;
 		}
-		if(element_reference instanceof HTMLScriptElement) {
-			let should_insert_1 = dom_add_elm_filter(element_reference);
-			if(!should_insert_1) return element_to_insert;
+		if(child instanceof HTMLScriptElement) {
+			let should_insert_1 = dom_add_elm_filter(child);
+			if(!should_insert_1) return node;
 		}
-		res = element_to_insert;
+		res = node;
 		p_res = Object.getPrototypeOf(res);
 		if(!seen_proto.includes(p_res)) {
 			seen_proto.push(p_res);
 			console.log(res, p_res);
 		}
-		res = element_reference;
+		res = child;
 		p_res = Object.getPrototypeOf(res);
 		if(!seen_proto.includes(p_res)) {
 			seen_proto.push(p_res);
 			console.log(res, p_res);
 		}
-		return prev_node_prototype_insertBefore.call(this, element_to_insert, element_reference);
+		return prev_node_prototype_insertBefore.call(this, node, child) as T;
 	}
 	remove_bad_dom_script_element();
 	window.on_on_timers_moved_first = true;
 	let move_timers_to_worker = new Promise(move_timers_to_worker_promise_executor);
 	move_timers_to_worker.then(on_timers_moved);
 	setTimeout(remove_bad_dom_script_element, 0);
-	let document_write_list = new DocumentWriteList;
-	document_write_list.attach_proxy(document);
-	window.document_write_list = document_write_list;
+	window.document_write_list = new DocumentWriteList;
 	document.stop = function() {};
 }
 main();

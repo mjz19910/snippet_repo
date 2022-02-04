@@ -1,20 +1,3 @@
-// ==Typescript types imported for extension==
-declare global {
-	interface Window {
-		g_auto_buy: main.AutoBuy;
-		da: any[];
-		lightreset(): void;
-		specialclick(that: any): void;
-		g_worker_state: WorkerState;
-	}
-	interface Document {
-		adoptedStyleSheets: CSSStyleSheet[];
-	}
-	interface CSSStyleSheet extends StyleSheet {
-		replace(string: string): Promise<CSSStyleSheet>
-	}
-}
-
 // ==UserScript==
 // @name		 rebuild the universe automation
 // @namespace	http://tampermonkey.net/
@@ -630,3 +613,78 @@ function on_game_data_set(): void;
 function on_timers_moved(): void;
 function dom_add_elm_filter(elm: HTMLScriptElement): boolean;
 function main(): void;
+
+declare global {
+	export interface Window {
+		atomepersecond: number;
+		totalAtome: number;
+		prestige: number;
+		g_auto_buy: AutoBuy;
+		__testing__: false;
+		bonusAll(): void;
+		allspec: SpecType[];
+		specialclick(index: number): void;
+		lightreset(): void;
+		timeplayed: number;
+		totalAchi(): number;
+		_targets_achi: any[];
+		arUnit: any[];
+		Get_Unit_Type(v: any): any;
+		getUnitPromoCost(v: any): number;
+		Find_ToNext(v: number): number;
+		_targets: any[];
+		mainCalc(v: any): void;
+		tonext(v: number): void;
+		specialsbought: number;
+		doc: Document;
+		rounding(v: number, x: any, y: any): string;
+		atomsinvest: number;
+		calcDiff(v: number): number;
+		noti: boolean;
+		gritter: any;
+		toTitleCase(v: string): string;
+		cint_arr: string[];
+		adsbygoogle: {
+			op: any,
+			push(v: number): void;
+		};
+		plurials(v: string): string;
+		arrayNames: string[];
+		updateprogress(v: any): void;
+		$: (val: any) => any;
+		seeUnit(v: number): any;
+		checkspec(): void;
+		achiSpec(): void;
+		Pace: {
+			bar: {
+				progress: number,
+				finish:Function;
+			}
+		};
+		_SM_Data:any;
+		on_on_timers_moved_first:boolean;
+		document_write_list:DocumentWriteList;
+		da: any[];
+		lightreset(): void;
+		specialclick(that: any): void;
+		g_worker_state?: WorkerState | undefined;
+	}
+	export var Window: {
+		prototype: Window;
+		new(): Window;
+	};
+	interface HTMLDivElement {
+		style: CSSStyleDeclaration;
+	}
+	interface Document {
+		adoptedStyleSheets: CSSStyleSheet[];
+
+		// don't make an error, just do nothing
+		stop():void;
+	}
+	interface CSSStyleSheet extends StyleSheet {
+		replace(string: string): Promise<CSSStyleSheet>
+	}
+}
+
+export var window: Window & typeof globalThis;

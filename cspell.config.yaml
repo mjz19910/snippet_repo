@@ -17,9 +17,11 @@ words:
   - astart
   - asya
   - asyfn
+  - atomepersecond
   - autobuy
   - autobuyer
   - bouncingdvdlogo
+  - Breit
   - buyables
   - cbfn
   - chunksz
@@ -35,6 +37,7 @@ words:
   - decodedata
   - decpart
   - decreaseSpawnCooldown
+  - deref
   - dname
   - dofn
   - doublequote
@@ -72,6 +75,7 @@ words:
   - jqts
   - jsfilt
   - jsfout
+  - lightgray
   - maxall
   - mkadd
   - mlis
@@ -132,6 +136,7 @@ words:
   - tlen
   - tlis
   - tobj
+  - tonext
   - trgfs
   - uerr
   - undebug
