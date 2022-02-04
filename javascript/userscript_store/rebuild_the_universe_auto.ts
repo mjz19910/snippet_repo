@@ -899,15 +899,15 @@ type TimerState = {
 type FirstStr<T extends string> = T extends `${infer U}${string}` ? U : '';
 type RemoveFirstStr<T extends string> = T extends `${string}${infer U}` ? U : '';
 type AnyOfStr<T extends string> = T extends `${infer U}${infer X}` ? X extends '' ? never : U | AnyOfStr<X> : '';
-type AnyOfArr<T extends any[]> = T extends [infer U, ...infer X] ? X extends [] ? U :  U | AnyOfArr<X> : never;
+type AnyOfArr<T extends any[]> = T extends [infer U, ...infer X] ? X extends [] ? U : U | AnyOfArr<X> : never;
 
-type AnyOf<T>= T extends any[] ? AnyOfArr<T> : T extends string ? AnyOfStr<T> : never;
+type AnyOf<T> = T extends any[] ? AnyOfArr<T> : T extends string ? AnyOfStr<T> : never;
 
 type FirstArr<T extends any[]> = T extends [infer U, ...any[]] ? U : [];
 type RemoveFirst<T extends any[]> = T extends [any, ...infer U] ? U : [];
 type ReverseStr<U extends string> = U extends '' ? '' : `${ReverseStr<RemoveFirstStr<U>>}${FirstStr<U>}`;
 type ReverseArr<U extends any[]> = U extends [] ? [] : [...ReverseArr<RemoveFirst<U>>, FirstArr<U>];
-type Reverse<T>= T extends any[] ? ReverseArr<T> : T extends string ? ReverseStr<T> : never;
+type Reverse<T> = T extends any[] ? ReverseArr<T> : T extends string ? ReverseStr<T> : never;
 
 class Timer {
 	id_generator;
@@ -1011,11 +1011,11 @@ class Timer {
 		if(!this.weak_worker_state) throw new Error("Invalid state");
 		let worker_state = this.weak_worker_state.deref();
 		if(!worker_state) throw new Error("Invalid state");
-		let types:[0, 203, 204]=[0, 203, 204];
-		let do_set_message_id:AnyOfArr<typeof types>=0;
-		if(type === TIMER_SINGLE)do_set_message_id=this.m_api_info.set_single_msg_id;
-		if(type === TIMER_REPEATING)do_set_message_id=this.m_api_info.set_repeating_msg_id;
-		if(do_set_message_id === 0)throw new Error("Invalid state");
+		let types: [0, 203, 204] = [0, 203, 204];
+		let do_set_message_id: AnyOfArr<typeof types> = 0;
+		if(type === TIMER_SINGLE) do_set_message_id = this.m_api_info.set_single_msg_id;
+		if(type === TIMER_REPEATING) do_set_message_id = this.m_api_info.set_repeating_msg_id;
+		if(do_set_message_id === 0) throw new Error("Invalid state");
 		worker_state.postMessage({
 			t: do_set_message_id,
 			v: {
@@ -1073,7 +1073,7 @@ class Timer {
 	}
 	force_clear(type: TimerTypeTag, remote_id: any) {
 		this.verify_timer_type_tag(type);
-		if(!this.weak_worker_state)throw new Error("Invalid state");
+		if(!this.weak_worker_state) throw new Error("Invalid state");
 		let worker_state = this.weak_worker_state.deref();
 		let main_state = this.get_main_state_by_id(remote_id);
 		if(main_state.active) {
@@ -1295,16 +1295,16 @@ class SimpleStackVMParser {
 		}
 	}
 	static raw_parse_handle_regexp_match(match_parts: string[]) {
-		if(match_parts) {
-			let trimmed = match_parts[1].trim();
-			if(trimmed.startsWith("//")) return;
-			while(trimmed.startsWith("/*")) {
-				let com_end = trimmed.indexOf("*/");
-				trimmed = trimmed.slice(com_end + 2).trim();
-			};
-			// if there is still something left, split by ","
-			if(trimmed) return trimmed.split(",");
+		if(!match_parts) return;
+		let str_data = match_parts[1].trim();
+		if(str_data.startsWith("//")) return;
+		while(str_data.startsWith("/*")) {
+			let com_end = str_data.indexOf("*/");
+			str_data = str_data.slice(com_end + 2).trim();
 		}
+		if(!str_data) return;
+		return str_data.split(",");
+
 	}
 	static parse_string_into_raw_instruction_stream(string: string) {
 		const parser_max_match_iter = 300;

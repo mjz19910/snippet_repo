@@ -780,6 +780,7 @@
 			if(!e.src)return;
 			if(new URL(e.src).origin != location.origin)return;
 			if(e.src.indexOf("ads") > -1 || e.src.indexOf("track") > -1)return e.remove();
+			//spell:disable-next-line
 			if(e.src.indexOf("opentracker") > -1){
 				debugger;
 				return e.remove();
@@ -930,14 +931,23 @@
 			}
 		}
 		static raw_parse_handle_regexp_match(m) {
-			if(m){let iter=m[1].trim();if(iter.startsWith("//"))return;while(iter.startsWith("/*")){let j=iter.indexOf("*/");iter=iter.slice(j+2).trim()};
-				  /*If there is still something left, split by ","*/
-				  if(iter)return iter.split(",")
-				 }
+			let iter=m[1].trim();
+			if(iter.startsWith("//"))return;
+			while(iter.startsWith("/*")){
+				let j=iter.indexOf("*/");
+				iter=iter.slice(j+2).trim();
+			}
+			if(!iter)return "";
+			return iter.split(",");
 		}
 		static parse_string_into_raw_instruction_stream(string) {
 			const parser_max_match_iter = 300;let parts, arr = [], i = 0;
-			do {parts = this.match_regex.exec(string);let res = this.raw_parse_handle_regexp_match(parts);if(res) arr.push(res);} while(parts && i++ < parser_max_match_iter);
+			do {
+				parts = this.match_regex.exec(string);
+				if(!parts) break;
+				let res = this.raw_parse_handle_regexp_match(parts);
+				if(res) arr.push(res);
+			} while(parts && i++ < parser_max_match_iter);
 			if(parts)console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);return arr;
 		}
 		static parse_instruction_stream_from_string(string, format_list) {
@@ -947,15 +957,15 @@
 		}
 		/**@arg {string[]} instruction @arg {[number]} left @ret {InstructionType}*/
 		static cook_instruction(instruction, left){
-			const [m_opcode, ...m_paramaters] = instruction;
+			const [m_opcode, ...m_parameters] = instruction;
 			switch(m_opcode) {
 					// variable argument count
-				case 'push':left[0] = 0;return [m_opcode, ...m_paramaters];
+				case 'push':left[0] = 0;return [m_opcode, ...m_parameters];
 					// 2 arguments
-				case 'call':left[0] -= 2;if(typeof m_paramaters[0] === 'number')return [m_opcode, m_paramaters[0]];else throw new Error("TypeError: Call argument is not paramater count");
+				case 'call':left[0] -= 2;if(typeof m_parameters[0] === 'number')return [m_opcode, m_parameters[0]];else throw new Error("TypeError: Call argument is not parameter count");
 					// one argument
 				case 'drop':case 'get':case 'return':case 'halt':case 'push_args':case 'this':case 'global':case 'breakpoint':left[0]--;return [m_opcode];
-				default:console.info("Info: opcode=%o instruction_paramaters=%o", m_opcode, m_paramaters);throw new Error("Unexpected opcode when cooking instructions");
+				default:console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_parameters);throw new Error("Unexpected opcode when cooking instructions");
 			}
 		}
 		/*@arg {string[][]} raw_instructions @ret {InstructionType[]}*/
@@ -1422,6 +1432,7 @@
 			this.compressor=new MulCompression;
 			this.load_state_history_arr(["S"]);
 			this.epoch_start_time=Date.now();
+			this.original_map=new Map;
 		}
 		pre_init(){
 			// find elements; find background_audio by id
@@ -1983,30 +1994,22 @@
 			var diff1 = calcDiff(that);
 			for (var a in arUnit[that][17]) arUnit[that][17][a] *= 100;
 			arUnit[that][5] *= 100;
-			var specaps = 0;
+			var spec_aps = 0;
 			if (arUnit[that][4] > 0) {
-				specaps = (calcDiff(that) - diff1);
-				atomepersecond += specaps;
+				spec_aps = (calcDiff(that) - diff1);
+				atomepersecond += spec_aps;
 			}
-			if (noti) gritter('Power-up !', toTitleCase(plurials(arrayNames[that])) + " X100 APS", null, "+" + rounding(specaps, false,0) + " APS", "");
+			//spell:ignore noti plurials
+			if (noti) gritter('Power-up !', toTitleCase(plurials(arrayNames[that])) + " X100 APS", null, "+" + rounding(spec_aps, false,0) + " APS", "");
+			//spell:ignore updateprogress
 			updateprogress(that);
 			$('#spec' + that).remove();
 			(that < 74) ? seeUnit(that + 1): seeUnit(that - 1);
 			seeUnit(that);
+			//spell:ignore checkspec
 			checkspec();
+			//spell:ignore achiSpec
 			achiSpec();
-		}
-	}
-	function on_page_is_loaded(){
-		remove_bad_dom_script_element();
-		if(Pace.bar.progress == 100){
-			auto_buy_obj.init();
-		}else{
-			let original_pace_bar_finish=Pace.bar.finish;
-			Pace.bar.finish=function(){
-				original_pace_bar_finish.call(this);
-				auto_buy_obj.init();
-			}
 		}
 	}
 	class ProxyHandlers {
@@ -2037,34 +2040,34 @@
 			}
 			keep_vec.push(from.concat([null, type, 1, call_args]));
 		}
-		set_(obj, call_args, from){
+		set_(call_args, from){
 			this.generic('set', call_args, from);
 			return Reflect.set(...call_args);
 		}
-		get_(obj, call_args, from){
+		get_(call_args, from){
 			this.generic('get', call_args, from);
 			return Reflect.get(...call_args);
 		}
-		apply_(obj, call_args, from){
+		apply_(call_args, from){
 			this.generic('apply', call_args, from);
 			return Reflect.apply(...call_args);
 		}
-		defineProperty_(obj, call_args, from){
+		defineProperty_(call_args, from){
 			this.generic('defineProperty', call_args, from);
 			return Reflect.defineProperty(...call_args);
 		}
-		getOwnPropertyDescriptor_(obj, call_args, from){
+		getOwnPropertyDescriptor_(call_args, from){
 			this.generic('getOwnPropertyDescriptor', call_args, from);
 			return Reflect.getOwnPropertyDescriptor(...call_args);
 		}
 	}
+	void ProxyHandlers;
 	class KeepSome extends Array {
 		constructor(){
 			super();
 		}
 		push(value){
 			let set_index=0;
-			let overflow_sets=[];
 			this.push_at(set_index, value);
 			while(this[set_index].length > 50) {
 				value=this[set_index].shift();
@@ -2147,6 +2150,7 @@
 		}
 		return false;
 	}
+	void reload_if_def;
 	function proxy_jquery(){
 		let val;
 		if(window.$){
