@@ -55,7 +55,8 @@ class Parser {
 						let chk = self.code.slice(index, index + "function".length);
 						if(chk === 'function') {
 							self.tokens.push("function");
-
+							self.step_index++;
+							return "function".length;
 						}
 					} break;
 					default: {
@@ -66,18 +67,47 @@ class Parser {
 			},
 			// `function${infer U}`
 			/**@arg {Parser}self @arg {number} index */
-			function step_3(self, index) {
-				switch(self.code[index]) {
-					case 'f': {
-						let chk = self.code.slice(index, index + "function".length);
-						if(chk === 'function') {
-							self.tokens.push("function");
-							debugger;
-							return "function".length;
+			function step_whitespace(self, index) {
+				let rx=/\w+/g;
+				rx.lastIndex=index;
+				let mat=rx.exec(self.code);
+				if(mat.index === index){
+					self.tokens.push(mat[0]);
+					return mat[0].length;
+				}
+				let cur=self.code[index];
+				let ret=null;
+				switch(cur) {
+					case ' ': {
+						let chk = self.code.slice(index, index + 2);
+						if(chk[0] === ' ' && chk[1] === '()'[0]) {
+							cur=[" ", "()"[0]];
+							ret=2;
 						}
 					} break;
+					case ')':{
+						self.step_index++;
+						ret=1;
+					} break;
 					default: {
-						console.log("??(\"%s\")", self.code[index]);
+						console.log("??(\"%s\", json=%s)", cur, JSON.stringify(cur));
+					}
+				}
+				if(cur instanceof Array){
+					self.tokens.push(...cur);
+				}else{
+					self.tokens.push(cur);
+				}
+				if(ret !== null){
+					return ret;
+				}
+			},
+			/**@arg {Parser}self @arg {number} index */
+			function step_whitespace(self, index) {
+				switch(self.code[index]) {
+					case ' ': {} break;
+					default: {
+						console.log("??(\"%s\", 1)", self.code[index]);
 					}
 				}
 			},
@@ -86,7 +116,7 @@ class Parser {
 				switch(self.code[index]) {
 					case '': {} break;
 					default: {
-						console.log("??(\"%s\")", self.code[index]);
+						console.log("??(\"%s\", 'template')", self.code[index]);
 					}
 				}
 			}];
