@@ -21,17 +21,17 @@ class Parser {
 		/**@type {string[]} */
 		this.tokens = [];
 		this.step_index = 0;
-		/**@type {string[]} */
-		this.steps = [/**@arg {number} index */
-			function step_1(index) {
+		/**@type {((index:number)=>number)[]} */
+		this.steps = [/**@arg {Parser}self @arg {number} index */
+			function step_1(self, index) {
 				let ret = null;
-				let char = this.code[index];
+				let char = self.code[index];
 				switch(char) {
 					case "()"[0]: {
-						this.tokens.push(char);
-						switch(this.code[index + 1]) {
+						self.tokens.push(char);
+						switch(self.code[index + 1]) {
 							case 'f': {
-								this.step_index++;
+								self.step_index++;
 								ret = 1;
 							} break;
 						}
@@ -39,57 +39,65 @@ class Parser {
 					case "()"[1]: {
 						console.log(2);
 					} break;
+					default: {
+						console.log("??(\"%s\")", self.code[index]);
+					}
 				}
 				return ret;
 			},
 			// "f"
-			/**@arg {number} index */
-			function step_2(index) {
-				switch(this.code[index]) {
+			/**@arg {Parser}self @arg {number} index */
+			function step_2(self, index) {
+				let ret=0;
+				let cur=self.code[index];
+				switch(cur) {
 					case 'f': {
-						let chk = this.code.slice(index, index + "function".length);
+						let chk = self.code.slice(index, index + "function".length);
 						if(chk === 'function') {
-							this.tokens.push("function");
+							self.tokens.push("function");
 
 						}
 					} break;
 					default: {
-						console.log("??(\"%s\")", this.code[index]);
+						console.log("??(\"%s\")", self.code[index]);
 					}
 				}
+				return ret;
 			},
 			// `function${infer U}`
-			/**@arg {number} index */
-			function step_3(index) {
-				switch(this.code[index]) {
+			/**@arg {Parser}self @arg {number} index */
+			function step_3(self, index) {
+				switch(self.code[index]) {
 					case 'f': {
-						let chk = this.code.slice(index, index + "function".length);
+						let chk = self.code.slice(index, index + "function".length);
 						if(chk === 'function') {
-							this.tokens.push("function");
-
+							self.tokens.push("function");
+							debugger;
+							return "function".length;
 						}
 					} break;
 					default: {
-						console.log("??(\"%s\")", this.code[index]);
+						console.log("??(\"%s\")", self.code[index]);
 					}
 				}
 			},
-			function step_template(index) {
-				switch(this.code[index]) {
+			/**@arg {Parser}self @arg {number} index */
+			function step_template(self, index) {
+				switch(self.code[index]) {
 					case '': {} break;
 					default: {
-						console.log("??(\"%s\")", this.code[index]);
+						console.log("??(\"%s\")", self.code[index]);
 					}
 				}
 			}];
 	}
 	run() {
 		let index = 0;
-		for(let i = 0; i < 3; i++) {
+		for(let i = 0; i < 12; i++) {
 			try {
 				let step = this.steps[this.step_index];
-				console.log(step);
-				let ch = this[step](index);
+				process.stdout.write('.');
+				let ch = step(this, index);
 				index += ch;
 				if(!ch) {
 					break;
@@ -98,6 +106,11 @@ class Parser {
 				continue;
 			}
 		}
+		process.stdout.write("\n");
+		console.log(this.tokens);
 	}
 }
-new Parser(code).run();
+function main(){
+	new Parser(code).run();
+}
+main();
