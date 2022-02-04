@@ -13,16 +13,17 @@ const TAG_STATE_LET_DEFINE = 3;
  * @typedef {[TAG_BOXED_STATES, StateType[]]} BoxedStatesValue
  * @typedef {BoxedStatesValue|BoxedTokensValue} BoxedValue
  * @typedef {[typeof TAG_BOXED_TOKENS, TokenType[]]} BoxedTokensValue
-* @typedef {[typeof TAG_TYPE_SPECIAL, JS_SPECIAL_CHARS]} TokenTypeSpecial
-* @typedef {" "|"\n"|"\t"} WhitespaceType
-* @typedef {[typeof TAG_TYPE_WHITESPACE, WhitespaceType]} TokenTypeWhitespace
-* @typedef {"function"|"var"|"let"} JSKeywordType
-* @typedef {[typeof TAG_TYPE_KEYWORD, JSKeywordType]} TokenTypeKeyword
-* @typedef {[typeof TAG_TYPE_WORD, string]} TokenTypeWord
-* @typedef {[typeof TAG_TYPE_INVALID]} TokenTypeInvalid
-* @typedef {TokenTypeKeyword|TokenTypeWord|TokenTypeWhitespace|TokenTypeSpecial|TokenTypeInvalid|BoxedTokensValue} TokenType
+ * @typedef {[typeof TAG_TYPE_SPECIAL, JS_SPECIAL_CHARS]} TokenTypeSpecial
+ * @typedef {" "|"\n"|"\t"} WhitespaceType
+ * @typedef {[typeof TAG_TYPE_WHITESPACE, WhitespaceType]} TokenTypeWhitespace
+ * @typedef {"function"|"var"|"let"} JSKeywordType
+ * @typedef {[typeof TAG_TYPE_KEYWORD, JSKeywordType]} TokenTypeKeyword
+ * @typedef {[typeof TAG_TYPE_WORD, string]} TokenTypeWord
+ * @typedef {[typeof TAG_TYPE_INVALID]} TokenTypeInvalid
+ * @typedef {TokenTypeKeyword|TokenTypeWord|TokenTypeWhitespace|TokenTypeSpecial|TokenTypeInvalid|BoxedTokensValue} TokenType
+ * @typedef {["function", "var", "let"]} KeywordTypeList
 */
-/**@type {["function", "var", "let"]} */
+/**@type {KeywordTypeList} */
 const keywords = ["function", "var", "let"];
 const TAG_TYPE_WORD = 1;
 const TAG_TYPE_WHITESPACE = 2;
@@ -41,14 +42,17 @@ const code = `(function (rebuild) {
         g_worker_state: WorkerState;
     })(global = rebuild.global || (rebuild.global = {}));
 })(rebuild || (rebuild = {}));`;
-/**@arg {number} index */
-function step_template(index) {
-	switch(this.code[index]) {
-		case '': {} break;
+/**@arg {Parser}self @arg {number} index @arg {TokenType[]} in_tokens */
+function step_template(self, index, in_tokens) {
+	let ret = 0;
+	let cur_tok = in_tokens[index];
+	switch(cur_tok) {
 		default: {
-			console.log("??(\"%s\")", this.code[index]);
+			self.tokens.push(cur_tok);
+			console.log("??(\"%s\", 2)", cur_tok);
 		}
 	}
+	return ret;
 }
 /**@type {(keyword:string)=>keyword is JSKeywordType} */
 function is_keyword(keyword) {
@@ -286,18 +290,8 @@ class Parser {
 				}
 				return ret;
 			},
-			/**@arg {Parser}self @arg {number} index @arg {TokenType[]} in_tokens */
-			function step_template(self, index, in_tokens) {
-				let ret = 0;
-				let cur_tok = in_tokens[index];
-				switch(cur_tok) {
-					default: {
-						self.tokens.push(cur_tok);
-						console.log("??(\"%s\", 2)", cur_tok);
-					}
-				}
-				return ret;
-			}];
+			step_template
+			];
 	}
 	can_run() {
 		let self = this;

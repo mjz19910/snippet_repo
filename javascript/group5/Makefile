@@ -19,8 +19,8 @@ js_parse_regex.ts.update:
 js_parse_regex.ts: js_parse_regex.ts.update
 js_parse_regex_1.ts: js_parse_regex_1.ts.update
 
-js_parse_regex_1.js: js_parse_regex_1.ts js_parse_regex.ts
-	tsc js_parse_regex_1.ts
+js_parse_regex_1.js: js_parse_regex_1.ts js_parse_regex.ts tsconfig.json
+	tsc -p .
 
 *.mtime:
 	touch $@

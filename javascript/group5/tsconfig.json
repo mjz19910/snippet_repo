@@ -1,18 +1,18 @@
 {
 	"compilerOptions": {
 		"declaration": true,
-		"module": "commonjs",
+		"module": "ESNext",
 		"target": "esnext",
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"noImplicitAny": true,
-		"outDir": "../typescript_lib",
+		"outDir": ".",
 		"strict": true,
 		"typeRoots": [
 			"./node_modules/@types"
 		]
 	},
-	"include": ["**/*"],
+	"include": ["js_parse_regex_1.ts"],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts"
