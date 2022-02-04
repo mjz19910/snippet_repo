@@ -1,19 +1,17 @@
 // ==UserScript==
-// @name		 rebuild the universe automation
-// @namespace	http://tampermonkey.net/
-// @version	  0.1
+// @name		 rebuild the universe auto
+// @namespace	 http://tampermonkey.net/
+// @version      0.2
 // @description  try to take over the world!
-// @author	   You
-// @match		http://rebuildtheuniverse.com/*
-// @match		http://rebuildtheuniverse.com
-// @match		https://rebuildtheuniverse.com/*
-// @match		https://rebuildtheuniverse.com
-// @run-at	   document-start
-// @grant		none
+// @author	     You
+// @match		 http://rebuildtheuniverse.com/*
+// @match		 http://rebuildtheuniverse.com
+// @match		 https://rebuildtheuniverse.com/*
+// @match		 https://rebuildtheuniverse.com
+// @match		 https://test.rebuildtheuniverse.com
+// @run-at	     document-start
+// @grant		 none
 // ==/UserScript==
-// spell:words deref
-// spell:words lazyload
-// spell:words adsbygoogle deinit totalAtome _targets_achi totalAchi tonext atomepersecond lightreset lightgray
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 (function() {
@@ -39,7 +37,7 @@
 			if(this.attached){
 				let was_destroyed=this.destroy(true);
 				if(!was_destroyed){
-					throw new Error("Can't attach to new document, can't detach from old document safely, the error might be because document.write is not equal to document_write_proxy");
+					throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
 				}
 			}
 			this.attached_document=document;
@@ -59,7 +57,7 @@
 					if(should_try_to_destroy){
 						return false;
 					}
-					throw new Error("Unable to destroy DocumentWriteList: document.write is not equal to document_write_proxy");
+					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
 				}
 				this.attached_document.write=this.document_write;
 			}
@@ -277,8 +275,7 @@
 				case 200/*reply*/:{
 					let result=msg.v;
 					console.assert(false, "unhandled result on remote worker", result)
-					break;
-				}
+				}break;
 				case 201/*remote worker init*/:{
 					let user_msg=msg.v;
 					let worker_str="()"[0];
@@ -300,8 +297,7 @@
 							v:msg.t
 						}
 					});
-					break;
-				}
+				}break;
 				case 202/**/:{
 					postMessage({
 						t:100,
@@ -310,30 +306,26 @@
 							v:msg.t
 						}
 					});
-					break;
-				}
+				}break;
 				case 203/*remote timer set single*/:{
 					let user_msg=msg.v;
 					let remote_timer_id = remote_worker_state.timer_set(TIMER_SINGLE, user_msg.t, user_msg.v);
 					void remote_timer_id;
-					break;
-				}
+				}break;
 				case 204/*remote timer set repeating*/:{
 					let user_msg=msg.v;
 					let remote_timer_id = remote_worker_state.timer_set(TIMER_REPEATING, user_msg.t, user_msg.v);
 					void remote_timer_id;
-					break;
-				}
-				case 205/*remote timer do_clear single*/:
+				}break;
+				case 205/*remote timer do_clear single*/:{
 					remote_worker_state.do_timer_clear(msg);
-					break;
-				case 206/*remote timer do_clear repeating*/:
+				}break;
+				case 206/*remote timer do_clear repeating*/:{
 					remote_worker_state.do_timer_clear(msg);
-					break;
+				}break;
 				default:{
 					console.assert(false, "RemoteWorker: Unhandled message", msg);
-					break;
-				}
+				}break;
 			}
 		}
 	}
@@ -399,8 +391,8 @@
 				t: 202
 			});
 		}
-		set_executor_handle(handle){
-			this.executor_handle=handle;
+		set_promise_executor_handle(handle){
+			this.promise_executor_handle=handle;
 		}
 		on_result(result){
 			switch(result){
@@ -487,8 +479,8 @@
 				this.worker=null;
 				URL.revokeObjectURL(this.worker_url);
 				this.worker_url = null;
-				if(!this.executor_handle.closed()){
-					this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
+				if(!this.promise_executor_handle.closed()){
+					this.promise_executor_handle.reject(new Error("Worker destroyed before it was connected"));
 				}
 				this.connected=false;
 			};
@@ -787,8 +779,11 @@
 		function remove_element_callback(e){
 			if(!e.src)return;
 			if(new URL(e.src).origin != location.origin)return;
-			if(e.src.indexOf("ads") > -1 || e.src.indexOf("track") > -1){
-				e.remove();
+			if(e.src.indexOf("ads") > -1 || e.src.indexOf("track") > -1)return e.remove();
+			//spell:disable-next-line
+			if(e.src.indexOf("opentracker") > -1){
+				debugger;
+				return e.remove();
 			}
 		}
 		Array.prototype.forEach.call(document.querySelectorAll("script"), remove_element_callback);
@@ -802,98 +797,179 @@
 			this.target_obj[this.target_name](event);
 		}
 	}
-	class SimpleStackVM {
-		constructor(instructions) {
+	class SimpleStackVMCreate {
+		constructor(instructions){
 			this.instructions = instructions;
-			this.stack = [];
 			this.instruction_pointer = 0;
-			this.return_value = void 0;
 			this.running = false;
 		}
+		reset(){
+			this.instruction_pointer = 0;
+			this.running = false;
+		}
+	}
+	class SimpleStackVM extends SimpleStackVMCreate {
+		constructor(instructions){
+			super(instructions);
+			this.stack=[];
+			this.return_value = void 0;
+			this.args_vec=null;
+		}
+		//SimpleStackVM @Runtime
 		reset() {
+			super.reset();
 			this.stack.length = 0;
-			this.instruction_pointer = 0;
 			this.return_value = void 0;
-			this.running = false;
+			this.args_vec=null;
 		}
+		//SimpleStackVM @Runtime
 		push(value) {
 			this.stack.push(value);
 		}
+		//SimpleStackVM @Runtime
 		pop() {
 			return this.stack.pop();
 		}
+		eval_instruction(instruction){
+			let [cur_opcode] = instruction;
+			switch(cur_opcode) {
+				case 'push'/*Stack*/: {
+					for(let i = 1; i < instruction.length; i++) {
+						let item = instruction[i];
+						this.push(item);
+					}
+				}break;
+				case 'drop'/*Stack*/: {
+					let drop = this.pop();
+					void drop;
+				}break;
+				case 'get'/*Object*/: {
+					let name = this.pop();
+					let obj = this.pop();
+					this.push(obj[name]);
+				}break;
+				case 'call'/*Call*/: {
+					let number_of_arguments = instruction[1];
+					let arg_arr = [];
+					for(let i = 0; i < number_of_arguments; i++) {
+						arg_arr.unshift(this.pop());
+					}
+					let name_to_call = this.pop();
+					let target = this.pop();
+					let ret = target[name_to_call](...arg_arr);
+					this.push(ret);
+				}break;
+				case 'return'/*Call*/: {
+					let ret = this.pop();
+					this.return_value = ret;
+				}break;
+				case 'halt'/*Running*/:{
+					this.running=false;
+				}break;
+				case 'this'/*Special*/: {
+					this.push(this);
+				}break;
+				case 'global'/*Special*/: {
+					if(window)this.push(window);
+					else this.push(globalThis);
+				}break;
+				case 'breakpoint'/*Debug*/: {
+					debugger;
+				}break;
+				default/*Debug*/:{
+					console.log('unk opcode', cur_opcode);
+					throw new Error("halt");
+				}break;
+			}
+		}
+		//SimpleStackVM @Runtime
 		run(...run_arguments) {
 			this.running = true;
+			this.args_vec=run_arguments;
 			while(this.instruction_pointer < this.instructions.length && this.running) {
 				let cur_instruction = this.instructions[this.instruction_pointer];
-				let [cur_opcode] = cur_instruction;
-				switch(cur_opcode) {
-					case 'push'/*Stack*/: {
-						for(let i = 1; i < cur_instruction.length; i++) {
-							let item = cur_instruction[i];
-							this.push(item);
-						}
-						break;
-					}
-					case 'drop'/*Stack*/: {
-						let drop = this.pop();
-						void drop;
-						break;
-					}
-					case 'get'/*Object*/: {
-						let name = this.pop();
-						let obj = this.pop();
-						this.push(obj[name]);
-						break;
-					}
-					case 'call'/*Call*/: {
-						let number_of_arguments = cur_instruction[1];
-						let arg_arr = [];
-						for(let i = 0; i < number_of_arguments; i++) {
-							arg_arr.unshift(this.pop());
-						}
-						let name_to_call = this.pop();
-						let target = this.pop();
-						let ret = target[name_to_call](...arg_arr);
-						this.push(ret);
-						break;
-					}
-					case 'return'/*Call*/: {
-						let ret = this.pop();
-						this.return_value = ret;
-						break;
-					}
-					case 'halt'/*Running*/:{
-						this.running=false;
-						break;
-					}
-					case 'push_args'/*Special*/: {
-						this.push(run_arguments);
-						break;
-					}
-					case 'this'/*Special*/: {
-						this.push(this);
-						break;
-					}
-					case 'push_window'/*Special*/: {
-						this.push(window);
-						break;
-					}
-					case 'breakpoint'/*Debug*/: {
-						debugger;
-						break;
-					}
-					default/*Debug*/:{
-						console.log('unk opcode', cur_opcode);
-						throw new Error("halt");
-					}
-				}
+				this.eval_instruction(cur_instruction);
 				this.instruction_pointer++;
 			}
 			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
 			return this.return_value;
 		}
 	}
+	class SimpleStackVMParser {
+		/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
+		static parse_int_arg(cur, arg_loc) {
+			let cur_item = cur[arg_loc];
+			if(typeof cur_item == 'string') {
+				let arg = cur_item;
+				if(arg[3] === '()'[0] && arg.at(-1) === "()"[1]) {
+					let str_int = arg.slice(4, -1);
+					cur[arg_loc] = parseInt(str_int, 10);
+				}
+			}
+		}
+		static parse_string_with_format_ident(str, format_list) {
+			let format_index = str.indexOf('%');
+			let format_type = str[format_index + 1];
+			switch(format_type) {
+				case 'o':
+					return format_list.shift();
+				default:
+					console.log("%s", 'unsupported format spec %' + format_type);
+			}
+		}
+		static parse_current_instruction(cur, format_list) {
+			let arg_loc = 1;
+			let arg = cur[arg_loc];
+			while(arg) {
+				if(arg.slice(0, 3) === 'int') this.parse_int_arg(cur, arg_loc);
+				if(arg.includes('%')) {
+					let res = this.parse_string_with_format_ident(arg, format_list);
+					cur[arg_loc] = res;
+				}
+				arg_loc++;
+				arg = cur[arg_loc]
+			}
+		}
+		static raw_parse_handle_regexp_match(m) {
+			if(m){let iter=m[1].trim();if(iter.startsWith("//"))return;while(iter.startsWith("/*")){let j=iter.indexOf("*/");iter=iter.slice(j+2).trim()};
+				  /*If there is still something left, split by ","*/
+				  if(iter)return iter.split(",")
+				 }
+		}
+		static parse_string_into_raw_instruction_stream(string) {
+			const parser_max_match_iter = 300;let parts, arr = [], i = 0;
+			do {parts = this.match_regex.exec(string);let res = this.raw_parse_handle_regexp_match(parts);if(res) arr.push(res);} while(parts && i++ < parser_max_match_iter);
+			if(parts)console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);return arr;
+		}
+		static parse_instruction_stream_from_string(string, format_list) {
+			let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
+			for(let v,i=0;i<raw_instructions.length;i++) {v=raw_instructions[i];this.parse_current_instruction(v, format_list);}
+			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
+		}
+		/**@arg {string[]} instruction @arg {[number]} left @ret {InstructionType}*/
+		static cook_instruction(instruction, left){
+			const [m_opcode, ...m_parameters] = instruction;
+			switch(m_opcode) {
+					// variable argument count
+				case 'push':left[0] = 0;return [m_opcode, ...m_parameters];
+					// 2 arguments
+				case 'call':left[0] -= 2;if(typeof m_parameters[0] === 'number')return [m_opcode, m_parameters[0]];else throw new Error("TypeError: Call argument is not parameter count");
+					// one argument
+				case 'drop':case 'get':case 'return':case 'halt':case 'push_args':case 'this':case 'global':case 'breakpoint':left[0]--;return [m_opcode];
+				default:console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_parameters);throw new Error("Unexpected opcode when cooking instructions");
+			}
+		}
+		/*@arg {string[][]} raw_instructions @ret {InstructionType[]}*/
+		static verify_raw_instructions(raw_instructions){
+			/**@type{InstructionType[]}*/
+			const instructions = [];
+			for(let i = 0;i < raw_instructions.length;i++) {
+				const instruction = raw_instructions[i];/*@type {[number]}*/const left = [instruction.length];const cooked_instruction = this.cook_instruction(instruction, left);
+				instructions.push(cooked_instruction);if(left[0] > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");}
+			return instructions;
+		}
+	}
+	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
 	class EventHandlerVMDispatch extends SimpleStackVM {
 		constructor(instructions, target_obj) {
 			super(instructions);
@@ -1037,7 +1113,7 @@
 		return ratio_acc/arr.length;
 	}
 	console.assert(calc_ratio([0,0]) === 0, "calc ratio of array full of zeros does not divide by zero");
-	class AverageRatio{
+	class AverageRatio {
 		constructor(max_len, max_history_len, weight, human_duration, initial_arr=[]){
 			this.arr=initial_arr;
 			this.history=[];
@@ -1072,46 +1148,48 @@
 			return calc_ratio(this.arr);
 		}
 	}
-	class BaseRecord{
-		constructor(root){
-			this.root=root;
-		}
-		start(){
-			this.root.on_child_start(this);
-		}
-		run(){
-			this.root.on_child_run(this);
-		}
-	}
-	class AsyncDelayNode extends BaseRecord {
-		constructor(root, target_obj, get_member_name, label) {
-			super(root);
+	class AsyncDelayNode {
+		constructor(parent, target, timeout=0) {
+			parent.append_child(this);
+			this.parent=parent;
 			this.cint=-1;
-			this.target_obj=target_obj;
-			this.target_get_member_name=get_member_name;
-			this.label=label;
-			this.delay=0;
+			let [obj, callback, description] = target;
+			this.target={obj, callback, description};
+			this.timeout=timeout;
+		}
+		remove(){
+			this.parent.remove_child(this);
 		}
 		start() {
-			super.start();
-			this.cint=setTimeout(this.run, this.delay, this);
+			this.cint=setTimeout(this.run.bind(this), this.timeout);
 		}
-		run(self=null) {
-			if(self)return self.run();
-			super.run();
-			this.target_obj[this.target_get_member_name]();
+		run() {
+			this.remove();
+			this.target.callback.call(this.target.obj);
+		}
+		destroy(){
+			clearTimeout(this.cint);
 		}
 	}
 	class AsyncNodeRoot {
 		constructor(){
 			this.children=[];
 		}
-		on_child_start(record){
+		append_child(record){
 			this.children.push(record);
 		}
-		on_child_run(record){
+		remove_child(record){
 			let index=this.children.indexOf(record);
 			this.children.splice(index, 1);
+		}
+		destroy_all(){
+			let item=this.children.shift();
+			if(!item)return;
+			do{
+				console.log('timer destroy', item);
+				item.destroy();
+				item=this.children.shift();
+			} while(item);
 		}
 	}
 	class AverageRatioRoot{
@@ -1165,7 +1243,7 @@
 		}
 		init(){
 			if(atomepersecond === 0){
-				new AsyncDelayNode(this.root_node, this, 'init', 'not ready AutoBuyState.update').start();
+				new AsyncDelayNode(this.root_node, [this, this.init, 'not ready AutoBuyState.update']).start();
 				return;
 			}
 			this.avg=new AverageRatioRoot;
@@ -1175,13 +1253,25 @@
 				for(let i=0;i<8;i++){
 					this.arr.push(rep_val*.75);
 				}
+			}else{
+				rep_val=0.75;
+			}
+			let ratio_names=['10sec', '1min', '5min', '30min', '3hour'];
+			let ratio_counts=[80, 6, 5, 6, 6];
+			let ratio_mul=[0, .65, .15, .15, .05];
+			let ratio_human=["10 seconds","1 minute","5 minutes", "30 minutes", "3 hours"];
+			function mul_3(arr, i){
+				let [a, b=1, c=10]=arr.slice(i);
+				return a * b * c;
+			}
+			function create_ratio(i){
+				return new AverageRatio(ratio_counts[i], mul_3(ratio_counts, i), ratio_mul[i], ratio_human[i], [rep_val]);
+			}
+			for(let i=0;i<5;i++){
+				let obj=create_ratio(i);
+				this.avg.push_ratio([ratio_names[i], obj]);
 			}
 			this.prev_atomepersecond=atomepersecond;
-			this.avg.push_ratio(['10sec', new AverageRatio(80, 80 * 6, .00, "10 seconds", [1])]);
-			this.avg.push_ratio(['1min', new AverageRatio(6, 6 * 5 * 6, .65, "1 minute", [1])]);
-			this.avg.push_ratio(['5min', new AverageRatio(5, 5 * 6 * 6, .15, "5 minutes", [1])]);
-			this.avg.push_ratio(['30min', new AverageRatio(6, 6 * 6 * 4, .15, "30 minutes", [1])]);
-			this.avg.push_ratio(['3hour', new AverageRatio(6, 6 * 4, .05, "3 hours", [1])]);
 			this.is_init_complete=true;
 		}
 		calc_ratio(){
@@ -1210,13 +1300,13 @@
 		}
 		update_ratio_mode(){
 			switch(this.ratio_mode){
-				case 0:
+				case 0:{
 					if(this.ratio > .4){
 						this.ratio_mode++;
 						this.locked_cycles=80*12;
 					}
-					break;
-				case 1:
+				}break;
+				case 1:{
 					if(this.ratio < .35){
 						this.ratio_mode--;
 						this.locked_cycles=80*3;
@@ -1225,8 +1315,8 @@
 						this.ratio_mode++;
 						this.locked_cycles=80*12;
 					}
-					break;
-				case 2:
+				}break;
+				case 2:{
 					if(this.ratio < .45){
 						this.ratio_mode--;
 						this.locked_cycles=80*3;
@@ -1235,7 +1325,7 @@
 						this.ratio_mode++;
 						this.locked_cycles=80*12;
 					}
-					break;
+				}break;
 				case 3:
 				default:{
 					if(this.ratio < .9){
@@ -1249,8 +1339,7 @@
 						this.ratio_mode++;
 						this.locked_cycles=80*12;
 					}
-					break;
-				}
+				}break;
 			}
 		}
 		get_mul_modifier(){
@@ -1259,10 +1348,7 @@
 				case 1:return 4;
 				case 2:return 2;
 				case 3:return 1;
-				default:{
-					// 60*10*8/0.0002 ~= 1;
-					return 0.05;
-				}
+				default:return 0.05;
 			}
 		}
 		get_near_val(){
@@ -1287,14 +1373,19 @@
 		update() {
 			this.ratio_mult=prestige;
 			this.div=60*this.ratio_mult*8;
+			for(let i=10;i >=4;i--){
+				if(prestige < i){
+					this.div/=1.75;
+				}
+			}
 			if(atomepersecond === 0){
-				new AsyncDelayNode(this.root_node, this, 'update', 'not ready AutoBuyState.update').start();
+				new AsyncDelayNode(this.root_node, [this, this.update, 'not ready AutoBuyState.update']).start();
 				return;
 			}
 			this.val=totalAtome/atomepersecond/this.div;
 			if(!Number.isFinite(this.val)){
 				console.log('fail', this.div, atomepersecond, totalAtome);
-				new AsyncDelayNode(this.root_node, this, 'update', 'not ready AutoBuyState.update').start();
+				new AsyncDelayNode(this.root_node, [this, this.update, 'not ready AutoBuyState.update']).start();
 				return;
 			}
 			this.val*=this.get_mul_modifier();
@@ -1313,27 +1404,30 @@
 			}
 		}
 	}
+	class MiniDom{
+		constructor(elements){
+		}
+		build_dom(){
+		}
+	}
 	class AutoBuy {
+		async_compress(){
+			this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
+		}
 		constructor(){
-			this.delay=0;
-			this.extra=0;
-			this.iter_count=0;
-			this.epoch_len=0;
-			this.background_audio=null;
-			this.state=new AutoBuyState;
-			this.cint_arr=[];
+			this.root_node=new AsyncNodeRoot;
+			this.delay=0;this.extra=0;this.iter_count=0;this.epoch_len=0;
+			this.background_audio=null;this.state_history_arr=null;
 			this.skip_save=false;
-			this.state_history_arr=null;
-			this.load_state_history_arr(["S"]);
+			this.cint_arr=[];
+			this.state=new AutoBuyState(this.root_node);
 			this.compressor=new MulCompression;
+			this.load_state_history_arr(["S"]);
+			this.epoch_start_time=Date.now();
 		}
 		pre_init(){
-			// find elements
-
-			// find background_audio by id
+			// find elements; find background_audio by id
 			this.background_audio=document.querySelector("#background_audio");
-
-
 			// change the audio element's volume, and remove
 			// the event listener that will change the volume
 			this.background_audio.onloadeddata=null;
@@ -1341,7 +1435,6 @@
 			this.async_pre_init().then(()=>{
 				console.log('pre_init done');
 			});
-
 			this.dom_pre_init();
 		}
 		async async_pre_init(){
@@ -1351,30 +1444,20 @@
 			}catch(e){
 				console.log("failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
-			let handler=new EventHandlerVMDispatch([
-				['this'],
-				['push', 'target_obj'],
-				['get'],
-				['push', 'background_audio'],
-				['get'],
-				['push', 'play'],
-				['call', 0],
-				['push', 'then',],
-				['push', function(){
-					console.log('play success');
-				}],
-				['push', function(err){
-					console.log(err);
-				}],
-				['call', 2],
-				['drop'],
-				['push_window'],
-				['push','removeEventListener'],
-				['push','click'],
-				['this'],
-				['call', 2],
-				['drop']
-			], this);
+			let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(`
+			this;push,target_obj;get;push,background_audio;get;push,play;
+				call,int(0);
+					push,then;
+					push,%o;push,%o;
+					call,int(2);
+				// comments work
+				/*-2 +1 multiline too, (not split across lines yet)*/
+			drop;
+			global;push,removeEventListener;push,click;this;
+				call,int(2);
+			drop
+			`, [function(){console.log('play success')}, function(err){console.log(err)}]);
+			let handler=new EventHandlerVMDispatch(instructions, this);
 			globalThis.addEventListener('click', handler);
 		}
 		save_state_history_arr(){
@@ -1408,111 +1491,60 @@
 			}
 		}
 		dom_pre_init(){
-			let style_string="";
-
-			// css init
 			this.display_style_sheet = new CSSStyleSheet;
 			this.display_style_sheet.replace(`
-			#state_log > div {
-				width:max-content
-			}
-			#state_log {
-				top:0px;
-				width:30px;
-				position:fixed;
-				z-index:101;
-				/*font-family:Desc;*/
-				font-family:monospace;
-				font-size:22px;
-				color:lightgray;
-			}`);
-
-
-			// dom element init
-
-			// init history_element
+			#state_log>div{width:max-content}
+			#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`);
+			// dom element init; init history_element
 			this.history_element=document.createElement("div");
 			this.history_element.innerText="?3";
-
 			// init delay_element
 			this.delay_element=document.createElement("div");
 			this.delay_element.innerText="0";
-
 			// init hours_played_element
 			this.hours_played_element=document.createElement("div");
 			this.hours_played_element.innerText="0.000 hours";
-
 			// init percent_ratio_element
 			this.percent_ratio_element=document.createElement("div");
 			this.percent_ratio_element.innerText=0..toFixed(2)+"%";
-
 			// init percent_ratio_change_element
 			this.percent_ratio_change_element=document.createElement("div");
 			this.percent_ratio_change_element.innerText=0..toExponential(3);
-
 			// init state_log_element
 			this.state_log_element=document.createElement("div");
 			this.state_log_element.id="state_log";
-			this.state_log_element.style=style_string;
-
-
 			// dom element attach
-
 			// attach history_element
 			this.state_log_element.append(this.history_element);
-
 			// attach delay_element
 			this.state_log_element.append(this.delay_element);
-
 			// attach hours_played_element
 			this.state_log_element.append(this.hours_played_element);
-
 			// attach percent_ratio_element
 			this.state_log_element.append(this.percent_ratio_element);
-
 			// attach percent_ratio_change_element
 			this.state_log_element.append(this.percent_ratio_change_element);
-
 			// attach state_log_element
 			document.body.append(this.state_log_element);
-
 			// attach display_style_sheet
 			document.adoptedStyleSheets = [...document.adoptedStyleSheets, this.display_style_sheet];
 		}
 		init_dom(){
-			// defs
 			const font_size_px=22;
 			let t=this;
-
-
 			// general init
 			this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1);
-
-
-			// dom element init
-
-			// init history_element
+			// dom element init; init history_element
 			this.history_element.addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
-
 			// init delay_element
 			this.delay_element.innerText=this.delay_arr[0];
-
-			// init hours_played_element
-
-			// init percent_ratio_element
+			// init hours_played_element; init percent_ratio_element
 			this.percent_ratio_element.addEventListener('click', function(){
 				t.state.reset();
 			});
-
-			// init percent_ratio_change_element
-
-			// init state_log_element
+			// init percent_ratio_change_element; init state_log_element
 			this.state_log_element.style.fontSize = font_size_px+"px";
-
-
-			// event listeners
-
-			// window unload
+			// event listeners; window unload
 			window.addEventListener('unload', function(){
 				t.save_state_history_arr();
 				t.save_delay_arr();
@@ -1525,11 +1557,20 @@
 			window.g_auto_buy=this;
 		}
 		destroy(){
-			clearTimeout(this.cint);
+			this.root_node.destroy_all();
 			for(let i=0;i<this.cint_arr.length;i+=2){
-				clearTimeout(this.cint_arr[i]);
-				clearTimeout(this.cint_arr[i+1]);
-				console.log(this.cint_arr[i]);
+				let cint_item=this.cint_arr[i];
+				switch(cint_item[0]){
+					case 1:{
+						clearTimeout(cint_item[1]);
+					}break;
+					case 2:{
+						clearInterval(cint_item[1]);
+					}break;
+					default:{
+						console.assert(false, 'cant destroy cint item (%o)', cint_item);
+					}break;
+				}
 			}
 		}
 		parse_single_int(string){
@@ -1546,17 +1587,9 @@
 			if(!storage_data)return Array(12).fill(300);
 			return this.parse_delay_arr(storage_data);
 		}
-		update_dom(self=null){
-			if(self)return self.update_dom();
+		update_dom(){
 			// spell:words timeplayed
-			if(this.cint_arr.indexOf('dom update_dom') > -1){
-				let rem=this.cint_arr.indexOf('dom');
-				this.cint_arr.splice(rem-1, 2);
-			}
 			this.hours_played_element.innerText=((timeplayed / 30) / 60).toFixed(3) + " hours";
-			if(!Number.isFinite(this.state.ratio)){
-				debugger;
-			}
 			let last_ratio=this.state.ratio*100;
 			this.state.update();
 			let cur_ratio=this.state.ratio*100;
@@ -1566,27 +1599,22 @@
 			if(ratio_diff < 0)extra_diff_char='';
 			this.percent_ratio_change_element.innerText=extra_diff_char+ratio_diff.toExponential(3);
 			this.history_element.innerText=array_sample_end(this.state_history_arr, this.state_history_arr_max_len).join(" ");
-			let cint=setTimeout(this.update_dom, 125, this);
-			this.cint_arr.push(cint, 'dom update_dom');
+			this.next_delay(this.update_dom, 125, 'update_dom', true);
 		}
 		init(){
 			this.delay_arr=this.load_delay_arr();
-			setTimeout(this.delayed_init, 200, this);
+			this.next_delay(this.delayed_init, 200, 'init', true);
 		}
-		delayed_init(self=null){
-			if(self)return self.delayed_init();
+		delayed_init() {
 			let t=this;
-
 			this.global_init();
 			this.init_dom();
 			this.state.init();
 			this.update_dom();
 			this.main();
-
 			let original_lightreset=lightreset;
 			window.lightreset=lightreset_inject;
 			window.specialclick=specialclick_inject;
-
 			function lightreset_inject(){
 				t.state_history_clear_for_reset();
 				t.skip_save=true;
@@ -1602,26 +1630,19 @@
 			this.state_history_arr=["R"];
 			localStorage.auto_buy_history_str="R";
 		}
-		state_history_append(value){
-			let success, res;
+		state_history_append(value, silent=false){
+			Promise.resolve().then(this.async_compress.bind(this));
 			this.epoch_len++;
+			if(silent)return;
 			let last=this.state_history_arr.at(-1);
 			this.state_history_arr.push(value);
 			if(this.state.debug)console.log('history append', last, value);
-			while(this.state_history_arr.length>120){
-				this.state_history_arr.shift();
-			}
-			function async_compress(self){
-				self.state_history_arr=self.compressor.compress_array(self.state_history_arr);
-			}
-			Promise.resolve(this).then(async_compress);
+			while(this.state_history_arr.length>120)this.state_history_arr.shift();
 		}
 		history_element_click_handler(event){
-			clearTimeout(this.cint);
-			this.extra=this.calc_delay_extra();
-			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append(">");
+			let delay=3000;
+			if(this.extra < delay)delay=this.extra;
+			this.next_delay(this.main, delay, '@');
 		}
 		calc_delay_extra() {
 			let max;
@@ -1635,12 +1656,15 @@
 			void max;
 			return ~~(this.extra / this.delay_arr.length);
 		}
-		main(self=null){
-			if(self)return self.main();
+		is_epoch_over(){
+			let epoch_diff=Date.now() - this.epoch_start_time;
+			return epoch_diff > 60*2*1000;
+		}
+		main(){
 			this.extra=this.calc_delay_extra();
 			this.pre_total=totalAtome;
-			do_auto_unit_promote();
-			if(this.state.ratio > 1 && this.epoch_len > 80)return this.reset_delay_init();
+			this.do_unit_promote();
+			if(this.state.ratio > 1 && this.is_epoch_over())return this.reset_delay_init();
 			if(this.pre_total != totalAtome)return this.step_iter_start();
 			this.iter_count=0;
 			this.rare_begin_or_faster_delay();
@@ -1658,146 +1682,154 @@
 			let res=this.extra * pow_res;
 			return res / div;
 		}
-		update_delay(change, decrease=false){
-			let value;
-			if(decrease)value=this.extra - change;
-			else value=this.extra + change;
-			// floor the value
-			this.delay=~~value;
-			this.delay_arr.push(this.delay);
+		update_delay_inc(change){
+			if(window.__testing__){
+				return;
+			}
+			let value=this.round_delay(this.extra + change);
+			this.delay=value;
+			this.delay_arr.push(value);
+		}
+		update_delay_dec(change){
+			if(window.__testing__){
+				return;
+			}
+			let value=this.round_delay(this.extra - change);
+			this.delay=value;
+			this.delay_arr.push(value);
+		}
+		round_delay(value){
+			return ~~value;
 		}
 		do_delay_dec(pow_terms, div){
 			let iter_term=Math.pow(pow_terms[1], this.iter_count);
 			let delay_change=this.get_delay_change(pow_terms[0], Math.log(totalAtome), div);
-			this.update_delay(delay_change * iter_term, true);
+			this.update_delay_dec(delay_change * iter_term);
 			if(this.delay < 25)this.delay=25;
 		}
 		do_delay_inc(pow_terms, div){
+			let iter_term=Math.pow(pow_terms[1], this.iter_count);
 			let delay_change=this.get_delay_change(pow_terms[0], Math.log(totalAtome), div);
-			this.update_delay(delay_change);
+			this.update_delay_inc(delay_change * iter_term);
 		}
 		large_decrease(){
-			this.do_delay_dec([1.0075, 1.05], 10);
-			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append("!");
+			this.do_delay_dec([1.009, 1.05], 8);
+			this.next_delay(this.main, this.extra, '!');
 		}
 		normal_decrease(){
-			this.do_delay_dec([1.006, 1.05], 10);
-			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append("-");
+			this.do_delay_dec([1.007, 1.05], 8);
+			this.next_delay(this.main, this.delay, '-');
 		}
-		rare_begin_or_faster_delay(self=null){
-			if(self)return self.rare_begin_or_faster_delay();
+		fast_unit_delay(){
+			this.iter_count+=1;
+			this.do_delay_dec([1.008, 1.05], 8);
+			this.next_delay(this.fast_unit, this.extra, ':');
+		}
+		rare_begin(){
+			this.do_delay_inc([1.008, 1.05], 10);
+			this.next_delay(this.initial_special, this.extra, '<');
+		}
+		faster_delay(){
+			this.do_delay_inc([1.007, 1.05], 40);
+			this.next_delay(this.main, this.delay, '+');
+		}
+		next_delay(trg_fn, timeout, char, silent=false){
+			new AsyncDelayNode(this.root_node, [this, trg_fn, char], timeout).start();
+			if(!silent && this.delay_element)this.delay_element.innerText=timeout;
+			this.state_history_append(char, silent);
+		}
+		rare_begin_or_faster_delay(){
 			if(Math.random()<0.05)return this.rare_begin();
 			this.faster_delay();
 		}
-		faster_delay(self=null){
-			if(self)return self.faster_delay();
-			this.do_delay_inc([1.007], 25);
-			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append("+");
+		calc_reduction(arr, index, type, target_item) {
+			let a=_targets.indexOf(target_item);
+			l1:if(a>-1&&target_item<=1000){
+				for(let v2 of type[2])if(v2!=index&&arr[v2][4]<target_item)break l1;
+				let c=_targets_achi.indexOf(totalAchi()+1);
+				if(c>-1)a=c;
+				return 1-((a+1)*0.01);
+			}
+			return 1;
 		}
-		fast_unit_delay(self=null){
-			if(self)return self.fast_unit_delay();
-			this.extra=this.calc_delay_extra();
-			this.iter_count+=1;
-			this.do_delay_dec([1.005, 1.025], 10);
-			this.cint=setTimeout(this.fast_unit, this.extra/1.9, this);
-			this.delay_element.innerText=this.extra/1.9;
-			this.state_history_append(":");
+		do_unit_promote_iter(maxed, arr, index){
+			let next=Find_ToNext(index);
+			const item=arr[index];
+			if(next < 0)maxed[index]=true;
+			if(index != 0 && item[16] == false)return false;
+			let type=Get_Unit_Type(index);
+			let cost_acc=getUnitPromoCost(index);
+			for(let i=1;i<=100;i++) {
+				if(cost_acc > totalAtome)break;
+				let cost=cost_acc;
+				cost+=(cost*item[3])/100;
+				cost*=this.calc_reduction(arr, index, type, (item[4]*1)+i);
+				cost_acc+=cost;
+				if(i==next||(maxed[index]&&i==100))return true;
+			}
+			return false;
 		}
-		fast_unit(self=null){
-			if(self)return self.fast_unit();
+		do_unit_promote(){
+			var out=[],maxed=[];
+			const arr=arUnit;
+			for(var i=0;i<arr.length;i++)out[i]=this.do_unit_promote_iter(maxed, arr, i);
+			let res=out.lastIndexOf(true);
+			if(res<0)return;
+			if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);
+			else tonext(res);
+		}
+		fast_unit(){
 			this.pre_total=totalAtome;
-			do_auto_unit_promote();
+			this.do_unit_promote();
 			if(this.pre_total == totalAtome)this.slow_final();
 			else this.fast_unit_delay();
 		}
-		slow_final(self=null){
-			if(self)return self.slow_final();
-			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append("$");
+		slow_final(){
+			this.next_delay(this.main, this.extra, '$');
 		}
-		bonus(self=null){
-			if(self)return self.bonus();
+		bonus(){
 			bonusAll();
 			this.fast_unit_delay();
 		}
-		special_delay(self=null){
-			if(self)return self.special_delay();
-			this.cint=setTimeout(this.special, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append("^");
+		special_delay(){
+			this.next_delay(this.special, this.extra, '^');
 		}
 		is_special_done(special_buyable){
 			return !special_buyable.done && special_buyable.cost < totalAtome;
 		}
-		do_special(self=null){
-			if(self)return self.do_special();
-			//this is valid
+		next_special(){
+			return allspec.findIndex(this.is_special_done);
+		}
+		do_special(){
 			let ret=false;
-			//spell:words allspec specialclick
-			while(true){
-				let index=allspec.findIndex(this.is_special_done)
-				if(index == -1){
-					break;
-				}
-				window.specialclick(index);
-				ret = true;
+			for(let index=this.next_special();;index=this.next_special()){
+				if(index > -1){
+					window.specialclick(index);
+					ret=true;
+				} else break;
 			}
 			return ret;
 		}
-		bonus_delay(self=null){
-			if(self)return self.bonus_delay();
-			this.cint=setTimeout(this.bonus, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append("#");
+		special(){
+			if(this.do_special())this.next_delay(this.special, this.extra, '^');
+			else this.next_delay(this.bonus, this.extra, '#');
 		}
-		special(self=null){
-			if(self)return self.special();
-			if(this.do_special())this.special_delay();
-			else this.bonus_delay();
+		initial_special(){
+			this.next_delay(this.special, this.extra, '>');
 		}
-		initial_special(self=null){
-			if(self)return self.initial_special();
-			this.cint=setTimeout(this.special, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append(">");
-		}
-		rare_begin(self=null){
-			if(self)return self.rare_begin();
-			this.do_delay_inc([1.008],10);
-			this.cint=setTimeout(this.initial_special, this.extra, this);
-			this.delay_element.innerText=this.extra;
-			this.state_history_append("<");
-		}
-		reset_delay_trigger(self=null){
-			if(self)return self.reset_delay_trigger();
+		reset_delay_trigger(){
 			this.background_audio.muted=!this.background_audio.muted;
-			this.cint=setTimeout(this.reset_delay_start, 60*2*1000, this);
-			this.delay_element.innerText=60*2*1000;
-			this.state_history_append("trigger");
+			this.next_delay(this.reset_delay_start, 60*2*1000, 'trigger');
 		}
-		reset_delay_start(self=null){
-			if(self)return self.reset_delay_start();
-			this.delay_element.innerText=60*1000;
-			this.cint=setTimeout(this.reset_delay_run, 60*1000, this);
-			this.state_history_append("reset_soon");
+		reset_delay_start(){
+			this.next_delay(this.reset_delay_run, 60*1000, 'reset_soon');
 		}
-		reset_delay_run(self=null){
-			if(self)return self.reset_delay_run();
+		reset_delay_run(){
 			window.lightreset();
 		}
-		reset_delay_init(self=null){
-			if(self)return self.reset_delay_init();
+		reset_delay_init(){
 			this.background_audio.muted=!this.background_audio.muted;
-			this.cint=setTimeout(this.reset_delay_trigger, 60*3*1000, this);
-			this.delay_element.innerText=60*3*1000;
-			this.state_history_append("reset_delay");
+			this.next_delay(this.reset_delay_start, 60*2*1000, 'reset_delay');
 		}
 	}
 	const auto_buy_obj=new AutoBuy;
@@ -1878,128 +1910,44 @@
 			}
 		}
 	}
-	class DoUnitPromoteExecutor{
-		run(){
+	class DoUnitPromote {
+		static calc_reduction(arr, index, type, target_item) {
+			let a=_targets.indexOf(target_item);
+			l1:if(a>-1&&target_item<=1000){
+				for(let v2 of type[2])if(v2!=index&&arr[v2][4]<target_item)break l1;
+				let c=_targets_achi.indexOf(totalAchi()+1);
+				if(c>-1)a=c;
+				return 1-((a+1)*0.01);
+			}
+			return 1;
+		}
+		static do_unit_promote_iter(maxed, arr, index){
+			let next=Find_ToNext(index);
+			const item=arr[index];
+			if(next < 0)maxed[index]=true;
+			if(index != 0 && item[16] == false)return false;
+			let type=Get_Unit_Type(index);
+			let cost_acc=getUnitPromoCost(index);
+			for(let i=1;i<=100;i++) {
+				if(cost_acc > totalAtome)break;
+				let cost=cost_acc;
+				cost+=(cost*item[3])/100;
+				cost*=this.calc_reduction(arr, index, type, (item[4]*1)+i);
+				cost_acc+=cost;
+				if(i==next||(maxed[index]&&i==100))return true;
+			}
+			return false;
+		}
+		static do_unit_promote(){
 			var out=[],maxed=[];
-			for(var k=0;k<arUnit.length;k++){
-				var afford=false;
-				if(arUnit[k][16]==true||k==0){
-					var type=Get_Unit_Type(k);
-					var tmp=getUnitPromoCost(k);
-					var cost=tmp;
-					var next=Find_ToNext(k);
-					if(next < 0){maxed[k]=true};
-					for(var i=1;i<=100;i++){
-						if(totalAtome>=cost){
-							tmp=tmp+(tmp*arUnit[k][3])/100;
-							var tar=(arUnit[k][4]*1)+i;
-							var a=_targets.indexOf(tar);
-							var reduction=1;
-							if(a>-1&&tar<=1000){
-								var b=true;
-								for(var k2 in type[2]){
-									var v2=type[2][k2]
-									if(v2!=k&&arUnit[v2][4]<tar){
-										b=false;
-									}
-								}
-								if(b){
-									var c=_targets_achi.indexOf(totalAchi()+1);
-									if(c>-1){
-										reduction*=(1-((c+1)*0.01));
-									}
-									reduction*=1-((a+1)*0.01);
-								}
-							}
-							tmp*=reduction;
-							cost+=tmp;
-						}else{
-							break
-						}
-						if(i==next||(maxed[k]&&i==100)){
-							afford=true;
-						}
-					}
-					if(afford){
-						out[k]=true;
-					}else{
-						out[k]=false;
-					}
-				}
-			}
-			res=out.lastIndexOf(true);
-			if(res<0){
-				return
-			}
-			if(maxed[res]){
-				for(var y=0;y<100;y++){
-					mainCalc(res);
-				}
-			}else{
-				tonext(res);
-			}
+			const arr=arUnit;
+			for(var i=0;i<arr.length;i++)out[i]=this.do_unit_promote_iter(maxed, arr, i);
+			let res=out.lastIndexOf(true);
+			if(res<0)return;
+			if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);
+			else tonext(res);
 		}
 	}
-	function do_auto_unit_promote(){
-		var out=[],maxed=[];
-		for(var k=0;k<arUnit.length;k++){
-			var afford=false;
-			if(arUnit[k][16]==true||k==0){
-				var type=Get_Unit_Type(k);
-				var tmp=getUnitPromoCost(k);
-				var cost=tmp;
-				var next=Find_ToNext(k);
-				if(next < 0){maxed[k]=true};
-				for(var i=1;i<=100;i++){
-					if(totalAtome>=cost){
-						tmp=tmp+(tmp*arUnit[k][3])/100;
-						var tar=(arUnit[k][4]*1)+i;
-						var a=_targets.indexOf(tar);
-						var reduction=1;
-						if(a>-1&&tar<=1000){
-							var b=true;
-							for(var k2 in type[2]){
-								var v2=type[2][k2]
-								if(v2!=k&&arUnit[v2][4]<tar){
-									b=false;
-								}
-							}
-							if(b){
-								var c=_targets_achi.indexOf(totalAchi()+1);
-								if(c>-1){
-									reduction*=(1-((c+1)*0.01));
-								}
-								reduction*=1-((a+1)*0.01);
-							}
-						}
-						tmp*=reduction;
-						cost+=tmp;
-					}else{
-						break
-					}
-					if(i==next||(maxed[k]&&i==100)){
-						afford=true;
-					}
-				}
-				if(afford){
-					out[k]=true;
-				}else{
-					out[k]=false;
-				}
-			}
-		}
-		res=out.lastIndexOf(true);
-		if(res<0){
-			return
-		}
-		if(maxed[res]){
-			for(var y=0;y<100;y++){
-				mainCalc(res);
-			}
-		}else{
-			tonext(res);
-		}
-	};
 	function map_to_tuple(e, i){
 		return [e, this[i]];
 	}
@@ -2083,13 +2031,13 @@
 			return g_proxy_state.hand.count_arr[0];
 		}
 		generic(type, call_args, from){
-			let proxy_state=this.weak_root.deref();
-			if(proxy_state === null){
-				console.log('ProxyHandlers reset ProxyState after gc collect');
-				proxy_state=new ProxyState;
-				this.weak_root=new WeakRef(proxy_state);
+			let keep_vec=this.weak_root.deref();
+			if(keep_vec === null){
+				console.log('ProxyHandlers reset KeepSome after gc collect');
+				keep_vec=new KeepSome;
+				this.weak_root=new WeakRef(keep_vec);
 			}
-			proxy_state.push(from.concat([null, type, 1, call_args]));
+			keep_vec.push(from.concat([null, type, 1, call_args]));
 		}
 		set_(obj, call_args, from){
 			this.generic('set', call_args, from);
@@ -2112,7 +2060,7 @@
 			return Reflect.getOwnPropertyDescriptor(...call_args);
 		}
 	}
-	class RandomKeepArray extends Array {
+	class KeepSome extends Array {
 		constructor(){
 			super();
 		}
