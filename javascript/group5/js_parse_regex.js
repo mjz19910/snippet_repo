@@ -7,13 +7,7 @@ const code = `(function (rebuild) {
 /**@arg {number} index */
 function step_template(index) {
 	switch(this.code[index]) {
-		case 'f': {
-			let chk = this.code.slice(index, index + "function".length);
-			if(chk === 'function') {
-				this.tokens.push("function");
-
-			}
-		} break;
+		case '': {} break;
 		default: {
 			console.log("??(\"%s\")", this.code[index]);
 		}
@@ -75,6 +69,14 @@ class Parser {
 
 						}
 					} break;
+					default: {
+						console.log("??(\"%s\")", this.code[index]);
+					}
+				}
+			},
+			function step_template(index) {
+				switch(this.code[index]) {
+					case '': {} break;
 					default: {
 						console.log("??(\"%s\")", this.code[index]);
 					}
