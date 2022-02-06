@@ -529,17 +529,24 @@
 			}
 		}
 		dispatch_message(result) {
-			switch(result.t){
+			let msg_type=result;
+			let msg_data=null;
+			if(typeof msg_type === 'object'){
+				msg_type=msg_type.t;
+				msg_data=msg_type.v;
+			}
+			switch(msg_type) {
 				case 301:
 				case 302:
-				case 1:{
+				case 401:{
 					this.on_result(result.v);
 				} break;
-				case 2:{
+				case 402:{
 					this.timer.on_result(result.v);
 				} break;
 				case 303:
 				case 304:
+				case 306:
 					{
 						this.timer.on_reply(result);
 					} break;
@@ -758,9 +765,16 @@
 			}
 		}
 		on_reply(msg){
-			let timer_result_msg_id=msg.t;
-			console.log('reply', timer_result_msg_id, msg.v);
-			switch(timer_result_msg_id){
+			let msg_type;
+			let msg_data=null;
+			if(typeof msg === 'object'){
+				msg_type=msg.t;
+				msg_data=msg.v;
+			} else {
+				msg_type=msg;
+			}
+			console.log('reply', msg_type, msg_data);
+			switch(msg_type){
 				case 205:{
 					let remote_id=timer_result_msg.v;
 					this.delete_state_by_remote_id(remote_id);
@@ -771,8 +785,9 @@
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
+				case 303:
 				case 304:
-				case 303:break;
+				case 306:break;
 				default:
 					console.assert(false, 'on_result timer_result_msg needs a handler for', timer_result_msg);
 			}
@@ -2290,7 +2305,7 @@
 			this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1);
 			// dom element init; init history_element
 			this.history_element.addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
-			// init delay_element
+			// init timeout_element
 			this.timeout_element.innerText=this.timeout_arr[0];
 			// init hours_played_element; init percent_ratio_element
 			this.percent_ratio_element.addEventListener('click', function(){
@@ -2339,10 +2354,10 @@
 			if(ratio_diff < 0)extra_diff_char='';
 			this.percent_ratio_change_element.innerText=extra_diff_char+ratio_diff.toExponential(3);
 			this.history_element.innerText=array_sample_end(this.state_history_arr, this.state_history_arr_max_len).join(" ");
-			this.next_delay(this.update_dom, 125, 'update_dom', true);
+			this.next_timeout(this.update_dom, 125, 'update_dom', true);
 		}
 		init(){
-			this.next_delay(this.delayed_init, 200, 'init', true);
+			this.next_timeout(this.init_impl, 200, 'init', true);
 		}
 		dom_reset() {
 			this.update_dom();
@@ -2361,12 +2376,13 @@
 			}, 66);
 			this.root_node.append_raw(setInterval(function(){
 				doc.title = rounding(totalAtome, false,1).toString() + " atoms";
+				//spell:words atomsaccu presnbr
 				doc.getElementById('atomsaccu').innerHTML = rounding(atomsaccu, false,0);
 				doc.getElementById('timeplayed').innerHTML = (Math.round(timeplayed / 30) / 60).toFixed(2) + " hours";
 				doc.getElementById('presnbr').innerHTML = "<br>" + (calcPres() * 100).toFixed(0) + " % APS boost";
 			}, 2000), false);
 		}
-		delayed_init() {
+		init_impl() {
 			let t=this;
 			this.global_init();
 			this.init_dom();
@@ -2403,21 +2419,21 @@
 			if(this.extra < timeout)timeout=this.extra;
 			this.next_timeout(this.main, timeout, '@');
 		}
-		calc_delay_extra() {
-			while(this.delay_arr.length>60)this.delay_arr.shift();
+		calc_timeout_extra() {
+			while(this.timeout_arr.length>60)this.timeout_arr.shift();
 			let max=0;
 			let total=0;
-			for(var i=0;i<this.delay_arr.length;i++){
-				total+=this.delay_arr[i];
-				max=Math.max(this.delay_arr[i], max);
+			for(var i=0;i<this.timeout_arr.length;i++){
+				total+=this.timeout_arr[i];
+				max=Math.max(this.timeout_arr[i], max);
 			};
-			const val=total / this.delay_arr.length;
+			const val=total / this.timeout_arr.length;
 			let num=max / val;
 			this.last_value??=num;
 			let diff=this.last_value-num;
 			if(diff > .1 || diff < -.1){
 				this.last_value=num;
-				console.log('delay_arr num', num, 'differing from last by', diff);
+				console.log('timeout_arr num', num, 'differing from last by', diff);
 			}
 			return this.round(val);
 		}
@@ -2437,7 +2453,7 @@
 			if(this.pre_total != totalAtome)return this.step_iter_start();
 			this.iter_count=0;
 			if(Math.random()<0.005)return this.rare_begin();
-			this.faster_delay();
+			this.faster_timeout();
 		}
 		async maybe_async_reset(){
 			let loss_rate=this.unit_promote_start();
@@ -2454,7 +2470,7 @@
 				if(this.pre_total == totalAtome)break;
 			}
 			if(Math.random()<0.005)this.rare_begin();
-			else this.faster_delay_use_async();
+			else this.faster_timeout_use_async();
 		}
 		step_iter_start(){
 			if(this.iter_count>6)return this.large_decrease();
@@ -2465,13 +2481,13 @@
 			while(running) {
 				this.unit_promote_start();
 				if(this.pre_total == totalAtome) break;
-				let promise=this.async_delay_step();
+				let promise=this.async_timeout_step();
 				await promise;
 			}
-			this.async_delay_step_finish();
+			this.async_timeout_step_finish();
 		}
 		unit_promote_start(){
-			this.extra=this.calc_delay_extra();
+			this.extra=this.calc_timeout_extra();
 			this.pre_total=totalAtome;
 			this.do_unit_promote();
 			let money_diff=this.pre_total-totalAtome;
@@ -3005,7 +3021,9 @@
 			auto_buy_obj.init();
 			return;
 		}
-		Pace.bar.finish=new Proxy(Pace.bar.finish, {apply:pace_finish_proxy_apply});
+		Pace.bar.finish=new Proxy(Pace.bar.finish, {
+			apply:pace_finish_proxy_apply
+		});
 	}
 	function remove_cint_item(cint_arr, cint_item){
 		let idx=cint_arr.indexOf(cint_item);
