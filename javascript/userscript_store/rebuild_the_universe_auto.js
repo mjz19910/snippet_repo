@@ -64,7 +64,18 @@
 		clear_names={
 			single:"clearTimeout",
 			repeating:"clearInterval"
-		}
+		};
+		handled=[
+
+		];
+		to_handle=[
+			// 202
+			{t:500, v:{t:302, v:202}},
+			// 203
+			{t:500, v:{t:303, v:{var:'local_id'}}},
+			// 204
+			{t:500, v:{t:304, v:{var:'local_id'}}},
+		];
 	}
 	function find_all_scripts_using_string_apis(){
 		let scripts=new WeakSet;
