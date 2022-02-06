@@ -957,13 +957,7 @@
 	}
 	/**@typedef {(v1|v2)['v']} TimerTag */
 	class TimerState {
-		/**
-		 * @arg {TimerTag} tag 
-		 * @arg {boolean} is_repeating
-		 * @arg {TimerHandler} target_fn
-		 * @arg {any[]} target_args
-		 * @arg {number} timeout
-		*/
+		/**@arg {TimerTag} tag */
 		constructor(tag, is_repeating, target_fn, target_args, timeout){
 			this.active=true;
 			/**@type {TimerTag} */
@@ -972,34 +966,19 @@
 			this.repeat=is_repeating;
 			/**@type {TimerHandler} */
 			this.target_fn=target_fn
-			/**@type {any[]} */
 			this.target_args=target_args;
 			/**@type {number} */
 			this.timeout=timeout;
 		}
 	}
-	/**@typedef {TimerApi['set_names']} SN1 */
-	/**@typedef {TimerApi['clear_names']} CN1 */
-	/**@typedef {(SN1|CN1)['repeating']} RN2 */
-	/**@typedef {(SN1|CN1)['single']} SN2 */
-	/**@typedef {CN1['single']} NSR1 */
-	/**@typedef {CN1['repeating']} NSR2 */
-	/**@typedef {SN1['single']} NSR3 */
-	/**@typedef {SN1['repeating']} NSR4 */
-	/**@typedef {Window[NSR1]} GW1 */
-	/**@typedef {Window[NSR2]} GW2 */
-	/**@typedef {Window[NSR3]} GW3 */
-	/**@typedef {Window[NSR4]} GW4 */
 	class Timer {
 		/**@arg {TimerApi} api_info */
 		constructor(id_generator, api_info){
-			/**@type {UniqueIdGenerator} */
 			this.id_generator=id_generator;
 			/**@type {Map<number|string, TimerState>} */
 			this.m_remote_id_to_state_map=new Map;
 			/**@type {import("./types/weak_ref.js").WeakRef<WorkerState>} */
 			this.weak_worker_state=null;
-			/**@type {Map<RN2|SN2, GW1|GW2|GW3|GW4>} */
 			this.m_api_map=new Map;
 			/**@type {TimerApi} */
 			this.m_api_info=api_info;
@@ -1018,20 +997,18 @@
 			window[clear.single](this.base_id);
 			this.id_generator.set_current(this.base_id);
 		}
-		/**@arg {WorkerState} worker_state_value  */
-		set_worker_state(worker_state_value) {
+		set_worker_state(worker_state_value){
 			this.weak_worker_state=new WeakRef(worker_state_value);
 		}
 		// If you cause any side effects, please
 		// wrap this call in try{}finally{} and
 		// revert all side effects...
 		/**@arg {TimerTag} tag */
-		verify_tag(tag) {
-			if(!this.validate_tag(tag)) {
+		verify_tag(tag){
+			if(!this.validate_tag(tag)){
 				throw new Error("Verify failed in Timer.verify_tag");
 			}
 		}
-		/**@arg {TimerState} state @arg {number} remote_id*/
 		verify_state(state, remote_id) {
 			if(!this.validate_timer_state(state)) {
 				let worker_state=this.weak_worker_state.deref();
@@ -1051,11 +1028,10 @@
 			}
 			return true;
 		}
-		/**@arg {TimerState} state */
 		validate_timer_state(state){
 			return this.validate_tag(state.type);
 		}
-		/**@arg {TimerTag} tag @arg {number} remote_id */
+		/**@arg {TimerTag} tag */
 		fire(tag, remote_id) {
 			let state = this.get_state_by_remote_id(remote_id);
 			if(!state){
@@ -1095,7 +1071,6 @@
 				});
 			}
 		}
-		/**@arg {TimerTag} tag */
 		set(tag, target_fn, timeout, target_args) {
 			let remote_id = this.id_generator.next();
 			let is_repeating = false;
@@ -1104,7 +1079,15 @@
 				is_repeating=true;
 			}
 			if (timeout < 0) timeout = 0;
-			let state = new TimerState(tag, is_repeating, target_fn, target_args, timeout);
+			let state2=new TimerState(tag, is_repeating, target_fn, target_args, timeout);
+			let state = {
+				active: true,
+				type: tag,
+				repeat:is_repeating,
+				target_fn,
+				target_args,
+				timeout
+			};
 			if(is_in_userscript) {
 				target_fn.is_userscript_fn = true;
 			}
@@ -1155,15 +1138,13 @@
 			this.verify_state(state, remote_id);
 			return state;
 		}
-		/**@arg {number} remote_id @arg {TimerState} state */
-		store_state_by_remote_id(remote_id, state) {
+		store_state_by_remote_id(remote_id, state){
 			this.m_remote_id_to_state_map.set(remote_id, state);
 		}
-		/**@arg {number} remote_id */
 		delete_state_by_remote_id(remote_id){
 			this.m_remote_id_to_state_map.delete(remote_id);
 		}
-		remote_id_to_state_entries() {
+		remote_id_to_state_entries(){
 			return this.m_remote_id_to_state_map.entries();
 		}
 		on_result(type, data) {
@@ -1216,8 +1197,7 @@
 					debugger;
 			}
 		}
-		/**@arg {TimerTag} tag */
-		force_clear(tag, remote_id) {
+		force_clear(tag, remote_id){
 			this.verify_tag(tag);
 			let worker_state=this.weak_worker_state.deref();
 			let state = this.get_state_by_remote_id(remote_id);
@@ -1239,7 +1219,6 @@
 				});
 			}
 		}
-		/**@arg {TimerTag} tag */
 		clear(tag, remote_id){
 			this.verify_tag(tag);
 			let state = this.get_state_by_remote_id(remote_id);
@@ -1279,8 +1258,7 @@
 			this.m_api_map.clear();
 		}
 	}
-	class VerifyError extends Error {
-		/**@type {(v?:string):VerifyError} */
+	class VerifyError extends Error{
 		constructor(message){
 			super(message);
 			this.name="VerifyError";
@@ -1416,7 +1394,6 @@
 			throw new Error("Abstract function");
 		}
 		execute_instruction_raw(cur_opcode, operands){
-			void cur_opcode, operands;
 			// ignore it, this is the base, if you want to ignore instruction opcodes go ahead
 			if(this.execute_instruction_raw !== AbstractVM.prototype.execute_instruction_raw)return;
 			throw new Error("Abstract function");
@@ -1430,7 +1407,6 @@
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 	class BaseVMCreate extends AbstractVM {
-		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super();
 			this.instructions = instructions;
@@ -1444,7 +1420,6 @@
 		is_in_instructions(value){
 			return value >= 0 && value < this.instructions.length;
 		}
-		/**@arg {InstructionType[0]} cur_opcode */
 		execute_instruction_raw(cur_opcode, operands) {
 			switch(cur_opcode) {
 				default:{
@@ -1508,10 +1483,8 @@
 	const LOG_LEVEL_TRACE=5;
 	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxed} VMBoxed */
 	class BaseStackVM extends BaseVMCreate {
-		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super(instructions);
-			/**@type {VMBoxed[]} */
 			this.stack=[];
 			this.return_value = void 0;
 		}
@@ -1520,17 +1493,13 @@
 			this.stack.length = 0;
 			this.return_value = void 0;
 		}
-		/**@arg {VMBoxed} value */
 		push(value) {
 			this.stack.push(value);
 		}
-		/**@return {VMBoxed} */
 		pop() {
 			return this.stack.pop();
 		}
-		/**@type {(v:number)} @returns {VMBoxed[]} */
 		pop_arg_count(operand_number_of_arguments){
-			/**@type {VMBoxed[]} */
 			let arguments_arr=[];
 			let arg_count=operand_number_of_arguments;
 			for(let i = 0; i < arg_count; i++) {
@@ -1541,7 +1510,6 @@
 			}
 			return arguments_arr;
 		}
-		/**@arg {InstructionType[0]} cur_opcode @arg {AnyInstructionOperands} operands */
 		execute_instruction_raw(cur_opcode, operands){
 			switch(cur_opcode) {
 				case 'push'/*Stack*/: {
@@ -1593,7 +1561,6 @@
 		}
 	}
 	class SimpleStackVM extends BaseStackVM {
-		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super(instructions);
 			this.args_vec=null;
@@ -1602,7 +1569,6 @@
 			super.reset();
 			this.args_vec=null;
 		}
-		/**@arg {InstructionType[0]} cur_opcode */
 		execute_instruction_raw(cur_opcode, operands) {
 			switch(cur_opcode) {
 				case 'this'/*Special*/:this.push(this);break;
@@ -1738,7 +1704,6 @@
 	}
 	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
 	class EventHandlerVMDispatch extends SimpleStackVM {
-		/**@arg {InstructionType[]} instructions */
 		constructor(instructions, target_obj) {
 			super(instructions);
 			this.target_obj = target_obj;
@@ -2329,11 +2294,9 @@
 	class DomBuilderVM extends BaseStackVM {
 		constructor(instructions) {
 			super(instructions);
-			/**@type {[VMBoxed[], InstructionType[]][]} */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
-		/**@arg {InstructionType[0]} cur_opcode @arg {AnyInstructionOperands} operands */
 		execute_instruction_raw(cur_opcode, operands){
 			l_log_if(LOG_LEVEL_VERBOSE, cur_opcode, ...operands, null);
 			switch(cur_opcode) {
