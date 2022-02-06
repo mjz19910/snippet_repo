@@ -1611,7 +1611,6 @@
 	}
 	class AsyncTimeoutNode extends TimeoutNode {
 		run() {
-			debugger;
 			super.run();
 			if(this.target)this.target.fire();
 		}
@@ -1991,7 +1990,6 @@
 			return data.split(",");
 		}
 		load_int_arr(key, def_value){
-			debugger;
 			let storage_data=this.store.getItem(key);
 			if(storage_data === null)return this.create_default(def_value);
 			return this.parse_int_arr(storage_data);
