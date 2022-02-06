@@ -21,6 +21,51 @@
 	const TIMER_TAG_COUNT=3;
 	const AUDIO_ELEMENT_VOLUME=0.58;
 	const cint_arr=[];
+	class ReplyTypes {
+		/**@type {402} */
+		msg=402
+		/**@type {500} */
+		from_remote=500
+		/**@type {600} */
+		to_worker=600
+		/**@type {301} */
+		update_handler=301
+		/**@type {302} */
+		ready=302
+		/**@type {{single:303, repeating:304}} */
+		set={single:303, repeating:304}
+		/**@type {{single:305, repeating:306, any:307}} */
+		clear={single:305, repeating:306, any:307}
+	}
+	class TimerApi {
+		msg_types={
+			/**@type {1} */
+			async:1,
+			reply:new ReplyTypes,
+			/**@type {{single:101, repeating:102}} */
+			fire:{single:101, repeating:102},
+			worker:{
+				/**@type {201} */
+				update_handler:201,
+				/**@type {202} */
+				ready:202,
+				/**@type {{single:203, repeating:204}} */
+				set:{single:203, repeating:204},
+				/**@type {{single:205, repeating:206, any:207}} */
+				clear:{single:205, repeating:206, any:207}
+			}
+		}
+		/**@type {{single:"setTimeout",repeating:"setInterval"}} */
+		set_names={
+			single:"setTimeout",
+			repeating:"setInterval"
+		}
+		/**@type {{single:"clearTimeout",repeating:"clearInterval"}} */
+		clear_names={
+			single:"clearTimeout",
+			repeating:"clearInterval"
+		}
+	}
 	class DocumentWriteList {
 		constructor(){
 			this.list=[];
@@ -127,121 +172,172 @@
 				TIMER_TAG_COUNT
 			});
 		}
+		class RemoteReplyTypes {
+			/**@type {402} */
+			msg=402
+			/**@type {500} */
+			from_remote=500
+			/**@type {600} */
+			to_worker=600
+			/**@type {301} */
+			update_handler=301
+			/**@type {302} */
+			ready=302
+			/**@type {{single:303, repeating:304}} */
+			set={single:303, repeating:304}
+			/**@type {{single:305, repeating:306, any:307}} */
+			clear={single:305, repeating:306, any:307}
+		}
+		class RemoteTimerApi {
+			msg_types={
+				/**@type {1} */
+				async:1,
+				reply:new RemoteReplyTypes,
+				/**@type {{single:101, repeating:102}} */
+				fire:{single:101, repeating:102},
+				worker:{
+					/**@type {201} */
+					update_handler:201,
+					/**@type {202} */
+					ready:202,
+					/**@type {{single:203, repeating:204}} */
+					set:{single:203, repeating:204},
+					/**@type {{single:205, repeating:206, any:207}} */
+					clear:{single:205, repeating:206, any:207}
+				}
+			}
+			/**@type {{single:"setTimeout",repeating:"setInterval"}} */
+			set_names={
+				single:"setTimeout",
+				repeating:"setInterval"
+			}
+			/**@type {{single:"clearTimeout",repeating:"clearInterval"}} */
+			clear_names={
+				single:"clearTimeout",
+				repeating:"clearInterval"
+			}
+		}
 		class RemoteWorkerState {
 			constructor(){
+				/**@type {RemoteTimer|null} */
 				this.m_timer=null;
 				this.unique_script_id=1;
 			}
 			set_timer(timer){
 				this.m_timer=timer;
 			}
-			timer_set(timer_type_tag, remote_id, delay){
-				return this.m_timer.set(timer_type_tag, remote_id, delay);
+			set(tag, remote_id, timeout){
+				return this.m_timer.set(tag, remote_id, timeout);
 			}
-			do_timer_clear(timer_clear_msg) {
-				return this.m_timer.do_clear(timer_clear_msg);
+			clear(msg) {
+				return this.m_timer.do_clear(msg);
 			}
 		}
-		function timer_nop(){};
+		function nop_fn(){};
 		function fire_timer(timer, remote_id){
 			timer.fire(remote_id);
 		}
 		class RemoteTimer {
-			constructor(api_info){
-				this.m_remote_to_local_timer_state_map=new Map;
+			constructor(api_info=new RemoteTimerApi){
+				this.m_remote_id_to_state_map=new Map;
+				/**@type {RemoteTimerApi} */
 				this.m_api_info=api_info;
-				this.base_id=globalThis[this.m_api_info.set_single](timer_nop);
-				globalThis[this.m_api_info.clear_single](this.base_id);
+				this.base_id=globalThis[this.m_api_info.set_names.single](nop_fn);
+				globalThis[this.m_api_info.clear_names.single](this.base_id);
 			}
 			fire(remote_id){
-				let local_state=this.m_remote_to_local_timer_state_map.get(remote_id);
+				let local_state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!local_state)return;
-				this.validate_timer_state(local_state, remote_id);
+				this.validate_state(local_state, remote_id);
 				if(!local_state.active){
-					debugger;
 					console.log('fire inactive', remote_id, local_state);
 					return;
 				};
-				if(local_state.type === TIMER_SINGLE){
-					postMessage({
-						t:this.m_api_info.fire_single_msg_id,
-						v:remote_id
-					});
-					this.m_remote_to_local_timer_state_map.delete(remote_id);
-				} else if(local_state.type === TIMER_REPEATING){
-					postMessage({
-						t:this.m_api_info.fire_repeating_msg_id,
-						v:remote_id
-					});
+				let tag=local_state.type;
+				let msg_id;
+				switch(tag){
+					case TIMER_SINGLE:msg_id=this.m_api_info.msg_types.fire.single;break;
+					case TIMER_REPEATING:msg_id=this.m_api_info.msg_types.fire.repeating;break;
 				}
-			}
-			set(timer_type_tag, remote_id, delay){
-				this.verify_timer_type_tag(timer_type_tag);
-				let local_id=-1;
-				if(timer_type_tag === TIMER_SINGLE){
-					local_id=globalThis[this.m_api_info.set_single](fire_timer, delay, this, remote_id);
+				if(!msg_id){
+					console.assert(false, 'Unknown tag in RemoteWorker.fire', tag);
+					console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o', TIMER_SINGLE, TIMER_REPEATING, tag);
+					return;
 				}
-				if(timer_type_tag === TIMER_REPEATING){
-					local_id=globalThis[this.m_api_info.set_repeating](fire_timer, delay, this, remote_id);
-				}
-				this.m_remote_to_local_timer_state_map.set(remote_id, {
-					active:true,
-					local_id,
-					type:timer_type_tag
+				postMessage({
+					t: msg_id,
+					v: remote_id
 				});
-				return local_id;
+			}
+			set(tag, remote_id, timeout){
+				this.verify_tag(tag);
+				let obj={
+					active:true,
+					local_id:-1,
+					type:tag
+				};
+				this.m_remote_id_to_state_map.set(remote_id, obj);
+				/**@type {typeof this.m_api_info.set_names.single | typeof this.m_api_info.set_names.repeating} */
+				let api_name;
+				switch(tag){
+					case TIMER_SINGLE:api_name=this.m_api_info.set_names.single;break;
+					case TIMER_REPEATING:api_name=this.m_api_info.set_names.repeating;break;
+				}
+				if(!api_name)return;
+				obj.local_id=globalThis[api_name](fire_timer, timeout, this, remote_id);
+				return obj.local_id;
 			}
 			// If you cause any side effects, please
 			// wrap this call in try{}finally{} and
 			// revert all side effects...
-			verify_timer_type_tag(type_tag){
-				if(!this.validate_timer_type_tag(type_tag)){
-					throw new Error("type_tag verification failed on remote_worker");
+			verify_tag(tag){
+				if(!this.validate_tag(tag)){
+					throw new Error("tag verification failed in RemoteTimer");
 				}
 			}
-			verify_timer_state(local_state, remote_id) {
-				if(!this.validate_timer_state(local_state)){
+			verify_state(state, remote_id) {
+				if(!this.validate_state(state)){
 					console.info("Removed invalid local_state");
-					globalThis[this.m_api_info.clear_single](local_state.local_id);
-					globalThis[this.m_api_info.clear_repeating](local_state.local_id);
-					this.m_remote_to_local_timer_state_map.delete(remote_id);
-					throw new Error("type_tag verification failed on remote_worker");
+					globalThis[this.m_api_info.clear_names.single](state.local_id);
+					globalThis[this.m_api_info.clear_names.repeating](state.local_id);
+					this.m_remote_id_to_state_map.delete(remote_id);
+					throw new Error("Tag verification failed in RemoteWorker");
 				}
 			}
-			validate_timer_type_tag(type_tag){
-				if(type_tag < TIMER_SINGLE || type_tag >= TIMER_TAG_COUNT){
-					console.assert(false, "Assertion failed in RemoteTimer.validate_timer_type_tag: type_tag=%o is out of range");
-					console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", type_tag, TIMER_SINGLE, TIMER_TAG_COUNT);
+			validate_tag(tag){
+				if(tag < TIMER_SINGLE || tag >= TIMER_TAG_COUNT){
+					console.assert(false, "Assertion failed in RemoteTimer.validate_tag: tag=%o is out of range");
+					console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", tag, TIMER_SINGLE, TIMER_TAG_COUNT);
 					return false;
 				}
 				return true;
 			}
-			validate_timer_state(local_state){
-				return this.validate_timer_type_tag(local_state.type);
+			validate_state(state){
+				return this.validate_tag(state.type);
 			}
 			clear(remote_id){
-				if(this.m_remote_to_local_timer_state_map.has(remote_id)){
-					let local_state=this.m_remote_to_local_timer_state_map.get(remote_id);
-					this.verify_timer_state(local_state, remote_id);
-					if(local_state.type === TIMER_SINGLE){
-						globalThis[this.m_api_info.clear_single](local_state.local_id);
+				if(this.m_remote_id_to_state_map.has(remote_id)){
+					let state=this.m_remote_id_to_state_map.get(remote_id);
+					this.verify_state(state, remote_id);
+					if(state.type === TIMER_SINGLE){
+						globalThis[this.m_api_info.clear_names.single](state.local_id);
 					}
-					if(local_state.type === TIMER_REPEATING){
-						globalThis[this.m_api_info.clear_repeating](local_state.local_id);
+					if(state.type === TIMER_REPEATING){
+						globalThis[this.m_api_info.clear_names.repeating](state.local_id);
 					}
-					local_state.active=false;
-					this.m_remote_to_local_timer_state_map.delete(remote_id);
+					state.active=false;
+					this.m_remote_id_to_state_map.delete(remote_id);
 				}
 			}
-			do_clear(clear_msg){
-				let remote_id=clear_msg.v;
+			do_clear(msg){
+				let remote_id=msg.v;
 				this.clear(remote_id);
 				postMessage({
-					t:100,
+					t:this.m_api_info.msg_types.reply.from_remote,
 					v:{
-						t:this.m_api_info.timer_reply_msg_id,
+						t:this.m_api_info.msg_types.reply.msg,
 						v:{
-							t:clear_msg.t,
+							t:msg.t,
 							v:remote_id
 						}
 					}
@@ -250,32 +346,21 @@
 		}
 		let remote_worker_state=new RemoteWorkerState;
 		globalThis.remote_worker_state=remote_worker_state;
-		remote_worker_state.set_timer(new RemoteTimer({
-			async_reply_msg_id:1,
-			timer_reply_msg_id:2,
-			reply_msg_id:100,
-			fire_single_msg_id:101,
-			fire_repeating_msg_id:102,
-			reply_msg_id:200,
-			worker_update_code:201,
-			async_worker_ready_msg_id:202,
-			set_single_msg_id:203,
-			set_repeating_msg_id:204,
-			clear_single_msg_id:205,
-			clear_repeating_msg_id:206,
-			clear_any_msg_id:207,
-			set_single:"setTimeout",
-			set_repeating:"setInterval",
-			clear_single:"clearTimeout",
-			clear_repeating:"clearInterval"
-		}));
+		remote_worker_state.set_timer(new RemoteTimer);
 		onmessage=function(e){
 			let msg = e.data;
+			if(!remote_worker_state.m_timer){
+				console.log('got message but don\'t have a timer');
+				return;
+			}
+			let message_types=remote_worker_state.m_timer.m_api_info.msg_types;
+			let reply_message_types=message_types.reply;
 			switch (msg.t) {
 				case 200/*reply*/:{
 					let result=msg.v;
-					console.assert(false, "unhandled result on remote worker", result)
-				}break;
+					console.assert(false, "unhandled result on remote worker", result);
+					debugger;
+				} break;
 				case 201/*remote worker init*/:{
 					let user_msg=msg.v;
 					let worker_str="()"[0];
@@ -291,41 +376,62 @@
 					eval(worker_str);
 					remote_worker_state.unique_script_id++;
 					postMessage({
-						t:100,
+						t:reply_message_types.from_remote,
 						v:{
 							t:1,
 							v:msg.t
 						}
 					});
-				}break;
+				} break;
 				case 202/**/:{
 					postMessage({
-						t:100,
+						t:reply_message_types.from_remote,
 						v:{
-							t:1,
+							t:message_types.reply.ready,
 							v:msg.t
 						}
 					});
-				}break;
+				} break;
 				case 203/*remote timer set single*/:{
 					let user_msg=msg.v;
-					let remote_timer_id = remote_worker_state.timer_set(TIMER_SINGLE, user_msg.t, user_msg.v);
-					void remote_timer_id;
-				}break;
+					let local_id = remote_worker_state.set(TIMER_SINGLE, user_msg.t, user_msg.v);
+					postMessage({
+						t:reply_message_types.from_remote,
+						v:{
+							t:message_types.reply.set.single,
+							v:local_id
+						}
+					});
+				} break;
 				case 204/*remote timer set repeating*/:{
 					let user_msg=msg.v;
-					let remote_timer_id = remote_worker_state.timer_set(TIMER_REPEATING, user_msg.t, user_msg.v);
-					void remote_timer_id;
-				}break;
+					let local_id = remote_worker_state.set(TIMER_REPEATING, user_msg.t, user_msg.v);
+					postMessage({
+						t:reply_message_types.from_remote,
+						v:{
+							t:message_types.reply.set.repeating,
+							v:local_id
+						}
+					});
+				} break;
 				case 205/*remote timer do_clear single*/:{
-					remote_worker_state.do_timer_clear(msg);
-				}break;
+					remote_worker_state.clear(msg);
+					postMessage({
+						t:reply_message_types.from_remote,
+						v:message_types.reply.clear.single
+					});
+				} break;
 				case 206/*remote timer do_clear repeating*/:{
-					remote_worker_state.do_timer_clear(msg);
-				}break;
+					remote_worker_state.clear(msg);
+					postMessage({
+						t:reply_message_types.from_remote,
+						v:message_types.reply.clear.repeating
+					});
+				} break;
 				default:{
 					console.assert(false, "RemoteWorker: Unhandled message", msg);
-				}break;
+					debugger;
+				} break;
 			}
 		}
 	}
@@ -353,11 +459,13 @@
 				this.destroy();
 			}
 			this.connected=false;
+			/**@type {WeakRef<this>} */
 			let weak_worker_state=new WeakRef(this);
 			this.worker_url = URL.createObjectURL(this.worker_code);
 			this.worker = new Worker(this.worker_url);
 			this.worker.onmessage = function onmessage(e) {
 				var msg = e.data;
+				/**@type {typeof weak_worker_state} */
 				let worker_state=weak_worker_state.deref();
 				if(!worker_state){
 					console.log('lost worker state');
@@ -365,7 +473,13 @@
 					return;
 				}
 				switch (msg.t) {
-					case 100/*worker_state dispatch_message*/:{
+					case 401:
+					case 402/*worker_state dispatch_message_unpacked*/:{
+						debugger;
+						worker_state.dispatch_message(msg);
+						break;
+					}
+					case 500/*worker_state dispatch_message*/:{
 						worker_state.dispatch_message(msg.v);
 						break;
 					}
@@ -382,6 +496,7 @@
 						break;
 					default:{
 						console.assert(false, "Main: Unhandled message", msg);
+						debugger;
 						break;
 					}
 				}
@@ -391,8 +506,8 @@
 				t: 202
 			});
 		}
-		set_promise_executor_handle(handle){
-			this.promise_executor_handle=handle;
+		set_executor_handle(handle){
+			this.executor_handle=handle;
 		}
 		on_result(result){
 			switch(result){
@@ -405,7 +520,7 @@
 						console.assert(false, "WorkerState used with closed executor_handle");
 						break;
 					}
-					console.log("remote_worker ready");
+					l_log_if(LOG_LEVEL_VERBOSE, "remote_worker ready");
 					WorkerState.set_global_state(this);
 					this.executor_handle.accept(this);
 					this.connected=true;
@@ -415,24 +530,27 @@
 		}
 		dispatch_message(result) {
 			switch(result.t){
+				case 301:
+				case 302:
 				case 1:{
 					this.on_result(result.v);
-					break;
-				}
+				} break;
 				case 2:{
 					this.timer.on_result(result.v);
-					break;
-				}
+				} break;
+				case 303:
+				case 304:
+					{
+						this.timer.on_reply(result);
+					} break;
 				default:{
 					console.assert(false, "unhandled result", result);
+					debugger;
 				}
 			}
 		}
 		postMessage(data){
 			return this.worker.postMessage(data);
-		}
-		static has_global_state(){
-			return window.hasOwnProperty("worker_state");
 		}
 		static has_old_global_state_value(worker_state_value){
 			return this.has_global_state() && !this.equals_global_state(worker_state_value);
@@ -460,6 +578,10 @@
 			this[before_destroy_call_name]();
 			worker_state_value.destroy();
 		}
+		static global_state_key="g_worker_state";
+		static has_global_state(){
+			return window.hasOwnProperty(this.global_state_key);
+		}
 		static get_global_state(){
 			return window[this.global_state_key];
 		}
@@ -470,17 +592,14 @@
 		static delete_global_state(){
 			delete window[this.global_state_key];
 		}
-		static get global_state_key(){
-			return "g_worker_state";
-		}
 		destroy(){
 			if (this.worker){
 				this.worker.terminate();
 				this.worker=null;
 				URL.revokeObjectURL(this.worker_url);
 				this.worker_url = null;
-				if(!this.promise_executor_handle.closed()){
-					this.promise_executor_handle.reject(new Error("Worker destroyed before it was connected"));
+				if(!this.executor_handle.closed()){
+					this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
 				}
 				this.connected=false;
 			};
@@ -490,18 +609,27 @@
 	}
 	function timer_nop(){}
 	class Timer {
+		/**@arg {TimerApi} api_info */
 		constructor(id_generator, api_info){
 			this.id_generator=id_generator;
-			this.m_remote_id_to_main_state_map=new Map;
+			this.m_remote_id_to_state_map=new Map;
 			this.weak_worker_state=null;
 			this.m_api_map=new Map;
+			/**@type {TimerApi} */
 			this.m_api_info=api_info;
-			this.m_api_map.set(api_info.set_single, window[api_info.set_single]);
-			this.m_api_map.set(api_info.set_repeating, window[api_info.set_repeating]);
-			this.m_api_map.set(api_info.clear_single, window[api_info.clear_single]);
-			this.m_api_map.set(api_info.clear_repeating, window[api_info.clear_repeating]);
-			this.base_id=window[api_info.set_single](timer_nop);
-			window[api_info.clear_single](this.base_id);
+			this.set_api_names(api_info.set_names, api_info.clear_names)
+		}
+		/**@arg {TimerApi['set_names']|TimerApi['clear_names']} names */
+		set_map_names(names){
+			this.m_api_map.set(names.single, window[names.single]);
+			this.m_api_map.set(names.repeating, window[names.repeating]);
+		}
+		/**@arg {TimerApi['set_names']} set @arg {TimerApi['clear_names']} clear */
+		set_api_names(set, clear){
+			this.set_map_names(set);
+			this.set_map_names(clear);
+			this.base_id=window[set.single](timer_nop);
+			window[clear.single](this.base_id);
 			this.id_generator.set_current(this.base_id);
 		}
 		set_worker_state(worker_state_value){
@@ -510,176 +638,201 @@
 		// If you cause any side effects, please
 		// wrap this call in try{}finally{} and
 		// revert all side effects...
-		verify_timer_type_tag(type_tag){
-			if(!this.validate_timer_type_tag(type_tag)){
-				throw new Error("Verify failed in Timer.verify_timer_type_tag");
+		verify_tag(tag){
+			if(!this.validate_tag(tag)){
+				throw new Error("Verify failed in Timer.verify_tag");
 			}
 		}
-		verify_timer_state(main_state, remote_id) {
-			if(!this.validate_timer_state(main_state)) {
+		verify_state(state, remote_id) {
+			if(!this.validate_timer_state(state)) {
 				let worker_state=this.weak_worker_state.deref();
 				worker_state.postMessage({
-					t: this.m_api_info.clear_any_msg_id,
+					t: this.m_api_info.msg_types.worker.clear.any,
 					v: remote_id
 				});
 				throw new Error("Verify failed in Timer.verify_timer_state");
 			}
 		}
-		validate_timer_type_tag(type_tag){
-			if(type_tag < TIMER_SINGLE || type_tag >= TIMER_TAG_COUNT){
-				console.assert(false, "Assertion failure in Timer.validate_timer_type_tag: type_tag=%o is out of range");
-				console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", type_tag, TIMER_SINGLE, TIMER_TAG_COUNT);
+		validate_tag(tag){
+			if(tag < TIMER_SINGLE || tag >= TIMER_TAG_COUNT){
+				console.assert(false, "Assertion failure in Timer.validate_tag: tag=%o is out of range");
+				console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", tag, TIMER_SINGLE, TIMER_TAG_COUNT);
 				return false;
 			}
 			return true;
 		}
-		validate_timer_state(main_state){
-			return this.validate_timer_type_tag(main_state.type);
+		validate_timer_state(state){
+			return this.validate_tag(state.type);
 		}
 		fire(timer_mode_tag, remote_id){
-			let main_state = this.get_main_state_by_id(remote_id);
-			if(!main_state){
+			let state = this.get_state_by_remote_id(remote_id);
+			if(!state){
 				this.force_clear(timer_mode_tag, remote_id);
 				return;
 			}
-			if(main_state.active){
-				main_state.target_function.apply(null, main_state.target_arguments);
+			if(state.active){
+				state.target_function.apply(null, state.target_arguments);
 			}
 			if(timer_mode_tag === TIMER_SINGLE){
-				main_state.active=false;
+				state.active=false;
 				this.clear(timer_mode_tag, remote_id);
 			}
 		}
-		set(timer_mode_tag, target_function, delay, target_arguments){
+		set(timer_mode_tag, target_function, timeout, target_arguments){
 			let remote_id = this.id_generator.next();
 			let is_repeating=false;
-			this.verify_timer_type_tag(timer_mode_tag);
+			this.verify_tag(timer_mode_tag);
 			if(timer_mode_tag === TIMER_REPEATING){
 				is_repeating=true;
 			}
-			if (delay < 0)delay = 0;
-			let main_state = {
+			if (timeout < 0)timeout = 0;
+			let state = {
 				active: true,
 				type: timer_mode_tag,
 				repeat:is_repeating,
 				target_function,
 				target_arguments,
-				delay
+				timeout
 			};
-			this.store_main_state_by_id(remote_id, main_state);
-			let worker_state=this.weak_worker_state.deref();
-			if(worker_state) {
-				if(timer_mode_tag === TIMER_SINGLE){
-					worker_state.postMessage({
-						t: this.m_api_info.set_single_msg_id,
-						v: {
-							t: remote_id,
-							v: delay
-						}
-					});
-				}
-				if(timer_mode_tag === TIMER_REPEATING){
-					worker_state.postMessage({
-						t: this.m_api_info.set_repeating_msg_id,
-						v: {
-							t: remote_id,
-							v: delay
-						}
-					});
-				}
-			}
+			this.store_state_by_remote_id(remote_id, state);
+			this.send_worker_set_message(timer_mode_tag, {
+				t:remote_id,
+				v:timeout
+			});
 			return remote_id;
 		}
-		is_main_state_stored_by_id(remote_id){
-			return this.m_remote_id_to_main_state_map.has(remote_id);
+		send_worker_set_message(tag, obj) {
+			let worker_state=this.weak_worker_state.deref();
+			if(!worker_state){
+				console.assert(false, 'tried to send_worker_message, but the gc collected the worker_state, referenced with a WeakRef (weak_worker_state)');
+				return;
+			}
+			let msg_id;
+			switch(tag){
+				case TIMER_SINGLE:msg_id=this.m_api_info.msg_types.worker.set.single;break;
+				case TIMER_REPEATING:msg_id=this.m_api_info.msg_types.worker.set.repeating;break;
+			}
+			if(!msg_id){
+				console.assert(false, 'Unknown timer_tag', tag);
+				console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o', TIMER_SINGLE, TIMER_REPEATING, tag);
+				return;
+			}
+			worker_state.postMessage({
+				t: msg_id,
+				v: obj
+			});
 		}
-		get_main_state_by_id(remote_id){
-			let main_state = this.m_remote_id_to_main_state_map.get(remote_id);
-			if(!main_state)return null;
-			this.verify_timer_state(main_state, remote_id);
-			return main_state;
+		is_state_stored_by_remote_id(remote_id){
+			return this.m_remote_id_to_state_map.has(remote_id);
 		}
-		store_main_state_by_id(remote_id, main_state){
-			this.m_remote_id_to_main_state_map.set(remote_id, main_state);
+		get_state_by_remote_id(remote_id){
+			let state = this.m_remote_id_to_state_map.get(remote_id);
+			if(!state)return null;
+			this.verify_state(state, remote_id);
+			return state;
 		}
-		delete_main_state_by_id(remote_id){
-			this.m_remote_id_to_main_state_map.delete(remote_id);
+		store_state_by_remote_id(remote_id, state){
+			this.m_remote_id_to_state_map.set(remote_id, state);
 		}
-		main_state_entries(){
-			return this.m_remote_id_to_main_state_map.entries();
+		delete_state_by_remote_id(remote_id){
+			this.m_remote_id_to_state_map.delete(remote_id);
+		}
+		remote_id_to_state_entries(){
+			return this.m_remote_id_to_state_map.entries();
 		}
 		on_result(timer_result_msg){
 			let timer_result_msg_id=timer_result_msg.t;
 			switch(timer_result_msg_id){
 				case 205:{
 					let remote_id=timer_result_msg.v;
-					this.delete_main_state_by_id(remote_id);
+					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
 				case 206:{
 					let remote_id=timer_result_msg.v;
-					this.delete_main_state_by_id(remote_id);
+					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
 				default:
-					console.log(timer_result_msg);
-					debugger;
+					console.assert(false, 'on_result timer_result_msg needs a handler for', timer_result_msg);
 			}
 		}
-		force_clear(timer_mode_tag, remote_id){
-			this.verify_timer_type_tag(timer_mode_tag);
+		on_reply(msg){
+			let timer_result_msg_id=msg.t;
+			console.log('reply', timer_result_msg_id, msg.v);
+			switch(timer_result_msg_id){
+				case 205:{
+					let remote_id=timer_result_msg.v;
+					this.delete_state_by_remote_id(remote_id);
+					break;
+				}
+				case 206:{
+					let remote_id=timer_result_msg.v;
+					this.delete_state_by_remote_id(remote_id);
+					break;
+				}
+				case 304:
+				case 303:break;
+				default:
+					console.assert(false, 'on_result timer_result_msg needs a handler for', timer_result_msg);
+			}
+		}
+		force_clear(tag, remote_id){
+			this.verify_tag(tag);
 			let worker_state=this.weak_worker_state.deref();
-			let main_state = this.get_main_state_by_id(remote_id);
-			if(main_state?.active){
-				return this.clear(timer_mode_tag, remote_id);
+			let state = this.get_state_by_remote_id(remote_id);
+			if(!state)throw new Error("No state for id");
+			if(state.active){
+				return this.clear(tag, remote_id);
 			}
 			// we have to trust the user, go ahead and send the message
 			// anyway (this can technically send structured cloneable objects)
-			if(timer_mode_tag === TIMER_SINGLE) {
+			if(tag === TIMER_SINGLE) {
 				worker_state.postMessage({
-					t: this.m_api_info.clear_single_msg_id,
+					t: this.m_api_info.msg_types.worker.clear.single,
 					v: remote_id
 				});
-			} else if(timer_mode_tag === TIMER_REPEATING) {
+			} else if(tag === TIMER_REPEATING) {
 				worker_state.postMessage({
-					t: this.m_api_info.clear_repeating_msg_id,
+					t: this.m_api_info.msg_types.worker.clear.repeating,
 					v: remote_id
 				});
 			}
 		}
-		clear(timer_mode_tag, remote_id){
-			this.verify_timer_type_tag(timer_mode_tag);
-			let main_state = this.get_main_state_by_id(remote_id);
-			if(main_state?.active){
+		clear(tag, remote_id){
+			this.verify_tag(tag);
+			let state = this.get_state_by_remote_id(remote_id);
+			if(state?.active){
 				let worker_state=this.weak_worker_state.deref();
-				if(main_state.type === TIMER_SINGLE) {
+				if(state.type === TIMER_SINGLE) {
 					worker_state.postMessage({
-						t: this.m_api_info.clear_single_msg_id,
+						t: this.m_api_info.msg_types.worker.clear.single,
 						v: remote_id
 					});
-				} else if(main_state.type === TIMER_REPEATING) {
+				} else if(state.type === TIMER_REPEATING) {
 					worker_state.postMessage({
-						t: this.m_api_info.clear_repeating_msg_id,
+						t: this.m_api_info.msg_types.worker.clear.repeating,
 						v: remote_id
 					});
 				}
-				main_state.active = false;
+				state.active = false;
 			}
 		}
 		destroy(){
 			let api_info=this.m_api_info;
 			let api_map=this.m_api_map;
-			window[api_info.set_single] = api_map.get(api_info.set_single);
-			window[api_info.set_repeating] = api_map.get(api_info.set_repeating);
-			window[api_info.clear_single] = api_map.get(api_info.clear_single);
-			window[api_info.clear_repeating] = api_map.get(api_info.clear_repeating);
-			for (var timer_map_entry of this.main_state_entries()) {
-				let remote_timer_id=timer_map_entry[0];
-				let main_state=timer_map_entry[1];
-				if(main_state.type === TIMER_SINGLE){
+			window[api_info.set_names.single] = api_map.get(api_info.set_names.single);
+			window[api_info.set_names.repeating] = api_map.get(api_info.set_names.repeating);
+			window[api_info.clear_names.single] = api_map.get(api_info.clear_names.single);
+			window[api_info.clear_names.repeating] = api_map.get(api_info.clear_names.repeating);
+			for (var state_entry of this.remote_id_to_state_entries()) {
+				let id=state_entry[0];
+				void id;
+				let state=state_entry[1];
+				if(state.type === TIMER_SINGLE){
 					// if the timer might get reset when calling the function while
 					// the timer functions are reset to the underlying api
-					main_state.target_function.apply(null, main_state.target_arguments);
+					state.target_function.apply(null, state.target_arguments);
 				}
 			}
 			this.m_api_map.clear();
@@ -698,9 +851,7 @@
 	}
 	function move_timers_to_worker_promise_executor(executor_accept, executor_reject) {
 		if (globalThis.remote_worker_state) {
-			postMessage({
-				t: 300
-			});
+			postMessage({t: 300});
 			executor_accept(null);
 			return;
 		}
@@ -714,16 +865,7 @@
 		});
 		const worker_code_blob = new Blob(["(", worker_code_function.toString(), ")()","\n//# sourceURL=$__.0"]);
 		let id_generator=new UniqueIdGenerator;
-		let timer=new Timer(id_generator, {
-			set_single_msg_id:203,
-			set_repeating_msg_id:204,
-			clear_single_msg_id:205,
-			clear_repeating_msg_id:206,
-			set_single:"setTimeout",
-			clear_single:"clearTimeout",
-			set_repeating:"setInterval",
-			clear_repeating:"clearInterval"
-		});
+		let timer=new Timer(id_generator, new TimerApi);
 		let executor_handle=new PromiseExecutorHandle(executor_accept, executor_reject);
 		const worker_state=new WorkerState(worker_code_blob, timer, executor_handle);
 		const weak_worker_state = new WeakRef(worker_state);
@@ -731,9 +873,12 @@
 		function remoteSetTimeout(handler, timeout, ...target_arguments) {
 			if(!worker_state) {
 				setTimeout=setTimeout_global;
-				console.log('lost worker_state in timer');
+				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
 				return setTimeout_global(handler, timeout, ...target_arguments);
 			}
+			if(typeof timeout === 'undefined')timeout=0;
+			if(typeof timeout != 'number' && timeout.valueOf)timeout=timeout.valueOf();
+			if(typeof timeout != 'number' && timeout.toString)timeout=timeout.toString();
 			return worker_state.timer.set(TIMER_SINGLE, handler, timeout, target_arguments);
 		}
 		const clearTimeout_global=clearTimeout;
@@ -741,7 +886,7 @@
 		function remoteClearTimeout(id=void 0) {
 			if(!worker_state) {
 				clearTimeout=clearTimeout_global;
-				console.log('lost worker_state in timer');
+				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
 				return clearTimeout_global(id);
 			}
 			worker_state.timer.clear(TIMER_SINGLE, id);
@@ -750,9 +895,12 @@
 		function remoteSetInterval(handler, timeout=0, ...target_arguments) {
 			if(!worker_state) {
 				setInterval=setInterval_global;
-				console.log('lost worker_state in timer');
+				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
 				return setInterval_global(handler, timeout, ...target_arguments);
 			}
+			if(typeof timeout === 'undefined')timeout=0;
+			if(typeof timeout != 'number' && timeout.valueOf)timeout=timeout.valueOf();
+			if(typeof timeout != 'number' && timeout.toString)timeout=timeout.toString();
 			return worker_state.timer.set(TIMER_REPEATING, handler, timeout, target_arguments);
 		}
 		const clearInterval_global=clearInterval;
@@ -760,7 +908,7 @@
 		function remoteClearInterval(id) {
 			if(!worker_state) {
 				clearInterval=clearInterval_global;
-				console.log('lost worker_state in timer');
+				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
 				return clearInterval_global(id);
 			}
 			worker_state.timer.clear(TIMER_REPEATING, id);
@@ -775,18 +923,36 @@
 			}
 		};
 	}
-	function remove_bad_dom_script_element(){
-		function remove_element_callback(e){
-			if(!e.src)return;
-			if(new URL(e.src).origin != location.origin)return;
-			if(e.src.indexOf("ads") > -1 || e.src.indexOf("track") > -1)return e.remove();
-			//spell:disable-next-line
-			if(e.src.indexOf("opentracker") > -1){
-				debugger;
-				return e.remove();
-			}
+	let seen_elements=new WeakSet;
+	function remove_bad_dom_script_element_callback(e){
+		if(seen_elements.has(e))return;
+		seen_elements.add(e);
+		if(!e.src)return;
+		if(e.src.includes("analytics.js") && e.src.includes("google")){
+			e.remove();
+			return;
 		}
-		Array.prototype.forEach.call(document.querySelectorAll("script"), remove_element_callback);
+		if(e.src.includes("platform.js")){
+			e.remove();
+			return;
+		}
+		//spell:disable-next-line
+		if(e.src.indexOf("opentracker") > -1){
+			e.remove();
+			return;
+		}
+		if(e.src.includes("pagead/js/adsbygoogle.js")){
+			e.remove();
+			return;
+		}
+		if(new URL(e.src).origin != location.origin)return;
+		if(e.src.indexOf("ads") > -1 || e.src.indexOf("track") > -1){
+			e.remove();
+			return;
+		}
+	}
+	function remove_bad_dom_script_element(){
+		Array.prototype.forEach.call(document.querySelectorAll("script"), remove_bad_dom_script_element_callback);
 	};
 	class EventHandlerDispatch {
 		constructor(target_obj, target_name){
@@ -797,8 +963,30 @@
 			this.target_obj[this.target_name](event);
 		}
 	}
-	class SimpleStackVMCreate {
+	class AbstractVM {
+		push(){
+			console.log('you might want to implement this.push for this constructor', Object.getPrototypeOf(this).constructor);
+			throw new Error("Abstract function");
+		}
+		pop(){
+			console.log('you might want to implement this.pop for this constructor', Object.getPrototypeOf(this).constructor);
+			throw new Error("Abstract function");
+		}
+		execute_instruction_raw(cur_opcode, operands){
+			// ignore it, this is the base, if you want to ignore instruction opcodes goahead
+			if(this.execute_instruction_raw !== AbstractVM.prototype.execute_instruction_raw)return;
+			throw new Error("Abstract function");
+		}
+		execute_instruction_raw_t(cur_opcode, operands){
+			switch(cur_opcode) {
+					// implement more opcode handling here
+				default/*Debug*/:super.execute_instruction_raw(cur_opcode, operands);break;
+			}
+		}
+	}
+	class BaseVMCreate extends AbstractVM {
 		constructor(instructions){
+			super();
 			this.instructions = instructions;
 			this.instruction_pointer = 0;
 			this.running = false;
@@ -807,92 +995,181 @@
 			this.instruction_pointer = 0;
 			this.running = false;
 		}
+		is_in_instructions(value){
+			return value >= 0 && value < this.instructions.length;
+		}
+		execute_instruction_raw(cur_opcode, operands) {
+			switch(cur_opcode) {
+				default:{
+					console.info('Unknown opcode', cur_opcode);
+					throw new Error('Halt: bad opcode ('+cur_opcode+')');
+				}
+				case 'je':{
+					let [target] = operands;
+					if(this.is_in_instructions(target)){
+						throw new Error("RangeError: Jump target is out of instructions range");
+					}
+					if(this.flags.equal){
+						this.instruction_pointer=target;
+					}
+				} break;
+				case 'jmp':{
+					let [target] = operands;
+					if(this.is_in_instructions(target)){
+						throw new Error("RangeError: Jump target is out of instructions range");
+					}
+					this.instruction_pointer=target;
+				} break;
+				case 'modify_operand':{
+					let [target, offset]=operands;
+					if(this.is_in_instructions(target)){
+						throw new Error("RangeError: Destination is out of instructions range");
+					}
+					let instruction_modify=this.instructions[ip_target].slice();
+					let value=this.pop();
+					instruction_modify[offset] = value;
+					let verify_state=[instruction_modify.length];
+					//[instruction.length]
+					let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify, verify_state);
+					this.instructions[ip_target]=valid_instruction;
+					console.log('new verify state', verify_state);
+					console.assert(verify_state[0] === 0, "not all of the operands typechecked");
+				} break;
+				case 'push_pc':{
+					if(AbstractVM.prototype.push === this.push){
+						throw new Error("push_pc requires a stack");
+					}
+					this.push(this.instruction_pointer);
+				} break;
+				case 'halt'/*Running*/:this.running=false; break;
+			}
+		}
 	}
-	class SimpleStackVM extends SimpleStackVMCreate {
+	function trigger_debug_breakpoint(){
+		debugger;
+	}
+	const local_logging_level=3;
+	function l_log_if(level, ...args){
+		if(level <= local_logging_level) {
+			console.log(...args);
+		}
+	}
+	const LOG_LEVEL_ERROR=1;
+	const LOG_LEVEL_WARN=2;
+	const LOG_LEVEL_INFO=3;
+	const LOG_LEVEL_VERBOSE=4;
+	const LOG_LEVEL_TRACE=5;
+	class BaseStackVM extends BaseVMCreate {
 		constructor(instructions){
 			super(instructions);
 			this.stack=[];
 			this.return_value = void 0;
-			this.args_vec=null;
 		}
-		//SimpleStackVM @Runtime
-		reset() {
+		reset(){
 			super.reset();
 			this.stack.length = 0;
 			this.return_value = void 0;
-			this.args_vec=null;
 		}
-		//SimpleStackVM @Runtime
 		push(value) {
 			this.stack.push(value);
 		}
-		//SimpleStackVM @Runtime
 		pop() {
 			return this.stack.pop();
 		}
-		eval_instruction(instruction){
-			let [cur_opcode] = instruction;
+		pop_arg_count(operand_number_of_arguments){
+			let arguments_arr=[];
+			let arg_count=operand_number_of_arguments;
+			for(let i = 0; i < arg_count; i++) {
+				if(this.stack.length <= 0){
+					throw new Error('stack underflow in pop_arg_count');
+				}
+				arguments_arr.unshift(this.pop());
+			}
+			return arguments_arr;
+		}
+		execute_instruction_raw(cur_opcode, operands){
 			switch(cur_opcode) {
 				case 'push'/*Stack*/: {
-					for(let i = 1; i < instruction.length; i++) {
-						let item = instruction[i];
+					for(let i = 0; i < operands.length; i++) {
+						let item = operands[i];
 						this.push(item);
 					}
-				}break;
-				case 'drop'/*Stack*/: {
-					let drop = this.pop();
-					void drop;
-				}break;
+				} break;
+				case 'drop'/*Stack*/:this.pop();break;
 				case 'get'/*Object*/: {
-					let name = this.pop();
-					let obj = this.pop();
-					this.push(obj[name]);
-				}break;
+					let target_name = this.pop();
+					let target_obj = this.pop();
+					this.push(target_obj[target_name]);
+				} break;
 				case 'call'/*Call*/: {
-					let number_of_arguments = instruction[1];
-					let arg_arr = [];
-					for(let i = 0; i < number_of_arguments; i++) {
-						arg_arr.unshift(this.pop());
+					let number_of_arguments = operands[0];
+					if(number_of_arguments <= 1){
+						throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 					}
-					let name_to_call = this.pop();
-					let target = this.pop();
-					let ret = target[name_to_call](...arg_arr);
+					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
+					let ret = target_fn.apply(target_this, arg_arr);
 					this.push(ret);
-				}break;
-				case 'return'/*Call*/: {
-					let ret = this.pop();
-					this.return_value = ret;
-				}break;
-				case 'halt'/*Running*/:{
-					this.running=false;
-				}break;
-				case 'this'/*Special*/: {
-					this.push(this);
-				}break;
-				case 'global'/*Special*/: {
-					if(window)this.push(window);
-					else this.push(globalThis);
-				}break;
-				case 'breakpoint'/*Debug*/: {
-					debugger;
-				}break;
-				default/*Debug*/:{
-					console.log('unk opcode', cur_opcode);
-					throw new Error("halt");
-				}break;
+				} break;
+				case 'construct'/*Construct*/:{
+					let number_of_arguments=operands[0];
+					let [construct_target, ...construct_arr]=this.pop_arg_count(number_of_arguments);
+					if(construct_target instanceof Function){
+						let obj=new construct_target(...construct_arr);
+						this.push(obj);
+					} else {
+						console.assert(false, 'try to construct non function');
+						debugger;
+					}
+					l_log_if(LOG_LEVEL_VERBOSE, operands, ...this.stack.slice(this.stack.length-operands[0]));
+				} break;
+				case 'return'/*Call*/:this.return_value=this.pop();break;
+				default:super.execute_instruction_raw(cur_opcode, operands);break;
 			}
 		}
-		//SimpleStackVM @Runtime
-		run(...run_arguments) {
+		run() {
 			this.running = true;
-			this.args_vec=run_arguments;
 			while(this.instruction_pointer < this.instructions.length && this.running) {
-				let cur_instruction = this.instructions[this.instruction_pointer];
-				this.eval_instruction(cur_instruction);
+				let [cur_opcode, ...operands] = this.instructions[this.instruction_pointer];
+				this.execute_instruction_raw(cur_opcode, operands);
 				this.instruction_pointer++;
 			}
 			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
 			return this.return_value;
+		}
+	}
+	class SimpleStackVM extends BaseStackVM {
+		constructor(instructions){
+			super(instructions);
+			this.args_vec=null;
+		}
+		reset() {
+			super.reset();
+			this.args_vec=null;
+		}
+		execute_instruction_raw(cur_opcode, operands) {
+			switch(cur_opcode) {
+				case 'this'/*Special*/:this.push(this);break;
+					// TODO: if you ever use this on a worker, change
+					// it to use globalThis...
+				case 'global'/*Special*/:this.push(window);break;
+				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
+				case 'call'/*Call*/: {
+					// TODO: Fix the other code to use the call handling from
+					// the base class
+					// Currently we support applying functions
+					// this is closer to what you expect, not to just get
+					// the name of a member to call
+					let number_of_arguments = operands[0];
+					let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
+					let ret = target_obj[target_name](...arg_arr);
+					this.push(ret);
+				} break;
+				default:super.execute_instruction_raw(cur_opcode, operands);break;
+			}
+		}
+		run(...run_arguments) {
+			this.args_vec=run_arguments;
+			super.run();
 		}
 	}
 	class SimpleStackVMParser {
@@ -952,20 +1229,40 @@
 		}
 		static parse_instruction_stream_from_string(string, format_list) {
 			let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
-			for(let v,i=0;i<raw_instructions.length;i++) {v=raw_instructions[i];this.parse_current_instruction(v, format_list);}
+			for(let i=0;i<raw_instructions.length;i++) {
+				let raw_instruction=raw_instructions[i];
+				this.parse_current_instruction(raw_instruction, format_list);
+			}
 			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
 		}
 		/**@arg {string[]} instruction @arg {[number]} left @ret {InstructionType}*/
-		static cook_instruction(instruction, left){
-			const [m_opcode, ...m_parameters] = instruction;
+		static verify_instruction(instruction, left){
+			const [m_opcode, ...m_operands] = instruction;
 			switch(m_opcode) {
 					// variable argument count
-				case 'push':left[0] = 0;return [m_opcode, ...m_parameters];
-					// 2 arguments
-				case 'call':left[0] -= 2;if(typeof m_parameters[0] === 'number')return [m_opcode, m_parameters[0]];else throw new Error("TypeError: Call argument is not parameter count");
-					// one argument
-				case 'drop':case 'get':case 'return':case 'halt':case 'push_args':case 'this':case 'global':case 'breakpoint':left[0]--;return [m_opcode];
-				default:console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_parameters);throw new Error("Unexpected opcode when cooking instructions");
+				case 'push':
+					left[0] = 0;
+					return [m_opcode, ...m_operands];
+				case 'call'/*1 argument*/:
+					left[0] -= 2;
+					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0]))return [m_opcode, m_operands[0]];
+					else {
+						console.info("Can't verify that call instruction is valid, argument (%o) is not a number or not finite", m_operands[0]);
+						throw new Error("TypeError: Invalid argument");
+					}
+				case 'drop':
+				case 'get':
+				case 'return':
+				case 'halt':
+				case 'push_args':
+				case 'this':
+				case 'global':
+				case 'breakpoint'/*opcode*/:
+					left[0]--;
+					return [m_opcode];
+				default:
+					console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_operands);
+					throw new Error("Unexpected opcode");
 			}
 		}
 		/*@arg {string[][]} raw_instructions @ret {InstructionType[]}*/
@@ -973,8 +1270,12 @@
 			/**@type{InstructionType[]}*/
 			const instructions = [];
 			for(let i = 0;i < raw_instructions.length;i++) {
-				const instruction = raw_instructions[i];/*@type {[number]}*/const left = [instruction.length];const cooked_instruction = this.cook_instruction(instruction, left);
-				instructions.push(cooked_instruction);if(left[0] > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");}
+				const instruction = raw_instructions[i];
+				/*@type {[number]}*/const left = [instruction.length];
+				const valid_instruction = this.verify_instruction(instruction, left);
+				instructions.push(valid_instruction);
+				if(left[0] > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");
+			}
 			return instructions;
 		}
 	}
@@ -1054,6 +1355,7 @@
 			this.stats_calculator=new CompressionStatsCalculator;
 			this.compression_stats=[];
 		}
+
 		try_compress(arr){
 			let ret=[];
 			for (let i=0;i<arr.length;i++){
@@ -1123,6 +1425,7 @@
 	}
 	console.assert(calc_ratio([0,0]) === 0, "calc ratio of array full of zeros does not divide by zero");
 	class AverageRatio {
+		// @AverageRatio
 		constructor(max_len, max_history_len, weight, human_duration, initial_arr=[]){
 			this.arr=initial_arr;
 			this.history=[];
@@ -1135,7 +1438,7 @@
 		/**@arg {boolean} from_prev */
 		add(value, from_prev, debug=false){
 			if(from_prev){
-				if(debug)console.log("ratio", this.human_duration, (value*100).toFixed(5));
+				if(debug)console.log("ratio add", this.human_duration, (value*100).toFixed(5));
 				this.arr.unshift(value);
 				this.history.unshift(value);
 				if(this.history.length>this.history_len)this.history.pop();
@@ -1157,41 +1460,180 @@
 			return calc_ratio(this.arr);
 		}
 	}
-	class AsyncDelayNode {
-		constructor(parent, target, timeout=0) {
-			parent.append_child(this);
-			this.parent=parent;
-			this.cint=-1;
-			let [obj, callback, description] = target;
-			this.target={obj, callback, description};
+	class AbstractTarget {
+		fire() {
+			throw new Error("Attempt to call an abstract class");
+		}
+		start_async() {
+			return Promise.reject(new Error("Attempt to call an abstract class"));
+		}
+	}
+	class TimeoutTarget extends AbstractTarget {
+		constructor(obj, callback, description){
+			super();
+			this.once=true;
+			this.obj=obj
+			this.callback=callback;
+			this.description=description;
+		}
+		fire(){
+			this.callback.call(this.obj);
+		}
+	}
+	class IntervalTarget extends AbstractTarget {
+		constructor(obj, callback, description){
+			super();
+			this.once=false;
+			this.obj=obj
+			this.callback=callback;
+			this.description=description;
+		}
+		fire(){
+			this.callback.call(this.obj);
+		}
+	}
+	class PromiseTimeoutTarget {
+		constructor(description){
+			this.description=description;
+		}
+		get_promise(){
+			if(this.promise)return this.promise;
+			this.promise=new Promise(this.promise_executor.bind(this));
+			return this.promise;
+		}
+		promise_executor(accept, reject){
+			this.promise_accept=accept;
+			this.callback=this.on_result.bind(this);
+		}
+		on_result(value){
+			this.m_promise=null;
+			this.promise_accept(value);
+		}
+		fire(){
+			let cb_fn=this.callback;
+			if(cb_fn)cb_fn();
+		}
+	}
+	class AsyncTimeoutTarget extends PromiseTimeoutTarget {
+		wait(){
+			return this.get_promise();
+		}
+	}
+	class BaseNode {
+		constructor(){
+			this.parent=null;
+		}
+		run(){
+			// do nothing
+		}
+	}
+	class BaseTimeoutNode extends BaseNode {
+		constructor(timeout) {
+			super();
 			this.timeout=timeout;
 		}
+		get_timeout(){
+			return this.timeout;
+		}
+		set_parent(parent){
+			this.parent=parent;
+		}
 		remove(){
-			this.parent.remove_child(this);
-		}
-		start() {
-			this.cint=setTimeout(this.run.bind(this), this.timeout);
-		}
-		run() {
-			this.remove();
-			this.target.callback.call(this.target.obj);
+			if(this.parent)this.parent.remove_child(this);
 		}
 		destroy(){
-			clearTimeout(this.cint);
+			this.remove();
+		}
+	}
+	class TimeoutIdNode extends BaseTimeoutNode {
+		constructor(id=null){
+			super(null);
+			this.id=id;
+		}
+	}
+	class TimeoutNode extends BaseTimeoutNode {
+		constructor(timeout=0){
+			super(timeout);
+			this.id=null;
+			this.target=null;
+		}
+		set_target(target){
+			this.target=target;
+		}
+		set() {
+			this.id=setInterval(this.run.bind(this), this.timeout);
+		}
+		start(target=new TimeoutTarget(null, target_fn, this.timeout)){
+			if(target)this.target=target;
+			this.set();
+		}
+		run(){
+			this.id=null;
+			this.remove();
+		}
+		destroy(){
+			if(this.id !== null)clearTimeout(this.id);
+		}
+	}
+	class IntervalNode extends BaseTimeoutNode {
+		constructor(timeout=0, target_fn){
+			super(timeout);
+			this.target_fn=target_fn;
+			this.id=null;
+		}
+		set(){
+			this.id=setInterval(this.run.bind(this), this.timeout);
+		}
+		start(target=new IntervalTarget(null, this.target_fn, this.timeout)){
+			if(target)this.set_target(target);
+			this.set();
+		}
+		destroy(){
+			if(this.id !== null)clearInterval(this.id);
+		}
+	}
+	class AsyncTimeoutNode extends TimeoutNode {
+		run() {
+			if(this.is_once())super.run();
+			if(this.target)this.target.fire();
+		}
+		start_async(target){
+			if(target){
+				this.target=target;
+				this.set();
+				return target.wait();
+			}
+			throw new Error("unable to start_async without anything to wait for");
 		}
 	}
 	class AsyncNodeRoot {
 		constructor(){
 			this.children=[];
 		}
+		set(target_fn, timeout, repeat=false){
+			let node;
+			if(repeat) {
+				node=new TimeoutNode(target_fn, timeout);
+			} else {
+				node=new IntervalNode(target_fn, timeout);
+			}
+			this.append_child(node);
+			node.start();
+		}
+		append_raw(timeout_id, once=true) {
+			this.append_child(new TimeoutIdNode(timeout_id, once));
+		}
 		append_child(record){
+			record.remove();
+			record.set_parent(this);
 			this.children.push(record);
 		}
 		remove_child(record){
 			let index=this.children.indexOf(record);
 			this.children.splice(index, 1);
+			record.set_parent(null);
 		}
-		destroy_all(){
+		destroy(){
 			let item=this.children.shift();
 			if(!item)return;
 			do{
@@ -1201,7 +1643,7 @@
 			} while(item);
 		}
 	}
-	class AverageRatioRoot{
+	class AverageRatioRoot {
 		constructor(){
 			/**@type {Map<string, AverageRatio>} */
 			this.map=new Map;
@@ -1232,7 +1674,7 @@
 				let key=this.ordered_keys[i];
 				cur=this.map.get(key);
 				let prev=this.map.get(this.ordered_keys[i-1]);
-				if(key === '5min')debug=true;
+				if(key === '30min')debug=true;
 				res=cur.add(prev.get_average(), res, debug);
 			}
 		}
@@ -1252,7 +1694,9 @@
 		}
 		init(){
 			if(atomepersecond === 0){
-				new AsyncDelayNode(this.root_node, [this, this.init, 'not ready AutoBuyState.update']).start();
+				let node=new AsyncTimeoutNode(0);
+				this.root_node.append_child(node);
+				node.start(new TimeoutTarget(this, this.init, 'not ready AutoBuyState.update'));
 				return;
 			}
 			this.avg=new AverageRatioRoot;
@@ -1273,6 +1717,7 @@
 				let [a, b=1, c=10]=arr.slice(i);
 				return a * b * c;
 			}
+			//@AverageRatio
 			function create_ratio(i){
 				return new AverageRatio(ratio_counts[i], mul_3(ratio_counts, i), ratio_mul[i], ratio_human[i], [rep_val]);
 			}
@@ -1293,7 +1738,6 @@
 		append_value(value) {
 			if(!Number.isFinite(value)){
 				console.assert(false, 'value is not finite');
-				debugger;
 			}
 			this.arr.unshift(value);
 			this.avg.push(value);
@@ -1303,60 +1747,41 @@
 			let new_ratio=this.calc_ratio();
 			if(!Number.isFinite(new_ratio)){
 				console.assert(false, 'ratio result is not finite');
-				debugger;
 			}
 			this.ratio=new_ratio;
 		}
 		update_ratio_mode(){
 			switch(this.ratio_mode){
-				case 0:{
-					if(this.ratio > .4){
-						this.ratio_mode++;
-						this.locked_cycles=80*12;
-					}
-				} break;
-				case 1:{
-					if(this.ratio < .35){
-						this.ratio_mode--;
-						this.locked_cycles=80*3;
-					}
-					if(this.ratio > .60){
-						this.ratio_mode++;
-						this.locked_cycles=80*12;
-					}
-				} break;
-				case 2:{
-					if(this.ratio < .45){
-						this.ratio_mode--;
-						this.locked_cycles=80*3;
-					}
-					if(this.ratio > .85){
-						this.ratio_mode++;
-						this.locked_cycles=80*12;
-					}
-				} break;
+				case 0:if(this.ratio>.4)this.do_ratio_lock(1, 80*12);break;
+				case 1:
+					if(this.ratio < .35)this.do_ratio_lock(-1, 80*3);
+					if(this.ratio > .60)this.do_ratio_lock(1, 80*12);break;
+				case 2:
+					if(this.ratio < .45)this.do_ratio_lock(-1, 80*3);
+					if(this.ratio > .85)this.do_ratio_lock(1, 80*12);break;
 				case 3:
-				default:{
-					if(this.ratio < .9){
-						this.ratio_mode--;
-						this.locked_cycles=80*3;
-					}
-					if(this.ratio > 1.5){
-						let offset=this.ratio_mode-3;
-						console.log(offset);
-						this.ratio_mode++;
-						this.locked_cycles=80*12;
-					}
-				} break;
+					if(this.ratio < .9)this.do_ratio_lock(-1, 80*3);
+					if(this.ratio > 1.5)this.on_very_high_ratio();break;
+				default:
+					if(this.ratio < .9)this.do_ratio_lock(-1, 80*6);
+					if(this.ratio > 1.5)this.on_very_high_ratio(2);break;
 			}
+		}
+		do_ratio_lock(mode_change_direction, num_of_cycles){
+			this.ratio_mode+=mode_change_direction;
+			this.locked_cycles=num_of_cycles;
+		}
+		on_very_high_ratio(mul=1){
+			console.log('high ratio', this.ratio_mode, mul, (~~(this.ratio*100))/100);
+			this.do_ratio_lock(1, 80*12 * mul);
 		}
 		get_mul_modifier(){
 			switch(this.ratio_mode){
-				case 0:return 8;
-				case 1:return 4;
-				case 2:return 2;
+				case 0:return 3;
+				case 1:return 2;
+				case 2:return 1.5;
 				case 3:return 1;
-				default:return 0.05;
+				default:return 0.4;
 			}
 		}
 		get_near_val(){
@@ -1379,21 +1804,22 @@
 			console.log('ratio cycle lock %se%o %s%o %s%o', (~~(num*1000))/1000, exponent, 'mode=', this.ratio_mode, 'cc=', this.locked_cycles);
 		}
 		update() {
-			this.ratio_mult=prestige;
-			this.div=60*this.ratio_mult*8;
-			for(let i=10;i >=4;i--){
-				if(prestige < i){
-					this.div/=1.75;
-				}
-			}
-			if(atomepersecond === 0){
-				new AsyncDelayNode(this.root_node, [this, this.update, 'not ready AutoBuyState.update']).start();
+			if(typeof prestige=='undefined'){
+				console.log('fail', this.div, atomepersecond, totalAtome);
+				let node=new AsyncTimeoutNode(80);
+				this.root_node.append_child(node);
+				node.start(new TimeoutTarget(this, this.update, 'not ready AutoBuyState.update'));
 				return;
 			}
+			this.ratio_mult=prestige;
+			this.div=60*this.ratio_mult*8;
 			this.val=totalAtome/atomepersecond/this.div;
 			if(!Number.isFinite(this.val)){
+				this.val=1;
 				console.log('fail', this.div, atomepersecond, totalAtome);
-				new AsyncDelayNode(this.root_node, [this, this.update, 'not ready AutoBuyState.update']).start();
+				let node=new AsyncTimeoutNode(80);
+				this.root_node.append_child(node);
+				node.start(new TimeoutTarget(this, this.update, 'not ready AutoBuyState.update'));
 				return;
 			}
 			this.val*=this.get_mul_modifier();
@@ -1418,21 +1844,161 @@
 		build_dom(){
 		}
 	}
+	const debug_id_gen=new UniqueIdGenerator;
+	/**@type {WeakRef<number>}*/
+	const debug_id_syms=[];
+	function next_debug_id(){
+		const id=debug_id_gen.next();
+		const sym=Symbol(id);
+		debug_id_syms.push(new WeakRef({sym}));
+		return sym;
+	}
+	class DomBuilderVM extends BaseStackVM {
+		constructor(instructions) {
+			super(instructions);
+			this.exec_stack=[];
+			this.jump_instruction_pointer=null;
+		}
+		execute_instruction_raw(cur_opcode, operands){
+			l_log_if(LOG_LEVEL_VERBOSE, cur_opcode, ...operands, null);
+			switch(cur_opcode) {
+				case 'exec':{
+					this.exec_stack.push([this.stack, this.instructions]);
+					let base_ptr=this.stack.length;
+					// advance the instruction pointer, when we return we want to resume
+					// at the next instruction...
+					this.instruction_pointer++;
+					this.stack.push(this.instruction_pointer, base_ptr);
+					this.stack=[];
+					this.instructions=operands[0];
+					this.jump_instruction_pointer=0;
+					l_log_if(LOG_LEVEL_VERBOSE, 'exec', ...operands[0]);
+				} break;
+				case 'peek':{
+					let [op_1, op_2]=operands;
+					let peek_stack=this.exec_stack[op_1][0];
+					let base_ptr=peek_stack.at(-1);
+					let at=peek_stack[base_ptr - op_2 - 1];
+					this.push(at);
+					l_log_if(LOG_LEVEL_VERBOSE, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
+				} break;
+				case 'append':{
+					if(this.stack.length <= 0){
+						throw new Error('stack underflow');
+					}
+					let target=this.pop();
+					if(this.stack.length <= 0){
+						throw new Error('stack underflow');
+					}
+					let elem=this.pop();
+					target.appendChild(elem);
+					l_log_if(LOG_LEVEL_VERBOSE, 'append to dom', [target, elem]);
+				} break;
+				default/*Debug*/:super.execute_instruction_raw(cur_opcode, operands);break;
+			}
+		}
+		run() {
+			this.running = true;
+			while(this.instruction_pointer < this.instructions.length && this.running) {
+				let instruction = this.instructions[this.instruction_pointer];
+				let [cur_opcode, ...operands] = instruction;
+				this.execute_instruction_raw(cur_opcode, operands);
+				if(this.jump_instruction_pointer != null){
+					this.instruction_pointer=this.jump_instruction_pointer;
+					this.jump_instruction_pointer=null;
+				}else{
+					this.instruction_pointer++;
+				}
+				if(this.instruction_pointer >= this.instructions.length){
+					if(this.exec_stack.length > 0){
+						[this.stack, this.instructions]=this.exec_stack.pop();
+						let base_ptr=this.stack.pop();
+						this.instruction_pointer=this.stack.pop();
+						l_log_if(LOG_LEVEL_VERBOSE, 'returned to', this.instruction_pointer, this.exec_stack.length);
+						continue;
+					}
+					l_log_if(LOG_LEVEL_VERBOSE, 'reached end of instruction stream, nothing to return too', instruction, this.instructions, this.instruction_pointer);
+				}
+			}
+			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
+			return this.return_value;
+		}
+	}
+	class DataLoader {
+		static int_parser=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
+		constructor(storage) {
+			this.store=storage;
+			this.null_sym=Symbol('null');
+		}
+		load_str_arr(key, def_value){
+			let data=this.store.getItem(key);
+			if(data === null)return this.create_default(def_value);
+			return data.split(",");
+		}
+		load_int_arr(key, def_value){
+			let storage_data=this.store.getItem(key);
+			if(storage_data === null)return this.create_default(def_value);
+			return this.parse_int_arr(storage_data);
+		}
+		parse_int=DataLoader.int_parser;
+		default_split(string){
+			return string.split(",");
+		}
+		parse_int_arr(data){
+			return this.default_split(data).map(DataLoader.int_parser);
+		}
+		create_default(value_or_factory){
+			let value=this.null_sym;
+			if(typeof value_or_factory === 'function'){
+				// this is a value factory
+				return value_or_factory();
+			}
+			let cc=Object.getPrototypeOf(value_or_factory).constructor;
+			try{
+				// get it as an object, the convert back to unboxed if possible
+				value=(new cc(value_or_factory)).valueOf();
+			}catch{}
+			if(value === this.null_sym) {
+				// none of them worked, it is a default value that you can't construct and call valueOf on
+				return value_or_factory;
+			}
+			return value;
+		}
+	}
 	class AutoBuy {
 		async_compress(){
 			this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
 		}
 		constructor(){
 			this.root_node=new AsyncNodeRoot;
-			this.delay=0;this.extra=0;this.iter_count=0;this.epoch_len=0;
+			this.extra=0;this.iter_count=0;this.epoch_len=0;
 			this.background_audio=null;this.state_history_arr=null;
 			this.skip_save=false;
 			this.cint_arr=[];
+			this.local_data_loader=new DataLoader(localStorage);
 			this.state=new AutoBuyState(this.root_node);
+			this.debug=this.state.debug;
 			this.compressor=new MulCompression;
-			this.load_state_history_arr(["S"]);
+			this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str', ["S"]);
 			this.epoch_start_time=Date.now();
 			this.original_map=new Map;
+			this.dom_map=new Map;
+			this.debug_arr=[];
+			for(let i=0;i<debug_id_syms.length;i++){
+				let val=debug_id_syms[i].deref();
+				if(val && this[val.sym]){
+					this.debug_arr.push(...this[val.sym].split(",").map(e=>e.trim()));
+				}
+			}
+			this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str', e=>{
+				let src=[300];
+				src.length=16;
+				let data_len=1;
+				while(src.at(-1) != src[0]){
+					src.copyWithin(data_len);
+					data_len*=2;
+				}
+			});
 		}
 		pre_init(){
 			// find elements; find background_audio by id
@@ -1455,7 +2021,7 @@
 			}
 			let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(`
 			this;push,target_obj;get;push,background_audio;get;push,play;
-				call,int(0);
+				call,int(2);
 					push,then;
 					push,%o;push,%o;
 					call,int(2);
@@ -1473,21 +2039,15 @@
 			if(this.skip_save)return;
 			localStorage.auto_buy_history_str=this.state_history_arr.join(",");
 		}
-		load_state_history_arr(arr){
-			if(localStorage.auto_buy_history_str){
-				arr=localStorage.auto_buy_history_str.split(",");
-			}
-			this.state_history_arr=arr;
+		get_timeout_arr_data(forced_action){
+			if(forced_action == "RESET")return this.timeout_arr.map(e=>~~(e/4)).join(",");
+			return this.timeout_arr.join(",");
 		}
-		get_delay_arr_data(forced_action){
-			if(forced_action == "RESET")return this.delay_arr.map(e=>~~(e/4)).join(",");
-			return this.delay_arr.join(",");
-		}
-		save_delay_arr(){
+		save_timeout_arr(){
 			let forced_action, action_count;
 			let action_data=localStorage.auto_buy_forced_action;
 			if(action_data)[forced_action, action_count]=action_data.split(",");
-			localStorage.auto_buy_delay_str=this.get_delay_arr_data(forced_action);
+			localStorage.auto_buy_timeout_str=this.get_timeout_arr_data(forced_action);
 			if(action_count !== void 0){
 				action_count=parseInt(action_count);
 				if(Number.isFinite(action_count)){
@@ -1500,19 +2060,23 @@
 			}
 		}
 		dom_pre_init(){
-			this.display_style_sheet = new CSSStyleSheet;
-			this.display_style_sheet.replace(`
+			const css_display_style=`
 			#state_log>div{width:max-content}
-			#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`);
+			#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`;
+			function style_sheet_gen(instance, args){
+				instance.replace(args[0]);
+			}
+			this.display_style_sheet = new CSSStyleSheet;
+			this.display_style_sheet.replace(css_display_style);
 			// dom element init; init history_element
 			this.history_element=document.createElement("div");
 			this.history_element.innerText="?3";
-			// init delay_element
-			this.delay_element=document.createElement("div");
-			this.delay_element.innerText="0";
+			// init timeout_element
+			this.timeout_element=document.createElement("div");
+			this.timeout_element.innerText="0";
 			// init hours_played_element
 			this.hours_played_element=document.createElement("div");
-			this.hours_played_element.innerText="0.000 hours";
+			this.hours_played_element.innerText="0.00000 hours";
 			// init percent_ratio_element
 			this.percent_ratio_element=document.createElement("div");
 			this.percent_ratio_element.innerText=0..toFixed(2)+"%";
@@ -1525,8 +2089,8 @@
 			// dom element attach
 			// attach history_element
 			this.state_log_element.append(this.history_element);
-			// attach delay_element
-			this.state_log_element.append(this.delay_element);
+			// attach timeout_element
+			this.state_log_element.append(this.timeout_element);
 			// attach hours_played_element
 			this.state_log_element.append(this.hours_played_element);
 			// attach percent_ratio_element
@@ -1536,7 +2100,188 @@
 			// attach state_log_element
 			document.body.append(this.state_log_element);
 			// attach display_style_sheet
-			document.adoptedStyleSheets = [...document.adoptedStyleSheets, this.display_style_sheet];
+			this.adopt_styles(this.display_style_sheet);
+			let create_state_log_arr=[
+				[0, 'get', 'body'],
+				[1, 'create', 'div', 'state_log', {id:'state_log'}], [1, 'append'],
+			]
+			let call_arg_arr=[];
+			let make_css_arr=[
+				[0, 'push', null, (...styles_promise_arr)=>{
+					// @Hack: wait for any promise to settle
+					return Promise.allSettled(styles_promise_arr).then(e=>{
+						let res=e.filter(e=>e.status==='fulfilled').map(e=>e.value);
+						this.adopt_styles(...res);
+						let err=e.filter(e=>e.status!='fulfilled');
+						if(err.length > 0)console.log('promise failure...', ...err);
+					});
+				}, ...call_arg_arr],
+				[0, 'new', CSSStyleSheet, [],
+				 (obj, str)=>obj.replace(str),
+				 [css_display_style]
+				],
+				[0, 'call', 2 + 1 + call_arg_arr.length],
+				// drop the promise
+				[0, 'drop'],
+			];
+			let raw_dom_arr=[
+				...create_state_log_arr,
+				[2, 'create', 'div', 'history', "?3"], [2, 'append'],
+				[2, 'create', 'div', 'delay', "0"], [2, 'append'],
+				[2, 'create', 'div', 'hours_played', "0.000 hours"], [2, 'append'],
+				[2, 'create', 'div', 'ratio', 0..toFixed(2)+"%"], [2, 'append'],
+				[2, 'create', 'div', 'ratio_change', 0..toExponential(3)], [2, 'append'],
+				[1, 'drop'],
+				[0, 'drop'],
+				...make_css_arr
+			];
+			try{
+				raw_dom_arr=[
+					...create_state_log_arr,
+					[0, 'drop'],
+					...make_css_arr
+				];
+				this.build_dom_from_desc(raw_dom_arr, this.dom_map);
+			}catch(e){
+				console.log(e);
+			};
+		}
+		adopt_styles(...styles){
+			let dom_styles=document.adoptedStyleSheets;
+			document.adoptedStyleSheets = [...dom_styles, ...styles];
+		}
+		build_dom_from_desc(raw_arr, trg_map=new Map, dry_run=false) {
+			let stack=[];
+			let map=trg_map;
+			if(dry_run)stack.push([0, "enable_dry_mode"]);
+			for(let i=0;i<raw_arr.length;i++) {
+				let cur_item=raw_arr[i];
+				let [depth, action, ...args] = cur_item;
+				switch(action){
+					case 'get':{
+						let elem, [element_to_get]=args;
+						switch(element_to_get){
+							case 'body':elem=document.body;break;
+							default:elem=document.querySelector(element_to_get);break;
+						}
+						stack.push([depth, "push", {type:'dom', from:'get', value:elem}]);
+					} break;
+					case 'new':{
+						const [_class, construct_arg_arr, callback, arg_arr]=args;
+						stack.push([depth, "push", null, callback, ...construct_arg_arr, _class]);
+						stack.push([depth, "construct", 1 + construct_arg_arr.length]);
+						stack.push([depth, "push", ...arg_arr]);
+						stack.push([depth, "call", 3 + arg_arr.length]);
+					} break;
+					case 'create':{
+						const [element_type, name, content] = args;
+						let cur_element=document.createElement(element_type);
+						if(typeof content == 'string'){
+							cur_element.innerText=content;
+						} else if(typeof content == 'object'){
+							if(content.id)cur_element.id=content.id;
+						} else {
+							console.log('bad typeof == %s for content in build_dom; content=%o', typeof content, content);
+							console.info("Info: case 'create' args are", element_type, name);
+						}
+						map.set(name, cur_element);
+						stack.push([depth, "push", {type:'dom', from:'create', value:cur_element}]);
+					} break;
+					case 'append':{
+						// peek at the return stack, up 1 depth
+						stack.push([depth, "peek", depth-1, 0]);
+						stack.push(cur_item);
+					} break;
+					case 'drop':
+					case 'call':// push the item
+					case 'push':stack.push(cur_item);break;
+					default:{
+						console.log('might need to handle', action);
+						debugger;
+					} break;
+				}
+				if(this.debug_arr.includes('build_dom_from_desc'))console.log('es', stack.at(-1));
+			}
+			let [left_stack, tree]=this.parse_dom_desc(stack);
+			if(left_stack.length > 0){
+				console.assert(false, 'failed to parse everything (parse tree probably has errors)');
+			}
+			this.apply_dom_desc(tree);
+		}
+		parse_dom_desc(input_stack){
+			let stack=[];
+			let tree=[];
+			for(let x=0,i=0;i<input_stack.length;i++){
+				let cur_stack=input_stack[i];
+				let [y, ...item]=cur_stack;
+				if(this.debug_arr.includes('parse_dom_desc'))console.log(item);
+				while(y > x){
+					stack.push(tree);
+					tree=[];
+					x++;
+				}
+				while(y < x){
+					let prev=tree;
+					tree=stack.pop();
+					tree.push([x, prev]);
+					x--;
+				}
+				tree.push([y, item]);
+			}
+			return [stack, tree];
+		}
+		log_if(tag, ...log_args){
+			if(this.debug_arr.includes(tag)){
+				console.log(...log_args);
+			}
+		}
+		get_logging_level(tag, level=LOG_LEVEL_VERBOSE){
+			if(this.debug_arr.includes(tag)){
+				return level-1;
+			}
+			return level;
+		}
+		/* 		get [next_debug_id()](){
+			return 'apply_dom_desc';
+		} */
+		apply_dom_desc(tree) {
+			this.run_dom_desc(tree);
+		}
+		run_dom_desc(tree, stack=[], cur_depth=0, items=[], depths=[]){
+			for(let i=0;i<tree.length;i++){
+				let cur=tree[i];
+				switch(cur[0] - cur_depth){
+					case 1:{
+						this.log_if('apply_dom_desc', 'rdc stk');
+						stack.push(['children', items.length-1, cur]);
+					} break;
+					case 0:{
+						items.push(cur[1]);
+						depths.push(cur[0]);
+					} break;
+					default:{
+						console.assert(false, 'handle depth change in apply_dom_desc');
+						this.log_if('apply_dom_desc', cur[0] - cur_depth);
+					}
+				}
+			}
+			if(stack.length === 0)return [items, depths];
+			let tag, data, items_index;
+			{
+				let data_depth;
+				[tag, items_index, [data_depth, data]] = stack.pop();
+				let log_level=this.get_logging_level('apply_dom_desc');
+				l_log_if(log_level, tag, items[items_index], data_depth, data);
+			}
+			let deep_res=this.run_dom_desc(data, stack, cur_depth+1);
+			const ret_items=items.slice();
+			let off=1;
+			ret_items.splice(items_index + off++, 0, ['exec', deep_res[0]]);
+			this.log_if('apply_dom_desc', deep_res[0], deep_res[1]);
+			this.log_if('apply_dom_desc', ret_items, depths, stack);
+			let builder_vm=new DomBuilderVM(ret_items);
+			builder_vm.run();
+			return [ret_items, depths];
 		}
 		init_dom(){
 			const font_size_px=22;
@@ -1546,7 +2291,7 @@
 			// dom element init; init history_element
 			this.history_element.addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
 			// init delay_element
-			this.delay_element.innerText=this.delay_arr[0];
+			this.timeout_element.innerText=this.timeout_arr[0];
 			// init hours_played_element; init percent_ratio_element
 			this.percent_ratio_element.addEventListener('click', function(){
 				t.state.reset();
@@ -1556,7 +2301,7 @@
 			// event listeners; window unload
 			window.addEventListener('unload', function(){
 				t.save_state_history_arr();
-				t.save_delay_arr();
+				t.save_timeout_arr();
 			});
 		}
 		global_init(){
@@ -1566,7 +2311,7 @@
 			window.g_auto_buy=this;
 		}
 		destroy(){
-			this.root_node.destroy_all();
+			this.root_node.destroy();
 			for(let i=0;i<this.cint_arr.length;i+=2){
 				let cint_item=this.cint_arr[i];
 				switch(cint_item[0]){
@@ -1582,23 +2327,9 @@
 				}
 			}
 		}
-		parse_single_int(string){
-			return parseInt(string);
-		}
-		default_split(string){
-			return string.split(",");
-		}
-		parse_delay_arr(data){
-			return this.default_split(data).map(this.parse_single_int);
-		}
-		load_delay_arr(){
-			let storage_data=localStorage.auto_buy_delay_str;
-			if(!storage_data)return Array(12).fill(300);
-			return this.parse_delay_arr(storage_data);
-		}
 		update_dom(){
 			// spell:words timeplayed
-			this.hours_played_element.innerText=((timeplayed / 30) / 60).toFixed(3) + " hours";
+			this.hours_played_element.innerText=((timeplayed / 30) / 60).toFixed(7) + " hours";
 			let last_ratio=this.state.ratio*100;
 			this.state.update();
 			let cur_ratio=this.state.ratio*100;
@@ -1611,8 +2342,29 @@
 			this.next_delay(this.update_dom, 125, 'update_dom', true);
 		}
 		init(){
-			this.delay_arr=this.load_delay_arr();
 			this.next_delay(this.delayed_init, 200, 'init', true);
+		}
+		dom_reset() {
+			this.update_dom();
+		}
+		replace_timeplayed_timer(){
+			//spell:words secondinterval
+			clearInterval(window.secondinterval);
+			let rate = 66 / 2000;
+			let time_base=performance.now();
+			window.secondinterval = setInterval(function() {
+				let real_time=performance.now();
+				let time_diff=real_time-time_base;
+				time_base=real_time;
+				let real_rate=time_diff / 2000;
+				timeplayed += real_rate;
+			}, 66);
+			this.root_node.append_raw(setInterval(function(){
+				doc.title = rounding(totalAtome, false,1).toString() + " atoms";
+				doc.getElementById('atomsaccu').innerHTML = rounding(atomsaccu, false,0);
+				doc.getElementById('timeplayed').innerHTML = (Math.round(timeplayed / 30) / 60).toFixed(2) + " hours";
+				doc.getElementById('presnbr').innerHTML = "<br>" + (calcPres() * 100).toFixed(0) + " % APS boost";
+			}, 2000), false);
 		}
 		delayed_init() {
 			let t=this;
@@ -1624,6 +2376,9 @@
 			this.original_map.set('lightreset', lightreset);
 			window.lightreset=lightreset_inject;
 			window.specialclick=specialclick_inject;
+			if(window.secondinterval){
+				this.replace_timeplayed_timer();
+			}
 		}
 		state_history_clear_for_reset(){
 			this.state_history_arr=["R"];
@@ -1639,159 +2394,187 @@
 			while(this.state_history_arr.length>120)this.state_history_arr.shift();
 		}
 		history_element_click_handler(event){
-			let delay=3000;
-			if(this.extra < delay)delay=this.extra;
-			this.next_delay(this.main, delay, '@');
+			this.root_node.destroy();
+			this.dom_reset();
+			this.reset();
+		}
+		reset(){
+			let timeout=3000;
+			if(this.extra < timeout)timeout=this.extra;
+			this.next_timeout(this.main, timeout, '@');
 		}
 		calc_delay_extra() {
-			let max;
-			while(this.delay_arr.length>16){
-				this.delay_arr.shift();
-			};
+			while(this.delay_arr.length>60)this.delay_arr.shift();
+			let max=0;
+			let total=0;
 			for(var i=0;i<this.delay_arr.length;i++){
-				this.extra+=this.delay_arr[i];
+				total+=this.delay_arr[i];
 				max=Math.max(this.delay_arr[i], max);
 			};
-			void max;
-			return ~~(this.extra / this.delay_arr.length);
+			const val=total / this.delay_arr.length;
+			let num=max / val;
+			this.last_value??=num;
+			let diff=this.last_value-num;
+			if(diff > .1 || diff < -.1){
+				this.last_value=num;
+				console.log('delay_arr num', num, 'differing from last by', diff);
+			}
+			return this.round(val);
 		}
 		is_epoch_over(){
 			let epoch_diff=Date.now() - this.epoch_start_time;
-			return epoch_diff > 60*2*1000;
+			return epoch_diff > 60*5*1000;
 		}
 		main(){
+			function r(v){
+				return ~~v;
+			}
+			let loss_rate=this.unit_promote_start();
+			if(loss_rate > 0 || loss_rate < 0){
+				console.log('loss', r(loss_rate*100 * 10)/10);
+			}
+			if(this.maybe_run_reset())return;
+			if(this.pre_total != totalAtome)return this.step_iter_start();
+			this.iter_count=0;
+			if(Math.random()<0.005)return this.rare_begin();
+			this.faster_delay();
+		}
+		async maybe_async_reset(){
+			let loss_rate=this.unit_promote_start();
+			if(this.maybe_run_reset())return [true, loss_rate];
+			return [false, loss_rate];
+		}
+		async main_async(){
+			for(this.iter_count=0;;) {
+				if(this.iter_count<6) await this.normal_decrease_async();
+				else await this.large_decrease_async();
+				let [quit, loss_rate]=this.maybe_async_reset();
+				if(quit)return;
+				if(loss_rate > 0.08)continue;
+				if(this.pre_total == totalAtome)break;
+			}
+			if(Math.random()<0.005)this.rare_begin();
+			else this.faster_delay_use_async();
+		}
+		step_iter_start(){
+			if(this.iter_count>6)return this.large_decrease();
+			else return this.normal_decrease();
+		}
+		async fast_unit(){
+			let running=true;
+			while(running) {
+				this.unit_promote_start();
+				if(this.pre_total == totalAtome) break;
+				let promise=this.async_delay_step();
+				await promise;
+			}
+			this.async_delay_step_finish();
+		}
+		unit_promote_start(){
 			this.extra=this.calc_delay_extra();
 			this.pre_total=totalAtome;
 			this.do_unit_promote();
-			if(this.state.ratio > 1 && this.is_epoch_over())return this.reset_delay_init();
-			if(this.pre_total != totalAtome)return this.step_iter_start();
-			this.iter_count=0;
-			this.rare_begin_or_faster_delay();
-		}
-		step_iter_start(){
+			let money_diff=this.pre_total-totalAtome;
+			let loss_rate=money_diff/this.pre_total;
+			if(this.pre_total != totalAtome && this.debug){
+				let log_args=[];
+				let percent_change=(loss_rate*100).toFixed(5);
+				let money_str=totalAtome.toExponential(3);
+				log_args.push(this.iter_count);
+				log_args.push(percent_change);
+				log_args.push(money_str);
+				console.log(...log_args);
+			}
 			this.iter_count+=1;
-			if(this.iter_count>6){
-				return this.large_decrease();
-			}else{
-				return this.normal_decrease();
-			};
+			return loss_rate;
 		}
-		get_delay_change(pow_base, pow_num, div){
+		async async_next_timeout_step(){
+			this.do_timeout_dec([1.006], 10);
+			return this.next_timeout_async(this.extra, ':');
+		}
+		async_timeout_step_finish(){
+			this.do_timeout_dec([1.006], 10);
+			this.next_timeout(this.main, this.extra, '$');
+		}
+		large_decrease(){
+			this.do_timeout_dec([1.008], 10);
+			this.next_timeout(this.main, this.extra, '!');
+		}
+		normal_decrease(){
+			this.do_timeout_dec([1.006], 10);
+			this.next_timeout(this.main, this.extra, '-');
+		}
+		rare_begin(){
+			this.do_timeout_inc([1.008, 1.03], 10);
+			this.next_timeout(this.initial_special, this.extra, '<');
+		}
+		faster_timeout_use_async(){
+			this.do_timeout_inc([1.007, 1.01], 50);
+			this.next_timeout(this.main_async, this.extra, 'A');
+		}
+		faster_timeout(){
+			this.do_timeout_inc([1.007, 1.01], 50);
+			this.next_timeout(this.main, this.extra, '+');
+		}
+		get_timeout_change(pow_base, pow_num, div){
 			let pow_res=Math.pow(pow_base, pow_num);
 			let res=this.extra * pow_res;
 			return res / div;
 		}
-		update_delay_inc(change){
+		update_timeout_inc(change){
 			if(window.__testing__){
 				return;
 			}
-			let value=this.round_delay(this.extra + change);
-			this.delay=value;
-			this.delay_arr.push(value);
+			let value=this.round(this.extra + change);
+			this.timeout_arr.push(value);
 		}
-		update_delay_dec(change){
+		update_timeout_dec(change){
 			if(window.__testing__){
 				return;
 			}
-			let value=this.round_delay(this.extra - change);
-			this.delay=value;
-			this.delay_arr.push(value);
+			let value=this.round(this.extra - change);
+			if(value < 25)value=25;
+			this.timeout_arr.push(value);
 		}
-		round_delay(value){
+		round(value){
 			return ~~value;
 		}
-		do_delay_dec(pow_terms, div){
+		do_timeout_dec(pow_terms, div){
+			let change=this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
+			this.update_timeout_dec(change);
+		}
+		do_timeout_inc(pow_terms, div){
 			let iter_term=Math.pow(pow_terms[1], this.iter_count);
-			let delay_change=this.get_delay_change(pow_terms[0], Math.log(totalAtome), div);
-			this.update_delay_dec(delay_change * iter_term);
-			if(this.delay < 25)this.delay=25;
+			let change=this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
+			this.update_timeout_inc(change * iter_term);
 		}
-		do_delay_inc(pow_terms, div){
-			let iter_term=Math.pow(pow_terms[1], this.iter_count);
-			let delay_change=this.get_delay_change(pow_terms[0], Math.log(totalAtome), div);
-			this.update_delay_inc(delay_change * iter_term);
+		async next_timeout_async(timeout, char, silent=false){
+			if(!silent && this.timeout_element)this.timeout_element.innerText=timeout;
+			this.state_history_append(char, silent);
+			let node=new AsyncTimeoutNode(timeout);
+			this.root_node.append_child(node);
+			let promise=node.start_async(new AsyncTimeoutTarget(char));
+			await promise;
 		}
-		large_decrease(){
-			this.do_delay_dec([1.009, 1.05], 8);
-			this.next_delay(this.main, this.extra, '!');
-		}
-		normal_decrease(){
-			this.do_delay_dec([1.007, 1.05], 8);
-			this.next_delay(this.main, this.delay, '-');
-		}
-		fast_unit_delay(){
-			this.iter_count+=1;
-			this.do_delay_dec([1.008, 1.05], 8);
-			this.next_delay(this.fast_unit, this.extra, ':');
-		}
-		rare_begin(){
-			this.do_delay_inc([1.008, 1.05], 10);
-			this.next_delay(this.initial_special, this.extra, '<');
-		}
-		faster_delay(){
-			this.do_delay_inc([1.007, 1.05], 40);
-			this.next_delay(this.main, this.delay, '+');
-		}
-		next_delay(trg_fn, timeout, char, silent=false){
-			new AsyncDelayNode(this.root_node, [this, trg_fn, char], timeout).start();
-			if(!silent && this.delay_element)this.delay_element.innerText=timeout;
+		next_timeout(trg_fn, timeout, char, silent=false){
+			let node=new AsyncTimeoutNode(timeout);
+			this.root_node.append_child(node);
+			node.start(new TimeoutTarget(this, trg_fn, char));
+			if(!silent && this.timeout_element)this.timeout_element.innerText=timeout;
 			this.state_history_append(char, silent);
 		}
-		rare_begin_or_faster_delay(){
-			if(Math.random()<0.05)return this.rare_begin();
-			this.faster_delay();
-		}
-		calc_reduction(arr, index, type, target_item) {
-			let a=_targets.indexOf(target_item);
-			l1:if(a>-1&&target_item<=1000){
-				for(let v2 of type[2])if(v2!=index&&arr[v2][4]<target_item)break l1;
-				let c=_targets_achi.indexOf(totalAchi()+1);
-				if(c>-1)a=c;
-				return 1-((a+1)*0.01);
-			}
-			return 1;
-		}
-		do_unit_promote_iter(maxed, arr, index){
-			let next=Find_ToNext(index);
-			const item=arr[index];
-			if(next < 0)maxed[index]=true;
-			if(index != 0 && item[16] == false)return false;
-			let type=Get_Unit_Type(index);
-			let cost_acc=getUnitPromoCost(index);
-			for(let i=1;i<=100;i++) {
-				if(cost_acc > totalAtome)break;
-				let cost=cost_acc;
-				cost+=(cost*item[3])/100;
-				cost*=this.calc_reduction(arr, index, type, (item[4]*1)+i);
-				cost_acc+=cost;
-				if(i==next||(maxed[index]&&i==100))return true;
-			}
-			return false;
-		}
 		do_unit_promote(){
-			var out=[],maxed=[];
-			const arr=arUnit;
-			for(var i=0;i<arr.length;i++)out[i]=this.do_unit_promote_iter(maxed, arr, i);
-			let res=out.lastIndexOf(true);
-			if(res<0)return;
-			if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);
-			else tonext(res);
-		}
-		fast_unit(){
-			this.pre_total=totalAtome;
-			this.do_unit_promote();
-			if(this.pre_total == totalAtome)this.slow_final();
-			else this.fast_unit_delay();
+			do_auto_unit_promote();
 		}
 		slow_final(){
-			this.next_delay(this.main, this.extra, '$');
+			this.next_timeout(this.main, this.extra, '$');
 		}
 		bonus(){
 			bonusAll();
-			this.fast_unit_delay();
+			this.fast_unit();
 		}
-		special_delay(){
-			this.next_delay(this.special, this.extra, '^');
+		special_timeout(){
+			this.next_timeout(this.special, this.extra, '^');
 		}
 		is_special_done(special_buyable){
 			return !special_buyable.done && special_buyable.cost < totalAtome;
@@ -1810,25 +2593,99 @@
 			return ret;
 		}
 		special(){
-			if(this.do_special())this.next_delay(this.special, this.extra, '^');
-			else this.next_delay(this.bonus, this.extra, '#');
+			if(this.do_special())this.next_timeout(this.special, this.extra, '^');
+			else this.next_timeout(this.bonus, this.extra, '#');
 		}
 		initial_special(){
-			this.next_delay(this.special, this.extra, '>');
+			this.next_timeout(this.special, this.extra, '>');
 		}
-		reset_delay_trigger(){
+		maybe_run_reset(){
+			let count=0;
+			count+=this.extra > 15*1000;
+			count+=this.state.ratio > 1;
+			count+=this.is_epoch_over();
+			switch(count){
+				case 0:
+				case 1:break;
+				default:console.log('mrc', count);
+			}
+			if(this.state.ratio > 1 && this.is_epoch_over() || this.extra > 15*1000){
+				this.next_timeout(this.reset_timeout_trigger, 5*1000, 'reset_timeout_begin');
+				return true;
+			}
+			return false;
+		}
+		reset_timeout_init(){
 			this.background_audio.muted=!this.background_audio.muted;
-			this.next_delay(this.reset_delay_start, 60*2*1000, 'trigger');
+			this.next_timeout(this.reset_timeout_trigger, 60*2*1000, 'reset_timeout');
 		}
-		reset_delay_start(){
-			this.next_delay(this.reset_delay_run, 60*1000, 'reset_soon');
+		reset_timeout_trigger(){
+			this.background_audio.muted=!this.background_audio.muted;
+			this.next_timeout(this.reset_timeout_start, 60*2*1000, 'reset_timeout');
 		}
-		reset_delay_run(){
+		reset_timeout_start(){
+			this.next_timeout(this.reset_timeout_run, 60*1000, 'reset_timeout');
+		}
+		reset_timeout_run(){
 			window.lightreset();
 		}
-		reset_delay_init(){
-			this.background_audio.muted=!this.background_audio.muted;
-			this.next_delay(this.reset_delay_start, 60*2*1000, 'reset_delay');
+	}
+	function do_auto_unit_promote(){
+		var out=[],maxed=[];
+		for(var k=0;k<arUnit.length;k++){
+			var afford=false;
+			if(arUnit[k][16]==true||k==0){
+				var type=Get_Unit_Type(k);
+				var tmp=getUnitPromoCost(k);
+				var cost=tmp;
+				var next=Find_ToNext(k);
+				if(next < 0){maxed[k]=true};
+				for(var i=1;i<=100;i++){
+					if(totalAtome>=cost){
+						tmp=tmp+(tmp*arUnit[k][3])/100;
+						var tar=(arUnit[k][4]*1)+i;
+						var a=_targets.indexOf(tar);
+						var reduction=1;
+						if(a>-1&&tar<=1000){
+							var b=true;
+							for(var k2 in type[2]){
+								var v2=type[2][k2]
+								if(v2!=k&&arUnit[v2][4]<tar){
+									b=false;
+								}
+							}
+							if(b){
+								var c=_targets_achi.indexOf(totalAchi()+1);
+								if(c>-1){
+									reduction*=(1-((c+1)*0.01));
+								}
+								reduction*=1-((a+1)*0.01);
+							}
+						}
+						tmp*=reduction;
+						cost+=tmp;
+					}else{
+						break
+					}
+					if(i==next||(maxed[k]&&i==100)){
+						afford=true;
+					}
+				}
+				if(afford){
+					out[k]=true;
+				}else{
+					out[k]=false;
+				}
+			}
+		}
+		res=out.lastIndexOf(true);
+		if(res<0)return;
+		if(maxed[res]){
+			for(var y=0;y<100;y++){
+				mainCalc(res);
+			}
+		}else{
+			tonext(res);
 		}
 	}
 	const auto_buy_obj=new AutoBuy;
@@ -1909,56 +2766,19 @@
 			}
 		}
 	}
-	class DoUnitPromote {
-		static calc_reduction(arr, index, type, target_item) {
-			let a=_targets.indexOf(target_item);
-			l1:if(a>-1&&target_item<=1000){
-				for(let v2 of type[2])if(v2!=index&&arr[v2][4]<target_item)break l1;
-				let c=_targets_achi.indexOf(totalAchi()+1);
-				if(c>-1)a=c;
-				return 1-((a+1)*0.01);
-			}
-			return 1;
-		}
-		static do_unit_promote_iter(maxed, arr, index){
-			let next=Find_ToNext(index);
-			const item=arr[index];
-			if(next < 0)maxed[index]=true;
-			if(index != 0 && item[16] == false)return false;
-			let type=Get_Unit_Type(index);
-			let cost_acc=getUnitPromoCost(index);
-			for(let i=1;i<=100;i++) {
-				if(cost_acc > totalAtome)break;
-				let cost=cost_acc;
-				cost+=(cost*item[3])/100;
-				cost*=this.calc_reduction(arr, index, type, (item[4]*1)+i);
-				cost_acc+=cost;
-				if(i==next||(maxed[index]&&i==100))return true;
-			}
-			return false;
-		}
-		static do_unit_promote(){
-			var out=[],maxed=[];
-			const arr=arUnit;
-			for(var i=0;i<arr.length;i++)out[i]=this.do_unit_promote_iter(maxed, arr, i);
-			let res=out.lastIndexOf(true);
-			if(res<0)return;
-			if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);
-			else tonext(res);
-		}
-	}
 	function map_to_tuple(e, i){
 		return [e, this[i]];
 	}
 	function to_tuple_arr(keys, values){
 		return keys.map(map_to_tuple, values);
 	}
-	function do_async_wait(delay){
-		function promise_exec(a){
-			setTimeout(a, delay);
-		}
-		return new Promise(promise_exec);
+	function promise_set_timeout(timeout, a){
+		setTimeout(a, timeout);
 	}
+	function do_async_wait(timeout){
+		return new Promise(promise_set_timeout.bind(null, timeout));
+	}
+	void do_async_wait;
 	function array_sample_end(arr, rem_target_len){
 		arr=arr.slice(-300);
 		let rem_len=char_len_of(arr);
@@ -1975,7 +2795,7 @@
 		g_auto_buy.skip_save=true;
 		window.addEventListener('unload', function(){
 			g_auto_buy.skip_save=false;
-			localStorage.auto_buy_delay_str="300,300,300,300";
+			localStorage.auto_buy_timeout_str="300,300,300,300";
 			localStorage.long_wait=12000;
 		});
 		let original=g_auto_buy.original_map.get('lightreset');
@@ -2130,42 +2950,38 @@
 			configurable
 		});
 	}
-	function got_jquery(jquery_func){
-		define_property_value(window, '$', jquery_func);
-		let res=jquery_func('head');
-		let r_proto=Object.getPrototypeOf(res);
-		r_proto.lazyload=function(...a){
-			console.log('lazyload', ...a);
-		}
-		return jquery_func;
-	}
 	function reload_if_def(obj, key){
 		if(obj[key]){
 			location.reload();
 			document.body.innerHTML="";
 			document.head.innerHTML="";
-			document.documentElement="";
-			debugger;
+			document.documentElement.outerHTML="";
 			return true;
 		}
 		return false;
 	}
+	function got_jquery(value){
+		Object.defineProperty(window, '$', {
+			value,
+			writable:true,
+			enumerable:true,
+			configurable:true
+		});
+		use_jquery();
+	}
+	function use_jquery(){
+		let jq=window.$;
+		if(!jq)return;
+		let res=jq('head');
+		let r_proto=Object.getPrototypeOf(res);
+		r_proto.lazyload=function(...a){}
+		return jq;
+	}
 	void reload_if_def;
-	function proxy_jquery(){
-		let val;
-		if(window.$){
-			let res=window.$('head');
-			let r_proto=Object.getPrototypeOf(res);
-			r_proto.lazyload=function(...a){
-				console.log('lazyload', ...a);
-			}
-			return;
-		}
+	function proxy_jquery(value){
+		let val=use_jquery();
 		Object.defineProperty(window, '$', {
 			get(){
-				if(val){
-					debugger;
-				}
 				return val;
 			},
 			set(value){
