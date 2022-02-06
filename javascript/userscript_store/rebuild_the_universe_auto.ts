@@ -1375,7 +1375,7 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 }
-import {InstructionType, VMBoxedAnySafe, VMBoxed} from "./SimpleVMTypes";
+import {InstructionType, VMBoxedAnySafe, VMBoxed} from "./types/SimpleVMTypes";
 class SimpleStackVM {
 	instructions: InstructionType[];
 	stack: VMBoxed[];
