@@ -12,7 +12,84 @@
 // @run-at	     document-start
 // @grant		 none
 // ==/UserScript==
+
+import {RecursivePartial} from "./types/RecursivePartial";
+
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
+declare global {
+	export interface Window {
+		proxy_set:any[];
+		atomepersecond: number;
+		//spell:words totalAtome lightreset totalAchi _targets_achi
+		totalAtome: number;
+		prestige: number;
+		is_in_ignored_fn():any;
+		__testing__: false;
+		bonusAll(): void;
+		specialclick(index: number): void;
+		lightreset(): void;
+		timeplayed: number;
+		totalAchi(): number;
+		_targets_achi: any[];
+		arUnit: any[];
+		Get_Unit_Type(v: any): any;
+		getUnitPromoCost(v: any): number;
+		Find_ToNext(v: number): number;
+		_targets: any[];
+		mainCalc(v: any): void;
+		tonext(v: number): void;
+		specialsbought: number;
+		doc: Document;
+		rounding(v: number, x: any, y: any): string;
+		atomsinvest: number;
+		calcDiff(v: number): number;
+		noti: boolean;
+		gritter: any;
+		toTitleCase(v: string): string;
+		cint_arr: string[];
+		//spell:words adsbygoogle
+		adsbygoogle: {
+			op: any,
+			push(v: number): void;
+		};
+		plurials(v: string): string;
+		arrayNames: string[];
+		updateprogress(v: any): void;
+		$: (val: any) => any;
+		seeUnit(v: number): any;
+		checkspec(): void;
+		achiSpec(): void;
+		Pace: {
+			bar: {
+				progress: number,
+				finish: Function;
+			}
+		};
+		_SM_Data: any;
+		on_on_timers_moved_first: boolean;
+		da: any[];
+		lightreset(): void;
+		specialclick(that: any): void;
+	}
+	export var Window: {
+		prototype: Window;
+		new(): Window;
+	};
+	interface HTMLDivElement {
+		style: CSSStyleDeclaration;
+	}
+	interface Document {
+		adoptedStyleSheets: CSSStyleSheet[];
+
+		// don't make an error, just do nothing
+		stop(): void;
+	}
+	interface CSSStyleSheet extends StyleSheet {
+		replace(string: string): Promise<CSSStyleSheet>
+	}
+}
+export {};
+
 
 (function() {
 	'use strict';
@@ -20,7 +97,7 @@
 	const TIMER_REPEATING=2;
 	const TIMER_TAG_COUNT=3;
 	const AUDIO_ELEMENT_VOLUME=0.58;
-	const cint_arr=[];
+	const cint_arr: string[] | number[][]=[];
 	//spell:disable
 	const __RTU = 301;
 	const __RTR = 302;
@@ -106,12 +183,16 @@
 	let g_timer_api=new TimerApi;
 	let message_types=g_timer_api.msg_types;
 	class ScriptStateHost {
-		static event_target={
+		static event_target:{
+			fns:any[],
+			addEventListener(fn: (e: any) => void):void,
+			dispatchEvent(ev: {type: string; state: string;}):void;
+		}={
 			fns:[],
-			addEventListener(fn){
+			addEventListener(fn: (e: any) => void){
 				this.fns.push(fn);
 			},
-			dispatchEvent(ev){
+			dispatchEvent(ev: {type: string; state: string;}){
 				//spell:disable
 				let lfns=this.fns.slice();
 				for(let i=0;i<lfns.length;i++){
@@ -126,23 +207,58 @@
 	let is_in_userscript_fn=false;
 	let is_in_userscript=true;
 	/**@type {CallableFunction | NewableFunction} */
-	let cur_event_fns=[];
-	function find_all_scripts_using_string_apis(){
+	let cur_event_fns: any[]=[];
+	function find_all_scripts_using_string_apis():
+	[typeof scripts_weak_arr, typeof register_obj_with_registry]
+	{
 		let scripts=new WeakSet;
 		let scripts_holders=[];
-		let scripts_tokens=[];
-		let scripts_weak_arr=[];
-		let script_registry;
+		type TokenPtr = {
+			token: symbol;
+		};
+
+		type TokenType = {
+			key: symbol;
+			ref: WeakRef<TokenPtr>;
+		};
+
+		let scripts_tokens: (TokenType|null)[]=[];
+		type WeakFinalInfo = {
+			key: symbol;
+			id: number;
+			ref: WeakRef<any>;
+		};
+
+		let scripts_weak_arr: (WeakFinalInfo|null)[]=[];
+		let script_registry: FinalizationRegistry<unknown>;
 		let script_id=1;
 		window.is_in_ignored_fn=function(){
 			return is_in_ignored_from_src_fn;
 		}
-		ScriptStateHost.event_target.addEventListener(e=>{
+		ScriptStateHost.event_target.addEventListener((e: any)=>{
 			is_in_userscript=false;
 		});
-		function register_obj_with_registry(obj) {
+		function type_verify_extract<T>(val:null[] | T[]):val is T[] {
+			return true;
+		}
+		function retype_arr<T>(in_val:null[] | T[]):T[] | null {
+			if(type_verify_extract<T>(in_val)){
+				return in_val;
+			}
+			return null;
+		}
+		function register_obj_with_registry(obj: any) {
 			let obj_id;
-			let obj_ref=scripts_weak_arr.find(e=>e.ref.deref() === obj);
+			let elem=scripts_weak_arr[0];
+			let scripts_res:WeakFinalInfo[]=[];
+			for(let i=0;i<scripts_weak_arr.length;i++){
+				let elem=scripts_weak_arr[i];
+				if(elem !== null){
+					scripts_res.push(elem);
+				}
+			}
+			let weak_arr = retype_arr(scripts_weak_arr);
+			let obj_ref=weak_arr?.find((e: null | {ref: {deref: () => any;};})=>e && e.ref.deref() === obj);
 			if(obj_ref){
 				obj_id=obj_ref.id;
 				return obj_id;
@@ -157,12 +273,16 @@
 			let token_sym={token:Symbol(-obj_id)};
 			scripts_holders.push(held_obj);
 			scripts_tokens.push({key:held_obj.key, ref:new WeakRef(token_sym)});
-			scripts_weak_arr.push({key:held_obj.key, id:obj_id, ref:new WeakRef(obj)})
+			if(weak_arr)weak_arr.push({
+				key:held_obj.key,
+				id:obj_id,
+				ref:new WeakRef(obj)
+			});
 			script_registry.register(obj, held_obj, token_sym);
 			return obj_id;
 		}
-		function replace_cb_with_safe_proxy(args, index){
-			if(args[index] instanceof Function) {
+		function replace_cb_with_safe_proxy(args: any[] | null, index: number | null){
+			if(index && args && args[index] instanceof Function) {
 				let target_fn=args[index];
 				if(is_in_userscript) {
 					target_fn.is_userscript_fn=true;
@@ -232,7 +352,7 @@
 				return ret;
 			}
 		});
-		requestAnimationFrame=new Proxy(requestAnimationFrame, {
+		window.requestAnimationFrame=new Proxy(requestAnimationFrame, {
 			apply(...a){
 				let target_obj=a[1];
 				let call_args=a[2];
@@ -289,10 +409,14 @@
 				return Reflect.apply(...a);
 			}
 		});
-		script_registry=new FinalizationRegistry(function cleanup(held) {
+		type CleanupType = {
+			arr_key: any;
+		};
+
+		script_registry=new FinalizationRegistry(function cleanup(held:CleanupType) {
 			let arr_key=held.arr_key;
-			let weak_state_index=scripts_weak_arr.findIndex(e=>e.key === arr_key);
-			let token_index=scripts_tokens.findIndex(e=>e.key === arr_key);
+			let weak_state_index=scripts_weak_arr.findIndex(e=>e && e.key === arr_key);
+			let token_index=scripts_tokens.findIndex(e=>e && e.key === arr_key);
 			if(weak_state_index === -1){
 				console.log('prev gc', held);
 			}
@@ -307,7 +431,7 @@
 		return [scripts_weak_arr, register_obj_with_registry];
 	}
 	void find_all_scripts_using_string_apis;
-	// const [weak_scripts, register_obj_with_registry]=find_all_scripts_using_string_apis();
+	const [weak_scripts, register_obj_with_registry]=find_all_scripts_using_string_apis();
 	function get_nearest_script() {
 		if(document.currentScript !== null){
 			return document.currentScript;
@@ -319,7 +443,7 @@
 		let script_ghost=cur_event_fns.at(-1);
 		if(script_ghost && weak_scripts[script_ghost.reg_id-1]) {
 			let reg=weak_scripts[script_ghost.reg_id-1];
-			if(reg.ref.deref()){
+			if(reg && reg.ref.deref()){
 				return reg.ref.deref();
 			} else if(document.currentScript === null && !is_in_ignored_from_src_fn) {
 				debugger;
@@ -339,18 +463,27 @@
 		}
 	}
 	class DocumentWriteList {
+		list: any[];
+		attached;
+		end_symbol;
 		constructor(){
 			this.list=[];
 			this.attached=false;
-			this.end_symbol=Symbol(null);
+			this.end_symbol=Symbol(1);
+			this.document_write=null;
+			this.attached_document=null;
+			this.document_write_proxy=null;
 		}
-		write(args_spread){
+		document_write: ((...text: string[]) => void) | null;
+		attached_document: Document | null;
+		write(args_spread: any[]){
 			console.assert(args_spread[0] === this.document_write);
 			console.assert(args_spread[1] === this.attached_document);
 			this.list.push(args_spread[2], null);
 		}
+		document_write_proxy: {(...text: string[]): void; (...text: string[]): void;} | null;
 		/**@arg {Document} document */
-		attach_proxy(document){
+		attach_proxy(document: Document){
 			if(this.attached){
 				let was_destroyed=this.destroy(true);
 				if(!was_destroyed){
@@ -359,15 +492,15 @@
 			}
 			this.attached_document=document;
 			this.document_write=document.write;
-			this.document_write_proxy=new Proxy(document.write, {
+			this.document_write_proxy=new Proxy(document.write, <any>{
 				other:this,
-				apply(...a){
+				apply(...a:any[]){
 					this.other.write(a);
 				}
 			});
 			document.write=this.document_write_proxy;
 		}
-		destroy(should_try_to_destroy){
+		destroy(should_try_to_destroy: boolean){
 			if(this.attached_document&&this.document_write_proxy){
 				console.assert(this.attached_document.write === this.document_write_proxy);
 				if(this.attached_document.write !== this.document_write_proxy){
@@ -376,7 +509,7 @@
 					}
 					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
 				}
-				this.attached_document.write=this.document_write;
+				if(this.document_write)this.attached_document.write=this.document_write;
 			}
 			if(this.document_write_proxy){
 				this.document_write_proxy=null;
@@ -393,10 +526,11 @@
 		}
 	}
 	class UniqueIdGenerator {
+		m_current;
 		constructor(){
 			this.m_current=-1;
 		}
-		set_current(current_value){
+		set_current(current_value: any){
 			this.m_current=current_value;
 		}
 		current(){
@@ -407,18 +541,23 @@
 		}
 	}
 	class PromiseExecutorHandle {
-		constructor(accept, reject){
+		m_closed;
+		destroyed;
+		m_accept;
+		m_reject;
+		constructor(accept: any, reject: any){
 			this.m_closed=false;
+			this.destroyed=false;
 			this.m_accept=accept;
 			this.m_reject=reject;
 		}
-		accept(value){
+		accept(value: any){
 			if(this.destroyed)throw new Error("accept called on destroyed PromiseExecutorHandle");
 			let accept=this.m_accept;
 			accept(value);
 			this.close();
 		}
-		reject(error){
+		reject(error: any){
 			if(this.destroyed)throw new Error("accept called on destroyed PromiseExecutorHandle");
 			let reject=this.m_reject;
 			reject(error);
@@ -432,8 +571,11 @@
 			this.m_accept=null;
 			this.m_reject=null;
 		}
+		destroy(){
+			this.destroyed=true;
+		}
 	}
-	function worker_code_function(verify_callback) {
+	function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: {TIMER_SINGLE: number; TIMER_REPEATING: number; TIMER_TAG_COUNT: number;}): void;}) {
 		const TIMER_SINGLE=1;
 		const TIMER_REPEATING=2;
 		const TIMER_TAG_COUNT=3;
@@ -458,31 +600,17 @@
 		// 	/**@type {{single:305, repeating:306, any:307}} */
 		// 	clear={single:305, repeating:306, any:307}
 		// }
-		/**@typedef {import("./types/RecursivePartial.js").RecursivePartial<TimerApi['msg_types']>} RecursivePartialApi */
 		class RemoteTimerApi {
-			/**@arg {RecursivePartialApi} msg_types */
-			constructor(msg_types) {
-				/**@type {RecursivePartialApi} */
+			msg_types;
+			constructor(msg_types:RecursivePartial<TimerApi['msg_types']>) {
 				this.msg_types = msg_types;
 			}
-			pre_msg_types={
-				// /**@type {1} */
-				// async:1,
-				// /**@type {402} */
-				// reply_message:402,
-				// reply:new RemoteReplyTypes,
-				// /**@type {{single:101, repeating:102}} */
-				// fire:{single:101, repeating:102},
+			pre_msg_types:{
 				worker:{
-					// /**@type {201} */
-					// update_handler:201,
-					// /**@type {202} */
-					// ready:202,
-					// /**@type {{single:203, repeating:204}} */
-					// set:{single:203, repeating:204},
-					// /**@type {{single:205, repeating:206, any:207}} */
-					// clear:{single:205, repeating:206, any:207},
-					// /**@type {1000} */
+					set_types:1000
+				}
+			}={
+				worker:{
 					set_types:1000
 				}
 			}
@@ -498,29 +626,30 @@
 			}
 		}
 		class RemoteWorkerState {
+			m_timer: RemoteTimer|null;
+			unique_script_id;
 			constructor(){
-				/**@type {RemoteTimer|null} */
 				this.m_timer=null;
 				this.unique_script_id=1;
 			}
-			set_timer(timer){
+			set_timer(timer:RemoteTimer) {
 				this.m_timer=timer;
 			}
-			set(tag, remote_id, timeout){
-				return this.m_timer.set(tag, remote_id, timeout);
+			set(tag: number, remote_id: any, timeout: any){
+				if(this.m_timer)return this.m_timer.set(tag, remote_id, timeout);
 			}
-			clear(msg) {
-				return this.m_timer.do_clear(msg);
+			clear(msg: any) {
+				if(this.m_timer)return this.m_timer.do_clear(msg);
 			}
 		}
 		function nop_fn(){};
-		function fire_timer(timer, remote_id){
+		function fire_timer(timer: {fire: (arg0: any) => void;}, remote_id: any){
 			timer.fire(remote_id);
 		}
 		const remote_api_info_instance=new RemoteTimerApi;
 		let message_types=remote_api_info_instance.msg_types;
 		let reply_message_types=message_types.reply;
-		let fire_pause=[];
+		let fire_pause: any[]=[];
 		class RemoteTimer {
 			constructor(api_info){
 				this.m_remote_id_to_state_map=new Map;
@@ -529,7 +658,7 @@
 				this.base_id=globalThis[this.m_api_info.set_names.single](nop_fn);
 				globalThis[this.m_api_info.clear_names.single](this.base_id);
 			}
-			fire(remote_id) {
+			fire(remote_id: any) {
 				let local_state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!local_state)return;
 				this.validate_state(local_state, remote_id);
@@ -563,7 +692,7 @@
 					v: remote_id
 				});
 			}
-			set(tag, remote_id, timeout){
+			set(tag: any, remote_id: any, timeout: any){
 				// debugger;
 				this.verify_tag(tag);
 				let obj={
@@ -583,12 +712,12 @@
 				return obj.local_id;
 			}
 			// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
-			verify_tag(tag){
+			verify_tag(tag: any){
 				if(!this.validate_tag(tag)){
 					throw new Error("tag verification failed in RemoteTimer");
 				}
 			}
-			verify_state(state, remote_id) {
+			verify_state(state: {local_id: any;}, remote_id: any) {
 				if(!this.validate_state(state)){
 					console.info("Removed invalid local_state");
 					globalThis[this.m_api_info.clear_names.single](state.local_id);
@@ -597,7 +726,7 @@
 					throw new Error("Tag verification failed in RemoteWorker");
 				}
 			}
-			validate_tag(tag){
+			validate_tag(tag: number){
 				if(tag < TIMER_SINGLE || tag >= TIMER_TAG_COUNT){
 					console.assert(false, "Assertion failed in RemoteTimer.validate_tag: tag=%o is out of range");
 					console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", tag, TIMER_SINGLE, TIMER_TAG_COUNT);
@@ -605,10 +734,10 @@
 				}
 				return true;
 			}
-			validate_state(state){
+			validate_state(state: {type: any;}){
 				return this.validate_tag(state.type);
 			}
-			clear(remote_id){
+			clear(remote_id: any){
 				if(this.m_remote_id_to_state_map.has(remote_id)){
 					let state=this.m_remote_id_to_state_map.get(remote_id);
 					this.verify_state(state, remote_id);
@@ -624,7 +753,7 @@
 				}
 				return null;
 			}
-			do_clear(msg){
+			do_clear(msg: {v: any; t: any;}){
 				let remote_id=msg.v;
 				let maybe_local_id=this.clear(remote_id);
 				// debugger;
@@ -746,7 +875,7 @@
 		}
 	}
 	class WorkerState {
-		constructor(worker_code_blob, timer, executor_handle){
+		constructor(worker_code_blob: Blob, timer, executor_handle){
 			let has_blob=false;
 			if(worker_code_blob instanceof Blob)has_blob=true;
 			if(!has_blob)throw new Error("WorkerState requires a blob with javascript code to execute on a worker");
@@ -764,7 +893,7 @@
 			this.worker_url=null;
 			this.failed=false;
 		}
-		set_failed(has_failed){
+		set_failed(has_failed: boolean){
 			this.failed=has_failed;
 		}
 		init() {
@@ -777,7 +906,7 @@
 			this.worker_url = URL.createObjectURL(this.worker_code);
 			if(this.failed)return;
 			this.worker = new Worker(this.worker_url);
-			this.worker.onmessage = function onmessage(e) {
+			this.worker.onmessage = function onmessage(e: {data: any;}) {
 				var msg = e.data;
 				/**@type {typeof weak_worker_state} */
 				let worker_state=weak_worker_state.deref();
@@ -820,10 +949,10 @@
 				t: message_types.worker.ready
 			});
 		}
-		set_executor_handle(handle){
+		set_executor_handle(handle: any){
 			this.executor_handle=handle;
 		}
-		on_result(type, data){
+		on_result(type: number, data: any){
 			switch(data){
 				case message_types.worker.update_handler:{
 					console.assert(type === 301);
@@ -844,7 +973,7 @@
 				}
 			}
 		}
-		dispatch_message(result) {
+		dispatch_message(result: {t: any; v: any;}) {
 			let msg_type;
 			let msg_data=null;
 			if(typeof result === 'object'){
@@ -892,16 +1021,16 @@
 				}
 			}
 		}
-		postMessage(data){
+		postMessage(data: any){
 			return this.worker.postMessage(data);
 		}
-		static has_old_global_state_value(worker_state_value){
+		static has_old_global_state_value(worker_state_value: any){
 			return this.has_global_state() && !this.equals_global_state(worker_state_value);
 		}
-		static equals_global_state(worker_state_value){
+		static equals_global_state(worker_state_value: any){
 			return this.get_global_state() === worker_state_value;
 		}
-		static maybe_delete_old_global_state_value(worker_state_value){
+		static maybe_delete_old_global_state_value(worker_state_value: any){
 			if(this.has_old_global_state_value(worker_state_value)){
 				this.delete_old_global_state();
 			}
@@ -917,7 +1046,7 @@
 			let old_worker_state=this.get_global_state();
 			this.destroy_old_worker_state(old_worker_state, 'delete_global_state');
 		}
-		static destroy_old_worker_state(worker_state_value, before_destroy_call_name){
+		static destroy_old_worker_state(worker_state_value: {destroy: () => void;}, before_destroy_call_name: string){
 			this[before_destroy_call_name]();
 			worker_state_value.destroy();
 		}
@@ -928,7 +1057,7 @@
 		static get_global_state(){
 			return window[this.global_state_key];
 		}
-		static set_global_state(worker_state_value){
+		static set_global_state(worker_state_value: this){
 			this.maybe_delete_old_global_state_value(worker_state_value);
 			window[this.global_state_key]=worker_state_value;
 		}
@@ -962,7 +1091,7 @@
 	/**@typedef {(v1|v2)['v']} TimerTag */
 	class TimerState {
 		/**@arg {TimerTag} tag */
-		constructor(tag, is_repeating, target_fn, target_args, timeout){
+		constructor(tag: any, is_repeating: boolean, target_fn: any, target_args: any, timeout: any){
 			this.active=true;
 			/**@type {TimerTag} */
 			this.type=tag;
@@ -989,31 +1118,31 @@
 			this.set_api_names(api_info.set_names, api_info.clear_names)
 		}
 		/**@arg {TimerApi['set_names']|TimerApi['clear_names']} names */
-		set_map_names(names){
+		set_map_names(names: {single: string | number; repeating: string | number;}){
 			this.m_api_map.set(names.single, window[names.single]);
 			this.m_api_map.set(names.repeating, window[names.repeating]);
 		}
 		/**@arg {TimerApi['set_names']} set @arg {TimerApi['clear_names']} clear */
-		set_api_names(set, clear){
+		set_api_names(set: {single: string | number;}, clear: {single: string | number;}){
 			this.set_map_names(set);
 			this.set_map_names(clear);
 			this.base_id=window[set.single](timer_nop);
 			window[clear.single](this.base_id);
 			this.id_generator.set_current(this.base_id);
 		}
-		set_worker_state(worker_state_value){
+		set_worker_state(worker_state_value: any){
 			this.weak_worker_state=new WeakRef(worker_state_value);
 		}
 		// If you cause any side effects, please
 		// wrap this call in try{}finally{} and
 		// revert all side effects...
 		/**@arg {TimerTag} tag */
-		verify_tag(tag){
+		verify_tag(tag: any){
 			if(!this.validate_tag(tag)){
 				throw new Error("Verify failed in Timer.verify_tag");
 			}
 		}
-		verify_state(state, remote_id) {
+		verify_state(state: any, remote_id: any) {
 			if(!this.validate_timer_state(state)) {
 				let worker_state=this.weak_worker_state.deref();
 				worker_state.postMessage({
@@ -1024,7 +1153,7 @@
 			}
 		}
 		/**@arg {TimerTag} tag */
-		validate_tag(tag){
+		validate_tag(tag: number){
 			if(tag != TIMER_SINGLE && tag != TIMER_REPEATING){
 				console.assert(false, "Assertion failure in Timer.validate_tag: tag=%o is out of range");
 				console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", tag, TIMER_SINGLE, TIMER_TAG_COUNT);
@@ -1032,11 +1161,11 @@
 			}
 			return true;
 		}
-		validate_timer_state(state){
+		validate_timer_state(state: {type: any;}){
 			return this.validate_tag(state.type);
 		}
 		/**@arg {TimerTag} tag */
-		fire(tag, remote_id) {
+		fire(tag: number, remote_id: any) {
 			let state = this.get_state_by_remote_id(remote_id);
 			if(!state){
 				this.force_clear(tag, remote_id);
@@ -1075,7 +1204,7 @@
 				});
 			}
 		}
-		set(tag, target_fn, timeout, target_args) {
+		set(tag: number, target_fn: {is_userscript_fn: boolean;}, timeout: number, target_args: any) {
 			let remote_id = this.id_generator.next();
 			let is_repeating = false;
 			this.verify_tag(tag);
@@ -1111,7 +1240,7 @@
 			});
 			return remote_id;
 		}
-		send_worker_set_message(tag, obj) {
+		send_worker_set_message(tag: any, obj: {t: any; v: any;}) {
 			let worker_state=this.weak_worker_state.deref();
 			if(!worker_state){
 				console.assert(false, 'tried to send_worker_message, but the gc collected the worker_state, referenced with a WeakRef (weak_worker_state)');
@@ -1132,26 +1261,26 @@
 				v: obj
 			});
 		}
-		is_state_stored_by_remote_id(remote_id){
+		is_state_stored_by_remote_id(remote_id: any){
 			return this.m_remote_id_to_state_map.has(remote_id);
 		}
 		/**@arg {number} remote_id */
-		get_state_by_remote_id(remote_id){
+		get_state_by_remote_id(remote_id: any){
 			let state = this.m_remote_id_to_state_map.get(remote_id);
 			if(!state)return null;
 			this.verify_state(state, remote_id);
 			return state;
 		}
-		store_state_by_remote_id(remote_id, state){
+		store_state_by_remote_id(remote_id: any, state: {active: boolean; type: any; repeat: boolean; target_fn: any; target_args: any; timeout: any;}){
 			this.m_remote_id_to_state_map.set(remote_id, state);
 		}
-		delete_state_by_remote_id(remote_id){
+		delete_state_by_remote_id(remote_id: any){
 			this.m_remote_id_to_state_map.delete(remote_id);
 		}
 		remote_id_to_state_entries(){
 			return this.m_remote_id_to_state_map.entries();
 		}
-		on_result(type, data) {
+		on_result(type: any, data: any) {
 			console.log(type, data);
 			debugger;
 			switch(0){
@@ -1169,7 +1298,7 @@
 					console.assert(false, 'on_result timer_result_msg needs a handler for', timer_result_msg);
 			}
 		}
-		on_reply(msg_type, msg_data){
+		on_reply(msg_type: any, msg_data: any){
 			switch(msg_type){
 				case this.m_api_info.msg_types.worker.clear.single:{
 					debugger;
@@ -1201,7 +1330,7 @@
 					debugger;
 			}
 		}
-		force_clear(tag, remote_id){
+		force_clear(tag: number, remote_id: any){
 			this.verify_tag(tag);
 			let worker_state=this.weak_worker_state.deref();
 			let state = this.get_state_by_remote_id(remote_id);
@@ -1223,7 +1352,7 @@
 				});
 			}
 		}
-		clear(tag, remote_id){
+		clear(tag: any, remote_id: any){
 			this.verify_tag(tag);
 			let state = this.get_state_by_remote_id(remote_id);
 			if(state?.active){
@@ -1263,17 +1392,17 @@
 		}
 	}
 	class VerifyError extends Error{
-		constructor(message){
+		constructor(message: string | undefined){
 			super(message);
 			this.name="VerifyError";
 		}
 	}
-	function VERIFY(assert_result, assert_message){
+	function VERIFY(assert_result: boolean, assert_message: string){
 		if(!assert_result){
 			throw new VerifyError(assert_message);
 		}
 	}
-	function move_timers_to_worker_promise_executor(executor_accept, executor_reject) {
+	function move_timers_to_worker_promise_executor(executor_accept: (arg0: null) => void, executor_reject: any) {
 		let failed=false;
 		if (globalThis.remote_worker_state) {
 			postMessage({t: 300});
@@ -1282,7 +1411,7 @@
 		}
 		if (WorkerState.maybe_delete_old_global_state())return null;
 		try{
-			worker_code_function(function(verify_obj){
+			worker_code_function(function(verify_obj: {TIMER_REPEATING?: any; TIMER_TAG_COUNT?: any;}){
 				VERIFY(verify_obj.TIMER_REPEATING === TIMER_REPEATING, "TIMER_SINGLE constant matches");
 				VERIFY(verify_obj.TIMER_REPEATING === TIMER_REPEATING, "TIMER_REPEATING constant matches");
 				VERIFY(verify_obj.TIMER_TAG_COUNT === TIMER_TAG_COUNT, "TIMER_TAG_COUNT constant matches");
@@ -1306,7 +1435,7 @@
 		worker_state.init();
 		const weak_worker_state = new WeakRef(worker_state);
 		const setTimeout_global=setTimeout;
-		function remoteSetTimeout(handler, timeout, ...target_args) {
+		function remoteSetTimeout(handler: TimerHandler, timeout: number | undefined, ...target_args: any[]) {
 			if(!worker_state) {
 				setTimeout=setTimeout_global;
 				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
@@ -1328,7 +1457,7 @@
 			worker_state.timer.clear(TIMER_SINGLE, id);
 		}
 		const setInterval_global=setInterval;
-		function remoteSetInterval(handler, timeout=0, ...target_args) {
+		function remoteSetInterval(handler: TimerHandler, timeout=0, ...target_args: any[]) {
 			if(!worker_state) {
 				setInterval=setInterval_global;
 				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
@@ -1341,7 +1470,7 @@
 		}
 		const clearInterval_global=clearInterval;
 		/**@arg {number} id */
-		function remoteClearInterval(id) {
+		function remoteClearInterval(id: number | undefined) {
 			if(!worker_state) {
 				clearInterval=clearInterval_global;
 				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
@@ -1366,7 +1495,7 @@
 		};
 	}
 	let seen_elements=new WeakSet;
-	function remove_bad_dom_script_element_callback(e){
+	function remove_bad_dom_script_element_callback(e: object){
 		if(seen_elements.has(e))return;
 		seen_elements.add(e);
 		if(!e.src)return;
@@ -1398,11 +1527,11 @@
 		Array.prototype.forEach.call(document.querySelectorAll("script"), remove_bad_dom_script_element_callback);
 	};
 	class EventHandlerDispatch {
-		constructor(target_obj, target_name){
+		constructor(target_obj: this, target_name: string){
 			this.target_obj=target_obj;
 			this.target_name=target_name;
 		}
-		handleEvent(event){
+		handleEvent(event: any){
 			this.target_obj[this.target_name](event);
 		}
 	}
@@ -1415,12 +1544,12 @@
 			console.log('you might want to implement this.pop for this constructor', Object.getPrototypeOf(this).constructor);
 			throw new Error("Abstract function");
 		}
-		execute_instruction_raw(cur_opcode, operands){
+		execute_instruction_raw(cur_opcode: any, operands: any){
 			// ignore it, this is the base, if you want to ignore instruction opcodes go ahead
 			if(this.execute_instruction_raw !== AbstractVM.prototype.execute_instruction_raw)return;
 			throw new Error("Abstract function");
 		}
-		execute_instruction_raw_t(cur_opcode, operands){
+		execute_instruction_raw_t(cur_opcode: any, operands: any){
 			switch(cur_opcode) {
 					// implement more opcode handling here
 				default/*Debug*/:super.execute_instruction_raw(cur_opcode, operands);break;
@@ -1429,7 +1558,7 @@
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 	class BaseVMCreate extends AbstractVM {
-		constructor(instructions){
+		constructor(instructions: any){
 			super();
 			this.instructions = instructions;
 			this.instruction_pointer = 0;
@@ -1439,10 +1568,10 @@
 			this.instruction_pointer = 0;
 			this.running = false;
 		}
-		is_in_instructions(value){
+		is_in_instructions(value: number){
 			return value >= 0 && value < this.instructions.length;
 		}
-		execute_instruction_raw(cur_opcode, operands) {
+		execute_instruction_raw(cur_opcode: string, operands: [any] | [any, any]) {
 			switch(cur_opcode) {
 				default:{
 					console.info('Unknown opcode', cur_opcode);
@@ -1493,7 +1622,7 @@
 		debugger;
 	}
 	const local_logging_level=3;
-	function l_log_if(level, ...args){
+	function l_log_if(level: number, ...args: (string | any[] | null)[]){
 		if(level <= local_logging_level) {
 			console.log(...args);
 		}
@@ -1505,7 +1634,7 @@
 	const LOG_LEVEL_TRACE=5;
 	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxed} VMBoxed */
 	class BaseStackVM extends BaseVMCreate {
-		constructor(instructions){
+		constructor(instructions: any){
 			super(instructions);
 			this.stack=[];
 			this.return_value = void 0;
@@ -1515,13 +1644,13 @@
 			this.stack.length = 0;
 			this.return_value = void 0;
 		}
-		push(value) {
+		push(value: (Window & typeof globalThis) | this) {
 			this.stack.push(value);
 		}
 		pop() {
 			return this.stack.pop();
 		}
-		pop_arg_count(operand_number_of_arguments){
+		pop_arg_count(operand_number_of_arguments: any){
 			let arguments_arr=[];
 			let arg_count=operand_number_of_arguments;
 			for(let i = 0; i < arg_count; i++) {
@@ -1532,7 +1661,7 @@
 			}
 			return arguments_arr;
 		}
-		execute_instruction_raw(cur_opcode, operands){
+		execute_instruction_raw(cur_opcode: any, operands: string | any[]){
 			switch(cur_opcode) {
 				case 'push'/*Stack*/: {
 					for(let i = 0; i < operands.length; i++) {
@@ -1583,7 +1712,7 @@
 		}
 	}
 	class SimpleStackVM extends BaseStackVM {
-		constructor(instructions){
+		constructor(instructions: any){
 			super(instructions);
 			this.args_vec=null;
 		}
@@ -1591,7 +1720,7 @@
 			super.reset();
 			this.args_vec=null;
 		}
-		execute_instruction_raw(cur_opcode, operands) {
+		execute_instruction_raw(cur_opcode: any, operands: any[]) {
 			switch(cur_opcode) {
 				case 'this'/*Special*/:this.push(this);break;
 					// TODO: if you ever use this on a worker, change
@@ -1612,14 +1741,14 @@
 				default:super.execute_instruction_raw(cur_opcode, operands);break;
 			}
 		}
-		run(...run_arguments) {
+		run(...run_arguments: undefined[]) {
 			this.args_vec=run_arguments;
 			super.run();
 		}
 	}
 	class SimpleStackVMParser {
 		/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
-		static parse_int_arg(cur, arg_loc) {
+		static parse_int_arg(cur: {[x: string]: number;}, arg_loc: number) {
 			let cur_item = cur[arg_loc];
 			if(typeof cur_item == 'string') {
 				let arg = cur_item;
@@ -1629,7 +1758,7 @@
 				}
 			}
 		}
-		static parse_string_with_format_ident(str, format_list) {
+		static parse_string_with_format_ident(str: string | string[], format_list: any[]) {
 			let format_index = str.indexOf('%');
 			let format_type = str[format_index + 1];
 			switch(format_type) {
@@ -1639,7 +1768,7 @@
 					console.log("%s", 'unsupported format spec %' + format_type);
 			}
 		}
-		static parse_current_instruction(cur, format_list) {
+		static parse_current_instruction(cur: any[], format_list: any) {
 			let arg_loc = 1;
 			let arg = cur[arg_loc];
 			while(arg) {
@@ -1652,7 +1781,7 @@
 				arg = cur[arg_loc]
 			}
 		}
-		static raw_parse_handle_regexp_match(m) {
+		static raw_parse_handle_regexp_match(m: string[]) {
 			let iter=m[1].trim();
 			if(iter.startsWith("//"))return;
 			while(iter.startsWith("/*")){
@@ -1662,7 +1791,7 @@
 			if(!iter)return "";
 			return iter.split(",");
 		}
-		static parse_string_into_raw_instruction_stream(string) {
+		static parse_string_into_raw_instruction_stream(string: any) {
 			const parser_max_match_iter = 300;let parts, arr = [], i = 0;
 			do {
 				parts = this.match_regex.exec(string);
@@ -1672,7 +1801,7 @@
 			} while(parts && i++ < parser_max_match_iter);
 			if(parts)console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);return arr;
 		}
-		static parse_instruction_stream_from_string(string, format_list) {
+		static parse_instruction_stream_from_string(string: string, format_list: ((err: any) => void)[]) {
 			let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
 			for(let i=0;i<raw_instructions.length;i++) {
 				let raw_instruction=raw_instructions[i];
@@ -1681,7 +1810,7 @@
 			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
 		}
 		/**@arg {string[]} instruction @arg {[number]} left @ret {InstructionType}*/
-		static verify_instruction(instruction, left){
+		static verify_instruction(instruction: [any, ...any[]], left: any[]){
 			const [m_opcode, ...m_operands] = instruction;
 			switch(m_opcode) {
 					// variable argument count
@@ -1711,7 +1840,7 @@
 			}
 		}
 		/*@arg {string[][]} raw_instructions @ret {InstructionType[]}*/
-		static verify_raw_instructions(raw_instructions){
+		static verify_raw_instructions(raw_instructions: string | any[]){
 			/**@type{InstructionType[]}*/
 			const instructions = [];
 			for(let i = 0;i < raw_instructions.length;i++) {
@@ -1726,11 +1855,11 @@
 	}
 	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
 	class EventHandlerVMDispatch extends SimpleStackVM {
-		constructor(instructions, target_obj) {
+		constructor(instructions: any[][], target_obj: this) {
 			super(instructions);
 			this.target_obj = target_obj;
 		}
-		handleEvent(event) {
+		handleEvent(event: any) {
 			this.reset();
 			this.run(event);
 		}
@@ -1746,12 +1875,12 @@
 		map_keys(){
 			return this.cache;
 		}
-		add_hit(index) {
+		add_hit(index: string | number) {
 			if(!this.map_values()[index]) {
 				this.map_values()[index]=1;
 			} else this.map_values()[index]++;
 		}
-		add_item(key){
+		add_item(key: any){
 			let index=this.map_keys().indexOf(key)
 			if(index == -1)index=this.map_keys().push(key);
 			else this.add_hit(index);
@@ -1760,34 +1889,34 @@
 			this.map_keys().length=0;
 			this.map_values().length=0;
 		}
-		calc_compression_stats(arr, win_size){
+		calc_compression_stats(arr: any[], win_size: number){
 			this.reset();
 			for(let i=0;i<arr.length;i++){
 				if(i+win_size < arr.length){
 					this.add_item(arr.slice(i, i+win_size).join(","));
 				}
 			}
-			return to_tuple_arr(this.map_keys(), this.map_values()).filter(e=>e[1]!==void 0);
+			return to_tuple_arr(this.map_keys(), this.map_values()).filter((e: undefined[])=>e[1]!==void 0);
 		}
-		calc_for_stats_window_size(stats_arr, arr, win_size){
+		calc_for_stats_window_size(stats_arr: any[], arr: any, win_size: number){
 			stats_arr[win_size-1]=this.calc_compression_stats(arr, win_size);
 		}
-		calc_for_stats_index(stats_arr, arr, index){
+		calc_for_stats_index(stats_arr: {[x: string]: any;}, arr: any, index: number){
 			stats_arr[index]=this.calc_compression_stats(arr, index+1);
 		}
 	}
 	class BaseCompression {
-		did_compress(src, dst){
+		did_compress(src: string | any[], dst: string | any[]){
 			return dst.length < src.length;
 		}
-		did_decompress(src, dst){
+		did_decompress(src: string | any[], dst: string | any[]){
 			return dst.length > src.length;
 		}
-		compress_result(src, dst){
+		compress_result(src: any, dst: any[]){
 			if(this.did_compress(src, dst))return [true, dst];
 			return [false, src];
 		}
-		decompress_result(src, dst) {
+		decompress_result(src: any, dst: any[]) {
 			// maybe this is not a decompression, just a modification to make
 			// later decompression work
 			if(this.did_decompress(src, dst))return [true, dst];
@@ -1801,7 +1930,7 @@
 			this.compression_stats=[];
 		}
 
-		try_compress(arr){
+		try_compress(arr: string | any[]){
 			let ret=[];
 			for (let i=0;i<arr.length;i++){
 				let item=arr[i];
@@ -1826,7 +1955,7 @@
 			}
 			return this.compress_result(arr, ret);
 		}
-		try_decompress(arr){
+		try_decompress(arr: string | any[]){
 			let ret=[];
 			for (let i=0;i<arr.length;i++) {
 				let item=arr[i];
@@ -1842,7 +1971,7 @@
 			}
 			return this.decompress_result(arr, ret);
 		}
-		compress_array(arr){
+		compress_array(arr: any){
 			let success, res;
 			// await async_semaphore.inc(1);
 			[success, res]=this.try_decompress(arr);
@@ -1861,7 +1990,7 @@
 			return arr;
 		}
 	}
-	function calc_ratio(arr){
+	function calc_ratio(arr: string | any[]){
 		let ratio_acc=0;
 		for(let i=0;i<arr.length;i++)ratio_acc+=arr[i];
 		// don't divide by zero
@@ -1871,7 +2000,7 @@
 	console.assert(calc_ratio([0,0]) === 0, "calc ratio of array full of zeros does not divide by zero");
 	class AverageRatio {
 		// @AverageRatio
-		constructor(max_len, max_history_len, weight, human_duration, initial_arr=[]){
+		constructor(max_len: number, max_history_len: number, weight: number, human_duration: string, initial_arr=[]){
 			this.arr=initial_arr;
 			this.history=[];
 			this.count=0;
@@ -1881,7 +2010,7 @@
 			this.human_duration=human_duration;
 		}
 		/**@arg {boolean} from_prev */
-		add(value, from_prev, debug=false){
+		add(value: number, from_prev: any, debug=false){
 			if(from_prev){
 				if(debug)console.log("ratio add", this.human_duration, (value*100).toFixed(5));
 				this.arr.unshift(value);
@@ -1914,7 +2043,7 @@
 		}
 	}
 	class TimeoutTarget extends AbstractTarget {
-		constructor(obj, callback, description){
+		constructor(obj: this | this | null, callback: {(): void; (): void; (): void;}, description: string){
 			super();
 			this.once=true;
 			this.obj=obj
@@ -1926,7 +2055,7 @@
 		}
 	}
 	class IntervalTarget extends AbstractTarget {
-		constructor(obj, callback, description){
+		constructor(obj: null, callback: any, description: any){
 			super();
 			this.once=false;
 			this.obj=obj
@@ -1938,7 +2067,7 @@
 		}
 	}
 	class PromiseTimeoutTarget {
-		constructor(description){
+		constructor(description: any){
 			this.description=description;
 		}
 		get_promise(){
@@ -1946,11 +2075,11 @@
 			this.promise=new Promise(this.promise_executor.bind(this));
 			return this.promise;
 		}
-		promise_executor(accept, reject){
+		promise_executor(accept: any, reject: any){
 			this.promise_accept=accept;
 			this.callback=this.on_result.bind(this);
 		}
-		on_result(value){
+		on_result(value: any){
 			this.m_promise=null;
 			this.promise_accept(value);
 		}
@@ -1973,14 +2102,14 @@
 		}
 	}
 	class BaseTimeoutNode extends BaseNode {
-		constructor(timeout) {
+		constructor(timeout: any) {
 			super();
 			this.timeout=timeout;
 		}
 		get_timeout(){
 			return this.timeout;
 		}
-		set_parent(parent){
+		set_parent(parent: any){
 			this.parent=parent;
 		}
 		remove(){
@@ -2002,7 +2131,7 @@
 			this.id=null;
 			this.target=null;
 		}
-		set_target(target){
+		set_target(target: any){
 			this.target=target;
 		}
 		set() {
@@ -2021,7 +2150,7 @@
 		}
 	}
 	class IntervalNode extends BaseTimeoutNode {
-		constructor(timeout=0, target_fn){
+		constructor(timeout=0, target_fn: any){
 			super(timeout);
 			this.target_fn=target_fn;
 			this.id=null;
@@ -2055,7 +2184,7 @@
 		constructor(){
 			this.children=[];
 		}
-		set(target_fn, timeout, repeat=false){
+		set(target_fn: number | undefined, timeout: any, repeat=false){
 			let node;
 			if(repeat) {
 				node=new TimeoutNode(target_fn, timeout);
@@ -2065,7 +2194,7 @@
 			this.append_child(node);
 			node.start();
 		}
-		append_raw(timeout_id, once=true) {
+		append_raw(timeout_id: null | undefined, once=true) {
 			this.append_child(new TimeoutIdNode(timeout_id, once));
 		}
 		append_child(record){
@@ -2073,7 +2202,7 @@
 			record.set_parent(this);
 			this.children.push(record);
 		}
-		remove_child(record){
+		remove_child(record: {set_parent: (arg0: null) => void;}){
 			let index=this.children.indexOf(record);
 			this.children.splice(index, 1);
 			record.set_parent(null);
@@ -2095,14 +2224,14 @@
 			/**@type {string[]} */
 			this.ordered_keys=[];
 		}
-		set_ordered_keys(ordered_keys){
+		set_ordered_keys(ordered_keys: any){
 			this.ordered_keys=ordered_keys;
 		}
-		can_average(key){
+		can_average(key: any){
 			let ratio_calc=this.map.get(key);
 			return ratio_calc.can_average();
 		}
-		get_average(key){
+		get_average(key: any){
 			let ratio_calc=this.map.get(key);
 			return ratio_calc.get_average();
 		}
@@ -2111,7 +2240,7 @@
 			this.ordered_keys.push(key);
 			this.map.set(key, ratio_obj);
 		}
-		push(value){
+		push(value: any){
 			let cur=this.map.get(this.ordered_keys[0]);
 			let res=cur.add(value, true, false);
 			for(let i=1;i<this.ordered_keys.length;i++){
@@ -2125,7 +2254,7 @@
 		}
 	}
 	class AutoBuyState{
-		constructor(root){
+		constructor(root: any){
 			this.root_node=root;
 			this.debug=false;
 			this.arr=[];
@@ -2158,12 +2287,12 @@
 			let ratio_counts=[80, 6, 5, 6, 6];
 			let ratio_mul=[0, .65, .15, .15, .05];
 			let ratio_human=["10 seconds","1 minute","5 minutes", "30 minutes", "3 hours"];
-			function mul_3(arr, i){
+			function mul_3(arr: number[], i: any){
 				let [a, b=1, c=10]=arr.slice(i);
 				return a * b * c;
 			}
 			//@AverageRatio
-			function create_ratio(i){
+			function create_ratio(i: number){
 				return new AverageRatio(ratio_counts[i], mul_3(ratio_counts, i), ratio_mul[i], ratio_human[i], [rep_val]);
 			}
 			for(let i=0;i<5;i++){
@@ -2180,7 +2309,7 @@
 			if(this.avg.can_average('10sec'))return this.avg.get_average('10sec');
 			return 0;
 		}
-		append_value(value) {
+		append_value(value: unknown) {
 			if(!Number.isFinite(value)){
 				console.assert(false, 'value is not finite');
 			}
@@ -2212,7 +2341,7 @@
 					if(this.ratio > 1.5)this.on_very_high_ratio(2);break;
 			}
 		}
-		do_ratio_lock(mode_change_direction, num_of_cycles){
+		do_ratio_lock(mode_change_direction: number, num_of_cycles: number){
 			this.ratio_mode+=mode_change_direction;
 			this.locked_cycles=num_of_cycles;
 		}
@@ -2284,14 +2413,14 @@
 		}
 	}
 	class MiniDom{
-		constructor(elements){
+		constructor(elements: any){
 		}
 		build_dom(){
 		}
 	}
 	const debug_id_gen=new UniqueIdGenerator;
 	/**@type {WeakRef<number>}*/
-	const debug_id_syms=[];
+	const debug_id_syms: {deref: () => any;}[]=[];
 	function next_debug_id(){
 		const id=debug_id_gen.next();
 		const sym=Symbol(id);
@@ -2305,7 +2434,7 @@
 		}
 	}
 	class DomValueBox {
-		constructor(from, value){
+		constructor(from: string, value: any){
 			this.type='DomValueBox';
 			this.from=from;
 			this.value=value;
@@ -2314,13 +2443,13 @@
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").AnyInstructionOperands} AnyInstructionOperands */
 	class DomBuilderVM extends BaseStackVM {
-		constructor(instructions) {
+		constructor(instructions: never[]) {
 			super(instructions);
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
 		/**@arg {AnyInstructionOperands} operands */
-		execute_instruction_raw(cur_opcode, operands){
+		execute_instruction_raw(cur_opcode: any, operands: any[]){
 			l_log_if(LOG_LEVEL_VERBOSE, cur_opcode, ...operands, null);
 			switch(cur_opcode) {
 				case 'exec':{
@@ -2371,10 +2500,10 @@
 				default/*Debug*/:super.execute_instruction_raw(cur_opcode, operands);break;
 			}
 		}
-		can_use_box(box){
+		can_use_box(box: {from: string;}){
 			return box.from === 'get' || box.from === 'create';
 		}
-		verify_dom_box(box){
+		verify_dom_box(box: {type: string | undefined; from: any; value: any;}){
 			if(box.type===void 0)throw new Error("Invalid Box (no type)");
 			if(box.type != 'DomValueBox')throw new Error("Unbox failed not a DomValueBox");
 			if(typeof box.from != 'string')throw new Error("Unbox failed Box.from is not a string");
@@ -2410,28 +2539,28 @@
 	class DataLoader {
 		//spell:words externref
 		static int_parser=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
-		constructor(storage) {
+		constructor(storage: Storage) {
 			this.store=storage;
 			this.null_sym=Symbol('null');
 		}
-		load_str_arr(key, def_value){
+		load_str_arr(key: any, def_value: any){
 			let data=this.store.getItem(key);
 			if(data === null)return this.create_default(def_value);
 			return data.split(",");
 		}
-		load_int_arr(key, def_value){
+		load_int_arr(key: any, def_value: any){
 			let storage_data=this.store.getItem(key);
 			if(storage_data === null)return this.create_default(def_value);
 			return this.parse_int_arr(storage_data);
 		}
 		parse_int=DataLoader.int_parser;
-		default_split(string){
+		default_split(string: string){
 			return string.split(",");
 		}
-		parse_int_arr(data){
+		parse_int_arr(data: any){
 			return this.default_split(data).map(DataLoader.int_parser);
 		}
-		create_default(value_or_factory){
+		create_default(value_or_factory: () => any){
 			let value=this.null_sym;
 			if(typeof value_or_factory === 'function'){
 				// this is a value factory
@@ -2471,10 +2600,10 @@
 			for(let i=0;i<debug_id_syms.length;i++){
 				let val=debug_id_syms[i].deref();
 				if(val && this[val.sym]){
-					this.debug_arr.push(...this[val.sym].split(",").map(e=>e.trim()));
+					this.debug_arr.push(...this[val.sym].split(",").map((e: string)=>e.trim()));
 				}
 			}
-			this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str', e=>{
+			this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str', (e: any)=>{
 				let src=[300];
 				src.length=16;
 				let data_len=1;
@@ -2521,7 +2650,7 @@
 			global;push,removeEventListener;push,click;this;
 				call,int(2);
 			drop
-			`, [function(){console.log('play success')}, function(err){console.log(err)}]);
+			`, [function(){console.log('play success')}, function(err: any){console.log(err)}]);
 			let handler=new EventHandlerVMDispatch(instructions, this);
 			globalThis.addEventListener('click', handler);
 			is_in_ignored_from_src_fn=false;
@@ -2530,8 +2659,8 @@
 			if(this.skip_save)return;
 			localStorage.auto_buy_history_str=this.state_history_arr.join(",");
 		}
-		get_timeout_arr_data(forced_action){
-			if(forced_action == "RESET")return this.timeout_arr.map(e=>~~(e/4)).join(",");
+		get_timeout_arr_data(forced_action: string){
+			if(forced_action == "RESET")return this.timeout_arr.map((e: number)=>~~(e/4)).join(",");
 			return this.timeout_arr.join(",");
 		}
 		save_timeout_arr(){
@@ -2554,7 +2683,7 @@
 			const css_display_style=`
 			#state_log>div{width:max-content}
 			#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`;
-			function style_sheet_gen(instance, args){
+			function style_sheet_gen(instance: {replace: (arg0: any) => void;}, args: any[]){
 				instance.replace(args[0]);
 			}
 			this.display_style_sheet = new CSSStyleSheet;
@@ -2596,9 +2725,9 @@
 				[0, 'get', 'body'],
 				[1, 'create', 'div', 'state_log', {id:'state_log'}], [1, 'append'],
 			]
-			let call_arg_arr=[];
+			let call_arg_arr: string | any[]=[];
 			let make_css_arr=[
-				[0, 'push', null, (...styles_promise_arr)=>{
+				[0, 'push', null, (...styles_promise_arr: any[])=>{
 					// @Hack: wait for any promise to settle
 					return Promise.allSettled(styles_promise_arr).then(e=>{
 						let res=e.filter(e=>e.status==='fulfilled').map(e=>e.value);
@@ -2608,7 +2737,7 @@
 					});
 				}, ...call_arg_arr],
 				[0, 'new', CSSStyleSheet, [],
-				 (obj, str)=>obj.replace(str),
+				 (obj: {replace: (arg0: any) => any;}, str: any)=>obj.replace(str),
 				 [css_display_style]
 				],
 				[0, 'call', 2 + 1 + call_arg_arr.length],
@@ -2637,11 +2766,11 @@
 				console.log(e);
 			};
 		}
-		adopt_styles(...styles){
+		adopt_styles(...styles: any[]){
 			let dom_styles=document.adoptedStyleSheets;
 			document.adoptedStyleSheets = [...dom_styles, ...styles];
 		}
-		build_dom_from_desc(raw_arr, trg_map=new Map, dry_run=false) {
+		build_dom_from_desc(raw_arr: string | any[], trg_map=new Map, dry_run=false) {
 			let stack=[];
 			let map=trg_map;
 			if(dry_run)stack.push([0, "enable_dry_mode"]);
@@ -2699,8 +2828,8 @@
 			}
 			this.apply_dom_desc(tree);
 		}
-		parse_dom_desc(input_stack){
-			let stack=[];
+		parse_dom_desc(input_stack: string | any[]){
+			let stack: any[][]=[];
 			let tree=[];
 			for(let x=0,i=0;i<input_stack.length;i++){
 				let cur_stack=input_stack[i];
@@ -2721,12 +2850,12 @@
 			}
 			return [stack, tree];
 		}
-		log_if(tag, ...log_args){
+		log_if(tag: string, ...log_args: (string | number | never[])[]){
 			if(this.debug_arr.includes(tag)){
 				console.log(...log_args);
 			}
 		}
-		get_logging_level(tag, level=LOG_LEVEL_VERBOSE){
+		get_logging_level(tag: string, level=LOG_LEVEL_VERBOSE){
 			if(this.debug_arr.includes(tag)){
 				return level-1;
 			}
@@ -2735,10 +2864,10 @@
 		/* 		get [next_debug_id()](){
 			return 'apply_dom_desc';
 		} */
-		apply_dom_desc(tree) {
+		apply_dom_desc(tree: any) {
 			this.run_dom_desc(tree);
 		}
-		run_dom_desc(tree, stack=[], cur_depth=0, items=[], depths=[]){
+		run_dom_desc(tree: string | any[], stack=[], cur_depth=0, items=[], depths=[]){
 			for(let i=0;i<tree.length;i++){
 				let cur=tree[i];
 				switch(cur[0] - cur_depth){
@@ -2876,7 +3005,7 @@
 			this.state_history_arr=["R"];
 			localStorage.auto_buy_history_str="R";
 		}
-		state_history_append(value, silent=false){
+		state_history_append(value: any, silent=false){
 			Promise.resolve().then(this.async_compress.bind(this));
 			this.epoch_len++;
 			if(silent)return;
@@ -2885,7 +3014,7 @@
 			if(this.state.debug)console.log('history append', last, value);
 			while(this.state_history_arr.length>120)this.state_history_arr.shift();
 		}
-		history_element_click_handler(event){
+		history_element_click_handler(event: any){
 			this.root_node.destroy();
 			this.dom_reset();
 			this.reset();
@@ -2918,7 +3047,7 @@
 			return epoch_diff > 60*5*1000;
 		}
 		main(){
-			function r(v){
+			function r(v: number){
 				return ~~v;
 			}
 			let loss_rate=this.unit_promote_start();
@@ -3008,19 +3137,19 @@
 			this.do_timeout_inc([1.007, 1.01], 50);
 			this.next_timeout(this.main, this.extra, '+');
 		}
-		get_timeout_change(pow_base, pow_num, div){
+		get_timeout_change(pow_base: number, pow_num: number, div: number){
 			let pow_res=Math.pow(pow_base, pow_num);
 			let res=this.extra * pow_res;
 			return res / div;
 		}
-		update_timeout_inc(change){
+		update_timeout_inc(change: number){
 			if(window.__testing__){
 				return;
 			}
 			let value=this.round(this.extra + change);
 			this.timeout_arr.push(value);
 		}
-		update_timeout_dec(change){
+		update_timeout_dec(change: number){
 			if(window.__testing__){
 				return;
 			}
@@ -3028,19 +3157,19 @@
 			if(value < 25)value=25;
 			this.timeout_arr.push(value);
 		}
-		round(value){
+		round(value: number){
 			return ~~value;
 		}
-		do_timeout_dec(pow_terms, div){
+		do_timeout_dec(pow_terms: any[], div: number){
 			let change=this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
 			this.update_timeout_dec(change);
 		}
-		do_timeout_inc(pow_terms, div){
+		do_timeout_inc(pow_terms: any[], div: number){
 			let iter_term=Math.pow(pow_terms[1], this.iter_count);
 			let change=this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
 			this.update_timeout_inc(change * iter_term);
 		}
-		async next_timeout_async(timeout, char, silent=false){
+		async next_timeout_async(timeout: number | undefined, char: string, silent=false){
 			if(!silent && this.timeout_element)this.timeout_element.innerText=timeout;
 			this.state_history_append(char, silent);
 			let node=new AsyncTimeoutNode(timeout);
@@ -3048,7 +3177,7 @@
 			let promise=node.start_async(new AsyncTimeoutTarget(char));
 			await promise;
 		}
-		next_timeout(trg_fn, timeout, char, silent=false){
+		next_timeout(trg_fn: {(): void; (): void; (): void; (): void; (): void; (): void; (): void; (): Promise<void>; (): void; (): void; (): void; (): void; (): void; (): void; (): void; (): void; (): void; (): void;}, timeout: number | undefined, char: string, silent=false){
 			let node=new AsyncTimeoutNode(timeout);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTarget(this, trg_fn, char));
@@ -3068,7 +3197,7 @@
 		special_timeout(){
 			this.next_timeout(this.special, this.extra, '^');
 		}
-		is_special_done(special_buyable){
+		is_special_done(special_buyable: {done: any; cost: number;}){
 			return !special_buyable.done && special_buyable.cost < totalAtome;
 		}
 		next_special(){
@@ -3192,13 +3321,13 @@
 				t.m_set_flag=false;
 			});
 		}
-		set(cnt){
+		set(cnt: any){
 			if(!this.m_set_flag){
 				this.m_set(cnt);
 				this.m_set_flag=true;
 			}
 		}
-		set_error(opt_error){
+		set_error(opt_error: any){
 			if(!this.m_set_flag){
 				if(opt_error) this.m_set_error(opt_error);
 				else this.m_set_error(null);
@@ -3208,13 +3337,13 @@
 			let ret=this.promise_set;
 			return ret;
 		}
-		notify(cnt){
+		notify(cnt: any){
 			if(this.m_can_notify){
 				this.m_notify(cnt);
 				this.m_can_notify=false;
 			}
 		}
-		notify_error(error){
+		notify_error(error: any){
 			if(this.m_can_notify){
 				this.m_notify_error(error);
 				this.m_can_notify=false;
@@ -3234,7 +3363,7 @@
 			this.notify_waiters_vec=[];
 			this.count=0;
 		}
-		async inc(cnt){
+		async inc(cnt: any){
 			let wait_trigger=new AsyncTrigger;
 			while(this.count > 0){
 				if(!this.notify_waiters_vec.includes(wait_trigger)){
@@ -3245,7 +3374,7 @@
 			}
 			this.count+=cnt;
 		}
-		async dec(cnt){
+		async dec(cnt: number){
 			this.count-=cnt;
 			if(this.count <= 0){
 				do{
@@ -3258,20 +3387,20 @@
 			}
 		}
 	}
-	function map_to_tuple(e, i){
+	function map_to_tuple(this: any, e: any, i: string | number){
 		return [e, this[i]];
 	}
-	function to_tuple_arr(keys, values){
+	function to_tuple_arr(keys: any[], values: any){
 		return keys.map(map_to_tuple, values);
 	}
-	function promise_set_timeout(timeout, a){
+	function promise_set_timeout(timeout: number | undefined, a: TimerHandler){
 		setTimeout(a, timeout);
 	}
-	function do_async_wait(timeout){
+	function do_async_wait(timeout: any){
 		return new Promise(promise_set_timeout.bind(null, timeout));
 	}
 	void do_async_wait;
-	function array_sample_end(arr, rem_target_len){
+	function array_sample_end(arr: {(): any; new(): any; length: number;}[], rem_target_len: number){
 		arr=arr.slice(-300);
 		let rem_len=char_len_of(arr);
 		while(rem_len > rem_target_len) {
@@ -3279,8 +3408,8 @@
 		}
 		return arr;
 	}
-	function char_len_of(arr){
-		return arr.reduce((a,b)=>a + b.length, 0) + arr.length;
+	function char_len_of(arr: any[]){
+		return arr.reduce((a: any,b: string | any[])=>a + b.length, 0) + arr.length;
 	}
 	function lightreset_inject(){
 		g_auto_buy.state_history_clear_for_reset();
@@ -3293,7 +3422,7 @@
 		let original=g_auto_buy.original_map.get('lightreset');
 		original();
 	}
-	function specialclick_inject(that) {
+	function specialclick_inject(that: string | number) {
 		if (allspec[that].done == undefined) allspec[that].done = false;
 		if (allspec[that].cost <= totalAtome && allspec[that].done == false) {
 			doc.getElementById('specialsbought').innerText = rounding(++specialsbought, false,0);
@@ -3325,16 +3454,16 @@
 		}
 	}
 	class ProxyHandlers {
-		constructor(root){
+		constructor(root: any){
 			this.weak_root=new WeakRef(root);
 			this.count_arr=[0];
 		}
 		so_init(){
-			let val=Array(12).fill((idx)=>{
+			let val=Array(12).fill((idx: number)=>{
 				if(idx > window.da.length)return window.da.at(-1)(idx-1);
 				return window.da[idx-1](idx-1);
 			});
-			window.da=[e=>g_proxy_state.hand.stack_overflow_check(), ...val];
+			window.da=[(e: any)=>g_proxy_state.hand.stack_overflow_check(), ...val];
 		}
 		stack_overflow_check(){
 			g_proxy_state.hand.count_arr[0]++;
@@ -3343,7 +3472,7 @@
 			}
 			return g_proxy_state.hand.count_arr[0];
 		}
-		generic(type, call_args, from){
+		generic(type: string, call_args: any, from: any[]){
 			let keep_vec=this.weak_root.deref();
 			if(keep_vec === null){
 				console.log('ProxyHandlers reset KeepSome after gc collect');
@@ -3352,23 +3481,23 @@
 			}
 			keep_vec.push(from.concat([null, type, 1, call_args]));
 		}
-		set_(call_args, from){
+		set_(call_args: any, from: any){
 			this.generic('set', call_args, from);
 			return Reflect.set(...call_args);
 		}
-		get_(call_args, from){
+		get_(call_args: any, from: any){
 			this.generic('get', call_args, from);
 			return Reflect.get(...call_args);
 		}
-		apply_(call_args, from){
+		apply_(call_args: any, from: any){
 			this.generic('apply', call_args, from);
 			return Reflect.apply(...call_args);
 		}
-		defineProperty_(call_args, from){
+		defineProperty_(call_args: any, from: any){
 			this.generic('defineProperty', call_args, from);
 			return Reflect.defineProperty(...call_args);
 		}
-		getOwnPropertyDescriptor_(call_args, from){
+		getOwnPropertyDescriptor_(call_args: any, from: any){
 			this.generic('getOwnPropertyDescriptor', call_args, from);
 			return Reflect.getOwnPropertyDescriptor(...call_args);
 		}
@@ -3419,17 +3548,17 @@
 				}
 			}
 		}
-		push_at(index, value){
+		push_at(index: number, value: any){
 			while(index >= this.length){
 				super.push([]);
 			}
 			this[index].push(value);
 		}
-		push_va(...a){
+		push_va(...a: any[]){
 			this.push(a);
 		}
 	}
-	function define_property_value(obj, name, value, ...props){
+	function define_property_value(obj: any, name: PropertyKey, value: any, ...props: any[]){
 		let [
 			writable=true,
 			enumerable=true,
@@ -3442,7 +3571,7 @@
 			configurable
 		});
 	}
-	function reload_if_def(obj, key){
+	function reload_if_def(obj: {[x: string]: any;}, key: string | number){
 		if(obj[key]){
 			location.reload();
 			document.body.innerHTML="";
@@ -3452,7 +3581,7 @@
 		}
 		return false;
 	}
-	function got_jquery(value){
+	function got_jquery(value: any){
 		Object.defineProperty(window, '$', {
 			value,
 			writable:true,
@@ -3466,11 +3595,11 @@
 		if(!jq)return;
 		let res=jq('head');
 		let r_proto=Object.getPrototypeOf(res);
-		r_proto.lazyload=function(...a){}
+		r_proto.lazyload=function(...a: any){}
 		return jq;
 	}
 	void reload_if_def;
-	function proxy_jquery(value){
+	function proxy_jquery(value: undefined){
 		let val=use_jquery();
 		Object.defineProperty(window, '$', {
 			get(){
@@ -3485,7 +3614,7 @@
 			configurable:true
 		});
 	}
-	function pace_finish_proxy_apply(func, this_v, args){
+	function pace_finish_proxy_apply(func: Function, this_v: any, args: ArrayLike<any>){
 		auto_buy_obj.init();
 		Pace.bar.finish=func;
 		return Reflect.apply(func, this_v, args);
@@ -3501,7 +3630,7 @@
 			apply:pace_finish_proxy_apply
 		});
 	}
-	function remove_cint_item(cint_arr, cint_item){
+	function remove_cint_item(cint_arr: any[], cint_item: undefined){
 		let idx=cint_arr.indexOf(cint_item);
 		cint_arr.splice(idx, 1);
 	}
@@ -3518,7 +3647,7 @@
 			cint_arr.push(cint_item);
 		}
 	}
-	function on_timers_moved(timers) {
+	function on_timers_moved(timers: any) {
 		if(window._SM_Data){
 			on_game_data_set();
 		}else{
@@ -3526,7 +3655,7 @@
 		}
 		remove_bad_dom_script_element();
 	}
-	function dom_add_elm_filter(elm){
+	function dom_add_elm_filter(elm: Node | null){
 		if(elm && elm.nodeName === "SCRIPT"){
 			if(!elm.src){
 				console.log(elm);
@@ -3548,7 +3677,7 @@
 		}
 		adsbygoogle=[];
 		adsbygoogle.op=adsbygoogle.push;
-		adsbygoogle.push=function(e){
+		adsbygoogle.push=function(e: any){
 			adsbygoogle.op(e);
 			remove_bad_dom_script_element();
 		};
