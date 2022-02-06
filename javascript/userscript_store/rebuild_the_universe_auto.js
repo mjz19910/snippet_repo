@@ -957,6 +957,7 @@
 			e.remove();
 			return;
 		}
+		//spell:disable-next-line
 		if(e.src.includes("pagead/js/adsbygoogle.js")){
 			e.remove();
 			return;
@@ -989,7 +990,7 @@
 			throw new Error("Abstract function");
 		}
 		execute_instruction_raw(cur_opcode, operands){
-			// ignore it, this is the base, if you want to ignore instruction opcodes goahead
+			// ignore it, this is the base, if you want to ignore instruction opcodes go ahead
 			if(this.execute_instruction_raw !== AbstractVM.prototype.execute_instruction_raw)return;
 			throw new Error("Abstract function");
 		}
@@ -1610,7 +1611,8 @@
 	}
 	class AsyncTimeoutNode extends TimeoutNode {
 		run() {
-			if(this.is_once())super.run();
+			debugger;
+			super.run();
 			if(this.target)this.target.fire();
 		}
 		start_async(target){
@@ -1869,6 +1871,20 @@
 		debug_id_syms.push(new WeakRef({sym}));
 		return sym;
 	}
+	class AbstractBox {
+		constructor(){
+			this.type='AbstractBox';
+			this.value=null;
+		}
+	}
+	class DomValueBox {
+		constructor(from, value){
+			this.type='DomValueBox';
+			this.from=from;
+			this.value=value;
+		}
+
+	}
 	class DomBuilderVM extends BaseStackVM {
 		constructor(instructions) {
 			super(instructions);
@@ -1906,12 +1922,28 @@
 					if(this.stack.length <= 0){
 						throw new Error('stack underflow');
 					}
-					let elem=this.pop();
-					target.appendChild(elem);
-					l_log_if(LOG_LEVEL_VERBOSE, 'append to dom', [target, elem]);
+					let child_to_append=this.pop();
+					if(!target.type){
+						throw new Error("target element is invalid (wrong type)");
+					}
+					let target_element=this.unbox_dom_value(target);
+					if(target.from !== 'get'){
+						console.log('dom_from', target.from);
+						throw new Error("target element is invalid (from is not 'get')");
+					}
+					let child_to_append_element=this.unbox_dom_value(child_to_append);
+					target_element.appendChild(child_to_append_element);
+					l_log_if(LOG_LEVEL_VERBOSE, 'append to dom', [target, child_to_append]);
 				} break;
 				default/*Debug*/:super.execute_instruction_raw(cur_opcode, operands);break;
 			}
+		}
+		unbox_dom_value(box){
+			if(box.type===void 0)throw new Error("Invalid Box (no type)");
+			if(box.type != 'DomValueBox')throw new Error("Unbox failed not a DomValueBox");
+			if(typeof box.from == 'string')throw new Error("Unbox failed Box.from is not a string");
+			if(typeof box.value != 'object')throw new Error("Unbox failed: Box is not boxing an object");
+			return box.value;
 		}
 		run() {
 			this.running = true;
@@ -1941,6 +1973,7 @@
 		}
 	}
 	class DataLoader {
+		//spell:words externref
 		static int_parser=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
 		constructor(storage) {
 			this.store=storage;
@@ -2175,12 +2208,12 @@
 				let [depth, action, ...args] = cur_item;
 				switch(action){
 					case 'get':{
-						let elem, [element_to_get]=args;
-						switch(element_to_get){
-							case 'body':elem=document.body;break;
-							default:elem=document.querySelector(element_to_get);break;
+						let cur_element, [query_arg]=args;
+						switch(query_arg){
+							case 'body':cur_element=document.body;break;
+							default:cur_element=document.querySelector(query_arg);break;
 						}
-						stack.push([depth, "push", {type:'dom', from:'get', value:elem}]);
+						stack.push([depth, "push", new DomValueBox('get', cur_element)]);
 					} break;
 					case 'new':{
 						const [_class, construct_arg_arr, callback, arg_arr]=args;
@@ -2201,7 +2234,7 @@
 							console.info("Info: case 'create' args are", element_type, name);
 						}
 						map.set(name, cur_element);
-						stack.push([depth, "push", {type:'dom', from:'create', value:cur_element}]);
+						stack.push([depth, "push", new DomValueBox('create', cur_element)]);
 					} break;
 					case 'append':{
 						// peek at the return stack, up 1 depth

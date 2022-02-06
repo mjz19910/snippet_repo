@@ -148,6 +148,7 @@ words:
   - totalAchi
   - totalAtome
   - trgfs
+  - typechecked
   - uerr
   - undebug
   - Unregisters
