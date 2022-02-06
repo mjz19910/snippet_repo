@@ -773,15 +773,14 @@
 			} else {
 				msg_type=msg;
 			}
-			console.log('reply', msg_type, msg_data);
 			switch(msg_type){
 				case 205:{
-					let remote_id=timer_result_msg.v;
+					let remote_id=msg.v;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
 				case 206:{
-					let remote_id=timer_result_msg.v;
+					let remote_id=msg.v;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
@@ -789,7 +788,9 @@
 				case 304:
 				case 306:break;
 				default:
-					console.assert(false, 'on_result timer_result_msg needs a handler for', timer_result_msg);
+					console.log('reply', msg_type, msg_data);
+					console.assert(false, 'on_result msg needs a handler for', msg);
+					debugger;
 			}
 		}
 		force_clear(tag, remote_id){
