@@ -12,7 +12,7 @@
 // @grant		none
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
-import {WeakRef} from "./weak_ref"
+import {WeakRef} from "./types/weak_ref"
 
 type TimerTypeTag = 1 | 2;
 declare namespace Remote {

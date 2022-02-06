@@ -21,25 +21,38 @@
 	const TIMER_TAG_COUNT=3;
 	const AUDIO_ELEMENT_VOLUME=0.58;
 	const cint_arr=[];
+	//spell:disable
+	const __RTU = 301;
+	const __RTR = 302;
+	const __RTSS = 303;
+	const __RTSR = 304;
+	const __RTCS = 305;
+	const __RTCR = 306;
+	const __RTCA = 307;
+	const __RTM = 402;
+	const __RTF = 500;
+	const __RTT = 600;
+	const __WRTFS = 700;
+	const __WRTFR = 701;
 	class WorkerReplyTypes {
-		/**@type {{single:700, repeating:701}} */
-		fire={single:700, repeating:701}
+		/**@type {{single:typeof __WRTFS, repeating:__WRTFR}} */
+		fire={single:__WRTFS, repeating:__WRTFR}
 	}
 	class ReplyTypes {
-		/**@type {402} */
-		msg=402
-		/**@type {500} */
-		from_remote=500
-		/**@type {600} */
-		to_worker=600
-		/**@type {301} */
-		update_handler=301
-		/**@type {302} */
-		ready=302
-		/**@type {{single:303, repeating:304}} */
-		set={single:303, repeating:304}
-		/**@type {{single:305, repeating:306, any:307}} */
-		clear={single:305, repeating:306, any:307}
+		/**@type {typeof __RTM} */
+		msg=__RTM;
+		/**@type {__RTF} */
+		from_remote=__RTF;
+		/**@type {__RTT} */
+		to_worker=__RTT
+		/**@type {__RTU} */
+		update_handler=__RTU;
+		/**@type {__RTR} */
+		ready=__RTR;
+		/**@type {{single:__RTSS, repeating:__RTSR}} */
+		set={single:__RTSS, repeating:__RTSR}
+		/**@type {{single:__RTCS, repeating:__RTCR, any:__RTCA}} */
+		clear={single:__RTCS, repeating:__RTCR, any:__RTCA}
 	}
 	class TimerApi {
 		msg_types={
@@ -57,9 +70,11 @@
 				/**@type {{single:203, repeating:204}} */
 				set:{single:203, repeating:204},
 				/**@type {{single:205, repeating:206, any:207}} */
-				clear:{single:205, repeating:206, any:207}
+				clear:{single:205, repeating:206, any:207},
+				set_types:1000
 			}
 		}
+		//spell:enable
 		/**@type {{single:"setTimeout",repeating:"setInterval"}} */
 		set_names={
 			single:"setTimeout",
@@ -74,6 +89,10 @@
 
 		];
 		to_handle=[
+			{t:202},
+			{t:203},
+			{t:204},
+			{t:205},
 			// 202
 			{t:500, v:{t:302, v:202}},
 			// 203
@@ -425,38 +444,46 @@
 				TIMER_TAG_COUNT
 			});
 		}
-		class RemoteReplyTypes {
-			/**@type {500} */
-			from_remote=500
-			/**@type {600} */
-			to_worker=600
-			/**@type {301} */
-			update_handler=301
-			/**@type {302} */
-			ready=302
-			/**@type {{single:303, repeating:304}} */
-			set={single:303, repeating:304}
-			/**@type {{single:305, repeating:306, any:307}} */
-			clear={single:305, repeating:306, any:307}
-		}
+		// class RemoteReplyTypes {
+		// 	/**@type {500} */
+		// 	from_remote=500
+		// 	/**@type {600} */
+		// 	to_worker=600
+		// 	/**@type {301} */
+		// 	update_handler=301
+		// 	/**@type {302} */
+		// 	ready=302
+		// 	/**@type {{single:303, repeating:304}} */
+		// 	set={single:303, repeating:304}
+		// 	/**@type {{single:305, repeating:306, any:307}} */
+		// 	clear={single:305, repeating:306, any:307}
+		// }
+		/**@typedef {import("./types/RecursivePartial.js").RecursivePartial<TimerApi['msg_types']>} RecursivePartialApi */
 		class RemoteTimerApi {
-			msg_types={
-				/**@type {1} */
-				async:1,
-				/**@type {402} */
-				reply_message:402,
-				reply:new RemoteReplyTypes,
-				/**@type {{single:101, repeating:102}} */
-				fire:{single:101, repeating:102},
+			/**@arg {RecursivePartialApi} msg_types */
+			constructor(msg_types) {
+				/**@type {RecursivePartialApi} */
+				this.msg_types = msg_types;
+			}
+			pre_msg_types={
+				// /**@type {1} */
+				// async:1,
+				// /**@type {402} */
+				// reply_message:402,
+				// reply:new RemoteReplyTypes,
+				// /**@type {{single:101, repeating:102}} */
+				// fire:{single:101, repeating:102},
 				worker:{
-					/**@type {201} */
-					update_handler:201,
-					/**@type {202} */
-					ready:202,
-					/**@type {{single:203, repeating:204}} */
-					set:{single:203, repeating:204},
-					/**@type {{single:205, repeating:206, any:207}} */
-					clear:{single:205, repeating:206, any:207}
+					// /**@type {201} */
+					// update_handler:201,
+					// /**@type {202} */
+					// ready:202,
+					// /**@type {{single:203, repeating:204}} */
+					// set:{single:203, repeating:204},
+					// /**@type {{single:205, repeating:206, any:207}} */
+					// clear:{single:205, repeating:206, any:207},
+					// /**@type {1000} */
+					set_types:1000
 				}
 			}
 			/**@type {{single:"setTimeout",repeating:"setInterval"}} */
@@ -970,7 +997,7 @@
 			this.id_generator=id_generator;
 			/**@type {Map<number|string, TimerState>} */
 			this.m_remote_id_to_state_map=new Map;
-			/**@type {import("./weak_ref.js").WeakRef<WorkerState>} */
+			/**@type {import("./types/weak_ref.js").WeakRef<WorkerState>} */
 			this.weak_worker_state=null;
 			/**@type {Map<RN2|SN2, GW1|GW2|GW3|GW4>} */
 			this.m_api_map=new Map;
@@ -1401,7 +1428,7 @@
 			}
 		}
 	}
-	/**@typedef {import("./SimpleVMTypes.js").InstructionType} InstructionType */
+	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 	class BaseVMCreate extends AbstractVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
@@ -1479,7 +1506,7 @@
 	const LOG_LEVEL_INFO=3;
 	const LOG_LEVEL_VERBOSE=4;
 	const LOG_LEVEL_TRACE=5;
-	/**@typedef {import("./SimpleVMTypes.js").VMBoxed} VMBoxed */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxed} VMBoxed */
 	class BaseStackVM extends BaseVMCreate {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
@@ -2298,7 +2325,7 @@
 		}
 
 	}
-	/**@typedef {import("./SimpleVMTypes.js").AnyInstructionOperands} AnyInstructionOperands */
+	/**@typedef {import("./types/SimpleVMTypes.js").AnyInstructionOperands} AnyInstructionOperands */
 	class DomBuilderVM extends BaseStackVM {
 		constructor(instructions) {
 			super(instructions);
