@@ -12,15 +12,7 @@
 // @grant		none
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
-interface WeakRef<T extends object> {
-	readonly [Symbol.toStringTag]: "WeakRef";
-
-	/**
-	 * Returns the WeakRef instance's target object, or undefined if the target object has been
-	 * reclaimed.
-	 */
-	deref(): T | undefined;
-}
+import {WeakRef} from "./weak_ref"
 
 type TimerTypeTag = 1 | 2;
 declare namespace Remote {
@@ -412,76 +404,7 @@ declare var timeplayed: number;
 declare function lightreset(): void;
 declare function lightreset_inject(): void;
 declare function async_compress(self: AutoBuy): void;
-declare class AutoBuy {
-	delay: number;
-	extra: number;
-	iter_count: number
-	epoch_len: number
-	background_audio: HTMLAudioElement;
-	state: AutoBuyState;
-	cint_arr: CIntItem[];
-	skip_save: boolean;
-	state_history_arr: string[] | CompressedArray;
-	compressor: MulCompression;
-	constructor();
-	pre_init(): void;
-	async_pre_init(): Promise<void>;
-	save_state_history_arr(): void;
-	load_state_history_arr(arr: string[]): void;
-	delay_arr: number[];
-	get_delay_arr_data(forced_action: string): string;
-	save_delay_arr(): void;
-	display_style_sheet: CSSStyleSheet;
-	history_element: HTMLDivElement;
-	delay_element: HTMLDivElement;
-	hours_played_element: HTMLDivElement;
-	percent_ratio_element: HTMLDivElement;
-	percent_ratio_change_element: HTMLDivElement;
-	state_log_element: HTMLDivElement;
-	dom_pre_init(): void;
-	state_history_arr_max_len: number;
-	init_dom(): void;
-	global_init(): void;
-	cint: number;
-	destroy(): void;
-	parse_single_int(string: string): number;
-	default_split(string: string): string[];
-	parse_delay_arr(data: string): number[];
-	load_delay_arr(): number[];
-	update_dom(self?: this): void;
-	init(): void;
-	delayed_init(self?: this): void;
-	state_history_clear_for_reset(): void;
-	state_history_append(value: string): void;
-	history_element_click_handler(event: Event): void;
-	calc_delay_extra(): number;
-	pre_total: number;
-	main(self?: this): void;
-	step_iter_start(): void;
-	get_delay_change(pow_base: number, pow_num: number, div: number): number;
-	update_delay(change: number, decrease: boolean): void;
-	do_delay_dec(pow_terms: [number], div: number): void;
-	do_delay_inc(pow_terms: [number, number], div: number): void;
-	large_decrease(): void;
-	normal_decrease(): void;
-	rare_begin_or_faster_delay(self?: this): void;
-	faster_delay(self?: this): void;
-	fast_unit_delay(self?: this): void;
-	fast_unit(self?: this): void;
-	slow_final(self?: this): void;
-	bonus(self?: this): void;
-	special_delay(self?: this): void;
-	is_special_done(special_buyable: {done: boolean, cost: number}): boolean;
-	do_special(self?: this): boolean;
-	bonus_delay(self?: this): void;
-	special(self?: this): void;
-	initial_special(self?: this): void;
-	rare_begin(self?: this): void;
-	reset_delay_trigger(self?: this): void;
-	reset_delay_start(self?: this): void;
-	reset_delay_run(self?: this): void;
-	reset_delay_init(self?: this): void;
-}
+import {AutoBuy} from "./rebuild_the_universe_auto"
 declare const auto_buy_obj: AutoBuy;
 declare class AsyncTrigger<S, W, N> {
 	m_set_flag: boolean;
@@ -679,11 +602,9 @@ declare global {
 		};
 		_SM_Data: any;
 		on_on_timers_moved_first: boolean;
-		document_write_list: DocumentWriteList;
 		da: any[];
 		lightreset(): void;
 		specialclick(that: any): void;
-		g_worker_state?: WorkerState | undefined;
 	}
 	export var Window: {
 		prototype: Window;

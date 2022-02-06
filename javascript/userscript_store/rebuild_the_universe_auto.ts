@@ -737,7 +737,7 @@ class WorkerState {
 		let weak_worker_state = new WeakRef(this);
 		this.worker_url = URL.createObjectURL(this.worker_code);
 		this.worker = new Worker(this.worker_url);
-		this.worker.onmessage = function onmessage(e: MessageEvent<any>) {
+		this.worker.onmessage = function onmessage(e: MessageEvent) {
 			var msg = e.data;
 			let worker_state = weak_worker_state.deref();
 			if(!worker_state) {
@@ -772,7 +772,7 @@ class WorkerState {
 			t: 202
 		});
 	}
-	set_executor_handle(handle: PromiseExecutorHandle<any>) {
+	set_executor_handle(handle: PromiseExecutorHandle<WorkerState>) {
 		this.executor_handle = handle;
 	}
 	on_result(result: (WorkerMessageReply201 | WorkerMessageReply202)['v']) {
@@ -1344,7 +1344,7 @@ class SimpleStackVMParser {
 				} else {
 					throw new Error("TypeError: Call argument is not parameter count");
 				}
-			} break;
+			}
 			// one argument
 			case 'drop':
 			case 'get':
@@ -1375,23 +1375,12 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 }
-type StackInstructionTypeCategory = ['push', ...any[]] | ['drop'];
-type ObjectInstructionTypeCategory = ['get'];
-type CallInstructionTypeCategory = ['call', number] | ['return'];
-type TuringInstructionTypeCategory = ['halt'];
-type SpecialInstructionTypeCategory = ['push_args'] | ['this'] | ['global'];
-type DebugInstructionTypeCategory = ['breakpoint'];
-type InstructionType = StackInstructionTypeCategory
-	| ObjectInstructionTypeCategory
-	| CallInstructionTypeCategory
-	| TuringInstructionTypeCategory
-	| SpecialInstructionTypeCategory
-	| DebugInstructionTypeCategory;
+import {InstructionType, VMBoxedAnySafe, VMBoxed} from "./SimpleVMTypes";
 class SimpleStackVM {
 	instructions: InstructionType[];
-	stack: any[];
+	stack: VMBoxed[];
 	instruction_pointer: number;
-	return_value?: any;
+	return_value: VMBoxed;
 	running: boolean;
 	constructor(instructions: InstructionType[]) {
 		this.instructions = instructions;
@@ -1406,10 +1395,10 @@ class SimpleStackVM {
 		this.return_value = void 0;
 		this.running = false;
 	}
-	push(value: any) {
+	push(value: VMBoxed) {
 		this.stack.push(value);
 	}
-	pop(): any {
+	pop() {
 		return this.stack.pop();
 	}
 	run(...run_arguments: any[]) {
@@ -1432,20 +1421,33 @@ class SimpleStackVM {
 				}
 				case 'get'/*Object*/: {
 					let name = this.pop();
+					if(!name)throw new Error("Invalid");
 					let obj = this.pop();
-					this.push(obj[name]);
+					if(!obj)throw new Error("Invalid");
+					if(obj instanceof VMBoxedAnySafe && typeof name === 'string'){
+						this.push(obj.do_get(name));
+					}
 					break;
 				}
 				case 'call'/*Call*/: {
 					let number_of_arguments = instruction_parameters[0];
+					if(number_of_arguments === void 0){
+						throw new Error("Invalid call operand");
+					}
 					let arg_arr = [];
 					for(let i = 0;i < number_of_arguments;i++) {
 						arg_arr.unshift(this.pop());
 					}
 					let name_to_call = this.pop();
 					let target = this.pop();
-					let ret = target[name_to_call](...arg_arr);
-					this.push(ret);
+					if(!target)throw "Bad";
+					if(!name_to_call)throw "Bad";
+					if(target instanceof VMBoxedAnySafe && typeof name_to_call==='string'){
+						let boxed_arr=VMBoxedAnySafe.box_array(arg_arr);
+						debugger;
+						let ret = target.do_get(name_to_call).do_call(...boxed_arr);
+						this.push(ret);
+					}
 					break;
 				}
 				case 'return'/*Call*/: {
@@ -1458,16 +1460,16 @@ class SimpleStackVM {
 					break;
 				}
 				case 'push_args'/*Special*/: {
-					this.push(run_arguments);
+					this.push(new VMBoxedAnySafe(run_arguments));
 					break;
 				}
 				case 'this'/*Special*/: {
-					this.push(this);
+					this.push(new VMBoxedAnySafe(this));
 					break;
 				}
 				case 'global'/*Special*/: {
-					if(window) this.push(window);
-					else this.push(globalThis);
+					if(window) this.push(new VMBoxedAnySafe(window));
+					else this.push(new VMBoxedAnySafe(globalThis));
 					break;
 				}
 				case 'breakpoint'/*Debug*/: {
@@ -1751,7 +1753,7 @@ class AverageRatioRoot {
 		}
 	}
 }
-class AutoBuyState {
+export class AutoBuyState {
 	debug
 	arr: number[]
 	ratio
@@ -1931,7 +1933,7 @@ class AutoBuyState {
 		}
 	}
 }
-class AutoBuy {
+export class AutoBuy {
 	delay: number;
 	extra: number;
 	iter_count: number;
@@ -2661,9 +2663,12 @@ function proxy_jquery() {
 		configurable: true
 	});
 }
-function pace_finish_proxy_apply(func: Function, this_v: any, args: ArrayLike<any>) {
+function pace_finish_proxy_apply(func: Function, this_v: any, args: ArrayLike<[]>) {
 	auto_buy_obj.init();
 	window.Pace.bar.finish = func;
+	if(args.length > 0){
+		throw new Error("pace apply used more than the expected arguments");
+	}
 	return Reflect.apply(func, this_v, args);
 }
 function on_game_data_set() {
@@ -2673,7 +2678,9 @@ function on_game_data_set() {
 		auto_buy_obj.init();
 		return;
 	}
-	window.Pace.bar.finish = <any>new Proxy(window.Pace.bar.finish, {apply: pace_finish_proxy_apply});
+	window.Pace.bar.finish = new Proxy(window.Pace.bar.finish, {
+		apply: pace_finish_proxy_apply
+	});
 }
 function remove_cint_item(cint_arr: [1 | 2, number, string][], cint_item: [1 | 2, number, string]) {
 	let idx = cint_arr.indexOf(cint_item);

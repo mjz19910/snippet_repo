@@ -40,6 +40,7 @@ words:
   - decpart
   - decreaseSpawnCooldown
   - deref
+  - desync
   - dname
   - dofn
   - doublequote
@@ -152,6 +153,7 @@ words:
   - uerr
   - undebug
   - Unregisters
+  - userscript
   - varg
   - webassembly
   - workch

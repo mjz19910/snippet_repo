@@ -21,6 +21,10 @@
 	const TIMER_TAG_COUNT=3;
 	const AUDIO_ELEMENT_VOLUME=0.58;
 	const cint_arr=[];
+	class WorkerReplyTypes {
+		/**@type {{single:700, repeating:701}} */
+		fire={single:700, repeating:701}
+	}
 	class ReplyTypes {
 		/**@type {402} */
 		msg=402
@@ -45,6 +49,7 @@
 			/**@type {{single:101, repeating:102}} */
 			fire:{single:101, repeating:102},
 			worker:{
+				reply:new WorkerReplyTypes,
 				/**@type {201} */
 				update_handler:201,
 				/**@type {202} */
@@ -75,8 +80,12 @@
 			{t:500, v:{t:303, v:{var:'local_id'}}},
 			// 204
 			{t:500, v:{t:304, v:{var:'local_id'}}},
+			// 206
+			{t:500, v:{t:306, v:{var:'remote_id'}}}
 		];
 	}
+	let g_timer_api=new TimerApi;
+	let message_types=g_timer_api.msg_types;
 	class ScriptStateHost {
 		static event_target={
 			fns:[],
@@ -84,14 +93,21 @@
 				this.fns.push(fn);
 			},
 			dispatchEvent(ev){
+				//spell:disable
 				let lfns=this.fns.slice();
 				for(let i=0;i<lfns.length;i++){
 					let fn=lfns[i];
 					fn(ev);
 				}
+				//spell:enable
 			}
 		}
 	}
+	let is_in_ignored_from_src_fn=false;
+	let is_in_userscript_fn=false;
+	let is_in_userscript=true;
+	/**@type {CallableFunction | NewableFunction} */
+	let cur_event_fns=[];
 	function find_all_scripts_using_string_apis(){
 		let scripts=new WeakSet;
 		let scripts_holders=[];
@@ -99,54 +115,210 @@
 		let scripts_weak_arr=[];
 		let script_registry;
 		let script_id=1;
-		let is_in_userscript=true;
+		window.is_in_ignored_fn=function(){
+			return is_in_ignored_from_src_fn;
+		}
 		ScriptStateHost.event_target.addEventListener(e=>{
 			is_in_userscript=false;
-		})
-		String.prototype.indexOf=new Proxy(String.prototype.indexOf, {
+		});
+		function register_obj_with_registry(obj) {
+			let obj_id;
+			let obj_ref=scripts_weak_arr.find(e=>e.ref.deref() === obj);
+			if(obj_ref){
+				obj_id=obj_ref.id;
+				return obj_id;
+			}
+			obj_id=script_id;
+			script_id++;
+			let held_obj={
+				type:'held',
+				id:obj_id,
+				key:Symbol(obj_id)
+			};
+			let token_sym={token:Symbol(-obj_id)};
+			scripts_holders.push(held_obj);
+			scripts_tokens.push({key:held_obj.key, ref:new WeakRef(token_sym)});
+			scripts_weak_arr.push({key:held_obj.key, id:obj_id, ref:new WeakRef(obj)})
+			script_registry.register(obj, held_obj, token_sym);
+			return obj_id;
+		}
+		function replace_cb_with_safe_proxy(args, index){
+			if(args[index] instanceof Function) {
+				let target_fn=args[index];
+				if(is_in_userscript) {
+					target_fn.is_userscript_fn=true;
+				}
+				if(is_in_userscript_fn){
+					target_fn.is_userscript_fn=true;
+				}
+				if(document.currentScript){
+					target_fn.reg_id=register_obj_with_registry(document.currentScript);
+				}
+				args[index]=new Proxy(target_fn, {
+					apply(...a){
+						let ret;
+						let should_reset=false;
+						cur_event_fns.push(a[0]);
+						let idx=cur_event_fns.indexOf(a[0]);
+						if(a[0].is_userscript_fn) {
+							is_in_ignored_from_src_fn=true;
+							if(is_in_userscript_fn === false){
+								is_in_userscript_fn=true;
+								should_reset=true;
+							}
+						}
+						try{
+							ret=Reflect.apply(...a);
+						}finally{
+							if(should_reset){
+								is_in_userscript_fn=false;
+								should_reset=false;
+							}
+							is_in_ignored_from_src_fn=false;
+							delete cur_event_fns[idx];
+						}
+						delete cur_event_fns[idx];
+						return ret;
+					}
+				});
+				target_fn=null;
+				let unsafe_proxy=args[index];
+				unsafe_proxy=null;
+				args=null;
+				index=null;
+				// args[index]=function(...a){return Reflect.apply(unsafe_proxy, this, a)}
+			}
+		}
+		EventTarget.prototype.addEventListener=new Proxy(EventTarget.prototype.addEventListener, {
 			apply(...a){
-				if(document.currentScript === null){
-					if(!is_in_userscript)throw new Error("No");
-					// a userscript is running
-					return;
+				// this will always be EventTarget.prototype.addEventListener (the real one)
+				// let target_fn=a[0];
+				cur_event_fns.push(a[0]);
+				let idx=cur_event_fns.indexOf(a[0]);
+				let target_obj=a[1];
+				let call_args=a[2];
+				replace_cb_with_safe_proxy(call_args, 1);
+				// ignore any calls from this script
+				if(!is_in_userscript){
+					debugger;
+					console.log(target_obj, call_args);
 				}
-				let had_script=scripts.has(document.currentScript);
-				if(!had_script){
-					scripts.add(document.currentScript);
-					let held_obj={
-						type:'held',
-						id:script_id,
-						key:Symbol(script_id)
-					};
-					let token_sym={token:Symbol(-script_id)};
-					let object_to_register=document.currentScript;
-					scripts_holders.push(held_obj);
-					scripts_tokens.push({key:held_obj.key, ref:new WeakRef(token_sym)});
-					scripts_weak_arr.push({key:held_obj.key, ref:new WeakRef(object_to_register)})
-					script_registry.register(object_to_register, held_obj, token_sym);
-					script_id++;
+				let ret
+				try{
+					ret=Reflect.apply(...a);
+				}finally{
+					delete cur_event_fns[idx];
 				}
-				if(!had_script){
-					console.log(document.currentScript);
-					// debugger;
-				}
+				delete cur_event_fns[idx];
+				return ret;
 			}
 		});
-		script_registry=new FinalizationRegistry(function cleanup(held){
+		requestAnimationFrame=new Proxy(requestAnimationFrame, {
+			apply(...a){
+				let target_obj=a[1];
+				let call_args=a[2];
+				replace_cb_with_safe_proxy(call_args, 0);
+				return Reflect.apply(...a);
+			}
+		})
+		window.proxy_set=[];
+		window.proxy_set.push(EventTarget.prototype.addEventListener);
+		Promise.prototype.then=new Proxy(Promise.prototype.then, {
+			apply(...a){
+				let target_obj=a[1];
+				let call_args=a[2];
+				replace_cb_with_safe_proxy(call_args, 0);
+				replace_cb_with_safe_proxy(call_args, 1);
+				return Reflect.apply(...a);
+			}
+		});
+		function str_indexOf_inject() {
+			let cur_script = get_nearest_script();
+			if(cur_script === void 0) {
+				if(is_in_ignored_from_src_fn)return;
+				if(!is_in_userscript)throw new Error("No");
+				// a userscript is running
+				return;
+			}
+			let had_script=scripts.has(cur_script);
+			if(!had_script){
+				try{
+					scripts.add(cur_script);
+				}catch(e){
+					let jj=e;
+					debugger;
+				}
+				let id=register_obj_with_registry(cur_script);
+				console.log('new registry id', id);
+			}
+			if(!had_script){
+				//spell:disable-next-line
+				if(cur_script.src.includes("opentracker")){
+					cur_script.remove();
+					throw new Error("No tracking");
+					cur_script=null;
+					return;
+				}
+				console.log(cur_script);
+				// debugger;
+			}
+			cur_script=null;
+		}
+		String.prototype.indexOf=new Proxy(String.prototype.indexOf, {
+			apply(...a){
+				str_indexOf_inject();
+				return Reflect.apply(...a);
+			}
+		});
+		script_registry=new FinalizationRegistry(function cleanup(held) {
 			let arr_key=held.arr_key;
 			let weak_state_index=scripts_weak_arr.findIndex(e=>e.key === arr_key);
 			let token_index=scripts_tokens.findIndex(e=>e.key === arr_key);
+			if(weak_state_index === -1){
+				console.log('prev gc', held);
+			}
 			let token=null;
 			let weak_state=null;
 			if(token_index > -1)token=scripts_tokens[token_index];
 			if(weak_state_index > -1)weak_state=scripts_weak_arr[weak_state_index];
-			console.log('gc', index, arr_key, token, weak_state);
+			console.log('gc', weak_state_index, token_index, arr_key, token, weak_state);
 			scripts_weak_arr[weak_state_index]=null;
 			scripts_tokens[token_index]=null;
 		});
-		return scripts_weak_arr;
+		return [scripts_weak_arr, register_obj_with_registry];
 	}
-	const weak_scripts=find_all_scripts_using_string_apis();
+	void find_all_scripts_using_string_apis;
+	// const [weak_scripts, register_obj_with_registry]=find_all_scripts_using_string_apis();
+	function get_nearest_script() {
+		if(document.currentScript !== null){
+			return document.currentScript;
+		}
+		let cur_script;
+		while(cur_event_fns.at(-1) === void 0 && cur_event_fns.length > 0) {
+			cur_event_fns.pop();
+		}
+		let script_ghost=cur_event_fns.at(-1);
+		if(script_ghost && weak_scripts[script_ghost.reg_id-1]) {
+			let reg=weak_scripts[script_ghost.reg_id-1];
+			if(reg.ref.deref()){
+				return reg.ref.deref();
+			} else if(document.currentScript === null && !is_in_ignored_from_src_fn) {
+				debugger;
+			}
+		}
+		if(cur_script === void 0 && !is_in_userscript && !is_in_userscript_fn && !is_in_ignored_from_src_fn){
+			debugger;
+		}
+		if(cur_event_fns.at(-1) && weak_scripts[cur_event_fns.at(-1).reg_id-1]?.ref?.deref?.()){
+			return weak_scripts[cur_event_fns.at(-1).reg_id-1]?.ref?.deref?.();
+		};
+		let doc_script=document.currentScript;
+		if(doc_script === null){
+			return;
+		} else {
+			return doc_script;
+		}
+	}
 	class DocumentWriteList {
 		constructor(){
 			this.list=[];
@@ -254,8 +426,6 @@
 			});
 		}
 		class RemoteReplyTypes {
-			/**@type {402} */
-			msg=402
 			/**@type {500} */
 			from_remote=500
 			/**@type {600} */
@@ -273,6 +443,8 @@
 			msg_types={
 				/**@type {1} */
 				async:1,
+				/**@type {402} */
+				reply_message:402,
 				reply:new RemoteReplyTypes,
 				/**@type {{single:101, repeating:102}} */
 				fire:{single:101, repeating:102},
@@ -318,8 +490,12 @@
 		function fire_timer(timer, remote_id){
 			timer.fire(remote_id);
 		}
+		const remote_api_info_instance=new RemoteTimerApi;
+		let message_types=remote_api_info_instance.msg_types;
+		let reply_message_types=message_types.reply;
+		let fire_pause=[];
 		class RemoteTimer {
-			constructor(api_info=new RemoteTimerApi){
+			constructor(api_info){
 				this.m_remote_id_to_state_map=new Map;
 				/**@type {RemoteTimerApi} */
 				this.m_api_info=api_info;
@@ -327,7 +503,6 @@
 				globalThis[this.m_api_info.clear_names.single](this.base_id);
 			}
 			fire(remote_id) {
-				debugger;
 				let local_state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!local_state)return;
 				this.validate_state(local_state, remote_id);
@@ -337,8 +512,12 @@
 				};
 				let tag=local_state.type;
 				let msg_id;
+				let reply_id;
 				switch(tag){
-					case TIMER_SINGLE:msg_id=this.m_api_info.msg_types.fire.single;break;
+					case TIMER_SINGLE:{
+						msg_id=this.m_api_info.msg_types.fire.single;
+						reply_id=this.m_api_info.msg_types.worker
+					} break;
 					case TIMER_REPEATING:msg_id=this.m_api_info.msg_types.fire.repeating;break;
 				}
 				if(!msg_id){
@@ -346,13 +525,19 @@
 					console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o', TIMER_SINGLE, TIMER_REPEATING, tag);
 					return;
 				}
+				if(fire_pause.includes(remote_id)){
+					return;
+				}else{
+					fire_pause.push(remote_id);
+				}
+				console.log('worker fire', msg_id, remote_id);
 				postMessage({
 					t: msg_id,
 					v: remote_id
 				});
 			}
 			set(tag, remote_id, timeout){
-				debugger;
+				// debugger;
 				this.verify_tag(tag);
 				let obj={
 					active:true,
@@ -408,41 +593,58 @@
 					}
 					state.active=false;
 					this.m_remote_id_to_state_map.delete(remote_id);
+					return state.local_id;
 				}
+				return null;
 			}
 			do_clear(msg){
 				let remote_id=msg.v;
-				this.clear(remote_id);
-				postMessage({
-					t:this.m_api_info.msg_types.reply.from_remote,
-					v:{
-						t:this.m_api_info.msg_types.reply.msg,
-						v:{
-							t:msg.t,
-							v:remote_id
-						}
-					}
-				});
+				let maybe_local_id=this.clear(remote_id);
+				// debugger;
+				switch(msg.t){
+					case message_types.worker.clear.single:{
+						// debugger;
+						postMessage({
+							t:reply_message_types.from_remote,
+							v:{
+								t:message_types.reply.clear.single,
+								v:[remote_id, maybe_local_id, msg.t]
+							}
+						});
+					} break
+					case message_types.worker.clear.repeating:{
+						// debugger;
+						postMessage({
+							t:reply_message_types.from_remote,
+							v:{
+								t:message_types.reply.clear.repeating,
+								v:[remote_id, maybe_local_id, msg.t]
+							}
+						});
+					} break;
+					default:{
+						console.error("RemoteTimer.do_clear unexpected message");
+						debugger;
+					} break;
+				}
 			}
 		}
 		let remote_worker_state=new RemoteWorkerState;
 		globalThis.remote_worker_state=remote_worker_state;
-		remote_worker_state.set_timer(new RemoteTimer);
+		remote_worker_state.set_timer(new RemoteTimer(remote_api_info_instance));
 		onmessage=function(e){
 			let msg = e.data;
 			if(!remote_worker_state.m_timer){
 				console.log('got message but don\'t have a timer');
 				return;
 			}
-			let message_types=remote_worker_state.m_timer.m_api_info.msg_types;
-			let reply_message_types=message_types.reply;
 			switch (msg.t) {
-				case 200/*reply*/:{
+				case reply_message_types.to_worker/*reply*/:{
 					let result=msg.v;
 					console.assert(false, "unhandled result on remote worker", result);
 					debugger;
 				} break;
-				case 201/*remote worker init*/:{
+				case message_types.worker.update_handler/*remote worker init*/:{
 					debugger;
 					let user_msg=msg.v;
 					let worker_str="()"[0];
@@ -465,7 +667,7 @@
 						}
 					});
 				} break;
-				case 202/**/:{
+				case message_types.worker.ready/**/:{
 					// debugger;
 					postMessage({
 						t:reply_message_types.from_remote,
@@ -475,45 +677,39 @@
 						}
 					});
 				} break;
-				case 203/*remote timer set single*/:{
+				case message_types.worker.set.single/*remote timer set single*/:{
 					// debugger;
 					let user_msg=msg.v;
+					console.log('worker set single', user_msg.t, user_msg.v);
 					let local_id = remote_worker_state.set(TIMER_SINGLE, user_msg.t, user_msg.v);
 					postMessage({
 						t:reply_message_types.from_remote,
 						v:{
 							t:message_types.reply.set.single,
-							v:local_id
+							v:[local_id, msg.t, user_msg.t, user_msg.v]
 						}
 					});
 				} break;
-				case 204/*remote timer set repeating*/:{
+				case message_types.worker.set.repeating/*remote timer set repeating*/:{
 					// debugger;
 					let user_msg=msg.v;
+					console.log('worker set repeating', user_msg.t, user_msg.v);
 					let local_id = remote_worker_state.set(TIMER_REPEATING, user_msg.t, user_msg.v);
 					postMessage({
 						t:reply_message_types.from_remote,
 						v:{
 							t:message_types.reply.set.repeating,
-							v:local_id
+							v:[local_id, msg.t, user_msg.t, user_msg.v]
 						}
 					});
 				} break;
-				case 205/*remote timer do_clear single*/:{
-					debugger;
+				case message_types.worker.clear.single/*remote timer do_clear single*/:{
+					// debugger;
 					remote_worker_state.clear(msg);
-					postMessage({
-						t:reply_message_types.from_remote,
-						v:message_types.reply.clear.single
-					});
 				} break;
-				case 206/*remote timer do_clear repeating*/:{
-					debugger;
+				case message_types.worker.clear.repeating/*remote timer do_clear repeating*/:{
+					// debugger;
 					remote_worker_state.clear(msg);
-					postMessage({
-						t:reply_message_types.from_remote,
-						v:message_types.reply.clear.repeating
-					});
 				} break;
 				default:{
 					console.assert(false, "RemoteWorker: Unhandled message", msg);
@@ -589,21 +785,22 @@
 				}
 			};
 			this.valid=true;
-			debugger;
 			this.worker.postMessage({
-				t: 202
+				t: message_types.worker.ready
 			});
 		}
 		set_executor_handle(handle){
 			this.executor_handle=handle;
 		}
-		on_result(result){
-			switch(result){
-				case 201:{
+		on_result(type, data){
+			switch(data){
+				case message_types.worker.update_handler:{
+					console.assert(type === 301);
 					console.log("remote_worker onmessage function changed");
 					break;
 				}
-				case 202:{
+				case message_types.worker.ready: {
+					console.assert(type === 302);
 					if(this.executor_handle.closed()){
 						console.assert(false, "WorkerState used with closed executor_handle");
 						break;
@@ -625,23 +822,39 @@
 			} else {
 				msg_type=result;
 			}
-			debugger;
 			switch(msg_type) {
-				case 301:
-				case 302:
+				case 301:{
+					debugger;
+					this.on_result(msg_type, msg_data);
+				} break;
+				case 302:{
+					// debugger;
+					this.on_result(msg_type, msg_data);
+				} break;
 				case 401:{
+					debugger;
 					this.on_result(msg_type, msg_data);
 				} break;
 				case 402:{
+					debugger;
 					this.timer.on_result(msg_type, msg_data);
 				} break;
-				case 303:
-				case 304:
-				case 305:
-				case 306:
-					{
-						this.timer.on_reply(msg_type, msg_data);
-					} break;
+				case 303:{
+					// debugger;
+					this.timer.on_reply(msg_type, msg_data);
+				} break;
+				case 304:{
+					// debugger;
+					this.timer.on_reply(msg_type, msg_data);
+				} break;
+				case message_types.reply.clear.single:{
+					// debugger;
+					this.timer.on_reply(msg_type, msg_data);
+				} break;
+				case message_types.reply.clear.repeating:{
+					// debugger;
+					this.timer.on_reply(msg_type, msg_data);
+				} break;
 				default:{
 					console.assert(false, "unhandled result", result);
 					debugger;
@@ -707,12 +920,59 @@
 		}
 	}
 	function timer_nop(){}
+	class v1{
+		/**@type {1} */
+		v=1;
+	}
+	class v2{
+		/**@type {2} */
+		v=2;
+	}
+	/**@typedef {(v1|v2)['v']} TimerTag */
+	class TimerState {
+		/**
+		 * @arg {TimerTag} tag 
+		 * @arg {boolean} is_repeating
+		 * @arg {TimerHandler} target_fn
+		 * @arg {any[]} target_args
+		 * @arg {number} timeout
+		*/
+		constructor(tag, is_repeating, target_fn, target_args, timeout){
+			this.active=true;
+			/**@type {TimerTag} */
+			this.type=tag;
+			/**@type {boolean} */
+			this.repeat=is_repeating;
+			/**@type {TimerHandler} */
+			this.target_fn=target_fn
+			/**@type {any[]} */
+			this.target_args=target_args;
+			/**@type {number} */
+			this.timeout=timeout;
+		}
+	}
+	/**@typedef {TimerApi['set_names']} SN1 */
+	/**@typedef {TimerApi['clear_names']} CN1 */
+	/**@typedef {(SN1|CN1)['repeating']} RN2 */
+	/**@typedef {(SN1|CN1)['single']} SN2 */
+	/**@typedef {CN1['single']} NSR1 */
+	/**@typedef {CN1['repeating']} NSR2 */
+	/**@typedef {SN1['single']} NSR3 */
+	/**@typedef {SN1['repeating']} NSR4 */
+	/**@typedef {Window[NSR1]} GW1 */
+	/**@typedef {Window[NSR2]} GW2 */
+	/**@typedef {Window[NSR3]} GW3 */
+	/**@typedef {Window[NSR4]} GW4 */
 	class Timer {
 		/**@arg {TimerApi} api_info */
 		constructor(id_generator, api_info){
+			/**@type {UniqueIdGenerator} */
 			this.id_generator=id_generator;
+			/**@type {Map<number|string, TimerState>} */
 			this.m_remote_id_to_state_map=new Map;
+			/**@type {import("./weak_ref.js").WeakRef<WorkerState>} */
 			this.weak_worker_state=null;
+			/**@type {Map<RN2|SN2, GW1|GW2|GW3|GW4>} */
 			this.m_api_map=new Map;
 			/**@type {TimerApi} */
 			this.m_api_info=api_info;
@@ -731,17 +991,20 @@
 			window[clear.single](this.base_id);
 			this.id_generator.set_current(this.base_id);
 		}
-		set_worker_state(worker_state_value){
+		/**@arg {WorkerState} worker_state_value  */
+		set_worker_state(worker_state_value) {
 			this.weak_worker_state=new WeakRef(worker_state_value);
 		}
 		// If you cause any side effects, please
 		// wrap this call in try{}finally{} and
 		// revert all side effects...
-		verify_tag(tag){
-			if(!this.validate_tag(tag)){
+		/**@arg {TimerTag} tag */
+		verify_tag(tag) {
+			if(!this.validate_tag(tag)) {
 				throw new Error("Verify failed in Timer.verify_tag");
 			}
 		}
+		/**@arg {TimerState} state @arg {number} remote_id*/
 		verify_state(state, remote_id) {
 			if(!this.validate_timer_state(state)) {
 				let worker_state=this.weak_worker_state.deref();
@@ -752,49 +1015,83 @@
 				throw new Error("Verify failed in Timer.verify_timer_state");
 			}
 		}
+		/**@arg {TimerTag} tag */
 		validate_tag(tag){
-			if(tag < TIMER_SINGLE || tag >= TIMER_TAG_COUNT){
+			if(tag != TIMER_SINGLE && tag != TIMER_REPEATING){
 				console.assert(false, "Assertion failure in Timer.validate_tag: tag=%o is out of range");
 				console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", tag, TIMER_SINGLE, TIMER_TAG_COUNT);
 				return false;
 			}
 			return true;
 		}
+		/**@arg {TimerState} state */
 		validate_timer_state(state){
 			return this.validate_tag(state.type);
 		}
-		fire(timer_mode_tag, remote_id){
+		/**@arg {TimerTag} tag @arg {number} remote_id */
+		fire(tag, remote_id) {
 			let state = this.get_state_by_remote_id(remote_id);
 			if(!state){
-				this.force_clear(timer_mode_tag, remote_id);
+				this.force_clear(tag, remote_id);
 				return;
 			}
-			if(state.active){
-				state.target_function.apply(null, state.target_arguments);
-			}
-			if(timer_mode_tag === TIMER_SINGLE){
-				state.active=false;
-				this.clear(timer_mode_tag, remote_id);
+			let should_reset_user_fn=false;
+			let should_reset_ign=false;
+			cur_event_fns.push(state.target_fn);
+			let idx=cur_event_fns.indexOf(state.target_fn);
+			try{
+				a:if(state.active) {
+					if(state.target_fn.is_userscript_fn){
+						if(is_in_ignored_from_src_fn === false){
+							is_in_ignored_from_src_fn=true;
+							should_reset_ign=true;
+						}
+						if(is_in_userscript_fn === false){
+							is_in_userscript_fn=true;
+							should_reset_user_fn=true;
+						}
+					}
+					state.target_fn.apply(null, state.target_args);
+				}
+			}finally{
+				if(should_reset_ign)is_in_ignored_from_src_fn=false;
+				if(should_reset_user_fn)is_in_userscript_fn=false;
+				delete cur_event_fns[idx];
+				if(tag === TIMER_SINGLE){
+					state.active=false;
+					this.clear(tag, remote_id);
+				}
+				let worker_state=this.weak_worker_state.deref();
+				worker_state.postMessage({
+					t: this.m_api_info.msg_types.worker.reply.fire.single,
+					v: remote_id
+				});
 			}
 		}
-		set(timer_mode_tag, target_function, timeout, target_arguments){
+		/**@arg {TimerTag} tag */
+		set(tag, target_fn, timeout, target_args) {
 			let remote_id = this.id_generator.next();
-			let is_repeating=false;
-			this.verify_tag(timer_mode_tag);
-			if(timer_mode_tag === TIMER_REPEATING){
+			let is_repeating = false;
+			this.verify_tag(tag);
+			if(tag === TIMER_REPEATING) {
 				is_repeating=true;
 			}
-			if (timeout < 0)timeout = 0;
-			let state = {
-				active: true,
-				type: timer_mode_tag,
-				repeat:is_repeating,
-				target_function,
-				target_arguments,
-				timeout
-			};
+			if (timeout < 0) timeout = 0;
+			let state = new TimerState(tag, is_repeating, target_fn, target_args, timeout);
+			if(is_in_userscript) {
+				target_fn.is_userscript_fn = true;
+			}
+			if(is_in_userscript_fn) {
+				target_fn.is_userscript_fn = true;
+			}
+			// if(document.currentScript){
+			// 	target_fn.reg_id=register_obj_with_registry(document.currentScript);
+			// }
+			// if(get_nearest_script()){
+			// 	target_fn.reg_id=register_obj_with_registry(get_nearest_script());
+			// }
 			this.store_state_by_remote_id(remote_id, state);
-			this.send_worker_set_message(timer_mode_tag, {
+			this.send_worker_set_message(tag, {
 				t:remote_id,
 				v:timeout
 			});
@@ -824,31 +1121,34 @@
 		is_state_stored_by_remote_id(remote_id){
 			return this.m_remote_id_to_state_map.has(remote_id);
 		}
+		/**@arg {number} remote_id */
 		get_state_by_remote_id(remote_id){
 			let state = this.m_remote_id_to_state_map.get(remote_id);
 			if(!state)return null;
 			this.verify_state(state, remote_id);
 			return state;
 		}
-		store_state_by_remote_id(remote_id, state){
+		/**@arg {number} remote_id @arg {TimerState} state */
+		store_state_by_remote_id(remote_id, state) {
 			this.m_remote_id_to_state_map.set(remote_id, state);
 		}
+		/**@arg {number} remote_id */
 		delete_state_by_remote_id(remote_id){
 			this.m_remote_id_to_state_map.delete(remote_id);
 		}
-		remote_id_to_state_entries(){
+		remote_id_to_state_entries() {
 			return this.m_remote_id_to_state_map.entries();
 		}
 		on_result(type, data) {
 			console.log(type, data);
 			debugger;
 			switch(0){
-				case 205:{
+				case this.m_api_info.msg_types.worker.clear.single:{
 					let remote_id=timer_result_msg.v;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
-				case 206:{
+				case this.m_api_info.msg_types.worker.clear.repeating:{
 					let remote_id=timer_result_msg.v;
 					this.delete_state_by_remote_id(remote_id);
 					break;
@@ -857,36 +1157,40 @@
 					console.assert(false, 'on_result timer_result_msg needs a handler for', timer_result_msg);
 			}
 		}
-		on_reply(msg){
-			let msg_type;
-			let msg_data=null;
-			if(typeof msg === 'object'){
-				msg_type=msg.t;
-				msg_data=msg.v;
-			} else {
-				msg_type=msg;
-			}
+		on_reply(msg_type, msg_data){
 			switch(msg_type){
-				case 205:{
+				case this.m_api_info.msg_types.worker.clear.single:{
+					debugger;
 					let remote_id=msg.v;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
-				case 206:{
+				case this.m_api_info.msg_types.worker.clear.repeating:{
+					debugger;
 					let remote_id=msg.v;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
-				case 303:
-				case 304:
-				case 306:break;
+				case 303:{
+					//debugger;
+				} break;
+				case 304:{
+					// debugger;
+				} break;
+				case 305:{
+					debugger;
+				} break;
+				case message_types.reply.clear.repeating:{
+					// debugger;
+				} break;
 				default:
 					console.log('reply', msg_type, msg_data);
 					console.assert(false, 'on_result msg needs a handler for', msg);
 					debugger;
 			}
 		}
-		force_clear(tag, remote_id){
+		/**@arg {TimerTag} tag */
+		force_clear(tag, remote_id) {
 			this.verify_tag(tag);
 			let worker_state=this.weak_worker_state.deref();
 			let state = this.get_state_by_remote_id(remote_id);
@@ -908,6 +1212,7 @@
 				});
 			}
 		}
+		/**@arg {TimerTag} tag */
 		clear(tag, remote_id){
 			this.verify_tag(tag);
 			let state = this.get_state_by_remote_id(remote_id);
@@ -941,13 +1246,14 @@
 				if(state.type === TIMER_SINGLE){
 					// if the timer might get reset when calling the function while
 					// the timer functions are reset to the underlying api
-					state.target_function.apply(null, state.target_arguments);
+					state.target_fn.apply(null, state.target_args);
 				}
 			}
 			this.m_api_map.clear();
 		}
 	}
-	class VerifyError extends Error{
+	class VerifyError extends Error {
+		/**@type {(v?:string):VerifyError} */
 		constructor(message){
 			super(message);
 			this.name="VerifyError";
@@ -979,16 +1285,16 @@
 		const worker_state=new WorkerState(worker_code_blob, timer, executor_handle);
 		const weak_worker_state = new WeakRef(worker_state);
 		const setTimeout_global=setTimeout;
-		function remoteSetTimeout(handler, timeout, ...target_arguments) {
+		function remoteSetTimeout(handler, timeout, ...target_args) {
 			if(!worker_state) {
 				setTimeout=setTimeout_global;
 				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
-				return setTimeout_global(handler, timeout, ...target_arguments);
+				return setTimeout_global(handler, timeout, ...target_args);
 			}
 			if(typeof timeout === 'undefined')timeout=0;
 			if(typeof timeout != 'number' && timeout.valueOf)timeout=timeout.valueOf();
 			if(typeof timeout != 'number' && timeout.toString)timeout=timeout.toString();
-			return worker_state.timer.set(TIMER_SINGLE, handler, timeout, target_arguments);
+			return worker_state.timer.set(TIMER_SINGLE, handler, timeout, target_args);
 		}
 		const clearTimeout_global=clearTimeout;
 		/**@arg {number} id */
@@ -1001,16 +1307,16 @@
 			worker_state.timer.clear(TIMER_SINGLE, id);
 		}
 		const setInterval_global=setInterval;
-		function remoteSetInterval(handler, timeout=0, ...target_arguments) {
+		function remoteSetInterval(handler, timeout=0, ...target_args) {
 			if(!worker_state) {
 				setInterval=setInterval_global;
 				l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
-				return setInterval_global(handler, timeout, ...target_arguments);
+				return setInterval_global(handler, timeout, ...target_args);
 			}
 			if(typeof timeout === 'undefined')timeout=0;
 			if(typeof timeout != 'number' && timeout.valueOf)timeout=timeout.valueOf();
 			if(typeof timeout != 'number' && timeout.toString)timeout=timeout.toString();
-			return worker_state.timer.set(TIMER_REPEATING, handler, timeout, target_arguments);
+			return worker_state.timer.set(TIMER_REPEATING, handler, timeout, target_args);
 		}
 		const clearInterval_global=clearInterval;
 		/**@arg {number} id */
@@ -1083,6 +1389,7 @@
 			throw new Error("Abstract function");
 		}
 		execute_instruction_raw(cur_opcode, operands){
+			void cur_opcode, operands;
 			// ignore it, this is the base, if you want to ignore instruction opcodes go ahead
 			if(this.execute_instruction_raw !== AbstractVM.prototype.execute_instruction_raw)return;
 			throw new Error("Abstract function");
@@ -1094,7 +1401,9 @@
 			}
 		}
 	}
+	/**@typedef {import("./SimpleVMTypes.js").InstructionType} InstructionType */
 	class BaseVMCreate extends AbstractVM {
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super();
 			this.instructions = instructions;
@@ -1108,6 +1417,7 @@
 		is_in_instructions(value){
 			return value >= 0 && value < this.instructions.length;
 		}
+		/**@arg {InstructionType[0]} cur_opcode */
 		execute_instruction_raw(cur_opcode, operands) {
 			switch(cur_opcode) {
 				default:{
@@ -1169,9 +1479,12 @@
 	const LOG_LEVEL_INFO=3;
 	const LOG_LEVEL_VERBOSE=4;
 	const LOG_LEVEL_TRACE=5;
+	/**@typedef {import("./SimpleVMTypes.js").VMBoxed} VMBoxed */
 	class BaseStackVM extends BaseVMCreate {
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super(instructions);
+			/**@type {VMBoxed[]} */
 			this.stack=[];
 			this.return_value = void 0;
 		}
@@ -1180,13 +1493,17 @@
 			this.stack.length = 0;
 			this.return_value = void 0;
 		}
+		/**@arg {VMBoxed} value */
 		push(value) {
 			this.stack.push(value);
 		}
+		/**@return {VMBoxed} */
 		pop() {
 			return this.stack.pop();
 		}
+		/**@type {(v:number)} @returns {VMBoxed[]} */
 		pop_arg_count(operand_number_of_arguments){
+			/**@type {VMBoxed[]} */
 			let arguments_arr=[];
 			let arg_count=operand_number_of_arguments;
 			for(let i = 0; i < arg_count; i++) {
@@ -1197,6 +1514,7 @@
 			}
 			return arguments_arr;
 		}
+		/**@arg {InstructionType[0]} cur_opcode @arg {AnyInstructionOperands} operands */
 		execute_instruction_raw(cur_opcode, operands){
 			switch(cur_opcode) {
 				case 'push'/*Stack*/: {
@@ -1248,6 +1566,7 @@
 		}
 	}
 	class SimpleStackVM extends BaseStackVM {
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super(instructions);
 			this.args_vec=null;
@@ -1256,6 +1575,7 @@
 			super.reset();
 			this.args_vec=null;
 		}
+		/**@arg {InstructionType[0]} cur_opcode */
 		execute_instruction_raw(cur_opcode, operands) {
 			switch(cur_opcode) {
 				case 'this'/*Special*/:this.push(this);break;
@@ -1391,6 +1711,7 @@
 	}
 	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
 	class EventHandlerVMDispatch extends SimpleStackVM {
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions, target_obj) {
 			super(instructions);
 			this.target_obj = target_obj;
@@ -1977,12 +2298,15 @@
 		}
 
 	}
+	/**@typedef {import("./SimpleVMTypes.js").AnyInstructionOperands} AnyInstructionOperands */
 	class DomBuilderVM extends BaseStackVM {
 		constructor(instructions) {
 			super(instructions);
+			/**@type {[VMBoxed[], InstructionType[]][]} */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
+		/**@arg {InstructionType[0]} cur_opcode @arg {AnyInstructionOperands} operands */
 		execute_instruction_raw(cur_opcode, operands){
 			l_log_if(LOG_LEVEL_VERBOSE, cur_opcode, ...operands, null);
 			switch(cur_opcode) {
@@ -2161,10 +2485,15 @@
 			this.dom_pre_init();
 		}
 		async async_pre_init(){
+			is_in_ignored_from_src_fn=true;
 			try{
-				await this.background_audio.play();
+				let promise=this.background_audio.play();
+				is_in_ignored_from_src_fn=false;
+				await promise;
+				is_in_ignored_from_src_fn=true;
 				return;
 			}catch(e){
+				is_in_ignored_from_src_fn=true;
 				console.log("failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
 			let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(`
@@ -2182,6 +2511,7 @@
 			`, [function(){console.log('play success')}, function(err){console.log(err)}]);
 			let handler=new EventHandlerVMDispatch(instructions, this);
 			globalThis.addEventListener('click', handler);
+			is_in_ignored_from_src_fn=false;
 		}
 		save_state_history_arr(){
 			if(this.skip_save)return;
