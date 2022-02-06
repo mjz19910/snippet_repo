@@ -66,6 +66,29 @@
 			repeating:"clearInterval"
 		}
 	}
+	function find_all_scripts_using_string_apis(){
+		let scripts=new WeakSet;
+		let scripts_keys=[];
+		let scripts_weak_arr=[];
+		let script_registry
+		String.prototype.indexOf=new Proxy(String.prototype.indexOf, {
+			apply(...a){
+				let had_script=scripts.has(document.currentScript);
+				if(!had_script){
+					scripts.add(document.currentScript);
+					script_registry.register(theObject, "some value", tokenObject);
+				}
+				if(!had_script){
+					console.log(document.currentScript);
+					debugger;
+				}
+			}
+		});
+		script_registry=new FinalizationRegistry(function cleanup(key){});
+		debugger;
+		return scripts_weak_arr;
+	}
+	const weak_scripts=find_all_scripts_using_string_apis();
 	class DocumentWriteList {
 		constructor(){
 			this.list=[];
@@ -245,7 +268,8 @@
 				this.base_id=globalThis[this.m_api_info.set_names.single](nop_fn);
 				globalThis[this.m_api_info.clear_names.single](this.base_id);
 			}
-			fire(remote_id){
+			fire(remote_id) {
+				debugger;
 				let local_state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!local_state)return;
 				this.validate_state(local_state, remote_id);
@@ -270,6 +294,7 @@
 				});
 			}
 			set(tag, remote_id, timeout){
+				debugger;
 				this.verify_tag(tag);
 				let obj={
 					active:true,
@@ -473,16 +498,6 @@
 					return;
 				}
 				switch (msg.t) {
-					case 401:
-					case 402/*worker_state dispatch_message_unpacked*/:{
-						debugger;
-						worker_state.dispatch_message(msg);
-						break;
-					}
-					case 500/*worker_state dispatch_message*/:{
-						worker_state.dispatch_message(msg.v);
-						break;
-					}
 					case 101/*worker_state.timer single fire*/:{
 						worker_state.timer.fire(TIMER_SINGLE, msg.v);
 						break;
@@ -494,6 +509,16 @@
 					case 300/*worker_state destroy*/:
 						worker_state.destroy();
 						break;
+					case 401:
+					case 402/*worker_state dispatch_message_unpacked*/:{
+						debugger;
+						worker_state.dispatch_message(msg);
+						break;
+					}
+					case 500/*worker_state dispatch_message*/:{
+						worker_state.dispatch_message(msg.v);
+						break;
+					}
 					default:{
 						console.assert(false, "Main: Unhandled message", msg);
 						debugger;
@@ -502,6 +527,7 @@
 				}
 			};
 			this.valid=true;
+			debugger;
 			this.worker.postMessage({
 				t: 202
 			});
@@ -529,26 +555,30 @@
 			}
 		}
 		dispatch_message(result) {
-			let msg_type=result;
+			let msg_type;
 			let msg_data=null;
-			if(typeof msg_type === 'object'){
-				msg_type=msg_type.t;
-				msg_data=msg_type.v;
+			if(typeof result === 'object'){
+				msg_type=result.t;
+				msg_data=result.v;
+			} else {
+				msg_type=result;
 			}
+			debugger;
 			switch(msg_type) {
 				case 301:
 				case 302:
 				case 401:{
-					this.on_result(result.v);
+					this.on_result(msg_type, msg_data);
 				} break;
 				case 402:{
-					this.timer.on_result(result.v);
+					this.timer.on_result(msg_type, msg_data);
 				} break;
 				case 303:
 				case 304:
+				case 305:
 				case 306:
 					{
-						this.timer.on_reply(result);
+						this.timer.on_reply(msg_type, msg_data);
 					} break;
 				default:{
 					console.assert(false, "unhandled result", result);
@@ -747,9 +777,10 @@
 		remote_id_to_state_entries(){
 			return this.m_remote_id_to_state_map.entries();
 		}
-		on_result(timer_result_msg){
-			let timer_result_msg_id=timer_result_msg.t;
-			switch(timer_result_msg_id){
+		on_result(type, data) {
+			console.log(type, data);
+			debugger;
+			switch(0){
 				case 205:{
 					let remote_id=timer_result_msg.v;
 					this.delete_state_by_remote_id(remote_id);
