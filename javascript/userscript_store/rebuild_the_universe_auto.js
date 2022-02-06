@@ -77,26 +77,73 @@
 			{t:500, v:{t:304, v:{var:'local_id'}}},
 		];
 	}
+	class ScriptStateHost {
+		static event_target={
+			fns:[],
+			addEventListener(fn){
+				this.fns.push(fn);
+			},
+			dispatchEvent(ev){
+				let lfns=this.fns.slice();
+				for(let i=0;i<lfns.length;i++){
+					let fn=lfns[i];
+					fn(ev);
+				}
+			}
+		}
+	}
 	function find_all_scripts_using_string_apis(){
 		let scripts=new WeakSet;
-		let scripts_keys=[];
+		let scripts_holders=[];
+		let scripts_tokens=[];
 		let scripts_weak_arr=[];
-		let script_registry
+		let script_registry;
+		let script_id=1;
+		let is_in_userscript=true;
+		ScriptStateHost.event_target.addEventListener(e=>{
+			is_in_userscript=false;
+		})
 		String.prototype.indexOf=new Proxy(String.prototype.indexOf, {
 			apply(...a){
+				if(document.currentScript === null){
+					if(!is_in_userscript)throw new Error("No");
+					// a userscript is running
+					return;
+				}
 				let had_script=scripts.has(document.currentScript);
 				if(!had_script){
 					scripts.add(document.currentScript);
-					script_registry.register(theObject, "some value", tokenObject);
+					let held_obj={
+						type:'held',
+						id:script_id,
+						key:Symbol(script_id)
+					};
+					let token_sym={token:Symbol(-script_id)};
+					let object_to_register=document.currentScript;
+					scripts_holders.push(held_obj);
+					scripts_tokens.push({key:held_obj.key, ref:new WeakRef(token_sym)});
+					scripts_weak_arr.push({key:held_obj.key, ref:new WeakRef(object_to_register)})
+					script_registry.register(object_to_register, held_obj, token_sym);
+					script_id++;
 				}
 				if(!had_script){
 					console.log(document.currentScript);
-					debugger;
+					// debugger;
 				}
 			}
 		});
-		script_registry=new FinalizationRegistry(function cleanup(key){});
-		debugger;
+		script_registry=new FinalizationRegistry(function cleanup(held){
+			let arr_key=held.arr_key;
+			let weak_state_index=scripts_weak_arr.findIndex(e=>e.key === arr_key);
+			let token_index=scripts_tokens.findIndex(e=>e.key === arr_key);
+			let token=null;
+			let weak_state=null;
+			if(token_index > -1)token=scripts_tokens[token_index];
+			if(weak_state_index > -1)weak_state=scripts_weak_arr[weak_state_index];
+			console.log('gc', index, arr_key, token, weak_state);
+			scripts_weak_arr[weak_state_index]=null;
+			scripts_tokens[token_index]=null;
+		});
 		return scripts_weak_arr;
 	}
 	const weak_scripts=find_all_scripts_using_string_apis();
@@ -323,9 +370,7 @@
 				obj.local_id=globalThis[api_name](fire_timer, timeout, this, remote_id);
 				return obj.local_id;
 			}
-			// If you cause any side effects, please
-			// wrap this call in try{}finally{} and
-			// revert all side effects...
+			// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
 			verify_tag(tag){
 				if(!this.validate_tag(tag)){
 					throw new Error("tag verification failed in RemoteTimer");
@@ -398,6 +443,7 @@
 					debugger;
 				} break;
 				case 201/*remote worker init*/:{
+					debugger;
 					let user_msg=msg.v;
 					let worker_str="()"[0];
 					worker_str+=user_msg.init;
@@ -420,6 +466,7 @@
 					});
 				} break;
 				case 202/**/:{
+					// debugger;
 					postMessage({
 						t:reply_message_types.from_remote,
 						v:{
@@ -429,6 +476,7 @@
 					});
 				} break;
 				case 203/*remote timer set single*/:{
+					// debugger;
 					let user_msg=msg.v;
 					let local_id = remote_worker_state.set(TIMER_SINGLE, user_msg.t, user_msg.v);
 					postMessage({
@@ -440,6 +488,7 @@
 					});
 				} break;
 				case 204/*remote timer set repeating*/:{
+					// debugger;
 					let user_msg=msg.v;
 					let local_id = remote_worker_state.set(TIMER_REPEATING, user_msg.t, user_msg.v);
 					postMessage({
@@ -451,6 +500,7 @@
 					});
 				} break;
 				case 205/*remote timer do_clear single*/:{
+					debugger;
 					remote_worker_state.clear(msg);
 					postMessage({
 						t:reply_message_types.from_remote,
@@ -458,6 +508,7 @@
 					});
 				} break;
 				case 206/*remote timer do_clear repeating*/:{
+					debugger;
 					remote_worker_state.clear(msg);
 					postMessage({
 						t:reply_message_types.from_remote,
@@ -3179,5 +3230,6 @@
 		document.stop=function(){};
 	}
 	main();
+	ScriptStateHost.event_target.dispatchEvent({type:'userscript', state:'done'});
 	// Your code here...
 })();
