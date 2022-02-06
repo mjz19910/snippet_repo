@@ -1923,27 +1923,33 @@
 						throw new Error('stack underflow');
 					}
 					let child_to_append=this.pop();
-					if(!target.type){
-						throw new Error("target element is invalid (wrong type)");
+					this.verify_dom_box(target);
+					this.verify_dom_box(child_to_append);
+					if(child_to_append.from !== 'create'){
+						console.warn('Are you sure you want to move elements around? child_to_append was not an element you created', child_to_append);
 					}
-					let target_element=this.unbox_dom_value(target);
-					if(target.from !== 'get'){
-						console.log('dom_from', target.from);
-						throw new Error("target element is invalid (from is not 'get')");
+					if(this.can_use_box(target) && this.can_use_box(child_to_append)){
+						if(target.value && child_to_append.value){
+							target.value.appendChild(child_to_append.value);
+						} else {
+							console.assert(false, 'box has no value');
+						}
+					} else {
+						console.warn('not using box');
 					}
-					let child_to_append_element=this.unbox_dom_value(child_to_append);
-					target_element.appendChild(child_to_append_element);
 					l_log_if(LOG_LEVEL_VERBOSE, 'append to dom', [target, child_to_append]);
 				} break;
 				default/*Debug*/:super.execute_instruction_raw(cur_opcode, operands);break;
 			}
 		}
-		unbox_dom_value(box){
+		can_use_box(box){
+			return box.from === 'get' || box.from === 'create';
+		}
+		verify_dom_box(box){
 			if(box.type===void 0)throw new Error("Invalid Box (no type)");
 			if(box.type != 'DomValueBox')throw new Error("Unbox failed not a DomValueBox");
-			if(typeof box.from == 'string')throw new Error("Unbox failed Box.from is not a string");
+			if(typeof box.from != 'string')throw new Error("Unbox failed Box.from is not a string");
 			if(typeof box.value != 'object')throw new Error("Unbox failed: Box is not boxing an object");
-			return box.value;
 		}
 		run() {
 			this.running = true;
@@ -1985,6 +1991,7 @@
 			return data.split(",");
 		}
 		load_int_arr(key, def_value){
+			debugger;
 			let storage_data=this.store.getItem(key);
 			if(storage_data === null)return this.create_default(def_value);
 			return this.parse_int_arr(storage_data);
@@ -2047,6 +2054,7 @@
 					src.copyWithin(data_len);
 					data_len*=2;
 				}
+				return src;
 			});
 		}
 		pre_init(){
