@@ -162,14 +162,17 @@ class DocumentWriteList {
 		this.document_write_proxy = new Proxy(document.write, proxy_for_write);
 		if(this.document_write_proxy) document.write = this.document_write_proxy;
 	}
-	document_write?;
-	attached_document?;
+	attach_proxy(document:Document){
+		throw new Error("Not yet implemented")
+	}
+	document_write: ((...text: string[]) => void) | null;
+	attached_document:Document | null;
 	write(target: (...text: string[]) => void, thisArg: any, argArray: string[]) {
 		console.assert(target === this.document_write);
 		console.assert(thisArg === this.attached_document);
 		this.list.push(argArray, null);
 	}
-	document_write_proxy?;
+	document_write_proxy:((...text: string[]) => void) | null;
 	destroy(should_try_to_destroy: boolean) {
 		if(this.attached_document && this.document_write_proxy) {
 			console.assert(this.attached_document.write === this.document_write_proxy);
@@ -184,13 +187,13 @@ class DocumentWriteList {
 			}
 		}
 		if(this.document_write_proxy) {
-			this.document_write_proxy = void 0;
+			this.document_write_proxy = null;
 		}
 		if(this.document_write) {
-			this.document_write = void 0;
+			this.document_write = null;
 		}
 		if(this.attached_document) {
-			this.attached_document = void 0;
+			this.attached_document = null;
 		}
 		if(should_try_to_destroy) {
 			return true;
@@ -632,7 +635,6 @@ declare global {
 		//spell:words totalAtome lightreset totalAchi _targets_achi
 		totalAtome: number;
 		prestige: number;
-		g_auto_buy: AutoBuy;
 		__testing__: false;
 		bonusAll(): void;
 		allspec: SpecType[];
@@ -656,7 +658,7 @@ declare global {
 		noti: boolean;
 		gritter: any;
 		toTitleCase(v: string): string;
-		cint_arr: string[];
+		cint_arr: (string | number[])[];
 		//spell:words adsbygoogle
 		adsbygoogle: {
 			op: any,
@@ -853,14 +855,14 @@ class WorkerState {
 		worker_state_value.destroy();
 	}
 
-	static get_global_state() {
-		return window[this.global_state_key];
+	static get_global_state():WorkerState {
+		return (<any>window)[this.global_state_key];
 	}
 	static set_global_state(worker_state_value: WorkerState) {
-		window[this.global_state_key] = worker_state_value;
+		(<any>window)[<any>this.global_state_key] = worker_state_value;
 	}
 	static delete_global_state() {
-		delete window[this.global_state_key];
+		delete window[<any>this.global_state_key];
 	}
 	static get global_state_key(): "g_worker_state" {
 		return "g_worker_state";
@@ -1375,8 +1377,8 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 }
-import {InstructionType, VMBoxedAnySafe, VMValue} from "./types/SimpleVMTypes";
-class SimpleStackVM {
+import {InstructionType, StackVM, VMBoxedArray, VMBoxedCallableIndexed, VMBoxedGlobalThis, VMBoxedKeyedObject, VMBoxedStackVM, VMBoxedWindow, VMValue} from "./types/SimpleVMTypes";
+class SimpleStackVM implements StackVM {
 	instructions: InstructionType[];
 	stack: VMValue[];
 	instruction_pointer: number;
@@ -1401,7 +1403,7 @@ class SimpleStackVM {
 	pop() {
 		return this.stack.pop();
 	}
-	run(...run_arguments: any[]) {
+	run(...run_arguments: VMValue[]) {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let cur_instruction = this.instructions[this.instruction_pointer];
@@ -1424,8 +1426,8 @@ class SimpleStackVM {
 					if(!name)throw new Error("Invalid");
 					let obj = this.pop();
 					if(!obj)throw new Error("Invalid");
-					if(obj instanceof VMBoxedAnySafe && typeof name === 'string'){
-						this.push(obj.do_get(name));
+					if(obj instanceof VMBoxedKeyedObject && typeof name === 'string'){
+						this.push(obj.value[name]);
 					}
 					break;
 				}
@@ -1434,6 +1436,7 @@ class SimpleStackVM {
 					if(number_of_arguments === void 0){
 						throw new Error("Invalid call operand");
 					}
+					if(typeof number_of_arguments != 'number')throw new Error("Invalid");
 					let arg_arr = [];
 					for(let i = 0;i < number_of_arguments;i++) {
 						arg_arr.unshift(this.pop());
@@ -1442,10 +1445,8 @@ class SimpleStackVM {
 					let target = this.pop();
 					if(!target)throw "Bad";
 					if(!name_to_call)throw "Bad";
-					if(target instanceof VMBoxedAnySafe && typeof name_to_call==='string'){
-						let boxed_arr=VMBoxedAnySafe.box_array(arg_arr);
-						debugger;
-						let ret = target.do_get(name_to_call).do_call(...boxed_arr);
+					if(target instanceof VMBoxedCallableIndexed && typeof name_to_call==='string'){
+						let ret = target.value[name_to_call](...arg_arr);
 						this.push(ret);
 					}
 					break;
@@ -1460,16 +1461,16 @@ class SimpleStackVM {
 					break;
 				}
 				case 'push_args'/*Special*/: {
-					this.push(new VMBoxedAnySafe(run_arguments));
+					this.push(new VMBoxedArray(run_arguments));
 					break;
 				}
 				case 'this'/*Special*/: {
-					this.push(new VMBoxedAnySafe(this));
+					this.push(new VMBoxedStackVM(this));
 					break;
 				}
 				case 'global'/*Special*/: {
-					if(window) this.push(new VMBoxedAnySafe(window));
-					else this.push(new VMBoxedAnySafe(globalThis));
+					if(window) this.push(new VMBoxedWindow(window));
+					else this.push(new VMBoxedGlobalThis(globalThis));
 					break;
 				}
 				case 'breakpoint'/*Debug*/: {
@@ -1946,6 +1947,7 @@ export class AutoBuy {
 	compressor: MulCompression;
 	epoch_start_time: number;
 	root_node: AsyncNodeRoot;
+	original_map: any;
 	constructor() {
 		this.root_node = new AsyncNodeRoot;
 		this.delay = 0;
@@ -2084,8 +2086,8 @@ export class AutoBuy {
 		});
 	}
 	global_init() {
-		if(window.g_auto_buy && window.g_auto_buy !== this) window.g_auto_buy.destroy();
-		window.g_auto_buy = this;
+		if(window.g_auto_buy && (<any>window).g_auto_buy !== this) window.g_auto_buy.destroy();
+		(<any>window).g_auto_buy = this;
 	}
 	destroy() {
 		for(let i = 0;i < this.cint_arr.length;i += 2) {

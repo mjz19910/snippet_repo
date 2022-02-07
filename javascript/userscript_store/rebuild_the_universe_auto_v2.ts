@@ -1,5 +1,5 @@
 import {RecursivePartial} from "./types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMBoxedCallableFunction, VMBoxedKeyedObject, VMBoxedNewableFunction, VMBoxedValue, VMValue, VMValueToCall} from "./types/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMBoxedValue, VMValue, VMBoxedCallableIndexed} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
 
@@ -36,7 +36,7 @@ declare global {
 		noti: boolean;
 		gritter: any;
 		toTitleCase(v: string): string;
-		cint_arr: string[];
+		cint_arr: (string | number[])[];
 		//spell:words adsbygoogle
 		adsbygoogle: {
 			op: any,
@@ -60,11 +60,17 @@ declare global {
 		da: any[];
 		lightreset(): void;
 		specialclick(that: any): void;
+		secondinterval:number;
+		atomsaccu:number;
+		calcPres():number;
+		g_auto_buy:AutoBuy;
+		g_proxy_state: {hand: {stack_overflow_check: () => any; count_arr: any[];};};
 	}
 	export var Window: {
 		prototype: Window;
 		new(): Window;
 	};
+	var window: Window & typeof globalThis;
 	module globalThis {
 		var remote_worker_state: RemoteWorkerState;
 	}
@@ -93,7 +99,7 @@ const TIMER_SINGLE = 1;
 const TIMER_REPEATING = 2;
 const TIMER_TAG_COUNT = 3;
 const AUDIO_ELEMENT_VOLUME = 0.58;
-const cint_arr: string[] | number[][] = [];
+const cint_arr: string[] = [];
 //spell:disable
 const RTUH = 301;
 const RTR = 302;
@@ -210,12 +216,12 @@ type TimerMessageTypes = {
 	worker: TimeoutWorkerTypes;
 };
 
-type TASN = {
+type TimeoutSetStrings = {
 	single: "setTimeout";
 	repeating: "setInterval";
 };
 
-type TACN = {
+type TimeoutClearStrings = {
 	single: "clearTimeout";
 	repeating: "clearInterval";
 };
@@ -266,11 +272,11 @@ class MakeReplyType {
 class TimerApi {
 	msg_types: TimerMessageTypes = this.make_message_types()
 	//spell:enable
-	set_names: TASN = {
+	set_names: TimeoutSetStrings = {
 		single: "setTimeout",
 		repeating: "setInterval"
 	}
-	clear_names: TACN = {
+	clear_names: TimeoutClearStrings = {
 		single: "clearTimeout",
 		repeating: "clearInterval"
 	};
@@ -380,8 +386,7 @@ class ScriptStateHost {
 let is_in_ignored_from_src_fn = false;
 let is_in_userscript_fn = false;
 let is_in_userscript = true;
-/**@type {CallableFunction | NewableFunction} */
-let cur_event_fns: any[] = [];
+let cur_event_fns: (CallableFunction | NewableFunction)[] = [];
 function find_all_scripts_using_string_apis():
 	[typeof scripts_weak_arr, typeof register_obj_with_registry] {
 	let scripts = new WeakSet;
@@ -604,7 +609,16 @@ function find_all_scripts_using_string_apis():
 	return [scripts_weak_arr, register_obj_with_registry];
 }
 void find_all_scripts_using_string_apis;
+type AnyFunction = CallableFunction | NewableFunction;
+type RegIdFunction={reg_id:number} & AnyFunction;
+function has_reg_id(v:AnyFunction): v is RegIdFunction {
+	if((v as Object).hasOwnProperty('reg_id')){
+		return true;
+	}
+	return false;
+}
 const [weak_scripts, register_obj_with_registry] = find_all_scripts_using_string_apis();
+void register_obj_with_registry;
 function get_nearest_script() {
 	if(document.currentScript !== null) {
 		return document.currentScript;
@@ -614,6 +628,8 @@ function get_nearest_script() {
 		cur_event_fns.pop();
 	}
 	let script_ghost = cur_event_fns.at(-1);
+	if(!script_ghost)return null;
+	if(has_reg_id(script_ghost))
 	if(script_ghost && weak_scripts[script_ghost.reg_id - 1]) {
 		let reg = weak_scripts[script_ghost.reg_id - 1];
 		if(reg && reg.ref.deref()) {
@@ -625,12 +641,13 @@ function get_nearest_script() {
 	if(cur_script === void 0 && !is_in_userscript && !is_in_userscript_fn && !is_in_ignored_from_src_fn) {
 		debugger;
 	}
-	if(cur_event_fns.at(-1) && weak_scripts[cur_event_fns.at(-1).reg_id - 1]?.ref?.deref?.()) {
-		return weak_scripts[cur_event_fns.at(-1).reg_id - 1]?.ref?.deref?.();
+	script_ghost=cur_event_fns.at(-1);
+	if(script_ghost)if(has_reg_id(script_ghost))if(weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.()) {
+		return weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.();
 	};
 	let doc_script = document.currentScript;
 	if(doc_script === null) {
-		return;
+		return null;
 	} else {
 		return doc_script;
 	}
@@ -649,10 +666,10 @@ class DocumentWriteList {
 	}
 	document_write: ((...text: string[]) => void) | null;
 	attached_document: Document | null;
-	write(args_spread: any[]) {
-		console.assert(args_spread[0] === this.document_write);
-		console.assert(args_spread[1] === this.attached_document);
-		this.list.push(args_spread[2], null);
+	write(target: (...text: string[]) => void, thisArg: any, argArray: string[]) {
+		console.assert(target === this.document_write);
+		console.assert(thisArg === this.attached_document);
+		this.list.push(argArray, null);
 	}
 	document_write_proxy: {(...text: string[]): void; (...text: string[]): void;} | null;
 	/**@arg {Document} document */
@@ -1276,7 +1293,6 @@ class v2 {
 	v = 2;
 }
 type TimerTag = 1 | 2;
-/**@typedef {(v1|v2)['v']} TimerTag */
 class TimerState {
 	active;
 	type;
@@ -1284,15 +1300,12 @@ class TimerState {
 	target_fn;
 	target_args;
 	timeout;
-	constructor(tag: TimerTag, is_repeating: boolean, target_fn: any, target_args: any, timeout: any) {
+	constructor(tag: TimerTag, is_repeating: boolean, target_fn: TimerHandler, target_args: any[], timeout: number) {
 		this.active = true;
 		this.type = tag;
-		/**@type {boolean} */
 		this.repeat = is_repeating;
-		/**@type {TimerHandler} */
 		this.target_fn = target_fn
 		this.target_args = target_args;
-		/**@type {number} */
 		this.timeout = timeout;
 	}
 }
@@ -1303,15 +1316,11 @@ class Timer {
 	m_api_info: TimerApi;
 	weak_worker_state: WeakRef<WorkerState> | null;
 	m_remote_id_to_state_map: Map<number | string, TimerState>;
-	/**@arg {TimerApi} api_info */
 	constructor(id_generator: UniqueIdGenerator, api_info: TimerApi) {
 		this.id_generator = id_generator;
-		/**@type {Map<number|string, TimerState>} */
 		this.m_remote_id_to_state_map = new Map;
-		/**@type {import("./types/weak_ref.js").WeakRef<WorkerState>} */
 		this.weak_worker_state = null;
 		this.m_api_map = new Map;
-		/**@type {TimerApi} */
 		this.m_api_info = api_info;
 		this.set_api_names(api_info.set_names, api_info.clear_names)
 	}
@@ -1334,12 +1343,12 @@ class Timer {
 	// wrap this call in try{}finally{} and
 	// revert all side effects...
 	/**@arg {TimerTag} tag */
-	verify_tag(tag: any) {
+	verify_tag(tag: TimerTag) {
 		if(!this.validate_tag(tag)) {
 			throw new Error("Verify failed in Timer.verify_tag");
 		}
 	}
-	verify_state(state: any, remote_id: any) {
+	verify_state(state: any, remote_id: number) {
 		if(!this.weak_worker_state) return;
 		if(!this.validate_state(state)) {
 			let worker_state = this.weak_worker_state.deref();
@@ -1351,8 +1360,7 @@ class Timer {
 			throw new Error("Verify failed in Timer.verify_timer_state");
 		}
 	}
-	/**@arg {TimerTag} tag */
-	validate_tag(tag: number) {
+	validate_tag(tag: TimerTag) {
 		if(tag != TIMER_SINGLE && tag != TIMER_REPEATING) {
 			console.assert(false, "Assertion failure in Timer.validate_tag: tag=%o is out of range");
 			console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", tag, TIMER_SINGLE, TIMER_TAG_COUNT);
@@ -1360,11 +1368,10 @@ class Timer {
 		}
 		return true;
 	}
-	validate_state(state: {type: any;}) {
+	validate_state(state: any) {
 		return this.validate_tag(state.type);
 	}
-	/**@arg {TimerTag} tag */
-	fire(tag: number, remote_id: any) {
+	fire(tag: TimerTag, remote_id: any) {
 		let state = this.get_state_by_remote_id(remote_id);
 		if(!state) {
 			this.force_clear(tag, remote_id);
@@ -1373,11 +1380,12 @@ class Timer {
 		if(!this.weak_worker_state) return;
 		let should_reset_user_fn = false;
 		let should_reset_ign = false;
-		cur_event_fns.push(state.target_fn);
-		let idx = cur_event_fns.indexOf(state.target_fn);
+		if(typeof state.target_fn != 'string')cur_event_fns.push(state.target_fn);
+		let idx = -1;
+		if(typeof state.target_fn != 'string')cur_event_fns.indexOf(state.target_fn);
 		try {
-			a: if(state.active) {
-				if(state.target_fn.is_userscript_fn) {
+			if(state.active) {
+				if((<any>state.target_fn).is_userscript_fn) {
 					if(is_in_ignored_from_src_fn === false) {
 						is_in_ignored_from_src_fn = true;
 						should_reset_ign = true;
@@ -1387,7 +1395,13 @@ class Timer {
 						should_reset_user_fn = true;
 					}
 				}
-				state.target_fn.apply(null, state.target_args);
+				if(state.target_fn instanceof Function){
+					state.target_fn.apply(null, state.target_args);
+				} else {
+					let fn=new Function(state.target_fn);
+					state.target_fn=fn;
+					state.target_fn.apply(null, state.target_args);
+				}
 			}
 		} finally {
 			if(should_reset_ign) is_in_ignored_from_src_fn = false;
@@ -1421,15 +1435,7 @@ class Timer {
 			}
 		}
 		if(timeout < 0) timeout = 0;
-		let state2 = new TimerState(tag, is_repeating, target_fn, target_args, timeout);
-		let state = {
-			active: true,
-			type: tag,
-			repeat: is_repeating,
-			target_fn,
-			target_args,
-			timeout
-		};
+		let state = new TimerState(tag, is_repeating, target_fn, target_args, timeout);
 		if(is_in_userscript) {
 			(<any>target_fn).is_userscript_fn = true;
 		}
@@ -1539,7 +1545,7 @@ class Timer {
 				debugger;
 		}
 	}
-	force_clear(tag: number, remote_id: any) {
+	force_clear(tag: TimerTag, remote_id: number) {
 		if(!this.weak_worker_state) return;
 		this.verify_tag(tag);
 		let worker_state = this.weak_worker_state.deref();
@@ -1598,7 +1604,11 @@ class Timer {
 			if(state.type === TIMER_SINGLE) {
 				// if the timer might get reset when calling the function while
 				// the timer functions are reset to the underlying api
-				state.target_fn.apply(null, state.target_args);
+				if(state.target_fn instanceof Function){
+					state.target_fn.apply(null, state.target_args);
+				} else {
+					eval(state.target_fn);
+				}
 			}
 		}
 		this.m_api_map.clear();
@@ -1774,18 +1784,18 @@ function remove_bad_dom_script_element_callback(e: HTMLScriptElement) {
 function remove_bad_dom_script_element() {
 	Array.prototype.forEach.call(document.querySelectorAll("script"), remove_bad_dom_script_element_callback);
 };
-type ObjIndex<T> = {
-	[x: string]: (v: T) => void;
-};
 class EventHandlerDispatch<T> {
-	target_obj: ObjIndex<T>;
-	target_name;
-	constructor(target_obj: ObjIndex<T>, target_name: string) {
+	target_obj: T;
+	target_fn;
+	constructor(target_obj: T, target_fn: (this: T, args_0: Event) => void) {
 		this.target_obj = target_obj;
-		this.target_name = target_name;
+		this.target_fn = target_fn;
 	}
-	handleEvent(event: T) {
-		this.target_obj[this.target_name](event);
+	do_handle_event(event: Event) {
+		this.target_fn.call(this.target_obj, event);
+	}
+	handleEvent(v:Event){
+		this.do_handle_event(v);
 	}
 }
 abstract class AbstractVM {
@@ -2004,7 +2014,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 				let number_of_arguments = operands[0];
 				let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 				if(typeof target_name == 'string') {
-					if(target_obj instanceof VMValueToCall) {
+					if(target_obj instanceof VMBoxedCallableIndexed) {
 						let ret = target_obj.value[target_name](...arg_arr);
 						this.push(ret);
 					}
@@ -2113,13 +2123,11 @@ class SimpleStackVMParser {
 				throw new Error("Unexpected opcode");
 		}
 	}
-	/*@arg {string[][]} raw_instructions @ret {InstructionType[]}*/
 	static verify_raw_instructions(raw_instructions: string[][]): InstructionType[] {
-		/**@type{InstructionType[]}*/
-		const instructions = [];
+		const instructions:InstructionType[] = [];
 		for(let i = 0;i < raw_instructions.length;i++) {
 			const instruction = raw_instructions[i];
-				/*@type {[number]}*/const left: [number] = [instruction.length];
+				const left: [number] = [instruction.length];
 			const valid_instruction = this.verify_instruction(instruction, left);
 			instructions.push(valid_instruction);
 			if(left[0] > 0) throw new Error("Typechecking failure, data left when processing raw instruction stream");
@@ -2385,15 +2393,26 @@ class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 		return this.get_promise();
 	}
 }
+type BaseNodeParent = {
+	remove_child(v: BaseNode): void;
+};
+
 class BaseNode {
-	parent: {
-		remove_child(v: BaseNode): void;
-	} | null;
+	parent: BaseNodeParent | null;
 	constructor() {
 		this.parent = null;
 	}
+	set_parent(parent: BaseNodeParent | null) {
+		this.parent = parent;
+	}
+	remove() {
+		if(this.parent) this.parent.remove_child(this);
+	}
 	run() {
 		// do nothing
+	}
+	destroy(){
+		this.remove();
 	}
 }
 class BaseTimeoutNode extends BaseNode {
@@ -2405,21 +2424,14 @@ class BaseTimeoutNode extends BaseNode {
 	get_timeout() {
 		return this.timeout;
 	}
-	set_parent(parent: any) {
-		this.parent = parent;
-	}
-	remove() {
-		if(this.parent) this.parent.remove_child(this);
-	}
-	destroy() {
-		this.remove();
-	}
 }
 class TimeoutIdNode extends BaseTimeoutNode {
 	id: number | null;
-	constructor(id: number | null = null) {
+	m_is_timeout:boolean;
+	constructor(id: number | null = null, is_timeout_flag:boolean) {
 		super(null);
 		this.id = id;
+		this.m_is_timeout=is_timeout_flag;
 	}
 }
 class TimeoutNode extends BaseTimeoutNode {
@@ -2474,7 +2486,7 @@ class AsyncTimeoutNode extends TimeoutNode {
 		super.run();
 		if(this.target) this.target.fire();
 	}
-	start_async(target: {fire: () => void; wait: () => Promise<void>} | null) {
+	start_async(target: AsyncTimeoutTarget | null) {
 		if(target) {
 			this.target = target;
 			this.set();
@@ -2490,7 +2502,7 @@ type RecordType1 = {
 };
 
 class AsyncNodeRoot {
-	children: RecordType1[];
+	children: BaseNode[];
 	constructor() {
 		this.children = [];
 	}
@@ -2508,15 +2520,15 @@ class AsyncNodeRoot {
 			}
 		});
 	}
-	append_raw(timeout_id: number) {
-		this.append_child(new TimeoutIdNode(timeout_id));
+	append_raw(timeout_id: number, is_timeout_id:boolean) {
+		this.append_child(new TimeoutIdNode(timeout_id, is_timeout_id));
 	}
-	append_child(record: RecordType1): void {
+	append_child(record: BaseNode): void {
 		record.remove();
 		record.set_parent(this);
 		this.children.push(record);
 	}
-	remove_child(record: RecordType1) {
+	remove_child(record: BaseNode) {
 		let index = this.children.indexOf(record);
 		this.children.splice(index, 1);
 		record.set_parent(null);
@@ -2757,10 +2769,11 @@ class MiniDom {
 	}
 }
 const debug_id_gen = new UniqueIdGenerator;
-/**@type {WeakRef<number>}*/
-const debug_id_syms: WeakRef<{
-	sym: symbol
-}>[] = [];
+type SymbolRef = {
+	sym: symbol;
+};
+
+const debug_id_syms: WeakRef<SymbolRef>[] = [];
 function next_debug_id() {
 	const id = debug_id_gen.next();
 	const sym = Symbol(id);
@@ -2788,7 +2801,6 @@ class DomValueBox {
 	}
 
 }
-/**@typedef {import("./types/SimpleVMTypes.js").AnyInstructionOperands} AnyInstructionOperands */
 class DomBuilderVM extends BaseStackVM {
 	exec_stack: ([VMValue[], InstructionType[]])[];
 	jump_instruction_pointer: number | null;
@@ -2960,7 +2972,9 @@ class AutoBuy {
 	percent_ratio_element?: HTMLDivElement;
 	percent_ratio_change_element?: HTMLDivElement;
 	state_log_element?: HTMLDivElement;
-	state_history_arr_max_len: number;
+	state_history_arr_max_len: number | undefined;
+	last_value: number|undefined;
+	pre_total: any;
 	[v: symbol]: string;
 	async_compress() {
 		this.state_history_arr = this.compressor.compress_array(this.state_history_arr);
@@ -3301,7 +3315,7 @@ class AutoBuy {
 		// general init
 		this.state_history_arr_max_len = Math.floor(document.body.getClientRects()[0].width / (font_size_px * 0.55) / 2.1);
 		// dom element init; init history_element
-		this.history_element?.addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
+		this.history_element?.addEventListener('click', new EventHandlerDispatch(this, this.history_element_click_handler));
 		// init timeout_element
 		if(this.timeout_element) this.timeout_element.innerText = this.timeout_arr[0];
 		// init hours_played_element; init percent_ratio_element
@@ -3318,10 +3332,10 @@ class AutoBuy {
 	}
 	global_init() {
 		let cur_this: AutoBuy = this;
-		if(window.g_auto_buy && window.g_auto_buy !== cur_this) {
-			window.g_auto_buy.destroy();
+		if((window as any).g_auto_buy && (window as any).g_auto_buy !== cur_this) {
+			(window as any).g_auto_buy.destroy();
 		}
-		window.g_auto_buy = this;
+		(window as any).g_auto_buy = this;
 	}
 	destroy() {
 		this.root_node.destroy();
@@ -3341,8 +3355,13 @@ class AutoBuy {
 		}
 	}
 	update_dom() {
+		if(!this.hours_played_element)return;
+		if(!this.percent_ratio_element)return;
+		if(!this.percent_ratio_change_element)return;
+		if(!this.history_element)return;
+		if(!this.state_history_arr_max_len)return;
 		// spell:words timeplayed
-		this.hours_played_element.innerText = ((timeplayed / 30) / 60).toFixed(7) + " hours";
+		this.hours_played_element.innerText = ((window.timeplayed / 30) / 60).toFixed(7) + " hours";
 		let last_ratio = this.state.ratio * 100;
 		this.state.update();
 		let cur_ratio = this.state.ratio * 100;
@@ -3370,14 +3389,20 @@ class AutoBuy {
 			let time_diff = real_time - time_base;
 			time_base = real_time;
 			let real_rate = time_diff / (2300 - 300);
-			timeplayed += real_rate;
+			window.timeplayed += real_rate;
 		}, 66);
 		this.root_node.append_raw(setInterval(function() {
-			doc.title = rounding(totalAtome, false, 1).toString() + " atoms";
+			window.doc.title = window.rounding(totalAtome, false, 1).toString() + " atoms";
+			let atomsaccu=window.doc.getElementById('atomsaccu');
+			let timeplayed_e=window.doc.getElementById('timeplayed');
+			let presnbr_e=window.doc.getElementById('timeplayed');
+			if(!atomsaccu)return;
+			if(!timeplayed_e)return;
+			if(!presnbr_e)return;
 			//spell:words atomsaccu presnbr
-			doc.getElementById('atomsaccu').innerHTML = rounding(atomsaccu, false, 0);
-			doc.getElementById('timeplayed').innerHTML = (Math.round(timeplayed / 30) / 60).toFixed(2) + " hours";
-			doc.getElementById('presnbr').innerHTML = "<br>" + (calcPres() * 100).toFixed(0) + " % APS boost";
+			atomsaccu.innerHTML = window.rounding(window.atomsaccu, false, 0);
+			timeplayed_e.innerHTML = (Math.round(window.timeplayed / 30) / 60).toFixed(2) + " hours";
+			presnbr_e.innerHTML = "<br>" + (window.calcPres() * 100).toFixed(0) + " % APS boost";
 		}, (230 - 300)), false);
 	}
 	init_impl() {
@@ -3387,7 +3412,7 @@ class AutoBuy {
 		this.state.init();
 		this.update_dom();
 		this.main();
-		this.original_map.set('lightreset', lightreset);
+		this.original_map.set('lightreset', window.lightreset);
 		window.lightreset = lightreset_inject;
 		window.specialclick = specialclick_inject;
 		if(window.secondinterval) {
@@ -3462,13 +3487,19 @@ class AutoBuy {
 		for(this.iter_count = 0;;) {
 			if(this.iter_count < 6) await this.normal_decrease_async();
 			else await this.large_decrease_async();
-			let [quit, loss_rate] = this.maybe_async_reset();
+			let [quit, loss_rate] = await this.maybe_async_reset();
 			if(quit) return;
 			if(loss_rate > 0.08) continue;
 			if(this.pre_total == totalAtome) break;
 		}
 		if(Math.random() < 0.005) this.rare_begin();
 		else this.faster_timeout_use_async();
+	}
+	large_decrease_async(): Promise<void> {
+		throw new Error("Method not implemented.");
+	}
+	normal_decrease_async(): Promise<void> {
+		throw new Error("Method not implemented.");
 	}
 	step_iter_start() {
 		if(this.iter_count > 6) return this.large_decrease();
@@ -3483,6 +3514,9 @@ class AutoBuy {
 			await promise;
 		}
 		this.async_timeout_step_finish();
+	}
+	async_timeout_step(): Promise<void> {
+		throw new Error("Method not implemented.");
 	}
 	unit_promote_start() {
 		this.extra = this.calc_timeout_extra();
@@ -3562,19 +3596,20 @@ class AutoBuy {
 		let change = this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
 		this.update_timeout_inc(change * iter_term);
 	}
-	async next_timeout_async(timeout: number | undefined, char: string, silent = false) {
-		if(!silent && this.timeout_element) this.timeout_element.innerText = timeout;
+	async next_timeout_async(timeout: number, char: string, silent = false) {
+		if(!silent && this.timeout_element) this.timeout_element.innerText = timeout.toString();
 		this.state_history_append(char, silent);
 		let node = new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
-		let promise = node.start_async(new AsyncTimeoutTarget(char));
+		let att=new AsyncTimeoutTarget(char);
+		let promise = node.start_async(att);
 		await promise;
 	}
-	next_timeout(trg_fn: {(): void; (): void; (): void; (): void; (): void; (): void; (): void; (): Promise<void>; (): void; (): void; (): void; (): void; (): void; (): void; (): void; (): void; (): void; (): void;}, timeout: number | undefined, char: string, silent = false) {
+	next_timeout(trg_fn:CallableFunction, timeout: number, char: string, silent = false) {
 		let node = new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTarget(this, trg_fn, char));
-		if(!silent && this.timeout_element) this.timeout_element.innerText = timeout;
+		if(!silent && this.timeout_element) this.timeout_element.innerText = timeout.toString();
 		this.state_history_append(char, silent);
 	}
 	do_unit_promote() {
@@ -3584,7 +3619,7 @@ class AutoBuy {
 		this.next_timeout(this.main, this.extra, '$');
 	}
 	bonus() {
-		bonusAll();
+		window.bonusAll();
 		this.fast_unit();
 	}
 	special_timeout() {
@@ -3594,7 +3629,7 @@ class AutoBuy {
 		return !special_buyable.done && special_buyable.cost < totalAtome;
 	}
 	next_special() {
-		return allspec.findIndex(this.is_special_done);
+		return window.allspec.findIndex(this.is_special_done);
 	}
 	do_special() {
 		let ret = false;
@@ -3615,9 +3650,9 @@ class AutoBuy {
 	}
 	maybe_run_reset() {
 		let count = 0;
-		count += this.extra > 15 * 1000;
-		count += this.state.ratio > 1;
-		count += this.is_epoch_over();
+		count += (this.extra > 15 * 1000) as unknown as number;
+		count += this.state.ratio > 1 as unknown as number;
+		count += this.is_epoch_over() as unknown as number;
 		switch(count) {
 			case 0:
 			case 1: break;
@@ -3630,11 +3665,15 @@ class AutoBuy {
 		return false;
 	}
 	reset_timeout_init() {
-		this.background_audio.muted = !this.background_audio.muted;
+		if(this.background_audio){
+			this.background_audio.muted = !this.background_audio.muted;
+		}
 		this.next_timeout(this.reset_timeout_trigger, 60 * 2 * 1000, 'reset_timeout');
 	}
 	reset_timeout_trigger() {
-		this.background_audio.muted = !this.background_audio.muted;
+		if(this.background_audio){
+			this.background_audio.muted = !this.background_audio.muted;
+		}
 		this.next_timeout(this.reset_timeout_start, 60 * 2 * 1000, 'reset_timeout');
 	}
 	reset_timeout_start() {
@@ -3692,7 +3731,7 @@ function do_auto_unit_promote() {
 			}
 		}
 	}
-	res = out.lastIndexOf(true);
+	let res = out.lastIndexOf(true);
 	if(res < 0) return;
 	if(maxed[res]) {
 		for(var y = 0;y < 100;y++) {
@@ -3704,24 +3743,31 @@ function do_auto_unit_promote() {
 }
 const auto_buy_obj = new AutoBuy;
 class AsyncTrigger {
+	m_set_flag: boolean;
+	trigger_handler: null;
+	promise_set;
+	m_set_result!: (value: number) => void;
+	m_set_error!: (arg0: any) => void;
 	constructor() {
+		this.notify_promise=null;
+		this.m_set_flag = true;
+		this.trigger_handler = null;
+		this.m_can_notify=false;
 		let t = this;
-		t.m_set_flag = true;
-		t.trigger_handler = null;
-		this.promise_set = new Promise(function(accept, reject) {
-			t.m_set = accept;
+		this.promise_set = new Promise((accept, reject)=>{
+			t.m_set_result = accept;
 			t.m_set_error = reject;
 			t.m_set_flag = false;
 		});
 	}
-	set(cnt: any) {
-		if(!this.m_set_flag) {
-			this.m_set(cnt);
+	set(cnt: number) {
+		if(!this.m_set_flag && this.m_set_result) {
+			this.m_set_result(cnt);
 			this.m_set_flag = true;
 		}
 	}
 	set_error(opt_error: any) {
-		if(!this.m_set_flag) {
+		if(!this.m_set_flag && this.m_set_error) {
 			if(opt_error) this.m_set_error(opt_error);
 			else this.m_set_error(null);
 		}
@@ -3730,9 +3776,12 @@ class AsyncTrigger {
 		let ret = this.promise_set;
 		return ret;
 	}
+	m_can_notify:boolean;
+	m_notify_result!: ((value: void | PromiseLike<void>) => void);
+	m_notify_error!: (reason?: any) => void;
 	notify(cnt: any) {
 		if(this.m_can_notify) {
-			this.m_notify(cnt);
+			this.m_notify_result(cnt);
 			this.m_can_notify = false;
 		}
 	}
@@ -3742,42 +3791,14 @@ class AsyncTrigger {
 			this.m_can_notify = false;
 		}
 	}
+	notify_promise:Promise<void> | null;
 	async notified() {
 		let t = this;
 		this.notify_promise = new Promise(function(accept, reject) {
-			t.m_notify = accept;
+			t.m_notify_result = accept;
 			t.m_notify_error = reject;
 		});
 		this.m_can_notify = true;
-	}
-}
-class AsyncSemaphore {
-	constructor() {
-		this.notify_waiters_vec = [];
-		this.count = 0;
-	}
-	async inc(cnt: any) {
-		let wait_trigger = new AsyncTrigger;
-		while(this.count > 0) {
-			if(!this.notify_waiters_vec.includes(wait_trigger)) {
-				this.notify_waiters_vec.push(wait_trigger);
-			}
-			await wait_trigger.wait();
-			wait_trigger.notify(cnt);
-		}
-		this.count += cnt;
-	}
-	async dec(cnt: number) {
-		this.count -= cnt;
-		if(this.count <= 0) {
-			do {
-				let waiter = this.notify_waiters_vec.shift();
-				if(!waiter) break;
-				waiter.set(cnt);
-				let used_count = await waiter.notified();
-				cnt -= used_count;
-			} while(cnt > 0);
-		}
 	}
 }
 function map_to_tuple(this: any, e: any, i: string | number) {
@@ -3797,7 +3818,9 @@ function array_sample_end(arr: {(): any; new(): any; length: number;}[], rem_tar
 	arr = arr.slice(-300);
 	let rem_len = char_len_of(arr);
 	while(rem_len > rem_target_len) {
-		rem_len -= arr.shift().length + 1;
+		let cur=arr.shift();
+		if(!cur)break;
+		rem_len -= cur.length + 1;
 	}
 	return arr;
 }
@@ -3805,48 +3828,53 @@ function char_len_of(arr: any[]) {
 	return arr.reduce((a: any, b: string | any[]) => a + b.length, 0) + arr.length;
 }
 function lightreset_inject() {
-	g_auto_buy.state_history_clear_for_reset();
-	g_auto_buy.skip_save = true;
+	window.g_auto_buy.state_history_clear_for_reset();
+	window.g_auto_buy.skip_save = true;
 	window.addEventListener('unload', function() {
-		g_auto_buy.skip_save = false;
+		window.g_auto_buy.skip_save = false;
 		localStorage.auto_buy_timeout_str = "300,300,300,300";
 		localStorage.long_wait = (6000 * 2);
 	});
-	let original = g_auto_buy.original_map.get('lightreset');
+	let original = window.g_auto_buy.original_map.get('lightreset');
 	original();
 }
-function specialclick_inject(that: string | number) {
-	if(allspec[that].done == undefined) allspec[that].done = false;
-	if(allspec[that].cost <= totalAtome && allspec[that].done == false) {
-		doc.getElementById('specialsbought').innerText = rounding(++specialsbought, false, 0);
+function specialclick_inject(that: number) {
+	if(window.allspec[that].done == undefined) window.allspec[that].done = false;
+	if(window.allspec[that].cost <= totalAtome && window.allspec[that].done == false) {
+		let specialsbought_e=window.doc.getElementById('specialsbought');
+		let atomsinvest_e=window.doc.getElementById('atomsinvest');
+		if(!specialsbought_e || !atomsinvest_e)throw new Error("Invalid");
+		specialsbought_e.innerText = window.rounding(++window.specialsbought, false, 0);
 		if(that == 74) {
 		}
-		atomsinvest += allspec[that].cost;
-		doc.getElementById('atomsinvest').innerText = rounding(atomsinvest, false, 0);
-		allspec[that].done = true;
-		totalAtome -= allspec[that].cost;
-		var diff1 = calcDiff(that);
+		window.atomsinvest += window.allspec[that].cost;
+		atomsinvest_e.innerText = window.rounding(window.atomsinvest, false, 0);
+		window.allspec[that].done = true;
+		totalAtome -= window.allspec[that].cost;
+		var diff1 = window.calcDiff(that);
 		for(var a in arUnit[that][17]) arUnit[that][17][a] *= 100;
 		arUnit[that][5] *= 100;
 		var spec_aps = 0;
 		if(arUnit[that][4] > 0) {
-			spec_aps = (calcDiff(that) - diff1);
-			atomepersecond += spec_aps;
+			spec_aps = (window.calcDiff(that) - diff1);
+			window.atomepersecond += spec_aps;
 		}
 		//spell:ignore noti plurials
-		if(noti) gritter('Power-up !', toTitleCase(plurials(arrayNames[that])) + " X100 APS", null, "+" + rounding(spec_aps, false, 0) + " APS", "");
+		if(window.noti) window.gritter('Power-up !', window.toTitleCase(window.plurials(window.arrayNames[that])) + " X100 APS", null, "+" + window.rounding(spec_aps, false, 0) + " APS", "");
 		//spell:ignore updateprogress
-		updateprogress(that);
+		window.updateprogress(that);
 		$('#spec' + that).remove();
-		(that < 74) ? seeUnit(that + 1) : seeUnit(that - 1);
-		seeUnit(that);
+		(that < 74) ? window.seeUnit(that + 1) : window.seeUnit(that - 1);
+		window.seeUnit(that);
 		//spell:ignore checkspec
-		checkspec();
+		window.checkspec();
 		//spell:ignore achiSpec
-		achiSpec();
+		window.achiSpec();
 	}
 }
 class ProxyHandlers {
+	weak_root: WeakRef<any>;
+	count_arr: number[];
 	constructor(root: any) {
 		this.weak_root = new WeakRef(root);
 		this.count_arr = [0];
@@ -3856,14 +3884,14 @@ class ProxyHandlers {
 			if(idx > window.da.length) return window.da.at(-1)(idx - 1);
 			return window.da[idx - 1](idx - 1);
 		});
-		window.da = [(e: any) => g_proxy_state.hand.stack_overflow_check(), ...val];
+		window.da = [() => window.g_proxy_state.hand.stack_overflow_check(), ...val];
 	}
 	stack_overflow_check() {
-		g_proxy_state.hand.count_arr[0]++;
-		if(g_proxy_state.hand.count_arr[0] < g_proxy_state.hand.count_arr[1]) {
-			return g_proxy_state.hand.stack_overflow_check();
+		window.g_proxy_state.hand.count_arr[0]++;
+		if(window.g_proxy_state.hand.count_arr[0] < window.g_proxy_state.hand.count_arr[1]) {
+			return window.g_proxy_state.hand.stack_overflow_check();
 		}
-		return g_proxy_state.hand.count_arr[0];
+		return window.g_proxy_state.hand.count_arr[0];
 	}
 	generic(type: string, call_args: any, from: any[]) {
 		let keep_vec = this.weak_root.deref();
@@ -3874,95 +3902,92 @@ class ProxyHandlers {
 		}
 		keep_vec.push(from.concat([null, type, 1, call_args]));
 	}
-	set_(call_args: any, from: any) {
+	set_(call_args: [target: object, propertyKey: PropertyKey, value: any, receiver?: any], from: any) {
 		this.generic('set', call_args, from);
 		return Reflect.set(...call_args);
 	}
-	get_(call_args: any, from: any) {
+	get_(call_args: [target: object, propertyKey: PropertyKey, receiver?: any], from: any) {
 		this.generic('get', call_args, from);
 		return Reflect.get(...call_args);
 	}
-	apply_(call_args: any, from: any) {
+	apply_(call_args: [target: Function, thisArgument: any, argumentsList: ArrayLike<any>], from: any) {
 		this.generic('apply', call_args, from);
 		return Reflect.apply(...call_args);
 	}
-	defineProperty_(call_args: any, from: any) {
+	defineProperty_(call_args:[target: object, propertyKey: PropertyKey, attributes: PropertyDescriptor], from: any) {
 		this.generic('defineProperty', call_args, from);
 		return Reflect.defineProperty(...call_args);
 	}
-	getOwnPropertyDescriptor_(call_args: any, from: any) {
+	getOwnPropertyDescriptor_(call_args: [target: object, propertyKey: PropertyKey], from: any) {
 		this.generic('getOwnPropertyDescriptor', call_args, from);
 		return Reflect.getOwnPropertyDescriptor(...call_args);
 	}
 }
 void ProxyHandlers;
-class KeepSome extends Array {
+class KeepSome {
+	array:number[][];
 	constructor() {
-		super();
+		this.array=[];
 	}
-	push(value) {
+	push(value:number|string) {
 		let set_index = 0;
-		this.push_at(set_index, value);
-		while(this[set_index].length > 50) {
-			value = this[set_index].shift();
+		let ret=this.push_at(set_index, value);
+		while(this.array[set_index].length > 50) {
+			let sr=this.array[set_index].shift();
+			if(!sr)throw new Error("This should not happen (popped from an array with length > 50)");
+			value = sr;
 			if(Math.random() > 0.9) {
 				set_index++;
 				this.push_at(set_index, value);
 				console.log('psp', 1);
 				let off = 0;
-				while(this[set_index - off].length < 25) {
-					let val = this[set_index - off - 1].shift();
-					this[set_index - off].push(val);
+				while(this.array[set_index - off].length < 25) {
+					let val = this.array[set_index - off - 1].shift();
+					if(!val)break;
+					this.array[set_index - off].push(val);
 				}
 				off++;
 				if(set_index - off < 0) continue;
 				console.log('psp', 2);
-				while(this[set_index - off].length < 40) {
-					let val = this[set_index - off - 1].shift();
-					this[set_index - off].push(val);
+				while(this.array[set_index - off].length < 40) {
+					let val = this.array[set_index - off - 1].shift();
+					if(!val)break;
+					this.array[set_index - off].push(val);
 				}
 				off++;
 				if(set_index - off < 0) continue;
 				console.log('psp', 3);
-				while(this[set_index - off].length < 40) {
-					let val = this[set_index - off - 1].shift();
-					this[set_index - off].push(val);
+				while(this.array[set_index - off].length < 40) {
+					let val = this.array[set_index - off - 1].shift();
+					if(!val)break;
+					this.array[set_index - off].push(val);
 				}
 				off++;
 				if(set_index - off < 0) continue;
 				console.log('psp', 4);
-				while(this[set_index - off].length < 40) {
-					let val = this[set_index - off - 1].shift();
-					this[set_index - off].push(val);
+				while(this.array[set_index - off].length < 40) {
+					let val = this.array[set_index - off - 1].shift();
+					if(!val)break;
+					this.array[set_index - off].push(val);
 				}
 			}
-			if(this[set_index].length <= 50 && set_index > 0) {
+			if(this.array[set_index].length <= 50 && set_index > 0) {
 				set_index--;
 			}
 		}
+		return ret;
 	}
 	push_at(index: number, value: any) {
-		while(index >= this.length) {
-			super.push([]);
+		while(index >= this.array.length) {
+			this.array.push([]);
 		}
-		this[index].push(value);
+		this.array[index].push(value);
 	}
-	push_va(...a: any[]) {
-		this.push(a);
+	push_va(...a: (number|string)[]) {
+		for(let x of a){
+			this.push(x);
+		}
 	}
-}
-function define_property_value(obj: any, name: PropertyKey, value: any, ...props: any[]) {
-	let [
-		writable = true,
-		enumerable = true,
-		configurable = true
-	] = props;
-	Object.defineProperty(obj, name, {
-		value,
-		writable,
-		enumerable,
-		configurable
-	});
 }
 function reload_if_def(obj: {[x: string]: any;}, key: string | number) {
 	if(obj[key]) {
@@ -3992,7 +4017,7 @@ function use_jquery() {
 	return jq;
 }
 void reload_if_def;
-function proxy_jquery(value: undefined) {
+function proxy_jquery() {
 	let val = use_jquery();
 	Object.defineProperty(window, '$', {
 		get() {
@@ -4009,17 +4034,17 @@ function proxy_jquery(value: undefined) {
 }
 function pace_finish_proxy_apply(func: Function, this_v: any, args: ArrayLike<any>) {
 	auto_buy_obj.init();
-	Pace.bar.finish = func;
+	window.Pace.bar.finish = func;
 	return Reflect.apply(func, this_v, args);
 }
 function on_game_data_set() {
 	remove_bad_dom_script_element();
 	auto_buy_obj.pre_init();
-	if(Pace.bar.progress == 100) {
+	if(window.Pace.bar.progress == 100) {
 		auto_buy_obj.init();
 		return;
 	}
-	Pace.bar.finish = new Proxy(Pace.bar.finish, {
+	window.Pace.bar.finish = new Proxy(window.Pace.bar.finish, {
 		apply: pace_finish_proxy_apply
 	});
 }
@@ -4029,7 +4054,7 @@ function remove_cint_item(cint_arr: any[], cint_item: undefined) {
 }
 function wait_for_game_data(cint_item = null) {
 	if(cint_item) {
-		remove_cint_item(cint_item);
+		remove_cint_item(cint_arr, cint_item);
 	}
 	if(window._SM_Data) {
 		on_game_data_set();
@@ -4037,7 +4062,7 @@ function wait_for_game_data(cint_item = null) {
 		let cint_item = [0, -1];
 		let cint = setTimeout(wait_for_game_data, 0, cint_item);
 		cint_item[1] = cint;
-		cint_arr.push(cint_item);
+		cint_arr.push(cint_item.join(","));
 	}
 }
 function on_timers_moved(timers: any) {
@@ -4048,7 +4073,7 @@ function on_timers_moved(timers: any) {
 	}
 	remove_bad_dom_script_element();
 }
-function dom_add_elm_filter(elm: Node | null) {
+function dom_add_elm_filter(elm: HTMLScriptElement | null) {
 	if(elm && elm.nodeName === "SCRIPT") {
 		if(!elm.src) {
 			console.log(elm);
@@ -4068,7 +4093,9 @@ function main() {
 	if(enable_proxy) {
 		proxy_jquery();
 	}
-	adsbygoogle = [];
+	let adsbygoogle = window.adsbygoogle;
+	let new_arr=[] as unknown as { op: any; push(v: number): void; };
+	window.adsbygoogle = new_arr;
 	adsbygoogle.op = adsbygoogle.push;
 	adsbygoogle.push = function(e: any) {
 		adsbygoogle.op(e);
@@ -4076,22 +4103,25 @@ function main() {
 	};
 	var prev_node_prototype_insertBefore = Node.prototype.insertBefore;
 	document.addEventListener('onContentLoaded', remove_bad_dom_script_element);
-	Node.prototype.insertBefore = function(element_to_insert, element_reference, ...rest) {
+	Node.prototype.insertBefore = (<any>function<T extends Node>(this:T, node: T, child: Node | null, ...rest:[]) {
 		console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
-		let should_insert_1 = dom_add_elm_filter(element_to_insert);
-		if(!should_insert_1) return element_to_insert;
-		let should_insert_2 = dom_add_elm_filter(element_reference);
-		if(!should_insert_2) return element_to_insert;
-		return prev_node_prototype_insertBefore.call(this, element_to_insert, element_reference);
-	}
+		let should_insert_1, should_insert_2;
+		if(node instanceof HTMLScriptElement){
+			should_insert_1 = dom_add_elm_filter(node);
+		}
+		if(child instanceof HTMLScriptElement){
+			should_insert_2 = dom_add_elm_filter(child);
+		}
+		if(!should_insert_1 || !should_insert_2)return node;
+		return prev_node_prototype_insertBefore.call(this, node, child);
+	})
 	remove_bad_dom_script_element();
 	window.on_on_timers_moved_first = true;
 	let move_timers_to_worker = new Promise(move_timers_to_worker_promise_executor);
 	move_timers_to_worker.then(on_timers_moved);
 	setTimeout(remove_bad_dom_script_element, 0);
-	let document_write_list = new DocumentWriteList;
-	document_write_list.attach_proxy(document);
-	window.document_write_list = document_write_list;
+	window.document_write_list = new DocumentWriteList;
+	window.document_write_list.attach_proxy(document);
 	document.stop = function() {};
 }
 main();

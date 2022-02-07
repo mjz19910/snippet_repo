@@ -3,7 +3,7 @@
 		"experimentalDecorators": true,
 		"target": "esnext",
 		"lib": ["esnext","DOM"],
-		"types": [],
+		"types": ["jquery"],
 		"declaration": true,
 		//"module": "ESNext",
 		"module":"NodeNext",

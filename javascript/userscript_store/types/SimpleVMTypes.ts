@@ -17,14 +17,24 @@ export class VMBoxedFunction extends VMBoxedValue<Function> {}
 export class VMBoxedNewableFunction extends VMBoxedValue<HasNewableVMValue> {}
 export class VMBoxedCallableFunction extends VMBoxedValue<CallableFunction> {}
 type HasVMValue={[v: string]: VMValue};
-export class VMValueToCall extends VMBoxedValue<{
-	[v:string]: (...v:VMValue[])=>VMValue;
-}> {};
-export class VMBoxedKeyedObject extends VMBoxedValue<HasVMValue>{} 
+type HasVMCallableIndexed = {
+	[v: string]: (...v: VMValue[]) => VMValue;
+};
+
+export interface StackVM {
+	push(value: VMValue):void;
+}
+
+export class VMBoxedCallableIndexed extends VMBoxedValue<HasVMCallableIndexed> {};
+export class VMBoxedKeyedObject extends VMBoxedValue<HasVMValue>{}
+export class VMBoxedArray extends VMBoxedValue<VMValue[]>{}
+export class VMBoxedStackVM extends VMBoxedValue<StackVM>{}
+export class VMBoxedWindow extends VMBoxedValue<Window>{}
+export class VMBoxedGlobalThis extends VMBoxedValue<typeof globalThis> {}
 
 type VMFunctionTypes = VMBoxedFunction | VMBoxedNewableFunction | VMBoxedCallableFunction;
 type VMClassTypes = VMFunctionTypes;
-type VMValueTypes = VMValueToCall | VMBoxedValue<object> | VMBoxedKeyedObject | VMClassTypes | bigint | boolean | number | string | symbol;
+type VMValueTypes = VMBoxedCallableIndexed | VMBoxedValue<object> | VMBoxedKeyedObject | VMClassTypes | bigint | boolean | number | string | symbol;
 export type VMValue = VMValueTypes | undefined;
 type StackInstructionPushArgs = VMValue[];
 type InstructionDropArgs = [];
