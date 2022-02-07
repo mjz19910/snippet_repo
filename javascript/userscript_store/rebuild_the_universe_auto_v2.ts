@@ -107,8 +107,8 @@ const TimeoutFireS = 101;
 type TimeoutFireTyS = typeof TimeoutFireS;
 const TimeoutFireR = 102;
 type TimeoutFireTyR = typeof TimeoutFireR;
-const WorkerUpdateOnMessage = 201;
-type TimerMessageWorkerTypeUH = typeof WorkerUpdateOnMessage;
+const WorkerUpdateOnMessageHandler = 201;
+type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateOnMessageHandler;
 const TimeoutMessageR = 202;
 type WorkerTimeoutSetTypeS = typeof TimeoutSetTypeS;
 const TimeoutSetTypeS = 203;
@@ -121,43 +121,43 @@ const TimeoutClearR = 206;
 type TimeoutClearTyR = typeof TimeoutClearR;
 const TimeoutClearA = 207;
 type TimeoutClearTyA = typeof TimeoutClearA;
-const WorkerUpdateHandler = 301;
+const WorkerUpdateOnMessageHandlerReply = 301;
+// did not handle this one at all...
+export type WorkerUpdateOnMessageHandlerReplyTy = typeof WorkerUpdateOnMessageHandlerReply;
 const ReplyWorkerReady = 302;
+type ReplyWorkerReadyTy = typeof ReplyWorkerReady;
 const ReplySetSingle = 303;
+type ReplySetSingleTy = typeof ReplySetSingle;
 const ReplySetRepeating = 304;
+type ReplySetRepeatingTy = typeof ReplySetRepeating;
 const ReplyClearSingle = 305;
+type ReplyClearSingleTy = typeof ReplyClearSingle;
 const ReplyClearRepeating = 306;
+type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
 const ReplyClearAny = 307;
+type ReplyClearAnyTy = typeof ReplyClearAny;
 const ReplyMessage = 402;
-const ReplyFromRemote = 500;
+type ReplyMessageTy = typeof ReplyMessage;
+const ReplyFromWorker = 500;
+type ReplyFromWorkerTy = typeof ReplyFromWorker;
 const ReplyToWorker = 600;
+type ReplyToWorkerTy = typeof ReplyToWorker;
 const TimeoutSingleReply = 700;
+type TimeoutSingleReplyTy = typeof TimeoutSingleReply;
 const TimeoutRepeatingReply = 701;
+type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;
 const TimeoutSetTypes = 1001;
 type TimeoutSetTypesTy = typeof TimeoutSetTypes;
-type WorkerUpdateOnMessageTy = typeof WorkerUpdateOnMessage;
-type ReplyWorkerReadyTy = typeof ReplyWorkerReady;
-type ReplySetSingleTy = typeof ReplySetSingle;
-type ReplySetRepeatingTy = typeof ReplySetRepeating;
-type ReplyClearSingleTy = typeof ReplyClearSingle;
-type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
-type ReplyClearAnyTy = typeof ReplyClearAny;
-type ReplyMessageTy = typeof ReplyMessage;
-type ReplyFromRemoteTy = typeof ReplyFromRemote;
-type ReplyToWorkerTy = typeof ReplyToWorker;
-type TimeoutSingleReplyTy = typeof TimeoutSingleReply;
-type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;
 type WorkerReplyTypesType = {
 	single: TimeoutSingleReplyTy;
 	repeating: TimeoutRepeatingReplyTy;
 };
-
-// spell:enable
+class WorkerFireReplyTypes implements WorkerReplyTypesType {
+	single: TimeoutSingleReplyTy = TimeoutSingleReply
+	repeating: TimeoutRepeatingReplyTy = TimeoutRepeatingReply
+}
 class WorkerReplyTypes {
-	fire: WorkerReplyTypesType = {
-		single: TimeoutSingleReply,
-		repeating: TimeoutRepeatingReply
-	}
+	fire = new WorkerFireReplyTypes;
 }
 type ReplyClearTypes = {
 	single: ReplyClearSingleTy;
@@ -183,12 +183,12 @@ class ReplyClearMessages implements ReplyClearTypes {
 
 class ReplyTypes {
 	msg: ReplyMessageTy = ReplyMessage;
-	from_remote: ReplyFromRemoteTy = ReplyFromRemote;
+	from_worker: ReplyFromWorkerTy = ReplyFromWorker;
 	to_worker: ReplyToWorkerTy = ReplyToWorker;
-	update_handler: WorkerUpdateOnMessageTy = WorkerUpdateOnMessage;
+	update_handler: WorkerUpdateMessageHandlerTy = WorkerUpdateOnMessageHandler;
 	ready: ReplyWorkerReadyTy = ReplyWorkerReady;
-	set: ReplySetTypes = new ReplySetMessages;
-	clear: ReplyClearTypes = new ReplyClearMessages;
+	set = new ReplySetMessages;
+	clear = new ReplyClearMessages;
 }
 type TimeoutFireInfo = {
 	single: TimeoutFireTyS;
@@ -205,7 +205,7 @@ type TimeoutClearInfo = {
 };
 type TimeoutWorkerTypes = {
 	reply: WorkerReplyTypes;
-	update_handler: TimerMessageWorkerTypeUH;
+	update_message_handler: WorkerUpdateMessageHandlerTy;
 	ready: TimerMessageWorkerTypeR;
 	set: TimeoutSetInfo;
 	clear: TimeoutClearInfo;
@@ -247,12 +247,16 @@ type NumInfoMsg = {
 type NoDataMsg = {
 	t: number;
 };
+type LocalOrRemoteIdVarType = {
+	var: 'local_id' | 'remote_id';
+};
+
 class MakeReplyType {
 	v: {
 		t: number;
-		v: number;
+		v: LocalOrRemoteIdVarType | number;
 	};
-	constructor(reply: number, info: number, from: number, {}) {
+	constructor(reply: number, info: number, from: LocalOrRemoteIdVarType | number, {}) {
 		this.t = reply;
 		this.v = {
 			t: info,
@@ -263,7 +267,6 @@ class MakeReplyType {
 }
 class TimerApi {
 	msg_types: TimerMessageTypes = this.make_message_types()
-	//spell:enable
 	set_names: TimeoutSetStrings = {
 		single: "setTimeout",
 		repeating: "setInterval"
@@ -282,43 +285,19 @@ class TimerApi {
 			{t: TimeoutSetTypeS},
 			{t: TimeoutSetTypeR},
 			{t: TimeoutClearS},
-			// TimeoutMessageR
 			new MakeReplyType(500, 302, TimeoutMessageR, {}),
-			{
-				t: 500,
-				v: {
-					t: 302,
-					v: TimeoutMessageR
-				}
-			},
 			// TimeoutSetTypeS
-			{
-				t: 500,
-				v: {
-					t: 303,
-					v: {
-						var: 'local_id'
-					}
-				}
-			},
+			new MakeReplyType(500, 303, {
+				var: 'local_id'
+			}, {}),
 			// TimeoutSetTypeR
-			{
-				t: 500,
-				v: {
-					t: 304,
-					v: {
-						var: 'local_id'
-					}
-				}
-			},
+			new MakeReplyType(500, 304, {
+				var: 'local_id'
+			}, {}),
 			// TimeoutClearR
-			{
-				t: 500, v: {
-					t: 306, v: {
-						var: 'remote_id'
-					}
-				}
-			}
+			new MakeReplyType(500, 306, {
+				var: 'remote_id'
+			}, {})
 		];
 	}
 
@@ -338,7 +317,7 @@ class TimerApi {
 		};
 		const worker_info: TimeoutWorkerTypes = {
 			reply: new WorkerReplyTypes,
-			update_handler: WorkerUpdateOnMessage,
+			update_message_handler: WorkerUpdateOnMessageHandler,
 			ready: TimeoutMessageR,
 			set: timeout_set_info,
 			clear: timeout_clear_info,
@@ -943,7 +922,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 				case message_types.worker.clear.single: {
 					// debugger;
 					postMessage({
-						t: reply_message_types.from_remote,
+						t: reply_message_types.from_worker,
 						v: {
 							t: message_types.reply.clear.single,
 							v: [remote_id, maybe_local_id, msg.t]
@@ -953,7 +932,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 				case message_types.worker.clear.repeating: {
 					// debugger;
 					postMessage({
-						t: reply_message_types.from_remote,
+						t: reply_message_types.from_worker,
 						v: {
 							t: message_types.reply.clear.repeating,
 							v: [remote_id, maybe_local_id, msg.t]
@@ -987,7 +966,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 				console.assert(false, "unhandled result on remote worker", result);
 				debugger;
 			} break;
-			case message_types.worker.update_handler/*remote worker init*/: {
+			case message_types.worker.update_message_handler/*remote worker init*/: {
 				debugger;
 				let user_msg = msg.v;
 				let worker_str = "()"[0];
@@ -1003,7 +982,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 				eval(worker_str);
 				remote_worker_state.unique_script_id++;
 				postMessage({
-					t: reply_message_types.from_remote,
+					t: reply_message_types.from_worker,
 					v: {
 						t: 1,
 						v: msg.t
@@ -1013,7 +992,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 			case message_types.worker.ready/**/: {
 				// debugger;
 				postMessage({
-					t: reply_message_types.from_remote,
+					t: reply_message_types.from_worker,
 					v: {
 						t: message_types.reply.ready,
 						v: msg.t
@@ -1026,7 +1005,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 				console.log('worker set single', user_msg.t, user_msg.v);
 				let local_id = remote_worker_state.set(TIMER_SINGLE, user_msg.t, user_msg.v);
 				postMessage({
-					t: reply_message_types.from_remote,
+					t: reply_message_types.from_worker,
 					v: {
 						t: message_types.reply.set.single,
 						v: [local_id, msg.t, user_msg.t, user_msg.v]
@@ -1039,7 +1018,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 				console.log('worker set repeating', user_msg.t, user_msg.v);
 				let local_id = remote_worker_state.set(TIMER_REPEATING, user_msg.t, user_msg.v);
 				postMessage({
-					t: reply_message_types.from_remote,
+					t: reply_message_types.from_worker,
 					v: {
 						t: message_types.reply.set.repeating,
 						v: [local_id, msg.t, user_msg.t, user_msg.v]
@@ -1147,7 +1126,7 @@ class WorkerState {
 	on_result(type: number, data: any) {
 		if(!this.executor_handle) return;
 		switch(data) {
-			case message_types.worker.update_handler: {
+			case message_types.worker.update_message_handler: {
 				console.assert(type === 301);
 				console.log("remote_worker onmessage function changed");
 				break;
