@@ -107,8 +107,8 @@ const TimeoutFireS = 101;
 type TimeoutFireTyS = typeof TimeoutFireS;
 const TimeoutFireR = 102;
 type TimeoutFireTyR = typeof TimeoutFireR;
-const WorkerUpdateOnMessageHandler = 201;
-type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateOnMessageHandler;
+const WorkerUpdateMessageHandler = 201;
+type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateMessageHandler;
 const TimeoutMessageR = 202;
 type WorkerTimeoutSetTypeS = typeof TimeoutSetTypeS;
 const TimeoutSetTypeS = 203;
@@ -121,9 +121,9 @@ const TimeoutClearR = 206;
 type TimeoutClearTyR = typeof TimeoutClearR;
 const TimeoutClearA = 207;
 type TimeoutClearTyA = typeof TimeoutClearA;
-const WorkerUpdateOnMessageHandlerReply = 301;
+const WorkerUpdateMessageHandlerReply = 301;
 // did not handle this one at all...
-export type WorkerUpdateOnMessageHandlerReplyTy = typeof WorkerUpdateOnMessageHandlerReply;
+type WorkerUpdateMessageHandlerReplyTy = typeof WorkerUpdateMessageHandlerReply;
 const ReplyWorkerReady = 302;
 type ReplyWorkerReadyTy = typeof ReplyWorkerReady;
 const ReplySetSingle = 303;
@@ -185,7 +185,7 @@ class ReplyTypes {
 	msg: ReplyMessageTy = ReplyMessage;
 	from_worker: ReplyFromWorkerTy = ReplyFromWorker;
 	to_worker: ReplyToWorkerTy = ReplyToWorker;
-	update_handler: WorkerUpdateMessageHandlerTy = WorkerUpdateOnMessageHandler;
+	update_handler: WorkerUpdateMessageHandlerReplyTy = WorkerUpdateMessageHandlerReply;
 	ready: ReplyWorkerReadyTy = ReplyWorkerReady;
 	set = new ReplySetMessages;
 	clear = new ReplyClearMessages;
@@ -321,7 +321,7 @@ class TimerApi {
 		};
 		const worker_info: TimeoutWorkerTypes = {
 			reply: new WorkerReplyTypes,
-			update_message_handler: WorkerUpdateOnMessageHandler,
+			update_message_handler: WorkerUpdateMessageHandler,
 			ready: TimeoutMessageR,
 			set: timeout_set_info,
 			clear: timeout_clear_info,
