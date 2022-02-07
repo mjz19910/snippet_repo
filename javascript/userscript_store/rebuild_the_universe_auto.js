@@ -1429,7 +1429,11 @@
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 	class BaseVMCreate extends AbstractVM {
-		constructor(instructions){
+		instructions;
+		instruction_pointer;
+		running;
+		/**@arg {InstructionType[]} instructions */
+		constructor(instructions) {
 			super();
 			this.instructions = instructions;
 			this.instruction_pointer = 0;
@@ -1439,7 +1443,8 @@
 			this.instruction_pointer = 0;
 			this.running = false;
 		}
-		is_in_instructions(value){
+		/**@arg {number} value */
+		is_in_instructions(value) {
 			return value >= 0 && value < this.instructions.length;
 		}
 		execute_instruction_raw(cur_opcode, operands) {
@@ -1503,7 +1508,7 @@
 	const LOG_LEVEL_INFO=3;
 	const LOG_LEVEL_VERBOSE=4;
 	const LOG_LEVEL_TRACE=5;
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxed} VMBoxed */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMBoxed */
 	class BaseStackVM extends BaseVMCreate {
 		constructor(instructions){
 			super(instructions);
@@ -1680,7 +1685,7 @@
 			}
 			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
 		}
-		/**@arg {string[]} instruction @arg {[number]} left @ret {InstructionType}*/
+		/**@arg {string[]} instruction @arg {[number]} left @returns {InstructionType}*/
 		static verify_instruction(instruction, left){
 			const [m_opcode, ...m_operands] = instruction;
 			switch(m_opcode) {
@@ -1710,7 +1715,7 @@
 					throw new Error("Unexpected opcode");
 			}
 		}
-		/*@arg {string[][]} raw_instructions @ret {InstructionType[]}*/
+		/**@arg {string[][]} raw_instructions @returns {InstructionType[]}*/
 		static verify_raw_instructions(raw_instructions){
 			/**@type{InstructionType[]}*/
 			const instructions = [];

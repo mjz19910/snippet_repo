@@ -681,7 +681,7 @@ declare global {
 		da: any[];
 		lightreset(): void;
 		specialclick(that: any): void;
-		g_worker_state: WorkerState | undefined;
+		// g_worker_state: WorkerState | undefined;
 	}
 	export var Window: {
 		prototype: Window;
@@ -1375,12 +1375,12 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 }
-import {InstructionType, VMBoxedAnySafe, VMBoxed} from "./types/SimpleVMTypes";
+import {InstructionType, VMBoxedAnySafe, VMValue} from "./types/SimpleVMTypes";
 class SimpleStackVM {
 	instructions: InstructionType[];
-	stack: VMBoxed[];
+	stack: VMValue[];
 	instruction_pointer: number;
-	return_value: VMBoxed;
+	return_value: VMValue;
 	running: boolean;
 	constructor(instructions: InstructionType[]) {
 		this.instructions = instructions;
@@ -1395,7 +1395,7 @@ class SimpleStackVM {
 		this.return_value = void 0;
 		this.running = false;
 	}
-	push(value: VMBoxed) {
+	push(value: VMValue) {
 		this.stack.push(value);
 	}
 	pop() {
