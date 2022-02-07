@@ -60,10 +60,10 @@ declare global {
 		da: any[];
 		lightreset(): void;
 		specialclick(that: any): void;
-		secondinterval:number;
-		atomsaccu:number;
-		calcPres():number;
-		g_auto_buy:AutoBuy;
+		secondinterval: number;
+		atomsaccu: number;
+		calcPres(): number;
+		g_auto_buy: AutoBuy;
 		g_proxy_state: {hand: {stack_overflow_check: () => any; count_arr: any[];};};
 	}
 	export var Window: {
@@ -101,103 +101,108 @@ const TIMER_TAG_COUNT = 3;
 const AUDIO_ELEMENT_VOLUME = 0.58;
 const cint_arr: string[] = [];
 //spell:disable
-const RTUH = 301;
-const RTR = 302;
-const RSTS = 303;
-const RSTR = 304;
-const RCTS = 305;
-const RCTR = 306;
-const RCTA = 307;
-const __RTM = 402;
-const __RTF = 500;
-const __RTT = 600;
-const __WRTFS = 700;
-const __WRTFR = 701;
-type __T_RTU = typeof RTUH;
-type __T_RTR = typeof RTR;
-type __T_RTSS = typeof RSTS;
-type __T_RTSR = typeof RSTR;
-type __T_RTCS = typeof RCTS;
-type __T_RTCR = typeof RCTR;
-type __T_RTCA = typeof RCTA;
-type __T_RTM = typeof __RTM;
-type __T_RTF = typeof __RTF;
-type __T_RTT = typeof __RTT;
-type __T_WRTFS = typeof __WRTFS;
-type __T_WRTFR = typeof __WRTFR;
-class WorkerReplyTypes {
-	fire: {
-		single: __T_WRTFS,
-		repeating: __T_WRTFR
-	} = {
-			single: __WRTFS,
-			repeating: __WRTFR
-		}
-}
-type ReplyClearTypes = {
-	single: __T_RTCS;
-	repeating: __T_RTCR;
-	any: __T_RTCA;
-};
-
-type ReplySetTypes = {
-	single: __T_RTSS;
-	repeating: __T_RTSR;
-};
-
-class ReplyTypes {
-	msg: __T_RTM = __RTM;
-	from_remote: __T_RTF = __RTF;
-	to_worker: __T_RTT = __RTT
-	update_handler: __T_RTU = RTUH;
-	ready: __T_RTR = RTR;
-	set: ReplySetTypes = {
-		single: RSTS,
-		repeating: RSTR
-	}
-	clear: ReplyClearTypes = {
-		single: RCTS,
-		repeating: RCTR,
-		any: RCTA
-	}
-}
+const WorkerAsyncMessage = 1;
+type WorkerAsyncMessageTy = typeof WorkerAsyncMessage;
 const TimeoutFireS = 101;
 type TimeoutFireTyS = typeof TimeoutFireS;
 const TimeoutFireR = 102;
 type TimeoutFireTyR = typeof TimeoutFireR;
-type TimeoutFireInfo = {
-	single: TimeoutFireTyS;
-	repeating: TimeoutFireTyR;
-};
-
+const WorkerUpdateOnMessage = 201;
+type TimerMessageWorkerTypeUH = typeof WorkerUpdateOnMessage;
+const TimeoutMessageR = 202;
 type WorkerTimeoutSetTypeS = typeof TimeoutSetTypeS;
 const TimeoutSetTypeS = 203;
 type WorkerTimeoutSetTypeR = typeof TimeoutSetTypeR;
 const TimeoutSetTypeR = 204;
-type TimeoutSetInfo = {
-	single: WorkerTimeoutSetTypeS;
-	repeating: WorkerTimeoutSetTypeR;
-};
-
+type TimerMessageWorkerTypeR = typeof TimeoutMessageR;
 const TimeoutClearS = 205;
 type TimeoutClearTyS = typeof TimeoutClearS;
 const TimeoutClearR = 206;
 type TimeoutClearTyR = typeof TimeoutClearR;
 const TimeoutClearA = 207;
 type TimeoutClearTyA = typeof TimeoutClearA;
+const WorkerUpdateHandler = 301;
+const ReplyWorkerReady = 302;
+const ReplySetSingle = 303;
+const ReplySetRepeating = 304;
+const ReplyClearSingle = 305;
+const ReplyClearRepeating = 306;
+const ReplyClearAny = 307;
+const ReplyMessage = 402;
+const ReplyFromRemote = 500;
+const ReplyToWorker = 600;
+const TimeoutSingleReply = 700;
+const TimeoutRepeatingReply = 701;
+const TimeoutSetTypes = 1001;
+type TimeoutSetTypesTy = typeof TimeoutSetTypes;
+type WorkerUpdateOnMessageTy = typeof WorkerUpdateOnMessage;
+type ReplyWorkerReadyTy = typeof ReplyWorkerReady;
+type ReplySetSingleTy = typeof ReplySetSingle;
+type ReplySetRepeatingTy = typeof ReplySetRepeating;
+type ReplyClearSingleTy = typeof ReplyClearSingle;
+type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
+type ReplyClearAnyTy = typeof ReplyClearAny;
+type ReplyMessageTy = typeof ReplyMessage;
+type ReplyFromRemoteTy = typeof ReplyFromRemote;
+type ReplyToWorkerTy = typeof ReplyToWorker;
+type TimeoutSingleReplyTy = typeof TimeoutSingleReply;
+type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;
+type WorkerReplyTypesType = {
+	single: TimeoutSingleReplyTy;
+	repeating: TimeoutRepeatingReplyTy;
+};
+
+// spell:enable
+class WorkerReplyTypes {
+	fire: WorkerReplyTypesType = {
+		single: TimeoutSingleReply,
+		repeating: TimeoutRepeatingReply
+	}
+}
+type ReplyClearTypes = {
+	single: ReplyClearSingleTy;
+	repeating: ReplyClearRepeatingTy;
+	any: ReplyClearAnyTy;
+};
+
+type ReplySetTypes = {
+	single: ReplySetSingleTy;
+	repeating: ReplySetRepeatingTy;
+};
+
+class ReplySetMessages implements ReplySetTypes {
+	single: ReplySetSingleTy = ReplySetSingle
+	repeating: ReplySetRepeatingTy = ReplySetRepeating
+};
+
+class ReplyClearMessages implements ReplyClearTypes {
+	single: ReplyClearSingleTy = ReplyClearSingle
+	repeating: ReplyClearRepeatingTy = ReplyClearRepeating
+	any: ReplyClearAnyTy = ReplyClearAny
+}
+
+class ReplyTypes {
+	msg: ReplyMessageTy = ReplyMessage;
+	from_remote: ReplyFromRemoteTy = ReplyFromRemote;
+	to_worker: ReplyToWorkerTy = ReplyToWorker;
+	update_handler: WorkerUpdateOnMessageTy = WorkerUpdateOnMessage;
+	ready: ReplyWorkerReadyTy = ReplyWorkerReady;
+	set: ReplySetTypes = new ReplySetMessages;
+	clear: ReplyClearTypes = new ReplyClearMessages;
+}
+type TimeoutFireInfo = {
+	single: TimeoutFireTyS;
+	repeating: TimeoutFireTyR;
+};
+type TimeoutSetInfo = {
+	single: WorkerTimeoutSetTypeS;
+	repeating: WorkerTimeoutSetTypeR;
+};
 type TimeoutClearInfo = {
 	single: TimeoutClearTyS;
 	repeating: TimeoutClearTyR;
 	any: TimeoutClearTyA;
 };
-
-const WorkerUpdateHandler = 201;
-type TimerMessageWorkerTypeUH = typeof WorkerUpdateHandler;
-const TimeoutMessageR = 202;
-type TimerMessageWorkerTypeR = typeof TimeoutMessageR;
-const TimeoutSetTypes = 1001;
-type TimeoutSetTypesTy = typeof TimeoutSetTypes;
-
 type TimeoutWorkerTypes = {
 	reply: WorkerReplyTypes;
 	update_handler: TimerMessageWorkerTypeUH;
@@ -206,55 +211,42 @@ type TimeoutWorkerTypes = {
 	clear: TimeoutClearInfo;
 	set_types: TimeoutSetTypesTy;
 };
-
-type TimerMessageTypeA = 1;
-
 type TimerMessageTypes = {
-	async: TimerMessageTypeA;
+	async: WorkerAsyncMessageTy;
 	reply: ReplyTypes;
 	fire: TimeoutFireInfo;
 	worker: TimeoutWorkerTypes;
 };
-
 type TimeoutSetStrings = {
 	single: "setTimeout";
 	repeating: "setInterval";
 };
-
 type TimeoutClearStrings = {
 	single: "clearTimeout";
 	repeating: "clearInterval";
 };
-
 type VarRef = {
 	var: string;
 };
-
 type RefVarInfo = {
 	t: number;
 	v: VarRef;
 };
-
 type RefVarMsg = {
 	t: number;
 	v: RefVarInfo;
 };
-
 type NumInfo = {
 	t: number;
 	v: number;
 };
-
 type NumInfoMsg = {
 	t: number;
 	v: NumInfo;
 };
-
 type NoDataMsg = {
 	t: number;
 };
-
-
 class MakeReplyType {
 	v: {
 		t: number;
@@ -346,7 +338,7 @@ class TimerApi {
 		};
 		const worker_info: TimeoutWorkerTypes = {
 			reply: new WorkerReplyTypes,
-			update_handler: WorkerUpdateHandler,
+			update_handler: WorkerUpdateOnMessage,
 			ready: TimeoutMessageR,
 			set: timeout_set_info,
 			clear: timeout_clear_info,
@@ -610,9 +602,9 @@ function find_all_scripts_using_string_apis():
 }
 void find_all_scripts_using_string_apis;
 type AnyFunction = CallableFunction | NewableFunction;
-type RegIdFunction={reg_id:number} & AnyFunction;
-function has_reg_id(v:AnyFunction): v is RegIdFunction {
-	if((v as Object).hasOwnProperty('reg_id')){
+type RegIdFunction = {reg_id: number} & AnyFunction;
+function has_reg_id(v: AnyFunction): v is RegIdFunction {
+	if((v as Object).hasOwnProperty('reg_id')) {
 		return true;
 	}
 	return false;
@@ -628,21 +620,21 @@ function get_nearest_script() {
 		cur_event_fns.pop();
 	}
 	let script_ghost = cur_event_fns.at(-1);
-	if(!script_ghost)return null;
+	if(!script_ghost) return null;
 	if(has_reg_id(script_ghost))
-	if(script_ghost && weak_scripts[script_ghost.reg_id - 1]) {
-		let reg = weak_scripts[script_ghost.reg_id - 1];
-		if(reg && reg.ref.deref()) {
-			return reg.ref.deref();
-		} else if(document.currentScript === null && !is_in_ignored_from_src_fn) {
-			debugger;
+		if(script_ghost && weak_scripts[script_ghost.reg_id - 1]) {
+			let reg = weak_scripts[script_ghost.reg_id - 1];
+			if(reg && reg.ref.deref()) {
+				return reg.ref.deref();
+			} else if(document.currentScript === null && !is_in_ignored_from_src_fn) {
+				debugger;
+			}
 		}
-	}
 	if(cur_script === void 0 && !is_in_userscript && !is_in_userscript_fn && !is_in_ignored_from_src_fn) {
 		debugger;
 	}
-	script_ghost=cur_event_fns.at(-1);
-	if(script_ghost)if(has_reg_id(script_ghost))if(weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.()) {
+	script_ghost = cur_event_fns.at(-1);
+	if(script_ghost) if(has_reg_id(script_ghost)) if(weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.()) {
 		return weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.();
 	};
 	let doc_script = document.currentScript;
@@ -1380,9 +1372,9 @@ class Timer {
 		if(!this.weak_worker_state) return;
 		let should_reset_user_fn = false;
 		let should_reset_ign = false;
-		if(typeof state.target_fn != 'string')cur_event_fns.push(state.target_fn);
+		if(typeof state.target_fn != 'string') cur_event_fns.push(state.target_fn);
 		let idx = -1;
-		if(typeof state.target_fn != 'string')cur_event_fns.indexOf(state.target_fn);
+		if(typeof state.target_fn != 'string') cur_event_fns.indexOf(state.target_fn);
 		try {
 			if(state.active) {
 				if((<any>state.target_fn).is_userscript_fn) {
@@ -1395,11 +1387,11 @@ class Timer {
 						should_reset_user_fn = true;
 					}
 				}
-				if(state.target_fn instanceof Function){
+				if(state.target_fn instanceof Function) {
 					state.target_fn.apply(null, state.target_args);
 				} else {
-					let fn=new Function(state.target_fn);
-					state.target_fn=fn;
+					let fn = new Function(state.target_fn);
+					state.target_fn = fn;
 					state.target_fn.apply(null, state.target_args);
 				}
 			}
@@ -1604,7 +1596,7 @@ class Timer {
 			if(state.type === TIMER_SINGLE) {
 				// if the timer might get reset when calling the function while
 				// the timer functions are reset to the underlying api
-				if(state.target_fn instanceof Function){
+				if(state.target_fn instanceof Function) {
 					state.target_fn.apply(null, state.target_args);
 				} else {
 					eval(state.target_fn);
@@ -1794,7 +1786,7 @@ class EventHandlerDispatch<T> {
 	do_handle_event(event: Event) {
 		this.target_fn.call(this.target_obj, event);
 	}
-	handleEvent(v:Event){
+	handleEvent(v: Event) {
 		this.do_handle_event(v);
 	}
 }
@@ -2124,10 +2116,10 @@ class SimpleStackVMParser {
 		}
 	}
 	static verify_raw_instructions(raw_instructions: string[][]): InstructionType[] {
-		const instructions:InstructionType[] = [];
+		const instructions: InstructionType[] = [];
 		for(let i = 0;i < raw_instructions.length;i++) {
 			const instruction = raw_instructions[i];
-				const left: [number] = [instruction.length];
+			const left: [number] = [instruction.length];
 			const valid_instruction = this.verify_instruction(instruction, left);
 			instructions.push(valid_instruction);
 			if(left[0] > 0) throw new Error("Typechecking failure, data left when processing raw instruction stream");
@@ -2411,7 +2403,7 @@ class BaseNode {
 	run() {
 		// do nothing
 	}
-	destroy(){
+	destroy() {
 		this.remove();
 	}
 }
@@ -2427,11 +2419,11 @@ class BaseTimeoutNode extends BaseNode {
 }
 class TimeoutIdNode extends BaseTimeoutNode {
 	id: number | null;
-	m_is_timeout:boolean;
-	constructor(id: number | null = null, is_timeout_flag:boolean) {
+	m_is_timeout: boolean;
+	constructor(id: number | null = null, is_timeout_flag: boolean) {
 		super(null);
 		this.id = id;
-		this.m_is_timeout=is_timeout_flag;
+		this.m_is_timeout = is_timeout_flag;
 	}
 }
 class TimeoutNode extends BaseTimeoutNode {
@@ -2520,7 +2512,7 @@ class AsyncNodeRoot {
 			}
 		});
 	}
-	append_raw(timeout_id: number, is_timeout_id:boolean) {
+	append_raw(timeout_id: number, is_timeout_id: boolean) {
 		this.append_child(new TimeoutIdNode(timeout_id, is_timeout_id));
 	}
 	append_child(record: BaseNode): void {
@@ -2973,7 +2965,7 @@ class AutoBuy {
 	percent_ratio_change_element?: HTMLDivElement;
 	state_log_element?: HTMLDivElement;
 	state_history_arr_max_len: number | undefined;
-	last_value: number|undefined;
+	last_value: number | undefined;
 	pre_total: any;
 	[v: symbol]: string;
 	async_compress() {
@@ -3355,11 +3347,11 @@ class AutoBuy {
 		}
 	}
 	update_dom() {
-		if(!this.hours_played_element)return;
-		if(!this.percent_ratio_element)return;
-		if(!this.percent_ratio_change_element)return;
-		if(!this.history_element)return;
-		if(!this.state_history_arr_max_len)return;
+		if(!this.hours_played_element) return;
+		if(!this.percent_ratio_element) return;
+		if(!this.percent_ratio_change_element) return;
+		if(!this.history_element) return;
+		if(!this.state_history_arr_max_len) return;
 		// spell:words timeplayed
 		this.hours_played_element.innerText = ((window.timeplayed / 30) / 60).toFixed(7) + " hours";
 		let last_ratio = this.state.ratio * 100;
@@ -3393,12 +3385,12 @@ class AutoBuy {
 		}, 66);
 		this.root_node.append_raw(setInterval(function() {
 			window.doc.title = window.rounding(totalAtome, false, 1).toString() + " atoms";
-			let atomsaccu=window.doc.getElementById('atomsaccu');
-			let timeplayed_e=window.doc.getElementById('timeplayed');
-			let presnbr_e=window.doc.getElementById('timeplayed');
-			if(!atomsaccu)return;
-			if(!timeplayed_e)return;
-			if(!presnbr_e)return;
+			let atomsaccu = window.doc.getElementById('atomsaccu');
+			let timeplayed_e = window.doc.getElementById('timeplayed');
+			let presnbr_e = window.doc.getElementById('timeplayed');
+			if(!atomsaccu) return;
+			if(!timeplayed_e) return;
+			if(!presnbr_e) return;
 			//spell:words atomsaccu presnbr
 			atomsaccu.innerHTML = window.rounding(window.atomsaccu, false, 0);
 			timeplayed_e.innerHTML = (Math.round(window.timeplayed / 30) / 60).toFixed(2) + " hours";
@@ -3601,11 +3593,11 @@ class AutoBuy {
 		this.state_history_append(char, silent);
 		let node = new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
-		let att=new AsyncTimeoutTarget(char);
+		let att = new AsyncTimeoutTarget(char);
 		let promise = node.start_async(att);
 		await promise;
 	}
-	next_timeout(trg_fn:CallableFunction, timeout: number, char: string, silent = false) {
+	next_timeout(trg_fn: CallableFunction, timeout: number, char: string, silent = false) {
 		let node = new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTarget(this, trg_fn, char));
@@ -3665,13 +3657,13 @@ class AutoBuy {
 		return false;
 	}
 	reset_timeout_init() {
-		if(this.background_audio){
+		if(this.background_audio) {
 			this.background_audio.muted = !this.background_audio.muted;
 		}
 		this.next_timeout(this.reset_timeout_trigger, 60 * 2 * 1000, 'reset_timeout');
 	}
 	reset_timeout_trigger() {
-		if(this.background_audio){
+		if(this.background_audio) {
 			this.background_audio.muted = !this.background_audio.muted;
 		}
 		this.next_timeout(this.reset_timeout_start, 60 * 2 * 1000, 'reset_timeout');
@@ -3749,12 +3741,12 @@ class AsyncTrigger {
 	m_set_result!: (value: number) => void;
 	m_set_error!: (arg0: any) => void;
 	constructor() {
-		this.notify_promise=null;
+		this.notify_promise = null;
 		this.m_set_flag = true;
 		this.trigger_handler = null;
-		this.m_can_notify=false;
+		this.m_can_notify = false;
 		let t = this;
-		this.promise_set = new Promise((accept, reject)=>{
+		this.promise_set = new Promise((accept, reject) => {
 			t.m_set_result = accept;
 			t.m_set_error = reject;
 			t.m_set_flag = false;
@@ -3776,7 +3768,7 @@ class AsyncTrigger {
 		let ret = this.promise_set;
 		return ret;
 	}
-	m_can_notify:boolean;
+	m_can_notify: boolean;
 	m_notify_result!: ((value: void | PromiseLike<void>) => void);
 	m_notify_error!: (reason?: any) => void;
 	notify(cnt: any) {
@@ -3791,7 +3783,7 @@ class AsyncTrigger {
 			this.m_can_notify = false;
 		}
 	}
-	notify_promise:Promise<void> | null;
+	notify_promise: Promise<void> | null;
 	async notified() {
 		let t = this;
 		this.notify_promise = new Promise(function(accept, reject) {
@@ -3818,8 +3810,8 @@ function array_sample_end(arr: {(): any; new(): any; length: number;}[], rem_tar
 	arr = arr.slice(-300);
 	let rem_len = char_len_of(arr);
 	while(rem_len > rem_target_len) {
-		let cur=arr.shift();
-		if(!cur)break;
+		let cur = arr.shift();
+		if(!cur) break;
 		rem_len -= cur.length + 1;
 	}
 	return arr;
@@ -3841,9 +3833,9 @@ function lightreset_inject() {
 function specialclick_inject(that: number) {
 	if(window.allspec[that].done == undefined) window.allspec[that].done = false;
 	if(window.allspec[that].cost <= totalAtome && window.allspec[that].done == false) {
-		let specialsbought_e=window.doc.getElementById('specialsbought');
-		let atomsinvest_e=window.doc.getElementById('atomsinvest');
-		if(!specialsbought_e || !atomsinvest_e)throw new Error("Invalid");
+		let specialsbought_e = window.doc.getElementById('specialsbought');
+		let atomsinvest_e = window.doc.getElementById('atomsinvest');
+		if(!specialsbought_e || !atomsinvest_e) throw new Error("Invalid");
 		specialsbought_e.innerText = window.rounding(++window.specialsbought, false, 0);
 		if(that == 74) {
 		}
@@ -3914,7 +3906,7 @@ class ProxyHandlers {
 		this.generic('apply', call_args, from);
 		return Reflect.apply(...call_args);
 	}
-	defineProperty_(call_args:[target: object, propertyKey: PropertyKey, attributes: PropertyDescriptor], from: any) {
+	defineProperty_(call_args: [target: object, propertyKey: PropertyKey, attributes: PropertyDescriptor], from: any) {
 		this.generic('defineProperty', call_args, from);
 		return Reflect.defineProperty(...call_args);
 	}
@@ -3925,16 +3917,16 @@ class ProxyHandlers {
 }
 void ProxyHandlers;
 class KeepSome {
-	array:number[][];
+	array: number[][];
 	constructor() {
-		this.array=[];
+		this.array = [];
 	}
-	push(value:number|string) {
+	push(value: number | string) {
 		let set_index = 0;
-		let ret=this.push_at(set_index, value);
+		let ret = this.push_at(set_index, value);
 		while(this.array[set_index].length > 50) {
-			let sr=this.array[set_index].shift();
-			if(!sr)throw new Error("This should not happen (popped from an array with length > 50)");
+			let sr = this.array[set_index].shift();
+			if(!sr) throw new Error("This should not happen (popped from an array with length > 50)");
 			value = sr;
 			if(Math.random() > 0.9) {
 				set_index++;
@@ -3943,7 +3935,7 @@ class KeepSome {
 				let off = 0;
 				while(this.array[set_index - off].length < 25) {
 					let val = this.array[set_index - off - 1].shift();
-					if(!val)break;
+					if(!val) break;
 					this.array[set_index - off].push(val);
 				}
 				off++;
@@ -3951,7 +3943,7 @@ class KeepSome {
 				console.log('psp', 2);
 				while(this.array[set_index - off].length < 40) {
 					let val = this.array[set_index - off - 1].shift();
-					if(!val)break;
+					if(!val) break;
 					this.array[set_index - off].push(val);
 				}
 				off++;
@@ -3959,7 +3951,7 @@ class KeepSome {
 				console.log('psp', 3);
 				while(this.array[set_index - off].length < 40) {
 					let val = this.array[set_index - off - 1].shift();
-					if(!val)break;
+					if(!val) break;
 					this.array[set_index - off].push(val);
 				}
 				off++;
@@ -3967,7 +3959,7 @@ class KeepSome {
 				console.log('psp', 4);
 				while(this.array[set_index - off].length < 40) {
 					let val = this.array[set_index - off - 1].shift();
-					if(!val)break;
+					if(!val) break;
 					this.array[set_index - off].push(val);
 				}
 			}
@@ -3983,8 +3975,8 @@ class KeepSome {
 		}
 		this.array[index].push(value);
 	}
-	push_va(...a: (number|string)[]) {
-		for(let x of a){
+	push_va(...a: (number | string)[]) {
+		for(let x of a) {
 			this.push(x);
 		}
 	}
@@ -4094,7 +4086,7 @@ function main() {
 		proxy_jquery();
 	}
 	let adsbygoogle = window.adsbygoogle;
-	let new_arr=[] as unknown as { op: any; push(v: number): void; };
+	let new_arr = [] as unknown as {op: any; push(v: number): void;};
 	window.adsbygoogle = new_arr;
 	adsbygoogle.op = adsbygoogle.push;
 	adsbygoogle.push = function(e: any) {
@@ -4103,16 +4095,16 @@ function main() {
 	};
 	var prev_node_prototype_insertBefore = Node.prototype.insertBefore;
 	document.addEventListener('onContentLoaded', remove_bad_dom_script_element);
-	Node.prototype.insertBefore = (<any>function<T extends Node>(this:T, node: T, child: Node | null, ...rest:[]) {
+	Node.prototype.insertBefore = (<any>function <T extends Node>(this: T, node: T, child: Node | null, ...rest: []) {
 		console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
 		let should_insert_1, should_insert_2;
-		if(node instanceof HTMLScriptElement){
+		if(node instanceof HTMLScriptElement) {
 			should_insert_1 = dom_add_elm_filter(node);
 		}
-		if(child instanceof HTMLScriptElement){
+		if(child instanceof HTMLScriptElement) {
 			should_insert_2 = dom_add_elm_filter(child);
 		}
-		if(!should_insert_1 || !should_insert_2)return node;
+		if(!should_insert_1 || !should_insert_2) return node;
 		return prev_node_prototype_insertBefore.call(this, node, child);
 	})
 	remove_bad_dom_script_element();
