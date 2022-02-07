@@ -294,6 +294,10 @@ class TimerApi {
 			new MakeReplyType(500, 304, {
 				var: 'local_id'
 			}, {}),
+			// TimeoutClearS
+			new MakeReplyType(500, 305, {
+				var: 'remote_id'
+			}, {}),
 			// TimeoutClearR
 			new MakeReplyType(500, 306, {
 				var: 'remote_id'
