@@ -104,28 +104,27 @@ const cint_arr: string[] = [];
 const WorkerAsyncMessage = 1;
 type WorkerAsyncMessageTy = typeof WorkerAsyncMessage;
 const TimeoutFireS = 101;
-type TimeoutFireTyS = typeof TimeoutFireS;
+type TimeoutFireSTy = typeof TimeoutFireS;
 const TimeoutFireR = 102;
-type TimeoutFireTyR = typeof TimeoutFireR;
+type TimeoutFireRTy = typeof TimeoutFireR;
 const WorkerUpdateMessageHandler = 201;
 type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateMessageHandler;
 const TimeoutMessageR = 202;
-type WorkerTimeoutSetTypeS = typeof TimeoutSetTypeS;
-const TimeoutSetTypeS = 203;
-type WorkerTimeoutSetTypeR = typeof TimeoutSetTypeR;
-const TimeoutSetTypeR = 204;
-type TimerMessageWorkerTypeR = typeof TimeoutMessageR;
+type TimeoutMessageRTy = typeof TimeoutMessageR;
+const TimeoutSetS = 203;
+type TimeoutSetSTy = typeof TimeoutSetS;
+const TimeoutSetR = 204;
+type TimeoutSetRTy = typeof TimeoutSetR;
 const TimeoutClearS = 205;
-type TimeoutClearTyS = typeof TimeoutClearS;
+type TimeoutClearSTy = typeof TimeoutClearS;
 const TimeoutClearR = 206;
-type TimeoutClearTyR = typeof TimeoutClearR;
+type TimeoutClearRTy = typeof TimeoutClearR;
 const TimeoutClearA = 207;
-type TimeoutClearTyA = typeof TimeoutClearA;
+type TimeoutClearATy = typeof TimeoutClearA;
 const WorkerUpdateMessageHandlerReply = 301;
-// did not handle this one at all...
 type WorkerUpdateMessageHandlerReplyTy = typeof WorkerUpdateMessageHandlerReply;
-const ReplyWorkerReady = 302;
-type ReplyWorkerReadyTy = typeof ReplyWorkerReady;
+const WorkerReadyReply = 302;
+type WorkerReadyReplyTy = typeof WorkerReadyReply;
 const ReplySetSingle = 303;
 type ReplySetSingleTy = typeof ReplySetSingle;
 const ReplySetRepeating = 304;
@@ -152,76 +151,47 @@ type WorkerReplyTypesType = {
 	single: TimeoutSingleReplyTy;
 	repeating: TimeoutRepeatingReplyTy;
 };
-class WorkerFireReplyTypes implements WorkerReplyTypesType {
-	single: TimeoutSingleReplyTy = TimeoutSingleReply
-	repeating: TimeoutRepeatingReplyTy = TimeoutRepeatingReply
-}
-class WorkerReplyTypes {
-	fire = new WorkerFireReplyTypes;
-}
 type ReplyClearTypes = {
 	single: ReplyClearSingleTy;
 	repeating: ReplyClearRepeatingTy;
 	any: ReplyClearAnyTy;
 };
-
 type ReplySetTypes = {
 	single: ReplySetSingleTy;
 	repeating: ReplySetRepeatingTy;
 };
-
-class ReplySetMessages implements ReplySetTypes {
-	single: ReplySetSingleTy = ReplySetSingle
-	repeating: ReplySetRepeatingTy = ReplySetRepeating
+type TimeoutFireInfoTy = {
+	single: TimeoutFireSTy;
+	repeating: TimeoutFireRTy;
 };
-
-class ReplyClearMessages implements ReplyClearTypes {
-	single: ReplyClearSingleTy = ReplyClearSingle
-	repeating: ReplyClearRepeatingTy = ReplyClearRepeating
-	any: ReplyClearAnyTy = ReplyClearAny
-}
-
-class ReplyTypes {
-	msg: ReplyMessageTy = ReplyMessage;
-	from_worker: ReplyFromWorkerTy = ReplyFromWorker;
-	to_worker: ReplyToWorkerTy = ReplyToWorker;
-	update_handler: WorkerUpdateMessageHandlerReplyTy = WorkerUpdateMessageHandlerReply;
-	ready: ReplyWorkerReadyTy = ReplyWorkerReady;
-	set = new ReplySetMessages;
-	clear = new ReplyClearMessages;
-}
-type TimeoutFireInfo = {
-	single: TimeoutFireTyS;
-	repeating: TimeoutFireTyR;
+type TimeoutSetInfoTy = {
+	single: TimeoutSetSTy;
+	repeating: TimeoutSetRTy;
 };
-type TimeoutSetInfo = {
-	single: WorkerTimeoutSetTypeS;
-	repeating: WorkerTimeoutSetTypeR;
+type TimeoutClearInfoTy = {
+	single: TimeoutClearSTy;
+	repeating: TimeoutClearRTy;
+	any: TimeoutClearATy;
 };
-type TimeoutClearInfo = {
-	single: TimeoutClearTyS;
-	repeating: TimeoutClearTyR;
-	any: TimeoutClearTyA;
-};
-type TimeoutWorkerTypes = {
+type TimeoutWorkerTypesTy = {
 	reply: WorkerReplyTypes;
 	update_message_handler: WorkerUpdateMessageHandlerTy;
-	ready: TimerMessageWorkerTypeR;
-	set: TimeoutSetInfo;
-	clear: TimeoutClearInfo;
+	ready: TimeoutMessageRTy;
+	set: TimeoutSetInfoTy;
+	clear: TimeoutClearInfoTy;
 	set_types: TimeoutSetTypesTy;
 };
-type TimerMessageTypes = {
+type TimerMessageTypesTy = {
 	async: WorkerAsyncMessageTy;
 	reply: ReplyTypes;
-	fire: TimeoutFireInfo;
-	worker: TimeoutWorkerTypes;
+	fire: TimeoutFireInfoTy;
+	worker: TimeoutWorkerTypesTy;
 };
-type TimeoutSetStrings = {
-	single: "setTimeout";
-	repeating: "setInterval";
+type TimeoutSetStringsTy = {
+	single: typeof TimeoutSetStringS;
+	repeating: typeof TimeoutSetStringR;
 };
-type TimeoutClearStrings = {
+type TimeoutClearStringsTy = {
 	single: "clearTimeout";
 	repeating: "clearInterval";
 };
@@ -250,12 +220,38 @@ type NoDataMsg = {
 type LocalOrRemoteIdVarType = {
 	var: 'local_id' | 'remote_id';
 };
-
-class MakeReplyType {
-	v: {
-		t: number;
-		v: LocalOrRemoteIdVarType | number;
-	};
+type MakeReplyDataType = {
+	t: number;
+	v: LocalOrRemoteIdVarType | number;
+};
+class WorkerFireReplyTypes implements WorkerReplyTypesType {
+	single: TimeoutSingleReplyTy = TimeoutSingleReply
+	repeating: TimeoutRepeatingReplyTy = TimeoutRepeatingReply
+}
+class WorkerReplyTypes {
+	fire = new WorkerFireReplyTypes;
+}
+class ReplySetMessages implements ReplySetTypes {
+	single: ReplySetSingleTy = ReplySetSingle
+	repeating: ReplySetRepeatingTy = ReplySetRepeating
+};
+class ReplyClearMessages implements ReplyClearTypes {
+	single: ReplyClearSingleTy = ReplyClearSingle
+	repeating: ReplyClearRepeatingTy = ReplyClearRepeating
+	any: ReplyClearAnyTy = ReplyClearAny
+}
+class ReplyTypes {
+	msg: ReplyMessageTy = ReplyMessage;
+	from_worker: ReplyFromWorkerTy = ReplyFromWorker;
+	to_worker: ReplyToWorkerTy = ReplyToWorker;
+	update_handler: WorkerUpdateMessageHandlerReplyTy = WorkerUpdateMessageHandlerReply;
+	ready: WorkerReadyReplyTy = WorkerReadyReply;
+	set = new ReplySetMessages;
+	clear = new ReplyClearMessages;
+}
+class MakeReplyData {
+	t: number;
+	v: MakeReplyDataType;
 	constructor(reply: number, info: number, from: LocalOrRemoteIdVarType | number, {}) {
 		this.t = reply;
 		this.v = {
@@ -263,76 +259,77 @@ class MakeReplyType {
 			v: from
 		};
 	}
-	t: number = 0;
+}
+const TimeoutSetStringS = "setTimeout";
+const TimeoutSetStringR = "setInterval";
+class TimeoutSetStrings implements TimeoutSetStringsTy {
+	single:typeof TimeoutSetStringS = TimeoutSetStringS;
+	repeating: typeof TimeoutSetStringR = TimeoutSetStringR;
+}
+class TimeoutSetInfo implements TimeoutSetInfoTy {
+	single: TimeoutSetSTy = TimeoutSetS
+	repeating: TimeoutSetRTy = TimeoutSetR;
+}
+class TimeoutClearInfo implements TimeoutClearInfoTy {
+	single: TimeoutClearSTy = TimeoutClearS;
+	repeating:  TimeoutClearRTy = TimeoutClearR;
+	any:  TimeoutClearATy = TimeoutClearA;
+
+}
+class TimeoutWorkerTypes implements TimeoutWorkerTypesTy {
+	reply: WorkerReplyTypes = new WorkerReplyTypes
+	update_message_handler: WorkerUpdateMessageHandlerTy = WorkerUpdateMessageHandler;
+	ready: TimeoutMessageRTy = TimeoutMessageR;
+	set: TimeoutSetInfo = new TimeoutSetInfo;
+	clear: TimeoutClearInfo = new TimeoutClearInfo;
+	set_types: TimeoutSetTypesTy = TimeoutSetTypes;
+
+}
+class TimeoutFireInfo implements TimeoutFireInfoTy {
+	single: TimeoutFireSTy = TimeoutFireS;
+	repeating: TimeoutFireRTy = TimeoutFireR;
+
+}
+class TimerMessageTypes implements TimerMessageTypesTy {
+	async: WorkerAsyncMessageTy = WorkerAsyncMessage;
+	reply: ReplyTypes = new ReplyTypes;
+	fire: TimeoutFireInfoTy = new TimeoutFireInfo;
+	worker: TimeoutWorkerTypesTy = new TimeoutWorkerTypes;
+}
+class TimeoutClearStrings implements TimeoutClearStringsTy {
+	single: "clearTimeout" = "clearTimeout";
+	repeating: "clearInterval" = "clearInterval";
 }
 class TimerApi {
-	msg_types: TimerMessageTypes = this.make_message_types()
-	set_names: TimeoutSetStrings = {
-		single: "setTimeout",
-		repeating: "setInterval"
-	}
-	clear_names: TimeoutClearStrings = {
-		single: "clearTimeout",
-		repeating: "clearInterval"
-	};
-	handled: number[] = [
-
-	];
+	msg_types = new TimerMessageTypes;
+	set_names = new TimeoutSetStrings;
+	clear_names = new TimeoutClearStrings;
+	handled: number[] = [];
 	to_handle: (NoDataMsg | NumInfoMsg | RefVarMsg)[]
 	constructor() {
 		this.to_handle = [
 			{t: TimeoutMessageR},
-			{t: TimeoutSetTypeS},
-			{t: TimeoutSetTypeR},
+			{t: TimeoutSetS},
+			{t: TimeoutSetR},
 			{t: TimeoutClearS},
-			new MakeReplyType(500, 302, TimeoutMessageR, {}),
+			new MakeReplyData(500, 302, TimeoutMessageR, {}),
 			// TimeoutSetTypeS
-			new MakeReplyType(500, 303, {
+			new MakeReplyData(500, 303, {
 				var: 'local_id'
 			}, {}),
 			// TimeoutSetTypeR
-			new MakeReplyType(500, 304, {
+			new MakeReplyData(500, 304, {
 				var: 'local_id'
 			}, {}),
 			// TimeoutClearS
-			new MakeReplyType(500, 305, {
+			new MakeReplyData(500, 305, {
 				var: 'remote_id'
 			}, {}),
 			// TimeoutClearR
-			new MakeReplyType(500, 306, {
+			new MakeReplyData(500, 306, {
 				var: 'remote_id'
 			}, {})
 		];
-	}
-
-	private make_message_types(): TimerMessageTypes {
-		const timeout_fire_info: TimeoutFireInfo = {
-			single: TimeoutFireS,
-			repeating: TimeoutFireR
-		};
-		const timeout_clear_info: TimeoutClearInfo = {
-			single: TimeoutClearS,
-			repeating: TimeoutClearR,
-			any: TimeoutClearA
-		};
-		const timeout_set_info: TimeoutSetInfo = {
-			single: TimeoutSetTypeS,
-			repeating: TimeoutSetTypeR
-		};
-		const worker_info: TimeoutWorkerTypes = {
-			reply: new WorkerReplyTypes,
-			update_message_handler: WorkerUpdateMessageHandler,
-			ready: TimeoutMessageR,
-			set: timeout_set_info,
-			clear: timeout_clear_info,
-			set_types: TimeoutSetTypes
-		};
-		return {
-			async: 1,
-			reply: new ReplyTypes,
-			fire: timeout_fire_info,
-			worker: worker_info
-		};
 	}
 }
 let g_timer_api = new TimerApi;
@@ -348,13 +345,11 @@ class ScriptStateHost {
 				this.fns.push(fn);
 			},
 			dispatchEvent(ev: {type: string; state: string;}) {
-				//spell:disable
-				let lfns = this.fns.slice();
-				for(let i = 0;i < lfns.length;i++) {
-					let fn = lfns[i];
+				let l_fns = this.fns.slice();
+				for(let i = 0;i < l_fns.length;i++) {
+					let fn = l_fns[i];
 					fn(ev);
 				}
-				//spell:enable
 			}
 		}
 }
@@ -765,13 +760,11 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 					set_types: TimeoutSetTypes
 				}
 			}
-		/**@type {{single:"setTimeout",repeating:"setInterval"}} */
-		set_names = {
-			single: "setTimeout",
-			repeating: "setInterval"
+		set_names : TimeoutSetStringsTy = {
+			single: TimeoutSetStringS,
+			repeating: TimeoutSetStringR
 		}
-		/**@type {{single:"clearTimeout",repeating:"clearInterval"}} */
-		clear_names = {
+		clear_names:TimeoutClearStringsTy = {
 			single: "clearTimeout",
 			repeating: "clearInterval"
 		}
