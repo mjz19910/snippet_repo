@@ -140,15 +140,15 @@ const TIMER_REPEATING = 2;
 const TIMER_TAG_COUNT = 3;
 const AUDIO_ELEMENT_VOLUME = 0.58;
 const cint_arr: any[] = [];
-function down_convert_type<T, U extends T>(v:T) : v is U {
+function down_convert_type<T, U extends T>(v: T): v is U {
 	return true;
 }
 type DocumentWriteFn = (...text: string[]) => void;
 
 class DocumentWriteFnProxyHandler {
-	other: DocumentWriteList|null = null;
+	other: DocumentWriteList | null = null;
 	apply(...a: [target: DocumentWriteFn, thisArg: Document, argArray: string[]]) {
-		if(this.other)this.other.write(...a);
+		if(this.other) this.other.write(...a);
 	}
 }
 
@@ -170,7 +170,7 @@ class DocumentWriteList {
 		this.document_write_proxy = new Proxy(document.write, proxy_for_write);
 		if(this.document_write_proxy) document.write = this.document_write_proxy;
 	}
-	attach_proxy(document:Document){
+	attach_proxy(document: Document) {
 		if(this.attached) {
 			let was_destroyed = this.destroy(true);
 			if(!was_destroyed) {
@@ -179,19 +179,19 @@ class DocumentWriteList {
 		}
 		this.attached_document = document;
 		this.document_write = document.write;
-		let obj=new DocumentWriteFnProxyHandler;
-		obj.other=this;
+		let obj = new DocumentWriteFnProxyHandler;
+		obj.other = this;
 		this.document_write_proxy = new Proxy(document.write, obj);
 		document.write = this.document_write_proxy;
 	}
-	document_write: DocumentWriteFn | { other: any; } | null;
-	attached_document:Document | null;
+	document_write: DocumentWriteFn | {other: any;} | null;
+	attached_document: Document | null;
 	write(target: (...text: string[]) => void, thisArg: any, argArray: string[]) {
 		console.assert(target === this.document_write);
 		console.assert(thisArg === this.attached_document);
 		this.list.push(argArray, null);
 	}
-	document_write_proxy:DocumentWriteFn | { other: any; } | null;
+	document_write_proxy: DocumentWriteFn | {other: any;} | null;
 	destroy(should_try_to_destroy: boolean) {
 		if(this.attached_document && this.document_write_proxy) {
 			console.assert(this.attached_document.write === this.document_write_proxy);
@@ -202,7 +202,8 @@ class DocumentWriteList {
 				throw new Error("Unable to destroy DocumentWriteList: document.write is not equal to document_write_proxy");
 			}
 			if(this.document_write) {
-				if(down_convert_type<typeof this.document_write, typeof this.attached_document.write>(this.document_write)){;
+				if(down_convert_type<typeof this.document_write, typeof this.attached_document.write>(this.document_write)) {
+					;
 					this.attached_document.write = this.document_write;
 				}
 			}
@@ -876,7 +877,7 @@ class WorkerState {
 		worker_state_value.destroy();
 	}
 
-	static get_global_state():WorkerState {
+	static get_global_state(): WorkerState {
 		return (<any>window)[this.global_state_key];
 	}
 	static set_global_state(worker_state_value: WorkerState) {
@@ -1444,34 +1445,34 @@ class SimpleStackVM implements StackVM {
 				}
 				case 'get'/*Object*/: {
 					let name = this.pop();
-					if(!name)throw new Error("Invalid");
+					if(!name) throw new Error("Invalid");
 					let obj = this.pop();
-					if(!obj)throw new Error("Invalid");
-					if(obj instanceof VMBoxedKeyedObject && typeof name === 'string'){
+					if(!obj) throw new Error("Invalid");
+					if(obj instanceof VMBoxedKeyedObject && typeof name === 'string') {
 						this.push(obj.value[name]);
 					}
 					break;
 				}
 				case 'call'/*Call*/: {
 					let number_of_arguments = instruction_parameters[0];
-					if(number_of_arguments === void 0){
+					if(number_of_arguments === void 0) {
 						throw new Error("Invalid call operand");
 					}
-					if(typeof number_of_arguments != 'number')throw new Error("Invalid");
+					if(typeof number_of_arguments != 'number') throw new Error("Invalid");
 					let arg_arr = [];
 					for(let i = 0;i < number_of_arguments;i++) {
 						arg_arr.unshift(this.pop());
 					}
 					let name_to_call = this.pop();
 					let target = this.pop();
-					if(!target)throw "Bad";
-					if(!name_to_call)throw "Bad";
-					if(target instanceof VMBoxedCallableIndexed && typeof name_to_call==='string') {
-						let boxed_nulls:VMValue[]=[];
-						for(let i=0;i<arg_arr.length;i++){
-							let cur=arg_arr[i];
-							if(typeof cur == 'undefined'){
-								cur=new VMBoxedUndefined(cur);
+					if(!target) throw "Bad";
+					if(!name_to_call) throw "Bad";
+					if(target instanceof VMBoxedCallableIndexed && typeof name_to_call === 'string') {
+						let boxed_nulls: VMValue[] = [];
+						for(let i = 0;i < arg_arr.length;i++) {
+							let cur = arg_arr[i];
+							if(typeof cur == 'undefined') {
+								cur = new VMBoxedUndefined(cur);
 							}
 							boxed_nulls.push(cur);
 						}
@@ -1482,8 +1483,8 @@ class SimpleStackVM implements StackVM {
 				}
 				case 'return'/*Call*/: {
 					let ret = this.pop();
-					if(typeof ret == 'undefined'){
-						ret=new VMBoxedUndefined(ret);
+					if(typeof ret == 'undefined') {
+						ret = new VMBoxedUndefined(ret);
 					}
 					this.return_value = ret;
 					break;
@@ -2700,7 +2701,7 @@ function proxy_jquery() {
 function pace_finish_proxy_apply(func: Function, this_v: any, args: ArrayLike<[]>) {
 	auto_buy_obj.init();
 	window.Pace.bar.finish = func;
-	if(args.length > 0){
+	if(args.length > 0) {
 		throw new Error("pace apply used more than the expected arguments");
 	}
 	return Reflect.apply(func, this_v, args);
