@@ -1398,7 +1398,7 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 }
-import {InstructionType, StackVM, VMBoxedArray, VMBoxedCallableIndexed, VMBoxedGlobalThis, VMBoxedKeyedObject, VMBoxedStackVM, VMBoxedWindow, VMValue} from "./types/SimpleVMTypes";
+import {InstructionType, StackVM, VMBoxedArray, VMBoxedCallableIndexed, VMBoxedGlobalThis, VMBoxedKeyedObject, VMBoxedStackVM, VMBoxedUndefined, VMBoxedWindow, VMValue} from "./types/SimpleVMTypes";
 class SimpleStackVM implements StackVM {
 	instructions: InstructionType[];
 	stack: VMValue[];
@@ -1409,13 +1409,13 @@ class SimpleStackVM implements StackVM {
 		this.instructions = instructions;
 		this.stack = [];
 		this.instruction_pointer = 0;
-		this.return_value = void 0;
+		this.return_value = new VMBoxedUndefined(void 0);
 		this.running = false;
 	}
 	reset() {
 		this.stack.length = 0;
 		this.instruction_pointer = 0;
-		this.return_value = void 0;
+		this.return_value = new VMBoxedUndefined(void 0);
 		this.running = false;
 	}
 	push(value: VMValue) {
@@ -1466,14 +1466,25 @@ class SimpleStackVM implements StackVM {
 					let target = this.pop();
 					if(!target)throw "Bad";
 					if(!name_to_call)throw "Bad";
-					if(target instanceof VMBoxedCallableIndexed && typeof name_to_call==='string'){
-						let ret = target.value[name_to_call](...arg_arr);
+					if(target instanceof VMBoxedCallableIndexed && typeof name_to_call==='string') {
+						let boxed_nulls:VMValue[]=[];
+						for(let i=0;i<arg_arr.length;i++){
+							let cur=arg_arr[i];
+							if(typeof cur == 'undefined'){
+								cur=new VMBoxedUndefined(cur);
+							}
+							boxed_nulls.push(cur);
+						}
+						let ret = target.value[name_to_call](...boxed_nulls);
 						this.push(ret);
 					}
 					break;
 				}
 				case 'return'/*Call*/: {
 					let ret = this.pop();
+					if(typeof ret == 'undefined'){
+						ret=new VMBoxedUndefined(ret);
+					}
 					this.return_value = ret;
 					break;
 				}

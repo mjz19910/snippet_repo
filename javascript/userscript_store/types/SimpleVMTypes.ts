@@ -31,11 +31,13 @@ export class VMBoxedArray extends VMBoxedValue<VMValue[]>{}
 export class VMBoxedStackVM extends VMBoxedValue<StackVM>{}
 export class VMBoxedWindow extends VMBoxedValue<Window>{}
 export class VMBoxedGlobalThis extends VMBoxedValue<typeof globalThis> {}
+export class VMBoxedNull extends VMBoxedValue<null> {}
+export class VMBoxedUndefined extends VMBoxedValue<undefined> {}
 
 type VMFunctionTypes = VMBoxedFunction | VMBoxedNewableFunction | VMBoxedCallableFunction;
 type VMClassTypes = VMFunctionTypes;
-type VMValueTypes = VMBoxedCallableIndexed | VMBoxedValue<object> | VMBoxedKeyedObject | VMClassTypes | bigint | boolean | number | string | symbol;
-export type VMValue = VMValueTypes | undefined;
+type VMValueTypes = VMBoxedArray|VMBoxedUndefined | VMBoxedNull | VMBoxedCallableIndexed | VMBoxedValue<object> | VMBoxedKeyedObject | VMClassTypes | bigint | boolean | number | string | symbol;
+export type VMValue = VMValueTypes;
 type StackInstructionPushArgs = VMValue[];
 type InstructionDropArgs = [];
 type InstructionGetArgs = [];

@@ -1,5 +1,5 @@
 import {RecursivePartial} from "./types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMBoxedValue, VMValue, VMBoxedCallableIndexed} from "./types/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMBoxedValue, VMValue, VMBoxedCallableIndexed, VMBoxedNull, VMBoxedUndefined} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
 
@@ -65,6 +65,10 @@ declare global {
 		calcPres(): number;
 		g_auto_buy: AutoBuy;
 		g_proxy_state: {hand: {stack_overflow_check: () => any; count_arr: any[];};};
+		remoteSetTimeout: (handler: TimerHandler, timeout: string | number | object | undefined, ...target_args: any[]) => number;
+		remoteSetInterval: (handler: TimerHandler, timeout?: number, ...target_args: any[]) => number;
+		remoteClearTimeout: (id?: number) => void;
+		remoteClearInterval: (id?: number) => void;
 	}
 	export var Window: {
 		prototype: Window;
@@ -121,6 +125,8 @@ const TimeoutClearR = 206;
 type TimeoutClearRTy = typeof TimeoutClearR;
 const TimeoutClearA = 207;
 type TimeoutClearATy = typeof TimeoutClearA;
+const WorkerDestroyMessage = 300;
+type WorkerDestroyMessageTy = typeof WorkerDestroyMessage;
 const WorkerUpdateMessageHandlerReply = 301;
 type WorkerUpdateMessageHandlerReplyTy = typeof WorkerUpdateMessageHandlerReply;
 const WorkerReadyReply = 302;
@@ -135,8 +141,10 @@ const ReplyClearRepeating = 306;
 type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
 const ReplyClearAny = 307;
 type ReplyClearAnyTy = typeof ReplyClearAny;
-const ReplyMessage = 402;
-type ReplyMessageTy = typeof ReplyMessage;
+const ReplyMessage1 = 401;
+type ReplyMessage1Ty = typeof ReplyMessage1;
+const ReplyMessage2 = 402;
+type ReplyMessage2Ty = typeof ReplyMessage2;
 const ReplyFromWorker = 500;
 type ReplyFromWorkerTy = typeof ReplyFromWorker;
 const ReplyToWorker = 600;
@@ -243,9 +251,11 @@ class ReplyClearMessages implements ReplyClearTypes {
 	any: ReplyClearAnyTy = ReplyClearAny
 }
 class ReplyTypes {
-	msg: ReplyMessageTy = ReplyMessage;
+	msg1: ReplyMessage1Ty = ReplyMessage1;
+	msg2: ReplyMessage2Ty = ReplyMessage2;
 	from_worker: ReplyFromWorkerTy = ReplyFromWorker;
 	to_worker: ReplyToWorkerTy = ReplyToWorker;
+	destroy_worker:WorkerDestroyMessageTy = WorkerDestroyMessage;
 	update_handler: WorkerUpdateMessageHandlerReplyTy = WorkerUpdateMessageHandlerReply;
 	ready: WorkerReadyReplyTy = WorkerReadyReply;
 	set = new ReplySetMessages;
@@ -265,7 +275,7 @@ class MakeReplyData {
 const TimeoutSetStringS = "setTimeout";
 const TimeoutSetStringR = "setInterval";
 class TimeoutSetStrings implements TimeoutSetStringsTy {
-	single:typeof TimeoutSetStringS = TimeoutSetStringS;
+	single: typeof TimeoutSetStringS = TimeoutSetStringS;
 	repeating: typeof TimeoutSetStringR = TimeoutSetStringR;
 }
 class TimeoutSetInfo implements TimeoutSetInfoTy {
@@ -274,8 +284,8 @@ class TimeoutSetInfo implements TimeoutSetInfoTy {
 }
 class TimeoutClearInfo implements TimeoutClearInfoTy {
 	single: TimeoutClearSTy = TimeoutClearS;
-	repeating:  TimeoutClearRTy = TimeoutClearR;
-	any:  TimeoutClearATy = TimeoutClearA;
+	repeating: TimeoutClearRTy = TimeoutClearR;
+	any: TimeoutClearATy = TimeoutClearA;
 
 }
 class TimeoutWorkerTypes implements TimeoutWorkerTypesTy {
@@ -314,21 +324,21 @@ class TimerApi {
 			{t: TimeoutSetS},
 			{t: TimeoutSetR},
 			{t: TimeoutClearS},
-			new MakeReplyData(500, 302, TimeoutMessageR, {}),
+			new MakeReplyData(ReplyFromWorker, WorkerReadyReply, TimeoutMessageR, {}),
 			// TimeoutSetTypeS
-			new MakeReplyData(500, 303, {
+			new MakeReplyData(ReplyFromWorker, ReplySetSingle, {
 				var: 'local_id'
 			}, {}),
 			// TimeoutSetTypeR
-			new MakeReplyData(500, 304, {
+			new MakeReplyData(ReplyFromWorker, ReplySetRepeating, {
 				var: 'local_id'
 			}, {}),
 			// TimeoutClearS
-			new MakeReplyData(500, 305, {
+			new MakeReplyData(ReplyFromWorker, ReplyClearSingle, {
 				var: 'remote_id'
 			}, {}),
 			// TimeoutClearR
-			new MakeReplyData(500, 306, {
+			new MakeReplyData(ReplyFromWorker, ReplyClearRepeating, {
 				var: 'remote_id'
 			}, {})
 		];
@@ -346,18 +356,18 @@ type ScriptEventTargetType = {
 };
 class ScriptStateHost {
 	static event_target: ScriptEventTargetType = {
-			fns: [],
-			addEventListener(fn: (e: any) => void) {
-				this.fns.push(fn);
-			},
-			dispatchEvent(ev: {type: string; state: string;}) {
-				let l_fns = this.fns.slice();
-				for(let i = 0;i < l_fns.length;i++) {
-					let fn = l_fns[i];
-					fn(ev);
-				}
+		fns: [],
+		addEventListener(fn: (e: any) => void) {
+			this.fns.push(fn);
+		},
+		dispatchEvent(ev: {type: string; state: string;}) {
+			let l_fns = this.fns.slice();
+			for(let i = 0;i < l_fns.length;i++) {
+				let fn = l_fns[i];
+				fn(ev);
 			}
 		}
+	}
 }
 let is_in_ignored_from_src_fn = false;
 let is_in_userscript_fn = false;
@@ -619,14 +629,14 @@ function get_nearest_script() {
 		return doc_script;
 	}
 }
-type NullableItem<T>=T | null;
-type Nullable2dArray<T>=NullableItem<T[]>[];
+type NullableItem<T> = T | null;
+type Nullable2dArray<T> = NullableItem<T[]>[];
 type DocumentWriteFn = (...text: string[]) => void;
 
 class DocumentWriteFnProxyHandler {
-	other: DocumentWriteList|null = null;
+	other: DocumentWriteList | null = null;
 	apply(...a: [target: DocumentWriteFn, thisArg: any, argArray: string[]]) {
-		if(this.other)this.other.write(...a);
+		if(this.other) this.other.write(...a);
 	}
 }
 
@@ -649,7 +659,7 @@ class DocumentWriteList {
 		console.assert(thisArg === this.attached_document);
 		this.list.push(argArray, null);
 	}
-	document_write_proxy: (DocumentWriteFn | {other:any}) | null;
+	document_write_proxy: (DocumentWriteFn | {other: any}) | null;
 	attach_proxy(document: Document) {
 		if(this.attached) {
 			let was_destroyed = this.destroy(true);
@@ -659,8 +669,8 @@ class DocumentWriteList {
 		}
 		this.attached_document = document;
 		this.document_write = document.write;
-		let obj=new DocumentWriteFnProxyHandler;
-		obj.other=this;
+		let obj = new DocumentWriteFnProxyHandler;
+		obj.other = this;
 		this.document_write_proxy = new Proxy(document.write, obj);
 		document.write = this.document_write_proxy;
 	}
@@ -694,7 +704,7 @@ class UniqueIdGenerator {
 	constructor() {
 		this.m_current = -1;
 	}
-	set_current(current_value: any) {
+	set_current(current_value: number) {
 		this.m_current = current_value;
 	}
 	current() {
@@ -707,21 +717,21 @@ class UniqueIdGenerator {
 class PromiseExecutorHandle {
 	m_closed;
 	destroyed;
-	m_accept;
+	m_accept: ((arg0: WorkerState | null) => void) | null;
 	m_reject;
-	constructor(accept: any, reject: any) {
+	constructor(accept: (arg0: WorkerState | null) => void, reject: any) {
 		this.m_closed = false;
 		this.destroyed = false;
 		this.m_accept = accept;
 		this.m_reject = reject;
 	}
-	accept(value: any) {
+	accept(value: WorkerState | null) {
 		if(this.destroyed) throw new Error("accept called on destroyed PromiseExecutorHandle");
 		let accept = this.m_accept;
-		accept(value);
+		if(accept) accept(value);
 		this.close();
 	}
-	reject(error: any) {
+	reject(error: Error) {
 		if(this.destroyed) throw new Error("accept called on destroyed PromiseExecutorHandle");
 		let reject = this.m_reject;
 		reject(error);
@@ -764,11 +774,11 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 					set_types: TimeoutSetTypes
 				}
 			}
-		set_names : TimeoutSetStringsTy = {
+		set_names: TimeoutSetStringsTy = {
 			single: TimeoutSetStringS,
 			repeating: TimeoutSetStringR
 		}
-		clear_names:TimeoutClearStringsTy = {
+		clear_names: TimeoutClearStringsTy = {
 			single: TimeoutClearStringS,
 			repeating: TimeoutClearStringR
 		}
@@ -795,7 +805,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 		timer.fire(remote_id);
 	}
 	type NL<T> = T | null;
-	let remote_api_info_instance: NL<TimerApi> = null; //new RemoteTimerApi;
+	let remote_api_info_instance: NL<TimerApi> = null;//new RemoteTimerApi;
 	let message_types: NL<TimerApi['msg_types']> = null;//remote_api_info_instance.msg_types;
 	let reply_message_types: NL<TimerApi['msg_types']['reply']> = null;//message_types.reply;
 	let fire_pause: any[] = [];
@@ -814,7 +824,7 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 			this.base_id = globalThis[this.m_api_info.set_names.single](nop_fn);
 			globalThis[this.m_api_info.clear_names.single](this.base_id);
 		}
-		fire(remote_id: any) {
+		fire(remote_id: number) {
 			let local_state = this.m_remote_id_to_state_map.get(remote_id);
 			if(!local_state) return;
 			this.validate_state(local_state, remote_id);
@@ -1073,14 +1083,12 @@ class WorkerState {
 			this.destroy();
 		}
 		this.flags.set('connected', false);
-		/**@type {WeakRef<WorkerState>} */
-		let weak_worker_state = new WeakRef(this);
+		let weak_worker_state:WeakRef<WorkerState> = new WeakRef(this);
 		this.worker_url = URL.createObjectURL(this.worker_code);
 		if(this.flags.get('failed')) return;
 		this.worker = new Worker(this.worker_url);
 		this.worker.onmessage = function onmessage(e: {data: any;}) {
 			var msg = e.data;
-			/**@type {typeof weak_worker_state} */
 			let worker_state = weak_worker_state.deref();
 			if(!worker_state) {
 				console.log('lost worker state');
@@ -1096,16 +1104,16 @@ class WorkerState {
 					worker_state.timer.fire(TIMER_REPEATING, msg.v);
 					break;
 				}
-				case 300/*worker_state destroy*/:
+				case WorkerDestroyMessage/*worker_state destroy*/:
 					worker_state.destroy();
 					break;
-				case 401:
-				case 402/*worker_state dispatch_message_unpacked*/: {
+				case ReplyMessage1:
+				case ReplyMessage2/*worker_state dispatch_message_unpacked*/: {
 					debugger;
 					worker_state.dispatch_message(msg);
 					break;
 				}
-				case 500/*worker_state dispatch_message*/: {
+				case ReplyFromWorker/*worker_state dispatch_message*/: {
 					worker_state.dispatch_message(msg.v);
 					break;
 				}
@@ -1128,12 +1136,12 @@ class WorkerState {
 		if(!this.executor_handle) return;
 		switch(data) {
 			case message_types.worker.update_message_handler: {
-				console.assert(type === 301);
+				console.assert(type === WorkerUpdateMessageHandlerReply);
 				console.log("remote_worker onmessage function changed");
 				break;
 			}
 			case message_types.worker.ready: {
-				console.assert(type === 302);
+				console.assert(type === WorkerReadyReply);
 				if(this.executor_handle.closed()) {
 					console.assert(false, "WorkerState used with closed executor_handle");
 					break;
@@ -1156,27 +1164,27 @@ class WorkerState {
 			msg_type = result;
 		}
 		switch(msg_type) {
-			case 301: {
+			case WorkerUpdateMessageHandlerReply: {
 				debugger;
 				this.on_result(msg_type, msg_data);
 			} break;
-			case 302: {
+			case WorkerReadyReply: {
 				// debugger;
 				this.on_result(msg_type, msg_data);
 			} break;
-			case 401: {
+			case ReplyMessage1: {
 				debugger;
 				this.on_result(msg_type, msg_data);
 			} break;
-			case 402: {
+			case ReplyMessage2: {
 				debugger;
 				this.timer.on_result(msg_type, msg_data);
 			} break;
-			case 303: {
+			case ReplySetSingle: {
 				// debugger;
 				this.timer.on_reply(msg_type, msg_data);
 			} break;
-			case 304: {
+			case ReplySetRepeating: {
 				// debugger;
 				this.timer.on_reply(msg_type, msg_data);
 			} break;
@@ -1499,13 +1507,13 @@ class Timer {
 				this.delete_state_by_remote_id(remote_id);
 				break;
 			}
-			case 303: {
+			case ReplySetSingle: {
 				//debugger;
 			} break;
-			case 304: {
+			case ReplySetRepeating: {
 				// debugger;
 			} break;
-			case 305: {
+			case ReplyClearSingle: {
 				debugger;
 			} break;
 			case message_types.reply.clear.repeating: {
@@ -1597,7 +1605,7 @@ function VERIFY(assert_result: boolean, assert_message: string) {
 		throw new VerifyError(assert_message);
 	}
 }
-function move_timers_to_worker_promise_executor(executor_accept: (arg0: null) => void, executor_reject: any) {
+function move_timers_to_worker_promise_executor(executor_accept: (arg0: WorkerState | null) => void, executor_reject: any) {
 	let failed = false;
 	if(globalThis.remote_worker_state) {
 		postMessage({t: 300});
@@ -1681,7 +1689,6 @@ function move_timers_to_worker_promise_executor(executor_accept: (arg0: null) =>
 		let tt4: number | string;
 		let tt3: string | number | Object;
 		let tt2: number | string | object = timeout;
-		let tt1 = timeout;
 		if(typeof timeout != 'number' && tt2.valueOf) {
 			tt3 = tt2.valueOf();
 		} else {
@@ -1696,10 +1703,9 @@ function move_timers_to_worker_promise_executor(executor_accept: (arg0: null) =>
 		} else {
 			tt4 = Object.prototype.toString.call(tt3);
 		}
-		return worker_state.timer.set(TIMER_REPEATING, handler, timeout, target_args);
+		return worker_state.timer.set(TIMER_REPEATING, handler, tt4, target_args);
 	}
 	const clearInterval_global = clearInterval;
-	/**@arg {number} id */
 	function remoteClearInterval(id: number | undefined) {
 		if(!worker_state) {
 			window.clearInterval = clearInterval_global;
@@ -1708,10 +1714,10 @@ function move_timers_to_worker_promise_executor(executor_accept: (arg0: null) =>
 		}
 		worker_state.timer.clear(TIMER_REPEATING, id);
 	}
-	(<any>window).remoteSetTimeout = remoteSetTimeout;
-	(<any>window).remoteSetInterval = remoteSetInterval;
-	(<any>window).remoteClearTimeout = remoteClearTimeout;
-	(<any>window).remoteClearInterval = remoteClearInterval;
+	window.remoteSetTimeout = remoteSetTimeout;
+	window.remoteSetInterval = remoteSetInterval;
+	window.remoteClearTimeout = remoteClearTimeout;
+	window.remoteClearInterval = remoteClearInterval;
 	if(!failed) {
 		window.setTimeout = remoteSetTimeout;
 		window.setInterval = remoteSetInterval;
@@ -1771,8 +1777,8 @@ class EventHandlerDispatch<T> {
 	}
 }
 abstract class AbstractVM {
-	abstract execute_instruction_raw(cur_opcode: any, operands: any): void;
-	// abstract execute_instruction_raw_t(cur_opcode: any, operands: any):void;
+	abstract execute_instruction_raw(cur_opcode: InstructionType[0], operands: AnyInstructionOperands): void;
+	abstract run():VMValue;
 }
 class BaseVMCreate extends AbstractVM {
 	flags: {
@@ -1819,6 +1825,15 @@ class BaseVMCreate extends AbstractVM {
 			case 'halt'/*Running*/: this.running = false; break;
 		}
 	}
+	run():VMValue {
+		this.running = true;
+		while(this.instruction_pointer < this.instructions.length && this.running) {
+			let [cur_opcode, ...operands] = this.instructions[this.instruction_pointer];
+			this.execute_instruction_raw(cur_opcode, operands);
+			this.instruction_pointer++;
+		}
+		return new VMBoxedNull(null);
+	}
 }
 function trigger_debug_breakpoint() {
 	debugger;
@@ -1830,22 +1845,25 @@ function l_log_if(level: number, ...args: any[]) {
 	}
 }
 const LOG_LEVEL_ERROR = 1;
+void LOG_LEVEL_ERROR;
 const LOG_LEVEL_WARN = 2;
 const LOG_LEVEL_INFO = 3;
+void LOG_LEVEL_INFO;
 const LOG_LEVEL_VERBOSE = 4;
 const LOG_LEVEL_TRACE = 5;
+void LOG_LEVEL_TRACE;
 class BaseStackVM extends BaseVMCreate {
 	stack: VMValue[];
 	return_value: VMValue;
 	constructor(instructions: InstructionType[]) {
 		super(instructions);
 		this.stack = [];
-		this.return_value = void 0;
+		this.return_value = new VMBoxedUndefined(void 0);
 	}
 	reset() {
 		super.reset();
 		this.stack.length = 0;
-		this.return_value = void 0;
+		this.return_value = new VMBoxedUndefined(void 0);
 	}
 	push(value: VMValue) {
 		this.stack.push(value);
@@ -1854,7 +1872,11 @@ class BaseStackVM extends BaseVMCreate {
 		if(this.stack.length === 0) {
 			throw new Error("stack underflow");
 		}
-		return this.stack.pop();
+		let pop_value=this.stack.pop();
+		if(pop_value === void 0){
+			return new VMBoxedUndefined(pop_value);
+		}
+		return pop_value;
 	}
 	pop_arg_count(operand_number_of_arguments: any) {
 		let arguments_arr = [];
@@ -1949,7 +1971,7 @@ class BaseStackVM extends BaseVMCreate {
 			default: super.execute_instruction_raw(cur_opcode, operands); break;
 		}
 	}
-	run() {
+	run():VMValue {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let [cur_opcode, ...operands] = this.instructions[this.instruction_pointer];
@@ -1970,7 +1992,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 		super.reset();
 		this.args_vec = null;
 	}
-	execute_instruction_raw(cur_opcode: any, operands: any[]) {
+	execute_instruction_raw(cur_opcode: InstructionType[0], operands: AnyInstructionOperands) {
 		switch(cur_opcode) {
 			case 'this'/*Special*/: this.push(new VMBoxedValue(this)); break;
 			// TODO: if you ever use this on a worker, change
@@ -2000,6 +2022,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 		return super.run();
 	}
 }
+type FormattableTypes=string | (()=>void) | ((err:VMValue)=>void);
 class SimpleStackVMParser {
 	/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
 	static parse_int_arg(cur: string[] | number[], arg_loc: number) {
@@ -2058,7 +2081,7 @@ class SimpleStackVMParser {
 		if(parts) console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);
 		return arr;
 	}
-	static parse_instruction_stream_from_string(string: string, format_list: any[]) {
+	static parse_instruction_stream_from_string(string: string, format_list: FormattableTypes[]) {
 		let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
 		for(let i = 0;i < raw_instructions.length;i++) {
 			let raw_instruction = raw_instructions[i];
@@ -2110,7 +2133,7 @@ class SimpleStackVMParser {
 SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
 class EventHandlerVMDispatch extends SimpleStackVM<Event> {
 	target_obj;
-	constructor(instructions: any[][], target_obj: any) {
+	constructor(instructions: InstructionType[], target_obj: AutoBuy) {
 		super(instructions);
 		this.target_obj = target_obj;
 	}
@@ -2121,7 +2144,7 @@ class EventHandlerVMDispatch extends SimpleStackVM<Event> {
 }
 class CompressionStatsCalculator {
 	hit_counts: number[];
-	cache: any[];
+	cache: string[];
 	constructor() {
 		this.hit_counts = [];
 		this.cache = [];
@@ -2137,7 +2160,7 @@ class CompressionStatsCalculator {
 			this.hit_counts[index] = 1;
 		} else this.hit_counts[index]++;
 	}
-	add_item(key: any) {
+	add_item(key: string) {
 		let index = this.cache.indexOf(key)
 		if(index == -1) index = this.cache.push(key);
 		else this.add_hit(index);
@@ -2146,34 +2169,37 @@ class CompressionStatsCalculator {
 		this.cache.length = 0;
 		this.hit_counts.length = 0;
 	}
-	calc_compression_stats(arr: any[], win_size: number) {
+	calc_compression_stats(arr: string[], win_size: number):string[][] {
 		this.reset();
 		for(let i = 0;i < arr.length;i++) {
 			if(i + win_size < arr.length) {
 				this.add_item(arr.slice(i, i + win_size).join(","));
 			}
 		}
-		return to_tuple_arr(this.map_keys(), this.map_values()).filter((e: undefined[]) => e[1] !== void 0);
+		let mk=this.map_keys();
+		let mv=this.map_values();
+		let tuple_of=to_tuple_arr(mk, mv);
+		return tuple_of.filter((e) => e[1] !== void 0);
 	}
-	calc_for_stats_window_size(stats_arr: any[][][], arr: any, win_size: number) {
+	calc_for_stats_window_size(stats_arr: string[][][], arr: string[], win_size: number) {
 		stats_arr[win_size - 1] = this.calc_compression_stats(arr, win_size);
 	}
-	calc_for_stats_index(stats_arr: any[][][], arr: any, index: number) {
+	calc_for_stats_index(stats_arr: string[][][], arr: string[], index: number) {
 		stats_arr[index] = this.calc_compression_stats(arr, index + 1);
 	}
 }
 class BaseCompression {
-	did_compress(src: string | any[], dst: string | any[]) {
+	did_compress(src: string[], dst: string[]) {
 		return dst.length < src.length;
 	}
-	did_decompress(src: string | any[], dst: string | any[]) {
+	did_decompress(src: string[], dst: string[]) {
 		return dst.length > src.length;
 	}
-	compress_result(src: any, dst: any[]) {
+	compress_result(src: string[], dst: string[]) {
 		if(this.did_compress(src, dst)) return [true, dst];
 		return [false, src];
 	}
-	decompress_result(src: any, dst: any[]) {
+	decompress_result(src: string[], dst: string[]):[res:boolean, v:string[]] {
 		// maybe this is not a decompression, just a modification to make
 		// later decompression work
 		if(this.did_decompress(src, dst)) return [true, dst];
@@ -2182,7 +2208,7 @@ class BaseCompression {
 }
 class MulCompression extends BaseCompression {
 	stats_calculator;
-	compression_stats: any[];
+	compression_stats: never[][];
 	constructor() {
 		super();
 		this.stats_calculator = new CompressionStatsCalculator;
@@ -2209,7 +2235,7 @@ class MulCompression extends BaseCompression {
 		}
 		return this.compress_result(arr, ret);
 	}
-	try_decompress(arr: string[]) {
+	try_decompress(arr: string[]): [res:boolean, v:string[]] {
 		let ret = [];
 		for(let i = 0;i < arr.length;i++) {
 			let item = arr[i];
@@ -2225,7 +2251,7 @@ class MulCompression extends BaseCompression {
 		}
 		return this.decompress_result(arr, ret);
 	}
-	compress_array(arr: any) {
+	compress_array(arr: string[]) {
 		let success, res;
 		[success, res] = this.try_decompress(arr);
 		if(success) arr = res;
@@ -2242,7 +2268,7 @@ class MulCompression extends BaseCompression {
 		return arr;
 	}
 }
-function calc_ratio(arr: string | any[]) {
+function calc_ratio(arr: number[]) {
 	let ratio_acc = 0;
 	for(let i = 0;i < arr.length;i++)ratio_acc += arr[i];
 	// don't divide by zero
@@ -2268,8 +2294,7 @@ class AverageRatio {
 		this.weight = weight;
 		this.human_duration = human_duration;
 	}
-	/**@arg {boolean} from_prev */
-	add(value: number, from_prev: any, debug = false) {
+	add(value: number, from_prev: boolean, debug = false) {
 		if(from_prev) {
 			if(debug) console.log("ratio add", this.human_duration, (value * 100).toFixed(5));
 			this.arr.unshift(value);
@@ -2301,12 +2326,16 @@ class AbstractTarget {
 		return Promise.reject(new Error("Attempt to call an abstract class"));
 	}
 }
+type TimeoutTargetObjects = AutoBuy|AutoBuyState;
+type CallbackType1=()=>void;
+type CallbackType2=(this:TimeoutTargetObjects)=>void;
+type TimeoutTargetCallbackType = CallbackType2 | CallbackType1;
 class TimeoutTarget extends AbstractTarget {
 	once;
 	obj;
 	callback;
 	description;
-	constructor(obj: any, callback: any, description: string) {
+	constructor(obj: TimeoutTargetObjects, callback: TimeoutTargetCallbackType, description: string) {
 		super();
 		this.once = true;
 		this.obj = obj
@@ -2333,6 +2362,7 @@ class IntervalTarget extends AbstractTarget {
 		this.callback.call(this.obj);
 	}
 }
+void IntervalTarget;
 class PromiseTimeoutTarget {
 	description;
 	m_promise: Promise<void> | null;
@@ -2346,18 +2376,19 @@ class PromiseTimeoutTarget {
 		return this.m_promise;
 	}
 	promise_accept: ((value: void | PromiseLike<void>) => void) | null;
-	callback: ((value: any) => void) | null;
-	promise_executor(accept: (value: void | PromiseLike<void>) => void, reject: any) {
+	callback: ((value: void | PromiseLike<void>) => void) | null;
+	promise_executor(accept: (value: void | PromiseLike<void>) => void, reject: (reason?:any)=>void) {
+		void reject;
 		this.promise_accept = accept;
 		this.callback = this.on_result.bind(this);
 	}
-	on_result(value: any) {
+	on_result(value: void | PromiseLike<void>) {
 		this.m_promise = null;
 		if(this.promise_accept) this.promise_accept(value);
 	}
 	fire() {
 		let callback = this.callback;
-		if(callback) callback(null);
+		if(callback) callback();
 	}
 }
 class AsyncTimeoutTarget extends PromiseTimeoutTarget {
@@ -2389,7 +2420,7 @@ class BaseNode {
 }
 class BaseTimeoutNode extends BaseNode {
 	timeout;
-	constructor(timeout: any) {
+	constructor(timeout: number | undefined) {
 		super();
 		this.timeout = timeout;
 	}
@@ -2401,7 +2432,7 @@ class TimeoutIdNode extends BaseTimeoutNode {
 	id: number | null;
 	m_is_timeout: boolean;
 	constructor(id: number | null = null, is_timeout_flag: boolean) {
-		super(null);
+		super(void 0);
 		this.id = id;
 		this.m_is_timeout = is_timeout_flag;
 	}
@@ -2434,10 +2465,11 @@ class TimeoutNode extends BaseTimeoutNode {
 }
 class IntervalNode extends BaseTimeoutNode {
 	id: number | null | undefined;
-	target: any;
+	target: {fire: () => void;} | null;
 	constructor(timeout = 0) {
 		super(timeout);
 		this.id = null;
+		this.target=null;
 	}
 	set() {
 		this.id = setInterval(this.run.bind(this), this.timeout);
@@ -2445,7 +2477,7 @@ class IntervalNode extends BaseTimeoutNode {
 	set_target(target: any): void {
 		this.target = target;
 	}
-	start(target: any) {
+	start(target: {fire: () => void;} | null) {
 		if(target) this.set_target(target);
 		this.set();
 	}
@@ -2467,18 +2499,12 @@ class AsyncTimeoutNode extends TimeoutNode {
 		throw new Error("unable to start_async without anything to wait for");
 	}
 }
-type RecordType1 = {
-	remove(): void;
-	set_parent(v: AsyncNodeRoot | null): void;
-	destroy(): void;
-};
-
 class AsyncNodeRoot {
 	children: BaseNode[];
 	constructor() {
 		this.children = [];
 	}
-	set(target_fn: () => void, timeout: any, repeat = false) {
+	set(target_fn: () => void, timeout: number, repeat = false) {
 		let node: TimeoutNode | IntervalNode;
 		if(repeat) {
 			node = new TimeoutNode(timeout);
@@ -2522,14 +2548,14 @@ class AverageRatioRoot {
 		this.map = new Map;
 		this.ordered_keys = [];
 	}
-	set_ordered_keys(ordered_keys: any) {
+	set_ordered_keys(ordered_keys: string[]) {
 		this.ordered_keys = ordered_keys;
 	}
-	can_average(key: any) {
+	can_average(key: string) {
 		let ratio_calc = this.map.get(key);
 		if(ratio_calc) return ratio_calc.can_average();
 	}
-	get_average(key: any) {
+	get_average(key: string) {
 		let ratio_calc = this.map.get(key);
 		if(ratio_calc) return ratio_calc.get_average();
 		return 0;
@@ -2538,7 +2564,7 @@ class AverageRatioRoot {
 		this.ordered_keys.push(key);
 		this.map.set(key, ratio_obj);
 	}
-	push(value: any) {
+	push(value: number) {
 		let cur = this.map.get(this.ordered_keys[0]);
 		if(!cur) return;
 		let res = cur.add(value, true, false);
@@ -2555,7 +2581,7 @@ class AverageRatioRoot {
 	}
 }
 type TAutoBuyRoot = {
-	append_child(v: any): void;
+	append_child(v: AsyncTimeoutNode): void;
 };
 
 class AutoBuyState {
@@ -3018,7 +3044,7 @@ class AutoBuy {
 			global;push,removeEventListener;push,click;this;
 				call,int(2);
 			drop
-			`, [function() {console.log('play success')}, function(err: any) {console.log(err)}]);
+			`, [function() {console.log('play success')}, function(err: VMValue) {console.log(err)}]);
 		let handler = new EventHandlerVMDispatch(instructions, this);
 		globalThis.addEventListener('click', handler);
 		is_in_ignored_from_src_fn = false;
@@ -3577,7 +3603,7 @@ class AutoBuy {
 		let promise = node.start_async(att);
 		await promise;
 	}
-	next_timeout(trg_fn: CallableFunction, timeout: number, char: string, silent = false) {
+	next_timeout(trg_fn: ()=>void, timeout: number, char: string, silent = false) {
 		let node = new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTarget(this, trg_fn, char));
@@ -3773,20 +3799,20 @@ class AsyncTrigger {
 		this.m_can_notify = true;
 	}
 }
-function map_to_tuple(this: any, e: any, i: string | number) {
+function map_to_tuple(this: never, e: string, i: string | number) {
 	return [e, this[i]];
 }
-function to_tuple_arr(keys: any[], values: any) {
+function to_tuple_arr(keys: string[], values: number[]) {
 	return keys.map(map_to_tuple, values);
 }
 function promise_set_timeout(timeout: number | undefined, a: TimerHandler) {
 	setTimeout(a, timeout);
 }
-function do_async_wait(timeout: any) {
+function do_async_wait(timeout: never) {
 	return new Promise(promise_set_timeout.bind(null, timeout));
 }
 void do_async_wait;
-function array_sample_end(arr: {(): any; new(): any; length: number;}[], rem_target_len: number) {
+function array_sample_end(arr: {(): never; new(): never; length: number;}[], rem_target_len: number) {
 	arr = arr.slice(-300);
 	let rem_len = char_len_of(arr);
 	while(rem_len > rem_target_len) {
