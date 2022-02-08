@@ -2004,8 +2004,17 @@
 		constructor(){
 			this.parent=null;
 		}
+		set_parent(parent){
+			this.parent=parent;
+		}
 		run(){
 			// do nothing
+		}
+		remove(){
+			if(this.parent)this.parent.remove_child(this);
+		}
+		destroy(){
+			this.remove();
 		}
 	}
 	class BaseTimeoutNode extends BaseNode {
@@ -2016,20 +2025,25 @@
 		get_timeout(){
 			return this.timeout;
 		}
-		set_parent(parent){
-			this.parent=parent;
-		}
-		remove(){
-			if(this.parent)this.parent.remove_child(this);
-		}
-		destroy(){
-			this.remove();
-		}
 	}
 	class TimeoutIdNode extends BaseTimeoutNode {
 		constructor(id=null){
 			super(null);
 			this.id=id;
+		}
+		destroy(){
+			if(this.id !== null)clearTimeout(this.id);
+			super.destroy();
+		}
+	}
+	class IntervalIdNode extends BaseTimeoutNode {
+		constructor(id=null){
+			super(null);
+			this.id=id;
+		}
+		destroy(){
+			if(this.id !== null)clearInterval(this.id);
+			super.destroy();
 		}
 	}
 	class TimeoutNode extends BaseTimeoutNode {
@@ -2082,6 +2096,16 @@
 				return target.wait();
 			}
 			throw new Error("unable to start_async without anything to wait for");
+		}
+	}
+	class IntervalIdNodeRef extends IntervalIdNode {
+		constructor(interval_id, destroy_cb){
+			super(interval_id);
+			this.destroy_callback=destroy_cb;
+		}
+		destroy(){
+			this.destroy_callback();
+			super.destroy();
 		}
 	}
 	class AsyncNodeRoot {
@@ -2163,6 +2187,7 @@
 			this.debug=false;
 			this.arr=[];
 			this.ratio=0;
+			this.last_ratio=0;
 			this.compressor_stats=[];
 			this.arr_max_len=5*60;
 			this.val=1;
@@ -2265,8 +2290,8 @@
 		}
 		get_mul_modifier(){
 			switch(this.ratio_mode){
-				case 0:return 2;
-				default:return 1;
+				case 0:return 5;
+				default:return 3;
 			}
 		}
 		get_near_val(){
@@ -2459,7 +2484,7 @@
 			this.root_node=new AsyncNodeRoot;
 			this.timeout_ms=0;this.iter_count=0;this.epoch_len=0;
 			this.background_audio=null;this.state_history_arr=null;
-			this.skip_save=false;
+			this.skip_save=false;this.has_real_time=false;
 			this.cint_arr=[];
 			this.local_data_loader=new DataLoader(localStorage);
 			this.state=new AutoBuyState(this.root_node);
@@ -2687,10 +2712,105 @@
 			}
 		}
 		update_timeout_element() {
-			this.dom_map.get('timeout_element').innerText=this.round(this.timeout_ms)// (this.timeout_avg()[1]);
+			this.dom_map.get('timeout_element').innerText=this.get_milis_as_pretty_str(this.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
+		}
+		do_zero_pad(value, pad_char, char_num) {
+			let string;
+			if(typeof value === 'number'){
+				string = value.toString();
+			} else {
+				string = value;
+			}
+			while(string.length < char_num){
+				string = pad_char + string;
+			}
+			return string;
+		}
+		get_milis_as_pretty_str(timeout_mili, mili_acc){
+			let time_arr=[];
+			let float_miliseconds = timeout_mili % 1000;
+			let mili_len=6;
+			if(mili_acc === 0){
+				mili_len=3;
+			}
+			time_arr[3]=this.do_zero_pad(float_miliseconds.toFixed(mili_acc), '0', mili_len);
+			timeout_mili-=float_miliseconds;
+			timeout_mili/=1000;
+			let int_seconds = timeout_mili % 60;
+			time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
+			timeout_mili-=int_seconds;
+			timeout_mili/=60;
+			let int_minutes = timeout_mili % 60;
+			time_arr[1]=this.do_zero_pad(int_minutes, '0', 2);
+			timeout_mili-=int_minutes;
+			timeout_mili/=60;
+			let int_hours=timeout_mili;
+			time_arr[0]=this.do_zero_pad(int_hours, '0', 2);
+			int_hours === 0 && (time_arr.shift(), int_minutes === 0 && (time_arr.shift(), int_seconds === 0 && time_arr.shift()));
+			switch(time_arr.length) {
+				case 1:
+					return time_arr[0] + 'ms';
+				case 2:
+					return time_arr[0] + '.' + time_arr[1];
+				case 3:
+					return time_arr.slice(0, 2).join(":") + '.' + time_arr[2];
+				case 4:
+					return time_arr.slice(0, 3).join(":") + '.' + time_arr[3];
+			}
+			return time_arr.join(":");
+		}
+		get_hours_num_as_pretty_str(hours_num){
+			let int_hours=~~hours_num;
+			let time_arr=[];
+			time_arr[0]=this.do_zero_pad(int_hours, '0', 2);
+			let float_minutes=(hours_num-int_hours) * 60;
+			let int_minutes = ~~float_minutes;
+			time_arr[1]=this.do_zero_pad(int_minutes, '0', 2);
+			let float_seconds = (float_minutes-int_minutes) * 60;
+			let int_seconds = ~~float_seconds;
+			time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
+			let float_miliseconds = (float_seconds-int_seconds) * 1000;
+			let float_mili_from_prev = float_miliseconds - 1000;
+			let has_miliseconds=true;
+			if(float_miliseconds > 100 && float_miliseconds < 900){
+				this.has_real_time=true;
+			}
+			if(this.has_real_time);else if(float_miliseconds < 3e-9 && float_miliseconds > -3e-9);else if(float_mili_from_prev < 3e-9 && float_mili_from_prev > -3e-9);else {
+				console.log(float_miliseconds, float_miliseconds - 1000);
+			}
+			let int_miliseconds = ~~float_miliseconds;
+			if(int_miliseconds >= 1000) {
+				int_miliseconds-=1000;
+				int_seconds++;
+				if(int_seconds >= 60) {
+					int_seconds=0;
+					int_minutes++;
+					if(int_minutes >= 60){
+						int_minutes=0;
+						int_hours++;
+						time_arr[0]=this.do_zero_pad(int_hours, '0', 2);
+					}
+					time_arr[1]=this.do_zero_pad(int_minutes, '0', 2);
+				}
+				time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
+			}
+			time_arr[3]=this.do_zero_pad(int_miliseconds, '0', 3);
+			int_hours === 0 && (time_arr.shift(), int_minutes === 0 && (time_arr.shift(), int_seconds === 0 && time_arr.shift()));
+			switch(time_arr.length) {
+				case 1:
+					return time_arr[0] + 'ms';
+				case 2:
+					return time_arr[0] + '.' + time_arr[1];
+				case 3:
+					return time_arr.slice(0, 2).join(":") + '.' + time_arr[2];
+				case 4:
+					return time_arr.slice(0, 3).join(":") + '.' + time_arr[3];
+			}
+			return time_arr.join(":");
 		}
 		update_hours_played(){
-			this.dom_map.get('hours_played').innerText=((timeplayed / 30) / 60).toFixed(7) + " hours";
+			let float_hours=((timeplayed / 30) / 60);
+			this.dom_map.get('hours_played').innerText=this.get_hours_num_as_pretty_str(float_hours);
 		}
 		update_ratio_element(){
 			this.dom_map.get('ratio').innerText=(this.state.ratio*100).toFixed(2)+"%";
@@ -2728,15 +2848,14 @@
 		init(){
 			this.next_timeout(this.init_impl, 200, 'init', true);
 		}
-		dom_reset() {
-			debugger;
-		}
-		replace_timeplayed_timer(){
+		set_secondinterval(){
+			let disabled=false;
+			if(disabled)return;
 			//spell:words secondinterval
-			clearInterval(window.secondinterval);
+			if(window.secondinterval !== void 0)clearInterval(window.secondinterval);
 			let rate = 66 / 2000;
 			let time_base=performance.now();
-			window.secondinterval = setInterval(function() {
+			let interval_id = setInterval(function() {
 				let real_time=performance.now();
 				let time_diff=real_time-time_base;
 				time_base=real_time;
@@ -2749,6 +2868,12 @@
 				}
 				timeplayed += real_rate;
 			}, 66);
+			window.secondinterval = interval_id;
+			this.root_node.append_child(new IntervalIdNodeRef(interval_id, function(){
+				window.secondinterval = void 0;
+			}));
+		}
+		set_timeplayed_update_interval(){
 			this.root_node.append_raw(setInterval(function(){
 				doc.title = rounding(totalAtome, false,1).toString() + " atoms";
 				//spell:words atomsaccu presnbr
@@ -2757,8 +2882,11 @@
 				doc.getElementById('presnbr').innerHTML = "<br>" + (calcPres() * 100).toFixed(0) + " % APS boost";
 			}, 2000), false);
 		}
+		replace_timeplayed_timer(){
+			this.set_secondinterval();
+			this.set_timeplayed_update_interval();
+		}
 		init_impl() {
-			let t=this;
 			this.global_init();
 			this.init_dom();
 			this.state.init();
@@ -2778,24 +2906,22 @@
 		state_history_append(value, silent=false){
 			this.epoch_len++;
 			if(silent)return;
-			Promise.resolve().then(this.async_compress.bind(this));
 			let last=this.state_history_arr.at(-1);
 			this.state_history_arr.push(value);
 			if(this.state.debug)console.log('history append', last, value);
 			while(this.state_history_arr.length>120)this.state_history_arr.shift();
+			Promise.resolve().then(this.async_compress.bind(this));
 		}
 		history_element_click_handler(event){
 			this.root_node.destroy();
 			this.set_update_timeout();
 			this.set_auto_buy_timeout();
+			// we destroyed the node this was attached to,
+			// replace it again (it was there, we destroyed it, now please put it back)
+			this.set_timeplayed_update_interval();
 		}
 		set_auto_buy_timeout(){
-			let timeout=3000;
-			if(this.timeout_ms < timeout)timeout=this.timeout_ms;
-			this.next_timeout(this.main, timeout, '@');
-		}
-		reset(){
-			debugger;
+			this.next_timeout(this.main, ~~(this.timeout_ms / 4), '@');
 		}
 		timeout_avg() {
 			let first=this.timeout_arr[0];
@@ -2828,47 +2954,45 @@
 			let num=val;// max / val;
 			this.last_value??=num;
 			let diff=this.last_value-num;
-			if(true || diff > .1 || diff < -.1){
-				this.last_value=num;
-				this.large_diff.push(num);
-				let sorted_diff_arr = this.large_diff.map(e=>e-num).sort((a,b)=>a-b);
-				let diff_want_mul=1;
-				let diff_cur=diff;
-				while(diff_cur > -1 && diff_cur < 1 && diff_want_mul < 1e18){
-					diff_cur*=10;
-					diff_want_mul*=10;
-				}
-				diff_want_mul*=1000;
-				let zero_idx=sorted_diff_arr.indexOf(0);
-				let zs=zero_idx-8;
-				let z_loss=0;
-				if(zs < 0){
-					z_loss=zs*-1;
-					zs=0;
-				}
-				let ez_log=sorted_diff_arr.map(e=>{
-					if(e === 0)return e;
-					return this.round(e*diff_want_mul)
-				});
-				//console.log('calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
-				//console.log('calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
+			this.last_value=num;
+			this.large_diff.push(num);
+			let sorted_diff_arr = this.large_diff.map(e=>e-num).sort((a,b)=>a-b);
+			let diff_want_mul=1;
+			let diff_cur=diff;
+			while(diff_cur > -1 && diff_cur < 1 && diff_want_mul < 1e18){
+				diff_cur*=10;
+				diff_want_mul*=10;
 			}
+			diff_want_mul*=1000;
+			let zero_idx=sorted_diff_arr.indexOf(0);
+			let zs=zero_idx-8;
+			let z_loss=0;
+			if(zs < 0){
+				z_loss=zs*-1;
+				zs=0;
+			}
+			let ez_log=sorted_diff_arr.map(e=>{
+				if(e === 0)return e;
+				return this.round(e*diff_want_mul)
+			});
+			//console.log('calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
+			//console.log('calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
 			return this.round(val);
 		}
 		is_epoch_over(){
 			let epoch_diff=Date.now() - this.epoch_start_time;
 			return epoch_diff > 60*5*1000;
 		}
+		random_rate=0.008;// 0.005
 		main(){
-			function r(v){return ~~v}
+			if(Math.random()<this.random_rate)return this.rare_begin();
 			let loss_rate=this.unit_promote_start();
 			if(loss_rate > 0 || loss_rate < 0){
-				l_log_if(LOG_LEVEL_VERBOSE, 'loss', r(loss_rate*100 * 100)/100);
+				l_log_if(LOG_LEVEL_VERBOSE, 'loss', this.round(loss_rate * 100 * 100)/100);
 			}
 			if(this.maybe_run_reset())return;
 			if(this.pre_total != totalAtome)return this.step_iter_start();
 			this.iter_count=0;
-			if(Math.random()<0.005)return this.rare_begin();
 			this.faster_timeout();
 		}
 		async maybe_async_reset(){
@@ -2876,8 +3000,53 @@
 			if(this.maybe_run_reset())return [true, loss_rate];
 			return [false, loss_rate];
 		}
+		do_large_decrease(){
+			this.do_timeout_dec([1.005], 60);// 60
+		}
+		do_normal_decrease(){
+			this.do_timeout_dec([1.004], 80);// 80
+		}
+		do_rare_begin_change(){
+			this.do_timeout_inc([1.008, 1.03], 10);
+		}
+		bonus_async(){
+			// this.bonus();
+			bonusAll();
+			this.fast_unit();
+		}
+		async initial_special_async(){
+			// this.initial_special();
+			await this.next_timeout_async(this.timeout_ms, '>');
+			let in_special=true;
+			while(in_special){
+				// this.special();
+				if(this.do_special()){
+					await this.next_timeout_async(this.timeout_ms, '^');
+					continue;
+				} else {
+					in_special=false;
+				}
+			}
+			await this.next_timeout_async(this.timeout_ms, '#');
+			await this.bonus_async();
+		}
+		async rare_begin_async(){
+			this.do_rare_begin_change();
+			await this.next_timeout_async(this.timeout_ms, '<');
+			await this.initial_special_async();
+		}
+		async normal_decrease_async(){
+			this.do_normal_decrease();
+			return this.next_timeout_async(this.timeout_ms, '-');
+		}
+		async large_decrease_async(){
+			this.do_large_decrease();
+			return this.next_timeout_async(this.timeout_ms, '!');
+		}
 		async main_async(){
 			for(this.iter_count=0;;) {
+				// this.rare_begin();
+				if(Math.random()<this.random_rate)await this.rare_begin_async();
 				if(this.iter_count<6) await this.normal_decrease_async();
 				else await this.large_decrease_async();
 				let [quit, loss_rate]=this.maybe_async_reset();
@@ -2885,22 +3054,22 @@
 				if(loss_rate > 0.08)continue;
 				if(this.pre_total == totalAtome)break;
 			}
-			if(Math.random()<0.005)this.rare_begin();
-			else this.faster_timeout_use_async();
+			this.faster_timeout_use_async();
 		}
 		step_iter_start(){
 			if(this.iter_count>6)return this.large_decrease();
 			else return this.normal_decrease();
 		}
+		// this is already async...
 		async fast_unit(){
 			let running=true;
 			while(running) {
 				this.unit_promote_start();
 				if(this.pre_total == totalAtome) break;
-				let promise=this.async_next_timeout_step();
-				await promise;
+				this.do_next_timeout_step_change();
+				await this.next_timeout_async(this.timeout_ms, ':');
 			}
-			this.async_timeout_step_finish();
+			this.timeout_step_finish();
 		}
 		unit_promote_start(){
 			this.timeout_ms=this.calc_timeout_ms();
@@ -2920,20 +3089,19 @@
 			this.iter_count+=1;
 			return loss_rate;
 		}
-		async async_next_timeout_step(){
+		do_next_timeout_step_change(){
 			this.do_timeout_dec([1.006], 10);
-			return this.next_timeout_async(this.timeout_ms, ':');
 		}
-		async_timeout_step_finish(){
+		timeout_step_finish(){
 			this.do_timeout_dec([1.006], 10);
 			this.next_timeout(this.main, this.timeout_ms, '$');
 		}
 		large_decrease(){
-			this.do_timeout_dec([1.005], 60);
+			this.do_large_decrease();
 			this.next_timeout(this.main, this.timeout_ms, '!');
 		}
 		normal_decrease(){
-			this.do_timeout_dec([1.004], 80);
+			this.do_normal_decrease();
 			this.next_timeout(this.main, this.timeout_ms, '-');
 		}
 		rare_begin(){
@@ -2945,7 +3113,7 @@
 			this.next_timeout(this.main_async, this.timeout_ms, 'A');
 		}
 		faster_timeout(){
-			this.do_timeout_inc([1.006, 1.005], 3);
+			this.do_timeout_inc([1.006, 1.005], 4);
 			this.next_timeout(this.main, this.timeout_ms, '+');
 		}
 		get_timeout_change(pow_base, pow_num, div){
@@ -2983,18 +3151,24 @@
 			this.update_timeout_inc(change * iter_term);
 		}
 		async next_timeout_async(timeout, char, silent=false){
-			if(!silent && this.dom_map.get('timeout_element'))this.dom_map.get('timeout_element').innerText=timeout;
-			this.state_history_append(char, silent);
 			let node=new AsyncTimeoutNode(timeout);
 			this.root_node.append_child(node);
 			let promise=node.start_async(new AsyncTimeoutTarget(char));
+			if(!silent){
+				this.timeout_ms=timeout;
+				this.update_timeout_element();
+			}
+			this.state_history_append(char, silent);
 			await promise;
 		}
 		next_timeout(trg_fn, timeout, char, silent=false){
 			let node=new TimeoutNode(timeout);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTarget(this, trg_fn, char));
-			if(!silent && this.dom_map.has('timeout_element'))this.dom_map.get('timeout_element').innerText=timeout;
+			if(!silent){
+				this.timeout_ms=timeout;
+				this.update_timeout_element();
+			}
 			this.state_history_append(char, silent);
 		}
 		do_unit_promote(){
@@ -3302,59 +3476,70 @@
 		}
 	}
 	void ProxyHandlers;
-	class KeepSome extends Array {
+	class KeepSome {
+		/*@type {number[][]}*/
+		m_2d_vec;
 		constructor(){
-			super();
+			this.m_2d_vec=[];
 		}
+		/**@arg {number} value*/
 		push(value){
+			let tmp_val=null;
 			let set_index=0;
 			this.push_at(set_index, value);
-			while(this[set_index].length > 50) {
-				value=this[set_index].shift();
+			while(this.m_2d_vec[set_index].length > 50) {
+				tmp_val=this.m_2d_vec[set_index].shift();
+				if(tmp_val === void 0)break;
 				if(Math.random() > 0.9) {
 					set_index++;
-					this.push_at(set_index, value);
+					this.push_at(set_index, tmp_val);
 					console.log('psp', 1);
 					let off=0;
-					while(this[set_index-off].length < 25){
-						let val=this[set_index-off-1].shift();
-						this[set_index-off].push(val);
+					while(this.m_2d_vec[set_index-off].length < 25){
+						tmp_val=this.m_2d_vec[set_index-off-1].shift();
+						if(tmp_val === void 0)break;
+						this.m_2d_vec[set_index-off].push(tmp_val);
 					}
 					off++;
 					if(set_index-off < 0)continue;
 					console.log('psp', 2);
-					while(this[set_index-off].length < 40){
-						let val=this[set_index-off-1].shift();
-						this[set_index-off].push(val);
+					while(this.m_2d_vec[set_index-off].length < 40){
+						tmp_val=this.m_2d_vec[set_index-off-1].shift();
+						if(tmp_val === void 0)break;
+						this.m_2d_vec[set_index-off].push(tmp_val);
 					}
 					off++;
 					if(set_index-off < 0)continue;
 					console.log('psp', 3);
-					while(this[set_index-off].length < 40){
-						let val=this[set_index-off-1].shift();
-						this[set_index-off].push(val);
+					while(this.m_2d_vec[set_index-off].length < 40){
+						tmp_val=this.m_2d_vec[set_index-off-1].shift();
+						if(tmp_val === void 0)break;
+						this.m_2d_vec[set_index-off].push(tmp_val);
 					}
 					off++;
 					if(set_index-off < 0)continue;
 					console.log('psp', 4);
-					while(this[set_index-off].length < 40){
-						let val=this[set_index-off-1].shift();
-						this[set_index-off].push(val);
+					while(this.m_2d_vec[set_index-off].length < 40){
+						tmp_val=this.m_2d_vec[set_index-off-1].shift();
+						if(tmp_val === void 0)break;
+						this.m_2d_vec[set_index-off].push(tmp_val);
 					}
 				}
-				if(this[set_index].length <= 50 && set_index > 0){
+				if(this.m_2d_vec[set_index].length <= 50 && set_index > 0){
 					set_index--;
 				}
 			}
 		}
 		push_at(index, value){
-			while(index >= this.length){
-				super.push([]);
+			while(index >= this.m_2d_vec.length){
+				this.m_2d_vec.push([]);
 			}
-			this[index].push(value);
+			this.m_2d_vec[index].push(value);
 		}
 		push_va(...a){
-			this.push(a);
+			for(let x of a){
+				this.push(x);
+			}
 		}
 	}
 	function define_property_value(obj, name, value, ...props){
