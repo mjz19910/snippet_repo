@@ -3767,5 +3767,4 @@
 	}
 	main();
 	ScriptStateHost.event_target.dispatchEvent({type:'userscript', state:'done'});
-	// Your code here...
 })();
