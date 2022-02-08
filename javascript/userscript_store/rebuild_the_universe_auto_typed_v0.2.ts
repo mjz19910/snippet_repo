@@ -1,4 +1,4 @@
-import {IAutoBuy} from "./rebuild_the_universe_auto_interface";
+import {IAutoBuy} from "./types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "./types/RecursivePartial";
 import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMValue, VMBoxedCallableIndexed, VMBoxedNull, VMBoxedUndefined, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow} from "./types/SimpleVMTypes";
 

@@ -12,7 +12,7 @@
 // @grant		none
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
-import {IAutoBuy} from "./rebuild_the_universe_auto_interface";
+import {IAutoBuy} from "./types/rebuild_the_universe_auto_interface";
 import {WeakRef} from "./types/weak_ref"
 
 type TimerTypeTag = 1 | 2;
