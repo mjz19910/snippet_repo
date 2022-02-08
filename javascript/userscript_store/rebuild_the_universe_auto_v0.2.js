@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name		 rebuild the universe auto version 0.2
-// @namespace	 http://tampermonkey.net/
-// @version      0.2
-// @description  try to take over the world!
-// @author	     You
-// @match		 http://rebuildtheuniverse.com/*
-// @match		 http://rebuildtheuniverse.com
-// @match		 https://rebuildtheuniverse.com/*
-// @match		 https://rebuildtheuniverse.com
-// @match		 https://test.rebuildtheuniverse.com
-// @run-at	     document-start
-// @grant		 none
+// @name			rebuild the universe auto version 0.2
+// @namespace		http://tampermonkey.net/
+// @version			0.2
+// @description		try to take over the world!
+// @author			You
+// @match			http://rebuildtheuniverse.com/*
+// @match			http://rebuildtheuniverse.com
+// @match			https://rebuildtheuniverse.com/*
+// @match			https://rebuildtheuniverse.com
+// @match			https://test.rebuildtheuniverse.com
+// @run-at			document-start
+// @grant			none
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 

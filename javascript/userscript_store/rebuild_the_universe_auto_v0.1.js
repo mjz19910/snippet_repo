@@ -1,15 +1,15 @@
 // ==UserScript==
-// @name		 rebuild the universe automation
-// @namespace	http://tampermonkey.net/
-// @version	  0.1
-// @description  try to take over the world!
-// @author	   You
-// @match		http://rebuildtheuniverse.com/*
-// @match		http://rebuildtheuniverse.com
-// @match		https://rebuildtheuniverse.com/*
-// @match		https://rebuildtheuniverse.com
-// @run-at	   document-start
-// @grant		none
+// @name			rebuild the universe automation
+// @namespace		http://tampermonkey.net/
+// @version			0.1
+// @description		try to take over the world!
+// @author			You
+// @match			http://rebuildtheuniverse.com/*
+// @match			http://rebuildtheuniverse.com
+// @match			https://rebuildtheuniverse.com/*
+// @match			https://rebuildtheuniverse.com
+// @run-at			document-start
+// @grant			none
 // ==/UserScript==
 // spell:words deref
 // spell:words lazyload
