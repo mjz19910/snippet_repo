@@ -404,7 +404,7 @@ declare var timeplayed: number;
 declare function lightreset(): void;
 declare function lightreset_inject(): void;
 declare function async_compress(self: AutoBuy): void;
-import {AutoBuy} from "./rebuild_the_universe_auto"
+import {AutoBuy} from "./rebuild_the_universe_auto_v0.1"
 declare const auto_buy_obj: AutoBuy;
 declare class AsyncTrigger<S, W, N> {
 	m_set_flag: boolean;
