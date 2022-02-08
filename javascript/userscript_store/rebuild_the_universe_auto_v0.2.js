@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name		 rebuild the universe auto
+// @name		 rebuild the universe auto version 0.2
 // @namespace	 http://tampermonkey.net/
 // @version      0.2
 // @description  try to take over the world!
@@ -2712,7 +2712,7 @@
 			}
 		}
 		update_timeout_element() {
-			this.dom_map.get('timeout_element').innerText=this.get_milis_as_pretty_str(this.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
+			this.dom_map.get('timeout_element').innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
 		}
 		do_zero_pad(value, pad_char, char_num) {
 			let string;
@@ -2726,25 +2726,25 @@
 			}
 			return string;
 		}
-		get_milis_as_pretty_str(timeout_mili, mili_acc){
+		get_millis_as_pretty_str(timeout_milli, milli_acc){
 			let time_arr=[];
-			let float_miliseconds = timeout_mili % 1000;
-			let mili_len=6;
-			if(mili_acc === 0){
-				mili_len=3;
+			let float_milliseconds = timeout_milli % 1000;
+			let milli_len=6;
+			if(milli_acc === 0){
+				milli_len=3;
 			}
-			time_arr[3]=this.do_zero_pad(float_miliseconds.toFixed(mili_acc), '0', mili_len);
-			timeout_mili-=float_miliseconds;
-			timeout_mili/=1000;
-			let int_seconds = timeout_mili % 60;
+			time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc), '0', milli_len);
+			timeout_milli-=float_milliseconds;
+			timeout_milli/=1000;
+			let int_seconds = timeout_milli % 60;
 			time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
-			timeout_mili-=int_seconds;
-			timeout_mili/=60;
-			let int_minutes = timeout_mili % 60;
+			timeout_milli-=int_seconds;
+			timeout_milli/=60;
+			let int_minutes = timeout_milli % 60;
 			time_arr[1]=this.do_zero_pad(int_minutes, '0', 2);
-			timeout_mili-=int_minutes;
-			timeout_mili/=60;
-			let int_hours=timeout_mili;
+			timeout_milli-=int_minutes;
+			timeout_milli/=60;
+			let int_hours=timeout_milli;
 			time_arr[0]=this.do_zero_pad(int_hours, '0', 2);
 			int_hours === 0 && (time_arr.shift(), int_minutes === 0 && (time_arr.shift(), int_seconds === 0 && time_arr.shift()));
 			switch(time_arr.length) {
@@ -2769,18 +2769,17 @@
 			let float_seconds = (float_minutes-int_minutes) * 60;
 			let int_seconds = ~~float_seconds;
 			time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
-			let float_miliseconds = (float_seconds-int_seconds) * 1000;
-			let float_mili_from_prev = float_miliseconds - 1000;
-			let has_miliseconds=true;
-			if(float_miliseconds > 100 && float_miliseconds < 900){
+			let float_milliseconds = (float_seconds-int_seconds) * 1000;
+			let float_milli_from_prev = float_milliseconds - 1000;
+			if(float_milliseconds > 100 && float_milliseconds < 900){
 				this.has_real_time=true;
 			}
-			if(this.has_real_time);else if(float_miliseconds < 3e-9 && float_miliseconds > -3e-9);else if(float_mili_from_prev < 3e-9 && float_mili_from_prev > -3e-9);else {
-				console.log(float_miliseconds, float_miliseconds - 1000);
+			if(this.has_real_time);else if(float_milliseconds < 3e-9 && float_milliseconds > -3e-9);else if(float_milli_from_prev < 3e-9 && float_milli_from_prev > -3e-9);else {
+				console.log(float_milliseconds, float_milliseconds - 1000);
 			}
-			let int_miliseconds = ~~float_miliseconds;
-			if(int_miliseconds >= 1000) {
-				int_miliseconds-=1000;
+			let int_milliseconds = ~~float_milliseconds;
+			if(int_milliseconds >= 1000) {
+				int_milliseconds-=1000;
 				int_seconds++;
 				if(int_seconds >= 60) {
 					int_seconds=0;
@@ -2794,7 +2793,7 @@
 				}
 				time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
 			}
-			time_arr[3]=this.do_zero_pad(int_miliseconds, '0', 3);
+			time_arr[3]=this.do_zero_pad(int_milliseconds, '0', 3);
 			int_hours === 0 && (time_arr.shift(), int_minutes === 0 && (time_arr.shift(), int_seconds === 0 && time_arr.shift()));
 			switch(time_arr.length) {
 				case 1:

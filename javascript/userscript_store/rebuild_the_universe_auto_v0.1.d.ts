@@ -12,6 +12,7 @@
 // @grant		none
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
+import {IAutoBuy} from "./rebuild_the_universe_auto_interface";
 import {WeakRef} from "./types/weak_ref"
 
 type TimerTypeTag = 1 | 2;
@@ -113,7 +114,7 @@ declare namespace ArrayTuringTools {
 	type ReverseStr<U extends string> = U extends '' ? '' : `${ReverseStr<RemoveFirstStr<U>>}${FirstStr<U>}`
 	type ReverseArr<U extends any[]> = U extends [] ? [] : [...Reverse<RemoveFirst<U>>, First<U>];
 
-	type GReverse<T>= T extends any[] ? ReverseArr<T> : T extends string ? ReverseStr<T> : never;
+	type GReverse<T> = T extends any[] ? ReverseArr<T> : T extends string ? ReverseStr<T> : never;
 
 	type Reverse<U extends any[] | string> = U extends string ? ReverseStr<U> : U extends any[] ? ReverseArr<U> : never;
 	type Data = [1, 2, 3, 4];
@@ -403,9 +404,8 @@ type CIntItem = TimeoutCintItem;
 declare var timeplayed: number;
 declare function lightreset(): void;
 declare function lightreset_inject(): void;
-declare function async_compress(self: AutoBuy): void;
-import {AutoBuy} from "./rebuild_the_universe_auto_v0.1"
-declare const auto_buy_obj: AutoBuy;
+declare function async_compress(self: IAutoBuy): void;
+declare const auto_buy_obj: IAutoBuy;
 declare class AsyncTrigger<S, W, N> {
 	m_set_flag: boolean;
 	trigger_handler: any;
@@ -546,7 +546,7 @@ declare function on_game_data_set(): void;
 declare function on_timers_moved(): void;
 declare function dom_add_elm_filter(elm: HTMLScriptElement): boolean;
 declare function main(): void;
-export type SpecType={
+export type SpecType = {
 	name: 'Breit-Wheeler process'
 	desc: 'Convert pure light to matter.'
 	done: false | true
@@ -558,7 +558,7 @@ declare global {
 		atomepersecond: number;
 		totalAtome: number;
 		prestige: number;
-		g_auto_buy: AutoBuy;
+		g_auto_buy: IAutoBuy;
 		__testing__: false;
 		bonusAll(): void;
 		allspec: SpecType[];
@@ -582,7 +582,7 @@ declare global {
 		noti: boolean;
 		gritter: any;
 		toTitleCase(v: string): string;
-		cint_arr: string[];
+		cint_arr: (string | number[])[];
 		adsbygoogle: {
 			op: any,
 			push(v: number): void;

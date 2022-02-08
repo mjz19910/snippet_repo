@@ -86,6 +86,10 @@ words:
   - lightgray
   - lightreset
   - maxall
+  - milli
+  - milli_acc
+  - milli_len
+  - millis
   - mkadd
   - mlis
   - mnum
@@ -144,6 +148,7 @@ words:
   - targets_achi
   - tarl
   - thecentralscrutinizer
+  - timeout_milli
   - timeplayed
   - tkey
   - tlele
