@@ -140,10 +140,18 @@ const TIMER_REPEATING = 2;
 const TIMER_TAG_COUNT = 3;
 const AUDIO_ELEMENT_VOLUME = 0.58;
 const cint_arr: any[] = [];
-export type ProxyType00 = {
-	other: DocumentWriteList;
-	apply(this: ProxyType00, target: any, thisArg: any, argArray: any[]): any;
-};
+function down_convert_type<T, U extends T>(v:T) : v is U {
+	return true;
+}
+type DocumentWriteFn = (...text: string[]) => void;
+
+class DocumentWriteFnProxyHandler {
+	other: DocumentWriteList|null = null;
+	apply(...a: [target: DocumentWriteFn, thisArg: Document, argArray: string[]]) {
+		if(this.other)this.other.write(...a);
+	}
+}
+
 class DocumentWriteList {
 	list: (string[] | null)[];
 	attached; end_symbol;
@@ -155,7 +163,7 @@ class DocumentWriteList {
 		this.document_write = document.write;
 		const proxy_for_write = {
 			other: this,
-			apply(target: (...text: string[]) => void, thisArg: any, argArray: any[]) {
+			apply(target: (...text: string[]) => void, thisArg: Document, argArray: string[]) {
 				this.other.write(target, thisArg, argArray);
 			}
 		}
@@ -163,16 +171,27 @@ class DocumentWriteList {
 		if(this.document_write_proxy) document.write = this.document_write_proxy;
 	}
 	attach_proxy(document:Document){
-		throw new Error("Not yet implemented")
+		if(this.attached) {
+			let was_destroyed = this.destroy(true);
+			if(!was_destroyed) {
+				throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
+			}
+		}
+		this.attached_document = document;
+		this.document_write = document.write;
+		let obj=new DocumentWriteFnProxyHandler;
+		obj.other=this;
+		this.document_write_proxy = new Proxy(document.write, obj);
+		document.write = this.document_write_proxy;
 	}
-	document_write: ((...text: string[]) => void) | null;
+	document_write: DocumentWriteFn | { other: any; } | null;
 	attached_document:Document | null;
 	write(target: (...text: string[]) => void, thisArg: any, argArray: string[]) {
 		console.assert(target === this.document_write);
 		console.assert(thisArg === this.attached_document);
 		this.list.push(argArray, null);
 	}
-	document_write_proxy:((...text: string[]) => void) | null;
+	document_write_proxy:DocumentWriteFn | { other: any; } | null;
 	destroy(should_try_to_destroy: boolean) {
 		if(this.attached_document && this.document_write_proxy) {
 			console.assert(this.attached_document.write === this.document_write_proxy);
@@ -183,7 +202,9 @@ class DocumentWriteList {
 				throw new Error("Unable to destroy DocumentWriteList: document.write is not equal to document_write_proxy");
 			}
 			if(this.document_write) {
-				this.attached_document.write = this.document_write;
+				if(down_convert_type<typeof this.document_write, typeof this.attached_document.write>(this.document_write)){;
+					this.attached_document.write = this.document_write;
+				}
 			}
 		}
 		if(this.document_write_proxy) {

@@ -191,9 +191,11 @@ type TimeoutSetStringsTy = {
 	single: typeof TimeoutSetStringS;
 	repeating: typeof TimeoutSetStringR;
 };
+const TimeoutClearStringS = "clearTimeout";
+const TimeoutClearStringR = "clearInterval";
 type TimeoutClearStringsTy = {
-	single: "clearTimeout";
-	repeating: "clearInterval";
+	single: typeof TimeoutClearStringS;
+	repeating: typeof TimeoutClearStringR;
 };
 type VarRef = {
 	var: string;
@@ -297,8 +299,8 @@ class TimerMessageTypes implements TimerMessageTypesTy {
 	worker: TimeoutWorkerTypesTy = new TimeoutWorkerTypes;
 }
 class TimeoutClearStrings implements TimeoutClearStringsTy {
-	single: "clearTimeout" = "clearTimeout";
-	repeating: "clearInterval" = "clearInterval";
+	single: typeof TimeoutClearStringS = TimeoutClearStringS;
+	repeating: typeof TimeoutClearStringR = TimeoutClearStringR;
 }
 class TimerApi {
 	msg_types = new TimerMessageTypes;
@@ -334,12 +336,16 @@ class TimerApi {
 }
 let g_timer_api = new TimerApi;
 let message_types = g_timer_api.msg_types;
+type ScriptEventTargetType = {
+	fns: any[];
+	addEventListener(fn: (e: any) => void): void;
+	dispatchEvent(ev: {
+		type: string;
+		state: string;
+	}): void;
+};
 class ScriptStateHost {
-	static event_target: {
-		fns: any[],
-		addEventListener(fn: (e: any) => void): void,
-		dispatchEvent(ev: {type: string; state: string;}): void;
-	} = {
+	static event_target: ScriptEventTargetType = {
 			fns: [],
 			addEventListener(fn: (e: any) => void) {
 				this.fns.push(fn);
@@ -397,7 +403,6 @@ function find_all_scripts_using_string_apis():
 	}
 	function register_obj_with_registry(obj: any) {
 		let obj_id;
-		let elem = scripts_weak_arr[0];
 		let scripts_res: WeakFinalInfo[] = [];
 		for(let i = 0;i < scripts_weak_arr.length;i++) {
 			let elem = scripts_weak_arr[i];
@@ -405,8 +410,7 @@ function find_all_scripts_using_string_apis():
 				scripts_res.push(elem);
 			}
 		}
-		let weak_arr = retype_arr(scripts_weak_arr);
-		let obj_ref = weak_arr?.find((e: null | {ref: {deref: () => any;};}) => e && e.ref.deref() === obj);
+		let obj_ref = scripts_weak_arr.find((e: null | {ref: {deref: () => any;};}) => e && e.ref.deref() === obj);
 		if(obj_ref) {
 			obj_id = obj_ref.id;
 			return obj_id;
@@ -421,7 +425,7 @@ function find_all_scripts_using_string_apis():
 		let token_sym = {token: Symbol(-obj_id)};
 		scripts_holders.push(held_obj);
 		scripts_tokens.push({key: held_obj.key, ref: new WeakRef(token_sym)});
-		if(weak_arr) weak_arr.push({
+		scripts_weak_arr.push({
 			key: held_obj.key,
 			id: obj_id,
 			ref: new WeakRef(obj)
@@ -429,19 +433,19 @@ function find_all_scripts_using_string_apis():
 		script_registry.register(obj, held_obj, token_sym);
 		return obj_id;
 	}
-	function replace_cb_with_safe_proxy(args: any[] | null, index: number | null) {
-		if(index && args && args[index] instanceof Function) {
-			let target_fn = args[index];
+	function replace_cb_with_safe_proxy(args: any[], index: number) {
+		let value = args[index];
+		if(index && args && value instanceof Function) {
 			if(is_in_userscript) {
-				target_fn.is_userscript_fn = true;
+				value.is_userscript_fn = true;
 			}
 			if(is_in_userscript_fn) {
-				target_fn.is_userscript_fn = true;
+				value.is_userscript_fn = true;
 			}
 			if(document.currentScript) {
-				target_fn.reg_id = register_obj_with_registry(document.currentScript);
+				value.reg_id = register_obj_with_registry(document.currentScript);
 			}
-			args[index] = new Proxy(target_fn, {
+			args[index] = new Proxy(value, {
 				apply(...a) {
 					let ret;
 					let should_reset = false;
@@ -468,13 +472,10 @@ function find_all_scripts_using_string_apis():
 					return ret;
 				}
 			});
-			target_fn = null;
-			let unsafe_proxy = args[index];
-			unsafe_proxy = null;
-			args = null;
-			index = null;
-			// args[index]=function(...a){return Reflect.apply(unsafe_proxy, this, a)}
+			args = [];
+			index = -1;
 		}
+		value = null;
 	}
 	EventTarget.prototype.addEventListener = new Proxy(EventTarget.prototype.addEventListener, {
 		apply(...a) {
@@ -502,7 +503,7 @@ function find_all_scripts_using_string_apis():
 	});
 	window.requestAnimationFrame = new Proxy(requestAnimationFrame, {
 		apply(...a) {
-			let target_obj = a[1];
+			// let target_obj = a[1];
 			let call_args = a[2];
 			replace_cb_with_safe_proxy(call_args, 0);
 			return Reflect.apply(...a);
@@ -512,14 +513,14 @@ function find_all_scripts_using_string_apis():
 	window.proxy_set.push(EventTarget.prototype.addEventListener);
 	Promise.prototype.then = new Proxy(Promise.prototype.then, {
 		apply(...a) {
-			let target_obj = a[1];
+			// let target_obj = a[1];
 			let call_args = a[2];
 			replace_cb_with_safe_proxy(call_args, 0);
 			replace_cb_with_safe_proxy(call_args, 1);
 			return Reflect.apply(...a);
 		}
 	});
-	function str_indexOf_inject() {
+	function str_index_of_inject() {
 		let cur_script = get_nearest_script();
 		if(cur_script === void 0) {
 			if(is_in_ignored_from_src_fn) return;
@@ -532,28 +533,24 @@ function find_all_scripts_using_string_apis():
 			try {
 				scripts.add(cur_script);
 			} catch(e) {
-				let jj = e;
 				debugger;
 			}
 			let id = register_obj_with_registry(cur_script);
 			console.log('new registry id', id);
 		}
 		if(!had_script) {
-			//spell:disable-next-line
 			if(cur_script.src.includes("opentracker")) {
 				cur_script.remove();
-				throw new Error("No tracking");
 				cur_script = null;
-				return;
+				throw new Error("No tracking");
 			}
 			console.log(cur_script);
-			// debugger;
 		}
 		cur_script = null;
 	}
 	String.prototype.indexOf = new Proxy(String.prototype.indexOf, {
 		apply(...a) {
-			str_indexOf_inject();
+			str_index_of_inject();
 			return Reflect.apply(...a);
 		}
 	});
@@ -579,10 +576,10 @@ function find_all_scripts_using_string_apis():
 	return [scripts_weak_arr, register_obj_with_registry];
 }
 void find_all_scripts_using_string_apis;
-type AnyFunction = CallableFunction | NewableFunction;
+type AnyFunction = CallableFunction | NewableFunction | Function | Object;
 type RegIdFunction = {reg_id: number} & AnyFunction;
 function has_reg_id(v: AnyFunction): v is RegIdFunction {
-	if((v as Object).hasOwnProperty('reg_id')) {
+	if(v.hasOwnProperty('reg_id')) {
 		return true;
 	}
 	return false;
@@ -622,8 +619,19 @@ function get_nearest_script() {
 		return doc_script;
 	}
 }
+type NullableItem<T>=T | null;
+type Nullable2dArray<T>=NullableItem<T[]>[];
+type DocumentWriteFn = (...text: string[]) => void;
+
+class DocumentWriteFnProxyHandler {
+	other: DocumentWriteList|null = null;
+	apply(...a: [target: DocumentWriteFn, thisArg: any, argArray: string[]]) {
+		if(this.other)this.other.write(...a);
+	}
+}
+
 class DocumentWriteList {
-	list: any[];
+	list: Nullable2dArray<string>;
 	attached;
 	end_symbol;
 	constructor() {
@@ -634,15 +642,14 @@ class DocumentWriteList {
 		this.attached_document = null;
 		this.document_write_proxy = null;
 	}
-	document_write: ((...text: string[]) => void) | null;
+	document_write: DocumentWriteFn | null;
 	attached_document: Document | null;
-	write(target: (...text: string[]) => void, thisArg: any, argArray: string[]) {
+	write(target: DocumentWriteFn, thisArg: any, argArray: string[]) {
 		console.assert(target === this.document_write);
 		console.assert(thisArg === this.attached_document);
 		this.list.push(argArray, null);
 	}
-	document_write_proxy: {(...text: string[]): void; (...text: string[]): void;} | null;
-	/**@arg {Document} document */
+	document_write_proxy: (DocumentWriteFn | {other:any}) | null;
 	attach_proxy(document: Document) {
 		if(this.attached) {
 			let was_destroyed = this.destroy(true);
@@ -652,12 +659,9 @@ class DocumentWriteList {
 		}
 		this.attached_document = document;
 		this.document_write = document.write;
-		this.document_write_proxy = new Proxy(document.write, <any>{
-			other: this,
-			apply(...a: any[]) {
-				this.other.write(a);
-			}
-		});
+		let obj=new DocumentWriteFnProxyHandler;
+		obj.other=this;
+		this.document_write_proxy = new Proxy(document.write, obj);
 		document.write = this.document_write_proxy;
 	}
 	destroy(should_try_to_destroy: boolean) {
@@ -765,8 +769,8 @@ function worker_code_function(verify_callback: {(verify_obj: any): void; (arg0: 
 			repeating: TimeoutSetStringR
 		}
 		clear_names:TimeoutClearStringsTy = {
-			single: "clearTimeout",
-			repeating: "clearInterval"
+			single: TimeoutClearStringS,
+			repeating: TimeoutClearStringR
 		}
 	}
 	class RemoteWorkerState {
