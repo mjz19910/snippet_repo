@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name			rebuild the universe auto version 0.2
+// @name			rebuild the universe auto
 // @namespace		http://tampermonkey.net/
 // @version			0.2
 // @description		try to take over the world!
@@ -2368,6 +2368,9 @@
 		do_ratio_lock(mode_change_direction, num_of_cycles){
 			this.ratio_mode+=mode_change_direction;
 			this.locked_cycles+=num_of_cycles;
+			let rem_val=this.locked_cycles%100;
+			this.locked_cycles-=rem_val;
+			this.locked_cycles+=50;
 		}
 		get_mul_modifier(){
 			switch(this.ratio_mode){
@@ -2556,6 +2559,7 @@
 		default_split(string){return string.split(",")}
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
+	const DO_UPGRADES_RANDOM_RATE=0.008;// 0.005
 	class AutoBuy {
 		async_compress(){
 			this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
@@ -3063,7 +3067,7 @@
 			let epoch_diff=Date.now() - this.epoch_start_time;
 			return epoch_diff > 60*5*1000;
 		}
-		random_rate=0.008;// 0.005
+		random_rate=DO_UPGRADES_RANDOM_RATE;
 		main(){
 			if(Math.random()<this.random_rate)return this.rare_begin();
 			let loss_rate=this.unit_promote_start();
