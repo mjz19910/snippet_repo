@@ -157,7 +157,11 @@ const TimeoutRepeatingReply = 701;
 type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;
 const TimeoutSetTypes = 1001;
 type TimeoutSetTypesTy = typeof TimeoutSetTypes;
-type WorkerReplyTypesType = {
+const TimeoutSetStringS = "setTimeout";
+const TimeoutSetStringR = "setInterval";
+const TimeoutClearStringS = "clearTimeout";
+const TimeoutClearStringR = "clearInterval";
+export type WorkerReplyTypesTy = {
 	single: TimeoutSingleReplyTy;
 	repeating: TimeoutRepeatingReplyTy;
 };
@@ -170,7 +174,7 @@ type ReplySetTypes = {
 	single: ReplySetSingleTy;
 	repeating: ReplySetRepeatingTy;
 };
-type TimeoutFireInfoTy = {
+export type TimeoutFireInfoTy = {
 	single: TimeoutFireSTy;
 	repeating: TimeoutFireRTy;
 };
@@ -183,7 +187,7 @@ type TimeoutClearInfoTy = {
 	repeating: TimeoutClearRTy;
 	any: TimeoutClearATy;
 };
-type TimeoutWorkerTypesTy = {
+export type TimeoutWorkerTypesTy = {
 	reply: WorkerReplyTypes;
 	update_message_handler: WorkerUpdateMessageHandlerTy;
 	ready: TimeoutMessageRTy;
@@ -191,7 +195,7 @@ type TimeoutWorkerTypesTy = {
 	clear: TimeoutClearInfoTy;
 	set_types: TimeoutSetTypesTy;
 };
-type TimerMessageTypesTy = {
+export type TimerMessageTypesTy = {
 	async: WorkerAsyncMessageTy;
 	reply: ReplyTypes;
 	fire: TimeoutFireInfoTy;
@@ -201,8 +205,6 @@ type TimeoutSetStringsTy = {
 	single: typeof TimeoutSetStringS;
 	repeating: typeof TimeoutSetStringR;
 };
-const TimeoutClearStringS = "clearTimeout";
-const TimeoutClearStringR = "clearInterval";
 type TimeoutClearStringsTy = {
 	single: typeof TimeoutClearStringS;
 	repeating: typeof TimeoutClearStringR;
@@ -229,14 +231,14 @@ type NumInfoMsg = {
 type NoDataMsg = {
 	t: number;
 };
-type LocalOrRemoteIdVarType = {
+export type LocalOrRemoteIdVarType = {
 	var: 'local_id' | 'remote_id';
 };
-type MakeReplyDataType = {
+export type MakeReplyDataType = {
 	t: number;
 	v: LocalOrRemoteIdVarType | number;
 };
-class WorkerFireReplyTypes implements WorkerReplyTypesType {
+class WorkerFireReplyTypes implements WorkerReplyTypesTy {
 	single: TimeoutSingleReplyTy = TimeoutSingleReply
 	repeating: TimeoutRepeatingReplyTy = TimeoutRepeatingReply
 }
@@ -274,8 +276,6 @@ class MakeReplyData {
 		};
 	}
 }
-const TimeoutSetStringS = "setTimeout";
-const TimeoutSetStringR = "setInterval";
 class TimeoutSetStrings implements TimeoutSetStringsTy {
 	single: typeof TimeoutSetStringS = TimeoutSetStringS;
 	repeating: typeof TimeoutSetStringR = TimeoutSetStringR;
@@ -288,7 +288,6 @@ class TimeoutClearInfo implements TimeoutClearInfoTy {
 	single: TimeoutClearSTy = TimeoutClearS;
 	repeating: TimeoutClearRTy = TimeoutClearR;
 	any: TimeoutClearATy = TimeoutClearA;
-
 }
 class TimeoutWorkerTypes implements TimeoutWorkerTypesTy {
 	reply: WorkerReplyTypes = new WorkerReplyTypes
@@ -297,16 +296,25 @@ class TimeoutWorkerTypes implements TimeoutWorkerTypesTy {
 	set: TimeoutSetInfo = new TimeoutSetInfo;
 	clear: TimeoutClearInfo = new TimeoutClearInfo;
 	set_types: TimeoutSetTypesTy = TimeoutSetTypes;
-
 }
 class TimeoutFireInfo implements TimeoutFireInfoTy {
 	single: TimeoutFireSTy = TimeoutFireS;
 	repeating: TimeoutFireRTy = TimeoutFireR;
-
+}
+export type ReplyTypesTy = {
+	msg1: ReplyMessage1Ty;
+	msg2: ReplyMessage2Ty;
+	from_worker: ReplyFromWorkerTy;
+	to_worker: ReplyToWorkerTy;
+	destroy_worker: WorkerDestroyMessageTy;
+	update_handler: WorkerUpdateMessageHandlerReplyTy;
+	ready: WorkerReadyReplyTy;
+	set: ReplySetMessages;
+	clear: ReplyClearMessages;
 }
 class TimerMessageTypes implements TimerMessageTypesTy {
 	async: WorkerAsyncMessageTy = WorkerAsyncMessage;
-	reply: ReplyTypes = new ReplyTypes;
+	reply: ReplyTypesTy = new ReplyTypes;
 	fire: TimeoutFireInfoTy = new TimeoutFireInfo;
 	worker: TimeoutWorkerTypesTy = new TimeoutWorkerTypes;
 }

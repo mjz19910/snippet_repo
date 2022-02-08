@@ -21,86 +21,169 @@
 	const TIMER_TAG_COUNT=3;
 	const AUDIO_ELEMENT_VOLUME=0.58;
 	const cint_arr=[];
-	//spell:disable
-	const __RTU = 301;
-	const __RTR = 302;
-	const __RTSS = 303;
-	const __RTSR = 304;
-	const __RTCS = 305;
-	const __RTCR = 306;
-	const __RTCA = 307;
-	const __RTM = 402;
-	const __RTF = 500;
-	const __RTT = 600;
-	const __WRTFS = 700;
-	const __WRTFR = 701;
-	class WorkerReplyTypes {
-		/**@type {{single:typeof __WRTFS, repeating:__WRTFR}} */
-		fire={single:__WRTFS, repeating:__WRTFR}
+	class ReplyClearMessages {
+		single = ReplyClearSingle
+		repeating = ReplyClearRepeating
+		any = ReplyClearAny
 	}
+	class ReplySetMessages {
+		single = ReplySetSingle
+		repeating = ReplySetRepeating
+	};
+	const WorkerAsyncMessage = 1;
+	const TimeoutFireS = 101;
+	const TimeoutFireR = 102;
+	const WorkerUpdateMessageHandler = 201;
+	const TimeoutMessageR = 202;
+	const TimeoutSetS = 203;
+	const TimeoutSetR = 204;
+	const TimeoutClearS = 205;
+	const TimeoutClearR = 206;
+	const TimeoutClearA = 207;
+	const WorkerDestroyMessage = 300;
+	const WorkerUpdateMessageHandlerReply = 301;
+	const WorkerReadyReply = 302;
+	const ReplySetSingle = 303;
+	const ReplySetRepeating = 304;
+	const ReplyClearSingle = 305;
+	const ReplyClearRepeating = 306;
+	const ReplyClearAny = 307;
+	const ReplyMessage1 = 401;
+	const ReplyMessage2 = 402;
+	const ReplyFromWorker = 500;
+	const ReplyToWorker = 600;
+	const TimeoutSingleReply = 700;
+	const TimeoutRepeatingReply = 701;
+	const TimeoutSetTypes = 1001;
 	class ReplyTypes {
-		/**@type {typeof __RTM} */
-		msg=__RTM;
-		/**@type {__RTF} */
-		from_remote=__RTF;
-		/**@type {__RTT} */
-		to_worker=__RTT
-		/**@type {__RTU} */
-		update_handler=__RTU;
-		/**@type {__RTR} */
-		ready=__RTR;
-		/**@type {{single:__RTSS, repeating:__RTSR}} */
-		set={single:__RTSS, repeating:__RTSR}
-		/**@type {{single:__RTCS, repeating:__RTCR, any:__RTCA}} */
-		clear={single:__RTCS, repeating:__RTCR, any:__RTCA}
+		/**@type {ReplyMessage1} */
+		msg1 = ReplyMessage1;
+		/**@type {ReplyMessage2} */
+		msg2 = ReplyMessage2;
+		/**@type {ReplyFromWorker} */
+		from_worker = ReplyFromWorker;
+		/**@type {ReplyToWorker} */
+		to_worker = ReplyToWorker;
+		/**@type {WorkerDestroyMessage} */
+		destroy_worker = WorkerDestroyMessage;
+		/**@type {WorkerUpdateMessageHandlerReply} */
+		update_handler = WorkerUpdateMessageHandlerReply;
+		/**@type {WorkerReadyReply} */
+		ready = WorkerReadyReply;
+		set = new ReplySetMessages;
+		clear = new ReplyClearMessages;
+	}
+	class TimeoutFireInfo {
+		single = TimeoutFireS;
+		repeating = TimeoutFireR;
+	}
+	class TimeoutSetInfo {
+		/**@type {TimeoutSetS} */
+		single = TimeoutSetS;
+		/**@type {TimeoutSetR} */
+		repeating = TimeoutSetR;
+	}
+	class TimeoutClearInfo {
+		/**@type {TimeoutClearS} */
+		single = TimeoutClearS;
+		/**@type {TimeoutClearR} */
+		repeating = TimeoutClearR;
+		/**@type {TimeoutClearA} */
+		any = TimeoutClearA;
+	}
+	class WorkerFireReplyTypes {
+		/**@type {TimeoutSingleReply} */
+		single = TimeoutSingleReply;
+		/**@type {TimeoutRepeatingReply} */
+		repeating = TimeoutRepeatingReply;
+	}
+	class WorkerReplyTypes {
+		fire = new WorkerFireReplyTypes;
+	}
+	class TimeoutWorkerTypes {
+		reply = new WorkerReplyTypes;
+		/**@type {WorkerUpdateMessageHandler} */
+		update_message_handler = WorkerUpdateMessageHandler;
+		/**@type {TimeoutMessageR} */
+		ready = TimeoutMessageR;
+		set = new TimeoutSetInfo;
+		clear = new TimeoutClearInfo;
+		/**@type {TimeoutSetTypes} */
+		set_types = TimeoutSetTypes;
+	}
+	class TimerMessageTypes {
+		/**@type {WorkerAsyncMessage} */
+		async = WorkerAsyncMessage;
+		/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2").ReplyTypesTy} ReplyTypesTy */
+		/**@type {ReplyTypesTy} */
+		reply = new ReplyTypes;
+		/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2").TimeoutFireInfoTy} TimeoutFireInfoTy */
+		/**@type {TimeoutFireInfoTy} */
+		fire = new TimeoutFireInfo;
+		/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2").TimeoutWorkerTypesTy} TimeoutWorkerTypesTy */
+		/**@type {TimeoutWorkerTypesTy} */
+		worker = new TimeoutWorkerTypes;
+	}
+	const TimeoutSetStringS = "setTimeout";
+	const TimeoutSetStringR = "setInterval";
+	const TimeoutClearStringS = "clearTimeout";
+	const TimeoutClearStringR = "clearInterval";
+	class TimeoutSetStrings {
+		/**@type {TimeoutSetStringS} */
+		single = TimeoutSetStringS;
+		/**@type {TimeoutSetStringR} */
+		repeating = TimeoutSetStringR;
+	}
+	class TimeoutClearStrings {
+		/**@type {TimeoutClearStringS} */
+		single = TimeoutClearStringS;
+		/**@type {TimeoutClearStringR} */
+		repeating = TimeoutClearStringR;
+	}
+	class MakeReplyData {
+		/**@type {number} */
+		t;
+		/**@type {import("./rebuild_the_universe_auto_typed_v0.2").MakeReplyDataType} */
+		v;
+		/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2").LocalOrRemoteIdVarType} LocalOrRemoteIdVarType */
+		/**@arg {number} reply @arg {number} info @arg {LocalOrRemoteIdVarType | number} from */
+		constructor(reply, info, from) {
+			this.t = reply;
+			this.v = {
+				t: info,
+				v: from
+			};
+		}
 	}
 	class TimerApi {
-		msg_types={
-			/**@type {1} */
-			async:1,
-			reply:new ReplyTypes,
-			/**@type {{single:101, repeating:102}} */
-			fire:{single:101, repeating:102},
-			worker:{
-				reply:new WorkerReplyTypes,
-				/**@type {201} */
-				update_handler:201,
-				/**@type {202} */
-				ready:202,
-				/**@type {{single:203, repeating:204}} */
-				set:{single:203, repeating:204},
-				/**@type {{single:205, repeating:206, any:207}} */
-				clear:{single:205, repeating:206, any:207},
-				set_types:1000
-			}
-		}
-		//spell:enable
-		/**@type {{single:"setTimeout",repeating:"setInterval"}} */
-		set_names={
-			single:"setTimeout",
-			repeating:"setInterval"
-		}
-		/**@type {{single:"clearTimeout",repeating:"clearInterval"}} */
-		clear_names={
-			single:"clearTimeout",
-			repeating:"clearInterval"
-		};
-		handled=[
-
-		];
-		to_handle=[
-			{t:202},
-			{t:203},
-			{t:204},
-			{t:205},
-			// 202
-			{t:500, v:{t:302, v:202}},
-			// 203
-			{t:500, v:{t:303, v:{var:'local_id'}}},
-			// 204
-			{t:500, v:{t:304, v:{var:'local_id'}}},
-			// 206
-			{t:500, v:{t:306, v:{var:'remote_id'}}}
+		/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2").TimerMessageTypesTy} TimerMessageTypesTy */
+		/**@type {TimerMessageTypesTy} */
+		msg_types = new TimerMessageTypes;
+		set_names = new TimeoutSetStrings;
+		clear_names = new TimeoutClearStrings;
+		handled=[];
+		to_handle = [
+			{t: TimeoutMessageR},
+			{t: TimeoutSetS},
+			{t: TimeoutSetR},
+			{t: TimeoutClearS},
+			new MakeReplyData(ReplyFromWorker, WorkerReadyReply, TimeoutMessageR, {}),
+			// TimeoutSetTypeS
+			new MakeReplyData(ReplyFromWorker, ReplySetSingle, {
+				var: 'local_id'
+			}, {}),
+			// TimeoutSetTypeR
+			new MakeReplyData(ReplyFromWorker, ReplySetRepeating, {
+				var: 'local_id'
+			}, {}),
+			// TimeoutClearS
+			new MakeReplyData(ReplyFromWorker, ReplyClearSingle, {
+				var: 'remote_id'
+			}, {}),
+			// TimeoutClearR
+			new MakeReplyData(ReplyFromWorker, ReplyClearRepeating, {
+				var: 'remote_id'
+			}, {})
 		];
 	}
 	let g_timer_api=new TimerApi;
@@ -112,13 +195,11 @@
 				this.fns.push(fn);
 			},
 			dispatchEvent(ev){
-				//spell:disable
-				let lfns=this.fns.slice();
-				for(let i=0;i<lfns.length;i++){
-					let fn=lfns[i];
+				let l_fns=this.fns.slice();
+				for(let i=0;i<l_fns.length;i++){
+					let fn=l_fns[i];
 					fn(ev);
 				}
-				//spell:enable
 			}
 		}
 	}
