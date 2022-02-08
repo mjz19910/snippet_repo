@@ -2,7 +2,7 @@ type VMBoxed<T> = {
 	value: T
 }
 
-export class VMBoxedValue<T> implements VMBoxed<T> {
+class VMBoxedValue<T> implements VMBoxed<T> {
 	constructor(value: T) {
 		this.value = value;
 	}
@@ -16,13 +16,16 @@ type HasNewableVMValue = {
 export class VMBoxedFunction extends VMBoxedValue<Function> {}
 export class VMBoxedNewableFunction extends VMBoxedValue<HasNewableVMValue> {}
 export class VMBoxedCallableFunction extends VMBoxedValue<CallableFunction> {}
-type HasVMValue={[v: string]: VMValue};
+type HasVMValue={
+	[v: string]: VMValue
+};
 type HasVMCallableIndexed = {
 	[v: string]: (...v: VMValue[]) => VMValue;
 };
 
 export interface StackVM {
-	push(value: VMValue):void;
+	push(value: VMValue) : void;
+	pop() : VMValue | undefined;
 }
 
 export class VMBoxedCallableIndexed extends VMBoxedValue<HasVMCallableIndexed> {};
@@ -38,30 +41,34 @@ type VMFunctionTypes = VMBoxedFunction | VMBoxedNewableFunction | VMBoxedCallabl
 type VMClassTypes = VMFunctionTypes;
 type VMValueTypes = VMBoxedArray|VMBoxedUndefined | VMBoxedNull | VMBoxedCallableIndexed | VMBoxedValue<object> | VMBoxedKeyedObject | VMClassTypes | bigint | boolean | number | string | symbol;
 export type VMValue = VMValueTypes;
-type StackInstructionPushArgs = VMValue[];
-type InstructionDropArgs = [];
-type InstructionGetArgs = [];
-type InstructionCallArgs = [number];
-type InstructionReturnArgs = [];
-type InstructionHaltArgs = [];
-type SpecialInstructionPushArgsType = [];
-type InstructionThisArgs = [];
-type InstructionGlobalArgs = [];
-type InstructionBreakpointArgs = [];
-type InstructionPush = ['push', ...StackInstructionPushArgs];
-type InstructionDrop = ['drop', ...InstructionDropArgs];
-type InstructionGet = ['get', ...InstructionGetArgs];
-type InstructionCall = ['call', ...InstructionCallArgs];
-type InstructionReturn = ['return', ...InstructionReturnArgs];
-type InstructionGlobal = ['global', ...InstructionGlobalArgs];
-type InstructionThis = ['this', ...InstructionThisArgs];
-type InstructionPushArgs = ['push_args', ...SpecialInstructionPushArgsType];
-type InstructionBreakpoint = ['breakpoint', ...InstructionBreakpointArgs];
-type InstructionHalt = ['halt', ...InstructionHaltArgs];
-type InstructionPushInstructionPointer = ['push_pc'];
-type InstructionConstruct = ['construct'];
-type InstructionModifyOperand = ['modify_operand'];
-export type AnyInstructionOperands = StackInstructionPushArgs | InstructionDropArgs | InstructionCallArgs | InstructionGetArgs;
+type InstructionPushOperands = VMValue[];
+type InstructionDropOperands = [];
+type InstructionGetOperands = [];
+type InstructionCallOperands = [number];
+type InstructionReturnOperands = [];
+type InstructionHaltOperands = [];
+type InstructionThisOperands = [];
+type InstructionGlobalOperands = [];
+type InstructionBreakpointOperands = [];
+type InstructionPushInstructionPointerOperands = [];
+type InstructionPushArgsOperands = [];
+type InstructionPush = ['push', ...InstructionPushOperands];
+type InstructionDrop = ['drop', ...InstructionDropOperands];
+type InstructionGet = ['get', ...InstructionGetOperands];
+type InstructionCall = ['call', ...InstructionCallOperands];
+type InstructionReturn = ['return', ...InstructionReturnOperands];
+type InstructionGlobal = ['global', ...InstructionGlobalOperands];
+type InstructionThis = ['this', ...InstructionThisOperands];
+type InstructionPushArgs = ['push_args', ...InstructionPushArgsOperands];
+type InstructionBreakpoint = ['breakpoint', ...InstructionBreakpointOperands];
+type InstructionHalt = ['halt', ...InstructionHaltOperands];
+type InstructionPushInstructionPointer = ['push_pc', ...InstructionPushInstructionPointerOperands];
+type InstructionConstructOperands = [];
+type InstructionConstruct = ['construct', ...InstructionConstructOperands];
+type InstructionModifyOperandOperands = [];
+type InstructionModifyOperand = ['modify_operand', ...InstructionModifyOperandOperands];
+type SkipItem0<T extends [f:string, ...v:any[]], X> = T extends [X, infer U] ? U : T[1];
+export type AnyInstructionOperands = InstructionPushOperands | InstructionCallOperands | [];
 
 export type IStackInstructionType = InstructionPush | InstructionDrop;
 export type IObjectInstructionType = InstructionGet;
@@ -80,3 +87,4 @@ type InstructionTypeG3 = InstructionType5;
 type InstructionTypeG4 = InstructionTypeG1 | InstructionTypeG2;
 type InstructionTypeG5 = InstructionTypeG3;
 export type InstructionType = InstructionTypeG4 | InstructionTypeG5;
+export class VMBoxedInstructionType extends VMBoxedValue<InstructionType> {}

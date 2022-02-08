@@ -2329,12 +2329,6 @@
 			}
 		}
 	}
-	class MiniDom{
-		constructor(elements){
-		}
-		build_dom(){
-		}
-	}
 	const debug_id_gen=new UniqueIdGenerator;
 	/**@type {WeakRef<number>}*/
 	const debug_id_syms=[];
@@ -2343,12 +2337,6 @@
 		const sym=Symbol(id);
 		debug_id_syms.push(new WeakRef({sym}));
 		return sym;
-	}
-	class AbstractBox {
-		constructor(){
-			this.type='AbstractBox';
-			this.value=null;
-		}
 	}
 	class DomValueBox {
 		constructor(from, value){
@@ -2365,7 +2353,7 @@
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
-		/**@arg {AnyInstructionOperands} operands */
+		/**@arg {InstructionType[0]} cur_opcode @arg {AnyInstructionOperands} operands */
 		execute_instruction_raw(cur_opcode, operands){
 			l_log_if(LOG_LEVEL_VERBOSE, cur_opcode, ...operands, null);
 			switch(cur_opcode) {

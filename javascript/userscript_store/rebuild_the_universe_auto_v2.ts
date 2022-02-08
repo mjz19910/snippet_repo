@@ -1,5 +1,5 @@
 import {RecursivePartial} from "./types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMBoxedValue, VMValue, VMBoxedCallableIndexed, VMBoxedNull, VMBoxedUndefined} from "./types/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMValue, VMBoxedCallableIndexed, VMBoxedNull, VMBoxedUndefined, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
 
@@ -2073,7 +2073,7 @@ class BaseStackVM extends BaseVMCreate {
 					if(this.is_in_instructions(target)) {
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
-					let instruction_modify = new VMBoxedValue<InstructionType>(this.instructions[target]);
+					let instruction_modify = new VMBoxedInstructionType(this.instructions[target]);
 					let value = this.pop();
 					if(typeof value === 'string') {
 						instruction_modify.value[offset] = value;
@@ -2123,10 +2123,10 @@ class SimpleStackVM<T> extends BaseStackVM {
 	}
 	execute_instruction_raw(cur_opcode: InstructionType[0], operands: AnyInstructionOperands) {
 		switch(cur_opcode) {
-			case 'this'/*Special*/: this.push(new VMBoxedValue(this)); break;
+			case 'this'/*Special*/: this.push(new VMBoxedStackVM(this)); break;
 			// TODO: if you ever use this on a worker, change
 			// it to use globalThis...
-			case 'global'/*Special*/: this.push(new VMBoxedValue(window)); break;
+			case 'global'/*Special*/: this.push(new VMBoxedWindow(window)); break;
 			case 'breakpoint'/*Debug*/: trigger_debug_breakpoint(); break;
 			case 'call'/*Call*/: {
 				// TODO: Fix the other code to use the call handling from
