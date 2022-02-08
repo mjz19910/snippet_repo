@@ -1,19 +1,5 @@
-// ==UserScript==
-// @name		 rebuild the universe automation
-// @namespace	http://tampermonkey.net/
-// @version	  0.1
-// @description  try to take over the world!
-// @author	   You
-// @match		http://rebuildtheuniverse.com/*
-// @match		http://rebuildtheuniverse.com
-// @match		https://rebuildtheuniverse.com/*
-// @match		https://rebuildtheuniverse.com
-// @run-at	   document-start
-// @grant		none
-// ==/UserScript==
-/* eslint-disable no-undef,no-lone-blocks,no-eval */
-import {IAutoBuy} from "./types/rebuild_the_universe_auto_interface";
-import {WeakRef} from "./types/weak_ref"
+import {IAutoBuy} from "../types/rebuild_the_universe_auto_interface";
+import {WeakRef} from "../types/weak_ref"
 
 type TimerTypeTag = 1 | 2;
 declare namespace Remote {

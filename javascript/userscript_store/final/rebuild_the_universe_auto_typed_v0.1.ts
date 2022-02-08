@@ -1,3 +1,5 @@
+import {InstructionType, StackVM, VMBoxedArray, VMBoxedCallableIndexed, VMBoxedGlobalThis, VMBoxedKeyedObject, VMBoxedStackVM, VMBoxedUndefined, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
+
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
 }
@@ -1399,7 +1401,6 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 }
-import {InstructionType, StackVM, VMBoxedArray, VMBoxedCallableIndexed, VMBoxedGlobalThis, VMBoxedKeyedObject, VMBoxedStackVM, VMBoxedUndefined, VMBoxedWindow, VMValue} from "./types/SimpleVMTypes";
 class SimpleStackVM implements StackVM {
 	instructions: InstructionType[];
 	stack: VMValue[];

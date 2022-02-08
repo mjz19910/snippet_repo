@@ -11,9 +11,6 @@
 // @run-at			document-start
 // @grant			none
 // ==/UserScript==
-// spell:words deref
-// spell:words lazyload
-// spell:words adsbygoogle deinit totalAtome _targets_achi totalAchi tonext atomepersecond lightreset lightgray
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 (function() {
