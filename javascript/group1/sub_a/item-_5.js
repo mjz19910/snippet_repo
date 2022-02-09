@@ -1,3 +1,7 @@
+/* spell:words
+-- version_list item 5 --
+v1 (cur): snippet_repo_v2/javascript/group1/sub_a/item-_5.js
+*/
 (function() {
 	if (window.hasOwnProperty("cint")) {
 		clearTimeout(cint)
