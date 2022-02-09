@@ -16,7 +16,7 @@
 			"./node_modules/@types"
 		]
 	},
-	"include": ["**/*"],
+	"include": ["javascript/userscript_store/**/*"],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
