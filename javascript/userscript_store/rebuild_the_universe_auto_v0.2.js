@@ -1172,41 +1172,47 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			if(!cur)throw new Error("Invalid");
 			let cur_size=cur.size;
 			let time_now=performance.now();
-			cur=this.map.get(this.keys[0]);
 			cur.do_history_update(this, time_now);
 			cur.add_to_ratio(value);
 			for(let i=1;i<this.keys.length;i++) {
 				let key=this.keys[i];
 				cur=this.map.get(key);
+				if(!cur)throw new Error("Invalid");
 				cur_size*=cur.size;
 				cur.add_to_ratio(value, cur_size);
 			}
 		}
 	}
 	class AutoBuyState {
+		/**@arg {AsyncNodeRoot} root */
 		constructor(root){
 			this.root_node=root;
 			this.debug=false;
+			/**
+			 * @type {number[]}
+			 */
 			this.arr=[];
 			this.ratio=0;
 			this.last_ratio=0;
 			this.compressor_stats=[];
 			this.arr_max_len=5*60;
 			this.val=1;
+			this.total_mul=1;
 			this.ratio_mode=0;
+			this.total_cycle_count_change=0;
 			this.locked_cycle_count=50;
 			this.is_init_complete=false;
 			this.avg=new AverageRatioRoot;
 		}
 		init() {
-			if(atomepersecond === 0){
+			if(window.atomepersecond === 0){
 				let node=new TimeoutNode(0);
 				this.root_node.append_child(node);
 				node.start(new TimeoutTarget(this, this.init));
 				return;
 			}
-			this.val=totalAtome/atomepersecond;
-			let rep_val=this.val/(100*4*prestige);
+			this.val=window.totalAtome/window.atomepersecond;
+			let rep_val=this.val/(100*4*window.prestige);
 			if(Number.isFinite(rep_val)){
 				for(let i=0;i<8;i++){
 					this.arr.push(rep_val*.75);
@@ -1217,11 +1223,20 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			let ratio_types=['10sec', '1min', '5min', '30min', '3hour'];
 			let ratio_times=[10*1000, 60*1000, 5*60*1000, 30*60*1000, 3*60*60*1000];
 			let ratio_counts=[80, 6, 5, 6, 6];
+			/**
+			 * @param {number[]} arr
+			 * @param {any} i
+			 */
 			function mul_3(arr, i){
 				let [a, b=1, c=10]=arr.slice(i);
 				return a * b * c * 4;
 			}
 			//@AverageRatio
+			/**
+			 * @arg {AverageRatioRoot} target_obj
+			 * @param {number} i
+			 * @param {number} now_start
+			 */
 			function create_ratio(target_obj, i, now_start){
 				let obj=new AverageRatio(ratio_types[i], ratio_times[i], ratio_counts[i], mul_3(ratio_counts, i), now_start);
 				if(ratio_types[i] === '1min')obj.set_history_size(7200);
@@ -1231,12 +1246,15 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			for(let i=0;i<5;i++){
 				create_ratio(this.avg, i, now_start);
 			}
-			this.prev_atomepersecond=atomepersecond;
+			this.prev_atomepersecond=window.atomepersecond;
 			this.is_init_complete=true;
 		}
 		calc_ratio(){
 			return this.avg.get_average('30min');
 		}
+		/**
+		 * @param {number} value
+		 */
 		append_value(value) {
 			if(!Number.isFinite(value)){
 				console.assert(false, 'value is not finite');
@@ -1277,6 +1295,7 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 				this.cycle_log();
 			}
 		}
+		/** @param {boolean} do_lock */
 		rep_update_ratio_mode(do_lock){
 			let mode_ratio_up=this.ratio_mode * .1;
 			let mode_ratio_down=this.ratio_mode * .1 - .25;
@@ -1285,14 +1304,22 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			if(this.ratio > mode_ratio_up)return this.on_increase_ratio(do_lock);
 			return false;
 		}
+		/** @param {boolean} do_lock */
 		on_decrease_ratio(do_lock, mul=1){
 			this.on_ratio_change(do_lock, -1, 10, mul);
 			return true;
 		}
+		/** @param {boolean} do_lock */
 		on_increase_ratio(do_lock, mul=1){
 			this.on_ratio_change(do_lock, 1, 20, mul);
 			return true;
 		}
+		/**
+		 * @param {boolean} do_lock
+		 * @param {number} dir_num
+		 * @param {number} lock_for
+		 * @param {number} mul
+		 */
 		on_ratio_change(do_lock, dir_num, lock_for, mul){
 			if(do_lock){
 				this.do_ratio_lock(do_lock, dir_num, 60 * lock_for * mul);
@@ -1301,6 +1328,10 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			}
 			this.on_cycle_count_change(lock_for, mul);
 		}
+		/**
+		 * @param {number} lock_for
+		 * @param {number} mul
+		 */
 		on_cycle_count_change(lock_for, mul){
 			this.total_mul*=mul;
 			this.total_cycle_count_change+=lock_for;
@@ -1310,6 +1341,11 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			this.locked_cycle_count-=rem_val;
 			this.locked_cycle_count+=50;
 		}
+		/**
+		 * @param {boolean} _do_lock
+		 * @param {number} mode_change_direction
+		 * @param {number} num_of_cycles
+		 */
 		do_ratio_lock(_do_lock, mode_change_direction, num_of_cycles){
 			this.ratio_mode+=mode_change_direction;
 			this.locked_cycle_count+=num_of_cycles;
@@ -1321,6 +1357,9 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 				default:return AutoBuyMulModifierFactor;
 			}
 		}
+		/**
+		 * @param {string} near_avg
+		 */
 		get_near_val(near_avg){
 			let real_val=this.avg.get_average(near_avg);
 			let log_val=real_val;
@@ -1355,15 +1394,15 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 		}
 		update() {
 			let not_ready=false;
-			if(!not_ready)if(typeof prestige=='undefined')not_ready=true;
-			if(!not_ready)if(totalAtome < 100 || atomepersecond < 100)not_ready=true;
+			if(!not_ready)if(typeof window.prestige=='undefined')not_ready=true;
+			if(!not_ready)if(window.totalAtome < 100 || window.atomepersecond < 100)not_ready=true;
 			if(not_ready) {
 				this.update_not_ready();
 				return;
 			}
-			this.div=Math.log2(prestige)*AutoBuyRatioDiv;
+			this.div=Math.log2(window.prestige)*AutoBuyRatioDiv;
 			//this.div=AutoBuyRatioDiv;
-			this.val=Math.log2(totalAtome/atomepersecond)/this.div;
+			this.val=Math.log2(window.totalAtome/window.atomepersecond)/this.div;
 			if(!Number.isFinite(this.val)){
 				this.val=1e-16;
 				this.update_not_ready();
@@ -1376,6 +1415,9 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			this.append_value(this.val);
 			this.update_ratio_mode();
 		}
+		/**
+		 * @param {string} time_played_str
+		 */
 		on_game_reset_finish(time_played_str){
 			let hist_arr=this.avg.values[0].history.slice().reverse();
 			let avg=hist_arr[0];
@@ -1387,11 +1429,12 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			let json_hist=JSON.stringify(hist_filt_arr);
 			let json_tag="JSON_HIST@";
 			let prev_hist=sessionStorage.history;
+			/**@type {string[]} */
 			let data_arr;
 			if(prev_hist && prev_hist.startsWith(json_tag)){
 				let hist_data=prev_hist.slice("JSON_HIST@".length);
 				let prev_data_len=parseInt(hist_data.split(":", 1)[0]);
-				data_arr=hist_data.slice(prev_data_len.length).split("|");
+				data_arr=hist_data.slice((prev_data_len+"").length).split("|");
 				if(data_arr.length != prev_data_len){
 					console.log('invalid data_arr len');
 				}
@@ -1406,19 +1449,23 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 				data_arr=[json_hist];
 			}
 			sessionStorage.history=`${json_tag}${data_arr.length.toFixed(0)}:${data_arr.join("|")}`;
+			/**@type {(string|null)[]} */
 			let time_played_arr=data_arr.map(_e=>null);
 			if(sessionStorage.time_played_hist){
+				/**@type {string} */
 				let data=sessionStorage.time_played_hist;
 				data.split("@").map(e=>{
 					let [index, time_str]=e.split("|");
-					time_played_arr[index]=time_str;
+					let index_num=parseInt(index);
+					time_played_arr[index_num]=time_str;
 				})
 			}
 			time_played_arr[time_played_arr.length-1]=time_played_str;
+			/**@type {[number, (string | null)][]} */
 			let t_play_tmp=time_played_arr.map((e, i)=>[i, e]);
 			t_play_tmp=t_play_tmp.filter(e=>e[1]!==null);
-			t_play_tmp=t_play_tmp.map(e=>`${e[0]}|${e[1]}`);
-			sessionStorage.time_played_hist=t_play_tmp.join("@");
+			let t_play_tmp_2=t_play_tmp.map(e=>`${e[0]}|${e[1]}`);
+			sessionStorage.time_played_hist=t_play_tmp_2.join("@");
 		}
 		reset(){
 			this.ratio*=0.75;
@@ -1428,7 +1475,7 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 		}
 	}
 	const debug_id_gen=new UniqueIdGenerator;
-	/**@type {WeakRef<number>}*/
+	/**@type {WeakRef<{sym:symbol}>[]}*/
 	const debug_id_syms=[];
 	function next_debug_id(){
 		const id=debug_id_gen.next();
@@ -1445,6 +1492,10 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 		return sym;
 	}
 	class DomValueBox {
+		/**
+		 * @param {string} from
+		 * @param {any} value
+		 */
 		constructor(from, value){
 			this.type='DomValueBox';
 			this.from=from;
@@ -1454,15 +1505,23 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").AnyInstructionOperands} AnyInstructionOperands */
 	class DomBuilderVM extends BaseStackVM {
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
 			super(instructions);
+			/**
+			 * @type {VMValueTypes[]}
+			 */
+			this.stack=[];
+			/**
+			 * @type {[VMValueTypes[], InstructionType[]][]}
+			 */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
-		/**@arg {InstructionType[0]} cur_opcode @arg {AnyInstructionOperands} operands */
-		execute_instruction_raw(cur_opcode, operands){
-			l_log_if(LOG_LEVEL_INFO, cur_opcode, ...operands, null);
-			switch(cur_opcode) {
+		/**@arg {InstructionType} instruction */
+		execute_instruction(instruction) {
+			l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+			switch(instruction[0]) {
 				case 'exec':{
 					this.exec_stack.push([this.stack, this.instructions]);
 					let base_ptr=this.stack.length;
@@ -1471,9 +1530,9 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 					this.instruction_pointer++;
 					this.stack.push(this.instruction_pointer, base_ptr);
 					this.stack=[];
-					this.instructions=operands[0];
+					this.instructions=instruction[1];
 					this.jump_instruction_pointer=0;
-					l_log_if(LOG_LEVEL_INFO, 'exec', ...operands[0]);
+					l_log_if(LOG_LEVEL_INFO, 'exec', ...instruction[1]);
 				} break;
 				case 'peek':{
 					let [op_1, op_2]=operands;
