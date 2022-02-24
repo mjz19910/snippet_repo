@@ -2573,7 +2573,7 @@
 			let k=keys[i];
 			let v=values[i];
 			/**@type {[typeof k, typeof v]} */
-			let item=[k, values[i]];
+			let item=[k, v];
 			ret.push(item);
 		}
 		return ret;
@@ -2767,6 +2767,7 @@
 			configurable
 		});
 	}
+	void define_property_value;
 	function reload_if_def(obj, key){
 		if(obj[key]){
 			location.reload();
@@ -2907,7 +2908,6 @@
 		}
 		enable_jquery_proxy_if_needed();
 		let mut_observers=[];
-		let has_observer=false;
 		window.g_mut_observers=mut_observers;
 		class DetachedMutationObserver {
 			constructor(target) {
