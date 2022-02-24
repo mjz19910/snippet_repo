@@ -1419,14 +1419,16 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 		 * @param {string} time_played_str
 		 */
 		on_game_reset_finish(time_played_str){
-			let hist_arr=this.avg.values[0].history.slice().reverse();
-			let avg=hist_arr[0];
-			let avsz=6*5*6;
-			let hist_filt_arr=hist_arr.map(e=>{
-				avg=((avg*(avsz-1))+e)/avsz;
-				return (avg*100).toFixed(1);
+			let history_arr_1=this.avg.values[0].history.slice().reverse();
+			let history_item=history_arr_1[0];
+			let history_div_num=6*5*6;
+			let history_arr_2=history_arr_1.map(value=>{
+				history_item*=history_div_num-1;
+				history_item+=value;
+				history_item/=history_div_num;
+				return (history_item*100).toFixed(1);
 			});
-			let json_hist=JSON.stringify(hist_filt_arr);
+			let json_hist=JSON.stringify(history_arr_2);
 			let json_tag="JSON_HIST@";
 			let prev_hist=sessionStorage.history;
 			/**@type {string[]} */
@@ -2153,7 +2155,7 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 		start_main_async(no_wait=false) {
 			return this.do_start_main_async(no_wait).then(_e=>{}, e=>{
 				console.log('err', e);
-				console.log('cancled main_async');
+				console.log('canceled main_async');
 			});
 		}
 		main() {
@@ -3025,6 +3027,7 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 				do_dom_filter();
 			};
 			let rb_html_tmp=rb_html.replace(/https:\/\/apis.google.com\/js\/platform.js/, "");
+			//spell:disable-next-line
 			rb_html_tmp=rb_html_tmp.replace("//script.opentracker.net/?site=rebuildtheuniverse.com", "");
 			let rc=0;
 			let did_rep=true;
@@ -3035,6 +3038,7 @@ import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
 			}
 			while(did_rep){
 				did_rep=false;
+				//spell:disable-next-line
 				rb_html_tmp=rb_html_tmp.replace("//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", on_html_replace);
 			}
 			let script_num=[...rb_html_tmp.matchAll(/<\s*script.*?>/g)].length;
