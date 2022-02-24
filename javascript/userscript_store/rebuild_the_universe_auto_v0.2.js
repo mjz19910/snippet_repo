@@ -15,6 +15,8 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
+import {VMBoxedDomValue} from "./types/SimpleVMTypes.js";
+
 (function() {
 	'use strict';
 	const AUDIO_ELEMENT_VOLUME=0.58;
@@ -185,17 +187,16 @@
 			equal:false,
 		};
 		/**
-		 * @param {string} cur_opcode
-		 * @param {AnyInstructionOperands} operands
+		 * @param {InstructionType} instruction
 		 */
-		execute_instruction_raw(cur_opcode, operands) {
-			switch(cur_opcode) {
+		execute_instruction(instruction) {
+			switch(instruction[0]) {
 				default:{
-					console.info('Unknown opcode', cur_opcode);
-					throw new Error('Halt: bad opcode ('+cur_opcode+')');
+					console.info('Unknown opcode', instruction[0]);
+					throw new Error('Halt: bad opcode ('+instruction[0]+')');
 				}
 				case 'je':{
-					let [target] = operands;
+					let [, target] = instruction;
 					if(typeof target!='number')throw new Error("Invalid");
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Jump target is out of instructions range");
@@ -205,7 +206,7 @@
 					}
 				} break;
 				case 'jmp':{
-					let [target] = operands;
+					let [, target] = instruction;
 					if(typeof target!='number')throw new Error("Invalid");
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Jump target is out of instructions range");
@@ -213,15 +214,15 @@
 					this.instruction_pointer=target;
 				} break;
 				case 'modify_operand':{
-					let [target, offset]=operands;
+					let [, target, offset]=instruction;
 					if(typeof target!='number')throw new Error("Invalid");
 					if(typeof offset!='number')throw new Error("Invalid");
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
-					let instruction=this.instructions[target];
+					let instruction_1=this.instructions[target];
 					/**@type {[string, ...any[]]} */
-					let instruction_modify=instruction;
+					let instruction_modify=instruction_1;
 					let value=this.pop();
 					if(instruction_modify === void 0)throw new Error("Invalid");
 					instruction_modify[offset] = value;
@@ -232,9 +233,13 @@
 					if(AbstractVM.prototype.push === this.push){
 						throw new Error("push_pc requires a stack");
 					}
+					instruction;
 					this.push(this.instruction_pointer);
 				} break;
-				case 'halt'/*Running*/:this.running=false; break;
+				case 'halt'/*Running*/:
+					instruction;
+					this.running=false;
+					break;
 			}
 		}
 	}
@@ -297,14 +302,13 @@
 			return arguments_arr;
 		}
 		/**
-		 * @param {InstructionType[0]} cur_opcode
-		 * @param {AnyInstructionOperands} operands
+		 * @param {InstructionType} instruction
 		 */
-		execute_instruction_raw(cur_opcode, operands){
-			switch(cur_opcode) {
+		execute_instruction(instruction){
+			switch(instruction[0]) {
 				case 'push'/*Stack*/: {
-					for(let i = 0; i < operands.length; i++) {
-						let item = operands[i];
+					for(let i = 0; i < instruction.length-1; i++) {
+						let item = instruction[i+1];
 						this.push(item);
 					}
 				} break;
@@ -324,7 +328,7 @@
 					this.push(target_obj.value[target_name]);
 				} break;
 				case 'call'/*Call*/: {
-					let number_of_arguments = operands[0];
+					let number_of_arguments = instruction[1];
 					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					if(number_of_arguments <= 1){
 						throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
@@ -336,18 +340,18 @@
 					this.push(ret);
 				} break;
 				case 'construct'/*Construct*/:{
-					let number_of_arguments=operands[0];
+					let number_of_arguments=instruction[1];
 					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					let [construct_target, ...construct_arr]=this.pop_arg_count(number_of_arguments);
 					if(typeof construct_target!='object')throw new Error("Invalid");
 					if(construct_target.type != 'constructor_box')throw new Error("Invalid");
 					let obj=new construct_target.value(...construct_arr);
 					this.push(obj);
-					l_log_if(LOG_LEVEL_INFO, operands, ...this.stack.slice(this.stack.length-number_of_arguments));
+					l_log_if(LOG_LEVEL_INFO, instruction, ...this.stack.slice(this.stack.length-number_of_arguments));
 				} break;
 				case 'return'/*Call*/:this.return_value=this.pop();break;
 				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
-				default:super.execute_instruction_raw(cur_opcode, operands);break;
+				default:super.execute_instruction(instruction);break;
 			}
 		}
 	}
@@ -378,11 +382,10 @@
 			this.args_vec=null;
 		}
 		/**
-		 * @param {InstructionType[0]} cur_opcode
-		 * @param {AnyInstructionOperands} operands
+		 * @param {InstructionType} instruction
 		 */
-		execute_instruction_raw(cur_opcode, operands) {
-			switch(cur_opcode) {
+		execute_instruction(instruction) {
+			switch(instruction[0]) {
 				case 'this'/*Special*/:{
 					this.push(new VMBoxedStackVM(this));
 				} break;
@@ -395,7 +398,7 @@
 					// Currently we support applying functions
 					// this is closer to what you expect, not to just get
 					// the name of a member to call
-					let number_of_arguments = operands[0];
+					let number_of_arguments = instruction[1];
 					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 					if(typeof target_obj!='object')throw new Error("Invalid");
@@ -404,7 +407,7 @@
 					let ret = target_obj.value[target_name](...arg_arr);
 					this.push(ret);
 				} break;
-				default:super.execute_instruction_raw(cur_opcode, operands);break;
+				default:super.execute_instruction(instruction);break;
 			}
 		}
 		/**
@@ -414,8 +417,8 @@
 			this.args_vec=run_arguments;
 			this.running = true;
 			while(this.instruction_pointer < this.instructions.length && this.running) {
-				let [cur_opcode, ...operands] = this.instructions[this.instruction_pointer];
-				this.execute_instruction_raw(cur_opcode, operands);
+				let instruction = this.instructions[this.instruction_pointer];
+				this.execute_instruction(instruction);
 				this.instruction_pointer++;
 			}
 			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
@@ -659,8 +662,9 @@
 			return dst.length > src.length;
 		}
 		/**
-		 * @param {string | any[]} src
-		 * @param {string | any[]} dst
+		 * @param {string[]} src
+		 * @param {string[]} dst
+		 * @returns {[boolean, string[]]}
 		 */
 		compress_result(src, dst){
 			if(this.did_compress(src, dst))return [true, dst];
@@ -689,7 +693,7 @@
 		}
 
 		/**
-		 * @param {string | any[]} arr
+		 * @param {string[]} arr
 		 */
 		try_compress(arr){
 			let ret=[];
@@ -739,7 +743,7 @@
 		/**
 		 * @param {string[]} arr
 		 */
-		compress_array(arr){
+		compress_array(arr) {
 			let success, res;
 			// await async_semaphore.inc(1);
 			[success, res]=this.try_decompress(arr);
@@ -1148,7 +1152,7 @@
 			if(!ratio_calc)throw new Error("Ratio not found: "+key);
 			return ratio_calc.get_average();
 		}
-		/**@type {(key:string, value:AverageRatio):void} */
+		/**@type {(key:string, value:AverageRatio)=>void} */
 		set_ratio(key, value){
 			this.keys.push(key);
 			this.values.push(value);
@@ -1518,7 +1522,7 @@
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
-		/**@arg {InstructionType} instruction */
+		/**@arg {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} instruction */
 		execute_instruction(instruction) {
 			l_log_if(LOG_LEVEL_INFO, ...instruction, null);
 			switch(instruction[0]) {
@@ -1530,19 +1534,21 @@
 					this.instruction_pointer++;
 					this.stack.push(this.instruction_pointer, base_ptr);
 					this.stack=[];
-					this.instructions=instruction[1];
+					let new_instruction_stream=instruction[1];
+					this.instructions=new_instruction_stream;
 					this.jump_instruction_pointer=0;
 					l_log_if(LOG_LEVEL_INFO, 'exec', ...instruction[1]);
 				} break;
 				case 'peek':{
-					let [op_1, op_2]=operands;
+					let [, op_1, op_2]=instruction;
 					let peek_stack=this.exec_stack[op_1][0];
 					let base_ptr=peek_stack.at(-1);
+					if(typeof base_ptr!='number')throw new Error("Invalid");
 					let at=peek_stack[base_ptr - op_2 - 1];
 					this.push(at);
 					l_log_if(LOG_LEVEL_INFO, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
 				} break;
-				case 'append':{
+				case 'dom_append':{
 					if(this.stack.length <= 0){
 						throw new Error('stack underflow');
 					}
@@ -1551,31 +1557,39 @@
 						throw new Error('stack underflow');
 					}
 					let child_to_append=this.pop();
-					this.verify_dom_box(target);
-					this.verify_dom_box(child_to_append);
-					if(child_to_append.from !== 'create'){
-						console.warn('Are you sure you want to move elements around? child_to_append was not an element you created', child_to_append);
-					}
+					if(typeof child_to_append!='object')throw 1;
+					if(typeof target!='object')throw 1;
 					if(this.can_use_box(target) && this.can_use_box(child_to_append)){
+						if(child_to_append.from !== 'create'){
+							console.warn('Are you sure you want to move elements around? child_to_append was not an element you created', child_to_append);
+						}
 						if(target.value && child_to_append.value){
 							target.value.appendChild(child_to_append.value);
 						} else {
 							console.assert(false, 'box has no value');
 						}
 					} else {
-						console.warn('not using box');
+						throw new Error("Invalid VMBoxedDomValue");
 					}
 					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
 				} break;
-				default/*Debug*/:super.execute_instruction_raw(cur_opcode, operands);break;
+				default/*Debug*/:super.execute_instruction(instruction);break;
 			}
 		}
+		/**
+		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
+		 * @returns {box is VMBoxedDomValue}
+		 */
 		can_use_box(box){
-			return box.from === 'get' || box.from === 'create';
+			return typeof box=='object' && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
 		}
+		/**
+		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
+		 */
 		verify_dom_box(box){
+			if(typeof box!='object')throw new Error("invalid Box (not an object)");
 			if(box.type===void 0)throw new Error("Invalid Box (no type)");
-			if(box.type != 'DomValueBox')throw new Error("Unbox failed not a DomValueBox");
+			if(box.type != 'dom_value')throw new Error("Unbox failed not a VMBoxedDomValue");
 			if(typeof box.from != 'string')throw new Error("Unbox failed Box.from is not a string");
 			if(typeof box.value != 'object')throw new Error("Unbox failed: Box is not boxing an object");
 		}
@@ -1593,9 +1607,14 @@
 				}
 				if(this.instruction_pointer >= this.instructions.length){
 					if(this.exec_stack.length > 0){
-						[this.stack, this.instructions]=this.exec_stack.pop();
+						let exec_top=this.exec_stack.pop();
+						if(!exec_top)throw 1;
+						[this.stack, this.instructions]=exec_top;
 						let base_ptr=this.stack.pop();
-						this.instruction_pointer=this.stack.pop();
+						let instruction_ptr=this.stack.pop();
+						if(instruction_ptr===void 0)throw new Error("Stack underflow");
+						if(typeof instruction_ptr!='number')throw new Error("Invalid");
+						this.instruction_pointer=instruction_ptr;
 						l_log_if(LOG_LEVEL_INFO, 'returned to', this.instruction_pointer, this.exec_stack.length);
 						continue;
 					}
@@ -1608,13 +1627,47 @@
 	}
 	class DataLoader {
 		static int_parser=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
+		/**
+		 * @param {Storage} storage
+		 */
 		constructor(storage) {this.store=storage}
+		/**
+		 * @param {string} key
+		 * @param {string[]} def_value
+		 */
 		load_str_arr(key, def_value){let data=this.store.getItem(key);if(data === null)return def_value;return data.split(",")}
+		/**
+		 * @param {string} key
+		 * @param {any} def_value
+		 */
 		load_int_arr(key, def_value, storage_data=this.store.getItem(key)){if(storage_data === null)return def_value;return this.parse_int_arr(storage_data)}
+		/**
+		 * @param {string} key
+		 * @param {{ (_e: any): number[]; (): any; }} def_factory
+		 */
 		load_int_arr_cb(key, def_factory, storage_data=this.store.getItem(key)){if(storage_data === null)return def_factory();return this.parse_int_arr(storage_data)}
+		/**
+		 * @param {string} string
+		 */
 		default_split(string){return string.split(",")}
+		/**
+		 * @param {string} data
+		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
+	/**@typedef {[0, 'get', string]} DomExecDescriptionI1 */
+	/**@typedef {[number, 'create', string, string, {[s:string]:VMValue}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
+	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
+	/**@typedef {[number, 'dom_append']} DomExecDescriptionI4 */
+	/**@typedef {[number, 'push', null, (...p:Promise<CSSStyleSheet>[])=>void]} DomExecDescriptionI5 */
+	/**@typedef {[number, 'new', NewableFunction, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
+	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
+	/**@typedef {[number, 'drop']} DomExecDescriptionI8 */
+	/**@typedef {[number, 'breakpoint']} DomExecDescriptionI9 */
+	/**@typedef {DomExecDescriptionI1|DomExecDescriptionI2|DomExecDescriptionI3|DomExecDescriptionI4} DomExecDescriptionG1 */
+	/**@typedef {DomExecDescriptionI5|DomExecDescriptionI6|DomExecDescriptionI7|DomExecDescriptionI8} DomExecDescriptionG2 */
+	/**@typedef {DomExecDescriptionI9} */
+	/**@typedef {DomExecDescriptionG1|DomExecDescriptionG2|DomExecDescriptionI9} DomExecDescription */
 	const DO_UPGRADES_RANDOM_RATE=0.008;// 0.005
 	class AutoBuy {
 		async_compress(){
@@ -1626,6 +1679,9 @@
 			this.timeout_ms=0;this.iter_count=0;this.epoch_len=0;
 			this.background_audio=null;this.state_history_arr=null;
 			this.skip_save=false;this.has_real_time=false;
+			/**
+			 * @type {never[]}
+			 */
 			this.cint_arr=[];
 			this.local_data_loader=new DataLoader(localStorage);
 			this.state=new AutoBuyState(this.root_node);
@@ -1637,17 +1693,42 @@
 			this.dom_map=new Map;
 			this.debug_arr=[];
 			this.flags=new Set();
-			for(let i=0;i<debug_id_syms.length;i++){let val=debug_id_syms[i].deref();if(val && this[val.sym])this.debug_arr.push(...this[val.sym].split(",").map(e=>e.trim()))}
-			this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str', _e=>{let src=[300];src.length=16;let data_len=1;while(src.at(-1) != src[0]){src.copyWithin(data_len);data_len*=2}return src});
+			/**@type {any} */
+			let this_as_any=this;
+			/**@type {{[x:symbol]:string}} */
+			let sym_indexed_this=this_as_any;
+			for(let i=0;i<debug_id_syms.length;i++){
+				let val=debug_id_syms[i].deref();
+				if(val && sym_indexed_this[val.sym])this.debug_arr.push(...sym_indexed_this[val.sym].split(",").map(e=>e.trim()))
+			}
+			this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str', _e=>{
+				let src=[300];
+				src.length=16;
+				let data_len=1;
+				while(data_len < src.length){
+					src.copyWithin(data_len, 0);
+					data_len*=2;
+				}
+				return src;
+			});
 		}
 		pre_init(){
-			this.background_audio=document.querySelector("#background_audio");this.background_audio.onloadeddata=null;this.background_audio.volume=AUDIO_ELEMENT_VOLUME;
+			this.background_audio=document.querySelector("#background_audio");
+			if(!this.background_audio)throw new Error("Missing element querySelector('#background_audio')");
+			if(this.background_audio instanceof HTMLAudioElement){
+				this.background_audio.onloadeddata=null;
+				this.background_audio.volume=AUDIO_ELEMENT_VOLUME;
+			} else {
+				throw new Error("querySelector('#background_audio') is not an instance of HTMLAudioElement");
+			}
 			this.async_pre_init().then(()=>{
 				void 0;
 				// console.log('pre_init done')
 			});this.dom_pre_init();
 		}
 		async async_pre_init(){
+			if(!this.background_audio)throw 1;
+			if(!(this.background_audio instanceof HTMLAudioElement))throw 1;
 			x:try{
 				return await this.background_audio.play();
 			}catch(e){
@@ -1659,7 +1740,10 @@
 				function(){
 					// console.log('play success')
 				},
-				function(err){console.log(err)}
+				/**@arg {any} err */
+				function(err){
+					console.log(err);
+				}
 			]);
 			let handler=new EventHandlerVMDispatch(instructions, this);
 			window.addEventListener('click', handler);
@@ -1668,8 +1752,11 @@
 			if(this.skip_save)return;
 			localStorage.auto_buy_history_str=this.state_history_arr.join(",");
 		}
+		/**
+		 * @param {string} forced_action
+		 */
 		get_timeout_arr_data(forced_action){
-			if(forced_action == "RESET")return this.timeout_arr.map(e=>~~(e/4)).join(",");
+			if(forced_action == "RESET")return this.timeout_arr.map((/** @type {number} */ e)=>~~(e/4)).join(",");
 			return this.timeout_arr.join(",");
 		}
 		save_timeout_arr(){
@@ -1690,61 +1777,122 @@
 		}
 		dom_pre_init(){
 			const css_display_style=`#state_log>div{width:max-content}#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`;
-			let create_state_log_arr=[[0, 'get', 'body'],[1, 'create', 'div', 'state_log', {id:'state_log'}], [1, 'dup'], [1, 'append']]
-			let call_arg_arr=[];
+			/**@type {DomExecDescription[]} */
+			let create_state_log_arr=[
+				[0, 'get', 'body'],
+				[1, 'create', 'div', 'state_log', {id:'state_log'}],
+				[1, 'dup'],
+				[1, 'dom_append']
+			];
+			/**@type {DomExecDescription[]} */
 			let make_css_arr=[
 				[
 					0, 'push', null,
-					(...styles_promise_arr)=>
-					/*@Hack: wait for any promise to settle*/
-					Promise.allSettled(styles_promise_arr)
-					.then(e=>{
-						let res=e.filter(e=>e.status==='fulfilled').map(e=>e.value);
+					async (/** @type {Promise<CSSStyleSheet>[]} */ ...styles_promise_arr)=>{
+						/*@Hack: wait for any promise to settle*/
+						const e = await Promise.allSettled(styles_promise_arr);
+						/**@type {PromiseFulfilledResult<Awaited<(typeof styles_promise_arr)[0]>>[]} */
+						let fulfilled_res = [];
+						let rejected_res = [];
+						for(let i = 0; i < e.length; i++) {
+							let cur = e[i];
+							if(cur.status === 'fulfilled') {
+								fulfilled_res.push(cur);
+							} else {
+								rejected_res.push(cur);
+							}
+						}
+						let res = fulfilled_res.map(e_1 => e_1.value);
 						this.adopt_styles(...res);
-						let err=e.filter(e=>e.status!='fulfilled');
-						if(err.length > 0)console.log('promise failure...', ...err)
-					})
+						if(rejected_res.length > 0)
+							console.log('promise failure...', ...rejected_res);
+					}
 				],
-				[0, 'new', CSSStyleSheet, [],(obj, str)=>obj.replace(str),[css_display_style]],[0, 'call', 3],/*drop the promise*/[0, 'drop']
+				[
+					0, 'new', CSSStyleSheet, [], 
+					(/** @type {CSSStyleSheet} */ obj, /** @type {string} */ str)=>obj.replace(str),
+					[css_display_style]
+				],
+				[0, 'call', 3],
+				/*drop the promise*/
+				[0, 'drop']
 			];
+			/**@type {DomExecDescription[]} */
 			let raw_dom_arr=[
-				...create_state_log_arr,[2, 'create', 'div', 'history', "?3"], [2, 'append'],[2, 'create', 'div', 'timeout_element', "0"], [2, 'append'],
-				[2, 'create', 'div', 'hours_played', "0.000 hours"], [2, 'append'],[2, 'create', 'div', 'ratio', 0..toFixed(2)+"%"], [2, 'append'],
-				[2, 'create', 'div', 'ratio_change', 0..toExponential(3)], [2, 'append'],[1, 'drop'],[0, 'drop'],...make_css_arr];
+				...create_state_log_arr,
+				[2, 'create', 'div', 'history', "?3"],
+				[2, 'dom_append'],
+				[2, 'create', 'div', 'timeout_element', "0"],
+				[2, 'dom_append'],
+				[2, 'create', 'div', 'hours_played', "0.000 hours"],
+				[2, 'dom_append'],
+				[2, 'create', 'div', 'ratio', 0..toFixed(2)+"%"],
+				[2, 'dom_append'],
+				[2, 'create', 'div', 'ratio_change', 0..toExponential(3)],
+				[2, 'dom_append'],
+				[1, 'drop'],
+				[0, 'drop'],
+				...make_css_arr
+			];
 			this.build_dom_from_desc(raw_dom_arr, this.dom_map);
 		}
+		/**
+		 * @param {any[]} styles
+		 */
 		adopt_styles(...styles){
 			let dom_styles=document.adoptedStyleSheets;
 			document.adoptedStyleSheets = [...dom_styles, ...styles];
 		}
+		/**
+		 * @param {DomExecDescription[]} raw_arr
+		 */
 		build_dom_from_desc(raw_arr, trg_map=new Map, dry_run=false) {
 			let stack=[];
 			let map=trg_map;
 			if(dry_run)stack.push([0, "enable_dry_mode"]);
 			for(let i=0;i<raw_arr.length;i++) {
 				let cur_item=raw_arr[i];
-				let [depth, action, ...args] = cur_item;
-				switch(action){
+				// let [depth, action, ...args] = cur_item;
+				switch(cur_item[1]){
 					case 'get':{
-						let cur_element, [query_arg]=args;switch(query_arg){case 'body':cur_element=document.body;break;default:cur_element=document.querySelector(query_arg);break;}
-						stack.push([depth, "push", new DomValueBox('get', cur_element)])
+						let cur_element, [, , query_arg]=cur_item;switch(query_arg){case 'body':cur_element=document.body;break;default:cur_element=document.querySelector(query_arg);break;}
+						stack.push([cur_item[0], "push", new DomValueBox('get', cur_element)])
 					} break;
 					case 'new':{
-						const [_class, construct_arg_arr, callback, arg_arr]=args;
-						stack.push([depth, "push", null, callback, ...construct_arg_arr, _class],[depth, "construct", 1 + construct_arg_arr.length],[depth, "push", ...arg_arr],[depth, "call", 3 + arg_arr.length])
+						const [depth, , _class, construct_arg_arr, callback, arg_arr]=cur_item;
+						stack.push([cur_item[0], "push", null, callback, ...construct_arg_arr, _class],[cur_item[0], "construct", 1 + construct_arg_arr.length],
+						[depth, "push", ...arg_arr],
+						[depth, "call", 3 + arg_arr.length])
 					} break;
 					case 'create':{
-						const [element_type, name, content] = args;
+						const [depth, ,element_type, name, content] = cur_item;
 						let cur_element=document.createElement(element_type);
 						if(typeof content == 'string')cur_element.innerText=content;
-						else if(typeof content == 'object' && content.id)cur_element.id=content.id;
+						else if(typeof content == 'object' && content.id){
+							let dom_id=content.id;
+							if(typeof dom_id === 'string'){
+								cur_element.id=dom_id;
+							}
+						}
 						else{console.log('bad typeof == %s for content in build_dom; content=%o', typeof content, content);console.info("Info: case 'create' args are", element_type, name)}
 						map.set(name, cur_element);
 						stack.push([depth, "push", new DomValueBox('create', cur_element)]);
 					} break;
-					case 'append':{/*peek at the return stack, up 1 depth*/stack.push([depth, "peek", depth-1, 0]);stack.push(cur_item);} break;
+					case 'dom_append':{
+						let depth=cur_item[0];
+						/*peek at the return stack, up 1 depth*/
+						stack.push([depth, "peek", depth-1, 0]);
+						stack.push(cur_item);
+					} break;
 					case 'dup':case 'breakpoint':case 'drop':case 'call':/*push the item*/case 'push':stack.push(cur_item);break;
-					default:{console.log('might need to handle', action);debugger} break;
+					default:{
+						/**@type {any} */
+						let any_cur=cur_item;
+						if(!(any_cur instanceof Array))throw 1;
+						const [, action] = any_cur;
+						console.log('might need to handle', action);
+						debugger
+					} break;
 				}
 				if(this.debug_arr.includes('build_dom_from_desc'))console.log('es', stack.at(-1));
 			}
@@ -1754,7 +1902,13 @@
 			}
 			this.apply_dom_desc(tree);
 		}
+		/**
+		 * @param {string | any[]} input_stack
+		 */
 		parse_dom_desc(input_stack){
+			/**
+			 * @type {any[][]}
+			 */
 			let stack=[];
 			let tree=[];
 			for(let x=0,i=0;i<input_stack.length;i++){
@@ -1768,6 +1922,7 @@
 				}
 				while(y < x){
 					let prev=tree;
+					// @ts-ignore
 					tree=stack.pop();
 					tree.push([x, prev]);
 					x--;
@@ -1776,11 +1931,18 @@
 			}
 			return [stack, tree];
 		}
+		/**
+		 * @param {string} tag
+		 * @param {(string | number | any[])[]} log_args
+		 */
 		log_if(tag, ...log_args){
 			if(this.debug_arr.includes(tag)){
 				console.log(...log_args);
 			}
 		}
+		/**
+		 * @param {string} tag
+		 */
 		get_logging_level(tag, level=LOG_LEVEL_INFO){
 			if(this.debug_arr.includes(tag)){
 				return level-1;
@@ -1790,9 +1952,16 @@
 		get [next_debug_id()](){
 			return '';
 		}
+		/**
+		 * @param {any[]} tree
+		 */
 		apply_dom_desc(tree) {
 			this.run_dom_desc(tree);
 		}
+		/**
+		 * @param {string | any[]} tree
+		 */
+		// @ts-ignore
 		run_dom_desc(tree, stack=[], cur_depth=0, items=[], depths=[]){
 			for(let i=0;i<tree.length;i++){
 				let cur=tree[i];
@@ -1865,6 +2034,11 @@
 		update_timeout_element() {
 			this.dom_map.get('timeout_element').innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
 		}
+		/**
+		 * @param {string | number} value
+		 * @param {string} pad_char
+		 * @param {number} char_num
+		 */
 		do_zero_pad(value, pad_char, char_num) {
 			let string;
 			if(typeof value === 'number'){
@@ -1877,6 +2051,10 @@
 			}
 			return string;
 		}
+		/**
+		 * @param {number} timeout_milli
+		 * @param {number | undefined} milli_acc
+		 */
 		get_millis_as_pretty_str(timeout_milli, milli_acc){
 			let time_arr=[];
 			let float_milliseconds = timeout_milli % 1000;
@@ -1910,6 +2088,9 @@
 			}
 			return time_arr.join(":");
 		}
+		/**
+		 * @param {number} hours_num
+		 */
 		get_hours_num_as_pretty_str(hours_num){
 			let int_hours=~~hours_num;
 			let time_arr=[];
@@ -1925,9 +2106,9 @@
 			if(float_milliseconds > 100 && float_milliseconds < 900){
 				this.has_real_time=true;
 			}
-			x:if(this.has_real_time);
-			else if(float_milliseconds < 3e-9 && float_milliseconds > -3e-9);
-			else if(float_milli_from_prev < 3e-9 && float_milli_from_prev > -3e-9);
+			x:if(this.has_real_time){}
+			else if(float_milliseconds < 3e-9 && float_milliseconds > -3e-9){}
+			else if(float_milli_from_prev < 3e-9 && float_milli_from_prev > -3e-9){}
 			else {
 				break x;
 				// console.log(float_milliseconds, float_milliseconds - 1000);
@@ -1968,7 +2149,7 @@
 			return time_arr.join(":");
 		}
 		update_hours_played(){
-			let float_hours=((timeplayed / 30) / 60);
+			let float_hours=((window.timeplayed / 30) / 60);
 			let time_played_str=this.get_hours_num_as_pretty_str(float_hours);
 			this.dom_map.get('hours_played').innerText=time_played_str;
 			this.dom_map.set('time_played_str', time_played_str);
@@ -2024,10 +2205,10 @@
 				// we lost some time here, the diff was too large (got a 10 hours playtime from putting my pc to sleep)
 				if(time_diff > 2000){
 					// assume a max of 2 seconds passed
-					timeplayed++;
+					window.timeplayed++;
 					return;
 				}
-				timeplayed += real_rate;
+				window.timeplayed += real_rate;
 			}, 66);
 			window.secondinterval = interval_id;
 			this.root_node.append_child(new IntervalIdNodeRef(interval_id, function(){
@@ -2036,11 +2217,19 @@
 		}
 		set_timeplayed_update_interval(){
 			this.root_node.append_raw(setInterval(function(){
+				let doc=window.doc;
+				let rounding=window.rounding;
+				let totalAtome=window.totalAtome;
+				let timeplayed=window.timeplayed;
+				let calcPres=window.calcPres;
 				doc.title = rounding(totalAtome, false,1).toString() + " atoms";
 				//spell:words atomsaccu presnbr
-				doc.getElementById('atomsaccu').innerHTML = rounding(atomsaccu, false,0);
-				doc.getElementById('timeplayed').innerHTML = (Math.round(timeplayed / 30) / 60).toFixed(2) + " hours";
-				doc.getElementById('presnbr').innerHTML = "<br>" + (calcPres() * 100).toFixed(0) + " % APS boost";
+				let atomsaccu_e=doc.getElementById('atomsaccu');
+				if(atomsaccu_e)atomsaccu_e.innerHTML = rounding(window.atomsaccu, false,0);
+				let timeplayed_e=doc.getElementById('timeplayed');
+				if(timeplayed_e)timeplayed_e.innerHTML = (Math.round(timeplayed / 30) / 60).toFixed(2) + " hours";
+				let presnbr_e=doc.getElementById('presnbr');
+				if(presnbr_e)presnbr_e.innerHTML = "<br>" + (calcPres() * 100).toFixed(0) + " % APS boost";
 			}, 2000), false);
 		}
 		replace_timeplayed_timer(){
@@ -2053,7 +2242,7 @@
 			this.state.init();
 			this.next_update();
 			this.main();
-			this.original_map.set('lightreset', lightreset);
+			this.original_map.set('lightreset', window.lightreset);
 			window.lightreset=lightreset_inject;
 			window.specialclick=specialclick_inject;
 			if(window.secondinterval){
@@ -2064,6 +2253,9 @@
 			this.state_history_arr=["R"];
 			localStorage.auto_buy_history_str="R";
 		}
+		/**
+		 * @param {string} value
+		 */
 		state_history_append(value, silent=false){
 			this.epoch_len++;
 			if(silent)return;
@@ -2074,6 +2266,9 @@
 			while(this.state_history_arr.length>120)this.state_history_arr.shift();
 			Promise.resolve().then(this.async_compress.bind(this));
 		}
+		/**
+		 * @param {Event} _event
+		 */
 		history_element_click_handler(_event){
 			this.root_node.destroy();
 			this.set_update_timeout();
@@ -2104,6 +2299,9 @@
 			const avg=total / this.timeout_arr.length;
 			return [min, avg, max];
 		}
+		/**
+		 * @type {number[]}
+		 */
 		large_diff=[];
 		calc_timeout_ms() {
 			while(this.timeout_arr.length>60)this.timeout_arr.shift();
@@ -2136,16 +2334,19 @@
 			}
 			let ez_log=sorted_diff_arr.map(e=>{
 				if(e === 0)return e;
-				return this.round(e*diff_want_mul)
+				return this.round(e*diff_want_mul);
 			});
-			//console.log('calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
-			//console.log('calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
+			console.log('calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
+			console.log('calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
 			return this.round(val);
 		}
 		is_epoch_over(){
 			let epoch_diff=Date.now() - this.epoch_start_time;
 			return epoch_diff > 60*5*1000;
 		}
+		/**
+		 * @param {boolean} no_wait
+		 */
 		async do_start_main_async(no_wait){
 			if(!no_wait)await this.next_timeout_async(this.timeout_ms, 'A');
 			await this.main_async();
@@ -2176,7 +2377,7 @@
 			this.do_timeout_inc([1.008, 1.03], 10);
 		}
 		async bonus_async() {
-			bonusAll();
+			window.bonusAll();
 			await this.fast_unit_async();
 		}
 		async initial_special_async(){
@@ -2229,7 +2430,7 @@
 						continue run_loop;
 					}
 					if(loss_rate > 0.08)continue;
-					if(this.pre_total == totalAtome)break;
+					if(this.pre_total == window.totalAtome)break;
 				}
 				await this.faster_timeout_async();
 			}
@@ -2239,7 +2440,7 @@
 			let count=0;
 			while(this.fast_unit_running) {
 				this.unit_promote_start();
-				if(this.pre_total == totalAtome) break;
+				if(this.pre_total == window.totalAtome) break;
 				this.do_fast_unit_step_change();
 				await this.next_timeout_async(this.timeout_ms, ':');
 				count++;
@@ -2250,6 +2451,7 @@
 		}
 		unit_upgradable_count=0;
 		unit_promote_start(){
+			let totalAtome=window.totalAtome;
 			this.timeout_ms=this.calc_timeout_ms();
 			this.pre_total=totalAtome;
 			this.do_unit_promote();
@@ -2280,11 +2482,19 @@
 			this.do_timeout_inc([1.006, 1.005], 4);
 			await this.next_timeout_async(this.timeout_ms, '+');
 		}
+		/**
+		 * @param {number} pow_base
+		 * @param {number} pow_num
+		 * @param {number} div
+		 */
 		get_timeout_change(pow_base, pow_num, div){
 			let pow_res=Math.pow(pow_base, pow_num);
 			let res=this.timeout_ms * pow_res;
 			return res / div;
 		}
+		/**
+		 * @param {number} change
+		 */
 		update_timeout_inc(change){
 			if(window.__testing__){
 				return;
@@ -2293,6 +2503,9 @@
 			l_log_if(LOG_LEVEL_INFO, 'inc', this.timeout_ms, value-this.timeout_ms);
 			this.timeout_arr.push(value);
 		}
+		/**
+		 * @param {number} change
+		 */
 		update_timeout_dec(change){
 			if(window.__testing__){
 				return;
@@ -2302,20 +2515,41 @@
 			l_log_if(LOG_LEVEL_INFO, 'dec', this.timeout_ms, this.timeout_ms-value);
 			this.timeout_arr.push(value);
 		}
+		/**
+		 * @param {number} value
+		 */
 		round(value){
 			return ~~value;
 		}
+		/**
+		 * @param {number[]} pow_terms
+		 * @param {number} div
+		 */
 		do_timeout_dec(pow_terms, div){
 			let change=this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
 			this.update_timeout_dec(change);
 		}
+		/**
+		 * @param {number[]} pow_terms
+		 * @param {number} div
+		 */
 		do_timeout_inc(pow_terms, div){
 			let iter_term=Math.pow(pow_terms[1], this.iter_count);
-			let change=this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
+			let change=this.get_timeout_change(pow_terms[0], Math.log(window.totalAtome), div);
 			this.update_timeout_inc(change * iter_term);
 		}
+		/**
+		 * @param {string} msg
+		 * @param {Error} err
+		 */
 		next_timeout_async_err_log(msg, err){
+			/**@type {{stack:string|null}} */
+			let stack_trace={stack:null};
+			if(err.stack===void 0)Error.captureStackTrace(stack_trace);
 			let err_stack=err.stack.split("\n").slice(1);
+			/**
+			 * @param {string} str
+			 */
 			function rm(str){
 				if(err_stack.length === 0)return false;
 				if(err_stack[0].includes(str)){

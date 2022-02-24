@@ -64,10 +64,21 @@ export class VMBoxedObject extends VMBoxedValue<object> {
 export class VMBoxedInstructionTypeArray extends VMBoxedValue<InstructionType[]>{
 	type:"instruction_type_vec"="instruction_type_vec";
 }
+export class VMBoxedDomValue extends VMBoxedValue<Node> {
+	type:"dom_value"="dom_value";
+	from:"create"|"get"="create";
+}
 
 type VMFunctionTypes = VMBoxedFunction | VMBoxedNewableFunction | VMBoxedCallableFunction;
 type VMClassTypes = VMFunctionTypes;
-export type VMValueTypes = VMBoxedStackVM | VMBoxedWindow | VMBoxedArray | VMBoxedUndefined | VMBoxedNull | VMBoxedCallableIndexed | VMBoxedObject | VMBoxedKeyedObject | VMClassTypes | bigint | boolean | number | string | symbol | undefined;
+type VMObjectTypes=VMBoxedCallableIndexed | VMBoxedKeyedObject | VMBoxedObject;
+export type VMValueTypes = VMBoxedStackVM | VMBoxedWindow |
+	VMBoxedArray |
+	VMBoxedUndefined | VMBoxedNull |
+	VMObjectTypes |
+	VMClassTypes |
+	VMBoxedDomValue |
+	bigint | boolean | number | string | symbol | undefined;
 export type VMValue = VMValueTypes;
 type InstructionPushOperands = VMValue[];
 type InstructionDropOperands = [];
@@ -92,28 +103,30 @@ type InstructionPushArgs = ['push_args', ...InstructionPushArgsOperands];
 type InstructionBreakpoint = ['breakpoint', ...InstructionBreakpointOperands];
 type InstructionHalt = ['halt', ...InstructionHaltOperands];
 type InstructionPushInstructionPointer = ['push_pc', ...InstructionPushInstructionPointerOperands];
-type InstructionConstructOperands = [];
+type InstructionConstructOperands = [number];
 type InstructionConstruct = ['construct', ...InstructionConstructOperands];
-type InstructionModifyOperandOperands = [];
+type InstructionModifyOperandOperands = [number,  number];
 type InstructionModifyOperand = ['modify_operand', ...InstructionModifyOperandOperands];
-type SkipItem0<T extends [f:string, ...v:any[]], X> = T extends [X, infer U] ? U : T[1];
-export type AnyInstructionOperands = InstructionPushOperands | InstructionCallOperands | [];
+type InstructionPeek = ['peek', number,  number];
+type DomInstructionAppend = ['dom_append'];
+type InstructionExec = ['exec', InstructionType[]];
+type InstructionJumpJe = ['je', number];
+type InstructionJumpAbs = ['jmp', number];
+type SkipItem0_t<T extends [f:string, ...v:any[]], X> = T extends [X, ...infer U] ? U : T[1];
+type SkipItem0<T extends [f:any, ...v:any[]]> = SkipItem0_t<T, T[0]>
+export type AnyInstructionOperands = SkipItem0<InstructionType>;
 
-export type IStackInstructionType = InstructionPush | InstructionDrop;
+export type IStackInstructionType = InstructionPush | InstructionPeek | InstructionDrop;
 export type IObjectInstructionType = InstructionGet;
 export type ICallInstructionType = InstructionCall | InstructionReturn;
 export type ITuringInstructionType = InstructionHalt;
 export type ISpecialInstructionType = InstructionPushArgs | InstructionThis | InstructionGlobal;
 export type IDebugInstructionType = InstructionBreakpoint;
-type InstructionType1 = IStackInstructionType | IObjectInstructionType;
-type InstructionType2 = ICallInstructionType | ITuringInstructionType;
-type InstructionType3 = ISpecialInstructionType | IDebugInstructionType;
-type InstructionType4 = InstructionPushInstructionPointer | InstructionConstruct;
-type InstructionType5 = InstructionModifyOperand | InstructionDup;
-type InstructionTypeG1 = InstructionType1 | InstructionType2;
-type InstructionTypeG2 = InstructionType3 | InstructionType4;
-type InstructionTypeG3 = InstructionType5;
-type InstructionTypeG4 = InstructionTypeG1 | InstructionTypeG2;
-type InstructionTypeG5 = InstructionTypeG3;
-export type InstructionType = InstructionTypeG4 | InstructionTypeG5;
+export type IInstructionJumpType = InstructionJumpJe | InstructionJumpAbs;
+export type IDomInstructions = DomInstructionAppend;
+export type InstructionType = IStackInstructionType | IObjectInstructionType |
+	ICallInstructionType | ITuringInstructionType |
+	ISpecialInstructionType | IDebugInstructionType | IInstructionJumpType |
+	InstructionPushInstructionPointer | InstructionConstruct |
+	InstructionModifyOperand | InstructionDup | InstructionExec;
 export class VMBoxedInstructionType extends VMBoxedValue<InstructionType> {}

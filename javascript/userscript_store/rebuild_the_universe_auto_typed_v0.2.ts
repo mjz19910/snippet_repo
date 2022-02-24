@@ -1,6 +1,6 @@
 import {IAutoBuy} from "./types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "./types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMValue, VMBoxedCallableIndexed, VMBoxedNull, VMBoxedUndefined, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow} from "./types/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMValue, VMBoxedCallableIndexed, VMBoxedNull, VMBoxedUndefined, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow, IDomInstructions} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
 
@@ -61,7 +61,7 @@ declare global {
 		da: any[];
 		lightreset(): void;
 		specialclick(that: any): void;
-		secondinterval: number;
+		secondinterval?: number;
 		atomsaccu: number;
 		calcPres(): number;
 		g_auto_buy: IAutoBuy;
@@ -76,6 +76,13 @@ declare global {
 		prototype: Window;
 		new(): Window;
 	};
+
+	export interface ErrorConstructor {
+		new(message?: string): Error;
+		(message?: string): Error;
+		readonly prototype: Error;
+		captureStackTrace(obj:{stack:string}, constructorOpt?:{}):void;
+	}
 	var window: Window & typeof globalThis;
 	module globalThis {
 		var remote_worker_state: RemoteWorkerState;
@@ -1912,7 +1919,7 @@ class EventHandlerDispatch<T> {
 	}
 }
 abstract class AbstractVM {
-	abstract execute_instruction_raw(cur_opcode: InstructionType[0], operands: AnyInstructionOperands): void;
+	abstract execute_instruction(instruction: InstructionType): void;
 	abstract run(): VMValue;
 }
 class BaseVMCreate extends AbstractVM {
@@ -1934,14 +1941,14 @@ class BaseVMCreate extends AbstractVM {
 	is_in_instructions(value: number) {
 		return value >= 0 && value < this.instructions.length;
 	}
-	execute_instruction_raw(cur_opcode: string, operands: any) {
-		switch(cur_opcode) {
+	execute_instruction(instruction:InstructionType) {
+		switch(instruction[0]) {
 			default: {
-				console.info('Unknown opcode', cur_opcode);
-				throw new Error('Halt: bad opcode (' + cur_opcode + ')');
+				console.info('Unknown opcode', instruction[0]);
+				throw new Error('Halt: bad opcode (' + instruction[0] + ')');
 			}
 			case 'je': {
-				let [target] = operands;
+				let [, target] = instruction;
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Jump target is out of instructions range");
 				}
@@ -1950,7 +1957,7 @@ class BaseVMCreate extends AbstractVM {
 				}
 			} break;
 			case 'jmp': {
-				let [target] = operands;
+				let [, target] = instruction;
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Jump target is out of instructions range");
 				}
@@ -1962,8 +1969,8 @@ class BaseVMCreate extends AbstractVM {
 	run(): VMValue {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
-			let [cur_opcode, ...operands] = this.instructions[this.instruction_pointer];
-			this.execute_instruction_raw(cur_opcode, operands);
+			let instruction = this.instructions[this.instruction_pointer];
+			this.execute_instruction(instruction);
 			this.instruction_pointer++;
 		}
 		return new VMBoxedNull(null);
@@ -2023,11 +2030,11 @@ class BaseStackVM extends BaseVMCreate {
 		}
 		return arguments_arr;
 	}
-	execute_instruction_raw(cur_opcode: InstructionType[0], operands: AnyInstructionOperands) {
-		switch(cur_opcode) {
+	execute_instruction(instruction: InstructionType) {
+		switch(instruction[0]) {
 			case 'push'/*Stack*/: {
-				for(let i = 0;i < operands.length;i++) {
-					let item = operands[i];
+				for(let i = 0;i < instruction.length-1;i++) {
+					let item = instruction[i+1];
 					this.push(item);
 				}
 			} break;
@@ -2044,7 +2051,7 @@ class BaseStackVM extends BaseVMCreate {
 				}
 			} break;
 			case 'call'/*Call*/: {
-				let number_of_arguments = operands[0];
+				let number_of_arguments = instruction[1];
 				if(number_of_arguments === void 0) return;
 				if(typeof number_of_arguments != 'number') return;
 				if(number_of_arguments <= 1) {
@@ -2056,7 +2063,7 @@ class BaseStackVM extends BaseVMCreate {
 				this.push(ret);
 			} break;
 			case 'construct'/*Construct*/: {
-				let number_of_arguments = operands[0];
+				let number_of_arguments = instruction[1];
 				if(typeof number_of_arguments != 'number') return;
 				let [construct_target, ...construct_arr] = this.pop_arg_count(number_of_arguments);
 				if(construct_target instanceof Function) {
@@ -2069,14 +2076,14 @@ class BaseStackVM extends BaseVMCreate {
 					console.assert(false, 'try to construct non function');
 					debugger;
 				}
-				l_log_if(LOG_LEVEL_VERBOSE, operands, ...this.stack.slice(this.stack.length - number_of_arguments));
+				l_log_if(LOG_LEVEL_VERBOSE, instruction, ...this.stack.slice(this.stack.length - number_of_arguments));
 			} break;
 			case 'return'/*Call*/:
 				let ret = this.pop();
 				this.return_value = ret;
 				break;
 			case 'modify_operand': {
-				let [target, offset] = operands;
+				let [, target, offset] = instruction;
 				if(typeof offset != 'number') return;
 				if(typeof target === 'number') {
 					if(this.is_in_instructions(target)) {
@@ -2106,14 +2113,14 @@ class BaseStackVM extends BaseVMCreate {
 			case 'push_pc': {
 				this.push(this.instruction_pointer);
 			} break;
-			default: super.execute_instruction_raw(cur_opcode, operands); break;
+			default: super.execute_instruction(instruction); break;
 		}
 	}
 	run(): VMValue {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
-			let [cur_opcode, ...operands] = this.instructions[this.instruction_pointer];
-			this.execute_instruction_raw(cur_opcode, operands);
+			let instruction = this.instructions[this.instruction_pointer];
+			this.execute_instruction(instruction);
 			this.instruction_pointer++;
 		}
 		console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
@@ -2130,8 +2137,8 @@ class SimpleStackVM<T> extends BaseStackVM {
 		super.reset();
 		this.args_vec = null;
 	}
-	execute_instruction_raw(cur_opcode: InstructionType[0], operands: AnyInstructionOperands) {
-		switch(cur_opcode) {
+	execute_instruction_raw(instruction:InstructionType) {
+		switch(instruction[0]) {
 			case 'this'/*Special*/: this.push(new VMBoxedStackVM(this)); break;
 			// TODO: if you ever use this on a worker, change
 			// it to use globalThis...
@@ -2143,7 +2150,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 				// Currently we support applying functions
 				// this is closer to what you expect, not to just get
 				// the name of a member to call
-				let number_of_arguments = operands[0];
+				let number_of_arguments = instruction[1];
 				let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 				if(typeof target_name == 'string') {
 					if(target_obj instanceof VMBoxedCallableIndexed) {
@@ -2152,7 +2159,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 					}
 				}
 			} break;
-			default: super.execute_instruction_raw(cur_opcode, operands); break;
+			default: super.execute_instruction(instruction); break;
 		}
 	}
 	run(...run_arguments: T extends T[] ? T : [T]) {
@@ -2955,10 +2962,9 @@ class DomBuilderVM extends BaseStackVM {
 		this.exec_stack = [];
 		this.jump_instruction_pointer = null;
 	}
-	/**@arg {AnyInstructionOperands} operands */
-	execute_instruction_raw(cur_opcode: any, operands: AnyInstructionOperands) {
-		l_log_if(LOG_LEVEL_VERBOSE, cur_opcode, ...operands, null);
-		switch(cur_opcode) {
+	execute_instruction_raw(instruction:InstructionType | IDomInstructions) {
+		l_log_if(LOG_LEVEL_VERBOSE, ...instruction, null);
+		switch(instruction[0]) {
 			case 'exec': {
 				this.exec_stack.push([this.stack, this.instructions]);
 				let base_ptr = this.stack.length;
@@ -2967,19 +2973,19 @@ class DomBuilderVM extends BaseStackVM {
 				this.instruction_pointer++;
 				this.stack.push(this.instruction_pointer, base_ptr);
 				this.stack = [];
-				this.instructions = <any>operands[0];
+				this.instructions = <any>instruction[1];
 				this.jump_instruction_pointer = 0;
-				l_log_if(LOG_LEVEL_VERBOSE, 'exec', ...<any>operands[0]);
+				l_log_if(LOG_LEVEL_VERBOSE, 'exec', ...<any>instruction[1]);
 			} break;
 			case 'peek': {
-				let [op_1, op_2] = operands;
+				let [, op_1, op_2] = instruction;
 				let peek_stack = this.exec_stack[<any>op_1][0];
 				let base_ptr = peek_stack.at(-1);
 				let at = peek_stack[<any>base_ptr - <any>op_2 - 1];
 				this.push(at);
 				l_log_if(LOG_LEVEL_VERBOSE, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
 			} break;
-			case 'append': {
+			case 'dom_append': {
 				if(this.stack.length <= 0) {
 					throw new Error('stack underflow');
 				}
@@ -3004,7 +3010,7 @@ class DomBuilderVM extends BaseStackVM {
 				}
 				l_log_if(LOG_LEVEL_VERBOSE, 'append to dom', [target, child_to_append]);
 			} break;
-			default/*Debug*/: super.execute_instruction_raw(cur_opcode, operands); break;
+			default/*Debug*/: super.execute_instruction(instruction); break;
 		}
 	}
 	can_use_box(box: {from: string;}) {
@@ -3020,8 +3026,7 @@ class DomBuilderVM extends BaseStackVM {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let instruction = this.instructions[this.instruction_pointer];
-			let [cur_opcode, ...operands] = instruction;
-			this.execute_instruction_raw(cur_opcode, operands);
+			this.execute_instruction_raw(instruction);
 			if(this.jump_instruction_pointer != null) {
 				this.instruction_pointer = this.jump_instruction_pointer;
 				this.jump_instruction_pointer = null;

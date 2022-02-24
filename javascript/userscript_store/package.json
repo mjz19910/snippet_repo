@@ -1,5 +1,8 @@
 {
 	"files": [
 		".\\DebugAPI.user.d.ts"
-	]
+	],
+	"devDependencies": {
+		"@types/jquery": "^3.5.14"
+	}
 }

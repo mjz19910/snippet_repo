@@ -2,14 +2,14 @@
 	"compilerOptions": {
 		"target": "esnext",
 		"lib": ["esnext","DOM"],
-		"types": ["jquery"],
+		"types": [],
 		"strict": true,
 		"declaration": true,
 		"checkJs": true,
 		"allowJs": true,
 		"strictNullChecks": true,
-		"module":"nodenext",
-		"moduleResolution": "node",
+		"module":"ESNext",
+		"moduleResolution": "classic",
 		"sourceMap": true,
 		"noImplicitAny": true,
 		"outDir": "./lib",
@@ -17,7 +17,7 @@
 			"./node_modules/@types"
 		]
 	},
-	"include": ["javascript/userscript_store/**/*"],
+	"include": ["**/*"],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts"
