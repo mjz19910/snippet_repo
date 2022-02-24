@@ -1,6 +1,6 @@
 /* spell:words
 -- version_list template --
-v1 (cur): snippet_repo_v2/javascript/group1/sub_a/item-_8.js
+v1 (cur-f): snippet_repo_v2/javascript/final/items/item8_v1.js
 */
 // cspell: disable-next-line
 lsw = document.querySelector("#layerswrapper");
