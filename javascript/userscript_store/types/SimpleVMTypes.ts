@@ -61,6 +61,9 @@ export class VMBoxedUndefined extends VMBoxedValue<undefined> {
 export class VMBoxedObject extends VMBoxedValue<object> {
 	type:"object"="object";
 }
+export class VMBoxedInstructionTypeArray extends VMBoxedValue<InstructionType[]>{
+	type:"instruction_type_vec"="instruction_type_vec";
+}
 
 type VMFunctionTypes = VMBoxedFunction | VMBoxedNewableFunction | VMBoxedCallableFunction;
 type VMClassTypes = VMFunctionTypes;
