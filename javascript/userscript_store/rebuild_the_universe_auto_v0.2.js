@@ -15,8 +15,6 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
-
 (function() {
 	'use strict';
 	const AUDIO_ELEMENT_VOLUME=0.58;
