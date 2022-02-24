@@ -3071,7 +3071,6 @@
 				}
 				if(document.body)log_data_vec.push('b', document.body.children.length);
 				else log_data_vec.push('h', document.head.children.length);
-				let script_num_tmp=document.querySelectorAll("script").length-1;
 				log_data_vec.push(document.querySelectorAll("script").length);
 				loaded_scripts_count+=added_scripts.length;
 				if(loaded_scripts_count >= script_num){
