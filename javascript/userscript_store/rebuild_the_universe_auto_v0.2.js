@@ -8,6 +8,7 @@
 // @match			http://rebuildtheuniverse.com/mjz_version/
 // @match			https://rebuildtheuniverse.com/mjz_version/*
 // @match			https://rebuildtheuniverse.com/mjz_version/
+// @match			https://rebuildtheuniverse.com/?real=1
 // @match			https://test.rebuildtheuniverse.com
 // @run-at			document-start
 // @grant			none
@@ -2541,35 +2542,9 @@
 			return;
 		}
 		enable_jquery_proxy_if_needed();
-		class OverwriteDynamic {
-			m_value;
-			constructor(obj, property, callback){
-				let c_obj=this;
-				Object.defineProperty(obj, property, {
-					get(){
-						callback();
-						throw new Error("no get of "+property);
-						return c_obj.m_value;
-					},
-					set(value){
-						callback();
-						c_obj.m_value=value;
-						throw new Error("no set of "+property);
-						return true;
-					},
-					enumerable:true,
-					configurable:true
-				});
-			}
-		}
 		let mut_observers=[];
 		let has_observer=false;
 		window.g_mut_observers=mut_observers;
-		// document.firstChild.remove();
-		// document.firstElementChild.remove();
-		// new OverwriteDynamic(window, "GoogleAnalyticsObject", any_doc_remove);
-		// new OverwriteDynamic(window, "dataLayer", any_doc_remove);
-		// new OverwriteDynamic(window, "doc", any_doc_remove);
 		class DetachedMutationObserver {
 			constructor(target) {
 				let mutationObserver = new MutationObserver(this.callback);
@@ -2606,7 +2581,6 @@
 				this.m_callback(mut_vec, mut_observer);
 			}
 		}
-		mut_observers.push(new DetachedMutationObserver(document));
 		var prev_node_prototype_insertBefore=Node.prototype.insertBefore;
 		document.addEventListener('onContentLoaded', do_dom_filter);
 		Node.prototype.insertBefore=function(element_to_insert, element_reference, ...rest){
@@ -2734,16 +2708,15 @@
 				let script_num_tmp=document.querySelectorAll("script").length-1;
 				log_data_vec.push(document.querySelectorAll("script").length);
 				loaded_scripts_count+=added_scripts.length;
-				console.log(loaded_scripts_count, script_num, '+', added_scripts.length, '-', removed_scripts.length);
 				if(loaded_scripts_count >= script_num){
+					console.log(loaded_scripts_count, script_num);
 					console.log('load observer ', ...log_data_vec);
-					window.dispatchEvent(new Event("DOMContentLoad"));
-					window.dispatchEvent(new Event("load"));
 					mut_observer.disconnect();
 				}
 			}));
 			document.writeln(rb_html_tmp);
 			action_1();
+			document.close();
 			window.onbeforeunload=function(){
 				if(history.state?.gen !== void 0 && history.state.prev === void 0) {
 					// https://rebuildtheuniverse.com/mjz_version/
@@ -2751,13 +2724,22 @@
 				}
 			}
 		}
-		let bb=new Blob([`console.log("first_writeln");
-		//# sourceURL=writeln_html.js`], {type:"text/javascript"});
-		let src=URL.createObjectURL(bb);
-		document.writeln(`<head></head><body><script src="${src}">
-		</script></body>`);
-		let should_close_on_mut=true;
-		do_fetch_load();
+		let should_close_on_mut=false;
+		if(location.href!=="https://rebuildtheuniverse.com/?real=1") {
+			mut_observers.push(new DetachedMutationObserver(document));
+			let bb=new Blob([`console.log("first_writeln");\n//# sourceURL=writeln_html.js`], {type:"text/javascript"});
+			let src=URL.createObjectURL(bb);
+			document.writeln(`<head></head><body><script src="${src}"></script></body>`);
+			do_fetch_load();
+			should_close_on_mut=true;
+		} else {
+			setTimeout=real_st;
+			setInterval=real_si;
+			EventTarget.prototype.addEventListener=orig_aev;
+			document.addEventListener('DOMContentLoaded', function(){
+				action_1();
+			})
+		}
 	}
 	main();
 })();
