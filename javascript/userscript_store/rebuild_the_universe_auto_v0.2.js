@@ -15,6 +15,8 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
+import {VMBoxedStackVM} from "./types/SimpleVMTypes.js";
+
 (function() {
 	'use strict';
 	const AUDIO_ELEMENT_VOLUME=0.58;
@@ -126,6 +128,7 @@
 		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMValue */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMValueTypes} VMValueTypes */
 	class AbstractVM {
 		/**
 		 * @param {VMValue} _value
@@ -281,6 +284,9 @@
 		peek_at(distance){
 			return this.stack.at(-1 - distance);
 		}
+		/**
+		 * @param {number} operand_number_of_arguments
+		 */
 		pop_arg_count(operand_number_of_arguments){
 			let arguments_arr=[];
 			let arg_count=operand_number_of_arguments;
@@ -292,6 +298,10 @@
 			}
 			return arguments_arr;
 		}
+		/**
+		 * @param {InstructionType[0]} cur_opcode
+		 * @param {AnyInstructionOperands} operands
+		 */
 		execute_instruction_raw(cur_opcode, operands){
 			switch(cur_opcode) {
 				case 'push'/*Stack*/: {
@@ -301,50 +311,66 @@
 					}
 				} break;
 				case 'drop'/*Stack*/:this.pop();break;
-				case 'dup'/*Stack*/:this.push(this.peek_at(0));break;
+				case 'dup'/*Stack*/:{
+					let top=this.peek_at(0);
+					if(!top)throw new Error("Stack underflow when executing dup instruction");
+					this.push(top);
+				} break;
 				case 'get'/*Object*/: {
 					let target_name = this.pop();
 					let target_obj = this.pop();
-					this.push(target_obj[target_name]);
+					if(!target_obj)throw new Error("Invalid");
+					if(typeof target_name!='string')throw new Error("Invalid");
+					if(typeof target_obj!='object')throw new Error("Invalid");
+					if(target_obj.type != 'object_index')throw new Error("Invalid");
+					this.push(target_obj.value[target_name]);
 				} break;
 				case 'call'/*Call*/: {
 					let number_of_arguments = operands[0];
+					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					if(number_of_arguments <= 1){
 						throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 					}
 					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-					let ret = target_fn.apply(target_this, arg_arr);
+					if(typeof target_fn!='object')throw new Error("Invalid");
+					if(target_fn.type != 'function_box')throw new Error("Invalid");
+					let ret = target_fn.value.apply(target_this, arg_arr);
 					this.push(ret);
 				} break;
 				case 'construct'/*Construct*/:{
 					let number_of_arguments=operands[0];
+					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					let [construct_target, ...construct_arr]=this.pop_arg_count(number_of_arguments);
-					if(construct_target instanceof Function){
-						let obj=new construct_target(...construct_arr);
-						this.push(obj);
-					} else {
-						console.assert(false, 'try to construct non function');
-						debugger;
-					}
-					l_log_if(LOG_LEVEL_INFO, operands, ...this.stack.slice(this.stack.length-operands[0]));
+					if(typeof construct_target!='object')throw new Error("Invalid");
+					if(construct_target.type != 'constructor_box')throw new Error("Invalid");
+					let obj=new construct_target.value(...construct_arr);
+					this.push(obj);
+					l_log_if(LOG_LEVEL_INFO, operands, ...this.stack.slice(this.stack.length-number_of_arguments));
 				} break;
 				case 'return'/*Call*/:this.return_value=this.pop();break;
 				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
 				default:super.execute_instruction_raw(cur_opcode, operands);break;
 			}
 		}
-		run() {
-			this.running = true;
-			while(this.instruction_pointer < this.instructions.length && this.running) {
-				let [cur_opcode, ...operands] = this.instructions[this.instruction_pointer];
-				this.execute_instruction_raw(cur_opcode, operands);
-				this.instruction_pointer++;
-			}
-			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
-			return this.return_value;
+	}
+	class VMBoxedStackVM {
+		/**@type {"StackVM"} */
+		type="StackVM";
+		/**@arg {SimpleStackVM} value */
+		constructor(value) {
+			this.value = value;
+		}
+	}
+	class VMBoxedWindow {
+		/**@type {"window_box"} */
+		type="window_box";
+		/**@arg {Window} value */
+		constructor(value) {
+			this.value = value;
 		}
 	}
 	class SimpleStackVM extends BaseStackVM {
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super(instructions);
 			this.args_vec=null;
@@ -353,12 +379,18 @@
 			super.reset();
 			this.args_vec=null;
 		}
+		/**
+		 * @param {InstructionType[0]} cur_opcode
+		 * @param {AnyInstructionOperands} operands
+		 */
 		execute_instruction_raw(cur_opcode, operands) {
 			switch(cur_opcode) {
-				case 'this'/*Special*/:this.push(this);break;
+				case 'this'/*Special*/:{
+					this.push(new VMBoxedStackVM(this));
+				} break;
 					// TODO: if you ever use this on a worker, change
 					// it to use globalThis...
-				case 'global'/*Special*/:this.push(window);break;
+				case 'global'/*Special*/:this.push(new VMBoxedWindow(window));break;
 				case 'call'/*Call*/: {
 					// TODO: Fix the other code to use the call handling from
 					// the base class
@@ -366,16 +398,30 @@
 					// this is closer to what you expect, not to just get
 					// the name of a member to call
 					let number_of_arguments = operands[0];
+					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-					let ret = target_obj[target_name](...arg_arr);
+					if(typeof target_obj!='object')throw new Error("Invalid");
+					if(typeof target_name!='string')throw new Error("Invalid");
+					if(target_obj.type!="callable_index")throw new Error("Invalid");
+					let ret = target_obj.value[target_name](...arg_arr);
 					this.push(ret);
 				} break;
 				default:super.execute_instruction_raw(cur_opcode, operands);break;
 			}
 		}
+		/**
+		 * @param {VMValue[]} run_arguments
+		 */
 		run(...run_arguments) {
 			this.args_vec=run_arguments;
-			super.run();
+			this.running = true;
+			while(this.instruction_pointer < this.instructions.length && this.running) {
+				let [cur_opcode, ...operands] = this.instructions[this.instruction_pointer];
+				this.execute_instruction_raw(cur_opcode, operands);
+				this.instruction_pointer++;
+			}
+			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
+			return this.return_value;
 		}
 	}
 	class SimpleStackVMParser {
@@ -390,6 +436,10 @@
 				}
 			}
 		}
+		/**
+		 * @param {string | string[]} str
+		 * @param {any[]} format_list
+		 */
 		static parse_string_with_format_ident(str, format_list) {
 			let format_index = str.indexOf('%');
 			let format_type = str[format_index + 1];
@@ -400,6 +450,10 @@
 					console.log("%s", 'unsupported format spec %' + format_type);
 			}
 		}
+		/**
+		 * @param {any[]} cur
+		 * @param {any[]} format_list
+		 */
 		static parse_current_instruction(cur, format_list) {
 			let arg_loc = 1;
 			let arg = cur[arg_loc];
@@ -413,6 +467,9 @@
 				arg = cur[arg_loc]
 			}
 		}
+		/**
+		 * @param {string[]} m
+		 */
 		static raw_parse_handle_regexp_match(m) {
 			let iter=m[1].trim();
 			if(iter.startsWith("//"))return;
@@ -420,9 +477,12 @@
 				let j=iter.indexOf("*/");
 				iter=iter.slice(j+2).trim();
 			}
-			if(!iter)return "";
+			if(!iter)return null;
 			return iter.split(",");
 		}
+		/**
+		 * @param {string} string
+		 */
 		static parse_string_into_raw_instruction_stream(string) {
 			const parser_max_match_iter = 300;let parts, arr = [], i = 0;
 			do {
@@ -431,8 +491,13 @@
 				let res = this.raw_parse_handle_regexp_match(parts);
 				if(res) arr.push(res);
 			} while(parts && i++ < parser_max_match_iter);
-			if(parts)console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);return arr;
+			if(parts)console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);
+			return arr;
 		}
+		/**
+		 * @param {string} string
+		 * @param {any[]} format_list
+		 */
 		static parse_instruction_stream_from_string(string, format_list) {
 			let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
 			for(let i=0;i<raw_instructions.length;i++) {
@@ -487,29 +552,41 @@
 			/**@type{InstructionType[]}*/
 			const instructions = [];
 			for(let i = 0;i < raw_instructions.length;i++) {
-				const instruction = raw_instructions[i];
-				/**@type {[number]}*/
-				const left = [instruction.length];
-				const valid_instruction = this.verify_instruction(instruction, left);
-				instructions.push(valid_instruction);
+				instructions.push(this.verify_instruction(raw_instructions[i]));
 			}
 			return instructions;
 		}
 	}
 	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
+	class VMBoxedObject {
+		/**@type {"object"} */
+		type="object";
+		/**@arg {object} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
 	class EventHandlerVMDispatch extends SimpleStackVM {
+		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
 			super(instructions);
 			this.target_obj = target_obj;
 		}
+		/**@arg {Event} event */
 		handleEvent(event) {
 			this.reset();
-			this.run(event);
+			this.run(new VMBoxedObject(event));
 		}
 	}
 	class CompressionStatsCalculator {
 		constructor(){
+			/**
+			 * @type {number[]}
+			 */
 			this.hit_counts=[];
+			/**
+			 * @type {string[]}
+			 */
 			this.cache=[];
 		}
 		map_values(){
@@ -518,11 +595,17 @@
 		map_keys(){
 			return this.cache;
 		}
+		/**
+		 * @param {number} index
+		 */
 		add_hit(index) {
 			if(!this.map_values()[index]) {
 				this.map_values()[index]=1;
 			} else this.map_values()[index]++;
 		}
+		/**
+		 * @param {string} key
+		 */
 		add_item(key){
 			let index=this.map_keys().indexOf(key)
 			if(index == -1)index=this.map_keys().push(key);
@@ -532,33 +615,64 @@
 			this.map_keys().length=0;
 			this.map_values().length=0;
 		}
-		calc_compression_stats(arr, win_size){
+		/**
+		 * @param {any[]} arr
+		 * @param {number} win_size
+		 */
+		calc_compression_stats(arr, win_size) {
 			this.reset();
 			for(let i=0;i<arr.length;i++){
 				if(i+win_size < arr.length){
 					this.add_item(arr.slice(i, i+win_size).join(","));
 				}
 			}
-			return to_tuple_arr(this.map_keys(), this.map_values()).filter(e=>e[1]!==void 0);
+			return to_tuple_arr(this.map_keys(), this.map_values()).filter((e)=>e[1]!==void 0);
 		}
+		/**
+		 * @param {any[]} stats_arr
+		 * @param {any[]} arr
+		 * @param {number} win_size
+		 */
 		calc_for_stats_window_size(stats_arr, arr, win_size){
 			stats_arr[win_size-1]=this.calc_compression_stats(arr, win_size);
 		}
+		/**
+		 * @param {any[]} stats_arr
+		 * @param {any[]} arr
+		 * @param {number} index
+		 */
 		calc_for_stats_index(stats_arr, arr, index){
 			stats_arr[index]=this.calc_compression_stats(arr, index+1);
 		}
 	}
 	class BaseCompression {
+		/**
+		 * @param {string | any[]} src
+		 * @param {string | any[]} dst
+		 */
 		did_compress(src, dst){
 			return dst.length < src.length;
 		}
+		/**
+		 * @param {string | any[]} src
+		 * @param {string | any[]} dst
+		 */
 		did_decompress(src, dst){
 			return dst.length > src.length;
 		}
+		/**
+		 * @param {string | any[]} src
+		 * @param {string | any[]} dst
+		 */
 		compress_result(src, dst){
 			if(this.did_compress(src, dst))return [true, dst];
 			return [false, src];
 		}
+		/**
+		 * @param {string[]} src
+		 * @param {string[]} dst
+		 * @returns {[boolean, string[]]}
+		 */
 		decompress_result(src, dst) {
 			// maybe this is not a decompression, just a modification to make
 			// later decompression work
@@ -570,9 +684,15 @@
 		constructor(){
 			super();
 			this.stats_calculator=new CompressionStatsCalculator;
+			/**
+			 * @type {any[]}
+			 */
 			this.compression_stats=[];
 		}
 
+		/**
+		 * @param {string | any[]} arr
+		 */
 		try_compress(arr){
 			let ret=[];
 			for (let i=0;i<arr.length;i++){
@@ -598,6 +718,9 @@
 			}
 			return this.compress_result(arr, ret);
 		}
+		/**
+		 * @param {string[]} arr
+		 */
 		try_decompress(arr){
 			let ret=[];
 			for (let i=0;i<arr.length;i++) {
@@ -615,6 +738,9 @@
 			}
 			return this.decompress_result(arr, ret);
 		}
+		/**
+		 * @param {string[]} arr
+		 */
 		compress_array(arr){
 			let success, res;
 			// await async_semaphore.inc(1);
@@ -634,6 +760,9 @@
 			return arr;
 		}
 	}
+	/**
+	 * @param {string | any[]} arr
+	 */
 	function calc_ratio(arr){
 		let ratio_acc=0;
 		for(let i=0;i<arr.length;i++)ratio_acc+=arr[i];
@@ -643,6 +772,10 @@
 	}
 	console.assert(calc_ratio([0,0]) === 0, "calc ratio of array full of zeros does not divide by zero");
 	class TimeoutTarget {
+		/**
+		 * @param {AutoBuyState | AutoBuy | null} obj
+		 * @param {()=>void} callback
+		 */
 		constructor(obj, callback) {
 			this.m_once=true;
 			this.m_obj=obj;
@@ -653,6 +786,10 @@
 		}
 	}
 	class IntervalTarget {
+		/**
+		 * @param {any} obj
+		 * @param {any} callback
+		 */
 		constructor(obj, callback) {
 			this.m_once=false;
 			this.m_obj=obj;
@@ -662,6 +799,7 @@
 			this.m_callback.call(this.m_obj);
 		}
 	}
+	void IntervalTarget;
 	class PromiseTimeoutTarget {
 		constructor(){
 			this.m_promise_accept=null;
@@ -676,16 +814,26 @@
 			this.m_active=true;
 			return this.m_promise;
 		}
+		/**
+		 * @param {any} accept
+		 * @param {any} reject
+		 */
 		promise_executor(accept, reject){
 			this.m_promise_accept=accept;
 			this.m_promise_reject=reject;
 			this.m_callback=this.on_result.bind(this);
 		}
-		on_result(value){
+		/**
+		 * @param {any} value
+		 */
+		on_result(value=void 0){
 			if(!this.m_promise_accept)throw new Error("Missing promise accept handler");
 			this.m_promise_accept(value);
 			this.reset();
 		}
+		/**
+		 * @param {Error} error
+		 */
 		on_error(error){
 			if(!this.m_promise_reject)throw new Error("Missing promise accept handler");
 			this.m_promise_reject(error);
@@ -714,6 +862,9 @@
 		constructor(){
 			this.m_parent=null;
 		}
+		/**
+		 * @param {any} parent
+		 */
 		set_parent(parent){
 			this.m_parent=parent;
 		}
@@ -728,6 +879,7 @@
 		}
 	}
 	class TimeoutIdNode extends BaseNode {
+		/** @param {number} id */
 		constructor(id){
 			super();
 			this.m_id=id;
@@ -738,6 +890,7 @@
 		}
 	}
 	class IntervalIdNode extends BaseNode {
+		/** @param {number} id */
 		constructor(id){
 			super();
 			this.m_id=id;
@@ -748,6 +901,10 @@
 		}
 	}
 	class TimeoutTargetFn {
+		/**
+		 * @param {any} callback
+		 * @param {number} timeout
+		 */
 		constructor(callback, timeout) {
 			this.m_once=true;
 			this.m_callback=callback;
@@ -758,9 +915,13 @@
 		}
 	}
 	class IntervalTargetFn {
-		constructor(_obj, callback) {
-			this.m_once=false;
+		/**
+		 * @param {any} callback
+		 * @param {number} timeout
+		 */
+		constructor(callback, timeout) {
 			this.m_callback=callback;
+			this.timeout=timeout;
 		}
 		fire(){
 			this.m_callback();
@@ -776,22 +937,23 @@
 		timeout(){
 			return this.m_timeout;
 		}
+		/**
+		 * @param {any} target
+		 */
 		set_target(target){
 			this.m_target=target;
 		}
 		set() {
 			this.m_id=setTimeout(this.run.bind(this), this.m_timeout);
 		}
-		start(target){
-			if(target){
-				this.target=target;
-			}else{
-				this.target=new TimeoutTargetFn(target_fn, this.m_timeout);
-			}
+		/**@arg {{} | null} target */
+		start(target) {
+			if(!target)throw new Error("No target");
+			this.m_target=target;
 			this.set();
 		}
 		run(){
-			if(this.target)this.target.fire();
+			if(this.m_target)this.m_target.fire();
 			this.m_id=null;
 			this.remove();
 		}
@@ -800,6 +962,9 @@
 		}
 	}
 	class IntervalNode extends BaseNode {
+		/**
+		 * @param {CallableFunction} target_fn
+		 */
 		constructor(target_fn, timeout=0){
 			super();
 			this.m_target_fn=target_fn;
@@ -809,11 +974,12 @@
 		set(){
 			this.id=setInterval(this.run.bind(this), this.m_timeout);
 		}
-		start(target){
+		/**@arg {{} | null} target */
+		start(target=null){
 			if(target){
-				this.set_target(target);
+				this.m_target=target;
 			}else{
-				this.set_target(new IntervalTargetFn(this.m_target_fn, this.m_timeout));
+				this.m_target=new IntervalTargetFn(this.m_target_fn, this.m_timeout);
 			}
 			this.set();
 		}
@@ -822,6 +988,7 @@
 		}
 	}
 	class AsyncTimeoutNode extends TimeoutNode {
+		/**@arg {{wait():Promise<any>;destroy():void}} target */
 		async start_async(target){
 			if(!target)throw new Error("unable to start_async without anything to wait for");
 			this.target=target;
@@ -830,11 +997,15 @@
 			await promise;
 		}
 		destroy(){
-			this.target.destroy();
+			if(this.target)this.target.destroy();
 			super.destroy();
 		}
 	}
 	class IntervalIdNodeRef extends IntervalIdNode {
+		/**
+		 * @param {number} interval_id
+		 * @param {() => void} destroy_cb
+		 */
 		constructor(interval_id, destroy_cb){
 			super(interval_id);
 			this.destroy_callback=destroy_cb;
@@ -846,26 +1017,42 @@
 	}
 	class AsyncNodeRoot {
 		constructor(){
+			/**
+			 * @type {BaseNode[]}
+			 */
 			this.children=[];
 		}
-		// set(target_fn, timeout, repeat=false){
-		// 	let node;
-		// 	if(repeat) {
-		// 		node=new TimeoutNode(target_fn, timeout);
-		// 	} else {
-		// 		node=new IntervalNode(target_fn, timeout);
-		// 	}
-		// 	this.append_child(node);
-		// 	node.start();
-		// }
-		append_raw(timeout_id, once=true) {
-			this.append_child(new TimeoutIdNode(timeout_id, once));
+		/**
+		 * @param {()=>void} target_fn
+		 * @param {number | undefined} timeout
+		 */
+		set(target_fn, timeout, repeat=false){
+			let node;
+			if(repeat) {
+				node=new TimeoutNode(timeout);
+				node.start(new TimeoutTarget(null, target_fn));
+			} else {
+				node=new IntervalNode(target_fn, timeout);
+				node.start(new IntervalTarget(null, target_fn));
+			}
 		}
+		/**
+		 * @param {number} timeout_id
+		 */
+		append_raw(timeout_id, once=true) {
+			if(once){
+				this.append_child(new TimeoutIdNode(timeout_id));
+			} else {
+				this.append_child(new IntervalIdNode(timeout_id));
+			}
+		}
+		/**@arg {BaseNode} record */
 		append_child(record){
 			record.remove();
 			record.set_parent(this);
 			this.children.push(record);
 		}
+		/**@arg {BaseNode} record */
 		remove_child(record){
 			let index=this.children.indexOf(record);
 			this.children.splice(index, 1);
@@ -883,8 +1070,18 @@
 	}
 	class AverageRatio {
 		// @AverageRatio
+		/**
+		 * @param {string} type
+		 * @param {number} time_diff_max
+		 * @param {number} size
+		 * @param {number} history_size
+		 * @param {any} time_start
+		 */
 		constructor(type, time_diff_max, size, history_size, time_start) {
 			this.type=type;
+			/**
+			 * @type {number[]}
+			 */
 			this.history=[];
 			this.count=0;
 			this.value=0;
@@ -896,6 +1093,10 @@
 			this.gen_count=0;
 			this.history_size=history_size;
 		}
+		/**
+		 * @param {AverageRatioRoot} avg
+		 * @param {number} time_now
+		 */
 		do_history_update(avg, time_now) {
 			if(this.value === null)return;
 			this.count++;
@@ -911,6 +1112,9 @@
 				if(next)next.do_history_update(avg, time_now);
 			}
 		}
+		/**
+		 * @param {number} value
+		 */
 		add_to_ratio(value, avg_window=this.size) {
 			if(this.value === null) {
 				this.value=value;
@@ -918,6 +1122,9 @@
 			}
 			this.value=(this.value*(avg_window-1)+value)/avg_window;
 		}
+		/**
+		 * @param {number} size
+		 */
 		set_history_size(size) {
 			this.history_size=size;
 		}
@@ -935,16 +1142,21 @@
 			/**@type {AverageRatio[]} */
 			this.values=[];
 		}
+		/**
+		 * @param {string} key
+		 */
 		get_average(key){
 			let ratio_calc=this.map.get(key);
+			if(!ratio_calc)throw new Error("Ratio not found: "+key);
 			return ratio_calc.get_average();
 		}
-		/**@arg {key:string, value:AverageRatio} */
+		/**@type {(key:string, value:AverageRatio):void} */
 		set_ratio(key, value){
 			this.keys.push(key);
 			this.values.push(value);
 			this.map.set(key, value);
 		}
+		/**@arg {AverageRatio} value_obj */
 		next(value_obj){
 			let idx=this.values.indexOf(value_obj);
 			if(idx < this.values.length){
@@ -952,9 +1164,12 @@
 			}
 			return null;
 		}
+		/**
+		 * @param {number} value
+		 */
 		push(value){
-			const do_debug=false;
 			let cur=this.map.get(this.keys[0]);
+			if(!cur)throw new Error("Invalid");
 			let cur_size=cur.size;
 			let time_now=performance.now();
 			cur=this.map.get(this.keys[0]);
@@ -2283,11 +2498,26 @@
 			}
 		}
 	}
+	/**
+	 * @this {any[]}
+	 * @param {any} e
+	 * @param {number} i
+	 */
 	function map_to_tuple(e, i){
 		return [e, this[i]];
 	}
+	/**@type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 	function to_tuple_arr(keys, values){
-		return keys.map(map_to_tuple, values);
+		/**@type {[typeof keys[0], typeof values[0]][]} */
+		let ret=[];
+		for(let i=0;i<keys.length;i++){
+			let k=keys[i];
+			let v=values[i];
+			/**@type {[typeof k, typeof v]} */
+			let item=[k, values[i]];
+			ret.push(item);
+		}
+		return ret;
 	}
 	function promise_set_timeout(timeout, a){
 		setTimeout(a, timeout);
