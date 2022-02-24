@@ -2770,7 +2770,7 @@ class AutoBuyState {
 			node.start(new TimeoutTarget(this, this.init, 'not ready AutoBuyState.update'));
 			return;
 		}
-		this.val = totalAtome / window.atomepersecond;
+		this.val = window.totalAtome / window.atomepersecond;
 		let rep_val = this.val / (100 * 4 * window.prestige);
 		if(Number.isFinite(rep_val)) {
 			for(let i = 0;i < 8;i++) {
@@ -2875,7 +2875,7 @@ class AutoBuyState {
 	}
 	update() {
 		if(typeof window.prestige == 'undefined') {
-			console.log('fail', this.div, window.atomepersecond, totalAtome);
+			console.log('fail', this.div, window.atomepersecond, window.totalAtome);
 			let node = new AsyncTimeoutNode(80);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTarget(this, this.update, 'not ready AutoBuyState.update'));
@@ -2883,10 +2883,10 @@ class AutoBuyState {
 		}
 		this.ratio_mult = window.prestige;
 		this.div = 60 * this.ratio_mult * 8;
-		this.val = totalAtome / window.atomepersecond / this.div;
+		this.val = window.totalAtome / window.atomepersecond / this.div;
 		if(!Number.isFinite(this.val)) {
 			this.val = 1;
-			console.log('fail', this.div, window.atomepersecond, totalAtome);
+			console.log('fail', this.div, window.atomepersecond, window.totalAtome);
 			let node = new AsyncTimeoutNode(80);
 			this.root_node.append_child(node);
 			node.start(new TimeoutTarget(this, this.update, 'not ready AutoBuyState.update'));
@@ -3280,8 +3280,13 @@ class AutoBuy {
 			}
 			return out;
 		}
-		let call_arg_arr: string | any[] = [];
-		let make_css_arr = [
+		let call_arg_arr: [] = [];
+		let make_css_arr: (
+			[0, 'push', null, ((...v:Promise<CSSStyleSheet>[]) => Promise<void>)] |
+			[0, 'new', NewableFunction, [], CallableFunction, [string]] |
+			[0, 'call', number] |
+			[0, 'drop']
+		)[] = [
 			[0, 'push', null, async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
 				// @Hack: wait for any promise to settle
 				const e = await Promise.allSettled(styles_promise_arr);
@@ -3538,7 +3543,7 @@ class AutoBuy {
 			window.timeplayed += real_rate;
 		}, 66);
 		this.root_node.append_raw(setInterval(function() {
-			window.doc.title = window.rounding(totalAtome, false, 1).toString() + " atoms";
+			window.doc.title = window.rounding(window.totalAtome, false, 1).toString() + " atoms";
 			let atomsaccu = window.doc.getElementById('atomsaccu');
 			let timeplayed_e = window.doc.getElementById('timeplayed');
 			let presnbr_e = window.doc.getElementById('timeplayed');
@@ -3619,7 +3624,7 @@ class AutoBuy {
 			console.log('loss', r(loss_rate * 100 * 10) / 10);
 		}
 		if(this.maybe_run_reset()) return;
-		if(this.pre_total != totalAtome) return this.step_iter_start();
+		if(this.pre_total != window.totalAtome) return this.step_iter_start();
 		this.iter_count = 0;
 		if(Math.random() < 0.005) return this.rare_begin();
 		this.faster_timeout();
@@ -3636,7 +3641,7 @@ class AutoBuy {
 			let [quit, loss_rate] = await this.maybe_async_reset();
 			if(quit) return;
 			if(loss_rate > 0.08) continue;
-			if(this.pre_total == totalAtome) break;
+			if(this.pre_total == window.totalAtome) break;
 		}
 		if(Math.random() < 0.005) this.rare_begin();
 		else this.faster_timeout_use_async();
@@ -3655,7 +3660,7 @@ class AutoBuy {
 		let running = true;
 		while(running) {
 			this.unit_promote_start();
-			if(this.pre_total == totalAtome) break;
+			if(this.pre_total == window.totalAtome) break;
 			let promise = this.async_timeout_step();
 			await promise;
 		}
@@ -3666,14 +3671,14 @@ class AutoBuy {
 	}
 	unit_promote_start() {
 		this.extra = this.calc_timeout_extra();
-		this.pre_total = totalAtome;
+		this.pre_total = window.totalAtome;
 		this.do_unit_promote();
-		let money_diff = this.pre_total - totalAtome;
+		let money_diff = this.pre_total - window.totalAtome;
 		let loss_rate = money_diff / this.pre_total;
-		if(this.pre_total != totalAtome && this.debug) {
+		if(this.pre_total != window.totalAtome && this.debug) {
 			let log_args = [];
 			let percent_change = (loss_rate * 100).toFixed(5);
-			let money_str = totalAtome.toExponential(3);
+			let money_str = window.totalAtome.toExponential(3);
 			log_args.push(this.iter_count);
 			log_args.push(percent_change);
 			log_args.push(money_str);
@@ -3734,12 +3739,12 @@ class AutoBuy {
 		return ~~value;
 	}
 	do_timeout_dec(pow_terms: any[], div: number) {
-		let change = this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
+		let change = this.get_timeout_change(pow_terms[0], Math.log(window.totalAtome), div);
 		this.update_timeout_dec(change);
 	}
 	do_timeout_inc(pow_terms: any[], div: number) {
 		let iter_term = Math.pow(pow_terms[1], this.iter_count);
-		let change = this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
+		let change = this.get_timeout_change(pow_terms[0], Math.log(window.totalAtome), div);
 		this.update_timeout_inc(change * iter_term);
 	}
 	async next_timeout_async(timeout: number, char: string, silent = false) {
@@ -3772,7 +3777,7 @@ class AutoBuy {
 		this.next_timeout(this.special, this.extra, '^');
 	}
 	is_special_done(special_buyable: {done: any; cost: number;}) {
-		return !special_buyable.done && special_buyable.cost < totalAtome;
+		return !special_buyable.done && special_buyable.cost < window.totalAtome;
 	}
 	next_special() {
 		return window.allspec.findIndex(this.is_special_done);
@@ -3830,6 +3835,10 @@ class AutoBuy {
 	}
 }
 function do_auto_unit_promote() {
+	let arUnit=window.arUnit;
+	let Get_Unit_Type=window.Get_Unit_Type;
+	let getUnitPromoCost=window.getUnitPromoCost;
+	let Find_ToNext=window.Find_ToNext;
 	var out = [], maxed = [];
 	for(var k = 0;k < arUnit.length;k++) {
 		var afford = false;
@@ -3840,10 +3849,10 @@ function do_auto_unit_promote() {
 			var next = Find_ToNext(k);
 			if(next < 0) {maxed[k] = true};
 			for(var i = 1;i <= 100;i++) {
-				if(totalAtome >= cost) {
+				if(window.totalAtome >= cost) {
 					tmp = tmp + (tmp * arUnit[k][3]) / 100;
 					var tar = (arUnit[k][4] * 1) + i;
-					var a = _targets.indexOf(tar);
+					var a = window._targets.indexOf(tar);
 					var reduction = 1;
 					if(a > -1 && tar <= 1000) {
 						var b = true;
@@ -3854,7 +3863,7 @@ function do_auto_unit_promote() {
 							}
 						}
 						if(b) {
-							var c = _targets_achi.indexOf(totalAchi() + 1);
+							var c = window._targets_achi.indexOf(window.totalAchi() + 1);
 							if(c > -1) {
 								reduction *= (1 - ((c + 1) * 0.01));
 							}
@@ -3881,10 +3890,10 @@ function do_auto_unit_promote() {
 	if(res < 0) return;
 	if(maxed[res]) {
 		for(var y = 0;y < 100;y++) {
-			mainCalc(res);
+			window.mainCalc(res);
 		}
 	} else {
-		tonext(res);
+		window.tonext(res);
 	}
 }
 const auto_buy_obj = new AutoBuy;
@@ -3987,7 +3996,7 @@ function lightreset_inject() {
 }
 function specialclick_inject(that: number) {
 	if(window.allspec[that].done == undefined) window.allspec[that].done = false;
-	if(window.allspec[that].cost <= totalAtome && window.allspec[that].done == false) {
+	if(window.allspec[that].cost <= window.totalAtome && window.allspec[that].done == false) {
 		let specialsbought_e = window.doc.getElementById('specialsbought');
 		let atomsinvest_e = window.doc.getElementById('atomsinvest');
 		if(!specialsbought_e || !atomsinvest_e) throw new Error("Invalid");
@@ -3997,12 +4006,12 @@ function specialclick_inject(that: number) {
 		window.atomsinvest += window.allspec[that].cost;
 		atomsinvest_e.innerText = window.rounding(window.atomsinvest, false, 0);
 		window.allspec[that].done = true;
-		totalAtome -= window.allspec[that].cost;
+		window.totalAtome -= window.allspec[that].cost;
 		var diff1 = window.calcDiff(that);
-		for(var a in arUnit[that][17]) arUnit[that][17][a] *= 100;
-		arUnit[that][5] *= 100;
+		for(var a in window.arUnit[that][17]) window.arUnit[that][17][a] *= 100;
+		window.arUnit[that][5] *= 100;
 		var spec_aps = 0;
-		if(arUnit[that][4] > 0) {
+		if(window.arUnit[that][4] > 0) {
 			spec_aps = (window.calcDiff(that) - diff1);
 			window.atomepersecond += spec_aps;
 		}
