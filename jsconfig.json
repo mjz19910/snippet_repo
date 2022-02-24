@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "esnext",
 		"lib": ["esnext","DOM"],
-		"types": [],
+		"types": ["jquery"],
 		"strict": true,
 		"declaration": true,
 		"checkJs": true,

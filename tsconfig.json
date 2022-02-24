@@ -2,8 +2,8 @@
 	"compilerOptions": {
 		"experimentalDecorators": true,
 		"target": "esnext",
-		"lib": ["esnext","DOM"],
-		"types": [],
+		"lib": ["esnext", "DOM"],
+		"types": ["jquery"],
 		"declaration": true,
 		//"module": "ESNext",
 		"module":"NodeNext",
