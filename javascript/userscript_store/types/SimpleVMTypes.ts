@@ -39,7 +39,7 @@ export class VMBoxedUndefined extends VMBoxedValue<undefined> {}
 
 type VMFunctionTypes = VMBoxedFunction | VMBoxedNewableFunction | VMBoxedCallableFunction;
 type VMClassTypes = VMFunctionTypes;
-type VMValueTypes = VMBoxedArray|VMBoxedUndefined | VMBoxedNull | VMBoxedCallableIndexed | VMBoxedValue<object> | VMBoxedKeyedObject | VMClassTypes | bigint | boolean | number | string | symbol;
+export type VMValueTypes = VMBoxedArray|VMBoxedUndefined | VMBoxedNull | VMBoxedCallableIndexed | VMBoxedValue<object> | VMBoxedKeyedObject | VMClassTypes | bigint | boolean | number | string | symbol;
 export type VMValue = VMValueTypes;
 type InstructionPushOperands = VMValue[];
 type InstructionDropOperands = [];

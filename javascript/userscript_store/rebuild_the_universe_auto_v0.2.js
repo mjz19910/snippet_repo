@@ -22,11 +22,18 @@
 	const AutoBuyMulModifierFactor=1;
 	const AutoBuyRatioDiv=3;
 	class DocumentWriteList {
+		/**
+		 * @type {any[]}
+		 */
+		list;
 		constructor(){
 			this.list=[];
 			this.attached=false;
-			this.end_symbol=Symbol(null);
+			this.end_symbol=Symbol(void 0);
 		}
+		/**
+		 * @param {any[]} args_spread
+		 */
 		write(args_spread){
 			console.assert(args_spread[0] === this.document_write);
 			console.assert(args_spread[1] === this.attached_document);
@@ -42,14 +49,21 @@
 			}
 			this.attached_document=document;
 			this.document_write=document.write;
-			this.document_write_proxy=new Proxy(document.write, {
+			/**@type {ProxyHandler<document['write']> & {other:any}} */
+			let proxy_handler={
+				// @ts-ignore
 				other:this,
+				/**@arg {Parameters<ConstructorParameters<Proxy<Document['write']>>[1]['apply']>} a */
 				apply(...a){
 					this.other.write(a);
 				}
-			});
+			};
+			this.document_write_proxy=new Proxy(document.write, proxy_handler);
 			document.write=this.document_write_proxy;
 		}
+		/**
+		 * @param {boolean} should_try_to_destroy
+		 */
 		destroy(should_try_to_destroy){
 			if(this.attached_document&&this.document_write_proxy){
 				console.assert(this.attached_document.write === this.document_write_proxy);
@@ -59,7 +73,10 @@
 					}
 					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
 				}
-				this.attached_document.write=this.document_write;
+				let att_doc=this.attached_document;
+				if(att_doc && this.document_write){
+					att_doc.write=this.document_write;
+				}
 			}
 			if(this.document_write_proxy){
 				this.document_write_proxy=null;
@@ -79,6 +96,9 @@
 		constructor(){
 			this.m_current=-1;
 		}
+		/**
+		 * @param {number} current_value
+		 */
 		set_current(current_value){
 			this.m_current=current_value;
 		}
@@ -90,37 +110,57 @@
 		}
 	}
 	class EventHandlerDispatch {
+		/**
+		 * @param {{[x:string]:any}} target_obj
+		 * @param {string} target_name
+		 */
 		constructor(target_obj, target_name){
 			this.target_obj=target_obj;
 			this.target_name=target_name;
 		}
+		/**
+		 * @param {any} event
+		 */
 		handleEvent(event){
 			this.target_obj[this.target_name](event);
 		}
 	}
+	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMValue */
 	class AbstractVM {
-		push(){
+		/**
+		 * @param {VMValue} _value
+		 */
+		push(_value) {
 			console.log('you might want to implement this.push for this constructor', Object.getPrototypeOf(this).constructor);
 			throw new Error("Abstract function");
 		}
-		pop(){
+		pop() {
 			console.log('you might want to implement this.pop for this constructor', Object.getPrototypeOf(this).constructor);
 			throw new Error("Abstract function");
 		}
-		execute_instruction_raw(cur_opcode, operands){
+		/**
+		 * @param {string} _cur_opcode
+		 * @param {import("./types/SimpleVMTypes.js").AnyInstructionOperands} _operands
+		 */
+		execute_instruction_raw(_cur_opcode, _operands){
 			// ignore it, this is the base, if you want to ignore instruction opcodes go ahead
 			if(this.execute_instruction_raw !== AbstractVM.prototype.execute_instruction_raw)return;
 			throw new Error("Abstract function");
 		}
+		/**
+		 * @param {any} cur_opcode
+		 * @param {any} operands
+		 */
 		execute_instruction_raw_t(cur_opcode, operands){
 			switch(cur_opcode) {
 					// implement more opcode handling here
-				default/*Debug*/:super.execute_instruction_raw(cur_opcode, operands);break;
+				default/*Debug*/:this.execute_instruction_raw(cur_opcode, operands);break;
 			}
 		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 	class BaseVMCreate extends AbstractVM {
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super();
 			this.instructions = instructions;
@@ -131,9 +171,22 @@
 			this.instruction_pointer = 0;
 			this.running = false;
 		}
+		/**
+		 * @param {number} value
+		 */
 		is_in_instructions(value){
 			return value >= 0 && value < this.instructions.length;
 		}
+		/**
+		 * @type {{ equal: boolean; }}
+		 */
+		flags={
+			equal:false,
+		};
+		/**
+		 * @param {string} cur_opcode
+		 * @param {AnyInstructionOperands} operands
+		 */
 		execute_instruction_raw(cur_opcode, operands) {
 			switch(cur_opcode) {
 				default:{
@@ -142,6 +195,7 @@
 				}
 				case 'je':{
 					let [target] = operands;
+					if(typeof target!='number')throw new Error("Invalid");
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Jump target is out of instructions range");
 					}
@@ -151,6 +205,7 @@
 				} break;
 				case 'jmp':{
 					let [target] = operands;
+					if(typeof target!='number')throw new Error("Invalid");
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Jump target is out of instructions range");
 					}
@@ -158,18 +213,19 @@
 				} break;
 				case 'modify_operand':{
 					let [target, offset]=operands;
+					if(typeof target!='number')throw new Error("Invalid");
+					if(typeof offset!='number')throw new Error("Invalid");
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
-					let instruction_modify=this.instructions[ip_target].slice();
+					let instruction=this.instructions[target];
+					/**@type {[string, ...any[]]} */
+					let instruction_modify=instruction;
 					let value=this.pop();
+					if(instruction_modify === void 0)throw new Error("Invalid");
 					instruction_modify[offset] = value;
-					let verify_state=[instruction_modify.length];
-					//[instruction.length]
-					let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify, verify_state);
-					this.instructions[ip_target]=valid_instruction;
-					console.log('new verify state', verify_state);
-					console.assert(verify_state[0] === 0, "not all of the operands typechecked");
+					let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify);
+					this.instructions[target]=valid_instruction;
 				} break;
 				case 'push_pc':{
 					if(AbstractVM.prototype.push === this.push){
@@ -191,13 +247,19 @@
 	const LOG_LEVEL_INFO=5;
 	const LOG_LEVEL_DEBUG=6;
 	const local_logging_level=3;
+	/**
+	 * @param {number} level
+	 * @arg {any[]} args
+	 */
 	function l_log_if(level, ...args){
 		if(level <= local_logging_level) {
 			console.log(...args);
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxed} VMBoxed */
 	class BaseStackVM extends BaseVMCreate {
+		/**@type {VMValue[]} */
+		stack;
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super(instructions);
 			this.stack=[];
@@ -208,12 +270,14 @@
 			this.stack.length = 0;
 			this.return_value = void 0;
 		}
+		/**@arg {VMValue} value */
 		push(value) {
 			this.stack.push(value);
 		}
 		pop() {
 			return this.stack.pop();
 		}
+		/**@arg {number} distance */
 		peek_at(distance){
 			return this.stack.at(-1 - distance);
 		}
@@ -377,17 +441,23 @@
 			}
 			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
 		}
-		/**@arg {string[]} instruction @arg {[number]} left @ret {InstructionType}*/
-		static verify_instruction(instruction, left){
+		/**@arg {string[]} instruction @returns {InstructionType}*/
+		static verify_instruction(instruction){
+			let num_to_parse=instruction.length;
 			const [m_opcode, ...m_operands] = instruction;
+			/**@type {InstructionType|null} */
+			let ret=null;
 			switch(m_opcode) {
 					// variable argument count
 				case 'push':
-					left[0] = 0;
-					return [m_opcode, ...m_operands];
+					num_to_parse = 0;
+					ret=[m_opcode, ...m_operands];
 				case 'call'/*1 argument*/:
-					left[0] -= 2;
-					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0]))return [m_opcode, m_operands[0]];
+					num_to_parse -= 2;
+					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0])){
+						ret=[m_opcode, m_operands[0]];
+						break;
+					}
 					else {
 						console.info("Can't verify that call instruction is valid, argument (%o) is not a number or not finite", m_operands[0]);
 						throw new Error("TypeError: Invalid argument");
@@ -400,23 +470,28 @@
 				case 'this':
 				case 'global':
 				case 'breakpoint'/*opcode*/:
-					left[0]--;
-					return [m_opcode];
+					num_to_parse--;
+					ret=[m_opcode];
 				default:
 					console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_operands);
 					throw new Error("Unexpected opcode");
 			}
+			if(num_to_parse > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");
+			if(ret !== null){
+				return ret;
+			}
+			throw new Error("Unreachable");
 		}
-		/*@arg {string[][]} raw_instructions @ret {InstructionType[]}*/
+		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
 		static verify_raw_instructions(raw_instructions){
 			/**@type{InstructionType[]}*/
 			const instructions = [];
 			for(let i = 0;i < raw_instructions.length;i++) {
 				const instruction = raw_instructions[i];
-				/*@type {[number]}*/const left = [instruction.length];
+				/**@type {[number]}*/
+				const left = [instruction.length];
 				const valid_instruction = this.verify_instruction(instruction, left);
 				instructions.push(valid_instruction);
-				if(left[0] > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");
 			}
 			return instructions;
 		}
@@ -683,7 +758,7 @@
 		}
 	}
 	class IntervalTargetFn {
-		constructor(obj, callback) {
+		constructor(_obj, callback) {
 			this.m_once=false;
 			this.m_callback=callback;
 		}
@@ -1020,7 +1095,7 @@
 			this.locked_cycle_count-=rem_val;
 			this.locked_cycle_count+=50;
 		}
-		do_ratio_lock(do_lock, mode_change_direction, num_of_cycles){
+		do_ratio_lock(_do_lock, mode_change_direction, num_of_cycles){
 			this.ratio_mode+=mode_change_direction;
 			this.locked_cycle_count+=num_of_cycles;
 		}
@@ -1116,7 +1191,7 @@
 				data_arr=[json_hist];
 			}
 			sessionStorage.history=`${json_tag}${data_arr.length.toFixed(0)}:${data_arr.join("|")}`;
-			let time_played_arr=data_arr.map(e=>null);
+			let time_played_arr=data_arr.map(_e=>null);
 			if(sessionStorage.time_played_hist){
 				let data=sessionStorage.time_played_hist;
 				data.split("@").map(e=>{
@@ -1289,7 +1364,7 @@
 			this.debug_arr=[];
 			this.flags=new Set();
 			for(let i=0;i<debug_id_syms.length;i++){let val=debug_id_syms[i].deref();if(val && this[val.sym])this.debug_arr.push(...this[val.sym].split(",").map(e=>e.trim()))}
-			this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str', e=>{let src=[300];src.length=16;let data_len=1;while(src.at(-1) != src[0]){src.copyWithin(data_len);data_len*=2}return src});
+			this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str', _e=>{let src=[300];src.length=16;let data_len=1;while(src.at(-1) != src[0]){src.copyWithin(data_len);data_len*=2}return src});
 		}
 		pre_init(){
 			this.background_audio=document.querySelector("#background_audio");this.background_audio.onloadeddata=null;this.background_audio.volume=AUDIO_ELEMENT_VOLUME;
@@ -1725,7 +1800,7 @@
 			while(this.state_history_arr.length>120)this.state_history_arr.shift();
 			Promise.resolve().then(this.async_compress.bind(this));
 		}
-		history_element_click_handler(event){
+		history_element_click_handler(_event){
 			this.root_node.destroy();
 			this.set_update_timeout();
 			this.set_auto_buy_timeout();
@@ -1802,7 +1877,7 @@
 			await this.main_async();
 		}
 		start_main_async(no_wait=false) {
-			return this.do_start_main_async(no_wait).then(e=>{}, e=>{
+			return this.do_start_main_async(no_wait).then(_e=>{}, e=>{
 				console.log('err', e);
 				console.log('cancled main_async');
 			});
@@ -2284,7 +2359,7 @@
 				if(idx > window.da.length)return window.da.at(-1)(idx-1);
 				return window.da[idx-1](idx-1);
 			});
-			window.da=[e=>g_proxy_state.hand.stack_overflow_check(), ...val];
+			window.da=[_e=>g_proxy_state.hand.stack_overflow_check(), ...val];
 		}
 		stack_overflow_check(){
 			g_proxy_state.hand.count_arr[0]++;
@@ -2428,11 +2503,11 @@
 		if(typeof jq != 'function')return;
 		let res=jq('head');
 		let r_proto=Object.getPrototypeOf(res);
-		r_proto.lazyload=function(...a){}
+		r_proto.lazyload=function(..._a){}
 		return jq;
 	}
 	void reload_if_def;
-	function proxy_jquery(value){
+	function proxy_jquery(_value){
 		let val=use_jquery();
 		set_jq_proxy(val);
 	}
@@ -2733,8 +2808,8 @@
 			do_fetch_load();
 			should_close_on_mut=true;
 		} else {
-			setTimeout=real_st;
-			setInterval=real_si;
+			window.setTimeout=real_st;
+			window.setInterval=real_si;
 			EventTarget.prototype.addEventListener=orig_aev;
 			document.addEventListener('DOMContentLoaded', function(){
 				action_1();
