@@ -2959,7 +2959,6 @@
 		document_write_list.attach_proxy(document);
 		window.document_write_list=document_write_list;
 		document.stop=function(){};
-		let did_remove_doc_root=false;
 		function nop_timeout(){
 			console.log('nop timeout');
 		}
