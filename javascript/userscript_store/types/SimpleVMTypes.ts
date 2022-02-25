@@ -278,27 +278,25 @@ bigint | boolean | number | string | symbol | null | undefined;
 
 
 // --- Instruction ---
-type InstructionPush = ['push', ...VMValue[]];
-type InstructionDrop = ['drop'];
-type InstructionDup = ['dup'];
-type InstructionGet = ['get'];
-type InstructionCall = ['call', number];
-type InstructionReturn = ['return'];
-type InstructionGlobal = ['global'];
-type InstructionThis = ['this'];
-type InstructionPushArgs = ['push_args'];
-type InstructionBreakpoint = ['breakpoint'];
-type InstructionHalt = ['halt'];
-type InstructionPushInstructionPointer = ['push_pc'];
-type InstructionConstruct = ['construct', number];
-type InstructionModifyOperand = ['modify_operand', number, number];
-type InstructionPeek = ['peek', number, number];
-type DomInstructionAppend = ['dom_append'];
-type InstructionExec = ['exec', InstructionType[]];
-type InstructionJumpJe = ['je', number];
-type InstructionJumpAbs = ['jmp', number];
-type SkipItem0_t<T extends [f: string, ...v: any[]], X> = T extends [X, ...infer U] ? U : T[1];
-type SkipItem0<T extends [f: any, ...v: any[]]> = SkipItem0_t<T, T[0]>
+export type InstructionPush = ['push', ...VMValue[]];
+export type InstructionDrop = ['drop'];
+export type InstructionDup = ['dup'];
+export type InstructionGet = ['get'];
+export type InstructionCall = ['call', number];
+export type InstructionReturn = ['return'];
+export type InstructionGlobal = ['global'];
+export type InstructionThis = ['this'];
+export type InstructionPushArgs = ['push_args'];
+export type InstructionBreakpoint = ['breakpoint'];
+export type InstructionHalt = ['halt'];
+export type InstructionPushInstructionPointer = ['push_pc'];
+export type InstructionConstruct = ['construct', number];
+export type InstructionModifyOperand = ['modify_operand', number, number];
+export type InstructionPeek = ['peek', number, number];
+export type DomInstructionAppend = ['dom_append'];
+export type InstructionExec = ['exec', InstructionType[]];
+export type InstructionJumpJe = ['je', number];
+export type InstructionJumpAbs = ['jmp', number];
 export type AnyInstructionOperands = SkipItem0<InstructionType>;
 
 export type IStackInstructionType = InstructionPush | InstructionPeek | InstructionDrop;
@@ -314,4 +312,8 @@ export type InstructionType = IStackInstructionType | IObjectInstructionType |
 	ISpecialInstructionType | IDebugInstructionType | IInstructionJumpType |
 	InstructionPushInstructionPointer | InstructionConstruct |
 	InstructionModifyOperand | InstructionDup | InstructionExec;
-export class VMBoxedInstructionType extends VMBoxed<InstructionType> {}
+export class VMBoxedInstructionType extends VMBoxed<InstructionType> {};
+
+// --- Misc ---
+type SkipItem0_t<T extends [f: string, ...v: any[]], X> = T extends [X, ...infer U] ? U : T[1];
+type SkipItem0<T extends [f: any, ...v: any[]]> = SkipItem0_t<T, T[0]>;

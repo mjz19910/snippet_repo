@@ -179,7 +179,7 @@
 		/**
 		 * @param {boolean} should_try_to_destroy
 		 */
-		destroy(should_try_to_destroy){
+		destroy(should_try_to_destroy=false) {
 			if(this.attached_document&&this.document_write_proxy){
 				console.assert(this.attached_document.write === this.document_write_proxy);
 				if(this.attached_document.write !== this.document_write_proxy){
@@ -442,6 +442,42 @@
 	function l_log_if(level, ...args){
 		if(level <= local_logging_level) {
 			console . log (...args);
+		}
+	}
+	class InstructionConstructE {
+		static execute_instruction(vm, instruction){
+			let number_of_arguments=instruction[1];
+			if(typeof number_of_arguments!='number')throw new Error("Invalid");
+			let [construct_target, ...construct_arr]=this.pop_arg_count(number_of_arguments);
+			const a=construct_target;
+			if(typeof a!='object')throw new Error("Invalid");
+			if(a===null)throw new Error("Invalid");
+			if(a.type != 'constructor_box')throw new Error("Invalid");
+			if(a.from === 'typescript'){
+				let obj=new a.value(...construct_arr);
+				this.push(obj);
+			} else if(a.from === 'javascript') {
+				if(a.constructor_type === 'CSSStyleSheet') {
+					/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
+					let valid_args={
+						s:[],
+						valid_count:0
+					}
+					for(let i=0;i<construct_arr.length;i++){
+						let val=construct_arr[i];
+						if(typeof val != 'object')continue;
+						if(val === null)continue;
+						if(val.type != 'shape_box')continue;
+						valid_args={
+							s:[val.value],
+							valid_count:1
+						}
+					}
+					let obj=new a.value(...valid_args.s);
+					this.push(new VMBoxedCSSStyleSheetR(obj));
+				}
+			}
+			l_log_if(LOG_LEVEL_INFO, instruction, ...this.stack.slice(this.stack.length-number_of_arguments));
 		}
 	}
 	class BaseStackVM extends BaseVMCreate {
@@ -1035,7 +1071,7 @@
 	console.assert(calc_ratio([0,0]) === 0, "calc ratio of array full of zeros does not divide by zero");
 	class TimeoutTarget {
 		/**
-		 * @param {AutoBuyActions | AutoBuyState | AutoBuy | null} obj
+		 * @param {AutoBuyState | AutoBuy | null} obj
 		 * @param {()=>void} callback
 		 */
 		constructor(obj, callback) {
@@ -1806,20 +1842,35 @@
 		return true;
 	}
 	/**@typedef {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} IDomInstructionSet */
+	/**@typedef {import("./types/SimpleVMTypes.js").StackVM} StackVMTypeZ */
 	void does_array_include;
-	class DomBuilderVM extends BaseStackVM {
-		/**@arg {InstructionType[]} instructions */
+	/**@implements {StackVMTypeZ} */
+	class DomBuilderVM {
+		/**@type {VMValue} */
+		return_value;
+		/**@arg {IDomInstructionSet[]} instructions */
 		constructor(instructions) {
-			super(instructions);
+			this.instructions=instructions;
+			this.instruction_pointer=0;
+			this.return_value = void 0;
 			/**
 			 * @type {VMValue[]}
 			 */
 			this.stack=[];
 			/**
-			 * @type {[VMValue[], InstructionType[]][]}
+			 * @type {[VMValue[], IDomInstructionSet[]][]}
 			 */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
+		}
+		/**
+		 * @param {VMValue} v
+		 */
+		push(v){
+			this.stack.push(v);
+		}
+		pop(){
+			return this.stack.pop();
 		}
 		/**@arg {IDomInstructionSet} instruction */
 		execute_instruction(instruction) {
@@ -1877,7 +1928,15 @@
 					}
 					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
 				} break;
-				default/*Base class*/:super.execute_instruction(instruction);break;
+				case 'push'/*Stack*/: {
+					for(let i = 0; i < instruction.length-1; i++) {
+						let item = instruction[i+1];
+						this.push(item);
+					}
+				} break;
+				case 'drop'/*Stack*/:this.pop();break;
+				case 'construct':{}
+				default/*Base class*/:console.error("Need instruction: "+instruction[0]);break;
 			}
 		}
 		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
@@ -2013,231 +2072,10 @@
 	/**@typedef {DomExecDescriptionI9} */
 	/**@typedef {DomExecDescriptionG1|DomExecDescriptionG2|DomExecDescriptionI9} DomExecDescription */
 	const DO_UPGRADES_RANDOM_RATE=0.008;// 0.005
-	class MathActions {
-		/**@arg {number} v */
-		round(v) {
-			return ~~v;
-		}
-	}
-	/**@typedef {number[] | number} AutoBuyStateType */
-	class AutoBuyActions {
-		/**@arg {AsyncNodeRoot} root_node @arg {AutoBuyState} state */
-		constructor(root_node, state) {
-			/**@type {Map<string, AutoBuyStateType>} */
-			this.state_map=new Map;
-			this.math=new MathActions;
-			this.root_node=root_node;
-			this.m_state=state;
-		}
-		get_state(){
-			return this.m_state;
-		}
-		/** @arg {()=>void} trg_fn @arg {number | undefined} timeout @arg {string} char */
-		next_timeout(trg_fn, timeout, char, silent=false){
-			let node=new TimeoutNode(timeout);
-			this.root_node.append_child(node);
-			node.start(new TimeoutTarget(this, trg_fn));
-			if(!silent){
-				this.timeout_ms=timeout;
-				this.update_timeout_element();
-			}
-			this.state_history_append(char, silent);
-		}
-		update_timeout_element() {
-			if(this.timeout_ms) {
-				let element=this.dom_map.get('timeout_element');
-				if(element instanceof HTMLElement) {
-					element.innerText=this.get_millis_as_pretty_str(this.math.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
-				}
-			}
-		}
-		/** @param {number} timeout_milli @param {number | undefined} milli_acc */
-		get_millis_as_pretty_str(timeout_milli, milli_acc){
-			let time_arr=[];
-			let float_milliseconds = timeout_milli % 1000;
-			let milli_len=6;
-			if(milli_acc === 0){
-				milli_len=3;
-			}
-			time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc), '0', milli_len);
-			timeout_milli-=float_milliseconds;
-			timeout_milli/=1000;
-			let int_seconds = timeout_milli % 60;
-			time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
-			timeout_milli-=int_seconds;
-			timeout_milli/=60;
-			let int_minutes = timeout_milli % 60;
-			time_arr[1]=this.do_zero_pad(int_minutes, '0', 2);
-			timeout_milli-=int_minutes;
-			timeout_milli/=60;
-			let int_hours=timeout_milli;
-			time_arr[0]=this.do_zero_pad(int_hours, '0', 2);
-			int_hours === 0 && (time_arr.shift(), int_minutes === 0 && (time_arr.shift(), int_seconds === 0 && time_arr.shift()));
-			switch(time_arr.length) {
-				case 1:
-					return time_arr[0] + 'ms';
-				case 2:
-					return time_arr[0] + '.' + time_arr[1];
-				case 3:
-					return time_arr.slice(0, 2).join(":") + '.' + time_arr[2];
-				case 4:
-					return time_arr.slice(0, 3).join(":") + '.' + time_arr[3];
-			}
-			return time_arr.join(":");
-		}
-		/**@param {string | number} value@param {string} pad_char@param {number} char_num*/
-		do_zero_pad(value, pad_char, char_num) {
-			let string;
-			if(typeof value === 'number'){
-				string = value.toString();
-			} else {
-				string = value;
-			}
-			while(string.length < char_num){
-				string = pad_char + string;
-			}
-			return string;
-		}
-		/**@arg {string} key */
-		inc(key){
-			if(this.state_map.has(key)){
-				let vv=this.state_map.get(key);
-				if(typeof vv == 'number'){
-					this.state_map.set(key, vv+1);
-				} else {
-					this.state_map.set(key, 1);
-				}
-			} else {
-				this.state_map.set(key, 1);
-			}
-		}
-		calc_timeout_ms() {
-			let timeout_arr=this.state_map.get('timeout_arr');
-			let large_diff=this.state_map.get('large_diff');
-			if(!(timeout_arr instanceof Array))return 125;
-			if(!(large_diff instanceof Array))return 125;
-			if(!large_diff)return 125;
-			while(timeout_arr.length>60)timeout_arr.shift();
-			let max=0;
-			let total=0;
-			for(var i=0;i<timeout_arr.length;i++){
-				total+=timeout_arr[i];
-				max=Math.max(timeout_arr[i], max);
-			};
-			const val=total / timeout_arr.length;
-			let num=val;// max / val;
-			this.last_value??=num;
-			let diff=this.last_value-num;
-			this.last_value=num;
-			large_diff.push(num);
-			let sorted_diff_arr = large_diff.map(e=>e-num).sort((a,b)=>a-b);
-			let diff_want_mul=1;
-			let diff_cur=diff;
-			while(diff_cur > -1 && diff_cur < 1 && diff_want_mul < 1e18){
-				diff_cur*=10;
-				diff_want_mul*=10;
-			}
-			diff_want_mul*=1000;
-			let zero_idx=sorted_diff_arr.indexOf(0);
-			let zs=zero_idx-8;
-			let z_loss=0;
-			if(zs < 0){
-				z_loss=zs*-1;
-				zs=0;
-			}
-			let ez_log=sorted_diff_arr.map(e=>{
-				if(e === 0)return e;
-				return this.math.round(e*diff_want_mul);
-			});
-			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.math.round(diff*diff_want_mul)/diff_want_mul);
-			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
-			return this.math.round(val);
-		}
-		unit_promote_start(){
-			let totalAtome=window.totalAtome;
-			this.timeout_ms=this.calc_timeout_ms();
-			this.pre_total=totalAtome;
-			do_auto_unit_promote();
-			let money_diff=this.pre_total-totalAtome;
-			let loss_rate=money_diff/this.pre_total;
-			if(this.pre_total != totalAtome){
-				this.inc('unit_upgradable_count');
-			}
-			if(this.pre_total != totalAtome && this.state_map.get('debug')){
-				let log_args=[];
-				let percent_change=(loss_rate*100).toFixed(5);
-				let money_str=totalAtome.toExponential(3);
-				log_args.push(this.state_map.get('iter_count'));
-				log_args.push(percent_change);
-				log_args.push(money_str);
-				console.log(...log_args);
-			}
-			this.inc('iter_count');
-			return loss_rate;
-		}
-		is_epoch_over(){
-			let epoch_start=this.state_map.get('epoch_start_time');
-			if(typeof epoch_start != 'number')return false;
-			let epoch_diff=Date.now() - epoch_start;
-			return epoch_diff > 60*5*1000;
-		}
-		maybe_run_reset(){
-			if(!this.timeout_ms)return false;
-			let state=this.get_state();
-			let count=0;
-			count+=+(this.timeout_ms > 30*1000);
-			count+=+(state.ratio > 1);
-			count+=+this.is_epoch_over();
-			count+=+(state.locked_cycle_count < 100);
-			switch(count){
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-					break;
-				default:console.log('maybe_run_reset count', count);
-			}
-			if(state.ratio > 1 && this.is_epoch_over() && state.locked_cycle_count < 100) {
-				this.do_game_reset();
-				return true;
-			}
-			return false;
-		}
-		do_game_reset(){
-			if(!this.timeout_ms){
-				this.timeout_ms=300;
-			};
-			this.next_timeout(this.game_reset_step_1, this.math.round(this.timeout_ms / 3), '1R');
-			this.on_repeat_r();
-		}
-		do_audio_mute_toggle(){
-			if(!AudioMuted){
-				// this.background_audio.muted=!this.background_audio.muted;
-				window.mute();
-			}
-		}
-		game_reset_step_1(){
-			this.do_audio_mute_toggle();
-			this.next_timeout(this.game_reset_step_2, 60*5*1000, '2R');
-		}
-		game_reset_step_2(){
-			this.do_audio_mute_toggle();
-			this.next_timeout(this.game_reset_finish, 60*5*1000, '3R');
-		}
-		game_reset_finish(){
-			this.update_hours_played();
-			let str=this.dom_map.get("time_played_str");
-			if(typeof str=='string'){
-				this.dispatch_on_game_reset_finish(str);
-			} else {
-				this.dispatch_on_game_reset_finish("0.000");
-			}
-		}
-	}
 	class AsyncAutoBuy {
-		/** @arg {AsyncNodeRoot} root_node@arg {AutoBuyState} state */
-		constructor(root_node, state) {
-			this.actions=new AutoBuyActions(root_node, state);
+		/**@arg {AutoBuy} parent */
+		constructor(parent) {
+			this.parent=parent;
 		}
 		/**
 		 * @param {boolean} no_wait
@@ -2247,8 +2085,8 @@
 			await this.main_async();
 		}
 		async maybe_async_reset(){
-			let loss_rate=this.actions.unit_promote_start();
-			if(this.actions.maybe_run_reset())return [true, loss_rate];
+			let loss_rate=this.parent.unit_promote_start();
+			if(this.parent.maybe_run_reset())return [true, loss_rate];
 			return [false, loss_rate];
 		}
 		async bonus_async() {
@@ -2259,7 +2097,7 @@
 			await this.next_timeout_async(this.timeout_ms, '>');
 			let in_special=true;
 			while(in_special){
-				if(this.do_special()){
+				if(this.parent.do_special()){
 					await this.next_timeout_async(this.timeout_ms, '^');
 					continue;
 				} else {
@@ -2270,16 +2108,16 @@
 			await this.bonus_async();
 		}
 		async rare_begin_async(){
-			this.do_rare_begin_change();
+			this.parent.do_rare_begin_change();
 			await this.next_timeout_async(this.timeout_ms, '<');
 			await this.initial_special_async();
 		}
 		async normal_decrease_async(){
-			this.do_normal_decrease();
+			this.parent.do_normal_decrease();
 			await this.next_timeout_async(this.timeout_ms, '-');
 		}
 		async large_decrease_async(){
-			this.do_large_decrease();
+			this.parent.do_large_decrease();
 			await this.next_timeout_async(this.timeout_ms, '!');
 		}
 		async main_async(){
@@ -2294,7 +2132,7 @@
 						if(this.timeout_ms && this.timeout_ms > 3*60*1000){
 							unit_upgradeable_trigger=8;
 						}
-						if(this.unit_upgradable_count > unit_upgradeable_trigger){
+						if(this.parent.unit_upgradable_count > unit_upgradeable_trigger){
 							this.unit_upgradable_count=0;
 							await this.rare_begin_async();
 						}
@@ -2303,7 +2141,7 @@
 						let [quit, loss_rate]=await this.maybe_async_reset();
 						if(quit)break run_loop;
 						if(loss_rate > 0.08)continue;
-						if(this.pre_total == window.totalAtome)break;
+						if(this.parent.pre_total == window.totalAtome)break;
 					}
 					await this.faster_timeout_async();
 				}
@@ -2319,18 +2157,18 @@
 			this.fast_unit_running=true;
 			let count=0;
 			while(this.fast_unit_running) {
-				this.unit_promote_start();
-				if(this.pre_total == window.totalAtome) break;
-				this.do_fast_unit_step_change();
+				this.parent.unit_promote_start();
+				if(this.parent.pre_total == window.totalAtome) break;
+				this.parent.do_fast_unit_step_change();
 				await this.next_timeout_async(this.timeout_ms, ':');
 				count++;
 				if(count > 12)this.fast_unit_running=false;
 			}
-			this.do_fast_unit_change();
+			this.parent.do_fast_unit_change();
 			await this.next_timeout_async(this.timeout_ms, '$');
 		}
 		async faster_timeout_async(){
-			this.do_timeout_inc([1.006, 1.005], 4);
+			this.parent.do_timeout_inc([1.006, 1.005], 4);
 			await this.next_timeout_async(this.timeout_ms, '+');
 		}
 		/**
@@ -2339,12 +2177,12 @@
 		 */
 		async next_timeout_async(timeout, char, silent=false){
 			let node=new AsyncTimeoutNode(timeout);
-			this.root_node.append_child(node);
+			this.parent.root_node.append_child(node);
 			if(!silent){
 				this.timeout_ms=timeout;
-				this.update_timeout_element();
+				this.parent.update_timeout_element();
 			}
-			this.state_history_append(char, silent);
+			this.parent.state_history_append(char, silent);
 			await node.start_async(new AsyncTimeoutTarget);
 		}
 	}
@@ -2355,6 +2193,7 @@
 		}
 		constructor(){
 			this.root_node=new AsyncNodeRoot;
+			this.with_async=new AsyncAutoBuy(this);
 			this.timeout_ms=0;this.iter_count=0;this.epoch_len=0;
 			this.background_audio=null;this.state_history_arr=null;
 			this.skip_save=false;this.has_real_time=false;
@@ -2364,7 +2203,6 @@
 			this.cint_arr=[];
 			this.local_data_loader=new DataLoader(localStorage);
 			this.state=new AutoBuyState(this.root_node);
-			this.with_async=new AsyncAutoBuy(this.root_node, this.state);
 			this.debug=this.state.debug;
 			this.compressor=new MulCompression;
 			this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str', ["S"]);
@@ -2616,13 +2454,14 @@
 				return res;
 			}
 		}
+		/**@typedef {[number, ...(['breakpoint']|['drop']|['dup']|['dom_append'] | ['push', ...any[]] | ['peek', number, number] | ['construct', number] | ['call', number])]} DomInstructionBuildInstructionType */
 		/**
 		 * @param {DomExecDescription[]} raw_arr
 		 */
-		build_dom_from_desc(raw_arr, trg_map=new Map, dry_run=false) {
+		build_dom_from_desc(raw_arr, trg_map=new Map) {
+			/**@type {DomInstructionBuildInstructionType[]} */
 			let stack=[];
 			let map=trg_map;
-			if(dry_run)stack.push([0, "enable_dry_mode"]);
 			for(let i=0;i<raw_arr.length;i++) {
 				let cur_item=raw_arr[i];
 				// let [depth, action, ...args] = cur_item;
@@ -2678,40 +2517,9 @@
 				}
 				if(this.debug_arr.includes('build_dom_from_desc'))console.log('es', stack.at(-1));
 			}
-			let [left_stack, tree]=this.parse_dom_desc(stack);
-			if(left_stack.length > 0){
-				console.assert(false, 'failed to parse everything (parse tree probably has errors)');
-			}
-			this.apply_dom_desc(tree);
-		}
-		/**
-		 * @param {string | any[]} input_stack
-		 */
-		parse_dom_desc(input_stack){
-			/**
-			 * @type {any[][]}
-			 */
-			let stack=[];
-			let tree=[];
-			for(let x=0,i=0;i<input_stack.length;i++){
-				let cur_stack=input_stack[i];
-				let [y, ...item]=cur_stack;
-				if(this.debug_arr.includes('parse_dom_desc'))console.log(item);
-				while(y > x){
-					stack.push(tree);
-					tree=[];
-					x++;
-				}
-				while(y < x){
-					let prev=tree;
-					// @ts-ignore
-					tree=stack.pop();
-					tree.push([x, prev]);
-					x--;
-				}
-				tree.push([y, item]);
-			}
-			return [stack, tree];
+			let instructions=this.parse_dom_stack(stack);
+			let builder_vm=new DomBuilderVM(instructions);
+			builder_vm.run();
 		}
 		/**
 		 * @param {string} tag
@@ -2735,51 +2543,31 @@
 			return '';
 		}
 		/**
-		 * @param {any[]} tree
+		 * @arg {DomInstructionBuildInstructionType[]} stack
 		 */
-		apply_dom_desc(tree) {
-			this.run_dom_desc(tree);
-		}
-		/**
-		 * @param {string | any[]} tree
-		 */
-		run_dom_desc(tree, stack=[], cur_depth=0, items=[], depths=[]){
-			for(let i=0;i<tree.length;i++){
-				let cur=tree[i];
-				switch(cur[0] - cur_depth){
+		parse_dom_stack(stack){
+			/**@type {IDomInstructionSet[]} */
+			let ret=[];
+			let cur_depth=0;
+			for(let i=0;i<stack.length;i++){
+				let cur=stack[i];
+				switch(cur[0] - cur_depth) {
 					case 1:{
-						this.log_if('apply_dom_desc', 'rdc stk');
-						stack.push(['children', items.length-1, cur]);
+						console.log('dom_stack +');
 					} break;
 					case 0:{
-						items.push(cur[1]);
-						depths.push(cur[0]);
+						const [, ...rest]=cur;
+						ret.push(rest);
 					} break;
+					case -1:{
+						console.log('dom_stack -');
+					}
 					default:{
-						console.assert(false, 'handle depth change in apply_dom_desc');
-						this.log_if('apply_dom_desc', cur[0] - cur_depth);
+						console.assert(false, 'handle depth change in apply_dom_desc %o', cur[0] - cur_depth);
 					}
 				}
 			}
-			if(stack.length === 0)return [items, depths];
-			let tag, data, items_index;
-			{
-				let data_depth;
-				[tag, items_index, [data_depth, data]] = stack.pop();
-				let log_level=this.get_logging_level('apply_dom_desc');
-				l_log_if(log_level, tag, items[items_index], data_depth, data);
-			}
-			let deep_res=this.run_dom_desc(data, stack, cur_depth+1);
-			const ret_items=items.slice();
-			let off=1;
-			ret_items.splice(items_index + off++, 0, ['exec', deep_res[0]]);
-			this.log_if('apply_dom_desc', deep_res[0], deep_res[1]);
-			this.log_if('apply_dom_desc', ret_items, depths, stack);
-			if(cur_depth === 0){
-				let builder_vm=new DomBuilderVM(ret_items);
-				builder_vm.run();
-			}
-			return [ret_items, depths];
+			return ret;
 		}
 		init_dom(){
 			const font_size_px=22;
@@ -2816,6 +2604,68 @@
 					default:console.assert(false, 'cant destroy cint item (%o)', cint_item);break;
 				}
 			}
+		}
+		update_timeout_element() {
+			if(this.timeout_ms) {
+				let element=this.dom_map.get('timeout_element');
+				if(element instanceof HTMLElement) {
+					element.innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
+				}
+			}
+		}
+		/**
+		 * @param {string | number} value
+		 * @param {string} pad_char
+		 * @param {number} char_num
+		 */
+		do_zero_pad(value, pad_char, char_num) {
+			let string;
+			if(typeof value === 'number'){
+				string = value.toString();
+			} else {
+				string = value;
+			}
+			while(string.length < char_num){
+				string = pad_char + string;
+			}
+			return string;
+		}
+		/**
+		 * @param {number} timeout_milli
+		 * @param {number | undefined} milli_acc
+		 */
+		get_millis_as_pretty_str(timeout_milli, milli_acc){
+			let time_arr=[];
+			let float_milliseconds = timeout_milli % 1000;
+			let milli_len=6;
+			if(milli_acc === 0){
+				milli_len=3;
+			}
+			time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc), '0', milli_len);
+			timeout_milli-=float_milliseconds;
+			timeout_milli/=1000;
+			let int_seconds = timeout_milli % 60;
+			time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
+			timeout_milli-=int_seconds;
+			timeout_milli/=60;
+			let int_minutes = timeout_milli % 60;
+			time_arr[1]=this.do_zero_pad(int_minutes, '0', 2);
+			timeout_milli-=int_minutes;
+			timeout_milli/=60;
+			let int_hours=timeout_milli;
+			time_arr[0]=this.do_zero_pad(int_hours, '0', 2);
+			int_hours === 0 && (time_arr.shift(), int_minutes === 0 && (time_arr.shift(), int_seconds === 0 && time_arr.shift()));
+			switch(time_arr.length) {
+				case 1:
+					return time_arr[0] + 'ms';
+				case 2:
+					return time_arr[0] + '.' + time_arr[1];
+				case 3:
+					return time_arr.slice(0, 2).join(":") + '.' + time_arr[2];
+				case 4:
+					return time_arr.slice(0, 3).join(":") + '.' + time_arr[3];
+			}
+			return time_arr.join(":");
 		}
 		/**
 		 * @param {number} hours_num
@@ -3049,8 +2899,49 @@
 		 * @type {number[]}
 		 */
 		large_diff=[];
+		calc_timeout_ms() {
+			while(this.timeout_arr.length>60)this.timeout_arr.shift();
+			let max=0;
+			let total=0;
+			for(var i=0;i<this.timeout_arr.length;i++){
+				total+=this.timeout_arr[i];
+				max=Math.max(this.timeout_arr[i], max);
+			};
+			const val=total / this.timeout_arr.length;
+			let num=val;// max / val;
+			this.last_value??=num;
+			let diff=this.last_value-num;
+			this.last_value=num;
+			this.large_diff.push(num);
+			let sorted_diff_arr = this.large_diff.map(e=>e-num).sort((a,b)=>a-b);
+			let diff_want_mul=1;
+			let diff_cur=diff;
+			while(diff_cur > -1 && diff_cur < 1 && diff_want_mul < 1e18){
+				diff_cur*=10;
+				diff_want_mul*=10;
+			}
+			diff_want_mul*=1000;
+			let zero_idx=sorted_diff_arr.indexOf(0);
+			let zs=zero_idx-8;
+			let z_loss=0;
+			if(zs < 0){
+				z_loss=zs*-1;
+				zs=0;
+			}
+			let ez_log=sorted_diff_arr.map(e=>{
+				if(e === 0)return e;
+				return this.round(e*diff_want_mul);
+			});
+			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
+			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
+			return this.round(val);
+		}
+		is_epoch_over(){
+			let epoch_diff=Date.now() - this.epoch_start_time;
+			return epoch_diff > 60*5*1000;
+		}
 		start_main_async(no_wait=false) {
-			return this.do_start_main_async(no_wait).then(_e=>{}, e=>{
+			return this.with_async.do_start_main_async(no_wait).then(_e=>{}, e=>{
 				console.log('err', e);
 				console.log('canceled main_async');
 			});
@@ -3070,6 +2961,28 @@
 			this.do_timeout_inc([1.008, 1.03], 10);
 		}
 		unit_upgradable_count=0;
+		unit_promote_start(){
+			let totalAtome=window.totalAtome;
+			this.timeout_ms=this.calc_timeout_ms();
+			this.pre_total=totalAtome;
+			this.do_unit_promote();
+			let money_diff=this.pre_total-totalAtome;
+			let loss_rate=money_diff/this.pre_total;
+			if(this.pre_total != totalAtome){
+				this.unit_upgradable_count++;
+			}
+			if(this.pre_total != totalAtome && this.debug){
+				let log_args=[];
+				let percent_change=(loss_rate*100).toFixed(5);
+				let money_str=totalAtome.toExponential(3);
+				log_args.push(this.iter_count);
+				log_args.push(percent_change);
+				log_args.push(money_str);
+				console.log(...log_args);
+			}
+			this.iter_count+=1;
+			return loss_rate;
+		}
 		do_fast_unit_step_change(){
 			this.do_timeout_dec([1.006], 10);
 		}
@@ -3185,7 +3098,11 @@
 		}
 		/**@type {number|undefined} */
 		timeout_ms;
-		/** @param {()=>void} trg_fn @param {number | undefined} timeout @param {string} char */
+		/**
+		 * @param {()=>void} trg_fn
+		 * @param {number | undefined} timeout
+		 * @param {string} char
+		 */
 		next_timeout(trg_fn, timeout, char, silent=false){
 			let node=new TimeoutNode(timeout);
 			this.root_node.append_child(node);
@@ -3217,6 +3134,57 @@
 				} else break;
 			}
 			return ret;
+		}
+		maybe_run_reset(){
+			if(!this.timeout_ms)return false;
+			let count=0;
+			count+=+(this.timeout_ms > 30*1000);
+			count+=+(this.state.ratio > 1);
+			count+=+this.is_epoch_over();
+			count+=+(this.state.locked_cycle_count < 100);
+			switch(count){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+					break;
+				default:console.log('maybe_run_reset count', count);
+			}
+			if(this.state.ratio > 1 && this.is_epoch_over() && this.state.locked_cycle_count < 100) {
+				this.do_game_reset();
+				return true;
+			}
+			return false;
+		}
+		do_game_reset(){
+			if(!this.timeout_ms){
+				this.timeout_ms=300;
+			};
+			this.next_timeout(this.game_reset_step_1, this.round(this.timeout_ms / 3), '1R');
+			this.on_repeat_r();
+		}
+		do_audio_mute_toggle(){
+			if(!AudioMuted){
+				// this.background_audio.muted=!this.background_audio.muted;
+				window.mute();
+			}
+		}
+		game_reset_step_1(){
+			this.do_audio_mute_toggle();
+			this.next_timeout(this.game_reset_step_2, 60*5*1000, '2R');
+		}
+		game_reset_step_2(){
+			this.do_audio_mute_toggle();
+			this.next_timeout(this.game_reset_finish, 60*5*1000, '3R');
+		}
+		game_reset_finish(){
+			this.update_hours_played();
+			let str=this.dom_map.get("time_played_str");
+			if(typeof str=='string'){
+				this.dispatch_on_game_reset_finish(str);
+			} else {
+				this.dispatch_on_game_reset_finish("0.000");
+			}
 		}
 		/**@arg {string} time_played */
 		dispatch_on_game_reset_finish(time_played){
@@ -3856,9 +3824,10 @@
 			proxy_jquery();
 		}
 	}
+	/**@arg {(value: any) => void} promise_accept */
 	function do_load_fire_promise(promise_accept){
-		document.firstChild.remove();
-		promise_accept();
+		document.firstChild?.remove();
+		promise_accept(null);
 	}
 	function page_url_no_protocol(){
 		return location.href.slice(location.protocol.length);
@@ -4021,7 +3990,7 @@
 			let nav_url="//rebuildtheuniverse.com";
 			await new Promise(function(a){
 				if(localStorage.justReset === 'true'){
-					return a();
+					return a(null);
 				}
 				window.g_do_load=do_load_fire_promise.bind(null, a);
 				document.writeln(`<head></head><body><a onclick="g_do_load()">load with fetch</a></body>`);
@@ -4186,6 +4155,7 @@
 	}
 	console.log('re main 1');
 	main();
+	/**@arg {PopStateEvent} e */
 	function popstate_event_handler(e){
 		console.log('popstate', e.state, location.href);
 		if(e.state === null && page_url_no_protocol() == "//rebuildtheuniverse.com/mjz_version/") {

@@ -78,6 +78,7 @@ declare global {
 			request_content:string,
 			cur:string
 		};
+		g_do_load:((promise_accept: (value: any) => void)=>void) | undefined;
 	}
 	var window: Window & typeof globalThis;
 	export var Window: {
