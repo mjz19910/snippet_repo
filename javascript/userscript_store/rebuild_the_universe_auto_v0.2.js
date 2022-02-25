@@ -1490,19 +1490,27 @@
 		sym_id_syms.push(sym);
 		return sym;
 	}
-	class DomValueBox {
+	/**@implements {VMBoxedDomValue} */
+	class VMBoxedDomValueR {
+		/**@type {"dom_value"} */
+		type;
+		/**@type {"get"|"create"} */
+		from;
 		/**
-		 * @param {string} from
-		 * @param {any} value
+		 * @param {"get"|"create"|string} from
+		 * @param {Node} value
 		 */
 		constructor(from, value){
-			this.type='DomValueBox';
-			this.from=from;
+			this.type="dom_value";
+			if(from === 'get' || from === 'create'){
+				this.from=from;
+			} else {
+				throw new Error("Invalid constructor arguments for VMBoxedDomValue");
+			}
 			this.value=value;
 		}
 
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").AnyInstructionOperands} AnyInstructionOperands */
 	class DomBuilderVM extends BaseStackVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
@@ -1593,8 +1601,7 @@
 			this.running = true;
 			while(this.instruction_pointer < this.instructions.length && this.running) {
 				let instruction = this.instructions[this.instruction_pointer];
-				let [cur_opcode, ...operands] = instruction;
-				this.execute_instruction_raw(cur_opcode, operands);
+				this.execute_instruction(instruction);
 				if(this.jump_instruction_pointer != null){
 					this.instruction_pointer=this.jump_instruction_pointer;
 					this.jump_instruction_pointer=null;
@@ -1852,7 +1859,7 @@
 				switch(cur_item[1]){
 					case 'get':{
 						let cur_element, [, , query_arg]=cur_item;switch(query_arg){case 'body':cur_element=document.body;break;default:cur_element=document.querySelector(query_arg);break;}
-						stack.push([cur_item[0], "push", new DomValueBox('get', cur_element)])
+						stack.push([cur_item[0], "push", new VMBoxedDomValueR('get', cur_element)])
 					} break;
 					case 'new':{
 						const [depth, , _class, construct_arg_arr, callback, arg_arr]=cur_item;
@@ -1872,7 +1879,7 @@
 						}
 						else{console.log('bad typeof == %s for content in build_dom; content=%o', typeof content, content);console.info("Info: case 'create' args are", element_type, name)}
 						map.set(name, cur_element);
-						stack.push([depth, "push", new DomValueBox('create', cur_element)]);
+						stack.push([depth, "push", new VMBoxedDomValueR('create', cur_element)]);
 					} break;
 					case 'dom_append':{
 						let depth=cur_item[0];
