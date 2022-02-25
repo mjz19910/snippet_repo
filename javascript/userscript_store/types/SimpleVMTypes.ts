@@ -100,7 +100,7 @@ export class VMBoxedObject extends VMBoxed<object> {
 		return null;
 	}
 }
-type VMInstanceTypes = VMBoxedStackVM | VMBoxedDomValue | VMBoxedCSSStyleSheet;
+type VMInstanceTypes = VMBoxedStackVM | VMBoxedDomValue | VMBoxedCSSStyleSheet | VMBoxedMediaList;
 export class VMBoxedStackVM extends VMBoxed<StackVM>{
 	type: "custom_box" = "custom_box";
 	box_type: "StackVM" = "StackVM";
@@ -122,6 +122,14 @@ export class VMBoxedCSSStyleSheet extends VMBoxed<CSSStyleSheet> {
 		return null;
 	}
 }
+export class VMBoxedMediaList extends VMBoxed<MediaList>{
+	type: "instance_box" = "instance_box";
+	instance_type: "MediaList" = "MediaList";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+
 type VMConstructorTypes = VMBoxedCSSStyleSheetConstructor;
 export class VMBoxedCSSStyleSheetConstructor extends VMBoxed<typeof CSSStyleSheet> {
 	type: "constructor_box" = "constructor_box";
@@ -224,17 +232,9 @@ export class VMReturnsBoxedPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedPr
 		return null;
 	}
 }
-export class VMBoxedMediaList extends VMBoxed<MediaList>{
-	type: "instance_box" = "instance_box";
-	instance_type: "MediaList" = "MediaList";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
 
 // --- VM Value (types) ---
-export type VMValue = VMBoxedWindow |
-	VMArrayTypes |
+export type VMValue = VMArrayTypes |
 	VMObjectTypes |
 	VMFunctionTypes |
 	VMGlobalTypes |
