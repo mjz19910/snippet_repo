@@ -497,9 +497,31 @@
 					if(typeof construct_target!='object')throw new Error("Invalid");
 					if(construct_target===null)throw new Error("Invalid");
 					if(construct_target.type != 'constructor_box')throw new Error("Invalid");
-					if(construct_target.from != 'typescript')throw new Error("Invalid");
-					let obj=new construct_target.value(...construct_arr);
-					this.push(obj);
+					if(construct_target.from === 'typescript'){
+						let obj=new construct_target.value(...construct_arr);
+						this.push(obj);
+					} else if(construct_target.from === 'javascript') {
+						let q=construct_target;
+						if(q.constructor_type === 'CSSStyleSheet') {
+							/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
+							let valid_args={
+								s:[],
+								valid_count:0
+							}
+							for(let i=0;i<construct_arr.length;i++){
+								let val=construct_arr[i];
+								if(typeof val != 'object')continue;
+								if(val === null)continue;
+								if(val.type != 'shape_box')continue;
+								valid_args={
+									s:[val.value],
+									valid_count:1
+								}
+							}
+							let obj=new q.value(...valid_args.s);
+							this.push(new VMBoxedCSSStyleSheetR(obj));
+						}
+					}
 					l_log_if(LOG_LEVEL_INFO, instruction, ...this.stack.slice(this.stack.length-number_of_arguments));
 				} break;
 				case 'return'/*Call*/:this.return_value=this.pop();break;
