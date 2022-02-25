@@ -145,11 +145,10 @@ const cint_arr: any[] = [];
 function down_convert_type<T, U extends T>(v: T): v is U {
 	return true;
 }
-type DocumentWriteFn = (...text: string[]) => void;
 
 class DocumentWriteFnProxyHandler {
 	other: DocumentWriteList | null = null;
-	apply(...a: [target: DocumentWriteFn, thisArg: Document, argArray: string[]]) {
+	apply(...a: [target: ((...text: string[]) => void), thisArg: Document, argArray: string[]]) {
 		if(this.other) this.other.write(...a);
 	}
 }
@@ -193,7 +192,7 @@ export class DocumentWriteList {
 		console.assert(thisArg === this.attached_document);
 		this.list.push(argArray, null);
 	}
-	document_write_proxy: DocumentWriteFn | {other: any;} | null;
+	document_write_proxy: ((...text: string[]) => void) | {other: any;} | null;
 	destroy(should_try_to_destroy: boolean) {
 		if(this.attached_document && this.document_write_proxy) {
 			console.assert(this.attached_document.write === this.document_write_proxy);
