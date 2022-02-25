@@ -46,7 +46,7 @@ declare global {
 		plurials(v: string): string;
 		arrayNames: string[];
 		updateprogress(v: any): void;
-		$: (val: any) => any;
+		$: JQueryStatic;
 		seeUnit(v: number): any;
 		checkspec(): void;
 		achiSpec(): void;
@@ -71,7 +71,9 @@ declare global {
 		remoteClearTimeout: (id?: number) => void;
 		remoteClearInterval: (id?: number) => void;
 		["g_worker_state"]?: WorkerState;
+		mute():void;
 	}
+	var window: Window & typeof globalThis;
 	export var Window: {
 		prototype: Window;
 		new(): Window;
@@ -83,7 +85,6 @@ declare global {
 		readonly prototype: Error;
 		captureStackTrace(obj:{stack:string}, constructorOpt?:{}):void;
 	}
-	var window: Window & typeof globalThis;
 	module globalThis {
 		var remote_worker_state: RemoteWorkerState;
 	}
@@ -104,6 +105,11 @@ declare global {
 	}
 }
 export {};
+
+
+export type NonNull<T> = T extends null ? never : T;
+type MaybeNull=number | null;
+type ExtractedType=NonNull<MaybeNull>;
 
 
 
@@ -3902,23 +3908,42 @@ function do_auto_unit_promote() {
 	}
 }
 const auto_buy_obj = new AutoBuy;
-class AsyncTrigger {
+export class AsyncTrigger {
 	m_set_flag: boolean;
 	trigger_handler: null;
 	promise_set;
-	m_set_result!: (value: number) => void;
-	m_set_error!: PromiseExecutorRejectCallback;
+	m_set_result: (value: number) => void;
+	m_set_error: PromiseExecutorRejectCallback;
+	m_can_notify: boolean;
+	m_notify_result: null | ((value: void | PromiseLike<void>) => void);
+	m_notify_error: null | PromiseExecutorRejectCallback;
 	constructor() {
 		this.notify_promise = null;
-		this.m_set_flag = true;
-		this.trigger_handler = null;
-		this.m_can_notify = false;
-		let t = this;
-		this.promise_set = new Promise((accept, reject) => {
-			t.m_set_result = accept;
-			t.m_set_error = reject;
-			t.m_set_flag = false;
-		});
+			this.m_set_flag = true;
+			this.trigger_handler = null;
+			this.m_can_notify = false;
+			this.m_notify_result=null;
+			this.m_notify_error=null;
+			let accept_fn:((value: any) => void)|null=null;
+			let reject_fn:((reason?: any) => void)|null=null;
+			this.promise_set = new Promise((accept, reject) => {
+				accept_fn = accept;
+				reject_fn = reject;
+			});
+			if(accept_fn && reject_fn){
+				this.m_set_result = accept_fn;
+				this.m_set_error = reject_fn;
+			} else {
+				this.m_set_result = this.default_accept.bind(this);
+				this.m_set_error = this.default_reject.bind(this);
+			}
+			this.m_set_flag = false;
+	}
+	default_accept(value:any){
+		return value;
+	}
+	default_reject(error:any){
+		throw error;
 	}
 	set(cnt: number) {
 		if(!this.m_set_flag && this.m_set_result) {
@@ -3936,18 +3961,14 @@ class AsyncTrigger {
 		let ret = this.promise_set;
 		return ret;
 	}
-	m_can_notify: boolean;
-	// these members will have a value when the above bool is true
-	m_notify_result!: ((value: void | PromiseLike<void>) => void);
-	m_notify_error!: PromiseExecutorRejectCallback;
 	notify(cnt: any) {
-		if(this.m_can_notify) {
+		if(this.m_can_notify && this.m_notify_result) {
 			this.m_notify_result(cnt);
 			this.m_can_notify = false;
 		}
 	}
 	notify_error(error: any) {
-		if(this.m_can_notify) {
+		if(this.m_can_notify && this.m_notify_error) {
 			this.m_notify_error(error);
 			this.m_can_notify = false;
 		}

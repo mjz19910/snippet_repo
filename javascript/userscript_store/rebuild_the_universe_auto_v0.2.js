@@ -21,6 +21,18 @@
 	const AudioMuted=true;
 	const AutoBuyMulModifierFactor=1;
 	const AutoBuyRatioDiv=3;
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedNewableFunction} VMBoxedNewableFunction */
+	/**@implements {VMBoxedNewableFunction} */
+	class VMBoxedNewableFunctionR {
+		/**@type {"constructor_box"} */
+		type="constructor_box";
+		/**@type {{new (v:any):any}} */
+		value;
+		/**@arg {{new (v:any):any}} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
 	class DocumentWriteList {
 		/**
 		 * @type {any[]}
@@ -107,6 +119,31 @@
 		}
 		next(){
 			return this.m_current++;
+		}
+	}
+	class NamedIdGenerator {
+		constructor(){
+			this.state_map=new Map;
+		}
+		/**@arg {string} name */
+		current_named(name){
+			let val=this.state_map.get(name);
+			if(val){
+				return val;
+			} else {
+				return 0;
+			}
+		}
+		/**@arg {string} name */
+		next_named(name){
+			if(this.state_map.has(name)){
+				let cur=this.state_map.get(name) + 1;
+				this.state_map.set(name, cur);
+				return cur;
+			} else {
+				this.state_map.set(name, 1);
+				return 1;
+			};
 		}
 	}
 	class EventHandlerDispatch {
@@ -1483,11 +1520,20 @@
 		return sym;
 	}
 	const sym_id_gen=new UniqueIdGenerator;
+	const named_sym_gen=new NamedIdGenerator;
+	/**@type {(symbol | [string, number, symbol])[]} */
 	const sym_id_syms=[];
 	function next_sym(){
 		const id=sym_id_gen.next();
 		const sym=Symbol(id);
 		sym_id_syms.push(sym);
+		return sym;
+	}
+	/**@type {(v:string)=>symbol} */
+	function labeled_sym(name){
+		const id=named_sym_gen.next_named(name);
+		const sym=Symbol(`${name}@${id}`);
+		sym_id_syms.push([name, id, sym]);
 		return sym;
 	}
 	/**@implements {VMBoxedDomValue} */
@@ -1663,7 +1709,7 @@
 	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
 	/**@typedef {[number, 'dom_append']} DomExecDescriptionI4 */
 	/**@typedef {[number, 'push', null, (...p:Promise<CSSStyleSheet>[])=>void]} DomExecDescriptionI5 */
-	/**@typedef {[number, 'new', NewableFunction, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
+	/**@typedef {[number, 'new', {new (v:any):any;}, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
 	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
 	/**@typedef {[number, 'drop']} DomExecDescriptionI8 */
 	/**@typedef {[number, 'breakpoint']} DomExecDescriptionI9 */
@@ -1693,6 +1739,7 @@
 			this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str', ["S"]);
 			this.epoch_start_time=Date.now();
 			this.original_map=new Map;
+			/**@type {Map<string, (Node|string)>} */
 			this.dom_map=new Map;
 			this.debug_arr=[];
 			this.flags=new Set();
@@ -1858,14 +1905,21 @@
 				// let [depth, action, ...args] = cur_item;
 				switch(cur_item[1]){
 					case 'get':{
-						let cur_element, [, , query_arg]=cur_item;switch(query_arg){case 'body':cur_element=document.body;break;default:cur_element=document.querySelector(query_arg);break;}
+						let cur_element, [, , query_arg]=cur_item;
+						switch(query_arg){
+							case 'body':cur_element=document.body;break;default:cur_element=document.querySelector(query_arg);break;
+						}
+						if(!cur_element)throw new Error("build from dom failed, element not found: \""+query_arg+"\"");
 						stack.push([cur_item[0], "push", new VMBoxedDomValueR('get', cur_element)])
 					} break;
 					case 'new':{
 						const [depth, , _class, construct_arg_arr, callback, arg_arr]=cur_item;
-						stack.push([cur_item[0], "push", null, callback, ...construct_arg_arr, _class],[cur_item[0], "construct", 1 + construct_arg_arr.length],
-								   [depth, "push", ...arg_arr],
-								   [depth, "call", 3 + arg_arr.length])
+						stack.push(
+							[cur_item[0], "push", null, callback, ...construct_arg_arr, new VMBoxedNewableFunctionR(_class)],
+							[cur_item[0], "construct", 1 + construct_arg_arr.length],
+							[depth, "push", ...arg_arr],
+							[depth, "call", 3 + arg_arr.length]
+						);
 					} break;
 					case 'create':{
 						const [depth, ,element_type, name, content] = cur_item;
@@ -2007,11 +2061,14 @@
 			const font_size_px=22;
 			let t=this;
 			this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1);
-			this.dom_map.get('history').addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
-			this.dom_map.get('ratio').addEventListener('click', function(){
+			let history=this.dom_map.get('history');
+			if(history && typeof history=='object')history.addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
+			let ratio=this.dom_map.get('ratio');
+			if(ratio && typeof ratio=='object')ratio.addEventListener('click', function(){
 				t.state.reset();
 			});
-			this.dom_map.get('state_log').style.fontSize = font_size_px+"px";
+			let state_log=this.dom_map.get('state_log');
+			if(state_log instanceof HTMLElement)state_log.style.fontSize = font_size_px+"px";
 			window.addEventListener('unload', function(){
 				t.save_state_history_arr();
 				t.save_timeout_arr();
@@ -2035,7 +2092,12 @@
 			}
 		}
 		update_timeout_element() {
-			this.dom_map.get('timeout_element').innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
+			if(this.timeout_ms) {
+				let element=this.dom_map.get('timeout_element');
+				if(element instanceof HTMLElement) {
+					element.innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
+				}
+			}
 		}
 		/**
 		 * @param {string | number} value
@@ -2154,11 +2216,15 @@
 		update_hours_played(){
 			let float_hours=((window.timeplayed / 30) / 60);
 			let time_played_str=this.get_hours_num_as_pretty_str(float_hours);
-			this.dom_map.get('hours_played').innerText=time_played_str;
+			let hours_played_e=this.dom_map.get('hours_played');
+			if(hours_played_e instanceof HTMLElement)hours_played_e.innerText=time_played_str;
 			this.dom_map.set('time_played_str', time_played_str);
 		}
 		update_ratio_element(){
-			this.dom_map.get('ratio').innerText=(this.state.ratio*100).toFixed(2)+"%";
+			let ratio=this.dom_map.get('ratio');
+			if(!ratio)return;
+			if(!(ratio instanceof HTMLElement))return;
+			ratio.innerText=(this.state.ratio*100).toFixed(2)+"%";
 		}
 		update_ratio_change_element(){
 			let last_ratio=this.state.last_ratio*100;
@@ -2166,10 +2232,17 @@
 			let ratio_diff=cur_ratio-last_ratio;
 			let char_value="+";
 			if(ratio_diff < 0)char_value='';
-			this.dom_map.get('ratio_change').innerText=char_value+ratio_diff.toExponential(3);
+			let ratio_change=this.dom_map.get('ratio_change');
+			if(ratio_change && ratio_change instanceof HTMLElement)ratio_change.innerText=char_value+ratio_diff.toExponential(3);
 		}
 		update_history_element(){
-			this.dom_map.get('history').innerText=array_sample_end(this.state_history_arr, this.state_history_arr_max_len).join(" ");
+			let history=this.dom_map.get('history');
+			if(history && history instanceof HTMLElement){
+				let sample_len=this.state_history_arr_max_len;
+				if(!sample_len)return;
+				let end_sample=array_sample_end(this.state_history_arr, sample_len).join(" ");
+				history.innerText=end_sample;
+			}
 		}
 		next_update(){
 			if(this.flags.has('do_reset_dom')){
@@ -2281,7 +2354,11 @@
 			this.set_timeplayed_update_interval();
 		}
 		set_auto_buy_timeout(){
-			this.timeout_ms=~~(this.timeout_ms * 0.9);
+			if(this.timeout_ms) {
+				this.timeout_ms=~~(this.timeout_ms * 0.9);
+			} else {
+				this.timeout_ms=25;
+			}
 			this.start_main_async(true);
 		}
 		timeout_avg() {
@@ -2418,7 +2495,7 @@
 			run_loop:while(this.main_running) {
 				for(this.iter_count=0;;) {
 					let unit_upgradeable_trigger=30;
-					if(this.timeout_ms > 3*60*1000){
+					if(this.timeout_ms && this.timeout_ms > 3*60*1000){
 						unit_upgradeable_trigger=8;
 					}
 					if(this.unit_upgradable_count > unit_upgradeable_trigger){
@@ -2491,6 +2568,7 @@
 		 * @param {number} div
 		 */
 		get_timeout_change(pow_base, pow_num, div){
+			if(!this.timeout_ms)throw new Error("Invalid");
 			let pow_res=Math.pow(pow_base, pow_num);
 			let res=this.timeout_ms * pow_res;
 			return res / div;
@@ -2502,6 +2580,7 @@
 			if(window.__testing__){
 				return;
 			}
+			if(!this.timeout_ms)throw new Error("Invalid");
 			let value=this.round(this.timeout_ms + change);
 			l_log_if(LOG_LEVEL_INFO, 'inc', this.timeout_ms, value-this.timeout_ms);
 			this.timeout_arr.push(value);
@@ -2513,6 +2592,7 @@
 			if(window.__testing__){
 				return;
 			}
+			if(!this.timeout_ms)throw new Error("Invalid");
 			let value=this.round(this.timeout_ms - change);
 			if(value < 25)value=25;
 			l_log_if(LOG_LEVEL_INFO, 'dec', this.timeout_ms, this.timeout_ms-value);
@@ -2529,7 +2609,7 @@
 		 * @param {number} div
 		 */
 		do_timeout_dec(pow_terms, div){
-			let change=this.get_timeout_change(pow_terms[0], Math.log(totalAtome), div);
+			let change=this.get_timeout_change(pow_terms[0], Math.log(window.totalAtome), div);
 			this.update_timeout_dec(change);
 		}
 		/**
@@ -2580,11 +2660,21 @@
 				}).join("\n"));
 			}
 		}
-		[next_sym("next_timeout_async")]() {
+		/**
+		 * @param {number | undefined} timeout
+		 * @param {string} char
+		 */
+		[labeled_sym("next_timeout_async")](timeout, char) {
 			console.log('next_timeout_async', char, timeout);
 			let err=new Error;
 			this.next_timeout_async_err_log('next_timeout_async stk', err);
 		}
+		/**@type {number|undefined} */
+		timeout_ms;
+		/**
+		 * @param {number | undefined} timeout
+		 * @param {string} char
+		 */
 		async next_timeout_async(timeout, char, silent=false){
 			let node=new AsyncTimeoutNode(timeout);
 			this.root_node.append_child(node);
@@ -2595,6 +2685,11 @@
 			this.state_history_append(char, silent);
 			await node.start_async(new AsyncTimeoutTarget);
 		}
+		/**
+		 * @param {()=>void} trg_fn
+		 * @param {number | undefined} timeout
+		 * @param {string} char
+		 */
 		next_timeout(trg_fn, timeout, char, silent=false){
 			let node=new TimeoutNode(timeout);
 			this.root_node.append_child(node);
@@ -2608,11 +2703,14 @@
 		do_unit_promote(){
 			do_auto_unit_promote();
 		}
+		/**
+		 * @param {{ done: any; cost: number; }} special_buyable
+		 */
 		is_special_done(special_buyable){
-			return !special_buyable.done && special_buyable.cost < totalAtome;
+			return !special_buyable.done && special_buyable.cost < window.totalAtome;
 		}
 		next_special(){
-			return allspec.findIndex(this.is_special_done);
+			return window.allspec.findIndex(this.is_special_done);
 		}
 		do_special(){
 			let ret=false;
@@ -2624,19 +2722,13 @@
 			}
 			return ret;
 		}
-		special(){
-			if(this.do_special())this.next_timeout(this.special, this.timeout_ms, '^');
-			else this.next_timeout(this.bonus, this.timeout_ms, '#');
-		}
-		initial_special(){
-			this.next_timeout(this.special, this.timeout_ms, '>');
-		}
 		maybe_run_reset(){
+			if(!this.timeout_ms)return false;
 			let count=0;
-			count+=this.timeout_ms > 30*1000;
-			count+=this.state.ratio > 1;
-			count+=this.is_epoch_over();
-			count+=this.state.locked_cycle_count < 100;
+			count+=+(this.timeout_ms > 30*1000);
+			count+=+(this.state.ratio > 1);
+			count+=+this.is_epoch_over();
+			count+=+(this.state.locked_cycle_count < 100);
 			switch(count){
 				case 0:
 				case 1:
@@ -2652,13 +2744,16 @@
 			return false;
 		}
 		do_game_reset(){
+			if(!this.timeout_ms){
+				this.timeout_ms=300;
+			};
 			this.next_timeout(this.game_reset_step_1, this.round(this.timeout_ms / 3), '1R');
 			this.on_repeat_r();
 		}
 		do_audio_mute_toggle(){
 			if(!AudioMuted){
 				// this.background_audio.muted=!this.background_audio.muted;
-				mute();
+				window.mute();
 			}
 		}
 		game_reset_step_1(){
@@ -2671,12 +2766,19 @@
 		}
 		game_reset_finish(){
 			this.update_hours_played();
-			this.dispatch_on_game_reset_finish(this.dom_map.get("time_played_str"));
+			let str=this.dom_map.get("time_played_str");
+			if(typeof str=='string'){
+				this.dispatch_on_game_reset_finish(str);
+			} else {
+				this.dispatch_on_game_reset_finish("0.000");
+			}
 		}
+		/**@arg {string} time_played */
 		dispatch_on_game_reset_finish(time_played){
 			this.state.on_game_reset_finish(time_played);
 			this.on_game_reset_finish(time_played);
 		}
+		/**@arg {string} time_played */
 		on_game_reset_finish(time_played){
 			console.info('fire lightreset at %s', time_played);
 			window.lightreset();
@@ -2686,6 +2788,16 @@
 		}
 	}
 	function do_auto_unit_promote(){
+		let arUnit=window.arUnit;
+		let Get_Unit_Type=window.Get_Unit_Type;
+		let getUnitPromoCost=window.getUnitPromoCost;
+		let Find_ToNext=window.Find_ToNext;
+		let totalAtome=window.totalAtome;
+		let _targets=window._targets;
+		let _targets_achi=window._targets_achi;
+		let totalAchi=window.totalAchi;
+		let mainCalc=window.mainCalc;
+		let tonext=window.tonext;
 		var out=[],maxed=[];
 		for(var k=0;k<arUnit.length;k++){
 			var afford=false;
@@ -2715,28 +2827,82 @@
 				if(afford)out[k]=true;else out[k]=false;
 			}
 		}
-		res=out.lastIndexOf(true);
+		let res=out.lastIndexOf(true);
 		if(res<0)return;
 		if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);else tonext(res);
 	}
 	const auto_buy_obj=new AutoBuy;
-	class AsyncTrigger{
+	/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2.js").AsyncTrigger} AsyncTriggerT */
+	/**@implements {AsyncTriggerT} */
+	class AsyncTrigger {
+		m_set_flag;
+		/**
+		 * @type {null}
+		 */
+		trigger_handler;
+		promise_set;
+		/**
+		 * @type {(value: any) => void}
+		 */
+		m_set_result;
+		/**
+		 * @type {(arg0?: any) => void}
+		 */
+		m_set_error;
+		/**
+		 * @type {((value: any) => void)|null}
+		 */
+		m_notify_result=null;
+		/**
+		 * @type {((arg0?: any) => void)|null}
+		 */
+		m_notify_error=null;
 		constructor(){
-			let t=this;
-			t.m_set_flag=true;
-			t.trigger_handler=null;
-			this.promise_set=new Promise(function(accept, reject){
-				t.m_set=accept;
-				t.m_set_error=reject;
-				t.m_set_flag=false;
+			this.notify_promise = null;
+			this.m_set_flag = true;
+			this.trigger_handler = null;
+			this.m_can_notify = false;
+			/**@type {null| ((value: any) => void)} */
+			let accept_fn=null;
+			/**@type {null | ((reason?: any) => void)} */
+			let reject_fn=null;
+			this.promise_set = new Promise((accept, reject) => {
+				accept_fn = accept;
+				reject_fn = reject;
 			});
+			if(accept_fn && reject_fn){
+				this.m_set_result = accept_fn;
+				this.m_set_error = reject_fn;
+			} else {
+				this.m_set_result = this.default_accept.bind(this);
+				this.m_set_error = this.default_reject.bind(this);
+			}
+			this.m_set_flag = false;
 		}
+		/**
+		 * @param {any} _value
+		 */
+		default_accept(_value){
+			return;
+		}
+		/**
+		 * @param {any} error
+		 */
+		default_reject(error){
+			throw error;
+		}
+		/**
+		 * @param {any} cnt
+		 */
 		set(cnt){
 			if(!this.m_set_flag){
-				this.m_set(cnt);
+				this.m_set_result(cnt);
 				this.m_set_flag=true;
 			}
 		}
+		/**
+		 * @param {any} opt_error
+		 */
 		set_error(opt_error){
 			if(!this.m_set_flag){
 				if(opt_error) this.m_set_error(opt_error);
@@ -2747,14 +2913,20 @@
 			let ret=this.promise_set;
 			return ret;
 		}
+		/**
+		 * @param {any} cnt
+		 */
 		notify(cnt){
-			if(this.m_can_notify){
-				this.m_notify(cnt);
+			if(this.m_can_notify && this.m_notify_result){
+				this.m_notify_result(cnt);
 				this.m_can_notify=false;
 			}
 		}
+		/**
+		 * @param {any} error
+		 */
 		notify_error(error){
-			if(this.m_can_notify){
+			if(this.m_can_notify && this.m_notify_error){
 				this.m_notify_error(error);
 				this.m_can_notify=false;
 			}
@@ -2762,17 +2934,19 @@
 		async notified(){
 			let t=this;
 			this.notify_promise=new Promise(function(accept, reject){
-				t.m_notify=accept;
+				t.m_notify_result=accept;
 				t.m_notify_error=reject;
 			});
 			this.m_can_notify=true;
 		}
 	}
-	class AsyncSemaphore{
+	class AsyncSemaphore {
 		constructor(){
+			/**@type {any[]} */
 			this.notify_waiters_vec=[];
 			this.count=0;
 		}
+		/**@arg {number} cnt */
 		async inc(cnt){
 			let wait_trigger=new AsyncTrigger;
 			while(this.count > 0){
@@ -2784,6 +2958,7 @@
 			}
 			this.count+=cnt;
 		}
+		/**@arg {number} cnt */
 		async dec(cnt){
 			this.count-=cnt;
 			if(this.count <= 0){
@@ -2818,43 +2993,78 @@
 		}
 		return ret;
 	}
+	/**
+	 * @param {number | undefined} timeout
+	 * @param {TimerHandler} a
+	 */
 	function promise_set_timeout(timeout, a){
 		setTimeout(a, timeout);
 	}
+	/**
+	 * @param {number | undefined} timeout
+	 */
 	function do_async_wait(timeout){
 		return new Promise(promise_set_timeout.bind(null, timeout));
 	}
 	void do_async_wait;
+	/**
+	 * @param {string[]} arr
+	 * @param {number} rem_target_len
+	 */
 	function array_sample_end(arr, rem_target_len){
 		arr=arr.slice(-300);
 		let rem_len=char_len_of(arr);
 		while(rem_len > rem_target_len) {
-			rem_len-=arr.shift().length+1;
+			if(!arr.length)break;
+			let val=arr.shift();
+			if(val === void 0) continue;
+			rem_len-=val.length+1;
 		}
 		return arr;
 	}
+	/**
+	 * @param {any[]} arr
+	 */
 	function char_len_of(arr){
 		return arr.reduce((a,b)=>a + b.length, 0) + arr.length;
 	}
 	function lightreset_inject(){
-		g_auto_buy.state_history_clear_for_reset();
-		g_auto_buy.skip_save=true;
+		window.g_auto_buy.state_history_clear_for_reset();
+		window.g_auto_buy.skip_save=true;
 		window.addEventListener('unload', function(){
-			g_auto_buy.skip_save=false;
+			window.g_auto_buy.skip_save=false;
 			localStorage.auto_buy_timeout_str="300,300,300,300";
 			localStorage.long_wait=12000;
 		});
-		let original=g_auto_buy.original_map.get('lightreset');
+		let original=window.g_auto_buy.original_map.get('lightreset');
+		if(!original){
+			alert('unable to light reset game');
+			throw new Error("Missing original lightreset");
+		}
 		original();
 	}
+	/**
+	 * @param {number} that
+	 */
 	function specialclick_inject(that) {
+		let allspec=window.allspec;
+		let totalAtome=window.totalAtome;
+		let atomsinvest=window.atomsinvest;
+		let doc=window.doc;
+		let gritter=window.gritter;
+		let specialsbought=window.specialsbought, noti=window.noti;
+		let rounding=window.rounding, calcDiff=window.calcDiff,arUnit=window.arUnit, atomepersecond=window.atomepersecond;
+		let arrayNames=window.arrayNames, plurials=window.plurials, toTitleCase=window.toTitleCase;
+		let updateprogress=window.updateprogress, seeUnit=window.seeUnit, checkspec=window.checkspec, achiSpec=window.achiSpec;
 		if (allspec[that].done == undefined) allspec[that].done = false;
 		if (allspec[that].cost <= totalAtome && allspec[that].done == false) {
-			doc.getElementById('specialsbought').innerText = rounding(++specialsbought, false,0);
+			let specialsbought_e=doc.getElementById('specialsbought');
+			if(specialsbought_e)specialsbought_e.innerText = rounding(++specialsbought, false,0);
 			if (that == 74) {
 			}
 			atomsinvest += allspec[that].cost;
-			doc.getElementById('atomsinvest').innerText = rounding(atomsinvest, false,0);
+			let atomsinvest_e=doc.getElementById("atomsinvest");
+			if(atomsinvest_e)atomsinvest_e.innerText = rounding(atomsinvest, false,0);
 			allspec[that].done = true;
 			totalAtome -= allspec[that].cost;
 			var diff1 = calcDiff(that);
@@ -2877,26 +3087,24 @@
 			//spell:ignore achiSpec
 			achiSpec();
 		}
+		window.totalAtome=totalAtome;
+		window.atomsinvest=atomsinvest;
+		window.atomepersecond=atomepersecond;
+		window.specialsbought=specialsbought;
 	}
 	class ProxyHandlers {
+		/**
+		 * @param {any} root
+		 */
 		constructor(root){
 			this.weak_root=new WeakRef(root);
 			this.count_arr=[0];
 		}
-		so_init(){
-			let val=Array(12).fill((idx)=>{
-				if(idx > window.da.length)return window.da.at(-1)(idx-1);
-				return window.da[idx-1](idx-1);
-			});
-			window.da=[_e=>g_proxy_state.hand.stack_overflow_check(), ...val];
-		}
-		stack_overflow_check(){
-			g_proxy_state.hand.count_arr[0]++;
-			if(g_proxy_state.hand.count_arr[0] < g_proxy_state.hand.count_arr[1]){
-				return g_proxy_state.hand.stack_overflow_check();
-			}
-			return g_proxy_state.hand.count_arr[0];
-		}
+		/**
+		 * @param {string} type
+		 * @param {any} call_args
+		 * @param {any[]} from
+		 */
 		generic(type, call_args, from){
 			let keep_vec=this.weak_root.deref();
 			if(keep_vec === null){
@@ -2906,22 +3114,42 @@
 			}
 			keep_vec.push(from.concat([null, type, 1, call_args]));
 		}
+		/**
+		 * @param {[o: object, k: PropertyKey, v: any, r?: any]} call_args
+		 * @param {any[]} from
+		 */
 		set_(call_args, from){
 			this.generic('set', call_args, from);
 			return Reflect.set(...call_args);
 		}
+		/**
+		 * @param {[o: object, k: PropertyKey, r?: any]} call_args
+		 * @param {any[]} from
+		 */
 		get_(call_args, from){
 			this.generic('get', call_args, from);
 			return Reflect.get(...call_args);
 		}
+		/**
+		 * @param {[f: Function, o: any, l: ArrayLike<any>]} call_args
+		 * @param {any[]} from
+		 */
 		apply_(call_args, from){
 			this.generic('apply', call_args, from);
 			return Reflect.apply(...call_args);
 		}
+		/**
+		 * @param {[o: object, k: PropertyKey, o: PropertyDescriptor]} call_args
+		 * @param {any[]} from
+		 */
 		defineProperty_(call_args, from){
 			this.generic('defineProperty', call_args, from);
 			return Reflect.defineProperty(...call_args);
 		}
+		/**
+		 * @param {[o: object, k: PropertyKey]} call_args
+		 * @param {any[]} from
+		 */
 		getOwnPropertyDescriptor_(call_args, from){
 			this.generic('getOwnPropertyDescriptor', call_args, from);
 			return Reflect.getOwnPropertyDescriptor(...call_args);
@@ -2929,7 +3157,7 @@
 	}
 	void ProxyHandlers;
 	class KeepSome {
-		/*@type {number[][]}*/
+		/**@type {number[][]}*/
 		m_2d_vec;
 		constructor(){
 			this.m_2d_vec=[];
@@ -2982,18 +3210,31 @@
 				}
 			}
 		}
+		/**
+		 * @param {number} index
+		 * @param {number} value
+		 */
 		push_at(index, value){
 			while(index >= this.m_2d_vec.length){
 				this.m_2d_vec.push([]);
 			}
 			this.m_2d_vec[index].push(value);
 		}
+		/**
+		 * @param {number[]} a
+		 */
 		push_va(...a){
 			for(let x of a){
 				this.push(x);
 			}
 		}
 	}
+	/**
+	 * @param {any} obj
+	 * @param {PropertyKey} name
+	 * @param {any} value
+	 * @param {any[]} props
+	 */
 	function define_property_value(obj, name, value, ...props){
 		let [
 			writable=true,
@@ -3008,6 +3249,10 @@
 		});
 	}
 	void define_property_value;
+	/**
+	 * @param {{ [x: string]: any; }} obj
+	 * @param {string} key
+	 */
 	function reload_if_def(obj, key){
 		if(obj[key]){
 			location.reload();
@@ -3018,6 +3263,9 @@
 		}
 		return false;
 	}
+	/**
+	 * @param {typeof $} value
+	 */
 	function got_jquery(value){
 		Object.defineProperty(window, '$', {
 			value,
@@ -3028,26 +3276,35 @@
 		use_jquery();
 	}
 	function use_jquery(){
+		/**@type {typeof $} */
 		let jq=window.$;
 		if(!jq)return;
 		if(typeof jq != 'function')return;
 		let res=jq('head');
 		let r_proto=Object.getPrototypeOf(res);
-		r_proto.lazyload=function(..._a){}
+		r_proto.lazyload=function(/** @type {any} */ ..._a){}
 		return jq;
 	}
 	void reload_if_def;
+	/**
+	 * @param {undefined} [_value]
+	 */
 	function proxy_jquery(_value){
 		let val=use_jquery();
+		if(!val)return;
 		set_jq_proxy(val);
 	}
-	function set_jq_proxy(val){
+	/**
+	 * @param {typeof $} value
+	 */
+	function set_jq_proxy(value){
+		let s_value=value;
 		Object.defineProperty(window, '$', {
 			get(){
-				return val;
+				return s_value;
 			},
 			set(value){
-				val=value;
+				s_value=value;
 				got_jquery(value);
 				return true;
 			},
@@ -3055,12 +3312,20 @@
 			configurable:true
 		});
 	}
+	/**
+	 * @param {Function} func
+	 * @param {any} this_v
+	 * @param {ArrayLike<any>} args
+	 */
 	function pace_finish_proxy_apply(func, this_v, args){
 		auto_buy_obj.init();
-		Pace.bar.finish=func;
+		window.Pace.bar.finish=func;
 		return Reflect.apply(func, this_v, args);
 	}
 	let seen_elements=new WeakSet;
+	/**
+	 * @param {HTMLScriptElement} e
+	 */
 	function remove_bad_dom_script_element_callback(e){
 		if(seen_elements.has(e))return;
 		seen_elements.add(e);
@@ -3099,11 +3364,11 @@
 	function on_game_data_set(){
 		do_dom_filter();
 		auto_buy_obj.pre_init();
-		if(Pace.bar.progress == 100){
+		if(window.Pace.bar.progress == 100){
 			auto_buy_obj.init();
 			return;
 		}
-		Pace.bar.finish=new Proxy(Pace.bar.finish, {
+		window.Pace.bar.finish=new Proxy(window.Pace.bar.finish, {
 			apply:pace_finish_proxy_apply
 		});
 	}
@@ -3122,6 +3387,9 @@
 		}
 		do_dom_filter();
 	}
+	/**
+	 * @param {HTMLScriptElement} elm
+	 */
 	function dom_add_elm_filter(elm){
 		if(elm && elm.nodeName === "SCRIPT"){
 			if(!elm.src){
@@ -3147,9 +3415,14 @@
 			return;
 		}
 		enable_jquery_proxy_if_needed();
+		// @ts-ignore
 		let mut_observers=[];
+		// @ts-ignore
 		window.g_mut_observers=mut_observers;
 		class DetachedMutationObserver {
+			/**
+			 * @param {Node} target
+			 */
 			constructor(target) {
 				let mutationObserver = new MutationObserver(this.callback);
 				let options={
@@ -3163,8 +3436,9 @@
 				mutationObserver.observe(target, options);
 				this.observer=mutationObserver;
 			}
-			callback(mut_rec_vec, _mut_obj){
-				console.log(mut_rec_vec);
+			/** @type {MutationCallback} */
+			callback(mutations, _observer){
+				console.log(mutations);
 				if(should_close_on_mut){
 					document.close();
 					should_close_on_mut=false;
@@ -3172,6 +3446,10 @@
 			}
 		}
 		class LoadMutationObserver {
+			/**
+			 * @param {Node} target
+			 * @param {(mut_vec: any, mut_observer: any) => void} callback
+			 */
 			constructor(target, callback){
 				this.m_callback=callback;
 				let mutationObserver = new MutationObserver(this.callback.bind(this));
@@ -3181,20 +3459,59 @@
 				};
 				mutationObserver.observe(target, options);
 			}
-			callback(mut_vec, mut_observer) {
-				this.m_callback(mut_vec, mut_observer);
+			/** @type {MutationCallback} */
+			callback(mutations, observer) {
+				this.m_callback(mutations, observer);
 			}
 		}
-		var prev_node_prototype_insertBefore=Node.prototype.insertBefore;
-		document.addEventListener('onContentLoaded', do_dom_filter);
-		Node.prototype.insertBefore=function(element_to_insert, element_reference, ...rest){
-			console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
-			let should_insert_1=dom_add_elm_filter(element_to_insert);
-			if(!should_insert_1)return element_to_insert;
-			let should_insert_2=dom_add_elm_filter(element_reference);
-			if(!should_insert_2)return element_to_insert;
-			return prev_node_prototype_insertBefore.call(this, element_to_insert, element_reference);
+		/**@type {<T extends U, U>(a:any, b:U)=>a is T} */
+		function cast_T_extends_U(T, U){
+			let up=Object.getPrototypeOf(U);
+			let class_type=up.constructor;
+			if(T instanceof class_type){
+				return true;
+			}
+			return false;
 		}
+		void cast_T_extends_U;
+		/**@type {<T extends U['prototype'], U extends {new ():V; prototype:V}, V>(a:any, b:U)=>a is T} */
+		function cast_T_extends_U_type(T_value, U_value) {
+			if(T_value instanceof U_value){
+				return true;
+			}
+			return false;
+		}
+		/**@type {<T extends U['prototype'], U extends {new ():V; prototype:V}, V>(a:any, b:U)=>T|null} */
+		function cast_value_T_to_U(a, b){
+			if(cast_T_extends_U_type(a, b)){
+				return a;
+			}
+			return null;
+		}
+		var prev_node_prototype_insertBefore=Node.prototype.insertBefore;
+		/**@type {cast_T_extends_U_type<Node, HTMLScriptElement>} */
+		let cast_to_script=cast_T_extends_U_type;
+		document.addEventListener('onContentLoaded', do_dom_filter);
+		/**@type {(this:Node, node: Node, child: Node | null)=>Node}*/function insertBefore_inject(element_to_insert, element_reference, ...rest){
+			console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
+			let cast_element_1=cast_value_T_to_U(element_to_insert, HTMLScriptElement);
+			let cast_element_2=cast_value_T_to_U(element_reference, HTMLScriptElement);
+			if(cast_element_1){
+				let should_insert_1=dom_add_elm_filter(cast_element_1);
+				if(!should_insert_1)return element_to_insert;
+			}
+			if(cast_element_2){
+				let should_insert_2=dom_add_elm_filter(cast_element_2);
+				if(!should_insert_2)return element_to_insert;
+			}
+			let ret=prev_node_prototype_insertBefore.call(this, element_to_insert, element_reference);
+			return ret;
+		}
+		/**@type {any} */
+		let as_any=insertBefore_inject;
+		/**@type {Node['insertBefore']} */
+		let as_insert_before_type=as_any;
+		Node.prototype.insertBefore=as_insert_before_type;
 		let document_write_list=new DocumentWriteList;
 		document_write_list.attach_proxy(document);
 		window.document_write_list=document_write_list;
@@ -3234,7 +3551,6 @@
 			let nav_url="https://rebuildtheuniverse.com";
 			history.pushState(hist_state, '', nav_url);
 			const rb_html=await (await fetch(loc_url)).text();
-			window.g_page_content_str=rb_html;
 			{
 				let la=mut_observers.pop();
 				la.observer.disconnect();
@@ -3280,7 +3596,6 @@
 				//spell:disable-next-line
 				rb_html_tmp=rb_html_tmp.replace("//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", on_html_replace);
 				if(did_rep)continue;
-				debugger;
 				rb_html_tmp=rb_html_tmp.replace(rem_str_1, on_html_replace);
 			}
 			let script_num=[...rb_html_tmp.matchAll(/<\s*script.*?>/g)].length;
