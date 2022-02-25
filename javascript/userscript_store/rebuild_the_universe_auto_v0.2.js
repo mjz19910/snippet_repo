@@ -21,12 +21,51 @@
 	const AudioMuted=true;
 	const AutoBuyMulModifierFactor=1;
 	const AutoBuyRatioDiv=3;
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
+	/**@implements {VMBoxedCSSStyleSheetConstructor} */
+	class VMBoxedCSSStyleSheetConstructorR {
+		/**@type {"constructor_box"} */
+		type="constructor_box";
+		/**@type {"javascript"} */
+		from="javascript";
+		/**@type {"CSSStyleSheet"} */
+		constructor_type="CSSStyleSheet";
+		/**@arg {typeof CSSStyleSheet} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheet} VMBoxedCSSStyleSheet */
+	/**@implements {VMBoxedCSSStyleSheet} */
+	class VMBoxedCSSStyleSheetR {
+		/**@type {"instance_box"} */
+		type="instance_box";
+		/**@type {"CSSStyleSheet"} */
+		instance_type="CSSStyleSheet";
+		/**@arg {CSSStyleSheet} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedPromise} VMBoxedPromise */
+	/**@implements {VMBoxedPromise} */
+	class VMBoxedPromiseR {
+		/**@type {"promise"} */
+		type="promise";
+		/**@arg {Promise<VMValue>} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedNewableFunction} VMBoxedNewableFunction */
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCallableFunction} VMBoxedCallableFunction */
 	/**@implements {VMBoxedNewableFunction} */
 	class VMBoxedNewableFunctionR {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
+		/**@type {"typescript"} */
+		from="typescript";
+		/**@type {"NewableFunction"} */
+		constructor_type="NewableFunction";
 		/**@type {{new (v:any):any}} */
 		value;
 		/**@arg {{new (v:any):any}} value */
@@ -34,6 +73,8 @@
 			this.value=value;
 		}
 	}
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCallableFunction} VMBoxedCallableFunction */
+	/**@implements {VMBoxedCallableFunction} */
 	class VMBoxedCallableFunctionR {
 		/**@type {"callable_box"} */
 		type="callable_box";
@@ -188,44 +229,31 @@
 		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMValue */
-	/**@typedef {import("./types/SimpleVMTypes.js").VMValueTypes} VMValueTypes */
-	class AbstractVM {
-		/**
-		 * @param {VMValue} _value
-		 */
-		push(_value) {
-			console.log('you might want to implement this.push for this constructor', Object.getPrototypeOf(this).constructor);
-			throw new Error("Abstract function");
-		}
-		pop() {
-			console.log('you might want to implement this.pop for this constructor', Object.getPrototypeOf(this).constructor);
-			throw new Error("Abstract function");
-		}
-		/**
-		 * @param {InstructionType} _instruction
-		 */
-		execute_instruction(_instruction){
-			// ignore it, this is the base, if you want to ignore instruction opcodes go ahead
-			if(this.execute_instruction !== AbstractVM.prototype.execute_instruction)return;
-			throw new Error("Abstract function");
+	class VMTemplateImpl {
+		/** @arg {InstructionType} instruction */
+		execute_instruction(instruction){
+			switch(instruction[0]){
+				default:{
+					console.log('execute', instruction[0], instruction.slice(1));
+				} break;
+			}
 		}
 	}
-	class AbstractVMTemplate extends AbstractVM {
+	class VMTemplate extends VMTemplateImpl {
 		/**
 		 * @param {InstructionType} instruction
 		 */
-		execute_instruction_t(instruction){
+		execute_instruction(instruction){
 			switch(instruction[0]) {
 				default/*Base class*/:super.execute_instruction(instruction);break;
 			}
 		}
 	}
-	void AbstractVMTemplate;
+	void VMTemplate;
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
-	class BaseVMCreate extends AbstractVM {
+	class BaseVMCreate {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
-			super();
 			this.instructions = instructions;
 			this.instruction_pointer = 0;
 			this.running = false;
@@ -284,7 +312,19 @@
 					let instruction_1=this.instructions[target];
 					/**@type {[string, ...any[]]} */
 					let instruction_modify=instruction_1;
-					let value=this.pop();
+					let value=null;
+					if(this instanceof BaseStackVM){
+						value=this.pop();
+					} else {
+						let pop_fn=Object.getOwnPropertyDescriptor(this, 'pop');
+						if(!pop_fn)throw new Error("Unexpected control flow (previous check ensured there was a property)");
+						if(pop_fn.get){
+							throw new Error("own property pop was a getter");
+						} else {
+							console.log(`TODO: add instanceof check`);
+							value=pop_fn.value.call(this);
+						}
+					}
 					if(instruction_modify === void 0)throw new Error("Invalid");
 					instruction_modify[offset] = value;
 					let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify);
@@ -366,7 +406,6 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction){
-			debugger;
 			switch(instruction[0]) {
 				case 'push'/*Stack*/: {
 					for(let i = 0; i < instruction.length-1; i++) {
@@ -390,19 +429,14 @@
 					this.push(target_obj.value[target_name]);
 				} break;
 				case 'call'/*Call*/: {
+					debugger;
 					let number_of_arguments = instruction[1];
 					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					if(number_of_arguments <= 1){
 						throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 					}
 					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-					let ts=performance.now();
-					let td=0;
-					while(td < 20){
-						debugger;
-						td=performance.now()-ts;
-						console.log('no debugger');
-					}
+					debugger;
 					if(typeof target_fn!='object')throw new Error("Invalid");
 					if(target_fn.type != 'function_box')throw new Error("Invalid");
 					let ret = target_fn.value.apply(target_this, arg_arr);
@@ -414,6 +448,7 @@
 					let [construct_target, ...construct_arr]=this.pop_arg_count(number_of_arguments);
 					if(typeof construct_target!='object')throw new Error("Invalid");
 					if(construct_target.type != 'constructor_box')throw new Error("Invalid");
+					if(construct_target.from != 'typescript')throw new Error("Invalid");
 					let obj=new construct_target.value(...construct_arr);
 					this.push(obj);
 					l_log_if(LOG_LEVEL_INFO, instruction, ...this.stack.slice(this.stack.length-number_of_arguments));
@@ -454,7 +489,6 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
-			debugger;
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
 					this.push(new VMBoxedStackVM(this));
@@ -1603,11 +1637,11 @@
 		constructor(instructions) {
 			super(instructions);
 			/**
-			 * @type {VMValueTypes[]}
+			 * @type {VMValue[]}
 			 */
 			this.stack=[];
 			/**
-			 * @type {[VMValueTypes[], InstructionType[]][]}
+			 * @type {[VMValue[], InstructionType[]][]}
 			 */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
@@ -1751,7 +1785,7 @@
 	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
 	/**@typedef {[number, 'dom_append']} DomExecDescriptionI4 */
 	/**@typedef {[number, 'push', null, (...p:Promise<CSSStyleSheet>[])=>void]} DomExecDescriptionI5 */
-	/**@typedef {[number, 'new', {new (v:any):any;}, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
+	/**@typedef {[number, 'new', VMValue, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
 	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
 	/**@typedef {[number, 'drop']} DomExecDescriptionI8 */
 	/**@typedef {[number, 'breakpoint']} DomExecDescriptionI9 */
@@ -1901,7 +1935,7 @@
 					}
 				],
 				[
-					0, 'new', CSSStyleSheet, [],
+					0, 'new', new VMBoxedCSSStyleSheetConstructorR(CSSStyleSheet), [],
 					(/** @type {CSSStyleSheet} */ obj, /** @type {string} */ str)=>obj.replace(str),
 					[css_display_style]
 				],
@@ -1955,9 +1989,46 @@
 						stack.push([cur_item[0], "push", new VMBoxedDomValueR('get', cur_element)])
 					} break;
 					case 'new':{
-						const [depth, , _class, construct_arg_arr, callback, arg_arr]=cur_item;
+						const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
 						stack.push(
-							[cur_item[0], 'push', null, new VMBoxedCallableFunctionR(callback), ...construct_arg_arr, new VMBoxedNewableFunctionR(_class)],
+							[cur_item[0], 'push', null, new VMBoxedCallableFunctionR(function(...a){
+								/**@type {{v:[], t:0}|{v:[CSSStyleSheet], t:1}|{v:[CSSStyleSheet, string], t:2}} */
+								let extracted_values={
+									v:[],
+									t:0
+								};
+								for(let i=0;i<a.length;i++){
+									let v=a[i];
+									switch(typeof v){
+										default:
+											console.log('handle for', typeof v);
+											break;
+										case 'object':
+											if(v.type === 'instance_box'){
+												extracted_values={
+													v:[v.value],
+													t:1
+												};
+											}
+											break;
+										case 'string':
+											if(extracted_values.t===1){
+												extracted_values={
+													v:[extracted_values.v[0], v],
+													t:2
+												}
+											}
+									}
+								}
+								if(extracted_values && extracted_values.t === 2){
+									let ret=callback(...extracted_values.v);
+									let r2=ret.then(function(v){
+										return new VMBoxedCSSStyleSheetR(v);
+									});
+									let res=new VMBoxedPromiseR(r2);
+									return res;
+								}
+							}), ...construct_arg_arr, class_box],
 							[cur_item[0], "construct", 1 + construct_arg_arr.length],
 							[depth, 'push', ...arg_arr],
 							[depth, 'call', 3 + arg_arr.length]

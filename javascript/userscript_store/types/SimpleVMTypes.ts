@@ -22,6 +22,13 @@ export class VMBoxedFunction extends VMBoxedValue<Function> {
 }
 export class VMBoxedNewableFunction extends VMBoxedValue<HasNewableVMValue> {
 	type:"constructor_box"="constructor_box";
+	constructor_type:"NewableFunction"="NewableFunction";
+	from:"typescript"="typescript";
+}
+export class VMBoxedCSSStyleSheetConstructor extends VMBoxedValue<typeof CSSStyleSheet> {
+	type:"constructor_box"="constructor_box";
+	from:"javascript"="javascript";
+	constructor_type:"CSSStyleSheet"="CSSStyleSheet";
 }
 export class VMBoxedCallableFunction extends VMBoxedValue<HasCallableVMValue> {
 	type:"callable_box"="callable_box";
@@ -72,20 +79,30 @@ export class VMBoxedDomValue extends VMBoxedValue<Node> {
 	type:"dom_value"="dom_value";
 	from:"create"|"get"="create";
 }
+export class VMBoxedCSSStyleSheet extends VMBoxedValue<CSSStyleSheet> {
+	type:"instance_box"="instance_box";
+	instance_type:"CSSStyleSheet"="CSSStyleSheet";
+}
+export class VMBoxedPromise extends VMBoxedValue<Promise<VMValue>> {
+	type:"promise"="promise";
+}
 
 type VMFunctionTypes = VMBoxedFunction | VMBoxedNewableFunction | VMBoxedCallableFunction;
 type VMClassTypes = VMFunctionTypes;
 type VMBoxedValueTypes= VMBoxedGlobalThis | VMBoxedDomValue;
 type VMObjectTypes = VMBoxedCallableIndexed | VMBoxedKeyedObject | VMBoxedObject;
 type VMArrayTypes = VMBoxedArray | VMBoxedInstructionTypeArray;
-export type VMValueTypes = VMBoxedStackVM | VMBoxedWindow |
-	VMArrayTypes |
-	VMBoxedUndefined | VMBoxedNull |
-	VMObjectTypes |
-	VMClassTypes |
-	VMBoxedValueTypes |
-	bigint | boolean | number | string | symbol | undefined;
-export type VMValue = VMValueTypes;
+type VMInstanceTypes = VMBoxedCSSStyleSheet;
+export type VMValue = VMBoxedStackVM | VMBoxedWindow |
+VMArrayTypes |
+VMBoxedUndefined | VMBoxedNull |
+VMObjectTypes |
+VMClassTypes |
+VMBoxedValueTypes |
+VMInstanceTypes |
+VMBoxedPromise |
+VMBoxedCSSStyleSheetConstructor |
+bigint | boolean | number | string | symbol | undefined;;
 type InstructionPushOperands = VMValue[];
 type InstructionDropOperands = [];
 type InstructionGetOperands = [];
