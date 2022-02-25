@@ -78,14 +78,6 @@ export class VMCallableFunction extends VMBoxed<VMCallableValue> {
 		return null;
 	}
 }
-type VMGlobalTypes = VMBoxedGlobalThis;
-export class VMBoxedGlobalThis extends VMBoxed<typeof globalThis> {
-	type: "value_box" = "value_box";
-	inner_value: "globalThis" = "globalThis";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
 type VMObjectTypes = VMIndexedCallableValue | VMIndexedObjectValue | VMBoxedObject;
 export class VMIndexedCallableValue extends VMBoxed<VMIndexed<VMCallableValue>> {
 	type: "callable_index" = "callable_index";
@@ -108,7 +100,14 @@ export class VMBoxedObject extends VMBoxed<object> {
 		return null;
 	}
 }
-type VMInstanceTypes = VMBoxedDomValue | VMBoxedCSSStyleSheet;
+type VMInstanceTypes = VMBoxedStackVM | VMBoxedDomValue | VMBoxedCSSStyleSheet;
+export class VMBoxedStackVM extends VMBoxed<StackVM>{
+	type: "custom_box" = "custom_box";
+	box_type: "StackVM" = "StackVM";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
 export class VMBoxedDomValue extends VMBoxed<Node> {
 	type: "dom_value" = "dom_value";
 	from: "create" | "get" = "create";
@@ -187,11 +186,10 @@ export class VMReturnsBoxedVoidPromise extends VMBoxed<(...a:VMValue[]) => VMBox
 		return null;
 	}
 }
-
-
-export class VMBoxedStackVM extends VMBoxed<StackVM>{
-	type: "custom_box" = "custom_box";
-	box_type: "StackVM" = "StackVM";
+type VMGlobalTypes = VMBoxedGlobalThis | VMBoxedWindow;
+export class VMBoxedGlobalThis extends VMBoxed<typeof globalThis> {
+	type: "value_box" = "value_box";
+	inner_value: "globalThis" = "globalThis";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
@@ -203,6 +201,8 @@ export class VMBoxedWindow extends VMBoxed<Window>{
 		return null;
 	}
 }
+
+
 export class VMBoxedVoidPromise extends VMBoxed<Promise<void>> {
 	type: "promise" = "promise";
 	promise_return_type_special:'void_type'='void_type';
@@ -233,7 +233,7 @@ export class VMBoxedMediaList extends VMBoxed<MediaList>{
 }
 
 // --- VM Value (types) ---
-export type VMValue = VMBoxedStackVM | VMBoxedWindow |
+export type VMValue = VMBoxedWindow |
 	VMArrayTypes |
 	VMObjectTypes |
 	VMFunctionTypes |
