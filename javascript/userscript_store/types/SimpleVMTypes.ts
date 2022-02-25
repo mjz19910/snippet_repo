@@ -22,6 +22,8 @@ StackVM
 export interface VMInterface {
 	push(value: VMValue): void;
 	pop(): VMValue | undefined;
+	pop_arg_count(q:number):VMValue[];
+	stack:VMValue[];
 }
 
 /* --- VM Value (classes) ---

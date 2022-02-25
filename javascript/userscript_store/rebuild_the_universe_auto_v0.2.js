@@ -477,10 +477,10 @@
 						}
 					}
 					let obj=new a.value(...valid_args.s);
-					this.push(new VMBoxedCSSStyleSheetR(obj));
+					vm.push(new VMBoxedCSSStyleSheetR(obj));
 				}
 			}
-			l_log_if(LOG_LEVEL_INFO, instruction, ...this.stack.slice(this.stack.length-number_of_arguments));
+			l_log_if(LOG_LEVEL_INFO, instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
 	class BaseStackVM extends BaseVMCreate {
@@ -1874,6 +1874,21 @@
 		}
 		pop(){
 			return this.stack.pop();
+		}
+		/**
+		 * @param {number} operand_number_of_arguments
+		 * @return {VMValue[]}
+		 */
+		pop_arg_count(operand_number_of_arguments){
+			let arguments_arr=[];
+			let arg_count=operand_number_of_arguments;
+			for(let i = 0; i < arg_count; i++) {
+				if(this.stack.length <= 0){
+					throw new Error('stack underflow in pop_arg_count');
+				}
+				arguments_arr.unshift(this.pop());
+			}
+			return arguments_arr;
 		}
 		/**@arg {IDomInstructionSet} instruction */
 		execute_instruction(instruction) {
