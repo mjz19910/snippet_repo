@@ -218,7 +218,7 @@ export class VMBoxedPromise extends VMBoxed<Promise<VMValue>> {
 	}
 }
 
-class VMEmptyReturn extends VMBoxed<[]> {
+export class VMEmptyReturn extends VMBoxed<[]> {
 	type:"TODO"="TODO";
 };
 type VMReturnTypes=VMEmptyReturn;
@@ -244,20 +244,31 @@ export class VMReturnsBoxedPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedPr
 	}
 }
 
+type VMCustomReturnTypes = VMBoxedCSSStyleSheetPromise;
+export class VMBoxedCSSStyleSheetPromise extends VMBoxed<Promise<CSSStyleSheet>> {
+	type:"promise"="promise";
+	await_type:"CSSStyleSheet"="CSSStyleSheet";
+}
+
 
 // --- VM Value (types) ---
-export type VMValue = VMArrayTypes |
-	VMObjectTypes |
-	VMFunctionTypes |
-	VMGlobalTypes |
-	VMInstanceTypes |
-	VMBoxedPromise |
-	VMConstructorTypes |
-	VMArgumentTypes |
-	VMReturnTypes |
-	VMPromiseTypes |
-	VMCustomFunctionTypes |
-	bigint | boolean | number | string | symbol | null | undefined;
+type VMCustomTypes=
+VMCustomFunctionTypes |
+VMCustomReturnTypes;
+export type VMValue =
+VMArrayTypes |
+VMObjectTypes |
+VMFunctionTypes |
+VMGlobalTypes |
+VMInstanceTypes |
+VMBoxedPromise |
+VMConstructorTypes |
+VMArgumentTypes |
+VMReturnTypes |
+VMPromiseTypes |
+VMCustomTypes |
+bigint | boolean | number | string | symbol | null | undefined;
+
 
 // --- Instruction ---
 type InstructionPush = ['push', ...VMValue[]];
