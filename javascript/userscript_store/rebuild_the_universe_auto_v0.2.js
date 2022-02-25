@@ -44,6 +44,8 @@
 			this.end_symbol=Symbol(void 0);
 			/**@type {import("./final/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
 			this.document_write=null;
+			this.attached_document=null;
+			this.document_write_proxy=null;
 		}
 		/**
 		 * @arg {(...text: string[]) => void} target
@@ -3304,11 +3306,10 @@
 	 */
 	function proxy_jquery(_value){
 		let val=use_jquery();
-		if(!val)return;
 		set_jq_proxy(val);
 	}
 	/**
-	 * @param {typeof $} value
+	 * @param {typeof $ | undefined} value
 	 */
 	function set_jq_proxy(value){
 		let s_value=value;
@@ -3428,9 +3429,8 @@
 			return;
 		}
 		enable_jquery_proxy_if_needed();
-		// @ts-ignore
+		/**@type {any[]} */
 		let mut_observers=[];
-		// @ts-ignore
 		window.g_mut_observers=mut_observers;
 		class DetachedMutationObserver {
 			/**
@@ -3527,8 +3527,7 @@
 		Node.prototype.insertBefore=as_insert_before_type;
 		let document_write_list=new DocumentWriteList;
 		document_write_list.attach_proxy(document);
-		document_write_list.document_write;
-		window.document_write_list.document_write;
+		document_write_list.document_write_proxy;
 		window.document_write_list=document_write_list;
 		document.stop=function(){};
 		function nop_timeout(){
@@ -3539,6 +3538,9 @@
 		let real_si=setInterval;
 		window.setTimeout=nop_timeout;
 		window.setInterval=nop_timeout;
+		/**
+		 * @param {any[]} v
+		 */
 		function no_aev(...v){
 			console.log('aev', v);
 		}
@@ -3571,28 +3573,39 @@
 				let la=mut_observers.pop();
 				la.observer.disconnect();
 			}
-			set_jq_proxy();
-			adsbygoogle=[];
-			adsbygoogle.op=adsbygoogle.push;
-			adsbygoogle.push=function(e){
+			set_jq_proxy(window.$);
+			/**
+			 * @type {any[]}
+			 */
+			let arr=[];
+			/**@type {any} */
+			let any_cur=arr;
+			window.adsbygoogle=any_cur;
+			window.adsbygoogle.op=window.adsbygoogle.push;
+			window.adsbygoogle.push=function(e){
 				// console.log('ads by google push');
 				let cs=document.currentScript;
-				let ls,rs;
+				/**@type {Element|null} */
+				let ls=null;
+				/**@type {Element|null} */
+				let rs;
+				if(!cs) return;
 				window.g_cs??=[];
 				window.g_cs.push(cs);
-				if(cs.previousElementSibling?.dataset?.adSlot){
+				let prev=cs.previousElementSibling;
+				if(prev && prev instanceof HTMLElement)if(prev.dataset.adSlot){
 					let ad_slot=cs.previousElementSibling;
-					ls=cs.previousElementSibling.previousElementSibling;
-					rs=cs.nextElementSibling;
-					ad_slot.remove();
+					if(prev.previousElementSibling)ls=prev.previousElementSibling;
+					if(cs.nextElementSibling)rs=cs.nextElementSibling;
+					if(ad_slot)ad_slot.remove();
 					cs.remove();
-					while(ls && ls.src && ls.src.includes("adsbygoogle")){
+					while(ls && ls instanceof HTMLScriptElement && ls.src && ls.src.includes("adsbygoogle")){
 						let ls_tmp=ls.previousElementSibling;
 						ls.remove();
 						ls=ls_tmp;
 					}
 				}
-				adsbygoogle.op(e);
+				window.adsbygoogle.op(e);
 				do_dom_filter();
 			};
 			let rb_html_tmp=rb_html.replace(/https:\/\/apis.google.com\/js\/platform.js/, "");
@@ -3605,6 +3618,7 @@
 				did_rep=true;
 				return "";
 			}
+			//spell:disable-next-line
 			let json_rep_1=`"\x3Cscript>\\n  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\n  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\n  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');\\n\\n  ga('create', 'UA-63134422-1', 'auto');\\n  ga('send', 'pageview');\\n\\n\x3C/script>"`;
 			let rem_str_1=JSON.parse(json_rep_1);
 			while(did_rep){

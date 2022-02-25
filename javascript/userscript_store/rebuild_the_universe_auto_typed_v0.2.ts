@@ -72,6 +72,12 @@ declare global {
 		remoteClearInterval: (id?: number) => void;
 		["g_worker_state"]?: WorkerState;
 		mute():void;
+		g_mut_observers:any[];
+		g_cs?:any[];
+		g_page_content:{
+			request_content:string,
+			cur:string
+		};
 	}
 	var window: Window & typeof globalThis;
 	export var Window: {
