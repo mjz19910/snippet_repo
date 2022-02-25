@@ -528,9 +528,14 @@
 					} else if (b.type == 'constructor_box'){
 						throw new Error("Unexpected constructor");
 					} else if (b.type === 'function_box'){
-						debugger;
-						let ret=b.value.apply(target_this, arg_arr);
-						this.push(ret);
+						if(b.return_type == 'promise'){
+							let ret=b.value.apply(target_this, arg_arr);
+							this.push(ret);
+						} else if(b.return_type === null) {
+							let ret=b.value.apply(target_this, arg_arr);
+							console.log('fixme type of return is any', ret);
+							this.push(ret);
+						}
 					} else {
 						throw new Error("Unreachable (type of value is never)");
 					}
@@ -2114,19 +2119,23 @@
 			 * @this {AutoBuy}
 			 * */
 			async function css_promise_runner(/** @type {VMValue[]} */ ...styles_promise_arr) {
-				/**@type {Promise<CSSStyleSheet>[]} */
+				/**@type {Promise<VMValue>[]} */
 				let css_arr=[];
 				for(let i=0;i<styles_promise_arr.length;i++){
 					let cur=styles_promise_arr[i];
+					console.log(cur);
 					if(typeof cur != 'object')continue;
 					if(cur === null)continue;
 					if(cur.type != 'promise')continue;
-					css_arr.push(cur.value);
+					if(cur.await_type === 'value'){
+						css_arr.push(cur.value);
+					}
 				}
 				/*@Hack: wait for any promise to settle*/
-				const e = await Promise.allSettled(styles_promise_arr);
-				/**@type {PromiseFulfilledResult<Awaited<(typeof styles_promise_arr)[0]>>[]} */
+				const e = await Promise.allSettled(css_arr);
+				/**@type {PromiseFulfilledResult<Awaited<(typeof css_arr)[0]>>[]} */
 				let fulfilled_res = [];
+				/**@type {PromiseRejectedResult[]} */
 				let rejected_res = [];
 				for(let i = 0; i < e.length; i++) {
 					let cur = e[i];
@@ -2137,8 +2146,19 @@
 					}
 				}
 				let res = fulfilled_res.map(e_1 => e_1.value);
-				console.log('promise res', res);
-				this.adopt_styles(...res);
+				/**@type {CSSStyleSheet[]} */
+				let css_arr2=[];
+				for(let i=0;i<res.length;i++){
+					let cur=res[i];
+					console.log(cur);
+					if(typeof cur != 'object')continue;
+					if(cur === null)continue;
+					if(cur.type!='instance_box')continue;
+					if(cur.instance_type != "CSSStyleSheet")continue;
+					css_arr2.push(cur.value);
+				}
+				console.log('promise res2', css_arr2);
+				this.adopt_styles(...css_arr2);
 				if(rejected_res.length > 0) {
 					console.log('promise failure...', ...rejected_res);
 				}
@@ -2149,6 +2169,8 @@
 			class VMBoxedVoidPromiseR {
 				/**@type {"promise"} */
 				type="promise";
+				return_type=null;
+				await_type=null;
 				/**@type {"void_type"} */
 				promise_return_type_special="void_type";
 				/**@arg {"function"} _s */
@@ -2221,7 +2243,7 @@
 						break;
 					case 'object':
 						if(v === null)break;
-						if(v.type === 'instance_box'){
+						if(v.type === 'instance_box' && v.instance_type === 'CSSStyleSheet'){
 							extracted_values={
 								v:[v.value],
 								t:1
@@ -2845,27 +2867,32 @@
 				throw new Error("Already running");
 			}
 			this.main_running=true;
-			run_loop:while(this.main_running) {
-				for(this.iter_count=0;;) {
-					let unit_upgradeable_trigger=30;
-					if(this.timeout_ms && this.timeout_ms > 3*60*1000){
-						unit_upgradeable_trigger=8;
+			try{
+				run_loop:while(this.main_running) {
+					for(this.iter_count=0;;) {
+						let unit_upgradeable_trigger=30;
+						if(this.timeout_ms && this.timeout_ms > 3*60*1000){
+							unit_upgradeable_trigger=8;
+						}
+						if(this.unit_upgradable_count > unit_upgradeable_trigger){
+							this.unit_upgradable_count=0;
+							await this.rare_begin_async();
+						}
+						if(this.iter_count<6) await this.normal_decrease_async();
+						else await this.large_decrease_async();
+						let [quit, loss_rate]=await this.maybe_async_reset();
+						if(quit)break run_loop;
+						if(loss_rate > 0.08)continue;
+						if(this.pre_total == window.totalAtome)break;
 					}
-					if(this.unit_upgradable_count > unit_upgradeable_trigger){
-						this.unit_upgradable_count=0;
-						await this.rare_begin_async();
-					}
-					if(this.iter_count<6) await this.normal_decrease_async();
-					else await this.large_decrease_async();
-					let [quit, loss_rate]=await this.maybe_async_reset();
-					if(quit){
-						this.main_running=false;
-						continue run_loop;
-					}
-					if(loss_rate > 0.08)continue;
-					if(this.pre_total == window.totalAtome)break;
+					await this.faster_timeout_async();
 				}
-				await this.faster_timeout_async();
+			} finally {
+				this.main_running=false;
+			}
+			if(this.main_running) {
+				console.log('no finally');
+				this.main_running=false;
 			}
 		}
 		async fast_unit_async() {

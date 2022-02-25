@@ -252,6 +252,9 @@ type VMCustomReturnTypes = VMBoxedCSSStyleSheetPromise;
 export class VMBoxedCSSStyleSheetPromise extends VMBoxed<Promise<CSSStyleSheet>> {
 	type:"promise"="promise";
 	await_type:"CSSStyleSheet"="CSSStyleSheet";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
 }
 
 
