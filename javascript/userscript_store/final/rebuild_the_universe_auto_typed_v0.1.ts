@@ -204,7 +204,7 @@ export class DocumentWriteList {
 				throw new Error("Unable to destroy DocumentWriteList: document.write is not equal to document_write_proxy");
 			}
 			if(this.document_write) {
-				if(down_convert_type<typeof this.document_write, typeof this.attached_document.write>(this.document_write)) {
+				if(down_convert_type<this['document_write'], Document['write']>(this.document_write)) {
 					this.attached_document.write = this.document_write;
 				}
 			}

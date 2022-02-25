@@ -92,9 +92,14 @@
 					}
 					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
 				}
-				let att_doc=this.attached_document;
-				if(att_doc && this.document_write){
-					att_doc.write=this.document_write;
+				let doc_1=this.attached_document;
+				if(doc_1 && this.document_write) {
+					let doc_var=this.document_write;
+					/**@type {any} */
+					let any_var=doc_var;
+					/**@type {Document['write']} */
+					let vv=any_var;
+					doc_1.write=vv;
 				}
 			}
 			if(this.document_write_proxy){
@@ -373,6 +378,7 @@
 						throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 					}
 					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
+					debugger;
 					if(typeof target_fn!='object')throw new Error("Invalid");
 					if(target_fn.type != 'function_box')throw new Error("Invalid");
 					let ret = target_fn.value.apply(target_this, arg_arr);
