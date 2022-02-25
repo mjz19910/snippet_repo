@@ -29,6 +29,8 @@
 		/**@type {"javascript"} */
 		from="javascript";
 		/**@type {"CSSStyleSheet"} */
+		instance_type= "CSSStyleSheet";
+		/**@type {"CSSStyleSheet"} */
 		constructor_type="CSSStyleSheet";
 		/**@arg {typeof CSSStyleSheet} value */
 		constructor(value){
@@ -79,6 +81,7 @@
 		type="constructor_box";
 		/**@type {"typescript"} */
 		from="typescript";
+		instance_type = null;
 		/**@type {"NewableFunction"} */
 		constructor_type="NewableFunction";
 		/**@type {{new (v:any):any}} */
@@ -101,6 +104,9 @@
 	class VMBoxedCallableFunctionR {
 		/**@type {"callable_box"} */
 		type="callable_box";
+		parameters_type_array = null;
+		instance_type = null;
+		return_type = null;
 		/**@type {{(...a:VMValue[]) : VMValue}} */
 		value;
 		/**@arg {'function'} to_match */
@@ -567,9 +573,13 @@
 			}
 		}
 	}
-	class VMBoxedStackVM {
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedStackVM} VMBoxedStackVM */
+	/**@implements {VMBoxedStackVM} */
+	class VMBoxedStackVMR {
+		/**@type {"custom_box"} */
+		type="custom_box";
 		/**@type {"StackVM"} */
-		type="StackVM";
+		box_type="StackVM";
 		/**@arg {'function'} _a */
 		get_matching_typeof(_a){
 			return null;
@@ -579,9 +589,13 @@
 			this.value = value;
 		}
 	}
-	class VMBoxedWindow {
-		/**@type {"window_box"} */
-		type="window_box";
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedWindow} VMBoxedWindow */
+	/**@implements {VMBoxedWindow} */
+	class VMBoxedWindowR {
+		/**@type {"object_box"} */
+		type="object_box";
+		/**@type {"Window"} */
+		inner_type="Window";
 		/**@arg {'function'} _a */
 		get_matching_typeof(_a){
 			return null;
@@ -613,11 +627,11 @@
 			}
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
-					this.push(new VMBoxedStackVM(this));
+					this.push(new VMBoxedStackVMR(this));
 				} break;
 					// TODO: if you ever use this on a worker, change
 					// it to use globalThis...
-				case 'global'/*Special*/:this.push(new VMBoxedWindow(window));break;
+				case 'global'/*Special*/:this.push(new VMBoxedWindowR(window));break;
 				case 'call'/*Call*/: {
 					// TODO: Fix the other code to use the call handling from
 					// the base class
@@ -786,9 +800,12 @@
 		}
 	}
 	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
-	class VMBoxedObject {
-		/**@type {"object"} */
-		type="object";
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
+	/**@implements {VMBoxedObject} */
+	class VMBoxedObjectR {
+		/**@type {"object_box"} */
+		type="object_box";
+		inner_type=null;
 		/**@arg {'function'} _a */
 		get_matching_typeof(_a){
 			return null;
@@ -807,7 +824,7 @@
 		/**@arg {Event} event */
 		handleEvent(event) {
 			this.reset();
-			this.run(new VMBoxedObject(event));
+			this.run(new VMBoxedObjectR(event));
 		}
 	}
 	class CompressionStatsCalculator {
@@ -1922,11 +1939,50 @@
 		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
-	/**@typedef {[0, 'get', string]} DomExecDescriptionI1 */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMReturnsBoxedPromise} VMReturnsBoxedPromise */
+	/**@implements {VMReturnsBoxedPromise} */
+	class VMReturnsBoxedPromiseR {
+		/**@type {"function_box"} */
+		type="function_box" 
+		/**@type {"promise"} */
+		return_type="promise";
+		/**@type {"value"} */
+		await_type="value";
+		/**@arg {"function"} _to_match */
+		get_matching_typeof(_to_match) {
+			return null;
+		}
+		/**@arg {VMReturnsBoxedPromise['value']} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
+	/**@typedef {import("./types/SimpleVMTypes.js").VMReturnsBoxedVoidPromise} VMReturnsBoxedVoidPromise */
+	/**@implements {VMReturnsBoxedVoidPromise} */
+	class VMReturnsBoxedVoidPromiseR {
+		/**@type {"function_box"} */
+		type="function_box";
+		/**@type {"promise"} */
+		return_type="promise";
+		/**@type {"void_type"} */
+		promise_return_type_special="void_type";
+		/**@arg {VMReturnsBoxedVoidPromise['value']} value */
+		constructor(value){
+			this.value=value;
+		}
+		/**@arg {"function"} to_match */
+		get_matching_typeof(to_match) {
+			if(typeof this.value === to_match){
+				return this;
+			}
+			return null;
+		}
+	}
+	/**@typedef {[number, 'get', string]} DomExecDescriptionI1 */
 	/**@typedef {[number, 'create', string, string, {[s:string]:VMValue}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
 	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
 	/**@typedef {[number, 'dom_append']} DomExecDescriptionI4 */
-	/**@typedef {[number, 'push', null, (...p:Promise<CSSStyleSheet>[])=>void]} DomExecDescriptionI5 */
+	/**@typedef {[number, 'push', null, VMReturnsBoxedVoidPromiseR]} DomExecDescriptionI5 */
 	/**@typedef {[number, 'new', VMValue, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
 	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
 	/**@typedef {[number, 'drop']} DomExecDescriptionI8 */
@@ -2052,30 +2108,57 @@
 				[1, 'dup'],
 				[1, 'dom_append']
 			];
+			/**
+			 * @this {AutoBuy}
+			 * */
+			async function css_promise_runner(/** @type {VMValue[]} */ ...styles_promise_arr) {
+				/**@type {Promise<CSSStyleSheet>[]} */
+				let css_arr=[];
+				void css_arr;
+				/*@Hack: wait for any promise to settle*/
+				const e = await Promise.allSettled(styles_promise_arr);
+				/**@type {PromiseFulfilledResult<Awaited<(typeof styles_promise_arr)[0]>>[]} */
+				let fulfilled_res = [];
+				let rejected_res = [];
+				for(let i = 0; i < e.length; i++) {
+					let cur = e[i];
+					if(cur.status === 'fulfilled') {
+						fulfilled_res.push(cur);
+					} else {
+						rejected_res.push(cur);
+					}
+				}
+				let res = fulfilled_res.map(e_1 => e_1.value);
+				this.adopt_styles(...res);
+				if(rejected_res.length > 0) {
+					console.log('promise failure...', ...rejected_res);
+				}
+			}
+			let bound_this=this;
+			/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedVoidPromise} VMBoxedVoidPromise */
+			/**@implements {VMBoxedVoidPromise} */
+			class VMBoxedVoidPromiseR {
+				/**@type {"promise"} */
+				type="promise";
+				/**@type {"void_type"} */
+				promise_return_type_special="void_type";
+				/**@arg {"function"} s */
+				get_matching_typeof(s){
+					return null;
+				}
+				/**@arg {VMBoxedVoidPromise['value']} value */
+				constructor(value){
+					this.value=value;
+				}
+			}
 			/**@type {DomExecDescription[]} */
 			let make_css_arr=[
 				[
 					0, 'push', null,
-					async (/** @type {Promise<CSSStyleSheet>[]} */ ...styles_promise_arr)=>{
-						/*@Hack: wait for any promise to settle*/
-						const e = await Promise.allSettled(styles_promise_arr);
-						/**@type {PromiseFulfilledResult<Awaited<(typeof styles_promise_arr)[0]>>[]} */
-						let fulfilled_res = [];
-						let rejected_res = [];
-						for(let i = 0; i < e.length; i++) {
-							let cur = e[i];
-							if(cur.status === 'fulfilled') {
-								fulfilled_res.push(cur);
-							} else {
-								rejected_res.push(cur);
-							}
-						}
-						let res = fulfilled_res.map(e_1 => e_1.value);
-						this.adopt_styles(...res);
-						if(rejected_res.length > 0) {
-							console.log('promise failure...', ...rejected_res);
-						}
-					}
+					new VMReturnsBoxedVoidPromiseR(function(/** @type {VMValue[]} */ ...a) {
+						let ret=css_promise_runner.call(bound_this, ...a);
+						return new VMBoxedVoidPromiseR(ret);
+					})
 				],
 				[
 					0, 'new', new VMBoxedCSSStyleSheetConstructorR(CSSStyleSheet), [],

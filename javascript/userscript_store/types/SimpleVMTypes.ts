@@ -30,8 +30,9 @@ VMCallableFunction, VMIndexedCallableValue, VMBoxedIndexedObjectValue
 */
 export class VMBoxedFunction extends VMBoxed<Function> {
 	type: "function_box" = "function_box";
-	get_matching_typeof(to_match:'function') {
-		if(typeof this.value === to_match){
+	return_type: null = null;
+	get_matching_typeof(to_match: 'function') {
+		if(typeof this.value === to_match) {
 			return this;
 		}
 		return null;
@@ -39,10 +40,11 @@ export class VMBoxedFunction extends VMBoxed<Function> {
 }
 export class VMNewableFunction extends VMBoxed<VMNewableValue> {
 	type: "constructor_box" = "constructor_box";
-	constructor_type: "NewableFunction" = "NewableFunction";
 	from: "typescript" = "typescript";
-	get_matching_typeof(to_match:'function') {
-		if(typeof this.value === to_match){
+	instance_type: null = null;
+	constructor_type: "NewableFunction" = "NewableFunction";
+	get_matching_typeof(to_match: 'function') {
+		if(typeof this.value === to_match) {
 			return this;
 		}
 		return null;
@@ -51,9 +53,10 @@ export class VMNewableFunction extends VMBoxed<VMNewableValue> {
 export class VMBoxedCSSStyleSheetConstructor extends VMBoxed<typeof CSSStyleSheet> {
 	type: "constructor_box" = "constructor_box";
 	from: "javascript" = "javascript";
+	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
 	constructor_type: "CSSStyleSheet" = "CSSStyleSheet";
-	get_matching_typeof(to_match:'function') {
-		if(typeof this.value === to_match){
+	get_matching_typeof(to_match: 'function') {
+		if(typeof this.value === to_match) {
 			return this;
 		}
 		return null;
@@ -61,8 +64,11 @@ export class VMBoxedCSSStyleSheetConstructor extends VMBoxed<typeof CSSStyleShee
 }
 export class VMCallableFunction extends VMBoxed<VMCallableValue> {
 	type: "callable_box" = "callable_box";
-	get_matching_typeof(to_match:'function') {
-		if(typeof this.value === to_match){
+	parameters_type_array: null = null;
+	instance_type: null = null;
+	return_type: null = null;
+	get_matching_typeof(to_match: 'function') {
+		if(typeof this.value === to_match) {
 			return this;
 		}
 		return null;
@@ -70,95 +76,117 @@ export class VMCallableFunction extends VMBoxed<VMCallableValue> {
 }
 export class VMIndexedCallableValue extends VMBoxed<VMIndexed<VMCallableValue>> {
 	type: "callable_index" = "callable_index";
-	get_matching_typeof(_to_match:'function') {
+	index_type: "callable_box" = "callable_box";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 };
 export class VMIndexedObjectValue extends VMBoxed<VMIndexed<VMValue>>{
 	type: "object_index" = "object_index";
-	get_matching_typeof(_to_match:'function') {
-		return null;
-	}
-}
-export class VMBoxedArray extends VMBoxed<VMValue[]>{
-	type: "value_array" = "value_array";
-	get_matching_typeof(_to_match:'function') {
+	index_type: "value" = "value";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedStackVM extends VMBoxed<StackVM>{
-	type: "StackVM" = "StackVM";
-	get_matching_typeof(_to_match:'function') {
+	type: "custom_box" = "custom_box";
+	box_type: "StackVM" = "StackVM";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedWindow extends VMBoxed<Window>{
-	type: "window_box" = "window_box";
-	get_matching_typeof(_to_match:'function') {
+	type: "object_box" = "object_box";
+	inner_type: "Window" = "Window";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedGlobalThis extends VMBoxed<typeof globalThis> {
-	type: "global_object_box" = "global_object_box";
-	get_matching_typeof(_to_match:'function') {
-		return null;
-	}
-}
-export class VMBoxedNull extends VMBoxed<null> {
-	type: "primitive" = "primitive";
-	get_matching_typeof(_to_match:'function') {
-		return null;
-	}
-}
-export class VMBoxedUndefined extends VMBoxed<undefined> {
-	type: "primitive" = "primitive";
-	get_matching_typeof(_to_match:'function') {
+	type: "value_box" = "value_box";
+	inner_value: "globalThis" = "globalThis";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedObject extends VMBoxed<object> {
-	type: "object" = "object";
-	get_matching_typeof(_to_match:'function') {
+	type: "object_box" = "object_box";
+	inner_type: null = null;
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+export class VMBoxedArray extends VMBoxed<VMValue[]>{
+	type: "array_box" = "array_box";
+	item_type: "value" = "value";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedInstructionTypeArray extends VMBoxed<InstructionType[]>{
-	type: "instruction_type_vec" = "instruction_type_vec";
-	get_matching_typeof(_to_match:'function') {
+	type: "array_box" = "array_box";
+	item_type: "instruction" = "instruction";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedDomValue extends VMBoxed<Node> {
 	type: "dom_value" = "dom_value";
 	from: "create" | "get" = "create";
-	get_matching_typeof(_to_match:'function') {
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedCSSStyleSheet extends VMBoxed<CSSStyleSheet> {
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
-	get_matching_typeof(_to_match:'function') {
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+export class VMBoxedVoidPromise extends VMBoxed<Promise<void>> {
+	type: "promise" = "promise";
+	promise_return_type_special:'void_type'='void_type';
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedPromise extends VMBoxed<Promise<VMValue>> {
 	type: "promise" = "promise";
-	get_matching_typeof(_to_match:'function') {
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+export class VMReturnsBoxedVoidPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedVoidPromise> {
+	type: "function_box" = "function_box";
+	return_type: "promise" = "promise";
+	promise_return_type_special:'void_type'='void_type';
+	get_matching_typeof(to_match: 'function') {
+		if(typeof this.value == to_match){
+			return this;
+		}
+		return null;
+	}
+}
+export class VMReturnsBoxedPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedPromise> {
+	type: "function_box" = "function_box";
+	return_type: "promise" = "promise";
+	await_type:"value"="value";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedMediaList extends VMBoxed<MediaList>{
 	type: "instance_box" = "instance_box";
 	instance_type: "MediaList" = "MediaList";
-	get_matching_typeof(_to_match:'function') {
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
 	type: "shape_box" = "shape_box";
 	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
-	get_matching_typeof(_to_match:'function') {
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | VMBoxedMediaList | undefined) {
@@ -168,7 +196,7 @@ export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
 			} else if(typeof value === 'undefined') {
 				this.value[key] = value;
 			} else {
-				throw new Error("Invalid value for key "+key);
+				throw new Error("Invalid value for key " + key);
 			}
 		} else if(key === 'disabled') {
 			if(typeof value === 'boolean') {
@@ -176,7 +204,7 @@ export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
 			} else if(typeof value === 'undefined') {
 				this.value[key] = value;
 			} else {
-				throw new Error("Invalid value for key "+key);
+				throw new Error("Invalid value for key " + key);
 			}
 		} else if(key === 'media') {
 			if(typeof value === 'object' && value.instance_type === 'MediaList') {
@@ -186,7 +214,7 @@ export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
 			} else if(typeof value === 'undefined') {
 				this.value[key] = value;
 			} else {
-				throw new Error("Invalid value for key "+key);
+				throw new Error("Invalid value for key " + key);
 			}
 		} else {
 			throw new Error("Type shenanigans afoot (You passed a value that should be impossible at runtime)");
