@@ -57,7 +57,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedNewableFunction} VMBoxedNewableFunction */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMNewableFunction} VMBoxedNewableFunction */
 	/**@implements {VMBoxedNewableFunction} */
 	class VMBoxedNewableFunctionR {
 		/**@type {"constructor_box"} */
@@ -73,7 +73,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCallableFunction} VMBoxedCallableFunction */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMCallableFunction} VMBoxedCallableFunction */
 	/**@implements {VMBoxedCallableFunction} */
 	class VMBoxedCallableFunctionR {
 		/**@type {"callable_box"} */
@@ -304,12 +304,15 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
-			debugger;
-			switch(instruction[0]) {
-				default:{
-					console.info('Unknown opcode', instruction[0]);
-					throw new Error('Halt: bad opcode ('+instruction[0]+')');
+			/**@type {['je', 'jmp', 'modify_operand', 'push_pc', 'halt']}*/
+			let handled_instructions=['je', 'jmp', 'modify_operand', 'push_pc', 'halt'];
+			for(let i=0;i<handled_instructions.length;i++){
+				let handle_cur=handled_instructions[i];
+				if(instruction[0] === handle_cur) {;
+					l_log_if(LOG_LEVEL_INFO, ...instruction, null);
 				}
+			}
+			switch(instruction[0]) {
 				case 'je':{
 					let [, target] = instruction;
 					if(typeof target!='number')throw new Error("Invalid");
@@ -357,6 +360,7 @@
 					this.instructions[target]=valid_instruction;
 				} break;
 				case 'push_pc':{
+					instruction;
 					if(!this.hasOwnProperty('push')) {
 						throw new Error("push_pc requires a stack");
 					} else if (this instanceof BaseStackVM) {
@@ -372,10 +376,11 @@
 						fn_ptr.v.call(this, this.instruction_pointer);
 					}
 				} break;
-				case 'halt'/*Running*/:
+				case 'halt'/*Running*/:{
 					instruction;
 					this.running=false;
-					break;
+				} break;
+				default:throw new Error("Unexpected instruction: "+instruction[0]);break;
 			}
 		}
 	}
@@ -441,6 +446,14 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction){
+			/**@type {['push', 'drop', 'dup', 'get', 'call', 'construct', 'return']}*/
+			let handled_instructions=['push', 'drop', 'dup', 'get', 'call', 'construct', 'return'];
+			for(let i=0;i<handled_instructions.length;i++){
+				let handle_cur=handled_instructions[i];
+				if(instruction[0] === handle_cur) {;
+					l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+				}
+			}
 			switch(instruction[0]) {
 				case 'push'/*Stack*/: {
 					for(let i = 0; i < instruction.length-1; i++) {
@@ -473,7 +486,7 @@
 					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 					debugger;
 					if(typeof target_fn!='object')throw new Error("Invalid");
-					if(target_fn.type != 'function_box')throw new Error("Invalid");
+					if(!target_fn || target_fn.type != 'function_box')throw new Error("Invalid");
 					let ret = target_fn.value.apply(target_this, arg_arr);
 					this.push(ret);
 				} break;
@@ -482,6 +495,7 @@
 					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					let [construct_target, ...construct_arr]=this.pop_arg_count(number_of_arguments);
 					if(typeof construct_target!='object')throw new Error("Invalid");
+					if(construct_target===null)throw new Error("Invalid");
 					if(construct_target.type != 'constructor_box')throw new Error("Invalid");
 					if(construct_target.from != 'typescript')throw new Error("Invalid");
 					let obj=new construct_target.value(...construct_arr);
@@ -490,7 +504,7 @@
 				} break;
 				case 'return'/*Call*/:this.return_value=this.pop();break;
 				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
-				default:super.execute_instruction(instruction);break;
+				default:throw new Error("Unexpected instruction: "+instruction[0]);break;
 			}
 		}
 	}
@@ -524,6 +538,15 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
+			/**@type {['this', 'global', 'call']}*/
+			let handled_instructions=['this', 'global', 'call'];
+			// @TODO: Add base class handling back
+			for(let i=0;i<handled_instructions.length;i++){
+				let handle_cur=handled_instructions[i];
+				if(instruction[0] === handle_cur) {;
+					l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+				}
+			}
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
 					this.push(new VMBoxedStackVM(this));
@@ -542,11 +565,12 @@
 					let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 					if(typeof target_obj!='object')throw new Error("Invalid");
 					if(typeof target_name!='string')throw new Error("Invalid");
+					if(target_obj===null)throw new Error("Invalid");
 					if(target_obj.type!="callable_index")throw new Error("Invalid");
 					let ret = target_obj.value[target_name](...arg_arr);
 					this.push(ret);
 				} break;
-				default:super.execute_instruction(instruction);break;
+				default:throw new Error("Unexpected instruction: "+instruction[0]);break;
 			}
 		}
 		/**
@@ -679,10 +703,7 @@
 					num_to_parse--;
 					ret=[m_opcode];
 				} break;
-				default:{
-					console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_operands);
-					throw new Error("Unexpected opcode");
-				}
+				default:throw new Error("Verify: Unexpected opcode, opcode was `"+m_opcode+"`");break;
 			}
 			if(num_to_parse > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");
 			if(ret !== null){
@@ -1665,7 +1686,10 @@
 			}
 			this.value=value;
 		}
-
+	}
+	/**@arg {string[]} arr @arg {string} key */
+	function does_array_include(arr, key){
+		return arr.includes(key);
 	}
 	class DomBuilderVM extends BaseStackVM {
 		/**@arg {InstructionType[]} instructions */
@@ -1683,8 +1707,14 @@
 		}
 		/**@arg {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} instruction */
 		execute_instruction(instruction) {
-			debugger;
-			l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+			/**@type {['exec', 'peek', 'dom_append']}*/
+			let handled_instructions=['exec', 'peek', 'dom_append'];
+			for(let i=0;i<handled_instructions.length;i++){
+				let handle_cur=handled_instructions[i];
+				if(instruction[0] === handle_cur) {;
+					l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+				}
+			}
 			switch(instruction[0]) {
 				case 'exec':{
 					this.exec_stack.push([this.stack, this.instructions]);
@@ -1733,7 +1763,7 @@
 					}
 					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
 				} break;
-				default/*Debug*/:super.execute_instruction(instruction);break;
+				default/*Base class*/:super.execute_instruction(instruction);break;
 			}
 		}
 		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
@@ -1742,13 +1772,14 @@
 		 * @returns {box is VMBoxedDomValue}
 		 */
 		can_use_box(box){
-			return typeof box=='object' && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
+			return typeof box=='object' && box!==null && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
 		}
 		/**
 		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
 		 */
 		verify_dom_box(box){
 			if(typeof box!='object')throw new Error("invalid Box (not an object)");
+			if(box===null)throw new Error("invalid Box (is null)");
 			if(box.type===void 0)throw new Error("Invalid Box (no type)");
 			if(box.type != 'dom_value')throw new Error("Unbox failed not a VMBoxedDomValue");
 			if(typeof box.from != 'string')throw new Error("Unbox failed Box.from is not a string");
@@ -2004,6 +2035,46 @@
 			let dom_styles=document.adoptedStyleSheets;
 			document.adoptedStyleSheets = [...dom_styles, ...styles];
 		}
+		/**@arg {(a:CSSStyleSheet, b:string)=>Promise<CSSStyleSheet>} callback @arg {VMValue[]} a */
+		use_boxed_style_sheet(callback, ...a) {
+			/**@type {{v:[], t:0}|{v:[CSSStyleSheet], t:1}|{v:[CSSStyleSheet, string], t:2}} */
+			let extracted_values={
+				v:[],
+				t:0
+			};
+			for(let i=0;i<a.length;i++){
+				let v=a[i];
+				switch(typeof v){
+					default:
+						console.log('handle for', typeof v);
+						break;
+					case 'object':
+						if(v === null)break;
+						if(v.type === 'instance_box'){
+							extracted_values={
+								v:[v.value],
+								t:1
+							};
+						}
+						break;
+					case 'string':
+						if(extracted_values.t===1){
+							extracted_values={
+								v:[extracted_values.v[0], v],
+								t:2
+							}
+						}
+				}
+			}
+			if(extracted_values && extracted_values.t === 2){
+				let ret=callback(...extracted_values.v);
+				let r2=ret.then(function(v){
+					return new VMBoxedCSSStyleSheetR(v);
+				});
+				let res=new VMBoxedPromiseR(r2);
+				return res;
+			}
+		}
 		/**
 		 * @param {DomExecDescription[]} raw_arr
 		 */
@@ -2026,44 +2097,7 @@
 					case 'new':{
 						const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
 						stack.push(
-							[cur_item[0], 'push', null, new VMBoxedCallableFunctionR(function(...a){
-								/**@type {{v:[], t:0}|{v:[CSSStyleSheet], t:1}|{v:[CSSStyleSheet, string], t:2}} */
-								let extracted_values={
-									v:[],
-									t:0
-								};
-								for(let i=0;i<a.length;i++){
-									let v=a[i];
-									switch(typeof v){
-										default:
-											console.log('handle for', typeof v);
-											break;
-										case 'object':
-											if(v.type === 'instance_box'){
-												extracted_values={
-													v:[v.value],
-													t:1
-												};
-											}
-											break;
-										case 'string':
-											if(extracted_values.t===1){
-												extracted_values={
-													v:[extracted_values.v[0], v],
-													t:2
-												}
-											}
-									}
-								}
-								if(extracted_values && extracted_values.t === 2){
-									let ret=callback(...extracted_values.v);
-									let r2=ret.then(function(v){
-										return new VMBoxedCSSStyleSheetR(v);
-									});
-									let res=new VMBoxedPromiseR(r2);
-									return res;
-								}
-							}), ...construct_arg_arr, class_box],
+							[cur_item[0], 'push', null, new VMBoxedCallableFunctionR(this.use_boxed_style_sheet.bind(this, callback)), ...construct_arg_arr, class_box],
 							[cur_item[0], "construct", 1 + construct_arg_arr.length],
 							[depth, 'push', ...arg_arr],
 							[depth, 'call', 3 + arg_arr.length]
@@ -3582,12 +3616,15 @@
 				mutationObserver.observe(target, options);
 				this.observer=mutationObserver;
 			}
-			/** @type {MutationCallback} */
-			callback(mutations, _observer){
-				console.log(mutations);
+			/** @type {(mutations: MutationRecord[], observer: MutationObserver & {document_is_closed?:boolean})=>void} */
+			callback(mutations, observer){
 				if(should_close_on_mut){
 					document.close();
 					should_close_on_mut=false;
+					observer.document_is_closed=true;
+				}
+				if(observer.document_is_closed){
+					console.log('done with', ...mutations);
 				}
 			}
 		}
@@ -3818,9 +3855,7 @@
 		let should_close_on_mut=false;
 		if(location.href!=="https://rebuildtheuniverse.com/?real=1") {
 			mut_observers.push(new DetachedMutationObserver(document));
-			let bb=new Blob([`console.log("first_writeln");\n//# sourceURL=writeln_html.js`], {type:"text/javascript"});
-			let src=URL.createObjectURL(bb);
-			document.writeln(`<head></head><body><script src="${src}"></script></body>`);
+			document.writeln(`<head></head><body></body>`);
 			do_fetch_load();
 			should_close_on_mut=true;
 		} else {

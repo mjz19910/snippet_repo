@@ -1,4 +1,4 @@
-import {InstructionType, StackVM, VMBoxedArray, VMBoxedCallableIndexed, VMBoxedGlobalThis, VMBoxedInstructionTypeArray, VMBoxedKeyedObject, VMBoxedStackVM, VMBoxedUndefined, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
+import {InstructionType, StackVM, VMBoxedArray, VMIndexedCallableValue, VMBoxedGlobalThis, VMBoxedInstructionTypeArray, VMIndexedObjectValue, VMBoxedStackVM, VMBoxedUndefined, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
@@ -1409,13 +1409,13 @@ class SimpleStackVM implements StackVM {
 		this.instructions = instructions;
 		this.stack = [];
 		this.instruction_pointer = 0;
-		this.return_value = new VMBoxedUndefined(void 0);
+		this.return_value = void 0;
 		this.running = false;
 	}
 	reset() {
 		this.stack.length = 0;
 		this.instruction_pointer = 0;
-		this.return_value = new VMBoxedUndefined(void 0);
+		this.return_value = void 0;
 		this.running = false;
 	}
 	push(value: VMValue) {
@@ -1451,7 +1451,7 @@ class SimpleStackVM implements StackVM {
 					if(!name) throw new Error("Invalid");
 					let obj = this.pop();
 					if(!obj) throw new Error("Invalid");
-					if(obj instanceof VMBoxedKeyedObject && typeof name === 'string') {
+					if(obj instanceof VMIndexedObjectValue && typeof name === 'string') {
 						this.push(obj.value[name]);
 					}
 					break;
@@ -1470,40 +1470,16 @@ class SimpleStackVM implements StackVM {
 					let target = this.pop();
 					if(!target) throw "Bad";
 					if(!name_to_call) throw "Bad";
-					if(target instanceof VMBoxedCallableIndexed && typeof name_to_call === 'string') {
-						let boxed_nulls: VMValue[] = [];
-						for(let i = 0;i < arg_arr.length;i++) {
-							let cur = arg_arr[i];
-							if(typeof cur == 'undefined') {
-								cur = new VMBoxedUndefined(cur);
-							}
-							boxed_nulls.push(cur);
-						}
-						let ret = target.value[name_to_call](...boxed_nulls);
+					if(target instanceof VMIndexedCallableValue && typeof name_to_call === 'string') {
+						let ret = target.value[name_to_call](...arg_arr);
 						this.push(ret);
 					}
 					break;
 				}
-				case 'return'/*Call*/: {
-					let ret = this.pop();
-					if(typeof ret == 'undefined') {
-						ret = new VMBoxedUndefined(ret);
-					}
-					this.return_value = ret;
-					break;
-				}
-				case 'halt'/*Running*/: {
-					this.running = false;
-					break;
-				}
-				case 'push_args'/*Special*/: {
-					this.push(new VMBoxedArray(run_arguments));
-					break;
-				}
-				case 'this'/*Special*/: {
-					this.push(new VMBoxedStackVM(this));
-					break;
-				}
+				case 'return'/*Call*/:this.return_value = this.pop();break;
+				case 'halt'/*Running*/:this.running = false;break;
+				case 'push_args'/*Special*/:this.push(new VMBoxedArray(run_arguments));break;
+				case 'this'/*Special*/: this.push(new VMBoxedStackVM(this));break;
 				case 'global'/*Special*/: {
 					if(window) this.push(new VMBoxedWindow(window));
 					else this.push(new VMBoxedGlobalThis(globalThis));

@@ -1,6 +1,6 @@
 import {IAutoBuy} from "./types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "./types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMBoxedKeyedObject, VMBoxedNewableFunction, VMValue, VMBoxedCallableIndexed, VMBoxedNull, VMBoxedUndefined, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow, IDomInstructions} from "./types/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMIndexedObjectValue, VMNewableFunction, VMValue, VMIndexedCallableValue, VMBoxedNull, VMBoxedUndefined, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow, IDomInstructions} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
 
@@ -1985,7 +1985,7 @@ class BaseVMCreate extends AbstractVM {
 			this.execute_instruction(instruction);
 			this.instruction_pointer++;
 		}
-		return new VMBoxedNull(null);
+		return null;
 	}
 }
 function trigger_debug_breakpoint() {
@@ -2011,12 +2011,12 @@ class BaseStackVM extends BaseVMCreate {
 	constructor(instructions: InstructionType[]) {
 		super(instructions);
 		this.stack = [];
-		this.return_value = new VMBoxedUndefined(void 0);
+		this.return_value = void 0;
 	}
 	reset() {
 		super.reset();
 		this.stack.length = 0;
-		this.return_value = new VMBoxedUndefined(void 0);
+		this.return_value = void 0;
 	}
 	push(value: VMValue) {
 		this.stack.push(value);
@@ -2026,9 +2026,6 @@ class BaseStackVM extends BaseVMCreate {
 			throw new Error("stack underflow");
 		}
 		let pop_value = this.stack.pop();
-		if(pop_value === void 0) {
-			return new VMBoxedUndefined(pop_value);
-		}
 		return pop_value;
 	}
 	pop_arg_count(operand_number_of_arguments: any) {
@@ -2058,7 +2055,7 @@ class BaseStackVM extends BaseVMCreate {
 				if(target_obj === void 0) break;
 				if(typeof target_obj != 'object') break;
 				if(typeof target_name != 'string') break;
-				if(target_obj instanceof VMBoxedKeyedObject) {
+				if(target_obj instanceof VMIndexedObjectValue) {
 					this.push(target_obj.value[target_name]);
 				}
 			} break;
@@ -2081,7 +2078,7 @@ class BaseStackVM extends BaseVMCreate {
 				if(construct_target instanceof Function) {
 					let obj = new (<any>construct_target)(...construct_arr);
 					this.push(obj);
-				} else if(construct_target instanceof VMBoxedNewableFunction) {
+				} else if(construct_target instanceof VMNewableFunction) {
 					let obj = new construct_target.value(...construct_arr);
 					this.push(obj);
 				} else {
@@ -2165,7 +2162,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 				let number_of_arguments = instruction[1];
 				let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 				if(typeof target_name == 'string') {
-					if(target_obj instanceof VMBoxedCallableIndexed) {
+					if(target_obj instanceof VMIndexedCallableValue) {
 						let ret = target_obj.value[target_name](...arg_arr);
 						this.push(ret);
 					}
