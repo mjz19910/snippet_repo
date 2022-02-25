@@ -15,8 +15,6 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-import {VMBoxedDomValue} from "./types/SimpleVMTypes.js";
-
 (function() {
 	'use strict';
 	const AUDIO_ELEMENT_VOLUME=0.58;
@@ -1576,6 +1574,7 @@ import {VMBoxedDomValue} from "./types/SimpleVMTypes.js";
 				default/*Debug*/:super.execute_instruction(instruction);break;
 			}
 		}
+		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
 		/**
 		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
 		 * @returns {box is VMBoxedDomValue}
@@ -2543,10 +2542,13 @@ import {VMBoxedDomValue} from "./types/SimpleVMTypes.js";
 		 * @param {Error} err
 		 */
 		next_timeout_async_err_log(msg, err){
-			/**@type {{stack:string|null}} */
-			let stack_trace={stack:null};
+			/**@type {{stack:string}} */
+			let stack_trace={stack:"Error\n    at <anonymous>"};
 			if(err.stack===void 0)Error.captureStackTrace(stack_trace);
-			let err_stack=err.stack.split("\n").slice(1);
+			let err_stack_tmp=null;
+			if(err.stack)err_stack_tmp=err.stack;
+			else err_stack_tmp=stack_trace.stack;
+			let err_stack=err_stack_tmp.split("\n").slice(1);
 			/**
 			 * @param {string} str
 			 */
@@ -3267,10 +3269,15 @@ import {VMBoxedDomValue} from "./types/SimpleVMTypes.js";
 				did_rep=true;
 				return "";
 			}
+			let json_rep_1=`"\x3Cscript>\\n  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\n  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\n  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');\\n\\n  ga('create', 'UA-63134422-1', 'auto');\\n  ga('send', 'pageview');\\n\\n\x3C/script>"`;
+			let rem_str_1=JSON.parse(json_rep_1);
 			while(did_rep){
 				did_rep=false;
 				//spell:disable-next-line
 				rb_html_tmp=rb_html_tmp.replace("//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", on_html_replace);
+				if(did_rep)continue;
+				debugger;
+				rb_html_tmp=rb_html_tmp.replace(rem_str_1, on_html_replace);
 			}
 			let script_num=[...rb_html_tmp.matchAll(/<\s*script.*?>/g)].length;
 			let loaded_scripts_count=0;
