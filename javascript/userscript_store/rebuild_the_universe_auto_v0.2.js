@@ -445,6 +445,7 @@
 		}
 	}
 	class InstructionConstructE {
+		/**@arg {InstructionConstruct} */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments=instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
