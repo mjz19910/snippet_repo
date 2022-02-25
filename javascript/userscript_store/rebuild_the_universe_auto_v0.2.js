@@ -34,6 +34,13 @@
 		constructor(value){
 			this.value=value;
 		}
+		/**@arg {'function'} to_match */
+		get_matching_typeof(to_match) {
+			if(typeof this.value === to_match){
+				return this;
+			}
+			return null;
+		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheet} VMBoxedCSSStyleSheet */
 	/**@implements {VMBoxedCSSStyleSheet} */
@@ -42,6 +49,10 @@
 		type="instance_box";
 		/**@type {"CSSStyleSheet"} */
 		instance_type="CSSStyleSheet";
+		/**@arg {'function'} to_match */
+		get_matching_typeof(to_match) {
+			return null;
+		}
 		/**@arg {CSSStyleSheet} value */
 		constructor(value){
 			this.value=value;
@@ -52,6 +63,10 @@
 	class VMBoxedPromiseR {
 		/**@type {"promise"} */
 		type="promise";
+		/**@arg {'function'} _to_match */
+		get_matching_typeof(_to_match) {
+			return null;
+		}
 		/**@arg {Promise<VMValue>} value */
 		constructor(value){
 			this.value=value;
@@ -68,11 +83,19 @@
 		constructor_type="NewableFunction";
 		/**@type {{new (v:any):any}} */
 		value;
+		/**@arg {'function'} to_match */
+		get_matching_typeof(to_match) {
+			if(typeof this.value === to_match){
+				return this;
+			}
+			return null;
+		}
 		/**@arg {{new (v:any):any}} value */
 		constructor(value){
 			this.value=value;
 		}
 	}
+	void VMBoxedNewableFunctionR;
 	/**@typedef {import("./types/SimpleVMTypes.js").VMCallableFunction} VMBoxedCallableFunction */
 	/**@implements {VMBoxedCallableFunction} */
 	class VMBoxedCallableFunctionR {
@@ -80,6 +103,13 @@
 		type="callable_box";
 		/**@type {{(...a:VMValue[]) : VMValue}} */
 		value;
+		/**@arg {'function'} to_match */
+		get_matching_typeof(to_match) {
+			if(typeof this.value === to_match){
+				return this;
+			}
+			return null;
+		}
 		/**@arg {{(...a:VMValue[]) : VMValue}} value */
 		constructor(value){
 			this.value=value;
@@ -304,13 +334,11 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
-			/**@type {['je', 'jmp', 'modify_operand', 'push_pc', 'halt']}*/
+			/**@type {('je'|'jmp'|'modify_operand'|'push_pc'|'halt')[]}*/
 			let handled_instructions=['je', 'jmp', 'modify_operand', 'push_pc', 'halt'];
-			for(let i=0;i<handled_instructions.length;i++){
-				let handle_cur=handled_instructions[i];
-				if(instruction[0] === handle_cur) {;
-					l_log_if(LOG_LEVEL_INFO, ...instruction, null);
-				}
+			let op_code=instruction[0];
+			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
+				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
 			}
 			switch(instruction[0]) {
 				case 'je':{
@@ -346,7 +374,7 @@
 						value=this.pop();
 					} else {
 						let pop_fn=Object.getOwnPropertyDescriptor(this, 'pop');
-						if(!pop_fn)throw new Error("Unexpected control flow (previous check ensured there was a property)");
+						if(!pop_fn)throw new Error("Previous check should cause this to be unreachable");
 						if(pop_fn.get){
 							throw new Error("own property pop was a getter");
 						} else {
@@ -446,13 +474,11 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction){
-			/**@type {['push', 'drop', 'dup', 'get', 'call', 'construct', 'return']}*/
+			/**@type {('push'|'drop'|'dup'|'get'|'call'|'construct'|'return')[]}*/
 			let handled_instructions=['push', 'drop', 'dup', 'get', 'call', 'construct', 'return'];
-			for(let i=0;i<handled_instructions.length;i++){
-				let handle_cur=handled_instructions[i];
-				if(instruction[0] === handle_cur) {;
-					l_log_if(LOG_LEVEL_INFO, ...instruction, null);
-				}
+			let op_code=instruction[0];
+			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
+				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
 			}
 			switch(instruction[0]) {
 				case 'push'/*Stack*/: {
@@ -477,18 +503,29 @@
 					this.push(target_obj.value[target_name]);
 				} break;
 				case 'call'/*Call*/: {
-					debugger;
 					let number_of_arguments = instruction[1];
 					if(typeof number_of_arguments!='number')throw new Error("Invalid");
 					if(number_of_arguments <= 1){
 						throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 					}
 					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
+					const a=target_fn;
 					debugger;
-					if(typeof target_fn!='object')throw new Error("Invalid");
-					if(!target_fn || target_fn.type != 'function_box')throw new Error("Invalid");
-					let ret = target_fn.value.apply(target_this, arg_arr);
-					this.push(ret);
+					if(typeof a!='object')throw new Error("Invalid");
+					if(a === null)throw new Error("Invalid");
+					let b=a.get_matching_typeof('function');
+					if(!b)throw new Error("Type mismatch");
+					if(b.type === 'callable_box'){
+						let ret = b.value.apply(target_this, arg_arr);
+						this.push(ret);
+					} else if (b.type == 'constructor_box'){
+						throw new Error("Unexpected constructor");
+					} else if (b.type === 'function_box'){
+						let ret=b.value.apply(target_this, arg_arr);
+						this.push(ret);
+					} else {
+						throw new Error("Unreachable (type of value is never)");
+					}
 				} break;
 				case 'construct'/*Construct*/:{
 					let number_of_arguments=instruction[1];
@@ -526,13 +563,17 @@
 				} break;
 				case 'return'/*Call*/:this.return_value=this.pop();break;
 				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
-				default:throw new Error("Unexpected instruction: "+instruction[0]);break;
+				default/*Base class*/:super.execute_instruction(instruction);break;
 			}
 		}
 	}
 	class VMBoxedStackVM {
 		/**@type {"StackVM"} */
 		type="StackVM";
+		/**@arg {'function'} _a */
+		get_matching_typeof(_a){
+			return null;
+		}
 		/**@arg {SimpleStackVM} value */
 		constructor(value) {
 			this.value = value;
@@ -541,6 +582,10 @@
 	class VMBoxedWindow {
 		/**@type {"window_box"} */
 		type="window_box";
+		/**@arg {'function'} _a */
+		get_matching_typeof(_a){
+			return null;
+		}
 		/**@arg {Window} value */
 		constructor(value) {
 			this.value = value;
@@ -560,14 +605,11 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
-			/**@type {['this', 'global', 'call']}*/
+			/**@type {('this'|'global'|'call')[]}*/
 			let handled_instructions=['this', 'global', 'call'];
-			// @TODO: Add base class handling back
-			for(let i=0;i<handled_instructions.length;i++){
-				let handle_cur=handled_instructions[i];
-				if(instruction[0] === handle_cur) {;
-					l_log_if(LOG_LEVEL_INFO, ...instruction, null);
-				}
+			let op_code=instruction[0];
+			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
+				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
 			}
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
@@ -592,7 +634,7 @@
 					let ret = target_obj.value[target_name](...arg_arr);
 					this.push(ret);
 				} break;
-				default:throw new Error("Unexpected instruction: "+instruction[0]);break;
+				default/*Base class*/:super.execute_instruction(instruction);break;
 			}
 		}
 		/**
@@ -747,6 +789,10 @@
 	class VMBoxedObject {
 		/**@type {"object"} */
 		type="object";
+		/**@arg {'function'} _a */
+		get_matching_typeof(_a){
+			return null;
+		}
 		/**@arg {object} value */
 		constructor(value){
 			this.value=value;
@@ -1695,6 +1741,10 @@
 		type;
 		/**@type {"get"|"create"} */
 		from;
+		/**@arg {'function'} _a */
+		get_matching_typeof(_a){
+			return null;
+		}
 		/**
 		 * @param {"get"|"create"|string} from
 		 * @param {Node} value
@@ -1713,6 +1763,12 @@
 	function does_array_include(arr, key){
 		return arr.includes(key);
 	}
+	/**@type {<T, U extends T>(v:T, q:U)=>v is U} */
+	function assume_equal(v, q) {
+		return true;
+	}
+	/**@typedef {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} IDomInstructionSet */
+	void does_array_include;
 	class DomBuilderVM extends BaseStackVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
@@ -1727,15 +1783,13 @@
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
-		/**@arg {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} instruction */
+		/**@arg {IDomInstructionSet} instruction */
 		execute_instruction(instruction) {
-			/**@type {['exec', 'peek', 'dom_append']}*/
+			/**@type {('exec'|'peek'|'dom_append')[]}*/
 			let handled_instructions=['exec', 'peek', 'dom_append'];
-			for(let i=0;i<handled_instructions.length;i++){
-				let handle_cur=handled_instructions[i];
-				if(instruction[0] === handle_cur) {;
-					l_log_if(LOG_LEVEL_INFO, ...instruction, null);
-				}
+			let op_code=instruction[0];
+			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
+				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
 			}
 			switch(instruction[0]) {
 				case 'exec':{

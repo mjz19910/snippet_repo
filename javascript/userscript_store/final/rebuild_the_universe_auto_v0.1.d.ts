@@ -93,7 +93,7 @@ declare namespace StringTuringTools {
 	type T1 = Reverse<RemoveFirst<Data>>;
 }
 declare namespace ArrayTuringTools {
-	type FirstStr<T extends string> = T extends `${infer U}${string}` ? U : ''
+	type FirstStr<T extends string> = T extends `${infer U}${string}` ? U : '';
 	type RemoveFirstStr<T extends string> = T extends `${string}${infer U}` ? U : ''
 	type First<T extends any[]> = T extends [infer U, ...any[]] ? U : []
 	type RemoveFirst<T extends any[]> = T extends [any, ...infer U] ? U : []
@@ -104,7 +104,8 @@ declare namespace ArrayTuringTools {
 
 	type Reverse<U extends any[] | string> = U extends string ? ReverseStr<U> : U extends any[] ? ReverseArr<U> : never;
 	type Data = [1, 2, 3, 4];
-	type RevDataStr = Reverse<"Data">;
+	type RevDataStr1 = ReverseStr<"Data">;
+	type RevDataStr2 = Reverse<"Data">;
 	type RevDataArr = Reverse<Data>;
 }
 // STRING MANIPULATION TOOLS

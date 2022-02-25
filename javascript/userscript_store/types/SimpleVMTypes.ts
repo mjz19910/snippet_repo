@@ -30,68 +30,137 @@ VMCallableFunction, VMIndexedCallableValue, VMBoxedIndexedObjectValue
 */
 export class VMBoxedFunction extends VMBoxed<Function> {
 	type: "function_box" = "function_box";
+	get_matching_typeof(to_match:'function') {
+		if(typeof this.value === to_match){
+			return this;
+		}
+		return null;
+	}
 }
 export class VMNewableFunction extends VMBoxed<VMNewableValue> {
 	type: "constructor_box" = "constructor_box";
 	constructor_type: "NewableFunction" = "NewableFunction";
 	from: "typescript" = "typescript";
+	get_matching_typeof(to_match:'function') {
+		if(typeof this.value === to_match){
+			return this;
+		}
+		return null;
+	}
 }
 export class VMBoxedCSSStyleSheetConstructor extends VMBoxed<typeof CSSStyleSheet> {
 	type: "constructor_box" = "constructor_box";
 	from: "javascript" = "javascript";
 	constructor_type: "CSSStyleSheet" = "CSSStyleSheet";
+	get_matching_typeof(to_match:'function') {
+		if(typeof this.value === to_match){
+			return this;
+		}
+		return null;
+	}
 }
 export class VMCallableFunction extends VMBoxed<VMCallableValue> {
 	type: "callable_box" = "callable_box";
+	get_matching_typeof(to_match:'function') {
+		if(typeof this.value === to_match){
+			return this;
+		}
+		return null;
+	}
 }
 export class VMIndexedCallableValue extends VMBoxed<VMIndexed<VMCallableValue>> {
 	type: "callable_index" = "callable_index";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 };
 export class VMIndexedObjectValue extends VMBoxed<VMIndexed<VMValue>>{
 	type: "object_index" = "object_index";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedArray extends VMBoxed<VMValue[]>{
 	type: "value_array" = "value_array";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedStackVM extends VMBoxed<StackVM>{
 	type: "StackVM" = "StackVM";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedWindow extends VMBoxed<Window>{
 	type: "window_box" = "window_box";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedGlobalThis extends VMBoxed<typeof globalThis> {
 	type: "global_object_box" = "global_object_box";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedNull extends VMBoxed<null> {
 	type: "primitive" = "primitive";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedUndefined extends VMBoxed<undefined> {
 	type: "primitive" = "primitive";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedObject extends VMBoxed<object> {
 	type: "object" = "object";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedInstructionTypeArray extends VMBoxed<InstructionType[]>{
 	type: "instruction_type_vec" = "instruction_type_vec";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedDomValue extends VMBoxed<Node> {
 	type: "dom_value" = "dom_value";
 	from: "create" | "get" = "create";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedCSSStyleSheet extends VMBoxed<CSSStyleSheet> {
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedPromise extends VMBoxed<Promise<VMValue>> {
 	type: "promise" = "promise";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedMediaList extends VMBoxed<MediaList>{
 	type: "instance_box" = "instance_box";
 	instance_type: "MediaList" = "MediaList";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 }
 export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
 	type: "shape_box" = "shape_box";
 	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
+	get_matching_typeof(_to_match:'function') {
+		return null;
+	}
 	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | VMBoxedMediaList | undefined) {
 		if(key === 'baseURL') {
 			if(typeof value == 'string') {
