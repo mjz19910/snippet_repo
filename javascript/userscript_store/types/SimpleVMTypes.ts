@@ -28,6 +28,22 @@ export interface StackVM {
 VMBoxedFunction, VMNewableFunction, VMBoxedCSSStyleSheetConstructor
 VMCallableFunction, VMIndexedCallableValue, VMBoxedIndexedObjectValue
 */
+type VMArrayTypes = VMBoxedArray | VMBoxedInstructionTypeArray;
+export class VMBoxedArray extends VMBoxed<VMValue[]>{
+	type: "array_box" = "array_box";
+	item_type: "value" = "value";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+export class VMBoxedInstructionTypeArray extends VMBoxed<InstructionType[]>{
+	type: "array_box" = "array_box";
+	item_type: "instruction" = "instruction";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+type VMFunctionTypes = VMBoxedFunction | VMNewableFunction | VMCallableFunction;
 export class VMBoxedFunction extends VMBoxed<Function> {
 	type: "function_box" = "function_box";
 	return_type: null = null;
@@ -50,18 +66,6 @@ export class VMNewableFunction extends VMBoxed<VMNewableValue> {
 		return null;
 	}
 }
-export class VMBoxedCSSStyleSheetConstructor extends VMBoxed<typeof CSSStyleSheet> {
-	type: "constructor_box" = "constructor_box";
-	from: "javascript" = "javascript";
-	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
-	constructor_type: "CSSStyleSheet" = "CSSStyleSheet";
-	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value === to_match) {
-			return this;
-		}
-		return null;
-	}
-}
 export class VMCallableFunction extends VMBoxed<VMCallableValue> {
 	type: "callable_box" = "callable_box";
 	parameters_type_array: null = null;
@@ -74,6 +78,15 @@ export class VMCallableFunction extends VMBoxed<VMCallableValue> {
 		return null;
 	}
 }
+type VMGlobalTypes = VMBoxedGlobalThis;
+export class VMBoxedGlobalThis extends VMBoxed<typeof globalThis> {
+	type: "value_box" = "value_box";
+	inner_value: "globalThis" = "globalThis";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+type VMObjectTypes = VMIndexedCallableValue | VMIndexedObjectValue | VMBoxedObject;
 export class VMIndexedCallableValue extends VMBoxed<VMIndexed<VMCallableValue>> {
 	type: "callable_index" = "callable_index";
 	index_type: "callable_box" = "callable_box";
@@ -88,27 +101,6 @@ export class VMIndexedObjectValue extends VMBoxed<VMIndexed<VMValue>>{
 		return null;
 	}
 }
-export class VMBoxedStackVM extends VMBoxed<StackVM>{
-	type: "custom_box" = "custom_box";
-	box_type: "StackVM" = "StackVM";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
-export class VMBoxedWindow extends VMBoxed<Window>{
-	type: "object_box" = "object_box";
-	inner_type: "Window" = "Window";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
-export class VMBoxedGlobalThis extends VMBoxed<typeof globalThis> {
-	type: "value_box" = "value_box";
-	inner_value: "globalThis" = "globalThis";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
 export class VMBoxedObject extends VMBoxed<object> {
 	type: "object_box" = "object_box";
 	inner_type: null = null;
@@ -116,20 +108,7 @@ export class VMBoxedObject extends VMBoxed<object> {
 		return null;
 	}
 }
-export class VMBoxedArray extends VMBoxed<VMValue[]>{
-	type: "array_box" = "array_box";
-	item_type: "value" = "value";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
-export class VMBoxedInstructionTypeArray extends VMBoxed<InstructionType[]>{
-	type: "array_box" = "array_box";
-	item_type: "instruction" = "instruction";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
+type VMInstanceTypes = VMBoxedDomValue | VMBoxedCSSStyleSheet;
 export class VMBoxedDomValue extends VMBoxed<Node> {
 	type: "dom_value" = "dom_value";
 	from: "create" | "get" = "create";
@@ -140,6 +119,73 @@ export class VMBoxedDomValue extends VMBoxed<Node> {
 export class VMBoxedCSSStyleSheet extends VMBoxed<CSSStyleSheet> {
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+type VMConstructorTypes = VMBoxedCSSStyleSheetConstructor;
+export class VMBoxedCSSStyleSheetConstructor extends VMBoxed<typeof CSSStyleSheet> {
+	type: "constructor_box" = "constructor_box";
+	from: "javascript" = "javascript";
+	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
+	constructor_type: "CSSStyleSheet" = "CSSStyleSheet";
+	get_matching_typeof(to_match: 'function') {
+		if(typeof this.value === to_match) {
+			return this;
+		}
+		return null;
+	}
+}
+type VMArgumentTypes = VMBoxedCSSStyleSheetInit;
+export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
+	type: "shape_box" = "shape_box";
+	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | VMBoxedMediaList | undefined) {
+		if(key === 'baseURL') {
+			if(typeof value == 'string') {
+				this.value[key] = value;
+			} else if(typeof value === 'undefined') {
+				this.value[key] = value;
+			} else {
+				throw new Error("Invalid value for key " + key);
+			}
+		} else if(key === 'disabled') {
+			if(typeof value === 'boolean') {
+				this.value[key] = value;
+			} else if(typeof value === 'undefined') {
+				this.value[key] = value;
+			} else {
+				throw new Error("Invalid value for key " + key);
+			}
+		} else if(key === 'media') {
+			if(typeof value === 'object' && value.instance_type === 'MediaList') {
+				this.value[key] = value.value;
+			} else if(typeof value === 'string') {
+				this.value[key] = value;
+			} else if(typeof value === 'undefined') {
+				this.value[key] = value;
+			} else {
+				throw new Error("Invalid value for key " + key);
+			}
+		} else {
+			throw new Error("Type shenanigans afoot (You passed a value that should be impossible at runtime)");
+		}
+	}
+}
+
+export class VMBoxedStackVM extends VMBoxed<StackVM>{
+	type: "custom_box" = "custom_box";
+	box_type: "StackVM" = "StackVM";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+export class VMBoxedWindow extends VMBoxed<Window>{
+	type: "object_box" = "object_box";
+	inner_type: "Window" = "Window";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
@@ -183,62 +229,19 @@ export class VMBoxedMediaList extends VMBoxed<MediaList>{
 		return null;
 	}
 }
-export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
-	type: "shape_box" = "shape_box";
-	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | VMBoxedMediaList | undefined) {
-		if(key === 'baseURL') {
-			if(typeof value == 'string') {
-				this.value[key] = value;
-			} else if(typeof value === 'undefined') {
-				this.value[key] = value;
-			} else {
-				throw new Error("Invalid value for key " + key);
-			}
-		} else if(key === 'disabled') {
-			if(typeof value === 'boolean') {
-				this.value[key] = value;
-			} else if(typeof value === 'undefined') {
-				this.value[key] = value;
-			} else {
-				throw new Error("Invalid value for key " + key);
-			}
-		} else if(key === 'media') {
-			if(typeof value === 'object' && value.instance_type === 'MediaList') {
-				this.value[key] = value.value;
-			} else if(typeof value === 'string') {
-				this.value[key] = value;
-			} else if(typeof value === 'undefined') {
-				this.value[key] = value;
-			} else {
-				throw new Error("Invalid value for key " + key);
-			}
-		} else {
-			throw new Error("Type shenanigans afoot (You passed a value that should be impossible at runtime)");
-		}
-	}
-}
 
 // --- VM Value (types) ---
-
-type VMFunctionTypes = VMBoxedFunction | VMNewableFunction | VMCallableFunction;
-type VMClassTypes = VMFunctionTypes;
-type VMBoxedValueTypes = VMBoxedGlobalThis | VMBoxedDomValue;
-type VMObjectTypes = VMIndexedCallableValue | VMIndexedObjectValue | VMBoxedObject;
-type VMArrayTypes = VMBoxedArray | VMBoxedInstructionTypeArray;
-type VMInstanceTypes = VMBoxedCSSStyleSheet;
+type VMReturnTypes = VMReturnsBoxedVoidPromise | VMReturnsBoxedPromise;
 export type VMValue = VMBoxedStackVM | VMBoxedWindow |
 	VMArrayTypes |
 	VMObjectTypes |
-	VMClassTypes |
-	VMBoxedValueTypes |
+	VMFunctionTypes |
+	VMGlobalTypes |
 	VMInstanceTypes |
 	VMBoxedPromise |
-	VMBoxedCSSStyleSheetConstructor |
-	VMBoxedCSSStyleSheetInit |
+	VMConstructorTypes |
+	VMArgumentTypes |
+	VMReturnTypes |
 	bigint | boolean | number | string | symbol | null | undefined;
 
 // --- Instruction ---

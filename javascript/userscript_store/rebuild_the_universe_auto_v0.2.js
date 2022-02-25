@@ -516,7 +516,6 @@
 					}
 					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 					const a=target_fn;
-					debugger;
 					if(typeof a!='object')throw new Error("Invalid");
 					if(a === null)throw new Error("Invalid");
 					let b=a.get_matching_typeof('function');
@@ -527,6 +526,7 @@
 					} else if (b.type == 'constructor_box'){
 						throw new Error("Unexpected constructor");
 					} else if (b.type === 'function_box'){
+						debugger;
 						let ret=b.value.apply(target_this, arg_arr);
 						this.push(ret);
 					} else {
@@ -2114,7 +2114,13 @@
 			async function css_promise_runner(/** @type {VMValue[]} */ ...styles_promise_arr) {
 				/**@type {Promise<CSSStyleSheet>[]} */
 				let css_arr=[];
-				void css_arr;
+				for(let i=0;i<styles_promise_arr.length;i++){
+					let cur=styles_promise_arr[i];
+					if(typeof cur != 'object')continue;
+					if(cur === null)continue;
+					if(cur.type != 'promise')continue;
+					css_arr.push(cur.value);
+				}
 				/*@Hack: wait for any promise to settle*/
 				const e = await Promise.allSettled(styles_promise_arr);
 				/**@type {PromiseFulfilledResult<Awaited<(typeof styles_promise_arr)[0]>>[]} */
@@ -2129,6 +2135,7 @@
 					}
 				}
 				let res = fulfilled_res.map(e_1 => e_1.value);
+				console.log('promise res', res);
 				this.adopt_styles(...res);
 				if(rejected_res.length > 0) {
 					console.log('promise failure...', ...rejected_res);
@@ -2142,8 +2149,8 @@
 				type="promise";
 				/**@type {"void_type"} */
 				promise_return_type_special="void_type";
-				/**@arg {"function"} s */
-				get_matching_typeof(s){
+				/**@arg {"function"} _s */
+				get_matching_typeof(_s){
 					return null;
 				}
 				/**@arg {VMBoxedVoidPromise['value']} value */
@@ -2156,7 +2163,9 @@
 				[
 					0, 'push', null,
 					new VMReturnsBoxedVoidPromiseR(function(/** @type {VMValue[]} */ ...a) {
+						console.log('void input', a);
 						let ret=css_promise_runner.call(bound_this, ...a);
+						console.log('void out', ret);
 						return new VMBoxedVoidPromiseR(ret);
 					})
 				],
