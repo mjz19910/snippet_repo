@@ -1996,8 +1996,9 @@
 						}
 						let res = fulfilled_res.map(e_1 => e_1.value);
 						this.adopt_styles(...res);
-						if(rejected_res.length > 0)
+						if(rejected_res.length > 0) {
 							console.log('promise failure...', ...rejected_res);
+						}
 					}
 				],
 				[
@@ -2098,7 +2099,7 @@
 						const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
 						stack.push(
 							[cur_item[0], 'push', null, new VMBoxedCallableFunctionR(this.use_boxed_style_sheet.bind(this, callback)), ...construct_arg_arr, class_box],
-							[cur_item[0], "construct", 1 + construct_arg_arr.length],
+							[cur_item[0], 'construct', 1 + construct_arg_arr.length],
 							[depth, 'push', ...arg_arr],
 							[depth, 'call', 3 + arg_arr.length]
 						);
@@ -3727,7 +3728,7 @@
 				})
 			});
 			let orig_url=location.href;
-			let loc_url="https://rebuildtheuniverse.com";
+			let loc_url="//rebuildtheuniverse.com";
 			let prev_state=history.state;
 			let next_gen=0;
 			if(prev_state && prev_state.gen){
@@ -3736,7 +3737,7 @@
 			let hist_state={
 				gen:next_gen
 			};
-			let nav_url="https://rebuildtheuniverse.com";
+			let nav_url="//rebuildtheuniverse.com";
 			history.pushState(hist_state, '', nav_url);
 			const rb_html=await (await fetch(loc_url)).text();
 			{
