@@ -6,9 +6,13 @@
 // @author			You
 // @match			http://rebuildtheuniverse.com/mjz_version/*
 // @match			http://rebuildtheuniverse.com/mjz_version/
+// @match			http://rebuildtheuniverse.com/?real=1
+// @match			http://rebuildtheuniverse.com/
+// @match			http://test.rebuildtheuniverse.com
 // @match			https://rebuildtheuniverse.com/mjz_version/*
 // @match			https://rebuildtheuniverse.com/mjz_version/
 // @match			https://rebuildtheuniverse.com/?real=1
+// @match			https://rebuildtheuniverse.com/
 // @match			https://test.rebuildtheuniverse.com
 // @run-at			document-start
 // @grant			none
@@ -386,7 +390,7 @@
 						if(pop_fn.get){
 							throw new Error("own property pop was a getter");
 						} else {
-							console.log(`TODO: add instanceof check`);
+							console.info(`TODO: add instanceof check`);
 							value=pop_fn.value.call(this);
 						}
 					}
@@ -402,7 +406,7 @@
 					} else if (this instanceof BaseStackVM) {
 						this.push(this.instruction_pointer);
 					} else {
-						console.log('TODO: add instanceof check to push_pc');
+						console.info('TODO: add instanceof check to push_pc');
 						/**@type {any} */
 						let this_as_any=this;
 						/**@type {this & {push:BaseStackVM['push'];}} */
@@ -429,6 +433,7 @@
 	const LOG_LEVEL_NOTICE=4;
 	const LOG_LEVEL_INFO=5;
 	const LOG_LEVEL_DEBUG=6;
+	const LOG_LEVEL_TRACE=7;
 	const local_logging_level=3;
 	/**
 	 * @param {number} level
@@ -436,7 +441,7 @@
 	 */
 	function l_log_if(level, ...args){
 		if(level <= local_logging_level) {
-			console.log(...args);
+			console . log (...args);
 		}
 	}
 	class BaseStackVM extends BaseVMCreate {
@@ -533,7 +538,7 @@
 							this.push(ret);
 						} else if(b.return_type === null) {
 							let ret=b.value.apply(target_this, arg_arr);
-							console.log('fixme type of return is any', ret);
+							console.info('fixme type of return is any', ret);
 							this.push(ret);
 						}
 					} else {
@@ -696,7 +701,7 @@
 				case 'o':
 					return format_list.shift();
 				default:
-					console.log("%s", 'unsupported format spec %' + format_type);
+					console.assert(false, "Assertion failed: %s", 'unsupported format spec %' + format_type);
 			}
 		}
 		/**
@@ -1248,13 +1253,27 @@
 		/**@arg {{wait():Promise<any>;destroy():void}} target */
 		async start_async(target){
 			if(!target)throw new Error("unable to start_async without anything to wait for");
-			this.target=target;
+			l_log_if(LOG_LEVEL_INFO, 'start_async');
+			this.m_target=target;
 			this.set();
-			let promise=this.target.wait();
+			let promise=this.m_target.wait();
+			l_log_if(LOG_LEVEL_INFO, 'p', promise);
 			await promise;
 		}
+		set(){
+			l_log_if(LOG_LEVEL_INFO, 'set', this);
+			super.set();
+		}
+		run(){
+			l_log_if(LOG_LEVEL_INFO, 'run', this);
+			return super.run();
+		}
+		fire(){
+			l_log_if(LOG_LEVEL_INFO, 'fire', this);
+			return super.fire();
+		}
 		destroy(){
-			if(this.target)this.target.destroy();
+			if(this.m_target)this.m_target.destroy();
 			super.destroy();
 		}
 	}
@@ -1319,7 +1338,7 @@
 			let item=this.children.shift();
 			if(!item)return;
 			do{
-				console.log('timer destroy', item);
+				console.info('timer destroy', item);
 				item.destroy();
 				item=this.children.shift();
 			} while(item);
@@ -1534,7 +1553,7 @@
 				this.locked_cycle_count--;
 				if(this.locked_cycle_count % 100 == 0){
 					// do_update=true;
-					// console.log('ratio cycle lcc=%o', this.locked_cycle_count);
+					l_log_if(LOG_LEVEL_INFO, 'ratio cycle lcc=%o', this.locked_cycle_count);
 				}
 			} else {
 				do_update=true;
@@ -1634,14 +1653,13 @@
 			return [real_val, log_val, log_mul_count];
 		}
 		cycle_log(){
-			// console.log('ratio mode mode=%o total_mul=%o cycle_change=%o', this.ratio_mode, this.total_mul, this.total_cycle_count_change);
+			l_log_if(LOG_LEVEL_INFO, 'ratio mode mode=%o total_mul=%o cycle_change=%o', this.ratio_mode, this.total_mul, this.total_cycle_count_change);
 			const near_avg='30min';
 			let [real, num, exponent]=this.get_near_val(near_avg);
 			a:if(exponent < 2 && exponent > -2) {
-				break a;
-				// console.log('ratio cycle avg:%s=%o lcc=%o', near_avg, (~~(real*10000))/10000, this.locked_cycle_count);
+				l_log_if(LOG_LEVEL_INFO, 'ratio cycle avg:%s=%o lcc=%o', near_avg, (~~(real*10000))/10000, this.locked_cycle_count);
 			} else {
-				console.log('ratio cycle avg:%s=(%o,%o) lcc=%o', near_avg, (~~(num*1000))/1000, exponent, this.locked_cycle_count);
+				l_log_if(LOG_LEVEL_ERROR, 'ratio cycle avg:%s=(%o,%o) lcc=%o', near_avg, (~~(num*1000))/1000, exponent, this.locked_cycle_count);
 			}
 		}
 		update_not_ready(){
@@ -1695,7 +1713,7 @@
 				let prev_data_len=parseInt(hist_data.split(":", 1)[0]);
 				data_arr=hist_data.slice((prev_data_len+"").length).split("|");
 				if(data_arr.length != prev_data_len){
-					console.log('invalid data_arr len');
+					console.assert(false, 'invalid data_arr len');
 				}
 				data_arr.push(json_hist);
 			} else if(prev_hist.startsWith("JSON_HIST:")){
@@ -1999,6 +2017,116 @@
 	/**@typedef {DomExecDescriptionI9} */
 	/**@typedef {DomExecDescriptionG1|DomExecDescriptionG2|DomExecDescriptionI9} DomExecDescription */
 	const DO_UPGRADES_RANDOM_RATE=0.008;// 0.005
+	class AsyncAutoBuy {
+		/**
+		 * @param {boolean} no_wait
+		 */
+		async do_start_main_async(no_wait){
+			if(!no_wait)await this.next_timeout_async(this.timeout_ms, 'A');
+			await this.main_async();
+		}
+		async maybe_async_reset(){
+			let loss_rate=this.unit_promote_start();
+			if(this.maybe_run_reset())return [true, loss_rate];
+			return [false, loss_rate];
+		}
+		async bonus_async() {
+			window.bonusAll();
+			await this.fast_unit_async();
+		}
+		async initial_special_async(){
+			await this.next_timeout_async(this.timeout_ms, '>');
+			let in_special=true;
+			while(in_special){
+				if(this.do_special()){
+					await this.next_timeout_async(this.timeout_ms, '^');
+					continue;
+				} else {
+					in_special=false;
+				}
+			}
+			await this.next_timeout_async(this.timeout_ms, '#');
+			await this.bonus_async();
+		}
+		async rare_begin_async(){
+			this.do_rare_begin_change();
+			await this.next_timeout_async(this.timeout_ms, '<');
+			await this.initial_special_async();
+		}
+		async normal_decrease_async(){
+			this.do_normal_decrease();
+			await this.next_timeout_async(this.timeout_ms, '-');
+		}
+		async large_decrease_async(){
+			this.do_large_decrease();
+			await this.next_timeout_async(this.timeout_ms, '!');
+		}
+		async main_async(){
+			if(this.main_running){
+				throw new Error("Already running");
+			}
+			this.main_running=true;
+			try{
+				run_loop:while(this.main_running) {
+					for(this.iter_count=0;;) {
+						let unit_upgradeable_trigger=30;
+						if(this.timeout_ms && this.timeout_ms > 3*60*1000){
+							unit_upgradeable_trigger=8;
+						}
+						if(this.unit_upgradable_count > unit_upgradeable_trigger){
+							this.unit_upgradable_count=0;
+							await this.rare_begin_async();
+						}
+						if(this.iter_count<6) await this.normal_decrease_async();
+						else await this.large_decrease_async();
+						let [quit, loss_rate]=await this.maybe_async_reset();
+						if(quit)break run_loop;
+						if(loss_rate > 0.08)continue;
+						if(this.pre_total == window.totalAtome)break;
+					}
+					await this.faster_timeout_async();
+				}
+			} finally {
+				this.main_running=false;
+			}
+			if(this.main_running) {
+				console.log('no finally');
+				this.main_running=false;
+			}
+		}
+		async fast_unit_async() {
+			this.fast_unit_running=true;
+			let count=0;
+			while(this.fast_unit_running) {
+				this.unit_promote_start();
+				if(this.pre_total == window.totalAtome) break;
+				this.do_fast_unit_step_change();
+				await this.next_timeout_async(this.timeout_ms, ':');
+				count++;
+				if(count > 12)this.fast_unit_running=false;
+			}
+			this.do_fast_unit_change();
+			await this.next_timeout_async(this.timeout_ms, '$');
+		}
+		async faster_timeout_async(){
+			this.do_timeout_inc([1.006, 1.005], 4);
+			await this.next_timeout_async(this.timeout_ms, '+');
+		}
+		/**
+		 * @param {number | undefined} timeout
+		 * @param {string} char
+		 */
+		async next_timeout_async(timeout, char, silent=false){
+			let node=new AsyncTimeoutNode(timeout);
+			this.root_node.append_child(node);
+			if(!silent){
+				this.timeout_ms=timeout;
+				this.update_timeout_element();
+			}
+			this.state_history_append(char, silent);
+			await node.start_async(new AsyncTimeoutTarget);
+		}
+	}
 	class AutoBuy {
 		async_compress(){
 			this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
@@ -2006,6 +2134,7 @@
 		}
 		constructor(){
 			this.root_node=new AsyncNodeRoot;
+			this.with_async=new AsyncAutoBuy;
 			this.timeout_ms=0;this.iter_count=0;this.epoch_len=0;
 			this.background_audio=null;this.state_history_arr=null;
 			this.skip_save=false;this.has_real_time=false;
@@ -2053,8 +2182,7 @@
 				throw new Error("querySelector('#background_audio') is not an instance of HTMLAudioElement");
 			}
 			this.async_pre_init().then(()=>{
-				void 0;
-				// console.log('pre_init done')
+				l_log_if(LOG_LEVEL_INFO, 'pre_init done')
 			});this.dom_pre_init();
 		}
 		async async_pre_init(){
@@ -2063,17 +2191,16 @@
 			x:try{
 				return await this.background_audio.play();
 			}catch(e){
-				break x;
-				// console.log("failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
+				l_log_if(LOG_LEVEL_INFO, "failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
 			let raw_instructions=`this;push,target_obj;get;push,background_audio;get;push,play;call,int(2);push,then;push,%o;push,%o;call,int(4);drop;global;push,removeEventListener;push,click;this;call,int(4);drop`;
 			let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(raw_instructions, [
 				function(){
-					// console.log('play success')
+					l_log_if(LOG_LEVEL_INFO, 'play success')
 				},
 				/**@arg {any} err */
 				function(err){
-					console.log(err);
+					l_log_if(LOG_LEVEL_ERROR, err);
 				}
 			]);
 			let handler=new EventHandlerVMDispatch(instructions, this);
@@ -2123,7 +2250,7 @@
 				let css_arr=[];
 				for(let i=0;i<styles_promise_arr.length;i++){
 					let cur=styles_promise_arr[i];
-					console.log(cur);
+					l_log_if(LOG_LEVEL_INFO, 'css run', cur);
 					if(typeof cur != 'object')continue;
 					if(cur === null)continue;
 					if(cur.type != 'promise')continue;
@@ -2150,17 +2277,17 @@
 				let css_arr2=[];
 				for(let i=0;i<res.length;i++){
 					let cur=res[i];
-					console.log(cur);
+					l_log_if(LOG_LEVEL_INFO, 'css ss', cur);
 					if(typeof cur != 'object')continue;
 					if(cur === null)continue;
 					if(cur.type!='instance_box')continue;
 					if(cur.instance_type != "CSSStyleSheet")continue;
 					css_arr2.push(cur.value);
 				}
-				console.log('promise res2', css_arr2);
+				l_log_if(LOG_LEVEL_INFO, 'promise res2', css_arr2);
 				this.adopt_styles(...css_arr2);
 				if(rejected_res.length > 0) {
-					console.log('promise failure...', ...rejected_res);
+					l_log_if(LOG_LEVEL_ERROR, 'promise failure...', ...rejected_res);
 				}
 			}
 			let bound_this=this;
@@ -2187,9 +2314,9 @@
 				[
 					0, 'push', null,
 					new VMReturnsBoxedVoidPromiseR(function(/** @type {VMValue[]} */ ...a) {
-						console.log('void input', a);
+						l_log_if(LOG_LEVEL_INFO, 'void input', a);
 						let ret=css_promise_runner.call(bound_this, ...a);
-						console.log('void out', ret);
+						l_log_if(LOG_LEVEL_INFO, 'void out', ret);
 						return new VMBoxedVoidPromiseR(ret);
 					})
 				],
@@ -2239,7 +2366,7 @@
 				let v=a[i];
 				switch(typeof v){
 					default:
-						console.log('handle for', typeof v);
+						console.assert(false, 'Assertion need to handle `case "%s":`', typeof v);
 						break;
 					case 'object':
 						if(v === null)break;
@@ -2305,8 +2432,10 @@
 							if(typeof dom_id === 'string'){
 								cur_element.id=dom_id;
 							}
+						} else{
+							l_log_if(LOG_LEVEL_ERROR, 'bad typeof == %s for content in build_dom; content=%o', typeof content, content);
+							l_log_if(LOG_LEVEL_TRACE, "Info: case 'create' args are", element_type, name);
 						}
-						else{console.log('bad typeof == %s for content in build_dom; content=%o', typeof content, content);console.info("Info: case 'create' args are", element_type, name)}
 						map.set(name, cur_element);
 						stack.push([depth, "push", new VMBoxedDomValueR('create', cur_element)]);
 					} break;
@@ -2322,7 +2451,7 @@
 						let any_cur=cur_item;
 						if(!(any_cur instanceof Array))throw 1;
 						const [, action] = any_cur;
-						console.log('might need to handle', action);
+						l_log_if(LOG_LEVEL_ERROR, 'might need to handle', action);
 						debugger
 					} break;
 				}
@@ -2393,7 +2522,6 @@
 		/**
 		 * @param {string | any[]} tree
 		 */
-		// @ts-ignore
 		run_dom_desc(tree, stack=[], cur_depth=0, items=[], depths=[]){
 			for(let i=0;i<tree.length;i++){
 				let cur=tree[i];
@@ -2439,9 +2567,11 @@
 			let history=this.dom_map.get('history');
 			if(history && typeof history=='object')history.addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
 			let ratio=this.dom_map.get('ratio');
-			if(ratio && typeof ratio=='object')ratio.addEventListener('click', function(){
-				t.state.reset();
-			});
+			if(ratio && typeof ratio=='object'){
+				ratio.addEventListener('click', function(){
+					t.state.reset();
+				});
+			}
 			let state_log=this.dom_map.get('state_log');
 			if(state_log instanceof HTMLElement)state_log.style.fontSize = font_size_px+"px";
 			window.addEventListener('unload', function(){
@@ -2638,6 +2768,8 @@
 			this.update_ratio_change_element();
 			this.next_update();
 		}
+		update_async(){
+		}
 		init(){
 			this.next_timeout(this.init_impl, 200, 'init', true);
 		}
@@ -2791,20 +2923,13 @@
 				if(e === 0)return e;
 				return this.round(e*diff_want_mul);
 			});
-			console.log('calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
-			console.log('calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
+			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
+			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
 			return this.round(val);
 		}
 		is_epoch_over(){
 			let epoch_diff=Date.now() - this.epoch_start_time;
 			return epoch_diff > 60*5*1000;
-		}
-		/**
-		 * @param {boolean} no_wait
-		 */
-		async do_start_main_async(no_wait){
-			if(!no_wait)await this.next_timeout_async(this.timeout_ms, 'A');
-			await this.main_async();
 		}
 		start_main_async(no_wait=false) {
 			return this.do_start_main_async(no_wait).then(_e=>{}, e=>{
@@ -2817,11 +2942,6 @@
 			this.timeout_ms=this.calc_timeout_ms();
 			this.start_main_async();
 		}
-		async maybe_async_reset(){
-			let loss_rate=this.unit_promote_start();
-			if(this.maybe_run_reset())return [true, loss_rate];
-			return [false, loss_rate];
-		}
 		do_large_decrease(){
 			this.do_timeout_dec([1.005], 60);// 60
 		}
@@ -2830,84 +2950,6 @@
 		}
 		do_rare_begin_change(){
 			this.do_timeout_inc([1.008, 1.03], 10);
-		}
-		async bonus_async() {
-			window.bonusAll();
-			await this.fast_unit_async();
-		}
-		async initial_special_async(){
-			await this.next_timeout_async(this.timeout_ms, '>');
-			let in_special=true;
-			while(in_special){
-				if(this.do_special()){
-					await this.next_timeout_async(this.timeout_ms, '^');
-					continue;
-				} else {
-					in_special=false;
-				}
-			}
-			await this.next_timeout_async(this.timeout_ms, '#');
-			await this.bonus_async();
-		}
-		async rare_begin_async(){
-			this.do_rare_begin_change();
-			await this.next_timeout_async(this.timeout_ms, '<');
-			await this.initial_special_async();
-		}
-		async normal_decrease_async(){
-			this.do_normal_decrease();
-			await this.next_timeout_async(this.timeout_ms, '-');
-		}
-		async large_decrease_async(){
-			this.do_large_decrease();
-			await this.next_timeout_async(this.timeout_ms, '!');
-		}
-		async main_async(){
-			if(this.main_running){
-				throw new Error("Already running");
-			}
-			this.main_running=true;
-			try{
-				run_loop:while(this.main_running) {
-					for(this.iter_count=0;;) {
-						let unit_upgradeable_trigger=30;
-						if(this.timeout_ms && this.timeout_ms > 3*60*1000){
-							unit_upgradeable_trigger=8;
-						}
-						if(this.unit_upgradable_count > unit_upgradeable_trigger){
-							this.unit_upgradable_count=0;
-							await this.rare_begin_async();
-						}
-						if(this.iter_count<6) await this.normal_decrease_async();
-						else await this.large_decrease_async();
-						let [quit, loss_rate]=await this.maybe_async_reset();
-						if(quit)break run_loop;
-						if(loss_rate > 0.08)continue;
-						if(this.pre_total == window.totalAtome)break;
-					}
-					await this.faster_timeout_async();
-				}
-			} finally {
-				this.main_running=false;
-			}
-			if(this.main_running) {
-				console.log('no finally');
-				this.main_running=false;
-			}
-		}
-		async fast_unit_async() {
-			this.fast_unit_running=true;
-			let count=0;
-			while(this.fast_unit_running) {
-				this.unit_promote_start();
-				if(this.pre_total == window.totalAtome) break;
-				this.do_fast_unit_step_change();
-				await this.next_timeout_async(this.timeout_ms, ':');
-				count++;
-				if(count > 12)this.fast_unit_running=false;
-			}
-			this.do_fast_unit_change();
-			await this.next_timeout_async(this.timeout_ms, '$');
 		}
 		unit_upgradable_count=0;
 		unit_promote_start(){
@@ -2937,10 +2979,6 @@
 		}
 		do_fast_unit_change(){
 			this.do_timeout_dec([1.006], 10);
-		}
-		async faster_timeout_async(){
-			this.do_timeout_inc([1.006, 1.005], 4);
-			await this.next_timeout_async(this.timeout_ms, '+');
 		}
 		/**
 		 * @param {number} pow_base
@@ -3051,20 +3089,6 @@
 		}
 		/**@type {number|undefined} */
 		timeout_ms;
-		/**
-		 * @param {number | undefined} timeout
-		 * @param {string} char
-		 */
-		async next_timeout_async(timeout, char, silent=false){
-			let node=new AsyncTimeoutNode(timeout);
-			this.root_node.append_child(node);
-			if(!silent){
-				this.timeout_ms=timeout;
-				this.update_timeout_element();
-			}
-			this.state_history_append(char, silent);
-			await node.start_async(new AsyncTimeoutTarget);
-		}
 		/**
 		 * @param {()=>void} trg_fn
 		 * @param {number | undefined} timeout
@@ -3743,6 +3767,8 @@
 	function on_game_data_set(){
 		do_dom_filter();
 		auto_buy_obj.pre_init();
+		auto_buy_obj.init();
+		return;
 		if(window.Pace.bar.progress == 100){
 			auto_buy_obj.init();
 			return;
@@ -3789,10 +3815,19 @@
 			proxy_jquery();
 		}
 	}
+	function do_load_fire_promise(promise_accept){
+		document.firstChild.remove();
+		promise_accept();
+	}
+	function page_url_no_protocol(){
+		return location.href.slice(location.protocol.length);
+	}
 	function main() {
 		if(location.pathname.match('test')){
 			return;
 		}
+		let is_detached_observer_needed=false;
+		reset_global_event_handlers(true);
 		enable_jquery_proxy_if_needed();
 		/**@type {any[]} */
 		let mut_observers=[];
@@ -3816,13 +3851,18 @@
 			}
 			/** @type {(mutations: MutationRecord[], observer: MutationObserver & {document_is_closed?:boolean})=>void} */
 			callback(mutations, observer){
-				if(should_close_on_mut){
+				if(is_detached_observer_needed && observer.document_is_closed === void 0){
 					document.close();
-					should_close_on_mut=false;
 					observer.document_is_closed=true;
+					return;
 				}
 				if(observer.document_is_closed){
-					console.log('done with', ...mutations);
+					should_close_on_mut=false;
+					return;
+				}
+				if(is_detached_observer_needed && !should_close_on_mut){
+					console.log('already done', ...mutations);
+					return;
 				}
 			}
 		}
@@ -3873,7 +3913,8 @@
 		/**@type {cast_T_extends_U_type<Node, HTMLScriptElement>} */
 		let cast_to_script=cast_T_extends_U_type;
 		document.addEventListener('onContentLoaded', do_dom_filter);
-		/**@type {(this:Node, node: Node, child: Node | null)=>Node}*/function insertBefore_inject(element_to_insert, element_reference, ...rest){
+		/**@type {(this:Node, node: Node, child: Node | null)=>Node}*/
+		function insertBefore_inject(element_to_insert, element_reference, ...rest){
 			console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
 			let cast_element_1=cast_value_T_to_U(element_to_insert, HTMLScriptElement);
 			let cast_element_2=cast_value_T_to_U(element_reference, HTMLScriptElement);
@@ -3915,6 +3956,7 @@
 		let orig_aev=EventTarget.prototype.addEventListener;
 		EventTarget.prototype.addEventListener=no_aev;
 		async function do_fetch_load() {
+			reset_global_event_handlers();
 			window.setTimeout=real_st;
 			window.setInterval=real_si;
 			EventTarget.prototype.addEventListener=orig_aev;
@@ -3924,6 +3966,7 @@
 					window.removeEventListener('load', lis);
 				})
 			});
+			reset_global_event_handlers();
 			let orig_url=location.href;
 			let loc_url="//rebuildtheuniverse.com";
 			let prev_state=history.state;
@@ -3935,6 +3978,16 @@
 				gen:next_gen
 			};
 			let nav_url="//rebuildtheuniverse.com";
+			await new Promise(function(a){
+				if(localStorage.justReset === 'true'){
+					return a();
+				}
+				window.g_do_load=do_load_fire_promise.bind(null, a);
+				document.writeln(`<head></head><body><a onclick="g_do_load()">load with fetch</a></body>`);
+				reset_global_event_handlers();
+				document.close();
+			});
+			reset_global_event_handlers();
 			history.pushState(hist_state, '', nav_url);
 			const rb_html=await (await fetch(loc_url)).text();
 			{
@@ -4031,8 +4084,9 @@
 				log_data_vec.push(document.querySelectorAll("script").length);
 				loaded_scripts_count+=added_scripts.length;
 				if(loaded_scripts_count >= script_num){
-					console.log(loaded_scripts_count, script_num);
-					console.log('load observer ', ...log_data_vec);
+					l_log_if(LOG_LEVEL_INFO, 'observer script count', loaded_scripts_count, script_num);
+					console.info('load observer ', ...log_data_vec);
+					reset_global_event_handlers();
 					mut_observer.disconnect();
 				}
 			}));
@@ -4040,10 +4094,17 @@
 				request_content:rb_html,
 				cur:rb_html_tmp
 			};
+			reset_global_event_handlers();
 			document.writeln(rb_html_tmp);
+			reset_global_event_handlers();
 			action_1();
 			document.close();
+			reset_global_event_handlers();
+			window.onunload=function(){
+				console.info('unload');
+			}
 			window.onbeforeunload=function(){
+				console.info('before unload');
 				if(history.state?.gen !== void 0 && history.state.prev === void 0) {
 					// https://rebuildtheuniverse.com/mjz_version/
 					history.replaceState({prev:history.state, gen:history.state.gen+1}, "", orig_url);
@@ -4051,19 +4112,52 @@
 			}
 		}
 		let should_close_on_mut=false;
-		if(location.href!=="https://rebuildtheuniverse.com/?real=1") {
-			mut_observers.push(new DetachedMutationObserver(document));
-			document.writeln(`<head></head><body></body>`);
-			do_fetch_load();
-			should_close_on_mut=true;
-		} else {
+		function on_dom_load(){
 			window.setTimeout=real_st;
 			window.setInterval=real_si;
 			EventTarget.prototype.addEventListener=orig_aev;
 			document.addEventListener('DOMContentLoaded', function(){
 				action_1();
-			})
+			});
+		}
+		function do_page_replace(){
+			is_detached_observer_needed=true;
+			mut_observers.push(new DetachedMutationObserver(document));
+			reset_global_event_handlers();
+			document.writeln(`<head></head><body></body>`);
+			reset_global_event_handlers();
+			do_fetch_load();
+			should_close_on_mut=true;
+		}
+		let non_proto_url=page_url_no_protocol();
+		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version/") {
+			do_page_replace();
+		} else if(non_proto_url == "//rebuildtheuniverse.com/?real=1") {
+			on_dom_load();
+		} else if(non_proto_url == "//rebuildtheuniverse.com/"){
+			window.setTimeout=real_st;
+			window.setInterval=real_si;
+			EventTarget.prototype.addEventListener=orig_aev;
+			document_write_list.destroy();
+		} else {
+			console.log('handle location pathname', location.pathname);
 		}
 	}
+	console.log('re main 1');
 	main();
+	function popstate_event_handler(e){
+		console.log('popstate', e.state, location.href);
+		if(e.state === null && page_url_no_protocol() == "//rebuildtheuniverse.com/mjz_version/") {
+			history.go(-1);
+		}
+		if(e.state){
+		} else {
+		}
+	}
+	function reset_global_event_handlers(init=false) {
+		if(window.onpopstate === null && !init){
+			console.info('lost onpopstate');
+		}
+		window.onpopstate=popstate_event_handler;
+	}
 })();
