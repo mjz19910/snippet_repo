@@ -250,6 +250,32 @@
 		}
 	}
 	void VMTemplate;
+	/**@type {<T, X extends keyof T>(obj:{[V in keyof T]:T[V]}, key:X)=>{v:T[X]} | null} */
+	function safe_get(obj, key) {
+		let cur_proto=obj;
+		let prop=null;
+		while(cur_proto !== null && !prop) {
+			prop=Object.getOwnPropertyDescriptor(cur_proto, key);
+			cur_proto=Object.getPrototypeOf(cur_proto);
+		}
+		if(!prop)return null;
+		if(!prop.value){
+			if(prop.get){
+				let res=prop.get.call(obj);
+				return {
+					v:res
+				};
+			} else if(prop.set){
+				console.log('ignored set only ownProperty');
+				return null;
+			} else {
+				return null;
+			}
+		}
+		return {
+			v:prop.value
+		};
+	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 	class BaseVMCreate {
 		/**@arg {InstructionType[]} instructions */
@@ -331,11 +357,20 @@
 					this.instructions[target]=valid_instruction;
 				} break;
 				case 'push_pc':{
-					if(AbstractVM.prototype.push === this.push){
+					if(!this.hasOwnProperty('push')) {
 						throw new Error("push_pc requires a stack");
+					} else if (this instanceof BaseStackVM) {
+						this.push(this.instruction_pointer);
+					} else {
+						console.log('TODO: add instanceof check to push_pc');
+						/**@type {any} */
+						let this_as_any=this;
+						/**@type {this & {push:BaseStackVM['push'];}} */
+						let this_with_push=this_as_any;
+						let fn_ptr=safe_get(this_with_push, 'push');
+						if(!fn_ptr)throw new Error("push_pc requires a stack");
+						fn_ptr.v.call(this, this.instruction_pointer);
 					}
-					instruction;
-					this.push(this.instruction_pointer);
 				} break;
 				case 'halt'/*Running*/:
 					instruction;
