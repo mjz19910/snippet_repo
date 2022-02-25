@@ -1268,10 +1268,6 @@
 			l_log_if(LOG_LEVEL_INFO, 'run', this);
 			return super.run();
 		}
-		fire(){
-			l_log_if(LOG_LEVEL_INFO, 'fire', this);
-			return super.fire();
-		}
 		destroy(){
 			if(this.m_target)this.m_target.destroy();
 			super.destroy();
@@ -2017,7 +2013,86 @@
 	/**@typedef {DomExecDescriptionI9} */
 	/**@typedef {DomExecDescriptionG1|DomExecDescriptionG2|DomExecDescriptionI9} DomExecDescription */
 	const DO_UPGRADES_RANDOM_RATE=0.008;// 0.005
+	class MathActions {
+		/**@arg {number} v */
+		round(v) {
+			return ~~v;
+		}
+	}
+	/**@typedef {number[]} AutoBuyStateType */
+	class AutoBuyActions {
+		constructor(){
+			/**@type {Map<string, AutoBuyStateType>} */
+			this.state_map=new Map;
+		}
+		calc_timeout_ms() {
+			let timeout_arr=this.state_map.get('timeout_arr');
+			let large_diff=this.state_map.get('large_diff');
+			if(!timeout_arr)return 125;
+			if(!large_diff)return 125;
+			while(timeout_arr.length>60)timeout_arr.shift();
+			let max=0;
+			let total=0;
+			for(var i=0;i<timeout_arr.length;i++){
+				total+=timeout_arr[i];
+				max=Math.max(timeout_arr[i], max);
+			};
+			const val=total / timeout_arr.length;
+			let num=val;// max / val;
+			this.last_value??=num;
+			let diff=this.last_value-num;
+			this.last_value=num;
+			large_diff.push(num);
+			let sorted_diff_arr = large_diff.map(e=>e-num).sort((a,b)=>a-b);
+			let diff_want_mul=1;
+			let diff_cur=diff;
+			while(diff_cur > -1 && diff_cur < 1 && diff_want_mul < 1e18){
+				diff_cur*=10;
+				diff_want_mul*=10;
+			}
+			diff_want_mul*=1000;
+			let zero_idx=sorted_diff_arr.indexOf(0);
+			let zs=zero_idx-8;
+			let z_loss=0;
+			if(zs < 0){
+				z_loss=zs*-1;
+				zs=0;
+			}
+			let ez_log=sorted_diff_arr.map(e=>{
+				if(e === 0)return e;
+				return this.round(e*diff_want_mul);
+			});
+			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
+			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
+			return this.round(val);
+		}
+		unit_promote_start(){
+			let totalAtome=window.totalAtome;
+			this.timeout_ms=this.calc_timeout_ms();
+			this.pre_total=totalAtome;
+			this.do_unit_promote();
+			let money_diff=this.pre_total-totalAtome;
+			let loss_rate=money_diff/this.pre_total;
+			if(this.pre_total != totalAtome){
+				this.unit_upgradable_count++;
+			}
+			if(this.pre_total != totalAtome && this.debug){
+				let log_args=[];
+				let percent_change=(loss_rate*100).toFixed(5);
+				let money_str=totalAtome.toExponential(3);
+				log_args.push(this.iter_count);
+				log_args.push(percent_change);
+				log_args.push(money_str);
+				console.log(...log_args);
+			}
+			this.iter_count+=1;
+			return loss_rate;
+		}
+	}
 	class AsyncAutoBuy {
+		constructor(){
+			this.actions=new AutoBuyActions;
+		}
 		/**
 		 * @param {boolean} no_wait
 		 */
@@ -2026,7 +2101,7 @@
 			await this.main_async();
 		}
 		async maybe_async_reset(){
-			let loss_rate=this.unit_promote_start();
+			let loss_rate=this.actions.unit_promote_start();
 			if(this.maybe_run_reset())return [true, loss_rate];
 			return [false, loss_rate];
 		}
@@ -2890,43 +2965,6 @@
 		 * @type {number[]}
 		 */
 		large_diff=[];
-		calc_timeout_ms() {
-			while(this.timeout_arr.length>60)this.timeout_arr.shift();
-			let max=0;
-			let total=0;
-			for(var i=0;i<this.timeout_arr.length;i++){
-				total+=this.timeout_arr[i];
-				max=Math.max(this.timeout_arr[i], max);
-			};
-			const val=total / this.timeout_arr.length;
-			let num=val;// max / val;
-			this.last_value??=num;
-			let diff=this.last_value-num;
-			this.last_value=num;
-			this.large_diff.push(num);
-			let sorted_diff_arr = this.large_diff.map(e=>e-num).sort((a,b)=>a-b);
-			let diff_want_mul=1;
-			let diff_cur=diff;
-			while(diff_cur > -1 && diff_cur < 1 && diff_want_mul < 1e18){
-				diff_cur*=10;
-				diff_want_mul*=10;
-			}
-			diff_want_mul*=1000;
-			let zero_idx=sorted_diff_arr.indexOf(0);
-			let zs=zero_idx-8;
-			let z_loss=0;
-			if(zs < 0){
-				z_loss=zs*-1;
-				zs=0;
-			}
-			let ez_log=sorted_diff_arr.map(e=>{
-				if(e === 0)return e;
-				return this.round(e*diff_want_mul);
-			});
-			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
-			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
-			return this.round(val);
-		}
 		is_epoch_over(){
 			let epoch_diff=Date.now() - this.epoch_start_time;
 			return epoch_diff > 60*5*1000;
@@ -2952,28 +2990,6 @@
 			this.do_timeout_inc([1.008, 1.03], 10);
 		}
 		unit_upgradable_count=0;
-		unit_promote_start(){
-			let totalAtome=window.totalAtome;
-			this.timeout_ms=this.calc_timeout_ms();
-			this.pre_total=totalAtome;
-			this.do_unit_promote();
-			let money_diff=this.pre_total-totalAtome;
-			let loss_rate=money_diff/this.pre_total;
-			if(this.pre_total != totalAtome){
-				this.unit_upgradable_count++;
-			}
-			if(this.pre_total != totalAtome && this.debug){
-				let log_args=[];
-				let percent_change=(loss_rate*100).toFixed(5);
-				let money_str=totalAtome.toExponential(3);
-				log_args.push(this.iter_count);
-				log_args.push(percent_change);
-				log_args.push(money_str);
-				console.log(...log_args);
-			}
-			this.iter_count+=1;
-			return loss_rate;
-		}
 		do_fast_unit_step_change(){
 			this.do_timeout_dec([1.006], 10);
 		}
