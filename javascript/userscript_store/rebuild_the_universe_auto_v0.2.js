@@ -1950,7 +1950,7 @@
 	/**@implements {VMReturnsBoxedPromise} */
 	class VMReturnsBoxedPromiseR {
 		/**@type {"function_box"} */
-		type="function_box" 
+		type="function_box"
 		/**@type {"promise"} */
 		return_type="promise";
 		/**@type {"value"} */
@@ -3961,7 +3961,7 @@
 				window.g_cs??=[];
 				window.g_cs.push(cs);
 				let prev=cs.previousElementSibling;
-				if(prev && prev instanceof HTMLElement)if(prev.dataset.adSlot){
+				if(prev && prev instanceof HTMLElement && prev.dataset.adSlot){
 					let ad_slot=cs.previousElementSibling;
 					if(prev.previousElementSibling)ls=prev.previousElementSibling;
 					if(cs.nextElementSibling)rs=cs.nextElementSibling;
