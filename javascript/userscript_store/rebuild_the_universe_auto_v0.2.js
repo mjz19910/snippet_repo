@@ -22,6 +22,7 @@
 	const AutoBuyMulModifierFactor=1;
 	const AutoBuyRatioDiv=3;
 	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedNewableFunction} VMBoxedNewableFunction */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCallableFunction} VMBoxedCallableFunction */
 	/**@implements {VMBoxedNewableFunction} */
 	class VMBoxedNewableFunctionR {
 		/**@type {"constructor_box"} */
@@ -29,6 +30,16 @@
 		/**@type {{new (v:any):any}} */
 		value;
 		/**@arg {{new (v:any):any}} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
+	class VMBoxedCallableFunctionR {
+		/**@type {"callable_box"} */
+		type="callable_box";
+		/**@type {{(...a:VMValue[]) : VMValue}} */
+		value;
+		/**@arg {{(...a:VMValue[]) : VMValue}} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -239,6 +250,7 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
+			debugger;
 			switch(instruction[0]) {
 				default:{
 					console.info('Unknown opcode', instruction[0]);
@@ -384,7 +396,13 @@
 						throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 					}
 					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-					debugger;
+					let ts=performance.now();
+					let td=0;
+					while(td < 20){
+						debugger;
+						td=performance.now()-ts;
+						console.log('no debugger');
+					}
 					if(typeof target_fn!='object')throw new Error("Invalid");
 					if(target_fn.type != 'function_box')throw new Error("Invalid");
 					let ret = target_fn.value.apply(target_this, arg_arr);
@@ -566,11 +584,11 @@
 			/**@type {InstructionType|null} */
 			let ret=null;
 			switch(m_opcode) {
-					// variable argument count
-				case 'push':
+				case 'push':{
 					num_to_parse = 0;
 					ret=[m_opcode, ...m_operands];
-				case 'call'/*1 argument*/:
+				} break;
+				case 'call'/*1 argument*/:{
 					num_to_parse -= 2;
 					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0])){
 						ret=[m_opcode, m_operands[0]];
@@ -580,6 +598,7 @@
 						console.info("Can't verify that call instruction is valid, argument (%o) is not a number or not finite", m_operands[0]);
 						throw new Error("TypeError: Invalid argument");
 					}
+				} break;
 				case 'drop':
 				case 'get':
 				case 'return':
@@ -587,12 +606,14 @@
 				case 'push_args':
 				case 'this':
 				case 'global':
-				case 'breakpoint'/*opcode*/:
+				case 'breakpoint'/*opcode*/:{
 					num_to_parse--;
 					ret=[m_opcode];
-				default:
+				} break;
+				default:{
 					console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_operands);
 					throw new Error("Unexpected opcode");
+				}
 			}
 			if(num_to_parse > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");
 			if(ret !== null){
@@ -1936,10 +1957,10 @@
 					case 'new':{
 						const [depth, , _class, construct_arg_arr, callback, arg_arr]=cur_item;
 						stack.push(
-							[cur_item[0], "push", null, callback, ...construct_arg_arr, new VMBoxedNewableFunctionR(_class)],
+							[cur_item[0], 'push', null, new VMBoxedCallableFunctionR(callback), ...construct_arg_arr, new VMBoxedNewableFunctionR(_class)],
 							[cur_item[0], "construct", 1 + construct_arg_arr.length],
-							[depth, "push", ...arg_arr],
-							[depth, "call", 3 + arg_arr.length]
+							[depth, 'push', ...arg_arr],
+							[depth, 'call', 3 + arg_arr.length]
 						);
 					} break;
 					case 'create':{

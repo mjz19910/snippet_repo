@@ -13,13 +13,17 @@ type HasNewableVMValue = {
 	new (...a:VMValue[]) : VMValue
 }
 
+type HasCallableVMValue = {
+	(...a:VMValue[]) : VMValue;
+}
+
 export class VMBoxedFunction extends VMBoxedValue<Function> {
 	type:"function_box"="function_box";
 }
 export class VMBoxedNewableFunction extends VMBoxedValue<HasNewableVMValue> {
 	type:"constructor_box"="constructor_box";
 }
-export class VMBoxedCallableFunction extends VMBoxedValue<CallableFunction> {
+export class VMBoxedCallableFunction extends VMBoxedValue<HasCallableVMValue> {
 	type:"callable_box"="callable_box";
 }
 type HasVMValue={
