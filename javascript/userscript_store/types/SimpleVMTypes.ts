@@ -50,7 +50,7 @@ export class VMBoxedWindow extends VMBoxedValue<Window>{
 	type:"window_box"="window_box";
 }
 export class VMBoxedGlobalThis extends VMBoxedValue<typeof globalThis> {
-	type:"constructor"="constructor";
+	type:"global_object_box"="global_object_box";
 }
 export class VMBoxedNull extends VMBoxedValue<null> {
 	type:"primitive"="primitive";
@@ -71,13 +71,15 @@ export class VMBoxedDomValue extends VMBoxedValue<Node> {
 
 type VMFunctionTypes = VMBoxedFunction | VMBoxedNewableFunction | VMBoxedCallableFunction;
 type VMClassTypes = VMFunctionTypes;
-type VMObjectTypes=VMBoxedCallableIndexed | VMBoxedKeyedObject | VMBoxedObject;
+type VMBoxedValueTypes= VMBoxedGlobalThis | VMBoxedDomValue;
+type VMObjectTypes = VMBoxedCallableIndexed | VMBoxedKeyedObject | VMBoxedObject;
+type VMArrayTypes = VMBoxedArray | VMBoxedInstructionTypeArray;
 export type VMValueTypes = VMBoxedStackVM | VMBoxedWindow |
-	VMBoxedArray |
+	VMArrayTypes |
 	VMBoxedUndefined | VMBoxedNull |
 	VMObjectTypes |
 	VMClassTypes |
-	VMBoxedDomValue |
+	VMBoxedValueTypes |
 	bigint | boolean | number | string | symbol | undefined;
 export type VMValue = VMValueTypes;
 type InstructionPushOperands = VMValue[];

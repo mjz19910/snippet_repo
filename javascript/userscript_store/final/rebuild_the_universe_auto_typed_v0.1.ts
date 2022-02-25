@@ -1,4 +1,4 @@
-import {InstructionType, StackVM, VMBoxedArray, VMBoxedCallableIndexed, VMBoxedGlobalThis, VMBoxedKeyedObject, VMBoxedStackVM, VMBoxedUndefined, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
+import {InstructionType, StackVM, VMBoxedArray, VMBoxedCallableIndexed, VMBoxedGlobalThis, VMBoxedInstructionTypeArray, VMBoxedKeyedObject, VMBoxedStackVM, VMBoxedUndefined, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
@@ -154,7 +154,7 @@ class DocumentWriteFnProxyHandler {
 	}
 }
 
-class DocumentWriteList {
+export class DocumentWriteList {
 	list: (string[] | null)[];
 	attached; end_symbol;
 	constructor() {
@@ -186,7 +186,7 @@ class DocumentWriteList {
 		this.document_write_proxy = new Proxy(document.write, obj);
 		document.write = this.document_write_proxy;
 	}
-	document_write: DocumentWriteFn | {other: any;} | null;
+	document_write: ((...text: string[]) => void) | {other: DocumentWriteList;} | null;
 	attached_document: Document | null;
 	write(target: (...text: string[]) => void, thisArg: any, argArray: string[]) {
 		console.assert(target === this.document_write);
@@ -205,7 +205,6 @@ class DocumentWriteList {
 			}
 			if(this.document_write) {
 				if(down_convert_type<typeof this.document_write, typeof this.attached_document.write>(this.document_write)) {
-					;
 					this.attached_document.write = this.document_write;
 				}
 			}
@@ -691,7 +690,7 @@ declare global {
 		plurials(v: string): string;
 		arrayNames: string[];
 		updateprogress(v: any): void;
-		$: (val: any) => any;
+		$: JQueryStatic;
 		seeUnit(v: number): any;
 		checkspec(): void;
 		achiSpec(): void;
@@ -1435,7 +1434,11 @@ class SimpleStackVM implements StackVM {
 				case 'push'/*Stack*/: {
 					for(let i = 1;i < cur_instruction.length;i++) {
 						let item = cur_instruction[i];
-						this.push(item);
+						if(item instanceof Array){
+							this.push(new VMBoxedInstructionTypeArray(item));
+						} else {
+							this.push(item);
+						}
 					}
 					break;
 				}

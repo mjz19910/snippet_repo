@@ -42,14 +42,18 @@
 			this.list=[];
 			this.attached=false;
 			this.end_symbol=Symbol(void 0);
+			/**@type {import("./final/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
+			this.document_write=null;
 		}
 		/**
-		 * @param {any[]} args_spread
+		 * @arg {(...text: string[]) => void} target
+		 * @arg {Document} thisArg
+		 * @arg {string[]} argArray
 		 */
-		write(args_spread){
-			console.assert(args_spread[0] === this.document_write);
-			console.assert(args_spread[1] === this.attached_document);
-			this.list.push(args_spread[2], null);
+		write(target, thisArg, argArray){
+			console.assert(target === this.document_write);
+			console.assert(thisArg === this.attached_document);
+			this.list.push(argArray, null);
 		}
 		/**@arg {Document} document */
 		attach_proxy(document){
@@ -61,13 +65,16 @@
 			}
 			this.attached_document=document;
 			this.document_write=document.write;
-			/**@type {ProxyHandler<document['write']> & {other:any}} */
 			let proxy_handler={
-				// @ts-ignore
 				other:this,
-				/**@arg {Parameters<ConstructorParameters<Proxy<Document['write']>>[1]['apply']>} a */
-				apply(...a){
-					this.other.write(a);
+				//target: (...text: string[]) => void, thisArg: Document, argArray: string[]
+				/**
+				 * @arg {(...text: string[]) => void} target
+				 * @arg {Document} thisArg
+				 * @arg {string[]} argArray
+				 */
+				apply(target, thisArg, argArray){
+					this.other.write(target, thisArg, argArray);
 				}
 			};
 			this.document_write_proxy=new Proxy(document.write, proxy_handler);
@@ -3514,23 +3521,26 @@
 		Node.prototype.insertBefore=as_insert_before_type;
 		let document_write_list=new DocumentWriteList;
 		document_write_list.attach_proxy(document);
+		document_write_list.document_write;
+		window.document_write_list.document_write;
 		window.document_write_list=document_write_list;
 		document.stop=function(){};
 		function nop_timeout(){
 			console.log('nop timeout');
+			return -1;
 		}
 		let real_st=setTimeout;
 		let real_si=setInterval;
-		setTimeout=nop_timeout;
-		setInterval=nop_timeout;
+		window.setTimeout=nop_timeout;
+		window.setInterval=nop_timeout;
 		function no_aev(...v){
 			console.log('aev', v);
 		}
 		let orig_aev=EventTarget.prototype.addEventListener;
 		EventTarget.prototype.addEventListener=no_aev;
 		async function do_fetch_load() {
-			setTimeout=real_st;
-			setInterval=real_si;
+			window.setTimeout=real_st;
+			window.setInterval=real_si;
 			EventTarget.prototype.addEventListener=orig_aev;
 			await new Promise(function(a){
 				window.addEventListener('load', function lis(){
