@@ -140,22 +140,19 @@
 			throw new Error("Abstract function");
 		}
 		/**
-		 * @param {string} _cur_opcode
-		 * @param {import("./types/SimpleVMTypes.js").AnyInstructionOperands} _operands
+		 * @param {InstructionType} _instruction
 		 */
-		execute_instruction_raw(_cur_opcode, _operands){
+		execute_instruction(_instruction){
 			// ignore it, this is the base, if you want to ignore instruction opcodes go ahead
-			if(this.execute_instruction_raw !== AbstractVM.prototype.execute_instruction_raw)return;
+			if(this.execute_instruction !== AbstractVM.prototype.execute_instruction)return;
 			throw new Error("Abstract function");
 		}
 		/**
-		 * @param {any} cur_opcode
-		 * @param {any} operands
+		 * @param {InstructionType} instruction
 		 */
-		execute_instruction_raw_t(cur_opcode, operands){
-			switch(cur_opcode) {
-					// implement more opcode handling here
-				default/*Debug*/:this.execute_instruction_raw(cur_opcode, operands);break;
+		execute_instruction_t(instruction){
+			switch(instruction[0]) {
+				default/*Base class*/:this.execute_instruction(instruction);break;
 			}
 		}
 	}
@@ -1808,7 +1805,7 @@
 					}
 				],
 				[
-					0, 'new', CSSStyleSheet, [], 
+					0, 'new', CSSStyleSheet, [],
 					(/** @type {CSSStyleSheet} */ obj, /** @type {string} */ str)=>obj.replace(str),
 					[css_display_style]
 				],
@@ -1860,8 +1857,8 @@
 					case 'new':{
 						const [depth, , _class, construct_arg_arr, callback, arg_arr]=cur_item;
 						stack.push([cur_item[0], "push", null, callback, ...construct_arg_arr, _class],[cur_item[0], "construct", 1 + construct_arg_arr.length],
-						[depth, "push", ...arg_arr],
-						[depth, "call", 3 + arg_arr.length])
+								   [depth, "push", ...arg_arr],
+								   [depth, "call", 3 + arg_arr.length])
 					} break;
 					case 'create':{
 						const [depth, ,element_type, name, content] = cur_item;
@@ -3319,6 +3316,10 @@
 					mut_observer.disconnect();
 				}
 			}));
+			window.g_page_content={
+				request_content:rb_html,
+				cur:rb_html_tmp
+			};
 			document.writeln(rb_html_tmp);
 			action_1();
 			document.close();
