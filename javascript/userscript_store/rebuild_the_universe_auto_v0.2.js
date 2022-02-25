@@ -444,19 +444,21 @@
 			console . log (...args);
 		}
 	}
+	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
 	class InstructionConstructE {
-		/**@arg {InstructionConstruct} */
+		/**@arg {InstructionConstruct} instruction @arg {VMInterface} vm */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments=instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
-			let [construct_target, ...construct_arr]=this.pop_arg_count(number_of_arguments);
+			let [construct_target, ...construct_arr]=vm.pop_arg_count(number_of_arguments);
 			const a=construct_target;
 			if(typeof a!='object')throw new Error("Invalid");
 			if(a===null)throw new Error("Invalid");
 			if(a.type != 'constructor_box')throw new Error("Invalid");
 			if(a.from === 'typescript'){
 				let obj=new a.value(...construct_arr);
-				this.push(obj);
+				vm.push(obj);
 			} else if(a.from === 'javascript') {
 				if(a.constructor_type === 'CSSStyleSheet') {
 					/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
@@ -1843,7 +1845,7 @@
 		return true;
 	}
 	/**@typedef {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} IDomInstructionSet */
-	/**@typedef {import("./types/SimpleVMTypes.js").StackVM} StackVMTypeZ */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} StackVMTypeZ */
 	void does_array_include;
 	/**@implements {StackVMTypeZ} */
 	class DomBuilderVM {

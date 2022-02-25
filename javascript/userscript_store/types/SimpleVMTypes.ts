@@ -19,7 +19,7 @@ type VMIndexed<T> = {
 /* --- VM Value supporting interfaces ---
 StackVM
 */
-export interface StackVM {
+export interface VMInterface {
 	push(value: VMValue): void;
 	pop(): VMValue | undefined;
 }
@@ -102,7 +102,7 @@ export class VMBoxedObject extends VMBoxed<object> {
 	}
 }
 type VMInstanceTypes = VMBoxedStackVM | VMBoxedDomValue | VMBoxedCSSStyleSheet | VMBoxedMediaList;
-export class VMBoxedStackVM extends VMBoxed<StackVM>{
+export class VMBoxedStackVM extends VMBoxed<VMInterface>{
 	type: "custom_box" = "custom_box";
 	box_type: "StackVM" = "StackVM";
 	get_matching_typeof(_to_match: 'function') {
