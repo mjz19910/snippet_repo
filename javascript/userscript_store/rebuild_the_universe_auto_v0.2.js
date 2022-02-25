@@ -65,6 +65,8 @@
 	class VMBoxedPromiseR {
 		/**@type {"promise"} */
 		type="promise";
+		/**@type {"value"} */
+		await_type="value";
 		/**@arg {'function'} _to_match */
 		get_matching_typeof(_to_match) {
 			return null;
@@ -2119,7 +2121,6 @@
 					if(typeof cur != 'object')continue;
 					if(cur === null)continue;
 					if(cur.type != 'promise')continue;
-					if(!cur.return_type)continue;
 					css_arr.push(cur.value);
 				}
 				/*@Hack: wait for any promise to settle*/

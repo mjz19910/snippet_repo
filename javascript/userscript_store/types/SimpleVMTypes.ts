@@ -205,6 +205,7 @@ type VMPromiseTypes = VMBoxedVoidPromise | VMBoxedPromise;
 export class VMBoxedVoidPromise extends VMBoxed<Promise<void>> {
 	type: "promise" = "promise";
 	return_type:null=null;
+	await_type:null=null;
 	promise_return_type_special:'void_type'='void_type';
 	get_matching_typeof(_to_match: 'function') {
 		return null;
@@ -212,16 +213,19 @@ export class VMBoxedVoidPromise extends VMBoxed<Promise<void>> {
 }
 export class VMBoxedPromise extends VMBoxed<Promise<VMValue>> {
 	type: "promise" = "promise";
-	return_type:'value'='value';
+	await_type:"value"="value";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 
+type VMReturnTypes=VMEmptyReturn;
 export class VMEmptyReturn extends VMBoxed<[]> {
 	type:"TODO"="TODO";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
 };
-type VMReturnTypes=VMEmptyReturn;
 
 type VMCustomFunctionTypes = VMReturnsBoxedVoidPromise | VMReturnsBoxedPromise;
 export class VMReturnsBoxedVoidPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedVoidPromise> {
