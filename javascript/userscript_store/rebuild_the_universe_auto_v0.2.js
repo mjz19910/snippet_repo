@@ -2119,6 +2119,7 @@
 					if(typeof cur != 'object')continue;
 					if(cur === null)continue;
 					if(cur.type != 'promise')continue;
+					if(!cur.return_type)continue;
 					css_arr.push(cur.value);
 				}
 				/*@Hack: wait for any promise to settle*/

@@ -43,6 +43,7 @@ export class VMBoxedInstructionTypeArray extends VMBoxed<InstructionType[]>{
 		return null;
 	}
 }
+
 type VMFunctionTypes = VMBoxedFunction | VMNewableFunction | VMCallableFunction;
 export class VMBoxedFunction extends VMBoxed<Function> {
 	type: "function_box" = "function_box";
@@ -143,6 +144,7 @@ export class VMBoxedCSSStyleSheetConstructor extends VMBoxed<typeof CSSStyleShee
 		return null;
 	}
 }
+
 type VMArgumentTypes = VMBoxedCSSStyleSheetInit;
 export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
 	type: "shape_box" = "shape_box";
@@ -182,18 +184,7 @@ export class VMBoxedCSSStyleSheetInit extends VMBoxed<CSSStyleSheetInit>{
 		}
 	}
 }
-type VMReturnTypes = VMReturnsBoxedVoidPromise | VMReturnsBoxedPromise;
-export class VMReturnsBoxedVoidPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedVoidPromise> {
-	type: "function_box" = "function_box";
-	return_type: "promise" = "promise";
-	promise_return_type_special:'void_type'='void_type';
-	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value == to_match){
-			return this;
-		}
-		return null;
-	}
-}
+
 type VMGlobalTypes = VMBoxedGlobalThis | VMBoxedWindow;
 export class VMBoxedGlobalThis extends VMBoxed<typeof globalThis> {
 	type: "value_box" = "value_box";
@@ -210,9 +201,10 @@ export class VMBoxedWindow extends VMBoxed<Window>{
 	}
 }
 
-
+type VMPromiseTypes = VMBoxedVoidPromise | VMBoxedPromise;
 export class VMBoxedVoidPromise extends VMBoxed<Promise<void>> {
 	type: "promise" = "promise";
+	return_type:null=null;
 	promise_return_type_special:'void_type'='void_type';
 	get_matching_typeof(_to_match: 'function') {
 		return null;
@@ -220,7 +212,26 @@ export class VMBoxedVoidPromise extends VMBoxed<Promise<void>> {
 }
 export class VMBoxedPromise extends VMBoxed<Promise<VMValue>> {
 	type: "promise" = "promise";
+	return_type:'value'='value';
 	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+
+class VMEmptyReturn extends VMBoxed<[]> {
+	type:"TODO"="TODO";
+};
+type VMReturnTypes=VMEmptyReturn;
+
+type VMCustomFunctionTypes = VMReturnsBoxedVoidPromise | VMReturnsBoxedPromise;
+export class VMReturnsBoxedVoidPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedVoidPromise> {
+	type: "function_box" = "function_box";
+	return_type: "promise" = "promise";
+	promise_return_type_special:'void_type'='void_type';
+	get_matching_typeof(to_match: 'function') {
+		if(typeof this.value == to_match){
+			return this;
+		}
 		return null;
 	}
 }
@@ -233,6 +244,7 @@ export class VMReturnsBoxedPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedPr
 	}
 }
 
+
 // --- VM Value (types) ---
 export type VMValue = VMArrayTypes |
 	VMObjectTypes |
@@ -243,6 +255,8 @@ export type VMValue = VMArrayTypes |
 	VMConstructorTypes |
 	VMArgumentTypes |
 	VMReturnTypes |
+	VMPromiseTypes |
+	VMCustomFunctionTypes |
 	bigint | boolean | number | string | symbol | null | undefined;
 
 // --- Instruction ---
