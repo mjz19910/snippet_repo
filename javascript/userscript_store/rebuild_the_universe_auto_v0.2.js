@@ -1035,7 +1035,7 @@
 	console.assert(calc_ratio([0,0]) === 0, "calc ratio of array full of zeros does not divide by zero");
 	class TimeoutTarget {
 		/**
-		 * @param {AutoBuyState | AutoBuy | null} obj
+		 * @param {AutoBuyActions | AutoBuyState | AutoBuy | null} obj
 		 * @param {()=>void} callback
 		 */
 		constructor(obj, callback) {
@@ -2019,16 +2019,103 @@
 			return ~~v;
 		}
 	}
-	/**@typedef {number[]} AutoBuyStateType */
+	/**@typedef {number[] | number} AutoBuyStateType */
 	class AutoBuyActions {
-		constructor(){
+		/**@arg {AsyncNodeRoot} root_node @arg {AutoBuyState} state */
+		constructor(root_node, state) {
 			/**@type {Map<string, AutoBuyStateType>} */
 			this.state_map=new Map;
+			this.math=new MathActions;
+			this.root_node=root_node;
+			this.m_state=state;
+		}
+		get_state(){
+			return this.m_state;
+		}
+		/** @arg {()=>void} trg_fn @arg {number | undefined} timeout @arg {string} char */
+		next_timeout(trg_fn, timeout, char, silent=false){
+			let node=new TimeoutNode(timeout);
+			this.root_node.append_child(node);
+			node.start(new TimeoutTarget(this, trg_fn));
+			if(!silent){
+				this.timeout_ms=timeout;
+				this.update_timeout_element();
+			}
+			this.state_history_append(char, silent);
+		}
+		update_timeout_element() {
+			if(this.timeout_ms) {
+				let element=this.dom_map.get('timeout_element');
+				if(element instanceof HTMLElement) {
+					element.innerText=this.get_millis_as_pretty_str(this.math.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
+				}
+			}
+		}
+		/** @param {number} timeout_milli @param {number | undefined} milli_acc */
+		get_millis_as_pretty_str(timeout_milli, milli_acc){
+			let time_arr=[];
+			let float_milliseconds = timeout_milli % 1000;
+			let milli_len=6;
+			if(milli_acc === 0){
+				milli_len=3;
+			}
+			time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc), '0', milli_len);
+			timeout_milli-=float_milliseconds;
+			timeout_milli/=1000;
+			let int_seconds = timeout_milli % 60;
+			time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
+			timeout_milli-=int_seconds;
+			timeout_milli/=60;
+			let int_minutes = timeout_milli % 60;
+			time_arr[1]=this.do_zero_pad(int_minutes, '0', 2);
+			timeout_milli-=int_minutes;
+			timeout_milli/=60;
+			let int_hours=timeout_milli;
+			time_arr[0]=this.do_zero_pad(int_hours, '0', 2);
+			int_hours === 0 && (time_arr.shift(), int_minutes === 0 && (time_arr.shift(), int_seconds === 0 && time_arr.shift()));
+			switch(time_arr.length) {
+				case 1:
+					return time_arr[0] + 'ms';
+				case 2:
+					return time_arr[0] + '.' + time_arr[1];
+				case 3:
+					return time_arr.slice(0, 2).join(":") + '.' + time_arr[2];
+				case 4:
+					return time_arr.slice(0, 3).join(":") + '.' + time_arr[3];
+			}
+			return time_arr.join(":");
+		}
+		/**@param {string | number} value@param {string} pad_char@param {number} char_num*/
+		do_zero_pad(value, pad_char, char_num) {
+			let string;
+			if(typeof value === 'number'){
+				string = value.toString();
+			} else {
+				string = value;
+			}
+			while(string.length < char_num){
+				string = pad_char + string;
+			}
+			return string;
+		}
+		/**@arg {string} key */
+		inc(key){
+			if(this.state_map.has(key)){
+				let vv=this.state_map.get(key);
+				if(typeof vv == 'number'){
+					this.state_map.set(key, vv+1);
+				} else {
+					this.state_map.set(key, 1);
+				}
+			} else {
+				this.state_map.set(key, 1);
+			}
 		}
 		calc_timeout_ms() {
 			let timeout_arr=this.state_map.get('timeout_arr');
 			let large_diff=this.state_map.get('large_diff');
-			if(!timeout_arr)return 125;
+			if(!(timeout_arr instanceof Array))return 125;
+			if(!(large_diff instanceof Array))return 125;
 			if(!large_diff)return 125;
 			while(timeout_arr.length>60)timeout_arr.shift();
 			let max=0;
@@ -2060,38 +2147,97 @@
 			}
 			let ez_log=sorted_diff_arr.map(e=>{
 				if(e === 0)return e;
-				return this.round(e*diff_want_mul);
+				return this.math.round(e*diff_want_mul);
 			});
-			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
+			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.math.round(diff*diff_want_mul)/diff_want_mul);
 			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
-			return this.round(val);
+			return this.math.round(val);
 		}
 		unit_promote_start(){
 			let totalAtome=window.totalAtome;
 			this.timeout_ms=this.calc_timeout_ms();
 			this.pre_total=totalAtome;
-			this.do_unit_promote();
+			do_auto_unit_promote();
 			let money_diff=this.pre_total-totalAtome;
 			let loss_rate=money_diff/this.pre_total;
 			if(this.pre_total != totalAtome){
-				this.unit_upgradable_count++;
+				this.inc('unit_upgradable_count');
 			}
-			if(this.pre_total != totalAtome && this.debug){
+			if(this.pre_total != totalAtome && this.state_map.get('debug')){
 				let log_args=[];
 				let percent_change=(loss_rate*100).toFixed(5);
 				let money_str=totalAtome.toExponential(3);
-				log_args.push(this.iter_count);
+				log_args.push(this.state_map.get('iter_count'));
 				log_args.push(percent_change);
 				log_args.push(money_str);
 				console.log(...log_args);
 			}
-			this.iter_count+=1;
+			this.inc('iter_count');
 			return loss_rate;
+		}
+		is_epoch_over(){
+			let epoch_start=this.state_map.get('epoch_start_time');
+			if(typeof epoch_start != 'number')return false;
+			let epoch_diff=Date.now() - epoch_start;
+			return epoch_diff > 60*5*1000;
+		}
+		maybe_run_reset(){
+			if(!this.timeout_ms)return false;
+			let state=this.get_state();
+			let count=0;
+			count+=+(this.timeout_ms > 30*1000);
+			count+=+(state.ratio > 1);
+			count+=+this.is_epoch_over();
+			count+=+(state.locked_cycle_count < 100);
+			switch(count){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+					break;
+				default:console.log('maybe_run_reset count', count);
+			}
+			if(state.ratio > 1 && this.is_epoch_over() && state.locked_cycle_count < 100) {
+				this.do_game_reset();
+				return true;
+			}
+			return false;
+		}
+		do_game_reset(){
+			if(!this.timeout_ms){
+				this.timeout_ms=300;
+			};
+			this.next_timeout(this.game_reset_step_1, this.math.round(this.timeout_ms / 3), '1R');
+			this.on_repeat_r();
+		}
+		do_audio_mute_toggle(){
+			if(!AudioMuted){
+				// this.background_audio.muted=!this.background_audio.muted;
+				window.mute();
+			}
+		}
+		game_reset_step_1(){
+			this.do_audio_mute_toggle();
+			this.next_timeout(this.game_reset_step_2, 60*5*1000, '2R');
+		}
+		game_reset_step_2(){
+			this.do_audio_mute_toggle();
+			this.next_timeout(this.game_reset_finish, 60*5*1000, '3R');
+		}
+		game_reset_finish(){
+			this.update_hours_played();
+			let str=this.dom_map.get("time_played_str");
+			if(typeof str=='string'){
+				this.dispatch_on_game_reset_finish(str);
+			} else {
+				this.dispatch_on_game_reset_finish("0.000");
+			}
 		}
 	}
 	class AsyncAutoBuy {
-		constructor(){
-			this.actions=new AutoBuyActions;
+		/** @arg {AsyncNodeRoot} root_node@arg {AutoBuyState} state */
+		constructor(root_node, state) {
+			this.actions=new AutoBuyActions(root_node, state);
 		}
 		/**
 		 * @param {boolean} no_wait
@@ -2102,7 +2248,7 @@
 		}
 		async maybe_async_reset(){
 			let loss_rate=this.actions.unit_promote_start();
-			if(this.maybe_run_reset())return [true, loss_rate];
+			if(this.actions.maybe_run_reset())return [true, loss_rate];
 			return [false, loss_rate];
 		}
 		async bonus_async() {
@@ -2209,7 +2355,6 @@
 		}
 		constructor(){
 			this.root_node=new AsyncNodeRoot;
-			this.with_async=new AsyncAutoBuy;
 			this.timeout_ms=0;this.iter_count=0;this.epoch_len=0;
 			this.background_audio=null;this.state_history_arr=null;
 			this.skip_save=false;this.has_real_time=false;
@@ -2219,6 +2364,7 @@
 			this.cint_arr=[];
 			this.local_data_loader=new DataLoader(localStorage);
 			this.state=new AutoBuyState(this.root_node);
+			this.with_async=new AsyncAutoBuy(this.root_node, this.state);
 			this.debug=this.state.debug;
 			this.compressor=new MulCompression;
 			this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str', ["S"]);
@@ -2671,68 +2817,6 @@
 				}
 			}
 		}
-		update_timeout_element() {
-			if(this.timeout_ms) {
-				let element=this.dom_map.get('timeout_element');
-				if(element instanceof HTMLElement) {
-					element.innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms), 0)// (this.timeout_avg()[1]);
-				}
-			}
-		}
-		/**
-		 * @param {string | number} value
-		 * @param {string} pad_char
-		 * @param {number} char_num
-		 */
-		do_zero_pad(value, pad_char, char_num) {
-			let string;
-			if(typeof value === 'number'){
-				string = value.toString();
-			} else {
-				string = value;
-			}
-			while(string.length < char_num){
-				string = pad_char + string;
-			}
-			return string;
-		}
-		/**
-		 * @param {number} timeout_milli
-		 * @param {number | undefined} milli_acc
-		 */
-		get_millis_as_pretty_str(timeout_milli, milli_acc){
-			let time_arr=[];
-			let float_milliseconds = timeout_milli % 1000;
-			let milli_len=6;
-			if(milli_acc === 0){
-				milli_len=3;
-			}
-			time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc), '0', milli_len);
-			timeout_milli-=float_milliseconds;
-			timeout_milli/=1000;
-			let int_seconds = timeout_milli % 60;
-			time_arr[2]=this.do_zero_pad(int_seconds, '0', 2);
-			timeout_milli-=int_seconds;
-			timeout_milli/=60;
-			let int_minutes = timeout_milli % 60;
-			time_arr[1]=this.do_zero_pad(int_minutes, '0', 2);
-			timeout_milli-=int_minutes;
-			timeout_milli/=60;
-			let int_hours=timeout_milli;
-			time_arr[0]=this.do_zero_pad(int_hours, '0', 2);
-			int_hours === 0 && (time_arr.shift(), int_minutes === 0 && (time_arr.shift(), int_seconds === 0 && time_arr.shift()));
-			switch(time_arr.length) {
-				case 1:
-					return time_arr[0] + 'ms';
-				case 2:
-					return time_arr[0] + '.' + time_arr[1];
-				case 3:
-					return time_arr.slice(0, 2).join(":") + '.' + time_arr[2];
-				case 4:
-					return time_arr.slice(0, 3).join(":") + '.' + time_arr[3];
-			}
-			return time_arr.join(":");
-		}
 		/**
 		 * @param {number} hours_num
 		 */
@@ -2965,10 +3049,6 @@
 		 * @type {number[]}
 		 */
 		large_diff=[];
-		is_epoch_over(){
-			let epoch_diff=Date.now() - this.epoch_start_time;
-			return epoch_diff > 60*5*1000;
-		}
 		start_main_async(no_wait=false) {
 			return this.do_start_main_async(no_wait).then(_e=>{}, e=>{
 				console.log('err', e);
@@ -3105,11 +3185,7 @@
 		}
 		/**@type {number|undefined} */
 		timeout_ms;
-		/**
-		 * @param {()=>void} trg_fn
-		 * @param {number | undefined} timeout
-		 * @param {string} char
-		 */
+		/** @param {()=>void} trg_fn @param {number | undefined} timeout @param {string} char */
 		next_timeout(trg_fn, timeout, char, silent=false){
 			let node=new TimeoutNode(timeout);
 			this.root_node.append_child(node);
@@ -3141,57 +3217,6 @@
 				} else break;
 			}
 			return ret;
-		}
-		maybe_run_reset(){
-			if(!this.timeout_ms)return false;
-			let count=0;
-			count+=+(this.timeout_ms > 30*1000);
-			count+=+(this.state.ratio > 1);
-			count+=+this.is_epoch_over();
-			count+=+(this.state.locked_cycle_count < 100);
-			switch(count){
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-					break;
-				default:console.log('maybe_run_reset count', count);
-			}
-			if(this.state.ratio > 1 && this.is_epoch_over() && this.state.locked_cycle_count < 100) {
-				this.do_game_reset();
-				return true;
-			}
-			return false;
-		}
-		do_game_reset(){
-			if(!this.timeout_ms){
-				this.timeout_ms=300;
-			};
-			this.next_timeout(this.game_reset_step_1, this.round(this.timeout_ms / 3), '1R');
-			this.on_repeat_r();
-		}
-		do_audio_mute_toggle(){
-			if(!AudioMuted){
-				// this.background_audio.muted=!this.background_audio.muted;
-				window.mute();
-			}
-		}
-		game_reset_step_1(){
-			this.do_audio_mute_toggle();
-			this.next_timeout(this.game_reset_step_2, 60*5*1000, '2R');
-		}
-		game_reset_step_2(){
-			this.do_audio_mute_toggle();
-			this.next_timeout(this.game_reset_finish, 60*5*1000, '3R');
-		}
-		game_reset_finish(){
-			this.update_hours_played();
-			let str=this.dom_map.get("time_played_str");
-			if(typeof str=='string'){
-				this.dispatch_on_game_reset_finish(str);
-			} else {
-				this.dispatch_on_game_reset_finish("0.000");
-			}
 		}
 		/**@arg {string} time_played */
 		dispatch_on_game_reset_finish(time_played){
