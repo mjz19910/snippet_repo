@@ -198,15 +198,18 @@
 			if(this.execute_instruction !== AbstractVM.prototype.execute_instruction)return;
 			throw new Error("Abstract function");
 		}
+	}
+	class AbstractVMTemplate extends AbstractVM {
 		/**
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction_t(instruction){
 			switch(instruction[0]) {
-				default/*Base class*/:this.execute_instruction(instruction);break;
+				default/*Base class*/:super.execute_instruction(instruction);break;
 			}
 		}
 	}
+	void AbstractVMTemplate;
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 	class BaseVMCreate extends AbstractVM {
 		/**@arg {InstructionType[]} instructions */
@@ -351,6 +354,7 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction){
+			debugger;
 			switch(instruction[0]) {
 				case 'push'/*Stack*/: {
 					for(let i = 0; i < instruction.length-1; i++) {
@@ -432,6 +436,7 @@
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
+			debugger;
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
 					this.push(new VMBoxedStackVM(this));
@@ -1588,6 +1593,7 @@
 		}
 		/**@arg {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} instruction */
 		execute_instruction(instruction) {
+			debugger;
 			l_log_if(LOG_LEVEL_INFO, ...instruction, null);
 			switch(instruction[0]) {
 				case 'exec':{
