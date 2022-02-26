@@ -1908,7 +1908,10 @@
 					}
 					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
 				} break;
-				default/*Base class*/:console.error("Need instruction: "+instruction[0]);break;
+				default/*Base class*/:{
+					console.error("Need instruction: "+instruction[0]);
+					debugger;
+				} break;
 			}
 		}
 		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
