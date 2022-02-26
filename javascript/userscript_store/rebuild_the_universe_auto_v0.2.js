@@ -838,6 +838,163 @@
 			this.run(new VMBoxedObjectR(event));
 		}
 	}
+	/**@typedef {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} IDomInstructionSet */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} StackVMTypeZ */
+	/**@implements {StackVMTypeZ} */
+	class DomBuilderVM {
+		/**@type {VMValue} */
+		return_value;
+		/**@arg {IDomInstructionSet[]} instructions */
+		constructor(instructions) {
+			this.instructions=instructions;
+			this.instruction_pointer=0;
+			this.return_value = void 0;
+			/**
+			 * @type {VMValue[]}
+			 */
+			this.stack=[];
+			/**
+			 * @type {[VMValue[], IDomInstructionSet[]][]}
+			 */
+			this.exec_stack=[];
+			this.jump_instruction_pointer=null;
+		}
+		/**
+		 * @param {VMValue} v
+		 */
+		push(v){
+			this.stack.push(v);
+		}
+		pop(){
+			return this.stack.pop();
+		}
+		/**
+		 * @param {number} operand_number_of_arguments
+		 * @return {VMValue[]}
+		 */
+		pop_arg_count(operand_number_of_arguments){
+			let arguments_arr=[];
+			let arg_count=operand_number_of_arguments;
+			for(let i = 0; i < arg_count; i++) {
+				if(this.stack.length <= 0){
+					throw new Error('stack underflow in pop_arg_count');
+				}
+				arguments_arr.unshift(this.pop());
+			}
+			return arguments_arr;
+		}
+		/**@arg {IDomInstructionSet} instruction */
+		execute_instruction(instruction) {
+			/**@type {('exec'|'peek'|'dom_append')[]}*/
+			let handled_instructions=['exec', 'peek', 'dom_append'];
+			let op_code=instruction[0];
+			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
+				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+			}
+			switch(instruction[0]) {
+				case 'exec':{
+					this.exec_stack.push([this.stack, this.instructions]);
+					let base_ptr=this.stack.length;
+					// advance the instruction pointer, when we return we want to resume
+					// at the next instruction...
+					this.instruction_pointer++;
+					this.stack.push(this.instruction_pointer, base_ptr);
+					this.stack=[];
+					let new_instruction_stream=instruction[1];
+					this.instructions=new_instruction_stream;
+					this.jump_instruction_pointer=0;
+					l_log_if(LOG_LEVEL_INFO, 'exec', ...instruction[1]);
+				} break;
+				case 'peek':{
+					let [, op_1, op_2]=instruction;
+					let peek_stack=this.exec_stack[op_1][0];
+					let base_ptr=peek_stack.at(-1);
+					if(typeof base_ptr!='number')throw new Error("Invalid");
+					let at=peek_stack[base_ptr - op_2 - 1];
+					this.push(at);
+					l_log_if(LOG_LEVEL_INFO, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
+				} break;
+				case 'dom_append':{
+					if(this.stack.length <= 0){
+						throw new Error('stack underflow');
+					}
+					let target=this.pop();
+					if(this.stack.length <= 0){
+						throw new Error('stack underflow');
+					}
+					let child_to_append=this.pop();
+					if(typeof child_to_append!='object')throw 1;
+					if(typeof target!='object')throw 1;
+					if(this.can_use_box(target) && this.can_use_box(child_to_append)){
+						if(child_to_append.from !== 'create'){
+							console.warn('Are you sure you want to move elements around? child_to_append was not an element you created', child_to_append);
+						}
+						if(target.value && child_to_append.value){
+							target.value.appendChild(child_to_append.value);
+						} else {
+							console.assert(false, 'box has no value');
+						}
+					} else {
+						throw new Error("Invalid VMBoxedDomValue");
+					}
+					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
+				} break;
+				default/*Base class*/:{
+					console.error("Need instruction: "+instruction[0]);
+					debugger;
+				} break;
+			}
+		}
+		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
+		/**
+		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
+		 * @returns {box is VMBoxedDomValue}
+		 */
+		can_use_box(box){
+			return typeof box=='object' && box!==null && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
+		}
+		/**
+		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
+		 */
+		verify_dom_box(box){
+			if(typeof box!='object')throw new Error("invalid Box (not an object)");
+			if(box===null)throw new Error("invalid Box (is null)");
+			if(box.type===void 0)throw new Error("Invalid Box (no type)");
+			if(box.type != 'dom_value')throw new Error("Unbox failed not a VMBoxedDomValue");
+			if(typeof box.from != 'string')throw new Error("Unbox failed Box.from is not a string");
+			if(typeof box.value != 'object')throw new Error("Unbox failed: Box is not boxing an object");
+		}
+		run() {
+			this.running = true;
+			while(this.instruction_pointer < this.instructions.length && this.running) {
+				let instruction = this.instructions[this.instruction_pointer];
+				this.execute_instruction(instruction);
+				if(this.jump_instruction_pointer != null){
+					this.instruction_pointer=this.jump_instruction_pointer;
+					this.jump_instruction_pointer=null;
+				}else{
+					this.instruction_pointer++;
+				}
+				if(this.instruction_pointer >= this.instructions.length){
+					if(this.exec_stack.length > 0){
+						let exec_top=this.exec_stack.pop();
+						if(!exec_top)throw 1;
+						[this.stack, this.instructions]=exec_top;
+						let base_ptr=this.stack.pop();
+						let instruction_ptr=this.stack.pop();
+						if(instruction_ptr===void 0)throw new Error("Stack underflow");
+						if(typeof instruction_ptr!='number')throw new Error("Invalid");
+						this.instruction_pointer=instruction_ptr;
+						l_log_if(LOG_LEVEL_INFO, 'returned to', this.instruction_pointer, this.exec_stack.length);
+						continue;
+					}
+					l_log_if(LOG_LEVEL_INFO, 'reached end of instruction stream, nothing to return too', instruction, this.instructions, this.instruction_pointer);
+				}
+			}
+			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
+			return this.return_value;
+		}
+	}
 	class CompressionStatsCalculator {
 		constructor(){
 			/**
@@ -1798,163 +1955,6 @@
 	/**@type {<T, U extends T>(_v:T, x?:U)=>_v is U} */
 	function assume_equal(_v, _q) {
 		return true;
-	}
-	/**@typedef {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} IDomInstructionSet */
-	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} StackVMTypeZ */
-	/**@implements {StackVMTypeZ} */
-	class DomBuilderVM {
-		/**@type {VMValue} */
-		return_value;
-		/**@arg {IDomInstructionSet[]} instructions */
-		constructor(instructions) {
-			this.instructions=instructions;
-			this.instruction_pointer=0;
-			this.return_value = void 0;
-			/**
-			 * @type {VMValue[]}
-			 */
-			this.stack=[];
-			/**
-			 * @type {[VMValue[], IDomInstructionSet[]][]}
-			 */
-			this.exec_stack=[];
-			this.jump_instruction_pointer=null;
-		}
-		/**
-		 * @param {VMValue} v
-		 */
-		push(v){
-			this.stack.push(v);
-		}
-		pop(){
-			return this.stack.pop();
-		}
-		/**
-		 * @param {number} operand_number_of_arguments
-		 * @return {VMValue[]}
-		 */
-		pop_arg_count(operand_number_of_arguments){
-			let arguments_arr=[];
-			let arg_count=operand_number_of_arguments;
-			for(let i = 0; i < arg_count; i++) {
-				if(this.stack.length <= 0){
-					throw new Error('stack underflow in pop_arg_count');
-				}
-				arguments_arr.unshift(this.pop());
-			}
-			return arguments_arr;
-		}
-		/**@arg {IDomInstructionSet} instruction */
-		execute_instruction(instruction) {
-			/**@type {('exec'|'peek'|'dom_append')[]}*/
-			let handled_instructions=['exec', 'peek', 'dom_append'];
-			let op_code=instruction[0];
-			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
-			}
-			switch(instruction[0]) {
-				case 'exec':{
-					this.exec_stack.push([this.stack, this.instructions]);
-					let base_ptr=this.stack.length;
-					// advance the instruction pointer, when we return we want to resume
-					// at the next instruction...
-					this.instruction_pointer++;
-					this.stack.push(this.instruction_pointer, base_ptr);
-					this.stack=[];
-					let new_instruction_stream=instruction[1];
-					this.instructions=new_instruction_stream;
-					this.jump_instruction_pointer=0;
-					l_log_if(LOG_LEVEL_INFO, 'exec', ...instruction[1]);
-				} break;
-				case 'peek':{
-					let [, op_1, op_2]=instruction;
-					let peek_stack=this.exec_stack[op_1][0];
-					let base_ptr=peek_stack.at(-1);
-					if(typeof base_ptr!='number')throw new Error("Invalid");
-					let at=peek_stack[base_ptr - op_2 - 1];
-					this.push(at);
-					l_log_if(LOG_LEVEL_INFO, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
-				} break;
-				case 'dom_append':{
-					if(this.stack.length <= 0){
-						throw new Error('stack underflow');
-					}
-					let target=this.pop();
-					if(this.stack.length <= 0){
-						throw new Error('stack underflow');
-					}
-					let child_to_append=this.pop();
-					if(typeof child_to_append!='object')throw 1;
-					if(typeof target!='object')throw 1;
-					if(this.can_use_box(target) && this.can_use_box(child_to_append)){
-						if(child_to_append.from !== 'create'){
-							console.warn('Are you sure you want to move elements around? child_to_append was not an element you created', child_to_append);
-						}
-						if(target.value && child_to_append.value){
-							target.value.appendChild(child_to_append.value);
-						} else {
-							console.assert(false, 'box has no value');
-						}
-					} else {
-						throw new Error("Invalid VMBoxedDomValue");
-					}
-					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
-				} break;
-				default/*Base class*/:{
-					console.error("Need instruction: "+instruction[0]);
-					debugger;
-				} break;
-			}
-		}
-		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
-		/**
-		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
-		 * @returns {box is VMBoxedDomValue}
-		 */
-		can_use_box(box){
-			return typeof box=='object' && box!==null && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
-		}
-		/**
-		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
-		 */
-		verify_dom_box(box){
-			if(typeof box!='object')throw new Error("invalid Box (not an object)");
-			if(box===null)throw new Error("invalid Box (is null)");
-			if(box.type===void 0)throw new Error("Invalid Box (no type)");
-			if(box.type != 'dom_value')throw new Error("Unbox failed not a VMBoxedDomValue");
-			if(typeof box.from != 'string')throw new Error("Unbox failed Box.from is not a string");
-			if(typeof box.value != 'object')throw new Error("Unbox failed: Box is not boxing an object");
-		}
-		run() {
-			this.running = true;
-			while(this.instruction_pointer < this.instructions.length && this.running) {
-				let instruction = this.instructions[this.instruction_pointer];
-				this.execute_instruction(instruction);
-				if(this.jump_instruction_pointer != null){
-					this.instruction_pointer=this.jump_instruction_pointer;
-					this.jump_instruction_pointer=null;
-				}else{
-					this.instruction_pointer++;
-				}
-				if(this.instruction_pointer >= this.instructions.length){
-					if(this.exec_stack.length > 0){
-						let exec_top=this.exec_stack.pop();
-						if(!exec_top)throw 1;
-						[this.stack, this.instructions]=exec_top;
-						let base_ptr=this.stack.pop();
-						let instruction_ptr=this.stack.pop();
-						if(instruction_ptr===void 0)throw new Error("Stack underflow");
-						if(typeof instruction_ptr!='number')throw new Error("Invalid");
-						this.instruction_pointer=instruction_ptr;
-						l_log_if(LOG_LEVEL_INFO, 'returned to', this.instruction_pointer, this.exec_stack.length);
-						continue;
-					}
-					l_log_if(LOG_LEVEL_INFO, 'reached end of instruction stream, nothing to return too', instruction, this.instructions, this.instruction_pointer);
-				}
-			}
-			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
-			return this.return_value;
-		}
 	}
 	class DataLoader {
 		static int_parser=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
