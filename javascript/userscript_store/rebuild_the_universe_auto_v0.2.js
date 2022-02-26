@@ -692,7 +692,9 @@
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
 			this.instructions=instructions;
-			this.instruction_pointer=0;
+			this.instruction_ptr=0;
+			/**@type {number|null} */
+			this.stack_base_ptr=null;
 			this.return_value = void 0;
 			/**
 			 * @type {VMValue[]}
@@ -717,7 +719,7 @@
 		 * @param {number} operand_number_of_arguments
 		 * @return {VMValue[]}
 		 */
-		pop_arg_count(operand_number_of_arguments){
+		pop_arg_count(operand_number_of_arguments) {
 			let arguments_arr=[];
 			let arg_count=operand_number_of_arguments;
 			for(let i = 0; i < arg_count; i++) {
@@ -737,19 +739,7 @@
 				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
 			}
 			switch(instruction[0]) {
-				case 'exec':{
-					this.exec_stack.push([this.stack, this.instructions]);
-					let base_ptr=this.stack.length;
-					// advance the instruction pointer, when we return we want to resume
-					// at the next instruction...
-					this.instruction_pointer++;
-					this.stack.push(this.instruction_pointer, base_ptr);
-					this.stack=[];
-					let new_instruction_stream=instruction[1];
-					this.instructions=new_instruction_stream;
-					this.jump_instruction_pointer=0;
-					l_log_if(LOG_LEVEL_INFO, 'exec', ...instruction[1]);
-				} break;
+				case 'exec':throw new Error("Disabled");
 				case 'peek':{
 					let [, op_1, op_2]=instruction;
 					let peek_stack=this.exec_stack[op_1][0];
@@ -803,11 +793,20 @@
 				case 'je':break;
 				case 'jmp':break;
 				case 'vm_return':{
-					if(!this.exec_stack.length){
+					if(this.stack_base_ptr === null) {
 						this.running=false;
+					} else {
+						let at=this.stack[this.stack_base_ptr];
+						console.log(this.stack_base_ptr, at);
 					}
 				} break;
-				case 'vm_call':break;
+				case 'vm_call':{
+					let base_ptr=this.stack_base_ptr;
+					let new_base_ptr = this.stack.length;
+					this.instruction_ptr++;
+					this.stack.push(this.instruction_ptr, base_ptr);
+					this.stack_base_ptr = new_base_ptr;
+				} break;
 				case 'push_pc':break;
 				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
 				case 'modify_operand':break;
@@ -838,16 +837,16 @@
 		}
 		run() {
 			this.running = true;
-			while(this.instruction_pointer < this.instructions.length && this.running) {
-				let instruction = this.instructions[this.instruction_pointer];
+			while(this.instruction_ptr < this.instructions.length && this.running) {
+				let instruction = this.instructions[this.instruction_ptr];
 				this.execute_instruction(instruction);
 				if(this.jump_instruction_pointer != null){
-					this.instruction_pointer=this.jump_instruction_pointer;
+					this.instruction_ptr=this.jump_instruction_pointer;
 					this.jump_instruction_pointer=null;
 				}else{
-					this.instruction_pointer++;
+					this.instruction_ptr++;
 				}
-				if(this.instruction_pointer >= this.instructions.length){
+				if(this.instruction_ptr >= this.instructions.length){
 					if(this.exec_stack.length > 0){
 						let exec_top=this.exec_stack.pop();
 						if(!exec_top)throw 1;
@@ -856,11 +855,11 @@
 						let instruction_ptr=this.stack.pop();
 						if(instruction_ptr===void 0)throw new Error("Stack underflow");
 						if(typeof instruction_ptr!='number')throw new Error("Invalid");
-						this.instruction_pointer=instruction_ptr;
-						l_log_if(LOG_LEVEL_INFO, 'returned to', this.instruction_pointer, this.exec_stack.length);
+						this.instruction_ptr=instruction_ptr;
+						l_log_if(LOG_LEVEL_INFO, 'returned to', this.instruction_ptr, this.exec_stack.length);
 						continue;
 					}
-					l_log_if(LOG_LEVEL_INFO, 'reached end of instruction stream, nothing to return too', instruction, this.instructions, this.instruction_pointer);
+					l_log_if(LOG_LEVEL_INFO, 'reached end of instruction stream, nothing to return too', instruction, this.instructions, this.instruction_ptr);
 				}
 			}
 			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
