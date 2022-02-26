@@ -1,4 +1,4 @@
-import {InstructionType, VMInterface, VMBoxedArray, VMIndexedCallableValue, VMBoxedGlobalThis, VMBoxedInstructionTypeArray, VMIndexedObjectValue, VMBoxedStackVM, VMBoxedUndefined, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
+import {InstructionType, VMInterface, VMBoxedArray, VMIndexedCallableValue, VMBoxedGlobalThis, VMBoxedInstructionTypeArray, VMIndexedObjectValue, VMBoxedStackVM, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
@@ -1423,6 +1423,16 @@ class SimpleStackVM implements VMInterface {
 	}
 	pop() {
 		return this.stack.pop();
+	}
+	 pop_arg_count(arg_count:number):VMValue[] {
+		let ret=[];
+		for(let i = 0; i < arg_count; i++) {
+			if(this.stack.length <= 0){
+				throw new Error('stack underflow in pop_arg_count');
+			}
+			ret.unshift(this.pop());
+		}
+		return ret;
 	}
 	run(...run_arguments: VMValue[]) {
 		this.running = true;
