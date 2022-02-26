@@ -704,6 +704,7 @@
 			 * @type {[VMValue[], InstructionType[]][]}
 			 */
 			this.exec_stack=[];
+			/**@type {number|null} */
 			this.jump_instruction_pointer=null;
 		}
 		/**
@@ -798,14 +799,23 @@
 					} else {
 						let at=this.stack[this.stack_base_ptr];
 						console.log(this.stack_base_ptr, at);
+						this.stack.length=this.stack_base_ptr;
+						let base_ptr=this.stack.pop();
+						if(base_ptr === null || typeof base_ptr=='number'){
+							this.stack_base_ptr=base_ptr;
+						} else {
+							throw new Error("Invalid base ptr");
+						}
+						let instruction_ptr=this.pop();
+						if(typeof instruction_ptr!='number')throw new Error("Invalid");
+						this.instruction_ptr=instruction_ptr;
 					}
 				} break;
 				case 'vm_call':{
 					let base_ptr=this.stack_base_ptr;
-					let new_base_ptr = this.stack.length;
 					this.instruction_ptr++;
 					this.stack.push(this.instruction_ptr, base_ptr);
-					this.stack_base_ptr = new_base_ptr;
+					this.stack_base_ptr = this.stack.length;
 				} break;
 				case 'push_pc':break;
 				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
