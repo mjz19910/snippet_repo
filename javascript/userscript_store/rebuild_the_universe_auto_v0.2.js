@@ -48,12 +48,12 @@
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").VMValue} VMValue */
-	/**@typedef {import("types/SimpleVMTypes.js").VMInterface} VMInterface */
-	/**@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMValue */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
+	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 
 
-	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
 	/**@implements {VMBoxedCSSStyleSheetConstructor} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
@@ -76,7 +76,7 @@
 			return null;
 		}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedCSSStyleSheet} VMBoxedCSSStyleSheet */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheet} VMBoxedCSSStyleSheet */
 	/**@implements {VMBoxedCSSStyleSheet} */
 	class VMBoxedCSSStyleSheetR {
 		/**@type {"instance_box"} */
@@ -92,7 +92,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedPromise} VMBoxedPromise */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedPromise} VMBoxedPromise */
 	/**@implements {VMBoxedPromise} */
 	class VMBoxedPromiseR {
 		/**@type {"promise"} */
@@ -108,7 +108,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").VMNewableFunction} VMBoxedNewableFunction */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMNewableFunction} VMBoxedNewableFunction */
 	/**@implements {VMBoxedNewableFunction} */
 	class VMBoxedNewableFunctionR {
 		/**@type {"constructor_box"} */
@@ -132,7 +132,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").VMCallableFunction} VMBoxedCallableFunction */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMCallableFunction} VMBoxedCallableFunction */
 	/**@implements {VMBoxedCallableFunction} */
 	class VMBoxedCallableFunctionR {
 		/**@type {"callable_box"} */
@@ -285,7 +285,7 @@
 			}
 		}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
+	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
 	class InstructionConstructE {
 		/**@arg {InstructionConstruct} instruction @arg {VMInterface} vm */
 		static execute_instruction(vm, instruction){
@@ -607,7 +607,7 @@
 			}
 		}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedStackVM} VMBoxedStackVM */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedStackVM} VMBoxedStackVM */
 	/**@implements {VMBoxedStackVM} */
 	class VMBoxedStackVMR {
 		/**@type {"custom_box"} */
@@ -623,7 +623,7 @@
 			this.value = value;
 		}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedWindow} VMBoxedWindow */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedWindow} VMBoxedWindow */
 	/**@implements {VMBoxedWindow} */
 	class VMBoxedWindowR {
 		/**@type {"object_box"} */
@@ -824,16 +824,16 @@
 				} break;
 			}
 		}
-		/**@typedef {import("types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
+		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
 		/**
-		 * @param {import("types/SimpleVMTypes.js").VMValue} box
+		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
 		 * @returns {box is VMBoxedDomValue}
 		 */
 		can_use_box(box){
 			return typeof box=='object' && box!==null && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
 		}
 		/**
-		 * @param {import("types/SimpleVMTypes.js").VMValue} box
+		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
 		 */
 		verify_dom_box(box){
 			if(typeof box!='object')throw new Error("invalid Box (not an object)");
@@ -1006,7 +1006,7 @@
 		}
 	}
 	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
-	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
 	/**@implements {VMBoxedObject} */
 	class VMBoxedObjectR {
 		/**@type {"object_box"} */
@@ -2015,7 +2015,7 @@
 		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
-	/**@typedef {import("types/SimpleVMTypes.js").VMReturnsBoxedVoidPromise} VMReturnsBoxedVoidPromise */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMReturnsBoxedVoidPromise} VMReturnsBoxedVoidPromise */
 	/**@implements {VMReturnsBoxedVoidPromise} */
 	class VMReturnsBoxedVoidPromiseR {
 		/**@type {"function_box"} */
@@ -2328,7 +2328,7 @@
 				}
 			}
 			let bound_this=this;
-			/**@typedef {import("types/SimpleVMTypes.js").VMBoxedVoidPromise} VMBoxedVoidPromise */
+			/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedVoidPromise} VMBoxedVoidPromise */
 			/**@implements {VMBoxedVoidPromise} */
 			class VMBoxedVoidPromiseR {
 				/**@type {"promise"} */
@@ -2522,24 +2522,29 @@
 		}
 		/**
 		 * @arg {InstructionWithDepth[]} stack
-		 * @returns {InstructionType[]}
 		 */
-		parse_dom_stack(stack) {
-			/**@type {['exec', InstructionType[]]} */
-			/**@type {InstructionType[][]} */
-			let instructions=[];
-			let depths=[];
+		parse_dom_stack(stack){
+			/**@type {InstructionType[]} */
+			let ret=[];
 			let cur_depth=0;
 			for(let i=0;i<stack.length;i++){
 				let cur=stack[i];
-				depths.push(cur[0]);
-				const [, ...rest]=cur;
-				if(!instructions[cur_depth])instructions[cur_depth]=[];
-				instructions[cur_depth].push(rest);
+				switch(cur[0] - cur_depth) {
+					case 1:{
+						console.log('dom_stack +');
+					} break;
+					case 0:{
+						const [, ...rest]=cur;
+						ret.push(rest);
+					} break;
+					case -1:{
+						console.log('dom_stack -');
+					}
+					default:{
+						console.assert(false, 'handle depth change in apply_dom_desc %o', cur[0] - cur_depth);
+					}
+				}
 			}
-			/**@type {InstructionType[]} */
-			let ret=[];
-			debugger;
 			return ret;
 		}
 		init_dom(){
@@ -4121,7 +4126,7 @@
 			do_page_replace();
 		} else if (non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version"){
 			do_page_replace();
-		}else if(non_proto_url == "//rebuildtheuniverse.com/?real=1") {
+		}else if(non_proto_url == "//rebuildtheuniverse.com/?type=real") {
 			on_dom_load();
 		} else if(non_proto_url == "//rebuildtheuniverse.com/"){
 			window.setTimeout=real_st;
