@@ -802,7 +802,11 @@
 				case 'breakpoint':break;
 				case 'je':break;
 				case 'jmp':break;
-				case 'vm_return':break;
+				case 'vm_return':{
+					if(!this.exec_stack.length){
+						this.running=false;
+					}
+				} break;
 				case 'vm_call':break;
 				case 'push_pc':break;
 				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
@@ -2559,7 +2563,6 @@
 			}
 			for(let i=0;i<flat_stack.length;i++){
 					let instruction=flat_stack[i];
-					console.log('i', i, instruction);
 					if(instruction[0] === 'vm_call_at'){
 						let idx=flat_stack.indexOf(instruction[1]);
 						instructions.push(['vm_call', idx]);
