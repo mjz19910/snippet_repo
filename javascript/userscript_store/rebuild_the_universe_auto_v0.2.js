@@ -2527,29 +2527,24 @@
 		}
 		/**
 		 * @arg {InstructionWithDepth[]} stack
+		 * @returns {InstructionType[]}
 		 */
-		parse_dom_stack(stack){
-			/**@type {InstructionType[]} */
-			let ret=[];
+		parse_dom_stack(stack) {
+			/**@type {['exec', InstructionType[]]} */
+			/**@type {InstructionType[][]} */
+			let instructions=[];
+			let depths=[];
 			let cur_depth=0;
 			for(let i=0;i<stack.length;i++){
 				let cur=stack[i];
-				switch(cur[0] - cur_depth) {
-					case 1:{
-						console.log('dom_stack +');
-					} break;
-					case 0:{
-						const [, ...rest]=cur;
-						ret.push(rest);
-					} break;
-					case -1:{
-						console.log('dom_stack -');
-					}
-					default:{
-						console.assert(false, 'handle depth change in apply_dom_desc %o', cur[0] - cur_depth);
-					}
-				}
+				depths.push(cur[0]);
+				const [, ...rest]=cur;
+				if(!instructions[cur_depth])instructions[cur_depth]=[];
+				instructions[cur_depth].push(rest);
 			}
+			/**@type {InstructionType[]} */
+			let ret=[];
+			debugger;
 			return ret;
 		}
 		init_dom(){
