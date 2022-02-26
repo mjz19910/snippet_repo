@@ -12,6 +12,7 @@
 // @match			https://rebuildtheuniverse.com/mjz_version/*
 // @match			https://rebuildtheuniverse.com/mjz_version/
 // @match			https://rebuildtheuniverse.com/?real=1
+// @match			https://rebuildtheuniverse.com/?type=mjz_version
 // @match			https://rebuildtheuniverse.com/
 // @match			https://test.rebuildtheuniverse.com
 // @run-at			document-start
@@ -442,45 +443,6 @@
 	function l_log_if(level, ...args){
 		if(level <= local_logging_level) {
 			console . log (...args);
-		}
-	}
-	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
-	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
-	class InstructionConstructE {
-		/**@arg {InstructionConstruct} instruction @arg {VMInterface} vm */
-		static execute_instruction(vm, instruction){
-			let number_of_arguments=instruction[1];
-			if(typeof number_of_arguments!='number')throw new Error("Invalid");
-			let [construct_target, ...construct_arr]=vm.pop_arg_count(number_of_arguments);
-			const a=construct_target;
-			if(typeof a!='object')throw new Error("Invalid");
-			if(a===null)throw new Error("Invalid");
-			if(a.type != 'constructor_box')throw new Error("Invalid");
-			if(a.from === 'typescript'){
-				let obj=new a.value(...construct_arr);
-				vm.push(obj);
-			} else if(a.from === 'javascript') {
-				if(a.constructor_type === 'CSSStyleSheet') {
-					/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
-					let valid_args={
-						s:[],
-						valid_count:0
-					}
-					for(let i=0;i<construct_arr.length;i++){
-						let val=construct_arr[i];
-						if(typeof val != 'object')continue;
-						if(val === null)continue;
-						if(val.type != 'shape_box')continue;
-						valid_args={
-							s:[val.value],
-							valid_count:1
-						}
-					}
-					let obj=new a.value(...valid_args.s);
-					vm.push(new VMBoxedCSSStyleSheetR(obj));
-				}
-			}
-			l_log_if(LOG_LEVEL_INFO, instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
 	class BaseStackVM extends BaseVMCreate {
@@ -1946,14 +1908,6 @@
 					}
 					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
 				} break;
-				case 'push'/*Stack*/: {
-					for(let i = 0; i < instruction.length-1; i++) {
-						let item = instruction[i+1];
-						this.push(item);
-					}
-				} break;
-				case 'drop'/*Stack*/:this.pop();break;
-				case 'construct':{}
 				default/*Base class*/:console.error("Need instruction: "+instruction[0]);break;
 			}
 		}
@@ -3850,118 +3804,130 @@
 	function page_url_no_protocol(){
 		return location.href.slice(location.protocol.length);
 	}
+	/**@arg {PopStateEvent} e */
+	function popstate_event_handler(e){
+		console.log('popstate', e.state, location.href);
+		if(e.state === null){
+			let non_proto_url=page_url_no_protocol();
+			if(non_proto_url == "//rebuildtheuniverse.com/mjz_version/") {
+				history.go(-1);
+			} else if(non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version"){
+				history.go(-1);
+			}
+		}
+		if(e.state){
+		} else {
+		}
+	}
+	function reset_global_event_handlers(init=false) {
+		if(window.onpopstate === null && !init){
+			console.info('lost onpopstate');
+		}
+		window.onpopstate=popstate_event_handler;
+	}
+	class BaseMutationObserver{
+		constructor() {
+			/**@type {MutationObserver|null} */
+			this.observer=null;
+		}
+		disconnect(){
+			if(!this.observer)return;
+			this.observer.disconnect();
+		}
+	}
+	class DetachedMutationObserver extends BaseMutationObserver {
+		/** @param {Node} target */
+		constructor(target) {
+			super();
+			let mutationObserver = new MutationObserver(this.callback);
+			let options={
+				subtree:true,
+				childList:true,
+				attributes:true,
+				attributeOldValue:true,
+				characterData:true,
+				characterDataOldValue:true,
+			}
+			mutationObserver.observe(target, options);
+			this.observer=mutationObserver;
+		}
+		/** @type {(mutations: MutationRecord[], observer: MutationObserver & {observer_state?:1|2})=>void} */
+		callback(mutations, observer) {
+			console.log('mut len', mutations.length);
+			if(observer.observer_state === void 0) {
+				observer.observer_state=1;
+			} else if(observer.observer_state == 1){
+				observer.observer_state=2;
+			} else if(observer.observer_state == 2){
+				console.log('already done', ...mutations);
+			}
+		}
+	}
+	class LoadMutationObserver extends BaseMutationObserver {
+		/**
+		 * @param {Node} target
+		 * @param {(mut_vec: MutationRecord[], mut_observer: MutationObserver) => void} callback
+		 */
+		constructor(target, callback) {
+			super();
+			this.m_callback=callback;
+			let mutationObserver = new MutationObserver(this.callback.bind(this));
+			let options={
+				childList:true,
+				subtree:true
+			};
+			mutationObserver.observe(target, options);
+			this.observer=mutationObserver;
+		}
+		/** @type {MutationCallback} */
+		callback(mutations, observer) {
+			this.m_callback(mutations, observer);
+		}
+	}
+	/**@type {BaseMutationObserver[]} */
+	let mut_observers=[];
+	window.g_mut_observers=mut_observers;
+	/**@type {<T extends U['prototype'], U extends {new ():V; prototype:V}, V>(a:any, b:U)=>a is T} */
+	function cast_T_extends_U_type(T_value, U_value) {
+		if(T_value instanceof U_value){
+			return true;
+		}
+		return false;
+	}
+	/**@type {<T extends U['prototype'], U extends {new ():V; prototype:V}, V>(a:any, b:U)=>T|null} */
+	function cast_value_T_to_U(a, b){
+		if(cast_T_extends_U_type(a, b)){
+			return a;
+		}
+		return null;
+	}
+	/**@type {(this:Node, node: Node, child: Node | null)=>boolean}*/
+	function insert_before_enabled(node, child) {
+		if(node instanceof HTMLScriptElement) {
+			let should_insert_1=dom_add_elm_filter(node);
+			if(!should_insert_1)return false;
+		}
+		if(child instanceof HTMLScriptElement) {
+			let should_insert_2=dom_add_elm_filter(child);
+			if(!should_insert_2)return false;
+		}
+		return true;
+	}
 	function main() {
 		if(location.pathname.match('test')){
 			return;
 		}
-		let is_detached_observer_needed=false;
 		reset_global_event_handlers(true);
 		enable_jquery_proxy_if_needed();
-		/**@type {any[]} */
-		let mut_observers=[];
-		window.g_mut_observers=mut_observers;
-		class DetachedMutationObserver {
-			/**
-			 * @param {Node} target
-			 */
-			constructor(target) {
-				let mutationObserver = new MutationObserver(this.callback);
-				let options={
-					subtree:true,
-					childList:true,
-					attributes:true,
-					attributeOldValue:true,
-					characterData:true,
-					characterDataOldValue:true,
-				}
-				mutationObserver.observe(target, options);
-				this.observer=mutationObserver;
-			}
-			/** @type {(mutations: MutationRecord[], observer: MutationObserver & {document_is_closed?:boolean})=>void} */
-			callback(mutations, observer){
-				if(is_detached_observer_needed && observer.document_is_closed === void 0){
-					document.close();
-					observer.document_is_closed=true;
-					return;
-				}
-				if(observer.document_is_closed){
-					should_close_on_mut=false;
-					return;
-				}
-				if(is_detached_observer_needed && !should_close_on_mut){
-					console.log('already done', ...mutations);
-					return;
-				}
-			}
-		}
-		class LoadMutationObserver {
-			/**
-			 * @param {Node} target
-			 * @param {(mut_vec: any, mut_observer: any) => void} callback
-			 */
-			constructor(target, callback){
-				this.m_callback=callback;
-				let mutationObserver = new MutationObserver(this.callback.bind(this));
-				let options={
-					childList:true,
-					subtree:true
-				};
-				mutationObserver.observe(target, options);
-			}
-			/** @type {MutationCallback} */
-			callback(mutations, observer) {
-				this.m_callback(mutations, observer);
-			}
-		}
-		/**@type {<T extends U, U>(a:any, b:U)=>a is T} */
-		function cast_T_extends_U(T, U){
-			let up=Object.getPrototypeOf(U);
-			let class_type=up.constructor;
-			if(T instanceof class_type){
-				return true;
-			}
-			return false;
-		}
-		void cast_T_extends_U;
-		/**@type {<T extends U['prototype'], U extends {new ():V; prototype:V}, V>(a:any, b:U)=>a is T} */
-		function cast_T_extends_U_type(T_value, U_value) {
-			if(T_value instanceof U_value){
-				return true;
-			}
-			return false;
-		}
-		/**@type {<T extends U['prototype'], U extends {new ():V; prototype:V}, V>(a:any, b:U)=>T|null} */
-		function cast_value_T_to_U(a, b){
-			if(cast_T_extends_U_type(a, b)){
-				return a;
-			}
-			return null;
-		}
-		var prev_node_prototype_insertBefore=Node.prototype.insertBefore;
-		/**@type {cast_T_extends_U_type<Node, HTMLScriptElement>} */
-		let cast_to_script=cast_T_extends_U_type;
 		document.addEventListener('onContentLoaded', do_dom_filter);
-		/**@type {(this:Node, node: Node, child: Node | null)=>Node}*/
-		function insertBefore_inject(element_to_insert, element_reference, ...rest){
-			console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
-			let cast_element_1=cast_value_T_to_U(element_to_insert, HTMLScriptElement);
-			let cast_element_2=cast_value_T_to_U(element_reference, HTMLScriptElement);
-			if(cast_element_1){
-				let should_insert_1=dom_add_elm_filter(cast_element_1);
-				if(!should_insert_1)return element_to_insert;
+		Node.prototype.insertBefore=new Proxy(Node.prototype.insertBefore, {
+			/**@arg {[Node, Node]} parameters */
+			apply(target, thisValue, parameters) {
+				if(insert_before_enabled(...parameters)){
+					return Reflect.apply(target, thisValue, parameters);
+				}
 			}
-			if(cast_element_2){
-				let should_insert_2=dom_add_elm_filter(cast_element_2);
-				if(!should_insert_2)return element_to_insert;
-			}
-			let ret=prev_node_prototype_insertBefore.call(this, element_to_insert, element_reference);
-			return ret;
-		}
-		/**@type {any} */
-		let as_any=insertBefore_inject;
-		/**@type {Node['insertBefore']} */
-		let as_insert_before_type=as_any;
-		Node.prototype.insertBefore=as_insert_before_type;
+		});
 		let document_write_list=new DocumentWriteList;
 		document_write_list.attach_proxy(document);
 		document_write_list.document_write_proxy;
@@ -4020,7 +3986,8 @@
 			const rb_html=await (await fetch(loc_url)).text();
 			{
 				let la=mut_observers.pop();
-				la.observer.disconnect();
+				if(!la)throw new Error("mut_observers underflow");
+				la.disconnect();
 			}
 			set_jq_proxy(window.$);
 			/**
@@ -4083,26 +4050,27 @@
 			mut_observers.push(new LoadMutationObserver(document, function(mut_vec, mut_observer){
 				let log_data_vec=[];
 				log_data_vec.push(mut_vec.length, document.body != null);
+				/**@type {HTMLScriptElement[]} */
 				let added_scripts=[];
+				/**@type {HTMLScriptElement[]} */
 				let removed_scripts=[];
-				let cur_node;
 				for(let i=0;i<mut_vec.length;i++){
 					let mut_rec=mut_vec[i];
-					let add_node_list=[...mut_rec.addedNodes];
+					let add_node_list=mut_rec.addedNodes;
 					for(let j=0;j<add_node_list.length;j++){
-						cur_node=add_node_list[j];
+						let cur_node=add_node_list[j];
 						if(!cur_node){
 							debugger;
 							continue;
 						}
-						if(cur_node && cur_node.tagName === "SCRIPT"){
+						if(cur_node instanceof HTMLScriptElement) {
 							added_scripts.push(cur_node);
 						}
 					}
-					let remove_node_list=[...mut_rec.removedNodes];
+					let remove_node_list=mut_rec.removedNodes;
 					for(let j=0;j<remove_node_list.length;j++){
-						cur_node=remove_node_list[j];
-						if(cur_node.tagName === "SCRIPT"){
+						let cur_node=remove_node_list[j];
+						if(cur_node instanceof HTMLScriptElement) {
 							removed_scripts.push(cur_node);
 						}
 					}
@@ -4139,7 +4107,6 @@
 				}
 			}
 		}
-		let should_close_on_mut=false;
 		function on_dom_load(){
 			window.setTimeout=real_st;
 			window.setInterval=real_si;
@@ -4149,18 +4116,19 @@
 			});
 		}
 		function do_page_replace(){
-			is_detached_observer_needed=true;
 			mut_observers.push(new DetachedMutationObserver(document));
 			reset_global_event_handlers();
 			document.writeln(`<head></head><body></body>`);
 			reset_global_event_handlers();
 			do_fetch_load();
-			should_close_on_mut=true;
+			document.close();
 		}
 		let non_proto_url=page_url_no_protocol();
 		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version/") {
 			do_page_replace();
-		} else if(non_proto_url == "//rebuildtheuniverse.com/?real=1") {
+		} else if (non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version"){
+			do_page_replace();
+		}else if(non_proto_url == "//rebuildtheuniverse.com/?real=1") {
 			on_dom_load();
 		} else if(non_proto_url == "//rebuildtheuniverse.com/"){
 			window.setTimeout=real_st;
@@ -4173,20 +4141,4 @@
 	}
 	console.log('re main 1');
 	main();
-	/**@arg {PopStateEvent} e */
-	function popstate_event_handler(e){
-		console.log('popstate', e.state, location.href);
-		if(e.state === null && page_url_no_protocol() == "//rebuildtheuniverse.com/mjz_version/") {
-			history.go(-1);
-		}
-		if(e.state){
-		} else {
-		}
-	}
-	function reset_global_event_handlers(init=false) {
-		if(window.onpopstate === null && !init){
-			console.info('lost onpopstate');
-		}
-		window.onpopstate=popstate_event_handler;
-	}
 })();
