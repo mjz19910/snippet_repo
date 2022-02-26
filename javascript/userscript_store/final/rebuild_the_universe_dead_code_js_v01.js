@@ -168,3 +168,24 @@ class VMReturnsBoxedPromiseR {
 		this.value=value;
 	}
 }
+/**@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType */
+class VMTemplateImpl {
+		/** @arg {InstructionType} instruction */
+		execute_instruction(instruction){
+			switch(instruction[0]){
+				default:{
+					console.log('execute', instruction[0], instruction.slice(1));
+				} break;
+			}
+		}
+	}
+	class VMTemplate extends VMTemplateImpl {
+		/**
+		 * @param {InstructionType} instruction
+		 */
+		execute_instruction(instruction){
+			switch(instruction[0]) {
+				default/*Base class*/:super.execute_instruction(instruction);break;
+			}
+		}
+	}

@@ -53,7 +53,12 @@
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
+	/**@typedef {import("types/SimpleVMTypes.js").VMValue} VMValue */
+	/**@typedef {import("types/SimpleVMTypes.js").VMInterface} VMInterface */
+	/**@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType */
+
+
+	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
 	/**@implements {VMBoxedCSSStyleSheetConstructor} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
@@ -76,7 +81,7 @@
 			return null;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheet} VMBoxedCSSStyleSheet */
+	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedCSSStyleSheet} VMBoxedCSSStyleSheet */
 	/**@implements {VMBoxedCSSStyleSheet} */
 	class VMBoxedCSSStyleSheetR {
 		/**@type {"instance_box"} */
@@ -92,7 +97,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedPromise} VMBoxedPromise */
+	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedPromise} VMBoxedPromise */
 	/**@implements {VMBoxedPromise} */
 	class VMBoxedPromiseR {
 		/**@type {"promise"} */
@@ -108,7 +113,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMNewableFunction} VMBoxedNewableFunction */
+	/**@typedef {import("types/SimpleVMTypes.js").VMNewableFunction} VMBoxedNewableFunction */
 	/**@implements {VMBoxedNewableFunction} */
 	class VMBoxedNewableFunctionR {
 		/**@type {"constructor_box"} */
@@ -132,7 +137,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMCallableFunction} VMBoxedCallableFunction */
+	/**@typedef {import("types/SimpleVMTypes.js").VMCallableFunction} VMBoxedCallableFunction */
 	/**@implements {VMBoxedCallableFunction} */
 	class VMBoxedCallableFunctionR {
 		/**@type {"callable_box"} */
@@ -152,27 +157,6 @@
 		/**@arg {{(...a:VMValue[]) : VMValue}} value */
 		constructor(value){
 			this.value=value;
-		}
-	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMValue */
-	class VMTemplateImpl {
-		/** @arg {InstructionType} instruction */
-		execute_instruction(instruction){
-			switch(instruction[0]){
-				default:{
-					console.log('execute', instruction[0], instruction.slice(1));
-				} break;
-			}
-		}
-	}
-	class VMTemplate extends VMTemplateImpl {
-		/**
-		 * @param {InstructionType} instruction
-		 */
-		execute_instruction(instruction){
-			switch(instruction[0]) {
-				default/*Base class*/:super.execute_instruction(instruction);break;
-			}
 		}
 	}
 	/**@type {<T, X extends keyof T>(obj:{[V in keyof T]:T[V]}, key:X)=>{v:T[X]} | null} */
@@ -201,8 +185,7 @@
 			v:prop.value
 		};
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
-	class BaseVMCreate {
+	class StackVMImpl {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			this.instructions = instructions;
@@ -265,7 +248,7 @@
 					/**@type {[string, ...any[]]} */
 					let instruction_modify=instruction_1;
 					let value=null;
-					if(this instanceof BaseStackVM){
+					if(this instanceof StackVM){
 						value=this.pop();
 					} else {
 						let pop_fn=Object.getOwnPropertyDescriptor(this, 'pop');
@@ -286,13 +269,13 @@
 					instruction;
 					if(!this.hasOwnProperty('push')) {
 						throw new Error("push_pc requires a stack");
-					} else if (this instanceof BaseStackVM) {
+					} else if (this instanceof StackVM) {
 						this.push(this.instruction_pointer);
 					} else {
 						console.info('TODO: add instanceof check to push_pc');
 						/**@type {any} */
 						let this_as_any=this;
-						/**@type {this & {push:BaseStackVM['push'];}} */
+						/**@type {this & {push:StackVM['push'];}} */
 						let this_with_push=this_as_any;
 						let fn_ptr=safe_get(this_with_push, 'push');
 						if(!fn_ptr)throw new Error("push_pc requires a stack");
@@ -307,7 +290,7 @@
 			}
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
+	/**@typedef {import("types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
 	class InstructionConstructE {
 		/**@arg {InstructionConstruct} instruction @arg {VMInterface} vm */
 		static execute_instruction(vm, instruction){
@@ -488,7 +471,7 @@
 			this.target_obj[this.target_name](event);
 		}
 	}
-	class BaseStackVM extends BaseVMCreate {
+	class StackVM extends StackVMImpl {
 		/**@type {VMValue[]} */
 		stack;
 		/**@arg {InstructionType[]} instructions */
@@ -629,7 +612,7 @@
 			}
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedStackVM} VMBoxedStackVM */
+	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedStackVM} VMBoxedStackVM */
 	/**@implements {VMBoxedStackVM} */
 	class VMBoxedStackVMR {
 		/**@type {"custom_box"} */
@@ -645,7 +628,7 @@
 			this.value = value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedWindow} VMBoxedWindow */
+	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedWindow} VMBoxedWindow */
 	/**@implements {VMBoxedWindow} */
 	class VMBoxedWindowR {
 		/**@type {"object_box"} */
@@ -661,7 +644,7 @@
 			this.value = value;
 		}
 	}
-	class SimpleStackVM extends BaseStackVM {
+	class SimpleStackVM extends StackVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super(instructions);
@@ -734,7 +717,6 @@
 			this.run(new VMBoxedObjectR(event));
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
 	/**@implements {VMInterface} */
 	class DomBuilderVM {
 		/**@type {VMValue} */
@@ -847,16 +829,16 @@
 				} break;
 			}
 		}
-		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
+		/**@typedef {import("types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
 		/**
-		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
+		 * @param {import("types/SimpleVMTypes.js").VMValue} box
 		 * @returns {box is VMBoxedDomValue}
 		 */
 		can_use_box(box){
 			return typeof box=='object' && box!==null && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
 		}
 		/**
-		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
+		 * @param {import("types/SimpleVMTypes.js").VMValue} box
 		 */
 		verify_dom_box(box){
 			if(typeof box!='object')throw new Error("invalid Box (not an object)");
@@ -1029,7 +1011,7 @@
 		}
 	}
 	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
+	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
 	/**@implements {VMBoxedObject} */
 	class VMBoxedObjectR {
 		/**@type {"object_box"} */
@@ -2038,7 +2020,7 @@
 		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMReturnsBoxedVoidPromise} VMReturnsBoxedVoidPromise */
+	/**@typedef {import("types/SimpleVMTypes.js").VMReturnsBoxedVoidPromise} VMReturnsBoxedVoidPromise */
 	/**@implements {VMReturnsBoxedVoidPromise} */
 	class VMReturnsBoxedVoidPromiseR {
 		/**@type {"function_box"} */
@@ -2351,7 +2333,7 @@
 				}
 			}
 			let bound_this=this;
-			/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedVoidPromise} VMBoxedVoidPromise */
+			/**@typedef {import("types/SimpleVMTypes.js").VMBoxedVoidPromise} VMBoxedVoidPromise */
 			/**@implements {VMBoxedVoidPromise} */
 			class VMBoxedVoidPromiseR {
 				/**@type {"promise"} */
