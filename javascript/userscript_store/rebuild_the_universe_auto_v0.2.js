@@ -889,8 +889,8 @@
 		}
 		/**@arg {InstructionType} instruction */
 		execute_instruction(instruction) {
-			/**@type {('exec'|'peek'|'dom_append')[]}*/
-			let handled_instructions=['exec', 'peek', 'dom_append'];
+			/**@type {('exec'|'peek'|'append')[]}*/
+			let handled_instructions=['exec', 'peek', 'append'];
 			let op_code=instruction[0];
 			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
 				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
@@ -918,7 +918,7 @@
 					this.push(at);
 					l_log_if(LOG_LEVEL_INFO, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
 				} break;
-				case 'dom_append':{
+				case 'append':{
 					if(this.stack.length <= 0){
 						throw new Error('stack underflow');
 					}
@@ -2017,7 +2017,7 @@
 	/**@typedef {[number, 'get', string]} DomExecDescriptionI1 */
 	/**@typedef {[number, 'create', string, string, {[s:string]:VMValue}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
 	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
-	/**@typedef {[number, 'dom_append']} DomExecDescriptionI4 */
+	/**@typedef {[number, 'append']} DomExecDescriptionI4 */
 	/**@typedef {[number, 'push', null, VMReturnsBoxedVoidPromiseR]} DomExecDescriptionI5 */
 	/**@typedef {[number, 'new', VMValue, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
 	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
@@ -2255,7 +2255,7 @@
 				[0, 'get', 'body'],
 				[1, 'create', 'div', 'state_log', {id:'state_log'}],
 				[1, 'dup'],
-				[1, 'dom_append']
+				[1, 'append']
 			];
 			/**
 			 * @this {AutoBuy}
@@ -2348,15 +2348,15 @@
 			let raw_dom_arr=[
 				...create_state_log_arr,
 				[2, 'create', 'div', 'history', "?3"],
-				[2, 'dom_append'],
+				[2, 'append'],
 				[2, 'create', 'div', 'timeout_element', "0"],
-				[2, 'dom_append'],
+				[2, 'append'],
 				[2, 'create', 'div', 'hours_played', "0.000 hours"],
-				[2, 'dom_append'],
+				[2, 'append'],
 				[2, 'create', 'div', 'ratio', 0..toFixed(2)+"%"],
-				[2, 'dom_append'],
+				[2, 'append'],
 				[2, 'create', 'div', 'ratio_change', 0..toExponential(3)],
-				[2, 'dom_append'],
+				[2, 'append'],
 				[1, 'drop'],
 				[0, 'drop'],
 				...make_css_arr
@@ -2410,12 +2410,12 @@
 				return res;
 			}
 		}
-		/**@typedef {[number, ...(['breakpoint']|['drop']|['dup']|['dom_append'] | ['push', ...any[]] | ['peek', number, number] | ['construct', number] | ['call', number])]} DomInstructionBuildInstructionType */
+		/**@typedef {[number, ...InstructionType]} InstructionWithDepth */
 		/**
 		 * @param {DomExecDescription[]} raw_arr
 		 */
 		build_dom_from_desc(raw_arr, trg_map=new Map) {
-			/**@type {DomInstructionBuildInstructionType[]} */
+			/**@type {InstructionWithDepth[]} */
 			let stack=[];
 			let map=trg_map;
 			for(let i=0;i<raw_arr.length;i++) {
@@ -2455,7 +2455,7 @@
 						map.set(name, cur_element);
 						stack.push([depth, "push", new VMBoxedDomValueR('create', cur_element)]);
 					} break;
-					case 'dom_append':{
+					case 'append':{
 						let depth=cur_item[0];
 						/*peek at the return stack, up 1 depth*/
 						stack.push([depth, "peek", depth-1, 0]);
@@ -2499,7 +2499,7 @@
 			return '';
 		}
 		/**
-		 * @arg {DomInstructionBuildInstructionType[]} stack
+		 * @arg {InstructionWithDepth[]} stack
 		 */
 		parse_dom_stack(stack){
 			/**@type {InstructionType[]} */
@@ -3793,7 +3793,7 @@
 		console.log('popstate', e.state, location.href);
 		if(e.state === null){
 			let non_proto_url=page_url_no_protocol();
-			if(non_proto_url == "//rebuildtheuniverse.com/mjz_version/") {
+			if(non_proto_url == "//rebuildtheuniverse.com/mjz_version") {
 				history.go(-1);
 			} else if(non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version"){
 				history.go(-1);
@@ -4101,10 +4101,14 @@
 		function do_page_replace(){
 			mut_observers.push(new DetachedMutationObserver(document));
 			reset_global_event_handlers();
-			document.writeln(`<head></head><body></body>`);
-			reset_global_event_handlers();
-			do_fetch_load();
-			document.close();
+			new Promise(function(a){
+				setTimeout(a, 300);
+			}).then(()=>{
+				document.writeln(`<head></head><body></body>`);
+				reset_global_event_handlers();
+				do_fetch_load();
+				document.close();
+			});
 		}
 		let non_proto_url=page_url_no_protocol();
 		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {

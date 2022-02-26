@@ -295,25 +295,26 @@ export type InstructionPushInstructionPointer = ['push_pc'];
 export type InstructionConstruct = ['construct', number];
 export type InstructionModifyOperand = ['modify_operand', number, number];
 export type InstructionPeek = ['peek', number, number];
-export type DomInstructionAppend = ['dom_append'];
+export type InstructionAppend = ['append'];
 export type InstructionExec = ['exec', InstructionType[]];
 export type InstructionJumpJe = ['je', number];
 export type InstructionJumpAbs = ['jmp', number];
 export type AnyInstructionOperands = SkipItem0<InstructionType>;
 
-export type IStackInstructionType = InstructionPush | InstructionPeek | InstructionDrop;
+export type IStackInstructionType = InstructionPush | InstructionDup | InstructionPeek | InstructionDrop;
 export type IObjectInstructionType = InstructionGet;
 export type ICallInstructionType = InstructionCall | InstructionReturn;
 export type ITuringInstructionType = InstructionHalt;
 export type ISpecialInstructionType = InstructionPushArgs | InstructionThis | InstructionGlobal;
 export type IDebugInstructionType = InstructionBreakpoint;
 export type IInstructionJumpType = InstructionJumpJe | InstructionJumpAbs;
-export type IDomInstructions = DomInstructionAppend;
-export type InstructionType = IStackInstructionType | IObjectInstructionType |
+export type InstructionType =
+	IStackInstructionType | IObjectInstructionType |
 	ICallInstructionType | ITuringInstructionType |
 	ISpecialInstructionType | IDebugInstructionType | IInstructionJumpType |
 	InstructionPushInstructionPointer | InstructionConstruct |
-	InstructionModifyOperand | InstructionDup | InstructionExec;
+	InstructionModifyOperand | InstructionExec |
+	InstructionAppend;
 export class VMBoxedInstructionType extends VMBoxed<InstructionType> {};
 
 // --- Misc ---
