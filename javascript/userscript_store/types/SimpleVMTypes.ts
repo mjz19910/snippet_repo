@@ -307,11 +307,13 @@ export type ICallInstructionType = InstructionCall | InstructionReturn;
 export type ITuringInstructionType = InstructionHalt;
 export type ISpecialInstructionType = InstructionPushArgs | InstructionThis | InstructionGlobal;
 export type IDebugInstructionType = InstructionBreakpoint;
-export type IInstructionJumpType = InstructionJumpJe | InstructionJumpAbs;
+export type IVMJumpType = InstructionJumpJe | InstructionJumpAbs;
+export type IVMExecutionType = ['vm_return'] | ['vm_call', number];
 export type InstructionType =
 	IStackInstructionType | IObjectInstructionType |
 	ICallInstructionType | ITuringInstructionType |
-	ISpecialInstructionType | IDebugInstructionType | IInstructionJumpType |
+	ISpecialInstructionType | IDebugInstructionType |
+	IVMJumpType | IVMExecutionType |
 	InstructionPushInstructionPointer | InstructionConstruct |
 	InstructionModifyOperand | InstructionExec |
 	InstructionAppend;

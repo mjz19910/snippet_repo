@@ -2522,24 +2522,35 @@
 		}
 		/** @arg {InstructionWithDepth[]} stack @returns {InstructionType[]} */
 		parse_dom_stack(stack) {
+			/**@type {InstructionType[]} */
+			let ret=[];
 			// /**@type {['exec', InstructionType[]]} */
-			/**@type {(InstructionType|null)[][]} */
+			/**@type {(InstructionType|null|['inc_depth'|'dec_depth', number, number]|)[][]} */
 			let instructions=[];
 			/**@type {number[]} */
 			let depths=[];
 			for(let i=0;i<stack.length;i++){
 				let cur=stack[i];
 				const [cur_depth, ...cur_instruction]=cur;
+				ret.push(cur_instruction);
 				const prev_depth=depths.at(-1);
 				if(prev_depth != cur_depth && prev_depth) {
-					instructions[prev_depth].push(null);
+					instructions[prev_depth].push(['depth', prev_depth, cur_depth]);
+					if(cur_depth < prev_depth){
+						let ins_start_item=instructions[prev_depth][0];
+						let ins_start_index=ret.indexOf(ins_start_item);
+						/**@type {['vm_call', number]} */
+						let ins=['vm_call', ins_start_index];
+						ret.push(ins);
+						instructions[prev_depth - 1].push();
+					} else {
+						instructions[prev_depth].push(['vm_return']);
+					}
 				}
 				depths.push(cur_depth);
 				if(!instructions[cur_depth])instructions[cur_depth]=[];
 				instructions[cur_depth].push(cur_instruction);
 			}
-			/**@type {InstructionType[]} */
-			let ret=[];
 			console.log('parse_dom_stack', instructions, depths);
 			return ret;
 		}
