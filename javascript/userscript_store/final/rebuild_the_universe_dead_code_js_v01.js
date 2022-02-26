@@ -1,4 +1,7 @@
-
+/**@arg {string[]} arr @arg {string} key */
+function does_array_include(arr, key){
+	return arr.includes(key);
+}
 /**@typedef {import("../rebuild_the_universe_auto_typed_v0.2.js").AsyncTrigger} AsyncTriggerT */
 /**@implements {AsyncTriggerT} */
 class AsyncTrigger {

@@ -1795,10 +1795,6 @@
 			this.value=value;
 		}
 	}
-	/**@arg {string[]} arr @arg {string} key */
-	function does_array_include(arr, key){
-		return arr.includes(key);
-	}
 	/**@type {<T, U extends T>(_v:T, x?:U)=>_v is U} */
 	function assume_equal(_v, _q) {
 		return true;
