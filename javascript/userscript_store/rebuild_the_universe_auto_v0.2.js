@@ -10,6 +10,7 @@
 // @match			https://rebuildtheuniverse.com/?type=real
 // @match			https://rebuildtheuniverse.com/?type=mjz_version
 // @match			https://rebuildtheuniverse.com
+// @match           https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/
 // @run-at			document-start
 // @grant			none
 // ==/UserScript==
@@ -569,6 +570,9 @@
 					if(!target_obj)throw new Error("Invalid");
 					if(typeof target_name!='string')throw new Error("Invalid");
 					if(typeof target_obj!='object')throw new Error("Invalid");
+					if(target_obj.type == 'custom_box'){
+						this.push(target_obj.value[target_name]);
+					}
 					if(target_obj.type != 'object_index')throw new Error("Invalid");
 					this.push(target_obj.value[target_name]);
 				} break;
@@ -692,9 +696,7 @@
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
 			this.instructions=instructions;
-			this.instruction_ptr=0;
-			/**@type {number|null} */
-			this.stack_base_ptr=null;
+			this.instruction_pointer=0;
 			this.return_value = void 0;
 			/**
 			 * @type {VMValue[]}
@@ -704,7 +706,6 @@
 			 * @type {[VMValue[], InstructionType[]][]}
 			 */
 			this.exec_stack=[];
-			/**@type {number|null} */
 			this.jump_instruction_pointer=null;
 		}
 		/**
@@ -720,7 +721,7 @@
 		 * @param {number} operand_number_of_arguments
 		 * @return {VMValue[]}
 		 */
-		pop_arg_count(operand_number_of_arguments) {
+		pop_arg_count(operand_number_of_arguments){
 			let arguments_arr=[];
 			let arg_count=operand_number_of_arguments;
 			for(let i = 0; i < arg_count; i++) {
@@ -740,7 +741,19 @@
 				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
 			}
 			switch(instruction[0]) {
-				case 'exec':throw new Error("Disabled");
+				case 'exec':{
+					this.exec_stack.push([this.stack, this.instructions]);
+					let base_ptr=this.stack.length;
+					// advance the instruction pointer, when we return we want to resume
+					// at the next instruction...
+					this.instruction_pointer++;
+					this.stack.push(this.instruction_pointer, base_ptr);
+					this.stack=[];
+					let new_instruction_stream=instruction[1];
+					this.instructions=new_instruction_stream;
+					this.jump_instruction_pointer=0;
+					l_log_if(LOG_LEVEL_INFO, 'exec', ...instruction[1]);
+				} break;
 				case 'peek':{
 					let [, op_1, op_2]=instruction;
 					let peek_stack=this.exec_stack[op_1][0];
@@ -794,29 +807,11 @@
 				case 'je':break;
 				case 'jmp':break;
 				case 'vm_return':{
-					if(this.stack_base_ptr === null) {
+					if(!this.exec_stack.length){
 						this.running=false;
-					} else {
-						let at=this.stack[this.stack_base_ptr];
-						console.log(this.stack_base_ptr, at);
-						this.stack.length=this.stack_base_ptr;
-						let base_ptr=this.stack.pop();
-						if(base_ptr === null || typeof base_ptr=='number'){
-							this.stack_base_ptr=base_ptr;
-						} else {
-							throw new Error("Invalid base ptr");
-						}
-						let instruction_ptr=this.pop();
-						if(typeof instruction_ptr!='number')throw new Error("Invalid");
-						this.instruction_ptr=instruction_ptr;
 					}
 				} break;
-				case 'vm_call':{
-					let base_ptr=this.stack_base_ptr;
-					this.instruction_ptr++;
-					this.stack.push(this.instruction_ptr, base_ptr);
-					this.stack_base_ptr = this.stack.length;
-				} break;
+				case 'vm_call':break;
 				case 'push_pc':break;
 				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
 				case 'modify_operand':break;
@@ -847,16 +842,16 @@
 		}
 		run() {
 			this.running = true;
-			while(this.instruction_ptr < this.instructions.length && this.running) {
-				let instruction = this.instructions[this.instruction_ptr];
+			while(this.instruction_pointer < this.instructions.length && this.running) {
+				let instruction = this.instructions[this.instruction_pointer];
 				this.execute_instruction(instruction);
 				if(this.jump_instruction_pointer != null){
-					this.instruction_ptr=this.jump_instruction_pointer;
+					this.instruction_pointer=this.jump_instruction_pointer;
 					this.jump_instruction_pointer=null;
 				}else{
-					this.instruction_ptr++;
+					this.instruction_pointer++;
 				}
-				if(this.instruction_ptr >= this.instructions.length){
+				if(this.instruction_pointer >= this.instructions.length){
 					if(this.exec_stack.length > 0){
 						let exec_top=this.exec_stack.pop();
 						if(!exec_top)throw 1;
@@ -865,11 +860,11 @@
 						let instruction_ptr=this.stack.pop();
 						if(instruction_ptr===void 0)throw new Error("Stack underflow");
 						if(typeof instruction_ptr!='number')throw new Error("Invalid");
-						this.instruction_ptr=instruction_ptr;
-						l_log_if(LOG_LEVEL_INFO, 'returned to', this.instruction_ptr, this.exec_stack.length);
+						this.instruction_pointer=instruction_ptr;
+						l_log_if(LOG_LEVEL_INFO, 'returned to', this.instruction_pointer, this.exec_stack.length);
 						continue;
 					}
-					l_log_if(LOG_LEVEL_INFO, 'reached end of instruction stream, nothing to return too', instruction, this.instructions, this.instruction_ptr);
+					l_log_if(LOG_LEVEL_INFO, 'reached end of instruction stream, nothing to return too', instruction, this.instructions, this.instruction_pointer);
 				}
 			}
 			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
@@ -3995,6 +3990,9 @@
 			reset_global_event_handlers();
 			let orig_url=location.href;
 			let loc_url="//rebuildtheuniverse.com";
+			if(location.origin != "rebuildtheuniverse.com"){
+				loc_url="https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/";
+			}
 			let prev_state=history.state;
 			let next_gen=0;
 			if(prev_state && prev_state.gen){
@@ -4163,7 +4161,9 @@
 			do_page_replace();
 		} else if (non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version"){
 			do_page_replace();
-		}else if(non_proto_url == "//rebuildtheuniverse.com/?type=real") {
+		} else if(location.href === "https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/"){
+			do_page_replace();
+		} else if(non_proto_url == "//rebuildtheuniverse.com/?type=real") {
 			on_dom_load();
 		} else if(non_proto_url == "//rebuildtheuniverse.com/"){
 			window.setTimeout=real_st;
