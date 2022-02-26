@@ -261,7 +261,7 @@ export class VMBoxedCSSStyleSheetPromise extends VMBoxed<Promise<CSSStyleSheet>>
 
 
 // --- VM Value (types) ---
-type VMCustomTypes=
+type VMCustomTypes =
 VMCustomFunctionTypes |
 VMCustomReturnTypes;
 export type VMValue =

@@ -34,13 +34,23 @@
 	const LOG_LEVEL_DEBUG=6;
 	const LOG_LEVEL_TRACE=7;
 	const local_logging_level=3;
-	/**
-	 * @param {number} level
-	 * @arg {any[]} args
-	 */
-	function l_log_if(level, ...args){
-		if(level <= local_logging_level) {
-			console . log (...args);
+	/**@type {['crit','error','warn','notice','info','debug','trace']} */
+	const logging_levels=['crit','error','warn','notice','info','debug','trace'];
+	/**@arg {(typeof logging_levels)[number]} level_str @arg {string} format_str@arg {any[]} args */
+	function append_console_message(level_str, format_str, ...args) {
+		console . log ("[%s] " + format_str, level_str, ...args);
+	}
+	/** @param {number} level @arg {string} format_str @arg {any[]} args */
+	function l_log_if(level, format_str, ...args){
+		if(level > local_logging_level)return;
+		switch(level){
+			case LOG_LEVEL_CRIT:append_console_message('crit', format_str, ...args);break;
+			case LOG_LEVEL_ERROR:append_console_message('error', format_str, ...args);break;
+			case LOG_LEVEL_WARN:append_console_message('warn', format_str, ...args);break;
+			case LOG_LEVEL_NOTICE:append_console_message('notice', format_str, ...args);break;
+			case LOG_LEVEL_INFO:append_console_message('info', format_str, ...args);break;
+			case LOG_LEVEL_DEBUG:append_console_message('debug', format_str, ...args);break;
+			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
@@ -223,7 +233,7 @@
 			let handled_instructions=['je', 'jmp', 'modify_operand', 'push_pc', 'halt'];
 			let op_code=instruction[0];
 			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
 			}
 			switch(instruction[0]) {
 				case 'je':{
@@ -487,7 +497,7 @@
 			let handled_instructions=['push', 'drop', 'dup', 'get', 'call', 'construct', 'return'];
 			let op_code=instruction[0];
 			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
 			}
 			switch(instruction[0]) {
 				case 'push'/*Stack*/: {
@@ -573,7 +583,7 @@
 							this.push(new VMBoxedCSSStyleSheetR(obj));
 						}
 					}
-					l_log_if(LOG_LEVEL_INFO, instruction, ...this.stack.slice(this.stack.length-number_of_arguments));
+					l_log_if(LOG_LEVEL_INFO, "", instruction, ...this.stack.slice(this.stack.length-number_of_arguments));
 				} break;
 				case 'return'/*Call*/:this.return_value=this.pop();break;
 				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
@@ -631,7 +641,7 @@
 			let handled_instructions=['this', 'global', 'call'];
 			let op_code=instruction[0];
 			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
 			}
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
@@ -833,13 +843,12 @@
 			this.run(new VMBoxedObjectR(event));
 		}
 	}
-	/**@typedef {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} IDomInstructionSet */
 	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
 	/**@implements {VMInterface} */
 	class DomBuilderVM {
 		/**@type {VMValue} */
 		return_value;
-		/**@arg {IDomInstructionSet[]} instructions */
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
 			this.instructions=instructions;
 			this.instruction_pointer=0;
@@ -849,7 +858,7 @@
 			 */
 			this.stack=[];
 			/**
-			 * @type {[VMValue[], IDomInstructionSet[]][]}
+			 * @type {[VMValue[], InstructionType[]][]}
 			 */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
@@ -878,13 +887,13 @@
 			}
 			return arguments_arr;
 		}
-		/**@arg {IDomInstructionSet} instruction */
+		/**@arg {InstructionType} instruction */
 		execute_instruction(instruction) {
 			/**@type {('exec'|'peek'|'dom_append')[]}*/
 			let handled_instructions=['exec', 'peek', 'dom_append'];
 			let op_code=instruction[0];
 			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, ...instruction, null);
+				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
 			}
 			switch(instruction[0]) {
 				case 'exec':{
@@ -2493,7 +2502,7 @@
 		 * @arg {DomInstructionBuildInstructionType[]} stack
 		 */
 		parse_dom_stack(stack){
-			/**@type {IDomInstructionSet[]} */
+			/**@type {InstructionType[]} */
 			let ret=[];
 			let cur_depth=0;
 			for(let i=0;i<stack.length;i++){
