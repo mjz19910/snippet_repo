@@ -307,7 +307,46 @@
 			}
 		}
 	}
-		class DocumentWriteList {
+	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
+	class InstructionConstructE {
+		/**@arg {InstructionConstruct} instruction @arg {VMInterface} vm */
+		static execute_instruction(vm, instruction){
+			let number_of_arguments=instruction[1];
+			if(typeof number_of_arguments!='number')throw new Error("Invalid");
+			let [construct_target, ...construct_arr]=vm.pop_arg_count(number_of_arguments);
+			const a=construct_target;
+			if(typeof a!='object')throw new Error("Invalid");
+			if(a===null)throw new Error("Invalid");
+			if(a.type != 'constructor_box')throw new Error("Invalid");
+			if(a.from === 'typescript'){
+				let obj=new a.value(...construct_arr);
+				vm.push(obj);
+			} else if(a.from === 'javascript') {
+				if(a.constructor_type === 'CSSStyleSheet') {
+					/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
+					let valid_args={
+						s:[],
+						valid_count:0
+					}
+					for(let i=0;i<construct_arr.length;i++){
+						let val=construct_arr[i];
+						if(typeof val != 'object')continue;
+						if(val === null)continue;
+						if(val.type != 'shape_box')continue;
+						valid_args={
+							s:[val.value],
+							valid_count:1
+						}
+					}
+					let obj=new a.value(...valid_args.s);
+					vm.push(new VMBoxedCSSStyleSheetR(obj));
+				}
+			}
+			l_log_if(LOG_LEVEL_INFO, instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
+		}
+	}
+	class DocumentWriteList {
 		/**
 		 * @type {any[]}
 		 */
@@ -943,6 +982,13 @@
 					}
 					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
 				} break;
+				case 'push'/*Stack*/: {
+					for(let i = 0; i < instruction.length-1; i++) {
+						let item = instruction[i+1];
+						this.push(item);
+					}
+				} break;
+				case 'drop'/*Stack*/:this.pop();break;
 				default/*Base class*/:{
 					console.error("Need instruction: "+instruction[0]);
 					debugger;
@@ -3835,16 +3881,9 @@
 			mutationObserver.observe(target, options);
 			this.observer=mutationObserver;
 		}
-		/** @type {(mutations: MutationRecord[], observer: MutationObserver & {observer_state?:1|2})=>void} */
-		callback(mutations, observer) {
-			console.log('mut len', mutations.length);
-			if(observer.observer_state === void 0) {
-				observer.observer_state=1;
-			} else if(observer.observer_state == 1){
-				observer.observer_state=2;
-			} else if(observer.observer_state == 2){
-				console.log('already done', ...mutations);
-			}
+		/** @type {(_mutations: MutationRecord[], observer: MutationObserver & {observer_state?:1|2})=>void} */
+		callback(_mutations, observer) {
+			observer.disconnect();
 		}
 	}
 	class LoadMutationObserver extends BaseMutationObserver {
@@ -4098,17 +4137,13 @@
 				action_1();
 			});
 		}
-		function do_page_replace(){
+		function do_page_replace() {
 			mut_observers.push(new DetachedMutationObserver(document));
 			reset_global_event_handlers();
-			new Promise(function(a){
-				setTimeout(a, 300);
-			}).then(()=>{
-				document.writeln(`<head></head><body></body>`);
-				reset_global_event_handlers();
-				do_fetch_load();
-				document.close();
-			});
+			document.writeln("");
+			reset_global_event_handlers();
+			do_fetch_load();
+			document.close();
 		}
 		let non_proto_url=page_url_no_protocol();
 		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
