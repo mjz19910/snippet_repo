@@ -774,9 +774,7 @@
 					num_to_parse -= 2;
 					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0])){
 						ret=[m_opcode, m_operands[0]];
-						break;
-					}
-					else {
+					} else {
 						console.info("Can't verify that call instruction is valid, argument (%o) is not a number or not finite", m_operands[0]);
 						throw new Error("TypeError: Invalid argument");
 					}
@@ -839,8 +837,8 @@
 		}
 	}
 	/**@typedef {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} IDomInstructionSet */
-	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} StackVMTypeZ */
-	/**@implements {StackVMTypeZ} */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
+	/**@implements {VMInterface} */
 	class DomBuilderVM {
 		/**@type {VMValue} */
 		return_value;
