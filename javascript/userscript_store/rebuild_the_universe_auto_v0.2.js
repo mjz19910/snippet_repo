@@ -308,7 +308,6 @@
 		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
-	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
 	class InstructionConstructE {
 		/**@arg {InstructionConstruct} instruction @arg {VMInterface} vm */
 		static execute_instruction(vm, instruction){
@@ -343,7 +342,7 @@
 					vm.push(new VMBoxedCSSStyleSheetR(obj));
 				}
 			}
-			l_log_if(LOG_LEVEL_INFO, instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
+			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
 	class DocumentWriteList {
@@ -723,153 +722,6 @@
 			return this.return_value;
 		}
 	}
-	class SimpleStackVMParser {
-		/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
-		static parse_int_arg(cur, arg_loc) {
-			let cur_item = cur[arg_loc];
-			if(typeof cur_item == 'string') {
-				let arg = cur_item;
-				if(arg[3] === '()'[0] && arg.at(-1) === "()"[1]) {
-					let str_int = arg.slice(4, -1);
-					cur[arg_loc] = parseInt(str_int, 10);
-				}
-			}
-		}
-		/**
-		 * @param {string | string[]} str
-		 * @param {any[]} format_list
-		 */
-		static parse_string_with_format_ident(str, format_list) {
-			let format_index = str.indexOf('%');
-			let format_type = str[format_index + 1];
-			switch(format_type) {
-				case 'o':
-					return format_list.shift();
-				default:
-					console.assert(false, "Assertion failed: %s", 'unsupported format spec %' + format_type);
-			}
-		}
-		/**
-		 * @param {any[]} cur
-		 * @param {any[]} format_list
-		 */
-		static parse_current_instruction(cur, format_list) {
-			let arg_loc = 1;
-			let arg = cur[arg_loc];
-			while(arg) {
-				if(arg.slice(0, 3) === 'int') this.parse_int_arg(cur, arg_loc);
-				if(arg.includes('%')) {
-					let res = this.parse_string_with_format_ident(arg, format_list);
-					cur[arg_loc] = res;
-				}
-				arg_loc++;
-				arg = cur[arg_loc]
-			}
-		}
-		/**
-		 * @param {string[]} m
-		 */
-		static raw_parse_handle_regexp_match(m) {
-			let iter=m[1].trim();
-			if(iter.startsWith("//"))return;
-			while(iter.startsWith("/*")){
-				let j=iter.indexOf("*/");
-				iter=iter.slice(j+2).trim();
-			}
-			if(!iter)return null;
-			return iter.split(",");
-		}
-		/**
-		 * @param {string} string
-		 */
-		static parse_string_into_raw_instruction_stream(string) {
-			const parser_max_match_iter = 300;let parts, arr = [], i = 0;
-			do {
-				parts = this.match_regex.exec(string);
-				if(!parts) break;
-				let res = this.raw_parse_handle_regexp_match(parts);
-				if(res) arr.push(res);
-			} while(parts && i++ < parser_max_match_iter);
-			if(parts)console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);
-			return arr;
-		}
-		/**
-		 * @param {string} string
-		 * @param {any[]} format_list
-		 */
-		static parse_instruction_stream_from_string(string, format_list) {
-			let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
-			for(let i=0;i<raw_instructions.length;i++) {
-				let raw_instruction=raw_instructions[i];
-				this.parse_current_instruction(raw_instruction, format_list);
-			}
-			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
-		}
-		/**@arg {string[]} instruction @returns {InstructionType}*/
-		static verify_instruction(instruction){
-			let num_to_parse=instruction.length;
-			const [m_opcode, ...m_operands] = instruction;
-			/**@type {InstructionType|null} */
-			let ret=null;
-			switch(m_opcode) {
-				case 'push':{
-					num_to_parse = 0;
-					ret=[m_opcode, ...m_operands];
-				} break;
-				case 'call'/*1 argument*/:{
-					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0])){
-						num_to_parse -= 2;
-						ret=[m_opcode, m_operands[0]];
-					} else {
-						console.info("Operand is", m_operands[0]);
-						throw new Error("Invalid operand");
-					}
-				} break;
-				case 'drop':
-				case 'get':
-				case 'return':
-				case 'halt':
-				case 'push_args':
-				case 'this':
-				case 'global':
-				case 'breakpoint'/*opcode*/:{
-					num_to_parse--;
-					ret=[m_opcode];
-				} break;
-				default:throw new Error("Verify: Unexpected opcode, opcode was `"+m_opcode+"`");break;
-			}
-			if(num_to_parse > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");
-			if(ret !== null){
-				return ret;
-			}
-			throw new Error("Unreachable");
-		}
-		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
-		static verify_raw_instructions(raw_instructions){
-			/**@type{InstructionType[]}*/
-			const instructions = [];
-			for(let i = 0;i < raw_instructions.length;i++) {
-				instructions.push(this.verify_instruction(raw_instructions[i]));
-			}
-			return instructions;
-		}
-	}
-	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
-	/**@implements {VMBoxedObject} */
-	class VMBoxedObjectR {
-		/**@type {"object_box"} */
-		type="object_box";
-		inner_type=null;
-		/**@arg {'function'} _a */
-		get_matching_typeof(_a){
-			return null;
-		}
-		/**@arg {object} value */
-		constructor(value){
-			this.value=value;
-		}
-	}
 	class EventHandlerVMDispatch extends SimpleStackVM {
 		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
@@ -1043,6 +895,153 @@
 			}
 			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
 			return this.return_value;
+		}
+	}
+	class SimpleStackVMParser {
+		/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
+		static parse_int_arg(cur, arg_loc) {
+			let cur_item = cur[arg_loc];
+			if(typeof cur_item == 'string') {
+				let arg = cur_item;
+				if(arg[3] === '()'[0] && arg.at(-1) === "()"[1]) {
+					let str_int = arg.slice(4, -1);
+					cur[arg_loc] = parseInt(str_int, 10);
+				}
+			}
+		}
+		/**
+		 * @param {string | string[]} str
+		 * @param {any[]} format_list
+		 */
+		static parse_string_with_format_ident(str, format_list) {
+			let format_index = str.indexOf('%');
+			let format_type = str[format_index + 1];
+			switch(format_type) {
+				case 'o':
+					return format_list.shift();
+				default:
+					console.assert(false, "Assertion failed: %s", 'unsupported format spec %' + format_type);
+			}
+		}
+		/**
+		 * @param {any[]} cur
+		 * @param {any[]} format_list
+		 */
+		static parse_current_instruction(cur, format_list) {
+			let arg_loc = 1;
+			let arg = cur[arg_loc];
+			while(arg) {
+				if(arg.slice(0, 3) === 'int') this.parse_int_arg(cur, arg_loc);
+				if(arg.includes('%')) {
+					let res = this.parse_string_with_format_ident(arg, format_list);
+					cur[arg_loc] = res;
+				}
+				arg_loc++;
+				arg = cur[arg_loc]
+			}
+		}
+		/**
+		 * @param {string[]} m
+		 */
+		static raw_parse_handle_regexp_match(m) {
+			let iter=m[1].trim();
+			if(iter.startsWith("//"))return;
+			while(iter.startsWith("/*")){
+				let j=iter.indexOf("*/");
+				iter=iter.slice(j+2).trim();
+			}
+			if(!iter)return null;
+			return iter.split(",");
+		}
+		/**
+		 * @param {string} string
+		 */
+		static parse_string_into_raw_instruction_stream(string) {
+			const parser_max_match_iter = 300;let parts, arr = [], i = 0;
+			do {
+				parts = this.match_regex.exec(string);
+				if(!parts) break;
+				let res = this.raw_parse_handle_regexp_match(parts);
+				if(res) arr.push(res);
+			} while(parts && i++ < parser_max_match_iter);
+			if(parts)console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);
+			return arr;
+		}
+		/**
+		 * @param {string} string
+		 * @param {any[]} format_list
+		 */
+		static parse_instruction_stream_from_string(string, format_list) {
+			let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
+			for(let i=0;i<raw_instructions.length;i++) {
+				let raw_instruction=raw_instructions[i];
+				this.parse_current_instruction(raw_instruction, format_list);
+			}
+			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
+		}
+		/**@arg {string[]} instruction @returns {InstructionType}*/
+		static verify_instruction(instruction){
+			let num_to_parse=instruction.length;
+			const [m_opcode, ...m_operands] = instruction;
+			/**@type {InstructionType|null} */
+			let ret=null;
+			switch(m_opcode) {
+				case 'push':{
+					num_to_parse = 0;
+					ret=[m_opcode, ...m_operands];
+				} break;
+				case 'call'/*1 argument*/:{
+					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0])){
+						num_to_parse -= 2;
+						ret=[m_opcode, m_operands[0]];
+					} else {
+						console.info("Operand is", m_operands[0]);
+						throw new Error("Invalid operand");
+					}
+				} break;
+				case 'drop':
+				case 'get':
+				case 'return':
+				case 'halt':
+				case 'push_args':
+				case 'this':
+				case 'global':
+				case 'breakpoint'/*opcode*/:{
+					num_to_parse--;
+					ret=[m_opcode];
+				} break;
+				default:throw new Error("Verify: Unexpected opcode, opcode was `"+m_opcode+"`");break;
+			}
+			if(num_to_parse > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");
+			if(ret !== null){
+				return ret;
+			}
+			throw new Error("Unreachable");
+		}
+		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
+		static verify_raw_instructions(raw_instructions){
+			/**@type{InstructionType[]}*/
+			const instructions = [];
+			for(let i = 0;i < raw_instructions.length;i++) {
+				instructions.push(this.verify_instruction(raw_instructions[i]));
+			}
+			return instructions;
+		}
+	}
+	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
+	/**@implements {VMBoxedObject} */
+	class VMBoxedObjectR {
+		/**@type {"object_box"} */
+		type="object_box";
+		inner_type=null;
+		/**@arg {'function'} _a */
+		get_matching_typeof(_a){
+			return null;
+		}
+		/**@arg {object} value */
+		constructor(value){
+			this.value=value;
 		}
 	}
 	function trigger_debug_breakpoint(){
