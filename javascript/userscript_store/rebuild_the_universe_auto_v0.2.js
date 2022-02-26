@@ -771,12 +771,12 @@
 					ret=[m_opcode, ...m_operands];
 				} break;
 				case 'call'/*1 argument*/:{
-					num_to_parse -= 2;
 					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0])){
+						num_to_parse -= 2;
 						ret=[m_opcode, m_operands[0]];
 					} else {
-						console.info("Can't verify that call instruction is valid, argument (%o) is not a number or not finite", m_operands[0]);
-						throw new Error("TypeError: Invalid argument");
+						console.info("Operand is", m_operands[0]);
+						throw new Error("Invalid operand");
 					}
 				} break;
 				case 'drop':
