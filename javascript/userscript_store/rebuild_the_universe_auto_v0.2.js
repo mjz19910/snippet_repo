@@ -5,15 +5,15 @@
 // @description		try to take over the world!
 // @author			You
 // @match			http://rebuildtheuniverse.com/mjz_version/*
-// @match			http://rebuildtheuniverse.com/mjz_version/
+// @match			http://rebuildtheuniverse.com/mjz_version
 // @match			http://rebuildtheuniverse.com/?real=1
-// @match			http://rebuildtheuniverse.com/
+// @match			http://rebuildtheuniverse.com
 // @match			http://test.rebuildtheuniverse.com
 // @match			https://rebuildtheuniverse.com/mjz_version/*
-// @match			https://rebuildtheuniverse.com/mjz_version/
+// @match			https://rebuildtheuniverse.com/mjz_version
 // @match			https://rebuildtheuniverse.com/?real=1
 // @match			https://rebuildtheuniverse.com/?type=mjz_version
-// @match			https://rebuildtheuniverse.com/
+// @match			https://rebuildtheuniverse.com
 // @match			https://test.rebuildtheuniverse.com
 // @run-at			document-start
 // @grant			none
@@ -3974,18 +3974,17 @@
 			let hist_state={
 				gen:next_gen
 			};
-			let nav_url="//rebuildtheuniverse.com";
 			await new Promise(function(a){
 				if(localStorage.justReset === 'true'){
 					return a(null);
 				}
 				window.g_do_load=do_load_fire_promise.bind(null, a);
-				document.writeln(`<head></head><body><a onclick="g_do_load()">load with fetch</a></body>`);
+				document.writeln(`<head></head><body><a href onclick="g_do_load()">load with fetch</a></body>`);
 				reset_global_event_handlers();
 				document.close();
 			});
 			reset_global_event_handlers();
-			history.pushState(hist_state, '', nav_url);
+			history.pushState(hist_state, '', loc_url);
 			const rb_html=await (await fetch(loc_url)).text();
 			{
 				let la=mut_observers.pop();
@@ -4127,7 +4126,7 @@
 			document.close();
 		}
 		let non_proto_url=page_url_no_protocol();
-		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version/") {
+		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
 			do_page_replace();
 		} else if (non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version"){
 			do_page_replace();
