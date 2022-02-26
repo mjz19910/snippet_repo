@@ -2528,17 +2528,16 @@
 			/**@type {InstructionType[][]} */
 			let instructions=[];
 			let depths=[];
-			let cur_depth=0;
 			for(let i=0;i<stack.length;i++){
 				let cur=stack[i];
-				depths.push(cur[0]);
-				const [, ...rest]=cur;
+				const [cur_depth, ...cur_instruction]=cur;
+				depths.push(cur_depth);
 				if(!instructions[cur_depth])instructions[cur_depth]=[];
-				instructions[cur_depth].push(rest);
+				instructions[cur_depth].push(cur_instruction);
 			}
 			/**@type {InstructionType[]} */
 			let ret=[];
-			debugger;
+			console.log('parse_dom_stack', instructions);
 			return ret;
 		}
 		init_dom(){
@@ -3872,6 +3871,7 @@
 		/** @type {MutationCallback} */
 		callback(mutations, observer) {
 			this.m_callback(mutations, observer);
+			observer.disconnect();
 		}
 	}
 	/**@type {BaseMutationObserver[]} */
