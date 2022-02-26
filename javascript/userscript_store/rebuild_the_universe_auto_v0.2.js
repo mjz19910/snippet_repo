@@ -2555,6 +2555,7 @@
 				let cur_instructions=stack[i];
 				if(!cur_instructions)continue;
 				flat_stack.push(...cur_instructions);
+				flat_stack.push(["vm_return"]);
 			}
 			for(let i=0;i<flat_stack.length;i++){
 					let instruction=flat_stack[i];
