@@ -4,17 +4,12 @@
 // @version			0.2
 // @description		try to take over the world!
 // @author			You
-// @match			http://rebuildtheuniverse.com/mjz_version/*
-// @match			http://rebuildtheuniverse.com/mjz_version
-// @match			http://rebuildtheuniverse.com/?real=1
+// @match			http://rebuildtheuniverse.com/?type=real
+// @match			http://rebuildtheuniverse.com/?type=mjz_version
 // @match			http://rebuildtheuniverse.com
-// @match			http://test.rebuildtheuniverse.com
-// @match			https://rebuildtheuniverse.com/mjz_version/*
-// @match			https://rebuildtheuniverse.com/mjz_version
-// @match			https://rebuildtheuniverse.com/?real=1
+// @match			https://rebuildtheuniverse.com/?type=real
 // @match			https://rebuildtheuniverse.com/?type=mjz_version
 // @match			https://rebuildtheuniverse.com
-// @match			https://test.rebuildtheuniverse.com
 // @run-at			document-start
 // @grant			none
 // ==/UserScript==
