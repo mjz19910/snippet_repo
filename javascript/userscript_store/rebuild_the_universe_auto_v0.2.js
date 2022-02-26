@@ -26,6 +26,23 @@
 	const AudioMuted=true;
 	const AutoBuyMulModifierFactor=1;
 	const AutoBuyRatioDiv=3;
+	const LOG_LEVEL_CRIT=1;
+	const LOG_LEVEL_ERROR=2;
+	const LOG_LEVEL_WARN=3;
+	const LOG_LEVEL_NOTICE=4;
+	const LOG_LEVEL_INFO=5;
+	const LOG_LEVEL_DEBUG=6;
+	const LOG_LEVEL_TRACE=7;
+	const local_logging_level=3;
+	/**
+	 * @param {number} level
+	 * @arg {any[]} args
+	 */
+	function l_log_if(level, ...args){
+		if(level <= local_logging_level) {
+			console . log (...args);
+		}
+	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
 	/**@implements {VMBoxedCSSStyleSheetConstructor} */
 	class VMBoxedCSSStyleSheetConstructorR {
@@ -125,149 +142,6 @@
 		/**@arg {{(...a:VMValue[]) : VMValue}} value */
 		constructor(value){
 			this.value=value;
-		}
-	}
-	class DocumentWriteList {
-		/**
-		 * @type {any[]}
-		 */
-		list;
-		constructor(){
-			this.list=[];
-			this.attached=false;
-			this.end_symbol=Symbol(void 0);
-			/**@type {import("./final/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
-			this.document_write=null;
-			this.attached_document=null;
-			this.document_write_proxy=null;
-		}
-		/**
-		 * @arg {(...text: string[]) => void} target
-		 * @arg {Document} thisArg
-		 * @arg {string[]} argArray
-		 */
-		write(target, thisArg, argArray){
-			console.assert(target === this.document_write);
-			console.assert(thisArg === this.attached_document);
-			this.list.push(argArray, null);
-		}
-		/**@arg {Document} document */
-		attach_proxy(document){
-			if(this.attached){
-				let was_destroyed=this.destroy(true);
-				if(!was_destroyed){
-					throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
-				}
-			}
-			this.attached_document=document;
-			this.document_write=document.write;
-			let proxy_handler={
-				other:this,
-				//target: (...text: string[]) => void, thisArg: Document, argArray: string[]
-				/**
-				 * @arg {(...text: string[]) => void} target
-				 * @arg {Document} thisArg
-				 * @arg {string[]} argArray
-				 */
-				apply(target, thisArg, argArray){
-					this.other.write(target, thisArg, argArray);
-				}
-			};
-			this.document_write_proxy=new Proxy(document.write, proxy_handler);
-			document.write=this.document_write_proxy;
-		}
-		/**
-		 * @param {boolean} should_try_to_destroy
-		 */
-		destroy(should_try_to_destroy=false) {
-			if(this.attached_document&&this.document_write_proxy){
-				console.assert(this.attached_document.write === this.document_write_proxy);
-				if(this.attached_document.write !== this.document_write_proxy){
-					if(should_try_to_destroy){
-						return false;
-					}
-					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
-				}
-				let doc_1=this.attached_document;
-				if(doc_1 && this.document_write) {
-					let doc_var=this.document_write;
-					/**@type {any} */
-					let any_var=doc_var;
-					/**@type {Document['write']} */
-					let vv=any_var;
-					doc_1.write=vv;
-				}
-			}
-			if(this.document_write_proxy){
-				this.document_write_proxy=null;
-			}
-			if(this.document_write){
-				this.document_write=null;
-			}
-			if(this.attached_document){
-				this.attached_document=null;
-			}
-			if(should_try_to_destroy){
-				return true;
-			}
-		}
-	}
-	class UniqueIdGenerator {
-		constructor(){
-			this.m_current=-1;
-		}
-		/**
-		 * @param {number} current_value
-		 */
-		set_current(current_value){
-			this.m_current=current_value;
-		}
-		current(){
-			return this.m_current;
-		}
-		next(){
-			return this.m_current++;
-		}
-	}
-	class NamedIdGenerator {
-		constructor(){
-			this.state_map=new Map;
-		}
-		/**@arg {string} name */
-		current_named(name){
-			let val=this.state_map.get(name);
-			if(val){
-				return val;
-			} else {
-				return 0;
-			}
-		}
-		/**@arg {string} name */
-		next_named(name){
-			if(this.state_map.has(name)){
-				let cur=this.state_map.get(name) + 1;
-				this.state_map.set(name, cur);
-				return cur;
-			} else {
-				this.state_map.set(name, 1);
-				return 1;
-			};
-		}
-	}
-	class EventHandlerDispatch {
-		/**
-		 * @param {{[x:string]:any}} target_obj
-		 * @param {string} target_name
-		 */
-		constructor(target_obj, target_name){
-			this.target_obj=target_obj;
-			this.target_name=target_name;
-		}
-		/**
-		 * @param {any} event
-		 */
-		handleEvent(event){
-			this.target_obj[this.target_name](event);
 		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMValue */
@@ -423,24 +297,147 @@
 			}
 		}
 	}
-	function trigger_debug_breakpoint(){
-		debugger;
+		class DocumentWriteList {
+		/**
+		 * @type {any[]}
+		 */
+		list;
+		constructor(){
+			this.list=[];
+			this.attached=false;
+			this.end_symbol=Symbol(void 0);
+			/**@type {import("./final/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
+			this.document_write=null;
+			this.attached_document=null;
+			this.document_write_proxy=null;
+		}
+		/**
+		 * @arg {(...text: string[]) => void} target
+		 * @arg {Document} thisArg
+		 * @arg {string[]} argArray
+		 */
+		write(target, thisArg, argArray){
+			console.assert(target === this.document_write);
+			console.assert(thisArg === this.attached_document);
+			this.list.push(argArray, null);
+		}
+		/**@arg {Document} document */
+		attach_proxy(document){
+			if(this.attached){
+				let was_destroyed=this.destroy(true);
+				if(!was_destroyed){
+					throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
+				}
+			}
+			this.attached_document=document;
+			this.document_write=document.write;
+			let proxy_handler={
+				other:this,
+				//target: (...text: string[]) => void, thisArg: Document, argArray: string[]
+				/**
+				 * @arg {(...text: string[]) => void} target
+				 * @arg {Document} thisArg
+				 * @arg {string[]} argArray
+				 */
+				apply(target, thisArg, argArray){
+					this.other.write(target, thisArg, argArray);
+				}
+			};
+			this.document_write_proxy=new Proxy(document.write, proxy_handler);
+			document.write=this.document_write_proxy;
+		}
+		/**
+		 * @param {boolean} should_try_to_destroy
+		 */
+		destroy(should_try_to_destroy=false) {
+			if(this.attached_document&&this.document_write_proxy){
+				console.assert(this.attached_document.write === this.document_write_proxy);
+				if(this.attached_document.write !== this.document_write_proxy){
+					if(should_try_to_destroy){
+						return false;
+					}
+					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
+				}
+				let doc_1=this.attached_document;
+				if(doc_1 && this.document_write) {
+					let doc_var=this.document_write;
+					/**@type {any} */
+					let any_var=doc_var;
+					/**@type {Document['write']} */
+					let vv=any_var;
+					doc_1.write=vv;
+				}
+			}
+			if(this.document_write_proxy){
+				this.document_write_proxy=null;
+			}
+			if(this.document_write){
+				this.document_write=null;
+			}
+			if(this.attached_document){
+				this.attached_document=null;
+			}
+			if(should_try_to_destroy){
+				return true;
+			}
+		}
 	}
-	const LOG_LEVEL_CRIT=1;
-	const LOG_LEVEL_ERROR=2;
-	const LOG_LEVEL_WARN=3;
-	const LOG_LEVEL_NOTICE=4;
-	const LOG_LEVEL_INFO=5;
-	const LOG_LEVEL_DEBUG=6;
-	const LOG_LEVEL_TRACE=7;
-	const local_logging_level=3;
-	/**
-	 * @param {number} level
-	 * @arg {any[]} args
-	 */
-	function l_log_if(level, ...args){
-		if(level <= local_logging_level) {
-			console . log (...args);
+	class UniqueIdGenerator {
+		constructor(){
+			this.m_current=-1;
+		}
+		/**
+		 * @param {number} current_value
+		 */
+		set_current(current_value){
+			this.m_current=current_value;
+		}
+		current(){
+			return this.m_current;
+		}
+		next(){
+			return this.m_current++;
+		}
+	}
+	class NamedIdGenerator {
+		constructor(){
+			this.state_map=new Map;
+		}
+		/**@arg {string} name */
+		current_named(name){
+			let val=this.state_map.get(name);
+			if(val){
+				return val;
+			} else {
+				return 0;
+			}
+		}
+		/**@arg {string} name */
+		next_named(name){
+			if(this.state_map.has(name)){
+				let cur=this.state_map.get(name) + 1;
+				this.state_map.set(name, cur);
+				return cur;
+			} else {
+				this.state_map.set(name, 1);
+				return 1;
+			};
+		}
+	}
+	class EventHandlerDispatch {
+		/**
+		 * @param {{[x:string]:any}} target_obj
+		 * @param {string} target_name
+		 */
+		constructor(target_obj, target_name){
+			this.target_obj=target_obj;
+			this.target_name=target_name;
+		}
+		/**
+		 * @param {any} event
+		 */
+		handleEvent(event){
+			this.target_obj[this.target_name](event);
 		}
 	}
 	class BaseStackVM extends BaseVMCreate {
@@ -992,6 +989,9 @@
 			console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
 			return this.return_value;
 		}
+	}
+	function trigger_debug_breakpoint(){
+		debugger;
 	}
 	class CompressionStatsCalculator {
 		constructor(){
