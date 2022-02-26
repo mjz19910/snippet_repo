@@ -570,10 +570,10 @@
 					if(!target_obj)throw new Error("Invalid");
 					if(typeof target_name!='string')throw new Error("Invalid");
 					if(typeof target_obj!='object')throw new Error("Invalid");
-					if(target_obj.type == 'custom_box'){
-						this.push(target_obj.value[target_name]);
+					if(target_obj.type != 'object_index'){
+						console.log('not object_index', target_obj);
+						throw new Error("Invalid");
 					}
-					if(target_obj.type != 'object_index')throw new Error("Invalid");
 					this.push(target_obj.value[target_name]);
 				} break;
 				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
