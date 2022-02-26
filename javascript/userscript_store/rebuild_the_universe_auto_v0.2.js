@@ -2523,19 +2523,24 @@
 		/** @arg {InstructionWithDepth[]} stack @returns {InstructionType[]} */
 		parse_dom_stack(stack) {
 			// /**@type {['exec', InstructionType[]]} */
-			/**@type {InstructionType[][]} */
+			/**@type {(InstructionType|null)[][]} */
 			let instructions=[];
+			/**@type {number[]} */
 			let depths=[];
 			for(let i=0;i<stack.length;i++){
 				let cur=stack[i];
 				const [cur_depth, ...cur_instruction]=cur;
+				const prev_depth=depths.at(-1);
+				if(prev_depth != cur_depth && prev_depth) {
+					instructions[prev_depth].push(null);
+				}
 				depths.push(cur_depth);
 				if(!instructions[cur_depth])instructions[cur_depth]=[];
 				instructions[cur_depth].push(cur_instruction);
 			}
 			/**@type {InstructionType[]} */
 			let ret=[];
-			console.log('parse_dom_stack', instructions);
+			console.log('parse_dom_stack', instructions, depths);
 			return ret;
 		}
 		init_dom(){
