@@ -1,5 +1,6 @@
-import {IAutoBuy} from "./types/rebuild_the_universe_auto_interface";
-import {RecursivePartial} from "./types/RecursivePartial";
+import {NonNull} from "api";
+import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
+import {RecursivePartial} from "types/RecursivePartial";
 import {AnyInstructionOperands, InstructionType, VMIndexedObjectValue, VMNewableFunction, VMValue, VMIndexedCallableValue, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow, IDomInstructions} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
@@ -113,8 +114,6 @@ declare global {
 }
 export {};
 
-
-export type NonNull<T> = T extends null ? never : T;
 type MaybeNull=number | null;
 type ExtractedType=NonNull<MaybeNull>;
 

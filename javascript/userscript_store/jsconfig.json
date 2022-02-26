@@ -18,7 +18,8 @@
 			"./node_modules/@types"
 		],
 		"paths":{
-			"types/*": ["types/*"]
+			"types/*": ["types/*"],
+			"api":["types/api.js"],
 		}
 	},
 	"include": ["**/*"],

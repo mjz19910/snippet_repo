@@ -285,6 +285,41 @@
 			}
 		}
 	}
+	/**@typedef {import("./types/SimpleVMTypes.js").InstructionCall} InstructionCall */
+	class InstructionCallE {
+		/**@arg {InstructionCall} instruction @arg {VMInterface} vm */
+		static execute_instruction(vm, instruction){
+			let number_of_arguments = instruction[1];
+			if(typeof number_of_arguments!='number')throw new Error("Invalid");
+			if(number_of_arguments <= 1){
+				throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
+			}
+			let [target_this, target_fn, ...arg_arr] = vm.pop_arg_count(number_of_arguments);
+			const a=target_fn;
+			if(typeof a!='object')throw new Error("Invalid");
+			if(a === null)throw new Error("Invalid");
+			let b=a.get_matching_typeof('function');
+			if(!b)throw new Error("Type mismatch");
+			if(b.type === 'callable_box'){
+				let ret = b.value.apply(target_this, arg_arr);
+				vm.push(ret);
+			} else if (b.type == 'constructor_box'){
+				throw new Error("Unexpected constructor");
+			} else if (b.type === 'function_box'){
+				if(b.return_type == 'promise'){
+					let ret=b.value.apply(target_this, arg_arr);
+					vm.push(ret);
+				} else if(b.return_type === null) {
+					let ret=b.value.apply(target_this, arg_arr);
+					console.info('fixme type of return is any', ret);
+					vm.push(ret);
+				}
+			} else {
+				throw new Error("Unreachable (type of value is never)");
+			}
+		}
+
+	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
 	class InstructionConstructE {
 		/**@arg {InstructionConstruct} instruction @arg {VMInterface} vm */
@@ -537,70 +572,8 @@
 					if(target_obj.type != 'object_index')throw new Error("Invalid");
 					this.push(target_obj.value[target_name]);
 				} break;
-				case 'call'/*Call*/: {
-					let number_of_arguments = instruction[1];
-					if(typeof number_of_arguments!='number')throw new Error("Invalid");
-					if(number_of_arguments <= 1){
-						throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
-					}
-					let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-					const a=target_fn;
-					if(typeof a!='object')throw new Error("Invalid");
-					if(a === null)throw new Error("Invalid");
-					let b=a.get_matching_typeof('function');
-					if(!b)throw new Error("Type mismatch");
-					if(b.type === 'callable_box'){
-						let ret = b.value.apply(target_this, arg_arr);
-						this.push(ret);
-					} else if (b.type == 'constructor_box'){
-						throw new Error("Unexpected constructor");
-					} else if (b.type === 'function_box'){
-						if(b.return_type == 'promise'){
-							let ret=b.value.apply(target_this, arg_arr);
-							this.push(ret);
-						} else if(b.return_type === null) {
-							let ret=b.value.apply(target_this, arg_arr);
-							console.info('fixme type of return is any', ret);
-							this.push(ret);
-						}
-					} else {
-						throw new Error("Unreachable (type of value is never)");
-					}
-				} break;
-				case 'construct'/*Construct*/:{
-					let number_of_arguments=instruction[1];
-					if(typeof number_of_arguments!='number')throw new Error("Invalid");
-					let [construct_target, ...construct_arr]=this.pop_arg_count(number_of_arguments);
-					const a=construct_target;
-					if(typeof a!='object')throw new Error("Invalid");
-					if(a===null)throw new Error("Invalid");
-					if(a.type != 'constructor_box')throw new Error("Invalid");
-					if(a.from === 'typescript'){
-						let obj=new a.value(...construct_arr);
-						this.push(obj);
-					} else if(a.from === 'javascript') {
-						if(a.constructor_type === 'CSSStyleSheet') {
-							/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
-							let valid_args={
-								s:[],
-								valid_count:0
-							}
-							for(let i=0;i<construct_arr.length;i++){
-								let val=construct_arr[i];
-								if(typeof val != 'object')continue;
-								if(val === null)continue;
-								if(val.type != 'shape_box')continue;
-								valid_args={
-									s:[val.value],
-									valid_count:1
-								}
-							}
-							let obj=new a.value(...valid_args.s);
-							this.push(new VMBoxedCSSStyleSheetR(obj));
-						}
-					}
-					l_log_if(LOG_LEVEL_INFO, "", instruction, ...this.stack.slice(this.stack.length-number_of_arguments));
-				} break;
+				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
+				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
 				case 'return'/*Call*/:this.return_value=this.pop();break;
 				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
 				default/*Base class*/:super.execute_instruction(instruction);break;
@@ -818,6 +791,22 @@
 					}
 				} break;
 				case 'drop'/*Stack*/:this.pop();break;
+				case 'dup':this.push(this.pop());break;
+				case 'get':break;
+				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
+				case 'return':break;
+				case 'halt':break;
+				case 'push_args':break;
+				case 'this':break;
+				case 'global':break;
+				case 'breakpoint':break;
+				case 'je':break;
+				case 'jmp':break;
+				case 'vm_return':break;
+				case 'vm_call':break;
+				case 'push_pc':break;
+				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
+				case 'modify_operand':break;
 				default/*Base class*/:{
 					console.error("Need instruction: "+instruction[0]);
 					debugger;
@@ -2386,7 +2375,7 @@
 			this.build_dom_from_desc(raw_dom_arr, this.dom_map);
 		}
 		/**
-		 * @param {any[]} styles
+		 * @param {CSSStyleSheet[]} styles
 		 */
 		adopt_styles(...styles){
 			let dom_styles=document.adoptedStyleSheets;
@@ -2520,39 +2509,65 @@
 		get [next_debug_id()](){
 			return '';
 		}
-		/** @arg {InstructionWithDepth[]} stack @returns {InstructionType[]} */
-		parse_dom_stack(stack) {
-			/**@type {InstructionType[]} */
-			let ret=[];
-			// /**@type {['exec', InstructionType[]]} */
-			/**@type {(InstructionType|null|['inc_depth'|'dec_depth', number, number]|)[][]} */
-			let instructions=[];
+		/**@typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack */
+		/**
+		 * @arg {import("api").NonNull<DomInstructionStack[0]>[0]} value @arg {number} stack_ptr
+		 * @arg {DomInstructionStack} stack
+		 * */
+		push_instruction_group(stack, stack_ptr, value){
+			let instructions_at=stack[stack_ptr];
+			if(instructions_at){
+				instructions_at.push(value);
+			} else {
+				stack[stack_ptr] = [value];
+			}
+		}
+		/** @arg {InstructionWithDepth[]} input_instructions @returns {InstructionType[]} */
+		parse_dom_stack(input_instructions) {
+			const double_indirect_error_str="Double indirect vm_call is hard to prove to the typechecker";
+			/**@type {DomInstructionStack} */
+			let stack=[];
 			/**@type {number[]} */
 			let depths=[];
-			for(let i=0;i<stack.length;i++){
-				let cur=stack[i];
+			for(let i=0;i<input_instructions.length;i++){
+				let cur=input_instructions[i];
 				const [cur_depth, ...cur_instruction]=cur;
-				ret.push(cur_instruction);
+				this.push_instruction_group(stack, cur_depth, cur_instruction);
 				const prev_depth=depths.at(-1);
 				if(prev_depth != cur_depth && prev_depth) {
-					instructions[prev_depth].push(['depth', prev_depth, cur_depth]);
-					if(cur_depth < prev_depth){
-						let ins_start_item=instructions[prev_depth][0];
-						let ins_start_index=ret.indexOf(ins_start_item);
-						/**@type {['vm_call', number]} */
-						let ins=['vm_call', ins_start_index];
-						ret.push(ins);
-						instructions[prev_depth - 1].push();
+					if(cur_depth > prev_depth){
+						let instructions_at=stack[prev_depth];
+						if(!instructions_at)throw new Error("");
+						let ins_start_item=instructions_at[0];
+						if(ins_start_item[0] === 'vm_call_at')throw new Error(double_indirect_error_str);
+						this.push_instruction_group(stack, prev_depth - 1, ['vm_call_at', ins_start_item]);
 					} else {
-						instructions[prev_depth].push(['vm_return']);
+						this.push_instruction_group(stack, prev_depth, ['vm_return']);
 					}
 				}
 				depths.push(cur_depth);
-				if(!instructions[cur_depth])instructions[cur_depth]=[];
-				instructions[cur_depth].push(cur_instruction);
 			}
-			console.log('parse_dom_stack', instructions, depths);
-			return ret;
+			/**@type {import("api").NonNull<DomInstructionStack[0]>} */
+			let flat_stack=[];
+			/**@type {InstructionType[]} */
+			let instructions=[];
+			for(let i=0;i<stack.length;i++){
+				let cur_instructions=stack[i];
+				if(!cur_instructions)continue;
+				flat_stack.push(...cur_instructions);
+			}
+			for(let i=0;i<flat_stack.length;i++){
+					let instruction=flat_stack[i];
+					console.log('i', i, instruction);
+					if(instruction[0] === 'vm_call_at'){
+						let idx=flat_stack.indexOf(instruction[1]);
+						instructions.push(['vm_call', idx]);
+						continue;
+					}
+					instructions.push(instruction);
+				}
+			console.log('parse_dom_stack', stack, depths, instructions);
+			return instructions;
 		}
 		init_dom(){
 			const font_size_px=22;
