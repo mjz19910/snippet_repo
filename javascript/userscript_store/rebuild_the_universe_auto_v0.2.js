@@ -105,7 +105,6 @@
 			this.value=value;
 		}
 	}
-	void VMBoxedNewableFunctionR;
 	/**@typedef {import("./types/SimpleVMTypes.js").VMCallableFunction} VMBoxedCallableFunction */
 	/**@implements {VMBoxedCallableFunction} */
 	class VMBoxedCallableFunctionR {
@@ -292,7 +291,6 @@
 			}
 		}
 	}
-	void VMTemplate;
 	/**@type {<T, X extends keyof T>(obj:{[V in keyof T]:T[V]}, key:X)=>{v:T[X]} | null} */
 	function safe_get(obj, key) {
 		let cur_proto=obj;
@@ -1062,7 +1060,6 @@
 			this.m_callback.call(this.m_obj);
 		}
 	}
-	void IntervalTarget;
 	class PromiseTimeoutTarget {
 		constructor(){
 			this.m_promise_accept=null;
@@ -1802,13 +1799,12 @@
 	function does_array_include(arr, key){
 		return arr.includes(key);
 	}
-	/**@type {<T, U extends T>(v:T, q:U)=>v is U} */
-	function assume_equal(v, q) {
+	/**@type {<T, U extends T>(_v:T, x?:U)=>_v is U} */
+	function assume_equal(_v, _q) {
 		return true;
 	}
 	/**@typedef {InstructionType | import("./types/SimpleVMTypes.js").IDomInstructions} IDomInstructionSet */
 	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} StackVMTypeZ */
-	void does_array_include;
 	/**@implements {StackVMTypeZ} */
 	class DomBuilderVM {
 		/**@type {VMValue} */
@@ -1993,24 +1989,6 @@
 		 * @param {string} data
 		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
-	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMReturnsBoxedPromise} VMReturnsBoxedPromise */
-	/**@implements {VMReturnsBoxedPromise} */
-	class VMReturnsBoxedPromiseR {
-		/**@type {"function_box"} */
-		type="function_box"
-		/**@type {"promise"} */
-		return_type="promise";
-		/**@type {"value"} */
-		await_type="value";
-		/**@arg {"function"} _to_match */
-		get_matching_typeof(_to_match) {
-			return null;
-		}
-		/**@arg {VMReturnsBoxedPromise['value']} value */
-		constructor(value){
-			this.value=value;
-		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMReturnsBoxedVoidPromise} VMReturnsBoxedVoidPromise */
 	/**@implements {VMReturnsBoxedVoidPromise} */
