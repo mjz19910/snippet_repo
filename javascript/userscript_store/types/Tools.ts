@@ -59,7 +59,11 @@ declare namespace TypeManipulation {
 		// recurse with a longer array
 		IntIncImpl<T, [1, ...U]>; 
 	 */
-	type IntIncImpl<T extends number, U extends 1[]>=
+	type IntIncImplSkip1000<U extends 1[], Z>=Z extends [] ? [...U, ...U] :
+	Z extends [any, ...infer A] ? IntIncImplSkip1000<[...U, ...U], A> : never;
+	type Z1=IntIncImplSkip1000<[], [1,1]>['length'];
+	type IntIncImpl<T extends number, U extends void[]>=
+		U['length'] extends 16 ? never :
 		// check for number less than 0, access an array, this will verify
 		// we have a positive or zero value
 		[][T] extends never ?
@@ -69,16 +73,16 @@ declare namespace TypeManipulation {
 		T extends U['length'] ?
 		// we got to the accumulator length eq T, we found the value the user passed,
 		// now add 1 to it
-		[1, ...U]['length'] :
+		[void, ...U]['length'] :
 		// recurse with a longer array
-		IntIncImpl<T, [1, ...U]>;
+		IntIncImpl<T, [void, ...U]>;
 	type IntInc<T extends number>=IntIncImpl<T, []>;
 	/* type IntDecImpl<T extends number, U extends 1[]>=[][T] extends never ? -1 : T extends U['length'] ? U extends [1,  ...infer C] ? C['length'] : T : IntDecImpl<T, [1, ...U]>;
 	type IntDec<T extends number>=IntDecImpl<T, []>;
 	type NegDec<T extends number>=Extract<[null, undefined][T], undefined> extends null ? -1:
 	[null][T] extends null ? T extends -2 ? -3 : ['e', T]
 	: T extends 1 ? 0 : IntDec<T>; */
-	type IAz=IntInc<0>;
+	type IAz=IntInc<12>;
 	/* type IA1=IntInc<1>;
 	type IA2=IntInc<2>;
 	type IA4=IntInc<4>;
@@ -118,3 +122,6 @@ declare namespace TypeManipulation {
 	type V5 = NegIncImpl1<-2, [0, 1]>;
 	type V6 = NegIncImpl2<0, [], 0>; */
 }
+type Arr1=[1,2,3];
+type Arr2=[1,2,3,4];
+var x:Arr1|Arr2=[1,2,3,4];x[x['2']];
