@@ -2520,11 +2520,9 @@
 		get [next_debug_id()](){
 			return '';
 		}
-		/**
-		 * @arg {InstructionWithDepth[]} stack
-		 */
-		parse_dom_stack(stack){
-			/**@type {['exec', InstructionType[]]} */
+		/** @arg {InstructionWithDepth[]} stack @returns {InstructionType[]} */
+		parse_dom_stack(stack) {
+			// /**@type {['exec', InstructionType[]]} */
 			/**@type {InstructionType[][]} */
 			let instructions=[];
 			let depths=[];
@@ -3961,15 +3959,19 @@
 			let hist_state={
 				gen:next_gen
 			};
-			await new Promise(function(a){
-				if(localStorage.justReset === 'true'){
-					return a(null);
-				}
-				window.g_do_load=do_load_fire_promise.bind(null, a);
-				document.writeln(`<head></head><body><a href onclick="g_do_load()">load with fetch</a></body>`);
-				reset_global_event_handlers();
-				document.close();
-			});
+			let skip=true;
+			x:{
+				if(skip)break x;
+				await new Promise(function(a){
+					if(localStorage.justReset === 'true'){
+						return a(null);
+					}
+					window.g_do_load=do_load_fire_promise.bind(null, a);
+					document.writeln(`<head></head><body><a href onclick="g_do_load()">load with fetch</a></body>`);
+					reset_global_event_handlers();
+					document.close();
+				});
+			}
 			reset_global_event_handlers();
 			history.pushState(hist_state, '', loc_url);
 			const rb_html=await (await fetch(loc_url)).text();
