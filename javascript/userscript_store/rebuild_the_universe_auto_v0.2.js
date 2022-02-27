@@ -543,14 +543,18 @@
 						}
 						return null;
 					}
-					/**@type {VMIndexedValue|null} */
-					let unboxed_obj=null;
-					if(obj.type === 'custom_box'){
-						unboxed_obj=as_indexed(obj.value);
-					} else {
-						unboxed_obj=as_indexed(obj);
-					}
+					switch(instruction[1]){
+						case 'object_index':{
+							/**@type {VMIndexedValue|null} */
+							let unboxed_obj=null;
+							if(obj.type === 'custom_box'){
+							unboxed_obj=as_indexed(obj.value);
+							} else {
+								unboxed_obj=as_indexed(obj);
+							}
 					if(unboxed_obj)this.push(new VMIndexedObjectValueR(unboxed_obj));
+						} break;
+					}
 				} break;
 				case 'get'/*Object*/: {
 					let target_name = this.pop();
@@ -614,6 +618,7 @@
 					if(typeof target_obj!='object')throw new Error("Invalid");
 					if(typeof target_name!='string')throw new Error("Invalid");
 					if(target_obj===null)throw new Error("Invalid");
+					console.log('VM: call', target_obj);
 					if(target_obj.type!="callable_index")throw new Error("Invalid");
 					let ret = target_obj.value[target_name](...arg_arr);
 					this.push(ret);
