@@ -11,6 +11,8 @@
 // @match			https://rebuildtheuniverse.com/?type=mjz_version
 // @match			https://rebuildtheuniverse.com
 // @match           https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/
+// @match           https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/?type=real
+// @match           https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/?type=mjz_version
 // @run-at			document-start
 // @grant			none
 // ==/UserScript==
@@ -181,111 +183,6 @@
 			v:prop.value
 		};
 	}
-	class StackVMImpl {
-		/**@arg {InstructionType[]} instructions */
-		constructor(instructions){
-			this.instructions = instructions;
-			this.instruction_pointer = 0;
-			this.running = false;
-		}
-		reset(){
-			this.instruction_pointer = 0;
-			this.running = false;
-		}
-		/**
-		 * @param {number} value
-		 */
-		is_in_instructions(value){
-			return value >= 0 && value < this.instructions.length;
-		}
-		/**
-		 * @type {{ equal: boolean; }}
-		 */
-		flags={
-			equal:false,
-		};
-		/**
-		 * @param {InstructionType} instruction
-		 */
-		execute_instruction(instruction) {
-			/**@type {('je'|'jmp'|'modify_operand'|'push_pc'|'halt')[]}*/
-			let handled_instructions=['je', 'jmp', 'modify_operand', 'push_pc', 'halt'];
-			let op_code=instruction[0];
-			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
-			}
-			switch(instruction[0]) {
-				case 'je':{
-					let [, target] = instruction;
-					if(typeof target!='number')throw new Error("Invalid");
-					if(this.is_in_instructions(target)){
-						throw new Error("RangeError: Jump target is out of instructions range");
-					}
-					if(this.flags.equal){
-						this.instruction_pointer=target;
-					}
-				} break;
-				case 'jmp':{
-					let [, target] = instruction;
-					if(typeof target!='number')throw new Error("Invalid");
-					if(this.is_in_instructions(target)){
-						throw new Error("RangeError: Jump target is out of instructions range");
-					}
-					this.instruction_pointer=target;
-				} break;
-				case 'modify_operand':{
-					let [, target, offset]=instruction;
-					if(typeof target!='number')throw new Error("Invalid");
-					if(typeof offset!='number')throw new Error("Invalid");
-					if(this.is_in_instructions(target)){
-						throw new Error("RangeError: Destination is out of instructions range");
-					}
-					let instruction_1=this.instructions[target];
-					/**@type {[string, ...any[]]} */
-					let instruction_modify=instruction_1;
-					let value=null;
-					if(this instanceof StackVM){
-						value=this.pop();
-					} else {
-						let pop_fn=Object.getOwnPropertyDescriptor(this, 'pop');
-						if(!pop_fn)throw new Error("Previous check should cause this to be unreachable");
-						if(pop_fn.get){
-							throw new Error("own property pop was a getter");
-						} else {
-							console.info(`TODO: add instanceof check`);
-							value=pop_fn.value.call(this);
-						}
-					}
-					if(instruction_modify === void 0)throw new Error("Invalid");
-					instruction_modify[offset] = value;
-					let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify);
-					this.instructions[target]=valid_instruction;
-				} break;
-				case 'push_pc':{
-					instruction;
-					if(!this.hasOwnProperty('push')) {
-						throw new Error("push_pc requires a stack");
-					} else if (this instanceof StackVM) {
-						this.push(this.instruction_pointer);
-					} else {
-						console.info('TODO: add instanceof check to push_pc');
-						/**@type {any} */
-						let this_as_any=this;
-						/**@type {this & {push:StackVM['push'];}} */
-						let this_with_push=this_as_any;
-						let fn_ptr=safe_get(this_with_push, 'push');
-						if(!fn_ptr)throw new Error("push_pc requires a stack");
-						fn_ptr.v.call(this, this.instruction_pointer);
-					}
-				} break;
-				case 'halt'/*Running*/:{
-					instruction;
-					this.running=false;
-				} break;
-				default:throw new Error("Unexpected instruction: "+instruction[0]);break;
-			}
-		}
-	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionCall} InstructionCall */
 	class InstructionCallE {
 		/**@arg {InstructionCall} instruction @arg {VMInterface} vm */
@@ -359,231 +256,6 @@
 			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
-	class DocumentWriteList {
-		/**
-		 * @type {any[]}
-		 */
-		list;
-		constructor(){
-			this.list=[];
-			this.attached=false;
-			this.end_symbol=Symbol(void 0);
-			/**@type {import("./final/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
-			this.document_write=null;
-			this.attached_document=null;
-			this.document_write_proxy=null;
-		}
-		/**
-		 * @arg {(...text: string[]) => void} target
-		 * @arg {Document} thisArg
-		 * @arg {string[]} argArray
-		 */
-		write(target, thisArg, argArray){
-			console.assert(target === this.document_write);
-			console.assert(thisArg === this.attached_document);
-			this.list.push(argArray, null);
-		}
-		/**@arg {Document} document */
-		attach_proxy(document){
-			if(this.attached){
-				let was_destroyed=this.destroy(true);
-				if(!was_destroyed){
-					throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
-				}
-			}
-			this.attached_document=document;
-			this.document_write=document.write;
-			let proxy_handler={
-				other:this,
-				//target: (...text: string[]) => void, thisArg: Document, argArray: string[]
-				/**
-				 * @arg {(...text: string[]) => void} target
-				 * @arg {Document} thisArg
-				 * @arg {string[]} argArray
-				 */
-				apply(target, thisArg, argArray){
-					this.other.write(target, thisArg, argArray);
-				}
-			};
-			this.document_write_proxy=new Proxy(document.write, proxy_handler);
-			document.write=this.document_write_proxy;
-		}
-		/**
-		 * @param {boolean} should_try_to_destroy
-		 */
-		destroy(should_try_to_destroy=false) {
-			if(this.attached_document&&this.document_write_proxy){
-				console.assert(this.attached_document.write === this.document_write_proxy);
-				if(this.attached_document.write !== this.document_write_proxy){
-					if(should_try_to_destroy){
-						return false;
-					}
-					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
-				}
-				let doc_1=this.attached_document;
-				if(doc_1 && this.document_write) {
-					let doc_var=this.document_write;
-					/**@type {any} */
-					let any_var=doc_var;
-					/**@type {Document['write']} */
-					let vv=any_var;
-					doc_1.write=vv;
-				}
-			}
-			if(this.document_write_proxy){
-				this.document_write_proxy=null;
-			}
-			if(this.document_write){
-				this.document_write=null;
-			}
-			if(this.attached_document){
-				this.attached_document=null;
-			}
-			if(should_try_to_destroy){
-				return true;
-			}
-		}
-	}
-	class UniqueIdGenerator {
-		constructor(){
-			this.m_current=-1;
-		}
-		/**
-		 * @param {number} current_value
-		 */
-		set_current(current_value){
-			this.m_current=current_value;
-		}
-		current(){
-			return this.m_current;
-		}
-		next(){
-			return this.m_current++;
-		}
-	}
-	class NamedIdGenerator {
-		constructor(){
-			this.state_map=new Map;
-		}
-		/**@arg {string} name */
-		current_named(name){
-			let val=this.state_map.get(name);
-			if(val){
-				return val;
-			} else {
-				return 0;
-			}
-		}
-		/**@arg {string} name */
-		next_named(name){
-			if(this.state_map.has(name)){
-				let cur=this.state_map.get(name) + 1;
-				this.state_map.set(name, cur);
-				return cur;
-			} else {
-				this.state_map.set(name, 1);
-				return 1;
-			};
-		}
-	}
-	class EventHandlerDispatch {
-		/**
-		 * @param {{[x:string]:any}} target_obj
-		 * @param {string} target_name
-		 */
-		constructor(target_obj, target_name){
-			this.target_obj=target_obj;
-			this.target_name=target_name;
-		}
-		/**
-		 * @param {any} event
-		 */
-		handleEvent(event){
-			this.target_obj[this.target_name](event);
-		}
-	}
-	class StackVM extends StackVMImpl {
-		/**@type {VMValue[]} */
-		stack;
-		/**@arg {InstructionType[]} instructions */
-		constructor(instructions){
-			super(instructions);
-			this.stack=[];
-			this.return_value = void 0;
-		}
-		reset(){
-			super.reset();
-			this.stack.length = 0;
-			this.return_value = void 0;
-		}
-		/**@arg {VMValue} value */
-		push(value) {
-			this.stack.push(value);
-		}
-		pop() {
-			return this.stack.pop();
-		}
-		/**@arg {number} distance */
-		peek_at(distance){
-			return this.stack.at(-1 - distance);
-		}
-		/**
-		 * @param {number} operand_number_of_arguments
-		 */
-		pop_arg_count(operand_number_of_arguments){
-			let arguments_arr=[];
-			let arg_count=operand_number_of_arguments;
-			for(let i = 0; i < arg_count; i++) {
-				if(this.stack.length <= 0){
-					throw new Error('stack underflow in pop_arg_count');
-				}
-				arguments_arr.unshift(this.pop());
-			}
-			return arguments_arr;
-		}
-		/**
-		 * @param {InstructionType} instruction
-		 */
-		execute_instruction(instruction){
-			/**@type {('push'|'drop'|'dup'|'get'|'call'|'construct'|'return')[]}*/
-			let handled_instructions=['push', 'drop', 'dup', 'get', 'call', 'construct', 'return'];
-			let op_code=instruction[0];
-			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
-			}
-			switch(instruction[0]) {
-				case 'push'/*Stack*/: {
-					for(let i = 0; i < instruction.length-1; i++) {
-						let item = instruction[i+1];
-						this.push(item);
-					}
-				} break;
-				case 'drop'/*Stack*/:this.pop();break;
-				case 'dup'/*Stack*/:{
-					let top=this.peek_at(0);
-					if(!top)throw new Error("Stack underflow when executing dup instruction");
-					this.push(top);
-				} break;
-				case 'get'/*Object*/: {
-					let target_name = this.pop();
-					let target_obj = this.pop();
-					if(!target_obj)throw new Error("Invalid");
-					if(typeof target_name!='string')throw new Error("Invalid");
-					if(typeof target_obj!='object')throw new Error("Invalid");
-					if(target_obj.type != 'object_index'){
-						console.log('not object_index', target_obj);
-						throw new Error("Invalid");
-					}
-					this.push(target_obj.value[target_name]);
-				} break;
-				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
-				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
-				case 'return'/*Call*/:this.return_value=this.pop();break;
-				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
-				default/*Base class*/:super.execute_instruction(instruction);break;
-			}
-		}
-	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedStackVM} VMBoxedStackVM */
 	/**@implements {VMBoxedStackVM} */
 	class VMBoxedStackVMR {
@@ -616,6 +288,187 @@
 			this.value = value;
 		}
 	}
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
+	/**@implements {VMBoxedObject} */
+	class VMBoxedObjectR {
+		/**@type {"object_box"} */
+		type="object_box";
+		inner_type=null;
+		/**@arg {'function'} _a */
+		get_matching_typeof(_a){
+			return null;
+		}
+		/**@arg {object} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
+	/**@implements {VMInterface} */
+	class StackVM {
+		/**@arg {InstructionType[]} instructions */
+		constructor(instructions){
+			this.instructions = instructions;
+			this.instruction_pointer = 0;
+			this.running = false;
+			this.stack=[];
+			this.return_value = void 0;
+		}
+		/**@type {VMValue[]} */
+		stack;
+		/**@arg {VMValue} value */
+		push(value) {
+			this.stack.push(value);
+		}
+		pop() {
+			return this.stack.pop();
+		}
+		/**@arg {number} distance */
+		peek_at(distance){
+			return this.stack.at(-1 - distance);
+		}
+		/**
+		 * @param {number} operand_number_of_arguments
+		 */
+		pop_arg_count(operand_number_of_arguments){
+			let arguments_arr=[];
+			let arg_count=operand_number_of_arguments;
+			for(let i = 0; i < arg_count; i++) {
+				if(this.stack.length <= 0){
+					throw new Error('stack underflow in pop_arg_count');
+				}
+				arguments_arr.unshift(this.pop());
+			}
+			return arguments_arr;
+		}
+		reset(){
+			this.running = false;
+			this.instruction_pointer = 0;
+			this.return_value = void 0;
+			this.stack.length = 0;
+		}
+		/**
+		 * @param {number} value
+		 */
+		is_in_instructions(value){
+			return value >= 0 && value < this.instructions.length;
+		}
+		/**
+		 * @type {{ equal: boolean; }}
+		 */
+		flags={
+			equal:false,
+		};
+		/**
+		 * @param {InstructionType} instruction
+		 */
+		execute_instruction(instruction) {
+			/**@type {('je'|'jmp'|'modify_operand'|'push_pc'|'halt'|'push'|'drop'|'dup'|'get'|'call'|'construct'|'return')[]}*/
+			let handled_instructions=['je', 'jmp', 'modify_operand', 'push_pc', 'halt', 'push', 'drop', 'dup', 'get', 'call', 'construct', 'return'];
+			let op_code=instruction[0];
+			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
+				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
+			}
+			switch(instruction[0]) {
+				case 'je':{
+					let [, target] = instruction;
+					if(typeof target!='number')throw new Error("Invalid");
+					if(this.is_in_instructions(target)){
+						throw new Error("RangeError: Jump target is out of instructions range");
+					}
+					if(this.flags.equal){
+						this.instruction_pointer=target;
+					}
+				} break;
+				case 'jmp':{
+					let [, target] = instruction;
+					if(typeof target!='number')throw new Error("Invalid");
+					if(this.is_in_instructions(target)){
+						throw new Error("RangeError: Jump target is out of instructions range");
+					}
+					this.instruction_pointer=target;
+				} break;
+				case 'modify_operand':{
+					let [, target, offset]=instruction;
+					if(typeof target!='number')throw new Error("Invalid");
+					if(typeof offset!='number')throw new Error("Invalid");
+					if(this.is_in_instructions(target)){
+						throw new Error("RangeError: Destination is out of instructions range");
+					}
+					let instruction_1=this.instructions[target];
+					/**@type {[string, ...any[]]} */
+					let instruction_modify=instruction_1;
+					let value=null;
+					if(this instanceof StackVM){
+						value=this.pop();
+					} else {
+						let pop_fn=Object.getOwnPropertyDescriptor(this, 'pop');
+						if(!pop_fn)throw new Error("Previous check should cause this to be unreachable");
+						if(pop_fn.get){
+							throw new Error("own property pop was a getter");
+						} else {
+							console.info(`TODO: add instanceof check`);
+							value=pop_fn.value.call(this);
+						}
+					}
+					if(instruction_modify === void 0)throw new Error("Invalid");
+					instruction_modify[offset] = value;
+					let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify);
+					this.instructions[target]=valid_instruction;
+				} break;
+				case 'push_pc':{
+					instruction;
+					if(!this.hasOwnProperty('push')) {
+						throw new Error("push_pc requires a stack");
+					} else if (this instanceof StackVM) {
+						this.push(this.instruction_pointer);
+					} else {
+						console.info('TODO: add instanceof check to push_pc');
+						/**@type {any} */
+						let this_as_any=this;
+						/**@type {this & {push:StackVM['push'];}} */
+						let this_with_push=this_as_any;
+						let fn_ptr=safe_get(this_with_push, 'push');
+						if(!fn_ptr)throw new Error("push_pc requires a stack");
+						fn_ptr.v.call(this, this.instruction_pointer);
+					}
+				} break;
+				case 'halt'/*Running*/:{
+					instruction;
+					this.running=false;
+				} break;
+				case 'push'/*Stack*/: {
+					for(let i = 0; i < instruction.length-1; i++) {
+						let item = instruction[i+1];
+						this.push(item);
+					}
+				} break;
+				case 'drop'/*Stack*/:this.pop();break;
+				case 'dup'/*Stack*/:{
+					let top=this.peek_at(0);
+					if(!top)throw new Error("Stack underflow when executing dup instruction");
+					this.push(top);
+				} break;
+				case 'get'/*Object*/: {
+					let target_name = this.pop();
+					let target_obj = this.pop();
+					if(!target_obj)throw new Error("Invalid");
+					if(typeof target_name!='string')throw new Error("Invalid");
+					if(typeof target_obj!='object')throw new Error("Invalid");
+					if(target_obj.type != 'object_index'){
+						console.log('not object_index', target_obj, target_name);
+						throw new Error("Invalid");
+					}
+					this.push(target_obj.value[target_name]);
+				} break;
+				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
+				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
+				case 'return'/*Call*/:this.return_value=this.pop();break;
+				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
+				default:throw new Error("Unexpected instruction: "+instruction[0]);break;
+			}
+		}
+	}
+	/**@implements {VMInterface} */
 	class SimpleStackVM extends StackVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
@@ -677,6 +530,7 @@
 			return this.return_value;
 		}
 	}
+	/**@implements {VMInterface} */
 	class EventHandlerVMDispatch extends SimpleStackVM {
 		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
@@ -1003,19 +857,147 @@
 		}
 	}
 	SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
-	/**@implements {VMBoxedObject} */
-	class VMBoxedObjectR {
-		/**@type {"object_box"} */
-		type="object_box";
-		inner_type=null;
-		/**@arg {'function'} _a */
-		get_matching_typeof(_a){
-			return null;
+	class DocumentWriteList {
+		/**
+		 * @type {any[]}
+		 */
+		list;
+		constructor(){
+			this.list=[];
+			this.attached=false;
+			this.end_symbol=Symbol(void 0);
+			/**@type {import("./final/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
+			this.document_write=null;
+			this.attached_document=null;
+			this.document_write_proxy=null;
 		}
-		/**@arg {object} value */
-		constructor(value){
-			this.value=value;
+		/**
+		 * @arg {(...text: string[]) => void} target
+		 * @arg {Document} thisArg
+		 * @arg {string[]} argArray
+		 */
+		write(target, thisArg, argArray){
+			console.assert(target === this.document_write);
+			console.assert(thisArg === this.attached_document);
+			this.list.push(argArray, null);
+		}
+		/**@arg {Document} document */
+		attach_proxy(document){
+			if(this.attached){
+				let was_destroyed=this.destroy(true);
+				if(!was_destroyed){
+					throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
+				}
+			}
+			this.attached_document=document;
+			this.document_write=document.write;
+			let proxy_handler={
+				other:this,
+				//target: (...text: string[]) => void, thisArg: Document, argArray: string[]
+				/**
+				 * @arg {(...text: string[]) => void} target
+				 * @arg {Document} thisArg
+				 * @arg {string[]} argArray
+				 */
+				apply(target, thisArg, argArray){
+					this.other.write(target, thisArg, argArray);
+				}
+			};
+			this.document_write_proxy=new Proxy(document.write, proxy_handler);
+			document.write=this.document_write_proxy;
+		}
+		/**
+		 * @param {boolean} should_try_to_destroy
+		 */
+		destroy(should_try_to_destroy=false) {
+			if(this.attached_document&&this.document_write_proxy){
+				console.assert(this.attached_document.write === this.document_write_proxy);
+				if(this.attached_document.write !== this.document_write_proxy){
+					if(should_try_to_destroy){
+						return false;
+					}
+					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
+				}
+				let doc_1=this.attached_document;
+				if(doc_1 && this.document_write) {
+					let doc_var=this.document_write;
+					/**@type {any} */
+					let any_var=doc_var;
+					/**@type {Document['write']} */
+					let vv=any_var;
+					doc_1.write=vv;
+				}
+			}
+			if(this.document_write_proxy){
+				this.document_write_proxy=null;
+			}
+			if(this.document_write){
+				this.document_write=null;
+			}
+			if(this.attached_document){
+				this.attached_document=null;
+			}
+			if(should_try_to_destroy){
+				return true;
+			}
+		}
+	}
+	class UniqueIdGenerator {
+		constructor(){
+			this.m_current=-1;
+		}
+		/**
+		 * @param {number} current_value
+		 */
+		set_current(current_value){
+			this.m_current=current_value;
+		}
+		current(){
+			return this.m_current;
+		}
+		next(){
+			return this.m_current++;
+		}
+	}
+	class NamedIdGenerator {
+		constructor(){
+			this.state_map=new Map;
+		}
+		/**@arg {string} name */
+		current_named(name){
+			let val=this.state_map.get(name);
+			if(val){
+				return val;
+			} else {
+				return 0;
+			}
+		}
+		/**@arg {string} name */
+		next_named(name){
+			if(this.state_map.has(name)){
+				let cur=this.state_map.get(name) + 1;
+				this.state_map.set(name, cur);
+				return cur;
+			} else {
+				this.state_map.set(name, 1);
+				return 1;
+			};
+		}
+	}
+	class EventHandlerDispatch {
+		/**
+		 * @param {{[x:string]:any}} target_obj
+		 * @param {string} target_name
+		 */
+		constructor(target_obj, target_name){
+			this.target_obj=target_obj;
+			this.target_name=target_name;
+		}
+		/**
+		 * @param {any} event
+		 */
+		handleEvent(event){
+			this.target_obj[this.target_name](event);
 		}
 	}
 	function trigger_debug_breakpoint(){
@@ -2227,7 +2209,7 @@
 			}catch(e){
 				l_log_if(LOG_LEVEL_INFO, "failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
-			let raw_instructions=`this;push,target_obj;get;push,background_audio;get;push,play;call,int(2);push,then;push,%o;push,%o;call,int(4);drop;global;push,removeEventListener;push,click;this;call,int(4);drop`;
+			let raw_instructions=`this;push,target_obj;get;cast_object,/*TODO*/;push,background_audio;get;push,play;call,int(2);push,then;push,%o;push,%o;call,int(4);drop;global;push,removeEventListener;push,click;this;call,int(4);drop`;
 			let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(raw_instructions, [
 				function(){
 					l_log_if(LOG_LEVEL_INFO, 'play success')
@@ -2549,8 +2531,6 @@
 						let ins_start_item=instructions_at[0];
 						if(ins_start_item[0] === 'vm_call_at')throw new Error(double_indirect_error_str);
 						this.push_instruction_group(stack, prev_depth - 1, ['vm_call_at', ins_start_item]);
-					} else {
-						this.push_instruction_group(stack, prev_depth, ['vm_return']);
 					}
 				}
 				depths.push(cur_depth);
@@ -3989,10 +3969,7 @@
 			});
 			reset_global_event_handlers();
 			let orig_url=location.href;
-			let loc_url="//rebuildtheuniverse.com";
-			if(location.origin != "rebuildtheuniverse.com"){
-				loc_url="https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/";
-			}
+			let loc_url=location.origin+location.pathname;
 			let prev_state=history.state;
 			let next_gen=0;
 			if(prev_state && prev_state.gen){
@@ -4015,7 +3992,7 @@
 				});
 			}
 			reset_global_event_handlers();
-			history.pushState(hist_state, '', loc_url);
+			history.pushState(hist_state, '', orig_url);
 			const rb_html=await (await fetch(loc_url)).text();
 			{
 				let la=mut_observers.pop();
@@ -4119,6 +4096,7 @@
 					mut_observer.disconnect();
 				}
 			}));
+			mut_observers[0].disconnect();
 			window.g_page_content={
 				request_content:rb_html,
 				cur:rb_html_tmp
@@ -4156,16 +4134,24 @@
 			do_fetch_load();
 			document.close();
 		}
+		let page_url=location.href
 		let non_proto_url=page_url_no_protocol();
 		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
 			do_page_replace();
 		} else if (non_proto_url == "//rebuildtheuniverse.com/?type=mjz_version"){
 			do_page_replace();
-		} else if(location.href === "https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/"){
+		} else if (page_url == "https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/?type=mjz_version"){
 			do_page_replace();
 		} else if(non_proto_url == "//rebuildtheuniverse.com/?type=real") {
 			on_dom_load();
+		} else if(page_url === "https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/?type=real"){
+			on_dom_load();
 		} else if(non_proto_url == "//rebuildtheuniverse.com/"){
+			window.setTimeout=real_st;
+			window.setInterval=real_si;
+			EventTarget.prototype.addEventListener=orig_aev;
+			document_write_list.destroy();
+		} else if(page_url === "https://ssh.login.local:9342/rebuild/mirror/rebuildtheuniverse.com/"){
 			window.setTimeout=real_st;
 			window.setInterval=real_si;
 			EventTarget.prototype.addEventListener=orig_aev;
