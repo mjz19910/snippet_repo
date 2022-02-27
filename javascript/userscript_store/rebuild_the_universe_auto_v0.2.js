@@ -22,7 +22,6 @@ import {CSSStyleSheetBox} from "types/vm/box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "types/vm/box/CSSStyleSheetConstructorBox.js";
 import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 import {FunctionBox} from "types/vm/box/FunctionBox.js";
-import {IndexedFnBox} from "types/vm/box/IndexedFunctionBox.js";
 import {NewableFunctionBox} from "types/vm/box/NewableFunctionBox.js";
 import {NodeBox} from "types/vm/box/NodeBox.js";
 import {PromiseBox} from "types/vm/box/PromiseBox.js";
@@ -101,7 +100,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/vm/box/mod.js").IBox} IBox */
+	/**@typedef {import("types/vm/box/mod.js").Box} Box */
 	/**@implements {PromiseBox} */
 	class PromiseBoxImpl {
 		/**@type {"promise"} */
@@ -112,29 +111,28 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {Promise<IBox>} value */
+		/**@arg {Promise<Box>} value */
 		constructor(value){
 			this.value=value;
 		}
 	}
-	/**@implements {NewableFunctionBox} */
-	class NewableFunctionBoxImpl {
+	class NewableFactory {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
 		/**@type {'box[]'} */
 		arguments="box[]";
 		/**@type {'box'} */
 		return="box";
-		/**@type {<T>(fn:{new (v:Box[]):T})=>Box} */
+		/**@type {<T>(fn:{new (...v:Box[]):T})=>Box} */
 		value;
-		/**@arg {'function'} to_match */
+		/**@arg {string} to_match */
 		get_matching_typeof(to_match) {
 			if(typeof this.value === to_match){
 				return this;
 			}
 			return null;
 		}
-		/**@arg {<T>(fn:{new (v:Box[]):T})=>Box} value */
+		/**@arg {<T>(fn: new (...v: Box[]) => T) => Box} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -184,24 +182,20 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 	}
 	/**@typedef {import("types/vm/mod.js").InstructionCall} InstructionCall */
 	class InstructionCallE {
-		/**@arg {IBox} v */
+		/**@arg {Box} v */
 		static unbox_value(v){
 			if(typeof v!='object'){
 				return v;
 			} else if(v === null){
 				return v;
 			} else {
-				if(v.type === 'special'){
-					if(v.value_type === 'void'){
-						throw new Error("Attempt to use a box with void type");
-					} else {
-						throw new Error("TODO");
-					}
+				if(v.type === 'void'){
+					throw new Error("Attempt to use a box with void type");
 				}
 				return v.value;
 			}
 		}
-		/**@arg {IBox[]} v_arr */
+		/**@arg {Box[]} v_arr */
 		static unbox_args(v_arr) {
 			return v_arr.map(v=>{
 				return this.unbox_value(v);
@@ -218,9 +212,8 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			const a=target_fn;
 			if(typeof a!='object')throw new Error("Invalid");
 			if(a === null)throw new Error("Invalid");
-			if(a.type === 'special'){
-				if(a.value_type === 'void')throw new Error("Attempt to call a void value");
-				throw new Error("Invalid");
+			if(a.type === 'void'){
+				throw new Error("Attempt to call a void value");
 			}
 			let b=a.get_matching_typeof('function');
 			if(!b)throw new Error("Type mismatch");
@@ -265,7 +258,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		get_matching_typeof(_typeof_val){
 			return null;
 		}
-		/**@arg {IBox[]} value */
+		/**@arg {Box[]} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -295,7 +288,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			if(typeof a!='object')throw new Error("Invalid");
 			if(a===null)throw new Error("Invalid");
 			if(a.type != 'constructor_box')throw new Error("Invalid");
-			if(a.from === 'typescript'){
+			if(a.value === CSSStyleSheet) {
 				let obj=new a.value(...construct_arr);
 				switch(typeof obj){
 					case 'object':
@@ -324,8 +317,8 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 					default:
 						throw new Error("new typeof result: "+typeof obj);
 				}
-			} else if(a.from === 'javascript') {
-				if(a.constructor_type === 'CSSStyleSheet') {
+			} else {
+				{
 					/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
 					let valid_args={
 						s:[],
@@ -341,6 +334,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 							valid_count:1
 						}
 					}
+					/**@type {CSSStyleSheet} */
 					let obj=new a.value(...valid_args.s);
 					vm.push(new VMBoxedCSSStyleSheetR(obj));
 				}
@@ -499,14 +493,14 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {import("types/vm/index_access/mod.js").IndexAccess<IBox>} value */
+		/**@arg {import("types/vm/index_access/mod.js").IndexAccess<Box>} value */
 		constructor(value){
 			this.value=value;
 		}
 	}
-	/**@type {IBox} */
+	/**@type {Box} */
 	class BaseBox {
-		/**@arg {import("api").NonNull<IBox>['value']} value */
+		/**@arg {import("api").NonNull<Box>['value']} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -534,9 +528,9 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			this.stack=[];
 			this.return_value = void 0;
 		}
-		/**@type {IBox[]} */
+		/**@type {Box[]} */
 		stack;
-		/**@arg {IBox} value */
+		/**@arg {Box} value */
 		push(value) {
 			this.stack.push(value);
 		}
@@ -551,6 +545,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		 * @param {number} operand_number_of_arguments
 		 */
 		pop_arg_count(operand_number_of_arguments){
+			/**@type {Box[]} */
 			let arguments_arr=[];
 			let arg_count=operand_number_of_arguments;
 			for(let i = 0; i < arg_count; i++) {
@@ -794,7 +789,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			}
 		}
 		/**
-		 * @param {IBox[]} run_arguments
+		 * @param {Box[]} run_arguments
 		 */
 		run(...run_arguments) {
 			this.args_vec=run_arguments;
@@ -822,7 +817,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		}
 	}
 	class DomBuilderVM {
-		/**@type {IBox} */
+		/**@type {Box} */
 		return_value;
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
@@ -830,17 +825,17 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			this.instruction_pointer=0;
 			this.return_value = void 0;
 			/**
-			 * @type {IBox[]}
+			 * @type {Box[]}
 			 */
 			this.stack=[];
 			/**
-			 * @type {[IBox[], InstructionType[]][]}
+			 * @type {[Box[], InstructionType[]][]}
 			 */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
 		/**
-		 * @param {IBox} v
+		 * @param {Box} v
 		 */
 		push(v){
 			this.stack.push(v);
@@ -850,7 +845,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		}
 		/**
 		 * @param {number} operand_number_of_arguments
-		 * @return {IBox[]}
+		 * @return {Box[]}
 		 */
 		pop_arg_count(operand_number_of_arguments){
 			let arguments_arr=[];
@@ -956,7 +951,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			}
 		}
 		/**
-		 * @param {IBox} box
+		 * @param {Box} box
 		 * @returns {box is NodeBox}
 		 */
 		can_use_box(box){
@@ -966,7 +961,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			return false;
 		}
 		/**
-		 * @param {IBox} box
+		 * @param {Box} box
 		 */
 		verify_dom_box(box){
 			if(typeof box!='object')throw new Error("invalid Box (not an object)");
@@ -2310,11 +2305,11 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		}
 	}
 	/**@typedef {[number, 'get', string]} DomExecDescriptionI1 */
-	/**@typedef {[number, 'create', string, string, {[s:string]:IBox}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
+	/**@typedef {[number, 'create', string, string, {[s:string]:Box}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
 	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
 	/**@typedef {[number, 'append']} DomExecDescriptionI4 */
 	/**@typedef {[number, 'push', null, VMReturnsBoxedVoidPromiseR]} DomExecDescriptionI5 */
-	/**@typedef {[number, 'new', IBox, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
+	/**@typedef {[number, 'new', Box, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
 	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
 	/**@typedef {[number, 'drop']} DomExecDescriptionI8 */
 	/**@typedef {[number, 'breakpoint']} DomExecDescriptionI9 */
@@ -2579,8 +2574,8 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			/**
 			 * @this {AutoBuy}
 			 * */
-			async function css_promise_runner(/** @type {IBox[]} */ ...styles_promise_arr) {
-				/**@type {Promise<IBox>[]} */
+			async function css_promise_runner(/** @type {Box[]} */ ...styles_promise_arr) {
+				/**@type {Promise<Box>[]} */
 				let css_arr=[];
 				for(let i=0;i<styles_promise_arr.length;i++){
 					let cur=styles_promise_arr[i];
@@ -2647,7 +2642,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			let make_css_arr=[
 				[
 					0, 'push', null,
-					new VMReturnsBoxedVoidPromiseR(function(/** @type {IBox[]} */ ...a) {
+					new VMReturnsBoxedVoidPromiseR(function(/** @type {Box[]} */ ...a) {
 						l_log_if(LOG_LEVEL_INFO, 'void input', a);
 						let ret=css_promise_runner.call(bound_this, ...a);
 						l_log_if(LOG_LEVEL_INFO, 'void out', ret);
