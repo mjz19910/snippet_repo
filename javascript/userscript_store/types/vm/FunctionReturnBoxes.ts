@@ -1,3 +1,3 @@
-import {CSSStyleSheetPromiseBox} from "./CSSStyleSheetPromiseBox";
+import {CSSStyleSheetPromiseBox} from "./box/CSSStyleSheetPromiseBox";
 
 export type FunctionReturnBoxes = CSSStyleSheetPromiseBox;

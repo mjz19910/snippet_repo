@@ -1,4 +1,4 @@
-import {NewableFunctionBox} from "./NewableFunctionBox";
+import {NewableFunctionBox} from "../NewableFunctionBox";
 import {CallableReturnPromiseBox} from "./CallableReturnPromiseBox";
 import {CallableReturnsVoidPromiseBox} from "./CallableReturnsVoidPromiseBox";
 import {FunctionBox} from "./FunctionBox";
