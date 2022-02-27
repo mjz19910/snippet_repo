@@ -1,11 +1,5 @@
-import {IStackInstructionType} from "./interface/IStackInstructionType";
-import {IObjectInstructionType} from "../IObjectInstructionType";
-import {ICallInstructionType} from "./interface/ICallInstructionType";
-import {ITuringInstructionType} from "../ITuringInstructionType";
-import {ISpecialInstructionType} from "../ISpecialInstructionType";
-import {IDebugInstructionType} from "./interface/IDebugInstructionType";
-import {InstructionJumpTypes} from "./interface/InstructionJumpTypes";
-import {InstructionExecutionTypes} from "./InstructionExecutionTypes";
+import {InstructionJumpTypes as InstructionJump} from "./interface/InstructionJumpTypes";
+import {VMInstruction as VMInstruction} from "./VMInstruction";
 import {InstructionExec} from "./InstructionExec";
 import {InstructionAppend} from "./InstructionAppend";
 import {InstructionModifyOperand} from "./InstructionModifyOperand";
@@ -19,6 +13,13 @@ import {InstructionDup} from "./InstructionDup";
 import {InstructionPush} from "./InstructionPush";
 import {InstructionReturn} from "./InstructionReturn";
 import {InstructionCall} from "./InstructionCall";
+import {InstructionHalt} from "./InstructionHalt";
+import {InstructionPushArgs} from "./InstructionPushArgs";
+import {InstructionThis} from "./InstructionThis";
+import {InstructionGlobal} from "./InstructionGlobal";
+import {InstructionBreakpoint} from "./InstructionBreakpoint";
+import {VMInstructionReturn} from "./VMInstructionReturn";
+import {VMInstructionCall} from "./VMInstructionCall";
 
 
 export type InstructionType =
@@ -26,9 +27,19 @@ export type InstructionType =
 	InstructionPush | InstructionDup | InstructionPeek | InstructionDrop | InstructionGet |
 	// Call
 	InstructionCall | InstructionReturn |
-	ITuringInstructionType |
-	ISpecialInstructionType | IDebugInstructionType |
-	InstructionJumpTypes | InstructionExecutionTypes |
-	InstructionPushInstructionPointer | InstructionConstruct |
-	InstructionModifyOperand | InstructionExec |
-	InstructionAppend | InstructionCast;
+	// Turing
+	InstructionHalt |
+	// Special
+	InstructionPushArgs | InstructionThis | InstructionGlobal |
+	// Debug
+	InstructionBreakpoint |
+	InstructionJump |
+	// VM
+	VMInstructionReturn |
+	VMInstructionCall |
+	InstructionPushInstructionPointer |
+	InstructionConstruct |
+	InstructionModifyOperand |
+	InstructionExec |
+	InstructionAppend |
+	InstructionCast;
