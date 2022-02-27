@@ -1,1 +1,1 @@
-export type InstructionPushInstructionPointer = ['push_pc'];
+export type VMInstructionPushIP = ['push_pc'];

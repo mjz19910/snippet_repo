@@ -1,11 +1,10 @@
-import {IAutoBuy} from "./types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "./types/RecursivePartial";
-import {InstructionTypeBox} from "./types/vm/VMBoxedInstructionType";
+import InstructionTypeBox from "./types/vm/box/InstructionTypeBox";
 import {InstructionType} from "./types/vm/instruction/mod";
-import {Box} from "./types/vm/box/mod";
+import Box from "./types/vm/box/Box";
 import IndexBox from "./types/vm/box/IndexBox";
 import NewableFunctionBox from "./types/vm/box/NewableFunctionBox";
-import {StackVMBox} from "./types/vm/box/StackVMBox";
+import StackVMBox from "./types/vm/box/StackVMBox";
 import WindowBox from "./types/vm/box/WindowBox";
 
 class RemoteWorkerState {
@@ -70,7 +69,7 @@ declare global {
 		secondinterval?: number;
 		atomsaccu: number;
 		calcPres(): number;
-		g_auto_buy: IAutoBuy;
+		g_auto_buy: AutoBuy;
 		g_proxy_state: {hand: {stack_overflow_check: () => any; count_arr: any[];};};
 		remoteSetTimeout: (handler: TimerHandler, timeout?: number, ...target_args: any[]) => number;
 		remoteSetInterval: (handler: TimerHandler, timeout?: number, ...target_args: any[]) => number;
@@ -2078,7 +2077,7 @@ class BaseStackVM extends BaseVMCreate {
 					let obj = new (<any>construct_target)(...construct_arr);
 					this.push(obj);
 				} else if(construct_target instanceof NewableFunctionBox) {
-					let obj = new construct_target.value(...construct_arr);
+					let obj=construct_target.factory(...construct_arr);
 					this.push(obj);
 				} else {
 					console.assert(false, 'try to construct non function');
@@ -2161,9 +2160,21 @@ class SimpleStackVM<T> extends BaseStackVM {
 				let number_of_arguments = instruction[1];
 				let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 				if(typeof target_name == 'string') {
-					if(target_obj instanceof IndexedFnBox) {
-						let ret = target_obj.value[target_name](...arg_arr);
-						this.push(ret);
+					switch(typeof target_obj){
+						case 'object':
+							if(target_obj === null)throw new Error("Call null func");
+							switch(target_obj.type){
+								case 'array_box':throw new Error("Call not a function");
+								case 'constructor_box':{
+									// are you sure, you just called a constructor! (the correct way)
+									let ret=target_obj.factory(...arg_arr);
+									this.push(ret);
+								}
+								case 'custom_box':{
+									let ret=target_obj.as_type('function');
+									ret;
+								} break;
+							}
 					}
 				}
 			} break;

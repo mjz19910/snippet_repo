@@ -197,31 +197,6 @@
 [7m2081[0m      let obj = new construct_target.value(...construct_arr);
 [7m    [0m [91m                                          ~~~~~~~~~~~~~~~~[0m
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2100[0m:[93m54[0m - [91merror[0m[90m TS2554: [0mExpected 0 arguments, but got 1.
-
-[7m2100[0m      let instruction_modify = new InstructionTypeBox(this.instructions[target]);
-[7m    [0m [91m                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2103[0m:[93m26[0m - [91merror[0m[90m TS2339: [0mProperty 'value' does not exist on type 'InstructionTypeBox'.
-
-[7m2103[0m       instruction_modify.value[offset] = value;
-[7m    [0m [91m                         ~~~~~[0m
-
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2105[0m:[93m55[0m - [91merror[0m[90m TS2339: [0mProperty 'value' does not exist on type 'InstructionTypeBox'.
-
-[7m2105[0m      let verify_state: [number] = [instruction_modify.value.length];
-[7m    [0m [91m                                                      ~~~~~[0m
-
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2107[0m:[93m43[0m - [91merror[0m[90m TS2339: [0mProperty 'value' does not exist on type 'InstructionTypeBox'.
-
-[7m2107[0m      for(let i = 0;i < instruction_modify.value.length;i++) {
-[7m    [0m [91m                                          ~~~~~[0m
-
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2108[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'value' does not exist on type 'InstructionTypeBox'.
-
-[7m2108[0m       let cur = instruction_modify.value[i];
-[7m    [0m [91m                                   ~~~~~[0m
-
 [96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2164[0m:[93m31[0m - [91merror[0m[90m TS2304: [0mCannot find name 'IndexedFnBox'.
 
 [7m2164[0m      if(target_obj instanceof IndexedFnBox) {
@@ -259,27 +234,9 @@
 [7m4248[0m   cint_item[1] = cint;
 [7m    [0m [91m  ~~~~~~~~~~~~[0m
 
-[96mtypes/StackVM.ts[0m:[93m1[0m:[93m20[0m - [91merror[0m[90m TS2792: [0mCannot find module './vm/box/IBox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
-[7m1[0m import {IBox} from "./vm/box/IBox";
-[7m [0m [91m                   ~~~~~~~~~~~~~~~[0m
-
-[96mtypes/vm/VMBoxedInstructionType.ts[0m:[93m5[0m:[93m41[0m - [91merror[0m[90m TS2693: [0m'Box' only refers to a type, but is being used as a value here.
-
-[7m5[0m export class InstructionTypeBox extends Box<InstructionType> {}
-[7m [0m [91m                                        ~~~[0m
-
-[96mtypes/vm/instruction/InstructionPush.ts[0m:[93m1[0m:[93m20[0m - [91merror[0m[90m TS2792: [0mCannot find module '../box/IBox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
-
-[7m1[0m import {IBox} from "../box/IBox";
-[7m [0m [91m                   ~~~~~~~~~~~~~[0m
-
-
-Found 41 errors in 5 files.
+Found 33 errors in 2 files.
 
 Errors  Files
     19  final/rebuild_the_universe_auto_typed_v0.1.ts[90m:2[0m
-    19  rebuild_the_universe_auto_typed_v0.2.ts[90m:8[0m
-     1  types/StackVM.ts[90m:1[0m
-     1  types/vm/VMBoxedInstructionType.ts[90m:5[0m
-     1  types/vm/instruction/InstructionPush.ts[90m:1[0m
+    14  rebuild_the_universe_auto_typed_v0.2.ts[90m:8[0m

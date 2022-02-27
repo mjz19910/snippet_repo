@@ -1,14 +1,25 @@
-import {TypeOfResult} from "../TypeOfResult";
+import BoxInterface from "./BoxInterface";
 
-
-export default class BoxTemplate<T> {
+export default class BoxTemplate<T> implements BoxInterface {
 	constructor(value: T) {
 		this.value = value;
 	}
 	value: T;
-	get_matching_typeof(to_match: TypeOfResult) {
-		if(typeof this.value === to_match)
-			return this;
+	as_type(x:'function') {
+		let tof=typeof this.value;
+		switch(tof){
+			case 'object':{
+
+			} break;
+			case 'bigint':{
+			} break;
+			case 'boolean':{
+
+			} break;
+			case 'function':{
+				if(x === 'function')return this;
+			}
+		}
 		return null;
 	}
 }

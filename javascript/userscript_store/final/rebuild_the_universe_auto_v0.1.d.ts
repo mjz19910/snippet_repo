@@ -1,5 +1,5 @@
 import {InstructionType} from "types/vm/instruction/mod";
-import {IAutoBuy} from "../types/rebuild_the_universe_auto_interface";
+import {AutoBuy} from "../types/AutoBuy";
 import {WeakRef} from "../types/weak_ref"
 
 type TimerTypeTag = 1 | 2;
@@ -380,8 +380,8 @@ type CIntItem = TimeoutCintItem;
 declare var timeplayed: number;
 declare function lightreset(): void;
 declare function lightreset_inject(): void;
-declare function async_compress(self: IAutoBuy): void;
-declare const auto_buy_obj: IAutoBuy;
+declare function async_compress(self: AutoBuy): void;
+declare const auto_buy_obj: AutoBuy;
 declare class AsyncTrigger<S, W, N> {
 	m_set_flag: boolean;
 	trigger_handler: any;
@@ -534,7 +534,7 @@ declare global {
 		atomepersecond: number;
 		totalAtome: number;
 		prestige: number;
-		g_auto_buy: IAutoBuy;
+		g_auto_buy: AutoBuy;
 		__testing__: false;
 		bonusAll(): void;
 		allspec: SpecType[];

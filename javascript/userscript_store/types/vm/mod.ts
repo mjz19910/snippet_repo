@@ -1,4 +1,4 @@
-import {InstructionCall} from "./instruction/InstructionCall";
+import {InstructionCall} from "./instruction/general/InstructionCall";
 
 // --- Misc ---
 type SkipItem0_t<T extends [f: string, ...v: any[]], X> = T extends [X, ...infer U] ? U : T[1];

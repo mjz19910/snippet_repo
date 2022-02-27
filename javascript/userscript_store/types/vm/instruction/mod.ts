@@ -1,18 +1,15 @@
-import {InstructionJumpTypes as InstructionJump} from "./interface/InstructionJumpTypes";
-import {VMInstruction as VMInstruction} from "./VMInstruction";
+import * as jump from "./jump/mod";
 import {InstructionExec} from "./InstructionExec";
 import {InstructionAppend} from "./InstructionAppend";
 import {InstructionModifyOperand} from "./InstructionModifyOperand";
-import {InstructionConstruct} from "./InstructionConstruct";
-import {InstructionPushInstructionPointer} from "./InstructionPushInstructionPointer";
-import {InstructionCast as InstructionCast} from "./InstructionCast";
+import * as gen from "./general/mod";
+import * as st from "./stack/mod";
+import {VMInstructionPushIP} from "./InstructionPushInstructionPointer";
+import {InstructionCast} from "./InstructionCast";
 import {InstructionGet} from "./InstructionGet";
-import {InstructionDrop} from "./InstructionDrop";
 import {InstructionPeek} from "./InstructionPeek";
-import {InstructionDup} from "./InstructionDup";
-import {InstructionPush} from "./InstructionPush";
 import {InstructionReturn} from "./InstructionReturn";
-import {InstructionCall} from "./InstructionCall";
+import {InstructionCall} from "./general/InstructionCall";
 import {InstructionHalt} from "./InstructionHalt";
 import {InstructionPushArgs} from "./InstructionPushArgs";
 import {InstructionThis} from "./InstructionThis";
@@ -24,26 +21,30 @@ import {VMInstructionCall} from "./VMInstructionCall";
 
 export type InstructionType =
 	// Stack
-	InstructionPush |
-	InstructionDup |
+	st.InstructionPush |
+	st.InstructionDup |
+	st.InstructionDrop |
+	// TODO: convert to base stack ptr access
 	InstructionPeek |
-	InstructionDrop |
+	// FFI property access
 	InstructionGet |
 	// FFI Call
 	InstructionCall |
 	InstructionReturn |
+	// Jump
+	jump.InstructionJumpAbs |
+	jump.InstructionJumpJe |
 	// Turing
 	InstructionHalt |
 	// Special
 	InstructionPushArgs | InstructionThis | InstructionGlobal |
 	// Debug
 	InstructionBreakpoint |
-	InstructionJump |
 	// VM
 	VMInstructionReturn |
 	VMInstructionCall |
-	InstructionPushInstructionPointer |
-	InstructionConstruct |
+	VMInstructionPushIP |
+	gen.InstructionConstruct |
 	InstructionModifyOperand |
 	InstructionExec |
 	InstructionAppend |

@@ -78,7 +78,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			this.value=value;
 		}
 		/**@arg {'function'} to_match */
-		get_matching_typeof(to_match) {
+		as_type(to_match) {
 			if(typeof this.value === to_match){
 				return this;
 			}
@@ -114,7 +114,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		/**@type {"CSSStyleSheet"} */
 		instance_type="CSSStyleSheet";
 		/**@arg {'function'} to_match */
-		get_matching_typeof(to_match) {
+		as_type(to_match) {
 			return null;
 		}
 		/**@arg {CSSStyleSheet} value */
@@ -129,8 +129,9 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		type="promise";
 		/**@type {"value"} */
 		await_type="value";
-		/**@arg {'function'} _to_match */
-		get_matching_typeof(_to_match) {
+		/**@arg {'function'} type */
+		as_type(type) {
+			if(typeof this.value === type)return this;
 			return null;
 		}
 		/**@arg {Promise<Box>} value */
@@ -147,9 +148,9 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		return="box";
 		/**@type {<T>(fn:{new (...v:Box[]):T})=>Box} */
 		value;
-		/**@arg {string} to_match */
-		get_matching_typeof(to_match) {
-			if(typeof this.value === to_match){
+		/**@arg {ReturnType<BaseBox['as_type']>} type */
+		as_type(type) {
+			if(typeof this.value === type){
 				return this;
 			}
 			return null;
@@ -191,7 +192,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		type = "function_box";
 		return_type = null;
 		/**@arg {'function'} to_match */
-		get_matching_typeof(to_match) {
+		as_type(to_match) {
 			if(typeof this.value === to_match) {
 				return this;
 			}
@@ -237,7 +238,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			if(a.type === 'void'){
 				throw new Error("Attempt to call a void value");
 			}
-			let b=a.get_matching_typeof('function');
+			let b=a.as_type('function');
 			if(!b)throw new Error("Type mismatch");
 			if(b.type === 'function_box') {
 				let ret = b.value.apply(target_this, arg_arr);
@@ -252,40 +253,10 @@ import VoidBox from "types/vm/box/VoidBox.js";
 	}
 	/**@typedef {EmptyArrayBox} EmptyArrayBox2 */
 	/**@implements {EmptyArrayBox2} */
-	class EmptyArrayBoxImpl {
-		/**@type {"array_box"} */
-		type="array_box";
-		/**@arg {'object'} type */
-		get_matching_typeof(type){
-			if(typeof this.value === type){
-				return this;
-			}
-			return null;
-		}
-		/**@arg {[]} v */
-		constructor(v){
-			this.value=v;
-		}
-	}
+
 	/**@typedef {ArrayBox} ArrayBoxT */
 	/**@implements {ArrayBoxT} */
-	class ArrayBoxImpl {
-		/**@type {"array_box"} */
-		type="array_box";
-		/**@type {"value"} */
-		item_type="value";
-		/**
-		 * @param {'function'} _typeof_val
-		 */
-		get_matching_typeof(_typeof_val){
-			return null;
-		}
-		/**@arg {Box[]} value */
-		constructor(value){
-			this.value=value;
-		}
-	}
-	/**@typedef {import("types/vm/instruction/InstructionConstruct.js").InstructionConstruct} InstructionConstructT */
+	/**@typedef {import("types/vm/instruction/general/InstructionConstruct.js").InstructionConstruct} InstructionConstructT */
 	class InstructionConstructE {
 		/**@type {<T>(arr:T[])=>arr is []} */
 		static is_array_empty(arr){
@@ -363,23 +334,19 @@ import VoidBox from "types/vm/box/VoidBox.js";
 				return null;
 			}
 			switch(instruction[1]){
-				case 'object_index':{
-					throw new Error("TODO");
-				} break;
-				case 'callable_index':{
-					throw new Error("TODO");
-				} break;
+				case 'object_index':throw new Error("TODO");
+				case 'callable_index':throw new Error("TODO");
 				default:throw new Error("Missing cast to "+instruction[1]);
 			}
 		}
 	}
-	class IStackVMBoxImpl {
+	class StackVMBoxImpl {
 		/**@type {"custom_box"} */
 		type="custom_box";
 		/**@type {"StackVM"} */
 		box_type="StackVM";
 		/**@arg {'function'} _a */
-		get_matching_typeof(_a){
+		as_type(_a){
 			return null;
 		}
 		/**@arg {StackVM} value */
@@ -427,87 +394,6 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		let rr=v && k;
 		void rr;
 		return true;
-	}
-	/**
-	 * @type {<T, F>(v:T, k:(v:T)=>F)=>T|null}
-	 */
-	function with_has_property_as_type(v, k){
-		if(does_have_property_as_type(v, k))return v;
-		return null;
-	}
-	/**@type {<A extends {}, B extends A>(o:B, k:keyof A)=>{[T in keyof A]:A[T]}|null} */
-	function with_has_property(o, k){
-		if(does_have_property(o, k)){
-			return o;
-		}
-		return null;
-	}
-	/**@type {<T extends {}>(o:T)=>o is T} */
-	function can_be_object(v){
-		if(v === null){
-			return false;
-		}
-		if(typeof v==='object'){
-			return true;
-		}
-		return false;
-	}
-	/**@type {<T>(v:T)=>({} & T)|null} */
-	function as_object_or_null(v){
-		if(can_be_object(v)){
-			return v;
-		}
-		return null;
-	}
-	class IndexAccessBox {
-		/**@type {"object_index"} */
-		type= "object_index";
-		/**@type {"value"} */
-		index_type = "value";
-		/**@arg {'function'} _to_match */
-		get_matching_typeof(_to_match) {
-			return null;
-		}
-		/**@arg {import("types/vm/index_access/mod.js").default<Box>} value */
-		constructor(value){
-			this.value=value;
-		}
-	}
-	class BaseBox {
-		/**@type {'object_box'} */
-		type="object_box";
-		/**@type {import("api").NonNull<Box>} */
-		value;
-		/**@arg {import("api").NonNull<Box>} value */
-		constructor(value){
-			/**@type {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} */
-			let vv=typeof value;
-			switch(typeof value){
-				case 'object':vv;break;
-				case 'bigint':vv;break;
-				case 'string':case 'number':case 'boolean':case 'symbol':
-					this.value=value;
-					break;
-				case 'undefined':
-					this.value=value;
-					break;
-				default:value;break;
-			}
-			this.value=value;
-		}
-		/**@arg {string} to_match */
-		unbox_as_type(to_match) {
-			if(typeof this.value === to_match)return this;
-			return null;
-		}
-	}
-	class VMIndexedCallableValueR extends BaseBox {
-		/**@type {"object_box"} */
-		type= "object_box";
-		/**@type {'function'} */
-		extension='function';
-		/**@type {"callable_box"} */
-		index_type = "callable_box";
 	}
 	class StackVM {
 		/**@arg {InstructionType[]} instructions */
@@ -763,7 +649,6 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			}
 		}
 	}
-	/**@implements {IStackVM} */
 	class SimpleStackVM extends StackVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
@@ -787,7 +672,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
 					console.log('VM: this push');
-					this.push(new IStackVMBoxImpl(this));
+					this.push(new StackVMBoxImpl(this));
 				} break;
 					// TODO: if you ever use this on a worker, change
 					// it to use globalThis...
@@ -821,7 +706,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 									break;
 								}
 								if(ret instanceof StackVM){
-									this.push(new IStackVMBoxImpl(ret));
+									this.push(new StackVMBoxImpl(ret));
 								} else {
 									throw new Error("Can't box return")
 								}

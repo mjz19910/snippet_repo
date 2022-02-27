@@ -150,8 +150,6 @@ class AsyncSemaphore {
 function map_to_tuple(e, i){
 	return [e, this[i]];
 }
-/**@typedef {import("../types/vm/mod.js").CallableReturnPromiseBox} VMReturnsBoxedPromise */
-/**@implements {VMReturnsBoxedPromise} */
 class VMReturnsBoxedPromiseR {
 	/**@type {"function_box"} */
 	type="function_box"
@@ -163,12 +161,12 @@ class VMReturnsBoxedPromiseR {
 	get_matching_typeof(_to_match) {
 		return null;
 	}
-	/**@arg {VMReturnsBoxedPromise['value']} value */
+	/**@arg {any} value */
 	constructor(value){
 		this.value=value;
 	}
 }
-/**@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType */
+/**@typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionType */
 class VMTemplateImpl {
 		/** @arg {InstructionType} instruction */
 		execute_instruction(instruction){
@@ -188,4 +186,126 @@ class VMTemplateImpl {
 				default/*Base class*/:super.execute_instruction(instruction);break;
 			}
 		}
+	}
+	class IndexAccessBox {
+		/**@type {"object_index"} */
+		type= "object_index";
+		/**@type {"value"} */
+		index_type = "value";
+		/**@type {import("types/vm/IndexAccess.js").default<Box>} */
+		value;
+		/**@arg {'function'} _to_match */
+		get_matching_typeof(_to_match) {
+			return null;
+		}
+		/**@arg {import("types/vm/IndexAccess.js").default<Box>} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
+	/**@type {<T extends {}>(o:T)=>o is T} */
+	function can_be_object(v){
+		if(v === null){
+			return false;
+		}
+		if(typeof v==='object'){
+			return true;
+		}
+		return false;
+	}
+	/**@type {<T>(v:T)=>({} & T)|null} */
+	function as_object_or_null(v){
+		if(can_be_object(v)){
+			return v;
+		}
+		return null;
+	}
+	/**@typedef {import("types/vm/box/Box.js").default} Box */
+	class BaseBox {
+		/**@type {'object_box'} */
+		type="object_box";
+		/**@type {import("api").NonNull<Box>} */
+		value;
+		/**@type {string} v */
+		as_type(v){
+			if(typeof this.value === v){
+				return this;
+			}
+			return null;
+		}
+		/**@arg {import("api").NonNull<Box>} value */
+		constructor(value){
+			/**@type {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} */
+			let vv=typeof value;
+			switch(typeof value){
+				case 'object':vv;break;
+				case 'bigint':vv;break;
+				case 'string':case 'number':case 'boolean':case 'symbol':
+					this.value=value;
+					break;
+				case 'undefined':
+					this.value=value;
+					break;
+				default:value;break;
+			}
+			this.value=value;
+		}
+		/**@arg {'object'|'function'} to_match */
+		as_box(to_match) {
+			if(typeof this.value === to_match)return this;
+			return null;
+		}
+	}
+	class VMIndexedCallableValueR extends BaseBox {
+		/**@type {"object_box"} */
+		type= "object_box";
+		/**@type {'function'} */
+		extension='function';
+		/**@type {"callable_box"} */
+		index_type = "callable_box";
+	}
+		class EmptyArrayBoxImpl {
+		/**@type {"array_box"} */
+		type="array_box";
+		/**@arg {'function'|'object'} type */
+		as_type(type){
+			if(typeof this.value === type){
+				return this;
+			}
+			return null;
+		}
+		/**@arg {[]} v */
+		constructor(v){
+			this.value=v;
+		}
+	}
+	class ArrayBoxImpl {
+		/**@type {"array_box"} */
+		type="array_box";
+		/**@type {"value"} */
+		item_type="value";
+		/**
+		 * @param {'function'} _typeof_val
+		 */
+		as_type(_typeof_val){
+			return null;
+		}
+		/**@arg {Box[]} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
+		/**
+	 * @type {<T, F>(v:T, k:(v:T)=>F)=>T|null}
+	 */
+	function with_has_property_as_type(v, k){
+		if(does_have_property_as_type(v, k))return v;
+		return null;
+	}
+	/**@type {<A extends {}, B extends A>(o:B, k:keyof A)=>{[T in keyof A]:A[T]}|null} */
+	function with_has_property(o, k){
+		if(does_have_property(o, k)){
+			return o;
+		}
+		return null;
 	}

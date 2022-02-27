@@ -13,6 +13,12 @@ export default class NewableFunctionBox extends BoxTemplate<NewableFactory<{}>> 
 		super(factory_value);
 		this.class_value=class_value;
 	}
+	as_type(x:string) {
+		if(typeof this.value === x){
+			return this;
+		}
+		return null;
+	}
 	factory(...args: Box[]) {
 		let res=new this.class_value(...args);
 		return new ObjectBox(res);
