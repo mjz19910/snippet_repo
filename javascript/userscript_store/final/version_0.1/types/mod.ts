@@ -1,4 +1,4 @@
-import {calc_ratio} from "final/rebuild_the_universe_auto_v0.1";
+import {calc_ratio} from "final/version_0.1/rebuild_the_universe_auto_v0.1";
 import {AutoBuy} from "types/AutoBuy";
 
 export type TimerTypeTag = 1 | 2;

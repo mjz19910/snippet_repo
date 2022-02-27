@@ -715,8 +715,8 @@ import WindowBox from "types/vm/box/WindowBox.js";
 							case "instance_box":throw new Error("Unable to index instance yet");
 						}
 					}
-					/**@typedef {import("final/rebuild_the_universe_auto_v0.1.js").First<typeof the_type>} FC1 */
-					/**@typedef {import("final/rebuild_the_universe_auto_v0.1.js").RemoveFirst<typeof the_type>} FC2 */
+					/**@typedef {import("final/version_0.1/rebuild_the_universe_auto_v0.1.js").First<typeof the_type>} FC1 */
+					/**@typedef {import("final/version_0.1/rebuild_the_universe_auto_v0.1.js").RemoveFirst<typeof the_type>} FC2 */
 					let res=do_box_get(target_obj, target_name);
 					console.log('VM: get result', res);
 					switch(typeof res){
@@ -1185,7 +1185,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			this.list=[];
 			this.attached=false;
 			this.end_symbol=Symbol(void 0);
-			/**@type {import("./final/types/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
+			/**@type {import("./final/version_0.1/types/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
 			this.document_write=null;
 			this.attached_document=null;
 			this.document_write_proxy=null;
