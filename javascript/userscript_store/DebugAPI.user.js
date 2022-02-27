@@ -1,26 +1,12 @@
-// ==UserScript==
-// @name         global DebugAPI userscript
-// @namespace    http://tampermonkey.net/
-// @version      0.2.5
-// @description  global DebugAPI userscript snippet from https://github.com/mjz19910/javascript_snippet_repo
-// @author       @mjz19910
-// @match        https://*/*
-// @match        http://*/*
-// @run-at       document-start
-// @grant        none
-// @updateURL    https://raw.githubusercontent.com/mjz19910/javascript_snippet_repo/master/DebugAPI.meta.js
-// @downloadURL  https://raw.githubusercontent.com/mjz19910/javascript_snippet_repo/master/DebugAPI.user.js
-// ==/UserScript==
-/*
-Copyright 2019-2021 @mjz19910
-*/
-/* eslint-disable no-undef */
+/**@type {any[]} */
+let ecma_sections = [];
+
 class HexRandomDataGenerator {
 	constructor() {
 		this.random_num = Math.random();
 		this.used_bits = 0;
 		/**@type {{value:number,bit_count:number}} */
-		this.cur_part = {value: 0,bit_count: 0};
+		this.cur_part = {value: 0, bit_count: 0};
 	}
 	reset() {
 		this.random_num = Math.random();
@@ -38,7 +24,7 @@ class HexRandomDataGenerator {
 		return num;
 	}
 	reset_part() {
-		this.cur_part = {value: 0,bit_count: 0};
+		this.cur_part = {value: 0, bit_count: 0};
 	}
 	/**
 	 * @param {number} bit_count
@@ -77,12 +63,7 @@ class HexRandomDataGenerator {
 }
 let random_data_generator = new HexRandomDataGenerator;
 class EventListenerValue {
-	/**
-	 * @param {import("final/DebugApi/GenericEventListenerOrEventListenerObject.js").GenericEventListenerOrEventListenerObject|null} callback
-	 * @param {boolean | EventListenerOptions} options
-	 */
 	constructor(callback, options) {
-		/**@type {import("final/DebugApi/GenericEventListenerOrEventListenerObject.js").GenericEventListenerOrEventListenerObject|null} */
 		this.callback = callback;
 		/**@type {boolean | EventListenerOptions} */
 		this.options = options;
@@ -147,7 +128,7 @@ class GenericEventTarget {
 			return;
 		if(cur_event_vec.length == 0)
 			return;
-		for(let i = cur_event_vec.length - 1;i >= 0;i--) {
+		for(let i = cur_event_vec.length - 1; i >= 0; i--) {
 			let cur = cur_event_vec[i];
 			if(cur.callback !== callback)
 				continue;
@@ -168,7 +149,7 @@ class GenericEventTarget {
 			return false;
 		let cur_event_vec_owned = cur_event_vec.slice();
 		let can_handle = false;
-		for(let i = 0;i < cur_event_vec_owned.length;i++) {
+		for(let i = 0; i < cur_event_vec_owned.length; i++) {
 			let cur = cur_event_vec_owned[i];
 			let callback = cur.callback;
 			if(callback === null)
@@ -266,7 +247,7 @@ class RustSimpleTokenizer {
 		//let parse_enum_literal=parse_enum[5];
 		//let parse_enum_comment=parse_enum[6];
 		let parse_enum_whitespace = parse_enum[7];
-		for(;this.index < this.source.length;) {
+		for(; this.index < this.source.length;) {
 			if(this.source[this.index] === ':' && this.source[this.index + 1] === ':') {
 				tok_arr.push([parse_enum_operator, '::']);
 				this.advance(2);
@@ -305,7 +286,7 @@ class RustSimpleTokenizer {
 		return tok_arr;
 	}
 	/**@returns {never} */
-	bad_state(){
+	bad_state() {
 		throw new Error("BadState");
 	}
 	/**
@@ -332,13 +313,13 @@ class RustSimpleTokenizer {
 		let cur_tt_vec;
 		for(let x of tok_arr) {
 			if(x[0] !== parse_enum_separator) {
-				if(tt_item)tt_item.push(x);
+				if(tt_item) tt_item.push(x);
 				else throw new Error("Bad state");
 				continue;
 			}
 			let cur = x[1];
 			if(separator_open_vec.includes(cur)) {
-				if(tt_item)tt_stack.push(tt_item);
+				if(tt_item) tt_stack.push(tt_item);
 				else throw new Error("Bad state");
 				tt_item = [parse_enum_token_tree_item, x];
 				tt_stack.push(tt_item);
@@ -350,16 +331,16 @@ class RustSimpleTokenizer {
 					throw SyntaxError('unbalanced token tree');
 				}
 				cur_tt_vec = tt_stack.pop();
-				if(cur_tt_vec)cur_tt_vec.push(tt_item);
+				if(cur_tt_vec) cur_tt_vec.push(tt_item);
 				else this.bad_state();
-				if(cur_tt_vec)cur_tt_vec.push(x);
+				if(cur_tt_vec) cur_tt_vec.push(x);
 				else this.bad_state();
 				tt_item = tt_stack.pop();
-				if(tt_item)tt_item.push(cur_tt_vec);
+				if(tt_item) tt_item.push(cur_tt_vec);
 				else this.bad_state();
 				continue;
 			}
-			if(tt_item)tt_item.push(x);
+			if(tt_item) tt_item.push(x);
 			else this.bad_state();
 		}
 		if(tt_stack.length) {
@@ -390,139 +371,123 @@ class RustSimpleParser {
 	}
 }
 class JSParseError extends Error {
-	stack="JSParseError";
+	stack = "JSParseError";
 	/**@arg {string} message */
-	constructor(message){
+	constructor(message) {
 		super(message);
 		Error.captureStackTrace(this, this.constructor);
 	}
 }
-class SimpleJavascriptParser {
-	token_generator = null;
-	ecma_262_section_12_factory() {
-		let ecma_sections = [];
-		class ecma_base {
-			/**@arg {{export(...d:[ecma_base, string, string[]]):void}} root */
-			static _attach(root) {
-				let eXports = Object.getOwnPropertyNames(this.prototype);
-				let ecma_section_name = this.name.slice(5).replaceAll('_', '.');
-				root.export(this, ecma_section_name, eXports);
+class ecma_base {
+	/**@arg {{export(...d:[ecma_base, string, string[]]):void}} root */
+	static _attach(root) {
+		let eXports = Object.getOwnPropertyNames(this.prototype);
+		let ecma_section_name = this.name.slice(5).replaceAll('_', '.');
+		root.export(this, ecma_section_name, eXports);
+	}
+}
+class ecma_12_2 extends ecma_base {
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	WhiteSpace(str, index) {
+		if(str[index] === ' ') {
+			return ['WhiteSpace', 1];
+		}
+		if(str[index] === '\t') {
+			return ['WhiteSpace', 1];
+		}
+		return [null, 0];
+	}
+}
+class ecma_12_3 extends ecma_base {
+	static the() {
+		if(this._the)
+			return this._the;
+		this._the = new this;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	LineTerminator(str, index) {
+		let len = 0;
+		if(str[index] === '\r')
+			len = 1;
+		if(str[index] === '\n')
+			len = 1;
+		if(str[index] === '\u{2028}')
+			len = 1;
+		if(str[index] === '\u{2029}')
+			len = 1;
+		if(len > 0) {
+			return ['LineTerminator', 1];
+		}
+		return [null, 0];
+	}
+	LineTerminatorSequence() {
+		console.info('LineTerminatorSequence not implemented');
+	}
+}
+class ecma_12_4 extends ecma_base {
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	Comment(str, index) {
+		let ml_len = this.MultiLineComment(str, index);
+		let sl_len = this.SingleLineComment(str, index);
+		if(!ml_len) throw new JSParseError("no multiline");
+		if(ml_len[1] > 0) {
+			return ml_len;
+		}
+		if(sl_len[1] > 0) {
+			return sl_len;
+		}
+		return [null, 0];
+	}
+	/**
+	 * @param {string} str
+	 * @param {number} index
+	 */
+	MultiLineComment(str, index) {
+		let off = 0;
+		if(str.slice(index, index + 2) === '/*') {
+			off += 2;
+			if(str.slice(index + off, index + off + 2) === '*/') {
+				return ['MultiLineComment', 4];
+			}
+			let com_len = this.MultiLineCommentChars(str, index + off);
+			if(com_len === 0) {
+				return [null, 0];
+			}
+			console.log([str.slice(index, index + off + com_len + 2)]);
+			if(str.slice(index + off + com_len, index + off + com_len + 2) === "*/") {
+				return ['MultiLineComment', off + com_len + 2];
 			}
 		}
-		class ecma_12_2 extends ecma_base {
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			WhiteSpace(str, index) {
-				if(str[index] === ' ') {
-					return ['WhiteSpace', 1];
-				}
-				if(str[index] === '\t') {
-					return ['WhiteSpace', 1];
-				}
-				return [null, 0];
-			}
+		return [null, 0];
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {number} index
+	 */
+	MultiLineCommentChars(str, index) {
+		this.dep ??= 0;
+		let slen = 0;
+		if(this.dep > 64) {
+			throw Error('stack overflow');
 		}
-		ecma_sections.push(ecma_12_2);
-		class ecma_12_3 extends ecma_base {
-			static the() {
-				if(this._the)
-					return this._the;
-				this._the = new this;
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			LineTerminator(str, index) {
-				let len = 0;
-				if(str[index] === '\r')
-					len = 1;
-				if(str[index] === '\n')
-					len = 1;
-				if(str[index] === '\u{2028}')
-					len = 1;
-				if(str[index] === '\u{2029}')
-					len = 1;
-				if(len > 0) {
-					return ['LineTerminator', 1];
-				}
-				return [null, 0];
-			}
-			LineTerminatorSequence() {
-				console.info('LineTerminatorSequence not implemented');
-			}
-		}
-		ecma_sections.push(ecma_12_3);
-		class ecma_12_4 extends ecma_base {
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			Comment(str, index) {
-				let ml_len = this.MultiLineComment(str, index);
-				let sl_len = this.SingleLineComment(str, index);
-				if(!ml_len)throw new JSParseError("no multiline");
-				if(ml_len[1] > 0) {
-					return ml_len;
-				}
-				if(sl_len[1] > 0) {
-					return sl_len;
-				}
-				return [null, 0];
-			}
-			/**
-			 * @param {string} str
-			 * @param {number} index
-			 */
-			MultiLineComment(str, index) {
-				let off = 0;
-				if(str.slice(index, index + 2) === '/*') {
-					off += 2;
-					if(str.slice(index + off, index + off + 2) === '*/') {
-						return ['MultiLineComment', 4];
-					}
-					let com_len = this.MultiLineCommentChars(str, index + off);
-					if(com_len === 0) {
-						return [null, 0];
-					}
-					console.log([str.slice(index, index + off + com_len + 2)]);
-					if(str.slice(index + off + com_len, index + off + com_len + 2) === "*/") {
-						return ['MultiLineComment', off + com_len + 2];
-					}
-				}
-				return [null, 0];
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {number} index
-			 */
-			MultiLineCommentChars(str, index) {
-				this.dep ??= 0;
-				let slen = 0;
-				if(this.dep > 64) {
-					throw Error('stack overflow');
-				}
-				this.dep++;
+		this.dep++;
+		let ml_na = this.MultiLineNotAsteriskChar(str, index + slen);
+		if(ml_na > 0) {
+			slen++;
+			for(; ;) {
 				let ml_na = this.MultiLineNotAsteriskChar(str, index + slen);
 				if(ml_na > 0) {
-					slen++;
-					for(;;) {
-						let ml_na = this.MultiLineNotAsteriskChar(str, index + slen);
-						if(ml_na > 0) {
-							slen += ml_na;
-							continue;
-						}
-						if(str[index + slen] === '*') {
-							let pac = this.PostAsteriskCommentChars(str, index + slen + 1);
-							if(pac > 0) {
-								slen++;
-								slen += pac;
-							}
-						}
-						break;
-					}
+					slen += ml_na;
+					continue;
 				}
 				if(str[index + slen] === '*') {
 					let pac = this.PostAsteriskCommentChars(str, index + slen + 1);
@@ -531,1052 +496,1162 @@ class SimpleJavascriptParser {
 						slen += pac;
 					}
 				}
-				this.dep--;
-				return slen;
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {number} index
-			 */
-			PostAsteriskCommentChars(str, index) {
-				let idxoff = 0;
-				let cxlen = this.MultiLineNotForwardSlashOrAsteriskChar(str, index + idxoff);
-				if(cxlen > 0) {
-					idxoff += cxlen;
-					let la = this.MultiLineCommentChars(str, index + idxoff);
-					idxoff += la;
-					return idxoff;
-				}
-				if(cxlen === 0) {
-					if(str[index + idxoff] === '*') {
-						idxoff++;
-						let len = this.PostAsteriskCommentChars(str, index + idxoff);
-						if(len > 0) {
-							return len + idxoff;
-						}
-					}
-				}
-				return idxoff;
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			MultiLineNotAsteriskChar(str, index) {
-				if(str[index] !== '*') {
-					return 1;
-				}
-				return 0;
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			MultiLineNotForwardSlashOrAsteriskChar(str, index) {
-				if(str[index] === '*' || str[index] === '/') {
-					return 0;
-				}
-				return 1;
-			}
-			/**
-			 * @param {string} str
-			 * @param {number} index
-			 */
-			SingleLineComment(str, index) {
-				if(str.slice(index, index + 2) === '//') {
-					let comment_length = this.SingleLineCommentChars(str, index + 2);
-					return ['SingleLineComment', comment_length + 2];
-				}
-				return [null, 0];
-			}
-			/**
-			 * @param {string | any[]} str
-			 * @param {number} index
-			 */
-			SingleLineCommentChars(str, index) {
-				let s_index = index;
-				while(str[s_index] !== '\n') {
-					s_index++;
-					if(s_index > str.length) {
-						break;
-					}
-				}
-				return s_index - index;
+				break;
 			}
 		}
-		ecma_sections.push(ecma_12_4);
-		class ecma_12_5 extends ecma_base {
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			CommonToken(str, index) {
-				let cur = null
-				, type = null
-				, len = 0;
-				let common_token = ['IdentifierName', 'PrivateIdentifier', 'Punctuator', 'NumericLiteral', 'StringLiteral', 'Template'];
-				for(let m_name of common_token) {
-					cur = this[m_name](str, index);
-					if(cur[1] > len) {
-						type = cur[0];
-						len = cur[1];
-					}
-				}
-				return [type, len];
+		if(str[index + slen] === '*') {
+			let pac = this.PostAsteriskCommentChars(str, index + slen + 1);
+			if(pac > 0) {
+				slen++;
+				slen += pac;
 			}
 		}
-		ecma_sections.push(ecma_12_5);
-		class ecma_12_6 extends ecma_base {
-			/**
-			 * @param {string[]} str
-			 * @param {number} index
-			 */
-			PrivateIdentifier(str, index) {
-				if(str[0] !== '#')
-					return [null, 0];
-				let cur = this.IdentifierName(src, index + 1);
-				return cur[1] + 1;
-			}
-			/**
-			 * @param {any} str
-			 * @param {number} index
-			 */
-			IdentifierName(str, index) {
-				let ids = this.IdentifierStart(str, index);
-				if(ids > 0) {
-					for(;;) {
-						let len = this.IdentifierPart(str, index + ids);
-						if(len === 0) {
-							break;
-						}
-						ids++;
-					}
-					return ['IdentifierName', ids];
-				}
-				return [null, 0];
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			IdentifierStart(str, index) {
-				if(str[index].match(/[a-zA-Z$_]/)) {
-					return 1;
-				}
-				return 0;
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			IdentifierPart(str, index) {
-				if(str[index].match(/[a-zA-Z$_0-9]/)) {
-					return 1;
-				}
-				return 0;
-			}
+		this.dep--;
+		return slen;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {number} index
+	 */
+	PostAsteriskCommentChars(str, index) {
+		let idxoff = 0;
+		let cxlen = this.MultiLineNotForwardSlashOrAsteriskChar(str, index + idxoff);
+		if(cxlen > 0) {
+			idxoff += cxlen;
+			let la = this.MultiLineCommentChars(str, index + idxoff);
+			idxoff += la;
+			return idxoff;
 		}
-		ecma_sections.push(ecma_12_6);
-		class ecma_12_7 extends ecma_base {
-			/**
-			 * @param {any} root
-			 */
-			static _attach(root) {
-				let test_class = new ecma_12_7();
-				// import the instance variables by constructing the class
-				let instance_var_vec = Object.getOwnPropertyNames(test_class);
-				for(let x of instance_var_vec) {
-					this.prototype[x] = test_class[x];
-				}
-				super._attach(root);
-			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			Punctuator(str, index) {
-				var len = 0, type = null, ret;
-				ret = this.OptionalChainingPunctuator(str, index);
-				if(ret[1] > len) {
-					type = ret[0];
-					len = ret[1];
-				}
-				ret = this.OtherPunctuator(str, index);
-				if(ret[1] > len) {
-					type = ret[0];
-					len = ret[1];
-				}
-				return [type, len];
-			}
-			/**
-			 * @param {string} str
-			 * @param {number} index
-			 */
-			OptionalChainingPunctuator(str, index) {
-				if(str.slice(index, index + 2) === '?.') {
-					let num_len = this.DecimalDigit(str, index + 2);
-					if(num_len > 0) {
-						return [null, 0];
-					}
-					return ["OptionalChainingPunctuator", 2];
-				}
-				return [null, 0];
-			}
-			_OtherPunctuator_vec = "{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
-			/**
-			 * @param {string} str
-			 * @param {any} index
-			 */
-			OtherPunctuator(str, index) {
-				let char_length = 0;
-				for(let punctuator of this._OtherPunctuator_vec) {
-					if(str.startsWith(punctuator, index)) {
-						if(punctuator.length > char_length) {
-							char_length = punctuator.length;
-						}
-					}
-				}
-				return ["OtherPunctuator", char_length];
-			}
-			_DivPunctuator_vec = "/ /=".split(' ');
-			/**
-			 * @param {string} str
-			 * @param {any} index
-			 */
-			DivPunctuator(str, index) {
-				let char_length = 0;
-				let max_len = 2;
-				for(let punctuator of this._DivPunctuator_vec) {
-					if(str.startsWith(punctuator, index)) {
-						if(punctuator.length > char_length) {
-							char_length = punctuator.length;
-						}
-						if(char_length === max_len) {
-							break;
-						}
-					}
-				}
-				return ["DivPunctuator", char_length];
-			}
-			/**
-			 * @param {string} str
-			 * @param {any} index
-			 */
-			RightBracePunctuator(str, index) {
-				if(str.startsWith('{}'[1], index)) {
-					return ['RightBracePunctuator', 1];
-				}
-				return [null, 0];
-			}
-		}
-		ecma_sections.push(ecma_12_7);
-		class ecma_12_8 extends ecma_base {
-			static the() {
-				if(ecma_12_8._the)
-					return ecma_12_8._the;
-				ecma_12_8._the = new ecma_12_8;
-			}
-			/**
-			 * @param {any} str
-			 */
-			RegularExpressionNonTerminator(str) {
-				let _val = this.LineTerminator(str);
-				if(_val[0] === 0) {
-					return [1, ['regexpNonTerm'], null];
-				}
-				return [0, null, null];
-			}
-		}
-		ecma_sections.push(ecma_12_8);
-		class ecma_12_8_3 extends ecma_base {
-			static _attach(root) {
-				let exports = Object.getOwnPropertyNames(this.prototype);
-				root.export(this, '12.8.3', exports);
-			}
-			/**
-			 * @param {string} str
-			 * @param {any} index
-			 */
-			DecimalDigit(str, index) {
-				if(str.charCodeAt(index) >= 48 && str.charCodeAt(index) <= 57) {
-					return 1;
-				}
-				return 0;
-			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			NumericLiteral(str, index) {
-				let len = this.DecimalLiteral(str, index);
+		if(cxlen === 0) {
+			if(str[index + idxoff] === '*') {
+				idxoff++;
+				let len = this.PostAsteriskCommentChars(str, index + idxoff);
 				if(len > 0) {
-					return len;
+					return len + idxoff;
 				}
-				return 0;
 			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {number} index
-			 */
-			DecimalLiteral(str, index) {
-				if(str[index] === '0') {
-					return 1;
-				}
-				let zd_len = this.NonZeroDigit(str, index);
-				let off = 0;
-				if(zd_len === 1) {
-					off += 1;
-					let ns_len = this.NumericLiteralSeparator(str, index + off);
-					if(ns_len > 0) {
-						off++;
-					}
-					let dd_len = this.DecimalDigits(str, index + off);
-					return dd_len + off;
-				}
-				return off;
+		}
+		return idxoff;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	MultiLineNotAsteriskChar(str, index) {
+		if(str[index] !== '*') {
+			return 1;
+		}
+		return 0;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	MultiLineNotForwardSlashOrAsteriskChar(str, index) {
+		if(str[index] === '*' || str[index] === '/') {
+			return 0;
+		}
+		return 1;
+	}
+	/**
+	 * @param {string} str
+	 * @param {number} index
+	 */
+	SingleLineComment(str, index) {
+		if(str.slice(index, index + 2) === '//') {
+			let comment_length = this.SingleLineCommentChars(str, index + 2);
+			return ['SingleLineComment', comment_length + 2];
+		}
+		return [null, 0];
+	}
+	/**
+	 * @param {string | any[]} str
+	 * @param {number} index
+	 */
+	SingleLineCommentChars(str, index) {
+		let s_index = index;
+		while(str[s_index] !== '\n') {
+			s_index++;
+			if(s_index > str.length) {
+				break;
 			}
-			/**
-			 * @param {any} str
-			 * @param {number} index
-			 */
-			DecimalDigits(str, index) {
-				let off = 0;
-				for(;;) {
-					let len = this.DecimalDigit(str, index + off);
-					if(len > 0) {
-						off++;
-						continue;
-					}
-					let s_len = this.NumericLiteralSeparator(str, index + off);
-					if(s_len > 0) {
-						let exl = this.DecimalDigit(str, index + off + 1);
-						if(exl > 0) {
-							off++;
-							continue;
-						}
-						break;
-					}
+		}
+		return s_index - index;
+	}
+}
+ecma_sections.push(ecma_12_4);
+class ecma_12_5 extends ecma_base {
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	CommonToken(str, index) {
+		let cur = null
+			, type = null
+			, len = 0;
+		let common_token = ['IdentifierName', 'PrivateIdentifier', 'Punctuator', 'NumericLiteral', 'StringLiteral', 'Template'];
+		for(let m_name of common_token) {
+			cur = this[m_name](str, index);
+			if(cur[1] > len) {
+				type = cur[0];
+				len = cur[1];
+			}
+		}
+		return [type, len];
+	}
+}
+ecma_sections.push(ecma_12_5);
+class ecma_12_6 extends ecma_base {
+	/**
+	 * @param {string[]} str
+	 * @param {number} index
+	 */
+	PrivateIdentifier(str, index) {
+		if(str[0] !== '#')
+			return [null, 0];
+		let cur = this.IdentifierName(src, index + 1);
+		return cur[1] + 1;
+	}
+	/**
+	 * @param {any} str
+	 * @param {number} index
+	 */
+	IdentifierName(str, index) {
+		let ids = this.IdentifierStart(str, index);
+		if(ids > 0) {
+			for(; ;) {
+				let len = this.IdentifierPart(str, index + ids);
+				if(len === 0) {
 					break;
 				}
-				return off;
+				ids++;
 			}
-			/**
-			 * @param {string} str
-			 * @param {any} index
-			 */
-			NonZeroDigit(str, index) {
-				if(str.charCodeAt(index) >= 49 && str.charCodeAt(index) <= 57) {
-					return 1;
-				}
-				return 0;
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			NumericLiteralSeparator(str, index) {
-				if(str[index] === '_') {
-					return 1;
-				}
-				return 0;
-			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			DecimalIntegerLiteral(str, index) {}
+			return ['IdentifierName', ids];
 		}
-		ecma_sections.push(ecma_12_8_3);
-		class ecma_12_8_4 extends ecma_base {
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {number} index
-			 */
-			StringLiteral(str, index) {
-				let cur = str[index];
-				if(cur === '"') {
-					if(str[index + 1] === '"') {
-						return ['StringLiteral', 2];
-					}
-					let double_string_len = this.DoubleStringCharacters(str, index + 1);
-					if(str[index + double_string_len + 1] === '"') {
-						return ['StringLiteral', double_string_len + 2];
-					}
-					return [null, 0];
-				}
-				if(cur === "'") {
-					if(str[index + 1] === "'") {
-						return ['StringLiteral', 2];
-					}
-					let single_string_len = this.SingleStringCharacters(str, index + 1);
-					if(str[index + single_string_len + 1] === "'") {
-						return ['StringLiteral', single_string_len + 2];
-					}
-					return [null, 0];
-				}
+		return [null, 0];
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	IdentifierStart(str, index) {
+		if(str[index].match(/[a-zA-Z$_]/)) {
+			return 1;
+		}
+		return 0;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	IdentifierPart(str, index) {
+		if(str[index].match(/[a-zA-Z$_0-9]/)) {
+			return 1;
+		}
+		return 0;
+	}
+}
+ecma_sections.push(ecma_12_6);
+class ecma_12_7 extends ecma_base {
+	/**
+	 * @param {any} root
+	 */
+	static _attach(root) {
+		let test_class = new ecma_12_7();
+		// import the instance variables by constructing the class
+		let instance_var_vec = Object.getOwnPropertyNames(test_class);
+		for(let x of instance_var_vec) {
+			this.prototype[x] = test_class[x];
+		}
+		super._attach(root);
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	Punctuator(str, index) {
+		var len = 0, type = null, ret;
+		ret = this.OptionalChainingPunctuator(str, index);
+		if(ret[1] > len) {
+			type = ret[0];
+			len = ret[1];
+		}
+		ret = this.OtherPunctuator(str, index);
+		if(ret[1] > len) {
+			type = ret[0];
+			len = ret[1];
+		}
+		return [type, len];
+	}
+	/**
+	 * @param {string} str
+	 * @param {number} index
+	 */
+	OptionalChainingPunctuator(str, index) {
+		if(str.slice(index, index + 2) === '?.') {
+			let num_len = this.DecimalDigit(str, index + 2);
+			if(num_len > 0) {
 				return [null, 0];
 			}
-			/**
-			 * @param {any} str
-			 * @param {number} index
-			 */
-			DoubleStringCharacters(str, index) {
-				let off = 0;
-				for(;;) {
-					let len = this.DoubleStringCharacter(str, index + off);
-					if(len > 0) {
-						off++;
-						continue;
-					}
+			return ["OptionalChainingPunctuator", 2];
+		}
+		return [null, 0];
+	}
+	_OtherPunctuator_vec = "{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
+	/**
+	 * @param {string} str
+	 * @param {any} index
+	 */
+	OtherPunctuator(str, index) {
+		let char_length = 0;
+		for(let punctuator of this._OtherPunctuator_vec) {
+			if(str.startsWith(punctuator, index)) {
+				if(punctuator.length > char_length) {
+					char_length = punctuator.length;
+				}
+			}
+		}
+		return ["OtherPunctuator", char_length];
+	}
+	_DivPunctuator_vec = "/ /=".split(' ');
+	/**
+	 * @param {string} str
+	 * @param {any} index
+	 */
+	DivPunctuator(str, index) {
+		let char_length = 0;
+		let max_len = 2;
+		for(let punctuator of this._DivPunctuator_vec) {
+			if(str.startsWith(punctuator, index)) {
+				if(punctuator.length > char_length) {
+					char_length = punctuator.length;
+				}
+				if(char_length === max_len) {
 					break;
 				}
-				return off;
 			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			DoubleStringCharacter(str, index) {
-				x: {
-					if(str[index] === '"') {
-						return 0;
-					}
-					if(str[index] === '\\') {
-						break x;
-					}
-					let len = this.LineTerminator(str, index);
-					if(len > 0) {
-						break x;
-					}
-					return 1;
-				}
-				if(str[index] === '\u{2028}') {
-					return 1;
-				}
-				if(str[index] === '\u{2029}') {
-					return 1;
-				}
-				if(str[index] === '\\') {
-					let esc_len = this.EscapeSequence(str, index);
-					return esc_len + 1;
-				}
-				let lc_len = this.LineContinuation(str, index);
-				if(lc_len > 0) {
-					return lc_len;
-				}
-				return 1;
+		}
+		return ["DivPunctuator", char_length];
+	}
+	/**
+	 * @param {string} str
+	 * @param {any} index
+	 */
+	RightBracePunctuator(str, index) {
+		if(str.startsWith('{}'[1], index)) {
+			return ['RightBracePunctuator', 1];
+		}
+		return [null, 0];
+	}
+}
+ecma_sections.push(ecma_12_7);
+class ecma_12_8 extends ecma_base {
+	static the() {
+		if(ecma_12_8._the)
+			return ecma_12_8._the;
+		ecma_12_8._the = new ecma_12_8;
+	}
+	/**
+	 * @param {any} str
+	 */
+	RegularExpressionNonTerminator(str) {
+		let _val = this.LineTerminator(str);
+		if(_val[0] === 0) {
+			return [1, ['regexpNonTerm'], null];
+		}
+		return [0, null, null];
+	}
+}
+ecma_sections.push(ecma_12_8);
+class ecma_12_8_3 extends ecma_base {
+	static _attach(root) {
+		let exports = Object.getOwnPropertyNames(this.prototype);
+		root.export(this, '12.8.3', exports);
+	}
+	/**
+	 * @param {string} str
+	 * @param {any} index
+	 */
+	DecimalDigit(str, index) {
+		if(str.charCodeAt(index) >= 48 && str.charCodeAt(index) <= 57) {
+			return 1;
+		}
+		return 0;
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	NumericLiteral(str, index) {
+		let len = this.DecimalLiteral(str, index);
+		if(len > 0) {
+			return len;
+		}
+		return 0;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {number} index
+	 */
+	DecimalLiteral(str, index) {
+		if(str[index] === '0') {
+			return 1;
+		}
+		let zd_len = this.NonZeroDigit(str, index);
+		let off = 0;
+		if(zd_len === 1) {
+			off += 1;
+			let ns_len = this.NumericLiteralSeparator(str, index + off);
+			if(ns_len > 0) {
+				off++;
 			}
-			/**
-			 * @param {any} str
-			 * @param {number} index
-			 */
-			SingleStringCharacters(str, index) {
-				let off = 0;
-				for(;;) {
-					let len = this.SingleStringCharacter(str, index + off);
-					if(len > 0) {
-						off++;
-						continue;
-					}
-					break;
-				}
-				return off;
+			let dd_len = this.DecimalDigits(str, index + off);
+			return dd_len + off;
+		}
+		return off;
+	}
+	/**
+	 * @param {any} str
+	 * @param {number} index
+	 */
+	DecimalDigits(str, index) {
+		let off = 0;
+		for(; ;) {
+			let len = this.DecimalDigit(str, index + off);
+			if(len > 0) {
+				off++;
+				continue;
 			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			SingleStringCharacter(str, index) {
-				x: {
-					if(str[index] === "'") {
-						return 0;
-					}
-					if(str[index] === '\\') {
-						break x;
-					}
-					let len = this.LineTerminator(str, index);
-					if(len > 0) {
-						break x;
-					}
-					return 1;
+			let s_len = this.NumericLiteralSeparator(str, index + off);
+			if(s_len > 0) {
+				let exl = this.DecimalDigit(str, index + off + 1);
+				if(exl > 0) {
+					off++;
+					continue;
 				}
-				if(str[index] === '\u{2028}') {
-					return 1;
-				}
-				if(str[index] === '\u{2029}') {
-					return 1;
-				}
-				if(str[index] === '\\') {
-					let esc_len = this.EscapeSequence(str, index);
-					return esc_len + 1;
-				}
-				let lc_len = this.LineContinuation(str, index);
-				if(lc_len > 0) {
-					return lc_len;
-				}
-				return 1;
+				break;
 			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {number} index
-			 */
-			LineContinuation(str, index) {
-				if(str[index] === '\\') {
-					let lt_len = this.LineTerminatorSequence(str, index + 1);
-					if(lt_len > 0) {
-						return lt_len + 1;
-					}
-					return 0;
-				}
+			break;
+		}
+		return off;
+	}
+	/**
+	 * @param {string} str
+	 * @param {any} index
+	 */
+	NonZeroDigit(str, index) {
+		if(str.charCodeAt(index) >= 49 && str.charCodeAt(index) <= 57) {
+			return 1;
+		}
+		return 0;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	NumericLiteralSeparator(str, index) {
+		if(str[index] === '_') {
+			return 1;
+		}
+		return 0;
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	DecimalIntegerLiteral(str, index) {}
+}
+ecma_sections.push(ecma_12_8_3);
+class ecma_12_8_4 extends ecma_base {
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {number} index
+	 */
+	StringLiteral(str, index) {
+		let cur = str[index];
+		if(cur === '"') {
+			if(str[index + 1] === '"') {
+				return ['StringLiteral', 2];
 			}
-			/* EscapeSequence ::*/
-			/* | CharacterEscapeSequence*/
-			/* | 0 [lookahead ∉ DecimalDigit]*/
-			/* | LegacyOctalEscapeSequence*/
-			/* | NonOctalDecimalEscapeSequence*/
-			/* | HexEscapeSequence*/
-			/* | UnicodeEscapeSequence*/
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			EscapeSequence(str, index) {
-				let len = this.CharacterEscapeSequence(str, index);
-				if(len > 0) {
-					return len;
-				}
-				/* | 0 [lookahead ∉ DecimalDigit]*/
-				x: {
-					if(str[index] === '0') {
-						let peek = this.DecimalDigit(str, index);
-						if(peek > 0) {
-							break x;
-						}
-						// \0 null escape found
-						return 1;
-					}
-				}
-				len = this.LegacyOctalEscapeSequence(str, index);
-				if(len > 0) {
-					return len;
-				}
-				len = this.NonOctalDecimalEscapeSequence(str, index);
-				if(len > 0) {
-					return len;
-				}
-				len = this.HexEscapeSequence(str, index);
-				if(len > 0) {
-					return len;
-				}
-				len = this.UnicodeEscapeSequence(str, index);
-				if(len > 0) {
-					return len;
-				}
+			let double_string_len = this.DoubleStringCharacters(str, index + 1);
+			if(str[index + double_string_len + 1] === '"') {
+				return ['StringLiteral', double_string_len + 2];
+			}
+			return [null, 0];
+		}
+		if(cur === "'") {
+			if(str[index + 1] === "'") {
+				return ['StringLiteral', 2];
+			}
+			let single_string_len = this.SingleStringCharacters(str, index + 1);
+			if(str[index + single_string_len + 1] === "'") {
+				return ['StringLiteral', single_string_len + 2];
+			}
+			return [null, 0];
+		}
+		return [null, 0];
+	}
+	/**
+	 * @param {any} str
+	 * @param {number} index
+	 */
+	DoubleStringCharacters(str, index) {
+		let off = 0;
+		for(; ;) {
+			let len = this.DoubleStringCharacter(str, index + off);
+			if(len > 0) {
+				off++;
+				continue;
+			}
+			break;
+		}
+		return off;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	DoubleStringCharacter(str, index) {
+		x: {
+			if(str[index] === '"') {
 				return 0;
 			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			CharacterEscapeSequence(str, index) {
-				let len = this.SingleEscapeCharacter(str, index);
-				if(len > 0) {
-					return len;
-				}
-				len = this.NonEscapeCharacter(str, index);
-				if(len > 0) {
-					return len;
-				}
+			if(str[index] === '\\') {
+				break x;
 			}
-			/**
-			 * @param {{ [x: string]: any; }} str
-			 * @param {string | number} index
-			 */
-			SingleEscapeCharacter(str, index) {
-				let m_arr = ["'", '"', '\\', 'b', 'f', 'n', 'r', 't', 'v'];
-				let cur = str[index];
-				if(m_arr.includes(cur)) {
-					return 1;
-				}
+			let len = this.LineTerminator(str, index);
+			if(len > 0) {
+				break x;
+			}
+			return 1;
+		}
+		if(str[index] === '\u{2028}') {
+			return 1;
+		}
+		if(str[index] === '\u{2029}') {
+			return 1;
+		}
+		if(str[index] === '\\') {
+			let esc_len = this.EscapeSequence(str, index);
+			return esc_len + 1;
+		}
+		let lc_len = this.LineContinuation(str, index);
+		if(lc_len > 0) {
+			return lc_len;
+		}
+		return 1;
+	}
+	/**
+	 * @param {any} str
+	 * @param {number} index
+	 */
+	SingleStringCharacters(str, index) {
+		let off = 0;
+		for(; ;) {
+			let len = this.SingleStringCharacter(str, index + off);
+			if(len > 0) {
+				off++;
+				continue;
+			}
+			break;
+		}
+		return off;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	SingleStringCharacter(str, index) {
+		x: {
+			if(str[index] === "'") {
 				return 0;
 			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			NonEscapeCharacter(str, index) {
-				if(this.EscapeCharacter(str, index)) {
-					return 0;
+			if(str[index] === '\\') {
+				break x;
+			}
+			let len = this.LineTerminator(str, index);
+			if(len > 0) {
+				break x;
+			}
+			return 1;
+		}
+		if(str[index] === '\u{2028}') {
+			return 1;
+		}
+		if(str[index] === '\u{2029}') {
+			return 1;
+		}
+		if(str[index] === '\\') {
+			let esc_len = this.EscapeSequence(str, index);
+			return esc_len + 1;
+		}
+		let lc_len = this.LineContinuation(str, index);
+		if(lc_len > 0) {
+			return lc_len;
+		}
+		return 1;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {number} index
+	 */
+	LineContinuation(str, index) {
+		if(str[index] === '\\') {
+			let lt_len = this.LineTerminatorSequence(str, index + 1);
+			if(lt_len > 0) {
+				return lt_len + 1;
+			}
+			return 0;
+		}
+	}
+	/* EscapeSequence ::*/
+	/* | CharacterEscapeSequence*/
+	/* | 0 [lookahead ∉ DecimalDigit]*/
+	/* | LegacyOctalEscapeSequence*/
+	/* | NonOctalDecimalEscapeSequence*/
+	/* | HexEscapeSequence*/
+	/* | UnicodeEscapeSequence*/
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	EscapeSequence(str, index) {
+		let len = this.CharacterEscapeSequence(str, index);
+		if(len > 0) {
+			return len;
+		}
+		/* | 0 [lookahead ∉ DecimalDigit]*/
+		x: {
+			if(str[index] === '0') {
+				let peek = this.DecimalDigit(str, index);
+				if(peek > 0) {
+					break x;
 				}
-				if(this.LineTerminator(str, index)) {
-					return 0;
+				// \0 null escape found
+				return 1;
+			}
+		}
+		len = this.LegacyOctalEscapeSequence(str, index);
+		if(len > 0) {
+			return len;
+		}
+		len = this.NonOctalDecimalEscapeSequence(str, index);
+		if(len > 0) {
+			return len;
+		}
+		len = this.HexEscapeSequence(str, index);
+		if(len > 0) {
+			return len;
+		}
+		len = this.UnicodeEscapeSequence(str, index);
+		if(len > 0) {
+			return len;
+		}
+		return 0;
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	CharacterEscapeSequence(str, index) {
+		let len = this.SingleEscapeCharacter(str, index);
+		if(len > 0) {
+			return len;
+		}
+		len = this.NonEscapeCharacter(str, index);
+		if(len > 0) {
+			return len;
+		}
+	}
+	/**
+	 * @param {{ [x: string]: any; }} str
+	 * @param {string | number} index
+	 */
+	SingleEscapeCharacter(str, index) {
+		let m_arr = ["'", '"', '\\', 'b', 'f', 'n', 'r', 't', 'v'];
+		let cur = str[index];
+		if(m_arr.includes(cur)) {
+			return 1;
+		}
+		return 0;
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	NonEscapeCharacter(str, index) {
+		if(this.EscapeCharacter(str, index)) {
+			return 0;
+		}
+		if(this.LineTerminator(str, index)) {
+			return 0;
+		}
+		return 1;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	EscapeCharacter(str, index) {
+		let len0 = this.SingleEscapeCharacter(str, index);
+		let len1 = this.DecimalDigit(str, index);
+		let act = 0;
+		if(len0 > len1) {
+			act = 1;
+		}
+		if(str[index] === 'x') {
+			return 1;
+		}
+		if(len0 > 0 && len0 >= len1) {
+			return len0;
+		}
+		if(len1 > 0 && len1 > len0) {
+			return len1;
+		}
+	}
+	/*LegacyOctalEscapeSequence ::
+	0 [lookahead ∈ { 8, 9 }]
+	NonZeroOctalDigit [lookahead ∉ OctalDigit]
+	ZeroToThree OctalDigit [lookahead ∉ OctalDigit]
+	FourToSeven OctalDigit
+	ZeroToThree OctalDigit OctalDigit
+	*/
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {number} index
+	 */
+	LegacyOctalEscapeSequence(str, index) {
+		x: {
+			if(str[index] === '0') {
+				if(str[index + 1] === '8' || str[index + 1] === '9') {
+					return 1;
+				}
+				break x;
+			}
+		}
+		x: {
+			let len = this.NonZeroOctalDigit(str, index);
+			if(len > 0) {
+				let n_len = this.OctalDigit(str, index + 1);
+				if(n_len > 0) {
+					break x;
 				}
 				return 1;
 			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			EscapeCharacter(str, index) {
-				let len0 = this.SingleEscapeCharacter(str, index);
-				let len1 = this.DecimalDigit(str, index);
-				let act = 0;
-				if(len0 > len1) {
-					act = 1;
-				}
-				if(str[index] === 'x') {
-					return 1;
-				}
-				if(len0 > 0 && len0 >= len1) {
-					return len0;
-				}
-				if(len1 > 0 && len1 > len0) {
-					return len1;
+		}
+		x: {
+			let len = this.ZeroToThree(str, index);
+			if(len > 0) {
+				len = this.OctalDigit(str, index + 1);
+				if(len > 0) {
+					let n_len = this.OctalDigit(str, index + 2);
+					if(n_len > 0) {
+						break x;
+					}
+					return 2;
 				}
 			}
-			/*LegacyOctalEscapeSequence ::
-			0 [lookahead ∈ { 8, 9 }]
-			NonZeroOctalDigit [lookahead ∉ OctalDigit]
-			ZeroToThree OctalDigit [lookahead ∉ OctalDigit]
-			FourToSeven OctalDigit
-			ZeroToThree OctalDigit OctalDigit
-			*/
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {number} index
-			 */
-			LegacyOctalEscapeSequence(str, index) {
-				x: {
-					if(str[index] === '0') {
-						if(str[index + 1] === '8' || str[index + 1] === '9') {
-							return 1;
-						}
-						break x;
-					}
+		}
+		x: {
+			let len = this.FourToSeven(str, index);
+			if(len > 0) {
+				len = this.OctalDigit(str, index + 1);
+				if(len > 0) {
+					return 2;
 				}
-				x: {
-					let len = this.NonZeroOctalDigit(str, index);
-					if(len > 0) {
-						let n_len = this.OctalDigit(str, index + 1);
-						if(n_len > 0) {
-							break x;
-						}
-						return 1;
-					}
-				}
-				x: {
-					let len = this.ZeroToThree(str, index);
-					if(len > 0) {
-						len = this.OctalDigit(str, index + 1);
-						if(len > 0) {
-							let n_len = this.OctalDigit(str, index + 2);
-							if(n_len > 0) {
-								break x;
-							}
-							return 2;
-						}
-					}
-				}
-				x: {
-					let len = this.FourToSeven(str, index);
-					if(len > 0) {
-						len = this.OctalDigit(str, index + 1);
-						if(len > 0) {
-							return 2;
-						}
-					}
-				}
-				x: {
-					let len = this.ZeroToThree(str, index);
-					if(!len) {
-						break x;
-					}
-					len = this.OctalDigit(str, index + 1);
-					if(!len) {
-						break x;
-					}
-					len = this.OctalDigit(str, index + 2);
-					if(!len) {
-						break x;
-					}
-					return 3;
-				}
+			}
+		}
+		x: {
+			let len = this.ZeroToThree(str, index);
+			if(!len) {
+				break x;
+			}
+			len = this.OctalDigit(str, index + 1);
+			if(!len) {
+				break x;
+			}
+			len = this.OctalDigit(str, index + 2);
+			if(!len) {
+				break x;
+			}
+			return 3;
+		}
 
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			NonZeroOctalDigit(str, index) {
-				if(str[index] === '0') {
-					return 0;
-				}
-				let len = this.OctalDigit(str, index);
-				if(len > 0) {
-					return 1;
-				}
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	NonZeroOctalDigit(str, index) {
+		if(str[index] === '0') {
+			return 0;
+		}
+		let len = this.OctalDigit(str, index);
+		if(len > 0) {
+			return 1;
+		}
+		return 0;
+	}
+	/**
+	 * @param {{ [x: string]: any; }} str
+	 * @param {string | number} index
+	 */
+	ZeroToThree(str, index) {
+		let cur = str[index];
+		let chk = '0123';
+		if(chk.includes(cur)) {
+			return 1;
+		}
+		;
+	}
+	/**
+	 * @param {{ [x: string]: any; }} str
+	 * @param {string | number} index
+	 */
+	FourToSeven(str, index) {
+		let cur = str[index];
+		let chk = '4567';
+		if(chk.includes(cur)) {
+			return 1;
+		}
+		;
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {string | number} index
+	 */
+	NonOctalDecimalEscapeSequence(str, index) {
+		if(str[index] === '8' || str[index] === '9') {
+			return 1;
+		}
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {number} index
+	 */
+	HexEscapeSequence(str, index) {
+		if(str[index] === 'x') {
+			let len = this.HexDigit(str, index);
+			if(!len) {
 				return 0;
 			}
-			/**
-			 * @param {{ [x: string]: any; }} str
-			 * @param {string | number} index
-			 */
-			ZeroToThree(str, index) {
-				let cur = str[index];
-				let chk = '0123';
-				if(chk.includes(cur)) {
-					return 1;
-				}
-				;
-			}
-			/**
-			 * @param {{ [x: string]: any; }} str
-			 * @param {string | number} index
-			 */
-			FourToSeven(str, index) {
-				let cur = str[index];
-				let chk = '4567';
-				if(chk.includes(cur)) {
-					return 1;
-				}
-				;
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {string | number} index
-			 */
-			NonOctalDecimalEscapeSequence(str, index) {
-				if(str[index] === '8' || str[index] === '9') {
-					return 1;
-				}
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {number} index
-			 */
-			HexEscapeSequence(str, index) {
-				if(str[index] === 'x') {
-					let len = this.HexDigit(str, index);
-					if(!len) {
-						return 0;
-					}
-					len = this.HexDigit(str, index + 1);
-					if(!len) {
-						return 0;
-					}
-					return 3;
-				}
-			}
-			/**
-			 * @param {{ [x: string]: string; }} str
-			 * @param {number} index
-			 */
-			UnicodeEscapeSequence(str, index) {
-				let off = 0;
-				if(str[index] === 'u') {
-					off++;
-				}
-				let len0 = this.Hex4Digits(str, index + off);
-				if(len0 > 0) {
-					return len0 + 1;
-				}
-				if(str[index + off] === '{}'[0]) {
-					off++;
-					let len = this.CodePoint(str, index + off);
-					if(len > 0) {
-						off += len;
-						if(str[index + off] === '{}'[1]) {
-							off++;
-							return off;
-						}
-					}
-				}
+			len = this.HexDigit(str, index + 1);
+			if(!len) {
 				return 0;
 			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			Hex4Digits(str, index) {
-				let len = this.HexDigit(str, index);
-				if(!len) {
-					return 0;
+			return 3;
+		}
+	}
+	/**
+	 * @param {{ [x: string]: string; }} str
+	 * @param {number} index
+	 */
+	UnicodeEscapeSequence(str, index) {
+		let off = 0;
+		if(str[index] === 'u') {
+			off++;
+		}
+		let len0 = this.Hex4Digits(str, index + off);
+		if(len0 > 0) {
+			return len0 + 1;
+		}
+		if(str[index + off] === '{}'[0]) {
+			off++;
+			let len = this.CodePoint(str, index + off);
+			if(len > 0) {
+				off += len;
+				if(str[index + off] === '{}'[1]) {
+					off++;
+					return off;
 				}
-				len = this.HexDigit(str, index);
-				if(!len0) {
-					return 0;
-				}
-				len = this.HexDigit(str, index);
-				if(!len) {
-					return 0;
-				}
-				len = this.HexDigit(str, index);
-				if(!len) {
-					return 0;
-				}
-				return 4;
 			}
 		}
-		ecma_sections.push(ecma_12_8_4);
-		class ecma_12_8_6 extends ecma_base {
-			/* TemplateHead ::*/
-			/* | ` TemplateCharacters opt ${*/
-			/* | TemplateSubstitutionTail ::*/
-			/* | TemplateMiddle*/
-			/* | TemplateTail*/
-			/*TemplateMiddle ::*/
-			/* | } TemplateCharacters opt ${*/
-			/* TemplateTail ::*/
-			/* | } TemplateCharacters opt `*/
-			/* TemplateCharacters ::*/
-			/* | TemplateCharacter TemplateCharacters opt*/
-			/* TemplateCharacter ::*/
-			/* | $ [lookahead ≠ {]*/
-			/* | \ TemplateEscapeSequence*/
-			/* | \ NotEscapeSequence*/
-			/* | LineContinuation*/
-			/* | LineTerminatorSequence*/
-			/* | SourceCharacter but not one of ` or \ or $ or LineTerminator*/
-			/* TemplateEscapeSequence ::*/
-			/* | CharacterEscapeSequence*/
-			/* | 0 [lookahead ∉ DecimalDigit]*/
-			/* | HexEscapeSequence*/
-			/* | UnicodeEscapeSequence*/
-			/* NotEscapeSequence ::*/
-			/* | 0 DecimalDigit*/
-			/* | DecimalDigit but not 0*/
-			/* | x [lookahead ∉ HexDigit]*/
-			/* | x HexDigit [lookahead ∉ HexDigit]*/
-			/* | u [lookahead ∉ HexDigit] [lookahead ≠ {]*/
-			/* | u HexDigit [lookahead ∉ HexDigit]*/
-			/* | u HexDigit HexDigit [lookahead ∉ HexDigit]*/
-			/* | u HexDigit HexDigit HexDigit [lookahead ∉ HexDigit]*/
-			/* | u { [lookahead ∉ HexDigit]*/
-			/* | u { NotCodePoint [lookahead ∉ HexDigit]*/
-			/* | u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]*/
-			/* NotCodePoint ::*/
-			/* | HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF*/
-			/* CodePoint ::*/
-			/* | HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF*/
-			/*Template ::*/
-			/* | NoSubstitutionTemplate*/
-			/* | TemplateHead*/
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			Template(str, index) {
-				let ret = this.NoSubstitutionTemplate(str, index);
-				if(ret[1] > 0) {
-					return ret;
-				}
-				ret = this.TemplateHead(str, index);
-				if(ret[1] > 0) {
-					return ret;
-				}
-				return [null, 0];
-			}
-			/* NoSubstitutionTemplate ::*/
-			/* | ` TemplateCharacters opt `*/
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			NoSubstitutionTemplate(str, index) {}
+		return 0;
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	Hex4Digits(str, index) {
+		let len = this.HexDigit(str, index);
+		if(!len) {
+			return 0;
 		}
-		ecma_sections.push(ecma_12_8_6);
-		class ecma_terminal extends ecma_base {
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			InputElementDiv(str, index) {
-				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
-				let max_item = null
-				, max_val = 0;
-				let rb_len, item, tree;
-				let cur_res = this.WhiteSpace(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'whitespace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.LineTerminator(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'line_term';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.Comment(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'comment';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.CommonToken(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'common';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.DivPunctuator(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'div_pnt';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.RightBracePunctuator(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'r_brace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				return [max_item, max_val];
-			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			InputElementRegExp(str, index) {
-				// WhiteSpace, LineTerminator, Comment, CommonToken,
-				// RightBracePunctuator, RegularExpressionLiteral
-				let max_item = null
-				, max_val = 0;
-				let rb_len, item, tree;
-				let cur_res = this.WhiteSpace(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'whitespace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.LineTerminator(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'line_term';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.Comment(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'comment';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.CommonToken(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'common';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.RightBracePunctuator(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'r_brace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.RegularExpressionLiteral(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'r_brace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				return [max_item, max_val];
-			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			InputElementRegExpOrTemplateTail(str, index) {
-				// WhiteSpace, LineTerminator, Comment, CommonToken, RegularExpressionLiteral, TemplateSubstitutionTail
-				let max_item = null
-				, max_val = 0;
-				let rb_len, item, tree;
-				let cur_res = this.WhiteSpace(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'whitespace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.LineTerminator(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'line_term';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.Comment(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'comment';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.CommonToken(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'common';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.RegularExpressionLiteral(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'r_brace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.TemplateSubstitutionTail(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'r_brace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				return [max_item, max_val];
-			}
-			/**
-			 * @param {any} str
-			 * @param {any} index
-			 */
-			InputElementTemplateTail(str, index) {
-				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, TemplateSubstitutionTail
-				let max_item = null
-				, max_val = 0;
-				let rb_len, item, tree;
-				let cur_res = this.WhiteSpace(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'whitespace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.LineTerminator(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'line_term';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.Comment(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'comment';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.CommonToken(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'common';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.DivPunctuator(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'r_brace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				cur_res = this.TemplateSubstitutionTail(str, index);
-				if(cur_res[1] > max_val) {
-					//max_item = 'r_brace';
-					max_item = cur_res[0];
-					max_val = cur_res[1];
-				}
-				return [max_item, max_val];
-			}
+		len = this.HexDigit(str, index);
+		if(!len0) {
+			return 0;
 		}
-		ecma_sections.push(ecma_terminal);
+		len = this.HexDigit(str, index);
+		if(!len) {
+			return 0;
+		}
+		len = this.HexDigit(str, index);
+		if(!len) {
+			return 0;
+		}
+		return 4;
+	}
+}
+ecma_sections.push(ecma_12_8_4);
+class ecma_12_8_6 extends ecma_base {
+	/* TemplateHead ::*/
+	/* | ` TemplateCharacters opt ${*/
+	/* | TemplateSubstitutionTail ::*/
+	/* | TemplateMiddle*/
+	/* | TemplateTail*/
+	/*TemplateMiddle ::*/
+	/* | } TemplateCharacters opt ${*/
+	/* TemplateTail ::*/
+	/* | } TemplateCharacters opt `*/
+	/* TemplateCharacters ::*/
+	/* | TemplateCharacter TemplateCharacters opt*/
+	/* TemplateCharacter ::*/
+	/* | $ [lookahead ≠ {]*/
+	/* | \ TemplateEscapeSequence*/
+	/* | \ NotEscapeSequence*/
+	/* | LineContinuation*/
+	/* | LineTerminatorSequence*/
+	/* | SourceCharacter but not one of ` or \ or $ or LineTerminator*/
+	/* TemplateEscapeSequence ::*/
+	/* | CharacterEscapeSequence*/
+	/* | 0 [lookahead ∉ DecimalDigit]*/
+	/* | HexEscapeSequence*/
+	/* | UnicodeEscapeSequence*/
+	/* NotEscapeSequence ::*/
+	/* | 0 DecimalDigit*/
+	/* | DecimalDigit but not 0*/
+	/* | x [lookahead ∉ HexDigit]*/
+	/* | x HexDigit [lookahead ∉ HexDigit]*/
+	/* | u [lookahead ∉ HexDigit] [lookahead ≠ {]*/
+	/* | u HexDigit [lookahead ∉ HexDigit]*/
+	/* | u HexDigit HexDigit [lookahead ∉ HexDigit]*/
+	/* | u HexDigit HexDigit HexDigit [lookahead ∉ HexDigit]*/
+	/* | u { [lookahead ∉ HexDigit]*/
+	/* | u { NotCodePoint [lookahead ∉ HexDigit]*/
+	/* | u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]*/
+	/* NotCodePoint ::*/
+	/* | HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF*/
+	/* CodePoint ::*/
+	/* | HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF*/
+	/*Template ::*/
+	/* | NoSubstitutionTemplate*/
+	/* | TemplateHead*/
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	Template(str, index) {
+		let ret = this.NoSubstitutionTemplate(str, index);
+		if(ret[1] > 0) {
+			return ret;
+		}
+		ret = this.TemplateHead(str, index);
+		if(ret[1] > 0) {
+			return ret;
+		}
+		return [null, 0];
+	}
+	/* NoSubstitutionTemplate ::*/
+	/* | ` TemplateCharacters opt `*/
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	NoSubstitutionTemplate(str, index) {}
+}
+ecma_sections.push(ecma_12_8_6);
+class ecma_terminal extends ecma_base {
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	InputElementDiv(str, index) {
+		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
+		let max_item = null
+			, max_val = 0;
+		let rb_len, item, tree;
+		let cur_res = this.WhiteSpace(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'whitespace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.LineTerminator(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'line_term';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.Comment(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'comment';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.CommonToken(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'common';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.DivPunctuator(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'div_pnt';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.RightBracePunctuator(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'r_brace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		return [max_item, max_val];
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	InputElementRegExp(str, index) {
+		// WhiteSpace, LineTerminator, Comment, CommonToken,
+		// RightBracePunctuator, RegularExpressionLiteral
+		let max_item = null
+			, max_val = 0;
+		let rb_len, item, tree;
+		let cur_res = this.WhiteSpace(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'whitespace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.LineTerminator(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'line_term';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.Comment(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'comment';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.CommonToken(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'common';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.RightBracePunctuator(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'r_brace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.RegularExpressionLiteral(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'r_brace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		return [max_item, max_val];
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	InputElementRegExpOrTemplateTail(str, index) {
+		// WhiteSpace, LineTerminator, Comment, CommonToken, RegularExpressionLiteral, TemplateSubstitutionTail
+		let max_item = null
+			, max_val = 0;
+		let rb_len, item, tree;
+		let cur_res = this.WhiteSpace(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'whitespace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.LineTerminator(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'line_term';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.Comment(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'comment';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.CommonToken(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'common';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.RegularExpressionLiteral(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'r_brace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.TemplateSubstitutionTail(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'r_brace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		return [max_item, max_val];
+	}
+	/**
+	 * @param {any} str
+	 * @param {any} index
+	 */
+	InputElementTemplateTail(str, index) {
+		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, TemplateSubstitutionTail
+		let max_item = null
+			, max_val = 0;
+		let rb_len, item, tree;
+		let cur_res = this.WhiteSpace(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'whitespace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.LineTerminator(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'line_term';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.Comment(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'comment';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.CommonToken(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'common';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.DivPunctuator(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'r_brace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		cur_res = this.TemplateSubstitutionTail(str, index);
+		if(cur_res[1] > max_val) {
+			//max_item = 'r_brace';
+			max_item = cur_res[0];
+			max_val = cur_res[1];
+		}
+		return [max_item, max_val];
+	}
+}
+ecma_sections.push(ecma_12_2);
+ecma_sections.push(ecma_12_3);
+ecma_sections.push(ecma_terminal);
+class ParseNode {
+	/**
+	 * @param {any[]} e
+	 */
+	constructor(...e) {
+		this.data_vec = e;
+	}
+}
+class SyntaxError {}
+class List {
+	constructor(...e) {
+		if(e[0] instanceof Array && e.length == 1) {
+			this.data = e[0];
+		} else {
+			this.data = e;
+		}
+	}
+}
+class ParseTree {
+	/**
+	 * @type {any}
+	 */
+	root;
+}
+class ParseResult {
+	/**@returns {boolean} */
+	ok() {
+		return false;
+	}
+	/**@returns {boolean} */
+	has_parse_error() {
+		if(!this.parse_errors)throw new Error("Invalid");
+		if(this.parse_errors.length > 0) {
+			return true;
+		}
+		return false;
+	}
+	/**@returns {boolean} */
+	has_early_error() {
+		if(!this.early_errors)throw new Error("Invalid");
+		if(this.early_errors.length > 0) {
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * @abstract
+	 * @type {ParseTree|undefined} */
+	parse_tree;
+	/**@type {SyntaxError[]|undefined} */
+	parse_errors;
+	/**@type {SyntaxError[]|undefined} */
+	early_errors;
+}
+/**
+ * @returns {ParseResult}
+ * @param {any} sourceText
+ * @param {any} goalSymbol
+ */
+function do_parse_to_goal_symbol(sourceText, goalSymbol) {}
+/**
+ * @param {any} sourceText
+ * @param {any} goalSymbol
+ */
+function ParseText(sourceText, goalSymbol) {
+	let parse_tree_root = null;
+	//1.
+	// Attempt to parse sourceText using goalSymbol as the goal symbol,
+	//  and analyse the parse result for any early error conditions.
+	// Parsing and early error detection may be interleaved in an implementation-defined manner.
+	let parse_result = do_parse_to_goal_symbol(sourceText, goalSymbol);
+	//2.
+	// If the parse succeeded and no early errors were found,
+	//  return the Parse Node (an instance of goalSymbol)
+	//   at the root of the parse tree resulting from the parse.
+	if(parse_result.ok() && !parse_result.has_early_error()) {
+		parse_tree_root = parse_result.parse_tree.root;
+		return new ParseNode(goalSymbol, parse_tree_root);
+	} else {
+		//3.
+		// Otherwise,
+		//  return
+		//   a List of one or more SyntaxError objects representing the parsing errors and/or early errors.
+		if(parse_result.has_parse_error()) {
+			return new List(parse_result.parse_errors);
+		}
+		//  If more than one parsing error or early error is present,
+		//   the number and ordering of error objects in the list is implementation-defined,
+		//   but at least one must be present.
+		if(parse_result.has_early_error()) {
+			return new List(parse_result.early_errors);
+		}
+		throw "Invalid state";
+	}
+}
+class SimpleJavascriptParser {
+	token_generator = null;
+	ecma_262_section_12_factory() {
 		return ecma_sections;
 	}
 	ecma_262_section_script_parse_factory() {
@@ -1594,95 +1669,6 @@ class SimpleJavascriptParser {
 		local_dumper.m_dump_value(utf8_string);
 	}
 	ecma_262_pseudo() {
-		class ParseNode {
-			/**
-			 * @param {any[]} e
-			 */
-			constructor(...e) {
-				this.data_vec = e;
-			}
-		}
-		class SyntaxError {}
-		class List {
-			constructor(...e) {
-				if(e[0] instanceof Array && e.length == 1) {
-					this.data = e[0];
-				} else {
-					this.data = e;
-				}
-			}
-		}
-		class ParseTree {
-			/**
-			 * @type {any}
-			 */
-			root;
-		}
-		class ParseResult {
-			/**@returns {boolean} */
-			ok() {}
-			/**@returns {boolean} */
-			has_parse_error() {
-				if(this.parse_errors.length > 0) {
-					return true;
-				}
-				return false;
-			}
-			/**@returns {boolean} */
-			has_early_error() {
-				if(this.early_errors.length > 0) {
-					return true;
-				}
-				return false;
-			}
-			/**@type {ParseTree} */
-			parse_tree;
-			/**@type {SyntaxError[]} */
-			parse_errors;
-			/**@type {SyntaxError[]} */
-			early_errors;
-		}
-		/**
-		 * @returns {ParseResult}
-		 * @param {any} sourceText
-		 * @param {any} goalSymbol
-		 */
-		function do_parse_to_goal_symbol(sourceText, goalSymbol) {}
-		/**
-		 * @param {any} sourceText
-		 * @param {any} goalSymbol
-		 */
-		function ParseText(sourceText, goalSymbol) {
-			let parse_tree_root = null;
-			//1.
-			// Attempt to parse sourceText using goalSymbol as the goal symbol,
-			//  and analyse the parse result for any early error conditions.
-			// Parsing and early error detection may be interleaved in an implementation-defined manner.
-			let parse_result = do_parse_to_goal_symbol(sourceText, goalSymbol);
-			//2.
-			// If the parse succeeded and no early errors were found,
-			//  return the Parse Node (an instance of goalSymbol)
-			//   at the root of the parse tree resulting from the parse.
-			if(parse_result.ok() && !parse_result.has_early_error()) {
-				parse_tree_root = parse_result.parse_tree.root;
-				return new ParseNode(goalSymbol, parse_tree_root);
-			} else {
-				//3.
-				// Otherwise,
-				//  return
-				//   a List of one or more SyntaxError objects representing the parsing errors and/or early errors.
-				if(parse_result.has_parse_error()) {
-					return new List(parse_result.parse_errors);
-				}
-				//  If more than one parsing error or early error is present,
-				//   the number and ordering of error objects in the list is implementation-defined,
-				//   but at least one must be present.
-				if(parse_result.has_early_error()) {
-					return new List(parse_result.early_errors);
-				}
-				throw "Invalid state";
-			}
-		}
 		return {
 			ParseText
 		};
@@ -1726,7 +1712,7 @@ class SimpleJavascriptParser {
 				if(this._init === void 0)
 					this.init();
 				let arr = this.export_list;
-				rt: for(let i = 0;i < arr.length;i++) {
+				rt: for(let i = 0; i < arr.length; i++) {
 					let cur = arr[i];
 					let n_arr = cur[2];
 					let src_class = cur[0];
@@ -1749,7 +1735,7 @@ class SimpleJavascriptParser {
 				if(this._init === void 0)
 					this.init();
 				let arr = this.export_list.filter(e => e[1] === toc_loc);
-				for(let i = 0;i < arr.length;i++) {
+				for(let i = 0; i < arr.length; i++) {
 					let cur = arr[i];
 					for(let x of cur[2]) {
 						if(x === 'constructor') {
@@ -1844,7 +1830,7 @@ class DebugAPI {
 	/**
 	 * @param {string} key
 	 */
-	hasData(key){
+	hasData(key) {
 		return this.data_store.has(key);
 	}
 	/**
@@ -1946,15 +1932,15 @@ class DebugAPI {
 			}
 		};
 		{
-			if(!window.DebugAPI.the().clearCurrentBreakpoint()){
+			if(!window.DebugAPI.the().clearCurrentBreakpoint()) {
 				console.log("failed to clear breakpoint");
 			};
 		}
 		0;
 	}
-	clearCurrentBreakpoint(){
+	clearCurrentBreakpoint() {
 		let undebug;
-		if(undebug=this.getData("u")){
+		if(undebug = this.getData("u")) {
 			undebug(this.current_function_value);
 			return true;
 		}
@@ -2003,7 +1989,7 @@ class DebugAPI {
 			let fs = j.split('-');
 			let sa = fs[0].charCodeAt(0);
 			let se = fs[1].charCodeAt(0);
-			for(let i = sa;i <= se;i++) {
+			for(let i = sa; i <= se; i++) {
 				sr.push(i);
 			}
 		}
@@ -2020,7 +2006,7 @@ class DebugAPI {
 		}
 		let tmp_key = '__k';
 		{
-			for(let i = 0;i < rep_arr.length;i += 2) {
+			for(let i = 0; i < rep_arr.length; i += 2) {
 				let cur0 = rep_arr[i];
 				let cur1 = rep_arr[i] + 1;
 				if(tmp_key === cur0) {
@@ -2036,7 +2022,7 @@ class DebugAPI {
 		// ---- Activate ----
 		let exec_return = activate(function_value, ...activate_vec);
 		let exec_res_arr = [];
-		if(tmp_value.get){
+		if(tmp_value.get) {
 			for(let j of vars_arr) {
 				let res = tmp_value.get(j);
 				let arg_index = -1;
@@ -2129,7 +2115,7 @@ class DebugAPI {
 		let map_arr = [dbg_str_func];
 		let tmp_key = '__k';
 		{
-			for(let i = 0;i < rep_arr.length;i += 2) {
+			for(let i = 0; i < rep_arr.length; i += 2) {
 				let cur0 = rep_arr[i];
 				let cur1 = rep_arr[i] + 1;
 				if(tmp_key === cur0) {
@@ -2145,8 +2131,8 @@ class DebugAPI {
 		// ---- Activate ----
 		let activate_return = activate(function_value, ...activate_vec);
 		let breakpoint_result = null;
-		if(tmp_value.get){
-			breakpoint_result=tmp_value.get(var_name);
+		if(tmp_value.get) {
+			breakpoint_result = tmp_value.get(var_name);
 		}
 		this.deleteData(tmp_key);
 		if(breakpoint_result?.type === 'var') {
@@ -2158,7 +2144,7 @@ class DebugAPI {
 				}
 			};
 		}
-		if(breakpoint_result){
+		if(breakpoint_result) {
 			return {
 				type: 'unexpected',
 				data: {

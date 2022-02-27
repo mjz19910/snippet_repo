@@ -1,6 +1,6 @@
 import {GenericEventTarget} from "./GenericEventTarget";
-import DebugAPI_breakpoint_return from "./DebugAPI_breakpoint_return";
-import {DebugAPI_breakpoint_return_array} from "./DebugAPI_breakpoint_return_array";
+import DebugAPI_breakpoint_return from "./breakpoint_return";
+import {DebugAPI_breakpoint_return_array} from "./breakpoint_return_array";
 import {SimpleJavascriptParser} from "./SimpleJavascriptParser";
 import {RustSimpleParser} from "./RustSimpleParser";
 
@@ -36,18 +36,18 @@ export class DebugAPI {
 		activate: CallableFunction,
 		var_match: string,
 		...activate_vec: any[]
-	): DebugAPI_breakpoint_return_array;
+	): arg_error | data_resp_arr | no_debugger_response;
 	debuggerGetVarArray_c(
 		class_value: NewableFunction,
 		target_arg_vec: any[],
 		var_match: string
-	): DebugAPI_breakpoint_return_array;
+	): arg_error | data_resp_arr | no_debugger_response;
 	debuggerGetVarArray(
 		function_value: CallableFunction,
 		target_obj: any,
 		target_arg_vec: any[],
 		var_match: string
-	): DebugAPI_breakpoint_return_array;
+	): arg_error | data_resp_arr | no_debugger_response;
 	debuggerGetVar_a(
 		function_value: CallableFunction | NewableFunction,
 		activate: CallableFunction,
