@@ -1,20 +1,21 @@
-import {ecma_base} from "module_tmp/ecma_base.js";
-import {DebugAPI} from "./final/DebugApi/DebugAPI";
-import {Dumper} from "./Dumper";
-import {ecma_12_2} from "./ecma_12_2";
-import {ecma_12_3} from "./ecma_12_3";
-import {ecma_12_4} from "./ecma_12_4";
-import {ecma_12_5} from "./ecma_12_5";
-import {ecma_12_6} from "./ecma_12_6";
-import {ecma_12_7} from "./ecma_12_7";
-import {ecma_12_8} from "./ecma_12_8";
-import {ecma_12_8_3} from "./ecma_12_8_3";
-import {ecma_12_8_4} from "./ecma_12_8_4";
-import {ecma_12_8_6} from "./ecma_12_8_6";
-import {ecma_terminal} from "./ecma_terminal";
-import {GenericDataEvent} from "./GenericDataEvent";
-import {GenericEventTarget} from "./GenericEventTarget";
-import {HexRandomDataGenerator} from "./HexRandomDataGenerator";
+import {DebugAPI} from "final/DebugApi/DebugAPI.js";
+import {ecma_12_2} from "types/ecma_12_2.js";
+import {ecma_terminal} from "types/ecma_terminal.js";
+import {Dumper} from "./Dumper.js";
+import {ecma_12_3} from "./ecma_12_3.js";
+import {ecma_12_4} from "./ecma_12_4.js";
+import {ecma_12_5} from "./ecma_12_5.js";
+import {ecma_12_6} from "./ecma_12_6.js";
+import {ecma_12_7} from "./ecma_12_7.js";
+import {ecma_12_8} from "./ecma_12_8.js";
+import {ecma_12_8_3} from "./ecma_12_8_3.js";
+import {ecma_12_8_4} from "./ecma_12_8_4.js";
+import {ecma_12_8_6} from "./ecma_12_8_6.js";
+import {ecma_base} from "./ecma_base.js";
+import {GenericDataEvent} from "./GenericDataEvent.js";
+import {GenericEventTarget} from "./GenericEventTarget.js";
+import {HexRandomDataGenerator} from "./HexRandomDataGenerator.js";
+
 /**@type {ecma_base[]} */
 export let ecma_sections = [];
 export let random_data_generator = new HexRandomDataGenerator;
