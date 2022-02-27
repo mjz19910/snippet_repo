@@ -142,6 +142,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			this.value=value;
 		}
 	}
+	/**@returns {never} */
 	function not_reached(){
 		throw new Error("Unreachable");
 	}
@@ -358,6 +359,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 	class WindowBoxImpl {
 		/**@type {"object_box"} */
 		type="object_box";
+		extension=null;
 		/**@type {"Window"} */
 		inner_type="Window";
 		/**@arg {'function'} type */
@@ -648,7 +650,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 					if(typeof target_obj!='object')throw invalid();
 					let get_name=target_name;
 					let the_type=target_obj.type;
-					/**@arg {Box} opt @arg {string} get_name */
+					/**@arg {Box} opt @arg {string} get_name @returns {Box} */
 					function do_box_get(opt, get_name) {
 						if(typeof opt!='object')throw invalid();
 						if(opt === null)throw invalid();
@@ -674,7 +676,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 								if(Number.isNaN(int_num))throw new Error("Can't parse number");
 								let res=opt.value[int_num];
 								if(TempBox.is_box_inner(res)){
-									return new TempBox(res);
+									return res;
 								} else {
 									return res;
 								}
@@ -688,7 +690,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 									let res=opt.value[get_name];
 									if(res === null)return res;
 									if(res === void 0)return res;
-									return new TempBox(res);
+									return res;
 								}
 								if(opt) {
 									if(opt.inner_type === 'unit'){
@@ -701,6 +703,10 @@ import WindowBox from "types/vm/box/WindowBox.js";
 											throw new Error("Figure out how to type check index access to the window object");
 										}
 										let other_window=opt.value[int_num];
+										if(other_window === null)return other_window;
+										if(typeof other_window === 'string'){
+											return other_window;
+										}
 										return new WindowBoxImpl(other_window);
 									}
 								}
@@ -722,7 +728,11 @@ import WindowBox from "types/vm/box/WindowBox.js";
 					}else if(TempBox.is_box_inner(res)) {
 						this.push(res);
 					} else {
-						this.push(new TempBox(res));
+						if(res === null){
+							this.push(res);
+							break;
+						}
+						this.push(res);
 					}
 				} break;
 				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
@@ -779,7 +789,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 					if(target_this===null)throw invalid();
 					if(target_fn.type!="function_box")throw invalid();
 					let ret = target_fn.value.apply(target_this.value, arg_arr);
-					console.log('VM: call %o %s(...)\n ... = [' + "%o, ".repeat(arg_arr.length) + "]\n return %o", target_fn, target_name, ...arg_arr, ret);
+					console.log('VM: call %o %s(...)\n ... = [' + "%o, ".repeat(arg_arr.length) + "]\n return %o", target_fn, target_this, ...arg_arr, ret);
 					switch(typeof ret){
 						default:{
 							this.push(ret);
@@ -1106,7 +1116,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
 		}
 		/**@arg {string[]} instruction @returns {InstructionType}*/
-		static verify_instruction(instruction){
+		static verify_instruction(instruction) {
 			let num_to_parse=instruction.length;
 			/**@type {InstructionType|null} */
 			let ret=null;
@@ -2454,6 +2464,8 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			await node.start_async(new AsyncTimeoutTarget);
 		}
 	}
+	/**@typedef {import("types/AutoBuy.js").default} IAutoBuy */
+	/**@implements {IAutoBuy} */
 	class AutoBuy {
 		async_compress(){
 			this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
@@ -2642,6 +2654,28 @@ import WindowBox from "types/vm/box/WindowBox.js";
 				}
 			}
 			let bound_this=this;
+			/**@implements {VoidPromiseBox} */
+			class VoidPromiseBoxImpl {
+				/**@type {"promise"} */
+				type="promise";
+				/**@type {"Promise<void>"} */
+				inner_type="Promise<void>";
+				return_type=null;
+				/**@type {void} */
+				await_type;
+				/**@type {"void_type"} */
+				promise_return_type_special="void_type";
+				/**@arg {"function"} type */
+				as_type(type){
+					if(typeof this.value === type)return this;
+					return null;
+				}
+				/**@arg {any} value */
+				constructor(value){
+					this.await_type=void 0;
+					this.value=value;
+				}
+			}
 			/**@type {DomExecDescription[]} */
 			let make_css_arr=[
 				[
@@ -2882,7 +2916,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			});
 		}
 		global_init(){
-			if(window.g_auto_buy && window.g_auto_buy!==this){
+			if(window.g_auto_buy && window.g_auto_buy !== this) {
 				window.g_auto_buy.destroy();
 			}
 			window.g_auto_buy=this;
