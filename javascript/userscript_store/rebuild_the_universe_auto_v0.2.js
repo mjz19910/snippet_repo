@@ -563,7 +563,7 @@
 				case 'cast_object': {
 					let obj=this.pop();
 					if(!obj)throw new Error("Invalid");
-					console.log(...this.stack, obj);
+					console.log('VM: cast_object', instruction[1], obj);
 					if(typeof obj!='object')throw new Error("Invalid");
 					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue */
 					/**@type {<T>(q:T, v:any)=>v is T} */
@@ -661,7 +661,7 @@
 			}
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
-					console.log('VM: global push `this`');
+					console.log('VM: this push');
 					this.push(new VMBoxedStackVMR(this));
 				} break;
 					// TODO: if you ever use this on a worker, change
