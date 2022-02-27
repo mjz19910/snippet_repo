@@ -303,6 +303,49 @@
 			this.value=value;
 		}
 	}
+	/**@type {<T extends {}>(v:T, k:keyof T)=>v is {[U in keyof T]:T[U]}} */
+	function does_have_property(v, k){
+		if(v.hasOwnProperty(k))return true;
+		if(v[k] !== void 0)return true;
+		return false;
+	}
+	/**@type {<T, F>(v:T, k:(v:T)=>F)=>v is (T & F)} */
+	function does_have_property_as_type(v, k){
+		let rr=v && k;
+		void rr;
+		return true;
+	}
+	/**
+	 * @type {<T, F>(v:T, k:(v:T)=>F)=>T|null}
+	 */
+	function with_has_property_as_type(v, k){
+		if(does_have_property_as_type(v, k))return v;
+		return null;
+	}
+	/**@type {<A extends {}, B extends A>(o:B, k:keyof A)=>{[T in keyof A]:A[T]}|null} */
+	function with_has_property(o, k){
+		if(does_have_property(o, k)){
+			return o;
+		}
+		return null;
+	}
+	/**@type {<T extends {}>(o:T)=>o is T} */
+	function can_be_object(v){
+		if(v === null){
+			return false;
+		}
+		if(typeof v==='object'){
+			return true;
+		}
+		return false;
+	}
+	/**@type {<T>(v:T)=>({} & T)|null} */
+	function as_object_or_null(v){
+		if(can_be_object(v)){
+			return v;
+		}
+		return null;
+	}
 	/**@implements {VMInterface} */
 	class StackVM {
 		/**@arg {InstructionType[]} instructions */
@@ -429,7 +472,17 @@
 						let this_with_push=this_as_any;
 						let fn_ptr=safe_get(this_with_push, 'push');
 						if(!fn_ptr)throw new Error("push_pc requires a stack");
-						fn_ptr.v.call(this, this.instruction_pointer);
+						/**@type {<T, U extends T>(proto:T, o:U)=>T}*/
+						function into_typed(proto, obj) {
+							void proto;
+							return obj;
+						}
+						let ww2=into_typed(StackVM.prototype, this);
+						if(ww2){
+							fn_ptr.v.call(this, ww2.instruction_pointer);
+						} else {
+							throw new Error("Property missing or invalid: instruction_pointer");
+						}
 					}
 				} break;
 				case 'halt'/*Running*/:{
@@ -447,6 +500,10 @@
 					let top=this.peek_at(0);
 					if(!top)throw new Error("Stack underflow when executing dup instruction");
 					this.push(top);
+				} break;
+				case 'cast_object':{
+					let obj=this.pop();
+					if(!obj)throw new Error("Invalid");
 				} break;
 				case 'get'/*Object*/: {
 					let target_name = this.pop();
@@ -2209,7 +2266,7 @@
 			}catch(e){
 				l_log_if(LOG_LEVEL_INFO, "failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
-			let raw_instructions=`this;push,target_obj;get;cast_object,/*TODO*/;push,background_audio;get;push,play;call,int(2);push,then;push,%o;push,%o;call,int(4);drop;global;push,removeEventListener;push,click;this;call,int(4);drop`;
+			let raw_instructions=`this;push,target_obj;get;cast_object,object_index;push,background_audio;get;push,play;call,int(2);push,then;push,%o;push,%o;call,int(4);drop;global;push,removeEventListener;push,click;this;call,int(4);drop`;
 			let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(raw_instructions, [
 				function(){
 					l_log_if(LOG_LEVEL_INFO, 'play success')
