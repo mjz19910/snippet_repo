@@ -1,4 +1,4 @@
-import {VMBoxedValues as ValueBoxes} from "./ValueBoxes";
-import {VMPrimitiveValues as Primitives} from "./Primitives";
+import ValueBoxes from "./ValueBoxes";
+import {Primitives as Primitives} from "./Primitives";
 
 export type Boxed = ValueBoxes | Primitives | null;

@@ -4,4 +4,5 @@ import {BoxesWithValue} from "./BoxesWithValue";
 // --- VM Value (types) ---
 
 
-export type VMBoxedValues = BoxesWithValue | BoxesWithoutValue;
+type ValueBoxes = BoxesWithValue | BoxesWithoutValue;
+export default ValueBoxes;
