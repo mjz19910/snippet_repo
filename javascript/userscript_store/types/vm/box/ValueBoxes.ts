@@ -7,7 +7,7 @@ import {GlobalThisBox} from "./GlobalThisBox";
 import {InstanceBoxes} from "./InstanceBoxes";
 import {ObjectBoxes} from "./ObjectBoxes";
 import {PromiseBox} from "./PromiseBox";
-import {PromiseTypeBoxes} from "../PromiseTypeBoxes";
+import {PromiseTypeBoxes} from "./PromiseTypeBoxes";
 import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
 

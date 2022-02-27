@@ -1,5 +1,5 @@
 import {VoidPromiseBox} from "./VoidPromiseBox";
-import {PromiseBox} from "./box/PromiseBox";
+import {PromiseBox} from "./PromiseBox";
 
 
 export type PromiseTypeBoxes = VoidPromiseBox | PromiseBox;
