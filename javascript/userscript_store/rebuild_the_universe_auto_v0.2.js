@@ -24,6 +24,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 import {FunctionBox} from "types/vm/box/FunctionBox.js";
 import {IndexedFnBox} from "types/vm/box/IndexedFunctionBox.js";
 import {NewableFunctionBox} from "types/vm/box/NewableFunctionBox.js";
+import {NodeBox} from "types/vm/box/NodeBox.js";
 import {PromiseBox} from "types/vm/box/PromiseBox.js";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
@@ -60,13 +61,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	/**@typedef {import("types/vm/box/mod.js").IBox} IBox */
-	/**@typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionTypeV */
-	/**@typedef {IndexedFnBox} VMIndexedCallableValue */
-
-
-	/**@typedef {CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor */
-	/**@implements {VMBoxedCSSStyleSheetConstructor} */
+	/**@implements {CSSStyleSheetConstructorBox} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
@@ -104,6 +99,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			this.value=value;
 		}
 	}
+	/**@typedef {import("types/vm/box/mod.js").IBox} IBox */
 	/**@implements {PromiseBox} */
 	class PromiseBoxImpl {
 		/**@type {"promise"} */
@@ -380,7 +376,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 					throw new Error("TODO");
 				} break;
 				case 'callable_index':{
-					/**@type {(v:any)=>v is VMIndexedCallableValueRaw} */
+					/**@type {(v:any)=>v is IndexAccessFunction} */
 					function can_cast_indexed(obj) {
 						if(obj === null){
 							return false;
@@ -388,14 +384,14 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 						void obj;
 						return true;
 					}
-					/**@type {(v:any)=>VMIndexedCallableValueRaw|null} */
+					/**@type {(v:any)=>IndexAccessFunction|null} */
 					function as_indexed(obj){
 						if(can_cast_indexed(obj)){
 							return obj;
 						}
 						return null;
 					}
-					/**@type {VMIndexedCallableValueRaw|null} */
+					/**@type {IndexAccessFunction|null} */
 					let unboxed_obj=null;
 					if(obj.type === 'object_box'){
 						throw new Error("TODO");
@@ -408,8 +404,6 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			}
 		}
 	}
-	/**@typedef {IStackVMBox} IStackVMBox */
-	/**@implements {IStackVMBox} */
 	class IStackVMBoxImpl {
 		/**@type {"custom_box"} */
 		type="custom_box";
@@ -424,9 +418,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			this.value = value;
 		}
 	}
-	/**@typedef {WindowBox} VMBoxedWindow */
-	/**@implements {VMBoxedWindow} */
-	class VMBoxedWindowR {
+	class WindowBoxImpl {
 		/**@type {"object_box"} */
 		type="object_box";
 		/**@type {"Window"} */
@@ -440,11 +432,11 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			this.value = value;
 		}
 	}
-	/**@typedef {ObjectBox} VMBoxedObject */
-	/**@implements {VMBoxedObject} */
-	class VMBoxedObjectR {
+	class ObjectBoxImpl {
 		/**@type {"object_box"} */
 		type="object_box";
+		/**@type {""} */
+		extension="";
 		inner_type=null;
 		/**@arg {'function'} _a */
 		get_matching_typeof(_a){
@@ -498,8 +490,6 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		}
 		return null;
 	}
-	/**@typedef {VMIndexedValue} VMIndexedObjectValue */
-	/**@implements {VMIndexedObjectValue} */
 	class VMIndexedObjectValueR {
 		/**@type {"object_index"} */
 		type= "object_index";
@@ -525,7 +515,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			return null;
 		}
 	}
-	/**@typedef {VMIndexed<VMCallableValue>} VMIndexedCallableValueRaw */
+	/**@typedef {import("types/vm/index_access/mod.js").IndexAccess<import("types/vm/Function.js").Function>} IndexAccessFunction */
 	/**@implements {VMIndexedCallableValue} */
 	class VMIndexedCallableValueR extends BoxBase {
 		/**@type {"object_box"} */
@@ -742,7 +732,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 					// it to use globalThis...
 				case 'global'/*Special*/:{
 					console.log('VM: global push');
-					this.push(new VMBoxedWindowR(window));
+					this.push(new WindowBoxImpl(window));
 				} break;
 				case 'call'/*Call*/: {
 					// TODO: Fix the other code to use the call handling from
@@ -828,14 +818,13 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		/**@arg {Event} event */
 		handleEvent(event) {
 			this.reset();
-			this.run(new VMBoxedObjectR(event));
+			this.run(new ObjectBoxImpl(event));
 		}
 	}
-	/**@implements {IStackVM} */
 	class DomBuilderVM {
 		/**@type {IBox} */
 		return_value;
-		/**@arg {InstructionTypeV[]} instructions */
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
 			this.instructions=instructions;
 			this.instruction_pointer=0;
@@ -845,7 +834,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			 */
 			this.stack=[];
 			/**
-			 * @type {[IBox[], InstructionTypeV[]][]}
+			 * @type {[IBox[], InstructionType[]][]}
 			 */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
@@ -916,7 +905,9 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 					let child_to_append=this.pop();
 					if(typeof child_to_append!='object')throw 1;
 					if(typeof target!='object')throw 1;
-					if(this.can_use_box(target) && this.can_use_box(child_to_append)){
+					if(target === null)throw 1;
+					if(child_to_append === null)throw 1;
+					if(this.can_use_box(target) && this.can_use_box(child_to_append)) {
 						if(child_to_append.from !== 'create'){
 							console.warn('Are you sure you want to move elements around? child_to_append was not an element you created', child_to_append);
 						}
@@ -926,6 +917,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 							console.assert(false, 'box has no value');
 						}
 					} else {
+						target;
 						throw new Error("Invalid VMBoxedDomValue");
 					}
 					l_log_if(LOG_LEVEL_INFO, 'append to dom', [target, child_to_append]);
@@ -963,16 +955,18 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 				} break;
 			}
 		}
-		/**@typedef {NodeBox} VMBoxedDomValue */
 		/**
-		 * @param {VMValue} box
-		 * @returns {box is VMBoxedDomValue}
+		 * @param {IBox} box
+		 * @returns {box is NodeBox}
 		 */
 		can_use_box(box){
-			return typeof box=='object' && box!==null && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
+			if(typeof box == 'object' && box !== null) {
+				if(box.type === 'dom_value')return true;
+			}
+			return false;
 		}
 		/**
-		 * @param {VMValue} box
+		 * @param {IBox} box
 		 */
 		verify_dom_box(box){
 			if(typeof box!='object')throw new Error("invalid Box (not an object)");
@@ -998,7 +992,8 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 						let exec_top=this.exec_stack.pop();
 						if(!exec_top)throw 1;
 						[this.stack, this.instructions]=exec_top;
-						let base_ptr=this.stack.pop();
+						// let base_ptr=...
+						this.stack.pop();
 						let instruction_ptr=this.stack.pop();
 						if(instruction_ptr===void 0)throw new Error("Stack underflow");
 						if(typeof instruction_ptr!='number')throw new Error("Invalid");
