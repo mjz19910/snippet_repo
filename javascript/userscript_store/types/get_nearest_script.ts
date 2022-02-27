@@ -13,23 +13,13 @@ export function get_nearest_script() {
 	if(!script_ghost)
 		return null;
 	if(has_reg_id(script_ghost))
-		if(script_ghost && weak_scripts[script_ghost.reg_id - 1]) {
-			let reg = weak_scripts[script_ghost.reg_id - 1];
-			if(reg && reg.ref.deref()) {
-				return reg.ref.deref();
-			} else if(document.currentScript === null && !is_in_ignored_from_src_fn) {
-				debugger;
-			}
-		}
+		
 	if(cur_script === void 0 && !is_in_userscript && !is_in_userscript_fn && !is_in_ignored_from_src_fn) {
 		debugger;
 	}
 	script_ghost = cur_event_fns.at(-1);
 	if(script_ghost)
-		if(has_reg_id(script_ghost))
-			if(weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.()) {
-				return weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.();
-			};
+		if(has_reg_id(script_ghost)){}
 	let doc_script = document.currentScript;
 	if(doc_script === null) {
 		return null;

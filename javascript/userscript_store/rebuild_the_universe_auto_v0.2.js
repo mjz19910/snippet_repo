@@ -1185,7 +1185,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			this.list=[];
 			this.attached=false;
 			this.end_symbol=Symbol(void 0);
-			/**@type {import("./final/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
+			/**@type {import("./final/types/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
 			this.document_write=null;
 			this.attached_document=null;
 			this.document_write_proxy=null;
@@ -2464,7 +2464,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			await node.start_async(new AsyncTimeoutTarget);
 		}
 	}
-	/**@typedef {import("types/AutoBuy.js").default} IAutoBuy */
+	/**@typedef {import("types/IAutoBuy.js").default} IAutoBuy */
 	/**@implements {IAutoBuy} */
 	class AutoBuy {
 		async_compress(){

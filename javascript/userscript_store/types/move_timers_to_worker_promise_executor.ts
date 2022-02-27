@@ -1,11 +1,11 @@
-import {TimerApi} from "./TimerApi";
-import {UniqueIdGenerator} from "./UniqueIdGenerator";
-import {PromiseExecutorHandle} from "./PromiseExecutorHandle";
-import {worker_code_function} from "./worker_code_function";
-import {WorkerState} from "./WorkerState";
-import {Timer} from "./Timer";
-import {do_worker_verify} from "./types/do_worker_verify";
-import {WorkerDestroyMessage, l_log_if, LOG_LEVEL_WARN, TIMER_SINGLE, TIMER_REPEATING} from "./rebuild_the_universe_auto_typed_v0.2";
+import {TimerApi} from "TimerApi";
+import {UniqueIdGenerator} from "UniqueIdGenerator";
+import {worker_code_function} from "worker_code_function";
+import {WorkerState} from "WorkerState";
+import {Timer} from "Timer";
+import {do_worker_verify} from "types/do_worker_verify";
+import {WorkerDestroyMessage, l_log_if, LOG_LEVEL_WARN, TIMER_SINGLE, TIMER_REPEATING} from "../rebuild_the_universe_auto_typed_v0.2";
+import {PromiseExecutorHandle} from "final/rebuild_the_universe_auto_v0.1";
 
 export function move_timers_to_worker_promise_executor(
 	executor_accept: (arg0: WorkerState | null) => void,

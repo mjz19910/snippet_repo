@@ -1,11 +1,11 @@
-import Box from "./types/vm/box/Box";
-import IAutoBuy from "types/AutoBuy";
-import {AutoBuyState} from "./types/AutoBuyState";
-import {DomValueBox} from "./types/DomValueBox";
-import {DomBuilderVM} from "./types/DomBuilderVM";
-import {DataLoader} from "./types/DataLoader";
-import {AsyncNodeRoot, MulCompression, debug_id_syms, AUDIO_ELEMENT_VOLUME, is_in_ignored_from_src_fn, SimpleStackVMParser, EventHandlerVMDispatch, LOG_LEVEL_VERBOSE, l_log_if, EventHandlerDispatch, array_sample_end, lightreset_inject, specialclick_inject, AsyncTimeoutNode, AsyncTimeoutTarget, TimeoutTarget} from "./rebuild_the_universe_auto_typed_v0.2";
-import {do_auto_unit_promote} from "./types/do_auto_unit_promote";
+import Box from "./vm/box/Box";
+import IAutoBuy from "types/IAutoBuy";
+import {AutoBuyState} from "./AutoBuyState";
+import {DomValueBox} from "./DomValueBox";
+import {DomBuilderVM} from "./DomBuilderVM";
+import {DataLoader} from "./DataLoader";
+import {AsyncNodeRoot, MulCompression, debug_id_syms, AUDIO_ELEMENT_VOLUME, is_in_ignored_from_src_fn, SimpleStackVMParser, EventHandlerVMDispatch, LOG_LEVEL_VERBOSE, l_log_if, EventHandlerDispatch, array_sample_end, lightreset_inject, specialclick_inject, AsyncTimeoutNode, AsyncTimeoutTarget, TimeoutTarget} from "../rebuild_the_universe_auto_typed_v0.2";
+import {do_auto_unit_promote} from "./do_auto_unit_promote";
 
 export class AutoBuy implements IAutoBuy {
 	state_history_arr: any;

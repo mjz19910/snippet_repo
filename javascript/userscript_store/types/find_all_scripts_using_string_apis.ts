@@ -1,8 +1,10 @@
 import {ScriptStateHost} from "../ScriptStateHost";
-import {is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn, cur_event_fns} from "../rebuild_the_universe_auto_typed_v0.2";
+import {is_in_userscript_fn, cur_event_fns} from "../rebuild_the_universe_auto_typed_v0.2";
 import {get_nearest_script} from "./get_nearest_script";
+export var is_in_userscript:boolean=false;
+export var is_in_ignored_from_src_fn:boolean=false;
 
-export function find_all_scripts_using_string_apis(): [typeof scripts_weak_arr, typeof register_obj_with_registry] {
+export function find_all_scripts_using_string_apis(): CallableFunction[] {
 	let scripts = new WeakSet;
 	let scripts_holders = [];
 	type TokenPtr = {
