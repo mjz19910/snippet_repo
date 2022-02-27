@@ -1,4 +1,3 @@
-import {Box} from "./mod";
 import {InstructionType} from "../instruction/mod";
 import {ArrayBox} from "./ArrayBox";
 

@@ -1,4 +1,4 @@
-import {Box} from "./box/mod";
+import {Box} from "./mod";
 
 export class NodeBox extends Box<Node> {
 	type: "dom_value" = "dom_value";

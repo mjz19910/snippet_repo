@@ -1,4 +1,4 @@
-import {Box} from "./box/mod";
+import {Box} from "./mod";
 
 export class ObjectBox extends Box<{}> {
 	type: "object_box" = "object_box";
