@@ -1,6 +1,6 @@
 import {ArrayBoxes} from "./box/ArrayBoxes";
 import {BoxesWithValue} from "./box/BoxesWithValue";
-import {InstanceBoxes} from "./InstanceBoxes";
+import {InstanceBoxes} from "./box/InstanceBoxes";
 import {ObjectBoxes as ObjectBoxes} from "./ObjectBoxes";
 import {VoidBox} from "./VoidBox";
 

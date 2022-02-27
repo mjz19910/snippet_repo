@@ -1,7 +1,7 @@
 import {IndexedFnRaw as IndexedFnRaw} from "../index_access/IndexedFnRaw";
-import {IBoxImpl} from "./mod";
+import {Box} from "./mod";
 
-export class IndexedFnBox extends IBoxImpl<IndexedFnRaw> {
+export class IndexedFnBox extends Box<IndexedFnRaw> {
 	type: "object_box" = "object_box";
 	extension: 'function' = 'function';
 }

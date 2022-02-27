@@ -1,7 +1,7 @@
-import {IBoxImpl} from "./box/mod";
+import {Box} from "./box/mod";
 import {InstructionType} from "./InstructionType";
 
-export class InstructionTypeArrayBox extends IBoxImpl<IBoxImpl<InstructionType>[]> {
+export class InstructionTypeArrayBox extends Box<Box<InstructionType>[]> {
 	type: "array_box" = "array_box";
 	item_type: "instruction" = "instruction";
 	mapped_value: InstructionType[];

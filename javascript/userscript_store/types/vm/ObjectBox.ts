@@ -1,6 +1,6 @@
-import {IBoxImpl} from "./box/mod";
+import {Box} from "./box/mod";
 
-export class ObjectBox extends IBoxImpl<{}> {
+export class ObjectBox extends Box<{}> {
 	type: "object_box" = "object_box";
 	extension: 'null' = 'null';
 	inner_type: null = null;

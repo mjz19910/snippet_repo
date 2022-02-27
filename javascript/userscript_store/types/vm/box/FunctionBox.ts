@@ -1,7 +1,7 @@
 import {Function as VMFunction} from "../vm";
-import {IBoxImpl} from "./mod";
+import {Box} from "./mod";
 
-export class FunctionBox extends IBoxImpl<VMFunction> {
+export class FunctionBox extends Box<VMFunction> {
 	type: "function_box" = "function_box";
 	return_type: null = null;
 }

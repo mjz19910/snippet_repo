@@ -1,8 +1,8 @@
 import {Box as Box} from "./Box";
-import {IBoxImpl} from "../box/mod";
+import {Box} from "../box/mod";
 
 
-export class ArrayBox extends IBoxImpl<Box[]> {
+export class ArrayBox extends Box<Box[]> {
 	type: "array_box" = "array_box";
 	item_type: "value" = "value";
 }

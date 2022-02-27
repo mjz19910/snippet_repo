@@ -7,7 +7,7 @@ import {FunctionReturnBoxes} from "./FunctionReturnBoxes";
 import {PromiseTypeBoxes} from "../PromiseTypeBoxes";
 import {ArgumentTypeBoxes} from "./ArgumentTypeBoxes";
 import {ConstructorBoxes} from "./ConstructorBoxes";
-import {InstanceBoxes} from "../InstanceBoxes";
+import {InstanceBoxes} from "./InstanceBoxes";
 import {ArrayBoxes} from "./ArrayBoxes";
 
 export type BoxesWithValue =
