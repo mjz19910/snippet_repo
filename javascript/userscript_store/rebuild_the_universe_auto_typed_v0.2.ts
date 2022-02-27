@@ -1,4 +1,3 @@
-import {RecursivePartial} from "./types/RecursivePartial";
 import InstructionTypeBox from "./types/vm/box/InstructionTypeBox";
 import {InstructionType} from "./types/vm/instruction/mod";
 import Box from "./types/vm/box/Box";
@@ -12,178 +11,76 @@ import {SymbolRef} from "./SymbolRef";
 import {next_debug_id} from "./types/next_debug_id";
 import {AbstractBox} from "./types/AbstractBox";
 import {AutoBuy} from "./AutoBuy";
+import {ProxyHandlers} from "./types/ProxyHandlers";
+import {TimerApi} from "./TimerApi";
+import {ScriptStateHost} from "./ScriptStateHost";
+import {find_all_scripts_using_string_apis} from "./types/find_all_scripts_using_string_apis";
+import {DocumentWriteList} from "./types/DocumentWriteList";
+import {UniqueIdGenerator} from "./UniqueIdGenerator";
+import {move_timers_to_worker_promise_executor} from "./move_timers_to_worker_promise_executor";
 
-class RemoteWorkerState {
-
-}
-
-/* eslint-disable no-undef,no-lone-blocks,no-eval */
-declare global {
-	export interface Window {
-		proxy_set: any[];
-		atomepersecond: number;
-		//spell:words totalAtome lightreset totalAchi _targets_achi
-		totalAtome: number;
-		prestige: number;
-		is_in_ignored_fn(): any;
-		__testing__: false;
-		bonusAll(): void;
-		specialclick(index: number): void;
-		lightreset(): void;
-		timeplayed: number;
-		totalAchi(): number;
-		_targets_achi: any[];
-		arUnit: any[];
-		Get_Unit_Type(v: any): any;
-		getUnitPromoCost(v: any): number;
-		Find_ToNext(v: number): number;
-		_targets: any[];
-		mainCalc(v: any): void;
-		tonext(v: number): void;
-		specialsbought: number;
-		doc: Document;
-		rounding(v: number, x: any, y: any): string;
-		atomsinvest: number;
-		calcDiff(v: number): number;
-		noti: boolean;
-		gritter: any;
-		toTitleCase(v: string): string;
-		cint_arr: (string | number[])[];
-		//spell:words adsbygoogle
-		adsbygoogle: {
-			op: any,
-			push(v: number): void;
-		};
-		plurials(v: string): string;
-		arrayNames: string[];
-		updateprogress(v: any): void;
-		$: JQueryStatic;
-		seeUnit(v: number): any;
-		checkspec(): void;
-		achiSpec(): void;
-		Pace: {
-			bar: {
-				progress: number,
-				finish: Function;
-			}
-		};
-		_SM_Data: any;
-		on_on_timers_moved_first: boolean;
-		da: any[];
-		lightreset(): void;
-		specialclick(that: any): void;
-		secondinterval?: number;
-		atomsaccu: number;
-		calcPres(): number;
-		g_auto_buy: IAutoBuy;
-		g_proxy_state: {hand: {stack_overflow_check: () => any; count_arr: any[];};};
-		remoteSetTimeout: (handler: TimerHandler, timeout?: number, ...target_args: any[]) => number;
-		remoteSetInterval: (handler: TimerHandler, timeout?: number, ...target_args: any[]) => number;
-		remoteClearTimeout: (id?: number) => void;
-		remoteClearInterval: (id?: number) => void;
-		["g_worker_state"]?: WorkerState;
-		mute():void;
-		g_mut_observers:any[];
-		g_cs?:any[];
-		g_page_content:{
-			request_content:string,
-			cur:string
-		};
-		g_do_load:((promise_accept: (value: any) => void)=>void) | undefined;
-	}
-	var window: Window & typeof globalThis;
-	export var Window: {
-		prototype: Window;
-		new(): Window;
-	};
-
-	export interface ErrorConstructor {
-		new(message?: string): Error;
-		(message?: string): Error;
-		readonly prototype: Error;
-		captureStackTrace(obj:{stack:string}, constructorOpt?:{}):void;
-	}
-	module globalThis {
-		var remote_worker_state: RemoteWorkerState;
-	}
-	interface HTMLDivElement {
-		style: CSSStyleDeclaration;
-	}
-	interface Document {
-		adoptedStyleSheets: CSSStyleSheet[];
-
-		// don't make an error, just do nothing
-		stop(): void;
-	}
-	interface CSSStyleSheet extends StyleSheet {
-		replace(string: string): Promise<CSSStyleSheet>
-	}
-	export namespace WebAssembly {
-		var Function: new (types: {parameters: string[]; results: string[];}, arg1: (...v: any[]) => any) => any;
-	}
-}
 export {};
 'use strict';
-const TIMER_SINGLE = 1;
-const TIMER_REPEATING = 2;
-const TIMER_TAG_COUNT = 3;
+export const TIMER_SINGLE = 1;
+export const TIMER_REPEATING = 2;
+export const TIMER_TAG_COUNT = 3;
 export const AUDIO_ELEMENT_VOLUME = 0.58;
 const cint_arr: string[] = [];
 //spell:disable
 const WorkerAsyncMessage = 1;
 type WorkerAsyncMessageTy = typeof WorkerAsyncMessage;
-const TimeoutFireS = 101;
+export const TimeoutFireS = 101;
 type TimeoutFireSTy = typeof TimeoutFireS;
 const TimeoutFireR = 102;
 type TimeoutFireRTy = typeof TimeoutFireR;
 const WorkerUpdateMessageHandler = 201;
-type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateMessageHandler;
-const TimeoutMessageR = 202;
-type TimeoutMessageRTy = typeof TimeoutMessageR;
-const TimeoutSetS = 203;
-type TimeoutSetSTy = typeof TimeoutSetS;
-const TimeoutSetR = 204;
-type TimeoutSetRTy = typeof TimeoutSetR;
-const TimeoutClearS = 205;
-type TimeoutClearSTy = typeof TimeoutClearS;
-const TimeoutClearR = 206;
-type TimeoutClearRTy = typeof TimeoutClearR;
+export type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateMessageHandler;
+export const TimeoutMessageR = 202;
+export type TimeoutMessageRTy = typeof TimeoutMessageR;
+export const TimeoutSetS = 203;
+export type TimeoutSetSTy = typeof TimeoutSetS;
+export const TimeoutSetR = 204;
+export type TimeoutSetRTy = typeof TimeoutSetR;
+export const TimeoutClearS = 205;
+export type TimeoutClearSTy = typeof TimeoutClearS;
+export const TimeoutClearR = 206;
+export type TimeoutClearRTy = typeof TimeoutClearR;
 const TimeoutClearA = 207;
 type TimeoutClearATy = typeof TimeoutClearA;
-const WorkerDestroyMessage = 300;
+export const WorkerDestroyMessage = 300;
 type WorkerDestroyMessageTy = typeof WorkerDestroyMessage;
-const WorkerUpdateMessageHandlerReply = 301;
+export const WorkerUpdateMessageHandlerReply = 301;
 type WorkerUpdateMessageHandlerReplyTy = typeof WorkerUpdateMessageHandlerReply;
-const WorkerReadyReply = 302;
+export const WorkerReadyReply = 302;
 type WorkerReadyReplyTy = typeof WorkerReadyReply;
-const ReplySetSingle = 303;
+export const ReplySetSingle = 303;
 type ReplySetSingleTy = typeof ReplySetSingle;
-const ReplySetRepeating = 304;
+export const ReplySetRepeating = 304;
 type ReplySetRepeatingTy = typeof ReplySetRepeating;
-const ReplyClearSingle = 305;
+export const ReplyClearSingle = 305;
 type ReplyClearSingleTy = typeof ReplyClearSingle;
-const ReplyClearRepeating = 306;
+export const ReplyClearRepeating = 306;
 type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
 const ReplyClearAny = 307;
 type ReplyClearAnyTy = typeof ReplyClearAny;
-const ReplyMessage1 = 401;
+export const ReplyMessage1 = 401;
 type ReplyMessage1Ty = typeof ReplyMessage1;
-const ReplyMessage2 = 402;
+export const ReplyMessage2 = 402;
 type ReplyMessage2Ty = typeof ReplyMessage2;
-const ReplyFromWorker = 500;
+export const ReplyFromWorker = 500;
 type ReplyFromWorkerTy = typeof ReplyFromWorker;
 const ReplyToWorker = 600;
-type ReplyToWorkerTy = typeof ReplyToWorker;
+export type ReplyToWorkerTy = typeof ReplyToWorker;
 const TimeoutSingleReply = 700;
-type TimeoutSingleReplyTy = typeof TimeoutSingleReply;
+export type TimeoutSingleReplyTy = typeof TimeoutSingleReply;
 const TimeoutRepeatingReply = 701;
-type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;
-const TimeoutSetTypes = 1001;
-type TimeoutSetTypesTy = typeof TimeoutSetTypes;
-const TimeoutSetStringS = "setTimeout";
-const TimeoutSetStringR = "setInterval";
-const TimeoutClearStringS = "clearTimeout";
-const TimeoutClearStringR = "clearInterval";
+export type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;
+export const TimeoutSetTypes = 1001;
+export type TimeoutSetTypesTy = typeof TimeoutSetTypes;
+export const TimeoutSetStringS = "setTimeout";
+export const TimeoutSetStringR = "setInterval";
+export const TimeoutClearStringS = "clearTimeout";
+export const TimeoutClearStringR = "clearInterval";
 export type WorkerReplyTypesTy = {
 	single: TimeoutSingleReplyTy;
 	repeating: TimeoutRepeatingReplyTy;
@@ -224,11 +121,11 @@ export type TimerMessageTypesTy = {
 	fire: TimeoutFireInfoTy;
 	worker: TimeoutWorkerTypesTy;
 };
-type TimeoutSetStringsTy = {
+export type TimeoutSetStringsTy = {
 	single: typeof TimeoutSetStringS;
 	repeating: typeof TimeoutSetStringR;
 };
-type TimeoutClearStringsTy = {
+export type TimeoutClearStringsTy = {
 	single: typeof TimeoutClearStringS;
 	repeating: typeof TimeoutClearStringR;
 };
@@ -239,7 +136,7 @@ type RefVarInfo = {
 	t: number;
 	v: VarRef;
 };
-type RefVarMsg = {
+export type RefVarMsg = {
 	t: number;
 	v: RefVarInfo;
 };
@@ -247,11 +144,11 @@ type NumInfo = {
 	t: number;
 	v: number;
 };
-type NumInfoMsg = {
+export type NumInfoMsg = {
 	t: number;
 	v: NumInfo;
 };
-type NoDataMsg = {
+export type NoDataMsg = {
 	t: number;
 };
 export type LocalOrRemoteIdVarType = {
@@ -288,7 +185,7 @@ class ReplyTypes {
 	set = new ReplySetMessages;
 	clear = new ReplyClearMessages;
 }
-class MakeReplyData {
+export class MakeReplyData {
 	t: number;
 	v: MakeReplyDataType;
 	constructor(reply: number, info: number, from: LocalOrRemoteIdVarType | number, {}) {
@@ -299,7 +196,7 @@ class MakeReplyData {
 		};
 	}
 }
-class TimeoutSetStrings implements TimeoutSetStringsTy {
+export class TimeoutSetStrings implements TimeoutSetStringsTy {
 	single: typeof TimeoutSetStringS = TimeoutSetStringS;
 	repeating: typeof TimeoutSetStringR = TimeoutSetStringR;
 }
@@ -335,829 +232,32 @@ export type ReplyTypesTy = {
 	set: ReplySetMessages;
 	clear: ReplyClearMessages;
 }
-class TimerMessageTypes implements TimerMessageTypesTy {
+export class TimerMessageTypes implements TimerMessageTypesTy {
 	async: WorkerAsyncMessageTy = WorkerAsyncMessage;
 	reply: ReplyTypesTy = new ReplyTypes;
 	fire: TimeoutFireInfoTy = new TimeoutFireInfo;
 	worker: TimeoutWorkerTypesTy = new TimeoutWorkerTypes;
 }
-class TimeoutClearStrings implements TimeoutClearStringsTy {
+export class TimeoutClearStrings implements TimeoutClearStringsTy {
 	single: typeof TimeoutClearStringS = TimeoutClearStringS;
 	repeating: typeof TimeoutClearStringR = TimeoutClearStringR;
 }
-class TimerApi {
-	msg_types = new TimerMessageTypes;
-	set_names = new TimeoutSetStrings;
-	clear_names = new TimeoutClearStrings;
-	handled: number[] = [];
-	to_handle: (NoDataMsg | NumInfoMsg | RefVarMsg)[]
-	constructor() {
-		this.to_handle = [
-			{t: TimeoutMessageR},
-			{t: TimeoutSetS},
-			{t: TimeoutSetR},
-			{t: TimeoutClearS},
-			new MakeReplyData(ReplyFromWorker, WorkerReadyReply, TimeoutMessageR, {}),
-			// TimeoutSetTypeS
-			new MakeReplyData(ReplyFromWorker, ReplySetSingle, {
-				var: 'local_id'
-			}, {}),
-			// TimeoutSetTypeR
-			new MakeReplyData(ReplyFromWorker, ReplySetRepeating, {
-				var: 'local_id'
-			}, {}),
-			// TimeoutClearS
-			new MakeReplyData(ReplyFromWorker, ReplyClearSingle, {
-				var: 'remote_id'
-			}, {}),
-			// TimeoutClearR
-			new MakeReplyData(ReplyFromWorker, ReplyClearRepeating, {
-				var: 'remote_id'
-			}, {})
-		];
-	}
-}
 let g_timer_api = new TimerApi;
-let message_types = g_timer_api.msg_types;
-type ScriptEventTargetType = {
-	fns: any[];
-	addEventListener(fn: (e: any) => void): void;
-	dispatchEvent(ev: {
-		type: string;
-		state: string;
-	}): void;
-};
-class ScriptStateHost {
-	static event_target: ScriptEventTargetType = {
-		fns: [],
-		addEventListener(fn: (e: any) => void) {
-			this.fns.push(fn);
-		},
-		dispatchEvent(ev: {type: string; state: string;}) {
-			let l_fns = this.fns.slice();
-			for(let i = 0;i < l_fns.length;i++) {
-				let fn = l_fns[i];
-				fn(ev);
-			}
-		}
-	}
-}
+export let message_types = g_timer_api.msg_types;
 export let is_in_ignored_from_src_fn = false;
-let is_in_userscript_fn = false;
-let is_in_userscript = true;
-let cur_event_fns: (CallableFunction | NewableFunction)[] = [];
-function find_all_scripts_using_string_apis():
-	[typeof scripts_weak_arr, typeof register_obj_with_registry] {
-	let scripts = new WeakSet;
-	let scripts_holders = [];
-	type TokenPtr = {
-		token: symbol;
-	};
-
-	type TokenType = {
-		key: symbol;
-		ref: WeakRef<TokenPtr>;
-	};
-
-	let scripts_tokens: (TokenType | null)[] = [];
-	type WeakFinalInfo = {
-		key: symbol;
-		id: number;
-		ref: WeakRef<any>;
-	};
-
-	let scripts_weak_arr: (WeakFinalInfo | null)[] = [];
-	let script_registry: FinalizationRegistry<unknown>;
-	let script_id = 1;
-	window.is_in_ignored_fn = function() {
-		return is_in_ignored_from_src_fn;
-	}
-	ScriptStateHost.event_target.addEventListener((e: any) => {
-		is_in_userscript = false;
-	});
-	function type_verify_extract<T>(val: null[] | T[]): val is T[] {
-		return true;
-	}
-	function retype_arr<T>(in_val: null[] | T[]): T[] | null {
-		if(type_verify_extract<T>(in_val)) {
-			return in_val;
-		}
-		return null;
-	}
-	function register_obj_with_registry(obj: any) {
-		let obj_id;
-		let scripts_res: WeakFinalInfo[] = [];
-		for(let i = 0;i < scripts_weak_arr.length;i++) {
-			let elem = scripts_weak_arr[i];
-			if(elem !== null) {
-				scripts_res.push(elem);
-			}
-		}
-		let obj_ref = scripts_weak_arr.find((e: null | {ref: {deref: () => any;};}) => e && e.ref.deref() === obj);
-		if(obj_ref) {
-			obj_id = obj_ref.id;
-			return obj_id;
-		}
-		obj_id = script_id;
-		script_id++;
-		let held_obj = {
-			type: 'held',
-			id: obj_id,
-			key: Symbol(obj_id)
-		};
-		let token_sym = {token: Symbol(-obj_id)};
-		scripts_holders.push(held_obj);
-		scripts_tokens.push({key: held_obj.key, ref: new WeakRef(token_sym)});
-		scripts_weak_arr.push({
-			key: held_obj.key,
-			id: obj_id,
-			ref: new WeakRef(obj)
-		});
-		script_registry.register(obj, held_obj, token_sym);
-		return obj_id;
-	}
-	function replace_cb_with_safe_proxy(args: any[], index: number) {
-		let value = args[index];
-		if(index && args && value instanceof Function) {
-			if(is_in_userscript) {
-				value.is_userscript_fn = true;
-			}
-			if(is_in_userscript_fn) {
-				value.is_userscript_fn = true;
-			}
-			if(document.currentScript) {
-				value.reg_id = register_obj_with_registry(document.currentScript);
-			}
-			args[index] = new Proxy(value, {
-				apply(...a) {
-					let ret;
-					let should_reset = false;
-					cur_event_fns.push(a[0]);
-					let idx = cur_event_fns.indexOf(a[0]);
-					if(a[0].is_userscript_fn) {
-						is_in_ignored_from_src_fn = true;
-						if(is_in_userscript_fn === false) {
-							is_in_userscript_fn = true;
-							should_reset = true;
-						}
-					}
-					try {
-						ret = Reflect.apply(...a);
-					} finally {
-						if(should_reset) {
-							is_in_userscript_fn = false;
-							should_reset = false;
-						}
-						is_in_ignored_from_src_fn = false;
-						delete cur_event_fns[idx];
-					}
-					delete cur_event_fns[idx];
-					return ret;
-				}
-			});
-			args = [];
-			index = -1;
-		}
-		value = null;
-	}
-	EventTarget.prototype.addEventListener = new Proxy(EventTarget.prototype.addEventListener, {
-		apply(...a) {
-			// this will always be EventTarget.prototype.addEventListener (the real one)
-			// let target_fn=a[0];
-			cur_event_fns.push(a[0]);
-			let idx = cur_event_fns.indexOf(a[0]);
-			let target_obj = a[1];
-			let call_args = a[2];
-			replace_cb_with_safe_proxy(call_args, 1);
-			// ignore any calls from this script
-			if(!is_in_userscript) {
-				debugger;
-				console.log(target_obj, call_args);
-			}
-			let ret
-			try {
-				ret = Reflect.apply(...a);
-			} finally {
-				delete cur_event_fns[idx];
-			}
-			delete cur_event_fns[idx];
-			return ret;
-		}
-	});
-	window.requestAnimationFrame = new Proxy(requestAnimationFrame, {
-		apply(...a) {
-			// let target_obj = a[1];
-			let call_args = a[2];
-			replace_cb_with_safe_proxy(call_args, 0);
-			return Reflect.apply(...a);
-		}
-	})
-	window.proxy_set = [];
-	window.proxy_set.push(EventTarget.prototype.addEventListener);
-	Promise.prototype.then = new Proxy(Promise.prototype.then, {
-		apply(...a) {
-			// let target_obj = a[1];
-			let call_args = a[2];
-			replace_cb_with_safe_proxy(call_args, 0);
-			replace_cb_with_safe_proxy(call_args, 1);
-			return Reflect.apply(...a);
-		}
-	});
-	function str_index_of_inject() {
-		let cur_script = get_nearest_script();
-		if(cur_script === void 0) {
-			if(is_in_ignored_from_src_fn) return;
-			if(!is_in_userscript) throw new Error("No");
-			// a userscript is running
-			return;
-		}
-		let had_script = scripts.has(cur_script);
-		if(!had_script) {
-			try {
-				scripts.add(cur_script);
-			} catch(e) {
-				debugger;
-			}
-			let id = register_obj_with_registry(cur_script);
-			console.log('new registry id', id);
-		}
-		if(!had_script) {
-			if(cur_script.src.includes("opentracker")) {
-				cur_script.remove();
-				cur_script = null;
-				throw new Error("No tracking");
-			}
-			console.log(cur_script);
-		}
-		cur_script = null;
-	}
-	String.prototype.indexOf = new Proxy(String.prototype.indexOf, {
-		apply(...a) {
-			str_index_of_inject();
-			return Reflect.apply(...a);
-		}
-	});
-	type CleanupType = {
-		arr_key: any;
-	};
-
-	script_registry = new FinalizationRegistry(function cleanup(held: CleanupType) {
-		let arr_key = held.arr_key;
-		let weak_state_index = scripts_weak_arr.findIndex(e => e && e.key === arr_key);
-		let token_index = scripts_tokens.findIndex(e => e && e.key === arr_key);
-		if(weak_state_index === -1) {
-			console.log('prev gc', held);
-		}
-		let token = null;
-		let weak_state = null;
-		if(token_index > -1) token = scripts_tokens[token_index];
-		if(weak_state_index > -1) weak_state = scripts_weak_arr[weak_state_index];
-		console.log('gc', weak_state_index, token_index, arr_key, token, weak_state);
-		scripts_weak_arr[weak_state_index] = null;
-		scripts_tokens[token_index] = null;
-	});
-	return [scripts_weak_arr, register_obj_with_registry];
-}
+export let is_in_userscript_fn = false;
+export let is_in_userscript = true;
+export let cur_event_fns: (CallableFunction | NewableFunction)[] = [];
 void find_all_scripts_using_string_apis;
-type AnyFunction = CallableFunction | NewableFunction | Function | Object;
-type RegIdFunction = {reg_id: number} & AnyFunction;
-function has_reg_id(v: AnyFunction): v is RegIdFunction {
-	if(v.hasOwnProperty('reg_id')) {
-		return true;
-	}
-	return false;
-}
+export type AnyFunction = CallableFunction | NewableFunction | Function | Object;
+export type RegIdFunction = {reg_id: number} & AnyFunction;
 const [weak_scripts, register_obj_with_registry] = find_all_scripts_using_string_apis();
 void register_obj_with_registry;
-function get_nearest_script() {
-	if(document.currentScript !== null) {
-		return document.currentScript;
-	}
-	let cur_script;
-	while(cur_event_fns.at(-1) === void 0 && cur_event_fns.length > 0) {
-		cur_event_fns.pop();
-	}
-	let script_ghost = cur_event_fns.at(-1);
-	if(!script_ghost) return null;
-	if(has_reg_id(script_ghost))
-		if(script_ghost && weak_scripts[script_ghost.reg_id - 1]) {
-			let reg = weak_scripts[script_ghost.reg_id - 1];
-			if(reg && reg.ref.deref()) {
-				return reg.ref.deref();
-			} else if(document.currentScript === null && !is_in_ignored_from_src_fn) {
-				debugger;
-			}
-		}
-	if(cur_script === void 0 && !is_in_userscript && !is_in_userscript_fn && !is_in_ignored_from_src_fn) {
-		debugger;
-	}
-	script_ghost = cur_event_fns.at(-1);
-	if(script_ghost) if(has_reg_id(script_ghost)) if(weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.()) {
-		return weak_scripts[script_ghost.reg_id - 1]?.ref?.deref?.();
-	};
-	let doc_script = document.currentScript;
-	if(doc_script === null) {
-		return null;
-	} else {
-		return doc_script;
-	}
-}
 type NullableItem<T> = T | null;
-type Nullable2dArray<T> = NullableItem<T[]>[];
-type DocumentWriteFn = (...text: string[]) => void;
+export type Nullable2dArray<T> = NullableItem<T[]>[];
+export type DocumentWriteFn = (...text: string[]) => void;
 
-class DocumentWriteFnProxyHandler {
-	other: DocumentWriteList | null = null;
-	apply(...a: [target: DocumentWriteFn, thisArg: any, argArray: string[]]) {
-		if(this.other) this.other.write(...a);
-	}
-}
-
-class DocumentWriteList {
-	list: Nullable2dArray<string>;
-	attached;
-	end_symbol;
-	constructor() {
-		this.list = [];
-		this.attached = false;
-		this.end_symbol = Symbol(1);
-		this.document_write = null;
-		this.attached_document = null;
-		this.document_write_proxy = null;
-	}
-	document_write: DocumentWriteFn | null;
-	attached_document: Document | null;
-	write(target: DocumentWriteFn, thisArg: any, argArray: string[]) {
-		console.assert(target === this.document_write);
-		console.assert(thisArg === this.attached_document);
-		this.list.push(argArray, null);
-	}
-	document_write_proxy: (DocumentWriteFn | {other: any}) | null;
-	attach_proxy(document: Document) {
-		if(this.attached) {
-			let was_destroyed = this.destroy(true);
-			if(!was_destroyed) {
-				throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
-			}
-		}
-		this.attached_document = document;
-		this.document_write = document.write;
-		let obj = new DocumentWriteFnProxyHandler;
-		obj.other = this;
-		this.document_write_proxy = new Proxy(document.write, obj);
-		document.write = this.document_write_proxy;
-	}
-	destroy(should_try_to_destroy: boolean) {
-		if(this.attached_document && this.document_write_proxy) {
-			console.assert(this.attached_document.write === this.document_write_proxy);
-			if(this.attached_document.write !== this.document_write_proxy) {
-				if(should_try_to_destroy) {
-					return false;
-				}
-				throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
-			}
-			if(this.document_write) this.attached_document.write = this.document_write;
-		}
-		if(this.document_write_proxy) {
-			this.document_write_proxy = null;
-		}
-		if(this.document_write) {
-			this.document_write = null;
-		}
-		if(this.attached_document) {
-			this.attached_document = null;
-		}
-		if(should_try_to_destroy) {
-			return true;
-		}
-	}
-}
-class UniqueIdGenerator {
-	m_current;
-	constructor() {
-		this.m_current = -1;
-	}
-	set_current(current_value: number) {
-		this.m_current = current_value;
-	}
-	current() {
-		return this.m_current;
-	}
-	next() {
-		return this.m_current++;
-	}
-}
-class PromiseExecutorHandle {
-	m_closed;
-	destroyed;
-	m_accept: ((arg0: WorkerState | null) => void) | null;
-	m_reject;
-	constructor(accept: (arg0: WorkerState | null) => void, reject: any) {
-		this.m_closed = false;
-		this.destroyed = false;
-		this.m_accept = accept;
-		this.m_reject = reject;
-	}
-	accept(value: WorkerState | null) {
-		if(this.destroyed) throw new Error("accept called on destroyed PromiseExecutorHandle");
-		let accept = this.m_accept;
-		if(accept) accept(value);
-		this.close();
-	}
-	reject(error: Error) {
-		if(this.destroyed) throw new Error("accept called on destroyed PromiseExecutorHandle");
-		let reject = this.m_reject;
-		reject(error);
-		this.close();
-	}
-	closed() {
-		return this.m_closed;
-	}
-	close() {
-		this.m_closed = true;
-		this.m_accept = null;
-		this.m_reject = null;
-	}
-	destroy() {
-		this.destroyed = true;
-	}
-}
-type WorkerVerifyCallback = {
-	(verify_obj: WorkerVerifyType): void;
-};
-
-function worker_code_function(verify_callback: WorkerVerifyCallback) {
-	const TIMER_SINGLE = 1;
-	const TIMER_REPEATING = 2;
-	const TIMER_TAG_COUNT = 3;
-	if(verify_callback) {
-		verify_callback({
-			TIMER_SINGLE,
-			TIMER_REPEATING,
-			TIMER_TAG_COUNT
-		});
-	}
-	class RemoteTimerApi {
-		msg_types;
-		constructor(msg_types: RecursivePartial<TimerApi['msg_types']>) {
-			this.msg_types = msg_types;
-		}
-		pre_msg_types: {
-			worker: {
-				set_types: TimeoutSetTypesTy
-			}
-		} = {
-				worker: {
-					set_types: TimeoutSetTypes
-				}
-			}
-		set_names: TimeoutSetStringsTy = {
-			single: TimeoutSetStringS,
-			repeating: TimeoutSetStringR
-		}
-		clear_names: TimeoutClearStringsTy = {
-			single: TimeoutClearStringS,
-			repeating: TimeoutClearStringR
-		}
-	}
-	class RemoteWorkerState {
-		m_timer: RemoteTimer | null;
-		unique_script_id;
-		constructor() {
-			this.m_timer = null;
-			this.unique_script_id = 1;
-		}
-		set_timer(timer: RemoteTimer) {
-			this.m_timer = timer;
-		}
-		set(tag: TimerTag, remote_id: number, timeout: number) {
-			if(this.m_timer) return this.m_timer.set(tag, remote_id, timeout);
-		}
-		clear(msg: MessageTimeoutClearS | MessageTimeoutClearR) {
-			if(this.m_timer) return this.m_timer.do_clear(msg);
-		}
-	}
-	function nop_fn() {};
-	function fire_timer(timer: RemoteTimer, remote_id: number) {
-		timer.fire(remote_id);
-	}
-	type NL<T> = T | null;
-	let remote_api_info_instance: NL<TimerApi> = null;//new RemoteTimerApi;
-	let message_types: NL<TimerApi['msg_types']> = null;//remote_api_info_instance.msg_types;
-	let reply_message_types: NL<TimerApi['msg_types']['reply']> = null;//message_types.reply;
-	let fire_pause: any[] = [];
-	class RemoteTimer {
-		m_remote_id_to_state_map;
-		m_api_info: NL<TimerApi>;
-		base_id;
-		constructor(api_info: NL<TimerApi>) {
-			this.m_remote_id_to_state_map = new Map;
-			if(!api_info) {
-				this.m_api_info = null;
-				return;
-			}
-			/**@type {RemoteTimerApi} */
-			this.m_api_info = api_info;
-			this.base_id = globalThis[this.m_api_info.set_names.single](nop_fn);
-			globalThis[this.m_api_info.clear_names.single](this.base_id);
-		}
-		fire(remote_id: number) {
-			let local_state = this.m_remote_id_to_state_map.get(remote_id);
-			if(!local_state) return;
-			this.validate_state(local_state, remote_id);
-			if(!local_state.active) {
-				console.log('fire inactive', remote_id, local_state);
-				return;
-			};
-			let tag = local_state.type;
-			let msg_id;
-			let reply_id!: TimeoutSingleReplyTy | TimeoutRepeatingReplyTy;
-			if(!this.m_api_info) return;
-			switch(tag) {
-				case TIMER_SINGLE: {
-					msg_id = this.m_api_info.msg_types.fire.single;
-					reply_id = this.m_api_info.msg_types.worker.reply.fire.single;
-				} break;
-				case TIMER_REPEATING: {
-					msg_id = this.m_api_info.msg_types.fire.repeating;
-					reply_id = this.m_api_info.msg_types.worker.reply.fire.repeating;
-				} break;
-			}
-			if(!msg_id) {
-				console.assert(false, 'Unknown tag in RemoteWorker.fire', tag);
-				console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o', TIMER_SINGLE, TIMER_REPEATING, tag);
-				return;
-			}
-			if(fire_pause.includes(remote_id)) {
-				return;
-			} else {
-				fire_pause.push(remote_id);
-			}
-			console.log('worker fire', msg_id, remote_id);
-			postMessage({
-				t: msg_id,
-				v: {
-					t: reply_id,
-					v: remote_id
-				}
-			});
-		}
-		set(tag: TimerTag, remote_id: number, timeout: number) {
-			// debugger;
-			this.verify_tag(tag);
-			let obj = {
-				active: true,
-				local_id: -1,
-				type: tag
-			};
-			this.m_remote_id_to_state_map.set(remote_id, obj);
-			/**@type {typeof this.m_api_info.set_names.single | typeof this.m_api_info.set_names.repeating} */
-			let api_name;
-			if(!this.m_api_info) return;
-			switch(tag) {
-				case TIMER_SINGLE: api_name = this.m_api_info.set_names.single; break;
-				case TIMER_REPEATING: api_name = this.m_api_info.set_names.repeating; break;
-			}
-			if(!api_name) return;
-			obj.local_id = globalThis[api_name](fire_timer, timeout, this, remote_id);
-			return obj.local_id;
-		}
-		// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
-		verify_tag(tag: TimerTag) {
-			if(!this.validate_tag(tag)) {
-				throw new Error("tag verification failed in RemoteTimer");
-			}
-		}
-		verify_state(state: {local_id: number; type: TimerTag;}, remote_id: number) {
-			if(!this.validate_state(state, remote_id)) {
-				console.info("Removed invalid local_state");
-				if(!this.m_api_info) return;
-				globalThis[this.m_api_info.clear_names.single](state.local_id);
-				globalThis[this.m_api_info.clear_names.repeating](state.local_id);
-				this.m_remote_id_to_state_map.delete(remote_id);
-				throw new Error("Tag verification failed in RemoteWorker");
-			}
-		}
-		validate_tag(tag: TimerTag) {
-			if(tag < TIMER_SINGLE || tag >= TIMER_TAG_COUNT) {
-				console.assert(false, "Assertion failed in RemoteTimer.validate_tag: tag=%o is out of range");
-				console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", tag, TIMER_SINGLE, TIMER_TAG_COUNT);
-				return false;
-			}
-			return true;
-		}
-		validate_state(state: {local_id?: number; type: TimerTag;}, _remote_id: number) {
-			return this.validate_tag(state.type);
-		}
-		clear(remote_id: number): number | null | undefined {
-			if(this.m_remote_id_to_state_map.has(remote_id)) {
-				let state = this.m_remote_id_to_state_map.get(remote_id);
-				this.verify_state(state, remote_id);
-				if(!this.m_api_info) return;
-				if(state.type === TIMER_SINGLE) {
-					globalThis[this.m_api_info.clear_names.single](state.local_id);
-				}
-				if(state.type === TIMER_REPEATING) {
-					globalThis[this.m_api_info.clear_names.repeating](state.local_id);
-				}
-				state.active = false;
-				this.m_remote_id_to_state_map.delete(remote_id);
-				return state.local_id;
-			}
-			return null;
-		}
-		do_clear(msg: MessageTimeoutClearS | MessageTimeoutClearR) {
-			let remote_id = msg.v;
-			let maybe_local_id = this.clear(remote_id);
-			if(!message_types) return;
-			if(!reply_message_types) return;
-			if(maybe_local_id === void 0) return;
-			if(maybe_local_id === null) return;
-			// debugger;
-			switch(msg.t) {
-				case message_types.worker.clear.single: {
-					// debugger;
-					const message: {
-						t: typeof reply_message_types.from_worker,
-						v: {
-							t: typeof message_types.reply.clear.single,
-							v: [remote_id: number, local_id: number, msg_from: TimeoutClearSTy]
-						}
-					} = {
-						t: reply_message_types.from_worker,
-						v: {
-							t: message_types.reply.clear.single,
-							v: [remote_id, maybe_local_id, msg.t]
-						}
-					};
-					postMessage(message);
-				} break
-				case message_types.worker.clear.repeating: {
-					// debugger;
-					const message: {
-						t: typeof reply_message_types.from_worker,
-						v: {
-							t: typeof message_types.reply.clear.repeating,
-							v: [remote_id: number, local_id: number, msg_from: TimeoutClearRTy]
-						}
-					} = {
-						t: reply_message_types.from_worker,
-						v: {
-							t: message_types.reply.clear.repeating,
-							v: [remote_id, maybe_local_id, msg.t]
-						}
-					};
-					postMessage(message);
-				} break;
-				default: {
-					console.error("RemoteTimer.do_clear unexpected message");
-					debugger;
-				} break;
-			}
-		}
-	}
-	let remote_worker_state = new RemoteWorkerState;
-	globalThis.remote_worker_state = remote_worker_state;
-	remote_worker_state.set_timer(new RemoteTimer(remote_api_info_instance));
-	let stored_for_later_messages: WorkerMessageType[] = [];
-	type ReplyToWorkerMessageType = {
-		t: ReplyToWorkerTy;
-		v: never;
-	};
-	type UpdateWorkerMessageHandler = {
-		t: WorkerUpdateMessageHandlerTy;
-		v: UpdateMessageHandlerType;
-	};
-	type MessageTimeoutMessageR = {
-		t: TimeoutMessageRTy;
-		v: never;
-	};
-	type WorkerMessageType = MessageTimeoutClearR | ReplyToWorkerMessageType | UpdateWorkerMessageHandler | MessageTimeoutMessageR | MessageTimeoutSetS | MessageTimeoutSetR | MessageTimeoutClearS;
-	type UpdateMessageHandlerType = {
-		init: string;
-		onmessage: string;
-	};
-	onmessage = function(e: MessageEvent<WorkerMessageType>) {
-		let msg = e.data;
-		if(!remote_worker_state.m_timer) {
-			console.log('got message but don\'t have a timer');
-			return;
-		}
-		if(!reply_message_types || !message_types) {
-			stored_for_later_messages.push(e.data);
-			return;
-		}
-		switch(msg.t) {
-			case reply_message_types.to_worker/*reply*/: {
-				let result = msg.v;
-				console.assert(false, "unhandled result on remote worker", result);
-				debugger;
-			} break;
-			case message_types.worker.update_message_handler/*remote worker init*/: {
-				debugger;
-				let user_msg = msg.v;
-				let worker_str = "()"[0];
-				worker_str += user_msg.init;
-				worker_str += "()"[1];
-				worker_str += "()";
-				worker_str += "\n";
-				worker_str += "onmessage=";
-				worker_str += user_msg.onmessage;
-				worker_str += "\n";
-				worker_str += "//# sourceURL=$__.";
-				worker_str += remote_worker_state.unique_script_id;
-				eval(worker_str);
-				remote_worker_state.unique_script_id++;
-				const message: {
-					t: typeof reply_message_types.from_worker,
-					v: {
-						t: 1,
-						v: typeof msg.t
-					}
-				} = {
-					t: reply_message_types.from_worker,
-					v: {
-						t: 1,
-						v: msg.t
-					}
-				}
-				postMessage(message);
-			} break;
-			case message_types.worker.ready/**/: {
-				// debugger;
-				const message: {
-					t: typeof reply_message_types.from_worker,
-					v: {
-						t: typeof message_types.reply.ready,
-						v: typeof msg.t
-					}
-				} = {
-					t: reply_message_types.from_worker,
-					v: {
-						t: message_types.reply.ready,
-						v: msg.t
-					}
-				};
-				postMessage(message);
-			} break;
-			case message_types.worker.set.single/*remote timer set single*/: {
-				// debugger;
-				let user_msg = msg.v;
-				console.log('worker set single', user_msg.t, user_msg.v);
-				let local_id = remote_worker_state.set(TIMER_SINGLE, user_msg.t, user_msg.v);
-				if(!local_id) return;
-				const message: {
-					t: typeof reply_message_types.from_worker,
-					v: {
-						t: typeof message_types.reply.set.single,
-						v: [local_id: number, msg_t: typeof msg.t, u_msg_t: typeof user_msg.t, u_msg_v: typeof user_msg.v]
-					}
-				} = {
-					t: reply_message_types.from_worker,
-					v: {
-						t: message_types.reply.set.single,
-						v: [local_id, msg.t, user_msg.t, user_msg.v]
-					}
-				};
-				postMessage(message);
-			} break;
-			case message_types.worker.set.repeating/*remote timer set repeating*/: {
-				// debugger;
-				let user_msg = msg.v;
-				console.log('worker set repeating', user_msg.t, user_msg.v);
-				let local_id = remote_worker_state.set(TIMER_REPEATING, user_msg.t, user_msg.v);
-				if(!local_id) return;
-				const message: {
-					t: typeof reply_message_types.from_worker,
-					v: {
-						t: typeof message_types.reply.set.repeating,
-						v: [typeof local_id, typeof msg.t, typeof user_msg.t, typeof user_msg.v]
-					}
-				} = {
-					t: reply_message_types.from_worker,
-					v: {
-						t: message_types.reply.set.repeating,
-						v: [local_id, msg.t, user_msg.t, user_msg.v]
-					}
-				};
-				postMessage(message);
-			} break;
-			case message_types.worker.clear.single/*remote timer do_clear single*/: {
-				// debugger;
-				remote_worker_state.clear(msg);
-			} break;
-			case message_types.worker.clear.repeating/*remote timer do_clear repeating*/: {
-				// debugger;
-				remote_worker_state.clear(msg);
-			} break;
-			default: {
-				console.assert(false, "RemoteWorker: Unhandled message", msg);
-				debugger;
-			} break;
-		}
-	}
-}
-type MessageTimeoutFireS = {
+export type MessageTimeoutFireS = {
 	t: TimeoutFireSTy;
 	v: never;
 };
@@ -1185,7 +285,7 @@ type MessageReplyFromWorker = {
 	t: ReplyFromWorkerTy;
 	v: MessageReplyFromWorkerData;
 };
-type MessageTypesForWorkerReplies = MessageReplyFromWorker | MessageReplyMessage2 | MessageReplyMessage1 | MessageWorkerDestroyMessage | MessageTimeoutFireS;
+export type MessageTypesForWorkerReplies = MessageReplyFromWorker | MessageReplyMessage2 | MessageReplyMessage1 | MessageWorkerDestroyMessage | MessageTimeoutFireS;
 type MessageWorkerReadyReply = {
 	t: WorkerReadyReplyTy;
 	v: TimeoutMessageRTy;
@@ -1206,21 +306,21 @@ type MessageReplyClearRepeating = {
 	t: ReplyClearRepeatingTy;
 	v: never;
 };
-type MessageTimeoutClearS = {
+export type MessageTimeoutClearS = {
 	t: TimeoutClearSTy;
 	v: number;
 };
-type MessageTimeoutClearR = {
+export type MessageTimeoutClearR = {
 	t: TimeoutClearRTy;
 	v: number;
 }
 
-type DispatchMessageType = MessageTimeoutClearR | MessageTimeoutClearS | MessageReplyClearRepeating | MessageReplyClearSingle | MessageReplySetRepeating | MessageReplySetSingle | MessageWorkerReadyReply | MessageWorkerUpdateMessageHandlerReply | MessageReplyMessage2 | MessageReplyMessage1 | MessageReplyFromWorkerData;
-type MessageTimeoutClearA = {
+export type DispatchMessageType = MessageTimeoutClearR | MessageTimeoutClearS | MessageReplyClearRepeating | MessageReplyClearSingle | MessageReplySetRepeating | MessageReplySetSingle | MessageWorkerReadyReply | MessageWorkerUpdateMessageHandlerReply | MessageReplyMessage2 | MessageReplyMessage1 | MessageReplyFromWorkerData;
+export type MessageTimeoutClearA = {
 	t: TimeoutClearATy;
 	v: number;
 };
-type MessageTimeoutSingleReply = {
+export type MessageTimeoutSingleReply = {
 	t: TimeoutSingleReplyTy;
 	v: number;
 };
@@ -1232,662 +332,21 @@ type SetRepeatingMessageData = {
 	t: number;
 	v: number;
 }
-type MessageTimeoutSetS = {
+export type MessageTimeoutSetS = {
 	t: TimeoutSetSTy;
 	v: SetSingleMessageData;
 };
-type MessageTimeoutSetR = {
+export type MessageTimeoutSetR = {
 	t: TimeoutSetRTy;
 	v: SetRepeatingMessageData;
 }
-class WorkerState {
-	flags: Map<string, boolean>;
-	worker_code;
-	timer: Timer;
-	executor_handle;
-	worker: Worker | null;
-	worker_url: string | null;
-	constructor(worker_code_blob: Blob, timer: Timer, executor_handle: PromiseExecutorHandle | null) {
-		this.flags = new Map;
-		this.flags.set('has_blob', false);
-		if(worker_code_blob instanceof Blob) this.flags.set('has_blob', true);
-		if(!this.flags.get('has_blob')) throw new Error("WorkerState requires a blob with javascript code to execute on a worker");
-		if(!timer) throw new Error("WorkerState needs a timer");
-		this.flags.set('rejected', false);
-		this.flags.set('valid', false);
-		this.flags.set('connected', false);
-		this.flags.set('failed', false);
-		this.worker_code = worker_code_blob;
-		this.timer = timer;
-		timer.set_worker_state(this);
-		this.executor_handle = executor_handle;
-		this.worker = null;
-		this.worker_url = null;
-	}
-	set_failed(has_failed: boolean) {
-		this.flags.set('failed', has_failed);
-	}
-	init() {
-		if(this.flags.get('connected') || this.flags.get('valid')) {
-			this.destroy();
-		}
-		this.flags.set('connected', false);
-		let weak_worker_state: WeakRef<WorkerState> = new WeakRef(this);
-		this.worker_url = URL.createObjectURL(this.worker_code);
-		if(this.flags.get('failed')) return;
-		this.worker = new Worker(this.worker_url);
-		this.worker.onmessage = function onmessage(e: MessageEvent<MessageTypesForWorkerReplies>) {
-			var msg = e.data;
-			let worker_state = weak_worker_state.deref();
-			if(!worker_state) {
-				console.log('lost worker state');
-				this.terminate();
-				return;
-			}
-			switch(msg.t) {
-				case TimeoutFireS/*worker_state.timer single fire*/: {
-					worker_state.timer.fire(TIMER_SINGLE, msg.v);
-					break;
-				}
-				case TimeoutFireS/*worker_state.timer repeating fire*/: {
-					worker_state.timer.fire(TIMER_REPEATING, msg.v);
-					break;
-				}
-				case WorkerDestroyMessage/*worker_state destroy*/:
-					worker_state.destroy();
-					break;
-				case ReplyMessage1:
-				case ReplyMessage2/*worker_state dispatch_message_unpacked*/: {
-					debugger;
-					worker_state.dispatch_message(msg);
-					break;
-				}
-				case ReplyFromWorker/*worker_state dispatch_message*/: {
-					worker_state.dispatch_message(msg.v);
-					break;
-				}
-				default: {
-					console.assert(false, "Main: Unhandled message", msg);
-					debugger;
-					break;
-				}
-			}
-		};
-		this.flags.set('valid', true);
-		this.worker.postMessage({
-			t: message_types.worker.ready
-		});
-	}
-	set_executor_handle(handle: PromiseExecutorHandle) {
-		this.executor_handle = handle;
-	}
-	on_result(result: DispatchMessageType) {
-		if(!this.executor_handle) return;
-		switch(result.v) {
-			case message_types.worker.update_message_handler: {
-				console.assert(result.t === WorkerUpdateMessageHandlerReply);
-				console.log("remote_worker onmessage function changed");
-				break;
-			}
-			case message_types.worker.ready: {
-				console.assert(result.t === WorkerReadyReply);
-				if(this.executor_handle.closed()) {
-					console.assert(false, "WorkerState used with closed executor_handle");
-					break;
-				}
-				l_log_if(LOG_LEVEL_VERBOSE, "remote_worker ready");
-				WorkerState.set_global_state(this);
-				this.executor_handle.accept(this);
-				this.flags.set('connected', true);
-				break;
-			}
-		}
-	}
-	dispatch_message(result: DispatchMessageType) {
-		switch(result.t) {
-			case WorkerUpdateMessageHandlerReply: {
-				debugger;
-				this.on_result(result);
-			} break;
-			case WorkerReadyReply: {
-				// debugger;
-				this.on_result(result);
-			} break;
-			case ReplyMessage1: {
-				debugger;
-				this.on_result(result);
-			} break;
-			case ReplyMessage2: {
-				debugger;
-				this.timer.on_result(result);
-			} break;
-			case ReplySetSingle: {
-				// debugger;
-				this.timer.on_reply(result);
-			} break;
-			case ReplySetRepeating: {
-				// debugger;
-				this.timer.on_reply(result);
-			} break;
-			case message_types.reply.clear.single: {
-				// debugger;
-				this.timer.on_reply(result);
-			} break;
-			case message_types.reply.clear.repeating: {
-				// debugger;
-				this.timer.on_reply(result);
-			} break;
-			case TimeoutClearR: {
-				// debugger;
-				this.timer.on_reply(result);
-			} break;
-			case TimeoutClearS: {
-				// debugger;
-				this.timer.on_reply(result);
-			} break;
-			default: {
-				console.assert(false, "unhandled result", result);
-				debugger;
-			}
-		}
-	}
-	postMessage(data: MessageTimeoutFireS | MessageTimeoutClearA | MessageTimeoutSingleReply | MessageTimeoutClearS | MessageTimeoutSetS | MessageTimeoutSetR | MessageTimeoutClearR) {
-		if(this.worker) return this.worker.postMessage(data);
-	}
-	static has_old_global_state_value(worker_state_value: WorkerState) {
-		return this.has_global_state() && !this.equals_global_state(worker_state_value);
-	}
-	static equals_global_state(worker_state_value: WorkerState) {
-		return this.get_global_state() === worker_state_value;
-	}
-	static maybe_delete_old_global_state_value(worker_state_value: WorkerState) {
-		if(this.has_old_global_state_value(worker_state_value)) {
-			this.delete_old_global_state();
-		}
-	}
-	static maybe_delete_old_global_state() {
-		if(this.has_global_state()) {
-			this.delete_old_global_state();
-			return true;
-		}
-		return false;
-	}
-	static delete_old_global_state() {
-		let old_worker_state = this.get_global_state();
-		if(old_worker_state) {
-			const before_destroy_call_name = 'delete_global_state';
-			this.destroy_old_worker_state(old_worker_state, before_destroy_call_name);
-		}
-	}
-	static destroy_old_worker_state(worker_state_value: {destroy: () => void;}, before_destroy_call_name: 'delete_global_state') {
-		this[before_destroy_call_name]();
-		worker_state_value.destroy();
-	}
-	static global_state_key: 'g_worker_state' = "g_worker_state";
-	static has_global_state() {
-		return window.hasOwnProperty(this.global_state_key);
-	}
-	static get_global_state(): WorkerState | undefined {
-		return window[this.global_state_key];
-	}
-	static set_global_state(worker_state_value: WorkerState) {
-		this.maybe_delete_old_global_state_value(worker_state_value);
-		window[this.global_state_key] = worker_state_value;
-	}
-	static delete_global_state() {
-		delete window[this.global_state_key];
-	}
-	destroy() {
-		if(this.worker) {
-			this.worker.terminate();
-			this.worker = null;
-			if(this.worker_url) URL.revokeObjectURL(this.worker_url);
-			this.worker_url = null;
-			this.flags.set('connected', false);
-			this.flags.set('valid', false);
-			if(this.executor_handle && !this.executor_handle.closed()) {
-				this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
-			}
-		};
-		this.timer.destroy();
-	}
-}
-function timer_nop() {}
-type TimerTag = 1 | 2;
-class TimerState {
-	active;
-	type;
-	repeat;
-	target_fn;
-	target_args;
-	timeout;
-	constructor(tag: TimerTag, is_repeating: boolean, target_fn: TimerHandler, target_args: any[], timeout: number) {
-		this.active = true;
-		this.type = tag;
-		this.repeat = is_repeating;
-		this.target_fn = target_fn
-		this.target_args = target_args;
-		this.timeout = timeout;
-	}
-}
-type SetMessageData = {
+export function timer_nop() {}
+export type TimerTag = 1 | 2;
+export type SetMessageData = {
 	t: number;
 	v: number;
 };
 
-class Timer {
-	id_generator;
-	m_remote_id_to_main_state_map: any;
-	m_api_map;
-	m_api_info: TimerApi;
-	weak_worker_state: WeakRef<WorkerState> | null;
-	m_remote_id_to_state_map: Map<number | string, TimerState>;
-	constructor(id_generator: UniqueIdGenerator, api_info: TimerApi) {
-		this.id_generator = id_generator;
-		this.m_remote_id_to_state_map = new Map;
-		this.weak_worker_state = null;
-		this.m_api_map = new Map;
-		this.m_api_info = api_info;
-		this.set_api_names(api_info.set_names, api_info.clear_names)
-	}
-	set_map_names(names: TimerApi['set_names'] | TimerApi['clear_names']) {
-		this.m_api_map.set(names.single, window[names.single]);
-		this.m_api_map.set(names.repeating, window[names.repeating]);
-	}
-	base_id: number | undefined;
-	set_api_names(set: TimerApi['set_names'], clear: TimerApi['clear_names']) {
-		this.set_map_names(set);
-		this.set_map_names(clear);
-		this.base_id = window[set.single](timer_nop);
-		window[clear.single](this.base_id);
-		this.id_generator.set_current(this.base_id);
-	}
-	set_worker_state(worker_state_value: any) {
-		this.weak_worker_state = new WeakRef(worker_state_value);
-	}
-	// If you cause any side effects, please
-	// wrap this call in try{}finally{} and
-	// revert all side effects...
-	verify_tag(tag: TimerTag) {
-		if(!this.validate_tag(tag)) {
-			throw new Error("Verify failed in Timer.verify_tag");
-		}
-	}
-	verify_state(state: TimerState, remote_id: number) {
-		if(!this.weak_worker_state) return;
-		if(!this.validate_state(state)) {
-			let worker_state = this.weak_worker_state.deref();
-			if(!worker_state) return;
-			worker_state.postMessage({
-				t: this.m_api_info.msg_types.worker.clear.any,
-				v: remote_id
-			});
-			throw new Error("Verify failed in Timer.verify_timer_state");
-		}
-	}
-	validate_tag(tag: TimerTag) {
-		if(tag != TIMER_SINGLE && tag != TIMER_REPEATING) {
-			console.assert(false, "Assertion failure in Timer.validate_tag: tag=%o is out of range");
-			console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)", tag, TIMER_SINGLE, TIMER_TAG_COUNT);
-			return false;
-		}
-		return true;
-	}
-	validate_state(state: TimerState) {
-		return this.validate_tag(state.type);
-	}
-	fire(tag: TimerTag, remote_id: number) {
-		let state = this.get_state_by_remote_id(remote_id);
-		if(!state) {
-			this.force_clear(tag, remote_id);
-			return;
-		}
-		if(!this.weak_worker_state) return;
-		let should_reset_user_fn = false;
-		let should_reset_ign = false;
-		if(typeof state.target_fn != 'string') cur_event_fns.push(state.target_fn);
-		let idx = -1;
-		if(typeof state.target_fn != 'string') cur_event_fns.indexOf(state.target_fn);
-		try {
-			if(state.active) {
-				if((<any>state.target_fn).is_userscript_fn) {
-					if(is_in_ignored_from_src_fn === false) {
-						is_in_ignored_from_src_fn = true;
-						should_reset_ign = true;
-					}
-					if(is_in_userscript_fn === false) {
-						is_in_userscript_fn = true;
-						should_reset_user_fn = true;
-					}
-				}
-				if(state.target_fn instanceof Function) {
-					state.target_fn.apply(null, state.target_args);
-				} else {
-					let fn = new Function(state.target_fn);
-					state.target_fn = fn;
-					state.target_fn.apply(null, state.target_args);
-				}
-			}
-		} finally {
-			if(should_reset_ign) is_in_ignored_from_src_fn = false;
-			if(should_reset_user_fn) is_in_userscript_fn = false;
-			delete cur_event_fns[idx];
-			if(tag === TIMER_SINGLE) {
-				state.active = false;
-				this.clear(tag, remote_id);
-			}
-			let worker_state = this.weak_worker_state.deref();
-			if(!worker_state) return;
-			worker_state.postMessage({
-				t: this.m_api_info.msg_types.worker.reply.fire.single,
-				v: remote_id
-			});
-		}
-	}
-	set(tag: TimerTag, target_fn: TimerHandler, timeout: number | undefined, target_args: any) {
-		let remote_id = this.id_generator.next();
-		let is_repeating = false;
-		this.verify_tag(tag);
-		if(tag === TIMER_REPEATING) {
-			is_repeating = true;
-		}
-		if(typeof timeout === 'string') {
-			let tmp_timeout = parseInt(timeout, 10);
-			if(!Number.isNaN(tmp_timeout)) {
-				timeout = tmp_timeout;
-			} else {
-				timeout = 30;
-			}
-		}
-		if(!timeout || timeout < 0) timeout = 0;
-		let state = new TimerState(tag, is_repeating, target_fn, target_args, timeout);
-		if(is_in_userscript) {
-			(<any>target_fn).is_userscript_fn = true;
-		}
-		if(is_in_userscript_fn) {
-			(<any>target_fn).is_userscript_fn = true;
-		}
-		// if(document.currentScript){
-		// 	target_fn.reg_id=register_obj_with_registry(document.currentScript);
-		// }
-		// if(get_nearest_script()){
-		// 	target_fn.reg_id=register_obj_with_registry(get_nearest_script());
-		// }
-		this.store_state_by_remote_id(state, remote_id);
-		this.send_worker_set_message(tag, {
-			t: remote_id,
-			v: timeout
-		});
-		return remote_id;
-	}
-	send_worker_set_message(tag: TimerTag, obj: SetMessageData) {
-		if(!this.weak_worker_state) return;
-		let worker_state = this.weak_worker_state.deref();
-		if(!worker_state) {
-			console.assert(false, 'tried to send_worker_message, but the gc collected the worker_state, referenced with a WeakRef (weak_worker_state)');
-			return;
-		}
-		let msg_id: TimeoutSetRTy | TimeoutSetSTy;
-		switch(tag) {
-			case TIMER_SINGLE: msg_id = this.m_api_info.msg_types.worker.set.single; break;
-			case TIMER_REPEATING: msg_id = this.m_api_info.msg_types.worker.set.repeating; break;
-		}
-		if(!msg_id) {
-			console.assert(false, 'Unknown timer_tag', tag);
-			console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o', TIMER_SINGLE, TIMER_REPEATING, tag);
-			return;
-		}
-		worker_state.postMessage({
-			t: msg_id,
-			v: obj
-		});
-	}
-	is_state_stored_by_remote_id(remote_id: number) {
-		return this.m_remote_id_to_state_map.has(remote_id);
-	}
-	get_state_by_remote_id(remote_id: number) {
-		let state = this.m_remote_id_to_state_map.get(remote_id);
-		if(!state) return null;
-		this.verify_state(state, remote_id);
-		return state;
-	}
-	store_state_by_remote_id(state: TimerState, remote_id: number) {
-		this.m_remote_id_to_state_map.set(remote_id, state);
-	}
-	delete_state_by_remote_id(remote_id: number) {
-		this.m_remote_id_to_state_map.delete(remote_id);
-	}
-	remote_id_to_state_entries() {
-		return this.m_remote_id_to_state_map.entries();
-	}
-	on_result(result: DispatchMessageType) {
-		console.log(result);
-		debugger;
-		switch(result.t) {
-			case this.m_api_info.msg_types.worker.clear.single: {
-				let remote_id = result.v;
-				if(!remote_id) return;
-				this.delete_state_by_remote_id(remote_id);
-				break;
-			}
-			case this.m_api_info.msg_types.worker.clear.repeating: {
-				let remote_id = result.v;
-				if(!remote_id) return;
-				this.delete_state_by_remote_id(remote_id);
-				break;
-			}
-			default:
-				console.assert(false, 'on_result timer_result_msg needs a handler for', result.t);
-		}
-	}
-	on_reply(result: DispatchMessageType) {
-		switch(result.t) {
-			case this.m_api_info.msg_types.worker.clear.single: {
-				debugger;
-				let remote_id = result.v;
-				this.delete_state_by_remote_id(remote_id);
-				break;
-			}
-			case this.m_api_info.msg_types.worker.clear.repeating: {
-				debugger;
-				let remote_id = result.v;
-				this.delete_state_by_remote_id(remote_id);
-				break;
-			}
-			case ReplySetSingle: {
-				//debugger;
-			} break;
-			case ReplySetRepeating: {
-				// debugger;
-			} break;
-			case ReplyClearSingle: {
-				debugger;
-			} break;
-			case message_types.reply.clear.repeating: {
-				// debugger;
-			} break;
-			default:
-				console.log('reply', result);
-				console.assert(false, 'on_result msg needs a handler for', result);
-				debugger;
-		}
-	}
-	force_clear(tag: TimerTag, remote_id: number) {
-		if(!this.weak_worker_state) return;
-		this.verify_tag(tag);
-		let worker_state = this.weak_worker_state.deref();
-		if(!worker_state) return;
-		let state = this.get_state_by_remote_id(remote_id);
-		if(!state) throw new Error("No state for id");
-		if(state.active) {
-			return this.clear(tag, remote_id);
-		}
-		// we have to trust the user, go ahead and send the message
-		// anyway (this can technically send structured cloneable objects)
-		if(tag === TIMER_SINGLE) {
-			worker_state.postMessage({
-				t: this.m_api_info.msg_types.worker.clear.single,
-				v: remote_id
-			});
-		} else if(tag === TIMER_REPEATING) {
-			worker_state.postMessage({
-				t: this.m_api_info.msg_types.worker.clear.repeating,
-				v: remote_id
-			});
-		}
-	}
-	clear(tag: TimerTag, remote_id?: number) {
-		this.verify_tag(tag);
-		if(remote_id === void 0) return;
-		let state = this.get_state_by_remote_id(remote_id);
-		if(!this.weak_worker_state) return;
-		if(state?.active) {
-			let worker_state = this.weak_worker_state.deref();
-			if(!worker_state) return;
-			if(state.type === TIMER_SINGLE) {
-				worker_state.postMessage({
-					t: this.m_api_info.msg_types.worker.clear.single,
-					v: remote_id
-				});
-			} else if(state.type === TIMER_REPEATING) {
-				worker_state.postMessage({
-					t: this.m_api_info.msg_types.worker.clear.repeating,
-					v: remote_id
-				});
-			}
-			state.active = false;
-		}
-	}
-	destroy() {
-		let api_info = this.m_api_info;
-		let api_map = this.m_api_map;
-		window[api_info.set_names.single] = api_map.get(api_info.set_names.single);
-		window[api_info.set_names.repeating] = api_map.get(api_info.set_names.repeating);
-		window[api_info.clear_names.single] = api_map.get(api_info.clear_names.single);
-		window[api_info.clear_names.repeating] = api_map.get(api_info.clear_names.repeating);
-		for(var state_entry of this.remote_id_to_state_entries()) {
-			let id = state_entry[0];
-			void id;
-			let state = state_entry[1];
-			if(state.type === TIMER_SINGLE) {
-				// if the timer might get reset when calling the function while
-				// the timer functions are reset to the underlying api
-				if(state.target_fn instanceof Function) {
-					state.target_fn.apply(null, state.target_args);
-				} else {
-					eval(state.target_fn);
-				}
-			}
-		}
-		this.m_api_map.clear();
-	}
-}
-class VerifyError extends Error {
-	constructor(message: string | undefined) {
-		super(message);
-		this.name = "VerifyError";
-	}
-}
-function VERIFY(assert_result: boolean, assert_message: string) {
-	if(!assert_result) {
-		throw new VerifyError(assert_message);
-	}
-}
-type WorkerVerifyType = {
-	TIMER_SINGLE: typeof TIMER_SINGLE;
-	TIMER_REPEATING: typeof TIMER_REPEATING;
-	TIMER_TAG_COUNT: typeof TIMER_TAG_COUNT;
-}
-function do_worker_verify(verify_obj: WorkerVerifyType) {
-	VERIFY(verify_obj.TIMER_SINGLE === TIMER_SINGLE, "TIMER_SINGLE constant matches");
-	VERIFY(verify_obj.TIMER_REPEATING === TIMER_REPEATING, "TIMER_REPEATING constant matches");
-	VERIFY(verify_obj.TIMER_TAG_COUNT === TIMER_TAG_COUNT, "TIMER_TAG_COUNT constant matches");
-	VERIFY(Object.keys(verify_obj).length === 3, "keys(verify_obj).length is expected value");
-	return;
-}
-
-function move_timers_to_worker_promise_executor(
-	executor_accept: (arg0: WorkerState | null) => void,
-	executor_reject: () => void,
-) {
-	let failed = false;
-	if(globalThis.remote_worker_state) {
-		postMessage({t: WorkerDestroyMessage});
-		executor_accept(null);
-		return;
-	}
-	if(WorkerState.maybe_delete_old_global_state()) return null;
-	try {
-		worker_code_function(do_worker_verify);
-	} catch(e) {
-		console.log(e);
-		executor_accept(null);
-		failed = true;
-	}
-	const worker_code_blob = new Blob(["(", worker_code_function.toString(), ")()", "\n//# sourceURL=$__.0"]);
-	let id_generator = new UniqueIdGenerator;
-	let timer = new Timer(id_generator, new TimerApi);
-	let executor_handle = null;
-	if(!failed) {
-		executor_handle = new PromiseExecutorHandle(executor_accept, executor_reject);
-	}
-	const worker_state = new WorkerState(worker_code_blob, timer, executor_handle);
-	worker_state.set_failed(failed);
-	worker_state.init();
-	const weak_worker_state = new WeakRef(worker_state);
-	const setTimeout_global = setTimeout;
-	function remoteSetTimeout(handler: TimerHandler, timeout: number | undefined, ...target_args: any[]) {
-		if(!worker_state) {
-			window.setTimeout = setTimeout_global;
-			l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
-			return setTimeout_global(handler, timeout, ...target_args);
-		}
-		return worker_state.timer.set(TIMER_SINGLE, handler, timeout, target_args);
-	}
-	const clearTimeout_global = clearTimeout;
-	/**@arg {number} id */
-	function remoteClearTimeout(id?: number) {
-		if(!worker_state) {
-			window.clearTimeout = clearTimeout_global;
-			l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
-			return clearTimeout_global(id);
-		}
-		worker_state.timer.clear(TIMER_SINGLE, id);
-	}
-	const setInterval_global = setInterval;
-	function remoteSetInterval(handler: TimerHandler, timeout?: number, ...target_args: any[]) {
-		if(!worker_state) {
-			window.setInterval = setInterval_global;
-			l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
-			return setInterval_global(handler, timeout, ...target_args);
-		}
-		return worker_state.timer.set(TIMER_REPEATING, handler, timeout, target_args);
-	}
-	const clearInterval_global = clearInterval;
-	function remoteClearInterval(id: number | undefined) {
-		if(!worker_state) {
-			window.clearInterval = clearInterval_global;
-			l_log_if(LOG_LEVEL_WARN, 'lost worker_state in timer');
-			return clearInterval_global(id);
-		}
-		worker_state.timer.clear(TIMER_REPEATING, id);
-	}
-	window.remoteSetTimeout = remoteSetTimeout;
-	window.remoteSetInterval = remoteSetInterval;
-	window.remoteClearTimeout = remoteClearTimeout;
-	window.remoteClearInterval = remoteClearInterval;
-	if(!failed) {
-		window.setTimeout = remoteSetTimeout;
-		window.setInterval = remoteSetInterval;
-		window.clearTimeout = remoteClearTimeout;
-		window.clearInterval = remoteClearInterval;
-	}
-	return {
-		get() {
-			return weak_worker_state.deref();
-		}
-	};
-}
 let seen_elements = new WeakSet;
 function remove_bad_dom_script_element_callback(e: HTMLScriptElement) {
 	if(seen_elements.has(e)) return;
@@ -2003,7 +462,7 @@ export function l_log_if(level: number, ...args: any[]) {
 }
 const LOG_LEVEL_ERROR = 1;
 void LOG_LEVEL_ERROR;
-const LOG_LEVEL_WARN = 2;
+export const LOG_LEVEL_WARN = 2;
 const LOG_LEVEL_INFO = 3;
 void LOG_LEVEL_INFO;
 export const LOG_LEVEL_VERBOSE = 4;
@@ -2836,123 +1295,7 @@ export function specialclick_inject(that: number) {
 		window.achiSpec();
 	}
 }
-class ProxyHandlers {
-	weak_root: WeakRef<never | KeepSome>;
-	count_arr: number[];
-	constructor(root: never) {
-		this.weak_root = new WeakRef(root);
-		this.count_arr = [0];
-	}
-	so_init() {
-		let val = Array(12).fill((idx: number) => {
-			if(idx > window.da.length) return window.da.at(-1)(idx - 1);
-			return window.da[idx - 1](idx - 1);
-		});
-		window.da = [() => window.g_proxy_state.hand.stack_overflow_check(), ...val];
-	}
-	stack_overflow_check() {
-		window.g_proxy_state.hand.count_arr[0]++;
-		if(window.g_proxy_state.hand.count_arr[0] < window.g_proxy_state.hand.count_arr[1]) {
-			return window.g_proxy_state.hand.stack_overflow_check();
-		}
-		return window.g_proxy_state.hand.count_arr[0];
-	}
-	generic(type: string, call_args: any, from: any[]) {
-		let keep_vec = this.weak_root.deref();
-		if(keep_vec === null) {
-			console.log('ProxyHandlers reset KeepSome after gc collect');
-			keep_vec = new KeepSome;
-			this.weak_root = new WeakRef(keep_vec);
-		}
-		if(keep_vec) keep_vec.push((<any>from).concat([null, type, 1, call_args]));
-	}
-	set_(call_args: [target: object, propertyKey: PropertyKey, value: any, receiver?: any], from: never) {
-		this.generic('set', call_args, from);
-		return Reflect.set(...call_args);
-	}
-	get_(call_args: [target: object, propertyKey: PropertyKey, receiver?: any], from: never) {
-		this.generic('get', call_args, from);
-		return Reflect.get(...call_args);
-	}
-	apply_(call_args: [target: Function, thisArgument: any, argumentsList: ArrayLike<any>], from: never) {
-		this.generic('apply', call_args, from);
-		return Reflect.apply(...call_args);
-	}
-	defineProperty_(call_args: [target: object, propertyKey: PropertyKey, attributes: PropertyDescriptor], from: never) {
-		this.generic('defineProperty', call_args, from);
-		return Reflect.defineProperty(...call_args);
-	}
-	getOwnPropertyDescriptor_(call_args: [target: object, propertyKey: PropertyKey], from: never) {
-		this.generic('getOwnPropertyDescriptor', call_args, from);
-		return Reflect.getOwnPropertyDescriptor(...call_args);
-	}
-}
 void ProxyHandlers;
-class KeepSome {
-	array: (number | string)[][];
-	constructor() {
-		this.array = [];
-	}
-	push(value: number | string) {
-		let set_index = 0;
-		let ret = this.push_at(set_index, value);
-		while(this.array[set_index].length > 50) {
-			let sr = this.array[set_index].shift();
-			if(!sr) throw new Error("This should not happen (popped from an array with length > 50)");
-			value = sr;
-			if(Math.random() > 0.9) {
-				set_index++;
-				this.push_at(set_index, value);
-				console.log('psp', 1);
-				let off = 0;
-				while(this.array[set_index - off].length < 25) {
-					let val = this.array[set_index - off - 1].shift();
-					if(!val) break;
-					this.array[set_index - off].push(val);
-				}
-				off++;
-				if(set_index - off < 0) continue;
-				console.log('psp', 2);
-				while(this.array[set_index - off].length < 40) {
-					let val = this.array[set_index - off - 1].shift();
-					if(!val) break;
-					this.array[set_index - off].push(val);
-				}
-				off++;
-				if(set_index - off < 0) continue;
-				console.log('psp', 3);
-				while(this.array[set_index - off].length < 40) {
-					let val = this.array[set_index - off - 1].shift();
-					if(!val) break;
-					this.array[set_index - off].push(val);
-				}
-				off++;
-				if(set_index - off < 0) continue;
-				console.log('psp', 4);
-				while(this.array[set_index - off].length < 40) {
-					let val = this.array[set_index - off - 1].shift();
-					if(!val) break;
-					this.array[set_index - off].push(val);
-				}
-			}
-			if(this.array[set_index].length <= 50 && set_index > 0) {
-				set_index--;
-			}
-		}
-		return ret;
-	}
-	push_at(index: number, value: number | string) {
-		while(index >= this.array.length) {
-			this.array.push([]);
-		}
-		this.array[index].push(value);
-	}
-	push_va(...a: (number | string)[]) {
-		for(let x of a) {
-			this.push(x);
-		}
-	}
-}
 function reload_if_def(obj: {[x: string]: any;}, key: string | number) {
 	if(obj[key]) {
 		location.reload();
