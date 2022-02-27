@@ -17,17 +17,14 @@ import {NodeBox} from "./NodeBox";
 import {ObjectBox} from "./ObjectBox";
 import {Primitives} from "../Primitives";
 import {PromiseBox} from "./PromiseBox";
-import {PromiseTypeBoxes} from "./PromiseTypeBoxes";
 import {StackVMBox} from "./StackVMBox";
 import {TypeOfResult} from "../TypeOfResult";
 import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
 import {VoidPromiseBox} from "./VoidPromiseBox";
 
-type ValueBoxes =
-
-
-export type IBox = // function result
+export type IBox =
+// function result
 CSSStyleSheetInitBox |
 // array
 EmptyArrayBox |
@@ -61,7 +58,7 @@ PromiseBox |
 Primitives |
 null |
 // No value (Void)
-VoidBox ;
+VoidBox;
 
 export class Box<T> {
 	constructor(value: T) {
