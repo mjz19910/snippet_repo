@@ -1,2 +1,3 @@
-export type CastObjectOpts = "object_index" | "callable_index";
-export type InstructionCastObject = ['cast_object', CastObjectOpts];
+export type InstructionCastOpcode="cast";
+export type InstructionCastArg = "object_index" | "callable_index";
+export type InstructionCast = [InstructionCastOpcode, InstructionCastArg];

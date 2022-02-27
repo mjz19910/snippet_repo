@@ -1,4 +1,4 @@
-import {Box} from "./Box";
+import {Box} from "./box/mod";
 import {InstructionType} from "./InstructionType";
 
 export class InstructionTypeArrayBox extends Box<Box<InstructionType>[]> {

@@ -7,10 +7,11 @@ import {IDebugInstructionType} from "./IDebugInstructionType";
 import {InstructionJumpTypes} from "./InstructionJumpTypes";
 import {InstructionExecutionTypes} from "./InstructionExecutionTypes";
 import {InstructionExec} from "./InstructionExec";
-import {InstructionAppend} from "./InstructionAppend";
+import {InstructionAppend} from "./instruction/InstructionAppend";
 import {InstructionModifyOperand} from "./InstructionModifyOperand";
 import {InstructionConstruct} from "./InstructionConstruct";
 import {InstructionPushInstructionPointer} from "./InstructionPushInstructionPointer";
+import {InstructionCast as InstructionCast} from "./InstructionCast";
 
 
 export type InstructionType =
@@ -20,4 +21,4 @@ export type InstructionType =
 	InstructionJumpTypes | InstructionExecutionTypes |
 	InstructionPushInstructionPointer | InstructionConstruct |
 	InstructionModifyOperand | InstructionExec |
-	InstructionAppend | InstructionCastObject;
+	InstructionAppend | InstructionCast;

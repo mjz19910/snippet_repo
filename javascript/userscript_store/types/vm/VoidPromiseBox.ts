@@ -1,4 +1,4 @@
-import {Box} from "./Box";
+import {Box} from "./box/mod";
 
 export class VoidPromiseBox extends Box<Promise<void>> {
 	type: "promise" = "promise";

@@ -3,8 +3,8 @@ import {InstructionType} from "../types/vm/InstructionType";
 import {WindowBox} from "../types/vm/WindowBox";
 import {GlobalThisBox} from "../types/vm/GlobalThisBox";
 import {IStackVMBox} from "../types/vm/IStackVMBox";
-import {VMIndexedValue} from "../types/vm/VMIndexedValue";
-import {VMIndexedCallableBox} from "../types/vm/VMIndexedCallableBox";
+import {IndexedObject} from "../types/vm/IndexedObject";
+import {IndexedFnBox} from "../types/vm/IndexedFunctionBox";
 import {InstructionTypeArrayBox} from "../types/vm/InstructionTypeArrayBox";
 import {IStackVM} from "../types/vm/IStackVM";
 import {Boxed} from "../types/vm/Boxed";
@@ -1470,7 +1470,7 @@ class SimpleStackVM implements IStackVM {
 					if(!name) throw new Error("Invalid");
 					let obj = this.pop();
 					if(!obj) throw new Error("Invalid");
-					if(obj instanceof VMIndexedValue && typeof name === 'string') {
+					if(obj instanceof IndexedObject && typeof name === 'string') {
 						this.push(obj.value[name]);
 					}
 					break;
@@ -1489,7 +1489,7 @@ class SimpleStackVM implements IStackVM {
 					let target = this.pop();
 					if(!target) throw "Bad";
 					if(!name_to_call) throw "Bad";
-					if(target instanceof VMIndexedCallableBox && typeof name_to_call === 'string') {
+					if(target instanceof IndexedFnBox && typeof name_to_call === 'string') {
 						let ret = target.value[name_to_call](...arg_arr);
 						switch(typeof ret){
 							case 'function':
@@ -1503,9 +1503,9 @@ class SimpleStackVM implements IStackVM {
 								this.push(ret);
 								break;
 							default:
-								ret;
+								console.warn("return value unable to be pushed", ret);
+								throw new Error("Can't box return value");
 						}
-						this.push(ret);
 					}
 					break;
 				}

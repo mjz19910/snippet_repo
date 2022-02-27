@@ -1,13 +1,12 @@
 import {NonNull} from "api";
 import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
-import {AnyInstructionOperands} from "./types/vm/mod";
 import {VMBoxedInstructionType} from "./types/vm/VMBoxedInstructionType";
 import {InstructionType} from "./types/vm/InstructionType";
 import {WindowBox} from "./types/vm/WindowBox";
 import {IStackVMBox} from "./types/vm/IStackVMBox";
-import {VMIndexedValue} from "./types/vm/VMIndexedValue";
-import {VMIndexedCallableBox} from "./types/vm/VMIndexedCallableBox";
+import {IndexedObject} from "./types/vm/IndexedObject";
+import {IndexedFnBox} from "./types/vm/IndexedFunctionBox";
 import {NewableFunctionBox} from "./types/vm/NewableFunctionBox";
 import {Boxed} from "./types/vm/Boxed";
 
@@ -2063,7 +2062,7 @@ class BaseStackVM extends BaseVMCreate {
 				if(target_obj === void 0) break;
 				if(typeof target_obj != 'object') break;
 				if(typeof target_name != 'string') break;
-				if(target_obj instanceof VMIndexedValue) {
+				if(target_obj instanceof IndexedObject) {
 					this.push(target_obj.value[target_name]);
 				}
 			} break;
@@ -2170,7 +2169,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 				let number_of_arguments = instruction[1];
 				let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 				if(typeof target_name == 'string') {
-					if(target_obj instanceof VMIndexedCallableBox) {
+					if(target_obj instanceof IndexedFnBox) {
 						let ret = target_obj.value[target_name](...arg_arr);
 						this.push(ret);
 					}

@@ -96,9 +96,9 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").PromiseBox} VMBoxedPromise */
-	/**@implements {VMBoxedPromise} */
-	class VMBoxedPromiseR {
+	/**@typedef {import("types/vm/mod.js").PromiseBox} PromiseBox */
+	/**@implements {PromiseBox} */
+	class PromiseBoxImpl {
 		/**@type {"promise"} */
 		type="promise";
 		/**@type {"value"} */
@@ -2744,7 +2744,7 @@
 			let r2=ret.then(function(v){
 				return new VMBoxedCSSStyleSheetR(v);
 			});
-			let res=new VMBoxedPromiseR(r2);
+			let res=new PromiseBoxImpl(r2);
 			return res;
 		}
 		/**@typedef {[number, ...InstructionType]} InstructionWithDepth */

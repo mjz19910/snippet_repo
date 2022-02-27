@@ -1,5 +1,5 @@
 import {IndexedObjectValue as IndexedObjectValue} from "./IndexedObjectValue";
-import {Box} from "./Box";
+import {Box} from "./box/mod";
 
 export class IndexedObject extends Box<IndexedObjectValue> {
 	type: "object_box" = "object_box";
