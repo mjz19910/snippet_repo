@@ -1,4 +1,4 @@
-import {ArgumentTypeBoxes} from "./ArgumentTypeBoxes";
+import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox";
 import {ArrayBoxes} from "./ArrayBoxes";
 import {ConstructorBoxes} from "./ConstructorBoxes";
 import {FunctionBoxes} from "./FunctionBoxes";
@@ -12,18 +12,28 @@ import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
 
 type ValueBoxes =
-ArgumentTypeBoxes |
+// function result
+CSSStyleSheetInitBox |
+// array
 ArrayBoxes |
+// constructor function
 ConstructorBoxes |
+// function
 FunctionBoxes |
+// return type
 FunctionReturnBoxes |
+// global
 GlobalThisBox |
-InstanceBoxes |
-ObjectBoxes |
-PromiseBox |
-PromiseTypeBoxes |
 WindowBox |
-// No value
+// object instances
+InstanceBoxes |
+// object
+ObjectBoxes |
+// promise box
+PromiseBox |
+// promise types
+PromiseTypeBoxes |
+// No value (Void)
 VoidBox;
 
 export default ValueBoxes;
