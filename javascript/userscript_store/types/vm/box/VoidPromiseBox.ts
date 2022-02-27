@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./mod";
+import {BoxTemplate} from "./BoxTemplate";
 
 export class VoidPromiseBox extends BoxTemplate<Promise<void>> {
 	type: "promise" = "promise";

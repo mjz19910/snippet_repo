@@ -1,4 +1,5 @@
-import {Box, BoxTemplate} from "./mod";
+import Box from "./Box";
+import {BoxTemplate} from "./BoxTemplate";
 import {PromiseBox} from "./PromiseBox";
 
 export class PromiseResultBox extends BoxTemplate<(...a: Box[]) => PromiseBox> {

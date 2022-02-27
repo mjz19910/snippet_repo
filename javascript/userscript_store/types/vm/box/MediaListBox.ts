@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./mod";
+import {BoxTemplate} from "./BoxTemplate";
 
 export class MediaListBox extends BoxTemplate<MediaList> {
 	type: "instance_box" = "instance_box";

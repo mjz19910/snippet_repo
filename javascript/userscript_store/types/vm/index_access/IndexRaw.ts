@@ -1,4 +1,4 @@
-import {Box} from "../box/mod";
+import Box from "../box/Box";
 import {IndexAccess} from "./mod";
 
 

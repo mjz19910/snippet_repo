@@ -1,7 +1,7 @@
-import {IBox as IBox} from "./IBox";
-import {BoxTemplate} from "./mod";
+import {BoxTemplate} from "./BoxTemplate";
+import Box from "./Box";
 
-export class PromiseBox extends BoxTemplate<Promise<IBox>> {
+export class PromiseBox extends BoxTemplate<Promise<Box>> {
 	type: "promise" = "promise";
 	await_type: "value" = "value";
 }
