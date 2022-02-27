@@ -3,9 +3,9 @@ import {IndexedFnBox} from "types/vm/box/IndexedFunctionBox";
 import InstructionTypeArrayBox from "types/vm/box/InstructionTypeArrayBox";
 import {StackVM} from "types/StackVM";
 import {IBox} from "types/vm/box/IBox";
-import {GlobalThisBox} from "types/vm/box/GlobalThisBox";
+import GlobalThisBox from "types/vm/box/GlobalThisBox";
 import ArrayBox from "types/vm/box/ArrayBox";
-import {IndexBox} from "types/vm/index_access/IndexedObject";
+import {IndexBox} from "types/vm/index_access/IndexBox";
 import {StackVMBox} from "types/vm/box/StackVMBox";
 import {WindowBox} from "types/vm/box/WindowBox";
 

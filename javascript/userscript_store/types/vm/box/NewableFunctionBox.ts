@@ -1,7 +1,7 @@
 import NewableFactory from "../NewableFunction";
 import Box from "./Box";
 import BoxTemplate from "./BoxTemplate";
-import {ObjectBox} from "./ObjectBox";
+import ObjectBox from "./ObjectBox";
 
 export default class NewableFunctionBox extends BoxTemplate<NewableFactory<{}>> {
 	type: "constructor_box" = "constructor_box";

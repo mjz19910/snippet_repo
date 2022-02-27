@@ -21,10 +21,11 @@ import ArrayBox from "types/vm/box/ArrayBox.js";
 import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
 import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox.js";
 import EmptyArrayBox from "types/vm/box/EmptyArrayBox.js";
-import {FunctionBox} from "types/vm/box/FunctionBox.js";
+import FunctionBox from "types/vm/box/FunctionBox.js";
 import NewableFunctionBox from "types/vm/box/NewableFunctionBox.js";
-import {NodeBox} from "types/vm/box/NodeBox.js";
+import NodeBox from "types/vm/box/NodeBox.js";
 import PromiseBox from "types/vm/box/PromiseBox.js";
+import {VoidBox} from "types/vm/box/VoidBox.js";
 
 /**@typedef {import("types/vm/box/mod.js").Box} Box */
 
@@ -85,21 +86,23 @@ import PromiseBox from "types/vm/box/PromiseBox.js";
 		}
 		/**@arg {Box[]} arr */
 		factory(...arr){
-			let valid_args={
-			state:0,
-			acc:[]
-		}
+			/**@type {CSSStyleSheetConstructorBox['args_type']} */
+			let args_state={
+				id:0,
+				value:[]
+			}
 		for(let i=0;i<arr.length;i++){
 			let val=arr[i];
 			if(typeof val != 'object')continue;
 			if(val === null)continue;
 			if(val.type != 'shape_box')continue;
-			valid_args={
-				acc:[val.value],
+			args_state={
+				value:[val.value],
 				state:1
 			}
 		}
-		let obj:CSSStyleSheet=new this.value(...valid_args.acc);
+		/**@type {CSSStyleSheet} */
+		let obj=new this.value(...args_state.value);
 		return new CSSStyleSheetBox(obj);
 		}
 	}
@@ -471,15 +474,24 @@ import PromiseBox from "types/vm/box/PromiseBox.js";
 		}
 	}
 	class BaseBox {
+		/**@type {'object_box'} */
+		type="object_box";
 		/**@type {import("api").NonNull<Box>} */
 		value;
 		/**@arg {import("api").NonNull<Box>} value */
 		constructor(value){
-			/**@type {this['value']|null} */
-			let vv=null;
-			switch(typeof vv){
+			/**@type {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} */
+			let vv=typeof value;
+			switch(typeof value){
+				case 'object':vv;break;
 				case 'bigint':vv;break;
-				case 'boolean':vv;break;
+				case 'string':case 'number':case 'boolean':case 'symbol':
+					this.value=value;
+					break;
+				case 'undefined':
+					this.value=value;
+					break;
+				default:value;break;
 			}
 			this.value=value;
 		}
@@ -662,6 +674,36 @@ import PromiseBox from "types/vm/box/PromiseBox.js";
 					let get_name=target_name;
 					let the_type=target_obj.type;
 					class TempBox extends BaseBox {
+						/**@arg {import("types/vm/box/mod.js").AsObject<Box>} v */
+						static does_box(v){
+							switch(typeof v){
+								case 'object':
+									if(!v.value)return false;
+									if(typeof v.value.value === 'object'){
+										let res_types=v.value.value;
+										return true;
+									} else if(typeof v.value.value === 'function') {
+										let res_types=v.value.value;
+										return true;
+									} else {
+										let ret=v.value.value;
+										return true;
+									}
+							}
+							return false;
+						}
+						/**@type {Box|null} */
+						m_as_box;
+						/**@arg {Box} value */
+						constructor(value){
+							if(value === null){
+								super(new VoidBox);
+								this.m_as_box=value;
+							} else {
+								super(value);
+								this.m_as_box=null;
+							}
+						}
 					}
 					/**@arg {Box} opt @arg {string} get_name */
 					function do_box_get(opt, get_name) {
@@ -672,22 +714,46 @@ import PromiseBox from "types/vm/box/PromiseBox.js";
 							case "array_box":{
 								let int_num=parseInt(get_name);
 								if(Number.isNaN(int_num))throw new Error("Can't parse number");
-								return new TempBox(opt.value[int_num]);
+								let res=opt.value[int_num];
+								return new TempBox(res);
 							}
-							case "constructor_box":return new TempBox(opt.value[get_name]);
-							case "function_box":return opt.value;
-							case "promise":return opt.value;
-							case "void":return opt.value;
-							case "object_box":return opt.value;
-							case "dom_value":return opt.value;
-							case "instance_box":return opt.value;
+							case "constructor_box":throw new Error("Unable to index");
+							case "function_box":throw new Error("Unable to index");
+							case "promise":throw new Error("Unable to index");
+							case "void":throw new Error("Unable to index type is void");
+							case "object_box":{
+								if(opt.extension === 'index'){
+									let res=opt.value[get_name];
+									return new TempBox(res);
+								}
+								if(opt) {
+									if(opt.inner_type === 'unit'){
+										console.info('is this (%o) really a unit (ie has no properties)', opt.value);
+										throw new Error("Unable to index unit object");
+									}
+									if(get_name in opt.value){
+										let int_num=parseInt(get_name);
+										if(Number.isNaN(int_num)){
+											throw new Error("Figure out how to type check index access to the window object");
+										}
+										let other_window=opt.value[int_num];
+										return new WindowBoxImpl(other_window);
+									}
+								}
+							}
+							case "dom_value":throw new Error("TODO: support dom_value");
+							case "instance_box":throw new Error("Unable to index instance yet");
 						}
 					}
 					/**@typedef {import("final/rebuild_the_universe_auto_v0.1.js").First<typeof the_type>} FC1 */
 					/**@typedef {import("final/rebuild_the_universe_auto_v0.1.js").RemoveFirst<typeof the_type>} FC2 */
 					let res=do_box_get(target_obj, target_name);
 					console.log('VM: get result', res);
-					this.push(res);
+					if(TempBox.does_box(res)){
+						this.push(new TempBox(res));
+					} else {
+						this.push(res);
+					}
 				} break;
 				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
 				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;

@@ -5,15 +5,15 @@ import CSSStyleSheetBox from "./CSSStyleSheetBox";
 export default class CSSStyleSheetConstructorBox extends BoxTemplate<typeof CSSStyleSheet> {
 	type: "constructor_box" = "constructor_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
-	args_type:{
+	args_type?:{
 		state:1,
-		acc:[options?: CSSStyleSheetInit | undefined]
+		value:[options?: CSSStyleSheetInit | undefined]
 	} | {
-		state:0,
-		acc:[],
+		id:0,
+		value:[],
 	} = {
-		acc:[],
-		state:0
+		value:[],
+		id:0
 	}
 	factory(...arr:Box[]){
 		let valid_args:{

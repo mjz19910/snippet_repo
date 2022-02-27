@@ -1,4 +1,4 @@
-import {MediaListBox} from "./MediaListBox";
+import MediaListBox from "./MediaListBox";
 import BoxTemplate from "./BoxTemplate";
 
 export default class CSSStyleSheetInitBox extends BoxTemplate<CSSStyleSheetInit> {
