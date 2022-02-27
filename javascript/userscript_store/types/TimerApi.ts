@@ -1,4 +1,8 @@
-import {MakeReplyData, ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutClearStrings, TimeoutMessageR, TimeoutSetR, TimeoutSetS, TimeoutSetStrings, TimerMessageTypes, WorkerReadyReply} from "rebuild_the_universe_auto_typed_v0.2";
+import {ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutMessageR, TimeoutSetR, TimeoutSetS, WorkerReadyReply} from "rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutClearStrings} from "TimeoutClearStrings";
+import {TimerMessageTypes} from "TimerMessageTypes";
+import {TimeoutSetStrings} from "TimeoutSetStrings";
+import {MakeReplyData} from "MakeReplyData";
 import {NoDataMsg} from "NoDataMsg";
 import {NumInfoMsg} from "NumInfoMsg";
 import {RefVarMsg} from "RefVarMsg";

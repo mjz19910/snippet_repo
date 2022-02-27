@@ -1,7 +1,7 @@
 import {WorkerAsyncMessageTy} from "./WorkerAsyncMessageTy";
 import {TimeoutFireInfoTy} from "./TimeoutFireInfoTy";
 import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy";
-import {ReplyTypes} from "./rebuild_the_universe_auto_typed_v0.2";
+import {ReplyTypes} from "./ReplyTypes";
 
 export type TimerMessageTypesTy = {
 	async: WorkerAsyncMessageTy;

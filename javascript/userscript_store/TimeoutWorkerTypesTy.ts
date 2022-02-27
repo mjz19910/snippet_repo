@@ -3,7 +3,7 @@ import {TimeoutMessageRTy} from "./TimeoutMessageRTy";
 import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy";
 import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy";
 import {TimeoutClearInfoTy} from "./TimeoutClearInfoTy";
-import {WorkerReplyTypes} from "./rebuild_the_universe_auto_typed_v0.2";
+import {WorkerReplyTypes} from "./WorkerReplyTypes";
 
 export type TimeoutWorkerTypesTy = {
 	reply: WorkerReplyTypes;
