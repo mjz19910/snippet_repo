@@ -525,6 +525,7 @@
 				case 'cast_object': {
 					let obj=this.pop();
 					if(!obj)throw new Error("Invalid");
+					console.log(...this.stack, obj);
 					if(typeof obj!='object')throw new Error("Invalid");
 					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValue} VMIndexedValue */
 					/**@type {(v:any)=>v is VMIndexedValue} */
@@ -562,7 +563,7 @@
 						throw new Error("Invalid");
 					}
 					let res=target_obj.value[target_name];
-					debugger;
+					console.log('VM: get result', res);
 					this.push(res);
 				} break;
 				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
@@ -2334,8 +2335,8 @@
 			cast_object,object_index;
 			push,background_audio;
 			get;
-			push,play;
 			cast_object,callable_index;
+			push,play;
 			call,int(2);
 			cast_object,callable_index;
 			push,then;
