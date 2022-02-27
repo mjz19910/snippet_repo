@@ -7,7 +7,7 @@ import {IndexedObject} from "../types/vm/IndexedObject";
 import {IndexedFnBox} from "../types/vm/IndexedFunctionBox";
 import {InstructionTypeArrayBox} from "../types/vm/InstructionTypeArrayBox";
 import {IStackVM} from "../types/vm/IStackVM";
-import {Boxed} from "../types/vm/Boxed";
+import {Box} from "../types/vm/box/Boxed";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
@@ -1410,9 +1410,9 @@ class SimpleStackVMParser {
 }
 class SimpleStackVM implements IStackVM {
 	instructions: InstructionType[];
-	stack: Boxed[];
+	stack: Box[];
 	instruction_pointer: number;
-	return_value: Boxed;
+	return_value: Box;
 	running: boolean;
 	constructor(instructions: InstructionType[]) {
 		this.instructions = instructions;
@@ -1427,13 +1427,13 @@ class SimpleStackVM implements IStackVM {
 		this.return_value = void 0;
 		this.running = false;
 	}
-	push(value: Boxed) {
+	push(value: Box) {
 		this.stack.push(value);
 	}
 	pop() {
 		return this.stack.pop();
 	}
-	pop_arg_count(arg_count:number):Boxed[] {
+	pop_arg_count(arg_count:number):Box[] {
 		let ret=[];
 		for(let i = 0; i < arg_count; i++) {
 			if(this.stack.length <= 0){
@@ -1443,7 +1443,7 @@ class SimpleStackVM implements IStackVM {
 		}
 		return ret;
 	}
-	run(...run_arguments: Boxed[]) {
+	run(...run_arguments: Box[]) {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let cur_instruction = this.instructions[this.instruction_pointer];

@@ -1,4 +1,3 @@
-import ValueBoxes from "../ValueBoxes";
-import {Primitives as Primitives} from "../Primitives";
+import {Box as IBox} from "./mod";
 
-export type Boxed = ValueBoxes | Primitives | null;
+export type Box = IBox;

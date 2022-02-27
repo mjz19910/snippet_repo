@@ -1,14 +1,14 @@
 import {NonNull} from "api";
 import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
-import {VMBoxedInstructionType} from "./types/vm/VMBoxedInstructionType";
+import {InstructionTypeBox} from "./types/vm/VMBoxedInstructionType";
 import {InstructionType} from "./types/vm/InstructionType";
 import {WindowBox} from "./types/vm/WindowBox";
 import {IStackVMBox} from "./types/vm/IStackVMBox";
 import {IndexedObject} from "./types/vm/IndexedObject";
 import {IndexedFnBox} from "./types/vm/IndexedFunctionBox";
 import {NewableFunctionBox} from "./types/vm/NewableFunctionBox";
-import {Boxed} from "./types/vm/Boxed";
+import {Box} from "./types/vm/box/Boxed";
 
 class RemoteWorkerState {
 
@@ -1939,7 +1939,7 @@ class EventHandlerDispatch<T> {
 }
 abstract class AbstractVM {
 	abstract execute_instruction(instruction: InstructionType): void;
-	abstract run(): Boxed;
+	abstract run(): Box;
 }
 class BaseVMCreate extends AbstractVM {
 	flags: Map<string, boolean>;
@@ -1985,7 +1985,7 @@ class BaseVMCreate extends AbstractVM {
 			case 'halt'/*Running*/: this.running = false; break;
 		}
 	}
-	run(): Boxed {
+	run(): Box {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let instruction = this.instructions[this.instruction_pointer];
@@ -2013,8 +2013,8 @@ const LOG_LEVEL_VERBOSE = 4;
 const LOG_LEVEL_TRACE = 5;
 void LOG_LEVEL_TRACE;
 class BaseStackVM extends BaseVMCreate {
-	stack: Boxed[];
-	return_value: Boxed;
+	stack: Box[];
+	return_value: Box;
 	constructor(instructions: InstructionType[]) {
 		super(instructions);
 		this.stack = [];
@@ -2025,10 +2025,10 @@ class BaseStackVM extends BaseVMCreate {
 		this.stack.length = 0;
 		this.return_value = void 0;
 	}
-	push(value: Boxed) {
+	push(value: Box) {
 		this.stack.push(value);
 	}
-	pop(): Boxed {
+	pop(): Box {
 		if(this.stack.length === 0) {
 			throw new Error("stack underflow");
 		}
@@ -2105,7 +2105,7 @@ class BaseStackVM extends BaseVMCreate {
 					if(this.is_in_instructions(target)) {
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
-					let instruction_modify = new VMBoxedInstructionType(this.instructions[target]);
+					let instruction_modify = new InstructionTypeBox(this.instructions[target]);
 					let value = this.pop();
 					if(typeof value === 'string') {
 						instruction_modify.value[offset] = value;
@@ -2132,7 +2132,7 @@ class BaseStackVM extends BaseVMCreate {
 			default: super.execute_instruction(instruction); break;
 		}
 	}
-	run(): Boxed {
+	run(): Box {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let instruction = this.instructions[this.instruction_pointer];
@@ -2183,7 +2183,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 		return super.run();
 	}
 }
-type FormattableTypes = string | (() => void) | ((err: Boxed) => void);
+type FormattableTypes = string | (() => void) | ((err: Box) => void);
 class SimpleStackVMParser {
 	/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
 	static parse_int_arg(cur_item: string | number) {
@@ -2207,7 +2207,7 @@ class SimpleStackVMParser {
 				console.log("%s", 'unsupported format spec %' + format_type);
 		}
 	}
-	static parse_current_instruction(cur: (number | string | ((err: Boxed) => void))[], format_list: FormattableTypes[]) {
+	static parse_current_instruction(cur: (number | string | ((err: Box) => void))[], format_list: FormattableTypes[]) {
 		let arg_loc = 1;
 		let arg = cur[arg_loc];
 		while(arg) {
@@ -2971,7 +2971,7 @@ class DomValueBox {
 
 }
 class DomBuilderVM extends BaseStackVM {
-	exec_stack: ([Boxed[], InstructionType[]])[];
+	exec_stack: ([Box[], InstructionType[]])[];
 	jump_instruction_pointer: number | null;
 	constructor(instructions: InstructionType[]) {
 		super(instructions);
@@ -3213,7 +3213,7 @@ class AutoBuy {
 			global;push,removeEventListener;push,click;this;
 				call,int(2);
 			drop
-			`, [function() {console.log('play success')}, function(err: Boxed) {console.log(err)}]);
+			`, [function() {console.log('play success')}, function(err: Box) {console.log(err)}]);
 		let handler = new EventHandlerVMDispatch(instructions, this);
 		globalThis.addEventListener('click', handler);
 		is_in_ignored_from_src_fn = false;

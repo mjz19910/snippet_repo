@@ -1,7 +1,10 @@
+import {Primitives} from "../Primitives";
 import {TypeOfResult} from "../TypeOfResult";
+import ValueBoxes from "../ValueBoxes";
 
+export type Box = ValueBoxes | Primitives | null;
 
-export class Box<T> {
+export class IBoxImpl<T> {
 	constructor(value: T) {
 		this.value = value;
 	}

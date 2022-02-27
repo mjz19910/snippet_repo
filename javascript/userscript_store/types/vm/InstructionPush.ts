@@ -1,4 +1,4 @@
-import {Boxed as Boxed} from "./Boxed";
+import {Box as Box} from "./box/Boxed";
 
 // --- Instruction ---
-export type InstructionPush = ['push', ...Boxed[]];
+export type InstructionPush = ['push', ...Box[]];

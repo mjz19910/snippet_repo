@@ -1,9 +1,9 @@
-import {VMObjectTypes} from "../VMObjectTypes";
-import {FunctionBoxes} from "../FunctionBoxes";
+import {ObjectBoxes} from "../ObjectBoxes";
+import {FunctionBoxes} from "./FunctionBoxes";
 import {PromiseBox} from "../PromiseBox";
-import {GlobalThisBox} from "../GlobalThisBox";
+import {GlobalThisBox} from "./GlobalThisBox";
 import {WindowBox} from "../WindowBox";
-import {FunctionReturnBoxes} from "../FunctionReturnBoxes";
+import {FunctionReturnBoxes} from "./FunctionReturnBoxes";
 import {PromiseTypeBoxes} from "../PromiseTypeBoxes";
 import {ArgumentTypeBoxes} from "./ArgumentTypeBoxes";
 import {ConstructorBoxes} from "./ConstructorBoxes";
@@ -12,7 +12,7 @@ import {ArrayBoxes} from "./ArrayBoxes";
 
 export type BoxesWithValue =
 	ArrayBoxes |
-	VMObjectTypes |
+	ObjectBoxes |
 	InstanceBoxes |
 	PromiseBox |
 	ConstructorBoxes |

@@ -1,4 +1,4 @@
-import {InstructionBreakpoint} from "./InstructionBreakpoint";
+import {InstructionBreakpoint} from "../../InstructionBreakpoint";
 
 
 export type IDebugInstructionType = InstructionBreakpoint;

@@ -1,7 +1,7 @@
-import {Boxed as Boxed} from "./Boxed";
-import {Box} from "./box/mod";
+import {Box as Box} from "./box/Boxed";
+import {IBoxImpl} from "./box/mod";
 
-export class PromiseBox extends Box<Promise<Boxed>> {
+export class PromiseBox extends IBoxImpl<Promise<Box>> {
 	type: "promise" = "promise";
 	await_type: "value" = "value";
 }

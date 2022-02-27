@@ -1,5 +1,5 @@
-import {Indexed} from "./vm";
-import {Boxed as Boxed} from "./Boxed";
+import {IndexAccess} from "./index_access/mod";
+import {Box} from "./box/Boxed";
 
 
-export type IndexedObjectValue = Indexed<Boxed>;
+export type IndexedObjectValue = IndexAccess<Box>;
