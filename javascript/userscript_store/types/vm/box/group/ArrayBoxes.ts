@@ -1,6 +1,6 @@
-import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
-import {EmptyArrayBox} from "./EmptyArrayBox";
-import {ArrayBox} from "./ArrayBox";
+import {InstructionTypeArrayBox} from "../InstructionTypeArrayBox";
+import {EmptyArrayBox} from "../EmptyArrayBox";
+import {ArrayBox} from "../ArrayBox";
 
 /* --- VM Value (classes) ---
 VMBoxedFunction, VMNewableFunction, VMBoxedCSSStyleSheetConstructor

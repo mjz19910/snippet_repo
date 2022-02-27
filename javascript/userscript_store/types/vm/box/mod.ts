@@ -1,6 +1,62 @@
+import {ArrayBox} from "./ArrayBox";
+import {CallableReturnPromiseBox} from "./CallableReturnPromiseBox";
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
+import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";
+import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox";
+import {CSSStyleSheetPromiseBox} from "./CSSStyleSheetPromiseBox";
+import {EmptyArrayBox} from "./EmptyArrayBox";
+import {FunctionBox} from "./FunctionBox";
+import {FunctionReturnsVoidPromiseBox} from "./CallableReturnsVoidPromiseBox";
+import {GlobalThisBox} from "./GlobalThisBox";
+import {IndexedFnBox} from "./IndexedFunctionBox";
+import {IndexedObject} from "../index_access/IndexedObject";
+import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
+import {MediaListBox} from "./MediaListBox";
+import {NewableFunctionBox} from "./NewableFunctionBox";
+import {NodeBox} from "./NodeBox";
+import {ObjectBox} from "./ObjectBox";
 import {Primitives} from "../Primitives";
+import {PromiseBox} from "./PromiseBox";
+import {PromiseTypeBoxes} from "./PromiseTypeBoxes";
+import {StackVMBox} from "./StackVMBox";
 import {TypeOfResult} from "../TypeOfResult";
-import ValueBoxes from "./ValueBoxes";
+import {VoidBox} from "./VoidBox";
+import {WindowBox} from "./WindowBox";
+
+type ValueBoxes =
+// function result
+CSSStyleSheetInitBox |
+// array
+EmptyArrayBox |
+ArrayBox |
+InstructionTypeArrayBox |
+// constructor function
+CSSStyleSheetConstructorBox |
+// function
+FunctionBox |
+NewableFunctionBox |
+FunctionReturnsVoidPromiseBox |
+CallableReturnPromiseBox |
+// return type
+CSSStyleSheetPromiseBox |
+// global
+GlobalThisBox |
+WindowBox |
+// object instances
+StackVMBox |
+NodeBox |
+CSSStyleSheetBox |
+MediaListBox |
+// object
+IndexedFnBox |
+IndexedObject |
+ObjectBox |
+// promise box
+PromiseBox |
+// promise types
+PromiseTypeBoxes |
+// No value (Void)
+VoidBox;
 
 export type IBox = ValueBoxes | Primitives | null;
 
