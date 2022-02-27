@@ -1,6 +1,7 @@
 import {fire_timer} from "./fire_timer";
 import {RemoteTimerState} from "./RemoteTimerState";
-import {timer_nop, TIMER_SINGLE, TIMER_REPEATING, TimerTypeTag, TIMER_TAG_COUNT} from "./rebuild_the_universe_auto_typed_v0.1";
+import {TIMER_SINGLE, TIMER_REPEATING, TimerTypeTag, TIMER_TAG_COUNT} from "./rebuild_the_universe_auto_typed_v0.1";
+import {timer_nop} from "./timer_nop";
 import {RemoteWorkerMessage206} from "./RemoteWorkerMessage206";
 import {RemoteWorkerMessage205} from "./RemoteWorkerMessage205";
 import {RemoteWorkerMessage102} from "./RemoteWorkerMessage102";
