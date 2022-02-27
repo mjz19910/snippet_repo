@@ -31,6 +31,22 @@ import {ReplyClearAnyTy} from "./ReplyClearAnyTy";
 import {ReplyMessage1Ty} from "./ReplyMessage1Ty";
 import {ReplyMessage2Ty} from "./ReplyMessage2Ty";
 import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy";
+import {ReplyToWorkerTy} from "./ReplyToWorkerTy";
+import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy";
+import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy";
+import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy";
+import {WorkerReplyTypesTy} from "./WorkerReplyTypesTy";
+import {ReplyClearTypes} from "./ReplyClearTypes";
+import {ReplySetTypes} from "./ReplySetTypes";
+import {TimeoutFireInfoTy} from "./TimeoutFireInfoTy";
+import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy";
+import {TimeoutClearInfoTy} from "./TimeoutClearInfoTy";
+import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy";
+import {TimerMessageTypesTy} from "./TimerMessageTypesTy";
+import {TimeoutSetStringsTy} from "./TimeoutSetStringsTy";
+import {TimeoutClearStringsTy} from "./TimeoutClearStringsTy";
+import {LocalOrRemoteIdVarType} from "./LocalOrRemoteIdVarType";
+import {MakeReplyDataType} from "./MakeReplyDataType";
 
 export const TIMER_SINGLE = 1;
 export const TIMER_REPEATING = 2;
@@ -58,100 +74,19 @@ export const ReplyClearAny = 307;
 export const ReplyMessage1 = 401;
 export const ReplyMessage2 = 402;
 export const ReplyFromWorker = 500;
-const ReplyToWorker = 600;
-export type ReplyToWorkerTy = typeof ReplyToWorker;
-const TimeoutSingleReply = 700;
-export type TimeoutSingleReplyTy = typeof TimeoutSingleReply;
-const TimeoutRepeatingReply = 701;
-export type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;
+export const ReplyToWorker = 600;
+export const TimeoutSingleReply = 700;
+export const TimeoutRepeatingReply = 701;
 export const TimeoutSetTypes = 1001;
-export type TimeoutSetTypesTy = typeof TimeoutSetTypes;
 export const TimeoutSetStringS = "setTimeout";
 export const TimeoutSetStringR = "setInterval";
 export const TimeoutClearStringS = "clearTimeout";
 export const TimeoutClearStringR = "clearInterval";
-export type WorkerReplyTypesTy = {
-	single: TimeoutSingleReplyTy;
-	repeating: TimeoutRepeatingReplyTy;
-};
-type ReplyClearTypes = {
-	single: ReplyClearSingleTy;
-	repeating: ReplyClearRepeatingTy;
-	any: ReplyClearAnyTy;
-};
-type ReplySetTypes = {
-	single: ReplySetSingleTy;
-	repeating: ReplySetRepeatingTy;
-};
-export type TimeoutFireInfoTy = {
-	single: TimeoutFireSTy;
-	repeating: TimeoutFireRTy;
-};
-type TimeoutSetInfoTy = {
-	single: TimeoutSetSTy;
-	repeating: TimeoutSetRTy;
-};
-type TimeoutClearInfoTy = {
-	single: TimeoutClearSTy;
-	repeating: TimeoutClearRTy;
-	any: TimeoutClearATy;
-};
-export type TimeoutWorkerTypesTy = {
-	reply: WorkerReplyTypes;
-	update_message_handler: WorkerUpdateMessageHandlerTy;
-	ready: TimeoutMessageRTy;
-	set: TimeoutSetInfoTy;
-	clear: TimeoutClearInfoTy;
-	set_types: TimeoutSetTypesTy;
-};
-export type TimerMessageTypesTy = {
-	async: WorkerAsyncMessageTy;
-	reply: ReplyTypes;
-	fire: TimeoutFireInfoTy;
-	worker: TimeoutWorkerTypesTy;
-};
-export type TimeoutSetStringsTy = {
-	single: typeof TimeoutSetStringS;
-	repeating: typeof TimeoutSetStringR;
-};
-export type TimeoutClearStringsTy = {
-	single: typeof TimeoutClearStringS;
-	repeating: typeof TimeoutClearStringR;
-};
-type VarRef = {
-	var: string;
-};
-type RefVarInfo = {
-	t: number;
-	v: VarRef;
-};
-export type RefVarMsg = {
-	t: number;
-	v: RefVarInfo;
-};
-type NumInfo = {
-	t: number;
-	v: number;
-};
-export type NumInfoMsg = {
-	t: number;
-	v: NumInfo;
-};
-export type NoDataMsg = {
-	t: number;
-};
-export type LocalOrRemoteIdVarType = {
-	var: 'local_id' | 'remote_id';
-};
-export type MakeReplyDataType = {
-	t: number;
-	v: LocalOrRemoteIdVarType | number;
-};
 class WorkerFireReplyTypes implements WorkerReplyTypesTy {
 	single: TimeoutSingleReplyTy = TimeoutSingleReply
 	repeating: TimeoutRepeatingReplyTy = TimeoutRepeatingReply
 }
-class WorkerReplyTypes {
+export class WorkerReplyTypes {
 	fire = new WorkerFireReplyTypes;
 }
 class ReplySetMessages implements ReplySetTypes {
@@ -163,7 +98,7 @@ class ReplyClearMessages implements ReplyClearTypes {
 	repeating: ReplyClearRepeatingTy = ReplyClearRepeating
 	any: ReplyClearAnyTy = ReplyClearAny
 }
-class ReplyTypes {
+export class ReplyTypes {
 	msg1: ReplyMessage1Ty = ReplyMessage1;
 	msg2: ReplyMessage2Ty = ReplyMessage2;
 	from_worker: ReplyFromWorkerTy = ReplyFromWorker;

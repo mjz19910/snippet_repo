@@ -1,4 +1,7 @@
-import {MakeReplyData, NoDataMsg, NumInfoMsg, RefVarMsg, ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutClearStrings, TimeoutMessageR, TimeoutSetR, TimeoutSetS, TimeoutSetStrings, TimerMessageTypes, WorkerReadyReply} from "rebuild_the_universe_auto_typed_v0.2";
+import {MakeReplyData, ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutClearStrings, TimeoutMessageR, TimeoutSetR, TimeoutSetS, TimeoutSetStrings, TimerMessageTypes, WorkerReadyReply} from "rebuild_the_universe_auto_typed_v0.2";
+import {NoDataMsg} from "NoDataMsg";
+import {NumInfoMsg} from "NumInfoMsg";
+import {RefVarMsg} from "RefVarMsg";
 
 export class TimerApi {
 	msg_types:TimerMessageTypes = new TimerMessageTypes;
