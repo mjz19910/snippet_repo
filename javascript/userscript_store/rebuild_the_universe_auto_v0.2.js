@@ -27,6 +27,7 @@ import NewableFunctionBox from "types/vm/box/NewableFunctionBox.js";
 import NodeBox from "types/vm/box/NodeBox.js";
 import PromiseBox from "types/vm/box/PromiseBox.js";
 import VoidBox from "types/vm/box/VoidBox.js";
+import VoidPromiseBox from "types/vm/box/VoidPromiseBox.js";
 import WindowBox from "types/vm/box/WindowBox.js";
 
 /**@typedef {import("types/vm/box/mod.js").Box} Box */
@@ -2641,22 +2642,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 				}
 			}
 			let bound_this=this;
-			class VMBoxedVoidPromiseR {
-				/**@type {"promise"} */
-				type="promise";
-				return_type=null;
-				await_type=null;
-				/**@type {"void_type"} */
-				promise_return_type_special="void_type";
-				/**@arg {"function"} _s */
-				get_matching_typeof(_s){
-					return null;
-				}
-				/**@arg {any} value */
-				constructor(value){
-					this.value=value;
-				}
-			}
 			/**@type {DomExecDescription[]} */
 			let make_css_arr=[
 				[
@@ -2665,7 +2650,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 						l_log_if(LOG_LEVEL_INFO, 'void input', a);
 						let ret=css_promise_runner.call(bound_this, ...a);
 						l_log_if(LOG_LEVEL_INFO, 'void out', ret);
-						return new VMBoxedVoidPromiseR(ret);
+						return new VoidPromiseBoxImpl(ret);
 					})
 				],
 				[
