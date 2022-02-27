@@ -15,19 +15,20 @@
 Copyright 2019-2021 @mjz19910
 */
 /* eslint-disable no-undef */
-/**@typedef {import("./DebugAPI.user").DebugAPI} _DebugAPI */
-
 class HexRandomDataGenerator {
 	constructor() {
 		this.random_num = Math.random();
 		this.used_bits = 0;
 		/**@type {{value:number,bit_count:number}} */
-		this.cur_part = {};
+		this.cur_part = {value: 0,bit_count: 0};
 	}
 	reset() {
 		this.random_num = Math.random();
 		this.used_bits = 0;
 	}
+	/**
+	 * @param {number} bit_count
+	 */
 	next(bit_count) {
 		let random_size = 1 << bit_count;
 		let num = ~~(this.random_num * random_size);
@@ -37,8 +38,11 @@ class HexRandomDataGenerator {
 		return num;
 	}
 	reset_part() {
-		this.cur_part = null;
+		this.cur_part = {value: 0,bit_count: 0};
 	}
+	/**
+	 * @param {number} bit_count
+	 */
 	next_part(bit_count) {
 		let cur_num = this.next(bit_count);
 		if(this.used_bits >= 48) {
@@ -74,11 +78,11 @@ class HexRandomDataGenerator {
 let random_data_generator = new HexRandomDataGenerator;
 class EventListenerValue {
 	/**
-	 * @param {GenericEventListenerOrEventListenerObject|null} callback
+	 * @param {import("final/DebugApi/GenericEventListenerOrEventListenerObject.js").GenericEventListenerOrEventListenerObject|null} callback
 	 * @param {boolean | EventListenerOptions} options
 	 */
 	constructor(callback, options) {
-		/**@type {GenericEventListenerOrEventListenerObject|null} */
+		/**@type {import("final/DebugApi/GenericEventListenerOrEventListenerObject.js").GenericEventListenerOrEventListenerObject|null} */
 		this.callback = callback;
 		/**@type {boolean | EventListenerOptions} */
 		this.options = options;
@@ -101,11 +105,16 @@ class GenericEvent {
 	}
 }
 class GenericDataEvent extends GenericEvent {
+	/**
+	 * @param {string} type
+	 * @param {any} data
+	 */
 	constructor(type, data) {
 		super(type);
 		this.data = data;
 	}
 }
+/**@typedef {import("final/DebugApi/GenericEventListenerOrEventListenerObject.js").GenericEventListenerOrEventListenerObject} GenericEventListenerOrEventListenerObject */
 window.GenericDataEvent = GenericDataEvent;
 class GenericEventTarget {
 	constructor() {
@@ -156,7 +165,7 @@ class GenericEventTarget {
 		let event_type = event.type;
 		let cur_event_vec = this._events.get(event_type);
 		if(!cur_event_vec)
-			return;
+			return false;
 		let cur_event_vec_owned = cur_event_vec.slice();
 		let can_handle = false;
 		for(let i = 0;i < cur_event_vec_owned.length;i++) {
@@ -180,10 +189,13 @@ class GenericEventTarget {
 const static_event_target = new GenericEventTarget;
 class Dumper {
 	/**@type {null} */
-	dump_value = null;
+	m_dump_value = null;
+	/**
+	 * @param {null} value
+	 */
 	dump_value(value) {
-		this.dump_value = value;
-		this.dump_value = null;
+		this.m_dump_value = value;
+		this.m_dump_value = null;
 	}
 }
 const local_dumper = new Dumper;
@@ -192,13 +204,22 @@ class RustSimpleTokenizer {
 		this.index = 0;
 		this.source = null;
 	}
+	/**
+	 * @param {any} str
+	 */
 	reset(str) {
 		this.index = 0;
 		this.source = str;
 	}
+	/**
+	 * @param {number} tok_len
+	 */
 	advance(tok_len) {
 		this.index += tok_len;
 	}
+	/**
+	 * @param {number} char_code
+	 */
 	inIdentRange(char_code) {
 		// Regex: /[a-zA-Z_]/
 		if(char_code >= 0x41 && char_code <= 0x5a) {
@@ -211,6 +232,9 @@ class RustSimpleTokenizer {
 			return true;
 		return false;
 	}
+	/**
+	 * @param {any} char_code
+	 */
 	isWhitespaceRange(char_code) {
 		// Regex: /[ \t\n]/
 		switch(char_code) {
@@ -223,6 +247,9 @@ class RustSimpleTokenizer {
 		}
 		return false;
 	}
+	/**
+	 * @param {any} str
+	 */
 	exec(str) {
 		let separator_vec = "{}()<>";
 		let operator_vec = ".,=:";
@@ -277,6 +304,13 @@ class RustSimpleTokenizer {
 		}
 		return tok_arr;
 	}
+	/**@returns {never} */
+	bad_state(){
+		throw new Error("BadState");
+	}
+	/**
+	 * @param {any[][]} tok_arr
+	 */
 	into_tt(tok_arr) {
 		let parse_enum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 		//let parse_enum_invalid = parse_enum[0];
@@ -291,17 +325,21 @@ class RustSimpleTokenizer {
 		let parse_enum_token_tree_body = parse_enum[9];
 		let separator_open_vec = "{}"[0] + "()"[0] + "<>"[0];
 		let separator_close_vec = "{}"[1] + "()"[1] + "<>"[1];
+		/**@type {any[][]} */
 		let tt_stack = [];
+		/**@type {any[]|undefined} */
 		let tt_item = [];
 		let cur_tt_vec;
 		for(let x of tok_arr) {
 			if(x[0] !== parse_enum_separator) {
-				tt_item.push(x);
+				if(tt_item)tt_item.push(x);
+				else throw new Error("Bad state");
 				continue;
 			}
 			let cur = x[1];
 			if(separator_open_vec.includes(cur)) {
-				tt_stack.push(tt_item);
+				if(tt_item)tt_stack.push(tt_item);
+				else throw new Error("Bad state");
 				tt_item = [parse_enum_token_tree_item, x];
 				tt_stack.push(tt_item);
 				tt_item = [parse_enum_token_tree_body];
@@ -312,13 +350,17 @@ class RustSimpleTokenizer {
 					throw SyntaxError('unbalanced token tree');
 				}
 				cur_tt_vec = tt_stack.pop();
-				cur_tt_vec.push(tt_item);
-				cur_tt_vec.push(x);
+				if(cur_tt_vec)cur_tt_vec.push(tt_item);
+				else this.bad_state();
+				if(cur_tt_vec)cur_tt_vec.push(x);
+				else this.bad_state();
 				tt_item = tt_stack.pop();
-				tt_item.push(cur_tt_vec);
+				if(tt_item)tt_item.push(cur_tt_vec);
+				else this.bad_state();
 				continue;
 			}
-			tt_item.push(x);
+			if(tt_item)tt_item.push(x);
+			else this.bad_state();
 		}
 		if(tt_stack.length) {
 			throw SyntaxError('unexpected eof');
@@ -328,6 +370,9 @@ class RustSimpleTokenizer {
 }
 class RustSimpleParser {
 	tokenizer = new RustSimpleTokenizer;
+	/**
+	 * @param {string} str
+	 */
 	simple_type_info(str) {
 		// let iter_index = 0;
 		this.tokenizer.reset(str);
@@ -344,18 +389,31 @@ class RustSimpleParser {
 		return ret;
 	}
 }
+class JSParseError extends Error {
+	stack="JSParseError";
+	/**@arg {string} message */
+	constructor(message){
+		super(message);
+		Error.captureStackTrace(this, this.constructor);
+	}
+}
 class SimpleJavascriptParser {
 	token_generator = null;
 	ecma_262_section_12_factory() {
 		let ecma_sections = [];
 		class ecma_base {
+			/**@arg {{export(...d:[ecma_base, string, string[]]):void}} root */
 			static _attach(root) {
-				let exports = Object.getOwnPropertyNames(this.prototype);
+				let eXports = Object.getOwnPropertyNames(this.prototype);
 				let ecma_section_name = this.name.slice(5).replaceAll('_', '.');
-				root.export(this, ecma_section_name, exports);
+				root.export(this, ecma_section_name, eXports);
 			}
 		}
 		class ecma_12_2 extends ecma_base {
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			WhiteSpace(str, index) {
 				if(str[index] === ' ') {
 					return ['WhiteSpace', 1];
@@ -373,6 +431,10 @@ class SimpleJavascriptParser {
 					return this._the;
 				this._the = new this;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			LineTerminator(str, index) {
 				let len = 0;
 				if(str[index] === '\r')
@@ -394,9 +456,14 @@ class SimpleJavascriptParser {
 		}
 		ecma_sections.push(ecma_12_3);
 		class ecma_12_4 extends ecma_base {
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			Comment(str, index) {
 				let ml_len = this.MultiLineComment(str, index);
 				let sl_len = this.SingleLineComment(str, index);
+				if(!ml_len)throw new JSParseError("no multiline");
 				if(ml_len[1] > 0) {
 					return ml_len;
 				}
@@ -405,6 +472,10 @@ class SimpleJavascriptParser {
 				}
 				return [null, 0];
 			}
+			/**
+			 * @param {string} str
+			 * @param {number} index
+			 */
 			MultiLineComment(str, index) {
 				let off = 0;
 				if(str.slice(index, index + 2) === '/*') {
@@ -423,6 +494,10 @@ class SimpleJavascriptParser {
 				}
 				return [null, 0];
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {number} index
+			 */
 			MultiLineCommentChars(str, index) {
 				this.dep ??= 0;
 				let slen = 0;
@@ -459,6 +534,10 @@ class SimpleJavascriptParser {
 				this.dep--;
 				return slen;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {number} index
+			 */
 			PostAsteriskCommentChars(str, index) {
 				let idxoff = 0;
 				let cxlen = this.MultiLineNotForwardSlashOrAsteriskChar(str, index + idxoff);
@@ -479,18 +558,30 @@ class SimpleJavascriptParser {
 				}
 				return idxoff;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			MultiLineNotAsteriskChar(str, index) {
 				if(str[index] !== '*') {
 					return 1;
 				}
 				return 0;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			MultiLineNotForwardSlashOrAsteriskChar(str, index) {
 				if(str[index] === '*' || str[index] === '/') {
 					return 0;
 				}
 				return 1;
 			}
+			/**
+			 * @param {string} str
+			 * @param {number} index
+			 */
 			SingleLineComment(str, index) {
 				if(str.slice(index, index + 2) === '//') {
 					let comment_length = this.SingleLineCommentChars(str, index + 2);
@@ -498,6 +589,10 @@ class SimpleJavascriptParser {
 				}
 				return [null, 0];
 			}
+			/**
+			 * @param {string | any[]} str
+			 * @param {number} index
+			 */
 			SingleLineCommentChars(str, index) {
 				let s_index = index;
 				while(str[s_index] !== '\n') {
@@ -511,6 +606,10 @@ class SimpleJavascriptParser {
 		}
 		ecma_sections.push(ecma_12_4);
 		class ecma_12_5 extends ecma_base {
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			CommonToken(str, index) {
 				let cur = null
 				, type = null
@@ -528,12 +627,20 @@ class SimpleJavascriptParser {
 		}
 		ecma_sections.push(ecma_12_5);
 		class ecma_12_6 extends ecma_base {
+			/**
+			 * @param {string[]} str
+			 * @param {number} index
+			 */
 			PrivateIdentifier(str, index) {
 				if(str[0] !== '#')
 					return [null, 0];
 				let cur = this.IdentifierName(src, index + 1);
 				return cur[1] + 1;
 			}
+			/**
+			 * @param {any} str
+			 * @param {number} index
+			 */
 			IdentifierName(str, index) {
 				let ids = this.IdentifierStart(str, index);
 				if(ids > 0) {
@@ -548,12 +655,20 @@ class SimpleJavascriptParser {
 				}
 				return [null, 0];
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			IdentifierStart(str, index) {
 				if(str[index].match(/[a-zA-Z$_]/)) {
 					return 1;
 				}
 				return 0;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			IdentifierPart(str, index) {
 				if(str[index].match(/[a-zA-Z$_0-9]/)) {
 					return 1;
@@ -563,6 +678,9 @@ class SimpleJavascriptParser {
 		}
 		ecma_sections.push(ecma_12_6);
 		class ecma_12_7 extends ecma_base {
+			/**
+			 * @param {any} root
+			 */
 			static _attach(root) {
 				let test_class = new ecma_12_7();
 				// import the instance variables by constructing the class
@@ -572,6 +690,10 @@ class SimpleJavascriptParser {
 				}
 				super._attach(root);
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			Punctuator(str, index) {
 				var len = 0, type = null, ret;
 				ret = this.OptionalChainingPunctuator(str, index);
@@ -586,6 +708,10 @@ class SimpleJavascriptParser {
 				}
 				return [type, len];
 			}
+			/**
+			 * @param {string} str
+			 * @param {number} index
+			 */
 			OptionalChainingPunctuator(str, index) {
 				if(str.slice(index, index + 2) === '?.') {
 					let num_len = this.DecimalDigit(str, index + 2);
@@ -597,6 +723,10 @@ class SimpleJavascriptParser {
 				return [null, 0];
 			}
 			_OtherPunctuator_vec = "{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
+			/**
+			 * @param {string} str
+			 * @param {any} index
+			 */
 			OtherPunctuator(str, index) {
 				let char_length = 0;
 				for(let punctuator of this._OtherPunctuator_vec) {
@@ -609,6 +739,10 @@ class SimpleJavascriptParser {
 				return ["OtherPunctuator", char_length];
 			}
 			_DivPunctuator_vec = "/ /=".split(' ');
+			/**
+			 * @param {string} str
+			 * @param {any} index
+			 */
 			DivPunctuator(str, index) {
 				let char_length = 0;
 				let max_len = 2;
@@ -624,6 +758,10 @@ class SimpleJavascriptParser {
 				}
 				return ["DivPunctuator", char_length];
 			}
+			/**
+			 * @param {string} str
+			 * @param {any} index
+			 */
 			RightBracePunctuator(str, index) {
 				if(str.startsWith('{}'[1], index)) {
 					return ['RightBracePunctuator', 1];
@@ -638,6 +776,9 @@ class SimpleJavascriptParser {
 					return ecma_12_8._the;
 				ecma_12_8._the = new ecma_12_8;
 			}
+			/**
+			 * @param {any} str
+			 */
 			RegularExpressionNonTerminator(str) {
 				let _val = this.LineTerminator(str);
 				if(_val[0] === 0) {
@@ -652,12 +793,20 @@ class SimpleJavascriptParser {
 				let exports = Object.getOwnPropertyNames(this.prototype);
 				root.export(this, '12.8.3', exports);
 			}
+			/**
+			 * @param {string} str
+			 * @param {any} index
+			 */
 			DecimalDigit(str, index) {
 				if(str.charCodeAt(index) >= 48 && str.charCodeAt(index) <= 57) {
 					return 1;
 				}
 				return 0;
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			NumericLiteral(str, index) {
 				let len = this.DecimalLiteral(str, index);
 				if(len > 0) {
@@ -665,6 +814,10 @@ class SimpleJavascriptParser {
 				}
 				return 0;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {number} index
+			 */
 			DecimalLiteral(str, index) {
 				if(str[index] === '0') {
 					return 1;
@@ -682,6 +835,10 @@ class SimpleJavascriptParser {
 				}
 				return off;
 			}
+			/**
+			 * @param {any} str
+			 * @param {number} index
+			 */
 			DecimalDigits(str, index) {
 				let off = 0;
 				for(;;) {
@@ -703,22 +860,38 @@ class SimpleJavascriptParser {
 				}
 				return off;
 			}
+			/**
+			 * @param {string} str
+			 * @param {any} index
+			 */
 			NonZeroDigit(str, index) {
 				if(str.charCodeAt(index) >= 49 && str.charCodeAt(index) <= 57) {
 					return 1;
 				}
 				return 0;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			NumericLiteralSeparator(str, index) {
 				if(str[index] === '_') {
 					return 1;
 				}
 				return 0;
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			DecimalIntegerLiteral(str, index) {}
 		}
 		ecma_sections.push(ecma_12_8_3);
 		class ecma_12_8_4 extends ecma_base {
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {number} index
+			 */
 			StringLiteral(str, index) {
 				let cur = str[index];
 				if(cur === '"') {
@@ -743,6 +916,10 @@ class SimpleJavascriptParser {
 				}
 				return [null, 0];
 			}
+			/**
+			 * @param {any} str
+			 * @param {number} index
+			 */
 			DoubleStringCharacters(str, index) {
 				let off = 0;
 				for(;;) {
@@ -755,6 +932,10 @@ class SimpleJavascriptParser {
 				}
 				return off;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			DoubleStringCharacter(str, index) {
 				x: {
 					if(str[index] === '"') {
@@ -785,6 +966,10 @@ class SimpleJavascriptParser {
 				}
 				return 1;
 			}
+			/**
+			 * @param {any} str
+			 * @param {number} index
+			 */
 			SingleStringCharacters(str, index) {
 				let off = 0;
 				for(;;) {
@@ -797,6 +982,10 @@ class SimpleJavascriptParser {
 				}
 				return off;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			SingleStringCharacter(str, index) {
 				x: {
 					if(str[index] === "'") {
@@ -827,6 +1016,10 @@ class SimpleJavascriptParser {
 				}
 				return 1;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {number} index
+			 */
 			LineContinuation(str, index) {
 				if(str[index] === '\\') {
 					let lt_len = this.LineTerminatorSequence(str, index + 1);
@@ -843,6 +1036,10 @@ class SimpleJavascriptParser {
 			/* | NonOctalDecimalEscapeSequence*/
 			/* | HexEscapeSequence*/
 			/* | UnicodeEscapeSequence*/
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			EscapeSequence(str, index) {
 				let len = this.CharacterEscapeSequence(str, index);
 				if(len > 0) {
@@ -877,6 +1074,10 @@ class SimpleJavascriptParser {
 				}
 				return 0;
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			CharacterEscapeSequence(str, index) {
 				let len = this.SingleEscapeCharacter(str, index);
 				if(len > 0) {
@@ -887,6 +1088,10 @@ class SimpleJavascriptParser {
 					return len;
 				}
 			}
+			/**
+			 * @param {{ [x: string]: any; }} str
+			 * @param {string | number} index
+			 */
 			SingleEscapeCharacter(str, index) {
 				let m_arr = ["'", '"', '\\', 'b', 'f', 'n', 'r', 't', 'v'];
 				let cur = str[index];
@@ -895,6 +1100,10 @@ class SimpleJavascriptParser {
 				}
 				return 0;
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			NonEscapeCharacter(str, index) {
 				if(this.EscapeCharacter(str, index)) {
 					return 0;
@@ -904,6 +1113,10 @@ class SimpleJavascriptParser {
 				}
 				return 1;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			EscapeCharacter(str, index) {
 				let len0 = this.SingleEscapeCharacter(str, index);
 				let len1 = this.DecimalDigit(str, index);
@@ -928,6 +1141,10 @@ class SimpleJavascriptParser {
 			FourToSeven OctalDigit
 			ZeroToThree OctalDigit OctalDigit
 			*/
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {number} index
+			 */
 			LegacyOctalEscapeSequence(str, index) {
 				x: {
 					if(str[index] === '0') {
@@ -986,6 +1203,10 @@ class SimpleJavascriptParser {
 				}
 
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			NonZeroOctalDigit(str, index) {
 				if(str[index] === '0') {
 					return 0;
@@ -996,6 +1217,10 @@ class SimpleJavascriptParser {
 				}
 				return 0;
 			}
+			/**
+			 * @param {{ [x: string]: any; }} str
+			 * @param {string | number} index
+			 */
 			ZeroToThree(str, index) {
 				let cur = str[index];
 				let chk = '0123';
@@ -1004,6 +1229,10 @@ class SimpleJavascriptParser {
 				}
 				;
 			}
+			/**
+			 * @param {{ [x: string]: any; }} str
+			 * @param {string | number} index
+			 */
 			FourToSeven(str, index) {
 				let cur = str[index];
 				let chk = '4567';
@@ -1012,11 +1241,19 @@ class SimpleJavascriptParser {
 				}
 				;
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {string | number} index
+			 */
 			NonOctalDecimalEscapeSequence(str, index) {
 				if(str[index] === '8' || str[index] === '9') {
 					return 1;
 				}
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {number} index
+			 */
 			HexEscapeSequence(str, index) {
 				if(str[index] === 'x') {
 					let len = this.HexDigit(str, index);
@@ -1030,6 +1267,10 @@ class SimpleJavascriptParser {
 					return 3;
 				}
 			}
+			/**
+			 * @param {{ [x: string]: string; }} str
+			 * @param {number} index
+			 */
 			UnicodeEscapeSequence(str, index) {
 				let off = 0;
 				if(str[index] === 'u') {
@@ -1052,6 +1293,10 @@ class SimpleJavascriptParser {
 				}
 				return 0;
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			Hex4Digits(str, index) {
 				let len = this.HexDigit(str, index);
 				if(!len) {
@@ -1116,6 +1361,10 @@ class SimpleJavascriptParser {
 			/*Template ::*/
 			/* | NoSubstitutionTemplate*/
 			/* | TemplateHead*/
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			Template(str, index) {
 				let ret = this.NoSubstitutionTemplate(str, index);
 				if(ret[1] > 0) {
@@ -1129,10 +1378,18 @@ class SimpleJavascriptParser {
 			}
 			/* NoSubstitutionTemplate ::*/
 			/* | ` TemplateCharacters opt `*/
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			NoSubstitutionTemplate(str, index) {}
 		}
 		ecma_sections.push(ecma_12_8_6);
 		class ecma_terminal extends ecma_base {
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			InputElementDiv(str, index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 				let max_item = null
@@ -1176,6 +1433,10 @@ class SimpleJavascriptParser {
 				}
 				return [max_item, max_val];
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			InputElementRegExp(str, index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken,
 				// RightBracePunctuator, RegularExpressionLiteral
@@ -1220,6 +1481,10 @@ class SimpleJavascriptParser {
 				}
 				return [max_item, max_val];
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			InputElementRegExpOrTemplateTail(str, index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, RegularExpressionLiteral, TemplateSubstitutionTail
 				let max_item = null
@@ -1263,6 +1528,10 @@ class SimpleJavascriptParser {
 				}
 				return [max_item, max_val];
 			}
+			/**
+			 * @param {any} str
+			 * @param {any} index
+			 */
 			InputElementTemplateTail(str, index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, TemplateSubstitutionTail
 				let max_item = null
@@ -1311,15 +1580,24 @@ class SimpleJavascriptParser {
 		return ecma_sections;
 	}
 	ecma_262_section_script_parse_factory() {
+		/**
+		 * @type {never[]}
+		 */
 		let generated_class_vec = [];
 		return generated_class_vec;
 	}
 	ecma_262_section_module_parse_factory() {}
+	/**
+	 * @param {any} utf8_string
+	 */
 	get_sequence_of_input_elements(utf8_string) {
-		local_dumper.dump_value(utf8_string);
+		local_dumper.m_dump_value(utf8_string);
 	}
 	ecma_262_pseudo() {
 		class ParseNode {
+			/**
+			 * @param {any[]} e
+			 */
 			constructor(...e) {
 				this.data_vec = e;
 			}
@@ -1335,6 +1613,9 @@ class SimpleJavascriptParser {
 			}
 		}
 		class ParseTree {
+			/**
+			 * @type {any}
+			 */
 			root;
 		}
 		class ParseResult {
@@ -1361,8 +1642,16 @@ class SimpleJavascriptParser {
 			/**@type {SyntaxError[]} */
 			early_errors;
 		}
-		/**@returns {ParseResult} */
+		/**
+		 * @returns {ParseResult}
+		 * @param {any} sourceText
+		 * @param {any} goalSymbol
+		 */
 		function do_parse_to_goal_symbol(sourceText, goalSymbol) {}
+		/**
+		 * @param {any} sourceText
+		 * @param {any} goalSymbol
+		 */
 		function ParseText(sourceText, goalSymbol) {
 			let parse_tree_root = null;
 			//1.
@@ -1403,10 +1692,16 @@ class SimpleJavascriptParser {
 		class js_root {
 			static init() {
 				this._init = true;
+				/**
+				 * @type {any[][]}
+				 */
 				this.export_list = [];
 				for(let i of token_matcher_array)
 					i._attach(js_root);
 			}
+			/**
+			 * @param {string} name
+			 */
 			static import(name) {
 				if(this._init === void 0)
 					this.init();
@@ -1417,6 +1712,11 @@ class SimpleJavascriptParser {
 				let cls = mat[0];
 				return cls.prototype[fn];
 			}
+			/**
+			 * @param {any} _class
+			 * @param {any} toc_loc
+			 * @param {any} name_vec
+			 */
 			static export(_class, toc_loc, name_vec) {
 				if(this._init === void 0)
 					this.init();
@@ -1441,6 +1741,10 @@ class SimpleJavascriptParser {
 					}
 				}
 			}
+			/**
+			 * @param {string} toc_loc
+			 * @param {{ prototype: { [x: string]: any; }; }} trg_class
+			 */
 			static import_all(toc_loc, trg_class) {
 				if(this._init === void 0)
 					this.init();
@@ -1458,10 +1762,16 @@ class SimpleJavascriptParser {
 		}
 		class js_token_generator {
 			static EOF_TOKEN = Symbol();
+			/**
+			 * @param {undefined} [str]
+			 */
 			constructor(str) {
 				this.str = null;
 				this.index = 0;
 			}
+			/**
+			 * @param {any[]} token_value
+			 */
 			describe_token(token_value) {
 				let tok_str = this.str.slice(token_value[2], token_value[2] + token_value[1]);
 				let token_type = token_value[0];
@@ -1470,6 +1780,9 @@ class SimpleJavascriptParser {
 				}
 				return [token_value[0], tok_str];
 			}
+			/**
+			 * @param {any} string
+			 */
 			set_str(string) {
 				this.str = string;
 			}
@@ -1506,6 +1819,9 @@ class SimpleJavascriptParser {
 }
 class WeakValueRef {
 	id = -1;
+	/**
+	 * @param {number} id
+	 */
 	constructor(id) {
 		this.id = id;
 	}
@@ -1525,22 +1841,46 @@ class DebugAPI {
 		}
 		return this.the_instance;
 	}
+	/**
+	 * @param {string} key
+	 */
 	hasData(key){
 		return this.data_store.has(key);
 	}
+	/**
+	 * @param {string} key
+	 */
 	getData(key) {
 		return this.data_store.get(key);
 	}
+	/**
+	 * @param {string} key
+	 * @param {{}} value
+	 */
 	setData(key, value) {
 		this.data_store.set(key, value);
 		return this;
 	}
+	/**
+	 * @param {string} key
+	 */
 	deleteData(key) {
 		return this.data_store.delete(key);
 	}
+	/**
+	 * @param {any} debug
+	 * @param {any} undebug
+	 * @param {any} func
+	 * @param {any} name
+	 */
 	get_event_listener_var_vec_1(debug, undebug, func, name) {
 		let __d = this.weak_root.deref();
 		__d.attach(debug, undebug, null);
+		/**
+		 * @param {Function} func
+		 * @param {any} f_this
+		 * @param {ArrayLike<any>} c_args
+		 */
 		function do_activate(func, f_this, c_args) {
 			try {
 				return Reflect.apply(func, f_this, c_args);
@@ -1553,6 +1893,11 @@ class DebugAPI {
 		}]);
 		return __d.debuggerGetVar_a(func, activate, name);
 	}
+	/**
+	 * @param {any} debug
+	 * @param {any} undebug
+	 * @param {any} getEventListeners
+	 */
 	attach(debug, undebug, getEventListeners) {
 		//Attach to the chrome DebugApi functions the user specified.
 		let obj_debug = this.getData('d');
@@ -1565,14 +1910,23 @@ class DebugAPI {
 		}
 		return this;
 	}
+	/**
+	 * @param {new (arg0: any) => any} class_value
+	 * @param {any} arg_vec
+	 */
 	activateClass(class_value, arg_vec) {
 		return new class_value(...arg_vec);
 	}
+	/**
+	 * @param {Function} function_value
+	 * @param {any} target_obj
+	 * @param {ArrayLike<any>} arg_vec
+	 */
 	activateApply(function_value, target_obj, arg_vec) {
 		return Reflect.apply(function_value, target_obj, arg_vec);
 	}
 	debuggerBreakpointCode() {
-		window.DebugAPI.the().getData("__k").get = (__v) => {
+		window.DebugAPI.the().getData("__k").get = (/** @type {string} */ __v) => {
 			if(__v === '__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -1619,6 +1973,12 @@ class DebugAPI {
 		}
 		return function_code;
 	}
+	/**
+	 * @param {any} function_value
+	 * @param {{ (class_value: any, arg_vec: any): any; (function_value: any, target_obj: any, arg_vec: any): any; (arg0: any, arg1: any): any; }} activate
+	 * @param {string} var_match
+	 * @param {any[][]} activate_vec
+	 */
 	debuggerGetVarArray_a(function_value, activate, var_match, ...activate_vec) {
 		if(!this.hasData("d") || !this.getData("u")) {
 			return {
@@ -1709,6 +2069,11 @@ class DebugAPI {
 			}
 		};
 	}
+	/**
+	 * @param {any} class_value
+	 * @param {any} target_arg_vec
+	 * @param {any} var_match
+	 */
 	debuggerGetVarArray_c(class_value, target_arg_vec, var_match) {
 		if(target_arg_vec instanceof Array) {
 			return this.debuggerGetVarArray_a(class_value, this.activateClass, var_match, target_arg_vec);
@@ -1718,6 +2083,12 @@ class DebugAPI {
 			data: null
 		};
 	}
+	/**
+	 * @param {any} function_value
+	 * @param {any} target_obj
+	 * @param {any} target_arg_vec
+	 * @param {any} var_match
+	 */
 	debuggerGetVarArray(function_value, target_obj, target_arg_vec, var_match) {
 		if(target_arg_vec instanceof Array) {
 			return this.debuggerGetVarArray_a(function_value, this.activateApply, var_match, target_obj, target_arg_vec);
@@ -1727,6 +2098,12 @@ class DebugAPI {
 			data: null
 		};
 	}
+	/**
+	 * @param {any} function_value
+	 * @param {{ (class_value: any, arg_vec: any): any; (function_value: any, target_obj: any, arg_vec: any): any; (arg0: any, arg1: any): any; }} activate
+	 * @param {any} var_name
+	 * @param {any[][]} activate_vec
+	 */
 	debuggerGetVar_a(function_value, activate, var_name, ...activate_vec) {
 		if(!this.hasData("d") || !this.getData("u")) {
 			return {
@@ -1799,6 +2176,11 @@ class DebugAPI {
 		};
 
 	}
+	/**
+	 * @param {any} class_value
+	 * @param {any} target_arg_vec
+	 * @param {any} var_name
+	 */
 	debuggerGetVar_c(class_value, target_arg_vec, var_name) {
 		if(typeof class_value != 'function') {
 			return {
@@ -1814,6 +2196,12 @@ class DebugAPI {
 			value: null
 		};
 	}
+	/**
+	 * @param {any} function_value
+	 * @param {any} target_obj
+	 * @param {any} target_arg_vec
+	 * @param {any} var_name
+	 */
 	debuggerGetVar(function_value, target_obj, target_arg_vec, var_name) {
 		if(typeof function_value != 'function') {
 			return {

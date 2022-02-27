@@ -4,10 +4,10 @@ import {EventHandlerVMDispatch} from "./EventHandlerVMDispatch";
 import {MulCompression} from "./MulCompression";
 import {AsyncNodeRoot} from "./AsyncNodeRoot";
 import {AutoBuyState} from "./AutoBuyState";
-import {AUDIO_ELEMENT_VOLUME} from "./rebuild_the_universe_auto_typed_v0.1";
 import {specialclick_inject} from "./specialclick_inject";
 import {array_sample_end} from "./array_sample_end";
 import {do_auto_unit_promote} from "./do_auto_unit_promote";
+import {AUDIO_ELEMENT_VOLUME} from "./mod";
 
 export class AutoBuy {
 	delay: number;

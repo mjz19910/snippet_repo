@@ -13,7 +13,7 @@ import {AbstractBox} from "./types/AbstractBox";
 import {AutoBuy} from "./types/AutoBuy";
 import {ProxyHandlers} from "./types/ProxyHandlers";
 import {ScriptStateHost} from "./types/ScriptStateHost";
-import {find_all_scripts_using_string_apis} from "./types/find_all_scripts_using_string_apis";
+import {find_all_scripts_using_string_apis} from "./types/find_all_scripts_using_string_apis_helper";
 import {DocumentWriteList} from "./types/DocumentWriteList";
 import {UniqueIdGenerator} from "./types/UniqueIdGenerator";
 import {move_timers_to_worker_promise_executor} from "types/move_timers_to_worker_promise_executor";
