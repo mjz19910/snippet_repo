@@ -6,7 +6,12 @@ import VoidBox from "./VoidBox";
 import ArrayBox from "./ArrayBox";
 
 
-type ExtractKey<T extends NonPrimitives<NonNull<Box>>, U> = U extends 'void' ? never : U extends keyof NotVoidBox<T> ? NotVoidBox<T>[U] : never;
+type ExtractKey<T extends Box, U> = 
+T extends NonPrimitives<NonNull<Box>> ?
+U extends keyof NotVoidBox<T> ?
+NotVoidBox<T>[U] :
+never :
+never;
 
 export default ExtractKey;
 

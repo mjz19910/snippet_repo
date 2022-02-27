@@ -22,10 +22,12 @@ import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
 import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox.js";
 import EmptyArrayBox from "types/vm/box/EmptyArrayBox.js";
 import FunctionBox from "types/vm/box/FunctionBox.js";
+import MediaListBox from "types/vm/box/MediaListBox.js";
 import NewableFunctionBox from "types/vm/box/NewableFunctionBox.js";
 import NodeBox from "types/vm/box/NodeBox.js";
 import PromiseBox from "types/vm/box/PromiseBox.js";
 import VoidBox from "types/vm/box/VoidBox.js";
+import WindowBox from "types/vm/box/WindowBox.js";
 
 /**@typedef {import("types/vm/box/mod.js").Box} Box */
 
@@ -351,13 +353,15 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			this.value = value;
 		}
 	}
+	/**@implements {WindowBox} */
 	class WindowBoxImpl {
 		/**@type {"object_box"} */
 		type="object_box";
 		/**@type {"Window"} */
 		inner_type="Window";
-		/**@arg {'function'} _a */
-		get_matching_typeof(_a){
+		/**@arg {'function'} type */
+		as_type(type) {
+			if(typeof this.value === type)return this;
 			return null;
 		}
 		/**@arg {Window} value */
@@ -423,33 +427,52 @@ import VoidBox from "types/vm/box/VoidBox.js";
 	function unreachable() {
 		throw new Error("Unreachable");
 	}
+	/**@typedef {import("api").NonNull<BoxInner>} NonNullInner */
 	/**@typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionType */
 	/**@typedef {import("types/vm/box/ExtractKey").default<Box, 'value'>} BoxInner */
 	class TempBox extends BaseBox {
 		/**
 		 * @arg {Box} v
-		 * @returns {v is Box}
+		 * @returns {v is import("types/vm/mod.js").Primitives}
+		*/
+		static is_raw(v){
+			if(v === null)return true;
+			switch(typeof v){
+				case 'object':return false;
+				case 'function':return false;
+				default:v;return true;
+			}
+		}
+		/**
+		 * @arg {Box} v
+		 * @returns {v is {value:BoxInner}}
 		 * */
-		static no_box(v){
+		static is_box_inner(v){
 			switch(typeof v){
 				case 'object':
-					if(v === null)return true;
-					return false;
+					if(v === null)return false;
+					return true;
 			}
-			return true;
+			return false;
 		}
 		/**@arg {Box} v */
 		static make_box(v){
-			if(this.no_box(v)){
+			if(this.is_box_inner(v)){
 				return v;
 			}
 			if(typeof v === 'function')return new this(v);
-			if(typeof v === 'object')return new this(v);
+			if(typeof v === 'object'){
+				if(v === null)return v;
+				// a void box;
+				if(v.type === 'void'){
+					return v;
+				};
+			}
 			unreachable();
 		}
-		/**@type {BoxInner|null} */
+		/**@type {NonNullInner|null} */
 		m_as_box;
-		/**@arg {BoxInner} value */
+		/**@arg {NonNullInner} value */
 		constructor(value){
 			if(value === null){
 				super(new VoidBox);
@@ -630,10 +653,18 @@ import VoidBox from "types/vm/box/VoidBox.js";
 						if(opt === null)throw invalid();
 						switch(opt.type){
 							case "shape_box":{
+								let content=opt.value;
 								switch(get_name){
-									case 'baseURL':return opt.value['baseURL'];
-									case 'disabled':return opt.value['disabled'];
-									case 'media':return opt.value['media'];
+									case 'baseURL':return content['baseURL'];
+									case 'disabled':return content['disabled'];
+									case 'media':
+										let val=content.media;
+										if(!val)return val;
+										if(typeof val === 'string'){
+											return val;
+										} else {
+											return new MediaListBox(val);
+										}
 									default:throw new Error("Invalid box on get");
 								}
 							}
@@ -641,7 +672,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 								let int_num=parseInt(get_name);
 								if(Number.isNaN(int_num))throw new Error("Can't parse number");
 								let res=opt.value[int_num];
-								if(TempBox.no_box(res)){
+								if(TempBox.is_box_inner(res)){
 									return new TempBox(res);
 								} else {
 									return res;
@@ -685,10 +716,12 @@ import VoidBox from "types/vm/box/VoidBox.js";
 						case 'bigint':res;
 						case 'boolean':res;
 					}
-					if(TempBox.no_box(res)){
-						this.push(new TempBox(res));
-					} else {
+					if(TempBox.is_raw(res)){
 						this.push(res);
+					}else if(TempBox.is_box_inner(res)) {
+						this.push(res);
+					} else {
+						this.push(new TempBox(res));
 					}
 				} break;
 				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
