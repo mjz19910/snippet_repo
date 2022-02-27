@@ -1,0 +1,1 @@
+export type TGetOr<T, V extends string> = T extends {[X in V]:any} ? T[V] : never;
