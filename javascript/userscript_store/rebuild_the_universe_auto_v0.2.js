@@ -661,11 +661,15 @@
 			}
 			switch(instruction[0]) {
 				case 'this'/*Special*/:{
+					console.log('VM: global push `this`');
 					this.push(new VMBoxedStackVMR(this));
 				} break;
 					// TODO: if you ever use this on a worker, change
 					// it to use globalThis...
-				case 'global'/*Special*/:this.push(new VMBoxedWindowR(window));break;
+				case 'global'/*Special*/:{
+					console.log('VM: global push');
+					this.push(new VMBoxedWindowR(window));
+				} break;
 				case 'call'/*Call*/: {
 					// TODO: Fix the other code to use the call handling from
 					// the base class
@@ -1007,7 +1011,7 @@
 							ret=[instruction[0], m_arg];
 					}
 					if(num_to_parse === 0)break;
-					throw new Error("Verify: Unexpected operand for cast_object, operand was `"+m_arg+"`");
+					throw new Error("Assertion failed: cast_object operand `"+m_arg+"` is invalid");
 				}
 				case 'drop':
 				case 'get':
@@ -2409,6 +2413,7 @@
 			call,int(4);
 			drop;
 			global;
+			cast_object,callable_index;
 			push,removeEventListener;
 			push,click;
 			this;
