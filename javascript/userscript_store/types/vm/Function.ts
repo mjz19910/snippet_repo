@@ -1,2 +1,2 @@
-import {IBox} from "./mod";
-export type Function = (...a: IBox[]) => IBox;
+import {Box} from "./box/mod";
+export type Function = (...a: Box[]) => Box;

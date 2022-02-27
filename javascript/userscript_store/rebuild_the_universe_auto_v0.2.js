@@ -520,7 +520,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		index_type = "callable_box";
 	}
 	class StackVM {
-		/**@arg {InstructionTypeV[]} instructions */
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			this.instructions = instructions;
 			this.instruction_pointer = 0;
@@ -575,7 +575,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			equal:false,
 		};
 		/**
-		 * @param {InstructionTypeV} instruction
+		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
 			/**@type {('je'|'jmp'|'modify_operand'|'push_pc'|'halt'|'push'|'drop'|'dup'|'get'|'call'|'construct'|'return')[]}*/
@@ -699,7 +699,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 	}
 	/**@implements {IStackVM} */
 	class SimpleStackVM extends StackVM {
-		/**@arg {InstructionTypeV[]} instructions */
+		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
 			super(instructions);
 			this.args_vec=null;
@@ -709,7 +709,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			this.args_vec=null;
 		}
 		/**
-		 * @param {InstructionTypeV} instruction
+		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
 			/**@type {('this'|'global'|'call')[]}*/
@@ -737,38 +737,14 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 					// the name of a member to call
 					let number_of_arguments = instruction[1];
 					if(typeof number_of_arguments!='number')throw new Error("Invalid");
-					let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-					if(typeof target_obj!='object')throw new Error("Invalid");
-					if(typeof target_name!='string')throw new Error("Invalid");
-					if(target_obj===null)throw new Error("Invalid");
-					if(target_obj.type!="callable_index")throw new Error("Invalid");
-					/**@type {Unboxed[]} */
-					let unboxed_args=[];
-					for(let i=0;i<arg_arr.length;i++) {
-						let cur=arg_arr[i];
-						switch(typeof cur){
-							default:unboxed_args.push(cur);break;
-							case 'object':
-								if(cur === null){
-									unboxed_args.push(null);
-									break;
-								}
-								switch(cur.type){
-									case 'custom_box':
-										switch(cur.box_type){
-											case 'StackVM':
-												unboxed_args.push(cur.value);
-											default:
-												console.assert(false, 'handle type: ', cur.type);
-										}
-									default:
-										console.assert(false, 'handle type: ', cur.type);
-								}
-						}
-					}
-					let target_fn=target_obj.value[target_name];
-					let ret = target_fn.apply(target_obj.value, unboxed_args);
-					console.log('VM: call %o %s(...)\n ... = [' + "%o, ".repeat(unboxed_args.length) + "]\n return %o", target_obj, target_name, ...arg_arr, ret);
+					let [target_fn, target_this, ...arg_arr] = this.pop_arg_count(number_of_arguments);
+					if(typeof target_fn!='object')throw new Error("Invalid");
+					if(target_fn===null)throw new Error("Invalid");
+					if(typeof target_this!='object')throw new Error("Invalid");
+					if(target_this===null)throw new Error("Invalid");
+					if(target_fn.type!="function_box")throw new Error("Invalid");
+					let ret = target_fn.value.apply(target_this.value, arg_arr);
+					console.log('VM: call %o %s(...)\n ... = [' + "%o, ".repeat(arg_arr.length) + "]\n return %o", target_fn, target_name, ...arg_arr, ret);
 					switch(typeof ret){
 						default:{
 							this.push(ret);
@@ -805,7 +781,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 	}
 	/**@implements {IStackVM} */
 	class EventHandlerVMDispatch extends SimpleStackVM {
-		/**@arg {InstructionTypeV[]} instructions @arg {any} target_obj */
+		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
 			super(instructions);
 			this.target_obj = target_obj;
@@ -858,7 +834,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			}
 			return arguments_arr;
 		}
-		/**@arg {InstructionTypeV} instruction */
+		/**@arg {InstructionType} instruction */
 		execute_instruction(instruction) {
 			/**@type {('exec'|'peek'|'append')[]}*/
 			let handled_instructions=['exec', 'peek', 'append'];
@@ -1085,10 +1061,10 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			}
 			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
 		}
-		/**@arg {string[]} instruction @returns {InstructionTypeV}*/
+		/**@arg {string[]} instruction @returns {InstructionType}*/
 		static verify_instruction(instruction){
 			let num_to_parse=instruction.length;
-			/**@type {InstructionTypeV|null} */
+			/**@type {InstructionType|null} */
 			let ret=null;
 			switch(instruction[0]) {
 				case 'push':{
@@ -1135,9 +1111,9 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			}
 			throw new Error("Unreachable");
 		}
-		/** @arg {string[][]} raw_instructions @return {InstructionTypeV[]} */
+		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
 		static verify_raw_instructions(raw_instructions){
-			/**@type{InstructionTypeV[]}*/
+			/**@type{InstructionType[]}*/
 			const instructions = [];
 			for(let i = 0;i < raw_instructions.length;i++) {
 				instructions.push(this.verify_instruction(raw_instructions[i]));
@@ -2696,7 +2672,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			let res=new PromiseBoxImpl(r2);
 			return res;
 		}
-		/**@typedef {[number, ...InstructionTypeV]} InstructionWithDepth */
+		/**@typedef {[number, ...InstructionType]} InstructionWithDepth */
 		/**
 		 * @param {DomExecDescription[]} raw_arr
 		 */
@@ -2794,7 +2770,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		get [next_debug_id()](){
 			return '';
 		}
-		/**@typedef {((InstructionTypeV|['vm_call_at', InstructionTypeV])[]|null)[]} DomInstructionStack */
+		/**@typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack */
 		/**
 		 * @arg {import("api").NonNull<DomInstructionStack[0]>[0]} value @arg {number} stack_ptr
 		 * @arg {DomInstructionStack} stack
@@ -2807,7 +2783,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 				stack[stack_ptr] = [value];
 			}
 		}
-		/** @arg {InstructionWithDepth[]} input_instructions @returns {InstructionTypeV[]} */
+		/** @arg {InstructionWithDepth[]} input_instructions @returns {InstructionType[]} */
 		parse_dom_stack(input_instructions) {
 			const double_indirect_error_str="Double indirect vm_call is hard to prove to the typechecker";
 			/**@type {DomInstructionStack} */
@@ -2832,7 +2808,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			}
 			/**@type {import("api").NonNull<DomInstructionStack[0]>} */
 			let flat_stack=[];
-			/**@type {InstructionTypeV[]} */
+			/**@type {InstructionType[]} */
 			let instructions=[];
 			for(let i=0;i<stack.length;i++){
 				let cur_instructions=stack[i];
