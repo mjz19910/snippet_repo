@@ -381,11 +381,11 @@ import VoidBox from "types/vm/box/VoidBox.js";
 	class ObjectBoxImpl {
 		/**@type {"object_box"} */
 		type="object_box";
-		/**@type {""} */
-		extension="";
-		inner_type=null;
-		/**@arg {'function'} _a */
-		get_matching_typeof(_a){
+		extension=null;
+		/**@type {'unit'} */
+		inner_type='unit';
+		/**@arg {'object' | 'function'} _a */
+		as_type(_a){
 			return null;
 		}
 		/**@arg {object} value */
@@ -414,9 +414,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			}
 			if(typeof v === 'function')return new this(v);
 			if(typeof v != 'object')return v;
-			if(typeof v.value === 'object'){
-				return new this(v.value);
-			}
+			unreachable();
 		}
 		/**@type {BoxInner|null} */
 		m_as_box;
@@ -738,7 +736,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			return this.return_value;
 		}
 	}
-	/**@implements {IStackVM} */
+	/**@implements {StackVM} */
 	class EventHandlerVMDispatch extends SimpleStackVM {
 		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
@@ -756,6 +754,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		return_value;
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
+			this.running=false;
 			this.instructions=instructions;
 			this.instruction_pointer=0;
 			this.return_value = void 0;
@@ -793,6 +792,14 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			}
 			return arguments_arr;
 		}
+		peek_at(){
+			return this.stack[0];
+		}
+		reset(){}
+		is_in_instructions(){
+			return true;
+		}
+		flags={equal:false};
 		/**@arg {InstructionType} instruction */
 		execute_instruction(instruction) {
 			/**@type {('exec'|'peek'|'append')[]}*/
@@ -1040,7 +1047,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 						throw new Error("Invalid operand");
 					}
 				} break;
-				case 'cast_object': {
+				case 'cast': {
 					let m_arg=instruction[1];
 					switch(m_arg){
 						case 'object_index':
@@ -1049,7 +1056,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 							ret=[instruction[0], m_arg];
 					}
 					if(num_to_parse === 0)break;
-					throw new Error("Assertion failed: cast_object operand `"+m_arg+"` is invalid");
+					throw new Error("Assertion failed: cast operand `"+m_arg+"` is invalid");
 				}
 				case 'drop':
 				case 'get':
@@ -2160,14 +2167,16 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		sym_id_syms.push([name, id, sym]);
 		return sym;
 	}
-	/**@implements {VMBoxedDomValue} */
 	class VMBoxedDomValueR {
 		/**@type {"dom_value"} */
 		type;
 		/**@type {"get"|"create"} */
 		from;
-		/**@arg {'function'} _a */
-		get_matching_typeof(_a){
+		/**@arg {'object' | 'function'} type */
+		as_type(type) {
+			if(typeof this.value === type){
+				return this;
+			}
 			return null;
 		}
 		/**
@@ -2218,21 +2227,21 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
-	/**@typedef {CallableReturnsVoidPromiseBox} VMReturnsBoxedVoidPromise */
-	/**@implements {VMReturnsBoxedVoidPromise} */
 	class VMReturnsBoxedVoidPromiseR {
 		/**@type {"function_box"} */
 		type="function_box";
+		/**@type {"value"} */
+		await_type="value";
 		/**@type {"promise"} */
 		return_type="promise";
 		/**@type {"void_type"} */
 		promise_return_type_special="void_type";
-		/**@arg {VMReturnsBoxedVoidPromise['value']} value */
+		/**@arg {any} value */
 		constructor(value){
 			this.value=value;
 		}
-		/**@arg {"function"} to_match */
-		get_matching_typeof(to_match) {
+		/**@arg {"object"|"function"} to_match */
+		as_type(to_match) {
 			if(typeof this.value === to_match){
 				return this;
 			}
@@ -2555,8 +2564,6 @@ import VoidBox from "types/vm/box/VoidBox.js";
 				}
 			}
 			let bound_this=this;
-			/**@typedef {VoidPromiseBox} VMBoxedVoidPromise */
-			/**@implements {VMBoxedVoidPromise} */
 			class VMBoxedVoidPromiseR {
 				/**@type {"promise"} */
 				type="promise";
@@ -2568,7 +2575,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 				get_matching_typeof(_s){
 					return null;
 				}
-				/**@arg {VMBoxedVoidPromise['value']} value */
+				/**@arg {any} value */
 				constructor(value){
 					this.value=value;
 				}
@@ -2646,7 +2653,8 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					case 'get':{
 						let cur_element, [, , query_arg]=cur_item;
 						switch(query_arg){
-							case 'body':cur_element=document.body;break;default:cur_element=document.querySelector(query_arg);break;
+							case 'body':cur_element=document.body;break;
+							default:cur_element=document.querySelector(query_arg);break;
 						}
 						if(!cur_element)throw new Error("build from dom failed, element not found: \""+query_arg+"\"");
 						stack.push([cur_item[0], "push", new VMBoxedDomValueR('get', cur_element)])
@@ -2692,7 +2700,12 @@ import VoidBox from "types/vm/box/VoidBox.js";
 						stack.push([depth, "peek", depth-1, 0]);
 						stack.push(cur_item);
 					} break;
-					case 'dup':case 'breakpoint':case 'drop':case 'call':/*push the item*/case 'push':stack.push(cur_item);break;
+					case 'dup':
+					case 'breakpoint':
+					case 'drop':
+					case 'call':
+						/*push the item*/
+					case 'push':stack.push(cur_item);break;
 					default:{
 						/**@type {any} */
 						let any_cur=cur_item;
