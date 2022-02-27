@@ -1,6 +1,4 @@
 import {SymbolRef} from "./types/SymbolRef";
-import {next_debug_id} from "./types/next_debug_id";
-import {AbstractBox} from "./types/AbstractBox";
 import {AutoBuy} from "./types/AutoBuy";
 import {ProxyHandlers} from "./types/ProxyHandlers";
 import {ScriptStateHost} from "./types/ScriptStateHost";
@@ -12,64 +10,54 @@ import {TimerApi} from "types/TimerApi";
 import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element";
 import {SimpleStackVMParser} from "./SimpleStackVMParser";
 import {calc_ratio} from "./calc_ratio";
-import {AverageRatio} from "./AverageRatio";
-import {AbstractTarget} from "./AbstractTarget";
-import {IntervalTarget} from "./IntervalTarget";
-import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget";
-import {BaseNode} from "./BaseNode";
-import {BaseTimeoutNode} from "./BaseTimeoutNode";
-import {TimeoutIdNode} from "./TimeoutIdNode";
+import {WorkerAsyncMessageTy} from "./WorkerAsyncMessageTy";
+import {TimeoutFireSTy} from "./TimeoutFireSTy";
+import {TimeoutFireRTy} from "./TimeoutFireRTy";
+import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy";
+import {TimeoutMessageRTy} from "./TimeoutMessageRTy";
+import {TimeoutSetSTy} from "./TimeoutSetSTy";
+import {TimeoutSetRTy} from "./TimeoutSetRTy";
+import {TimeoutClearSTy} from "./TimeoutClearSTy";
+import {TimeoutClearRTy} from "./TimeoutClearRTy";
+import {TimeoutClearATy} from "./TimeoutClearATy";
+import {WorkerDestroyMessageTy} from "./WorkerDestroyMessageTy";
+import {WorkerUpdateMessageHandlerReplyTy} from "./WorkerUpdateMessageHandlerReplyTy";
+import {WorkerReadyReplyTy} from "./WorkerReadyReplyTy";
+import {ReplySetSingleTy} from "./ReplySetSingleTy";
+import {ReplySetRepeatingTy} from "./ReplySetRepeatingTy";
+import {ReplyClearSingleTy} from "./ReplyClearSingleTy";
+import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy";
+import {ReplyClearAnyTy} from "./ReplyClearAnyTy";
+import {ReplyMessage1Ty} from "./ReplyMessage1Ty";
+import {ReplyMessage2Ty} from "./ReplyMessage2Ty";
+import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy";
 
-export {};
-'use strict';
 export const TIMER_SINGLE = 1;
 export const TIMER_REPEATING = 2;
 export const TIMER_TAG_COUNT = 3;
 export const AUDIO_ELEMENT_VOLUME = 0.58;
 const cint_arr: string[] = [];
-//spell:disable
-const WorkerAsyncMessage = 1;
-type WorkerAsyncMessageTy = typeof WorkerAsyncMessage;
+export const WorkerAsyncMessage = 1;
 export const TimeoutFireS = 101;
-export type TimeoutFireSTy = typeof TimeoutFireS;
-const TimeoutFireR = 102;
-type TimeoutFireRTy = typeof TimeoutFireR;
-const WorkerUpdateMessageHandler = 201;
-export type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateMessageHandler;
+export const TimeoutFireR = 102;
+export const WorkerUpdateMessageHandler = 201;
 export const TimeoutMessageR = 202;
-export type TimeoutMessageRTy = typeof TimeoutMessageR;
 export const TimeoutSetS = 203;
-export type TimeoutSetSTy = typeof TimeoutSetS;
 export const TimeoutSetR = 204;
-export type TimeoutSetRTy = typeof TimeoutSetR;
 export const TimeoutClearS = 205;
-export type TimeoutClearSTy = typeof TimeoutClearS;
 export const TimeoutClearR = 206;
-export type TimeoutClearRTy = typeof TimeoutClearR;
-const TimeoutClearA = 207;
-export type TimeoutClearATy = typeof TimeoutClearA;
+export const TimeoutClearA = 207;
 export const WorkerDestroyMessage = 300;
-export type WorkerDestroyMessageTy = typeof WorkerDestroyMessage;
 export const WorkerUpdateMessageHandlerReply = 301;
-export type WorkerUpdateMessageHandlerReplyTy = typeof WorkerUpdateMessageHandlerReply;
 export const WorkerReadyReply = 302;
-export type WorkerReadyReplyTy = typeof WorkerReadyReply;
 export const ReplySetSingle = 303;
-export type ReplySetSingleTy = typeof ReplySetSingle;
 export const ReplySetRepeating = 304;
-export type ReplySetRepeatingTy = typeof ReplySetRepeating;
 export const ReplyClearSingle = 305;
-export type ReplyClearSingleTy = typeof ReplyClearSingle;
 export const ReplyClearRepeating = 306;
-export type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
-const ReplyClearAny = 307;
-type ReplyClearAnyTy = typeof ReplyClearAny;
+export const ReplyClearAny = 307;
 export const ReplyMessage1 = 401;
-export type ReplyMessage1Ty = typeof ReplyMessage1;
 export const ReplyMessage2 = 402;
-export type ReplyMessage2Ty = typeof ReplyMessage2;
 export const ReplyFromWorker = 500;
-export type ReplyFromWorkerTy = typeof ReplyFromWorker;
 const ReplyToWorker = 600;
 export type ReplyToWorkerTy = typeof ReplyToWorker;
 const TimeoutSingleReply = 700;
@@ -280,181 +268,9 @@ export const LOG_LEVEL_VERBOSE = 4;
 export const LOG_LEVEL_TRACE = 5;
 SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
 console.assert(calc_ratio([0, 0]) === 0, "calc ratio of array full of zeros does not divide by zero");
-void IntervalTarget;
-class TimeoutNode extends BaseTimeoutNode {
-	id: number | null | undefined;
-	target: AbstractTarget | null;
-	constructor(timeout = 0) {
-		super(timeout);
-		this.id = null;
-		this.target = null;
-	}
-	set_target(target: any) {
-		this.target = target;
-	}
-	set() {
-		this.id = setInterval(this.run.bind(this), this.timeout);
-	}
-	start(target: AbstractTarget | null | undefined) {
-		if(target) this.target = target;
-		this.set();
-	}
-	run() {
-		this.id = null;
-		this.remove();
-	}
-	destroy() {
-		if(this.id !== null) clearTimeout(this.id);
-	}
-}
-class IntervalNode extends BaseTimeoutNode {
-	id: number | null | undefined;
-	target: AbstractTarget | null;
-	constructor(timeout = 0) {
-		super(timeout);
-		this.id = null;
-		this.target = null;
-	}
-	set() {
-		this.id = setInterval(this.run.bind(this), this.timeout);
-	}
-	set_target(target: any): void {
-		this.target = target;
-	}
-	start(target: AbstractTarget | null) {
-		if(target) this.set_target(target);
-		this.set();
-	}
-	destroy() {
-		if(this.id !== null) clearInterval(this.id);
-	}
-}
-export class AsyncTimeoutNode extends TimeoutNode {
-	run() {
-		super.run();
-		if(this.target) this.target.fire();
-	}
-	start_async(target: AsyncTimeoutTarget | null) {
-		if(target) {
-			this.target = target;
-			this.set();
-			return target.wait();
-		}
-		throw new Error("unable to start_async without anything to wait for");
-	}
-}
-export class AsyncNodeRoot {
-	children: BaseNode[];
-	constructor() {
-		this.children = [];
-	}
-	set(target_fn: () => void, timeout: number, repeat = false) {
-		let node: TimeoutNode | IntervalNode;
-		if(repeat) {
-			node = new TimeoutNode(timeout);
-		} else {
-			node = new IntervalNode(timeout);
-		}
-		this.append_child(node);
-		node.start({
-			fire() {
-				target_fn();
-			}
-		});
-	}
-	append_raw(timeout_id: number, is_timeout_id: boolean) {
-		this.append_child(new TimeoutIdNode(timeout_id, is_timeout_id));
-	}
-	append_child(record: BaseNode): void {
-		record.remove();
-		record.set_parent(this);
-		this.children.push(record);
-	}
-	remove_child(record: BaseNode) {
-		let index = this.children.indexOf(record);
-		this.children.splice(index, 1);
-		record.set_parent(null);
-	}
-	destroy() {
-		let item = this.children.shift();
-		if(!item) return;
-		do {
-			console.log('timer destroy', item);
-			item.destroy();
-			item = this.children.shift();
-		} while(item);
-	}
-}
-export class AverageRatioRoot {
-	map: Map<string, AverageRatio>;
-	ordered_keys: string[];
-	constructor() {
-		this.map = new Map;
-		this.ordered_keys = [];
-	}
-	set_ordered_keys(ordered_keys: string[]) {
-		this.ordered_keys = ordered_keys;
-	}
-	can_average(key: string) {
-		let ratio_calc = this.map.get(key);
-		if(ratio_calc) return ratio_calc.can_average();
-	}
-	get_average(key: string) {
-		let ratio_calc = this.map.get(key);
-		if(ratio_calc) return ratio_calc.get_average();
-		return 0;
-	}
-	push_ratio([key, ratio_obj]: [key: string, ratio_obj: AverageRatio]) {
-		this.ordered_keys.push(key);
-		this.map.set(key, ratio_obj);
-	}
-	push(value: number) {
-		let cur = this.map.get(this.ordered_keys[0]);
-		if(!cur) return;
-		let res = cur.add(value, true, false);
-		for(let i = 1;i < this.ordered_keys.length;i++) {
-			let debug = false;
-			let key = this.ordered_keys[i];
-			cur = this.map.get(key);
-			if(!cur) continue;
-			let prev = this.map.get(this.ordered_keys[i - 1]);
-			if(!prev) continue;
-			if(key === '30min') debug = true;
-			res = cur.add(prev.get_average(), res, debug);
-		}
-	}
-}
 export const debug_id_gen = new UniqueIdGenerator;
 export const debug_id_syms: WeakRef<SymbolRef>[] = [];
-void next_debug_id;
-void AbstractBox;
 const auto_buy_obj = new AutoBuy;
-function map_to_tuple(this: never, e: string, i: string | number) {
-	return [e, this[i]];
-}
-export function to_tuple_arr(keys: string[], values: number[]) {
-	return keys.map(map_to_tuple, values);
-}
-function promise_set_timeout(timeout: number | undefined, a: TimerHandler) {
-	setTimeout(a, timeout);
-}
-function do_async_wait(timeout: never) {
-	return new Promise(promise_set_timeout.bind(null, timeout));
-}
-void do_async_wait;
-export function array_sample_end(arr: string[], rem_target_len: number) {
-	arr = arr.slice(-300);
-	let rem_len = char_len_of(arr);
-	while(rem_len > rem_target_len) {
-		let cur = arr.shift();
-		if(!cur) break;
-		rem_len -= cur.length + 1;
-	}
-	return arr;
-}
-function char_len_of(arr: string[]) {
-	return arr.reduce((a: number, b: string) => a + b.length, 0) + arr.length;
-}
 export function lightreset_inject() {
 	window.g_auto_buy.state_history_clear_for_reset();
 	window.g_auto_buy.skip_save = true;

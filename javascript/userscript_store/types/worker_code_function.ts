@@ -1,7 +1,11 @@
 import {RecursivePartial} from "./RecursivePartial";
 import {TimerApi} from "./TimerApi";
 import {WorkerVerifyCallback} from "./WorkerVerifyCallback";
-import {TimeoutSetTypesTy, TimeoutSetTypes, TimeoutSetStringsTy, TimeoutSetStringS, TimeoutSetStringR, TimeoutClearStringsTy, TimeoutClearStringS, TimeoutClearStringR, TimeoutSingleReplyTy, TimeoutRepeatingReplyTy, TimeoutClearSTy, TimeoutClearRTy, ReplyToWorkerTy, WorkerUpdateMessageHandlerTy, TimeoutMessageRTy, MessageTimeoutSetS, MessageTimeoutSetR} from "../rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutSetTypesTy, TimeoutSetTypes, TimeoutSetStringsTy, TimeoutSetStringS, TimeoutSetStringR, TimeoutClearStringsTy, TimeoutClearStringS, TimeoutClearStringR, TimeoutSingleReplyTy, TimeoutRepeatingReplyTy, ReplyToWorkerTy, MessageTimeoutSetS, MessageTimeoutSetR} from "../rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutClearRTy} from "../TimeoutClearRTy";
+import {TimeoutClearSTy} from "../TimeoutClearSTy";
+import {TimeoutMessageRTy} from "../TimeoutMessageRTy";
+import {WorkerUpdateMessageHandlerTy} from "../WorkerUpdateMessageHandlerTy";
 import {TimerTag} from "../TimerTag";
 import {MessageTimeoutClearR} from "../MessageTimeoutClearR";
 import {MessageTimeoutClearS} from "../MessageTimeoutClearS";

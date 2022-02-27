@@ -1,4 +1,5 @@
-import {WorkerUpdateMessageHandlerReplyTy, WorkerUpdateMessageHandlerTy} from "./rebuild_the_universe_auto_typed_v0.2";
+import {WorkerUpdateMessageHandlerReplyTy} from "./WorkerUpdateMessageHandlerReplyTy";
+import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy";
 
 export type MessageWorkerUpdateMessageHandlerReply = {
 	t: WorkerUpdateMessageHandlerReplyTy;

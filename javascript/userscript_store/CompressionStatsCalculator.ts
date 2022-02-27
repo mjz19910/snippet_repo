@@ -1,4 +1,4 @@
-import {to_tuple_arr} from "./rebuild_the_universe_auto_typed_v0.2";
+import {to_tuple_arr} from "./to_tuple_arr";
 
 export class CompressionStatsCalculator {
 	hit_counts: number[];

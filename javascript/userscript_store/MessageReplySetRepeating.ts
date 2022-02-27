@@ -1,4 +1,4 @@
-import {ReplySetRepeatingTy} from "./rebuild_the_universe_auto_typed_v0.2";
+import {ReplySetRepeatingTy} from "./ReplySetRepeatingTy";
 
 export type MessageReplySetRepeating = {
 	t: ReplySetRepeatingTy;

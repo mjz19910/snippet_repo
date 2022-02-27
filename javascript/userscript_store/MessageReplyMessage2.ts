@@ -1,4 +1,4 @@
-import {ReplyMessage2Ty} from "./rebuild_the_universe_auto_typed_v0.2";
+import {ReplyMessage2Ty} from "./ReplyMessage2Ty";
 
 export type MessageReplyMessage2 = {
 	t: ReplyMessage2Ty;

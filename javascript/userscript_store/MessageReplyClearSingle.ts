@@ -1,4 +1,4 @@
-import {ReplyClearSingleTy} from "./rebuild_the_universe_auto_typed_v0.2";
+import {ReplyClearSingleTy} from "./ReplyClearSingleTy";
 
 export type MessageReplyClearSingle = {
 	t: ReplyClearSingleTy;

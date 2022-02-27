@@ -1,4 +1,4 @@
-import {TimeoutFireSTy} from "./rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutFireSTy} from "./TimeoutFireSTy";
 
 export type MessageTimeoutFireS = {
 	t: TimeoutFireSTy;

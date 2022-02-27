@@ -1,4 +1,4 @@
-import {TimeoutClearATy} from "./rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutClearATy} from "./TimeoutClearATy";
 
 export type MessageTimeoutClearA = {
 	t: TimeoutClearATy;

@@ -1,4 +1,4 @@
-import {WorkerDestroyMessageTy} from "./rebuild_the_universe_auto_typed_v0.2";
+import {WorkerDestroyMessageTy} from "./WorkerDestroyMessageTy";
 
 export type MessageWorkerDestroyMessage = {
 	t: WorkerDestroyMessageTy;
