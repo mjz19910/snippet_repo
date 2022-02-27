@@ -9,7 +9,7 @@
 		"checkJs": true,
 		"allowJs": true,
 		"strictNullChecks": true,
-		"module":"CommonJS",
+		"module":"ESNext",
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"noImplicitAny": true,

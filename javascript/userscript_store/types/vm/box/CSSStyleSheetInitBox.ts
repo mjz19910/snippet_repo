@@ -1,4 +1,4 @@
-import {MediaListBox} from "../MediaListBox";
+import {MediaListBox} from "./MediaListBox";
 import {Box} from "./mod";
 
 export class CSSStyleSheetInitBox extends Box<CSSStyleSheetInit> {

@@ -1,8 +1,8 @@
-import {InstructionType} from "../types/vm/instruction/mod";
-import {IndexedFnBox} from "../types/vm/box/IndexedFunctionBox";
-import {InstructionTypeArrayBox} from "../types/vm/box/InstructionTypeArrayBox";
-import {StackVM} from "../types/StackVM";
-import {IBox} from "../types/vm/box/IBox";
+import {InstructionType} from "types/vm/instruction/mod";
+import {IndexedFnBox} from "types/vm/box/IndexedFunctionBox";
+import {InstructionTypeArrayBox} from "types/vm/box/InstructionTypeArrayBox";
+import {StackVM} from "types/StackVM";
+import {IBox} from "types/vm/box/IBox";
 import {GlobalThisBox} from "types/vm/box/GlobalThisBox";
 import {ArrayBox} from "types/vm/box/ArrayBox";
 import {IndexBox} from "types/vm/index_access/IndexedObject";
@@ -1216,6 +1216,7 @@ function move_timers_to_worker_promise_executor(
 	const worker_state = new WorkerState(worker_code_blob, timer, executor_handle);
 	const weak_worker_state = new WeakRef(worker_state);
 	const setTimeout_global = setTimeout;
+	/**@type {typeof setTimeout} */
 	function remoteSetTimeout(handler: TimerHandler, timeout = 0, ...target_arguments: any[]) {
 		if(!worker_state) {
 			window.setTimeout = setTimeout_global;
@@ -1225,7 +1226,8 @@ function move_timers_to_worker_promise_executor(
 		return worker_state.timer.set(TIMER_SINGLE, handler, timeout, target_arguments);
 	}
 	const clearTimeout_global = clearTimeout;
-	function remoteClearTimeout(id: number | undefined): void {
+	/**@type {typeof clearTimeout} */
+	function remoteClearTimeout(id?: number | undefined): void {
 		if(!worker_state) {
 			window.clearTimeout = clearTimeout_global;
 			console.log('lost worker_state in timer');
@@ -1234,6 +1236,7 @@ function move_timers_to_worker_promise_executor(
 		if(id !== void 0) worker_state.timer.clear(TIMER_SINGLE, id);
 	}
 	const setInterval_global = setInterval;
+	/**@type {typeof setInterval} */
 	function remoteSetInterval(handler: TimerHandler, timeout = 0, ...target_arguments: any[]) {
 		if(!worker_state) {
 			window.setInterval = setInterval_global;
@@ -1243,6 +1246,7 @@ function move_timers_to_worker_promise_executor(
 		return worker_state.timer.set(TIMER_REPEATING, handler, timeout, target_arguments);
 	}
 	const clearInterval_global = clearInterval;
+	/**@type {typeof clearInterval} */
 	function remoteClearInterval(id?: number) {
 		if(!worker_state) {
 			window.clearInterval = clearInterval_global;

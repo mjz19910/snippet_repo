@@ -1,14 +1,13 @@
-import {NonNull} from "api";
-import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
-import {RecursivePartial} from "types/RecursivePartial";
+import {IAutoBuy} from "./types/rebuild_the_universe_auto_interface";
+import {RecursivePartial} from "./types/RecursivePartial";
 import {InstructionTypeBox} from "./types/vm/VMBoxedInstructionType";
 import {InstructionType} from "./types/vm/instruction/mod";
 import {IndexedFnBox} from "./types/vm/box/IndexedFunctionBox";
 import {IBox} from "./types/vm/box/IBox";
-import {IndexBox} from "types/vm/index_access/IndexedObject";
-import {NewableFunctionBox} from "types/vm/box/NewableFunctionBox";
-import {StackVMBox} from "types/vm/box/StackVMBox";
-import {WindowBox} from "types/vm/box/WindowBox";
+import {IndexBox} from "./types/vm/index_access/IndexedObject";
+import {NewableFunctionBox} from "./types/vm/box/NewableFunctionBox";
+import {StackVMBox} from "./types/vm/box/StackVMBox";
+import {WindowBox} from "./types/vm/box/WindowBox";
 
 class RemoteWorkerState {
 

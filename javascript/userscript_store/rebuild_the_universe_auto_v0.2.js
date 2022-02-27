@@ -16,8 +16,10 @@
 // @run-at			document-start
 // @grant			none
 // ==/UserScript==
-/* eslint-disable no-undef,no-lone-blocks,no-eval */
 
+import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
+
+/* eslint-disable no-undef,no-lone-blocks,no-eval */
 (function() {
 	'use strict';
 	const AUDIO_ELEMENT_VOLUME=0.58;
@@ -136,25 +138,6 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").Unboxed} Unboxed */
-	class CallableFunctionImpl {
-		/**@type {"callable_box"} */
-		type="callable_box";
-		parameters_type_array = null;
-		instance_type = null;
-		return_type = null;
-		/**@arg {'function'} to_match */
-		get_matching_typeof(to_match) {
-			if(typeof this.value === to_match){
-				return this;
-			}
-			return null;
-		}
-		/**@arg {{(...a:Unboxed[]) : Unboxed}} value */
-		constructor(value){
-			this.value=value;
-		}
-	}
 	/**@type {<T, X extends keyof T>(obj:{[V in keyof T]:T[V]}, key:X)=>{v:T[X]} | null} */
 	function safe_get(obj, key) {
 		let cur_proto=obj;
@@ -199,7 +182,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/vm/mod.js").InstructionCall} InstructionCall */
+	/**@typedef {import("types/vm/mod.js").InstructionCall} InstructionCall */
 	class InstructionCallE {
 		/**@arg {Boxed} v */
 		static unbox_value(v){
@@ -280,8 +263,8 @@
 		}
 
 	}
-	/**@typedef {import("types/vm/mod.js").EmptyArrayBox} EmptyArrayBox */
-	/**@implements {EmptyArrayBox} */
+	/**@typedef {EmptyArrayBox} EmptyArrayBox2 */
+	/**@implements {EmptyArrayBox2} */
 	class EmptyArrayBoxImpl {
 		/**@type {"array_box"} */
 		type="array_box";
@@ -290,8 +273,8 @@
 			this.value=v;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").ArrayBox} ArrayBox */
-	/**@implements {ArrayBox} */
+	/**@typedef {ArrayBox} ArrayBoxT */
+	/**@implements {ArrayBoxT} */
 	class ArrayBoxImpl {
 		/**@type {"array_box"} */
 		type="array_box";
@@ -308,7 +291,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/vm/mod.js").InstructionConstruct} InstructionConstruct */
+	/**@typedef {import("types/vm/mod.js").InstructionConstruct} InstructionConstruct */
 	class InstructionConstructE {
 		/**@type {<T>(arr:T[])=>arr is []} */
 		static is_array_empty(arr){
@@ -393,7 +376,7 @@
 			if(!obj)throw new Error("Invalid");
 			console.log('VM: cast_object', instruction[1], obj);
 			if(typeof obj!='object')throw new Error("Invalid");
-			/**@typedef {import("./types/vm/mod.js").VMIndexedValueRaw} VMIndexedValue */
+			/**@typedef {import("types/vm/mod.js").VMIndexedValueRaw} VMIndexedValue */
 			/**@type {<T>(q:T, v:any)=>v is T} */
 			function can_cast_indexed(q, obj) {
 				if(obj === null){
