@@ -220,13 +220,15 @@ function as_object_or_null(v) {
 	}
 	return null;
 }
-/**@typedef {import("types/vm/box/Box.js").default} Box */
+/**@typedef {import("types/vm/box/mod.js").Box} Box */
 class BaseBox {
 	/**@type {'object_box'} */
 	type = "object_box";
+	/**@type {'BaseBox'} */
+	from = "BaseBox";
 	/**@type {import("api").NonNull<Box>} */
 	value;
-	/**@type {string} v */
+	/**@arg {string} v */
 	as_type(v) {
 		if(typeof this.value === v) {
 			return this;

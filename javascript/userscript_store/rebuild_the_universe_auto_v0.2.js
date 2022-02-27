@@ -139,6 +139,9 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			this.value=value;
 		}
 	}
+	function not_reached(){
+		throw new Error("Unreachable");
+	}
 	class NewableFactory {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
@@ -148,8 +151,12 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		return="box";
 		/**@type {<T>(fn:{new (...v:Box[]):T})=>Box} */
 		value;
-		/**@arg {ReturnType<BaseBox['as_type']>} type */
+		/**@arg {Parameters<BaseBox['as_type']>[0]} type */
 		as_type(type) {
+			switch(typeof this.value){
+				case 'function':this.value;break;
+				default:not_reached();
+			}
 			if(typeof this.value === type){
 				return this;
 			}
@@ -203,6 +210,9 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			this.value=value;
 		}
 	}
+	function invalid(){
+		return new Error("Invalid");
+	}
 	/**@typedef {import("types/vm/mod.js").InstructionCall} InstructionCall */
 	class InstructionCallE {
 		/**@arg {Box} v */
@@ -227,14 +237,14 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		/**@arg {InstructionCall} instruction @arg {StackVM} vm */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments = instruction[1];
-			if(typeof number_of_arguments!='number')throw new Error("Invalid");
+			if(typeof number_of_arguments!='number')throw invalid();
 			if(number_of_arguments <= 1){
 				throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 			}
 			let [target_this, target_fn, ...arg_arr] = vm.pop_arg_count(number_of_arguments);
 			const a=target_fn;
-			if(typeof a!='object')throw new Error("Invalid");
-			if(a === null)throw new Error("Invalid");
+			if(typeof a!='object')throw invalid();
+			if(a === null)throw invalid();
 			if(a.type === 'void'){
 				throw new Error("Attempt to call a void value");
 			}
@@ -275,12 +285,12 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		/**@arg {InstructionConstructT} instruction @arg {StackVM} vm */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments=instruction[1];
-			if(typeof number_of_arguments!='number')throw new Error("Invalid");
+			if(typeof number_of_arguments!='number')throw invalid();
 			let [construct_target, ...construct_arr]=vm.pop_arg_count(number_of_arguments);
 			const a=construct_target;
-			if(typeof a!='object')throw new Error("Invalid");
-			if(a===null)throw new Error("Invalid");
-			if(a.type != 'constructor_box')throw new Error("Invalid");
+			if(typeof a!='object')throw invalid()
+			if(a===null)throw invalid();
+			if(a.type != 'constructor_box')throw invalid();
 			if(a.instance_type === null) {
 				let obj=a.factory(...construct_arr);
 				vm.push(obj);
@@ -310,13 +320,13 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
-	class InstructionCastObjectE {
+	class InstructionCastImpl {
 		/**@arg {import("types/vm/instruction/InstructionCast.js").InstructionCast} instruction @arg {StackVM} vm */
 		static execute_instruction(vm, instruction){
 			let obj=vm.pop();
-			if(!obj)throw new Error("Invalid");
+			if(!obj)throw invalid();
 			console.log('VM: cast_object', instruction[1], obj);
-			if(typeof obj!='object')throw new Error("Invalid");
+			if(typeof obj!='object')throw invalid();
 			/**@type {<T>(q:T, v:any)=>v is T} */
 			function can_cast_indexed(q, obj) {
 				if(obj === null){
@@ -381,6 +391,29 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		/**@arg {object} value */
 		constructor(value){
 			this.value=value;
+		}
+	}
+	class TempBox extends BaseBox {
+		/**@arg {import("types/vm/box/mod.js").AsObject<Box>} v */
+		static does_box(v){
+			switch(typeof v){
+				case 'object':
+					if(!v)return false;
+					return true;
+			}
+			return false;
+		}
+		/**@type {Box|null} */
+		m_as_box;
+		/**@arg {Box} value */
+		constructor(value){
+			if(value === null){
+				super(new VoidBox);
+				this.m_as_box=value;
+			} else {
+				super(value);
+				this.m_as_box=null;
+			}
 		}
 	}
 	class StackVM {
@@ -451,7 +484,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			switch(instruction[0]) {
 				case 'je':{
 					let [, target] = instruction;
-					if(typeof target!='number')throw new Error("Invalid");
+					if(typeof target!='number')throw invalid();
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Jump target is out of instructions range");
 					}
@@ -461,7 +494,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 				} break;
 				case 'jmp':{
 					let [, target] = instruction;
-					if(typeof target!='number')throw new Error("Invalid");
+					if(typeof target!='number')throw invalid();
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Jump target is out of instructions range");
 					}
@@ -469,8 +502,8 @@ import VoidBox from "types/vm/box/VoidBox.js";
 				} break;
 				case 'modify_operand':{
 					let [, target, offset]=instruction;
-					if(typeof target!='number')throw new Error("Invalid");
-					if(typeof offset!='number')throw new Error("Invalid");
+					if(typeof target!='number')throw invalid();
+					if(typeof offset!='number')throw invalid();
 					if(this.is_in_instructions(target)){
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
@@ -490,7 +523,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 							value=pop_fn.value.call(this);
 						}
 					}
-					if(instruction_modify === void 0)throw new Error("Invalid");
+					if(instruction_modify === void 0)throw invalid();
 					instruction_modify[offset] = value;
 					let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify);
 					this.instructions[target]=valid_instruction;
@@ -538,51 +571,19 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					if(!top)throw new Error("Stack underflow when executing dup instruction");
 					this.push(top);
 				} break;
-				case 'cast_object':InstructionCastObjectE.execute_instruction(this, instruction);break;
+				case 'cast':InstructionCastImpl.execute_instruction(this, instruction);break;
 				case 'get'/*Object*/: {
 					let target_name = this.pop();
 					let target_obj = this.pop();
-					if(!target_obj)throw new Error("Invalid");
-					if(typeof target_name!='string')throw new Error("Invalid");
-					if(typeof target_obj!='object')throw new Error("Invalid");
+					if(!target_obj)throw invalid();
+					if(typeof target_name!='string')throw invalid();
+					if(typeof target_obj!='object')throw invalid();
 					let get_name=target_name;
 					let the_type=target_obj.type;
-					class TempBox extends BaseBox {
-						/**@arg {import("types/vm/box/mod.js").AsObject<Box>} v */
-						static does_box(v){
-							switch(typeof v){
-								case 'object':
-									if(!v.value)return false;
-									if(typeof v.value.value === 'object'){
-										let res_types=v.value.value;
-										return true;
-									} else if(typeof v.value.value === 'function') {
-										let res_types=v.value.value;
-										return true;
-									} else {
-										let ret=v.value.value;
-										return true;
-									}
-							}
-							return false;
-						}
-						/**@type {Box|null} */
-						m_as_box;
-						/**@arg {Box} value */
-						constructor(value){
-							if(value === null){
-								super(new VoidBox);
-								this.m_as_box=value;
-							} else {
-								super(value);
-								this.m_as_box=null;
-							}
-						}
-					}
 					/**@arg {Box} opt @arg {string} get_name */
 					function do_box_get(opt, get_name) {
-						if(typeof opt!='object')throw new Error("Invalid");
-						if(opt === null)throw new Error("Invalid");
+						if(typeof opt!='object')throw invalid();
+						if(opt === null)throw invalid();
 						switch(opt.type){
 							case "shape_box":return opt.value;
 							case "array_box":{
@@ -675,13 +676,13 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					// this is closer to what you expect, not to just get
 					// the name of a member to call
 					let number_of_arguments = instruction[1];
-					if(typeof number_of_arguments!='number')throw new Error("Invalid");
+					if(typeof number_of_arguments!='number')throw invalid();
 					let [target_fn, target_this, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-					if(typeof target_fn!='object')throw new Error("Invalid");
-					if(target_fn===null)throw new Error("Invalid");
-					if(typeof target_this!='object')throw new Error("Invalid");
-					if(target_this===null)throw new Error("Invalid");
-					if(target_fn.type!="function_box")throw new Error("Invalid");
+					if(typeof target_fn!='object')throw invalid();
+					if(target_fn===null)throw invalid();
+					if(typeof target_this!='object')throw invalid();
+					if(target_this===null)throw invalid();
+					if(target_fn.type!="function_box")throw invalid();
 					let ret = target_fn.value.apply(target_this.value, arg_arr);
 					console.log('VM: call %o %s(...)\n ... = [' + "%o, ".repeat(arg_arr.length) + "]\n return %o", target_fn, target_name, ...arg_arr, ret);
 					switch(typeof ret){
@@ -799,7 +800,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					let [, op_1, op_2]=instruction;
 					let peek_stack=this.exec_stack[op_1][0];
 					let base_ptr=peek_stack.at(-1);
-					if(typeof base_ptr!='number')throw new Error("Invalid");
+					if(typeof base_ptr!='number')throw invalid();
 					let at=peek_stack[base_ptr - op_2 - 1];
 					this.push(at);
 					l_log_if(LOG_LEVEL_INFO, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
@@ -906,7 +907,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 						this.stack.pop();
 						let instruction_ptr=this.stack.pop();
 						if(instruction_ptr===void 0)throw new Error("Stack underflow");
-						if(typeof instruction_ptr!='number')throw new Error("Invalid");
+						if(typeof instruction_ptr!='number')throw invalid();
 						this.instruction_pointer=instruction_ptr;
 						l_log_if(LOG_LEVEL_INFO, 'returned to', this.instruction_pointer, this.exec_stack.length);
 						continue;
@@ -1808,7 +1809,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		 */
 		push(value){
 			let cur=this.map.get(this.keys[0]);
-			if(!cur)throw new Error("Invalid");
+			if(!cur)throw invalid();
 			let cur_size=cur.size;
 			let time_now=performance.now();
 			cur.do_history_update(this, time_now);
@@ -1816,7 +1817,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			for(let i=1;i<this.keys.length;i++) {
 				let key=this.keys[i];
 				cur=this.map.get(key);
-				if(!cur)throw new Error("Invalid");
+				if(!cur)throw invalid();
 				cur_size*=cur.size;
 				cur.add_to_ratio(value, cur_size);
 			}
@@ -3193,7 +3194,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		 * @param {number} div
 		 */
 		get_timeout_change(pow_base, pow_num, div){
-			if(!this.timeout_ms)throw new Error("Invalid");
+			if(!this.timeout_ms)throw invalid();
 			let pow_res=Math.pow(pow_base, pow_num);
 			let res=this.timeout_ms * pow_res;
 			return res / div;
@@ -3205,7 +3206,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			if(window.__testing__){
 				return;
 			}
-			if(!this.timeout_ms)throw new Error("Invalid");
+			if(!this.timeout_ms)throw invalid();
 			let value=this.round(this.timeout_ms + change);
 			l_log_if(LOG_LEVEL_INFO, 'inc', this.timeout_ms, value-this.timeout_ms);
 			this.timeout_arr.push(value);
@@ -3217,7 +3218,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			if(window.__testing__){
 				return;
 			}
-			if(!this.timeout_ms)throw new Error("Invalid");
+			if(!this.timeout_ms)throw invalid();
 			let value=this.round(this.timeout_ms - change);
 			if(value < 25)value=25;
 			l_log_if(LOG_LEVEL_INFO, 'dec', this.timeout_ms, this.timeout_ms-value);
