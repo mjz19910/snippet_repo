@@ -53,10 +53,10 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").IBox} Boxed */
-	/**@typedef {import("types/vm/mod.js").IStackVM} IStackVM */
-	/**@typedef {import("types/vm/mod.js").InstructionType} InstructionType */
-	/**@typedef {import("types/vm/mod.js").IndexedFnBox} VMIndexedCallableValue */
+	/**@typedef {import("types/vm/box/mod.js").IBox} IBox */
+	/**@typedef {IStackVM} IStackVM */
+	/**@typedef {InstructionType} InstructionType */
+	/**@typedef {IndexedFnBox} VMIndexedCallableValue */
 
 
 	/**@typedef {import("types/vm/mod.js").CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor */
@@ -109,7 +109,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {Promise<Boxed>} value */
+		/**@arg {Promise<IBox>} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -184,7 +184,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 	}
 	/**@typedef {import("types/vm/mod.js").InstructionCall} InstructionCall */
 	class InstructionCallE {
-		/**@arg {Boxed} v */
+		/**@arg {IBox} v */
 		static unbox_value(v){
 			if(typeof v!='object'){
 				return v;
@@ -201,7 +201,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 				return v.value;
 			}
 		}
-		/**@arg {Boxed[]} v_arr */
+		/**@arg {IBox[]} v_arr */
 		static unbox_args(v_arr) {
 			return v_arr.map(v=>{
 				return this.unbox_value(v);
@@ -286,7 +286,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		get_matching_typeof(_typeof_val){
 			return null;
 		}
-		/**@arg {Boxed[]} value */
+		/**@arg {IBox[]} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -537,7 +537,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {import("types/vm/mod.js").VMIndexed<Boxed>} value */
+		/**@arg {import("types/vm/mod.js").VMIndexed<IBox>} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -568,9 +568,9 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			this.stack=[];
 			this.return_value = void 0;
 		}
-		/**@type {Boxed[]} */
+		/**@type {IBox[]} */
 		stack;
-		/**@arg {Boxed} value */
+		/**@arg {IBox} value */
 		push(value) {
 			this.stack.push(value);
 		}
@@ -828,7 +828,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			}
 		}
 		/**
-		 * @param {Boxed[]} run_arguments
+		 * @param {IBox[]} run_arguments
 		 */
 		run(...run_arguments) {
 			this.args_vec=run_arguments;
@@ -857,7 +857,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 	}
 	/**@implements {IStackVM} */
 	class DomBuilderVM {
-		/**@type {Boxed} */
+		/**@type {IBox} */
 		return_value;
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
@@ -865,17 +865,17 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			this.instruction_pointer=0;
 			this.return_value = void 0;
 			/**
-			 * @type {Boxed[]}
+			 * @type {IBox[]}
 			 */
 			this.stack=[];
 			/**
-			 * @type {[Boxed[], InstructionType[]][]}
+			 * @type {[IBox[], InstructionType[]][]}
 			 */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
 		}
 		/**
-		 * @param {Boxed} v
+		 * @param {IBox} v
 		 */
 		push(v){
 			this.stack.push(v);
@@ -885,7 +885,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		}
 		/**
 		 * @param {number} operand_number_of_arguments
-		 * @return {Boxed[]}
+		 * @return {IBox[]}
 		 */
 		pop_arg_count(operand_number_of_arguments){
 			let arguments_arr=[];
@@ -2339,11 +2339,11 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		}
 	}
 	/**@typedef {[number, 'get', string]} DomExecDescriptionI1 */
-	/**@typedef {[number, 'create', string, string, {[s:string]:Boxed}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
+	/**@typedef {[number, 'create', string, string, {[s:string]:IBox}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
 	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
 	/**@typedef {[number, 'append']} DomExecDescriptionI4 */
 	/**@typedef {[number, 'push', null, VMReturnsBoxedVoidPromiseR]} DomExecDescriptionI5 */
-	/**@typedef {[number, 'new', Boxed, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
+	/**@typedef {[number, 'new', IBox, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
 	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
 	/**@typedef {[number, 'drop']} DomExecDescriptionI8 */
 	/**@typedef {[number, 'breakpoint']} DomExecDescriptionI9 */
@@ -2608,8 +2608,8 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			/**
 			 * @this {AutoBuy}
 			 * */
-			async function css_promise_runner(/** @type {Boxed[]} */ ...styles_promise_arr) {
-				/**@type {Promise<Boxed>[]} */
+			async function css_promise_runner(/** @type {IBox[]} */ ...styles_promise_arr) {
+				/**@type {Promise<IBox>[]} */
 				let css_arr=[];
 				for(let i=0;i<styles_promise_arr.length;i++){
 					let cur=styles_promise_arr[i];
@@ -2676,7 +2676,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			let make_css_arr=[
 				[
 					0, 'push', null,
-					new VMReturnsBoxedVoidPromiseR(function(/** @type {Boxed[]} */ ...a) {
+					new VMReturnsBoxedVoidPromiseR(function(/** @type {IBox[]} */ ...a) {
 						l_log_if(LOG_LEVEL_INFO, 'void input', a);
 						let ret=css_promise_runner.call(bound_this, ...a);
 						l_log_if(LOG_LEVEL_INFO, 'void out', ret);
