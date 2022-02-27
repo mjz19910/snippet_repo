@@ -1,6 +1,6 @@
 import {InstructionType} from "../types/vm/instruction/mod";
 import {WindowBox} from "../types/vm/WindowBox";
-import {IStackVMBox} from "../types/vm/IStackVMBox";
+import {StackVMBox} from "../types/vm/StackVMBox";
 import {IndexedFnBox} from "../types/vm/box/IndexedFunctionBox";
 import {InstructionTypeArrayBox} from "../types/vm/box/InstructionTypeArrayBox";
 import {StackVM} from "../types/StackVM";
@@ -1512,7 +1512,7 @@ class SimpleStackVM implements StackVM {
 				case 'return'/*Call*/:this.return_value = this.pop();break;
 				case 'halt'/*Running*/:this.running = false;break;
 				case 'push_args'/*Special*/:this.push(new ArrayBox(run_arguments));break;
-				case 'this'/*Special*/: this.push(new IStackVMBox(this));break;
+				case 'this'/*Special*/: this.push(new StackVMBox(this));break;
 				case 'global'/*Special*/: {
 					if(window) this.push(new WindowBox(window));
 					else this.push(new GlobalThisBox(globalThis));

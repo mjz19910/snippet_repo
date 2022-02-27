@@ -1,6 +1,6 @@
 import {Primitives} from "../Primitives";
 import {TypeOfResult} from "../TypeOfResult";
-import ValueBoxes from "../ValueBoxes";
+import ValueBoxes from "./ValueBoxes";
 
 export type IBox = ValueBoxes | Primitives | null;
 

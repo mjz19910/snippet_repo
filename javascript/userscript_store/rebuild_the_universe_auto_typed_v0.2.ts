@@ -4,7 +4,7 @@ import {RecursivePartial} from "types/RecursivePartial";
 import {InstructionTypeBox} from "./types/vm/VMBoxedInstructionType";
 import {InstructionType} from "./types/vm/instruction/mod";
 import {WindowBox} from "./types/vm/WindowBox";
-import {IStackVMBox} from "./types/vm/IStackVMBox";
+import {StackVMBox} from "./types/vm/StackVMBox";
 import {IndexedFnBox} from "./types/vm/box/IndexedFunctionBox";
 import {NewableFunctionBox} from "./types/vm/NewableFunctionBox";
 import {IBox} from "./types/vm/box/IBox";
@@ -2155,7 +2155,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 	}
 	execute_instruction_raw(instruction:InstructionType) {
 		switch(instruction[0]) {
-			case 'this'/*Special*/: this.push(new IStackVMBox(this)); break;
+			case 'this'/*Special*/: this.push(new StackVMBox(this)); break;
 			// TODO: if you ever use this on a worker, change
 			// it to use globalThis...
 			case 'global'/*Special*/: this.push(new WindowBox(window)); break;
