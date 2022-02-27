@@ -1,7 +1,7 @@
 import {NonNull} from "api";
 import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMIndexedValue, NewableFunctionBox, VMIndexedCallableBox, VMBoxedInstructionType, IStackVMBox, WindowBox} from "./types/vm/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMIndexedValue, NewableFunctionBox, VMIndexedCallableBox, VMBoxedInstructionType, IStackVMBox, WindowBox} from "./types/vm/mod";
 import {VMValue} from "./types/vm/VMValue";
 
 class RemoteWorkerState {

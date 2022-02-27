@@ -199,7 +199,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/vm/SimpleVMTypes.js").InstructionCall} InstructionCall */
+	/**@typedef {import("./types/vm/mod.js").InstructionCall} InstructionCall */
 	class InstructionCallE {
 		/**@arg {VMValue} v */
 		static unbox_value(v){
@@ -308,7 +308,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/vm/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
+	/**@typedef {import("./types/vm/mod.js").InstructionConstruct} InstructionConstruct */
 	class InstructionConstructE {
 		/**@type {<T>(arr:T[])=>arr is []} */
 		static is_array_empty(arr){
@@ -393,7 +393,7 @@
 			if(!obj)throw new Error("Invalid");
 			console.log('VM: cast_object', instruction[1], obj);
 			if(typeof obj!='object')throw new Error("Invalid");
-			/**@typedef {import("./types/vm/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue */
+			/**@typedef {import("./types/vm/mod.js").VMIndexedValueRaw} VMIndexedValue */
 			/**@type {<T>(q:T, v:any)=>v is T} */
 			function can_cast_indexed(q, obj) {
 				if(obj === null){

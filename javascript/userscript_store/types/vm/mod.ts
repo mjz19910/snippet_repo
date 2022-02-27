@@ -9,12 +9,12 @@ class Box<T> {
 		this.value = value;
 	}
 	value: T;
-	get_matching_typeof(to_match: typeofArg) {
+	get_matching_typeof(to_match: TypeofArg) {
 		if(typeof this.value === to_match)return this;
 		return null;
 	}
 }
-type typeofArg='object'|'function'
+type TypeofArg='object'|'function'
 
 /* --- VM Value (classes) ---
 VMBoxedFunction, VMNewableFunction, VMBoxedCSSStyleSheetConstructor

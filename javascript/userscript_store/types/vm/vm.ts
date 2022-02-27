@@ -1,4 +1,4 @@
-import {Unboxed} from "./SimpleVMTypes";
+import {Unboxed} from "./mod";
 
 export type NewableFunction = {
 	new(...a: Unboxed[]): Unboxed;

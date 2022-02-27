@@ -1,4 +1,4 @@
-import {InstructionType, ArrayBox, VMIndexedCallableBox, GlobalThisBox, InstructionTypeArrayBox, VMIndexedValue, IStackVMBox, WindowBox} from "../types/vm/SimpleVMTypes";
+import {InstructionType, ArrayBox, VMIndexedCallableBox, GlobalThisBox, InstructionTypeArrayBox, VMIndexedValue, IStackVMBox, WindowBox} from "../types/vm/mod";
 import {IStackVM} from "../types/vm/IStackVM";
 import {VMValue} from "../types/vm/VMValue";
 
