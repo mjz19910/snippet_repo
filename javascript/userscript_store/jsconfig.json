@@ -9,7 +9,7 @@
 		"checkJs": true,
 		"allowJs": true,
 		"strictNullChecks": true,
-		"module":"nodenext",
+		"module":"CommonJS",
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"noImplicitAny": true,

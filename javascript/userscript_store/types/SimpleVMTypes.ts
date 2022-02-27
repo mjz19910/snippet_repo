@@ -7,13 +7,13 @@ class VMBoxed<T> {
 /* --- VM Value supporting types ---
 IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
 */
-type VMNewableValue = {
+export type VMNewableValue = {
 	new(...a: VMValue[]): VMValue;
 };
-type VMCallableValue = {
+export type VMCallableValue = {
 	(...a: VMValue[]): VMValue;
 };
-type VMIndexed<T> = {
+export type VMIndexed<T> = {
 	[v: string]: T;
 };
 /* --- VM Value supporting interfaces ---
@@ -299,6 +299,8 @@ export type InstructionAppend = ['append'];
 export type InstructionExec = ['exec', InstructionType[]];
 export type InstructionJumpJe = ['je', number];
 export type InstructionJumpAbs = ['jmp', number];
+type CastObjectOpts="object_index"
+export type InstructionCastObject = ['cast_object', CastObjectOpts];
 export type AnyInstructionOperands = SkipItem0<InstructionType>;
 
 export type IStackInstructionType = InstructionPush | InstructionDup | InstructionPeek | InstructionDrop;
@@ -316,7 +318,7 @@ export type InstructionType =
 	IVMJumpType | IVMExecutionType |
 	InstructionPushInstructionPointer | InstructionConstruct |
 	InstructionModifyOperand | InstructionExec |
-	InstructionAppend;
+	InstructionAppend | InstructionCastObject;
 export class VMBoxedInstructionType extends VMBoxed<InstructionType> {};
 
 // --- Misc ---

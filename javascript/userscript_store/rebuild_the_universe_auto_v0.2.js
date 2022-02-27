@@ -346,6 +346,22 @@
 		}
 		return null;
 	}
+	/**@typedef {import("types/SimpleVMTypes").VMIndexedObjectValue} VMIndexedObjectValue */
+	/**@implements {VMIndexedObjectValue} */
+	class VMIndexedObjectValueR {
+		/**@type {"object_index"} */
+		type= "object_index";
+		/**@type {"value"} */
+		index_type = "value";
+		/**@arg {'function'} _to_match */
+		get_matching_typeof(_to_match) {
+			return null;
+		}
+		/**@arg {import("types/SimpleVMTypes").VMIndexed<VMValue>} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
 	/**@implements {VMInterface} */
 	class StackVM {
 		/**@arg {InstructionType[]} instructions */
@@ -501,9 +517,27 @@
 					if(!top)throw new Error("Stack underflow when executing dup instruction");
 					this.push(top);
 				} break;
-				case 'cast_object':{
+				case 'cast_object': {
 					let obj=this.pop();
 					if(!obj)throw new Error("Invalid");
+					if(typeof obj!='object')throw new Error("Invalid");
+					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexed<VMValue>} VMIndexedValue */
+					/**@type {(v:any)=>v is VMIndexedValue} */
+					function can_cast_indexed(obj) {
+						void obj;
+						return true;
+					}
+					/**@type {(v:any)=>VMIndexedValue|null} */
+					function as_indexed(obj){
+						if(can_cast_indexed(obj)){
+							return obj;
+						}
+						return null;
+					}
+					let oo=as_indexed(obj);
+					if(oo) {
+						this.push(new VMIndexedObjectValueR(oo));
+					}
 				} break;
 				case 'get'/*Object*/: {
 					let target_name = this.pop();
@@ -515,7 +549,9 @@
 						console.log('not object_index', target_obj, target_name);
 						throw new Error("Invalid");
 					}
-					this.push(target_obj.value[target_name]);
+					let res=target_obj.value[target_name];
+					debugger;
+					this.push(res);
 				} break;
 				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
 				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
@@ -867,22 +903,32 @@
 		/**@arg {string[]} instruction @returns {InstructionType}*/
 		static verify_instruction(instruction){
 			let num_to_parse=instruction.length;
-			const [m_opcode, ...m_operands] = instruction;
 			/**@type {InstructionType|null} */
 			let ret=null;
-			switch(m_opcode) {
+			switch(instruction[0]) {
 				case 'push':{
 					num_to_parse = 0;
-					ret=[m_opcode, ...m_operands];
+					const [, ...push_operands]=instruction;
+					console.log(push_operands);
+					ret=[instruction[0], ...push_operands];
 				} break;
 				case 'call'/*1 argument*/:{
-					if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0])){
+					if(typeof instruction[1] === 'number' && Number.isFinite(instruction[1])){
 						num_to_parse -= 2;
-						ret=[m_opcode, m_operands[0]];
+						ret=[instruction[0], instruction[1]];
 					} else {
-						console.info("Operand is", m_operands[0]);
+						console.info("Operand is", instruction[1]);
 						throw new Error("Invalid operand");
 					}
+				} break;
+				case 'cast_object': {
+					let m_arg=instruction[1];
+					if(m_arg === 'object_index'){
+						num_to_parse -= 2;
+						ret=[instruction[0], m_arg];
+						break;
+					}
+					throw new Error("Verify: Unexpected operand, operand was `"+m_arg+"`");
 				} break;
 				case 'drop':
 				case 'get':
