@@ -1,4 +1,4 @@
-import {InstructionTypeArrayBox} from "../InstructionTypeArrayBox";
+import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
 import {EmptyArrayBox} from "./EmptyArrayBox";
 import {ArrayBox} from "./ArrayBox";
 

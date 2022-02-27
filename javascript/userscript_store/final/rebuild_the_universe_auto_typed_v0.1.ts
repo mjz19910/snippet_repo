@@ -2,7 +2,7 @@ import {InstructionType} from "../types/vm/instruction/mod";
 import {WindowBox} from "../types/vm/WindowBox";
 import {IStackVMBox} from "../types/vm/IStackVMBox";
 import {IndexedFnBox} from "../types/vm/box/IndexedFunctionBox";
-import {InstructionTypeArrayBox} from "../types/vm/InstructionTypeArrayBox";
+import {InstructionTypeArrayBox} from "../types/vm/box/InstructionTypeArrayBox";
 import {IStackVM} from "../types/vm/IStackVM";
 import {IBox} from "../types/vm/box/IBox";
 import {GlobalThisBox} from "types/vm/box/GlobalThisBox";

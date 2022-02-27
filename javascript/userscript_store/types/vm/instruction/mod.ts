@@ -13,11 +13,20 @@ import {InstructionConstruct} from "./InstructionConstruct";
 import {InstructionPushInstructionPointer} from "./InstructionPushInstructionPointer";
 import {InstructionCast as InstructionCast} from "./InstructionCast";
 import {InstructionGet} from "./InstructionGet";
+import {InstructionDrop} from "./InstructionDrop";
+import {InstructionPeek} from "./InstructionPeek";
+import {InstructionDup} from "./InstructionDup";
+import {InstructionPush} from "./InstructionPush";
+import {InstructionReturn} from "./InstructionReturn";
+import {InstructionCall} from "./InstructionCall";
 
 
 export type InstructionType =
-	IStackInstructionType | InstructionGet |
-	ICallInstructionType | ITuringInstructionType |
+	// Stack
+	InstructionPush | InstructionDup | InstructionPeek | InstructionDrop | InstructionGet |
+	// Call
+	InstructionCall | InstructionReturn |
+	ITuringInstructionType |
 	ISpecialInstructionType | IDebugInstructionType |
 	InstructionJumpTypes | InstructionExecutionTypes |
 	InstructionPushInstructionPointer | InstructionConstruct |
