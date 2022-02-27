@@ -283,6 +283,73 @@
 			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
+	class InstructionCastObjectE {
+		/**@arg {import("types/SimpleVMTypes.js").InstructionCastObject} instruction @arg {IStackVM} vm */
+		static execute_instruction(vm, instruction){
+			let obj=vm.pop();
+					if(!obj)throw new Error("Invalid");
+					console.log('VM: cast_object', instruction[1], obj);
+					if(typeof obj!='object')throw new Error("Invalid");
+					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue */
+					/**@type {<T>(q:T, v:any)=>v is T} */
+					function can_cast_indexed(q, obj) {
+						if(obj === null){
+							return false;
+						}
+						void q;
+						void obj;
+						return true;
+					}
+					/**@type {<T>(q:T, v:any)=>T|null} */
+					function as_indexed(q, obj){
+						if(can_cast_indexed(q, obj)){
+							return obj;
+						}
+						return null;
+					}
+					switch(instruction[1]){
+						case 'object_index':{
+							/**@type {VMIndexedValue|null} */
+							let unboxed_obj=null;
+							if(obj.type === 'custom_box'){
+								unboxed_obj=as_indexed(unboxed_obj, obj.value);
+							} else {
+								unboxed_obj=as_indexed(unboxed_obj, obj);
+							}
+							if(unboxed_obj)vm.push(new VMIndexedObjectValueR(unboxed_obj));
+						} break;
+						case 'callable_index':{
+							/**@type {(v:any)=>v is VMIndexedCallableValueRaw} */
+							function can_cast_indexed(obj) {
+								if(obj === null){
+									return false;
+								}
+								void obj;
+								return true;
+							}
+							/**@type {(v:any)=>VMIndexedCallableValueRaw|null} */
+							function as_indexed(obj){
+								if(can_cast_indexed(obj)){
+									return obj;
+								}
+								return null;
+							}
+							/**@type {VMIndexedCallableValueRaw|null} */
+							let unboxed_obj=null;
+							if(obj.type === 'object_box'){
+								if(obj.inner_type === null){
+									throw new Error("Can't cast object without properties to an object that indexes to a callable")
+								}
+								unboxed_obj=as_indexed(obj.value);
+							} else {
+								unboxed_obj=as_indexed(obj);
+							}
+							if(unboxed_obj)vm.push(new VMIndexedCallableValueR(unboxed_obj));
+						} break;
+						default:throw new Error("Missing cast to "+instruction[1]);
+					}
+		}
+	}
 	/**@typedef {import("./types/SimpleVMTypes.js").IStackVMBox} VMBoxedStackVM */
 	/**@implements {VMBoxedStackVM} */
 	class VMBoxedStackVMR {
@@ -544,7 +611,7 @@
 						}
 					}
 				} break;
-				case 'halt'/*Running*/:{
+				case 'halt'/*Running*/: {
 					instruction;
 					this.running=false;
 				} break;
@@ -555,67 +622,12 @@
 					}
 				} break;
 				case 'drop'/*Stack*/:this.pop();break;
-				case 'dup'/*Stack*/:{
+				case 'dup'/*Stack*/: {
 					let top=this.peek_at(0);
 					if(!top)throw new Error("Stack underflow when executing dup instruction");
 					this.push(top);
 				} break;
-				case 'cast_object': {
-					let obj=this.pop();
-					if(!obj)throw new Error("Invalid");
-					console.log('VM: cast_object', instruction[1], obj);
-					if(typeof obj!='object')throw new Error("Invalid");
-					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue */
-					/**@type {<T>(q:T, v:any)=>v is T} */
-					function can_cast_indexed(q, obj) {
-						if(obj === null){
-							return false;
-						}
-						void q;
-						void obj;
-						return true;
-					}
-					/**@type {<T>(q:T, v:any)=>T|null} */
-					function as_indexed(q, obj){
-						if(can_cast_indexed(q, obj)){
-							return obj;
-						}
-						return null;
-					}
-					switch(instruction[1]){
-						case 'object_index':{
-							/**@type {VMIndexedValue|null} */
-							let unboxed_obj=null;
-							if(obj.type === 'custom_box'){
-								unboxed_obj=as_indexed(unboxed_obj, obj.value);
-							} else {
-								unboxed_obj=as_indexed(unboxed_obj, obj);
-							}
-							if(unboxed_obj)this.push(new VMIndexedObjectValueR(unboxed_obj));
-						} break;
-						case 'callable_index':{
-							/**@type {(v:any)=>v is VMIndexedCallableValueRaw} */
-							function can_cast_indexed(obj) {
-								if(obj === null){
-									return false;
-								}
-								void obj;
-								return true;
-							}
-							/**@type {(v:any)=>VMIndexedCallableValueRaw|null} */
-							function as_indexed(obj){
-								if(can_cast_indexed(obj)){
-									return obj;
-								}
-								return null;
-							}
-							/**@type {VMIndexedCallableValueRaw|null} */
-							let unboxed_obj=as_indexed(obj);
-							if(unboxed_obj)this.push(new VMIndexedCallableValueR(unboxed_obj));
-						} break;
-						default:throw new Error("Missing cast to "+instruction[1]);
-					}
-				} break;
+				case 'cast_object':InstructionCastObjectE.execute_instruction(this, instruction);break;
 				case 'get'/*Object*/: {
 					let target_name = this.pop();
 					let target_obj = this.pop();
