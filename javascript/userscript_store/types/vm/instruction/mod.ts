@@ -24,9 +24,14 @@ import {VMInstructionCall} from "./VMInstructionCall";
 
 export type InstructionType =
 	// Stack
-	InstructionPush | InstructionDup | InstructionPeek | InstructionDrop | InstructionGet |
-	// Call
-	InstructionCall | InstructionReturn |
+	InstructionPush |
+	InstructionDup |
+	InstructionPeek |
+	InstructionDrop |
+	InstructionGet |
+	// FFI Call
+	InstructionCall |
+	InstructionReturn |
 	// Turing
 	InstructionHalt |
 	// Special
