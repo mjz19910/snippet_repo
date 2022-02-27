@@ -383,18 +383,6 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			this.value=value;
 		}
 	}
-	/**@type {<T extends {}>(v:T, k:keyof T)=>v is {[U in keyof T]:T[U]}} */
-	function does_have_property(v, k){
-		if(v.hasOwnProperty(k))return true;
-		if(v[k] !== void 0)return true;
-		return false;
-	}
-	/**@type {<T, F>(v:T, k:(v:T)=>F)=>v is (T & F)} */
-	function does_have_property_as_type(v, k){
-		let rr=v && k;
-		void rr;
-		return true;
-	}
 	class StackVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
