@@ -1,4 +1,5 @@
-import {BoxesWithValue, BoxesWithoutValue} from "./SimpleVMTypes";
+import {BoxesWithoutValue} from "./BoxesWithoutValue";
+import {BoxesWithValue} from "./BoxesWithValue";
 
 // --- VM Value (types) ---
 

@@ -1,8 +1,15 @@
 import {NonNull} from "api";
 import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMIndexedValue, NewableFunctionBox, VMIndexedCallableBox, VMBoxedInstructionType, IStackVMBox, WindowBox} from "./types/vm/mod";
-import {VMValue} from "./types/vm/VMValue";
+import {AnyInstructionOperands} from "./types/vm/mod";
+import {VMBoxedInstructionType} from "./types/vm/VMBoxedInstructionType";
+import {InstructionType} from "./types/vm/InstructionType";
+import {WindowBox} from "./types/vm/WindowBox";
+import {IStackVMBox} from "./types/vm/IStackVMBox";
+import {VMIndexedValue} from "./types/vm/VMIndexedValue";
+import {VMIndexedCallableBox} from "./types/vm/VMIndexedCallableBox";
+import {NewableFunctionBox} from "./types/vm/NewableFunctionBox";
+import {Boxed} from "./types/vm/Boxed";
 
 class RemoteWorkerState {
 
@@ -1933,7 +1940,7 @@ class EventHandlerDispatch<T> {
 }
 abstract class AbstractVM {
 	abstract execute_instruction(instruction: InstructionType): void;
-	abstract run(): VMValue;
+	abstract run(): Boxed;
 }
 class BaseVMCreate extends AbstractVM {
 	flags: Map<string, boolean>;
@@ -1979,7 +1986,7 @@ class BaseVMCreate extends AbstractVM {
 			case 'halt'/*Running*/: this.running = false; break;
 		}
 	}
-	run(): VMValue {
+	run(): Boxed {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let instruction = this.instructions[this.instruction_pointer];
@@ -2007,8 +2014,8 @@ const LOG_LEVEL_VERBOSE = 4;
 const LOG_LEVEL_TRACE = 5;
 void LOG_LEVEL_TRACE;
 class BaseStackVM extends BaseVMCreate {
-	stack: VMValue[];
-	return_value: VMValue;
+	stack: Boxed[];
+	return_value: Boxed;
 	constructor(instructions: InstructionType[]) {
 		super(instructions);
 		this.stack = [];
@@ -2019,10 +2026,10 @@ class BaseStackVM extends BaseVMCreate {
 		this.stack.length = 0;
 		this.return_value = void 0;
 	}
-	push(value: VMValue) {
+	push(value: Boxed) {
 		this.stack.push(value);
 	}
-	pop(): VMValue {
+	pop(): Boxed {
 		if(this.stack.length === 0) {
 			throw new Error("stack underflow");
 		}
@@ -2126,7 +2133,7 @@ class BaseStackVM extends BaseVMCreate {
 			default: super.execute_instruction(instruction); break;
 		}
 	}
-	run(): VMValue {
+	run(): Boxed {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let instruction = this.instructions[this.instruction_pointer];
@@ -2177,7 +2184,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 		return super.run();
 	}
 }
-type FormattableTypes = string | (() => void) | ((err: VMValue) => void);
+type FormattableTypes = string | (() => void) | ((err: Boxed) => void);
 class SimpleStackVMParser {
 	/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
 	static parse_int_arg(cur_item: string | number) {
@@ -2201,7 +2208,7 @@ class SimpleStackVMParser {
 				console.log("%s", 'unsupported format spec %' + format_type);
 		}
 	}
-	static parse_current_instruction(cur: (number | string | ((err: VMValue) => void))[], format_list: FormattableTypes[]) {
+	static parse_current_instruction(cur: (number | string | ((err: Boxed) => void))[], format_list: FormattableTypes[]) {
 		let arg_loc = 1;
 		let arg = cur[arg_loc];
 		while(arg) {
@@ -2965,7 +2972,7 @@ class DomValueBox {
 
 }
 class DomBuilderVM extends BaseStackVM {
-	exec_stack: ([VMValue[], InstructionType[]])[];
+	exec_stack: ([Boxed[], InstructionType[]])[];
 	jump_instruction_pointer: number | null;
 	constructor(instructions: InstructionType[]) {
 		super(instructions);
@@ -3207,7 +3214,7 @@ class AutoBuy {
 			global;push,removeEventListener;push,click;this;
 				call,int(2);
 			drop
-			`, [function() {console.log('play success')}, function(err: VMValue) {console.log(err)}]);
+			`, [function() {console.log('play success')}, function(err: Boxed) {console.log(err)}]);
 		let handler = new EventHandlerVMDispatch(instructions, this);
 		globalThis.addEventListener('click', handler);
 		is_in_ignored_from_src_fn = false;

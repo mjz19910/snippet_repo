@@ -1,6 +1,13 @@
-import {InstructionType, ArrayBox, VMIndexedCallableBox, GlobalThisBox, InstructionTypeArrayBox, VMIndexedValue, IStackVMBox, WindowBox} from "../types/vm/mod";
+import {ArrayBox} from "../types/vm/ArrayBox";
+import {InstructionType} from "../types/vm/InstructionType";
+import {WindowBox} from "../types/vm/WindowBox";
+import {GlobalThisBox} from "../types/vm/GlobalThisBox";
+import {IStackVMBox} from "../types/vm/IStackVMBox";
+import {VMIndexedValue} from "../types/vm/VMIndexedValue";
+import {VMIndexedCallableBox} from "../types/vm/VMIndexedCallableBox";
+import {InstructionTypeArrayBox} from "../types/vm/InstructionTypeArrayBox";
 import {IStackVM} from "../types/vm/IStackVM";
-import {VMValue} from "../types/vm/VMValue";
+import {Boxed} from "../types/vm/Boxed";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
@@ -1403,9 +1410,9 @@ class SimpleStackVMParser {
 }
 class SimpleStackVM implements IStackVM {
 	instructions: InstructionType[];
-	stack: VMValue[];
+	stack: Boxed[];
 	instruction_pointer: number;
-	return_value: VMValue;
+	return_value: Boxed;
 	running: boolean;
 	constructor(instructions: InstructionType[]) {
 		this.instructions = instructions;
@@ -1420,13 +1427,13 @@ class SimpleStackVM implements IStackVM {
 		this.return_value = void 0;
 		this.running = false;
 	}
-	push(value: VMValue) {
+	push(value: Boxed) {
 		this.stack.push(value);
 	}
 	pop() {
 		return this.stack.pop();
 	}
-	 pop_arg_count(arg_count:number):VMValue[] {
+	pop_arg_count(arg_count:number):Boxed[] {
 		let ret=[];
 		for(let i = 0; i < arg_count; i++) {
 			if(this.stack.length <= 0){
@@ -1436,7 +1443,7 @@ class SimpleStackVM implements IStackVM {
 		}
 		return ret;
 	}
-	run(...run_arguments: VMValue[]) {
+	run(...run_arguments: Boxed[]) {
 		this.running = true;
 		while(this.instruction_pointer < this.instructions.length && this.running) {
 			let cur_instruction = this.instructions[this.instruction_pointer];
@@ -1484,6 +1491,20 @@ class SimpleStackVM implements IStackVM {
 					if(!name_to_call) throw "Bad";
 					if(target instanceof VMIndexedCallableBox && typeof name_to_call === 'string') {
 						let ret = target.value[name_to_call](...arg_arr);
+						switch(typeof ret){
+							case 'function':
+							case 'object':
+								console.log('convert', ret);
+								throw new Error("Conversion needed");
+							case 'string':case'number':case 'bigint':case 'boolean':case 'symbol':
+								this.push(ret);
+								break;
+							case 'undefined':
+								this.push(ret);
+								break;
+							default:
+								ret;
+						}
 						this.push(ret);
 					}
 					break;
