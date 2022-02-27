@@ -1,5 +1,5 @@
 import {ObjectBox} from "./ObjectBox";
-import {VMIndexedValue} from "./VMIndexedValue";
-import {VMIndexedCallableBox} from "./VMIndexedCallableBox";
+import {IndexedObject as IndexedObject} from "./IndexedObject";
+import {IndexedFnBox} from "./IndexedFunctionBox";
 
-export type VMObjectTypes = VMIndexedCallableBox | VMIndexedValue | ObjectBox;
+export type VMObjectTypes = IndexedFnBox | IndexedObject | ObjectBox;

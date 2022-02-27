@@ -5,4 +5,5 @@ export {FunctionBox} from "./FunctionBox";
 export {Boxed} from "./Boxed";
 export {IStackVM} from "./IStackVM";
 export {InstructionType} from "./InstructionType";
-export {IndexedFunctionBox as IndexedFunctionBox} from "./IndexedFunctionBox";
+export {IndexedFnBox as IndexedFnBox} from "./IndexedFunctionBox";
+export {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";

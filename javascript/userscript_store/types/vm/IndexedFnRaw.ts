@@ -1,5 +1,5 @@
 import {Indexed} from "./vm";
-import {Function as VMFunction} from "./vm";
+import {Function as Function} from "./vm";
 
 
-export type IndexedFnRaw = Indexed<VMFunction>;
+export type IndexedFnRaw = Indexed<Function>;

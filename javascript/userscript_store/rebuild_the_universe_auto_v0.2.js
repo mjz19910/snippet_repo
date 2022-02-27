@@ -54,7 +54,7 @@
 	/**@typedef {import("types/vm/mod.js").Boxed} Boxed */
 	/**@typedef {import("types/vm/mod.js").IStackVM} IStackVM */
 	/**@typedef {import("types/vm/mod.js").InstructionType} InstructionType */
-	/**@typedef {import("types/vm/mod.js").VMIndexedCallableBox} VMIndexedCallableValue */
+	/**@typedef {import("types/vm/mod.js").IndexedFnBox} VMIndexedCallableValue */
 
 
 	/**@typedef {import("types/vm/mod.js").CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor */
