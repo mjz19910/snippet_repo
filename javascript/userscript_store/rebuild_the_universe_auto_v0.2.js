@@ -287,67 +287,67 @@
 		/**@arg {import("types/SimpleVMTypes.js").InstructionCastObject} instruction @arg {IStackVM} vm */
 		static execute_instruction(vm, instruction){
 			let obj=vm.pop();
-					if(!obj)throw new Error("Invalid");
-					console.log('VM: cast_object', instruction[1], obj);
-					if(typeof obj!='object')throw new Error("Invalid");
-					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue */
-					/**@type {<T>(q:T, v:any)=>v is T} */
-					function can_cast_indexed(q, obj) {
+			if(!obj)throw new Error("Invalid");
+			console.log('VM: cast_object', instruction[1], obj);
+			if(typeof obj!='object')throw new Error("Invalid");
+			/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue */
+			/**@type {<T>(q:T, v:any)=>v is T} */
+			function can_cast_indexed(q, obj) {
+				if(obj === null){
+					return false;
+				}
+				void q;
+				void obj;
+				return true;
+			}
+			/**@type {<T>(q:T, v:any)=>T|null} */
+			function as_indexed(q, obj){
+				if(can_cast_indexed(q, obj)){
+					return obj;
+				}
+				return null;
+			}
+			switch(instruction[1]){
+				case 'object_index':{
+					/**@type {VMIndexedValue|null} */
+					let unboxed_obj=null;
+					if(obj.type === 'custom_box'){
+						unboxed_obj=as_indexed(unboxed_obj, obj.value);
+					} else {
+						unboxed_obj=as_indexed(unboxed_obj, obj);
+					}
+					if(unboxed_obj)vm.push(new VMIndexedObjectValueR(unboxed_obj));
+				} break;
+				case 'callable_index':{
+					/**@type {(v:any)=>v is VMIndexedCallableValueRaw} */
+					function can_cast_indexed(obj) {
 						if(obj === null){
 							return false;
 						}
-						void q;
 						void obj;
 						return true;
 					}
-					/**@type {<T>(q:T, v:any)=>T|null} */
-					function as_indexed(q, obj){
-						if(can_cast_indexed(q, obj)){
+					/**@type {(v:any)=>VMIndexedCallableValueRaw|null} */
+					function as_indexed(obj){
+						if(can_cast_indexed(obj)){
 							return obj;
 						}
 						return null;
 					}
-					switch(instruction[1]){
-						case 'object_index':{
-							/**@type {VMIndexedValue|null} */
-							let unboxed_obj=null;
-							if(obj.type === 'custom_box'){
-								unboxed_obj=as_indexed(unboxed_obj, obj.value);
-							} else {
-								unboxed_obj=as_indexed(unboxed_obj, obj);
-							}
-							if(unboxed_obj)vm.push(new VMIndexedObjectValueR(unboxed_obj));
-						} break;
-						case 'callable_index':{
-							/**@type {(v:any)=>v is VMIndexedCallableValueRaw} */
-							function can_cast_indexed(obj) {
-								if(obj === null){
-									return false;
-								}
-								void obj;
-								return true;
-							}
-							/**@type {(v:any)=>VMIndexedCallableValueRaw|null} */
-							function as_indexed(obj){
-								if(can_cast_indexed(obj)){
-									return obj;
-								}
-								return null;
-							}
-							/**@type {VMIndexedCallableValueRaw|null} */
-							let unboxed_obj=null;
-							if(obj.type === 'object_box'){
-								if(obj.inner_type === null){
-									throw new Error("Can't cast object without properties to an object that indexes to a callable")
-								}
-								unboxed_obj=as_indexed(obj.value);
-							} else {
-								unboxed_obj=as_indexed(obj);
-							}
-							if(unboxed_obj)vm.push(new VMIndexedCallableValueR(unboxed_obj));
-						} break;
-						default:throw new Error("Missing cast to "+instruction[1]);
+					/**@type {VMIndexedCallableValueRaw|null} */
+					let unboxed_obj=null;
+					if(obj.type === 'object_box'){
+						if(obj.inner_type === null){
+							throw new Error("Can't cast object without properties to an object that indexes to a callable")
+						}
+						unboxed_obj=as_indexed(obj.value);
+					} else {
+						unboxed_obj=as_indexed(obj);
 					}
+					if(unboxed_obj)vm.push(new VMIndexedCallableValueR(unboxed_obj));
+				} break;
+				default:throw new Error("Missing cast to "+instruction[1]);
+			}
 		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").IStackVMBox} VMBoxedStackVM */
@@ -2768,14 +2768,14 @@
 				flat_stack.push(["vm_return"]);
 			}
 			for(let i=0;i<flat_stack.length;i++){
-					let instruction=flat_stack[i];
-					if(instruction[0] === 'vm_call_at'){
-						let idx=flat_stack.indexOf(instruction[1]);
-						instructions.push(['vm_call', idx]);
-						continue;
-					}
-					instructions.push(instruction);
+				let instruction=flat_stack[i];
+				if(instruction[0] === 'vm_call_at'){
+					let idx=flat_stack.indexOf(instruction[1]);
+					instructions.push(['vm_call', idx]);
+					continue;
 				}
+				instructions.push(instruction);
+			}
 			console.log('parse_dom_stack', stack, depths, instructions);
 			return instructions;
 		}
