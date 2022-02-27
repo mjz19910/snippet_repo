@@ -1,4 +1,4 @@
-import {Box} from "./box/mod";
+import {Box} from "./mod";
 
 // --- Misc Boxes ---
 export class GlobalThisBox extends Box<typeof globalThis> {
