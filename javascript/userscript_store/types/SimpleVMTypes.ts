@@ -22,8 +22,8 @@ StackVM
 export interface VMInterface {
 	push(value: VMValue): void;
 	pop(): VMValue | undefined;
-	pop_arg_count(q:number):VMValue[];
-	stack:VMValue[];
+	pop_arg_count(q: number): VMValue[];
+	stack: VMValue[];
 }
 
 /* --- VM Value (classes) ---
@@ -82,6 +82,7 @@ export class VMCallableFunction extends VMBoxed<VMCallableValue> {
 	}
 }
 type VMObjectTypes = VMIndexedCallableValue | VMIndexedObjectValue | VMBoxedObject;
+export type VMIndexedValue = VMIndexed<VMValue>;
 export class VMIndexedCallableValue extends VMBoxed<VMIndexed<VMCallableValue>> {
 	type: "callable_index" = "callable_index";
 	index_type: "callable_box" = "callable_box";
@@ -89,7 +90,7 @@ export class VMIndexedCallableValue extends VMBoxed<VMIndexed<VMCallableValue>> 
 		return null;
 	}
 };
-export class VMIndexedObjectValue extends VMBoxed<VMIndexed<VMValue>>{
+export class VMIndexedObjectValue extends VMBoxed<VMIndexedValue>{
 	type: "object_index" = "object_index";
 	index_type: "value" = "value";
 	get_matching_typeof(_to_match: 'function') {
@@ -206,45 +207,45 @@ export class VMBoxedWindow extends VMBoxed<Window>{
 type VMPromiseTypes = VMBoxedVoidPromise | VMBoxedPromise;
 export class VMBoxedVoidPromise extends VMBoxed<Promise<void>> {
 	type: "promise" = "promise";
-	return_type:null=null;
-	await_type:null=null;
-	promise_return_type_special:'void_type'='void_type';
+	return_type: null = null;
+	await_type: null = null;
+	promise_return_type_special: 'void_type' = 'void_type';
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 export class VMBoxedPromise extends VMBoxed<Promise<VMValue>> {
 	type: "promise" = "promise";
-	await_type:"value"="value";
+	await_type: "value" = "value";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
 
-type VMReturnTypes=VMEmptyReturn;
+type VMReturnTypes = VMEmptyReturn;
 export class VMEmptyReturn extends VMBoxed<[]> {
-	type:"TODO"="TODO";
+	type: "TODO" = "TODO";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 };
 
 type VMCustomFunctionTypes = VMReturnsBoxedVoidPromise | VMReturnsBoxedPromise;
-export class VMReturnsBoxedVoidPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedVoidPromise> {
+export class VMReturnsBoxedVoidPromise extends VMBoxed<(...a: VMValue[]) => VMBoxedVoidPromise> {
 	type: "function_box" = "function_box";
 	return_type: "promise" = "promise";
-	promise_return_type_special:'void_type'='void_type';
+	promise_return_type_special: 'void_type' = 'void_type';
 	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value == to_match){
+		if(typeof this.value == to_match) {
 			return this;
 		}
 		return null;
 	}
 }
-export class VMReturnsBoxedPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedPromise> {
+export class VMReturnsBoxedPromise extends VMBoxed<(...a: VMValue[]) => VMBoxedPromise> {
 	type: "function_box" = "function_box";
 	return_type: "promise" = "promise";
-	await_type:"value"="value";
+	await_type: "value" = "value";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
@@ -252,8 +253,8 @@ export class VMReturnsBoxedPromise extends VMBoxed<(...a:VMValue[]) => VMBoxedPr
 
 type VMCustomReturnTypes = VMBoxedCSSStyleSheetPromise;
 export class VMBoxedCSSStyleSheetPromise extends VMBoxed<Promise<CSSStyleSheet>> {
-	type:"promise"="promise";
-	await_type:"CSSStyleSheet"="CSSStyleSheet";
+	type: "promise" = "promise";
+	await_type: "CSSStyleSheet" = "CSSStyleSheet";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
@@ -262,21 +263,21 @@ export class VMBoxedCSSStyleSheetPromise extends VMBoxed<Promise<CSSStyleSheet>>
 
 // --- VM Value (types) ---
 type VMCustomTypes =
-VMCustomFunctionTypes |
-VMCustomReturnTypes;
-export type VMValue =
-VMArrayTypes |
-VMObjectTypes |
-VMFunctionTypes |
-VMGlobalTypes |
-VMInstanceTypes |
-VMBoxedPromise |
-VMConstructorTypes |
-VMArgumentTypes |
-VMReturnTypes |
-VMPromiseTypes |
-VMCustomTypes |
-bigint | boolean | number | string | symbol | null | undefined;
+	VMCustomFunctionTypes |
+	VMCustomReturnTypes;
+export type VMBoxValues = VMArrayTypes |
+	VMObjectTypes |
+	VMFunctionTypes |
+	VMGlobalTypes |
+	VMInstanceTypes |
+	VMBoxedPromise |
+	VMConstructorTypes |
+	VMArgumentTypes |
+	VMReturnTypes |
+	VMPromiseTypes |
+	VMCustomTypes;
+export type VMPrimitiveValues = bigint | boolean | number | string | symbol | null | undefined;
+export type VMValue = VMBoxValues | VMPrimitiveValues;
 
 
 // --- Instruction ---
@@ -299,7 +300,7 @@ export type InstructionAppend = ['append'];
 export type InstructionExec = ['exec', InstructionType[]];
 export type InstructionJumpJe = ['je', number];
 export type InstructionJumpAbs = ['jmp', number];
-type CastObjectOpts="object_index"
+type CastObjectOpts = "object_index"
 export type InstructionCastObject = ['cast_object', CastObjectOpts];
 export type AnyInstructionOperands = SkipItem0<InstructionType>;
 

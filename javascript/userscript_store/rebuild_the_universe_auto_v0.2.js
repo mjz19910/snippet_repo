@@ -521,23 +521,30 @@
 					let obj=this.pop();
 					if(!obj)throw new Error("Invalid");
 					if(typeof obj!='object')throw new Error("Invalid");
-					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexed<VMValue>} VMIndexedValue */
+					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValue} VMIndexedValue */
 					/**@type {(v:any)=>v is VMIndexedValue} */
 					function can_cast_indexed(obj) {
+						if(obj === null){
+							return false;
+						}
 						void obj;
 						return true;
 					}
-					/**@type {(v:any)=>VMIndexedValue|null} */
+					/**@type {(v:VMValue|VMValue['value'])=>VMIndexedValue|null} */
 					function as_indexed(obj){
 						if(can_cast_indexed(obj)){
 							return obj;
 						}
 						return null;
 					}
-					let oo=as_indexed(obj);
-					if(oo) {
-						this.push(new VMIndexedObjectValueR(oo));
+					/**@type {VMIndexedValue|null} */
+					let unboxed_obj=null;
+					if(obj.type === 'custom_box'){
+						unboxed_obj=as_indexed(obj.value);
+					} else {
+						unboxed_obj=as_indexed(obj);
 					}
+					if(unboxed_obj)this.push(new VMIndexedObjectValueR(unboxed_obj));
 				} break;
 				case 'get'/*Object*/: {
 					let target_name = this.pop();
@@ -545,7 +552,7 @@
 					if(!target_obj)throw new Error("Invalid");
 					if(typeof target_name!='string')throw new Error("Invalid");
 					if(typeof target_obj!='object')throw new Error("Invalid");
-					if(target_obj.type != 'object_index'){
+					if(target_obj.type != 'object_index') {
 						console.log('not object_index', target_obj, target_name);
 						throw new Error("Invalid");
 					}
@@ -2312,10 +2319,11 @@
 			}catch(e){
 				l_log_if(LOG_LEVEL_INFO, "failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
-			let raw_instructions=`this;push,target_obj;get;cast_object,object_index;push,background_audio;get;push,play;call,int(2);push,then;push,%o;push,%o;call,int(4);drop;global;push,removeEventListener;push,click;this;call,int(4);drop`;
+			let raw_instructions=`this;cast_object,object_index;push,target_obj;get;cast_object,object_index;push,background_audio;get;push,play;call,int(2);push,then;push,%o;push,%o;call,int(4);drop;global;push,removeEventListener;push,click;this;call,int(4);drop`;
 			let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(raw_instructions, [
 				function(){
-					l_log_if(LOG_LEVEL_INFO, 'play success')
+					// LOG_LEVEL_INFO
+					l_log_if(LOG_LEVEL_ERROR, 'play success')
 				},
 				/**@arg {any} err */
 				function(err){
