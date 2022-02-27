@@ -8,13 +8,13 @@ class Box<T> {
 IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
 */
 namespace VM {
-	export type Function = (...a: VMValue[])=>VMValue;
+	export type Function = (...a: VMValue[]) => VMValue;
 }
 export type NewableFunction = {
 	new(...a: VMValue[]): VMValue;
 };
 export type VMCallable = {
-	(...a: VMValue[]): VMValue;
+	(...a: Unboxed[]): Unboxed;
 };
 export type VMIndexed<T> = {
 	[v: string]: T;
@@ -210,7 +210,7 @@ export class PromiseBox extends Box<Promise<VMValue>> {
 	}
 }
 
-type SpecialBoxes = VoidBox;
+type BoxesWithoutValue = VoidBox;
 export class VoidBox {
 	type: "special" = "special";
 	value_type: "void" = "void";
@@ -265,21 +265,23 @@ export class WindowBox extends Box<Window>{
 
 
 // --- VM Value (types) ---
-export type VMBoxedValues = ArrayBoxes |
+export type VMBoxedValues = BoxesWithValue | BoxesWithoutValue;
+export type BoxesWithValue =
 	VMObjectTypes |
 	CallableBoxes |
 	InstanceBoxes |
 	PromiseBox |
 	ConstructorBoxes |
 	ArgumentTypeBoxes |
-	SpecialBoxes |
 	GlobalThisBox |
 	WindowBox |
 	PromiseTypeBoxes |
 	FunctionReturnBoxes |
 	CustomFunctionBoxes;
-export type VMPrimitiveValues = bigint | boolean | number | string | symbol | null | undefined;
-export type VMValue = VMBoxedValues | VMPrimitiveValues;
+export type UnboxedObjects = BoxesWithValue['value'] | null;
+export type Unboxed = UnboxedObjects | string | number | bigint | boolean | symbol | undefined;
+export type VMPrimitiveValues = bigint | boolean | number | string | symbol | undefined;
+export type VMValue = VMBoxedValues | VMPrimitiveValues | null;
 
 
 // --- Instruction ---
