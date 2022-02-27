@@ -1,8 +1,6 @@
-import {Box as Box} from "./Box";
-import {Box} from "../box/mod";
+import {Box, IBox} from "./mod";
 
-
-export class ArrayBox extends Box<Box[]> {
+export class ArrayBox extends Box<IBox[]> {
 	type: "array_box" = "array_box";
 	item_type: "value" = "value";
 }

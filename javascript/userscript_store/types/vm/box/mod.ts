@@ -2,7 +2,7 @@ import {Primitives} from "../Primitives";
 import {TypeOfResult} from "../TypeOfResult";
 import ValueBoxes from "../ValueBoxes";
 
-export type TBox = ValueBoxes | Primitives | null;
+export type IBox = ValueBoxes | Primitives | null;
 
 export class Box<T> {
 	constructor(value: T) {

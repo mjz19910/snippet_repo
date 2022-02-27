@@ -12,10 +12,11 @@ import {InstructionModifyOperand} from "./InstructionModifyOperand";
 import {InstructionConstruct} from "./InstructionConstruct";
 import {InstructionPushInstructionPointer} from "./InstructionPushInstructionPointer";
 import {InstructionCast as InstructionCast} from "./InstructionCast";
+import {InstructionGet} from "./InstructionGet";
 
 
 export type InstructionType =
-	IStackInstructionType | IObjectInstructionType |
+	IStackInstructionType | InstructionGet |
 	ICallInstructionType | ITuringInstructionType |
 	ISpecialInstructionType | IDebugInstructionType |
 	InstructionJumpTypes | InstructionExecutionTypes |

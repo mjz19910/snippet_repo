@@ -1,4 +1,4 @@
-import {Box} from "./box/Box";
+import {IBox} from "./box/IBox";
 
 /* --- VM Value supporting types ---
 IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
@@ -7,8 +7,8 @@ IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
 StackVM
 */
 export interface IStackVM {
-	push(value: Box): void;
-	pop(): Box | undefined;
-	pop_arg_count(q: number): Box[];
-	stack: Box[];
+	push(value: IBox): void;
+	pop(): IBox | undefined;
+	pop_arg_count(q: number): IBox[];
+	stack: IBox[];
 }

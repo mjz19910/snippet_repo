@@ -51,7 +51,7 @@
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").Boxed} Boxed */
+	/**@typedef {import("types/vm/mod.js").IBox} Boxed */
 	/**@typedef {import("types/vm/mod.js").IStackVM} IStackVM */
 	/**@typedef {import("types/vm/mod.js").InstructionType} InstructionType */
 	/**@typedef {import("types/vm/mod.js").IndexedFnBox} VMIndexedCallableValue */
