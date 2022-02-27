@@ -3,12 +3,12 @@ import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
 import {InstructionTypeBox} from "./types/vm/VMBoxedInstructionType";
 import {InstructionType} from "./types/vm/instruction/mod";
-import {WindowBox} from "./types/vm/WindowBox";
-import {StackVMBox} from "./types/vm/StackVMBox";
 import {IndexedFnBox} from "./types/vm/box/IndexedFunctionBox";
-import {NewableFunctionBox} from "./types/vm/NewableFunctionBox";
 import {IBox} from "./types/vm/box/IBox";
-import {IndexedObject} from "types/vm/index_access/IndexedObject";
+import {IndexBox} from "types/vm/index_access/IndexedObject";
+import {NewableFunctionBox} from "types/vm/box/NewableFunctionBox";
+import {StackVMBox} from "types/vm/box/StackVMBox";
+import {WindowBox} from "types/vm/box/WindowBox";
 
 class RemoteWorkerState {
 
@@ -120,12 +120,6 @@ declare global {
 	}
 }
 export {};
-
-type MaybeNull=number | null;
-type ExtractedType=NonNull<MaybeNull>;
-
-
-
 'use strict';
 const TIMER_SINGLE = 1;
 const TIMER_REPEATING = 2;
@@ -2062,7 +2056,7 @@ class BaseStackVM extends BaseVMCreate {
 				if(target_obj === void 0) break;
 				if(typeof target_obj != 'object') break;
 				if(typeof target_name != 'string') break;
-				if(target_obj instanceof IndexedObject) {
+				if(target_obj instanceof IndexBox) {
 					this.push(target_obj.value[target_name]);
 				}
 			} break;

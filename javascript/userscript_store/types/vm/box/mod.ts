@@ -1,12 +1,11 @@
 import {ArrayBox} from "./ArrayBox";
-import {CallableReturnPromiseBox} from "./CallableReturnPromiseBox";
+import {PromiseResultBox} from "./CallableReturnPromiseBox";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
 import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";
 import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox";
 import {CSSStyleSheetPromiseBox} from "./CSSStyleSheetPromiseBox";
 import {EmptyArrayBox} from "./EmptyArrayBox";
 import {FunctionBox} from "./FunctionBox";
-import {FunctionReturnsVoidPromiseBox} from "./CallableReturnsVoidPromiseBox";
 import {GlobalThisBox} from "./GlobalThisBox";
 import {IndexedFnBox} from "./IndexedFunctionBox";
 import {IndexBox} from "../index_access/IndexedObject";
@@ -35,8 +34,7 @@ CSSStyleSheetConstructorBox |
 // function
 FunctionBox |
 NewableFunctionBox |
-FunctionReturnsVoidPromiseBox |
-CallableReturnPromiseBox |
+PromiseResultBox |
 // return type
 CSSStyleSheetPromiseBox |
 // global

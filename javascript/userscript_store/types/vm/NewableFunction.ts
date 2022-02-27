@@ -1,6 +1,5 @@
-import {Unboxed} from "./Unboxed";
-
+import {IBox} from "./mod";
 
 export type NewableFunction = {
-	new(...a: Unboxed[]): Unboxed;
+	new(...a: IBox[]): IBox;
 };

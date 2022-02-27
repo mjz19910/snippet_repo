@@ -1,0 +1,97 @@
+final/rebuild_the_universe_auto_typed_v0.1.ts(2,25): error TS2307: Cannot find module '../types/vm/WindowBox' or its corresponding type declarations.
+final/rebuild_the_universe_auto_typed_v0.1.ts(3,26): error TS2307: Cannot find module '../types/vm/StackVMBox' or its corresponding type declarations.
+final/rebuild_the_universe_auto_typed_v0.1.ts(8,29): error TS2307: Cannot find module 'types/vm/box/GlobalThisBox' or its corresponding type declarations.
+final/rebuild_the_universe_auto_typed_v0.1.ts(9,24): error TS2307: Cannot find module 'types/vm/box/ArrayBox' or its corresponding type declarations.
+final/rebuild_the_universe_auto_typed_v0.1.ts(10,29): error TS2307: Cannot find module 'types/vm/index_access/IndexedObject' or its corresponding type declarations.
+final/rebuild_the_universe_auto_typed_v0.1.ts(28,3): error TS2322: Type 'Timeout' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(57,4): error TS2322: Type 'Timeout' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(60,4): error TS2322: Type 'Timer' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(471,4): error TS2322: Type 'Timeout' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(500,5): error TS2322: Type 'Timeout' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(503,5): error TS2322: Type 'Timer' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(770,31): error TS2304: Cannot find name 'WeakRef'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(898,13): error TS1056: Accessors are only available when targeting ECMAScript 5 and higher.
+final/rebuild_the_universe_auto_typed_v0.1.ts(949,21): error TS2304: Cannot find name 'WeakRef'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(975,32): error TS2304: Cannot find name 'WeakRef'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1159,27): error TS2322: Type '(handler: TimerHandler, timeout?: number, ...arguments: any[]) => number' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setTimeout'.
+  Property '__promisify__' is missing in type '(handler: TimerHandler, timeout?: number, ...arguments: any[]) => number' but required in type 'typeof setTimeout'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1160,30): error TS2322: Type '(handler: TimerHandler, timeout?: number, ...arguments: any[]) => number' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setInterval'.
+  Property '__promisify__' is missing in type '(handler: TimerHandler, timeout?: number, ...arguments: any[]) => number' but required in type 'typeof setInterval'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1161,29): error TS2322: Type '(id?: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (timeoutId: Timeout): void; }'.
+  Type '(id?: number) => void' is not assignable to type '{ (id?: number): void; (timeoutId: Timeout): void; }'.
+    Types of parameters 'id' and 'timeoutId' are incompatible.
+      Type 'Timeout' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1162,32): error TS2322: Type '(id?: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (intervalId: Timeout): void; }'.
+  Type '(id?: number) => void' is not assignable to type '{ (id?: number): void; (intervalId: Timeout): void; }'.
+    Types of parameters 'id' and 'intervalId' are incompatible.
+      Type 'Timeout' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1217,32): error TS2304: Cannot find name 'WeakRef'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1254,2): error TS2322: Type '(handler: TimerHandler, timeout?: number, ...target_arguments: any[]) => any' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setTimeout'.
+  Property '__promisify__' is missing in type '(handler: TimerHandler, timeout?: number, ...target_arguments: any[]) => any' but required in type 'typeof setTimeout'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1255,2): error TS2322: Type '(handler: TimerHandler, timeout?: number, ...target_arguments: any[]) => any' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setInterval'.
+  Property '__promisify__' is missing in type '(handler: TimerHandler, timeout?: number, ...target_arguments: any[]) => any' but required in type 'typeof setInterval'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1256,2): error TS2322: Type '(id: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (timeoutId: Timeout): void; }'.
+  Type '(id: number) => void' is not assignable to type '{ (id?: number): void; (timeoutId: Timeout): void; }'.
+    Types of parameters 'id' and 'timeoutId' are incompatible.
+      Type 'Timeout' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1257,2): error TS2322: Type '(id?: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (intervalId: Timeout): void; }'.
+  Type '(id?: number) => void' is not assignable to type '{ (id?: number): void; (intervalId: Timeout): void; }'.
+    Types of parameters 'id' and 'intervalId' are incompatible.
+      Type 'Timeout' is not assignable to type 'number'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(1474,21): error TS2339: Property 'value' does not exist on type 'string | number | bigint | true | symbol | CSSStyleSheetInitBox | EmptyArrayBox | ArrayBox | InstructionTypeArrayBox | ... 17 more ... | VoidBox'.
+  Property 'value' does not exist on type 'string'.
+final/rebuild_the_universe_auto_typed_v0.1.ts(2737,43): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(1,23): error TS2307: Cannot find module 'api' or its corresponding type declarations.
+rebuild_the_universe_auto_typed_v0.2.ts(2,24): error TS2307: Cannot find module 'types/rebuild_the_universe_auto_interface' or its corresponding type declarations.
+rebuild_the_universe_auto_typed_v0.2.ts(3,32): error TS2307: Cannot find module 'types/RecursivePartial' or its corresponding type declarations.
+rebuild_the_universe_auto_typed_v0.2.ts(8,24): error TS2307: Cannot find module 'types/vm/index_access/IndexedObject' or its corresponding type declarations.
+rebuild_the_universe_auto_typed_v0.2.ts(419,8): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(426,8): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(430,23): error TS2304: Cannot find name 'FinalizationRegistry'.
+rebuild_the_universe_auto_typed_v0.2.ts(470,52): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(474,13): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(604,24): error TS2304: Cannot find name 'FinalizationRegistry'.
+rebuild_the_universe_auto_typed_v0.2.ts(1275,26): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(1275,53): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(1483,21): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(1506,32): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(1768,26): error TS2569: Type 'IterableIterator<[string | number, TimerState]>' is not an array type or a string type. Use compiler option '--downlevelIteration' to allow iterating of iterators.
+rebuild_the_universe_auto_typed_v0.2.ts(1837,32): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(1880,3): error TS2322: Type '(handler: TimerHandler, timeout: number, ...target_args: any[]) => any' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setTimeout'.
+  Property '__promisify__' is missing in type '(handler: TimerHandler, timeout: number, ...target_args: any[]) => any' but required in type 'typeof setTimeout'.
+rebuild_the_universe_auto_typed_v0.2.ts(1881,3): error TS2322: Type '(handler: TimerHandler, timeout?: number, ...target_args: any[]) => any' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setInterval'.
+  Property '__promisify__' is missing in type '(handler: TimerHandler, timeout?: number, ...target_args: any[]) => any' but required in type 'typeof setInterval'.
+rebuild_the_universe_auto_typed_v0.2.ts(1882,3): error TS2322: Type '(id?: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (timeoutId: Timeout): void; }'.
+  Type '(id?: number) => void' is not assignable to type '{ (id?: number): void; (timeoutId: Timeout): void; }'.
+    Types of parameters 'id' and 'timeoutId' are incompatible.
+      Type 'Timeout' is not assignable to type 'number'.
+rebuild_the_universe_auto_typed_v0.2.ts(1883,3): error TS2322: Type '(id: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (intervalId: Timeout): void; }'.
+  Type '(id: number) => void' is not assignable to type '{ (id?: number): void; (intervalId: Timeout): void; }'.
+    Types of parameters 'id' and 'intervalId' are incompatible.
+      Type 'Timeout' is not assignable to type 'number'.
+rebuild_the_universe_auto_typed_v0.2.ts(2063,27): error TS2339: Property 'value' does not exist on type 'CSSStyleSheetInitBox | EmptyArrayBox | ArrayBox | InstructionTypeArrayBox | CSSStyleSheetConstructorBox | ... 16 more ... | VoidBox'.
+  Property 'value' does not exist on type 'NewableFunctionBox'.
+rebuild_the_universe_auto_typed_v0.2.ts(2083,44): error TS2472: Spread operator in 'new' expressions is only available when targeting ECMAScript 5 and higher.
+rebuild_the_universe_auto_typed_v0.2.ts(2085,43): error TS2304: Cannot find name 'NewableFunctionBox'.
+rebuild_the_universe_auto_typed_v0.2.ts(2086,43): error TS2472: Spread operator in 'new' expressions is only available when targeting ECMAScript 5 and higher.
+rebuild_the_universe_auto_typed_v0.2.ts(2155,42): error TS2304: Cannot find name 'StackVMBox'.
+rebuild_the_universe_auto_typed_v0.2.ts(2158,44): error TS2304: Cannot find name 'WindowBox'.
+rebuild_the_universe_auto_typed_v0.2.ts(2620,3): error TS2322: Type 'Timer' is not assignable to type 'number'.
+rebuild_the_universe_auto_typed_v0.2.ts(2643,3): error TS2322: Type 'Timer' is not assignable to type 'number'.
+rebuild_the_universe_auto_typed_v0.2.ts(2942,22): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(2946,25): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(3556,3): error TS2322: Type 'Timer' is not assignable to type 'number'.
+rebuild_the_universe_auto_typed_v0.2.ts(3563,29): error TS2345: Argument of type 'Timer' is not assignable to parameter of type 'number'.
+rebuild_the_universe_auto_typed_v0.2.ts(4065,13): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(4068,24): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(4090,25): error TS2304: Cannot find name 'WeakRef'.
+rebuild_the_universe_auto_typed_v0.2.ts(4253,3): error TS2322: Type 'Timeout' is not assignable to type 'number'.
+types/vm/box/CSSStyleSheetInitBox.ts(1,28): error TS2307: Cannot find module '../MediaListBox' or its corresponding type declarations.
+types/vm/box/MediaListBox.ts(1,19): error TS2307: Cannot find module './box/mod' or its corresponding type declarations.
+types/vm/box/NewableFunctionBox.ts(1,31): error TS2307: Cannot find module './NewableFunction' or its corresponding type declarations.
+types/vm/box/NewableFunctionBox.ts(2,19): error TS2307: Cannot find module './box/mod' or its corresponding type declarations.
+types/vm/box/NodeBox.ts(1,19): error TS2307: Cannot find module './box/mod' or its corresponding type declarations.
+types/vm/box/ObjectBox.ts(1,19): error TS2307: Cannot find module './box/mod' or its corresponding type declarations.
+types/vm/box/StackVMBox.ts(1,23): error TS2307: Cannot find module '../StackVM' or its corresponding type declarations.
+types/vm/box/StackVMBox.ts(2,19): error TS2307: Cannot find module './box/mod' or its corresponding type declarations.
+types/vm/box/WindowBox.ts(1,19): error TS2307: Cannot find module './box/mod' or its corresponding type declarations.

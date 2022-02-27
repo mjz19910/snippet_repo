@@ -1,5 +1,5 @@
 import {ObjectBox} from "./ObjectBox";
 import {IndexedFnBox} from "./IndexedFunctionBox";
-import {IndexedObject} from "../index_access/IndexedObject";
+import {IndexBox} from "../index_access/IndexedObject";
 
-export type ObjectBoxes = IndexedFnBox | IndexedObject | ObjectBox;
+export type ObjectBoxes = IndexedFnBox | IndexBox | ObjectBox;

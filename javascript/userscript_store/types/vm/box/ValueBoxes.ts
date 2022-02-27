@@ -10,16 +10,17 @@ import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
 import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";
 import {FunctionBox} from "./FunctionBox";
 import {NewableFunctionBox} from "./NewableFunctionBox";
-import {FunctionReturnsVoidPromiseBox} from "./CallableReturnsVoidPromiseBox";
-import {CallableReturnPromiseBox} from "./CallableReturnPromiseBox";
+import {FunctionReturnsVoidPromiseBox as ResultVoidPromiseBox} from "./ResultVoidPromiseBox";
+import {CallableReturnPromiseBox as PromiseResultBox} from "./CallableReturnPromiseBox";
 import {CSSStyleSheetPromiseBox} from "./CSSStyleSheetPromiseBox";
 import {MediaListBox} from "./MediaListBox";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
 import {NodeBox} from "./NodeBox";
 import {StackVMBox} from "./StackVMBox";
 import {IndexedFnBox} from "./IndexedFunctionBox";
-import {IndexedObject} from "../index_access/IndexedObject";
+import {IndexBox} from "../index_access/IndexedObject";
 import {ObjectBox} from "./ObjectBox";
+import {VoidPromiseBox} from "./VoidPromiseBox";
 
 type ValueBoxes =
 // function result
@@ -33,8 +34,6 @@ CSSStyleSheetConstructorBox |
 // function
 FunctionBox |
 NewableFunctionBox |
-FunctionReturnsVoidPromiseBox |
-CallableReturnPromiseBox |
 // return type
 CSSStyleSheetPromiseBox |
 // global
@@ -47,13 +46,14 @@ CSSStyleSheetBox |
 MediaListBox |
 // object
 IndexedFnBox |
-IndexedObject |
+IndexBox |
 ObjectBox |
-// promise box
+// promise
 PromiseBox |
-// promise types
-PromiseTypeBoxes |
-// No value (Void)
-VoidBox;
+PromiseResultBox |
+// void (Void)
+VoidBox |
+// Promise<void>
+VoidPromiseBox;
 
 export default ValueBoxes;
