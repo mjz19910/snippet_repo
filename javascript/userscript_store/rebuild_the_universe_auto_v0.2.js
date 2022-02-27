@@ -54,8 +54,6 @@
 	/**@typedef {import("types/SimpleVMTypes.js").VMValue} VMValue */
 	/**@typedef {import("types/SimpleVMTypes.js").IStackVM} IStackVM */
 	/**@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType */
-	/**@typedef {import("types/SimpleVMTypes.js").VMCallable} VMCallableValue */
-	/**@typedef {import("types/SimpleVMTypes.js").CallableFunctionBox} CallableFunctionBox */
 	/**@typedef {import("types/SimpleVMTypes.js").VMIndexedCallableBox} VMIndexedCallableValue */
 
 
@@ -139,8 +137,6 @@
 		}
 	}
 	/**@typedef {import("types/SimpleVMTypes.js").Unboxed} Unboxed */
-	/**@typedef {import("types/SimpleVMTypes.js").CallableFunctionBox} VMBoxedCallableFunction */
-	/**@implements {VMBoxedCallableFunction} */
 	class CallableFunctionImpl {
 		/**@type {"callable_box"} */
 		type="callable_box";
@@ -158,26 +154,6 @@
 		constructor(value){
 			this.value=value;
 		}
-	}
-	/**@implements {CallableFunctionBox} */
-	class CallableFunctionBoxImpl {
-		/**@type {"callable_box"} */
-		type="callable_box";
-		parameters_type_array=null;
-		instance_type=null;
-		return_type=null;
-		/**@arg {"function"} to_match */
-		get_matching_typeof(to_match){
-			if(typeof this.value === to_match){
-				return this;
-			}
-			return null;
-		};
-		/**@arg {VMCallableValue} value */
-		constructor(value){
-			this.value=value;
-		}
-
 	}
 	/**@type {<T, X extends keyof T>(obj:{[V in keyof T]:T[V]}, key:X)=>{v:T[X]} | null} */
 	function safe_get(obj, key) {
@@ -205,33 +181,48 @@
 			v:prop.value
 		};
 	}
+	/**@typedef {import("types/SimpleVMTypes.js").FunctionBox} FunctionBox */
+	/**@implements {FunctionBox} */
+	class FunctionBoxImpl {
+		/**@type {"function_box"} */
+		type = "function_box";
+		return_type = null;
+		/**@arg {'function'} to_match */
+		get_matching_typeof(to_match) {
+			if(typeof this.value === to_match) {
+				return this;
+			}
+			return null;
+		}
+		/**@arg {FunctionBox['value']} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionCall} InstructionCall */
 	class InstructionCallE {
 		/**@arg {VMValue} v */
 		static unbox_value(v){
-
+			if(typeof v!='object'){
+				return v;
+			} else if(v === null){
+				return v;
+			} else {
+				if(v.type === 'special'){
+					if(v.value_type === 'void'){
+						throw new Error("Attempt to use a box with void type");
+					} else {
+						throw new Error("TODO");
+					}
+				}
+				return v.value;
+			}
 		}
 		/**@arg {VMValue[]} v_arr */
 		static unbox_args(v_arr) {
-			/**@type {Unboxed[]} */
-			let ret=[];
-			for(let i=0;i<v_arr.length;i++){
-				let v=v_arr[i];
-				if(typeof v!='object'){
-					ret.push(v);
-				} else if(v === null){
-					ret.push(v);
-				} else {
-					if(v.type === 'special'){
-						if(v.value_type === 'void'){
-							throw new Error("Attempt to use a box with void type");
-						} else {
-							throw new Error("TODO");
-						}
-					}
-					ret.push(v.value);
-				}
-			}
+			return v_arr.map(v=>{
+				return this.unbox_value(v);
+			});
 		}
 		/**@arg {InstructionCall} instruction @arg {IStackVM} vm */
 		static execute_instruction(vm, instruction){
@@ -250,17 +241,27 @@
 			}
 			let b=a.get_matching_typeof('function');
 			if(!b)throw new Error("Type mismatch");
-			if(b.type === 'callable_box'){
+			if(b.type === 'function_box') {
 				let ret = b.value.apply(target_this, this.unbox_args(arg_arr));
-				if(typeof ret != 'object'){
-					vm.push(ret);
-				} else {
-					if(ret instanceof StackVM){
-						vm.push(new IStackVMBoxImpl(ret));
-					} else {
-						ret;
-						throw new Error("Invalid type");
-					};
+				switch(typeof ret){
+					case 'bigint':
+						vm.push(ret);
+						break;
+					case 'string':
+						vm.push(ret);
+						break;
+					case 'function':
+						vm.push(new FunctionBoxImpl(ret));
+						break;
+					case 'object':
+						if(ret instanceof StackVM){
+							vm.push(new IStackVMBoxImpl(ret));
+						} else {
+							ret;
+							throw new Error("Invalid type");
+						};
+				}
+				if(typeof ret == 'object') {
 				}
 			} else if (b.type == 'constructor_box'){
 				throw new Error("Unexpected constructor");
@@ -292,6 +293,18 @@
 			if(a.type != 'constructor_box')throw new Error("Invalid");
 			if(a.from === 'typescript'){
 				let obj=new a.value(...construct_arr);
+				switch(typeof obj){
+					case 'object':
+						if(obj instanceof Array) {
+							if(obj.length === 0){
+								vm.push({
+									type:'array_box',
+									value:obj
+								});
+							}
+							vm.push(obj);
+						}
+				}
 				vm.push(obj);
 			} else if(a.from === 'javascript') {
 				if(a.constructor_type === 'CSSStyleSheet') {
@@ -2666,7 +2679,10 @@
 			let dom_styles=document.adoptedStyleSheets;
 			document.adoptedStyleSheets = [...dom_styles, ...styles];
 		}
-		/**@arg {(a:CSSStyleSheet, b:string)=>Promise<CSSStyleSheet>} callback @arg {[CSSStyleSheet, string]} a */
+		/**
+		 * @arg {(a:CSSStyleSheet, b:string)=>Promise<CSSStyleSheet>} callback
+		 * @arg {[CSSStyleSheet, string]} a
+		*/
 		use_boxed_style_sheet(callback, ...a) {
 			let ret=callback(...a);
 			let r2=ret.then(function(v){
@@ -2697,8 +2713,18 @@
 					} break;
 					case 'new':{
 						const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
+						let fn_box=new CallableFunctionBoxImpl(
+							/**
+							 * @arg {AutoBuy} obj
+							 * @arg {(obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>} callback
+							 * @arg {any} a
+							 * @arg {any} b */
+							function(obj, callback, a, b) {
+								return obj.use_boxed_style_sheet(callback, a, b);
+							}.bind(null, this, callback)
+						);
 						stack.push(
-							[cur_item[0], 'push', null, new CallableFunctionImpl(this.use_boxed_style_sheet.bind(this, callback)), ...construct_arg_arr, class_box],
+							[cur_item[0], 'push', null, fn_box, ...construct_arg_arr, class_box],
 							[cur_item[0], 'construct', 1 + construct_arg_arr.length],
 							[depth, 'push', ...arg_arr],
 							[depth, 'call', 3 + arg_arr.length]

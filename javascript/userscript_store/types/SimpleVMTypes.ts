@@ -1,3 +1,6 @@
+import {Indexed, NewableFunction} from "types/vm";
+import {Function as VMFunction} from "types/vm";
+
 class Box<T> {
 	constructor(value: T) {
 		this.value = value;
@@ -7,18 +10,6 @@ class Box<T> {
 /* --- VM Value supporting types ---
 IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
 */
-namespace VM {
-	export type Function = (...a: VMValue[]) => VMValue;
-}
-export type NewableFunction = {
-	new(...a: VMValue[]): VMValue;
-};
-export type VMCallable = {
-	(...a: Unboxed[]): Unboxed;
-};
-export type VMIndexed<T> = {
-	[v: string]: T;
-};
 /* --- VM Value supporting interfaces ---
 StackVM
 */
@@ -49,14 +40,33 @@ export class InstructionTypeArrayBox extends Box<InstructionType[]>{
 	}
 }
 
-type CallableBoxes = FunctionBox | NewableFunctionBox | CallableFunctionBox;
-export class FunctionBox extends Box<VM.Function> {
+type FunctionBoxes = FunctionBox | NewableFunctionBox | CallableReturnsVoidPromiseBox | CallableReturnPromiseBox;
+export class FunctionBox extends Box<VMFunction> {
 	type: "function_box" = "function_box";
 	return_type: null = null;
 	get_matching_typeof(to_match: 'function') {
 		if(typeof this.value === to_match) {
 			return this;
 		}
+		return null;
+	}
+}
+export class CallableReturnsVoidPromiseBox extends Box<(...a: VMValue[]) => VoidPromiseBox> {
+	type: "function_box" = "function_box";
+	return_type: "promise" = "promise";
+	promise_return_type_special: 'void_type' = 'void_type';
+	get_matching_typeof(to_match: 'function') {
+		if(typeof this.value == to_match) {
+			return this;
+		}
+		return null;
+	}
+}
+export class CallableReturnPromiseBox extends Box<(...a: VMValue[]) => PromiseBox> {
+	type: "function_box" = "function_box";
+	return_type: "promise" = "promise";
+	await_type: "value" = "value";
+	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
@@ -72,21 +82,14 @@ export class NewableFunctionBox extends Box<NewableFunction> {
 		return null;
 	}
 }
-export class CallableFunctionBox extends Box<VMCallable> {
-	type: "callable_box" = "callable_box";
-	parameters_type_array: null = null;
-	instance_type: null = null;
-	return_type: null = null;
-	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value === to_match) {
-			return this;
-		}
-		return null;
-	}
+
+export class EmptyArrayBox extends Box<[]> {
+	type: "array_box" = "array_box";
 }
+
 type VMObjectTypes = VMIndexedCallableBox | VMIndexedValue | ObjectBox;
-export type VMIndexedValueRaw = VMIndexed<VMValue>;
-export type VMIndexedCallableRaw = VMIndexed<VMCallable>;
+export type VMIndexedValueRaw = Indexed<VMValue>;
+export type VMIndexedCallableRaw = Indexed<VMFunction>;
 export class VMIndexedCallableBox extends Box<VMIndexedCallableRaw> {
 	type: "callable_index" = "callable_index";
 	index_type: "callable_box" = "callable_box";
@@ -216,27 +219,6 @@ export class VoidBox {
 	value_type: "void" = "void";
 };
 
-type CustomFunctionBoxes = CallableReturnsVoidPromiseBox | CallableReturnPromiseBox;
-export class CallableReturnsVoidPromiseBox extends Box<(...a: VMValue[]) => VoidPromiseBox> {
-	type: "function_box" = "function_box";
-	return_type: "promise" = "promise";
-	promise_return_type_special: 'void_type' = 'void_type';
-	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value == to_match) {
-			return this;
-		}
-		return null;
-	}
-}
-export class CallableReturnPromiseBox extends Box<(...a: VMValue[]) => PromiseBox> {
-	type: "function_box" = "function_box";
-	return_type: "promise" = "promise";
-	await_type: "value" = "value";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
-
 type FunctionReturnBoxes = CSSStyleSheetPromiseBox;
 export class CSSStyleSheetPromiseBox extends Box<Promise<CSSStyleSheet>> {
 	type: "promise" = "promise";
@@ -267,8 +249,8 @@ export class WindowBox extends Box<Window>{
 // --- VM Value (types) ---
 export type VMBoxedValues = BoxesWithValue | BoxesWithoutValue;
 export type BoxesWithValue =
+	ArrayBoxes |
 	VMObjectTypes |
-	CallableBoxes |
 	InstanceBoxes |
 	PromiseBox |
 	ConstructorBoxes |
@@ -277,7 +259,7 @@ export type BoxesWithValue =
 	WindowBox |
 	PromiseTypeBoxes |
 	FunctionReturnBoxes |
-	CustomFunctionBoxes;
+	FunctionBoxes;
 export type UnboxedObjects = BoxesWithValue['value'] | null;
 export type Unboxed = UnboxedObjects | string | number | bigint | boolean | symbol | undefined;
 export type VMPrimitiveValues = bigint | boolean | number | string | symbol | undefined;
