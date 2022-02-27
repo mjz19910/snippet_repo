@@ -14,7 +14,6 @@ import {WindowBox} from "./WindowBox";
 type ValueBoxes =
 ArgumentTypeBoxes |
 ArrayBoxes |
-ArrayBoxes |
 ConstructorBoxes |
 FunctionBoxes |
 FunctionReturnBoxes |
