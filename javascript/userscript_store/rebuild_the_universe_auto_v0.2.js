@@ -52,6 +52,7 @@
 		}
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMValue */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedValues} VMBoxedValues */
 	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
 
@@ -530,7 +531,7 @@
 						void obj;
 						return true;
 					}
-					/**@type {(v:VMValue|VMValue['value'])=>VMIndexedValue|null} */
+					/**@type {(v:any)=>VMIndexedValue|null} */
 					function as_indexed(obj){
 						if(can_cast_indexed(obj)){
 							return obj;
@@ -2319,7 +2320,29 @@
 			}catch(e){
 				l_log_if(LOG_LEVEL_INFO, "failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
-			let raw_instructions=`this;cast_object,object_index;push,target_obj;get;cast_object,object_index;push,background_audio;get;push,play;call,int(2);push,then;push,%o;push,%o;call,int(4);drop;global;push,removeEventListener;push,click;this;call,int(4);drop`;
+			let raw_instructions=`
+			this;
+			cast_object,object_index;
+			push,target_obj;
+			get;
+			cast_object,object_index;
+			push,background_audio;
+			get;
+			push,play;
+			cast_object,callable_index;
+			call,int(2);
+			cast_object,callable_index;
+			push,then;
+			push,%o;
+			push,%o;
+			call,int(4);
+			drop;
+			global;
+			push,removeEventListener;
+			push,click;
+			this;
+			call,int(4);
+			drop`;
 			let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(raw_instructions, [
 				function(){
 					// LOG_LEVEL_INFO

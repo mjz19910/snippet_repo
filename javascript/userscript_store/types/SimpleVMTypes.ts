@@ -265,7 +265,7 @@ export class VMBoxedCSSStyleSheetPromise extends VMBoxed<Promise<CSSStyleSheet>>
 type VMCustomTypes =
 	VMCustomFunctionTypes |
 	VMCustomReturnTypes;
-export type VMBoxValues = VMArrayTypes |
+export type VMBoxedValues = VMArrayTypes |
 	VMObjectTypes |
 	VMFunctionTypes |
 	VMGlobalTypes |
@@ -276,8 +276,9 @@ export type VMBoxValues = VMArrayTypes |
 	VMReturnTypes |
 	VMPromiseTypes |
 	VMCustomTypes;
+type V1 = VMCustomTypes['value'];
 export type VMPrimitiveValues = bigint | boolean | number | string | symbol | null | undefined;
-export type VMValue = VMBoxValues | VMPrimitiveValues;
+export type VMValue = VMBoxedValues | VMPrimitiveValues;
 
 
 // --- Instruction ---
