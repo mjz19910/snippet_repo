@@ -223,11 +223,9 @@ export class VMBoxedPromise extends VMBoxed<Promise<VMValue>> {
 }
 
 type VMReturnTypes = VMEmptyReturn;
-export class VMEmptyReturn extends VMBoxed<[]> {
-	type: "TODO" = "TODO";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
+export class VMEmptyReturn {
+	type: "special" = "special";
+	value_type: "void" = "void";
 };
 
 type VMCustomFunctionTypes = VMReturnsBoxedVoidPromise | VMReturnsBoxedPromise;

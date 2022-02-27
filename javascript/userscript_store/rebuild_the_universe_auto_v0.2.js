@@ -197,6 +197,10 @@
 			const a=target_fn;
 			if(typeof a!='object')throw new Error("Invalid");
 			if(a === null)throw new Error("Invalid");
+			if(a.type === 'special'){
+				if(a.value_type === 'void')throw new Error("Attempt to call a void value");
+				throw new Error("Invalid");
+			}
 			let b=a.get_matching_typeof('function');
 			if(!b)throw new Error("Type mismatch");
 			if(b.type === 'callable_box'){
@@ -937,10 +941,7 @@
 							num_to_parse -= 2;
 							ret=[instruction[0], m_arg];
 					}
-					if(m_arg === 'object_index'){
-						
-						break;
-					}
+					if(num_to_parse === 0)break;
 					throw new Error("Verify: Unexpected operand for cast_object, operand was `"+m_arg+"`");
 				}
 				case 'drop':
