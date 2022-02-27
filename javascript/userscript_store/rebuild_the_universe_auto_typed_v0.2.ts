@@ -1,7 +1,7 @@
 import {NonNull} from "api";
 import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMIndexedValue, VMNewableFunction, VMValue, VMIndexedCallableValue, VMBoxedInstructionType, StackVMBox, WindowBox} from "./types/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMIndexedValue, NewableFunctionBox, VMValue, VMIndexedCallableBox, VMBoxedInstructionType, IStackVMBox, WindowBox} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
 
@@ -2078,7 +2078,7 @@ class BaseStackVM extends BaseVMCreate {
 				if(construct_target instanceof Function) {
 					let obj = new (<any>construct_target)(...construct_arr);
 					this.push(obj);
-				} else if(construct_target instanceof VMNewableFunction) {
+				} else if(construct_target instanceof NewableFunctionBox) {
 					let obj = new construct_target.value(...construct_arr);
 					this.push(obj);
 				} else {
@@ -2148,7 +2148,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 	}
 	execute_instruction_raw(instruction:InstructionType) {
 		switch(instruction[0]) {
-			case 'this'/*Special*/: this.push(new StackVMBox(this)); break;
+			case 'this'/*Special*/: this.push(new IStackVMBox(this)); break;
 			// TODO: if you ever use this on a worker, change
 			// it to use globalThis...
 			case 'global'/*Special*/: this.push(new WindowBox(window)); break;
@@ -2162,7 +2162,7 @@ class SimpleStackVM<T> extends BaseStackVM {
 				let number_of_arguments = instruction[1];
 				let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
 				if(typeof target_name == 'string') {
-					if(target_obj instanceof VMIndexedCallableValue) {
+					if(target_obj instanceof VMIndexedCallableBox) {
 						let ret = target_obj.value[target_name](...arg_arr);
 						this.push(ret);
 					}

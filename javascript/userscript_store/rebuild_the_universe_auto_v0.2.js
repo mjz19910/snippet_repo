@@ -52,11 +52,11 @@
 		}
 	}
 	/**@typedef {import("types/SimpleVMTypes.js").VMValue} VMValue */
-	/**@typedef {import("types/SimpleVMTypes.js").VMInterface} VMInterface */
+	/**@typedef {import("types/SimpleVMTypes.js").IStackVM} IStackVM */
 	/**@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType */
-	/**@typedef {import("types/SimpleVMTypes.js").VMCallableValue} VMCallableValue */
-	/**@typedef {import("types/SimpleVMTypes.js").VMCallableFunction} VMCallableFunction */
-	/**@typedef {import("types/SimpleVMTypes.js").VMIndexedCallableValue} VMIndexedCallableValue */
+	/**@typedef {import("types/SimpleVMTypes.js").VMCallable} VMCallableValue */
+	/**@typedef {import("types/SimpleVMTypes.js").CallableFunctionBox} VMCallableFunction */
+	/**@typedef {import("types/SimpleVMTypes.js").VMIndexedCallableBox} VMIndexedCallableValue */
 
 
 	/**@typedef {import("types/SimpleVMTypes.js").CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor */
@@ -114,7 +114,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMNewableFunction} VMBoxedNewableFunction */
+	/**@typedef {import("./types/SimpleVMTypes.js").NewableFunctionBox} VMBoxedNewableFunction */
 	/**@implements {VMBoxedNewableFunction} */
 	class VMBoxedNewableFunctionR {
 		/**@type {"constructor_box"} */
@@ -138,7 +138,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMCallableFunction} VMBoxedCallableFunction */
+	/**@typedef {import("./types/SimpleVMTypes.js").CallableFunctionBox} VMBoxedCallableFunction */
 	/**@implements {VMBoxedCallableFunction} */
 	class VMBoxedCallableFunctionR {
 		/**@type {"callable_box"} */
@@ -208,7 +208,7 @@
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionCall} InstructionCall */
 	class InstructionCallE {
-		/**@arg {InstructionCall} instruction @arg {VMInterface} vm */
+		/**@arg {InstructionCall} instruction @arg {IStackVM} vm */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments = instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -247,7 +247,7 @@
 	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
 	class InstructionConstructE {
-		/**@arg {InstructionConstruct} instruction @arg {VMInterface} vm */
+		/**@arg {InstructionConstruct} instruction @arg {IStackVM} vm */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments=instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -283,7 +283,7 @@
 			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").StackVMBox} VMBoxedStackVM */
+	/**@typedef {import("./types/SimpleVMTypes.js").IStackVMBox} VMBoxedStackVM */
 	/**@implements {VMBoxedStackVM} */
 	class VMBoxedStackVMR {
 		/**@type {"custom_box"} */
@@ -315,7 +315,7 @@
 			this.value = value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMObject} VMBoxedObject */
+	/**@typedef {import("./types/SimpleVMTypes.js").ObjectBox} VMBoxedObject */
 	/**@implements {VMBoxedObject} */
 	class VMBoxedObjectR {
 		/**@type {"object_box"} */
@@ -405,7 +405,7 @@
 			this.value=value;
 		}
 	};
-	/**@implements {VMInterface} */
+	/**@implements {IStackVM} */
 	class StackVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
@@ -638,7 +638,7 @@
 			}
 		}
 	}
-	/**@implements {VMInterface} */
+	/**@implements {IStackVM} */
 	class SimpleStackVM extends StackVM {
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
@@ -701,7 +701,7 @@
 			return this.return_value;
 		}
 	}
-	/**@implements {VMInterface} */
+	/**@implements {IStackVM} */
 	class EventHandlerVMDispatch extends SimpleStackVM {
 		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
@@ -714,7 +714,7 @@
 			this.run(new VMBoxedObjectR(event));
 		}
 	}
-	/**@implements {VMInterface} */
+	/**@implements {IStackVM} */
 	class DomBuilderVM {
 		/**@type {VMValue} */
 		return_value;
@@ -846,7 +846,7 @@
 				} break;
 			}
 		}
-		/**@typedef {import("./types/SimpleVMTypes.js").DomValueBox} VMBoxedDomValue */
+		/**@typedef {import("./types/SimpleVMTypes.js").NodeBox} VMBoxedDomValue */
 		/**
 		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
 		 * @returns {box is VMBoxedDomValue}

@@ -1,4 +1,4 @@
-class VMBox<T> {
+class Box<T> {
 	constructor(value: T) {
 		this.value = value;
 	}
@@ -7,10 +7,13 @@ class VMBox<T> {
 /* --- VM Value supporting types ---
 IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
 */
-export type VMNewableValue = {
+namespace VM {
+	export type Function = (...a: VMValue[])=>VMValue;
+}
+export type NewableFunction = {
 	new(...a: VMValue[]): VMValue;
 };
-export type VMCallableValue = {
+export type VMCallable = {
 	(...a: VMValue[]): VMValue;
 };
 export type VMIndexed<T> = {
@@ -19,7 +22,7 @@ export type VMIndexed<T> = {
 /* --- VM Value supporting interfaces ---
 StackVM
 */
-export interface VMInterface {
+export interface IStackVM {
 	push(value: VMValue): void;
 	pop(): VMValue | undefined;
 	pop_arg_count(q: number): VMValue[];
@@ -30,15 +33,15 @@ export interface VMInterface {
 VMBoxedFunction, VMNewableFunction, VMBoxedCSSStyleSheetConstructor
 VMCallableFunction, VMIndexedCallableValue, VMBoxedIndexedObjectValue
 */
-type VMArrayTypes = VMBoxedArray | VMBoxedInstructionTypeArray;
-export class VMBoxedArray extends VMBox<VMValue[]>{
+type ArrayBoxes = ArrayBox | InstructionTypeArrayBox;
+export class ArrayBox extends Box<VMValue[]>{
 	type: "array_box" = "array_box";
 	item_type: "value" = "value";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
-export class VMBoxedInstructionTypeArray extends VMBox<InstructionType[]>{
+export class InstructionTypeArrayBox extends Box<InstructionType[]>{
 	type: "array_box" = "array_box";
 	item_type: "instruction" = "instruction";
 	get_matching_typeof(_to_match: 'function') {
@@ -46,8 +49,8 @@ export class VMBoxedInstructionTypeArray extends VMBox<InstructionType[]>{
 	}
 }
 
-type VMFunctionTypes = VMBoxedFunction | VMNewableFunction | VMCallableFunction;
-export class VMBoxedFunction extends VMBox<Function> {
+type CallableBoxes = FunctionBox | NewableFunctionBox | CallableFunctionBox;
+export class FunctionBox extends Box<VM.Function> {
 	type: "function_box" = "function_box";
 	return_type: null = null;
 	get_matching_typeof(to_match: 'function') {
@@ -57,7 +60,7 @@ export class VMBoxedFunction extends VMBox<Function> {
 		return null;
 	}
 }
-export class VMNewableFunction extends VMBox<VMNewableValue> {
+export class NewableFunctionBox extends Box<NewableFunction> {
 	type: "constructor_box" = "constructor_box";
 	from: "typescript" = "typescript";
 	instance_type: null = null;
@@ -69,7 +72,7 @@ export class VMNewableFunction extends VMBox<VMNewableValue> {
 		return null;
 	}
 }
-export class VMCallableFunction extends VMBox<VMCallableValue> {
+export class CallableFunctionBox extends Box<VMCallable> {
 	type: "callable_box" = "callable_box";
 	parameters_type_array: null = null;
 	instance_type: null = null;
@@ -81,53 +84,53 @@ export class VMCallableFunction extends VMBox<VMCallableValue> {
 		return null;
 	}
 }
-type VMObjectTypes = VMIndexedCallableValue | VMIndexedValue | VMObject;
+type VMObjectTypes = VMIndexedCallableBox | VMIndexedValue | ObjectBox;
 export type VMIndexedValueRaw = VMIndexed<VMValue>;
-export type VMIndexedCallableValueRaw=VMIndexed<VMCallableValue>;
-export class VMIndexedCallableValue extends VMBox<VMIndexedCallableValueRaw> {
+export type VMIndexedCallableRaw = VMIndexed<VMCallable>;
+export class VMIndexedCallableBox extends Box<VMIndexedCallableRaw> {
 	type: "callable_index" = "callable_index";
 	index_type: "callable_box" = "callable_box";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 };
-export class VMIndexedValue extends VMBox<VMIndexedValueRaw>{
+export class VMIndexedValue extends Box<VMIndexedValueRaw>{
 	type: "object_index" = "object_index";
 	index_type: "value" = "value";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
-export class VMObject extends VMBox<object> {
+export class ObjectBox extends Box<{}> {
 	type: "object_box" = "object_box";
 	inner_type: null = null;
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
-type VMInstanceTypes = StackVMBox | DomValueBox | CSSStyleSheetBox | MediaListBox;
-export class StackVMBox extends VMBox<VMInterface>{
+type InstanceBoxes = IStackVMBox | NodeBox | CSSStyleSheetBox | MediaListBox;
+export class IStackVMBox extends Box<IStackVM>{
 	type: "custom_box" = "custom_box";
 	box_type: "StackVM" = "StackVM";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
-export class DomValueBox extends VMBox<Node> {
+export class NodeBox extends Box<Node> {
 	type: "dom_value" = "dom_value";
 	from: "create" | "get" = "create";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
-export class CSSStyleSheetBox extends VMBox<CSSStyleSheet> {
+export class CSSStyleSheetBox extends Box<CSSStyleSheet> {
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 }
-export class MediaListBox extends VMBox<MediaList>{
+export class MediaListBox extends Box<MediaList>{
 	type: "instance_box" = "instance_box";
 	instance_type: "MediaList" = "MediaList";
 	get_matching_typeof(_to_match: 'function') {
@@ -136,7 +139,7 @@ export class MediaListBox extends VMBox<MediaList>{
 }
 
 type ConstructorBoxes = CSSStyleSheetConstructorBox;
-export class CSSStyleSheetConstructorBox extends VMBox<typeof CSSStyleSheet> {
+export class CSSStyleSheetConstructorBox extends Box<typeof CSSStyleSheet> {
 	type: "constructor_box" = "constructor_box";
 	from: "javascript" = "javascript";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
@@ -150,7 +153,7 @@ export class CSSStyleSheetConstructorBox extends VMBox<typeof CSSStyleSheet> {
 }
 
 type ArgumentTypeBoxes = CSSStyleSheetInitBox;
-export class CSSStyleSheetInitBox extends VMBox<CSSStyleSheetInit>{
+export class CSSStyleSheetInitBox extends Box<CSSStyleSheetInit>{
 	type: "shape_box" = "shape_box";
 	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
 	get_matching_typeof(_to_match: 'function') {
@@ -189,24 +192,8 @@ export class CSSStyleSheetInitBox extends VMBox<CSSStyleSheetInit>{
 	}
 }
 
-type VMGlobalTypes = GlobalThisBox | WindowBox;
-export class GlobalThisBox extends VMBox<typeof globalThis> {
-	type: "value_box" = "value_box";
-	inner_value: "globalThis" = "globalThis";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
-export class WindowBox extends VMBox<Window>{
-	type: "object_box" = "object_box";
-	inner_type: "Window" = "Window";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
-}
-
 type PromiseTypeBoxes = VoidPromiseBox | PromiseBox;
-export class VoidPromiseBox extends VMBox<Promise<void>> {
+export class VoidPromiseBox extends Box<Promise<void>> {
 	type: "promise" = "promise";
 	return_type: null = null;
 	await_type: null = null;
@@ -215,7 +202,7 @@ export class VoidPromiseBox extends VMBox<Promise<void>> {
 		return null;
 	}
 }
-export class PromiseBox extends VMBox<Promise<VMValue>> {
+export class PromiseBox extends Box<Promise<VMValue>> {
 	type: "promise" = "promise";
 	await_type: "value" = "value";
 	get_matching_typeof(_to_match: 'function') {
@@ -230,7 +217,7 @@ export class VoidBox {
 };
 
 type CustomFunctionBoxes = CallableReturnsVoidPromiseBox | CallableReturnPromiseBox;
-export class CallableReturnsVoidPromiseBox extends VMBox<(...a: VMValue[]) => VoidPromiseBox> {
+export class CallableReturnsVoidPromiseBox extends Box<(...a: VMValue[]) => VoidPromiseBox> {
 	type: "function_box" = "function_box";
 	return_type: "promise" = "promise";
 	promise_return_type_special: 'void_type' = 'void_type';
@@ -241,7 +228,7 @@ export class CallableReturnsVoidPromiseBox extends VMBox<(...a: VMValue[]) => Vo
 		return null;
 	}
 }
-export class CallableReturnPromiseBox extends VMBox<(...a: VMValue[]) => PromiseBox> {
+export class CallableReturnPromiseBox extends Box<(...a: VMValue[]) => PromiseBox> {
 	type: "function_box" = "function_box";
 	return_type: "promise" = "promise";
 	await_type: "value" = "value";
@@ -251,7 +238,7 @@ export class CallableReturnPromiseBox extends VMBox<(...a: VMValue[]) => Promise
 }
 
 type FunctionReturnBoxes = CSSStyleSheetPromiseBox;
-export class CSSStyleSheetPromiseBox extends VMBox<Promise<CSSStyleSheet>> {
+export class CSSStyleSheetPromiseBox extends Box<Promise<CSSStyleSheet>> {
 	type: "promise" = "promise";
 	await_type: "CSSStyleSheet" = "CSSStyleSheet";
 	get_matching_typeof(_to_match: 'function') {
@@ -260,16 +247,34 @@ export class CSSStyleSheetPromiseBox extends VMBox<Promise<CSSStyleSheet>> {
 }
 
 
+// --- Misc Boxes ---
+export class GlobalThisBox extends Box<typeof globalThis> {
+	type: "value_box" = "value_box";
+	inner_value: "globalThis" = "globalThis";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+export class WindowBox extends Box<Window>{
+	type: "object_box" = "object_box";
+	inner_type: "Window" = "Window";
+	get_matching_typeof(_to_match: 'function') {
+		return null;
+	}
+}
+
+
 // --- VM Value (types) ---
-export type VMBoxedValues = VMArrayTypes |
+export type VMBoxedValues = ArrayBoxes |
 	VMObjectTypes |
-	VMFunctionTypes |
-	VMGlobalTypes |
-	VMInstanceTypes |
+	CallableBoxes |
+	InstanceBoxes |
 	PromiseBox |
 	ConstructorBoxes |
 	ArgumentTypeBoxes |
 	SpecialBoxes |
+	GlobalThisBox |
+	WindowBox |
 	PromiseTypeBoxes |
 	FunctionReturnBoxes |
 	CustomFunctionBoxes;
@@ -317,7 +322,7 @@ export type InstructionType =
 	InstructionPushInstructionPointer | InstructionConstruct |
 	InstructionModifyOperand | InstructionExec |
 	InstructionAppend | InstructionCastObject;
-export class VMBoxedInstructionType extends VMBox<InstructionType> {};
+export class VMBoxedInstructionType extends Box<InstructionType> {};
 
 // --- Misc ---
 type SkipItem0_t<T extends [f: string, ...v: any[]], X> = T extends [X, ...infer U] ? U : T[1];

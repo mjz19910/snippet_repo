@@ -1,4 +1,4 @@
-import {InstructionType, VMInterface, VMBoxedArray, VMIndexedCallableValue, GlobalThisBox, VMBoxedInstructionTypeArray, VMIndexedValue, StackVMBox, WindowBox, VMValue} from "../types/SimpleVMTypes";
+import {InstructionType, IStackVM, ArrayBox, VMIndexedCallableBox, GlobalThisBox, InstructionTypeArrayBox, VMIndexedValue, IStackVMBox, WindowBox, VMValue} from "../types/SimpleVMTypes";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
@@ -1399,7 +1399,7 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 }
-class SimpleStackVM implements VMInterface {
+class SimpleStackVM implements IStackVM {
 	instructions: InstructionType[];
 	stack: VMValue[];
 	instruction_pointer: number;
@@ -1444,7 +1444,7 @@ class SimpleStackVM implements VMInterface {
 					for(let i = 1;i < cur_instruction.length;i++) {
 						let item = cur_instruction[i];
 						if(item instanceof Array){
-							this.push(new VMBoxedInstructionTypeArray(item));
+							this.push(new InstructionTypeArrayBox(item));
 						} else {
 							this.push(item);
 						}
@@ -1480,7 +1480,7 @@ class SimpleStackVM implements VMInterface {
 					let target = this.pop();
 					if(!target) throw "Bad";
 					if(!name_to_call) throw "Bad";
-					if(target instanceof VMIndexedCallableValue && typeof name_to_call === 'string') {
+					if(target instanceof VMIndexedCallableBox && typeof name_to_call === 'string') {
 						let ret = target.value[name_to_call](...arg_arr);
 						this.push(ret);
 					}
@@ -1488,8 +1488,8 @@ class SimpleStackVM implements VMInterface {
 				}
 				case 'return'/*Call*/:this.return_value = this.pop();break;
 				case 'halt'/*Running*/:this.running = false;break;
-				case 'push_args'/*Special*/:this.push(new VMBoxedArray(run_arguments));break;
-				case 'this'/*Special*/: this.push(new StackVMBox(this));break;
+				case 'push_args'/*Special*/:this.push(new ArrayBox(run_arguments));break;
+				case 'this'/*Special*/: this.push(new IStackVMBox(this));break;
 				case 'global'/*Special*/: {
 					if(window) this.push(new WindowBox(window));
 					else this.push(new GlobalThisBox(globalThis));
