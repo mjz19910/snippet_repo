@@ -1,7 +1,7 @@
 import {Box} from "../box/mod";
-import {IndexedObjectValue} from "./IndexedObjectValue";
+import {IndexRaw} from "./IndexRaw";
 
-export class IndexedObject extends Box<IndexedObjectValue> {
+export class IndexBox extends Box<IndexRaw> {
 	type: "object_box" = "object_box";
 	extension: 'index' = 'index';
 	index_type: "value" = "value";

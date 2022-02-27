@@ -1,5 +1,3 @@
 import {IndexAccess} from "./mod";
-import {Function as Function} from "../vm";
-
-
+import {Function} from "../Function";
 export type IndexedFnRaw = IndexAccess<Function>;

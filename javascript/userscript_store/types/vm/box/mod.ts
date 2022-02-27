@@ -9,7 +9,7 @@ import {FunctionBox} from "./FunctionBox";
 import {FunctionReturnsVoidPromiseBox} from "./CallableReturnsVoidPromiseBox";
 import {GlobalThisBox} from "./GlobalThisBox";
 import {IndexedFnBox} from "./IndexedFunctionBox";
-import {IndexedObject} from "../index_access/IndexedObject";
+import {IndexBox} from "../index_access/IndexedObject";
 import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
 import {MediaListBox} from "./MediaListBox";
 import {NewableFunctionBox} from "./NewableFunctionBox";
@@ -49,7 +49,7 @@ CSSStyleSheetBox |
 MediaListBox |
 // object
 IndexedFnBox |
-IndexedObject |
+IndexBox |
 ObjectBox |
 // promise types
 VoidPromiseBox |
