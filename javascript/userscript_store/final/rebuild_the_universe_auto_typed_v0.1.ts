@@ -1,4 +1,4 @@
-import {InstructionType, VMInterface, VMBoxedArray, VMIndexedCallableValue, VMBoxedGlobalThis, VMBoxedInstructionTypeArray, VMIndexedObjectValue, VMBoxedStackVM, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
+import {InstructionType, VMInterface, VMBoxedArray, VMIndexedCallableValue, VMBoxedGlobalThis, VMBoxedInstructionTypeArray, VMIndexedValue, VMBoxedStackVM, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
@@ -1461,7 +1461,7 @@ class SimpleStackVM implements VMInterface {
 					if(!name) throw new Error("Invalid");
 					let obj = this.pop();
 					if(!obj) throw new Error("Invalid");
-					if(obj instanceof VMIndexedObjectValue && typeof name === 'string') {
+					if(obj instanceof VMIndexedValue && typeof name === 'string') {
 						this.push(obj.value[name]);
 					}
 					break;

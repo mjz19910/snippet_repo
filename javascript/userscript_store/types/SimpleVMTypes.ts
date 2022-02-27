@@ -81,16 +81,17 @@ export class VMCallableFunction extends VMBoxed<VMCallableValue> {
 		return null;
 	}
 }
-type VMObjectTypes = VMIndexedCallableValue | VMIndexedObjectValue | VMBoxedObject;
-export type VMIndexedValue = VMIndexed<VMValue>;
-export class VMIndexedCallableValue extends VMBoxed<VMIndexed<VMCallableValue>> {
+type VMObjectTypes = VMIndexedCallableValue | VMIndexedValue | VMBoxedObject;
+export type VMIndexedValueRaw = VMIndexed<VMValue>;
+export type VMIndexedCallableValueRaw=VMIndexed<VMCallableValue>;
+export class VMIndexedCallableValue extends VMBoxed<VMIndexedCallableValueRaw> {
 	type: "callable_index" = "callable_index";
 	index_type: "callable_box" = "callable_box";
 	get_matching_typeof(_to_match: 'function') {
 		return null;
 	}
 };
-export class VMIndexedObjectValue extends VMBoxed<VMIndexedValue>{
+export class VMIndexedValue extends VMBoxed<VMIndexedValueRaw>{
 	type: "object_index" = "object_index";
 	index_type: "value" = "value";
 	get_matching_typeof(_to_match: 'function') {

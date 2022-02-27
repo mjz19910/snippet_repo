@@ -1,7 +1,7 @@
 import {NonNull} from "api";
 import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMIndexedObjectValue, VMNewableFunction, VMValue, VMIndexedCallableValue, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow, IDomInstructions} from "./types/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMIndexedValue, VMNewableFunction, VMValue, VMIndexedCallableValue, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow, IDomInstructions} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
 
@@ -2055,7 +2055,7 @@ class BaseStackVM extends BaseVMCreate {
 				if(target_obj === void 0) break;
 				if(typeof target_obj != 'object') break;
 				if(typeof target_name != 'string') break;
-				if(target_obj instanceof VMIndexedObjectValue) {
+				if(target_obj instanceof VMIndexedValue) {
 					this.push(target_obj.value[target_name]);
 				}
 			} break;

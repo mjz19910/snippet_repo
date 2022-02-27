@@ -51,13 +51,15 @@
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMValue} VMValue */
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedValues} VMBoxedValues */
-	/**@typedef {import("./types/SimpleVMTypes.js").VMInterface} VMInterface */
-	/**@typedef {import("./types/SimpleVMTypes.js").InstructionType} InstructionType */
+	/**@typedef {import("types/SimpleVMTypes.js").VMValue} VMValue */
+	/**@typedef {import("types/SimpleVMTypes.js").VMInterface} VMInterface */
+	/**@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType */
+	/**@typedef {import("types/SimpleVMTypes.js").VMCallableValue} VMCallableValue */
+	/**@typedef {import("types/SimpleVMTypes.js").VMCallableFunction} VMCallableFunction */
+	/**@typedef {import("types/SimpleVMTypes.js").VMIndexedCallableValue} VMIndexedCallableValue */
 
 
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
+	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
 	/**@implements {VMBoxedCSSStyleSheetConstructor} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
@@ -157,6 +159,26 @@
 		constructor(value){
 			this.value=value;
 		}
+	}
+	/**@implements {VMCallableFunction} */
+	class VMCallableFunctionR {
+		/**@type {"callable_box"} */
+		type="callable_box";
+		parameters_type_array=null;
+		instance_type=null;
+		return_type=null;
+		/**@arg {"function"} to_match */
+		get_matching_typeof(to_match){
+			if(typeof this.value === to_match){
+				return this;
+			}
+			return null;
+		};
+		/**@arg {VMCallableValue} value */
+		constructor(value){
+			this.value=value;
+		}
+
 	}
 	/**@type {<T, X extends keyof T>(obj:{[V in keyof T]:T[V]}, key:X)=>{v:T[X]} | null} */
 	function safe_get(obj, key) {
@@ -351,7 +373,7 @@
 		}
 		return null;
 	}
-	/**@typedef {import("types/SimpleVMTypes").VMIndexedObjectValue} VMIndexedObjectValue */
+	/**@typedef {import("types/SimpleVMTypes").VMIndexedValue} VMIndexedObjectValue */
 	/**@implements {VMIndexedObjectValue} */
 	class VMIndexedObjectValueR {
 		/**@type {"object_index"} */
@@ -367,6 +389,22 @@
 			this.value=value;
 		}
 	}
+	/**@typedef {import("./types/SimpleVMTypes.js").VMIndexed<VMCallableValue>} VMIndexedCallableValueRaw */
+	/**@implements {VMIndexedCallableValue} */
+	class VMIndexedCallableValueR {
+		/**@type {"callable_index"} */
+		type= "callable_index";
+		/**@type {"callable_box"} */
+		index_type = "callable_box";
+		/**@arg {'function'} _to_match */
+		get_matching_typeof(_to_match) {
+			return null;
+		}
+		/**@arg {VMIndexedCallableValueRaw} value */
+		constructor(value){
+			this.value=value;
+		}
+	};
 	/**@implements {VMInterface} */
 	class StackVM {
 		/**@arg {InstructionType[]} instructions */
@@ -527,18 +565,19 @@
 					if(!obj)throw new Error("Invalid");
 					console.log(...this.stack, obj);
 					if(typeof obj!='object')throw new Error("Invalid");
-					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValue} VMIndexedValue */
-					/**@type {(v:any)=>v is VMIndexedValue} */
-					function can_cast_indexed(obj) {
+					/**@typedef {import("./types/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue */
+					/**@type {<T>(q:T, v:any)=>v is T} */
+					function can_cast_indexed(q, obj) {
 						if(obj === null){
 							return false;
 						}
+						void q;
 						void obj;
 						return true;
 					}
-					/**@type {(v:any)=>VMIndexedValue|null} */
-					function as_indexed(obj){
-						if(can_cast_indexed(obj)){
+					/**@type {<T>(q:T, v:any)=>T|null} */
+					function as_indexed(q, obj){
+						if(can_cast_indexed(q, obj)){
 							return obj;
 						}
 						return null;
@@ -548,12 +587,33 @@
 							/**@type {VMIndexedValue|null} */
 							let unboxed_obj=null;
 							if(obj.type === 'custom_box'){
-							unboxed_obj=as_indexed(obj.value);
+								unboxed_obj=as_indexed(unboxed_obj, obj.value);
 							} else {
-								unboxed_obj=as_indexed(obj);
+								unboxed_obj=as_indexed(unboxed_obj, obj);
 							}
-					if(unboxed_obj)this.push(new VMIndexedObjectValueR(unboxed_obj));
+							if(unboxed_obj)this.push(new VMIndexedObjectValueR(unboxed_obj));
 						} break;
+						case 'callable_index':{
+							/**@type {(v:any)=>v is VMIndexedCallableValueRaw} */
+							function can_cast_indexed(obj) {
+								if(obj === null){
+									return false;
+								}
+								void obj;
+								return true;
+							}
+							/**@type {(v:any)=>VMIndexedCallableValueRaw|null} */
+							function as_indexed(obj){
+								if(can_cast_indexed(obj)){
+									return obj;
+								}
+								return null;
+							}
+							/**@type {VMIndexedCallableValueRaw|null} */
+							let unboxed_obj=as_indexed(obj);
+							if(unboxed_obj)this.push(new VMIndexedCallableValueR(unboxed_obj));
+						} break;
+						default:throw new Error("Missing cast to "+instruction[1]);
 					}
 				} break;
 				case 'get'/*Object*/: {
@@ -927,7 +987,6 @@
 				case 'push':{
 					num_to_parse = 0;
 					const [, ...push_operands]=instruction;
-					console.log(push_operands);
 					ret=[instruction[0], ...push_operands];
 				} break;
 				case 'call'/*1 argument*/:{
