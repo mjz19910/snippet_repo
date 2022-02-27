@@ -1,9 +1,9 @@
 import {Box} from "./mod";
 import {InstructionType} from "../instruction/mod";
+import {ArrayBox} from "./ArrayBox";
 
-export class InstructionTypeArrayBox extends Box<Box<InstructionType>[]> {
-	type: "array_box" = "array_box";
-	item_type: "instruction" = "instruction";
+export class InstructionTypeArrayBox extends ArrayBox {
+	mapped_as:"instruction_type"="instruction_type";
 	mapped_value: InstructionType[];
 	constructor(value: InstructionType[]) {
 		super([]);

@@ -1,34 +1,54 @@
 import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox";
-import {ArrayBoxes} from "./ArrayBoxes";
-import {ConstructorBoxes} from "./ConstructorBoxes";
-import {FunctionBoxes} from "./FunctionBoxes";
-import {FunctionReturnBoxes} from "./FunctionReturnBoxes";
 import {GlobalThisBox} from "./GlobalThisBox";
-import {InstanceBoxes} from "./InstanceBoxes";
-import {ObjectBoxes} from "./ObjectBoxes";
 import {PromiseBox} from "./PromiseBox";
 import {PromiseTypeBoxes} from "./PromiseTypeBoxes";
 import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
+import {EmptyArrayBox} from "./EmptyArrayBox";
+import {ArrayBox} from "./ArrayBox";
+import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
+import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";
+import {FunctionBox} from "./FunctionBox";
+import {NewableFunctionBox} from "./NewableFunctionBox";
+import {FunctionReturnsVoidPromiseBox} from "./CallableReturnsVoidPromiseBox";
+import {CallableReturnPromiseBox} from "./CallableReturnPromiseBox";
+import {CSSStyleSheetPromiseBox} from "./CSSStyleSheetPromiseBox";
+import {MediaListBox} from "./MediaListBox";
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
+import {NodeBox} from "./NodeBox";
+import {StackVMBox} from "./StackVMBox";
+import {IndexedFnBox} from "./IndexedFunctionBox";
+import {IndexedObject} from "../index_access/IndexedObject";
+import {ObjectBox} from "./ObjectBox";
 
 type ValueBoxes =
 // function result
 CSSStyleSheetInitBox |
 // array
-ArrayBoxes |
+EmptyArrayBox |
+ArrayBox |
+InstructionTypeArrayBox |
 // constructor function
-ConstructorBoxes |
+CSSStyleSheetConstructorBox |
 // function
-FunctionBoxes |
+FunctionBox |
+NewableFunctionBox |
+FunctionReturnsVoidPromiseBox |
+CallableReturnPromiseBox |
 // return type
-FunctionReturnBoxes |
+CSSStyleSheetPromiseBox |
 // global
 GlobalThisBox |
 WindowBox |
 // object instances
-InstanceBoxes |
+StackVMBox |
+NodeBox |
+CSSStyleSheetBox |
+MediaListBox |
 // object
-ObjectBoxes |
+IndexedFnBox |
+IndexedObject |
+ObjectBox |
 // promise box
 PromiseBox |
 // promise types
