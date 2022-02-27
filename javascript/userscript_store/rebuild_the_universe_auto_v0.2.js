@@ -27,6 +27,8 @@ import {NewableFunctionBox} from "types/vm/box/NewableFunctionBox.js";
 import {NodeBox} from "types/vm/box/NodeBox.js";
 import {PromiseBox} from "types/vm/box/PromiseBox.js";
 
+/**@typedef {import("types/vm/box/mod.js").Box} Box */
+
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 (function() {
 	'use strict';
@@ -123,7 +125,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		arguments="box[]";
 		/**@type {'box'} */
 		return="box";
-		/**@type {{new (v:any):any}} */
+		/**@type {<T>(fn:{new (v:Box[]):T})=>Box} */
 		value;
 		/**@arg {'function'} to_match */
 		get_matching_typeof(to_match) {
@@ -132,7 +134,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			}
 			return null;
 		}
-		/**@arg {{new (v:any):any}} value */
+		/**@arg {<T>(fn:{new (v:Box[]):T})=>Box} value */
 		constructor(value){
 			this.value=value;
 		}
