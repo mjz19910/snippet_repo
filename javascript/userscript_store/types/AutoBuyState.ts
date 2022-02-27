@@ -1,4 +1,6 @@
-import {AverageRatioRoot, AsyncTimeoutNode, TimeoutTarget, AverageRatio} from "../rebuild_the_universe_auto_typed_v0.2";
+import {AverageRatioRoot, AsyncTimeoutNode} from "../rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutTarget} from "../TimeoutTarget";
+import {AverageRatio} from "../AverageRatio";
 import {TAutoBuyRoot} from "./TAutoBuyRoot";
 
 export class AutoBuyState {

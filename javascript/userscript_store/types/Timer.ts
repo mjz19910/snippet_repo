@@ -3,7 +3,10 @@ import {UniqueIdGenerator} from "./UniqueIdGenerator";
 import {WorkerState} from "./WorkerState";
 import {TimerState} from "./TimerState";
 import {timer_nop} from "final/version_0.1/types/timer_nop";
-import {cur_event_fns, DispatchMessageType, is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn, message_types, ReplyClearSingle, ReplySetRepeating, ReplySetSingle, SetMessageData, TimeoutSetRTy, TimeoutSetStrings, TimeoutSetSTy, TimerTag, TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "rebuild_the_universe_auto_typed_v0.2";
+import {cur_event_fns, is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn, message_types, ReplyClearSingle, ReplySetRepeating, ReplySetSingle, TimeoutSetRTy, TimeoutSetStrings, TimeoutSetSTy, TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "rebuild_the_universe_auto_typed_v0.2";
+import {SetMessageData} from "SetMessageData";
+import {TimerTag} from "TimerTag";
+import {DispatchMessageType} from "DispatchMessageType";
 export class Timer {
 	id_generator;
 	m_remote_id_to_main_state_map: any;

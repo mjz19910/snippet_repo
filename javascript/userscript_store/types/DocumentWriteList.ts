@@ -1,5 +1,6 @@
 import {DocumentWriteFnProxyHandler} from "./DocumentWriteFnProxyHandler";
-import {Nullable2dArray, DocumentWriteFn} from "../rebuild_the_universe_auto_typed_v0.2";
+import {DocumentWriteFn} from "../DocumentWriteFn";
+import {Nullable2dArray} from "../Nullable2dArray";
 
 
 export class DocumentWriteList {

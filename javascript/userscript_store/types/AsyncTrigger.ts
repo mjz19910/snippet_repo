@@ -1,4 +1,4 @@
-import {PromiseExecutorRejectCallback} from "rebuild_the_universe_auto_typed_v0.2";
+import {PromiseExecutorRejectCallback} from "PromiseExecutorRejectCallback";
 
 export class AsyncTrigger {
 	m_set_flag: boolean;

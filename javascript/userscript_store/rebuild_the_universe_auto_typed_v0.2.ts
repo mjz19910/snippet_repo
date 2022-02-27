@@ -1,12 +1,3 @@
-import InstructionTypeBox from "./types/vm/box/InstructionTypeBox";
-import {InstructionType} from "./types/vm/instruction/mod";
-import Box from "./types/vm/box/Box";
-import IndexBox from "./types/vm/box/IndexBox";
-import NewableFunctionBox from "./types/vm/box/NewableFunctionBox";
-import StackVMBox from "./types/vm/box/StackVMBox";
-import WindowBox from "./types/vm/box/WindowBox";
-import IAutoBuy from "types/IAutoBuy";
-import {AutoBuyState} from "./types/AutoBuyState";
 import {SymbolRef} from "./types/SymbolRef";
 import {next_debug_id} from "./types/next_debug_id";
 import {AbstractBox} from "./types/AbstractBox";
@@ -18,6 +9,16 @@ import {DocumentWriteList} from "./types/DocumentWriteList";
 import {UniqueIdGenerator} from "./types/UniqueIdGenerator";
 import {move_timers_to_worker_promise_executor} from "types/move_timers_to_worker_promise_executor";
 import {TimerApi} from "types/TimerApi";
+import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element";
+import {SimpleStackVMParser} from "./SimpleStackVMParser";
+import {calc_ratio} from "./calc_ratio";
+import {AverageRatio} from "./AverageRatio";
+import {AbstractTarget} from "./AbstractTarget";
+import {IntervalTarget} from "./IntervalTarget";
+import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget";
+import {BaseNode} from "./BaseNode";
+import {BaseTimeoutNode} from "./BaseTimeoutNode";
+import {TimeoutIdNode} from "./TimeoutIdNode";
 
 export {};
 'use strict';
@@ -30,7 +31,7 @@ const cint_arr: string[] = [];
 const WorkerAsyncMessage = 1;
 type WorkerAsyncMessageTy = typeof WorkerAsyncMessage;
 export const TimeoutFireS = 101;
-type TimeoutFireSTy = typeof TimeoutFireS;
+export type TimeoutFireSTy = typeof TimeoutFireS;
 const TimeoutFireR = 102;
 type TimeoutFireRTy = typeof TimeoutFireR;
 const WorkerUpdateMessageHandler = 201;
@@ -46,29 +47,29 @@ export type TimeoutClearSTy = typeof TimeoutClearS;
 export const TimeoutClearR = 206;
 export type TimeoutClearRTy = typeof TimeoutClearR;
 const TimeoutClearA = 207;
-type TimeoutClearATy = typeof TimeoutClearA;
+export type TimeoutClearATy = typeof TimeoutClearA;
 export const WorkerDestroyMessage = 300;
-type WorkerDestroyMessageTy = typeof WorkerDestroyMessage;
+export type WorkerDestroyMessageTy = typeof WorkerDestroyMessage;
 export const WorkerUpdateMessageHandlerReply = 301;
-type WorkerUpdateMessageHandlerReplyTy = typeof WorkerUpdateMessageHandlerReply;
+export type WorkerUpdateMessageHandlerReplyTy = typeof WorkerUpdateMessageHandlerReply;
 export const WorkerReadyReply = 302;
-type WorkerReadyReplyTy = typeof WorkerReadyReply;
+export type WorkerReadyReplyTy = typeof WorkerReadyReply;
 export const ReplySetSingle = 303;
-type ReplySetSingleTy = typeof ReplySetSingle;
+export type ReplySetSingleTy = typeof ReplySetSingle;
 export const ReplySetRepeating = 304;
-type ReplySetRepeatingTy = typeof ReplySetRepeating;
+export type ReplySetRepeatingTy = typeof ReplySetRepeating;
 export const ReplyClearSingle = 305;
-type ReplyClearSingleTy = typeof ReplyClearSingle;
+export type ReplyClearSingleTy = typeof ReplyClearSingle;
 export const ReplyClearRepeating = 306;
-type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
+export type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
 const ReplyClearAny = 307;
 type ReplyClearAnyTy = typeof ReplyClearAny;
 export const ReplyMessage1 = 401;
-type ReplyMessage1Ty = typeof ReplyMessage1;
+export type ReplyMessage1Ty = typeof ReplyMessage1;
 export const ReplyMessage2 = 402;
-type ReplyMessage2Ty = typeof ReplyMessage2;
+export type ReplyMessage2Ty = typeof ReplyMessage2;
 export const ReplyFromWorker = 500;
-type ReplyFromWorkerTy = typeof ReplyFromWorker;
+export type ReplyFromWorkerTy = typeof ReplyFromWorker;
 const ReplyToWorker = 600;
 export type ReplyToWorkerTy = typeof ReplyToWorker;
 const TimeoutSingleReply = 700;
@@ -248,78 +249,7 @@ export var is_in_ignored_from_src_fn = {flag:false};
 export var is_in_userscript_fn = {flag:false};
 export var is_in_userscript = {flag:true};
 export let cur_event_fns: (CallableFunction | NewableFunction)[] = [];
-void find_all_scripts_using_string_apis;
-export type AnyFunction = CallableFunction | NewableFunction | Function | Object;
-export type RegIdFunction = {reg_id: number} & AnyFunction;
-const [weak_scripts, register_obj_with_registry] = find_all_scripts_using_string_apis();
-void register_obj_with_registry;
-type NullableItem<T> = T | null;
-export type Nullable2dArray<T> = NullableItem<T[]>[];
-export type DocumentWriteFn = (...text: string[]) => void;
-
-export type MessageTimeoutFireS = {
-	t: TimeoutFireSTy;
-	v: never;
-};
-type MessageWorkerDestroyMessage = {
-	t: WorkerDestroyMessageTy;
-	v: never;
-};
-type MessageReplyMessage1 = {
-	t: ReplyMessage1Ty;
-	v: never;
-};
-type MessageReplyMessage2 = {
-	t: ReplyMessage2Ty;
-	v: never;
-};
-type MessageWorkerUpdateMessageHandlerReply = {
-	t: WorkerUpdateMessageHandlerReplyTy;
-	v: WorkerUpdateMessageHandlerTy;
-};
-type MessageReplyFromWorkerData = {
-	t: never;
-	v: never;
-};
-type MessageReplyFromWorker = {
-	t: ReplyFromWorkerTy;
-	v: MessageReplyFromWorkerData;
-};
-export type MessageTypesForWorkerReplies = MessageReplyFromWorker | MessageReplyMessage2 | MessageReplyMessage1 | MessageWorkerDestroyMessage | MessageTimeoutFireS;
-type MessageWorkerReadyReply = {
-	t: WorkerReadyReplyTy;
-	v: TimeoutMessageRTy;
-};
-type MessageReplySetSingle = {
-	t: ReplySetSingleTy;
-	v: never;
-};
-type MessageReplySetRepeating = {
-	t: ReplySetRepeatingTy;
-	v: never;
-};
-type MessageReplyClearSingle = {
-	t: ReplyClearSingleTy;
-	v: never;
-};
-type MessageReplyClearRepeating = {
-	t: ReplyClearRepeatingTy;
-	v: never;
-};
-export type MessageTimeoutClearS = {
-	t: TimeoutClearSTy;
-	v: number;
-};
-export type MessageTimeoutClearR = {
-	t: TimeoutClearRTy;
-	v: number;
-}
-
-export type DispatchMessageType = MessageTimeoutClearR | MessageTimeoutClearS | MessageReplyClearRepeating | MessageReplyClearSingle | MessageReplySetRepeating | MessageReplySetSingle | MessageWorkerReadyReply | MessageWorkerUpdateMessageHandlerReply | MessageReplyMessage2 | MessageReplyMessage1 | MessageReplyFromWorkerData;
-export type MessageTimeoutClearA = {
-	t: TimeoutClearATy;
-	v: number;
-};
+export const [weak_scripts, register_obj_with_registry] = find_all_scripts_using_string_apis();
 export type MessageTimeoutSingleReply = {
 	t: TimeoutSingleReplyTy;
 	v: number;
@@ -340,742 +270,17 @@ export type MessageTimeoutSetR = {
 	t: TimeoutSetRTy;
 	v: SetRepeatingMessageData;
 }
-function timer_nop() {}
-export type TimerTag = 1 | 2;
-export type SetMessageData = {
-	t: number;
-	v: number;
-};
-
-let seen_elements = new WeakSet;
-function remove_bad_dom_script_element_callback(e: HTMLScriptElement) {
-	if(seen_elements.has(e)) return;
-	seen_elements.add(e);
-	if(!e.src) return;
-	if(e.src.includes("analytics.js") && e.src.includes("google")) {
-		e.remove();
-		return;
-	}
-	if(e.src.includes("platform.js")) {
-		e.remove();
-		return;
-	}
-	//spell:disable-next-line
-	if(e.src.indexOf("opentracker") > -1) {
-		e.remove();
-		return;
-	}
-	//spell:disable-next-line
-	if(e.src.includes("pagead/js/adsbygoogle.js")) {
-		e.remove();
-		return;
-	}
-	if(new URL(e.src).origin != location.origin) return;
-	if(e.src.indexOf("ads") > -1 || e.src.indexOf("track") > -1) {
-		e.remove();
-		return;
-	}
-}
-function remove_bad_dom_script_element() {
-	Array.prototype.forEach.call(document.querySelectorAll("script"), remove_bad_dom_script_element_callback);
-};
-export class EventHandlerDispatch<T> {
-	target_obj: T;
-	target_fn;
-	constructor(target_obj: T, target_fn: (this: T, event: Event) => void) {
-		this.target_obj = target_obj;
-		this.target_fn = target_fn;
-	}
-	do_handle_event(event: Event) {
-		this.target_fn.call(this.target_obj, event);
-	}
-	handleEvent(v: Event) {
-		this.do_handle_event(v);
-	}
-}
-abstract class AbstractVM {
-	abstract execute_instruction(instruction: InstructionType): void;
-	abstract run(): Box;
-}
-class BaseVMCreate extends AbstractVM {
-	flags: Map<string, boolean>;
-	instructions;
-	instruction_pointer;
-	running;
-	constructor(instructions: InstructionType[]) {
-		super();
-		this.flags = new Map;
-		this.instructions = instructions;
-		this.instruction_pointer = 0;
-		this.running = false;
-	}
-	reset() {
-		this.instruction_pointer = 0;
-		this.running = false;
-	}
-	is_in_instructions(value: number) {
-		return value >= 0 && value < this.instructions.length;
-	}
-	execute_instruction(instruction:InstructionType) {
-		switch(instruction[0]) {
-			default: {
-				console.info('Unknown opcode', instruction[0]);
-				throw new Error('Halt: bad opcode (' + instruction[0] + ')');
-			}
-			case 'je': {
-				let [, target] = instruction;
-				if(this.is_in_instructions(target)) {
-					throw new Error("RangeError: Jump target is out of instructions range");
-				}
-				if(this.flags.get('equal')) {
-					this.instruction_pointer = target;
-				}
-			} break;
-			case 'jmp': {
-				let [, target] = instruction;
-				if(this.is_in_instructions(target)) {
-					throw new Error("RangeError: Jump target is out of instructions range");
-				}
-				this.instruction_pointer = target;
-			} break;
-			case 'halt'/*Running*/: this.running = false; break;
-		}
-	}
-	run(): Box {
-		this.running = true;
-		while(this.instruction_pointer < this.instructions.length && this.running) {
-			let instruction = this.instructions[this.instruction_pointer];
-			this.execute_instruction(instruction);
-			this.instruction_pointer++;
-		}
-		return null;
-	}
-}
-function trigger_debug_breakpoint() {
-	debugger;
-}
-const local_logging_level = 3;
-export function l_log_if(level: number, ...args: any[]) {
-	if(level <= local_logging_level) {
-		console.log(...args);
-	}
-}
-const LOG_LEVEL_ERROR = 1;
-void LOG_LEVEL_ERROR;
+export let seen_elements = new WeakSet;
+;
+export const local_logging_level = 3;
+export const LOG_LEVEL_ERROR = 1;
 export const LOG_LEVEL_WARN = 2;
-const LOG_LEVEL_INFO = 3;
-void LOG_LEVEL_INFO;
+export const LOG_LEVEL_INFO = 3;
 export const LOG_LEVEL_VERBOSE = 4;
-const LOG_LEVEL_TRACE = 5;
-void LOG_LEVEL_TRACE;
-export class BaseStackVM extends BaseVMCreate {
-	stack: Box[];
-	return_value: Box;
-	constructor(instructions: InstructionType[]) {
-		super(instructions);
-		this.stack = [];
-		this.return_value = void 0;
-	}
-	reset() {
-		super.reset();
-		this.stack.length = 0;
-		this.return_value = void 0;
-	}
-	push(value: Box) {
-		this.stack.push(value);
-	}
-	pop(): Box {
-		if(this.stack.length === 0) {
-			throw new Error("stack underflow");
-		}
-		let pop_value = this.stack.pop();
-		return pop_value;
-	}
-	pop_arg_count(operand_number_of_arguments: any) {
-		let arguments_arr = [];
-		let arg_count = operand_number_of_arguments;
-		for(let i = 0;i < arg_count;i++) {
-			if(this.stack.length <= 0) {
-				throw new Error('stack underflow in pop_arg_count');
-			}
-			arguments_arr.unshift(this.pop());
-		}
-		return arguments_arr;
-	}
-	execute_instruction(instruction: InstructionType) {
-		switch(instruction[0]) {
-			case 'push'/*Stack*/: {
-				for(let i = 0;i < instruction.length-1;i++) {
-					let item = instruction[i+1];
-					this.push(item);
-				}
-			} break;
-			case 'drop'/*Stack*/: this.pop(); break;
-			case 'get'/*Object*/: {
-				let target_name = this.pop();
-				if(target_name === void 0) break;
-				let target_obj = this.pop();
-				if(target_obj === void 0) break;
-				if(typeof target_obj != 'object') break;
-				if(typeof target_name != 'string') break;
-				if(target_obj instanceof IndexBox) {
-					this.push(target_obj.value[target_name]);
-				}
-			} break;
-			case 'call'/*Call*/: {
-				let number_of_arguments = instruction[1];
-				if(number_of_arguments === void 0) return;
-				if(typeof number_of_arguments != 'number') return;
-				if(number_of_arguments <= 1) {
-					throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
-				}
-				let [target_this, target_fn, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-				if(!(target_fn instanceof Function)) break;
-				let ret = target_fn.apply(target_this, arg_arr);
-				this.push(ret);
-			} break;
-			case 'construct'/*Construct*/: {
-				let number_of_arguments = instruction[1];
-				if(typeof number_of_arguments != 'number') return;
-				let [construct_target, ...construct_arr] = this.pop_arg_count(number_of_arguments);
-				if(construct_target instanceof Function) {
-					let obj = new (<any>construct_target)(...construct_arr);
-					this.push(obj);
-				} else if(construct_target instanceof NewableFunctionBox) {
-					let obj=construct_target.factory(...construct_arr);
-					this.push(obj);
-				} else {
-					console.assert(false, 'try to construct non function');
-					debugger;
-				}
-				l_log_if(LOG_LEVEL_VERBOSE, instruction, ...this.stack.slice(this.stack.length - number_of_arguments));
-			} break;
-			case 'return'/*Call*/:
-				let ret = this.pop();
-				this.return_value = ret;
-				break;
-			case 'modify_operand': {
-				let [, target, offset] = instruction;
-				if(typeof offset != 'number') return;
-				if(typeof target === 'number') {
-					if(this.is_in_instructions(target)) {
-						throw new Error("RangeError: Destination is out of instructions range");
-					}
-					let instruction_modify = new InstructionTypeBox(this.instructions[target]);
-					let value = this.pop();
-					if(typeof value === 'string') {
-						instruction_modify.value[offset] = value;
-					}
-					let verify_state: [number] = [instruction_modify.value.length];
-					let out_ins: string[] = [];
-					for(let i = 0;i < instruction_modify.value.length;i++) {
-						let cur = instruction_modify.value[i];
-						if(typeof cur === 'string') {
-							out_ins.push(cur);
-						} else {
-							console.log('need type for', cur);
-						}
-					}
-					let valid_instruction = SimpleStackVMParser.verify_instruction(out_ins, verify_state);
-					this.instructions[target] = valid_instruction;
-					console.log('new verify state', verify_state);
-					console.assert(verify_state[0] === 0, "not all of the operands typechecked");
-				}
-			} break;
-			case 'push_pc': {
-				this.push(this.instruction_pointer);
-			} break;
-			default: super.execute_instruction(instruction); break;
-		}
-	}
-	run(): Box {
-		this.running = true;
-		while(this.instruction_pointer < this.instructions.length && this.running) {
-			let instruction = this.instructions[this.instruction_pointer];
-			this.execute_instruction(instruction);
-			this.instruction_pointer++;
-		}
-		console.assert(this.stack.length === 0, "stack length is not zero, unhandled data on stack");
-		return this.return_value;
-	}
-}
-class SimpleStackVM<T> extends BaseStackVM {
-	args_vec: (T extends Array<T> ? T : [T]) | null;
-	constructor(instructions: any) {
-		super(instructions);
-		this.args_vec = null;
-	}
-	reset() {
-		super.reset();
-		this.args_vec = null;
-	}
-	execute_instruction_raw(instruction:InstructionType) {
-		switch(instruction[0]) {
-			case 'this'/*Special*/: this.push(new StackVMBox(this)); break;
-			// TODO: if you ever use this on a worker, change
-			// it to use globalThis...
-			case 'global'/*Special*/: this.push(new WindowBox(window)); break;
-			case 'breakpoint'/*Debug*/: trigger_debug_breakpoint(); break;
-			case 'call'/*Call*/: {
-				// TODO: Fix the other code to use the call handling from
-				// the base class
-				// Currently we support applying functions
-				// this is closer to what you expect, not to just get
-				// the name of a member to call
-				let number_of_arguments = instruction[1];
-				let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-				if(typeof target_name == 'string') {
-					switch(typeof target_obj){
-						case 'object':
-							if(target_obj === null)throw new Error("Call null func");
-							switch(target_obj.type){
-								case 'array_box':throw new Error("Call not a function");
-								case 'constructor_box':{
-									// are you sure, you just called a constructor! (the correct way)
-									let ret=target_obj.factory(...arg_arr);
-									this.push(ret);
-								}
-								case 'custom_box':{
-									let ret=target_obj.as_type('function');
-									ret;
-								} break;
-							}
-					}
-				}
-			} break;
-			default: super.execute_instruction(instruction); break;
-		}
-	}
-	run(...run_arguments: T extends T[] ? T : [T]) {
-		this.args_vec = run_arguments;
-		return super.run();
-	}
-}
-type FormattableTypes = string | (() => void) | ((err: Box) => void);
-export class SimpleStackVMParser {
-	/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
-	static parse_int_arg(cur_item: string | number) {
-		if(typeof cur_item == 'string') {
-			let arg = cur_item;
-			if(arg[3] === '()'[0] && arg.at(-1) === "()"[1]) {
-				let str_int = arg.slice(4, -1);
-				return parseInt(str_int, 10);
-			}
-		}
-	}
-	static parse_string_with_format_ident(str: string, format_list: FormattableTypes[]) {
-		let format_index = str.indexOf('%');
-		let format_type = str[format_index + 1];
-		switch(format_type) {
-			case 'o':
-				let obj = format_list.shift();
-				if(!obj) throw new Error("Format list underflow");
-				return obj;
-			default:
-				console.log("%s", 'unsupported format spec %' + format_type);
-		}
-	}
-	static parse_current_instruction(cur: (number | string | ((err: Box) => void))[], format_list: FormattableTypes[]) {
-		let arg_loc = 1;
-		let arg = cur[arg_loc];
-		while(arg) {
-			if(typeof arg != 'string') {
-				arg_loc++;
-				arg = cur[arg_loc];
-				continue;
-			}
-			if(arg.slice(0, 3) === 'int') {
-				let int_res = this.parse_int_arg(arg);
-				if(!int_res) throw new Error("Failed to parse int");
-				cur[arg_loc] = int_res;
-			}
-			if(arg.includes('%')) {
-				let res = this.parse_string_with_format_ident(arg, format_list);
-				if(!res) throw new Error("Failed to parse format ident");
-				cur[arg_loc] = res;
-			}
-			arg_loc++;
-			arg = cur[arg_loc];
-		}
-	}
-	static raw_parse_handle_regexp_match(m: string[]) {
-		let iter = m[1].trim();
-		if(iter.startsWith("//")) return [];
-		while(iter.startsWith("/*")) {
-			let j = iter.indexOf("*/");
-			iter = iter.slice(j + 2).trim();
-		}
-		if(!iter) return [];
-		return iter.split(",");
-	}
-	static match_regex: RegExp;
-	static parse_string_into_raw_instruction_stream(string: string): string[][] {
-		const parser_max_match_iter = 390;
-		let parts: RegExpExecArray | null, arr: string[][] = [], i = 0;
-		do {
-			parts = this.match_regex.exec(string);
-			if(!parts) break;
-			let res = this.raw_parse_handle_regexp_match(parts);
-			if(res) arr.push(res);
-		} while(parts && i++ < parser_max_match_iter);
-		if(parts) console.assert(false, 'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);
-		return arr;
-	}
-	static parse_instruction_stream_from_string(string: string, format_list: FormattableTypes[]) {
-		let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
-		for(let i = 0;i < raw_instructions.length;i++) {
-			let raw_instruction = raw_instructions[i];
-			this.parse_current_instruction(raw_instruction, format_list);
-		}
-		let instructions = this.verify_raw_instructions(raw_instructions); return instructions;
-	}
-	static verify_instruction(instruction: string[], left: [number]): InstructionType {
-		const [m_opcode, ...m_operands] = instruction;
-		switch(m_opcode) {
-			// variable argument count
-			case 'push':
-				left[0] = 0;
-				return [m_opcode, ...m_operands];
-			case 'call'/*1 argument*/:
-				left[0] -= 2;
-				if(typeof m_operands[0] === 'number' && Number.isFinite(m_operands[0])) return [m_opcode, m_operands[0]];
-				else {
-					console.info("Can't verify that call instruction is valid, argument (%o) is not a number or not finite", m_operands[0]);
-					throw new Error("TypeError: Invalid argument");
-				}
-			case 'drop':
-			case 'get':
-			case 'return':
-			case 'halt':
-			case 'push_args':
-			case 'this':
-			case 'global':
-			case 'breakpoint'/*opcode*/:
-				left[0]--;
-				return [m_opcode];
-			default:
-				console.info("Info: opcode=%o instruction_parameters=%o", m_opcode, m_operands);
-				throw new Error("Unexpected opcode");
-		}
-	}
-	static verify_raw_instructions(raw_instructions: string[][]): InstructionType[] {
-		const instructions: InstructionType[] = [];
-		for(let i = 0;i < raw_instructions.length;i++) {
-			const instruction = raw_instructions[i];
-			const left: [number] = [instruction.length];
-			const valid_instruction = this.verify_instruction(instruction, left);
-			instructions.push(valid_instruction);
-			if(left[0] > 0) throw new Error("Typechecking failure, data left when processing raw instruction stream");
-		}
-		return instructions;
-	}
-}
+export const LOG_LEVEL_TRACE = 5;
 SimpleStackVMParser.match_regex = /(.+?)(;|$)/gm;
-export class EventHandlerVMDispatch extends SimpleStackVM<Event> {
-	target_obj;
-	constructor(instructions: InstructionType[], target_obj: IAutoBuy) {
-		super(instructions);
-		this.target_obj = target_obj;
-	}
-	handleEvent(event: Event) {
-		this.reset();
-		this.run(event);
-	}
-}
-class CompressionStatsCalculator {
-	hit_counts: number[];
-	cache: string[];
-	constructor() {
-		this.hit_counts = [];
-		this.cache = [];
-	}
-	map_values() {
-		return this.hit_counts;
-	}
-	map_keys() {
-		return this.cache;
-	}
-	add_hit(index: number) {
-		if(!this.hit_counts[index]) {
-			this.hit_counts[index] = 1;
-		} else this.hit_counts[index]++;
-	}
-	add_item(key: string) {
-		let index = this.cache.indexOf(key)
-		if(index == -1) index = this.cache.push(key);
-		else this.add_hit(index);
-	}
-	reset() {
-		this.cache.length = 0;
-		this.hit_counts.length = 0;
-	}
-	calc_compression_stats(arr: string[], win_size: number): string[][] {
-		this.reset();
-		for(let i = 0;i < arr.length;i++) {
-			if(i + win_size < arr.length) {
-				this.add_item(arr.slice(i, i + win_size).join(","));
-			}
-		}
-		let mk = this.map_keys();
-		let mv = this.map_values();
-		let tuple_of = to_tuple_arr(mk, mv);
-		return tuple_of.filter((e) => e[1] !== void 0);
-	}
-	calc_for_stats_window_size(stats_arr: string[][][], arr: string[], win_size: number) {
-		stats_arr[win_size - 1] = this.calc_compression_stats(arr, win_size);
-	}
-	calc_for_stats_index(stats_arr: string[][][], arr: string[], index: number) {
-		stats_arr[index] = this.calc_compression_stats(arr, index + 1);
-	}
-}
-class BaseCompression {
-	did_compress(src: string[], dst: string[]) {
-		return dst.length < src.length;
-	}
-	did_decompress(src: string[], dst: string[]) {
-		return dst.length > src.length;
-	}
-	compress_result(src: string[], dst: string[]) {
-		if(this.did_compress(src, dst)) return [true, dst];
-		return [false, src];
-	}
-	decompress_result(src: string[], dst: string[]): [res: boolean, dst: string[]] {
-		// maybe this is not a decompression, just a modification to make
-		// later decompression work
-		if(this.did_decompress(src, dst)) return [true, dst];
-		return [false, dst];
-	}
-}
-export class MulCompression extends BaseCompression {
-	stats_calculator;
-	compression_stats: never[][];
-	constructor() {
-		super();
-		this.stats_calculator = new CompressionStatsCalculator;
-		this.compression_stats = [];
-	}
-	try_compress(arr: string[]) {
-		let ret = [];
-		for(let i = 0;i < arr.length;i++) {
-			let item = arr[i];
-			if(i + 1 < arr.length) {
-				if(item === arr[i + 1]) {
-					let off = 1;
-					while(item === arr[i + off]) {
-						off++;
-					}
-					if(off > 1) {
-						ret.push(`${item}${off}`);
-						i += off - 1;
-						continue;
-					}
-				}
-			}
-			ret.push(item);
-		}
-		return this.compress_result(arr, ret);
-	}
-	try_decompress(arr: string[]): [res: boolean, dst: string[]] {
-		let ret = [];
-		for(let i = 0;i < arr.length;i++) {
-			let item = arr[i];
-			if(i + 1 < arr.length) {
-				let [item_type, num_data] = [item[0], item.slice(1)];
-				let parsed = parseInt(num_data);
-				if(!Number.isNaN(parsed)) {
-					for(let j = 0;j < parsed;j++)ret.push(item_type);
-					continue;
-				}
-			}
-			ret.push(arr[i]);
-		}
-		return this.decompress_result(arr, ret);
-	}
-	compress_array(arr: string[]) {
-		let success, res;
-		[success, res] = this.try_decompress(arr);
-		if(success) arr = res;
-		for(let i = 0;i < 4;i++) {
-			this.stats_calculator.calc_for_stats_index(this.compression_stats, arr, i);
-			let ls = this.compression_stats[i];
-			if(ls.length > 0) {
-				continue;
-			}
-			break;
-		}
-		[success, res] = this.try_compress(arr);
-		if(success) return res;
-		return arr;
-	}
-}
-function calc_ratio(arr: number[]) {
-	let ratio_acc = 0;
-	for(let i = 0;i < arr.length;i++)ratio_acc += arr[i];
-	// don't divide by zero
-	if(ratio_acc === 0) return 0;
-	return ratio_acc / arr.length;
-}
 console.assert(calc_ratio([0, 0]) === 0, "calc ratio of array full of zeros does not divide by zero");
-export class AverageRatio {
-	arr
-	history: number[]
-	count
-	len
-	history_len
-	weight
-	human_duration
-	// @AverageRatio
-	constructor(max_len: number, max_history_len: number, weight: number, human_duration: string, initial_arr: number[] = []) {
-		this.arr = initial_arr;
-		this.history = [];
-		this.count = 0;
-		this.len = max_len;
-		this.history_len = max_history_len;
-		this.weight = weight;
-		this.human_duration = human_duration;
-	}
-	add(value: number, from_prev: boolean, debug = false) {
-		if(from_prev) {
-			if(debug) console.log("ratio add", this.human_duration, (value * 100).toFixed(5));
-			this.arr.unshift(value);
-			this.history.unshift(value);
-			if(this.history.length > this.history_len) this.history.pop();
-			if(this.arr.length > this.len) this.arr.pop();
-			this.count++;
-			if(this.count > this.len) {
-				this.count = 0;
-				return true;
-			}
-		} else {
-			this.arr[0] = value;
-		}
-		return false;
-	}
-	can_average() {
-		return this.arr.length > 1;
-	}
-	get_average() {
-		return calc_ratio(this.arr);
-	}
-}
-class AbstractTarget {
-	fire() {
-		throw new Error("Attempt to call an abstract class");
-	}
-}
-type TimeoutTargetObjects = IAutoBuy | AutoBuyState;
-type CallbackType1 = () => void;
-type CallbackType2 = (this: TimeoutTargetObjects) => void;
-type TimeoutTargetCallbackType = CallbackType2 | CallbackType1;
-export class TimeoutTarget extends AbstractTarget {
-	once;
-	obj;
-	callback;
-	description;
-	constructor(obj: TimeoutTargetObjects, callback: TimeoutTargetCallbackType, description: string) {
-		super();
-		this.once = true;
-		this.obj = obj
-		this.callback = callback;
-		this.description = description;
-	}
-	fire() {
-		this.callback.call(this.obj);
-	}
-}
-class IntervalTarget extends AbstractTarget {
-	once;
-	obj;
-	callback;
-	description;
-	constructor(obj: never, callback: () => void, description: never) {
-		super();
-		this.once = false;
-		this.obj = obj
-		this.callback = callback;
-		this.description = description;
-	}
-	fire() {
-		this.callback.call(this.obj);
-	}
-}
 void IntervalTarget;
-export type PromiseExecutorRejectCallback = (reason?: any) => void;
-
-class PromiseTimeoutTarget {
-	description;
-	m_promise: Promise<void> | null;
-	constructor(description: string) {
-		this.description = description;
-		this.promise_accept = null;
-		this.callback = null;
-		this.m_promise = new Promise(this.promise_executor.bind(this));
-	}
-	get_promise() {
-		return this.m_promise;
-	}
-	promise_accept: ((value: void | PromiseLike<void>) => void) | null;
-	callback: ((value: void | PromiseLike<void>) => void) | null;
-	promise_executor(accept: (value: void | PromiseLike<void>) => void, reject: PromiseExecutorRejectCallback) {
-		void reject;
-		this.promise_accept = accept;
-		this.callback = this.on_result.bind(this);
-	}
-	on_result(value: void | PromiseLike<void>) {
-		this.m_promise = null;
-		if(this.promise_accept) this.promise_accept(value);
-	}
-	fire() {
-		let callback = this.callback;
-		if(callback) callback();
-	}
-}
-export class AsyncTimeoutTarget extends PromiseTimeoutTarget {
-	wait() {
-		return this.get_promise();
-	}
-}
-type BaseNodeParent = {
-	remove_child(v: BaseNode): void;
-};
-
-class BaseNode {
-	parent: BaseNodeParent | null;
-	constructor() {
-		this.parent = null;
-	}
-	set_parent(parent: BaseNodeParent | null) {
-		this.parent = parent;
-	}
-	remove() {
-		if(this.parent) this.parent.remove_child(this);
-	}
-	run() {
-		// do nothing
-	}
-	destroy() {
-		this.remove();
-	}
-}
-class BaseTimeoutNode extends BaseNode {
-	timeout;
-	constructor(timeout: number | undefined) {
-		super();
-		this.timeout = timeout;
-	}
-	get_timeout() {
-		return this.timeout;
-	}
-}
-class TimeoutIdNode extends BaseTimeoutNode {
-	id: number | null;
-	m_is_timeout: boolean;
-	constructor(id: number | null = null, is_timeout_flag: boolean) {
-		super(void 0);
-		this.id = id;
-		this.m_is_timeout = is_timeout_flag;
-	}
-}
 class TimeoutNode extends BaseTimeoutNode {
 	id: number | null | undefined;
 	target: AbstractTarget | null;
@@ -1227,7 +432,7 @@ const auto_buy_obj = new AutoBuy;
 function map_to_tuple(this: never, e: string, i: string | number) {
 	return [e, this[i]];
 }
-function to_tuple_arr(keys: string[], values: number[]) {
+export function to_tuple_arr(keys: string[], values: number[]) {
 	return keys.map(map_to_tuple, values);
 }
 function promise_set_timeout(timeout: number | undefined, a: TimerHandler) {

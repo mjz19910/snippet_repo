@@ -4,7 +4,14 @@ import {AutoBuyState} from "./AutoBuyState";
 import {DomValueBox} from "./DomValueBox";
 import {DomBuilderVM} from "./DomBuilderVM";
 import {DataLoader} from "./DataLoader";
-import {AsyncNodeRoot, MulCompression, debug_id_syms, AUDIO_ELEMENT_VOLUME, is_in_ignored_from_src_fn, SimpleStackVMParser, EventHandlerVMDispatch, LOG_LEVEL_VERBOSE, l_log_if, EventHandlerDispatch, array_sample_end, lightreset_inject, specialclick_inject, AsyncTimeoutNode, AsyncTimeoutTarget, TimeoutTarget} from "../rebuild_the_universe_auto_typed_v0.2";
+import {AsyncNodeRoot, debug_id_syms, AUDIO_ELEMENT_VOLUME, is_in_ignored_from_src_fn, LOG_LEVEL_VERBOSE, array_sample_end, lightreset_inject, specialclick_inject, AsyncTimeoutNode} from "../rebuild_the_universe_auto_typed_v0.2";
+import {AsyncTimeoutTarget} from "../AsyncTimeoutTarget";
+import {TimeoutTarget} from "../TimeoutTarget";
+import {MulCompression} from "../MulCompression";
+import {EventHandlerVMDispatch} from "../EventHandlerVMDispatch";
+import {SimpleStackVMParser} from "../SimpleStackVMParser";
+import {l_log_if} from "../l_log_if";
+import {EventHandlerDispatch} from "../EventHandlerDispatch";
 import {do_auto_unit_promote} from "./do_auto_unit_promote";
 
 export class AutoBuy implements IAutoBuy {

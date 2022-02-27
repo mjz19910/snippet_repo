@@ -1,5 +1,5 @@
 import {InstructionType} from "types/vm/instruction/mod";
-import {SimpleStackVM} from "./SimpleStackVM";
+import {SimpleStackVM} from "../SimpleStackVM";
 
 export class EventHandlerVMDispatch<T> extends SimpleStackVM {
 	target_obj: T;

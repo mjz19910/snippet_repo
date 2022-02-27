@@ -1,7 +1,10 @@
 import {RecursivePartial} from "./RecursivePartial";
 import {TimerApi} from "./TimerApi";
 import {WorkerVerifyCallback} from "./WorkerVerifyCallback";
-import {TimeoutSetTypesTy, TimeoutSetTypes, TimeoutSetStringsTy, TimeoutSetStringS, TimeoutSetStringR, TimeoutClearStringsTy, TimeoutClearStringS, TimeoutClearStringR, TimerTag, MessageTimeoutClearS, MessageTimeoutClearR, TimeoutSingleReplyTy, TimeoutRepeatingReplyTy, TimeoutClearSTy, TimeoutClearRTy, ReplyToWorkerTy, WorkerUpdateMessageHandlerTy, TimeoutMessageRTy, MessageTimeoutSetS, MessageTimeoutSetR} from "../rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutSetTypesTy, TimeoutSetTypes, TimeoutSetStringsTy, TimeoutSetStringS, TimeoutSetStringR, TimeoutClearStringsTy, TimeoutClearStringS, TimeoutClearStringR, TimeoutSingleReplyTy, TimeoutRepeatingReplyTy, TimeoutClearSTy, TimeoutClearRTy, ReplyToWorkerTy, WorkerUpdateMessageHandlerTy, TimeoutMessageRTy, MessageTimeoutSetS, MessageTimeoutSetR} from "../rebuild_the_universe_auto_typed_v0.2";
+import {TimerTag} from "../TimerTag";
+import {MessageTimeoutClearR} from "../MessageTimeoutClearR";
+import {MessageTimeoutClearS} from "../MessageTimeoutClearS";
 
 export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 	const TIMER_SINGLE = 1;

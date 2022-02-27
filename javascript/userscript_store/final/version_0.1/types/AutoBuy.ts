@@ -1,6 +1,6 @@
 import {EventHandlerDispatch} from "./EventHandlerDispatch";
 import {SimpleStackVMParser} from "./SimpleStackVMParser";
-import {EventHandlerVMDispatch} from "./EventHandlerVMDispatch";
+import {EventHandlerVMDispatch} from "./template/EventHandlerVMDispatch";
 import {MulCompression} from "./MulCompression";
 import {AsyncNodeRoot} from "./AsyncNodeRoot";
 import {AutoBuyState} from "./AutoBuyState";

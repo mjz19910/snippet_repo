@@ -1,6 +1,8 @@
 import {InstructionType} from "./vm/instruction/mod";
 import Box from "./vm/box/Box";
-import {BaseStackVM, l_log_if, LOG_LEVEL_VERBOSE} from "../rebuild_the_universe_auto_typed_v0.2";
+import {LOG_LEVEL_VERBOSE} from "../rebuild_the_universe_auto_typed_v0.2";
+import {BaseStackVM} from "../BaseStackVM";
+import {l_log_if} from "../l_log_if";
 
 export class DomBuilderVM extends BaseStackVM {
 	exec_stack: ([Box[], InstructionType[]])[];
