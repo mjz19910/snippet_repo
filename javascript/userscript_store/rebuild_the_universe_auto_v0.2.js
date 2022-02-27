@@ -280,8 +280,50 @@
 		}
 
 	}
+	/**@typedef {import("types/SimpleVMTypes").EmptyArrayBox} EmptyArrayBox */
+	/**@implements {EmptyArrayBox} */
+	class EmptyArrayBoxImpl {
+		/**@type {"array_box"} */
+		type="array_box";
+		/**@arg {[]} v */
+		constructor(v){
+			this.value=v;
+		}
+	}
+	/**@typedef {import("types/SimpleVMTypes").ArrayBox} ArrayBox */
+	/**@implements {ArrayBox} */
+	class ArrayBoxImpl {
+		/**@type {"array_box"} */
+		type="array_box";
+		/**@type {"value"} */
+		item_type="value";
+		/**
+		 * @param {'function'} _typeof_val
+		 */
+		get_matching_typeof(_typeof_val){
+			return null;
+		}
+		/**@arg {VMValue[]} value */
+		constructor(value){
+			this.value=value;
+		}
+	}
 	/**@typedef {import("./types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct */
 	class InstructionConstructE {
+		/**@type {<T>(arr:T[])=>arr is []} */
+		static is_array_empty(arr){
+			if(arr.length === 0)return true;
+			return false;
+		}
+		/**@type {<T>(arr:T)=>[]|null} */
+		static to_unit_arr(arr) {
+			if(arr instanceof Array) {
+				if(this.is_array_empty(arr)) {
+					return arr;
+				}
+			}
+			return null;
+		}
 		/**@arg {InstructionConstruct} instruction @arg {IStackVM} vm */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments=instruction[1];
@@ -296,16 +338,30 @@
 				switch(typeof obj){
 					case 'object':
 						if(obj instanceof Array) {
-							if(obj.length === 0){
-								vm.push({
-									type:'array_box',
-									value:obj
-								});
+							let arr=this.to_unit_arr(obj);
+							if(arr !== null){
+								let val=new EmptyArrayBoxImpl(arr);
+								vm.push(val);
+								return;
 							}
-							vm.push(obj);
 						}
+						console.assert(false, "If possible convert %o to a box", obj);
+						throw new Error("Unable to convert object, please make a auto boxing factory");
+					case 'function':
+						throw new Error("Unable to create a box for functions (no way to request return types to match to boxes)");
+					case 'symbol':
+					case 'number':
+					case 'bigint':
+					case 'boolean':
+					case 'string':
+						vm.push(obj);
+						break;
+					case 'undefined':
+						vm.push(obj);
+						break;
+					default:
+						throw new Error("new typeof result: "+typeof obj);
 				}
-				vm.push(obj);
 			} else if(a.from === 'javascript') {
 				if(a.constructor_type === 'CSSStyleSheet') {
 					/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
@@ -2148,7 +2204,7 @@
 			});
 			let json_hist=JSON.stringify(history_arr_2);
 			let json_tag="JSON_HIST@";
-			let prev_hist=sessionStorage.history;
+			let prev_hist=sessionStorage.getItem('history');
 			/**@type {string[]} */
 			let data_arr;
 			if(prev_hist && prev_hist.startsWith(json_tag)){
@@ -2159,7 +2215,7 @@
 					console.assert(false, 'invalid data_arr len');
 				}
 				data_arr.push(json_hist);
-			} else if(prev_hist.startsWith("JSON_HIST:")){
+			} else if(prev_hist && prev_hist.startsWith("JSON_HIST:")){
 				// upgrade v1
 				let hist_data=prev_hist.slice("JSON_HIST:".length);
 				data_arr=hist_data.split("|");

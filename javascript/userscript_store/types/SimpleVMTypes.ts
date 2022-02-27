@@ -6,6 +6,10 @@ class Box<T> {
 		this.value = value;
 	}
 	value: T;
+	get_matching_typeof(to_match: typeofArg) {
+		if(typeof this.value === to_match)return this;
+		return null;
+	}
 }
 /* --- VM Value supporting types ---
 IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
@@ -20,67 +24,42 @@ export interface IStackVM {
 	stack: VMValue[];
 }
 
+type typeofArg='object'|'function'
+
 /* --- VM Value (classes) ---
 VMBoxedFunction, VMNewableFunction, VMBoxedCSSStyleSheetConstructor
 VMCallableFunction, VMIndexedCallableValue, VMBoxedIndexedObjectValue
 */
-type ArrayBoxes = ArrayBox | InstructionTypeArrayBox;
+type ArrayBoxes = EmptyArrayBox | ArrayBox | InstructionTypeArrayBox;
 export class ArrayBox extends Box<VMValue[]>{
 	type: "array_box" = "array_box";
 	item_type: "value" = "value";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
-export class InstructionTypeArrayBox extends Box<InstructionType[]>{
+export class InstructionTypeArrayBox extends Box<Box<InstructionType>[]>{
 	type: "array_box" = "array_box";
 	item_type: "instruction" = "instruction";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 
 type FunctionBoxes = FunctionBox | NewableFunctionBox | CallableReturnsVoidPromiseBox | CallableReturnPromiseBox;
 export class FunctionBox extends Box<VMFunction> {
 	type: "function_box" = "function_box";
 	return_type: null = null;
-	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value === to_match) {
-			return this;
-		}
-		return null;
-	}
 }
 export class CallableReturnsVoidPromiseBox extends Box<(...a: VMValue[]) => VoidPromiseBox> {
 	type: "function_box" = "function_box";
 	return_type: "promise" = "promise";
 	promise_return_type_special: 'void_type' = 'void_type';
-	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value == to_match) {
-			return this;
-		}
-		return null;
-	}
 }
 export class CallableReturnPromiseBox extends Box<(...a: VMValue[]) => PromiseBox> {
 	type: "function_box" = "function_box";
 	return_type: "promise" = "promise";
 	await_type: "value" = "value";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 export class NewableFunctionBox extends Box<NewableFunction> {
 	type: "constructor_box" = "constructor_box";
 	from: "typescript" = "typescript";
 	instance_type: null = null;
 	constructor_type: "NewableFunction" = "NewableFunction";
-	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value === to_match) {
-			return this;
-		}
-		return null;
-	}
 }
 
 export class EmptyArrayBox extends Box<[]> {
@@ -93,52 +72,31 @@ export type VMIndexedCallableRaw = Indexed<VMFunction>;
 export class VMIndexedCallableBox extends Box<VMIndexedCallableRaw> {
 	type: "callable_index" = "callable_index";
 	index_type: "callable_box" = "callable_box";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 };
 export class VMIndexedValue extends Box<VMIndexedValueRaw>{
 	type: "object_index" = "object_index";
 	index_type: "value" = "value";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 export class ObjectBox extends Box<{}> {
 	type: "object_box" = "object_box";
 	inner_type: null = null;
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 type InstanceBoxes = IStackVMBox | NodeBox | CSSStyleSheetBox | MediaListBox;
 export class IStackVMBox extends Box<IStackVM>{
 	type: "custom_box" = "custom_box";
 	box_type: "StackVM" = "StackVM";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 export class NodeBox extends Box<Node> {
 	type: "dom_value" = "dom_value";
 	from: "create" | "get" = "create";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 export class CSSStyleSheetBox extends Box<CSSStyleSheet> {
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 export class MediaListBox extends Box<MediaList>{
 	type: "instance_box" = "instance_box";
 	instance_type: "MediaList" = "MediaList";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 
 type ConstructorBoxes = CSSStyleSheetConstructorBox;
@@ -147,21 +105,12 @@ export class CSSStyleSheetConstructorBox extends Box<typeof CSSStyleSheet> {
 	from: "javascript" = "javascript";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
 	constructor_type: "CSSStyleSheet" = "CSSStyleSheet";
-	get_matching_typeof(to_match: 'function') {
-		if(typeof this.value === to_match) {
-			return this;
-		}
-		return null;
-	}
 }
 
 type ArgumentTypeBoxes = CSSStyleSheetInitBox;
 export class CSSStyleSheetInitBox extends Box<CSSStyleSheetInit>{
 	type: "shape_box" = "shape_box";
 	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | MediaListBox | undefined) {
 		if(key === 'baseURL') {
 			if(typeof value == 'string') {
@@ -201,16 +150,10 @@ export class VoidPromiseBox extends Box<Promise<void>> {
 	return_type: null = null;
 	await_type: null = null;
 	promise_return_type_special: 'void_type' = 'void_type';
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 export class PromiseBox extends Box<Promise<VMValue>> {
 	type: "promise" = "promise";
 	await_type: "value" = "value";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 
 type BoxesWithoutValue = VoidBox;
@@ -223,9 +166,6 @@ type FunctionReturnBoxes = CSSStyleSheetPromiseBox;
 export class CSSStyleSheetPromiseBox extends Box<Promise<CSSStyleSheet>> {
 	type: "promise" = "promise";
 	await_type: "CSSStyleSheet" = "CSSStyleSheet";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 
 
@@ -233,16 +173,10 @@ export class CSSStyleSheetPromiseBox extends Box<Promise<CSSStyleSheet>> {
 export class GlobalThisBox extends Box<typeof globalThis> {
 	type: "value_box" = "value_box";
 	inner_value: "globalThis" = "globalThis";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 export class WindowBox extends Box<Window>{
 	type: "object_box" = "object_box";
 	inner_type: "Window" = "Window";
-	get_matching_typeof(_to_match: 'function') {
-		return null;
-	}
 }
 
 
