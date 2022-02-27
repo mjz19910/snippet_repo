@@ -320,6 +320,9 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
+	function flow_todo(){
+		throw new Error("TODO");
+	}
 	class InstructionCastImpl {
 		/**@arg {import("types/vm/instruction/InstructionCast.js").InstructionCast} instruction @arg {StackVM} vm */
 		static execute_instruction(vm, instruction){
@@ -327,25 +330,9 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			if(!obj)throw invalid();
 			console.log('VM: cast_object', instruction[1], obj);
 			if(typeof obj!='object')throw invalid();
-			/**@type {<T>(q:T, v:any)=>v is T} */
-			function can_cast_indexed(q, obj) {
-				if(obj === null){
-					return false;
-				}
-				void q;
-				void obj;
-				return true;
-			}
-			/**@type {<T>(q:T, v:any)=>T|null} */
-			function as_indexed(q, obj){
-				if(can_cast_indexed(q, obj)){
-					return obj;
-				}
-				return null;
-			}
 			switch(instruction[1]){
-				case 'object_index':throw new Error("TODO");
-				case 'callable_index':throw new Error("TODO");
+				case 'object_index':flow_todo();
+				case 'callable_index':flow_todo();
 				default:throw new Error("Missing cast to "+instruction[1]);
 			}
 		}
@@ -391,6 +378,46 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		/**@arg {object} value */
 		constructor(value){
 			this.value=value;
+		}
+	}
+	class BaseBox {
+		/**@type {'object_box'} */
+		type = "object_box";
+		/**@type {'BaseBox'} */
+		from = "BaseBox";
+		/**@type {BoxInner['value']} */
+		value;
+		/**@arg {string} v */
+		as_type(v) {
+			if(typeof this.value === v) {
+				return this;
+			}
+			return null;
+		}
+		/**@arg {BoxInner} value */
+		constructor(value) {
+			switch(typeof value) {
+				case 'string':this.value = value; break;
+				case 'number':
+				case 'bigint': this.value = value; break;
+				case 'boolean':
+				case 'symbol':
+					this.value = value;
+					break;
+				case 'undefined':
+					this.value = value;
+					break;
+				case 'object': this.value = value; break;
+				case 'function':
+					this.value = value;
+				default: this.value = value; break;
+			}
+			this.value = value;
+		}
+		/**@arg {'object'|'function'} to_match */
+		as_box(to_match) {
+			if(typeof this.value === to_match) return this;
+			return null;
 		}
 	}
 	/**@typedef {import("types/vm/box/mod.js").ExtractKey<Box, 'value'>} BoxInner */
@@ -1075,7 +1102,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			if(ret !== null){
 				return ret;
 			}
-			throw new Error("Unreachable");
+			not_reached();
 		}
 		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
 		static verify_raw_instructions(raw_instructions){

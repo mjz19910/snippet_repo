@@ -1,5 +1,5 @@
 /**@arg {string[]} arr @arg {string} key */
-function does_array_include(arr, key) {
+export function does_array_include(arr, key) {
 	return arr.includes(key);
 }
 /**@typedef {import("../rebuild_the_universe_auto_typed_v0.2.js").AsyncTrigger} AsyncTriggerT */
@@ -110,7 +110,7 @@ class AsyncTrigger {
 		this.m_can_notify = true;
 	}
 }
-class AsyncSemaphore {
+export class AsyncSemaphore {
 	constructor() {
 		/**@type {any[]} */
 		this.notify_waiters_vec = [];
@@ -147,10 +147,10 @@ class AsyncSemaphore {
  * @param {any} e
  * @param {number} i
  */
-function map_to_tuple(e, i) {
+export function map_to_tuple(e, i) {
 	return [e, this[i]];
 }
-class VMReturnsBoxedPromiseR {
+export class VMReturnsBoxedPromiseR {
 	/**@type {"function_box"} */
 	type = "function_box";
 	/**@type {"promise"} */
@@ -177,7 +177,7 @@ class VMTemplateImpl {
 		}
 	}
 }
-class VMTemplate extends VMTemplateImpl {
+export class VMTemplate extends VMTemplateImpl {
 	/**
 	 * @param {InstructionType} instruction
 	 */
@@ -187,7 +187,7 @@ class VMTemplate extends VMTemplateImpl {
 		}
 	}
 }
-class IndexAccessBox {
+export class IndexAccessBox {
 	/**@type {"object_index"} */
 	type = "object_index";
 	/**@type {"value"} */
@@ -214,7 +214,7 @@ function can_be_object(v) {
 	return false;
 }
 /**@type {<T>(v:T)=>({} & T)|null} */
-function as_object_or_null(v) {
+export function as_object_or_null(v) {
 	if(can_be_object(v)) {
 		return v;
 	}
@@ -262,7 +262,7 @@ class BaseBox {
 		return null;
 	}
 }
-class VMIndexedCallableValueR extends BaseBox {
+export class VMIndexedCallableValueR extends BaseBox {
 	/**@type {"object_box"} */
 	type = "object_box";
 	/**@type {'function'} */
@@ -270,7 +270,7 @@ class VMIndexedCallableValueR extends BaseBox {
 	/**@type {"callable_box"} */
 	index_type = "callable_box";
 }
-class EmptyArrayBoxImpl {
+export class EmptyArrayBoxImpl {
 	/**@type {"array_box"} */
 	type = "array_box";
 	/**@arg {'function'|'object'} type */
@@ -285,7 +285,7 @@ class EmptyArrayBoxImpl {
 		this.value = v;
 	}
 }
-class ArrayBoxImpl {
+export class ArrayBoxImpl {
 	/**@type {"array_box"} */
 	type = "array_box";
 	/**@type {"value"} */
@@ -316,14 +316,26 @@ function does_have_property_as_type(v, k) {
 /**
 * @type {<T, F>(v:T, k:(v:T)=>F)=>T|null}
 */
-function with_has_property_as_type(v, k) {
+export function with_has_property_as_type(v, k) {
 	if(does_have_property_as_type(v, k)) return v;
 	return null;
 }
 /**@type {<A extends {}, B extends A>(o:B, k:keyof A)=>{[T in keyof A]:A[T]}|null} */
-function with_has_property(o, k) {
+export function with_has_property(o, k) {
 	if(does_have_property(o, k)) {
 		return o;
 	}
+	return null;
+}
+/**@type {<T extends {[K in keyof T]:T[K]}>(q:T)=>q is {[K in keyof T]:T[K]}} */
+function can_cast_indexed(q) {
+	if(q)return true;
+	return true;
+}
+/**@type {<T extends {}>(...v:[T, keyof T])=>T|null} */
+export function as_indexed(value) {
+		if(can_cast_indexed(value)){
+			return value;
+		}
 	return null;
 }
