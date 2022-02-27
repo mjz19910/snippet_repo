@@ -7,7 +7,7 @@ import GlobalThisBox from "types/vm/box/GlobalThisBox";
 import ArrayBox from "types/vm/box/ArrayBox";
 import {IndexBox} from "types/vm/index_access/IndexBox";
 import {StackVMBox} from "types/vm/box/StackVMBox";
-import {WindowBox} from "types/vm/box/WindowBox";
+import WindowBox from "types/vm/box/WindowBox";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);

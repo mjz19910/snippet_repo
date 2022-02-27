@@ -6,7 +6,7 @@ import {Box} from "./types/vm/box/mod";
 import IndexBox from "./types/vm/box/IndexBox";
 import NewableFunctionBox from "./types/vm/box/NewableFunctionBox";
 import {StackVMBox} from "./types/vm/box/StackVMBox";
-import {WindowBox} from "./types/vm/box/WindowBox";
+import WindowBox from "./types/vm/box/WindowBox";
 
 class RemoteWorkerState {
 

@@ -15,10 +15,10 @@ import NodeBox from "./NodeBox";
 import ObjectBox from "./ObjectBox";
 import Primitives from "../Primitives";
 import PromiseBox from "./PromiseBox";
-import {StackVMBox} from "./StackVMBox";
-import {VoidBox} from "./VoidBox";
-import {WindowBox} from "./WindowBox";
-import {VoidPromiseBox} from "./VoidPromiseBox";
+import StackVMBox from "./StackVMBox";
+import VoidBox from "./VoidBox";
+import WindowBox from "./WindowBox";
+import VoidPromiseBox from "./VoidPromiseBox";
 
 type Box =
 	// function result

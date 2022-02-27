@@ -25,7 +25,7 @@ import FunctionBox from "types/vm/box/FunctionBox.js";
 import NewableFunctionBox from "types/vm/box/NewableFunctionBox.js";
 import NodeBox from "types/vm/box/NodeBox.js";
 import PromiseBox from "types/vm/box/PromiseBox.js";
-import {VoidBox} from "types/vm/box/VoidBox.js";
+import VoidBox from "types/vm/box/VoidBox.js";
 
 /**@typedef {import("types/vm/box/mod.js").Box} Box */
 
