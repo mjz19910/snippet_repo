@@ -1,3 +1,3 @@
-import {ReplyMessage2} from "./rebuild_the_universe_auto_typed_v0.2";
+import {ReplyMessage2} from "./typed_mod_rebuild_auto";
 
 export type ReplyMessage2Ty = typeof ReplyMessage2;

@@ -5,7 +5,7 @@ import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy";
 import {WorkerReplyTypes} from "./WorkerReplyTypes";
 import {TimeoutSetInfo} from "./TimeoutSetInfo";
 import {TimeoutClearInfo} from "./TimeoutClearInfo";
-import {WorkerUpdateMessageHandler, TimeoutMessageR, TimeoutSetTypes} from "./rebuild_the_universe_auto_typed_v0.2";
+import {WorkerUpdateMessageHandler, TimeoutMessageR, TimeoutSetTypes} from "./typed_mod_rebuild_auto";
 
 export class TimeoutWorkerTypes implements TimeoutWorkerTypesTy {
 	reply: WorkerReplyTypes = new WorkerReplyTypes;

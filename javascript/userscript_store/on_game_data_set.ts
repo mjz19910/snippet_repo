@@ -1,6 +1,6 @@
 import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element";
 import {pace_finish_proxy_apply} from "./pace_finish_proxy_apply";
-import {auto_buy_obj} from "./rebuild_the_universe_auto_typed_v0.2";
+import {auto_buy_obj} from "./typed_mod_rebuild_auto";
 
 export function on_game_data_set() {
 	remove_bad_dom_script_element();

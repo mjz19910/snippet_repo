@@ -4,7 +4,7 @@ import {worker_code_function} from "./worker_code_function";
 import {WorkerState} from "./WorkerState";
 import {Timer} from "./Timer";
 import {do_worker_verify} from "types/do_worker_verify";
-import {WorkerDestroyMessage, LOG_LEVEL_WARN, TIMER_SINGLE, TIMER_REPEATING} from "../rebuild_the_universe_auto_typed_v0.2";
+import {WorkerDestroyMessage, LOG_LEVEL_WARN, TIMER_SINGLE, TIMER_REPEATING} from "../typed_mod_rebuild_auto";
 import {l_log_if} from "../l_log_if";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle";
 

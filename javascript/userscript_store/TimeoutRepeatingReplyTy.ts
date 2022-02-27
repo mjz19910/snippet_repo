@@ -1,3 +1,3 @@
-import {TimeoutRepeatingReply} from "./rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutRepeatingReply} from "./typed_mod_rebuild_auto";
 
 export type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;

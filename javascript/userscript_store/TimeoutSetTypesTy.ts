@@ -1,3 +1,3 @@
-import {TimeoutSetTypes} from "./rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutSetTypes} from "./typed_mod_rebuild_auto";
 
 export type TimeoutSetTypesTy = typeof TimeoutSetTypes;

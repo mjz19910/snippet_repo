@@ -7,7 +7,7 @@ import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy";
 import {ReplyToWorkerTy} from "./ReplyToWorkerTy";
 import {ReplySetMessages} from "./ReplySetMessages";
 import {ReplyClearMessages} from "./ReplyClearMessages";
-import {ReplyMessage1, ReplyMessage2, ReplyFromWorker, ReplyToWorker, WorkerDestroyMessage, WorkerUpdateMessageHandlerReply, WorkerReadyReply} from "./rebuild_the_universe_auto_typed_v0.2";
+import {ReplyMessage1, ReplyMessage2, ReplyFromWorker, ReplyToWorker, WorkerDestroyMessage, WorkerUpdateMessageHandlerReply, WorkerReadyReply} from "./typed_mod_rebuild_auto";
 
 export class ReplyTypes {
 	msg1: ReplyMessage1Ty = ReplyMessage1;

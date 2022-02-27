@@ -1,3 +1,3 @@
-import {TimeoutFireS} from "./rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutFireS} from "./typed_mod_rebuild_auto";
 
 export type TimeoutFireSTy = typeof TimeoutFireS;

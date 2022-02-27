@@ -1,7 +1,7 @@
 import {TimeoutFireSTy} from "./TimeoutFireSTy";
 import {TimeoutFireRTy} from "./TimeoutFireRTy";
 import {TimeoutFireInfoTy} from "./TimeoutFireInfoTy";
-import {TimeoutFireS, TimeoutFireR} from "./rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutFireS, TimeoutFireR} from "./typed_mod_rebuild_auto";
 
 export class TimeoutFireInfo implements TimeoutFireInfoTy {
 	single: TimeoutFireSTy = TimeoutFireS;

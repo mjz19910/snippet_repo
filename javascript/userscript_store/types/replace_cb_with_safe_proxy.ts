@@ -1,4 +1,4 @@
-import {is_in_userscript_fn, cur_event_fns} from "../rebuild_the_universe_auto_typed_v0.2";
+import {is_in_userscript_fn, cur_event_fns} from "../typed_mod_rebuild_auto";
 import {register_obj_with_registry} from "./register_obj_with_registry";
 import {is_in_userscript, is_in_ignored_from_src_fn} from "./find_all_scripts_using_string_apis";
 

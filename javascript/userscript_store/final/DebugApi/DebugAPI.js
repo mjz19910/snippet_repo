@@ -1,6 +1,6 @@
-import {RustSimpleParser} from "./RustSimpleParser";
-import {SimpleJavascriptParser} from "./SimpleJavascriptParser";
-import {static_event_target, random_data_generator} from "./DebugAPI.user";
+import {RustSimpleParser} from "../../RustSimpleParser";
+import {SimpleJavascriptParser} from "../../SimpleJavascriptParser";
+import {static_event_target, random_data_generator} from "../../DebugAPI.user";
 
 export class DebugAPI {
 	next_remote_id = 0;

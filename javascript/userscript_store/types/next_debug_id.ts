@@ -1,4 +1,4 @@
-import {debug_id_gen, debug_id_syms} from "../rebuild_the_universe_auto_typed_v0.2";
+import {debug_id_gen, debug_id_syms} from "../typed_mod_rebuild_auto";
 
 export function next_debug_id() {
 	const id = debug_id_gen.next();

@@ -1,3 +1,3 @@
-import {ReplyClearAny} from "./rebuild_the_universe_auto_typed_v0.2";
+import {ReplyClearAny} from "./typed_mod_rebuild_auto";
 
 export type ReplyClearAnyTy = typeof ReplyClearAny;

@@ -1,4 +1,4 @@
-import {auto_buy_obj} from "./rebuild_the_universe_auto_typed_v0.2";
+import {auto_buy_obj} from "./typed_mod_rebuild_auto";
 
 export function pace_finish_proxy_apply(func: Function, this_v: any, args: ArrayLike<any>) {
 	auto_buy_obj.init();

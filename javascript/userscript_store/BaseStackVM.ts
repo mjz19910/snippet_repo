@@ -5,7 +5,7 @@ import IndexBox from "./types/vm/box/IndexBox";
 import NewableFunctionBox from "./types/vm/box/NewableFunctionBox";
 import {BaseVMCreate} from "./BaseVMCreate";
 import {l_log_if} from "./l_log_if";
-import {LOG_LEVEL_VERBOSE} from "./rebuild_the_universe_auto_typed_v0.2";
+import {LOG_LEVEL_VERBOSE} from "./typed_mod_rebuild_auto";
 import {SimpleStackVMParser} from "./SimpleStackVMParser";
 
 export class BaseStackVM extends BaseVMCreate {

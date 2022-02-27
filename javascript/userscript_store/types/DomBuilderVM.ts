@@ -1,6 +1,6 @@
 import {InstructionType} from "./vm/instruction/mod";
 import Box from "./vm/box/Box";
-import {LOG_LEVEL_VERBOSE} from "../rebuild_the_universe_auto_typed_v0.2";
+import {LOG_LEVEL_VERBOSE} from "../typed_mod_rebuild_auto";
 import {BaseStackVM} from "../BaseStackVM";
 import {l_log_if} from "../l_log_if";
 

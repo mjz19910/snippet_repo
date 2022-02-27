@@ -1,5 +1,5 @@
 import {PromiseExecutorHandle} from "types/PromiseExecutorHandle";
-import {TimeoutFireS, TIMER_SINGLE, TIMER_REPEATING, WorkerDestroyMessage, ReplyMessage1, ReplyMessage2, ReplyFromWorker, message_types, WorkerUpdateMessageHandlerReply, WorkerReadyReply, LOG_LEVEL_VERBOSE, ReplySetSingle, ReplySetRepeating, TimeoutClearR, TimeoutClearS} from "../rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutFireS, TIMER_SINGLE, TIMER_REPEATING, WorkerDestroyMessage, ReplyMessage1, ReplyMessage2, ReplyFromWorker, message_types, WorkerUpdateMessageHandlerReply, WorkerReadyReply, LOG_LEVEL_VERBOSE, ReplySetSingle, ReplySetRepeating, TimeoutClearR, TimeoutClearS} from "../typed_mod_rebuild_auto";
 import {MessageTimeoutSetR} from "../MessageTimeoutSetR";
 import {MessageTimeoutSetS} from "../MessageTimeoutSetS";
 import {MessageTimeoutSingleReply} from "../MessageTimeoutSingleReply";

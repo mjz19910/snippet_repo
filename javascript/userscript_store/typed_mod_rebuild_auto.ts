@@ -63,5 +63,7 @@ console.assert(calc_ratio([0, 0]) === 0, "calc ratio of array full of zeros does
 export const debug_id_gen = new UniqueIdGenerator;
 export const debug_id_syms: WeakRef<SymbolRef>[] = [];
 export const auto_buy_obj = new AutoBuy;
-main();
-ScriptStateHost.event_target.dispatchEvent({type: 'userscript', state: 'done'});
+export default function entry_point() {
+	main();
+	ScriptStateHost.event_target.dispatchEvent({type: 'userscript', state: 'done'});
+}

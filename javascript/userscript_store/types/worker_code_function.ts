@@ -1,7 +1,7 @@
 import {RecursivePartial} from "./RecursivePartial";
 import {TimerApi} from "./TimerApi";
 import {WorkerVerifyCallback} from "./WorkerVerifyCallback";
-import {TimeoutSetTypes, TimeoutSetStringS, TimeoutSetStringR, TimeoutClearStringS, TimeoutClearStringR} from "../rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutSetTypes, TimeoutSetStringS, TimeoutSetStringR, TimeoutClearStringS, TimeoutClearStringR} from "../typed_mod_rebuild_auto";
 import {MessageTimeoutSetR} from "../MessageTimeoutSetR";
 import {MessageTimeoutSetS} from "../MessageTimeoutSetS";
 import {TimeoutClearStringsTy} from "../TimeoutClearStringsTy";

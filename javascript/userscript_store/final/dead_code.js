@@ -2,7 +2,7 @@
 export function does_array_include(arr, key) {
 	return arr.includes(key);
 }
-/**@typedef {import("../rebuild_the_universe_auto_typed_v0.2.js").AsyncTrigger} AsyncTriggerT */
+/**@typedef {import("../typed_mod_rebuild_auto.js").AsyncTrigger} AsyncTriggerT */
 /**@implements {AsyncTriggerT} */
 class AsyncTrigger {
 	m_set_flag;

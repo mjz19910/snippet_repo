@@ -1,4 +1,4 @@
-import {ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutMessageR, TimeoutSetR, TimeoutSetS, WorkerReadyReply} from "rebuild_the_universe_auto_typed_v0.2";
+import {ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutMessageR, TimeoutSetR, TimeoutSetS, WorkerReadyReply} from "typed_mod_rebuild_auto";
 import {TimeoutClearStrings} from "TimeoutClearStrings";
 import {TimerMessageTypes} from "TimerMessageTypes";
 import {TimeoutSetStrings} from "TimeoutSetStrings";

@@ -1,3 +1,3 @@
-import {WorkerDestroyMessage} from "./rebuild_the_universe_auto_typed_v0.2";
+import {WorkerDestroyMessage} from "./typed_mod_rebuild_auto";
 
 export type WorkerDestroyMessageTy = typeof WorkerDestroyMessage;

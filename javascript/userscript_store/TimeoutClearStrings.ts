@@ -1,5 +1,5 @@
 import {TimeoutClearStringsTy} from "./TimeoutClearStringsTy";
-import {TimeoutClearStringS, TimeoutClearStringR} from "./rebuild_the_universe_auto_typed_v0.2";
+import {TimeoutClearStringS, TimeoutClearStringR} from "./typed_mod_rebuild_auto";
 
 export class TimeoutClearStrings implements TimeoutClearStringsTy {
 	single: typeof TimeoutClearStringS = TimeoutClearStringS;

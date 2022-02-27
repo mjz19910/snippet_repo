@@ -3572,7 +3572,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);else tonext(res);
 	}
 	const auto_buy_obj=new AutoBuy;
-	/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2.js").AsyncTrigger} AsyncTriggerT */
+	/**@typedef {import("./typed_mod_rebuild_auto.js").AsyncTrigger} AsyncTriggerT */
 	/**@implements {AsyncTriggerT} */
 	class AsyncTrigger {
 		m_set_flag;

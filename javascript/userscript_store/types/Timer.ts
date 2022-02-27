@@ -3,7 +3,7 @@ import {UniqueIdGenerator} from "./UniqueIdGenerator";
 import {WorkerState} from "./WorkerState";
 import {TimerState} from "./TimerState";
 import {timer_nop} from "final/version_0.1/types/timer_nop";
-import {cur_event_fns, is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn, message_types, ReplyClearSingle, ReplySetRepeating, ReplySetSingle, TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "rebuild_the_universe_auto_typed_v0.2";
+import {cur_event_fns, is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn, message_types, ReplyClearSingle, ReplySetRepeating, ReplySetSingle, TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "typed_mod_rebuild_auto";
 import {TimeoutSetStrings} from "TimeoutSetStrings";
 import {TimeoutSetRTy} from "TimeoutSetRTy";
 import {TimeoutSetSTy} from "TimeoutSetSTy";

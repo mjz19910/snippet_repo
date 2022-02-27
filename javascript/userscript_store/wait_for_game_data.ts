@@ -1,6 +1,6 @@
 import {on_game_data_set} from "./on_game_data_set";
 import {remove_cint_item} from "./remove_cint_item";
-import {cint_arr} from "./rebuild_the_universe_auto_typed_v0.2";
+import {cint_arr} from "./typed_mod_rebuild_auto";
 
 export function wait_for_game_data(cint_item = null) {
 	if(cint_item) {
