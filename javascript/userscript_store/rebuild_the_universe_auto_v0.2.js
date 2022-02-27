@@ -115,16 +115,14 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			this.value=value;
 		}
 	}
-	/**@typedef {NewableFunctionBox} VMBoxedNewableFunction */
-	/**@implements {VMBoxedNewableFunction} */
-	class VMBoxedNewableFunctionR {
+	/**@implements {NewableFunctionBox} */
+	class NewableFunctionBoxImpl {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
-		/**@type {"typescript"} */
-		from="typescript";
-		instance_type = null;
-		/**@type {"NewableFunction"} */
-		constructor_type="NewableFunction";
+		/**@type {'box[]'} */
+		arguments="box[]";
+		/**@type {'box'} */
+		return="box";
 		/**@type {{new (v:any):any}} */
 		value;
 		/**@arg {'function'} to_match */
@@ -490,7 +488,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		}
 		return null;
 	}
-	class VMIndexedObjectValueR {
+	class IndexAccessBox {
 		/**@type {"object_index"} */
 		type= "object_index";
 		/**@type {"value"} */
@@ -499,14 +497,14 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {VMIndexed<IBox>} value */
+		/**@arg {import("types/vm/index_access/mod.js").IndexAccess<IBox>} value */
 		constructor(value){
 			this.value=value;
 		}
 	}
 	/**@type {IBox} */
-	class BoxBase {
-		/**@arg {IBox['value']} value */
+	class BaseBox {
+		/**@arg {import("api").NonNull<IBox>['value']} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -517,7 +515,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 	}
 	/**@typedef {import("types/vm/index_access/mod.js").IndexAccess<import("types/vm/Function.js").Function>} IndexAccessFunction */
 	/**@implements {VMIndexedCallableValue} */
-	class VMIndexedCallableValueR extends BoxBase {
+	class VMIndexedCallableValueR extends BaseBox {
 		/**@type {"object_box"} */
 		type= "object_box";
 		/**@type {'function'} */

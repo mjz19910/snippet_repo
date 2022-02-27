@@ -1,7 +1,7 @@
 import {MediaListBox} from "./MediaListBox";
-import {Box} from "./mod";
+import {BoxTemplate} from "./mod";
 
-export class CSSStyleSheetInitBox extends Box<CSSStyleSheetInit> {
+export class CSSStyleSheetInitBox extends BoxTemplate<CSSStyleSheetInit> {
 	type: "shape_box" = "shape_box";
 	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
 	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | MediaListBox | undefined) {

@@ -1,7 +1,7 @@
 import {Function} from "../Function";
-import {Box} from "./mod";
+import {BoxTemplate} from "./mod";
 
-export class FunctionBox extends Box<Function> {
+export class FunctionBox extends BoxTemplate<Function> {
 	type: "function_box" = "function_box";
 	return_type: null = null;
 }

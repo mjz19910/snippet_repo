@@ -1,7 +1,7 @@
 import {StackVM} from "types/StackVM";
-import {Box} from "./mod";
+import {BoxTemplate} from "./mod";
 
-export class StackVMBox extends Box<StackVM> {
+export class StackVMBox extends BoxTemplate<StackVM> {
 	type: "custom_box" = "custom_box";
 	box_type: "StackVM" = "StackVM";
 }

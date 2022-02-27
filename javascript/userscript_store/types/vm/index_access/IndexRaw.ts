@@ -1,5 +1,5 @@
-import {IBox} from "../box/mod";
+import {Box} from "../box/mod";
 import {IndexAccess} from "./mod";
 
 
-export type IndexRaw = IndexAccess<IBox>;
+export type IndexRaw = IndexAccess<Box>;

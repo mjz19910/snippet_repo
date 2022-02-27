@@ -1,7 +1,7 @@
-import {Box} from "./mod";
+import {BoxTemplate} from "./mod";
 
 // --- Misc Boxes ---
-export class GlobalThisBox extends Box<typeof globalThis> {
+export class GlobalThisBox extends BoxTemplate<typeof globalThis> {
 	type: "value_box" = "value_box";
 	inner_value: "globalThis" = "globalThis";
 }

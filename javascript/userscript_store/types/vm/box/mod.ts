@@ -22,7 +22,7 @@ import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
 import {VoidPromiseBox} from "./VoidPromiseBox";
 
-export type IBox =
+export type Box =
 // function result
 CSSStyleSheetInitBox |
 // array
@@ -58,7 +58,7 @@ null |
 // No value (Void)
 VoidBox;
 
-export class Box<T> {
+export class BoxTemplate<T> {
 	constructor(value: T) {
 		this.value = value;
 	}

@@ -1,7 +1,6 @@
-import {Box} from "./mod";
+import {BoxTemplate} from "./mod";
 
-export class ObjectBox extends Box<{}> {
+export class ObjectBox extends BoxTemplate<{}> {
 	type: "object_box" = "object_box";
-	extension: 'null' = 'null';
-	inner_type: null = null;
+	inner_type: 'unit' = 'unit';
 }

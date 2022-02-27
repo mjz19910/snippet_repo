@@ -1,6 +1,6 @@
-import {Box} from "./mod";
+import {BoxTemplate} from "./mod";
 
-export class CSSStyleSheetBox extends Box<CSSStyleSheet> {
+export class CSSStyleSheetBox extends BoxTemplate<CSSStyleSheet> {
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
 }
