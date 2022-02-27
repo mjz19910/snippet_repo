@@ -5,7 +5,7 @@ import {InstructionType} from "./types/vm/instruction/mod";
 import {IndexedFnBox} from "./types/vm/box/IndexedFunctionBox";
 import {IBox} from "./types/vm/box/IBox";
 import {IndexBox} from "./types/vm/index_access/IndexedObject";
-import {NewableFunctionBox} from "./types/vm/box/NewableFunctionBox";
+import NewableFunctionBox from "./types/vm/box/NewableFunctionBox";
 import {StackVMBox} from "./types/vm/box/StackVMBox";
 import {WindowBox} from "./types/vm/box/WindowBox";
 

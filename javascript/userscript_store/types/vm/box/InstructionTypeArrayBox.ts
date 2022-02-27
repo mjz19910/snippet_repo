@@ -1,7 +1,7 @@
 import {InstructionType} from "../instruction/mod";
-import {ArrayBox} from "./ArrayBox";
+import ArrayBox from "./ArrayBox";
 
-export class InstructionTypeArrayBox extends ArrayBox {
+export default class InstructionTypeArrayBox extends ArrayBox {
 	mapped_as:"instruction_type"="instruction_type";
 	mapped_value: InstructionType[];
 	constructor(value: InstructionType[]) {

@@ -1,4 +1,4 @@
-import {BoxTemplate} from "../box/BoxTemplate";
+import BoxTemplate from "../box/BoxTemplate";
 import {IndexRaw} from "./IndexRaw";
 
 export class IndexBox extends BoxTemplate<IndexRaw> {

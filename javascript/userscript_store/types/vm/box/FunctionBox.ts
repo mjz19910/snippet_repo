@@ -1,5 +1,5 @@
 import Box from "./Box";
-import {BoxTemplate} from "./BoxTemplate";
+import BoxTemplate from "./BoxTemplate";
 
 export class FunctionBox extends BoxTemplate<(...a: Box[]) => Box> {
 	type: "function_box" = "function_box";

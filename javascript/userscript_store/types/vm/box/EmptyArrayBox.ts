@@ -1,5 +1,5 @@
-import {BoxTemplate} from "./BoxTemplate";
+import BoxTemplate from "./BoxTemplate";
 
-export class EmptyArrayBox extends BoxTemplate<[]> {
+export default class EmptyArrayBox extends BoxTemplate<[]> {
 	type: "array_box" = "array_box";
 }

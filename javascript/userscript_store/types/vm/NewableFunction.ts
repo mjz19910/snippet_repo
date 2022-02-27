@@ -1,5 +1,5 @@
-import {IBox} from "./mod";
+import Box from "./box/Box";
 
-export type NewableFunction = {
-	new(...a: IBox[]): IBox;
-};
+type NewableFactory<T> = (fn: {new(...a: Box[]): T}) => Box;
+
+export default NewableFactory;

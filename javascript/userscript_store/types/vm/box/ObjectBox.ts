@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./BoxTemplate";
+import BoxTemplate from "./BoxTemplate";
 
 export class ObjectBox extends BoxTemplate<{}> {
 	type: "object_box" = "object_box";

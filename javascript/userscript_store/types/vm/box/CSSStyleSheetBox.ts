@@ -1,6 +1,6 @@
-import {BoxTemplate} from "./BoxTemplate";
+import BoxTemplate from "./BoxTemplate";
 
-export class CSSStyleSheetBox extends BoxTemplate<CSSStyleSheet> {
+export default class CSSStyleSheetBox extends BoxTemplate<CSSStyleSheet> {
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
 }

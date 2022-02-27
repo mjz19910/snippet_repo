@@ -1,7 +1,7 @@
 import {TypeOfResult} from "../TypeOfResult";
 
 
-export class BoxTemplate<T> {
+export default class BoxTemplate<T> {
 	constructor(value: T) {
 		this.value = value;
 	}

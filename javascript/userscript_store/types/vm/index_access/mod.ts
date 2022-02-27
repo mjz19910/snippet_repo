@@ -1,3 +1,4 @@
-export type IndexAccess<T> = {
+export default IndexAccess;
+type IndexAccess<T> = {
 	[v: string]: T;
 };

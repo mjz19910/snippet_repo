@@ -17,14 +17,14 @@
 // @grant			none
 // ==/UserScript==
 
-import {ArrayBox} from "types/vm/box/ArrayBox.js";
-import {CSSStyleSheetBox} from "types/vm/box/CSSStyleSheetBox.js";
-import {CSSStyleSheetConstructorBox} from "types/vm/box/CSSStyleSheetConstructorBox.js";
-import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
+import ArrayBox from "types/vm/box/ArrayBox.js";
+import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
+import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox.js";
+import EmptyArrayBox from "types/vm/box/EmptyArrayBox.js";
 import {FunctionBox} from "types/vm/box/FunctionBox.js";
-import {NewableFunctionBox} from "types/vm/box/NewableFunctionBox.js";
+import NewableFunctionBox from "types/vm/box/NewableFunctionBox.js";
 import {NodeBox} from "types/vm/box/NodeBox.js";
-import {PromiseBox} from "types/vm/box/PromiseBox.js";
+import PromiseBox from "types/vm/box/PromiseBox.js";
 
 /**@typedef {import("types/vm/box/mod.js").Box} Box */
 
@@ -82,6 +82,25 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 				return this;
 			}
 			return null;
+		}
+		/**@arg {Box[]} arr */
+		factory(...arr){
+			let valid_args={
+			state:0,
+			acc:[]
+		}
+		for(let i=0;i<arr.length;i++){
+			let val=arr[i];
+			if(typeof val != 'object')continue;
+			if(val === null)continue;
+			if(val.type != 'shape_box')continue;
+			valid_args={
+				acc:[val.value],
+				state:1
+			}
+		}
+		let obj:CSSStyleSheet=new this.value(...valid_args.acc);
+		return new CSSStyleSheetBox(obj);
 		}
 	}
 	/**@typedef {CSSStyleSheetBox} VMBoxedCSSStyleSheet */
@@ -288,36 +307,11 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 			if(typeof a!='object')throw new Error("Invalid");
 			if(a===null)throw new Error("Invalid");
 			if(a.type != 'constructor_box')throw new Error("Invalid");
-			if(a.value === CSSStyleSheet) {
-				let obj=new a.value(...construct_arr);
-				switch(typeof obj){
-					case 'object':
-						if(obj instanceof Array) {
-							let arr=this.to_unit_arr(obj);
-							if(arr !== null){
-								let val=new EmptyArrayBoxImpl(arr);
-								vm.push(val);
-								return;
-							}
-						}
-						console.assert(false, "If possible convert %o to a box", obj);
-						throw new Error("Unable to convert object, please make a auto boxing factory");
-					case 'function':
-						throw new Error("Unable to create a box for functions (no way to request return types to match to boxes)");
-					case 'symbol':
-					case 'number':
-					case 'bigint':
-					case 'boolean':
-					case 'string':
-						vm.push(obj);
-						break;
-					case 'undefined':
-						vm.push(obj);
-						break;
-					default:
-						throw new Error("new typeof result: "+typeof obj);
-				}
+			if(a.instance_type === null) {
+				let obj=a.factory(...construct_arr);
+				vm.push(obj);
 			} else {
+				let ty=a;
 				{
 					/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
 					let valid_args={
@@ -370,29 +364,7 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 					throw new Error("TODO");
 				} break;
 				case 'callable_index':{
-					/**@type {(v:any)=>v is IndexAccessFunction} */
-					function can_cast_indexed(obj) {
-						if(obj === null){
-							return false;
-						}
-						void obj;
-						return true;
-					}
-					/**@type {(v:any)=>IndexAccessFunction|null} */
-					function as_indexed(obj){
-						if(can_cast_indexed(obj)){
-							return obj;
-						}
-						return null;
-					}
-					/**@type {IndexAccessFunction|null} */
-					let unboxed_obj=null;
-					if(obj.type === 'object_box'){
-						throw new Error("TODO");
-					} else {
-						unboxed_obj=as_indexed(obj);
-					}
-					if(unboxed_obj)vm.push(new VMIndexedCallableValueR(unboxed_obj));
+					throw new Error("TODO");
 				} break;
 				default:throw new Error("Missing cast to "+instruction[1]);
 			}
@@ -493,24 +465,30 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {import("types/vm/index_access/mod.js").IndexAccess<Box>} value */
+		/**@arg {import("types/vm/index_access/mod.js").default<Box>} value */
 		constructor(value){
 			this.value=value;
 		}
 	}
-	/**@type {Box} */
 	class BaseBox {
-		/**@arg {import("api").NonNull<Box>['value']} value */
+		/**@type {import("api").NonNull<Box>} */
+		value;
+		/**@arg {import("api").NonNull<Box>} value */
 		constructor(value){
+			/**@type {this['value']|null} */
+			let vv=null;
+			switch(typeof vv){
+				case 'bigint':vv;break;
+				case 'boolean':vv;break;
+			}
 			this.value=value;
 		}
-		get_matching_typeof(to_match) {
+		/**@arg {string} to_match */
+		unbox_as_type(to_match) {
 			if(typeof this.value === to_match)return this;
 			return null;
 		}
 	}
-	/**@typedef {import("types/vm/index_access/mod.js").IndexAccess<import("types/vm/Function.js").Function>} IndexAccessFunction */
-	/**@implements {VMIndexedCallableValue} */
 	class VMIndexedCallableValueR extends BaseBox {
 		/**@type {"object_box"} */
 		type= "object_box";
@@ -681,11 +659,33 @@ import {PromiseBox} from "types/vm/box/PromiseBox.js";
 					if(!target_obj)throw new Error("Invalid");
 					if(typeof target_name!='string')throw new Error("Invalid");
 					if(typeof target_obj!='object')throw new Error("Invalid");
-					if(target_obj.type != 'object_index') {
-						console.log('not object_index', target_obj, target_name);
-						throw new Error("Invalid");
+					let get_name=target_name;
+					let the_type=target_obj.type;
+					class TempBox extends BaseBox {
 					}
-					let res=target_obj.value[target_name];
+					/**@arg {Box} opt @arg {string} get_name */
+					function do_box_get(opt, get_name) {
+						if(typeof opt!='object')throw new Error("Invalid");
+						if(opt === null)throw new Error("Invalid");
+						switch(opt.type){
+							case "shape_box":return opt.value;
+							case "array_box":{
+								let int_num=parseInt(get_name);
+								if(Number.isNaN(int_num))throw new Error("Can't parse number");
+								return new TempBox(opt.value[int_num]);
+							}
+							case "constructor_box":return new TempBox(opt.value[get_name]);
+							case "function_box":return opt.value;
+							case "promise":return opt.value;
+							case "void":return opt.value;
+							case "object_box":return opt.value;
+							case "dom_value":return opt.value;
+							case "instance_box":return opt.value;
+						}
+					}
+					/**@typedef {import("final/rebuild_the_universe_auto_v0.1.js").First<typeof the_type>} FC1 */
+					/**@typedef {import("final/rebuild_the_universe_auto_v0.1.js").RemoveFirst<typeof the_type>} FC2 */
+					let res=do_box_get(target_obj, target_name);
 					console.log('VM: get result', res);
 					this.push(res);
 				} break;

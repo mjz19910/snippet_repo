@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./BoxTemplate";
+import BoxTemplate from "./BoxTemplate";
 
 // --- Misc Boxes ---
 export class GlobalThisBox extends BoxTemplate<typeof globalThis> {
