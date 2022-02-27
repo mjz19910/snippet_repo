@@ -1,3 +1,23 @@
+[96mfinal/rebuild_the_universe_auto_typed_v0.1.ts[0m:[93m2[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module 'types/vm/box/IndexedFunctionBox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+
+[7m2[0m import {IndexedFnBox} from "types/vm/box/IndexedFunctionBox";
+[7m [0m [91m                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96mfinal/rebuild_the_universe_auto_typed_v0.1.ts[0m:[93m5[0m:[93m20[0m - [91merror[0m[90m TS2792: [0mCannot find module 'types/vm/box/IBox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+
+[7m5[0m import {IBox} from "types/vm/box/IBox";
+[7m [0m [91m                   ~~~~~~~~~~~~~~~~~~~[0m
+
+[96mfinal/rebuild_the_universe_auto_typed_v0.1.ts[0m:[93m8[0m:[93m24[0m - [91merror[0m[90m TS2792: [0mCannot find module 'types/vm/index_access/IndexBox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+
+[7m8[0m import {IndexBox} from "types/vm/index_access/IndexBox";
+[7m [0m [91m                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96mfinal/rebuild_the_universe_auto_typed_v0.1.ts[0m:[93m9[0m:[93m9[0m - [91merror[0m[90m TS2614: [0mModule '"types/vm/box/StackVMBox"' has no exported member 'StackVMBox'. Did you mean to use 'import StackVMBox from "types/vm/box/StackVMBox"' instead?
+
+[7m9[0m import {StackVMBox} from "types/vm/box/StackVMBox";
+[7m [0m [91m        ~~~~~~~~~~[0m
+
 [96mfinal/rebuild_the_universe_auto_typed_v0.1.ts[0m:[93m28[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timeout' is not assignable to type 'number'.
 
 [7m28[0m   this.base_id = globalThis[this.m_api_info.set_single](timer_nop);
@@ -27,6 +47,16 @@
 
 [7m503[0m     local_id = globalThis[this.m_api_info.set_repeating](fire_timer, delay, this, remote_id);
 [7m   [0m [91m    ~~~~~~~~[0m
+
+[96mfinal/rebuild_the_universe_auto_typed_v0.1.ts[0m:[93m701[0m:[93m3[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property '$' must be of type '(val: any) => any', but here has type 'JQueryStatic'.
+
+[7m701[0m   $: JQueryStatic;
+[7m   [0m [91m  ~[0m
+
+  [96mfinal/rebuild_the_universe_auto_v0.1.d.ts[0m:[93m569[0m:[93m3[0m
+    [7m569[0m   $: (val: any) => any;
+    [7m   [0m [96m  ~[0m
+    '$' was also declared here.
 
 [96mfinal/rebuild_the_universe_auto_typed_v0.1.ts[0m:[93m1159[0m:[93m27[0m - [91merror[0m[90m TS2322: [0mType '(handler: TimerHandler, timeout?: number, ...arguments: any[]) => number' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setTimeout'.
   Property '__promisify__' is missing in type '(handler: TimerHandler, timeout?: number, ...arguments: any[]) => number' but required in type 'typeof setTimeout'.
@@ -104,10 +134,25 @@
 [7m1261[0m  window.clearInterval = remoteClearInterval;
 [7m    [0m [91m ~~~~~~~~~~~~~~~~~~~~[0m
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m1876[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType '(handler: TimerHandler, timeout: number, ...target_args: any[]) => any' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setTimeout'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m8[0m:[93m9[0m - [91merror[0m[90m TS2614: [0mModule '"./types/vm/box/StackVMBox"' has no exported member 'StackVMBox'. Did you mean to use 'import StackVMBox from "./types/vm/box/StackVMBox"' instead?
+
+[7m8[0m import {StackVMBox} from "./types/vm/box/StackVMBox";
+[7m [0m [91m        ~~~~~~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m55[0m:[93m3[0m - [91merror[0m[90m TS2717: [0mSubsequent property declarations must have the same type.  Property '$' must be of type '(val: any) => any', but here has type 'JQueryStatic'.
+
+[7m55[0m   $: JQueryStatic;
+[7m  [0m [91m  ~[0m
+
+  [96mfinal/rebuild_the_universe_auto_v0.1.d.ts[0m:[93m569[0m:[93m3[0m
+    [7m569[0m   $: (val: any) => any;
+    [7m   [0m [96m  ~[0m
+    '$' was also declared here.
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m1875[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType '(handler: TimerHandler, timeout: number, ...target_args: any[]) => any' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setTimeout'.
   Property '__promisify__' is missing in type '(handler: TimerHandler, timeout: number, ...target_args: any[]) => any' but required in type 'typeof setTimeout'.
 
-[7m1876[0m   window.setTimeout = remoteSetTimeout;
+[7m1875[0m   window.setTimeout = remoteSetTimeout;
 [7m    [0m [91m  ~~~~~~~~~~~~~~~~~[0m
 
   [96m../../node_modules/@types/node/timers.d.ts[0m:[93m70[0m:[93m19[0m
@@ -115,10 +160,10 @@
     [7m  [0m [96m                  ~~~~~~~~~~~~~[0m
     '__promisify__' is declared here.
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m1877[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType '(handler: TimerHandler, timeout?: number, ...target_args: any[]) => any' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setInterval'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m1876[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType '(handler: TimerHandler, timeout?: number, ...target_args: any[]) => any' is not assignable to type '((handler: TimerHandler, timeout?: number, ...arguments: any[]) => number) & typeof setInterval'.
   Property '__promisify__' is missing in type '(handler: TimerHandler, timeout?: number, ...target_args: any[]) => any' but required in type 'typeof setInterval'.
 
-[7m1877[0m   window.setInterval = remoteSetInterval;
+[7m1876[0m   window.setInterval = remoteSetInterval;
 [7m    [0m [91m  ~~~~~~~~~~~~~~~~~~[0m
 
   [96m../../node_modules/@types/node/timers.d.ts[0m:[93m78[0m:[93m19[0m
@@ -126,75 +171,115 @@
     [7m  [0m [96m                  ~~~~~~~~~~~~~[0m
     '__promisify__' is declared here.
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m1878[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType '(id?: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (timeoutId: Timeout): void; }'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m1877[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType '(id?: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (timeoutId: Timeout): void; }'.
   Type '(id?: number) => void' is not assignable to type '{ (id?: number): void; (timeoutId: Timeout): void; }'.
     Types of parameters 'id' and 'timeoutId' are incompatible.
       Type 'Timeout' is not assignable to type 'number'.
 
-[7m1878[0m   window.clearTimeout = remoteClearTimeout;
+[7m1877[0m   window.clearTimeout = remoteClearTimeout;
 [7m    [0m [91m  ~~~~~~~~~~~~~~~~~~~[0m
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m1879[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType '(id: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (intervalId: Timeout): void; }'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m1878[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType '(id: number) => void' is not assignable to type '((id?: number) => void) & { (id?: number): void; (intervalId: Timeout): void; }'.
   Type '(id: number) => void' is not assignable to type '{ (id?: number): void; (intervalId: Timeout): void; }'.
     Types of parameters 'id' and 'intervalId' are incompatible.
       Type 'Timeout' is not assignable to type 'number'.
 
-[7m1879[0m   window.clearInterval = remoteClearInterval;
+[7m1878[0m   window.clearInterval = remoteClearInterval;
 [7m    [0m [91m  ~~~~~~~~~~~~~~~~~~~~[0m
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2616[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timer' is not assignable to type 'number'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2081[0m:[93m16[0m - [91merror[0m[90m TS2350: [0mOnly a void function can be called with the 'new' keyword.
 
-[7m2616[0m   this.id = setInterval(this.run.bind(this), this.timeout);
+[7m2081[0m      let obj = new construct_target.value(...construct_arr);
+[7m    [0m [91m               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2081[0m:[93m43[0m - [91merror[0m[90m TS2556: [0mA spread argument must either have a tuple type or be passed to a rest parameter.
+
+[7m2081[0m      let obj = new construct_target.value(...construct_arr);
+[7m    [0m [91m                                          ~~~~~~~~~~~~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2100[0m:[93m54[0m - [91merror[0m[90m TS2554: [0mExpected 0 arguments, but got 1.
+
+[7m2100[0m      let instruction_modify = new InstructionTypeBox(this.instructions[target]);
+[7m    [0m [91m                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2103[0m:[93m26[0m - [91merror[0m[90m TS2339: [0mProperty 'value' does not exist on type 'InstructionTypeBox'.
+
+[7m2103[0m       instruction_modify.value[offset] = value;
+[7m    [0m [91m                         ~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2105[0m:[93m55[0m - [91merror[0m[90m TS2339: [0mProperty 'value' does not exist on type 'InstructionTypeBox'.
+
+[7m2105[0m      let verify_state: [number] = [instruction_modify.value.length];
+[7m    [0m [91m                                                      ~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2107[0m:[93m43[0m - [91merror[0m[90m TS2339: [0mProperty 'value' does not exist on type 'InstructionTypeBox'.
+
+[7m2107[0m      for(let i = 0;i < instruction_modify.value.length;i++) {
+[7m    [0m [91m                                          ~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2108[0m:[93m36[0m - [91merror[0m[90m TS2339: [0mProperty 'value' does not exist on type 'InstructionTypeBox'.
+
+[7m2108[0m       let cur = instruction_modify.value[i];
+[7m    [0m [91m                                   ~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2164[0m:[93m31[0m - [91merror[0m[90m TS2304: [0mCannot find name 'IndexedFnBox'.
+
+[7m2164[0m      if(target_obj instanceof IndexedFnBox) {
+[7m    [0m [91m                              ~~~~~~~~~~~~[0m
+
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2615[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timer' is not assignable to type 'number'.
+
+[7m2615[0m   this.id = setInterval(this.run.bind(this), this.timeout);
 [7m    [0m [91m  ~~~~~~~[0m
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2639[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timer' is not assignable to type 'number'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m2638[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timer' is not assignable to type 'number'.
 
-[7m2639[0m   this.id = setInterval(this.run.bind(this), this.timeout);
+[7m2638[0m   this.id = setInterval(this.run.bind(this), this.timeout);
 [7m    [0m [91m  ~~~~~~~[0m
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m3552[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timer' is not assignable to type 'number'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m3551[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timer' is not assignable to type 'number'.
 
-[7m3552[0m   window.secondinterval = setInterval(function() {
+[7m3551[0m   window.secondinterval = setInterval(function() {
 [7m    [0m [91m  ~~~~~~~~~~~~~~~~~~~~~[0m
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m3559[0m:[93m29[0m - [91merror[0m[90m TS2345: [0mArgument of type 'Timer' is not assignable to parameter of type 'number'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m3558[0m:[93m29[0m - [91merror[0m[90m TS2345: [0mArgument of type 'Timer' is not assignable to parameter of type 'number'.
 
-[7m3559[0m   this.root_node.append_raw(setInterval(function() {
+[7m3558[0m   this.root_node.append_raw(setInterval(function() {
 [7m    [0m [91m                            ~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m3560[0m    window.doc.title = window.rounding(window.totalAtome, false, 1).toString() + " atoms";
+[7m3559[0m    window.doc.title = window.rounding(window.totalAtome, false, 1).toString() + " atoms";
 [7m    [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
 [7m ...[0m 
-[7m3570[0m    presnbr_e.innerHTML = "<br>" + (window.calcPres() * 100).toFixed(0) + " % APS boost";
+[7m3569[0m    presnbr_e.innerHTML = "<br>" + (window.calcPres() * 100).toFixed(0) + " % APS boost";
 [7m    [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
-[7m3571[0m   }, (230 - 300)), false);
+[7m3570[0m   }, (230 - 300)), false);
 [7m    [0m [91m~~~~~~~~~~~~~~~~~[0m
 
-[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m4249[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timeout' is not assignable to type 'number'.
+[96mrebuild_the_universe_auto_typed_v0.2.ts[0m:[93m4248[0m:[93m3[0m - [91merror[0m[90m TS2322: [0mType 'Timeout' is not assignable to type 'number'.
 
-[7m4249[0m   cint_item[1] = cint;
+[7m4248[0m   cint_item[1] = cint;
 [7m    [0m [91m  ~~~~~~~~~~~~[0m
 
-[96mtypes/vm/Function.ts[0m:[93m1[0m:[93m9[0m - [91merror[0m[90m TS2305: [0mModule '"./mod"' has no exported member 'IBox'.
+[96mtypes/StackVM.ts[0m:[93m1[0m:[93m20[0m - [91merror[0m[90m TS2792: [0mCannot find module './vm/box/IBox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
-[7m1[0m import {IBox} from "./mod";
-[7m [0m [91m        ~~~~[0m
+[7m1[0m import {IBox} from "./vm/box/IBox";
+[7m [0m [91m                   ~~~~~~~~~~~~~~~[0m
 
-[96mtypes/vm/NewableFunction.ts[0m:[93m1[0m:[93m9[0m - [91merror[0m[90m TS2305: [0mModule '"./mod"' has no exported member 'IBox'.
+[96mtypes/vm/VMBoxedInstructionType.ts[0m:[93m5[0m:[93m41[0m - [91merror[0m[90m TS2693: [0m'Box' only refers to a type, but is being used as a value here.
 
-[7m1[0m import {IBox} from "./mod";
-[7m [0m [91m        ~~~~[0m
+[7m5[0m export class InstructionTypeBox extends Box<InstructionType> {}
+[7m [0m [91m                                        ~~~[0m
 
-[96mtypes/vm/box/CSSStyleSheetInitBox.ts[0m:[93m1[0m:[93m28[0m - [91merror[0m[90m TS2792: [0mCannot find module '../MediaListBox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
+[96mtypes/vm/instruction/InstructionPush.ts[0m:[93m1[0m:[93m20[0m - [91merror[0m[90m TS2792: [0mCannot find module '../box/IBox'. Did you mean to set the 'moduleResolution' option to 'node', or to add aliases to the 'paths' option?
 
-[7m1[0m import {MediaListBox} from "../MediaListBox";
-[7m [0m [91m                           ~~~~~~~~~~~~~~~~~[0m
+[7m1[0m import {IBox} from "../box/IBox";
+[7m [0m [91m                   ~~~~~~~~~~~~~[0m
 
 
-Found 26 errors in 5 files.
+Found 41 errors in 5 files.
 
 Errors  Files
-    14  final/rebuild_the_universe_auto_typed_v0.1.ts[90m:28[0m
-     9  rebuild_the_universe_auto_typed_v0.2.ts[90m:1876[0m
-     1  types/vm/Function.ts[90m:1[0m
-     1  types/vm/NewableFunction.ts[90m:1[0m
-     1  types/vm/box/CSSStyleSheetInitBox.ts[90m:1[0m
+    19  final/rebuild_the_universe_auto_typed_v0.1.ts[90m:2[0m
+    19  rebuild_the_universe_auto_typed_v0.2.ts[90m:8[0m
+     1  types/StackVM.ts[90m:1[0m
+     1  types/vm/VMBoxedInstructionType.ts[90m:5[0m
+     1  types/vm/instruction/InstructionPush.ts[90m:1[0m

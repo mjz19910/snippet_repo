@@ -1,2 +1,2 @@
-import {IBox} from "../box/IBox";
-export type InstructionPush = ['push', ...IBox[]];
+import Box from "../box/Box";
+export type InstructionPush = ['push', ...Box[]];
