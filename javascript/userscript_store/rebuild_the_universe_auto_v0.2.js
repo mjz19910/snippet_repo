@@ -928,8 +928,8 @@
 						ret=[instruction[0], m_arg];
 						break;
 					}
-					throw new Error("Verify: Unexpected operand, operand was `"+m_arg+"`");
-				} break;
+					throw new Error("Verify: Unexpected operand for cast_object, operand was `"+m_arg+"`");
+				}
 				case 'drop':
 				case 'get':
 				case 'return':
@@ -939,9 +939,9 @@
 				case 'global':
 				case 'breakpoint'/*opcode*/:{
 					num_to_parse--;
-					ret=[m_opcode];
+					ret=[instruction[0]];
 				} break;
-				default:throw new Error("Verify: Unexpected opcode, opcode was `"+m_opcode+"`");break;
+				default:throw new Error("Verify: Unexpected opcode, opcode was `"+instruction[0]+"`");
 			}
 			if(num_to_parse > 0)throw new Error("Typechecking failure, data left when processing raw instruction stream");
 			if(ret !== null){
