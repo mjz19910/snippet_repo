@@ -1,6 +1,6 @@
 import {ObjectBoxes} from "../ObjectBoxes";
 import {FunctionBoxes} from "./FunctionBoxes";
-import {PromiseBox} from "../PromiseBox";
+import {PromiseBox} from "./PromiseBox";
 import {GlobalThisBox} from "./GlobalThisBox";
 import {WindowBox} from "../WindowBox";
 import {FunctionReturnBoxes} from "./FunctionReturnBoxes";

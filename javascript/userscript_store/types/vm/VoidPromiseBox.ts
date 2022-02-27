@@ -1,6 +1,6 @@
-import {IBoxImpl} from "./box/mod";
+import {Box} from "./box/mod";
 
-export class VoidPromiseBox extends IBoxImpl<Promise<void>> {
+export class VoidPromiseBox extends Box<Promise<void>> {
 	type: "promise" = "promise";
 	return_type: null = null;
 	await_type: null = null;

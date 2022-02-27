@@ -6,9 +6,9 @@ import {InstructionType} from "./types/vm/InstructionType";
 import {WindowBox} from "./types/vm/WindowBox";
 import {IStackVMBox} from "./types/vm/IStackVMBox";
 import {IndexedObject} from "./types/vm/IndexedObject";
-import {IndexedFnBox} from "./types/vm/IndexedFunctionBox";
+import {IndexedFnBox} from "./types/vm/box/IndexedFunctionBox";
 import {NewableFunctionBox} from "./types/vm/NewableFunctionBox";
-import {Box} from "./types/vm/box/Boxed";
+import {Box} from "./types/vm/box/Box";
 
 class RemoteWorkerState {
 

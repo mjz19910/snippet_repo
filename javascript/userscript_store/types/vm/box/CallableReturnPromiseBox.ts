@@ -1,6 +1,6 @@
-import {Box as Box} from "./Boxed";
+import {Box as Box} from "./Box";
 import {IBoxImpl} from "./mod";
-import {PromiseBox} from "../PromiseBox";
+import {PromiseBox} from "./PromiseBox";
 
 export class CallableReturnPromiseBox extends IBoxImpl<(...a: Box[]) => PromiseBox> {
 	type: "function_box" = "function_box";

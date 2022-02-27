@@ -1,7 +1,7 @@
 import {MediaListBox} from "../MediaListBox";
-import {IBoxImpl} from "./mod";
+import {Box} from "./mod";
 
-export class CSSStyleSheetInitBox extends IBoxImpl<CSSStyleSheetInit> {
+export class CSSStyleSheetInitBox extends Box<CSSStyleSheetInit> {
 	type: "shape_box" = "shape_box";
 	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
 	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | MediaListBox | undefined) {

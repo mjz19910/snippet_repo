@@ -1,6 +1,6 @@
-import {IBoxImpl} from "./mod";
+import {Box} from "./mod";
 
-export class CSSStyleSheetPromiseBox extends IBoxImpl<Promise<CSSStyleSheet>> {
+export class CSSStyleSheetPromiseBox extends Box<Promise<CSSStyleSheet>> {
 	type: "promise" = "promise";
 	await_type: "CSSStyleSheet" = "CSSStyleSheet";
 }

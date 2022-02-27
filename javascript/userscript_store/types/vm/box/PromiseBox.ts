@@ -1,5 +1,5 @@
-import {Box as Box} from "./box/Boxed";
-import {IBoxImpl} from "./box/mod";
+import {Box as Box} from "./Box";
+import {IBoxImpl} from "./mod";
 
 export class PromiseBox extends IBoxImpl<Promise<Box>> {
 	type: "promise" = "promise";

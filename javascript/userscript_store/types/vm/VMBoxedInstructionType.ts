@@ -1,5 +1,5 @@
 import {InstructionType} from "./InstructionType";
-import {IBoxImpl} from "./box/mod";
+import {Box} from "./box/mod";
 
 
-export class InstructionTypeBox extends IBoxImpl<InstructionType> {}
+export class InstructionTypeBox extends Box<InstructionType> {}

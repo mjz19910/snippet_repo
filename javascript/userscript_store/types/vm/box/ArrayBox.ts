@@ -1,4 +1,4 @@
-import {Box as Box} from "./Boxed";
+import {Box as Box} from "./Box";
 import {IBoxImpl} from "../box/mod";
 
 

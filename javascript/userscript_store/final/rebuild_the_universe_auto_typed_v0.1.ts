@@ -1,13 +1,13 @@
-import {ArrayBox} from "../types/vm/ArrayBox";
 import {InstructionType} from "../types/vm/InstructionType";
 import {WindowBox} from "../types/vm/WindowBox";
-import {GlobalThisBox} from "../types/vm/GlobalThisBox";
 import {IStackVMBox} from "../types/vm/IStackVMBox";
 import {IndexedObject} from "../types/vm/IndexedObject";
-import {IndexedFnBox} from "../types/vm/IndexedFunctionBox";
+import {IndexedFnBox} from "../types/vm/box/IndexedFunctionBox";
 import {InstructionTypeArrayBox} from "../types/vm/InstructionTypeArrayBox";
 import {IStackVM} from "../types/vm/IStackVM";
-import {Box} from "../types/vm/box/Boxed";
+import {Box} from "../types/vm/box/Box";
+import {GlobalThisBox} from "types/vm/box/GlobalThisBox";
+import {ArrayBox} from "types/vm/box/ArrayBox";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);

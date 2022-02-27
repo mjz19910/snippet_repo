@@ -1,4 +1,4 @@
-import {Box} from "./box/Boxed";
+import {Box} from "./box/Box";
 
 /* --- VM Value supporting types ---
 IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
