@@ -931,9 +931,14 @@
 				} break;
 				case 'cast_object': {
 					let m_arg=instruction[1];
+					switch(m_arg){
+						case 'object_index':
+						case 'callable_index':
+							num_to_parse -= 2;
+							ret=[instruction[0], m_arg];
+					}
 					if(m_arg === 'object_index'){
-						num_to_parse -= 2;
-						ret=[instruction[0], m_arg];
+						
 						break;
 					}
 					throw new Error("Verify: Unexpected operand for cast_object, operand was `"+m_arg+"`");

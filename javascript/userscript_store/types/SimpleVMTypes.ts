@@ -276,7 +276,6 @@ export type VMBoxedValues = VMArrayTypes |
 	VMReturnTypes |
 	VMPromiseTypes |
 	VMCustomTypes;
-type V1 = VMCustomTypes['value'];
 export type VMPrimitiveValues = bigint | boolean | number | string | symbol | null | undefined;
 export type VMValue = VMBoxedValues | VMPrimitiveValues;
 
@@ -301,7 +300,7 @@ export type InstructionAppend = ['append'];
 export type InstructionExec = ['exec', InstructionType[]];
 export type InstructionJumpJe = ['je', number];
 export type InstructionJumpAbs = ['jmp', number];
-type CastObjectOpts = "object_index"
+type CastObjectOpts = "object_index" | "callable_index";
 export type InstructionCastObject = ['cast_object', CastObjectOpts];
 export type AnyInstructionOperands = SkipItem0<InstructionType>;
 
