@@ -1,4 +1,4 @@
-import {InstructionType, VMInterface, VMBoxedArray, VMIndexedCallableValue, VMBoxedGlobalThis, VMBoxedInstructionTypeArray, VMIndexedValue, VMBoxedStackVM, VMBoxedWindow, VMValue} from "../types/SimpleVMTypes";
+import {InstructionType, VMInterface, VMBoxedArray, VMIndexedCallableValue, GlobalThisBox, VMBoxedInstructionTypeArray, VMIndexedValue, StackVMBox, WindowBox, VMValue} from "../types/SimpleVMTypes";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);
@@ -1489,10 +1489,10 @@ class SimpleStackVM implements VMInterface {
 				case 'return'/*Call*/:this.return_value = this.pop();break;
 				case 'halt'/*Running*/:this.running = false;break;
 				case 'push_args'/*Special*/:this.push(new VMBoxedArray(run_arguments));break;
-				case 'this'/*Special*/: this.push(new VMBoxedStackVM(this));break;
+				case 'this'/*Special*/: this.push(new StackVMBox(this));break;
 				case 'global'/*Special*/: {
-					if(window) this.push(new VMBoxedWindow(window));
-					else this.push(new VMBoxedGlobalThis(globalThis));
+					if(window) this.push(new WindowBox(window));
+					else this.push(new GlobalThisBox(globalThis));
 					break;
 				}
 				case 'breakpoint'/*Debug*/: {

@@ -1,7 +1,7 @@
 import {NonNull} from "api";
 import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
-import {AnyInstructionOperands, InstructionType, VMIndexedValue, VMNewableFunction, VMValue, VMIndexedCallableValue, VMBoxedInstructionType, VMBoxedStackVM, VMBoxedWindow, IDomInstructions} from "./types/SimpleVMTypes";
+import {AnyInstructionOperands, InstructionType, VMIndexedValue, VMNewableFunction, VMValue, VMIndexedCallableValue, VMBoxedInstructionType, StackVMBox, WindowBox} from "./types/SimpleVMTypes";
 
 class RemoteWorkerState {
 
@@ -2148,10 +2148,10 @@ class SimpleStackVM<T> extends BaseStackVM {
 	}
 	execute_instruction_raw(instruction:InstructionType) {
 		switch(instruction[0]) {
-			case 'this'/*Special*/: this.push(new VMBoxedStackVM(this)); break;
+			case 'this'/*Special*/: this.push(new StackVMBox(this)); break;
 			// TODO: if you ever use this on a worker, change
 			// it to use globalThis...
-			case 'global'/*Special*/: this.push(new VMBoxedWindow(window)); break;
+			case 'global'/*Special*/: this.push(new WindowBox(window)); break;
 			case 'breakpoint'/*Debug*/: trigger_debug_breakpoint(); break;
 			case 'call'/*Call*/: {
 				// TODO: Fix the other code to use the call handling from
@@ -2971,7 +2971,7 @@ class DomBuilderVM extends BaseStackVM {
 		this.exec_stack = [];
 		this.jump_instruction_pointer = null;
 	}
-	execute_instruction_raw(instruction:InstructionType | IDomInstructions) {
+	execute_instruction_raw(instruction:InstructionType) {
 		l_log_if(LOG_LEVEL_VERBOSE, ...instruction, null);
 		switch(instruction[0]) {
 			case 'exec': {
@@ -2994,7 +2994,7 @@ class DomBuilderVM extends BaseStackVM {
 				this.push(at);
 				l_log_if(LOG_LEVEL_VERBOSE, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
 			} break;
-			case 'dom_append': {
+			case 'append': {
 				if(this.stack.length <= 0) {
 					throw new Error('stack underflow');
 				}

@@ -150,7 +150,7 @@ class AsyncSemaphore {
 function map_to_tuple(e, i){
 	return [e, this[i]];
 }
-/**@typedef {import("../types/SimpleVMTypes.js").VMReturnsBoxedPromise} VMReturnsBoxedPromise */
+/**@typedef {import("../types/SimpleVMTypes.js").CallableReturnPromiseBox} VMReturnsBoxedPromise */
 /**@implements {VMReturnsBoxedPromise} */
 class VMReturnsBoxedPromiseR {
 	/**@type {"function_box"} */

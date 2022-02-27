@@ -59,7 +59,7 @@
 	/**@typedef {import("types/SimpleVMTypes.js").VMIndexedCallableValue} VMIndexedCallableValue */
 
 
-	/**@typedef {import("types/SimpleVMTypes.js").VMBoxedCSSStyleSheetConstructor} VMBoxedCSSStyleSheetConstructor */
+	/**@typedef {import("types/SimpleVMTypes.js").CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor */
 	/**@implements {VMBoxedCSSStyleSheetConstructor} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
@@ -82,7 +82,7 @@
 			return null;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedCSSStyleSheet} VMBoxedCSSStyleSheet */
+	/**@typedef {import("./types/SimpleVMTypes.js").CSSStyleSheetBox} VMBoxedCSSStyleSheet */
 	/**@implements {VMBoxedCSSStyleSheet} */
 	class VMBoxedCSSStyleSheetR {
 		/**@type {"instance_box"} */
@@ -98,7 +98,7 @@
 			this.value=value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedPromise} VMBoxedPromise */
+	/**@typedef {import("./types/SimpleVMTypes.js").PromiseBox} VMBoxedPromise */
 	/**@implements {VMBoxedPromise} */
 	class VMBoxedPromiseR {
 		/**@type {"promise"} */
@@ -283,7 +283,7 @@
 			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedStackVM} VMBoxedStackVM */
+	/**@typedef {import("./types/SimpleVMTypes.js").StackVMBox} VMBoxedStackVM */
 	/**@implements {VMBoxedStackVM} */
 	class VMBoxedStackVMR {
 		/**@type {"custom_box"} */
@@ -299,7 +299,7 @@
 			this.value = value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedWindow} VMBoxedWindow */
+	/**@typedef {import("./types/SimpleVMTypes.js").WindowBox} VMBoxedWindow */
 	/**@implements {VMBoxedWindow} */
 	class VMBoxedWindowR {
 		/**@type {"object_box"} */
@@ -315,7 +315,7 @@
 			this.value = value;
 		}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedObject} VMBoxedObject */
+	/**@typedef {import("./types/SimpleVMTypes.js").VMObject} VMBoxedObject */
 	/**@implements {VMBoxedObject} */
 	class VMBoxedObjectR {
 		/**@type {"object_box"} */
@@ -846,7 +846,7 @@
 				} break;
 			}
 		}
-		/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedDomValue} VMBoxedDomValue */
+		/**@typedef {import("./types/SimpleVMTypes.js").DomValueBox} VMBoxedDomValue */
 		/**
 		 * @param {import("./types/SimpleVMTypes.js").VMValue} box
 		 * @returns {box is VMBoxedDomValue}
@@ -2176,7 +2176,7 @@
 		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
-	/**@typedef {import("./types/SimpleVMTypes.js").VMReturnsBoxedVoidPromise} VMReturnsBoxedVoidPromise */
+	/**@typedef {import("./types/SimpleVMTypes.js").CallableReturnsVoidPromiseBox} VMReturnsBoxedVoidPromise */
 	/**@implements {VMReturnsBoxedVoidPromise} */
 	class VMReturnsBoxedVoidPromiseR {
 		/**@type {"function_box"} */
@@ -2512,7 +2512,7 @@
 				}
 			}
 			let bound_this=this;
-			/**@typedef {import("./types/SimpleVMTypes.js").VMBoxedVoidPromise} VMBoxedVoidPromise */
+			/**@typedef {import("./types/SimpleVMTypes.js").VoidPromiseBox} VMBoxedVoidPromise */
 			/**@implements {VMBoxedVoidPromise} */
 			class VMBoxedVoidPromiseR {
 				/**@type {"promise"} */
