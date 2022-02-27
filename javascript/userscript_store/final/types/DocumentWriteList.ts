@@ -34,7 +34,7 @@ export class DocumentWriteList {
 		this.document_write_proxy = new Proxy(document.write, obj);
 		document.write = this.document_write_proxy;
 	}
-	document_write: ((...text: string[]) => void) | {other: DocumentWriteList;} | null;
+	document_write: ((...text: string[]) => void) | null;
 	attached_document: Document | null;
 	write(target: (...text: string[]) => void, thisArg: any, argArray: string[]) {
 		console.assert(target === this.document_write);

@@ -75,7 +75,7 @@ declare class PromiseExecutorHandle {
 	m_closed: boolean;
 	m_accept: any;
 	m_reject: any;
-	constructor(accept: (value: void) => void, reject: (reason?: any) => void);
+	constructor(accept: (arg0: WorkerState | null) => void, reject: (reason?: any) => void);
 	accept(value: void): void;
 	reject(error: any): void;
 	closed(): boolean;

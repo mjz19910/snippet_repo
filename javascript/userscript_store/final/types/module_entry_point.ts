@@ -4,6 +4,7 @@ import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element";
 import {proxy_jquery} from "./proxy_jquery";
 import {on_timers_moved} from "./on_timers_moved";
 import {dom_add_elm_filter} from "./dom_add_elm_filter";
+import {cint_arr} from "./mod";
 
 export function main() {
 	let enable_proxy = true;

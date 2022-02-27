@@ -5,7 +5,7 @@ import {WorkerState} from "WorkerState";
 import {Timer} from "Timer";
 import {do_worker_verify} from "types/do_worker_verify";
 import {WorkerDestroyMessage, l_log_if, LOG_LEVEL_WARN, TIMER_SINGLE, TIMER_REPEATING} from "../rebuild_the_universe_auto_typed_v0.2";
-import {PromiseExecutorHandle} from "final/rebuild_the_universe_auto_v0.1";
+import {PromiseExecutorHandle} from "./PromiseExecutorHandle";
 
 export function move_timers_to_worker_promise_executor(
 	executor_accept: (arg0: WorkerState | null) => void,
@@ -28,10 +28,12 @@ export function move_timers_to_worker_promise_executor(
 	const worker_code_blob = new Blob(["(", worker_code_function.toString(), ")()", "\n//# sourceURL=$__.0"]);
 	let id_generator = new UniqueIdGenerator;
 	let timer = new Timer(id_generator, new TimerApi);
+	/**@type {PromiseExecutorHandle|null} */
 	let executor_handle = null;
 	if(!failed) {
 		executor_handle = new PromiseExecutorHandle(executor_accept, executor_reject);
 	}
+	if(!executor_handle)throw 1;
 	const worker_state = new WorkerState(worker_code_blob, timer, executor_handle);
 	worker_state.set_failed(failed);
 	worker_state.init();

@@ -1,9 +1,10 @@
-import IAutoBuy from "types/AutoBuy";
+import IAutoBuy from "types/IAutoBuy";
 import {RemoteWorkerState} from "./RemoteWorkerState";
 import {WorkerState} from "../WorkerState";
+import {DocumentWriteList} from "./DocumentWriteList";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
-
+// spell:ignore secondinterval atomsaccu
 declare global {
 	export interface Window {
 		proxy_set: any[];
@@ -43,7 +44,6 @@ declare global {
 		plurials(v: string): string;
 		arrayNames: string[];
 		updateprogress(v: any): void;
-		$: JQueryStatic;
 		seeUnit(v: number): any;
 		checkspec(): void;
 		achiSpec(): void;
@@ -76,8 +76,9 @@ declare global {
 			cur: string;
 		};
 		g_do_load: ((promise_accept: (value: any) => void) => void) | undefined;
+		document_write_list:DocumentWriteList
 	}
-	var window: Window & typeof globalThis;
+	export var window: Window & typeof globalThis;
 	export var Window: {
 		prototype: Window;
 		new(): Window;

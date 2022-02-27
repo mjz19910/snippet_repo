@@ -1,4 +1,4 @@
-import {has_reg_id} from "../has_reg_id";
+import {has_reg_id} from "./has_reg_id";
 import {cur_event_fns, is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn} from "../rebuild_the_universe_auto_typed_v0.2";
 
 export function get_nearest_script() {
