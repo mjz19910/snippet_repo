@@ -14,7 +14,7 @@
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 import {AutoBuyState} from "types/AutoBuyState.js";
-import {prestige, totalAtome} from "./rebuild_the_universe_auto_v0.1.js";
+import {allspec, lightreset, prestige, timeplayed, totalAtome} from "./rebuild_the_universe_auto_v0.1.js";
 import {atomepersecond} from "./types/mod.js";
 
 (function() {
@@ -1027,8 +1027,8 @@ import {atomepersecond} from "./types/mod.js";
 	};
 	class EventHandlerDispatch {
 		/**
-		 * @param {EventHandlerDispatch} target_obj
-		 * @param {'handleEvent'} target_name
+		 * @param {AutoBuy} target_obj
+		 * @param {'history_element_click_handler'} target_name
 		 */
 		constructor(target_obj, target_name){
 			this.target_obj=target_obj;
@@ -1494,7 +1494,7 @@ import {atomepersecond} from "./types/mod.js";
 			if(ratio_calc)return ratio_calc.get_average();
 			return 0.01;
 		}
-		/**@arg {[key:string, ratio:AverageRatio]} */
+		/**@type {(v:[key:string, ratio:AverageRatio])=>void} */
 		push_ratio([key, ratio_obj]){
 			this.ordered_keys.push(key);
 			this.map.set(key, ratio_obj);
@@ -1530,25 +1530,31 @@ import {atomepersecond} from "./types/mod.js";
 		 */
 		on_very_high_ratio;
 		/**
-		 * @param {AsyncNodeRoot} root
+		 * @type {number}
 		 */
+		div;
+		/** @param {AsyncNodeRoot} root */
 		constructor(root){
-			/**
-			 * @type {AsyncNodeRoot}
-			 */
-			this.root_node=root;
-			this.debug=false;
+			this.root_node = root;
+			this.debug = false;
 			/**
 			 * @type {number[]}
 			 */
-			this.arr=[];
-			this.ratio=0;
-			this.compressor_stats=[];
-			this.arr_max_len=5*60;
-			this.val=1;
-			this.ratio_mode=0;
-			this.locked_cycles=0;
-			this.is_init_complete=false;
+			this.arr = [];
+			this.ratio = 0;
+			/**
+			 * @type {never[]}
+			 */
+			this.compressor_stats = [];
+			this.arr_max_len = 5 * 60;
+			this.val = 1;
+			this.ratio_mode = 0;
+			this.locked_cycles = 0;
+			this.prev_atomepersecond = 0;
+			this.ratio_mult = 0;
+			this.div = 0;
+			this.is_init_complete = false;
+			this.avg = new AverageRatioRoot;
 		}
 		init(){
 			if(atomepersecond === 0){
@@ -1706,12 +1712,15 @@ import {atomepersecond} from "./types/mod.js";
 			}
 		}
 	}
+	/**@typedef {import("types/IAutoBuy.js").default} IAutoBuy */
+	/**@implements {IAutoBuy} */
 	class AutoBuy {
 		constructor(){
 			this.delay=0;
 			this.extra=0;
 			this.iter_count=0;
 			this.epoch_len=0;
+			this.original_map=new Map;
 			this.background_audio=null;
 			this.state=new AutoBuyState_x(new AsyncNodeRoot);
 			/**
@@ -1719,9 +1728,11 @@ import {atomepersecond} from "./types/mod.js";
 			 */
 			this.cint_arr=[];
 			this.skip_save=false;
+			/**@type {string[]|null} */
 			this.state_history_arr=null;
 			this.load_state_history_arr(["S"]);
 			this.compressor=new MulCompression;
+			this.state_history_arr_max_len=80;
 		}
 		pre_init(){
 			// find elements
@@ -1797,6 +1808,10 @@ import {atomepersecond} from "./types/mod.js";
 			}
 			this.state_history_arr=arr;
 		}
+		/**
+		 * @type {number[]}
+		 */
+		delay_arr=[];
 		/**
 		 * @param {string} forced_action
 		 */
@@ -1901,7 +1916,8 @@ import {atomepersecond} from "./types/mod.js";
 
 			// general init
 			this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1);
-
+			if(!this.history_element)throw 1;
+			if(!this.delay_element)throw 1;
 
 			// dom element init
 
@@ -1909,12 +1925,12 @@ import {atomepersecond} from "./types/mod.js";
 			this.history_element.addEventListener('click', new EventHandlerDispatch(this, 'history_element_click_handler'));
 
 			// init delay_element
-			this.delay_element.innerText=this.delay_arr[0];
+			this.delay_element.innerText=""+this.delay_arr[0];
 
 			// init hours_played_element
 
 			// init percent_ratio_element
-			if(this.state_log_element)this.percent_ratio_element.addEventListener('click', function(){
+			if(this.percent_ratio_element)this.percent_ratio_element.addEventListener('click', function(){
 				t.state.reset();
 			});
 
@@ -1933,7 +1949,7 @@ import {atomepersecond} from "./types/mod.js";
 			});
 		}
 		global_init(){
-			if(window.g_auto_buy && window.g_auto_buy!==this){
+			if(window.g_auto_buy && window.g_auto_buy !== this){
 				window.g_auto_buy.destroy();
 			}
 			window.g_auto_buy=this;
@@ -1969,13 +1985,15 @@ import {atomepersecond} from "./types/mod.js";
 			if(!storage_data)return Array(12).fill(300);
 			return this.parse_delay_arr(storage_data);
 		}
-		update_dom(self=null){
+		/**@arg {this|null} self @returns {void} */
+		update_dom(self=null) {
 			if(self)return self.update_dom();
 			// spell:words timeplayed
 			if(this.cint_arr.indexOf('dom update_dom') > -1){
 				let rem=this.cint_arr.indexOf('dom');
 				this.cint_arr.splice(rem-1, 2);
 			}
+			if(!this.hours_played_element)return;
 			this.hours_played_element.innerText=((timeplayed / 30) / 60).toFixed(3) + " hours";
 			if(!Number.isFinite(this.state.ratio)){
 				debugger;
@@ -1983,10 +2001,14 @@ import {atomepersecond} from "./types/mod.js";
 			let last_ratio=this.state.ratio*100;
 			this.state.update();
 			let cur_ratio=this.state.ratio*100;
+			if(!this.percent_ratio_element)return;
 			this.percent_ratio_element.innerText=cur_ratio.toFixed(2)+"%";
 			let ratio_diff=cur_ratio-last_ratio;
 			let extra_diff_char="+";
 			if(ratio_diff < 0)extra_diff_char='';
+			if(!this.percent_ratio_change_element)return;
+			if(!this.history_element)return;
+			if(!this.state_history_arr)return;
 			this.percent_ratio_change_element.innerText=extra_diff_char+ratio_diff.toExponential(3);
 			this.history_element.innerText=array_sample_end(this.state_history_arr, this.state_history_arr_max_len).join(" ");
 			let cint=setTimeout(this.update_dom, 125, this);
@@ -1996,6 +2018,7 @@ import {atomepersecond} from "./types/mod.js";
 			this.delay_arr=this.load_delay_arr();
 			setTimeout(this.delayed_init, 200, this);
 		}
+		/**@arg {this|null} self @returns {void} */
 		delayed_init(self=null){
 			if(self)return self.delayed_init();
 			let t=this;
@@ -2029,30 +2052,31 @@ import {atomepersecond} from "./types/mod.js";
 		 * @param {string} value
 		 */
 		state_history_append(value){
-			let success, res;
 			this.epoch_len++;
-			let last=this.state_history_arr.at(-1);
-			this.state_history_arr.push(value);
+			let last=null;
+			if(this.state_history_arr)this.state_history_arr.at(-1);
 			if(this.state.debug)console.log('history append', last, value);
+			if(!this.state_history_arr)return;
+			this.state_history_arr.push(value);
 			while(this.state_history_arr.length>120){
 				this.state_history_arr.shift();
 			}
-			/**
-			 * @param {{ state_history_arr: any; compressor: { compress_array: (arg0: any) => any; }; }} self
-			 */
-			function async_compress(self){
-				self.state_history_arr=self.compressor.compress_array(self.state_history_arr);
-			}
-			Promise.resolve(this).then(async_compress);
+			Promise.resolve(this).then(this.async_compress);
 		}
 		/**
-		 * @param {any} event
+		 * @param {this} self
 		 */
-		history_element_click_handler(event){
+		async_compress(self){
+			self.state_history_arr=self.compressor.compress_array(self.state_history_arr);
+		}
+		/**
+		 * @param {any} _event
+		 */
+		history_element_click_handler(_event){
 			clearTimeout(this.cint);
 			this.extra=this.calc_delay_extra();
 			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=this.extra.toString();
 			this.state_history_append(">");
 		}
 		calc_delay_extra() {
@@ -2062,11 +2086,16 @@ import {atomepersecond} from "./types/mod.js";
 			};
 			for(var i=0;i<this.delay_arr.length;i++){
 				this.extra+=this.delay_arr[i];
-				max=Math.max(this.delay_arr[i], max);
+				if(max !== void 0){
+					max=Math.max(this.delay_arr[i], max);
+				} else {
+					max=this.delay_arr[i]
+				}
 			};
 			void max;
 			return ~~(this.extra / this.delay_arr.length);
 		}
+		/**@arg {this|null} self @returns {void} */
 		main(self=null){
 			if(self)return self.main();
 			this.extra=this.calc_delay_extra();
@@ -2127,36 +2156,40 @@ import {atomepersecond} from "./types/mod.js";
 		large_decrease(){
 			this.do_delay_dec([1.0075, 1.05], 10);
 			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=this.extra.toString();
 			this.state_history_append("!");
 		}
 		normal_decrease(){
 			this.do_delay_dec([1.006, 1.05], 10);
 			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=this.extra.toString();
 			this.state_history_append("-");
 		}
+		/**@arg {this|null} self @returns {void} */
 		rare_begin_or_faster_delay(self=null){
 			if(self)return self.rare_begin_or_faster_delay();
 			if(Math.random()<0.05)return this.rare_begin();
 			this.faster_delay();
 		}
+		/**@arg {this|null} self @returns {void} */
 		faster_delay(self=null){
 			if(self)return self.faster_delay();
 			this.do_delay_inc([1.007], 25);
 			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=this.extra.toString();
 			this.state_history_append("+");
 		}
+		/**@arg {this|null} self @returns {void} */
 		fast_unit_delay(self=null){
 			if(self)return self.fast_unit_delay();
 			this.extra=this.calc_delay_extra();
 			this.iter_count+=1;
 			this.do_delay_dec([1.005, 1.025], 10);
 			this.cint=setTimeout(this.fast_unit, this.extra/1.9, this);
-			this.delay_element.innerText=this.extra/1.9;
+			if(this.delay_element)this.delay_element.innerText=""+this.extra/1.9;
 			this.state_history_append(":");
 		}
+		/**@arg {this|null} self @returns {void} */
 		fast_unit(self=null){
 			if(self)return self.fast_unit();
 			this.pre_total=totalAtome;
@@ -2164,21 +2197,24 @@ import {atomepersecond} from "./types/mod.js";
 			if(this.pre_total == totalAtome)this.slow_final();
 			else this.fast_unit_delay();
 		}
+		/**@arg {this|null} self @returns {void} */
 		slow_final(self=null){
 			if(self)return self.slow_final();
 			this.cint=setTimeout(this.main, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=this.extra.toString();
 			this.state_history_append("$");
 		}
+		/**@arg {this|null} self @returns {void} */
 		bonus(self=null){
 			if(self)return self.bonus();
 			bonusAll();
 			this.fast_unit_delay();
 		}
+		/**@arg {this|null} self @returns {void} */
 		special_delay(self=null){
 			if(self)return self.special_delay();
 			this.cint=setTimeout(this.special, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=this.extra.toString();
 			this.state_history_append("^");
 		}
 		/**
@@ -2187,12 +2223,14 @@ import {atomepersecond} from "./types/mod.js";
 		is_special_done(special_buyable){
 			return !special_buyable.done && special_buyable.cost < totalAtome;
 		}
+		/**@arg {this|null} self @returns {boolean} */
 		do_special(self=null){
 			if(self)return self.do_special();
 			//this is valid
 			let ret=false;
 			//spell:words allspec specialclick
 			while(true){
+				// @ts-ignore
 				let index=allspec.findIndex(this.is_special_done)
 				if(index == -1){
 					break;
@@ -2202,52 +2240,64 @@ import {atomepersecond} from "./types/mod.js";
 			}
 			return ret;
 		}
+		/**@arg {this|null} self @returns {void} */
 		bonus_delay(self=null){
 			if(self)return self.bonus_delay();
 			this.cint=setTimeout(this.bonus, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=""+this.extra;
 			this.state_history_append("#");
 		}
+		/**@arg {this|null} self @returns {void} */
 		special(self=null){
 			if(self)return self.special();
 			if(this.do_special())this.special_delay();
 			else this.bonus_delay();
 		}
+		/**@arg {this|null} self @returns {void} */
 		initial_special(self=null){
 			if(self)return self.initial_special();
 			this.cint=setTimeout(this.special, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=""+this.extra;
 			this.state_history_append(">");
 		}
+		/**@arg {this|null} self @returns {void} */
 		rare_begin(self=null){
 			if(self)return self.rare_begin();
 			this.do_delay_inc([1.008],10);
 			this.cint=setTimeout(this.initial_special, this.extra, this);
-			this.delay_element.innerText=this.extra;
+			if(this.delay_element)this.delay_element.innerText=""+this.extra;
 			this.state_history_append("<");
 		}
+		/**@arg {this|null} self @returns {void} */
 		reset_delay_trigger(self=null){
 			if(self)return self.reset_delay_trigger();
-			this.background_audio.muted=!this.background_audio.muted;
+			if(this.background_audio instanceof HTMLAudioElement) {
+				this.background_audio.muted=!this.background_audio.muted;
+			}
 			this.cint=setTimeout(this.reset_delay_start, 60*2*1000, this);
-			this.delay_element.innerText=60*2*1000;
+			if(this.delay_element)this.delay_element.innerText=""+60*2*1000;
 			this.state_history_append("trigger");
 		}
+		/**@arg {this|null} self @returns {void} */
 		reset_delay_start(self=null){
 			if(self)return self.reset_delay_start();
-			this.delay_element.innerText=60*1000;
+			if(this.delay_element)this.delay_element.innerText=""+60*1000;
 			this.cint=setTimeout(this.reset_delay_run, 60*1000, this);
 			this.state_history_append("reset_soon");
 		}
+		/**@arg {this|null} self @returns {void} */
 		reset_delay_run(self=null){
 			if(self)return self.reset_delay_run();
 			window.lightreset();
 		}
+		/**@arg {this|null} self @returns {void} */
 		reset_delay_init(self=null){
 			if(self)return self.reset_delay_init();
-			this.background_audio.muted=!this.background_audio.muted;
+			if(this.background_audio instanceof HTMLAudioElement) {
+				this.background_audio.muted=!this.background_audio.muted;
+			}
 			this.cint=setTimeout(this.reset_delay_trigger, 60*3*1000, this);
-			this.delay_element.innerText=60*3*1000;
+			if(this.delay_element)this.delay_element.innerText=""+60*3*1000;
 			this.state_history_append("reset_delay");
 		}
 	}
@@ -2257,18 +2307,42 @@ import {atomepersecond} from "./types/mod.js";
 			let t=this;
 			t.m_set_flag=true;
 			t.trigger_handler=null;
+			/**@type {number} */
+			let nt=0;
+			/**@type {0|1|null} */
+			let sor=null;
+			if(nt !== 0){
+				sor=1;
+			} else {
+				sor=0;
+			}
+			/**@type {{state:null}|{fn_accept?: undefined, fn_reject?: undefined, state:0}|{fn_accept?:(value: any) => void, fn_reject?:(reason?: any) => void, state:1}} */
+			let obj={
+				state:sor
+			};
+			/**@type {((value: any) => void) | null} */
+			let fn_accept=null;
+			/**@type {((reason?: any) => void) | null} */
+			let fn_reject=null;
 			this.promise_set=new Promise(function(accept, reject){
-				t.m_set=accept;
-				t.m_set_error=reject;
-				t.m_set_flag=false;
+				obj={
+					fn_accept:accept,
+					fn_reject:reject,
+					state:1
+				};
 			});
+			if(obj.state === 1){
+				if(obj.fn_accept)this.m_set=obj.fn_accept;
+				if(obj.fn_reject)this.m_set_error=obj.fn_reject;
+			}
+			t.m_set_flag=false;
 		}
 		/**
 		 * @param {any} cnt
 		 */
 		set(cnt){
 			if(!this.m_set_flag){
-				this.m_set(cnt);
+				if(this.m_set)this.m_set(cnt);
 				this.m_set_flag=true;
 			}
 		}
@@ -2277,43 +2351,47 @@ import {atomepersecond} from "./types/mod.js";
 		 */
 		set_error(opt_error){
 			if(!this.m_set_flag){
-				if(opt_error) this.m_set_error(opt_error);
-				else this.m_set_error(null);
+				if(opt_error && this.m_set_error)return this.m_set_error(opt_error);
+				else if(this.m_set_error)return this.m_set_error(null);
+				throw new Error("Unreachable");
 			}
 		}
 		async wait(){
 			let ret=this.promise_set;
 			return ret;
 		}
-		/**
+		/* /**
 		 * @param {any} cnt
-		 */
+		
 		notify(cnt){
 			if(this.m_can_notify){
 				this.m_notify(cnt);
 				this.m_can_notify=false;
 			}
 		}
-		/**
+		/* /**
 		 * @param {any} error
-		 */
+		
 		notify_error(error){
 			if(this.m_can_notify){
 				this.m_notify_error(error);
 				this.m_can_notify=false;
 			}
 		}
-		async notified(){
+		/* async notified(){
 			let t=this;
 			this.notify_promise=new Promise(function(accept, reject){
 				t.m_notify=accept;
 				t.m_notify_error=reject;
 			});
 			this.m_can_notify=true;
-		}
+		} */
 	}
 	class AsyncSemaphore{
 		constructor(){
+			/**
+			 * @type {any[]}
+			 */
 			this.notify_waiters_vec=[];
 			this.count=0;
 		}
@@ -2327,7 +2405,7 @@ import {atomepersecond} from "./types/mod.js";
 					this.notify_waiters_vec.push(wait_trigger);
 				}
 				await wait_trigger.wait();
-				wait_trigger.notify(cnt);
+				// wait_trigger.notify(cnt);
 			}
 			this.count+=cnt;
 		}
@@ -2350,29 +2428,40 @@ import {atomepersecond} from "./types/mod.js";
 	class DoUnitPromoteExecutor{
 		run(){
 			var out=[],maxed=[];
+			// @ts-ignore
 			for(var k=0;k<arUnit.length;k++){
 				var afford=false;
+				// @ts-ignore
 				if(arUnit[k][16]==true||k==0){
 					var type=Get_Unit_Type(k);
 					var tmp=getUnitPromoCost(k);
 					var cost=tmp;
 					var next=Find_ToNext(k);
+					// @ts-ignore
 					if(next < 0){maxed[k]=true};
 					for(var i=1;i<=100;i++){
+						// @ts-ignore
 						if(totalAtome>=cost){
+							// @ts-ignore
 							tmp=tmp+(tmp*arUnit[k][3])/100;
+							// @ts-ignore
 							var tar=(arUnit[k][4]*1)+i;
+							// @ts-ignore
 							var a=_targets.indexOf(tar);
 							var reduction=1;
 							if(a>-1&&tar<=1000){
 								var b=true;
+								// @ts-ignore
 								for(var k2 in type[2]){
+									// @ts-ignore
 									var v2=type[2][k2]
+									// @ts-ignore
 									if(v2!=k&&arUnit[v2][4]<tar){
 										b=false;
 									}
 								}
 								if(b){
+									// @ts-ignore
 									var c=_targets_achi.indexOf(totalAchi()+1);
 									if(c>-1){
 										reduction*=(1-((c+1)*0.01));
@@ -2380,11 +2469,14 @@ import {atomepersecond} from "./types/mod.js";
 									reduction*=1-((a+1)*0.01);
 								}
 							}
+							// @ts-ignore
 							tmp*=reduction;
+							// @ts-ignore
 							cost+=tmp;
 						}else{
 							break
 						}
+						// @ts-ignore
 						if(i==next||(maxed[k]&&i==100)){
 							afford=true;
 						}
@@ -2396,7 +2488,7 @@ import {atomepersecond} from "./types/mod.js";
 					}
 				}
 			}
-			res=out.lastIndexOf(true);
+			let res=out.lastIndexOf(true);
 			if(res<0){
 				return
 			}
@@ -2405,35 +2497,48 @@ import {atomepersecond} from "./types/mod.js";
 					mainCalc(res);
 				}
 			}else{
+				// spell:words tonext
+				// @ts-ignore
 				tonext(res);
 			}
 		}
 	}
 	function do_auto_unit_promote(){
 		var out=[],maxed=[];
+		// @ts-ignore
 		for(var k=0;k<arUnit.length;k++){
 			var afford=false;
+			// @ts-ignore
 			if(arUnit[k][16]==true||k==0){
 				var type=Get_Unit_Type(k);
 				var tmp=getUnitPromoCost(k);
 				var cost=tmp;
 				var next=Find_ToNext(k);
+				// @ts-ignore
 				if(next < 0){maxed[k]=true};
 				for(var i=1;i<=100;i++){
+					// @ts-ignore
 					if(totalAtome>=cost){
+						// @ts-ignore
 						tmp=tmp+(tmp*arUnit[k][3])/100;
+						// @ts-ignore
 						var tar=(arUnit[k][4]*1)+i;
+						// @ts-ignore
 						var a=_targets.indexOf(tar);
 						var reduction=1;
 						if(a>-1&&tar<=1000){
 							var b=true;
+							// @ts-ignore
 							for(var k2 in type[2]){
+								// @ts-ignore
 								var v2=type[2][k2]
+								// @ts-ignore
 								if(v2!=k&&arUnit[v2][4]<tar){
 									b=false;
 								}
 							}
 							if(b){
+								// @ts-ignore
 								var c=_targets_achi.indexOf(totalAchi()+1);
 								if(c>-1){
 									reduction*=(1-((c+1)*0.01));
@@ -2441,11 +2546,14 @@ import {atomepersecond} from "./types/mod.js";
 								reduction*=1-((a+1)*0.01);
 							}
 						}
+						// @ts-ignore
 						tmp*=reduction;
+						// @ts-ignore
 						cost+=tmp;
 					}else{
 						break
 					}
+					// @ts-ignore
 					if(i==next||(maxed[k]&&i==100)){
 						afford=true;
 					}
@@ -2457,14 +2565,10 @@ import {atomepersecond} from "./types/mod.js";
 				}
 			}
 		}
-		res=out.lastIndexOf(true);
-		if(res<0){
-			return
-		}
+		let res=out.lastIndexOf(true);
+		if(res<0)return;
 		if(maxed[res]){
-			for(var y=0;y<100;y++){
-				mainCalc(res);
-			}
+			for(var y=0;y<100;y++)mainCalc(res);
 		}else{
 			tonext(res);
 		}
@@ -2497,8 +2601,8 @@ import {atomepersecond} from "./types/mod.js";
 		return new Promise(promise_exec);
 	}
 	/**
-	 * @param {{ (): any; new (): any; length: number; }[]} arr
-	 * @param {number | undefined} rem_target_len
+	 * @param {any[]} arr
+	 * @param {number} rem_target_len
 	 */
 	function array_sample_end(arr, rem_target_len){
 		arr=arr.slice(-300);
@@ -2519,38 +2623,62 @@ import {atomepersecond} from "./types/mod.js";
 	 * @param {string | number} that
 	 */
 	function specialclick_inject(that) {
+		let doc=window.doc;
+		// @ts-ignore
 		if (allspec[that].done == undefined) allspec[that].done = false;
+		// @ts-ignore
 		if (allspec[that].cost <= totalAtome && allspec[that].done == false) {
-			doc.getElementById('specialsbought').innerText = rounding(++specialsbought, false,0);
+			let sb=doc.getElementById('specialsbought');
+			// @ts-ignore
+			if(sb)sb.innerText = rounding(++specialsbought, false,0);
 			if (that == 74) {
 			}
+			// @ts-ignore
 			atomsinvest += allspec[that].cost;
+			// @ts-ignore
 			doc.getElementById('atomsinvest').innerText = rounding(atomsinvest, false,0);
+			// @ts-ignore
 			allspec[that].done = true;
+			// @ts-ignore
 			totalAtome -= allspec[that].cost;
+			// @ts-ignore
 			var diff1 = calcDiff(that);
+			// @ts-ignore
 			for (var a in arUnit[that][17]) arUnit[that][17][a] *= 100;
+			// @ts-ignore
 			arUnit[that][5] *= 100;
 			var specaps = 0;
+			// @ts-ignore
 			if (arUnit[that][4] > 0) {
+				// @ts-ignore
 				specaps = (calcDiff(that) - diff1);
+				// @ts-ignore
 				atomepersecond += specaps;
 			}
+			// @ts-ignore
 			if (noti) gritter('Power-up !', toTitleCase(plurials(arrayNames[that])) + " X100 APS", null, "+" + rounding(specaps, false,0) + " APS", "");
+			// @ts-ignore
 			updateprogress(that);
 			$('#spec' + that).remove();
+			// @ts-ignore
 			(that < 74) ? seeUnit(that + 1): seeUnit(that - 1);
+			// @ts-ignore
 			seeUnit(that);
+			// @ts-ignore
 			checkspec();
+			// @ts-ignore
 			achiSpec();
 		}
 	}
 	function on_page_is_loaded(){
 		remove_bad_dom_script_element();
+		// @ts-ignore
 		if(Pace.bar.progress == 100){
 			auto_buy_obj.init();
 		}else{
+			// @ts-ignore
 			let original_pace_bar_finish=Pace.bar.finish;
+			// @ts-ignore
 			Pace.bar.finish=function(){
 				original_pace_bar_finish.call(this);
 				auto_buy_obj.init();
@@ -2570,14 +2698,14 @@ import {atomepersecond} from "./types/mod.js";
 				if(idx > window.da.length)return window.da.at(-1)(idx-1);
 				return window.da[idx-1](idx-1);
 			});
-			window.da=[(/** @type {any} */ e)=>g_proxy_state.hand.stack_overflow_check(), ...val];
+			window.da=[(/** @type {any} */ _e)=>window.g_proxy_state.hand.stack_overflow_check(), ...val];
 		}
 		stack_overflow_check(){
-			g_proxy_state.hand.count_arr[0]++;
-			if(g_proxy_state.hand.count_arr[0] < g_proxy_state.hand.count_arr[1]){
-				return g_proxy_state.hand.stack_overflow_check();
+			window.g_proxy_state.hand.count_arr[0]++;
+			if(window.g_proxy_state.hand.count_arr[0] < window.g_proxy_state.hand.count_arr[1]){
+				return window.g_proxy_state.hand.stack_overflow_check();
 			}
-			return g_proxy_state.hand.count_arr[0];
+			return window.g_proxy_state.hand.count_arr[0];
 		}
 		/**
 		 * @param {string} type
@@ -2588,61 +2716,17 @@ import {atomepersecond} from "./types/mod.js";
 			let proxy_state=this.weak_root.deref();
 			if(proxy_state === null){
 				console.log('ProxyHandlers reset ProxyState after gc collect');
-				proxy_state=new ProxyState;
-				this.weak_root=new WeakRef(proxy_state);
+				// proxy_state=new ProxyState;
+				// this.weak_root=new WeakRef(proxy_state);
 			}
 			proxy_state.push(from.concat([null, type, 1, call_args]));
-		}
-		/**
-		 * @param {any} obj
-		 * @param {any} call_args
-		 * @param {any} from
-		 */
-		set_(obj, call_args, from){
-			this.generic('set', call_args, from);
-			return Reflect.set(...call_args);
-		}
-		/**
-		 * @param {any} obj
-		 * @param {any} call_args
-		 * @param {any} from
-		 */
-		get_(obj, call_args, from){
-			this.generic('get', call_args, from);
-			return Reflect.get(...call_args);
-		}
-		/**
-		 * @param {any} obj
-		 * @param {any} call_args
-		 * @param {any} from
-		 */
-		apply_(obj, call_args, from){
-			this.generic('apply', call_args, from);
-			return Reflect.apply(...call_args);
-		}
-		/**
-		 * @param {any} obj
-		 * @param {any} call_args
-		 * @param {any} from
-		 */
-		defineProperty_(obj, call_args, from){
-			this.generic('defineProperty', call_args, from);
-			return Reflect.defineProperty(...call_args);
-		}
-		/**
-		 * @param {any} obj
-		 * @param {any} call_args
-		 * @param {any} from
-		 */
-		getOwnPropertyDescriptor_(obj, call_args, from){
-			this.generic('getOwnPropertyDescriptor', call_args, from);
-			return Reflect.getOwnPropertyDescriptor(...call_args);
 		}
 	}
 	class RandomKeepArray extends Array {
 		constructor(){
 			super();
 		}
+		// @ts-ignore
 		push(value){
 			let set_index=0;
 			let overflow_sets=[];
@@ -2742,6 +2826,7 @@ import {atomepersecond} from "./types/mod.js";
 			location.reload();
 			document.body.innerHTML="";
 			document.head.innerHTML="";
+			// @ts-ignore
 			document.documentElement="";
 			debugger;
 			return true;
@@ -2784,16 +2869,19 @@ import {atomepersecond} from "./types/mod.js";
 	 */
 	function pace_finish_proxy_apply(func, this_v, args){
 		auto_buy_obj.init();
+		// @ts-ignore
 		Pace.bar.finish=func;
 		return Reflect.apply(func, this_v, args);
 	}
 	function on_game_data_set(){
 		remove_bad_dom_script_element();
 		auto_buy_obj.pre_init();
+		// @ts-ignore
 		if(Pace.bar.progress == 100){
 			auto_buy_obj.init();
 			return;
 		}
+		// @ts-ignore
 		Pace.bar.finish=new Proxy(Pace.bar.finish, {apply:pace_finish_proxy_apply});
 	}
 	/**
@@ -2818,9 +2906,9 @@ import {atomepersecond} from "./types/mod.js";
 		}
 	}
 	/**
-	 * @param {any} timers
+	 * @param {any} _timers
 	 */
-	function on_timers_moved(timers) {
+	function on_timers_moved(_timers) {
 		if(window._SM_Data){
 			on_game_data_set();
 		}else{
@@ -2851,7 +2939,11 @@ import {atomepersecond} from "./types/mod.js";
 		if(enable_proxy){
 			proxy_jquery();
 		}
-		adsbygoogle=[];
+		/**
+		 * @type {{ op: any; push(v: number): void; }}
+		 */
+		let adsbygoogle={};
+		window.adsbygoogle=adsbygoogle;
 		adsbygoogle.op=adsbygoogle.push;
 		adsbygoogle.push=function(/** @type {any} */ e){
 			adsbygoogle.op(e);
@@ -2859,10 +2951,13 @@ import {atomepersecond} from "./types/mod.js";
 		};
 		var prev_node_prototype_insertBefore=Node.prototype.insertBefore;
 		document.addEventListener('onContentLoaded', remove_bad_dom_script_element);
+		// @ts-ignore
 		Node.prototype.insertBefore=function(/** @type {Node} */ element_to_insert, /** @type {Node | null} */ element_reference, /** @type {string | any[]} */ ...rest){
 			console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
+			// @ts-ignore
 			let should_insert_1=dom_add_elm_filter(element_to_insert);
 			if(!should_insert_1)return element_to_insert;
+			// @ts-ignore
 			let should_insert_2=dom_add_elm_filter(element_reference);
 			if(!should_insert_2)return element_to_insert;
 			return prev_node_prototype_insertBefore.call(this, element_to_insert, element_reference);
@@ -2880,3 +2975,51 @@ import {atomepersecond} from "./types/mod.js";
 	main();
 	// Your code here...
 })();
+
+function bonusAll() {
+	throw new Error("Function not implemented.");
+}
+/**
+ * @param {number} _k
+ */
+function Get_Unit_Type(_k) {
+	throw new Error("Function not implemented.");
+}
+
+/**
+ * @param {number} _k
+ */
+function getUnitPromoCost(_k) {
+	throw new Error("Function not implemented.");
+}
+
+/**
+ * @param {number} _k
+ */
+function Find_ToNext(_k) {
+	throw new Error("Function not implemented.");
+}
+
+/**
+ * @param {number} _res
+ */
+function mainCalc(_res) {
+	throw new Error("Function not implemented.");
+}
+
+/**
+ * @param {number} _res
+ */
+function tonext(_res) {
+	throw new Error("Function not implemented.");
+}
+
+/**
+ * @param {number} _arg0
+ * @param {boolean} _arg1
+ * @param {number} _arg2
+ */
+function rounding(_arg0, _arg1, _arg2) {
+	throw new Error("Function not implemented.");
+}
+

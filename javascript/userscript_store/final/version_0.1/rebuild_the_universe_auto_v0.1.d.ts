@@ -410,7 +410,7 @@ declare function promise_exec(a: (value: void) => void): void;
 declare function do_async_wait(delay: number): Promise<void>;
 declare function array_sample_end(arr: string[], rem_target_len: number): string[];
 declare function char_len_of<T extends string>(arr: T[]): number;
-declare var allspec: any[];
+declare var allspec: (string | number)[];
 //spell:words specialsbought atomsinvest checkspec specaps noti plurials updateprogress achiSpec
 declare function specialclick_inject(that: typeof allspec[number]): void;
 declare function on_page_is_loaded(): void;

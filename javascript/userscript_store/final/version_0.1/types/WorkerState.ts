@@ -4,6 +4,7 @@ import {WorkerMessageReply201} from "./WorkerMessageReply201";
 import {WorkerMessageReply202} from "./WorkerMessageReply202";
 import {RemoteWorkerMessage} from "./RemoteWorkerMessage";
 import {Timer} from "./Timer";
+import {TIMER_REPEATING, TIMER_SINGLE} from "./mod";
 
 export class WorkerState {
 	rejected: boolean;
