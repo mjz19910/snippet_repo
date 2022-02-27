@@ -3,7 +3,7 @@ import {WindowBox} from "../types/vm/WindowBox";
 import {IStackVMBox} from "../types/vm/IStackVMBox";
 import {IndexedFnBox} from "../types/vm/box/IndexedFunctionBox";
 import {InstructionTypeArrayBox} from "../types/vm/box/InstructionTypeArrayBox";
-import {IStackVM} from "../types/vm/IStackVM";
+import {StackVM} from "../types/StackVM";
 import {IBox} from "../types/vm/box/IBox";
 import {GlobalThisBox} from "types/vm/box/GlobalThisBox";
 import {ArrayBox} from "types/vm/box/ArrayBox";
@@ -1408,7 +1408,7 @@ class SimpleStackVMParser {
 		return instructions;
 	}
 }
-class SimpleStackVM implements IStackVM {
+class SimpleStackVM implements StackVM {
 	instructions: InstructionType[];
 	stack: IBox[];
 	instruction_pointer: number;

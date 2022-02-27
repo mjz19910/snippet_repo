@@ -3,7 +3,7 @@ type SkipItem0_t<T extends [f: string, ...v: any[]], X> = T extends [X, ...infer
 export type SkipItem0<T extends [f: any, ...v: any[]]> = SkipItem0_t<T, T[0]>;
 export {FunctionBox} from "./box/FunctionBox";
 export {IBox} from "./box/IBox";
-export {IStackVM} from "./IStackVM";
+export {StackVM as IStackVM} from "../StackVM";
 export {InstructionType} from "./instruction/mod";
 export {IndexedFnBox} from "./box/IndexedFunctionBox";
 export {CSSStyleSheetConstructorBox} from "./box/CSSStyleSheetConstructorBox";
