@@ -385,7 +385,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		type = "object_box";
 		/**@type {'BaseBox'} */
 		from = "BaseBox";
-		/**@type {BoxInner['value']} */
+		/**@type {import("api").NonNull<BoxInner>} */
 		value;
 		/**@arg {string} v */
 		as_type(v) {
@@ -394,7 +394,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			}
 			return null;
 		}
-		/**@arg {BoxInner} value */
+		/**@arg {import("api").NonNull<BoxInner>} value */
 		constructor(value) {
 			switch(typeof value) {
 				case 'string':this.value = value; break;
@@ -412,7 +412,6 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					this.value = value;
 				default: this.value = value; break;
 			}
-			this.value = value;
 		}
 		/**@arg {'object'|'function'} to_match */
 		as_box(to_match) {
@@ -420,27 +419,32 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			return null;
 		}
 	}
-	/**@typedef {import("types/vm/box/mod.js").ExtractKey<Box, 'value'>} BoxInner */
+	/**@returns {never} */
+	function unreachable() {
+		throw new Error("Unreachable");
+	}
+	/**@typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionType */
+	/**@typedef {import("types/vm/box/ExtractKey").default<Box, 'value'>} BoxInner */
 	class TempBox extends BaseBox {
 		/**
 		 * @arg {Box} v
-		 * @returns {v is BoxInner}
+		 * @returns {v is Box}
 		 * */
-		static does_box(v){
+		static no_box(v){
 			switch(typeof v){
 				case 'object':
-					if(!v)return false;
-					return true;
+					if(v === null)return true;
+					return false;
 			}
-			return false;
+			return true;
 		}
 		/**@arg {Box} v */
 		static make_box(v){
-			if(this.does_box(v)){
-				return new this(v);
+			if(this.no_box(v)){
+				return v;
 			}
 			if(typeof v === 'function')return new this(v);
-			if(typeof v != 'object')return v;
+			if(typeof v === 'object')return new this(v);
 			unreachable();
 		}
 		/**@type {BoxInner|null} */
@@ -625,12 +629,19 @@ import VoidBox from "types/vm/box/VoidBox.js";
 						if(typeof opt!='object')throw invalid();
 						if(opt === null)throw invalid();
 						switch(opt.type){
-							case "shape_box":return opt.value;
+							case "shape_box":{
+								switch(get_name){
+									case 'baseURL':return opt.value['baseURL'];
+									case 'disabled':return opt.value['disabled'];
+									case 'media':return opt.value['media'];
+									default:throw new Error("Invalid box on get");
+								}
+							}
 							case "array_box":{
 								let int_num=parseInt(get_name);
 								if(Number.isNaN(int_num))throw new Error("Can't parse number");
 								let res=opt.value[int_num];
-								if(TempBox.does_box(res)){
+								if(TempBox.no_box(res)){
 									return new TempBox(res);
 								} else {
 									return res;
@@ -643,6 +654,8 @@ import VoidBox from "types/vm/box/VoidBox.js";
 							case "object_box":{
 								if(opt.extension === 'index'){
 									let res=opt.value[get_name];
+									if(res === null)return res;
+									if(res === void 0)return res;
 									return new TempBox(res);
 								}
 								if(opt) {
@@ -668,7 +681,11 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					/**@typedef {import("final/rebuild_the_universe_auto_v0.1.js").RemoveFirst<typeof the_type>} FC2 */
 					let res=do_box_get(target_obj, target_name);
 					console.log('VM: get result', res);
-					if(TempBox.does_box(res)){
+					switch(typeof res){
+						case 'bigint':res;
+						case 'boolean':res;
+					}
+					if(TempBox.no_box(res)){
 						this.push(new TempBox(res));
 					} else {
 						this.push(res);
