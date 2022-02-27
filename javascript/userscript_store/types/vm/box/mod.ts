@@ -22,9 +22,12 @@ import {StackVMBox} from "./StackVMBox";
 import {TypeOfResult} from "../TypeOfResult";
 import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
+import {VoidPromiseBox} from "./VoidPromiseBox";
 
 type ValueBoxes =
-// function result
+
+
+export type IBox = // function result
 CSSStyleSheetInitBox |
 // array
 EmptyArrayBox |
@@ -51,14 +54,14 @@ MediaListBox |
 IndexedFnBox |
 IndexedObject |
 ObjectBox |
-// promise box
-PromiseBox |
 // promise types
-PromiseTypeBoxes |
+VoidPromiseBox |
+PromiseBox |
+// primitive
+Primitives |
+null |
 // No value (Void)
-VoidBox;
-
-export type IBox = ValueBoxes | Primitives | null;
+VoidBox ;
 
 export class Box<T> {
 	constructor(value: T) {
