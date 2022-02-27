@@ -1,4 +1,6 @@
-import {InstructionType, IStackVM, ArrayBox, VMIndexedCallableBox, GlobalThisBox, InstructionTypeArrayBox, VMIndexedValue, IStackVMBox, WindowBox, VMValue} from "../types/SimpleVMTypes";
+import {InstructionType, ArrayBox, VMIndexedCallableBox, GlobalThisBox, InstructionTypeArrayBox, VMIndexedValue, IStackVMBox, WindowBox} from "../types/vm/SimpleVMTypes";
+import {IStackVM} from "../types/vm/IStackVM";
+import {VMValue} from "../types/vm/VMValue";
 
 function fire_timer(timer: RemoteTimer, remote_id: number) {
 	timer.fire(remote_id);

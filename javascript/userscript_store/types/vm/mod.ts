@@ -1,5 +1,8 @@
-import {Indexed, NewableFunction} from "types/vm";
-import {Function as VMFunction} from "types/vm";
+import {Indexed, NewableFunction} from "./vm";
+import {Function as VMFunction} from "./vm";
+import {IStackVM} from "./IStackVM";
+import {VMObjectTypes} from "./VMObjectTypes";
+import {VMValue} from "./VMValue";
 
 class Box<T> {
 	constructor(value: T) {
@@ -11,19 +14,6 @@ class Box<T> {
 		return null;
 	}
 }
-/* --- VM Value supporting types ---
-IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
-*/
-/* --- VM Value supporting interfaces ---
-StackVM
-*/
-export interface IStackVM {
-	push(value: VMValue): void;
-	pop(): VMValue | undefined;
-	pop_arg_count(q: number): VMValue[];
-	stack: VMValue[];
-}
-
 type typeofArg='object'|'function'
 
 /* --- VM Value (classes) ---
@@ -66,19 +56,20 @@ export class EmptyArrayBox extends Box<[]> {
 	type: "array_box" = "array_box";
 }
 
-type VMObjectTypes = VMIndexedCallableBox | VMIndexedValue | ObjectBox;
-export type VMIndexedValueRaw = Indexed<VMValue>;
 export type VMIndexedCallableRaw = Indexed<VMFunction>;
 export class VMIndexedCallableBox extends Box<VMIndexedCallableRaw> {
-	type: "callable_index" = "callable_index";
-	index_type: "callable_box" = "callable_box";
+	type: "object_box" = "object_box";
+	extension:'function'='function';
 };
+export type VMIndexedValueRaw = Indexed<VMValue>;
 export class VMIndexedValue extends Box<VMIndexedValueRaw>{
-	type: "object_index" = "object_index";
+	type: "object_box" = "object_box";
+	extension:'index'='index';
 	index_type: "value" = "value";
 }
 export class ObjectBox extends Box<{}> {
 	type: "object_box" = "object_box";
+	extension:'null'='null';
 	inner_type: null = null;
 }
 type InstanceBoxes = IStackVMBox | NodeBox | CSSStyleSheetBox | MediaListBox;
@@ -156,7 +147,7 @@ export class PromiseBox extends Box<Promise<VMValue>> {
 	await_type: "value" = "value";
 }
 
-type BoxesWithoutValue = VoidBox;
+export type BoxesWithoutValue = VoidBox;
 export class VoidBox {
 	type: "special" = "special";
 	value_type: "void" = "void";
@@ -180,8 +171,6 @@ export class WindowBox extends Box<Window>{
 }
 
 
-// --- VM Value (types) ---
-export type VMBoxedValues = BoxesWithValue | BoxesWithoutValue;
 export type BoxesWithValue =
 	ArrayBoxes |
 	VMObjectTypes |
@@ -196,10 +185,6 @@ export type BoxesWithValue =
 	FunctionBoxes;
 export type UnboxedObjects = BoxesWithValue['value'] | null;
 export type Unboxed = UnboxedObjects | string | number | bigint | boolean | symbol | undefined;
-export type VMPrimitiveValues = bigint | boolean | number | string | symbol | undefined;
-export type VMValue = VMBoxedValues | VMPrimitiveValues | null;
-
-
 // --- Instruction ---
 export type InstructionPush = ['push', ...VMValue[]];
 export type InstructionDrop = ['drop'];
