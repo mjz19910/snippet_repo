@@ -1,4 +1,4 @@
-import {DocumentWriteFn} from "../DocumentWriteFn";
+import {DocumentWriteFn} from "./DocumentWriteFn";
 import {DocumentWriteList} from "./DocumentWriteList";
 
 export class DocumentWriteFnProxyHandler {

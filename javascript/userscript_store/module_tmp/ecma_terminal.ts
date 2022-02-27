@@ -1,6 +1,10 @@
+import {ecma_12_2} from "./ecma_12_2";
 import {ecma_base} from "./ecma_base";
 
-export class ecma_terminal extends ecma_base {
+type impl_real=ecma_base & ecma_12_2;
+
+export class ecma_terminal implements impl_real {
+	WhiteSpace=ecma_12_2.prototype.WhiteSpace;
 	/**
 	 * @param {any} str
 	 * @param {any} index

@@ -1,4 +1,4 @@
-import {AbstractTarget} from "./AbstractTarget";
+import {AbstractTarget} from "types/AbstractTarget";
 import {TimeoutTargetObjects} from "./TimeoutTargetObjects";
 import {TimeoutCallbackType} from "./TimeoutCallbackType";
 

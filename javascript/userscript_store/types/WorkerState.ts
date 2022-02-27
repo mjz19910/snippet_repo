@@ -1,15 +1,15 @@
-import {PromiseExecutorHandle} from "types/PromiseExecutorHandle";
+import {PromiseExecutorHandle} from "./PromiseExecutorHandle";
 import {TimeoutFireS, TIMER_SINGLE, TIMER_REPEATING, WorkerDestroyMessage, ReplyMessage1, ReplyMessage2, ReplyFromWorker, message_types, WorkerUpdateMessageHandlerReply, WorkerReadyReply, LOG_LEVEL_VERBOSE, ReplySetSingle, ReplySetRepeating, TimeoutClearR, TimeoutClearS} from "../typed_mod_rebuild_auto";
-import {MessageTimeoutSetR} from "../MessageTimeoutSetR";
-import {MessageTimeoutSetS} from "../MessageTimeoutSetS";
-import {MessageTimeoutSingleReply} from "../MessageTimeoutSingleReply";
-import {l_log_if} from "../l_log_if";
-import {MessageTimeoutClearA} from "../MessageTimeoutClearA";
-import {DispatchMessageType} from "../DispatchMessageType";
-import {MessageTimeoutClearR} from "../MessageTimeoutClearR";
-import {MessageTimeoutClearS} from "../MessageTimeoutClearS";
-import {MessageTypesForWorkerReplies} from "../MessageTypesForWorkerReplies";
-import {MessageTimeoutFireS} from "../MessageTimeoutFireS";
+import {MessageTimeoutSetR} from "./MessageTimeoutSetR";
+import {MessageTimeoutSetS} from "./MessageTimeoutSetS";
+import {MessageTimeoutSingleReply} from "./MessageTimeoutSingleReply";
+import {l_log_if} from "./l_log_if";
+import {MessageTimeoutClearA} from "./MessageTimeoutClearA";
+import {DispatchMessageType} from "./DispatchMessageType";
+import {MessageTimeoutClearR} from "./MessageTimeoutClearR";
+import {MessageTimeoutClearS} from "./MessageTimeoutClearS";
+import {MessageTypesForWorkerReplies} from "./MessageTypesForWorkerReplies";
+import {MessageTimeoutFireS} from "./MessageTimeoutFireS";
 import {Timer} from "./Timer";
 
 export class WorkerState {

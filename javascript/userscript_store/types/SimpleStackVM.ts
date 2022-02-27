@@ -1,6 +1,6 @@
-import {InstructionType} from "./types/vm/instruction/mod";
-import StackVMBox from "./types/vm/box/StackVMBox";
-import WindowBox from "./types/vm/box/WindowBox";
+import {InstructionType} from "./vm/instruction/mod";
+import StackVMBox from "./vm/box/StackVMBox";
+import WindowBox from "./vm/box/WindowBox";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint";
 import {BaseStackVM} from "./BaseStackVM";
 

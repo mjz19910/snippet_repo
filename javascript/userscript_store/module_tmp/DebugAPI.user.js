@@ -1,4 +1,4 @@
-import {ecma_base} from "ecma_base.js";
+import {ecma_base} from "module_tmp/ecma_base.js";
 import {DebugAPI} from "./final/DebugApi/DebugAPI";
 import {Dumper} from "./Dumper";
 import {ecma_12_2} from "./ecma_12_2";

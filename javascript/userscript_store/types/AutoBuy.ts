@@ -6,17 +6,17 @@ import {DomBuilderVM} from "./DomBuilderVM";
 import {DataLoader} from "./DataLoader";
 import {debug_id_syms, AUDIO_ELEMENT_VOLUME, is_in_ignored_from_src_fn, LOG_LEVEL_VERBOSE} from "../typed_mod_rebuild_auto";
 import {specialclick_inject} from "../specialclick_inject";
-import {lightreset_inject} from "../lightreset_inject";
-import {array_sample_end} from "../array_sample_end";
-import {AsyncNodeRoot} from "../AsyncNodeRoot";
-import {AsyncTimeoutNode} from "../AsyncTimeoutNode";
+import {lightreset_inject} from "./lightreset_inject";
+import {array_sample_end} from "./array_sample_end";
+import {AsyncNodeRoot} from "./AsyncNodeRoot";
+import {AsyncTimeoutNode} from "./AsyncTimeoutNode";
 import {AsyncTimeoutTarget} from "../AsyncTimeoutTarget";
 import {TimeoutTarget} from "../TimeoutTarget";
 import {MulCompression} from "../MulCompression";
 import {EventHandlerVMDispatch} from "../EventHandlerVMDispatch";
 import {SimpleStackVMParser} from "../SimpleStackVMParser";
 import {l_log_if} from "../l_log_if";
-import {EventHandlerDispatch} from "../EventHandlerDispatch";
+import {EventHandlerDispatch} from "./EventHandlerDispatch";
 import {do_auto_unit_promote} from "./do_auto_unit_promote";
 
 export class AutoBuy implements IAutoBuy {
@@ -105,7 +105,7 @@ export class AutoBuy implements IAutoBuy {
 		try {
 			return this.background_audio.play();
 		} catch(e) {
-			is_in_ignored_from_src_fn = true;
+			is_in_ignored_from_src_fn.flag = true;
 			console.log("failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 		}
 		let instructions = SimpleStackVMParser.parse_instruction_stream_from_string(`
@@ -123,7 +123,7 @@ export class AutoBuy implements IAutoBuy {
 			`, [function() {console.log('play success');}, function(err: Box) {console.log(err);}]);
 		let handler = new EventHandlerVMDispatch(instructions, this);
 		globalThis.addEventListener('click', handler);
-		is_in_ignored_from_src_fn = false;
+		is_in_ignored_from_src_fn.flag = false;
 	}
 	save_state_history_arr() {
 		if(this.skip_save)

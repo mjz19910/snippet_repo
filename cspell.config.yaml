@@ -64,6 +64,7 @@ words:
   - fmstr
   - fnlist
   - fnname
+  - FormattableTypes
   - found_objs
   - foward
   - froms

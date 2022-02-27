@@ -4,12 +4,12 @@ import {WorkerState} from "./WorkerState";
 import {TimerState} from "./TimerState";
 import {timer_nop} from "final/version_0.1/types/timer_nop";
 import {cur_event_fns, is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn, message_types, ReplyClearSingle, ReplySetRepeating, ReplySetSingle, TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "typed_mod_rebuild_auto";
-import {TimeoutSetStrings} from "TimeoutSetStrings";
-import {TimeoutSetRTy} from "TimeoutSetRTy";
-import {TimeoutSetSTy} from "TimeoutSetSTy";
-import {SetMessageData} from "SetMessageData";
-import {TimerTag} from "TimerTag";
-import {DispatchMessageType} from "DispatchMessageType";
+import {TimeoutSetStrings} from "./TimeoutSetStrings";
+import {TimeoutSetRTy} from "./TimeoutSetRTy";
+import {TimeoutSetSTy} from "./TimeoutSetSTy";
+import {SetMessageData} from "types/SetMessageData";
+import {TimerTag} from "./TimerTag";
+import {DispatchMessageType} from "./DispatchMessageType";
 export class Timer {
 	id_generator;
 	m_remote_id_to_main_state_map: any;

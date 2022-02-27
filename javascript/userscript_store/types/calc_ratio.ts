@@ -7,3 +7,5 @@ export function calc_ratio(arr: number[]) {
 		return 0;
 	return ratio_acc / arr.length;
 }
+
+console.assert(calc_ratio([0, 0]) === 0, "calc ratio of array full of zeros does not divide by zero");

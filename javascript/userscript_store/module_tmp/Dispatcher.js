@@ -1,4 +1,4 @@
-import {DispatcherType} from "DispatcherType.js";
+import {DispatcherType} from "types/DispatcherType.js";
 
 export class Dispatcher extends DispatcherType {
 	IdentifierName() {

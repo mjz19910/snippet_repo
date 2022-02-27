@@ -1,11 +1,7 @@
 import {ecma_base} from "./ecma_base";
 
 export class ecma_12_2 extends ecma_base {
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
-	WhiteSpace(str, index) {
+	public WhiteSpace(str: string, index: number) {
 		if(str[index] === ' ') {
 			return ['WhiteSpace', 1];
 		}

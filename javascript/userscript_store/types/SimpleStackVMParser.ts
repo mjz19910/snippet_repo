@@ -3,6 +3,7 @@ import Box from "./types/vm/box/Box";
 import {FormattableTypes} from "./FormattableTypes";
 
 export class SimpleStackVMParser {
+	static match_regex=/(.+?)(;|$)/gm;
 	/**@arg {string[] | number[]} cur @arg {number} arg_loc*/
 	static parse_int_arg(cur_item: string | number) {
 		if(typeof cur_item == 'string') {
@@ -63,7 +64,6 @@ export class SimpleStackVMParser {
 			return [];
 		return iter.split(",");
 	}
-	static match_regex: RegExp;
 	static parse_string_into_raw_instruction_stream(string: string): string[][] {
 		const parser_max_match_iter = 390;
 		let parts: RegExpExecArray | null, arr: string[][] = [], i = 0;
