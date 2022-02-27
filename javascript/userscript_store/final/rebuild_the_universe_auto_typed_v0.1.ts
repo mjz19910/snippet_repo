@@ -1,4 +1,4 @@
-import {InstructionType} from "../types/vm/InstructionType";
+import {InstructionType} from "../types/vm/instruction/mod";
 import {WindowBox} from "../types/vm/WindowBox";
 import {IStackVMBox} from "../types/vm/IStackVMBox";
 import {IndexedObject} from "../types/vm/IndexedObject";

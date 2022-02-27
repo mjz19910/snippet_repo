@@ -4,7 +4,7 @@ export type SkipItem0<T extends [f: any, ...v: any[]]> = SkipItem0_t<T, T[0]>;
 export {FunctionBox} from "./box/FunctionBox";
 export {Box as Boxed} from "./box/Box";
 export {IStackVM} from "./IStackVM";
-export {InstructionType} from "./InstructionType";
+export {InstructionType} from "./instruction/mod";
 export {IndexedFnBox as IndexedFnBox} from "./box/IndexedFunctionBox";
 export {CSSStyleSheetConstructorBox} from "./box/CSSStyleSheetConstructorBox";
 export {CSSStyleSheetBox} from "./box/CSSStyleSheetBox";

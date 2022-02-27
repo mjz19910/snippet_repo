@@ -1,6 +1,6 @@
-import {InstructionPushArgs} from "./InstructionPushArgs";
-import {InstructionThis} from "./InstructionThis";
-import {InstructionGlobal} from "./InstructionGlobal";
+import {InstructionPushArgs} from "./instruction/InstructionPushArgs";
+import {InstructionThis} from "./instruction/InstructionThis";
+import {InstructionGlobal} from "./instruction/InstructionGlobal";
 
 
 export type ISpecialInstructionType = InstructionPushArgs | InstructionThis | InstructionGlobal;

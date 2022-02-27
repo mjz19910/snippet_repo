@@ -2,7 +2,7 @@ import {NonNull} from "api";
 import {IAutoBuy} from "types/rebuild_the_universe_auto_interface";
 import {RecursivePartial} from "types/RecursivePartial";
 import {InstructionTypeBox} from "./types/vm/VMBoxedInstructionType";
-import {InstructionType} from "./types/vm/InstructionType";
+import {InstructionType} from "./types/vm/instruction/mod";
 import {WindowBox} from "./types/vm/WindowBox";
 import {IStackVMBox} from "./types/vm/IStackVMBox";
 import {IndexedObject} from "./types/vm/IndexedObject";

@@ -1,4 +1,4 @@
-import {InstructionType} from "./InstructionType";
+import {InstructionType} from "./instruction/mod";
 import {Box} from "./box/mod";
 
 
