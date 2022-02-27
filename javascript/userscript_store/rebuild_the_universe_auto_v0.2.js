@@ -17,7 +17,14 @@
 // @grant			none
 // ==/UserScript==
 
+import {ArrayBox} from "types/vm/box/ArrayBox.js";
+import {CSSStyleSheetBox} from "types/vm/box/CSSStyleSheetBox.js";
+import {CSSStyleSheetConstructorBox} from "types/vm/box/CSSStyleSheetConstructorBox.js";
 import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
+import {FunctionBox} from "types/vm/box/FunctionBox.js";
+import {IndexedFnBox} from "types/vm/box/IndexedFunctionBox.js";
+import {NewableFunctionBox} from "types/vm/box/NewableFunctionBox.js";
+import {PromiseBox} from "types/vm/box/PromiseBox.js";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 (function() {
@@ -54,12 +61,11 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		}
 	}
 	/**@typedef {import("types/vm/box/mod.js").IBox} IBox */
-	/**@typedef {IStackVM} IStackVM */
-	/**@typedef {InstructionType} InstructionType */
+	/**@typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionTypeV */
 	/**@typedef {IndexedFnBox} VMIndexedCallableValue */
 
 
-	/**@typedef {import("types/vm/mod.js").CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor */
+	/**@typedef {CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor */
 	/**@implements {VMBoxedCSSStyleSheetConstructor} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
@@ -82,7 +88,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			return null;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").CSSStyleSheetBox} VMBoxedCSSStyleSheet */
+	/**@typedef {CSSStyleSheetBox} VMBoxedCSSStyleSheet */
 	/**@implements {VMBoxedCSSStyleSheet} */
 	class VMBoxedCSSStyleSheetR {
 		/**@type {"instance_box"} */
@@ -98,7 +104,6 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").PromiseBox} PromiseBox */
 	/**@implements {PromiseBox} */
 	class PromiseBoxImpl {
 		/**@type {"promise"} */
@@ -114,7 +119,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").NewableFunctionBox} VMBoxedNewableFunction */
+	/**@typedef {NewableFunctionBox} VMBoxedNewableFunction */
 	/**@implements {VMBoxedNewableFunction} */
 	class VMBoxedNewableFunctionR {
 		/**@type {"constructor_box"} */
@@ -164,7 +169,6 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			v:prop.value
 		};
 	}
-	/**@typedef {import("types/vm/mod.js").FunctionBox} FunctionBox */
 	/**@implements {FunctionBox} */
 	class FunctionBoxImpl {
 		/**@type {"function_box"} */
@@ -207,7 +211,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 				return this.unbox_value(v);
 			});
 		}
-		/**@arg {InstructionCall} instruction @arg {IStackVM} vm */
+		/**@arg {InstructionCall} instruction @arg {StackVM} vm */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments = instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -225,38 +229,10 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			let b=a.get_matching_typeof('function');
 			if(!b)throw new Error("Type mismatch");
 			if(b.type === 'function_box') {
-				let ret = b.value.apply(target_this, this.unbox_args(arg_arr));
-				switch(typeof ret){
-					case 'bigint':
-						vm.push(ret);
-						break;
-					case 'string':
-						vm.push(ret);
-						break;
-					case 'function':
-						vm.push(new FunctionBoxImpl(ret));
-						break;
-					case 'object':
-						if(ret instanceof StackVM){
-							vm.push(new IStackVMBoxImpl(ret));
-						} else {
-							ret;
-							throw new Error("Invalid type");
-						};
-				}
-				if(typeof ret == 'object') {
-				}
+				let ret = b.value.apply(target_this, arg_arr);
+				vm.push(ret);
 			} else if (b.type == 'constructor_box'){
 				throw new Error("Unexpected constructor");
-			} else if (b.type === 'function_box'){
-				if(b.return_type == 'promise'){
-					let ret=b.value.apply(target_this, arg_arr);
-					vm.push(ret);
-				} else if(b.return_type === null) {
-					let ret=b.value.apply(target_this, arg_arr);
-					console.info('fixme type of return is any', ret);
-					vm.push(ret);
-				}
 			} else {
 				throw new Error("Unreachable (type of value is never)");
 			}
@@ -268,6 +244,13 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 	class EmptyArrayBoxImpl {
 		/**@type {"array_box"} */
 		type="array_box";
+		/**@arg {'object'} type */
+		get_matching_typeof(type){
+			if(typeof this.value === type){
+				return this;
+			}
+			return null;
+		}
 		/**@arg {[]} v */
 		constructor(v){
 			this.value=v;
@@ -291,7 +274,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").InstructionConstruct} InstructionConstruct */
+	/**@typedef {import("types/vm/instruction/InstructionConstruct.js").InstructionConstruct} InstructionConstructT */
 	class InstructionConstructE {
 		/**@type {<T>(arr:T[])=>arr is []} */
 		static is_array_empty(arr){
@@ -307,7 +290,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			}
 			return null;
 		}
-		/**@arg {InstructionConstruct} instruction @arg {IStackVM} vm */
+		/**@arg {InstructionConstructT} instruction @arg {StackVM} vm */
 		static execute_instruction(vm, instruction){
 			let number_of_arguments=instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -370,13 +353,12 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		}
 	}
 	class InstructionCastObjectE {
-		/**@arg {import("types/vm/mod.js").InstructionCastObject} instruction @arg {IStackVM} vm */
+		/**@arg {import("types/vm/instruction/InstructionCast.js").InstructionCast} instruction @arg {StackVM} vm */
 		static execute_instruction(vm, instruction){
 			let obj=vm.pop();
 			if(!obj)throw new Error("Invalid");
 			console.log('VM: cast_object', instruction[1], obj);
 			if(typeof obj!='object')throw new Error("Invalid");
-			/**@typedef {import("types/vm/mod.js").VMIndexedValueRaw} VMIndexedValue */
 			/**@type {<T>(q:T, v:any)=>v is T} */
 			function can_cast_indexed(q, obj) {
 				if(obj === null){
@@ -395,14 +377,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			}
 			switch(instruction[1]){
 				case 'object_index':{
-					/**@type {VMIndexedValue|null} */
-					let unboxed_obj=null;
-					if(obj.type === 'custom_box'){
-						unboxed_obj=as_indexed(unboxed_obj, obj.value);
-					} else {
-						unboxed_obj=as_indexed(unboxed_obj, obj);
-					}
-					if(unboxed_obj)vm.push(new VMIndexedObjectValueR(unboxed_obj));
+					throw new Error("TODO");
 				} break;
 				case 'callable_index':{
 					/**@type {(v:any)=>v is VMIndexedCallableValueRaw} */
@@ -423,10 +398,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 					/**@type {VMIndexedCallableValueRaw|null} */
 					let unboxed_obj=null;
 					if(obj.type === 'object_box'){
-						if(obj.inner_type === null){
-							throw new Error("Can't cast object without properties to an object that indexes to a callable")
-						}
-						unboxed_obj=as_indexed(obj.value);
+						throw new Error("TODO");
 					} else {
 						unboxed_obj=as_indexed(obj);
 					}
@@ -436,7 +408,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			}
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").IStackVMBox} IStackVMBox */
+	/**@typedef {IStackVMBox} IStackVMBox */
 	/**@implements {IStackVMBox} */
 	class IStackVMBoxImpl {
 		/**@type {"custom_box"} */
@@ -452,7 +424,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			this.value = value;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").WindowBox} VMBoxedWindow */
+	/**@typedef {WindowBox} VMBoxedWindow */
 	/**@implements {VMBoxedWindow} */
 	class VMBoxedWindowR {
 		/**@type {"object_box"} */
@@ -468,7 +440,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			this.value = value;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").ObjectBox} VMBoxedObject */
+	/**@typedef {ObjectBox} VMBoxedObject */
 	/**@implements {VMBoxedObject} */
 	class VMBoxedObjectR {
 		/**@type {"object_box"} */
@@ -526,7 +498,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		}
 		return null;
 	}
-	/**@typedef {import("types/vm/mod.js").VMIndexedValue} VMIndexedObjectValue */
+	/**@typedef {VMIndexedValue} VMIndexedObjectValue */
 	/**@implements {VMIndexedObjectValue} */
 	class VMIndexedObjectValueR {
 		/**@type {"object_index"} */
@@ -537,30 +509,34 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {import("types/vm/mod.js").VMIndexed<IBox>} value */
+		/**@arg {VMIndexed<IBox>} value */
 		constructor(value){
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/vm/mod.js").VMIndexed<VMCallableValue>} VMIndexedCallableValueRaw */
-	/**@implements {VMIndexedCallableValue} */
-	class VMIndexedCallableValueR {
-		/**@type {"callable_index"} */
-		type= "callable_index";
-		/**@type {"callable_box"} */
-		index_type = "callable_box";
-		/**@arg {'function'} _to_match */
-		get_matching_typeof(_to_match) {
-			return null;
-		}
-		/**@arg {VMIndexedCallableValueRaw} value */
+	/**@type {IBox} */
+	class BoxBase {
+		/**@arg {IBox['value']} value */
 		constructor(value){
 			this.value=value;
 		}
-	};
-	/**@implements {IStackVM} */
+		get_matching_typeof(to_match) {
+			if(typeof this.value === to_match)return this;
+			return null;
+		}
+	}
+	/**@typedef {VMIndexed<VMCallableValue>} VMIndexedCallableValueRaw */
+	/**@implements {VMIndexedCallableValue} */
+	class VMIndexedCallableValueR extends BoxBase {
+		/**@type {"object_box"} */
+		type= "object_box";
+		/**@type {'function'} */
+		extension='function';
+		/**@type {"callable_box"} */
+		index_type = "callable_box";
+	}
 	class StackVM {
-		/**@arg {InstructionType[]} instructions */
+		/**@arg {InstructionTypeV[]} instructions */
 		constructor(instructions){
 			this.instructions = instructions;
 			this.instruction_pointer = 0;
@@ -614,7 +590,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			equal:false,
 		};
 		/**
-		 * @param {InstructionType} instruction
+		 * @param {InstructionTypeV} instruction
 		 */
 		execute_instruction(instruction) {
 			/**@type {('je'|'jmp'|'modify_operand'|'push_pc'|'halt'|'push'|'drop'|'dup'|'get'|'call'|'construct'|'return')[]}*/
@@ -738,7 +714,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 	}
 	/**@implements {IStackVM} */
 	class SimpleStackVM extends StackVM {
-		/**@arg {InstructionType[]} instructions */
+		/**@arg {InstructionTypeV[]} instructions */
 		constructor(instructions){
 			super(instructions);
 			this.args_vec=null;
@@ -748,7 +724,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			this.args_vec=null;
 		}
 		/**
-		 * @param {InstructionType} instruction
+		 * @param {InstructionTypeV} instruction
 		 */
 		execute_instruction(instruction) {
 			/**@type {('this'|'global'|'call')[]}*/
@@ -781,7 +757,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 					if(typeof target_name!='string')throw new Error("Invalid");
 					if(target_obj===null)throw new Error("Invalid");
 					if(target_obj.type!="callable_index")throw new Error("Invalid");
-					/**@type {import("types/vm/mod.js").Unboxed[]} */
+					/**@type {Unboxed[]} */
 					let unboxed_args=[];
 					for(let i=0;i<arg_arr.length;i++) {
 						let cur=arg_arr[i];
@@ -844,7 +820,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 	}
 	/**@implements {IStackVM} */
 	class EventHandlerVMDispatch extends SimpleStackVM {
-		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
+		/**@arg {InstructionTypeV[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
 			super(instructions);
 			this.target_obj = target_obj;
@@ -859,7 +835,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 	class DomBuilderVM {
 		/**@type {IBox} */
 		return_value;
-		/**@arg {InstructionType[]} instructions */
+		/**@arg {InstructionTypeV[]} instructions */
 		constructor(instructions) {
 			this.instructions=instructions;
 			this.instruction_pointer=0;
@@ -869,7 +845,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			 */
 			this.stack=[];
 			/**
-			 * @type {[IBox[], InstructionType[]][]}
+			 * @type {[IBox[], InstructionTypeV[]][]}
 			 */
 			this.exec_stack=[];
 			this.jump_instruction_pointer=null;
@@ -898,7 +874,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			}
 			return arguments_arr;
 		}
-		/**@arg {InstructionType} instruction */
+		/**@arg {InstructionTypeV} instruction */
 		execute_instruction(instruction) {
 			/**@type {('exec'|'peek'|'append')[]}*/
 			let handled_instructions=['exec', 'peek', 'append'];
@@ -987,16 +963,16 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 				} break;
 			}
 		}
-		/**@typedef {import("types/vm/mod.js").NodeBox} VMBoxedDomValue */
+		/**@typedef {NodeBox} VMBoxedDomValue */
 		/**
-		 * @param {import("types/vm/mod.js").VMValue} box
+		 * @param {VMValue} box
 		 * @returns {box is VMBoxedDomValue}
 		 */
 		can_use_box(box){
 			return typeof box=='object' && box!==null && box.type === 'dom_value' && (box.from === 'get' || box.from === 'create');
 		}
 		/**
-		 * @param {import("types/vm/mod.js").VMValue} box
+		 * @param {VMValue} box
 		 */
 		verify_dom_box(box){
 			if(typeof box!='object')throw new Error("invalid Box (not an object)");
@@ -1119,10 +1095,10 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			}
 			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
 		}
-		/**@arg {string[]} instruction @returns {InstructionType}*/
+		/**@arg {string[]} instruction @returns {InstructionTypeV}*/
 		static verify_instruction(instruction){
 			let num_to_parse=instruction.length;
-			/**@type {InstructionType|null} */
+			/**@type {InstructionTypeV|null} */
 			let ret=null;
 			switch(instruction[0]) {
 				case 'push':{
@@ -1169,9 +1145,9 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			}
 			throw new Error("Unreachable");
 		}
-		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
+		/** @arg {string[][]} raw_instructions @return {InstructionTypeV[]} */
 		static verify_raw_instructions(raw_instructions){
-			/**@type{InstructionType[]}*/
+			/**@type{InstructionTypeV[]}*/
 			const instructions = [];
 			for(let i = 0;i < raw_instructions.length;i++) {
 				instructions.push(this.verify_instruction(raw_instructions[i]));
@@ -2317,7 +2293,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
-	/**@typedef {import("types/vm/mod.js").CallableReturnsVoidPromiseBox} VMReturnsBoxedVoidPromise */
+	/**@typedef {CallableReturnsVoidPromiseBox} VMReturnsBoxedVoidPromise */
 	/**@implements {VMReturnsBoxedVoidPromise} */
 	class VMReturnsBoxedVoidPromiseR {
 		/**@type {"function_box"} */
@@ -2654,7 +2630,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 				}
 			}
 			let bound_this=this;
-			/**@typedef {import("types/vm/mod.js").VoidPromiseBox} VMBoxedVoidPromise */
+			/**@typedef {VoidPromiseBox} VMBoxedVoidPromise */
 			/**@implements {VMBoxedVoidPromise} */
 			class VMBoxedVoidPromiseR {
 				/**@type {"promise"} */
@@ -2730,7 +2706,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			let res=new PromiseBoxImpl(r2);
 			return res;
 		}
-		/**@typedef {[number, ...InstructionType]} InstructionWithDepth */
+		/**@typedef {[number, ...InstructionTypeV]} InstructionWithDepth */
 		/**
 		 * @param {DomExecDescription[]} raw_arr
 		 */
@@ -2828,7 +2804,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 		get [next_debug_id()](){
 			return '';
 		}
-		/**@typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack */
+		/**@typedef {((InstructionTypeV|['vm_call_at', InstructionTypeV])[]|null)[]} DomInstructionStack */
 		/**
 		 * @arg {import("api").NonNull<DomInstructionStack[0]>[0]} value @arg {number} stack_ptr
 		 * @arg {DomInstructionStack} stack
@@ -2841,7 +2817,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 				stack[stack_ptr] = [value];
 			}
 		}
-		/** @arg {InstructionWithDepth[]} input_instructions @returns {InstructionType[]} */
+		/** @arg {InstructionWithDepth[]} input_instructions @returns {InstructionTypeV[]} */
 		parse_dom_stack(input_instructions) {
 			const double_indirect_error_str="Double indirect vm_call is hard to prove to the typechecker";
 			/**@type {DomInstructionStack} */
@@ -2866,7 +2842,7 @@ import {EmptyArrayBox} from "types/vm/box/EmptyArrayBox.js";
 			}
 			/**@type {import("api").NonNull<DomInstructionStack[0]>} */
 			let flat_stack=[];
-			/**@type {InstructionType[]} */
+			/**@type {InstructionTypeV[]} */
 			let instructions=[];
 			for(let i=0;i<stack.length;i++){
 				let cur_instructions=stack[i];

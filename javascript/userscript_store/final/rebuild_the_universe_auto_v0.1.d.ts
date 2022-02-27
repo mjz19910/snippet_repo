@@ -1,3 +1,4 @@
+import {InstructionType} from "types/vm/instruction/mod";
 import {IAutoBuy} from "../types/rebuild_the_universe_auto_interface";
 import {WeakRef} from "../types/weak_ref"
 
@@ -249,18 +250,6 @@ declare class EventHandlerDispatch {
 	constructor(target_obj: any, target_name: string);
 	handleEvent(event: any): void;
 }
-type StackInstructionTypeCategory = ['push', ...any[]] | ['drop'];
-type ObjectInstructionTypeCategory = ['get'];
-type CallInstructionTypeCategory = ['call', number] | ['return'];
-type TuringInstructionTypeCategory = ['halt'];
-type SpecialInstructionTypeCategory = ['push_args'] | ['this'] | ['push_window'];
-type DebugInstructionTypeCategory = ['breakpoint'];
-type InstructionType = StackInstructionTypeCategory
-	| ObjectInstructionTypeCategory
-	| CallInstructionTypeCategory
-	| TuringInstructionTypeCategory
-	| SpecialInstructionTypeCategory
-	| DebugInstructionTypeCategory;
 
 declare class SimpleStackVM<ReturnType, StackItemType> {
 	instructions: InstructionType[];
