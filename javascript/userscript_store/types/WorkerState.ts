@@ -1,5 +1,5 @@
 import {PromiseExecutorHandle} from "types/PromiseExecutorHandle";
-import {MessageTypesForWorkerReplies, TimeoutFireS, TIMER_SINGLE, TIMER_REPEATING, WorkerDestroyMessage, ReplyMessage1, ReplyMessage2, ReplyFromWorker, message_types, DispatchMessageType, WorkerUpdateMessageHandlerReply, WorkerReadyReply, l_log_if, LOG_LEVEL_VERBOSE, ReplySetSingle, ReplySetRepeating, TimeoutClearR, TimeoutClearS, MessageTimeoutFireS, MessageTimeoutClearA, MessageTimeoutSingleReply, MessageTimeoutClearS, MessageTimeoutSetS, MessageTimeoutSetR, MessageTimeoutClearR} from "./rebuild_the_universe_auto_typed_v0.2";
+import {MessageTypesForWorkerReplies, TimeoutFireS, TIMER_SINGLE, TIMER_REPEATING, WorkerDestroyMessage, ReplyMessage1, ReplyMessage2, ReplyFromWorker, message_types, DispatchMessageType, WorkerUpdateMessageHandlerReply, WorkerReadyReply, l_log_if, LOG_LEVEL_VERBOSE, ReplySetSingle, ReplySetRepeating, TimeoutClearR, TimeoutClearS, MessageTimeoutFireS, MessageTimeoutClearA, MessageTimeoutSingleReply, MessageTimeoutClearS, MessageTimeoutSetS, MessageTimeoutSetR, MessageTimeoutClearR} from "../rebuild_the_universe_auto_typed_v0.2";
 import {Timer} from "./Timer";
 
 export class WorkerState {

@@ -1,8 +1,8 @@
-import {TimerApi} from "TimerApi";
-import {UniqueIdGenerator} from "UniqueIdGenerator";
-import {worker_code_function} from "worker_code_function";
-import {WorkerState} from "WorkerState";
-import {Timer} from "Timer";
+import {TimerApi} from "./TimerApi";
+import {UniqueIdGenerator} from "types/UniqueIdGenerator";
+import {worker_code_function} from "./worker_code_function";
+import {WorkerState} from "./WorkerState";
+import {Timer} from "./Timer";
 import {do_worker_verify} from "types/do_worker_verify";
 import {WorkerDestroyMessage, l_log_if, LOG_LEVEL_WARN, TIMER_SINGLE, TIMER_REPEATING} from "../rebuild_the_universe_auto_typed_v0.2";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle";

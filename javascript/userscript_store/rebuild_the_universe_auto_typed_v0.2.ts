@@ -7,17 +7,17 @@ import StackVMBox from "./types/vm/box/StackVMBox";
 import WindowBox from "./types/vm/box/WindowBox";
 import IAutoBuy from "types/IAutoBuy";
 import {AutoBuyState} from "./types/AutoBuyState";
-import {SymbolRef} from "./SymbolRef";
+import {SymbolRef} from "./types/SymbolRef";
 import {next_debug_id} from "./types/next_debug_id";
 import {AbstractBox} from "./types/AbstractBox";
 import {AutoBuy} from "./types/AutoBuy";
 import {ProxyHandlers} from "./types/ProxyHandlers";
-import {TimerApi} from "./TimerApi";
-import {ScriptStateHost} from "./ScriptStateHost";
+import {ScriptStateHost} from "./types/ScriptStateHost";
 import {find_all_scripts_using_string_apis} from "./types/find_all_scripts_using_string_apis";
 import {DocumentWriteList} from "./types/DocumentWriteList";
-import {UniqueIdGenerator} from "./UniqueIdGenerator";
+import {UniqueIdGenerator} from "./types/UniqueIdGenerator";
 import {move_timers_to_worker_promise_executor} from "types/move_timers_to_worker_promise_executor";
+import {TimerApi} from "types/TimerApi";
 
 export {};
 'use strict';
@@ -244,9 +244,9 @@ export class TimeoutClearStrings implements TimeoutClearStringsTy {
 }
 let g_timer_api = new TimerApi;
 export let message_types = g_timer_api.msg_types;
-export let is_in_ignored_from_src_fn = false;
-export let is_in_userscript_fn = false;
-export let is_in_userscript = true;
+export var is_in_ignored_from_src_fn = {flag:false};
+export var is_in_userscript_fn = {flag:false};
+export var is_in_userscript = {flag:true};
 export let cur_event_fns: (CallableFunction | NewableFunction)[] = [];
 void find_all_scripts_using_string_apis;
 export type AnyFunction = CallableFunction | NewableFunction | Function | Object;
@@ -340,7 +340,7 @@ export type MessageTimeoutSetR = {
 	t: TimeoutSetRTy;
 	v: SetRepeatingMessageData;
 }
-export function timer_nop() {}
+function timer_nop() {}
 export type TimerTag = 1 | 2;
 export type SetMessageData = {
 	t: number;

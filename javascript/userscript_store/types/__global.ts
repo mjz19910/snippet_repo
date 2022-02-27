@@ -1,6 +1,6 @@
 import IAutoBuy from "types/IAutoBuy";
 import {RemoteWorkerState} from "./RemoteWorkerState";
-import {WorkerState} from "../WorkerState";
+import {WorkerState} from "./WorkerState";
 import {DocumentWriteList} from "./DocumentWriteList";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */

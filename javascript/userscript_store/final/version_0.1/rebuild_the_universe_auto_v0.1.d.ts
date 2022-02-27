@@ -108,9 +108,6 @@ declare var prestige: number;
 interface ElementCSSInlineStyle {
 	style: CSSStyleDeclaration;
 }
-
-// declare var window:Window;
-declare function timer_nop(): void;
 declare class WorkerState {
 	rejected: boolean;
 	valid: boolean;

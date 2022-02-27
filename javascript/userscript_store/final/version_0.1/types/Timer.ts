@@ -4,9 +4,9 @@ import {WorkerState} from "./WorkerState";
 import {ApiMapData} from "./ApiMapData";
 import {MapObject} from "./MapObject";
 import {TimerState} from "./TimerState";
-import {AnyOfArr} from "./AnyOfArr";
-import {TimerTypeTag, TIMER_SINGLE, TIMER_TAG_COUNT, TIMER_REPEATING} from "./rebuild_the_universe_auto_typed_v0.1";
+import {AnyOfArr} from "./template/AnyOfArr";
 import {timer_nop} from "./timer_nop";
+import {TimerTypeTag, TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "./mod";
 
 export class Timer {
 	id_generator;

@@ -1,5 +1,5 @@
-import {VERIFY} from "../VERIFY";
-import {WorkerVerifyType} from "../WorkerVerifyType";
+import {VERIFY} from "./VERIFY";
+import {WorkerVerifyType} from "./WorkerVerifyType";
 import {TIMER_SINGLE, TIMER_REPEATING, TIMER_TAG_COUNT} from "../rebuild_the_universe_auto_typed_v0.2";
 
 export function do_worker_verify(verify_obj: WorkerVerifyType) {

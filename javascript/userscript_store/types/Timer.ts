@@ -2,9 +2,8 @@ import {TimerApi} from "./TimerApi";
 import {UniqueIdGenerator} from "./UniqueIdGenerator";
 import {WorkerState} from "./WorkerState";
 import {TimerState} from "./TimerState";
-import {timer_nop, TimerTag, TIMER_SINGLE, TIMER_REPEATING, TIMER_TAG_COUNT, cur_event_fns, is_in_ignored_from_src_fn, is_in_userscript_fn, is_in_userscript, SetMessageData, TimeoutSetRTy, TimeoutSetSTy, DispatchMessageType, ReplySetSingle, ReplySetRepeating, ReplyClearSingle, message_types} from "./rebuild_the_universe_auto_typed_v0.2";
-
-
+import {timer_nop} from "final/version_0.1/types/timer_nop";
+import {cur_event_fns, DispatchMessageType, is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn, message_types, ReplyClearSingle, ReplySetRepeating, ReplySetSingle, SetMessageData, TimeoutSetRTy, TimeoutSetStrings, TimeoutSetSTy, TimerTag, TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "rebuild_the_universe_auto_typed_v0.2";
 export class Timer {
 	id_generator;
 	m_remote_id_to_main_state_map: any;
@@ -25,7 +24,7 @@ export class Timer {
 		this.m_api_map.set(names.repeating, window[names.repeating]);
 	}
 	base_id: number | undefined;
-	set_api_names(set: TimerApi['set_names'], clear: TimerApi['clear_names']) {
+	set_api_names(set: TimeoutSetStrings, clear: TimerApi['clear_names']) {
 		this.set_map_names(set);
 		this.set_map_names(clear);
 		this.base_id = window[set.single](timer_nop);
@@ -86,12 +85,12 @@ export class Timer {
 		try {
 			if(state.active) {
 				if((<any>state.target_fn).is_userscript_fn) {
-					if(is_in_ignored_from_src_fn === false) {
-						is_in_ignored_from_src_fn = true;
+					if(is_in_ignored_from_src_fn.flag === false) {
+						is_in_ignored_from_src_fn.flag = true;
 						should_reset_ign = true;
 					}
-					if(is_in_userscript_fn === false) {
-						is_in_userscript_fn = true;
+					if(is_in_userscript_fn.flag === false) {
+						is_in_userscript_fn.flag = true;
 						should_reset_user_fn = true;
 					}
 				}
@@ -105,9 +104,9 @@ export class Timer {
 			}
 		} finally {
 			if(should_reset_ign)
-				is_in_ignored_from_src_fn = false;
+				is_in_ignored_from_src_fn.flag = false;
 			if(should_reset_user_fn)
-				is_in_userscript_fn = false;
+				is_in_userscript_fn.flag = false;
 			delete cur_event_fns[idx];
 			if(tag === TIMER_SINGLE) {
 				state.active = false;
