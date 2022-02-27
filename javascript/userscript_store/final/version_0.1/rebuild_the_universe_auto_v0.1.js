@@ -13,52 +13,89 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
+import {AutoBuyState} from "types/AutoBuyState.js";
+import {prestige, totalAtome} from "./rebuild_the_universe_auto_v0.1.js";
+import {atomepersecond} from "./types/mod.js";
+
 (function() {
 	'use strict';
 	const TIMER_SINGLE=1;
 	const TIMER_REPEATING=2;
 	const TIMER_TAG_COUNT=3;
 	const AUDIO_ELEMENT_VOLUME=0.58;
+	/**
+	 * @type {(string | number[])[]}
+	 */
 	const cint_arr=[];
 	class DocumentWriteList {
+		/**
+		 * @type {any[]}
+		 */
+		list;
 		constructor(){
 			this.list=[];
 			this.attached=false;
-			this.end_symbol=Symbol(null);
+			this.end_symbol=Symbol(void 0);
+			this.document_write=null;
+			this.attached_document=null;
+			this.document_write_proxy=null;
 		}
-		write(args_spread){
-			console.assert(args_spread[0] === this.document_write);
-			console.assert(args_spread[1] === this.attached_document);
-			this.list.push(args_spread[2], null);
+		/**
+		 * @arg {(...text: string[]) => void} target
+		 * @arg {Document} thisArg
+		 * @arg {string[]} argArray
+		 */
+		write(target, thisArg, argArray){
+			console.assert(target === this.document_write);
+			console.assert(thisArg === this.attached_document);
+			this.list.push(argArray, null);
 		}
 		/**@arg {Document} document */
 		attach_proxy(document){
 			if(this.attached){
 				let was_destroyed=this.destroy(true);
 				if(!was_destroyed){
-					throw new Error("Can't attach to new document, can't detach from old document safely, the error might be because document.write is not equal to document_write_proxy");
+					throw new Error("Can't reattach to document, document.write is not equal to DocumentWriteList.document_write_proxy");
 				}
 			}
 			this.attached_document=document;
 			this.document_write=document.write;
-			this.document_write_proxy=new Proxy(document.write, {
+			let proxy_handler={
 				other:this,
-				apply(...a){
-					this.other.write(a);
+				//target: (...text: string[]) => void, thisArg: Document, argArray: string[]
+				/**
+				 * @arg {(...text: string[]) => void} target
+				 * @arg {Document} thisArg
+				 * @arg {string[]} argArray
+				 */
+				apply(target, thisArg, argArray){
+					this.other.write(target, thisArg, argArray);
 				}
-			});
+			};
+			this.document_write_proxy=new Proxy(document.write, proxy_handler);
 			document.write=this.document_write_proxy;
 		}
-		destroy(should_try_to_destroy){
+		/**
+		 * @param {boolean} should_try_to_destroy
+		 */
+		destroy(should_try_to_destroy=false) {
 			if(this.attached_document&&this.document_write_proxy){
 				console.assert(this.attached_document.write === this.document_write_proxy);
 				if(this.attached_document.write !== this.document_write_proxy){
 					if(should_try_to_destroy){
 						return false;
 					}
-					throw new Error("Unable to destroy DocumentWriteList: document.write is not equal to document_write_proxy");
+					throw new Error("Unable to destroy: document.write is not equal to DocumentWriteList.document_write_proxy");
 				}
-				this.attached_document.write=this.document_write;
+				let doc_1=this.attached_document;
+				if(doc_1 && this.document_write) {
+					let doc_var=this.document_write;
+					/**@type {any} */
+					let any_var=doc_var;
+					/**@type {Document['write']} */
+					let vv=any_var;
+					doc_1.write=vv;
+				}
 			}
 			if(this.document_write_proxy){
 				this.document_write_proxy=null;
@@ -78,6 +115,9 @@
 		constructor(){
 			this.m_current=-1;
 		}
+		/**
+		 * @param {number} current_value
+		 */
 		set_current(current_value){
 			this.m_current=current_value;
 		}
@@ -89,19 +129,27 @@
 		}
 	}
 	class PromiseExecutorHandle {
+		/**
+		 * @param {any} accept
+		 * @param {any} reject
+		 */
 		constructor(accept, reject){
 			this.m_closed=false;
 			this.m_accept=accept;
 			this.m_reject=reject;
 		}
+		/**
+		 * @param {any} value
+		 */
 		accept(value){
-			if(this.destroyed)throw new Error("accept called on destroyed PromiseExecutorHandle");
 			let accept=this.m_accept;
 			accept(value);
 			this.close();
 		}
+		/**
+		 * @param {any} error
+		 */
 		reject(error){
-			if(this.destroyed)throw new Error("accept called on destroyed PromiseExecutorHandle");
 			let reject=this.m_reject;
 			reject(error);
 			this.close();
@@ -115,6 +163,9 @@
 			this.m_reject=null;
 		}
 	}
+	/**
+	 * @param {{ (verify_obj: any): void; (arg0: { TIMER_SINGLE: number; TIMER_REPEATING: number; TIMER_TAG_COUNT: number; }): void; }} verify_callback
+	 */
 	function worker_code_function(verify_callback) {
 		const TIMER_SINGLE=1;
 		const TIMER_REPEATING=2;
@@ -131,31 +182,50 @@
 				this.m_timer=null;
 				this.unique_script_id=1;
 			}
+			// @ts-ignore
 			set_timer(timer){
 				this.m_timer=timer;
 			}
+			/**
+			 * @param {number} timer_type_tag
+			 * @param {any} remote_id
+			 * @param {any} delay
+			 */
 			timer_set(timer_type_tag, remote_id, delay){
 				return this.m_timer.set(timer_type_tag, remote_id, delay);
 			}
+			/**
+			 * @param {any} timer_clear_msg
+			 */
 			do_timer_clear(timer_clear_msg) {
 				return this.m_timer.do_clear(timer_clear_msg);
 			}
 		}
 		function timer_nop(){};
+		/**
+		 * @param {{ fire: (arg0: any) => void; }} timer
+		 * @param {any} remote_id
+		 */
 		function fire_timer(timer, remote_id){
 			timer.fire(remote_id);
 		}
 		class RemoteTimer {
+			/**
+			 * @param {import("./types/mod.js").RemoteTimerApiInfo} api_info
+			 */
 			constructor(api_info){
 				this.m_remote_to_local_timer_state_map=new Map;
 				this.m_api_info=api_info;
 				this.base_id=globalThis[this.m_api_info.set_single](timer_nop);
 				globalThis[this.m_api_info.clear_single](this.base_id);
 			}
+			/**
+			 * @param {any} remote_id
+			 */
 			fire(remote_id){
 				let local_state=this.m_remote_to_local_timer_state_map.get(remote_id);
 				if(!local_state)return;
-				this.validate_timer_state(local_state, remote_id);
+				this.validate_timer_state(local_state);
 				if(!local_state.active){
 					debugger;
 					console.log('fire inactive', remote_id, local_state);
@@ -174,6 +244,11 @@
 					});
 				}
 			}
+			/**
+			 * @param {number} timer_type_tag
+			 * @param {any} remote_id
+			 * @param {any} delay
+			 */
 			set(timer_type_tag, remote_id, delay){
 				this.verify_timer_type_tag(timer_type_tag);
 				let local_id=-1;
@@ -193,11 +268,18 @@
 			// If you cause any side effects, please
 			// wrap this call in try{}finally{} and
 			// revert all side effects...
+			/**
+			 * @param {any} type_tag
+			 */
 			verify_timer_type_tag(type_tag){
 				if(!this.validate_timer_type_tag(type_tag)){
 					throw new Error("type_tag verification failed on remote_worker");
 				}
 			}
+			/**
+			 * @param {{ local_id: any; type: any; }} local_state
+			 * @param {any} remote_id
+			 */
 			verify_timer_state(local_state, remote_id) {
 				if(!this.validate_timer_state(local_state)){
 					console.info("Removed invalid local_state");
@@ -207,6 +289,9 @@
 					throw new Error("type_tag verification failed on remote_worker");
 				}
 			}
+			/**
+			 * @param {number} type_tag
+			 */
 			validate_timer_type_tag(type_tag){
 				if(type_tag < TIMER_SINGLE || type_tag >= TIMER_TAG_COUNT){
 					console.assert(false, "Assertion failed in RemoteTimer.validate_timer_type_tag: type_tag=%o is out of range");
@@ -215,9 +300,15 @@
 				}
 				return true;
 			}
+			/**
+			 * @param {{ type: any; }} local_state
+			 */
 			validate_timer_state(local_state){
 				return this.validate_timer_type_tag(local_state.type);
 			}
+			/**
+			 * @param {any} remote_id
+			 */
 			clear(remote_id){
 				if(this.m_remote_to_local_timer_state_map.has(remote_id)){
 					let local_state=this.m_remote_to_local_timer_state_map.get(remote_id);
@@ -232,6 +323,9 @@
 					this.m_remote_to_local_timer_state_map.delete(remote_id);
 				}
 			}
+			/**
+			 * @param {{ v: any; t: any; }} clear_msg
+			 */
 			do_clear(clear_msg){
 				let remote_id=clear_msg.v;
 				this.clear(remote_id);
@@ -252,10 +346,10 @@
 		remote_worker_state.set_timer(new RemoteTimer({
 			async_reply_msg_id:1,
 			timer_reply_msg_id:2,
-			reply_msg_id:100,
 			fire_single_msg_id:101,
 			fire_repeating_msg_id:102,
-			reply_msg_id:200,
+			reply_msg_id:100,
+			remote_reply_msg_id:200,
 			worker_update_code:201,
 			async_worker_ready_msg_id:202,
 			set_single_msg_id:203,
@@ -335,6 +429,10 @@
 		}
 	}
 	class WorkerState {
+		/**
+		 * @param {Blob} worker_code_blob
+		 */
+		// @ts-ignore
 		constructor(worker_code_blob, timer, executor_handle){
 			let has_blob=false;
 			if(worker_code_blob instanceof Blob)has_blob=true;
@@ -396,9 +494,15 @@
 				t: 202
 			});
 		}
+		/**
+		 * @param {any} handle
+		 */
 		set_executor_handle(handle){
 			this.executor_handle=handle;
 		}
+		/**
+		 * @param {any} result
+		 */
 		on_result(result){
 			switch(result){
 				case 201:{
@@ -418,6 +522,9 @@
 				}
 			}
 		}
+		/**
+		 * @param {{ t: any; v: any; }} result
+		 */
 		dispatch_message(result) {
 			switch(result.t){
 				case 1:{
@@ -433,18 +540,37 @@
 				}
 			}
 		}
+		/**@type {any[]|undefined} */
+		wait_for_worker_list;
+		/**
+		 * @param {any} data
+		 */
 		postMessage(data){
-			return this.worker.postMessage(data);
+			if(this.worker){
+				return this.worker.postMessage(data);
+			} else {
+				this.wait_for_worker_list??=[];
+				this.wait_for_worker_list.push(data);
+			}
 		}
 		static has_global_state(){
 			return window.hasOwnProperty("worker_state");
 		}
+		/**
+		 * @param {any} worker_state_value
+		 */
 		static has_old_global_state_value(worker_state_value){
 			return this.has_global_state() && !this.equals_global_state(worker_state_value);
 		}
+		/**
+		 * @param {any} worker_state_value
+		 */
 		static equals_global_state(worker_state_value){
 			return this.get_global_state() === worker_state_value;
 		}
+		/**
+		 * @param {any} worker_state_value
+		 */
 		static maybe_delete_old_global_state_value(worker_state_value){
 			if(this.has_old_global_state_value(worker_state_value)){
 				this.delete_old_global_state();
@@ -459,8 +585,14 @@
 		}
 		static delete_old_global_state(){
 			let old_worker_state=this.get_global_state();
-			this.destroy_old_worker_state(old_worker_state, 'delete_global_state');
+			if(old_worker_state){
+				this.destroy_old_worker_state(old_worker_state, 'delete_global_state');
+			}
 		}
+		/**
+		 * @param {{ destroy: () => void; }} worker_state_value
+		 * @param {'delete_global_state'} before_destroy_call_name
+		 */
 		static destroy_old_worker_state(worker_state_value, before_destroy_call_name){
 			this[before_destroy_call_name]();
 			worker_state_value.destroy();
@@ -468,13 +600,18 @@
 		static get_global_state(){
 			return window[this.global_state_key];
 		}
+		/**
+		 * @param {import("./types/WorkerState.js").WorkerState | undefined} worker_state_value
+		 */
 		static set_global_state(worker_state_value){
 			this.maybe_delete_old_global_state_value(worker_state_value);
+			// @ts-ignore
 			window[this.global_state_key]=worker_state_value;
 		}
 		static delete_global_state(){
 			delete window[this.global_state_key];
 		}
+		/**@returns {"g_worker_state"} */
 		static get global_state_key(){
 			return "g_worker_state";
 		}
@@ -482,19 +619,25 @@
 			if (this.worker){
 				this.worker.terminate();
 				this.worker=null;
-				URL.revokeObjectURL(this.worker_url);
+				if(this.worker_url){
+					URL.revokeObjectURL(this.worker_url);
+				}
 				this.worker_url = null;
 				if(!this.executor_handle.closed()){
 					this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
 				}
 				this.connected=false;
-			};
+			}
 			this.timer.destroy();
 			this.valid=false;
 		}
 	}
 	function timer_nop(){}
 	class Timer {
+		/**
+		 * @param {import("./types/TimerApiInfo.js").TimerApiInfo} api_info
+		 */
+		// @ts-ignore
 		constructor(id_generator, api_info){
 			this.id_generator=id_generator;
 			this.m_remote_id_to_main_state_map=new Map;
@@ -509,19 +652,29 @@
 			window[api_info.clear_single](this.base_id);
 			this.id_generator.set_current(this.base_id);
 		}
+		/**
+		 * @param {any} worker_state_value
+		 */
 		set_worker_state(worker_state_value){
 			this.weak_worker_state=new WeakRef(worker_state_value);
 		}
 		// If you cause any side effects, please
 		// wrap this call in try{}finally{} and
 		// revert all side effects...
+		/**
+		 * @param {any} type_tag
+		 */
 		verify_timer_type_tag(type_tag){
 			if(!this.validate_timer_type_tag(type_tag)){
 				throw new Error("Verify failed in Timer.verify_timer_type_tag");
 			}
 		}
+		/**
+		 * @param {any} main_state
+		 * @param {any} remote_id
+		 */
 		verify_timer_state(main_state, remote_id) {
-			if(!this.validate_timer_state(main_state)) {
+			if(!this.validate_timer_state(main_state) && this.weak_worker_state) {
 				let worker_state=this.weak_worker_state.deref();
 				worker_state.postMessage({
 					t: this.m_api_info.clear_any_msg_id,
@@ -530,6 +683,9 @@
 				throw new Error("Verify failed in Timer.verify_timer_state");
 			}
 		}
+		/**
+		 * @param {number} type_tag
+		 */
 		validate_timer_type_tag(type_tag){
 			if(type_tag < TIMER_SINGLE || type_tag >= TIMER_TAG_COUNT){
 				console.assert(false, "Assertion failure in Timer.validate_timer_type_tag: type_tag=%o is out of range");
@@ -538,9 +694,16 @@
 			}
 			return true;
 		}
+		/**
+		 * @param {{ type: any; }} main_state
+		 */
 		validate_timer_state(main_state){
 			return this.validate_timer_type_tag(main_state.type);
 		}
+		/**
+		 * @param {number} timer_mode_tag
+		 * @param {any} remote_id
+		 */
 		fire(timer_mode_tag, remote_id){
 			let main_state = this.get_main_state_by_id(remote_id);
 			if(!main_state){
@@ -555,6 +718,12 @@
 				this.clear(timer_mode_tag, remote_id);
 			}
 		}
+		/**
+		 * @param {number} timer_mode_tag
+		 * @param {any} target_function
+		 * @param {number} delay
+		 * @param {any} target_arguments
+		 */
 		set(timer_mode_tag, target_function, delay, target_arguments){
 			let remote_id = this.id_generator.next();
 			let is_repeating=false;
@@ -572,6 +741,7 @@
 				delay
 			};
 			this.store_main_state_by_id(remote_id, main_state);
+			if(!this.weak_worker_state)throw 1;
 			let worker_state=this.weak_worker_state.deref();
 			if(worker_state) {
 				if(timer_mode_tag === TIMER_SINGLE){
@@ -595,24 +765,40 @@
 			}
 			return remote_id;
 		}
+		/**
+		 * @param {any} remote_id
+		 */
 		is_main_state_stored_by_id(remote_id){
 			return this.m_remote_id_to_main_state_map.has(remote_id);
 		}
+		/**
+		 * @param {any} remote_id
+		 */
 		get_main_state_by_id(remote_id){
 			let main_state = this.m_remote_id_to_main_state_map.get(remote_id);
 			if(!main_state)return null;
 			this.verify_timer_state(main_state, remote_id);
 			return main_state;
 		}
+		/**
+		 * @param {any} remote_id
+		 * @param {{ active: boolean; type: any; repeat: boolean; target_function: any; target_arguments: any; delay: any; }} main_state
+		 */
 		store_main_state_by_id(remote_id, main_state){
 			this.m_remote_id_to_main_state_map.set(remote_id, main_state);
 		}
+		/**
+		 * @param {any} remote_id
+		 */
 		delete_main_state_by_id(remote_id){
 			this.m_remote_id_to_main_state_map.delete(remote_id);
 		}
 		main_state_entries(){
 			return this.m_remote_id_to_main_state_map.entries();
 		}
+		/**
+		 * @param {{ t: any; v: any; }} timer_result_msg
+		 */
 		on_result(timer_result_msg){
 			let timer_result_msg_id=timer_result_msg.t;
 			switch(timer_result_msg_id){
@@ -631,8 +817,13 @@
 					debugger;
 			}
 		}
+		/**
+		 * @param {number} timer_mode_tag
+		 * @param {any} remote_id
+		 */
 		force_clear(timer_mode_tag, remote_id){
 			this.verify_timer_type_tag(timer_mode_tag);
+			if(!this.weak_worker_state)throw 1;
 			let worker_state=this.weak_worker_state.deref();
 			let main_state = this.get_main_state_by_id(remote_id);
 			if(main_state?.active){
@@ -652,10 +843,15 @@
 				});
 			}
 		}
+		/**
+		 * @param {any} timer_mode_tag
+		 * @param {any} remote_id
+		 */
 		clear(timer_mode_tag, remote_id){
 			this.verify_timer_type_tag(timer_mode_tag);
 			let main_state = this.get_main_state_by_id(remote_id);
 			if(main_state?.active){
+				if(!this.weak_worker_state)throw 1;
 				let worker_state=this.weak_worker_state.deref();
 				if(main_state.type === TIMER_SINGLE) {
 					worker_state.postMessage({
@@ -691,16 +887,27 @@
 		}
 	}
 	class VerifyError extends Error{
+		/**
+		 * @param {string | undefined} message
+		 */
 		constructor(message){
 			super(message);
 			this.name="VerifyError";
 		}
 	}
+	/**
+	 * @param {boolean} assert_result
+	 * @param {string} assert_message
+	 */
 	function VERIFY(assert_result, assert_message){
 		if(!assert_result){
 			throw new VerifyError(assert_message);
 		}
 	}
+	/**
+	 * @param {(arg0: null) => void} executor_accept
+	 * @param {any} executor_reject
+	 */
 	function move_timers_to_worker_promise_executor(executor_accept, executor_reject) {
 		if (globalThis.remote_worker_state) {
 			postMessage({
@@ -710,7 +917,7 @@
 			return;
 		}
 		if (WorkerState.maybe_delete_old_global_state())return null;
-		worker_code_function(function(verify_obj){
+		worker_code_function(function(/** @type {{ TIMER_REPEATING?: any; TIMER_TAG_COUNT?: any; }} */ verify_obj){
 			VERIFY(verify_obj.TIMER_REPEATING === TIMER_REPEATING, "TIMER_SINGLE constant matches");
 			VERIFY(verify_obj.TIMER_REPEATING === TIMER_REPEATING, "TIMER_REPEATING constant matches");
 			VERIFY(verify_obj.TIMER_TAG_COUNT === TIMER_TAG_COUNT, "TIMER_TAG_COUNT constant matches");
@@ -720,41 +927,64 @@
 		const worker_code_blob = new Blob(["(", worker_code_function.toString(), ")()","\n//# sourceURL=$__.0"]);
 		let id_generator=new UniqueIdGenerator;
 		let timer=new Timer(id_generator, {
-			set_single_msg_id:203,
-			set_repeating_msg_id:204,
-			clear_single_msg_id:205,
-			clear_repeating_msg_id:206,
+			async_reply_msg_id: 1,
+			timer_reply_msg_id: 2,
+			r_reply_msg_id: 100,
+			fire_single_msg_id: 101,
+			fire_repeating_msg_id: 102,
+			l_reply_msg_id: 200,
+			worker_update_code: 201,
+			async_worker_ready_msg_id: 202,
+			set_single_msg_id: 203,
+			set_repeating_msg_id: 204,
+			clear_single_msg_id: 205,
+			clear_repeating_msg_id: 206,
+			clear_any_msg_id: 207,
 			set_single:"setTimeout",
 			clear_single:"clearTimeout",
 			set_repeating:"setInterval",
 			clear_repeating:"clearInterval"
 		});
+		/**TimerApiMessageIds & {
+			set_single: "setTimeout";
+			set_repeating: "setInterval";
+			clear_single: "clearTimeout";
+			clear_repeating: "clearInterval";
+		} */
 		let executor_handle=new PromiseExecutorHandle(executor_accept, executor_reject);
 		const worker_state=new WorkerState(worker_code_blob, timer, executor_handle);
 		const weak_worker_state = new WeakRef(worker_state);
 		const setTimeout_global=setTimeout;
+		/**
+		 * @param {TimerHandler} handler
+		 * @param {number | undefined} timeout
+		 * @param {any[]} target_arguments
+		 */
 		function remoteSetTimeout(handler, timeout, ...target_arguments) {
 			if(!worker_state) {
-				setTimeout=setTimeout_global;
+				window.setTimeout=setTimeout_global;
 				console.log('lost worker_state in timer');
 				return setTimeout_global(handler, timeout, ...target_arguments);
 			}
 			return worker_state.timer.set(TIMER_SINGLE, handler, timeout, target_arguments);
 		}
 		const clearTimeout_global=clearTimeout;
-		/**@arg {number} id */
 		function remoteClearTimeout(id=void 0) {
 			if(!worker_state) {
-				clearTimeout=clearTimeout_global;
+				window.clearTimeout=clearTimeout_global;
 				console.log('lost worker_state in timer');
 				return clearTimeout_global(id);
 			}
 			worker_state.timer.clear(TIMER_SINGLE, id);
 		}
 		const setInterval_global=setInterval;
+		/**
+		 * @param {TimerHandler} handler
+		 * @param {any[]} target_arguments
+		 */
 		function remoteSetInterval(handler, timeout=0, ...target_arguments) {
 			if(!worker_state) {
-				setInterval=setInterval_global;
+				window.setInterval=setInterval_global;
 				console.log('lost worker_state in timer');
 				return setInterval_global(handler, timeout, ...target_arguments);
 			}
@@ -764,7 +994,7 @@
 		/**@arg {number} id */
 		function remoteClearInterval(id) {
 			if(!worker_state) {
-				clearInterval=clearInterval_global;
+				window.clearInterval=clearInterval_global;
 				console.log('lost worker_state in timer');
 				return clearInterval_global(id);
 			}
@@ -772,7 +1002,9 @@
 		}
 		window.setTimeout = remoteSetTimeout;
 		window.setInterval = remoteSetInterval;
+		// @ts-ignore
 		window.clearTimeout = remoteClearTimeout;
+		// @ts-ignore
 		window.clearInterval = remoteClearInterval;
 		return {
 			get(){
@@ -781,6 +1013,9 @@
 		};
 	}
 	function remove_bad_dom_script_element(){
+		/**
+		 * @param {HTMLScriptElement} e
+		 */
 		function remove_element_callback(e){
 			if(!e.src)return;
 			if(new URL(e.src).origin != location.origin)return;
@@ -791,17 +1026,30 @@
 		Array.prototype.forEach.call(document.querySelectorAll("script"), remove_element_callback);
 	};
 	class EventHandlerDispatch {
+		/**
+		 * @param {EventHandlerDispatch} target_obj
+		 * @param {'handleEvent'} target_name
+		 */
 		constructor(target_obj, target_name){
 			this.target_obj=target_obj;
 			this.target_name=target_name;
 		}
+		/**
+		 * @param {any} event
+		 */
 		handleEvent(event){
 			this.target_obj[this.target_name](event);
 		}
 	}
 	class SimpleStackVM {
+		/**
+		 * @param {any} instructions
+		 */
 		constructor(instructions) {
 			this.instructions = instructions;
+			/**
+			 * @type {any[]}
+			 */
 			this.stack = [];
 			this.instruction_pointer = 0;
 			this.return_value = void 0;
@@ -813,12 +1061,18 @@
 			this.return_value = void 0;
 			this.running = false;
 		}
+		/**
+		 * @param {any[] | (Window & typeof globalThis) | this} value
+		 */
 		push(value) {
 			this.stack.push(value);
 		}
 		pop() {
 			return this.stack.pop();
 		}
+		/**
+		 * @param {any[]} run_arguments
+		 */
 		run(...run_arguments) {
 			this.running = true;
 			while(this.instruction_pointer < this.instructions.length && this.running) {
@@ -892,10 +1146,17 @@
 		}
 	}
 	class EventHandlerVMDispatch extends SimpleStackVM {
+		/**
+		 * @param {((string | number)[] | (string | ((err: any) => void))[])[]} instructions
+		 * @param {AutoBuy} target_obj
+		 */
 		constructor(instructions, target_obj) {
 			super(instructions);
 			this.target_obj = target_obj;
 		}
+		/**
+		 * @param {any} event
+		 */
 		handleEvent(event) {
 			this.reset();
 			this.run(event);
@@ -903,7 +1164,13 @@
 	}
 	class CompressionStatsCalculator {
 		constructor(){
+			/**
+			 * @type {number[]}
+			 */
 			this.hit_counts=[];
+			/**
+			 * @type {number[]}
+			 */
 			this.cache=[];
 		}
 		map_values(){
@@ -912,11 +1179,17 @@
 		map_keys(){
 			return this.cache;
 		}
+		/**
+		 * @param {number} index
+		 */
 		add_hit(index) {
 			if(!this.map_values()[index]) {
 				this.map_values()[index]=1;
 			} else this.map_values()[index]++;
 		}
+		/**
+		 * @param {any} key
+		 */
 		add_item(key){
 			let index=this.map_keys().indexOf(key)
 			if(index == -1)index=this.map_keys().push(key);
@@ -926,6 +1199,10 @@
 			this.map_keys().length=0;
 			this.map_values().length=0;
 		}
+		/**
+		 * @param {any[]} arr
+		 * @param {number} win_size
+		 */
 		calc_compression_stats(arr, win_size){
 			this.reset();
 			for(let i=0;i<arr.length;i++){
@@ -933,26 +1210,52 @@
 					this.add_item(arr.slice(i, i+win_size).join(","));
 				}
 			}
-			return to_tuple_arr(this.map_keys(), this.map_values()).filter(e=>e[1]!==void 0);
+			return to_tuple_arr(this.map_keys(), this.map_values()).filter((/** @type {undefined[]} */ e)=>e[1]!==void 0);
 		}
+		/**
+		 * @param {any[]} stats_arr
+		 * @param {any} arr
+		 * @param {number} win_size
+		 */
 		calc_for_stats_window_size(stats_arr, arr, win_size){
 			stats_arr[win_size-1]=this.calc_compression_stats(arr, win_size);
 		}
+		/**
+		 * @param {any[]} stats_arr
+		 * @param {any} arr
+		 * @param {number} index
+		 */
 		calc_for_stats_index(stats_arr, arr, index){
 			stats_arr[index]=this.calc_compression_stats(arr, index+1);
 		}
 	}
 	class BaseCompression {
+		/**
+		 * @param {string | any[]} src
+		 * @param {string | any[]} dst
+		 */
 		did_compress(src, dst){
 			return dst.length < src.length;
 		}
+		/**
+		 * @param {string | any[]} src
+		 * @param {string | any[]} dst
+		 */
 		did_decompress(src, dst){
 			return dst.length > src.length;
 		}
+		/**
+		 * @param {any} src
+		 * @param {any[]} dst
+		 */
 		compress_result(src, dst){
 			if(this.did_compress(src, dst))return [true, dst];
 			return [false, src];
 		}
+		/**
+		 * @param {any} src
+		 * @param {any[]} dst
+		 */
 		decompress_result(src, dst) {
 			// maybe this is not a decompression, just a modification to make
 			// later decompression work
@@ -964,8 +1267,14 @@
 		constructor(){
 			super();
 			this.stats_calculator=new CompressionStatsCalculator;
+			/**
+			 * @type {any[]}
+			 */
 			this.compression_stats=[];
 		}
+		/**
+		 * @param {string | any[]} arr
+		 */
 		try_compress(arr){
 			let ret=[];
 			for (let i=0;i<arr.length;i++){
@@ -991,6 +1300,9 @@
 			}
 			return this.compress_result(arr, ret);
 		}
+		/**
+		 * @param {string | any[]} arr
+		 */
 		try_decompress(arr){
 			let ret=[];
 			for (let i=0;i<arr.length;i++) {
@@ -1007,6 +1319,9 @@
 			}
 			return this.decompress_result(arr, ret);
 		}
+		/**
+		 * @param {any} arr
+		 */
 		compress_array(arr){
 			let success, res;
 			// await async_semaphore.inc(1);
@@ -1026,6 +1341,9 @@
 			return arr;
 		}
 	}
+	/**
+	 * @param {string | any[]} arr
+	 */
 	function calc_ratio(arr){
 		let ratio_acc=0;
 		for(let i=0;i<arr.length;i++)ratio_acc+=arr[i];
@@ -1035,8 +1353,18 @@
 	}
 	console.assert(calc_ratio([0,0]) === 0, "calc ratio of array full of zeros does not divide by zero");
 	class AverageRatio{
+		/**
+		 * @param {number} max_len
+		 * @param {number} max_history_len
+		 * @param {number} weight
+		 * @param {string} human_duration
+		 */
+		// @ts-ignore
 		constructor(max_len, max_history_len, weight, human_duration, initial_arr=[]){
 			this.arr=initial_arr;
+			/**
+			 * @type {any[]}
+			 */
 			this.history=[];
 			this.count=0;
 			this.len=max_len;
@@ -1044,7 +1372,10 @@
 			this.weight=weight;
 			this.human_duration=human_duration;
 		}
-		/**@arg {boolean} from_prev */
+		/**
+		 * @arg {boolean} from_prev
+		 * @param {number} value
+		 */
 		add(value, from_prev, debug=false){
 			if(from_prev){
 				if(debug)console.log("ratio", this.human_duration, (value*100).toFixed(5));
@@ -1070,6 +1401,9 @@
 		}
 	}
 	class BaseRecord{
+		/**
+		 * @param {any} root
+		 */
 		constructor(root){
 			this.root=root;
 		}
@@ -1081,6 +1415,12 @@
 		}
 	}
 	class AsyncDelayNode extends BaseRecord {
+		/**
+		 * @param {any} root
+		 * @param {AutoBuyState_x} target_obj
+		 * @param {'init'|'update'} get_member_name
+		 * @param {string} label
+		 */
 		constructor(root, target_obj, get_member_name, label) {
 			super(root);
 			this.cint=-1;
@@ -1093,6 +1433,7 @@
 			super.start();
 			this.cint=setTimeout(this.run, this.delay, this);
 		}
+		/**@arg {BaseRecord|null} self */
 		run(self=null) {
 			if(self)return self.run();
 			super.run();
@@ -1100,12 +1441,25 @@
 		}
 	}
 	class AsyncNodeRoot {
+		/**@arg {any} v */
+		append_child(v){
+			this.children.push(v);
+		}
 		constructor(){
+			/**
+			 * @type {any[]}
+			 */
 			this.children=[];
 		}
+		/**
+		 * @param {any} record
+		 */
 		on_child_start(record){
 			this.children.push(record);
 		}
+		/**
+		 * @param {any} record
+		 */
 		on_child_run(record){
 			let index=this.children.indexOf(record);
 			this.children.splice(index, 1);
@@ -1118,39 +1472,75 @@
 			/**@type {string[]} */
 			this.ordered_keys=[];
 		}
+		/**
+		 * @param {string[]} ordered_keys
+		 */
 		set_ordered_keys(ordered_keys){
 			this.ordered_keys=ordered_keys;
 		}
+		/**
+		 * @param {string} key
+		 */
 		can_average(key){
 			let ratio_calc=this.map.get(key);
-			return ratio_calc.can_average();
+			if(ratio_calc)return ratio_calc.can_average();
+			return false;
 		}
+		/**
+		 * @param {string} key
+		 */
 		get_average(key){
 			let ratio_calc=this.map.get(key);
-			return ratio_calc.get_average();
+			if(ratio_calc)return ratio_calc.get_average();
+			return 0.01;
 		}
 		/**@arg {[key:string, ratio:AverageRatio]} */
 		push_ratio([key, ratio_obj]){
 			this.ordered_keys.push(key);
 			this.map.set(key, ratio_obj);
 		}
+		/**
+		 * @param {any} value
+		 */
 		push(value){
 			let cur=this.map.get(this.ordered_keys[0]);
+			if(!cur)throw 1;
 			let res=cur.add(value, true, false);
 			for(let i=1;i<this.ordered_keys.length;i++){
 				let debug=false;
 				let key=this.ordered_keys[i];
 				cur=this.map.get(key);
+				if(!cur)throw 1;
 				let prev=this.map.get(this.ordered_keys[i-1]);
+				if(!prev)throw 1;
 				if(key === '5min')debug=true;
 				res=cur.add(prev.get_average(), res, debug);
 			}
 		}
 	}
-	class AutoBuyState{
+	/**@typedef {AutoBuyState} IAutoBuyState */
+	/**@implements {IAutoBuyState} */
+	class AutoBuyState_x {
+		/**
+		 * @type {any}
+		 */
+		do_ratio_lock;
+		/**
+		 * @type {any}
+		 */
+		on_very_high_ratio;
+		/**
+		 * @param {AsyncNodeRoot} root
+		 */
 		constructor(root){
+			/**
+			 * @type {AsyncNodeRoot}
+			 */
 			this.root_node=root;
 			this.debug=false;
+			/**
+			 * @type {number[]}
+			 */
 			this.arr=[];
 			this.ratio=0;
 			this.compressor_stats=[];
@@ -1182,19 +1572,23 @@
 			this.is_init_complete=true;
 		}
 		calc_ratio(){
+			if(!this.avg)return 0;
 			if(this.avg.can_average('30min'))return this.avg.get_average('30min');
 			if(this.avg.can_average('5min'))return this.avg.get_average('5min');
 			if(this.avg.can_average('1min'))return this.avg.get_average('1min');
 			if(this.avg.can_average('10sec'))return this.avg.get_average('10sec');
 			return 0;
 		}
+		/**
+		 * @param {number} value
+		 */
 		append_value(value) {
 			if(!Number.isFinite(value)){
 				console.assert(false, 'value is not finite');
 				debugger;
 			}
 			this.arr.unshift(value);
-			this.avg.push(value);
+			this.avg && this.avg.push(value);
 			while(this.arr.length > this.arr_max_len) {
 				this.arr.pop();
 			}
@@ -1250,6 +1644,7 @@
 				}
 			}
 		}
+		/**@returns {0.05|0.4|1|1.5|2|3|4|8} */
 		get_mul_modifier(){
 			switch(this.ratio_mode){
 				case 0:return 8;
@@ -1263,6 +1658,7 @@
 			}
 		}
 		get_near_val(){
+			if(!this.avg)return [0, 0];
 			let log_val=this.avg.get_average('5min');
 			let log_mul_count=0;
 			if(log_val < 0.01 || log_val > 1){
@@ -1317,7 +1713,10 @@
 			this.iter_count=0;
 			this.epoch_len=0;
 			this.background_audio=null;
-			this.state=new AutoBuyState;
+			this.state=new AutoBuyState_x(new AsyncNodeRoot);
+			/**
+			 * @type {any[]}
+			 */
 			this.cint_arr=[];
 			this.skip_save=false;
 			this.state_history_arr=null;
@@ -1329,7 +1728,8 @@
 
 			// find background_audio by id
 			this.background_audio=document.querySelector("#background_audio");
-
+			if(!this.background_audio)throw 1;
+			if(!(this.background_audio instanceof HTMLAudioElement))throw 1;
 
 			// change the audio element's volume, and remove
 			// the event listener that will change the volume
@@ -1343,9 +1743,18 @@
 		}
 		async async_pre_init(){
 			try{
-				await this.background_audio.play();
-				return;
+				if(!this.background_audio)throw 1;
+				if(this.background_audio instanceof HTMLAudioElement){
+					await this.background_audio.play();
+					return;
+				} else {
+					throw 1;
+				}
 			}catch(e){
+				if(e === 1){
+					console.log('no element');
+					return;
+				}
 				console.log("failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
 			let handler=new EventHandlerVMDispatch([
@@ -1360,7 +1769,7 @@
 				['push', function(){
 					console.log('play success');
 				}],
-				['push', function(err){
+				['push', function(/** @type {any} */ err){
 					console.log(err);
 				}],
 				['call', 2],
@@ -1376,16 +1785,24 @@
 		}
 		save_state_history_arr(){
 			if(this.skip_save)return;
+			if(!this.state_history_arr)return;
 			localStorage.auto_buy_history_str=this.state_history_arr.join(",");
 		}
+		/**
+		 * @param {string[]} arr
+		 */
 		load_state_history_arr(arr){
 			if(localStorage.auto_buy_history_str){
 				arr=localStorage.auto_buy_history_str.split(",");
 			}
 			this.state_history_arr=arr;
 		}
+		/**
+		 * @param {string} forced_action
+		 */
 		get_delay_arr_data(forced_action){
-			if(forced_action == "RESET")return this.delay_arr.map(e=>~~(e/4)).join(",");
+			if(!this.delay_arr)return "";
+			if(forced_action == "RESET")return this.delay_arr.map((/** @type {number} */ e)=>~~(e/4)).join(",");
 			return this.delay_arr.join(",");
 		}
 		save_delay_arr(){
@@ -1497,14 +1914,14 @@
 			// init hours_played_element
 
 			// init percent_ratio_element
-			this.percent_ratio_element.addEventListener('click', function(){
+			if(this.state_log_element)this.percent_ratio_element.addEventListener('click', function(){
 				t.state.reset();
 			});
 
 			// init percent_ratio_change_element
 
 			// init state_log_element
-			this.state_log_element.style.fontSize = font_size_px+"px";
+			if(this.state_log_element)this.state_log_element.style.fontSize = font_size_px+"px";
 
 
 			// event listeners
@@ -1529,12 +1946,21 @@
 				console.log(this.cint_arr[i]);
 			}
 		}
+		/**
+		 * @param {string} string
+		 */
 		parse_single_int(string){
 			return parseInt(string);
 		}
+		/**
+		 * @param {string} string
+		 */
 		default_split(string){
 			return string.split(",");
 		}
+		/**
+		 * @param {any} data
+		 */
 		parse_delay_arr(data){
 			return this.default_split(data).map(this.parse_single_int);
 		}
@@ -1599,6 +2025,9 @@
 			this.state_history_arr=["R"];
 			localStorage.auto_buy_history_str="R";
 		}
+		/**
+		 * @param {string} value
+		 */
 		state_history_append(value){
 			let success, res;
 			this.epoch_len++;
@@ -1608,11 +2037,17 @@
 			while(this.state_history_arr.length>120){
 				this.state_history_arr.shift();
 			}
+			/**
+			 * @param {{ state_history_arr: any; compressor: { compress_array: (arg0: any) => any; }; }} self
+			 */
 			function async_compress(self){
 				self.state_history_arr=self.compressor.compress_array(self.state_history_arr);
 			}
 			Promise.resolve(this).then(async_compress);
 		}
+		/**
+		 * @param {any} event
+		 */
 		history_element_click_handler(event){
 			clearTimeout(this.cint);
 			this.extra=this.calc_delay_extra();
@@ -1650,11 +2085,19 @@
 				return this.normal_decrease();
 			};
 		}
+		/**
+		 * @param {number} pow_base
+		 * @param {number} pow_num
+		 * @param {number} div
+		 */
 		get_delay_change(pow_base, pow_num, div){
 			let pow_res=Math.pow(pow_base, pow_num);
 			let res=this.extra * pow_res;
 			return res / div;
 		}
+		/**
+		 * @param {number} change
+		 */
 		update_delay(change, decrease=false){
 			let value;
 			if(decrease)value=this.extra - change;
@@ -1663,12 +2106,20 @@
 			this.delay=~~value;
 			this.delay_arr.push(this.delay);
 		}
+		/**
+		 * @param {any[]} pow_terms
+		 * @param {number} div
+		 */
 		do_delay_dec(pow_terms, div){
 			let iter_term=Math.pow(pow_terms[1], this.iter_count);
 			let delay_change=this.get_delay_change(pow_terms[0], Math.log(totalAtome), div);
 			this.update_delay(delay_change * iter_term, true);
 			if(this.delay < 25)this.delay=25;
 		}
+		/**
+		 * @param {any[]} pow_terms
+		 * @param {number} div
+		 */
 		do_delay_inc(pow_terms, div){
 			let delay_change=this.get_delay_change(pow_terms[0], Math.log(totalAtome), div);
 			this.update_delay(delay_change);
@@ -1730,6 +2181,9 @@
 			this.delay_element.innerText=this.extra;
 			this.state_history_append("^");
 		}
+		/**
+		 * @param {{ done: any; cost: number; }} special_buyable
+		 */
 		is_special_done(special_buyable){
 			return !special_buyable.done && special_buyable.cost < totalAtome;
 		}
@@ -1809,12 +2263,18 @@
 				t.m_set_flag=false;
 			});
 		}
+		/**
+		 * @param {any} cnt
+		 */
 		set(cnt){
 			if(!this.m_set_flag){
 				this.m_set(cnt);
 				this.m_set_flag=true;
 			}
 		}
+		/**
+		 * @param {any} opt_error
+		 */
 		set_error(opt_error){
 			if(!this.m_set_flag){
 				if(opt_error) this.m_set_error(opt_error);
@@ -1825,12 +2285,18 @@
 			let ret=this.promise_set;
 			return ret;
 		}
+		/**
+		 * @param {any} cnt
+		 */
 		notify(cnt){
 			if(this.m_can_notify){
 				this.m_notify(cnt);
 				this.m_can_notify=false;
 			}
 		}
+		/**
+		 * @param {any} error
+		 */
 		notify_error(error){
 			if(this.m_can_notify){
 				this.m_notify_error(error);
@@ -1851,6 +2317,9 @@
 			this.notify_waiters_vec=[];
 			this.count=0;
 		}
+		/**
+		 * @param {number} cnt
+		 */
 		async inc(cnt){
 			let wait_trigger=new AsyncTrigger;
 			while(this.count > 0){
@@ -1862,6 +2331,9 @@
 			}
 			this.count+=cnt;
 		}
+		/**
+		 * @param {number} cnt
+		 */
 		async dec(cnt){
 			this.count-=cnt;
 			if(this.count <= 0){
@@ -1997,18 +2469,37 @@
 			tonext(res);
 		}
 	};
+	/**
+	 * @param {any} e
+	 * @param {string | number} i
+	 * @this {any}
+	 */
 	function map_to_tuple(e, i){
 		return [e, this[i]];
 	}
+	/**
+	 * @param {any[]} keys
+	 * @param {any[]} values
+	 */
 	function to_tuple_arr(keys, values){
 		return keys.map(map_to_tuple, values);
 	}
+	/**
+	 * @param {number | undefined} delay
+	 */
 	function do_async_wait(delay){
+		/**
+		 * @param {TimerHandler} a
+		 */
 		function promise_exec(a){
 			setTimeout(a, delay);
 		}
 		return new Promise(promise_exec);
 	}
+	/**
+	 * @param {{ (): any; new (): any; length: number; }[]} arr
+	 * @param {number | undefined} rem_target_len
+	 */
 	function array_sample_end(arr, rem_target_len){
 		arr=arr.slice(-300);
 		let rem_len=char_len_of(arr);
@@ -2017,10 +2508,16 @@
 		}
 		return arr;
 	}
+	/**
+	 * @param {any[]} arr
+	 */
 	function char_len_of(arr){
-		return arr.reduce((a,b)=>a + b.length, 0) + arr.length;
+		return arr.reduce((/** @type {any} */ a,/** @type {string | any[]} */ b)=>a + b.length, 0) + arr.length;
 	}
 	//spell:words specialsbought atomsinvest checkspec specaps noti plurials updateprogress achiSpec
+	/**
+	 * @param {string | number} that
+	 */
 	function specialclick_inject(that) {
 		if (allspec[that].done == undefined) allspec[that].done = false;
 		if (allspec[that].cost <= totalAtome && allspec[that].done == false) {
@@ -2061,16 +2558,19 @@
 		}
 	}
 	class ProxyHandlers {
+		/**
+		 * @param {any} root
+		 */
 		constructor(root){
 			this.weak_root=new WeakRef(root);
 			this.count_arr=[0];
 		}
 		so_init(){
-			let val=Array(12).fill((idx)=>{
+			let val=Array(12).fill((/** @type {number} */ idx)=>{
 				if(idx > window.da.length)return window.da.at(-1)(idx-1);
 				return window.da[idx-1](idx-1);
 			});
-			window.da=[e=>g_proxy_state.hand.stack_overflow_check(), ...val];
+			window.da=[(/** @type {any} */ e)=>g_proxy_state.hand.stack_overflow_check(), ...val];
 		}
 		stack_overflow_check(){
 			g_proxy_state.hand.count_arr[0]++;
@@ -2079,6 +2579,11 @@
 			}
 			return g_proxy_state.hand.count_arr[0];
 		}
+		/**
+		 * @param {string} type
+		 * @param {any} call_args
+		 * @param {any[]} from
+		 */
 		generic(type, call_args, from){
 			let proxy_state=this.weak_root.deref();
 			if(proxy_state === null){
@@ -2088,22 +2593,47 @@
 			}
 			proxy_state.push(from.concat([null, type, 1, call_args]));
 		}
+		/**
+		 * @param {any} obj
+		 * @param {any} call_args
+		 * @param {any} from
+		 */
 		set_(obj, call_args, from){
 			this.generic('set', call_args, from);
 			return Reflect.set(...call_args);
 		}
+		/**
+		 * @param {any} obj
+		 * @param {any} call_args
+		 * @param {any} from
+		 */
 		get_(obj, call_args, from){
 			this.generic('get', call_args, from);
 			return Reflect.get(...call_args);
 		}
+		/**
+		 * @param {any} obj
+		 * @param {any} call_args
+		 * @param {any} from
+		 */
 		apply_(obj, call_args, from){
 			this.generic('apply', call_args, from);
 			return Reflect.apply(...call_args);
 		}
+		/**
+		 * @param {any} obj
+		 * @param {any} call_args
+		 * @param {any} from
+		 */
 		defineProperty_(obj, call_args, from){
 			this.generic('defineProperty', call_args, from);
 			return Reflect.defineProperty(...call_args);
 		}
+		/**
+		 * @param {any} obj
+		 * @param {any} call_args
+		 * @param {any} from
+		 */
 		getOwnPropertyDescriptor_(obj, call_args, from){
 			this.generic('getOwnPropertyDescriptor', call_args, from);
 			return Reflect.getOwnPropertyDescriptor(...call_args);
@@ -2155,16 +2685,29 @@
 				}
 			}
 		}
+		/**
+		 * @param {number} index
+		 * @param {any} value
+		 */
 		push_at(index, value){
 			while(index >= this.length){
 				super.push([]);
 			}
 			this[index].push(value);
 		}
+		/**
+		 * @param {any[]} a
+		 */
 		push_va(...a){
 			this.push(a);
 		}
 	}
+	/**
+	 * @param {Window & typeof globalThis} obj
+	 * @param {PropertyKey} name
+	 * @param {any} value
+	 * @param {undefined[]} props
+	 */
 	function define_property_value(obj, name, value, ...props){
 		let [
 			writable=true,
@@ -2178,15 +2721,22 @@
 			configurable
 		});
 	}
+	/**
+	 * @param {(arg0: string) => any} jquery_func
+	 */
 	function got_jquery(jquery_func){
 		define_property_value(window, '$', jquery_func);
 		let res=jquery_func('head');
 		let r_proto=Object.getPrototypeOf(res);
-		r_proto.lazyload=function(...a){
+		r_proto.lazyload=function(/** @type {any} */ ...a){
 			console.log('lazyload', ...a);
 		}
 		return jquery_func;
 	}
+	/**
+	 * @param {{ [x: string]: any; }} obj
+	 * @param {string | number} key
+	 */
 	function reload_if_def(obj, key){
 		if(obj[key]){
 			location.reload();
@@ -2199,11 +2749,14 @@
 		return false;
 	}
 	function proxy_jquery(){
+		/**
+		 * @type {any}
+		 */
 		let val;
 		if(window.$){
 			let res=window.$('head');
 			let r_proto=Object.getPrototypeOf(res);
-			r_proto.lazyload=function(...a){
+			r_proto.lazyload=function(/** @type {any} */ ...a){
 				console.log('lazyload', ...a);
 			}
 			return;
@@ -2224,6 +2777,11 @@
 			configurable:true
 		});
 	}
+	/**
+	 * @param {Function} func
+	 * @param {any} this_v
+	 * @param {ArrayLike<any>} args
+	 */
 	function pace_finish_proxy_apply(func, this_v, args){
 		auto_buy_obj.init();
 		Pace.bar.finish=func;
@@ -2238,6 +2796,10 @@
 		}
 		Pace.bar.finish=new Proxy(Pace.bar.finish, {apply:pace_finish_proxy_apply});
 	}
+	/**
+	 * @param {any[]} cint_arr
+	 * @param {undefined} [cint_item]
+	 */
 	function remove_cint_item(cint_arr, cint_item){
 		let idx=cint_arr.indexOf(cint_item);
 		cint_arr.splice(idx, 1);
@@ -2255,6 +2817,9 @@
 			cint_arr.push(cint_item);
 		}
 	}
+	/**
+	 * @param {any} timers
+	 */
 	function on_timers_moved(timers) {
 		if(window._SM_Data){
 			on_game_data_set();
@@ -2263,6 +2828,9 @@
 		}
 		remove_bad_dom_script_element();
 	}
+	/**
+	 * @param {{ nodeName: string; src: string | URL; }} elm
+	 */
 	function dom_add_elm_filter(elm){
 		if(elm && elm.nodeName === "SCRIPT"){
 			if(!elm.src){
@@ -2285,13 +2853,13 @@
 		}
 		adsbygoogle=[];
 		adsbygoogle.op=adsbygoogle.push;
-		adsbygoogle.push=function(e){
+		adsbygoogle.push=function(/** @type {any} */ e){
 			adsbygoogle.op(e);
 			remove_bad_dom_script_element();
 		};
 		var prev_node_prototype_insertBefore=Node.prototype.insertBefore;
 		document.addEventListener('onContentLoaded', remove_bad_dom_script_element);
-		Node.prototype.insertBefore=function(element_to_insert, element_reference, ...rest){
+		Node.prototype.insertBefore=function(/** @type {Node} */ element_to_insert, /** @type {Node | null} */ element_reference, /** @type {string | any[]} */ ...rest){
 			console.assert(rest.length === 0, "unexpected arguments for overwritten Node.prototype.insertBefore");
 			let should_insert_1=dom_add_elm_filter(element_to_insert);
 			if(!should_insert_1)return element_to_insert;

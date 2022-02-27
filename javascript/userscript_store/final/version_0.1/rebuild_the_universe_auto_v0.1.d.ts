@@ -29,25 +29,6 @@ declare namespace Remote {
 	function timer_nop(): void;
 	function fire_timer(timer: RemoteTimer, remote_id: number): void;
 	let remote_worker_state: RemoteWorkerState;
-	var RemoteTimerApiInfo: {
-		async_reply_msg_id: 1,
-		timer_reply_msg_id: 2,
-		reply_msg_id: 100,
-		fire_single_msg_id: 101,
-		fire_repeating_msg_id: 102,
-		remote_reply_msg_id: 200,
-		worker_update_code: 201,
-		async_worker_ready_msg_id: 202,
-		set_single_msg_id: 203,
-		set_repeating_msg_id: 204,
-		clear_single_msg_id: 205,
-		clear_repeating_msg_id: 206,
-		clear_any_msg_id: 207,
-		set_single: "setTimeout",
-		set_repeating: "setInterval",
-		clear_single: "clearTimeout",
-		clear_repeating: "clearInterval"
-	};
 }
 
 export const TIMER_SINGLE = 1;
@@ -587,7 +568,12 @@ declare global {
 		new(): Window;
 	};
 	interface HTMLDivElement {
-		style: CSSStyleDeclaration;
+		get style():CSSStyleDeclaration{
+			return super.style;
+		}
+		set style(v:CSSStyleDeclaration|string){
+			super.style=v;
+		}
 	}
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];

@@ -127,7 +127,7 @@ export class AutoBuyState {
 		console.log('high ratio', this.ratio_mode, mul, (~~(this.ratio * 100)) / 100);
 		this.do_ratio_lock(1, 80 * 12 * mul);
 	}
-	get_mul_modifier() {
+	get_mul_modifier():0.05|0.4|1|1.5|2|3|4|8 {
 		switch(this.ratio_mode) {
 			case 0: return 3;
 			case 1: return 2;

@@ -3,7 +3,6 @@ import {WorkerMessageReply2} from "./WorkerMessageReply2";
 import {WorkerMessageReply201} from "./WorkerMessageReply201";
 import {WorkerMessageReply202} from "./WorkerMessageReply202";
 import {RemoteWorkerMessage} from "./RemoteWorkerMessage";
-import {TIMER_SINGLE, TIMER_REPEATING} from "./rebuild_the_universe_auto_typed_v0.1";
 import {Timer} from "./Timer";
 
 export class WorkerState {
