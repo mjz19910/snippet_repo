@@ -393,8 +393,12 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			this.value=value;
 		}
 	}
+	/**@typedef {import("types/vm/box/mod.js").ExtractKey<Box, 'value'>} BoxInner */
 	class TempBox extends BaseBox {
-		/**@arg {import("types/vm/box/mod.js").AsObject<Box>} v */
+		/**
+		 * @arg {Box} v
+		 * @returns {v is BoxInner}
+		 * */
 		static does_box(v){
 			switch(typeof v){
 				case 'object':
@@ -403,9 +407,20 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			}
 			return false;
 		}
-		/**@type {Box|null} */
+		/**@arg {Box} v */
+		static make_box(v){
+			if(this.does_box(v)){
+				return new this(v);
+			}
+			if(typeof v === 'function')return new this(v);
+			if(typeof v != 'object')return v;
+			if(typeof v.value === 'object'){
+				return new this(v.value);
+			}
+		}
+		/**@type {BoxInner|null} */
 		m_as_box;
-		/**@arg {Box} value */
+		/**@arg {BoxInner} value */
 		constructor(value){
 			if(value === null){
 				super(new VoidBox);
@@ -590,7 +605,11 @@ import VoidBox from "types/vm/box/VoidBox.js";
 								let int_num=parseInt(get_name);
 								if(Number.isNaN(int_num))throw new Error("Can't parse number");
 								let res=opt.value[int_num];
-								return new TempBox(res);
+								if(TempBox.does_box(res)){
+									return new TempBox(res);
+								} else {
+									return res;
+								}
 							}
 							case "constructor_box":throw new Error("Unable to index");
 							case "function_box":throw new Error("Unable to index");

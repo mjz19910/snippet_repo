@@ -220,13 +220,14 @@ function as_object_or_null(v) {
 	}
 	return null;
 }
+/**@typedef {import("types/vm/box/mod.js").ExtractKey<Box, 'value'>} BoxInner */
 /**@typedef {import("types/vm/box/mod.js").Box} Box */
 class BaseBox {
 	/**@type {'object_box'} */
 	type = "object_box";
 	/**@type {'BaseBox'} */
 	from = "BaseBox";
-	/**@type {import("api").NonNull<Box>} */
+	/**@type {BoxInner['value']} */
 	value;
 	/**@arg {string} v */
 	as_type(v) {
@@ -235,20 +236,23 @@ class BaseBox {
 		}
 		return null;
 	}
-	/**@arg {import("api").NonNull<Box>} value */
+	/**@arg {BoxInner} value */
 	constructor(value) {
-		/**@type {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} */
-		let vv = typeof value;
 		switch(typeof value) {
-			case 'object': vv; break;
-			case 'bigint': vv; break;
-			case 'string': case 'number': case 'boolean': case 'symbol':
+			case 'string':this.value = value; break;
+			case 'number':
+			case 'bigint': this.value = value; break;
+			case 'boolean':
+			case 'symbol':
 				this.value = value;
 				break;
 			case 'undefined':
 				this.value = value;
 				break;
-			default: value; break;
+			case 'object': this.value = value; break;
+			case 'function':
+				this.value = value;
+			default: this.value = value; break;
 		}
 		this.value = value;
 	}
