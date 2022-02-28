@@ -1,4 +1,4 @@
 export type EvalNullRes = {
-	type: 'eval-hidden-var';
+	type: 'eval-lost';
 	data: null;
 };

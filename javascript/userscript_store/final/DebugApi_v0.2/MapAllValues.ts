@@ -1,6 +1,6 @@
 import {ChromeDevToolsDebug} from "./ChromeDevToolsDebug";
 import {ChromeDevToolsGetEventListeners} from "./ChromeDevToolsGetEventListeners";
 import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug";
-import {DbgDoGet} from "./DbgDoGet";
+import {DbgState} from "./DbgState";
 
-export type MapAllValues = [ChromeDevToolsDebug, ChromeDevToolsUnDebug, ChromeDevToolsGetEventListeners, DbgDoGet];
+export type MapAllValues = [ChromeDevToolsDebug, ChromeDevToolsUnDebug, ChromeDevToolsGetEventListeners, DbgState];

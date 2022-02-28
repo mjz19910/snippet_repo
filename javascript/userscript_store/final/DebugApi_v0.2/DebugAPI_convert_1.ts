@@ -7,25 +7,16 @@ import {ChromeDevToolsGetEventListeners} from "./ChromeDevToolsGetEventListeners
 import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug";
 import {ClassArgs} from "./ClassArgs";
 import {ClassCallbackArgs} from "./ClassCallbackArgs";
-import {DbgGetRes as DbgRetInfo} from "./DbgGetRes";
+import {DbgRetInfo as DbgRetInfo} from "./DbgRetInfo";
 import {ApiData} from "./DebuggerInitData";
 import {FnArgsObj} from "./FnArgsObj";
 import {FunctionCallbackArgs} from "./FunctionCallbackArgs";
 import {FuncType1} from "./FuncType1";
-import {KT5} from "./KT5";
 import {KT6} from "./KT6";
 import {MapAllKeys} from "./MapAllKeys";
 import {MapEach} from "./MapEach";
 import {T5} from "./T5";
 const MapKeys: MapAllKeys = ['d', 'u', 'getEventListeners', '__k'];
-export type AsSeqImpl<U, T> = T extends number ?
-	U extends {[X in T]: any} ?
-	U[T] extends void ?
-	[] :
-	T extends 0 ?
-	[[T, U[T]], ...KT5<IntInc<T>>] :
-	[[T, U[T]], ...KT5<IntInc<T>>] :
-	[] : [];
 export class DebugAPI {
 	next_remote_id = 0;
 	data_store: MapEach<KT6[number][0]> = new Map;
@@ -194,7 +185,7 @@ export class DebugAPI {
 			gd[1].get = (/** @type {string} */ __v: string) => {
 				let ret: DbgRetInfo | null;
 				if(__v === '__v') {
-					ret = {type: 'eval-hidden-var', data: null};
+					ret = {type: 'eval-lost', data: null};
 					return ret;
 				}
 				try {
@@ -228,7 +219,7 @@ export class DebugAPI {
 					let [, v1] = k2;
 					undebug_2(v1);
 				} else if(dd[0] === 'class') {
-					let [, k1, k2] = dd;
+					let [, , k2] = dd;
 					let [, v1] = k2;
 					undebug_2(v1);
 				}
@@ -281,6 +272,7 @@ export class DebugAPI {
 		let vars_arr = sr.map(e => String.fromCharCode(e));
 		let rng_bytes = Array(5).fill('').map(() => random_data_generator.next_byte()).join('');
 		let __y = this.event_handler;
+		void __y;
 		if(debug_data[0] === 'class') {
 			this.current_debug_data = debug_data;
 		} else if(debug_data[0] === 'function') {
@@ -307,8 +299,8 @@ export class DebugAPI {
 			}
 		}
 		let tmp_value = {
-			/**@returns {{type:'no-var'|'eval-var'|null} | {type:'var', data:null}} */
-			get(/**@type {string}*/_q: string): {type: 'no-var' | 'eval-var' | null;} | {type: 'var'; data: null;} {return {type: null};}
+			/**@returns {{type:'no-var'|'eval-lost'|null} | {type:'var', data:null}} */
+			get(/**@type {string}*/_q: string): {type: 'no-var' | 'eval-lost' | null;} | {type: 'var'; data: null;} {return {type: null};}
 		};
 		this.setData(<any>tmp_key, <any>tmp_value);
 		let debug = this.getDataWithKey('d', null);
@@ -319,19 +311,16 @@ export class DebugAPI {
 		let exec_return = null;
 		if(this.current_debug_data[0] === 'class') {
 			let [, p2, p3] = this.current_debug_data;
-			let [t1, v1, v2] = p3;
-			p2([t1, v1, v2]);
+			p2(p3);
 		} else if(this.current_debug_data[0] === 'function') {
 			let [, p2, p3] = this.current_debug_data;
-			let [t1, v1, v2] = p3;
-			p2([t1, v1, v2]);
+			p2(p3);
 		}
 		let exec_res_arr = [];
 		if(tmp_value.get) {
 			for(let j of vars_arr) {
 				let res = tmp_value.get(j);
 				if(!res) continue;
-				let arg_index = -1;
 				switch(res.type) {
 					case null: continue;
 					case 'var':
@@ -339,8 +328,7 @@ export class DebugAPI {
 						break;
 					case 'no-var':
 						break;
-					// TODO: `eval-hidden-var` -> `eval-var`
-					case 'eval-var':
+					case 'eval-lost':
 						console.log('can\'t use dynamic eval for var hidden by eval argument "' + j + '"');
 				}
 			}
