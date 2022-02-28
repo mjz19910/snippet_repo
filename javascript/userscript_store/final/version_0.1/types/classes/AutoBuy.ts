@@ -1,13 +1,13 @@
-import {EventHandlerDispatch} from "./EventHandlerDispatch";
-import {SimpleStackVMParser} from "./SimpleStackVMParser";
-import {EventHandlerVMDispatch} from "./template/EventHandlerVMDispatch";
-import {MulCompression} from "./MulCompression";
-import {AsyncNodeRoot} from "./AsyncNodeRoot";
-import {AutoBuyState} from "./AutoBuyState";
-import {specialclick_inject} from "./specialclick_inject";
-import {array_sample_end} from "./array_sample_end";
-import {do_auto_unit_promote} from "./do_auto_unit_promote";
-import {AUDIO_ELEMENT_VOLUME} from "./mod";
+import {EventHandlerDispatch} from "../EventHandlerDispatch";
+import {SimpleStackVMParser} from "../SimpleStackVMParser";
+import {EventHandlerVMDispatch} from "../template/EventHandlerVMDispatch";
+import {MulCompression} from "../MulCompression";
+import {AsyncNodeRoot} from "../AsyncNodeRoot";
+import {AutoBuyState} from "../AutoBuyState";
+import {specialclick_inject} from "../specialclick_inject";
+import {array_sample_end} from "../array_tools/array_sample_end";
+import {do_auto_unit_promote} from "../do_auto_unit_promote";
+import {AUDIO_ELEMENT_VOLUME} from "../mod";
 
 export class AutoBuy {
 	delay: number;
