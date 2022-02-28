@@ -1,4 +1,11 @@
 import {FunctionCallbackArgs} from "./FunctionCallbackArgs";
 import {ClassCallbackArgs} from "./ClassCallbackArgs";
 
-export type DebuggerInitData = ['class', (v: ClassCallbackArgs) => any, ClassCallbackArgs] | ['function', (v: FunctionCallbackArgs) => any, FunctionCallbackArgs];
+type ClassCallbackFunction=(v: ClassCallbackArgs) => any;
+type ApiCallbackFunction=(v:FunctionCallbackArgs) => {};
+
+type ClassData = ['class', ClassCallbackFunction, ClassCallbackArgs];
+
+type FunctionData = ['function', ApiCallbackFunction, FunctionCallbackArgs];
+
+export type ApiData = ClassData | FunctionData;
