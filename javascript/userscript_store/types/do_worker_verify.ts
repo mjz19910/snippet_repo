@@ -1,6 +1,5 @@
 import {VERIFY} from "./VERIFY";
 import {WorkerVerifyType} from "./WorkerVerifyType";
-import {TIMER_SINGLE, TIMER_REPEATING, TIMER_TAG_COUNT} from "../typed_mod_rebuild_auto";
 
 export function do_worker_verify(verify_obj: WorkerVerifyType) {
 	VERIFY(verify_obj.TIMER_SINGLE === TIMER_SINGLE, "TIMER_SINGLE constant matches");
