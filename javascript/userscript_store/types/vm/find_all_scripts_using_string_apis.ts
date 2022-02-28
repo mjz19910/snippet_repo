@@ -1,4 +1,4 @@
-import {cur_event_fns} from "../typed_mod_rebuild_auto";
+import {cur_event_fns} from "./typed_mod_rebuild_auto";
 import {WeakFinalInfo} from "./WeakFinalInfo";
 import {TokenType} from "./TokenType";
 import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy";

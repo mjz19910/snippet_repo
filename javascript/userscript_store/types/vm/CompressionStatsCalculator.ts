@@ -39,7 +39,7 @@ export class CompressionStatsCalculator {
 		}
 		let mk = this.map_keys();
 		let mv = this.map_values();
-		let tuple_of = to_tuple_arr(mk, mv);
+		let tuple_of:[string, number][] = to_tuple_arr(mk, mv);
 		return tuple_of.filter((e) => e[1] !== void 0);
 	}
 	calc_for_stats_window_size(stats_arr: string[][][], arr: string[], win_size: number) {

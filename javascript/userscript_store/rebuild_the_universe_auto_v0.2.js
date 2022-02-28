@@ -17,7 +17,7 @@
 // @grant			none
 // ==/UserScript==
 
-import {AsyncTrigger} from "types/AsyncTrigger.js";
+import {AsyncTrigger} from "types/vm/AsyncTrigger.js";
 import ArrayBox from "types/vm/box/ArrayBox.js";
 import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
 import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox.js";
@@ -1182,7 +1182,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		 * @type {any[]}
 		 */
 		list;
-		/**@type {import("types/DocumentWriteFn.js").DocumentWriteFn | null} */
+		/**@type {import("types/vm/DocumentWriteFn.js").DocumentWriteFn | null} */
 		document_write;
 		constructor(){
 			this.list=[];

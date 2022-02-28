@@ -1,5 +1,5 @@
-import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget";
-import {TimeoutNode} from "./TimeoutNode";
+import {AsyncTimeoutTarget} from "../AsyncTimeoutTarget";
+import {TimeoutNode} from "../TimeoutNode";
 
 export class AsyncTimeoutNode extends TimeoutNode {
 	run() {

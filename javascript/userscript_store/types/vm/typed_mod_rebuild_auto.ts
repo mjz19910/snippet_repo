@@ -1,12 +1,16 @@
-import {AutoBuy} from "types/vm/AutoBuy";
-import {find_all_scripts_using_string_apis} from "types/find_all_scripts_using_string_apis_helper";
-import {SymbolRef} from "types/SymbolRef";
-import {UniqueIdGenerator} from "types/UniqueIdGenerator";
+import {rebuild_auto_main} from "types/main";
+import {AutoBuy} from "./AutoBuy";
+import {find_all_scripts_using_string_apis} from "./find_all_scripts_using_string_apis_helper";
+import {ScriptStateHost} from "./ScriptStateHost";
+import {SymbolRef} from "./SymbolRef";
+import {TimerApi} from "./TimerApi";
+import {UniqueIdGenerator} from "./UniqueIdGenerator";
 
 export const TIMER_SINGLE = 1;
 export const TIMER_REPEATING = 2;
 export const TIMER_TAG_COUNT = 3;
 export const AUDIO_ELEMENT_VOLUME = 0.58;
+export const cint_arr: string[] = [];
 export const WorkerAsyncMessage = 1;
 export const TimeoutFireS = 101;
 export const TimeoutFireR = 102;
@@ -36,16 +40,18 @@ export const TimeoutSetStringS = "setTimeout";
 export const TimeoutSetStringR = "setInterval";
 export const TimeoutClearStringS = "clearTimeout";
 export const TimeoutClearStringR = "clearInterval";
-export const LOG_LEVEL_ERROR = 1;
-export const LOG_LEVEL_WARN = 2;
-export const LOG_LEVEL_INFO = 3;
-export const LOG_LEVEL_VERBOSE = 4;
-export const LOG_LEVEL_TRACE = 5;
-export const debug_id_gen = new UniqueIdGenerator;
-export const auto_buy_obj = new AutoBuy;
+export let g_timer_api = new TimerApi;
+export let message_types = g_timer_api.msg_types;
+export var is_in_ignored_from_src_fn = {flag:false};
+export var is_in_userscript_fn = {flag:false};
+export var is_in_userscript = {flag:true};
+export let cur_event_fns: (CallableFunction | NewableFunction)[] = [];
 export const [weak_scripts, register_obj_with_registry] = find_all_scripts_using_string_apis();
-export const local_logging_level = 3;
+export let seen_elements = new WeakSet;
+export const debug_id_gen = new UniqueIdGenerator;
 export const debug_id_syms: WeakRef<SymbolRef>[] = [];
-
-
-
+export const auto_buy_obj = new AutoBuy;
+export default function entry_point() {
+	rebuild_auto_main();
+	ScriptStateHost.event_target.dispatchEvent({type: 'userscript', state: 'done'});
+}

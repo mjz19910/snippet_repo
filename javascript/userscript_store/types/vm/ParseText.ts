@@ -1,18 +1,13 @@
 import {do_parse_to_goal_symbol} from "./do_parse_to_goal_symbol";
 import {List} from "./List";
 import {ParseNode} from "./ParseNode";
-
-/**
- * @param {any} sourceText
- * @param {any} goalSymbol
- */
-function ParseText(sourceText, goalSymbol) {
+export function ParseText(sourceText: any, goalSymbol: any): ParseNode | List {
 	let parse_tree_root = null;
 	//1.
 	// Attempt to parse sourceText using goalSymbol as the goal symbol,
 	//  and analyse the parse result for any early error conditions.
 	// Parsing and early error detection may be interleaved in an implementation-defined manner.
-	let parse_result = do_parse_to_goal_symbol(sourceText, goalSymbol);
+	let parse_result:ParseResult = do_parse_to_goal_symbol(sourceText, goalSymbol);
 	//2.
 	// If the parse succeeded and no early errors were found,
 	//  return the Parse Node (an instance of goalSymbol)

@@ -1,9 +1,9 @@
-import {DocumentWriteList} from "./DocumentWriteList";
-import {move_timers_to_worker_promise_executor} from "types/move_timers_to_worker_promise_executor";
-import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element";
-import {proxy_jquery} from "./proxy_jquery";
-import {on_timers_moved} from "./on_timers_moved";
-import {dom_add_elm_filter} from "./dom_add_elm_filter";
+import {DocumentWriteList} from "./vm/DocumentWriteList";
+import {move_timers_to_worker_promise_executor} from "types/vm/move_timers_to_worker_promise_executor";
+import {dom_add_elm_filter} from "./vm/dom_add_elm_filter";
+import {proxy_jquery} from "./vm/proxy_jquery";
+import {remove_bad_dom_script_element} from "./vm/remove_bad_dom_script_element";
+import {on_timers_moved} from "./vm/on_timers_moved";
 export const cint_arr:(string | number[])[] = [];
 
 export function rebuild_auto_main() {

@@ -1,7 +1,7 @@
 import IAutoBuy from "types/IAutoBuy";
 import {RemoteWorkerState} from "./RemoteWorkerState";
 import {WorkerState} from "./WorkerState";
-import {DocumentWriteList} from "./DocumentWriteList";
+import {DocumentWriteList} from "./vm/DocumentWriteList";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 // spell:ignore secondinterval atomsaccu

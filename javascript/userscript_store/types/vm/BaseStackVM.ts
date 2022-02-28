@@ -1,11 +1,11 @@
-import InstructionTypeBox from "./vm/box/InstructionTypeBox";
-import {InstructionType} from "./vm/instruction/mod";
-import Box from "./vm/box/Box";
-import IndexBox from "./vm/box/IndexBox";
-import NewableFunctionBox from "./vm/box/NewableFunctionBox";
+import InstructionTypeBox from "./box/InstructionTypeBox";
+import {InstructionType} from "./instruction/mod";
+import Box from "./box/Box";
+import IndexBox from "./box/IndexBox";
+import NewableFunctionBox from "./box/NewableFunctionBox";
 import {BaseVMCreate} from "./BaseVMCreate";
-import {l_log_if} from "./l_log_if";
-import {SimpleStackVMParser} from "./SimpleStackVMParser";
+import {l_log_if} from "../l_log_if";
+import {SimpleStackVMParser} from "../SimpleStackVMParser";
 export class BaseStackVM extends BaseVMCreate {
 	stack: Box[];
 	return_value: Box;
