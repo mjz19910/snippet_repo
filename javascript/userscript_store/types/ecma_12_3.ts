@@ -1,16 +1,13 @@
 import {ecma_base} from "./ecma_base";
 
 export class ecma_12_3 extends ecma_base {
-	static the() {
+	static _the:ecma_12_3|null=null;
+	static the(): ecma_12_3 | undefined {
 		if(this._the)
 			return this._the;
 		this._the = new this;
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
-	LineTerminator(str, index) {
+	LineTerminator(str: string, index: number) {
 		let len = 0;
 		if(str[index] === '\r')
 			len = 1;

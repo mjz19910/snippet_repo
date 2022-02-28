@@ -4,10 +4,8 @@ import Box from "./vm/box/Box";
 import IndexBox from "./vm/box/IndexBox";
 import NewableFunctionBox from "./vm/box/NewableFunctionBox";
 import {BaseVMCreate} from "./BaseVMCreate";
-import {l_log_if} from "../l_log_if";
-import {LOG_LEVEL_VERBOSE} from "../typed_mod_rebuild_auto";
-import {SimpleStackVMParser} from "../SimpleStackVMParser";
-
+import {l_log_if} from "./l_log_if";
+import {SimpleStackVMParser} from "./SimpleStackVMParser";
 export class BaseStackVM extends BaseVMCreate {
 	stack: Box[];
 	return_value: Box;

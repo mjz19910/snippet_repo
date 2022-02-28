@@ -1,127 +1,63 @@
+import {static_event_target} from "types/DebugAPI.user";
 import {RustSimpleParser} from "../../RustSimpleParser";
 import {SimpleJavascriptParser} from "../../SimpleJavascriptParser";
-import {static_event_target, random_data_generator} from "../../DebugAPI.user";
-/**
- * @typedef {['class', (v: ClassCallbackArgs) => any, ClassCallbackArgs] | ['function', (v: FunctionCallbackArgs) => any, FunctionCallbackArgs]} DebuggerInitData
- */
-
-/**
- * @typedef {{type: 'function'; run: (v: FunctionCallbackArgs) => void}} ActivateFunctionBox
- * @typedef {{type: 'class'; run: (v: ClassCallbackArgs) => void}} ActivateClassBox
- * @typedef {ActivateFunctionBox | ActivateClassBox} ActivateBoxTypes
- */
-
-/**
- * @typedef {['function', ActivateFunctionBox, FunctionCallbackArgs]} FnTypeAll
- */
-
-/**
- * @typedef {['class', ActivateClassBox, ClassCallbackArgs]} ClassTypeAll
- */
-
-/**
- * @typedef {'class'} ClassStr
- * @typedef {any[]} ClassArgs_x
- * @typedef {[type: 'class', args: ClassArgs_x]} ClassArgs
- * @typedef {[ClassStr, new (...v:ClassArgs[1])=>any]} ClassUnit
- * @typedef {[t:ClassStr, v: ClassCallbackArgs, a: ClassArgs[1]]} UseClass
- * @typedef {[type: 'class']} HCT
- * @typedef {{type:'class', run:(v:ClassCallbackArgs)=>void}} TargetClassType
- * 
- * @typedef {'function'} FnStr
- * @typedef {any[]} FnArgs_x
- * @typedef {[any, any[]]} UseFnB
- * @typedef {[FnStr, (...v:FnArgs_x) => void]} FnUnit
- * @typedef {[t:FnStr, v: FunctionCallbackArgs, a: FnArgs_x, o: any]} UseFn
- * @typedef {[type: 'function', obj:{}, args:any[]]} FunctionArgs
- * @typedef {[args: any[]]} HCV
- * @typedef {{type:'function', run:(v:FunctionCallbackArgs)=> void}} TargetFnType
- * 
- * 
- * @typedef {TargetClassType|TargetFnType} TargetType
- * @typedef {ClassUnit|FnUnit|null} AnyCallable
- * 
- * 
- *
- * @typedef {[t: 'class', r: any[]]} ClassArgsObj
- * @typedef {[t: 'function', o: {} | null, r: any[]]} FnArgsObj
- * @typedef {['class', new (...a:ClassArgsObj[1])=>{}, ClassArgsObj]} ClassCallbackArgs
- * @typedef {['function', (this:FnArgsObj[1], ...a:FnArgsObj[2])=>any, FnArgsObj]} FunctionCallbackArgs
- */
-
+import {ActivateClassBox} from "./ActivateClassBox";
+import {ClassCallbackArgs} from "./ClassCallbackArgs";
+import {DebuggerInitData} from "./DebuggerInitData";
+import {FnArgsObj} from "./FnArgsObj";
+import {FunctionCallbackArgs} from "./FunctionCallbackArgs";
 export class DebugAPI {
 	next_remote_id = 0;
 	data_store = new Map;
 	event_handler = static_event_target;
 	static simple_parser = new RustSimpleParser;
 	static javascript_parser = new SimpleJavascriptParser;
-	/**@type {DebugAPI|null} */
-	static the_instance = null;
-	/**@returns {DebugAPI} */
-	static the() {
+	static the_instance: DebugAPI | null = null;
+	static the(): DebugAPI {
 		if(!this.the_instance) {
 			this.the_instance = new this;
 		}
 		return this.the_instance;
 	}
-	/**@type {DebugAPI} */
-	root;
-	/**@arg {DebugAPI|null} root */
-	constructor(root = null) {
+	root: DebugAPI | null=null;
+	constructor(root: DebugAPI | null = null) {
 		if(root) {
 			this.root = root;
 		} else {
 			this.root = this;
 		}
 	}
-	/**
-	 * @param {string} key
-	 */
-	hasData(key) {
+	hasData(key: string) {
 		return this.data_store.has(key);
 	}
-	/**
-	 * @param {string} key
-	 */
-	getData(key) {
+	getData(key: string) {
 		return this.data_store.get(key);
 	}
-	/**
-	 * @param {string} key
-	 * @param {{}} value
-	 */
-	setData(key, value) {
+	setData(key: string, value: {}) {
 		this.data_store.set(key, value);
 		return this;
 	}
-	/**
-	 * @param {string} key
-	 */
-	deleteData(key) {
+	deleteData(key: string) {
 		return this.data_store.delete(key);
 	}
-	/**
-	 * @arg {(to_dbg:()=>void)=>void} debug @arg {(to_un_dbg:()=>void)=>void} undebug
-	 * @arg {()=>void} func
-	 * @arg {string} name
-	 */
-	get_event_listener_var_vec_1(debug, undebug, func, name) {
+	get_event_listener_var_vec_1(debug: (to_dbg: () => void) => void, undebug: (to_un_dbg: () => void) => void, func: () => void, name: string) {
 		let __d = this.root;
+		if(!__d){
+			return {
+				type:'error',
+				data:null
+			};
+		}
 		__d.attach(debug, undebug, null);
 		/**@type {FnArgsObj} */
-		let pk_args=['function', {}, []];
+		let pk_args: FnArgsObj=['function', {}, []];
 		/**@type {FunctionCallbackArgs} */
-		let pk_activate_box=['function', func, pk_args];
+		let pk_activate_box: FunctionCallbackArgs=['function', func, pk_args];
 		/**@type {DebuggerInitData} */
-		let dbg_data=['function', this.activate, pk_activate_box];
+		let dbg_data: DebuggerInitData=['function', this.activate, pk_activate_box];
 		return __d.debuggerGetVar_a(dbg_data, name);
 	}
-	/**
-	 * @param {any} debug
-	 * @param {any} undebug
-	 * @param {any} getEventListeners
-	 */
-	attach(debug, undebug, getEventListeners) {
+	attach(debug: any, undebug: any, getEventListeners: any) {
 		//Attach to the chrome DebugApi functions the user specified.
 		let obj_debug = this.getData('d');
 		let obj_undebug = this.getData('u');
@@ -133,10 +69,7 @@ export class DebugAPI {
 		}
 		return this;
 	}
-	/**
-	 * @arg {FunctionCallbackArgs | ClassCallbackArgs} v
-	 */
-	activate(v) {
+	activate(v: FunctionCallbackArgs | ClassCallbackArgs) {
 		if(v[0] === 'function'){
 			let [, target, rs] = v;
 			let [, thisArgument, argumentsList] = rs;
@@ -148,7 +81,7 @@ export class DebugAPI {
 		}
 	}
 	debuggerBreakpointCode() {
-		window.DebugAPI.the().getData("__k").get = (/** @type {string} */ __v) => {
+		window.DebugAPI.the().getData("__k").get = (/** @type {string} */ __v: string) => {
 			if(__v === '__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -186,7 +119,7 @@ export class DebugAPI {
 	 * @argument {Function} function_value
 	 * @returns {string}
 	*/
-	stringifyFunction(function_value) {
+	stringifyFunction(function_value: Function): string {
 		let function_code = function_value.toString();
 		if(function_code.includes("{}"[0])) {
 			function_code = function_code.slice(function_code.indexOf("{}"[0]));
@@ -196,12 +129,12 @@ export class DebugAPI {
 		return function_code;
 	}
 	/**@type {DebuggerInitData | null} */
-	current_debug_data = null;
+	current_debug_data: DebuggerInitData | null = null;
 	/**
 	 * @param {DebuggerInitData} debug_data
 	 * @param {string} var_match
 	 */
-	debuggerGetVarArray_a(debug_data, var_match) {		
+	debuggerGetVarArray_a(debug_data: DebuggerInitData, var_match: string) {		
 		let activate_fn_box, function_run_box;
 		if(!this.hasData("d") || !this.getData("u")) {
 			return {
@@ -254,7 +187,7 @@ export class DebugAPI {
 		}
 		let tmp_value = {
 			/**@returns {{type:'no-var'|'eval-var'|null} | {type:'var', data:null}} */
-			get(/**@type {string}*/_q) {return {type: null};}
+			get(/**@type {string}*/_q: string): {type: 'no-var' | 'eval-var' | null;} | {type: 'var'; data: null;} {return {type: null};}
 		};
 		this.setData(tmp_key, tmp_value);
 		let debug = this.getData('d');
@@ -312,15 +245,15 @@ export class DebugAPI {
 	 * @param {any} target_arg_vec
 	 * @param {any} var_match
 	 */
-	debuggerGetVarArray_c(class_value, target_arg_vec, var_match) {
+	debuggerGetVarArray_c(class_value: any, target_arg_vec: any, var_match: any) {
 		if(target_arg_vec instanceof Array) {
 			/**@type {ActivateClassBox} */
-			let activate = {
+			let activate: ActivateClassBox = {
 				type: 'class',
 				run: this.activate
 			};
 			/**@type {ClassCallbackArgs} */
-			let run_box=['class', class_value, ['class', target_arg_vec]];
+			let run_box: ClassCallbackArgs=['class', class_value, ['class', target_arg_vec]];
 			return this.debuggerGetVarArray_a(['class', this.activate, run_box], var_match);
 		}
 		return {
@@ -332,7 +265,7 @@ export class DebugAPI {
 	 * @param {DebuggerInitData} run_box
 	 * @param {string} var_match
 	 */
-	debuggerGetVarArray(run_box, var_match) {
+	debuggerGetVarArray(run_box: DebuggerInitData, var_match: string) {
 		if(run_box[0] === 'function'){
 			return this.debuggerGetVarArray_a(run_box, var_match);
 		} else if(run_box[0] === 'class') {
@@ -343,7 +276,7 @@ export class DebugAPI {
 	 * @param {DebuggerInitData} debug_data
 	 * @param {string} var_name
 	 */
-	debuggerGetVar_a(debug_data, var_name) {
+	debuggerGetVar_a(debug_data: DebuggerInitData, var_name: string) {
 		if(!this.hasData("d") || !this.getData("u")) {
 			return {
 				type: 'invalid-state-error',
@@ -375,7 +308,7 @@ export class DebugAPI {
 		let tmp_value = {
 			type:'none',
 			/**@arg {string} v */
-			get(v) {
+			get(v: string) {
 				return {
 					type:'none',
 					data:null
@@ -431,7 +364,7 @@ export class DebugAPI {
 	 * @param {DebuggerInitData} class_value
 	 * @param {string} var_name
 	 */
-	debuggerGetVar_c(class_value, var_name) {
+	debuggerGetVar_c(class_value: DebuggerInitData, var_name: string) {
 		if(typeof class_value != 'function') {
 			return {
 				type: 'argument-error',
@@ -444,7 +377,7 @@ export class DebugAPI {
 	 * @param {DebuggerInitData} function_value
 	 * @param {string} var_name
 	 */
-	debuggerGetVar(function_value, var_name) {
+	debuggerGetVar(function_value: DebuggerInitData, var_name: string) {
 		return this.debuggerGetVar_a(function_value, var_name);
 	}
 }
