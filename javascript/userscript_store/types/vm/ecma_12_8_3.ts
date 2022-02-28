@@ -7,6 +7,39 @@ function consume_exponent(){
 }
 
 export class ecma_12_8_3 extends ecma_base {
+	/*HexDigits[Sep] */
+	// https://tc39.es/ecma262/#prod-HexDigits
+	HexDigits(str:string, index:number):ecma_return_type {
+		let max_len=0;
+		let lex_res=null;
+		let cur;
+		cur=this.HexDigit(str, index);
+		let nx=this.HexDigit(str, index);
+		if(cur[0] && cur[1] > 0 && (!nx[0])){
+			return [true, 1];
+		}
+		// HexDigit
+		// HexDigits[?Sep] HexDigit
+		cur=this.HexDigits(str, index);
+		if(cur[0] && cur[1]){
+			nx=this.HexDigit(str, index);
+			if(nx[0] && nx[1] > 0){
+				return [true, cur[1] + nx[1]];
+			}
+		}
+		// [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
+		cur=this.HexDigits_Sep(str, index);
+
+	}
+	HexDigits_Sep(str:string, index:number) {
+		cur=this.HexDigit(str, index);
+		let nx=this.HexDigit(str, index);
+		if(cur[0] && cur[1] > 0 && (!nx[0])){
+			return [true, 1];
+		}
+		// HexDigits[?Sep] HexDigit
+		// [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
+	}
 	token_type:string;
 	token_message:string;
 	constructor(dis: Dispatcher){
@@ -255,8 +288,9 @@ export class ecma_12_8_3 extends ecma_base {
 			if(ns_len > 0) {
 				off++;
 			}
-			let [, dd_len] = this.DecimalDigits(str, index + off);
-			return [true, dd_len + off];
+			let dd_r = this.DecimalDigits(str, index + off);
+			if(!dd_r[0])throw dd_r[1];
+			return [true, dd_r[1] + off];
 		}
 		return [true, off];
 	}
@@ -372,6 +406,18 @@ export class ecma_12_8_3 extends ecma_base {
 	}
 	NonOctalDigit(str:string, index:number):ecma_return_type {
 		if(str[index] === '8' || str[index] === '9'){
+			return [true, 1];
+		}
+		return [null, 0];
+	}
+	HexDigit(str:string, index:number):ecma_return_type {
+		if(str.charCodeAt(index) >= '0'.charCodeAt(0) && str.charCodeAt(index) <= '9'.charCodeAt(0)){
+			return [true, 1];
+		}
+		if(str.charCodeAt(index) >= 'a'.charCodeAt(0) && str.charCodeAt(index) <= 'f'.charCodeAt(0)){
+			return [true, 1];
+		}
+		if(str.charCodeAt(index) >= 'A'.charCodeAt(0) && str.charCodeAt(index) <= 'F'.charCodeAt(0)){
 			return [true, 1];
 		}
 		return [null, 0];

@@ -1,1 +1,1 @@
-export type ecma_return_type = [string | boolean | null, number];
+export type ecma_return_type = [string | true | null, number] | [false, Error];
