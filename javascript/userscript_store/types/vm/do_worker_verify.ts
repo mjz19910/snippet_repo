@@ -1,4 +1,4 @@
-import {TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "mod_entries/constants";
+import {TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "types/constants";
 import {VERIFY} from "./VERIFY";
 import {WorkerVerifyType} from "./WorkerVerifyType";
 

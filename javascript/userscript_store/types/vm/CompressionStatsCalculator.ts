@@ -30,7 +30,7 @@ export class CompressionStatsCalculator {
 		this.cache.length = 0;
 		this.hit_counts.length = 0;
 	}
-	calc_compression_stats(arr: string[], win_size: number): string[][] {
+	calc_compression_stats(arr: string[], win_size: number): [string, number][] {
 		this.reset();
 		for(let i = 0;i < arr.length;i++) {
 			if(i + win_size < arr.length) {
@@ -40,12 +40,12 @@ export class CompressionStatsCalculator {
 		let mk = this.map_keys();
 		let mv = this.map_values();
 		let tuple_of:[string, number][] = to_tuple_arr(mk, mv);
-		return tuple_of.filter((e) => e[1] !== void 0);
+		return tuple_of;
 	}
-	calc_for_stats_window_size(stats_arr: string[][][], arr: string[], win_size: number) {
+	calc_for_stats_window_size(stats_arr: [string, number][][], arr: string[], win_size: number) {
 		stats_arr[win_size - 1] = this.calc_compression_stats(arr, win_size);
 	}
-	calc_for_stats_index(stats_arr: string[][][], arr: string[], index: number) {
+	calc_for_stats_index(stats_arr: [string, number][][], arr: string[], index: number) {
 		stats_arr[index] = this.calc_compression_stats(arr, index + 1);
 	}
 }

@@ -2,22 +2,10 @@ import {ecma_base} from "./ecma_base";
 
 export class ecma_12_7 extends ecma_base {
 	/**
-	 * @param {any} root
-	 */
-	static _attach(root) {
-		let test_class = new ecma_12_7();
-		// import the instance variables by constructing the class
-		let instance_var_vec = Object.getOwnPropertyNames(test_class);
-		for(let x of instance_var_vec) {
-			this.prototype[x] = test_class[x];
-		}
-		super._attach(root);
-	}
-	/**
 	 * @param {any} str
 	 * @param {any} index
 	 */
-	Punctuator(str, index) {
+	Punctuator(str: any, index: any) {
 		var len = 0, type = null, ret;
 		ret = this.OptionalChainingPunctuator(str, index);
 		if(ret[1] > len) {
@@ -35,7 +23,7 @@ export class ecma_12_7 extends ecma_base {
 	 * @param {string} str
 	 * @param {number} index
 	 */
-	OptionalChainingPunctuator(str, index) {
+	OptionalChainingPunctuator(str: string, index: number) {
 		if(str.slice(index, index + 2) === '?.') {
 			let num_len = this.DecimalDigit(str, index + 2);
 			if(num_len > 0) {
@@ -45,12 +33,11 @@ export class ecma_12_7 extends ecma_base {
 		}
 		return [null, 0];
 	}
+	DecimalDigit(str: string, arg1: number) {
+		throw new Error("Method not implemented.");
+	}
 	_OtherPunctuator_vec = "{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
-	/**
-	 * @param {string} str
-	 * @param {any} index
-	 */
-	OtherPunctuator(str, index) {
+	OtherPunctuator(str: string, index: any) {
 		let char_length = 0;
 		for(let punctuator of this._OtherPunctuator_vec) {
 			if(str.startsWith(punctuator, index)) {

@@ -1,7 +1,7 @@
-import IAutoBuy from "types/IAutoBuy";
-import {RemoteWorkerState} from "./RemoteWorkerState";
-import {WorkerState} from "./WorkerState";
+import {RemoteWorkerState} from "./vm/RemoteWorkerState";
+import {WorkerState} from "./vm/WorkerState";
 import {DocumentWriteList} from "./vm/DocumentWriteList";
+import IAutoBuy from "./vm/IAutoBuy";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 // spell:ignore secondinterval atomsaccu
@@ -76,7 +76,9 @@ declare global {
 			cur: string;
 		};
 		g_do_load: ((promise_accept: (value: any) => void) => void) | undefined;
-		document_write_list:DocumentWriteList
+		document_write_list:DocumentWriteList;
+		allspec:any[];
+		$:JQueryStatic;
 	}
 	export var window: Window & typeof globalThis;
 	export var Window: {

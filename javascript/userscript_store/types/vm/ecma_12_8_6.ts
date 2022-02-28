@@ -43,11 +43,7 @@ export class ecma_12_8_6 extends ecma_base {
 	/*Template ::*/
 	/* | NoSubstitutionTemplate*/
 	/* | TemplateHead*/
-	/**
-	 * @param {any} str
-	 * @param {any} index
-	 */
-	Template(str, index) {
+	public Template(str:string, index:number) {
 		let ret = this.NoSubstitutionTemplate(str, index);
 		if(ret[1] > 0) {
 			return ret;
@@ -64,5 +60,5 @@ export class ecma_12_8_6 extends ecma_base {
 	 * @param {any} str
 	 * @param {any} index
 	 */
-	NoSubstitutionTemplate(str, index) {}
+	public NoSubstitutionTemplate(str, index) {}
 }

@@ -4,10 +4,9 @@ import {worker_code_function} from "./worker_code_function";
 import {WorkerState} from "./WorkerState";
 import {Timer} from "./Timer";
 import {do_worker_verify} from "./do_worker_verify";
-import {WorkerDestroyMessage, TIMER_SINGLE, TIMER_REPEATING} from "./typed_mod_rebuild_auto";
 import {l_log_if} from "./l_log_if";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle";
-import {LOG_LEVEL_WARN} from "mod_entries/constants";
+import {LOG_LEVEL_WARN, TIMER_REPEATING, TIMER_SINGLE, WorkerDestroyMessage} from "types/constants";
 
 export function move_timers_to_worker_promise_executor(
 	executor_accept: (arg0: WorkerState | null) => void,

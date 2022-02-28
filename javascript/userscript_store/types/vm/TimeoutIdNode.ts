@@ -1,4 +1,4 @@
-import {BaseTimeoutNode} from "types/BaseTimeoutNode";
+import {BaseTimeoutNode} from "./BaseTimeoutNode";
 
 export class TimeoutIdNode extends BaseTimeoutNode {
 	id: number | null;

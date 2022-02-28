@@ -1,7 +1,7 @@
-import {BaseNode} from "BaseNode";
-import {IntervalNode} from "IntervalNode";
-import {TimeoutIdNode} from "TimeoutIdNode";
-import {TimeoutNode} from "../TimeoutNode";
+import {BaseNode} from "./BaseNode";
+import {IntervalNode} from "./IntervalNode";
+import {TimeoutIdNode} from "./TimeoutIdNode";
+import {TimeoutNode} from "./TimeoutNode";
 
 export class AsyncNodeRoot {
 	children: BaseNode[];

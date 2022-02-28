@@ -1,5 +1,4 @@
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle";
-import {TimeoutFireS, TIMER_SINGLE, TIMER_REPEATING, WorkerDestroyMessage, ReplyMessage1, ReplyMessage2, ReplyFromWorker, message_types, WorkerUpdateMessageHandlerReply, WorkerReadyReply, LOG_LEVEL_VERBOSE, ReplySetSingle, ReplySetRepeating, TimeoutClearR, TimeoutClearS} from "../typed_mod_rebuild_auto";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS";
 import {MessageTimeoutSingleReply} from "./MessageTimeoutSingleReply";
@@ -11,6 +10,7 @@ import {MessageTimeoutClearS} from "./MessageTimeoutClearS";
 import {MessageTypesForWorkerReplies} from "./MessageTypesForWorkerReplies";
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS";
 import {Timer} from "./Timer";
+import {LOG_LEVEL_VERBOSE, ReplyFromWorker, ReplyMessage1, ReplyMessage2, ReplySetRepeating, ReplySetSingle, TimeoutClearR, TimeoutClearS, TimeoutFireS, TIMER_REPEATING, TIMER_SINGLE, WorkerDestroyMessage, WorkerReadyReply, WorkerUpdateMessageHandlerReply} from "types/constants";
 
 export class WorkerState {
 	flags: Map<string, boolean>;
@@ -61,14 +61,6 @@ export class WorkerState {
 				return;
 			}
 			switch(msg.t) {
-				case TimeoutFireS /*worker_state.timer single fire*/: {
-					worker_state.timer.fire(TIMER_SINGLE, msg.v);
-					break;
-				}
-				case TimeoutFireS /*worker_state.timer repeating fire*/: {
-					worker_state.timer.fire(TIMER_REPEATING, msg.v);
-					break;
-				}
 				case WorkerDestroyMessage /*worker_state destroy*/:
 					worker_state.destroy();
 					break;
@@ -90,9 +82,6 @@ export class WorkerState {
 			}
 		};
 		this.flags.set('valid', true);
-		this.worker.postMessage({
-			t: message_types.worker.ready
-		});
 	}
 	set_executor_handle(handle: PromiseExecutorHandle) {
 		this.executor_handle = handle;
@@ -101,23 +90,8 @@ export class WorkerState {
 		if(!this.executor_handle)
 			return;
 		switch(result.v) {
-			case message_types.worker.update_message_handler: {
-				console.assert(result.t === WorkerUpdateMessageHandlerReply);
-				console.log("remote_worker onmessage function changed");
-				break;
-			}
-			case message_types.worker.ready: {
-				console.assert(result.t === WorkerReadyReply);
-				if(this.executor_handle.closed()) {
-					console.assert(false, "WorkerState used with closed executor_handle");
-					break;
-				}
-				l_log_if(LOG_LEVEL_VERBOSE, "remote_worker ready");
-				WorkerState.set_global_state(this);
-				this.executor_handle.accept(this);
-				this.flags.set('connected', true);
-				break;
-			}
+			default:
+				console.log('handler needed', result);
 		}
 	}
 	dispatch_message(result: DispatchMessageType) {
@@ -143,14 +117,6 @@ export class WorkerState {
 				this.timer.on_reply(result);
 			} break;
 			case ReplySetRepeating: {
-				// debugger;
-				this.timer.on_reply(result);
-			} break;
-			case message_types.reply.clear.single: {
-				// debugger;
-				this.timer.on_reply(result);
-			} break;
-			case message_types.reply.clear.repeating: {
 				// debugger;
 				this.timer.on_reply(result);
 			} break;

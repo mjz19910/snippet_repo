@@ -1,8 +1,8 @@
 import {AverageRatioRoot} from "./AverageRatioRoot";
 import {AsyncTimeoutNode} from "./AsyncTimeoutNode";
-import {TimeoutTarget} from "../TimeoutTarget";
-import {AverageRatio} from "../AverageRatio";
-import {TAutoBuyRoot} from "../TAutoBuyRoot";
+import {TimeoutTarget} from "./TimeoutTarget";
+import {AverageRatio} from "./AverageRatio";
+import {TAutoBuyRoot} from "./TAutoBuyRoot";
 
 export class AutoBuyState {
 	root_node;

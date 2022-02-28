@@ -467,10 +467,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			if(typeof v === 'function')return new this(v);
 			if(typeof v === 'object'){
 				if(v === null)return v;
-				// a void box;
-				if(v.type === 'void'){
-					return v;
-				};
 			}
 			unreachable();
 		}
@@ -716,8 +712,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 							case "instance_box":throw new Error("Unable to index instance yet");
 						}
 					}
-					/**@typedef {import("final/version_0.1/rebuild_the_universe_auto_v0.1.js").First<typeof the_type>} FC1 */
-					/**@typedef {import("final/version_0.1/rebuild_the_universe_auto_v0.1.js").RemoveFirst<typeof the_type>} FC2 */
 					let res=do_box_get(target_obj, target_name);
 					console.log('VM: get result', res);
 					switch(typeof res){
@@ -2466,8 +2460,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			await node.start_async(new AsyncTimeoutTarget);
 		}
 	}
-	/**@typedef {import("types/IAutoBuy.js").default} IAutoBuy */
-	/**@implements {IAutoBuy} */
 	class AutoBuy {
 		async_compress(){
 			this.state_history_arr=this.compressor.compress_array(this.state_history_arr);

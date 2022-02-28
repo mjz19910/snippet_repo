@@ -1,11 +1,11 @@
-import {ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutMessageR, TimeoutSetR, TimeoutSetS, WorkerReadyReply} from "typed_mod_rebuild_auto";
-import {TimeoutClearStrings} from "TimeoutClearStrings";
-import {TimerMessageTypes} from "TimerMessageTypes";
-import {TimeoutSetStrings} from "TimeoutSetStrings";
-import {MakeReplyData} from "MakeReplyData";
-import {NoDataMsg} from "NoDataMsg";
-import {NumInfoMsg} from "NumInfoMsg";
-import {RefVarMsg} from "RefVarMsg";
+import {ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutMessageR, TimeoutSetR, TimeoutSetS, WorkerReadyReply} from "types/constants";
+import {MakeReplyData} from "./MakeReplyData";
+import {NoDataMsg} from "./NoDataMsg";
+import {NumInfoMsg} from "./NumInfoMsg";
+import {RefVarMsg} from "./RefVarMsg";
+import {TimeoutClearStrings} from "./TimeoutClearStrings";
+import {TimeoutSetStrings} from "./TimeoutSetStrings";
+import {TimerMessageTypes} from "./TimerMessageTypes";
 
 export class TimerApi {
 	msg_types:TimerMessageTypes = new TimerMessageTypes;

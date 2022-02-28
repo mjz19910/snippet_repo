@@ -1,7 +1,8 @@
-import {InstructionType} from "./vm/instruction/mod";
-import Box from "./vm/box/Box";
-import {BaseStackVM} from "./vm/BaseStackVM";
-import {LOG_LEVEL_VERBOSE, l_log_if} from "./l_log_if";
+import {InstructionType} from "./instruction/mod";
+import Box from "./box/Box";
+import {BaseStackVM} from "./BaseStackVM";
+import {l_log_if} from "./l_log_if";
+import {LOG_LEVEL_VERBOSE} from "types/constants";
 export class DomBuilderVM extends BaseStackVM {
 	exec_stack: ([Box[], InstructionType[]])[];
 	jump_instruction_pointer: number | null;
