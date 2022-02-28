@@ -1,5 +1,4 @@
 import {random_data_generator, static_event_target} from "types/DebugAPI.user";
-import {IntInc} from "types/Tools";
 import {RustSimpleParser} from "../../RustSimpleParser";
 import {SimpleJavascriptParser} from "../../SimpleJavascriptParser";
 import {ChromeDevToolsDebug} from "./ChromeDevToolsDebug";

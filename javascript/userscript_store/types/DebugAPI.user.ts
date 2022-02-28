@@ -1,4 +1,4 @@
-import {DebugAPI} from "final/DebugApi/DebugAPI.js";
+import {DebugAPI} from "final/DebugApi_v0.2/DebugAPI.js";
 import {ecma_12_2} from "types/ecma_12_2.js";
 import {ecma_terminal} from "types/ecma_terminal.js";
 import {Dumper} from "./Dumper.js";
@@ -15,9 +15,7 @@ import {ecma_base} from "./ecma_base.js";
 import {GenericDataEvent} from "./GenericDataEvent.js";
 import {GenericEventTarget} from "./GenericEventTarget.js";
 import {HexRandomDataGenerator} from "./HexRandomDataGenerator.js";
-
-/**@type {ecma_base[]} */
-export let ecma_sections = [];
+export let ecma_sections:ecma_base[] = [];
 export let random_data_generator = new HexRandomDataGenerator;
 window.GenericDataEvent = GenericDataEvent;
 export const static_event_target = new GenericEventTarget;

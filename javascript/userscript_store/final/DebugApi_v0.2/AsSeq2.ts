@@ -1,6 +1,6 @@
 import {IntInc} from "types/Tools";
 import {AsSeqImpl} from "./AsSeqImpl";
-type SeqCarLast<T, X extends number>=[SeqCar<T, X>];
+type SeqEnd<T, X extends number>=[SeqCar<T, X>];
 type SeqCdr<T, X extends number>= AsSeq2<T, IntInc<X>>;
 type SeqCar<T, X extends number> = AsSeqImpl<T, X>[0];
 
@@ -15,5 +15,5 @@ export type AsSeq2<T, X extends number> =
 	SeqCar<T, X> extends undefined ?
 	never :
 	SeqCdr<T, X> extends undefined ?
-	SeqCarLast<T, X> :
+	SeqEnd<T, X> :
 	Seq1<T, X>;

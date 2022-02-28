@@ -1,5 +1,5 @@
-import {DebugAPI} from "./DebugApi_v0.2/DebugAPI_convert_1";
-import {GenericDataEvent} from "./DebugApi_v0.1/GenericDataEvent";
+import {GenericDataEvent} from "types/GenericDataEvent";
+import {DebugAPI} from "./DebugApi_v0.2/DebugAPI";
 
 declare global {
 	interface Window {
