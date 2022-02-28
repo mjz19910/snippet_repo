@@ -1,15 +1,34 @@
 import {random_data_generator, static_event_target} from "types/DebugAPI.user";
+import {IntInc} from "types/Tools";
 import {RustSimpleParser} from "../../RustSimpleParser";
 import {SimpleJavascriptParser} from "../../SimpleJavascriptParser";
-import {ActivateClassBox} from "./ActivateClassBox";
+import {ChromeDevToolsDebug} from "./ChromeDevToolsDebug";
+import {ChromeDevToolsGetEventListeners} from "./ChromeDevToolsGetEventListeners";
+import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug";
 import {ClassArgs} from "./ClassArgs";
 import {ClassCallbackArgs} from "./ClassCallbackArgs";
+import {DbgGetRes as DbgRetInfo} from "./DbgGetRes";
 import {ApiData} from "./DebuggerInitData";
 import {FnArgsObj} from "./FnArgsObj";
 import {FunctionCallbackArgs} from "./FunctionCallbackArgs";
+import {FuncType1} from "./FuncType1";
+import {KT5} from "./KT5";
+import {KT6} from "./KT6";
+import {MapAllKeys} from "./MapAllKeys";
+import {MapEach} from "./MapEach";
+import {T5} from "./T5";
+const MapKeys: MapAllKeys = ['d', 'u', 'getEventListeners', '__k'];
+export type AsSeqImpl<U, T> = T extends number ?
+	U extends {[X in T]: any} ?
+	U[T] extends void ?
+	[] :
+	T extends 0 ?
+	[[T, U[T]], ...KT5<IntInc<T>>] :
+	[[T, U[T]], ...KT5<IntInc<T>>] :
+	[] : [];
 export class DebugAPI {
 	next_remote_id = 0;
-	data_store = new Map;
+	data_store: MapEach<KT6[number][0]> = new Map;
 	event_handler = static_event_target;
 	static simple_parser = new RustSimpleParser;
 	static javascript_parser = new SimpleJavascriptParser;
@@ -28,20 +47,102 @@ export class DebugAPI {
 			this.root = this;
 		}
 	}
-	hasData(key: string) {
-		return this.data_store.has(key);
+	hasData<N extends keyof typeof MapKeys>(key: typeof MapKeys[N]): boolean {
+		for(let i = 0;i < MapKeys.length;i++) {
+			let eq = MapKeys[i];
+			if(eq === key) {
+				return this.data_store.has(eq);
+			}
+		}
+		return false;
 	}
-	getData(key: string) {
-		return this.data_store.get(key);
+	do_is_extract<T extends number, X extends T5[T], U extends X[0]>(typ: any, val: U): typ is X {
+		void typ;
+		void val;
+		return true;
 	}
-	setData(key: string, value: {}) {
-		this.data_store.set(key, value);
-		return this;
+	extractData(...q: T5[number]): typeof q | null {
+		switch(q[0]) {
+			case 'd': return q;
+			case 'u': return q;
+			case 'getEventListeners': return q;
+			case '__k': return q;
+			default: throw new Error("Unknown key in getData");
+		}
 	}
-	deleteData(key: string) {
+	getDataWithKey(...q: T5[number]): typeof q | null {
+		switch(q[0]) {
+			case 'd': {
+				let ret = this.data_store.get(q[0]);
+				if(!ret) return null;
+				let kv: [(typeof q)[0], typeof ret] = [q[0], ret];
+				if(this.do_is_extract(kv, q[0])) {
+					let rr = this.extractData(kv[0], kv[1]);
+					if(rr && rr[0] === q[0]) {
+						return rr;
+					}
+				}
+				return null;
+			}
+			case 'u': {
+				let ret = this.data_store.get(q[0]);
+				if(!ret) return null;
+				let kv: [(typeof q)[0], typeof ret] = [q[0], ret];
+				if(this.do_is_extract(kv, q[0])) {
+					let rr = this.extractData(kv[0], kv[1]);
+					if(rr && rr[0] === q[0]) {
+						let o = rr[1];
+						return rr;
+					}
+				}
+				return null;
+			}
+			case 'getEventListeners': {
+				let ret = this.data_store.get(q[0]);
+				if(!ret) return null;
+				let kv: [(typeof q)[0], typeof ret] = [q[0], ret];
+				if(this.do_is_extract(kv, q[0])) {
+					let rr = this.extractData(kv[0], kv[1]);
+					if(rr && rr[0] === q[0]) {
+						return rr;
+					}
+				}
+				return null;
+			}
+			case '__k': {
+				let ret = this.data_store.get(q[0]);
+				if(!ret) return null;
+				let kv: [(typeof q)[0], typeof ret] = [q[0], ret];
+				if(this.do_is_extract(kv, q[0])) {
+					let rr = this.extractData(kv[0], kv[1]);
+					if(rr && rr[0] === q[0]) {
+						return rr;
+					}
+				}
+				return null;
+			}
+			default: throw new Error("Unknown key in getData");
+		}
+	}
+	retype_data<T extends U, U>(x: U, v: T): x is T {
+		void x, v;
+		return true;
+	}
+	setData<T>(...q: T5[number] & [T, any]): boolean {
+		if(!q[1]) return false;
+		switch(q[0]) {
+			case 'd': this.data_store.set(q[0], q[1]); break;
+			case 'u': this.data_store.set(q[0], q[1]); break;
+			case '__k': this.data_store.set(q[0], q[1]); break;
+			case 'getEventListeners': this.data_store.set(q[0], q[1]); break;
+			default: throw new Error("Unknown key in setData");
+		}
+		return false;
+	}
+	deleteData<T extends number>(key: MapAllKeys[T]) {
 		return this.data_store.delete(key);
 	}
-	get_event_listener_var_vec_1(debug: (to_dbg: () => void) => void, undebug: (to_un_dbg: () => void) => void, func: () => void, name: string) {
+	get_event_listener_var_vec_1(debug: ChromeDevToolsDebug, undebug: ChromeDevToolsUnDebug, func: FuncType1, name: string) {
 		let __d = this.root;
 		if(!__d) {
 			return {
@@ -50,23 +151,25 @@ export class DebugAPI {
 			};
 		}
 		__d.attach(debug, undebug, null);
-		/**@type {FnArgsObj} */
-		let pk_args: FnArgsObj = ['function', {}, []];
-		/**@type {FunctionCallbackArgs} */
-		let pk_activate_box: FunctionCallbackArgs = ['function', func, pk_args];
-		/**@type {ApiData} */
-		let dbg_data: ApiData = ['function', this.activate, pk_activate_box];
-		return __d.debuggerGetVar_a(dbg_data, name);
+		let fn_args: FnArgsObj = ['function', {}, []];
+		let activate: FunctionCallbackArgs = ['function', func, fn_args];
+		let data: ApiData = ['function', this.activate, activate];
+		return __d.debuggerGetVar_a(data, name);
 	}
-	attach(debug: any, undebug: any, getEventListeners: any) {
+	attach(debug: ChromeDevToolsDebug, undebug: ChromeDevToolsUnDebug, getEventListeners: ChromeDevToolsGetEventListeners | null) {
 		//Attach to the chrome DebugApi functions the user specified.
-		let obj_debug = this.getData('d');
-		let obj_undebug = this.getData('u');
-		let get_ev_lis = this.getData('getEventListeners');
-		if(obj_debug !== debug || obj_undebug !== undebug || get_ev_lis !== getEventListeners) {
+		let obj_debug = this.getDataWithKey('d', null);
+		let obj_undebug = this.getDataWithKey('u', null);
+		let get_ev_lis = this.getDataWithKey('getEventListeners', null);
+		if(!obj_debug) return this;
+		if(!obj_undebug) return this;
+		if(!get_ev_lis) return this;
+		if(obj_debug[1] !== debug || obj_undebug[1] !== undebug || get_ev_lis[1] !== getEventListeners) {
 			this.setData('d', debug);
 			this.setData('u', undebug);
-			this.setData('getEventListeners', getEventListeners);
+			if(getEventListeners) {
+				this.setData('getEventListeners', getEventListeners);
+			}
 		}
 		return this;
 	}
@@ -82,37 +185,55 @@ export class DebugAPI {
 		}
 	}
 	debuggerBreakpointCode() {
-		window.DebugAPI.the().getData("__k").get = (/** @type {string} */ __v: string) => {
-			if(__v === '__v') {
-				return {
-					type: 'eval-hidden-var',
-					data: null,
-				};
+		bp_code: {
+			if(!window.DebugAPI.the()) break bp_code;
+			let gd = window.DebugAPI.the().getDataWithKey("__k", null);
+			if(!gd) break bp_code;
+			if(gd[0] !== '__k') break bp_code;
+			if(!gd[1]) break bp_code;
+			gd[1].get = (/** @type {string} */ __v: string) => {
+				let ret: DbgRetInfo | null;
+				if(__v === '__v') {
+					ret = {type: 'eval-hidden-var', data: null};
+					return ret;
+				}
+				try {
+					let ret_data: [string, any] = [__v, eval(__v)];
+					ret = {type: 'var', data: ret_data};
+					return ret;
+				} catch {
+					ret = {type: 'no-var', data: null};
+					return ret;
+				}
 			}
-			try {
-				return {
-					type: 'var',
-					data: [__v, eval(__v)]
-				};
-			} catch {
-				return {
-					type: 'no-var',
-					data: null
-				};
+			{
+				if(!window.DebugAPI.the().clearCurrentBreakpoint()) {
+					console.log("failed to clear breakpoint");
+				}
 			}
-		};
-		{
-			if(!window.DebugAPI.the().clearCurrentBreakpoint()) {
-				console.log("failed to clear breakpoint");
-			};
 		}
 		0;
 	}
 	clearCurrentBreakpoint() {
-		let undebug;
-		if(undebug = this.getData("u")) {
-			undebug(this.current_debug_data);
-			return true;
+		let key: "u" = "u";
+		if(this.hasData(key)) {
+			let undebug = this.getDataWithKey(key, null);
+			if(!undebug) return false;
+			if(undebug[0] !== key) return false;
+			let undebug_2 = undebug[1];
+			if(this.current_debug_data && undebug_2) {
+				let dd = this.current_debug_data;
+				if(dd[0] === 'function') {
+					let [, , k2] = dd;
+					let [, v1] = k2;
+					undebug_2(v1);
+				} else if(dd[0] === 'class') {
+					let [, k1, k2] = dd;
+					let [, v1] = k2;
+					undebug_2(v1);
+				}
+				return true;
+			}
 		}
 		return false;
 	}
@@ -136,8 +257,7 @@ export class DebugAPI {
 	 * @param {string} var_match
 	 */
 	debuggerGetVarArray_a(debug_data: ApiData, var_match: string) {
-		let activate_fn_box, function_run_box;
-		if(!this.hasData("d") || !this.getData("u")) {
+		if(!this.hasData("d") || !this.getDataWithKey("u", null)) {
 			return {
 				type: 'invalid-state-error',
 				data: null
@@ -175,13 +295,13 @@ export class DebugAPI {
 			rep_arr.push('__k', '__k_' + rng_bytes);
 			rep_arr.push('__x', '__x_' + rng_bytes);
 		}
-		let tmp_key = '__k';
+		let tmp_key: '__k' = '__k';
 		{
 			for(let i = 0;i < rep_arr.length;i += 2) {
 				let cur0 = rep_arr[i];
 				let cur1 = rep_arr[i] + 1;
 				if(tmp_key === cur0) {
-					tmp_key = cur1;
+					(tmp_key as any) = cur1;
 				}
 				breakpoint_code_string = breakpoint_code_string.replaceAll(cur0, cur1);
 			}
@@ -190,9 +310,11 @@ export class DebugAPI {
 			/**@returns {{type:'no-var'|'eval-var'|null} | {type:'var', data:null}} */
 			get(/**@type {string}*/_q: string): {type: 'no-var' | 'eval-var' | null;} | {type: 'var'; data: null;} {return {type: null};}
 		};
-		this.setData(tmp_key, tmp_value);
-		let debug = this.getData('d');
-		debug(this.current_debug_data[1], `${breakpoint_code_string}`);
+		this.setData(<any>tmp_key, <any>tmp_value);
+		let debug = this.getDataWithKey('d', null);
+		if(!debug) throw new Error("Invalid");
+		if(debug[0] !== 'd' || debug[1] === null) throw new Error("Invalid");
+		debug[1](this.current_debug_data[1], `${breakpoint_code_string}`);
 		// ---- Activate ----
 		let exec_return = null;
 		if(this.current_debug_data[0] === 'class') {
@@ -263,7 +385,7 @@ export class DebugAPI {
 	 * @param {string} var_name
 	 */
 	debuggerGetVar_a(debug_data: ApiData, var_name: string) {
-		if(!this.hasData("d") || !this.getData("u")) {
+		if(!this.hasData("d") || !this.getDataWithKey("u", null)) {
 			return {
 				type: 'invalid-state-error',
 				data: null
@@ -279,13 +401,13 @@ export class DebugAPI {
 			rep_arr.push('__x', '__x_' + rng_bytes);
 		}
 		let map_arr = [dbg_str_func];
-		let tmp_key = '__k';
+		let tmp_key: '__k' = '__k';
 		{
 			for(let i = 0;i < rep_arr.length;i += 2) {
 				let cur0 = rep_arr[i];
 				let cur1 = rep_arr[i] + 1;
 				if(tmp_key === cur0) {
-					tmp_key = cur1;
+					(tmp_key as any) = cur1;
 				}
 				map_arr[0] = map_arr[0].replaceAll(cur0, cur1);
 			}
@@ -301,8 +423,13 @@ export class DebugAPI {
 				};
 			}
 		};
-		this.setData(tmp_key, tmp_value);
-		this.getData('d')(this.current_debug_data, `${dbg_str_func}`);
+		this.setData(<any>tmp_key, <any>tmp_value);
+		let fn: ChromeDevToolsDebug | T5[number] | null = this.getDataWithKey('d', null);
+		if(!fn || fn[0] !== 'd' || fn[1] === null) throw new Error("Invalid");
+		fn = fn[1];
+		let dd = this.current_debug_data;
+		let ra = dd[2];
+		fn(ra[1], `${dbg_str_func}`);
 		let activate_return = null;
 		// ---- Activate ----
 		if(this.current_debug_data[0] === 'class') {

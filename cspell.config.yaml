@@ -38,6 +38,7 @@ words:
   - cstruct
   - cxlen
   - dddbg
+  - Debuggable
   - decodedata
   - decpart
   - decreaseSpawnCooldown

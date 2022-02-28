@@ -76,7 +76,7 @@ declare namespace TypeManipulation {
 		[void, ...U]['length'] :
 		// recurse with a longer array
 		IntIncImpl<T, [void, ...U]>;
-	type IntInc<T extends number>=IntIncImpl<T, []>;
+	export type IntInc<T extends number>=IntIncImpl<T, []>;
 	/* type IntDecImpl<T extends number, U extends 1[]>=[][T] extends never ? -1 : T extends U['length'] ? U extends [1,  ...infer C] ? C['length'] : T : IntDecImpl<T, [1, ...U]>;
 	type IntDec<T extends number>=IntDecImpl<T, []>;
 	type NegDec<T extends number>=Extract<[null, undefined][T], undefined> extends null ? -1:
@@ -125,3 +125,6 @@ declare namespace TypeManipulation {
 type Arr1=[1,2,3];
 type Arr2=[1,2,3,4];
 var x:Arr1|Arr2=[1,2,3,4];x[x['2']];
+type IntInc<T extends number> = TypeManipulation.IntInc<T>;
+type IAz=IntInc<12>;
+export {IntInc};

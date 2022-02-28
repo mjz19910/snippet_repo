@@ -544,7 +544,7 @@ declare global {
 		plurials(v: string): string;
 		arrayNames: string[];
 		updateprogress(v: any): void;
-		$: (val: any) => any;
+		$:JQueryStatic;
 		seeUnit(v: number): any;
 		checkspec(): void;
 		achiSpec(): void;

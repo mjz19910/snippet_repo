@@ -17,6 +17,7 @@
 // @grant			none
 // ==/UserScript==
 
+import {AsyncTrigger} from "types/AsyncTrigger.js";
 import ArrayBox from "types/vm/box/ArrayBox.js";
 import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
 import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox.js";
@@ -1181,11 +1182,12 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		 * @type {any[]}
 		 */
 		list;
+		/**@type {import("types/DocumentWriteFn.js").DocumentWriteFn | null} */
+		document_write;
 		constructor(){
 			this.list=[];
 			this.attached=false;
 			this.end_symbol=Symbol(void 0);
-			/**@type {import("./final/version_0.1/types/rebuild_the_universe_auto_typed_v0.1.js").DocumentWriteList['document_write']} */
 			this.document_write=null;
 			this.attached_document=null;
 			this.document_write_proxy=null;
@@ -3572,9 +3574,8 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);else tonext(res);
 	}
 	const auto_buy_obj=new AutoBuy;
-	/**@typedef {import("./typed_mod_rebuild_auto.js").AsyncTrigger} AsyncTriggerT */
-	/**@implements {AsyncTriggerT} */
-	class AsyncTrigger {
+	/**@implements {AsyncTrigger} */
+	class AsyncTriggerImpl {
 		m_set_flag;
 		/**
 		 * @type {null}
@@ -3688,7 +3689,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		}
 		/**@arg {number} cnt */
 		async inc(cnt){
-			let wait_trigger=new AsyncTrigger;
+			let wait_trigger=new AsyncTriggerImpl;
 			while(this.count > 0){
 				if(!this.notify_waiters_vec.includes(wait_trigger)){
 					this.notify_waiters_vec.push(wait_trigger);
@@ -4104,14 +4105,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		do_dom_filter();
 		auto_buy_obj.pre_init();
 		auto_buy_obj.init();
-		return;
-		if(window.Pace.bar.progress == 100){
-			auto_buy_obj.init();
-			return;
-		}
-		window.Pace.bar.finish=new Proxy(window.Pace.bar.finish, {
-			apply:pace_finish_proxy_apply
-		});
 	}
 	function wait_for_game_data() {
 		if(window._SM_Data){
