@@ -1,4 +1,3 @@
-import {SymbolRef} from "types/SymbolRef";
 import {ScriptStateHost} from "types/ScriptStateHost";
 import {rebuild_auto_main} from "types/main";
 import {TimerApi} from "types/TimerApi.js";
