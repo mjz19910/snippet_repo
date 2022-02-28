@@ -7,7 +7,7 @@ export class ecma_12_3 extends ecma_base {
 			return this._the;
 		this._the = new this;
 	}
-	LineTerminator(str: string, index: number) {
+	LineTerminator(str: string, index: number):[string, number] {
 		let len = 0;
 		if(str[index] === '\r')
 			len = 1;

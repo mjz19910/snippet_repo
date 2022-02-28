@@ -1,11 +1,12 @@
 import {ecma_base} from "./ecma_base";
+import {ecma_return_type} from "./ecma_return_type";
 
 export class ecma_12_7 extends ecma_base {
 	/**
 	 * @param {any} str
 	 * @param {any} index
 	 */
-	Punctuator(str: any, index: any) {
+	Punctuator(str: string, index: number):ecma_return_type {
 		var len = 0, type = null, ret;
 		ret = this.OptionalChainingPunctuator(str, index);
 		if(ret[1] > len) {
@@ -23,9 +24,9 @@ export class ecma_12_7 extends ecma_base {
 	 * @param {string} str
 	 * @param {number} index
 	 */
-	OptionalChainingPunctuator(str: string, index: number) {
+	OptionalChainingPunctuator(str: string, index: number):ecma_return_type {
 		if(str.slice(index, index + 2) === '?.') {
-			let num_len = this.DecimalDigit(str, index + 2);
+			let [, num_len] = this.DecimalDigit(str, index + 2);
 			if(num_len > 0) {
 				return [null, 0];
 			}
@@ -33,8 +34,8 @@ export class ecma_12_7 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	DecimalDigit(str: string, arg1: number) {
-		throw new Error("Method not implemented.");
+	private DecimalDigit(str: string, index: number):ecma_return_type {
+		return this.m_dispatcher.DecimalDigit(str, index);
 	}
 	_OtherPunctuator_vec = "{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
 	OtherPunctuator(str: string, index: any) {

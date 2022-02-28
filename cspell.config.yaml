@@ -34,9 +34,11 @@ words:
   - cloneable
   - cmap
   - comlen
+  - constexpr
   - cres
   - cstruct
   - cxlen
+  - dbgln
   - dddbg
   - Debuggable
   - decodedata

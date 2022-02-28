@@ -1,25 +1,18 @@
 import {ecma_base} from "./ecma_base";
+import {ecma_return_type} from "./ecma_return_type";
 
 export class ecma_12_6 extends ecma_base {
-	/**
-	 * @param {string[]} str
-	 * @param {number} index
-	 */
-	PrivateIdentifier(str, index) {
+	PrivateIdentifier(str:string, index:number):ecma_return_type {
 		if(str[0] !== '#')
 			return [null, 0];
-		let cur = this.IdentifierName(src, index + 1);
-		return cur[1] + 1;
+		let cur = this.IdentifierName(str, index + 1);
+		return [true, cur[1] + 1];
 	}
-	/**
-	 * @param {any} str
-	 * @param {number} index
-	 */
-	IdentifierName(str, index) {
-		let ids = this.IdentifierStart(str, index);
+	IdentifierName(str:string, index:number):ecma_return_type {
+		let [, ids] = this.IdentifierStart(str, index);
 		if(ids > 0) {
 			for(; ;) {
-				let len = this.IdentifierPart(str, index + ids);
+				let [, len] = this.IdentifierPart(str, index + ids);
 				if(len === 0) {
 					break;
 				}
@@ -29,24 +22,16 @@ export class ecma_12_6 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
-	IdentifierStart(str, index) {
+	IdentifierStart(str:string, index:number):ecma_return_type {
 		if(str[index].match(/[a-zA-Z$_]/)) {
-			return 1;
+			return [true, 1];
 		}
-		return 0;
+		return [null, 0];
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
-	IdentifierPart(str, index) {
+	IdentifierPart(str:string, index:number):ecma_return_type {
 		if(str[index].match(/[a-zA-Z$_0-9]/)) {
-			return 1;
+			return [true, 1];
 		}
-		return 0;
+		return [null, 0];
 	}
 }

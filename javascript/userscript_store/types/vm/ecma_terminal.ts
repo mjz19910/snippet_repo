@@ -1,15 +1,19 @@
 import {ecma_12_2} from "./ecma_12_2";
+import {ecma_12_3} from "./ecma_12_3";
+import {ecma_12_4} from "./ecma_12_4";
+import {ecma_12_5} from "./ecma_12_5";
+import {ecma_12_7} from "./ecma_12_7";
 import {ecma_base} from "./ecma_base";
 
 type impl_real=ecma_base & ecma_12_2;
 
-export class ecma_terminal implements impl_real {
+export class ecma_terminal extends ecma_base implements impl_real {
 	WhiteSpace=ecma_12_2.prototype.WhiteSpace;
-	/**
-	 * @param {any} str
-	 * @param {any} index
-	 */
-	InputElementDiv(str, index) {
+	LineTerminator=ecma_12_3.prototype.LineTerminator;
+	Comment=ecma_12_4.prototype.Comment;
+	CommonToken=ecma_12_5.prototype.CommonToken;
+	DivPunctuator=ecma_12_7.prototype.DivPunctuator;
+	InputElementDiv(str:string, index:number) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 		let max_item = null, max_val = 0;
 		let rb_len, item, tree;
