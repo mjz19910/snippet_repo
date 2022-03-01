@@ -63,4 +63,7 @@ export class Dispatcher implements DispatcherType {
 	OctalDigit(str:string, index:number){
 		return this.ecma_12_8_3.OctalDigit(str, index);
 	}
+	HexEscapeSequence(str:string, index:number) {
+		return this.ecma_12_8_4.HexEscapeSequence(str, index);
+	}
 }
