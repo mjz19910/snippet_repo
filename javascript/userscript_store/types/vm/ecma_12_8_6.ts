@@ -45,6 +45,7 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 	// https://tc39.es/ecma262/#prod-TemplateHead
 	TemplateHead(str: string, index: number): ecma_return_type {
+		console.log("TemplateHead");
 		let cur_index = index;
 		// ` TemplateCharacters_opt ${
 		if(str[cur_index] === '`') {
@@ -114,16 +115,16 @@ export class ecma_12_8_6 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	/*Template ::*/
-	/* | NoSubstitutionTemplate*/
-	/* | TemplateHead*/
+	/*Template*/
 	public Template(str: string, index: number): ecma_return_type {
+		// NoSubstitutionTemplate
 		let ret = this.NoSubstitutionTemplate(str, index);
-		if(ret[1] > 0) {
+		if(ret[0]) {
 			return ret;
 		}
+		// TemplateHead
 		ret = this.TemplateHead(str, index);
-		if(ret[1] > 0) {
+		if(ret[0]) {
 			return ret;
 		}
 		return [null, 0];
@@ -300,6 +301,7 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 	// https://tc39.es/ecma262/#prod-Template
 	public NoSubstitutionTemplate(str: string, index: number): ecma_return_type {
+		console.log("NoSubstitutionTemplate");
 		let cur_index = index;
 		//` TemplateCharacters opt `
 		if(str[cur_index] === '`') {
@@ -307,18 +309,24 @@ export class ecma_12_8_6 extends ecma_base {
 		} else {
 			return [null, 0];
 		}
-		let opt = this.TemplateCharacters(str, index);
-		if(opt[0] === false) {
-			throw opt[1];
-		}
-		return ['NoSubstitutionTemplate', opt[1]];
+		debugger;
+		let opt = this.TemplateCharacters(str, cur_index);
+		if(opt[0] === false)throw opt[1];
+		return ['NoSubstitutionTemplate', cur_index-index + opt[1]];
 	}
 }
-export function run_tests() {
+export async function run_tests() {
+	await new Promise(function(a){
+		setTimeout(a, 100);
+	})
 	let dispatcher=new Dispatcher;
 	let test_string=`
 	let v=\`Hi there\`;
 	`;
 	let res=dispatcher.Template(test_string, test_string.indexOf('`'));
-	console.log(res);
+	if(res[0]){
+		console.log("Success", test_string.slice(test_string.indexOf('`')-1, test_string.indexOf('`') + res[1]), res);
+	} else {
+		console.assert(false, "Test failed: ecma_12_8_6 (Template)", res);
+	}
 }
