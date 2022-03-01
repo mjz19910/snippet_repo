@@ -10,6 +10,11 @@ interface IHashMap<K, V> {
 	set(key: K, value: V): this;
 }
 
+enum IterationDecision {
+	Break,
+	Continue,
+}
+
 class HashMap<K, V> implements IHashMap<K, V> {
 	backing_map: Map<K, V> | null;
 	constructor() {
@@ -45,8 +50,14 @@ class HashMap<K, V> implements IHashMap<K, V> {
 		}
 		return this.backing_map.has(key);
 	}
-	iterate(callback){
-		
+	iterate(callback: (arg0: this, arg1: K, arg2: V) => IterationDecision) {
+		// from https://github.com/SerenityOS/serenity/blob/master/Userland/DevTools/Profiler/Profile.cpp
+		/*for (size_t i = 0; i < event.frames.size(); ++i) {
+			if (callback(event.frames.at(i), i == event.frames.size() - 1) == IterationDecision::Break)
+				break;
+		}*/
+		if(!this.backing_map) return;
+		for(let x of this.backing_map.entries()) if(callback(this, ...x) === IterationDecision.Break) break;
 	}
 }
 // HashMap<FlyString, TokenType> Lexer::s_keywords;
@@ -160,7 +171,7 @@ export class ecma_12_7 extends ecma_base {
 			s_three_char_tokens.set("...", TokenType::TripleDot);
 		}*/
 		// 4 char token is only [">>>="]
-		if (s_three_char_tokens.is_empty()) {
+		if(s_three_char_tokens.is_empty()) {
 			// === is OtherPunctuator
 			s_three_char_tokens.set("===", TokenType.EqualsEqualsEquals);
 			// !== is OtherPunctuator
@@ -208,7 +219,7 @@ export class ecma_12_7 extends ecma_base {
 			s_two_char_tokens.set("?.", TokenType::QuestionMarkPeriod);
 		}
 		*/
-		if (s_two_char_tokens.is_empty()) {
+		if(s_two_char_tokens.is_empty()) {
 			// => is OtherPunctuator
 			s_two_char_tokens.set("=>", TokenType.Arrow);
 			// += is OtherPunctuator
@@ -282,7 +293,7 @@ export class ecma_12_7 extends ecma_base {
 			s_single_char_tokens.set('>', TokenType::GreaterThan);
 		}
 		*/
-		if (s_single_char_tokens.is_empty()) {
+		if(s_single_char_tokens.is_empty()) {
 			// & is OtherPunctuator
 			s_single_char_tokens.set('&', TokenType.Ampersand);
 			// * is OtherPunctuator
@@ -364,17 +375,17 @@ export class ecma_12_7 extends ecma_base {
 	_OtherPunctuator_vec = "{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
 	OtherPunctuator(str: string, index: number): ecma_return_type {
 		let char_length = 0;
-		if(str.startsWith('>>>=', index)){
+		if(str.startsWith('>>>=', index)) {
 			return ['OtherPunctuator', 4];
 		}
 		for(s_three_char_tokens)
-		for(let punctuator of this._OtherPunctuator_vec) {
-			if(str.startsWith(punctuator, index)) {
-				if(punctuator.length > char_length) {
-					char_length = punctuator.length;
+			for(let punctuator of this._OtherPunctuator_vec) {
+				if(str.startsWith(punctuator, index)) {
+					if(punctuator.length > char_length) {
+						char_length = punctuator.length;
+					}
 				}
 			}
-		}
 		return ["OtherPunctuator", char_length];
 	}
 	DivPunctuator(str: string, index: number) {
