@@ -371,22 +371,47 @@ export class ecma_12_7 extends ecma_base {
 	private DecimalDigit(str: string, index: number): ecma_return_type {
 		return this.m_dispatcher.DecimalDigit(str, index);
 	}
-	// TODO: use HashMap to parse this
-	_OtherPunctuator_vec = "{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
 	OtherPunctuator(str: string, index: number): ecma_return_type {
 		let char_length = 0;
 		if(str.startsWith('>>>=', index)) {
 			return ['OtherPunctuator', 4];
 		}
-		for(s_three_char_tokens)
-			for(let punctuator of this._OtherPunctuator_vec) {
-				if(str.startsWith(punctuator, index)) {
-					if(punctuator.length > char_length) {
-						char_length = punctuator.length;
-					}
-				}
+		let result:string|null=null;
+		s_three_char_tokens.iterate(function(_hash_map, key, value) {
+			// I think all the 3 char tokens are valid as OtherPunctuator productions
+			console.log('iter', key, value);
+			if(str.startsWith(key, index)){
+				result = key;
+				return IterationDecision.Break;
 			}
-		return ["OtherPunctuator", char_length];
+			return IterationDecision.Continue;
+		});
+		if(result)return [true, 3];
+		result=null;
+		s_two_char_tokens.iterate(function(_hash_map, key, value){
+			if(key === '/=')return IterationDecision.Continue;
+			console.log('iter', key, value);
+			// TODO: exclude some tokens that are parsed elsewhere
+			if(str.startsWith(key, index)){
+				result = key;
+				return IterationDecision.Break;
+			}
+			return IterationDecision.Continue;
+		});
+		if(result)return [true, 2];
+		result=null;
+		s_single_char_tokens.iterate(function(_hash_map, key, value){
+			if(key === '/')return IterationDecision.Continue;
+			console.log('iter', key, value);
+			// TODO: exclude some tokens that are parsed elsewhere
+			if(str[index]===key){
+				result = key;
+				return IterationDecision.Break;
+			}
+			return IterationDecision.Continue;
+		});
+		if(result)return ["OtherPunctuator", 1];
+		return [null, 0];
 	}
 	DivPunctuator(str: string, index: number) {
 		let char_len = 0;
