@@ -3,30 +3,35 @@ import {ecma_return_type} from "./ecma_return_type";
 
 export class ecma_12_8_6 extends ecma_base {
 	// https://tc39.es/ecma262/#prod-CodePoint
-	CodePoint(str:string, index:number):ecma_return_type {
-		let res=this.m_dispatcher.HexDigits(str, index);
-		if(res[0]){
-			if(res[1]){
-				let hc=parseInt(res[1], 16);
+	CodePoint(str: string, index: number): ecma_return_type {
+		let res = this.m_dispatcher.HexDigits(str, index);
+		if(res[0]) {
+			if(res[1] > 0 && typeof res[0] === 'string') {
+				// but only if MV of HexDigits ≤ 0x10FFFF
+				let MV = parseInt(res[0], 16);
+				if(MV <= 0x10FFFF) {
+					return ['CodePoint', res[1]];
+				}
 			}
 		}
+		return [null, 0];
 	}
 	/*TemplateMiddle ::*/
 	/* | } TemplateCharacters opt ${*/
 	/* TemplateTail ::*/
 	/* | } TemplateCharacters opt `*/
 	/* TemplateEscapeSequence ::*/
-	TemplateEscapeSequence(str:string, index:number):ecma_return_type {
+	TemplateEscapeSequence(str: string, index: number): ecma_return_type {
 		/* CharacterEscapeSequence */
-		let tmp=this.m_dispatcher.CharacterEscapeSequence(str, index);
-		if(tmp[0]){
+		let tmp = this.m_dispatcher.CharacterEscapeSequence(str, index);
+		if(tmp[0]) {
 			return [true, tmp[1]];
 		}
 		/* 0 [lookahead ∉ DecimalDigit]*/
 		/* HexEscapeSequence*/
 		/* UnicodeEscapeSequence*/
-		let ct1:[string, number, false, Error]=[str, index, false, new Error("TODO")];
-		let [,, ...ct_ret]=ct1;
+		let ct1: [string, number, false, Error] = [str, index, false, new Error("TODO")];
+		let [, , ...ct_ret] = ct1;
 		return ct_ret;
 	}
 	/* NotEscapeSequence ::*/
@@ -50,13 +55,53 @@ export class ecma_12_8_6 extends ecma_base {
 	/* | TemplateSubstitutionTail ::*/
 	/* | TemplateMiddle*/
 	/* | TemplateTail*/
-	TemplateHead(str:string, index:number):ecma_return_type {
+	TemplateHead(str: string, index: number): ecma_return_type {
+		let cur_index = index;
+		// ` TemplateCharacters opt ${
+		cur: if(str[cur_index] === '`') {
+			cur_index++;
+			let res = this.TemplateCharacters(str, cur_index);
+			if(res[0] === false) throw res[1];
+			if(res[1] > 0) {
+				cur_index += res[1];
+			}
+			if(str[cur_index] === '$' && str[cur_index + 1] === '{') {
+				return [true, cur_index + 2];
+			}
+		}
+		// TemplateSubstitutionTail
+		let cur = this.TemplateSubstitutionTail(str, index);
+		if(cur[0] && cur[1] > 0) {
+			return [true, cur[1]];
+		}
+		// TemplateMiddle
+		cur = this.TemplateMiddle(str, index);
+		if(cur[0] && cur[1] > 0) {
+			return [true, cur[1]];
+		}
+		// TemplateTail
+		cur = this.TemplateTail(str, index);
+		if(cur[0] && cur[1] > 0) {
+			return [true, cur[1]];
+		}
+
+	}
+	// https://tc39.es/ecma262/#prod-TemplateMiddle
+	TemplateMiddle(str: string, index: number): ecma_return_type {
+
+	}
+	// https://tc39.es/ecma262/#prod-TemplateTail
+	TemplateTail(str: string, index: number): ecma_return_type {
+
+	}
+	// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
+	TemplateSubstitutionTail(str: string, index: number): ecma_return_type {
 
 	}
 	/*Template ::*/
 	/* | NoSubstitutionTemplate*/
 	/* | TemplateHead*/
-	public Template(str:string, index:number):ecma_return_type {
+	public Template(str: string, index: number): ecma_return_type {
 		let ret = this.NoSubstitutionTemplate(str, index);
 		if(ret[1] > 0) {
 			return ret;
@@ -74,33 +119,33 @@ export class ecma_12_8_6 extends ecma_base {
 	/* | LineContinuation*/
 	/* | LineTerminatorSequence*/
 	/* | SourceCharacter but not one of ` or \ or $ or LineTerminator*/
-	TemplateCharacter(str:string, index:number){
-		if(str[index] === '$' && str[index+1] !== '{'){
+	TemplateCharacter(str: string, index: number): ecma_return_type {
+		if(str[index] === '$' && str[index + 1] !== '{') {
 			return [true, 1];
 		}
-		if(str[index]==='\\'){
-			let escape_res=this.TemplateEscapeSequence(str, index);
+		if(str[index] === '\\') {
+			let escape_res = this.TemplateEscapeSequence(str, index);
 		}
 	}
 	/* TemplateCharacters ::*/
 	/* | TemplateCharacter TemplateCharacters opt*/
-	TemplateCharacters(str:string, index:number):ecma_return_type {
-		let tmp=this.TemplateCharacter(str, index);
-		while(tmp[0] === true){
-			tmp=this.TemplateCharacter(str, index);
+	TemplateCharacters(str: string, index: number): ecma_return_type {
+		let tmp = this.TemplateCharacter(str, index);
+		while(tmp[0] === true) {
+			tmp = this.TemplateCharacter(str, index);
 		}
 	}
 	// https://tc39.es/ecma262/#prod-Template
-	public NoSubstitutionTemplate(str:string, index:number):ecma_return_type {
-		let cur_index=index;
+	public NoSubstitutionTemplate(str: string, index: number): ecma_return_type {
+		let cur_index = index;
 		//` TemplateCharacters opt `
-		if(str[cur_index] === '`'){
+		if(str[cur_index] === '`') {
 			cur_index++;
 		} else {
 			return [null, 0];
 		}
-		let opt=this.TemplateCharacters(str, index);
-		if(opt[0] === false){
+		let opt = this.TemplateCharacters(str, index);
+		if(opt[0] === false) {
 			throw opt[1];
 		}
 	}
