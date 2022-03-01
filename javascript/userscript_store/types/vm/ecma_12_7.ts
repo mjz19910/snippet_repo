@@ -1,48 +1,7 @@
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
-enum TokenType {
-	Async,
-	Await,
-	Break,
-	Case,
-	Catch,
-	Class,
-	Const,
-	Continue,
-	Debugger,
-	Default,
-	Delete,
-	Do,
-	Else,
-	Enum,
-	Export,
-	Extends,
-	BoolLiteral,
-	Finally,
-	For,
-	Function,
-	If,
-	Import,
-	In,
-	Instanceof,
-	Let,
-	New,
-	NullLiteral,
-	Return,
-	Super,
-	Switch,
-	This,
-	Throw,
-	Try,
-	Typeof,
-	Var,
-	Void,
-	While,
-	With,
-	Yield
-}
-
+import {JSTokenizerTokenType as TokenType} from "./JSTokenizerTokenType";
 interface IHashMap<K, V> {
 	clear(): void;
 	is_empty(): boolean;
@@ -87,7 +46,14 @@ class HashMap<K, V> implements IHashMap<K, V> {
 		return this.backing_map.has(key);
 	}
 }
-let s_keywords = new HashMap<FlyString, TokenType>;
+// HashMap<FlyString, TokenType> Lexer::s_keywords;
+const s_keywords = new HashMap<FlyString, TokenType>;
+// HashMap<String, TokenType> Lexer::s_three_char_tokens;
+const s_three_char_tokens = new HashMap<FlyString, TokenType>;
+// HashMap<String, TokenType> Lexer::s_two_char_tokens;
+const s_two_char_tokens = new HashMap<FlyString, TokenType>;
+// HashMap<char, TokenType> Lexer::s_single_char_tokens;
+const s_single_char_tokens = new HashMap<FlyString, TokenType>;
 
 export class ecma_12_7 extends ecma_base {
 	constructor(dis: Dispatcher) {
@@ -178,7 +144,6 @@ export class ecma_12_7 extends ecma_base {
 			s_keywords.set("yield", TokenType.Yield);
 		}
 		/*
-	
 		if (s_three_char_tokens.is_empty()) {
 			s_three_char_tokens.set("===", TokenType::EqualsEqualsEquals);
 			s_three_char_tokens.set("!==", TokenType::ExclamationMarkEqualsEquals);
@@ -190,8 +155,31 @@ export class ecma_12_7 extends ecma_base {
 			s_three_char_tokens.set("\?\?=", TokenType::DoubleQuestionMarkEquals);
 			s_three_char_tokens.set(">>>", TokenType::UnsignedShiftRight);
 			s_three_char_tokens.set("...", TokenType::TripleDot);
+		}*/
+		// 4 char token is only [">>>="]
+		if (s_three_char_tokens.is_empty()) {
+			// === is OtherPunctuator
+			s_three_char_tokens.set("===", TokenType.EqualsEqualsEquals);
+			// !== is OtherPunctuator
+			s_three_char_tokens.set("!==", TokenType.ExclamationMarkEqualsEquals);
+			// **= is OtherPunctuator
+			s_three_char_tokens.set("**=", TokenType.DoubleAsteriskEquals);
+			// <<= is OtherPunctuator
+			s_three_char_tokens.set("<<=", TokenType.ShiftLeftEquals);
+			// >>= is OtherPunctuator
+			s_three_char_tokens.set(">>=", TokenType.ShiftRightEquals);
+			// &&= is OtherPunctuator
+			s_three_char_tokens.set("&&=", TokenType.DoubleAmpersandEquals);
+			// ||= is OtherPunctuator
+			s_three_char_tokens.set("||=", TokenType.DoublePipeEquals);
+			// ??= is OtherPunctuator
+			s_three_char_tokens.set("\?\?=", TokenType.DoubleQuestionMarkEquals);
+			// >>> is OtherPunctuator
+			s_three_char_tokens.set(">>>", TokenType.UnsignedShiftRight);
+			// ... is OtherPunctuator
+			s_three_char_tokens.set("...", TokenType.TripleDot);
 		}
-	
+		/*
 		if (s_two_char_tokens.is_empty()) {
 			s_two_char_tokens.set("=>", TokenType::Arrow);
 			s_two_char_tokens.set("+=", TokenType::PlusEquals);
@@ -216,7 +204,54 @@ export class ecma_12_7 extends ecma_base {
 			s_two_char_tokens.set(">>", TokenType::ShiftRight);
 			s_two_char_tokens.set("?.", TokenType::QuestionMarkPeriod);
 		}
-	
+		*/
+		if (s_two_char_tokens.is_empty()) {
+			// => is OtherPunctuator
+			s_two_char_tokens.set("=>", TokenType.Arrow);
+			// += is OtherPunctuator
+			s_two_char_tokens.set("+=", TokenType.PlusEquals);
+			// -= is OtherPunctuator
+			s_two_char_tokens.set("-=", TokenType.MinusEquals);
+			// *= is OtherPunctuator
+			s_two_char_tokens.set("*=", TokenType.AsteriskEquals);
+			// /= needs special handling
+			s_two_char_tokens.set("/=", TokenType.SlashEquals);
+			// %= is OtherPunctuator
+			s_two_char_tokens.set("%=", TokenType.PercentEquals);
+			// &= is OtherPunctuator
+			s_two_char_tokens.set("&=", TokenType.AmpersandEquals);
+			// |= is OtherPunctuator
+			s_two_char_tokens.set("|=", TokenType.PipeEquals);
+			// ^= is OtherPunctuator
+			s_two_char_tokens.set("^=", TokenType.CaretEquals);
+			// && is OtherPunctuator
+			s_two_char_tokens.set("&&", TokenType.DoubleAmpersand);
+			// || is OtherPunctuator
+			s_two_char_tokens.set("||", TokenType.DoublePipe);
+			// ?? is OtherPunctuator
+			s_two_char_tokens.set("??", TokenType.DoubleQuestionMark);
+			// ** is OtherPunctuator
+			s_two_char_tokens.set("**", TokenType.DoubleAsterisk);
+			// == is OtherPunctuator
+			s_two_char_tokens.set("==", TokenType.EqualsEquals);
+			// <= is OtherPunctuator
+			s_two_char_tokens.set("<=", TokenType.LessThanEquals);
+			// >= is OtherPunctuator
+			s_two_char_tokens.set(">=", TokenType.GreaterThanEquals);
+			// != is OtherPunctuator
+			s_two_char_tokens.set("!=", TokenType.ExclamationMarkEquals);
+			// ++ is OtherPunctuator
+			s_two_char_tokens.set("--", TokenType.MinusMinus);
+			// -- is OtherPunctuator
+			s_two_char_tokens.set("++", TokenType.PlusPlus);
+			// << is OtherPunctuator
+			s_two_char_tokens.set("<<", TokenType.ShiftLeft);
+			// >> is OtherPunctuator
+			s_two_char_tokens.set(">>", TokenType.ShiftRight);
+			// ?. needs special handling
+			s_two_char_tokens.set("?.", TokenType.QuestionMarkPeriod);
+		}
+		/*
 		if (s_single_char_tokens.is_empty()) {
 			s_single_char_tokens.set('&', TokenType::Ampersand);
 			s_single_char_tokens.set('*', TokenType::Asterisk);
@@ -242,7 +277,58 @@ export class ecma_12_7 extends ecma_base {
 			s_single_char_tokens.set('~', TokenType::Tilde);
 			s_single_char_tokens.set('<', TokenType::LessThan);
 			s_single_char_tokens.set('>', TokenType::GreaterThan);
-		}*/
+		}
+		*/
+		if (s_single_char_tokens.is_empty()) {
+			// & is OtherPunctuator
+			s_single_char_tokens.set('&', TokenType.Ampersand);
+			// * is OtherPunctuator
+			s_single_char_tokens.set('*', TokenType.Asterisk);
+			// [ is OtherPunctuator
+			s_single_char_tokens.set('[', TokenType.BracketOpen);
+			// ] is OtherPunctuator
+			s_single_char_tokens.set(']', TokenType.BracketClose);
+			// ^ is OtherPunctuator
+			s_single_char_tokens.set('^', TokenType.Caret);
+			// : is OtherPunctuator
+			s_single_char_tokens.set(':', TokenType.Colon);
+			// , is OtherPunctuator
+			s_single_char_tokens.set(',', TokenType.Comma);
+			// { is OtherPunctuator
+			s_single_char_tokens.set('{', TokenType.CurlyOpen);
+			// } needs special handling
+			s_single_char_tokens.set('}', TokenType.CurlyClose);
+			// = is OtherPunctuator
+			s_single_char_tokens.set('=', TokenType.Equals);
+			// ! is OtherPunctuator
+			s_single_char_tokens.set('!', TokenType.ExclamationMark);
+			// - is OtherPunctuator
+			s_single_char_tokens.set('-', TokenType.Minus);
+			// ( is OtherPunctuator
+			s_single_char_tokens.set('(', TokenType.ParenOpen);
+			// ) is OtherPunctuator
+			s_single_char_tokens.set(')', TokenType.ParenClose);
+			// % is OtherPunctuator
+			s_single_char_tokens.set('%', TokenType.Percent);
+			// . is OtherPunctuator
+			s_single_char_tokens.set('.', TokenType.Period);
+			// | is OtherPunctuator
+			s_single_char_tokens.set('|', TokenType.Pipe);
+			// + is OtherPunctuator
+			s_single_char_tokens.set('+', TokenType.Plus);
+			// ? is OtherPunctuator
+			s_single_char_tokens.set('?', TokenType.QuestionMark);
+			// ; is OtherPunctuator
+			s_single_char_tokens.set(';', TokenType.Semicolon);
+			// / needs special handling
+			s_single_char_tokens.set('/', TokenType.Slash);
+			// ~ is OtherPunctuator
+			s_single_char_tokens.set('~', TokenType.Tilde);
+			// < is OtherPunctuator
+			s_single_char_tokens.set('<', TokenType.LessThan);
+			// > is OtherPunctuator
+			s_single_char_tokens.set('>', TokenType.GreaterThan);
+		}
 	}
 	Punctuator(str: string, index: number): ecma_return_type {
 		var len = 0, type = null, ret;
@@ -271,9 +357,14 @@ export class ecma_12_7 extends ecma_base {
 	private DecimalDigit(str: string, index: number): ecma_return_type {
 		return this.m_dispatcher.DecimalDigit(str, index);
 	}
+	// TODO: use HashMap to parse this
 	_OtherPunctuator_vec = "{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
 	OtherPunctuator(str: string, index: number): ecma_return_type {
 		let char_length = 0;
+		if(str.startsWith('>>>=', index)){
+			return ['OtherPunctuator', 4];
+		}
+		for(s_three_char_tokens)
 		for(let punctuator of this._OtherPunctuator_vec) {
 			if(str.startsWith(punctuator, index)) {
 				if(punctuator.length > char_length) {
@@ -283,32 +374,23 @@ export class ecma_12_7 extends ecma_base {
 		}
 		return ["OtherPunctuator", char_length];
 	}
-	_DivPunctuator_vec = "/ /=".split(' ');
-	/**
-	 * @param {string} str
-	 * @param {any} index
-	 */
-	DivPunctuator(str, index) {
-		let char_length = 0;
-		let max_len = 2;
-		for(let punctuator of this._DivPunctuator_vec) {
-			if(str.startsWith(punctuator, index)) {
-				if(punctuator.length > char_length) {
-					char_length = punctuator.length;
-				}
-				if(char_length === max_len) {
-					break;
-				}
-			}
+	DivPunctuator(str: string, index: number) {
+		let char_len = 0;
+		// `/`
+		if(str.startsWith('/', index)) {
+			char_len = 1;
 		}
-		return ["DivPunctuator", char_length];
+		// `/=`
+		if(str.startsWith('/=', index)) {
+			char_len = 2;
+		}
+		if(char_len > 0) {
+			return ["DivPunctuator", char_len];
+		}
+		return [null, 0];
 	}
-	/**
-	 * @param {string} str
-	 * @param {any} index
-	 */
-	RightBracePunctuator(str, index) {
-		if(str.startsWith('{}'[1], index)) {
+	RightBracePunctuator(str: string, index: number) {
+		if(str[index] === '{}'[1]) {
 			return ['RightBracePunctuator', 1];
 		}
 		return [null, 0];
