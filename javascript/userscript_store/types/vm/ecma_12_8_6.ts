@@ -34,18 +34,6 @@ export class ecma_12_8_6 extends ecma_base {
 		let [, , ...ct_ret] = ct1;
 		return ct_ret;
 	}
-	/* NotEscapeSequence ::*/
-	/* | 0 DecimalDigit*/
-	/* | DecimalDigit but not 0*/
-	/* | x [lookahead ∉ HexDigit]*/
-	/* | x HexDigit [lookahead ∉ HexDigit]*/
-	/* | u [lookahead ∉ HexDigit] [lookahead ≠ {]*/
-	/* | u HexDigit [lookahead ∉ HexDigit]*/
-	/* | u HexDigit HexDigit [lookahead ∉ HexDigit]*/
-	/* | u HexDigit HexDigit HexDigit [lookahead ∉ HexDigit]*/
-	/* | u { [lookahead ∉ HexDigit]*/
-	/* | u { NotCodePoint [lookahead ∉ HexDigit]*/
-	/* | u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]*/
 	/* NotCodePoint ::*/
 	/* | HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF*/
 	/* CodePoint ::*/
@@ -112,28 +100,175 @@ export class ecma_12_8_6 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	/* TemplateCharacter ::*/
-	/* | $ [lookahead ≠ {]*/
-	/* | \ TemplateEscapeSequence*/
-	/* | \ NotEscapeSequence*/
-	/* | LineContinuation*/
-	/* | LineTerminatorSequence*/
-	/* | SourceCharacter but not one of ` or \ or $ or LineTerminator*/
+	/* TemplateCharacter*/
 	TemplateCharacter(str: string, index: number): ecma_return_type {
+		/* $ [lookahead ≠ {]*/
 		if(str[index] === '$' && str[index + 1] !== '{') {
 			return [true, 1];
 		}
+		/* \ TemplateEscapeSequence*/
 		if(str[index] === '\\') {
 			let escape_res = this.TemplateEscapeSequence(str, index);
+			if(escape_res[0]) {
+				return [true, escape_res[1]];
+			}
 		}
+		/* \ NotEscapeSequence*/
+		if(str[index] === '\\') {
+			let not_esc = this.NotEscapeSequence(str, index);
+			if(not_esc[0] === false){
+				throw not_esc[1];
+			}
+		}
+		/* LineContinuation */
+		let res=this.m_dispatcher.LineContinuation(str, index);
+		if(res[0]){
+			return [true, res[1]];
+		}
+		/* LineTerminatorSequence */
+		res=this.m_dispatcher.LineTerminatorSequence(str, index);
+		if(res[0]){
+			return [true, res[1]];
+		}
+		/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
+		if(str[index] === '`' || str[index] === '\\' || str[index] === '$'){
+			return [null, 0];
+		}
+		res=this.m_dispatcher.LineTerminator(str, index);
+		if(res[0]){
+			return [null, 0];
+		}
+		/* TODO: SourceCharacter is too complex for js
+				 It requires handling all of unicode
+		*/
+		return [true, 1];
+	}
+	// https://tc39.es/ecma262/#prod-NotEscapeSequence
+	NotEscapeSequence(str: string, index: number): ecma_return_type {
+		let len=0;
+		// 0 DecimalDigit
+		if(str[index] === '0'){
+			len++;
+			let res=this.m_dispatcher.DecimalDigit(str, index + len);
+			if(res[0]){
+				return [true, 2];
+			}
+		} else {
+			// DecimalDigit but not 0
+			// else excludes 0
+			let res=this.m_dispatcher.DecimalDigit(str, index);
+			if(res[0]){
+				return [true, res[1]];
+			}
+		}
+		len=0;
+		// x [lookahead ∉ HexDigit]
+		if(str[index] === 'x') {
+			++len;
+			let lookahead=this.m_dispatcher.HexDigit(str, index + len);
+			if(!lookahead[0]){
+				return ['x [lookahead ∉ HexDigit]', len];
+			} else {
+				// x HexDigit [lookahead ∉ HexDigit]
+				lookahead=this.m_dispatcher.HexDigit(str, index + len);
+				if(!lookahead[0]){
+					return ['x HexDigit [lookahead ∉ HexDigit]', len];
+				}
+			}
+		}
+		len=0;
+		// u [lookahead ∉ HexDigit] [lookahead ≠ {]
+		if(str[index] === 'u'){
+			len++;
+			let lookahead_res_1=this.m_dispatcher.HexDigit(str, index + 1);
+			let lookahead_2=str[index + 1] !== '{}'[0];
+			if(!lookahead_res_1[0] && lookahead_2) {
+				return ['u [lookahead ∉ HexDigit] [lookahead ≠ {]', 1];
+			}
+			// u HexDigit [lookahead ∉ HexDigit]
+			lookahead_res_1=this.m_dispatcher.HexDigit(str, index + 1);
+			let lookahead_res_2=this.m_dispatcher.HexDigit(str, index + 1);
+			if(lookahead_res_1[0] && !lookahead_res_2[0]){
+				return ['u HexDigit [lookahead ∉ HexDigit]', 2];
+			}
+			// u HexDigit HexDigit [lookahead ∉ HexDigit]
+			lookahead_res_1=this.m_dispatcher.HexDigit(str, index + 1);
+			lookahead_res_2=this.m_dispatcher.HexDigit(str, index + 1);
+			let lookahead_res=lookahead_res_1[0] && lookahead_res_2[0]
+			let lookahead_res_3=this.m_dispatcher.HexDigit(str, index + 1);
+			if(lookahead_res && !lookahead_res_3[0]){
+				return ['u HexDigit2 [lookahead ∉ HexDigit]', 3];
+			}
+			// u HexDigit HexDigit HexDigit [lookahead ∉ HexDigit]
+			lookahead_res_1=this.m_dispatcher.HexDigit(str, index + 1);
+			lookahead_res_2=this.m_dispatcher.HexDigit(str, index + 1);
+			lookahead_res_3=this.m_dispatcher.HexDigit(str, index + 1);
+			lookahead_res=lookahead_res_1[0] && lookahead_res_2[0] && lookahead_res_3[0];
+			let lookahead_res_4=this.m_dispatcher.HexDigit(str, index + 1);
+			if(lookahead_res && !lookahead_res_4[0]){
+				return ['u HexDigit3 [lookahead ∉ HexDigit]', 4];
+			}
+			// u { [lookahead ∉ HexDigit]
+			// u { NotCodePoint [lookahead ∉ HexDigit]
+			// u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]
+			if(str[index+len] === '{}'[1]){
+				++len;
+				// [lookahead ∉ HexDigit]
+				let lookahead_res_1=this.m_dispatcher.HexDigit(str, index + len);
+				if(!lookahead_res_1[0]) {
+					return ['u { [lookahead ∉ HexDigit]', len];
+				}
+				// NotCodePoint [lookahead ∉ HexDigit]
+				lookahead_res_1 = this.NotCodePoint(str, index + len);
+				lookahead_res_2 = this.m_dispatcher.HexDigit(str, index + len + 1);
+				if(lookahead_res_1[0] && !lookahead_res_2[0]) {
+					return ['u { NotCodePoint [lookahead ∉ HexDigit]', len];
+				}
+				// CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]
+				lookahead_res_1 = this.CodePoint(str, index + len);
+				lookahead_res_2 = this.m_dispatcher.HexDigit(str, index + len + 1);
+				let lookahead_3 = str[index + len + 1] !== '{}'[1];
+				if(lookahead_res_1[0] && !lookahead_res_2[0]) {
+					return ['u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]', len + 1];
+				}
+				if(lookahead_res_1[0] && lookahead_3){
+					return ['u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]', len + 1];
+				}
+			}
+			return [null, 0];
+		}
+		return [false, new Error("TODO: NotEscapeSequence")];
+	}
+	// https://tc39.es/ecma262/#prod-NotCodePoint
+	NotCodePoint(str:string, index:number): ecma_return_type {
+		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
+		let res=this.m_dispatcher.HexDigits(str, index);
+		if(res[0] && res[1] > 0 && typeof res[0] === 'string') {
+			// but only if MV of HexDigits > 0x10FFFF
+			let MV = parseInt(res[0], 16);
+			if(MV > 0x10FFFF) {
+				return ['NotCodePoint', res[1]];
+			}
+		}
+		return [null, 0];
 	}
 	/* TemplateCharacters ::*/
 	/* | TemplateCharacter TemplateCharacters opt*/
 	TemplateCharacters(str: string, index: number): ecma_return_type {
-		let tmp = this.TemplateCharacter(str, index);
-		while(tmp[0] === true) {
-			tmp = this.TemplateCharacter(str, index);
+		let cur_index = index;
+		let tmp = this.TemplateCharacter(str, cur_index);
+		if(tmp[0]) {
+			cur_index += tmp[1];
 		}
+		while(tmp[0] !== false) {
+			tmp = this.TemplateCharacter(str, cur_index);
+			if(tmp[0]) {
+				cur_index += tmp[1];
+			} else {
+				break;
+			}
+		}
+		return ['TemplateCharacters', cur_index - index];
 	}
 	// https://tc39.es/ecma262/#prod-Template
 	public NoSubstitutionTemplate(str: string, index: number): ecma_return_type {
@@ -148,5 +283,6 @@ export class ecma_12_8_6 extends ecma_base {
 		if(opt[0] === false) {
 			throw opt[1];
 		}
+		return ['NoSubstitutionTemplate', opt[1]];
 	}
 }
