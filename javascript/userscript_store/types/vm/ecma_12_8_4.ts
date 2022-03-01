@@ -208,11 +208,7 @@ export class ecma_12_8_4 extends ecma_base {
 			return len1;
 		}
 	}
-	/*LegacyOctalEscapeSequence*/
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
+	// https://tc39.es/ecma262/#prod-LegacyOctalEscapeSequence
 	LegacyOctalEscapeSequence(str: string, index: number): ecma_return_type {
 		// 0 [lookahead ∈ { 8, 9 }]
 		if(str[index] === '0') {
@@ -259,7 +255,9 @@ export class ecma_12_8_4 extends ecma_base {
 		if(!val[0]) return [null, 0];
 		return [true, 3];
 	}
+	// https://tc39.es/ecma262/#prod-NonZeroOctalDigit
 	NonZeroOctalDigit(str: string, index: number) {
+		// OctalDigit but not 0
 		if(str[index] === '0') {
 			return 0;
 		}
