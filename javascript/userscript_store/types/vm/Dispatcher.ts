@@ -55,6 +55,9 @@ export class Dispatcher implements DispatcherType {
 		return this.ecma_12_8_3.HexDigit(str, index);
 	}
 	CodePoint(str:string, index:number){
-		this.ecma_12_8_6.CodePoint(str, index);
+		return this.ecma_12_8_6.CodePoint(str, index);
+	}
+	LineContinuation(str:string, index:number) {
+		return this.ecma_12_8_4.LineContinuation(str, index);
 	}
 }
