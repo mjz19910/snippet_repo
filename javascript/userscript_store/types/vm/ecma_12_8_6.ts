@@ -3,23 +3,26 @@ import {ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
 
 export class ecma_12_8_6 extends ecma_base {
-	/*TemplateMiddle ::*/
-	/* | } TemplateCharacters opt ${*/
-	/* TemplateTail ::*/
-	/* | } TemplateCharacters opt `*/
-	/* TemplateEscapeSequence ::*/
+	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
 	TemplateEscapeSequence(str: string, index: number): ecma_return_type {
+		let len=0;
 		/* CharacterEscapeSequence */
 		let tmp = this.m_dispatcher.CharacterEscapeSequence(str, index);
 		if(tmp[0]) {
 			return [true, tmp[1]];
 		}
 		/* 0 [lookahead ∉ DecimalDigit]*/
+		if(str[index] === '0') {
+			len++;
+			let la=this.m_dispatcher.DecimalDigit(str, index);
+			if(!la[0]){
+				return [true, len];
+			}
+		}
+		len=0;
 		/* HexEscapeSequence*/
+		let res=this.m_dispatcher.HexEscapeSequence(str, index);
 		/* UnicodeEscapeSequence*/
-		let ct1: [string, number, false, Error] = [str, index, false, new Error("TODO")];
-		let [, , ...ct_ret] = ct1;
-		return ct_ret;
 	}
 	// https://tc39.es/ecma262/#prod-CodePoint
 	CodePoint(str: string, index: number): ecma_return_type {
