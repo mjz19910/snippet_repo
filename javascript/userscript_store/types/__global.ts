@@ -90,7 +90,7 @@ declare global {
 		new(message?: string): Error;
 		(message?: string): Error;
 		readonly prototype: Error;
-		captureStackTrace<T>(obj: {stack: string;}, constructorOpt?: T): void;
+		captureStackTrace<T>(obj: {stack?: string;}, constructorOpt?: T): void;
 	}
 	module globalThis {
 		var remote_worker_state: RemoteWorkerState;
