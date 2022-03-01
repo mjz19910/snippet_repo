@@ -42,6 +42,7 @@ enum TokenType {
 	With,
 	Yield
 }
+
 interface IHashMap<K, V> {
 	clear(): void;
 	is_empty(): boolean;
@@ -49,8 +50,7 @@ interface IHashMap<K, V> {
 	has(key: K): boolean;
 	set(key: K, value: V): this;
 }
-// JS strings are almost always FlyString
-type FlyString = string;
+
 class HashMap<K, V> implements IHashMap<K, V> {
 	backing_map: Map<K, V> | null;
 	constructor() {
@@ -176,7 +176,6 @@ export class ecma_12_7 extends ecma_base {
 			s_keywords.set("while", TokenType.While);
 			s_keywords.set("with", TokenType.With);
 			s_keywords.set("yield", TokenType.Yield);
-
 		}
 		/*
 	
