@@ -1,6 +1,10 @@
+import {is_ascii_digit} from "./AK/CharacterTypes";
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
+class TokenType {
+
+}
 
 function consume_exponent() {
 
@@ -143,11 +147,6 @@ export class ecma_12_8_3 extends ecma_base {
 	m_current_char_get() {
 		return this.m_current_char;
 	}
-	// constexpr bool is_ascii_digit(u32 code_point)
-	is_ascii_digit(code_point: string) {
-		return code_point.charCodeAt(0) >= '0'.charCodeAt(0) &&
-			code_point.charCodeAt(0) <= '9'.charCodeAt(0);
-	}
 	// template<typename Callback>
 	// bool Lexer::match_numeric_literal_separator_followed_by(Callback callback) const
 	match_numeric_literal_separator_followed_by<Callback extends Function>(callback: Callback): boolean {
@@ -155,10 +154,10 @@ export class ecma_12_8_3 extends ecma_base {
 		return this.m_current_char == '_' && callback(this.m_source[this.m_position]);
 	}
 	consume_decimal_number(): boolean {
-		if(!this.is_ascii_digit(this.m_current_char))
+		if(!is_ascii_digit(this.m_current_char))
 			return false;
 
-		while(this.is_ascii_digit(this.m_current_char) || this.match_numeric_literal_separator_followed_by(this.is_ascii_digit)) {
+		while(is_ascii_digit(this.m_current_char) || this.match_numeric_literal_separator_followed_by(is_ascii_digit)) {
 			this.consume();
 		}
 		return true;
@@ -168,7 +167,7 @@ export class ecma_12_8_3 extends ecma_base {
 		if(this.m_current_char == '-' || this.m_current_char == '+') {
 			this.consume();
 		}
-		if(!this.is_ascii_digit(this.m_current_char)) return false;
+		if(!is_ascii_digit(this.m_current_char)) return false;
 		return this.consume_decimal_number();
 	}
 	DecimalDigit(str: string, index: number): ecma_return_type {
@@ -222,6 +221,9 @@ export class ecma_12_8_3 extends ecma_base {
 			// typechecking failed us, need to use a
 			// function return type to indirectly access
 			// m_current_char as that was inferred to be '0'
+			/*if (m_current_char == '.') {
+				// to_js
+			}*/
 			if(this.m_current_char_get() == '.') {
 				// decimal
 				this.consume();
@@ -232,19 +234,29 @@ export class ecma_12_8_3 extends ecma_base {
 					is_invalid_numeric_literal = !this.consume_exponent();
 				}
 			}
-			/*
-			if (m_current_char == '.') {
-				// to_js
-			} else if (m_current_char == 'e' || m_current_char == 'E') {
+			/*else if (m_current_char == 'e' || m_current_char == 'E') {
 				is_invalid_numeric_literal = !consume_exponent();
-			} else if (m_current_char == 'o' || m_current_char == 'O') {
+			}*/
+			else if (this.m_current_char_get() == 'e' || this.m_current_char_get() == 'E') {
+				is_invalid_numeric_literal = !this.consume_exponent();
+			}
+			/*else if (m_current_char == 'o' || m_current_char == 'O') {
 				// octal
 				is_invalid_numeric_literal = !consume_octal_number();
 				if (m_current_char == 'n') {
 					consume();
 					token_type = TokenType::BigIntLiteral;
 				}
-			} else if (m_current_char == 'b' || m_current_char == 'B') {
+			}*/
+			else if (this.m_current_char_get() == 'o' || this.m_current_char_get() == 'O') {
+				// octal
+				is_invalid_numeric_literal = !this.consume_octal_number();
+				if (this.m_current_char == 'n') {
+					this.consume();
+					this.token_type = TokenType.BigIntLiteral;
+				}
+			}
+			/*else if (m_current_char == 'b' || m_current_char == 'B') {
 				// binary
 				is_invalid_numeric_literal = !consume_binary_number();
 				if (m_current_char == 'n') {
@@ -268,6 +280,32 @@ export class ecma_12_8_3 extends ecma_base {
 				} while (is_ascii_digit(m_current_char));
 			}
 			*/
+		}
+		/*else {
+			// to_js_block
+		}*/
+		else {
+			while (is_ascii_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_ascii_digit))
+				consume();
+			/*// 1...9 or period
+			while (is_ascii_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_ascii_digit))
+				consume();
+			if (m_current_char == 'n') {
+				consume();
+				token_type = TokenType::BigIntLiteral;
+			} else {
+				if (m_current_char == '.') {
+					consume();
+					if (m_current_char == '_')
+						is_invalid_numeric_literal = true;
+
+					while (is_ascii_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_ascii_digit)) {
+						consume();
+					}
+				}
+				if (m_current_char == 'e' || m_current_char == 'E')
+					is_invalid_numeric_literal = is_invalid_numeric_literal || !consume_exponent();
+			}*/
 
 		}
 		if(is_invalid_numeric_literal) {
