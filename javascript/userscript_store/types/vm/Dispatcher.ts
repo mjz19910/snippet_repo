@@ -60,4 +60,7 @@ export class Dispatcher implements DispatcherType {
 	LineContinuation(str:string, index:number) {
 		return this.ecma_12_8_4.LineContinuation(str, index);
 	}
+	OctalDigit(str:string, index:number){
+		return this.ecma_12_8_3.OctalDigit(str, index);
+	}
 }

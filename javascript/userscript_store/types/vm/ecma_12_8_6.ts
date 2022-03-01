@@ -1,3 +1,4 @@
+import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
 
@@ -305,4 +306,12 @@ export class ecma_12_8_6 extends ecma_base {
 		}
 		return ['NoSubstitutionTemplate', opt[1]];
 	}
+}
+export function run_tests() {
+	let dispatcher=new Dispatcher;
+	let test_string=`
+	let v=\`Hi there\`;
+	`;
+	debugger;
+	dispatcher.Template(test_string, test_string.indexOf('`'));
 }

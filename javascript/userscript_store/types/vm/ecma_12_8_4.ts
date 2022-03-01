@@ -26,10 +26,6 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	/**
-	 * @param {any} str
-	 * @param {number} index
-	 */
 	DoubleStringCharacters(str: any, index: number) {
 		let off = 0;
 		for(;;) {
@@ -42,10 +38,6 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return off;
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	DoubleStringCharacter(str: string, index: number) {
 		x: {
 			if(str[index] === '"') {
@@ -72,15 +64,11 @@ export class ecma_12_8_4 extends ecma_base {
 			return tmp[1] + 1;
 		}
 		let lc_len = this.LineContinuation(str, index);
-		if(lc_len > 0) {
-			return lc_len;
+		if(lc_len[0]) {
+			return lc_len[1];
 		}
 		return 1;
 	}
-	/**
-	 * @param {any} str
-	 * @param {number} index
-	 */
 	SingleStringCharacters(str: any, index: number) {
 		let off = 0;
 		for(;;) {
@@ -93,10 +81,6 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return off;
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	SingleStringCharacter(str: string, index: number) {
 		x: {
 			if(str[index] === "'") {
@@ -119,19 +103,15 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		if(str[index] === '\\') {
 			let esc_len = this.EscapeSequence(str, index);
-			if(esc_len[0])return esc_len[1] + 1;
+			if(esc_len[0]) return esc_len[1] + 1;
 		}
 		let lc_len = this.LineContinuation(str, index);
-		if(lc_len > 0) {
-			return lc_len;
+		if(lc_len[0]) {
+			return lc_len[1];
 		}
 		return 1;
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
-	LineContinuation(str: string, index: number):ecma_return_type {
+	LineContinuation(str: string, index: number): ecma_return_type {
 		if(str[index] === '\\') {
 			let lt_len = this.m_dispatcher.LineTerminatorSequence(str, index + 1);
 			if(lt_len[0] && lt_len[1] > 0) {
@@ -140,24 +120,15 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	/* EscapeSequence ::*/
-	/* | CharacterEscapeSequence*/
-	/* | 0 [lookahead ∉ DecimalDigit]*/
-	/* | LegacyOctalEscapeSequence*/
-	/* | NonOctalDecimalEscapeSequence*/
-	/* | HexEscapeSequence*/
-	/* | UnicodeEscapeSequence*/
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
+	// https://tc39.es/ecma262/#prod-EscapeSequence
 	EscapeSequence(str: string, index: number): ecma_return_type {
 		let len;
+		// CharacterEscapeSequence
 		let out = this.CharacterEscapeSequence(str, index);
 		if(out[0] && out[1] > 0) {
 			return [true, out[1]];
 		}
-		/* | 0 [lookahead ∉ DecimalDigit]*/
+		// 0 [lookahead ∉ DecimalDigit]
 		x: {
 			if(str[index] === '0') {
 				let [, peek] = this.m_dispatcher.DecimalDigit(str, index);
@@ -168,19 +139,23 @@ export class ecma_12_8_4 extends ecma_base {
 				return [true, 1];
 			}
 		}
+		// LegacyOctalEscapeSequence
 		out = this.LegacyOctalEscapeSequence(str, index);
 		if(out[0] && out[1] > 0) {
 			return [true, out[1]];
 		}
+		// NonOctalDecimalEscapeSequence
 		let non_oct_len: 1 | undefined = this.NonOctalDecimalEscapeSequence(str, index);
 		if(non_oct_len) {
 			let len_ty: 1 = non_oct_len;
 			return [true, len_ty];
 		}
+		// HexEscapeSequence
 		len = this.HexEscapeSequence(str, index);
 		if(len && len > 0) {
 			return [true, len];
 		}
+		// UnicodeEscapeSequence
 		len = this.UnicodeEscapeSequence(str, index);
 		if(len > 0) {
 			return [true, len];
@@ -206,11 +181,7 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return 0;
 	}
-	/**
-	 * @param {any} str
-	 * @param {any} index
-	 */
-	NonEscapeCharacter(str: any, index: any) {
+	NonEscapeCharacter(str: string, index: number) {
 		if(this.EscapeCharacter(str, index)) {
 			return 0;
 		}
@@ -219,14 +190,10 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return 1;
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	EscapeCharacter(str: string, index: number) {
 		let len0 = this.SingleEscapeCharacter(str, index);
 		let len1 = this.m_dispatcher.DecimalDigit(str, index);
-		if(!len1[0])throw len1[1];
+		if(!len1[0]) throw len1[1];
 		let act = 0;
 		if(len0 > len1[1]) {
 			act = 1;
@@ -257,8 +224,8 @@ export class ecma_12_8_4 extends ecma_base {
 		x: {
 			let len = this.NonZeroOctalDigit(str, index);
 			if(len > 0) {
-				let n_len = this.OctalDigit(str, index + 1);
-				if(n_len > 0) {
+				let n_len = this.m_dispatcher.OctalDigit(str, index + 1);
+				if(n_len[0]) {
 					break x;
 				}
 				return [true, 1];
@@ -268,68 +235,46 @@ export class ecma_12_8_4 extends ecma_base {
 		x: {
 			let len = this.ZeroToThree(str, index);
 			if(len > 0) {
-				len = this.OctalDigit(str, index + 1);
-				if(len > 0) {
-					let n_len = this.OctalDigit(str, index + 2);
-					if(n_len > 0) {
-						break x;
-					}
-					return [true, 2];
-				}
+				let val = this.m_dispatcher.OctalDigit(str, index + 1);
+				if(!val[0]) break x;
+				let n_len = this.m_dispatcher.OctalDigit(str, index + 2);
+				if(n_len[0]) break x;
+				return [true, len + val[1]];
 			}
 		}
 		// FourToSeven OctalDigit
 		x: {
 			let len = this.FourToSeven(str, index);
-			if(len > 0) {
-				len = this.OctalDigit(str, index + 1);
-				if(len > 0) {
-					return [true, 2];
-				}
-			}
+			if(len === 0) break x;
+			let val = this.m_dispatcher.OctalDigit(str, index + 1);
+			if(!val[0]) break x;
+			return [true, 2];
 		}
 		// ZeroToThree OctalDigit OctalDigit
-		x: {
-			let len = this.ZeroToThree(str, index);
-			if(!len) {
-				break x;
-			}
-			len = this.OctalDigit(str, index + 1);
-			if(!len) {
-				break x;
-			}
-			len = this.OctalDigit(str, index + 2);
-			if(!len) {
-				break x;
-			}
-			return [true, 3];
-		}
-		return [null, 0];
+		let len = this.ZeroToThree(str, index);
+		if(!len) return [null, 0];
+		let val = this.m_dispatcher.OctalDigit(str, index + 1);
+		if(!val[0]) return [null, 0];
+		val = this.m_dispatcher.OctalDigit(str, index + 2);
+		if(!val[0]) return [null, 0];
+		return [true, 3];
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	NonZeroOctalDigit(str: string, index: number) {
 		if(str[index] === '0') {
 			return 0;
 		}
-		let len = this.OctalDigit(str, index);
-		if(len > 0) {
-			return 1;
+		let len = this.m_dispatcher.OctalDigit(str, index);
+		if(len[0]) {
+			return len[1];
 		}
 		return 0;
 	}
-	/**
-	 * @param {{ [x: string]: any; }} str
-	 * @param {number} index
-	 */
-	ZeroToThree(str: {[x: string]: any;}, index: number) {
+	ZeroToThree(str: string, index: number) {
 		let cur = str[index];
-		let chk = '0123';
-		if(chk.includes(cur)) {
+		if(cur === '0' || cur === '1' || cur === '2' || cur === '3') {
 			return 1;
 		}
+		return 0;
 	}
 	FourToSeven(str: string, index: number) {
 		let cur = str[index];
@@ -337,6 +282,7 @@ export class ecma_12_8_4 extends ecma_base {
 		if(chk.includes(cur)) {
 			return 1;
 		}
+		return 0;
 	}
 	NonOctalDecimalEscapeSequence(str: string, index: number) {
 		if(str[index] === '8' || str[index] === '9') {
@@ -361,15 +307,15 @@ export class ecma_12_8_4 extends ecma_base {
 		if(str[index] === 'u') {
 			off++;
 		}
-		let len0 = this.Hex4Digits(str, index + off);
-		if(len0 > 0) {
-			return len0 + 1;
+		let len = this.Hex4Digits(str, index + off);
+		if(len[0]) {
+			return len[1] + 1;
 		}
 		if(str[index + off] === '{}'[0]) {
 			off++;
 			let len = this.m_dispatcher.CodePoint(str, index + off);
-			if(len > 0) {
-				off += len;
+			if(len[0]) {
+				off += len[1];
 				if(str[index + off] === '{}'[1]) {
 					off++;
 					return off;
@@ -378,27 +324,20 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return 0;
 	}
-	/**
-	 * @param {any} str
-	 * @param {any} index
-	 */
-	Hex4Digits(str: any, index: any) {
-		let len = this.HexDigit(str, index);
-		if(!len) {
-			return 0;
-		}
-		len = this.HexDigit(str, index);
-		if(!len0) {
-			return 0;
-		}
-		len = this.HexDigit(str, index);
-		if(!len) {
-			return 0;
-		}
-		len = this.HexDigit(str, index);
-		if(!len) {
-			return 0;
-		}
-		return 4;
+	Hex4Digits(str: string, index: number): ecma_return_type {
+		let acc = 0;
+		let len = this.m_dispatcher.HexDigit(str, index);
+		if(!len[0]) return [null, 0];
+		acc += len[1];
+		len = this.m_dispatcher.HexDigit(str, index);
+		if(!len[0]) return [null, 0];
+		acc += len[1];
+		len = this.m_dispatcher.HexDigit(str, index);
+		if(!len[0]) return [null, 0];
+		acc += len[1];
+		len = this.m_dispatcher.HexDigit(str, index);
+		if(!len[0]) return [null, 0];
+		acc += len[1];
+		return [true, acc];
 	}
 }
