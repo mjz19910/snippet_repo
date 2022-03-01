@@ -312,6 +312,6 @@ export function run_tests() {
 	let test_string=`
 	let v=\`Hi there\`;
 	`;
-	debugger;
-	dispatcher.Template(test_string, test_string.indexOf('`'));
+	let res=dispatcher.Template(test_string, test_string.indexOf('`'));
+	console.log(res);
 }
