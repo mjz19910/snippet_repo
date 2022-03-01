@@ -66,4 +66,7 @@ export class Dispatcher implements DispatcherType {
 	HexEscapeSequence(str:string, index:number) {
 		return this.ecma_12_8_4.HexEscapeSequence(str, index);
 	}
+	UnicodeEscapeSequence(str: string, index: number){
+		return this.ecma_12_8_4.HexEscapeSequence(str, index);
+	}
 }
