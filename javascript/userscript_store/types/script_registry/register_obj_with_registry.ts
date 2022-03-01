@@ -25,7 +25,7 @@ export function register_obj_with_registry(obj: any) {
 	};
 	let token_sym = {token: Symbol(-obj_id)};
 	scripts_holders.push(held_obj);
-	scripts_tokens.push({key: held_obj.key, ref: new WeakRef(token_sym)});
+	scripts_tokens.push({key: held_obj.key, weak_ptr: new WeakRef(token_sym)});
 	scripts_weak_arr.push({
 		key: held_obj.key,
 		id: obj_id,

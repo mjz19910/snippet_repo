@@ -1,5 +1,6 @@
+import {is_in_ignored_from_src_fn, is_in_userscript} from "./find_all_scripts_using_string_apis";
 import {has_reg_id} from "./has_reg_id";
-import {cur_event_fns, is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn} from "../typed_mod_rebuild_auto";
+import {cur_event_fns, is_in_userscript_fn} from "./mod";
 
 export function get_nearest_script() {
 	if(document.currentScript !== null) {
@@ -14,7 +15,7 @@ export function get_nearest_script() {
 		return null;
 	if(has_reg_id(script_ghost))
 		
-	if(cur_script === void 0 && !is_in_userscript && !is_in_userscript_fn && !is_in_ignored_from_src_fn) {
+	if(cur_script === void 0 && !is_in_userscript.flag && !is_in_userscript_fn.flag && !is_in_ignored_from_src_fn.flag) {
 		debugger;
 	}
 	script_ghost = cur_event_fns.at(-1);

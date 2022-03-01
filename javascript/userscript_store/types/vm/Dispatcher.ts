@@ -40,6 +40,7 @@ export class Dispatcher implements DispatcherType {
 		return this.ecma_12_8_4.StringLiteral(str, index);
 	}
 	Template(str: string, index: number) {
+		console.log('Template');
 		return this.ecma_12_8_6.Template(str, index);
 	}
 	LineTerminator(str:string, index:number) {

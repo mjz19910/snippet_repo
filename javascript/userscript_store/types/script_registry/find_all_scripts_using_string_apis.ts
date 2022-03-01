@@ -1,15 +1,14 @@
 import {WeakFinalInfo} from "./WeakFinalInfo";
-import {TokenType} from "./TokenType";
+import {PtrWithKeySymbolToWeakTokenSymbolPtr} from "./TokenType";
 import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy";
 import {str_index_of_inject} from "./str_index_of_inject";
 import {CleanupType} from "./CleanupType";
 import {HeldType} from "./HeldType";
 import {Counter} from "./Counter";
-export var is_in_userscript:{flag:boolean}={flag:false};
 export var is_in_ignored_from_src_fn:{flag:boolean}={flag:false};
 export let scripts = new WeakSet;
 export let scripts_holders:HeldType[] = [];
-export let scripts_tokens: (TokenType | null)[] = [];
+export let scripts_tokens: (PtrWithKeySymbolToWeakTokenSymbolPtr | null)[] = [];
 export let scripts_weak_arr: (WeakFinalInfo | null)[] = [];
 export let script_id = new Counter;
 export let script_registry:FinalizationRegistry<{}> = new FinalizationRegistry(function cleanup(held: CleanupType) {
