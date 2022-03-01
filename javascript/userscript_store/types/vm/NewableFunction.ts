@@ -1,4 +1,4 @@
-import Box from "./box/Box";
+import {Box} from "./box/Box";
 
 type NewableFactory<T> = (fn: {new(...a: Box[]): T}) => Box;
 

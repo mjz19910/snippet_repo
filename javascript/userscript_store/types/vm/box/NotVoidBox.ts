@@ -1,4 +1,4 @@
-import Box from "./Box";
+import {Box} from "./Box";
 import VoidBox from "./VoidBox";
 import NonPrimitives from "./NonPrimitives";
 import ArrayBox from "./ArrayBox";

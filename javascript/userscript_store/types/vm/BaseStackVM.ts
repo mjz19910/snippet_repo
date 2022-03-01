@@ -1,6 +1,6 @@
 import InstructionTypeBox from "./box/InstructionTypeBox";
 import {InstructionType} from "./instruction/mod";
-import Box from "./box/Box";
+import {Box} from "./box/Box";
 import IndexBox from "./box/IndexBox";
 import NewableFunctionBox from "./box/NewableFunctionBox";
 import {BaseVMCreate} from "./BaseVMCreate";

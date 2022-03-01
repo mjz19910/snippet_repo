@@ -1,5 +1,5 @@
 import {InstructionType} from "./types/vm/instruction/mod";
-import Box from "./types/vm/box/Box";
+import {Box} from "./types/vm/box/Box";
 import {FormattableTypes} from "./FormattableTypes";
 
 export class SimpleStackVMParser {

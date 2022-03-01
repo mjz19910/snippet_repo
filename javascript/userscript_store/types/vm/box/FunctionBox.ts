@@ -1,4 +1,4 @@
-import Box from "./Box";
+import {Box} from "./Box";
 import BoxTemplate from "./BoxTemplate";
 
 export default class FunctionBox extends BoxTemplate<(...a: Box[]) => Box> {

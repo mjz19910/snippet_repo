@@ -20,7 +20,7 @@ import VoidBox from "./VoidBox";
 import WindowBox from "./WindowBox";
 import VoidPromiseBox from "./VoidPromiseBox";
 
-type Box =
+export type Box =
 	// function result
 	CSSStyleSheetInitBox |
 	// array
@@ -54,4 +54,3 @@ type Box =
 	null |
 	// No value (Void)
 	VoidBox;
-export default Box;

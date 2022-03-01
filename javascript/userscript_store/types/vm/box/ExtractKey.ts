@@ -1,5 +1,5 @@
 import {NonNull} from "types/api";
-import Box from "./Box";
+import {Box} from "./Box";
 import NotVoidBox from "./NotVoidBox";
 import NonPrimitives from "./NonPrimitives";
 import VoidBox from "./VoidBox";

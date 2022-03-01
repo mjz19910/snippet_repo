@@ -1,4 +1,4 @@
-import Box from "./Box";
+import {Box} from "./Box";
 import BoxTemplate from "./BoxTemplate";
 import PromiseBox from "./PromiseBox";
 

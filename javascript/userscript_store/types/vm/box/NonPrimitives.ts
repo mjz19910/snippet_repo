@@ -1,5 +1,5 @@
 import Primitives from "../Primitives";
-import Box from "./Box";
+import {Box} from "./Box";
 
 type NonPrimitives<T extends Box> = T extends null ? never : T extends Primitives ? never : T;
 
