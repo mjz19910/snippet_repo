@@ -18,10 +18,9 @@
 // @grant			none
 // ==/UserScript==
 
-import {VMIndexedCallableValueR} from "final/dead_code.js";
-import {AbstractBox} from "types/vm/box/AbstractBox.js";
 import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
 import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox.js";
+import {PromiseBox} from "./support.js";
 import WindowBox from "types/vm/box/WindowBox.js";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
@@ -209,13 +208,16 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		}
 	}
 	/** @implements {PromiseBox} */
-	class VMBoxedPromiseR {
+	class PromiseBoxImpl {
 		/**@type {"promise"} */
 		type="promise";
 		/**@type {"value"} */
 		await_type="value";
-		/**@arg {'function'} _to_match */
-		get_matching_typeof(_to_match) {
+		/**@arg {'object'} _type @returns {PromiseBox|null} */
+		as_type(_type) {
+			if(typeof this.value === _type){
+				return this;
+			}
 			return null;
 		}
 		/**@arg {Promise<import("types/vm/box/Box.js").Box>} value */
@@ -224,7 +226,9 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		}
 	}
 	class BaseBox {
+		/**@arg {Exclude<import("api").NonNull<import("types/vm/box/Box.js").Box>, import("types/vm/Primitives.js").Primitives>} value */
 		constructor(value) {
+			let res=value.as_type('object');
 			this.value = value;
 		}
 		/**@arg {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} type */
@@ -2490,7 +2494,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 				let r2=ret.then(function(v){
 					return new VMBoxedCSSStyleSheetR(v);
 				});
-				let res=new VMBoxedPromiseR(r2);
+				let res=new PromiseBoxImpl(r2);
 				return res;
 			}
 		}
