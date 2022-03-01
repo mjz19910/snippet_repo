@@ -125,25 +125,16 @@ export class ecma_12_8_4 extends ecma_base {
 		let len;
 		// CharacterEscapeSequence
 		let out = this.CharacterEscapeSequence(str, index);
-		if(out[0] && out[1] > 0) {
-			return [true, out[1]];
-		}
+		if(out[0]) return [true, out[1]];
 		// 0 [lookahead ∉ DecimalDigit]
-		x: {
-			if(str[index] === '0') {
-				let [, peek] = this.m_dispatcher.DecimalDigit(str, index);
-				if(peek > 0) {
-					break x;
-				}
-				// \0 null escape found
-				return [true, 1];
-			}
+		x: if(str[index] === '0') {
+			let [, peek] = this.m_dispatcher.DecimalDigit(str, index);
+			if(peek > 0) break x;
+			return [true, 1];
 		}
 		// LegacyOctalEscapeSequence
 		out = this.LegacyOctalEscapeSequence(str, index);
-		if(out[0] && out[1] > 0) {
-			return [true, out[1]];
-		}
+		if(out[0]) return [true, out[1]];
 		// NonOctalDecimalEscapeSequence
 		let non_oct_len: 1 | undefined = this.NonOctalDecimalEscapeSequence(str, index);
 		if(non_oct_len) {
@@ -151,10 +142,8 @@ export class ecma_12_8_4 extends ecma_base {
 			return [true, len_ty];
 		}
 		// HexEscapeSequence
-		len = this.HexEscapeSequence(str, index);
-		if(len && len > 0) {
-			return [true, len];
-		}
+		let res = this.HexEscapeSequence(str, index);
+		if(res[0]) return [true, res[1]];
 		// UnicodeEscapeSequence
 		len = this.UnicodeEscapeSequence(str, index);
 		if(len > 0) {
@@ -287,35 +276,36 @@ export class ecma_12_8_4 extends ecma_base {
 			return 1;
 		}
 	}
-	HexEscapeSequence(str: string, index: number) {
+	HexEscapeSequence(str: string, index: number): ecma_return_type {
+		let len = 0;
 		if(str[index] === 'x') {
-			let len = this.m_dispatcher.HexDigit(str, index);
-			if(!len) {
-				return 0;
-			}
-			len = this.m_dispatcher.HexDigit(str, index + 1);
-			if(!len) {
-				return 0;
-			}
-			return 3;
+			++len;
+			let res = this.m_dispatcher.HexDigit(str, index + len);
+			if(!res[0]) return [null, 0];
+			++len;
+			res = this.m_dispatcher.HexDigit(str, index + len);
+			if(!res[0]) return [null, 0];
+			++len;
+			return [true, len];
 		}
+		return [null, 0];
 	}
 	UnicodeEscapeSequence(str: string, index: number) {
 		let off = 0;
 		if(str[index] === 'u') {
-			off++;
+			++off;
 		}
 		let len = this.Hex4Digits(str, index + off);
 		if(len[0]) {
 			return len[1] + 1;
 		}
 		if(str[index + off] === '{}'[0]) {
-			off++;
+			++off;
 			let len = this.m_dispatcher.CodePoint(str, index + off);
 			if(len[0]) {
 				off += len[1];
 				if(str[index + off] === '{}'[1]) {
-					off++;
+					++off;
 					return off;
 				}
 			}
