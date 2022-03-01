@@ -22,7 +22,11 @@ export class ecma_12_8_6 extends ecma_base {
 		len=0;
 		/* HexEscapeSequence*/
 		let res=this.m_dispatcher.HexEscapeSequence(str, index);
+		if(res[0]) return [true, res[1]];
 		/* UnicodeEscapeSequence*/
+		res=this.m_dispatcher.UnicodeEscapeSequence(str, index);
+		if(res[0]) return [true, res[1]];
+		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-CodePoint
 	CodePoint(str: string, index: number): ecma_return_type {
