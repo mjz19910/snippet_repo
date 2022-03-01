@@ -131,15 +131,14 @@ export class ecma_12_8_4 extends ecma_base {
 	 * @param {string} str
 	 * @param {number} index
 	 */
-	LineContinuation(str: string, index: number) {
+	LineContinuation(str: string, index: number):ecma_return_type {
 		if(str[index] === '\\') {
 			let lt_len = this.m_dispatcher.LineTerminatorSequence(str, index + 1);
 			if(lt_len[0] && lt_len[1] > 0) {
-				return lt_len[1] + 1;
+				return [true, lt_len[1] + 1];
 			}
-			return 0;
 		}
-		return 0;
+		return [null, 0];
 	}
 	/* EscapeSequence ::*/
 	/* | CharacterEscapeSequence*/
