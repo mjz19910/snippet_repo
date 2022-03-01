@@ -1,4 +1,4 @@
-import {SyntaxError} from "./SyntaxError";
+import {SyntaxError} from "modules/MJZ/SyntaxError.js";
 
 export class RustSimpleTokenizer {
 	constructor() {
@@ -152,7 +152,7 @@ export class RustSimpleTokenizer {
 			}
 			if(separator_close_vec.includes(cur)) {
 				if(!tt_stack.length) {
-					throw SyntaxError('unbalanced token tree');
+					throw new SyntaxError('unbalanced token tree');
 				}
 				cur_tt_vec = tt_stack.pop();
 				if(cur_tt_vec)
@@ -176,7 +176,7 @@ export class RustSimpleTokenizer {
 				this.bad_state();
 		}
 		if(tt_stack.length) {
-			throw SyntaxError('unexpected eof');
+			throw new SyntaxError('unexpected eof');
 		}
 		return tt_item;
 	}
