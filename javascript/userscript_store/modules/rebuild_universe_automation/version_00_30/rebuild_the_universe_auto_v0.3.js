@@ -18,32 +18,18 @@
 // @grant			none
 // ==/UserScript==
 
+import {VMIndexedCallableValueR} from "final/dead_code.js";
+import {AbstractBox} from "types/vm/box/AbstractBox.js";
+import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
+import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox.js";
+import WindowBox from "types/vm/box/WindowBox.js";
+
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 /**
-@typedef {import("types/SimpleVMTypes.js").VMValue} VMValue
-@typedef {import("types/SimpleVMTypes.js").IStackVM} IStackVM
-@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType
-@typedef {import("types/SimpleVMTypes.js").VMCallable} VMCallableValue
-@typedef {import("types/SimpleVMTypes.js").CallableFunctionBox} VMCallableFunction
-@typedef {import("types/SimpleVMTypes.js").VMIndexedCallableBox} VMIndexedCallableValue
-@typedef {import("types/SimpleVMTypes.js").PromiseBox} VMBoxedPromise
-@typedef {import("types/SimpleVMTypes.js").NewableFunctionBox} VMBoxedNewableFunction
-@typedef {import("types/SimpleVMTypes.js").CallableFunctionBox} VMBoxedCallableFunction
-@typedef {import("types/SimpleVMTypes.js").CSSStyleSheetBox} VMBoxedCSSStyleSheet
-@typedef {import("types/SimpleVMTypes.js").CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor
-@typedef {import("types/SimpleVMTypes.js").IStackVMBox} IStackVMBox
-@typedef {import("types/SimpleVMTypes.js").WindowBox} VMBoxedWindow
-@typedef {import("types/SimpleVMTypes.js").ObjectBox} IObjectBox
-@typedef {import("types/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue
-@typedef {import("types/SimpleVMTypes.js").InstructionCall} InstructionCall
-@typedef {import("types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct
-@typedef {import("types/SimpleVMTypes.js").InstructionCast} InstructionCast
-@typedef {import("types/SimpleVMTypes.js").VoidPromiseBox} VMBoxedVoidPromise
+@typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionType
 @typedef {[number, ...InstructionType]} DomExecDescription
-@typedef {[number, ...InstructionType]} InstructionWithDepth
 @typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack
-@typedef {import("./rebuild_the_universe_auto_typed_v0.2.js").AsyncTrigger} AsyncTriggerT
 */
 
 (function() {
@@ -138,7 +124,7 @@
 	function cast_err() {
 		let err={};
 		Error.call(err, 'Bad cast (or TODO)');
-		Error.captureStackTrace(err, cast_err)
+		Error.captureStackTrace(err, cast_err);
 		throw err;
 	}
 	function trigger_debug_breakpoint(){
@@ -178,7 +164,7 @@
 			v:prop.value
 		};
 	}
-	/** @implements {VMBoxedCSSStyleSheetConstructor} */
+	/** @implements {CSSStyleSheetConstructorBox} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
@@ -193,14 +179,21 @@
 			this.value=value;
 		}
 		/**@arg {'function'} to_match */
-		get_matching_typeof(to_match) {
+		as_type(to_match) {
 			if(typeof this.value === to_match){
 				return this;
 			}
 			return null;
 		}
+		/**
+		 * @returns {CSSStyleSheetBox}
+		 * @param {[]} arr
+		 */
+		factory(...arr) {
+			return new CSSStyleSheetBox(new this.value(...arr));
+		}
 	}
-	/** @implements {VMBoxedCSSStyleSheet} */
+	/** @implements {CSSStyleSheetBox} */
 	class VMBoxedCSSStyleSheetR {
 		/**@type {"instance_box"} */
 		type="instance_box";
@@ -215,7 +208,7 @@
 			this.value=value;
 		}
 	}
-	/** @implements {VMBoxedPromise} */
+	/** @implements {PromiseBox} */
 	class VMBoxedPromiseR {
 		/**@type {"promise"} */
 		type="promise";
@@ -225,7 +218,7 @@
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {Promise<VMValue>} value */
+		/**@arg {Promise<import("types/vm/box/Box.js").Box>} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -234,15 +227,14 @@
 		constructor(value) {
 			this.value = value;
 		}
-		/**@arg {'function'} type */
+		/**@arg {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} type */
 		as_type(type){
-			if(typeof this.value === 'type'){
+			if(typeof this.value === type) {
 				return this;
 			}
 			return null;
 		}
 	}
-	/** @implements {IStackVMBox} */
 	class StackVMBox extends BaseBox {
 		/**@type {"custom_box"} */
 		type="custom_box";
@@ -257,7 +249,6 @@
 		/**@type {"Window"} */
 		inner_type="Window";
 	}
-	/** @implements {IObjectBox} */
 	class ObjectBox extends BaseBox {
 		/**@type {"object_box"} */
 		type="object_box";
@@ -265,17 +256,26 @@
 	}
 	class InstructionCallImpl {
 		debug=false;
+		/**
+		 * @param {{stack: {type: string;source: string;value: any;}[] | {type: string;source: string;value: any;}[];}} vm
+		 * @param {{type: any;source: any;value: any;box_type: any;} | null} target_this
+		 * @param {string | any[]} arg_arr
+		 * @param {{ return_type: string | null; value: ()=>void; }} fn_box
+		 */
 		handle_as_fn_box(vm, fn_box, target_this, arg_arr){
-			if(raw_fn.return_type == 'promise'){
-				return this.handle_as_fn(vm, raw_fn.value, target_this, arg_arr);
-			} else if(raw_fn.return_type === null) {
-				console.log('fixme: make a type for this', raw_fn);
-				return this.handle_as_fn(vm, raw_fn.value, target_this, arg_arr);
+			if(fn_box.return_type == 'promise'){
+				return this.handle_as_fn(vm, fn_box.value, target_this, arg_arr);
+			} else if(fn_box.return_type === null) {
+				console.log('fixme: make a type for this', fn_box);
+				return this.handle_as_fn(vm, fn_box.value, target_this, arg_arr);
 			} else {
-				console.log('unexpected box value', raw_fn);
+				console.log('unexpected box value', fn_box);
 				throw new Error("Unexpected function box type");
 			}
 		}
+		/**
+		 * @param {{ type: any; source: any; value: any; box_type: any; } | null} object_box
+		 */
 		unbox_obj(object_box) {
 			if(object_box === null)return null;
 			const {type, ...left_to_unbox}=object_box;
@@ -319,9 +319,13 @@
 			console.log('unbox', type, left_to_unbox);
 			throw 1;
 		}
+		/**
+		 * @param {string | any[]} arg_arr
+		 */
 		unbox_arr(arg_arr){
 			let arr=[];
 			for(let i=0;i<arg_arr.length;i++){
+				/**@type {{type: any;source: any;value: any;box_type: any;}} */
 				let cur=arg_arr[i];
 				if(typeof cur === 'string'){
 					arr.push(cur);
@@ -337,6 +341,12 @@
 			}
 			return arr;
 		}
+		/**
+		 * @param {{ stack: any; }} vm
+		 * @param {(...a:any[])=>void} fn_value
+		 * @param {{ type: any; source: any; value: any; box_type: any; } | null} target_this
+		 * @param {string | any[]} arg_arr
+		 */
 		handle_as_fn(vm, fn_value, target_this, arg_arr) {
 			let real_this=this.unbox_obj(target_this);
 			let real_args=this.unbox_arr(arg_arr);
@@ -348,6 +358,12 @@
 			};
 			vm.stack.push(ret_box);
 		}
+		/**
+		 * @param {{ stack: any; }} vm
+		 * @param {{ as_type: (arg0: string) => {type:'callable_box'|'function_box'|'constructor_box';value:()=>void;return_type:null}; }} fn_obj
+		 * @param {{ type: any; source: any; value: any; box_type: any; } | null} target_this
+		 * @param {string | any[]} arg_arr
+		 */
 		handle_as_obj(vm, fn_obj, target_this, arg_arr){
 			if(!fn_obj.as_type){
 				console.log('!fn_obj.as_type', fn_obj);
@@ -364,7 +380,7 @@
 				throw new Error("Unreachable (type of value is never)");
 			}
 		}
-		/**@arg {InstructionCall} instruction @arg {IStackVM} vm */
+		/**@arg {import("types/vm/mod.js").InstructionCall} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			let number_of_arguments = instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -396,6 +412,12 @@
 				this.handle_as_obj(vm, value_box, target_this, arg_arr);
 			}
 		}
+		/**
+		 * @arg {{ stack: any; }} vm
+		 * @param {{ source: string; cast_source: string; value: (...a: any[]) => void; }} value_box
+		 * @param {{ type: any; source: any; value: any; box_type: any; } | null} target_this
+		 * @param {string | any[]} arg_arr
+		 */
 		handle_as_temporary_box(vm, value_box, target_this, arg_arr) {
 			if(value_box.source === 'cast'){
 				if(value_box.cast_source === 'vm_function'){
@@ -407,7 +429,7 @@
 
 	}
 	class InstructionConstructImpl {
-		/** @arg {IStackVM} vm @arg {InstructionConstruct} ins */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/general/InstructionConstruct.js").InstructionConstruct} ins */
 		static run(vm, ins){
 			let number_of_arguments=ins[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -1991,7 +2013,11 @@
 		return true;
 	}
 	class DataLoader {
-		static int_parser=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
+		get int_parser() {
+			if(this.int_parser_)return this.int_parser_;
+			this.int_parser_=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
+			return this.int_parser_;
+		}
 		/** @param {Storage} storage */
 		constructor(storage) {this.store=storage}
 		/** @param {string} key @param {string[]} def_value */
@@ -2003,7 +2029,9 @@
 		/** @param {string} string */
 		default_split(string){return string.split(",")}
 		/** @param {string} data */
-		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
+		parse_int_arr(data){
+			return this.default_split(data).map(this.int_parser)
+		}
 	}
 	class AsyncAutoBuy {
 		/** @arg {AutoBuy} parent */
@@ -2118,6 +2146,42 @@
 		}
 	}
 	class AutoBuy {
+		constructor(){
+			this.root_node=new AsyncNodeRoot;
+			this.with_async=new AsyncAutoBuy(this);
+			this.timeout_ms=0;this.iter_count=0;this.epoch_len=0;
+			this.background_audio=null;this.state_history_arr=null;
+			this.skip_save=false;this.has_real_time=false;
+			/** @type {number[]} */
+			this.cint_arr=[];
+			this.local_data_loader=new DataLoader(localStorage);
+			this.state=new AutoBuyState(this.root_node);
+			this.debug=this.state.debug;
+			this.compressor=new MulCompression;
+			this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str', ["S"]);
+			this.epoch_start_time=Date.now();
+			this.original_map=new Map;
+			/**@type {Map<string, (Node|string)>} */
+			this.dom_map=new Map;
+			/** @type {string[]} */
+			this.debug_arr=[];
+			this.flags=new Set();
+			try{
+				this.check_for_syms();
+			}catch(e){
+				console.log(e);
+			}
+			this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str', _e=>{
+				let src=[300];
+				src.length=16;
+				let data_len=1;
+				while(data_len < src.length){
+					src.copyWithin(data_len, 0);
+					data_len*=2;
+				}
+				return src;
+			});
+		}
 		async_compress(){
 			this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
 			this.update_history_element();
@@ -2140,41 +2204,6 @@
 				let val=debug_id_syms[i].deref();
 				if(val)this.syms_iter(sym_indexed_this, val);
 			}
-		}
-		constructor(){
-			this.root_node=new AsyncNodeRoot;
-			this.with_async=new AsyncAutoBuy(this);
-			this.timeout_ms=0;this.iter_count=0;this.epoch_len=0;
-			this.background_audio=null;this.state_history_arr=null;
-			this.skip_save=false;this.has_real_time=false;
-			/** @type {never[]} */
-			this.cint_arr=[];
-			this.local_data_loader=new DataLoader(localStorage);
-			this.state=new AutoBuyState(this.root_node);
-			this.debug=this.state.debug;
-			this.compressor=new MulCompression;
-			this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str', ["S"]);
-			this.epoch_start_time=Date.now();
-			this.original_map=new Map;
-			/**@type {Map<string, (Node|string)>} */
-			this.dom_map=new Map;
-			this.debug_arr=[];
-			this.flags=new Set();
-			try{
-				this.check_for_syms(this);
-			}catch(e){
-				console.log(e);
-			}
-			this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str', _e=>{
-				let src=[300];
-				src.length=16;
-				let data_len=1;
-				while(data_len < src.length){
-					src.copyWithin(data_len, 0);
-					data_len*=2;
-				}
-				return src;
-			});
 		}
 		pre_init(){
 			this.background_audio=document.querySelector("#background_audio");
@@ -2467,7 +2496,7 @@
 		}
 		/** @param {DomExecDescription[]} raw_arr */
 		build_dom_from_desc(raw_arr, trg_map=new Map) {
-			/**@type {InstructionWithDepth[]} */
+			/**@type {DomExecDescription[]} */
 			let stack=[];
 			let map=trg_map;
 			for(let i=0;i<raw_arr.length;i++) {
@@ -2538,7 +2567,7 @@
 				stack[stack_ptr] = [value];
 			}
 		}
-		/** @arg {InstructionWithDepth[]} input_instructions @returns {InstructionType[]} */
+		/** @arg {DomExecDescription[]} input_instructions @returns {InstructionType[]} */
 		parse_dom_stack(input_instructions) {
 			let stack_with_depths=[];
 			/**@type {DomInstructionStack} */
