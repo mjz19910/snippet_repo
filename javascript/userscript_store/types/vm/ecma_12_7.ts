@@ -45,6 +45,9 @@ class HashMap<K, V> implements IHashMap<K, V> {
 		}
 		return this.backing_map.has(key);
 	}
+	iterate(callback){
+		
+	}
 }
 // HashMap<FlyString, TokenType> Lexer::s_keywords;
 const s_keywords = new HashMap<FlyString, TokenType>;
