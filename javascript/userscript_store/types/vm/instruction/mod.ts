@@ -5,7 +5,7 @@ import {InstructionPushGlobalObj} from "./InstructionPushGlobalObj";
 import {InstructionHalt} from "./InstructionHalt";
 import {InstructionModifyOperand} from "./InstructionModifyOperand";
 import {InstructionPushArgs} from "./InstructionPushArgs";
-import {InstructionReturn} from "./InstructionReturn";
+import {InstructionReturn} from "./general/InstructionReturn";
 import {InstructionPushVMObj} from "./InstructionPushVMObj";
 import * as gen from "./general/mod";
 import * as jump from "./jump/mod";

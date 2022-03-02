@@ -1,1 +1,1 @@
-export type InstructionGlobal = ['global'];
+export type InstructionPushGlobalObj = ['global'];

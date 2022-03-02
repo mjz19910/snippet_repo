@@ -1,3 +1,3 @@
-export {VMInstructionCall} from "./VMInstructionCall";
-export {VMInstructionPushInstructionPtr} from "./VMInstructionPushInstructionPtr";
-export {VMInstructionReturn} from "./VMInstructionReturn";
+export {InstructionCall} from "./InstructionCall";
+export {InstructionPushInstructionPtr} from "./InstructionPushInstructionPtr";
+export {InstructionReturn} from "./InstructionReturn";
