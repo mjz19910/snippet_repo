@@ -1,0 +1,1 @@
+export type BlockTrace=['vm_block_trace', never];
