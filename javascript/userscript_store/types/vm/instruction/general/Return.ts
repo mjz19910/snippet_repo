@@ -1,2 +1,3 @@
-export type ReturnOpcode='return';
+import {ReturnOpcode} from "../opcodes/ReturnOpcode";
+
 export type Return = [ReturnOpcode];

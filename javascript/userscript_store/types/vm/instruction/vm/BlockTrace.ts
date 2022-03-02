@@ -1,2 +1,3 @@
-export type BlockTraceOpcode='vm_block_trace';
-export type BlockTrace=[BlockTraceOpcode, never];
+import {VMBlockTraceOpcode} from "../opcodes/VMBlockTraceOpcode";
+
+export type BlockTrace=[VMBlockTraceOpcode, never];

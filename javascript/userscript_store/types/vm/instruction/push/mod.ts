@@ -1,3 +1,14 @@
-export {Args as Args, ArgsOpcode as ArgsOpcode} from "./Args";
-export {GlobalObject as GlobalObject, GlobalObjectOpcode as GlobalObjectOpcode} from "./PushGlobalObject";
-export {PushSelf as VMPushSelf, PushSelfOpcode as VMPushSelfOpcode} from "../vm/PushSelf";
+import {Args as Args} from "./Args";
+import {ArgsOpcode as ArgsOpcode} from "../opcodes/ArgsOpcode";
+import {GlobalObject} from "./GlobalObject";
+import {GlobalObjectOpcode} from "../opcodes/GlobalObjectOpcode";
+import {PushSelf as VMPushSelf} from "../vm/PushSelf";
+import {PushSelfOpcode as VMPushSelfOpcode} from "../opcodes/VMPushSelfOpcode";
+export {
+	Args,
+	ArgsOpcode,
+	VMPushSelf,
+	VMPushSelfOpcode,
+	GlobalObject,
+	GlobalObjectOpcode
+}

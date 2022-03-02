@@ -1,3 +1,4 @@
-export type ReturnOpcode='vm_return';
-export type Return = ['vm_return'];
+import {ReturnOpcode} from "../opcodes/VMReturnOpcode";
+
+export type Return = [ReturnOpcode];
 export default Return;

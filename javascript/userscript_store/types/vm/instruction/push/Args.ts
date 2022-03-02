@@ -1,2 +1,3 @@
-export type ArgsOpcode = 'vm_push_args';
+import {ArgsOpcode} from "../opcodes/ArgsOpcode";
+
 export type Args = [ArgsOpcode];

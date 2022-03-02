@@ -1,3 +1,5 @@
-export type CastOpcode="cast";
-export type CastArg = "object_index" | "callable_index";
-export type Cast = [CastOpcode, CastArg];
+import {CastOperand1} from "./operands/CastOperand1";
+import {CastOpcode} from "./opcodes/CastOpcode";
+
+export type Cast = [CastOpcode, CastOperand1];
+export default Cast;

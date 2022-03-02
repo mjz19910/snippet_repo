@@ -1,4 +1,5 @@
-export type CallOpcode = 'vm_call';
-export type Call = ['vm_call', number];
+import {VMCallOpcode} from "../opcodes/VMCallOpcode";
+
+export type Call = [VMCallOpcode, number];
 export default Call;
 

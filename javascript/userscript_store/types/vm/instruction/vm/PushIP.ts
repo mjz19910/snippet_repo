@@ -1,4 +1,4 @@
-export type PushIPOpcode='vm_push_ip';
+import {PushIPOpcode} from "../opcodes/VMPushIPOpcode";
 
 export type PushIP = [PushIPOpcode];
 

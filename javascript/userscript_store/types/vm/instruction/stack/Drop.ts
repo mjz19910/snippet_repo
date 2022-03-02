@@ -1,2 +1,3 @@
-export type DropOpcode='drop';
+import {DropOpcode} from "../opcodes/DropOpcode";
+
 export type Drop = [DropOpcode];

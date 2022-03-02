@@ -1,2 +1,5 @@
-export type JumpOpcode='jmp';
-export type Jump = [JumpOpcode, number];
+import {JumpOpcode} from "../opcodes/JumpOpcode";
+
+type Jump = [JumpOpcode, number];
+
+export default Jump;

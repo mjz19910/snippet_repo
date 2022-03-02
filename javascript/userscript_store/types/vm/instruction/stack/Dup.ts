@@ -1,2 +1,3 @@
-export type DupOpcode='dup';
+import {DupOpcode} from "../opcodes/DupOpcode";
+
 export type Dup = [DupOpcode];

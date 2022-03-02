@@ -1,2 +1,3 @@
-export type PeekOpcode='peek';
+import {PeekOpcode} from "../opcodes/PeekOpcode";
+
 export type Peek = [PeekOpcode, number];

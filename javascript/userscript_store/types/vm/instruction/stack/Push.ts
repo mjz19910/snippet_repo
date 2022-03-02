@@ -1,4 +1,4 @@
 import {Box} from "types/vm/box/Box";
+import {PushOpcode} from "../opcodes/PushOpcode";
 
-export type PushOpcode='push';
 export type Push = [PushOpcode, ...Box[]];

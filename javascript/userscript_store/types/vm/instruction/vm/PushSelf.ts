@@ -1,2 +1,3 @@
-export type PushSelfOpcode='vm_push_self';
+import {PushSelfOpcode} from "../opcodes/VMPushSelfOpcode";
+
 export type PushSelf = [PushSelfOpcode];
