@@ -24,14 +24,11 @@ import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBo
 import EmptyArrayBox from "types/vm/box/EmptyArrayBox.js";
 import FunctionBox from "types/vm/box/FunctionBox.js";
 import MediaListBox from "types/vm/box/MediaListBox.js";
-import NewableFunctionBox from "types/vm/box/NewableFunctionBox.js";
 import NodeBox from "types/vm/box/NodeBox.js";
 import PromiseBox from "types/vm/box/PromiseBox.js";
 import VoidBox from "types/vm/box/VoidBox.js";
 import VoidPromiseBox from "types/vm/box/VoidPromiseBox.js";
 import WindowBox from "types/vm/box/WindowBox.js";
-
-/**@typedef {import("types/vm/box/mod.js").Box} Box */
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 (function() {
@@ -254,6 +251,9 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			if(a === null)throw invalid();
 			if(a.type === 'void'){
 				throw new Error("Attempt to call a void value");
+			}
+			if(a.type === 'temporary_box'){
+				throw new Error("Attempt to use an unknown value (cast it to the type it is)");
 			}
 			let b=a.as_type('function');
 			if(!b)throw new Error("Type mismatch");
@@ -686,15 +686,9 @@ import WindowBox from "types/vm/box/WindowBox.js";
 							}
 							case "constructor_box":throw new Error("Unable to index");
 							case "function_box":throw new Error("Unable to index");
-							case "promise":throw new Error("Unable to index");
+							case "promise_box":throw new Error("Unable to index");
 							case "void":throw new Error("Unable to index type is void");
 							case "object_box":{
-								if(opt.extension === 'index'){
-									let res=opt.value[get_name];
-									if(res === null)return res;
-									if(res === void 0)return res;
-									return res;
-								}
 								if(opt) {
 									if(opt.inner_type === 'unit'){
 										console.info('is this (%o) really a unit (ie has no properties)', opt.value);
@@ -714,7 +708,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 									}
 								}
 							}
-							case "dom_value":throw new Error("TODO: support dom_value");
 							case "instance_box":throw new Error("Unable to index instance yet");
 						}
 					}
@@ -789,22 +782,28 @@ import WindowBox from "types/vm/box/WindowBox.js";
 					if(typeof target_this!='object')throw invalid();
 					if(target_this===null)throw invalid();
 					if(target_fn.type!="function_box")throw invalid();
+					if(target_fn.return_type === 'promise_box'){
+						let ret=target_fn.wrap_call(target_this, ...arg_arr);
+						this.push(ret);
+						return;
+					}
 					let ret = target_fn.value.apply(target_this.value, arg_arr);
 					console.log('VM: call %o %s(...)\n ... = [' + "%o, ".repeat(arg_arr.length) + "]\n return %o", target_fn, target_this, ...arg_arr, ret);
 					switch(typeof ret){
 						default:{
 							this.push(ret);
 						} break;
-						case 'object':
-								if(ret === null){
-									this.push(null);
-									break;
-								}
-								if(ret instanceof StackVM){
-									this.push(new StackVMBoxImpl(ret));
-								} else {
-									throw new Error("Can't box return")
-								}
+						case 'object':{
+							if(ret === null){
+								this.push(null);
+								break;
+							}
+							if(ret instanceof StackVM){
+								this.push(new StackVMBoxImpl(ret));
+							} else {
+								throw new Error("Can't box return")
+							}
+						} break;
 					}
 				} break;
 				default/*Base class*/:super.execute_instruction(instruction);break;

@@ -20,13 +20,6 @@
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-/**
- * @typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionType
- * @typedef {[number, ...InstructionType]} DomExecDescription
- * @typedef {[number, ...InstructionType]} InstructionWithDepth
- * @typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack
-*/
-
 (function() {
 	'use strict';
 	const AUDIO_ELEMENT_VOLUME=0.58;
