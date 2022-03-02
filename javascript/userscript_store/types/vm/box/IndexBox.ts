@@ -1,8 +1,12 @@
 import BoxTemplate from "./BoxTemplate";
 import IndexRaw from "../raw/IndexRaw";
 
-export default class IndexBox extends BoxTemplate<IndexRaw> {
-	type: "object_box" = "object_box";
+export default class IndexBox {
+	value:IndexRaw;
+	like_type: "object_box" = "object_box";
 	extension: 'index' = 'index';
-	index_type: "value" = "value";
+	index_type: "Box" = "Box";
+	constructor(value:IndexRaw){
+		this.value=value;
+	}
 }

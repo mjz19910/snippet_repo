@@ -1,3 +1,6 @@
+import {AnyTypeOfResult} from "./BoxTemplate";
+
 export default interface BoxInterface {
-	as_type(x: string): this | null;
+	type:string;
+	as_type(x: AnyTypeOfResult): this | null;
 }

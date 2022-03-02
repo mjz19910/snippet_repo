@@ -6,6 +6,7 @@ import NewableFunctionBox from "./box/NewableFunctionBox";
 import {BaseVMCreate} from "./BaseVMCreate";
 import {l_log_if} from "./l_log_if";
 import {SimpleStackVMParser} from "./SimpleStackVMParser";
+import {LOG_LEVEL_VERBOSE} from "types/constants";
 export class BaseStackVM extends BaseVMCreate {
 	stack: Box[];
 	return_value: Box;

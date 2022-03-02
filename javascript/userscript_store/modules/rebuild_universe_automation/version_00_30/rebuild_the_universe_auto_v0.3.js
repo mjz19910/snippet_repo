@@ -209,10 +209,10 @@ import WindowBox from "types/vm/box/WindowBox.js";
 	}
 	/** @implements {PromiseBox} */
 	class PromiseBoxImpl {
-		/**@type {"promise"} */
-		type="promise";
-		/**@type {"value"} */
-		await_type="value";
+		/**@type {"promise_box"} */
+		type="promise_box";
+		/**@type {"Box"} */
+		await_type="Box";
 		/**@arg {'object'} _type @returns {PromiseBox|null} */
 		as_type(_type) {
 			if(typeof this.value === _type){
@@ -1998,8 +1998,8 @@ import WindowBox from "types/vm/box/WindowBox.js";
 	}
 	/**@implements {NodeBox} */
 	class NodeBoxImpl extends BaseBox {
-		/**@type {"dom_value"} */
-		type="dom_value";
+		/**@type {"instance_box"} */
+		type="instance_box";
 		/**@type {"get"|"create"} */
 		from="create";
 		/** @param {"get"|"create"|string} from @param {Node} value */
@@ -2395,8 +2395,8 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			let bound_this=this;
 			/** @implements {VMBoxedVoidPromise} */
 			class VMBoxedVoidPromiseR {
-				/** @type {"promise"} */
-				type="promise";
+				/** @type {"promise_box"} */
+				type="promise_box";
 				return_type=null;
 				await_type=null;
 				/**@type {"void_type"} */

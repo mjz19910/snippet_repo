@@ -1,24 +1,17 @@
 import BoxInterface from "./BoxInterface";
-
-export default class BoxTemplate<T> implements BoxInterface {
-	constructor(value: T) {
+export type AnyTypeOfResult = "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
+export default abstract class BoxTemplate<T extends string, V extends object | Function> implements BoxInterface {
+	constructor(value: V) {
 		this.value = value;
 	}
-	value: T;
-	as_type(x:'function') {
+	abstract type:T;
+	value: V;
+	as_type(_x: 'object'|'function') {
 		let tof=typeof this.value;
 		switch(tof){
-			case 'object':{
-
-			} break;
-			case 'bigint':{
-			} break;
-			case 'boolean':{
-
-			} break;
-			case 'function':{
-				if(x === 'function')return this;
-			}
+			case 'object':if(_x === tof)return this;break;
+			case 'function':if(_x === tof)return this;break;
+			default:throw new Error("Box not necessary for primitive types")
 		}
 		return null;
 	}

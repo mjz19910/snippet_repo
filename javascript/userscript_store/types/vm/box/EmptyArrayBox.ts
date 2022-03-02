@@ -1,5 +1,6 @@
 import BoxTemplate from "./BoxTemplate";
 
-export default class EmptyArrayBox extends BoxTemplate<[]> {
+export default class EmptyArrayBox extends BoxTemplate<"array_box", []> {
 	type: "array_box" = "array_box";
+	special:"Unit"="Unit";
 }

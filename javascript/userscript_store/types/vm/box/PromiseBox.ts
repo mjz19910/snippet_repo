@@ -1,7 +1,8 @@
 import BoxTemplate from "./BoxTemplate";
 import {Box} from "./Box";
 
-export default class PromiseBox extends BoxTemplate<Promise<Box>> {
-	type: "promise" = "promise";
-	await_type: "value" = "value";
+export default class PromiseBox extends BoxTemplate<"promise_box", Promise<Box>> {
+	type: "promise_box" = "promise_box";
+	inner_type: 'Promise<Box>' = 'Promise<Box>';
+	await_type: "Box" = "Box";
 }

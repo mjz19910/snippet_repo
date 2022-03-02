@@ -2,7 +2,7 @@
 IsVMIndexed, IsVMValueNewable, IsVMValueCallable, IsVMCallableIndexed
 */
 
-import {Box} from "./vm/box/Box";
+import {Box} from "./box/Box";
 
 /* --- VM Value supporting interfaces ---
 StackVM

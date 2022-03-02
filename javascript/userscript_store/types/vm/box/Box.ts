@@ -1,5 +1,5 @@
 import ArrayBox from "./ArrayBox";
-import PromiseResultBox from "./PromiseResultBox";
+import AsyncFunctionBox from "./PromiseResultBox";
 import CSSStyleSheetBox from "./CSSStyleSheetBox";
 import CSSStyleSheetConstructorBox from "./CSSStyleSheetConstructorBox";
 import CSSStyleSheetInitBox from "./CSSStyleSheetInitBox";
@@ -7,7 +7,6 @@ import CSSStyleSheetPromiseBox from "./CSSStyleSheetPromiseBox";
 import EmptyArrayBox from "./EmptyArrayBox";
 import FunctionBox from "./FunctionBox";
 import GlobalThisBox from "./GlobalThisBox";
-import IndexBox from "./IndexBox";
 import InstructionTypeArrayBox from "./InstructionTypeArrayBox";
 import MediaListBox from "./MediaListBox";
 import NewableFunctionBox from "./NewableFunctionBox";
@@ -19,6 +18,7 @@ import StackVMBox from "./StackVMBox";
 import VoidBox from "./VoidBox";
 import WindowBox from "./WindowBox";
 import VoidPromiseBox from "./VoidPromiseBox";
+import TemporaryBox from "./TemporaryBox";
 
 export type Box =
 	// function result
@@ -32,7 +32,7 @@ export type Box =
 	// function
 	FunctionBox |
 	NewableFunctionBox |
-	PromiseResultBox |
+	AsyncFunctionBox |
 	// return type
 	CSSStyleSheetPromiseBox |
 	// global
@@ -44,7 +44,8 @@ export type Box =
 	CSSStyleSheetBox |
 	MediaListBox |
 	// object
-	IndexBox |
+	// hard to box returns from normal js (can't find the index sig easily as any object would match)
+	// IndexBox |
 	ObjectBox |
 	// promise types
 	VoidPromiseBox |
@@ -53,4 +54,6 @@ export type Box =
 	Primitives |
 	null |
 	// No value (Void)
-	VoidBox;
+	VoidBox |
+	// Temporary box for when stuff is asserted to be true (ie, typeof value_to_box === "function")
+	TemporaryBox;

@@ -129,11 +129,13 @@ import WindowBox from "types/vm/box/WindowBox.js";
 	/**@typedef {import("types/vm/box/mod.js").Box} Box */
 	/**@implements {PromiseBox} */
 	class PromiseBoxImpl {
-		/**@type {"promise"} */
-		type="promise";
-		/**@type {"value"} */
-		await_type="value";
-		/**@arg {'function'} type */
+		/**@type {"promise_box"} */
+		type="promise_box";
+		/**@type {"Promise<Box>"} */
+		inner_type="Promise<Box>";
+		/**@type {"Box"} */
+		await_type="Box";
+		/**@arg {"object"|"function"} type */
 		as_type(type) {
 			if(typeof this.value === type)return this;
 			return null;
@@ -256,8 +258,12 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			let b=a.as_type('function');
 			if(!b)throw new Error("Type mismatch");
 			if(b.type === 'function_box') {
-				let ret = b.value.apply(target_this, arg_arr);
-				vm.push(ret);
+				if(b.return_type === null){
+					let ret = b.value.apply(target_this, arg_arr);
+					vm.push(ret);
+				} else {
+					b.wrap_call(target_this, ...arg_arr);
+				}
 			} else if (b.type == 'constructor_box'){
 				throw new Error("Unexpected constructor");
 			} else {
@@ -2252,7 +2258,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		return sym;
 	}
 	class VMBoxedDomValueR {
-		/**@type {"dom_value"} */
+		/**@type {"instance_box"} */
 		type;
 		/**@type {"get"|"create"} */
 		from;
@@ -2268,7 +2274,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		 * @param {Node} value
 		 */
 		constructor(from, value){
-			this.type="dom_value";
+			this.type="instance_box";
 			if(from === 'get' || from === 'create'){
 				this.from=from;
 			} else {
@@ -2314,10 +2320,10 @@ import WindowBox from "types/vm/box/WindowBox.js";
 	class VMReturnsBoxedVoidPromiseR {
 		/**@type {"function_box"} */
 		type="function_box";
-		/**@type {"value"} */
-		await_type="value";
-		/**@type {"promise"} */
-		return_type="promise";
+		/**@type {"Box"} */
+		await_type="Box";
+		/**@type {"promise_box"} */
+		return_type="promise_box";
 		/**@type {"void_type"} */
 		promise_return_type_special="void_type";
 		/**@arg {any} value */
@@ -2650,8 +2656,8 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			let bound_this=this;
 			/**@implements {VoidPromiseBox} */
 			class VoidPromiseBoxImpl {
-				/**@type {"promise"} */
-				type="promise";
+				/**@type {"promise_box"} */
+				type="promise_box";
 				/**@type {"Promise<void>"} */
 				inner_type="Promise<void>";
 				return_type=null;

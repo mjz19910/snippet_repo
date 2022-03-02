@@ -2,7 +2,7 @@ import {Box} from "./Box";
 import BoxTemplate from "./BoxTemplate";
 import CSSStyleSheetBox from "./CSSStyleSheetBox";
 
-export default class CSSStyleSheetConstructorBox extends BoxTemplate<typeof CSSStyleSheet> {
+export default class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box", typeof CSSStyleSheet> {
 	type: "constructor_box" = "constructor_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
 	args_type?:{
