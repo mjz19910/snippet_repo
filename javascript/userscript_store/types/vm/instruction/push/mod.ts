@@ -1,3 +1,3 @@
-export {InstructionPushArgs as PushArgs} from "./InstructionPushArgs";
-export {InstructionPushGlobalObj as PushGlobalObj} from "./InstructionPushGlobalObj";
-export {InstructionPushVMObj as PushVMObj} from "./InstructionPushVMObj";
+export {PushArgs as PushArgs} from "./PushArgs";
+export {PushGlobalObject as PushGlobalObject} from "./PushGlobalObject";
+export {PushVMSelf as PushVMSelf} from "./PushVMSelf";

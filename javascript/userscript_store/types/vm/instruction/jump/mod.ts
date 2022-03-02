@@ -1,2 +1,2 @@
-export {InstructionJumpAbs as Jump} from "./InstructionJumpAbs";
-export {InstructionJumpJe as Je} from "./InstructionJumpJe";
+export {Jump, JumpOpcode} from "./Jump";
+export {Je, JeOpcode} from "./Je";

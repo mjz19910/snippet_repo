@@ -1,121 +1,133 @@
-import {InstructionAppend as Append} from "./InstructionAppend";
-import {InstructionCast as Cast} from "./InstructionCast";
-import {InstructionModifyOperand as ModifyOperand} from "./InstructionModifyOperand";
+import {Append as Append, AppendOpcode} from "./Append";
+import {Cast, CastOpcode as CastOpcode} from "./Cast";
+import {ModifyOperand, ModifyOperandOpcode} from "./ModifyOperand";
+import {Nop, NopOpcode} from "./Nop";
 import * as debug from "./debug/mod";
-import * as gen from "./general/mod";
+import * as general from "./general/mod";
 import * as jump from "./jump/mod";
 import * as push from "./push/mod";
-import * as st from "./stack/mod";
+import * as stack from "./stack/mod";
 import * as turing from "./turing/mod";
 import * as vm from "./vm/mod";
 import {StackVM} from "../StackVM";
+import {PushGlobalObjectOpcode} from "./push/PushGlobalObject";
+import {PushVMSelfOpcode} from "./push/PushVMSelf";
+import {CallOpcode} from "./general/Call";
+import {ConstructOpcode} from "./general/Construct";
+import {GetOpcode} from "./general/Get";
+import {HaltOpcode} from "./turing/Halt";
 export {
-	gen as GeneralNS,
 	Append,
 	Cast,
-	debug as DebugNS,
+	debug,
+	general,
+	jump,
 	ModifyOperand,
-	jump as JumpNS,
-	push as PushNS,
-	st as StackNS,
-	turing as TuringNS,
-	vm as VM_NS,
+	Nop,
+	push,
+	stack,
+	turing,
+	vm,
 };
 
 
 export type InstructionType =
+	Nop |
 	// Stack
-	st.Push |
-	st.Dup |
-	st.Drop |
-	st.Peek |
+	stack.Push |
+	stack.Dup |
+	stack.Drop |
+	stack.Peek |
 	// FFI
-	gen.Get |
-	gen.Call |
-	gen.Construct |
-	gen.Return |
+	general.Get |
+	general.Call |
+	general.Construct |
+	general.Return |
 	// Jump
 	jump.Jump |
 	jump.Je |
 	turing.Halt |
 	// Push values
 	push.PushArgs |
-	push.PushVMObj |
-	push.PushGlobalObj |
+	push.PushVMSelf |
+	push.PushGlobalObject |
 	// Debug
 	debug.Breakpoint |
 	// VM
 	vm.Return |
 	vm.Call |
-	vm.PushInstructionPtr |
+	vm.PushIP |
 	ModifyOperand |
 	Append |
 	Cast;
 
 export interface InstructionImplObjCommon {
-	run(vm:StackVM, _i:InstructionType):void;
+	run(vm: StackVM, _i: InstructionType): void;
 }
 
-interface InstructionImplObj<T> extends InstructionImplObjCommon {
-	get_class_type?:()=>T|null;
+interface InstructionImplObj<T, N> extends InstructionImplObjCommon {
+	type:N;
+	get_class_type?: () => T | null;
 }
 
-interface InstructionImpl<T> {
-	new ():InstructionImplObj<T>;
+interface InstructionImpl<T extends [any, any]> {
+	new(): InstructionImplObj<T[0], T[1]>;
 }
 
-interface AppendImpl extends InstructionImpl<AppendImpl> {}
-interface BreakpointImpl extends InstructionImpl<BreakpointImpl> {}
-interface CallImpl extends InstructionImpl<CallImpl> {}
-interface CastImpl extends InstructionImpl<CastImpl> {}
-interface ConstructImpl extends InstructionImpl<ConstructImpl> {}
-interface DropImpl extends InstructionImpl<DropImpl> {}
-interface DupImpl extends InstructionImpl<DupImpl> {}
-interface GetImpl extends InstructionImpl<GetImpl> {}
-interface HaltImpl extends InstructionImpl<HaltImpl> {}
-interface JeImpl extends InstructionImpl<JeImpl> {}
-interface JumpImpl extends InstructionImpl<JumpImpl> {}
-interface ModifyOPImpl extends InstructionImpl<ModifyOPImpl> {}
-interface NopImpl extends InstructionImpl<NopImpl> {}
-interface PeekImpl extends InstructionImpl<PeekImpl> {}
-interface PushImpl extends InstructionImpl<PushImpl> {}
-interface PushArgsImpl extends InstructionImpl<PushArgsImpl> {}
-interface PushGlobalImpl extends InstructionImpl<PushGlobalImpl> {}
-interface PushIPImpl extends InstructionImpl<PushIPImpl> {}
-interface PushThisImpl extends InstructionImpl<PushThisImpl> {}
-interface ReturnImpl extends InstructionImpl<ReturnImpl> {}
-interface VMCallImpl extends InstructionImpl<VMCallImpl> {}
-interface VMReturnImpl extends InstructionImpl<VMReturnImpl> {}
-interface VMBlockTraceImpl extends InstructionImpl<VMBlockTraceImpl> {}
+type IM<T extends keyof InstructionImplMap>=[T, InstructionImplMap[T]];
+
+interface AppendImpl extends InstructionImpl<IM<AppendOpcode>> {}
+interface BreakpointImpl extends InstructionImpl<IM<debug.BreakpointOpcode>> {}
+interface CallImpl extends InstructionImpl<IM<CallOpcode>> {}
+interface CastImpl extends InstructionImpl<IM<CastOpcode>> {}
+interface ConstructImpl extends InstructionImpl<IM<ConstructOpcode>> {}
+interface DropImpl extends InstructionImpl<IM<stack.DropOpcode>> {}
+interface DupImpl extends InstructionImpl<IM<stack.DupOpcode>> {}
+interface GetImpl extends InstructionImpl<IM<GetOpcode>> {}
+interface HaltImpl extends InstructionImpl<IM<HaltOpcode>> {}
+interface JeImpl extends InstructionImpl<IM<jump.JeOpcode>> {}
+interface JumpImpl extends InstructionImpl<IM<jump.JumpOpcode>> {}
+interface ModifyOPImpl extends InstructionImpl<IM<ModifyOperandOpcode>> {}
+interface NopImpl extends InstructionImpl<IM<NopOpcode>> {}
+interface PeekImpl extends InstructionImpl<IM<PeekOpcode>> {}
+interface PushImpl extends InstructionImpl<IM<PushOpcode>> {}
+interface PushArgsImpl extends InstructionImpl<IM<PushArgsOpcode>> {}
+interface PushGlobalObjectImpl extends InstructionImpl<IM<PushGlobalObjectOpcode>> {}
+interface PushIPImpl extends InstructionImpl<IM<'push_ip'>> {}
+interface PushVMSelfImpl extends InstructionImpl<IM<PushVMSelfOpcode>> {}
+interface ReturnImpl extends InstructionImpl<IM<ReturnOpcode>> {}
+interface VMCallImpl extends InstructionImpl<IM<vm.CallOpcode>> {}
+interface VMReturnImpl extends InstructionImpl<IM<vm.ReturnOpcode>> {}
+interface VMBlockTraceImpl extends InstructionImpl<IM<vm.BlockTraceOpcode>> {}
 
 
-export type InstructionImplMap={
-	'append':AppendImpl;
-	'breakpoint':BreakpointImpl;
-	'call':CallImpl;
-	'cast':CastImpl;
-	'construct':ConstructImpl;
-	'drop':DropImpl;
-	'dup':DupImpl;
-	'get':GetImpl;
-	'halt':HaltImpl;
-	'je':JeImpl;
-	'jmp':JumpImpl;
-	'modify_op':ModifyOPImpl;
-	'nop':NopImpl;
-	'peek':PeekImpl;
-	'push_args':PushArgsImpl;
-	'push_global':PushGlobalImpl;
-	'push_ip':PushIPImpl;
-	'push_this':PushThisImpl;
-	'push':PushImpl;
-	'return':ReturnImpl;
-	'vm_block_trace':VMBlockTraceImpl;
-	'vm_call':VMCallImpl;
-	'vm_return':VMReturnImpl;
+export type InstructionImplMap = {
+	'append': AppendImpl;
+	'breakpoint': BreakpointImpl;
+	'call': CallImpl;
+	'cast': CastImpl;
+	'construct': ConstructImpl;
+	'drop': DropImpl;
+	'dup': DupImpl;
+	'get': GetImpl;
+	'halt': HaltImpl;
+	'je': JeImpl;
+	'jmp': JumpImpl;
+	'modify_operand': ModifyOPImpl;
+	'nop': NopImpl;
+	'peek': PeekImpl;
+	'push_args': PushArgsImpl;
+	'push_global_object': PushGlobalObjectImpl;
+	'push_ip': PushIPImpl;
+	'push_vm_self': PushVMSelfImpl;
+	'push': PushImpl;
+	'return': ReturnImpl;
+	'vm_block_trace': VMBlockTraceImpl;
+	'vm_call': VMCallImpl;
+	'vm_return': VMReturnImpl;
 }
 
-export type InstructionOpcodesList=[
+export type InstructionOpcodesList = [
 	'append',
 	'breakpoint',
 	'call',
@@ -131,38 +143,14 @@ export type InstructionOpcodesList=[
 	'nop',
 	'peek',
 	'push_args',
-	'push_global',
+	PushGlobalObjectOpcode,
 	'push_ip',
-	'push_this',
+	PushVMSelfOpcode,
 	'push',
 	'return',
-	'vm_block_trace',
+	vm.BlockTraceOpcode,
 	'vm_call',
 	'vm_return',
 ];
-
-export type Decode<T extends string> =
-	T extends 'append' ? [T, AppendImpl] :
-	T extends 'breakpoint' ? [T, BreakpointImpl] :
-	T extends 'call' ? [T, CallImpl] :
-	T extends 'cast' ? [T, CastImpl] :
-	T extends 'construct' ? [T, ConstructImpl] :
-	T extends 'drop' ? [T, DropImpl] :
-	T extends 'dup' ? [T, DupImpl] :
-	T extends 'get' ? [T, GetImpl] :
-	T extends 'halt' ? [T, HaltImpl] :
-	T extends 'je' ? [T, JeImpl] :
-	T extends 'jmp' ? [T, JumpImpl] :
-	T extends 'modify_op' ? [T, ModifyOPImpl] :
-	T extends 'nop' ? [T, NopImpl] :
-	T extends 'peek' ? [T, PeekImpl] :
-	T extends 'push_args' ? [T, PushArgsImpl] :
-	T extends 'push_global' ? [T, PushGlobalImpl] :
-	T extends 'push_ip' ? [T, PushIPImpl] :
-	T extends 'push_this' ? [T, PushThisImpl] :
-	T extends 'push' ? [T, PushImpl] :
-	T extends 'return' ? [T, ReturnImpl] :
-	T extends 'vm_block_trace' ? [T, VMBlockTraceImpl] :
-	T extends 'vm_call' ? [T, VMCallImpl] :
-	T extends 'vm_return' ? [T, VMReturnImpl] :
-	never;
+type kt=InstructionImplMap[InstructionOpcodesList[number]];
+export type Decode<T extends keyof InstructionImplMap> = [T, InstructionImplMap[T]];

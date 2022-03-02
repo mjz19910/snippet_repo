@@ -1,1 +1,5 @@
-export type Halt = ['halt'];
+import {Halt} from "./Halt";
+
+export {
+	Halt
+};

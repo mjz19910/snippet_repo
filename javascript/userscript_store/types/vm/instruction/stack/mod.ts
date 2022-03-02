@@ -1,4 +1,4 @@
-export {InstructionDrop as Drop} from "./InstructionDrop";
-export {InstructionDup as Dup} from "./InstructionDup";
-export {InstructionPush as Push} from "./InstructionPush";
-export {InstructionPeek as Peek} from "./InstructionPeek";
+export {Drop, DropOpcode} from "./Drop";
+export {Dup, DupOpcode} from "./Dup";
+export {Push, PushOpcode} from "./Push";
+export {Peek, PeekOpcode} from "./Peek";

@@ -1,1 +1,1 @@
-export {InstructionBreakpoint as Breakpoint} from "./InstructionBreakpoint";
+export {Breakpoint, BreakpointOpcode} from "./Breakpoint";
