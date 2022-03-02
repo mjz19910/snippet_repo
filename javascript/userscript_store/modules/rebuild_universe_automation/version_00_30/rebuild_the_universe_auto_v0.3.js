@@ -520,7 +520,7 @@
 			if(a.instance_type === null) {
 				let obj=a.factory(...construct_arr);
 				vm.stack.push(obj);
-			} else if(a.instance_type === 'CSSStyleSheet')  {
+			} else if(a.instance_type === 'CSSStyleSheet') {
 				/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
 				let valid_args={
 					s:[],
@@ -1036,36 +1036,15 @@
 		base_ptr;
 		/**@type {Box[]} */
 		stack;
-		/**@type {<C, M extends {[x:string]:C}>(v:{[X in keyof M]?:M[X]}, m:M|null)=>v is {[X in keyof M]:M[X]}} */
-		is_all_set(v, m=null) {
-			/**@type {{[x: string]: TypedPropertyDescriptor<import("api").NonNull<typeof m>[string] | undefined>;}} */
-			let kov=Object.getOwnPropertyDescriptors(v);
-			let ke=Object.keys(kov);
-			for(let i=0;i<ke.length;i++){
-				let cur_key=ke[i];
-				let vv=kov[cur_key];
-				if(vv.get || vv.set)throw 1;
-				let iv=vv.value;
-				if(iv === void 0){
-					return false;
-				}
-			}
-			return true;
-		}
 		/**@arg {InstructionList} instruction_desc_arr */
 		create_instruction_map(instruction_desc_arr) {
-			/**
-			 * @param {[any, any]} e
-			 */
-			function map_it(e){
-				let [na, val]=e;
-				return [na, new val];
+			let obj={};
+			for(let i=0;i<instruction_desc_arr.length;i++){
+				let cur=instruction_desc_arr[i];
+				// @ts-ignore
+				obj[cur[0]] = new cur[1];
 			}
-			/**@type {Array<(typeof instruction_desc_arr)[0]>['map']} */
-			if(instruction_desc_arr.length === 23){
-
-			}
-			throw 1;
+			return obj;
 		}
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
@@ -1152,13 +1131,21 @@
 	class EventHandlerVMDispatch extends StackVM {
 		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
-			super(instructions);
-			this.target_obj = target_obj;
+			try{
+				super(instructions);
+				this.target_obj = target_obj;
+			}catch(e){
+				console.log('EventHandlerVMDispatch constructor error', e);
+			}
 		}
 		/**@arg {Box[]} args_arr */
 		run(...args_arr) {
-			this.args_arr=args_arr;
-			return super.run();
+			try{
+				this.args_arr=args_arr;
+				return super.run();
+			}catch(e){
+				console.log('EventHandlerVMDispatch run error', e);
+			}
 		}
 		/**@arg {Event} event */
 		handleEvent(event) {
@@ -1207,7 +1194,7 @@
 		/** @param {string[]} m */
 		static raw_parse_handle_regexp_match(m) {
 			let iter=m[1].trim();
-			if(iter.startsWith("//"))return;
+			if(iter.startsWith("//"))return null;
 			while(iter.startsWith("/*")){
 				let j=iter.indexOf("*/");
 				iter=iter.slice(j+2).trim();
@@ -1219,12 +1206,26 @@
 		static parse_string_into_raw_instruction_stream(string) {
 			const parser_max_match_iter = 300;let parts, arr = [], i = 0;
 			do {
+				let saved_last=this.match_regex.lastIndex;
+				let sub_str=string.slice(this.match_regex.lastIndex);
+				let trimmed_str=sub_str.trim();
+				let diff_len=sub_str.length-trimmed_str.length;
+				if(trimmed_str.startsWith("//")){
+					let com_end=trimmed_str.indexOf("\n");
+					if(com_end > -1){
+						this.match_regex.lastIndex=saved_last + diff_len + trimmed_str.indexOf("\n");
+						console.log('comment');
+					} else {
+						console.log('comment at end');
+					}
+				}
 				parts = this.match_regex.exec(string);
 				if(!parts) break;
 				let res = this.raw_parse_handle_regexp_match(parts);
 				if(res) arr.push(res);
 			} while(parts && i++ < parser_max_match_iter);
 			if(parts)console.assert(false, 'StackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);
+			console.log(arr);
 			return arr;
 		}
 		/** @param {string} string @param {any[]} format_list */
@@ -2625,7 +2626,7 @@
 			// vm_self.target_obj
 			drop;
 			// [none]
-			push_global;
+			push_global_object;
 			// window
 			dup;
 			// window * 2
@@ -2657,8 +2658,12 @@
 					l_log_if(LOG_LEVEL_ERROR, err);
 				}
 			]);
+			try{
 			let handler=new EventHandlerVMDispatch(instructions, this);
 			window.addEventListener('click', handler);
+			}catch(e){
+				console.log('error when setting up EventHandlerVMDispatch', e);
+			}
 		}
 		save_state_history_arr(){
 			if(this.skip_save)return;
