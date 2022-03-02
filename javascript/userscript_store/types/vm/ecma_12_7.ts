@@ -389,6 +389,7 @@ export class ecma_12_7 extends ecma_base {
 		if(result)return [true, 3];
 		result=null;
 		s_two_char_tokens.iterate(function(_hash_map, key, value){
+			// skip DivPunctuator with length 2
 			if(key === '/=')return IterationDecision.Continue;
 			console.log('iter', key, value);
 			// TODO: exclude some tokens that are parsed elsewhere
@@ -401,9 +402,11 @@ export class ecma_12_7 extends ecma_base {
 		if(result)return [true, 2];
 		result=null;
 		s_single_char_tokens.iterate(function(_hash_map, key, value){
+			// skip a DivPunctuator with length 1
 			if(key === '/')return IterationDecision.Continue;
+			// skip a RightBracePunctuator
+			if(key === '{}'[1])return IterationDecision.Continue;
 			console.log('iter', key, value);
-			// TODO: exclude some tokens that are parsed elsewhere
 			if(str[index]===key){
 				result = key;
 				return IterationDecision.Break;
