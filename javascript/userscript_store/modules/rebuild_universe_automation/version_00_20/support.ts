@@ -1,6 +1,6 @@
 import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
 import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox";
-class VMBoxedCSSStyleSheetConstructorR {
+class CSSStyleSheetConstructorBoxImplSupport {
 	type: "constructor_box"="constructor_box";
 	from: "javascript"="javascript";
 	instance_type: "CSSStyleSheet"= "CSSStyleSheet";
@@ -49,7 +49,7 @@ export type CreateDesc=[1|2, 'create', 'div', 'state_log', {id:'state_log'}] |
 [2, 'create', 'div', "ratio", string]|
 [2, 'create', 'div', "ratio_change", string];
 export type NewDesc=[
-	0, 'new', VMBoxedCSSStyleSheetConstructorR, [],
+	0, 'new', CSSStyleSheetConstructorBoxImplSupport, [],
 	(obj:CSSStyleSheet, str:string)=>Promise<CSSStyleSheet>,
 	string[]
 ];

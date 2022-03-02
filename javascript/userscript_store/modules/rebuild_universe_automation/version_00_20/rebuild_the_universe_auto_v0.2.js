@@ -58,7 +58,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	class VMBoxedCSSStyleSheetConstructorR {
+	class CSSStyleSheetConstructorBoxImpl {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
 		/**@type {"javascript"} */
@@ -208,8 +208,8 @@ import VoidBox from "types/vm/box/VoidBox.js";
 	function invalid(){
 		return new Error("Invalid");
 	}
-	/**@typedef {import("types/vm/mod.js").Call} InstructionCall */
-	class InstructionCallE {
+	/**@typedef {import("types/vm/instruction/mod.js").general.Call} InstructionCall */
+	class InstructionCallImpl {
 		/**@arg {Box} v */
 		static unbox_value(v){
 			if(typeof v!='object'){
@@ -318,6 +318,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
+	/**@returns {never} */
 	function flow_todo(){
 		throw new Error("TODO");
 	}
@@ -330,7 +331,8 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			if(typeof obj!='object')throw invalid();
 			switch(instruction[1]){
 				case 'object_index':flow_todo();
-				case 'callable_index':flow_todo();
+				case 'object_index_to_function':flow_todo();
+				case 'vm_function':flow_todo();
 				default:throw new Error("Missing cast to "+instruction[1]);
 			}
 		}
@@ -534,12 +536,6 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
-			/**@type {('je'|'jmp'|'modify_operand'|'push_pc'|'halt'|'push'|'drop'|'dup'|'get'|'call'|'construct'|'return')[]}*/
-			let handled_instructions=['je', 'jmp', 'modify_operand', 'push_pc', 'halt', 'push', 'drop', 'dup', 'get', 'call', 'construct', 'return'];
-			let op_code=instruction[0];
-			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
-			}
 			switch(instruction[0]) {
 				case 'je':{
 					let [, target] = instruction;
@@ -587,7 +583,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify);
 					this.instructions[target]=valid_instruction;
 				} break;
-				case 'push_pc':{
+				case 'vm_push_ip':{
 					instruction;
 					if(!this.hasOwnProperty('push')) {
 						throw new Error("push_pc requires a stack");
@@ -715,7 +711,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 						this.push(res);
 					}
 				} break;
-				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
+				case 'call'/*Call*/:InstructionCallImpl.execute_instruction(this, instruction);break;
 				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
 				case 'return'/*Call*/:this.return_value=this.pop();break;
 				case 'breakpoint'/*Debug*/:trigger_debug_breakpoint();break;
@@ -737,20 +733,12 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		 * @param {InstructionType} instruction
 		 */
 		execute_instruction(instruction) {
-			/**@type {('this'|'global'|'call')[]}*/
-			let handled_instructions=['this', 'global', 'call'];
-			let op_code=instruction[0];
-			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
-			}
 			switch(instruction[0]) {
-				case 'this'/*Special*/:{
-					console.log('VM: this push');
+				case 'vm_push_self'/*Special*/:{
+					console.log('VM: vm_push_self');
 					this.push(new StackVMBoxImpl(this));
 				} break;
-					// TODO: if you ever use this on a worker, change
-					// it to use globalThis...
-				case 'global'/*Special*/:{
+				case 'push_global_object'/*Special*/:{
 					console.log('VM: global push');
 					this.push(new WindowBoxImpl(window));
 				} break;
@@ -825,6 +813,8 @@ import VoidBox from "types/vm/box/VoidBox.js";
 	class DomBuilderVM {
 		/**@type {Box} */
 		return_value;
+		/**@type {number|null} */
+		jump_instruction_pointer;
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions) {
 			this.running=false;
@@ -875,35 +865,30 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		flags={equal:false};
 		/**@arg {InstructionType} instruction */
 		execute_instruction(instruction) {
-			/**@type {('exec'|'peek'|'append')[]}*/
-			let handled_instructions=['exec', 'peek', 'append'];
-			let op_code=instruction[0];
-			if(assume_equal(op_code, handled_instructions[0]) && handled_instructions.includes(op_code) && instruction[0] === op_code) {
-				l_log_if(LOG_LEVEL_INFO, "", ...instruction, null);
-			}
 			switch(instruction[0]) {
-				case 'exec':{
-					this.exec_stack.push([this.stack, this.instructions]);
-					let base_ptr=this.stack.length;
-					// advance the instruction pointer, when we return we want to resume
-					// at the next instruction...
-					this.instruction_pointer++;
-					this.stack.push(this.instruction_pointer, base_ptr);
-					this.stack=[];
-					let new_instruction_stream=instruction[1];
-					this.instructions=new_instruction_stream;
-					this.jump_instruction_pointer=0;
-					l_log_if(LOG_LEVEL_INFO, 'exec', ...instruction[1]);
-				} break;
-				case 'peek':{
-					let [, op_1, op_2]=instruction;
+				// case 'exec':{
+				// 	this.exec_stack.push([this.stack, this.instructions]);
+				// 	let base_ptr=this.stack.length;
+				// 	// advance the instruction pointer, when we return we want to resume
+				// 	// at the next instruction...
+				// 	this.instruction_pointer++;
+				// 	this.stack.push(this.instruction_pointer, base_ptr);
+				// 	this.stack=[];
+				// 	let new_instruction_stream=instruction[1];
+				// 	this.instructions=new_instruction_stream;
+				// 	this.jump_instruction_pointer=0;
+				// 	l_log_if(LOG_LEVEL_INFO, 'exec', ...instruction[1]);
+				// } break;
+				case 'peek':// {
+					flow_todo();
+					/* let [, op_1, op_2]=instruction;
 					let peek_stack=this.exec_stack[op_1][0];
 					let base_ptr=peek_stack.at(-1);
 					if(typeof base_ptr!='number')throw invalid();
 					let at=peek_stack[base_ptr - op_2 - 1];
 					this.push(at);
 					l_log_if(LOG_LEVEL_INFO, 'peek, pushed value', at, op_2, 'base ptr', base_ptr, 'ex_stack', op_1);
-				} break;
+				} break; */
 				case 'append':{
 					if(this.stack.length <= 0){
 						throw new Error('stack underflow');
@@ -941,12 +926,12 @@ import VoidBox from "types/vm/box/VoidBox.js";
 				case 'drop'/*Stack*/:this.pop();break;
 				case 'dup':this.push(this.pop());break;
 				case 'get':break;
-				case 'call'/*Call*/:InstructionCallE.execute_instruction(this, instruction);break;
+				case 'call'/*Call*/:InstructionCallImpl.execute_instruction(this, instruction);break;
 				case 'return':break;
 				case 'halt':break;
-				case 'push_args':break;
-				case 'this':break;
-				case 'global':break;
+				case 'vm_push_args':break;
+				case 'vm_push_self':break;
+				case 'push_global_object':break;
 				case 'breakpoint':break;
 				case 'je':break;
 				case 'jmp':break;
@@ -956,7 +941,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					}
 				} break;
 				case 'vm_call':break;
-				case 'push_pc':break;
+				case 'vm_push_ip':break;
 				case 'construct'/*Construct*/:InstructionConstructE.execute_instruction(this, instruction);break;
 				case 'modify_operand':break;
 				default/*Base class*/:{
@@ -1127,7 +1112,8 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					let m_arg=instruction[1];
 					switch(m_arg){
 						case 'object_index':
-						case 'callable_index':
+						case 'object_index_to_function':
+						case 'vm_function':
 							num_to_parse -= 2;
 							ret=[instruction[0], m_arg];
 					}
@@ -1138,9 +1124,9 @@ import VoidBox from "types/vm/box/VoidBox.js";
 				case 'get':
 				case 'return':
 				case 'halt':
-				case 'push_args':
-				case 'this':
-				case 'global':
+				case 'vm_push_args':
+				case 'vm_push_self':
+				case 'push_global_object':
 				case 'breakpoint'/*opcode*/:{
 					num_to_parse--;
 					ret=[instruction[0]];
@@ -2580,6 +2566,13 @@ import VoidBox from "types/vm/box/VoidBox.js";
 				/**@type {"document_box"} */
 				type="document_box";
 				/**
+				 * @param {'function'|'object'} s
+				 */
+				as_type(s){
+					if(typeof this.value === s)return this;
+					return null;
+				}
+				/**
 				 * @param {Document} value
 				 */
 				constructor(value){
@@ -2677,7 +2670,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					})
 				],
 				[
-					0, 'new', new VMBoxedCSSStyleSheetConstructorR(CSSStyleSheet), [],
+					0, 'new', new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet), [],
 					(/** @type {CSSStyleSheet} */ obj, /** @type {string} */ str)=>obj.replace(str),
 					[css_display_style]
 				],
@@ -2784,8 +2777,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					} break;
 					case 'append':{
 						let depth=cur_item[0];
-						/*peek at the return stack, up 1 depth*/
-						stack.push([depth, "peek", depth-1, 0]);
+						stack.push([depth, "peek", 0]);
 						stack.push(cur_item);
 					} break;
 					case 'get':
