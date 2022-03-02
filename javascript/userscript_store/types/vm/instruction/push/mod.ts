@@ -1,3 +1,3 @@
-export {PushArgs as PushArgs} from "./PushArgs";
-export {PushGlobalObject as PushGlobalObject} from "./PushGlobalObject";
-export {PushVMSelf as PushVMSelf} from "./PushVMSelf";
+export {Args as Args, ArgsOpcode as ArgsOpcode} from "./Args";
+export {GlobalObject as GlobalObject, GlobalObjectOpcode as GlobalObjectOpcode} from "./PushGlobalObject";
+export {PushSelf as VMPushSelf, PushSelfOpcode as VMPushSelfOpcode} from "../vm/PushSelf";

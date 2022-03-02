@@ -10,8 +10,8 @@ import * as stack from "./stack/mod";
 import * as turing from "./turing/mod";
 import * as vm from "./vm/mod";
 import {StackVM} from "../StackVM";
-import {PushGlobalObjectOpcode} from "./push/PushGlobalObject";
-import {PushVMSelfOpcode} from "./push/PushVMSelf";
+import {GlobalObjectOpcode} from "./push/PushGlobalObject";
+import {PushSelfOpcode as VMPushSelfOpcode} from "./vm/PushSelf";
 import {CallOpcode} from "./general/Call";
 import {ConstructOpcode} from "./general/Construct";
 import {GetOpcode} from "./general/Get";
@@ -48,9 +48,9 @@ export type InstructionType =
 	jump.Je |
 	turing.Halt |
 	// Push values
-	push.PushArgs |
-	push.PushVMSelf |
-	push.PushGlobalObject |
+	push.Args |
+	push.VMPushSelf |
+	push.GlobalObject |
 	// Debug
 	debug.Breakpoint |
 	// VM
@@ -89,16 +89,16 @@ interface JeImpl extends InstructionImpl<IM<jump.JeOpcode>> {}
 interface JumpImpl extends InstructionImpl<IM<jump.JumpOpcode>> {}
 interface ModifyOPImpl extends InstructionImpl<IM<ModifyOperandOpcode>> {}
 interface NopImpl extends InstructionImpl<IM<NopOpcode>> {}
-interface PeekImpl extends InstructionImpl<IM<PeekOpcode>> {}
-interface PushImpl extends InstructionImpl<IM<PushOpcode>> {}
-interface PushArgsImpl extends InstructionImpl<IM<PushArgsOpcode>> {}
-interface PushGlobalObjectImpl extends InstructionImpl<IM<PushGlobalObjectOpcode>> {}
-interface PushIPImpl extends InstructionImpl<IM<'push_ip'>> {}
-interface PushVMSelfImpl extends InstructionImpl<IM<PushVMSelfOpcode>> {}
-interface ReturnImpl extends InstructionImpl<IM<ReturnOpcode>> {}
-interface VMCallImpl extends InstructionImpl<IM<vm.CallOpcode>> {}
-interface VMReturnImpl extends InstructionImpl<IM<vm.ReturnOpcode>> {}
+interface PeekImpl extends InstructionImpl<IM<stack.PeekOpcode>> {}
+interface PushGlobalObjectImpl extends InstructionImpl<IM<GlobalObjectOpcode>> {}
+interface PushImpl extends InstructionImpl<IM<stack.PushOpcode>> {}
+interface ReturnImpl extends InstructionImpl<IM<general.ReturnOpcode>> {}
 interface VMBlockTraceImpl extends InstructionImpl<IM<vm.BlockTraceOpcode>> {}
+interface VMCallImpl extends InstructionImpl<IM<vm.CallOpcode>> {}
+interface VMPushArgsImpl extends InstructionImpl<IM<push.ArgsOpcode>> {}
+interface VMPushIPImpl extends InstructionImpl<IM<vm.PushIPOpcode>> {}
+interface VMPushSelfImpl extends InstructionImpl<IM<VMPushSelfOpcode>> {}
+interface VMReturnImpl extends InstructionImpl<IM<vm.ReturnOpcode>> {}
 
 
 export type InstructionImplMap = {
@@ -116,41 +116,41 @@ export type InstructionImplMap = {
 	'modify_operand': ModifyOPImpl;
 	'nop': NopImpl;
 	'peek': PeekImpl;
-	'push_args': PushArgsImpl;
 	'push_global_object': PushGlobalObjectImpl;
-	'push_ip': PushIPImpl;
-	'push_vm_self': PushVMSelfImpl;
 	'push': PushImpl;
 	'return': ReturnImpl;
+	'vm_push_args': VMPushArgsImpl;
+	'vm_push_self': VMPushSelfImpl;
+	'vm_push_ip': VMPushIPImpl;
 	'vm_block_trace': VMBlockTraceImpl;
 	'vm_call': VMCallImpl;
 	'vm_return': VMReturnImpl;
 }
 
 export type InstructionOpcodesList = [
-	'append',
-	'breakpoint',
-	'call',
-	'cast',
-	'construct',
-	'drop',
-	'dup',
-	'get',
-	'halt',
-	'je',
-	'jmp',
-	'modify_op',
-	'nop',
-	'peek',
-	'push_args',
-	PushGlobalObjectOpcode,
-	'push_ip',
-	PushVMSelfOpcode,
-	'push',
-	'return',
+	AppendOpcode,
+	CallOpcode,
+	CastOpcode,
+	ConstructOpcode,
+	debug.BreakpointOpcode,
+	general.ReturnOpcode,
+	GetOpcode,
+	turing.HaltOpcode,
+	jump.JeOpcode,
+	jump.JumpOpcode,
+	ModifyOperandOpcode,
+	NopOpcode,
+	push.ArgsOpcode,
+	push.GlobalObjectOpcode,
+	stack.DropOpcode,
+	stack.DupOpcode,
+	stack.PeekOpcode,
+	stack.PushOpcode,
 	vm.BlockTraceOpcode,
-	'vm_call',
-	'vm_return',
+	vm.CallOpcode,
+	vm.PushIPOpcode,
+	vm.PushSelfOpcode,
+	vm.ReturnOpcode,
 ];
 type kt=InstructionImplMap[InstructionOpcodesList[number]];
 export type Decode<T extends keyof InstructionImplMap> = [T, InstructionImplMap[T]];

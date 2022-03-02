@@ -1,5 +1,1 @@
-import {Halt} from "./Halt";
-
-export {
-	Halt
-};
+export {Halt, HaltOpcode} from "./Halt";
