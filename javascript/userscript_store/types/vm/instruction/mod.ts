@@ -1,7 +1,6 @@
 import {InstructionAppend} from "./InstructionAppend";
 import {InstructionBreakpoint} from "./InstructionBreakpoint";
 import {InstructionCast} from "./InstructionCast";
-import {InstructionExec} from "./InstructionExec";
 import {InstructionGet} from "./InstructionGet";
 import {InstructionGlobal} from "./InstructionGlobal";
 import {InstructionHalt} from "./InstructionHalt";
@@ -9,7 +8,7 @@ import {InstructionModifyOperand} from "./InstructionModifyOperand";
 import {InstructionPeek} from "./InstructionPeek";
 import {InstructionPushArgs} from "./InstructionPushArgs";
 import {InstructionReturn} from "./InstructionReturn";
-import {InstructionThis} from "./InstructionThis";
+import {InstructionPushVMObj} from "./InstructionPushVMObj";
 import * as gen from "./general/mod";
 import * as jump from "./jump/mod";
 import * as st from "./stack/mod";
@@ -34,7 +33,7 @@ export type InstructionType =
 	// Turing
 	InstructionHalt |
 	// Special
-	InstructionPushArgs | InstructionThis | InstructionGlobal |
+	InstructionPushArgs | InstructionPushVMObj | InstructionGlobal |
 	// Debug
 	InstructionBreakpoint |
 	// VM
@@ -43,6 +42,5 @@ export type InstructionType =
 	vm.VMInstructionPushInstructionPtr |
 	gen.InstructionConstruct |
 	InstructionModifyOperand |
-	InstructionExec |
 	InstructionAppend |
 	InstructionCast;
