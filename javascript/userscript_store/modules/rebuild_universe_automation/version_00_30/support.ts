@@ -8,7 +8,6 @@ export {
 	InstructionConstruct
 } from "types/vm/mod.js";
 export {Primitives} from "types/vm/Primitives";
-export {} from "types/vm/mod.js";
 export {
 	WindowBox,
 	TemporaryBox,
