@@ -156,4 +156,12 @@ export type InstructionOpcodesList = [
 ];
 export type Decode<T extends keyof InstructionImplMap> = [T, InstructionImplMap[T]];
 
-export type DecodeArr<T extends (keyof InstructionImplMap)[]>=T extends [] ? [] : T extends [infer X, ...infer U] ? X extends keyof InstructionImplMap ? U extends (keyof InstructionImplMap)[] ? [Decode<X>, ...DecodeArr<U>] : [] : [] : [];
+export type DecodeArr<T>=
+	T extends [] ? [] :
+	T extends (keyof InstructionImplMap)[] ? 
+	T extends [infer X, ...infer U] ?
+	X extends keyof InstructionImplMap ?
+	[DecodeArrStep1<[X]>, ...DecodeArr<U>] :
+	[]:[] : [];
+
+type DecodeArrStep1<T extends (keyof InstructionImplMap)[]>=Decode<T[0]>

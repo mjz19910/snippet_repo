@@ -3,4 +3,5 @@ import {CastToObjectIndexOperandValue} from "./values/CastToObjectIndexOperandVa
 
 export type CastOperand1 =
 CastToObjectIndexOperandValue |
-CastToFunctionIndexOperandValue;
+CastToFunctionIndexOperandValue |
+'vm_function';
