@@ -19,6 +19,7 @@ import VoidBox from "./VoidBox";
 import WindowBox from "./WindowBox";
 import VoidPromiseBox from "./VoidPromiseBox";
 import TemporaryBox from "./TemporaryBox";
+import {DocumentBox} from "./DocumentBox";
 
 export type Box =
 	// function result
@@ -38,6 +39,7 @@ export type Box =
 	// global
 	GlobalThisBox |
 	WindowBox |
+	DocumentBox |
 	// object instances
 	StackVMBox |
 	NodeBox |
