@@ -1,22 +1,19 @@
-import * as jump from "./jump/mod";
-import {InstructionExec} from "./InstructionExec";
 import {InstructionAppend} from "./InstructionAppend";
-import {InstructionModifyOperand} from "./InstructionModifyOperand";
-import * as gen from "./general/mod";
-import * as st from "./stack/mod";
-import {VMInstructionPushIP} from "./InstructionPushInstructionPointer";
-import {InstructionCast} from "./InstructionCast";
-import {InstructionGet} from "./InstructionGet";
-import {InstructionPeek} from "./InstructionPeek";
-import {InstructionReturn} from "./InstructionReturn";
-import {InstructionCall} from "./general/InstructionCall";
-import {InstructionHalt} from "./InstructionHalt";
-import {InstructionPushArgs} from "./InstructionPushArgs";
-import {InstructionThis} from "./InstructionThis";
-import {InstructionGlobal} from "./InstructionGlobal";
 import {InstructionBreakpoint} from "./InstructionBreakpoint";
-import {VMInstructionReturn} from "./VMInstructionReturn";
-import {VMInstructionCall} from "./VMInstructionCall";
+import {InstructionCast} from "./InstructionCast";
+import {InstructionExec} from "./InstructionExec";
+import {InstructionGet} from "./InstructionGet";
+import {InstructionGlobal} from "./InstructionGlobal";
+import {InstructionHalt} from "./InstructionHalt";
+import {InstructionModifyOperand} from "./InstructionModifyOperand";
+import {InstructionPeek} from "./InstructionPeek";
+import {InstructionPushArgs} from "./InstructionPushArgs";
+import {InstructionReturn} from "./InstructionReturn";
+import {InstructionThis} from "./InstructionThis";
+import * as gen from "./general/mod";
+import * as jump from "./jump/mod";
+import * as st from "./stack/mod";
+import * as vm from "./vm/mod";
 
 
 export type InstructionType =
@@ -29,7 +26,7 @@ export type InstructionType =
 	// FFI property access
 	InstructionGet |
 	// FFI Call
-	InstructionCall |
+	gen.InstructionCall |
 	InstructionReturn |
 	// Jump
 	jump.InstructionJumpAbs |
@@ -41,9 +38,9 @@ export type InstructionType =
 	// Debug
 	InstructionBreakpoint |
 	// VM
-	VMInstructionReturn |
-	VMInstructionCall |
-	VMInstructionPushIP |
+	vm.VMInstructionReturn |
+	vm.VMInstructionCall |
+	vm.VMInstructionPushInstructionPtr |
 	gen.InstructionConstruct |
 	InstructionModifyOperand |
 	InstructionExec |
