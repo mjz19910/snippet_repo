@@ -103,7 +103,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		return new CSSStyleSheetBox(obj);
 		}
 	}
-	class VMBoxedCSSStyleSheetR {
+	class CSSStyleSheetBox {
 		/**@type {"instance_box"} */
 		type="instance_box";
 		/**@type {"CSSStyleSheet"} */
@@ -117,7 +117,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 			this.value=value;
 		}
 	}
-	class PromiseBoxImpl {
+	class PromiseBox {
 		/**@type {"promise_box"} */
 		type="promise_box";
 		/**@type {"Promise<Box>"} */
@@ -312,7 +312,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 					}
 					/**@type {CSSStyleSheet} */
 					let obj=new a.value(...valid_args.s);
-					vm.push(new VMBoxedCSSStyleSheetR(obj));
+					vm.push(new CSSStyleSheetBox(obj));
 				}
 			}
 			l_log_if(LOG_LEVEL_INFO, "", instruction, ...vm.stack.slice(vm.stack.length-number_of_arguments));
@@ -2722,9 +2722,9 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		use_boxed_style_sheet(callback, ...a) {
 			let ret=callback(...a);
 			let r2=ret.then(function(v){
-				return new VMBoxedCSSStyleSheetR(v);
+				return new CSSStyleSheetBox(v);
 			});
-			let res=new PromiseBoxImpl(r2);
+			let res=new PromiseBox(r2);
 			return res;
 		}
 		/**@typedef {[number, ...InstructionType]} InstructionWithDepth */
@@ -2745,10 +2745,18 @@ import VoidBox from "types/vm/box/VoidBox.js";
 							/**
 							 * @arg {AutoBuy} obj
 							 * @arg {(obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>} callback
-							 * @arg {any} a
-							 * @arg {any} b */
+							 * @arg {Box} a
+							 * @arg {Box} b */
 							function(obj, callback, a, b) {
-								return obj.use_boxed_style_sheet(callback, a, b);
+								if(
+									typeof b === 'string' &&
+									a && typeof a === 'object' &&
+									a.type=== 'instance_box'&&
+									a.instance_type === 'CSSStyleSheet'
+								){
+									return obj.use_boxed_style_sheet(callback, a.value, b);
+								}
+								throw 1;
 							}.bind(null, this, callback)
 						);
 						stack.push(
