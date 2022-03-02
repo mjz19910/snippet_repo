@@ -21,6 +21,7 @@
  * @typedef {import("./support.js").VoidPromiseBox} VoidPromiseBox
  * @typedef {import("./support.js").WindowBox} WindowBox
  * @typedef {import("./support.js").InstructionList} InstructionList
- * @typedef {[number, ...(InstructionType|['vm_call_at', InstructionType])]} DomInstructionType
+ * @typedef {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType} DomInstructionType
  * @typedef {DomInstructionType[][]} DomInstructionStack
+ * @typedef {import("./support.js").State_1} State_1
  */
