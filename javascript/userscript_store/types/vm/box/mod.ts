@@ -1,4 +1,6 @@
 import ArrayBox from "./ArrayBox";
+import AsyncFunctionBox from "./PromiseResultBox";
+import CSSStyleSheetBox from "./CSSStyleSheetBox";
 import CSSStyleSheetConstructorBox from "./CSSStyleSheetConstructorBox";
 import CSSStyleSheetInitBox from "./CSSStyleSheetInitBox";
 import CSSStyleSheetPromiseBox from "./CSSStyleSheetPromiseBox";
@@ -13,26 +15,24 @@ import NewableFunctionBox from "./NewableFunctionBox";
 import NodeBox from "./NodeBox";
 import ObjectBox from "./ObjectBox";
 import PromiseBox from "./PromiseBox";
-import AsyncFunctionBox from "./PromiseResultBox";
 import StackVMBox from "./StackVMBox";
+import TemporaryBox from "./TemporaryBox";
 import VoidBox from "./VoidBox";
 import VoidPromiseBox from "./VoidPromiseBox";
 import WindowBox from "./WindowBox";
-import TemporaryBox from "./TemporaryBox";
-import CSSStyleSheetBox from "./CSSStyleSheetBox";
 
 type BoxWithType=Exclude<Box, Primitives|null>;
 
 export {
-	Box,
-	ExtractKey,
 	ArrayBox,
 	AsyncFunctionBox,
 	CSSStyleSheetBox,
 	CSSStyleSheetConstructorBox,
 	CSSStyleSheetInitBox,
 	CSSStyleSheetPromiseBox,
+	DocumentBox,
 	EmptyArrayBox,
+	ExtractKey,
 	FunctionBox,
 	GlobalThisBox,
 	InstructionTypeArrayBox,
@@ -42,10 +42,13 @@ export {
 	ObjectBox,
 	PromiseBox,
 	StackVMBox,
-	VoidBox,
-	WindowBox,
-	VoidPromiseBox,
 	TemporaryBox,
-	DocumentBox,
-	BoxWithType
+	VoidBox,
+	VoidPromiseBox,
+	WindowBox,
 };
+
+export {
+	Box,
+	BoxWithType
+}
