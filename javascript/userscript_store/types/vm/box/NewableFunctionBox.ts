@@ -13,7 +13,7 @@ export default class NewableFunctionBox extends BoxTemplate<"constructor_box", N
 		super(factory_value);
 		this.class_value=class_value;
 	}
-	as_type(x:string) {
+	as_type(x:'function'|'object') {
 		if(typeof this.value === x){
 			return this;
 		}

@@ -19,7 +19,7 @@ import VoidBox from "./VoidBox";
 import WindowBox from "./WindowBox";
 import VoidPromiseBox from "./VoidPromiseBox";
 import TemporaryBox from "./TemporaryBox";
-import {DocumentBox} from "./DocumentBox";
+import DocumentBox from "./DocumentBox";
 
 export type Box =
 	// function result
@@ -59,3 +59,5 @@ export type Box =
 	VoidBox |
 	// Temporary box for when stuff is asserted to be true (ie, typeof value_to_box === "function")
 	TemporaryBox;
+
+export default Box;

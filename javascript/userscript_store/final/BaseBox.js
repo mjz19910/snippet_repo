@@ -1,4 +1,8 @@
-/**@typedef {import("types/vm/box/mod.js").ExtractKey<Exclude<import("types/api.js").NonNull<Box>, import("types/vm/Primitives.js").Primitives>, 'value'>} BoxInner */
+/**
+ * @typedef {import("types/api.js").NonNull<Box>} BoxN1
+ * @typedef {import("types/vm/Primitives.js").Primitives} Primitives
+ * @typedef {Exclude<BoxN1, Primitives>} BoxN2
+ * @typedef {BoxN2['value']} BoxInner */
 /**@typedef {import("types/vm/box/mod.js").Box} Box */
 export class BaseBox {
 	/**@type {'object_box'} */
