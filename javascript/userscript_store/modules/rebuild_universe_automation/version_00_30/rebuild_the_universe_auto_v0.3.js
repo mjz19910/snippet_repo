@@ -21,29 +21,10 @@
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 /**
-@typedef {import("types/SimpleVMTypes.js").VMValue} VMValue
-@typedef {import("types/SimpleVMTypes.js").IStackVM} IStackVM
-@typedef {import("types/SimpleVMTypes.js").InstructionType} InstructionType
-@typedef {import("types/SimpleVMTypes.js").VMCallable} VMCallableValue
-@typedef {import("types/SimpleVMTypes.js").CallableFunctionBox} VMCallableFunction
-@typedef {import("types/SimpleVMTypes.js").VMIndexedCallableBox} VMIndexedCallableValue
-@typedef {import("types/SimpleVMTypes.js").PromiseBox} VMBoxedPromise
-@typedef {import("types/SimpleVMTypes.js").NewableFunctionBox} VMBoxedNewableFunction
-@typedef {import("types/SimpleVMTypes.js").CallableFunctionBox} VMBoxedCallableFunction
-@typedef {import("types/SimpleVMTypes.js").CSSStyleSheetBox} VMBoxedCSSStyleSheet
-@typedef {import("types/SimpleVMTypes.js").CSSStyleSheetConstructorBox} VMBoxedCSSStyleSheetConstructor
-@typedef {import("types/SimpleVMTypes.js").IStackVMBox} IStackVMBox
-@typedef {import("types/SimpleVMTypes.js").WindowBox} VMBoxedWindow
-@typedef {import("types/SimpleVMTypes.js").ObjectBox} IObjectBox
-@typedef {import("types/SimpleVMTypes.js").VMIndexedValueRaw} VMIndexedValue
-@typedef {import("types/SimpleVMTypes.js").InstructionCall} InstructionCall
-@typedef {import("types/SimpleVMTypes.js").InstructionConstruct} InstructionConstruct
-@typedef {import("types/SimpleVMTypes.js").InstructionCast} InstructionCast
-@typedef {import("types/SimpleVMTypes.js").VoidPromiseBox} VMBoxedVoidPromise
-@typedef {[number, ...InstructionType]} DomExecDescription
-@typedef {[number, ...InstructionType]} InstructionWithDepth
-@typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack
-@typedef {import("./rebuild_the_universe_auto_typed_v0.2.js").AsyncTrigger} AsyncTriggerT
+ * @typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionType
+ * @typedef {[number, ...InstructionType]} DomExecDescription
+ * @typedef {[number, ...InstructionType]} InstructionWithDepth
+ * @typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack
 */
 
 (function() {
