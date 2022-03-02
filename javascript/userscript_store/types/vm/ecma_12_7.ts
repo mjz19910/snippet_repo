@@ -50,14 +50,14 @@ class HashMap<K, V> implements IHashMap<K, V> {
 		}
 		return this.backing_map.has(key);
 	}
-	iterate(callback: (arg0: this, arg1: K, arg2: V) => IterationDecision) {
+	iterate(callback: (this: this, arg1: K, arg2: V) => IterationDecision) {
 		// from https://github.com/SerenityOS/serenity/blob/master/Userland/DevTools/Profiler/Profile.cpp
 		/*for (size_t i = 0; i < event.frames.size(); ++i) {
 			if (callback(event.frames.at(i), i == event.frames.size() - 1) == IterationDecision::Break)
 				break;
 		}*/
 		if(!this.backing_map) return;
-		for(let x of this.backing_map.entries()) if(callback(this, ...x) === IterationDecision.Break) break;
+		for(let x of this.backing_map.entries()) if(callback.apply(this, x) === IterationDecision.Break) break;
 	}
 }
 // HashMap<FlyString, TokenType> Lexer::s_keywords;
@@ -372,48 +372,48 @@ export class ecma_12_7 extends ecma_base {
 		return this.m_dispatcher.DecimalDigit(str, index);
 	}
 	OtherPunctuator(str: string, index: number): ecma_return_type {
-		let char_length = 0;
+		// >>>= is the only production of length 4
 		if(str.startsWith('>>>=', index)) {
 			return ['OtherPunctuator', 4];
 		}
-		let result:string|null=null;
-		s_three_char_tokens.iterate(function(_hash_map, key, value) {
+		let result: string | null = null;
+		s_three_char_tokens.iterate(function(key, value) {
 			// I think all the 3 char tokens are valid as OtherPunctuator productions
 			console.log('iter', key, value);
-			if(str.startsWith(key, index)){
+			if(str.startsWith(key, index)) {
 				result = key;
 				return IterationDecision.Break;
 			}
 			return IterationDecision.Continue;
 		});
-		if(result)return [true, 3];
-		result=null;
-		s_two_char_tokens.iterate(function(_hash_map, key, value){
+		if(result) return [true, 3];
+		result = null;
+		s_two_char_tokens.iterate(function(key, value) {
 			// skip DivPunctuator with length 2
-			if(key === '/=')return IterationDecision.Continue;
+			if(key === '/=') return IterationDecision.Continue;
 			console.log('iter', key, value);
 			// TODO: exclude some tokens that are parsed elsewhere
-			if(str.startsWith(key, index)){
+			if(str.startsWith(key, index)) {
 				result = key;
 				return IterationDecision.Break;
 			}
 			return IterationDecision.Continue;
 		});
-		if(result)return [true, 2];
-		result=null;
-		s_single_char_tokens.iterate(function(_hash_map, key, value){
+		if(result) return [true, 2];
+		result = null;
+		s_single_char_tokens.iterate(function(key, value) {
 			// skip a DivPunctuator with length 1
-			if(key === '/')return IterationDecision.Continue;
+			if(key === '/') return IterationDecision.Continue;
 			// skip a RightBracePunctuator
-			if(key === '{}'[1])return IterationDecision.Continue;
+			if(key === '{}'[1]) return IterationDecision.Continue;
 			console.log('iter', key, value);
-			if(str[index]===key){
+			if(str[index] === key) {
 				result = key;
 				return IterationDecision.Break;
 			}
 			return IterationDecision.Continue;
 		});
-		if(result)return ["OtherPunctuator", 1];
+		if(result) return ["OtherPunctuator", 1];
 		return [null, 0];
 	}
 	DivPunctuator(str: string, index: number) {
