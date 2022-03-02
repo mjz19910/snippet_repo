@@ -1,6 +1,6 @@
 /**
  * @typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionType
- * @typedef {[number, ...InstructionType]} DomExecDescription
- * @typedef {[number, ...InstructionType]} InstructionWithDepth
- * @typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack
+ * @typedef {import("./support.js").CreateDesc | import("./support.js").NewDesc} DomExecDescriptionExt
+ * @typedef {[number, ...InstructionType]|DomExecDescriptionExt} DomExecDescription
 */
+/**@typedef {import("types/vm/box/mod.js").Box} Box */

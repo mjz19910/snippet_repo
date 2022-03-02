@@ -17,18 +17,12 @@
 // @grant			none
 // ==/UserScript==
 
-import {AsyncTrigger} from "types/vm/AsyncTrigger.js";
-import ArrayBox from "types/vm/box/ArrayBox.js";
 import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
 import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox.js";
-import EmptyArrayBox from "types/vm/box/EmptyArrayBox.js";
 import FunctionBox from "types/vm/box/FunctionBox.js";
 import MediaListBox from "types/vm/box/MediaListBox.js";
 import NodeBox from "types/vm/box/NodeBox.js";
-import PromiseBox from "types/vm/box/PromiseBox.js";
 import VoidBox from "types/vm/box/VoidBox.js";
-import VoidPromiseBox from "types/vm/box/VoidPromiseBox.js";
-import WindowBox from "types/vm/box/WindowBox.js";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 (function() {
@@ -64,7 +58,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	/**@implements {CSSStyleSheetConstructorBox} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
@@ -96,6 +89,9 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			let val=arr[i];
 			if(typeof val != 'object')continue;
 			if(val === null)continue;
+			if(val.value instanceof Document){
+				throw new Error("Unexpected document");
+			}
 			if(val.type != 'shape_box')continue;
 			args_state={
 				value:[val.value],
@@ -107,8 +103,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		return new CSSStyleSheetBox(obj);
 		}
 	}
-	/**@typedef {CSSStyleSheetBox} VMBoxedCSSStyleSheet */
-	/**@implements {VMBoxedCSSStyleSheet} */
 	class VMBoxedCSSStyleSheetR {
 		/**@type {"instance_box"} */
 		type="instance_box";
@@ -123,8 +117,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			this.value=value;
 		}
 	}
-	/**@typedef {import("types/vm/box/mod.js").Box} Box */
-	/**@implements {PromiseBox} */
 	class PromiseBoxImpl {
 		/**@type {"promise_box"} */
 		type="promise_box";
@@ -197,7 +189,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			v:prop.value
 		};
 	}
-	/**@implements {FunctionBox} */
 	class FunctionBoxImpl {
 		/**@type {"function_box"} */
 		type = "function_box";
@@ -255,6 +246,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			if(a.type === 'temporary_box'){
 				throw new Error("Attempt to use an unknown value (cast it to the type it is)");
 			}
+			if(a.type === 'document_box')throw new Error("document_box not supported");
 			let b=a.as_type('function');
 			if(!b)throw new Error("Type mismatch");
 			if(b.type === 'function_box') {
@@ -272,11 +264,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		}
 
 	}
-	/**@typedef {EmptyArrayBox} EmptyArrayBox2 */
-	/**@implements {EmptyArrayBox2} */
-
-	/**@typedef {ArrayBox} ArrayBoxT */
-	/**@implements {ArrayBoxT} */
 	/**@typedef {import("types/vm/instruction/general/InstructionConstruct.js").InstructionConstruct} InstructionConstructT */
 	class InstructionConstructE {
 		/**@type {<T>(arr:T[])=>arr is []} */
@@ -362,7 +349,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			this.value = value;
 		}
 	}
-	/**@implements {WindowBox} */
 	class WindowBoxImpl {
 		/**@type {"object_box"} */
 		type="object_box";
@@ -824,7 +810,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			return this.return_value;
 		}
 	}
-	/**@implements {StackVM} */
 	class EventHandlerVMDispatch extends SimpleStackVM {
 		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
@@ -2345,19 +2330,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			throw new Error("Not yet implemented");
 		}
 	}
-	/**@typedef {[number, 'get', string]} DomExecDescriptionI1 */
-	/**@typedef {[number, 'create', string, string, {[s:string]:Box}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
-	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
-	/**@typedef {[number, 'append']} DomExecDescriptionI4 */
-	/**@typedef {[number, 'push', null, AsyncPromiseBoxImpl]} DomExecDescriptionI5 */
-	/**@typedef {[number, 'new', Box, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
-	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
-	/**@typedef {[number, 'drop']} DomExecDescriptionI8 */
-	/**@typedef {[number, 'breakpoint']} DomExecDescriptionI9 */
-	/**@typedef {DomExecDescriptionI1|DomExecDescriptionI2|DomExecDescriptionI3|DomExecDescriptionI4} DomExecDescriptionG1 */
-	/**@typedef {DomExecDescriptionI5|DomExecDescriptionI6|DomExecDescriptionI7|DomExecDescriptionI8} DomExecDescriptionG2 */
-	/**@typedef {DomExecDescriptionI9} */
-	/**@typedef {DomExecDescriptionG1|DomExecDescriptionG2|DomExecDescriptionI9} DomExecDescription */
 	const DO_UPGRADES_RANDOM_RATE=0.008;// 0.005
 	class AsyncAutoBuy {
 		/**@arg {AutoBuy} parent */
@@ -2604,10 +2576,21 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			}
 		}
 		dom_pre_init(){
+			class DocumentBox {
+				/**@type {"document_box"} */
+				type="document_box";
+				/**
+				 * @param {Document} value
+				 */
+				constructor(value){
+					this.value=value;
+				}
+			}
 			const css_display_style=`#state_log>div{width:max-content}#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`;
 			/**@type {DomExecDescription[]} */
 			let create_state_log_arr=[
-				[0, 'get', 'body'],
+				[0, 'push', new DocumentBox(document), 'body'],
+				[0, 'get'],
 				[1, 'create', 'div', 'state_log', {id:'state_log'}],
 				[1, 'dup'],
 				[1, 'append']
@@ -2661,7 +2644,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 				}
 			}
 			let bound_this=this;
-			/**@implements {VoidPromiseBox} */
 			class VoidPromiseBoxImpl {
 				/**@type {"promise_box"} */
 				type="promise_box";
@@ -2704,8 +2686,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 				[0, 'drop']
 			];
 			/**@type {DomExecDescription[]} */
-			let raw_dom_arr=[
-				...create_state_log_arr,
+			let dom_arr_part_mid=[
 				[2, 'create', 'div', 'history', "?3"],
 				[2, 'append'],
 				[2, 'create', 'div', 'timeout_element', "0"],
@@ -2718,6 +2699,11 @@ import WindowBox from "types/vm/box/WindowBox.js";
 				[2, 'append'],
 				[1, 'drop'],
 				[0, 'drop'],
+			];
+			/**@type {DomExecDescription[]} */
+			let raw_dom_arr=[
+				...create_state_log_arr,
+				...dom_arr_part_mid,
 				...make_css_arr
 			];
 			this.build_dom_from_desc(raw_dom_arr, this.dom_map);
@@ -2753,15 +2739,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 				let cur_item=raw_arr[i];
 				// let [depth, action, ...args] = cur_item;
 				switch(cur_item[1]){
-					case 'get':{
-						let cur_element, [, , query_arg]=cur_item;
-						switch(query_arg){
-							case 'body':cur_element=document.body;break;
-							default:cur_element=document.querySelector(query_arg);break;
-						}
-						if(!cur_element)throw new Error("build from dom failed, element not found: \""+query_arg+"\"");
-						stack.push([cur_item[0], "push", new NodeBoxImpl('get', cur_element)])
-					} break;
 					case 'new':{
 						const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
 						let fn_box=new FunctionBoxImpl(
@@ -2803,6 +2780,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 						stack.push([depth, "peek", depth-1, 0]);
 						stack.push(cur_item);
 					} break;
+					case 'get':
 					case 'dup':
 					case 'breakpoint':
 					case 'drop':
@@ -3579,7 +3557,6 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);else tonext(res);
 	}
 	const auto_buy_obj=new AutoBuy;
-	/**@implements {AsyncTrigger} */
 	class AsyncTriggerImpl {
 		m_set_flag;
 		/**
