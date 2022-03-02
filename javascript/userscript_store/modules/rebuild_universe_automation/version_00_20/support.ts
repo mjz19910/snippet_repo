@@ -53,3 +53,5 @@ export type NewDesc=[
 	(obj:CSSStyleSheet, str:string)=>Promise<CSSStyleSheet>,
 	string[]
 ];
+
+export {Primitives} from "types/vm/Primitives";
