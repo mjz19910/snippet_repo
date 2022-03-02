@@ -215,6 +215,7 @@
 		/**@type {"StackVM"} */
 		box_type="StackVM";
 	}
+	/**@implements {WindowBox} */
 	class WindowBoxImpl extends BaseBox {
 		/**@type {"object_box"} */
 		type="object_box";
@@ -222,7 +223,8 @@
 		/**@type {"Window"} */
 		inner_type="Window";
 	}
-	class ObjectBox extends BaseBox {
+	/**@implements {ObjectBox} */
+	class ObjectBoxImpl extends BaseBox {
 		/**@type {"object_box"} */
 		type="object_box";
 		inner_type=null;
@@ -268,7 +270,7 @@
 				console.log('unbox temporary_box', type, source, value, rest);
 				throw 1;
 			}
-			/**@arg {WindowBox | ObjectBox} box */
+			/**@arg {WindowBox | ObjectBoxImpl} box */
 			function unbox_object_box(box){
 				const {type, value, ...rest}=box;
 				if(Object.keys(rest).length > 0){
@@ -904,7 +906,7 @@
 		/**@arg {Event} event */
 		handleEvent(event) {
 			this.reset();
-			this.run(new ObjectBox(event));
+			this.run(new ObjectBoxImpl(event));
 		}
 	}
 	class StackVMParser {
