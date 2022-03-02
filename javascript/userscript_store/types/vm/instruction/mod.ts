@@ -1,11 +1,9 @@
 import {InstructionAppend} from "./InstructionAppend";
 import {InstructionBreakpoint} from "./InstructionBreakpoint";
 import {InstructionCast} from "./InstructionCast";
-import {InstructionGet} from "./InstructionGet";
-import {InstructionGlobal} from "./InstructionGlobal";
+import {InstructionPushGlobalObj} from "./InstructionPushGlobalObj";
 import {InstructionHalt} from "./InstructionHalt";
 import {InstructionModifyOperand} from "./InstructionModifyOperand";
-import {InstructionPeek} from "./InstructionPeek";
 import {InstructionPushArgs} from "./InstructionPushArgs";
 import {InstructionReturn} from "./InstructionReturn";
 import {InstructionPushVMObj} from "./InstructionPushVMObj";
@@ -20,12 +18,11 @@ export type InstructionType =
 	st.InstructionPush |
 	st.InstructionDup |
 	st.InstructionDrop |
-	// TODO: convert to base stack ptr access
-	InstructionPeek |
-	// FFI property access
-	InstructionGet |
-	// FFI Call
+	st.InstructionPeek |
+	// FFI
+	gen.InstructionGet |
 	gen.InstructionCall |
+	gen.InstructionConstruct |
 	InstructionReturn |
 	// Jump
 	jump.InstructionJumpAbs |
@@ -33,14 +30,15 @@ export type InstructionType =
 	// Turing
 	InstructionHalt |
 	// Special
-	InstructionPushArgs | InstructionPushVMObj | InstructionGlobal |
+	InstructionPushArgs |
+	InstructionPushVMObj |
+	InstructionPushGlobalObj |
 	// Debug
 	InstructionBreakpoint |
 	// VM
-	vm.VMInstructionReturn |
-	vm.VMInstructionCall |
-	vm.VMInstructionPushInstructionPtr |
-	gen.InstructionConstruct |
+	vm.InstructionReturn |
+	vm.InstructionCall |
+	vm.InstructionPushInstructionPtr |
 	InstructionModifyOperand |
 	InstructionAppend |
 	InstructionCast;
