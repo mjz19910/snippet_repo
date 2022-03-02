@@ -1,5 +1,5 @@
 export type VMInstructionPushInstructionPtrOpcode='vm_push_instruction_ptr';
 
-export type VMInstructionPushInstructionPtr = [VMInstructionPushInstructionPtrOpcode];
+export type InstructionPushInstructionPtr = [VMInstructionPushInstructionPtrOpcode];
 
-export default VMInstructionPushInstructionPtr;
+export default InstructionPushInstructionPtr;

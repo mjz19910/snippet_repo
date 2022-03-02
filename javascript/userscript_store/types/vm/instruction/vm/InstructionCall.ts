@@ -1,3 +1,3 @@
-export type VMInstructionCall = ['vm_call', number];
-export default VMInstructionCall;
+export type InstructionCall = ['vm_call', number];
+export default InstructionCall;
 

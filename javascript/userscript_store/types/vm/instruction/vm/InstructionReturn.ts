@@ -1,2 +1,2 @@
-export type VMInstructionReturn = ['vm_return'];
-export default VMInstructionReturn;
+export type InstructionReturn = ['vm_return'];
+export default InstructionReturn;
