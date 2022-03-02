@@ -1,15 +1,7 @@
 import {Decode} from "types/vm/instruction/mod";
-export type AnyTypeOfResult = "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
+type AnyTypeOfResult = "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
+type __v_test_value = | 0;
 
-type _v = | 0;
-export {} from "types/vm/instruction/mod";
-export {Primitives} from "types/vm/Primitives";
-export {
-	PromiseBox,
-	WindowBox,
-	TemporaryBox,
-	CSSStyleSheetBox,
-} from "types/vm/box/mod.js";
 type InstructionOpcodeList = [
 	'append',
 	'breakpoint',
@@ -35,4 +27,17 @@ type InstructionOpcodeList = [
 	'vm_return',
 	'vm_block_trace',
 ];
-export type InstructionList = Decode<InstructionOpcodeList[number]>[];
+type InstructionList = Decode<InstructionOpcodeList[number]>[];
+export {} from "types/vm/instruction/mod";
+export {Primitives} from "types/vm/Primitives";
+export {
+	PromiseBox,
+	WindowBox,
+	TemporaryBox,
+	CSSStyleSheetBox,
+} from "types/vm/box/mod.js";
+export {
+	InstructionList,
+	AnyTypeOfResult,
+	__v_test_value
+};
