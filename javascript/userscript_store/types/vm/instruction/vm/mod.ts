@@ -1,3 +1,3 @@
-export {InstructionCall} from "./InstructionCall";
-export {InstructionPushInstructionPtr} from "./InstructionPushInstructionPtr";
-export {InstructionReturn} from "./InstructionReturn";
+export {InstructionCall as Call} from "./InstructionCall";
+export {InstructionPushInstructionPtr as PushInstructionPtr} from "./InstructionPushInstructionPtr";
+export {InstructionReturn as Return} from "./InstructionReturn";

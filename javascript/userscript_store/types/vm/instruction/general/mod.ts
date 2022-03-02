@@ -1,4 +1,4 @@
-export {InstructionCall} from "./InstructionCall";
-export {InstructionConstruct} from "./InstructionConstruct";
-export {InstructionGet} from "./InstructionGet";
-export {InstructionReturn} from "./InstructionReturn";
+export {InstructionCall as Call} from "./InstructionCall";
+export {InstructionConstruct as Construct} from "./InstructionConstruct";
+export {InstructionGet as Get} from "./InstructionGet";
+export {InstructionReturn as Return} from "./InstructionReturn";

@@ -1,1 +1,1 @@
-export type InstructionHalt = ['halt'];
+export type Halt = ['halt'];
