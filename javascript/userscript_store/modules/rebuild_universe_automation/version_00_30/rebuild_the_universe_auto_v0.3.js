@@ -152,7 +152,6 @@
 			v:prop.value
 		};
 	}
-	/** @implements {VMBoxedCSSStyleSheetConstructor} */
 	class VMBoxedCSSStyleSheetConstructorR {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
@@ -174,8 +173,8 @@
 			return null;
 		}
 	}
-	/** @implements {VMBoxedCSSStyleSheet} */
-	class VMBoxedCSSStyleSheetR {
+	/**@implements {CSSStyleSheetBox} */
+	class CSSStyleSheetBoxImpl {
 		/**@type {"instance_box"} */
 		type="instance_box";
 		/**@type {"CSSStyleSheet"} */
@@ -189,8 +188,7 @@
 			this.value=value;
 		}
 	}
-	/** @implements {VMBoxedPromise} */
-	class VMBoxedPromiseR {
+	class PromiseBoxI {
 		/**@type {"promise"} */
 		type="promise";
 		/**@type {"value"} */
@@ -199,31 +197,30 @@
 		get_matching_typeof(_to_match) {
 			return null;
 		}
-		/**@arg {Promise<VMValue>} value */
+		/**@arg {Promise<Box>} value */
 		constructor(value){
 			this.value=value;
 		}
 	}
 	class BaseBox {
+		/**@arg {import("final/BaseBox.js").BoxInner} value */
 		constructor(value) {
 			this.value = value;
 		}
-		/**@arg {'function'} type */
+		/**@arg {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} type */
 		as_type(type){
-			if(typeof this.value === 'type'){
+			if(typeof this.value === type) {
 				return this;
 			}
 			return null;
 		}
 	}
-	/** @implements {IStackVMBox} */
 	class StackVMBox extends BaseBox {
 		/**@type {"custom_box"} */
 		type="custom_box";
 		/**@type {"StackVM"} */
 		box_type="StackVM";
 	}
-	/**@implements {WindowBox} */
 	class WindowBoxImpl extends BaseBox {
 		/**@type {"object_box"} */
 		type="object_box";
@@ -231,7 +228,6 @@
 		/**@type {"Window"} */
 		inner_type="Window";
 	}
-	/** @implements {IObjectBox} */
 	class ObjectBox extends BaseBox {
 		/**@type {"object_box"} */
 		type="object_box";
@@ -239,22 +235,32 @@
 	}
 	class InstructionCallImpl {
 		debug=false;
-		handle_as_fn_box(vm, fn_box, target_this, arg_arr){
-			if(raw_fn.return_type == 'promise'){
-				return this.handle_as_fn(vm, raw_fn.value, target_this, arg_arr);
-			} else if(raw_fn.return_type === null) {
-				console.log('fixme: make a type for this', raw_fn);
-				return this.handle_as_fn(vm, raw_fn.value, target_this, arg_arr);
-			} else {
-				console.log('unexpected box value', raw_fn);
-				throw new Error("Unexpected function box type");
-			}
-		}
+		// /**
+		//  * @arg {StackVM} vm
+		//  * @arg {Box} fn_box
+		//  * @arg {Box} target_this
+		//  * @arg {Box[]} arg_arr
+		//  */
+		// handle_as_fn_box(vm, fn_box, target_this, arg_arr){
+		// 	if(fn_box.return_type == 'promise'){
+		// 		return this.handle_as_fn(vm, fn_box.value, target_this, arg_arr);
+		// 	} else if(fn_box.return_type === null) {
+		// 		console.log('fixme: make a type for this', fn_box);
+		// 		return this.handle_as_fn(vm, fn_box.value, target_this, arg_arr);
+		// 	} else {
+		// 		console.log('unexpected box value', fn_box);
+		// 		throw new Error("Unexpected function box type");
+		// 	}
+		// }
+		/**
+		 * @arg {Exclude<Box, Primitives>} object_box
+		 * @returns {{}|Function|StackVM|null}
+		 */
 		unbox_obj(object_box) {
 			if(object_box === null)return null;
 			const {type, ...left_to_unbox}=object_box;
-			if(type === 'temporary_box') {
-				const {source, value, ...rest}=left_to_unbox;
+			if(object_box.type === 'temporary_box') {
+				const {type, source, value, ...rest}=object_box;
 				if(Object.keys(rest).length > 0){
 					console.log('unbox temporary_box with extra', type, source, value, rest);
 					throw 1;
@@ -268,8 +274,16 @@
 				console.log('unbox temporary_box', type, source, value, rest);
 				throw 1;
 			}
-			if(type === 'object_box'){
-				const {value, ...rest}=left_to_unbox;
+			/**@arg {WindowBox | ObjectBox} box */
+			function unbox_object_box(box){
+				const {type, value, ...rest}=box;
+				if(Object.keys(rest).length > 0){
+					console.log('other enumerable on box', rest);
+				}
+				return value;
+			}
+			if(object_box.type === 'object_box'){
+				const {type, value, ...rest}=object_box;
 				if(Object.keys(rest).length > 0){
 					console.log('other enumerable on box', rest);
 				}
@@ -282,8 +296,8 @@
 				}
 				return value;
 			}
-			if(type === 'custom_box'){
-				const {value, box_type, ...rest}=left_to_unbox;
+			if(object_box.type === 'custom_box'){
+				const {type, value, box_type, ...rest}=object_box;
 				if(box_type === 'StackVM'){
 					return value;
 				}
@@ -293,7 +307,11 @@
 			console.log('unbox', type, left_to_unbox);
 			throw 1;
 		}
+		/**
+		 * @arg {Box[]} arg_arr
+		 */
 		unbox_arr(arg_arr){
+			/**@type {({} | Function | StackVM | Primitives | null)[]} */
 			let arr=[];
 			for(let i=0;i<arg_arr.length;i++){
 				let cur=arg_arr[i];
@@ -311,10 +329,18 @@
 			}
 			return arr;
 		}
+		/**
+		 * @arg {StackVM} vm
+		 * @arg {(...a: Box[]) => Box} fn_value
+		 * @arg {Exclude<Box, Primitives>} target_this
+		 * @arg {Box[]} arg_arr
+		 */
 		handle_as_fn(vm, fn_value, target_this, arg_arr) {
 			let real_this=this.unbox_obj(target_this);
-			let real_args=this.unbox_arr(arg_arr);
-			let ret=fn_value.apply(real_this, real_args);
+			// TODO: don't require the user to unbox the args
+			// let real_args=this.unbox_arr(arg_arr);
+			let ret=fn_value.apply(real_this, arg_arr);
+			/**@type {{type:'temporary_box';source: 'call';value: any;}} */
 			let ret_box={
 				type:'temporary_box',
 				source:'call',
@@ -322,23 +348,37 @@
 			};
 			vm.stack.push(ret_box);
 		}
+		/**
+		 * @arg {StackVM} vm
+		 * @arg {Exclude<Box, Primitives|null>} fn_obj
+		 * @arg {Exclude<Box, Primitives>} target_this
+		 * @arg {Box[]} arg_arr
+		 */
 		handle_as_obj(vm, fn_obj, target_this, arg_arr){
+			if(fn_obj.type === 'temporary_box')throw 1;
 			if(!fn_obj.as_type){
 				console.log('!fn_obj.as_type', fn_obj);
 				throw new Error("Invalid");
 			}
 			let raw_fn=fn_obj.as_type('function');
-			if(raw_fn.type === 'callable_box'){
-				return this.handle_as_fn(vm, raw_fn.value, target_this, arg_arr);
+			if(!raw_fn){
+				throw new Error("Unreachable (type of value is not 'function')");
+			}
+			if(raw_fn.type === 'function_box') {
+				if(raw_fn.return_type === null){
+					return this.handle_as_fn(vm, raw_fn.value, target_this, arg_arr);
+				}
 			} else if (raw_fn.type == 'constructor_box'){
 				throw new Error("Unexpected constructor");
-			} else if (raw_fn.type === 'function_box'){
-				this.handle_as_fn_box(vm, raw_fn, target_this, arg_arr);
-			} else {
+			}
+			// else if (raw_fn.type === 'function_box'){
+			//	this.handle_as_fn_box(vm, raw_fn, target_this, arg_arr);
+			// }
+			else {
 				throw new Error("Unreachable (type of value is never)");
 			}
 		}
-		/**@arg {InstructionCall} instruction @arg {IStackVM} vm */
+		/**@arg {InstructionCall} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			let number_of_arguments = instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -346,30 +386,44 @@
 				throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 			}
 			let [target_this, value_box, ...arg_arr] = vm.pop_arg_count(number_of_arguments);
+			if(typeof target_this !== 'object'){
+				throw new Error("Need to box into js objects to use as this object")
+			}
 			if(this.debug){
 				console.log('VM: call', target_this, 'fn box', value_box, arg_arr);
+			}
+			if(value_box === void 0){
+				console.info('VM Error: Processing call instruction', instruction, target_this, value_box, arg_arr);
+				throw new Error("Tried to call undefined");
 			}
 			if(typeof value_box === 'string'){
 				console.info('VM Error: Processing call instruction', instruction, target_this, value_box, arg_arr);
 				throw new Error("Tried to call a string(your asm code is outdated)");
 			}
-			const a=value_box;
 			if(typeof value_box==='function') {
 				if(this.debug)console.log('function is not boxed', value_box);
 				return this.handle_as_fn(vm, value_box, target_this, arg_arr);
 			} else if(value_box === null) {
 				throw new Error("Invalid");
-			} else if(value_box.type === 'special') {
-				if(value_box.value_type === 'void')throw new Error("Attempt to call a void value");
-				console.log('unk special box', value_box);
-				throw new Error("Invalid");
-			} else if(value_box.type === 'temporary_box'){
+			} else if(typeof value_box === 'object' && value_box.type === 'void') {
+				throw new Error("Attempt to call a void value");
+			} else if(typeof value_box === 'object' && value_box.type === 'temporary_box'){
 				this.handle_as_temporary_box(vm, value_box, target_this, arg_arr);
 			} else {
-				console.log('VM: call error value_box not handled', typeof value_box, value_box, value_box.value);
-				this.handle_as_obj(vm, value_box, target_this, arg_arr);
+				if(typeof value_box === 'object'){
+					console.log('VM: call error value_box not handled', typeof value_box, value_box, value_box.value);
+					this.handle_as_obj(vm, value_box, target_this, arg_arr);
+				}
+				console.log('VM: call invalid value', typeof value_box, value_box);
+				throw new Error("Invalid");
 			}
 		}
+		/**
+		 * @arg {StackVM} vm
+		 * @arg {TemporaryBox} value_box
+		 * @arg {Exclude<Box, Primitives>} target_this
+		 * @arg {Box[]} arg_arr
+		 */
 		handle_as_temporary_box(vm, value_box, target_this, arg_arr) {
 			if(value_box.source === 'cast'){
 				if(value_box.cast_source === 'vm_function'){
@@ -381,7 +435,7 @@
 
 	}
 	class InstructionConstructImpl {
-		/** @arg {IStackVM} vm @arg {InstructionConstruct} ins */
+		/** @arg {StackVM} vm @arg {InstructionConstruct} ins */
 		run(vm, ins){
 			let number_of_arguments=ins[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -390,29 +444,27 @@
 			if(typeof a!='object')throw new Error("Invalid");
 			if(a===null)throw new Error("Invalid");
 			if(a.type != 'constructor_box')throw new Error("Invalid");
-			if(a.from === 'typescript'){
-				let obj=new a.value(...construct_arr);
+			if(a.instance_type === null) {
+				let obj=a.factory(...construct_arr);
 				vm.stack.push(obj);
-			} else if(a.from === 'javascript') {
-				if(a.constructor_type === 'CSSStyleSheet') {
-					/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
-					let valid_args={
-						s:[],
-						valid_count:0
-					}
-					for(let i=0;i<construct_arr.length;i++){
-						let val=construct_arr[i];
-						if(typeof val != 'object')continue;
-						if(val === null)continue;
-						if(val.type != 'shape_box')continue;
-						valid_args={
-							s:[val.value],
-							valid_count:1
-						}
-					}
-					let obj=new a.value(...valid_args.s);
-					vm.stack.push(new VMBoxedCSSStyleSheetR(obj));
+			} else if(a.instance_type === 'CSSStyleSheet')  {
+				/**@type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
+				let valid_args={
+					s:[],
+					valid_count:0
 				}
+				for(let i=0;i<construct_arr.length;i++){
+					let val=construct_arr[i];
+					if(typeof val != 'object')continue;
+					if(val === null)continue;
+					if(val.type != 'shape_box')continue;
+					valid_args={
+						s:[val.value],
+						valid_count:1
+					}
+				}
+				let obj=new a.value(...valid_args.s);
+				vm.stack.push(new CSSStyleSheetBoxImpl(obj));
 			}
 			l_log_if(LOG_LEVEL_INFO, "", ins, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
@@ -2432,9 +2484,9 @@
 			if(extracted_values && extracted_values.t === 2){
 				let ret=callback(...extracted_values.v);
 				let r2=ret.then(function(v){
-					return new VMBoxedCSSStyleSheetR(v);
+					return new CSSStyleSheetBoxImpl(v);
 				});
-				let res=new VMBoxedPromiseR(r2);
+				let res=new PromiseBoxI(r2);
 				return res;
 			}
 		}

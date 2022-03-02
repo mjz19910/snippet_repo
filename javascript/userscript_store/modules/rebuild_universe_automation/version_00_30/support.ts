@@ -1,16 +1,16 @@
-import {Box} from "types/vm/box/Box";
-
-// must be a class for extending it to work
-export class PromiseBox {
-	type: "promise_box"="promise_box";
-	await_type: "Box"="Box";
-	value:Promise<Box>;
-	as_type(type: "object"): PromiseBox | null {
-		return this;
-	};
-	constructor(value: Promise<Box>){
-		this.value=value;
-	}
-}
-
 export type AnyTypeOfResult = "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
+
+type _v=|0;
+
+export {InstructionCast} from "types/vm/instruction/InstructionCast";
+export {
+	InstructionCall,
+	InstructionConstruct
+} from "types/vm/mod.js";
+export {Primitives} from "types/vm/Primitives";
+export {} from "types/vm/mod.js";
+export {
+	WindowBox,
+	TemporaryBox,
+	CSSStyleSheetBox,
+} from "types/vm/box/mod.js";
