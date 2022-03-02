@@ -208,7 +208,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 	function invalid(){
 		return new Error("Invalid");
 	}
-	/**@typedef {import("types/vm/mod.js").InstructionCall} InstructionCall */
+	/**@typedef {import("types/vm/mod.js").Call} InstructionCall */
 	class InstructionCallE {
 		/**@arg {Box} v */
 		static unbox_value(v){
@@ -264,7 +264,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		}
 
 	}
-	/**@typedef {import("types/vm/instruction/general/InstructionConstruct.js").InstructionConstruct} InstructionConstructT */
+	/**@typedef {import("types/vm/instruction/general/Construct.js").Construct} InstructionConstructT */
 	class InstructionConstructE {
 		/**@type {<T>(arr:T[])=>arr is []} */
 		static is_array_empty(arr){
@@ -322,7 +322,7 @@ import VoidBox from "types/vm/box/VoidBox.js";
 		throw new Error("TODO");
 	}
 	class InstructionCastImpl {
-		/**@arg {import("types/vm/instruction/InstructionCast.js").InstructionCast} instruction @arg {StackVM} vm */
+		/**@arg {import("types/vm/instruction/Cast.js").Cast} instruction @arg {StackVM} vm */
 		static execute_instruction(vm, instruction){
 			let obj=vm.pop();
 			if(!obj)throw invalid();
