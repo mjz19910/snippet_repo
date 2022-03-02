@@ -34,10 +34,27 @@ type InstructionList = Decode<InstructionOpcodeList[number]>[];
 export {} from "types/vm/instruction/mod";
 export {Primitives} from "types/vm/Primitives";
 export {
-	PromiseBox,
-	WindowBox,
-	TemporaryBox,
+	ArrayBox,
+	AsyncFunctionBox,
 	CSSStyleSheetBox,
+	CSSStyleSheetConstructorBox,
+	CSSStyleSheetInitBox,
+	CSSStyleSheetPromiseBox,
+	DocumentBox,
+	EmptyArrayBox,
+	FunctionBox,
+	GlobalThisBox,
+	InstructionTypeArrayBox,
+	MediaListBox,
+	NewableFunctionBox,
+	NodeBox,
+	ObjectBox,
+	PromiseBox,
+	StackVMBox,
+	TemporaryBox,
+	VoidBox,
+	VoidPromiseBox,
+	WindowBox,
 } from "types/vm/box/mod.js";
 export {
 	InstructionList,

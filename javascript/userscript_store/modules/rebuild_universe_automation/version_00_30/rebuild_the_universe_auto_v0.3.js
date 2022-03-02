@@ -196,17 +196,20 @@
 	}
 	/**@implements {PromiseBox} */
 	class PromiseBoxImpl extends BaseBox {
-		/**@type {"promise"} */
-		type="promise";
-		/**@type {"value"} */
-		await_type="value";
+		/**@type {"promise_box"} */
+		type="promise_box";
+		/**@type {"Box"} */
+		await_type="Box";
+		/**@type {"Promise<Box>"} */
+		inner_type="Promise<Box>";
 		/**@arg {'object'|'function'} to_match */
 		as_type(to_match) {
 			if(to_match === 'object')return this;
 			return null;
 		}
 	}
-	class StackVMBox extends BaseBox {
+	/**@implements {StackVMBox} */
+	class StackVMBoxImpl extends BaseBox {
 		/**@type {"custom_box"} */
 		type="custom_box";
 		/**@type {"StackVM"} */
@@ -667,7 +670,7 @@
 	}
 	class InstructionPushThisImpl {
 		run(vm, _i){
-			vm.stack.push(new StackVMBox(vm));
+			vm.stack.push(new StackVMBoxImpl(vm));
 		}
 	}
 	class InstructionPushGlobalImpl {
