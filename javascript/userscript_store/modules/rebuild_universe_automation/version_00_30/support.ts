@@ -27,7 +27,9 @@ type InstructionOpcodeList = [
 	'vm_return',
 	'vm_block_trace',
 ];
+
 type InstructionList = Decode<InstructionOpcodeList[number]>[];
+
 export {} from "types/vm/instruction/mod";
 export {Primitives} from "types/vm/Primitives";
 export {
