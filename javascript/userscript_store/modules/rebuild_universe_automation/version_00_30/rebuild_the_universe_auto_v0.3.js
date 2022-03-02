@@ -152,56 +152,6 @@
 			v:prop.value
 		};
 	}
-	class VMBoxedCSSStyleSheetConstructorR {
-		/**@type {"constructor_box"} */
-		type="constructor_box";
-		/**@type {"javascript"} */
-		from="javascript";
-		/**@type {"CSSStyleSheet"} */
-		instance_type= "CSSStyleSheet";
-		/**@type {"CSSStyleSheet"} */
-		constructor_type="CSSStyleSheet";
-		/**@arg {typeof CSSStyleSheet} value */
-		constructor(value){
-			this.value=value;
-		}
-		/**@arg {'function'} to_match */
-		get_matching_typeof(to_match) {
-			if(typeof this.value === to_match){
-				return this;
-			}
-			return null;
-		}
-	}
-	/**@implements {CSSStyleSheetBox} */
-	class CSSStyleSheetBoxImpl {
-		/**@type {"instance_box"} */
-		type="instance_box";
-		/**@type {"CSSStyleSheet"} */
-		instance_type="CSSStyleSheet";
-		/**@arg {'function'} to_match */
-		get_matching_typeof(to_match) {
-			return null;
-		}
-		/**@arg {CSSStyleSheet} value */
-		constructor(value){
-			this.value=value;
-		}
-	}
-	class PromiseBoxI {
-		/**@type {"promise"} */
-		type="promise";
-		/**@type {"value"} */
-		await_type="value";
-		/**@arg {'function'} _to_match */
-		get_matching_typeof(_to_match) {
-			return null;
-		}
-		/**@arg {Promise<Box>} value */
-		constructor(value){
-			this.value=value;
-		}
-	}
 	class BaseBox {
 		/**@arg {import("final/BaseBox.js").BoxInner} value */
 		constructor(value) {
@@ -212,6 +162,47 @@
 			if(typeof this.value === type) {
 				return this;
 			}
+			return null;
+		}
+	}
+	class CSSStyleSheetConstructorBoxImpl extends BaseBox {
+		/**@type {"constructor_box"} */
+		type="constructor_box";
+		/**@type {"javascript"} */
+		from="javascript";
+		/**@type {"CSSStyleSheet"} */
+		instance_type= "CSSStyleSheet";
+		/**@type {"CSSStyleSheet"} */
+		constructor_type="CSSStyleSheet";
+		/**@arg {'function'} to_match */
+		get_matching_typeof(to_match) {
+			if(typeof this.value === to_match){
+				return this;
+			}
+			return null;
+		}
+	}
+	/**@implements {CSSStyleSheetBox} */
+	class CSSStyleSheetBoxImpl extends BaseBox {
+		/**@type {"instance_box"} */
+		type="instance_box";
+		/**@type {"CSSStyleSheet"} */
+		instance_type="CSSStyleSheet";
+		/**@arg {'object'|'function'} to_match */
+		as_type(to_match) {
+			if(to_match === 'object')return this;
+			return null;
+		}
+	}
+	/**@implements {PromiseBox} */
+	class PromiseBoxImpl extends BaseBox {
+		/**@type {"promise"} */
+		type="promise";
+		/**@type {"value"} */
+		await_type="value";
+		/**@arg {'object'|'function'} to_match */
+		as_type(to_match) {
+			if(to_match === 'object')return this;
 			return null;
 		}
 	}
@@ -378,7 +369,7 @@
 				throw new Error("Unreachable (type of value is never)");
 			}
 		}
-		/**@arg {InstructionCall} instruction @arg {StackVM} vm */
+		/**@arg {import("types/vm/instruction/mod.js").GeneralNS.Call} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			let number_of_arguments = instruction[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -435,7 +426,7 @@
 
 	}
 	class InstructionConstructImpl {
-		/** @arg {StackVM} vm @arg {InstructionConstruct} ins */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").GeneralNS.Construct} ins */
 		run(vm, ins){
 			let number_of_arguments=ins[1];
 			if(typeof number_of_arguments!='number')throw new Error("Invalid");
@@ -469,9 +460,9 @@
 			l_log_if(LOG_LEVEL_INFO, "", ins, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
-	/** @implements {InstructionCast} */
 	class InstructionCastImpl {
 		debug=false;
+		/**@arg {StackVM} vm */
 		push_box(vm, cast_source, value){
 			vm.stack.push({
 				type:'temporary_box',
@@ -480,14 +471,17 @@
 				value
 			});
 		}
+		/**@arg {StackVM} vm */
 		noisy_push_temporary_box(vm, cast_source, obj){
 			console.warn('noisy box', cast_source, obj);
 			console.log('inner', obj.value);
 			this.push_box(vm, cast_source, obj.value);
 		}
+		/**@arg {StackVM} vm */
 		push_temporary_box(vm, cast_source, obj){
 			this.push_box(vm, cast_source, obj.value);
 		}
+		/**@arg {StackVM} vm */
 		cast_to_type(vm, obj, cast_source) {
 			if(obj.type === 'custom_box' && obj.box_type === 'StackVM') {
 				return this.push_box(vm, cast_source, obj.value);
@@ -519,7 +513,7 @@
 			console.warn('unk obj boxed into temporary_box<object_index>', obj);
 			this.push_box(vm, cast_source, obj);
 		}
-		/**@arg {import("types/SimpleVMTypes.js").InstructionCast} instruction @arg {IStackVM} vm */
+		/**@arg {import("types/vm/instruction/mod.js").Cast} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			let obj=vm.stack.pop();
 			if(!obj)throw new Error("Invalid");
@@ -528,16 +522,14 @@
 			}
 			if(typeof obj!='object')throw new Error("Invalid");
 			switch(instruction[1]){
-				case 'object_index':
-				case 'vm_function':{
-					// do nothing
-				} break;
+				case 'object_index':break;
 				default:throw new Error("Missing cast to "+instruction[1]);
 			}
 			this.cast_to_type(vm, obj, instruction[1]);
 		}
 	}
 	class InstructionJeImpl {
+		/**@arg {import("types/vm/instruction/mod.js").JumpNS.Je} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			let [, target] = instruction;
 			if(typeof target!='number')throw new Error("Invalid");
@@ -550,6 +542,7 @@
 		}
 	}
 	class InstructionJmpImpl {
+		/**@arg {import("types/vm/instruction/mod.js").JumpNS.Jump} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			let [, target] = instruction;
 			if(typeof target!='number')throw new Error("Invalid");
@@ -560,6 +553,7 @@
 		}
 	}
 	class InstructionModifyOpImpl {
+		/**@arg {import("types/vm/instruction/mod.js").ModifyOperand} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			let [, target, offset]=instruction;
 			if(typeof target!='number')throw new Error("Invalid");
@@ -583,12 +577,13 @@
 			vm.instructions[target]=valid_instruction;
 		}
 	}
-	class InstructionPushIptrImpl {
-		run(vm, instruction){
-			if(!this.hasOwnProperty('push')) {
+	class InstructionPushInstructionPtrImpl {
+		/**@arg {import("types/vm/instruction/mod.js").VM_NS.PushInstructionPtr} _ins @arg {StackVM} vm */
+		run(vm, _ins){
+			if(!vm.hasOwnProperty('push')) {
 				throw new Error("push_pc requires a stack");
-			} else if (this instanceof StackVM) {
-				this.push(this.instruction_pointer);
+			} else if (vm instanceof StackVM) {
+				vm.stack.push(vm.instruction_pointer);
 			} else {
 				console.info('TODO: add instanceof check to push_pc');
 				throw new Error("Property missing or invalid");
@@ -596,6 +591,7 @@
 		}
 	}
 	class InstructionPushImpl {
+		/**@arg {import("types/vm/instruction/mod.js").StackNS.Push} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			for(let i = 0; i < instruction.length-1; i++) {
 				let item = instruction[i+1];
@@ -604,12 +600,14 @@
 		}
 	}
 	class InstructionDupImpl {
-		run(vm, instruction){
+		/**@arg {import("types/vm/instruction/mod.js").StackNS.Dup} _ins @arg {StackVM} vm */
+		run(vm, _ins){
 			if(vm.stack.length === 0)throw new Error("stack underflow");
 			vm.stack.push(vm.stack.at(-1));
 		}
 	}
 	class InstructionGetImpl {
+		/** @arg {StackVM} vm */
 		handle_temporary_box(vm, tmp_box, key) {
 			if(tmp_box.source === 'cast') {
 				if(tmp_box.cast_source === 'object_index'){
@@ -617,6 +615,7 @@
 				}
 			}
 		}
+		/** @arg {StackVM} vm */
 		on_get(vm, value_box, key){
 			if(typeof key!='string')throw new Error("Invalid");
 			let {value}=value_box;
@@ -629,7 +628,8 @@
 				value:res
 			});
 		}
-		run(vm, instruction){
+		/**@arg {import("types/vm/instruction/mod.js").GeneralNS.Get} _ins @arg {StackVM} vm */
+		run(vm, _ins){
 			let get_key = vm.stack.pop();
 			let value_box = vm.stack.pop();
 			if(!value_box)throw new Error("Invalid");
@@ -639,22 +639,21 @@
 				this.handle_temporary_box(vm, value_box, get_key);
 				return;
 			}
-			if(value_box.type != 'object_index') {
-				console.log('not object_index', value_box, get_key);
-				throw new Error("Invalid");
-			}
 			this.on_get(vm, value_box, get_key);
+			throw new Error("Update types");
 		}
 	}
 	class InstructionHaltImpl {
+		/**@arg {import("types/vm/instruction/mod.js").TuringNS.Halt} _i @arg {StackVM} vm */
 		run(vm, _i) {
 			vm.halt();
 		}
 	}
 	class InstructionReturnImpl {
+		/**@arg {import("types/vm/instruction/mod.js").GeneralNS.Return} _i @arg {StackVM} vm */
 		run(vm, _i){
 			if(vm.stack.length > 0){
-				this.return_value=this.pop();
+				vm.return_value=vm.stack.pop();
 			} else {
 				throw new Error("Stack underflow on return");
 			}
@@ -766,6 +765,7 @@
 		run(_vm, _a) {
 		}
 	}
+	/**@type {InstructionList[]} */
 	const instruction_descriptor_arr=[
 		['append', InstructionAppendImpl],
 		['breakpoint', InstructionBreakpointImpl],
@@ -784,7 +784,7 @@
 		['push', InstructionPushImpl],
 		['push_args', InstructionPushArgsImpl],
 		['push_global', InstructionPushGlobalImpl],
-		['push_ip', InstructionPushIptrImpl],
+		['push_ip', InstructionPushInstructionPtrImpl],
 		['push_this', InstructionPushThisImpl],
 		['return', InstructionReturnImpl],
 		['vm_call', VMInstructionCallImpl],
@@ -792,8 +792,10 @@
 		// special nop that shows where the function id changed
 		['vm_block_trace', InstructionNopImpl],
 	];
-	/**@implements {IStackVM} */
 	class StackVM {
+		return_value;
+		jump_instruction_pointer;
+		base_ptr;
 		init_instructions(instruction_desc_arr){
 			for(let i=0;i<instruction_desc_arr.length;i++){
 				let cur_ins_desc=instruction_desc_arr[i];
@@ -2411,7 +2413,7 @@
 					}
 				],
 				[
-					0, 'new', new VMBoxedCSSStyleSheetConstructorR(CSSStyleSheet), [],
+					0, 'new', new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet), [],
 					(/** @type {CSSStyleSheet} */ obj, /** @type {string} */ str)=>obj.replace(str),
 					[css_display_style]
 				],
@@ -2486,7 +2488,7 @@
 				let r2=ret.then(function(v){
 					return new CSSStyleSheetBoxImpl(v);
 				});
-				let res=new PromiseBoxI(r2);
+				let res=new PromiseBoxImpl(r2);
 				return res;
 			}
 		}
