@@ -20,6 +20,7 @@ import TemporaryBox from "./TemporaryBox";
 import VoidBox from "./VoidBox";
 import VoidPromiseBox from "./VoidPromiseBox";
 import WindowBox from "./WindowBox";
+import Box from "./Box";
 
 type BoxWithType=Exclude<Box, Primitives|null>;
 

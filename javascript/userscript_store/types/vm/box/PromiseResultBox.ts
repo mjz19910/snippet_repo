@@ -1,5 +1,5 @@
 import {BoxInner} from "final/BaseBox";
-import NewableFactory from "../NewableFunction";
+import NewableFactory from "../NewableFactory";
 import Primitives from "../Primitives";
 import {StackVM} from "../StackVM";
 import ArrayBox from "./ArrayBox";
@@ -16,6 +16,7 @@ import NodeBox from "./NodeBox";
 import ObjectBox from "./ObjectBox";
 import PromiseBox from "./PromiseBox";
 import StackVMBox from "./StackVMBox";
+import TemporaryBox from "./TemporaryBox";
 import VoidBox from "./VoidBox";
 import WindowBox from "./WindowBox";
 type UnboxType = Primitives | BoxInner | null;
@@ -121,10 +122,13 @@ function create_box(v: UnboxType): Box {
 		if(extract_CSSStyleSheetConstructor(ret)) {
 			return new CSSStyleSheetConstructorBox(ret);
 		};
-		return {
+		let ret_tmp_box:TemporaryBox={
 			type: "temporary_box",
+			source:"create_box",
+			extension:null,
 			value: ret
 		};
+		return ret_tmp_box;
 	}
 	{
 		if(ret === null) return ret;
