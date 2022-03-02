@@ -11,9 +11,9 @@ interface IHashMap<K, V> {
 }
 
 enum IterationDecision {
-	Break,
-	Continue,
-}
+    Continue,
+    Break,
+};
 
 class HashMap<K, V> implements IHashMap<K, V> {
 	backing_map: Map<K, V> | null;
