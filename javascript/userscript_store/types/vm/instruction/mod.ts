@@ -5,7 +5,6 @@ import {InstructionPushGlobalObj} from "./InstructionPushGlobalObj";
 import {InstructionHalt} from "./InstructionHalt";
 import {InstructionModifyOperand} from "./InstructionModifyOperand";
 import {InstructionPushArgs} from "./InstructionPushArgs";
-import {InstructionReturn} from "./general/InstructionReturn";
 import {InstructionPushVMObj} from "./InstructionPushVMObj";
 import * as gen from "./general/mod";
 import * as jump from "./jump/mod";
@@ -23,7 +22,7 @@ export type InstructionType =
 	gen.InstructionGet |
 	gen.InstructionCall |
 	gen.InstructionConstruct |
-	InstructionReturn |
+	gen.InstructionReturn |
 	// Jump
 	jump.InstructionJumpAbs |
 	jump.InstructionJumpJe |
