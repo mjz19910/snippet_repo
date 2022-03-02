@@ -2575,53 +2575,56 @@
 			}
 			// @FileType(vm_asm);
 			let raw_instructions=`
-			// none
-			push_this;
-			// this
+			// [none]
+			vm_push_self;
+			// vm_self
 			cast,object_index;
-			// this as object_index
+			// vm_self as object_index
 			push,target_obj;
-			// this target_obj
+			// vm_self target_obj
 			get;
-			// this.target_obj
+			// vm_self.target_obj
 			dup;
-			// this.target_obj * 2
+			// vm_self.target_obj * 2
 			cast,object_index;
-			// this.target_obj target_obj<object_index>
+			// vm_self.target_obj target_obj<object_index>
 			push,background_audio;
-			// this.target_obj <object_index>target_obj "background_audio"
+			// vm_self.target_obj <object_index>target_obj "background_audio"
 			get;
-			// this.target_obj target_obj.background_audio
+			// vm_self.target_obj target_obj.background_audio
 			dup;
-			// this.target_obj target_obj.background_audio * 2
+			// vm_self.target_obj target_obj.background_audio * 2
 			cast,object_index;
-			// this.target_obj target_obj.background_audio <object_index>background_audio
+			// vm_self.target_obj target_obj.background_audio <object_index>background_audio
 			push,play;
-			// this.target_obj target_obj.background_audio <object_index>background_audio "play"
+			// vm_self.target_obj target_obj.background_audio <object_index>background_audio "play"
 			get;
-			// this.target_obj target_obj.background_audio background_audio.play
+			// vm_self.target_obj target_obj.background_audio background_audio.play
 			cast,vm_function;
-			// this.target_obj target_obj.background_audio (background_audio.play as vm_function)
+			// vm_self.target_obj target_obj.background_audio (background_audio.play as vm_function)
 			call,int(2);
-			// this.target_obj Promise<void>
+			// want to "swap;drop;" here
+			// vm_self.target_obj Promise<void>
 			dup;
-			// this.target_obj Promise<void> * 2
+			// vm_self.target_obj Promise<void> * 2
 			cast,object_index;
-			// this.target_obj Promise<void> <object_index>(Promise<void>)
+			// vm_self.target_obj Promise<void> <object_index>(Promise<void>)
 			push,then;
-			// this.target_obj Promise<void> <object_index>(Promise<void>) "then"
+			// vm_self.target_obj Promise<void> <object_index>(Promise<void>) "then"
 			get;
-			// this.target_obj Promise<void> (Promise<void>).then
+			// vm_self.target_obj Promise<void> (Promise<void>).then
 			cast,vm_function;
-			// this.target_obj Promise<void> ((Promise<void>).then as vm_function)
+			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function)
 			push,%o;
+			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function) arg1
 			push,%o;
-			// this.target_obj Promise<void> ((Promise<void>).then as vm_function) arg1 arg2
+			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function) arg1 arg2
 			call,int(4);
-			// this.target_obj Promise<void>^
+			// vm_self.target_obj Promise<void>^
 			drop;
+			// vm_self.target_obj
 			drop;
-			// none
+			// [none]
 			push_global;
 			// window
 			dup;
@@ -2636,11 +2639,12 @@
 			// window (window.removeEventListener as vm_function)
 			push,click;
 			// window (window.removeEventListener as vm_function) "click"
-			push_this;
-			// window (window.removeEventListener as vm_function) "click" this
+			vm_push_self;
+			// window (window.removeEventListener as vm_function) "click" vm_self
 			call,int(4);
-			// this
+			// vm_self
 			drop;
+			// [none]
 			vm_return;
 			`;
 			let instructions=StackVMParser.parse_instruction_stream_from_string(raw_instructions, [
@@ -3000,7 +3004,6 @@
 				}
 				state.depths.push(cur_depth);
 			}
-			debugger;
 			/**@type {DomInstructionType[]} */
 			let flat_with_depths=[];
 			/**@type {DomInstructionStack[0]} */
