@@ -986,7 +986,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		 */
 		can_use_box(box){
 			if(typeof box == 'object' && box !== null) {
-				if(box.type === 'dom_value')return true;
+				return box.type === 'instance_box' && box.instance_type === 'Node';
 			}
 			return false;
 		}
@@ -997,9 +997,12 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			if(typeof box!='object')throw new Error("invalid Box (not an object)");
 			if(box===null)throw new Error("invalid Box (is null)");
 			if(box.type===void 0)throw new Error("Invalid Box (no type)");
-			if(box.type != 'dom_value')throw new Error("Unbox failed not a VMBoxedDomValue");
+			if(box.type != 'instance_box')throw new Error("Unbox failed not an instance box");
+			if(box.instance_type != 'Node')throw new Error("Unbox failed not an instance box");
 			if(typeof box.from != 'string')throw new Error("Unbox failed Box.from is not a string");
-			if(typeof box.value != 'object')throw new Error("Unbox failed: Box is not boxing an object");
+			if(!(box.value instanceof Node)){
+				throw new Error("Box looks like a Node box but does not contain a Node");
+			}
 		}
 		run() {
 			this.running = true;
@@ -2256,9 +2259,11 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		sym_id_syms.push([name, id, sym]);
 		return sym;
 	}
-	class VMBoxedDomValueR {
+	class NodeBoxImpl {
 		/**@type {"instance_box"} */
-		type;
+		type="instance_box";
+		/**@type {"Node"} */
+		instance_type = "Node";
 		/**@type {"get"|"create"} */
 		from;
 		/**@arg {'object' | 'function'} type */
@@ -2269,15 +2274,14 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			return null;
 		}
 		/**
-		 * @param {"get"|"create"|string} from
+		 * @param {string} from
 		 * @param {Node} value
 		 */
 		constructor(from, value){
-			this.type="instance_box";
 			if(from === 'get' || from === 'create'){
 				this.from=from;
 			} else {
-				throw new Error("Invalid constructor arguments for VMBoxedDomValue");
+				throw new Error("Invalid constructor arguments for NodeBox, from must be 'get' or 'create'");
 			}
 			this.value=value;
 		}
@@ -2316,7 +2320,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 		 */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
-	class VMReturnsBoxedVoidPromiseR {
+	class AsyncPromiseBoxImpl {
 		/**@type {"function_box"} */
 		type="function_box";
 		/**@type {"Box"} */
@@ -2336,12 +2340,16 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			}
 			return null;
 		}
+		/**@returns {Box} */
+		wrap_call() {
+			throw new Error("Not yet implemented");
+		}
 	}
 	/**@typedef {[number, 'get', string]} DomExecDescriptionI1 */
 	/**@typedef {[number, 'create', string, string, {[s:string]:Box}] | [number, 'create', string, string, string]} DomExecDescriptionI2 */
 	/**@typedef {[number, 'dup']} DomExecDescriptionI3 */
 	/**@typedef {[number, 'append']} DomExecDescriptionI4 */
-	/**@typedef {[number, 'push', null, VMReturnsBoxedVoidPromiseR]} DomExecDescriptionI5 */
+	/**@typedef {[number, 'push', null, AsyncPromiseBoxImpl]} DomExecDescriptionI5 */
 	/**@typedef {[number, 'new', Box, any[], (obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>, any[]]} DomExecDescriptionI6 */
 	/**@typedef {[number, 'call', number]} DomExecDescriptionI7 */
 	/**@typedef {[number, 'drop']} DomExecDescriptionI8 */
@@ -2615,14 +2623,14 @@ import WindowBox from "types/vm/box/WindowBox.js";
 					l_log_if(LOG_LEVEL_INFO, 'css run', cur);
 					if(typeof cur != 'object')continue;
 					if(cur === null)continue;
-					if(cur.type != 'promise')continue;
-					if(cur.await_type === 'value'){
+					if(cur.type != 'promise_box')continue;
+					if(cur.await_type === 'Box'){
 						css_arr.push(cur.value);
 					}
 				}
 				/*@Hack: wait for any promise to settle*/
 				const e = await Promise.allSettled(css_arr);
-				/**@type {PromiseFulfilledResult<Awaited<(typeof css_arr)[0]>>[]} */
+				/**@type {PromiseFulfilledResult<Box>[]} */
 				let fulfilled_res = [];
 				/**@type {PromiseRejectedResult[]} */
 				let rejected_res = [];
@@ -2679,7 +2687,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 			let make_css_arr=[
 				[
 					0, 'push', null,
-					new VMReturnsBoxedVoidPromiseR(function(/** @type {Box[]} */ ...a) {
+					new AsyncPromiseBoxImpl(function(/** @type {Box[]} */ ...a) {
 						l_log_if(LOG_LEVEL_INFO, 'void input', a);
 						let ret=css_promise_runner.call(bound_this, ...a);
 						l_log_if(LOG_LEVEL_INFO, 'void out', ret);
@@ -2752,7 +2760,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 							default:cur_element=document.querySelector(query_arg);break;
 						}
 						if(!cur_element)throw new Error("build from dom failed, element not found: \""+query_arg+"\"");
-						stack.push([cur_item[0], "push", new VMBoxedDomValueR('get', cur_element)])
+						stack.push([cur_item[0], "push", new NodeBoxImpl('get', cur_element)])
 					} break;
 					case 'new':{
 						const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
@@ -2787,7 +2795,7 @@ import WindowBox from "types/vm/box/WindowBox.js";
 							l_log_if(LOG_LEVEL_TRACE, "Info: case 'create' args are", element_type, name);
 						}
 						map.set(name, cur_element);
-						stack.push([depth, "push", new VMBoxedDomValueR('create', cur_element)]);
+						stack.push([depth, "push", new NodeBoxImpl('create', cur_element)]);
 					} break;
 					case 'append':{
 						let depth=cur_item[0];
