@@ -1,4 +1,5 @@
 import {Decode} from "types/vm/instruction/mod";
+
 type AnyTypeOfResult = "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
 type __v_test_value = | 0;
 
