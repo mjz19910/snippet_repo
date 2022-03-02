@@ -52,6 +52,51 @@ export type InstructionType =
 	Cast;
 
 interface AppendImpl {}
+interface BreakpointImpl {}
+interface CallImpl {}
+interface CastImpl {}
+interface ConstructImpl {}
+interface DropImpl {}
+interface DupImplImpl {}
+interface GetImplImpl {}
+interface HaltImpl {}
+interface JeImpl {}
+interface JumpImpl {}
+interface ModifyOPImpl {}
+interface NopImpl {}
+interface PeekImpl {}
+interface PushImpl {}
+interface PushArgsImpl {}
+interface PushGlobalImpl {}
+interface PushIPImpl {}
+interface PushThisImpl {}
+interface ReturnImpl {}
+interface VMCallImpl {}
+interface VMReturnImpl {}
+interface VMBlockTraceImpl {}
 
-export type Decode<T extends string>=
-T extends 'append'? [T, AppendImpl] : never;
+export type Decode<T extends string> =
+	T extends 'append' ? [T, AppendImpl] :
+	T extends 'breakpoint' ? [T, BreakpointImpl] :
+	T extends 'call' ? [T, CallImpl] :
+	T extends 'cast' ? [T, CastImpl] :
+	T extends 'construct' ? [T, ConstructImpl] :
+	T extends 'drop' ? [T, DropImpl] :
+	T extends 'dup' ? [T, DupImplImpl] :
+	T extends 'get' ? [T, GetImplImpl] :
+	T extends 'halt' ? [T, HaltImpl] :
+	T extends 'je' ? [T, JeImpl] :
+	T extends 'jmp' ? [T, JumpImpl] :
+	T extends 'modify_op' ? [T, ModifyOPImpl] :
+	T extends 'nop' ? [T, NopImpl] :
+	T extends 'peek' ? [T, PeekImpl] :
+	T extends 'push' ? [T, PushImpl] :
+	T extends 'push_args' ? [T, PushArgsImpl] :
+	T extends 'push_global' ? [T, PushGlobalImpl] :
+	T extends 'push_ip' ? [T, PushIPImpl] :
+	T extends 'push_this' ? [T, PushThisImpl] :
+	T extends 'return' ? [T, ReturnImpl] :
+	T extends 'vm_call' ? [T, VMCallImpl] :
+	T extends 'vm_return' ? [T, VMReturnImpl] :
+	T extends 'vm_block_trace' ? [T, VMBlockTraceImpl] :
+	never;
