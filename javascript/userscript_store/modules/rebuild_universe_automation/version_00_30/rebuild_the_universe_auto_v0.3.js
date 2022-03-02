@@ -676,8 +676,8 @@
 		}
 	}
 	class InstructionModifyOpImpl extends InstructionImplBase {
-		/**@type {'modify_op'} */
-		type='modify_op';
+		/**@type {'modify_operand'} */
+		type='modify_operand';
 		/**@arg {import("types/vm/instruction/mod.js").ModifyOperand} instruction @arg {StackVM} vm */
 		run(vm, instruction){
 			let [, target, offset]=instruction;
@@ -702,8 +702,10 @@
 			vm.instructions[target]=valid_instruction;
 		}
 	}
-	class InstructionPushInstructionPtrImpl extends InstructionImplBase {
-		/**@arg {import("types/vm/instruction/mod.js").vm.PushInstructionPtr} _ins @arg {StackVM} vm */
+	class InstructionVMPushIPImpl extends InstructionImplBase {
+		/**@type {"vm_push_ip"} */
+		type = "vm_push_ip"
+		/**@arg {import("types/vm/instruction/mod.js").vm.PushIP} _ins @arg {StackVM} vm */
 		run(vm, _ins){
 			if(!vm.hasOwnProperty('push')) {
 				throw new Error("push_pc requires a stack");
@@ -807,6 +809,8 @@
 		}
 	}
 	class InstructionReturnImpl extends InstructionImplBase {
+		/**@type {'return'} */
+		type = 'return'
 		/**@arg {import("types/vm/instruction/mod.js").general.Return} _i @arg {StackVM} vm */
 		run(vm, _i){
 			if(vm.stack.length > 0){
@@ -829,9 +833,11 @@
 		}
 	}
 	class InstructionPushVMObjImpl extends InstructionImplBase {
+		/**@type {"vm_push_self"} */
+		type ="vm_push_self";
 		/**
 		 * @arg {StackVM} vm
-		 * @param {import("types/vm/instruction/mod.js").push.PushVMObj} _i
+		 * @param {import("types/vm/instruction/mod.js").vm.PushSelf} _i
 		 */
 		run(vm, _i){
 			vm.stack.push(new StackVMBoxImpl(vm));
@@ -842,7 +848,7 @@
 		type='push_global_object';
 		/**
 		 * @arg {StackVM} vm
-		 * @param {import("types/vm/instruction/mod.js").push.PushGlobalObj} _i
+		 * @param {import("types/vm/instruction/mod.js").push.GlobalObject} _i
 		 */
 		run(vm, _i){
 			vm.stack.push(new WindowBoxImpl(window));
@@ -870,9 +876,13 @@
 			if(this.debug)console.log('VM: peek', ins, 'value', at, 'index', offset, vm.stack.length-offset);
 		}
 	}
+	/**@typedef {import("types/vm/instruction/mod.js").InstructionImplObj<"append", import("types/vm/instruction/mod.js").IAppendImpl, import("types/vm/instruction/Append.js").Append>} IInstructionAppendImplIns */
+	/**@implements {IInstructionAppendImplIns} */
 	class InstructionAppendImpl extends InstructionImplBase {
-		/**@type {'append'} */
-		type='append';
+		/**
+		 * @type {"append"}
+		 */
+		type = "append";
 		/**
 		 * @arg {StackVM} vm
 		 * @param {import("types/vm/instruction/mod.js").Append} _i
@@ -900,8 +910,8 @@
 		}
 	}
 	class InstructionPushArgsImpl extends InstructionImplBase {
-		/**@type {'push_args'} */
-		type='push_args';
+		/**@type {'vm_push_args'} */
+		type='vm_push_args';
 		/**
 		 * @arg {StackVM} _vm
 		 * @param {any} _i
@@ -979,7 +989,15 @@
 	class InstructionBlockTraceImpl extends InstructionImplBase {
 		/**@type {'vm_block_trace'} */
 		type='vm_block_trace';
+		/**
+		 * @arg {StackVM} _vm
+		 * @arg {import("types/vm/instruction/mod.js").vm.BlockTrace} _i
+		 */
+		run(_vm, _i){
+		}
 	}
+	/**@type {[InstructionList[0][0], InstructionList[0][1]]} */
+	let i0=['append', InstructionAppendImpl];
 	/**@type {InstructionList} */
 	const instruction_descriptor_arr=[
 		['append', InstructionAppendImpl],
@@ -993,19 +1011,18 @@
 		['halt', InstructionHaltImpl],
 		['je', InstructionJeImpl],
 		['jmp', InstructionJmpImpl],
-		['modify_op', InstructionModifyOpImpl],
+		['modify_operand', InstructionModifyOpImpl],
 		['nop', InstructionNopImpl],
 		['peek', InstructionPeekImpl],
-		['push', InstructionPushImpl],
-		['push_args', InstructionPushArgsImpl],
 		['push_global_object', InstructionPushGlobalObjectImpl],
-		['push_ip', InstructionPushInstructionPtrImpl],
-		['push_this', InstructionPushVMObjImpl],
+		['push', InstructionPushImpl],
 		['return', InstructionReturnImpl],
-		['vm_call', InstructionVMCallImpl],
-		['vm_return', InstructionVMReturnImpl],
-		// special nop that shows where the function id changed
 		['vm_block_trace', InstructionBlockTraceImpl],
+		['vm_call', InstructionVMCallImpl],
+		['vm_push_args', InstructionPushArgsImpl],
+		['vm_push_ip', InstructionVMPushIPImpl],
+		['vm_push_self', InstructionPushVMObjImpl],
+		['vm_return', InstructionVMReturnImpl],
 	];
 	class StackVM {
 		/**@type {Box} */
@@ -1034,20 +1051,47 @@
 		}
 		/**@arg {InstructionList} instruction_desc_arr */
 		create_instruction_map(instruction_desc_arr){
-			/**@type {{[X in import("types/vm/instruction/mod.js").InstructionOpcodesList[number]]?:import("types/vm/instruction/mod.js").InstructionImplMap[X]}} */
-			let instruction_map_obj={};
-			for(let i=0;i<instruction_desc_arr.length;i++){
-				let cur_ins=instruction_desc_arr[i];
-				switch(cur_ins[0]){
-					default:{
-						let [name, class_]=cur_ins;
-						instruction_map_obj[name]=new class_;
-					} break;
+			let cur=instruction_desc_arr[0];
+			/**
+			 * @param {"append"} key
+			 * @param {import("types/vm/instruction/mod.js").InstructionImplObj<"append", import("types/vm/instruction/mod.js").IAppendImpl, import("types/vm/instruction/Append.js").Append>} value
+			 */
+			function add_data_start(key, value) {
+				let ret={[key]:value};
+				return ret;
+			}
+			let instruction_map_obj=add_data_start(cur[0], new cur[1]);
+			let cur_1=instruction_desc_arr[1];
+			/**
+			 * @param {'breakpoint' | 'call'} key
+			 * @param {number} idx
+			 * @param {{ append: import("types/vm/instruction/mod.js").InstructionImplObj<"append", import("types/vm/instruction/mod.js").IAppendImpl, import("types/vm/instruction/Append.js").Append>; }} obj
+			 * @param {import("types/vm/instruction/mod.js").InstructionImplObj<"breakpoint", import("types/vm/instruction/mod.js").IBreakpointImpl, import("../../../types/vm/instruction/debug/Breakpoint.js").Breakpoint>} value
+			 * @param {{ (nx: any): void; (arg0: any): void; }} next_step
+			 */
+			function add_data_s1(idx, obj, key, value, next_step){
+				if(idx === 1){
+					if(key === 'breakpoint' && value.type === 'breakpoint') {
+						let instruction_map_obj={...obj, [key]:value};
+						next_step(instruction_map_obj);
+					}
+				}
+				if(idx === 2 && key === 'call' && value.type === 'call') {
+					let instruction_map_obj={...obj, [key]:value};
+					next_step(instruction_map_obj);
 				}
 			}
-			if(this.is_all_set(instruction_map_obj)){
-				return instruction_map_obj;
+			add_data_s1(1, instruction_map_obj, cur_1[0], new cur_1[1], function(nx){
+				let cur=instruction_desc_arr[2];
+				// add_data_s1(2, nx, cur[0], new cur[1], function(n2){
+				// 	n2;
+				// });
+			});
+			for(let i=0;i<instruction_desc_arr.length;i++){
+				let cur_ins=instruction_desc_arr[i];
+				instruction_map_obj={[cur_ins[0]]:new cur_ins[1], ...instruction_map_obj}
 			}
+			return instruction_map_obj;
 		}
 		/**@arg {InstructionType[]} instructions */
 		constructor(instructions){
@@ -1094,21 +1138,11 @@
 		 * @param {import("types/vm/instruction/mod.js").InstructionOpcodesList[number]} opcode
 		 */
 		get_instruction(opcode){
-			if(opcode === 'get'){
-				return this.instruction_map_obj?.[opcode];
-			}
+			return this.instruction_map_obj[opcode];
 		}
 		/** @arg {InstructionType} instruction */
 		execute_instruction(instruction) {
 			let run=this.get_instruction(instruction[0]);
-			if(!run || (run && run.run === void 0)) {
-				if(run){
-					console.log('need an instruction runner object', run);
-				} else {
-					console.log('need an instruction runner for', instruction);
-				}
-				throw new Error("Need instruction: "+instruction[0]);
-			}
 			run.run(this, instruction);
 		}
 		run() {
@@ -3634,7 +3668,6 @@
 		if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);else tonext(res);
 	}
 	const auto_buy_obj=new AutoBuy;
-	/**@implements {AsyncTriggerT} */
 	class AsyncTrigger {
 		m_set_flag;
 		/** @type {null} */
