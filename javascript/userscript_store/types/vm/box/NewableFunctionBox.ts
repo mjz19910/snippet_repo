@@ -1,4 +1,4 @@
-import NewableFactory from "../NewableFactory";
+import NewableFactory from "../NewableFunction";
 import {Box} from "./Box";
 import BoxTemplate from "./BoxTemplate";
 import ObjectBox from "./ObjectBox";
