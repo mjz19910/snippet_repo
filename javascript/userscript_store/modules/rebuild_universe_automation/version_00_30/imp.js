@@ -20,4 +20,7 @@
  * @typedef {import("./support.js").VoidBox} VoidBox
  * @typedef {import("./support.js").VoidPromiseBox} VoidPromiseBox
  * @typedef {import("./support.js").WindowBox} WindowBox
+ * @typedef {import("./support.js").InstructionList} InstructionList
+ * @typedef {[number, ...(InstructionType|['vm_call_at', InstructionType])]} DomInstructionType
+ * @typedef {DomInstructionType[][]} DomInstructionStack
  */
