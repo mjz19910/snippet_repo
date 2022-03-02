@@ -228,7 +228,7 @@ export class ecma_12_7 extends ecma_base {
 			s_two_char_tokens.set("-=", TokenType.MinusEquals);
 			// *= is OtherPunctuator
 			s_two_char_tokens.set("*=", TokenType.AsteriskEquals);
-			// /= needs special handling
+			// /= is DivPunctuator
 			s_two_char_tokens.set("/=", TokenType.SlashEquals);
 			// %= is OtherPunctuator
 			s_two_char_tokens.set("%=", TokenType.PercentEquals);
@@ -310,7 +310,7 @@ export class ecma_12_7 extends ecma_base {
 			s_single_char_tokens.set(',', TokenType.Comma);
 			// { is OtherPunctuator
 			s_single_char_tokens.set('{', TokenType.CurlyOpen);
-			// } needs special handling
+			// } is RightBracePunctuator
 			s_single_char_tokens.set('}', TokenType.CurlyClose);
 			// = is OtherPunctuator
 			s_single_char_tokens.set('=', TokenType.Equals);
@@ -334,7 +334,7 @@ export class ecma_12_7 extends ecma_base {
 			s_single_char_tokens.set('?', TokenType.QuestionMark);
 			// ; is OtherPunctuator
 			s_single_char_tokens.set(';', TokenType.Semicolon);
-			// / needs special handling
+			// / is DivPunctuator
 			s_single_char_tokens.set('/', TokenType.Slash);
 			// ~ is OtherPunctuator
 			s_single_char_tokens.set('~', TokenType.Tilde);
