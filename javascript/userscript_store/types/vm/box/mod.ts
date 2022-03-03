@@ -13,14 +13,15 @@ import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
 import {MediaListBox} from "./MediaListBox";
 import {NewableFunctionBox} from "./NewableFunctionBox";
 import {NodeBox} from "./NodeBox";
-import ObjectBox from "./ObjectBox";
-import StackVMBox from "./StackVMBox";
+import {ObjectBox} from "./ObjectBox";
+import {StackVMBox} from "./StackVMBox";
 import {TemporaryBox} from "./TemporaryBox";
-import VoidBox from "./VoidBox";
-import VoidPromiseBox from "./promise/VoidPromiseBox";
+import {VoidBox} from "./VoidBox";
+import {VoidPromiseBox} from "./promise/VoidPromiseBox";
 import {WindowBox} from "./WindowBox";
 import {PromiseBox} from "./promise/PromiseBox";
 import {BoxWithType} from "./BoxWithType";
+import {Box} from "./Box";
 
 export {
 	ArrayBox,
