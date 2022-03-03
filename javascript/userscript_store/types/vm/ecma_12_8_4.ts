@@ -136,7 +136,7 @@ export class ecma_12_8_4 extends ecma_base {
 		out = this.LegacyOctalEscapeSequence(str, index);
 		if(out[0]) return [true, out[1]];
 		// NonOctalDecimalEscapeSequence
-		let non_oct_len: 1 | undefined = this.NonOctalDecimalEscapeSequence(str, index);
+		let non_oct_len: 1 | 0 = this.NonOctalDecimalEscapeSequence(str, index);
 		if(non_oct_len) {
 			let len_ty: 1 = non_oct_len;
 			return [true, len_ty];
@@ -271,10 +271,11 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return 0;
 	}
-	NonOctalDecimalEscapeSequence(str: string, index: number) {
+	NonOctalDecimalEscapeSequence(str: string, index: number):1|0 {
 		if(str[index] === '8' || str[index] === '9') {
 			return 1;
 		}
+		return 0;
 	}
 	HexEscapeSequence(str: string, index: number): ecma_return_type {
 		let len = 0;

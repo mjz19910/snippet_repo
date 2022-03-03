@@ -13,6 +13,7 @@ export class ecma_12_6 extends ecma_base {
 	}
 	static IdentifierName_not_start_regex=/[0-9a-zA-Z$_]+/;
 	IdentifierName(str:string, index:number):ecma_return_type {
+		console.log('IdentifierName', str[index], index);
 		let res = this.IdentifierStart(str, index);
 		if(!res[0])return [null, 0];
 		let [, id_start_len]=res;
@@ -62,12 +63,14 @@ export class ecma_12_6 extends ecma_base {
 }
 
 export function run_tests(){
+	console.log('run tests ecma 12.6');
 	let code=`(function(){let the_var=12;})`;
 	let test_2_code=`(class {#name=12;get name(){return this.#name}})`;
 	let js_r1=eval(code);
 	let js_r2=eval(test_2_code);
 	let dispatcher=new Dispatcher;
 	let term_lexer=new ecma_terminal(dispatcher);
-	let res=term_lexer.InputElementDiv(code, 0);
+	let res=term_lexer.InputElementRegExpOrTemplateTail(code, 0);
 	console.log(res);
+	console.log('Success');
 }

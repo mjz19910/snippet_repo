@@ -1,4 +1,4 @@
-import {DispatcherType} from "types/vm/DispatcherType.js";
+import {DispatcherType} from "./DispatcherType.js";
 import {ecma_12_2} from "./ecma_12_2";
 import {ecma_12_3} from "./ecma_12_3";
 import {ecma_12_4} from "./ecma_12_4";

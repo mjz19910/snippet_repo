@@ -1,3 +1,4 @@
+import {FlyString} from "./AK/FlyString";
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
@@ -384,7 +385,6 @@ export class ecma_12_7 extends ecma_base {
 		let result: string | null = null;
 		s_three_char_tokens.iterate(function(key, value) {
 			// I think all the 3 char tokens are valid as OtherPunctuator productions
-			console.log('iter', key, value);
 			if(str.startsWith(key, index)) {
 				result = key;
 				return IterationDecision.Break;
@@ -396,7 +396,6 @@ export class ecma_12_7 extends ecma_base {
 		s_two_char_tokens.iterate(function(key, value) {
 			// skip DivPunctuator with length 2
 			if(key === '/=') return IterationDecision.Continue;
-			console.log('iter', key, value);
 			// TODO: exclude some tokens that are parsed elsewhere
 			if(str.startsWith(key, index)) {
 				result = key;
@@ -411,7 +410,6 @@ export class ecma_12_7 extends ecma_base {
 			if(key === '/') return IterationDecision.Continue;
 			// skip a RightBracePunctuator
 			if(key === '{}'[1]) return IterationDecision.Continue;
-			console.log('iter', key, value);
 			if(str[index] === key) {
 				result = key;
 				return IterationDecision.Break;
