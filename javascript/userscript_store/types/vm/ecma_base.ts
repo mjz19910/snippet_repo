@@ -1,5 +1,7 @@
 import {Dispatcher} from "./Dispatcher";
 
+export const debug_flag_override=false;
+
 export class ecma_base {
 	type:"ecma_base"="ecma_base";
 	m_dispatcher:Dispatcher;

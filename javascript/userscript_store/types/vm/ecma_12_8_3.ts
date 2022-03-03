@@ -205,6 +205,18 @@ export class ecma_12_8_3 extends ecma_base {
 		}
 		return [null, 0];
 	}
+	/*bool Lexer::is_numeric_literal_start() const
+	{
+		return is_ascii_digit(m_current_char) || (m_current_char == '.' && m_position < m_source.length() && is_ascii_digit(m_source[m_position]));
+	}*/
+	is_numeric_literal_start(){
+		return is_ascii_digit(this.m_current_char) ||
+		(
+			this.m_current_char == '.' &&
+			this.m_position < this.m_source.length &&
+			is_ascii_digit(this.m_source[this.m_position])
+		);
+	}
 	/*
 	// C++ from SerenityOS's LibJS Lexer::next()
 	if (is_numeric_literal_start()) {
@@ -217,6 +229,9 @@ export class ecma_12_8_3 extends ecma_base {
 		this.m_source = str;
 		this.m_position = index;
 		this.init();
+		if(!this.is_numeric_literal_start()){
+			return [null, 0];
+		}
 		/*if (m_current_char == '0') {
 			// into js
 		}*/

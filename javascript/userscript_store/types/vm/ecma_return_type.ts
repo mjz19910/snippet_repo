@@ -1,4 +1,6 @@
 export type ecma_return_type =
-[string | true | null, number]|
+[string, number]|
+[true, number]|
+[null, number]|
 [['Error', string], number]|
 [false, Error];

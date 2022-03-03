@@ -405,7 +405,7 @@ export class ecma_12_7 extends ecma_base {
 		});
 		if(result) return [true, 2];
 		result = null;
-		s_single_char_tokens.iterate(function(key, value) {
+		s_single_char_tokens.iterate(function(key, _value) {
 			// skip a DivPunctuator with length 1
 			if(key === '/') return IterationDecision.Continue;
 			// skip a RightBracePunctuator
@@ -416,7 +416,9 @@ export class ecma_12_7 extends ecma_base {
 			}
 			return IterationDecision.Continue;
 		});
-		if(result) return ["OtherPunctuator", 1];
+		if(result){
+			return ['OtherPunctuator', 1];
+		}
 		return [null, 0];
 	}
 	DivPunctuator(str: string, index: number):ecma_return_type {

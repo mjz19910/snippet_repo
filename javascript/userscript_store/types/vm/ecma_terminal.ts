@@ -2,6 +2,12 @@ import {ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
 
 export class ecma_terminal extends ecma_base {
+	do_let_parse(str:string, index:number, outputs:ecma_return_type[] = []):ecma_return_type {
+		outputs;
+		let res1=this.InputElementRegExpOrTemplateTail(str, index);
+		console.log(res1);
+		return [null, 0];
+	}
 	InputElementDiv(str:string, index:number) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 		let max_item = null, max_val = 0;
