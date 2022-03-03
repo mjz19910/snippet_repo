@@ -84,7 +84,7 @@ export class ecma_12_4 extends ecma_base {
 	 * @param {number} index
 	 * @returns {number}
 	 */
-	PostAsteriskCommentChars(str:string, index:number):[boolean, number] {
+	PostAsteriskCommentChars(str:string, index:number):[string, number] {
 		let idxoff = 0;
 		let cxlen = this.MultiLineNotForwardSlashOrAsteriskChar(str, index + idxoff);
 		if(cxlen[0] === null)throw new Error("Parse error");
@@ -92,7 +92,7 @@ export class ecma_12_4 extends ecma_base {
 			idxoff += cxlen[1];
 			let la = this.MultiLineCommentChars(str, index + idxoff);
 			idxoff += la[1];
-			return [true, idxoff];
+			return ["PostAsteriskCommentChars", idxoff];
 		}
 		if(cxlen[1] === 0) {
 			if(str[index + idxoff] === '*') {
@@ -100,36 +100,24 @@ export class ecma_12_4 extends ecma_base {
 				let len = this.PostAsteriskCommentChars(str, index + idxoff);
 				if(!len[0])throw new Error("Recursive call to PostAsteriskCommentChars failed");
 				if(len[0] && len[1] > 0) {
-					return [true, len[1] + idxoff];
+					return ["PostAsteriskCommentChars", len[1] + idxoff];
 				}
 			}
 		}
-		return [true, idxoff];
+		return ["PostAsteriskCommentChars", idxoff];
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	MultiLineNotAsteriskChar(str:string, index:number):[string|null, number] {
 		if(str[index] !== '*') {
 			return [str[index], 1];
 		}
 		return [null, 0];
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	MultiLineNotForwardSlashOrAsteriskChar(str:string, index:number):[string|null, number] {
 		if(str[index] === '*' || str[index] === '/') {
 			return [null, 0];
 		}
 		return [str[index], 1];
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	SingleLineComment(str:string, index:number):[string|null, number] {
 		if(str.slice(index, index + 2) === '//') {
 			let comment_length = this.SingleLineCommentChars(str, index + 2);
@@ -138,11 +126,10 @@ export class ecma_12_4 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	/**
-	 * @param {string | any[]} str
-	 * @param {number} index
-	 */
-	SingleLineCommentChars(str:string, index:number):[boolean, number] {
+	SingleLineCommentChars(str:string, index:number):[string|null, number] {
+		if(index >= str.length){
+			return [null, 0];
+		}
 		let s_index = index;
 		while(str[s_index] !== '\n') {
 			s_index++;
@@ -150,6 +137,6 @@ export class ecma_12_4 extends ecma_base {
 				break;
 			}
 		}
-		return [true, s_index - index];
+		return ["SingleLineCommentChars", s_index - index];
 	}
 }

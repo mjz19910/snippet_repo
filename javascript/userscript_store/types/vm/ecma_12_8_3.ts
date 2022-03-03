@@ -7,6 +7,7 @@ type bool = boolean;
 enum TokenType {
 	Invalid,
 	BigIntLiteral,
+	NumericLiteral
 }
 
 // static constexpr bool is_octal_digit(char ch)
@@ -16,6 +17,7 @@ function is_octal_digit(ch: string): bool {
 }
 
 export class ecma_12_8_3 extends ecma_base {
+	result_error_token: ['Error', string]|null=null;
 	/*HexDigits[Sep] */
 	// https://tc39.es/ecma262/#prod-HexDigits
 	HexDigits(str: string, index: number): ecma_return_type {
@@ -23,7 +25,7 @@ export class ecma_12_8_3 extends ecma_base {
 		cur = this.HexDigit(str, index);
 		let nx = this.HexDigit(str, index);
 		if(cur[0] && cur[1] > 0 && (!nx[0])) {
-			return [true, 1];
+			return ["HexDigits", 1];
 		}
 		// HexDigit
 		// HexDigits[?Sep] HexDigit
@@ -31,7 +33,7 @@ export class ecma_12_8_3 extends ecma_base {
 		if(cur[0] && cur[1]) {
 			nx = this.HexDigit(str, index);
 			if(nx[0] && nx[1] > 0) {
-				return [true, cur[1] + nx[1]];
+				return ["HexDigits", cur[1] + nx[1]];
 			}
 		}
 		// [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
@@ -43,14 +45,14 @@ export class ecma_12_8_3 extends ecma_base {
 		let cur = this.HexDigit(str, index);
 		let nx = this.HexDigit(str, index);
 		if(cur[0] && cur[1] > 0 && (!nx[0])) {
-			return [true, 1];
+			return ["HexDigits_Sep", 1];
 		}
 		// HexDigits[?Sep] HexDigit
 		cur = this.HexDigits_Sep(str, index);
 		if(cur[0] && cur[1]) {
 			nx = this.HexDigits_Sep(str, index);
 			if(nx[0] && nx[1] > 0) {
-				return [true, cur[1] + nx[1]];
+				return ["HexDigits_Sep", cur[1] + nx[1]];
 			}
 		}
 		// [+Sep] HexDigits[+Sep] NumericLiteralSeparator HexDigit
@@ -60,7 +62,7 @@ export class ecma_12_8_3 extends ecma_base {
 			if(nx[0] && nx[1] > 0) {
 				let n3 = this.HexDigit(str, index + cur[1] + nx[1]);
 				if(n3[0] && n3[1] > 0) {
-					return [true, cur[1] + nx[1] + n3[1]];
+					return ["HexDigits_Sep", cur[1] + nx[1] + n3[1]];
 				}
 			}
 		}
@@ -168,7 +170,8 @@ export class ecma_12_8_3 extends ecma_base {
 
 	m_current_char = m_source[m_position++];
 	 */
-		this.m_current_char = this.m_source[this.m_position++];
+		this.m_position++;
+		this.m_current_char = this.m_source[this.m_position];
 	}
 	m_current_char_() {
 		return this.m_current_char;
@@ -198,52 +201,29 @@ export class ecma_12_8_3 extends ecma_base {
 	}
 	DecimalDigit(str: string, index: number): ecma_return_type {
 		if(str.charCodeAt(index) >= 48 && str.charCodeAt(index) <= 57) {
-			return [true, 1];
+			return ["DecimalDigit", 1];
 		}
 		return [null, 0];
 	}
+	/*
+	// C++ from SerenityOS's LibJS Lexer::next()
+	if (is_numeric_literal_start()) {
+	*/
 	NumericLiteral(str: string, index: number): ecma_return_type {
-		/*token_type = TokenType::NumericLiteral;
-		bool is_invalid_numeric_literal = false;
-		*/
+		// token_type = TokenType::NumericLiteral;
+		this.token_type = TokenType.NumericLiteral;
+		// bool is_invalid_numeric_literal = false;
 		let is_invalid_numeric_literal = false;
 		this.m_source = str;
 		this.m_position = index;
 		this.init();
 		/*
-		// C++ from SerenityOS
-	if (is_numeric_literal_start()) {
 		// to_js
-		if (m_current_char == '0') {
-			// into js
-		} else {
-			// 1...9 or period
-			while (is_ascii_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_ascii_digit))
-				consume();
-			if (m_current_char == 'n') {
-				consume();
-				token_type = TokenType::BigIntLiteral;
-			} else {
-				if (m_current_char == '.') {
-					consume();
-					if (m_current_char == '_')
-						is_invalid_numeric_literal = true;
-
-					while (is_ascii_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_ascii_digit)) {
-						consume();
-					}
-				}
-				if (m_current_char == 'e' || m_current_char == 'E')
-					is_invalid_numeric_literal = is_invalid_numeric_literal || !consume_exponent();
-			}
-		}
-		if (is_invalid_numeric_literal) {
-			token_type = TokenType::Invalid;
-			token_message = "Invalid numeric literal";
-		}
-    
 		*/
-		if(this.m_current_char === '0') {
+		/*if (m_current_char == '0') {
+			// into js
+		}*/
+		if(this.m_current_char_() === '0') {
 			this.consume();
 			// typechecking failed us, need to use a
 			// function return type to indirectly access
@@ -290,23 +270,54 @@ export class ecma_12_8_3 extends ecma_base {
 					consume();
 					token_type = TokenType::BigIntLiteral;
 				}
-			} else if (m_current_char == 'x' || m_current_char == 'X') {
+			}*/
+			else if (this.m_current_char_() == 'b' || this.m_current_char_() == 'B') {
+				// binary
+				is_invalid_numeric_literal = !this.consume_binary_number();
+				if (this.m_current_char_() == 'n') {
+					this.consume();
+					this.token_type = TokenType.BigIntLiteral;
+				}
+			}
+			/*else if (m_current_char == 'x' || m_current_char == 'X') {
 				// hexadecimal
 				is_invalid_numeric_literal = !consume_hexadecimal_number();
 				if (m_current_char == 'n') {
 					consume();
 					token_type = TokenType::BigIntLiteral;
 				}
-			} else if (m_current_char == 'n') {
+			}*/
+			else if (this.m_current_char_() == 'x' || this.m_current_char_() == 'X') {
+				// hexadecimal
+				is_invalid_numeric_literal = !this.consume_hexadecimal_number();
+				if (this.m_current_char_() == 'n') {
+					this.consume();
+					this.token_type = TokenType.BigIntLiteral;
+				}
+			} 
+			/*else if (m_current_char == 'n') {
 				consume();
 				token_type = TokenType::BigIntLiteral;
-			} else if (is_ascii_digit(m_current_char)) {
+			}*/
+			else if (this.m_current_char == 'n') {
+				this.consume();
+				this.token_type = TokenType.BigIntLiteral;
+			} 
+			/*else if (is_ascii_digit(m_current_char)) {
 				// octal without '0o' prefix. Forbidden in 'strict mode'
 				do {
 					consume();
 				} while (is_ascii_digit(m_current_char));
+			}*/
+			else if (is_ascii_digit(this.m_current_char)) {
+				// octal without '0o' prefix. Forbidden in 'strict mode'
+				if(this.m_dispatcher.environment_settings.is_strict){
+					this.result_error_token=['Error', "Strict mode violation"];
+				}
+				do {
+					this.consume();
+				} while (is_ascii_digit(this.m_current_char));
 			}
-			*/
 		}
 		/*else {
 			// to_js_block
@@ -360,10 +371,18 @@ export class ecma_12_8_3 extends ecma_base {
 			this.token_message = "Invalid numeric literal";
 		}
 		if(this.token_type === TokenType.Invalid){
-			console.log([this.token_type, this.token_message]);
 			return [null, 0];
 		}
-		return [true, this.m_position - index];
+		if(this.result_error_token){
+			return [this.result_error_token, this.m_position - index];
+		}
+		return [new Error("FIXME") as any, this.m_position - index];
+	}
+	consume_hexadecimal_number():boolean {
+		throw new Error("Method not implemented.");
+	}
+	consume_binary_number():boolean {
+		throw new Error("Method not implemented.");
 	}
 	consume_octal_number() {
 		//consume();
@@ -382,7 +401,7 @@ export class ecma_12_8_3 extends ecma_base {
 	}
 	DecimalLiteral(str: string, index: number): ecma_return_type {
 		if(str[index] === '0') {
-			return [true, 1];
+			return ["DecimalLiteral", 1];
 		}
 		let [, zd_len] = this.NonZeroDigit(str, index);
 		let off = 0;
@@ -394,11 +413,13 @@ export class ecma_12_8_3 extends ecma_base {
 			}
 			let dd_r = this.DecimalDigits(str, index + off);
 			if(!dd_r[0]) throw dd_r[1];
-			return [true, dd_r[1] + off];
+			return ["DecimalLiteral", dd_r[1] + off];
 		}
-		return [true, off];
+		return ["DecimalLiteral", off];
 	}
+	// DecimalDigits[~Sep]
 	DecimalDigits(str: string, index: number): ecma_return_type {
+		// DecimalDigit
 		let off = 0;
 		for(;;) {
 			let [, len] = this.DecimalDigit(str, index + off);
@@ -406,18 +427,35 @@ export class ecma_12_8_3 extends ecma_base {
 				off++;
 				continue;
 			}
+			break;
+		}
+		return ["DecimalDigits", off];
+	}
+	// DecimalDigits[+Sep]
+	DecimalDigits_Sep(str: string, index: number): ecma_return_type {
+		let off = 0;
+		for(;;) {
+			// DecimalDigit
+			let [, len] = this.DecimalDigit(str, index + off);
+			if(len > 0) {
+				off++;
+				// DecimalDigits[?Sep] DecimalDigit
+				continue;
+			}
+			// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
 			let [, s_len] = this.NumericLiteralSeparator(str, index + off);
 			if(s_len > 0) {
 				let [, exl] = this.DecimalDigit(str, index + off + 1);
 				if(exl > 0) {
 					off++;
+					// [+Sep] (DecimalDigits[+Sep]) NumericLiteralSeparator DecimalDigit
 					continue;
 				}
 				break;
 			}
 			break;
 		}
-		return [true, off];
+		return ["DecimalDigits", off];
 	}
 	/**
 	 * @param {string} str
@@ -425,7 +463,7 @@ export class ecma_12_8_3 extends ecma_base {
 	 */
 	NonZeroDigit(str: string, index: number): ecma_return_type {
 		if(str.charCodeAt(index) >= 49 && str.charCodeAt(index) <= 57) {
-			return [true, 1];
+			return ["NonZeroDigit", 1];
 		}
 		return [null, 0];
 	}
@@ -435,35 +473,37 @@ export class ecma_12_8_3 extends ecma_base {
 	 */
 	NumericLiteralSeparator(str: string, index: number): ecma_return_type {
 		if(str[index] === '_') {
-			return [true, 1];
+			return ["NumericLiteralSeparator", 1];
 		}
 		return [null, 0];
 	}
-	/*DecimalIntegerLiteral ::
-	0
-	NonZeroDigit
-	NonZeroDigit NumericLiteralSeparator[opt] DecimalDigits[+Sep]
-	NonOctalDecimalIntegerLiteral
-	  */
+	// https://tc39.es/ecma262/#prod-DecimalIntegerLiteral
 	DecimalIntegerLiteral(str: string, index: number) {
 		let len = 0;
+		// 0
 		if(str[index] === '0') {
 			len++;
 		}
-		let tmp = this.NonZeroDigit(str, index);
-		if(tmp[0] && tmp[1] > 0) {
-			len++;
-		} else {
-
-		}
-		do {
+		x:{
+			// NonZeroDigit
 			let tmp = this.NonZeroDigit(str, index);
-			if(tmp[0] && tmp[1] > 0) {
-				len += tmp[1];
-				continue;
+			if(tmp[0] && tmp[1] > len) {
+				len=tmp[1];
 			}
-			break;
-		} while(true)
+		}
+		// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
+		x:{
+			let tmp_len=0;
+			let tmp=this.NonZeroDigit(str, index + tmp_len);
+			if(tmp[0]){
+				tmp_len+=tmp[1];
+				let t2=this.NumericLiteralSeparator(str, index + tmp_len);
+				if(t2[0]){
+					tmp_len+=t2[1];
+				}
+				this.DecimalDigits_Sep(str, index);
+			}
+		}
 	}
 	NonOctalDecimalIntegerLiteral(str: string, index: number): ecma_return_type {
 		// 0 NonOctalDigit
@@ -472,14 +512,14 @@ export class ecma_12_8_3 extends ecma_base {
 			if(!tmp[0]) {
 				break non_oct;
 			}
-			return [true, 1 + tmp[1]];
+			return ["NonOctalDecimalIntegerLiteral", 1 + tmp[1]];
 		}
 		// LegacyOctalLikeDecimalIntegerLiteral NonOctalDigit
 		let tmp = this.LegacyOctalLikeDecimalIntegerLiteral(str, index);
 		not_int_1: if(tmp[0] === true) {
 			let tmp2 = this.NonOctalDigit(str, index + 1);
 			if(tmp2[0] === true) {
-				return [true, 2];
+				return ["NonOctalDecimalIntegerLiteral", 2];
 			}
 		}
 		throw new Error("Not implemented");
@@ -487,7 +527,7 @@ export class ecma_12_8_3 extends ecma_base {
 	OctalDigit(str: string, index: number): ecma_return_type {
 		// 0 1 2 3 4 5 6 7
 		if(str.charCodeAt(index) >= '0'.charCodeAt(0) && str.charCodeAt(index) <= '7'.charCodeAt(0)) {
-			return [true, 1];
+			return ["OctalDigit", 1];
 		}
 		return [null, 0];
 	}
@@ -503,26 +543,26 @@ export class ecma_12_8_3 extends ecma_base {
 					len++;
 				}
 			}
-			return [true, len + 1];
+			return ["LegacyOctalLikeDecimalIntegerLiteral", len + 1];
 		}
 		let tmp = this.OctalDigit(str, index + 2);
 		throw new Error("Not implemented");
 	}
 	NonOctalDigit(str: string, index: number): ecma_return_type {
 		if(str[index] === '8' || str[index] === '9') {
-			return [true, 1];
+			return ["NonOctalDigit", 1];
 		}
 		return [null, 0];
 	}
 	HexDigit(str: string, index: number): ecma_return_type {
 		if(str.charCodeAt(index) >= '0'.charCodeAt(0) && str.charCodeAt(index) <= '9'.charCodeAt(0)) {
-			return [true, 1];
+			return ["HexDigit", 1];
 		}
 		if(str.charCodeAt(index) >= 'a'.charCodeAt(0) && str.charCodeAt(index) <= 'f'.charCodeAt(0)) {
-			return [true, 1];
+			return ["HexDigit", 1];
 		}
 		if(str.charCodeAt(index) >= 'A'.charCodeAt(0) && str.charCodeAt(index) <= 'F'.charCodeAt(0)) {
-			return [true, 1];
+			return ["HexDigit", 1];
 		}
 		return [null, 0];
 	}

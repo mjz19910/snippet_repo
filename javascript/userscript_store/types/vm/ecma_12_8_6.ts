@@ -45,7 +45,6 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 	// https://tc39.es/ecma262/#prod-TemplateHead
 	TemplateHead(str: string, index: number): ecma_return_type {
-		console.log("TemplateHead");
 		let cur_index = index;
 		// ` TemplateCharacters_opt ${
 		if(str[cur_index] === '`') {
@@ -289,7 +288,7 @@ export class ecma_12_8_6 extends ecma_base {
 		if(tmp[0]) {
 			cur_index += tmp[1];
 		}
-		while(tmp[0] !== false) {
+		while(tmp[0] !== false && cur_index < str.length) {
 			tmp = this.TemplateCharacter(str, cur_index);
 			if(tmp[0]) {
 				cur_index += tmp[1];
@@ -301,7 +300,6 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 	// https://tc39.es/ecma262/#prod-Template
 	public NoSubstitutionTemplate(str: string, index: number): ecma_return_type {
-		console.log("NoSubstitutionTemplate");
 		let cur_index = index;
 		//` TemplateCharacters opt `
 		if(str[cur_index] === '`') {

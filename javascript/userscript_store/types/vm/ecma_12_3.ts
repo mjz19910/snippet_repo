@@ -22,14 +22,14 @@ export class ecma_12_3 extends ecma_base {
 	LineTerminatorSequence(str:string, index:number): ecma_return_type {
 		let len;
 		// <LF>
-		if(str[index] === '\u000a')return [true, 1];
+		if(str[index] === '\u000a')return ["LineTerminatorSequence", 1];
 		// <CR> [lookahead ≠ <LF>]
-		if(str[index] === '\u000d' && str[index + 1] !== '\u000a')return [true, 1];
+		if(str[index] === '\u000d' && str[index + 1] !== '\u000a')return ["LineTerminatorSequence", 1];
 		// <LS>
-		if(str[index] === '\u2028')return [true, 1];
-		if(str[index] === '\u2029')return [true, 1];
+		if(str[index] === '\u2028')return ["LineTerminatorSequence", 1];
+		if(str[index] === '\u2029')return ["LineTerminatorSequence", 1];
 		// <CR> <LF>
-		if(str[index] === '\r' && str[index+1] === '\n')return [true, 2];
+		if(str[index] === '\r' && str[index+1] === '\n')return ["LineTerminatorSequence", 2];
 		return [null, 0];
 	}
 }

@@ -5,7 +5,6 @@ export class ecma_terminal extends ecma_base {
 	InputElementDiv(str:string, index:number) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 		let max_item = null, max_val = 0;
-		let rb_len, item, tree;
 		let cur_res = this.m_dispatcher.WhiteSpace(str, index);
 		if(cur_res[0] && cur_res[1] > max_val) {
 			//max_item = 'whitespace';

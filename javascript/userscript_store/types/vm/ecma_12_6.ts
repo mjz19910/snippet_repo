@@ -9,18 +9,31 @@ export class ecma_12_6 extends ecma_base {
 			return [null, 0];
 		let cur = this.IdentifierName(str, index + 1);
 		if(!cur[0]) return [null, 0];
-		return [true, cur[1] + 1];
+		return ["PrivateIdentifier", cur[1] + 1];
 	}
 	static IdentifierName_not_start_regex = /[0-9a-zA-Z$_]+/g;
 	IdentifierName(str: string, index: number): ecma_return_type {
-		console.log('IdentifierName', str[index], index);
 		let res = this.IdentifierStart(str, index);
-		if(!res[0]) return [null, 0];
+		if(!res[0]){
+			console.log('not IdentifierName', str[index]);
+			return [null, 0];
+		}
 		let [, id_start_len] = res;
 		ecma_12_6.IdentifierName_not_start_regex.lastIndex = index + id_start_len;
 		let id_continue_match = ecma_12_6.IdentifierName_not_start_regex.exec(str);
-		console.log(id_continue_match);
-		if(id_continue_match) throw new Error("TODO");
+		if(!id_continue_match){
+			console.log('IdentifierName is start only', str.slice(index, index+id_start_len));
+			return ["IdentifierName", id_start_len];
+		}
+		let id_continue_len=0;
+		if(id_continue_match.index == index + id_start_len){
+			id_continue_len=id_continue_match[0].length;
+		}
+		console.log(str[index] + id_continue_match[0], id_continue_len);
+		if(id_continue_len > 0){
+			console.log('IdentifierName with continue', str.slice(index, index+id_start_len+id_continue_len));
+			return ["IdentifierName", id_start_len+id_continue_len];
+		}
 		return [null, 0];
 	}
 	static id_continue_regex = /[a-zA-Z$_0-9]/;
@@ -28,16 +41,16 @@ export class ecma_12_6 extends ecma_base {
 	IdentifierStart(str: string, index: number): ecma_return_type {
 		if(str[index] === '\\') {
 			let res = this.m_dispatcher.UnicodeEscapeSequence(str, index + 1);
-			if(res[0]) return [true, res[1] + 1];
+			if(res[0]) return ["IdentifierStart", res[1] + 1];
 		}
 		if(str[index].match(ecma_12_6.id_start_regex)) {
-			return [true, 1];
+			return ["IdentifierStart", 1];
 		}
 		return [null, 0];
 	}
 	IdentifierPart(str: string, index: number): ecma_return_type {
 		if(str[index].match(ecma_12_6.id_continue_regex)) {
-			return [true, 1];
+			return ["IdentifierPart", 1];
 		}
 		return [null, 0];
 	}
@@ -46,14 +59,14 @@ export class ecma_12_6 extends ecma_base {
 		// UnicodeIDContinue
 		// FIXME: this is adhoc, it will break when tokenizing non ascii
 		if(str[index].match(ecma_12_6.id_continue_regex)) {
-			return [true, 1];
+			return ["IdentifierPartChar", 1];
 		}
 		// $
-		if(str[index] === '$') return [true, 1];
+		if(str[index] === '$') return ["IdentifierPartChar", 1];
 		// <ZWNJ>
-		if(str[index] === '\u200C') return [true, 1];
+		if(str[index] === '\u200C') return ["IdentifierPartChar", 1];
 		// <ZWJ>
-		if(str[index] === '\u200D') return [true, 1];
+		if(str[index] === '\u200D') return ["IdentifierPartChar", 1];
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-UnicodeIDContinue
@@ -74,14 +87,27 @@ export async function run_tests() {
 	let dispatcher = new Dispatcher;
 	let term_lexer = new ecma_terminal(dispatcher);
 	let cur_index = 0;
-	let res = term_lexer.InputElementRegExpOrTemplateTail(code, 0);
 	let res_arr = [];
+	let res = term_lexer.InputElementRegExpOrTemplateTail(code, 0);
+	if(res[0]){
+		cur_index+=res[1];
+	}
+	res_arr.push(res);
 	while(res[0]) {
 		res = term_lexer.InputElementRegExpOrTemplateTail(code, cur_index);
+		res_arr.push(res);
 		if(res[0]) {
 			cur_index += res[1];
 		}
 	}
-	console.log(res);
+	cur_index=0;
+	console.log(res_arr.map(e=>{
+		if(e[0]){
+			let ret=[e[0], code.slice(cur_index, cur_index+e[1])];
+			cur_index+=e[1];
+			return ret;
+		}
+		return ['End (null)', 0, code[cur_index]];
+	}));
 	console.log('Success');
 }

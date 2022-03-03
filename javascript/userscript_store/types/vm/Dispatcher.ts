@@ -121,8 +121,30 @@ class ecma_12_8_5 extends ecma_base {
 	};
 }
 
+export type EnvSettingsType = {
+	type: 'environment_settings';
+	is_strict: boolean;
+};
+
+export type DispatcherIndexType = ((str: string, index: number) => ecma_return_type) | ecma_base | EnvSettingsType;
+
 export class Dispatcher implements DispatcherType {
-	DivPunctuator(str:string, index:number){
+	ecma_12_2: ecma_12_2=new ecma_12_2(this);
+	ecma_12_3: ecma_12_3=new ecma_12_3(this);
+	ecma_12_4: ecma_12_4=new ecma_12_4(this);
+	ecma_12_5: ecma_12_5=new ecma_12_5(this);
+	ecma_12_6: ecma_12_6=new ecma_12_6(this);
+	ecma_12_7: ecma_12_7=new ecma_12_7(this);
+	ecma_12_8_3: ecma_12_8_3=new ecma_12_8_3(this);
+	ecma_12_8_4: ecma_12_8_4=new ecma_12_8_4(this);
+	ecma_12_8_5: ecma_12_8_5=new ecma_12_8_5(this);
+	ecma_12_8_6: ecma_12_8_6=new ecma_12_8_6(this);
+	[x: string]: DispatcherIndexType;
+	environment_settings: EnvSettingsType = {
+		type: 'environment_settings',
+		is_strict: false,
+	};
+	DivPunctuator(str: string, index: number) {
 		return this.ecma_12_7.DivPunctuator(str, index);
 	}
 	CommonToken(str: string, index: number) {
@@ -137,17 +159,6 @@ export class Dispatcher implements DispatcherType {
 	HexDigits(str: string, index: number) {
 		return this.ecma_12_8_3.HexDigits(str, index);
 	}
-	[x: string]: ((str: string, index: number) => ecma_return_type) | ecma_base;
-	ecma_12_2: ecma_12_2 = new ecma_12_2(this);
-	ecma_12_3: ecma_12_3 = new ecma_12_3(this);
-	ecma_12_4: ecma_12_4 = new ecma_12_4(this);
-	ecma_12_5: ecma_12_5 = new ecma_12_5(this);
-	ecma_12_6: ecma_12_6 = new ecma_12_6(this);
-	ecma_12_7: ecma_12_7 = new ecma_12_7(this);
-	ecma_12_8_3: ecma_12_8_3 = new ecma_12_8_3(this);
-	ecma_12_8_4: ecma_12_8_4 = new ecma_12_8_4(this);
-	ecma_12_8_5: ecma_12_8_5 = new ecma_12_8_5(this);
-	ecma_12_8_6: ecma_12_8_6 = new ecma_12_8_6(this);
 	IdentifierName(str: string, index: number) {
 		return this.ecma_12_6.IdentifierName(str, index);
 	}
@@ -167,7 +178,6 @@ export class Dispatcher implements DispatcherType {
 		return this.ecma_12_8_4.StringLiteral(str, index);
 	}
 	Template(str: string, index: number) {
-		console.log('Template');
 		return this.ecma_12_8_6.Template(str, index);
 	}
 	LineTerminator(str: string, index: number) {
