@@ -9,10 +9,6 @@ enum TokenType {
 	BigIntLiteral,
 }
 
-function consume_exponent() {
-
-}
-
 // static constexpr bool is_octal_digit(char ch)
 function is_octal_digit(ch: string): bool {
 	return ch.charCodeAt(0) >= '0'.charCodeAt(0) &&
@@ -23,8 +19,6 @@ export class ecma_12_8_3 extends ecma_base {
 	/*HexDigits[Sep] */
 	// https://tc39.es/ecma262/#prod-HexDigits
 	HexDigits(str: string, index: number): ecma_return_type {
-		let max_len = 0;
-		let lex_res = null;
 		let cur;
 		cur = this.HexDigit(str, index);
 		let nx = this.HexDigit(str, index);
@@ -82,6 +76,10 @@ export class ecma_12_8_3 extends ecma_base {
 	m_source!: string;
 	m_position!: number;
 	m_current_char!: string;
+	m_initialized=false;
+	init(){
+		this.m_current_char=this.m_source[this.m_position];
+	}
 	consume() {
 		/*    auto did_reach_eof = [this] {
 		if (m_position < m_source.length())
@@ -211,6 +209,7 @@ export class ecma_12_8_3 extends ecma_base {
 		let is_invalid_numeric_literal = false;
 		this.m_source = str;
 		this.m_position = index;
+		this.init();
 		/*
 		// C++ from SerenityOS
 	if (is_numeric_literal_start()) {
@@ -360,7 +359,11 @@ export class ecma_12_8_3 extends ecma_base {
 			this.token_type = TokenType.Invalid;
 			this.token_message = "Invalid numeric literal";
 		}
-		throw new Error("TODO");
+		if(this.token_type === TokenType.Invalid){
+			console.log([this.token_type, this.token_message]);
+			return [null, 0];
+		}
+		return [true, this.m_position - index];
 	}
 	consume_octal_number() {
 		//consume();

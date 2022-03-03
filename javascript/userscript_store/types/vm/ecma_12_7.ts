@@ -421,7 +421,7 @@ export class ecma_12_7 extends ecma_base {
 		if(result) return ["OtherPunctuator", 1];
 		return [null, 0];
 	}
-	DivPunctuator(str: string, index: number) {
+	DivPunctuator(str: string, index: number):ecma_return_type {
 		let char_len = 0;
 		// `/`
 		if(str.startsWith('/', index)) {
@@ -436,7 +436,7 @@ export class ecma_12_7 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	RightBracePunctuator(str: string, index: number) {
+	RightBracePunctuator(str: string, index: number):ecma_return_type {
 		if(str[index] === '{}'[1]) {
 			return ['RightBracePunctuator', 1];
 		}

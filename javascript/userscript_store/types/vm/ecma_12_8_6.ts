@@ -309,7 +309,6 @@ export class ecma_12_8_6 extends ecma_base {
 		} else {
 			return [null, 0];
 		}
-		debugger;
 		let opt = this.TemplateCharacters(str, cur_index);
 		if(opt[0] === false)throw opt[1];
 		return ['NoSubstitutionTemplate', cur_index-index + opt[1]];
@@ -325,7 +324,7 @@ export async function run_tests() {
 	`;
 	let res=dispatcher.Template(test_string, test_string.indexOf('`'));
 	if(res[0]){
-		console.log("Success", test_string.slice(test_string.indexOf('`')-1, test_string.indexOf('`') + res[1]), res);
+		console.log("Success", test_string.slice(test_string.indexOf('`')-1, test_string.indexOf('`') + res[1] + 1), res);
 	} else {
 		console.assert(false, "Test failed: ecma_12_8_6 (Template)", res);
 	}
