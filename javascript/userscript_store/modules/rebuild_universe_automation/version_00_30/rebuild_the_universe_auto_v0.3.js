@@ -18,6 +18,8 @@
 // @grant			none
 // ==/UserScript==
 
+import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox, DocumentBox, VoidPromiseBox, AsyncFunctionBox, VoidBox} from "./support.js";
+
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 (function() {
@@ -232,9 +234,9 @@
 			if(to_match === 'object')return this;
 			return null;
 		}
-		/**@type {Promise<Box>} */
+		/**@type {Promise<import("final/BaseBox.js").Box>} */
 		value;
-		/**@arg {Promise<Box>} value */
+		/**@arg {Promise<import("final/BaseBox.js").Box>} value */
 		constructor(value){
 			super(null);
 			this.value=value;
@@ -323,7 +325,7 @@
 		// 	}
 		// }
 		/**
-		 * @arg {Exclude<Box, Primitives>} object_box
+		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} object_box
 		 * @returns {{}|Function|StackVM|null}
 		 */
 		unbox_obj(object_box) {
@@ -378,10 +380,10 @@
 			throw 1;
 		}
 		/**
-		 * @arg {Box[]} arg_arr
+		 * @arg {import("final/BaseBox.js").Box[]} arg_arr
 		 */
 		unbox_arr(arg_arr){
-			/**@type {({} | Function | StackVM | Primitives | null)[]} */
+			/**@type {({} | Function | StackVM | import("./support.js").Primitives | null)[]} */
 			let arr=[];
 			for(let i=0;i<arg_arr.length;i++){
 				let cur=arg_arr[i];
@@ -401,9 +403,9 @@
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @arg {(...a: Box[]) => Box} fn_value
-		 * @arg {Exclude<Box, Primitives>} target_this
-		 * @arg {Box[]} arg_arr
+		 * @arg {(...a: import("final/BaseBox.js").Box[]) => import("final/BaseBox.js").Box} fn_value
+		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} target_this
+		 * @arg {import("final/BaseBox.js").Box[]} arg_arr
 		 */
 		handle_as_fn(vm, fn_value, target_this, arg_arr) {
 			let real_this=this.unbox_obj(target_this);
@@ -421,9 +423,9 @@
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @arg {Exclude<Box, Primitives|null>} fn_obj
-		 * @arg {Exclude<Box, Primitives>} target_this
-		 * @arg {Box[]} arg_arr
+		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives|null>} fn_obj
+		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} target_this
+		 * @arg {import("final/BaseBox.js").Box[]} arg_arr
 		 */
 		handle_as_obj(vm, fn_obj, target_this, arg_arr){
 			if(fn_obj.type === 'temporary_box')throw 1;
@@ -491,9 +493,9 @@
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @arg {TemporaryBox} value_box
-		 * @arg {Exclude<Box, Primitives>} target_this
-		 * @arg {Box[]} arg_arr
+		 * @arg {import("./support.js").TemporaryBox} value_box
+		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} target_this
+		 * @arg {import("final/BaseBox.js").Box[]} arg_arr
 		 */
 		handle_as_temporary_box(vm, value_box, target_this, arg_arr) {
 			if(value_box.source === 'cast'){
@@ -547,7 +549,7 @@
 		type='cast'
 		debug=false;
 		/**
-		 * @type {(vm:StackVM, cast_source:"object_index", value:{[x:string]:Box})=>void}
+		 * @type {(vm:StackVM, cast_source:"object_index", value:{[x:string]:import("final/BaseBox.js").Box})=>void}
 		 */
 		push_box(vm, cast_source, value){
 			vm.stack.push({
@@ -571,7 +573,7 @@
 			// this.push_box(vm, cast_source, obj.value);
 		}
 		/**
-		 * @type {(vm:StackVM, cast_source:'object_index', obj:{value:{[x:string]:Box}})=>void}
+		 * @type {(vm:StackVM, cast_source:'object_index', obj:{value:{[x:string]:import("final/BaseBox.js").Box}})=>void}
 		 * @arg {StackVM} vm @arg {'object_index'} cast_source
 		 */
 		//* @arg {import("types/vm/box/TemporaryBox.js").temporary_box_from_get | import("types/vm/box/TemporaryBox.js").temporary_box_from_call} obj
@@ -595,7 +597,7 @@
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @arg {Exclude<Box, Primitives>} obj
+		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} obj
 		 * @arg {'object_index'} cast_source
 		 * */
 		cast_to_type(vm, obj, cast_source) {
@@ -757,7 +759,7 @@
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @param {Exclude<Box, Primitives|null>} value_box
+		 * @param {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives|null>} value_box
 		 * @param {string|number} key
 		 */
 		on_get(vm, value_box, key){
@@ -999,9 +1001,9 @@
 		run(_vm, _i){
 		}
 	}
-	/**@type {[InstructionList[0][0], InstructionList[0][1]]} */
+	/**@type {[import("./support.js").InstructionList[0][0], import("./support.js").InstructionList[0][1]]} */
 	let i0=['append', InstructionAppendImpl];
-	/**@type {InstructionList} */
+	/**@type {import("./support.js").InstructionList} */
 	const instruction_descriptor_arr=[
 		['append', InstructionAppendImpl],
 		['breakpoint', InstructionBreakpointImpl],
@@ -1028,15 +1030,15 @@
 		['vm_return', InstructionVMReturnImpl],
 	];
 	class StackVM {
-		/**@type {Box} */
+		/**@type {import("final/BaseBox.js").Box} */
 		return_value;
 		/**@type {number|null} */
 		jump_instruction_pointer;
 		/**@type {number|null} */
 		base_ptr;
-		/**@type {Box[]} */
+		/**@type {import("final/BaseBox.js").Box[]} */
 		stack;
-		/**@arg {InstructionList} instruction_desc_arr */
+		/**@arg {import("./support.js").InstructionList} instruction_desc_arr */
 		create_instruction_map(instruction_desc_arr) {
 			let obj={};
 			for(let i=0;i<instruction_desc_arr.length;i++){
@@ -1046,12 +1048,12 @@
 			}
 			return obj;
 		}
-		/**@arg {InstructionType[]} instructions */
+		/**@arg {import("types/vm/instruction/mod.js").InstructionType[]} instructions */
 		constructor(instructions){
 			this.instructions = instructions;
 			this.instruction_pointer = 0;
 			this.running = false;
-			/**@type {Box[]} */
+			/**@type {import("final/BaseBox.js").Box[]} */
 			this.stack=[];
 			this.return_value = void 0;
 			this.jump_instruction_pointer=null;
@@ -1095,7 +1097,7 @@
 			let any_map=this.instruction_map_obj;
 			return any_map[opcode];
 		}
-		/** @arg {InstructionType} instruction */
+		/** @arg {import("types/vm/instruction/mod.js").InstructionType} instruction */
 		execute_instruction(instruction) {
 			let run=this.get_instruction(instruction[0]);
 			run.run(this, instruction);
@@ -1129,7 +1131,7 @@
 		}
 	}
 	class EventHandlerVMDispatch extends StackVM {
-		/**@arg {InstructionType[]} instructions @arg {any} target_obj */
+		/**@arg {import("types/vm/instruction/mod.js").InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions, target_obj) {
 			try{
 				super(instructions);
@@ -1138,7 +1140,7 @@
 				console.log('EventHandlerVMDispatch constructor error', e);
 			}
 		}
-		/**@arg {Box[]} args_arr */
+		/**@arg {import("final/BaseBox.js").Box[]} args_arr */
 		run(...args_arr) {
 			try{
 				this.args_arr=args_arr;
@@ -1237,10 +1239,10 @@
 			}
 			let instructions = this.verify_raw_instructions(raw_instructions);return instructions;
 		}
-		/** @arg {string[]} instruction @returns {InstructionType}*/
+		/** @arg {string[]} instruction @returns {import("types/vm/instruction/mod.js").InstructionType}*/
 		static verify_instruction(instruction){
 			let num_to_parse=instruction.length;
-			/**@type {InstructionType|null} */
+			/**@type {import("types/vm/instruction/mod.js").InstructionType|null} */
 			let ret=null;
 			switch(instruction[0]) {
 				case 'push':{
@@ -1290,9 +1292,9 @@
 			}
 			throw new Error("Unreachable");
 		}
-		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
+		/** @arg {string[][]} raw_instructions @return {import("types/vm/instruction/mod.js").InstructionType[]} */
 		static verify_raw_instructions(raw_instructions){
-			/**@type{InstructionType[]}*/
+			/**@type {import("types/vm/instruction/mod.js").InstructionType[]}*/
 			const instructions = [];
 			for(let i = 0;i < raw_instructions.length;i++) {
 				instructions.push(this.verify_instruction(raw_instructions[i]));
@@ -2463,7 +2465,7 @@
 		 * @type {"Box"}
 		 */
 		await_type='Box';
-		/**@returns {Box} */
+		/**@returns {import("final/BaseBox.js").Box} */
 		wrap_call(){
 			throw 1;
 		}
@@ -2471,7 +2473,7 @@
 		as_type(){
 			throw 1;
 		}
-		/**@arg {(...a: Box[])=>Promise<Box>} value */
+		/**@arg {(...a: import("final/BaseBox.js").Box[])=>Promise<import("final/BaseBox.js").Box>} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -2692,17 +2694,17 @@
 		}
 		dom_pre_init(){
 			const css_display_style=`#state_log>div{width:max-content}#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`;
-			/**@type {DomExecDescription[]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 			let create_state_log_arr=[
 				[0, 'push', new DocumentBoxImpl(document), 'body'],
 				[0, 'get'],
-				[1, 'create', 'div', 'state_log', {id:'state_log'}],
+				[1, 'dom_filter', 'create', 'div', 'state_log', {id:'state_log'}],
 				[1, 'dup'],
 				[1, 'append']
 			];
 			/** @this {AutoBuy} */
-			async function css_promise_runner(/** @type {Box[]} */ ...box_arr) {
-				/**@type {Promise<Box>[]} */
+			async function css_promise_runner(/** @type {import("final/BaseBox.js").Box[]} */ ...box_arr) {
+				/**@type {Promise<import("final/BaseBox.js").Box>[]} */
 				let promise_arr=[];
 				for(let i=0;i<box_arr.length;i++){
 					let cur=box_arr[i];
@@ -2715,7 +2717,7 @@
 				}
 				/*@Hack: wait for any promise to settle*/
 				const promise_settle_arr = await Promise.allSettled(promise_arr);
-				/**@type {PromiseFulfilledResult<Box>[]} */
+				/**@type {PromiseFulfilledResult<import("final/BaseBox.js").Box>[]} */
 				let fulfilled_res_arr = [];
 				/** @type {PromiseRejectedResult[]} */
 				let rejected_res = [];
@@ -2746,17 +2748,17 @@
 				this.adopt_styles(...unbox_arr);
 			}
 			let bound_this=this;
-			/**@type {DomExecDescription[]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 			let make_css_arr=[
 				[
-					0, 'push', null, new AsyncFunctionBoxImpl(async function(/** @type {Box[]} */ ...a) {
+					0, 'push', null, new AsyncFunctionBoxImpl(async function(/** @type {import("final/BaseBox.js").Box[]} */ ...a) {
 						let ret=css_promise_runner.call(bound_this, ...a);
 						await ret;
 						return new VoidBoxImpl;
 					})
 				],
 				[
-					0, 'new', new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet), [],
+					0, 'dom_filter', 'new', new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet), [],
 					(/** @type {CSSStyleSheet} */ obj, /** @type {string} */ str)=>obj.replace(str),
 					[css_display_style]
 				],
@@ -2764,21 +2766,25 @@
 				/*drop the promise*/
 				[0, 'drop']
 			];
-			/** @type {DomExecDescription[]} */
-			let raw_dom_arr=[
-				...create_state_log_arr,
-				[2, 'create', 'div', 'history', "?3"],
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
+			let dom_arr_part=[
+				[2, 'dom_filter', 'create', 'div', 'history', "?3"],
 				[2, 'append'],
-				[2, 'create', 'div', 'timeout_element', "0"],
+				[2, 'dom_filter', 'create', 'div', 'timeout_element', "0"],
 				[2, 'append'],
-				[2, 'create', 'div', 'hours_played', "0.000 hours"],
+				[2, 'dom_filter', 'create', 'div', 'hours_played', "0.000 hours"],
 				[2, 'append'],
-				[2, 'create', 'div', 'ratio', 0..toFixed(2)+"%"],
+				[2, 'dom_filter', 'create', 'div', 'ratio', 0..toFixed(2)+"%"],
 				[2, 'append'],
-				[2, 'create', 'div', 'ratio_change', 0..toExponential(3)],
+				[2, 'dom_filter', 'create', 'div', 'ratio_change', 0..toExponential(3)],
 				[2, 'append'],
 				[1, 'drop'],
 				[0, 'drop'],
+			];
+			/** @type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
+			let raw_dom_arr=[
+				...create_state_log_arr,
+				...dom_arr_part,
 				...make_css_arr
 			];
 			this.build_dom_from_desc(raw_dom_arr, this.dom_map);
@@ -2788,7 +2794,7 @@
 			let dom_styles=document.adoptedStyleSheets;
 			document.adoptedStyleSheets = [...dom_styles, ...styles];
 		}
-		/** @arg {(a:CSSStyleSheet, b:string)=>Promise<CSSStyleSheet>} callback @arg {Box[]} a */
+		/** @arg {(a:CSSStyleSheet, b:string)=>Promise<CSSStyleSheet>} callback @arg {import("final/BaseBox.js").Box[]} a */
 		use_boxed_style_sheet(callback, ...a) {
 			/** @type {{v:[], t:0}|{v:[CSSStyleSheet], t:1}|{v:[CSSStyleSheet, string], t:2}} */
 			let extracted_values={
@@ -2835,9 +2841,47 @@
 				return res;
 			}
 		}
-		/** @param {DomExecDescription[]} raw_arr */
+		/**
+		 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} stack
+		 * @arg {Map<string, string|Node>} map
+		 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionFilter} cur_item
+		 * */
+		do_dom_build_filter(cur_item, map, stack) {
+			switch(cur_item[2]){
+				case 'new':{
+						// TODO
+						// const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
+						// stack.push(
+						// 	[cur_item[0], 'push', null, this.use_boxed_style_sheet.bind(this, callback), ...construct_arg_arr, class_box],
+						// 	[cur_item[0], 'construct', 1 + construct_arg_arr.length],
+						// 	[depth, 'push', ...arg_arr],
+						// 	[depth, 'call', 3 + arg_arr.length]
+						// );
+					} break;
+					case 'create':{
+						const [depth, _item_type, element_type, name, content] = cur_item;
+						let cur_element=document.createElement(element_type);
+						if(typeof content == 'string')cur_element.innerText=content;
+						else if(typeof content == 'object' && content.id){
+							let dom_id=content.id;
+							if(typeof dom_id === 'string'){
+								cur_element.id=dom_id;
+							}
+						} else{
+							l_log_if(LOG_LEVEL_ERROR, 'bad typeof == %s for content in build_dom; content=%o', typeof content, content);
+							l_log_if(LOG_LEVEL_TRACE, "Info: case 'create' args are", element_type, name);
+						}
+						map.set(name, cur_element);
+						stack.push([depth, "push", new NodeBoxImpl('create', cur_element)]);
+					} break;
+			}
+		}
+		/**
+		 * @param {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} raw_arr
+		 * @arg {Map<string, string|Node>} trg_map
+		 * */
 		build_dom_from_desc(raw_arr, trg_map=new Map) {
-			/**@type {DomExecDescription[]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 			let stack=[];
 			let map=trg_map;
 			for(let i=0;i<raw_arr.length;i++) {
@@ -2853,31 +2897,8 @@
 						// stack.push([cur_item[0], "push", new NodeBoxImpl('get', cur_element)])
 						stack.push(cur_item);
 					} break;
-					case 'new':{
-						// TODO
-						// const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
-						// stack.push(
-						// 	[cur_item[0], 'push', null, this.use_boxed_style_sheet.bind(this, callback), ...construct_arg_arr, class_box],
-						// 	[cur_item[0], 'construct', 1 + construct_arg_arr.length],
-						// 	[depth, 'push', ...arg_arr],
-						// 	[depth, 'call', 3 + arg_arr.length]
-						// );
-					} break;
-					case 'create':{
-						const [depth, ,element_type, name, content] = cur_item;
-						let cur_element=document.createElement(element_type);
-						if(typeof content == 'string')cur_element.innerText=content;
-						else if(typeof content == 'object' && content.id){
-							let dom_id=content.id;
-							if(typeof dom_id === 'string'){
-								cur_element.id=dom_id;
-							}
-						} else{
-							l_log_if(LOG_LEVEL_ERROR, 'bad typeof == %s for content in build_dom; content=%o', typeof content, content);
-							l_log_if(LOG_LEVEL_TRACE, "Info: case 'create' args are", element_type, name);
-						}
-						map.set(name, cur_element);
-						stack.push([depth, "push", new NodeBoxImpl('create', cur_element)]);
+					case 'dom_filter':{
+						this.do_dom_build_filter(cur_item, map, stack);
 					} break;
 					case 'append':{
 						let depth=cur_item[0];
@@ -2885,7 +2906,11 @@
 						stack.push([depth, "peek", 0]);
 						stack.push(cur_item);
 					} break;
-					case 'dup':case 'breakpoint':case 'drop':case 'call':/*push the item*/case 'push':stack.push(cur_item);break;
+					case 'dup':
+					case 'breakpoint':
+					case 'drop':
+					case 'call':
+					case 'push'/*push the item*/:stack.push(cur_item);break;
 					default:{
 						/**@type {any} */
 						let any_cur=cur_item;
@@ -2904,10 +2929,10 @@
 		}
 		/**
 		 * @arg {'vm_block_trace'} instruction_val
-		 * @arg {'begin'|'call'} op_1
+		 * @arg {"begin" | "call"} op_1
 		 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionTypePack|null} op_2
 		 * @arg {number} stack_ptr
-		 * @arg {State_1} state
+		 * @arg {import("./support.js").State_1} state
 		*/
 		push_instruction_group(state, stack_ptr, instruction_val, op_1, op_2){
 			let instructions_at=state.ins_arr_map[stack_ptr];
@@ -2917,16 +2942,35 @@
 				state.ins_arr_map[stack_ptr] = [[stack_ptr, instruction_val, op_1, op_2]];
 			}
 		}
-		/** @arg {DomInstructionType[]} input_instructions @returns {InstructionType[]} */
+		/**
+		 * @arg {'vm_block_trace'} instruction_val
+		 * @arg {"tagged_begin" | "tagged_call"} op_1
+		 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionTaggedTypePack|null} op_2
+		 * @arg {number} stack_ptr
+		 * @arg {import("./support.js").State_1} state
+		*/
+		push_instruction_group_tag(state, stack_ptr, instruction_val, op_1, op_2){
+			let instructions_at=state.ins_arr_map[stack_ptr];
+			if(instructions_at){
+				instructions_at.push([stack_ptr, instruction_val, op_1, op_2]);
+			} else {
+				state.ins_arr_map[stack_ptr] = [[stack_ptr, instruction_val, op_1, op_2]];
+			}
+		}
+		/**
+		 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} input_instructions
+		 * @returns {import("types/vm/instruction/mod.js").InstructionType[]} */
 		parse_dom_stack(input_instructions) {
-			/**@type {State_1} */
+			/**@type {import("./support.js").State_1} */
 			let state={};
-			/**@type {DomInstructionType[][]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[][]} */
 			state.depth_ins_map=[];
-			/**@type {DomInstructionStack} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[][]} */
 			state.ins_arr_map=[];
 			/**@type {number[]} */
 			state.depths=[];
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
+			state.ins_mem=[];
 			for(let i=0;i<input_instructions.length;i++) {
 				let cur=input_instructions[i];
 				const [cur_depth, ...cur_instruction]=cur;
@@ -2941,15 +2985,19 @@
 						let ins_dep_at_1=state.depth_ins_map[prev_depth];
 						if(!instructions_at_1)break pd;
 						if(!ins_dep_at_1)break pd;
-						let ins_item_1=instructions_at_1[0];
-						let ins_dep_item_1=ins_dep_at_1[0];
-						while(ins_item_1[1] === 'vm_block_trace' && ins_item_1[3]){
-							let src_ty=ins_item_1[3];
-							ins_item_1=src_ty[0];
-							console.log(ins_dep_item_1);
+						let ins_item=instructions_at_1[0];
+						let ins_dep_item=ins_dep_at_1[0];
+						while(ins_item[1] === 'vm_block_trace' && ins_item[3]){
+							if(ins_item[2] === 'tagged_begin')throw new Error("Tagged");
+							if(ins_item[2] === 'tagged_call')throw new Error("Tagged");
+							if(ins_item[2] === 'tagged')throw new Error("Tagged");
+							if(ins_item[2] === 'block')throw new Error("Tagged");
+							let src_ty=ins_item[3];
+							ins_item=src_ty[0];
+							console.log(ins_dep_item);
 							debugger;
 						}
-						console.log('vm_1', 'dep', prev_depth, 'in idx', input_instructions.indexOf(ins_dep_item_1));
+						console.log('vm_1', 'dep', prev_depth, 'in idx', input_instructions.indexOf(ins_dep_item));
 						let target_depth=prev_depth - 1;
 						if(target_depth < 0){
 							break pd;
@@ -2965,12 +3013,13 @@
 								null
 							);
 						}
-						if(ins_item_1 === null){} else {
-							state.depth_ins_map[target_depth].push([target_depth, 'vm_block_trace', 'begin', [ins_item_1]]);
-							this.push_instruction_group(state, target_depth, 'vm_block_trace', 'begin', [ins_item_1]);
+						if(ins_item === null){} else {
+							state.depth_ins_map[target_depth].push([target_depth, 'vm_block_trace', 'begin', [ins_item]]);
+							this.push_instruction_group(state, target_depth, 'vm_block_trace', 'begin', [ins_item]);
 						}
 					} else {
 						let ins_item=null;
+						/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType|null} */
 						let ins_dep_item_2=null;
 						let instructions_at_2=state.ins_arr_map[prev_depth];
 						let ins_dep_at_2=state.depth_ins_map[prev_depth];
@@ -2979,7 +3028,9 @@
 						ins_dep_item_2=ins_dep_at_2[0];
 						while(
 							ins_item[1] === 'vm_block_trace' && ins_item[2] === 'call' && ins_item[3] &&
-							ins_dep_item_2 && ins_dep_item_2[1] === 'vm_block_trace' && ins_dep_item_2[3]
+							ins_dep_item_2 && ins_dep_item_2[1] === 'vm_block_trace' &&
+							ins_dep_item_2[2] === 'call' &&
+							ins_dep_item_2[3]
 						) {
 							ins_item=ins_item[3];
 							ins_dep_item_2=ins_dep_item_2[3][0];
@@ -2995,8 +3046,11 @@
 							state.depth_ins_map[target_depth].push([target_depth, 'vm_block_trace', 'begin', null]);
 							this.push_instruction_group(state, target_depth, 'vm_block_trace', 'begin', null);
 						}
-						state.depth_ins_map[target_depth].push([target_depth, 'vm_block_trace', 'call', [ins_item]]);
-						this.push_instruction_group(state, target_depth, 'vm_block_trace', 'call', [ins_item]);
+						let idx_pk=state.ins_mem.push(ins_item);
+						/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType} */
+						let pd_dom_ins=[target_depth, 'vm_block_trace', 'tagged_call', ['dom_mem', idx_pk]];
+						state.depth_ins_map[target_depth].push(pd_dom_ins);
+						this.push_instruction_group_tag(state, target_depth, 'vm_block_trace', 'tagged_call', ['dom_mem', idx_pk]);
 					}
 				}
 				state.depth_ins_map[cur_depth]??=[];
@@ -3009,11 +3063,11 @@
 				}
 				state.depths.push(cur_depth);
 			}
-			/**@type {DomInstructionType[]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 			let flat_with_depths=[];
-			/**@type {DomInstructionStack[0]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 			let flat_stack=[];
-			/**@type {InstructionType[]} */
+			/**@type {import("types/vm/instruction/mod.js").InstructionType[]} */
 			let instructions=[];
 			let ins_arr_iid=[];
 			let iid=0;
@@ -3027,15 +3081,15 @@
 				flat_stack.push(...cur_instructions);
 				flat_stack.push([i, "vm_return"]);
 			}
-			/**@arg {DomInstructionType} ins */
+			/**@arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType} ins */
 			function is_marker_dep_ins(ins){
 				return ins[1] === 'marker';
 			}
-			/**@type {DomInstructionType[]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 			let flat_ins=[];
-			/**@type {DomInstructionType[]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 			let flat_dep_ins=[];
-			/**@type {DomInstructionType[]} */
+			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 			let flat_all_ins=[];
 			for(let i=0;i<flat_stack.length;i++){
 				let ins=flat_stack[i];
@@ -3043,7 +3097,14 @@
 				if(ins[1] !== dep_ins[1])console.assert(false, ins, dep_ins);
 				if(ins[1] === 'vm_block_trace'){
 					flat_ins.push(ins);
-					flat_dep_ins.push([dep_ins[0], 'vm_block_trace', ins[2], ins[3]]);
+					switch(ins[2]){
+						case 'begin':flat_dep_ins.push([dep_ins[0], 'vm_block_trace', ins[2], ins[3]]);break;
+						case 'block':flat_dep_ins.push([dep_ins[0], 'vm_block_trace', ins[2], ins[3], ins[4]]);break;
+						case 'call':flat_dep_ins.push([dep_ins[0], 'vm_block_trace', ins[2], ins[3]]);break;
+						case 'tagged':flat_dep_ins.push([dep_ins[0], 'vm_block_trace', ins[2], ins[3]]);break;
+						case 'tagged_begin':flat_dep_ins.push([dep_ins[0], 'vm_block_trace', ins[2], ins[3]]);break;
+						case 'tagged_call':flat_dep_ins.push([dep_ins[0], 'vm_block_trace', ins[2], ins[3]]);break;
+					}
 					flat_all_ins.push(dep_ins);
 					continue;
 				}
@@ -3066,6 +3127,8 @@
 				if(ins[1] === 'vm_block_trace' && dep_ins[1] === 'vm_block_trace'){
 					if(!ins[3])throw 1;
 					if(!dep_ins[3])throw 1;
+					if(ins[2] !== 'call')throw new Error("handle not call");
+					if(dep_ins[2] !== 'call')throw new Error("handle not call");
 					let idx=flat_ins.indexOf(ins[3][0]);
 					let dep_idx=flat_dep_ins.indexOf(dep_ins[3][0]);
 					flat_ins_dep_2.push([dep_ins[0], 'vm_block_trace', 'block', dep_idx]);
@@ -3084,12 +3147,23 @@
 						case "je":instructions.push([ins[1], ins[2]]);break;
 						case "jmp":instructions.push([ins[1], ins[2]]);break;
 						case "peek":instructions.push([ins[1], ins[2]]);break;
-						case "vm_block_trace":instructions.push([ins[1], ins[2], ins[3]]);break;
+						case "vm_block_trace":{
+							switch(ins[2]){
+								case 'begin':instructions.push([ins[1], ins[2], ins[3]]);break;
+								case 'block':instructions.push([ins[1], ins[2], ins[3], ins[4]]);break;
+								case 'call':instructions.push([ins[1], ins[2], ins[3]]);break;
+								case 'tagged':instructions.push([ins[1], ins[2], ins[3]]);break;
+								case 'tagged_begin':instructions.push([ins[1], ins[2], ins[3]]);break;
+								case 'tagged_call':instructions.push([ins[1], ins[2], ins[3]]);break;
+							}
+						} break;
 						case 'modify_operand':instructions.push([ins[1], ins[2], ins[3]]);break;
+						case 'dom_filter':break;
 						default:instructions.push([ins[1]]);break;
 					}
 				}
 				if(dep_ins[1] === 'vm_block_trace'){
+					if(dep_ins[2] !== 'call')throw new Error("handle not call");
 					let dx=dep_ins[3];
 					if(dx) {
 						let dep_idx=flat_dep_ins.indexOf(dx[0]);
