@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"experimentalDecorators": true,
+		"target": "esnext",
+		"lib": ["esnext", "DOM"],
+		"types": ["jquery"],
+		"declaration": true,
+		//"module": "ESNext",
+		"module":"NodeNext",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"outDir": "../typescript_lib",
+		"strict": true,
+		"typeRoots": [
+			"./node_modules/@types"
+		],
+		"paths":{
+			"types/*": ["types/*"],
+			"api":["types/api.js"],
+		}
+	},
+	"include": ["**/*"],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts",
+		"./lib"
+	]
+}

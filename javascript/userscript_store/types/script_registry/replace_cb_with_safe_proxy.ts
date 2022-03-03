@@ -1,6 +1,6 @@
-import {is_in_userscript_fn, cur_event_fns} from "../typed_mod_rebuild_auto";
+import {cur_event_fns} from "./constants";
+import {is_in_ignored_from_src_fn, is_in_userscript, is_in_userscript_fn} from "./mod";
 import {register_obj_with_registry} from "./register_obj_with_registry";
-import {is_in_userscript, is_in_ignored_from_src_fn} from "./find_all_scripts_using_string_apis";
 
 export function replace_cb_with_safe_proxy(args: any[], index: number) {
 	let value = args[index];
