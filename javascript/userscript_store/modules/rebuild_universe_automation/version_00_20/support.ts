@@ -1,3 +1,4 @@
+import Box from "types/vm/box/Box";
 import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
 import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox";
 class CSSStyleSheetConstructorBoxImplSupport {

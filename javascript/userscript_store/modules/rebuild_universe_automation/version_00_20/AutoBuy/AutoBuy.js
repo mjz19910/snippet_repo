@@ -1,32 +1,30 @@
 import {AUDIO_ELEMENT_VOLUME, LOG_LEVEL_ERROR, LOG_LEVEL_INFO, LOG_LEVEL_TRACE} from "types/constants.js";
 import {AsyncAutoBuy} from "./AsyncAutoBuy";
-import {AsyncNodeRoot} from "./AsyncNodeRoot";
-import {AsyncPromiseBoxImpl} from "./AsyncPromiseBoxImpl";
-import {AutoBuyState} from "./AutoBuyState";
-import {AudioMuted} from "./const.js";
-import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
-import {CSSStyleSheetConstructorBoxImpl} from "./CSSStyleSheetConstructorBoxImpl";
-import {DataLoader} from "./DataLoader";
-import {DomBuilderVM} from "./DomBuilderVM";
-import {EventHandlerDispatch} from "./EventHandlerDispatch";
-import {EventHandlerVMDispatch} from "./EventHandlerVMDispatch";
-import {FunctionBoxImpl} from "./FunctionBoxImpl";
-import {IntervalIdNodeRef} from "./IntervalIdNodeRef";
-import {labeled_sym} from "./labeled_sym";
-import {l_log_if} from "./l_log_if";
-import {MulCompression} from "./MulCompression";
-import {next_debug_id} from "./next_debug_id";
-import {NodeBoxImpl} from "./NodeBoxImpl";
-import {PromiseBox} from "./PromiseBox";
-import {SimpleStackVMParser} from "./SimpleStackVMParser";
-import {throw_invalid_error} from "./throw_invalid_error";
-import {TimeoutNode} from "./TimeoutNode";
-import {TimeoutTarget} from "./TimeoutTarget";
-import {debug_id_syms} from "./rebuild_the_universe_auto_v0.2";
-import {specialclick_inject} from "./specialclick_inject";
-import {lightreset_inject} from "./lightreset_inject";
-import {array_sample_end} from "./array_sample_end";
-import {do_auto_unit_promote} from "./do_auto_unit_promote";
+import {AsyncNodeRoot} from "../AsyncNodeRoot";
+import {AsyncPromiseBoxImpl} from "../AsyncPromiseBoxImpl";
+import {AutoBuyState} from "../AutoBuyState";
+import {AudioMuted} from "../const.js";
+import {CSSStyleSheetBox} from "../CSSStyleSheetBox";
+import {CSSStyleSheetConstructorBoxImpl} from "../CSSStyleSheetConstructorBoxImpl";
+import {DataLoader} from "../DataLoader";
+import {DomBuilderVM} from "../DomBuilderVM";
+import {EventHandlerDispatch} from "../EventHandlerDispatch";
+import {EventHandlerVMDispatch} from "../EventHandlerVMDispatch";
+import {IntervalIdNodeRef} from "../IntervalIdNodeRef";
+import {labeled_sym} from "../labeled_sym";
+import {l_log_if} from "../l_log_if";
+import {MulCompression} from "../MulCompression";
+import {next_debug_id} from "../next_debug_id";
+import {PromiseBox} from "../PromiseBox";
+import {SimpleStackVMParser} from "../SimpleStackVMParser";
+import {throw_invalid_error} from "../throw_invalid_error";
+import {TimeoutNode} from "../TimeoutNode";
+import {TimeoutTarget} from "../TimeoutTarget";
+import {debug_id_syms} from "../rebuild_the_universe_auto_v0.2";
+import {specialclick_inject} from "../specialclick_inject";
+import {lightreset_inject} from "../lightreset_inject";
+import {array_sample_end} from "../array_sample_end";
+import {do_auto_unit_promote} from "../do_auto_unit_promote";
 
 export class AutoBuy {
 	async_compress() {
@@ -185,19 +183,19 @@ export class AutoBuy {
 			}
 		}
 		const css_display_style = `#state_log>div{width:max-content}#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`;
-		/**@type {DomExecDescription[]} */
+		/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 		let create_state_log_arr = [
 			[0, 'push', new DocumentBox(document), 'body'],
 			[0, 'get'],
-			[1, 'create', 'div', 'state_log', {id: 'state_log'}],
+			[1, 'dom_filter', 'create', 'div', 'state_log', {id: 'state_log'}],
 			[1, 'dup'],
 			[1, 'append']
 		];
 		/**
 		 * @this {AutoBuy}
 		 * */
-		async function css_promise_runner(/** @type {Box[]} */ ...styles_promise_arr) {
-			/**@type {Promise<Box>[]} */
+		async function css_promise_runner(/** @type {import("types/vm/box/Box.js").Box[]} */ ...styles_promise_arr) {
+			/**@type {Promise<import("types/vm/box/Box.js").Box>[]} */
 			let css_arr = [];
 			for(let i = 0; i < styles_promise_arr.length; i++) {
 				let cur = styles_promise_arr[i];
@@ -214,7 +212,7 @@ export class AutoBuy {
 			}
 			/*@Hack: wait for any promise to settle*/
 			const e = await Promise.allSettled(css_arr);
-			/**@type {PromiseFulfilledResult<Box>[]} */
+			/**@type {PromiseFulfilledResult<import("types/vm/box/Box.js").Box>[]} */
 			let fulfilled_res = [];
 			/**@type {PromiseRejectedResult[]} */
 			let rejected_res = [];
@@ -271,11 +269,11 @@ export class AutoBuy {
 				this.value = value;
 			}
 		}
-		/**@type {DomExecDescription[]} */
+		/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 		let make_css_arr = [
 			[
 				0, 'push', null,
-				new AsyncPromiseBoxImpl(function(/** @type {Box[]} */ ...a) {
+				new AsyncPromiseBoxImpl(function(/** @type {import("types/vm/box/Box.js").Box[]} */ ...a) {
 					l_log_if(LOG_LEVEL_INFO, 'void input', a);
 					let ret = css_promise_runner.call(bound_this, ...a);
 					l_log_if(LOG_LEVEL_INFO, 'void out', ret);
@@ -283,7 +281,7 @@ export class AutoBuy {
 				})
 			],
 			[
-				0, 'new', new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet), [],
+				0, 'dom_filter', 'new', new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet), [],
 				(/** @type {CSSStyleSheet} */ obj, /** @type {string} */ str) => obj.replace(str),
 				[css_display_style]
 			],
@@ -291,22 +289,22 @@ export class AutoBuy {
 			/*drop the promise*/
 			[0, 'drop']
 		];
-		/**@type {DomExecDescription[]} */
+		/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 		let dom_arr_part_mid = [
-			[2, 'create', 'div', 'history', "?3"],
+			[2, 'dom_filter','create', 'div', 'history', "?3"],
 			[2, 'append'],
-			[2, 'create', 'div', 'timeout_element', "0"],
+			[2, 'dom_filter','create', 'div', 'timeout_element', "0"],
 			[2, 'append'],
-			[2, 'create', 'div', 'hours_played', "0.000 hours"],
+			[2, 'dom_filter','create', 'div', 'hours_played', "0.000 hours"],
 			[2, 'append'],
-			[2, 'create', 'div', 'ratio', 0..toFixed(2) + "%"],
+			[2, 'dom_filter','create', 'div', 'ratio', 0..toFixed(2) + "%"],
 			[2, 'append'],
-			[2, 'create', 'div', 'ratio_change', 0..toExponential(3)],
+			[2, 'dom_filter','create', 'div', 'ratio_change', 0..toExponential(3)],
 			[2, 'append'],
 			[1, 'drop'],
 			[0, 'drop'],
 		];
-		/**@type {DomExecDescription[]} */
+		/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 		let raw_dom_arr = [
 			...create_state_log_arr,
 			...dom_arr_part_mid,
@@ -333,9 +331,9 @@ export class AutoBuy {
 		let res = new PromiseBox(r2);
 		return res;
 	}
-	/**@typedef {[number, ...InstructionType]} InstructionWithDepth */
+	/**@typedef {[number, ...import("types/vm/instruction/mod").InstructionType]} InstructionWithDepth */
 	/**
-	 * @param {DomExecDescription[]} raw_arr
+	 * @param {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} raw_arr
 	 */
 	build_dom_from_desc(raw_arr, trg_map = new Map) {
 		/**@type {InstructionWithDepth[]} */
@@ -345,48 +343,48 @@ export class AutoBuy {
 			let cur_item = raw_arr[i];
 			// let [depth, action, ...args] = cur_item;
 			switch(cur_item[1]) {
-				case 'new': {
-					const [depth, , class_box, construct_arg_arr, callback, arg_arr] = cur_item;
-					let fn_box = new FunctionBoxImpl(
-						/**
-						 * @arg {AutoBuy} obj
-						 * @arg {(obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>} callback
-						 * @arg {Box} a
-						 * @arg {Box} b */
-						function(obj, callback, a, b) {
-							if(typeof b === 'string' &&
-								a && typeof a === 'object' &&
-								a.type === 'instance_box' &&
-								a.instance_type === 'CSSStyleSheet') {
-								return obj.use_boxed_style_sheet(callback, a.value, b);
-							}
-							throw 1;
-						}.bind(null, this, callback)
-					);
-					stack.push(
-						[cur_item[0], 'push', null, fn_box, ...construct_arg_arr, class_box],
-						[cur_item[0], 'construct', 1 + construct_arg_arr.length],
-						[depth, 'push', ...arg_arr],
-						[depth, 'call', 3 + arg_arr.length]
-					);
-				} break;
-				case 'create': {
-					const [depth, , element_type, name, content] = cur_item;
-					let cur_element = document.createElement(element_type);
-					if(typeof content == 'string')
-						cur_element.innerText = content;
-					else if(typeof content == 'object' && content.id) {
-						let dom_id = content.id;
-						if(typeof dom_id === 'string') {
-							cur_element.id = dom_id;
-						}
-					} else {
-						l_log_if(LOG_LEVEL_ERROR, 'bad typeof == %s for content in build_dom; content=%o', typeof content, content);
-						l_log_if(LOG_LEVEL_TRACE, "Info: case 'create' args are", element_type, name);
-					}
-					map.set(name, cur_element);
-					stack.push([depth, "push", new NodeBoxImpl('create', cur_element)]);
-				} break;
+				//case 'new': {
+				//	const [depth, , class_box, construct_arg_arr, callback, arg_arr] = cur_item;
+				//	let fn_box = new FunctionBoxImpl(
+				//		/**
+				//		 * @arg {AutoBuy} obj
+				//		 * @arg {(obj: CSSStyleSheet, str: string) => Promise<CSSStyleSheet>} callback
+				//		 * @arg {Box} a
+				//		 * @arg {Box} b */
+				//		function(obj, callback, a, b) {
+				//			if(typeof b === 'string' &&
+				//				a && typeof a === 'object' &&
+				//				a.type === 'instance_box' &&
+				//				a.instance_type === 'CSSStyleSheet') {
+				//				return obj.use_boxed_style_sheet(callback, a.value, b);
+				//			}
+				//			throw 1;
+				//		}.bind(null, this, callback)
+				//	);
+				//	stack.push(
+				//		[cur_item[0], 'push', null, fn_box, ...construct_arg_arr, class_box],
+				//		[cur_item[0], 'construct', 1 + construct_arg_arr.length],
+				//		[depth, 'push', ...arg_arr],
+				//		[depth, 'call', 3 + arg_arr.length]
+				//	);
+				//} break;
+				//case 'create': {
+				//	const [depth, , element_type, name, content] = cur_item;
+				//	let cur_element = document.createElement(element_type);
+				//	if(typeof content == 'string')
+				//		cur_element.innerText = content;
+				//	else if(typeof content == 'object' && content.id) {
+				//		let dom_id = content.id;
+				//		if(typeof dom_id === 'string') {
+				//			cur_element.id = dom_id;
+				//		}
+				//	} else {
+				//		l_log_if(LOG_LEVEL_ERROR, 'bad typeof == %s for content in build_dom; content=%o', typeof content, content);
+				//		l_log_if(LOG_LEVEL_TRACE, "Info: case 'create' args are", element_type, name);
+				//	}
+				//	map.set(name, cur_element);
+				//	stack.push([depth, "push", new NodeBoxImpl('create', cur_element)]);
+				//} break;
 				case 'append': {
 					let depth = cur_item[0];
 					stack.push([depth, "peek", 0]);
@@ -437,10 +435,10 @@ export class AutoBuy {
 	get [next_debug_id()]() {
 		return '';
 	}
-	/**@typedef {((InstructionType|['vm_call_at', InstructionType])[]|null)[]} DomInstructionStack */
 	/**
-	 * @arg {import("api").NonNull<DomInstructionStack[0]>[0]} value @arg {number} stack_ptr
-	 * @arg {DomInstructionStack} stack
+	 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType} value
+	 * @arg {number} stack_ptr
+	 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[][]} stack
 	 * */
 	push_instruction_group(stack, stack_ptr, value) {
 		let instructions_at = stack[stack_ptr];
@@ -450,50 +448,55 @@ export class AutoBuy {
 			stack[stack_ptr] = [value];
 		}
 	}
-	/** @arg {InstructionWithDepth[]} input_instructions @returns {InstructionType[]} */
+	/** @arg {InstructionWithDepth[]} input_instructions @returns {import("types/vm/instruction/mod").InstructionType[]} */
 	parse_dom_stack(input_instructions) {
 		const double_indirect_error_str = "Double indirect vm_call is hard to prove to the typechecker";
-		/**@type {DomInstructionStack} */
+		/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[][]} */
 		let stack = [];
 		/**@type {number[]} */
 		let depths = [];
 		for(let i = 0; i < input_instructions.length; i++) {
 			let cur = input_instructions[i];
 			const [cur_depth, ...cur_instruction] = cur;
-			this.push_instruction_group(stack, cur_depth, cur_instruction);
-			const prev_depth = depths.at(-1);
-			if(prev_depth != cur_depth && prev_depth) {
-				if(cur_depth > prev_depth) {
-					let instructions_at = stack[prev_depth];
-					if(!instructions_at)
-						throw new Error("");
-					let ins_start_item = instructions_at[0];
-					if(ins_start_item[0] === 'vm_call_at')
-						throw new Error(double_indirect_error_str);
-					this.push_instruction_group(stack, prev_depth - 1, ['vm_call_at', ins_start_item]);
-				}
-			}
-			depths.push(cur_depth);
+			//this.push_instruction_group(stack, cur_depth, cur_instruction);
+			//const prev_depth = depths.at(-1);
+			//if(prev_depth != cur_depth && prev_depth) {
+			//	if(cur_depth > prev_depth) {
+			//		let instructions_at = stack[prev_depth];
+			//		if(!instructions_at)
+			//			throw new Error("");
+			//		let ins_start_item = instructions_at[0];
+			//		if(ins_start_item[0] === 'vm_call_at')
+			//			throw new Error(double_indirect_error_str);
+			//		this.push_instruction_group(stack, prev_depth - 1, ['vm_call_at', ins_start_item]);
+			//	}
+			//}
+			//depths.push(cur_depth);
 		}
-		/**@type {import("api").NonNull<DomInstructionStack[0]>} */
+		/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} */
 		let flat_stack = [];
-		/**@type {InstructionType[]} */
+		/**@type {import("types/vm/instruction/mod").InstructionType[]} */
 		let instructions = [];
 		for(let i = 0; i < stack.length; i++) {
 			let cur_instructions = stack[i];
 			if(!cur_instructions)
 				continue;
 			flat_stack.push(...cur_instructions);
-			flat_stack.push(["vm_return"]);
+			flat_stack.push([1, "vm_return"]);
 		}
 		for(let i = 0; i < flat_stack.length; i++) {
 			let instruction = flat_stack[i];
-			if(instruction[0] === 'vm_call_at') {
-				let idx = flat_stack.indexOf(instruction[1]);
+			if(instruction[1] === 'vm_block_trace' && instruction[2] === 'call' && instruction[3]) {
+				let idx = flat_stack.indexOf(instruction[3][0]);
 				instructions.push(['vm_call', idx]);
 				continue;
 			}
-			instructions.push(instruction);
+			switch(instruction[1]){
+				case 'marker':
+				case 'vm_call_at':
+				case 'dom_filter':break;
+				default:{let [, ...rest]=instruction;instructions.push(rest);} break;
+			}
 		}
 		console.log('parse_dom_stack', stack, depths, instructions);
 		return instructions;

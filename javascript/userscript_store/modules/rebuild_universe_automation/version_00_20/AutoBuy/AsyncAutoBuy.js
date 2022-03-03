@@ -1,5 +1,5 @@
-import {AsyncTimeoutNode} from "./AsyncTimeoutNode";
-import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget";
+import {AsyncTimeoutNode} from "../AsyncTimeoutNode";
+import {AsyncTimeoutTarget} from "../AsyncTimeoutTarget";
 import {AutoBuy} from "./AutoBuy.js";
 
 export class AsyncAutoBuy {
