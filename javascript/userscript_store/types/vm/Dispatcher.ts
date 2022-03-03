@@ -70,4 +70,10 @@ export class Dispatcher implements DispatcherType {
 	UnicodeEscapeSequence(str: string, index: number){
 		return this.ecma_12_8_4.HexEscapeSequence(str, index);
 	}
+	RegularExpressionLiteral(str:string, index:number){
+		return this
+	}
+	TemplateSubstitutionTail(str:string, index:number){
+		return this;
+	}
 }

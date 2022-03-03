@@ -66,13 +66,13 @@ class HashMap<K, V> implements IHashMap<K, V> {
 	}
 }
 // HashMap<FlyString, TokenType> Lexer::s_keywords;
-const s_keywords = new HashMap<FlyString, TokenType>;
+const s_keywords = new HashMap<FlyString, TokenType>();
 // HashMap<String, TokenType> Lexer::s_three_char_tokens;
-const s_three_char_tokens = new HashMap<FlyString, TokenType>;
+const s_three_char_tokens = new HashMap<FlyString, TokenType>();
 // HashMap<String, TokenType> Lexer::s_two_char_tokens;
-const s_two_char_tokens = new HashMap<FlyString, TokenType>;
+const s_two_char_tokens = new HashMap<FlyString, TokenType>();
 // HashMap<char, TokenType> Lexer::s_single_char_tokens;
-const s_single_char_tokens = new HashMap<FlyString, TokenType>;
+const s_single_char_tokens = new HashMap<FlyString, TokenType>();
 
 export class ecma_12_7 extends ecma_base {
 	constructor(dis: Dispatcher) {

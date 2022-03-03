@@ -1,3 +1,3 @@
-import {WorkerAsyncMessage} from "./typed_mod_rebuild_auto";
+import {WorkerAsyncMessage} from "types/constants";
 
 export type WorkerAsyncMessageTy = typeof WorkerAsyncMessage;

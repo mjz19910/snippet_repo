@@ -1,3 +1,3 @@
-import {TimeoutSetR} from "./typed_mod_rebuild_auto";
+import {TimeoutSetR} from "types/constants";
 
 export type TimeoutSetRTy = typeof TimeoutSetR;

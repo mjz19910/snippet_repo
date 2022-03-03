@@ -1,4 +1,4 @@
-import {TimeoutSetStringS, TimeoutSetStringR} from "./typed_mod_rebuild_auto";
+import {TimeoutSetStringS, TimeoutSetStringR} from "types/constants";
 
 export type TimeoutSetStringsTy = {
 	single: typeof TimeoutSetStringS;

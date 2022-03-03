@@ -1,4 +1,4 @@
-import {TimeoutClearStringS, TimeoutClearStringR} from "./typed_mod_rebuild_auto";
+import {TimeoutClearStringS, TimeoutClearStringR} from "types/constants";
 
 export type TimeoutClearStringsTy = {
 	single: typeof TimeoutClearStringS;

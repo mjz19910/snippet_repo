@@ -1,4 +1,4 @@
-import {TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "typed_mod_rebuild_auto";
+import {TIMER_REPEATING, TIMER_SINGLE, TIMER_TAG_COUNT} from "types/constants";
 
 export type WorkerVerifyType = {
 	TIMER_SINGLE: typeof TIMER_SINGLE;

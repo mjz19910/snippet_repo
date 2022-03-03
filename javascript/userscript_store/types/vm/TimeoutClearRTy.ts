@@ -1,3 +1,3 @@
-import {TimeoutClearR} from "./typed_mod_rebuild_auto";
+import {TimeoutClearR} from "types/constants";
 
 export type TimeoutClearRTy = typeof TimeoutClearR;

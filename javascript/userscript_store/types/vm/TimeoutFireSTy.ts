@@ -1,3 +1,3 @@
-import {TimeoutFireS} from "./typed_mod_rebuild_auto";
+import {TimeoutFireS} from "types/constants";
 
 export type TimeoutFireSTy = typeof TimeoutFireS;

@@ -1,3 +1,3 @@
-import {WorkerDestroyMessage} from "./typed_mod_rebuild_auto";
+import {WorkerDestroyMessage} from "types/constants";
 
 export type WorkerDestroyMessageTy = typeof WorkerDestroyMessage;

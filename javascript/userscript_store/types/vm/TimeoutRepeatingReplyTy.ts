@@ -1,3 +1,3 @@
-import {TimeoutRepeatingReply} from "./typed_mod_rebuild_auto";
+import {TimeoutRepeatingReply} from "types/constants";
 
 export type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;

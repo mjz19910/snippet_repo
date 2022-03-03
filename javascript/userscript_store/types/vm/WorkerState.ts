@@ -2,7 +2,6 @@ import {PromiseExecutorHandle} from "./PromiseExecutorHandle";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS";
 import {MessageTimeoutSingleReply} from "./MessageTimeoutSingleReply";
-import {l_log_if} from "./l_log_if";
 import {MessageTimeoutClearA} from "./MessageTimeoutClearA";
 import {DispatchMessageType} from "./DispatchMessageType";
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR";
@@ -10,7 +9,7 @@ import {MessageTimeoutClearS} from "./MessageTimeoutClearS";
 import {MessageTypesForWorkerReplies} from "./MessageTypesForWorkerReplies";
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS";
 import {Timer} from "./Timer";
-import {LOG_LEVEL_VERBOSE, ReplyFromWorker, ReplyMessage1, ReplyMessage2, ReplySetRepeating, ReplySetSingle, TimeoutClearR, TimeoutClearS, TimeoutFireS, TIMER_REPEATING, TIMER_SINGLE, WorkerDestroyMessage, WorkerReadyReply, WorkerUpdateMessageHandlerReply} from "types/constants";
+import {ReplyFromWorker, ReplyMessage1, ReplyMessage2, ReplySetRepeating, ReplySetSingle, TimeoutClearR, TimeoutClearS, WorkerDestroyMessage, WorkerReadyReply, WorkerUpdateMessageHandlerReply} from "types/constants";
 
 export class WorkerState {
 	flags: Map<string, boolean>;

@@ -1,3 +1,3 @@
-import {WorkerUpdateMessageHandlerReply} from "./typed_mod_rebuild_auto";
+import {WorkerUpdateMessageHandlerReply} from "types/constants";
 
 export type WorkerUpdateMessageHandlerReplyTy = typeof WorkerUpdateMessageHandlerReply;

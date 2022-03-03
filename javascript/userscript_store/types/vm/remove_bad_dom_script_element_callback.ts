@@ -1,4 +1,4 @@
-import {seen_elements} from "./typed_mod_rebuild_auto";
+import {seen_elements} from "./mod";
 
 export function remove_bad_dom_script_element_callback(e: HTMLScriptElement) {
 	if(seen_elements.has(e))

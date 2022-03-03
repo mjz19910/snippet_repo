@@ -1,3 +1,3 @@
-import {ReplyClearSingle} from "./typed_mod_rebuild_auto";
+import {ReplyClearSingle} from "types/constants";
 
 export type ReplyClearSingleTy = typeof ReplyClearSingle;

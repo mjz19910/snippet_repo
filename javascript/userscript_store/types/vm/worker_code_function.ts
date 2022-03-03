@@ -13,6 +13,7 @@ import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy";
 import {TimeoutSetStringsTy} from "./TimeoutSetStringsTy";
 import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy";
 import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy";
+import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes";
 import {TimerApi} from "./TimerApi";
 import {TimerTag} from "./TimerTag";
 import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy";
@@ -281,6 +282,8 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		onmessage: string;
 	};
 	onmessage = function(e: MessageEvent<WorkerMessageType>) {
+		if(!message_types)return;
+		let worker_msg_types=new TimeoutWorkerTypes;
 		let msg = e.data;
 		if(!remote_worker_state.m_timer) {
 			console.log('got message but don\'t have a timer');
@@ -296,7 +299,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 				console.assert(false, "unhandled result on remote worker", result);
 				debugger;
 			} break;
-			case message_types.worker.update_message_handler /*remote worker init*/: {
+			case worker_msg_types.update_message_handler /*remote worker init*/: {
 				debugger;
 				let user_msg = msg.v;
 				let worker_str = "()"[0];

@@ -1,4 +1,4 @@
-import {debug_id_gen, debug_id_syms} from "../typed_mod_rebuild_auto";
+import {debug_id_gen, debug_id_syms} from "types/constants";
 
 export function next_debug_id() {
 	const id = debug_id_gen.next();

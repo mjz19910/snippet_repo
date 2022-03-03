@@ -1,3 +1,3 @@
-import {ReplyMessage1} from "./typed_mod_rebuild_auto";
+import {ReplyMessage1} from "types/constants";
 
 export type ReplyMessage1Ty = typeof ReplyMessage1;

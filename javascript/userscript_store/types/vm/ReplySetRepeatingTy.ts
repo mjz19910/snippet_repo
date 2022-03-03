@@ -1,3 +1,3 @@
-import {ReplySetRepeating} from "./typed_mod_rebuild_auto";
+import {ReplySetRepeating} from "types/constants";
 
 export type ReplySetRepeatingTy = typeof ReplySetRepeating;

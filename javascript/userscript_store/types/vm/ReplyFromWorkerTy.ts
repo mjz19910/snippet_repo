@@ -1,3 +1,3 @@
-import {ReplyFromWorker} from "./typed_mod_rebuild_auto";
+import {ReplyFromWorker} from "types/constants";
 
 export type ReplyFromWorkerTy = typeof ReplyFromWorker;

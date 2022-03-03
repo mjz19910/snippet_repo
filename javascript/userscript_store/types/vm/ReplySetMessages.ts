@@ -1,7 +1,7 @@
 import {ReplySetSingleTy} from "./ReplySetSingleTy";
 import {ReplySetRepeatingTy} from "./ReplySetRepeatingTy";
 import {ReplySetTypes} from "./ReplySetTypes";
-import {ReplySetSingle, ReplySetRepeating} from "./typed_mod_rebuild_auto";
+import {ReplySetSingle, ReplySetRepeating} from "types/constants";
 
 export class ReplySetMessages implements ReplySetTypes {
 	single: ReplySetSingleTy = ReplySetSingle;

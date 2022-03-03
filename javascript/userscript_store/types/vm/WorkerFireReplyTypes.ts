@@ -1,7 +1,7 @@
 import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy";
 import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy";
 import {WorkerReplyTypesTy} from "./WorkerReplyTypesTy";
-import {TimeoutSingleReply, TimeoutRepeatingReply} from "./typed_mod_rebuild_auto";
+import {TimeoutSingleReply, TimeoutRepeatingReply} from "types/constants";
 
 export class WorkerFireReplyTypes implements WorkerReplyTypesTy {
 	single: TimeoutSingleReplyTy = TimeoutSingleReply;

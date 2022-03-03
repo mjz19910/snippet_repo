@@ -1,5 +1,6 @@
 import TemporaryBox from "./box/TemporaryBox";
 import Primitives from "./Primitives";
+export const seen_elements:WeakSet<object>=new WeakSet;
 type _T=TemporaryBox|0;
 // --- Misc ---
 type SkipItem0_t<T extends [f: string, ...v: any[]], X> = T extends [X, ...infer U] ? U : T[1];
