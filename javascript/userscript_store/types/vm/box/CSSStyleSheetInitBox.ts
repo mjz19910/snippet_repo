@@ -1,7 +1,7 @@
 import MediaListBox from "./MediaListBox";
 import BoxTemplate from "./BoxTemplate";
 
-export default class CSSStyleSheetInitBox extends BoxTemplate<"shape_box", CSSStyleSheetInit> {
+export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box", CSSStyleSheetInit> {
 	type: "shape_box" = "shape_box";
 	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
 	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | MediaListBox | undefined) {
@@ -36,3 +36,4 @@ export default class CSSStyleSheetInitBox extends BoxTemplate<"shape_box", CSSSt
 		}
 	}
 }
+export default CSSStyleSheetInitBox;

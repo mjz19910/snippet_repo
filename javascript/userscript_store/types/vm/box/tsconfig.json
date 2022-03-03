@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"target": "esnext",
+		"lib": ["esnext", "DOM"],
+		"types": ["jquery"],
+		"declaration": true,
+		//"module": "ESNext",
+		"module":"NodeNext",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"outDir": "./lib",
+		"strict": true,
+		"typeRoots": [
+			"./node_modules/@types"
+		]
+	},
+	"include": ["./**/*"],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts",
+		"./lib"
+	]
+}

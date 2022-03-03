@@ -1,4 +1,4 @@
-import BoxTemplate from "./BoxTemplate";
+import BoxTemplate from "../BoxTemplate";
 
 export default class VoidPromiseBox extends BoxTemplate<"promise_box", Promise<void>> {
 	type: "promise_box" = "promise_box";

@@ -3,7 +3,7 @@ import {Box} from "./Box";
 import BoxTemplate from "./BoxTemplate";
 import ObjectBox from "./ObjectBox";
 
-export default class NewableFunctionBox extends BoxTemplate<"constructor_box", NewableFactory<{}>> {
+export class NewableFunctionBox extends BoxTemplate<"constructor_box", NewableFactory<{}>> {
 	type: "constructor_box" = "constructor_box";
 	class_value:{new (...a:Box[]):{}};
 	instance_type=null;
@@ -24,3 +24,4 @@ export default class NewableFunctionBox extends BoxTemplate<"constructor_box", N
 		return new ObjectBox(res);
 	}
 }
+export default NewableFunctionBox;

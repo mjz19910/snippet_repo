@@ -1,19 +1,20 @@
-import {NonNull} from "types/api";
 import {Box} from "./Box";
-import NotVoidBox from "./NotVoidBox";
-import NonPrimitives from "./NonPrimitives";
 import VoidBox from "./VoidBox";
 import ArrayBox from "./ArrayBox";
 
-
-type ExtractKey<T extends Box, U> = 
-T extends NonPrimitives<NonNull<Box>> ?
-U extends keyof NotVoidBox<T> ?
-NotVoidBox<T>[U] :
+export type ExtractKey<T extends Box, U> = 
+T extends Exclude<Box, Primitives|null> ?
+U extends keyof Exclude<T, VoidBox> ?
+Exclude<T, VoidBox>[U] :
 never :
 never;
 
-export default ExtractKey;
+export function run_tests(){
+	type Test2=ExtractKey<ArrayBox | VoidBox, 'value'>;
+	type Test3=ExtractKey<Exclude<Box, Primitives>, 'value'>;
+	let vv:Test2=[new VoidBox];
+	let vv2:Test3=[[new VoidBox]];
+	void vv,vv2;
+}
 
-type Test2=ExtractKey<ArrayBox | VoidBox, 'value'>;
-type Test3=ExtractKey<NonPrimitives<Box>, 'value'>;
+export default ExtractKey;
