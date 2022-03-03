@@ -217,9 +217,6 @@ export class ecma_12_8_3 extends ecma_base {
 		this.m_source = str;
 		this.m_position = index;
 		this.init();
-		/*
-		// to_js
-		*/
 		/*if (m_current_char == '0') {
 			// into js
 		}*/
@@ -376,7 +373,7 @@ export class ecma_12_8_3 extends ecma_base {
 		if(this.result_error_token){
 			return [this.result_error_token, this.m_position - index];
 		}
-		return [new Error("FIXME") as any, this.m_position - index];
+		return ["NumericLiteral", this.m_position - index];
 	}
 	consume_hexadecimal_number():boolean {
 		throw new Error("Method not implemented.");
