@@ -1,6 +1,6 @@
-import {async_box_fn_gt_s3, async_box_fn_svm_pd} from "./const";
+import {StackVM} from "../../StackVM";
 
-export function async_box_is_stack_vm_prop_desc(v: ReturnType<typeof async_box_fn_gt_s3>): v is ReturnType<typeof async_box_fn_svm_pd> {
+export function async_box_is_stack_vm_prop_desc(v: any): v is StackVM {
 	if(!v.stack)
 		return false;
 	if(!v.push)

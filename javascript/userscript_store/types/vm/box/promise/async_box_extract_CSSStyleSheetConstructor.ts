@@ -1,4 +1,4 @@
 
-export function async_box_extract_CSSStyleSheetConstructor(v: typeof CSSStyleSheet | Function): v is typeof CSSStyleSheet {
+export function async_box_extract_CSSStyleSheetConstructor(_v: typeof CSSStyleSheet | Function): _v is typeof CSSStyleSheet {
 	return false;
 }

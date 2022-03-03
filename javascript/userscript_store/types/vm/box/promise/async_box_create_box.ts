@@ -21,8 +21,8 @@ import {async_box_extract_StackVM} from "./async_box_extract_StackVM";
 import {AllPromiseInBoxType} from "./AllPromiseInBoxType";
 import {async_box_extract_sub_type} from "./async_box_extract_sub_type";
 import {async_box_extract_CSSStyleSheetConstructor} from "./async_box_extract_CSSStyleSheetConstructor";
-import {async_box_extract_box_function, async_box_extract_constructor_function} from "./const";
 import {UnboxType} from "./AsyncFunctionBox";
+import NewableFactory from "../../NewableFactory";
 
 
 export function async_box_create_box(v: UnboxType): Box {
@@ -41,10 +41,10 @@ export function async_box_create_box(v: UnboxType): Box {
 	if(typeof ret === 'symbol')
 		return ret;
 	if(typeof ret === 'function') {
-		if(async_box_extract_box_function(ret)) {
+		if(async_box_extract_sub_type<(...a: Box[]) => Box, Function>(ret)) {
 			return new FunctionBox(ret);
 		}
-		if(async_box_extract_constructor_function(ret)) {
+		if(async_box_extract_sub_type<NewableFactory<{}>, Function>(ret)) {
 			return new VoidBox;
 		}
 		if(async_box_extract_sub_type<(...a: Box[]) => Promise<Box>, Function>(ret)) {

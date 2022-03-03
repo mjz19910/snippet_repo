@@ -1,6 +1,7 @@
 import {Box} from "./Box";
 import VoidBox from "./VoidBox";
 import ArrayBox from "./ArrayBox";
+import Primitives from "../Primitives";
 
 export type ExtractKey<T extends Box, U> = 
 T extends Exclude<Box, Primitives|null> ?

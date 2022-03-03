@@ -1,4 +1,5 @@
 import {StackVM} from "../StackVM";
+import Box from "./Box";
 
 type TmpBoxStr = 'temporary_box';
 export type temporary_box_from_get = {
