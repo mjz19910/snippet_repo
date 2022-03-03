@@ -315,9 +315,6 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 }
 export async function run_tests() {
-	await new Promise(function(a){
-		setTimeout(a, 100);
-	})
 	let dispatcher=new Dispatcher;
 	let test_string=`
 	let v=\`Hi there\`;
