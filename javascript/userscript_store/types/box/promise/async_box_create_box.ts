@@ -29,15 +29,7 @@ type PropertiesToIterate="type";
 type FirstOpt<T>=T;
 
 function is_box_helper<T>(v:Box|T):v is Box {
-	if(is_box_impl(v)){
-		return true;
-	}
-	return false;
-}
-
-function is_box_impl<T>(v:T): v is T&Box {
-	let box_v:Box=v as {} as Box;
-	let bb=box_v;
+	let bb=v;
 	let rest=typeof bb;
 	switch(rest){
 		case 'bigint':return true;
@@ -52,11 +44,13 @@ function is_box_impl<T>(v:T): v is T&Box {
 	}}
 	switch(rest){case 'number':return true}
 	switch(rest){case 'object':{
-
+		// TODO
+		console.error("todo", bb);
+		return false;
 	}}
 	switch(rest){case 'string':return true}
-	rest;
-	return false;
+	switch(rest){case 'symbol':return true}
+	switch(rest){case 'undefined':return true}
 }
 
 function contains_getter_returns_box<T extends string>(v:{[U in FirstOpt<T>]:Box}, test:T) {

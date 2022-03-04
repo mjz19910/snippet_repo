@@ -1,6 +1,6 @@
-import Box from "types/vm/box/Box";
-import CSSStyleSheetBox from "types/vm/box/CSSStyleSheetBox.js";
-import CSSStyleSheetConstructorBox from "types/vm/box/CSSStyleSheetConstructorBox";
+import Box from "types/box/Box";
+import CSSStyleSheetBox from "types/box/CSSStyleSheetBox.js";
+import CSSStyleSheetConstructorBox from "types/box/CSSStyleSheetConstructorBox";
 class CSSStyleSheetConstructorBoxImplSupport {
 	type: "constructor_box"="constructor_box";
 	from: "javascript"="javascript";

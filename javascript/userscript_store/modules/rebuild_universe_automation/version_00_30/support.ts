@@ -40,7 +40,7 @@ export {
 	VoidBox,
 	VoidPromiseBox,
 	WindowBox,
-} from "types/vm/box/mod.js";
+} from "types/box/mod.js";
 export {
 	CreateDesc,
 	NewDesc,
