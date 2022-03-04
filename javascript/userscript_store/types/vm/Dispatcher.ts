@@ -1,4 +1,4 @@
-import {DispatcherType} from "./DispatcherType.js";
+import {DispatcherType} from "./DispatcherType";
 import {ecma_12_2} from "./ecma_12_2";
 import {ecma_12_3} from "./ecma_12_3";
 import {ecma_12_4} from "./ecma_12_4";
@@ -10,7 +10,7 @@ import {ecma_12_8_4} from "./ecma_12_8_4";
 import {ecma_12_8_6} from "./ecma_12_8_6";
 import {ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
-import {ecma_terminal} from "./ecma_terminal.js";
+import {ecma_12 as ecma_12} from "./ecma_12";
 class ecma_12_8_5 extends ecma_base {
 	RegularExpressionLiteral(str: string, index: number): ecma_return_type {
 		let len = 0;
@@ -140,7 +140,7 @@ export class Dispatcher implements DispatcherType {
 	ecma_12_8_4: ecma_12_8_4=new ecma_12_8_4(this);
 	ecma_12_8_5: ecma_12_8_5=new ecma_12_8_5(this);
 	ecma_12_8_6: ecma_12_8_6=new ecma_12_8_6(this);
-	ecma_terminal:ecma_terminal=new ecma_terminal(this);
+	ecma_12:ecma_12=new ecma_12(this);
 	[x: string]: DispatcherIndexType;
 	environment_settings: EnvSettingsType = {
 		type: 'environment_settings',
@@ -222,9 +222,9 @@ export class Dispatcher implements DispatcherType {
 		return this.ecma_12_6.IdentifierPartChar(str, index);
 	}
 	InputElementDiv(str:string, index:number){
-		return this.ecma_terminal.InputElementDiv(str, index);
+		return this.ecma_12.InputElementDiv(str, index);
 	}
 	InputElementRegExpOrTemplateTail(str:string, index:number){
-		return this.ecma_terminal.InputElementRegExpOrTemplateTail(str, index);
+		return this.ecma_12.InputElementRegExpOrTemplateTail(str, index);
 	}
 }
