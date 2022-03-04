@@ -12,7 +12,7 @@ import MediaListBox from "./MediaListBox";
 import NewableFunctionBox from "./NewableFunctionBox";
 import NodeBox from "./NodeBox";
 import ObjectBox from "./ObjectBox";
-import Primitives from "../Primitives";
+import Primitives from "./Primitives";
 import StackVMBox from "./StackVMBox";
 import VoidBox from "./VoidBox";
 import WindowBox from "./WindowBox";

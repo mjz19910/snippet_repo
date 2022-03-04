@@ -22,7 +22,94 @@ import {AllPromiseInBoxType} from "./AllPromiseInBoxType";
 import {async_box_extract_sub_type} from "./async_box_extract_sub_type";
 import {async_box_extract_CSSStyleSheetConstructor} from "./async_box_extract_CSSStyleSheetConstructor";
 import {UnboxType} from "./AsyncFunctionBox";
-import NewableFactory from "../../NewableFactory";
+import NewableFactory from "../../vm/NewableFactory";
+const PropertiesToIterateArray:PropertiesToIterate[]=["type"];
+type PropertiesToIterate="type";
+
+type FirstOpt<T>=T;
+
+function is_box_helper<T>(v:Box|T):v is Box {
+	if(is_box_impl(v)){
+		return true;
+	}
+	return false;
+}
+
+function is_box_impl<T>(v:T): v is T&Box {
+	let box_v:Box=v as {} as Box;
+	let bb=box_v;
+	let rest=typeof bb;
+	switch(rest){
+		case 'bigint':return true;
+	}
+	switch(rest){case 'boolean':return true}
+	switch(rest){case 'function':{
+		// TODO: figure out how to get the arguments the fn could take
+		// TODO: scan all the properties of the global object and objects attached to the
+		// global object to find and validate that a certain function takes
+		// the right arguments (by memorizing the types from compile time)
+		return false;
+	}}
+	switch(rest){case 'number':return true}
+	switch(rest){case 'object':{
+
+	}}
+	switch(rest){case 'string':return true}
+	rest;
+	return false;
+}
+
+function contains_getter_returns_box<T extends string>(v:{[U in FirstOpt<T>]:Box}, test:T) {
+	let obj_keys=Object.keys(v);
+	if(obj_keys.includes(test)){
+		if(is_box_helper(v[test])){
+			return true;
+		}
+	}
+	if(Object.getOwnPropertyDescriptors(v)){
+
+	}
+	return false;
+}
+
+function force_to_type_downgrade<T>(_v:T):_v is T {
+	return true;
+}
+
+function force_type_upgrade<T extends U, U>(v:U, opt_t?:T):v is T&U {
+	return true;
+}
+
+const box_able_properties_cache=[];
+
+function has_any_properties_to_box<T extends string, C extends {[U in T]:Box}>(v:{[x:string]:Box}, props:T[]): v is C {
+	let on:typeof v|null=v;
+	let has_some_to_return_box=false;
+	for(let i=0;i<props.length;i++){
+		let vv=props[i];
+		if(force_to_type_downgrade<{}>(on)){
+			if(force_type_upgrade<C, {}>(on)) {
+				if(contains_getter_returns_box<T>(on, vv)) {
+					box_able_properties_cache.push(vv);
+					has_some_to_return_box=true;
+				}
+			}
+		}
+	}
+	return has_some_to_return_box;
+}
+
+function can_property_return_a_box<T extends string, C extends {[U in T]:Box}>(v:{[x:string]:Box}, prop:T): v is C {
+	let vv=prop;
+	if(force_to_type_downgrade<{}>(v)){
+		if(force_type_upgrade<C, {}>(v)) {
+			if(contains_getter_returns_box<T>(v, vv)) {
+				return true;
+			}
+		}
+	}
+	return true;
+}
 
 
 export function async_box_create_box(v: UnboxType): Box {
@@ -125,6 +212,15 @@ export function async_box_create_box(v: UnboxType): Box {
 			if(async_box_extract_CSSStyleSheetInit(ret))
 				return new CSSStyleSheetInitBox(ret);
 			if(Object.keys(ret).length > 0) {
+				if(has_any_properties_to_box(ret, Object.keys(ret))){
+					let iter_arr=PropertiesToIterateArray;
+					let res_arr=[];
+					for(let i=0;i<iter_arr.length;i++){
+						if(can_property_return_a_box(ret, iter_arr[i])){
+							res_arr.push(iter_arr[i]);
+						}
+					}
+				}
 				console.warn('unable to box', ret);
 				throw new Error("Need box for iterable properties of return value");
 			}

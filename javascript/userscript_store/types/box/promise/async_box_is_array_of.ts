@@ -1,4 +1,4 @@
-import Primitives from "../../Primitives";
+import Primitives from "../Primitives";
 
 
 export function async_box_is_array_of<

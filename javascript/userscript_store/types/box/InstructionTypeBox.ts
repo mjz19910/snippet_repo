@@ -1,4 +1,4 @@
-import {InstructionType} from "../instruction/mod";
+import {InstructionType} from "../vm/instruction/mod";
 import BoxTemplate from "./BoxTemplate";
 
 

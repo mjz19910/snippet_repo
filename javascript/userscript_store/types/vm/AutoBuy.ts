@@ -4,7 +4,7 @@ import {AsyncNodeRoot} from "./AsyncNodeRoot";
 import {AsyncTimeoutNode} from "./AsyncTimeoutNode";
 import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget";
 import {AutoBuyState} from "./AutoBuyState";
-import {Box} from "./box/Box";
+import {Box} from "../box/Box";
 import {DataLoader} from "./DataLoader";
 import {DomBuilderVM} from "./DomBuilderVM";
 import {DomValueBox} from "./DomValueBox";

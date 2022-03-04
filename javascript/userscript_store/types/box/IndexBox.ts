@@ -1,5 +1,5 @@
 import BoxTemplate from "./BoxTemplate";
-import IndexRaw from "../raw/IndexRaw";
+import IndexRaw from "../vm/raw/IndexRaw";
 
 export default class IndexBox {
 	value:IndexRaw;

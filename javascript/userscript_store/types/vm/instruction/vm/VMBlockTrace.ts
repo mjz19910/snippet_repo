@@ -1,4 +1,4 @@
-import Box from "types/vm/box/Box";
+import Box from "types/box/Box";
 import {InstructionType} from "../mod";
 import {VMBlockTraceOpcode} from "../opcodes/VMBlockTraceOpcode";
 import {CastOperand1} from "../operands/CastOperand1";

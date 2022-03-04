@@ -1,5 +1,5 @@
 import {InstructionType} from "./instruction/mod";
-import {Box} from "./box/Box";
+import {Box} from "../box/Box";
 import {AbstractVM} from "./AbstractVM";
 
 export class BaseVMCreate extends AbstractVM {

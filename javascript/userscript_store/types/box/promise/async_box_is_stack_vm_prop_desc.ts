@@ -1,4 +1,4 @@
-import {StackVM} from "../../StackVM";
+import {StackVM} from "../../vm/StackVM";
 
 export function async_box_is_stack_vm_prop_desc(v: any): v is StackVM {
 	if(!v.stack)
