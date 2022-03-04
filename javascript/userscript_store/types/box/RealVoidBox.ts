@@ -6,8 +6,9 @@ export class RealVoidBox implements BoxVerify<RealVoidBox, "RealVoidBox"> {
 	m_verify_name: "RealVoidBox"="RealVoidBox";
 	verify_name(name:"RealVoidBox"){
 		if(this.m_verify_name !== 'RealVoidBox' || name !== 'RealVoidBox'){
-			throw new Error("Bad box");
+			return false;
 		}
+		return true;
 	}
 	as_type(_x: 'function' | 'object') {
 		return null;

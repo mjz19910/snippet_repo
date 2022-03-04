@@ -3,15 +3,20 @@ import {FunctionBox} from "./FunctionBox";
 import {BoxMaker} from "./BoxMaker";
 import {FunctionConstructorFactory} from "./FunctionConstructorFactory";
 import {BoxTemplate} from "./BoxTemplate";
-
-
-export class FunctionConstructorBox extends BoxTemplate<"constructor_box", typeof Function> {
+import {BoxVerify} from "./BoxVerify";
+export class FunctionConstructorBox
+	extends BoxTemplate<"constructor_box", typeof Function>
+	implements BoxVerify<FunctionConstructorBox, "FunctionConstructorBox"> {
 	readonly type = "constructor_box";
 	readonly arguments = "string[]";
 	readonly return = "box";
-	instance_factory: FunctionConstructorFactory;
-	constructor_value: typeof Function;
-	box_maker: BoxMaker<string, FunctionBox>;
+	readonly instance_factory: FunctionConstructorFactory;
+	readonly constructor_value: typeof Function;
+	readonly box_maker: BoxMaker<string, FunctionBox>;
+	readonly m_verify_name = "FunctionConstructorBox"
+	verify_name(name: "FunctionConstructorBox") {
+		return this.m_verify_name === 'FunctionConstructorBox' && name === 'FunctionConstructorBox';
+	}
 	constructor(
 		constructor_value: typeof Function,
 		instance_factory: FunctionConstructorFactory,
@@ -32,11 +37,5 @@ export class FunctionConstructorBox extends BoxTemplate<"constructor_box", typeo
 				return false;
 		}
 		return true;
-	}
-	readonly m_verify_name="FunctionConstructorBox"
-	verify_name(name: "FunctionConstructorBox") {
-		if(name !== 'FunctionConstructorBox'){
-			throw new Error("bad box");
-		}
 	}
 }

@@ -1,13 +1,13 @@
 import {BoxTemplate} from "./BoxTemplate";
-
-export class NodeBox extends BoxTemplate<"instance_box", Node> {
+import {BoxVerify} from "./BoxVerify";
+export class NodeBox
+	extends BoxTemplate<"instance_box", Node>
+	implements BoxVerify<NodeBox, "NodeBox"> {
 	type: "instance_box" = "instance_box";
 	instance_type: "Node" = "Node";
 	from: "create" | "get" = "create";
-	readonly m_verify_name="NodeBox";
-	verify_name(name:"NodeBox") {
-		if(this.m_verify_name !== 'NodeBox' || name !== 'NodeBox'){
-			throw new Error("Bad box");
-		}
+	readonly m_verify_name = "NodeBox";
+	verify_name(name: "NodeBox") {
+		return this.m_verify_name === 'NodeBox' && name === 'NodeBox';
 	}
 }

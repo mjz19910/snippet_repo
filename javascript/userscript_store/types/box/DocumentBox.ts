@@ -1,4 +1,5 @@
-export class DocumentBox {
+export class DocumentBox
+{
 	type:"document_box"="document_box";
 	value:Document;
 	as_type(v:'function'|'object'){

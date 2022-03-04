@@ -1,6 +1,12 @@
 import {BoxTemplate} from "./BoxTemplate";
-
-export class MediaListBox extends BoxTemplate<"instance_box", MediaList> {
-	type: "instance_box" = "instance_box";
-	instance_type: "MediaList" = "MediaList";
+import {BoxVerify} from "./BoxVerify";
+export class MediaListBox
+	extends BoxTemplate<"instance_box", MediaList>
+	implements BoxVerify<MediaListBox, "MediaListBox"> {
+	readonly type = "instance_box";
+	readonly instance_type = "MediaList";
+	readonly m_verify_name = "MediaListBox";
+	verify_name(name: "MediaListBox") {
+		return this.m_verify_name === 'MediaListBox' && name === 'MediaListBox';
+	}
 }

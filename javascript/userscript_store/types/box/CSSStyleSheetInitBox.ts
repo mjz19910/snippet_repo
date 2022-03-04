@@ -1,9 +1,15 @@
 import {MediaListBox} from "./MediaListBox";
 import {BoxTemplate} from "./BoxTemplate";
-
-export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box", CSSStyleSheetInit> {
-	type: "shape_box" = "shape_box";
-	shape: "CSSStyleSheetInit" = "CSSStyleSheetInit";
+import {BoxVerify} from "./BoxVerify";
+export class CSSStyleSheetInitBox
+	extends BoxTemplate<"shape_box", CSSStyleSheetInit>
+	implements BoxVerify<CSSStyleSheetInitBox, "CSSStyleSheetInitBox"> {
+	readonly type = "shape_box";
+	readonly shape = "CSSStyleSheetInit";
+	readonly m_verify_name = "CSSStyleSheetInitBox";
+	verify_name(name: "CSSStyleSheetInitBox") {
+		return this.m_verify_name === 'CSSStyleSheetInitBox' && name === 'CSSStyleSheetInitBox';
+	}
 	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | MediaListBox | undefined) {
 		if(key === 'baseURL') {
 			if(typeof value == 'string') {
@@ -33,12 +39,6 @@ export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box", CSSStyleSheet
 			}
 		} else {
 			throw new Error("Type shenanigans afoot (You passed a value that should be impossible at runtime)");
-		}
-	}
-	readonly m_verify_name="CSSStyleSheetInitBox";
-	verify_name(name:"CSSStyleSheetInitBox") {
-		if(this.m_verify_name !== 'CSSStyleSheetInitBox' || name !== 'CSSStyleSheetInitBox'){
-			throw new Error("Bad box");
 		}
 	}
 }

@@ -1,12 +1,12 @@
 import {BoxTemplate} from "./BoxTemplate";
-
-export class CSSStyleSheetBox extends BoxTemplate<"instance_box", CSSStyleSheet> {
+import {BoxVerify} from "./BoxVerify";
+export class CSSStyleSheetBox
+	extends BoxTemplate<"instance_box", CSSStyleSheet>
+	implements BoxVerify<CSSStyleSheetBox, "CSSStyleSheetBox"> {
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
-	readonly m_verify_name="CSSStyleSheetBox";
-	verify_name(name:"CSSStyleSheetBox") {
-		if(this.m_verify_name !== 'CSSStyleSheetBox' || name !== 'CSSStyleSheetBox'){
-			throw new Error("Bad box");
-		}
+	readonly m_verify_name = "CSSStyleSheetBox";
+	verify_name(name: "CSSStyleSheetBox") {
+		return this.m_verify_name === 'CSSStyleSheetBox' && name === 'CSSStyleSheetBox';
 	}
 }
