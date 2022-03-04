@@ -1,5 +1,5 @@
 import {Box} from "./Box";
-import FunctionBox from "./FunctionBox";
+import {FunctionBox} from "./FunctionBox";
 import {BoxMaker} from "./BoxMaker";
 import {FunctionConstructorFactory} from "./FunctionConstructorFactory";
 

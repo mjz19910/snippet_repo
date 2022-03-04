@@ -22,6 +22,7 @@ import TemporaryBox from "./TemporaryBox";
 import DocumentBox from "./DocumentBox";
 import PromiseBox from "./promise/PromiseBox";
 import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox";
+import {RealVoidBox} from "./RealVoidBox";
 
 export type Box =
 	// function result
@@ -60,6 +61,7 @@ export type Box =
 	null |
 	// No value (Void)
 	VoidBox |
+	RealVoidBox |
 	// Temporary box for when stuff is asserted to be true (ie, typeof value_to_box === "function")
 	TemporaryBox|
 	// Box with stuff

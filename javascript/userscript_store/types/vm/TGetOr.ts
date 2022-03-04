@@ -1,1 +1,2 @@
-export type TGetOr<T, V extends string> = T extends {[X in V]:any} ? T[V] : never;
+import {CanUnpack} from "./CanUnpack";
+export type TGetOr<T> = T extends CanUnpack<T, infer V> ? T[V] : never;

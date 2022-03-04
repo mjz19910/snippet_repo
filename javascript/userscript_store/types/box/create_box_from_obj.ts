@@ -1,73 +1,103 @@
-import CSSStyleSheetInitBox from "./CSSStyleSheetInitBox";
-import ObjectBox from "./ObjectBox";
-import StackVMBox from "./StackVMBox";
-import {async_box_extract_CSSStyleSheetInit} from "./async_box_extract_CSSStyleSheetInit";
-import {async_box_extract_StackVM} from "./async_box_extract_StackVM";
+import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox";
+import {ObjectBox} from "./ObjectBox";
+import {StackVMBox} from "./StackVMBox";
+import {extract_CSSStyleSheetInit} from "./extract_CSSStyleSheetInit";
+import {extract_StackVM} from "../vm/box_support/extract_stack_vm";
 import {BoxExtractType} from "./extract/BoxExtractType";
-import {has_any_properties_to_box} from "./has_any_properties_to_box";
-import {can_property_return_a_box} from "./can_property_return_a_box";
-import Primitives from "./Primitives";
-import {force_to_type_downgrade} from "./force_to_type_downgrade";
-import {PropertiesToIterate} from "./PropertiesToIterate";
-import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox";
-import {PropertiesToIterateArray} from "./create_box";
-import FunctionBox from "./FunctionBox";
+import {Primitives} from "./Primitives";
 import Box from "./Box";
-import NewableFunctionBox from "./NewableFunctionBox";
-import {FunctionConstructorBox} from "./FunctionConstructorBox";
-import {BoxMaker} from "./BoxMaker";
-import {force_type_upgrade} from "./force_type_upgrade";
+import NodeBox from "./NodeBox";
+import DocumentBox from "./DocumentBox";
+import WindowBox from "./WindowBox";
+import CSSStyleSheetBox from "./CSSStyleSheetBox";
+import EmptyArrayBox from "./EmptyArrayBox";
+import ArrayBox from "./ArrayBox";
+import {async_convert_to_box} from "./async_convert_to_box";
+import {create_box_from_obj_with_keys} from "./create_box_from_obj_with_keys";
+import {is_empty_arr} from "./is_empty_arr";
+import {async_box_extract_globalThis} from "./extract_globalThis";
+import GlobalThisBox from "./GlobalThisBox";
+import MediaListBox from "./MediaListBox";
+import {PromiseBox} from "./mod";
 import VoidBox from "./VoidBox";
-
-function has_property<Z, Q extends string>(v:{}, q:Q): v is {[U in Q]:Z} {
-	return true;
+import TemporaryBox from "./TemporaryBox";
+import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox";
+import {FunctionConstructorBox} from "./FunctionConstructorBox";
+function extract_MediaList(v: {} | MediaList): v is MediaList {
+	console.log('TODO extract MediaList', v);
+	return false;
 }
-
-function add_part<Z, Q>(q:Q):q is Q&Z {
-	return true;
-}
-
-function fn_box_maker<A, T, T_Box>(make_new_box: (do_box: () => T, ...a: A[]) => T_Box, value: {new ():T}) : T_Box {
-	return make_new_box(()=>new value);
-}
-
-function box_fn_return():FunctionBox {
-	return new FunctionBox(()=>null);
-}
-
-
-export function create_box_from_obj(value: Exclude<BoxExtractType, Primitives | undefined | null>) {
-	if(async_box_extract_StackVM(value))
+export function create_box_from_obj(value: Exclude<BoxExtractType, Primitives | Function | undefined | null>): Box {
+	if(extract_StackVM(value)) {
 		return new StackVMBox(value);
-	if(async_box_extract_CSSStyleSheetInit(value))
+	}
+	if(extract_CSSStyleSheetInit(value)) {
 		return new CSSStyleSheetInitBox(value);
+	}
+	if(value instanceof Document) {
+		return new DocumentBox(value);
+	}
+	if(value instanceof Node) {
+		return new NodeBox(value);
+	}
+	if(value instanceof Window) {
+		return new WindowBox(value);
+	}
+	if(value instanceof CSSStyleSheet) {
+		return new CSSStyleSheetBox(value);
+	}
+	if(value instanceof Array<any>) {
+		if(is_empty_arr(value)) {
+			return new EmptyArrayBox(value);
+		}
+		return new ArrayBox(value);
+	}
+	if(value instanceof Promise<any>) {
+		return new PromiseBox(async_convert_to_box(value));
+	}
+	if(extract_MediaList(value)) {
+		return new MediaListBox(value);
+	}
+	if(async_box_extract_globalThis(value)) {
+		return new GlobalThisBox(value);
+	}
 	if(Object.keys(value).length > 0) {
-		let v_value: {} = value;
-		if(
-			v_value === Function &&
-			has_property<typeof Function, 'prototype'>(v_value, 'prototype') && 
-			add_part<{
-				(...args: string[]): Function;
-				new (...args:string[]):Function;
-			}, {}>(v_value)
-		) {
-			return new FunctionConstructorBox(v_value, box_fn_return, fn_box_maker<string, Function, FunctionBox>);
-		}
-		if(force_to_type_downgrade<{}>(value)) {
-			let v_value: {} = value;
-			if(has_any_properties_to_box(v_value, Object.keys(value))) {
-				let iter_arr = PropertiesToIterateArray;
-				let res_arr: (PropertiesToIterate)[] = [];
-				for(let i = 0;i < iter_arr.length;i++) {
-					if(can_property_return_a_box(v_value, iter_arr[i])) {
-						res_arr.push(iter_arr[i]);
-					}
-				}
-				return new BoxWithPropertiesIsBox(v_value, res_arr);
-			}
-		}
-		console.warn('unable to box', value);
-		throw new Error("Need box for iterable properties of return value");
+		let tb: TemporaryBox = {
+			type: 'temporary_box',
+			extension: 'create_box',
+			custom_type: 'box',
+			source: "create_box_from_obj",
+			value
+		};
+		return tb;
 	}
 	return new ObjectBox(value);
+}
+export namespace Tests {
+	export function tests():BoxWithPropertiesIsBox|void|undefined {
+		let bx: Exclude<Box, Primitives | null> | null = new VoidBox;
+		function get_it(): Exclude<Box, Primitives | null> | null {
+			return bx;
+		}
+		let b2 = get_it();
+		switch(b2) {
+			case null: {
+				return create_box_from_obj_with_keys<{}>({});
+			}
+		}
+		switch(b2.type) {case 'array_box': {b2.value; return } }
+		switch(b2.type) {case 'constructor_box': {b2.value; return } }
+		switch(b2.type) {case 'custom_box': {b2.value; return } }
+		switch(b2.type) {case 'document_box': {b2.value; return } }
+		switch(b2.type) {case 'function_box': {b2.value; return } }
+		switch(b2.type) {case 'instance_box': {b2.value; return } }
+		switch(b2.type) {case 'object_box': {b2.value; return } }
+		switch(b2.type) {case 'promise_box': {b2.value; return } }
+		switch(b2.type) {case 'shape_box': {b2.value; return } }
+		switch(b2.type) {case 'temporary_box': {b2.value; return } }
+		switch(b2.type) {case 'value_box': {b2.value; return } }
+		switch(b2.type) {case 'void': {b2.value; return } }
+		let last:BoxWithPropertiesIsBox=b2;
+		switch(b2.type) {case 'with_properties': {b2.value; return last} }
+	}
 }

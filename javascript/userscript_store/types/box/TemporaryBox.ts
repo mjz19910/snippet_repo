@@ -43,11 +43,30 @@ export type temporary_box_object_index_to_box = {
 
 export type temporary_box_StackVM = {
 	type:'temporary_box',
-	source:'cast',
 	extension:'custom_box_cast',
+	source:'cast',
 	custom_type:'StackVM',
 	cast_source:'object_index',
 	value:StackVM;
+}
+
+export type temporary_box_from_create_box_from_obj = {
+	type:'temporary_box',
+	extension:'create_box',
+	source:'create_box_from_obj',
+	custom_type:'box',
+	value:{
+		[x:string]:Box;
+	};
+}
+export function new_temporary_box_from_create_obj(value:{}):temporary_box_from_create_box_from_obj {
+	return {
+		type:'temporary_box',
+		extension:'create_box',
+		custom_type:'box',
+		source:"create_box_from_obj",
+		value
+	}
 }
 
 export type TemporaryBox = 
@@ -56,5 +75,6 @@ temporary_box_from_cast_to_vm_function |
 temporary_box_from_call | 
 temporary_box_instance | 
 temporary_box_object_index_to_box|
-temporary_box_StackVM;
+temporary_box_StackVM|
+temporary_box_from_create_box_from_obj;
 export default TemporaryBox;

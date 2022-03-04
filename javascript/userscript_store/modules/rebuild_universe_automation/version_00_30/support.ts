@@ -1,5 +1,6 @@
 import {ArrayBox, AsyncFunctionBox, CSSStyleSheetBox, CSSStyleSheetConstructorBox, CSSStyleSheetInitBox, CSSStyleSheetPromiseBox, DocumentBox, EmptyArrayBox, FunctionBox, GlobalThisBox, InstructionTypeArrayBox, MediaListBox, NewableFunctionBox, NodeBox, ObjectBox, PromiseBox, StackVMBox, TemporaryBox, VoidBox, VoidPromiseBox, WindowBox} from "types/box/mod.js";
-import Primitives from "types/box/Primitives";
+import {Primitives} from "types/box/Primitives";
+import {RealVoidBox} from "types/box/RealVoidBox";
 import {DecodeArr, InstructionOpcodesList} from "types/vm/instruction/mod";
 import {DomInstructionType} from "types/vm/instruction/vm/VMBlockTrace";
 import {CreateDesc, NewDesc} from "../version_00_20/support";
@@ -36,6 +37,7 @@ export namespace AllImportsForSupport {
 		StackVMBox |
 		TemporaryBox |
 		VoidBox |
+		RealVoidBox |
 		VoidPromiseBox |
 		WindowBox |
 		Primitives;
@@ -68,6 +70,7 @@ export {
 	StackVMBox,
 	TemporaryBox,
 	VoidBox,
+	RealVoidBox,
 	VoidPromiseBox,
 	WindowBox
 }
