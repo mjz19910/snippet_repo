@@ -1,7 +1,5 @@
 import {CanRunTest} from "./CanRunTests";
 import {BaseTestRunner} from "./BaseTestRunner";
-
-
 export class TestEngine extends BaseTestRunner implements CanRunTest {
 	test_started = false;
 	m_is_user_completing_tests = false;
