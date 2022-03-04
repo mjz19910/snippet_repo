@@ -12,8 +12,9 @@ export class ecma_12_6 extends ecma_base {
 	}
 	debug = false;
 	PrivateIdentifier(str: string, index: number): ecma_return_type {
-		if(str[0] !== '#')
+		if(str[index] !== '#')
 			return [null, 0];
+		debugger;
 		let cur = this.IdentifierName(str, index + 1);
 		if(!cur[0]) return [null, 0];
 		return ["PrivateIdentifier", cur[1] + 1];
@@ -46,6 +47,9 @@ export class ecma_12_6 extends ecma_base {
 	static id_continue_regex = /[a-zA-Z$_0-9]/;
 	static id_start_regex = /[a-zA-Z$_]/;
 	IdentifierStart(str: string, index: number): ecma_return_type {
+		if(index >= str.length){
+			return [null, 0];
+		}
 		if(str[index] === '\\') {
 			let res = this.m_dispatcher.UnicodeEscapeSequence(str, index + 1);
 			if(res[0]) return ["IdentifierStart", res[1] + 1];
@@ -82,90 +86,6 @@ export class ecma_12_6 extends ecma_base {
 	}
 }
 
-
-function TODO_err(): Error {
-	let err = new Error("TODO");
-	Error.captureStackTrace(err, TODO_err);
-	return err;
-}
-
-function run_tests_impl() {
-	let code = `(function(){let the_var=12;})`;
-	let test_2_code = `(class {#name=12;get name(){return this.#name}})`;
-	let js_r1 = eval(code);
-	let js_r2 = eval(test_2_code);
-	void js_r1;
-	void js_r2;
-	let dispatcher = new Dispatcher;
-	let term_lexer = new ecma_terminal(dispatcher);
-	let cur_index = 0;
-	let res_arr = [];
-	let str = code;
-	let res = term_lexer.InputElementRegExpOrTemplateTail(code, 0);
-	if(res[0]) {
-		cur_index += res[1];
-	}
-	res_arr.push(res);
-	while(res[0]) {
-		res = term_lexer.InputElementRegExpOrTemplateTail(str, cur_index);
-		res_arr.push(res);
-		if(res[0]) {
-			let mat = str.slice(cur_index, cur_index + res[1]);
-			if(mat === 'let') {
-				let res_arr: ecma_return_type[] = [];
-				let res_mul = term_lexer.do_let_parse(str, cur_index, res_arr);
-				if(res_mul[0] === null) {
-					console.error('TODO');
-					if(test_state.resolver){
-						test_state.resolver();
-						test_state.resolver=null;
-						test_state.success=false;
-					}
-				}
-				if(res_mul[0]) {
-					cur_index += res_mul[1];
-					continue;
-				}
-			}
-			cur_index += res[1];
-		}
-	}
-	cur_index = 0;
-	console.log(res_arr.map(res => {
-		if(res[0]) {
-			let ret = [res[0], code.slice(cur_index, cur_index + res[1])];
-			cur_index += res[1];
-			return ret;
-		}
-		return ['End (null)', 0, code[cur_index]];
-	}));
-	if(test_state.resolver) {
-		test_state.resolver();
-		test_state.success=true;
-	}
-}
-
-class TestState {
-	promise: Promise<void> | null = null;
-	resolver: ((value: void | PromiseLike<void>) => void) | null = null;
-	success: boolean = false;
-}
-
-const test_state = new TestState;
-
-export async function run_tests() {
-	new Promise(function(a) {
-		setTimeout(a, 100);
-	});
-	console.log('run tests ecma 12.6');
-	setTimeout(run_tests_impl, 0);
-	test_state.promise = new Promise(function(a) {
-		test_state.resolver = a;
-	});
-	await test_state.promise;
-	if(test_state.success) {
-		console.log('Success');
-	} else {
-		throw new Error("Tests failed");
-	}
+export async function run_tests(){
+	// TODO: write tests for ECMA262: 12.6 (Javascript Identifiers), not checking from ecma_terminal
 }

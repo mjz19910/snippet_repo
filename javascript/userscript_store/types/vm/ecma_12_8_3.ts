@@ -226,6 +226,9 @@ export class ecma_12_8_3 extends ecma_base {
 		this.token_type = TokenType.NumericLiteral;
 		// bool is_invalid_numeric_literal = false;
 		let is_invalid_numeric_literal = false;
+		if(index >= str.length){
+			return [null, 0];
+		}
 		this.m_source = str;
 		this.m_position = index;
 		this.init();
