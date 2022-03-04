@@ -7,4 +7,3 @@ export declare namespace Manipulation {
 	type RevDataStr = Reverse<"Data">;
 	type RevDataArr = Reverse<[1, 2, 3]>;
 }
-export default Manipulation;

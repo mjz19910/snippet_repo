@@ -1,6 +1,6 @@
 import {Box} from "./Box";
-import BoxTemplate from "./BoxTemplate";
-import CSSStyleSheetBox from "./CSSStyleSheetBox";
+import {BoxTemplate} from "./BoxTemplate";
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
 
 export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box", typeof CSSStyleSheet> {
 	type: "constructor_box" = "constructor_box";
@@ -40,4 +40,3 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box", 
 		return new CSSStyleSheetBox(obj);
 	}
 }
-export default CSSStyleSheetConstructorBox;

@@ -1,20 +1,20 @@
-import ArrayBox from "./ArrayBox";
+import {ArrayBox} from "./ArrayBox";
 import {Box} from "./Box";
-import CSSStyleSheetBox from "./CSSStyleSheetBox";
-import CSSStyleSheetConstructorBox from "./CSSStyleSheetConstructorBox";
-import EmptyArrayBox from "./EmptyArrayBox";
-import FunctionBox from "./FunctionBox";
-import MediaListBox from "./MediaListBox";
-import NodeBox from "./NodeBox";
-import PromiseBox from "./promise/PromiseBox";
-import TemporaryBox from "./TemporaryBox";
-import VoidBox from "./VoidBox";
-import WindowBox from "./WindowBox";
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
+import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";
+import {EmptyArrayBox} from "./EmptyArrayBox";
+import {FunctionBox} from "./FunctionBox";
+import {MediaListBox} from "./MediaListBox";
+import {NodeBox} from "./NodeBox";
+import {PromiseBox} from "./promise/PromiseBox";
+import {TemporaryBox} from "./TemporaryBox";
+import {VoidBox} from "./VoidBox";
+import {WindowBox} from "./WindowBox";
 import {async_box_extract_unit_arr} from "./extract_unit_arr";
 import {async_box_extract_sub_type} from "./extract_sub_type";
 import {async_box_extract_CSSStyleSheetConstructor} from "./extract_CSSStyleSheetConstructor";
 import {BoxExtractType} from "./extract/BoxExtractType";
-import NewableInstancePack from "./NewableInstancePack";
+import {NewableInstancePack} from "./NewableInstancePack";
 import {async_returns_into_box} from "./async_returns_into_box";
 import {PropertiesToIterate} from "./PropertiesToIterate";
 import {create_box_from_obj} from "./create_box_from_obj";
@@ -61,7 +61,8 @@ export function create_box(value: BoxExtractType): Box {
 			return new ArrayBox(value);
 		}
 		if(value instanceof Promise) {
-			return new PromiseBox(async_returns_into_box(value));
+			// TODO
+			// return new PromiseBox(async_returns_into_box(value));
 		}
 		if(value instanceof Node)
 			return new NodeBox(value);

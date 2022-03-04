@@ -1,5 +1,5 @@
-import MediaListBox from "./MediaListBox";
-import BoxTemplate from "./BoxTemplate";
+import {MediaListBox} from "./MediaListBox";
+import {BoxTemplate} from "./BoxTemplate";
 
 export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box", CSSStyleSheetInit> {
 	type: "shape_box" = "shape_box";
@@ -36,4 +36,3 @@ export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box", CSSStyleSheet
 		}
 	}
 }
-export default CSSStyleSheetInitBox;

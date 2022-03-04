@@ -1,28 +1,25 @@
-import ArrayBox from "./ArrayBox";
-import AsyncFunctionBox from "./async/AsyncFunctionBox";
-import CSSStyleSheetBox from "./CSSStyleSheetBox";
-import CSSStyleSheetConstructorBox from "./CSSStyleSheetConstructorBox";
-import CSSStyleSheetInitBox from "./CSSStyleSheetInitBox";
-import CSSStyleSheetPromiseBox from "./promise/CSSStyleSheetPromiseBox";
-import EmptyArrayBox from "./EmptyArrayBox";
-import FunctionBox from "./FunctionBox";
-import GlobalThisBox from "./GlobalThisBox";
-import InstructionTypeArrayBox from "./InstructionTypeArrayBox";
-import MediaListBox from "./MediaListBox";
-import NewableFunctionBox from "./NewableFunctionBox";
-import {FunctionConstructorBox} from "./FunctionConstructorBox";
-import NodeBox from "./NodeBox";
-import ObjectBox from "./ObjectBox";
-import Primitives from "./Primitives";
-import StackVMBox from "./StackVMBox";
-import VoidBox from "./VoidBox";
-import WindowBox from "./WindowBox";
-import VoidPromiseBox from "./promise/VoidPromiseBox";
-import TemporaryBox from "./TemporaryBox";
-import DocumentBox from "./DocumentBox";
-import PromiseBox from "./promise/PromiseBox";
+import {ArrayBox} from "./ArrayBox";
 import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox";
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
+import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";
+import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox";
+import {DocumentBox} from "./DocumentBox";
+import {EmptyArrayBox} from "./EmptyArrayBox";
+import {FunctionBox} from "./FunctionBox";
+import {FunctionConstructorBox} from "./FunctionConstructorBox";
+import {GlobalThisBox} from "./GlobalThisBox";
+import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
+import {MediaListBox} from "./MediaListBox";
+import {AsyncFunctionBox, CSSStyleSheetPromiseBox, VoidPromiseBox, PromiseBox} from "./mod";
+import {NewableFunctionBox} from "./NewableFunctionBox";
+import {NodeBox} from "./NodeBox";
+import {ObjectBox} from "./ObjectBox";
+import {Primitives} from "./Primitives";
 import {RealVoidBox} from "./RealVoidBox";
+import {StackVMBox} from "./StackVMBox";
+import {TemporaryBox} from "./TemporaryBox";
+import {VoidBox} from "./VoidBox";
+import {WindowBox} from "./WindowBox";
 
 export type Box =
 	// function result
@@ -67,4 +64,3 @@ export type Box =
 	// Box with stuff
 	BoxWithPropertiesIsBox;
 
-export default Box;

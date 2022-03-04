@@ -1,7 +1,9 @@
-import BoxTemplate from "./BoxTemplate";
-import IndexRaw from "../vm/raw/IndexRaw";
-
-export default class IndexBox {
+import {Box} from "./mod";
+type IndexAccess<T> = {
+	[v: string]: T;
+}
+type IndexRaw = IndexAccess<Box>;
+export class IndexBox {
 	value:IndexRaw;
 	like_type: "object_box" = "object_box";
 	extension: 'index' = 'index';

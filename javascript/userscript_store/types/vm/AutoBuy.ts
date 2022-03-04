@@ -5,20 +5,20 @@ import {AsyncTimeoutNode} from "./AsyncTimeoutNode";
 import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget";
 import {AutoBuyState} from "./AutoBuyState";
 import {Box} from "../box/Box";
-import {DataLoader} from "./DataLoader";
 import {DomBuilderVM} from "./DomBuilderVM";
 import {DomValueBox} from "./DomValueBox";
 import {do_auto_unit_promote} from "./do_auto_unit_promote";
 import {EventHandlerDispatch} from "./EventHandlerDispatch";
 import {EventHandlerVMDispatch} from "./EventHandlerVMDispatch";
-import {is_in_ignored_from_src_fn} from "./find_all_scripts_using_string_apis";
-import IAutoBuy from "./IAutoBuy";
+import {IAutoBuy} from "./IAutoBuy";
 import {lightreset_inject} from "./lightreset_inject";
 import {l_log_if} from "./l_log_if";
 import {MulCompression} from "./MulCompression";
 import {SimpleStackVMParser} from "./SimpleStackVMParser";
 import {specialclick_inject} from "./specialclick_inject";
 import {TimeoutTarget} from "./TimeoutTarget";
+import {DataLoader} from "./wasm/DataLoader";
+import {is_in_ignored_from_src_fn} from "types/script_registry/mod";
 
 export class AutoBuy implements IAutoBuy {
 	state_history_arr: any;

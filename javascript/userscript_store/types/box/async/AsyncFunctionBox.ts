@@ -10,4 +10,3 @@ export class AsyncFunctionBox extends BoxTemplate<"function_box", (...a: Box[]) 
 		return new PromiseBox(ret);
 	}
 }
-export default AsyncFunctionBox;

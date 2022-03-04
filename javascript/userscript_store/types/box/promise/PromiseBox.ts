@@ -1,4 +1,4 @@
-import BoxTemplate from "../BoxTemplate";
+import {BoxTemplate} from "../BoxTemplate";
 import {Box} from "../Box";
 
 export class PromiseBox extends BoxTemplate<"promise_box", Promise<Box>> {
@@ -6,4 +6,3 @@ export class PromiseBox extends BoxTemplate<"promise_box", Promise<Box>> {
 	inner_type: 'Promise<Box>' = 'Promise<Box>';
 	await_type: "Box" = "Box";
 }
-export default PromiseBox;

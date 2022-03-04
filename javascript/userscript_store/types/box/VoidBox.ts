@@ -1,4 +1,4 @@
-import BoxInterface from "./BoxInterface";
+import {BoxInterface} from "./BoxInterface";
 import {RealVoidBox} from "./RealVoidBox";
 export class VoidBox implements BoxInterface {
 	readonly type = "void";
@@ -9,4 +9,3 @@ export class VoidBox implements BoxInterface {
 	}
 }
 export type IVoidBox = RealVoidBox|VoidBox;
-export default VoidBox;

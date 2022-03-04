@@ -1,4 +1,4 @@
-import BoxTemplate from "./BoxTemplate";
+import {BoxTemplate} from "./BoxTemplate";
 
 export class WindowBox extends BoxTemplate<"object_box", Window> {
 	type: "object_box" = "object_box";
@@ -6,4 +6,3 @@ export class WindowBox extends BoxTemplate<"object_box", Window> {
 	inner_type: "Window" = "Window";
 }
 
-export default WindowBox;

@@ -10,4 +10,3 @@ export class DocumentBox {
 	}
 }
 
-export default DocumentBox;

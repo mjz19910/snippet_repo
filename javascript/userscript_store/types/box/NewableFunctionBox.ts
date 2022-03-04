@@ -1,7 +1,7 @@
-import NewableInstancePack from "./NewableInstancePack";
+import {NewableInstancePack} from "./NewableInstancePack";
 import {Box} from "./Box";
-import BoxTemplate from "./BoxTemplate";
-import ObjectBox from "./ObjectBox";
+import {BoxTemplate} from "./BoxTemplate";
+import {ObjectBox} from "./ObjectBox";
 
 export class NewableFunctionBox extends BoxTemplate<"constructor_box", NewableInstancePack<{}>> {
 	readonly type: "constructor_box" = "constructor_box";
@@ -24,4 +24,3 @@ export class NewableFunctionBox extends BoxTemplate<"constructor_box", NewableIn
 		return new ObjectBox(res);
 	}
 }
-export default NewableFunctionBox;

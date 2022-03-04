@@ -1,4 +1,4 @@
-import Append from "./Append";
+import {Append} from "./Append";
 import {AppendOpcode} from "./opcodes/AppendOpcode";
 import {Cast} from "./Cast";
 import {CastOpcode as CastOpcode} from "./opcodes/CastOpcode";

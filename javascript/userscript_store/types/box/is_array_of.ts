@@ -1,4 +1,4 @@
-import Primitives from "./Primitives";
+import {Primitives} from "./Primitives";
 
 
 export function is_array_of<

@@ -1,5 +1,5 @@
 import {StackVM} from "../vm/StackVM";
-import Box from "./Box";
+import {Box} from "./Box";
 
 type TmpBoxStr = 'temporary_box';
 export type temporary_box_from_get = {
@@ -77,4 +77,3 @@ temporary_box_instance |
 temporary_box_object_index_to_box|
 temporary_box_StackVM|
 temporary_box_from_create_box_from_obj;
-export default TemporaryBox;

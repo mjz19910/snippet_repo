@@ -1,8 +1,8 @@
 import {InstructionType} from "../vm/instruction/mod";
-import BoxTemplate from "./BoxTemplate";
+import {BoxTemplate} from "./BoxTemplate";
 
 
-export default class InstructionTypeBox extends BoxTemplate<"instance_box", InstructionType> {
+export class InstructionTypeBox extends BoxTemplate<"instance_box", InstructionType> {
 	type:"instance_box"="instance_box";
 	inner_type:"InstructionType"="InstructionType";
 }

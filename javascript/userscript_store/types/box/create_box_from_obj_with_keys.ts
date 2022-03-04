@@ -1,6 +1,6 @@
 import {Box} from "./mod";
 import {RealVoidBox} from "./RealVoidBox";
-import VoidBox from "./VoidBox";
+import {VoidBox} from "./VoidBox";
 
 function t_is_void<T>(v:T|void):v is void {
 	if(v === void 0){

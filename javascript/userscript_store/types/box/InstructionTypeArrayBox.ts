@@ -1,5 +1,5 @@
 import {InstructionType} from "../vm/instruction/mod";
-import ArrayBox from "./ArrayBox";
+import {ArrayBox} from "./ArrayBox";
 
 export class InstructionTypeArrayBox extends ArrayBox {
 	mapped_as:"instruction_type"="instruction_type";
@@ -9,4 +9,3 @@ export class InstructionTypeArrayBox extends ArrayBox {
 		this.mapped_value = value;
 	}
 }
-export default InstructionTypeArrayBox;

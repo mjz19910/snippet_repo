@@ -1,4 +1,4 @@
-import BoxInterface from "./BoxInterface";
+import {BoxInterface} from "./BoxInterface";
 export type AnyTypeOfResult = "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
 export abstract class BoxTemplate<T extends string, V extends object | Function> implements BoxInterface {
 	constructor(value: V) {
@@ -16,4 +16,3 @@ export abstract class BoxTemplate<T extends string, V extends object | Function>
 		return null;
 	}
 }
-export default BoxTemplate;
