@@ -1,4 +1,4 @@
-import {TestLock, ITestRunnerNode} from "types/tests";
+import {TestLock, ITestRunner} from "types/tests_mod/tests";
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./LexerBase";
 import {ecma_return_type} from "./LexReturnType";
@@ -314,7 +314,7 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 }
 
-export async function run_tests_impl(test_runner:ITestRunnerNode, lock:TestLock) {
+export async function run_tests_impl(test_runner:ITestRunner, lock:TestLock) {
 	let dispatcher=new Dispatcher;
 	let test_string=`
 	let v=\`Hi there\`;
@@ -333,6 +333,6 @@ export async function run_tests_impl(test_runner:ITestRunnerNode, lock:TestLock)
 	await lock.unlock();
 }
 
-export function run_tests(test_runner:ITestRunnerNode, lock: TestLock) {
+export function run_tests(test_runner:ITestRunner, lock: TestLock) {
 	test_runner.start_async(run_tests_impl, test_runner, lock);
 }

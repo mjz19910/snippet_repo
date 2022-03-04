@@ -10,15 +10,8 @@ import {ecma_12_8_4} from "./section_12_8_4";
 import {ecma_12_8_5} from "./section_12_8_5";
 import {ecma_12_8_6} from "./section_12_8_6";
 import {ecma_12_8} from "./section_12_8";
-import {ecma_base} from "./LexerBase";
-import {LexReturnType} from "./LexReturnType";
-export type EnvSettingsType = {
-	type: 'environment_settings';
-	is_strict: boolean;
-};
-
-export type DispatcherIndexType = ((str: string, index: number) => LexReturnType) | ecma_base | EnvSettingsType;
-
+import {EnvSettingsType} from "./EnvSettingsType";
+import {DispatcherIndexType} from "./DispatcherIndexType";
 export class Dispatcher {
 	lexer:Lexer=new Lexer(this);
 	ecma_12_2: ecma_12_2=new ecma_12_2(this);

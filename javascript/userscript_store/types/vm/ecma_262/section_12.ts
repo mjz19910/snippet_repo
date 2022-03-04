@@ -1,9 +1,10 @@
-import {TestLock, ITestRunnerNode} from "types/tests";
+import {TestLock, ITestRunner} from "types/tests_mod/tests";
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base as LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
 import {ItemInfoType, item_info_type_to_string} from "./mod";
-import {run_test_1, run_test_2} from "./tests";
+import {run_test_1} from "./run_test_1";
+import {run_test_2} from "./run_test_2";
 function lexer_produce_input_element(ecma_dispatcher: Dispatcher, str: string, index: number): LexReturnType {
 	let max_item = null, max_val = 0;
 	let item_info = null;
@@ -258,7 +259,7 @@ export type LexerStateData = {
 	cur_index: number;
 };
 
-export function run_tests(test_runner:ITestRunnerNode, lock: TestLock) {
+export function run_tests(test_runner:ITestRunner, lock: TestLock) {
 	let dispatcher = new Dispatcher;
 	test_runner.start_async_template<Dispatcher>(run_test_1, test_runner, lock, dispatcher);
 	test_runner.start_async_template<Dispatcher>(run_test_2, test_runner, lock, dispatcher);

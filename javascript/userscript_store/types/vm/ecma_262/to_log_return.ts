@@ -1,0 +1,25 @@
+import {LexReturnType} from "./LexReturnType";
+import {LexerStateData} from "./section_12";
+
+
+export function to_log_return(state: LexerStateData, code: string, res: LexReturnType) {
+	if(res[0]) {
+		let ret: [typeof res[0], string] = [res[0], code.slice(state.cur_index, state.cur_index + res[1])];
+		state.cur_index += res[1];
+		if(!ret[1].includes(',')) {
+			return ret[1];
+		}
+		if(ret[1].includes("`") && !ret[1].includes("'")) {
+			return `"${ret[1]}"`;
+		}
+		if(ret[1].includes("'") && !ret[1].includes("`")) {
+			return `\`${ret[1]}\``;
+		}
+		return `'${ret[1]}'`;
+	}
+	if(state.cur_index <= (code.length - 1)) {
+		return `E\`${code[state.cur_index]}\``;
+	}
+	console.log('eof with', res);
+	return `[eof]`;
+}

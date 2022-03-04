@@ -1,7 +1,7 @@
-import {ITestRunnerNode, TestLock} from "types/tests";
+import {ITestRunner, TestLock} from "types/tests_mod/tests";
 import {Dispatcher} from "./Dispatcher";
 import {debug_flag_override, ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 export class ecma_12_6 extends ecma_base {
 	constructor(v: Dispatcher) {
 		super(v);
@@ -10,7 +10,7 @@ export class ecma_12_6 extends ecma_base {
 		}
 	}
 	debug = false;
-	PrivateIdentifier(str: string, index: number): ecma_return_type {
+	PrivateIdentifier(str: string, index: number): LexReturnType {
 		if(str[index] !== '#')
 			return [null, 0];
 		let cur = this.IdentifierName(str, index + 1);
@@ -18,7 +18,7 @@ export class ecma_12_6 extends ecma_base {
 		return ["PrivateIdentifier", cur[1] + 1];
 	}
 	static IdentifierName_not_start_regex = /[0-9a-zA-Z$_]+/g;
-	IdentifierName(str: string, index: number): ecma_return_type {
+	IdentifierName(str: string, index: number): LexReturnType {
 		let res = this.IdentifierStart(str, index);
 		if(!res[0]) {
 			if(this.debug) console.log('not IdentifierName', str[index]);
@@ -43,7 +43,7 @@ export class ecma_12_6 extends ecma_base {
 	}
 	static id_continue_regex = /[a-zA-Z$_0-9]/;
 	static id_start_regex = /[a-zA-Z$_]/;
-	IdentifierStart(str: string, index: number): ecma_return_type {
+	IdentifierStart(str: string, index: number): LexReturnType {
 		if(index >= str.length){
 			return [null, 0];
 		}
@@ -56,14 +56,14 @@ export class ecma_12_6 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	IdentifierPart(str: string, index: number): ecma_return_type {
+	IdentifierPart(str: string, index: number): LexReturnType {
 		if(str[index].match(ecma_12_6.id_continue_regex)) {
 			return ["IdentifierPart", 1];
 		}
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-IdentifierPartChar
-	IdentifierPartChar(str: string, index: number): ecma_return_type {
+	IdentifierPartChar(str: string, index: number): LexReturnType {
 		// UnicodeIDContinue
 		// FIXME: this is adhoc, it will break when tokenizing non ascii
 		if(str[index].match(ecma_12_6.id_continue_regex)) {
@@ -83,11 +83,11 @@ export class ecma_12_6 extends ecma_base {
 	}
 }
 
-export function run_tests(test_runner:ITestRunnerNode, lock: TestLock) {
+export function run_tests(test_runner:ITestRunner, lock: TestLock) {
 	test_runner.start_async(run_tests_impl, test_runner, lock);
 }
 
-export async function run_tests_impl(test_runner:ITestRunnerNode, lock:TestLock){
+export async function run_tests_impl(test_runner:ITestRunner, lock:TestLock){
 	// TODO: write tests for ECMA262: 12.6 (Javascript Identifiers), not checking from ecma_terminal
 	// console.error("TODO: ecma_12_6");
 	await lock.lock();
