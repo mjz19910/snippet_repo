@@ -313,21 +313,26 @@ export class ecma_12_8_6 extends ecma_base {
 		return ['NoSubstitutionTemplate', cur_index-index + opt[1]];
 	}
 }
-export async function run_tests(_test_runner:ITestRunnerNode, lock:TestLock) {
+
+export async function run_tests_impl(test_runner:ITestRunnerNode, lock:TestLock) {
 	let dispatcher=new Dispatcher;
 	let test_string=`
 	let v=\`Hi there\`;
 	`;
 	await lock.lock();
-	_test_runner.on_test_init();
 	let res=dispatcher.Template(test_string, test_string.indexOf('`'));
 	if(res[0]){
 		let result=test_string.slice(test_string.indexOf('`'), test_string.indexOf('`') + res[1] + 1);
-		console.log('ecma 12.8.6 result', result, res);
-		_test_runner.report_test_success();
+		// console.log('ecma 12.8.6 result', result, res);
+		result;
+		test_runner.report_test_success();
 	} else {
-		_test_runner.report_test_failure();
+		test_runner.report_test_failure();
 		console.assert(false, "Test failed: ecma_12_8_6 (Template)", res);
 	}
 	await lock.unlock();
+}
+
+export function run_tests(test_runner:ITestRunnerNode, lock: TestLock) {
+	test_runner.start_async(run_tests_impl, test_runner, lock);
 }
