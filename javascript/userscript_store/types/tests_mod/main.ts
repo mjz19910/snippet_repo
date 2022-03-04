@@ -1,15 +1,13 @@
-import {run_tests as ecma_12_8_6_run_tests} from "../ecma_262/section_12_8_6";
-import {run_tests as ecma_12_6_run_tests} from "../ecma_262/section_12_6";
-import {run_tests as ecma_terminal_run_tests} from "../ecma_262/section_12";
-import {TestRunner} from "./TestRunner";
+import {RootTestRunner} from "./TestRunner";
 import {do_runner_start_test} from "./do_runner_start_test";
-export async function mod_entry(): Promise<void> {
-	let run = new TestRunner;
+import {GenTestCallback} from "./GenTestCallback";
+export async function mod_entry(test_arr:[string, GenTestCallback][]): Promise<void> {
+	let run = new RootTestRunner;
 	console.log(` --- Starting tests --- `);
-	do_runner_start_test(run, "section_12_8_6", ecma_12_8_6_run_tests);
-	do_runner_start_test(run, "ecma_12_8_6", ecma_12_8_6_run_tests);
-	do_runner_start_test(run, "ecma_12_6", ecma_12_6_run_tests);
-	do_runner_start_test(run, "ecma_terminal", ecma_terminal_run_tests);
+	run.pre_start_set_test_count(test_arr.length);
+	for(let i=0;i<test_arr.length;i++){
+		do_runner_start_test(run, ...test_arr[i]);
+	}
 	await run.wait();
 	run.on_done();
 }

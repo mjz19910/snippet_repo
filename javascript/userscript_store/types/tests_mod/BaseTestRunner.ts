@@ -8,19 +8,19 @@ export class BaseTestRunner implements CanRunTest {
 	successful = 0;
 	failed = 0;
 	finished = 0;
+	pre_start_test: number = 0;
+	test_started = false;
 	parent: CanRunTest | null;
 	on_complete_callback = () => {};
 	constructor(parent: CanRunTest | null) {
 		this.parent = parent;
 	}
-	async wait() {
-		if(this.total > 0) {
-			await new Promise<void>((e) => {
-				this.on_complete_callback = function() {
-					e();
-				};
-			});
-		}
+	on_done() {
+		console.log(` --- ${this.successful}/${this.total} Tests complete --- `);
+	}
+	pre_start_set_test_count(test_count: number) {
+		this.total += test_count;
+		this.pre_start_test += test_count;
 	}
 	report_test_failure(): void {
 		this.failed++;
@@ -49,7 +49,7 @@ export class BaseTestRunner implements CanRunTest {
 			this.parent.print_marker(false, count_total, count_success, count_failed);
 		} else {
 			let count_finished = count_failed + count_success;
-			if(debug){
+			if(debug) {
 				console.log(` --- Running (${count_finished}/${count_total}, ${count_success} successful) --- `);
 			}
 			if(count_success === 0) {
@@ -57,7 +57,6 @@ export class BaseTestRunner implements CanRunTest {
 			}
 		}
 	}
-	test_started: boolean = false;
 	is_running_test_set: boolean = false;
 	init_test_set() {
 		this.is_running_test_set = true;
@@ -79,5 +78,24 @@ export class BaseTestRunner implements CanRunTest {
 	start_async_template<T>(test_gen: GenTestCallbackTemplate<T>, test_runner: CanRunTest, lock: TestLock, extra_arg: T) {
 		test_runner.on_test_init();
 		test_gen(test_runner, lock, extra_arg);
+	}
+	async wait_impl() {
+		if(this.total > 0) {
+			await new Promise<void>((e) => {
+				this.on_complete_callback = function() {
+					e();
+				};
+			});
+		}
+	}
+	children: CanRunTest[] = [];
+	async wait() {
+		if(this.children.length === 0) {
+			return this.wait_impl();
+		} else {
+			let arr_1 = this.children.map(run => run.wait());
+			let arr2 = [this.wait_impl(), ...arr_1];
+			await Promise.all(arr2);
+		}
 	}
 }

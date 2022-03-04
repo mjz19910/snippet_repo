@@ -1,21 +1,9 @@
-import {is_ascii_digit} from "../vm/AK/CharacterTypes";
+import {is_ascii_digit} from "../AK/CharacterTypes";
 import {Dispatcher} from "./Dispatcher";
+import {is_octal_digit} from "./is_octal_digit";
 import {ecma_base} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
-// C++ bool is Typescript boolean
-type bool = boolean;
-enum TokenType {
-	Invalid,
-	BigIntLiteral,
-	NumericLiteral
-}
-
-// static constexpr bool is_octal_digit(char ch)
-function is_octal_digit(ch: string): bool {
-	return ch.charCodeAt(0) >= '0'.charCodeAt(0) &&
-		ch.charCodeAt(0) <= '7'.charCodeAt(0);
-}
-
+import {TokenType} from "./TokenType";
 export class ecma_12_8_3 extends ecma_base {
 	result_error_token: ['Error', string]|null=null;
 	/*HexDigits[Sep] */
