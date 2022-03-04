@@ -1,7 +1,7 @@
-import {FlyString} from "./AK/FlyString";
+import {FlyString} from "../AK/FlyString";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./ecma_base";
-import {ecma_return_type} from "./ecma_return_type";
+import {ecma_base} from "./LexerBase";
+import {ecma_return_type} from "./LexReturnType";
 import {JSTokenizerTokenType as TokenType} from "./JSTokenizerTokenType";
 interface IHashMap<K, V> {
 	clear(): void;

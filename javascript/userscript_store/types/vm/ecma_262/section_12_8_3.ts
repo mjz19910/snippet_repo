@@ -1,7 +1,7 @@
-import {is_ascii_digit} from "./AK/CharacterTypes";
+import {is_ascii_digit} from "../AK/CharacterTypes";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./ecma_base";
-import {ecma_return_type} from "./ecma_return_type";
+import {ecma_base} from "./LexerBase";
+import {ecma_return_type} from "./LexReturnType";
 // C++ bool is Typescript boolean
 type bool = boolean;
 enum TokenType {

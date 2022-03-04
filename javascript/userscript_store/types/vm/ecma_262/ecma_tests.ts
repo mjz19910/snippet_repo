@@ -1,10 +1,10 @@
 import {ITestRunnerNode, TestLock} from "types/tests";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_return_type} from "./ecma_return_type";
-import {LexerStateData, lex_js} from "./ecma_12";
+import {ecma_return_type} from "./LexReturnType";
+import {LexerStateData, lex_js} from "./section_12";
 
 const debug = false;
-function null_to_str<T extends any, U extends Exclude<T, null>>(e: U | null) {
+export function null_to_str<T extends any, U extends Exclude<T, null>>(e: U | null) {
 	if(e === null) return 'null';
 	return e;
 }

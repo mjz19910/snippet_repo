@@ -1,7 +1,7 @@
 import {TestLock, ITestRunnerNode} from "types/tests";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./ecma_base";
-import {ecma_return_type} from "./ecma_return_type";
+import {ecma_base} from "./LexerBase";
+import {ecma_return_type} from "./LexReturnType";
 
 export class ecma_12_8_6 extends ecma_base {
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence

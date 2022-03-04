@@ -1,4 +1,4 @@
-import {ecma_base} from "./ecma_base";
+import {ecma_base} from "./LexerBase";
 import {JSParseError} from "./JSParseError";
 
 export class ecma_12_4 extends ecma_base {

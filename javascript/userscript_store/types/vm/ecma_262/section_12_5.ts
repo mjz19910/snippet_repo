@@ -1,6 +1,6 @@
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./ecma_base";
-import {ecma_return_type} from "./ecma_return_type";
+import {ecma_base} from "./LexerBase";
+import {ecma_return_type} from "./LexReturnType";
 
 export class ecma_12_5 extends ecma_base {
 	CommonToken(str: any, index: any):ecma_return_type {

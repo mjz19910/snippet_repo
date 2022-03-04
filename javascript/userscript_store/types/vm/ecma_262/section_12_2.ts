@@ -1,5 +1,5 @@
-import {ecma_base} from "./ecma_base";
-import {ecma_return_type} from "./ecma_return_type";
+import {ecma_base} from "./LexerBase";
+import {ecma_return_type} from "./LexReturnType";
 
 export class ecma_12_2 extends ecma_base {
 	public WhiteSpace(str: string, index: number):ecma_return_type {

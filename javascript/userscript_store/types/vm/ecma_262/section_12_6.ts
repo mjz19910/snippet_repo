@@ -1,7 +1,7 @@
 import {ITestRunnerNode, TestLock} from "types/tests";
 import {Dispatcher} from "./Dispatcher";
-import {debug_flag_override, ecma_base} from "./ecma_base";
-import {ecma_return_type} from "./ecma_return_type";
+import {debug_flag_override, ecma_base} from "./LexerBase";
+import {ecma_return_type} from "./LexReturnType";
 export class ecma_12_6 extends ecma_base {
 	constructor(v: Dispatcher) {
 		super(v);

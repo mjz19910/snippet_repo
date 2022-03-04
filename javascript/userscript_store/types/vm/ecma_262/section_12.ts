@@ -1,9 +1,7 @@
 import {TestLock, ITestRunnerNode} from "types/tests";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./ecma_base";
-import {ecma_return_type} from "./ecma_return_type";
-import {run_test_1, run_test_2} from "./ecma_tests";
-
+import {ecma_base} from "./LexerBase";
+import {ecma_return_type} from "./LexReturnType";
 function lex_input_element(ecma_dispatcher: Dispatcher, str: string, index: number): ecma_return_type {
 	let max_item = null, max_val = 0;
 	let item_info = null;

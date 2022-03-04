@@ -1,6 +1,6 @@
-import {run_tests as ecma_12_8_6_run_tests} from "./vm/ecma_12_8_6";
-import {run_tests as ecma_12_6_run_tests} from "./vm/ecma_12_6";
-import {run_tests as ecma_terminal_run_tests} from "./vm/ecma_12";
+import {run_tests as ecma_12_8_6_run_tests} from "./vm/ecma_262/section_12_8_6";
+import {run_tests as ecma_12_6_run_tests} from "./vm/ecma_262/section_12_6";
+import {run_tests as ecma_terminal_run_tests} from "./vm/ecma_262/section_12";
 
 type GenTestCallback = (runner: ITestRunnerNode, lock: TestLock) => void;
 
