@@ -1,8 +1,8 @@
 import {Box} from "../Box";
-import {UnboxType} from "./AsyncFunctionBox";
+import {BoxExtractType} from "./BoxExtractType";
 
 
-export function async_box_extract_box_inner_all(v: Box): UnboxType {
+export function extract_box(v: Box): BoxExtractType {
 	let cur = v;
 	switch(typeof cur) {
 		case 'function': throw new Error("What");

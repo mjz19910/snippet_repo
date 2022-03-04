@@ -1,5 +1,5 @@
 import ArrayBox from "./ArrayBox";
-import AsyncFunctionBox from "./promise/AsyncFunctionBox";
+import AsyncFunctionBox from "./async/AsyncFunctionBox";
 import CSSStyleSheetBox from "./CSSStyleSheetBox";
 import CSSStyleSheetConstructorBox from "./CSSStyleSheetConstructorBox";
 import CSSStyleSheetInitBox from "./CSSStyleSheetInitBox";

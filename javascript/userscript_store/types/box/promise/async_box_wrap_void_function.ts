@@ -1,16 +1,16 @@
 import {Box} from "../Box";
-import {async_box_extract_box_inner_all} from "./async_box_extract_box_inner_all";
-import {UnboxType} from "./AsyncFunctionBox";
+import {extract_box} from "../extract/extract_box";
+import {BoxExtractType} from "../extract/BoxExtractType";
 
 
-export function async_box_wrap_void_function(value_to_wrap: (this: UnboxType, ...args: UnboxType[]) => void) {
+export function async_box_wrap_void_function(value_to_wrap: (this: BoxExtractType, ...args: BoxExtractType[]) => void) {
 	return function wrap_inner(this_: Box, ...args: Box[]): void {
-		let real_args: UnboxType[] = [];
+		let real_args: BoxExtractType[] = [];
 		for(let i = 0;i < args.length;i++) {
 			let cur = args[i];
-			real_args.push(async_box_extract_box_inner_all(cur));
+			real_args.push(extract_box(cur));
 		}
-		let real_this: UnboxType;
+		let real_this: BoxExtractType;
 		if(this_ === null) {
 			real_this = this_;
 		} else if(typeof this_ === 'object') {
