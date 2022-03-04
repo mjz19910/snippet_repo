@@ -1,7 +1,6 @@
 export class JSParseError extends Error {
 	stack = "JSParseError";
-	/**@arg {string} message */
-	constructor(message) {
+	constructor(message: string) {
 		super(message);
 		Error.captureStackTrace(this, this.constructor);
 	}

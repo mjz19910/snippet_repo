@@ -1,5 +1,5 @@
-import {CanRunTests as CanRunTests} from "types/tests_mod/ITestRunner";
-import {LexerStateData} from "./LexerStateData.1";
+import {CanRunTest} from "types/tests_mod/CanRunTests";
+import {LexerStateData} from "./LexerStateData";
 export class Test {
 	input: string;
 	result?: string;
@@ -9,7 +9,7 @@ export class Test {
 		this.input = input;
 		this.expected = expected_output;
 	}
-	complete_test(test_runner: CanRunTests, result: string) {
+	complete_test(test_runner: CanRunTest, result: string) {
 		this.result = result;
 		if(this.result !== this.expected) {
 			test_runner.report_test_failure();
