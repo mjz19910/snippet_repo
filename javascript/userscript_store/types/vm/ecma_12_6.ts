@@ -1,8 +1,6 @@
 import {Dispatcher} from "./Dispatcher";
 import {debug_flag_override, ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
-import {ecma_terminal} from "./ecma_terminal";
-
 export class ecma_12_6 extends ecma_base {
 	constructor(v: Dispatcher) {
 		super(v);
@@ -14,7 +12,6 @@ export class ecma_12_6 extends ecma_base {
 	PrivateIdentifier(str: string, index: number): ecma_return_type {
 		if(str[index] !== '#')
 			return [null, 0];
-		debugger;
 		let cur = this.IdentifierName(str, index + 1);
 		if(!cur[0]) return [null, 0];
 		return ["PrivateIdentifier", cur[1] + 1];
@@ -37,7 +34,6 @@ export class ecma_12_6 extends ecma_base {
 		if(id_continue_match.index == index + id_start_len) {
 			id_continue_len = id_continue_match[0].length;
 		}
-		console.log(str[index] + id_continue_match[0], id_continue_len);
 		if(id_continue_len > 0) {
 			if(this.debug) console.log('IdentifierName with continue', str.slice(index, index + id_start_len + id_continue_len));
 			return ["IdentifierName", id_start_len + id_continue_len];
@@ -88,4 +84,5 @@ export class ecma_12_6 extends ecma_base {
 
 export async function run_tests(){
 	// TODO: write tests for ECMA262: 12.6 (Javascript Identifiers), not checking from ecma_terminal
+	console.error("TODO: ecma_12_6");
 }

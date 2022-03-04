@@ -1,3 +1,4 @@
+import {TestLock, ITestRunnerNode} from "types/tests";
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./ecma_base";
 import {ecma_return_type} from "./ecma_return_type";
@@ -312,15 +313,21 @@ export class ecma_12_8_6 extends ecma_base {
 		return ['NoSubstitutionTemplate', cur_index-index + opt[1]];
 	}
 }
-export async function run_tests() {
+export async function run_tests(_test_runner:ITestRunnerNode, lock:TestLock) {
 	let dispatcher=new Dispatcher;
 	let test_string=`
 	let v=\`Hi there\`;
 	`;
+	await lock.lock();
+	_test_runner.on_test_init();
 	let res=dispatcher.Template(test_string, test_string.indexOf('`'));
 	if(res[0]){
-		console.log("Success", test_string.slice(test_string.indexOf('`')-1, test_string.indexOf('`') + res[1] + 1), res);
+		let result=test_string.slice(test_string.indexOf('`'), test_string.indexOf('`') + res[1] + 1);
+		console.log('ecma 12.8.6 result', result, res);
+		_test_runner.report_test_success();
 	} else {
+		_test_runner.report_test_failure();
 		console.assert(false, "Test failed: ecma_12_8_6 (Template)", res);
 	}
+	await lock.unlock();
 }
