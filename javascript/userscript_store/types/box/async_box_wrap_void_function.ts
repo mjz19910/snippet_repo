@@ -1,6 +1,6 @@
-import {Box} from "../Box";
-import {extract_box} from "../extract/extract_box";
-import {BoxExtractType} from "../extract/BoxExtractType";
+import {Box} from "./Box";
+import {extract_box} from "./extract/extract_box";
+import {BoxExtractType} from "./extract/BoxExtractType";
 
 
 export function async_box_wrap_void_function(value_to_wrap: (this: BoxExtractType, ...args: BoxExtractType[]) => void) {
