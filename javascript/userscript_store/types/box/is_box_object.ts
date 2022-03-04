@@ -26,21 +26,20 @@ export function is_box_object<T>(v: Exclude<Box, Primitives | null> | T): v is E
 			case 'object_box': switch(v.inner_type) {
 				case 'Window': return v.verify_name("WindowBox");
 			}
-
 			case 'promise_box': switch(v.await_type) {
 				case 'Box': return v.verify_name("PromiseBox");
 				case 'CSSStyleSheet': return v.verify_name("CSSStyleSheetPromiseBox");
-				case void 0:v;return true;
-			} break;
+			}
 			case 'value_box': return v.verify_name("GlobalThisBox");
 		}
 	}
 	if(assume_is_box(v)) {
 		switch(v.type) {
 			// NewableFunctionBox | FunctionConstructorBox
-			case 'constructor_box':switch(v.arguments) {
-				case 'box[]': return v.verify_name("NewableFunctionBox");
-				case 'string[]': let q:FunctionConstructorBox=v;return v.verify_name("FunctionConstructorBox");
+			case 'constructor_box':switch(v.instance_type) {
+				case 'CSSStyleSheet': return v.verify_name("CSSStyleSheetConstructorBox");
+				case 'Function': return v.verify_name("FunctionConstructorBox");
+				case null:return v.verify_name("NewableFunctionBox");
 			}
 			case 'real_void': return v.verify_name("RealVoidBox");
 			case 'void': return v.verify_name("VoidBox");

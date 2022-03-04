@@ -8,6 +8,7 @@ export class FunctionConstructorBox
 	extends BoxTemplate<"constructor_box", typeof Function>
 	implements BoxVerify<FunctionConstructorBox, "FunctionConstructorBox"> {
 	readonly type = "constructor_box";
+	readonly instance_type = "Function";
 	readonly arguments = "string[]";
 	readonly return = "box";
 	readonly instance_factory: FunctionConstructorFactory;
