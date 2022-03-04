@@ -8,9 +8,6 @@ export class CSSStyleSheetPromiseBox
 	await_type: "CSSStyleSheet" = "CSSStyleSheet";
 	readonly m_verify_name = "CSSStyleSheetPromiseBox";
 	verify_name(name: "CSSStyleSheetPromiseBox") {
-		if(this.m_verify_name !== 'CSSStyleSheetPromiseBox' || name !== 'CSSStyleSheetPromiseBox') {
-			return false;
-		}
-		return true;
+		return this.m_verify_name === "CSSStyleSheetPromiseBox" && name === "CSSStyleSheetPromiseBox";
 	}
 }

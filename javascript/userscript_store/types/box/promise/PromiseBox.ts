@@ -6,10 +6,7 @@ export class PromiseBox extends BoxTemplate<"promise_box", Promise<Box>> impleme
 	inner_type: 'Promise<Box>' = 'Promise<Box>';
 	await_type: "Box" = "Box";
 	readonly m_verify_name="PromiseBox";
-	verify_name(name:"PromiseBox") {
-		if(this.m_verify_name !== 'PromiseBox' || name !== 'PromiseBox'){
-			return false;
-		}
-		return true;
+	verify_name(name: "PromiseBox") {
+		return this.m_verify_name === "PromiseBox" && name === "PromiseBox";
 	}
 }

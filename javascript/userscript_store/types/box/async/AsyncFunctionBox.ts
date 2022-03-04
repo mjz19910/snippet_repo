@@ -14,6 +14,6 @@ export class AsyncFunctionBox
 	}
 	readonly m_verify_name = "AsyncFunctionBox";
 	verify_name(name: "AsyncFunctionBox") {
-		return this.m_verify_name !== 'AsyncFunctionBox' || name !== 'AsyncFunctionBox';
+		return this.m_verify_name === "AsyncFunctionBox" && name === "AsyncFunctionBox";
 	}
 }

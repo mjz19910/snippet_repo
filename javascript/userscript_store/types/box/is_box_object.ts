@@ -15,9 +15,6 @@ export function is_box_object<T>(v: Exclude<Box, Primitives | null> | T): v is E
 				case "instruction_type[]": return v.verify_name("InstructionTypeArrayBox");
 				case null: return v.verify_name("EmptyArrayBox");
 			}
-			case 'constructor_box': return v.verify_name("CSSStyleSheetConstructorBox");
-			case 'custom_box': return v.verify_name("StackVMBox");
-			case 'document_box': return v.verify_name("DocumentBox");
 			case 'function_box': switch(v.return_type) {
 				case "promise_box": return v.verify_name("AsyncFunctionBox");
 				case null: return v.verify_name("FunctionBox");
@@ -25,25 +22,17 @@ export function is_box_object<T>(v: Exclude<Box, Primitives | null> | T): v is E
 			case 'instance_box': switch(v.instance_type) {
 				case "Node": return v.verify_name("NodeBox");
 				case "CSSStyleSheet": return v.verify_name("CSSStyleSheetBox");
-				case "MediaList": return v.verify_name("MediaListBox");
 			}
 			case 'object_box': switch(v.inner_type) {
-				case 'Window': return v.verify_name("WindowBox");;
-				case 'unit': return v.verify_name("ObjectBox");
+				case 'Window': return v.verify_name("WindowBox");
 			}
 
 			case 'promise_box': switch(v.await_type) {
-				case 'Box': return v.verify_name("PromiseBox");;
+				case 'Box': return v.verify_name("PromiseBox");
 				case 'CSSStyleSheet': return v.verify_name("CSSStyleSheetPromiseBox");
-			}
-			case 'shape_box': return v.verify_name("CSSStyleSheetInitBox");
+				case void 0:v;return true;
+			} break;
 			case 'value_box': return v.verify_name("GlobalThisBox");
-			// CSSStyleSheetConstructorBox
-			case 'constructor_box': return v.verify_name("CSSStyleSheetConstructorBox");
-			// none with same base class
-			// case 'real_void':return true;
-			// case 'void':return true;
-			// case 'with_properties':return true;
 		}
 	}
 	if(assume_is_box(v)) {

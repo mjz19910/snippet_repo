@@ -1,18 +1,16 @@
+import {BoxTemplate} from "./BoxTemplate";
+
 export class DocumentBox
+	extends BoxTemplate<"document_box", Document>
 {
-	type:"document_box"="document_box";
-	value:Document;
-	as_type(v:'function'|'object'){
-		if(v === 'object')return this;
+	readonly type = "document_box";
+	readonly m_verify_name = "DocumentBox";
+	as_type(v: 'function' | 'object') {
+		if(v === 'object') return this;
 		return null;
 	}
-	verify_name(name:"DocumentBox"){
-		if(name !== 'DocumentBox'){
-			throw new Error("bad box");
-		}
-	}
-	constructor(value: Document){
-		this.value=value;
+	verify_name(name: "DocumentBox") {
+		return this.m_verify_name === "DocumentBox" && name === "DocumentBox";
 	}
 }
 
