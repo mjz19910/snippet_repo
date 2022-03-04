@@ -1,8 +1,11 @@
 import {Box} from "./Box";
 import {BoxTemplate} from "./BoxTemplate";
+import {BoxVerify} from "./BoxVerify";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
 
-export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box", typeof CSSStyleSheet> {
+export class CSSStyleSheetConstructorBox
+	extends BoxTemplate<"constructor_box", typeof CSSStyleSheet>
+	implements BoxVerify<CSSStyleSheetConstructorBox, "CSSStyleSheetConstructorBox"> {
 	type: "constructor_box" = "constructor_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
 	args_type?:{
@@ -14,6 +17,15 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box", 
 	} = {
 		value:[],
 		id:0
+	}
+	m_verify_name: "CSSStyleSheetConstructorBox"="CSSStyleSheetConstructorBox";
+	verify_name(v:this['m_verify_name']){
+		if(this.m_verify_name !== "CSSStyleSheetConstructorBox"){
+			throw new Error("bad box");
+		}
+		if(v !== "CSSStyleSheetConstructorBox") {
+			throw new Error("bad box");
+		}
 	}
 	factory(...arr:Box[]){
 		let valid_args:{

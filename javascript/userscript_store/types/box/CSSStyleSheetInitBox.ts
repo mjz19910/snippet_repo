@@ -35,4 +35,10 @@ export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box", CSSStyleSheet
 			throw new Error("Type shenanigans afoot (You passed a value that should be impossible at runtime)");
 		}
 	}
+	readonly m_verify_name="CSSStyleSheetInitBox";
+	verify_name(name:"CSSStyleSheetInitBox") {
+		if(this.m_verify_name !== 'CSSStyleSheetInitBox' || name !== 'CSSStyleSheetInitBox'){
+			throw new Error("Bad box");
+		}
+	}
 }

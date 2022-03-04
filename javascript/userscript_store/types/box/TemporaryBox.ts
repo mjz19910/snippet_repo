@@ -1,74 +1,93 @@
 import {StackVM} from "../vm/StackVM";
 import {Box} from "./Box";
+import {BoxTemplate} from "./BoxTemplate";
 
-type TmpBoxStr = 'temporary_box';
-export type temporary_box_from_get = {
-	type: TmpBoxStr;
-	source: 'get';
-	extension: 'Function';
-	value: Function;
+abstract class MakeTemporaryBox<T extends void | object | Function> extends BoxTemplate<"temporary_box", T> {};
+
+export class temporary_box_from_get extends MakeTemporaryBox<Function> {
+	readonly type='temporary_box';
+	readonly source='get';
+	readonly extension='Function';
+	verify_name(name:"temporary_box_from_get"){
+		if(name !== 'temporary_box_from_get'){
+			throw new Error("bad box");
+		}
+	}
 };
 
-export type temporary_box_from_cast_to_vm_function = {
-	type: TmpBoxStr;
-	source: 'cast';
-	extension:null;
-	cast_source: 'vm_function';
-	value(...a: Box[]): Box;
+export class temporary_box_from_cast_to_vm_function extends MakeTemporaryBox<(...a: Box[])=>Box> {
+	readonly type= 'temporary_box';
+	readonly source= 'cast';
+	readonly cast_source= 'vm_function';
+	extension=null;
+	verify_name(name:"temporary_box_from_cast_to_vm_function"){
+		if(name !== 'temporary_box_from_cast_to_vm_function'){
+			throw new Error("bad box");
+		}
+	}
 };
 
-export type temporary_box_from_call = {
-	type: TmpBoxStr;
-	source: 'call';
-	extension:null;
-	value: {};
+export class temporary_box_from_call extends MakeTemporaryBox<{}> {
+	readonly type= 'temporary_box';
+	readonly source= 'call';
+	extension=null;
+	verify_name(name:"temporary_box_from_call"){
+		if(name !== 'temporary_box_from_call'){
+			throw new Error("bad box");
+		}
+	}
 };
 
-export type temporary_box_instance = {
-	type: TmpBoxStr;
-	source: 'create_box';
-	extension:null;
-	value: {};
+export class temporary_box_instance extends MakeTemporaryBox<{}> {
+	readonly type= 'temporary_box';
+	readonly source= 'create_box';
+	extension=null;
+	verify_name(name:"temporary_box_instance"){
+		if(name !== 'temporary_box_instance'){
+			throw new Error("bad box");
+		}
+	}
 };
 
-export type temporary_box_object_index_to_box = {
-	type: TmpBoxStr;
-	source: 'cast';
-	extension:null;
-	cast_source: 'object_index';
-	value: {
-		[x: string]: Box;
-	};
+export class temporary_box_object_index_to_box extends MakeTemporaryBox<{[x: string]: Box}> {
+	readonly type= 'temporary_box';
+	readonly source= 'cast';
+	readonly cast_source = 'object_index';
+	extension=null;
+	verify_name(name:"temporary_box_object_index_to_box"){
+		if(name !== 'temporary_box_object_index_to_box'){
+			throw new Error("bad box");
+		}
+	}
 };
 
-export type temporary_box_StackVM = {
-	type:'temporary_box',
-	extension:'custom_box_cast',
-	source:'cast',
-	custom_type:'StackVM',
-	cast_source:'object_index',
-	value:StackVM;
-}
-
-export type temporary_box_from_create_box_from_obj = {
-	type:'temporary_box',
-	extension:'create_box',
-	source:'create_box_from_obj',
-	custom_type:'box',
-	value:{
-		[x:string]:Box;
-	};
-}
-export function new_temporary_box_from_create_obj(value:{}):temporary_box_from_create_box_from_obj {
-	return {
-		type:'temporary_box',
-		extension:'create_box',
-		custom_type:'box',
-		source:"create_box_from_obj",
-		value
+export class temporary_box_StackVM extends MakeTemporaryBox<StackVM> {
+	readonly type='temporary_box';
+	readonly extension='custom_box_cast';
+	readonly source='cast';
+	readonly custom_type='StackVM';
+	readonly cast_source='object_index';
+	verify_name(name:"temporary_box_StackVM"){
+		if(name !== 'temporary_box_StackVM'){
+			throw new Error("bad box");
+		}
 	}
 }
 
+export class temporary_box_from_create_box_from_obj extends MakeTemporaryBox<{[x:string]:Box}> {
+	readonly type='temporary_box';
+	readonly extension='create_box';
+	readonly source='create_box_from_obj';
+	readonly custom_type='box';
+	verify_name(name:"temporary_box_from_create_box_from_obj"){
+		if(name !== 'temporary_box_from_create_box_from_obj'){
+			throw new Error("bad box");
+		}
+	}
+}
+export function new_temporary_box_from_create_obj(value:{}) {
+	return new temporary_box_from_create_box_from_obj(value);
+}
 export type TemporaryBox = 
 temporary_box_from_get | 
 temporary_box_from_cast_to_vm_function | 

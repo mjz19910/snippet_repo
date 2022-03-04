@@ -13,6 +13,12 @@ export class NewableFunctionBox extends BoxTemplate<"constructor_box", NewableIn
 		super(factory_value);
 		this.class_value = class_value;
 	}
+	readonly m_verify_name="NewableFunctionBox";
+	verify_name(name:"NewableFunctionBox") {
+		if(this.m_verify_name !== 'NewableFunctionBox' || name !== 'NewableFunctionBox'){
+			throw new Error("Bad box");
+		}
+	}
 	as_type(x: 'function' | 'object') {
 		if(typeof this.value === x) {
 			return this;

@@ -5,6 +5,11 @@ export class DocumentBox {
 		if(v === 'object')return this;
 		return null;
 	}
+	verify_name(name:"DocumentBox"){
+		if(name !== 'DocumentBox'){
+			throw new Error("bad box");
+		}
+	}
 	constructor(value: Document){
 		this.value=value;
 	}
