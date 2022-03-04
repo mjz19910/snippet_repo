@@ -1,5 +1,4 @@
 import {BoxWithPropertiesObjType} from "./create_box";
-
 export class BoxWithPropertiesIsBox {
 	readonly type = 'with_properties';
 	value: {};

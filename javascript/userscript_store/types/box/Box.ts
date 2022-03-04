@@ -10,6 +10,7 @@ import GlobalThisBox from "./GlobalThisBox";
 import InstructionTypeArrayBox from "./InstructionTypeArrayBox";
 import MediaListBox from "./MediaListBox";
 import NewableFunctionBox from "./NewableFunctionBox";
+import {FunctionConstructorBox} from "./FunctionConstructorBox";
 import NodeBox from "./NodeBox";
 import ObjectBox from "./ObjectBox";
 import Primitives from "./Primitives";
@@ -20,6 +21,7 @@ import VoidPromiseBox from "./promise/VoidPromiseBox";
 import TemporaryBox from "./TemporaryBox";
 import DocumentBox from "./DocumentBox";
 import PromiseBox from "./promise/PromiseBox";
+import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox";
 
 export type Box =
 	// function result
@@ -34,6 +36,7 @@ export type Box =
 	FunctionBox |
 	NewableFunctionBox |
 	AsyncFunctionBox |
+	FunctionConstructorBox |
 	// return type
 	CSSStyleSheetPromiseBox |
 	// global
@@ -58,6 +61,8 @@ export type Box =
 	// No value (Void)
 	VoidBox |
 	// Temporary box for when stuff is asserted to be true (ie, typeof value_to_box === "function")
-	TemporaryBox;
+	TemporaryBox|
+	// Box with stuff
+	BoxWithPropertiesIsBox;
 
 export default Box;

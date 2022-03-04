@@ -4,7 +4,6 @@ import CSSStyleSheetBox from "./CSSStyleSheetBox";
 import CSSStyleSheetConstructorBox from "./CSSStyleSheetConstructorBox";
 import EmptyArrayBox from "./EmptyArrayBox";
 import FunctionBox from "./FunctionBox";
-import GlobalThisBox from "./GlobalThisBox";
 import MediaListBox from "./MediaListBox";
 import NodeBox from "./NodeBox";
 import PromiseBox from "./promise/PromiseBox";
@@ -12,13 +11,11 @@ import TemporaryBox from "./TemporaryBox";
 import VoidBox from "./VoidBox";
 import WindowBox from "./WindowBox";
 import {async_box_extract_unit_arr} from "./extract_unit_arr";
-import {async_box_extract_globalThis} from "./async_box_extract_globalThis";
 import {async_box_extract_sub_type} from "./async_box_extract_sub_type";
 import {async_box_extract_CSSStyleSheetConstructor} from "./async_box_extract_CSSStyleSheetConstructor";
 import {BoxExtractType} from "./extract/BoxExtractType";
-import NewableFactoryToBox from "./NewableFactory";
+import NewableInstancePack from "./NewableInstancePack";
 import {async_returns_into_box} from "./async_returns_into_box";
-import {force_type_upgrade} from "./force_type_upgrade";
 import {PropertiesToIterate} from "./PropertiesToIterate";
 import {create_box_from_obj} from "./create_box_from_obj";
 export const PropertiesToIterateArray: PropertiesToIterate[] = ["type"];
@@ -37,7 +34,7 @@ export function create_box(value: BoxExtractType): Box {
 		if(async_box_extract_sub_type<(...a: Box[]) => Box, Function>(value)) {
 			return new FunctionBox(value);
 		}
-		if(async_box_extract_sub_type<NewableFactoryToBox<{}>, Function>(value)) {
+		if(async_box_extract_sub_type<NewableInstancePack<{}>, Function>(value)) {
 			return new VoidBox;
 		}
 		if(async_box_extract_sub_type<(...a: Box[]) => Promise<Box>, Function>(value)) {
