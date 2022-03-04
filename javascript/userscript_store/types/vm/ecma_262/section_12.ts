@@ -1,8 +1,10 @@
 import {TestLock, ITestRunnerNode} from "types/tests";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
-function lex_input_element(ecma_dispatcher: Dispatcher, str: string, index: number): ecma_return_type {
+import {ecma_base as LexerBase} from "./LexerBase";
+import {LexReturnType} from "./LexReturnType";
+import {ItemInfoType, item_info_type_to_string} from "./mod";
+import {run_test_1, run_test_2} from "./tests";
+function lexer_produce_input_element(ecma_dispatcher: Dispatcher, str: string, index: number): LexReturnType {
 	let max_item = null, max_val = 0;
 	let item_info = null;
 	let cur_res = ecma_dispatcher.WhiteSpace(str, index);
@@ -33,38 +35,12 @@ function lex_input_element(ecma_dispatcher: Dispatcher, str: string, index: numb
 	return [max_item, max_val];
 }
 
-enum ItemInfoType {
-	Comment,
-	CommonToken,
-	DivPunctuator,
-	InputElement,
-	Invalid,
-	LineTerminator,
-	RightBracePunctuator,
-	TemplateSubstitutionTail,
-	WhiteSpace,
-}
-
-function item_info_type_to_string(value: ItemInfoType | null) {
-	if(value === null) return null;
-	switch(value) {
-		case ItemInfoType.InputElement: return 'InputElement';
-	}
-	switch(value) {
-		case ItemInfoType.WhiteSpace: return 'WhiteSpace';
-	}
-	if(value != ItemInfoType.Invalid) {
-		console.assert(false, `Handle (enum ItemTypeInfo).(${value}).to_string()`);
-		return "Invalid";
-	}
-	return "Invalid";
-}
 const debug = false;
 
-function ecma_262_lex_js_input_element_or_div(ecma_dispatcher: Dispatcher, str: string, index: number): ecma_return_type {
+function produce_input_element_or_div(ecma_dispatcher: Dispatcher, str: string, index: number): LexReturnType {
 	let max_item = null, max_val = 0;
 	let item_info: ItemInfoType | null = null;
-	let cur_res = lex_input_element(ecma_dispatcher, str, index);
+	let cur_res = lexer_produce_input_element(ecma_dispatcher, str, index);
 	if(cur_res[0] && cur_res[1] > max_val) {
 		item_info = ItemInfoType.InputElement;
 		max_item = cur_res[0];
@@ -88,22 +64,25 @@ function ecma_262_lex_js_input_element_or_div(ecma_dispatcher: Dispatcher, str: 
 	return [max_item, max_val];
 }
 
-export class ecma_12 extends ecma_base {
-	do_let_parse(str: string, index: number, outputs: ecma_return_type[] = []): ecma_return_type {
+export class Lexer extends LexerBase {
+	do_let_parse(str: string, index: number, outputs: LexReturnType[] = []): LexReturnType {
 		void outputs;
-		let res1 = this.InputElementRegExpOrTemplateTail(str, index);
+		let res1 = this.m_dispatcher.InputElementRegExpOrTemplateTail(str, index);
 		if(!res1[0])return [null, 0];
 		console.assert(false);
 		void res1;
 		return [null, 0];
 	}
-	InputElementDiv(str: string, index: number): ecma_return_type {
+}
+
+export class ecma_12 extends LexerBase {
+	InputElementDiv(str: string, index: number): LexReturnType {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator,
 		// RightBracePunctuator
 		// !RegularExpressionLiteral
 		// !TemplateSubstitutionTail
-		let ret = ecma_262_lex_js_input_element_or_div(this.m_dispatcher, str, index);
+		let ret = produce_input_element_or_div(this.m_dispatcher, str, index);
 		if(ret[0]) {
 			return ret;
 		} else {
@@ -119,7 +98,7 @@ export class ecma_12 extends ecma_base {
 		let max_item = null, max_val = 0;
 		let item_info: ItemInfoType | null = null;
 		void item_info;
-		let cur_res = lex_input_element(this.m_dispatcher, str, index);
+		let cur_res = lexer_produce_input_element(this.m_dispatcher, str, index);
 		if(cur_res[0] && cur_res[1] > max_val) {
 			item_info = ItemInfoType.InputElement;
 			max_item = cur_res[0];
@@ -139,14 +118,14 @@ export class ecma_12 extends ecma_base {
 		}
 		return [max_item, max_val];
 	}
-	InputElementRegExpOrTemplateTail(str: string, index: number): ecma_return_type {
+	InputElementRegExpOrTemplateTail(str: string, index: number): LexReturnType {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// RegularExpressionLiteral,
 		// TemplateSubstitutionTail
 		let max_item = null, max_val = 0;
 		let item_info: ItemInfoType | null = null;
 		void item_info;
-		let cur_res = lex_input_element(this.m_dispatcher, str, index);
+		let cur_res = lexer_produce_input_element(this.m_dispatcher, str, index);
 		if(cur_res[0] && cur_res[1] > max_val) {
 			item_info = ItemInfoType.InputElement;
 			max_item = cur_res[0];
@@ -173,7 +152,7 @@ export class ecma_12 extends ecma_base {
 		let max_item = null, max_val = 0;
 		let item_info: ItemInfoType | null = null;
 		void item_info;
-		let cur_res = lex_input_element(this.m_dispatcher, str, index);
+		let cur_res = lexer_produce_input_element(this.m_dispatcher, str, index);
 		if(cur_res[0] && cur_res[1] > max_val) {
 			item_info = ItemInfoType.InputElement;
 			max_item = cur_res[0];
@@ -196,7 +175,7 @@ export class ecma_12 extends ecma_base {
 }
 
 
-function ecma_262_lex_js_input_or_regexp_or_template_tail(state:LexerStateData, dispatcher: Dispatcher, str: string, res_arr: ecma_return_type[]) {
+function lexer_produce_input_or_regexp_or_template_tail(state:LexerStateData, dispatcher: Dispatcher, str: string, res_arr: LexReturnType[]) {
 	let res = dispatcher.InputElementRegExpOrTemplateTail(str, state.cur_index);
 	if(res[0]) {
 		state.cur_index += res[1];
@@ -209,8 +188,8 @@ function ecma_262_lex_js_input_or_regexp_or_template_tail(state:LexerStateData, 
 			let mat = str.slice(state.cur_index, state.cur_index + res[1]);
 			switch(mat){
 				case 'let':{
-					let res_arr_inner: ecma_return_type[] = [];
-					let res_mul = dispatcher.ecma_12.do_let_parse(str, state.cur_index, res_arr_inner);
+					let res_arr_inner: LexReturnType[] = [];
+					let res_mul = dispatcher.lexer.do_let_parse(str, state.cur_index, res_arr_inner);
 					if(res_mul[0] === null){
 						throw new Error("FIXME");
 					}
@@ -225,7 +204,7 @@ function ecma_262_lex_js_input_or_regexp_or_template_tail(state:LexerStateData, 
 	}
 }
 
-function ecma_262_lex_js_input_or_div(state:LexerStateData, term_lexer: Dispatcher, str: string, res_arr: ecma_return_type[]) {
+function ecma_262_lex_js_input_or_div(state:LexerStateData, term_lexer: Dispatcher, str: string, res_arr: LexReturnType[]) {
 	let res = term_lexer.InputElementDiv(str, state.cur_index);
 	if(res[0]) {
 		state.cur_index += res[1];
@@ -240,11 +219,11 @@ function ecma_262_lex_js_input_or_div(state:LexerStateData, term_lexer: Dispatch
 }
 
 export function lex_js(state:LexerStateData, dispatcher: Dispatcher, str: string) {
-	let res_arr: ecma_return_type[] = [];
+	let res_arr: LexReturnType[] = [];
 	state.cur_index = 0;
 	while(state.cur_index <= (str.length - 1)) {
 		let start_len = state.cur_index;
-		ecma_262_lex_js_input_or_regexp_or_template_tail(state, dispatcher, str, res_arr);
+		lexer_produce_input_or_regexp_or_template_tail(state, dispatcher, str, res_arr);
 		if(state.cur_index <= (str.length - 1)) {
 			let last = res_arr.pop();
 			if(debug)console.log('not done');

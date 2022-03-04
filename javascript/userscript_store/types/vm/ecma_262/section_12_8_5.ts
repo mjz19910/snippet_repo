@@ -1,8 +1,8 @@
 import {ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 
 export class ecma_12_8_5 extends ecma_base {
-	RegularExpressionLiteral(str: string, index: number): ecma_return_type {
+	RegularExpressionLiteral(str: string, index: number): LexReturnType {
 		let len = 0;
 		// / RegularExpressionBody / RegularExpressionFlags
 		if(str[index] === '/') {
@@ -20,13 +20,13 @@ export class ecma_12_8_5 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionBody
-	RegularExpressionBody(str: string, index: number): ecma_return_type {
+	RegularExpressionBody(str: string, index: number): LexReturnType {
 		// RegularExpressionFirstChar RegularExpressionChars
 		let res = this.RegularExpressionFirstChar(str, index);
 		throw new Error("TODO");
 	};
 	// https://tc39.es/ecma262/#prod-RegularExpressionFirstChar
-	RegularExpressionFirstChar(str: string, index: number): ecma_return_type {
+	RegularExpressionFirstChar(str: string, index: number): LexReturnType {
 		// RegularExpressionNonTerminator but not one of * or \ or / or [
 		x: {
 			if(str[index] === '*' || str[index] === '\\' && str[index] === '/' || str[index] === '[]'[0]) {
@@ -47,7 +47,7 @@ export class ecma_12_8_5 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionNonTerminator
-	RegularExpressionNonTerminator(str: string, index: number): ecma_return_type {
+	RegularExpressionNonTerminator(str: string, index: number): LexReturnType {
 		// SourceCharacter but not LineTerminator
 		let vv = this.m_dispatcher.LineTerminator(str, index);
 		if(vv[0])
@@ -55,7 +55,7 @@ export class ecma_12_8_5 extends ecma_base {
 		return [true, 1];
 	};
 	// https://tc39.es/ecma262/#prod-RegularExpressionBackslashSequence
-	RegularExpressionBackslashSequence(str: string, index: number): ecma_return_type {
+	RegularExpressionBackslashSequence(str: string, index: number): LexReturnType {
 		// \ RegularExpressionNonTerminator
 		if(str[index] === '\\') {
 			let res = this.RegularExpressionNonTerminator(str, index + 1);
@@ -65,7 +65,7 @@ export class ecma_12_8_5 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionClass
-	RegularExpressionClass(str: string, index: number): ecma_return_type {
+	RegularExpressionClass(str: string, index: number): LexReturnType {
 		let len = 0;
 		// [ RegularExpressionClassChars ]
 		if(str[index] === '[]'[0]) {
@@ -81,7 +81,7 @@ export class ecma_12_8_5 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionClassChars
-	RegularExpressionClassChars(str: string, index: number): ecma_return_type {
+	RegularExpressionClassChars(str: string, index: number): LexReturnType {
 		let len = 0;
 		let is_class_chars = this.RegularExpressionClassChar(str, index + len);
 		// [empty]
@@ -97,7 +97,7 @@ export class ecma_12_8_5 extends ecma_base {
 		return [true, len];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionClassChar
-	RegularExpressionClassChar(str: string, index: number): ecma_return_type {
+	RegularExpressionClassChar(str: string, index: number): LexReturnType {
 		// RegularExpressionNonTerminator but not one of ] or \
 		if(str[index] === '[]'[1] || str[index] === '\\') {
 			return [null, 0];
@@ -111,7 +111,7 @@ export class ecma_12_8_5 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionFlags
-	RegularExpressionFlags(str: string, index: number): ecma_return_type {
+	RegularExpressionFlags(str: string, index: number): LexReturnType {
 		// [empty]
 		let len = 0;
 		let is_class_chars = this.m_dispatcher.IdentifierPartChar(str, index + len);

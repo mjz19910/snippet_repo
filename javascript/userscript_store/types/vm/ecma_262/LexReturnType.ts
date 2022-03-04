@@ -1,4 +1,4 @@
-export type ecma_return_type =
+export type LexReturnType =
 [string, number]|
 [true, number]|
 [null, number]|

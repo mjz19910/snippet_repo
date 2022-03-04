@@ -1,6 +1,6 @@
 import {ITestRunnerNode, TestLock} from "types/tests";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 import {LexerStateData, lex_js} from "./section_12";
 
 const debug = false;
@@ -28,7 +28,7 @@ class Test {
 	}
 }
 
-function to_log_return(state:LexerStateData, code: string, res: ecma_return_type) {
+function to_log_return(state:LexerStateData, code: string, res: LexReturnType) {
 	if(res[0]) {
 		let ret: [typeof res[0], string] = [res[0], code.slice(state.cur_index, state.cur_index + res[1])];
 		state.cur_index += res[1];

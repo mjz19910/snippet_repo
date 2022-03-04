@@ -1,4 +1,4 @@
-import {ecma_12 as ecma_12} from "./section_12";
+import {ecma_12 as ecma_12, Lexer} from "./section_12";
 import {ecma_12_2} from "./section_12_2";
 import {ecma_12_3} from "./section_12_3";
 import {ecma_12_4} from "./section_12_4";
@@ -11,15 +11,16 @@ import {ecma_12_8_5} from "./section_12_8_5";
 import {ecma_12_8_6} from "./section_12_8_6";
 import {ecma_12_8} from "./section_12_8";
 import {ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 export type EnvSettingsType = {
 	type: 'environment_settings';
 	is_strict: boolean;
 };
 
-export type DispatcherIndexType = ((str: string, index: number) => ecma_return_type) | ecma_base | EnvSettingsType;
+export type DispatcherIndexType = ((str: string, index: number) => LexReturnType) | ecma_base | EnvSettingsType;
 
 export class Dispatcher {
+	lexer:Lexer=new Lexer(this);
 	ecma_12_2: ecma_12_2=new ecma_12_2(this);
 	ecma_12_3: ecma_12_3=new ecma_12_3(this);
 	ecma_12_4: ecma_12_4=new ecma_12_4(this);
