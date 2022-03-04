@@ -1,10 +1,9 @@
-import {ITestRunner, TestLock} from "types/tests_mod/tests";
+import {TestLock} from "types/tests_mod/TestLock";
+import {CanRunTests} from "types/tests_mod/ITestRunner";
 import {Dispatcher} from "./Dispatcher";
 import {Test} from "./Test";
 import {test_1_critical} from "./test_1_critical";
-
-
-export async function run_test_1(test_runner: ITestRunner, lock: TestLock, dispatcher: Dispatcher) {
+export async function run_test_1(test_runner: CanRunTests, lock: TestLock, dispatcher: Dispatcher) {
 	let input = `(function(){let the_var=12;})`;
 	let test_1 = new Test(input, `${input}[eof]`);
 	let js_r1 = eval(test_1.input);

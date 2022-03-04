@@ -1,7 +1,5 @@
 import {LexReturnType} from "./LexReturnType";
-import {LexerStateData} from "./section_12";
-
-
+import {LexerStateData} from "./LexerStateData.1";
 export function to_log_return(state: LexerStateData, code: string, res: LexReturnType) {
 	if(res[0]) {
 		let ret: [typeof res[0], string] = [res[0], code.slice(state.cur_index, state.cur_index + res[1])];

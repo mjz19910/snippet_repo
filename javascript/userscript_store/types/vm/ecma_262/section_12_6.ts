@@ -1,4 +1,5 @@
-import {ITestRunner, TestLock} from "types/tests_mod/tests";
+import {TestLock} from "types/tests_mod/TestLock";
+import {CanRunTests} from "types/tests_mod/ITestRunner";
 import {Dispatcher} from "./Dispatcher";
 import {debug_flag_override, ecma_base} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
@@ -83,11 +84,11 @@ export class ecma_12_6 extends ecma_base {
 	}
 }
 
-export function run_tests(test_runner:ITestRunner, lock: TestLock) {
+export function run_tests(test_runner:CanRunTests, lock: TestLock) {
 	test_runner.start_async(run_tests_impl, test_runner, lock);
 }
 
-export async function run_tests_impl(test_runner:ITestRunner, lock:TestLock){
+export async function run_tests_impl(test_runner:CanRunTests, lock:TestLock){
 	// TODO: write tests for ECMA262: 12.6 (Javascript Identifiers), not checking from ecma_terminal
 	// console.error("TODO: ecma_12_6");
 	await lock.lock();

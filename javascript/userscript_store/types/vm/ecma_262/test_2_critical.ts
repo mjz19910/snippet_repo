@@ -1,12 +1,10 @@
-import {ITestRunner} from "types/tests_mod/tests";
+import {CanRunTests} from "types/tests_mod/ITestRunner";
 import {Dispatcher} from "./Dispatcher";
 import {lex_js} from "./section_12";
 import {Test} from "./Test";
 import {to_log_return} from "./to_log_return";
 import {g_ecma_262_do_debug_tests} from "./tests";
-
-
-export function test_2_critical(test_runner: ITestRunner, dispatcher: Dispatcher, test_data: Test) {
+export function test_2_critical(test_runner: CanRunTests, dispatcher: Dispatcher, test_data: Test) {
 	let state = test_data.state;
 	if(!state)
 		throw new Error("Missing test state");

@@ -4,3 +4,4 @@ export type LexReturnType =
 [null, number]|
 [['Error', string], number]|
 [false, Error];
+export type ecma_return_type=never;

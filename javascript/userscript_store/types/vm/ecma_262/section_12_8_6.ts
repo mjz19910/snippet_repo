@@ -1,11 +1,12 @@
-import {TestLock, ITestRunner} from "types/tests_mod/tests";
+import {TestLock} from "types/tests_mod/TestLock";
+import {CanRunTests} from "types/tests_mod/ITestRunner";
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 
 export class ecma_12_8_6 extends ecma_base {
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
-	TemplateEscapeSequence(str: string, index: number): ecma_return_type {
+	TemplateEscapeSequence(str: string, index: number): LexReturnType {
 		let len=0;
 		/* CharacterEscapeSequence */
 		let tmp = this.m_dispatcher.CharacterEscapeSequence(str, index);
@@ -30,7 +31,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-CodePoint
-	CodePoint(str: string, index: number): ecma_return_type {
+	CodePoint(str: string, index: number): LexReturnType {
 		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
 		let res = this.m_dispatcher.HexDigits(str, index);
 		if(res[0]) {
@@ -45,7 +46,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-TemplateHead
-	TemplateHead(str: string, index: number): ecma_return_type {
+	TemplateHead(str: string, index: number): LexReturnType {
 		let cur_index = index;
 		// ` TemplateCharacters_opt ${
 		if(str[cur_index] === '`') {
@@ -62,7 +63,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-TemplateMiddle
-	TemplateMiddle(str: string, index: number): ecma_return_type {
+	TemplateMiddle(str: string, index: number): LexReturnType {
 		let len=0;
 		// } TemplateCharacters_opt ${
 		if(str[index] === '{}'[1]){
@@ -81,7 +82,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-TemplateTail
-	TemplateTail(str: string, index: number): ecma_return_type {
+	TemplateTail(str: string, index: number): LexReturnType {
 		let len=0;
 		// } TemplateCharacters_opt `
 		if(str[index] === '{}'[0]){
@@ -102,7 +103,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
-	TemplateSubstitutionTail(str: string, index: number): ecma_return_type {
+	TemplateSubstitutionTail(str: string, index: number): LexReturnType {
 		// TemplateMiddle
 		let res=this.TemplateMiddle(str, index);
 		if(res[0]){
@@ -116,7 +117,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [null, 0];
 	}
 	/*Template*/
-	public Template(str: string, index: number): ecma_return_type {
+	Template(str: string, index: number): LexReturnType {
 		// NoSubstitutionTemplate
 		let ret = this.NoSubstitutionTemplate(str, index);
 		if(ret[0]) {
@@ -130,7 +131,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [null, 0];
 	}
 	/* TemplateCharacter*/
-	TemplateCharacter(str: string, index: number): ecma_return_type {
+	TemplateCharacter(str: string, index: number): LexReturnType {
 		/* $ [lookahead ≠ {]*/
 		if(str[index] === '$' && str[index + 1] !== '{') {
 			return [true, 1];
@@ -173,7 +174,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [true, 1];
 	}
 	// https://tc39.es/ecma262/#prod-NotEscapeSequence
-	NotEscapeSequence(str: string, index: number): ecma_return_type {
+	NotEscapeSequence(str: string, index: number): LexReturnType {
 		let len=0;
 		// 0 DecimalDigit
 		if(str[index] === '0'){
@@ -269,7 +270,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return [false, new Error("TODO: NotEscapeSequence")];
 	}
 	// https://tc39.es/ecma262/#prod-NotCodePoint
-	NotCodePoint(str:string, index:number): ecma_return_type {
+	NotCodePoint(str:string, index:number): LexReturnType {
 		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
 		let res=this.m_dispatcher.HexDigits(str, index);
 		if(res[0] && res[1] > 0 && typeof res[0] === 'string') {
@@ -283,7 +284,7 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 	/* TemplateCharacters ::*/
 	/* | TemplateCharacter TemplateCharacters opt*/
-	TemplateCharacters(str: string, index: number): ecma_return_type {
+	TemplateCharacters(str: string, index: number): LexReturnType {
 		let cur_index = index;
 		let tmp = this.TemplateCharacter(str, cur_index);
 		if(tmp[0]) {
@@ -300,7 +301,7 @@ export class ecma_12_8_6 extends ecma_base {
 		return ['TemplateCharacters', cur_index - index];
 	}
 	// https://tc39.es/ecma262/#prod-Template
-	public NoSubstitutionTemplate(str: string, index: number): ecma_return_type {
+	NoSubstitutionTemplate(str: string, index: number): LexReturnType {
 		let cur_index = index;
 		//` TemplateCharacters opt `
 		if(str[cur_index] === '`') {
@@ -314,7 +315,7 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 }
 
-export async function run_tests_impl(test_runner:ITestRunner, lock:TestLock) {
+export async function run_tests_impl(test_runner:CanRunTests, lock:TestLock) {
 	let dispatcher=new Dispatcher;
 	let test_string=`
 	let v=\`Hi there\`;
@@ -333,6 +334,6 @@ export async function run_tests_impl(test_runner:ITestRunner, lock:TestLock) {
 	await lock.unlock();
 }
 
-export function run_tests(test_runner:ITestRunner, lock: TestLock) {
+export function run_tests(test_runner:CanRunTests, lock: TestLock) {
 	test_runner.start_async(run_tests_impl, test_runner, lock);
 }
