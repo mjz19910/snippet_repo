@@ -1,23 +1,23 @@
-import {run_tests as ecma_12_8_6_run_tests} from "./vm/ecma_262/section_12_8_6";
-import {run_tests as ecma_12_6_run_tests} from "./vm/ecma_262/section_12_6";
-import {run_tests as ecma_terminal_run_tests} from "./vm/ecma_262/section_12";
+import {run_tests as ecma_12_8_6_run_tests} from "../vm/ecma_262/section_12_8_6";
+import {run_tests as ecma_12_6_run_tests} from "../vm/ecma_262/section_12_6";
+import {run_tests as ecma_terminal_run_tests} from "../vm/ecma_262/section_12";
 
-type GenTestCallback = (runner: ITestRunnerNode, lock: TestLock) => void;
+type GenTestCallback = (runner: ITestRunner, lock: TestLock) => void;
 
-type StartAsyncCallbackType=(runner: ITestRunnerNode, lock: TestLock) => Promise<void>;
+type StartAsyncCallbackType=(runner: ITestRunner, lock: TestLock) => Promise<void>;
 
 
-export interface ITestRunnerNode {
+export interface ITestRunner {
 	wait():Promise<void>;
 	init_test_set(): void;
 	report_test_failure(): void;
 	report_test_success(): void;
 	start_test(lock: TestLock, name: string, test_gen?: GenTestCallback): void;
-	start_async_template<T>(test_gen:GenTestCallbackTemplate<T>, test_runner: ITestRunnerNode, lock: TestLock, extra_arg:T):void;
-	start_async(function_to_run: StartAsyncCallbackType, runner: ITestRunnerNode, lock: TestLock): void;
+	start_async_template<T>(test_gen:GenTestCallbackTemplate<T>, test_runner: ITestRunner, lock: TestLock, extra_arg:T):void;
+	start_async(function_to_run: StartAsyncCallbackType, runner: ITestRunner, lock: TestLock): void;
 	print_marker(first:boolean, successful: number, finished: number, total: number): void;
 	on_test_init(): void;
-	parent: ITestRunnerNode | null;
+	parent: ITestRunner | null;
 }
 
 function null_resolver() {}
@@ -78,16 +78,16 @@ export const test_lock = new TestLock;
 
 const debug=false;
 
-type GenTestCallbackTemplate<T>=(runner: ITestRunnerNode, lock: TestLock, extra_arg:T) => void;
+type GenTestCallbackTemplate<T>=(runner: ITestRunner, lock: TestLock, extra_arg:T) => void;
 
-class BaseTestRunner implements ITestRunnerNode {
+class BaseTestRunner implements ITestRunner {
 	total = 0;
 	successful = 0;
 	failed = 0;
 	finished = 0;
-	parent: ITestRunnerNode|null;
+	parent: ITestRunner|null;
 	on_complete_callback=()=>{};
-	constructor(parent: ITestRunnerNode|null) {
+	constructor(parent: ITestRunner|null) {
 		this.parent = parent;
 	}
 	async wait(){
@@ -147,17 +147,17 @@ class BaseTestRunner implements ITestRunnerNode {
 			this.report_test_failure();
 		}
 	};
-	start_async(test_gen:GenTestCallback, test_runner: ITestRunnerNode, lock: TestLock) {
+	start_async(test_gen:GenTestCallback, test_runner: ITestRunner, lock: TestLock) {
 		test_runner.on_test_init();
 		test_gen(test_runner, lock);
 	}
-	start_async_template<T>(test_gen:GenTestCallbackTemplate<T>, test_runner: ITestRunnerNode, lock: TestLock, extra_arg:T) {
+	start_async_template<T>(test_gen:GenTestCallbackTemplate<T>, test_runner: ITestRunner, lock: TestLock, extra_arg:T) {
 		test_runner.on_test_init();
 		test_gen(test_runner, lock, extra_arg);
 	}
 }
 
-export class TestEngine extends BaseTestRunner implements ITestRunnerNode {
+export class TestEngine extends BaseTestRunner implements ITestRunner {
 	test_started = false;
 	m_is_user_completing_tests = false;
 	is_running_test_set = false;
@@ -180,14 +180,14 @@ export class TestEngine extends BaseTestRunner implements ITestRunnerNode {
 	init_async_test(promise: Promise<void>) {
 		this.async_init_promise = promise;
 	}
-	constructor(parent: ITestRunnerNode) {
+	constructor(parent: ITestRunner) {
 		super(parent);
 		this.is_running_test_set = false;
 		this.test_started = false;
 	}
 }
 
-class TestRunner extends BaseTestRunner implements ITestRunnerNode {
+class TestRunner extends BaseTestRunner implements ITestRunner {
 	on_done(){
 		console.log(` --- ${this.successful}/${this.total} Tests complete --- `);
 	}
@@ -206,7 +206,7 @@ class TestRunner extends BaseTestRunner implements ITestRunnerNode {
 			this.async_init_promise = null;
 		}
 	}
-	children:ITestRunnerNode[]=[];
+	children:ITestRunner[]=[];
 	async_init_promise: Promise<void> | null = null;
 	async wait() {
 		let promise=super.wait();
