@@ -1,7 +1,7 @@
-import {is_ascii_digit} from "../AK/CharacterTypes";
+import {is_ascii_digit} from "../vm/AK/CharacterTypes";
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 // C++ bool is Typescript boolean
 type bool = boolean;
 enum TokenType {
@@ -20,7 +20,7 @@ export class ecma_12_8_3 extends ecma_base {
 	result_error_token: ['Error', string]|null=null;
 	/*HexDigits[Sep] */
 	// https://tc39.es/ecma262/#prod-HexDigits
-	HexDigits(str: string, index: number): ecma_return_type {
+	HexDigits(str: string, index: number): LexReturnType {
 		let cur;
 		cur = this.HexDigit(str, index);
 		let nx = this.HexDigit(str, index);
@@ -41,7 +41,7 @@ export class ecma_12_8_3 extends ecma_base {
 		return [null, 0];
 
 	}
-	HexDigits_Sep(str: string, index: number): ecma_return_type {
+	HexDigits_Sep(str: string, index: number): LexReturnType {
 		let cur = this.HexDigit(str, index);
 		let nx = this.HexDigit(str, index);
 		if(cur[0] && cur[1] > 0 && (!nx[0])) {
@@ -199,7 +199,7 @@ export class ecma_12_8_3 extends ecma_base {
 		if(!is_ascii_digit(this.m_current_char)) return false;
 		return this.consume_decimal_number();
 	}
-	DecimalDigit(str: string, index: number): ecma_return_type {
+	DecimalDigit(str: string, index: number): LexReturnType {
 		if(str.charCodeAt(index) >= 48 && str.charCodeAt(index) <= 57) {
 			return ["DecimalDigit", 1];
 		}
@@ -221,7 +221,7 @@ export class ecma_12_8_3 extends ecma_base {
 	// C++ from SerenityOS's LibJS Lexer::next()
 	if (is_numeric_literal_start()) {
 	*/
-	NumericLiteral(str: string, index: number): ecma_return_type {
+	NumericLiteral(str: string, index: number): LexReturnType {
 		// token_type = TokenType::NumericLiteral;
 		this.token_type = TokenType.NumericLiteral;
 		// bool is_invalid_numeric_literal = false;
@@ -414,7 +414,7 @@ export class ecma_12_8_3 extends ecma_base {
 
 		return true;
 	}
-	DecimalLiteral(str: string, index: number): ecma_return_type {
+	DecimalLiteral(str: string, index: number): LexReturnType {
 		if(str[index] === '0') {
 			return ["DecimalLiteral", 1];
 		}
@@ -433,7 +433,7 @@ export class ecma_12_8_3 extends ecma_base {
 		return ["DecimalLiteral", off];
 	}
 	// DecimalDigits[~Sep]
-	DecimalDigits(str: string, index: number): ecma_return_type {
+	DecimalDigits(str: string, index: number): LexReturnType {
 		// DecimalDigit
 		let off = 0;
 		for(;;) {
@@ -447,7 +447,7 @@ export class ecma_12_8_3 extends ecma_base {
 		return ["DecimalDigits", off];
 	}
 	// DecimalDigits[+Sep]
-	DecimalDigits_Sep(str: string, index: number): ecma_return_type {
+	DecimalDigits_Sep(str: string, index: number): LexReturnType {
 		let off = 0;
 		for(;;) {
 			// DecimalDigit
@@ -476,7 +476,7 @@ export class ecma_12_8_3 extends ecma_base {
 	 * @param {string} str
 	 * @param {any} index
 	 */
-	NonZeroDigit(str: string, index: number): ecma_return_type {
+	NonZeroDigit(str: string, index: number): LexReturnType {
 		if(str.charCodeAt(index) >= 49 && str.charCodeAt(index) <= 57) {
 			return ["NonZeroDigit", 1];
 		}
@@ -486,7 +486,7 @@ export class ecma_12_8_3 extends ecma_base {
 	 * @param {string} str
 	 * @param {number} index
 	 */
-	NumericLiteralSeparator(str: string, index: number): ecma_return_type {
+	NumericLiteralSeparator(str: string, index: number): LexReturnType {
 		if(str[index] === '_') {
 			return ["NumericLiteralSeparator", 1];
 		}
@@ -520,7 +520,7 @@ export class ecma_12_8_3 extends ecma_base {
 			}
 		}
 	}
-	NonOctalDecimalIntegerLiteral(str: string, index: number): ecma_return_type {
+	NonOctalDecimalIntegerLiteral(str: string, index: number): LexReturnType {
 		// 0 NonOctalDigit
 		non_oct: if(str[index] === '0') {
 			let tmp = this.NonOctalDigit(str, index + 1);
@@ -539,14 +539,14 @@ export class ecma_12_8_3 extends ecma_base {
 		}
 		throw new Error("Not implemented");
 	}
-	OctalDigit(str: string, index: number): ecma_return_type {
+	OctalDigit(str: string, index: number): LexReturnType {
 		// 0 1 2 3 4 5 6 7
 		if(str.charCodeAt(index) >= '0'.charCodeAt(0) && str.charCodeAt(index) <= '7'.charCodeAt(0)) {
 			return ["OctalDigit", 1];
 		}
 		return [null, 0];
 	}
-	LegacyOctalLikeDecimalIntegerLiteral(str: string, index: number): ecma_return_type {
+	LegacyOctalLikeDecimalIntegerLiteral(str: string, index: number): LexReturnType {
 		let len = 0;
 		// 0 OctalDigit
 		is_oct: if(str[index] === '0') {
@@ -563,13 +563,13 @@ export class ecma_12_8_3 extends ecma_base {
 		let tmp = this.OctalDigit(str, index + 2);
 		throw new Error("Not implemented");
 	}
-	NonOctalDigit(str: string, index: number): ecma_return_type {
+	NonOctalDigit(str: string, index: number): LexReturnType {
 		if(str[index] === '8' || str[index] === '9') {
 			return ["NonOctalDigit", 1];
 		}
 		return [null, 0];
 	}
-	HexDigit(str: string, index: number): ecma_return_type {
+	HexDigit(str: string, index: number): LexReturnType {
 		if(str.charCodeAt(index) >= '0'.charCodeAt(0) && str.charCodeAt(index) <= '9'.charCodeAt(0)) {
 			return ["HexDigit", 1];
 		}

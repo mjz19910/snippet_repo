@@ -1,8 +1,8 @@
 import {ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 
 export class ecma_12_8_4 extends ecma_base {
-	StringLiteral(str: string, index: number): ecma_return_type {
+	StringLiteral(str: string, index: number): LexReturnType {
 		let cur = str[index];
 		if(cur === '"') {
 			if(str[index + 1] === '"') {
@@ -111,7 +111,7 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return 1;
 	}
-	LineContinuation(str: string, index: number): ecma_return_type {
+	LineContinuation(str: string, index: number): LexReturnType {
 		if(str[index] === '\\') {
 			let lt_len = this.m_dispatcher.LineTerminatorSequence(str, index + 1);
 			if(lt_len[0] && lt_len[1] > 0) {
@@ -121,7 +121,7 @@ export class ecma_12_8_4 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-EscapeSequence
-	EscapeSequence(str: string, index: number): ecma_return_type {
+	EscapeSequence(str: string, index: number): LexReturnType {
 		let len;
 		// CharacterEscapeSequence
 		let out = this.CharacterEscapeSequence(str, index);
@@ -151,7 +151,7 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	CharacterEscapeSequence(str: string, index: number): ecma_return_type {
+	CharacterEscapeSequence(str: string, index: number): LexReturnType {
 		let len = this.SingleEscapeCharacter(str, index);
 		if(len > 0) {
 			return [true, len];
@@ -198,7 +198,7 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 	}
 	// https://tc39.es/ecma262/#prod-LegacyOctalEscapeSequence
-	LegacyOctalEscapeSequence(str: string, index: number): ecma_return_type {
+	LegacyOctalEscapeSequence(str: string, index: number): LexReturnType {
 		// 0 [lookahead ∈ { 8, 9 }]
 		if(str[index] === '0') {
 			if(str[index + 1] === '8' || str[index + 1] === '9') {
@@ -277,7 +277,7 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return 0;
 	}
-	HexEscapeSequence(str: string, index: number): ecma_return_type {
+	HexEscapeSequence(str: string, index: number): LexReturnType {
 		let len = 0;
 		if(str[index] === 'x') {
 			++len;
@@ -313,7 +313,7 @@ export class ecma_12_8_4 extends ecma_base {
 		}
 		return 0;
 	}
-	Hex4Digits(str: string, index: number): ecma_return_type {
+	Hex4Digits(str: string, index: number): LexReturnType {
 		let acc = 0;
 		let len = this.m_dispatcher.HexDigit(str, index);
 		if(!len[0]) return [null, 0];

@@ -1,7 +1,7 @@
-import {FlyString} from "../AK/FlyString";
+import {FlyString} from "../vm/AK/FlyString";
 import {Dispatcher} from "./Dispatcher";
 import {ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 import {JSTokenizerTokenType as TokenType} from "./JSTokenizerTokenType";
 interface IHashMap<K, V> {
 	clear(): void;
@@ -350,7 +350,7 @@ export class ecma_12_7 extends ecma_base {
 			s_single_char_tokens.set('>', TokenType.GreaterThan);
 		}
 	}
-	Punctuator(str: string, index: number): ecma_return_type {
+	Punctuator(str: string, index: number): LexReturnType {
 		var len = 0, type = null, ret;
 		ret = this.OptionalChainingPunctuator(str, index);
 		if(ret[0] && ret[1] > len) {
@@ -364,7 +364,7 @@ export class ecma_12_7 extends ecma_base {
 		}
 		return [type, len];
 	}
-	OptionalChainingPunctuator(str: string, index: number): ecma_return_type {
+	OptionalChainingPunctuator(str: string, index: number): LexReturnType {
 		if(str.slice(index, index + 2) === '?.') {
 			let [, num_len] = this.DecimalDigit(str, index + 2);
 			if(num_len > 0) {
@@ -374,10 +374,10 @@ export class ecma_12_7 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	private DecimalDigit(str: string, index: number): ecma_return_type {
+	private DecimalDigit(str: string, index: number): LexReturnType {
 		return this.m_dispatcher.DecimalDigit(str, index);
 	}
-	OtherPunctuator(str: string, index: number): ecma_return_type {
+	OtherPunctuator(str: string, index: number): LexReturnType {
 		// >>>= is the only production of length 4
 		if(str.startsWith('>>>=', index)) {
 			return ['OtherPunctuator', 4];
@@ -421,7 +421,7 @@ export class ecma_12_7 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	DivPunctuator(str: string, index: number):ecma_return_type {
+	DivPunctuator(str: string, index: number):LexReturnType {
 		let char_len = 0;
 		// `/`
 		if(str.startsWith('/', index)) {
@@ -436,7 +436,7 @@ export class ecma_12_7 extends ecma_base {
 		}
 		return [null, 0];
 	}
-	RightBracePunctuator(str: string, index: number):ecma_return_type {
+	RightBracePunctuator(str: string, index: number):LexReturnType {
 		if(str[index] === '{}'[1]) {
 			return ['RightBracePunctuator', 1];
 		}

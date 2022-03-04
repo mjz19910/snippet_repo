@@ -1,9 +1,9 @@
 import {ecma_base} from "./LexerBase";
-import {ecma_return_type} from "./LexReturnType";
+import {LexReturnType} from "./LexReturnType";
 
 export class ecma_12_3 extends ecma_base {
 	// https://tc39.es/ecma262/#prod-LineTerminator
-	LineTerminator(str: string, index: number): ecma_return_type {
+	LineTerminator(str: string, index: number): LexReturnType {
 		let len = 0;
 		if(str[index] === '\r')
 			len = 1;
@@ -19,7 +19,7 @@ export class ecma_12_3 extends ecma_base {
 		return [null, 0];
 	}
 	// https://tc39.es/ecma262/#prod-LineTerminatorSequence
-	LineTerminatorSequence(str:string, index:number): ecma_return_type {
+	LineTerminatorSequence(str:string, index:number): LexReturnType {
 		let len;
 		// <LF>
 		if(str[index] === '\u000a')return ["LineTerminatorSequence", 1];
