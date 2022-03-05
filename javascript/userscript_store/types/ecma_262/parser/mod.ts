@@ -1,2 +1,2 @@
-import {ParseNode} from "./ParseNode";
-export {ParseNode}
+import {ParseText} from "./ParseText";
+export {ParseText}
