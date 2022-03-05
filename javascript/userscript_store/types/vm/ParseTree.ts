@@ -1,6 +1,3 @@
-class ParseTree {
-	/**
-	 * @type {any}
-	 */
-	root;
+export class ParseTree {
+	root:any;
 }

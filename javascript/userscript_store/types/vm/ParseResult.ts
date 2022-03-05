@@ -1,11 +1,11 @@
-class ParseResult {
+import {ParseTree} from "./ParseTree";
+export class ParseResult {
 	m_is_ok = false;
-	/**@returns {this is {parse_tree:ParseTree}} */
-	ok() {
+	ok(): this is {parse_tree: ParseTree} {
 		return this.m_is_ok;
 	}
 	/**@returns {boolean} */
-	has_parse_error() {
+	has_parse_error(): boolean {
 		if(!this.parse_errors)
 			throw new Error("Invalid");
 		if(this.parse_errors.length > 0) {
@@ -14,7 +14,7 @@ class ParseResult {
 		return false;
 	}
 	/**@returns {boolean} */
-	has_early_error() {
+	has_early_error(): boolean {
 		if(!this.early_errors)
 			throw new Error("Invalid");
 		if(this.early_errors.length > 0) {
@@ -25,9 +25,9 @@ class ParseResult {
 	/**
 	 * @abstract
 	 * @type {ParseTree|undefined} */
-	parse_tree;
+	parse_tree: ParseTree | undefined;
 	/**@type {SyntaxError[]|undefined} */
-	parse_errors;
+	parse_errors: SyntaxError[] | undefined;
 	/**@type {SyntaxError[]|undefined} */
-	early_errors;
+	early_errors: SyntaxError[] | undefined;
 }

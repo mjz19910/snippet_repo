@@ -1,7 +1,7 @@
 import {Args} from "./Args";
 import {ArgsOpcode} from "../opcodes/ArgsOpcode";
-import {GlobalObject} from "./GlobalObject";
-import {GlobalObjectOpcode} from "../opcodes/GlobalObjectOpcode";
+import {PushWindowObject as PushWindowObject} from "./WindowObject";
+import {PushWindowObjectOpcode} from "../opcodes/PushWindowObjectOpcode";
 import {PushSelf as VMPushSelf} from "../vm/VMPushSelf";
 import {PushSelfOpcode as VMPushSelfOpcode} from "../opcodes/VMPushSelfOpcode";
 export {
@@ -9,6 +9,6 @@ export {
 	ArgsOpcode,
 	VMPushSelf,
 	VMPushSelfOpcode,
-	GlobalObject,
-	GlobalObjectOpcode
+	PushWindowObject as WindowObject,
+	PushWindowObjectOpcode as PushWindowObjectOpcode
 }

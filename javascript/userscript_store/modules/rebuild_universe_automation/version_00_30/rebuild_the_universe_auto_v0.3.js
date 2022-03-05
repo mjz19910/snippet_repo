@@ -18,7 +18,58 @@
 // @grant			none
 // ==/UserScript==
 
-import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox, DocumentBox, VoidPromiseBox, AsyncFunctionBox, VoidBox} from "./support.js";
+import {
+	// ArrayBox,
+	AsyncFunctionBox,
+	CSSStyleSheetBox,
+	CSSStyleSheetConstructorBox,
+	// CSSStyleSheetInitBox,
+	// CSSStyleSheetPromiseBox,
+	DocumentBox,
+	// EmptyArrayBox,
+	// FunctionBox,
+	// GlobalThisBox,
+	//.InstructionTypeArrayBox,
+	// MediaListBox,
+	NewableFunctionBox,
+	NodeBox,
+	ObjectBox,
+	PromiseBox,
+	StackVMBox,
+	TemporaryBox,
+	VoidBox,
+	// RealVoidBox,
+	VoidPromiseBox,
+	WindowBox,
+	Box,
+	InstructionHalt,
+	InstructionReturn,
+	InstructionBreakpoint,
+	InstructionVMPushSelf,
+	IAppendImpl,
+	IBreakpointImpl,
+	ICallImpl,
+	ICastImpl,
+	IConstructImpl,
+	IDropImpl,
+	IDupImpl,
+	IGetImpl,
+	IHaltImpl,
+	IJeImpl,
+	IJumpImpl,
+	IModifyOPImpl,
+	INopImpl,
+	IPeekImpl,
+	IPushWindowObjectImpl,
+	IPushImpl,
+	IReturnImpl,
+	IVMBlockTraceImpl,
+	IVMCallImpl,
+	IVMPushArgsImpl,
+	IVMPushIPImpl,
+	IVMPushSelfImpl,
+	IVMReturnImpl,
+} from "./support.js";
 
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
@@ -38,61 +89,6 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 	const local_logging_level=3;
 	/** @type {['crit','error','warn','notice','info','debug','trace']} */
 	const logging_levels=['crit','error','warn','notice','info','debug','trace'];
-	/** @type {<T extends U['prototype'], U extends {new ():V; prototype:V}, V>(a:any, b:U)=>a is T} */
-	function cast_T_extends_U_type(T_value, U_value) {
-		if(T_value instanceof U_value){
-			return true;
-		}
-		return false;
-	}
-	/** @type {<T extends U['prototype'], U extends {new ():V; prototype:V}, V>(a:any, b:U)=>T|null} */
-	function cast_value_T_to_U(a, b){
-		if(cast_T_extends_U_type(a, b)){
-			return a;
-		}
-		return null;
-	}
-	/** @type {<T extends {}>(v:T, k:keyof T)=>v is {[U in keyof T]:T[U]}} */
-	function does_have_property(v, k){
-		if(v.hasOwnProperty(k))return true;
-		if(v[k] !== void 0)return true;
-		return false;
-	}
-	/** @type {<T, F>(v:T, k:(v:T)=>F)=>v is (T & F)} */
-	function does_have_property_as_type(v, k){
-		let rr=v && k;
-		void rr;
-		return true;
-	}
-	/** @type {<T, F>(v:T, k:(v:T)=>F)=>T|null} */
-	function with_has_property_as_type(v, k){
-		if(does_have_property_as_type(v, k))return v;
-		return null;
-	}
-	/** @type {<A extends {}, B extends A>(o:B, k:keyof A)=>{[T in keyof A]:A[T]}|null} */
-	function with_has_property(o, k){
-		if(does_have_property(o, k)){
-			return o;
-		}
-		return null;
-	}
-	/** @type {<T extends {}>(o:T)=>o is T} */
-	function can_be_object(v){
-		if(v === null){
-			return false;
-		}
-		if(typeof v==='object'){
-			return true;
-		}
-		return false;
-	}
-	/** @type {<T>(v:T)=>({} & T)|null} */
-	function as_object_or_null(v){
-		if(can_be_object(v)){
-			return v;
-		}
-		return null;
-	}
 	/** @arg {(typeof logging_levels)[number]} level_str @arg {string} format_str@arg {any[]} args */
 	function append_console_message(level_str, format_str, ...args) {
 		console.log("[%s] " + format_str, level_str, ...args);
@@ -110,49 +106,8 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 			case LOG_LEVEL_TRACE:append_console_message('trace', format_str, ...args);break;
 		}
 	}
-	/** @returns {never} */
-	function cast_err() {
-		let err={};
-		Error.call(err, 'Bad cast (or TODO)');
-		Error.captureStackTrace(err, cast_err)
-		throw err;
-	}
 	function trigger_debug_breakpoint(){
 		debugger;
-	}
-	/** @param {string | any[]} arr */
-	function calc_ratio(arr){
-		let ratio_acc=0;
-		for(let i=0;i<arr.length;i++)ratio_acc+=arr[i];
-		// don't divide by zero
-		if(ratio_acc === 0)return 0;
-		return ratio_acc/arr.length;
-	}
-	/** @type {<T, X extends keyof T>(obj:{[V in keyof T]:T[V]}, key:X)=>{v:T[X]} | null} */
-	function safe_get(obj, key) {
-		let cur_proto=obj;
-		let prop=null;
-		while(cur_proto !== null && !prop) {
-			prop=Object.getOwnPropertyDescriptor(cur_proto, key);
-			cur_proto=Object.getPrototypeOf(cur_proto);
-		}
-		if(!prop)return null;
-		if(!prop.value){
-			if(prop.get){
-				let res=prop.get.call(obj);
-				return {
-					v:res
-				};
-			} else if(prop.set){
-				console.log('ignored set only ownProperty');
-				return null;
-			} else {
-				return null;
-			}
-		}
-		return {
-			v:prop.value
-		};
 	}
 	class BaseBox {
 		/**@type {import("final/BaseBox.js").BoxInner | null} */
@@ -173,6 +128,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 			return null;
 		}
 	}
+	/**@implements {CSSStyleSheetConstructorBox} */
 	class CSSStyleSheetConstructorBoxImpl extends BaseBox {
 		/**@type {"constructor_box"} */
 		type="constructor_box";
@@ -286,8 +242,8 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 			this.value=value;
 		}
 	}
+	/**@implements {NewableFunctionBox} */
 	class NewableFunctionBoxImpl {
-		/**@arg {import("types/vm/NewableFactory").default<{}>} value */
 		constructor(value){
 			this.value=value;
 		}
@@ -325,7 +281,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		// 	}
 		// }
 		/**
-		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} object_box
+		 * @arg {Exclude<import("final/BaseBox.js").Box, Primitives>} object_box
 		 * @returns {{}|Function|StackVM|null}
 		 */
 		unbox_obj(object_box) {
@@ -383,7 +339,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		 * @arg {import("final/BaseBox.js").Box[]} arg_arr
 		 */
 		unbox_arr(arg_arr){
-			/**@type {({} | Function | StackVM | import("./support.js").Primitives | null)[]} */
+			/**@type {({} | Function | StackVM | Primitives | null)[]} */
 			let arr=[];
 			for(let i=0;i<arg_arr.length;i++){
 				let cur=arg_arr[i];
@@ -404,7 +360,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		/**
 		 * @arg {StackVM} vm
 		 * @arg {(...a: import("final/BaseBox.js").Box[]) => import("final/BaseBox.js").Box} fn_value
-		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} target_this
+		 * @arg {Exclude<import("final/BaseBox.js").Box, Primitives>} target_this
 		 * @arg {import("final/BaseBox.js").Box[]} arg_arr
 		 */
 		handle_as_fn(vm, fn_value, target_this, arg_arr) {
@@ -423,8 +379,8 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives|null>} fn_obj
-		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} target_this
+		 * @arg {Exclude<import("final/BaseBox.js").Box, Primitives|null>} fn_obj
+		 * @arg {Exclude<import("final/BaseBox.js").Box, Primitives>} target_this
 		 * @arg {import("final/BaseBox.js").Box[]} arg_arr
 		 */
 		handle_as_obj(vm, fn_obj, target_this, arg_arr){
@@ -493,9 +449,9 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @arg {import("./support.js").TemporaryBox} value_box
-		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} target_this
-		 * @arg {import("final/BaseBox.js").Box[]} arg_arr
+		 * @arg {TemporaryBox} value_box
+		 * @arg {Exclude<Box, Primitives>} target_this
+		 * @arg {Box[]} arg_arr
 		 */
 		handle_as_temporary_box(vm, value_box, target_this, arg_arr) {
 			if(value_box.source === 'cast'){
@@ -573,17 +529,16 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 			// this.push_box(vm, cast_source, obj.value);
 		}
 		/**
-		 * @type {(vm:StackVM, cast_source:'object_index', obj:{value:{[x:string]:import("final/BaseBox.js").Box}})=>void}
+		 * @type {(vm:StackVM, cast_source:'object_index', obj:{value:{[x:string]:Box}})=>void}
 		 * @arg {StackVM} vm @arg {'object_index'} cast_source
 		 */
-		//* @arg {import("types/vm/box/TemporaryBox.js").temporary_box_from_get | import("types/vm/box/TemporaryBox.js").temporary_box_from_call} obj
 		push_temporary_box(vm, cast_source, obj){
 			this.push_box(vm, cast_source, obj.value);
 		}
 		/**
 		 * @arg {StackVM} vm
 		 * @param {'object_index'} cast_source
-		 * @param {import("./support.js").StackVMBox} obj
+		 * @param {StackVMBox} obj
 		 */
 		push_custom_box(vm, cast_source, obj){
 			vm.stack.push({
@@ -597,7 +552,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @arg {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives>} obj
+		 * @arg {Exclude<import("final/BaseBox.js").Box, Primitives>} obj
 		 * @arg {'object_index'} cast_source
 		 * */
 		cast_to_type(vm, obj, cast_source) {
@@ -747,7 +702,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		type='get';
 		/**
 		 * @arg {StackVM} vm
-		 * @param {import("../../../types/vm/box/TemporaryBox.js").temporary_box_from_get | import("../../../types/vm/box/TemporaryBox.js").temporary_box_from_cast_to_vm_function | import("../../../types/vm/box/TemporaryBox.js").temporary_box_from_call | import("../../../types/vm/box/TemporaryBox.js").temporary_box_instance | import("../../../types/vm/box/TemporaryBox.js").temporary_box_object_index_to_box} tmp_box
+		 * @param {TemporaryBox} tmp_box
 		 * @param {string} key
 		 */
 		handle_temporary_box(vm, tmp_box, key) {
@@ -759,7 +714,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		}
 		/**
 		 * @arg {StackVM} vm
-		 * @param {Exclude<import("final/BaseBox.js").Box, import("./support.js").Primitives|null>} value_box
+		 * @param {Exclude<Box, Primitives|null>} value_box
 		 * @param {string|number} key
 		 */
 		on_get(vm, value_box, key){
@@ -808,7 +763,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 	class InstructionHaltImpl extends InstructionImplBase {
 		/**@type {'halt'} */
 		type='halt';
-		/**@arg {import("types/vm/instruction/mod.js").turing.Halt} _i @arg {StackVM} vm */
+		/**@arg {InstructionHalt} _i @arg {StackVM} vm */
 		run(vm, _i) {
 			vm.halt();
 		}
@@ -816,7 +771,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 	class InstructionReturnImpl extends InstructionImplBase {
 		/**@type {'return'} */
 		type = 'return'
-		/**@arg {import("types/vm/instruction/mod.js").general.Return} _i @arg {StackVM} vm */
+		/**@arg {InstructionReturn} _i @arg {StackVM} vm */
 		run(vm, _i){
 			if(vm.stack.length > 0){
 				vm.return_value=vm.stack.pop();
@@ -825,35 +780,37 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 			}
 		}
 	}
+	/**@implements {IBreakpointImpl} */
 	class InstructionBreakpointImpl extends InstructionImplBase {
 		/**@type {'breakpoint'} */
 		type='breakpoint'
 		/**
 		 * @arg {StackVM} vm
-		 * @param {import("types/vm/instruction/mod.js").debug.Breakpoint} _i
+		 * @param {InstructionBreakpoint} _i
 		 */
 		run(vm, _i){
 			console.log(vm.stack);
 			trigger_debug_breakpoint();
 		}
 	}
-	class InstructionPushVMObjImpl extends InstructionImplBase {
+	/**@implements {IBreakpointImpl} */
+	class InstructionVMPushSelfImpl extends InstructionImplBase {
 		/**@type {"vm_push_self"} */
 		type ="vm_push_self";
 		/**
 		 * @arg {StackVM} vm
-		 * @param {import("types/vm/instruction/mod.js").vm.PushSelf} _i
+		 * @param {InstructionVMPushSelf} _i
 		 */
 		run(vm, _i){
 			vm.stack.push(new StackVMBoxImpl(vm));
 		}
 	}
-	class InstructionPushGlobalObjectImpl extends InstructionImplBase {
-		/**@type {'push_global_object'} */
-		type='push_global_object';
+	class InstructionPushWindowImpl extends InstructionImplBase {
+		/**@type {'push_window'} */
+		type='push_window';
 		/**
 		 * @arg {StackVM} vm
-		 * @param {import("types/vm/instruction/mod.js").push.GlobalObject} _i
+		 * @param {IPushWindowImpl} _i
 		 */
 		run(vm, _i){
 			vm.stack.push(new WindowBoxImpl(window));
@@ -881,8 +838,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 			if(this.debug)console.log('VM: peek', ins, 'value', at, 'index', offset, vm.stack.length-offset);
 		}
 	}
-	/**@typedef {import("types/vm/instruction/mod.js").InstructionImplObj<"append", import("types/vm/instruction/mod.js").IAppendImpl, import("types/vm/instruction/Append.js").Append>} IInstructionAppendImplIns */
-	/**@implements {IInstructionAppendImplIns} */
+	/**@implements {IAppendImpl} */
 	class InstructionAppendImpl extends InstructionImplBase {
 		/**
 		 * @type {"append"}
@@ -1001,9 +957,9 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		run(_vm, _i){
 		}
 	}
-	/**@type {[import("./support.js").InstructionList[0][0], import("./support.js").InstructionList[0][1]]} */
+	/**@type {[InstructionList[0][0], InstructionList[0][1]]} */
 	let i0=['append', InstructionAppendImpl];
-	/**@type {import("./support.js").InstructionList} */
+	/**@type {InstructionList} */
 	const instruction_descriptor_arr=[
 		['append', InstructionAppendImpl],
 		['breakpoint', InstructionBreakpointImpl],
@@ -1019,14 +975,14 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		['modify_operand', InstructionModifyOpImpl],
 		['nop', InstructionNopImpl],
 		['peek', InstructionPeekImpl],
-		['push_global_object', InstructionPushGlobalObjectImpl],
+		['push_global_object', InstructionPushWindowImpl],
 		['push', InstructionPushImpl],
 		['return', InstructionReturnImpl],
 		['vm_block_trace', InstructionBlockTraceImpl],
 		['vm_call', InstructionVMCallImpl],
 		['vm_push_args', InstructionPushArgsImpl],
 		['vm_push_ip', InstructionVMPushIPImpl],
-		['vm_push_self', InstructionPushVMObjImpl],
+		['vm_push_self', InstructionVMPushSelfImpl],
 		['vm_return', InstructionVMReturnImpl],
 	];
 	class StackVM {
@@ -1038,7 +994,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		base_ptr;
 		/**@type {import("final/BaseBox.js").Box[]} */
 		stack;
-		/**@arg {import("./support.js").InstructionList} instruction_desc_arr */
+		/**@arg {InstructionList} instruction_desc_arr */
 		create_instruction_map(instruction_desc_arr) {
 			let obj={};
 			for(let i=0;i<instruction_desc_arr.length;i++){
@@ -2932,7 +2888,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		 * @arg {"begin" | "call"} op_1
 		 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionTypePack|null} op_2
 		 * @arg {number} stack_ptr
-		 * @arg {import("./support.js").State_1} state
+		 * @arg {State_1} state
 		*/
 		push_instruction_group(state, stack_ptr, instruction_val, op_1, op_2){
 			let instructions_at=state.ins_arr_map[stack_ptr];
@@ -2947,7 +2903,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		 * @arg {"tagged_begin" | "tagged_call"} op_1
 		 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionTaggedTypePack|null} op_2
 		 * @arg {number} stack_ptr
-		 * @arg {import("./support.js").State_1} state
+		 * @arg {State_1} state
 		*/
 		push_instruction_group_tag(state, stack_ptr, instruction_val, op_1, op_2){
 			let instructions_at=state.ins_arr_map[stack_ptr];
@@ -2961,7 +2917,7 @@ import {CSSStyleSheetBox, PromiseBox, StackVMBox, WindowBox, ObjectBox, NodeBox,
 		 * @arg {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[]} input_instructions
 		 * @returns {import("types/vm/instruction/mod.js").InstructionType[]} */
 		parse_dom_stack(input_instructions) {
-			/**@type {import("./support.js").State_1} */
+			/**@type {State_1} */
 			let state={};
 			/**@type {import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionType[][]} */
 			state.depth_ins_map=[];

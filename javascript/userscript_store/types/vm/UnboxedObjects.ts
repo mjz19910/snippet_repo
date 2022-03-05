@@ -1,3 +1,3 @@
-import {IBox} from "./mod";
-import {TGetOr} from "./TGetOr";
-export type UnboxedObjects = TGetOr<IBox, 'value'>;
+import {Box} from "types/box/mod";
+import {Primitives} from "types/box/Primitives";
+export type UnboxedObjects = Exclude<Box, Primitives|null>['value'];

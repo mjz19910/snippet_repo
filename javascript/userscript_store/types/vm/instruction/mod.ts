@@ -5,7 +5,7 @@ import {Cast} from "./Cast";
 import {CastOpcode} from "./opcodes/CastOpcode";
 import {ConstructOpcode} from "./opcodes/ConstructOpcode";
 import {GetOpcode} from "./opcodes/GetOpcode";
-import {GlobalObjectOpcode} from "./opcodes/GlobalObjectOpcode";
+import {PushWindowObjectOpcode} from "./opcodes/PushWindowObjectOpcode";
 import {HaltOpcode} from "./opcodes/HaltOpcode";
 import {ModifyOperand} from "./ModifyOperand";
 import {ModifyOperandOpcode} from "./opcodes/ModifyOperandOpcode";
@@ -21,6 +21,7 @@ import * as stack from "./stack/mod";
 import * as turing from "./turing/mod";
 import * as vm from "./vm/mod";
 export {
+	PushWindowObject as PushWindowObject,
 	Append,
 	Cast,
 	debug,
@@ -32,7 +33,8 @@ export {
 	stack,
 	turing,
 	vm,
-};
+}
+type PushWindowObject=push.WindowObject;
 
 export type InstructionMap={
 	'append':Append;
@@ -49,7 +51,7 @@ export type InstructionMap={
 	'modify_operand':ModifyOperand
 	'nop':Nop
 	'peek':stack.Peek
-	'push_global_object':push.GlobalObject
+	'push_window_object':push.WindowObject
 	'push':stack.Push
 	'return':general.Return
 	'vm_block_trace':vm.BlockTrace;
@@ -89,7 +91,7 @@ export interface IJumpImpl extends InstructionImpl<IM<jump.JumpOpcode>> {}
 export interface IModifyOPImpl extends InstructionImpl<IM<ModifyOperandOpcode>> {}
 export interface INopImpl extends InstructionImpl<IM<NopOpcode>> {}
 export interface IPeekImpl extends InstructionImpl<IM<stack.PeekOpcode>> {}
-export interface IPushGlobalObjectImpl extends InstructionImpl<IM<GlobalObjectOpcode>> {}
+export interface IPushWindowObjectImpl extends InstructionImpl<IM<PushWindowObjectOpcode>> {}
 export interface IPushImpl extends InstructionImpl<IM<stack.PushOpcode>> {}
 export interface IReturnImpl extends InstructionImpl<IM<general.ReturnOpcode>> {}
 export interface IVMBlockTraceImpl extends InstructionImpl<IM<vm.BlockTraceOpcode>> {}
@@ -118,7 +120,7 @@ export type InstructionImplMap = {
 	'modify_operand': IModifyOPImpl;
 	'nop': INopImpl;
 	'peek': IPeekImpl;
-	'push_global_object': IPushGlobalObjectImpl;
+	'push_window_object': IPushWindowObjectImpl;
 	'push': IPushImpl;
 	'return': IReturnImpl;
 	'vm_block_trace': IVMBlockTraceImpl;
@@ -144,7 +146,7 @@ export type InstructionOpcodesList = [
 	modify_op:ModifyOperandOpcode,
 	nop:NopOpcode,
 	peek:stack.PeekOpcode,
-	push_global_object:push.GlobalObjectOpcode,
+	push_global_object:push.PushWindowObjectOpcode,
 	push:stack.PushOpcode,
 	return_x:general.ReturnOpcode,
 	vm_block_trace:vm.BlockTraceOpcode,

@@ -38,7 +38,7 @@ export class AutoBuy {
 		this.background_audio = null; this.state_history_arr = null;
 		this.skip_save = false; this.has_real_time = false;
 		/**
-		 * @type {never[]}
+		 * @type {number[]}
 		 */
 		this.cint_arr = [];
 		this.local_data_loader = new DataLoader(localStorage);

@@ -1,14 +1,47 @@
 import {ArrayBox, AsyncFunctionBox, CSSStyleSheetBox, CSSStyleSheetConstructorBox, CSSStyleSheetInitBox, CSSStyleSheetPromiseBox, DocumentBox, EmptyArrayBox, FunctionBox, GlobalThisBox, InstructionTypeArrayBox, MediaListBox, NewableFunctionBox, NodeBox, ObjectBox, PromiseBox, StackVMBox, TemporaryBox, VoidBox, VoidPromiseBox, WindowBox} from "types/box/mod.js";
 import {Primitives} from "types/box/Primitives";
 import {RealVoidBox} from "types/box/RealVoidBox";
-import {DecodeArr, InstructionOpcodesList} from "types/vm/instruction/mod";
+import {Breakpoint} from "types/vm/instruction/debug/Breakpoint";
+import * as general from "types/vm/instruction/general/Return";
+import {IAppendImpl, IBreakpointImpl, ICallImpl, ICastImpl, IConstructImpl, IDropImpl, IDupImpl, IGetImpl, IHaltImpl, IJeImpl, IJumpImpl, IModifyOPImpl, INopImpl, IPeekImpl, IPushImpl, IPushWindowObjectImpl, IReturnImpl, IVMBlockTraceImpl, IVMCallImpl, IVMPushArgsImpl, IVMPushIPImpl, IVMPushSelfImpl, IVMReturnImpl, PushWindowObject} from "types/vm/instruction/mod";
+import {VMPushSelf} from "types/vm/instruction/push/mod";
+import * as turing from "types/vm/instruction/turing/Halt";
 import {DomInstructionType} from "types/vm/instruction/vm/VMBlockTrace";
 import {CreateDesc, NewDesc} from "../version_00_20/support";
-
-type AnyTypeOfResult = "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function";
-type __v_test_value = | 0;
-
-type InstructionList = DecodeArr<InstructionOpcodesList>;
+type InstructionHalt = turing.Halt;
+type InstructionReturn = general.Return;
+type x = | 0;
+export {
+	x,
+	InstructionHalt,
+	InstructionReturn,
+	Breakpoint as InstructionBreakpoint,
+	VMPushSelf as InstructionVMPushSelf,
+	PushWindowObject as InstructionPushWindowObject,
+	IAppendImpl,
+	IBreakpointImpl,
+	ICallImpl,
+	ICastImpl,
+	IConstructImpl,
+	IDropImpl,
+	IDupImpl,
+	IGetImpl,
+	IHaltImpl,
+	IJeImpl,
+	IJumpImpl,
+	IModifyOPImpl,
+	INopImpl,
+	IPeekImpl,
+	IPushWindowObjectImpl,
+	IPushImpl,
+	IReturnImpl,
+	IVMBlockTraceImpl,
+	IVMCallImpl,
+	IVMPushArgsImpl,
+	IVMPushIPImpl,
+	IVMPushSelfImpl,
+	IVMReturnImpl,
+}
 
 export type State_1 = {
 	depth_ins_map: DomInstructionType[][];
@@ -45,11 +78,8 @@ export namespace AllImportsForSupport {
 export {
 	Primitives,
 	CreateDesc,
-	NewDesc,
-	InstructionList,
-	AnyTypeOfResult,
-	__v_test_value
-};
+	NewDesc
+}
 export {
 	ArrayBox,
 	AsyncFunctionBox,

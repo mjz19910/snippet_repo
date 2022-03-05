@@ -1,7 +1,10 @@
 import {do_parse_to_goal_symbol} from "./do_parse_to_goal_symbol";
+import {IGoalSymbol} from "./IGoalSymbol";
 import {List} from "./List";
 import {ParseNode} from "./ParseNode";
-export function ParseText(sourceText: any, goalSymbol: any): ParseNode | List {
+import {ParseResult} from "./ParseResult";
+// TODO: use this
+export function ParseText(sourceText: string, goalSymbol: IGoalSymbol): ParseNode | List {
 	let parse_tree_root = null;
 	//1.
 	// Attempt to parse sourceText using goalSymbol as the goal symbol,
