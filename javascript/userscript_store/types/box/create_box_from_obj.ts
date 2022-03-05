@@ -236,9 +236,7 @@ function is_instruction_type<T>(v: InstructionType | T): v is InstructionType {
 		}
 	}
 	if(v[0] !== 'cast') {
-		let never_v: never = v;
-		console.log('handle instruction', never_v);
-		throw new Error("Need to box new instruction");
+		return false;
 	}
 	switch(v[1]) {
 		case 'object_index': return true;
