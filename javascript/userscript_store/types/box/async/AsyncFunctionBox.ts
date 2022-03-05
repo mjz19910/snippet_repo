@@ -4,7 +4,8 @@ import {BoxVerify} from "../BoxVerify";
 import {PromiseBox} from "../promise/PromiseBox";
 export class AsyncFunctionBox
 	extends BoxTemplate<"function_box", (...a: Box[]) => Promise<Box>>
-	implements BoxVerify<AsyncFunctionBox, "AsyncFunctionBox"> {
+	implements BoxVerify<AsyncFunctionBox, "AsyncFunctionBox">
+{
 	type: "function_box" = "function_box";
 	return_type: "promise_box" = "promise_box";
 	await_type: "Box" = "Box";

@@ -48,13 +48,16 @@ export type DomInstructionType = DomInstructionAppend |
 
 export type DomInstructionTypePack = [DomInstructionType];
 
-export type DomInstructionTaggedTypePack = ['dom', DomInstructionType] | ['vm', InstructionType] | ['dom_mem', number];
+export type DomInstructionTaggedTypePack =
+['dom', DomInstructionType]|
+['vm', InstructionType] |
+['dom_mem', number];
 
 // vm_block_trace
 export type BlockTrace =
 	[VMBlockTraceOpcode, 'begin', DomInstructionTypePack | null] |
 	[VMBlockTraceOpcode, 'call', DomInstructionTypePack | null] |
-	['vm_block_trace', 'block', number, number] |
-	['vm_block_trace', 'tagged', DomInstructionTaggedTypePack | null] |
-	['vm_block_trace', 'tagged_begin', DomInstructionTaggedTypePack | null] |
-	['vm_block_trace', 'tagged_call', DomInstructionTaggedTypePack | null];
+	[VMBlockTraceOpcode, 'block', number, number] |
+	[VMBlockTraceOpcode, 'tagged', DomInstructionTaggedTypePack | null] |
+	[VMBlockTraceOpcode, 'tagged_begin', DomInstructionTaggedTypePack | null] |
+	[VMBlockTraceOpcode, 'tagged_call', DomInstructionTaggedTypePack | null];

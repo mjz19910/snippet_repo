@@ -1,9 +1,9 @@
+import {BoxTemplate} from "./BoxTemplate";
 import {BoxVerify} from "./BoxVerify";
 
-export class RealVoidBox implements BoxVerify<RealVoidBox, "RealVoidBox"> {
+export class RealVoidBox extends BoxTemplate<"real_void", void> implements BoxVerify<RealVoidBox, "RealVoidBox"> {
 	readonly type = "real_void";
-	value: void = void 0;
-	m_verify_name: "RealVoidBox"="RealVoidBox";
+	readonly m_verify_name = "RealVoidBox";
 	verify_name(name: "RealVoidBox") {
 		return this.m_verify_name === "RealVoidBox" && name === "RealVoidBox";
 	}

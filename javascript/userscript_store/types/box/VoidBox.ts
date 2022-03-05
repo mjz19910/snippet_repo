@@ -1,7 +1,9 @@
 import {BoxTemplate} from "./BoxTemplate";
 import {BoxVerify} from "./BoxVerify";
 export class VoidBox
-implements BoxTemplate<"void", void>, BoxVerify<VoidBox, "VoidBox"> {
+	extends BoxTemplate<"void", void>
+	implements BoxVerify<VoidBox, "VoidBox">
+{
 	readonly type = "void";
 	readonly extension = null;
 	readonly m_verify_name = "VoidBox";

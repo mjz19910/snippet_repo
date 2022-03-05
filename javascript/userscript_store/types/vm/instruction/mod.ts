@@ -53,7 +53,7 @@ export type InstructionMap={
 	'push':stack.Push
 	'return':general.Return
 	'vm_block_trace':vm.BlockTrace;
-	'vm_call':vm.Call;
+	'vm_call':vm.VMCall;
 	'vm_push_args':push.Args
 	'vm_push_ip':vm.PushIP;
 	'vm_push_self':push.VMPushSelf
@@ -93,7 +93,7 @@ export interface IPushGlobalObjectImpl extends InstructionImpl<IM<GlobalObjectOp
 export interface IPushImpl extends InstructionImpl<IM<stack.PushOpcode>> {}
 export interface IReturnImpl extends InstructionImpl<IM<general.ReturnOpcode>> {}
 export interface IVMBlockTraceImpl extends InstructionImpl<IM<vm.BlockTraceOpcode>> {}
-export interface IVMCallImpl extends InstructionImpl<IM<vm.CallOpcode>> {}
+export interface IVMCallImpl extends InstructionImpl<IM<vm.VMCallOpcode>> {}
 export interface IVMPushArgsImpl extends InstructionImpl<IM<push.ArgsOpcode>> {}
 export interface IVMPushIPImpl extends InstructionImpl<IM<vm.PushIPOpcode>> {}
 export interface IVMPushSelfImpl extends InstructionImpl<IM<VMPushSelfOpcode>> {}
@@ -148,7 +148,7 @@ export type InstructionOpcodesList = [
 	push:stack.PushOpcode,
 	return_x:general.ReturnOpcode,
 	vm_block_trace:vm.BlockTraceOpcode,
-	vm_call:vm.CallOpcode,
+	vm_call:vm.VMCallOpcode,
 	vm_push_args:push.ArgsOpcode,
 	vm_push_ip:vm.PushIPOpcode,
 	vm_push_self:vm.PushSelfOpcode,
