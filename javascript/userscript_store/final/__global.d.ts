@@ -1,4 +1,4 @@
-import {GenericDataEvent} from "types/GenericDataEvent";
+import {GenericDataEvent} from "types/vm/GenericDataEvent";
 import {DebugAPI} from "./DebugApi_v0.2/DebugAPI";
 
 declare global {

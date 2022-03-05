@@ -1,5 +1,5 @@
 import {GenTestCallback} from "./GenTestCallback";
-import {CanRunTest} from "./CanRunTests";
+import {CanRunTest} from "./CanRunTest";
 import {TestLock} from "./TestLock";
 import {GenTestCallbackTemplate} from "./GenTestCallbackTemplate";
 import {debug} from "./const";

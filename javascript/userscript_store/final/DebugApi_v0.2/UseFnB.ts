@@ -1,0 +1,1 @@
+type UseFnB = [{} | null, any[]];

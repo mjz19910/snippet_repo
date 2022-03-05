@@ -1,4 +1,4 @@
-import {CanRunTest} from "./CanRunTests";
+import {CanRunTest} from "./CanRunTest";
 import {BaseTestRunner} from "./BaseTestRunner";
 export class TestEngine extends BaseTestRunner implements CanRunTest {
 	test_started = false;

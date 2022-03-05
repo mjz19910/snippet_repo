@@ -1,5 +1,5 @@
-import {CanRunTest} from "types/tests_mod/CanRunTests";
-import {LexerStateData} from "./LexerStateData";
+import {CanRunTest} from "types/tests_mod/CanRunTest";
+import {LexerStateData} from "./lexer/LexerStateData";
 export class Test {
 	input: string;
 	result?: string;
