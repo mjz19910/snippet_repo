@@ -1,10 +1,10 @@
 import {do_parse_to_goal_symbol} from "./do_parse_to_goal_symbol";
-import {IGoalSymbol} from "./IGoalSymbol";
 import {List} from "./List";
 import {ParseNode} from "./ParseNode";
 import {ParseResult} from "./ParseResult";
+import {GoalSymbol} from "./ParseScript";
 // https://tc39.es/ecma262/#sec-parsetext
-export function ParseText(sourceText: string, goalSymbol: IGoalSymbol): ParseNode | List<SyntaxError[]> {
+export function ParseText(sourceText: string, goalSymbol: GoalSymbol): ParseNode | List<SyntaxError[]> {
 	// 11.1.6 Static Semantics: ParseText
 	let parse_tree_root = null;
 	//1. Attempt to parse sourceText using goalSymbol as the goal symbol,
