@@ -1,10 +1,10 @@
 import {TestLock} from "types/tests_mod/TestLock";
-import {CanRunTests} from "types/tests_mod/ITestRunner";
+import {CanRunTest} from "types/tests_mod/CanRunTests";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
 
-export class ecma_12_8_6 extends ecma_base {
+export class ecma_12_8_6 extends LexerBase {
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
 	TemplateEscapeSequence(str: string, index: number): LexReturnType {
 		let len=0;
@@ -315,7 +315,7 @@ export class ecma_12_8_6 extends ecma_base {
 	}
 }
 
-export async function run_tests_impl(test_runner:CanRunTests, lock:TestLock) {
+export async function run_tests_impl(test_runner:CanRunTest, lock:TestLock) {
 	let dispatcher=new Dispatcher;
 	let test_string=`
 	let v=\`Hi there\`;
@@ -334,6 +334,6 @@ export async function run_tests_impl(test_runner:CanRunTests, lock:TestLock) {
 	await lock.unlock();
 }
 
-export function run_tests(test_runner:CanRunTests, lock: TestLock) {
+export function run_tests(test_runner:CanRunTest, lock: TestLock) {
 	test_runner.start_async(run_tests_impl, test_runner, lock);
 }

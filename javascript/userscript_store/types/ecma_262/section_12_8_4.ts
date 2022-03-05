@@ -1,7 +1,6 @@
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
-
-export class ecma_12_8_4 extends ecma_base {
+export class ecma_12_8_4 extends LexerBase {
 	StringLiteral(str: string, index: number): LexReturnType {
 		let cur = str[index];
 		if(cur === '"') {

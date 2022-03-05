@@ -1,8 +1,5 @@
+import {NonEmptyArray} from "./NonEmptyArray";
 import {Primitives} from "./Primitives";
-
-type NonEmptyArray<T>=T extends [] ? never : T;
-
-
 export function is_array_of<
 	ToType,
 	T extends ({} | Primitives | null)[],

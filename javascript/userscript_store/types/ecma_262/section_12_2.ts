@@ -1,7 +1,7 @@
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
 
-export class ecma_12_2 extends ecma_base {
+export class ecma_12_2 extends LexerBase {
 	WhiteSpace(str: string, index: number):LexReturnType {
 		if(str[index] === ' ') {
 			return ['WhiteSpace', 1];

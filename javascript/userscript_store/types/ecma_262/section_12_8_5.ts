@@ -1,7 +1,6 @@
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
-
-export class ecma_12_8_5 extends ecma_base {
+export class ecma_12_8_5 extends LexerBase {
 	RegularExpressionLiteral(str: string, index: number): LexReturnType {
 		let len = 0;
 		// / RegularExpressionBody / RegularExpressionFlags

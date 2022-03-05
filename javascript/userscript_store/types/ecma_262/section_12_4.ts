@@ -1,7 +1,7 @@
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {JSParseError} from "./JSParseError";
 
-export class ecma_12_4 extends ecma_base {
+export class ecma_12_4 extends LexerBase {
 	Comment(str:string, index:number):[string|null, number] {
 		let ml_len = this.MultiLineComment(str, index);
 		let sl_len = this.SingleLineComment(str, index);

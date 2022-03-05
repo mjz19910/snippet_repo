@@ -1,10 +1,10 @@
 import {is_ascii_digit} from "../AK/CharacterTypes";
 import {Dispatcher} from "./Dispatcher";
 import {is_octal_digit} from "./is_octal_digit";
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
 import {TokenType} from "./TokenType";
-export class ecma_12_8_3 extends ecma_base {
+export class ecma_12_8_3 extends LexerBase {
 	result_error_token: ['Error', string]|null=null;
 	/*HexDigits[Sep] */
 	// https://tc39.es/ecma262/#prod-HexDigits

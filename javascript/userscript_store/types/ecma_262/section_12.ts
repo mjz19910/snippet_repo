@@ -1,6 +1,7 @@
 import {TestLock} from "types/tests_mod/TestLock";
 import {Dispatcher} from "./Dispatcher";
 import {LexerBase} from "./LexerBase";
+import {LexerStateData} from "./LexerStateData";
 import {LexReturnType} from "./LexReturnType";
 import {ItemInfoType, item_info_type_to_string} from "./mod";
 import {run_test_1} from "./run_test_1";

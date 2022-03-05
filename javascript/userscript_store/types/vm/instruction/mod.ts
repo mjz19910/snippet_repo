@@ -1,11 +1,18 @@
 import {Append} from "./Append";
 import {AppendOpcode} from "./opcodes/AppendOpcode";
+import {CallOpcode} from "./opcodes/CallOpcode";
 import {Cast} from "./Cast";
 import {CastOpcode} from "./opcodes/CastOpcode";
+import {ConstructOpcode} from "./opcodes/ConstructOpcode";
+import {GetOpcode} from "./opcodes/GetOpcode";
+import {GlobalObjectOpcode} from "./opcodes/GlobalObjectOpcode";
+import {HaltOpcode} from "./opcodes/HaltOpcode";
 import {ModifyOperand} from "./ModifyOperand";
 import {ModifyOperandOpcode} from "./opcodes/ModifyOperandOpcode";
 import {Nop} from "./Nop";
 import {NopOpcode} from "./opcodes/NopOpcode";
+import {PushSelfOpcode as VMPushSelfOpcode} from "./opcodes/VMPushSelfOpcode";
+import {StackVM} from "../StackVM";
 import * as debug from "./debug/mod";
 import * as general from "./general/mod";
 import * as jump from "./jump/mod";
@@ -13,13 +20,6 @@ import * as push from "./push/mod";
 import * as stack from "./stack/mod";
 import * as turing from "./turing/mod";
 import * as vm from "./vm/mod";
-import {StackVM} from "../StackVM";
-import {GlobalObjectOpcode} from "./opcodes/GlobalObjectOpcode";
-import {PushSelfOpcode as VMPushSelfOpcode} from "./opcodes/VMPushSelfOpcode";
-import {CallOpcode} from "./opcodes/CallOpcode";
-import {ConstructOpcode} from "./opcodes/ConstructOpcode";
-import {GetOpcode} from "./opcodes/GetOpcode";
-import {HaltOpcode} from "./opcodes/HaltOpcode";
 export {
 	Append,
 	Cast,

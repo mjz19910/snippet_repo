@@ -1,6 +1,6 @@
 import {FlyString} from "../AK/FlyString";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
 import {JSTokenizerTokenType as TokenType} from "./JSTokenizerTokenType";
 import {IterationDecision} from "./IterationDecision";
@@ -15,7 +15,7 @@ const s_two_char_tokens = new HashMap<FlyString, TokenType>();
 // HashMap<char, TokenType> Lexer::s_single_char_tokens;
 const s_single_char_tokens = new HashMap<FlyString, TokenType>();
 
-export class ecma_12_7 extends ecma_base {
+export class ecma_12_7 extends LexerBase {
 	constructor(dis: Dispatcher) {
 		super(dis);
 		/*

@@ -1,7 +1,7 @@
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
 
-export class ecma_12_3 extends ecma_base {
+export class ecma_12_3 extends LexerBase {
 	// https://tc39.es/ecma262/#prod-LineTerminator
 	LineTerminator(str: string, index: number): LexReturnType {
 		let len = 0;

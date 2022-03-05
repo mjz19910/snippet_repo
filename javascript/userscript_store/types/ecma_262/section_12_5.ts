@@ -1,8 +1,8 @@
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
 
-export class ecma_12_5 extends ecma_base {
+export class ecma_12_5 extends LexerBase {
 	CommonToken(str: any, index: any):LexReturnType {
 		/**@type {['IdentifierName', 'PrivateIdentifier', 'Punctuator', 'NumericLiteral', 'StringLiteral', 'Template']} */
 		let common_token: ['IdentifierName', 'PrivateIdentifier', 'Punctuator', 'NumericLiteral', 'StringLiteral', 'Template'] = ['IdentifierName', 'PrivateIdentifier', 'Punctuator', 'NumericLiteral', 'StringLiteral', 'Template'];
