@@ -106,20 +106,39 @@ function is_ins_modify_op<T>(v: T | ModifyOperand): v is ModifyOperand {
 	return false;
 }
 
-function is_DomInstructionTypePack<T>(v:T|DomInstructionTypePack):v is DomInstructionTypePack {
-	if(v instanceof Array){
-
+function is_dom_instruction_type(v: DomInstructionType): v is DomInstructionType {
+	if(typeof v[0] !== 'number') return false;
+	let [, ...instruction_base] = v;
+	if(is_instruction_type(instruction_base)) {
+		return true;
+	} else {
+		switch(instruction_base[0]){
+			case 'dom_filter':break;
+			case 'marker':break;
+			case 'vm_call_at':break;
+		}
 	}
 	return false;
 }
 
-function is_null<T>(v:T|null):v is null {
+function is_DomInstructionTypePack<T>(v: T | DomInstructionTypePack): v is DomInstructionTypePack {
+	if(v instanceof Array) {
+		let iv = v[0];
+		if(is_dom_instruction_type(iv)) {
+			return true;
+		}
+		return false;
+	}
+	return false;
+}
+
+function is_null<T>(v: T | null): v is null {
 	return v === null;
 }
 
-function is_DomInstructionTaggedTypePack(v:DomInstructionTaggedTypePack):v is DomInstructionTaggedTypePack {
-	switch(v[0]){
-		case 'dom':{
+function is_DomInstructionTaggedTypePack(v: DomInstructionTaggedTypePack): v is DomInstructionTaggedTypePack {
+	switch(v[0]) {
+		case 'dom': {
 			v;
 		} break;
 		case 'dom_mem':
@@ -135,35 +154,35 @@ function is_ins_block_trace<T>(v: T | BlockTrace): v is BlockTrace {
 				if(typeof v[1] === 'number') return typeof v[2] === 'number';
 				switch(v[1]) {
 					case 'begin': {
-						let vv=v[2];
+						let vv = v[2];
 						if(is_null(vv)) return true;
-						if(is_DomInstructionTypePack(vv)){
+						if(is_DomInstructionTypePack(vv)) {
 							return true;
 						}
 					} break;
 					case 'call': {
-						let vv=v[2];
+						let vv = v[2];
 						if(is_null(vv)) return true;
-						if(is_DomInstructionTypePack(vv)){
+						if(is_DomInstructionTypePack(vv)) {
 							return true;
 						}
 					} break;
 					case 'tagged': {
-						let vv=v[2];
+						let vv = v[2];
 						if(is_null<typeof vv>(vv)) return true;
-						if(is_DomInstructionTaggedTypePack(vv))return true;
+						if(is_DomInstructionTaggedTypePack(vv)) return true;
 					} break;
 					case 'tagged_begin': {
-						let vv=v[2];
+						let vv = v[2];
 						if(is_null<typeof vv>(vv)) return true;
-						if(is_DomInstructionTaggedTypePack(vv)){
+						if(is_DomInstructionTaggedTypePack(vv)) {
 							return true;
 						}
 					} break;
 					case 'tagged_call': {
-						let vv=v[2];
+						let vv = v[2];
 						if(is_null<typeof vv>(vv)) return true;
-						if(is_DomInstructionTaggedTypePack(vv)){
+						if(is_DomInstructionTaggedTypePack(vv)) {
 							return true;
 						}
 					} break;
@@ -177,7 +196,7 @@ function is_ins_block_trace<T>(v: T | BlockTrace): v is BlockTrace {
 function is_instruction_type<T>(v: InstructionType | T): v is InstructionType {
 	if(!(v instanceof Array)) return false;
 	if(is_ins_modify_op(v)) return true;
-	if(is_ins_block_trace(v))return true;
+	if(is_ins_block_trace(v)) return true;
 	switch(v[0]) {
 		case 'push': {
 			let [, ...rest] = v;
