@@ -6,7 +6,8 @@ import {CSSStyleSheetConstructorArgsTypeState1} from "./CSSStyleSheetConstructor
 import {NoArgsType} from "./NoArgsType";
 export class CSSStyleSheetConstructorBox
 	extends BoxTemplate<"constructor_box", typeof CSSStyleSheet>
-	implements BoxVerify<CSSStyleSheetConstructorBox, "CSSStyleSheetConstructorBox"> {
+	implements BoxVerify<CSSStyleSheetConstructorBox, "CSSStyleSheetConstructorBox">
+{
 	readonly type = "constructor_box";
 	readonly instance_type = "CSSStyleSheet";
 	readonly arguments = "[options?: CSSStyleSheetInit | undefined]";

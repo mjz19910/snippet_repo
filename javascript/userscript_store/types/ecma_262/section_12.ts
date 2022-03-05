@@ -1,12 +1,10 @@
 import {TestLock} from "types/tests_mod/TestLock";
-import {CanRunTests} from "types/tests_mod/ITestRunner";
 import {Dispatcher} from "./Dispatcher";
-import {ecma_base as LexerBase} from "./LexerBase";
+import {LexerBase} from "./LexerBase";
 import {LexReturnType} from "./LexReturnType";
 import {ItemInfoType, item_info_type_to_string} from "./mod";
 import {run_test_1} from "./run_test_1";
 import {run_test_2} from "./run_test_2";
-import {LexerStateData} from "./LexerStateData.1";
 function lexer_produce_input_element(ecma_dispatcher: Dispatcher, str: string, index: number): LexReturnType {
 	let max_item = null, max_val = 0;
 	let item_info = null;

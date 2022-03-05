@@ -2,7 +2,8 @@ import {BoxTemplate} from "./BoxTemplate";
 import {BoxVerify} from "./BoxVerify";
 export class CSSStyleSheetBox
 	extends BoxTemplate<"instance_box", CSSStyleSheet>
-	implements BoxVerify<CSSStyleSheetBox, "CSSStyleSheetBox"> {
+	implements BoxVerify<CSSStyleSheetBox, "CSSStyleSheetBox">
+{
 	type: "instance_box" = "instance_box";
 	instance_type: "CSSStyleSheet" = "CSSStyleSheet";
 	readonly m_verify_name = "CSSStyleSheetBox";

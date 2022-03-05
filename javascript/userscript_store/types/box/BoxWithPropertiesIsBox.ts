@@ -3,7 +3,8 @@ import {BoxVerify} from "./BoxVerify";
 import {BoxWithPropertiesObjType} from "./create_box";
 export class BoxWithPropertiesIsBox
 	extends BoxTemplate<'with_properties', {}>
-	implements BoxVerify<BoxWithPropertiesIsBox, "BoxWithPropertiesIsBox"> {
+	implements BoxVerify<BoxWithPropertiesIsBox, "BoxWithPropertiesIsBox">
+{
 	readonly type = 'with_properties';
 	readonly properties;
 	constructor(value: BoxWithPropertiesObjType<BoxWithPropertiesIsBox['properties']>, properties: string[]) {

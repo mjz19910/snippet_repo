@@ -1,8 +1,8 @@
-import {Box} from "./Box";
-import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
-import {VoidBox} from "./VoidBox";
-import {AllPromiseInBoxType} from "./promise/AllPromiseInBoxType";
-import {create_box} from "./create_box";
+import {Box} from "../Box";
+import {CSSStyleSheetBox} from "../CSSStyleSheetBox";
+import {VoidBox} from "../VoidBox";
+import {AllPromiseInBoxType} from "../promise/AllPromiseInBoxType";
+import {create_box} from "../create_box";
 export async function async_returns_into_box(promise: AllPromiseInBoxType): Promise<Box> {
 	let val = await promise;
 	if(val === void 0) {

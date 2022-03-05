@@ -1,7 +1,7 @@
 import {Append} from "./Append";
 import {AppendOpcode} from "./opcodes/AppendOpcode";
 import {Cast} from "./Cast";
-import {CastOpcode as CastOpcode} from "./opcodes/CastOpcode";
+import {CastOpcode} from "./opcodes/CastOpcode";
 import {ModifyOperand} from "./ModifyOperand";
 import {ModifyOperandOpcode} from "./opcodes/ModifyOperandOpcode";
 import {Nop} from "./Nop";

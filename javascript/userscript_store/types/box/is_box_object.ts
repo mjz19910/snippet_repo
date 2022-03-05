@@ -1,6 +1,6 @@
 import {assume_is_box} from "./assume_is_box";
 import {Box} from "./Box";
-import {has_property_common_base_type as has_property_common_base_type} from "./has_property_common_base_type";
+import {has_property_common_base_type} from "./has_property_common_base_type";
 import {Primitives} from "./Primitives";
 export function is_box_object<T>(v: Exclude<Box, Primitives | null> | T):
 	v is Exclude<Box, Primitives | null> {
@@ -56,7 +56,13 @@ export function is_box_object<T>(v: Exclude<Box, Primitives | null> | T):
 			case null: break;
 		}
 		switch(v.source) {
-			case 'create_box': return v.verify_name("temporary_box_instance");
+			case 'create_box':{
+				v.extension;
+				switch(v.m_verify_name){
+					case 'temporary_box_instance':return v.verify_name("temporary_box_instance");
+					case 'temporary_box_from_create_box':v.verify_name("temporary_box_from_create_box");
+				}
+			}
 			case 'call': return v.verify_name("temporary_box_from_call");
 			case 'cast': break;
 		}

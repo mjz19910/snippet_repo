@@ -3,7 +3,8 @@ import {BoxTemplate} from "./BoxTemplate";
 import {BoxVerify} from "./BoxVerify";
 export class ArrayBox
 	extends BoxTemplate<"array_box", Box[]>
-	implements BoxVerify<ArrayBox, "ArrayBox"> {
+	implements BoxVerify<ArrayBox, "ArrayBox">
+{
 	type: "array_box" = "array_box";
 	item_type: "Box" = "Box";
 	readonly m_verify_name = "ArrayBox";
