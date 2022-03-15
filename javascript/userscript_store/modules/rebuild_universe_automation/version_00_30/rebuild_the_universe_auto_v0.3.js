@@ -50,6 +50,7 @@ import {
 	IVMPushSelfImpl,
 	IVMReturnImpl,
 } from "./support.js";
+
 const used_types=[
 	ArrayBox,
 	AsyncFunctionBox,
@@ -108,7 +109,7 @@ used_types;
 // @name			rebuild the universe auto
 // @namespace		http://tampermonkey.net/
 // @version			0.3
-// @description		try to take over the world!
+// @description		rebuildtheuniverse.com automation
 // @author			You
 // @match			http://rebuildtheuniverse.com/?type=real
 // @match			http://rebuildtheuniverse.com/?type=mjz_version
