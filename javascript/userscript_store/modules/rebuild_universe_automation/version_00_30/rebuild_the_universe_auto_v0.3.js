@@ -3239,6 +3239,7 @@ console=window.console;
 		}
 		edit_fns(){
 			// lightreset()
+			// spell:words constel2
 			let temp = window.lightreset.toString().replace("&& a != encrypt('Py')", "&& a != encrypt('Py') && a != 'constel2'");
 			window.lightreset = new Function(temp.substring(temp.indexOf('{')+1,temp.lastIndexOf('}')));
 		}
@@ -3987,6 +3988,7 @@ console=window.console;
 		do_dom_filter();
 		auto_buy_obj.pre_init();
 		setTimeout(auto_buy_obj.init.bind(auto_buy_obj), 300);
+		// spell:words constelOff
 		constelOff();
 	}
 	function wait_for_game_data() {
