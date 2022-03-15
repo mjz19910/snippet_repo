@@ -397,14 +397,6 @@ console=window.console;
 				console.log('unbox temporary_box', type, source, value, rest);
 				throw 1;
 			}
-			/** @arg {WindowBox | ObjectBoxImpl} box */
-			function unbox_object_box(box){
-				const {type, value, ...rest}=box;
-				if(Object.keys(rest).length > 0){
-					console.log('other enumerable on box', rest);
-				}
-				return value;
-			}
 			if(object_box.type === 'object_box'){
 				const {type, value, ...rest}=object_box;
 				if(Object.keys(rest).length > 0){
@@ -971,8 +963,6 @@ console=window.console;
 		run(_vm, _i){
 		}
 	}
-	/** @type {[InstructionList[0][0], InstructionList[0][1]]} */
-	let i0=['append', InstructionAppendImpl];
 	/** @type {InstructionList} */
 	const instruction_descriptor_arr=[
 		['append', InstructionAppendImpl],
@@ -1637,17 +1627,6 @@ console=window.console;
 			super.destroy();
 		}
 	}
-	class TimeoutTargetFn {
-		/** @param {any} callback @param {number} timeout */
-		constructor(callback, timeout) {
-			this.m_once=true;
-			this.m_callback=callback;
-			this.m_timeout=timeout;
-		}
-		fire(){
-			this.m_callback();
-		}
-	}
 	class IntervalTargetFn {
 		/** @param {any} callback @param {number} timeout */
 		constructor(callback, timeout) {
@@ -2160,7 +2139,7 @@ console=window.console;
 			}
 			sessionStorage.history=`${json_tag}@${data_arr.join("|")}`;
 			let time_played_data=sessionStorage.time_played_hist;
-			let time_played_arr = data_arr.map(e=>null);
+			let time_played_arr = data_arr.map(()=>null);
 			if(time_played_data){
 				let stored_arr=JSON.parse(time_played_data);
 				for(let i=0;i<stored_arr.length;i++){
@@ -2183,18 +2162,6 @@ console=window.console;
 	const named_sym_gen=new NamedIdGenerator;
 	/** @type {WeakRef<{sym:symbol}>[]}*/
 	const debug_id_syms=[];
-	function next_debug_id(){
-		const id=debug_id_gen.next();
-		const sym=Symbol(id);
-		debug_id_syms.push(new WeakRef({sym}));
-		return sym;
-	}
-	function next_sym(){
-		const id=debug_id_gen.next();
-		const sym=Symbol(id);
-		debug_id_syms.push(new WeakRef({sym}));
-		return sym;
-	}
 	/** @type {(v:string)=>symbol} */
 	function labeled_sym(name){
 		const id=named_sym_gen.next_named(name);
@@ -2220,10 +2187,6 @@ console=window.console;
 				throw new Error("Invalid constructor arguments for NodeBoxImpl");
 			}
 		}
-	}
-	/** @type {<T, U extends T>(_v:T, x?:U)=>_v is U} */
-	function assume_equal(_v, _q) {
-		return true;
 	}
 	class DataLoader {
 		static int_parser=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
@@ -2370,28 +2333,6 @@ console=window.console;
 		 */
 		constructor(value){
 			super(null);
-			this.value=value;
-		}
-	}
-	/** @implements {VoidPromiseBox} */
-	class VoidPromiseBoxImpl {
-		/** @type {"promise_box"} */
-		type="promise_box";
-		return_type=null;
-		await_type=void 0;
-		/** @type {'Promise<void>'} */
-		inner_type='Promise<void>';
-		/** @type {"void_type"} */
-		promise_return_type_special="void_type";
-		/** @arg {'object'|"function"} type */
-		as_type(type){
-			if(typeof this.value === type)return this;
-			return null;
-		}
-		/**
-		 * @param {Promise<void>} value
-		 */
-		constructor(value){
 			this.value=value;
 		}
 	}
@@ -2601,8 +2542,8 @@ console=window.console;
 			try{
 				let t=this;
 				window.addEventListener('click', {
-					handleEvent(ev){
-						this.run().then(e=>{
+					handleEvent(){
+						this.run().then(()=>{
 							l_log_if(LOG_LEVEL_INFO, 'play success');
 						}, function(err){
 							l_log_if(LOG_LEVEL_ERROR, err);
@@ -2964,8 +2905,6 @@ console=window.console;
 			let flat_stack=[];
 			/** @type {InstructionType[]} */
 			let instructions=[];
-			let ins_arr_iid=[];
-			let iid=0;
 			for(let i=0;i<state.depth_ins_map.length;i++) {
 				let cur_instructions=state.ins_arr_map[i];
 				let cur_ins_with_depths=state.depth_ins_map[i];
@@ -3258,7 +3197,6 @@ console=window.console;
 			if(disabled)return;
 			//spell:words secondinterval
 			if(window.secondinterval !== void 0)clearInterval(window.secondinterval);
-			let rate = 66 / 2000;
 			let time_base=performance.now();
 			let interval_id = setInterval(function() {
 				let real_time=performance.now();
@@ -3817,38 +3755,6 @@ console=window.console;
 			this.m_can_notify=true;
 		}
 	}
-	class AsyncSemaphore {
-		constructor(){
-			/** @type {any[]} */
-			this.notify_waiters_vec=[];
-			this.count=0;
-		}
-		/** @arg {number} cnt */
-		async inc(cnt){
-			let wait_trigger=new AsyncTrigger;
-			while(this.count > 0){
-				if(!this.notify_waiters_vec.includes(wait_trigger)){
-					this.notify_waiters_vec.push(wait_trigger);
-				}
-				await wait_trigger.wait();
-				wait_trigger.notify(cnt);
-			}
-			this.count+=cnt;
-		}
-		/** @arg {number} cnt */
-		async dec(cnt){
-			this.count-=cnt;
-			if(this.count <= 0){
-				do{
-					let waiter=this.notify_waiters_vec.shift();
-					if(!waiter)break;
-					waiter.set(cnt);
-					let used_count=await waiter.notified();
-					cnt-=used_count;
-				} while(cnt > 0);
-			}
-		}
-	}
 	/** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 	function to_tuple_arr(keys, values){
 		/** @type {[typeof keys[0], typeof values[0]][]} */
@@ -3865,10 +3771,6 @@ console=window.console;
 	/** @param {number | undefined} timeout @param {TimerHandler} a */
 	function promise_set_timeout(timeout, a){
 		setTimeout(a, timeout);
-	}
-	/** @param {number | undefined} timeout */
-	function do_async_wait(timeout){
-		return new Promise(promise_set_timeout.bind(null, timeout));
 	}
 	/** @param {string[]} arr @param {number} rem_target_len */
 	function array_sample_end(arr, rem_target_len){
@@ -3948,48 +3850,6 @@ console=window.console;
 		window.atomepersecond=atomepersecond;
 		window.specialsbought=specialsbought;
 	}
-	class ProxyHandlers {
-		/** @param {any} root */
-		constructor(root){
-			this.weak_root=new WeakRef(root);
-			this.count_arr=[0];
-		}
-		/** @param {string} type @param {any} call_args @param {any[]} from */
-		generic(type, call_args, from){
-			let keep_vec=this.weak_root.deref();
-			if(keep_vec === null){
-				console.log('ProxyHandlers reset KeepSome after gc collect');
-				keep_vec=new KeepSome;
-				this.weak_root=new WeakRef(keep_vec);
-			}
-			keep_vec.push(from.concat([null, type, 1, call_args]));
-		}
-		/** @param {[o: object, k: PropertyKey, v: any, r?: any]} call_args @param {any[]} from */
-		set_(call_args, from){
-			this.generic('set', call_args, from);
-			return Reflect.set(...call_args);
-		}
-		/** @param {[o: object, k: PropertyKey, r?: any]} call_args @param {any[]} from */
-		get_(call_args, from){
-			this.generic('get', call_args, from);
-			return Reflect.get(...call_args);
-		}
-		/** @param {[f: Function, o: any, l: ArrayLike<any>]} call_args @param {any[]} from */
-		apply_(call_args, from){
-			this.generic('apply', call_args, from);
-			return Reflect.apply(...call_args);
-		}
-		/** @param {[o: object, k: PropertyKey, o: PropertyDescriptor]} call_args @param {any[]} from */
-		defineProperty_(call_args, from){
-			this.generic('defineProperty', call_args, from);
-			return Reflect.defineProperty(...call_args);
-		}
-		/** @param {[o: object, k: PropertyKey]} call_args @param {any[]} from */
-		getOwnPropertyDescriptor_(call_args, from){
-			this.generic('getOwnPropertyDescriptor', call_args, from);
-			return Reflect.getOwnPropertyDescriptor(...call_args);
-		}
-	}
 	class KeepSome {
 		/** @type {number[][]}*/
 		m_2d_vec;
@@ -4063,31 +3923,6 @@ console=window.console;
 			}
 		}
 	}
-	/** @param {any} obj @param {PropertyKey} name  @param {any} value  @param {any[]} props */
-	function define_property_value(obj, name, value, ...props){
-		let [
-			writable=true,
-			enumerable=true,
-			configurable=true
-		] = props;
-		Object.defineProperty(obj, name, {
-			value,
-			writable,
-			enumerable,
-			configurable
-		});
-	}
-	/** @param {{ [x: string]: any; }} obj  @param {string} key */
-	function reload_if_def(obj, key){
-		if(obj[key]){
-			location.reload();
-			document.body.innerHTML="";
-			document.head.innerHTML="";
-			document.documentElement.outerHTML="";
-			return true;
-		}
-		return false;
-	}
 	/** @param {typeof $} value */
 	function got_jquery(value){
 		Object.defineProperty(window, '$', {
@@ -4127,12 +3962,6 @@ console=window.console;
 			enumerable:true,
 			configurable:true
 		});
-	}
-	/** @param {Function} func @param {any} this_v @param {ArrayLike<any>} args */
-	function pace_finish_proxy_apply(func, this_v, args){
-		auto_buy_obj.init();
-		window.Pace.bar.finish=func;
-		return Reflect.apply(func, this_v, args);
 	}
 	let seen_elements=new WeakSet;
 	/** @param {HTMLScriptElement} node */
