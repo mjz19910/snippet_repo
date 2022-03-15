@@ -2,19 +2,17 @@ import {ArrayBox, AsyncFunctionBox, CSSStyleSheetBox, CSSStyleSheetConstructorBo
 import {Primitives} from "types/box/Primitives";
 import {RealVoidBox} from "types/box/RealVoidBox";
 import {Breakpoint} from "types/vm/instruction/debug/Breakpoint";
-import * as general from "types/vm/instruction/general/Return";
+import {Return as general_Return} from "types/vm/instruction/general/Return";
 import {IAppendImpl, IBreakpointImpl, ICallImpl, ICastImpl, IConstructImpl, IDropImpl, IDupImpl, IGetImpl, IHaltImpl, IJeImpl, IJumpImpl, IModifyOPImpl, INopImpl, IPeekImpl, IPushImpl, IPushWindowObjectImpl, IReturnImpl, IVMBlockTraceImpl, IVMCallImpl, IVMPushArgsImpl, IVMPushIPImpl, IVMPushSelfImpl, IVMReturnImpl, PushWindowObject} from "types/vm/instruction/mod";
 import {VMPushSelf} from "types/vm/instruction/push/mod";
-import * as turing from "types/vm/instruction/turing/Halt";
+import {Halt as turing_Halt} from "types/vm/instruction/turing/Halt";
 import {DomInstructionType} from "types/vm/instruction/vm/VMBlockTrace";
 import {CreateDesc, NewDesc} from "../version_00_20/support";
-type InstructionHalt = turing.Halt;
-type InstructionReturn = general.Return;
 type x = | 0;
 export {
 	x,
-	InstructionHalt,
-	InstructionReturn,
+	turing_Halt as InstructionHalt,
+	general_Return as InstructionReturn,
 	Breakpoint as InstructionBreakpoint,
 	VMPushSelf as InstructionVMPushSelf,
 	PushWindowObject as InstructionPushWindowObject,
