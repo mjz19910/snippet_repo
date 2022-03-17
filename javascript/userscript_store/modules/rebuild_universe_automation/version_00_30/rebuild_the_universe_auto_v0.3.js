@@ -1,110 +1,3 @@
-import {
-	ArrayBox,
-	AsyncFunctionBox,
-	CSSStyleSheetBox,
-	CSSStyleSheetConstructorBox,
-	CSSStyleSheetInitBox,
-	CSSStyleSheetPromiseBox,
-	DocumentBox,
-	EmptyArrayBox,
-	FunctionBox,
-	GlobalThisBox,
-	InstructionTypeArrayBox,
-	MediaListBox,
-	NewableFunctionBox,
-	NodeBox,
-	ObjectBox,
-	PromiseBox,
-	StackVMBox,
-	TemporaryBox,
-	VoidBox,
-	RealVoidBox,
-	VoidPromiseBox,
-	WindowBox,
-	Box,
-	InstructionHalt,
-	InstructionReturn,
-	InstructionBreakpoint,
-	InstructionVMPushSelf,
-	IAppendImpl,
-	IBreakpointImpl,
-	ICallImpl,
-	ICastImpl,
-	IConstructImpl,
-	IDropImpl,
-	IDupImpl,
-	IGetImpl,
-	IHaltImpl,
-	IJeImpl,
-	IJumpImpl,
-	IModifyOPImpl,
-	INopImpl,
-	IPeekImpl,
-	IPushWindowObjectImpl,
-	IPushImpl,
-	IReturnImpl,
-	IVMBlockTraceImpl,
-	IVMCallImpl,
-	IVMPushArgsImpl,
-	IVMPushIPImpl,
-	IVMPushSelfImpl,
-	IVMReturnImpl,
-} from "./support.js";
-
-const used_types=[
-	ArrayBox,
-	AsyncFunctionBox,
-	CSSStyleSheetBox,
-	CSSStyleSheetConstructorBox,
-	CSSStyleSheetInitBox,
-	CSSStyleSheetPromiseBox,
-	DocumentBox,
-	EmptyArrayBox,
-	FunctionBox,
-	GlobalThisBox,
-	InstructionTypeArrayBox,
-	MediaListBox,
-	NewableFunctionBox,
-	NodeBox,
-	ObjectBox,
-	PromiseBox,
-	StackVMBox,
-	TemporaryBox,
-	VoidBox,
-	RealVoidBox,
-	VoidPromiseBox,
-	WindowBox,
-	Box,
-	InstructionHalt,
-	InstructionReturn,
-	InstructionBreakpoint,
-	InstructionVMPushSelf,
-	IAppendImpl,
-	IBreakpointImpl,
-	ICallImpl,
-	ICastImpl,
-	IConstructImpl,
-	IDropImpl,
-	IDupImpl,
-	IGetImpl,
-	IHaltImpl,
-	IJeImpl,
-	IJumpImpl,
-	IModifyOPImpl,
-	INopImpl,
-	IPeekImpl,
-	IPushWindowObjectImpl,
-	IPushImpl,
-	IReturnImpl,
-	IVMBlockTraceImpl,
-	IVMCallImpl,
-	IVMPushArgsImpl,
-	IVMPushIPImpl,
-	IVMPushSelfImpl,
-	IVMReturnImpl,
-];
-used_types;
-
 // ==UserScript==
 // @name			rebuild the universe auto
 // @namespace		http://tampermonkey.net/
@@ -135,7 +28,8 @@ arrayNames.map(e=>e.indexOf('cat')>-1?'cats-eye-nebula':e).map(e=>"imagesFull/"+
 // Download all specs
 allspec.map((e,i)=>"specs/"+(i+1)+".jpg").map(e=>fetch(e))
 */
-// tampermonkey is overwriting the console object
+// tampermonkey is overwriting console and
+// I want the real log fn so the line numbers show up
 console=window.console;
 (function() {
 	'use strict';
@@ -207,13 +101,6 @@ console=window.console;
 		if(sessionStorage.LoggingLevel){
 			local_logging_level = parseInt(sessionStorage.LoggingLevel, 10);
 		}
-	}
-	/** @returns {never} */
-	function cast_err() {
-		let err={};
-		Error.call(err, 'Bad cast (or TODO)');
-		Error.captureStackTrace(err, cast_err)
-		throw err;
 	}
 	function trigger_debug_breakpoint(){
 		debugger;
@@ -2061,12 +1948,12 @@ console=window.console;
 		}
 		calc_near_val(num) {
 			let exp=0;
-			if(num < 0.01 || num > 1){
-				while(num < 0.1){
+			if(num < 1 || num > 10) {
+				while(num < 1){
 					num*=10;
 					exp--;
 				}
-				while(num > 1){
+				while(num > 10){
 					num/=10;
 					exp++;
 				}
@@ -2078,10 +1965,10 @@ console=window.console;
 			const near_avg='30min';
 			let real_val=this.avg.get_average(near_avg);
 			let [num, exponent]=this.calc_near_val(real_val);
-			if(exponent < 2 && exponent > -1) {
-				l_log_if(LOG_LEVEL_ERROR, 'ratio cycle avg:%s=%o lcc=%o', near_avg, (~~(real_val*10000))/10000, this.locked_cycle_count);
+			if(exponent < 2 && exponent > -3) {
+				l_log_if(LOG_LEVEL_ERROR, 'ratio cycle_no_exp avg:%s=%o lcc=%o', near_avg, (~~(real_val*100000))/100000, this.locked_cycle_count);
 			} else {
-				l_log_if(LOG_LEVEL_ERROR, 'ratio cycle avg:%s=(%o,%o) lcc=%o', near_avg, (~~(num*1000))/1000, exponent, this.locked_cycle_count);
+				l_log_if(LOG_LEVEL_ERROR, 'ratio cycle_exp avg:%s=(%o,%o) lcc=%o', near_avg, (~~(num*10000))/10000, exponent, this.locked_cycle_count);
 			}
 		}
 		update_not_ready() {
@@ -2159,7 +2046,6 @@ console=window.console;
 			}
 		}
 	}
-	const debug_id_gen=new UniqueIdGenerator;
 	const named_sym_gen=new NamedIdGenerator;
 	/** @type {WeakRef<{sym:symbol}>[]}*/
 	const debug_id_syms=[];
@@ -3665,98 +3551,6 @@ console=window.console;
 		if(maxed[res])for(var y=0;y<100;y++)mainCalc(res);else tonext(res);
 	}
 	const auto_buy_obj=new AutoBuy;
-	class AsyncTrigger {
-		m_set_flag;
-		/** @type {null} */
-		trigger_handler;
-		promise_set;
-		/** @type {(value: any) => void} */
-		m_set_result;
-		/** @type {(arg0?: any) => void} */
-		m_set_error;
-		/** @type {((value: any) => void)|null} */
-		m_notify_result=null;
-		/** @type {((arg0?: any) => void)|null} */
-		m_notify_error=null;
-		constructor(){
-			this.notify_promise = null;
-			this.m_set_flag = true;
-			this.trigger_handler = null;
-			this.m_can_notify = false;
-			/** @type {null| ((value: any) => void)} */
-			let accept_fn=null;
-			/** @type {null | ((reason?: any) => void)} */
-			let reject_fn=null;
-			this.promise_set = new Promise((accept, reject) => {
-				accept_fn = accept;
-				reject_fn = reject;
-			});
-			if(accept_fn && reject_fn){
-				this.m_set_result = accept_fn;
-				this.m_set_error = reject_fn;
-			} else {
-				this.m_set_result = this.default_accept.bind(this);
-				this.m_set_error = this.default_reject.bind(this);
-			}
-			this.m_set_flag = false;
-		}
-		/**
-		 * @param {any} _value
-		 */
-		default_accept(_value){
-			return;
-		}
-		/**
-		 * @param {any} error
-		 */
-		default_reject(error){
-			throw error;
-		}
-		/**
-		 * @param {any} cnt
-		 */
-		set(cnt){
-			if(!this.m_set_flag){
-				this.m_set_result(cnt);
-				this.m_set_flag=true;
-			}
-		}
-		/** @param {any} opt_error */
-		set_error(opt_error){
-			if(!this.m_set_flag){
-				if(opt_error) this.m_set_error(opt_error);
-				else this.m_set_error(null);
-			}
-		}
-		async wait(){
-			let ret=this.promise_set;
-			return ret;
-		}
-		/** @param {any} cnt */
-		notify(cnt){
-			if(this.m_can_notify && this.m_notify_result){
-				this.m_notify_result(cnt);
-				this.m_can_notify=false;
-			}
-		}
-		/**
-		 * @param {any} error
-		 */
-		notify_error(error){
-			if(this.m_can_notify && this.m_notify_error){
-				this.m_notify_error(error);
-				this.m_can_notify=false;
-			}
-		}
-		async notified(){
-			let t=this;
-			this.notify_promise=new Promise(function(accept, reject){
-				t.m_notify_result=accept;
-				t.m_notify_error=reject;
-			});
-			this.m_can_notify=true;
-		}
-	}
 	/** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 	function to_tuple_arr(keys, values){
 		/** @type {[typeof keys[0], typeof values[0]][]} */
@@ -3769,10 +3563,6 @@ console=window.console;
 			ret.push(item);
 		}
 		return ret;
-	}
-	/** @param {number | undefined} timeout @param {TimerHandler} a */
-	function promise_set_timeout(timeout, a){
-		setTimeout(a, timeout);
 	}
 	/** @param {string[]} arr @param {number} rem_target_len */
 	function array_sample_end(arr, rem_target_len){
@@ -3851,79 +3641,6 @@ console=window.console;
 		window.atomsinvest=atomsinvest;
 		window.atomepersecond=atomepersecond;
 		window.specialsbought=specialsbought;
-	}
-	class KeepSome {
-		/** @type {number[][]}*/
-		m_2d_vec;
-		constructor(){
-			this.m_2d_vec=[];
-		}
-		/** @arg {number} value*/
-		push(value){
-			let tmp_val=null;
-			let set_index=0;
-			this.push_at(set_index, value);
-			while(this.m_2d_vec[set_index].length > 50) {
-				tmp_val=this.m_2d_vec[set_index].shift();
-				if(tmp_val === void 0)break;
-				if(Math.random() > 0.9) {
-					set_index++;
-					this.push_at(set_index, tmp_val);
-					console.log('psp', 1);
-					let off=0;
-					while(this.m_2d_vec[set_index-off].length < 25){
-						tmp_val=this.m_2d_vec[set_index-off-1].shift();
-						if(tmp_val === void 0)break;
-						this.m_2d_vec[set_index-off].push(tmp_val);
-					}
-					off++;
-					if(set_index-off < 0)continue;
-					console.log('psp', 2);
-					while(this.m_2d_vec[set_index-off].length < 40){
-						tmp_val=this.m_2d_vec[set_index-off-1].shift();
-						if(tmp_val === void 0)break;
-						this.m_2d_vec[set_index-off].push(tmp_val);
-					}
-					off++;
-					if(set_index-off < 0)continue;
-					console.log('psp', 3);
-					while(this.m_2d_vec[set_index-off].length < 40){
-						tmp_val=this.m_2d_vec[set_index-off-1].shift();
-						if(tmp_val === void 0)break;
-						this.m_2d_vec[set_index-off].push(tmp_val);
-					}
-					off++;
-					if(set_index-off < 0)continue;
-					console.log('psp', 4);
-					while(this.m_2d_vec[set_index-off].length < 40){
-						tmp_val=this.m_2d_vec[set_index-off-1].shift();
-						if(tmp_val === void 0)break;
-						this.m_2d_vec[set_index-off].push(tmp_val);
-					}
-				}
-				if(this.m_2d_vec[set_index].length <= 50 && set_index > 0){
-					set_index--;
-				}
-			}
-		}
-		/**
-		 * @param {number} index
-		 * @param {number} value
-		 */
-		push_at(index, value){
-			while(index >= this.m_2d_vec.length){
-				this.m_2d_vec.push([]);
-			}
-			this.m_2d_vec[index].push(value);
-		}
-		/**
-		 * @param {number[]} a
-		 */
-		push_va(...a){
-			for(let x of a){
-				this.push(x);
-			}
-		}
 	}
 	/** @param {typeof $} value */
 	function got_jquery(value){
