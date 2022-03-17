@@ -1,5 +1,5 @@
 my ($file) = @ARGV;
-my $fd=open($ARGV[0]);
+open($ARGV[0]);
 my $c="";
 while(<>){$c.=$_};
 my $header="// ==UserScript==";
