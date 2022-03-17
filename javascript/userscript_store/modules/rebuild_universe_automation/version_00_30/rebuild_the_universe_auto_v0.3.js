@@ -102,7 +102,7 @@ console=window.console;
 			default:return 'unknown';
 		}
 	}
-	/** @param {number} level @arg {string} format_str @arg {any[]} args */
+	/** @arg {number} level @arg {string} format_str @arg {any[]} args */
 	function log_if(level, format_str, ...args){
 		if(level > local_logging_level)return;
 		append_console_message(level, format_str, ...args);
@@ -253,7 +253,7 @@ console=window.console;
 		constructor(value){
 			this.value=value;
 		}
-		/** @param {StackVM} _vm @param {string} key */
+		/** @arg {StackVM} _vm @arg {string} key */
 		on_get(_vm, key){
 			console.log('get', 'newable function', this.value, key);
 		}
@@ -494,7 +494,7 @@ console=window.console;
 		push_temporary_box(vm, cast_source, obj){
 			this.push_box(vm, cast_source, obj.value);
 		}
-		/** @arg {StackVM} vm @param {'object_index'} cast_source @param {import("./support.js").StackVMBox} obj */
+		/** @arg {StackVM} vm @arg {'object_index'} cast_source @arg {import("./support.js").StackVMBox} obj */
 		push_custom_box(vm, cast_source, obj){
 			vm.stack.push({
 				type:'temporary_box',
@@ -651,7 +651,7 @@ console=window.console;
 	class InstructionGetImpl extends InstructionImplBase {
 		/** @type {'get'} */
 		type='get';
-		/** @arg {StackVM} vm @param {import("../../../types/vm/box/TemporaryBox.js").TemporaryBox} tmp_box @param {string} key */
+		/** @arg {StackVM} vm @arg {import("../../../types/vm/box/TemporaryBox.js").TemporaryBox} tmp_box @arg {string} key */
 		handle_temporary_box(vm, tmp_box, key) {
 			if(tmp_box.source === 'cast') {
 				if(tmp_box.cast_source === 'object_index'){
@@ -659,7 +659,7 @@ console=window.console;
 				}
 			}
 		}
-		/** @arg {StackVM} vm @param {Exclude<Box, Primitives|null>} value_box @param {string|number} key */
+		/** @arg {StackVM} vm @arg {Exclude<Box, Primitives|null>} value_box @arg {string|number} key */
 		on_get(vm, value_box, key){
 			if(typeof key!='string')throw new Error("Invalid");
 			switch(value_box.type){
@@ -726,7 +726,7 @@ console=window.console;
 	class InstructionBreakpointImpl extends InstructionImplBase {
 		/** @type {'breakpoint'} */
 		type='breakpoint'
-		/** @arg {StackVM} vm @param {import("types/vm/instruction/mod.js").debug.Breakpoint} _i */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").debug.Breakpoint} _i */
 		run(vm, _i){
 			console.log(vm.stack);
 			trigger_debug_breakpoint();
@@ -735,7 +735,7 @@ console=window.console;
 	class InstructionPushVMObjImpl extends InstructionImplBase {
 		/** @type {"vm_push_self"} */
 		type ="vm_push_self";
-		/** @arg {StackVM} vm @param {import("types/vm/instruction/mod.js").vm.PushSelf} _i */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.PushSelf} _i */
 		run(vm, _i){
 			vm.stack.push(new StackVMBoxImpl(vm));
 		}
@@ -743,7 +743,7 @@ console=window.console;
 	class InstructionPushGlobalObjectImpl extends InstructionImplBase {
 		/** @type {'push_global_object'} */
 		type='push_global_object';
-		/** @arg {StackVM} vm @param {import("types/vm/instruction/mod.js").push.GlobalObject} _i */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").push.GlobalObject} _i */
 		run(vm, _i){
 			vm.stack.push(new WindowBoxImpl(window));
 		}
@@ -752,7 +752,7 @@ console=window.console;
 		/** @type {'peek'} */
 		type = 'peek'
 		debug=false;
-		/** @arg {StackVM} vm @param {[any, any]} ins */
+		/** @arg {StackVM} vm @arg {[any, any]} ins */
 		run(vm, ins){
 			let [, distance] = ins;
 			let base_ptr=vm.base_ptr;
@@ -772,7 +772,7 @@ console=window.console;
 	class InstructionAppendImpl extends InstructionImplBase {
 		/** @type {"append"} */
 		type = "append";
-		/** @arg {StackVM} vm @param {import("types/vm/instruction/mod.js").Append} _i */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").Append} _i */
 		run(vm, _i){
 			if(vm.stack.length <= 0){
 				throw new Error('stack underflow');
@@ -798,7 +798,7 @@ console=window.console;
 	class InstructionPushArgsImpl extends InstructionImplBase {
 		/** @type {'vm_push_args'} */
 		type='vm_push_args';
-		/** @arg {StackVM} _vm @param {never} _i */
+		/** @arg {StackVM} _vm @arg {never} _i */
 		run(_vm, _i) {
 			throw new Error("Instruction not supported");
 		}
@@ -806,7 +806,7 @@ console=window.console;
 	class InstructionDropImpl extends InstructionImplBase {
 		/** @type {'drop'} */
 		type='drop';
-		/** @arg {StackVM} vm @param {import("types/vm/instruction/mod.js").stack.Drop} _i */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").stack.Drop} _i */
 		run(vm, _i){
 			vm.stack.pop();
 		}
@@ -815,7 +815,7 @@ console=window.console;
 		/** @type {'vm_return'} */
 		type='vm_return';
 		debug=false;
-		/** @arg {StackVM} vm @param {import("types/vm/instruction/mod.js").vm.Return} _i */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Return} _i */
 		run(vm, _i){
 			let start_stack=vm.stack.slice();
 			if(vm.base_ptr === null){
@@ -838,7 +838,7 @@ console=window.console;
 	class InstructionVMCallImpl extends InstructionImplBase {
 		/** @type {'vm_call'} */
 		type='vm_call';
-		/** @arg {StackVM} vm @param {import("types/vm/instruction/mod.js").vm.Call} ins */
+		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Call} ins */
 		run(vm, ins){
 			let prev_base=vm.base_ptr;
 			vm.stack.push(vm.base_ptr, vm.instruction_pointer);
@@ -922,7 +922,7 @@ console=window.console;
 			this.flags=new VMFlags;
 			this.instruction_map_obj=this.create_instruction_map(instruction_descriptor_arr);
 		}
-		/** @param {number} operand_number_of_arguments */
+		/** @arg {number} operand_number_of_arguments */
 		pop_arg_count(operand_number_of_arguments){
 			let arguments_arr=[];
 			let arg_count=operand_number_of_arguments;
@@ -942,14 +942,14 @@ console=window.console;
 			this.return_value = void 0;
 			this.stack.length = 0;
 		}
-		/** @param {number} value */
+		/** @arg {number} value */
 		is_in_instructions(value){
 			return value >= 0 && value < this.instructions.length;
 		}
 		halt(){
 			this.running=false;
 		}
-		/**  @arg {import("types/vm/instruction/mod.js").InstructionOpcodesList[number]} opcode */
+		/** @arg {import("types/vm/instruction/mod.js").InstructionOpcodesList[number]} opcode */
 		get_instruction(opcode){
 			/** @type {any} */
 			let any_map=this.instruction_map_obj;
@@ -1026,7 +1026,7 @@ console=window.console;
 				}
 			}
 		}
-		/** @param {string | string[]} str @param {any[]} format_list */
+		/** @arg {string | string[]} str @arg {any[]} format_list */
 		static parse_string_with_format_ident(str, format_list) {
 			let format_index = str.indexOf('%');
 			let format_type = str[format_index + 1];
@@ -1037,7 +1037,7 @@ console=window.console;
 					console.assert(false, "Assertion failed: %s", 'unsupported format spec %' + format_type);
 			}
 		}
-		/** @param {any[]} cur @param {any[]} format_list */
+		/** @arg {any[]} cur @arg {any[]} format_list */
 		static parse_current_instruction(cur, format_list) {
 			let arg_loc = 1;
 			let arg = cur[arg_loc];
@@ -1051,7 +1051,7 @@ console=window.console;
 				arg = cur[arg_loc]
 			}
 		}
-		/** @param {string[]} m */
+		/** @arg {string[]} m */
 		static raw_parse_handle_regexp_match(m) {
 			let iter=m[1].trim();
 			if(iter.startsWith("//"))return null;
@@ -1062,7 +1062,7 @@ console=window.console;
 			if(!iter)return null;
 			return iter.split(",");
 		}
-		/** @param {string} string */
+		/** @arg {string} string */
 		static parse_string_into_raw_instruction_stream(string) {
 			const parser_max_match_iter = 300;let parts, arr = [], i = 0;
 			do {
@@ -1084,7 +1084,7 @@ console=window.console;
 			if(parts)console.assert(false, 'StackVM Parser: Iteration limit exceeded (limit=%o)', parser_max_match_iter);
 			return arr;
 		}
-		/** @param {string} string @param {any[]} format_list */
+		/** @arg {string} string @arg {any[]} format_list */
 		static parse_instruction_stream_from_string(string, format_list) {
 			let raw_instructions = this.parse_string_into_raw_instruction_stream(string);
 			for(let i=0;i<raw_instructions.length;i++) {
@@ -1193,7 +1193,7 @@ console=window.console;
 			this.document_write_proxy=new Proxy(document.write, proxy_handler);
 			document.write=this.document_write_proxy;
 		}
-		/** @param {boolean} should_try_to_destroy */
+		/** @arg {boolean} should_try_to_destroy */
 		destroy(should_try_to_destroy=false) {
 			if(this.attached_document&&this.document_write_proxy){
 				console.assert(this.attached_document.write === this.document_write_proxy);
@@ -1231,7 +1231,7 @@ console=window.console;
 		constructor(){
 			this.m_current=-1;
 		}
-		/** @param {number} current_value */
+		/** @arg {number} current_value */
 		set_current(current_value){
 			this.m_current=current_value;
 		}
@@ -1268,12 +1268,12 @@ console=window.console;
 		}
 	}
 	class EventHandlerDispatch {
-		/** @param {{[x:string]:any}} target_obj @param {string} target_name */
+		/** @arg {{[x:string]:any}} target_obj @arg {string} target_name */
 		constructor(target_obj, target_name){
 			this.target_obj=target_obj;
 			this.target_name=target_name;
 		}
-		/** @param {any} event */
+		/** @arg {any} event */
 		handleEvent(event){
 			this.target_obj[this.target_name](event);
 		}
@@ -1291,13 +1291,13 @@ console=window.console;
 		map_keys(){
 			return this.cache;
 		}
-		/** @param {number} index */
+		/** @arg {number} index */
 		add_hit(index) {
 			if(!this.map_values()[index]) {
 				this.map_values()[index]=1;
 			} else this.map_values()[index]++;
 		}
-		/** @param {string} key */
+		/** @arg {string} key */
 		add_item(key){
 			let index=this.map_keys().indexOf(key)
 			if(index == -1)index=this.map_keys().push(key)-1;
@@ -1307,7 +1307,7 @@ console=window.console;
 			this.map_keys().length=0;
 			this.map_values().length=0;
 		}
-		/** @param {any[]} arr @param {number} win_size */
+		/** @arg {any[]} arr @arg {number} win_size */
 		calc_compression_stats(arr, win_size) {
 			this.reset();
 			for(let i=0;i<arr.length;i++){
@@ -1317,30 +1317,30 @@ console=window.console;
 			}
 			return to_tuple_arr(this.map_keys(), this.map_values()).filter((e)=>e[1]!==void 0);
 		}
-		/** @param {any[]} stats_arr @param {any[]} arr @param {number} win_size */
+		/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} win_size */
 		calc_for_stats_window_size(stats_arr, arr, win_size){
 			stats_arr[win_size-1]=this.calc_compression_stats(arr, win_size);
 		}
-		/** @param {any[]} stats_arr @param {any[]} arr @param {number} index */
+		/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} index */
 		calc_for_stats_index(stats_arr, arr, index){
 			stats_arr[index]=this.calc_compression_stats(arr, index+1);
 		}
 	}
 	class BaseCompression {
-		/** @param {string | any[]} src @param {string | any[]} dst */
+		/** @arg {string | any[]} src @arg {string | any[]} dst */
 		did_compress(src, dst){
 			return dst.length < src.length;
 		}
-		/** @param {string | any[]} src @param {string | any[]} dst */
+		/** @arg {string | any[]} src @arg {string | any[]} dst */
 		did_decompress(src, dst){
 			return dst.length > src.length;
 		}
-		/** @param {string[]} src @param {string[]} dst @returns {[boolean, string[]]} */
+		/** @arg {string[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
 		compress_result(src, dst){
 			if(this.did_compress(src, dst))return [true, dst];
 			return [false, src];
 		}
-		/** @param {string[]} src @param {string[]} dst @returns {[boolean, string[]]} */
+		/** @arg {string[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
 		decompress_result(src, dst) {
 			if(this.did_decompress(src, dst))return [true, dst];
 			return [false, dst];
@@ -1354,7 +1354,7 @@ console=window.console;
 			this.compression_stats=[];
 		}
 
-		/** @param {string[]} arr */
+		/** @arg {string[]} arr */
 		try_compress(arr){
 			let ret=[];
 			for (let i=0;i<arr.length;i++){
@@ -1380,7 +1380,7 @@ console=window.console;
 			}
 			return this.compress_result(arr, ret);
 		}
-		/** @param {string[]} arr */
+		/** @arg {string[]} arr */
 		try_decompress(arr){
 			let ret=[];
 			for (let i=0;i<arr.length;i++) {
@@ -1396,7 +1396,7 @@ console=window.console;
 			}
 			return this.decompress_result(arr, ret);
 		}
-		/** @param {string[]} arr */
+		/** @arg {string[]} arr */
 		compress_array(arr) {
 			let success, res;
 			[success, res]=this.try_decompress(arr);
@@ -1416,7 +1416,7 @@ console=window.console;
 	}
 	window.MulCompression=MulCompression;
 	class TimeoutTarget {
-		/** @param {AutoBuyState | AutoBuy | null} obj @param {()=>void} callback */
+		/** @arg {AutoBuyState | AutoBuy | null} obj @arg {()=>void} callback */
 		constructor(obj, callback) {
 			this.m_once=true;
 			this.m_obj=obj;
@@ -1427,7 +1427,7 @@ console=window.console;
 		}
 	}
 	class IntervalTarget {
-		/** @param {any} obj @param {any} callback */
+		/** @arg {any} obj @arg {any} callback */
 		constructor(obj, callback) {
 			this.m_once=false;
 			this.m_obj=obj;
@@ -1451,19 +1451,19 @@ console=window.console;
 			this.m_active=true;
 			return this.m_promise;
 		}
-		/** @param {any} accept  @param {any} reject */
+		/** @arg {any} accept @arg {any} reject */
 		promise_executor(accept, reject){
 			this.m_promise_accept=accept;
 			this.m_promise_reject=reject;
 			this.m_callback=this.on_result.bind(this);
 		}
-		/** @param {any} value */
+		/** @arg {any} value */
 		on_result(value=void 0){
 			if(!this.m_promise_accept)throw new Error("Missing promise accept handler");
 			this.m_promise_accept(value);
 			this.reset();
 		}
-		/** @param {Error} error */
+		/** @arg {Error} error */
 		on_error(error){
 			if(!this.m_promise_reject)throw new Error("Missing promise accept handler");
 			this.m_promise_reject(error);
@@ -1492,7 +1492,7 @@ console=window.console;
 		constructor(){
 			this.m_parent=null;
 		}
-		/** @param {any} parent */
+		/** @arg {any} parent */
 		set_parent(parent){
 			this.m_parent=parent;
 		}
@@ -1507,7 +1507,7 @@ console=window.console;
 		}
 	}
 	class TimeoutIdNode extends BaseNode {
-		/** @param {number} id */
+		/** @arg {number} id */
 		constructor(id){
 			super();
 			this.m_id=id;
@@ -1518,7 +1518,7 @@ console=window.console;
 		}
 	}
 	class IntervalIdNode extends BaseNode {
-		/** @param {number} id */
+		/** @arg {number} id */
 		constructor(id){
 			super();
 			this.m_id=id;
@@ -1529,7 +1529,7 @@ console=window.console;
 		}
 	}
 	class IntervalTargetFn {
-		/** @param {any} callback @param {number} timeout */
+		/** @arg {any} callback @arg {number} timeout */
 		constructor(callback, timeout) {
 			this.m_callback=callback;
 			this.timeout=timeout;
@@ -1634,7 +1634,7 @@ console=window.console;
 			/** @type {BaseNode[]} */
 			this.children=[];
 		}
-		/** @param {()=>void} target_fn @param {number | undefined} timeout */
+		/** @arg {()=>void} target_fn @arg {number | undefined} timeout */
 		set(target_fn, timeout, repeat=false){
 			let node;
 			if(repeat) {
@@ -1645,7 +1645,7 @@ console=window.console;
 				node.start(new IntervalTarget(null, target_fn));
 			}
 		}
-		/** @param {number} timeout_id */
+		/** @arg {number} timeout_id */
 		append_raw(timeout_id, once=true) {
 			if(once){
 				this.append_child(new TimeoutIdNode(timeout_id));
@@ -1708,10 +1708,7 @@ console=window.console;
 			this.gen_count=0;
 			this.history_size=options.history_size;
 		}
-		/**
-		 * @param {AverageRatioRoot} avg
-		 * @param {number} time_now
-		 */
+		/** @arg {AverageRatioRoot} avg @arg {number} time_now */
 		do_history_update(avg, time_now) {
 			if(this.value === null)return;
 			this.count++;
@@ -1727,9 +1724,7 @@ console=window.console;
 				if(next)next.do_history_update(avg, time_now);
 			}
 		}
-		/**
-		 * @param {number} value
-		 */
+		/** @arg {number} value */
 		add_to_ratio(value, avg_window=this.size) {
 			if(this.value === null) {
 				this.value=value;
@@ -1737,9 +1732,7 @@ console=window.console;
 			}
 			this.value=(this.value*(avg_window-1)+value)/avg_window;
 		}
-		/**
-		 * @param {number} size
-		 */
+		/** @arg {number} size */
 		set_history_size(size) {
 			this.history_size=size;
 		}
@@ -1757,9 +1750,7 @@ console=window.console;
 			/** @type {AverageRatio[]} */
 			this.values=[];
 		}
-		/**
-		 * @param {string} key
-		 */
+		/** @arg {string} key */
 		get_average(key){
 			let ratio_calc=this.map.get(key);
 			if(!ratio_calc)throw new Error("Ratio not found: "+key);
@@ -1779,9 +1770,7 @@ console=window.console;
 			}
 			return null;
 		}
-		/**
-		 * @param {number} value
-		 */
+		/** @arg {number} value */
 		push(value){
 			let cur=this.map.get(this.keys[0]);
 			if(!cur)throw new Error("Invalid");
@@ -1836,10 +1825,7 @@ console=window.console;
 			let ratio_types=['10sec', '1min', '5min', '30min', '3hour'];
 			let ratio_duration=[10*1000, 60*1000, 5*60*1000, 30*60*1000, 3*60*60*1000];
 			let ratio_counts=[80, 6, 5, 6, 6];
-			/**
-			 * @param {number[]} arr
-			 * @param {any} i
-			 */
+			/** @arg {number[]} arr @arg {number} i */
 			function mul_3(arr, i){
 				let [a, b=1, c=10]=arr.slice(i);
 				return a * b * c * 4;
@@ -2010,7 +1996,7 @@ console=window.console;
 			this.append_value(this.val);
 			this.update_ratio_mode();
 		}
-		/** @param {string} time_played_str */
+		/** @arg {string} time_played_str */
 		on_game_reset_finish(time_played_str){
 			let history_arr_1=this.avg.values[0].history.slice().reverse();
 			let history_item=history_arr_1[0];
@@ -2075,7 +2061,7 @@ console=window.console;
 		instance_type='Node';
 		/** @type {"get"|"create"} */
 		from="create";
-		/** @param {"get"|"create"|string} from @param {Node} value */
+		/** @arg {"get"|"create"|string} from @arg {Node} value */
 		constructor(from, value){
 			super(null);
 			this.value=value;
@@ -2088,17 +2074,17 @@ console=window.console;
 	}
 	class DataLoader {
 		static int_parser=new WebAssembly.Function({parameters:['externref'], results:['f64']}, parseInt);
-		/** @param {Storage} storage */
+		/** @arg {Storage} storage */
 		constructor(storage) {this.store=storage}
-		/** @param {string} key @param {string[]} def_value */
+		/** @arg {string} key @arg {string[]} def_value */
 		load_str_arr(key, def_value){let data=this.store.getItem(key);if(data === null)return def_value;return data.split(",")}
-		/** @param {string} key  @param {any} def_value */
+		/** @arg {string} key @arg {any} def_value */
 		load_int_arr(key, def_value, storage_data=this.store.getItem(key)){if(storage_data === null)return def_value;return this.parse_int_arr(storage_data)}
-		/** @param {string} key @param {{ (_e: any): number[]; (): any; }} def_factory */
+		/** @arg {string} key @arg {{ (_e: any): number[]; (): any; }} def_factory */
 		load_int_arr_cb(key, def_factory, storage_data=this.store.getItem(key)){if(storage_data === null)return def_factory();return this.parse_int_arr(storage_data)}
-		/** @param {string} string */
+		/** @arg {string} string */
 		default_split(string){return string.split(",")}
-		/** @param {string} data */
+		/** @arg {string} data */
 		parse_int_arr(data){return this.default_split(data).map(DataLoader.int_parser)}
 	}
 	class AsyncAutoBuy {
@@ -2111,7 +2097,7 @@ console=window.console;
 			debugger;
 			return this.parent.timeout_ms;
 		}
-		/** @param {boolean} no_wait */
+		/** @arg {boolean} no_wait */
 		async do_start_main_async(no_wait){
 			if(!no_wait)await this.next_timeout_async(this.parent.timeout_ms, 'A');
 			await this.main_async();
@@ -2204,7 +2190,7 @@ console=window.console;
 			this.parent.do_fast_unit_change();
 			await this.next_timeout_async(this.parent.timeout_ms, '$');
 		}
-		/** @param {number | undefined} timeout @param {string} char */
+		/** @arg {number | undefined} timeout @arg {string} char */
 		async next_timeout_async(timeout, char, silent=false){
 			let node=new AsyncTimeoutNode(timeout);
 			this.parent.root_node.append_child(node);
@@ -2226,9 +2212,7 @@ console=window.console;
 			if(typeof this.value === v)return this;
 			return null;
 		}
-		/**
-		 * @param {Document} value
-		 */
+		/** @arg {Document} value */
 		constructor(value){
 			super(null);
 			this.value=value;
@@ -2273,10 +2257,7 @@ console=window.console;
 			}
 			log_if(log_level, ...args);
 		}
-		/**
-		 * @param {{ [x: string]: any; }} sym_indexed_this
-		 * @param {{ sym: any; }} val
-		 */
+		/** @arg {{ [x: string]: any; }} sym_indexed_this @arg {{ sym: any; }} val */
 		syms_iter(sym_indexed_this, val) {
 			if(!sym_indexed_this[val.sym])return;
 			let obj=sym_indexed_this[val.sym];
@@ -2463,7 +2444,7 @@ console=window.console;
 			if(this.skip_save)return;
 			localStorage.auto_buy_history_str=this.state_history_arr.join(",");
 		}
-		/** @param {string} forced_action */
+		/** @arg {string} forced_action */
 		get_timeout_arr_data(forced_action){
 			if(forced_action == "RESET")return this.timeout_arr.map((/** @type {number} */ e)=>~~(e/4)).join(",");
 			return this.timeout_arr.join(",");
@@ -2507,7 +2488,6 @@ console=window.console;
 						promise_arr.push(cur.value);
 					}
 				}
-				/*@Hack: wait for any promise to settle*/
 				const promise_settle_arr = await Promise.allSettled(promise_arr);
 				/** @type {PromiseFulfilledResult<Box>[]} */
 				let fulfilled_res_arr = [];
@@ -2544,9 +2524,9 @@ console=window.console;
 			let make_css_arr=[
 				[
 					0, 'push', null, new AsyncFunctionBoxImpl(async function(/** @type {Box[]} */ ...a) {
-						let ret=css_promise_runner.call(bound_this, ...a);
-						await ret;
-						return new VoidBoxImpl;
+				let ret=css_promise_runner.call(bound_this, ...a);
+				await ret;
+				return new VoidBoxImpl;
 					})
 				],
 				[
@@ -2577,7 +2557,7 @@ console=window.console;
 			];
 			this.build_dom_from_desc(raw_dom_arr, this.dom_map);
 		}
-		/** @param {CSSStyleSheet[]} styles */
+		/** @arg {CSSStyleSheet[]} styles */
 		adopt_styles(...styles){
 			let dom_styles=document.adoptedStyleSheets;
 			document.adoptedStyleSheets = [...dom_styles, ...styles];
@@ -2629,7 +2609,7 @@ console=window.console;
 				return res;
 			}
 		}
-		/** @param {DomExecDescription[]} raw_arr */
+		/** @arg {DomExecDescription[]} raw_arr */
 		build_dom_from_desc(raw_arr, trg_map=new Map) {
 			/** @type {DomExecDescription[]} */
 			let stack=[];
@@ -2930,7 +2910,7 @@ console=window.console;
 				}
 			}
 		}
-		/** @param {string | number} value @param {string} pad_char @param {number} char_num */
+		/** @arg {string | number} value @arg {string} pad_char @arg {number} char_num */
 		do_zero_pad(value, pad_char, char_num) {
 			let string;
 			if(typeof value === 'number'){
@@ -2943,7 +2923,7 @@ console=window.console;
 			}
 			return string;
 		}
-		/** @param {number} timeout_milli @param {number | undefined} milli_acc */
+		/** @arg {number} timeout_milli @arg {number | undefined} milli_acc */
 		get_millis_as_pretty_str(timeout_milli, milli_acc){
 			let time_arr=[];
 			let float_milliseconds = timeout_milli % 1000;
@@ -2977,7 +2957,7 @@ console=window.console;
 			}
 			return time_arr.join(":");
 		}
-		/** @param {number} hours_num */
+		/** @arg {number} hours_num */
 		get_hours_num_as_pretty_str(hours_num){
 			let int_hours=~~hours_num;
 			let time_arr=[];
@@ -3158,7 +3138,7 @@ console=window.console;
 			this.state_history_arr=["R"];
 			localStorage.auto_buy_history_str="R";
 		}
-		/** @param {string} value */
+		/** @arg {string} value */
 		state_history_append(value, silent=false){
 			this.epoch_len++;
 			if(silent)return;
@@ -3170,7 +3150,7 @@ console=window.console;
 			if(this.state.debug)console.log('history append', last, value);
 			while(this.state_history_arr.length>2000)this.state_history_arr.shift();
 		}
-		/** @param {Event} _event */
+		/** @arg {Event} _event */
 		history_element_click_handler(_event){
 			this.root_node.destroy();
 			this.set_update_timeout();
@@ -3296,16 +3276,14 @@ console=window.console;
 		do_fast_unit_change(){
 			this.do_timeout_dec([1.006], 10);
 		}
-		/** @param {number} pow_base @param {number} pow_num @param {number} div */
+		/** @arg {number} pow_base @arg {number} pow_num @arg {number} div */
 		get_timeout_change(pow_base, pow_num, div){
 			if(!this.timeout_ms)throw new Error("Invalid");
 			let pow_res=Math.pow(pow_base, pow_num);
 			let res=this.timeout_ms * pow_res;
 			return res / div;
 		}
-		/**
-		 * @param {number} change
-		 */
+		/** @arg {number} change */
 		update_timeout_inc(change){
 			if(window.__testing__){
 				return;
@@ -3315,9 +3293,7 @@ console=window.console;
 			log_if(LOG_LEVEL_INFO, 'inc', this.timeout_ms, value-this.timeout_ms);
 			this.timeout_arr.push(value);
 		}
-		/**
-		 * @param {number} change
-		 */
+		/** @arg {number} change */
 		update_timeout_dec(change){
 			if(window.__testing__){
 				return;
@@ -3328,33 +3304,22 @@ console=window.console;
 			log_if(LOG_LEVEL_INFO, 'dec', this.timeout_ms, this.timeout_ms-value);
 			this.timeout_arr.push(value);
 		}
-		/**
-		 * @param {number} value
-		 */
+		/** @arg {number} value */
 		round(value){
 			return ~~value;
 		}
-		/**
-		 * @param {number[]} pow_terms
-		 * @param {number} div
-		 */
+		/** @arg {number[]} pow_terms @arg {number} div */
 		do_timeout_dec(pow_terms, div){
 			let change=this.get_timeout_change(pow_terms[0], Math.log(window.totalAtome), div);
 			this.update_timeout_dec(change);
 		}
-		/**
-		 * @param {number[]} pow_terms
-		 * @param {number} div
-		 */
+		/** @arg {number[]} pow_terms @arg {number} div */
 		do_timeout_inc(pow_terms, div){
 			let iter_term=Math.pow(pow_terms[1], this.iter_count);
 			let change=this.get_timeout_change(pow_terms[0], Math.log(window.totalAtome), div);
 			this.update_timeout_inc(change * iter_term);
 		}
-		/**
-		 * @param {string} msg
-		 * @param {Error} err
-		 */
+		/** @arg {string} msg @arg {Error} err */
 		next_timeout_async_err_log(msg, err){
 			/** @type {{stack:string}} */
 			let stack_trace={stack:"Error\n    at <anonymous>"};
@@ -3363,9 +3328,7 @@ console=window.console;
 			if(err.stack)err_stack_tmp=err.stack;
 			else err_stack_tmp=stack_trace.stack;
 			let err_stack=err_stack_tmp.split("\n").slice(1);
-			/**
-			 * @param {string} str
-			 */
+			/** @arg {string} str */
 			function rm(str){
 				if(err_stack.length === 0)return false;
 				if(err_stack[0].includes(str)){
@@ -3390,10 +3353,7 @@ console=window.console;
 				}).join("\n"));
 			}
 		}
-		/**
-		 * @param {number | undefined} timeout
-		 * @param {string} char
-		 */
+		/** @arg {number | undefined} timeout @arg {string} char */
 		[labeled_sym("next_timeout_async")](timeout, char) {
 			console.log('next_timeout_async', char, timeout);
 			let err=new Error;
@@ -3401,11 +3361,7 @@ console=window.console;
 		}
 		/** @type {number|undefined} */
 		timeout_ms;
-		/**
-		 * @param {()=>void} trg_fn
-		 * @param {number | undefined} timeout
-		 * @param {string} char
-		 */
+		/** @arg {()=>void} trg_fn @arg {number | undefined} timeout @arg {string} char */
 		next_timeout(trg_fn, timeout, char, silent=false){
 			let node=new TimeoutNode(timeout);
 			this.root_node.append_child(node);
@@ -3419,9 +3375,7 @@ console=window.console;
 		do_unit_promote(){
 			do_auto_unit_promote();
 		}
-		/**
-		 * @param {{ done: any; cost: number; }} special_buyable
-		 */
+		/** @arg {{ done: any; cost: number; }} special_buyable */
 		is_special_done(special_buyable){
 			return !special_buyable.done && special_buyable.cost < window.totalAtome;
 		}
@@ -3574,7 +3528,7 @@ console=window.console;
 		}
 		return ret;
 	}
-	/** @param {string[]} arr @param {number} rem_target_len */
+	/** @arg {string[]} arr @arg {number} rem_target_len */
 	function array_sample_end(arr, rem_target_len){
 		arr=arr.slice(-300);
 		let rem_len=char_len_of(arr);
@@ -3586,7 +3540,7 @@ console=window.console;
 		}
 		return arr;
 	}
-	/** @param {any[]} arr */
+	/** @arg {any[]} arr */
 	function char_len_of(arr){
 		return arr.reduce((a,b)=>a + b.length, 0) + arr.length;
 	}
@@ -3605,7 +3559,7 @@ console=window.console;
 		}
 		original();
 	}
-	/** @param {number} that */
+	/** @arg {number} that */
 	function specialclick_inject(that) {
 		let allspec=window.allspec;
 		let totalAtome=window.totalAtome;
@@ -3652,7 +3606,7 @@ console=window.console;
 		window.atomepersecond=atomepersecond;
 		window.specialsbought=specialsbought;
 	}
-	/** @param {typeof $} value */
+	/** @arg {typeof $} value */
 	function got_jquery(value){
 		Object.defineProperty(window, '$', {
 			value,
@@ -3676,7 +3630,7 @@ console=window.console;
 		let val=use_jquery();
 		set_jq_proxy(val);
 	}
-	/** @param {typeof $ | undefined} value */
+	/** @arg {typeof $ | undefined} value */
 	function set_jq_proxy(value){
 		let s_value=value;
 		Object.defineProperty(window, '$', {
@@ -3693,7 +3647,7 @@ console=window.console;
 		});
 	}
 	let seen_elements=new WeakSet;
-	/** @param {HTMLScriptElement} node */
+	/** @arg {HTMLScriptElement} node */
 	function remove_html_nodes(node){
 		if(seen_elements.has(node))return;
 		seen_elements.add(node);
@@ -3735,7 +3689,7 @@ console=window.console;
 		}
 		do_dom_filter();
 	}
-	/** @param {HTMLScriptElement} elm */
+	/** @arg {HTMLScriptElement} elm */
 	function dom_add_elm_filter(elm){
 		if(elm && elm.nodeName === "SCRIPT"){
 			if(!elm.src){
@@ -3795,7 +3749,7 @@ console=window.console;
 		}
 	}
 	class DetachedMutationObserver extends BaseMutationObserver {
-		/** @param {Node} target */
+		/** @arg {Node} target */
 		constructor(target) {
 			super();
 			let mutationObserver = new MutationObserver(this.callback);
@@ -3816,7 +3770,7 @@ console=window.console;
 		}
 	}
 	class LoadMutationObserver extends BaseMutationObserver {
-		/** @param {Node} target @param {(mut_vec: MutationRecord[], mut_observer: MutationObserver) => void} callback */
+		/** @arg {Node} target @arg {(mut_vec: MutationRecord[], mut_observer: MutationObserver) => void} callback */
 		constructor(target, callback) {
 			super();
 			this.m_callback=callback;
@@ -3877,7 +3831,7 @@ console=window.console;
 		let real_si=setInterval;
 		window.setTimeout=nop_timeout;
 		window.setInterval=nop_timeout;
-		/** @param {any[]} v */
+		/** @arg {any[]} v */
 		function no_aev(...v){
 			console.log('aev', v);
 		}
