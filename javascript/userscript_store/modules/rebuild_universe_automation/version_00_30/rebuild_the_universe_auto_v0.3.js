@@ -1905,13 +1905,13 @@ console=window.console;
 		/** @arg {boolean} do_lock */
 		on_decrease_ratio(do_lock, mul=1) {
 			this.total_mul*=mul;
-			this.on_ratio_change(do_lock, -1, 7_000 * mul);
+			this.on_ratio_change(do_lock, -1, 1_000 * mul);
 			return true;
 		}
 		/** @arg {boolean} do_lock */
 		on_increase_ratio(do_lock, mul=1) {
 			this.total_mul*=mul;
-			this.on_ratio_change(do_lock, 1, 13_000 * mul);
+			this.on_ratio_change(do_lock, 1, 500 * mul);
 			return true;
 		}
 		/** @arg {boolean} do_lock @arg {number} dir_num @arg {number} lock_for */
