@@ -1935,7 +1935,7 @@ console=window.console;
 			} else {
 				this.do_ratio_lock(do_lock, dir_num, lock_for);
 			}
-			this.on_cycle_count_change(lock_for, mul);
+			this.on_cycle_count_change(lock_for);
 		}
 		/** @arg {number} lock_for */
 		on_cycle_count_change(lock_for){
