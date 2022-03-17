@@ -50,7 +50,6 @@ import {
 	IVMPushSelfImpl,
 	IVMReturnImpl,
 } from "./support.js";
-
 const used_types=[
 	ArrayBox,
 	AsyncFunctionBox,
@@ -1959,9 +1958,7 @@ console=window.console;
 		calc_ratio(){
 			return this.avg.get_average('30min');
 		}
-		/**
-		 * @param {number} value
-		 */
+		/** @arg {number} value */
 		append_value(value) {
 			if(!Number.isFinite(value)){
 				console.assert(false, 'value is not finite');
@@ -1999,48 +1996,48 @@ console=window.console;
 			}
 			if(should_notify){
 				this.finalize_locked_cycle_count();
-				this.cycle_log();
+				this.log_on_update_ratio_mode_notify();
 			}
 		}
-		/** @param {boolean} do_lock */
+		/** @arg {boolean} do_lock */
 		rep_update_ratio_mode(do_lock){
-			let mode_ratio_up=this.ratio_mode * .1;
-			let mode_ratio_down=this.ratio_mode * .1 - .25;
-			if(this.ratio > (mode_ratio_up + .5))return this.on_increase_ratio(do_lock, 2);
+			let mode_ratio_up=this.ratio_mode * .1 + .1;
+			let mode_ratio_down=this.ratio_mode * .1 - .4;
+			if(this.ratio > (mode_ratio_up + .4))return this.on_increase_ratio(do_lock, 2);
 			if(this.ratio < mode_ratio_down)return this.on_decrease_ratio(do_lock);
 			if(this.ratio > mode_ratio_up)return this.on_increase_ratio(do_lock);
 			return false;
 		}
-		/** @param {boolean} do_lock */
-		on_decrease_ratio(do_lock, mul=1){
-			this.on_ratio_change(do_lock, -1, 10, mul);
+		/** @arg {boolean} do_lock */
+		on_decrease_ratio(do_lock, mul=1) {
+			this.total_mul*=mul;
+			this.on_ratio_change(do_lock, -1, 7_000 * mul);
 			return true;
 		}
-		/** @param {boolean} do_lock */
-		on_increase_ratio(do_lock, mul=1){
-			this.on_ratio_change(do_lock, 1, 20, mul);
+		/** @arg {boolean} do_lock */
+		on_increase_ratio(do_lock, mul=1) {
+			this.total_mul*=mul;
+			this.on_ratio_change(do_lock, 1, 13_000 * mul);
 			return true;
 		}
-		/** @param {boolean} do_lock @param {number} dir_num @param {number} lock_for @param {number} mul */
-		on_ratio_change(do_lock, dir_num, lock_for, mul){
+		/** @arg {boolean} do_lock @arg {number} dir_num @arg {number} lock_for */
+		on_ratio_change(do_lock, dir_num, lock_for) {
 			if(do_lock){
-				this.do_ratio_lock(do_lock, dir_num, 60 * lock_for * mul);
+				this.do_ratio_lock(do_lock, dir_num, lock_for);
 			} else {
-				this.do_ratio_lock(do_lock, dir_num, 2 * lock_for * mul);
+				this.do_ratio_lock(do_lock, dir_num, lock_for);
 			}
 			this.on_cycle_count_change(lock_for, mul);
 		}
-		/** @param {number} lock_for @param {number} mul */
-		on_cycle_count_change(lock_for, mul){
-			this.total_mul*=mul;
+		/** @arg {number} lock_for */
+		on_cycle_count_change(lock_for){
 			this.total_cycle_count_change+=lock_for;
 		}
 		finalize_locked_cycle_count(){
 			let rem_val=this.locked_cycle_count%100;
 			this.locked_cycle_count-=rem_val;
-			this.locked_cycle_count+=50;
 		}
-		/** @param {boolean} _do_lock @param {number} mode_change_direction @param {number} num_of_cycles */
+		/** @arg {boolean} _do_lock @arg {number} mode_change_direction @arg {number} num_of_cycles */
 		do_ratio_lock(_do_lock, mode_change_direction, num_of_cycles){
 			this.ratio_mode+=mode_change_direction;
 			this.locked_cycle_count+=num_of_cycles;
@@ -2066,15 +2063,15 @@ console=window.console;
 			}
 			return [num, exp];
 		}
-		cycle_log() {
-			log_if(LOG_LEVEL_INFO, 'ratio mode mode=%o total_mul=%o cycle_change=%o', this.ratio_mode, this.total_mul, this.total_cycle_count_change);
+		log_on_update_ratio_mode_notify() {
+			log_if(LOG_LEVEL_INFO, 'update_ratio_mode_tag mode=%o total_mul=%o cycle_change=%o', this.ratio_mode, this.total_mul, this.total_cycle_count_change);
 			const near_avg='30min';
 			let real_val=this.avg.get_average(near_avg);
 			let [num, exponent]=this.calc_near_val(real_val);
 			if(exponent < 2 && exponent > -3) {
-				log_if(LOG_LEVEL_ERROR, 'ratio cycle_no_exp avg:%s=%o lcc=%o', near_avg, (~~(real_val*100000))/100000, this.locked_cycle_count);
+				log_if(LOG_LEVEL_ERROR, 'update_ratio_mode_tag -exp avg:%s=%o lcc=%o', near_avg, (~~(real_val*100000))/100000, this.locked_cycle_count);
 			} else {
-				log_if(LOG_LEVEL_ERROR, 'ratio cycle_exp avg:%s=(%o,%o) lcc=%o', near_avg, (~~(num*10000))/10000, exponent, this.locked_cycle_count);
+				log_if(LOG_LEVEL_ERROR, 'update_ratio_mode_tag +exp avg:%s=(%o,%o) lcc=%o', near_avg, (~~(num*10000))/10000, exponent, this.locked_cycle_count);
 			}
 		}
 		update_not_ready() {
