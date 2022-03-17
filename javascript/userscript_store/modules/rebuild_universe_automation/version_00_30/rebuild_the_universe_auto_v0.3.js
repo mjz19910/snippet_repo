@@ -90,7 +90,7 @@ console=window.console;
 		}
 	}
 	/** @param {number} level @arg {string} format_str @arg {any[]} args */
-	function l_log_if(level, format_str, ...args){
+	function log_if(level, format_str, ...args){
 		if(level > local_logging_level)return;
 		append_console_message(level, format_str, ...args);
 	}
@@ -453,7 +453,7 @@ console=window.console;
 				let obj=new a.value(...valid_args.s);
 				vm.stack.push(new CSSStyleSheetBoxImpl(obj));
 			}
-			l_log_if(LOG_LEVEL_INFO, "", ins, ...vm.stack.slice(vm.stack.length-number_of_arguments));
+			log_if(LOG_LEVEL_INFO, "", ins, ...vm.stack.slice(vm.stack.length-number_of_arguments));
 		}
 	}
 	class InstructionCastImpl extends InstructionImplBase {
@@ -1585,19 +1585,19 @@ console=window.console;
 		/** @arg {{wait():Promise<any>;destroy():void}} target */
 		async start_async(target){
 			if(!target)throw new Error("unable to start_async without anything to wait for");
-			l_log_if(LOG_LEVEL_INFO, 'start_async');
+			log_if(LOG_LEVEL_INFO, 'start_async');
 			this.m_target=target;
 			this.set();
 			let promise=this.m_target.wait();
-			l_log_if(LOG_LEVEL_INFO, 'p', promise);
+			log_if(LOG_LEVEL_INFO, 'p', promise);
 			await promise;
 		}
 		set(){
-			l_log_if(LOG_LEVEL_INFO, 'set', this);
+			log_if(LOG_LEVEL_INFO, 'set', this);
 			super.set();
 		}
 		run(){
-			l_log_if(LOG_LEVEL_INFO, 'run', this);
+			log_if(LOG_LEVEL_INFO, 'run', this);
 			return super.run();
 		}
 		destroy(){
@@ -1878,7 +1878,7 @@ console=window.console;
 				this.locked_cycle_count--;
 				if(this.locked_cycle_count % 100 == 0){
 					// do_update=true;
-					l_log_if(LOG_LEVEL_INFO, 'ratio cycle lcc=%o', this.locked_cycle_count);
+					log_if(LOG_LEVEL_INFO, 'ratio cycle lcc=%o', this.locked_cycle_count);
 				}
 			} else {
 				do_update=true;
@@ -1961,14 +1961,14 @@ console=window.console;
 			return [num, exp];
 		}
 		cycle_log() {
-			l_log_if(LOG_LEVEL_INFO, 'ratio mode mode=%o total_mul=%o cycle_change=%o', this.ratio_mode, this.total_mul, this.total_cycle_count_change);
+			log_if(LOG_LEVEL_INFO, 'ratio mode mode=%o total_mul=%o cycle_change=%o', this.ratio_mode, this.total_mul, this.total_cycle_count_change);
 			const near_avg='30min';
 			let real_val=this.avg.get_average(near_avg);
 			let [num, exponent]=this.calc_near_val(real_val);
 			if(exponent < 2 && exponent > -3) {
-				l_log_if(LOG_LEVEL_ERROR, 'ratio cycle_no_exp avg:%s=%o lcc=%o', near_avg, (~~(real_val*100000))/100000, this.locked_cycle_count);
+				log_if(LOG_LEVEL_ERROR, 'ratio cycle_no_exp avg:%s=%o lcc=%o', near_avg, (~~(real_val*100000))/100000, this.locked_cycle_count);
 			} else {
-				l_log_if(LOG_LEVEL_ERROR, 'ratio cycle_exp avg:%s=(%o,%o) lcc=%o', near_avg, (~~(num*10000))/10000, exponent, this.locked_cycle_count);
+				log_if(LOG_LEVEL_ERROR, 'ratio cycle_exp avg:%s=(%o,%o) lcc=%o', near_avg, (~~(num*10000))/10000, exponent, this.locked_cycle_count);
 			}
 		}
 		update_not_ready() {
@@ -2260,7 +2260,7 @@ console=window.console;
 			} else {
 				args.unshift("test");
 			}
-			l_log_if(log_level, ...args);
+			log_if(log_level, ...args);
 		}
 		/**
 		 * @param {{ [x: string]: any; }} sym_indexed_this
@@ -2331,7 +2331,7 @@ console=window.console;
 				throw new Error("querySelector('#background_audio') is not an instance of HTMLAudioElement");
 			}
 			this.async_pre_init().then(()=>{
-				l_log_if(LOG_LEVEL_INFO, 'pre_init done');
+				log_if(LOG_LEVEL_INFO, 'pre_init done');
 			});this.dom_pre_init();
 		}
 		async async_pre_init(){
@@ -2340,7 +2340,7 @@ console=window.console;
 			x:try{
 				return await this.background_audio.play();
 			}catch(e){
-				l_log_if(LOG_LEVEL_INFO, "failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
+				log_if(LOG_LEVEL_INFO, "failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 			}
 			// @FileType(vm_asm);
 			let raw_instructions=`
@@ -2419,11 +2419,11 @@ console=window.console;
 			let instructions=StackVMParser.parse_instruction_stream_from_string(raw_instructions, [
 				function(){
 					// LOG_LEVEL_INFO
-					l_log_if(LOG_LEVEL_ERROR, 'play success')
+					log_if(LOG_LEVEL_ERROR, 'play success')
 				},
 				/** @arg {any} err */
 				function(err){
-					l_log_if(LOG_LEVEL_ERROR, err);
+					log_if(LOG_LEVEL_ERROR, err);
 				}
 			]);
 			try{
@@ -2431,9 +2431,9 @@ console=window.console;
 				window.addEventListener('click', {
 					handleEvent(){
 						this.run().then(()=>{
-							l_log_if(LOG_LEVEL_INFO, 'play success');
+							log_if(LOG_LEVEL_INFO, 'play success');
 						}, function(err){
-							l_log_if(LOG_LEVEL_ERROR, err);
+							log_if(LOG_LEVEL_ERROR, err);
 						});
 						window.removeEventListener('click', this);
 					},
@@ -2656,8 +2656,8 @@ console=window.console;
 								cur_element.id=dom_id;
 							}
 						} else{
-							l_log_if(LOG_LEVEL_ERROR, 'bad typeof == %s for content in build_dom; content=%o', typeof content, content);
-							l_log_if(LOG_LEVEL_TRACE, "Info: case 'create' args are", element_type, name);
+							log_if(LOG_LEVEL_ERROR, 'bad typeof == %s for content in build_dom; content=%o', typeof content, content);
+							log_if(LOG_LEVEL_TRACE, "Info: case 'create' args are", element_type, name);
 						}
 						map.set(name, cur_element);
 						stack.push([depth, "push", new NodeBoxImpl('create', cur_element)]);
@@ -2674,7 +2674,7 @@ console=window.console;
 						let any_cur=cur_item;
 						if(!(any_cur instanceof Array))throw 1;
 						const [, action] = any_cur;
-						l_log_if(LOG_LEVEL_ERROR, 'might need to handle', action);
+						log_if(LOG_LEVEL_ERROR, 'might need to handle', action);
 						debugger
 					} break;
 				}
@@ -3131,7 +3131,6 @@ console=window.console;
 			window.lightreset = new Function(temp.substring(temp.indexOf('{')+1,temp.lastIndexOf('}')));
 		}
 		init_impl() {
-			this.global_init();
 			this.init_dom();
 			this.state.init();
 			this.next_update();
@@ -3230,8 +3229,8 @@ console=window.console;
 				if(e === 0)return e;
 				return this.round(e*diff_want_mul);
 			});
-			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
-			l_log_if(LOG_LEVEL_INFO, 'calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
+			log_if(LOG_LEVEL_INFO, 'calc_timeout_ms sorted_diff index', zero_idx, 'diff is', this.round(diff*diff_want_mul)/diff_want_mul);
+			log_if(LOG_LEVEL_INFO, 'calc_timeout_ms l_diff %o %o\n%o', ez_log.slice(0,8), ez_log.slice(-8), ez_log.slice(zs, zero_idx + z_loss + 8));
 			return this.round(val);
 		}
 		is_epoch_over(){
@@ -3302,7 +3301,7 @@ console=window.console;
 			}
 			if(!this.timeout_ms)throw new Error("Invalid");
 			let value=this.round(this.timeout_ms + change);
-			l_log_if(LOG_LEVEL_INFO, 'inc', this.timeout_ms, value-this.timeout_ms);
+			log_if(LOG_LEVEL_INFO, 'inc', this.timeout_ms, value-this.timeout_ms);
 			this.timeout_arr.push(value);
 		}
 		/**
@@ -3315,7 +3314,7 @@ console=window.console;
 			if(!this.timeout_ms)throw new Error("Invalid");
 			let value=this.round(this.timeout_ms - change);
 			if(value < 25)value=25;
-			l_log_if(LOG_LEVEL_INFO, 'dec', this.timeout_ms, this.timeout_ms-value);
+			log_if(LOG_LEVEL_INFO, 'dec', this.timeout_ms, this.timeout_ms-value);
 			this.timeout_arr.push(value);
 		}
 		/**
@@ -3702,7 +3701,7 @@ console=window.console;
 		Array.prototype.forEach.call(document.querySelectorAll("script"), remove_html_nodes);
 	}
 	function on_game_data_set(){
-		l_log_if(LOG_LEVEL_INFO, 'game data init');
+		log_if(LOG_LEVEL_INFO, 'game data init');
 		do_dom_filter();
 		auto_buy_obj.pre_init();
 		setTimeout(auto_buy_obj.init.bind(auto_buy_obj), 300);
@@ -3717,7 +3716,7 @@ console=window.console;
 		}
 	}
 	function action_1() {
-		l_log_if(LOG_LEVEL_INFO, 'start wait');
+		log_if(LOG_LEVEL_INFO, 'start wait');
 		if(window._SM_Data){
 			on_game_data_set();
 		}else{
@@ -4005,7 +4004,7 @@ console=window.console;
 				log_data_vec.push(document.querySelectorAll("script").length);
 				loaded_scripts_count+=added_scripts.length;
 				if(loaded_scripts_count >= script_num){
-					l_log_if(LOG_LEVEL_INFO, 'observer script count', loaded_scripts_count, script_num);
+					log_if(LOG_LEVEL_INFO, 'observer script count', loaded_scripts_count, script_num);
 					console.info('load observer ', ...log_data_vec);
 					reset_global_event_handlers();
 					mut_observer.disconnect();
@@ -4080,8 +4079,10 @@ console=window.console;
 	}
 	function init() {
 		update_logger_vars();
+		g_auto_buy.global_init();
+		window.g_log_if=log_if;
 	}
 	init();
-	l_log_if(LOG_LEVEL_TRACE, 'userscript main');
+	log_if(LOG_LEVEL_TRACE, 'userscript main');
 	main();
 })();
