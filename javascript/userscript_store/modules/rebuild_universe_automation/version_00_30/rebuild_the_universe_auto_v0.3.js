@@ -1962,6 +1962,7 @@ console=window.console;
 			const near_avg='30min';
 			let real_val=this.avg.get_average(near_avg);
 			let [num, exponent]=this.calc_near_val(real_val);
+			if(real_val > 0.1 && real_val < 0.9)return;
 			if(exponent < 2 && exponent > -3) {
 				log_if(LOG_LEVEL_ERROR, 'update_ratio_mode_tag -exp avg:%s=%o lcc=%o', near_avg, (~~(real_val*100000))/100000, this.locked_cycle_count);
 			} else {
