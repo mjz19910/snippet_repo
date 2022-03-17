@@ -4090,7 +4090,7 @@ console=window.console;
 	}
 	function init() {
 		update_logger_vars();
-		g_auto_buy.global_init();
+		auto_buy_obj.global_init();
 		window.g_log_if=log_if;
 	}
 	init();
