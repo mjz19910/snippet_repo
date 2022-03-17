@@ -2475,6 +2475,10 @@ console=window.console;
 				[1, 'dup'],
 				[1, 'append']
 			];
+			/** @arg {CSSStyleSheet} obj @arg {string} str */
+			function replace_css_style(obj, str) {
+				return obj.replace(str);
+			}
 			/** @this {AutoBuy} */
 			async function css_promise_runner(/** @type {Box[]} */ ...box_arr) {
 				/** @type {Promise<Box>[]} */
@@ -2519,19 +2523,18 @@ console=window.console;
 				}
 				this.adopt_styles(...unbox_arr);
 			}
-			let bound_this=this;
-			/** @type {DomExecDescription[]} */
-			let make_css_arr=[
-				[
-					0, 'push', null, new AsyncFunctionBoxImpl(async function(/** @type {Box[]} */ ...a) {
+			async function add_css_style_sheet(/** @type {Box[]} */ ...a) {
 				let ret=css_promise_runner.call(bound_this, ...a);
 				await ret;
 				return new VoidBoxImpl;
-					})
-				],
+			}
+			let bound_this=this;
+			/** @type {DomExecDescription[]} */
+			let make_css_arr=[
+				[0, 'push', null, new AsyncFunctionBoxImpl(add_css_style_sheet)],
 				[
 					0, 'new', new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet), [],
-					(/** @type {CSSStyleSheet} */ obj, /** @type {string} */ str)=>obj.replace(str),
+					replace_css_style,
 					[css_display_style]
 				],
 				[0, 'call', 3],
