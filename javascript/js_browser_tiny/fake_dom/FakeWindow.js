@@ -71,3 +71,11 @@ export class FakeWindow extends FakeWindowNoImpl {
 		this.constructed_badge = badge;
 	}
 }
+
+export function use_types(){
+	return [
+		Badge,
+		NullBadge,
+		DOMBadge,
+	]
+}
