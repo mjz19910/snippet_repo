@@ -1,10 +1,14 @@
 import {document_element_factory, FakeElement} from "fake-dom-api";
 import {Badge} from "fake-dom-std";
 import {HTMLState} from "mjz-html-parser";
-import {DocumentImpl, FakeWindow} from "./mod.js";
-import {FakeHTMLElement} from "./HTMLElement.js";
-import {FakeNode} from "./FakeNode.js";
-import {any} from "./any.js";
+import {any, DocumentImpl, FakeHTMLElement, FakeWindow} from "./mod.js";
+import {NodeInternalData} from "page-loader";
+// FakeDocument <- FakeWindow -> FakeWindowNoImpl
+// FakeDocument -> FakeNode
+// FakeDocument -> FakeWindow
+// FakeDocument <-> FakeWindow
+// Can't import from "./mod.js" as these depend on each other
+import {FakeNode} from "./FakeNode";
 /**@implements {Document} */
 export class FakeDocument extends FakeNode {
 	/**@type {null}*/
@@ -424,6 +428,7 @@ export class FakeDocument extends FakeNode {
 	onended = null;
 	onerror = null;
 	onfocus = null;
+	//spell:ignore onformdata
 	onformdata = null;
 	ongotpointercapture = null;
 	oninput = null;
@@ -465,6 +470,7 @@ export class FakeDocument extends FakeNode {
 	onselect = null;
 	onselectionchange = null;
 	onselectstart = null;
+	//spell:ignore onslotchange
 	onslotchange = null;
 	onstalled = null;
 	onsubmit = null;
@@ -477,6 +483,7 @@ export class FakeDocument extends FakeNode {
 	ontransitionstart = null;
 	onvolumechange = null;
 	onwaiting = null;
+	//spell:ignore onwebkitanimationend onwebkitanimationiteration onwebkitanimationstart onwebkittransitionend
 	onwebkitanimationend = null;
 	onwebkitanimationiteration = null;
 	onwebkitanimationstart = null;
@@ -565,11 +572,13 @@ export class FakeDocument extends FakeNode {
 	/**
 	 * @param {HTMLState} state
 	 * @param {string} s
+	 * @returns {NodeInternalData|null}
 	 */
 	parseHTMLContent(state, s) {
 		if(this.html_parser_callback) {
 			return this.html_parser_callback(state, s);
 		}
+		return null;
 	}
 	#private_data;
 	/**

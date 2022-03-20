@@ -183,6 +183,7 @@ export class FakeWindowNoImpl extends FakeWindowType {
 	get onerror() {throw no_impl();}
 	/**@type {null}*/
 	get onfocus() {throw no_impl();}
+	//spell:ignore onformdata
 	/**@type {null}*/
 	get onformdata() {throw no_impl();}
 	/**@type {null}*/
@@ -266,6 +267,7 @@ export class FakeWindowNoImpl extends FakeWindowType {
 	/**@type {null}*/
 	get onselectstart() {throw no_impl();}
 	/**@type {null}*/
+	//spell:ignore onslotchange
 	get onslotchange() {throw no_impl();}
 	/**@type {null}*/
 	get onstalled() {throw no_impl();}
@@ -289,6 +291,7 @@ export class FakeWindowNoImpl extends FakeWindowType {
 	get onvolumechange() {throw no_impl();}
 	/**@type {null}*/
 	get onwaiting() {throw no_impl();}
+	// spell:ignore onwebkitanimationend onwebkitanimationiteration onwebkitanimationstart onwebkittransitionend
 	/**@type {null}*/
 	get onwebkitanimationend() {throw no_impl();}
 	/**@type {null}*/
@@ -305,6 +308,7 @@ export class FakeWindowNoImpl extends FakeWindowType {
 	get onbeforeprint() {throw no_impl();}
 	/**@type {null}*/
 	get onbeforeunload() {throw no_impl();}
+	//spell:ignore ongamepadconnected ongamepaddisconnected
 	/**@type {null}*/
 	get ongamepadconnected() {throw no_impl();}
 	/**@type {null}*/

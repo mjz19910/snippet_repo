@@ -2,12 +2,13 @@ import {
 	FakeDocument, 
 	FakeLocation, 
 	FakeStorage,
-	FakeWindowNoImpl, 
 	NullBadge,
 } from "./mod.js";
 import {FakeWindowBadge} from "fake-dom-implementation";
 import {Badge} from "fake-dom-std";
 import {DOMBadge} from "fake-dom-implementation";
+// FakeDocument <- FakeWindow -> FakeWindowNoImpl
+import {FakeWindowNoImpl} from "./FakeWindowNoImpl.js";
 export class FakeWindow extends FakeWindowNoImpl {
 	/**@type {FakeDocument} */
 	get document() {
