@@ -38,7 +38,7 @@
 		"fake_dom/std/*.js",
 		"fake_dom/browse/*.js",
 		"fake_dom/api/*.js",
-		"fake_dom/dist_ghost/*.d.ts",
+		"fake_dom/fwd/*.d.ts",
 		"fake_dom/*.js",
 		"preload/context/*.js",
 		"preload/*.js",

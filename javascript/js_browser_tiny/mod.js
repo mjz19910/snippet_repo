@@ -1,3 +1,5 @@
+export {FetchRequestState, fetch_url} from "preload";
+export {on_page_data_loaded, resolve_http_url} from "page-loader";
 import {create_fake, fake} from "fake-dom-browse";
 import {DOMBadge} from "fake-dom";
 import {FetchRequestState, fetch_url} from "preload";
@@ -5,7 +7,7 @@ import {get_repl_activator} from "repl-support";
 import {handle_onPageLoadStarted} from "fake-dom-event";
 import {on_page_data_loaded, resolve_http_url} from "page-loader";
 /**
- * @param {string} req_url
+ * @arg {string} req_url
  */
 export function init_wget(req_url) {
 	create_fake.window();
@@ -20,8 +22,8 @@ export function init_wget(req_url) {
 	return true;
 }
 /**
- * @param {string} page_content
- * @param {string} page_url
+ * @arg {string} page_content
+ * @arg {string} page_url
  */
 export function wget_on_static_page_load(page_content, page_url) {
 	if(!fake.document) throw new Error("No document");
@@ -34,8 +36,19 @@ export function wget_on_static_page_load(page_content, page_url) {
 		repl.on_finished();
 	}
 }
-export {
-	fetch_url,
-	FetchRequestState,
-	resolve_http_url,
+
+export const use_mod = {
+	get imports(){
+		/**@type {{}[]}*/
+		let t=[
+			resolve_http_url,
+			fetch_url,
+			FetchRequestState,
+		];
+		return t;
+	}
+};
+
+export function get_use_data() {
+	return use_mod;
 }
