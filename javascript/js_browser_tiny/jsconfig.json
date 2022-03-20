@@ -1,0 +1,57 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"target": "esnext",
+		"lib": [
+			"esnext",
+			"DOM",
+		],
+		"types": [
+			"node"
+		],
+		"strict": true,
+		"declaration": true,
+		"checkJs": true,
+		"allowJs": true,
+		"strictNullChecks": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"outDir": "./build",
+		"typeRoots": [
+			"./node_modules/@types"
+		],
+		"paths": {}
+	},
+	"include": [
+		"__global.d.ts",
+		"*.js",
+		"repl_support/plugins/*.js",
+		"repl_support/detail/*.js",
+		"repl_support/commands/*.js",
+		"repl_support/*.js",
+		"fake_dom/node_modules/*.js",
+		"fake_dom/types/*.js",
+		"fake_dom/event/*.js",
+		"fake_dom/implementation/*.js",
+		"fake_dom/std/*.js",
+		"fake_dom/browse/*.js",
+		"fake_dom/api/*.js",
+		"fake_dom/*.js",
+		"preload/context/*.js",
+		"preload/*.js",
+		"page_loader/types/*.js",
+		"page_loader/html/lex/plugin/*.js",
+		"page_loader/html/lex/box/*.js",
+		"page_loader/html/lex/*.js",
+		"page_loader/html/*.js",
+		"page_loader/api/*.js",
+		"page_loader/*.js",
+		"fake_dom/*.d.ts", "fake_dom/std/mod.d.ts",
+	],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts"
+	]
+}
