@@ -1,5 +1,7 @@
-import {fake_window, init as window_init} from "./do_create_window.js";
-import {fake_document, init as document_init} from "./do_create_document.js";
+import {init as window_init} from "./do_create_window.js";
+import {init as document_init} from "./do_create_document.js";
+import {FakeWindow} from "../FakeWindow.js";
+import {FakeDocument} from "../FakeDocument.js";
 
 const create_fake = Object.freeze({
 	window:window_init,
@@ -7,8 +9,10 @@ const create_fake = Object.freeze({
 });
 
 const fake = {
-	window:fake_window,
-	document:fake_document,
+	/**@type {FakeWindow|null}*/
+	window:null,
+	/**@type {FakeDocument|null}*/
+	document:null,
 };
 
 export {
