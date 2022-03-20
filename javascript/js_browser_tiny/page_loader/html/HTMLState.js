@@ -6,7 +6,7 @@ export class HTMLState {
 	document_impl_root = null;
 	request_state;
 	/**
-	 * @param {FetchRequestState} state
+	 * @param {FetchRequestState|null} state
 	 */
 	constructor(state) {
 		this.request_state = state;
