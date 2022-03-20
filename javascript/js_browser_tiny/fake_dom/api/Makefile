@@ -4,7 +4,7 @@ EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --target esnext
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types ../dist/mod
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types ../fwd/mod
 
 .PHONY: clean clean-src-decl build all
 
@@ -20,6 +20,8 @@ endif
 build: prepare dist/mod.d.ts
 
 prepare:
+# patch npm
+	~/workspace/git/snippet_repo/javascript/js_browser_tiny/patches/apply_patch_a.sh || true
 	npm i
 
 dist/mod.d.ts:

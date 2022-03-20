@@ -13,7 +13,6 @@ all: build
 
 clean: clean-src-decl
 	make -C api clean
-	make -C html clean
 
 clean-src-decl:
 ifneq ($(SRC_DECL_DIR),)
@@ -30,4 +29,3 @@ dist/mod.d.ts:
 
 req-build:
 	make -C api
-	make -C html

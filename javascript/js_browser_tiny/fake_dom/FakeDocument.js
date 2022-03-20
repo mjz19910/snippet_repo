@@ -1,6 +1,5 @@
 import {document_element_factory, FakeElement} from "fake-dom-api";
 import {Badge} from "fake-dom-std";
-import {HTMLState} from "mjz-html-parser";
 import {any, DocumentImpl, FakeHTMLElement, FakeWindow} from "./mod.js";
 import {NodeInternalData} from "page-loader";
 // FakeDocument <- FakeWindow -> FakeWindowNoImpl
@@ -9,6 +8,7 @@ import {NodeInternalData} from "page-loader";
 // FakeDocument <-> FakeWindow
 // Can't import from "./mod.js" as these depend on each other
 import {FakeNode} from "./FakeNode";
+import {HTMLState} from "../tiny_html_parser/HTMLState.js";
 /**@implements {Document} */
 export class FakeDocument extends FakeNode {
 	/**@type {null}*/

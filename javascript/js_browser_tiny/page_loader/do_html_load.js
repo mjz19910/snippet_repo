@@ -1,6 +1,6 @@
 import {FakeDocument, FakeWindow} from "fake-dom";
 import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js";
-import {html_parser_callback} from "mjz-html-parser/html_parser_callback";
+import {html_parser_callback} from "../tiny_html_parser/html_parser_callback.js";
 import {HTMLState} from "mjz-html-parser";
 /**
  * @param {FakeDocument} document

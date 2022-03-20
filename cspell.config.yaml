@@ -133,6 +133,7 @@ words:
   - retcp
   - retpr
   - retv
+  - rewalk
   - sandboxed
   - sargs
   - sarr
@@ -164,6 +165,7 @@ words:
   - tonext
   - totalAchi
   - totalAtome
+  - treeverse
   - trgfs
   - typechecked
   - uerr

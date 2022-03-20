@@ -1,4 +1,4 @@
-import {NodeInternalData} from "../../../NodeInternalData.js";
+import {NodeInternalData} from "page-loader/NodeInternalData";
 import {repl_activator} from "repl-support/repl_activator";
 import {REPLPlugin} from "repl-plugins/REPLPlugin";
 import {FetchRequestState} from "preload/FetchRequestState";

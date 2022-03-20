@@ -2,7 +2,8 @@ import {ClientRequest, IncomingMessage} from "http";
 import {fake} from "fake-dom-browse";
 import {get_repl_activator} from "repl-support";
 import {on_page_data_loaded} from "page-loader";
-import {fetch_url,FetchStateFlags, data} from "./mod.js";
+import {fetch_url, data} from "./mod.js";
+import {FetchStateFlags} from "./FetchStateFlags.js";
 export class FetchRequestState extends FetchStateFlags {
 	on_redirect_status_code() {
 		if(!this.m_incoming_message) return;

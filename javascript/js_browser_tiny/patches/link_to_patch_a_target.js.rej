@@ -1,0 +1,57 @@
+*** /dev/null
+--- /dev/null
+***************
+*** 2,3
+- const util = require('util');
+- const debug=false;
+--- 0 -----
+***************
+*** 6
+-   if(debug)console.log('\ncalcDepFlags', util.formatWithOptions({colors:true, depth:8, compact:1}, tree))
+--- 0 -----
+***************
+*** 17,24
+-     leave(node){
+-       if(debug)console.log('leave', util.formatWithOptions({colors:true, depth:3, compact:1}, node));
+-     },
+-     getChildren: (node, tree) =>{
+-       let ret=[...tree.edgesOut.values()].map(edge => edge.to);
+-       if(debug)console.log('getChildren', util.formatWithOptions({colors:true, depth:8, compact:1}, node))
+-       return ret;
+-     },
+--- 14,15 -----
++     getChildren: (node, tree) =>
++       [...tree.edgesOut.values()].map(edge => edge.to),
+***************
+*** 41,44
+-   if(!node.target){
+-     if(debug)console.log("node without target", node);
+-   }
+- 
+--- 0 -----
+***************
+*** 46
+-   if (node.isLink && node.target) {
+--- 33 -----
++   if (node.isLink) {
+***************
+*** 116,119
+-         if(!node.target){
+-           if(debug)console.log("node without target", node);
+-         }
+-         if (node.isLink && node.target) {
+--- 103 -----
++         if (node.isLink) {
+***************
+*** 123,125
+-       getChildren: node => {
+-         if(!node.target)return [];
+-         return [...node.target.edgesOut.values()]
+--- 107 -----
++       getChildren: node => [...node.target.edgesOut.values()]
+***************
+*** 128,129
+-         .map(edge => edge.to)
+-         },
+--- 110 -----
++         .map(edge => edge.to),
