@@ -1,6 +1,7 @@
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeElement} from "./FakeElement.js";
-// FakeHTMLElement -> [FakeElement.js, FakeDocument.js]
+// FakeHTMLElement -> [./FakeElement.js -> [./Element.js, ./api/CastResult.js], ./FakeDocument.js]
+// !!! FakeHTMLElement -> ./FakeElement.js -> ./api/CastResult.js -> FakeHTMLElement.js
 /**@implements {HTMLElement} */
 export class FakeHTMLElement extends FakeElement {
 	/**@returns {string} */

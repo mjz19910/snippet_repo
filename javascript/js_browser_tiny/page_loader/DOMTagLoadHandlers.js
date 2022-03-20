@@ -23,7 +23,10 @@ export class DOMTagLoadHandlers {
 		fe.tag_description = dom_tag_description;
 		let result = dom_node.castNodeTo(document_impl.element_type_tag);
 		if(result.type === 'cast_result') {
-			this.document.documentElement = result.release_value();
+			// !!! FakeHTMLElement -> ./api/CastResult.js -> FakeHTMLElement.js
+			/**@type {any}*/
+			let av=result.release_value();
+			this.document.documentElement = av;
 		} else {
 			throw Error("Cast to element failed: dom_node not a valid html documentElement");
 		}
