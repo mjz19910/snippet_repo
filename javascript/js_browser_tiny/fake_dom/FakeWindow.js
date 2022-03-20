@@ -43,7 +43,7 @@ export class FakeWindow extends FakeWindowNoImpl {
 	/**@type {FakeStorage|null} */
 	m_localStorage = null;
 	get localStorage() {
-		if(this.m_localStorage === null){
+		if(this.m_localStorage === null) {
 			this.m_localStorage = new FakeStorage("local");
 		}
 		return this.m_localStorage;
@@ -72,10 +72,10 @@ export class FakeWindow extends FakeWindowNoImpl {
 	}
 }
 
-export function use_types(){
+export function use_types() {
 	return [
 		Badge,
 		NullBadge,
 		DOMBadge,
-	]
+	];
 }
