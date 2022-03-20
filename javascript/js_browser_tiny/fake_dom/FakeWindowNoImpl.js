@@ -365,8 +365,11 @@ export class FakeWindowNoImpl extends FakeWindowType {
 	reportError() {throw no_impl();}
 	/**@return {number}*/
 	setInterval() {throw no_impl();}
-	/**@return {number}*/
-	setTimeout() {throw no_impl();}
+	/**
+	 * @arg {(args: any[]) => void} h
+	 * @arg {number | undefined} [t]
+	 * @arg {any[]} aa@return {number}*/
+	setTimeout(h,t,...aa) {throw no_impl(h,t,aa);}
 	/**@type {Storage}*/
 	get sessionStorage() {throw no_impl();}
 }
