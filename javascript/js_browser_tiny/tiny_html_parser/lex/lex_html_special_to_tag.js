@@ -1,8 +1,10 @@
 import {HTMLDataLex} from "./box/HTMLDataLex.js";
+import {HTMLEntityLex} from "./box/HTMLEntityLex.js";
 import {HTMLSpecialLex} from "./box/HTMLSpecialLex.js";
 import {HTMLTagLex} from "./box/HTMLTagLex.js";
+import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 /**
- * @param {(HTMLDataLex | HTMLSpecialLex | HTMLTagLex)[]} arr
+ * @param {(ReturnType<typeof js_type_html_lex_arr> | HTMLTagLex)[]} arr
  */
 function req_pop(arr){
 	let value=arr.pop();
@@ -10,12 +12,13 @@ function req_pop(arr){
 		throw new Error("Element underflow");
 	return value;
 }
+// cant use fn for this one
 /**
- * @param {(HTMLDataLex|HTMLSpecialLex|HTMLTagLex)[]} elements
+ * @param {(HTMLSpecialLex | HTMLDataLex | HTMLEntityLex | HTMLTagLex)[]} elements
  * @param {HTMLSpecialLex} item
  */
 export function lex_html_special_to_tag(elements, item) {
-	/**@type {(HTMLDataLex|HTMLSpecialLex|HTMLTagLex)[]} */
+	/**@type {(ReturnType<typeof js_type_html_lex_arr>|HTMLTagLex)[]} */
 	let tag_acc=[];
 	switch(item.value) {
 		case '>':
@@ -51,7 +54,11 @@ export function lex_html_special_to_tag(elements, item) {
 		case '/':
 		case '<':
 		case '\n':
+		case '<!':
 		case '</': elements.push(item); break;
-		default: console.log('need parse', item);
+		default:{
+			console.log('need parse', item);
+			throw new Error("Parse: \""+item.value+"\"");
+		}
 	}
 }

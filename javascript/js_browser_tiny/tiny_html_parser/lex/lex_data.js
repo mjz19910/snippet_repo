@@ -1,18 +1,28 @@
-import {HTMLDataLex} from "./box/HTMLDataLex.js";
-import {HTMLSpecialLex} from "./box/HTMLSpecialLex.js";
-
+import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 /**
- * @arg {(HTMLSpecialLex|HTMLDataLex)[]} arr
- * @param {string} x
+ * @type {string[]}
+ */
+const cc_map=[];
+/**
+ * @arg {(ReturnType<typeof js_type_html_lex_arr)[]} arr
+ * @param {number} x
  */
 export function lex_data(arr, x) {
 	let last = arr.at(-1);
 	if(last && last.type === 'data') {
-		last.value += x;
+		if(cc_map[x]){
+			last.value += cc_map[x];
+			return;
+		}
+		cc_map[x] = String.fromCharCode(x);
+		last.value += cc_map[x];
 	} else {
+		if(!cc_map[x]){
+			cc_map[x] = String.fromCharCode(x);
+		}
 		arr.push({
 			type: "data",
-			value: x
+			value: cc_map[x],
 		});
 	}
 }

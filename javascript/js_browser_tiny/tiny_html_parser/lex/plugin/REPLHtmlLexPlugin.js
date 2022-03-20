@@ -5,16 +5,17 @@ import {NodeInternalData} from "../../../page_loader/NodeInternalData.js";
 import {repl_activator} from "../../../repl_support/mod.js";
 import {REPLPlugin} from "../../../repl_support/plugins/REPLPlugin.js";
 import {FetchRequestState} from "../../../mod.js";
+import {js_type_html_lex_arr} from "../js_type_html_lex_arr.js";
 class HTMLLexResult {
-	/**@type {(HTMLSpecialLex|HTMLDataLex)[]}*/
+	/**@type {(ReturnType<typeof js_type_html_lex_arr>)[]}*/
 	lex_arr;
-	/**@type {(HTMLSpecialLex|HTMLDataLex|HTMLTagLex)[]}*/
+	/**@type {(ReturnType<typeof js_type_html_lex_arr>|HTMLTagLex)[]}*/
 	elements;
 	/**@type {NodeInternalData}*/
 	document_root;
 	/**
-	 * @param {(HTMLSpecialLex | HTMLDataLex)[]} lex_arr
-	 * @param {(HTMLSpecialLex | HTMLDataLex | HTMLTagLex)[]} elements
+	 * @param {(ReturnType<typeof js_type_html_lex_arr>)[]} lex_arr
+	 * @param {(ReturnType<typeof js_type_html_lex_arr> | HTMLTagLex)[]} elements
 	 * @param {NodeInternalData} document_root
 	 */
 	constructor(lex_arr, elements, document_root) {

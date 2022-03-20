@@ -24,7 +24,7 @@ export class FetchRequestState extends FetchStateFlags {
 		this.on_request_finished();
 	}
 	/**
-	 * @param {string|null} page_content
+	 * @param {Uint8Array|null} page_content
 	 */
 	on_incoming_message_result(page_content) {
 		if(!fake.document)
@@ -74,8 +74,7 @@ export class FetchRequestState extends FetchStateFlags {
 		});
 		this.m_incoming_message.on('end', () => {
 			process.stdout.write("\n");
-			let page_content = Buffer.concat(data).toString();
-			this.on_incoming_message_result(page_content);
+			this.on_incoming_message_result(Uint8Array.from(Buffer.concat(data)));
 		});
 	}
 	/**

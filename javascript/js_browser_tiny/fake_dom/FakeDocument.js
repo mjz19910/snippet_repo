@@ -11,6 +11,7 @@ import {document_element_factory} from "./api/const.js";
 import {FakeElement} from "./FakeElement";
 import {Badge} from "./std/Badge.js";
 import {init as html_element_init} from "./FakeHTMLElement.js";
+import {html_parser_callback} from "../tiny_html_parser/html_parser_callback.js";
 /**@implements {Document} */
 export class FakeDocument extends FakeNode {
 	/**@type {null}*/
@@ -577,6 +578,9 @@ export class FakeDocument extends FakeNode {
 	 * @returns {NodeInternalData|null}
 	 */
 	parseHTMLContent(state, html_bytes) {
+		if(this.html_parser_callback === html_parser_callback){
+			return html_parser_callback.call(this, state, html_bytes);
+		}
 		if(this.html_parser_callback) {
 			return this.html_parser_callback(state, html_bytes);
 		}
