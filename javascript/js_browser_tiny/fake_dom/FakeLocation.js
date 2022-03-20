@@ -3,33 +3,31 @@ import {Badge} from "./std/Badge.js";
 /**@implements {URL} */
 class FakeURL {
 	/**@type {string}*/
-	get hash(){throw new Error("NoImpl")};
+	get hash() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get host(){throw new Error("NoImpl")};
+	get host() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get hostname(){throw new Error("NoImpl")};
+	get hostname() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get href(){throw new Error("NoImpl")};
+	get href() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get origin(){throw new Error("NoImpl")};
+	get origin() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get password(){throw new Error("NoImpl")};
+	get password() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get pathname(){throw new Error("NoImpl")};
+	get pathname() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get port(){throw new Error("NoImpl")};
+	get port() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get protocol(){throw new Error("NoImpl")};
+	get protocol() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get search(){throw new Error("NoImpl")};
+	get search() {throw new Error("NoImpl");}
 	/**@type {URLSearchParams}*/
-	get searchParams(){throw new Error("NoImpl")};
+	get searchParams() {throw new Error("NoImpl");}
 	/**@type {string}*/
-	get username(){throw new Error("NoImpl")};
+	get username() {throw new Error("NoImpl");}
 	/**@returns {string} */
-	toJSON() {
-		throw new Error("NoImpl");
-	}
+	toJSON() {throw new Error("NoImpl");}
 }
 
 /**@implements {Location}*/
