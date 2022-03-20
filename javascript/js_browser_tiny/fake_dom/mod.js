@@ -1,7 +1,6 @@
 import {any} from "./any.js";
-import {create_fake, fake} from "fake-dom-browse";
 import {DocumentImpl} from "./DocumentImpl.js";
-import {DOMBadge} from "fake-dom-implementation";
+import {DOMBadge} from "./implementation/mod.js";
 import {DOMStringList} from "./DOMStringList.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeHTMLElement} from "./HTMLElement.js";
@@ -15,21 +14,24 @@ import {HTMLDivElement} from "./HTMLDivElement.js";
 import {HTMLFormElement} from "./HTMLFormElement.js";
 import {HTMLIFrameElement} from "./HTMLIFrameElement.js";
 import {HTMLUnknownElement} from "./HTMLUnknownElement.js";
+import {FakeElement} from "./FakeElement.js";
 import {NullBadge} from "./NullBadge.js";
-
+export {
+	create_fake,
+	fake,
+};
 export {
 	any,
-	create_fake,
 	DocumentImpl,
 	DOMBadge,
 	DOMStringList,
-	fake,
 	FakeDocument,
 	FakeHTMLElement,
 	FakeLocation,
 	FakeNode,
 	FakeStorage,
 	FakeWindow,
+	FakeElement,
 	FakeWindowNoImpl,
 	HTMLAnchorElement,
 	HTMLDivElement,
@@ -39,14 +41,12 @@ export {
 	NullBadge,
 };
 
-export function use_imports(){
+export function use_imports() {
 	return [
 		any,
-		create_fake,
 		DocumentImpl,
 		DOMBadge,
 		DOMStringList,
-		fake,
 		FakeDocument,
 		FakeHTMLElement,
 		FakeLocation,
@@ -60,5 +60,5 @@ export function use_imports(){
 		HTMLIFrameElement,
 		HTMLUnknownElement,
 		NullBadge,
-	]
+	];
 }

@@ -1,9 +1,9 @@
 import {ClientRequest, IncomingMessage} from "http";
-import {fake} from "fake-dom-browse";
-import {get_repl_activator} from "repl-support";
-import {on_page_data_loaded} from "page-loader";
-import {fetch_url, data} from "./mod.js";
+import {get_repl_activator} from "../repl_support/repl_activator.js";
 import {FetchStateFlags} from "./FetchStateFlags.js";
+import {fetch_url} from "./fetch_url.js";
+import {data} from "./mod.js";
+import {on_page_data_loaded} from "./on_page_data_loaded.js";
 export class FetchRequestState extends FetchStateFlags {
 	on_redirect_status_code() {
 		if(!this.m_incoming_message) return;
@@ -98,7 +98,7 @@ export class FetchRequestState extends FetchStateFlags {
 	constructor(url, opts) {
 		super(opts);
 		this.url = url;
-		/**@type {import("./types/http_type.js").http_type | undefined} */
+		/**@type {import("../preload/types/http_type.js").http_type | undefined} */
 		this.m_start_request_module = undefined;
 		/** @type {ClientRequest | undefined} */
 		this.m_client_request = undefined;

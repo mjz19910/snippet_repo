@@ -1,4 +1,4 @@
-const debug=false;
+const debug=true;
 class ContextType {
 	/**@type {string[]}*/
 	conditions=[];
@@ -10,15 +10,26 @@ class ContextType {
  * @param {ContextType} context
  * @param {import("./nice_loader_types.js").ResolveFn} defaultResolve
  */
-export function resolve(specifier, context, defaultResolve) {
+export async function resolve(specifier, context, defaultResolve) {
 	if(debug)console.log('spec', specifier);
 	if(debug)console.log('ctx', context);
-	if(specifier.endsWith(".js")){
-		return defaultResolve(specifier, context, defaultResolve);
+	if(specifier.endsWith(".js")) {
+		try{
+			return defaultResolve(specifier, context, defaultResolve);
+		}catch(err){
+			console.log('module err', err);
+			return {};
+		}
 	}
 	try{
-		return defaultResolve(specifier + ".js", context, defaultResolve);
+		return await defaultResolve(specifier + ".js", context, defaultResolve);
 	} catch(err) {
-		return defaultResolve(specifier, context, defaultResolve);
+		console.log('module err', err);
+		try{
+			return defaultResolve(specifier, context, defaultResolve);
+		}catch(err){
+			console.log('module err', err);
+			return {};
+		}
 	}
 }

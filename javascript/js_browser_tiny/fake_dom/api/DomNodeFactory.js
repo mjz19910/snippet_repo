@@ -1,11 +1,5 @@
-import {HTMLAnchorElement} from "../mod.js";
-import {HTMLDivElement} from "../mod.js";
-import {HTMLFormElement} from "../mod.js";
-import {HTMLUnknownElement} from "../mod.js";
-import {HTMLIFrameElement} from "../mod.js";
+import {HTMLAnchorElement, HTMLDivElement, FakeElement} from "../mod.js";
 import {doc_js_has_obj} from "./const.js";
-import {FakeElement} from "./FakeElement.js";
-
 export class DomNodeFactory {
 	#node_factory = {
 		handled_tags: ["A", "DIV", "FORM", "IFRAME", "SCRIPT", "UNKNOWN"],

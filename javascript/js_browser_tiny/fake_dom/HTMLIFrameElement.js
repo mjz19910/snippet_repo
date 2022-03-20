@@ -2,7 +2,7 @@ import {element_to_tree_node} from "fake-dom-api/const";
 import {FakeHTMLElement} from "./HTMLElement.js";
 import {FakeLocation} from "./Location.js";
 import {FakeWindow} from "./FakeWindow.js";
-import {DOMBadge} from "fake-dom-implementation";
+import {DOMBadge} from "fake_dom/implementation/mod.js";
 
 export class HTMLIFrameElement extends FakeHTMLElement {
 	/**@type {{window:FakeWindow}|null} */

@@ -1,5 +1,4 @@
-import {FetchRequestState} from "./mod.js";
-
+import {FetchRequestState} from "./FetchRequestState.js";
 /**
  * @param {FetchRequestState} state
  */
@@ -15,4 +14,10 @@ export function fix_fetch_url(state) {
 			state.url = new_url;
 		} catch {}
 	}
+}
+
+export function use_types(){
+	return [
+		FetchRequestState,
+	]
 }

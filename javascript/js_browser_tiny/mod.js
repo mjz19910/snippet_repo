@@ -1,11 +1,9 @@
-export {FetchRequestState, fetch_url} from "preload";
-export {on_page_data_loaded, resolve_http_url} from "page-loader";
-import {create_fake, fake} from "fake-dom-browse";
-import {DOMBadge} from "fake-dom";
-import {FetchRequestState, fetch_url} from "preload";
-import {get_repl_activator} from "repl-support";
-import {handle_onPageLoadStarted} from "fake-dom-event";
-import {on_page_data_loaded, resolve_http_url} from "page-loader";
+import {handle_onPageLoadStarted} from "./fake_dom/event/mod.js";
+import {create_fake, DOMBadge, fake} from "./fake_dom/mod.js";
+import {on_page_data_loaded} from "./page_loader/on_page_data_loaded.js";
+import {resolve_http_url, fetch_url} from "./page_loader/mod.js";
+import {get_repl_activator} from "./repl_support/repl_activator.js";
+import {FetchRequestState} from "./page_loader/FetchRequestState.js";
 /**
  * @arg {string} req_url
  */
@@ -37,10 +35,16 @@ export function wget_on_static_page_load(page_content, page_url) {
 	}
 }
 
+export {
+	resolve_http_url,
+	fetch_url,
+	FetchRequestState,
+};
+
 export const use_mod = {
-	get imports(){
+	get imports() {
 		/**@type {{}[]}*/
-		let t=[
+		let t = [
 			resolve_http_url,
 			fetch_url,
 			FetchRequestState,

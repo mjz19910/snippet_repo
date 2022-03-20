@@ -1,4 +1,5 @@
-import {FetchRequestState} from "./mod.js";
+import {FetchRequestState} from "./FetchRequestState.js";
+
 /**
  * @param {string} _filename
  */

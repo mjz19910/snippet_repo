@@ -1,12 +1,9 @@
-import {DOMBadge} from "fake-dom-implementation";
-import {fake} from "fake-dom-browse";
-import {FakeLocation} from "fake-dom";
-import {fix_fetch_url, FetchRequestState, run_fetch_algorithm} from "./mod.js";
-import {get_repl_activator} from "repl-support";
-
+import {fix_fetch_url, FetchRequestState, run_fetch_algorithm} from "../preload/mod.js";
 import * as http from "http";
 import * as https from "https";
-
+import {DOMBadge, FakeLocation} from "../fake_dom/mod.js";
+import {get_repl_activator} from "../repl_support/repl_activator.js";
+import {fake} from "../fake_dom/browse/mod.js";
 /**
  * @arg {FetchRequestState} fetch_state
  */

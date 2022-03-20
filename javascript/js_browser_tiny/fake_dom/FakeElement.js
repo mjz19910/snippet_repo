@@ -1,6 +1,6 @@
-import {FakeHTMLElement} from "../HTMLElement.js";
-import {CastResult} from "./CastResult.js";
-import {Result} from "./Result.js";
+import {FakeHTMLElement} from "./HTMLElement.js";
+import {CastResult} from "fake-dom-api/CastResult";
+import {Result} from "fake-dom-api/Result";
 export class FakeElement {
 	tag_description = {};
 	/**

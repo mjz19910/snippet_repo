@@ -126,6 +126,7 @@ words:
   - protos
   - proxied
   - punct
+  - realpath
   - rebuildtheuniverse
   - regs
   - reqs

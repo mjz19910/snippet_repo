@@ -1,6 +1,6 @@
-import {get_repl_activator} from "repl-support/repl_activator";
+import {get_repl_activator} from "repl_support/repl_activator";
 import {FetchRequestState} from "preload";
-import {FakeDocument, FakeWindow} from "fake-dom";
+import {FakeDocument, FakeWindow} from "fake_dom/mod";
 import {do_html_load} from "./do_html_load.js";
 import {HTMLState} from "mjz-html-parser";
 /**
