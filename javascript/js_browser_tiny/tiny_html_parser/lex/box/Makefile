@@ -1,10 +1,12 @@
+TARGET := dist/box/mod.d.ts
+DOM_FWD := ../../../fake_dom/fwd/mod
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_JS_DECLARATION := -d --emitDeclarationOnly
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --target esnext
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types $(shell realpath ../../../../fake_dom/fwd/mod)
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types $(DOM_FWD)
 
 .PHONY: clean clean-src-decl build all
 
@@ -17,12 +19,12 @@ ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: prepare dist/box/mod.d.ts req-build
+build: $(DOM_FWD).d.ts prepare $(TARGET) req-build
 
 prepare:
 	npm i
 
-dist/box/mod.d.ts:
+$(TARGET):
 	tsc ${EMIT_JS_DECLARATION} mod.js
 
 req-build:

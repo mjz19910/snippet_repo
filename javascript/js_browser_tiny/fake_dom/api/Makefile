@@ -1,3 +1,4 @@
+TARGET := dist/fake_dom/api/mod.d.ts
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_JS_DECLARATION := -d --emitDeclarationOnly
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
@@ -17,12 +18,16 @@ ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: prepare dist/mod.d.ts
+build: prepare $(TARGET) req-build
 
+.ONESHELL:
 prepare:
 # patch npm
-	~/workspace/git/snippet_repo/javascript/js_browser_tiny/patches/apply_patch_a.sh || true
+	npm i && return 0
+	~/workspace/git/snippet_repo/javascript/js_browser_tiny/patches/apply_patch_a.sh
 	npm i
 
-dist/mod.d.ts:
+$(TARGET):
 	tsc ${EMIT_JS_DECLARATION} mod.js
+
+req-build:
