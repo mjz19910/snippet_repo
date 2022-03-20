@@ -1,5 +1,11 @@
 SRC_DECL_DIR := $(wildcard dist)
-EMIT_JS_DECLARATION := -d --allowJs --emitDeclarationOnly --target esnext --outDir dist --moduleResolution node
+EMIT_JS_DECLARATION := -d --emitDeclarationOnly
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --target esnext
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types $(shell realpath ../dist/mod)
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types $(shell realpath ../../dist/mod)
 
 .PHONY: clean clean-src-decl build all
 
@@ -12,8 +18,8 @@ ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: dist/fake_dom/browse/mod.d.ts
+build: dist/mod.d.ts
 	npm i
 
-dist/fake_dom/browse/mod.d.ts:
+dist/mod.d.ts:
 	tsc ${EMIT_JS_DECLARATION} mod.js
