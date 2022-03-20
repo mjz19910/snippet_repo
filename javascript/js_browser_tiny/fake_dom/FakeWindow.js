@@ -1,11 +1,11 @@
 import {FakeDocument} from "./FakeDocument.js";
-import {FakeEventTarget} from "./EventTarget.js";
 import {FakeLocation} from "./Location.js";
-import {FakeStorage as FakeStorage} from "./Storage.js";
+import {FakeStorage} from "./Storage.js";
 import {FakeWindowBadge} from "fake-dom-implementation/WindowBadge";
 import {Badge} from "fake-dom-std";
 import {DOMBadge} from "fake-dom-implementation";
 import {FakeWindowNoImpl} from "./FakeWindowNoImpl";
+import {NullBadge} from "./NullBadge.js";
 export class FakeWindow extends FakeWindowNoImpl {
 	/**@type {FakeDocument} */
 	get document() {
@@ -33,15 +33,21 @@ export class FakeWindow extends FakeWindowNoImpl {
 		this.m_top = any_set;
 	}
 	/**@type {FakeLocation} */
-	location = new FakeLocation;
-	/**
-	 * @type {(callback:FrameRequestCallback) => number}
-	 */
-	requestAnimationFrame = () => {
-		return -1;
-	};
-	/**@type {FakeStorage} */
-	localStorage = new FakeStorage('local');
+	m_location = new FakeLocation;
+	get location() {
+		return this.m_location;
+	}
+	set location(value) {
+		this.m_location.assign(value);
+	}
+	/**@type {FakeStorage|null} */
+	m_localStorage = null;
+	get localStorage() {
+		if(this.m_localStorage === null){
+			this.m_localStorage = new FakeStorage("local");
+		}
+		return this.m_localStorage;
+	}
 	/**
 	 * @type {any}
 	 */
