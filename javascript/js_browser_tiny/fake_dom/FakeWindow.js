@@ -1,16 +1,18 @@
-import {FakeDocument} from "./FakeDocument.js";
-import {FakeLocation} from "./Location.js";
-import {FakeStorage} from "./Storage.js";
-import {FakeWindowBadge} from "fake-dom-implementation/WindowBadge";
+import {
+	FakeDocument, 
+	FakeLocation, 
+	FakeStorage,
+	FakeWindowNoImpl, 
+	NullBadge,
+} from "./mod.js";
+import {FakeWindowBadge} from "fake-dom-implementation";
 import {Badge} from "fake-dom-std";
 import {DOMBadge} from "fake-dom-implementation";
-import {FakeWindowNoImpl} from "./FakeWindowNoImpl";
-import {NullBadge} from "./NullBadge.js";
 export class FakeWindow extends FakeWindowNoImpl {
 	/**@type {FakeDocument} */
 	get document() {
 		return this.m_document;
-	};
+	}
 	/**
 	 * @arg {(args: any[]) => void} handler
 	 * @arg {number | undefined} [timeout]
