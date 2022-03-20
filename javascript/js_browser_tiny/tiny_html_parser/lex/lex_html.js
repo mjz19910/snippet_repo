@@ -10,7 +10,7 @@ import {HTMLDataLex} from "./box/HTMLDataLex.js";
 import {lex_single_quote_string} from "./lex_single_quote_string";
 import {NodeInternalData} from "../../page_loader/NodeInternalData.js";
 /**
- * @param {string} html
+ * @param {Uint8Array} html
  */
 export function lex_html(html) {
 	var document_root = new NodeInternalData('root', 0, [], null);
@@ -21,24 +21,14 @@ export function lex_html(html) {
 	// stage 1, handle script and style tags and ending and opening of html
 	// tags (also newline and crlf)
 	for(let i = 0; i < html.length; i++) {
-		let cur_lex = html[i];
+		let cur_lex = Buffer.from([html[i]]).toString();
 		if(lex_arr.at(-3)?.value === "<" && lex_arr.at(-1)?.value === ">") {
 			if(lex_arr.at(-2)?.value.trim().startsWith("script")) {
-				let next = html.indexOf('</script>', i);
-				if(next > -1) {
-					lex_arr.push({type: "data", value: ""});
-					lex_data(lex_arr, html.slice(i, next));
-					i = next - 1;
-				}
-				continue;
+				let maybe_script = Buffer.from(html.slice(i, i + '</script>'.length)).toString();
+				if(maybe_script !== '</script>')continue;
 			} else if(lex_arr.at(-2)?.value.trim().startsWith("style")) {
-				let next = html.indexOf('</style>', i);
-				if(next > -1) {
-					lex_arr.push({type: "data", value: ""});
-					lex_data(lex_arr, html.slice(i, next));
-					i = next - 1;
-				}
-				continue;
+				let maybe_script = Buffer.from(html.slice(i, i + '</style>'.length)).toString();
+				if(maybe_script !== '</style>')continue;
 			}
 		}
 		if(lex_mode === 1) {

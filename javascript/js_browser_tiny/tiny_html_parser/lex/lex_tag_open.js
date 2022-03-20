@@ -4,12 +4,12 @@ import {lex_special} from "./lex_special.js";
 
 /**
  * @param {(HTMLSpecialLex | HTMLDataLex)[]} lex_arr
- * @param {string} html
+ * @param {Uint8Array} html
  * @param {number} i
  */
 export function lex_tag_open(lex_arr, html, i) {
-	if(html[i + 1] === '/') {
-		if(html[i + 2] === '>') {
+	if(html[i + 1] === '/'.charCodeAt(0)) {
+		if(html[i + 2] === '>'.charCodeAt(0)) {
 			lex_special(lex_arr, "</>");
 			return 2;
 		} else {

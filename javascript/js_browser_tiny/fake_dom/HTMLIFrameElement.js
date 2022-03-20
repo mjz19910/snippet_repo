@@ -1,4 +1,4 @@
-import {FakeHTMLElement} from "./HTMLElement.js";
+import {FakeHTMLElement} from "./FakeHTMLElement.js";
 import {FakeLocation} from "./Location.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {element_to_tree_node} from "./api/const.js";

@@ -3,7 +3,6 @@ import {DocumentImpl} from "./DocumentImpl.js";
 import {DOMBadge} from "./implementation/mod.js";
 import {DOMStringList} from "./DOMStringList.js";
 import {FakeDocument} from "./FakeDocument.js";
-import {FakeHTMLElement} from "./HTMLElement.js";
 import {FakeLocation} from "./Location.js";
 import {FakeNode} from "./FakeNode.js";
 import {FakeStorage} from "./Storage.js";
@@ -29,7 +28,6 @@ export {
 	DOMBadge,
 	DOMStringList,
 	FakeDocument,
-	FakeHTMLElement,
 	FakeLocation,
 	FakeNode,
 	FakeStorage,
@@ -57,7 +55,6 @@ export function use_imports() {
 		DOMBadge,
 		DOMStringList,
 		FakeDocument,
-		FakeHTMLElement,
 		FakeLocation,
 		FakeNode,
 		FakeStorage,

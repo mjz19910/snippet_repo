@@ -1,7 +1,10 @@
 import {FakeEventTarget} from "./EventTarget.js";
 /**@implements {Node} */
 export class FakeNode extends FakeEventTarget {
-	baseURI = "";
+	/**@type {string}*/
+	get baseURI(){
+		throw new Error("Not implemented");
+	};
 	/**@type {NodeListOf<ChildNode>}*/
 	get childNodes() {
 		throw new Error("Not implemented");
@@ -22,7 +25,10 @@ export class FakeNode extends FakeEventTarget {
 	get nextSibling() {
 		throw new Error("Not implemented");
 	}
-	nodeName = "";
+	/**@type {string}*/
+	get nodeName(){
+		throw new Error("Not implemented");
+	}
 	/**@type {number}*/
 	get nodeType() {
 		throw new Error("Not implemented");
@@ -44,9 +50,13 @@ export class FakeNode extends FakeEventTarget {
 	get previousSibling() {
 		throw new Error("Not implemented");
 	}
-	textContent = "";
+	/**@type {string}*/
+	get textContent() {
+		throw new Error("Not implemented");
+	}
 	/**@type {<T extends Node>(node:T)=>T}*/
-	appendChild() {
+	appendChild(node) {
+		node;
 		throw new Error("Not implemented");
 	}
 	/**@type {(deep?:boolean|undefined)=>Node} */
@@ -72,7 +82,9 @@ export class FakeNode extends FakeEventTarget {
 		throw new Error("Not implemented");
 	}
 	/**@type {<T extends Node>(node: T, child: Node | null) => T}*/
-	insertBefore() {
+	insertBefore(node_a, node_b) {
+		node_a;
+		node_b;
 		throw new Error("Not implemented");
 	}
 	/**@returns {boolean}*/
@@ -99,7 +111,8 @@ export class FakeNode extends FakeEventTarget {
 		throw new Error("Not implemented");
 	}
 	/**@type {<T extends Node>(child: T) => T}*/
-	removeChild() {
+	removeChild(child) {
+		child;
 		throw new Error("Not implemented");
 	}
 	/**@type {<T extends Node>(node: Node, child: T) => T}*/

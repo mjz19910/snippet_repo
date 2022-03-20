@@ -6,7 +6,7 @@ import {HTMLState} from "./HTMLState.js";
 /**
  * @arg {FakeWindow} window
  * @arg {Error|null} err
- * @arg {string|null} html_document_content
+ * @arg {Uint8Array|null} html_document_content
  * @arg {FakeDocument} document
  * @arg {import("./types/page_loader_page_load_state.js").LoaderState} state
  */

@@ -1,2 +1,2 @@
-import {FakeHTMLElement} from "./HTMLElement.js";
+import {FakeHTMLElement} from "./FakeHTMLElement.js";
 export class HTMLUnknownElement extends FakeHTMLElement {}

@@ -20,7 +20,7 @@ export function init_wget(req_url) {
 	return true;
 }
 /**
- * @arg {string} page_content
+ * @arg {Uint8Array} page_content
  * @arg {string} page_url
  */
 export function wget_on_static_page_load(page_content, page_url) {

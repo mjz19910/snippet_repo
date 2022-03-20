@@ -19,7 +19,8 @@ function main() {
 			console.log(err, data);
 			process.exit(1);
 		}
-		wget_on_static_page_load(data.toString(), req_url);
+		
+		wget_on_static_page_load(Uint8Array.from(data), req_url);
 	});
 }
 main();

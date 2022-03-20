@@ -1,4 +1,5 @@
 import {event_handler_type} from "../event_handler_type.js";
+import {fake} from "../mod.js";
 /**
  * @param {{[x:string]:{op?:any;func:typeof event_handler_type}[]}} wind_event_lis
  */

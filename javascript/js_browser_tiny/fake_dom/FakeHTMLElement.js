@@ -1,7 +1,7 @@
-import {FakeDocument as FakeDocument} from "./FakeDocument.js";
-import {FakeElement as FakeElement} from "./Element.js";
+import {FakeDocument} from "./FakeDocument.js";
+import {FakeElement} from "./FakeElement.js";
+// FakeHTMLElement -> [FakeElement.js, FakeDocument.js]
 /**@implements {HTMLElement} */
-
 export class FakeHTMLElement extends FakeElement {
 	/**@returns {string} */
 	get accessKey() {
@@ -475,7 +475,7 @@ export class FakeHTMLElement extends FakeElement {
 		super(x);
 	}
 	/**
-	 * @type {<T>(node:T)=>T} e
+	 * @type {<T extends Node>(node:T)=>T} e
 	 */
 	appendChild(e) {
 		void e;
@@ -588,4 +588,7 @@ export class FakeHTMLElement extends FakeElement {
 		void class_name_needle;
 		throw new Error("Not implemented");
 	}
+}
+export function init() {
+	return FakeHTMLElement;
 }

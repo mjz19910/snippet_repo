@@ -1,4 +1,4 @@
-import {FakeHTMLElement} from "./HTMLElement.js";
+import {FakeHTMLElement} from "./FakeHTMLElement.js";
 
 const prop_hide = new WeakMap;
 export class HTMLImageElement extends FakeHTMLElement {

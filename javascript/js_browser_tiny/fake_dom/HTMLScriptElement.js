@@ -1,4 +1,4 @@
-import {HTMLElement} from "./HTMLElement.js";
+import {HTMLElement} from "./FakeHTMLElement.js";
 export class HTMLScriptElement extends HTMLElement {
     base;
     constructor() {

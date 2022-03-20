@@ -1,4 +1,4 @@
-import {any, DocumentImpl, FakeHTMLElement, FakeWindow} from "./mod.js";
+import {any, DocumentImpl, FakeWindow} from "./mod.js";
 // FakeDocument <- FakeWindow -> FakeWindowNoImpl
 // FakeDocument -> FakeNode
 // FakeDocument -> FakeWindow
@@ -6,6 +6,11 @@ import {any, DocumentImpl, FakeHTMLElement, FakeWindow} from "./mod.js";
 // Can't import from "./mod.js" as these depend on each other
 import {FakeNode} from "./FakeNode";
 import {HTMLState} from "../page_loader/HTMLState.js";
+import {NodeInternalData} from "../page_loader/NodeInternalData.js";
+import {document_element_factory} from "./api/const.js";
+import {FakeElement} from "./FakeElement";
+import {Badge} from "./std/Badge.js";
+import {init as html_element_init} from "./FakeHTMLElement.js";
 /**@implements {Document} */
 export class FakeDocument extends FakeNode {
 	/**@type {null}*/
@@ -539,7 +544,7 @@ export class FakeDocument extends FakeNode {
 	html_parser_callback;
 	document_tag_handlers = {};
 	/**@type {HTMLElement} */
-	documentElement = new FakeHTMLElement;
+	documentElement = new (html_element_init());
 	/**
 	 * @param {any} f
 	 */
@@ -555,7 +560,7 @@ export class FakeDocument extends FakeNode {
 	}
 	/**
 	 * @param {import("./types/TagName.js").TagName|string} a
-	 * @returns {Element&FakeElement}
+	 * @returns {FakeElement}
 	 */
 	construct_dom_node(a) {
 		return document_element_factory.construct_dom_node(a);
@@ -568,12 +573,12 @@ export class FakeDocument extends FakeNode {
 	}
 	/**
 	 * @param {HTMLState} state
-	 * @param {string} s
+	 * @param {Uint8Array} html_bytes
 	 * @returns {NodeInternalData|null}
 	 */
-	parseHTMLContent(state, s) {
+	parseHTMLContent(state, html_bytes) {
 		if(this.html_parser_callback) {
-			return this.html_parser_callback(state, s);
+			return this.html_parser_callback(state, html_bytes);
 		}
 		return null;
 	}
