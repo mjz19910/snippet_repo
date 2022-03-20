@@ -1,21 +1,21 @@
 import {any} from "./any.js";
+import {create_fake, fake} from "./browse/mod.js";
 import {DocumentImpl} from "./DocumentImpl.js";
 import {DOMBadge} from "./implementation/mod.js";
-import {DOMStringList} from "./DOMStringList.js";
 import {FakeDocument} from "./FakeDocument.js";
-import {FakeLocation} from "./Location.js";
+import {FakeDOMStringList} from "./FakeDOMStringList.js";
+import {FakeElement} from "./FakeElement.js";
+import {FakeLocation} from "./FakeLocation.js";
 import {FakeNode} from "./FakeNode.js";
-import {FakeStorage} from "./Storage.js";
+import {FakeStorage} from "./FakeStorage.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {FakeWindowNoImpl} from "./FakeWindowNoImpl.js";
-import {HTMLAnchorElement} from "./HTMLAnchorElement.js";
-import {HTMLDivElement} from "./HTMLDivElement.js";
-import {HTMLFormElement} from "./HTMLFormElement.js";
-import {HTMLIFrameElement} from "./HTMLIFrameElement.js";
-import {HTMLUnknownElement} from "./HTMLUnknownElement.js";
-import {FakeElement} from "./FakeElement.js";
+import {HTMLAnchorElement} from "./FakeHTMLAnchorElement.js";
+import {HTMLDivElement} from "./FakeHTMLDivElement.js";
+import {HTMLFormElement} from "./FakeHTMLFormElement.js";
+import {HTMLIFrameElement} from "./FakeHTMLIFrameElement.js";
+import {HTMLUnknownElement} from "./FakeHTMLUnknownElement.js";
 import {NullBadge} from "./NullBadge.js";
-import {create_fake, fake} from "./browse/mod.js";
 
 export {
 	create_fake,
@@ -26,7 +26,7 @@ export {
 	any,
 	DocumentImpl,
 	DOMBadge,
-	DOMStringList,
+	FakeDOMStringList,
 	FakeDocument,
 	FakeLocation,
 	FakeNode,
@@ -53,7 +53,7 @@ export function use_imports() {
 		any,
 		DocumentImpl,
 		DOMBadge,
-		DOMStringList,
+		FakeDOMStringList,
 		FakeDocument,
 		FakeLocation,
 		FakeNode,

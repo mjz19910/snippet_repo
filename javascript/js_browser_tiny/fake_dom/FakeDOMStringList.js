@@ -1,6 +1,6 @@
 import {Badge} from "./std/Badge.js";
 import {error_factory} from "./std/error_factory.js";
-export class DOMStringList extends Array {
+export class FakeDOMStringList extends Array {
 	/**@type {{[x:string|number]:any} & string[]} */
 	#strings = [];
 	constructor(dom_impl_badge = new Badge) {

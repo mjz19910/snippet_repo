@@ -1,4 +1,5 @@
 import {
+	DOMBadge,
 	FakeDocument, 
 	FakeLocation, 
 	FakeStorage,
@@ -7,6 +8,7 @@ import {
 // FakeDocument <- FakeWindow -> FakeWindowNoImpl
 import {FakeWindowNoImpl} from "./FakeWindowNoImpl.js";
 import {FakeWindowBadge} from "./implementation/WindowBadge.js";
+import {Badge} from "./std/Badge.js";
 export class FakeWindow extends FakeWindowNoImpl {
 	/**@type {FakeDocument} */
 	get document() {

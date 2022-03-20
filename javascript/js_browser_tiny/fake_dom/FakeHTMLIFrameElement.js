@@ -1,5 +1,5 @@
 import {FakeHTMLElement} from "./FakeHTMLElement.js";
-import {FakeLocation} from "./Location.js";
+import {FakeLocation} from "./FakeLocation.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {element_to_tree_node} from "./api/const.js";
 import {DOMBadge} from "./mod.js";

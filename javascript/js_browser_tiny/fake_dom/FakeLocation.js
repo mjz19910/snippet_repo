@@ -1,4 +1,4 @@
-import {DOMStringList} from "./mod.js";
+import {FakeDOMStringList} from "./mod.js";
 import {Badge} from "./std/Badge.js";
 /**@implements {URL} */
 class FakeURL {
@@ -43,7 +43,7 @@ export class FakeLocation {
 	#m_ancestor_origin_list = [];
 	get ancestorOrigins() {
 		if(!this.#dom_impl_badge) throw new Error("No badge");
-		const dom_list = new DOMStringList(this.#dom_impl_badge);
+		const dom_list = new FakeDOMStringList(this.#dom_impl_badge);
 		dom_list.setBackingArray(this.#dom_impl_badge, this.#m_ancestor_origin_list);
 		return dom_list;
 	}
