@@ -1,10 +1,10 @@
 import process from "process";
-import repl from 'repl';
+import repl, {REPLServer} from 'repl';
 import vm from 'vm';
-import {FetchRequestState} from "preload";
+import {FetchRequestState} from "../mod.js";
+import {bind_plugins} from "./plugins/mod.js";
 import {REPLServerRuntime} from "./REPLServerRuntime.js";
 import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
-import {bind_plugins} from "repl-plugins";
 const delete_all_javascript_api = false;
 export class repl_activator {
 	/**
@@ -17,9 +17,9 @@ export class repl_activator {
 		this.repl.pause();
 	}
 	repl_active = false;
-	/**@type {import("repl-support-types").Context|null} */
+	/**@type {import("vm").Context|null} */
 	m_context = null;
-	/**@type {(import("repl-support-types").REPLServer & REPLServerRuntime)|null} */
+	/**@type {(REPLServer & REPLServerRuntime)|null} */
 	m_repl = null;
 	/** @arg {FetchRequestState} state */
 	constructor(state) {
@@ -36,7 +36,7 @@ export class repl_activator {
 		});
 		/**@type {any} */
 		let a_repl = n_repl;
-		/**@type {import("repl-support-types").REPLServer & REPLServerRuntime} */
+		/**@type {REPLServer & REPLServerRuntime} */
 		let r_repl = a_repl;
 		this.m_repl = r_repl;
 		this.m_repl.pause();
@@ -65,7 +65,7 @@ export class repl_activator {
 	}
 	/**
 	 * @param {string} keyword
-	 * @param {import("repl-support-types").REPLCommand} cmd
+	 * @param {import("repl").REPLCommand} cmd
 	 */
 	defineCommand(keyword, cmd) {
 		this.repl.defineCommand(keyword, cmd);

@@ -1,4 +1,5 @@
-import {Badge} from "fake-dom-std/Badge";
+import {Badge} from "./std/Badge.js";
+
 /**@implements {Storage} */
 export class FakeStorage {
 	/**

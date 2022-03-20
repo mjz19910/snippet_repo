@@ -1,2 +1,3 @@
-import {FetchRequestState} from "preload";
+import {FetchRequestState} from "../FetchRequestState";
+
 export type LoaderState=FetchRequestState;

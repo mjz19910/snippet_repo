@@ -1,7 +1,6 @@
 import {lex_double_quote_string} from "./lex_double_quote_string.js";
 import {lex_special} from "./lex_special.js";
 import {lex_data} from "./lex_data.js";
-import {NodeInternalData} from "page-loader/NodeInternalData";
 import {lex_html_special_to_tag} from "./lex_html_special_to_tag.js";
 import {lex_tag_open} from "./lex_tag_open.js";
 import {lex_line_cr} from "./lex_line_cr.js";
@@ -9,6 +8,7 @@ import {HTMLTagLex} from "./box/HTMLTagLex.js";
 import {HTMLSpecialLex} from "./box/HTMLSpecialLex.js";
 import {HTMLDataLex} from "./box/HTMLDataLex.js";
 import {lex_single_quote_string} from "./lex_single_quote_string";
+import {NodeInternalData} from "../../page_loader/NodeInternalData.js";
 /**
  * @param {string} html
  */

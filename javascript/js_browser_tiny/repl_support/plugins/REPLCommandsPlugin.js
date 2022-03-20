@@ -1,4 +1,4 @@
-import {ReloadCommand} from "repl-commands";
+import {ReloadCommand} from "../commands/ReloadCommand.js";
 import {REPLPlugin} from "./mod.js";
 export function get_plugin() {
 	return class REPLCommandsPlugin extends REPLPlugin {

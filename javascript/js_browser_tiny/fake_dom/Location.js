@@ -1,57 +1,34 @@
 import {DOMStringList} from "./mod.js";
-import {Badge} from "fake-dom-std/Badge";
+import {Badge} from "./std/Badge.js";
 /**@implements {URL} */
 class FakeURL {
-	/**
-	 * @type {any}
-	 */
-	hash;
-	/**
-	 * @type {any}
-	 */
-	host;
-	/**
-	 * @type {any}
-	 */
-	hostname;
-	/**
-	 * @type {any}
-	 */
-	href;
-	/**
-	 * @type {any}
-	 */
-	origin;
-	/**
-	 * @type {any}
-	 */
-	password;
-	/**
-	 * @type {any}
-	 */
-	pathname;
-	/**
-	 * @type {any}
-	 */
-	port;
-	/**
-	 * @type {any}
-	 */
-	protocol;
-	/**
-	 * @type {any}
-	 */
-	search;
-	/**
-	 * @type {any}
-	 */
-	searchParams;
-	/**
-	 * @type {any}
-	 */
-	username;
+	/**@type {string}*/
+	get hash(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get host(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get hostname(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get href(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get origin(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get password(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get pathname(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get port(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get protocol(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get search(){throw new Error("NoImpl")};
+	/**@type {URLSearchParams}*/
+	get searchParams(){throw new Error("NoImpl")};
+	/**@type {string}*/
+	get username(){throw new Error("NoImpl")};
+	/**@returns {string} */
 	toJSON() {
-		return "{}";
+		throw new Error("NoImpl");
 	}
 }
 
@@ -62,9 +39,7 @@ export class FakeLocation {
 	#original_location_str;
 	/**@type {URL} */
 	#location_url = new FakeURL;
-	/**
-	 * @type {any}
-	 */
+	/**@type {string[]} */
 	#m_ancestor_origin_list = [];
 	get ancestorOrigins() {
 		if(!this.#dom_impl_badge) throw new Error("No badge");

@@ -14,6 +14,7 @@ clean: clean-src-decl
 	make -C page_loader clean
 	make -C preload clean
 	make -C repl_support clean
+	make -C tiny_html_parser clean
 
 clean-src-decl:
 ifneq ($(SRC_DECL_DIR),)
@@ -33,3 +34,4 @@ req-build:
 	make -C page_loader
 	make -C preload
 	make -C repl_support
+	make -C tiny_html_parser

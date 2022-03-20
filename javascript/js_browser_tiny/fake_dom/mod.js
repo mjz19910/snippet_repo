@@ -16,10 +16,13 @@ import {HTMLIFrameElement} from "./HTMLIFrameElement.js";
 import {HTMLUnknownElement} from "./HTMLUnknownElement.js";
 import {FakeElement} from "./FakeElement.js";
 import {NullBadge} from "./NullBadge.js";
+import {create_fake, fake} from "./browse/mod.js";
+
 export {
 	create_fake,
 	fake,
 };
+
 export {
 	any,
 	DocumentImpl,
@@ -42,7 +45,13 @@ export {
 };
 
 export function use_imports() {
-	return [
+	/**@type {{}[][]} */
+	let groups=[];
+	groups.push([
+		create_fake,
+		fake
+	]);
+	groups.push([
 		any,
 		DocumentImpl,
 		DOMBadge,
@@ -60,5 +69,6 @@ export function use_imports() {
 		HTMLIFrameElement,
 		HTMLUnknownElement,
 		NullBadge,
-	];
+	]);
+	return groups;
 }

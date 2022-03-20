@@ -1,4 +1,4 @@
-import {fetch_url} from "preload";
+import {fetch_url} from "../../mod.js";
 import {get_repl_activator} from "../mod.js";
 export class ReloadCommand {
 	/**

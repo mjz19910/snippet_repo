@@ -1,4 +1,4 @@
-import {Badge} from "fake-dom-std/Badge";
+import {Badge} from "../std/Badge.js";
 export class BrowseBadge extends Badge {
 	is_valid() {
 		return true;

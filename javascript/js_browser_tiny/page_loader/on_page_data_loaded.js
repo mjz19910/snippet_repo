@@ -1,8 +1,8 @@
-import {get_repl_activator} from "repl_support/repl_activator";
-import {FetchRequestState} from "preload";
-import {FakeDocument, FakeWindow} from "fake_dom/mod";
+import {FakeDocument, FakeWindow} from "../fake_dom/mod";
+import {get_repl_activator} from "../repl_support/repl_activator.js";
 import {do_html_load} from "./do_html_load.js";
-import {HTMLState} from "mjz-html-parser";
+import {FetchRequestState} from "./FetchRequestState.js";
+import {HTMLState} from "./HTMLState.js";
 /**
  * @arg {FakeWindow} window
  * @arg {Error|null} err

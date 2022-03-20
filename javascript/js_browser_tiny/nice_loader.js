@@ -1,4 +1,12 @@
 const debug=true;
+const system_modules = [
+	'repl',
+	'http',
+	'https',
+	'path',
+	'process',
+	'vm',
+]
 class ContextType {
 	/**@type {string[]}*/
 	conditions=[];
@@ -20,6 +28,9 @@ export async function resolve(specifier, context, defaultResolve) {
 			console.log('module err', err);
 			return {};
 		}
+	}
+	if(system_modules.includes(specifier)) {
+		return defaultResolve(specifier, context, defaultResolve);
 	}
 	try{
 		return await defaultResolve(specifier + ".js", context, defaultResolve);

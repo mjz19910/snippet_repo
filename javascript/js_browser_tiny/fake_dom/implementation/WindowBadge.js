@@ -1,5 +1,5 @@
-import {Badge} from "fake-dom-std";
 import {FakeWindow} from "../mod.js";
+import {Badge} from "../std/Badge.js";
 export class FakeWindowBadge extends Badge {
 	m_has_error = false;
 	/**@type {Error|null} */

@@ -1,5 +1,5 @@
-import {Badge} from "fake-dom-std/Badge";
-import {error_factory} from "fake-dom-std/error_factory";
+import {Badge} from "./std/Badge.js";
+import {error_factory} from "./std/error_factory.js";
 export class DOMStringList extends Array {
 	/**@type {{[x:string|number]:any} & string[]} */
 	#strings = [];
@@ -15,6 +15,9 @@ export class DOMStringList extends Array {
 	setBackingArray(dom_impl_badge = new Badge, value) {
 		if(!dom_impl_badge) {
 			throw new Error("no badge");
+		}
+		for(let i=0;i<value.length;i++){
+			this[i]=value;
 		}
 		this.#strings = value;
 	}

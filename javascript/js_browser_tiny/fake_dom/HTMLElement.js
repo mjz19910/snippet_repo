@@ -1,5 +1,5 @@
 import {FakeDocument as FakeDocument} from "./FakeDocument.js";
-import {Element as FakeElement} from "./Element.js";
+import {FakeElement as FakeElement} from "./Element.js";
 /**@implements {HTMLElement} */
 
 export class FakeHTMLElement extends FakeElement {

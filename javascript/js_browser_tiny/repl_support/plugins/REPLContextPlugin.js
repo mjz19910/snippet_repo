@@ -1,5 +1,8 @@
-import {get_vars, get_dom_state, make_reload_page_handler} from "preload-context";
-import {async_import, eval_script} from "repl-detail";
+import {make_reload_page_handler} from "../../page_loader/make_reload_page_handler.js";
+import {eval_script} from "../detail/eval.js";
+import {async_import} from "../detail/import.js";
+import {get_dom_state} from "../get_dom_state.js";
+import {get_vars} from "../get_vars.js";
 import {REPLPlugin} from "./mod.js";
 export function get_plugin() {
 	return class REPLContextPlugin extends REPLPlugin {

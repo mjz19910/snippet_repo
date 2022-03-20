@@ -1,4 +1,4 @@
-import {fake} from "fake-dom-browse";
+import {fake} from "../../fake_dom/mod.js";
 import {REPLPlugin} from "./mod.js";
 export function get_plugin() {
 	return class REPLFakeBrowserPlugin extends REPLPlugin {

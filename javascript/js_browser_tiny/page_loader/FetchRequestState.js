@@ -1,4 +1,5 @@
 import {ClientRequest, IncomingMessage} from "http";
+import {fake} from "../fake_dom/mod.js";
 import {get_repl_activator} from "../repl_support/repl_activator.js";
 import {FetchStateFlags} from "./FetchStateFlags.js";
 import {fetch_url} from "./fetch_url.js";

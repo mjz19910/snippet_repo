@@ -127,8 +127,8 @@ export class FakeWindowNoImpl extends FakeWindowType {
 	scrollTo() {throw no_impl();}
 	stop() {throw no_impl();}
 	cancelAnimationFrame() {throw no_impl();}
-	/**@returns {number}*/
-	requestAnimationFrame() {throw no_impl();}
+	/**@type {(a:FrameRequestCallback)=>number}*/
+	requestAnimationFrame(a) {throw no_impl(a);}
 	/**@type {null}*/
 	get onabort() {throw no_impl();}
 	/**@type {null}*/

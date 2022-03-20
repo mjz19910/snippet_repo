@@ -1,38 +1,18 @@
-import {fake} from "fake-dom-browse";
-import {DOMBadge} from "fake-dom-implementation";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeNode} from "./FakeNode.js";
-
+import {DOMBadge, fake} from "./mod.js";
 /**@implements {DocumentType} */
 class FakeDocumentType extends FakeNode {
-    /**
-     * @type {any}
-     */
-    name;
-    /**
-     * @type {any}
-     */
-    publicId;
-    /**
-     * @type {any}
-     */
-    systemId;
-    /**
-     * @type {any}
-     */
-    after;
-    /**
-     * @type {any}
-     */
-    before;
-    /**
-     * @type {any}
-     */
-    remove;
-    /**
-     * @type {any}
-     */
-    replaceWith;
+    /**@type {string}*/
+    get name(){throw new Error("NoImpl")};
+    /**@type {string}*/
+    get publicId(){throw new Error("NoImpl")};
+    /**@type {string}*/
+    get systemId(){throw new Error("NoImpl")};
+    after(){throw new Error("NoImpl")};
+    before(){throw new Error("NoImpl")};
+    remove(){throw new Error("NoImpl")};
+    replaceWith(){throw new Error("NoImpl")};
     /**@returns {Document} */
     get ownerDocument() {
         throw new Error("TODO");
@@ -68,7 +48,8 @@ export class DocumentImpl {
     /**
      * @param {any} title
      */
-    createHTMLDocument(title){
+    createHTMLDocument(title) {
+        title;
         if(!fake.window)throw new Error("");
         /**@type {any} */
         let vv=new FakeDocument(fake.window, new DOMBadge);

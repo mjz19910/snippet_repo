@@ -1,4 +1,3 @@
-import {FetchRequestState} from "preload";
 import {repl_activator} from "../mod.js";
 import {create_plugins} from "./create_plugins.js";
 import {enable_plugins} from "./enable_plugins.js";
