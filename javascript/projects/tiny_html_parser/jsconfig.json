@@ -4,7 +4,7 @@
 		"target": "esnext",
 		"lib": [
 			"esnext",
-			"DOM",
+			"DOM"
 		],
 		"types": [
 			"node"
@@ -25,7 +25,6 @@
 		"paths": {}
 	},
 	"include": [
-		"__global.d.ts",
 		"*.js"
 	],
 	"exclude": [

@@ -25,8 +25,7 @@
 		"paths": {}
 	},
 	"include": [
-		"__global.d.ts",
-		"*.js"
+		"*.js",
 	],
 	"exclude": [
 		"node_modules",

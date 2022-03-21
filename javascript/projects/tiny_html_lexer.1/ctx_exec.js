@@ -1,8 +1,3 @@
-import {writeFileSync} from "fs";
-import {dirname} from "path";
-import {runInContext, runInThisContext} from "vm";
-import {HTMLLexerState} from "./HTMLLexerState.js";
-const my_filename = import.meta.url;
 //**@arg {HTMLLexerState} obj*/
 // export function ctx_exec(obj) {
 export function ctx_exec() {
