@@ -1,3 +1,7 @@
+/* spell:words
+-- version_list template --
+v1 (cur): snippet_repo_v2/javascript/group1/sub_b/item-__.js
+*/
 (async function() {
 	var dofn = function(arr, p_a) {
 		var wk;
