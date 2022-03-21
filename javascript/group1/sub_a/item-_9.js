@@ -212,8 +212,7 @@ function deep_eq(obj_1, obj_2) {
 	if (obj_2 instanceof Map) {
 		return deep_eq([...obj_1.entries()], [...obj_2.entries()]);
 	}
-	throw 1;
-	return false;
+	throw new Error("Fixme");
 }
 function deep_includes(arr, value) {
 	for (let i = 0; i < arr.length; i++) {

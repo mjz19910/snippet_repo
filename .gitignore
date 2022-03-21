@@ -6,4 +6,4 @@ package-lock.json
 lib/final/
 lib/types/
 lib/modules/rebuild_universe_automation
-
+lib/temporary/
