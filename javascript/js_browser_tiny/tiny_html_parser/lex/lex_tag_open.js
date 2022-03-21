@@ -1,21 +1,18 @@
-import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
+import {HTMLLexerState} from "./HTMLLexerState.js";
 import {lex_special_raw} from "./lex_special_raw.js";
 /**
- * @param {(ReturnType<typeof js_type_html_lex_arr>)[]} lex_arr
- * @param {Uint8Array} html
- * @param {number} i
+ * @param {HTMLLexerState} state
  */
-export function lex_tag_open(lex_arr, html, i) {
-	if(html[i + 1] === '/'.charCodeAt(0)) {
-		if(html[i + 2] === '>'.charCodeAt(0)) {
-			lex_special_raw(lex_arr, "</>")
-			return 2;
+export function lex_tag_open(state) {
+	if(state.dec(1, 1) === '/') {
+		if(state.dec(2, 1) === '>') {
+			lex_special_raw(state.lex_arr, "</>")
+			state.i+=2;
 		} else {
-			lex_special_raw(lex_arr, "</");
-			return 1;
+			lex_special_raw(state.lex_arr, "</");
+			state.i+=1;
 		}
 	} else {
-		lex_special_raw(lex_arr, "<");
+		lex_special_raw(state.lex_arr, "<");
 	}
-	return 0;
 }

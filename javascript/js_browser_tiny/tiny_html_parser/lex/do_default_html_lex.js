@@ -1,7 +1,7 @@
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {lex_data} from "./lex_data.js";
 import {lex_doctype_open} from "./lex_doctype_open.js";
-import {abc_arr, num_chars} from "./lex_html";
+import {abc_arr, num_chars} from "./lex_html.js";
 /**
  * @param {HTMLLexerState} state
  * @param {string} cur_char
@@ -28,7 +28,7 @@ export function do_default_html_lex(state, cur_char) {
 	}
 	let ss_1 = 'doctype';
 	if(state.dec(0, ss_1.length) === ss_1) {
-		state.lex_inc = lex_doctype_open(state.lex_arr);
+		lex_doctype_open(state.lex_arr);
 		state.i += ss_1.length - 1;
 		return;
 	};

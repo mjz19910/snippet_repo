@@ -5,15 +5,16 @@ import {lex_tag_open} from "./lex_tag_open.js";
 import {lex_line_cr} from "./lex_line_cr.js";
 import {lex_single_quote_string} from "./lex_single_quote_string.js";
 import {lex_html_entity} from "./lex_html_entity.js";
-import {decode_text_ascii} from "./decode_text_ascii";
-import {lex_html_script_content} from "./lex_html_script_content";
-import {do_default_html_lex} from "./do_default_html_lex";
-import {ok_char_int8s, any, h_enc} from "./lex_html";
+import {decode_text_ascii} from "./decode_text_ascii.js";
+import {lex_html_script_content} from "./lex_html_script_content.js";
+import {do_default_html_lex} from "./do_default_html_lex.js";
+import {ok_char_int8s, any, h_enc} from "./lex_html.js";
 import {HTMLLexerState} from "./HTMLLexerState.js";
 /**
  * @param {HTMLLexerState} state
  */
 export function do_html_lex_step(state) {
+	if(!state.cur_lex)return;
 	if(state.html[state.i - 1] < 128 && ok_char_int8s.includes(state.cur_lex)) {
 		lex_data(state);
 		return;
@@ -47,7 +48,6 @@ export function do_html_lex_step(state) {
 		state.lex_mode = new_mode;
 		return;
 	}
-	let lex_inc;
 	let cur_char = state.dec(0, 1);
 	switch(cur_char) {
 		case '\r': lex_line_cr(state.lex_arr, state.html, state.i); break;
@@ -64,10 +64,9 @@ export function do_html_lex_step(state) {
 			break;
 		case '"': lex_data(state); state.lex_mode = 1; break;
 		case '<': {
-			lex_inc = lex_tag_open(state.lex_arr, state.html, state.i);
+			lex_tag_open(state);
 			state.is_in_tag_content = false;
 			state.is_in_tag_attrs = true;
-			state.i += lex_inc;
 		} break;
 		case "'": lex_data(state); state.lex_mode = 2; break;
 		case ' ':

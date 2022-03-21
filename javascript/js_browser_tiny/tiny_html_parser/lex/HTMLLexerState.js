@@ -23,29 +23,31 @@ export class HTMLLexerState {
 		run_script(this);
 		console.log(this.ctx, this.ctx_inner);
 		let s = new DelPropertiesState;
-		this.ctx.del_all_properties = del_all_properties;
 		this.ctx.s = s;
 		this.ctx.console = console;
-		/**
-		 * @type {never[]}
-		 */
-		let r_proxy_list = [];
-		this.ctx.obj_api = make_rec_revokable_proxy(r_proxy_list, Object);
-		s.ctx_req = [console, s, del_all_properties];
+		s.ctx_req = [s, console];
 		s.cur = this.ctx_inner;
-		ctx_exec(this);
 		debugger;
-		this.cur_lex = undefined;
-		this.lex_arr = undefined;
-		this.lex_mode = undefined;
-		this.is_in_tag_attrs = undefined;
-		this.is_in_tag_content = undefined;
-		this.is_in_script_tag = undefined;
+		ctx_exec(this);
+		/**
+		 * @type {number}
+		 */
+		this.cur_lex = -1;
+		/**
+		 * @type {any[]}
+		 */
+		this.lex_arr = [];
+		/**
+		 * @type {number}
+		 */
+		this.lex_mode = 0;
+		this.is_in_tag_attrs = false;
+		this.is_in_tag_content = false;
+		this.is_in_script_tag = false;
 		this.i = 0;
 		/**
 		 * @type {Uint8Array}
 		 */
 		this.html = new Uint8Array();
-		this.lex_inc = undefined;
 	}
 }

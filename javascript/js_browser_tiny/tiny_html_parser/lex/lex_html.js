@@ -7,7 +7,7 @@ import {HTMLDataLex} from "./box/HTMLDataLex.js";
 import {HTMLEntityLex} from "./box/HTMLEntityLex.js";
 import {writeFileSync} from "fs";
 import {HTMLLexerState} from "./HTMLLexerState.js";
-import {do_html_lex_step} from "./do_html_lex_step";
+import {do_html_lex_step} from "./do_html_lex_step.js";
 export const abc_arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 export const num_chars = "0123456789";
 /**@type {number[]}*/
@@ -27,9 +27,9 @@ export const my_filename = import.meta.url;
  * @param {Uint8Array} html
  */
 export function lex_html(html) {
-	writeFileSync("./download.html", html);
 	let state = new HTMLLexerState;
 	var document_root = new NodeInternalData('root', 0, [], null);
+	state.html=html;
 	/**@type {0|1|2}*/
 	state.lex_mode = 0;
 	state.is_in_tag_attrs = false;
