@@ -15,19 +15,22 @@ function req_pop(arr){
 // cant use fn for this one
 /**
  * @param {(HTMLSpecialLex | HTMLDataLex | HTMLEntityLex | HTMLTagLex)[]} elements
- * @param {HTMLSpecialLex} item
+ * @param {(HTMLSpecialLex|HTMLDataLex|HTMLEntityLex)[]} arr
+ * @arg {number} idx
  */
-export function lex_html_special_to_tag(elements, item) {
+export function lex_html_special_to_tag(elements, arr, idx) {
 	/**@type {(ReturnType<typeof js_type_html_lex_arr>|HTMLTagLex)[]} */
 	let tag_acc=[];
-	switch(item.value) {
+	let cur=arr[idx];
+	switch(cur.value) {
 		case '>':
 			let tag_content = req_pop(elements);
 			if(tag_content.type === 'special') {
 				tag_acc.push(req_pop(elements));
 				tag_acc.unshift(req_pop(elements));
-				tag_content.value += item.value;
+				tag_content.value += cur.value;
 				tag_acc.push(tag_content);
+				// console.log(`item.value === '>' && pop(elements).type === 'special'`, tag_acc);
 				if(tag_acc[0].type === 'special' && tag_acc[2].type === 'special' && tag_acc[1].type === 'data'){
 					elements.push(new HTMLTagLex(tag_acc[0].value, tag_acc[2].value, tag_acc[1]));
 				} else {
@@ -36,16 +39,28 @@ export function lex_html_special_to_tag(elements, item) {
 			} else if(tag_content.type === 'data') {
 				tag_acc.push(req_pop(elements));
 				tag_acc.push(tag_content);
-				tag_acc.push(item);
-				if(tag_acc[0].type === 'special' && tag_acc[2].type === 'special' && tag_acc[1].type === 'data'){
+				tag_acc.push(cur);
+				// console.log(`item.value === '>' && pop(elements).type === 'data'`, tag_acc);
+				if(tag_acc[0].type === 'special' && tag_acc[1].type === 'data' && tag_acc[2].type === 'special') {
 					elements.push(new HTMLTagLex(tag_acc[0].value, tag_acc[2].value, tag_acc[1]));
-				} else {
-					console.log(elements.slice(-12), tag_acc);
+				} else if(tag_acc[0].type === 'tag' && tag_acc[1].type === 'data' && tag_acc[2].type === 'special') {
+					tag_acc[1].value += tag_acc[2].value;
+					elements.push(tag_acc[0], tag_acc[1]);
+					console.log('script tag drop', tag_acc[2].value);
+				}
+				else {
+					console.log('hist ---------- \n%o', elements.slice(-4));
+					console.log('acc ---------- \n%o', tag_acc);
+					console.log('nx ---------- \n%o', arr[idx+1]);
 					throw new Error("TODO");
 				}
 			} else if(tag_content.type === 'tag') {
-				elements.push(tag_content);
-				elements.push(item);
+				tag_acc.push(tag_content);
+				tag_acc.push(cur);
+				for(let i=0;i<tag_acc.length;i++){
+					elements.push(tag_acc[i]);
+				}
+				// console.log(`item.value === '>' && pop(elements).type === 'tag'`, tag_acc);
 			} else {
 				console.debug("Not handled for", tag_content);
 				throw new Error("Tag type not handled");
@@ -55,10 +70,11 @@ export function lex_html_special_to_tag(elements, item) {
 		case '<':
 		case '\n':
 		case '<!':
-		case '</': elements.push(item); break;
+		case '</': elements.push(cur); break;
 		default:{
-			console.log('need parse', item);
-			throw new Error("Parse: \""+item.value+"\"");
+			console.log('nx ---------- \n%o', arr[idx+1]);
+			console.log('need parse ----- \n%o', cur);
+			throw new Error("Parse: \""+cur.value+"\"");
 		}
 	}
 }

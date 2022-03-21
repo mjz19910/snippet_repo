@@ -1,4 +1,4 @@
-import {FakeDocument, FakeWindow} from "../fake_dom/mod";
+import {FakeDocument, FakeWindow} from "../fake_dom/mod.js";
 import {get_repl_activator} from "../repl_support/repl_activator.js";
 import {do_html_load} from "./do_html_load.js";
 import {FetchRequestState} from "./FetchRequestState.js";

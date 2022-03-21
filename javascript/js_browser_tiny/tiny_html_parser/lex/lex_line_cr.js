@@ -1,4 +1,4 @@
-import {lex_special} from "./lex_special.js";
+import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {lex_special_raw} from "./lex_special_raw.js";
 
 /**

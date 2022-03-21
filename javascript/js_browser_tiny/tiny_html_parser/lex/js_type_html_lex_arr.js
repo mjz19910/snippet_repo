@@ -1,6 +1,6 @@
 import {HTMLSpecialLex} from "./box/HTMLSpecialLex.js";
 import {HTMLDataLex} from "./box/HTMLDataLex.js";
-import {HTMLEntityLex} from "./box/HTMLEntityLex";
+import {HTMLEntityLex} from "./box/HTMLEntityLex.js";
 /**@arg {1|2|3} mode */
 export function js_type_html_lex_arr(mode) {
 	// HTMLSpecialLex|HTMLDataLex|HTMLEntityLex

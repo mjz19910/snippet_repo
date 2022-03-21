@@ -3,6 +3,10 @@ import {html_parser_callback} from "../tiny_html_parser/html_parser_callback.js"
 import {FakeDocument} from "../fake_dom/FakeDocument.js";
 import {FakeWindow} from "../fake_dom/FakeWindow.js";
 import {HTMLState} from "./HTMLState.js";
+/**do_html_load <- [
+ * @type {import("./on_page_data_loaded").on_page_data_loaded}
+ *]*/
+export let xx;
 /**
  * @param {FakeDocument} document
  * @param {FakeWindow} window

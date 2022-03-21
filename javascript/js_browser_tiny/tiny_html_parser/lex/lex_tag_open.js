@@ -1,5 +1,5 @@
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
-import {lex_special_raw} from "./lex_special_raw";
+import {lex_special_raw} from "./lex_special_raw.js";
 /**
  * @param {(ReturnType<typeof js_type_html_lex_arr>)[]} lex_arr
  * @param {Uint8Array} html

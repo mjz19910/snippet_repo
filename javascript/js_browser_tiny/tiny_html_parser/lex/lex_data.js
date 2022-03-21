@@ -1,28 +1,26 @@
+import {HTMLLexerState} from "./HTMLLexerState.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 /**
  * @type {string[]}
  */
 const cc_map=[];
-/**
- * @arg {(ReturnType<typeof js_type_html_lex_arr)[]} arr
- * @param {number} x
- */
-export function lex_data(arr, x) {
-	let last = arr.at(-1);
+/**@arg {HTMLLexerState} state*/
+export function lex_data(state) {
+	let last = state.lex_arr.at(-1);
 	if(last && last.type === 'data') {
-		if(cc_map[x]){
-			last.value += cc_map[x];
+		if(cc_map[state.cur_lex]){
+			last.value += cc_map[state.cur_lex];
 			return;
 		}
-		cc_map[x] = String.fromCharCode(x);
-		last.value += cc_map[x];
+		cc_map[state.cur_lex] = String.fromCharCode(state.cur_lex);
+		last.value += cc_map[state.cur_lex];
 	} else {
-		if(!cc_map[x]){
-			cc_map[x] = String.fromCharCode(x);
+		if(!cc_map[state.cur_lex]){
+			cc_map[state.cur_lex] = String.fromCharCode(state.cur_lex);
 		}
-		arr.push({
+		state.lex_arr.push({
 			type: "data",
-			value: cc_map[x],
+			value: cc_map[state.cur_lex],
 		});
 	}
 }

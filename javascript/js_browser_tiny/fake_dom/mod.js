@@ -1,4 +1,3 @@
-import {any} from "./any.js";
 import {create_fake, fake} from "./browse/mod.js";
 import {DocumentImpl} from "./DocumentImpl.js";
 import {DOMBadge} from "./implementation/mod.js";
@@ -23,7 +22,6 @@ export {
 };
 
 export {
-	any,
 	DocumentImpl,
 	DOMBadge,
 	FakeDOMStringList,
@@ -50,7 +48,6 @@ export function use_imports() {
 		fake
 	]);
 	groups.push([
-		any,
 		DocumentImpl,
 		DOMBadge,
 		FakeDOMStringList,
