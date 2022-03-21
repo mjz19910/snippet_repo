@@ -11,9 +11,11 @@ export function do_default_html_lex(state, cur_char) {
 		return lex_data(state);
 	if(num_chars.includes(cur_char))
 		return lex_data(state);
-	let lv = state.lex_arr.at(-1)?.value;
-	x: if(lv !== '<' && lv !== '!') {
-		if(lv === '!') {
+	
+	let last_lex_value = state.lex_arr.at(-1)?.value;
+	console.log('last_value = %o; cur_char = %o', last_lex_value, cur_char);
+	x: if(last_lex_value !== '<' && last_lex_value !== '!') {
+		if(last_lex_value === '!') {
 			let to = state.lex_arr.at(-2)?.value;
 			if(to === '<') {
 				break x;
@@ -23,7 +25,7 @@ export function do_default_html_lex(state, cur_char) {
 		console.log('lex_html_tag bad else', state.cur_lex, as);
 		console.log('before', state.dec(-3, 6));
 		console.log('bin', state.html.subarray(state.i - 1, state.i + 6));
-		console.log('last seen', lv);
+		console.log('last seen', last_lex_value);
 		throw new Error("No");
 	}
 	let ss_1 = 'doctype';

@@ -1,8 +1,9 @@
 import path, {relative} from "path";
 import {default as process, argv, exit} from "process";
 import {init_wget, resolve_http_url, FetchRequestState, fetch_url} from "./mod.js";
+const saved_console=console;
 process.on('unhandledRejection', error => {
-	console.log('unhandled promise rejection', error);
+	saved_console.log('unhandled promise rejection', error);
 });
 /**
  * @arg {boolean} long_help

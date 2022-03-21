@@ -5,7 +5,6 @@ import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {HTMLSpecialLex} from "./box/HTMLSpecialLex.js";
 import {HTMLDataLex} from "./box/HTMLDataLex.js";
 import {HTMLEntityLex} from "./box/HTMLEntityLex.js";
-import {writeFileSync} from "fs";
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {do_html_lex_step} from "./do_html_lex_step.js";
 export const abc_arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -22,7 +21,6 @@ export const h_enc = {
 export function any(v) {
 	return v;
 }
-const my_filename = import.meta.url;
 /**
  * @param {Uint8Array} html
  */

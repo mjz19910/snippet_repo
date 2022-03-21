@@ -1,9 +1,6 @@
 import {StringDecoder} from "string_decoder";
 import {createContext, Script} from "vm";
 import {ctx_exec} from "./ctx_exec.js";
-import {del_all_properties} from "./del_all_properties.js";
-import {make_rec_revokable_proxy} from "./make_rec_revokable_proxy.js";
-import {DelPropertiesState} from "./DelPropertiesState.js";
 import {run_script} from "./run_script.js";
 export class HTMLLexerState {
 	/**
@@ -18,10 +15,6 @@ export class HTMLLexerState {
 		this.ctx = createContext(Object.create(null));
 		/**@type {any}*/
 		this.ctx_inner = null;
-		/**@type {Script|null}*/
-		this.script = null;
-		run_script(this);
-		ctx_exec();
 		/**
 		 * @type {number}
 		 */
@@ -42,5 +35,9 @@ export class HTMLLexerState {
 		 * @type {Uint8Array}
 		 */
 		this.html = new Uint8Array();
+		/**@type {Script|null}*/
+		this.script = null;
+		run_script(this);
+		ctx_exec();
 	}
 }
