@@ -9,7 +9,8 @@ import {on_html_lex_result} from "../tiny_html_lexer/on_html_lex_result.js";
  */
 export function html_parser_callback(html_state, html) {
 	let file_path = "";
-	let file_url = html_state.request_state?.url;
+	if(!html_state.request_state) throw new Error("no request state");
+	let file_url = html_state.request_state.url;
 	if(!file_url) throw new Error("request with no url");
 	let url_obj = new URL(file_url);
 	if(url_obj.pathname.endsWith("/")) {

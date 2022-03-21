@@ -4,7 +4,7 @@ export class HTMLState {
 	document_impl_root = null;
 	request_state;
 	/**
-	 * @param {{}|null} state
+	 * @param {{url:string}|null} state
 	 */
 	constructor(state) {
 		this.request_state = state;
