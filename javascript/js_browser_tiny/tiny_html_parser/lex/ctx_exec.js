@@ -3,11 +3,12 @@ import {dirname} from "path";
 import {runInContext, runInThisContext} from "vm";
 import {HTMLLexerState} from "./HTMLLexerState.js";
 const my_filename = import.meta.url;
-/**@arg {HTMLLexerState} obj*/
-export function ctx_exec(obj) {
-	const code=`
-/**@this {globalThis}*/
-(function() {
+//**@arg {HTMLLexerState} obj*/
+// export function ctx_exec(obj) {
+export function ctx_exec() {
+//	const code=`
+//**@this {globalThis}*/
+//(function() {
 	const obj_define_property = Object.defineProperty;
 	const obj_own_props = Object.getOwnPropertyDescriptors;
 	const arr_includes = Array.prototype.includes;
@@ -27,15 +28,18 @@ export function ctx_exec(obj) {
 	 * @param {any} obj
 	 */
 	function del_all_properties_1(state, obj, cc, key, property_descriptor) {
-		state.del_parents.push([obj, key, property_descriptor]);
+		const s=state;
+		const debug=false;
+		s.del_parents.push([obj, key, property_descriptor]);
+		s.del_objs.push(obj);
 		cc.push([obj, key, property_descriptor.value]);
 		x: try {
-			if(obj_has_own_property(property_descriptor, 'value')) {
-				console.log('del_all_properties_1_tag 1', key, property_descriptor);
+			if(reflect_apply(obj_has_own_property, property_descriptor, ['value'])) {
+				if(debug)console.log('del_all_properties_1_tag 1', key, property_descriptor);
 				break x;
 			}
 			if(property_descriptor.get && property_descriptor.set) {
-				console.log('del_all_properties_1_tag 2', key, property_descriptor.get, property_descriptor.set);
+				if(debug)console.log('del_all_properties_1_tag 2', key, property_descriptor.get, property_descriptor.set);
 				break x;
 			}
 			if(property_descriptor.get) {
@@ -45,17 +49,16 @@ export function ctx_exec(obj) {
 				console.log('del_all_properties_1_tag 4', key, property_descriptor.set);
 			}
 		} catch(e) {
-			debugger;
 			e;
 			let undo_try_fn = () => console.log('del', key, property_descriptor);
-			state.del_undo_init();
-			state.del_undo_until_ok(undo_try_fn);
+			s.del_undo_init();
+			s.del_undo_until_ok(undo_try_fn);
 		}
 		if(property_descriptor.value === void 0)
 			return;
-		if(!state.new_cache.includes(property_descriptor.value)) {
-			state.new_cache.push(property_descriptor.value);
-			state.new_del.push(property_descriptor.value);
+		if(!s.new_cache.includes(property_descriptor.value)) {
+			s.new_cache.push(property_descriptor.value);
+			s.new_del.push(property_descriptor.value);
 		}
 	}
 
@@ -82,8 +85,8 @@ export function ctx_exec(obj) {
 					del_all_properties_1(state, tq, cc, ...k);
 				} else {
 					if(k[1].writable) {
-						del_all_properties_1(state, tq, cc, ...k);
 						tq[k[0]] = void 0;
+						del_all_properties_1(state, tq, cc, ...k);
 					}
 				}
 			}
@@ -99,6 +102,8 @@ export function ctx_exec(obj) {
 		new_del = [];
 		/**@type {any[]}*/
 		del_parents = [];
+		/**@type {any[]}*/
+		del_objs = [];
 		/**
 		 * @type {any}
 		 */
@@ -117,16 +122,20 @@ export function ctx_exec(obj) {
 		del_undo_until_ok(fn) {
 			let is_ok = false;
 			let count = 0;
+			try{
+				fn();
+				return;
+			} catch {}
 			while(!is_ok) {
+				this.del_undo();
 				try {
 					fn();
 					is_ok = true;
 				} catch {
 					count++;
-					this.del_undo();
 				}
 			}
-			debugger;
+			count;
 		}
 		del_undo() {
 			if(this.del_undo_cur == void 0) return;
@@ -140,13 +149,23 @@ export function ctx_exec(obj) {
 	/**@type {Array<any>['pop']}*/
 	const arr_prototype_pop = Array.prototype.pop;
 	const map_proto = Map.prototype;
-	s.cur = this;
+	const prev_UintArr=Uint8Array;
+	const prev_Buffer=Buffer;
+	const prev_Array_proto=Array.prototype;
+	/**@type {any}*/
+	let ws_t=global;
+	/**@type {Window&typeof globalThis}*/
+	const window_saved=ws_t;
+	s.cur = window_saved;
 	s.ctx_req = [s, console];
-	console.log('ctx_exec ce', this);
-	debugger;
+	console.log('ctx_exec ce', window_saved);
 	del_all_properties(s, s.cur);
-	while(s.new_del.length > 8) {
-		debugger;
+	const fn_start_undo=function(){
+		let undo_try_fn = () => console.log('undo test');
+		s.del_undo_init();
+		s.del_undo_until_ok(undo_try_fn);
+	}
+	while(s.new_del.length > 0) {
 		let xx = reflect_apply(arr_prototype_pop, s.new_del, []);
 		s.cur = xx;
 		let pl = s.new_del.length;
@@ -156,21 +175,18 @@ export function ctx_exec(obj) {
 			console.log('pd', al - pl);
 		} catch(e) {
 			e;
-			debugger;
+			fn_start_undo();
+			console.log('pd', al - pl);
 		}
 	}
-	console.log('cc pr', this.obj_api);
 	console.log('s.cur', s.cur);
 	debugger;
-})();`;
+	window_saved.Uint8Array=prev_UintArr;
+	window_saved.Buffer=prev_Buffer;
+// })();`;
 	{
-		const script_running_opts={filename: my_filename, lineOffset:7};
-		try{
-			runInThisContext(code, script_running_opts);
-		}catch(e){
-			e;
-			debugger;
-		}
+		// const script_running_opts={filename: my_filename, lineOffset:7};
+		// runInThisContext(code, script_running_opts);
 		// runInContext(code, obj.ctx, script_running_opts);
 	}
 }

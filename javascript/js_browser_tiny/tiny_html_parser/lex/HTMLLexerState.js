@@ -21,8 +21,7 @@ export class HTMLLexerState {
 		/**@type {Script|null}*/
 		this.script = null;
 		run_script(this);
-		debugger;
-		ctx_exec(this);
+		ctx_exec();
 		/**
 		 * @type {number}
 		 */
