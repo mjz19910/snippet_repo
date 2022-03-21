@@ -1,5 +1,4 @@
 import {HTMLLexerState} from "./HTMLLexerState.js";
-import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 /**
  * @type {string[]}
  */

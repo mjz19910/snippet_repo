@@ -38,16 +38,12 @@ export function do_html_lex_step(state) {
 			throw 1;
 		}
 	}
-	if(state.lex_mode === 1) {
-		let new_mode = lex_double_quote_string(state.lex_arr, state.cur_lex, state.lex_mode);
-		state.lex_mode = new_mode;
-		return;
-	}
-	if(state.lex_mode === 2) {
-		let new_mode = lex_single_quote_string(state.lex_arr, state.cur_lex, state.lex_mode);
-		state.lex_mode = new_mode;
-		return;
-	}
+	if(state.lex_mode === 0) return lex_html_mode_1(state);
+	if(state.lex_mode === 1) return lex_double_quote_string(state);
+	if(state.lex_mode === 2) return lex_single_quote_string(state);
+}
+/**@arg {HTMLLexerState}state*/
+function lex_html_mode_1(state) {
 	let cur_char = state.dec(0, 1);
 	switch(cur_char) {
 		case '\r': lex_line_cr(state.lex_arr, state.html, state.i); break;

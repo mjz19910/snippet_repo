@@ -1,6 +1,5 @@
 import {StringDecoder} from "string_decoder";
 import {createContext, Script} from "vm";
-import {ctx_exec} from "./ctx_exec.js";
 import {run_script} from "./run_script.js";
 export class HTMLLexerState {
 	/**
@@ -38,6 +37,5 @@ export class HTMLLexerState {
 		/**@type {Script|null}*/
 		this.script = null;
 		run_script(this);
-		ctx_exec();
 	}
 }
