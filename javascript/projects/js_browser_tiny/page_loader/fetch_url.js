@@ -1,8 +1,3 @@
-import * as http from "http";
-import * as https from "https";
-import {FetchRequestState} from "./FetchRequestState.js";
-import {fix_fetch_url} from "./fix_fetch_url.js";
-import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
 /**
  * @arg {FetchRequestState} fetch_state
  */

@@ -1,8 +1,8 @@
 import {mkdir, writeFile} from "fs/promises";
 import {dirname} from "path";
 import {HTMLState} from "./HTMLState.js";
-import {lex_html} from "./lex/lex_html.js";
-import {on_html_lex_result} from "./lex/on_html_lex_result.js";
+import {lex_html} from "../tiny_html_lexer/lex_html.js";
+import {on_html_lex_result} from "../tiny_html_lexer/on_html_lex_result.js";
 /**
  * @param {HTMLState} html_state
  * @param {Uint8Array} html

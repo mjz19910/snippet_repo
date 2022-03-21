@@ -1,10 +1,9 @@
 import {lex_html_special_to_tag} from "./lex_html_special_to_tag.js";
-import {HTMLTagLex} from "./box/HTMLTagLex.js";
-import {NodeInternalData} from "../../js_browser_tiny/page_loader/NodeInternalData.js";
+import {HTMLTagLex} from "./tiny_html_general_box/HTMLTagLex.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
-import {HTMLSpecialLex} from "./box/HTMLSpecialLex.js";
-import {HTMLDataLex} from "./box/HTMLDataLex.js";
-import {HTMLEntityLex} from "./box/HTMLEntityLex.js";
+import {HTMLSpecialLex} from "./tiny_html_general_box/HTMLSpecialLex.js";
+import {HTMLDataLex} from "./tiny_html_general_box/HTMLDataLex.js";
+import {HTMLEntityLex} from "./tiny_html_general_box/HTMLEntityLex.js";
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {do_html_lex_step} from "./do_html_lex_step.js";
 export const abc_arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

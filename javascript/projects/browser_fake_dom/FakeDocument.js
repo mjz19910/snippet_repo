@@ -5,8 +5,8 @@ import {DocumentImpl, FakeWindow} from "./mod.js";
 // FakeDocument <-> FakeWindow
 // Can't import from "./mod.js" as these depend on each other
 import {FakeNode} from "./FakeNode.js";
-import {HTMLState} from "../../page_loader/HTMLState.js";
-import {NodeInternalData} from "../../page_loader/NodeInternalData.js";
+import {HTMLState} from "../page_loader/HTMLState.js";
+import {NodeInternalData} from "../page_loader/NodeInternalData.js";
 import {document_element_factory} from "./api/const.js";
 import {FakeElement} from "./FakeElement.js";
 import {Badge} from "./std/Badge.js";

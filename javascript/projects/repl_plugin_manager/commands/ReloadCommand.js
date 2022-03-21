@@ -1,4 +1,4 @@
-import {fetch_url} from "../../mod.js";
+import {fetch_url} from "../../js_browser_tiny/mod.js";
 import {get_repl_activator} from "../mod.js";
 export class ReloadCommand {
 	/**

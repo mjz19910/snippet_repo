@@ -1,7 +1,7 @@
 import process from "process";
 import repl, {REPLServer} from 'repl';
 import vm from 'vm';
-import {FetchRequestState} from "../mod.js";
+import {FetchRequestState} from "../js_browser_tiny/mod.js";
 import {bind_plugins} from "./plugins/mod.js";
 import {REPLServerRuntime} from "./REPLServerRuntime.js";
 import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";

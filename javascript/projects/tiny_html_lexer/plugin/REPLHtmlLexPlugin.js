@@ -1,10 +1,6 @@
-import {HTMLDataLex} from "../box/HTMLDataLex.js";
-import {HTMLSpecialLex} from "../box/HTMLSpecialLex.js";
-import {HTMLTagLex} from "../box/HTMLTagLex.js";
-import {NodeInternalData} from "../../../page_loader/NodeInternalData.js";
-import {repl_activator} from "../../../repl_support/mod.js";
-import {REPLPlugin} from "../../../repl_support/plugins/REPLPlugin.js";
-import {FetchRequestState} from "../../../mod.js";
+import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLex.js";
+import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLex.js";
+import {HTMLTagLex} from "../tiny_html_general_box/HTMLTagLex.js";
 import {js_type_html_lex_arr} from "../js_type_html_lex_arr.js";
 class HTMLLexResult {
 	/**@type {(ReturnType<typeof js_type_html_lex_arr>)[]}*/

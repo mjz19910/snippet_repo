@@ -1,5 +1,3 @@
-import {FakeDocument, FakeWindow} from "../js_browser_tiny/fake_dom/mod.js";
-import {get_repl_activator} from "../js_browser_tiny/repl_support/repl_activator.js";
 import {do_html_load} from "./do_html_load.js";
 import {FetchRequestState} from "./FetchRequestState.js";
 import {HTMLState} from "./HTMLState.js";
