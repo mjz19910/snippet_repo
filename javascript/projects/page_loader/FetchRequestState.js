@@ -1,6 +1,6 @@
 import {ClientRequest, IncomingMessage} from "http";
-import {fake} from "../fake_dom/mod.js";
-import {get_repl_activator} from "../repl_support/repl_activator.js";
+import {fake} from "../js_browser_tiny/fake_dom/mod.js";
+import {get_repl_activator} from "../js_browser_tiny/repl_support/repl_activator.js";
 import {FetchStateFlags} from "./FetchStateFlags.js";
 import {fetch_url} from "./fetch_url.js";
 import {data} from "./mod.js";
@@ -98,7 +98,7 @@ export class FetchRequestState extends FetchStateFlags {
 	constructor(url, opts) {
 		super(opts);
 		this.url = url;
-		/**@type {import("../preload/types/http_type.js").http_type | undefined} */
+		/**@type {import("../js_browser_tiny/preload/types/http_type.js").http_type | undefined} */
 		this.m_start_request_module = undefined;
 		/** @type {ClientRequest | undefined} */
 		this.m_client_request = undefined;

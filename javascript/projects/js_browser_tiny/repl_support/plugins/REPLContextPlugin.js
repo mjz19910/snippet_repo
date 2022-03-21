@@ -1,4 +1,4 @@
-import {make_reload_page_handler} from "../../page_loader/make_reload_page_handler.js";
+import {make_reload_page_handler} from "../../../page_loader/make_reload_page_handler.js";
 import {eval_script} from "../detail/eval.js";
 import {async_import} from "../detail/import.js";
 import {get_dom_state} from "../get_dom_state.js";

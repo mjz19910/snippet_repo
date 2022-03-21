@@ -1,5 +1,5 @@
-import {FakeDocument} from "../fake_dom/FakeDocument.js";
-import {FakeElement} from "../fake_dom/FakeElement.js";
+import {FakeDocument} from "../js_browser_tiny/fake_dom/FakeDocument.js";
+import {FakeElement} from "../js_browser_tiny/fake_dom/FakeElement.js";
 import {DOMTagDescription} from "./DOMTagDescription.js";
 export class DOMTagLoadHandlers {
 	/**@argument {FakeDocument} document */

@@ -1,8 +1,8 @@
 import * as http from "http";
 import * as https from "https";
-import {DOMBadge, FakeLocation} from "../fake_dom/mod.js";
-import {get_repl_activator} from "../repl_support/repl_activator.js";
-import {fake} from "../fake_dom/browse/mod.js";
+import {DOMBadge, FakeLocation} from "../js_browser_tiny/fake_dom/mod.js";
+import {get_repl_activator} from "../js_browser_tiny/repl_support/repl_activator.js";
+import {fake} from "../js_browser_tiny/fake_dom/browse/mod.js";
 import {FetchRequestState} from "./FetchRequestState.js";
 import {fix_fetch_url} from "./fix_fetch_url.js";
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js";

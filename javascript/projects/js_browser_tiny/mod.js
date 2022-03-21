@@ -1,9 +1,9 @@
 import {handle_onPageLoadStarted} from "./fake_dom/event/mod.js";
 import {create_fake, DOMBadge, fake} from "./fake_dom/mod.js";
-import {on_page_data_loaded} from "./page_loader/on_page_data_loaded.js";
-import {resolve_http_url, fetch_url} from "./page_loader/mod.js";
+import {on_page_data_loaded} from "../page_loader/on_page_data_loaded.js";
+import {resolve_http_url, fetch_url} from "../page_loader/mod.js";
 import {get_repl_activator} from "./repl_support/repl_activator.js";
-import {FetchRequestState} from "./page_loader/FetchRequestState.js";
+import {FetchRequestState} from "../page_loader/FetchRequestState.js";
 /**
  * @arg {string} req_url
  */
