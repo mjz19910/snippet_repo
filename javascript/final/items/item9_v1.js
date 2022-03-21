@@ -1,8 +1,13 @@
+/* spell:words
+-- version_list template --
+v1 (cur): snippet_repo_v2/javascript/final/items/item9_v1.js
+v2 (new): snippet_repo_v2/javascript/group1/sub_a/item-_9.js
+*/
 var found_modules = function(a, c, m_require) {};
 var rv = function(oc, cb) {
 	if (Function.prototype.call.rep) {
-		location.reload()
-		return
+		location.reload();
+		return;
 	}
 	var fr = document.createElement("iframe")
 	document.head.append(fr)
