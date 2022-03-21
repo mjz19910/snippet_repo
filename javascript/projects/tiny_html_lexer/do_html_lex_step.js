@@ -14,7 +14,7 @@ import {HTMLLexerState} from "./HTMLLexerState.js";
  * @param {HTMLLexerState} state
  */
 export function do_html_lex_step(state) {
-	if(!state.cur_lex)return;
+	if(!state.cur_lex) return;
 	if(state.html[state.i - 1] < 128 && ok_char_int8s.includes(state.cur_lex)) {
 		lex_data(state);
 		return;
@@ -38,16 +38,18 @@ export function do_html_lex_step(state) {
 			throw 1;
 		}
 	}
-	if(state.lex_mode === 0) return lex_html_mode_1(state);
+	if(state.lex_mode === 0) return lex_html_mode_0(state);
 	if(state.lex_mode === 1) return lex_double_quote_string(state);
 	if(state.lex_mode === 2) return lex_single_quote_string(state);
 }
 /**@arg {HTMLLexerState}state*/
-function lex_html_mode_1(state) {
+function lex_html_mode_0(state) {
 	let cur_char = state.dec(0, 1);
 	switch(cur_char) {
+		case ' ':
+		case ';': lex_data(state); break;
+		case '\n': lex_special(state); break;
 		case '\r': lex_line_cr(state.lex_arr, state.html, state.i); break;
-		case '\n':
 		case '>': {
 			lex_data(state);
 			state.is_in_tag_attrs = false;
@@ -56,17 +58,17 @@ function lex_html_mode_1(state) {
 		case '/':
 			if(state.is_in_tag_attrs) {
 				lex_data(state);
+				break;
 			}
+			lex_special(state);
 			break;
-		case '"': lex_data(state); state.lex_mode = 1; break;
 		case '<': {
 			lex_tag_open(state);
 			state.is_in_tag_content = false;
 			state.is_in_tag_attrs = true;
 		} break;
+		case '"': lex_data(state); state.lex_mode = 1; break;
 		case "'": lex_data(state); state.lex_mode = 2; break;
-		case ' ':
-		case ';': lex_data(state); break;
 		case '!': {
 			if(state.is_in_tag_attrs) {
 				let last = state.lex_arr.at(-1);
@@ -102,21 +104,18 @@ function lex_html_mode_1(state) {
 			lex_data(state);
 			break;
 		}
-		case '!':
-			if(state.is_in_tag_attrs) {
-				x: if(state.lex_arr.at(-1)?.value === '<') {
-					let last = state.lex_arr.at(-1);
-					if(!last)
-						break x;
-					last.value += '!';
-					break;
-				} else {
-					lex_data(state);
+		case '!': {
+			if(state.is_in_tag_attrs && state.lex_arr.at(-1)?.value === '<') {
+				let last = state.lex_arr.at(-1);
+				if(!last) {
+					lex_special(state);
 					break;
 				}
-				lex_special(state);
+				last.value += '!';
 				break;
 			}
+			lex_data(state);
+		} break;
 		default: do_default_html_lex(state, cur_char); break;
 	}
 }
