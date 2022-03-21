@@ -11,9 +11,6 @@ function sorted_comp_stats(arr, calc_win) {
 	ret.sort((a,b)=>b[1] - a[1]);
 	return ret;
 }
-function first_chunk(arr) {
-	return 2;
-}
 function next_chunk(arr, start) {
 	let s_arr;
 	let last;
