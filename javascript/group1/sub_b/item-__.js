@@ -1,5 +1,5 @@
-(function() {
-	var dofn = function(arr, p_a, p_r) {
+(async function() {
+	var dofn = function(arr, p_a) {
 		var wk;
 		if (onmessage) {
 			return postMessage({
@@ -342,6 +342,7 @@
 			return resa;
 		}
 	};
-	return res.then(dfn);
+	const resa = await res;
+	return dfn(resa);
 }
 )()
