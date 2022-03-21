@@ -22,7 +22,7 @@ export const h_enc = {
 export function any(v) {
 	return v;
 }
-export const my_filename = import.meta.url;
+const my_filename = import.meta.url;
 /**
  * @param {Uint8Array} html
  */

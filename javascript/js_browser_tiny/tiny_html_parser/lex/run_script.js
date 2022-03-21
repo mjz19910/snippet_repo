@@ -1,8 +1,7 @@
-import {Script} from "vm";
+import {runInContext} from "vm";
 import {HTMLLexerState} from "./HTMLLexerState.js";
-import {my_filename} from "./lex_html.js";
+const my_filename = "";
 /**@arg {HTMLLexerState} obj */
 export function run_script(obj) {
-	obj.script = new Script(`this`, {"filename": my_filename, lineOffset: 103});
-	obj.ctx_inner = obj.script.runInContext(obj.ctx, {});
+	obj.ctx_inner = runInContext(`this`, obj.ctx, {filename: my_filename, lineOffset: 5});
 }

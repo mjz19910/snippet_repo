@@ -21,12 +21,6 @@ export class HTMLLexerState {
 		/**@type {Script|null}*/
 		this.script = null;
 		run_script(this);
-		console.log(this.ctx, this.ctx_inner);
-		let s = new DelPropertiesState;
-		this.ctx.s = s;
-		this.ctx.console = console;
-		s.ctx_req = [s, console];
-		s.cur = this.ctx_inner;
 		debugger;
 		ctx_exec(this);
 		/**
