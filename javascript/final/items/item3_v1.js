@@ -1,6 +1,8 @@
 /* spell:words
 --- version_list item 3 ---
-v1 (cur-c): snippet_repo_v2/javascript/final/items/item3_v1.js
+v1 (cur): snippet_repo_v2/javascript/final/items/item3_v1.js
+v2 (new): snippet_repo_v2/javascript/final/items/item3_v2.js
+v3 (new): snippet_repo_v2/javascript/final/items/item3_v3.js
 */
 (function() {
 	const open_or_space_match = RegExp('[\\s]' + "{}"[0], 'g');

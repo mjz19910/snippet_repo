@@ -4,7 +4,6 @@ v1 (old): snippet_repo_v2/javascript/final/items/item3_v1.js
 v2 (cur): snippet_repo_v2/javascript/final/items/item3_v2.js
 v3 (new): snippet_repo_v2/javascript/final/items/item3_v3.js
 v4 (new): snippet_repo_v2/javascript/final/items/item3_v4.js
-v5 (new): snippet_repo_v2/javascript/group1/sub_a/item-_3.js
 */
 function get_location_from_error_stack_lines(error_lines, offset){
 	let cur_line=error_lines[offset];

@@ -1,9 +1,9 @@
 /* spell:words
 --- version_list item 3 ---
-v1 (old-o): snippet_repo_v2/javascript/final/items/item3_v1.js
-v2 (use-c): snippet_repo_v2/javascript/group1/sub_a/item-_3.js
-v3 (use-m): snippet_repo_v2/javascript/final/missing/item3_v3.js
-v4 (cur-m): snippet_repo_v2/javascript/final/missing/item3_v4.js
+v2 (old): snippet_repo_v2/javascript/final/items/item3_v2.js
+v3 (old): snippet_repo_v2/javascript/final/items/item3_v3.js
+v4 (cur): snippet_repo_v2/javascript/final/items/item3_v4.js
+v5 (new): snippet_repo_v2/javascript/group1/sub_a/item-_3.js
 */
 {
 	let ele=document.querySelector("#getPit");
