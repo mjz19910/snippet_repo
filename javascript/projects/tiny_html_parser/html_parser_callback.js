@@ -1,7 +1,6 @@
-import {mkdirSync} from "fs";
 import {mkdir, writeFile} from "fs/promises";
 import {dirname} from "path";
-import {HTMLState} from "../page_loader/HTMLState.js";
+import {HTMLState} from "./HTMLState.js";
 import {lex_html} from "./lex/lex_html.js";
 import {on_html_lex_result} from "./lex/on_html_lex_result.js";
 /**

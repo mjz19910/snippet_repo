@@ -1,6 +1,6 @@
 import {lex_html_special_to_tag} from "./lex_html_special_to_tag.js";
 import {HTMLTagLex} from "./box/HTMLTagLex.js";
-import {NodeInternalData} from "../../page_loader/NodeInternalData.js";
+import {NodeInternalData} from "../../js_browser_tiny/page_loader/NodeInternalData.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {HTMLSpecialLex} from "./box/HTMLSpecialLex.js";
 import {HTMLDataLex} from "./box/HTMLDataLex.js";
