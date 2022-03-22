@@ -79,4 +79,7 @@ export declare namespace TypeManipulation {
 	U extends [any,  ...infer C] ? U : T;
 	type V5 = NegIncImpl1<-2, [0, 1]>;
 	type V6 = NegIncImpl2<0, [], 0>; */
+	type V1 = `${-11}`;
+	type V2<X> = X extends `${string}${infer U}` ? U : X;
+	type v3 = V2<V1>;
 }
