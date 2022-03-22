@@ -24,7 +24,7 @@ build: prepare $(TARGET) req-build
 prepare:
 # patch npm
 	npm i && return 0
-	~/workspace/git/snippet_repo/javascript/js_browser_tiny/patches/apply_patch_a.sh
+	~/workspace/git/snippet_repo/javascript/js_browser/patches/apply_patch_a.sh
 	npm i
 
 $(TARGET):

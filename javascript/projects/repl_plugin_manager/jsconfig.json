@@ -26,6 +26,7 @@
 	},
 	"include": [
 		"*.js",
+		"plugins/*.js",
 	],
 	"exclude": [
 		"node_modules",

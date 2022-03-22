@@ -1,7 +1,6 @@
-import {FetchRequestState} from "../../js_browser_tiny/mod.js";
 import {repl_activator} from "../mod.js";
 export class REPLPlugin {
-	/** @param {repl_activator} repl @param {FetchRequestState} state */
+	/** @param {repl_activator} repl @param {{}} state */
 	constructor(repl, state) {
 		this.repl = repl;
 		this.state = state;

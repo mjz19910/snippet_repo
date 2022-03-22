@@ -1,18 +1,14 @@
-import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLex.js";
-import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLex.js";
-import {HTMLTagLex} from "../tiny_html_general_box/HTMLTagLex.js";
-import {js_type_html_lex_arr} from "../js_type_html_lex_arr.js";
 class HTMLLexResult {
-	/**@type {(ReturnType<typeof js_type_html_lex_arr>)[]}*/
+	/**@type {{}[]}*/
 	lex_arr;
-	/**@type {(ReturnType<typeof js_type_html_lex_arr>|HTMLTagLex)[]}*/
+	/**@type {{}[]}*/
 	elements;
-	/**@type {NodeInternalData}*/
+	/**@type {{}}*/
 	document_root;
 	/**
-	 * @param {(ReturnType<typeof js_type_html_lex_arr>)[]} lex_arr
-	 * @param {(ReturnType<typeof js_type_html_lex_arr> | HTMLTagLex)[]} elements
-	 * @param {NodeInternalData} document_root
+	 * @param {{}[]} lex_arr
+	 * @param {{}[]} elements
+	 * @param {{}} document_root
 	 */
 	constructor(lex_arr, elements, document_root) {
 		this.lex_arr = lex_arr;
@@ -20,16 +16,16 @@ class HTMLLexResult {
 		this.document_root = document_root;
 	}
 }
-export class REPLHtmlLexPlugin extends REPLPlugin {
+export class REPLHtmlLexPlugin {
 	/**
-	 * @param {repl_activator} repl
-	 * @param {FetchRequestState} req_state
+	 * @param {{no_repl:boolean}} state
 	 */
-	constructor(repl, req_state) {
-		super(repl, req_state);
-		repl.context.get_page_content = () => this.lexer_buffer;
-		repl.context.get_lex_arr = () => this.parse_result && this.parse_result.lex_arr;
-		repl.context.get_lex_elements = () => this.parse_result && this.parse_result.elements;
+	constructor(state) {
+		// this.repl=repl;
+		this.state=state;
+		// repl.context.get_page_content = () => this.lexer_buffer;
+		// repl.context.get_lex_arr = () => this.parse_result && this.parse_result.lex_arr;
+		// repl.context.get_lex_elements = () => this.parse_result && this.parse_result.elements;
 	}
 	get active() {
 		return !this.state.no_repl;
@@ -46,15 +42,4 @@ export class REPLHtmlLexPlugin extends REPLPlugin {
 	update_lexer_buffer(lexer_buffer) {
 		this.lexer_buffer = lexer_buffer;
 	}
-}
-
-export function use_types() {
-	return [
-		FetchRequestState,
-		HTMLDataLex,
-		HTMLSpecialLex,
-		HTMLTagLex,
-		NodeInternalData,
-		repl_activator,
-	];
 }
