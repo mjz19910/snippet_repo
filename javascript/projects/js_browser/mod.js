@@ -3,6 +3,7 @@ import {create_fake, DOMBadge, fake} from "../browser_fake_dom/mod.js";
 import {on_page_data_loaded} from "../page_loader/on_page_data_loaded.js";
 import {resolve_http_url, fetch_url} from "../page_loader/mod.js";
 import {FetchRequestState} from "../page_loader/FetchRequestState.js";
+import {get_repl_activator} from "../repl_plugin_manager/mod.js";
 /**
  * @arg {string} req_url
  */
