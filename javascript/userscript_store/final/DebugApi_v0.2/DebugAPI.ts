@@ -1,6 +1,4 @@
 import {random_data_generator, static_event_target} from "types/DebugAPI.user";
-import {RustSimpleParser} from "../../RustSimpleParser";
-import {SimpleJavascriptParser} from "../../SimpleJavascriptParser";
 import {ChromeDevToolsDebug} from "./ChromeDevToolsDebug";
 import {ChromeDevToolsGetEventListeners} from "./ChromeDevToolsGetEventListeners";
 import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug";
@@ -20,8 +18,8 @@ export class DebugAPI {
 	next_remote_id = 0;
 	data_store: MapEach<KT6[number][0]> = new Map;
 	event_handler = static_event_target;
-	static simple_parser = new RustSimpleParser;
-	static javascript_parser = new SimpleJavascriptParser;
+	// static simple_parser = new RustSimpleParser;
+	// static javascript_parser = new SimpleJavascriptParser;
 	static the_instance: DebugAPI | null = null;
 	static the(): DebugAPI {
 		if(!this.the_instance) {

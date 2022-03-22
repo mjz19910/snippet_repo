@@ -1,4 +1,3 @@
 import {ActivateClassBox} from "./ActivateClassBox";
 import {ClassCallbackArgs} from "./ClassCallbackArgs";
-
-type ClassTypeAll = ['class', ActivateClassBox, ClassCallbackArgs];
+export type ClassTypeAll = ['class', ActivateClassBox, ClassCallbackArgs];
