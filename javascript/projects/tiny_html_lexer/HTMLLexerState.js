@@ -1,5 +1,6 @@
 import {StringDecoder} from "string_decoder";
-import {createContext, Script} from "vm";
+import {createContext} from "vm";
+import {static_lexer_states} from "./static_state.js";
 export class HTMLLexerState {
 	/**
 	 * @param {number} off

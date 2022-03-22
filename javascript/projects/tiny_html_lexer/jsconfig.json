@@ -26,7 +26,8 @@
 	},
 	"include": [
 		"*.js",
-		"**/*.js", "../misc/run_script.js",
+		"**/*.js",
+		"**/*.ts"
 	],
 	"exclude": [
 		"node_modules",

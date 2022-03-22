@@ -1,4 +1,4 @@
-class BrowserPluginIndexType {
+export class BrowserPluginIndexType {
 	window;
 	/**@arg {{}|null} window */
 	constructor(window) {

@@ -12,9 +12,10 @@ export class FetchRequestState extends FetchStateFlags {
 			this.m_incoming_message.resume();
 			if(this.follow_redirects) {
 				console.log('redirect to', msg_headers.location);
-				let req = new FetchRequestState(msg_headers.location);
-				req.silent = true;
-				fetch_url(req);
+				this.url = msg_headers.location;
+				this.silent = true;
+				console.log('on_redirect_status_code -> fetch_url');
+				fetch_url(this);
 			} else {
 				this.url = msg_headers.location;
 				console.log('header says redirect to', msg_headers.location);
@@ -23,26 +24,36 @@ export class FetchRequestState extends FetchStateFlags {
 		this.on_request_finished();
 	}
 	/**
-	 * @param {Uint8Array|null} page_content
+	 * @param {Uint8Array | null} page_content
 	 */
 	on_incoming_message_result(page_content) {
 		if(!fake.document)
 			throw new Error("Missing document");
 		if(!fake.window)
 			throw new Error("Missing window");
+		if(!this.url)
+			throw new Error("No url");
 		if(page_content !== null) {
 			console.log("https stream end handler %o bytes\n\"%s\"", page_content.length, page_content.slice(0, 48));
 			if(page_content.length < 300) {
 				console.log("all content\n%s", page_content);
 			}
-			on_page_data_loaded(fake.window, fake.document, this, null, page_content);
+			let page_load_state={
+				url:this.url,
+				no_repl:this.no_repl
+			};
+			on_page_data_loaded(fake.window, fake.document, page_load_state, null, page_content);
 			console.log('in_message_result_tag loaded', this.url);
 		}
 		console.log('do on_request_finished');
 		this.on_request_finished();
 	}
-	/** @param {IncomingMessage} message */
+	/**
+	 * @param {IncomingMessage} message
+	 */
 	on_incoming_message(message) {
+		if(!fake.document)
+			throw new Error("Missing document");
 		this.m_incoming_message = message;
 		switch(this.m_incoming_message.statusCode) {
 			case 302:
@@ -55,6 +66,8 @@ export class FetchRequestState extends FetchStateFlags {
 		}
 	}
 	on_ok_status_code() {
+		if(!fake.document)
+			throw new Error("Missing document");
 		if(!this.m_incoming_message) return;
 		let chunk_offset = 0;
 		let chunk_sz = 2 ** 12 + 128;
@@ -84,11 +97,12 @@ export class FetchRequestState extends FetchStateFlags {
 		this.on_request_finished();
 	}
 	on_request_finished() {
-		let repl = get_repl_activator(this);
-		console.log('activated repl');
-		if(repl && !this.no_repl) {
-			repl.on_finished();
+		console.log('todo activate repl');
+		// TODO: find get_repl_activator
+		let repl={
+			on_finished(){}
 		}
+		repl.on_finished();
 	}
 	/**
 	 * @arg {string | null} url
@@ -97,7 +111,7 @@ export class FetchRequestState extends FetchStateFlags {
 	constructor(url, opts) {
 		super(opts);
 		this.url = url;
-		/**@type {import("../js_browser/preload/types/http_type.js.js").http_type | undefined} */
+		/**@type {{get(url:{},cb:(x:IncomingMessage)=>void):ClientRequest} | undefined} */
 		this.m_start_request_module = undefined;
 		/** @type {ClientRequest | undefined} */
 		this.m_client_request = undefined;

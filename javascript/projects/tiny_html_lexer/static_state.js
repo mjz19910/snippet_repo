@@ -1,4 +1,4 @@
-class static_lexer_states {
+export class static_lexer_states {
 	/**@readonly*/static Data = 0;
 	/**@readonly*/static RCDATA = 1;
 	/**@readonly*/static RAWTEXT = 2;

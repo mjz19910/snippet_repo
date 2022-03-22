@@ -6,6 +6,7 @@ import {NodeInternalData} from "./NodeInternalData.js";
 import {on_page_data_loaded} from "./on_page_data_loaded.js";
 import {resolve_http_url} from "./resolve_http_url.js";
 import {wait} from "./wait.js";
+import {FetchRequestState} from "./FetchRequestState.js";
 import {fetch_url} from "./fetch_url.js";
 /**@type {Buffer[]} */
 export let data = [];
@@ -20,12 +21,15 @@ export {
 	NodeInternalData,
 	on_page_data_loaded,
 	resolve_http_url,
+	FetchRequestState,
 	fetch_url,
 	wait,
 };
 
 export function use_imports() {
 	return [
+		fetch_url,
+		FetchRequestState,
 		add_element,
 		do_exec,
 		DOMTagDescription,
@@ -33,7 +37,6 @@ export function use_imports() {
 		NodeInternalData,
 		on_page_data_loaded,
 		resolve_http_url,
-		fetch_url,
 		wait,
 	];
 }

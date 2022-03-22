@@ -1,48 +1,57 @@
 import * as http from "http";
 import * as https from "https";
+import {create_fake, fake} from "../browser_fake_dom/mod.js";
 import {FetchRequestState} from "./FetchRequestState.js";
 import {fix_fetch_url} from "./fix_fetch_url.js";
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
 /**
- * @arg {FetchRequestState} fetch_state
+ * @arg {FetchRequestState} state
  */
-export function fetch_url(fetch_state, silent = false) {
-	if(!fake.window) throw new Error("No window");
-	if(!fake.document) throw new Error("No document");
-	if(!fetch_state.url) throw new Error("No url to get");
-	let repl=get_repl_activator(fetch_state);
+export function fetch_url(state, silent = false) {
+	if(!state.url) throw new Error("No url to get");
+	let get_repl_activator = (/** @type {FetchRequestState} */ _state) => {
+		console.log('todo get_repl_activator');
+		return {
+			repl_active: false,
+			pause() {},
+			activate() {},
+			/**
+			 * @param {string} _v
+			 */
+			setPrompt(_v) {}
+		};
+	};
+	let repl = get_repl_activator(state);
 	if(repl && !repl.repl_active) {
-		if(!fetch_state.no_repl) {
+		if(!state.no_repl) {
 			repl.activate();
 		}
 	}
-	fix_fetch_url(fetch_state);
-	let p_url = new URL(fetch_state.url);
+	fix_fetch_url(state);
+	let p_url = new URL(state.url);
 	if(!silent) {
-		if(repl && !fetch_state.no_repl) {
+		if(repl && !state.no_repl) {
 			repl.pause();
 			repl.setPrompt("");
 		}
-		console.log('fetch_url_tag get', fetch_state.url);
+		console.log('fetch_url_tag get', state.url);
 	}
-	var new_loc = new FakeLocation;
-	const dom_impl_badge = new DOMBadge;
-	if(new_loc.location_setup) {
-		new_loc.location_setup(dom_impl_badge, fetch_state.url);
-	}
-	let fake_win=fake.window;
-	let fake_doc=fake.document;
-	if(fake_win !== null){
-		if(fake_doc !== null) {
-			fake_win.m_document = fake_doc;
-			fake_win.document.location = new_loc;
-		}
-		fake_win.location = new_loc;
-	}
+	//const dom_impl_badge = new DOMBadge;
+	//let new_url=fetch_state.url;
+	/* fake.with_badge(dom_impl_badge, (fake) => {
+		if(!fake.document)throw new Error("Missing fake document");
+		fake.document.location.assign(new_url);
+	}); */
 	switch(p_url.protocol) {
-		case 'http:': fetch_state.m_start_request_module = http; break;
-		case 'https:': fetch_state.m_start_request_module = https; break;
+		case 'http:': state.m_start_request_module = http; break;
+		case 'https:': state.m_start_request_module = https; break;
 		default: throw new Error("Unknown protocol: " + p_url.protocol);
 	}
-	run_fetch_algorithm(fetch_state);
+	if(!fake.window)
+		create_fake.window();
+	if(!fake.document)
+		create_fake.document();
+	if(!state.on_incoming_message)
+		throw new Error("No Handler for server response");
+	run_fetch_algorithm(state);
 }

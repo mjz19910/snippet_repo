@@ -579,7 +579,7 @@ export class FakeDocument extends FakeNode {
 	/**
 	 * @param {HTMLState} state
 	 * @param {Uint8Array} html_bytes
-	 * @returns {NodeInternalData|null}
+	 * @returns {{}|null}
 	 */
 	parseHTMLContent(state, html_bytes) {
 		if(this.html_parser_callback === html_parser_callback){

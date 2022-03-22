@@ -1,6 +1,6 @@
-import {HTMLDataLex} from "./tiny_html_general_box/HTMLDataLex.js";
-import {HTMLEntityLex} from "./tiny_html_general_box/HTMLEntityLex.js";
-import {HTMLSpecialLex} from "./tiny_html_general_box/HTMLSpecialLex.js";
+import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLex.js";
+import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLex.js";
+import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLex.js";
 
 /**
  * @param {(HTMLSpecialLex | HTMLDataLex | HTMLEntityLex)[]} arr

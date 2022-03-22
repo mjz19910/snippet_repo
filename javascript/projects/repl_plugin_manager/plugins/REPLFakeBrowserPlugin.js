@@ -1,22 +1,12 @@
-import {REPLPlugin} from "./mod.js";
-/**
- * @arg {REPLFakeBrowserPlugin['obj']} st
- * @param {string} name
- */
-function get_from_store(st, name) {
-	if(!st) return null;
-	switch(st.type) {
-		case 'keys':
-			let nx = name;
-			switch(nx) {
-				case 'window': return st.value[nx];
-			}
-			console.log('case needed for', name);
-		case 'no-keys':
+import {repl_activator} from "../repl_activator.js";
+import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
+import {get_from_store} from "./get_from_store";
+export class REPLFakeBrowserPlugin {
+	/** @param {repl_activator} repl @param {{}} state */
+	constructor(repl, state) {
+		this.repl = repl;
+		this.state = state;
 	}
-	return null;
-}
-class REPLFakeBrowserPlugin extends REPLPlugin {
 	/**@type {{type:"no-keys", arr:[],value:BrowserPluginIndexType}|{type:"keys", arr:string[], value:BrowserPluginIndexType}|null}*/
 	obj = null;
 	enable() {
@@ -48,6 +38,6 @@ class REPLFakeBrowserPlugin extends REPLPlugin {
 		};
 	}
 }
-export function get_plugin() {
+export function get_browser_plugin() {
 	return REPLFakeBrowserPlugin;
 }

@@ -1,7 +1,7 @@
-import {HTMLDataLex} from "./tiny_html_general_box/HTMLDataLex.js";
-import {HTMLEntityLex} from "./tiny_html_general_box/HTMLEntityLex.js";
-import {HTMLSpecialLex} from "./tiny_html_general_box/HTMLSpecialLex.js";
-import {HTMLTagLex} from "./tiny_html_general_box/HTMLTagLex.js";
+import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLex.js";
+import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLex.js";
+import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLex.js";
+import {HTMLTagLex} from "../tiny_html_general_box/HTMLTagLex.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 /**
  * @param {(ReturnType<typeof js_type_html_lex_arr> | HTMLTagLex)[]} arr

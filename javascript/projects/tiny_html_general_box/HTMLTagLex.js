@@ -1,4 +1,4 @@
-import {lex_html_attributes} from "../lex_html_attributes.js";
+import {lex_html_attributes} from "../tiny_html_lexer/lex_html_attributes.js";
 import {HTMLDataLex} from "./HTMLDataLex.js";
 export class HTMLTagLex {
 	/**@readonly */

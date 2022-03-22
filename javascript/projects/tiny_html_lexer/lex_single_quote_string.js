@@ -1,4 +1,4 @@
-import {HTMLLexerState} from "HTMLLexerState.js";
+import {HTMLLexerState} from "./HTMLLexerState.js";
 import {lex_data} from "./lex_data.js";
 /**
  * @arg {HTMLLexerState} state
