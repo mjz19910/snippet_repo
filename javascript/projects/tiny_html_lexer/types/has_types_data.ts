@@ -5,6 +5,9 @@ export function has_types_data(_v:(...a:any extends infer U ? U[]:never)=>void):
 export function down_cast_func(v: ((...a:any[])=>void)|null):v is ()=>void {
 	return v !== null;
 }
+export function drop_type(_:Function | (()=>void)):_ is ()=>void {
+	return true;
+}
 export function has_types_arr_with(
 	v:{types:typeof cx[]}|((...a:any[])=>void)|null,
 	cx:any extends infer U ? U extends {} ? U[] : never: never

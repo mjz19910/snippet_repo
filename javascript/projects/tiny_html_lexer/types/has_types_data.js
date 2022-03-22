@@ -4,7 +4,10 @@ export function has_types_data(_v) {
 export function down_cast_func(v) {
     return v !== null;
 }
-export function has_types_arr_with(v, _cx) {
+export function drop_type(_) {
+    return true;
+}
+export function has_types_arr_with(v, cx) {
     if (v !== null) {
         if (!is_fn(v))
             return false;
@@ -24,13 +27,15 @@ export function has_types_arr_with(v, _cx) {
         if (!s.v.hasOwnProperty('types')) {
             s.v.types = [];
         }
+        ;
         return true;
     }
+    ;
     return false;
 }
-function cast_to_object_and_fn(_v) {
+export function cast_to_object_and_fn(_) {
     return true;
 }
-function is_fn(v) {
+export function is_fn(v) {
     return v !== null;
 }

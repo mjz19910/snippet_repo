@@ -7,8 +7,9 @@ import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLex.js";
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {NodeInternalData} from "../page_loader/NodeInternalData.js";
 import {do_html_lex_step} from "./do_html_lex_step.js";
-import {down_cast_func, has_types_arr_with} from "./types/has_types_data.js";
 import {static_lexer_states} from "./static_state.js";
+import {lexer_data_state} from "./lexer_data_state";
+import {down_cast_func, drop_type, has_types_arr_with} from "./types/has_types_data.js";
 export const abc_arr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 export const num_chars = "0123456789";
 /**@type {number[]}*/
@@ -152,44 +153,44 @@ export function use_types() {
 /**
  * @param {HTMLLexerState} state
  */
-function lexer_data_state(state) {
-	let lsd = lexer_data_state;
-	if(down_cast_func(lsd)) {
-		lsd;
-	}
+function lexer_rc_data_state(state) {
+	let l_callee = lexer_rc_data_state;
 	/**@type {[typeof HTMLLexerState]} */
 	let ls_arr = [HTMLLexerState];
-	if(has_types_arr_with(lsd, ls_arr)) {
-		lsd.types = ls_arr;
+	if(has_types_arr_with(l_callee, ls_arr)) {
+		l_callee.types = ls_arr;
 	}
 	console.log(state.cur_char);
 	throw new Error("Function not implemented.");
 }
-
-/**
- * @param {HTMLLexerState} state
- */
-function lexer_rc_data_state(state) {
-	console.log(state.cur_char);
-	throw new Error("Function not implemented.");
-}
-lexer_rc_data_state.types = [HTMLLexerState];
 
 /**
  * @param {HTMLLexerState} state
  */
 function lexer_raw_text(state) {
+	let l_callee = lexer_raw_text;
+	/**@type {[typeof HTMLLexerState]} */
+	let ls_arr = [HTMLLexerState];
+	if(has_types_arr_with(l_callee, ls_arr)) {
+		l_callee.types = ls_arr;
+	}
 	console.log(state.cur_char);
 	throw new Error("Function not implemented.");
 }
-lexer_raw_text.types = [HTMLLexerState];
 
 /**
  * @param {HTMLLexerState} state
  */
 function lexer_script_data(state) {
-	console.log(state.cur_char);
+	/**@type {Function | (()=>void)} */
+	let l_callee = arguments.callee;
+	/**@type {[typeof HTMLLexerState]} */
+	let ls_arr = [HTMLLexerState];
+	if(drop_type(l_callee) && down_cast_func(l_callee) && has_types_arr_with(l_callee, ls_arr)) {
+		l_callee.types = ls_arr;
+	}
+	console.log('ce',l_callee);
+	console.log('cc', JSON.stringify(state.cur_char));
 	throw new Error("Function not implemented.");
 }
-lexer_script_data.types = [HTMLLexerState];
 
