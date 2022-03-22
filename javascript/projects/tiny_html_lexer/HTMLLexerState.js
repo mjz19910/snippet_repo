@@ -41,5 +41,6 @@ export class HTMLLexerState {
 		this.current_state = this.states.Data;
 		this.html=input;
 		this.html_str = this.text_decoder.end(Buffer.from(this.html));
+		this.cur_char = "";
 	}
 }

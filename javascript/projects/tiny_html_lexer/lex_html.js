@@ -38,11 +38,12 @@ export function lex_html(html) {
 	// tags (also newline and crlf)
 	for(state.i = 0; state.i < state.html.length; state.i++) {
 		state.cur_lex = state.html[state.i];
+		state.cur_char = state.dec(state.i, 1);
 		switch(state.current_state) {
-			case static_lexer_states.Data:break;
-			case static_lexer_states.RCDATA:break;
-			case static_lexer_states.RAWTEXT:break;
-			case static_lexer_states.ScriptData:break;
+			case static_lexer_states.Data:lexer_data_state(state);break;
+			case static_lexer_states.RCDATA:lexer_rc_data_state(state);break;
+			case static_lexer_states.RAWTEXT:lexer_raw_text(state);break;
+			case static_lexer_states.ScriptData:lexer_script_data(state);break;
 			case static_lexer_states.PLAINTEXT:break;
 			case static_lexer_states.TagOpen:break;
 			case static_lexer_states.EndTagOpen:break;
@@ -146,3 +147,35 @@ export function use_types() {
 		js_type_html_lex_arr,
 	];
 }
+/**
+ * @param {HTMLLexerState} state
+ */
+function lexer_data_state(state) {
+	console.log(state.cur_char);
+	throw new Error("Function not implemented.");
+}
+
+/**
+ * @param {HTMLLexerState} state
+ */
+function lexer_rc_data_state(state) {
+	console.log(state.cur_char);
+	throw new Error("Function not implemented.");
+}
+
+/**
+ * @param {HTMLLexerState} state
+ */
+function lexer_raw_text(state) {
+	console.log(state.cur_char);
+	throw new Error("Function not implemented.");
+}
+
+/**
+ * @param {HTMLLexerState} state
+ */
+function lexer_script_data(state) {
+	console.log(state.cur_char);
+	throw new Error("Function not implemented.");
+}
+
