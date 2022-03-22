@@ -135,8 +135,11 @@ words:
   - proxied
   - punct
   - raquo
+  - RAWTEXT
+  - RCDATA
   - realpath
   - rebuildtheuniverse
+  - reconsume
   - regs
   - reqs
   - resa

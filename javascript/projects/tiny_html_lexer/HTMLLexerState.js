@@ -1,6 +1,5 @@
 import {StringDecoder} from "string_decoder";
 import {createContext, Script} from "vm";
-import {run_script} from "./run_script.js";
 export class HTMLLexerState {
 	/**
 	 * @param {number} off
@@ -10,7 +9,10 @@ export class HTMLLexerState {
 		return this.text_decoder.end(Buffer.from(this.html.subarray(this.i + off, this.i + off + len)));
 	}
 	text_decoder = new StringDecoder('ascii');
-	constructor() {
+	/**
+	 * @param {Uint8Array} input
+	 */
+	constructor(input) {
 		this.ctx = createContext(Object.create(null));
 		/**@type {any}*/
 		this.ctx_inner = null;
@@ -30,12 +32,14 @@ export class HTMLLexerState {
 		this.is_in_tag_content = false;
 		this.is_in_script_tag = false;
 		this.i = 0;
+		this.states = static_lexer_states;
 		/**
 		 * @type {Uint8Array}
 		 */
 		this.html = new Uint8Array();
-		/**@type {Script|null}*/
-		this.script = null;
-		run_script(this);
+		/**@type {typeof static_lexer_states[keyof typeof static_lexer_states]} */
+		this.current_state = this.states.Data;
+		this.html=input;
+		this.html_str = this.text_decoder.end(Buffer.from(this.html));
 	}
 }
