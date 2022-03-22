@@ -1,4 +1,5 @@
 import {ClientRequest, IncomingMessage} from "http";
+import {fake} from "../browser_fake_dom/mod.js";
 import {FetchStateFlags} from "./FetchStateFlags.js";
 import {fetch_url} from "./fetch_url.js";
 import {data} from "./mod.js";
@@ -96,7 +97,7 @@ export class FetchRequestState extends FetchStateFlags {
 	constructor(url, opts) {
 		super(opts);
 		this.url = url;
-		/**@type {import("../js_browser_tiny/preload/types/http_type.js").http_type | undefined} */
+		/**@type {import("../js_browser/preload/types/http_type.js.js").http_type | undefined} */
 		this.m_start_request_module = undefined;
 		/** @type {ClientRequest | undefined} */
 		this.m_client_request = undefined;

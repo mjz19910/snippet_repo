@@ -13,15 +13,15 @@ export class FakeElement extends FakeNode {
 	 * @param {any} name
 	 * @param {any} value
 	 */
-	static #private_set(obj, name, value) {
+	static #private_set=(obj, name, value) => {
 		obj.#instance_private_set(name, value);
 	}
 	/**
 	 * @arg {FakeElement} obj
 	 * @param {any} name
 	 */
-	static #private_get(obj, name) {
-		return obj.instance_private_get(name);
+	static #private_get=(obj, name) => {
+		return obj.#instance_private_get(name);
 	}
 	/**
 	 * @param {{ base_object: any; proto_private: { get?: (n: any) => any; set?: (n: any, v: any) => void; }; }} rin
@@ -43,7 +43,7 @@ export class FakeElement extends FakeNode {
 	/**
 	 * @param {'prototype'} n
 	 */
-	instance_private_get(n) {
+	#instance_private_get=(n) => {
 		switch(n) {
 			case 'prototype':
 				return this.#prototype;
@@ -57,7 +57,7 @@ export class FakeElement extends FakeNode {
 	 * @param {'prototype'} n
 	 * @param {{}} v
 	 */
-	#instance_private_set(n, v) {
+	#instance_private_set=(n, v) => {
 		switch(n) {
 			case 'prototype':
 				this.#prototype = v;
