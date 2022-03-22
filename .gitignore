@@ -1,7 +1,7 @@
 .vscode/
 venv/
 **/node_modules
-package.json
+/package.json
 package-lock.json
 lib/final/
 lib/types/
