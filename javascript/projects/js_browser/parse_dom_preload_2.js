@@ -72,6 +72,8 @@ async function async_main(url) {
 	let lexer=await import_ipc_plugin("tiny_html_lexer");
 	if(!lexer)throw new Error("Can't import lexer plugin");
 	let parser=await import_ipc_plugin("tiny_html_parser");
+	let repl_plugin=await import_ipc_plugin("repl_plugin_manager/mod.js", "direct");
+	console.log('repl plug', repl_plugin);
 	parser.ipc_call("set_lexer", ipc_wrap('[tiny_html_lexer.lexer]', [lexer]));
 	fetch_url(res);
 }

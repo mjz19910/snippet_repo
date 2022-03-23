@@ -1,10 +1,12 @@
 import process from "process";
 import repl, {REPLServer} from 'repl';
 import vm from 'vm';
-import {FetchRequestState} from "../js_browser/mod.js";
 import {bind_plugins} from "./plugins/mod.js";
 import {REPLServerRuntime} from "./REPLServerRuntime.js";
 import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
+class ReplLocalState {
+	no_repl=false;
+}
 const delete_all_javascript_api = false;
 export class repl_activator {
 	/**
@@ -21,7 +23,7 @@ export class repl_activator {
 	m_context = null;
 	/**@type {(REPLServer & REPLServerRuntime)|null} */
 	m_repl = null;
-	/** @arg {FetchRequestState} state */
+	/** @arg {ReplLocalState} state */
 	constructor(state) {
 		this.m_request_state = state;
 	}
@@ -101,7 +103,7 @@ export class repl_activator {
 		}
 	}
 	/**
-	 * @param {FetchRequestState} state
+	 * @param {ReplLocalState} state
 	 */
 	update(state) {
 		this.m_request_state=state;
@@ -111,7 +113,7 @@ export class repl_activator {
 export let g_repl_activator = null;
 /**
  * @returns {repl_activator | null}
- * @param {FetchRequestState} state
+ * @param {ReplLocalState} state
  */
 export function get_repl_activator(state) {
 	if(!g_repl_activator){
@@ -124,6 +126,6 @@ export function get_repl_activator(state) {
 
 export function use_types(){
 	return [
-		FetchRequestState,
+		ReplLocalState,
 	]
 }

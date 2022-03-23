@@ -1,13 +1,13 @@
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {lex_data} from "./lex_data.js";
 import {lex_doctype_open} from "./lex_doctype_open.js";
-import {abc_arr, num_chars} from "./lex_html.js";
+import {abc_chars, num_chars} from "./lex_html.js";
 /**
  * @param {HTMLLexerState} state
  * @param {string} cur_char
  */
 export function do_default_html_lex(state, cur_char) {
-	if(abc_arr.includes(cur_char))
+	if(abc_chars.includes(cur_char))
 		return lex_data(state);
 	if(num_chars.includes(cur_char))
 		return lex_data(state);
