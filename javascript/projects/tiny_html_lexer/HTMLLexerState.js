@@ -3,6 +3,11 @@ import {createContext} from "vm";
 import {static_lexer_states} from "./static_state.js";
 export class HTMLLexerState {
 	/**
+	 * @type {string[]}
+	 */
+	m_queued_tokens=[];
+	m_is_eof = false;
+	/**
 	 * @param {number} off
 	 * @param {number} len
 	 */
@@ -39,9 +44,11 @@ export class HTMLLexerState {
 		 */
 		this.html = new Uint8Array();
 		/**@type {typeof static_lexer_states[keyof typeof static_lexer_states]} */
-		this.current_state = this.states.Data;
+		this.m_current_state = this.states.Data;
 		this.html=input;
 		this.html_str = this.text_decoder.end(Buffer.from(this.html));
-		this.cur_char = "";
+		/**@type {string|null}*/
+		this.cur_char = null;
+		this.m_return_state = static_lexer_states.InvalidState;
 	}
 }

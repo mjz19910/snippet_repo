@@ -68,7 +68,6 @@ main();
  */
 async function async_main(url) {
 	let res=await new_FetchRequestState(url);
-	debugger;
 	let lexer=await import_ipc_plugin("tiny_html_lexer");
 	if(!lexer)throw new Error("Can't import lexer plugin");
 	let parser=await import_ipc_plugin("tiny_html_parser");
