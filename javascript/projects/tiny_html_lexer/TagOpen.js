@@ -7,26 +7,28 @@ import {g_state as g_state} from "./static_state.js";
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
 export function TagOpen(state) {
-	if(state.cur_char && abc_chars.includes(state.cur_char)){
+	if(is_ascii_alpha(state.cur_char)) {
 		create_new_token(state, HTMLToken.Type.StartTag);
 		// Reconsume in
 		state.m_current_state = g_state.TagName;
 		return;
 	}
+	console.log(state.i, state.cur_char);
 	switch(state.cur_char) {
-		case '!': state.m_current_state = g_state.MarkupDeclarationOpen; break;
+		case '!':
+			console.log(`["${state.cur_char}"] Reconsume in MarkupDeclarationOpen`);
+			state.m_current_state = g_state.MarkupDeclarationOpen;
+			break;
 		case '/': state.m_current_state = g_state.EndTagOpen; break;
 		// TODO: not all cases handled yet
 		default: lex_data(state); throw new Error("TODO");
 	}
-	console.log(state.i, state.cur_char);
 }
 /**
  * @param {string | null} _cur_char
  */
 function is_ascii_alpha(_cur_char) {
-	throw new Error("Function not implemented.");
-	return false;
+	return _cur_char !== null && abc_chars.includes(_cur_char)
 }
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
