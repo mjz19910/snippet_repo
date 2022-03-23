@@ -7,16 +7,8 @@ import {has_types_arr_with} from "./types/has_types_data.js";
  * @param {HTMLLexerState} state
  */
 export function lexerData(state) {
-	let l_callee = lexerData;
-	/**@type {[typeof HTMLLexerState]} */
-	let ls_arr = [HTMLLexerState];
-	if(has_types_arr_with(l_callee, ls_arr)) {
-		l_callee.types = ls_arr;
-	}
-	if(state.cur_lex === 0) {
-		return lex_data(state);
-	}
 	switch(state.cur_char) {
+		case '\0':lex_data(state);break;
 		case '&':
 			state.m_return_state = static_lexer_states.Data;
 			state.m_current_state = static_lexer_states.CharacterReference;
