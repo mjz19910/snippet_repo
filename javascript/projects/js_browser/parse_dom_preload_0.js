@@ -13,18 +13,14 @@ function main() {
 	const abs_file_path = path.resolve(req_file_path);
 	const req_url = "file://" + abs_file_path;
 	let state = init_wget({
-		ok:false
+		no_repl:false,
 	}, req_url);
-	if(!state.ok) {
-		console.log('init failed');
-		process.exit(1);
-	}
 	fs.readFile(abs_file_path, (err, data) => {
 		if(err) {
 			console.log(err, data);
 			process.exit(1);
 		}
-		wget_on_static_page_load({}, Uint8Array.from(data), req_url);
+		wget_on_static_page_load(state, Uint8Array.from(data), req_url);
 	});
 }
 main();

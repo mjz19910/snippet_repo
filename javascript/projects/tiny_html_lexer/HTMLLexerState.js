@@ -1,7 +1,10 @@
 import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
+import {HTMLToken} from "./HTMLToken.js";
 import {g_state} from "./static_state.js";
 export class HTMLLexerState {
+	/**@type {HTMLToken|null}*/
+	m_current_token = null;
 	/**
 	 * @type {string[]}
 	 */

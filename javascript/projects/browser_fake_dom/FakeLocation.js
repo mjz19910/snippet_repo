@@ -88,10 +88,6 @@ export class FakeLocation {
 		this.#original_location_str = "";
 		/**@type {undefined | ((dom_impl_badge:Badge,href:string)=>void)} */
 		this.location_setup = function(dom_impl_badge = new Badge, href) {
-			if(!dom_impl_badge.is_valid()) {
-				debugger;
-				throw Error("Unable to initialize without valid badge");
-			}
 			this.#dom_impl_badge = dom_impl_badge;
 			this.#original_location_str = href;
 			this.#location_url = new URL(href);

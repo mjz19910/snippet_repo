@@ -1,10 +1,14 @@
 import {handle_onPageLoadStarted} from "../browser_fake_dom/event/handle_onPageLoadStarted.js"
-import {fake} from "../browser_fake_dom/mod.js";
+import {create_fake, fake} from "../browser_fake_dom/mod.js";
+import {on_page_data_loaded} from "../page_loader/on_page_data_loaded.js";
 /**
  * @arg {string} req_url
  * @param {Parameters<typeof handle_onPageLoadStarted>[1]} state
  */
 export function init_wget(state, req_url) {
+	if(!fake.window){
+		create_fake.window();
+	}
 	if(!fake.window) throw new Error("No window");
 	handle_onPageLoadStarted(fake.window, state);
 	state.url=req_url;
@@ -13,16 +17,17 @@ export function init_wget(state, req_url) {
 /**
  * @arg {Uint8Array} page_content
  * @arg {string} page_url
- * @param {{ fake?: any; on_page_data_loaded?: any; }} state
+ * @param {import("../browser_fake_dom/types/onPageLoadStarted.js").PageLoadStateType} state
  */
 export function wget_on_static_page_load(state, page_content, page_url) {
-	if(!state.fake.document) throw new Error("No document");
-	if(!state.fake.window) throw new Error("No window");
+	if(!fake.document) throw new Error("No document");
+	if(!fake.window) throw new Error("No window");
 	console.log("static page content", '"' + page_content.slice(0, 48) + '"' + "...", page_content.length);
 	let static_req_state = {
 		url:page_url,
+		no_repl:state.no_repl,
 	};
-	state.on_page_data_loaded(state.fake.window, state.fake.document, static_req_state, null, page_content);
+	on_page_data_loaded(fake.window, fake.document, static_req_state, null, page_content);
 	let repl = {
 		on_finished(){}
 	}

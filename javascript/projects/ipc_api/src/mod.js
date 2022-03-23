@@ -1,7 +1,6 @@
 import {fetch_url} from "../../page_loader/fetch_url.js";
 import {import_ipc_plugin} from "./import_ipc_plugin.js";
 import {new_FetchRequestState} from "./new_FetchRequestState.js";
-debugger;
 export const debug = false;
 /**
  * 

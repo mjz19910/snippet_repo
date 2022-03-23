@@ -24,8 +24,21 @@ export function handle_onPageLoadStarted(window, state) {
 	}
 	var new_loc = new FakeLocation();
 	if(!new_loc.location_setup) throw new Error("New location expected to have location_setup");
-	if(!state.dom_impl_badge) throw new Error("Bad");
-	if(!state.href) throw new Error("Bad");
+	if(!state.href){
+		try{
+			new URL(state.url);
+			state.href=state.url;
+		}catch{
+			try{
+				new URL("http://"+state.url);
+				state.href = "http://"+state.url;
+			} catch {}
+		}
+	}
+	if(!state.href){
+		console.log('failed to parse url', state.url);
+		throw new Error("Failed to setup location href");
+	}
 	new_loc.location_setup(state.dom_impl_badge, state.href);
 	new_win.location = new_loc;
 	/**@type {{ [x: string]: { func: any; op: any; }[]; }} */

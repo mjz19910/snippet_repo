@@ -28,4 +28,11 @@ export class HTMLToken {
 	set_code_point(code_point) {
 		this.m_data = code_point;
 	}
+	/**
+	 * @param {{}} data
+	 * @param {{}} _pos
+	 */
+	set_start_position(data, _pos) {
+		this.m_data = data;
+	}
 }
