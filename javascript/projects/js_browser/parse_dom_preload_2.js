@@ -1,6 +1,6 @@
 import path, {relative} from "path";
 import {default as process, argv, exit} from "process";
-import {fetch_url, import_ipc_plugin, new_FetchRequestState} from "./ipc_api/src/mod.js";
+import {fetch_url, import_ipc_plugin, new_FetchRequestState} from "../ipc_api/src/mod.js";
 import {
 	init_wget,
 } from "./mod.js";
@@ -55,7 +55,10 @@ function main() {
 		return;
 	}
 	let url = cmd_argv[0];
-	let ok = init_wget({}, url);
+	let ok = init_wget({
+		no_repl:no_repl, 
+		follow_redirects:follow_redirects,
+	}, url);
 	if(!ok) {
 		console.log('init failed');
 		exit(1);
@@ -63,23 +66,18 @@ function main() {
 	async_main(url);
 }
 main();
+const debug = false;
 /**
  * @param {string} url
  */
 async function async_main(url) {
 	let res=await new_FetchRequestState(url);
-	let lexer=await import_ipc_plugin("tiny_html_lexer");
+	let lexer=await import_ipc_plugin("tiny_html_lexer", "default");
 	if(!lexer)throw new Error("Can't import lexer plugin");
-	let parser=await import_ipc_plugin("tiny_html_parser");
+	let parser=await import_ipc_plugin("tiny_html_parser", "default");
 	let repl_plugin=await import_ipc_plugin("repl_plugin_manager/mod.js", "direct");
-	console.log('repl plug', repl_plugin);
-	parser.ipc_call("set_lexer", ipc_wrap('[tiny_html_lexer.lexer]', [lexer]));
-	fetch_url(res);
-}
-/**
- * @param {string} _a
- * @param {any[]} b
- */
-function ipc_wrap(_a, b){
-	return b;
+	if(debug)console.log('repl plug', repl_plugin);
+	parser.ipc_call("set_lexer", [lexer]);
+	await Promise.resolve();
+	await fetch_url(res);
 }

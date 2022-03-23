@@ -13,10 +13,10 @@ export let xx;
  * @param {HTMLState} state
  * @param {Uint8Array} html_document_content
  */
-export function do_html_load(window, document, state, html_document_content) {
+export async function do_html_load(window, document, state, html_document_content) {
 	void window;
 	console.log('do_html_load');
 	document.setHTMLParserCallback(html_parser_callback);
 	state.tag_handlers = new DOMTagLoadHandlers(document);
-	document.doc_root = document.parseHTMLContent(state, html_document_content);
+	document.doc_root = await document.parseHTMLContent(state, html_document_content);
 }

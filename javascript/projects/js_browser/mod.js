@@ -1,9 +1,12 @@
+import {handle_onPageLoadStarted} from "../browser_fake_dom/event/handle_onPageLoadStarted.js"
+import {fake} from "../browser_fake_dom/mod.js";
 /**
  * @arg {string} req_url
- * @param {{ ok?: boolean; url?: any; }} state
+ * @param {Parameters<typeof handle_onPageLoadStarted>[1]} state
  */
 export function init_wget(state, req_url) {
-	// handle_onPageLoadStarted
+	if(!fake.window) throw new Error("No window");
+	handle_onPageLoadStarted(fake.window, state);
 	state.url=req_url;
 	return state;
 }

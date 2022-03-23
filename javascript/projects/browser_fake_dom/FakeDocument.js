@@ -6,7 +6,6 @@ import {DocumentImpl, FakeWindow} from "./mod.js";
 // Can't import from "./mod.js" as these depend on each other
 import {FakeNode} from "./FakeNode.js";
 import {HTMLState} from "../page_loader/HTMLState.js";
-import {NodeInternalData} from "../page_loader/NodeInternalData.js";
 import {document_element_factory} from "./api/const.js";
 import {FakeElement} from "./FakeElement.js";
 import {Badge} from "./std/Badge.js";
@@ -579,14 +578,14 @@ export class FakeDocument extends FakeNode {
 	/**
 	 * @param {HTMLState} state
 	 * @param {Uint8Array} html_bytes
-	 * @returns {{}|null}
+	 * @returns {Promise<{}|null>}
 	 */
-	parseHTMLContent(state, html_bytes) {
+	async parseHTMLContent(state, html_bytes) {
 		if(this.html_parser_callback === html_parser_callback){
-			return html_parser_callback.call(this, state, html_bytes);
+			return await html_parser_callback.call(this, state, html_bytes);
 		}
 		if(this.html_parser_callback) {
-			return this.html_parser_callback(state, html_bytes);
+			return await this.html_parser_callback(state, html_bytes);
 		}
 		return null;
 	}

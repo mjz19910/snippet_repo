@@ -1,6 +1,6 @@
 import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
-import {static_lexer_states} from "./static_state.js";
+import {g_state} from "./static_state.js";
 export class HTMLLexerState {
 	/**
 	 * @type {string[]}
@@ -12,7 +12,7 @@ export class HTMLLexerState {
 	 * @param {number} len
 	 */
 	dec(off, len) {
-		return this.text_decoder.end(Buffer.from(this.html.subarray(this.i + off, this.i + off + len)));
+		return this.text_decoder.end(Buffer.from(this.html.subarray(off, off + len)));
 	}
 	text_decoder = new StringDecoder('ascii');
 	/**
@@ -38,17 +38,17 @@ export class HTMLLexerState {
 		this.is_in_tag_content = false;
 		this.is_in_script_tag = false;
 		this.i = 0;
-		this.states = static_lexer_states;
+		this.states = g_state;
 		/**
 		 * @type {Uint8Array}
 		 */
 		this.html = new Uint8Array();
-		/**@type {typeof static_lexer_states[keyof typeof static_lexer_states]} */
+		/**@type {typeof g_state[keyof typeof g_state]} */
 		this.m_current_state = this.states.Data;
 		this.html=input;
 		this.html_str = this.text_decoder.end(Buffer.from(this.html));
 		/**@type {string|null}*/
 		this.cur_char = null;
-		this.m_return_state = static_lexer_states.InvalidState;
+		this.m_return_state = g_state.InvalidState;
 	}
 }

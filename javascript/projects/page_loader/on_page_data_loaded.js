@@ -7,7 +7,7 @@ import {HTMLState} from "./HTMLState.js";
  * @arg {Parameters<typeof do_html_load>[1]} document
  * @arg {ConstructorParameters<typeof HTMLState>[0]} state
  */
-export function on_page_data_loaded(window, document, state, err, html_document_content) {
+export async function on_page_data_loaded(window, document, state, err, html_document_content) {
 	console.log("on_page_data_loaded");
 	if(err){
 		console.log('on_page_data_loaded error', err);
@@ -23,6 +23,6 @@ export function on_page_data_loaded(window, document, state, err, html_document_
 	// 	repl.context.get_html_task_state=()=>html_state;
 	// 	repl.displayPrompt();
 	// }
-	do_html_load(window, document, html_state, html_document_content);
+	await do_html_load(window, document, html_state, html_document_content);
 	console.log('tasks', html_state.tasks);
 }

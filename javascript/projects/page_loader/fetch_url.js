@@ -7,7 +7,7 @@ import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
 /**
  * @arg {FetchRequestState} state
  */
-export function fetch_url(state, silent = false) {
+export async function fetch_url(state, silent = false) {
 	if(!state.url) throw new Error("No url to get");
 	let get_repl_activator = (/** @type {FetchRequestState} */ _state) => {
 		console.log('todo get_repl_activator');
@@ -53,5 +53,5 @@ export function fetch_url(state, silent = false) {
 		create_fake.document();
 	if(!state.on_incoming_message)
 		throw new Error("No Handler for server response");
-	run_fetch_algorithm(state);
+	await run_fetch_algorithm(state);
 }

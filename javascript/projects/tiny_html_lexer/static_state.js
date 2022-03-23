@@ -1,4 +1,4 @@
-export class static_lexer_states {
+export class g_state {
 	/**@readonly*/static InvalidState = -1;
 	/**@readonly*/static Data = 0;
 	/**@readonly*/static RCDATA = 1;
