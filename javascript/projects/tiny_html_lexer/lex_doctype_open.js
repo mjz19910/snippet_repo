@@ -6,6 +6,8 @@ import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLex.js";
  * @param {(HTMLSpecialLex | HTMLDataLex | HTMLEntityLex)[]} lex_arr
  */
 export function lex_doctype_open(lex_arr) {
+	if(1)
+		throw new Error("Not implemented");
 	lex_arr.push({
 		type: "special",
 		value: "doctype",

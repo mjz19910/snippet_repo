@@ -4,6 +4,8 @@ import {lex_special_raw} from "./lex_special_raw.js";
  * @param {HTMLLexerState} state
  */
 export function lex_tag_open(state) {
+	if(1)
+		throw new Error("Not implemented");
 	if(state.dec(1, 1) === '/') {
 		if(state.dec(2, 1) === '>') {
 			lex_special_raw(state.lex_arr, "</>")

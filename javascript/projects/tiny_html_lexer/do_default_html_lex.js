@@ -7,6 +7,8 @@ import {abc_chars, num_chars} from "./lex_html.js";
  * @param {string} cur_char
  */
 export function do_default_html_lex(state, cur_char) {
+	if(1)
+		throw new Error("Not implemented");
 	if(abc_chars.includes(cur_char))
 		return lex_data(state);
 	if(num_chars.includes(cur_char))

@@ -8,10 +8,86 @@ import {HTMLLexerState} from "./HTMLLexerState.js";
 import {NodeInternalData} from "../page_loader/NodeInternalData.js";
 import {do_html_lex_step} from "./do_html_lex_step.js";
 import {static_lexer_states} from "./static_state.js";
-import {lexer_data_state} from "./lexer_data_state";
-import {lexer_rc_data_state} from "./lexer_rc_data_state";
-import {lexer_raw_text} from "./lexer_raw_text";
-import {lexer_script_data} from "./lexer_script_data";
+import {lexerData as Data} from "./lexerData";
+import {lexerRCDATA as RCDATA} from "./lexerRCDATA";
+import {lexerRAWTEXT as RAWTEXT} from "./lexerRAWTEXT";
+import {lexerScriptData as ScriptData} from "./lexerScriptData";
+import {TagOpen} from "./TagOpen";
+import {EndTagOpen} from "./EndTagOpen";
+import {TagName} from "./TagName";
+import {RCDATALessThanSign} from "./RCDATALessThanSign";
+import {RCDATAEndTagOpen} from "./RCDATAEndTagOpen";
+import {PLAINTEXT} from "./PLAINTEXT";
+import {RCDATAEndTagName} from "./RCDATAEndTagName";
+import {RAWTEXTLessThanSign} from "./RAWTEXTLessThanSign";
+import {RAWTEXTEndTagOpen} from "./RAWTEXTEndTagOpen";
+import {RAWTEXTEndTagName} from "./RAWTEXTEndTagName";
+import {ScriptDataLessThanSign} from "./ScriptDataLessThanSign";
+import {ScriptDataEndTagOpen} from "./ScriptDataEndTagOpen";
+import {ScriptDataEndTagName} from "./ScriptDataEndTagName";
+import {ScriptDataEscapedLessThanSign} from "./ScriptDataEscapedLessThanSign";
+import {ScriptDataEscapedDashDash} from "./ScriptDataEscapedDashDash";
+import {ScriptDataEscapeStart} from "./ScriptDataEscapeStart";
+import {ScriptDataEscaped} from "./ScriptDataEscaped";
+import {ScriptDataEscapedDash} from "./ScriptDataEscapedDash";
+import {ScriptDataEscapeStartDash} from "./ScriptDataEscapeStartDash";
+import {ScriptDataEscapedEndTagOpen} from "./ScriptDataEscapedEndTagOpen";
+import {ScriptDataEscapedEndTagName} from "./ScriptDataEscapedEndTagName";
+import {ScriptDataDoubleEscapeStart} from "./ScriptDataDoubleEscapeStart";
+import {ScriptDataDoubleEscaped} from "./ScriptDataDoubleEscaped";
+import {ScriptDataDoubleEscapedDash} from "./ScriptDataDoubleEscapedDash";
+import {ScriptDataDoubleEscapeEnd} from "./ScriptDataDoubleEscapeEnd";
+import {BeforeAttributeName} from "./BeforeAttributeName";
+import {AttributeName} from "./AttributeName";
+import {AfterAttributeName} from "./AfterAttributeName";
+import {BeforeAttributeValue} from "./BeforeAttributeValue";
+import {AttributeValueDoubleQuoted} from "./AttributeValueDoubleQuoted";
+import {AttributeValueSingleQuoted} from "./AttributeValueSingleQuoted";
+import {AttributeValueUnquoted} from "./AttributeValueUnquoted";
+import {AfterAttributeValueQuoted} from "./AfterAttributeValueQuoted";
+import {SelfClosingStartTag} from "./SelfClosingStartTag";
+import {BogusComment} from "./BogusComment";
+import {MarkupDeclarationOpen} from "./MarkupDeclarationOpen";
+import {CommentStart} from "./CommentStart";
+import {CommentStartDash} from "./CommentStartDash";
+import {CommentLessThanSign} from "./CommentLessThanSign";
+import {CommentLessThanSignBang} from "./CommentLessThanSignBang";
+import {CommentLessThanSignBangDash} from "./CommentLessThanSignBangDash";
+import {CommentLessThanSignBangDashDash} from "./CommentLessThanSignBangDashDash";
+import {CommentEndDash} from "./CommentEndDash";
+import {CommentEnd} from "./CommentEnd";
+import {CommentEndBang} from "./CommentEndBang";
+import {DOCTYPE} from "./DOCTYPE";
+import {BeforeDOCTYPEName} from "./BeforeDOCTYPEName";
+import {DOCTYPEName} from "./DOCTYPEName";
+import {AfterDOCTYPEName} from "./AfterDOCTYPEName";
+import {AfterDOCTYPEPublicKeyword} from "./AfterDOCTYPEPublicKeyword";
+import {BeforeDOCTYPEPublicIdentifier} from "./BeforeDOCTYPEPublicIdentifier";
+import {DOCTYPEPublicIdentifierDoubleQuoted} from "./DOCTYPEPublicIdentifierDoubleQuoted";
+import {DOCTYPEPublicIdentifierSingleQuoted} from "./DOCTYPEPublicIdentifierSingleQuoted";
+import {AfterDOCTYPEPublicIdentifier} from "./AfterDOCTYPEPublicIdentifier";
+import {BetweenDOCTYPEPublicAndSystemIdentifiers} from "./BetweenDOCTYPEPublicAndSystemIdentifiers";
+import {AfterDOCTYPESystemKeyword} from "./AfterDOCTYPESystemKeyword";
+import {BeforeDOCTYPESystemIdentifier} from "./BeforeDOCTYPESystemIdentifier";
+import {DOCTYPESystemIdentifierDoubleQuoted} from "./DOCTYPESystemIdentifierDoubleQuoted";
+import {DOCTYPESystemIdentifierSingleQuoted} from "./DOCTYPESystemIdentifierSingleQuoted";
+import {AfterDOCTYPESystemIdentifier} from "./AfterDOCTYPESystemIdentifier";
+import {BogusDOCTYPE} from "./BogusDOCTYPE";
+import {CDATASectionBracket} from "./CDATASectionBracket";
+import {CDATASectionEnd} from "./CDATASectionEnd";
+import {CharacterReference} from "./CharacterReference";
+import {NamedCharacterReference} from "./NamedCharacterReference";
+import {AmbiguousAmpersand} from "./AmbiguousAmpersand";
+import {NumericCharacterReference} from "./NumericCharacterReference";
+import {HexadecimalCharacterReferenceStart} from "./HexadecimalCharacterReferenceStart";
+import {DecimalCharacterReferenceStart} from "./DecimalCharacterReferenceStart";
+import {HexadecimalCharacterReference} from "./HexadecimalCharacterReference";
+import {DecimalCharacterReference} from "./DecimalCharacterReference";
+import {NumericCharacterReferenceEnd} from "./NumericCharacterReferenceEnd";
+import {ScriptDataDoubleEscapedDashDash} from "./ScriptDataDoubleEscapedDashDash";
+import {ScriptDataDoubleEscapedLessThanSign} from "./ScriptDataDoubleEscapedLessThanSign";
+import {lexerComment} from "./lexerComment";
+import {CDATASection} from "./CDATASection";
 export const abc_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 export const num_chars = "0123456789";
 /**@type {number[]}*/
@@ -46,86 +122,86 @@ export function lex_html(html) {
 		state.cur_lex = state.html[state.i];
 		state.cur_char = state.dec(state.i, 1);
 		switch(state.m_current_state) {
-			case static_lexer_states.Data: lexer_data_state(state); break;
-			case static_lexer_states.RCDATA: lexer_rc_data_state(state); break;
-			case static_lexer_states.RAWTEXT: lexer_raw_text(state); break;
-			case static_lexer_states.ScriptData: lexer_script_data(state); break;
-			case static_lexer_states.PLAINTEXT: lexer_plain_text(state);break;
-			case static_lexer_states.TagOpen: lexer_tag_open(state);break;
-			case static_lexer_states.EndTagOpen: lexer_end_tag_open(state);break;
-			case static_lexer_states.TagName: lexer_tag_name(state);break;
-			case static_lexer_states.RCDATALessThanSign: lexer_rc_data_less_than_sign(state);break;
-			case static_lexer_states.RCDATAEndTagOpen: lexer_rc_data_end_tag_open(state);break;
-			case static_lexer_states.RCDATAEndTagName: lexer_rc_data_end_tag_name(state);break;
-			case static_lexer_states.RAWTEXTLessThanSign: lexer_raw_text_less_than_sign(state);break;
-			case static_lexer_states.RAWTEXTEndTagOpen: lexer_raw_text_end_tag_open(state);break;
-			case static_lexer_states.RAWTEXTEndTagName: lexer_raw_text_end_tag_name(state); throw todo_err;
-			case static_lexer_states.ScriptDataLessThanSign: script_data_less_than_sign(state);throw todo_err;
-			case static_lexer_states.ScriptDataEndTagOpen: throw todo_err;
-			case static_lexer_states.ScriptDataEndTagName: throw todo_err;
-			case static_lexer_states.ScriptDataEscapeStart: throw todo_err;
-			case static_lexer_states.ScriptDataEscapeStartDash: throw todo_err;
-			case static_lexer_states.ScriptDataEscaped: throw todo_err;
-			case static_lexer_states.ScriptDataEscapedDash: throw todo_err;
-			case static_lexer_states.ScriptDataEscapedDashDash: throw todo_err;
-			case static_lexer_states.ScriptDataEscapedLessThanSign: throw todo_err;
-			case static_lexer_states.ScriptDataEscapedEndTagOpen: throw todo_err;
-			case static_lexer_states.ScriptDataEscapedEndTagName: throw todo_err;
-			case static_lexer_states.ScriptDataDoubleEscapeStart: throw todo_err;
-			case static_lexer_states.ScriptDataDoubleEscaped: throw todo_err;
-			case static_lexer_states.ScriptDataDoubleEscapedDash: throw todo_err;
-			case static_lexer_states.ScriptDataDoubleEscapedDashDash: throw todo_err;
-			case static_lexer_states.ScriptDataDoubleEscapedLessThanSign: throw todo_err;
-			case static_lexer_states.ScriptDataDoubleEscapeEnd: throw todo_err;
-			case static_lexer_states.BeforeAttributeName: throw todo_err;
-			case static_lexer_states.AttributeName: throw todo_err;
-			case static_lexer_states.AfterAttributeName: throw todo_err;
-			case static_lexer_states.BeforeAttributeValue: throw todo_err;
-			case static_lexer_states.AttributeValueDoubleQuoted: throw todo_err;
-			case static_lexer_states.AttributeValueSingleQuoted: throw todo_err;
-			case static_lexer_states.AttributeValueUnquoted: throw todo_err;
-			case static_lexer_states.AfterAttributeValueQuoted: throw todo_err;
-			case static_lexer_states.SelfClosingStartTag: throw todo_err;
-			case static_lexer_states.BogusComment: throw todo_err;
-			case static_lexer_states.MarkupDeclarationOpen: throw todo_err;
-			case static_lexer_states.CommentStart: throw todo_err;
-			case static_lexer_states.CommentStartDash: throw todo_err;
-			case static_lexer_states.Comment: throw todo_err;
-			case static_lexer_states.CommentLessThanSign: throw todo_err;
-			case static_lexer_states.CommentLessThanSignBang: throw todo_err;
-			case static_lexer_states.CommentLessThanSignBangDash: throw todo_err;
-			case static_lexer_states.CommentLessThanSignBangDashDash: throw todo_err;
-			case static_lexer_states.CommentEndDash: throw todo_err;
-			case static_lexer_states.CommentEnd: throw todo_err;
-			case static_lexer_states.CommentEndBang: throw todo_err;
-			case static_lexer_states.DOCTYPE: throw todo_err;
-			case static_lexer_states.BeforeDOCTYPEName: throw todo_err;
-			case static_lexer_states.DOCTYPEName: throw todo_err;
-			case static_lexer_states.AfterDOCTYPEName: throw todo_err;
-			case static_lexer_states.AfterDOCTYPEPublicKeyword: throw todo_err;
-			case static_lexer_states.BeforeDOCTYPEPublicIdentifier: throw todo_err;
-			case static_lexer_states.DOCTYPEPublicIdentifierDoubleQuoted: throw todo_err;
-			case static_lexer_states.DOCTYPEPublicIdentifierSingleQuoted: throw todo_err;
-			case static_lexer_states.AfterDOCTYPEPublicIdentifier: throw todo_err;
-			case static_lexer_states.BetweenDOCTYPEPublicAndSystemIdentifiers: throw todo_err;
-			case static_lexer_states.AfterDOCTYPESystemKeyword: throw todo_err;
-			case static_lexer_states.BeforeDOCTYPESystemIdentifier: throw todo_err;
-			case static_lexer_states.DOCTYPESystemIdentifierDoubleQuoted: throw todo_err;
-			case static_lexer_states.DOCTYPESystemIdentifierSingleQuoted: throw todo_err;
-			case static_lexer_states.AfterDOCTYPESystemIdentifier: throw todo_err;
-			case static_lexer_states.BogusDOCTYPE: throw todo_err;
-			case static_lexer_states.CDATASection: throw todo_err;
-			case static_lexer_states.CDATASectionBracket: throw todo_err;
-			case static_lexer_states.CDATASectionEnd: throw todo_err;
-			case static_lexer_states.CharacterReference: throw todo_err;
-			case static_lexer_states.NamedCharacterReference: throw todo_err;
-			case static_lexer_states.AmbiguousAmpersand: throw todo_err;
-			case static_lexer_states.NumericCharacterReference: throw todo_err;
-			case static_lexer_states.HexadecimalCharacterReferenceStart: throw todo_err;
-			case static_lexer_states.DecimalCharacterReferenceStart: throw todo_err;
-			case static_lexer_states.HexadecimalCharacterReference: throw todo_err;
-			case static_lexer_states.DecimalCharacterReference: throw todo_err;
-			case static_lexer_states.NumericCharacterReferenceEnd: throw todo_err;
+			case static_lexer_states.Data: Data(state); break;
+			case static_lexer_states.RCDATA: RCDATA(state); break;
+			case static_lexer_states.RAWTEXT: RAWTEXT(state); break;
+			case static_lexer_states.ScriptData: ScriptData(state); break;
+			case static_lexer_states.PLAINTEXT: PLAINTEXT(state); break;
+			case static_lexer_states.TagOpen: TagOpen(state); break;
+			case static_lexer_states.EndTagOpen: EndTagOpen(state); break;
+			case static_lexer_states.TagName: TagName(state); break;
+			case static_lexer_states.RCDATALessThanSign: RCDATALessThanSign(state); break;
+			case static_lexer_states.RCDATAEndTagOpen: RCDATAEndTagOpen(state); break;
+			case static_lexer_states.RCDATAEndTagName: RCDATAEndTagName(state); break;
+			case static_lexer_states.RAWTEXTLessThanSign: RAWTEXTLessThanSign(state); break;
+			case static_lexer_states.RAWTEXTEndTagOpen: RAWTEXTEndTagOpen(state); break;
+			case static_lexer_states.RAWTEXTEndTagName: RAWTEXTEndTagName(state); break;
+			case static_lexer_states.ScriptDataLessThanSign: ScriptDataLessThanSign(state); break;
+			case static_lexer_states.ScriptDataEndTagOpen: ScriptDataEndTagOpen(state); break;
+			case static_lexer_states.ScriptDataEndTagName: ScriptDataEndTagName(state); break;
+			case static_lexer_states.ScriptDataEscapeStart: ScriptDataEscapeStart(state); break;
+			case static_lexer_states.ScriptDataEscapeStartDash: ScriptDataEscapeStartDash(state); break;
+			case static_lexer_states.ScriptDataEscaped: ScriptDataEscaped(state); break;
+			case static_lexer_states.ScriptDataEscapedDash: ScriptDataEscapedDash(state); break;
+			case static_lexer_states.ScriptDataEscapedDashDash: ScriptDataEscapedDashDash(state); break;
+			case static_lexer_states.ScriptDataEscapedLessThanSign: ScriptDataEscapedLessThanSign(state); break;
+			case static_lexer_states.ScriptDataEscapedEndTagOpen: ScriptDataEscapedEndTagOpen(state); break;
+			case static_lexer_states.ScriptDataEscapedEndTagName: ScriptDataEscapedEndTagName(state); break;
+			case static_lexer_states.ScriptDataDoubleEscapeStart: ScriptDataDoubleEscapeStart(state); break;
+			case static_lexer_states.ScriptDataDoubleEscaped: ScriptDataDoubleEscaped(state); break;
+			case static_lexer_states.ScriptDataDoubleEscapedDash: ScriptDataDoubleEscapedDash(state); break;
+			case static_lexer_states.ScriptDataDoubleEscapedDashDash: ScriptDataDoubleEscapedDashDash(state); break;
+			case static_lexer_states.ScriptDataDoubleEscapedLessThanSign: ScriptDataDoubleEscapedLessThanSign(state); break;
+			case static_lexer_states.ScriptDataDoubleEscapeEnd: ScriptDataDoubleEscapeEnd(state); break;
+			case static_lexer_states.BeforeAttributeName: BeforeAttributeName(state); break;
+			case static_lexer_states.AttributeName: AttributeName(state); break;
+			case static_lexer_states.AfterAttributeName: AfterAttributeName(state); break;
+			case static_lexer_states.BeforeAttributeValue: BeforeAttributeValue(state); break;
+			case static_lexer_states.AttributeValueDoubleQuoted: AttributeValueDoubleQuoted(state); break;
+			case static_lexer_states.AttributeValueSingleQuoted: AttributeValueSingleQuoted(state); break;
+			case static_lexer_states.AttributeValueUnquoted: AttributeValueUnquoted(state); break;
+			case static_lexer_states.AfterAttributeValueQuoted: AfterAttributeValueQuoted(state); break;
+			case static_lexer_states.SelfClosingStartTag: SelfClosingStartTag(state); break;
+			case static_lexer_states.BogusComment: BogusComment(state); break;
+			case static_lexer_states.MarkupDeclarationOpen: MarkupDeclarationOpen(state); break;
+			case static_lexer_states.CommentStart: CommentStart(state); break;
+			case static_lexer_states.CommentStartDash: CommentStartDash(state); break;
+			case static_lexer_states.Comment: lexerComment(state); break;
+			case static_lexer_states.CommentLessThanSign: CommentLessThanSign(state); break;
+			case static_lexer_states.CommentLessThanSignBang: CommentLessThanSignBang(state); break;
+			case static_lexer_states.CommentLessThanSignBangDash: CommentLessThanSignBangDash(state); break;
+			case static_lexer_states.CommentLessThanSignBangDashDash: CommentLessThanSignBangDashDash(state); break;
+			case static_lexer_states.CommentEndDash: CommentEndDash(state); break;
+			case static_lexer_states.CommentEnd: CommentEnd(state); break;
+			case static_lexer_states.CommentEndBang: CommentEndBang(state); break;
+			case static_lexer_states.DOCTYPE: DOCTYPE(state); break;
+			case static_lexer_states.BeforeDOCTYPEName: BeforeDOCTYPEName(state); break;
+			case static_lexer_states.DOCTYPEName: DOCTYPEName(state); break;
+			case static_lexer_states.AfterDOCTYPEName: AfterDOCTYPEName(state); break;
+			case static_lexer_states.AfterDOCTYPEPublicKeyword: AfterDOCTYPEPublicKeyword(state); break;
+			case static_lexer_states.BeforeDOCTYPEPublicIdentifier: BeforeDOCTYPEPublicIdentifier(state); break;
+			case static_lexer_states.DOCTYPEPublicIdentifierDoubleQuoted: DOCTYPEPublicIdentifierDoubleQuoted(state); break;
+			case static_lexer_states.DOCTYPEPublicIdentifierSingleQuoted: DOCTYPEPublicIdentifierSingleQuoted(state); break;
+			case static_lexer_states.AfterDOCTYPEPublicIdentifier: AfterDOCTYPEPublicIdentifier(state); break;
+			case static_lexer_states.BetweenDOCTYPEPublicAndSystemIdentifiers: BetweenDOCTYPEPublicAndSystemIdentifiers(state); break;
+			case static_lexer_states.AfterDOCTYPESystemKeyword: AfterDOCTYPESystemKeyword(state); break;
+			case static_lexer_states.BeforeDOCTYPESystemIdentifier: BeforeDOCTYPESystemIdentifier(state); break;
+			case static_lexer_states.DOCTYPESystemIdentifierDoubleQuoted: DOCTYPESystemIdentifierDoubleQuoted(state); break;
+			case static_lexer_states.DOCTYPESystemIdentifierSingleQuoted: DOCTYPESystemIdentifierSingleQuoted(state); break;
+			case static_lexer_states.AfterDOCTYPESystemIdentifier: AfterDOCTYPESystemIdentifier(state); break;
+			case static_lexer_states.BogusDOCTYPE: BogusDOCTYPE(state); break;
+			case static_lexer_states.CDATASection: CDATASection(state); break;
+			case static_lexer_states.CDATASectionBracket: CDATASectionBracket(state); break;
+			case static_lexer_states.CDATASectionEnd: CDATASectionEnd(state); break;
+			case static_lexer_states.CharacterReference: CharacterReference(state); break;
+			case static_lexer_states.NamedCharacterReference: NamedCharacterReference(state); break;
+			case static_lexer_states.AmbiguousAmpersand: AmbiguousAmpersand(state); break;
+			case static_lexer_states.NumericCharacterReference: NumericCharacterReference(state); break;
+			case static_lexer_states.HexadecimalCharacterReferenceStart: HexadecimalCharacterReferenceStart(state); break;
+			case static_lexer_states.DecimalCharacterReferenceStart: DecimalCharacterReferenceStart(state); break;
+			case static_lexer_states.HexadecimalCharacterReference: HexadecimalCharacterReference(state); break;
+			case static_lexer_states.DecimalCharacterReference: DecimalCharacterReference(state); break;
+			case static_lexer_states.NumericCharacterReferenceEnd: NumericCharacterReferenceEnd(state); break;
 		}
 		do_html_lex_step(state);
 	}
@@ -153,47 +229,3 @@ export function use_types() {
 		js_type_html_lex_arr,
 	];
 }
-
-function lexer_tag_open(state) {
-	throw new Error("Function not implemented.");
-}
-
-function lexer_end_tag_open(state) {
-	throw new Error("Function not implemented.");
-}
-
-function lexer_tag_name(state) {
-	throw new Error("Function not implemented.");
-}
-
-function lexer_rc_data_less_than_sign(state) {
-	throw new Error("Function not implemented.");
-}
-
-function lexer_rc_data_end_tag_open(state) {
-	throw new Error("Function not implemented.");
-}
-
-function lexer_plain_text(state){
-	throw new Error("Function not implemented.");
-}
-
-function lexer_rc_data_end_tag_name(state) {
-	throw new Error("Function not implemented.");
-}
-function lexer_raw_text_less_than_sign(state) {
-	throw new Error("Function not implemented.");
-}
-
-function lexer_raw_text_end_tag_open(state) {
-	throw new Error("Function not implemented.");
-}
-
-function lexer_raw_text_end_tag_name(state) {
-	throw new Error("Function not implemented.");
-}
-
-function script_data_less_than_sign(state) {
-	throw new Error("Function not implemented.");
-}
-

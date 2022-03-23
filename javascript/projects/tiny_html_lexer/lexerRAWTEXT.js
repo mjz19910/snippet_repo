@@ -4,8 +4,8 @@ import {has_types_arr_with} from "./types/has_types_data.js";
 /**
  * @param {HTMLLexerState} state
  */
-export function lexer_raw_text(state) {
-	let l_callee = lexer_raw_text;
+export function lexerRAWTEXT(state) {
+	let l_callee = lexerRAWTEXT;
 	/**@type {[typeof HTMLLexerState]} */
 	let ls_arr = [HTMLLexerState];
 	if(has_types_arr_with(l_callee, ls_arr)) {

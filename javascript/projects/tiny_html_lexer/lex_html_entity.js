@@ -7,6 +7,8 @@ import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLex.js";
  * @param {string} value
  */
 export function lex_html_entity(arr, value) {
+	if(1)
+		throw new Error("Not implemented");
 	arr.push({
 		type: "entity",
 		value: value,

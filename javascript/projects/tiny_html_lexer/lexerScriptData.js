@@ -4,7 +4,7 @@ import {down_cast_func, drop_type, has_types_arr_with} from "./types/has_types_d
 /**
  * @param {HTMLLexerState} state
  */
-export function lexer_script_data(state) {
+export function lexerScriptData(state) {
 	/**@type {Function | (()=>void)} */
 	let l_callee = arguments.callee;
 	/**@type {[typeof HTMLLexerState]} */
