@@ -1,4 +1,4 @@
-export class g_state {
+export class State {
 	/**@readonly*/static InvalidState = -1;
 	/**@readonly*/static Data = 0;
 	/**@readonly*/static RCDATA = 1;

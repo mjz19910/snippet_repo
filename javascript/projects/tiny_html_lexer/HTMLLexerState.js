@@ -1,12 +1,14 @@
 import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
 import {HTMLToken} from "./HTMLToken.js";
-import {g_state} from "./static_state.js";
+import {State} from "./static_state.js";
 export class HTMLLexerState {
+	/**@type {Extract<typeof State[keyof typeof State], number>}*/
+	m_state = -1;
 	/**@type {HTMLToken|null}*/
 	m_current_token = null;
 	/**
-	 * @type {string[]}
+	 * @type {(string | HTMLToken)[]}
 	 */
 	m_queued_tokens=[];
 	m_is_eof = false;
@@ -41,17 +43,17 @@ export class HTMLLexerState {
 		this.is_in_tag_content = false;
 		this.is_in_script_tag = false;
 		this.i = 0;
-		this.states = g_state;
+		this.states = State;
 		/**
 		 * @type {Uint8Array}
 		 */
 		this.html = new Uint8Array();
-		/**@type {typeof g_state[keyof typeof g_state]} */
+		/**@type {typeof State[keyof typeof State]} */
 		this.m_current_state = this.states.Data;
 		this.html=input;
 		this.html_str = this.text_decoder.end(Buffer.from(this.html));
 		/**@type {string|null}*/
 		this.cur_char = null;
-		this.m_return_state = g_state.InvalidState;
+		this.m_return_state = State.InvalidState;
 	}
 }

@@ -180,6 +180,7 @@ words:
   - totalAtome
   - treeverse
   - trgfs
+  - Typecheck
   - typechecked
   - uerr
   - undebug

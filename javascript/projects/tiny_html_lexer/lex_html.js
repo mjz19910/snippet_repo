@@ -6,12 +6,12 @@ import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLex.js";
 import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLex.js";
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {NodeInternalData} from "../page_loader/NodeInternalData.js";
-import {g_state} from "./static_state.js";
+import {State} from "./static_state.js";
 import {lexerData as Data} from "./lexerData";
 import {lexerRCDATA as RCDATA} from "./lexerRCDATA";
 import {lexerRAWTEXT as RAWTEXT} from "./lexerRAWTEXT";
 import {lexerScriptData as ScriptData} from "./lexerScriptData";
-import {TagOpen} from "./TagOpen";
+import {TagOpen} from "./lexerTagOpen";
 import {EndTagOpen} from "./EndTagOpen";
 import {TagName} from "./TagName";
 import {RCDATALessThanSign} from "./RCDATALessThanSign";
@@ -106,118 +106,118 @@ export function any(v) {
  */
 export function lex_html(html) {
 	const todo_err = new Error("TODO");
-	let state = new HTMLLexerState(html);
+	let lexer = new HTMLLexerState(html);
 	var document_root = new NodeInternalData('root', 0, [], null);
 	/**@type {0|1|2}*/
-	state.lex_mode = 0;
-	state.is_in_tag_attrs = false;
-	state.is_in_tag_content = true;
-	state.is_in_script_tag = false;
+	lexer.lex_mode = 0;
+	lexer.is_in_tag_attrs = false;
+	lexer.is_in_tag_content = true;
+	lexer.is_in_script_tag = false;
 	/**@type {(ReturnType<typeof js_type_html_lex_arr>)[]} */
-	state.lex_arr = [];
+	lexer.lex_arr = [];
 	// stage 1, handle script and style tags and ending and opening of html
 	// tags (also newline and crlf)
-	for(state.i = 0; state.i < state.html.length; state.i++) {
-		state.cur_lex = state.html[state.i];
-		state.cur_char = state.dec(state.i, 1);
-		switch(state.m_current_state) {
-			case g_state.Data: Data(state); break;
-			case g_state.RCDATA: RCDATA(state); break;
-			case g_state.RAWTEXT: RAWTEXT(state); break;
-			case g_state.ScriptData: ScriptData(state); break;
-			case g_state.PLAINTEXT: PLAINTEXT(state); break;
-			case g_state.TagOpen: TagOpen(state); break;
-			case g_state.EndTagOpen: EndTagOpen(state); break;
-			case g_state.TagName: TagName(state); break;
-			case g_state.RCDATALessThanSign: RCDATALessThanSign(state); break;
-			case g_state.RCDATAEndTagOpen: RCDATAEndTagOpen(state); break;
-			case g_state.RCDATAEndTagName: RCDATAEndTagName(state); break;
-			case g_state.RAWTEXTLessThanSign: RAWTEXTLessThanSign(state); break;
-			case g_state.RAWTEXTEndTagOpen: RAWTEXTEndTagOpen(state); break;
-			case g_state.RAWTEXTEndTagName: RAWTEXTEndTagName(state); break;
-			case g_state.ScriptDataLessThanSign: ScriptDataLessThanSign(state); break;
-			case g_state.ScriptDataEndTagOpen: ScriptDataEndTagOpen(state); break;
-			case g_state.ScriptDataEndTagName: ScriptDataEndTagName(state); break;
-			case g_state.ScriptDataEscapeStart: ScriptDataEscapeStart(state); break;
-			case g_state.ScriptDataEscapeStartDash: ScriptDataEscapeStartDash(state); break;
-			case g_state.ScriptDataEscaped: ScriptDataEscaped(state); break;
-			case g_state.ScriptDataEscapedDash: ScriptDataEscapedDash(state); break;
-			case g_state.ScriptDataEscapedDashDash: ScriptDataEscapedDashDash(state); break;
-			case g_state.ScriptDataEscapedLessThanSign: ScriptDataEscapedLessThanSign(state); break;
-			case g_state.ScriptDataEscapedEndTagOpen: ScriptDataEscapedEndTagOpen(state); break;
-			case g_state.ScriptDataEscapedEndTagName: ScriptDataEscapedEndTagName(state); break;
-			case g_state.ScriptDataDoubleEscapeStart: ScriptDataDoubleEscapeStart(state); break;
-			case g_state.ScriptDataDoubleEscaped: ScriptDataDoubleEscaped(state); break;
-			case g_state.ScriptDataDoubleEscapedDash: ScriptDataDoubleEscapedDash(state); break;
-			case g_state.ScriptDataDoubleEscapedDashDash: ScriptDataDoubleEscapedDashDash(state); break;
-			case g_state.ScriptDataDoubleEscapedLessThanSign: ScriptDataDoubleEscapedLessThanSign(state); break;
-			case g_state.ScriptDataDoubleEscapeEnd: ScriptDataDoubleEscapeEnd(state); break;
-			case g_state.BeforeAttributeName: BeforeAttributeName(state); break;
-			case g_state.AttributeName: AttributeName(state); break;
-			case g_state.AfterAttributeName: AfterAttributeName(state); break;
-			case g_state.BeforeAttributeValue: BeforeAttributeValue(state); break;
-			case g_state.AttributeValueDoubleQuoted: AttributeValueDoubleQuoted(state); break;
-			case g_state.AttributeValueSingleQuoted: AttributeValueSingleQuoted(state); break;
-			case g_state.AttributeValueUnquoted: AttributeValueUnquoted(state); break;
-			case g_state.AfterAttributeValueQuoted: AfterAttributeValueQuoted(state); break;
-			case g_state.SelfClosingStartTag: SelfClosingStartTag(state); break;
-			case g_state.BogusComment: BogusComment(state); break;
-			case g_state.MarkupDeclarationOpen: MarkupDeclarationOpen(state); break;
-			case g_state.CommentStart: CommentStart(state); break;
-			case g_state.CommentStartDash: CommentStartDash(state); break;
-			case g_state.Comment: lexerComment(state); break;
-			case g_state.CommentLessThanSign: CommentLessThanSign(state); break;
-			case g_state.CommentLessThanSignBang: CommentLessThanSignBang(state); break;
-			case g_state.CommentLessThanSignBangDash: CommentLessThanSignBangDash(state); break;
-			case g_state.CommentLessThanSignBangDashDash: CommentLessThanSignBangDashDash(state); break;
-			case g_state.CommentEndDash: CommentEndDash(state); break;
-			case g_state.CommentEnd: CommentEnd(state); break;
-			case g_state.CommentEndBang: CommentEndBang(state); break;
-			case g_state.DOCTYPE: DOCTYPE(state); break;
-			case g_state.BeforeDOCTYPEName: BeforeDOCTYPEName(state); break;
-			case g_state.DOCTYPEName: DOCTYPEName(state); break;
-			case g_state.AfterDOCTYPEName: AfterDOCTYPEName(state); break;
-			case g_state.AfterDOCTYPEPublicKeyword: AfterDOCTYPEPublicKeyword(state); break;
-			case g_state.BeforeDOCTYPEPublicIdentifier: BeforeDOCTYPEPublicIdentifier(state); break;
-			case g_state.DOCTYPEPublicIdentifierDoubleQuoted: DOCTYPEPublicIdentifierDoubleQuoted(state); break;
-			case g_state.DOCTYPEPublicIdentifierSingleQuoted: DOCTYPEPublicIdentifierSingleQuoted(state); break;
-			case g_state.AfterDOCTYPEPublicIdentifier: AfterDOCTYPEPublicIdentifier(state); break;
-			case g_state.BetweenDOCTYPEPublicAndSystemIdentifiers: BetweenDOCTYPEPublicAndSystemIdentifiers(state); break;
-			case g_state.AfterDOCTYPESystemKeyword: AfterDOCTYPESystemKeyword(state); break;
-			case g_state.BeforeDOCTYPESystemIdentifier: BeforeDOCTYPESystemIdentifier(state); break;
-			case g_state.DOCTYPESystemIdentifierDoubleQuoted: DOCTYPESystemIdentifierDoubleQuoted(state); break;
-			case g_state.DOCTYPESystemIdentifierSingleQuoted: DOCTYPESystemIdentifierSingleQuoted(state); break;
-			case g_state.AfterDOCTYPESystemIdentifier: AfterDOCTYPESystemIdentifier(state); break;
-			case g_state.BogusDOCTYPE: BogusDOCTYPE(state); break;
-			case g_state.CDATASection: CDATASection(state); break;
-			case g_state.CDATASectionBracket: CDATASectionBracket(state); break;
-			case g_state.CDATASectionEnd: CDATASectionEnd(state); break;
-			case g_state.CharacterReference: CharacterReference(state); break;
-			case g_state.NamedCharacterReference: NamedCharacterReference(state); break;
-			case g_state.AmbiguousAmpersand: AmbiguousAmpersand(state); break;
-			case g_state.NumericCharacterReference: NumericCharacterReference(state); break;
-			case g_state.HexadecimalCharacterReferenceStart: HexadecimalCharacterReferenceStart(state); break;
-			case g_state.DecimalCharacterReferenceStart: DecimalCharacterReferenceStart(state); break;
-			case g_state.HexadecimalCharacterReference: HexadecimalCharacterReference(state); break;
-			case g_state.DecimalCharacterReference: DecimalCharacterReference(state); break;
-			case g_state.NumericCharacterReferenceEnd: NumericCharacterReferenceEnd(state); break;
+	for(lexer.i = 0; lexer.i < lexer.html.length; lexer.i++) {
+		lexer.cur_lex = lexer.html[lexer.i];
+		lexer.cur_char = lexer.dec(lexer.i, 1);
+		switch(lexer.m_current_state) {
+			case State.Data: Data(lexer); break;
+			case State.RCDATA: RCDATA(lexer); break;
+			case State.RAWTEXT: RAWTEXT(lexer); break;
+			case State.ScriptData: ScriptData(lexer); break;
+			case State.PLAINTEXT: PLAINTEXT(lexer); break;
+			case State.TagOpen: TagOpen(lexer); break;
+			case State.EndTagOpen: EndTagOpen(lexer); break;
+			case State.TagName: TagName(lexer); break;
+			case State.RCDATALessThanSign: RCDATALessThanSign(lexer); break;
+			case State.RCDATAEndTagOpen: RCDATAEndTagOpen(lexer); break;
+			case State.RCDATAEndTagName: RCDATAEndTagName(lexer); break;
+			case State.RAWTEXTLessThanSign: RAWTEXTLessThanSign(lexer); break;
+			case State.RAWTEXTEndTagOpen: RAWTEXTEndTagOpen(lexer); break;
+			case State.RAWTEXTEndTagName: RAWTEXTEndTagName(lexer); break;
+			case State.ScriptDataLessThanSign: ScriptDataLessThanSign(lexer); break;
+			case State.ScriptDataEndTagOpen: ScriptDataEndTagOpen(lexer); break;
+			case State.ScriptDataEndTagName: ScriptDataEndTagName(lexer); break;
+			case State.ScriptDataEscapeStart: ScriptDataEscapeStart(lexer); break;
+			case State.ScriptDataEscapeStartDash: ScriptDataEscapeStartDash(lexer); break;
+			case State.ScriptDataEscaped: ScriptDataEscaped(lexer); break;
+			case State.ScriptDataEscapedDash: ScriptDataEscapedDash(lexer); break;
+			case State.ScriptDataEscapedDashDash: ScriptDataEscapedDashDash(lexer); break;
+			case State.ScriptDataEscapedLessThanSign: ScriptDataEscapedLessThanSign(lexer); break;
+			case State.ScriptDataEscapedEndTagOpen: ScriptDataEscapedEndTagOpen(lexer); break;
+			case State.ScriptDataEscapedEndTagName: ScriptDataEscapedEndTagName(lexer); break;
+			case State.ScriptDataDoubleEscapeStart: ScriptDataDoubleEscapeStart(lexer); break;
+			case State.ScriptDataDoubleEscaped: ScriptDataDoubleEscaped(lexer); break;
+			case State.ScriptDataDoubleEscapedDash: ScriptDataDoubleEscapedDash(lexer); break;
+			case State.ScriptDataDoubleEscapedDashDash: ScriptDataDoubleEscapedDashDash(lexer); break;
+			case State.ScriptDataDoubleEscapedLessThanSign: ScriptDataDoubleEscapedLessThanSign(lexer); break;
+			case State.ScriptDataDoubleEscapeEnd: ScriptDataDoubleEscapeEnd(lexer); break;
+			case State.BeforeAttributeName: BeforeAttributeName(lexer); break;
+			case State.AttributeName: AttributeName(lexer); break;
+			case State.AfterAttributeName: AfterAttributeName(lexer); break;
+			case State.BeforeAttributeValue: BeforeAttributeValue(lexer); break;
+			case State.AttributeValueDoubleQuoted: AttributeValueDoubleQuoted(lexer); break;
+			case State.AttributeValueSingleQuoted: AttributeValueSingleQuoted(lexer); break;
+			case State.AttributeValueUnquoted: AttributeValueUnquoted(lexer); break;
+			case State.AfterAttributeValueQuoted: AfterAttributeValueQuoted(lexer); break;
+			case State.SelfClosingStartTag: SelfClosingStartTag(lexer); break;
+			case State.BogusComment: BogusComment(lexer); break;
+			case State.MarkupDeclarationOpen: MarkupDeclarationOpen(lexer); break;
+			case State.CommentStart: CommentStart(lexer); break;
+			case State.CommentStartDash: CommentStartDash(lexer); break;
+			case State.Comment: lexerComment(lexer); break;
+			case State.CommentLessThanSign: CommentLessThanSign(lexer); break;
+			case State.CommentLessThanSignBang: CommentLessThanSignBang(lexer); break;
+			case State.CommentLessThanSignBangDash: CommentLessThanSignBangDash(lexer); break;
+			case State.CommentLessThanSignBangDashDash: CommentLessThanSignBangDashDash(lexer); break;
+			case State.CommentEndDash: CommentEndDash(lexer); break;
+			case State.CommentEnd: CommentEnd(lexer); break;
+			case State.CommentEndBang: CommentEndBang(lexer); break;
+			case State.DOCTYPE: DOCTYPE(lexer); break;
+			case State.BeforeDOCTYPEName: BeforeDOCTYPEName(lexer); break;
+			case State.DOCTYPEName: DOCTYPEName(lexer); break;
+			case State.AfterDOCTYPEName: AfterDOCTYPEName(lexer); break;
+			case State.AfterDOCTYPEPublicKeyword: AfterDOCTYPEPublicKeyword(lexer); break;
+			case State.BeforeDOCTYPEPublicIdentifier: BeforeDOCTYPEPublicIdentifier(lexer); break;
+			case State.DOCTYPEPublicIdentifierDoubleQuoted: DOCTYPEPublicIdentifierDoubleQuoted(lexer); break;
+			case State.DOCTYPEPublicIdentifierSingleQuoted: DOCTYPEPublicIdentifierSingleQuoted(lexer); break;
+			case State.AfterDOCTYPEPublicIdentifier: AfterDOCTYPEPublicIdentifier(lexer); break;
+			case State.BetweenDOCTYPEPublicAndSystemIdentifiers: BetweenDOCTYPEPublicAndSystemIdentifiers(lexer); break;
+			case State.AfterDOCTYPESystemKeyword: AfterDOCTYPESystemKeyword(lexer); break;
+			case State.BeforeDOCTYPESystemIdentifier: BeforeDOCTYPESystemIdentifier(lexer); break;
+			case State.DOCTYPESystemIdentifierDoubleQuoted: DOCTYPESystemIdentifierDoubleQuoted(lexer); break;
+			case State.DOCTYPESystemIdentifierSingleQuoted: DOCTYPESystemIdentifierSingleQuoted(lexer); break;
+			case State.AfterDOCTYPESystemIdentifier: AfterDOCTYPESystemIdentifier(lexer); break;
+			case State.BogusDOCTYPE: BogusDOCTYPE(lexer); break;
+			case State.CDATASection: CDATASection(lexer); break;
+			case State.CDATASectionBracket: CDATASectionBracket(lexer); break;
+			case State.CDATASectionEnd: CDATASectionEnd(lexer); break;
+			case State.CharacterReference: CharacterReference(lexer); break;
+			case State.NamedCharacterReference: NamedCharacterReference(lexer); break;
+			case State.AmbiguousAmpersand: AmbiguousAmpersand(lexer); break;
+			case State.NumericCharacterReference: NumericCharacterReference(lexer); break;
+			case State.HexadecimalCharacterReferenceStart: HexadecimalCharacterReferenceStart(lexer); break;
+			case State.DecimalCharacterReferenceStart: DecimalCharacterReferenceStart(lexer); break;
+			case State.HexadecimalCharacterReference: HexadecimalCharacterReference(lexer); break;
+			case State.DecimalCharacterReference: DecimalCharacterReference(lexer); break;
+			case State.NumericCharacterReferenceEnd: NumericCharacterReferenceEnd(lexer); break;
 		}
-		console.log(state.i, state.cur_char);
+		console.log(lexer.i, lexer.cur_char);
 	}
 	// stage 2, collect into tags marked if they open or close
 	/**@type {(HTMLSpecialLex|HTMLDataLex|HTMLEntityLex|HTMLTagLex)[]} */
 	let elements = [];
-	for(let i = 0; i < state.lex_arr.length; i++) {
-		let item = state.lex_arr[i];
+	for(let i = 0; i < lexer.lex_arr.length; i++) {
+		let item = lexer.lex_arr[i];
 		switch(item.type) {
 			case 'data': elements.push(item); break;
 			case 'special':
-				lex_html_special_to_tag(elements, state.lex_arr, i);
+				lex_html_special_to_tag(elements, lexer.lex_arr, i);
 				break;
 		}
 	}
 	return {
-		lex_arr: state.lex_arr,
+		lex_arr: lexer.lex_arr,
 		elements,
 		document_root
 	};
