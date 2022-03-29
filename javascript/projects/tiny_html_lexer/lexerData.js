@@ -1,6 +1,6 @@
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {lex_data} from "./lex_data.js";
-import {State} from "./static_state.js";
+import {State} from "./State.js";
 /**
  * @param {HTMLLexerState} state
  */

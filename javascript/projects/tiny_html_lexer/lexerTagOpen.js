@@ -1,7 +1,7 @@
 import {HTMLToken} from "./HTMLToken.js";
 import {abc_chars} from "./lex_html.js";
 import {SourceLocation} from "./cpp-to-js/SourceLocation";
-import {State as State} from "./static_state.js";
+import {State as State} from "./State.js";
 /**
  * @param {string | null} input
  */

@@ -6,7 +6,7 @@ import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLex.js";
 import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLex.js";
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {NodeInternalData} from "../page_loader/NodeInternalData.js";
-import {State} from "./static_state.js";
+import {State} from "./State.js";
 import {lexerData as Data} from "./lexerData";
 import {lexerRCDATA as RCDATA} from "./lexerRCDATA";
 import {lexerRAWTEXT as RAWTEXT} from "./lexerRAWTEXT";

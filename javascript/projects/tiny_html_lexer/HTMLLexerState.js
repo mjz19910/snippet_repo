@@ -1,7 +1,7 @@
 import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
 import {HTMLToken} from "./HTMLToken.js";
-import {State} from "./static_state.js";
+import {State} from "./State.js";
 export class HTMLLexerState {
 	/**@type {Extract<typeof State[keyof typeof State], number>}*/
 	m_state = -1;
