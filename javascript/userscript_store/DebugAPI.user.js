@@ -14,71 +14,71 @@
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
 
-let g_api={};
-window.g_api=g_api;
+let g_api = {};
+window.g_api = g_api;
 class Repeat {
-	static map=new Map;
+	static map = new Map;
 	static get(value, times) {
-		if(!this.map.has(value)){
+		if(!this.map.has(value)) {
 			this.map.set(value, new Map);
 		}
-		let tm_map=this.map.get(value);
-		if(tm_map.has(times)){
+		let tm_map = this.map.get(value);
+		if(tm_map.has(times)) {
 			return tm_map.get(times);
 		} else {
-			let rep=new this(value,times);
+			let rep = new this(value, times);
 			tm_map.set(times, rep);
 			return rep;
 		}
 	}
-	constructor(value, times){
-		this.value=value;
-		this.times=times;
+	constructor(value, times) {
+		this.value = value;
+		this.times = times;
 	}
-	toString(){
+	toString() {
 		return this.value + "x" + this.times;
 	}
 };
-g_api.Repeat=Repeat;
+g_api.Repeat = Repeat;
 class CompressRepeated {
-		/** @param {string | any[]} src @param {string | any[]} dst */
-	did_compress(src, dst){
+	/** @param {string | any[]} src @param {string | any[]} dst */
+	did_compress(src, dst) {
 		return dst.length < src.length;
 	}
 	/** @param {string | any[]} src @param {string | any[]} dst */
-	did_decompress(src, dst){
+	did_decompress(src, dst) {
 		return dst.length > src.length;
 	}
 	/** @param {string[]} src @param {string[]} dst @returns {[boolean, string[]]} */
-	compress_result(src, dst){
-		if(this.did_compress(src, dst))return [true, dst];
+	compress_result(src, dst) {
+		if(this.did_compress(src, dst)) return [true, dst];
 		return [false, src];
 	}
 	/** @param {string[]} src @param {string[]} dst @returns {[boolean, string[]]} */
 	decompress_result(src, dst) {
-		if(this.did_decompress(src, dst))return [true, dst];
+		if(this.did_decompress(src, dst)) return [true, dst];
 		return [false, dst];
 	}
-	static can_compress_items(arr){
-		for(let i=0;i<arr.length;i++){
-			let item=arr[i];
-			if(typeof item !== 'string')return false;
-			if(item.match(/[a-zA-Z]/) === null)return false;
+	static can_compress_items(arr) {
+		for(let i = 0; i < arr.length; i++) {
+			let item = arr[i];
+			if(typeof item !== 'string') return false;
+			if(item.match(/[a-zA-Z]/) === null) return false;
 		}
 		return true;
 	}
 	/** @param {string[]} arr */
-	try_compress(arr){
-		let ret=[];
-		for (let i=0;i<arr.length;i++){
-			let item=arr[i];
-			if(i+1 < arr.length && item === arr[i+1]) {
-				let off=0;
-				while(item === arr[i+off+1])off++;
+	try_compress(arr) {
+		let ret = [];
+		for(let i = 0; i < arr.length; i++) {
+			let item = arr[i];
+			if(i + 1 < arr.length && item === arr[i + 1]) {
+				let off = 0;
+				while(item === arr[i + off + 1]) off++;
 				if(off > 0) {
-					let rep_count=off+1;
+					let rep_count = off + 1;
 					ret.push(Repeat.get(item, rep_count));
-					i+=off;
+					i += off;
 					continue;
 				}
 			}
@@ -87,14 +87,14 @@ class CompressRepeated {
 		return this.compress_result(arr, ret);
 	}
 	/** @param {string[]} arr */
-	try_decompress(arr){
-		let ret=[];
-		for (let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(!item)continue;
+	try_decompress(arr) {
+		let ret = [];
+		for(let i = 0; i < arr.length; i++) {
+			let item = arr[i];
+			if(!item) continue;
 			if(item instanceof Repeat) {
-				let {value, times}=item;
-				for(let j=0;j<times;j++)ret.push(value);
+				let {value, times} = item;
+				for(let j = 0; j < times; j++)ret.push(value);
 				continue;
 			}
 			ret.push(arr[i]);
@@ -104,80 +104,81 @@ class CompressRepeated {
 	/** @param {string[]} arr */
 	compress_array(arr) {
 		let success, res;
-		[success, res]=this.try_decompress(arr);
-		if(success)arr=res;
-		[success, res]=this.try_compress(arr);
-		if(success)return res;
+		[success, res] = this.try_decompress(arr);
+		if(success) arr = res;
+		[success, res] = this.try_compress(arr);
+		if(success) return res;
 		return arr;
 	}
 }
-window.g_api.CompressRepeated=CompressRepeated;
+g_api.CompressRepeated = CompressRepeated;
 /**@type {<T, U>(a:T[], b:U[])=>[T, U][]} */
-function to_tuple_arr(keys, values){
+function to_tuple_arr(keys, values) {
 	/**@type {[typeof keys[0], typeof values[0]][]} */
-	let ret=[];
-	for(let i=0;i<keys.length;i++){
-		let k=keys[i];
-		let v=values[i];
+	let ret = [];
+	for(let i = 0; i < keys.length; i++) {
+		let k = keys[i];
+		let v = values[i];
 		/**@type {[typeof k, typeof v]} */
-		let item=[k, v];
+		let item = [k, v];
 		ret.push(item);
 	}
 	return ret;
 }
-window.g_api.to_tuple_arr=to_tuple_arr;
-function does_range_match(arr, idx, range) {
-	for(let i=0;i<range.length;i++){
-		if(arr[idx+i] !== range[i])return false;
+g_api.to_tuple_arr = to_tuple_arr;
+function range_matches(arr, idx, range) {
+	for(let i = 0; i < range.length; i++) {
+		if(arr[idx + i] !== range[i]) return false;
 	}
 	return true;
 }
+g_api.range_matches = range_matches;
 class CompressionStatsCalculator {
-	constructor(){
+	constructor() {
 		/** @type {number[]} */
-		this.hit_counts=[];
+		this.hit_counts = [];
 		/** @type {string[]} */
-		this.cache=[];
+		this.cache = [];
 		/** @type {any[]} */
-		this.real=[];
+		this.real = [];
 	}
 	/** @param {number} index */
 	add_hit(index) {
 		if(!this.hit_counts[index]) {
-			this.hit_counts[index]=1;
+			this.hit_counts[index] = 1;
 		} else this.hit_counts[index]++;
 	}
 	/** @param {string} key */
 	add_item(key, real) {
-		let index=this.cache.indexOf(key);
+		let index = this.cache.indexOf(key);
 		if(index == -1) {
 			this.real.push(real);
-			index=this.cache.push(key)-1;
+			index = this.cache.push(key) - 1;
 		}
 		this.add_hit(index);
 	}
-	reset(){
-		this.cache.length=0;
-		this.hit_counts.length=0;
-		this.real.length=0;
+	reset() {
+		this.cache.length = 0;
+		this.hit_counts.length = 0;
+		this.real.length = 0;
 	}
 	/** @param {any[]} arr @param {number} win_size */
 	calc_compression_stats(arr, win_size) {
 		this.reset();
-		for(let i=0;i<arr.length;i++){
-			if(i+win_size < arr.length) {
-				let arr_slice=arr.slice(i, i+win_size);
+		for(let i = 0; i < arr.length; i++) {
+			if(i + win_size < arr.length) {
+				let arr_slice = arr.slice(i, i + win_size);
 				this.add_item(arr_slice.join(","), arr_slice);
 			}
 		}
 		return to_tuple_arr(to_tuple_arr(this.cache, this.real), this.hit_counts);
 	}
-	replace_range(arr, range, range_replacement){
-		if(range.length <= 0)return arr;
-		let ret=[];
-		for(let i=0;i<arr.length;i++){
-			if(does_range_match(arr, i, range)){
-				i+=range.length-1;
+	replace_range(arr, range, range_replacement) {
+		if(range.length <= 0) return arr;
+		let ret = [];
+		for(let i = 0; i < arr.length; i++) {
+			if(range_matches(arr, i, range)) {
+				i += range.length - 1;
 				ret.push(range_replacement);
 				continue;
 			};
@@ -186,7 +187,7 @@ class CompressionStatsCalculator {
 		return ret;
 	}
 }
-window.CompressionStatsCalculator=CompressionStatsCalculator;
+g_api.CompressionStatsCalculator = CompressionStatsCalculator;
 class HexRandomDataGenerator {
 	constructor() {
 		this.random_num = Math.random();
@@ -241,6 +242,7 @@ class HexRandomDataGenerator {
 		return (size + num).toString(16).slice(1);
 	}
 }
+g_api.HexRandomDataGenerator = HexRandomDataGenerator;
 let random_data_generator = new HexRandomDataGenerator;
 class EventListenerValue {
 	/**
@@ -254,6 +256,7 @@ class EventListenerValue {
 		this.options = options;
 	}
 }
+g_api.EventListenerValue = EventListenerValue;
 class GenericEvent {
 	#default_prevented = false;
 	type = 'unknown';
@@ -270,13 +273,14 @@ class GenericEvent {
 		return this.#default_prevented;
 	}
 }
+g_api.GenericEvent = GenericEvent;
 class GenericDataEvent extends GenericEvent {
 	constructor(type, data) {
 		super(type);
 		this.data = data;
 	}
 }
-window.GenericDataEvent = GenericDataEvent;
+g_api.GenericDataEvent = GenericDataEvent;
 class GenericEventTarget {
 	constructor() {
 		/**@type {Map<string,EventListenerValue[]>} */
@@ -308,7 +312,7 @@ class GenericEventTarget {
 			return;
 		if(cur_event_vec.length == 0)
 			return;
-		for(let i = cur_event_vec.length - 1;i >= 0;i--) {
+		for(let i = cur_event_vec.length - 1; i >= 0; i--) {
 			let cur = cur_event_vec[i];
 			if(cur.callback !== callback)
 				continue;
@@ -329,7 +333,7 @@ class GenericEventTarget {
 			return;
 		let cur_event_vec_owned = cur_event_vec.slice();
 		let can_handle = false;
-		for(let i = 0;i < cur_event_vec_owned.length;i++) {
+		for(let i = 0; i < cur_event_vec_owned.length; i++) {
 			let cur = cur_event_vec_owned[i];
 			let callback = cur.callback;
 			if(callback === null)
@@ -347,6 +351,7 @@ class GenericEventTarget {
 		return can_handle;
 	}
 }
+g_api.GenericEventTarget = GenericEventTarget;
 const static_event_target = new GenericEventTarget;
 class Dumper {
 	/**@type {null} */
@@ -356,6 +361,7 @@ class Dumper {
 		this.dump_value = null;
 	}
 }
+g_api.Dumper = Dumper;
 const local_dumper = new Dumper;
 class RustSimpleTokenizer {
 	constructor() {
@@ -369,7 +375,7 @@ class RustSimpleTokenizer {
 	advance(tok_len) {
 		this.index += tok_len;
 	}
-	inIdentRange(char_code) {
+	is_identifier(char_code) {
 		// Regex: /[a-zA-Z_]/
 		if(char_code >= 0x41 && char_code <= 0x5a) {
 			return true;
@@ -381,7 +387,7 @@ class RustSimpleTokenizer {
 			return true;
 		return false;
 	}
-	isWhitespaceRange(char_code) {
+	is_whitespace(char_code) {
 		// Regex: /[ \t\n]/
 		switch(char_code) {
 			case 0x09:
@@ -393,7 +399,11 @@ class RustSimpleTokenizer {
 		}
 		return false;
 	}
-	exec(str) {
+	m_separators=["{", "}", "(", ")", "<", ">"];
+	is_separator(char_code) {
+
+	}
+	str_to_tokens(str) {
 		let separator_vec = "{}()<>";
 		let operator_vec = ".,=:";
 		let tok_arr = [];
@@ -409,7 +419,7 @@ class RustSimpleTokenizer {
 		//let parse_enum_literal=parse_enum[5];
 		//let parse_enum_comment=parse_enum[6];
 		let parse_enum_whitespace = parse_enum[7];
-		for(;this.index < this.source.length;) {
+		for(; this.index < this.source.length;) {
 			if(this.source[this.index] === ':' && this.source[this.index + 1] === ':') {
 				tok_arr.push([parse_enum_operator, '::']);
 				this.advance(2);
@@ -421,22 +431,22 @@ class RustSimpleTokenizer {
 				this.advance(1);
 				continue;
 			}
-			if(operator_vec.includes(operator_vec)) {
+			if(operator_vec.includes(cur_char)) {
 				tok_arr.push([parse_enum_operator, cur_char]);
 				this.advance(1);
 				continue;
 			}
 			let cur_char_code = this.source.charCodeAt(this.index);
-			if(this.inIdentRange(cur_char_code)) {
+			if(this.is_identifier(cur_char_code)) {
 				let len = 1;
-				while(this.inIdentRange(this.source.charCodeAt(this.index + len)) && this.index + len < this.source.length) {
+				while(this.is_identifier(this.source.charCodeAt(this.index + len)) && this.index + len < this.source.length) {
 					len++;
 				}
 				tok_arr.push([parse_enum_identifier, this.source.slice(this.index, this.index + len)]);
 				this.advance(len);
 				continue;
 			};
-			if(this.isWhitespaceRange(cur_char_code)) {
+			if(this.is_whitespace(cur_char_code)) {
 				tok_arr.push([parse_enum_whitespace, cur_char]);
 				this.advance(1);
 				continue;
@@ -496,12 +506,13 @@ class RustSimpleTokenizer {
 		return tt_item;
 	}
 }
-class RustSimpleParser {
+g_api.RustSimpleTokenizer = RustSimpleTokenizer;
+class RustTokenTreeParser {
 	tokenizer = new RustSimpleTokenizer;
 	simple_type_info(str) {
 		// let iter_index = 0;
 		this.tokenizer.reset(str);
-		let token_vec = this.tokenizer.exec(str);
+		let token_vec = this.tokenizer.str_to_tokens(str);
 		let tt_root = this.tokenizer.into_tt(token_vec);
 		let trg_obj = {
 			body: tt_root[0]
@@ -514,38 +525,40 @@ class RustSimpleParser {
 		return ret;
 	}
 }
+g_api.RustSimpleParser = RustTokenTreeParser;
 class WeakValueRef {
 	id = -1;
 	constructor(id) {
 		this.id = id;
 	}
 }
+g_api.WeakValueRef = WeakValueRef;
 class CSSCascade {
-	render_css_variable_from_style_element(style_element, css_style_variable){
-		style_sheet=style_element.sheet;
-		css_rules=style_sheet.cssRules;
-		css_rules_array=[...css_rules];
-		matching_css_rule=css_rules_array.find(e=>e.styleMap.has(css_style_variable));
+	render_css_variable_from_style_element(style_element, css_style_variable) {
+		style_sheet = style_element.sheet;
+		css_rules = style_sheet.cssRules;
+		css_rules_array = [...css_rules];
+		matching_css_rule = css_rules_array.find(e => e.styleMap.has(css_style_variable));
 		return matching_css_rule.styleMap.get(css_style_variable);
 	}
-	iterate_css_rule_list_for_rule_matches(result_acc_vec, cssRules, find_needle){
-		let as_arr=[...cssRules];
-		for(let i=0;i<as_arr.length;i++){
-			if(as_arr[i] instanceof CSSMediaRule){
+	iterate_css_rule_list_for_rule_matches(result_acc_vec, cssRules, find_needle) {
+		let as_arr = [...cssRules];
+		for(let i = 0; i < as_arr.length; i++) {
+			if(as_arr[i] instanceof CSSMediaRule) {
 				this.iterate_css_rule_list_for_rule_matches(result_acc_vec, as_arr[i].cssRules, find_needle);
 				//recursive iterate
 			}
-			if(this.does_match_selector(as_arr[i], find_needle)){
+			if(this.does_match_selector(as_arr[i], find_needle)) {
 				result_acc_vec.push(as_arr[i]);
 			}
 		}
 	}
-	does_match_selector(rule, find_needle){
+	does_match_selector(rule, find_needle) {
 		if(rule instanceof CSSKeyframesRule)
 			return rule.name.includes(find_needle);
 		if(rule instanceof CSSFontFaceRule)
 			return false;
-		if(rule instanceof CSSMediaRule){
+		if(rule instanceof CSSMediaRule) {
 			// this rule was already handled recursively
 			return false;
 		}
@@ -553,37 +566,37 @@ class CSSCascade {
 			return rule.selectorText.includes(find_needle);
 		// the user should figure out if they want this,
 		// if not, then report an issue
-		return true
+		return true;
 	}
-	search_for_matching_css_rule(element, find_needle){
-		let result_vec=[];
+	search_for_matching_css_rule(element, find_needle) {
+		let result_vec = [];
 		this.iterate_css_rule_list_for_rule_matches(result_vec, element.sheet.cssRules, find_needle);
 		return result_vec;
 	}
-	find_matching_css_rules_in_document(target_css_selector_needle){
+	find_matching_css_rules_in_document(target_css_selector_needle) {
 		{
-			let doc_all=[...document.querySelectorAll("style")];
-			return doc_all.flatMap(e=>{
-				return this.search_for_matching_css_rule(e, target_css_selector_needle)
+			let doc_all = [...document.querySelectorAll("style")];
+			return doc_all.flatMap(e => {
+				return this.search_for_matching_css_rule(e, target_css_selector_needle);
 			});
 		}
 	}
-	*temp(){
+	*temp() {
 		yield;
 		{
-			let ccm=new DebugAPI.exports.CSSCascade;
+			let ccm = new DebugAPI.exports.CSSCascade;
 			yield $0;
 			yield $0.classList;
-			let target_arr=[...$0.classList];
+			let target_arr = [...$0.classList];
 			yield target_arr;
-			let flat_results=[];
+			let flat_results = [];
 			function flat_filter(e) {
 				return ccm.find_matching_css_rules_in_document(e);
 			}
-			for(let i=0;i<target_arr.length;i++) {
-				let cur=target_arr[i];
+			for(let i = 0; i < target_arr.length; i++) {
+				let cur = target_arr[i];
 				yield cur;
-				let cur_filtered=flat_filter(cur);
+				let cur_filtered = flat_filter(cur);
 				// https://tc39.es/ecma262/multipage/abstract-operations.html#sec-isarray
 				if(typeof cur_filtered != 'object') {
 					yield cur_filtered;
@@ -592,15 +605,15 @@ class CSSCascade {
 				}
 				// https://tc39.es/ecma262/multipage/ordinary-and-exotic-objects-behaviours.html#sec-array-exotic-objects
 				if(cur_filtered.length >= 0) {
-					for(let j=0;cur_filtered.length;j++) {
+					for(let j = 0; cur_filtered.length; j++) {
 						yield cur_filtered[j];
 						flat_results.push(cur_filtered[j]);
 					}
 				}
 			}
-			let css_text_arr=[];
-			for(let i=0;i<flat_results.length;i++) {
-				let cur=flat_results[i];
+			let css_text_arr = [];
+			for(let i = 0; i < flat_results.length; i++) {
+				let cur = flat_results[i];
 				yield cur;
 				yield cur.cssText;
 				css_text_arr.push(cur.cssText);
@@ -609,87 +622,95 @@ class CSSCascade {
 		}
 	}
 }
-class ConnectToRemoteOrigin {
+g_api.CSSCascade = CSSCascade;
+class OriginState {
+	/**@readonly*/static window = window;
+	/**@readonly*/static top = window.top;
+	/**@readonly*/static parent = window.parent;
+	/**@readonly*/static opener = window.opener;
+}
+g_api.OriginState = OriginState;
+class RemoteOriginConnection {
 	// @Update on minor version change
 	// version 0.3.0 sha1 initial commit
 	sha_1_initial = "f615a9c";
-	constructor(state){
-		this.max_elevate_id=0;
-		this.event_transport_map=new WeakMap;
-		this.state=state;
-		this.elevated_array=[];
-		this.state.is_top=this.state.window===this.state.top;
-		this.state.is_root=this.state.opener===null;
+	constructor() {
+		this.max_elevate_id = 0;
+		this.event_transport_map = new WeakMap;
+		this.state = OriginState;
+		this.elevated_array = [];
+		this.state.is_top = this.state.window === this.state.top;
+		this.state.is_root = this.state.opener === null;
 		this.setup_root_proxy(this.state.window);
 		if(!this.state.is_top)
-			this.state.is_root=false;
+			this.state.is_root = false;
 		if(this.state.is_root) {
 			this.start_root_server();
 		} else {
-			if(this.state.is_top){
+			if(this.state.is_top) {
 				this.init_transport_over(this.state.opener, this.state.window);
 			}
 		}
 	}
-	setup_root_proxy(window){
+	setup_root_proxy(window) {
 		//TODO
-		let todo=true;
-		if(!todo){
+		let todo = true;
+		if(!todo) {
 			return window;
 		}
 	}
-	init_transport_over(post_message_event_transport_target, response_message_event_transport_target){
-		let channel=new MessageChannel;
+	init_transport_over(post_message_event_transport_target, response_message_event_transport_target) {
+		let channel = new MessageChannel;
 		this.port = channel.port2;
 		post_message_event_transport_target.postMessage({
-			type:"ConnectOverPostMessage",
-			data:{
-				type:"start",
-				source:null,
-				port_transfer_vec:null
+			type: "ConnectOverPostMessage",
+			data: {
+				type: "start",
+				source: null,
+				port_transfer_vec: null
 			}
 		}, [channel.port1]);
 		this.event_transport_map.set(response_message_event_transport_target, post_message_event_transport_target);
-		let message_object={
-			w_connection:null,
-			elevation_id:null,
-			current_target:null,
-			handleEvent(message_event_response){
-				if(this.w_connection.deref() == null){
+		let message_object = {
+			w_connection: null,
+			elevation_id: null,
+			current_target: null,
+			handleEvent(message_event_response) {
+				if(this.w_connection.deref() == null) {
 					console.log('lost connection in handleEvent');
 					this.disconnect();
 					return;
 				}
 				this.w_connection.deref()?.transport_init_maybe_complete({
-					event:message_event_response,
-					handler:this
+					event: message_event_response,
+					handler: this
 				});
 			},
-			construct(connection){
+			construct(connection) {
 				this.w_connection = new WeakRef(connection);
 			},
-			start(transport_target, timeout_ms){
+			start(transport_target, timeout_ms) {
 				this.elevation_id = this.w_connection.deref()?.elevate_object(this);
 				this.connect(transport_target);
-				this.timeout_id = setTimeout(()=>{
-					if(this.w_connection.deref() == null){
+				this.timeout_id = setTimeout(() => {
+					if(this.w_connection.deref() == null) {
 						console.log('lost connection in timeout');
 					}
 					this.disconnect();
 					this.clear();
 				}, timeout_ms);
 			},
-			connect(target){
+			connect(target) {
 				if(this.current_target !== null && this.current_target !== target)
 					this.disconnect();
 				this.current_target = target;
 				this.current_target.addEventListener('message', this);
 			},
-			disconnect(){
+			disconnect() {
 				this.current_target.removeEventListener('message', this);
 			},
-			clear(){
-				if(this.w_connection.deref() == null){
+			clear() {
+				if(this.w_connection.deref() == null) {
 					console.log('lost connection in clear');
 					return;
 				}
@@ -699,62 +720,60 @@ class ConnectToRemoteOrigin {
 		message_object.construct(this);
 		message_object.start(response_message_event_transport_target, 300);
 	}
-	clear_elevation_by_id(elevated_id){
+	clear_elevation_by_id(elevated_id) {
 		this.elevated_array[elevated_id] = null;
 		//TODO
 	}
-	elevate_object(object){
-		let elevated_id=this.max_elevated_id++;
+	elevate_object(object) {
+		let elevated_id = this.max_elevated_id++;
 		this.elevated_array[elevated_id] = new WeakRef(object);
 		return elevated_id;
 	}
-	transport_init_maybe_complete(message_event){
+	transport_init_maybe_complete(message_event) {
 		//TODO
 	}
-	start_root_server(){
+	start_root_server() {
 		//TODO
 	}
 }
+g_api.ConnectToRemoteOrigin = RemoteOriginConnection;
 class APIProxyManager {
-	constructor(event_handler){
+	constructor(event_handler) {
 		this.event_handler = event_handler;
 	}
-	create_proxy_for_function(message_to_send, function_value){
-		let event_handler=this.event_handler;
+	create_proxy_for_function(message_to_send, function_value) {
+		let event_handler = this.event_handler;
 		return new Proxy(function_value, {
 			event_handler,
-			apply(...post_message_proxy_spread){
+			apply(...post_message_proxy_spread) {
 				this.event_handler.dispatchEvent({
-					type:message_to_send,
-					data:post_message_proxy_spread
+					type: message_to_send,
+					data: post_message_proxy_spread
 				});
 				let ret = Reflect.apply(...post_message_proxy_spread);
 				return ret;
 			}
-		})
+		});
 	}
-	start_postMessage_proxy(){
-		window.postMessage = this.create_proxy_for_function('postMessage_sent', window.postMessage)
+	start_postMessage_proxy() {
+		window.postMessage = this.create_proxy_for_function('postMessage_sent', window.postMessage);
 	}
 }
+g_api.APIProxyManager = APIProxyManager;
 class LoggingEventTarget {
-	dispatchEvent=console.log.bind(console);
+	dispatchEvent = console.log.bind(console);
 }
-let dd;
+g_api.LoggingEventTarget = LoggingEventTarget;
+const html_parsing_div_element = document.createElement("div");
 function parse_html_to_binary_arr(html) {
-	dd??=document.createElement("div");
-	dd.innerHTML=html;
-	return Array.prototype.map.call(dd.textContent, e=>e.charCodeAt(0));
+	html_parsing_div_element.innerHTML = html;
+	return Array.prototype.map.call(html_parsing_div_element.textContent, e => e.charCodeAt(0));
 }
-window.parse_html_to_binary_arr=parse_html_to_binary_arr;
-class DebugAPIExports {
-	static CSSCascade=CSSCascade;
-	static null = null;
-}
+window.parse_html_to_binary_arr = parse_html_to_binary_arr;
 class DebugAPI {
-	constructor(){
-		let do_postMessage_logging=false;
-		if(do_postMessage_logging){
+	constructor() {
+		let do_postMessage_logging = false;
+		if(do_postMessage_logging) {
 			this.any_api_logger.start_postMessage_proxy();
 		}
 	}
@@ -762,24 +781,18 @@ class DebugAPI {
 	next_remote_id = 0;
 	data_store = new Map;
 	event_handler = static_event_target;
-	static exports = DebugAPIExports;
-	static udp_like_remote_origin_connection = new ConnectToRemoteOrigin({
-		window,
-		top,
-		parent,
-		opener
-	});
-	static simple_parser = new RustSimpleParser;
+	static udp_like_remote_origin_connection = new RemoteOriginConnection();
+	static token_tree_parser = new RustTokenTreeParser;
 	/**@type {DebugAPI} */
-	static the_instance = null;
+	static m_the = null;
 	/**@returns {DebugAPI} */
 	static the() {
-		if(!this.the_instance) {
-			this.the_instance = new this;
+		if(!this.m_the) {
+			this.m_the = new this;
 		}
-		return this.the_instance;
+		return this.m_the;
 	}
-	hasData(key){
+	hasData(key) {
 		return this.data_store.has(key);
 	}
 	getData(key) {
@@ -792,7 +805,7 @@ class DebugAPI {
 	deleteData(key) {
 		return this.data_store.delete(key);
 	}
-	getEventListeners(element){
+	getEventListeners(element) {
 		if(!this.hasData('getEventListeners'))
 			throw 1;
 		return this.getData('getEventListeners')(element);
@@ -851,15 +864,15 @@ class DebugAPI {
 			}
 		};
 		{
-			if(!window.DebugAPI.the().clearCurrentBreakpoint()){
+			if(!window.DebugAPI.the().clearCurrentBreakpoint()) {
 				console.log("failed to clear breakpoint");
 			};
 		}
 		0;
 	}
-	clearCurrentBreakpoint(){
+	clearCurrentBreakpoint() {
 		let undebug;
-		if(undebug=this.getData("u")){
+		if(undebug = this.getData("u")) {
 			undebug(this.current_function_value);
 			return true;
 		}
@@ -902,7 +915,7 @@ class DebugAPI {
 			let fs = j.split('-');
 			let sa = fs[0].charCodeAt(0);
 			let se = fs[1].charCodeAt(0);
-			for(let i = sa;i <= se;i++) {
+			for(let i = sa; i <= se; i++) {
 				sr.push(i);
 			}
 		}
@@ -919,7 +932,7 @@ class DebugAPI {
 		}
 		let tmp_key = '__k';
 		{
-			for(let i = 0;i < rep_arr.length;i += 2) {
+			for(let i = 0; i < rep_arr.length; i += 2) {
 				let cur0 = rep_arr[i];
 				let cur1 = rep_arr[i] + 1;
 				if(tmp_key === cur0) {
@@ -935,7 +948,7 @@ class DebugAPI {
 		// ---- Activate ----
 		let exec_return = activate(function_value, ...activate_vec);
 		let exec_res_arr = [];
-		if(tmp_value.get){
+		if(tmp_value.get) {
 			for(let j of vars_arr) {
 				let res = tmp_value.get(j);
 				let arg_index = -1;
@@ -1011,7 +1024,7 @@ class DebugAPI {
 		let map_arr = [dbg_str_func];
 		let tmp_key = '__k';
 		{
-			for(let i = 0;i < rep_arr.length;i += 2) {
+			for(let i = 0; i < rep_arr.length; i += 2) {
 				let cur0 = rep_arr[i];
 				let cur1 = rep_arr[i] + 1;
 				if(tmp_key === cur0) {
@@ -1027,8 +1040,8 @@ class DebugAPI {
 		// ---- Activate ----
 		let activate_return = activate(function_value, ...activate_vec);
 		let breakpoint_result = null;
-		if(tmp_value.get){
-			breakpoint_result=tmp_value.get(var_name);
+		if(tmp_value.get) {
+			breakpoint_result = tmp_value.get(var_name);
 		}
 		this.deleteData(tmp_key);
 		if(breakpoint_result?.type === 'var') {
@@ -1040,7 +1053,7 @@ class DebugAPI {
 				}
 			};
 		}
-		if(breakpoint_result){
+		if(breakpoint_result) {
 			return {
 				type: 'unexpected',
 				data: {
@@ -1083,21 +1096,21 @@ class DebugAPI {
 		if(target_arg_vec instanceof Array) {
 			let got_data = false;
 			let ret = this.debuggerGetVar_a(function_value, this.activateApply, var_name, target_obj, target_arg_vec);
-			if(ret.type === 'data'){
+			if(ret.type === 'data') {
 				ret = ret.data;
 				got_data = true;
 			}
-			if(got_data && ret.result){
-				if(ret.result.length>2){
+			if(got_data && ret.result) {
+				if(ret.result.length > 2) {
 					return ret.result;
 				}
-				if(!ret.result.length){
+				if(!ret.result.length) {
 					return ret;
 				}
 				return {
-					type:'debug_data',
-					result:ret.result[1],
-					return:ret.return
+					type: 'debug_data',
+					result: ret.result[1],
+					return: ret.return
 				};
 			}
 		}
@@ -1107,5 +1120,5 @@ class DebugAPI {
 		};
 	}
 }
-const debug_api_instance = DebugAPI.the();
+const debug_api = DebugAPI.the();
 window.DebugAPI = DebugAPI;
