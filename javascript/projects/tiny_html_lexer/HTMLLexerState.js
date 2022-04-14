@@ -4,6 +4,15 @@ import {EMIT_CHARACTER_AND_RECONSUME_IN} from "./EMIT_CHARACTER_AND_RECONSUME_IN
 import {HTMLToken} from "./HTMLToken.js";
 import {State} from "./State.js";
 export class HTMLLexerState {
+	DONT_CONSUME_NEXT_INPUT_CHARACTER() {
+		this.restore_to(this.m_prev_utf8_iterator);
+	}
+	/**
+	 * @param {any} _m_prev_utf8_iterator
+	 */
+	restore_to(_m_prev_utf8_iterator) {
+		throw new Error("Method not implemented.");
+	}
 	EMIT_EOF() {
 		if(this.m_has_emitted_eof)
 			return {};
@@ -79,6 +88,10 @@ export class HTMLLexerState {
 		/**@type {string|null}*/
 		this.cur_char = null;
 		this.m_return_state = State.InvalidState;
+		/**
+		 * @type {any}
+		 */
+		this.m_prev_utf8_iterator = undefined;
 	}
 	/**@arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type*/
 	create_new_token(type) {
