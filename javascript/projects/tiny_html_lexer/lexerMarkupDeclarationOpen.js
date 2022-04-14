@@ -1,6 +1,7 @@
 /**
- * @param {import("./HTMLLexerState").HTMLLexerState} _state
+ * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
-export function lexerMarkupDeclarationOpen(_state) {
+export function lexerMarkupDeclarationOpen(state) {
+	state;
 	throw new Error("Function not implemented.");
 }
