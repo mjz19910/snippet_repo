@@ -5,10 +5,6 @@ import {EMIT_CHARACTER_AND_RECONSUME_IN} from "./EMIT_CHARACTER_AND_RECONSUME_IN
 import {log_parse_error} from "./log_parse_error";
 import {get_char_type} from "./get_char_type";
 export const TOKENIZER_TRACE_DEBUG = false;
-/**@arg {State} next_state*/
-function RECONSUME_IN(state, next_state) {
-	state.m_current_state = next_state;
-}
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
