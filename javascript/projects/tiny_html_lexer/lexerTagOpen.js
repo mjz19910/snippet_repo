@@ -5,6 +5,10 @@ import {EMIT_CHARACTER_AND_RECONSUME_IN} from "./EMIT_CHARACTER_AND_RECONSUME_IN
 import {log_parse_error} from "./log_parse_error";
 import {get_char_type} from "./get_char_type";
 export const TOKENIZER_TRACE_DEBUG = false;
+/**@arg {State} next_state*/
+function RECONSUME_IN(state, next_state) {
+	state.m_current_state = next_state;
+}
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
@@ -20,12 +24,17 @@ export function lexerTagOpen(state) {
 			create_new_token(state, HTMLToken.Type.StartTag);
 			// Reconsume in
 			state.m_current_state = State.TagName;
-		break;
-		case '?': throw new Error("TODO");
+			break;
+		case '?':
+			log_parse_error();
+			state.create_new_token(HTMLToken.Type.Comment);
+			if(!state.m_current_token) throw new Error("Bad");
+			state.m_current_token.set_start_position({}, state.nth_last_position(2));
+			state.RECONSUME_IN(State.BogusComment);
 		case 'EOF': throw new Error("TODO");
 		// TODO: not all cases handled yet
 		default:
-			if(state.cur_char === null)throw new Error("Typecheck assert")
+			if(state.cur_char === null) throw new Error("Typecheck assert");
 			log_parse_error();
 			EMIT_CHARACTER_AND_RECONSUME_IN(state, '<', State.Data);
 			throw new Error("TODO");

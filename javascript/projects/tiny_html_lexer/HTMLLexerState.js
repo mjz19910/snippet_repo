@@ -10,7 +10,7 @@ export class HTMLLexerState {
 	/**
 	 * @type {(string | HTMLToken)[]}
 	 */
-	m_queued_tokens=[];
+	m_queued_tokens = [];
 	m_is_eof = false;
 	/**
 	 * @param {number} off
@@ -50,10 +50,33 @@ export class HTMLLexerState {
 		this.html = new Uint8Array();
 		/**@type {typeof State[keyof typeof State]} */
 		this.m_current_state = this.states.Data;
-		this.html=input;
+		this.html = input;
 		this.html_str = this.text_decoder.end(Buffer.from(this.html));
 		/**@type {string|null}*/
 		this.cur_char = null;
 		this.m_return_state = State.InvalidState;
+	}
+	/**@arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type*/
+	create_new_token(type) {
+		this.m_current_token = new HTMLToken(type);
+		let offset = 0;
+		switch(type) {
+			case HTMLToken.Type.StartTag:
+				offset = 1;
+				break;
+			case HTMLToken.Type.EndTag:
+				offset = 2;
+				break;
+			default:
+				break;
+		}
+
+		this.m_current_token.set_start_position({}, this.nth_last_position(offset));
+	}
+	/**
+	 * @param {number} _offset
+	 */
+	nth_last_position(_offset) {
+		return {};
 	}
 }

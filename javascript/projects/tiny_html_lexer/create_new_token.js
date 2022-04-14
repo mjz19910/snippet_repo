@@ -6,7 +6,7 @@ import {nth_last_position} from "./nth_last_position";
  * @arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type
  */
 export function create_new_token(state, type) {
-	state.m_current_token = new HTMLToken(type);
+	state.m_current_token = new HTMLToken(type, state.cur_char);
 	let offset = 0;
 	switch(type) {
 		case HTMLToken.Type.StartTag:
