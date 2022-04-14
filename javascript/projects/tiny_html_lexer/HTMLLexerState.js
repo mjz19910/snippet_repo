@@ -3,15 +3,26 @@ import {createContext} from "vm";
 import {EMIT_CHARACTER_AND_RECONSUME_IN} from "./EMIT_CHARACTER_AND_RECONSUME_IN.js";
 import {HTMLToken} from "./HTMLToken.js";
 import {State} from "./State.js";
+function TODO() {
+	throw new Error("TODO");
+}
 export class HTMLLexerState {
 	DONT_CONSUME_NEXT_INPUT_CHARACTER() {
 		this.restore_to(this.m_prev_utf8_iterator);
 	}
 	/**
-	 * @param {any} _m_prev_utf8_iterator
+	 * @param {any} new_iterator
 	 */
-	restore_to(_m_prev_utf8_iterator) {
-		throw new Error("Method not implemented.");
+	restore_to(new_iterator) {
+		let diff = this.m_utf8_iterator - new_iterator;
+		if(diff > 0) {
+			for(let i = 0; i < diff; ++i)
+			this.m_source_positions.pop();
+		} else {
+			// Going forwards...?
+			TODO();
+		}
+		this.m_utf8_iterator = new_iterator;
 	}
 	EMIT_EOF() {
 		if(this.m_has_emitted_eof)
@@ -92,6 +103,10 @@ export class HTMLLexerState {
 		 * @type {any}
 		 */
 		this.m_prev_utf8_iterator = undefined;
+		/**
+		 * @type {void[]}
+		 */
+		this.m_source_positions = [];
 	}
 	/**@arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type*/
 	create_new_token(type) {
