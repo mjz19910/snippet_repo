@@ -1,7 +1,6 @@
 import {HTMLToken} from "./HTMLToken.js";
 import {State as State} from "./State.js";
 import {create_new_token} from "./create_new_token";
-import {EMIT_CHARACTER_AND_RECONSUME_IN} from "./EMIT_CHARACTER_AND_RECONSUME_IN";
 import {log_parse_error} from "./log_parse_error";
 import {get_char_type} from "./get_char_type";
 export const TOKENIZER_TRACE_DEBUG = false;
