@@ -1,6 +1,6 @@
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
-export function ScriptDataEscaped(state) {
+export function lexerScriptDataEscaped(state) {
 	throw new Error("Function not implemented.");
 }
