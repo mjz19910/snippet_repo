@@ -1,6 +1,6 @@
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
-export function CommentLessThanSign(state) {
+export function lexerCommentLessThanSign(state) {
 	throw new Error("Function not implemented.");
 }

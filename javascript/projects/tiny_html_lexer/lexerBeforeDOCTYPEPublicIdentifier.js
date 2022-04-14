@@ -1,6 +1,6 @@
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
-export function BeforeDOCTYPEPublicIdentifier(state) {
+export function lexerBeforeDOCTYPEPublicIdentifier(state) {
 	throw new Error("Function not implemented.");
 }

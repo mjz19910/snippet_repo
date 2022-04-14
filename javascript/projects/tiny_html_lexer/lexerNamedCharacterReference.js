@@ -1,6 +1,7 @@
 /**
- * @param {import("./HTMLLexerState").HTMLLexerState} _state
+ * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
-export function lexerNamedCharacterReference(_state) {
+export function lexerNamedCharacterReference(state) {
+	state;
 	throw new Error("Function not implemented.");
 }

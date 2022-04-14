@@ -1,6 +1,6 @@
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
-export function RCDATAEndTagName(state) {
+export function lexerRCDATAEndTagName(state) {
 	throw new Error("Function not implemented.");
 }

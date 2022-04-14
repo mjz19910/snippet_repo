@@ -1,6 +1,6 @@
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
-export function RAWTEXTLessThanSign(state) {
+export function lexerRAWTEXTLessThanSign(state) {
 	throw new Error("Function not implemented.");
 }

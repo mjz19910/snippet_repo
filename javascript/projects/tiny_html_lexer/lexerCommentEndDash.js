@@ -1,6 +1,6 @@
 /**
  * @param {import("./HTMLLexerState").HTMLLexerState} state
  */
-export function CommentEndDash(state) {
+export function lexerCommentEndDash(state) {
 	throw new Error("Function not implemented.");
 }
