@@ -58,7 +58,7 @@ export class HTMLLexerState {
 	}
 	/**@arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type*/
 	create_new_token(type) {
-		this.m_current_token = new HTMLToken(type);
+		this.m_current_token = new HTMLToken(type, 0);
 		let offset = 0;
 		switch(type) {
 			case HTMLToken.Type.StartTag:
@@ -78,5 +78,9 @@ export class HTMLLexerState {
 	 */
 	nth_last_position(_offset) {
 		return {};
+	}
+	/**@arg {State} next_state */
+	RECONSUME_IN(next_state) {
+		this.m_current_state = next_state;
 	}
 }
