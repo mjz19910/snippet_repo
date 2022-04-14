@@ -5,13 +5,13 @@ import {HTMLToken} from "./HTMLToken.js";
 import {State} from "./State.js";
 export class HTMLLexerState {
 	EMIT_EOF() {
-		if (this.m_has_emitted_eof)                          
-            return {};                                  
-        this.m_has_emitted_eof = true;                       
-        this.create_new_token(HTMLToken.Type.EndOfFile);   
-        this.will_emit(this.m_current_token);                     
-        this.m_queued_tokens.push(this.m_current_token); 
-        return this.m_queued_tokens.shift();  
+		if(this.m_has_emitted_eof)
+			return {};
+		this.m_has_emitted_eof = true;
+		this.create_new_token(HTMLToken.Type.EndOfFile);
+		this.will_emit(this.m_current_token);
+		this.m_queued_tokens.push(this.m_current_token);
+		return this.m_queued_tokens.shift();
 	}
 	/**
 	 * @param {HTMLToken | null} m_current_token
