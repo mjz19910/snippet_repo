@@ -27,13 +27,14 @@ export function lexerTagOpen(state) {
 			if(!state.m_current_token) throw new Error("Bad");
 			state.m_current_token.set_start_position({}, state.nth_last_position(2));
 			state.RECONSUME_IN(State.BogusComment);
-		case 'EOF': throw new Error("TODO");
-		// TODO: not all cases handled yet
+		case 'EOF':
+			log_parse_error();
+			state.m_queued_tokens.push(HTMLToken.make_character('<'));
+			state.EMIT_EOF();
 		default:
 			if(state.cur_char === null) throw new Error("Typecheck assert");
 			log_parse_error();
-			EMIT_CHARACTER_AND_RECONSUME_IN(state, '<', State.Data);
-			throw new Error("TODO");
+			state.EMIT_CHARACTER_AND_RECONSUME_IN('<', State.Data);
 	}
 }
 

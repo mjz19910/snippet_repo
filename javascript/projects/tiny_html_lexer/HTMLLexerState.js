@@ -1,14 +1,38 @@
 import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
+import {EMIT_CHARACTER_AND_RECONSUME_IN} from "./EMIT_CHARACTER_AND_RECONSUME_IN.js";
 import {HTMLToken} from "./HTMLToken.js";
 import {State} from "./State.js";
 export class HTMLLexerState {
+	EMIT_EOF() {
+		if (this.m_has_emitted_eof)                          
+            return {};                                  
+        this.m_has_emitted_eof = true;                       
+        this.create_new_token(HTMLToken.Type.EndOfFile);   
+        this.will_emit(this.m_current_token);                     
+        this.m_queued_tokens.push(this.m_current_token); 
+        return this.m_queued_tokens.shift();  
+	}
+	/**
+	 * @param {HTMLToken | null} m_current_token
+	 */
+	will_emit(m_current_token) {
+		m_current_token;
+		throw new Error("Method not implemented.");
+	}
+	/**
+	 * @param {string} char
+	 * @param {State} Data
+	 */
+	EMIT_CHARACTER_AND_RECONSUME_IN(char, Data) {
+		EMIT_CHARACTER_AND_RECONSUME_IN(this, char, Data);
+	}
 	/**@type {Extract<typeof State[keyof typeof State], number>}*/
 	m_state = -1;
 	/**@type {HTMLToken|null}*/
 	m_current_token = null;
 	/**
-	 * @type {(string | HTMLToken)[]}
+	 * @type {(null | string | HTMLToken)[]}
 	 */
 	m_queued_tokens = [];
 	m_is_eof = false;
