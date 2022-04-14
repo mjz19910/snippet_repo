@@ -1,3 +1,6 @@
-export function ScriptDataDoubleEscapedDash(state) {
+/**
+ * @param {import("./HTMLLexerState").HTMLLexerState} state
+ */
+export function lexerScriptDataDoubleEscapedDash(state) {
 	throw new Error("Function not implemented.");
 }

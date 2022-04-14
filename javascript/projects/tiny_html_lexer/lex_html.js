@@ -34,19 +34,18 @@ import {HTMLLexerState} from "./HTMLLexerState.js";
 import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLex.js";
 import {HTMLTagLex} from "../tiny_html_general_box/HTMLTagLex.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
-import {lex_html_special_to_tag} from "./lex_html_special_to_tag.js";
 import {lexerAfterAttributeName} from "./lexerAfterAttributeName";
 import {lexerAfterAttributeValueQuoted} from "./lexerAfterAttributeValueQuoted";
 import {lexerAfterDOCTYPEName} from "./lexerAfterDOCTYPEName";
 import {lexerAfterDOCTYPEPublicIdentifier} from "./lexerAfterDOCTYPEPublicIdentifier";
-import {lexerAfterDOCTYPEPublicKeyword as lexerAfterDOCTYPEPublicKeyword} from "./lexerAfterDOCTYPEPublicKeyword";
-import {lexerAfterDOCTYPESystemIdentifier as lexerAfterDOCTYPESystemIdentifier} from "./lexerAfterDOCTYPESystemIdentifier";
-import {lexerAfterDOCTYPESystemKeyword as lexerAfterDOCTYPESystemKeyword} from "./lexerAfterDOCTYPESystemKeyword";
-import {lexerAmbiguousAmpersand as lexerAmbiguousAmpersand} from "./lexerAmbiguousAmpersand";
-import {lexerAttributeName as lexerAttributeName} from "./lexerAttributeName";
-import {lexerAttributeValueDoubleQuoted as lexerAttributeValueDoubleQuoted} from "./lexerAttributeValueDoubleQuoted";
-import {lexerAttributeValueSingleQuoted as lexerAttributeValueSingleQuoted} from "./lexerAttributeValueSingleQuoted";
-import {lexerAttributeValueUnquoted as lexerAttributeValueUnquoted} from "./lexerAttributeValueUnquoted";
+import {lexerAfterDOCTYPEPublicKeyword} from "./lexerAfterDOCTYPEPublicKeyword.js";
+import {lexerAfterDOCTYPESystemIdentifier} from "./lexerAfterDOCTYPESystemIdentifier.js";
+import {lexerAfterDOCTYPESystemKeyword} from "./lexerAfterDOCTYPESystemKeyword";
+import {lexerAmbiguousAmpersand} from "./lexerAmbiguousAmpersand";
+import {lexerAttributeName} from "./lexerAttributeName";
+import {lexerAttributeValueDoubleQuoted} from "./lexerAttributeValueDoubleQuoted";
+import {lexerAttributeValueSingleQuoted} from "./lexerAttributeValueSingleQuoted.js";
+import {lexerAttributeValueUnquoted} from "./lexerAttributeValueUnquoted.js";
 import {lexerComment} from "./lexerComment";
 import {lexerCommentLessThanSignBangDash} from "./lexerCommentLessThanSignBangDash";
 import {lexerData} from "./lexerData";
@@ -57,8 +56,8 @@ import {lexerRCDATA} from "./lexerRCDATA";
 import {lexerScriptData} from "./lexerScriptData";
 import {lexerTagName} from "./lexerTagName";
 import {lexerTagOpen} from "./lexerTagOpen";
-import {MarkupDeclarationOpen} from "./lexerMarkupDeclarationOpen";
-import {NamedCharacterReference} from "./lexerNamedCharacterReference";
+import {lexerMarkupDeclarationOpen} from "./lexerMarkupDeclarationOpen";
+import {lexerNamedCharacterReference} from "./lexerNamedCharacterReference";
 import {NodeInternalData} from "../page_loader/NodeInternalData.js";
 import {NumericCharacterReference} from "./lexerNumericCharacterReference";
 import {NumericCharacterReferenceEnd} from "./lexerNumericCharacterReferenceEnd";
@@ -67,9 +66,9 @@ import {RAWTEXTEndTagOpen} from "./lexerRAWTEXTEndTagOpen";
 import {RAWTEXTLessThanSign} from "./lexerRAWTEXTLessThanSign";
 import {RCDATAEndTagName} from "./lexerRCDATAEndTagName";
 import {RCDATAEndTagOpen} from "./lexerRCDATAEndTagOpen";
-import {RCDATALessThanSign} from "./lexerRCDATALessThanSign";
-import {ScriptDataDoubleEscaped} from "./lexerScriptDataDoubleEscaped";
-import {ScriptDataDoubleEscapedDash} from "./lexerScriptDataDoubleEscapedDash";
+import {lexerRCDATALessThanSign} from "./lexerRCDATALessThanSign";
+import {lexerScriptDataDoubleEscaped} from "./lexerScriptDataDoubleEscaped";
+import {lexerScriptDataDoubleEscapedDash} from "./lexerScriptDataDoubleEscapedDash";
 import {ScriptDataDoubleEscapedDashDash} from "./lexerScriptDataDoubleEscapedDashDash";
 import {ScriptDataDoubleEscapedLessThanSign} from "./lexerScriptDataDoubleEscapedLessThanSign";
 import {ScriptDataDoubleEscapeEnd} from "./lexerScriptDataDoubleEscapeEnd";
@@ -129,7 +128,7 @@ export function lex_html(html) {
 			case State.TagOpen: lexerTagOpen(lexer); break;
 			case State.EndTagOpen: lexerEndTagOpen(lexer); break;
 			case State.TagName: lexerTagName(lexer); break;
-			case State.RCDATALessThanSign: RCDATALessThanSign(lexer); break;
+			case State.RCDATALessThanSign: lexerRCDATALessThanSign(lexer); break;
 			case State.RCDATAEndTagOpen: RCDATAEndTagOpen(lexer); break;
 			case State.RCDATAEndTagName: RCDATAEndTagName(lexer); break;
 			case State.RAWTEXTLessThanSign: RAWTEXTLessThanSign(lexer); break;
@@ -147,8 +146,8 @@ export function lex_html(html) {
 			case State.ScriptDataEscapedEndTagOpen: ScriptDataEscapedEndTagOpen(lexer); break;
 			case State.ScriptDataEscapedEndTagName: ScriptDataEscapedEndTagName(lexer); break;
 			case State.ScriptDataDoubleEscapeStart: ScriptDataDoubleEscapeStart(lexer); break;
-			case State.ScriptDataDoubleEscaped: ScriptDataDoubleEscaped(lexer); break;
-			case State.ScriptDataDoubleEscapedDash: ScriptDataDoubleEscapedDash(lexer); break;
+			case State.ScriptDataDoubleEscaped: lexerScriptDataDoubleEscaped(lexer); break;
+			case State.ScriptDataDoubleEscapedDash: lexerScriptDataDoubleEscapedDash(lexer); break;
 			case State.ScriptDataDoubleEscapedDashDash: ScriptDataDoubleEscapedDashDash(lexer); break;
 			case State.ScriptDataDoubleEscapedLessThanSign: ScriptDataDoubleEscapedLessThanSign(lexer); break;
 			case State.ScriptDataDoubleEscapeEnd: ScriptDataDoubleEscapeEnd(lexer); break;
@@ -162,7 +161,7 @@ export function lex_html(html) {
 			case State.AfterAttributeValueQuoted: lexerAfterAttributeValueQuoted(lexer); break;
 			case State.SelfClosingStartTag: SelfClosingStartTag(lexer); break;
 			case State.BogusComment: BogusComment(lexer); break;
-			case State.MarkupDeclarationOpen: MarkupDeclarationOpen(lexer); break;
+			case State.MarkupDeclarationOpen: lexerMarkupDeclarationOpen(lexer); break;
 			case State.CommentStart: CommentStart(lexer); break;
 			case State.CommentStartDash: CommentStartDash(lexer); break;
 			case State.Comment: lexerComment(lexer); break;
@@ -193,7 +192,7 @@ export function lex_html(html) {
 			case State.CDATASectionBracket: CDATASectionBracket(lexer); break;
 			case State.CDATASectionEnd: CDATASectionEnd(lexer); break;
 			case State.CharacterReference: CharacterReference(lexer); break;
-			case State.NamedCharacterReference: NamedCharacterReference(lexer); break;
+			case State.NamedCharacterReference: lexerNamedCharacterReference(lexer); break;
 			case State.AmbiguousAmpersand: lexerAmbiguousAmpersand(lexer); break;
 			case State.NumericCharacterReference: NumericCharacterReference(lexer); break;
 			case State.HexadecimalCharacterReferenceStart: HexadecimalCharacterReferenceStart(lexer); break;
@@ -212,8 +211,7 @@ export function lex_html(html) {
 		switch(item.type) {
 			case 'data': elements.push(item); break;
 			case 'special':
-				lex_html_special_to_tag(elements, lexer.lex_arr, i);
-				break;
+				throw new Error("Not implemented yet");
 		}
 	}
 	return {
