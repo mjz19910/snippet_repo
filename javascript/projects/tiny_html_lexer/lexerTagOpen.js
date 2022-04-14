@@ -16,7 +16,7 @@ export function lexerTagOpen(state) {
 			break;
 		case '/': state.m_current_state = State.EndTagOpen; break;
 		case 'ASCII_ALPHA':
-			create_new_token(state, HTMLToken.Type.StartTag);
+			state.create_new_token(HTMLToken.Type.StartTag);
 			// Reconsume in
 			state.m_current_state = State.TagName;
 			break;

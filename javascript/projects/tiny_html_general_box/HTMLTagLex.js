@@ -1,4 +1,3 @@
-import {lex_html_attributes} from "../tiny_html_lexer/lex_html_attributes.js";
 import {HTMLDataLex} from "./HTMLDataLex.js";
 export class HTMLTagLex {
 	/**@readonly */
@@ -13,24 +12,10 @@ export class HTMLTagLex {
 		if(start_value === '<') {
 			this.m_start_tag??=0;
 			this.m_start_tag++;
-			this.attrs=lex_html_attributes(value.value);
-			let first=this.attrs.shift();
-			if(!first)throw new Error("Bad");
-			this.value=first.a;
 		} else if(start_value === '</') {
 			this.m_end_tag = true;
 			this.value=value.value;
 		} else if(start_value === '<!') {
-			this.attrs=lex_html_attributes(value.value);
-			let first=this.attrs.shift();
-			let doc_type_value=this.attrs.shift();
-			if(!first)throw new Error("Bad");
-			if(!doc_type_value)throw new Error("Bad");
-			if(first.a === 'DOCTYPE') {
-				this.m_is_doctype=true;
-			}
-			this.value = first.a;
-			this.attrs=[doc_type_value.a];
 		}
 		else {
 			console.log('unk_start_tag', start_value);

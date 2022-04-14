@@ -15,6 +15,7 @@ export async function handle_failed_import(err, import_args) {
 		if(!(e instanceof Error))
 			throw new Error("Bad error");
 		let imp_mod = e.stack?.split("\n")[0];
+		console.log(e.stack);
 		let imp_line = e.stack?.split("\n")[1].split("from")[1].trim().replaceAll(";", "");
 		console.log(imp_mod, imp_line);
 		if(!imp_line)
