@@ -5,20 +5,23 @@ function output_all(iter: () => string, has_more: () => boolean) {
 		++i;
 	}
 }
-class ItemRangeBase<T> {
+abstract class ItemRangeBase<T> {
+	abstract reset(): void;
+	abstract has_more(): boolean;
+	abstract get_value(): T;
+	abstract advance(): void;
+	abstract init(value: T): this;
+}
+class Exact {
+	value: string;
+	constructor(v: string) {
+		this.value = v;
+	}
 	has_more() {
 		return false;
 	}
-	get_value(): T | null {
-		return null;
-	}
-	advance() { }
-}
-class Exact extends ItemRangeBase<string> {
-	value: string;
-	constructor(v: string) {
-		super();
-		this.value = v;
+	advance(){
+		throw new Error("Unable to advance static value");
 	}
 	get_value() {
 		return this.value;
@@ -34,6 +37,13 @@ class ItemRange extends ItemRangeBase<string> {
 		this.end = range_end;
 		this.current = range_start;
 	}
+	reset(): void {
+		this.current = this.start;
+	}
+	init(value:string) {
+		this.current = value;
+		return this;
+	}
 	has_more() {
 		return this.current < this.end;
 	}
@@ -45,7 +55,7 @@ class ItemRange extends ItemRangeBase<string> {
 	}
 }
 class Base {
-	queue: (ItemRange | Exact)[] = [];
+	queue: (ItemRangeBase<string>|Exact)[] = [];
 	queue_index = 0;
 	advance() {
 		this.queue_index++;
@@ -53,8 +63,8 @@ class Base {
 	get_current_item() {
 		return this.queue[this.queue_index];
 	}
-	extend(item_range_or_exact: ItemRange | Exact) {
-		this.queue.push(item_range_or_exact);
+	extend(item_range: ItemRangeBase<string>|Exact) {
+		this.queue.push(item_range);
 	}
 	pop_front() {
 		if (this.queue_index >= this.queue.length) {
@@ -80,8 +90,20 @@ class Base {
 		}
 	}
 }
-class CountingSubRange extends ItemRangeBase<string> {
+class CountingSubRange extends ItemRangeBase<string[]> {
 	ranges: ItemRangeBase<string>[] = [];
+	reset() {
+		for (let i = 0; this.ranges.length; i++) {
+			this.ranges[i].reset();
+		}
+	}
+	init(values:string[]) {
+		if(this.ranges.length != values.length)
+		for (let i = 0; this.ranges.length; i++) {
+			this.ranges[i].init(values[i]);
+		}
+		return this;
+	}
 	has_more() {
 		for (let i = this.ranges.length - 1; i >= 0; i--) {
 			if (this.ranges[i].has_more()) {
@@ -91,15 +113,40 @@ class CountingSubRange extends ItemRangeBase<string> {
 		return false;
 	}
 	get_value() {
-		return this.ranges.map(e => e.get_value()).join("");
+		return this.ranges.map(e => e.get_value());
 	}
 	advance(): void {
 		for (let i = this.ranges.length - 1; i >= 0; i--) {
 			if (this.ranges[i].has_more()) {
 				this.ranges[i].advance();
 				break;
+			} else {
+				this.ranges[i].reset();
 			}
 		}
+	}
+}
+class RangeJoiner<T> extends ItemRangeBase<string> {
+	target:ItemRangeBase<string[]>;
+	constructor(target:ItemRangeBase<string[]>) {
+		super();
+		this.target = target;
+	}
+	advance() {
+		this.target.advance();
+	}
+	has_more() {
+		return this.target.has_more();
+	}
+	reset() {
+		this.target.reset();
+	}
+	init(value: string): this {
+		this.target.init(value.split(""));
+		return this;
+	}
+	get_value() {
+		return this.target.get_value().join("");
 	}
 }
 let n: Base = new Base();
@@ -108,3 +155,9 @@ n.extend(new Exact('_'));
 n.extend(new ItemRange('a', 'i'));
 output_all(() => `$_${n.pop_front()}`, () => n.has_more());
 n = new Base();
+let tmp = new CountingSubRange;
+tmp.ranges.push(new ItemRange("0", "9"), new ItemRange("0", "9").init("1"));
+n.extend(new RangeJoiner(tmp));
+for (; n.has_more();) {
+	console.log(n.pop_front());
+}
