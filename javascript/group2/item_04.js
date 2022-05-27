@@ -1,4 +1,5 @@
 function main() {
+	//spell:words vtable
 	class RustBasicSymbolGenerator {
 		next_symbol_id = 0;
 		generated_symbol_map = new Map;
