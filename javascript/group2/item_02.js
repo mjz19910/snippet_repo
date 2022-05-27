@@ -124,7 +124,8 @@ class RustCrateBuilder extends RustBuilderTrait {
 }
 class FakeRealm {
 	//[[HostDefined]]
-	fake_host_defined_data = {}get_field(key) {
+	fake_host_defined_data = {}
+	get_field(key) {
 		if (key === '[[HostDefined]]') {
 			return this.fake_host_defined_data;
 		}
