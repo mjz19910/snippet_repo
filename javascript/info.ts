@@ -1,20 +1,20 @@
 function output_all(iter: () => string, has_more: () => boolean) {
 	let i = 0;
-	while(has_more() && i < 256) {
+	while (has_more() && i < 256) {
 		console.log(iter());
 		++i;
 	}
 }
-class ItemRangeBase {
+class ItemRangeBase<T> {
 	has_more() {
 		return false;
 	}
-	get_value() {
+	get_value(): T | null {
 		return null;
 	}
-	advance() {}
+	advance() { }
 }
-class Exact extends ItemRangeBase {
+class Exact extends ItemRangeBase<string> {
 	value: string;
 	constructor(v: string) {
 		super();
@@ -24,7 +24,7 @@ class Exact extends ItemRangeBase {
 		return this.value;
 	}
 }
-class ItemRange extends ItemRangeBase {
+class ItemRange extends ItemRangeBase<string> {
 	start: string;
 	end: string;
 	current: string;
@@ -53,7 +53,7 @@ class Base {
 		this.queue = [];
 		this.queue_index = 0;
 	}
-	advance(){
+	advance() {
 		this.queue_index++;
 	}
 	get_current_item() {
@@ -63,13 +63,13 @@ class Base {
 		this.queue.push(item_range_or_exact);
 	}
 	pop_front() {
-		if(this.queue_index >= this.queue.length) {
+		if (this.queue_index >= this.queue.length) {
 			return null;
 		}
 		let cur_queue_item = this.get_current_item();
 		let had_more = cur_queue_item.has_more();
 		let ret = cur_queue_item.get_value();
-		if(had_more) {
+		if (had_more) {
 			cur_queue_item.advance();
 		} else {
 			this.advance();
@@ -77,11 +77,11 @@ class Base {
 		return ret;
 	}
 	has_more() {
-		if(this.queue_index >= this.queue.length) return false;
-		let cur=this.get_current_item();
-		if(cur.has_more()){
+		if (this.queue_index >= this.queue.length) return false;
+		let cur = this.get_current_item();
+		if (cur.has_more()) {
 			return true;
-		}else{
+		} else {
 			return this.queue_index < this.queue.length;
 		}
 	}
