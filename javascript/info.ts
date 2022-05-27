@@ -156,8 +156,6 @@ n.extend(new ItemRange('a', 'i'));
 output_all(() => `$_${n.pop_front()}`, () => n.has_more());
 n = new Base();
 let tmp = new CountingSubRange;
-tmp.ranges.push(new ItemRange("0", "9"), new ItemRange("0", "9").init("1"));
+tmp.ranges.push(...new Array(2).fill(()=>new ItemRange("0", "9")).map(e=>e()));
+tmp.ranges[tmp.ranges.length-1].init("1");
 n.extend(new RangeJoiner(tmp));
-for (; n.has_more();) {
-	console.log(n.pop_front());
-}
