@@ -45,14 +45,8 @@ class ItemRange extends ItemRangeBase<string> {
 	}
 }
 class Base {
-	data: string;
-	queue: (ItemRange | Exact)[];
-	queue_index: number;
-	constructor(v: string) {
-		this.data = v;
-		this.queue = [];
-		this.queue_index = 0;
-	}
+	queue: (ItemRange | Exact)[] = [];
+	queue_index = 0;
 	advance() {
 		this.queue_index++;
 	}
@@ -86,8 +80,31 @@ class Base {
 		}
 	}
 }
-let n: Base = new Base('1');
+class CountingSubRange extends ItemRangeBase<string> {
+	ranges: ItemRangeBase<string>[] = [];
+	has_more() {
+		for (let i = this.ranges.length - 1; i >= 0; i--) {
+			if (this.ranges[i].has_more()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	get_value() {
+		return this.ranges.map(e => e.get_value()).join("");
+	}
+	advance(): void {
+		for (let i = this.ranges.length - 1; i >= 0; i--) {
+			if (this.ranges[i].has_more()) {
+				this.ranges[i].advance();
+				break;
+			}
+		}
+	}
+}
+let n: Base = new Base();
 n.extend(new ItemRange('1', '9'));
 n.extend(new Exact('_'));
 n.extend(new ItemRange('a', 'i'));
 output_all(() => `$_${n.pop_front()}`, () => n.has_more());
+n = new Base();
