@@ -186,7 +186,7 @@ async function kernel_main() {
 			});
 		}
 		init() {
-			let runtime = this;
+			//spell:words spawnable
 			let task_vec = this.task_vec;
 			for (let i = 0; i < task_vec.length; i++) {
 				let spawnable_item = task_vec[i];
