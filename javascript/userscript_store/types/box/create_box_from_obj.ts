@@ -95,11 +95,12 @@ export namespace Tests {
 	}
 }
 
-function is_ins_modify_op<T>(v: T | ModifyOperand): v is ModifyOperand {
+function is_ins_modify_op<T extends Array<any>>(v: T | ModifyOperand): v is ModifyOperand {
 	if (
-		v instanceof Array &&
+		v.length === 3 &&
 		v[0] === 'modify_operand' &&
-		typeof v[1] === 'number' && typeof v[2] === 'number'
+		typeof v[1] === 'number' &&
+		typeof v[2] === 'number'
 	) return true;
 	return false;
 }
