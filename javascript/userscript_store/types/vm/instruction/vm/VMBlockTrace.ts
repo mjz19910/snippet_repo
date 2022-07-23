@@ -24,10 +24,10 @@ type DomInstructionVMCall = [number, "vm_call", number] | [number, "vm_push_args
 type DomInstructionBlockTrace =
 	[number, VMBlockTraceOpcode, 'begin', DomInstructionTypePack | null] |
 	[number, VMBlockTraceOpcode, 'call', DomInstructionTypePack | null] |
-	[number, 'vm_block_trace', 'block', number, number] |
-	[number, 'vm_block_trace', 'tagged', DomInstructionTaggedTypePack | null] |
-	[number, 'vm_block_trace', 'tagged_begin', DomInstructionTaggedTypePack | null] |
-	[number, 'vm_block_trace', 'tagged_call', DomInstructionTaggedTypePack | null];
+	[number, VMBlockTraceOpcode, 'block', number, number] |
+	[number, VMBlockTraceOpcode, 'tagged', DomInstructionTaggedTypePack | null] |
+	[number, VMBlockTraceOpcode, 'tagged_begin', DomInstructionTaggedTypePack | null] |
+	[number, VMBlockTraceOpcode, 'tagged_call', DomInstructionTaggedTypePack | null];
 type DomInstructionVMCallAt = [number, "vm_call_at", DomInstructionTaggedTypePack];
 type DomInstructionNullMarker = [number, "marker", null];
 export type DomInstructionFilter6 = [number, 'dom_filter', any, any, any, any];
