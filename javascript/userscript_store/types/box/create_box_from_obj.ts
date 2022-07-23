@@ -14,22 +14,22 @@ import { EmptyArrayBox } from "./EmptyArrayBox";
 import { ArrayBox } from "./ArrayBox";
 import { async_convert_to_box } from "./async_convert_to_box";
 import { is_empty_arr } from "./is_empty_arr";
-import { async_box_extract_globalThis as extract_globalThis } from "./extract_globalThis";
+import { async_box_extract_globalThis as is_globalThis } from "./extract_globalThis";
 import { GlobalThisBox } from "./GlobalThisBox";
 import { MediaListBox } from "./MediaListBox";
 import { VoidBox } from "./VoidBox";
 import { is_array_of } from "./is_array_of";
-import { InstructionType } from "../vm/instruction/mod";
 import { temporary_box_from_create_box_from_obj } from "./temporary_box_from_create_box_from_obj";
 import { InstructionTypeArrayBox } from "./InstructionTypeArrayBox";
 import { is_box } from "./is_box";
-import { BlockTrace, DomTaggedPack, DomInstructionType } from "../vm/instruction/vm/VMBlockTrace";
+import { DomInstructionType } from "../vm/instruction/vm/VMBlockTrace";
 import { assert_type } from "./assert_type";
-import { extract_MediaList } from "./extract_MediaList";
+import { extract_MediaList as is_MediaList } from "./extract_MediaList";
 import { ObjectBox_Value } from "./ObjectBox_Value";
 import { PromiseBox } from "./promise/PromiseBox";
 import { is_node } from "./is_node";
 import { is_array } from "./is_array";
+import { is_instruction_type } from "./is_instruction_type.1";
 export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (value === null) return value
 	if (value === void 0) return new VoidBox
@@ -45,8 +45,8 @@ export function create_box_from_object(value: ObjectBox_Value): Box {
 		if (is_array_of(value, is_instruction_type)) return new InstructionTypeArrayBox(value)
 	}
 	if (value instanceof Promise<any>) return new PromiseBox(async_convert_to_box(value))
-	if (extract_MediaList(value)) return new MediaListBox(value)
-	if (extract_globalThis(value)) return new GlobalThisBox(value)
+	if (is_MediaList(value)) return new MediaListBox(value)
+	if (is_globalThis(value)) return new GlobalThisBox(value)
 	if (Object.keys(value).length > 0) return new temporary_box_from_create_box_from_obj(value)
 	return new ObjectBox(value);
 }
@@ -78,7 +78,7 @@ export namespace Tests {
 	}
 }
 
-function is_ins_modify_op<T extends Array<any>>(v: T | ModifyOperand): v is ModifyOperand {
+export function is_instruction_modify_op<T extends Array<any>>(v: T | ModifyOperand): v is ModifyOperand {
 	if (
 		v.length === 3 &&
 		v[0] === 'modify_operand' &&
@@ -88,7 +88,7 @@ function is_ins_modify_op<T extends Array<any>>(v: T | ModifyOperand): v is Modi
 	return false;
 }
 
-function is_dom_instruction_type(v: DomInstructionType): v is DomInstructionType {
+export function is_dom_instruction_type(v: DomInstructionType): v is DomInstructionType {
 	if (typeof v[0] !== 'number') return false;
 	let [, ...instruction_base] = v;
 	if (is_instruction_type(instruction_base)) {
@@ -102,117 +102,4 @@ function is_dom_instruction_type(v: DomInstructionType): v is DomInstructionType
 		}
 	}
 	return false;
-}
-
-function is_null<T>(v: T | null): v is null {
-	return v === null;
-}
-
-function is_DomInstructionTaggedTypePack(v: DomTaggedPack): v is DomTaggedPack {
-	switch (v[0]) {
-		case 'dom': {
-			v;
-		} break;
-		case 'dom_mem':
-		case 'vm':
-	}
-	return false;
-}
-
-function is_ins_block_trace<T>(v: T | BlockTrace): v is BlockTrace {
-	if (v instanceof Array) {
-		switch (v[0]) {
-			case 'vm_block_trace': {
-				if (typeof v[1] === 'number') return typeof v[2] === 'number';
-				switch (v[1]) {
-					case 'begin': {
-						let vv = v[2];
-						if (is_null(vv)) return true;
-						if (is_dom_instruction_type(vv)) {
-							return true;
-						}
-					} break;
-					case 'call': {
-						let vv = v[2];
-						if (is_null(vv)) return true;
-						if (is_dom_instruction_type(vv)) {
-							return true;
-						}
-					} break;
-					case 'tagged': {
-						let vv = v[2];
-						if (is_null<typeof vv>(vv)) return true;
-						if (is_DomInstructionTaggedTypePack(vv)) return true;
-					} break;
-					case 'tagged_begin': {
-						let vv = v[2];
-						if (is_null<typeof vv>(vv)) return true;
-						if (is_DomInstructionTaggedTypePack(vv)) {
-							return true;
-						}
-					} break;
-					case 'tagged_call': {
-						let vv = v[2];
-						if (is_null<typeof vv>(vv)) return true;
-						if (is_DomInstructionTaggedTypePack(vv)) {
-							return true;
-						}
-					} break;
-				}
-			}
-		}
-	}
-	return false;
-}
-
-function is_instruction_type<T>(v: InstructionType | T): v is InstructionType {
-	if (!(v instanceof Array)) return false;
-	if (is_ins_modify_op(v)) return true;
-	if (is_ins_block_trace(v)) return true;
-	switch (v[0]) {
-		case 'push': {
-			let [, ...rest] = v;
-			if (is_empty_arr(rest)) return true;
-			if (is_array_of(rest, is_box)) return true;
-			return false;
-		}
-	}
-	switch (v.length) {
-		case 1: switch (v[0]) {
-			case 'append':
-			case 'breakpoint':
-			case 'drop':
-			case 'dup':
-			case 'get':
-			case 'halt':
-			case 'nop':
-			case 'push_window_object':
-			case 'return':
-			case 'vm_push_args':
-			case 'vm_push_ip':
-			case 'vm_push_self':
-			case 'vm_return': return true
-		}
-	}
-	switch (v.length) {
-		case 2: {
-			let v2;
-			switch (v[0]) {
-				case 'construct':
-				case 'je':
-				case 'jmp':
-				case 'peek':
-				case 'vm_call':
-				case 'call': [, v2] = v; return typeof v2 === 'number';
-			}
-		}
-	}
-	if (v[0] !== 'cast') {
-		return false;
-	}
-	switch (v[1]) {
-		case 'object_index': return true;
-		case 'object_index_to_function': return true;
-		case 'vm_function': return true;
-	}
 }
