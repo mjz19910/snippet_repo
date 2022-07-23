@@ -11,21 +11,16 @@ export function is_dom_instruction_type(value: DomInstructionType): value is Dom
 	}
 	let [, ...instruction_base] = value;
 	if (is_instruction_type(instruction_base)) return true;
-	switch (value[1]) { case 'push_global_object': return is_instruction_type(['push_window_object']); }
-	switch (value[1]) {
+	switch (instruction_base[0]) {
+		case 'marker':
+			assert_type<DomInstructionNullMarker>([value[0], ...instruction_base]);
+			return instruction_base.length === 2 && instruction_base[1] === null;
 		case 'vm_call_at': return value.length === 3 && is_dom_instruction_tagged_pack(value[2]);
-		case 'modify_operand': return value.length === 4 && is_instruction_type([value[1], value[2], value[3]]);
-	}
-	switch (value[1]) {
-		case 'dom_filter_6': switch (value.length) { case 6: return true; }
-		case 'dom_filter_7': switch (value.length) { case 7: return true; }
-	}
-	switch (value[1]) {
-		case 'marker': assert_type<DomInstructionNullMarker>(value); return value.length === 3 && value[2] === null;
-		case 'vm_block_trace': return is_dom_instruction_vm_block_trace(value);
-		case 'vm_return': return value.length === 2;
+		case 'dom_filter_6': switch (instruction_base.length) { case 5: return true; }
+		case 'dom_filter_7': switch (instruction_base.length) { case 6: return true; }
+		case 'push_global_object': return is_instruction_type(['push_window_object']);
 		default:
-			console.log('missing type for dom instruction', [value[1]][0], 'with args=', [value[1]].slice(1));
+			console.log('missing type for dom instruction', instruction_base[0], 'with args=', [value[1]].slice(1));
 			throw new Error("Missing type");
 	}
 }
