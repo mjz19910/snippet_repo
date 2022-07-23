@@ -187,6 +187,3 @@ function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace){
 		default:assert_type<never>(value);return false;
 	}
 }
-function is_dom_instruction_vm_return(value:DomInstructionVMReturn) {
-	return value.length === 2;
-}
