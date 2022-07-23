@@ -167,12 +167,25 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 function assert_type<T>(value: T) {
 	void value;
 }
-function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace){
+function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace): value is DomInstructionBlockTrace {
 	switch(value[2]){
-		case 'begin':return true;
-		case 'block':return true;
-		case 'call':return true;
-		case 'tagged':return true;
+		case 'call':
+		case 'begin':{
+			if(value.length != 4)return false;
+			if(value[3] === null)return true;
+			return is_dom_instruction_type(value[3][0]);
+		}
+		case 'block':return value.length === 5;
+		case 'tagged':{
+			if(value.length != 4)return false;
+			let cur = value[3];
+			if(cur === null)return true;
+			switch(cur[0]){
+				case 'dom':return is_dom_instruction_type(cur[1]);
+				case 'dom_mem':return typeof cur[1] === 'number';
+				case 'vm':return is_instruction_type(cur[1]);
+			}
+		}
 		case 'tagged_begin':return true;
 		case 'tagged_call':return true;
 		default:assert_type<never>(value);return false;
