@@ -2,7 +2,7 @@ import {Box} from "./Box";
 import {is_obj_index_to_box} from "./is_obj_index_to_box";
 import {force_to_type_downgrade} from "./force_to_type_downgrade";
 import {force_type_upgrade} from "./force_type_upgrade";
-import {box_able_properties_cache} from "./create_box";
+import {box_value_property_cache} from "./constant";
 import {ObjIndexToBox} from "./ObjIndexToBox";
 
 export function has_any_properties_to_box<T extends string, C extends ObjIndexToBox<T>>(v: {[x: string]: Box;}, props: T[]): v is C {
@@ -13,7 +13,7 @@ export function has_any_properties_to_box<T extends string, C extends ObjIndexTo
 		if(force_to_type_downgrade<{}>(on)) {
 			if(force_type_upgrade<C, {}>(on)) {
 				if(is_obj_index_to_box(on, vv)) {
-					box_able_properties_cache.add(vv);
+					box_value_property_cache.add(vv);
 					has_some_to_return_box = true;
 				}
 			}
