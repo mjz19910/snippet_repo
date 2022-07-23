@@ -10,6 +10,7 @@ type DomInstructionCall = [number, "call", number];
 type DomInstructionCast = [number, "cast", CastOperand1];
 type DomInstructionCons = [number, "construct", number];
 type DomInstructionDrop = [number, "drop"];
+type DomInstructionDup = [number, "dup"];
 type DomInstructionPushGlobalObject = [number, "push_global_object"];
 type DomInstructionNop = [number, "nop"];
 type DomInstructionGet = [number, "get"];
@@ -49,6 +50,7 @@ export type DomInstructionType = DomInstructionAppend |
 	DomInstructionPeek |
 	DomInstructionPush |
 	DomInstructionVMCall |
+	DomInstructionDup |
 	DomInstructionDrop |
 	DomInstructionPushGlobalObject |
 	DomInstructionNop |
