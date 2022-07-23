@@ -176,7 +176,9 @@ function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace): valu
 			return is_dom_instruction_type(value[3][0]);
 		}
 		case 'block':return value.length === 5;
-		case 'tagged':{
+		case 'tagged':
+		case 'tagged_begin':
+		case 'tagged_call':{
 			if(value.length != 4)return false;
 			let cur = value[3];
 			if(cur === null)return true;
@@ -186,8 +188,6 @@ function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace): valu
 				case 'vm':return is_instruction_type(cur[1]);
 			}
 		}
-		case 'tagged_begin':return true;
-		case 'tagged_call':return true;
 		default:assert_type<never>(value);return false;
 	}
 }
