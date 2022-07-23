@@ -10,7 +10,7 @@ export function is_dom_instruction_type(value: DomInstructionType): value is Dom
 		return false;
 	}
 	let [, ...instruction_base] = value;
-	if (is_instruction_type(instruction_base)) return true;
+	if (is_instruction_type(instruction_base)) return true
 	switch (instruction_base[0]) {
 		case 'dom_filter_6': return instruction_base.length == 5
 		case 'dom_filter_7': return instruction_base.length == 6
