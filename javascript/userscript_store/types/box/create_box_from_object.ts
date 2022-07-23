@@ -20,7 +20,7 @@ import { is_array_of } from "./is_array_of";
 import { temporary_box_from_object as temporary_box_from_object } from "./temporary_box_from_object";
 import { InstructionTypeArrayBox } from "./InstructionTypeArrayBox";
 import { is_box } from "./is_box";
-import { extract_MediaList as is_MediaList } from "./extract_MediaList";
+import { is_MediaList as is_MediaList } from "./is_MediaList";
 import { ObjectBox_Value } from "./ObjectBox_Value";
 import { PromiseBox } from "./promise/PromiseBox";
 import { is_node } from "./is_node";
