@@ -26,12 +26,14 @@ import { PromiseBox } from "./promise/PromiseBox";
 import { is_node } from "./is_node";
 import { is_array } from "./is_array";
 import { is_instruction_type } from "./is_instruction_type.1";
+import { is_promise } from "./is_promise";
+import { assert_type } from "./assert_type";
 
 export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (value === null) return value
 	if (value === void 0) return new VoidBox
 	if (extract_StackVM(value)) return new StackVMBox(value)
-	if (extract_CSSStyleSheetInit(value))return new CSSStyleSheetInitBox(value)
+	if (extract_CSSStyleSheetInit(value)) return new CSSStyleSheetInitBox(value)
 	if (value instanceof Document) return new DocumentBox(value)
 	if (is_node(value)) return new NodeBox(value)
 	if (value instanceof Window) return new WindowBox(value)
@@ -40,10 +42,23 @@ export function create_box_from_object(value: ObjectBox_Value): Box {
 		if (is_empty_arr(value)) return new EmptyArrayBox(value)
 		if (is_array_of(value, is_box)) return new ArrayBox(value)
 		if (is_array_of(value, is_instruction_type)) return new InstructionTypeArrayBox(value)
+		assert_type<never>(value)
+		throw new Error("Reached end of control flow")
 	}
-	if (value instanceof Promise<any>) return new PromiseBox(async_convert_to_box(value))
+	if (is_promise(value)) return new PromiseBox(async_convert_to_box(value))
 	if (is_MediaList(value)) return new MediaListBox(value)
+	if (value instanceof Array) {
+		if (is_array(value)) return create_box_from_array(value);
+	}
 	if (is_globalThis(value)) return new GlobalThisBox(value)
 	if (Object.keys(value).length > 0) return new temporary_box_from_create_box_from_obj(value)
-	return new ObjectBox(value);
+	return new ObjectBox(value)
 }
+function create_box_from_array(value: Extract<ObjectBox_Value, any[]>): Box {
+	if (is_empty_arr(value)) return new EmptyArrayBox(value)
+	if (is_array_of(value, is_box)) return new ArrayBox(value)
+	if (is_array_of(value, is_instruction_type)) return new InstructionTypeArrayBox(value)
+	assert_type<never>(value)
+	throw new Error("Typechecker failed", { cause: value })
+}
+

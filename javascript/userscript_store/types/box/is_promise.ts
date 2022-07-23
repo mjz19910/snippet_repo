@@ -1,3 +1,3 @@
-export function is_promise<T, Y>(v: T | Promise<Y>): v is Promise<Y> {
+export function is_promise<T, V extends Promise<any>>(v: T | V): v is Extract<T, V> {
 	return v instanceof Promise;
 }
