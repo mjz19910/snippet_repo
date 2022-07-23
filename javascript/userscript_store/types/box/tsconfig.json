@@ -16,7 +16,7 @@
 			"./node_modules/@types"
 		]
 	},
-	"include": ["./**/*", "../vm/box_support/extract_StackVM.ts", "../vm/box_support/extract_stack_vm_from_obj.ts", "../vm/is_stack_vm.ts"],
+	"include": ["./**/*", "../vm/box_support/extract_StackVM.ts", "../vm/is_stack_vm.ts"],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
