@@ -1,8 +1,8 @@
 import { CSSStyleSheetInitBox } from "./CSSStyleSheetInitBox";
 import { ObjectBox } from "./ObjectBox";
 import { StackVMBox } from "./StackVMBox";
-import { extract_CSSStyleSheetInit } from "./extract_CSSStyleSheetInit";
-import { extract_StackVM } from "../vm/box_support/extract_stack_vm";
+import { extract_CSSStyleSheetInit as is_CSSStyleSheetInit } from "./extract_CSSStyleSheetInit";
+import { extract_StackVM as is_StackVM } from "../vm/box_support/extract_stack_vm";
 import { Box } from "./Box";
 import { NodeBox } from "./NodeBox";
 import { DocumentBox } from "./DocumentBox";
@@ -32,8 +32,8 @@ import { assert_type } from "./assert_type";
 export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (value === null) return value
 	if (value === void 0) return new VoidBox
-	if (extract_StackVM(value)) return new StackVMBox(value)
-	if (extract_CSSStyleSheetInit(value)) return new CSSStyleSheetInitBox(value)
+	if (is_StackVM(value)) return new StackVMBox(value)
+	if (is_CSSStyleSheetInit(value)) return new CSSStyleSheetInitBox(value)
 	if (value instanceof Document) return new DocumentBox(value)
 	if (is_node(value)) return new NodeBox(value)
 	if (value instanceof Window) return new WindowBox(value)
