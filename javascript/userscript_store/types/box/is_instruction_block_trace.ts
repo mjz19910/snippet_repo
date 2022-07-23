@@ -1,54 +1,19 @@
 import { BlockTrace } from "../vm/instruction/vm/VMBlockTrace";
-import { is_array } from "./is_array";
-import { is_DomTaggedPack } from "./is_DomTaggedPack";
-import { is_dom_instruction_type } from "./is_dom_instruction_type";
-import { is_null } from "./is_null";
+import { assert_type } from "./assert_type";
+import { assume_exclude_type } from "./assume_exclude_type";
+import { is_instruction_block_trace_instruction_ptr } from "./is_instruction_block_trace_instruction_ptr";
+import { is_instruction_block_trace_tagged_ptr } from "./is_instruction_block_trace_tagged_ptr";
 
-export function is_instruction_block_trace<T>(v: T | BlockTrace): v is BlockTrace {
-	if (!is_array(v)) throw new Error("Invalid type");
-	switch (v[0]) {
-		case 'vm_block_trace': {
-			switch (v[1]) {
-				case 'begin': {
-					let vv = v[2];
-					if (is_null(vv))
-						return true;
-					if (is_dom_instruction_type(vv)) {
-						return true;
-					}
-				} break;
-				case 'call': {
-					let vv = v[2];
-					if (is_null(vv))
-						return true;
-					if (is_dom_instruction_type(vv)) {
-						return true;
-					}
-				} break;
-				case 'tagged': {
-					let vv = v[2];
-					if (is_null<typeof vv>(vv))
-						return true;
-					if (is_DomTaggedPack(vv))
-						return true;
-				} break;
-				case 'tagged_begin': {
-					let vv = v[2];
-					if (is_null<typeof vv>(vv))
-						return true;
-					if (is_DomTaggedPack(vv)) {
-						return true;
-					}
-				} break;
-				case 'tagged_call': {
-					let vv = v[2];
-					if (is_null<typeof vv>(vv))
-						return true;
-					if (is_DomTaggedPack(vv)) {
-						return true;
-					}
-				} break;
-			}
-		}
+export function is_instruction_block_trace<T>(value: T | BlockTrace): value is BlockTrace {
+	if (assume_exclude_type<T>(value)) throw new Error("Never");
+	switch (value[1]) {
+		case 'block': value; return true;
+		case 'begin':
+		case 'call':return is_instruction_block_trace_instruction_ptr(value)
+		case 'tagged':
+		case 'tagged_begin':
+		case 'tagged_call': return is_instruction_block_trace_tagged_ptr(value)
+		default: assert_type<never>(value); return false;
 	}
 }
+
