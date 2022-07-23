@@ -1,6 +1,6 @@
 import { BlockTrace } from "../vm/instruction/vm/VMBlockTrace";
 import { is_DomTaggedPack } from "./is_DomTaggedPack";
-import { is_dom_instruction_type } from "./is_dom_instruction_type.1";
+import { is_dom_instruction_type } from "./is_dom_instruction_type";
 import { is_null } from "./is_null";
 
 export function is_instruction_block_trace<T>(v: T | BlockTrace): v is BlockTrace {
