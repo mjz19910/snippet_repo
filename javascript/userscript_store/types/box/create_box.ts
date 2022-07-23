@@ -174,7 +174,7 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 	}
 }
 function assert_type<T>(value: T) {
-	throw new Error("Function not implemented.");
+	void value;
 }
 function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace){
 	switch(value[2]){
