@@ -147,11 +147,7 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 	switch(value[1]){case 'call':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'cast':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'construct':return is_instruction_type([value[1],value[2]])}
-	switch(value[1]){case 'dom_filter':switch(value.length){
-		case 6:return true;
-		case 7:return true;
-		default:return false;
-	}}
+	switch(value[1]){case 'dom_filter':switch(value.length){case 6:return true;case 7:return true}}
 	switch(value[1]){case 'je':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'jmp':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'modify_operand':return is_instruction_type([value[1],value[2],value[3]])}
