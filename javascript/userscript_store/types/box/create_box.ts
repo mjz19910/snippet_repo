@@ -22,6 +22,7 @@ import {PropertiesToIterate} from "./PropertiesToIterate";
 import {temporary_box_from_create_box} from "./temporary_box_from_create_box";
 import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
+import { BlockTrace, DomInstructionType, DomInstructionTypePack } from "../vm/instruction/vm/VMBlockTrace";
 export const PropertiesToIterateArray: PropertiesToIterate[] = ["type"];
 export const box_able_properties_cache = new Set<string>();
 export type BoxWithPropertiesObjType<T extends string[]>={[U in T[number]]:Box};
@@ -40,15 +41,10 @@ function is_instruction_type(value:InstructionType):value is InstructionType {
 	switch(value[0]){case 'modify_operand':return value.length === 3}
 	switch(value[0]){case 'nop':return value.length === 1}
 	switch(value[0]){case 'peek':return value.length === 2}
-	switch(value[0]){
-		case 'push':
-			let [, ...rest]=value;
-			rest;
-			return true
-	}
-	switch(value[0]){case 'push_global_object':return value.length === 1}
+	switch(value[0]){case 'push':return true}
+	switch(value[0]){case 'push_window_object':return value.length === 1}
 	switch(value[0]){case 'return':return value.length === 1}
-	switch(value[0]){case 'vm_block_trace':return true}
+	switch(value[0]){case 'vm_block_trace':return is_instruction_vm_block_trace(value)}
 	switch(value[0]){case 'vm_call':return true}
 	switch(value[0]){case 'vm_push_args':return value.length === 1}
 	switch(value[0]){case 'vm_push_ip':return value.length === 1}
@@ -113,5 +109,70 @@ export function create_box(value: BoxExtractType): Box {
 			return create_box_from_obj(value);
 		}
 		throw new Error("Never type should not be reached");
+	}
+}
+function is_instruction_vm_block_trace(value: BlockTrace): value is BlockTrace {
+	switch(value[1]){
+		case 'begin':
+		switch(value[2]) {
+			case null:return true;
+			default:return is_valid_dom_instruction_type_pack(value[2]);
+		}
+	}
+	return false;
+}
+
+function is_valid_dom_instruction_type_pack(arg0: DomInstructionTypePack): arg0 is DomInstructionTypePack {
+	return is_dom_instruction_type(arg0[0]);
+}
+function assert_is_never(value:never) {
+	return false;
+}
+function is_dom_instruction_type(value: DomInstructionType): value is DomInstructionType {
+	if (typeof value[0] !== "number")return assert_is_never(value[0])
+	switch(value[1]){
+		case 'append':let v=value[0];return true;
+		case 'breakpoint':return is_instruction_type([value[1]])
+		case 'drop':return is_instruction_type([value[1]])
+		case 'dup':return is_instruction_type([value[1]])
+		case 'get':return is_instruction_type([value[1]])
+		case 'halt':return is_instruction_type([value[1]])
+		case 'nop':return is_instruction_type([value[1]])
+		case 'return':return is_instruction_type([value[1]])
+	}
+	switch(value[1]){case 'call':return is_instruction_type([value[1],value[2]])}
+	switch(value[1]){case 'cast':return is_instruction_type([value[1],value[2]])}
+	switch(value[1]){case 'construct':return is_instruction_type([value[1],value[2]])}
+	switch(value[1]){case 'dom_filter':switch(value.length){
+		case 6:return true;
+		case 7:return true;
+		default:return false;
+	}}
+	switch(value[1]){case 'je':return is_instruction_type([value[1],value[2]])}
+	switch(value[1]){case 'jmp':return is_instruction_type([value[1],value[2]])}
+	switch(value[1]){case 'marker':return [value[1]].length === 2}
+	switch(value[1]){case 'modify_operand':return is_instruction_type([value[1],value[2],value[3]])}
+	switch(value[1]){case 'peek':return is_instruction_type([value[1],value[2]])}
+	switch(value[1]){case 'push':return is_instruction_type([value[1]])}
+	switch(value[1]){case 'vm_block_trace':switch(value[2]){
+		case 'begin':return true;
+		case 'block':return true;
+		case 'call':return true;
+		case 'tagged':return true;
+		case 'tagged_begin':return true;
+		case 'tagged_call':return true;
+	}}
+	switch(value[1]){case 'vm_call':return is_instruction_type([value[1],value[2]])}
+	switch(value[1]){case 'vm_push_args':return is_instruction_type([value[1]])}
+	switch(value[1]){case 'vm_push_ip':return is_instruction_type([value[1]])}
+	switch(value[1]){case 'vm_push_self':return is_instruction_type([value[1]])}
+	switch(value[1]){case 'push_global_object':return is_instruction_type(['push_window_object'])}
+	switch(value[1]){case 'vm_call_at':return [value[1]].length === 2}
+	switch(value[1]){
+		case 'vm_return':
+			return is_instruction_type([value[1]])
+		default:
+			console.log('missing type for dom instruction', [value[1]][0], 'with args=', [value[1]].slice(1))
+			throw new Error("Missing type")
 	}
 }

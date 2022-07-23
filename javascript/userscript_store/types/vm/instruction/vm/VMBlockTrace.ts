@@ -1,7 +1,7 @@
-import {Box} from "types/box/Box";
-import {InstructionType} from "../mod";
-import {VMBlockTraceOpcode} from "../opcodes/VMBlockTraceOpcode";
-import {CastOperand1} from "../operands/CastOperand1";
+import { Box } from "types/box/Box";
+import { InstructionType } from "../mod";
+import { VMBlockTraceOpcode } from "../opcodes/VMBlockTraceOpcode";
+import { CastOperand1 } from "../operands/CastOperand1";
 
 export type test_type_1 = ['vm_block_trace', 'begin', null];
 type DomInstructionAppend = [number, "append"];
@@ -9,7 +9,12 @@ type DomInstructionBP = [number, "breakpoint"];
 type DomInstructionCall = [number, "call", number];
 type DomInstructionCast = [number, "cast", CastOperand1];
 type DomInstructionCons = [number, "construct", number];
-type DomInstruction1Arg = [number, "drop" | "push_global_object" | "nop" | "append" | "breakpoint" | "dup" | "get" | "halt" | "return"];
+type DomInstructionDrop = [number, "drop"];
+type DomInstructionPushGlobalObject = [number, "push_global_object"];
+type DomInstructionNop = [number, "nop"];
+type DomInstructionGet = [number, "get"];
+type DomInstructionHalt = [number, "halt"];
+type DomInstructionReturn = [number, "return"];
 type DomInstructionJe = [number, "je", number]
 type DomInstructionJmp = [number, "jmp", number]
 type DomInstructionModOp = [number, "modify_operand", number, number]
@@ -44,14 +49,19 @@ export type DomInstructionType = DomInstructionAppend |
 	DomInstructionPeek |
 	DomInstructionPush |
 	DomInstructionVMCall |
-	DomInstruction1Arg;
+	DomInstructionDrop |
+	DomInstructionPushGlobalObject |
+	DomInstructionNop |
+	DomInstructionGet |
+	DomInstructionHalt |
+	DomInstructionReturn;
 
 export type DomInstructionTypePack = [DomInstructionType];
 
 export type DomInstructionTaggedTypePack =
-['dom', DomInstructionType]|
-['vm', InstructionType] |
-['dom_mem', number];
+	['dom', DomInstructionType] |
+	['vm', InstructionType] |
+	['dom_mem', number];
 
 // vm_block_trace
 export type BlockTrace =
