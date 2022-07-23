@@ -27,7 +27,7 @@ import {InstructionType} from "../vm/instruction/mod";
 import {temporary_box_from_create_box_from_obj} from "./temporary_box_from_create_box_from_obj";
 import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
 import {is_box} from "./is_box";
-import {BlockTrace, DomInstructionTaggedTypePack, DomInstructionType, DomInstructionTypePack} from "../vm/instruction/vm/VMBlockTrace";
+import {BlockTrace, DomTaggedPack, DomInstructionType, DomInstructionTypePack} from "../vm/instruction/vm/VMBlockTrace";
 type BoxWithObjectValue = Exclude<BoxExtractType, Primitives | Function | undefined | null>;
 function extract_MediaList(v: {} | MediaList): v is MediaList {
 	console.log('TODO extract MediaList', v);
@@ -136,7 +136,7 @@ function is_null<T>(v: T | null): v is null {
 	return v === null;
 }
 
-function is_DomInstructionTaggedTypePack(v: DomInstructionTaggedTypePack): v is DomInstructionTaggedTypePack {
+function is_DomInstructionTaggedTypePack(v: DomTaggedPack): v is DomTaggedPack {
 	switch(v[0]) {
 		case 'dom': {
 			v;
@@ -214,7 +214,7 @@ function is_instruction_type<T>(v: InstructionType | T): v is InstructionType {
 			case 'get':
 			case 'halt':
 			case 'nop':
-			case 'push_global_object':
+			case 'push_window_object':
 			case 'return':
 			case 'vm_push_args':
 			case 'vm_push_ip':

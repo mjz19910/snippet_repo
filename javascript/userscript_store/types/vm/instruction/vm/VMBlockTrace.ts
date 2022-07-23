@@ -30,10 +30,10 @@ export type DomInstructionBlockTrace =
 	[number, VMBlockTraceOpcode, 'begin', DomInstructionTypePack | null] |
 	[number, VMBlockTraceOpcode, 'call', DomInstructionTypePack | null] |
 	[number, VMBlockTraceOpcode, 'block', number, number] |
-	[number, VMBlockTraceOpcode, 'tagged', DomInstructionTaggedTypePack | null] |
-	[number, VMBlockTraceOpcode, 'tagged_begin', DomInstructionTaggedTypePack | null] |
-	[number, VMBlockTraceOpcode, 'tagged_call', DomInstructionTaggedTypePack | null];
-export type DomInstructionVMCallAt = [number, "vm_call_at", DomInstructionTaggedTypePack];
+	[number, VMBlockTraceOpcode, 'tagged', DomTaggedPack | null] |
+	[number, VMBlockTraceOpcode, 'tagged_begin', DomTaggedPack | null] |
+	[number, VMBlockTraceOpcode, 'tagged_call', DomTaggedPack | null];
+export type DomInstructionVMCallAt = [number, "vm_call_at", DomTaggedPack];
 export type DomInstructionNullMarker = [number, "marker", null];
 export type DomInstructionFilter6 = [number, 'dom_filter', any, any, any, any];
 export type DomInstructionFilter7 = [number, 'dom_filter', any, any, any, any, any];
@@ -68,7 +68,7 @@ export type DomInstructionType = DomInstructionAppend |
 
 export type DomInstructionTypePack = [DomInstructionType];
 
-export type DomInstructionTaggedTypePack =
+export type DomTaggedPack =
 	['dom', DomInstructionType] |
 	['vm', InstructionType] |
 	['dom_mem', number];
@@ -78,6 +78,6 @@ export type BlockTrace =
 	[VMBlockTraceOpcode, 'begin', DomInstructionTypePack | null] |
 	[VMBlockTraceOpcode, 'call', DomInstructionTypePack | null] |
 	[VMBlockTraceOpcode, 'block', number, number] |
-	[VMBlockTraceOpcode, 'tagged', DomInstructionTaggedTypePack | null] |
-	[VMBlockTraceOpcode, 'tagged_begin', DomInstructionTaggedTypePack | null] |
-	[VMBlockTraceOpcode, 'tagged_call', DomInstructionTaggedTypePack | null];
+	[VMBlockTraceOpcode, 'tagged', DomTaggedPack | null] |
+	[VMBlockTraceOpcode, 'tagged_begin', DomTaggedPack | null] |
+	[VMBlockTraceOpcode, 'tagged_call', DomTaggedPack | null];
