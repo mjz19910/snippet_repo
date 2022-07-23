@@ -81,14 +81,14 @@ export namespace Tests {
 			case 'document_box': return
 			case 'function_box': return
 			case 'instance_box': return
+			case 'NewableInstancePack<{}>': return
 			case 'object_box': return
 			case 'promise_box': return
+			case 'real_void': return
 			case 'shape_box': return
 			case 'temporary_box': return
 			case 'value_box': return
 			case 'void': return
-			case 'real_void': return
-			case 'NewableInstancePack<{}>': return
 			case 'with_properties': return
 			default: assert_type<never>(b2)
 		}
