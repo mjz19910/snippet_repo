@@ -1,5 +1,7 @@
 import { DomInstructionBlockTrace } from "../vm/instruction/vm/VMBlockTrace";
-import { is_dom_instruction_type, is_number, assert_type } from "./create_box";
+import { is_number } from "./is_number";
+import { assert_type } from "./assert_type";
+import { is_dom_instruction_type } from "./is_dom_instruction_type";
 import { is_dom_instruction_tagged_pack } from "./is_dom_instruction_tagged_pack";
 
 export function is_dom_instruction_vm_block_trace(value: DomInstructionBlockTrace): value is DomInstructionBlockTrace {

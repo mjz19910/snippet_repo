@@ -4,7 +4,6 @@ import { StackVMBox } from "./StackVMBox";
 import { extract_CSSStyleSheetInit } from "./extract_CSSStyleSheetInit";
 import { extract_StackVM } from "../vm/box_support/extract_stack_vm";
 import { ModifyOperand } from "../vm/instruction/ModifyOperand";
-import { BoxExtractType } from "./extract/BoxExtractType";
 import { Primitives } from "./Primitives";
 import { Box } from "./Box";
 import { NodeBox } from "./NodeBox";
@@ -14,42 +13,29 @@ import { CSSStyleSheetBox } from "./CSSStyleSheetBox";
 import { EmptyArrayBox } from "./EmptyArrayBox";
 import { ArrayBox } from "./ArrayBox";
 import { async_convert_to_box } from "./async_convert_to_box";
-import { create_box_from_obj_with_keys } from "./create_box_from_obj_with_keys";
 import { is_empty_arr } from "./is_empty_arr";
 import { async_box_extract_globalThis as extract_globalThis } from "./extract_globalThis";
 import { GlobalThisBox } from "./GlobalThisBox";
 import { MediaListBox } from "./MediaListBox";
-import { PromiseBox } from "./mod";
 import { VoidBox } from "./VoidBox";
-import { BoxWithPropertiesIsBox } from "./BoxWithPropertiesIsBox";
 import { is_array_of } from "./is_array_of";
 import { InstructionType } from "../vm/instruction/mod";
 import { temporary_box_from_create_box_from_obj } from "./temporary_box_from_create_box_from_obj";
 import { InstructionTypeArrayBox } from "./InstructionTypeArrayBox";
 import { is_box } from "./is_box";
 import { BlockTrace, DomTaggedPack, DomInstructionType } from "../vm/instruction/vm/VMBlockTrace";
-import { assert_type } from "./create_box";
-type BoxWithObjectValue = Exclude<BoxExtractType, Primitives | Function | undefined | null>;
-function extract_MediaList(v: {} | MediaList): v is MediaList {
-	console.log('TODO extract MediaList', v);
-	return false;
-}
+import { assert_type } from "./assert_type";
+import { extract_MediaList } from "./extract_MediaList";
+import { BoxWithObjectValue } from "./BoxWithObjectValue";
+import { PromiseBox } from "./promise/PromiseBox";
+import { is_node } from "./is_node";
 export function create_box_from_obj(value: BoxWithObjectValue): Box {
-	if (value === void 0) {
-		return new VoidBox;
-	}
-	if (extract_StackVM(value)) {
-		return new StackVMBox(value);
-	}
-	if (extract_CSSStyleSheetInit(value)) {
-		return new CSSStyleSheetInitBox(value);
-	}
-	if (value instanceof Document) {
-		return new DocumentBox(value);
-	}
-	if (value instanceof Node) {
-		return new NodeBox(value);
-	}
+	if (value === null) return value
+	if (value === void 0) return new VoidBox
+	if (extract_StackVM(value)) return new StackVMBox(value)
+	if (extract_CSSStyleSheetInit(value))return new CSSStyleSheetInitBox(value)
+	if (value instanceof Document) return new DocumentBox(value)
+	if (is_node(value)) return new NodeBox(value)
 	if (value instanceof Window) {
 		return new WindowBox(value);
 	}

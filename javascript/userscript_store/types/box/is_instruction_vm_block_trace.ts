@@ -1,5 +1,5 @@
 import { BlockTrace } from "../vm/instruction/vm/VMBlockTrace";
-import { is_dom_instruction_type } from "./create_box";
+import { is_dom_instruction_type } from "./is_dom_instruction_type";
 
 export function is_instruction_vm_block_trace(value: BlockTrace): value is BlockTrace {
 	switch (value[1]) {
