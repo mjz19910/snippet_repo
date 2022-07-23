@@ -26,6 +26,7 @@ import { PromiseBox } from "./promise/PromiseBox";
 import { is_node } from "./is_node";
 import { is_array } from "./is_array";
 import { is_instruction_type } from "./is_instruction_type.1";
+
 export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (value === null) return value
 	if (value === void 0) return new VoidBox
