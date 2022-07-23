@@ -1,4 +1,4 @@
-export function extract_CSSStyleSheetInit(value: {} | CSSStyleSheetInit): value is CSSStyleSheetInit {
+export function is_CSSStyleSheetInit(value: {} | CSSStyleSheetInit): value is CSSStyleSheetInit {
 	let rr = Object.getOwnPropertyDescriptors(value);
 	if(rr.baseURL)
 		return true;

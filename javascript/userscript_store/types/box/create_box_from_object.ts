@@ -1,8 +1,8 @@
 import { CSSStyleSheetInitBox } from "./CSSStyleSheetInitBox";
 import { ObjectBox } from "./ObjectBox";
 import { StackVMBox } from "./StackVMBox";
-import { extract_CSSStyleSheetInit as is_CSSStyleSheetInit } from "./extract_CSSStyleSheetInit";
-import { extract_StackVM as is_StackVM } from "../vm/box_support/extract_stack_vm";
+import { is_CSSStyleSheetInit as is_CSSStyleSheetInit } from "./extract_CSSStyleSheetInit";
+import { is_StackVM as is_StackVM } from "../vm/box_support/extract_stack_vm";
 import { Box } from "./Box";
 import { NodeBox } from "./NodeBox";
 import { DocumentBox } from "./DocumentBox";
@@ -12,12 +12,12 @@ import { EmptyArrayBox } from "./EmptyArrayBox";
 import { ArrayBox } from "./ArrayBox";
 import { async_convert_to_box } from "./async_convert_to_box";
 import { is_empty_arr } from "./is_empty_arr";
-import { async_box_extract_globalThis as is_globalThis } from "./extract_globalThis";
+import { is_globalThis as is_globalThis } from "./is_globalThis";
 import { GlobalThisBox } from "./GlobalThisBox";
 import { MediaListBox } from "./MediaListBox";
 import { VoidBox } from "./VoidBox";
 import { is_array_of } from "./is_array_of";
-import { temporary_box_from_create_box_from_obj } from "./temporary_box_from_create_box_from_obj";
+import { temporary_box_from_object as temporary_box_from_object } from "./temporary_box_from_object";
 import { InstructionTypeArrayBox } from "./InstructionTypeArrayBox";
 import { is_box } from "./is_box";
 import { extract_MediaList as is_MediaList } from "./extract_MediaList";
@@ -51,7 +51,7 @@ export function create_box_from_object(value: ObjectBox_Value): Box {
 		if (is_array(value)) return create_box_from_array(value);
 	}
 	if (is_globalThis(value)) return new GlobalThisBox(value)
-	if (Object.keys(value).length > 0) return new temporary_box_from_create_box_from_obj(value)
+	if (Object.keys(value).length > 0) return new temporary_box_from_object(value)
 	return new ObjectBox(value)
 }
 function create_box_from_array(value: Extract<ObjectBox_Value, any[]>): Box {
