@@ -3,7 +3,7 @@ import { is_array_of } from "./is_array_of";
 import { InstructionType } from "../vm/instruction/mod";
 import { is_box } from "./is_box";
 import { is_instruction_block_trace } from "./is_instruction_block_trace";
-import { is_instruction_modify_op } from "./create_box_from_obj";
+import { is_instruction_modify_op } from "./is_instruction_modify_op";
 
 export function is_instruction_type<T>(v: InstructionType | T): v is InstructionType {
 	if (!(v instanceof Array))
