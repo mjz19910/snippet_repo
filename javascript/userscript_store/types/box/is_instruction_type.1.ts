@@ -5,7 +5,7 @@ import { is_box } from "./is_box";
 import { is_instruction_block_trace } from "./is_instruction_block_trace";
 import { is_instruction_modify_op } from "./is_instruction_modify_op";
 
-export function is_instruction_type<T>(v: InstructionType | T): v is InstructionType {
+export function is_instruction_type_old<T>(v: InstructionType | T): v is InstructionType {
 	if (!(v instanceof Array))
 		return false;
 	if (is_instruction_modify_op(v))

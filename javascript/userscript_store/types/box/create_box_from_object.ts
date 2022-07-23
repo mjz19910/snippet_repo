@@ -25,9 +25,9 @@ import { ObjectBox_Value } from "./ObjectBox_Value";
 import { PromiseBox } from "./promise/PromiseBox";
 import { is_node } from "./is_node";
 import { is_array } from "./is_array";
-import { is_instruction_type } from "./is_instruction_type.1";
 import { is_promise } from "./is_promise";
 import { assert_type } from "./assert_type";
+import { is_instruction_type } from "./is_instruction_type";
 
 export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (value === null) return value

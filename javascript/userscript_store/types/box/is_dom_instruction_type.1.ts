@@ -1,5 +1,5 @@
 import { DomInstructionType } from "../vm/instruction/vm/VMBlockTrace";
-import { is_instruction_type } from "./is_instruction_type.1";
+import { is_instruction_type } from "./is_instruction_type";
 
 
 export function is_dom_instruction_type(v: DomInstructionType): v is DomInstructionType {
