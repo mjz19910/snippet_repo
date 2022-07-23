@@ -36,7 +36,7 @@ export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (is_node(value)) return new NodeBox(value)
 	if (value instanceof Window) return new WindowBox(value)
 	if (value instanceof CSSStyleSheet) return new CSSStyleSheetBox(value)
-	if (is_array<ObjectBox_Value, Extract<typeof value, any[]>>(value)) {
+	if (is_array(value)) {
 		if (is_empty_arr(value)) return new EmptyArrayBox(value)
 		if (is_array_of(value, is_box)) return new ArrayBox(value)
 		if (is_array_of(value, is_instruction_type)) return new InstructionTypeArrayBox(value)

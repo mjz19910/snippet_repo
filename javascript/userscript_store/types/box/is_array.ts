@@ -1,3 +1,3 @@
-export function is_array<T, Y extends Array<any>>(v: T | Y): v is Y {
+export function is_array<T>(v: T | any[]): v is Extract<T, any[]> {
 	return v instanceof Array;
 }
