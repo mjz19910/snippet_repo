@@ -28,6 +28,7 @@ import { temporary_box_from_create_box_from_obj } from "./temporary_box_from_cre
 import { InstructionTypeArrayBox } from "./InstructionTypeArrayBox";
 import { is_box } from "./is_box";
 import { BlockTrace, DomTaggedPack, DomInstructionType } from "../vm/instruction/vm/VMBlockTrace";
+import { assert_type } from "./create_box";
 type BoxWithObjectValue = Exclude<BoxExtractType, Primitives | Function | undefined | null>;
 function extract_MediaList(v: {} | MediaList): v is MediaList {
 	console.log('TODO extract MediaList', v);
@@ -67,33 +68,30 @@ export function create_box_from_obj(value: BoxWithObjectValue): Box {
 	return new ObjectBox(value);
 }
 export namespace Tests {
-	export function tests(): BoxWithPropertiesIsBox | Box | void | undefined {
-		let bx: Exclude<Box, Primitives | null> | null = new VoidBox;
-		function get_it(): Exclude<Box, Primitives | null> | null {
-			return bx;
+	export function tests(): void {
+		function get_testing_void_box(): Exclude<Box, Primitives | null> | null {
+			return new VoidBox;
 		}
-		let b2 = get_it();
-		switch (b2) {
-			case null: {
-				let res = create_box_from_obj_with_keys<{}>({});
-				return res;
-			}
+		let b2 = get_testing_void_box();
+		switch (b2) { case null: return }
+		switch (b2.type) {
+			case 'array_box': return
+			case 'constructor_box': return
+			case 'custom_box': return
+			case 'document_box': return
+			case 'function_box': return
+			case 'instance_box': return
+			case 'object_box': return
+			case 'promise_box': return
+			case 'shape_box': return
+			case 'temporary_box': return
+			case 'value_box': return
+			case 'void': return
+			case 'real_void': return
+			case 'NewableInstancePack<{}>': return
+			case 'with_properties': return
+			default: assert_type<never>(b2)
 		}
-		switch (b2.type) { case 'array_box': { b2.value; return } }
-		switch (b2.type) { case 'constructor_box': { b2.value; return } }
-		switch (b2.type) { case 'custom_box': { b2.value; return } }
-		switch (b2.type) { case 'document_box': { b2.value; return } }
-		switch (b2.type) { case 'function_box': { b2.value; return } }
-		switch (b2.type) { case 'instance_box': { b2.value; return } }
-		switch (b2.type) { case 'object_box': { b2.value; return } }
-		switch (b2.type) { case 'promise_box': { b2.value; return } }
-		switch (b2.type) { case 'shape_box': { b2.value; return } }
-		switch (b2.type) { case 'temporary_box': { b2.value; return } }
-		switch (b2.type) { case 'value_box': { b2.value; return } }
-		switch (b2.type) { case 'void': { b2.value; return } }
-		switch (b2.type) { case 'real_void': b2.value; return }
-		let last: BoxWithPropertiesIsBox = b2;
-		switch (b2.type) { case 'with_properties': { b2.value; return last } }
 	}
 }
 
