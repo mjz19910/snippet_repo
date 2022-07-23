@@ -11,8 +11,8 @@ export function is_dom_instruction_type(v: DomInstructionType): v is DomInstruct
 		case 'dom_filter_6': return true;
 		case 'dom_filter_7': return true;
 		case 'marker': return true;
-		case 'vm_call_at': return true;
 		case 'push_global_object': return is_instruction_type(['push_window_object'])
+		case 'vm_call_at': return true;
 		default: assert_type<never>(instruction_base); return false;
 	}
 }

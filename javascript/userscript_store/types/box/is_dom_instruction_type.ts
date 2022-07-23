@@ -15,12 +15,10 @@ export function is_dom_instruction_type(value: DomInstructionType): value is Dom
 		case 'marker':
 			assert_type<DomInstructionNullMarker>([value[0], ...instruction_base]);
 			return instruction_base.length === 2 && instruction_base[1] === null;
-		case 'vm_call_at': return value.length === 3 && is_dom_instruction_tagged_pack(value[2]);
-		case 'dom_filter_6': switch (instruction_base.length) { case 5: return true; }
-		case 'dom_filter_7': switch (instruction_base.length) { case 6: return true; }
-		case 'push_global_object': return is_instruction_type(['push_window_object']);
-		default:
-			console.log('missing type for dom instruction', instruction_base[0], 'with args=', [value[1]].slice(1));
-			throw new Error("Missing type");
+		case 'dom_filter_6': return instruction_base.length == 5
+		case 'dom_filter_7': return instruction_base.length == 6
+		case 'push_global_object': return is_instruction_type(['push_window_object'])
+		case 'vm_call_at': return value.length === 3 && is_dom_instruction_tagged_pack(value[2])
+		default: assert_type<never>(instruction_base); return false
 	}
 }
