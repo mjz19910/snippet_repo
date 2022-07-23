@@ -22,7 +22,7 @@ import {PropertiesToIterate} from "./PropertiesToIterate";
 import {temporary_box_from_create_box} from "./temporary_box_from_create_box";
 import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
-import { BlockTrace, DomInstructionType, DomInstructionTypePack } from "../vm/instruction/vm/VMBlockTrace";
+import { BlockTrace, DomInstructionBlockTrace, DomInstructionNullMarker, DomInstructionReturn, DomInstructionType, DomInstructionTypePack, DomInstructionVMReturn } from "../vm/instruction/vm/VMBlockTrace";
 export const PropertiesToIterateArray: PropertiesToIterate[] = ["type"];
 export const box_able_properties_cache = new Set<string>();
 export type BoxWithPropertiesObjType<T extends string[]>={[U in T[number]]:Box};
@@ -129,9 +129,12 @@ function assert_is_never(value:never) {
 	return false;
 }
 function is_dom_instruction_type(value: DomInstructionType): value is DomInstructionType {
-	if (typeof value[0] !== "number")return assert_is_never(value[0])
+	if (typeof value[0] !== "number"){
+		assert_type<never>(value[0])
+		return false;
+	}
 	switch(value[1]){
-		case 'append':let v=value[0];return true;
+		case 'append':return is_instruction_type([value[1]])
 		case 'breakpoint':return is_instruction_type([value[1]])
 		case 'drop':return is_instruction_type([value[1]])
 		case 'dup':return is_instruction_type([value[1]])
@@ -150,18 +153,11 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 	}}
 	switch(value[1]){case 'je':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'jmp':return is_instruction_type([value[1],value[2]])}
-	switch(value[1]){case 'marker':return [value[1]].length === 2}
 	switch(value[1]){case 'modify_operand':return is_instruction_type([value[1],value[2],value[3]])}
 	switch(value[1]){case 'peek':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'push':return is_instruction_type([value[1]])}
-	switch(value[1]){case 'vm_block_trace':switch(value[2]){
-		case 'begin':return true;
-		case 'block':return true;
-		case 'call':return true;
-		case 'tagged':return true;
-		case 'tagged_begin':return true;
-		case 'tagged_call':return true;
-	}}
+	switch(value[1]){
+		}
 	switch(value[1]){case 'vm_call':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'vm_push_args':return is_instruction_type([value[1]])}
 	switch(value[1]){case 'vm_push_ip':return is_instruction_type([value[1]])}
@@ -169,10 +165,28 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 	switch(value[1]){case 'push_global_object':return is_instruction_type(['push_window_object'])}
 	switch(value[1]){case 'vm_call_at':return [value[1]].length === 2}
 	switch(value[1]){
-		case 'vm_return':
-			return is_instruction_type([value[1]])
+		case 'marker':assert_type<DomInstructionNullMarker>(value);return value.length === 3 && value[2] === null
+		case 'vm_block_trace':is_dom_instruction_vm_block_trace(value);
+		case 'vm_return':return is_dom_instruction_vm_return(value);
 		default:
 			console.log('missing type for dom instruction', [value[1]][0], 'with args=', [value[1]].slice(1))
 			throw new Error("Missing type")
 	}
+}
+function assert_type<T>(value: T) {
+	throw new Error("Function not implemented.");
+}
+function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace){
+	switch(value[2]){
+		case 'begin':return true;
+		case 'block':return true;
+		case 'call':return true;
+		case 'tagged':return true;
+		case 'tagged_begin':return true;
+		case 'tagged_call':return true;
+		default:assert_type<never>(value);
+	}
+}
+function is_dom_instruction_vm_return(value:DomInstructionVMReturn) {
+	return true;
 }

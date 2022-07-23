@@ -4,33 +4,37 @@ import { VMBlockTraceOpcode } from "../opcodes/VMBlockTraceOpcode";
 import { CastOperand1 } from "../operands/CastOperand1";
 
 export type test_type_1 = ['vm_block_trace', 'begin', null];
-type DomInstructionAppend = [number, "append"];
-type DomInstructionBP = [number, "breakpoint"];
-type DomInstructionCall = [number, "call", number];
-type DomInstructionCast = [number, "cast", CastOperand1];
-type DomInstructionCons = [number, "construct", number];
-type DomInstructionDrop = [number, "drop"];
-type DomInstructionDup = [number, "dup"];
-type DomInstructionPushGlobalObject = [number, "push_global_object"];
-type DomInstructionNop = [number, "nop"];
-type DomInstructionGet = [number, "get"];
-type DomInstructionHalt = [number, "halt"];
-type DomInstructionReturn = [number, "return"];
-type DomInstructionJe = [number, "je", number]
-type DomInstructionJmp = [number, "jmp", number]
-type DomInstructionModOp = [number, "modify_operand", number, number]
-type DomInstructionPeek = [number, "peek", number]
-type DomInstructionPush = [number, "push", ...Box[]];
-type DomInstructionVMCall = [number, "vm_call", number] | [number, "vm_push_args"] | [number, "vm_push_ip"] | [number, "vm_push_self"] | [number, "vm_return"];
-type DomInstructionBlockTrace =
+export type DomInstructionAppend = [number, "append"];
+export type DomInstructionBP = [number, "breakpoint"];
+export type DomInstructionCall = [number, "call", number];
+export type DomInstructionCast = [number, "cast", CastOperand1];
+export type DomInstructionCons = [number, "construct", number];
+export type DomInstructionDrop = [number, "drop"];
+export type DomInstructionDup = [number, "dup"];
+export type DomInstructionPushGlobalObject = [number, "push_global_object"];
+export type DomInstructionNop = [number, "nop"];
+export type DomInstructionGet = [number, "get"];
+export type DomInstructionHalt = [number, "halt"];
+export type DomInstructionReturn = [number, "return"];
+export type DomInstructionJe = [number, "je", number]
+export type DomInstructionJmp = [number, "jmp", number]
+export type DomInstructionModOp = [number, "modify_operand", number, number]
+export type DomInstructionPeek = [number, "peek", number]
+export type DomInstructionPush = [number, "push", ...Box[]];
+export type DomInstructionVMCall = [number, "vm_call", number]
+export type DomInstructionVMPushArgs = [number, "vm_push_args"];
+export type DomInstructionVMPushIP = [number, "vm_push_ip"];
+export type DomInstructionVMPushSelf = [number, "vm_push_self"];
+export type DomInstructionVMReturn = [number, "vm_return"];
+export type DomInstructionBlockTrace =
 	[number, VMBlockTraceOpcode, 'begin', DomInstructionTypePack | null] |
 	[number, VMBlockTraceOpcode, 'call', DomInstructionTypePack | null] |
 	[number, VMBlockTraceOpcode, 'block', number, number] |
 	[number, VMBlockTraceOpcode, 'tagged', DomInstructionTaggedTypePack | null] |
 	[number, VMBlockTraceOpcode, 'tagged_begin', DomInstructionTaggedTypePack | null] |
 	[number, VMBlockTraceOpcode, 'tagged_call', DomInstructionTaggedTypePack | null];
-type DomInstructionVMCallAt = [number, "vm_call_at", DomInstructionTaggedTypePack];
-type DomInstructionNullMarker = [number, "marker", null];
+export type DomInstructionVMCallAt = [number, "vm_call_at", DomInstructionTaggedTypePack];
+export type DomInstructionNullMarker = [number, "marker", null];
 export type DomInstructionFilter6 = [number, 'dom_filter', any, any, any, any];
 export type DomInstructionFilter7 = [number, 'dom_filter', any, any, any, any, any];
 export type DomInstructionFilter = DomInstructionFilter6 | DomInstructionFilter7;
