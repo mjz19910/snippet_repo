@@ -60,7 +60,11 @@ export type DomInstructionType = DomInstructionAppend |
 	DomInstructionNop |
 	DomInstructionGet |
 	DomInstructionHalt |
-	DomInstructionReturn;
+	DomInstructionReturn |
+	DomInstructionVMPushArgs |
+	DomInstructionVMPushIP |
+	DomInstructionVMPushSelf|
+	DomInstructionVMReturn;
 
 export type DomInstructionTypePack = [DomInstructionType];
 

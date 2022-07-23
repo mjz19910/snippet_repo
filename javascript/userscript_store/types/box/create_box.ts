@@ -166,8 +166,8 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 	switch(value[1]){case 'vm_call_at':return [value[1]].length === 2}
 	switch(value[1]){
 		case 'marker':assert_type<DomInstructionNullMarker>(value);return value.length === 3 && value[2] === null
-		case 'vm_block_trace':is_dom_instruction_vm_block_trace(value);
-		case 'vm_return':return is_dom_instruction_vm_return(value);
+		case 'vm_block_trace':return is_dom_instruction_vm_block_trace(value);
+		case 'vm_return':return value.length === 2;
 		default:
 			console.log('missing type for dom instruction', [value[1]][0], 'with args=', [value[1]].slice(1))
 			throw new Error("Missing type")
@@ -184,9 +184,9 @@ function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace){
 		case 'tagged':return true;
 		case 'tagged_begin':return true;
 		case 'tagged_call':return true;
-		default:assert_type<never>(value);
+		default:assert_type<never>(value);return false;
 	}
 }
 function is_dom_instruction_vm_return(value:DomInstructionVMReturn) {
-	return true;
+	return value.length === 2;
 }
