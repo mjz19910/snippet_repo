@@ -163,7 +163,7 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 	switch(value[1]){case 'vm_push_ip':return is_instruction_type([value[1]])}
 	switch(value[1]){case 'vm_push_self':return is_instruction_type([value[1]])}
 	switch(value[1]){case 'push_global_object':return is_instruction_type(['push_window_object'])}
-	switch(value[1]){case 'vm_call_at':return [value[1]].length === 2}
+	switch(value[1]){case 'vm_call_at':return value.length === 3}
 	switch(value[1]){
 		case 'marker':assert_type<DomInstructionNullMarker>(value);return value.length === 3 && value[2] === null
 		case 'vm_block_trace':return is_dom_instruction_vm_block_trace(value);
