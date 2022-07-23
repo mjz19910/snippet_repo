@@ -1162,22 +1162,6 @@ function main() {
 		yt_playlist_manager = any(element);
 		window.yt_playlist_manager = element;
 	}
-	// yt create page app
-	// spell:ignore ytcp_app
-	/**
-	 * @type {HTMLElement | null}
-	 */
-	let ytcp_app = null;
-	/**
-	 * @param {HTMLElement} element
-	 */
-	function on_ytcp_app(element) {
-		const element_id = "ytcp-app";
-		console.log(`on ${element_id}`);
-		element_map.set(element_id, element);
-		ytcp_app = any(element);
-		window.ytcp_app = element;
-	}
 	class YTPlayerData extends HTMLElement {
 		active_nav = false;
 		/**@type {{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null} */
@@ -1279,7 +1263,7 @@ function main() {
 		 cint = -1;
 		 state_log = port_state_log;
 		 time_offset = performance.now();
-		 current_event_type = "documentReadyState";
+		 current_event_type = "find-ytd-app";
 	 }
 	 let port_state = new MessagePortState;
 	 g_api.port_state = port_state;
