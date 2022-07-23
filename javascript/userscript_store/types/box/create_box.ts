@@ -10,10 +10,7 @@ import {extract_CSSStyleSheetConstructor} from "./extract_CSSStyleSheetConstruct
 import {extract_sub_type} from "./extract_sub_type";
 import {extract_unit_arr} from "./extract_unit_arr";
 import {FunctionBox} from "./FunctionBox";
-import {InstructionType} from "../vm/instruction/mod";
 import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
-import {is_array_of} from "./is_array_of";
-import {is_box} from "./is_box";
 import {MediaListBox} from "./MediaListBox";
 import {NewableInstancePack} from "./NewableInstancePack";
 import {NodeBox} from "./NodeBox";
@@ -22,45 +19,15 @@ import {PropertiesToIterate} from "./PropertiesToIterate";
 import {temporary_box_from_create_box} from "./temporary_box_from_create_box";
 import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
-import { BlockTrace, DomInstructionBlockTrace, DomInstructionNullMarker, DomInstructionReturn, DomTaggedPack, DomInstructionType, DomInstructionVMReturn } from "../vm/instruction/vm/VMBlockTrace";
-export const PropertiesToIterateArray: PropertiesToIterate[] = ["type"];
+import { DomInstructionNullMarker, DomInstructionType } from "../vm/instruction/vm/VMBlockTrace";
+import { is_dom_instruction_vm_block_trace } from "./is_dom_instruction_vm_block_trace";
+import { is_dom_instruction_tagged_pack } from "./is_dom_instruction_tagged_pack";
+import { is_array_of_InstructionType } from "./is_array_of_InstructionType";
+import { is_array_of_box } from "./is_array_of_box";
+import { is_instruction_type } from "./is_instruction_type";
+import { BoxedNewableInstancePackObject } from "./BoxedNewableInstancePackObject";
+export const PropertiesToIterateArray: [PropertiesToIterate] = ["type"];
 export const box_able_properties_cache = new Set<string>();
-export type BoxWithPropertiesObjType<T extends string[]>={[U in T[number]]:Box};
-function is_instruction_type(value:InstructionType):value is InstructionType {
-	switch(value[0]){case 'append':return value.length === 1}
-	switch(value[0]){case 'breakpoint':return value.length === 1}
-	switch(value[0]){case 'call':return value.length === 2}
-	switch(value[0]){case 'cast':return value.length === 2}
-	switch(value[0]){case 'construct':return value.length === 2}
-	switch(value[0]){case 'drop':return value.length === 1}
-	switch(value[0]){case 'dup':return value.length === 1}
-	switch(value[0]){case 'get':return value.length === 1}
-	switch(value[0]){case 'halt':return value.length === 1}
-	switch(value[0]){case 'je':return value.length === 2}
-	switch(value[0]){case 'jmp':return value.length === 2}
-	switch(value[0]){case 'modify_operand':return value.length === 3}
-	switch(value[0]){case 'nop':return value.length === 1}
-	switch(value[0]){case 'peek':return value.length === 2}
-	switch(value[0]){case 'push':return true}
-	switch(value[0]){case 'push_window_object':return value.length === 1}
-	switch(value[0]){case 'return':return value.length === 1}
-	switch(value[0]){case 'vm_block_trace':return is_instruction_vm_block_trace(value)}
-	switch(value[0]){case 'vm_call':return true}
-	switch(value[0]){case 'vm_push_args':return value.length === 1}
-	switch(value[0]){case 'vm_push_ip':return value.length === 1}
-	switch(value[0]){case 'vm_push_self':return value.length === 1}
-	switch(value[0]){case 'vm_return':return value.length === 1;default:return false}
-}
-function is_array_of_box<T>(value:Box[]|T[]):value is Box[] {
-	return is_array_of(value, function(inner_value):inner_value is Box {
-		return is_box(inner_value);
-	});
-}
-function is_array_of_InstructionType<T>(value:InstructionType[]|T[]):value is InstructionType[] {
-	return is_array_of(value, function(inner_value):inner_value is InstructionType {
-		return is_box(inner_value);
-	})
-}
 export function create_box(value: BoxExtractType): Box {
 	switch(typeof value) {case 'bigint': return value}
 	switch(typeof value) {case 'boolean': return value}
@@ -69,17 +36,17 @@ export function create_box(value: BoxExtractType): Box {
 	switch(typeof value) {case 'symbol': return value}
 	switch(typeof value) {case 'undefined': return value}
 	if(typeof value === 'function') {
+		if(extract_CSSStyleSheetConstructor(value)) {
+			return new CSSStyleSheetConstructorBox(value);
+		}
 		if(extract_sub_type<(...a: Box[]) => Box, Function>(value)) {
 			return new FunctionBox(value);
 		}
 		if(extract_sub_type<NewableInstancePack<{}>, Function>(value)) {
-			return new VoidBox;
+			return new BoxedNewableInstancePackObject(value);
 		}
 		if(extract_sub_type<(...a: Box[]) => Promise<Box>, Function>(value)) {
 			return new VoidBox;
-		}
-		if(extract_CSSStyleSheetConstructor(value)) {
-			return new CSSStyleSheetConstructorBox(value);
 		}
 		return new temporary_box_from_create_box(value);
 	}
@@ -111,18 +78,7 @@ export function create_box(value: BoxExtractType): Box {
 		throw new Error("Never type should not be reached");
 	}
 }
-function is_instruction_vm_block_trace(value: BlockTrace): value is BlockTrace {
-	switch(value[1]){
-		case 'begin':
-		switch(value[2]) {
-			case null:return true;
-			default:return is_dom_instruction_type(value[2]);
-		}
-	}
-	return false;
-}
-
-function is_dom_instruction_type(value: DomInstructionType): value is DomInstructionType {
+export function is_dom_instruction_type(value: DomInstructionType): value is DomInstructionType {
 	if (typeof value[0] !== "number"){
 		assert_type<never>(value[0])
 		return false;
@@ -168,37 +124,9 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 			throw new Error("Missing type")
 	}
 }
-function assert_type<T>(value: T) {
+export function assert_type<T>(value: T) {
 	void value;
 }
-function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace): value is DomInstructionBlockTrace {
-	switch(value[2]){
-		case 'call':
-		case 'begin':{
-			if(value.length != 4)return false;
-			if(value[3] === null)return true;
-			return is_dom_instruction_type(value[3]);
-		}
-		case 'block':return value.length === 5 && is_number(value[3]) && is_number(value[4])
-		case 'tagged':
-		case 'tagged_begin':
-		case 'tagged_call':{
-			if(value.length != 4)return false;
-			let tag_pack = value[3];
-			if(tag_pack === null)return true;
-			return is_dom_instruction_tagged_pack(tag_pack);
-		}
-		default:assert_type<never>(value);return false;
-	}
-}
-function is_number(num: number):num is number {
+export function is_number(num: number):num is number {
 	return typeof num === 'number';
-}
-function is_dom_instruction_tagged_pack(value: DomTaggedPack) {
-	switch(value[0]){
-		case 'dom':return is_dom_instruction_type(value[1]);
-		case 'dom_mem':return is_number(value[1]);
-		case 'vm':return is_instruction_type(value[1]);
-		default:assert_type<never>(value);return false;
-	}
 }

@@ -1,3 +1,3 @@
-export function extract_CSSStyleSheetConstructor(_v: typeof CSSStyleSheet | Function): _v is typeof CSSStyleSheet {
+export function extract_CSSStyleSheetConstructor(value: typeof CSSStyleSheet | Function): value is typeof CSSStyleSheet {
 	return false;
 }

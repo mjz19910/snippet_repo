@@ -1,4 +1,5 @@
 import {ArrayBox} from "./ArrayBox";
+import { BoxedNewableInstancePackObject } from "./BoxedNewableInstancePackObject";
 import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
 import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";
@@ -62,5 +63,7 @@ export type Box =
 	// Temporary box for when stuff is asserted to be true (ie, typeof value_to_box === "function")
 	TemporaryBox|
 	// Box with stuff
-	BoxWithPropertiesIsBox;
+	BoxWithPropertiesIsBox |
+	// Generic boxes
+	BoxedNewableInstancePackObject;
 

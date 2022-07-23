@@ -1,6 +1,6 @@
 import {BoxTemplate} from "./BoxTemplate";
 import {BoxVerify} from "./BoxVerify";
-import {BoxWithPropertiesObjType} from "./create_box";
+import { BoxWithPropertiesObjType } from "./BoxWithPropertiesObjType";
 export class BoxWithPropertiesIsBox
 	extends BoxTemplate<'with_properties', {}>
 	implements BoxVerify<BoxWithPropertiesIsBox, "BoxWithPropertiesIsBox">
