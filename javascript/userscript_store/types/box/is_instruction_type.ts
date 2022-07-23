@@ -51,7 +51,6 @@ export function is_instruction_type<T extends any[]>(value: T | InstructionType)
 		} break;
 		case 3: switch (value[0]) {
 			case 'modify_operand': return is_instruction_modify_op(value);
-			case 'vm_block_trace': return is_instruction_block_trace(value);
 			default: assert_type<never>(value); return false;
 		}
 		default: value; return false;
