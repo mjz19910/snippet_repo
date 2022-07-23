@@ -35,8 +35,8 @@ export type DomInstructionBlockTrace =
 	[number, VMBlockTraceOpcode, 'tagged_call', DomTaggedPack | null];
 export type DomInstructionVMCallAt = [number, "vm_call_at", DomTaggedPack];
 export type DomInstructionNullMarker = [number, "marker", null];
-export type DomInstructionFilter6 = [number, 'dom_filter', any, any, any, any];
-export type DomInstructionFilter7 = [number, 'dom_filter', any, any, any, any, any];
+export type DomInstructionFilter6 = [number, 'dom_filter_6', any, any, any, any];
+export type DomInstructionFilter7 = [number, 'dom_filter_7', any, any, any, any, any];
 export type DomInstructionFilter = DomInstructionFilter6 | DomInstructionFilter7;
 
 export type DomInstructionType = DomInstructionAppend |

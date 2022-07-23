@@ -113,7 +113,8 @@ function is_dom_instruction_type(v: DomInstructionType): v is DomInstructionType
 		return true;
 	} else {
 		switch(instruction_base[0]){
-			case 'dom_filter':break;
+			case 'dom_filter_6':break;
+			case 'dom_filter_7':break;
 			case 'marker':break;
 			case 'vm_call_at':break;
 		}
