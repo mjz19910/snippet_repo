@@ -1388,10 +1388,10 @@ function main() {
 	/**
 	 * @this {CustomEventTarget}
 	 * @arg {CustomEventType} event
-	 * ID(60)
+	 * ID(50)
 	 * */
 	function event_ytd_watch_flexy(event) {
-		const current_message_id = 60;
+		const current_message_id = 50;
 		let {type, detail, port} = event;
 		observer_default_action(type, current_message_id);
 		let target_element = ytd_watch_flexy.getElementsByTagName('ytd-player')[0];
@@ -1403,10 +1403,10 @@ function main() {
 	/**
 	 * @this {CustomEventTarget}
 	 * @param {CustomEventType} event
-	 * ID(70)
+	 * ID(60)
 	 */
 	function event_ytd_player(event) {
-		const current_message_id = 70;
+		const current_message_id = 60;
 		let {type, detail, port} = event;
 		observer_default_action(type, current_message_id);
 		const element_list = document.getElementsByTagName('video')
@@ -1420,20 +1420,24 @@ function main() {
 	/**
 	 * @this {CustomEventTarget}
 	 * @param {CustomEventType} event
-	 * ID(80)
+	 * ID(70)
 	 */
 	function event_video_element_list(event) {
-		const current_message_id = 80;
+		const current_message_id = 70;
 		let {type, detail, port} = event;
 		observer_default_action(type, current_message_id);
 		if(!box_map.has("video-list")) {
 			console.log('no video element list');
 			return;
 		}
+		this.dispatchEvent({type: "plugin-activate", detail, port});
+	}
+	dom_observer.addEventListener('video', event_video_element_list);
+	function event_plugin_activate() {
 		if(is_watch_page_active())
 			yt_watch_page_loaded_handler();
 	}
-	dom_observer.addEventListener('video', event_video_element_list);
+	dom_observer.addEventListener('plugin-activate', event_plugin_activate);
 	const realHTMLElement = HTMLElement;
 	class MessageChannelWithReadonlyPorts {
 		get port1() {
