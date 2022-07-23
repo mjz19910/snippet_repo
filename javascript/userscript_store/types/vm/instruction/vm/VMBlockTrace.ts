@@ -27,8 +27,8 @@ export type DomInstructionVMPushIP = [number, "vm_push_ip"];
 export type DomInstructionVMPushSelf = [number, "vm_push_self"];
 export type DomInstructionVMReturn = [number, "vm_return"];
 export type DomInstructionBlockTrace =
-	[number, VMBlockTraceOpcode, 'begin', DomInstructionTypePack | null] |
-	[number, VMBlockTraceOpcode, 'call', DomInstructionTypePack | null] |
+	[number, VMBlockTraceOpcode, 'begin', DomInstructionType | null] |
+	[number, VMBlockTraceOpcode, 'call', DomInstructionType | null] |
 	[number, VMBlockTraceOpcode, 'block', number, number] |
 	[number, VMBlockTraceOpcode, 'tagged', DomTaggedPack | null] |
 	[number, VMBlockTraceOpcode, 'tagged_begin', DomTaggedPack | null] |
@@ -66,8 +66,6 @@ export type DomInstructionType = DomInstructionAppend |
 	DomInstructionVMPushSelf|
 	DomInstructionVMReturn;
 
-export type DomInstructionTypePack = [DomInstructionType];
-
 export type DomTaggedPack =
 	['dom', DomInstructionType] |
 	['vm', InstructionType] |
@@ -75,8 +73,8 @@ export type DomTaggedPack =
 
 // vm_block_trace
 export type BlockTrace =
-	[VMBlockTraceOpcode, 'begin', DomInstructionTypePack | null] |
-	[VMBlockTraceOpcode, 'call', DomInstructionTypePack | null] |
+	[VMBlockTraceOpcode, 'begin', DomInstructionType | null] |
+	[VMBlockTraceOpcode, 'call', DomInstructionType | null] |
 	[VMBlockTraceOpcode, 'block', number, number] |
 	[VMBlockTraceOpcode, 'tagged', DomTaggedPack | null] |
 	[VMBlockTraceOpcode, 'tagged_begin', DomTaggedPack | null] |

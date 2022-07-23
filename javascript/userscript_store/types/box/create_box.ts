@@ -22,7 +22,7 @@ import {PropertiesToIterate} from "./PropertiesToIterate";
 import {temporary_box_from_create_box} from "./temporary_box_from_create_box";
 import {VoidBox} from "./VoidBox";
 import {WindowBox} from "./WindowBox";
-import { BlockTrace, DomInstructionBlockTrace, DomInstructionNullMarker, DomInstructionReturn, DomTaggedPack, DomInstructionType, DomInstructionTypePack, DomInstructionVMReturn } from "../vm/instruction/vm/VMBlockTrace";
+import { BlockTrace, DomInstructionBlockTrace, DomInstructionNullMarker, DomInstructionReturn, DomTaggedPack, DomInstructionType, DomInstructionVMReturn } from "../vm/instruction/vm/VMBlockTrace";
 export const PropertiesToIterateArray: PropertiesToIterate[] = ["type"];
 export const box_able_properties_cache = new Set<string>();
 export type BoxWithPropertiesObjType<T extends string[]>={[U in T[number]]:Box};
@@ -116,15 +116,12 @@ function is_instruction_vm_block_trace(value: BlockTrace): value is BlockTrace {
 		case 'begin':
 		switch(value[2]) {
 			case null:return true;
-			default:return is_valid_dom_instruction_type_pack(value[2]);
+			default:return is_dom_instruction_type(value[2]);
 		}
 	}
 	return false;
 }
 
-function is_valid_dom_instruction_type_pack(arg0: DomInstructionTypePack): arg0 is DomInstructionTypePack {
-	return is_dom_instruction_type(arg0[0]);
-}
 function is_dom_instruction_type(value: DomInstructionType): value is DomInstructionType {
 	if (typeof value[0] !== "number"){
 		assert_type<never>(value[0])
@@ -177,7 +174,7 @@ function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace): valu
 		case 'begin':{
 			if(value.length != 4)return false;
 			if(value[3] === null)return true;
-			return is_dom_instruction_type(value[3][0]);
+			return is_dom_instruction_type(value[3]);
 		}
 		case 'block':return value.length === 5 && is_number(value[3]) && is_number(value[4])
 		case 'tagged':

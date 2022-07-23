@@ -27,7 +27,7 @@ import {InstructionType} from "../vm/instruction/mod";
 import {temporary_box_from_create_box_from_obj} from "./temporary_box_from_create_box_from_obj";
 import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox";
 import {is_box} from "./is_box";
-import {BlockTrace, DomTaggedPack, DomInstructionType, DomInstructionTypePack} from "../vm/instruction/vm/VMBlockTrace";
+import {BlockTrace, DomTaggedPack, DomInstructionType} from "../vm/instruction/vm/VMBlockTrace";
 type BoxWithObjectValue = Exclude<BoxExtractType, Primitives | Function | undefined | null>;
 function extract_MediaList(v: {} | MediaList): v is MediaList {
 	console.log('TODO extract MediaList', v);
@@ -121,17 +121,6 @@ function is_dom_instruction_type(v: DomInstructionType): v is DomInstructionType
 	return false;
 }
 
-function is_DomInstructionTypePack<T>(v: T | DomInstructionTypePack): v is DomInstructionTypePack {
-	if(v instanceof Array) {
-		let iv = v[0];
-		if(is_dom_instruction_type(iv)) {
-			return true;
-		}
-		return false;
-	}
-	return false;
-}
-
 function is_null<T>(v: T | null): v is null {
 	return v === null;
 }
@@ -156,14 +145,14 @@ function is_ins_block_trace<T>(v: T | BlockTrace): v is BlockTrace {
 					case 'begin': {
 						let vv = v[2];
 						if(is_null(vv)) return true;
-						if(is_DomInstructionTypePack(vv)) {
+						if(is_dom_instruction_type(vv)) {
 							return true;
 						}
 					} break;
 					case 'call': {
 						let vv = v[2];
 						if(is_null(vv)) return true;
-						if(is_DomInstructionTypePack(vv)) {
+						if(is_dom_instruction_type(vv)) {
 							return true;
 						}
 					} break;
