@@ -14,7 +14,7 @@ import { InstructionTypeArrayBox } from "./InstructionTypeArrayBox";
 import { MediaListBox } from "./MediaListBox";
 import { NewableInstancePack } from "./NewableInstancePack";
 import { NodeBox } from "./NodeBox";
-import { PromiseBox, AsyncFunctionBox } from "./mod";
+import { PromiseBox } from "./mod";
 import { temporary_box_from_create_box } from "./temporary_box_from_create_box";
 import { VoidBox } from "./VoidBox";
 import { WindowBox } from "./WindowBox";
@@ -25,75 +25,45 @@ import { is_array_of_InstructionType } from "./is_array_of_InstructionType";
 import { is_array_of_box } from "./is_array_of_box";
 import { is_instruction_type } from "./is_instruction_type";
 import { BoxedNewableInstancePackObject } from "./BoxedNewableInstancePackObject";
-import { Primitives } from "./Primitives";
-type FunctionBox_Value = Extract<Exclude<Box, Primitives | null>['value'], Function>;
-function create_box_from_function(value: FunctionBox_Value): Box {
-	if (extract_CSSStyleSheetConstructor(value)) {
-		return new CSSStyleSheetConstructorBox(value);
-	}
-	if (extract_sub_type<(...a: Box[]) => Box, Function>(value)) {
-		return new FunctionBox(value);
-	}
-	if (extract_sub_type<NewableInstancePack<{}>, Function>(value)) {
-		return new BoxedNewableInstancePackObject(value);
-	}
-	if (extract_sub_type<(...a: Box[]) => Promise<Box>, Function>(value)) {
-		return new AsyncFunctionBox(value);
-	}
-	return new temporary_box_from_create_box(value);
-}
+import { create_box_from_function } from "./create_box_from_function";
 export function create_box(value: BoxExtractType): Box {
 	switch (typeof value) {
 		case 'bigint': return value
 		case 'boolean': return value
 		case 'function': return create_box_from_function(value);
 		case 'number': return value
+		case 'object': return create_box_from_object(value);
 		case 'string': return value
 		case 'symbol': return value
 		case 'undefined': return value
 	}
-	if (typeof value === 'function') {
-		if (extract_CSSStyleSheetConstructor(value)) {
-			return new CSSStyleSheetConstructorBox(value);
-		}
-		if (extract_sub_type<(...a: Box[]) => Box, Function>(value)) {
-			return new FunctionBox(value);
-		}
-		if (extract_sub_type<NewableInstancePack<{}>, Function>(value)) {
-			return new BoxedNewableInstancePackObject(value);
-		}
-		if (extract_sub_type<(...a: Box[]) => Promise<Box>, Function>(value)) {
-			return new VoidBox;
-		}
-		return new temporary_box_from_create_box(value);
-	}
 	{
-		if (value === null)
-			return value;
-		if (value instanceof Array) {
-			if (extract_unit_arr(value)) {
-				return new EmptyArrayBox(value);
-			}
-			if (is_array_of_box(value)) return new ArrayBox(value);
-			if (is_array_of_InstructionType(value)) return new InstructionTypeArrayBox(value);
-		}
-		if (value instanceof Promise) {
-			return new PromiseBox(async_returns_into_box(value));
-		}
-		if (value instanceof Node)
-			return new NodeBox(value);
-		if (value instanceof CSSStyleSheet)
-			return new CSSStyleSheetBox(value);
-		if (value instanceof Window)
-			return new WindowBox(value);
-		if (value instanceof MediaList)
-			return new MediaListBox(value);
-		if (value instanceof Object) {
-			if (value === null) return value;
-			return create_box_from_obj(value);
-		}
+
 		throw new Error("Never type should not be reached");
 	}
+}
+function create_box_from_object(value: BoxExtractType): Box {
+	if (typeof value != 'object') throw new Error("Invalid type");
+	if (value === null) return value
+	if (is_array(value)) {
+		if (extract_unit_arr(value)) return new EmptyArrayBox(value)
+		if (is_array_of_box(value)) return new ArrayBox(value)
+		if (is_array_of_InstructionType(value)) return new InstructionTypeArrayBox(value)
+		assert_type<never>(value);
+		throw new Error("End of branch");
+	}
+	if (is_promise(value)) return new PromiseBox(async_returns_into_box(value))
+	if (value instanceof Node) return new NodeBox(value)
+	if (value instanceof CSSStyleSheet) return new CSSStyleSheetBox(value);
+	if (value instanceof Window) return new WindowBox(value)
+	if (value instanceof MediaList) return new MediaListBox(value)
+	if (value instanceof Object) return create_box_from_obj(value)
+}
+function is_promise<T, Y>(v:T|Promise<Y>): v is Promise<Y> {
+	return v instanceof Promise;
+}
+function is_array<T, Y>(v:T|Array<Y>): v is Array<Y> {
+	return v instanceof Array;
 }
 export function is_dom_instruction_type(value: DomInstructionType): value is DomInstructionType {
 	if (typeof value[0] !== "number") {
