@@ -53,7 +53,7 @@ export function is_instruction_type<T extends any[]>(value: T | InstructionType)
 			case 'modify_operand': return is_instruction_modify_op(value);
 			default: assert_type<never>(value); return false;
 		}
-		default: value; return false;
+		default: assert_type<never>(value); return false;
 	}
 	return false;
 }
