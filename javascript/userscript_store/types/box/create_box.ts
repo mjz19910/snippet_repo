@@ -142,6 +142,7 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 		case 'halt':return is_instruction_type([value[1]])
 		case 'nop':return is_instruction_type([value[1]])
 		case 'return':return is_instruction_type([value[1]])
+		case 'push':return is_instruction_type([value[1]])
 	}
 	switch(value[1]){case 'call':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'cast':return is_instruction_type([value[1],value[2]])}
@@ -155,9 +156,6 @@ function is_dom_instruction_type(value: DomInstructionType): value is DomInstruc
 	switch(value[1]){case 'jmp':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'modify_operand':return is_instruction_type([value[1],value[2],value[3]])}
 	switch(value[1]){case 'peek':return is_instruction_type([value[1],value[2]])}
-	switch(value[1]){case 'push':return is_instruction_type([value[1]])}
-	switch(value[1]){
-		}
 	switch(value[1]){case 'vm_call':return is_instruction_type([value[1],value[2]])}
 	switch(value[1]){case 'vm_push_args':return is_instruction_type([value[1]])}
 	switch(value[1]){case 'vm_push_ip':return is_instruction_type([value[1]])}
