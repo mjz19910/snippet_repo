@@ -37,17 +37,17 @@ export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (extract_CSSStyleSheetInit(value))return new CSSStyleSheetInitBox(value)
 	if (value instanceof Document) return new DocumentBox(value)
 	if (is_node(value)) return new NodeBox(value)
-	if (value instanceof Window) return new WindowBox(value);
-	if (value instanceof CSSStyleSheet) return new CSSStyleSheetBox(value);
+	if (value instanceof Window) return new WindowBox(value)
+	if (value instanceof CSSStyleSheet) return new CSSStyleSheetBox(value)
 	if (is_array<typeof value, Extract<typeof value, any[]>>(value)) {
-		if (is_empty_arr(value)) return new EmptyArrayBox(value);
-		if (is_array_of(value, is_box)) return new ArrayBox(value);
-		if (is_array_of(value, is_instruction_type)) return new InstructionTypeArrayBox(value);
+		if (is_empty_arr(value)) return new EmptyArrayBox(value)
+		if (is_array_of(value, is_box)) return new ArrayBox(value)
+		if (is_array_of(value, is_instruction_type)) return new InstructionTypeArrayBox(value)
 	}
-	if (value instanceof Promise<any>) return new PromiseBox(async_convert_to_box(value));
-	if (extract_MediaList(value)) return new MediaListBox(value);
-	if (extract_globalThis(value)) return new GlobalThisBox(value);
-	if (Object.keys(value).length > 0) return new temporary_box_from_create_box_from_obj(value);
+	if (value instanceof Promise<any>) return new PromiseBox(async_convert_to_box(value))
+	if (extract_MediaList(value)) return new MediaListBox(value)
+	if (extract_globalThis(value)) return new GlobalThisBox(value)
+	if (Object.keys(value).length > 0) return new temporary_box_from_create_box_from_obj(value)
 	return new ObjectBox(value);
 }
 export namespace Tests {
