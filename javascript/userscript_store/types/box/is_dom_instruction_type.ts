@@ -9,29 +9,8 @@ export function is_dom_instruction_type(value: DomInstructionType): value is Dom
 		assert_type<never>(value[0]);
 		return false;
 	}
-	switch (value[1]) {
-		case 'append': return is_instruction_type([value[1]]);
-		case 'breakpoint': return is_instruction_type([value[1]]);
-		case 'drop': return is_instruction_type([value[1]]);
-		case 'dup': return is_instruction_type([value[1]]);
-		case 'get': return is_instruction_type([value[1]]);
-		case 'halt': return is_instruction_type([value[1]]);
-		case 'nop': return is_instruction_type([value[1]]);
-		case 'return': return is_instruction_type([value[1]]);
-		case 'push': return is_instruction_type([value[1]]);
-		case 'vm_push_args': return is_instruction_type([value[1]]);
-		case 'vm_push_ip': return is_instruction_type([value[1]]);
-		case 'vm_push_self': return is_instruction_type([value[1]]);
-	}
-	switch (value[1]) {
-		case 'call': return is_instruction_type([value[1], value[2]]);
-		case 'cast': return is_instruction_type([value[1], value[2]]);
-		case 'construct': return is_instruction_type([value[1], value[2]]);
-		case 'je': return is_instruction_type([value[1], value[2]]);
-		case 'jmp': return is_instruction_type([value[1], value[2]]);
-		case 'peek': return is_instruction_type([value[1], value[2]]);
-	}
-	switch (value[1]) { case 'vm_call': return is_instruction_type([value[1], value[2]]); }
+	let [, ...instruction_base] = value;
+	if (is_instruction_type(instruction_base)) return true;
 	switch (value[1]) { case 'push_global_object': return is_instruction_type(['push_window_object']); }
 	switch (value[1]) {
 		case 'vm_call_at': return value.length === 3 && is_dom_instruction_tagged_pack(value[2]);
