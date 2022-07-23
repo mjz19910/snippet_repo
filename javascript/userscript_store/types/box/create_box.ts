@@ -175,7 +175,7 @@ function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace): valu
 			if(value[3] === null)return true;
 			return is_dom_instruction_type(value[3][0]);
 		}
-		case 'block':return value.length === 5;
+		case 'block':return value.length === 5 && is_number(value[3]) && is_number(value[4])
 		case 'tagged':
 		case 'tagged_begin':
 		case 'tagged_call':{
@@ -184,10 +184,13 @@ function is_dom_instruction_vm_block_trace(value:DomInstructionBlockTrace): valu
 			if(cur === null)return true;
 			switch(cur[0]){
 				case 'dom':return is_dom_instruction_type(cur[1]);
-				case 'dom_mem':return typeof cur[1] === 'number';
+				case 'dom_mem':return is_number(cur[1]);
 				case 'vm':return is_instruction_type(cur[1]);
 			}
 		}
 		default:assert_type<never>(value);return false;
 	}
+}
+function is_number(num: number):num is number {
+	return typeof num === 'number';
 }
