@@ -1,8 +1,8 @@
 import { CSSStyleSheetInitBox } from "./CSSStyleSheetInitBox";
 import { ObjectBox } from "./ObjectBox";
 import { StackVMBox } from "./StackVMBox";
-import { is_CSSStyleSheetInit as is_CSSStyleSheetInit } from "./extract_CSSStyleSheetInit";
-import { is_StackVM as is_StackVM } from "../vm/box_support/extract_stack_vm";
+import { is_CSSStyleSheetInit } from "./is_CSSStyleSheetInit";
+import { is_StackVM } from "../vm/box_support/extract_stack_vm";
 import { Box } from "./Box";
 import { NodeBox } from "./NodeBox";
 import { DocumentBox } from "./DocumentBox";
