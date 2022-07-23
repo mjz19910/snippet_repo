@@ -26,23 +26,20 @@ import { is_box } from "./is_box";
 import { BlockTrace, DomTaggedPack, DomInstructionType } from "../vm/instruction/vm/VMBlockTrace";
 import { assert_type } from "./assert_type";
 import { extract_MediaList } from "./extract_MediaList";
-import { BoxWithObjectValue } from "./BoxWithObjectValue";
+import { ObjectBox_Value } from "./ObjectBox_Value";
 import { PromiseBox } from "./promise/PromiseBox";
 import { is_node } from "./is_node";
-export function create_box_from_obj(value: BoxWithObjectValue): Box {
+import { is_array } from "./is_array";
+export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (value === null) return value
 	if (value === void 0) return new VoidBox
 	if (extract_StackVM(value)) return new StackVMBox(value)
 	if (extract_CSSStyleSheetInit(value))return new CSSStyleSheetInitBox(value)
 	if (value instanceof Document) return new DocumentBox(value)
 	if (is_node(value)) return new NodeBox(value)
-	if (value instanceof Window) {
-		return new WindowBox(value);
-	}
-	if (value instanceof CSSStyleSheet) {
-		return new CSSStyleSheetBox(value);
-	}
-	if (value instanceof Array<any>) {
+	if (value instanceof Window) return new WindowBox(value);
+	if (value instanceof CSSStyleSheet) return new CSSStyleSheetBox(value);
+	if (is_array<typeof value, Extract<typeof value, any[]>>(value)) {
 		if (is_empty_arr(value)) return new EmptyArrayBox(value);
 		if (is_array_of(value, is_box)) return new ArrayBox(value);
 		if (is_array_of(value, is_instruction_type)) return new InstructionTypeArrayBox(value);
