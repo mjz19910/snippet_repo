@@ -6,7 +6,7 @@ export function is_array_of<
 	Fn extends (v: T[0]) => v is ToType
 >(
 	// an array that has no values should never be the case
-	v: NonEmptyArray<T>|ToType[],
+	v: NonEmptyArray<T> | ToType[],
 	// a function to check that the array element type is valid to be converted
 	check_is_type: Fn
 ):v is ToType[] {
