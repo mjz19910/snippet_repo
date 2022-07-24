@@ -1,3 +1,3 @@
 export function never_value() {
-	return null as never;
+	return null as never
 }
