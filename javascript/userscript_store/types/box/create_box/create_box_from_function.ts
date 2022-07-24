@@ -1,10 +1,10 @@
 import { Box } from "../Box";
 import { CSSStyleSheetConstructorBox } from "../CSSStyleSheetConstructorBox";
-import { is_CSSStyleSheetConstructor } from "../is_CSSStyleSheetConstructor";
+import { is_CSSStyleSheetConstructor } from "../is_namespace/is_CSSStyleSheetConstructor";
 import { extract_sub_type } from "../extract_sub_type";
 import { FunctionBox } from "../FunctionBox";
 import { NewableInstancePack } from "../NewableInstancePack";
-import { temporary_box_from_create_box } from "../temporary_box_from_create_box";
+import { temporary_box_from_create_box } from "../temporary_box/temporary_box_from_create_box";
 import { NewableInstancePackObjectBox } from "../NewableInstancePackObjectBox";
 import { FunctionBox_Value } from "../FunctionBox_Value";
 import { AsyncFunctionBox } from "../async/AsyncFunctionBox";

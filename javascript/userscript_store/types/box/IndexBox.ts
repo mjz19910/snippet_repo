@@ -1,4 +1,5 @@
-import {Box} from "./mod";
+import { Box } from "./Box";
+
 type IndexAccess<T> = {
 	[v: string]: T;
 }

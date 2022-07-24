@@ -1,4 +1,4 @@
-import {is_box} from "./is_box";
+import {is_box} from "./is_namespace/is_box";
 export function extract_like_type<T extends PropertyDescriptor>(value: PropertyDescriptor): value is T {
 	if(!value.value)
 		return false;

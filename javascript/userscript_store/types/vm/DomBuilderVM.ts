@@ -1,5 +1,5 @@
 import {InstructionType} from "./instruction/mod";
-import {Box} from "../box/Box";
+import {Box} from "../box/z_/Box";
 import {BaseStackVM} from "./BaseStackVM";
 import {l_log_if} from "./l_log_if";
 import {LOG_LEVEL_VERBOSE} from "types/constants";

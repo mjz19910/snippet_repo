@@ -1,3 +1,4 @@
-export function async_box_drop_type<T>(_v: T): _v is T {
+export function drop_type<T>(value: T): value is T {
+	void value;
 	return false;
 }

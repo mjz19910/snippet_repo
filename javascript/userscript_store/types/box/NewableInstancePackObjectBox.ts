@@ -3,8 +3,8 @@ import { BoxTemplate } from "./BoxTemplate";
 
 export class NewableInstancePackObjectBox extends BoxTemplate<"NewableInstancePack<{}>", NewableInstancePack<{}>> {
 	readonly type: "NewableInstancePack<{}>" = "NewableInstancePack<{}>";
-	readonly m_verify_name = "BoxedNewableInstancePackObject";
-	verify_name(name: "BoxedNewableInstancePackObject") {
-		return this.m_verify_name === "BoxedNewableInstancePackObject" && name === "BoxedNewableInstancePackObject";
+	readonly m_verify_name = "NewableInstancePackObjectBox";
+	verify_name(name: "NewableInstancePackObjectBox") {
+		return this.m_verify_name === "NewableInstancePackObjectBox" && name === "NewableInstancePackObjectBox";
 	}
 }

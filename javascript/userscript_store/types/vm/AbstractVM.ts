@@ -1,4 +1,4 @@
-import Box from "../box/Box";
+import Box from "../box/z_/Box";
 import {InstructionType} from "./instruction/mod";
 
 export abstract class AbstractVM {

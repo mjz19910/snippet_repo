@@ -21,7 +21,7 @@ import { PromiseBox } from "./promise/PromiseBox";
 import { VoidPromiseBox } from "./promise/VoidPromiseBox";
 import { RealVoidBox } from "./RealVoidBox";
 import { StackVMBox } from "./StackVMBox";
-import { TemporaryBox } from "./TemporaryBox";
+import { TemporaryBox } from "./temporary_box/TemporaryBox";
 import { VoidBox } from "./VoidBox";
 import { WindowBox } from "./WindowBox";
 

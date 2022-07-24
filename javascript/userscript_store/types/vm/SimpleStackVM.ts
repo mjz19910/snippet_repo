@@ -1,8 +1,16 @@
-import {InstructionType} from "./instruction/mod";
-import StackVMBox from "../box/StackVMBox";
-import WindowBox from "../box/WindowBox";
-import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint";
-import {BaseStackVM} from "./BaseStackVM";
+import { InstructionType } from "./instruction/mod";
+import { trigger_debug_breakpoint } from "./trigger_debug_breakpoint";
+import { BaseStackVM } from "./BaseStackVM";
+import { FunctionConstructorBox } from "../box/FunctionConstructorBox";
+import { CSSStyleSheetConstructorBox } from "../box/CSSStyleSheetConstructorBox";
+import { NewableFunctionBox } from "../box/NewableFunctionBox";
+import { Call } from "./instruction/general/Call";
+
+function construct_with_constructor_box<ArgsType extends any[]>(value: CSSStyleSheetConstructorBox | NewableFunctionBox | FunctionConstructorBox, arg_arr: ArgsType) {
+	switch (value.instance_type) {
+		case 'CSSStyleSheet': return value.factory(...arg_arr)
+	}
+}
 
 export class SimpleStackVM<T> extends BaseStackVM {
 	args_vec: (T extends Array<T> ? T : [T]) | null;
@@ -14,41 +22,38 @@ export class SimpleStackVM<T> extends BaseStackVM {
 		super.reset();
 		this.args_vec = null;
 	}
-	execute_instruction_raw(instruction: InstructionType) {
-		switch(instruction[0]) {
-			case 'this' /*Special*/: this.push(new StackVMBox(this)); break;
-			// TODO: if you ever use this on a worker, change
-			// it to use globalThis...
-			case 'global' /*Special*/: this.push(new WindowBox(window)); break;
-			case 'breakpoint' /*Debug*/: trigger_debug_breakpoint(); break;
-			case 'call' /*Call*/: {
-				// TODO: Fix the other code to use the call handling from
-				// the base class
-				// Currently we support applying functions
-				// this is closer to what you expect, not to just get
-				// the name of a member to call
-				let number_of_arguments = instruction[1];
-				let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
-				if(typeof target_name == 'string') {
-					switch(typeof target_obj) {
-						case 'object':
-							if(target_obj === null)
-								throw new Error("Call null func");
-							switch(target_obj.type) {
-								case 'array_box': throw new Error("Call not a function");
-								case 'constructor_box': {
-									// are you sure, you just called a constructor! (the correct way)
-									let ret = target_obj.factory(...arg_arr);
-									this.push(ret);
-								}
-								case 'custom_box': {
-									let ret = target_obj.as_type('function');
-									ret;
-								} break;
-							}
+	execute_call_instruction(instruction: Call) {
+		// TODO: Fix the other code to use the call handling from
+		// the base class
+		// Currently we support applying functions
+		// this is closer to what you expect, not to just get
+		// the name of a member to call
+		let number_of_arguments = instruction[1];
+		let [target_obj, target_name, ...arg_arr] = this.pop_arg_count(number_of_arguments);
+		if (typeof target_name == 'string') {
+			switch (typeof target_obj) {
+				case 'object':
+					if (target_obj === null)
+						throw new Error("Call null func");
+					switch (target_obj.type) {
+						case 'array_box': throw new Error("Call not a function");
+						case 'constructor_box': {
+							let ret = construct_with_constructor_box(target_obj, arg_arr);
+							this.push(ret);
+						} break;
+						case 'custom_box': {
+							let ret = target_obj.as_type('function');
+							if(!ret) throw new Error("Call null func");
+							if('factory' in ret){}
+						} break;
 					}
-				}
-			} break;
+			}
+		}
+	}
+	execute_instruction_raw(instruction: InstructionType) {
+		switch (instruction[0]) {
+			case 'breakpoint' /*Debug*/: trigger_debug_breakpoint(); break;
+			case 'call' /*Call*/: this.execute_call_instruction(instruction); break;
 			default: super.execute_instruction(instruction); break;
 		}
 	}

@@ -1,1 +1,0 @@
-perl ../export.pl rebuild_the_universe_auto_v0.3.js|win32yank.exe -i
