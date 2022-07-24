@@ -1,5 +1,5 @@
 import {BlockTrace} from "../../vm/instruction/vm/VMBlockTrace"
-import {bool_false} from "./bool_false"
+import {eat_never} from "./eat_never"
 import {is_instruction_block_trace_instruction_ptr} from "./is_instruction_block_trace_instruction_ptr"
 import {is_instruction_block_trace_tagged_ptr} from "./is_instruction_block_trace_tagged_ptr"
 import {is_not_type} from "./is_not_type"
@@ -14,7 +14,7 @@ export function is_instruction_block_trace<T>(value: T|BlockTrace): value is Blo
 		case 'tagged':
 		case 'tagged_begin':
 		case 'tagged_call': return is_instruction_block_trace_tagged_ptr(value)
-		default: return bool_false(value)
+		default: return eat_never(value)
 	}
 }
 

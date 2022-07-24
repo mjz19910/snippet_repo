@@ -1,6 +1,7 @@
 import {Box} from "../Box"
-import {bool_false} from "./bool_false"
+import {eat_never} from "./eat_never"
 import {cast} from "./cast"
+import {eat_type} from "./eat_type"
 import {is_box_object} from "./is_box_object"
 export function is_box<T>(v: Box|T): v is Box {
 	switch(typeof v) {
@@ -13,9 +14,6 @@ export function is_box<T>(v: Box|T): v is Box {
 		case 'symbol': return true
 		case 'undefined': return true
 	}
-	if(cast<T>(v)) {
-		console.log('chk',v)
-		return false
-	}
-	return bool_false(v)
+	if(cast<T>(v)) return eat_type(v)
+	return eat_never(v)
 }

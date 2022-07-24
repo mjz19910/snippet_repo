@@ -2,12 +2,12 @@ import {DomInstructionNullMarker,DomInstructionType} from "../../vm/instruction/
 import {is_dom_tagged_pack} from "./is_dom_tagged_pack"
 import {is_instruction_type} from "./is_instruction_type"
 import {is_number} from "./is_number"
-import {bool_false} from "./bool_false"
+import {eat_never} from "./eat_never"
 import {assert_type} from "../helper/assert_type"
 
 export function is_dom_instruction_type(value: DomInstructionType): value is DomInstructionType {
 	if(!is_number(value[0])) {
-		return bool_false(value[0])
+		return eat_never(value[0])
 	}
 	let [,...instruction_base]=value
 	if(is_instruction_type(instruction_base)) return true
@@ -19,6 +19,6 @@ export function is_dom_instruction_type(value: DomInstructionType): value is Dom
 			return instruction_base.length===2&&instruction_base[1]===null
 		case 'push_global_object': return is_instruction_type(['push_window_object'])
 		case 'vm_call_at': return instruction_base.length===2&&is_dom_tagged_pack(instruction_base[1])
-		default: return bool_false(instruction_base)
+		default: return eat_never(instruction_base)
 	}
 }

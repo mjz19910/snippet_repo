@@ -8,6 +8,7 @@ export class IndexBox extends BoxTemplate<"object_box",IndexAccess<Box>> {
 	readonly like_type="object_box"
 	readonly extension='index'
 	readonly index_type="Box"
+	readonly inner_type="T"
 	verify_name(name: "IndexBox") {
 		return this.m_verify_name==='IndexBox'&&name==='IndexBox'
 	}

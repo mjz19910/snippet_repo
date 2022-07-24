@@ -1,6 +1,6 @@
 import {InstructionType} from "../../vm/instruction/mod"
 import {Push} from "../../vm/instruction/stack/Push"
-import {bool_false} from "./bool_false"
+import {eat_never} from "./eat_never"
 import {is_box} from "./is_box"
 import {is_instruction_block_trace} from "./is_instruction_block_trace"
 import {is_instruction_modify_op} from "./is_instruction_modify_op"
@@ -15,7 +15,7 @@ export function is_instruction_type<T extends any[]>(value: T|InstructionType): 
 				return false
 			}
 			if(never_cast<Push>(value)) throw new Error("Never")
-			return bool_false(value)
+			return eat_never(value)
 		case 'vm_block_trace': return is_instruction_block_trace(value)
 	}
 	switch(value.length) {
@@ -33,7 +33,7 @@ export function is_instruction_type<T extends any[]>(value: T|InstructionType): 
 			case 'vm_push_ip': return true
 			case 'vm_push_self': return true
 			case 'vm_return': return true
-			default: return bool_false(value)
+			default: return eat_never(value)
 		}
 		case 2: switch(value[0]) {
 			case 'construct': break
@@ -47,13 +47,13 @@ export function is_instruction_type<T extends any[]>(value: T|InstructionType): 
 				case 'object_index_to_function': return true
 				case 'vm_function': return true
 			}
-			default: return bool_false(value)
+			default: return eat_never(value)
 		} break
 		case 3: switch(value[0]) {
 			case 'modify_operand': return is_instruction_modify_op(value)
-			default: return bool_false(value)
+			default: return eat_never(value)
 		}
-		default: return bool_false(value)
+		default: return eat_never(value)
 	}
 	return false
 }
