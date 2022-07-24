@@ -4,12 +4,12 @@
  * Copyright (c) 2022, the SerenityOS developers.
  *
  * SPDX-License-Identifier: BSD-2-Clause
- * 
- * 
+ *
+ *
  * Some code is close enough to the code on the SerenityOS repo, the copyright should be here too
  */
 // constexpr bool is_ascii_digit(u32 code_point)
 export function is_ascii_digit(code_point: string) {
-	return code_point.charCodeAt(0) >= '0'.charCodeAt(0) &&
-		code_point.charCodeAt(0) <= '9'.charCodeAt(0);
+	return code_point.charCodeAt(0)>='0'.charCodeAt(0)&&
+		code_point.charCodeAt(0)<='9'.charCodeAt(0)
 }
