@@ -1,6 +1,5 @@
 import { Box } from "./Box";
 import { is_obj_index_to_box } from "./is_namespace/is_obj_index_to_box";
-import { force_to_type_downgrade } from "./force_to_type_downgrade";
 import { force_type_upgrade } from "./force_type_upgrade";
 import { box_value_property_cache } from "./constant";
 import { ObjectIndexToBox } from "./ObjectIndexToBox";
