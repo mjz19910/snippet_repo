@@ -1,5 +1,5 @@
-import {AnyTypeOfResult} from "./BoxTemplate";
+import {AnyTypeOfResult} from "./BoxTemplate"
 export interface BoxInterface {
-	type:string;
-	as_type(x: AnyTypeOfResult): this | null;
+	type: string
+	as_type(x: AnyTypeOfResult): this|null
 }

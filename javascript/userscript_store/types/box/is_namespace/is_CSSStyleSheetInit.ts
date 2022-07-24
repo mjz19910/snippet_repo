@@ -1,10 +1,10 @@
-export function is_CSSStyleSheetInit(value: {} | CSSStyleSheetInit): value is CSSStyleSheetInit {
-	let rr = Object.getOwnPropertyDescriptors(value);
+export function is_CSSStyleSheetInit(value: {}|CSSStyleSheetInit): value is CSSStyleSheetInit {
+	let rr=Object.getOwnPropertyDescriptors(value)
 	if(rr.baseURL)
-		return true;
+		return true
 	if(rr.disabled)
-		return true;
+		return true
 	if(rr.media)
-		return true;
-	return false;
+		return true
+	return false
 }

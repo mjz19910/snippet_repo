@@ -1,6 +1,6 @@
 declare global {
 	interface ObjectConstructor {
-		keys<T>(v: T): (keyof T)[];
+		keys<T>(v: T): (keyof T)[]
 	}
 }
 export {}

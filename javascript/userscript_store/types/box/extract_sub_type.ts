@@ -1,3 +1,4 @@
-export function extract_sub_type<T, GeneralType>(v: T | GeneralType): v is T {
-	return false;
+export function extract_sub_type<T,GeneralType>(value: T|GeneralType): value is T {
+	void value
+	return false
 }
