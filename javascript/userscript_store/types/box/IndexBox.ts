@@ -1,15 +1,14 @@
-import { Box } from "./Box";
+import {Box} from "./Box"
+import {BoxTemplate} from "./BoxTemplate"
+import {IndexAccess} from "./IndexAccess"
 
-type IndexAccess<T> = {
-	[v: string]: T;
-}
-type IndexRaw = IndexAccess<Box>;
-export class IndexBox {
-	value:IndexRaw;
-	like_type: "object_box" = "object_box";
-	extension: 'index' = 'index';
-	index_type: "Box" = "Box";
-	constructor(value:IndexRaw){
-		this.value=value;
+export class IndexBox extends BoxTemplate<"object_box",IndexAccess<Box>> {
+	readonly type="object_box";
+	readonly m_verify_name="IndexBox";
+	readonly like_type="object_box";
+	readonly extension='index';
+	readonly index_type="Box";
+	verify_name(name: "IndexBox") {
+		return this.m_verify_name==='IndexBox'&&name==='IndexBox'
 	}
 }

@@ -6,7 +6,7 @@ export class DocumentBox
 	readonly type = "document_box";
 	readonly m_verify_name = "DocumentBox";
 	as_type(v: 'function' | 'object') {
-		if(v === 'object') return this;
+		if (v === 'object') return this;
 		return null;
 	}
 	verify_name(name: "DocumentBox") {

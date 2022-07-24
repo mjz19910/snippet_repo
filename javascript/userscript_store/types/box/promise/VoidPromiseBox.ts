@@ -4,7 +4,7 @@ export class VoidPromiseBox extends BoxTemplate<"promise_box", Promise<void>> im
 	readonly type: "promise_box" = "promise_box";
 	readonly inner_type: 'Promise<void>' = 'Promise<void>';
 	await_type = void 0;
-	readonly m_verify_name="VoidPromiseBox";
+	readonly m_verify_name = "VoidPromiseBox";
 	verify_name(name: "VoidPromiseBox") {
 		return this.m_verify_name === "VoidPromiseBox" && name === "VoidPromiseBox";
 	}

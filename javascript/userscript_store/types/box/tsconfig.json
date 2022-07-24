@@ -2,11 +2,16 @@
 	"compilerOptions": {
 		"experimentalDecorators": true,
 		"target": "esnext",
-		"lib": ["esnext", "DOM"],
-		"types": ["jquery"],
+		"lib": [
+			"esnext",
+			"DOM"
+		],
+		"types": [
+			"jquery"
+		],
 		"declaration": true,
 		//"module": "ESNext",
-		"module":"NodeNext",
+		"module": "NodeNext",
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"noImplicitAny": true,
@@ -16,7 +21,11 @@
 			"./node_modules/@types"
 		]
 	},
-	"include": ["./**/*", "../vm/box_support/extract_StackVM.ts", "../vm/is_stack_vm.ts"],
+	"include": [
+		"./**/*",
+		"../vm/box_support/extract_StackVM.ts",
+		"../vm/is_stack_vm.ts"
+	],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",

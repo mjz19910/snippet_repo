@@ -1,1 +1,1 @@
-export type PropertiesToIterate = "type";
+export type PropertiesToIterate="type"

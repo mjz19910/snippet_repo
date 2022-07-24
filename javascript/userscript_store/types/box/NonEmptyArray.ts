@@ -1,1 +1,1 @@
-export type NonEmptyArray<T> = T extends [] ? never : T;
+export type NonEmptyArray<T>=T extends []? never:T

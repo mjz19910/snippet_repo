@@ -3,7 +3,7 @@ export type AnyTypeOfResult = "string" | "number" | "bigint" | "boolean" | "symb
 export abstract class BoxTemplate<
 	T extends string,
 	V extends object | Function | void
-	> implements BoxInterface {
+> implements BoxInterface {
 	constructor(value: V) {
 		this.value = value;
 	}
@@ -12,9 +12,9 @@ export abstract class BoxTemplate<
 	readonly value: V;
 	as_type(_x: 'object' | 'function') {
 		let tof = typeof this.value;
-		switch(tof) {
-			case 'object': if(_x === tof) return this; break;
-			case 'function': if(_x === tof) return this; break;
+		switch (tof) {
+			case 'object': if (_x === tof) return this; break;
+			case 'function': if (_x === tof) return this; break;
 			default: throw new Error("Box not necessary for primitive types")
 		}
 		return null;

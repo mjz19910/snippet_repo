@@ -18,11 +18,11 @@ export class CSSStyleSheetConstructorBox
 	}
 	factory(...arr: Box[]) {
 		let valid_args: CSSStyleSheetConstructorArgsTypeState1 | NoArgsType = new NoArgsType;
-		for(let i = 0;i < arr.length;i++) {
+		for (let i = 0; i < arr.length; i++) {
 			let val = arr[i];
-			if(typeof val != 'object') continue;
-			if(val === null) continue;
-			if(val.type != 'shape_box') continue;
+			if (typeof val != 'object') continue;
+			if (val === null) continue;
+			if (val.type != 'shape_box') continue;
 			valid_args = {
 				value: [val.value],
 				state: 1

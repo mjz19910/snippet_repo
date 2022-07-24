@@ -29,12 +29,12 @@ export class FunctionConstructorBox
 		this.box_maker = box_maker;
 	}
 	verify_arguments(...boxes: Box[]) {
-		if(boxes.length === 0) {
+		if (boxes.length === 0) {
 			return true;
 		}
-		for(let i = 0;i < boxes.length;i++) {
+		for (let i = 0; i < boxes.length; i++) {
 			let cur_box = boxes[i];
-			if(typeof cur_box !== 'string')
+			if (typeof cur_box !== 'string')
 				return false;
 		}
 		return true;

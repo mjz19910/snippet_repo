@@ -1,1 +1,1 @@
-export type UnpackToCommonBaseWithProperty<V extends string, T>={[X in V]:T};
+export type UnpackToCommonBaseWithProperty<V extends string,T>={[X in V]: T}

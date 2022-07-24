@@ -1,9 +1,9 @@
 export class TypeEraseClass<T> {
 	constructor(v: T) {
-		this.erase_value = v;
+		this.erase_value=v
 	}
-	erase_value: T;
+	erase_value: T
 	get_value(): T {
-		return this.erase_value;
+		return this.erase_value
 	}
 }

@@ -12,28 +12,28 @@ export class CSSStyleSheetInitBox
 		return this.m_verify_name === 'CSSStyleSheetInitBox' && name === 'CSSStyleSheetInitBox';
 	}
 	set_property(key: keyof CSSStyleSheetInit, value: string | boolean | MediaListBox | undefined) {
-		if(key === 'baseURL') {
-			if(typeof value == 'string') {
+		if (key === 'baseURL') {
+			if (typeof value == 'string') {
 				this.value[key] = value;
-			} else if(typeof value === 'undefined') {
-				this.value[key] = value;
-			} else {
-				throw new Error("Invalid value for key " + key);
-			}
-		} else if(key === 'disabled') {
-			if(typeof value === 'boolean') {
-				this.value[key] = value;
-			} else if(typeof value === 'undefined') {
+			} else if (typeof value === 'undefined') {
 				this.value[key] = value;
 			} else {
 				throw new Error("Invalid value for key " + key);
 			}
-		} else if(key === 'media') {
-			if(typeof value === 'object' && value.instance_type === 'MediaList') {
+		} else if (key === 'disabled') {
+			if (typeof value === 'boolean') {
+				this.value[key] = value;
+			} else if (typeof value === 'undefined') {
+				this.value[key] = value;
+			} else {
+				throw new Error("Invalid value for key " + key);
+			}
+		} else if (key === 'media') {
+			if (typeof value === 'object' && value.instance_type === 'MediaList') {
 				this.value[key] = value.value;
-			} else if(typeof value === 'string') {
+			} else if (typeof value === 'string') {
 				this.value[key] = value;
-			} else if(typeof value === 'undefined') {
+			} else if (typeof value === 'undefined') {
 				this.value[key] = value;
 			} else {
 				throw new Error("Invalid value for key " + key);

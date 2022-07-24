@@ -11,5 +11,5 @@ export type TemporaryBox =
 	temporary_box_from_call |
 	temporary_box_object_index_to_box |
 	temporary_box_StackVM |
-	temporary_box_from_object|
+	temporary_box_from_object |
 	temporary_box_from_create_box;
