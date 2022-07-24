@@ -1,5 +1,4 @@
 import {Box} from "./Box"
-import {assert_type} from "./helper/assert_type"
 import {Primitives} from "./helper/Primitives"
 import {type_assert_never} from "./is_namespace/type_assert_never"
 import {NewableInstancePack} from "./NewableInstancePack"
