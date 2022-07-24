@@ -1,5 +1,5 @@
 import {StackVM} from "../vm/StackVM"
-import {BoxTemplate} from "./BoxTemplate"
+import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 export class StackVMBox
 	extends BoxTemplate<"custom_box",StackVM>

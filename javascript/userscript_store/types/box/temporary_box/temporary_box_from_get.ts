@@ -1,5 +1,5 @@
 import {BoxVerify} from "../BoxVerify"
-import {TemporaryBoxTemplate} from "./TemporaryBoxTemplate"
+import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate"
 export class temporary_box_from_get
 	extends TemporaryBoxTemplate<Function>
 	implements BoxVerify<temporary_box_from_get,"temporary_box_from_get"> {

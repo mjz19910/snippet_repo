@@ -1,6 +1,6 @@
 import {Box} from "../Box"
 import {BoxVerify} from "../BoxVerify"
-import {TemporaryBoxTemplate} from "./TemporaryBoxTemplate"
+import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate"
 export class temporary_box_from_cast_to_vm_function
 	extends TemporaryBoxTemplate<(...a: Box[]) => Box>
 	implements BoxVerify<temporary_box_from_cast_to_vm_function,"temporary_box_from_cast_to_vm_function"> {

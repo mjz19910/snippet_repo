@@ -2,7 +2,7 @@ import {Box} from "./Box"
 import {FunctionBox} from "./FunctionBox"
 import {BoxMaker} from "./BoxMaker"
 import {FunctionConstructorFactory} from "./FunctionConstructorFactory"
-import {BoxTemplate} from "./BoxTemplate"
+import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 export class FunctionConstructorBox
 	extends BoxTemplate<"constructor_box",typeof Function>

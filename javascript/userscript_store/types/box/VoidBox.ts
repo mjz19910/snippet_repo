@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./BoxTemplate"
+import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 export class VoidBox
 	extends BoxTemplate<"void",void>
@@ -10,9 +10,6 @@ export class VoidBox
 	readonly value=void 0
 	verify_name(name: "VoidBox") {
 		return this.m_verify_name==="VoidBox"&&name==="VoidBox"
-	}
-	as_type(_x: 'function'|'object') {
-		return null
 	}
 }
 

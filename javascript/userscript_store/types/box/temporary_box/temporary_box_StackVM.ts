@@ -1,6 +1,6 @@
 import {StackVM} from "../../vm/StackVM"
 import {BoxVerify} from "../BoxVerify"
-import {TemporaryBoxTemplate} from "./TemporaryBoxTemplate"
+import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate"
 export class temporary_box_StackVM
 	extends TemporaryBoxTemplate<StackVM>
 	implements BoxVerify<temporary_box_StackVM,"temporary_box_StackVM"> {

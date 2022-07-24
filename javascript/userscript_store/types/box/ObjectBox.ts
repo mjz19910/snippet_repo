@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./BoxTemplate"
+import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 export class ObjectBox
 	extends BoxTemplate<"object_box",{}>

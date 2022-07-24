@@ -1,5 +1,5 @@
 import {Box} from "./Box"
-import {BoxTemplate} from "./BoxTemplate"
+import {BoxTemplate} from "./template/BoxTemplate"
 import {IndexAccess} from "./IndexAccess"
 
 export class IndexBox extends BoxTemplate<"object_box",IndexAccess<Box>> {

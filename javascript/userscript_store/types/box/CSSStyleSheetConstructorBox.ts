@@ -1,5 +1,5 @@
 import {Box} from "./Box"
-import {BoxTemplate} from "./BoxTemplate"
+import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox"
 import {CSSStyleSheetConstructorArgsTypeState1} from "./CSSStyleSheetConstructorArgsTypeState1"

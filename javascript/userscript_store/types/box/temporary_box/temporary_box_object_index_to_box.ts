@@ -1,6 +1,6 @@
 import {Box} from "../Box"
 import {BoxVerify} from "../BoxVerify"
-import {TemporaryBoxTemplate} from "./TemporaryBoxTemplate"
+import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate"
 export class temporary_box_object_index_to_box
 	extends TemporaryBoxTemplate<{[x: string]: Box}>
 	implements BoxVerify<temporary_box_object_index_to_box,"temporary_box_object_index_to_box"> {

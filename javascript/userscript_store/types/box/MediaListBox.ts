@@ -1,4 +1,4 @@
-import {BoxTemplate} from "./BoxTemplate"
+import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 export class MediaListBox
 	extends BoxTemplate<"instance_box",MediaList>

@@ -1,4 +1,4 @@
-import {BoxInterface} from "./BoxInterface"
+import {BoxInterface} from "../BoxInterface"
 export type AnyTypeOfResult="string"|"number"|"bigint"|"boolean"|"symbol"|"undefined"|"object"|"function"
 export abstract class BoxTemplate<
 	T extends string,
@@ -10,13 +10,12 @@ export abstract class BoxTemplate<
 	abstract readonly type: T
 	abstract verify_name(name: string): boolean
 	readonly value: V
-	as_type(_x: 'object'|'function') {
-		let tof=typeof this.value
-		switch(tof) {
-			case 'object': if(_x===tof) return this; break
-			case 'function': if(_x===tof) return this; break
-			default: throw new Error("Box not necessary for primitive types")
+	as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
+		let typeof_=typeof this.value
+		switch(typeof_) {
+			case 'object': return [input_typeof===typeof_,this]
+			case 'function': return [input_typeof===typeof_,this]
 		}
-		return null
+		return [false,null]
 	}
 }
