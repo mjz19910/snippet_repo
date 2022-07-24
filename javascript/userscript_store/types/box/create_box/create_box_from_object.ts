@@ -28,6 +28,9 @@ import { is_array } from "../is_namespace/is_array";
 import { is_promise } from "../is_namespace/is_promise";
 import { assert_type } from "../assert_type";
 import { is_instruction_type } from "../is_namespace/is_instruction_type";
+import { assume_exclude_type } from "../assume_exclude_type";
+import { force_type_upgrade } from "../force_type_upgrade";
+import { force_to_type_downgrade } from "../force_to_type_downgrade";
 
 export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (value === null) return value
@@ -40,7 +43,7 @@ export function create_box_from_object(value: ObjectBox_Value): Box {
 	if (value instanceof CSSStyleSheet) return new CSSStyleSheetBox(value)
 	if (is_array(value)) {
 		if (is_empty_arr(value)) return new EmptyArrayBox(value)
-		if (is_array_of(value, is_box)) return new ArrayBox(value)
+		if (force_type_upgrade<Box[], {}>(value) && is_array_of(value, is_box)) return new ArrayBox(value)
 		if (is_array_of(value, is_instruction_type)) return new InstructionTypeArrayBox(value)
 		assert_type<never>(value)
 		throw new Error("Reached end of control flow")
