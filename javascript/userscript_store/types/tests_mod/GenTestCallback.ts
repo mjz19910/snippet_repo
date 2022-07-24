@@ -1,4 +1,4 @@
-import {TestLock} from "./TestLock";
-import {CanRunTest} from "./CanRunTest";
+import {TestLock} from "./TestLock"
+import {CanRunTest} from "./CanRunTest"
 
-export type GenTestCallback = (runner: CanRunTest, lock: TestLock) => void;
+export type GenTestCallback = (runner: CanRunTest, lock: TestLock) => void

@@ -1,4 +1,4 @@
-import {FnVoidResult} from "./FnVoidResult";
-import {TimeoutTargetCallback} from "./TimeoutTargetCallback";
+import {FnVoidResult} from "./FnVoidResult"
+import {TimeoutTargetCallback} from "./TimeoutTargetCallback"
 
-export type TimeoutCallbackType = TimeoutTargetCallback | FnVoidResult;
+export type TimeoutCallbackType = TimeoutTargetCallback | FnVoidResult

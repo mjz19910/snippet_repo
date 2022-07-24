@@ -1,7 +1,7 @@
-import {WorkerReadyReplyTy} from "./WorkerReadyReplyTy";
-import {TimeoutMessageRTy} from "./TimeoutMessageRTy";
+import {WorkerReadyReplyTy} from "./WorkerReadyReplyTy"
+import {TimeoutMessageRTy} from "./TimeoutMessageRTy"
 
 export type MessageWorkerReadyReply = {
-	t: WorkerReadyReplyTy;
-	v: TimeoutMessageRTy;
-};
+	t: WorkerReadyReplyTy
+	v: TimeoutMessageRTy
+}

@@ -1,3 +1,3 @@
-export {HaltOpcode} from "../opcodes/HaltOpcode";
+export {HaltOpcode} from "../opcodes/HaltOpcode"
 
-export {Halt} from "./Halt";
+export {Halt} from "./Halt"

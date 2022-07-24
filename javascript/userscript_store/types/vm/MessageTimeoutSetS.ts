@@ -1,7 +1,7 @@
-import {TimeoutSetSTy} from "./TimeoutSetSTy";
-import {SetSingleMessageData} from "./SetSingleMessageData";
+import {TimeoutSetSTy} from "./TimeoutSetSTy"
+import {SetSingleMessageData} from "./SetSingleMessageData"
 
 export type MessageTimeoutSetS = {
-	t: TimeoutSetSTy;
-	v: SetSingleMessageData;
-};
+	t: TimeoutSetSTy
+	v: SetSingleMessageData
+}

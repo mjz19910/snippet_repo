@@ -1,3 +1,3 @@
-import {ReplySetSingle} from "types/constants";
+import {ReplySetSingle} from "types/constants"
 
-export type ReplySetSingleTy = typeof ReplySetSingle;
+export type ReplySetSingleTy = typeof ReplySetSingle

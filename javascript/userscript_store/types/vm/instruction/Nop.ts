@@ -1,3 +1,3 @@
-import {NopOpcode} from "./opcodes/NopOpcode";
+import {NopOpcode} from "./opcodes/NopOpcode"
 
-export type Nop=[NopOpcode];
+export type Nop=[NopOpcode]

@@ -1,6 +1,6 @@
-import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy";
+import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy"
 
 export type MessageReplyClearRepeating = {
-	t: ReplyClearRepeatingTy;
-	v: never;
-};
+	t: ReplyClearRepeatingTy
+	v: never
+}

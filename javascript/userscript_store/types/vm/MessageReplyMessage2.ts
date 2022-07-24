@@ -1,6 +1,6 @@
-import {ReplyMessage2Ty} from "./ReplyMessage2Ty";
+import {ReplyMessage2Ty} from "./ReplyMessage2Ty"
 
 export type MessageReplyMessage2 = {
-	t: ReplyMessage2Ty;
-	v: never;
-};
+	t: ReplyMessage2Ty
+	v: never
+}

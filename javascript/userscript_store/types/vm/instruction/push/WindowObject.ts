@@ -1,3 +1,3 @@
-import {PushWindowObjectOpcode as PushWindowObjectOpcode} from "../opcodes/PushWindowObjectOpcode";
+import {PushWindowObjectOpcode as PushWindowObjectOpcode} from "../opcodes/PushWindowObjectOpcode"
 
-export type PushWindowObject = [PushWindowObjectOpcode];
+export type PushWindowObject = [PushWindowObjectOpcode]

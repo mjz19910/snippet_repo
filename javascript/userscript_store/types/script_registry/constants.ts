@@ -1,3 +1,3 @@
-import {AnyFunction} from "./AnyFunction";
+import {AnyFunction} from "./AnyFunction"
 
-export const cur_event_fns:AnyFunction[] = [];
+export const cur_event_fns:AnyFunction[] = []

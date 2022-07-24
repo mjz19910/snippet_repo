@@ -1,5 +1,5 @@
-import {BaseNode} from "./BaseNode";
+import {BaseNode} from "./BaseNode"
 
 export type BaseNodeParent = {
-	remove_child(v: BaseNode): void;
-};
+	remove_child(v: BaseNode): void
+}

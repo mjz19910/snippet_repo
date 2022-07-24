@@ -1,3 +1,3 @@
 export interface CanWaitFor {
-	wait(): Promise<void>;
+	wait(): Promise<void>
 }

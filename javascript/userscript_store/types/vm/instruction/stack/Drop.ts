@@ -1,3 +1,3 @@
-import {DropOpcode} from "../opcodes/DropOpcode";
+import {DropOpcode} from "../opcodes/DropOpcode"
 
-export type Drop = [DropOpcode];
+export type Drop = [DropOpcode]

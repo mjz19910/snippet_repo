@@ -1,4 +1,4 @@
-import {DispatcherIndexType} from "./DispatcherIndexType";
+import {DispatcherIndexType} from "./DispatcherIndexType"
 export interface DispatcherType {
-	[x: string]: DispatcherIndexType;
+	[x: string]: DispatcherIndexType
 }

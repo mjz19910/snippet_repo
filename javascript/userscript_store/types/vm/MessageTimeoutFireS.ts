@@ -1,6 +1,6 @@
-import {TimeoutFireSTy} from "./TimeoutFireSTy";
+import {TimeoutFireSTy} from "./TimeoutFireSTy"
 
 export type MessageTimeoutFireS = {
-	t: TimeoutFireSTy;
-	v: never;
-};
+	t: TimeoutFireSTy
+	v: never
+}

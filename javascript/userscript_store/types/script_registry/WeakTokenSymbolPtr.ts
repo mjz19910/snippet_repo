@@ -1,3 +1,3 @@
-import {TokenSymbolPtr} from "./TokenPtr";
+import {TokenSymbolPtr} from "./TokenPtr"
 
-export type WeakTokenSymbolPtr = WeakRef<TokenSymbolPtr>;
+export type WeakTokenSymbolPtr = WeakRef<TokenSymbolPtr>

@@ -1,4 +1,4 @@
 export type NumInfo = {
-	t: number;
-	v: number;
-};
+	t: number
+	v: number
+}

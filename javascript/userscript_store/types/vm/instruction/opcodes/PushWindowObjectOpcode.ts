@@ -1,1 +1,1 @@
-export type PushWindowObjectOpcode = 'push_window_object';
+export type PushWindowObjectOpcode = 'push_window_object'

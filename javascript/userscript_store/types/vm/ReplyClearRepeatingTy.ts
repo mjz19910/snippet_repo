@@ -1,3 +1,3 @@
-import {ReplyClearRepeating} from "types/constants";
+import {ReplyClearRepeating} from "types/constants"
 
-export type ReplyClearRepeatingTy = typeof ReplyClearRepeating;
+export type ReplyClearRepeatingTy = typeof ReplyClearRepeating

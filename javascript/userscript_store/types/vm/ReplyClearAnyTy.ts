@@ -1,3 +1,3 @@
-import {ReplyClearAny} from "types/constants";
+import {ReplyClearAny} from "types/constants"
 
-export type ReplyClearAnyTy = typeof ReplyClearAny;
+export type ReplyClearAnyTy = typeof ReplyClearAny

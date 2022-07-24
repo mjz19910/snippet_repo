@@ -1,1 +1,1 @@
-export type GetOpcode = 'get';
+export type GetOpcode = 'get'

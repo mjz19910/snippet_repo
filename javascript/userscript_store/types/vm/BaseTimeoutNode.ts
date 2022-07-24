@@ -1,12 +1,12 @@
-import {BaseNode} from "./BaseNode";
+import {BaseNode} from "./BaseNode"
 
 export class BaseTimeoutNode extends BaseNode {
-	timeout;
+	timeout
 	constructor(timeout: number | undefined) {
-		super();
-		this.timeout = timeout;
+		super()
+		this.timeout = timeout
 	}
 	get_timeout() {
-		return this.timeout;
+		return this.timeout
 	}
 }

@@ -1,3 +1,3 @@
 export type NoDataMsg = {
-	t: number;
-};
+	t: number
+}

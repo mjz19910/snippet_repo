@@ -1,4 +1,4 @@
-import {VMCallOpcode} from "../opcodes/VMCallOpcode";
+import {VMCallOpcode} from "../opcodes/VMCallOpcode"
 
-export type VMCall = [VMCallOpcode, number];
+export type VMCall = [VMCallOpcode, number]
 

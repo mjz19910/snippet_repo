@@ -1,4 +1,4 @@
 export type SetMessageData = {
-	t: number;
-	v: number;
-};
+	t: number
+	v: number
+}

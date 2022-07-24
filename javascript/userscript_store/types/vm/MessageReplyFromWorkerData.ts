@@ -1,4 +1,4 @@
 export type MessageReplyFromWorkerData = {
-	t: never;
-	v: never;
-};
+	t: never
+	v: never
+}

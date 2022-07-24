@@ -1,3 +1,3 @@
-import {WorkerUpdateMessageHandler} from "types/constants";
+import {WorkerUpdateMessageHandler} from "types/constants"
 
-export type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateMessageHandler;
+export type WorkerUpdateMessageHandlerTy = typeof WorkerUpdateMessageHandler

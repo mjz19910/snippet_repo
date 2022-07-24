@@ -1,3 +1,3 @@
-import {HaltOpcode} from "../opcodes/HaltOpcode";
+import {HaltOpcode} from "../opcodes/HaltOpcode"
 
-export type Halt = [HaltOpcode];
+export type Halt = [HaltOpcode]

@@ -1,3 +1,3 @@
 export type VarRef = {
-	var: string;
-};
+	var: string
+}

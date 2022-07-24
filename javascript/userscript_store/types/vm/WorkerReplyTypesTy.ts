@@ -1,7 +1,7 @@
-import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy";
-import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy";
+import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy"
+import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy"
 
 export type WorkerReplyTypesTy = {
-	single: TimeoutSingleReplyTy;
-	repeating: TimeoutRepeatingReplyTy;
-};
+	single: TimeoutSingleReplyTy
+	repeating: TimeoutRepeatingReplyTy
+}

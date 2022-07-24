@@ -1,1 +1,1 @@
-export type JeOpcode = 'je';
+export type JeOpcode = 'je'

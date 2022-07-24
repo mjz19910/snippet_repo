@@ -1,2 +1,2 @@
-import {JeOpcode} from "../opcodes/JeOpcode";
-export type Je = [JeOpcode, number];
+import {JeOpcode} from "../opcodes/JeOpcode"
+export type Je = [JeOpcode, number]

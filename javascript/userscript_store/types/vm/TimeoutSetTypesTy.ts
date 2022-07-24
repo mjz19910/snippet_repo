@@ -1,3 +1,3 @@
-import {TimeoutSetTypes} from "types/constants";
+import {TimeoutSetTypes} from "types/constants"
 
-export type TimeoutSetTypesTy = typeof TimeoutSetTypes;
+export type TimeoutSetTypesTy = typeof TimeoutSetTypes

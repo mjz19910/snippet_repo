@@ -1,3 +1,3 @@
 export type TokenSymbolPtr = {
-	token: symbol;
-};
+	token: symbol
+}

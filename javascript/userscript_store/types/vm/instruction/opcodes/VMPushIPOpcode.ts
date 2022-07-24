@@ -1,1 +1,1 @@
-export type PushIPOpcode = 'vm_push_ip';
+export type PushIPOpcode = 'vm_push_ip'

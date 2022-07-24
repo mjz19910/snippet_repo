@@ -1,3 +1,3 @@
-import {ReplyToWorker} from "types/constants";
+import {ReplyToWorker} from "types/constants"
 
-export type ReplyToWorkerTy = typeof ReplyToWorker;
+export type ReplyToWorkerTy = typeof ReplyToWorker

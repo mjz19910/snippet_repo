@@ -1,1 +1,1 @@
-export type DropOpcode = 'drop';
+export type DropOpcode = 'drop'

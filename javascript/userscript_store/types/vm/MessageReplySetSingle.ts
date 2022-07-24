@@ -1,6 +1,6 @@
-import {ReplySetSingleTy} from "./ReplySetSingleTy";
+import {ReplySetSingleTy} from "./ReplySetSingleTy"
 
 export type MessageReplySetSingle = {
-	t: ReplySetSingleTy;
-	v: never;
-};
+	t: ReplySetSingleTy
+	v: never
+}

@@ -1,4 +1,4 @@
-import {GenericEvent} from "./GenericEvent";
+import {GenericEvent} from "./GenericEvent"
 
 export class GenericDataEvent extends GenericEvent {
 	/**
@@ -6,7 +6,7 @@ export class GenericDataEvent extends GenericEvent {
 	 * @param {any} data
 	 */
 	constructor(type, data) {
-		super(type);
-		this.data = data;
+		super(type)
+		this.data = data
 	}
 }

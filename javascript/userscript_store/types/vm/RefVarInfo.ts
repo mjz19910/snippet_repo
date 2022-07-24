@@ -1,6 +1,6 @@
-import {VarRef} from "./VarRef";
+import {VarRef} from "./VarRef"
 
 export type RefVarInfo = {
-	t: number;
-	v: VarRef;
-};
+	t: number
+	v: VarRef
+}

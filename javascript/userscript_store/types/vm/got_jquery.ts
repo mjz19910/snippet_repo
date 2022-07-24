@@ -1,4 +1,4 @@
-import {use_jquery} from "./use_jquery";
+import {use_jquery} from "./use_jquery"
 
 export function got_jquery(value: any) {
 	Object.defineProperty(window, '$', {
@@ -6,6 +6,6 @@ export function got_jquery(value: any) {
 		writable: true,
 		enumerable: true,
 		configurable: true
-	});
-	use_jquery();
+	})
+	use_jquery()
 }

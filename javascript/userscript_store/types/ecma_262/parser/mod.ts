@@ -1,2 +1,2 @@
-import {ParseText} from "./ParseText";
+import {ParseText} from "./ParseText"
 export {ParseText}

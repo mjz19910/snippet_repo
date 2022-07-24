@@ -1,7 +1,7 @@
-import {TimeoutFireSTy} from "./TimeoutFireSTy";
-import {TimeoutFireRTy} from "./TimeoutFireRTy";
+import {TimeoutFireSTy} from "./TimeoutFireSTy"
+import {TimeoutFireRTy} from "./TimeoutFireRTy"
 
 export type TimeoutFireInfoTy = {
-	single: TimeoutFireSTy;
-	repeating: TimeoutFireRTy;
-};
+	single: TimeoutFireSTy
+	repeating: TimeoutFireRTy
+}

@@ -1,4 +1,4 @@
 export type SetRepeatingMessageData = {
-	t: number;
-	v: number;
-};
+	t: number
+	v: number
+}

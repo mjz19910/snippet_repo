@@ -1,2 +1,2 @@
-import {ReturnOpcode} from "../opcodes/VMReturnOpcode";
-export type Return = [ReturnOpcode];
+import {ReturnOpcode} from "../opcodes/VMReturnOpcode"
+export type Return = [ReturnOpcode]

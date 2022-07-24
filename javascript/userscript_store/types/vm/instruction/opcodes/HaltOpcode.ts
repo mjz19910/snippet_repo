@@ -1,1 +1,1 @@
-export type HaltOpcode = 'halt';
+export type HaltOpcode = 'halt'

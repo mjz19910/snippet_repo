@@ -1,1 +1,1 @@
-export type ExtractPromiseResult<T> = T extends Promise<infer U> ? U : never;
+export type ExtractPromiseResult<T> = T extends Promise<infer U> ? U : never

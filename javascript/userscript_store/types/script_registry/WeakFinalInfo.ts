@@ -1,5 +1,5 @@
 export type WeakFinalInfo = {
-	key: symbol;
-	id: number;
-	ref: WeakRef<any>;
-};
+	key: symbol
+	id: number
+	ref: WeakRef<any>
+}

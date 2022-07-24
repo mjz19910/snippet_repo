@@ -1,3 +1,3 @@
 export type SymbolRef = {
-	sym: symbol;
-};
+	sym: symbol
+}

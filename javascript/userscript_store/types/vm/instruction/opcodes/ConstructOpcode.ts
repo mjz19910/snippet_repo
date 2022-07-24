@@ -1,1 +1,1 @@
-export type ConstructOpcode = 'construct';
+export type ConstructOpcode = 'construct'

@@ -1,2 +1,2 @@
 
-export type CastToFunctionIndexOperandValue = "object_index_to_function";
+export type CastToFunctionIndexOperandValue = "object_index_to_function"

@@ -1,3 +1,3 @@
-import {TimeoutClearR} from "types/constants";
+import {TimeoutClearR} from "types/constants"
 
-export type TimeoutClearRTy = typeof TimeoutClearR;
+export type TimeoutClearRTy = typeof TimeoutClearR

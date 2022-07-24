@@ -1,1 +1,1 @@
-export type VMBlockTraceOpcode = 'vm_block_trace';
+export type VMBlockTraceOpcode = 'vm_block_trace'

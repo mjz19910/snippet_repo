@@ -1,1 +1,1 @@
-export type NopOpcode = 'nop';
+export type NopOpcode = 'nop'

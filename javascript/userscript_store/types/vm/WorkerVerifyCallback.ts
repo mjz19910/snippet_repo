@@ -1,5 +1,5 @@
-import {WorkerVerifyType} from "./WorkerVerifyType";
+import {WorkerVerifyType} from "./WorkerVerifyType"
 
 export type WorkerVerifyCallback = {
-	(verify_obj: WorkerVerifyType): void;
-};
+	(verify_obj: WorkerVerifyType): void
+}

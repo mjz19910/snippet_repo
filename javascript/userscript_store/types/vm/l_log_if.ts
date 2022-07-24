@@ -4,6 +4,6 @@ export let logging_state = {
 
 export function l_log_if(level: number, ...args: any[]) {
 	if(level <= logging_state.level) {
-		console.log(...args);
+		console.log(...args)
 	}
 }

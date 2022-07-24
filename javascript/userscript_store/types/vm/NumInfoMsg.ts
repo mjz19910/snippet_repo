@@ -1,6 +1,6 @@
-import {NumInfo} from "./NumInfo";
+import {NumInfo} from "./NumInfo"
 
 export type NumInfoMsg = {
-	t: number;
-	v: NumInfo;
-};
+	t: number
+	v: NumInfo
+}

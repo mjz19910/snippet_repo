@@ -1,3 +1,3 @@
-import {TimeoutSetR} from "types/constants";
+import {TimeoutSetR} from "types/constants"
 
-export type TimeoutSetRTy = typeof TimeoutSetR;
+export type TimeoutSetRTy = typeof TimeoutSetR

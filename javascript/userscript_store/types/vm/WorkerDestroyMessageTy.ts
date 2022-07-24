@@ -1,3 +1,3 @@
-import {WorkerDestroyMessage} from "types/constants";
+import {WorkerDestroyMessage} from "types/constants"
 
-export type WorkerDestroyMessageTy = typeof WorkerDestroyMessage;
+export type WorkerDestroyMessageTy = typeof WorkerDestroyMessage

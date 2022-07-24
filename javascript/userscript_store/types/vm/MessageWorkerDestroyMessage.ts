@@ -1,6 +1,6 @@
-import {WorkerDestroyMessageTy} from "./WorkerDestroyMessageTy";
+import {WorkerDestroyMessageTy} from "./WorkerDestroyMessageTy"
 
 export type MessageWorkerDestroyMessage = {
-	t: WorkerDestroyMessageTy;
-	v: never;
-};
+	t: WorkerDestroyMessageTy
+	v: never
+}

@@ -1,9 +1,9 @@
-import {EventListenerValue} from "./EventListenerValue";
+import {EventListenerValue} from "./EventListenerValue"
 
 export class GenericEventTarget {
 	constructor() {
 		/**@type {Map<string,EventListenerValue[]>} */
-		this._events = new Map;
+		this._events = new Map
 	}
 	/**
 	 * @param {string} type
@@ -12,12 +12,12 @@ export class GenericEventTarget {
 	 * @param {any} callback
 	 */
 	addEventListener(type, callback, options) {
-		let cur_event_vec = this._events.get(type);
+		let cur_event_vec = this._events.get(type)
 		if(!cur_event_vec) {
-			cur_event_vec = [];
-			this._events.set(type, cur_event_vec);
+			cur_event_vec = []
+			this._events.set(type, cur_event_vec)
 		}
-		cur_event_vec.push(new EventListenerValue(callback, options));
+		cur_event_vec.push(new EventListenerValue(callback, options))
 	}
 	/**
 	 * @param {string} type
@@ -26,19 +26,19 @@ export class GenericEventTarget {
 	 * @param {any} callback
 	 */
 	removeEventListener(type, callback, options) {
-		let cur_event_vec = this._events.get(type);
+		let cur_event_vec = this._events.get(type)
 		if(!cur_event_vec)
-			return;
+			return
 		if(cur_event_vec.length == 0)
-			return;
+			return
 		for(let i = cur_event_vec.length - 1; i >= 0; i--) {
-			let cur = cur_event_vec[i];
+			let cur = cur_event_vec[i]
 			if(cur.callback !== callback)
-				continue;
+				continue
 			if(cur.options !== options)
-				continue;
-			cur.callback = null;
-			cur_event_vec.splice(i, 1);
+				continue
+			cur.callback = null
+			cur_event_vec.splice(i, 1)
 		}
 	}
 	/**
@@ -46,27 +46,27 @@ export class GenericEventTarget {
 	 * @returns {boolean}
 	 */
 	dispatchEvent(event) {
-		let event_type = event.type;
-		let cur_event_vec = this._events.get(event_type);
+		let event_type = event.type
+		let cur_event_vec = this._events.get(event_type)
 		if(!cur_event_vec)
-			return false;
-		let cur_event_vec_owned = cur_event_vec.slice();
-		let can_handle = false;
+			return false
+		let cur_event_vec_owned = cur_event_vec.slice()
+		let can_handle = false
 		for(let i = 0; i < cur_event_vec_owned.length; i++) {
-			let cur = cur_event_vec_owned[i];
-			let callback = cur.callback;
+			let cur = cur_event_vec_owned[i]
+			let callback = cur.callback
 			if(callback === null)
-				continue;
+				continue
 			if(typeof callback === 'function') {
-				callback(event);
-				can_handle = true;
-				continue;
+				callback(event)
+				can_handle = true
+				continue
 			}
 			if(callback.handleEvent && typeof callback.handleEvent === 'function') {
-				callback.handleEvent(event);
-				can_handle = true;
+				callback.handleEvent(event)
+				can_handle = true
 			}
 		}
-		return can_handle;
+		return can_handle
 	}
 }

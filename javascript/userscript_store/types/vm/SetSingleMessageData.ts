@@ -1,4 +1,4 @@
 export type SetSingleMessageData = {
-	t: number;
-	v: number;
-};
+	t: number
+	v: number
+}

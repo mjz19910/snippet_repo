@@ -1,1 +1,1 @@
-export type DocumentWriteFn = (...text: string[]) => void;
+export type DocumentWriteFn = (...text: string[]) => void

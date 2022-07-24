@@ -3,4 +3,4 @@ export type LexReturnType =
 [true, number]|
 [null, number]|
 [['Error', string], number]|
-[false, Error];
+[false, Error]

@@ -1,3 +1,3 @@
-import {TimeoutRepeatingReply} from "types/constants";
+import {TimeoutRepeatingReply} from "types/constants"
 
-export type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply;
+export type TimeoutRepeatingReplyTy = typeof TimeoutRepeatingReply

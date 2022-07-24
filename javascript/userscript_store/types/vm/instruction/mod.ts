@@ -1,25 +1,25 @@
-import {Append} from "./Append";
-import {AppendOpcode} from "./opcodes/AppendOpcode";
-import {CallOpcode} from "./opcodes/CallOpcode";
-import {Cast} from "./Cast";
-import {CastOpcode} from "./opcodes/CastOpcode";
-import {ConstructOpcode} from "./opcodes/ConstructOpcode";
-import {GetOpcode} from "./opcodes/GetOpcode";
-import {PushWindowObjectOpcode} from "./opcodes/PushWindowObjectOpcode";
-import {HaltOpcode} from "./opcodes/HaltOpcode";
-import {ModifyOperand} from "./ModifyOperand";
-import {ModifyOperandOpcode} from "./opcodes/ModifyOperandOpcode";
-import {Nop} from "./Nop";
-import {NopOpcode} from "./opcodes/NopOpcode";
-import {PushSelfOpcode as VMPushSelfOpcode} from "./opcodes/VMPushSelfOpcode";
-import {StackVM} from "../StackVM";
-import * as debug from "./debug/mod";
-import * as general from "./general/mod";
-import * as jump from "./jump/mod";
-import * as push from "./push/mod";
-import * as stack from "./stack/mod";
-import * as turing from "./turing/mod";
-import * as vm from "./vm/mod";
+import {Append} from "./Append"
+import {AppendOpcode} from "./opcodes/AppendOpcode"
+import {CallOpcode} from "./opcodes/CallOpcode"
+import {Cast} from "./Cast"
+import {CastOpcode} from "./opcodes/CastOpcode"
+import {ConstructOpcode} from "./opcodes/ConstructOpcode"
+import {GetOpcode} from "./opcodes/GetOpcode"
+import {PushWindowObjectOpcode} from "./opcodes/PushWindowObjectOpcode"
+import {HaltOpcode} from "./opcodes/HaltOpcode"
+import {ModifyOperand} from "./ModifyOperand"
+import {ModifyOperandOpcode} from "./opcodes/ModifyOperandOpcode"
+import {Nop} from "./Nop"
+import {NopOpcode} from "./opcodes/NopOpcode"
+import {PushSelfOpcode as VMPushSelfOpcode} from "./opcodes/VMPushSelfOpcode"
+import {StackVM} from "../StackVM"
+import * as debug from "./debug/mod"
+import * as general from "./general/mod"
+import * as jump from "./jump/mod"
+import * as push from "./push/mod"
+import * as stack from "./stack/mod"
+import * as turing from "./turing/mod"
+import * as vm from "./vm/mod"
 export {
 	PushWindowObject as PushWindowObject,
 	Append,
@@ -34,13 +34,13 @@ export {
 	turing,
 	vm,
 }
-type PushWindowObject=push.WindowObject;
+type PushWindowObject=push.WindowObject
 
 export type InstructionMap={
-	'append':Append;
+	'append':Append
 	'breakpoint':debug.Breakpoint
 	'call':general.Call
-	'cast':Cast;
+	'cast':Cast
 	'construct':general.Construct
 	'drop':stack.Drop
 	'dup':stack.Dup
@@ -54,28 +54,28 @@ export type InstructionMap={
 	'push_window_object':push.WindowObject
 	'push':stack.Push
 	'return':general.Return
-	'vm_block_trace':vm.BlockTrace;
-	'vm_call':vm.VMCall;
+	'vm_block_trace':vm.BlockTrace
+	'vm_call':vm.VMCall
 	'vm_push_args':push.Args
-	'vm_push_ip':vm.PushIP;
+	'vm_push_ip':vm.PushIP
 	'vm_push_self':push.VMPushSelf
-	'vm_return':vm.Return;
+	'vm_return':vm.Return
 }
 
-export type InstructionType = InstructionMap[keyof InstructionMap];
+export type InstructionType = InstructionMap[keyof InstructionMap]
 
 
 export interface InstructionImplObj<T, C_Ty, I_Type> {
-	type:T;
-	get_class_type?: () => C_Ty | null;
-	run(vm: StackVM, _i: I_Type): void;
+	type:T
+	get_class_type?: () => C_Ty | null
+	run(vm: StackVM, _i: I_Type): void
 }
 
 export interface InstructionImpl<T extends [string, any, any]> {
-	new(): InstructionImplObj<T[0], T[1], T[2]>;
+	new(): InstructionImplObj<T[0], T[1], T[2]>
 }
 
-type IM<T extends keyof InstructionImplMap & keyof InstructionMap>=[T, InstructionImplMap[T], InstructionMap[T]];
+type IM<T extends keyof InstructionImplMap & keyof InstructionMap>=[T, InstructionImplMap[T], InstructionMap[T]]
 
 export interface IAppendImpl extends InstructionImpl<IM<AppendOpcode>> {}
 export interface IBreakpointImpl extends InstructionImpl<IM<debug.BreakpointOpcode>> {}
@@ -101,34 +101,34 @@ export interface IVMPushIPImpl extends InstructionImpl<IM<vm.PushIPOpcode>> {}
 export interface IVMPushSelfImpl extends InstructionImpl<IM<VMPushSelfOpcode>> {}
 export interface IVMReturnImpl extends InstructionImpl<IM<vm.ReturnOpcode>> {}
 
-type i_type_test=InstanceType<IVMReturnImpl>;
+type i_type_test=InstanceType<IVMReturnImpl>
 
-type x_1=i_type_test['type'];
+type x_1=i_type_test['type']
 
 export type InstructionImplMap = {
-	'append': IAppendImpl;
-	'breakpoint': IBreakpointImpl;
-	'call': ICallImpl;
-	'cast': ICastImpl;
-	'construct': IConstructImpl;
-	'drop': IDropImpl;
-	'dup': IDupImpl;
-	'get': IGetImpl;
-	'halt': IHaltImpl;
-	'je': IJeImpl;
-	'jmp': IJumpImpl;
-	'modify_operand': IModifyOPImpl;
-	'nop': INopImpl;
-	'peek': IPeekImpl;
-	'push_window_object': IPushWindowObjectImpl;
-	'push': IPushImpl;
-	'return': IReturnImpl;
-	'vm_block_trace': IVMBlockTraceImpl;
-	'vm_call': IVMCallImpl;
-	'vm_push_args': IVMPushArgsImpl;
-	'vm_push_ip': IVMPushIPImpl;
-	'vm_push_self': IVMPushSelfImpl;
-	'vm_return': IVMReturnImpl;
+	'append': IAppendImpl
+	'breakpoint': IBreakpointImpl
+	'call': ICallImpl
+	'cast': ICastImpl
+	'construct': IConstructImpl
+	'drop': IDropImpl
+	'dup': IDupImpl
+	'get': IGetImpl
+	'halt': IHaltImpl
+	'je': IJeImpl
+	'jmp': IJumpImpl
+	'modify_operand': IModifyOPImpl
+	'nop': INopImpl
+	'peek': IPeekImpl
+	'push_window_object': IPushWindowObjectImpl
+	'push': IPushImpl
+	'return': IReturnImpl
+	'vm_block_trace': IVMBlockTraceImpl
+	'vm_call': IVMCallImpl
+	'vm_push_args': IVMPushArgsImpl
+	'vm_push_ip': IVMPushIPImpl
+	'vm_push_self': IVMPushSelfImpl
+	'vm_return': IVMReturnImpl
 }
 
 export type InstructionOpcodesList = [
@@ -155,8 +155,8 @@ export type InstructionOpcodesList = [
 	vm_push_ip:vm.PushIPOpcode,
 	vm_push_self:vm.PushSelfOpcode,
 	vm_return:vm.ReturnOpcode,
-];
-export type Decode<T extends keyof InstructionImplMap> = [T, InstructionImplMap[T]];
+]
+export type Decode<T extends keyof InstructionImplMap> = [T, InstructionImplMap[T]]
 
 export type DecodeArr<T>=
 	T extends [] ? [] :
@@ -164,6 +164,6 @@ export type DecodeArr<T>=
 	T extends [infer X, ...infer U] ?
 	X extends keyof InstructionImplMap ?
 	[DecodeArrStep1<[X]>, ...DecodeArr<U>] :
-	[]:[] : [];
+	[]:[] : []
 
 type DecodeArrStep1<T extends (keyof InstructionImplMap)[]>=Decode<T[0]>

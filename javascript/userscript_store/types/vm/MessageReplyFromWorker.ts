@@ -1,7 +1,7 @@
-import {MessageReplyFromWorkerData} from "./MessageReplyFromWorkerData";
-import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy";
+import {MessageReplyFromWorkerData} from "./MessageReplyFromWorkerData"
+import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy"
 
 export type MessageReplyFromWorker = {
-	t: ReplyFromWorkerTy;
-	v: MessageReplyFromWorkerData;
-};
+	t: ReplyFromWorkerTy
+	v: MessageReplyFromWorkerData
+}

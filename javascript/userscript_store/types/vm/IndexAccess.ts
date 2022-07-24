@@ -1,3 +1,3 @@
 export type IndexAccess<T> = {
-	[v: string]: T;
-};
+	[v: string]: T
+}

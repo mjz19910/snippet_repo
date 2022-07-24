@@ -1,18 +1,18 @@
-import {ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutMessageR, TimeoutSetR, TimeoutSetS, WorkerReadyReply} from "types/constants";
-import {MakeReplyData} from "./MakeReplyData";
-import {NoDataMsg} from "./NoDataMsg";
-import {NumInfoMsg} from "./NumInfoMsg";
-import {RefVarMsg} from "./RefVarMsg";
-import {TimeoutClearStrings} from "./TimeoutClearStrings";
-import {TimeoutSetStrings} from "./TimeoutSetStrings";
-import {TimerMessageTypes} from "./TimerMessageTypes";
+import {ReplyClearRepeating, ReplyClearSingle, ReplyFromWorker, ReplySetRepeating, ReplySetSingle, TimeoutClearS, TimeoutMessageR, TimeoutSetR, TimeoutSetS, WorkerReadyReply} from "types/constants"
+import {MakeReplyData} from "./MakeReplyData"
+import {NoDataMsg} from "./NoDataMsg"
+import {NumInfoMsg} from "./NumInfoMsg"
+import {RefVarMsg} from "./RefVarMsg"
+import {TimeoutClearStrings} from "./TimeoutClearStrings"
+import {TimeoutSetStrings} from "./TimeoutSetStrings"
+import {TimerMessageTypes} from "./TimerMessageTypes"
 
 export class TimerApi {
-	msg_types:TimerMessageTypes = new TimerMessageTypes;
-	set_names:TimeoutSetStrings = new TimeoutSetStrings;
-	clear_names:TimeoutClearStrings = new TimeoutClearStrings;
-	handled: number[] = [];
-	to_handle: (NoDataMsg | NumInfoMsg | RefVarMsg)[];
+	msg_types:TimerMessageTypes = new TimerMessageTypes
+	set_names:TimeoutSetStrings = new TimeoutSetStrings
+	clear_names:TimeoutClearStrings = new TimeoutClearStrings
+	handled: number[] = []
+	to_handle: (NoDataMsg | NumInfoMsg | RefVarMsg)[]
 	constructor() {
 		this.to_handle = [
 			{t: TimeoutMessageR},
@@ -36,6 +36,6 @@ export class TimerApi {
 			new MakeReplyData(ReplyFromWorker, ReplyClearRepeating, {
 				var: 'remote_id'
 			}, {})
-		];
+		]
 	}
 }

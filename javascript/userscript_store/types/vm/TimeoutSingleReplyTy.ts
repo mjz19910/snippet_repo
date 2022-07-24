@@ -1,3 +1,3 @@
-import {TimeoutSingleReply} from "types/constants";
+import {TimeoutSingleReply} from "types/constants"
 
-export type TimeoutSingleReplyTy = typeof TimeoutSingleReply;
+export type TimeoutSingleReplyTy = typeof TimeoutSingleReply

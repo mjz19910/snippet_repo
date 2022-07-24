@@ -1,8 +1,8 @@
-import { DomInstructionNullMarker, DomInstructionType } from "../../vm/instruction/vm/VMBlockTrace";
-import { is_dom_tagged_pack } from "./is_dom_tagged_pack";
-import { is_instruction_type } from "./is_instruction_type";
-import { assert_type } from "../assert_type";
-import { is_number } from "./is_number";
+import { DomInstructionNullMarker, DomInstructionType } from "../../vm/instruction/vm/VMBlockTrace"
+import { is_dom_tagged_pack } from "./is_dom_tagged_pack"
+import { is_instruction_type } from "./is_instruction_type"
+import { assert_type } from "../assert_type"
+import { is_number } from "./is_number"
 
 export function is_dom_instruction_type(value: DomInstructionType): value is DomInstructionType {
 	if (!is_number(value[0])) {
