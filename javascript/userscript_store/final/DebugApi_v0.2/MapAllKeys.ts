@@ -1,1 +1,1 @@
-export type MapAllKeys = ['d', 'u', 'getEventListeners', '__k'];
+export type MapAllKeys=['d','u','getEventListeners','__k']

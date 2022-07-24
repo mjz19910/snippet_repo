@@ -1,2 +1,2 @@
-import {FunctionCallbackArgs} from "./FunctionCallbackArgs";
-export type ApiCallbackFunction = (v: FunctionCallbackArgs) => {};
+import {FunctionCallbackArgs} from "./FunctionCallbackArgs"
+export type ApiCallbackFunction=(v: FunctionCallbackArgs) => {}

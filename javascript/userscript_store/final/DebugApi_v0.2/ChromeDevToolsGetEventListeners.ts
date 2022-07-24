@@ -1,1 +1,1 @@
-export type ChromeDevToolsGetEventListeners = (obj_to_query: {}) => {};
+export type ChromeDevToolsGetEventListeners=(obj_to_query: {}) => {}

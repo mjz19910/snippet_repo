@@ -1,9 +1,9 @@
 Object.defineProperty({
-	info(){
-		return this.t;
+	info() {
+		return this.t
 	}
 },'t',{
-	value:false,
-	enumerable:true,
-	writable:true
-});
+	value: false,
+	enumerable: true,
+	writable: true
+})

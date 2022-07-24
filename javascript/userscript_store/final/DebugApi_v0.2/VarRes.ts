@@ -1,4 +1,4 @@
-export type VarRes = {
-	type: 'var';
-	data: [string, any];
-};
+export type VarRes={
+	type: 'var'
+	data: [string,any]
+}

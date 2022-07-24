@@ -1,1 +1,1 @@
-type FunctionArgs = [type: 'function', obj: {}, args: any[]];
+export type FunctionArgs=[type: 'function',obj: {},args: any[]]

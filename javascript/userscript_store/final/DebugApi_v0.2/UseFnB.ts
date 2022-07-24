@@ -1,1 +1,1 @@
-type UseFnB = [{} | null, any[]];
+export type UseFnB=[{}|null,any[]]

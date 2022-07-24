@@ -9,8 +9,8 @@ import {TimerTag} from "./TimerTag"
 import {DispatchMessageType} from "./DispatchMessageType"
 import {TimeoutClearStrings} from "./TimeoutClearStrings"
 import {TIMER_SINGLE,TIMER_REPEATING,TIMER_TAG_COUNT,ReplySetSingle,ReplySetRepeating,ReplyClearSingle} from "types/constants"
-import {is_in_ignored_from_src_fn,is_in_userscript} from "./find_all_scripts_using_string_apis"
 import {SetMessageData} from "./SetMessageData"
+import {is_in_ignored_from_src_fn, is_in_userscript} from "types/script_registry/mod"
 export class Timer {
 	id_generator
 	m_remote_id_to_main_state_map: any
@@ -34,7 +34,7 @@ export class Timer {
 	set_api_names(set: TimeoutSetStrings,clear: TimeoutClearStrings) {
 		this.set_map_names(set)
 		this.set_map_names(clear)
-		this.base_id=window[set.single](timer_nop)
+		this.base_id=window[set.single](()=>{})
 		window[clear.single](this.base_id)
 		this.id_generator.set_current(this.base_id)
 	}
@@ -151,11 +151,12 @@ export class Timer {
 			console.assert(false,'tried to send_worker_message, but the gc collected the worker_state, referenced with a WeakRef (weak_worker_state)')
 			return
 		}
-		let msg_id: TimeoutSetRTy|TimeoutSetSTy
-		switch(tag) {
-			case TIMER_SINGLE: msg_id=this.m_api_info.msg_types.worker.set.single; break
-			case TIMER_REPEATING: msg_id=this.m_api_info.msg_types.worker.set.repeating; break
-		}
+		let msg_id=(tag=>{
+			switch(tag){
+				case TIMER_SINGLE: return this.m_api_info.msg_types.worker.set.single
+				case TIMER_REPEATING: return this.m_api_info.msg_types.worker.set.repeating
+			}
+		})(tag)
 		if(!msg_id) {
 			console.assert(false,'Unknown timer_tag',tag)
 			console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag)

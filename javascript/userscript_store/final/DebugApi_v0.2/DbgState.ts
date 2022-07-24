@@ -1,4 +1,4 @@
-import {DbgRetInfo} from "./DbgRetInfo";
+import {DbgRetInfo} from "./DbgRetInfo"
 export interface DbgState {
-	get(x: string): DbgRetInfo;
+	get(x: string): DbgRetInfo
 }

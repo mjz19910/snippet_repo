@@ -1,1 +1,1 @@
-export type FnArgsObj = ['function', {} | null, any[]];
+export type FnArgsObj=['function',{}|null,any[]]

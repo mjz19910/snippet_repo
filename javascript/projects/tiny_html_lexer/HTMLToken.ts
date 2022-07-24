@@ -8,7 +8,7 @@ enum Type {
 	EndOfFile=7,
 }
 export class HTMLToken {
-	static Type=Type;
+	static Type=Type
 	m_type
 	m_data!: number|string|{}
 	/**

@@ -99,27 +99,32 @@ export class AutoBuyState {
 	update_ratio_mode() {
 		switch(this.ratio_mode) {
 			case 0: if(this.ratio>.4)
-				this.do_ratio_lock(1,80*12); break
+				this.do_ratio_lock(1,80*12)
+				break
 			case 1:
 				if(this.ratio<.35)
 					this.do_ratio_lock(-1,80*3)
 				if(this.ratio>.60)
-					this.do_ratio_lock(1,80*12); break
+					this.do_ratio_lock(1,80*12)
+					break
 			case 2:
 				if(this.ratio<.45)
 					this.do_ratio_lock(-1,80*3)
 				if(this.ratio>.85)
-					this.do_ratio_lock(1,80*12); break
+					this.do_ratio_lock(1,80*12)
+					break
 			case 3:
 				if(this.ratio<.9)
 					this.do_ratio_lock(-1,80*3)
 				if(this.ratio>1.5)
-					this.on_very_high_ratio(); break
+					this.on_very_high_ratio()
+					break
 			default:
 				if(this.ratio<.9)
 					this.do_ratio_lock(-1,80*6)
 				if(this.ratio>1.5)
-					this.on_very_high_ratio(2); break
+					this.on_very_high_ratio(2)
+					break
 		}
 	}
 	do_ratio_lock(mode_change_direction: number,num_of_cycles: number) {

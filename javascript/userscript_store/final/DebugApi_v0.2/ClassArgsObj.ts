@@ -1,3 +1,3 @@
-import {ClassArgs} from "./ClassArgs";
+import {ClassArgs} from "./ClassArgs"
 
-export type ClassArgsObj = ['class', ClassArgs];
+export type ClassArgsObj=['class',ClassArgs]

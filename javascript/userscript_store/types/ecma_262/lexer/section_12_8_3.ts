@@ -329,7 +329,7 @@ export class section_12_8_3 extends LexerBase {
 		else {
 			// 1...9 or period
 			/*while (is_ascii_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_ascii_digit))
-				consume();*/
+				consume()*/
 			while(is_ascii_digit(this.m_current_char)||this.match_numeric_literal_separator_followed_by(is_ascii_digit))
 				this.consume()
 			/*if (m_current_char == 'n') {
@@ -364,7 +364,7 @@ export class section_12_8_3 extends LexerBase {
 					}
 				}
 				/*if (m_current_char == 'e' || m_current_char == 'E')
-					is_invalid_numeric_literal = is_invalid_numeric_literal || !consume_exponent();*/
+					is_invalid_numeric_literal = is_invalid_numeric_literal || !consume_exponent()*/
 				if(this.m_current_char=='e'||this.m_current_char=='E')
 					is_invalid_numeric_literal=is_invalid_numeric_literal||!this.consume_exponent()
 			}
@@ -392,12 +392,12 @@ export class section_12_8_3 extends LexerBase {
 		//consume()
 		this.consume()
 		/*if (!is_octal_digit(m_current_char))
-			return false;*/
+			return false*/
 		if(!is_octal_digit(this.m_current_char))
 			return false
 
 		/*while (is_octal_digit(m_current_char) || match_numeric_literal_separator_followed_by(is_octal_digit))
-		consume();*/
+		consume()*/
 		while(is_octal_digit(this.m_current_char)||this.match_numeric_literal_separator_followed_by(is_octal_digit))
 			this.consume()
 

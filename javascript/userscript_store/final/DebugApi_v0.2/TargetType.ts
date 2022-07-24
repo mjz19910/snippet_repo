@@ -1,4 +1,4 @@
-import {TargetClassType} from "./TargetClassType";
-import {TargetFnType} from "./TargetFnType";
+import {TargetClassType} from "./TargetClassType"
+import {TargetFnType} from "./TargetFnType"
 
-type TargetType = TargetClassType | TargetFnType;
+export type TargetType=TargetClassType|TargetFnType

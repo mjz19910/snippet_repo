@@ -1,3 +1,3 @@
-import {FunctionCallbackArgs} from "./FunctionCallbackArgs";
+import {FunctionCallbackArgs} from "./FunctionCallbackArgs"
 
-export type TargetFnType = [type: 'function', run: (v: FunctionCallbackArgs) => void];
+export type TargetFnType=[type: 'function',run: (v: FunctionCallbackArgs) => void]

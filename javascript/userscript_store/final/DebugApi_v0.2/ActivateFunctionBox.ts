@@ -1,1 +1,1 @@
-export type ActivateFunctionBox = ['function', null, null];
+export type ActivateFunctionBox=['function',null,null]

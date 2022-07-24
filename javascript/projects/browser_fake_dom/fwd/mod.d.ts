@@ -7,13 +7,13 @@ declare class DOMBadge {}
 declare class Badge {}
 
 declare namespace create_fake {
-	function window():void;
-	function document():void;
+	function window():void
+	function document():void
 }
 
 declare namespace fake {
-	var window:FakeWindow;
-	var document:FakeDocument;
+	var window:FakeWindow
+	var document:FakeDocument
 }
 
 declare global {

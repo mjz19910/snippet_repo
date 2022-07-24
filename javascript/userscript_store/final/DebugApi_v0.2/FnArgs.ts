@@ -1,1 +1,1 @@
-export type FnArgs = any[];
+export type FnArgs=any[]

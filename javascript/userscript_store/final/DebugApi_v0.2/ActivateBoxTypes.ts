@@ -1,4 +1,4 @@
-import {ActivateClassBox} from "./ActivateClassBox";
-import {ActivateFunctionBox} from "./ActivateFunctionBox";
+import {ActivateClassBox} from "./ActivateClassBox"
+import {ActivateFunctionBox} from "./ActivateFunctionBox"
 
-type ActivateBoxTypes = ActivateFunctionBox | ActivateClassBox;
+type ActivateBoxTypes=ActivateFunctionBox|ActivateClassBox

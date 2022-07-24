@@ -49,7 +49,9 @@ export class BaseStackVM extends BaseVMCreate {
 					this.push(item)
 				}
 			} break
-			case 'drop' /*Stack*/: this.pop(); break
+			case 'drop' /*Stack*/:
+				this.pop()
+				break
 			case 'get' /*Object*/: {
 				let target_name=this.pop()
 				if(target_name===void 0)
@@ -133,7 +135,9 @@ export class BaseStackVM extends BaseVMCreate {
 			case 'push_pc': {
 				this.push(this.instruction_pointer)
 			} break
-			default: super.execute_instruction(instruction); break
+			default: {
+				super.execute_instruction(instruction)
+			} break
 		}
 	}
 	run(): Box {

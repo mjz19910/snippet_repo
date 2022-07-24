@@ -1,1 +1,1 @@
-export type ActivateClassBox = ['class', null, null];
+export type ActivateClassBox=['class',null,null]

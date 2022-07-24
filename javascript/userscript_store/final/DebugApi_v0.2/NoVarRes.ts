@@ -1,4 +1,4 @@
-export type NoVarRes = {
-	type: 'no-var';
-	data: null;
-};
+export type NoVarRes={
+	type: 'no-var'
+	data: null
+}

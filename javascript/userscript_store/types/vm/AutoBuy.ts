@@ -4,7 +4,7 @@ import {AsyncNodeRoot} from "./AsyncNodeRoot"
 import {AsyncTimeoutNode} from "./AsyncTimeoutNode"
 import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget"
 import {AutoBuyState} from "./AutoBuyState"
-import {Box} from "../box/z_/Box"
+import {Box} from "../box/Box"
 import {DomBuilderVM} from "./DomBuilderVM"
 import {DomValueBox} from "./DomValueBox"
 import {do_auto_unit_promote} from "./do_auto_unit_promote"
@@ -267,6 +267,12 @@ export class AutoBuy implements IAutoBuy {
 		let dom_styles=document.adoptedStyleSheets
 		document.adoptedStyleSheets=[...dom_styles,...styles]
 	}
+	decode_query_arg(query: string) {
+		switch(query) {
+			case 'body': return document.body
+			default: return document.querySelector(query)
+		}
+	}
 	build_dom_from_desc(raw_arr: string|any[],trg_map=new Map,dry_run=false) {
 		let stack=[]
 		let map=trg_map
@@ -277,11 +283,8 @@ export class AutoBuy implements IAutoBuy {
 			let [depth,action,...args]=cur_item
 			switch(action) {
 				case 'get': {
-					let cur_element,[query_arg]=args
-					switch(query_arg) {
-						case 'body': cur_element=document.body; break
-						default: cur_element=document.querySelector(query_arg); break
-					}
+					let [query_arg]=args
+					const cur_element=this.decode_query_arg(query_arg)
 					stack.push([depth,"push",new DomValueBox('get',cur_element)])
 				} break
 				case 'new': {
@@ -300,7 +303,7 @@ export class AutoBuy implements IAutoBuy {
 						if(content.id)
 							cur_element.id=content.id
 					} else {
-						console.log('bad typeof == %s for content in build_dom; content=%o',typeof content,content)
+						console.log('typeof content=%s content=%o',typeof content,content)
 						console.info("Info: case 'create' args are",element_type,name)
 					}
 					map.set(name,cur_element)
@@ -313,7 +316,9 @@ export class AutoBuy implements IAutoBuy {
 				} break
 				case 'drop':
 				case 'call': // push the item
-				case 'push': stack.push(cur_item); break
+				case 'push':
+					stack.push(cur_item)
+					break
 				default: {
 					console.log('might need to handle',action)
 					debugger

@@ -1,3 +1,3 @@
-import {DebuggableTypes} from "./DebuggableTypes";
+import {DebuggableTypes} from "./DebuggableTypes"
 
-export type ChromeDevToolsUnDebug = (fn_to_stop_dbg: DebuggableTypes) => void;
+export type ChromeDevToolsUnDebug=(fn_to_stop_dbg: DebuggableTypes) => void

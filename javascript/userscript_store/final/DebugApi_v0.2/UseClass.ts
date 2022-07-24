@@ -1,4 +1,4 @@
-import {ClassArgs} from "./ClassArgs";
-import {ClassCallbackArgs} from "./ClassCallbackArgs";
+import {ClassArgs} from "./ClassArgs"
+import {ClassCallbackArgs} from "./ClassCallbackArgs"
 
-type UseClass = [t: 'class', v: ClassCallbackArgs, a: ClassArgs];
+export type UseClass=[t: 'class',v: ClassCallbackArgs,a: ClassArgs]

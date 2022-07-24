@@ -1,4 +1,4 @@
-import {ClassArgs} from "./ClassArgs";
-import {ClassArgsObj} from "./ClassArgsObj";
+import {ClassArgs} from "./ClassArgs"
+import {ClassArgsObj} from "./ClassArgsObj"
 
-export type ClassCallbackArgs = ['class', new (...a: ClassArgs) => {}, ClassArgsObj];
+export type ClassCallbackArgs=['class',new (...a: ClassArgs) => {},ClassArgsObj]
