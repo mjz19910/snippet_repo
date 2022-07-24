@@ -1,15 +1,13 @@
 import {NonEmptyArray} from "../helper/NonEmptyArray"
-import {Primitives} from "../helper/Primitives"
 export function is_array_of<
-	ToType,
-	T extends ({}|Primitives|null)[],
-	Fn extends (v: T[0]) => v is ToType
+	T extends any[],U,
+	Fn extends (v: T[0]) => v is U
 >(
 	// an array that has no values should never be the case
-	v: NonEmptyArray<T>|ToType[],
+	v: NonEmptyArray<T>|U[],
 	// a function to check that the array element type is valid to be converted
 	check_is_type: Fn
-): v is ToType[] {
+): v is U[] {
 	let vv=v.values()
 	let v1=vv.next()
 	if(v1.done) {
