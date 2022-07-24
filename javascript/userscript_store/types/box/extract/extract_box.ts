@@ -1,5 +1,5 @@
 import {Box} from "../Box";
-import {BoxExtractType} from "./create_box/BoxExtractType";
+import {BoxExtractType} from "../create_box/BoxExtractType";
 export function extract_box(v: Box): BoxExtractType {
 	let cur = v;
 	switch(typeof cur) {
