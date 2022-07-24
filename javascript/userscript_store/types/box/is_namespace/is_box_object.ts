@@ -59,6 +59,7 @@ export function is_box_object<T>(v: Exclude<Box,Primitives|null>|T):
 					case 'vm_function': return v.verify_name("temporary_box_from_cast_to_vm_function")
 				}
 				case 'create_box': return v.verify_name("temporary_box_from_create_box")
+				default: assert_type<never>(v); return false
 			}
 			default: assert_type<never>(v); return false
 		}
