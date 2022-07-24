@@ -25,7 +25,7 @@ export function is_box_object<T>(v: Exclude<Box,Primitives|null>|T):
 		case 'object_box': switch(v.inner_type) {
 			case 'Window': return v.verify_name("WindowBox")
 			case 'unit': return v.verify_name("ObjectBox")
-			case 'T': return v.verify_name("IndexBox")
+			case 'Box': return v.verify_name("IndexBox")
 			default: return eat_never(v)
 		}
 		case 'promise_box': switch(v.await_type) {
