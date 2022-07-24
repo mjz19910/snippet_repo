@@ -1,3 +1,3 @@
-import {FetchRequestState} from "../FetchRequestState";
+import {FetchRequestState} from "../FetchRequestState"
 
-export type LoaderState=FetchRequestState;
+export type LoaderState=FetchRequestState

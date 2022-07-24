@@ -1,3 +1,3 @@
-export function is_array<T extends any[]>(v: any): v is T {
+export function is_array<T, U>(v: T[]|U): v is T[] {
 	return v instanceof Array
 }

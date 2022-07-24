@@ -1,4 +1,4 @@
-import {debug_id_syms, AUDIO_ELEMENT_VOLUME, LOG_LEVEL_VERBOSE} from "types/constants"
+import {debug_id_syms,AUDIO_ELEMENT_VOLUME,LOG_LEVEL_VERBOSE} from "types/constants"
 import {array_sample_end} from "./array_sample_end"
 import {AsyncNodeRoot} from "./AsyncNodeRoot"
 import {AsyncTimeoutNode} from "./AsyncTimeoutNode"
@@ -24,7 +24,7 @@ export class AutoBuy implements IAutoBuy {
 	state_history_arr: any
 	root_node: AsyncNodeRoot
 	extra: number
-	background_audio: HTMLAudioElement | null
+	background_audio: HTMLAudioElement|null
 	skip_save: boolean
 	iter_count: number
 	epoch_len: number
@@ -34,8 +34,8 @@ export class AutoBuy implements IAutoBuy {
 	state: AutoBuyState
 	debug: boolean
 	epoch_start_time: number
-	original_map: Map<any, any>
-	dom_map: Map<any, any>
+	original_map: Map<any,any>
+	dom_map: Map<any,any>
 	debug_arr: string[]
 	timeout_arr: any
 	display_style_sheet?: CSSStyleSheet
@@ -45,56 +45,60 @@ export class AutoBuy implements IAutoBuy {
 	percent_ratio_element?: HTMLDivElement
 	percent_ratio_change_element?: HTMLDivElement
 	state_log_element?: HTMLDivElement
-	state_history_arr_max_len: number | undefined
-	last_value: number | undefined
+	state_history_arr_max_len: number|undefined
+	last_value: number|undefined
 	pre_total: any
 	[v: symbol]: string
 	async_compress() {
-		this.state_history_arr = this.compressor.compress_array(this.state_history_arr)
+		this.state_history_arr=this.compressor.compress_array(this.state_history_arr)
 	}
 	constructor() {
-		this.root_node = new AsyncNodeRoot
-		this.extra = 0; this.iter_count = 0; this.epoch_len = 0
-		this.background_audio = null; this.state_history_arr = null
-		this.skip_save = false
-		this.cint_arr = []
-		this.local_data_loader = new DataLoader(localStorage)
-		this.state = new AutoBuyState(this.root_node)
-		this.debug = this.state.debug
-		this.compressor = new MulCompression
-		this.state_history_arr = this.local_data_loader.load_str_arr('auto_buy_history_str', ["S"])
-		this.epoch_start_time = Date.now()
-		this.original_map = new Map
-		this.dom_map = new Map
-		this.debug_arr = []
-		for(let i = 0;i < debug_id_syms.length;i++) {
-			let val = debug_id_syms[i].deref()
-			if(val && (<any>this)[val.sym]) {
-				let obj1 = (this)[val.sym]
-				let split_data = obj1.split(",")
+		this.root_node=new AsyncNodeRoot
+		this.extra=0
+		this.iter_count=0
+		this.epoch_len=0
+		this.background_audio=null
+		this.state_history_arr=null
+		this.skip_save=false
+		this.cint_arr=[]
+		this.local_data_loader=new DataLoader(localStorage)
+		this.state=new AutoBuyState(this.root_node)
+		this.debug=this.state.debug
+		this.compressor=new MulCompression
+		this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str',["S"])
+		this.epoch_start_time=Date.now()
+		this.original_map=new Map
+		this.dom_map=new Map
+		this.debug_arr=[]
+		for(let i=0;i<debug_id_syms.length;i++) {
+			let val=debug_id_syms[i].deref()
+			if(val&&(<any>this)[val.sym]) {
+				let obj1=(this)[val.sym]
+				let split_data=obj1.split(",")
 				this.debug_arr.push(...split_data.map((e: string) => e.trim()))
 			}
 		}
-		this.timeout_arr = this.local_data_loader.load_int_arr('auto_buy_timeout_str', (e: any) => {
-			let src = [300]
-			src.length = 16
-			let data_len = 1
-			while(src.at(-1) != src[0]) {
-				src.copyWithin(data_len, 0)
-				data_len *= 2
+		this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str',(e: any) => {
+			let src=[300]
+			src.length=16
+			let data_len=1
+			while(src.at(-1)!=src[0]) {
+				src.copyWithin(data_len,0)
+				data_len*=2
 			}
 			return src
 		})
 	}
 	pre_init() {
-		// find elements; find background_audio by id
-		this.background_audio = document.querySelector("#background_audio")
+		// find elements
+		// find background_audio by id
+		this.background_audio=document.querySelector("#background_audio")
 		if(!this.background_audio)
 			throw new Error("Missing expected element")
 		// change the audio element's volume, and remove
 		// the event listener that will change the volume
-		this.background_audio.onloadeddata = null
-		this.background_audio.volume = AUDIO_ELEMENT_VOLUME
+		this.background_audio.onloadeddata=null
+		this.background_audio.volume=AUDIO_ELEMENT_VOLUME
 		this.async_pre_init().then(() => {
 			console.log('pre_init done')
 		})
@@ -106,10 +110,10 @@ export class AutoBuy implements IAutoBuy {
 		try {
 			return this.background_audio.play()
 		} catch(e) {
-			is_in_ignored_from_src_fn.flag = true
+			is_in_ignored_from_src_fn.flag=true
 			console.log("failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)")
 		}
-		let instructions = SimpleStackVMParser.parse_instruction_stream_from_string(`
+		let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(`
 			this;push,target_obj;get;push,background_audio;get;push,play
 				call,int(2)
 					push,then
@@ -121,65 +125,66 @@ export class AutoBuy implements IAutoBuy {
 			global;push,removeEventListener;push,click;this
 				call,int(2)
 			drop
-			`, [function() {console.log('play success');}, function(err: Box) {console.log(err);}])
-		let handler = new EventHandlerVMDispatch(instructions, this)
-		globalThis.addEventListener('click', handler)
-		is_in_ignored_from_src_fn.flag = false
+			`,[function() {console.log('play success')},function(err: Box) {console.log(err)}])
+		let handler=new EventHandlerVMDispatch(instructions,this)
+		globalThis.addEventListener('click',handler)
+		is_in_ignored_from_src_fn.flag=false
 	}
 	save_state_history_arr() {
 		if(this.skip_save)
 			return
-		localStorage.auto_buy_history_str = this.state_history_arr.join(",")
+		localStorage.auto_buy_history_str=this.state_history_arr.join(",")
 	}
 	get_timeout_arr_data(forced_action: string) {
-		if(forced_action == "RESET")
-			return this.timeout_arr.map((e: number) => ~~(e / 4)).join(",")
+		if(forced_action=="RESET")
+			return this.timeout_arr.map((e: number) => ~~(e/4)).join(",")
 		return this.timeout_arr.join(",")
 	}
 	save_timeout_arr() {
-		let forced_action, action_count
-		let action_data = localStorage.auto_buy_forced_action
+		let forced_action,action_count
+		let action_data=localStorage.auto_buy_forced_action
 		if(action_data)
-			[forced_action, action_count] = action_data.split(",")
-		localStorage.auto_buy_timeout_str = this.get_timeout_arr_data(forced_action)
-		if(action_count !== void 0) {
-			action_count = parseInt(action_count)
+			[forced_action,action_count]=action_data.split(",")
+		localStorage.auto_buy_timeout_str=this.get_timeout_arr_data(forced_action)
+		if(action_count!==void 0) {
+			action_count=parseInt(action_count)
 			if(Number.isFinite(action_count)) {
-				if(action_count > 0) {
-					localStorage.auto_buy_forced_action = [forced_action, action_count - 1]
-				} else if(forced_action !== "NONE") {
-					localStorage.auto_buy_forced_action = "NONE,0"
+				if(action_count>0) {
+					localStorage.auto_buy_forced_action=[forced_action,action_count-1]
+				} else if(forced_action!=="NONE") {
+					localStorage.auto_buy_forced_action="NONE,0"
 				}
 			}
 		}
 	}
 	dom_pre_init() {
-		const css_display_style = `
+		const css_display_style=`
 			#state_log>div{width:max-content}
 			#state_log{top:0px;width:30px;position:fixed;z-index:121;font-family:monospace;font-size:22px;color:lightgray}`
-		function style_sheet_gen(instance: {replace: (arg0: any) => void;}, args: any[]) {
+		function style_sheet_gen(instance: {replace: (arg0: any) => void},args: any[]) {
 			instance.replace(args[0])
 		}
-		this.display_style_sheet = new CSSStyleSheet
+		this.display_style_sheet=new CSSStyleSheet
 		this.display_style_sheet.replace(css_display_style)
-		// dom element init; init history_element
-		this.history_element = document.createElement("div")
-		this.history_element.innerText = "?3"
+		// dom element init
+		// init history_element
+		this.history_element=document.createElement("div")
+		this.history_element.innerText="?3"
 		// init timeout_element
-		this.timeout_element = document.createElement("div")
-		this.timeout_element.innerText = "0"
+		this.timeout_element=document.createElement("div")
+		this.timeout_element.innerText="0"
 		// init hours_played_element
-		this.hours_played_element = document.createElement("div")
-		this.hours_played_element.innerText = "0.00000 hours"
+		this.hours_played_element=document.createElement("div")
+		this.hours_played_element.innerText="0.00000 hours"
 		// init percent_ratio_element
-		this.percent_ratio_element = document.createElement("div")
-		this.percent_ratio_element.innerText = 0..toFixed(2) + "%"
+		this.percent_ratio_element=document.createElement("div")
+		this.percent_ratio_element.innerText=0..toFixed(2)+"%"
 		// init percent_ratio_change_element
-		this.percent_ratio_change_element = document.createElement("div")
-		this.percent_ratio_change_element.innerText = 0..toExponential(3)
+		this.percent_ratio_change_element=document.createElement("div")
+		this.percent_ratio_change_element.innerText=0..toExponential(3)
 		// init state_log_element
-		this.state_log_element = document.createElement("div")
-		this.state_log_element.id = "state_log"
+		this.state_log_element=document.createElement("div")
+		this.state_log_element.id="state_log"
 		// dom element attach
 		// attach history_element
 		this.state_log_element.append(this.history_element)
@@ -195,165 +200,165 @@ export class AutoBuy implements IAutoBuy {
 		document.body.append(this.state_log_element)
 		// attach display_style_sheet
 		this.adopt_styles(this.display_style_sheet)
-		let create_state_log_arr = [
-			[0, 'get', 'body'],
-			[1, 'create', 'div', 'state_log', {id: 'state_log'}], [1, 'append'],
+		let create_state_log_arr=[
+			[0,'get','body'],
+			[1,'create','div','state_log',{id: 'state_log'}],[1,'append'],
 		]
 		function retype_promise_helper(v: PromiseSettledResult<CSSStyleSheet>): v is PromiseFulfilledResult<CSSStyleSheet> {
-			return v.status === 'fulfilled'
+			return v.status==='fulfilled'
 		}
 		function retype_promise_settled_results(v: PromiseSettledResult<CSSStyleSheet>[]): PromiseFulfilledResult<CSSStyleSheet>[] {
-			let out: PromiseFulfilledResult<CSSStyleSheet>[] = []
-			for(let i = 0;i < v.length;i++) {
-				let cur = v[i]
+			let out: PromiseFulfilledResult<CSSStyleSheet>[]=[]
+			for(let i=0;i<v.length;i++) {
+				let cur=v[i]
 				if(retype_promise_helper(cur)) {
 					out.push(cur)
 				}
 			}
 			return out
 		}
-		let call_arg_arr: [] = []
+		let call_arg_arr: []=[]
 		let make_css_arr: (
-			[0, 'push', null, ((...v: Promise<CSSStyleSheet>[]) => Promise<void>)] |
-			[0, 'new', NewableFunction, [], CallableFunction, [string]] |
-			[0, 'call', number] |
-			[0, 'drop'])[] = [
-				[0, 'push', null, async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
+			[0,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
+			[0,'new',NewableFunction,[],CallableFunction,[string]]|
+			[0,'call',number]|
+			[0,'drop'])[]=[
+				[0,'push',null,async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
 					// @Hack: wait for any promise to settle
-					const e = await Promise.allSettled(styles_promise_arr)
-					let fulfilled = retype_promise_settled_results(e)
-					let res = fulfilled.map(e_2 => e_2.value)
+					const e=await Promise.allSettled(styles_promise_arr)
+					let fulfilled=retype_promise_settled_results(e)
+					let res=fulfilled.map(e_2 => e_2.value)
 					this.adopt_styles(...res)
-					let err = e.filter(e_3 => e_3.status != 'fulfilled')
-					if(err.length > 0)
-						console.log('promise failure...', ...err)
-				}, ...call_arg_arr],
-				[0, 'new', CSSStyleSheet, [],
-					(obj: {replace: (arg0: any) => any;}, str: any) => obj.replace(str),
+					let err=e.filter(e_3 => e_3.status!='fulfilled')
+					if(err.length>0)
+						console.log('promise failure...',...err)
+				},...call_arg_arr],
+				[0,'new',CSSStyleSheet,[],
+					(obj: {replace: (arg0: any) => any},str: any) => obj.replace(str),
 					[css_display_style]
 				],
-				[0, 'call', 2 + 1 + call_arg_arr.length],
+				[0,'call',2+1+call_arg_arr.length],
 				// drop the promise
-				[0, 'drop'],
+				[0,'drop'],
 			]
-		let raw_dom_arr = [
+		let raw_dom_arr=[
 			...create_state_log_arr,
-			[2, 'create', 'div', 'history', "?3"], [2, 'append'],
-			[2, 'create', 'div', 'delay', "0"], [2, 'append'],
-			[2, 'create', 'div', 'hours_played', "0.000 hours"], [2, 'append'],
-			[2, 'create', 'div', 'ratio', 0..toFixed(2) + "%"], [2, 'append'],
-			[2, 'create', 'div', 'ratio_change', 0..toExponential(3)], [2, 'append'],
-			[1, 'drop'],
-			[0, 'drop'],
+			[2,'create','div','history',"?3"],[2,'append'],
+			[2,'create','div','delay',"0"],[2,'append'],
+			[2,'create','div','hours_played',"0.000 hours"],[2,'append'],
+			[2,'create','div','ratio',0..toFixed(2)+"%"],[2,'append'],
+			[2,'create','div','ratio_change',0..toExponential(3)],[2,'append'],
+			[1,'drop'],
+			[0,'drop'],
 			...make_css_arr
 		]
 		try {
-			raw_dom_arr = [
+			raw_dom_arr=[
 				...create_state_log_arr,
-				[0, 'drop'],
+				[0,'drop'],
 				...make_css_arr
 			]
-			this.build_dom_from_desc(raw_dom_arr, this.dom_map)
+			this.build_dom_from_desc(raw_dom_arr,this.dom_map)
 		} catch(e) {
 			console.log(e)
 		}
 	}
 	adopt_styles(...styles: CSSStyleSheet[]) {
-		let dom_styles = document.adoptedStyleSheets
-		document.adoptedStyleSheets = [...dom_styles, ...styles]
+		let dom_styles=document.adoptedStyleSheets
+		document.adoptedStyleSheets=[...dom_styles,...styles]
 	}
-	build_dom_from_desc(raw_arr: string | any[], trg_map = new Map, dry_run = false) {
-		let stack = []
-		let map = trg_map
+	build_dom_from_desc(raw_arr: string|any[],trg_map=new Map,dry_run=false) {
+		let stack=[]
+		let map=trg_map
 		if(dry_run)
-			stack.push([0, "enable_dry_mode"])
-		for(let i = 0;i < raw_arr.length;i++) {
-			let cur_item = raw_arr[i]
-			let [depth, action, ...args] = cur_item
+			stack.push([0,"enable_dry_mode"])
+		for(let i=0;i<raw_arr.length;i++) {
+			let cur_item=raw_arr[i]
+			let [depth,action,...args]=cur_item
 			switch(action) {
 				case 'get': {
-					let cur_element, [query_arg] = args
+					let cur_element,[query_arg]=args
 					switch(query_arg) {
-						case 'body': cur_element = document.body; break
-						default: cur_element = document.querySelector(query_arg); break
+						case 'body': cur_element=document.body; break
+						default: cur_element=document.querySelector(query_arg); break
 					}
-					stack.push([depth, "push", new DomValueBox('get', cur_element)])
+					stack.push([depth,"push",new DomValueBox('get',cur_element)])
 				} break
 				case 'new': {
-					const [_class, construct_arg_arr, callback, arg_arr] = args
-					stack.push([depth, "push", null, callback, ...construct_arg_arr, _class])
-					stack.push([depth, "construct", 1 + construct_arg_arr.length])
-					stack.push([depth, "push", ...arg_arr])
-					stack.push([depth, "call", 3 + arg_arr.length])
+					const [_class,construct_arg_arr,callback,arg_arr]=args
+					stack.push([depth,"push",null,callback,...construct_arg_arr,_class])
+					stack.push([depth,"construct",1+construct_arg_arr.length])
+					stack.push([depth,"push",...arg_arr])
+					stack.push([depth,"call",3+arg_arr.length])
 				} break
 				case 'create': {
-					const [element_type, name, content] = args
-					let cur_element = document.createElement(element_type)
-					if(typeof content == 'string') {
-						cur_element.innerText = content
-					} else if(typeof content == 'object') {
+					const [element_type,name,content]=args
+					let cur_element=document.createElement(element_type)
+					if(typeof content=='string') {
+						cur_element.innerText=content
+					} else if(typeof content=='object') {
 						if(content.id)
-							cur_element.id = content.id
+							cur_element.id=content.id
 					} else {
-						console.log('bad typeof == %s for content in build_dom; content=%o', typeof content, content)
-						console.info("Info: case 'create' args are", element_type, name)
+						console.log('bad typeof == %s for content in build_dom; content=%o',typeof content,content)
+						console.info("Info: case 'create' args are",element_type,name)
 					}
-					map.set(name, cur_element)
-					stack.push([depth, "push", new DomValueBox('create', cur_element)])
+					map.set(name,cur_element)
+					stack.push([depth,"push",new DomValueBox('create',cur_element)])
 				} break
 				case 'append': {
 					// peek at the return stack, up 1 depth
-					stack.push([depth, "peek", depth - 1, 0])
+					stack.push([depth,"peek",depth-1,0])
 					stack.push(cur_item)
 				} break
 				case 'drop':
 				case 'call': // push the item
 				case 'push': stack.push(cur_item); break
 				default: {
-					console.log('might need to handle', action)
+					console.log('might need to handle',action)
 					debugger
 				} break
 			}
 			if(this.debug_arr.includes('build_dom_from_desc'))
-				console.log('es', stack.at(-1))
+				console.log('es',stack.at(-1))
 		}
-		let [left_stack, tree] = this.parse_dom_desc(stack)
-		if(left_stack.length > 0) {
-			console.assert(false, 'failed to parse everything (parse tree probably has errors)')
+		let [left_stack,tree]=this.parse_dom_desc(stack)
+		if(left_stack.length>0) {
+			console.assert(false,'failed to parse everything (parse tree probably has errors)')
 		}
 		this.apply_dom_desc(tree)
 	}
-	parse_dom_desc(input_stack: string | any[]) {
-		let stack: any[][] = []
-		let tree = []
-		for(let x = 0, i = 0;i < input_stack.length;i++) {
-			let cur_stack = input_stack[i]
-			let [y, ...item] = cur_stack
+	parse_dom_desc(input_stack: string|any[]) {
+		let stack: any[][]=[]
+		let tree=[]
+		for(let x=0,i=0;i<input_stack.length;i++) {
+			let cur_stack=input_stack[i]
+			let [y,...item]=cur_stack
 			if(this.debug_arr.includes('parse_dom_desc'))
 				console.log(item)
-			while(y > x) {
+			while(y>x) {
 				stack.push(tree)
-				tree = []
+				tree=[]
 				x++
 			}
-			while(y < x) {
-				let prev = tree
-				tree = <any>stack.pop()
-				tree.push([x, prev])
+			while(y<x) {
+				let prev=tree
+				tree=<any>stack.pop()
+				tree.push([x,prev])
 				x--
 			}
-			tree.push([y, item])
+			tree.push([y,item])
 		}
-		return [stack, tree]
+		return [stack,tree]
 	}
-	log_if(tag: string, ...log_args: (string | number | any[])[]) {
+	log_if(tag: string,...log_args: (string|number|any[])[]) {
 		if(this.debug_arr.includes(tag)) {
 			console.log(...log_args)
 		}
 	}
-	get_logging_level(tag: string, level = LOG_LEVEL_VERBOSE) {
+	get_logging_level(tag: string,level=LOG_LEVEL_VERBOSE) {
 		if(this.debug_arr.includes(tag)) {
-			return level - 1
+			return level-1
 		}
 		return level
 	}
@@ -363,73 +368,77 @@ export class AutoBuy implements IAutoBuy {
 	apply_dom_desc(tree: any) {
 		this.run_dom_desc(tree)
 	}
-	run_dom_desc(tree: string | any[], stack: (string | number)[][] = [], cur_depth = 0, items: any[] = [], depths: number[] = []) {
-		for(let i = 0;i < tree.length;i++) {
-			let cur = tree[i]
-			switch(cur[0] - cur_depth) {
+	run_dom_desc(tree: string|any[],stack: (string|number)[][]=[],cur_depth=0,items: any[]=[],depths: number[]=[]) {
+		for(let i=0;i<tree.length;i++) {
+			let cur=tree[i]
+			switch(cur[0]-cur_depth) {
 				case 1: {
-					this.log_if('apply_dom_desc', 'rdc stk')
-					stack.push(['children', items.length - 1, cur])
+					this.log_if('apply_dom_desc','rdc stk')
+					stack.push(['children',items.length-1,cur])
 				} break
 				case 0: {
 					items.push(cur[1])
 					depths.push(cur[0])
 				} break
 				default: {
-					console.assert(false, 'handle depth change in apply_dom_desc')
-					this.log_if('apply_dom_desc', cur[0] - cur_depth)
+					console.assert(false,'handle depth change in apply_dom_desc')
+					this.log_if('apply_dom_desc',cur[0]-cur_depth)
 				}
 			}
 		}
-		if(stack.length === 0)
-			return [items, depths]
-		const [tag, items_index, [data_depth, data]] = <any>stack.pop()
-		let log_level = this.get_logging_level('apply_dom_desc')
-		l_log_if(log_level, tag, items[items_index], data_depth, data)
-		let deep_res = this.run_dom_desc(data, stack, cur_depth + 1)
-		const ret_items = items.slice()
-		let off = 1
-		ret_items.splice(items_index + off++, 0, ['exec', deep_res[0]])
-		this.log_if('apply_dom_desc', deep_res[0], deep_res[1])
-		this.log_if('apply_dom_desc', ret_items, depths, stack)
-		let builder_vm = new DomBuilderVM(ret_items)
+		if(stack.length===0)
+			return [items,depths]
+		const [tag,items_index,[data_depth,data]]=<any>stack.pop()
+		let log_level=this.get_logging_level('apply_dom_desc')
+		l_log_if(log_level,tag,items[items_index],data_depth,data)
+		let deep_res=this.run_dom_desc(data,stack,cur_depth+1)
+		const ret_items=items.slice()
+		let off=1
+		ret_items.splice(items_index+off++,0,['exec',deep_res[0]])
+		this.log_if('apply_dom_desc',deep_res[0],deep_res[1])
+		this.log_if('apply_dom_desc',ret_items,depths,stack)
+		let builder_vm=new DomBuilderVM(ret_items)
 		builder_vm.run()
-		return [ret_items, depths]
+		return [ret_items,depths]
 	}
 	init_dom() {
-		const font_size_px = 22
-		let t = this
+		const font_size_px=22
+		let t=this
 		// general init
-		this.state_history_arr_max_len = Math.floor(document.body.getClientRects()[0].width / (font_size_px * 0.55) / 2.1)
-		// dom element init; init history_element
-		this.history_element?.addEventListener('click', new EventHandlerDispatch(this, this.history_element_click_handler))
+		this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1)
+		// dom element init
+		// init history_element
+		this.history_element?.addEventListener('click',new EventHandlerDispatch(this,this.history_element_click_handler))
 		// init timeout_element
 		if(this.timeout_element)
-			this.timeout_element.innerText = this.timeout_arr[0]
-		// init hours_played_element; init percent_ratio_element
-		this.percent_ratio_element?.addEventListener('click', function() {
+			this.timeout_element.innerText=this.timeout_arr[0]
+		// init hours_played_element
+		// init percent_ratio_element
+		this.percent_ratio_element?.addEventListener('click',function() {
 			t.state.reset()
 		})
-		// init percent_ratio_change_element; init state_log_element
+		// init percent_ratio_change_element
+		// init state_log_element
 		if(this.state_log_element)
-			this.state_log_element.style.fontSize = font_size_px + "px"
-		// event listeners; window unload
-		window.addEventListener('unload', function() {
+			this.state_log_element.style.fontSize=font_size_px+"px"
+		// event listeners
+		// window unload
+		window.addEventListener('unload',function() {
 			t.save_state_history_arr()
 			t.save_timeout_arr()
 		})
 	}
 	global_init() {
-		let cur_this: IAutoBuy = this
-		if((window as any).g_auto_buy && (window as any).g_auto_buy !== cur_this) {
+		let cur_this: IAutoBuy=this
+		if((window as any).g_auto_buy&&(window as any).g_auto_buy!==cur_this) {
 			(window as any).g_auto_buy.destroy()
 		}
-		(window as any).g_auto_buy = this
+		(window as any).g_auto_buy=this
 	}
 	destroy() {
 		this.root_node.destroy()
-		for(let i = 0;i < this.cint_arr.length;i += 2) {
-			let cint_item = this.cint_arr[i]
+		for(let i=0;i<this.cint_arr.length;i+=2) {
+			let cint_item=this.cint_arr[i]
 			switch(cint_item[0]) {
 				case 1: {
 					clearTimeout(cint_item[1])
@@ -438,7 +447,7 @@ export class AutoBuy implements IAutoBuy {
 					clearInterval(cint_item[1])
 				} break
 				default: {
-					console.assert(false, 'cant destroy cint item (%o)', cint_item)
+					console.assert(false,'cant destroy cint item (%o)',cint_item)
 				} break
 			}
 		}
@@ -455,21 +464,21 @@ export class AutoBuy implements IAutoBuy {
 		if(!this.state_history_arr_max_len)
 			return
 		// spell:words timeplayed
-		this.hours_played_element.innerText = ((window.timeplayed / 30) / 60).toFixed(7) + " hours"
-		let last_ratio = this.state.ratio * 100
+		this.hours_played_element.innerText=((window.timeplayed/30)/60).toFixed(7)+" hours"
+		let last_ratio=this.state.ratio*100
 		this.state.update()
-		let cur_ratio = this.state.ratio * 100
-		this.percent_ratio_element.innerText = cur_ratio.toFixed(2) + "%"
-		let ratio_diff = cur_ratio - last_ratio
-		let extra_diff_char = "+"
-		if(ratio_diff < 0)
-			extra_diff_char = ''
-		this.percent_ratio_change_element.innerText = extra_diff_char + ratio_diff.toExponential(3)
-		this.history_element.innerText = array_sample_end(this.state_history_arr, this.state_history_arr_max_len).join(" ")
-		this.next_timeout(this.update_dom, 125, 'update_dom', true)
+		let cur_ratio=this.state.ratio*100
+		this.percent_ratio_element.innerText=cur_ratio.toFixed(2)+"%"
+		let ratio_diff=cur_ratio-last_ratio
+		let extra_diff_char="+"
+		if(ratio_diff<0)
+			extra_diff_char=''
+		this.percent_ratio_change_element.innerText=extra_diff_char+ratio_diff.toExponential(3)
+		this.history_element.innerText=array_sample_end(this.state_history_arr,this.state_history_arr_max_len).join(" ")
+		this.next_timeout(this.update_dom,125,'update_dom',true)
 	}
 	init() {
-		this.next_timeout(this.init_impl, 210 - 10, 'init', true)
+		this.next_timeout(this.init_impl,210-10,'init',true)
 	}
 	dom_reset() {
 		this.update_dom()
@@ -477,20 +486,20 @@ export class AutoBuy implements IAutoBuy {
 	replace_timeplayed_timer() {
 		//spell:words secondinterval
 		clearInterval(window.secondinterval)
-		let rate = 66 / (2110 - 110)
-		let time_base = performance.now()
-		window.secondinterval = setInterval(function() {
-			let real_time = performance.now()
-			let time_diff = real_time - time_base
-			time_base = real_time
-			let real_rate = time_diff / (2300 - 300)
-			window.timeplayed += real_rate
-		}, 66)
+		let rate=66/(2110-110)
+		let time_base=performance.now()
+		window.secondinterval=setInterval(function() {
+			let real_time=performance.now()
+			let time_diff=real_time-time_base
+			time_base=real_time
+			let real_rate=time_diff/(2300-300)
+			window.timeplayed+=real_rate
+		},66)
 		this.root_node.append_raw(setInterval(function() {
-			window.doc.title = window.rounding(window.totalAtome, false, 1).toString() + " atoms"
-			let atomsaccu = window.doc.getElementById('atomsaccu')
-			let timeplayed_e = window.doc.getElementById('timeplayed')
-			let presnbr_e = window.doc.getElementById('timeplayed')
+			window.doc.title=window.rounding(window.totalAtome,false,1).toString()+" atoms"
+			let atomsaccu=window.doc.getElementById('atomsaccu')
+			let timeplayed_e=window.doc.getElementById('timeplayed')
+			let presnbr_e=window.doc.getElementById('timeplayed')
 			if(!atomsaccu)
 				return
 			if(!timeplayed_e)
@@ -498,39 +507,39 @@ export class AutoBuy implements IAutoBuy {
 			if(!presnbr_e)
 				return
 			//spell:words atomsaccu presnbr
-			atomsaccu.innerHTML = window.rounding(window.atomsaccu, false, 0)
-			timeplayed_e.innerHTML = (Math.round(window.timeplayed / 30) / 60).toFixed(2) + " hours"
-			presnbr_e.innerHTML = "<br>" + (window.calcPres() * 100).toFixed(0) + " % APS boost"
-		}, (230 - 300)), false)
+			atomsaccu.innerHTML=window.rounding(window.atomsaccu,false,0)
+			timeplayed_e.innerHTML=(Math.round(window.timeplayed/30)/60).toFixed(2)+" hours"
+			presnbr_e.innerHTML="<br>"+(window.calcPres()*100).toFixed(0)+" % APS boost"
+		},(230-300)),false)
 	}
 	init_impl() {
-		let t = this
+		let t=this
 		this.global_init()
 		this.init_dom()
 		this.state.init()
 		this.update_dom()
 		this.main()
-		this.original_map.set('lightreset', window.lightreset)
-		window.lightreset = lightreset_inject
-		window.specialclick = specialclick_inject
+		this.original_map.set('lightreset',window.lightreset)
+		window.lightreset=lightreset_inject
+		window.specialclick=specialclick_inject
 		if(window.secondinterval) {
 			this.replace_timeplayed_timer()
 		}
 	}
 	state_history_clear_for_reset() {
-		this.state_history_arr = ["R"]
-		localStorage.auto_buy_history_str = "R"
+		this.state_history_arr=["R"]
+		localStorage.auto_buy_history_str="R"
 	}
-	state_history_append(value: any, silent = false) {
+	state_history_append(value: any,silent=false) {
 		Promise.resolve().then(this.async_compress.bind(this))
 		this.epoch_len++
 		if(silent)
 			return
-		let last = this.state_history_arr.at(-1)
+		let last=this.state_history_arr.at(-1)
 		this.state_history_arr.push(value)
 		if(this.state.debug)
-			console.log('history append', last, value)
-		while(this.state_history_arr.length > 120)
+			console.log('history append',last,value)
+		while(this.state_history_arr.length>120)
 			this.state_history_arr.shift()
 	}
 	history_element_click_handler(event: any) {
@@ -539,72 +548,72 @@ export class AutoBuy implements IAutoBuy {
 		this.reset()
 	}
 	reset() {
-		let timeout = 3000
-		if(this.extra < timeout)
-			timeout = this.extra
-		this.next_timeout(this.main, timeout, '@')
+		let timeout=3000
+		if(this.extra<timeout)
+			timeout=this.extra
+		this.next_timeout(this.main,timeout,'@')
 	}
 	calc_timeout_extra() {
-		while(this.timeout_arr.length > 60)
+		while(this.timeout_arr.length>60)
 			this.timeout_arr.shift()
-		let max = 0
-		let total = 0
-		for(var i = 0;i < this.timeout_arr.length;i++) {
-			total += this.timeout_arr[i]
-			max = Math.max(this.timeout_arr[i], max)
+		let max=0
+		let total=0
+		for(var i=0;i<this.timeout_arr.length;i++) {
+			total+=this.timeout_arr[i]
+			max=Math.max(this.timeout_arr[i],max)
 		}
-		const val = total / this.timeout_arr.length
-		let num = max / val
-		this.last_value ??= num
-		let diff = this.last_value - num
-		if(diff > .1 || diff < -.1) {
-			this.last_value = num
-			console.log('timeout_arr num', num, 'differing from last by', diff)
+		const val=total/this.timeout_arr.length
+		let num=max/val
+		this.last_value??=num
+		let diff=this.last_value-num
+		if(diff>.1||diff<-.1) {
+			this.last_value=num
+			console.log('timeout_arr num',num,'differing from last by',diff)
 		}
 		return this.round(val)
 	}
 	is_epoch_over() {
-		let epoch_diff = Date.now() - this.epoch_start_time
-		return epoch_diff > 60 * 5 * 1000
+		let epoch_diff=Date.now()-this.epoch_start_time
+		return epoch_diff>60*5*1000
 	}
 	main() {
 		function r(v: number) {
 			return ~~v
 		}
-		let loss_rate = this.unit_promote_start()
-		if(loss_rate > 0 || loss_rate < 0) {
-			console.log('loss', r(loss_rate * 100 * 10) / 10)
+		let loss_rate=this.unit_promote_start()
+		if(loss_rate>0||loss_rate<0) {
+			console.log('loss',r(loss_rate*100*10)/10)
 		}
 		if(this.maybe_run_reset())
 			return
-		if(this.pre_total != window.totalAtome)
+		if(this.pre_total!=window.totalAtome)
 			return this.step_iter_start()
-		this.iter_count = 0
-		if(Math.random() < 0.005)
+		this.iter_count=0
+		if(Math.random()<0.005)
 			return this.rare_begin()
 		this.faster_timeout()
 	}
 	async maybe_async_reset() {
-		let loss_rate = this.unit_promote_start()
+		let loss_rate=this.unit_promote_start()
 		if(this.maybe_run_reset())
-			return [true, loss_rate]
-		return [false, loss_rate]
+			return [true,loss_rate]
+		return [false,loss_rate]
 	}
 	async main_async() {
-		for(this.iter_count = 0;;) {
-			if(this.iter_count < 6)
+		for(this.iter_count=0;;) {
+			if(this.iter_count<6)
 				await this.normal_decrease_async()
 			else
 				await this.large_decrease_async()
-			let [quit, loss_rate] = await this.maybe_async_reset()
+			let [quit,loss_rate]=await this.maybe_async_reset()
 			if(quit)
 				return
-			if(loss_rate > 0.08)
+			if(loss_rate>0.08)
 				continue
-			if(this.pre_total == window.totalAtome)
+			if(this.pre_total==window.totalAtome)
 				break
 		}
-		if(Math.random() < 0.005)
+		if(Math.random()<0.005)
 			this.rare_begin()
 		else
 			this.faster_timeout_use_async()
@@ -616,18 +625,18 @@ export class AutoBuy implements IAutoBuy {
 		throw new Error("Method not implemented.")
 	}
 	step_iter_start() {
-		if(this.iter_count > 6)
+		if(this.iter_count>6)
 			return this.large_decrease()
 		else
 			return this.normal_decrease()
 	}
 	async fast_unit() {
-		let running = true
+		let running=true
 		while(running) {
 			this.unit_promote_start()
-			if(this.pre_total == window.totalAtome)
+			if(this.pre_total==window.totalAtome)
 				break
-			let promise = this.async_timeout_step()
+			let promise=this.async_timeout_step()
 			await promise
 		}
 		this.async_timeout_step_finish()
@@ -636,127 +645,130 @@ export class AutoBuy implements IAutoBuy {
 		throw new Error("Method not implemented.")
 	}
 	unit_promote_start() {
-		this.extra = this.calc_timeout_extra()
-		this.pre_total = window.totalAtome
+		this.extra=this.calc_timeout_extra()
+		this.pre_total=window.totalAtome
 		this.do_unit_promote()
-		let money_diff = this.pre_total - window.totalAtome
-		let loss_rate = money_diff / this.pre_total
-		if(this.pre_total != window.totalAtome && this.debug) {
-			let log_args = []
-			let percent_change = (loss_rate * 100).toFixed(5)
-			let money_str = window.totalAtome.toExponential(3)
+		let money_diff=this.pre_total-window.totalAtome
+		let loss_rate=money_diff/this.pre_total
+		if(this.pre_total!=window.totalAtome&&this.debug) {
+			let log_args=[]
+			let percent_change=(loss_rate*100).toFixed(5)
+			let money_str=window.totalAtome.toExponential(3)
 			log_args.push(this.iter_count)
 			log_args.push(percent_change)
 			log_args.push(money_str)
 			console.log(...log_args)
 		}
-		this.iter_count += 1
+		this.iter_count+=1
 		return loss_rate
 	}
 	async async_next_timeout_step() {
-		this.do_timeout_dec([1.006], 10)
-		return this.next_timeout_async(this.extra, ':')
+		this.do_timeout_dec([1.006],10)
+		return this.next_timeout_async(this.extra,':')
 	}
 	async_timeout_step_finish() {
-		this.do_timeout_dec([1.006], 10)
-		this.next_timeout(this.main, this.extra, '$')
+		this.do_timeout_dec([1.006],10)
+		this.next_timeout(this.main,this.extra,'$')
 	}
 	large_decrease() {
-		this.do_timeout_dec([1.008], 10)
-		this.next_timeout(this.main, this.extra, '!')
+		this.do_timeout_dec([1.008],10)
+		this.next_timeout(this.main,this.extra,'!')
 	}
 	normal_decrease() {
-		this.do_timeout_dec([1.006], 10)
-		this.next_timeout(this.main, this.extra, '-')
+		this.do_timeout_dec([1.006],10)
+		this.next_timeout(this.main,this.extra,'-')
 	}
 	rare_begin() {
-		this.do_timeout_inc([1.008, 1.03], 10)
-		this.next_timeout(this.initial_special, this.extra, '<')
+		this.do_timeout_inc([1.008,1.03],10)
+		this.next_timeout(this.initial_special,this.extra,'<')
 	}
 	faster_timeout_use_async() {
-		this.do_timeout_inc([1.007, 1.01], 50)
-		this.next_timeout(this.main_async, this.extra, 'A')
+		this.do_timeout_inc([1.007,1.01],50)
+		this.next_timeout(this.main_async,this.extra,'A')
 	}
 	faster_timeout() {
-		this.do_timeout_inc([1.007, 1.01], 50)
-		this.next_timeout(this.main, this.extra, '+')
+		this.do_timeout_inc([1.007,1.01],50)
+		this.next_timeout(this.main,this.extra,'+')
 	}
-	get_timeout_change(pow_base: number, pow_num: number, div: number) {
-		let pow_res = Math.pow(pow_base, pow_num)
-		let res = this.extra * pow_res
-		return res / div
+	get_timeout_change(pow_base: number,pow_num: number,div: number) {
+		let pow_res=Math.pow(pow_base,pow_num)
+		let res=this.extra*pow_res
+		return res/div
 	}
 	update_timeout_inc(change: number) {
 		if(window.__testing__) {
 			return
 		}
-		let value = this.round(this.extra + change)
+		let value=this.round(this.extra+change)
 		this.timeout_arr.push(value)
 	}
 	update_timeout_dec(change: number) {
 		if(window.__testing__) {
 			return
 		}
-		let value = this.round(this.extra - change)
-		if(value < 25)
-			value = 25
+		let value=this.round(this.extra-change)
+		if(value<25)
+			value=25
 		this.timeout_arr.push(value)
 	}
 	round(value: number) {
 		return ~~value
 	}
-	do_timeout_dec(pow_terms: any[], div: number) {
-		let change = this.get_timeout_change(pow_terms[0], Math.log(window.totalAtome), div)
+	do_timeout_dec(pow_terms: any[],div: number) {
+		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div)
 		this.update_timeout_dec(change)
 	}
-	do_timeout_inc(pow_terms: any[], div: number) {
-		let iter_term = Math.pow(pow_terms[1], this.iter_count)
-		let change = this.get_timeout_change(pow_terms[0], Math.log(window.totalAtome), div)
-		this.update_timeout_inc(change * iter_term)
+	do_timeout_inc(pow_terms: any[],div: number) {
+		let iter_term=Math.pow(pow_terms[1],this.iter_count)
+		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div)
+		this.update_timeout_inc(change*iter_term)
 	}
-	async next_timeout_async(timeout: number, char: string, silent = false) {
-		if(!silent && this.timeout_element)
-			this.timeout_element.innerText = timeout.toString()
-		this.state_history_append(char, silent)
-		let node = new AsyncTimeoutNode(timeout)
+	async next_timeout_async(timeout: number,char: string,silent=false) {
+		if(!silent&&this.timeout_element)
+			this.timeout_element.innerText=timeout.toString()
+		this.state_history_append(char,silent)
+		let node=new AsyncTimeoutNode(timeout)
 		this.root_node.append_child(node)
-		let att = new AsyncTimeoutTarget(char)
-		let promise = node.start_async(att)
+		let att=new AsyncTimeoutTarget(char)
+		let promise=node.start_async(att)
 		await promise
 	}
-	next_timeout(trg_fn: () => void, timeout: number, char: string, silent = false) {
-		let node = new AsyncTimeoutNode(timeout)
+	next_timeout(trg_fn: () => void,timeout: number,char: string,silent=false) {
+		let node=new AsyncTimeoutNode(timeout)
 		this.root_node.append_child(node)
-		node.start(new TimeoutTarget(this, trg_fn, char))
-		if(!silent && this.timeout_element)
-			this.timeout_element.innerText = timeout.toString()
-		this.state_history_append(char, silent)
+		node.start(new TimeoutTarget(this,trg_fn,char))
+		if(!silent&&this.timeout_element)
+			this.timeout_element.innerText=timeout.toString()
+		this.state_history_append(char,silent)
 	}
 	do_unit_promote() {
 		do_auto_unit_promote()
 	}
 	slow_final() {
-		this.next_timeout(this.main, this.extra, '$')
+		this.next_timeout(this.main,this.extra,'$')
 	}
 	bonus() {
 		window.bonusAll()
 		this.fast_unit()
 	}
 	special_timeout() {
-		this.next_timeout(this.special, this.extra, '^')
+		this.next_timeout(this.special,this.extra,'^')
 	}
-	is_special_done(special_buyable: {done: any; cost: number;}) {
-		return !special_buyable.done && special_buyable.cost < window.totalAtome
+	is_special_done(special_buyable: {
+		done: any
+		cost: number
+	}) {
+		return !special_buyable.done&&special_buyable.cost<window.totalAtome
 	}
 	next_special() {
 		return window.allspec.findIndex(this.is_special_done)
 	}
 	do_special() {
-		let ret = false
-		for(let index = this.next_special();;index = this.next_special()) {
-			if(index > -1) {
+		let ret=false
+		for(let index=this.next_special();;index=this.next_special()) {
+			if(index>-1) {
 				window.specialclick(index)
-				ret = true
+				ret=true
 			} else
 				break
 		}
@@ -764,43 +776,43 @@ export class AutoBuy implements IAutoBuy {
 	}
 	special() {
 		if(this.do_special())
-			this.next_timeout(this.special, this.extra, '^')
+			this.next_timeout(this.special,this.extra,'^')
 		else
-			this.next_timeout(this.bonus, this.extra, '#')
+			this.next_timeout(this.bonus,this.extra,'#')
 	}
 	initial_special() {
-		this.next_timeout(this.special, this.extra, '>')
+		this.next_timeout(this.special,this.extra,'>')
 	}
 	maybe_run_reset() {
-		let count = 0
-		count += (this.extra > 15 * 1000) as unknown as number
-		count += this.state.ratio > 1 as unknown as number
-		count += this.is_epoch_over() as unknown as number
+		let count=0
+		count+=(this.extra>15*1000) as unknown as number
+		count+=this.state.ratio>1 as unknown as number
+		count+=this.is_epoch_over() as unknown as number
 		switch(count) {
 			case 0:
 			case 1: break
-			default: console.log('mrc', count)
+			default: console.log('mrc',count)
 		}
-		if(this.state.ratio > 1 && this.is_epoch_over() || this.extra > 15 * 1000) {
-			this.next_timeout(this.reset_timeout_trigger, 5 * 1000, 'reset_timeout_begin')
+		if(this.state.ratio>1&&this.is_epoch_over()||this.extra>15*1000) {
+			this.next_timeout(this.reset_timeout_trigger,5*1000,'reset_timeout_begin')
 			return true
 		}
 		return false
 	}
 	reset_timeout_init() {
 		if(this.background_audio) {
-			this.background_audio.muted = !this.background_audio.muted
+			this.background_audio.muted=!this.background_audio.muted
 		}
-		this.next_timeout(this.reset_timeout_trigger, 60 * 2 * 1000, 'reset_timeout')
+		this.next_timeout(this.reset_timeout_trigger,60*2*1000,'reset_timeout')
 	}
 	reset_timeout_trigger() {
 		if(this.background_audio) {
-			this.background_audio.muted = !this.background_audio.muted
+			this.background_audio.muted=!this.background_audio.muted
 		}
-		this.next_timeout(this.reset_timeout_start, 60 * 2 * 1000, 'reset_timeout')
+		this.next_timeout(this.reset_timeout_start,60*2*1000,'reset_timeout')
 	}
 	reset_timeout_start() {
-		this.next_timeout(this.reset_timeout_run, 60 * 1000, 'reset_timeout')
+		this.next_timeout(this.reset_timeout_run,60*1000,'reset_timeout')
 	}
 	reset_timeout_run() {
 		window.lightreset()

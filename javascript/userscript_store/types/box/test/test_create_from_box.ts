@@ -9,7 +9,7 @@ export namespace test {
 			return new VoidBox
 		}
 		let b2=get_testing_void_box()
-		switch(b2) {case null: return}
+		switch(b2) {case null: return }
 		switch(b2.type) {
 			case 'array_box': return
 			case 'constructor_box': return

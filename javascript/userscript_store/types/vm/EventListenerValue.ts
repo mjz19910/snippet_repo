@@ -1,9 +1,7 @@
 export class EventListenerValue {
-	/**
-	 * @param {any} callback
-	 * @param {boolean | EventListenerOptions} options
-	 */
-	constructor(callback, options) {
+	callback:any
+	options:boolean | EventListenerOptions
+	constructor(callback:any, options:boolean|EventListenerOptions) {
 		this.callback = callback
 		/**@type {boolean | EventListenerOptions} */
 		this.options = options

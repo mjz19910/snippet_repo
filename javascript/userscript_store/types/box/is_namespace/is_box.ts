@@ -1,5 +1,5 @@
 import {Box} from "../Box"
-import {assert_type} from "../helper/assert_type"
+import {bool_false} from "./bool_false"
 import {cast} from "./cast"
 import {is_box_object} from "./is_box_object"
 export function is_box<T>(v: Box|T): v is Box {
@@ -14,9 +14,8 @@ export function is_box<T>(v: Box|T): v is Box {
 		case 'undefined': return true
 	}
 	if(cast<T>(v)) {
-		console.log('chk', v);
+		console.log('chk',v)
 		return false
 	}
-	assert_type<never>(v)
-	return false
+	return bool_false(v)
 }

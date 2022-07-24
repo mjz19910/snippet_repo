@@ -38,11 +38,7 @@ export class HashMap<K, V> implements IHashMap<K, V> {
 	}
 	iterate(callback: (this: this, arg1: K, arg2: V) => IterationDecision) {
 		// from https://github.com/SerenityOS/serenity/blob/master/Userland/DevTools/Profiler/Profile.cpp
-		// on my fs file://home/wsl2/serenity/Userland/DevTools/Profiler/Profile.cpp
-		/*for (size_t i = 0; i < event.frames.size(); ++i) {
-			if (callback(event.frames.at(i), i == event.frames.size() - 1) == IterationDecision::Break)
-				break
-		}*/
+		// on my fs file://home/wsl2/dev/serenity/Userland/DevTools/Profiler/Profile.cpp
 		if(!this.backing_map)
 			return
 		for(let x of this.backing_map.entries()) {

@@ -1,3 +1,3 @@
 export interface Context {
-	[key: string]: any | undefined;
+	[key: string]: any|undefined
 }

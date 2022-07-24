@@ -1,14 +1,14 @@
-import { is_obj_index_to_box } from "./is_namespace/is_obj_index_to_box"
-import {force_type_upgrade} from "./force_type_upgrade"
-import {ObjectIndexToBox} from "./ObjectIndexToBox"
-import {ObjectIndexToOptBox} from "./ObjectIndexToOptBox"
+import {is_obj_index_to_box} from "./is_namespace/is_obj_index_to_box"
+import {ObjectIndexToBox} from "./helper/ObjectIndexToBox"
+import {ObjectIndexToOptBox} from "./helper/ObjectIndexToOptBox"
+import {convert_to_type} from "./is_namespace/convert_to_type"
 export function can_property_return_a_box<T extends string>(
-	v: ObjectIndexToOptBox<T, ObjectIndexToBox<T>>,
+	v: ObjectIndexToOptBox<T>,
 	prop: T
-): v is ObjectIndexToOptBox<T, ObjectIndexToBox<T>> {
-	let vv = prop
-	if(force_type_upgrade<ObjectIndexToBox<T>, {}>(v)) {
-		if(is_obj_index_to_box(v, vv)) {
+): v is ObjectIndexToOptBox<T> {
+	let vv=prop
+	if(convert_to_type<ObjectIndexToBox<T>,{}>(v)) {
+		if(is_obj_index_to_box(v,vv)) {
 			return true
 		}
 	}

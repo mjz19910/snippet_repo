@@ -24,6 +24,7 @@ import {StackVMBox} from "./StackVMBox"
 import {TemporaryBox} from "./temporary_box/TemporaryBox"
 import {VoidBox} from "./VoidBox"
 import {WindowBox} from "./WindowBox"
+import {IndexBox} from "./IndexBox"
 
 export type Box=
 	// function result
@@ -52,7 +53,7 @@ export type Box=
 	MediaListBox|
 	// object
 	// hard to box returns from normal js (can't find the index sig easily as any object would match)
-	// IndexBox |
+	IndexBox|
 	ObjectBox|
 	// promise types
 	VoidPromiseBox|

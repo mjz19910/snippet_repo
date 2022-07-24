@@ -9,51 +9,51 @@ import {MessageTimeoutClearS} from "./MessageTimeoutClearS"
 import {MessageTypesForWorkerReplies} from "./MessageTypesForWorkerReplies"
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS"
 import {Timer} from "./Timer"
-import {ReplyFromWorker, ReplyMessage1, ReplyMessage2, ReplySetRepeating, ReplySetSingle, TimeoutClearR, TimeoutClearS, WorkerDestroyMessage, WorkerReadyReply, WorkerUpdateMessageHandlerReply} from "types/constants"
+import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyMessage,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "types/constants"
 
 export class WorkerState {
-	flags: Map<string, boolean>
+	flags: Map<string,boolean>
 	worker_code
 	timer: Timer
 	executor_handle
-	worker: Worker | null
-	worker_url: string | null
-	constructor(worker_code_blob: Blob, timer: Timer, executor_handle: PromiseExecutorHandle | null) {
-		this.flags = new Map
-		this.flags.set('has_blob', false)
+	worker: Worker|null
+	worker_url: string|null
+	constructor(worker_code_blob: Blob,timer: Timer,executor_handle: PromiseExecutorHandle|null) {
+		this.flags=new Map
+		this.flags.set('has_blob',false)
 		if(worker_code_blob instanceof Blob)
-			this.flags.set('has_blob', true)
+			this.flags.set('has_blob',true)
 		if(!this.flags.get('has_blob'))
 			throw new Error("WorkerState requires a blob with javascript code to execute on a worker")
 		if(!timer)
 			throw new Error("WorkerState needs a timer")
-		this.flags.set('rejected', false)
-		this.flags.set('valid', false)
-		this.flags.set('connected', false)
-		this.flags.set('failed', false)
-		this.worker_code = worker_code_blob
-		this.timer = timer
+		this.flags.set('rejected',false)
+		this.flags.set('valid',false)
+		this.flags.set('connected',false)
+		this.flags.set('failed',false)
+		this.worker_code=worker_code_blob
+		this.timer=timer
 		timer.set_worker_state(this)
-		this.executor_handle = executor_handle
-		this.worker = null
-		this.worker_url = null
+		this.executor_handle=executor_handle
+		this.worker=null
+		this.worker_url=null
 	}
 	set_failed(has_failed: boolean) {
-		this.flags.set('failed', has_failed)
+		this.flags.set('failed',has_failed)
 	}
 	init() {
-		if(this.flags.get('connected') || this.flags.get('valid')) {
+		if(this.flags.get('connected')||this.flags.get('valid')) {
 			this.destroy()
 		}
-		this.flags.set('connected', false)
-		let weak_worker_state: WeakRef<WorkerState> = new WeakRef(this)
-		this.worker_url = URL.createObjectURL(this.worker_code)
+		this.flags.set('connected',false)
+		let weak_worker_state: WeakRef<WorkerState>=new WeakRef(this)
+		this.worker_url=URL.createObjectURL(this.worker_code)
 		if(this.flags.get('failed'))
 			return
-		this.worker = new Worker(this.worker_url)
-		this.worker.onmessage = function onmessage(e: MessageEvent<MessageTypesForWorkerReplies>) {
-			var msg = e.data
-			let worker_state = weak_worker_state.deref()
+		this.worker=new Worker(this.worker_url)
+		this.worker.onmessage=function onmessage(e: MessageEvent<MessageTypesForWorkerReplies>) {
+			var msg=e.data
+			let worker_state=weak_worker_state.deref()
 			if(!worker_state) {
 				console.log('lost worker state')
 				this.terminate()
@@ -74,23 +74,23 @@ export class WorkerState {
 					break
 				}
 				default: {
-					console.assert(false, "Main: Unhandled message", msg)
+					console.assert(false,"Main: Unhandled message",msg)
 					debugger
 					break
 				}
 			}
 		}
-		this.flags.set('valid', true)
+		this.flags.set('valid',true)
 	}
 	set_executor_handle(handle: PromiseExecutorHandle) {
-		this.executor_handle = handle
+		this.executor_handle=handle
 	}
 	on_result(result: DispatchMessageType) {
 		if(!this.executor_handle)
 			return
 		switch(result.v) {
 			default:
-				console.log('handler needed', result)
+				console.log('handler needed',result)
 		}
 	}
 	dispatch_message(result: DispatchMessageType) {
@@ -128,20 +128,20 @@ export class WorkerState {
 				this.timer.on_reply(result)
 			} break
 			default: {
-				console.assert(false, "unhandled result", result)
+				console.assert(false,"unhandled result",result)
 				debugger
 			}
 		}
 	}
-	postMessage(data: MessageTimeoutFireS | MessageTimeoutClearA | MessageTimeoutSingleReply | MessageTimeoutClearS | MessageTimeoutSetS | MessageTimeoutSetR | MessageTimeoutClearR) {
+	postMessage(data: MessageTimeoutFireS|MessageTimeoutClearA|MessageTimeoutSingleReply|MessageTimeoutClearS|MessageTimeoutSetS|MessageTimeoutSetR|MessageTimeoutClearR) {
 		if(this.worker)
 			return this.worker.postMessage(data)
 	}
 	static has_old_global_state_value(worker_state_value: WorkerState) {
-		return this.has_global_state() && !this.equals_global_state(worker_state_value)
+		return this.has_global_state()&&!this.equals_global_state(worker_state_value)
 	}
 	static equals_global_state(worker_state_value: WorkerState) {
-		return this.get_global_state() === worker_state_value
+		return this.get_global_state()===worker_state_value
 	}
 	static maybe_delete_old_global_state_value(worker_state_value: WorkerState) {
 		if(this.has_old_global_state_value(worker_state_value)) {
@@ -156,26 +156,26 @@ export class WorkerState {
 		return false
 	}
 	static delete_old_global_state() {
-		let old_worker_state = this.get_global_state()
+		let old_worker_state=this.get_global_state()
 		if(old_worker_state) {
-			const before_destroy_call_name = 'delete_global_state'
-			this.destroy_old_worker_state(old_worker_state, before_destroy_call_name)
+			const before_destroy_call_name='delete_global_state'
+			this.destroy_old_worker_state(old_worker_state,before_destroy_call_name)
 		}
 	}
-	static destroy_old_worker_state(worker_state_value: {destroy: () => void;}, before_destroy_call_name: 'delete_global_state') {
+	static destroy_old_worker_state(worker_state_value: {destroy: () => void},before_destroy_call_name: 'delete_global_state') {
 		this[before_destroy_call_name]()
 		worker_state_value.destroy()
 	}
-	static global_state_key: 'g_worker_state' = "g_worker_state"
+	static global_state_key: 'g_worker_state'="g_worker_state"
 	static has_global_state() {
 		return window.hasOwnProperty(this.global_state_key)
 	}
-	static get_global_state(): WorkerState | undefined {
+	static get_global_state(): WorkerState|undefined {
 		return window[this.global_state_key]
 	}
 	static set_global_state(worker_state_value: WorkerState) {
 		this.maybe_delete_old_global_state_value(worker_state_value)
-		window[this.global_state_key] = worker_state_value
+		window[this.global_state_key]=worker_state_value
 	}
 	static delete_global_state() {
 		delete window[this.global_state_key]
@@ -183,13 +183,13 @@ export class WorkerState {
 	destroy() {
 		if(this.worker) {
 			this.worker.terminate()
-			this.worker = null
+			this.worker=null
 			if(this.worker_url)
 				URL.revokeObjectURL(this.worker_url)
-			this.worker_url = null
-			this.flags.set('connected', false)
-			this.flags.set('valid', false)
-			if(this.executor_handle && !this.executor_handle.closed()) {
+			this.worker_url=null
+			this.flags.set('connected',false)
+			this.flags.set('valid',false)
+			if(this.executor_handle&&!this.executor_handle.closed()) {
 				this.executor_handle.reject(new Error("Worker destroyed before it was connected"))
 			}
 		}

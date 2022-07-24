@@ -29,13 +29,13 @@ declare global {
 		tonext(v: number): void
 		specialsbought: number
 		doc: Document
-		rounding(v: number, x: any, y: any): string
+		rounding(v: number,x: any,y: any): string
 		atomsinvest: number
 		calcDiff(v: number): number
 		noti: boolean
 		gritter: any
 		toTitleCase(v: string): string
-		cint_arr: (string | number[])[]
+		cint_arr: (string|number[])[]
 		//spell:words adsbygoogle
 		adsbygoogle: {
 			op: any
@@ -62,9 +62,14 @@ declare global {
 		atomsaccu: number
 		calcPres(): number
 		g_auto_buy: IAutoBuy
-		g_proxy_state: {hand: {stack_overflow_check: () => any; count_arr: any[];};}
-		remoteSetTimeout: (handler: TimerHandler, timeout?: number, ...target_args: any[]) => number
-		remoteSetInterval: (handler: TimerHandler, timeout?: number, ...target_args: any[]) => number
+		g_proxy_state: {
+			hand: {
+				stack_overflow_check: () => any
+				count_arr: any[]
+			}
+		}
+		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number
+		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number
 		remoteClearTimeout: (id?: number) => void
 		remoteClearInterval: (id?: number) => void
 		["g_worker_state"]?: WorkerState
@@ -75,12 +80,12 @@ declare global {
 			request_content: string
 			cur: string
 		}
-		g_do_load: ((promise_accept: (value: any) => void) => void) | undefined
-		document_write_list:DocumentWriteList
-		allspec:any[]
-		$:JQueryStatic
+		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined
+		document_write_list: DocumentWriteList
+		allspec: any[]
+		$: JQueryStatic
 	}
-	export var window: Window & typeof globalThis
+	export var window: Window&typeof globalThis
 	export var Window: {
 		prototype: Window
 		new(): Window
@@ -90,7 +95,7 @@ declare global {
 		new(message?: string): Error
 		(message?: string): Error
 		readonly prototype: Error
-		captureStackTrace<T>(obj: {stack?: string;}, constructorOpt?: T): void
+		captureStackTrace<T>(obj: {stack?: string},constructorOpt?: T): void
 	}
 	module globalThis {
 		var remote_worker_state: RemoteWorkerState
@@ -108,6 +113,9 @@ declare global {
 		replace(string: string): Promise<CSSStyleSheet>
 	}
 	export namespace WebAssembly {
-		var Function: new (types: {parameters: string[]; results: string[];}, arg1: (...v: any[]) => any) => any
+		var Function: new (types: {
+			parameters: string[]
+			results: string[]
+		},arg1: (...v: any[]) => any) => any
 	}
 }

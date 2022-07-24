@@ -1,19 +1,20 @@
-import { BlockTrace } from "../../vm/instruction/vm/VMBlockTrace"
-import { assert_type } from "../assert_type"
-import { assume_exclude_type } from "../assume_exclude_type"
-import { is_instruction_block_trace_instruction_ptr } from "./is_instruction_block_trace_instruction_ptr"
-import { is_instruction_block_trace_tagged_ptr } from "./is_instruction_block_trace_tagged_ptr"
+import {BlockTrace} from "../../vm/instruction/vm/VMBlockTrace"
+import {bool_false} from "./bool_false"
+import {is_instruction_block_trace_instruction_ptr} from "./is_instruction_block_trace_instruction_ptr"
+import {is_instruction_block_trace_tagged_ptr} from "./is_instruction_block_trace_tagged_ptr"
+import {is_not_type} from "./is_not_type"
+import {is_number} from "./is_number"
 
-export function is_instruction_block_trace<T>(value: T | BlockTrace): value is BlockTrace {
-	if (assume_exclude_type<T>(value)) throw new Error("Never")
-	switch (value[1]) {
-		case 'block': value; return true
+export function is_instruction_block_trace<T>(value: T|BlockTrace): value is BlockTrace {
+	if(is_not_type<T,any>(value)) throw new Error("Never")
+	switch(value[1]) {
+		case 'block': return value.length===4&&is_number(value[2])&&is_number(value[3])
 		case 'begin':
-		case 'call':return is_instruction_block_trace_instruction_ptr(value)
+		case 'call': return is_instruction_block_trace_instruction_ptr(value)
 		case 'tagged':
 		case 'tagged_begin':
 		case 'tagged_call': return is_instruction_block_trace_tagged_ptr(value)
-		default: assert_type<never>(value); return false
+		default: return bool_false(value)
 	}
 }
 
