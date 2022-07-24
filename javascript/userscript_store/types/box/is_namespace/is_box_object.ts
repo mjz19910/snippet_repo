@@ -4,10 +4,7 @@ import {Primitives} from "../helper/Primitives"
 import {assert_type} from "../helper/assert_type"
 export function is_box_object<T>(v: Exclude<Box,Primitives|null>|T):
 	v is Exclude<Box,Primitives|null> {
-	if(!assume_is_box(v)) {
-		console.log('chk',v)
-		return false
-	}
+	if(!('type' in v)) throw new Error("Invalid")
 	switch(v.type) {
 		case 'array_box': switch(v.item_type) {
 			case "Box": return v.verify_name("ArrayBox")
