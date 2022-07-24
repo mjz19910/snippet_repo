@@ -1,7 +1,7 @@
 import { NewableInstancePack } from "./NewableInstancePack";
 import { BoxTemplate } from "./BoxTemplate";
 
-export class BoxedNewableInstancePackObject extends BoxTemplate<"NewableInstancePack<{}>", NewableInstancePack<{}>> {
+export class NewableInstancePackObjectBox extends BoxTemplate<"NewableInstancePack<{}>", NewableInstancePack<{}>> {
 	readonly type: "NewableInstancePack<{}>" = "NewableInstancePack<{}>";
 	readonly m_verify_name = "BoxedNewableInstancePackObject";
 	verify_name(name: "BoxedNewableInstancePackObject") {

@@ -1,6 +1,6 @@
 import {ArrayBox} from "./ArrayBox";
 import { AsyncFunctionBox } from "./async/AsyncFunctionBox";
-import { BoxedNewableInstancePackObject } from "./BoxedNewableInstancePackObject";
+import { NewableInstancePackObjectBox } from "./NewableInstancePackObjectBox";
 import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
 import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox";
@@ -68,5 +68,5 @@ export type Box =
 	// Box with stuff
 	BoxWithPropertiesIsBox |
 	// Generic boxes
-	BoxedNewableInstancePackObject;
+	NewableInstancePackObjectBox;
 

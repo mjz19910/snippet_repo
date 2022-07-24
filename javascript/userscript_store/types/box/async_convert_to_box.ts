@@ -1,4 +1,4 @@
-import {BoxExtractType} from "./extract/BoxExtractType";
+import {BoxExtractType} from "./extract/create_box/BoxExtractType";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
 import {VoidBox} from "./VoidBox";
 export async function async_convert_to_box(value: Extract<BoxExtractType, Promise<any>>) {

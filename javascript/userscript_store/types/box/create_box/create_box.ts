@@ -1,5 +1,5 @@
-import { Box } from "./Box";
-import { BoxExtractType } from "./extract/BoxExtractType";
+import { Box } from "../Box";
+import { BoxExtractType } from "../extract/create_box/BoxExtractType";
 import { create_box_from_object } from "./create_box_from_object";
 import { create_box_from_function } from "./create_box_from_function";
 export function create_box(value: BoxExtractType): Box {
