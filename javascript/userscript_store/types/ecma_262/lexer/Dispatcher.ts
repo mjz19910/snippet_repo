@@ -13,6 +13,7 @@ import {section_12_8} from "./section_12_8"
 import {EnvSettingsType} from "../EnvSettingsType"
 import {DispatcherIndexType} from "./DispatcherIndexType"
 export class Dispatcher {
+	[x: string]: DispatcherIndexType
 	lexer:Lexer=new Lexer(this)
 	ecma_12_2: section_12_2=new section_12_2(this)
 	ecma_12_3: section_12_3=new section_12_3(this)
@@ -26,7 +27,6 @@ export class Dispatcher {
 	ecma_12_8_6: section_12_8_6=new section_12_8_6(this)
 	ecma_12:section_12=new section_12(this)
 	ecma_12_8:section_12_8=new section_12_8(this)
-	[x: string]: DispatcherIndexType
 	environment_settings: EnvSettingsType = {
 		type: 'environment_settings',
 		is_strict: false,
