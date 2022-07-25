@@ -3,199 +3,316 @@
 v1 (old-o): snippet_repo_v2/javascript/final/myhtml_tokenizer.js
 v2 (cur-c): snippet_repo_v2/javascript/group1/sub_a/item-_1.js
 */
+/**
+ * @param {{ raw: any[]; }} v
+ */
 function raw_template(v) {
-	return v.raw[0];
+	return v.raw[0]
 }
 class DirBuilder {
+	/**
+	 * @param {FSDir} cur
+	 */
 	constructor(cur) {
-		this.cur = cur;
+		this.cur=cur
 	}
+	/**
+	 * @param {string} target
+	 */
 	cd(target) {
-		if (target.slice(0, 3) == "../") {
-			this.cur = this.cur.parent;
-			this.cd(target.slice(3));
+		if(target.slice(0,3)=="../") {
+			let parent_dir=this.cur.parent
+			if(!parent_dir) return
+			this.cur=parent_dir
+			this.cd(target.slice(3))
 		}
-		let cd_next = target.split("/", 1);
-		console.log(cd_next);
+		let cd_next=target.split("/",1)
+		console.log(cd_next)
 	}
 }
 class FSDirEntry {
-	constructor(name, value) {
-		this.name = name;
-		this.value = value;
+	/**
+	 * @param {string} name
+	 * @param {FSDir | FSFile} value
+	 */
+	constructor(name,value) {
+		this.name=name
+		this.value=value
 	}
 }
 class FSFile {
+	/**@type {string|null} */
+	file_data=null
+	content_length=0
+	/**
+	 * @param {string} [file_data]
+	 */
 	constructor(file_data) {
-		if (file_data) {
-			this.file_data = file_data;
-			this.content_length = file_data.length;
-		} else {
-			this.file_data = "";
-			this.content_length = 0;
-		}
+		if(!file_data) return
+		this.file_data=file_data
+		this.content_length=file_data.length
 	}
+	/**
+	 * @param {string} content
+	 */
 	set_content(content) {
-		this.file_data = content.length;
-		this.content_length = content.length;
+		this.file_data=content
+		this.content_length=content.length
 	}
 }
 class FSDir {
+	/**
+	 * @type {FSDirEntry[]}
+	 */
+	m_children=[]
+	/**@type {WeakRef<FSDir>|null} */
+	m_parent=null
+	/**
+	 * @param {FSDir | null} parent
+	 */
 	constructor(parent) {
-		if (parent !== null) {
-			this.m_parent = new WeakRef(parent);
+		if(parent!==null) {
+			this.m_parent=new WeakRef(parent)
+		} else {
+			this.m_parent=parent
 		}
-		this.m_parent = parent;
-		this.m_children = [];
 	}
+	/**
+	 * @param {string} file_name
+	 */
 	add_file(file_name) {
-		let new_file = new FSFile;
-		this.m_children.push(new FSDirEntry(file_name,new_file));
-		return new_file;
+		let new_file=new FSFile
+		this.m_children.push(new FSDirEntry(file_name,new_file))
+		return new_file
 	}
+	/**
+	 * @param {string} dir_name
+	 */
 	add_dir(dir_name) {
-		let new_dir = new FSDir(this);
-		this.m_children.push(new FSDirEntry(dir_name,new_dir));
-		return new_dir;
+		let new_dir=new FSDir(this)
+		this.m_children.push(new FSDirEntry(dir_name,new_dir))
+		return new_dir
 	}
+	/**@returns {FSDir | null} */
 	get parent() {
-		return this.m_parent;
+		if(!this.m_parent) return null
+		let parent_dir=this.m_parent.deref()
+		if(parent_dir===void 0) return null
+		return parent_dir
 	}
 }
-class Win32FSDir extends FSDir {
+class Win32FSDir {
+	/**@type {WeakRef<FSDir>|null} */
+	m_parent=null
+	/**
+	 * @type {FSDirEntry[]}
+	 */
+	m_children=[]
 	constructor() {
-		super(null);
-		this.drive = null;
-		this.base = "/";
-		this.m_object_parent = null;
+		this.drive=null
+		this.base="/"
+		this.m_object_parent=null
 	}
+	/**
+	 * @param {{ drive: any; base: any; object_parent: any; }} init_args
+	 */
 	init(init_args) {
-		this.drive = init_args.drive;
-		this.base = init_args.base;
-		this.m_object_parent = init_args.object_parent;
+		this.drive=init_args.drive
+		this.base=init_args.base
+		this.m_object_parent=init_args.object_parent
 	}
+	/**@returns {FSDir | null} */
 	get parent() {
-		if (this.base == "/") {
-			return null;
+		if(this.base=="/") {
+			return null
 		}
-		if (!this.m_parent || !this.m_parent.deref()) {
-			let path = this.base.split("/");
-			let up_dir_name = path.pop();
-			let up_base;
-			if (path.length > 1) {
-				up_base = path.join("/");
-			} else {
-				up_base = path[0] + "/";
+		if(!this.m_parent||!this.m_parent.deref()) {
+			let path=this.base.split("/")
+			let up_dir_name=path.pop()
+			if(!up_dir_name) {
+				return null
 			}
-			console.log(up_base);
-			let up_dir = new Win32FSDir;
+			let up_base
+			if(path.length>1) {
+				up_base=path.join("/")
+			} else {
+				up_base=path[0]+"/"
+			}
+			console.log(up_base)
+			let up_dir=new Win32FSDir
 			up_dir.init({
 				drive: this.drive,
 				base: up_base,
 				object_parent: this.m_object_parent
-			});
-			up_dir.m_children.push(new FSDirEntry(up_dir_name,this));
-			b: if (this.m_object_parent) {
-				let ref = this.m_object_parent.deref();
-				if (!ref)
-					break b;
-				ref.fs_root = up_dir;
-				this.m_object_parent = null;
+			})
+			up_dir.m_children.push(new FSDirEntry(up_dir_name,this))
+			b: if(this.m_object_parent) {
+				let ref=this.m_object_parent.deref()
+				if(!ref)
+					break b
+				ref.fs_root=up_dir
+				this.m_object_parent=null
 			}
-			this.m_parent = new WeakRef(up_dir);
+			this.m_parent=new WeakRef(up_dir)
 		}
-		return this.m_parent.deref();
+		let parent_dir=this.m_parent.deref()
+		if(parent_dir===void 0) return null
+		return parent_dir
+	}
+	/**
+	 * @param {string} file_name
+	 * @arg {string} [file_content]
+	 */
+	add_file(file_name,file_content) {
+		let new_file=new FSFile(file_content)
+		this.m_children.push(new FSDirEntry(file_name,new_file))
+		return new_file
+	}
+	/**
+	 * @param {string} dir_name
+	 */
+	add_dir(dir_name) {
+		let new_dir=new FSDir(this)
+		this.m_children.push(new FSDirEntry(dir_name,new_dir))
+		return new_dir
 	}
 }
 class _SimplePackageModule {
 	constructor() {
-		this.fs_root = new Win32FSDir;
+		this.fs_root=new Win32FSDir
 		this.fs_root.init({
 			drive: "C",
 			base: "/jai/modules/Simple_Package",
 			object_parent: new WeakRef(this),
-		});
-		this.current_dir = this.fs_root;
-		this.content_map = new Map;
-		let dir_builder = new DirBuilder(this.fs_root);
-		dir_builder.cur.add_dir("examples");
+		})
+		this.current_dir=this.fs_root
+		this.content_map=new Map
+		let dir_builder=new DirBuilder(this.fs_root)
+		dir_builder.cur.add_dir("examples")
 	}
-	add_module_jai(module_file_name, module_file_content, module_obj) {
-		let mod_file = this.current_dir.add_file(module_file_name);
-		mod_file.set_content(module_file_content);
-		if (this.content_map.has(module_file_name)) {
-			throw new Error("duplicate module.jai");
+	/**
+	 * @param {string} module_file_name
+	 * @param {string} module_file_content
+	 * @param {_module_jai} module_obj
+	 */
+	add_module_jai(module_file_name,module_file_content,module_obj) {
+		let mod_file=this.current_dir.add_file(module_file_name)
+		mod_file.set_content(module_file_content)
+		if(this.content_map.has(module_file_name)) {
+			throw new Error("duplicate module.jai")
 		}
-		this.content_map.set(module_file_name, module_obj);
+		this.content_map.set(module_file_name,module_obj)
 	}
 }
-const ExecuteArrayTag = Symbol("ExecuteArray");
-let AK;
-AK = (function() {
-	const ErrorTag = Symbol("Error");
-	class AK_Error {
-		constructor(err) {
-			this.error = err;
-		}
+const ExecuteArrayTag=Symbol("ExecuteArray")
+const ErrorTag=Symbol("Error")
+class AK_Error {
+	/**
+	 * @param {any} err
+	 */
+	constructor(err) {
+		this.error=err
 	}
-	class AK_ErrorOr {
-		constructor(tag_or_value, ...value_or_error_rest) {
-			if (tag_or_value === ErrorTag) {
-				let[error,...rest_args] = value_or_error_rest;
-				if (rest_args.length > 0) {
-					throw new Error("too many arguments");
-				}
-				this.m_index = 1;
-				this.m_data = new AK.Error(error);
-				return;
+}
+class AK_ErrorOr {
+	/**@type {symbol|AK_Error|null} */
+	m_data
+	/**
+	 * @arg {symbol|null} tag_or_value
+	 * @param {[any, ...any[]]} value_or_error_rest
+	 */
+	constructor(tag_or_value,...value_or_error_rest) {
+		if(tag_or_value===ErrorTag) {
+			let [error,...rest_args]=value_or_error_rest
+			if(rest_args.length>0) {
+				throw new Error("too many arguments")
 			}
-			this.m_index = 0;
-			this.m_data = tag_or_value;
+			this.m_index=1
+			this.m_data=new AK_Error(error)
+			return
 		}
+		this.m_index=0
+		this.m_data=tag_or_value
 	}
-	return {
-		impl: {
-			ErrorTag
-		},
-		Error: AK_Error,
-		ErrorOr: AK_ErrorOr,
-	};
 }
-)();
+let AK={
+	impl: {
+		ErrorTag
+	},
+	Error: AK_Error,
+	ErrorOr: AK_ErrorOr,
+}
+class AK_Optional {
+	has_value() {
+		return false
+	}
+	/**@returns {never} */
+	value() {
+		throw new Error("No value")
+	}
+}
+class JaiFunctionPolymorph {
+	/**
+	 * @param {FunctionArguments} function_args
+	 */
+	execute_call(function_args) {
+		void function_args
+	}
+}
 class JaiExecuteCall {
-	constructor(jai, function_name, function_args) {
-		let function_def = jai.get_function_def(function_name);
-		let function_call_types = jai.get_type_for_args(function_args);
-		let instantiated_fn = jai.getInstantiation(function_def, function_call_types);
-		if (instantiated_fn) {
-			this.result = instantiated_fn.execute_call(function_args);
-			return;
+	/**
+	 * @param {typeof jai_runner} jai
+	 * @param {string} function_name
+	 * @param {any} function_args
+	 */
+	constructor(jai,function_name,function_args) {
+		let function_def=jai.get_function_def(function_name)
+		let function_call_types=jai.get_type_for_args(function_args)
+		let instantiated_fn=jai.getInstantiation(function_def,function_call_types)
+		if(instantiated_fn) {
+			this.result=instantiated_fn.execute_call(function_args)
+			return
 		}
-		let res = jai.polymorph_function(function_def, function_args, function_call_types);
-		if (res.is_error()) {
-			this.result = res;
-			return;
+		let polymorph_or_error=jai.polymorph_function(function_def,function_args,function_call_types)
+		if(polymorph_or_error.is_error()) {
+			this.result=polymorph_or_error
+			return
 		}
-		res = res.release_value();
-		if (res.has_value()) {
-			let polymorphed_fn = res.value();
-			this.result = polymorphed_fn.execute_call(function_args);
+		let optional_polymorph=polymorph_or_error.release_value()
+		/**@type {any} */
+		let optional_polymorph_any=optional_polymorph
+		/**@type {AK_Optional} */
+		let optional_polymorph_typed=optional_polymorph_any
+		if(optional_polymorph_typed.has_value()) {
+			let polymorph=optional_polymorph_typed.value()
+			/**@type {any} */
+			let polymorph_any=polymorph
+			/**@type {JaiFunctionPolymorph} */
+			let polymorph_typed=polymorph_any
+			this.result=polymorph_typed.execute_call(function_args)
 		} else {
-			console.log("polymorph failure", function_call_types);
-			this.result = new AK.ErrorOr(AK.impl.ErrorTag,new Error("polymorph failed for \"" + function_name + "\""));
+			console.log("polymorph failure",function_call_types)
+			this.result=new AK_ErrorOr(AK.impl.ErrorTag,new Error("polymorph failed for \""+function_name+"\""))
 		}
 	}
 }
-let Simple_Package = new _SimplePackageModule;
+let Simple_Package=new _SimplePackageModule
 class NullValueHolder {
+	/**
+	 * @param {any} value
+	 */
 	constructor(value) {
-		this.value = value;
+		this.value=value
 	}
 }
 class NullEntryHolder {
-	constructor(name, value) {
-		this.name = name;
-		this.value = value;
+	/**
+	 * @param {any} name
+	 * @param {JaiStructMember} value
+	 */
+	constructor(name,value) {
+		this.name=name
+		this.value=value
 	}
 }
 class JaiStructMember extends NullValueHolder {
@@ -204,89 +321,202 @@ class JaiStructMemberEntry extends NullEntryHolder {
 }
 class JaiStruct {
 	constructor() {
-		this.layout = [];
-		this.name_map = [];
+		/**
+		 * @type {any[]}
+		 */
+		this.layout=[]
+		/**
+		 * @type {any[]}
+		 */
+		this.name_map=[]
+		/**@type {{[x:string]:any}} */
+		this.value={}
 	}
+	/**
+	 * @param {string | any[]} entries
+	 */
 	static from_builder_entries(entries) {
-		let new_struct = new this;
-		for (let i = 0; i < entries.length; i++) {
-			let ent = entries[i];
-			new_struct.name_map.push(ent.name);
-			new_struct.layout.push(ent.value);
-			new_struct[ent.name] = ent.value;
+		let new_struct=new this
+		for(let i=0;i<entries.length;i++) {
+			let ent=entries[i]
+			new_struct.name_map.push(ent.name)
+			new_struct.layout.push(ent.value)
+			new_struct.value[ent.name]=ent.value
 		}
-		return new_struct;
+		return new_struct
 	}
 }
 class JaiStructBuilder {
 	constructor() {
-		this.struct_entries = [];
+		/**
+		 * @type {JaiStructMemberEntry[]}
+		 */
+		this.struct_entries=[]
 	}
-	add_member(member_name, member_type) {
-		let new_member = new JaiStructMember(member_type);
-		this.struct_entries.push(new JaiStructMemberEntry(member_name,new_member));
-		return new_member;
+	/**
+	 * @param {any} member_name
+	 * @param {any} member_type
+	 */
+	add_member(member_name,member_type) {
+		let new_member=new JaiStructMember(member_type)
+		this.struct_entries.push(new JaiStructMemberEntry(member_name,new_member))
+		return new_member
 	}
+	/**@arg {(v:JaiStructBuilder)=>void} function_callback*/
 	with_function(function_callback) {
-		function_callback(this);
-		return this;
+		function_callback(this)
+		return this
 	}
 	build() {
-		let new_struct = JaiStruct.from_builder_entries(this.struct_entries);
-		return new_struct;
+		let new_struct=JaiStruct.from_builder_entries(this.struct_entries)
+		return new_struct
 	}
 }
 class JaiDynamicArrayTag extends NullValueHolder {
 }
 class JaiDynamicArray {
-	constructor(tag, member_type) {
-		this.tag = tag;
-		this.member_type = member_type;
+	/**
+	 * @param {any} tag
+	 * @param {any} member_type
+	 */
+	constructor(tag,member_type) {
+		this.tag=tag
+		this.member_type=member_type
 	}
 }
 class JaiNullStruct {
 }
+class AK_Result {
+	/**
+	 * @param {string} tag
+	 */
+	constructor(tag) {
+		if(tag==="Dummy tag") {
+			throw new Error("Dummy tag used to instantiate function")
+		}
+	}
+	is_error() {
+		return true
+	}
+	/**@returns {never} */
+	release_value() {
+		throw new Error()
+	}
+}
 class JaiRunner {
+	/**
+	 * @param {any[]} args
+	 */
 	execute(...args) {
-		console.log('jai execute', args);
+		console.log('jai execute',args)
 	}
 	null_struct() {
-		return JaiNullStruct;
+		return JaiNullStruct
 	}
+	/**
+	 * @param {[]} args
+	 */
 	struct_builder(...args) {
-		return new JaiStructBuilder(...args);
+		return new JaiStructBuilder(...args)
 	}
+	/**
+	 * @param {string} info
+	 */
 	dyn_array_tag(info) {
-		return new JaiDynamicArrayTag(info);
+		return new JaiDynamicArrayTag(info)
 	}
-	dyn_array(array_tag, array_member_type) {
-		return new JaiDynamicArray(array_tag,array_member_type);
+	/**
+	 * @param {JaiDynamicArrayTag} array_tag
+	 * @param {string} array_member_type
+	 */
+	dyn_array(array_tag,array_member_type) {
+		return new JaiDynamicArray(array_tag,array_member_type)
 	}
-	get_function_def() {}
-	get_type_for_args() {}
+	/**
+	 * @param {string} name
+	 * @returns {never}
+	 */
+	get_function_def(name) {
+		void name
+		throw new Error("TODO")
+	}
+	/**
+	 * @param {any} function_args
+	 * @returns {never}
+	 */
+	get_type_for_args(function_args) {
+		void function_args
+		throw new Error("TODO")
+	}
+	/**
+	 * @param {never} a
+	 * @param {never} b
+	 * @returns {JaiFunctionInstance|null}
+	 */
+	getInstantiation(a,b) {
+		void a,b
+		return new JaiFunctionInstance("Dummy tag")
+	}
+	/**
+	 * @param {never} a
+	 * @param {any} b
+	 * @param {never} c
+	 */
+	polymorph_function(a,b,c) {
+		void a,b,c
+		return new AK_Result("Dummy tag")
+	}
 }
-let run_jai = new JaiRunner;
-Simple_Package.current_dir;
-class _module_jai {
-	scope_export = new class {
-		Create_Package = run_jai.struct_builder().with_function(function(struct_builder) {
-			let jai = run_jai;
-			struct_builder.add_member("data", "String_Builder");
-			struct_builder.add_member("entries", jai.dyn_array(jai.dyn_array_tag("[..]"), "Entry_Info"));
-		}).build();
-		Package = run_jai.null_struct();
+class FunctionArguments {}
+class JaiFunctionInstance {
+	/**
+	 * @param {string} tag
+	 */
+	constructor(tag) {
+		if(tag==="Dummy tag") {
+			throw new Error("Dummy tag used to instantiate function")
+		}
 	}
-	scope_file = new class {
-		MAGIC = "simp";
+	/**@arg {FunctionArguments} call_arguments */
+	execute_call(call_arguments) {
+		void call_arguments
+	}
+}
+class JaiFunctionDef {
+	/**
+	 * @param {JaiRunner} cur_jai
+	 * @param {string} function_name
+	 * @param {string[]} argument_names
+	 * @param {(builder: any, x: any) => void} function_body
+	 */
+	constructor(cur_jai,function_name,argument_names,function_body) {
+		this.cur_jai=cur_jai
+		this.function_name=function_name
+		this.argument_names=argument_names
+		this.function_body=function_body
+	}
+}
+let jai_runner=new JaiRunner
+Simple_Package.current_dir
+class _module_jai {
+	scope_export=new class {
+		Create_Package=jai_runner.struct_builder().with_function(function(struct_builder) {
+			let jai=jai_runner
+			struct_builder.add_member("data","String_Builder")
+			struct_builder.add_member("entries",jai.dyn_array(jai.dyn_array_tag("[..]"),"Entry_Info"))
+		}).build();
+		Package=jai_runner.null_struct();
+	}
+	scope_file=new class {
+		MAGIC="simp"
+		// #modify of put in file scope of simple_package/module.jai
 		put() {
-			let jai = run_jai;
-			let res = new JaiFunctionDef(jai,"put",["builder", "x"],function(builder, x) {}
-			);
-			return res;
+			let res=new JaiFunctionDef(jai_runner,"put",["builder","x"],(builder,x) => (void builder,x))
+			return res
 		}
 	}
 }
-Simple_Package.add_module_jai("module.jai", raw_template`
+Simple_Package.add_module_jai("module.jai",raw_template`
 
 // create_*...
 
@@ -348,7 +578,7 @@ write :: (package: *Create_Package, filename: string) -> bool {
 
 
 	//
-	// Table of contents: 
+	// Table of contents:
 	//
 
 	// Number of files (64-bit unsigned integer):
@@ -404,4 +634,4 @@ put :: (builder: *String_Builder, x: $T)
 	}
 }
 #import "Basic";
-`, new _module_jai);
+`,new _module_jai)
