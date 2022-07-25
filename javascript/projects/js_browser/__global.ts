@@ -1,4 +1,11 @@
 declare global {
+	interface Window {
+		setup_accessor?: (v: any) => number
+	}
+	interface Console {}
+	var global: typeof globalThis
+	var console: Console
+	// Import ESNext api
 	interface WeakRef<T extends object> {
 		readonly [Symbol.toStringTag]: "WeakRef"
 

@@ -2,14 +2,17 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"target": "esnext",
-		"lib": ["esnext","DOM"],
+		"lib": [
+			"esnext",
+			"DOM"
+		],
 		"types": [],
 		"strict": true,
 		"declaration": true,
 		"checkJs": true,
 		"allowJs": true,
 		"strictNullChecks": true,
-		"module":"ESNext",
+		"module": "ESNext",
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"noImplicitAny": true,
@@ -18,9 +21,12 @@
 			"./node_modules/@types"
 		]
 	},
-	"include": ["**/*"],
+	"include": [
+		"**/*"
+	],
 	"exclude": [
 		"node_modules",
-		"**/*-spec.ts"
+		"**/*-spec.ts",
+		"./build",
 	]
 }

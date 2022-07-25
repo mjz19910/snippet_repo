@@ -25,8 +25,11 @@
 		"paths": {}
 	},
 	"include": [
-		"__global.d.ts",
-		"*.js",
-		"ipc_api/**/*.js"
+		"**/*",
+	],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts",
+		"./build",
 	]
 }
