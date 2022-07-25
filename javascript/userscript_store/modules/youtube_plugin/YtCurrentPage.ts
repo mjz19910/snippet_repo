@@ -1,4 +1,4 @@
-import {YTPlayerData} from "./youtube_plugin.user"
+import {YTPlayerData} from "./YTPlayerData"
 
 export class YtCurrentPage extends HTMLElement {
 	/**@return {YTPlayerData} */

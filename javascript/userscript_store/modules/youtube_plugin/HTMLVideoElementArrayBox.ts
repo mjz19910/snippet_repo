@@ -1,6 +1,6 @@
-export class Box {
+export class HTMLVideoElementArrayBox {
 	/**@readonly*/
-	type="box";
+	type="HTMLVideoElementArrayBox";
 	value: HTMLVideoElement[]
 	constructor(value: HTMLVideoElement[]) {
 		this.value=value

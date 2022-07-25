@@ -16,9 +16,6 @@
 		"typeRoots": [
 			"./node_modules/@types"
 		],
-		"paths":{
-			"api":["types/api.js"],
-		}
 	},
 	"include": ["**/*"],
 	"exclude": [
