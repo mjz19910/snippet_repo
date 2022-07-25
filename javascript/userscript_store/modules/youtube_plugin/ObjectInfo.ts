@@ -17,4 +17,7 @@ export class ObjectInfo {
 		return this.chunk_beg+object_keys.join(this.key_sep)+this.chunk_end
 	}
 	static instance: ObjectInfo
+	static init() {
+		this.instance = new this;
+	}
 }
