@@ -1,5 +1,6 @@
 import {Seen} from "./Seen"
 import {deep_clone_object} from "./deep_clone_object"
+import {log_value} from "./log_value"
 
 export function deep_clone<T>(value: T): T {
 	switch(typeof value) {
@@ -16,6 +17,6 @@ export function deep_clone<T>(value: T): T {
 		case 'string': return value
 		case 'symbol': return value
 		case 'undefined': return value
+		default: return log_value(value)
 	}
-	return value
 }
