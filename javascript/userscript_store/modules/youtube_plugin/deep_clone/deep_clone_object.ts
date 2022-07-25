@@ -1,5 +1,5 @@
 import {clone_object} from "./clone_object"
-import {Seen} from "../Seen"
+import {Seen} from "../seen_plugin/Seen"
 import {realHTMLElement} from "../const"
 import {clone_null_proto_object} from "./clone_null_proto_object"
 import {clone_map} from "./clone_map"

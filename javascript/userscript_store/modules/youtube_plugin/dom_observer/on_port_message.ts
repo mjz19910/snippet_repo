@@ -1,4 +1,4 @@
-import {debug} from "../debug"
+import {debug} from "../config/debug"
 import {handle_port_message} from "./handle_port_message"
 import {slow_message_event} from "./options"
 import {port_state} from "./port_state"

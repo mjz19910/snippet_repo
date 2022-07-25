@@ -1,4 +1,4 @@
-import {debug} from "../debug"
+import {debug} from "../config/debug"
 import {update_plugin_overlay} from "./update_plugin_overlay"
 
 export function update_ui_plugin() {

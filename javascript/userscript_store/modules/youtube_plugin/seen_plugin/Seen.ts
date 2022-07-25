@@ -1,5 +1,7 @@
+import {debug} from "../config/debug"
+
 export class Seen {
-	static debug=false;
+	static debug=debug.value;
 	static all_seen_objs: any[]=[];
 	static all_seen_map=new Map;
 	static seen_gen_counter=1;

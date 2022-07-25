@@ -4,7 +4,7 @@ import {player_overlay_style_source} from "./player_overlay_style_source"
 import {load_volume_range_plugin} from "./load_volume_range_plugin"
 import {ytd_player} from "../elements/ytd_player"
 import {ytd_page_manager} from "../elements/ytd_page_manager"
-import {debug} from "../debug"
+import {debug} from "../config/debug"
 import {plugin_overlay_element} from "../elements/plugin_overlay_element"
 
 export function activate_nav() {

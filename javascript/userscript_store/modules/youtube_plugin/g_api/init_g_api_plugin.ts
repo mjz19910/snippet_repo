@@ -1,6 +1,6 @@
 import {yt_watch_page_loaded_handler} from "../player_plugin_activate/yt_watch_page_loaded_handler"
 import {PropertyHandler} from "../PropertyHandler"
-import {Seen} from "../Seen"
+import {Seen} from "../seen_plugin/Seen"
 import {ts_remove_undefined} from "../ts_remove_undefined"
 import {g_api} from "./g_api"
 import {yt_state_map} from "../fetch_result_handler_plugin/yt_state_map"

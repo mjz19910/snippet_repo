@@ -1,4 +1,4 @@
-import {debug} from "../debug"
+import {debug} from "../config/debug"
 import {fetch_filter_text_then_data_url} from "./fetch_filter_text_then_data_url"
 
 export function handle_json_parse<T extends Function, U extends Function>(
@@ -7,8 +7,7 @@ export function handle_json_parse<T extends Function, U extends Function>(
 	onrejected: U|null|undefined,
 	response_text: string) {
 	let original_json_parse=JSON.parse
-	if(debug.value)
-		console.log('JSON.parse = new Proxy()')
+	if(debug.value) console.log('JSON.parse = new Proxy()')
 	JSON.parse=new Proxy(JSON.parse,{
 		apply: function(...proxy_args) {
 			if(debug.value)

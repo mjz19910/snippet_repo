@@ -1,4 +1,4 @@
-import {debug} from "../debug"
+import {debug} from "../config/debug"
 import {ytd_app} from "../elements/ytd_app"
 import {createGainController} from "./createGainController"
 import {gain_controller} from "./gain_controller"
