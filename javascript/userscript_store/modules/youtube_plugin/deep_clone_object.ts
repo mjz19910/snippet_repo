@@ -8,7 +8,7 @@ import {clone_array} from "./clone_array"
 export function deep_clone_object<T extends {}|any[]|Map<any,any>|null>(value: T): T {
 	// check for null, it is a primitive
 	if(value===null) return value
-	if(value instanceof Array) return clone_array<T,T&any[]>(value)
+	if(value instanceof Array) return clone_array(value)
 	if(value instanceof Map) return clone_map(value)
 	const value_proto=Object.getPrototypeOf(value)
 	if(value_proto===null)
