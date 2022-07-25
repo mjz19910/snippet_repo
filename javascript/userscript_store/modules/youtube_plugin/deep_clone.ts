@@ -2,7 +2,7 @@ import {Seen} from "./Seen"
 import {deep_clone_object} from "./deep_clone_object"
 import {log_value} from "./log_value"
 
-export function deep_clone<T extends undefined|string|boolean|bigint|number|object|Function|any[]>(value: T): T {
+export function deep_clone<T>(value: T): T {
 	switch(typeof value) {
 		case 'function': {
 			if(value.name in window) {
