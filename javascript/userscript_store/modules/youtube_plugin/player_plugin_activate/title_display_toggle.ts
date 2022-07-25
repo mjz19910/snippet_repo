@@ -1,4 +1,4 @@
-import {title_on} from "../title_on"
+import {title_on} from "./title_on"
 import {title_display_update} from "./title_display_update"
 
 export function title_display_toggle() {

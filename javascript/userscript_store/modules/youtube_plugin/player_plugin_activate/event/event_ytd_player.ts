@@ -1,9 +1,9 @@
 import {HTMLVideoElementArrayBox} from "../../box/HTMLVideoElementArrayBox"
-import {CustomEventTarget} from "./types/CustomEventTarget"
-import {CustomEventType} from "./types/CustomEventType"
-import {dom_observer_next_tick_action} from "./dom_observer_next_tick_action"
+import {CustomEventTarget} from "../../dom_observer/CustomEventTarget"
+import {CustomEventType} from "../../dom_observer/CustomEventType"
+import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action"
 import {event_box_map} from "./event_box_map"
-import {observer_default_action} from "./observer_default_action"
+import {observer_default_action} from "../../dom_observer/observer_default_action"
 
 /**
  * @this {CustomEventTarget}

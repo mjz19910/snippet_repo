@@ -1,7 +1,7 @@
-import {debug} from "./debug"
+import {debug} from "../debug"
 import {handle_port_message} from "./handle_port_message"
 import {slow_message_event} from "./options"
-import {port_state} from "./player_plugin_activate/port_state"
+import {port_state} from "./port_state"
 import {port_state_log} from "./port_state_log"
 
 export function on_port_message(event: MessageEvent<number>) {

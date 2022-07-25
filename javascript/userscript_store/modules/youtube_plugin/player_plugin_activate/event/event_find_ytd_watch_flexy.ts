@@ -1,7 +1,7 @@
-import {CustomEventTarget} from "./types/CustomEventTarget"
-import {CustomEventType} from "./types/CustomEventType"
-import {dom_observer_next_tick_action} from "./dom_observer_next_tick_action"
-import {observer_default_action} from "./observer_default_action"
+import {CustomEventTarget} from "modules/youtube_plugin/dom_observer/CustomEventTarget"
+import {CustomEventType} from "modules/youtube_plugin/dom_observer/CustomEventType"
+import {dom_observer_next_tick_action} from "modules/youtube_plugin/dom_observer/dom_observer_next_tick_action"
+import {observer_default_action} from "../../dom_observer/observer_default_action"
 import {on_ytd_watch_flexy} from "../on_ytd_watch_flexy"
 import {ytd_page_manager} from "modules/youtube_plugin/elements/ytd_page_manager"
 

@@ -1,7 +1,7 @@
 import {message_channel} from "./message_channel"
 import {rep_size} from "./options"
-import {continue_callback} from "./player_plugin_activate/continue_callback"
-import {port_state} from "./player_plugin_activate/port_state"
+import {continue_callback} from "./continue_callback"
+import {port_state} from "./port_state"
 import {rep_count} from "./rep_count"
 import {rep_max} from "./rep_max"
 

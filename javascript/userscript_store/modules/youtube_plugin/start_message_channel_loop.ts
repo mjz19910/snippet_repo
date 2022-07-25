@@ -1,5 +1,5 @@
-import {continue_callback} from "./player_plugin_activate/continue_callback"
-import {message_channel} from "./message_channel"
+import {continue_callback} from "./dom_observer/continue_callback"
+import {message_channel} from "./dom_observer/message_channel"
 
 export function start_message_channel_loop() {
 	if(top===window) {

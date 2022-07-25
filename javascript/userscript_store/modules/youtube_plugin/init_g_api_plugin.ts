@@ -5,9 +5,9 @@ import {ts_remove_undefined} from "./ts_remove_undefined"
 import {g_api} from "./g_api"
 import {yt_state} from "./yt_state_map"
 import {yt_handlers} from "./yt_handlers"
-import {dom_observer} from "./player_plugin_activate/event/dom_observer"
-import {port_state} from "./player_plugin_activate/port_state"
-import {blob_create_args_arr} from "./blob_create_args_arr"
+import {dom_observer} from "./dom_observer/dom_observer"
+import {port_state} from "./dom_observer/port_state"
+import {blob_create_args_arr} from "./blob_logger/blob_create_args_arr"
 
 export function init_g_api_plugin() {
 	window.g_api??={}

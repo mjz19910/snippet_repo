@@ -1,14 +1,10 @@
-import {CustomEventTarget} from "./types/CustomEventTarget"
-import {CustomEventType} from "./types/CustomEventType"
-import {dom_observer_next_tick_action} from "./dom_observer_next_tick_action"
-import {observer_default_action} from "./observer_default_action"
+import {CustomEventTarget} from "../../dom_observer/CustomEventTarget"
+import {CustomEventType} from "../../dom_observer/CustomEventType"
+import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action"
+import {observer_default_action} from "../../dom_observer/observer_default_action"
 import {on_yt_playlist_manager} from "./on_yt_playlist_manager"
 
-/**
- * @this {CustomEventTarget}
- * @param {CustomEventType} event
- * ID(20)
- * */
+/** ID(20) */
 export function event_find_yt_playlist_manager(this: CustomEventTarget,event: CustomEventType) {
 	const current_message_id=20
 	let {type,detail,port}=event

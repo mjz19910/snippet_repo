@@ -1,5 +1,5 @@
-import {overlay_hide_ui_input} from "../overlay_hide_ui_input"
-import {title_text_overlay_enabled} from "../title_text_overlay_enabled"
+import {overlay_hide_ui_input} from "../elements/overlay_hide_ui_input"
+import {title_text_overlay_enabled} from "./title_text_overlay_enabled"
 import {title_display_update} from "./title_display_update"
 
 export function title_text_overlay_update() {

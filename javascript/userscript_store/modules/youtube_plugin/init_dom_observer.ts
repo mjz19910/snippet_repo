@@ -7,7 +7,7 @@ import {event_ytd_player} from "./player_plugin_activate/event/event_ytd_player"
 import {event_ytd_watch_flexy} from "./player_plugin_activate/event/event_ytd_watch_flexy"
 import {event_handler_name_plugin_activate,event_plugin_activate} from "./player_plugin_activate/event/event_plugin_activate"
 import {on_yt_page_type_changed} from "./player_plugin_activate/on_yt_page_type_changed"
-import {dom_observer} from "./player_plugin_activate/event/dom_observer"
+import {dom_observer} from "./dom_observer/dom_observer"
 
 export function init_dom_observer() {
 	dom_observer.addEventListener('find-ytd-app',event_find_ytd_app)

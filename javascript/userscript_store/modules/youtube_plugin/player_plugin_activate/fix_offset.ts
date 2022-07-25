@@ -1,5 +1,5 @@
 import {ytd_player} from "../elements/ytd_player"
-import {plugin_overlay_element} from "./plugin_overlay_element"
+import {plugin_overlay_element} from "../elements/plugin_overlay_element"
 import {sumOffset} from "./sumOffset"
 
 export function fix_offset() {

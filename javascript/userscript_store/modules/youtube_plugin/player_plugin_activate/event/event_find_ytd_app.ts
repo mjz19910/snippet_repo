@@ -1,15 +1,11 @@
-import {CustomEventTarget} from "./types/CustomEventTarget"
-import {CustomEventType} from "./types/CustomEventType"
-import {dom_observer_next_tick_action} from "./dom_observer_next_tick_action"
-import {observer_default_action} from "./observer_default_action"
+import {CustomEventTarget} from "../../dom_observer/CustomEventTarget"
+import {CustomEventType} from "../../dom_observer/CustomEventType"
+import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action"
+import {observer_default_action} from "../../dom_observer/observer_default_action"
 import {on_ytd_app} from "./on_ytd_app"
 import {load_volume_range_plugin} from "../load_volume_range_plugin"
 
-/**
- * @this {CustomEventTarget}
- * @arg {CustomEventType} event
- * ID(10)
- * */
+/** ID(10) */
 export function event_find_ytd_app(this: CustomEventTarget,event: CustomEventType) {
 	const current_message_id=10
 	let {port,detail,type}=event

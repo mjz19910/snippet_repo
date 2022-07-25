@@ -1,4 +1,4 @@
-import {title_text_overlay_enabled} from "../title_text_overlay_enabled"
+import {title_text_overlay_enabled} from "./title_text_overlay_enabled"
 import {fix_offset} from "./fix_offset"
 import {is_yt_fullscreen_change_action} from "./is_yt_fullscreen_change_action"
 import {title_text_overlay_update} from "./title_text_overlay_update"

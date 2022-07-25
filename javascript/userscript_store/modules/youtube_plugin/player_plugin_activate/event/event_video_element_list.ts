@@ -1,6 +1,6 @@
-import {CustomEventTarget} from "./types/CustomEventTarget"
-import {CustomEventType} from "./types/CustomEventType"
-import {observer_default_action} from "./observer_default_action"
+import {CustomEventTarget} from "../../dom_observer/CustomEventTarget"
+import {CustomEventType} from "../../dom_observer/CustomEventType"
+import {observer_default_action} from "../../dom_observer/observer_default_action"
 import {event_handler_name_plugin_activate} from "./event_plugin_activate"
 import {event_box_map} from "./event_box_map"
 

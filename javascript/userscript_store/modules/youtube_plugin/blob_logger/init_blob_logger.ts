@@ -1,6 +1,6 @@
 import {blob_create_args_arr} from "./blob_create_args_arr"
 import {leftover_args} from "./leftover_args"
-import {created_blobs} from "./created_blobs"
+import {created_blobs} from "../created_blobs"
 import {active_blob_set} from "./active_blob_set"
 
 export function init_blob_logger() {
