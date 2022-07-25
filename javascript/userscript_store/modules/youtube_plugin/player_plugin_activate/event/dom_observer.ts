@@ -1,3 +1,3 @@
-import {CustomEventTarget} from "./CustomEventTarget"
+import {CustomEventTarget} from "./types/CustomEventTarget"
 
 export let dom_observer=new CustomEventTarget

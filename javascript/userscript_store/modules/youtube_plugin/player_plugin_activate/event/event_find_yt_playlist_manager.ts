@@ -1,5 +1,5 @@
-import {CustomEventTarget} from "./CustomEventTarget"
-import {CustomEventType} from "./CustomEventType"
+import {CustomEventTarget} from "./types/CustomEventTarget"
+import {CustomEventType} from "./types/CustomEventType"
 import {dom_observer_next_tick_action} from "./dom_observer_next_tick_action"
 import {observer_default_action} from "./observer_default_action"
 import {on_yt_playlist_manager} from "./on_yt_playlist_manager"

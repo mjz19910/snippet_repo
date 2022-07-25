@@ -9,20 +9,11 @@
 // @run-at       document-start
 // ==/UserScript==
 
-import {HTMLVideoElementArrayBox} from "./box/HTMLVideoElementArrayBox"
 import {create_message_channel} from "./create_message_channel"
-import {CustomEventTarget} from "./player_plugin_activate/event/CustomEventTarget"
 import {HTMLMediaElementGainController} from "./volume_range_plugin/HTMLMediaElementGainController"
-import {MessagePortState} from "./MessagePortState"
 import {OnWindowProperty} from "./OnWindowProperty"
 import {PluginOverlayElement} from "./player_plugin_activate/PluginOverlayElement"
-import {YtdAppElement} from "./elements/types/YtdAppElement"
-import {YtdPageManagerElement} from "./elements/types/YtdPageManagerElement"
-import {YtdWatchFlexyElement} from "./elements/types/YtdWatchFlexyElement"
 import {YTFilterHandlers} from "./YTFilterHandlers"
-import {Box} from "types/box/Box"
-import {YTDPlayerElement} from "./elements/types/YTDPlayerElement"
-import {YtPlaylistManagerElement} from "./elements/types/YtPlaylistManagerElement"
 
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 export const debug={value:false}
@@ -38,8 +29,6 @@ export const ghost_symbol=Symbol.for('ghost')
 export const LOGGING_LEVEL=1
 export let playlist_arr: {value?:string[]}
 export let element_map: Map<string,HTMLElement>=new Map
-export let port_state_log: [number,number][]=[]
-export let port_state=new MessagePortState
 export let found_element_arr=[
 	"yt-playlist-manager",
 	"video",
@@ -52,7 +41,6 @@ export let slow_message_event=true
 export let rep_size=8
 export let rep_count={value:0}
 export let rep_max={value:25}
-export var on_yt_navigate_finish: ((event: {}) => void)[]=[]
 export var on_yt_navigate: ((event: {}) => void)[]=[]
 export let waiting_for_ytd_player={value:false}
 export let current_timeout: {value:number|null}={value:null}

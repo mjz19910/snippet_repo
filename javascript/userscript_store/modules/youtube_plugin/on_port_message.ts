@@ -1,5 +1,7 @@
 import {handle_port_message} from "./handle_port_message"
-import {debug,port_state_log,port_state,slow_message_event} from "./youtube_plugin.user"
+import {port_state} from "./player_plugin_activate/port_state"
+import {port_state_log} from "./port_state_log"
+import {debug,slow_message_event} from "./youtube_plugin.user"
 
 export function on_port_message(event: MessageEvent<number>) {
 	if(debug.value)

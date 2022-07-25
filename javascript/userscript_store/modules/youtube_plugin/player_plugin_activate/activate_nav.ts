@@ -1,8 +1,10 @@
 import {dummy_event_callback} from "./dummy_event_callback"
 import {page_changed_next_frame} from "./page_changed_next_frame"
-import {debug,ytd_player,ytd_page_manager,plugin_overlay_element} from "../youtube_plugin.user"
+import {debug,plugin_overlay_element} from "../youtube_plugin.user"
 import {player_overlay_style_source} from "./player_overlay_style_source"
-import {load_volume_range_plugin} from "../load_volume_range_plugin"
+import {load_volume_range_plugin} from "./load_volume_range_plugin"
+import {ytd_player} from "../elements/ytd_player"
+import {ytd_page_manager} from "../elements/ytd_page_manager"
 
 export function activate_nav() {
 	if(debug.value) console.log('activate_nav:fire')

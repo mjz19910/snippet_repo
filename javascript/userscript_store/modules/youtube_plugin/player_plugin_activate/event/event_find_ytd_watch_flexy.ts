@@ -1,15 +1,11 @@
-import {CustomEventTarget} from "./CustomEventTarget"
-import {CustomEventType} from "./CustomEventType"
+import {CustomEventTarget} from "./types/CustomEventTarget"
+import {CustomEventType} from "./types/CustomEventType"
 import {dom_observer_next_tick_action} from "./dom_observer_next_tick_action"
 import {observer_default_action} from "./observer_default_action"
 import {on_ytd_watch_flexy} from "../on_ytd_watch_flexy"
-import {ytd_page_manager} from "../../youtube_plugin.user"
+import {ytd_page_manager} from "modules/youtube_plugin/elements/ytd_page_manager"
 
-/**
- * @this {CustomEventTarget}
- * @param {CustomEventType} event
- * ID(40)
- * */
+/** ID(40) */
 export function event_find_ytd_watch_flexy(this: CustomEventTarget,event: CustomEventType) {
 	const current_message_id=40
 	let {type,detail,port}=event

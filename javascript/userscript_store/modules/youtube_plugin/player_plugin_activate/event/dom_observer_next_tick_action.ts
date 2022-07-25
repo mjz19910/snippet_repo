@@ -1,7 +1,6 @@
-import {CustomEventTarget} from "./CustomEventTarget"
+import {CustomEventTarget} from "./types/CustomEventTarget"
 
 export function dom_observer_next_tick_action(observer: CustomEventTarget,port: MessagePort,message_id: number) {
-	if(observer.trace)
-		console.log("trace_id_"+message_id+":continue")
+	if(observer.trace) console.log("trace_id_"+message_id+":continue")
 	port.postMessage(message_id)
 }
