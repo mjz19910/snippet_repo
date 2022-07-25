@@ -1,4 +1,4 @@
-import {continue_callback} from "./continue_callback"
+import {continue_callback} from "./player_plugin_activate/continue_callback"
 import {message_channel,rep_count,rep_max,port_state,rep_size} from "./youtube_plugin.user"
 
 export function handle_port_message() {

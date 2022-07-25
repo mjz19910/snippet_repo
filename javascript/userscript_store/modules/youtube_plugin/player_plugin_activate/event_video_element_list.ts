@@ -1,7 +1,8 @@
 import {CustomEventTarget} from "./CustomEventTarget"
 import {CustomEventType} from "./CustomEventType"
 import {observer_default_action} from "./observer_default_action"
-import {box_map} from "./youtube_plugin.user"
+import {event_handler_name_plugin_activate} from "./event_plugin_activate"
+import {box_map} from "../youtube_plugin.user"
 
 /**
  * @this {CustomEventTarget}
@@ -16,5 +17,5 @@ export function event_video_element_list(this: CustomEventTarget,event: CustomEv
 		console.log('no video element list')
 		return
 	}
-	this.dispatchEvent({type: "plugin-activate",detail,port})
+	this.dispatchEvent({type: event_handler_name_plugin_activate,detail,port})
 }

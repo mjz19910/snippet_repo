@@ -1,5 +1,5 @@
-import {element_map,ytd_page_manager} from "./youtube_plugin.user"
-import {YtdPageManagerElement} from "./YtdPageManagerElement"
+import {element_map,ytd_page_manager} from "../youtube_plugin.user"
+import {YtdPageManagerElement} from "../YtdPageManagerElement"
 
 export function on_ytd_page_manager(element: HTMLElement) {
 	const element_id="ytd-page-manager"

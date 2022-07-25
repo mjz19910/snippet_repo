@@ -1,5 +1,5 @@
-import {element_map,ytd_player} from "./youtube_plugin.user"
-import {YTPlayerData} from "./YTPlayerData"
+import {element_map,ytd_player} from "../youtube_plugin.user"
+import {YTPlayerData} from "../YTPlayerData"
 
 export function on_ytd_player(element: HTMLElement) {
 	const element_id="ytd-player"

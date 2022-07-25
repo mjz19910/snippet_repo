@@ -1,15 +1,15 @@
-import {continue_callback} from "./continue_callback"
-import {event_find_ytd_app} from "./event_find_ytd_app"
-import {event_find_ytd_page_manager} from "./event_find_ytd_page_manager"
-import {event_find_ytd_watch_flexy} from "./event_find_ytd_watch_flexy"
-import {event_find_yt_playlist_manager} from "./event_find_yt_playlist_manager"
-import {event_video_element_list} from "./event_video_element_list"
-import {event_ytd_player} from "./event_ytd_player"
-import {event_ytd_watch_flexy} from "./event_ytd_watch_flexy"
-import {on_yt_action} from "./on_yt_action"
+import {continue_callback} from "./player_plugin_activate/continue_callback"
+import {event_find_ytd_app} from "./player_plugin_activate/event_find_ytd_app"
+import {event_find_ytd_page_manager} from "./player_plugin_activate/event_find_ytd_page_manager"
+import {event_find_ytd_watch_flexy} from "./player_plugin_activate/event_find_ytd_watch_flexy"
+import {event_find_yt_playlist_manager} from "./player_plugin_activate/event_find_yt_playlist_manager"
+import {event_video_element_list} from "./player_plugin_activate/event_video_element_list"
+import {event_ytd_player} from "./player_plugin_activate/event_ytd_player"
+import {event_ytd_watch_flexy} from "./player_plugin_activate/event_ytd_watch_flexy"
+import {on_yt_action} from "./player_plugin_activate/on_yt_action"
 import {yt_watch_page_loaded_handler} from "./player_plugin_activate/yt_watch_page_loaded_handler"
-import {event_plugin_activate} from "./event_plugin_activate"
-import {on_yt_page_type_changed} from "./on_yt_page_type_changed"
+import {event_handler_name_plugin_activate, event_plugin_activate} from "./player_plugin_activate/event_plugin_activate"
+import {on_yt_page_type_changed} from "./player_plugin_activate/on_yt_page_type_changed"
 import {dom_observer,g_api,plugin_overlay_element,message_channel,title_on,mk_tree_arr,win_watch,port_state,playlist_arr,original_fetch,yt_state,yt_handlers} from "./youtube_plugin.user"
 import {mk} from "./mk"
 import {act_found_create_yt_player} from "./act_found_create_yt_player"
@@ -130,7 +130,7 @@ export function entry_point() {
 	dom_observer.addEventListener('ytd-watch-flexy',event_ytd_watch_flexy)
 	dom_observer.addEventListener('ytd-player',event_ytd_player)
 	dom_observer.addEventListener('video',event_video_element_list)
-	dom_observer.addEventListener('plugin-activate',event_plugin_activate)
+	dom_observer.addEventListener(event_handler_name_plugin_activate,event_plugin_activate)
 	document.addEventListener('yt-action',on_yt_action as (this: Document,ev: Event) => void)
 	g_api_local.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
 	window.addEventListener("resize",function() {

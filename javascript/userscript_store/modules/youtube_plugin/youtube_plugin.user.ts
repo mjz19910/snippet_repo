@@ -11,7 +11,7 @@
 
 import {HTMLVideoElementArrayBox} from "./HTMLVideoElementArrayBox"
 import {create_message_channel} from "./create_message_channel"
-import {CustomEventTarget} from "./CustomEventTarget"
+import {CustomEventTarget} from "./player_plugin_activate/CustomEventTarget"
 import {HTMLMediaElementGainController} from "./volume_range_plugin/HTMLMediaElementGainController"
 import {MessagePortState} from "./MessagePortState"
 import {OnWindowProperty} from "./OnWindowProperty"

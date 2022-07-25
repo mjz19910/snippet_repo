@@ -1,4 +1,4 @@
-import {dom_observer,port_state} from "./youtube_plugin.user"
+import {dom_observer,port_state} from "../youtube_plugin.user"
 
 export function continue_callback(port: MessagePort) {
 	dom_observer.dispatchEvent({
