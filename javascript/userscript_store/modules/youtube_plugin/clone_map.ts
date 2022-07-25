@@ -1,7 +1,7 @@
-import {deep_clone} from "./deep_clone"
+import {clone_each_entry} from "./clone_each_entry"
 
 export function clone_map<T, U, X extends Map<T, U>>(map: X): X {
 	let arr=Array.from(map)
-	let cloned_arr: [T,U][]=arr.map((map_entry): [T,U] => [map_entry[0],deep_clone<U>(map_entry[1])])
+	let cloned_arr: [T,U][]=arr.map(clone_each_entry)
 	return new Map(cloned_arr) as Map<T,U> as X
 }
