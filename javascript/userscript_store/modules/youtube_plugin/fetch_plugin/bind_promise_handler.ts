@@ -1,5 +1,5 @@
 import {handle_json_parse} from "./handle_json_parse"
-import {debug} from "./debug"
+import {debug} from "../debug"
 
 export function bind_promise_handler<T extends Function, U extends Function>(
 	request_info: RequestInfo|URL,

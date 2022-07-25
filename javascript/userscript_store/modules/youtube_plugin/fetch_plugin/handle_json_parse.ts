@@ -1,4 +1,4 @@
-import {debug} from "./debug"
+import {debug} from "../debug"
 import {fetch_filter_text_then_data_url} from "./fetch_filter_text_then_data_url"
 
 export function handle_json_parse<T extends Function, U extends Function>(

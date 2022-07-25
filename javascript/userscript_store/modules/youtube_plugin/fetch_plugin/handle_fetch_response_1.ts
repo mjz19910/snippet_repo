@@ -1,4 +1,4 @@
-import {debug} from "./debug"
+import {debug} from "../debug"
 import {handle_fetch_response_2} from "./handle_fetch_response_2"
 
 export function handle_fetch_response_1(request_info: RequestInfo|URL,response: Response): Response {
