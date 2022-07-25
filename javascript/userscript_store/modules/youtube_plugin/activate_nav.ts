@@ -7,30 +7,30 @@ export function activate_nav() {
 	if(debug)
 		console.log('activate_nav:fire')
 	VolumeRangePlugin()
-	if(!ytd_player)
+	if(!ytd_player.value)
 		return
-	if(!ytd_page_manager)
+	if(!ytd_page_manager.value)
 		return
-	if(ytd_player.active_nav)
+	if(ytd_player.value.active_nav)
 		return
-	if(!plugin_overlay_element)
+	if(!plugin_overlay_element.value)
 		return
-	ytd_player.active_nav=true
-	plugin_overlay_element.setAttribute("style",player_overlay_style_str)
-	plugin_overlay_element.onupdate()
-	ytd_page_manager.getCurrentPage().append(plugin_overlay_element)
+	ytd_player.value.active_nav=true
+	plugin_overlay_element.value.setAttribute("style",player_overlay_style_str)
+	plugin_overlay_element.value.onupdate()
+	ytd_page_manager.value.getCurrentPage().append(plugin_overlay_element.value)
 	dummy_event_callback()
-	ytd_page_manager.addEventListener("yt-page-type-changed",function() {
-		if(!ytd_player)
+	ytd_page_manager.value.addEventListener("yt-page-type-changed",function() {
+		if(!ytd_player.value)
 			return
-		if(!ytd_page_manager)
+		if(!ytd_page_manager.value)
 			return
-		if(ytd_page_manager.getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
-			ytd_player.is_watch_page_active=false
-			plugin_overlay_element&&plugin_overlay_element.remove()
+		if(ytd_page_manager.value.getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
+			ytd_player.value.is_watch_page_active=false
+			plugin_overlay_element.value&&plugin_overlay_element.value.remove()
 			return
 		} else {
-			ytd_player.is_watch_page_active=true
+			ytd_player.value.is_watch_page_active=true
 		}
 		requestAnimationFrame(page_changed_next_frame)
 	})

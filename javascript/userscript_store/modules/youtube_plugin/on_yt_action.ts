@@ -9,7 +9,7 @@ export function on_yt_action(event: CustomEvent<{actionName: "yt-fullscreen-chan
 		let {args}=detail
 		fix_offset()
 		setTimeout(fix_offset)
-		title_text_overlay_enabled=!args[0]
+		title_text_overlay_enabled.value=!args[0]
 		title_text_overlay_update()
 	}
 }

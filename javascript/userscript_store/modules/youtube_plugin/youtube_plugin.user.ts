@@ -36,12 +36,12 @@ export let win_watch=new OnWindowProperty
 export const ghost_symbol=Symbol.for('ghost')
 export const LOGGING_LEVEL=1
 export let playlist_arr: {value?:string[]}
-export let ytd_page_manager: YtdPageManagerElement|null=null
-export let ytd_watch_flexy: YtdWatchFlexyElement|null=null
+export let ytd_page_manager: {value:YtdPageManagerElement|null}={value:null}
+export let ytd_watch_flexy: {value:YtdWatchFlexyElement|null}={value:null}
 // yt display app
-export let ytd_app: YtdAppElement|null=null
-export let yt_playlist_manager: Element|null=null
-export let ytd_player: YTPlayerData|null=null
+export let ytd_app: {value:YtdAppElement|null}={value:null}
+export let yt_playlist_manager: {value:Element|null}={value:null}
+export let ytd_player: {value:YTPlayerData|null}={value:null}
 export let element_map: Map<string,HTMLElement>=new Map
 export let box_map: Map<string,Box|HTMLVideoElementArrayBox>=new Map
 export let dom_observer=new CustomEventTarget
@@ -52,13 +52,13 @@ export let found_element_arr=[
 	"video",
 ]
 export let find_element_tag_name: string='video'
-export let found_element=false
+export let found_element={value:false}
 export const realHTMLElement=HTMLElement
 export let message_channel=create_message_channel()
 export let slow_message_event=true
 export let rep_size=8
-export let rep_count=0
-export let rep_max=25
+export let rep_count={value:0}
+export let rep_max={value:25}
 export var on_yt_navigate_finish: ((event: {}) => void)[]=[]
 export var on_yt_navigate: ((event: {}) => void)[]=[]
 // spell:words monospace
@@ -90,17 +90,15 @@ export let player_overlay_style_str=`
 	user-select: none;
 	width: 10px;
 `
-export let waiting_for_ytd_player=false
-export let current_timeout: number|null=null
-export let title_text_overlay_enabled=true
-/**@type {HTMLDivElement | null}*/
-export let overlay_hide_ui_input: HTMLDivElement|null=null
-/**@type {HTMLDivElement | null}*/
-export let overlay_content_div: HTMLDivElement|null=null
-export let title_on={value:null}
-export let ui_plugin_css_enabled=false
+export let waiting_for_ytd_player={value:false}
+export let current_timeout: {value:number|null}={value:null}
+export let title_text_overlay_enabled={value:true}
+export let overlay_hide_ui_input: {value:HTMLDivElement|null}={value:null}
+export let overlay_content_div: {value:HTMLDivElement|null}={value:null}
+export let title_on:{value:boolean|null}={value:null}
+export let ui_plugin_css_enabled={value:false}
 /**@type {PluginOverlayElement | null} */
-export let plugin_overlay_element: PluginOverlayElement|null=null
+export let plugin_overlay_element: {value:PluginOverlayElement|null}={value:null}
 export let volume_plugin_style_source=`
 	#rh_css {
 		--w:calc(100% - 16px - 185px - 728px - 225px);

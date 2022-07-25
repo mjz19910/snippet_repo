@@ -8,6 +8,6 @@ export function on_ytd_app(element: HTMLElement) {
 	const element_id="ytd-app"
 	console.log(`on ${element_id}`)
 	element_map.set(element_id,element)
-	ytd_app=any(element)
+	ytd_app.value=any(element)
 	window.ytd_app=element
 }

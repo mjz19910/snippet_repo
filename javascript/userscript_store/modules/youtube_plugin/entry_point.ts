@@ -130,7 +130,7 @@ export function entry_point() {
 	document.addEventListener('yt-action',any<(this: Document,ev: Event) => void>(on_yt_action))
 	g_api_local.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
 	window.addEventListener("resize",function() {
-		plugin_overlay_element&&plugin_overlay_element.onupdate()
+		plugin_overlay_element.value&&plugin_overlay_element.value.onupdate()
 	})
 	if(top===window) {
 		continue_callback(message_channel.port1)

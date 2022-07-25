@@ -8,6 +8,6 @@ export function on_ytd_page_manager(element: HTMLElement) {
 	const element_id="ytd-page-manager"
 	console.log(`on ${element_id}`)
 	element_map.set(element_id,element)
-	ytd_page_manager=any(element)
+	ytd_page_manager.value=any(element)
 	window.ytd_page_manager=element
 }
