@@ -1,1 +1,1 @@
-export let yt_state: Map<string,{}>=new Map
+export let yt_state_map: Map<string,{}>=new Map
