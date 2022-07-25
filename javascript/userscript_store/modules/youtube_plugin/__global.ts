@@ -1,6 +1,6 @@
 declare global {
 	interface Window {
-		g_api:{
+		g_api?:{
 			Seen?:{}
 			property_handler_state?:{}
 			yt_state?: Map<string, {}>
