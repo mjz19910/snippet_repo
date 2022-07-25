@@ -18,10 +18,11 @@ export function VolumeRangePlugin() {
 		if(!ytd_app.value.volume_range) throw new Error("Typechecker error")
 		let container_dom_parent=ytd_app.value.__shady_children.masthead.$.container.children.center
 		let use_container=true
+		if(!(ytd_app.value.volume_range instanceof VolumeRange)) return
 		if(use_container) {
-			(ytd_app.value.volume_range as VolumeRange).attach_to_element(container_dom_parent)
+			ytd_app.value.volume_range.attach_to_element(container_dom_parent)
 		} else {
-			(ytd_app.value.volume_range as VolumeRange).attach_to_element(ytd_app.value)
+			ytd_app.value.volume_range.attach_to_element(ytd_app.value)
 		}
 	}
 }
