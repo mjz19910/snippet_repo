@@ -12,13 +12,12 @@ import {blob_create_args_arr} from "../blob_logger/blob_create_args_arr"
 export function init_g_api_plugin() {
 	window.g_api??={}
 	g_api.value=ts_remove_undefined(window.g_api)
-	let g_api_local=g_api.value
-	g_api_local.Seen=Seen
-	g_api_local.PropertyHandler=PropertyHandler
-	g_api_local.dom_observer=dom_observer
-	g_api_local.port_state=port_state
-	g_api_local.yt_state=yt_state_map
-	g_api_local.yt_handlers=yt_handlers
-	g_api_local.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
-	g_api_local.blob_create_args_arr=blob_create_args_arr
+	g_api.value.Seen=Seen
+	g_api.value.PropertyHandler=PropertyHandler
+	g_api.value.dom_observer=dom_observer
+	g_api.value.port_state=port_state
+	g_api.value.yt_state=yt_state_map
+	g_api.value.yt_handlers=yt_handlers
+	g_api.value.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
+	g_api.value.blob_create_args_arr=blob_create_args_arr
 }
