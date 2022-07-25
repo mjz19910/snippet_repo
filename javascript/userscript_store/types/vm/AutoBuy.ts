@@ -1,4 +1,4 @@
-import {debug_id_syms,AUDIO_ELEMENT_VOLUME,LOG_LEVEL_VERBOSE} from "types/constants"
+import {LOG_LEVEL_VERBOSE} from "types/constants"
 import {array_sample_end} from "./array_sample_end"
 import {AsyncNodeRoot} from "./AsyncNodeRoot"
 import {AsyncTimeoutNode} from "./AsyncTimeoutNode"
@@ -19,6 +19,8 @@ import {specialclick_inject} from "./specialclick_inject"
 import {TimeoutTarget} from "./TimeoutTarget"
 import {DataLoader} from "./wasm/DataLoader"
 import {is_in_ignored_from_src_fn} from "types/script_registry/mod"
+import {debug_id_syms} from "types/mod"
+import {AUDIO_ELEMENT_VOLUME} from "types/vars"
 
 export class AutoBuy implements IAutoBuy {
 	state_history_arr: any
