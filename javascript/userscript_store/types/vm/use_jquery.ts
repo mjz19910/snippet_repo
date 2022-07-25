@@ -4,6 +4,6 @@ export function use_jquery() {
 		return
 	let res = jq('head')
 	let r_proto = Object.getPrototypeOf(res)
-	r_proto.lazyload = function(...a: any) {}
+	r_proto.lazyload = function() {}
 	return jq
 }
