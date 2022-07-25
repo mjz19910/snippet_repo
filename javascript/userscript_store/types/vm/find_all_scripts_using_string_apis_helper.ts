@@ -1,14 +1,11 @@
-import {is_in_ignored_from_src_fn, is_in_userscript, scripts_weak_arr} from "types/script_registry/mod"
-import {register_obj_with_registry} from "types/script_registry/register_obj_with_registry"
-import {WeakFinalInfo} from "types/script_registry/WeakFinalInfo"
+import {is_in_ignored_from_src_fn, is_in_userscript} from "types/script_registry/mod"
 import {ScriptStateHost} from "./ScriptStateHost"
 
-export function find_all_scripts_using_string_apis(): [(WeakFinalInfo | null)[], (obj: any) => number] {
+export function init_script_registry() {
 	window.is_in_ignored_fn = function() {
 		return is_in_ignored_from_src_fn.flag
 	}
-	ScriptStateHost.event_target.addEventListener((e: any) => {
+	ScriptStateHost.event_target.addEventListener(() => {
 		is_in_userscript.flag = false
 	})
-	return [scripts_weak_arr, register_obj_with_registry]
 }

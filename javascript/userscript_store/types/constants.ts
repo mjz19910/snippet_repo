@@ -1,12 +1,6 @@
-import {AutoBuy} from "types/vm/AutoBuy"
-import {find_all_scripts_using_string_apis} from "types/vm/find_all_scripts_using_string_apis_helper"
-import {SymbolRef} from "types/vm/SymbolRef"
-import {UniqueIdGenerator} from "types/vm/UniqueIdGenerator"
-
 export const TIMER_SINGLE = 1
 export const TIMER_REPEATING = 2
 export const TIMER_TAG_COUNT = 3
-export const AUDIO_ELEMENT_VOLUME = 0.58
 export const WorkerAsyncMessage = 1
 export const TimeoutFireS = 101
 export const TimeoutFireR = 102
@@ -41,8 +35,3 @@ export const LOG_LEVEL_WARN = 2
 export const LOG_LEVEL_INFO = 3
 export const LOG_LEVEL_VERBOSE = 4
 export const LOG_LEVEL_TRACE = 5
-export const debug_id_gen = new UniqueIdGenerator
-export const auto_buy_obj = new AutoBuy
-export const [weak_scripts, register_obj_with_registry] = find_all_scripts_using_string_apis()
-export const local_logging_level = 3
-export const debug_id_syms: WeakRef<SymbolRef>[] = []

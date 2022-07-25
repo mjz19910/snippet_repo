@@ -1,16 +1,16 @@
 import {WeakFinalInfo} from "./WeakFinalInfo"
 import {HeldType} from "./HeldType"
-import {scripts_holders, scripts_tokens, scripts_weak_arr, script_id, script_registry} from "./mod"
+import {scripts_holders, scripts_tokens, weak_scripts_arr, script_id, script_registry} from "./mod"
 export function register_obj_with_registry(obj: any) {
 	let obj_id
 	let scripts_res: WeakFinalInfo[]=[]
-	for(let i=0;i<scripts_weak_arr.length;i++) {
-		let elem=scripts_weak_arr[i]
+	for(let i=0;i<weak_scripts_arr.length;i++) {
+		let elem=weak_scripts_arr[i]
 		if(elem!==null) {
 			scripts_res.push(elem)
 		}
 	}
-	let obj_ref=scripts_weak_arr.find((e: null|{ref: {deref: () => any}}) => e&&e.ref.deref()===obj)
+	let obj_ref=weak_scripts_arr.find((e: null|{ref: {deref: () => any}}) => e&&e.ref.deref()===obj)
 	if(obj_ref) {
 		obj_id=obj_ref.id
 		return obj_id
@@ -26,7 +26,7 @@ export function register_obj_with_registry(obj: any) {
 	let token_sym={token: Symbol(-obj_id)}
 	scripts_holders.push(held_obj)
 	scripts_tokens.push({key: held_obj.key,weak_ptr: new WeakRef(token_sym)})
-	scripts_weak_arr.push({
+	weak_scripts_arr.push({
 		key: held_obj.key,
 		id: obj_id,
 		ref: new WeakRef(obj)
