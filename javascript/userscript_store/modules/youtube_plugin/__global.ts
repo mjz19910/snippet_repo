@@ -2,7 +2,7 @@ declare global {
 	interface Window {
 		g_api?:{
 			Seen?:{}
-			property_handler_state?:{}
+			PropertyHandler?:{}
 			yt_state?: Map<string, {}>
 			blob_create_args_arr?: any[]
 			yt_handlers?: {}

@@ -14,7 +14,7 @@ export function init_g_api_plugin() {
 	g_api.value=ts_remove_undefined(window.g_api)
 	let g_api_local=g_api.value
 	g_api_local.Seen=Seen
-	g_api_local.property_handler_state=PropertyHandler
+	g_api_local.PropertyHandler=PropertyHandler
 	g_api_local.dom_observer=dom_observer
 	g_api_local.port_state=port_state
 	g_api_local.yt_state=yt_state_map
