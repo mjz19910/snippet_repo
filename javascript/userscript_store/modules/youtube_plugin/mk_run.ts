@@ -1,6 +1,6 @@
+import {locked_set} from "./locked_set"
 import {MKState} from "./MKState"
 import {on_mk_property_set} from "./on_mk_property_set"
-import {locked_set} from "./youtube_plugin.user"
 
 export function mk_run(cc: MKState) {
 	if(locked_set.has(cc.target)&&locked_set.get(cc.target).names.indexOf(cc.property_key)>-1) {

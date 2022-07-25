@@ -1,5 +1,6 @@
+import {ytd_player} from "../elements/ytd_player"
+import {plugin_overlay_element} from "./plugin_overlay_element"
 import {sumOffset} from "./sumOffset"
-import {ytd_player,plugin_overlay_element} from "../youtube_plugin.user"
 
 export function fix_offset() {
 	if(!ytd_player.value)

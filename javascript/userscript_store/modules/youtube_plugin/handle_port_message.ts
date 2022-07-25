@@ -1,5 +1,9 @@
+import {message_channel} from "./message_channel"
+import {rep_size} from "./options"
 import {continue_callback} from "./player_plugin_activate/continue_callback"
-import {message_channel,rep_count,rep_max,port_state,rep_size} from "./youtube_plugin.user"
+import {port_state} from "./player_plugin_activate/port_state"
+import {rep_count} from "./rep_count"
+import {rep_max} from "./rep_max"
 
 export function handle_port_message() {
 	let {port1}=message_channel

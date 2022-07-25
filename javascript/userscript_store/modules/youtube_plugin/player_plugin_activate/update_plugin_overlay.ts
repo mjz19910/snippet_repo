@@ -1,4 +1,4 @@
-import {plugin_overlay_element} from "../youtube_plugin.user"
+import {plugin_overlay_element} from "./plugin_overlay_element"
 
 export function update_plugin_overlay() {
 	if(!plugin_overlay_element.value)

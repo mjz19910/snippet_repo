@@ -1,4 +1,5 @@
-import {plugin_overlay_element,ytd_page_manager} from "../youtube_plugin.user"
+import {ytd_page_manager} from "../elements/ytd_page_manager"
+import {plugin_overlay_element} from "./plugin_overlay_element"
 
 export function page_changed_next_frame() {
 	if(!plugin_overlay_element.value)

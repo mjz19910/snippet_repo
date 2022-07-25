@@ -2,7 +2,7 @@ import {clone_array} from "./clone_array"
 import {clone_map} from "./clone_map"
 import {clone_object} from "./clone_object"
 import {Seen} from "./Seen"
-import {realHTMLElement} from "./youtube_plugin.user"
+import {realHTMLElement} from "./const"
 
 export function deep_clone<T>(value: T): T {
 	if(typeof value==='object') {

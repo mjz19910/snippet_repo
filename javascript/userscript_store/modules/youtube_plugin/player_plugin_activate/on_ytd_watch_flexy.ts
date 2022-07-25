@@ -1,4 +1,5 @@
-import {element_map,ytd_watch_flexy} from "../youtube_plugin.user"
+import {ytd_watch_flexy} from "../elements/ytd_watch_flexy"
+import {element_map} from "../element_map"
 
 export function on_ytd_watch_flexy(element: HTMLElement) {
 	const element_id="ytd-watch-flexy"

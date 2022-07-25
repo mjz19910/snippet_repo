@@ -1,5 +1,5 @@
 import {new_pv_fn} from "./new_pv_fn"
-import {ud_func} from "./youtube_plugin.user"
+import {ud_func} from "./ud_func"
 import {MKState} from "./MKState"
 
 export function on_mk_function_property(cc: MKState) {

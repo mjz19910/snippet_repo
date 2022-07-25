@@ -6,22 +6,20 @@ import {title_display_toggle} from "./title_display_toggle"
 import {title_display_update} from "./title_display_update"
 import {title_text_overlay_update} from "./title_text_overlay_update"
 import {ui_css_toggle_click_handler} from "./ui_css_toggle_click_handler"
-import {
-	g_api,
-	on_yt_navigate_finish,
-	on_yt_navigate,
-	overlay_content_div,
-	overlay_hide_ui_input,
-	plugin_overlay_element,
-	yt_playlist_manager,
-	ytd_player,
-} from "../youtube_plugin.user"
 import {PluginOverlayElement} from "./PluginOverlayElement"
 import {update_ui_plugin} from "./update_ui_plugin"
 import {fire_on_visibility_change_restart_video_playback} from "./fire_on_visibility_change_restart_video_playback"
 import {ytd_page_manager} from "../elements/ytd_page_manager"
 import {ytd_app} from "../elements/ytd_app"
 import {ytd_watch_flexy} from "../elements/ytd_watch_flexy"
+import {yt_playlist_manager} from "../elements/yt_playlist_manager"
+import {overlay_content_div} from "../overlay_content_div"
+import {overlay_hide_ui_input} from "../overlay_hide_ui_input"
+import {plugin_overlay_element} from "./plugin_overlay_element"
+import {g_api} from "../g_api"
+import {on_yt_navigate} from "../on_yt_navigate"
+import {on_yt_navigate_finish} from "../on_yt_navigate_finish"
+import {ytd_player} from "../elements/ytd_player"
 
 export function yt_watch_page_loaded_handler() {
 	if(!ytd_app.value) {

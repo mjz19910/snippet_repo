@@ -1,4 +1,5 @@
-import {debug,yt_handlers} from "./youtube_plugin.user"
+import {debug} from "./debug"
+import {yt_handlers} from "./yt_handlers"
 
 export function fetch_filter_text_then_data_url(url: string|URL,response_obj: {}) {
 	let url_obj=new URL(url)

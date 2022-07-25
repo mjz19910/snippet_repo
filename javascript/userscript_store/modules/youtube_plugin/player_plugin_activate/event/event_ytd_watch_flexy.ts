@@ -3,7 +3,7 @@ import {CustomEventType} from "./types/CustomEventType"
 import {dom_observer_next_tick_action} from "./dom_observer_next_tick_action"
 import {observer_default_action} from "./observer_default_action"
 import {on_ytd_player} from "../on_ytd_player"
-import {ytd_watch_flexy} from "../../youtube_plugin.user"
+import {ytd_watch_flexy} from "modules/youtube_plugin/elements/ytd_watch_flexy"
 
 /**
  * @this {CustomEventTarget}

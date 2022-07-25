@@ -10,7 +10,6 @@ import {on_yt_action} from "./player_plugin_activate/on_yt_action"
 import {yt_watch_page_loaded_handler} from "./player_plugin_activate/yt_watch_page_loaded_handler"
 import {event_handler_name_plugin_activate, event_plugin_activate} from "./player_plugin_activate/event/event_plugin_activate"
 import {on_yt_page_type_changed} from "./player_plugin_activate/on_yt_page_type_changed"
-import {dom_observer,g_api,plugin_overlay_element,message_channel,title_on,mk_tree_arr,win_watch,port_state,playlist_arr,original_fetch,yt_state,yt_handlers} from "./youtube_plugin.user"
 import {mk} from "./mk"
 import {act_found_create_yt_player} from "./act_found_create_yt_player"
 import {fetch_inject} from "./fetch_inject"
@@ -21,6 +20,18 @@ import {ObjectInfo} from "./ObjectInfo"
 import {do_proxy_call_getInitialData} from "./do_proxy_call_getInitialData"
 import {Seen} from "./Seen"
 import {ts_remove_undefined} from "./ts_remove_undefined"
+import {win_watch} from "./win_watch"
+import {g_api} from "./g_api"
+import {yt_state} from "./yt_state_map"
+import {yt_handlers} from "./yt_handlers"
+import {original_fetch} from "./original_fetch"
+import {mk_tree_arr} from "./mk_tree_arr"
+import {dom_observer} from "./player_plugin_activate/event/dom_observer"
+import {port_state} from "./player_plugin_activate/port_state"
+import {playlist_arr} from "./playlist_arr"
+import {title_on} from "./title_on"
+import {plugin_overlay_element} from "./player_plugin_activate/plugin_overlay_element"
+import {message_channel} from "./message_channel"
 
 export function entry_point() {
 	win_watch.addEventListener('new_window_object',act_found_create_yt_player)
@@ -29,13 +40,15 @@ export function entry_point() {
 	let g_api_local=g_api.value
 	g_api_local.Seen=Seen
 	g_api_local.property_handler_state=PropertyHandler
+	g_api_local.dom_observer=dom_observer
+	g_api_local.port_state=port_state
+	g_api_local.yt_state=yt_state
+	g_api_local.yt_handlers=yt_handlers
 	override_prop(window,"getInitialData",new PropertyHandler("getInitialData",do_proxy_call_getInitialData))
 	ObjectInfo.instance=new ObjectInfo
-	g_api_local.yt_state=yt_state
 	let blob_create_args_arr: any[]=[]
-	let leftover_args=[]
 	g_api_local.blob_create_args_arr=blob_create_args_arr
-	g_api_local.yt_handlers=yt_handlers
+	let leftover_args=[]
 
 	// PROTOTYPE MODIFIERS
 	/**
@@ -114,13 +127,10 @@ export function entry_point() {
 	mk_tree_arr.push(yta_str+'.create',yta_str+'.createAlternate')
 	mk(window,'yt','yt',true)
 	window.playlist_arr??=[]
-	g_api_local.dom_observer=dom_observer
-	g_api_local.port_state=port_state
 	playlist_arr.value=window.playlist_arr
 	let title_save=localStorage.title_save_data
-	if(!title_save) {
+	if(!title_save)
 		title_save=localStorage.title_save_data='{"value":false}'
-	}
 	title_on.value=JSON.parse(title_save).value
 	dom_observer.addEventListener('find-ytd-app',event_find_ytd_app)
 	dom_observer.addEventListener("find-yt-playlist-manager",event_find_yt_playlist_manager)

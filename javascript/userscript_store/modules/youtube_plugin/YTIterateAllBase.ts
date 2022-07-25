@@ -1,4 +1,4 @@
-import {yt_state} from "./youtube_plugin.user"
+import {yt_state as yt_state_map} from "./yt_state_map"
 
 export class YTIterateAllBase {
 	default_iter(path: string,data: {[str: string]: {}}) {
@@ -30,15 +30,15 @@ export class YTIterateAllBase {
 	 * @private
 	 */
 	update_state(key: string,value: string) {
-		if(yt_state.has(key)) {
-			let stored_state=yt_state.get(key)
+		if(yt_state_map.has(key)) {
+			let stored_state=yt_state_map.get(key)
 			if(stored_state instanceof Array) {
 				stored_state.push(value)
 				return
 			}
-			yt_state.set(key,[stored_state,value])
+			yt_state_map.set(key,[stored_state,value])
 		} else {
-			yt_state.set(key,[value])
+			yt_state_map.set(key,[value])
 		}
 	}
 }

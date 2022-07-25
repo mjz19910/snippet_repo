@@ -1,4 +1,4 @@
-import {ghost_symbol} from "./youtube_plugin.user"
+import {ghost_symbol} from "./ghost_symbol"
 import {mk_run} from "./mk_run"
 
 export class MKState {

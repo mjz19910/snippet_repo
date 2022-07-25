@@ -1,5 +1,5 @@
+import {debug} from "./debug"
 import {fetch_filter_text_then_data_url} from "./fetch_filter_text_then_data_url"
-import {debug} from "./youtube_plugin.user"
 
 export function handle_json_parse<T extends Function, U extends Function>(
 	request_info: RequestInfo|URL,

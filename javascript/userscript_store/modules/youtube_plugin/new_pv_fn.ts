@@ -1,4 +1,4 @@
-import {win_watch} from "./youtube_plugin.user"
+import {win_watch} from "./win_watch"
 import {MKState} from "./MKState"
 
 export function new_pv_fn(val: any,cc: MKState, /** @type {any[]} */ ...args: any[]) {

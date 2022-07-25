@@ -1,7 +1,7 @@
 import {MKState} from "./MKState"
 import {on_mk_function_property} from "./on_mk_function_property"
 import {walk_key_path} from "./walk_key_path"
-import {mk_tree_arr} from "./youtube_plugin.user"
+import {mk_tree_arr} from "./mk_tree_arr"
 
 export function on_mk_new_property(cc: MKState,obj: {}) {
 	if(obj instanceof Function) {

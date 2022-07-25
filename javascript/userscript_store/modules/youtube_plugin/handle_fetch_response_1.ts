@@ -1,5 +1,5 @@
+import {debug} from "./debug"
 import {handle_fetch_response_2} from "./handle_fetch_response_2"
-import {debug} from "./youtube_plugin.user"
 
 export function handle_fetch_response_1(request_info: RequestInfo|URL,response: Response): Response {
 	let overridden_props = ['text']

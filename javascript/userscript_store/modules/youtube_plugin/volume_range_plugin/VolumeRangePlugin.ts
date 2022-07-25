@@ -1,7 +1,9 @@
+import {debug} from "../debug"
+import {ytd_app} from "../elements/ytd_app"
 import {createGainController} from "./createGainController"
+import {gain_controller} from "./gain_controller"
 import {on_gain_controller} from "./on_gain_controller"
 import {VolumeRange} from "./VolumeRange"
-import {debug,gain_controller,ytd_app} from "../youtube_plugin.user"
 
 export function VolumeRangePlugin() {
 	if(debug.value)
@@ -21,9 +23,9 @@ export function VolumeRangePlugin() {
 		let container_dom_parent=ytd_app.value.__shady_children.masthead.$.container.children.center
 		let use_container=true
 		if(use_container) {
-			ytd_app.value.volume_range.attach_to_element(container_dom_parent)
+			(ytd_app.value.volume_range as VolumeRange).attach_to_element(container_dom_parent)
 		} else {
-			ytd_app.value.volume_range.attach_to_element(ytd_app.value)
+			(ytd_app.value.volume_range as VolumeRange).attach_to_element(ytd_app.value)
 		}
 	}
 }
