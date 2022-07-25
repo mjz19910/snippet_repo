@@ -4,32 +4,32 @@ import {clone_object} from "./clone_object"
 import {Seen} from "./Seen"
 import {realHTMLElement} from "./const"
 
+function clone_null_proto_object<T>(value: T): T {
+	let obj=clone_object(value)
+	Object.setPrototypeOf(obj,null)
+	return obj
+}
+
 export function deep_clone<T>(value: T): T {
 	if(typeof value==='object') {
-		if(value===null) {
-			// null is a primitive
-			return value
-		}
-		if(value instanceof Array) {
+		// check for null, it is a primitive
+		if(value===null) return value
+		if(value instanceof Array)
 			return clone_array(value) as T
-		}
-		if(value instanceof Map) {
+		if(value instanceof Map)
 			return clone_map(value) as T
-		}
-		if(Object.getPrototypeOf(value)===null) {
-			let obj=clone_object(value)
-			Object.setPrototypeOf(obj,null)
-			return obj
-		}
-		if(Object.getPrototypeOf(value).constructor===Object) {
+		const value_proto=Object.getPrototypeOf(value)
+		if(value_proto===null)
+			return clone_null_proto_object(value)
+		let create=value_proto.constructor
+		if(create===void 0||create===null)
+			debugger
+		if(create===Object)
 			return clone_object(value)
-		}
-		let create=Object.getPrototypeOf(value).constructor
-		let proto=Object.getPrototypeOf(value)
-		let str=Object.getPrototypeOf(value).constructor.name
+		let str=create.name
 		let seen_obj=Seen.as_instance(value,{
 			constructor_tag: Seen.as_constructor(create),
-			prototype_tag: Seen.as_any(proto)
+			prototype_tag: Seen.as_any(value_proto)
 		})
 		if(create===HTMLVideoElement) {
 			// don't recurse into exact dom elements
