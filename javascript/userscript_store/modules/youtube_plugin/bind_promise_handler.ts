@@ -1,11 +1,11 @@
 import {handle_json_parse} from "./handle_json_parse"
 import {debug} from "./youtube_plugin.user"
 
-export function bind_promise_handler<T,TResult2>(
+export function bind_promise_handler<T extends Function, U extends Function>(
 	request_info: RequestInfo|URL,
-	onfulfilled: ((value: T) => T|PromiseLike<T>)|null|undefined,
-	onrejected: ((reason: any) => TResult2|PromiseLike<TResult2>)|null|undefined) {
-	if(debug)
+	onfulfilled: T|null|undefined,
+	onrejected: U|null|undefined) {
+	if(debug.value)
 		console.log('handle_json_parse.bind()')
-	return (value: string) => handle_json_parse(request_info,onfulfilled,onrejected,value)
+	return (value: string) => handle_json_parse<T, U>(request_info,onfulfilled,onrejected,value)
 }

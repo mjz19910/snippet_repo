@@ -1,4 +1,3 @@
-import {any} from "./any"
 import {clone_array} from "./clone_array"
 import {clone_map} from "./clone_map"
 import {clone_object} from "./clone_object"
@@ -12,12 +11,10 @@ export function deep_clone<T>(value: T): T {
 			return value
 		}
 		if(value instanceof Array) {
-			return clone_array(value)
+			return clone_array(value) as T
 		}
 		if(value instanceof Map) {
-			/**@type {typeof value}*/
-			let copy: typeof value=clone_map(value)
-			return copy
+			return clone_map(value) as T
 		}
 		if(Object.getPrototypeOf(value)===null) {
 			let obj: T=clone_object(value)
@@ -39,7 +36,7 @@ export function deep_clone<T>(value: T): T {
 			return seen_obj
 		}
 		// was the real one shimmed already
-		if(any<HTMLElement&{es5Shimmed?: boolean}>(realHTMLElement).es5Shimmed) {
+		if((realHTMLElement as {es5Shimmed?: boolean}).es5Shimmed) {
 			// the constructor is still non-shimmed
 			if(create===realHTMLElement.prototype.constructor) {
 				return seen_obj

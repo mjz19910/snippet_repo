@@ -1,4 +1,4 @@
-import {waiting_for_ytd_player,current_timeout,ytd_player} from "./youtube_plugin.user"
+import {waiting_for_ytd_player,current_timeout,ytd_player} from "../youtube_plugin.user"
 import {activate_nav} from "./activate_nav"
 import {wait_for_yt_player} from "./wait_for_yt_player"
 

@@ -1,10 +1,10 @@
 import {createGainController} from "./createGainController"
 import {on_gain_controller} from "./on_gain_controller"
 import {VolumeRange} from "./VolumeRange"
-import {debug,gain_controller,ytd_app} from "./youtube_plugin.user"
+import {debug,gain_controller,ytd_app} from "../youtube_plugin.user"
 
 export function VolumeRangePlugin() {
-	if(debug)
+	if(debug.value)
 		console.log('VolumeRangePlugin')
 	if(!gain_controller.value)
 		gain_controller.value=on_gain_controller(createGainController)
@@ -17,6 +17,7 @@ export function VolumeRangePlugin() {
 		return
 	if(!ytd_app.value.volume_range) {
 		ytd_app.value.volume_range=new VolumeRange(0,100*5,100*5*2,gain_controller.value)
+		if(!ytd_app.value.volume_range) throw new Error("Typechecker error")
 		let container_dom_parent=ytd_app.value.__shady_children.masthead.$.container.children.center
 		let use_container=true
 		if(use_container) {

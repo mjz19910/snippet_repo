@@ -1,4 +1,3 @@
-import {any} from "./any"
 import {yt_state} from "./youtube_plugin.user"
 
 export class YTIterateAllBase {
@@ -18,8 +17,10 @@ export class YTIterateAllBase {
 		}
 		for(let [key,value] of Object.entries(data)) {
 			this.default_iter(`${path}.${key}`,value)
-			if(any<{[x: string]: any}>(this)[key]) {
-				any<{[x: string]: any}>(this)[key](`${path}.${key}`,value)
+			let iter_this_any:any = this
+			let iter_this_type: {[x:string]: any} = iter_this_any
+			if(iter_this_type[key]) {
+				iter_this_type[key](`${path}.${key}`,value)
 			}
 		}
 	}

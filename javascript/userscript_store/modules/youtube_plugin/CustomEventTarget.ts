@@ -9,17 +9,9 @@ export class CustomEventTarget {
 		this._events={}
 		this.trace=false
 	}
-	/**
-	 * @param {string} type
-	 * @param {(this:CustomEventTarget, event: CustomEventType) => void} handler
-	 */
 	addEventListener(type: string,handler: (this: CustomEventTarget,event: CustomEventType) => void) {
 		(this._events[type]??=[]).push(handler)
 	}
-	/**
-	 * @param {string} type
-	 * @param {any} handler
-	 */
 	removeEventListener(type: string,handler: any) {
 		let event_arr=this._events[type]
 		if(!event_arr)
@@ -33,9 +25,6 @@ export class CustomEventTarget {
 			event_arr.splice(i,1)
 		}
 	}
-	/**
-	 * @param {CustomEventType} event
-	 */
 	dispatchEvent(event: CustomEventType) {
 		let msg_arr=this._events[event.type]
 		if(!msg_arr)

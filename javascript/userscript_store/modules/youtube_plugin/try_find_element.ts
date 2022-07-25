@@ -1,6 +1,5 @@
 import {found_element_arr,find_element_tag_name,found_element} from "./youtube_plugin.user"
 
-/**@arg {number} message_id*/
 export function try_find_element(message_id: number) {
 	if(found_element_arr.includes(find_element_tag_name))
 		return

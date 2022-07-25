@@ -1,4 +1,4 @@
-import {ui_plugin_css_enabled,ytd_app} from "./youtube_plugin.user"
+import {ui_plugin_css_enabled,ytd_app} from "../youtube_plugin.user"
 
 export function ui_css_toggle_click_handler() {
 	if(ui_plugin_css_enabled.value) {

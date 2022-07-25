@@ -1,7 +1,6 @@
 import {MessageChannelWithReadonlyPorts} from "./MessageChannelWithReadonlyPorts"
 import {on_port_message} from "./on_port_message"
 
-/**@return {Readonly<MessageChannelWithReadonlyPorts>} */
 export function create_message_channel(): Readonly<MessageChannelWithReadonlyPorts> {
 	let channel=Object.freeze(new MessageChannel())
 	let {port1,port2}=channel

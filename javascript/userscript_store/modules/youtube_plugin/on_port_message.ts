@@ -1,11 +1,8 @@
 import {handle_port_message} from "./handle_port_message"
 import {debug,port_state_log,port_state,slow_message_event} from "./youtube_plugin.user"
 
-/**
- * @param {MessageEvent<number>} event
- */
 export function on_port_message(event: MessageEvent<number>) {
-	if(debug)
+	if(debug.value)
 		console.log('msg_port:message %o',event.data)
 	port_state_log.push([performance.now()-port_state.time_offset,event.data])
 	if(slow_message_event) {

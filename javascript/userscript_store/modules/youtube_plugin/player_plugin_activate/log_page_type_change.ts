@@ -1,4 +1,4 @@
-import {ytd_page_manager,playlist_arr} from "./youtube_plugin.user"
+import {ytd_page_manager,playlist_arr} from "../youtube_plugin.user"
 
 export function log_page_type_change(event: {detail?: {pageType: string}}) {
 	let {detail}=event

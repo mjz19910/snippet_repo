@@ -1,4 +1,4 @@
-import {ytd_player} from "./youtube_plugin.user"
+import {ytd_player} from "../youtube_plugin.user"
 
 export async function wait_for_yt_player() {
 	if(!ytd_player.value) {

@@ -3,10 +3,6 @@ import {on_mk_function_property} from "./on_mk_function_property"
 import {walk_key_path} from "./walk_key_path"
 import {mk_tree_arr} from "./youtube_plugin.user"
 
-/**
- * @param {MKState} cc
- * @param {{}} obj
- */
 export function on_mk_new_property(cc: MKState,obj: {}) {
 	if(obj instanceof Function) {
 		cc.function_value=obj

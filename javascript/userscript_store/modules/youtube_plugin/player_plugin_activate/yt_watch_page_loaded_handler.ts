@@ -6,9 +6,7 @@ import {title_display_toggle} from "./title_display_toggle"
 import {title_display_update} from "./title_display_update"
 import {title_text_overlay_update} from "./title_text_overlay_update"
 import {ui_css_toggle_click_handler} from "./ui_css_toggle_click_handler"
-import {update_plugin_overlay} from "./update_plugin_overlay"
 import {
-	debug,
 	g_api,
 	on_yt_navigate_finish,
 	on_yt_navigate,
@@ -20,8 +18,10 @@ import {
 	ytd_page_manager,
 	ytd_player,
 	ytd_watch_flexy,
-} from "./youtube_plugin.user"
+} from "../youtube_plugin.user"
 import {PluginOverlayElement} from "./PluginOverlayElement"
+import {update_ui_plugin} from "./update_ui_plugin"
+import {fire_on_visibility_change_restart_video_playback} from "./fire_on_visibility_change_restart_video_playback"
 
 export function yt_watch_page_loaded_handler() {
 	if(!ytd_app.value) {
@@ -78,8 +78,7 @@ export function yt_watch_page_loaded_handler() {
 	var css_str=`ytd-watch-next-secondary-results-renderer{overflow-x:scroll;height:80vh;}\n/*# sourceURL=yt_css_user */`
 	if(ytd_app.value.ui_plugin_style_element)
 		ytd_app.value.ui_plugin_style_element.innerHTML=css_str
-	if(!ytd_player.value)
-		return
+	if(!ytd_player.value) return
 	ytd_player.value.active_nav=false
 	plugin_overlay_element.value.onupdate=fix_offset
 	on_yt_navigate_finish[0]=log_yt_finish_navigation
@@ -88,26 +87,10 @@ export function yt_watch_page_loaded_handler() {
 	input_modify_css_style.innerHTML="C"
 	input_modify_css_style.onclick=ui_css_toggle_click_handler
 	let current_page_element=ytd_page_manager.value.getCurrentPage()
-	function update_ui_plugin() {
-		if(debug)
-			console.log('update_ui_plugin')
-		setTimeout(update_plugin_overlay)
-	};
 	current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin)
-	// visibilitychange handler (resume video when page is visible again)
 	let vis_imm=false
 	ytd_app.value.app_is_visible=1
-	function fire_on_visibility_change_restart_video_playback() {
-		if(!is_watch_page_active())
-			return
-		if(!ytd_player.value||!ytd_player.value.player_)
-			return
-		if(ytd_player.value.player_.getPlayerState()!=2)
-			return
-		ytd_player.value.pause()
-		ytd_player.value.play()
-	}
-	document.addEventListener("visibilitychange",function() {
+	document.addEventListener("visibilitychange",() => {
 		if(!ytd_app.value)
 			return
 		if(!is_watch_page_active())

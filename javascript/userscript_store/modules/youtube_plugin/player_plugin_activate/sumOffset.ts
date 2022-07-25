@@ -1,6 +1,3 @@
-/**
- * @param {HTMLElement} element
- */
 export function sumOffset(element: HTMLElement) {
 	let cache={
 		top_offset: 0,

@@ -1,11 +1,7 @@
-import {any} from "./any"
 import {deep_clone} from "./deep_clone"
 
-/**
- * @type {<T extends Map<any, any>>(map:T)=>typeof map}
- */
-export function clone_map<T extends Map<any,any>>(map: T): T {
+export function clone_map<T, U, X>(map: Map<T,U>): Map<T,U> {
 	let arr=Array.from(map)
-	let cloned_arr: [any,any][]=arr.map((map_entry): [any,any] => [map_entry[0],deep_clone(map_entry[1])])
-	return any(new Map(cloned_arr))
+	let cloned_arr: [T,U][]=arr.map((map_entry): [T,U] => [map_entry[0],deep_clone<U>(map_entry[1])])
+	return new Map(cloned_arr)
 }

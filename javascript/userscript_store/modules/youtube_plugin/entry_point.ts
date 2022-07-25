@@ -1,4 +1,3 @@
-import {any} from "./any"
 import {continue_callback} from "./continue_callback"
 import {event_find_ytd_app} from "./event_find_ytd_app"
 import {event_find_ytd_page_manager} from "./event_find_ytd_page_manager"
@@ -8,10 +7,10 @@ import {event_video_element_list} from "./event_video_element_list"
 import {event_ytd_player} from "./event_ytd_player"
 import {event_ytd_watch_flexy} from "./event_ytd_watch_flexy"
 import {on_yt_action} from "./on_yt_action"
-import {yt_watch_page_loaded_handler} from "./yt_watch_page_loaded_handler"
+import {yt_watch_page_loaded_handler} from "./player_plugin_activate/yt_watch_page_loaded_handler"
 import {event_plugin_activate} from "./event_plugin_activate"
 import {on_yt_page_type_changed} from "./on_yt_page_type_changed"
-import {dom_observer,g_api,plugin_overlay_element,message_channel,title_on, mk_tree_arr, win_watch, port_state, playlist_arr, original_fetch, yt_state, yt_handlers} from "./youtube_plugin.user"
+import {dom_observer,g_api,plugin_overlay_element,message_channel,title_on,mk_tree_arr,win_watch,port_state,playlist_arr,original_fetch,yt_state,yt_handlers} from "./youtube_plugin.user"
 import {mk} from "./mk"
 import {act_found_create_yt_player} from "./act_found_create_yt_player"
 import {fetch_inject} from "./fetch_inject"
@@ -26,8 +25,8 @@ import {ts_remove_undefined} from "./ts_remove_undefined"
 export function entry_point() {
 	win_watch.addEventListener('new_window_object',act_found_create_yt_player)
 	window.g_api??={}
-	g_api.value = ts_remove_undefined(window.g_api)
-	let g_api_local = g_api.value
+	g_api.value=ts_remove_undefined(window.g_api)
+	let g_api_local=g_api.value
 	g_api_local.Seen=Seen
 	g_api_local.property_handler_state=PropertyHandler
 	override_prop(window,"getInitialData",new PropertyHandler("getInitialData",do_proxy_call_getInitialData))
@@ -67,13 +66,18 @@ export function entry_point() {
 	})
 	original_fetch.value=fetch
 	window.fetch=fetch_inject
-	any<{__proxy_target__: typeof fetch}>(fetch_inject).__proxy_target__=original_fetch.value
-	//window.fetch=o_fetch;
-	if(any<{JSON_parse_changed?: boolean}>(Function).JSON_parse_changed===undefined) {
+	let any_fetch_inject: any=fetch_inject
+	let fetch_inject_extension: {__proxy_target__: typeof fetch}=any_fetch_inject
+	fetch_inject_extension.__proxy_target__=original_fetch.value
+	const is_fetch_disabled=false
+	if(is_fetch_disabled) window.fetch=original_fetch.value
+	let Function_any: any=Function
+	let Function_with_json_info: {JSON_parse_changed?: boolean}=Function_any
+	if(Function_with_json_info.JSON_parse_changed===undefined) {
 		let orig_json_parse=JSON.parse
 		JSON.parse=new Proxy(JSON.parse,new json_parse_handler)
 		JSON.parse=orig_json_parse
-		any<{JSON_parse_changed: boolean}>(Function).JSON_parse_changed=true
+		Function_with_json_info.JSON_parse_changed=true
 	}
 	let navigator_sendBeacon=navigator.sendBeacon
 	navigator.sendBeacon=function(...args) {
@@ -127,7 +131,7 @@ export function entry_point() {
 	dom_observer.addEventListener('ytd-player',event_ytd_player)
 	dom_observer.addEventListener('video',event_video_element_list)
 	dom_observer.addEventListener('plugin-activate',event_plugin_activate)
-	document.addEventListener('yt-action',any<(this: Document,ev: Event) => void>(on_yt_action))
+	document.addEventListener('yt-action',on_yt_action as (this: Document,ev: Event) => void)
 	g_api_local.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
 	window.addEventListener("resize",function() {
 		plugin_overlay_element.value&&plugin_overlay_element.value.onupdate()

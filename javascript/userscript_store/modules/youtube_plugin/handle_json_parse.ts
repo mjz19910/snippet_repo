@@ -1,21 +1,20 @@
-import {any} from "./any"
 import {fetch_filter_text_then_data_url} from "./fetch_filter_text_then_data_url"
 import {debug} from "./youtube_plugin.user"
 
-export function handle_json_parse<T,TResult2>(
+export function handle_json_parse<T extends Function, U extends Function>(
 	request_info: RequestInfo|URL,
-	onfulfilled: ((value: T) => T|PromiseLike<T>)|null|undefined,
-	onrejected: ((reason: any) => TResult2|PromiseLike<TResult2>)|null|undefined,
+	onfulfilled: T|null|undefined,
+	onrejected: U|null|undefined,
 	response_text: string) {
 	let original_json_parse=JSON.parse
-	if(debug)
+	if(debug.value)
 		console.log('JSON.parse = new Proxy()')
 	JSON.parse=new Proxy(JSON.parse,{
 		apply: function(...proxy_args) {
-			if(debug)
+			if(debug.value)
 				console.log('JSON.parse()')
 			let obj=Reflect.apply(...proxy_args)
-			if(debug)
+			if(debug.value)
 				console.log('request_info.url')
 			function get_url_from_request_info(value: RequestInfo|URL) {
 				if(typeof value==='string') {
@@ -25,7 +24,7 @@ export function handle_json_parse<T,TResult2>(
 				} else if(value.url!==void 0) {
 					return value.url
 				}
-				if(debug)
+				if(debug.value)
 					console.log("handle_json_parse no url",request_info,obj)
 				throw new Error("Failed")
 			}
@@ -40,7 +39,7 @@ export function handle_json_parse<T,TResult2>(
 	let ret
 	try {
 		if(onfulfilled) {
-			ret=onfulfilled(any(response_text))
+			ret=onfulfilled(response_text)
 		}
 	} catch(err) {
 		if(onrejected)

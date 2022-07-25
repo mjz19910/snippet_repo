@@ -1,4 +1,4 @@
-import {volume_plugin_style_source} from "./youtube_plugin.user"
+import {volume_plugin_style_source} from "./volume_plugin_style_source"
 
 export class HTMLMediaElementGainController {
 	/**@type {Event|undefined}*/

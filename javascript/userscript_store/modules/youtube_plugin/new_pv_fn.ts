@@ -1,10 +1,6 @@
 import {win_watch} from "./youtube_plugin.user"
 import {MKState} from "./MKState"
 
-/**
- * @param {any} val
- * @param {MKState} cc
- */
 export function new_pv_fn(val: any,cc: MKState, /** @type {any[]} */ ...args: any[]) {
 	let ret
 	let act_cb_obj={fired: false,ret: ret}
