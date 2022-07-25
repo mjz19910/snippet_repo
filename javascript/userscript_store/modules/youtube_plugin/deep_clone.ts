@@ -17,7 +17,7 @@ export function deep_clone<T>(value: T): T {
 			return clone_map(value) as T
 		}
 		if(Object.getPrototypeOf(value)===null) {
-			let obj: T=clone_object(value)
+			let obj=clone_object(value)
 			Object.setPrototypeOf(obj,null)
 			return obj
 		}
