@@ -27,15 +27,15 @@ class Exact {
 		return this.value
 	}
 }
-class ItemRange extends ItemRangeBase<string> {
-	start: string
-	end: string
+class ItemRange<A extends string,B extends string,C extends string> extends ItemRangeBase<string> {
+	start: A
+	end: B
 	current: string
-	constructor(range_start: string,range_end: string) {
+	constructor(range_start: A,range_end: B,range_init: C) {
 		super()
 		this.start=range_start
 		this.end=range_end
-		this.current=range_start
+		this.current=range_init
 	}
 	reset(): void {
 		this.current=this.start
@@ -54,7 +54,8 @@ class ItemRange extends ItemRangeBase<string> {
 		this.current=String.fromCharCode(this.current.charCodeAt(0)+1)
 	}
 }
-class Base {
+class Base<T> {
+	__tag: T|null=null
 	queue: (ItemRangeBase<string>|Exact)[]=[]
 	queue_index=0
 	advance() {
@@ -90,7 +91,11 @@ class Base {
 		}
 	}
 }
-class CountingSubRange extends ItemRangeBase<string[]> {
+class CountingSubRange<T extends ItemRangeBase<string>[]> extends ItemRangeBase<string[]> {
+	constructor(ranges: T) {
+		super()
+		this.ranges=ranges
+	}
 	ranges: ItemRangeBase<string>[]=[]
 	reset() {
 		for(let i=0;this.ranges.length;i++) {
@@ -126,11 +131,13 @@ class CountingSubRange extends ItemRangeBase<string[]> {
 		}
 	}
 }
-class RangeJoiner<T> extends ItemRangeBase<string> {
-	target: ItemRangeBase<string[]>
-	constructor(target: ItemRangeBase<string[]>) {
+class RangeJoiner<T extends ItemRangeBase<string[]>,U extends string> extends ItemRangeBase<string> {
+	target: T
+	separator: U
+	constructor(target: T,separator: U) {
 		super()
 		this.target=target
+		this.separator=separator
 	}
 	advance() {
 		this.target.advance()
@@ -142,20 +149,20 @@ class RangeJoiner<T> extends ItemRangeBase<string> {
 		this.target.reset()
 	}
 	init(value: string): this {
-		this.target.init(value.split(""))
+		this.target.init(value.split(this.separator))
 		return this
 	}
 	get_value() {
-		return this.target.get_value().join("")
+		return this.target.get_value().join(this.separator)
 	}
 }
-let n: Base=new Base()
-n.extend(new ItemRange('1','9'))
-n.extend(new Exact('_'))
-n.extend(new ItemRange('a','i'))
-output_all(() => `$_${n.pop_front()}`,() => n.has_more())
-n=new Base()
-let tmp=new CountingSubRange
-tmp.ranges.push(...new Array(2).fill(() => new ItemRange("0","9")).map(e => e()))
-tmp.ranges[tmp.ranges.length-1].init("1")
-n.extend(new RangeJoiner(tmp))
+let group_1=new Base<"group1">
+group_1.extend(new ItemRange('1','9',"1"))
+group_1.extend(new Exact('_'))
+group_1.extend(new ItemRange('a','i',"a"))
+output_all(() => `$_${group_1.pop_front()}`,() => group_1.has_more())
+let group_2=new Base<"group2">
+const counting_range_2=new CountingSubRange<[ItemRange<"0","9","0">,ItemRange<"0","9","1">]>(
+	[new ItemRange("0","9","0"),new ItemRange("0","9","1")]
+)
+group_2.extend(new RangeJoiner(counting_range_2,""))
