@@ -19,7 +19,7 @@ declare global {
 		new <T extends object>(target: T): WeakRef<T>
 	}
 
-	export var WeakRef: WeakRefConstructor
+	var WeakRef: WeakRefConstructor
 }
 
 export {}
