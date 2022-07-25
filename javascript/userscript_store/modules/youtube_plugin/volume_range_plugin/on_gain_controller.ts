@@ -1,4 +1,4 @@
-import {g_api} from "../g_api"
+import {g_api} from "../g_api/g_api"
 import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController"
 
 export function on_gain_controller(create_gain_controller: () => HTMLMediaElementGainController): HTMLMediaElementGainController {
