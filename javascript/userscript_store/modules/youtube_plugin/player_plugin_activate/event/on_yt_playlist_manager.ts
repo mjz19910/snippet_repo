@@ -1,4 +1,4 @@
-import {element_map,yt_playlist_manager} from "../youtube_plugin.user"
+import {element_map,yt_playlist_manager} from "../../youtube_plugin.user"
 
 export function on_yt_playlist_manager(element: HTMLElement) {
 	const element_id="yt-playlist-manager"

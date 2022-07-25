@@ -1,4 +1,4 @@
-import {VolumeRange} from "./volume_range_plugin/VolumeRange"
+import {VolumeRange} from "modules/youtube_plugin/volume_range_plugin/VolumeRange"
 
 export class YtdAppElement extends HTMLElement {
 	ytp_click_cint?: number

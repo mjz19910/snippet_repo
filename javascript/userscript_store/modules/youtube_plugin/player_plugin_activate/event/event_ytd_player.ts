@@ -1,9 +1,9 @@
-import {HTMLVideoElementArrayBox} from "../HTMLVideoElementArrayBox"
+import {HTMLVideoElementArrayBox} from "../../box/HTMLVideoElementArrayBox"
 import {CustomEventTarget} from "./CustomEventTarget"
 import {CustomEventType} from "./CustomEventType"
 import {dom_observer_next_tick_action} from "./dom_observer_next_tick_action"
+import {event_box_map} from "./event_box_map"
 import {observer_default_action} from "./observer_default_action"
-import {box_map} from "../youtube_plugin.user"
 
 /**
  * @this {CustomEventTarget}
@@ -19,6 +19,6 @@ export function event_ytd_player(this: CustomEventTarget,event: CustomEventType)
 		return dom_observer_next_tick_action(this,port,current_message_id)
 	/**@type {HTMLVideoElement[]}*/
 	let element_list_arr: HTMLVideoElement[]=[...Array.prototype.slice.call(element_list)]
-	box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr))
+	event_box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr))
 	this.dispatchEvent({type: "video",detail,port})
 }

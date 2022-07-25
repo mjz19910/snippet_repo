@@ -9,20 +9,20 @@
 // @run-at       document-start
 // ==/UserScript==
 
-import {HTMLVideoElementArrayBox} from "./HTMLVideoElementArrayBox"
+import {HTMLVideoElementArrayBox} from "./box/HTMLVideoElementArrayBox"
 import {create_message_channel} from "./create_message_channel"
-import {CustomEventTarget} from "./player_plugin_activate/CustomEventTarget"
+import {CustomEventTarget} from "./player_plugin_activate/event/CustomEventTarget"
 import {HTMLMediaElementGainController} from "./volume_range_plugin/HTMLMediaElementGainController"
 import {MessagePortState} from "./MessagePortState"
 import {OnWindowProperty} from "./OnWindowProperty"
 import {PluginOverlayElement} from "./player_plugin_activate/PluginOverlayElement"
-import {YtdAppElement} from "./YtdAppElement"
-import {YtdPageManagerElement} from "./YtdPageManagerElement"
-import {YtdWatchFlexyElement} from "./YtdWatchFlexyElement"
+import {YtdAppElement} from "./elements/types/YtdAppElement"
+import {YtdPageManagerElement} from "./elements/types/YtdPageManagerElement"
+import {YtdWatchFlexyElement} from "./elements/types/YtdWatchFlexyElement"
 import {YTFilterHandlers} from "./YTFilterHandlers"
 import {Box} from "types/box/Box"
-import {YTPlayerData} from "./YTPlayerData"
-import {YtPlaylistManager} from "./YtPlaylistManager"
+import {YTDPlayerElement} from "./elements/types/YTDPlayerElement"
+import {YtPlaylistManagerElement} from "./elements/types/YtPlaylistManagerElement"
 
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 export const debug={value:false}
@@ -37,15 +37,7 @@ export let win_watch=new OnWindowProperty
 export const ghost_symbol=Symbol.for('ghost')
 export const LOGGING_LEVEL=1
 export let playlist_arr: {value?:string[]}
-export let ytd_page_manager: {value:YtdPageManagerElement|null}={value:null}
-export let ytd_watch_flexy: {value:YtdWatchFlexyElement|null}={value:null}
-// yt display app
-export let ytd_app: {value:YtdAppElement|null}={value:null}
-export let yt_playlist_manager: {value:YtPlaylistManager|null}={value:null}
-export let ytd_player: {value:YTPlayerData|null}={value:null}
 export let element_map: Map<string,HTMLElement>=new Map
-export let box_map: Map<string,Box|HTMLVideoElementArrayBox>=new Map
-export let dom_observer=new CustomEventTarget
 export let port_state_log: [number,number][]=[]
 export let port_state=new MessagePortState
 export let found_element_arr=[

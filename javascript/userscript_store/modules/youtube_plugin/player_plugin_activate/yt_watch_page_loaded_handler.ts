@@ -1,6 +1,6 @@
 import {fix_offset} from "./fix_offset"
 import {init_ui_plugin} from "./init_ui_plugin"
-import {is_watch_page_active} from "./is_watch_page_active"
+import {is_watch_page_active} from "./event/is_watch_page_active"
 import {log_yt_finish_navigation} from "./log_yt_finish_navigation"
 import {title_display_toggle} from "./title_display_toggle"
 import {title_display_update} from "./title_display_update"
@@ -14,14 +14,14 @@ import {
 	overlay_hide_ui_input,
 	plugin_overlay_element,
 	yt_playlist_manager,
-	ytd_app,
-	ytd_page_manager,
 	ytd_player,
-	ytd_watch_flexy,
 } from "../youtube_plugin.user"
 import {PluginOverlayElement} from "./PluginOverlayElement"
 import {update_ui_plugin} from "./update_ui_plugin"
 import {fire_on_visibility_change_restart_video_playback} from "./fire_on_visibility_change_restart_video_playback"
+import {ytd_page_manager} from "../elements/ytd_page_manager"
+import {ytd_app} from "../elements/ytd_app"
+import {ytd_watch_flexy} from "../elements/ytd_watch_flexy"
 
 export function yt_watch_page_loaded_handler() {
 	if(!ytd_app.value) {
