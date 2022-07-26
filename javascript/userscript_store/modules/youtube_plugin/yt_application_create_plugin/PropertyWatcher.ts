@@ -3,7 +3,7 @@ import {ghost_symbol} from "./ghost_symbol"
 import {watched_target_map} from "./watched_target_map"
 import {object_property_watcher} from "./object_property_watcher"
 import {watched_function_weak_set} from "./watched_function_weak_set"
-import {walk_key_path} from "./walk_key_path"
+import {init_property_watcher_for_target} from "./init_property_watcher_for_target"
 
 export class PropertyWatcher {
 	[ghost_symbol]=true
@@ -63,12 +63,36 @@ export class PropertyWatcher {
 		} else {
 			let ck_i=0
 			let ck_str=active_property_watcher_paths[ck_i]
-			let mc=walk_key_path(this,ck_str,value)
+			let mc=this.walk_key_path(ck_str,value)
 			for(;ck_i<active_property_watcher_paths.length;ck_i++) {
 				ck_str=active_property_watcher_paths[ck_i]
-				mc=walk_key_path(this,ck_str,value,mc)
+				mc=this.walk_key_path(ck_str,value,mc)
 			}
 			this.value=value
+		}
+	}
+	walk_key_path(property_key_path: string,value: {},prev_walk_key_path?: string) {
+		let match_parts_1
+		let value_tr_match_res=property_key_path.match(this.value_tr)
+		if(value_tr_match_res!==null) {
+			match_parts_1=value_tr_match_res[0]
+		} else {
+			return prev_walk_key_path
+		}
+		let arg_1_slice=property_key_path.slice(match_parts_1.length+1)
+		let index=arg_1_slice.indexOf('.')
+		let property_name
+		if(index>-1) {
+			property_name=arg_1_slice.slice(0,index)
+		} else {
+			property_name=arg_1_slice
+		}
+		if(property_name.length>0) {
+			if((this.value_tr+'.'+property_name)==prev_walk_key_path) {
+				return this.value_tr+'.'+property_name
+			}
+			init_property_watcher_for_target(value,property_name,this.value_tr+'.'+property_name,this.noisy)
+			return this.value_tr+'.'+property_name
 		}
 	}
 	value={}
