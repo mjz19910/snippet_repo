@@ -3,7 +3,7 @@ Copyright 2021-2021 @mjz19910
 
 Header definition:
 function main() {
-	let parse_state;
+	let parse_state
 	class Logger {
 		info_log_value(obj) {}
 		info_object(obj) {}
@@ -22,20 +22,20 @@ function main() {
 				constructor() {}
 				accept_type(com_type, str, index) {}
 				strip_tab_padding(str) {
-					return str.split('\n').map(e=>{}).join('\n');
+					return str.split('\n').map(e=>{}).join('\n')
 				}
 				get_ss_comment(str) {}
 				parse_rust_cont(str, index) {}
 			}
-			let parser = new FirstClassCommentParser;
-			let stripped_str = parser.strip_tab_padding(str);
+			let parser = new FirstClassCommentParser
+			let stripped_str = parser.strip_tab_padding(str)
 			if (stripped_str[0] == '\n' && stripped_str[1] == '/' && stripped_str[2] == '/'){
-				let str = stripped_str.slice(1,stripped_str.indexOf('\n',idx+1));
-				let value = parser.get_ss_comment(str);
-				return parser.accept_type(value, stripped_str, value.length + 4);
+				let str = stripped_str.slice(1,stripped_str.indexOf('\n',idx+1))
+				let value = parser.get_ss_comment(str)
+				return parser.accept_type(value, stripped_str, value.length + 4)
 			}
 			if(stripped_str[0] != '\n'){
-				return stripped_str.slice(0, stripped_str.indexOf('\n'));
+				return stripped_str.slice(0, stripped_str.indexOf('\n'))
 			}
 		}
 	}
@@ -43,7 +43,7 @@ function main() {
 		filter: State::parse_first_class_comment,
 		url: '',
 		msg: ''
-	});
+	})
 }
 */
 function main() {
@@ -212,7 +212,7 @@ function main() {
 			// javascript init
 			template_varargs('impl_base',\${class {
 			}
-			});
+			})
 			//rust block
 			/* javascript immediate javascript_alt(alt_for("rust"),'class impl_Speed_token extends impl_base'+'{}'[0]) */
 			impl Speed for token</*typescript*/upg_coins<number,number,number>/*rust*/> {
@@ -224,7 +224,7 @@ function main() {
 					u2:{
 						return this.generate(32,34,51) //rust return Ok("1e44493")
 					}
-					return new Decimal('1e35420');
+					return new Decimal('1e35420')
 				}
 				//rust
 			}

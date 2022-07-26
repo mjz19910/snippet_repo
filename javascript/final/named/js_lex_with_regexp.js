@@ -79,14 +79,13 @@ function main() {
 			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -393,7 +392,7 @@ function main() {
 					b_cnt_off=b_cnt
 					state.reset_count=false
 				}
-				if(b_cnt-b_cnt_off>100) {//console.log(state.lex_chunks[state.lex_chunks.length-1],b_cnt-b_cnt_off);
+				if(b_cnt-b_cnt_off>100) {//console.log(state.lex_chunks[state.lex_chunks.length-1],b_cnt-b_cnt_off)
 				}
 				state.m_l_str=state.m_l_str.slice(state.obj.nx_len)
 				if(state.m_at_eof) {

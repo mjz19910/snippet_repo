@@ -1,5 +1,5 @@
 class RustTypeTheory {
-	types=[];
+	types=[]
 	addAxiom(value) {
 		this.axioms.push(value)
 	}

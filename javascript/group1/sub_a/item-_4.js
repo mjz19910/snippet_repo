@@ -92,8 +92,8 @@ class AutoState {
 			}
 			if(log_diff!==0) {
 				let [v_avg]=avg(sd_arr)
-				let ov=v_avg;
-				[v_avg]=avg_up(sd_arr,v_avg)
+				let ov=v_avg
+				v_avg=avg_up(sd_arr,v_avg)[0]
 				let avg_1=ov
 				let avg_2=v_avg
 				let cnt=0

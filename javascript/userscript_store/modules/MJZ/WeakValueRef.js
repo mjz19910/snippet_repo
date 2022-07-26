@@ -1,9 +1,9 @@
 class WeakValueRef {
-	id = -1;
+	id=-1
 	/**
 	 * @param {number} id
 	 */
 	constructor(id) {
-		this.id = id;
+		this.id=id
 	}
 }

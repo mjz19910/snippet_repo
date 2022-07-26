@@ -1,8 +1,8 @@
 import {create_proxy} from "./create_proxy"
 
 export class PropertyHandler {
-	static proxy_map: Map<{},{}>=new Map;
-	static override_map: Map<string,{}>=new Map;
+	static proxy_map: Map<{},{}>=new Map
+	static override_map: Map<string,{}>=new Map
 	key: string
 	on_target_apply_callback: (args: any) => any
 	constructor(key: string,on_target_apply_callback: (args: any) => any) {

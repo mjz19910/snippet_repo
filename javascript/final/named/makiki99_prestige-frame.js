@@ -79,14 +79,13 @@ function main() {
 			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -185,15 +184,15 @@ function main() {
 				return 0,
 					`x:{
 if(activatePrestige.length==3){
-nx_l=function(x,y,l){return nx_df(x,y,l,x,y,l+1)};nx_x=function(x,y,l){return nx_df(x,y,l,x+1,y,l)};nx_y=function(x,y,l){return nx_df(x,y,l,x,y+1,l)};nx_df=function(x1,y1,l1,x2,y2,l2){let ret,nx=getRequirement(x2,y2,l2);for(let i=0;i<=nx;i++){if (canActivatePrestige(x1,y1,l1)){activatePrestige(x1,y1,l1)}else{ret=[i,nx];break}};activatePrestige(x2,y2,l2);if(!ret)ret=[-1,nx];return ret};
+nx_l=function(x,y,l){return nx_df(x,y,l,x,y,l+1)};nx_x=function(x,y,l){return nx_df(x,y,l,x+1,y,l)};nx_y=function(x,y,l){return nx_df(x,y,l,x,y+1,l)};nx_df=function(x1,y1,l1,x2,y2,l2){let ret,nx=getRequirement(x2,y2,l2);for(let i=0;i<=nx;i++){if (canActivatePrestige(x1,y1,l1)){activatePrestige(x1,y1,l1)}else{ret=[i,nx];break}};activatePrestige(x2,y2,l2);if(!ret)ret=[-1,nx];return ret}
 }else{
-nx_x=function(x,y){return nx_df(x,y,x+1,y)};nx_y=function(x,y){return nx_df(x,y,x,y+1)};nx_df=function(x1,y1,x2,y2){let ret,nx=getRequirement(x2,y2);for(let i=0;i<=nx;i++){if (canActivatePrestige(x1,y1)){activatePrestige(x1,y1)}else{ret=[i,nx];break}};activatePrestige(x2,y2);if(!ret)ret=[-1,nx];return ret};
+nx_x=function(x,y){return nx_df(x,y,x+1,y)};nx_y=function(x,y){return nx_df(x,y,x,y+1)};nx_df=function(x1,y1,x2,y2){let ret,nx=getRequirement(x2,y2);for(let i=0;i<=nx;i++){if (canActivatePrestige(x1,y1)){activatePrestige(x1,y1)}else{ret=[i,nx];break}};activatePrestige(x2,y2);if(!ret)ret=[-1,nx];return ret}
 }
-};
+}
 if(activatePrestige.length==3){
-al:for(let i=0;i<7;i++){let r=[...nx_x(0,0,0),...nx_y(0,0,0),...nx_l(0,0,0)];let zc=0,om=[];for(let y=0;y<r.length;y+=2){if(r[y]==0){zc++};om.push(r[y+1])};console.log(om,zc);if(zc===3){break}};
+al:for(let i=0;i<7;i++){let r=[...nx_x(0,0,0),...nx_y(0,0,0),...nx_l(0,0,0)];let zc=0,om=[];for(let y=0;y<r.length;y+=2){if(r[y]==0){zc++};om.push(r[y+1])};console.log(om,zc);if(zc===3){break}}
 }else{
-al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let y=0;y<r.length;y+=2){if(r[y]==0){zc++};om.push(r[y+1])};console.log(om,zc);if(zc===2){break}};
+al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let y=0;y<r.length;y+=2){if(r[y]==0){zc++};om.push(r[y+1])};console.log(om,zc);if(zc===2){break}}
 }`
 			}
 		}

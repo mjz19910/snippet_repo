@@ -79,14 +79,13 @@ function main() {
 			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -168,11 +167,12 @@ function main() {
 			}
 		}
 		let preparePage_breakpoint=new bp_class(`{
-			let v=f.preparePage;
-			Object.defineProperty(f,'preparePage',{get:function(){debugger;return v},set:function(x){v=x}});
+			let v=f.preparePage
+			Object.defineProperty(f,'preparePage',{get:function(){debugger;return v},set:function(x){v=x}})
 			false
-		};
+		}
 		/*atString(lazyPrepareCriticalPages).getObjectVar()==="f"*/`,'desktop_polymer.js')
+		preparePage_breakpoint.a
 	}
 	cur.f=function() {
 		debug.u=undebug
@@ -194,15 +194,15 @@ function main() {
 				let x=debug
 				x.f=proto[name]
 				x.u(x.f)
-				x(x.f,`;
+				x(x.f,`
 				{
-					let __uf=Symbol(2),__get=function(__arg){try{return eval(__arg)}catch{return __uf}};
+					let __uf=Symbol(2),__get=function(__arg){try{return eval(__arg)}catch{return __uf}}
 					{
-						let x=debug;
+						let x=debug
 						try{
-							if(x.cb)x.cb(__get);
+							if(x.cb)x.cb(__get)
 						}catch(e){
-							console.log('uerr',e);
+							console.log('uerr',e)
 						}
 						x.u(x.f)
 					}
@@ -276,7 +276,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI
 		}
-		//console.log('restart on top frame');
+		//console.log('restart on top frame')
 		ret=debugApi.asyncExecuteFunction(top,main)
 	} else {
 		ret=do_cur()

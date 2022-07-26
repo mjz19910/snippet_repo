@@ -9,7 +9,7 @@ export abstract class BoxTemplate<
 	}
 	abstract readonly type: T
 	abstract verify_name(name: string): boolean
-	abstract readonly m_verify_name: string;
+	abstract readonly m_verify_name: string
 	readonly value: V
 	as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
 		let typeof_=typeof this.value

@@ -41,6 +41,6 @@ export function deep_clone_object<T extends {}|any[]|Map<any,any>|null>(value: T
 	if(str in window) {
 		debugger
 	}
-	// if(!had_func)console.log('proto', str, create.toString().slice(0, 32), create.toString().length);
+	// if(!had_func)console.log('proto', str, create.toString().slice(0, 32), create.toString().length)
 	return seen_obj
 }

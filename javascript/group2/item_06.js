@@ -3,7 +3,7 @@ Copyright 2021-2021 @mjz19910
 
 Header definition:
 async function kernel_main() {
-	let runtime = new RustRuntime;
+	let runtime = new RustRuntime
 	class RustEventHandler {
 		constructor() {}
 		addEventListener(event_type, event_listener) {}
@@ -56,12 +56,12 @@ async function kernel_main() {
 	}
 	class RustTaskContext {
 		constructor(runtime){}
-		waker_option = RustOption.default();
+		waker_option = RustOption.default()
 		active() {}
 		wait_for() {}
 		waker() {}
 	}
-	runtime.state.dbg = {};
+	runtime.state.dbg = {}
 	class root_future {
 		static poll() {
 			function buyable_iter(arr,target){}
@@ -94,10 +94,10 @@ async function kernel_main() {
 	}
 	class ExportTask {}
 	async function main() {
-		await runtime.run();
+		await runtime.run()
 	}
-	await main();
-	return runtime;
+	await main()
+	return runtime
 }
 */
 async function kernel_main() {
@@ -326,8 +326,8 @@ async function kernel_main() {
 		constructor(runtime) {
 			this.runtime=runtime
 		}
-		count=0;
-		inner=null;
+		count=0
+		inner=null
 		static create_promise(obj,accept,reject) {
 			obj.inner=new AsyncBlocker(obj.runtime,accept,reject)
 		}
@@ -352,7 +352,7 @@ async function kernel_main() {
 			this.runtime=runtime
 			this.notifier=new RustTaskNotifier(runtime)
 		}
-		waker_option=RustOption.default();
+		waker_option=RustOption.default()
 		active() {
 			return this.notifier.count>0
 		}
@@ -376,7 +376,7 @@ async function kernel_main() {
 		getEventListeners
 	}
 	class root_future {
-		static running=true;
+		static running=true
 		static poll() {
 			let min_cost_dist
 			let get_cost_ratio=cc => player.c.points.div(tmp.c.buyables[cc].cost)
@@ -433,7 +433,6 @@ async function kernel_main() {
 				if(s_can_buy_count>0) {
 					break ib
 				}
-				// too slow;
 				if(temp.pointGen.div(getPointGen()).toNumber()===1) {
 					break ib
 				}
@@ -550,8 +549,9 @@ async function kernel_main() {
 	class RustVec {
 	}
 	class Poll extends RustKeywordEnum {
-		static option_vec=new RustVec;
+		static option_vec=new RustVec
 	}
+	window.Poll=Poll
 	class DelayFuture {
 		constructor(timeout) {
 			this.delay=timeout
@@ -658,12 +658,12 @@ async function kernel_main() {
 				}
 				let activate=do_activate.bind(null,func,{},[])
 				let result=__d.debuggerGetVar_a(func,activate,`{
-						let __orig=${c_name};
+						let __orig=${c_name}
 						${c_name}=function(){
-							${c_name}=__orig;
+							${c_name}=__orig
 							throw 1
-						};
-						[layer,data];
+						}
+						[layer,data]
 					}`)
 				console.log(c_name,result.result.detail.value)
 				console.log(res_value.fns)

@@ -1,2 +1,2 @@
-import {REPLHtmlLexPlugin} from "./REPLHtmlLexPlugin.js";
-export {REPLHtmlLexPlugin};
+import {REPLHtmlLexPlugin} from "./REPLHtmlLexPlugin.js"
+export {REPLHtmlLexPlugin}

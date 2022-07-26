@@ -58,7 +58,7 @@ export class VolumeRange {
 			c_gain=1
 		return c_gain*this.max
 	}
-	max_compressor_reduction=-0.00011033167538698763;
+	max_compressor_reduction=-0.00011033167538698763
 	on_key_down(event: KeyboardEvent) {
 		if(!this.range_element)
 			return

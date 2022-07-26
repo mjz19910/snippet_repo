@@ -1,5 +1,5 @@
 export class YTDPlayerElement extends HTMLElement {
-	active_nav=false;
+	active_nav=false
 	player_: {
 		getVideoData(): {
 			video_id: string
@@ -8,12 +8,12 @@ export class YTDPlayerElement extends HTMLElement {
 			author: any
 		}
 		getPlayerState(): {}
-	}|null=null;
+	}|null=null
 	playerResolver_={
 		promise: Promise.resolve()
-	};
-	init_nav=false;
-	is_watch_page_active=false;
+	}
+	init_nav=false
+	is_watch_page_active=false
 	pause() {}
 	play() {}
 }

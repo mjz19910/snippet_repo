@@ -1,9 +1,9 @@
 function main() {
 	//spell:words vtable
 	class RustBasicSymbolGenerator {
-		next_symbol_id=0;
-		generated_symbol_map=new Map;
-		last_sym_key=null;
+		next_symbol_id=0
+		generated_symbol_map=new Map
+		last_sym_key=null
 		generate() {
 			this.last_sym_key=Symbol()
 			this.set(this.last_sym_key,this.next_symbol_id++)
@@ -25,11 +25,11 @@ function main() {
 		}
 	}
 	class RustBasicExecutor {
-		value_vec=[];
-		key_vec=[];
-		data_start_vec=[];
-		data_end_vec=[];
-		data_store_vec=[];
+		value_vec=[]
+		key_vec=[]
+		data_start_vec=[]
+		data_end_vec=[]
+		data_store_vec=[]
 		constructor(key_generator) {
 			this.key_generator=key_generator
 			this.my_key=key_generator.generate()
@@ -115,12 +115,13 @@ function main() {
 		class RustCrateHandler extends Map {
 		}
 		class RustScope {
-			crate=new RustCrateHandler;
+			crate=new RustCrateHandler
 		}
 		let rust_scope=new RustScope
 		class RustCrate {
-			define_vec=[];
+			define_vec=[]
 			type(...arg_vec) {
+				arg_vec
 				return null
 			}
 			define(...arg_vec) {
@@ -250,7 +251,7 @@ function main() {
 				let delay=50
 				let poll_scope=cur.poll_fn({
 					delay
-				});
+				})
 				({delay}=poll_scope)
 				let __cint=window.__cint
 				if(__cint>-1) {
@@ -415,10 +416,10 @@ function main() {
 			}
 		}
 		class TimeoutExecutor {
-			active=[];
-			task_queue=new ArrayDequeue(4);
-			notifier=new AsyncNotifier;
-			waker_count=0;
+			active=[]
+			task_queue=new ArrayDequeue(4)
+			notifier=new AsyncNotifier
+			waker_count=0
 			waker_new() {
 				this.waker_count++
 			}

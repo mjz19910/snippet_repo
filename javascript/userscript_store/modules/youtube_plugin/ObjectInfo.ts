@@ -18,6 +18,6 @@ export class ObjectInfo {
 	}
 	static instance: ObjectInfo
 	static init() {
-		this.instance = new this;
+		this.instance = new this
 	}
 }

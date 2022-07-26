@@ -182,7 +182,7 @@ window.async_func=(async function() {
 		if(this.act.indexOf(n)>-1) {
 			let tni=this.act.indexOf(n)
 			let tfn=this.act[tni+1]
-			//console.log('mkadd',tfn);
+			//console.log('mkadd',tfn)
 			if(tfn instanceof Function) {
 				this.act[tni+1]=[tfn,_new]
 			} else {
@@ -190,12 +190,12 @@ window.async_func=(async function() {
 			}
 			return
 		}
-		//console.log('akadd',this.act,n,_new);
+		//console.log('akadd',this.act,n,_new)
 		let plen=this.act.length
 		this.act.push(n,_new)
-		//console.log(this.act.length,plen);
+		//console.log(this.act.length,plen)
 	}
-		
+
 	xarray.act=[]
 	xarray.nxt=_e => xarray.chk.filter(e => e instanceof Function).filter(e => e(_e)).map(e => xarray.chk[xarray.chk.indexOf(e)-1])[0]
 	var make_dbg=function(fn) {
@@ -207,7 +207,7 @@ window.async_func=(async function() {
 		}
 		log_name_of=JSON.parse(`\"${nx_l_name}\"`)
 		let grc=function(e,...r) {
-			//console.log(arguments);
+			//console.log(arguments)
 			let s=e.raw[0]
 			let c=1
 			for(let i of r) {
@@ -220,26 +220,26 @@ window.async_func=(async function() {
 			return s
 		}
 		debug.str_code=grc`
-xarray.indexOf(this)==-1?xarray.push(this):0;
-let log_name_of="${nx_l_name}";
-let fn_name="${nx_name}";
-console.log('breakpoint',fn_name,log_name_of);
+xarray.indexOf(this)==-1?xarray.push(this):0
+let log_name_of="${nx_l_name}"
+let fn_name="${nx_name}"
+console.log('breakpoint',fn_name,log_name_of)
 try{
-	let arg_save=Array.prototype.slice.call(arguments);
+	let arg_save=Array.prototype.slice.call(arguments)
 	let evaler=(__eval_in__)=>{
 		if(__eval_in__=="arguments"){
-			return arg_save;
+			return arg_save
 		}
 		return eval(__eval_in__)
-	};
-	let _ntn=this;
-	let nxt_ex=xarray.nxt(_ntn);
-	let nx=xarray.act.indexOf(nxt_ex);
-	let nfn=xarray.act[nx+1];
-	nfn(_ntn,evaler);
+	}
+	let _ntn=this
+	let nxt_ex=xarray.nxt(_ntn)
+	let nx=xarray.act.indexOf(nxt_ex)
+	let nfn=xarray.act[nx+1]
+	nfn(_ntn,evaler)
 }catch(e){
 	console.log(e)
-};
+}
 ${'//'}# sourceURL=snippet://web/dbg0.js
 0
 `
@@ -349,7 +349,7 @@ ${'//'}# sourceURL=snippet://web/dbg0.js
 			xarray.act_promise.push(nx_name,e)
 		}
 		))
-		//console.log('b',nx_name,xarray.act);
+		//console.log('b',nx_name,xarray.act)
 		xarray.make_act(nx_name,function(_e) {
 			let asya=get_arrmap(xarray.act_promise,_e)
 			return function(e,evaler) {
@@ -366,7 +366,7 @@ ${'//'}# sourceURL=snippet://web/dbg0.js
 		xarray.tfn.push(nx_name,nx)
 		let msg_chan=new message_channel_class(xarray.des_arr)
 		xarray.callbacks.push(nx_name,function(e,evaler) {
-			//console.log('cbr',evaler('e'));
+			//console.log('cbr',evaler('e'))
 			xarray.eval_scope.push(evaler)
 			msg_chan.delayedCallback(e => {
 				undebug(get_arrmap(xarray.tfn,nx_name))
@@ -378,7 +378,7 @@ ${'//'}# sourceURL=snippet://web/dbg0.js
 		let nx_l_name=(nx.name? ("fn(\\\""+nx.name+'\\"):'+(xarray.anid)):("anon:"+(xarray.anid)))
 		let log_name_of=JSON.parse('"'+nx_l_name+'"')
 		let grc=function(e,...r) {
-			//console.log(arguments);
+			//console.log(arguments)
 			let s=e.raw[0]
 			let c=1
 			for(let i of r) {
@@ -392,62 +392,62 @@ ${'//'}# sourceURL=snippet://web/dbg0.js
 		}
 		debug.str_code=grc`
 	x:{
-	let sargs=typeof arguments;
-	let evaler;
-	let fn_name="${nx_name}";
+	let sargs=typeof arguments
+	let evaler
+	let fn_name="${nx_name}"
 	let log_name_of="${nx_l_name}"
-	let nfn;
-	console.log('breakpoint',fn_name,log_name_of);
+	let nfn
+	console.log('breakpoint',fn_name,log_name_of)
 	if(sargs=='undefined'){
 		evaler=(__eval_in__)=>{
 			if(__eval_in__=="arguments"){
-				throw RuntimeError("Failed to save arguments from bound function");
+				throw RuntimeError("Failed to save arguments from bound function")
 			}
 			return eval(__eval_in__)
-		};
-		//console.dir(evaler);
+		}
+		//console.dir(evaler)
 		if(typeof this=='undefined'){
 			try{
-			let nx=xarray.act.indexOf(fn_name);
-			nfn=xarray.act[nx+1];
-			nfn(e,evaler);
+			let nx=xarray.act.indexOf(fn_name)
+			nfn=xarray.act[nx+1]
+			nfn(e,evaler)
 			}catch(e){
-				console.log('nthis,err');
-				console.error(e);
+				console.log('nthis,err')
+				console.error(e)
 			}
-			break x;
+			break x
 		}
-		let _ntn=this;
-		let nxt_ex=xarray.nxt(_ntn);
-		let nx=xarray.act.indexOf(nxt_ex);
-		nfn=xarray.act[nx+1];
-		nfn(_ntn,evaler);
-		break x;
+		let _ntn=this
+		let nxt_ex=xarray.nxt(_ntn)
+		let nx=xarray.act.indexOf(nxt_ex)
+		nfn=xarray.act[nx+1]
+		nfn(_ntn,evaler)
+		break x
 	}
 	try{
-xarray.indexOf(this)==-1?xarray.push(this):0;
-console.log(sargs+":"+fn_name,xarray.nxt(this));
+xarray.indexOf(this)==-1?xarray.push(this):0
+console.log(sargs+":"+fn_name,xarray.nxt(this))
 try{
 	let arg_save=Array.prototype.slice.call(arguments)
 	evaler=(__eval_in__)=>{
 		if(__eval_in__=="arguments"){
-			return arg_save;
+			return arg_save
 		}
 		return eval(__eval_in__)
-	};
-	let _ntn=this;
-	let nxt_ex=xarray.nxt(_ntn);
-	let nx=xarray.act.indexOf(nxt_ex);
-	let nfn=xarray.act[nx+1];
-	nfn(_ntn,evaler);
+	}
+	let _ntn=this
+	let nxt_ex=xarray.nxt(_ntn)
+	let nx=xarray.act.indexOf(nxt_ex)
+	let nfn=xarray.act[nx+1]
+	nfn(_ntn,evaler)
 }catch(e){
 	console.log(e)
-};
+}
 }catch(e){
-	console.log(e);
-};
+	console.log(e)
+}
 ${'//'}# sourceURL=snippet://web/dbg.js
-};
+}
 0`
 		xarray.act_probj.push(nx_name,new Promise(e => {
 			xarray.act_promise.push(nx_name,e)

@@ -79,14 +79,13 @@ function main() {
 			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -162,7 +161,7 @@ function main() {
 	cur.n="reddit"
 	cur.f=function() {
 		//x: {
-		//	break x;
+		//	break x
 		//	/* cspell: disable-next-line */
 		//	document.querySelector("[id^='continueThread']").__reactInternalInstance$fh55rrshmcw
 		//}
@@ -170,7 +169,7 @@ function main() {
 		dom=dom._reactRootContainer._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode
 		var do_ar=Object.getOwnPropertyNames(dom)
 		var react_ii=do_ar.find(e => e.indexOf("__reactInternalInstance")==0)
-		window.react_ii=react_ii;
+		window.react_ii=react_ii
 		(function(f) {
 			f(f)
 		}
@@ -344,7 +343,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI
 		}
-		//console.log('restart on top frame');
+		//console.log('restart on top frame')
 		ret=debugApi.asyncExecuteFunction(top,main)
 	} else {
 		ret=do_cur()

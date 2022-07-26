@@ -1,6 +1,6 @@
 import {dummy_event_callback} from "./dummy_event_callback"
 import {page_changed_next_frame} from "./page_changed_next_frame"
-import {player_overlay_style_source} from "./player_overlay_style_source"
+import {player_overlay_style_source} from "./raw/player_overlay_style_source"
 import {load_volume_range_plugin} from "./load_volume_range_plugin"
 import {ytd_player} from "../elements/ytd_player"
 import {ytd_page_manager} from "../elements/ytd_page_manager"

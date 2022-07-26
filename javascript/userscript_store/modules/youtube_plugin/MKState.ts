@@ -2,7 +2,7 @@ import {ghost_symbol} from "./ghost_symbol"
 import {mk_run} from "./mk_run"
 
 export class MKState {
-	[ghost_symbol]=true;
+	[ghost_symbol]=true
 	property_key: PropertyKey
 	target: object
 	property_path: string
@@ -16,9 +16,9 @@ export class MKState {
 	run() {
 		return mk_run(this)
 	}
-	value={};
-	value_tr="";
+	value={}
+	value_tr=""
 	/**@type {Function | null} */
-	function_value: Function|null=null;
-	noisy=false;
+	function_value: Function|null=null
+	noisy=false
 }

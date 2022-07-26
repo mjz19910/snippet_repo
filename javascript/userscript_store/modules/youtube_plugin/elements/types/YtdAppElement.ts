@@ -17,5 +17,5 @@ export class YtdAppElement extends HTMLElement {
 				}
 			}
 		}
-	};
+	}
 }

@@ -98,4 +98,4 @@ export const volume_plugin_style_source=`
 		}
 	}
 	/\*# sourceURL=youtube_volume_plugin_style_source*\/
-`;
+`

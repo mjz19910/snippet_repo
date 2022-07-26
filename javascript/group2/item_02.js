@@ -38,7 +38,7 @@ class HostObjectRc {
 	}
 }
 class RustBuilderTrait {
-	children=[];
+	children=[]
 	build_from_vec(build_source) {
 		for(let x of build_source) {
 			for(let j of x.children) {
@@ -151,7 +151,7 @@ class RustFakeVM {
 	}
 }
 class RustFakeBuildTarget {
-	build_result_vec=[];
+	build_result_vec=[]
 	build_visit(_builder) {
 		this.build_result_vec=null
 	}

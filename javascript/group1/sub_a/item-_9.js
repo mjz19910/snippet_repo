@@ -259,7 +259,7 @@ function compress_main() {
 		}
 		if(cur.stats[0][1]===1) {
 			break
-		};
+		}
 		if(cur.next) {
 			cur=cur.next
 			continue

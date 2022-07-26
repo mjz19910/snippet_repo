@@ -1,4 +1,4 @@
-export var ParsingState;
+export var ParsingState
 (function(ParsingState) {
     ParsingState[ParsingState["Data"]=0]="Data"
     ParsingState[ParsingState["RCDATA"]=1]="RCDATA"

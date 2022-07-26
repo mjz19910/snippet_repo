@@ -125,7 +125,7 @@ function init() {
 				n(r(792))
 		}
 			,,,,function(e,t,r) {
-				"use strict";
+				"use strict";//
 				(function(e) {
 					/*!
 	 * The buffer module from node.js, for the browser.
@@ -715,7 +715,7 @@ function init() {
 						return n
 					}
 					function A(e,t,r) {
-						var n=e.length;
+						var n=e.length;//
 						(!t||t<0)&&(t=0),
 							(!r||r<0||r>n)&&(r=n)
 						for(var i="",o=t;o<r;++o)
@@ -1233,7 +1233,7 @@ function init() {
 	if(window.code) {
 		return
 	}
-	//code = x(decodedata, 62, 145, key_array, 0, {});
+	//code = x(decodedata, 62, 145, key_array, 0, {});//
 	code=imp_str.toString()
 }
 function main() {
@@ -1500,7 +1500,7 @@ function main() {
 
 			UnicodeIDContinue ::
 			any Unicode code point with the Unicode property “ID_Continue”
-			`;
+			`;//
 			PrivateIdentifier(str,index) {
 				if(str[0]!=='#')
 					return [null,0]
@@ -1566,7 +1566,7 @@ function main() {
 				}
 				return 0
 			}
-			_OtherPunct="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
+			_OtherPunct="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');//
 			OtherPunctuator(str,index) {
 				let len=0
 				for(let ci,i=0;i<this._OtherPunct.length;i++) {
@@ -1579,7 +1579,7 @@ function main() {
 				}
 				return len
 			}
-			_DivPunct="/ /=".split(' ');
+			_DivPunct="/ /=".split(' ')
 			DivPunctuator(str,index) {
 				let len=0
 				for(let ci,i=0;i<this._DivPunct.length;i++) {
@@ -2024,7 +2024,6 @@ function main() {
 				if(chk.includes(cur)) {
 					return 1
 				}
-				;
 			}
 			FourToSeven(str,index) {
 				let cur=str[index]
@@ -2032,7 +2031,6 @@ function main() {
 				if(chk.includes(cur)) {
 					return 1
 				}
-				;
 			}
 			NonOctalDecimalEscapeSequence(str,index) {
 				if(str[index]==='8'||str[index]==='9') {
@@ -2187,7 +2185,7 @@ function main() {
 			}
 		}
 		class js_token_generator {
-			static EOF_TOKEN=Symbol();
+			static EOF_TOKEN=Symbol()
 			constructor(str) {
 				this.str=null
 				this.index=0
@@ -2230,37 +2228,37 @@ function main() {
 				let rb_len,item,tree
 				let cur_res=this.WhiteSpace(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'whitespace';
+					//max_item = 'whitespace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.LineTerminator(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'line_term';
+					//max_item = 'line_term'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.Comment(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'comment';
+					//max_item = 'comment'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.CommonToken(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'common';
+					//max_item = 'common'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.DivPunctuator(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'div_punct';
+					//max_item = 'div_punct'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.RightBracePunctuator(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'r_brace';
+					//max_item = 'r_brace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
@@ -2274,37 +2272,37 @@ function main() {
 				let rb_len,item,tree
 				let cur_res=this.WhiteSpace(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'whitespace';
+					//max_item = 'whitespace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.LineTerminator(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'line_term';
+					//max_item = 'line_term'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.Comment(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'comment';
+					//max_item = 'comment'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.CommonToken(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'common';
+					//max_item = 'common'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.RightBracePunctuator(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'r_brace';
+					//max_item = 'r_brace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.RegularExpressionLiteral(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'r_brace';
+					//max_item = 'r_brace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
@@ -2565,7 +2563,7 @@ function main() {
 	class ident extends tt_any {
 	}
 	class tt_type_switch {
-		// used for regexp;
+		// used for regexp
 		constructor(vec) {
 			this.inner=vec
 		}

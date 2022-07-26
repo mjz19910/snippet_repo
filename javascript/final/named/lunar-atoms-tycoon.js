@@ -79,14 +79,13 @@ function main() {
 			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -177,8 +176,8 @@ function main() {
 			}
 			console.log(Object.getOwnPropertyDescriptors(ret))
 			for(let i of Object.entries(obj)) {
+				i
 				if(1) {}
-				;
 			}
 			return obj
 		}

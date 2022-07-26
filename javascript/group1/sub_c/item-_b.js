@@ -50,9 +50,9 @@ var z=function(fn,cbfn,ex) {
 			}
 
 		}
-		ru=0;
-		precreate=null;
-		promise_result=null;
+		ru=0
+		precreate=null
+		promise_result=null
 	}
 	)
 	Object.defineProperty(fn,"run",{
@@ -110,7 +110,7 @@ var b=async function(fn) {
 	pdi=get_p_val(gid)-slog
 	var pdr=0
 	gx++
-	//if(gx%60==0)console.log(pdi);
+	//if(gx%60==0)console.log(pdi)
 	var div=fn.div
 	var pdp=pd
 	pd=pdi
@@ -162,7 +162,6 @@ var b=async function(fn) {
 				tlen=tarl.length
 				i=tarl.length
 			}
-			;
 		}
 		await fn.wait(150)
 		var gl=player.generators.length-3
@@ -184,7 +183,6 @@ var b=async function(fn) {
 				tlen=tarl.length
 				i=tarl.length
 			}
-			;
 		}
 		await fn.wait(150)
 		fn.o.reset()
@@ -200,7 +198,6 @@ var b=async function(fn) {
 			tlen=tarl.length
 			i=tarl.length
 		}
-		;
 	}
 	fn.o.reset()
 	await fn.wait(200*Math.log2(player.generators.length))

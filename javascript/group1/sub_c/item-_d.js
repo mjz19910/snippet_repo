@@ -6,7 +6,7 @@ if(window.cint2) {
 }
 cint=setTimeout(function() {
 	cint2=setInterval(maxAll,17*1000)
-	//setTimeout(pointReset,200);
+	//setTimeout(pointReset,200)
 	setTimeout(maxAll,400)
 	reset_func=(e,dl) => {
 		var c={

@@ -1,11 +1,11 @@
 import {debug} from "../config/debug"
 
 export class Seen {
-	static debug=debug.value;
-	static all_seen_objs: any[]=[];
-	static all_seen_map=new Map;
-	static seen_gen_counter=1;
-	static seen_uid_counter=0;
+	static debug=debug.value
+	static all_seen_objs: any[]=[]
+	static all_seen_map=new Map
+	static seen_gen_counter=1
+	static seen_uid_counter=0
 	static as_any(value: null) {
 		let weak_info,ret
 		const [instance_index,instance_gen,ref_obj]=this.see_value(value)

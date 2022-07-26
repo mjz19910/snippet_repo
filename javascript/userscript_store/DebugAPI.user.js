@@ -17,7 +17,7 @@
 let g_api={}
 window.g_api=g_api
 class Repeat {
-	static map=new Map;
+	static map=new Map
 	static get(value,times) {
 		if(!this.map.has(value)) {
 			this.map.set(value,new Map)
@@ -38,7 +38,7 @@ class Repeat {
 	toString() {
 		return this.value+"x"+this.times
 	}
-};
+}
 g_api.Repeat=Repeat
 class CompressRepeated {
 	/** @param {string | any[]} src @param {string | any[]} dst */
@@ -103,9 +103,9 @@ class CompressRepeated {
 	}
 	/** @param {string[]} arr */
 	compress_array(arr) {
-		let success,res;
+		let success,res
 		[success,res]=this.try_decompress(arr)
-		if(success) arr=res;
+		if(success) arr=res
 		[success,res]=this.try_compress(arr)
 		if(success) return res
 		return arr
@@ -181,7 +181,7 @@ class CompressionStatsCalculator {
 				i+=range.length-1
 				ret.push(range_replacement)
 				continue
-			};
+			}
 			ret.push(arr[i])
 		}
 		return ret
@@ -258,8 +258,8 @@ class EventListenerValue {
 }
 g_api.EventListenerValue=EventListenerValue
 class GenericEvent {
-	#default_prevented=false;
-	type='unknown';
+	#default_prevented=false
+	type='unknown'
 	/**@param {string} type */
 	constructor(type) {
 		if(type) {
@@ -355,7 +355,7 @@ g_api.GenericEventTarget=GenericEventTarget
 const static_event_target=new GenericEventTarget
 class Dumper {
 	/**@type {null} */
-	dump_value=null;
+	dump_value=null
 	dump_value(value) {
 		this.dump_value=value
 		this.dump_value=null
@@ -399,7 +399,7 @@ class RustSimpleTokenizer {
 		}
 		return false
 	}
-	m_separators=["{","}","(",")","<",">"];
+	m_separators=["{","}","(",")","<",">"]
 	is_separator(char_code) {
 
 	}
@@ -413,11 +413,11 @@ class RustSimpleTokenizer {
 		let parse_enum=[0,1,2,3,4,5,6,7]
 		let parse_enum_invalid=parse_enum[0]
 		let parse_enum_identifier=parse_enum[1]
-		//let parse_enum_keyword=parse_enum[2];
-		//let parse_enum_separator=parse_enum[3];
+		//let parse_enum_keyword=parse_enum[2]
+		//let parse_enum_separator=parse_enum[3]
 		let parse_enum_operator=parse_enum[4]
-		//let parse_enum_literal=parse_enum[5];
-		//let parse_enum_comment=parse_enum[6];
+		//let parse_enum_literal=parse_enum[5]
+		//let parse_enum_comment=parse_enum[6]
 		let parse_enum_whitespace=parse_enum[7]
 		for(;this.index<this.source.length;) {
 			if(this.source[this.index]===':'&&this.source[this.index+1]===':') {
@@ -445,7 +445,7 @@ class RustSimpleTokenizer {
 				tok_arr.push([parse_enum_identifier,this.source.slice(this.index,this.index+len)])
 				this.advance(len)
 				continue
-			};
+			}
 			if(this.is_whitespace(cur_char_code)) {
 				tok_arr.push([parse_enum_whitespace,cur_char])
 				this.advance(1)
@@ -459,14 +459,14 @@ class RustSimpleTokenizer {
 	}
 	into_tt(tok_arr) {
 		let parse_enum=[0,1,2,3,4,5,6,7,8,9]
-		//let parse_enum_invalid = parse_enum[0];
-		//let parse_enum_identifier = parse_enum[1];
-		//let parse_enum_keyword = parse_enum[2];
+		//let parse_enum_invalid = parse_enum[0]
+		//let parse_enum_identifier = parse_enum[1]
+		//let parse_enum_keyword = parse_enum[2]
 		let parse_enum_separator=parse_enum[3]
-		//let parse_enum_operator = parse_enum[4];
-		//let parse_enum_literal = parse_enum[5];
-		//let parse_enum_comment = parse_enum[6];
-		//let parse_enum_whitespace = parse_enum[7];
+		//let parse_enum_operator = parse_enum[4]
+		//let parse_enum_literal = parse_enum[5]
+		//let parse_enum_comment = parse_enum[6]
+		//let parse_enum_whitespace = parse_enum[7]
 		let parse_enum_token_tree_item=parse_enum[8]
 		let parse_enum_token_tree_body=parse_enum[9]
 		let separator_open_vec="{}"[0]+"()"[0]+"<>"[0]
@@ -508,9 +508,9 @@ class RustSimpleTokenizer {
 }
 g_api.RustSimpleTokenizer=RustSimpleTokenizer
 class RustTokenTreeParser {
-	tokenizer=new RustSimpleTokenizer;
+	tokenizer=new RustSimpleTokenizer
 	simple_type_info(str) {
-		// let iter_index = 0;
+		// let iter_index = 0
 		this.tokenizer.reset(str)
 		let token_vec=this.tokenizer.str_to_tokens(str)
 		let tt_root=this.tokenizer.into_tt(token_vec)
@@ -527,7 +527,7 @@ class RustTokenTreeParser {
 }
 g_api.RustSimpleParser=RustTokenTreeParser
 class WeakValueRef {
-	id=-1;
+	id=-1
 	constructor(id) {
 		this.id=id
 	}
@@ -624,16 +624,16 @@ class CSSCascade {
 }
 g_api.CSSCascade=CSSCascade
 class OriginState {
-	/**@readonly*/static window=window;
-	/**@readonly*/static top=window.top;
-	/**@readonly*/static parent=window.parent;
-	/**@readonly*/static opener=window.opener;
+	/**@readonly*/static window=window
+	/**@readonly*/static top=window.top
+	/**@readonly*/static parent=window.parent
+	/**@readonly*/static opener=window.opener
 }
 g_api.OriginState=OriginState
 class RemoteOriginConnection {
 	// @Update on minor version change
 	// version 0.3.0 sha1 initial commit
-	sha_1_initial="f615a9c";
+	sha_1_initial="f615a9c"
 	constructor() {
 		this.max_elevate_id=0
 		this.event_transport_map=new WeakMap
@@ -761,7 +761,7 @@ class APIProxyManager {
 }
 g_api.APIProxyManager=APIProxyManager
 class LoggingEventTarget {
-	dispatchEvent=console.log.bind(console);
+	dispatchEvent=console.log.bind(console)
 }
 g_api.LoggingEventTarget=LoggingEventTarget
 const html_parsing_div_element=document.createElement("div")
@@ -777,14 +777,14 @@ class DebugAPI {
 			this.any_api_logger.start_postMessage_proxy()
 		}
 	}
-	any_api_logger=new APIProxyManager(new LoggingEventTarget);
-	next_remote_id=0;
-	data_store=new Map;
-	event_handler=static_event_target;
-	static udp_like_remote_origin_connection=new RemoteOriginConnection();
-	static token_tree_parser=new RustTokenTreeParser;
+	any_api_logger=new APIProxyManager(new LoggingEventTarget)
+	next_remote_id=0
+	data_store=new Map
+	event_handler=static_event_target
+	static udp_like_remote_origin_connection=new RemoteOriginConnection()
+	static token_tree_parser=new RustTokenTreeParser
 	/**@type {DebugAPI} */
-	static m_the=null;
+	static m_the=null
 	/**@returns {DebugAPI} */
 	static the() {
 		if(!this.m_the) {
@@ -866,7 +866,7 @@ class DebugAPI {
 		{
 			if(!window.DebugAPI.the().clearCurrentBreakpoint()) {
 				console.log("failed to clear breakpoint")
-			};
+			}
 		}
 		0
 	}

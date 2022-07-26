@@ -19,7 +19,7 @@ function encode_string(arr) {
 }
 async function run() {
 	const wasm_header=[0,0x61,0x73,0x6d,1,0,0,0]
-	// const empty_wasm_module=await WebAssembly.compile(new Uint8Array([...wasm_header]));
+	// const empty_wasm_module=await WebAssembly.compile(new Uint8Array([...wasm_header]))
 	let module_list=[]
 	window.module_list=module_list
 	for(let i=0;i<256;i++) {

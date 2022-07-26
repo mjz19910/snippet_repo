@@ -27,10 +27,8 @@ export function has_types_arr_with(v,cx) {
         if(!s.v.hasOwnProperty('types')) {
             s.v.types=[]
         }
-        ;
         return true
     }
-    ;
     return false
 }
 export function cast_to_object_and_fn(_) {

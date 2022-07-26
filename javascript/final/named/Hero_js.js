@@ -79,14 +79,13 @@ function main() {
 			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -168,10 +167,10 @@ function main() {
 			debug.fn=game_objects.Player.instance.game.update
 			let dbg_src_url='//'+'# sourceURL=snippet://js/js_1.js'
 			debug(debug.fn,`
-			window.out={};
-			debug.get_from=function(e){return eval(e)};
-			debug.g();
-			undebug(debug.fn);
+			window.out={}
+			debug.get_from=function(e){return eval(e)}
+			debug.g()
+			undebug(debug.fn)
 			` +dbg_src_url)
 			let eok=(function() {
 				"use strict"
@@ -187,8 +186,8 @@ function main() {
 					}else{
 						return class tt extends f_in {
 							constructor(...a){
-								super(...a);
-								tt.instance=this;
+								super(...a)
+								tt.instance=this
 							}
 						}
 					}${src_url}
@@ -254,10 +253,10 @@ function main() {
 		async function run() {
 			"use strict"
 			var static_part=eval(`(class {
-			static ar=[];
-			time=null;
-			w=null;
-			timeout=true;
+			static ar=[]
+			time=null
+			w=null
+			timeout=true
 		})`)
 			class timeout_class extends static_part {
 				constructor(time) {
@@ -301,7 +300,7 @@ function main() {
 				if(!rr.has(e.map)) {
 					rr.set(e.map,e)
 					e.map.setCounts()
-					//console.log('t_new', dz,e.map.countFloors - e.map.countExplored);
+					//console.log('t_new', dz,e.map.countFloors - e.map.countExplored)
 					ret=brk
 				}
 				var mp_no_exp=e.map.countFloors-e.map.countExplored
@@ -402,7 +401,7 @@ function main() {
 			}
 			)
 			a=game.dungeonHeroes.map((e,dz) => {
-				//e.map.setCounts();
+				//e.map.setCounts()
 				let mp_no_exp=e.map.countFloors-e.map.countExplored
 				return [mp_no_exp,e,dz]
 			}

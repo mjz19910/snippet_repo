@@ -16,7 +16,7 @@ function main() {
 			val.#set_value(value)
 			return val
 		}
-		#has_value=false;
+		#has_value=false
 		/**@type {string} */
 		#inner_value
 		/**@arg {string} style_value */
@@ -35,7 +35,7 @@ function main() {
 		}
 	}
 	class CSSKeywordValue extends CSSStyleValue {
-		#inner_value="";
+		#inner_value=""
 		get value() {
 			return this.#inner_value
 		}
@@ -72,7 +72,7 @@ function main() {
 			return 1
 		if(is_typechecking)
 			return ""
-		// return {};
+		// return {}
 	}()
 	function log_if_noisy(...v) {
 		if(log_level>LOG_VERBOSE) {

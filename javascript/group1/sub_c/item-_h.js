@@ -37,56 +37,56 @@ __cur.f=function() {
 		}
 		//__ident_start_chars&&__ident_chars
 		x.__all_vars=`{
-			let __nf=Symbol(1);
-			let __get=__e=>{try{return eval(__e)}catch(e){return __nf}};
+			let __nf=Symbol(1)
+			let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
 			{
-				let x=debug;
-				x.u(x.f);
-				x.o={};
-				let pl=x.__ident_start_chars;
+				let x=debug
+				x.u(x.f)
+				x.o={}
+				let pl=x.__ident_start_chars
 				for(let i=0;i<pl.length;i++){
-					let t=x.o;
-					let k=pl[i];
-					let v=__get(k);
+					let t=x.o
+					let k=pl[i]
+					let v=__get(k)
 					if(v!==__nf){t[k]=v}
 				}
 			}
 		};0;`
 		x.__getter_names=`{
-			let __nf=Symbol(1);
-			let __get=__e=>{try{return eval(__e)}catch(e){return __nf}};
-			debug.__error_sym=Symbol("Error");
-			debug.__result_sym=Symbol("Result");
+			let __nf=Symbol(1)
+			let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
+			debug.__error_sym=Symbol("Error")
+			debug.__result_sym=Symbol("Result")
 			debug.__trg_eval=__e=>{
 				try{
 					return [debug.__result_sym,eval(__e)]
 				}catch(e){
 					return [debug.__error_sym,e]
 				}
-			};
+			}
 			{
-				let x=debug;
-				x.u(x.f);
-				let cb=x.cb;
-				if(cb)cb(__get);
-				x.gr={};
-				let pl=x.__name_list;
+				let x=debug
+				x.u(x.f)
+				let cb=x.cb
+				if(cb)cb(__get)
+				x.gr={}
+				let pl=x.__name_list
 				for(let i=0;i<pl.length;i++){
-					let t=x.gr;
-					let k=pl[i];
-					let v=__get("(function(){return "+k+"})");
+					let t=x.gr
+					let k=pl[i]
+					let v=__get("(function(){return "+k+"})")
 					if(v!==__nf){t[k]=v}
 				}
 			}
 		};0;`
 		x.__get_list=`{
-			let __nf=Symbol(1);
-			let __get=__e=>{try{return eval(__e)}catch(e){return __nf}};
+			let __nf=Symbol(1)
+			let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
 			{
-				let x=debug;x.u(x.f);x.o={};
+				let x=debug;x.u(x.f);x.o={}
 				for(let i of x.__name_list){
-					let t=x.o;
-					let v=__get(i);
+					let t=x.o
+					let v=__get(i)
 					if(v!==__nf){t[i]=v}
 				}
 			}
@@ -155,8 +155,9 @@ __cur.f=function() {
 					dc=0
 					try {
 						while(1) {
-							lc++;
-							[a,b]=arr
+							lc++
+							a=arr[0]
+							b=arr[1]
 							al=arr.length
 							let nx=sarr.slice().map(e => e())
 							arr[0]=nx[0]
@@ -191,8 +192,8 @@ __cur.f=function() {
 							Object.setPrototypeOf(arc,Array)
 							Object.setPrototypeOf(arc.prototype,Array.prototype)
 							arc.prototype[Symbol.toStringTag]='e'
-							lps[lps.length-1]=new arc;
-							[a,cp.length+eas.length,(dc++)]
+							lps[lps.length-1]=new arc
+							console.log([a,cp.length+eas.length,(dc++)])
 							lps[lps.length-1]
 						}
 					} catch {

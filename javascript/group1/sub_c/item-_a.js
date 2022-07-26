@@ -65,7 +65,7 @@ var dofn=function() {
 
 	}
 }
-dofn();
+dofn()
 (function() {
 	var absldec=(/** @type {number} */ v) => {
 		return Math.abs(Math.log10(v))

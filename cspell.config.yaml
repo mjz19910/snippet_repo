@@ -49,6 +49,7 @@ words:
   - desync
   - dname
   - dofn
+  - DONT_CONSUME_NEXT_INPUT_CHARACTER
   - doublequote
   - dslen
   - ducdat

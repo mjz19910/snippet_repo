@@ -4,8 +4,8 @@ v1 (spl-f): snippet_repo_v2/javascript/final/js_wasm_importing.js
 */
 function main() {
 	class cur {
-		static value_arr=[];
-		static key_arr=[];
+		static value_arr=[]
+		static key_arr=[]
 		static set(key,value) {
 			if(this.key_arr.indexOf(key)>-1) {
 				throw new Error("Key conflict")

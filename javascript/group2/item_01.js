@@ -37,7 +37,7 @@ class RustModelDescription {
 	}
 }
 class RustComputerScience {
-	model_description_vec=[];
+	model_description_vec=[]
 	addModel(model_description) {
 		this.model_description_vec.push(model_description)
 	}
@@ -75,8 +75,8 @@ class RustActivator {
 let comp_sci=new RustComputerScience
 {
 	class ActorInterface {
-		state={};
-		impl=new RustActor;
+		state={}
+		impl=new RustActor
 		/**@returns {void} @arg {RustActor} target_actor @arg {RustActor} transmitted_actor @arg {RustActivator} transmitted_actor @arg {number} event_count*/
 		on_receive_event(target_actor,transmitted_actor,activator,event_count) {
 			this.impl.process_event(target_actor,transmitted_actor,activator,event_count)

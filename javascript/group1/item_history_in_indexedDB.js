@@ -19,7 +19,6 @@ function open_complete() {
     let cur=tr.objectStore("history").openCursor()
     function cursor_done() {
         if(cur.result&&cur.result.value) {
-            //cursor.continue();
             console.log(cur.result.value)
             setTimeout(function() {
                 cur.result?.continue()

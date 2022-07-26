@@ -49,9 +49,9 @@ var z=function(fn,cbfn,ex) {
 			}
 
 		}
-		ru=0;
-		precreate=null;
-		promise_result=null;
+		ru=0
+		precreate=null
+		promise_result=null
 	}
 	)
 	Object.defineProperty(fn,"run",{

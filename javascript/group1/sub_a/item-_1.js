@@ -4,7 +4,7 @@ v1 (old-o): snippet_repo_v2/javascript/final/myhtml_tokenizer.js
 v2 (cur-c): snippet_repo_v2/javascript/group1/sub_a/item-_1.js
 */
 /**
- * @param {{ raw: any[]; }} v
+ * @param {TemplateStringsArray} v
  */
 function raw_template(v) {
 	return v.raw[0]
@@ -504,8 +504,8 @@ class _module_jai {
 			let jai=jai_runner
 			struct_builder.add_member("data","String_Builder")
 			struct_builder.add_member("entries",jai.dyn_array(jai.dyn_array_tag("[..]"),"Entry_Info"))
-		}).build();
-		Package=jai_runner.null_struct();
+		}).build()
+		Package=jai_runner.null_struct()
 	}
 	scope_file=new class {
 		MAGIC="simp"

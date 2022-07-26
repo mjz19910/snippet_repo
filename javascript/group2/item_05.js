@@ -45,11 +45,11 @@ function main() {
 			return performance_end-performance_start
 		}
 		class BaseWorkProcessor {
-			count=0;
-			last_index=-1;
-			start_index=-1;
-			result_vec=[];
-			overflow_vec=[];
+			count=0
+			last_index=-1
+			start_index=-1
+			result_vec=[]
+			overflow_vec=[]
 			constructor() {
 				this.result_vec[0]=1
 			}
@@ -124,8 +124,8 @@ function main() {
 			}
 		}
 		class WorkProcessor extends BaseWorkProcessor {
-			message=null;
-			reply=null;
+			message=null
+			reply=null
 			set_message(message) {
 				this.message=message
 			}
@@ -208,8 +208,8 @@ function main() {
 						this.reply.response.detail=report_object
 				}
 			}
-			log_level_vec=['error','warning','info','debug','trace'];
-			log_level='debug';
+			log_level_vec=['error','warning','info','debug','trace']
+			log_level='debug'
 			on_failure(error) {
 				if(this.log_level==='debug') {
 					post_message({
@@ -233,8 +233,8 @@ function main() {
 	}
 	let min_arr=[]
 	class IntervalClock {
-		timeout_id=-1;
-		handler_map=new Map;
+		timeout_id=-1
+		handler_map=new Map
 		static on_interval(self) {
 			self.on_tick()
 		}
@@ -374,10 +374,10 @@ function main() {
 		}
 	}
 	class WorkerStateModel {
-		clock=new IntervalClock;
-		running=false;
-		accept=null;
-		reject=null;
+		clock=new IntervalClock
+		running=false
+		accept=null
+		reject=null
 		constructor() {
 			this.set_timeout_delay(10*1000)
 			this.remote_worker=new RemoteWorkerModel()
@@ -451,8 +451,8 @@ function main() {
 			this.accept=accept
 			this.reject=reject
 		}
-		tag_promise_resolver=false;
-		log_resolver_tags=true;
+		tag_promise_resolver=false
+		log_resolver_tags=true
 		do_reject(reason) {
 			if(this.tag_promise_resolver&&this.log_resolver_tags) {
 				console.log('rj tag',this.accept.tag)

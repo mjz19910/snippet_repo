@@ -1,7 +1,7 @@
 import {RichGridRenderer} from "./RichGridRenderer"
 
 export class HandleRichGridRenderer {
-	static debug=false;
+	static debug=false
 	static run(path: string,object: RichGridRenderer) {
 		let renderer=object
 		if(this.debug)

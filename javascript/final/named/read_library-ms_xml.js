@@ -117,11 +117,11 @@ async function x() {
 		overflow=binary_data.length%4
 		b32_data=new Uint32Array(binary_data.buffer,0,(binary_data.length-overflow)/4)
 		let offset=0
-		//typeof b32_data.slice(offset,offset+6) == 'static';
+		//typeof b32_data.slice(offset,offset+6) == 'static'
 		offset+=6
-		//typeof b32_data.slice(offset,offset+8) == 'dynamic';
+		//typeof b32_data.slice(offset,offset+8) == 'dynamic'
 		offset+=8
-		//typeof b32_data.slice(offset,offset+16) == 'static';
+		//typeof b32_data.slice(offset,offset+16) == 'static'
 		offset+=16
 		//b32_data.slice(offset,offset+8); // disk description
 		//[1560281088, 2246618090, 609064146, 1217224307, 297022384, 50240, 0, 0] === C:

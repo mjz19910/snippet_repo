@@ -1,4 +1,4 @@
-import {volume_plugin_style_source} from "./volume_plugin_style_source"
+import {volume_plugin_style_source} from "./raw/volume_plugin_style_source"
 
 export class HTMLMediaElementGainController {
 	last_event?: Event
@@ -14,14 +14,16 @@ export class HTMLMediaElementGainController {
 		this.gain_node.connect(this.audioCtx.destination)
 		let dynamics_compressor=this.audioCtx.createDynamicsCompressor()
 		dynamics_compressor.connect(this.gain_node)
-		this.dynamics_compressor=dynamics_compressor;
-		(({knee,attack,release,ratio,threshold}) => {
+		this.dynamics_compressor=dynamics_compressor
+		 function init_dynamics_compressor(dyn:DynamicsCompressorNode) {
+			let {knee,attack,release,ratio,threshold}=dyn
 			knee.value=27
 			attack.value=1
 			release.value=1
 			ratio.value=4
 			threshold.value=-24
-		})(dynamics_compressor)
+		}
+		init_dynamics_compressor(dynamics_compressor)
 		this.style.innerHTML=volume_plugin_style_source
 		document.head.append(this.style)
 	}

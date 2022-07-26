@@ -1,3 +1,3 @@
 export class RichItemRenderer {
-	content: {displayAdRenderer?: {}}={};
+	content: {displayAdRenderer?: {}}={}
 }

@@ -3,9 +3,9 @@ Copyright 2021-2021 @mjz19910
 
 Header definition:
 class RustBasicSymbolGenerator{
-	next_symbol_id = 0;
-	generated_symbol_map = new Map;
-	last_sym_key = null;
+	next_symbol_id = 0
+	generated_symbol_map = new Map
+	last_sym_key = null
 	generate(){}
 	set(sym_key,sym_id){}
 	has(sym_key){}
@@ -14,16 +14,16 @@ class RustBasicSymbolGenerator{
 }
 class RustBasicExecutor{}
 function main(){
-	let key_generator = new RustBasicSymbolGenerator;
-	var cur = new RustBasicExecutor(key_generator);
-	cur.k = '';
+	let key_generator = new RustBasicSymbolGenerator
+	var cur = new RustBasicExecutor(key_generator)
+	cur.k = ''
 	cur.v = function req_$sym_distance$(sym_distance) {}
 }
 */
 class RustBasicSymbolGenerator {
-	next_symbol_id=0;
-	generated_symbol_map=new Map;
-	last_sym_key=null;
+	next_symbol_id=0
+	generated_symbol_map=new Map
+	last_sym_key=null
 	generate() {
 		this.last_sym_key=Symbol()
 		this.set(this.last_sym_key,this.next_symbol_id++)
@@ -45,11 +45,11 @@ class RustBasicSymbolGenerator {
 	}
 }
 class RustBasicExecutor {
-	value_vec=[];
-	key_vec=[];
-	data_start_vec=[];
-	data_end_vec=[];
-	data_store_vec=[];
+	value_vec=[]
+	key_vec=[]
+	data_start_vec=[]
+	data_end_vec=[]
+	data_store_vec=[]
 	constructor(key_generator) {
 		this.key_generator=key_generator
 		this.my_key=key_generator.generate()
