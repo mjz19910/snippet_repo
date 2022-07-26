@@ -1,1 +1,1 @@
-export type PromiseExecutorRejectCallback = (reason?: any) => void
+export type PromiseExecutorRejectCallback=(reason?: any) => void

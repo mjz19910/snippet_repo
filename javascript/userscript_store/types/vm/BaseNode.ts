@@ -1,12 +1,12 @@
 import {BaseNodeParent} from "./BaseNodeParent"
 
 export class BaseNode {
-	parent: BaseNodeParent | null
+	parent: BaseNodeParent|null
 	constructor() {
-		this.parent = null
+		this.parent=null
 	}
-	set_parent(parent: BaseNodeParent | null) {
-		this.parent = parent
+	set_parent(parent: BaseNodeParent|null) {
+		this.parent=parent
 	}
 	remove() {
 		if(this.parent)

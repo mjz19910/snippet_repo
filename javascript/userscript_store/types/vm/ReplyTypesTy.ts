@@ -8,7 +8,7 @@ import {ReplyToWorkerTy} from "./ReplyToWorkerTy"
 import {ReplySetMessages} from "./ReplySetMessages"
 import {ReplyClearMessages} from "./ReplyClearMessages"
 
-export type ReplyTypesTy = {
+export type ReplyTypesTy={
 	msg1: ReplyMessage1Ty
 	msg2: ReplyMessage2Ty
 	from_worker: ReplyFromWorkerTy

@@ -3,14 +3,12 @@ import {UniqueIdGenerator} from "./UniqueIdGenerator"
 import {WorkerState} from "./WorkerState"
 import {TimerState} from "./TimerState"
 import {TimeoutSetStrings} from "./TimeoutSetStrings"
-import {TimeoutSetRTy} from "./TimeoutSetRTy"
-import {TimeoutSetSTy} from "./TimeoutSetSTy"
 import {TimerTag} from "./TimerTag"
 import {DispatchMessageType} from "./DispatchMessageType"
 import {TimeoutClearStrings} from "./TimeoutClearStrings"
 import {TIMER_SINGLE,TIMER_REPEATING,TIMER_TAG_COUNT,ReplySetSingle,ReplySetRepeating,ReplyClearSingle} from "types/constants"
 import {SetMessageData} from "./SetMessageData"
-import {is_in_ignored_from_src_fn, is_in_userscript} from "types/script_registry/mod"
+import {is_in_ignored_from_src_fn,is_in_userscript} from "types/script_registry/mod"
 export class Timer {
 	id_generator
 	m_remote_id_to_main_state_map: any
@@ -34,7 +32,7 @@ export class Timer {
 	set_api_names(set: TimeoutSetStrings,clear: TimeoutClearStrings) {
 		this.set_map_names(set)
 		this.set_map_names(clear)
-		this.base_id=window[set.single](()=>{})
+		this.base_id=window[set.single](() => {})
 		window[clear.single](this.base_id)
 		this.id_generator.set_current(this.base_id)
 	}
@@ -151,8 +149,8 @@ export class Timer {
 			console.assert(false,'tried to send_worker_message, but the gc collected the worker_state, referenced with a WeakRef (weak_worker_state)')
 			return
 		}
-		let msg_id=(tag=>{
-			switch(tag){
+		let msg_id=(tag => {
+			switch(tag) {
 				case TIMER_SINGLE: return this.m_api_info.msg_types.worker.set.single
 				case TIMER_REPEATING: return this.m_api_info.msg_types.worker.set.repeating
 			}

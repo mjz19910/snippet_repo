@@ -2,7 +2,7 @@ import {AverageRatioRoot} from "./AverageRatioRoot"
 import {AsyncTimeoutNode} from "./AsyncTimeoutNode"
 import {TimeoutTarget} from "./TimeoutTarget"
 import {AverageRatio} from "./AverageRatio"
-import {TAutoBuyRoot} from "./TAutoBuyRoot"
+import {AutoBuyRootType} from "./AutoBuyRootType"
 
 export class AutoBuyState {
 	root_node
@@ -18,7 +18,7 @@ export class AutoBuyState {
 	avg
 	ratio_mult: number
 	div: number
-	constructor(root: TAutoBuyRoot) {
+	constructor(root: AutoBuyRootType) {
 		this.root_node=root
 		this.debug=false
 		this.arr=[]
@@ -106,25 +106,25 @@ export class AutoBuyState {
 					this.do_ratio_lock(-1,80*3)
 				if(this.ratio>.60)
 					this.do_ratio_lock(1,80*12)
-					break
+				break
 			case 2:
 				if(this.ratio<.45)
 					this.do_ratio_lock(-1,80*3)
 				if(this.ratio>.85)
 					this.do_ratio_lock(1,80*12)
-					break
+				break
 			case 3:
 				if(this.ratio<.9)
 					this.do_ratio_lock(-1,80*3)
 				if(this.ratio>1.5)
 					this.on_very_high_ratio()
-					break
+				break
 			default:
 				if(this.ratio<.9)
 					this.do_ratio_lock(-1,80*6)
 				if(this.ratio>1.5)
 					this.on_very_high_ratio(2)
-					break
+				break
 		}
 	}
 	do_ratio_lock(mode_change_direction: number,num_of_cycles: number) {

@@ -1,12 +1,12 @@
-import {InstructionType} from "./types/vm/instruction/mod"
-import IAutoBuy from "types/IAutoBuy"
+import {InstructionType} from "./instruction/mod"
+import {AutoBuyInterface} from "./AutoBuyInterface"
 import {SimpleStackVM} from "./SimpleStackVM"
 
 export class EventHandlerVMDispatch extends SimpleStackVM<Event> {
 	target_obj
-	constructor(instructions: InstructionType[], target_obj: IAutoBuy) {
+	constructor(instructions: InstructionType[],target_obj: AutoBuyInterface) {
 		super(instructions)
-		this.target_obj = target_obj
+		this.target_obj=target_obj
 	}
 	handleEvent(event: Event) {
 		this.reset()

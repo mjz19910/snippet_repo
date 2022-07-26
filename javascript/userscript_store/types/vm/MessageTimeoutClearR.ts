@@ -1,6 +1,6 @@
 import {TimeoutClearRTy} from "./TimeoutClearRTy"
 
-export type MessageTimeoutClearR = {
+export type MessageTimeoutClearR={
 	t: TimeoutClearRTy
 	v: number
 }

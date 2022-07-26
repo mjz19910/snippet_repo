@@ -1,1 +1,1 @@
-export type ReturnOpcode = 'vm_return'
+export type ReturnOpcode='vm_return'

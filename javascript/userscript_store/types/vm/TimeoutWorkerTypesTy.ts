@@ -5,7 +5,7 @@ import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy"
 import {TimeoutClearInfoTy} from "./TimeoutClearInfoTy"
 import {WorkerReplyTypes} from "./WorkerReplyTypes"
 
-export type TimeoutWorkerTypesTy = {
+export type TimeoutWorkerTypesTy={
 	reply: WorkerReplyTypes
 	update_message_handler: WorkerUpdateMessageHandlerTy
 	ready: TimeoutMessageRTy

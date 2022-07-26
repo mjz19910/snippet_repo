@@ -1,1 +1,1 @@
-export type VMCallOpcode = 'vm_call'
+export type VMCallOpcode='vm_call'

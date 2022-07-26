@@ -1,1 +1,1 @@
-export type AppendOpcode = 'append'
+export type AppendOpcode='append'

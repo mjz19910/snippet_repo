@@ -1,6 +1,7 @@
+import {Box} from "types/box/Box"
 import {ReplyMessage1Ty} from "./ReplyMessage1Ty"
 
-export type MessageReplyMessage1 = {
+export type MessageReplyMessage1={
 	t: ReplyMessage1Ty
-	v: never
+	v: Box
 }

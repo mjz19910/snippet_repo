@@ -2,7 +2,6 @@ import {DocumentWriteFnProxyHandler} from "./DocumentWriteFnProxyHandler"
 import {DocumentWriteFn} from "./DocumentWriteFn"
 import {Nullable2dArray} from "./Nullable2dArray"
 
-
 export class DocumentWriteList {
 	list: Nullable2dArray<string>
 	attached

@@ -1,6 +1,7 @@
+import {Box} from "types/box/Box"
 import {WorkerDestroyMessageTy} from "./WorkerDestroyMessageTy"
 
-export type MessageWorkerDestroyMessage = {
+export type MessageWorkerDestroyMessage={
 	t: WorkerDestroyMessageTy
-	v: never
+	v: Box
 }

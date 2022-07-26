@@ -1,4 +1,4 @@
-export type SetSingleMessageData = {
+export type SetSingleMessageData={
 	t: number
 	v: number
 }

@@ -1,3 +1,3 @@
 import {TimeoutFireR} from "types/constants"
 
-export type TimeoutFireRTy = typeof TimeoutFireR
+export type TimeoutFireRTy=typeof TimeoutFireR

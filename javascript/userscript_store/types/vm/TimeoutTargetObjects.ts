@@ -1,4 +1,4 @@
-import IAutoBuy from "types/IAutoBuy"
-import {AutoBuyState} from "./types/AutoBuyState"
+import {AutoBuy} from "./AutoBuy"
+import {AutoBuyState} from "./AutoBuyState"
 
-export type TimeoutTargetObjects = IAutoBuy | AutoBuyState
+export type TimeoutTargetObjects=AutoBuy|AutoBuyState

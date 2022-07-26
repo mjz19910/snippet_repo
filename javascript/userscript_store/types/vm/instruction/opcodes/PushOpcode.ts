@@ -1,2 +1,2 @@
 
-export type PushOpcode = 'push'
+export type PushOpcode='push'

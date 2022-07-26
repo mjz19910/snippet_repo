@@ -1,1 +1,1 @@
-export type FnVoidResult = () => void
+export type FnVoidResult=() => void

@@ -1,1 +1,1 @@
-export type ReturnOpcode = 'return'
+export type ReturnOpcode='return'

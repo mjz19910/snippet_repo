@@ -1,1 +1,1 @@
-export type CallOpcode = 'call'
+export type CallOpcode='call'

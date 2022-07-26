@@ -1,6 +1,6 @@
-import {TimeoutSetStringS, TimeoutSetStringR} from "types/constants"
+import {TimeoutSetStringS,TimeoutSetStringR} from "types/constants"
 
-export type TimeoutSetStringsTy = {
+export type TimeoutSetStringsTy={
 	single: typeof TimeoutSetStringS
 	repeating: typeof TimeoutSetStringR
 }

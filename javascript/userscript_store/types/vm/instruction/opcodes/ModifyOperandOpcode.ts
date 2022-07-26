@@ -1,1 +1,1 @@
-export type ModifyOperandOpcode = 'modify_operand'
+export type ModifyOperandOpcode='modify_operand'

@@ -1,6 +1,7 @@
+import {Box} from "types/box/Box"
 import {TimeoutFireSTy} from "./TimeoutFireSTy"
 
-export type MessageTimeoutFireS = {
+export type MessageTimeoutFireS={
 	t: TimeoutFireSTy
-	v: never
+	v: Box
 }

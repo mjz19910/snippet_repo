@@ -1,2 +1,3 @@
 import {ReturnOpcode} from "../opcodes/VMReturnOpcode"
-export type Return = [ReturnOpcode]
+
+export type Return=[ReturnOpcode]

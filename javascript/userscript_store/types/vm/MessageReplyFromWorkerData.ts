@@ -1,4 +1,6 @@
-export type MessageReplyFromWorkerData = {
-	t: never
-	v: never
+import {Box} from "types/box/Box"
+
+export type MessageReplyFromWorkerData={
+	t: Box
+	v: Box
 }

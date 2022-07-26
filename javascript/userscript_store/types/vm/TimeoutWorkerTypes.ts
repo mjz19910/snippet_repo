@@ -5,13 +5,13 @@ import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy"
 import {WorkerReplyTypes} from "./WorkerReplyTypes"
 import {TimeoutSetInfo} from "./TimeoutSetInfo"
 import {TimeoutClearInfo} from "./TimeoutClearInfo"
-import {TimeoutMessageR as TimeoutMessageReady, TimeoutSetTypes, WorkerUpdateMessageHandler} from "types/constants"
+import {TimeoutMessageR as TimeoutMessageReady,TimeoutSetTypes,WorkerUpdateMessageHandler} from "types/constants"
 
 export class TimeoutWorkerTypes implements TimeoutWorkerTypesTy {
-	reply: WorkerReplyTypes = new WorkerReplyTypes
-	update_message_handler: WorkerUpdateMessageHandlerTy = WorkerUpdateMessageHandler
-	ready: TimeoutMessageReadyTy = TimeoutMessageReady
-	set: TimeoutSetInfo = new TimeoutSetInfo
-	clear: TimeoutClearInfo = new TimeoutClearInfo
-	set_types: TimeoutSetTypesTy = TimeoutSetTypes
+	reply: WorkerReplyTypes=new WorkerReplyTypes
+	update_message_handler: WorkerUpdateMessageHandlerTy=WorkerUpdateMessageHandler
+	ready: TimeoutMessageReadyTy=TimeoutMessageReady
+	set: TimeoutSetInfo=new TimeoutSetInfo
+	clear: TimeoutClearInfo=new TimeoutClearInfo
+	set_types: TimeoutSetTypesTy=TimeoutSetTypes
 }

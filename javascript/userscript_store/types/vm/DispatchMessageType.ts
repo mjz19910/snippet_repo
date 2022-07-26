@@ -10,4 +10,4 @@ import {MessageReplyClearRepeating} from "./MessageReplyClearRepeating"
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS"
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR"
 
-export type DispatchMessageType = MessageTimeoutClearR | MessageTimeoutClearS | MessageReplyClearRepeating | MessageReplyClearSingle | MessageReplySetRepeating | MessageReplySetSingle | MessageWorkerReadyReply | MessageWorkerUpdateMessageHandlerReply | MessageReplyMessage2 | MessageReplyMessage1 | MessageReplyFromWorkerData
+export type DispatchMessageType=MessageTimeoutClearR|MessageTimeoutClearS|MessageReplyClearRepeating|MessageReplyClearSingle|MessageReplySetRepeating|MessageReplySetSingle|MessageWorkerReadyReply|MessageWorkerUpdateMessageHandlerReply|MessageReplyMessage2|MessageReplyMessage1|MessageReplyFromWorkerData

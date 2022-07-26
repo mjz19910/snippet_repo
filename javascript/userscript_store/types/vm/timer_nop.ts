@@ -1,1 +1,1 @@
-function timer_nop() {}
+export function timer_nop() {}

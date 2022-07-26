@@ -1,1 +1,1 @@
-export type DupOpcode = 'dup'
+export type DupOpcode='dup'

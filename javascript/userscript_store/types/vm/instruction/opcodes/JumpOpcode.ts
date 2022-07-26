@@ -1,1 +1,1 @@
-export type JumpOpcode = 'jmp'
+export type JumpOpcode='jmp'

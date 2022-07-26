@@ -1,1 +1,1 @@
-export type CastOpcode = "cast"
+export type CastOpcode="cast"

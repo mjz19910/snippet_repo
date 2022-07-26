@@ -1,1 +1,1 @@
-export type BreakpointOpcode = 'breakpoint'
+export type BreakpointOpcode='breakpoint'

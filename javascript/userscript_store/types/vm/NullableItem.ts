@@ -1,1 +1,1 @@
-export type NullableItem<T> = T | null
+export type NullableItem<T>=T|null

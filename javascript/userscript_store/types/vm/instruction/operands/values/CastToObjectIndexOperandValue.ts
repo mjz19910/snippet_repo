@@ -1,1 +1,1 @@
-export type CastToObjectIndexOperandValue = "object_index"
+export type CastToObjectIndexOperandValue="object_index"

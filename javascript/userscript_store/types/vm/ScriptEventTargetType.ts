@@ -1,4 +1,4 @@
-export type ScriptEventTargetType = {
+export type ScriptEventTargetType={
 	fns: any[]
 	addEventListener(fn: (e: any) => void): void
 	dispatchEvent(ev: {

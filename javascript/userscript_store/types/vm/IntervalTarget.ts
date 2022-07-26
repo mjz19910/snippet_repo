@@ -5,12 +5,12 @@ export class IntervalTarget extends AbstractTarget {
 	obj
 	callback
 	description
-	constructor(obj: never, callback: () => void, description: never) {
+	constructor(obj: never,callback: () => void,description: never) {
 		super()
-		this.once = false
-		this.obj = obj
-		this.callback = callback
-		this.description = description
+		this.once=false
+		this.obj=obj
+		this.callback=callback
+		this.description=description
 	}
 	fire() {
 		this.callback.call(this.obj)

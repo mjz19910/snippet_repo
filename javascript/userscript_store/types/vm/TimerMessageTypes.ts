@@ -9,8 +9,8 @@ import {ReplyTypesTy} from "./ReplyTypesTy"
 import {WorkerAsyncMessage} from "types/constants"
 
 export class TimerMessageTypes implements TimerMessageTypesTy {
-	async: WorkerAsyncMessageTy = WorkerAsyncMessage
-	reply: ReplyTypesTy = new ReplyTypes
-	fire: TimeoutFireInfoTy = new TimeoutFireInfo
-	worker: TimeoutWorkerTypesTy = new TimeoutWorkerTypes
+	async: WorkerAsyncMessageTy=WorkerAsyncMessage
+	reply: ReplyTypesTy=new ReplyTypes
+	fire: TimeoutFireInfoTy=new TimeoutFireInfo
+	worker: TimeoutWorkerTypesTy=new TimeoutWorkerTypes
 }

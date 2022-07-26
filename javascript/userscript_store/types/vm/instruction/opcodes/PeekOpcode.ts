@@ -1,1 +1,1 @@
-export type PeekOpcode = 'peek'
+export type PeekOpcode='peek'

@@ -1,2 +1,3 @@
 import {AppendOpcode} from "./opcodes/AppendOpcode"
-export type Append = [AppendOpcode]
+
+export type Append=[AppendOpcode]

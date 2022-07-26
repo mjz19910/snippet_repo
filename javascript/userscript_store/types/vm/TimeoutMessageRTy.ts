@@ -1,3 +1,3 @@
 import {TimeoutMessageR} from "types/constants"
 
-export type TimeoutMessageRTy = typeof TimeoutMessageR
+export type TimeoutMessageRTy=typeof TimeoutMessageR

@@ -1,3 +1,3 @@
-export type IndexAccess<T> = {
+export type IndexAccess<T>={
 	[v: string]: T
 }

@@ -7,9 +7,9 @@ export class AsyncTimeoutNode extends TimeoutNode {
 		if(this.target)
 			this.target.fire()
 	}
-	start_async(target: AsyncTimeoutTarget | null) {
+	start_async(target: AsyncTimeoutTarget|null) {
 		if(target) {
-			this.target = target
+			this.target=target
 			this.set()
 			return target.wait()
 		}

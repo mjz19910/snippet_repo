@@ -1,25 +1,24 @@
 export class DataLoader {
-	//spell:words externref
-	static int_parser = new WebAssembly.Function({parameters: ['externref'], results: ['f64']}, parseInt)
+	static int_parser=new WebAssembly.Function({parameters: ['externref'],results: ['f64']},parseInt)
 	store: Storage
 	null_sym: symbol
 	constructor(storage: Storage) {
-		this.store = storage
-		this.null_sym = Symbol('null')
+		this.store=storage
+		this.null_sym=Symbol('null')
 	}
-	load_str_arr(key: any, def_value: any) {
-		let data = this.store.getItem(key)
-		if(data === null)
+	load_str_arr(key: any,def_value: any) {
+		let data=this.store.getItem(key)
+		if(data===null)
 			return this.create_default(def_value)
 		return data.split(",")
 	}
-	load_int_arr(key: any, def_value: any) {
-		let storage_data = this.store.getItem(key)
-		if(storage_data === null)
+	load_int_arr(key: any,def_value: any) {
+		let storage_data=this.store.getItem(key)
+		if(storage_data===null)
 			return this.create_default(def_value)
 		return this.parse_int_arr(storage_data)
 	}
-	parse_int = DataLoader.int_parser
+	parse_int=DataLoader.int_parser
 	default_split(string: string) {
 		return string.split(",")
 	}
@@ -27,17 +26,17 @@ export class DataLoader {
 		return this.default_split(data).map(DataLoader.int_parser)
 	}
 	create_default(value_or_factory: () => any) {
-		let value = this.null_sym
-		if(typeof value_or_factory === 'function') {
+		let value=this.null_sym
+		if(typeof value_or_factory==='function') {
 			// this is a value factory
 			return value_or_factory()
 		}
-		let cc = Object.getPrototypeOf(value_or_factory).constructor
+		let cc=Object.getPrototypeOf(value_or_factory).constructor
 		try {
 			// get it as an object, the convert back to unboxed if possible
-			value = (new cc(value_or_factory)).valueOf()
+			value=(new cc(value_or_factory)).valueOf()
 		} catch {}
-		if(value === this.null_sym) {
+		if(value===this.null_sym) {
 			// none of them worked, it is a default value that you can't construct and call valueOf on
 			return value_or_factory
 		}

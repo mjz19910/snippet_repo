@@ -1,6 +1,7 @@
+import {Box} from "types/box/Box"
 import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy"
 
-export type MessageReplyClearRepeating = {
+export type MessageReplyClearRepeating={
 	t: ReplyClearRepeatingTy
-	v: never
+	v: Box
 }

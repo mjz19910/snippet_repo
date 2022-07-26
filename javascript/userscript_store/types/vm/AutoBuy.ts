@@ -10,7 +10,7 @@ import {DomValueBox} from "./DomValueBox"
 import {do_auto_unit_promote} from "./do_auto_unit_promote"
 import {EventHandlerDispatch} from "./EventHandlerDispatch"
 import {EventHandlerVMDispatch} from "./EventHandlerVMDispatch"
-import {IAutoBuy} from "./IAutoBuy"
+import {AutoBuyInterface} from "./AutoBuyInterface"
 import {lightreset_inject} from "./lightreset_inject"
 import {l_log_if} from "./l_log_if"
 import {MulCompression} from "./MulCompression"
@@ -22,7 +22,7 @@ import {is_in_ignored_from_src_fn} from "types/script_registry/mod"
 import {debug_id_syms} from "types/mod"
 import {AUDIO_ELEMENT_VOLUME} from "types/vars"
 
-export class AutoBuy implements IAutoBuy {
+export class AutoBuy implements AutoBuyInterface {
 	state_history_arr: any
 	root_node: AsyncNodeRoot
 	extra: number
@@ -436,7 +436,7 @@ export class AutoBuy implements IAutoBuy {
 		})
 	}
 	global_init() {
-		let cur_this: IAutoBuy=this
+		let cur_this: AutoBuyInterface=this
 		if((window as any).g_auto_buy&&(window as any).g_auto_buy!==cur_this) {
 			(window as any).g_auto_buy.destroy()
 		}

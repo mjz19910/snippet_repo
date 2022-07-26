@@ -1,6 +1,6 @@
 import {RefVarInfo} from "./RefVarInfo"
 
-export type RefVarMsg = {
+export type RefVarMsg={
 	t: number
 	v: RefVarInfo
 }

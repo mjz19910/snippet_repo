@@ -1,6 +1,7 @@
+import {Box} from "types/box/Box"
 import {ReplyClearSingleTy} from "./ReplyClearSingleTy"
 
-export type MessageReplyClearSingle = {
+export type MessageReplyClearSingle={
 	t: ReplyClearSingleTy
-	v: never
+	v: Box
 }
