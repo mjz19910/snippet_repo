@@ -16,7 +16,7 @@ export function event_find_ytd_watch_flexy(this: CustomEventTarget,event: Custom
 	console.log("PageManager:current_page:"+target_element.tagName.toLowerCase())
 	if(target_element.tagName=="YTD-WATCH-FLEXY") {
 		on_ytd_watch_flexy(target_element)
-		this.dispatchEvent({type: "ytd-watch-flexy",detail,port})
+		this.dispatchEvent({type: "find-ytd-player",detail,port})
 	} else {
 		ytd_page_manager.value.addEventListener(
 			"yt-page-type-changed",

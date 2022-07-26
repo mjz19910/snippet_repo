@@ -15,5 +15,5 @@ export function event_ytd_watch_flexy(this: CustomEventTarget,event: CustomEvent
 	if(!target_element) return dom_observer_next_tick_action(this,port,current_message_id)
 	if(!(target_element instanceof HTMLElement)) throw new Error("no html element")
 	on_ytd_player(target_element)
-	this.dispatchEvent({type: "ytd-player",detail,port})
+	this.dispatchEvent({type: "find-video",detail,port})
 }

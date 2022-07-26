@@ -1,9 +1,19 @@
+import {CustomEventTarget} from "modules/youtube_plugin/dom_observer/CustomEventTarget"
+import {CustomEventType} from "modules/youtube_plugin/dom_observer/CustomEventType"
+import {observer_default_action} from "modules/youtube_plugin/dom_observer/observer_default_action"
+import {event_box_map} from "./event_box_map"
 import {exit_event_stage} from "./exit_event_stage"
 import {is_watch_page_active} from "./is_watch_page_active"
 
-export const event_handler_name_plugin_activate = 'plugin-activate'
-
-export function event_plugin_activate() {
+/** ID(70) */
+export function event_plugin_activate(this: CustomEventTarget,event: CustomEventType) {
+	const current_message_id=70
+	let {type}=event
+	observer_default_action(type,current_message_id)
+	if(!event_box_map.has("video-list")) {
+		console.log('no video element list')
+		return
+	}
 	if(is_watch_page_active())
 		exit_event_stage()
 }

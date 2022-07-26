@@ -22,10 +22,8 @@ export function activate_nav() {
 		throw new Error("Dummy callback failure")
 	yt_navigate_finish_handler_array[0]({})
 	ytd_page_manager.value.addEventListener("yt-page-type-changed",function() {
-		if(!ytd_player.value)
-			return
-		if(!ytd_page_manager.value)
-			return
+		if(!ytd_player.value) return
+		if(!ytd_page_manager.value) return
 		if(ytd_page_manager.value.getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
 			ytd_player.value.is_watch_page_active=false
 			plugin_overlay_element.value&&plugin_overlay_element.value.remove()
