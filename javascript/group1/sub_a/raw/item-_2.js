@@ -109,7 +109,7 @@ write :: (package: *Create_Package, filename: string) -> bool {
 	// followed by an 8-byte integer indicating the size of the data entry,
 	// followed by an 8-byte integer indicating the offset of the entry from the start of the file.
 	for entry: package.entries {
-		
+
 	}
 
 	success = file_write(*file, table_of_contents);
