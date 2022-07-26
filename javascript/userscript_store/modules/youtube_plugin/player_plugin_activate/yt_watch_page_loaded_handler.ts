@@ -17,8 +17,8 @@ import {overlay_content_div} from "../elements/overlay_content_div"
 import {overlay_hide_ui_input} from "../elements/overlay_hide_ui_input"
 import {plugin_overlay_element} from "../elements/plugin_overlay_element"
 import {g_api} from "../g_api/g_api"
-import {on_yt_navigate} from "./on_yt_navigate"
-import {on_yt_navigate_finish} from "../on_yt_navigate_finish"
+import {yt_navigate_handler_array} from "./yt_navigate_handler_array"
+import {yt_navigate_finish_handler_array} from "./yt_navigate_finish_handler_array"
 import {ytd_player} from "../elements/ytd_player"
 
 export function yt_watch_page_loaded_handler() {
@@ -49,12 +49,12 @@ export function yt_watch_page_loaded_handler() {
 		let custom_style_element=document.createElement("style")
 		ytd_app.value.ui_plugin_style_element=custom_style_element
 		ytd_watch_flexy.value.addEventListener("yt-navigate",function(event) {
-			for(let handler of on_yt_navigate) {
+			for(let handler of yt_navigate_handler_array) {
 				handler(event)
 			}
 		})
 		ytd_app.value.addEventListener("yt-navigate-finish",function(event) {
-			for(let handler of on_yt_navigate_finish) {
+			for(let handler of yt_navigate_finish_handler_array) {
 				handler(event)
 			}
 		})
@@ -79,7 +79,7 @@ export function yt_watch_page_loaded_handler() {
 	if(!ytd_player.value) return
 	ytd_player.value.active_nav=false
 	plugin_overlay_element.value.onupdate=fix_offset
-	on_yt_navigate_finish[0]=log_yt_finish_navigation
+	yt_navigate_finish_handler_array[0]=log_yt_finish_navigation
 	init_ui_plugin()
 	ytd_player.value.init_nav=true
 	input_modify_css_style.innerHTML="C"

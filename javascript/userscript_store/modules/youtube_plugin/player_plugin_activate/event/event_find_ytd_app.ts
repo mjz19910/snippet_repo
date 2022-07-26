@@ -2,7 +2,7 @@ import {CustomEventTarget} from "../../dom_observer/CustomEventTarget"
 import {CustomEventType} from "../../dom_observer/CustomEventType"
 import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action"
 import {observer_default_action} from "../../dom_observer/observer_default_action"
-import {on_ytd_app} from "./on_ytd_app"
+import {on_ytd_app} from "../found_elements/on_ytd_app"
 import {load_volume_range_plugin} from "../load_volume_range_plugin"
 
 /** ID(10) */

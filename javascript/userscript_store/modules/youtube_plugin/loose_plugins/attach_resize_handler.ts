@@ -1,4 +1,4 @@
-import {on_yt_action} from "../player_plugin_activate/on_yt_action"
+import {on_yt_action} from "../player_plugin_activate/event/on_yt_action"
 import {plugin_overlay_element} from "../elements/plugin_overlay_element"
 
 export function attach_resize_handler() {
