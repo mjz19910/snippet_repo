@@ -1,7 +1,7 @@
 import {active_property_watcher_paths} from "./active_property_watcher_paths"
 import {ghost_symbol} from "./ghost_symbol"
 import {watched_target_map} from "./watched_target_map"
-import {object_property_watcher} from "./object_property_watcher"
+import {object_property_watcher} from "../object_property_watcher"
 import {watched_function_weak_set} from "./watched_function_weak_set"
 import {init_property_watcher_for_target} from "./init_property_watcher_for_target"
 
