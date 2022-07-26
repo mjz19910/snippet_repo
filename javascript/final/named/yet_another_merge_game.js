@@ -79,14 +79,13 @@ function main() {
 			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -341,7 +340,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI
 		}
-		//console.log('restart on top frame');
+		//console.log('restart on top frame')
 		ret=debugApi.asyncExecuteFunction(top,main)
 	} else {
 		ret=do_cur()
