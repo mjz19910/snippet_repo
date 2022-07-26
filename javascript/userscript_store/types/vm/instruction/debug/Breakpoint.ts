@@ -1,3 +1,3 @@
 import {BreakpointOpcode} from "../opcodes/BreakpointOpcode"
 
-export type Breakpoint = [BreakpointOpcode]
+export type Breakpoint=[BreakpointOpcode]

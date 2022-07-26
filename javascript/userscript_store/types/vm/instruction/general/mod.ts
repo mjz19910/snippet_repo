@@ -6,6 +6,7 @@ import {Get} from "./Get"
 import {GetOpcode} from "../opcodes/GetOpcode"
 import {Return} from "./Return"
 import {ReturnOpcode} from "../opcodes/ReturnOpcode"
+
 export {
 	Call, CallOpcode,
 	Construct, ConstructOpcode,

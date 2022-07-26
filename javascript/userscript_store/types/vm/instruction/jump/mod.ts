@@ -4,6 +4,6 @@ import {Je} from "./Je"
 import {Jump} from "./Jump"
 
 export {
-	Jump, JumpOpcode,
-	Je, JeOpcode
+	Jump,JumpOpcode,
+	Je,JeOpcode
 }
