@@ -76,17 +76,15 @@ function main() {
 					return ret
 				}
 			} finally {}
-			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -215,56 +213,56 @@ function main() {
 			}
 			//__ident_start_chars&&__ident_chars
 			x.__all_vars=`{
-				let __nf=Symbol(1);
-				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}};
+				let __nf=Symbol(1)
+				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
 				{
-					let x=debug;
-					x.u(x.f);
-					x.o={};
-					let pl=x.__ident_start_chars;
+					let x=debug
+					x.u(x.f)
+					x.o={}
+					let pl=x.__ident_start_chars
 					for(let i=0;i<pl.length;i++){
-						let t=x.o;
-						let k=pl[i];
-						let v=__get(k);
+						let t=x.o
+						let k=pl[i]
+						let v=__get(k)
 						if(v!==__nf){t[k]=v}
 					}
 				}
 			};0;`
 			x.__getter_names=`{
-				let __nf=Symbol(1);
-				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}};
-				debug.__error_sym=Symbol("Error");
-				debug.__result_sym=Symbol("Result");
+				let __nf=Symbol(1)
+				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
+				debug.__error_sym=Symbol("Error")
+				debug.__result_sym=Symbol("Result")
 				debug.__trg_eval=__e=>{
 					try{
 						return [debug.__result_sym,eval(__e)]
 					}catch(e){
 						return [debug.__error_sym,e]
 					}
-				};
+				}
 				{
-					let x=debug;
-					x.u(x.f);
-					let cb=x.cb;
-					if(cb)cb(__get);
-					x.gr={};
-					let pl=x.__name_list;
+					let x=debug
+					x.u(x.f)
+					let cb=x.cb
+					if(cb)cb(__get)
+					x.gr={}
+					let pl=x.__name_list
 					for(let i=0;i<pl.length;i++){
-						let t=x.gr;
-						let k=pl[i];
-						let v=__get("(function(){return "+k+"})");
+						let t=x.gr
+						let k=pl[i]
+						let v=__get("(function(){return "+k+"})")
 						if(v!==__nf){t[k]=v}
 					}
 				}
 			};0;`
 			x.__get_list=`{
-				let __nf=Symbol(1);
-				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}};
+				let __nf=Symbol(1)
+				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
 				{
-					let x=debug;x.u(x.f);x.o={};
+					let x=debug;x.u(x.f);x.o={}
 					for(let i of x.__name_list){
-						let t=x.o;
-						let v=__get(i);
+						let t=x.o
+						let v=__get(i)
 						if(v!==__nf){t[i]=v}
 					}
 				}
@@ -404,8 +402,8 @@ function main() {
 						js_out.push(ret[0])
 						let cc=ret[0].length+1+1
 						while(ret[1][0]==',') {
-							js_out.push(',');
-							[ret]=js_parse_ident([str.slice(cc)],[])
+							js_out.push(',')
+								([ret]=js_parse_ident([str.slice(cc)],[]))
 							js_out.push(ret[0])
 							if(ret[1][0]==')') {
 								js_out.push('()'[1])
@@ -488,12 +486,12 @@ function main() {
 						jsfout.push(e[0])
 						jsfout.push(e.slice(1))
 						let ret=js_parse_loop_whitespace(jsfout,jsfilt)
-						let js_tmp=jsfilt;
+						let js_tmp=jsfilt
 						[js_out,jsfout,jsfilt]=ret
 						jsfout.push(...js_out,...js_tmp)
 						if(is_classy) {
-							ret=js_parse_ident(jsfout,jsfilt);
-							[js_out,jsfout,jsfilt]=ret
+							ret=js_parse_ident(jsfout,jsfilt)
+								([js_out,jsfout,jsfilt]=ret)
 							js_func_ident=js_out[0]
 							jsfout.push(js_out[0],js_out[1])
 							if(js_out[0]==='constructor') {
@@ -510,8 +508,8 @@ function main() {
 								jsfout=[wt]
 								jsfilt=[]
 								ret=js_parse_loop_whitespace(jsfout,jsfilt)
-								js_tmp=jsfilt;
-								[js_out,jsfout,jsfilt]=ret;
+								js_tmp=jsfilt
+								[js_out,jsfout,jsfilt]=ret
 								[jsfout,jsfilt]=parse_stack.pop()
 								jsfout.push(...js_out,...js_tmp)
 								wt=jsfout.pop()
@@ -522,7 +520,7 @@ function main() {
 								js_tmp.push(jsfilt.pop())
 								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()])
 								jsfilt.push(js_tmp.pop())
-								js_tmp=jsfilt;
+								js_tmp=jsfilt
 								[jsfout,jsfilt]=parse_stack.pop()
 								js_tmp.forEach(e => jsfout.push(e))
 								let p_cur=parse_stack.pop()
@@ -540,12 +538,12 @@ function main() {
 							loop_max_count=40
 							function call_loop_parse_whitespace() {
 								ret=js_parse_loop_whitespace(jsfout,jsfilt)
-								js_tmp=jsfilt;
+								js_tmp=jsfilt
 								[js_out,jsfout,jsfilt]=ret
 								jsfout.push(...js_out,...js_tmp)
 							}
 							function call_parse_ident() {
-								ret=js_parse_ident(jsfout,jsfilt);
+								ret=js_parse_ident(jsfout,jsfilt)
 								[js_out,jsfout,jsfilt]=ret
 								jsfout.push(js_out[0],js_out[1])
 							}
@@ -570,7 +568,7 @@ function main() {
 								js_tmp.push(jsfilt.pop())
 								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()])
 								jsfilt.push(js_tmp.pop())
-								js_tmp=jsfilt;
+								js_tmp=jsfilt
 								[jsfout,jsfilt]=parse_stack.pop()
 								js_tmp.forEach(e => jsfout.push(e))
 								let p_cur=parse_stack.pop()
@@ -593,8 +591,8 @@ function main() {
 							let wt=jsfout.pop()
 							parse_stack.push([jsfout,jsfilt])
 							ret=js_parse_loop_whitespace([wt],[])
-							js_tmp=jsfilt;
-							[js_out,jsfout,jsfilt]=ret;
+							js_tmp=jsfilt
+							[js_out,jsfout,jsfilt]=ret
 							[jsfout]=parse_stack.pop()
 							jsfout.push(...js_out,...js_tmp)
 						} else {
@@ -898,7 +896,7 @@ function main() {
 			}
 			x.fo.push([x.f,x.o])
 			__add_set()
-			let cmc=__for_code(__m.click);
+			let cmc=__for_code(__m.click)
 			//???
 			`${cmc}`
 			x.f=x.o.u
@@ -1012,63 +1010,63 @@ function main() {
 		}
 		comment_function() {
 			/*
-				{let __g=[-4,0];
-				if(__instance.ret)__g=JSON.parse([...__instance.ret[1].entries()].sort((e,q)=>q[1]-e[1]).map(e=>e[0])[1]);
-				__instance.run();
-				let log=new Set();
-				let cnt_map=new Map();
+				{let __g=[-4,0]
+				if(__instance.ret)__g=JSON.parse([...__instance.ret[1].entries()].sort((e,q)=>q[1]-e[1]).map(e=>e[0])[1])
+				__instance.run()
+				let log=new Set()
+				let cnt_map=new Map()
 				let obj_arr=[]
 				let ff=function(o,r,f,sq,or,st){
 				if(!log.has(JSON.stringify(st))){
-				log.add(JSON.stringify(st));
-				console.log(st);
+				log.add(JSON.stringify(st))
+				console.log(st)
 				}
 				if(r){
-				__w.I_listener.I(...r);
-				let c=f.fp(...sq);
+				__w.I_listener.I(...r)
+				let c=f.fp(...sq)
 				if(c){
-				__w.I_listener.I(...sq);
-				};
+				__w.I_listener.I(...sq)
+				}
 				let ovf=function(fn,arg){
-				let sa=JSON.stringify(arg);
+				let sa=JSON.stringify(arg)
 				if(cnt_map.has(sa)){
-				cnt_map.set(sa,cnt_map.get(sa)+1);
+				cnt_map.set(sa,cnt_map.get(sa)+1)
 				}else{
-				cnt_map.set(sa,1);
+				cnt_map.set(sa,1)
 				}
-				return arg;
+				return arg
 				}
-				if(r[0]>st.x.g)([obj_arr.indexOf(f),'dt',...ovf(f,r)]);
-				if(r[0]<st.x.l)([obj_arr.indexOf(f),'dt',...ovf(f,r)]);
-				if(r[1]>st.y.g)([obj_arr.indexOf(f),'dt',...ovf(f,r)]);
-				if(r[1]<st.y.l)([obj_arr.indexOf(f),'dt',...ovf(f,r)]);
-				if(r[0]>o.max_x)o.max_x=r[0];if(r[1]>o.max_y)o.max_y=r[1];
-				if(r[0]<o.min_x)o.min_x=r[0];if(r[1]<o.min_y)o.min_y=r[1];
+				if(r[0]>st.x.g)([obj_arr.indexOf(f),'dt',...ovf(f,r)])
+				if(r[0]<st.x.l)([obj_arr.indexOf(f),'dt',...ovf(f,r)])
+				if(r[1]>st.y.g)([obj_arr.indexOf(f),'dt',...ovf(f,r)])
+				if(r[1]<st.y.l)([obj_arr.indexOf(f),'dt',...ovf(f,r)])
+				if(r[0]>o.max_x)o.max_x=r[0];if(r[1]>o.max_y)o.max_y=r[1]
+				if(r[0]<o.min_x)o.min_x=r[0];if(r[1]<o.min_y)o.min_y=r[1]
 				}
 				}
 				let f_for=function(func){
-				let o={};
-				o.max_x=-128,o.max_y=-128,o.min_x=128,o.min_y=128;
-				let s_pos=__g,r_x=find_closed_up_x(...s_pos)[0];
+				let o={}
+				o.max_x=-128,o.max_y=-128,o.min_x=128,o.min_y=128
+				let s_pos=__g,r_x=find_closed_up_x(...s_pos)[0]
 				for(let s=find_closed_dn_x(...s_pos)[0],q=s;q<r_x;q++)for(let r=find_closed_up_y(...s_pos)[1],m=find_closed_dn_y(...s_pos)[1],j=m;j<r;j++){
-				if(obj_arr.indexOf(func)==-1)obj_arr.push(func);
+				if(obj_arr.indexOf(func)==-1)obj_arr.push(func)
 				ff(o,func(q,j),func,[q,j],function(id,val){
 				if(id=='v+'){}
 				if(id=='v-'){}
 				if(id=='h+'){}
 				if(id=='h-'){}
-				},{x:{g:r_x,l:s},y:{g:r,l:m}});
+				},{x:{g:r_x,l:s},y:{g:r,l:m}})
 				}
-				return o;
+				return o
 				}
-				let na,str=__g+"\n",co={};
+				let na,str=__g+"\n",co={}
 				na='dn_x';co[na]=f_for(window['find_closed_'+na]);str+=`${na}:{x:{${co[na].max_x} to ${co[na].min_x}},y:{${co[na].max_y} to ${co[na].min_y}}}\n`
 				na='up_x';co[na]=f_for(window['find_closed_'+na]);str+=`${na}:{x:{${co[na].max_x} to ${co[na].min_x}},y:{${co[na].max_y} to ${co[na].min_y}}}\n`
 				na='dn_y';co[na]=f_for(window['find_closed_'+na]);str+=`${na}:{x:{${co[na].max_x} to ${co[na].min_x}},y:{${co[na].max_y} to ${co[na].min_y}}}\n`
 				na='up_y';co[na]=f_for(window['find_closed_'+na]);str+=`${na}:{x:{${co[na].max_x} to ${co[na].min_x}},y:{${co[na].max_y} to ${co[na].min_y}}}\n`
-				__instance.ret=[str.slice(0,-1),cnt_map];
-				__instance.ret[0];
-				};
+				__instance.ret=[str.slice(0,-1),cnt_map]
+				__instance.ret[0]
+				}
 			*/
 			void 0
 		}
@@ -1107,7 +1105,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI
 		}
-		//console.log('restart on top frame');
+		//console.log('restart on top frame')
 		ret=debugApi.asyncExecuteFunction(top,main)
 	} else {
 		ret=do_cur()

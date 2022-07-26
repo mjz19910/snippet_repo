@@ -259,7 +259,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI
 		}
-		//console.log('restart on top frame');
+		//console.log('restart on top frame')
 		ret=debugApi.asyncExecuteFunction(top,main)
 	} else {
 		ret=do_cur()

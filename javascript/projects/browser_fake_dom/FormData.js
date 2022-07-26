@@ -3,18 +3,18 @@ export class FormData {
 		/**
 		 * @type {any[]}
 		 */
-		this.k = [];
+		this.k=[]
 		/**
 		 * @type {any[]}
 		 */
-		this.v = [];
+		this.v=[]
 	}
 	/**
 	 * @param {any} k
 	 * @param {any} v
 	 */
-	append(k, v) {
-		this.k.push(k);
-		this.v.push(v);
+	append(k,v) {
+		this.k.push(k)
+		this.v.push(v)
 	}
 }

@@ -5,10 +5,10 @@ export class NodeInternalData {
 	 * @arg {NodeInternalData[]} children
 	 * @arg {NodeInternalData|null} parent
 	 */
-	constructor(type, depth, children, parent) {
-		this.type = type;
-		this.depth = depth;
-		this.children = children;
-		this.parent = parent;
+	constructor(type,depth,children,parent) {
+		this.type=type
+		this.depth=depth
+		this.children=children
+		this.parent=parent
 	}
 }

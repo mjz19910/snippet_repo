@@ -1,6 +1,6 @@
 export class HTMLSpecialLex {
 	/**@readonly */
-	type = "special";
+	type = "special"
 	/** @type {string} */
-	value = "";
+	value = ""
 }

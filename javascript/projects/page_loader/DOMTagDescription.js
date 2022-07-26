@@ -1,3 +1,3 @@
 export class DOMTagDescription {
-	tagName = null;
+	tagName=null
 }

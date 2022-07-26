@@ -1,15 +1,15 @@
-import {add_element} from "./add_element.js";
-import {do_exec} from "./do_exec.js";
-import {DOMTagDescription} from "./DOMTagDescription.js";
-import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js";
-import {NodeInternalData} from "./NodeInternalData.js";
-import {resolve_http_url} from "./resolve_http_url.js";
-import {wait} from "./wait.js";
-import {FetchRequestState} from "./FetchRequestState.js";
+import {add_element} from "./add_element.js"
+import {do_exec} from "./do_exec.js"
+import {DOMTagDescription} from "./DOMTagDescription.js"
+import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js"
+import {NodeInternalData} from "./NodeInternalData.js"
+import {resolve_http_url} from "./resolve_http_url.js"
+import {wait} from "./wait.js"
+import {FetchRequestState} from "./FetchRequestState.js"
 /**@type {Buffer[]} */
-export let data = [];
+export let data=[]
 /** @type {{request?:{}}} */
-export let dom_state = {};
+export let dom_state={}
 
 export {
 	add_element,
@@ -20,7 +20,7 @@ export {
 	resolve_http_url,
 	FetchRequestState,
 	wait,
-};
+}
 
 export function use_imports() {
 	return [
@@ -32,5 +32,5 @@ export function use_imports() {
 		NodeInternalData,
 		resolve_http_url,
 		wait,
-	];
+	]
 }

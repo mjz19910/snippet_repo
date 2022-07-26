@@ -3,6 +3,6 @@
  * @param {(Function | number | any[] | undefined)[]} a
  */
 export function no_impl(...a) {
-	a;
-	return new Error("NoImpl");
+	void a
+	return new Error("NoImpl")
 }

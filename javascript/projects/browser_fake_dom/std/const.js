@@ -1,1 +1,1 @@
-export const IllegalConstructorErrorMessage = "Illegal constructor";
+export const IllegalConstructorErrorMessage="Illegal constructor"

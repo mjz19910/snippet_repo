@@ -1,5 +1,5 @@
 export class HTMLEntityLex {
 	/**@readonly*/
-	type = "entity";
-	value = "";
+	type="entity"
+	value=""
 }

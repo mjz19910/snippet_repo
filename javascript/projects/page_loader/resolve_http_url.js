@@ -3,13 +3,13 @@
  */
 export function resolve_http_url(url) {
 	try {
-		new URL(url);
+		new URL(url)
 	} catch {
 		try {
-			let new_url = "http://" + url;
-			new URL(new_url);
-			return new_url;
+			let new_url="http://"+url
+			new URL(new_url)
+			return new_url
 		} catch {}
 	}
-	return url;
+	return url
 }

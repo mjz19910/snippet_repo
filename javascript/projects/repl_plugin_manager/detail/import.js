@@ -1,7 +1,7 @@
 export async function async_import(/** @type {string} */ mod) {
 	try {
-		return await import(mod);
+		return await import(mod)
 	} catch(e) {
-		console.log('import error', e);
+		console.log('import error',e)
 	}
 }

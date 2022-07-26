@@ -1,9 +1,9 @@
 export class BrowserPluginIndexType {
-	window;
+	window
 	/**@arg {{}|null} window */
 	constructor(window) {
-		if(window != null) {
-			this.window = window;
+		if(window!=null) {
+			this.window=window
 		}
 	}
 }

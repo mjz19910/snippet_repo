@@ -16,15 +16,15 @@ v5 (new): snippet_repo_v2/javascript/group1/sub_a/item-_3.js
 			while(v<1) {
 				v*=10
 				sm_sz++
-			};
+			}
 			return v.toFixed(7)+"s-"+sm_sz
-		};
+		}
 		if(v<10) return v.toFixed(7)
 		return v.toFixed(4)
-	};
+	}
 	function res_get(v) {
 		return pr.get(v).amount
-	};
+	}
 	ele.cint=setInterval(() => {
 		ele.click()
 		let eel=["eel",fmt(res_get("eel")/1e151)]

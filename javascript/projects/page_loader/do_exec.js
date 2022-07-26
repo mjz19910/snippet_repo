@@ -2,23 +2,23 @@
  * @param {string} text
  * @param {any} _ec_info
  */
-export function do_exec(text, _ec_info) {
+export function do_exec(text,_ec_info) {
     while(1) {
-        var func;
+        var func
         try {
-            let eval_value = eval(text);
+            let eval_value=eval(text)
             return {
                 error: false,
                 value: eval_value,
                 out: func
-            };
+            }
         } catch(e) {
-            console.log("ERROR");
-            console.log(e);
-            break;
+            console.log("ERROR")
+            console.log(e)
+            break
         }
     }
     return {
         error: true,
-    };
+    }
 }

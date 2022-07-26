@@ -79,14 +79,13 @@ function main() {
 			return
 		}
 		let stt=eval(`(class {
-			static #unused = this.#init();
+			static #unused = this.#init()
 			static #init(){
-				
 			}
 			static _f(){}
-			static _n = "<empty>";
-			static n_on = true;
-			static f_on = true;
+			static _n = "<empty>"
+			static n_on = true
+			static f_on = true
 		})`)
 		window.CustomInputMatcher=class {
 			constructor(t_needle,t_string_getter) {
@@ -312,19 +311,19 @@ function main() {
 				var tmp=`
 				x:{
 					try{
-						let function_path="${this.breakpoint_function_path}";
-						let key_for_dbg="${this.key}";
+						let function_path="${this.breakpoint_function_path}"
+						let key_for_dbg="${this.key}"
 						if(window[key_for_dbg]===undefined){
 							if(function_path){
-								console.log("Bad breakpoint","try undebug");
-								undebug(new Function("return "+function_path));
+								console.log("Bad breakpoint","try undebug")
+								undebug(new Function("return "+function_path))
 							}
-							console.log("Bad breakpoint");
-							1;
-							break x;
+							console.log("Bad breakpoint")
+							1
+							break x
 						}
 						let _debugger=window[key_for_dbg]
-						let info={m_this:this,arg:arguments};
+						let info={m_this:this,arg:arguments}
 						info.scope_accessor=function(e){
 							try{
 								var r=eval(e)
@@ -344,8 +343,8 @@ function main() {
 						_debugger.in_callback=false
 					}
 					catch(e){
-						console.log('at_bp',e);
-						1;
+						console.log('at_bp',e)
+						1
 					}
 				}
 				`
@@ -465,7 +464,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI
 		}
-		//console.log('restart on top frame');
+		//console.log('restart on top frame')
 		ret=debugApi.asyncExecuteFunction(top,main)
 	} else {
 		ret=do_cur()

@@ -3,8 +3,11 @@
 v1 (cur): snippet_repo_v2/javascript/final/items/item9_v1.js
 v2 (new): snippet_repo_v2/javascript/group1/sub_a/item-_9.js
 */
-var found_modules=function(a,c,m_require) {}
+var found_modules=function(a,c,m_require) {
+	void a,c,m_require
+}
 var rv=function(oc,cb) {
+	void oc
 	if(Function.prototype.call.rep) {
 		location.reload()
 		return
@@ -53,5 +56,5 @@ var rv=function(oc,cb) {
 	window.sfunc=sfunc
 	return sfunc
 }
-rv(Function.prototype.call,found_modules);
+rv(Function.prototype.call,found_modules)
 [rv,found_modules]

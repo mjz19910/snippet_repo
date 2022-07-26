@@ -15,8 +15,8 @@ function short_wait() {
 		} while(!iter_cur.done)
 	}
 	class IterState {
-		running=true;
-		cur=0;
+		running=true
+		cur=0
 		step() {
 			if(this.cur!==totalAtome) {
 				let last=this.cur

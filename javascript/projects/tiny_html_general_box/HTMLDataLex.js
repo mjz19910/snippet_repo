@@ -1,5 +1,5 @@
 export class HTMLDataLex {
 	/**@type {"data"} */
-	type = "data";
-	value = "";
+	type="data"
+	value=""
 }

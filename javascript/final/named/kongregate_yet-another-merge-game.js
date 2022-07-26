@@ -262,7 +262,7 @@ function main() {
 			debugApi=new DebugAPI
 		}
 		if(document.gameiframe) {
-			//console.log('restart on gameiframe');
+			//console.log('restart on gameiframe')
 			return debugApi.asyncExecuteEval(document.gameiframe,_function)
 		} else {
 			if(top===window) {
@@ -288,7 +288,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI
 		}
-		//console.log('restart on top frame');
+		//console.log('restart on top frame')
 		ret=debugApi.asyncExecuteFunction(top,main)
 	} else {
 		ret=do_cur()

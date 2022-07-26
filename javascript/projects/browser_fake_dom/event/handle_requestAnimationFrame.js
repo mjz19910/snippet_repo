@@ -4,8 +4,8 @@
  */
 export function handle_requestAnimationFrame(setTimeout) {
 	/**@type {any} */
-	let av = function(/** @type {() => void} */ func) {
-		return setTimeout(func);
-	};
-	return av;
+	let av=function(/** @type {() => void} */ func) {
+		return setTimeout(func)
+	}
+	return av
 }

@@ -1,4 +1,4 @@
 export class REPLServerRuntime {
-	historySize = 0;
-	removeHistoryDuplicates = false;
+	historySize = 0
+	removeHistoryDuplicates = false
 }

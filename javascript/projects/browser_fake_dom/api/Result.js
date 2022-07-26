@@ -1,15 +1,15 @@
 export class Result {
 	/**@readonly*/
-	type = "result";
+	type="result"
 	has_value() {
-		return false;
+		return false
 	}
 	/**@returns {false}*/
 	is_cast_result() {
-		return false;
+		return false
 	}
 	/**@returns {{}} */
 	release_value() {
-		throw new Error("Not implemented");
+		throw new Error("Not implemented")
 	}
 }
