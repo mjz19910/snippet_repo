@@ -8,12 +8,6 @@ export class VolumeRange {
 	gain_controller: HTMLMediaElementGainController
 	range_element: any
 	view_div: any
-	/**
-	 * @param {number} min
-	 * @param {number} max
-	 * @param {number} overdrive
-	 * @param {HTMLMediaElementGainController} obj
-	 */
 	constructor(min: number,max: number,overdrive: number,obj: HTMLMediaElementGainController) {
 		this.cache=true
 		this.max=max
@@ -21,16 +15,10 @@ export class VolumeRange {
 		this.overdrive=overdrive
 		this.gain_controller=obj
 	}
-	/**
-	 * @param {number} gain
-	 */
 	setGain(gain: number) {
 		this.gain_controller.setGain(gain)
 		this.setGainCache(gain)
 	}
-	/**
-	 * @param {any} gain
-	 */
 	setGainCache(gain: any) {
 		if(!this.cache)
 			return
@@ -44,10 +32,6 @@ export class VolumeRange {
 		}
 		return null
 	}
-	/**
-	 * @param {string} key
-	 * @param {any} value
-	 */
 	setHistoryStateCache(key: string,value: any) {
 		if(typeof history.state==='object') {
 			history.replaceState({...history.state,[key]: value},document.title)
@@ -56,9 +40,6 @@ export class VolumeRange {
 			history.replaceState({[key]: value},document.title)
 		}
 	}
-	/**
-	 * @param {string} key
-	 */
 	getHistoryStateCache(key: string) {
 		if(!this.cache)
 			return null
@@ -78,9 +59,6 @@ export class VolumeRange {
 		return c_gain*this.max
 	}
 	max_compressor_reduction=-0.00011033167538698763;
-	/**
-	 * @param {KeyboardEvent} event
-	 */
 	on_key_down(event: KeyboardEvent) {
 		if(!this.range_element)
 			return
@@ -104,9 +82,6 @@ export class VolumeRange {
 			this.setGain(new_gain)
 		}
 	}
-	/**
-	 * @param {Element} view_parent
-	 */
 	attach_to_element(view_parent: Element) {
 		if(!this.view_div) {
 			let element=document.getElementById('rh_css')

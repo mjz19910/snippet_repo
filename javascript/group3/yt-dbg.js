@@ -1,4 +1,4 @@
-_yt_player = {
+_yt_player={
 	bp: {
 		data: "??"
 	}

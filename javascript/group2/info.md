@@ -1,9 +1,9 @@
 # From Chrome
-```ts
+```typescript
 import {conversion, convert, convert_type} from "../info.ts";
 conversion(
-	(str)=>convert`,${str}_`,
+	function (str){return convert`,${str}_`},
 	convert_type("converts to"),
-	(str)=>convert`item_${str}.js`
+	function (str){convert`item_${str}.js`}
 );
 ```

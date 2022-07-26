@@ -49,7 +49,6 @@ export function move_timers_to_worker_promise_executor(
 		return worker_state.timer.set(TIMER_SINGLE,handler,timeout,target_args)
 	}
 	const clearTimeout_global=clearTimeout
-	/**@arg {number} id */
 	function remoteClearTimeout(id?: number) {
 		if(!worker_state) {
 			window.clearTimeout=clearTimeout_global

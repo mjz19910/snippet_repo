@@ -3,10 +3,6 @@ import {RichGridRenderer} from "./RichGridRenderer"
 import {YTIterateAllBase} from "./YTIterateAllBase"
 
 export class YTFilterHandlers extends YTIterateAllBase {
-	/**
-	 * @param {string} path
-	 * @param {RichGridRenderer} renderer
-	 */
 	richGridRenderer(path: string,renderer: RichGridRenderer) {
 		HandleRichGridRenderer.run(path,renderer)
 	}
@@ -33,10 +29,6 @@ export class YTFilterHandlers extends YTIterateAllBase {
 			data.adPlacements=[]
 		}
 	}
-	/**
-	 * @arg {{}} data
-	 * @param {URL} url_as_URL
-	 */
 	on_handle_api(data: {},url_as_URL: URL) {
 		const debug=false
 		let path_url=url_as_URL.pathname

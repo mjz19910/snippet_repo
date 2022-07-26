@@ -12,7 +12,9 @@
 			"./node_modules/@types"
 		]
 	},
-	"include": ["js_parse_regex_1.ts"],
+	"include": [
+		"**/*"
+	],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts"

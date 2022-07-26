@@ -5,11 +5,7 @@ import {observer_default_action} from "../../dom_observer/observer_default_actio
 import {on_ytd_player} from "../on_ytd_player"
 import {ytd_watch_flexy} from "modules/youtube_plugin/elements/ytd_watch_flexy"
 
-/**
- * @this {CustomEventTarget}
- * @arg {CustomEventType} event
- * ID(50)
- * */
+/** ID(50) */
 export function event_ytd_watch_flexy(this: CustomEventTarget,event: CustomEventType) {
 	const current_message_id=50
 	let {type,detail,port}=event

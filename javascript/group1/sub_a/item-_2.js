@@ -4,9 +4,9 @@ v1 (old-o): snippet_repo_v2/javascript/final/__ret_do_cur_debugApi.js
 v2 (cur-c): snippet_repo_v2/javascript/group1/sub_a/item-_2.js
 */
 function raw_template(v) {
-	return v.raw[0];
+	return v.raw[0]
 }
-let _module_jai_Simple_Package = raw_template`
+let _module_jai_Simple_Package=raw_template`
 
 // create_*...
 
@@ -158,7 +158,7 @@ put :: (builder: *String_Builder, x: $T)
 }
 #import "Basic";
 #import "File";
-`;
+`
 let _examples_create_jai_content=`
 #import "Simple_Package";
 #import "Basic";

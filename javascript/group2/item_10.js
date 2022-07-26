@@ -1,463 +1,463 @@
 //spell:ignore riker testkit
 class RustParser {
-	static merge_tok(state, str) {
-		let tok = this.next_token(str, state.index);
-		if (!tok) {
-			return [null, null];
+	static merge_tok(state,str) {
+		let tok=this.next_token(str,state.index)
+		if(!tok) {
+			return [null,null]
 		}
-		let cur_tok;
-		let tok_ty = tok[0];
-		cur_tok = [tok_ty, ""];
-		while (tok && tok[0] == tok_ty) {
-			cur_tok[1] += str[state.index];
-			state.index++;
-			tok = this.next_token(str, state.index);
-			if (!tok) {
-				return [cur_tok, this.next_token(str, state.index)];
+		let cur_tok
+		let tok_ty=tok[0]
+		cur_tok=[tok_ty,""]
+		while(tok&&tok[0]==tok_ty) {
+			cur_tok[1]+=str[state.index]
+			state.index++
+			tok=this.next_token(str,state.index)
+			if(!tok) {
+				return [cur_tok,this.next_token(str,state.index)]
 			}
-			if (tok[0] != tok_ty) {
-				return [cur_tok, this.next_token(str, state.index)];
+			if(tok[0]!=tok_ty) {
+				return [cur_tok,this.next_token(str,state.index)]
 			}
 		}
-		return tok;
+		return tok
 	}
-	static next_token(str, index) {
-		let iota = 0;
-		if (index >= str.length) {
-			return null;
+	static next_token(str,index) {
+		let iota=0
+		if(index>=str.length) {
+			return null
 		}
-		let idx = str.charCodeAt(index);
-		if (idx >= 0x41 && idx < (0x41 + 26)) {
-			return [iota, str[index]];
+		let idx=str.charCodeAt(index)
+		if(idx>=0x41&&idx<(0x41+26)) {
+			return [iota,str[index]]
 		}
-		if (idx >= 0x61 && idx < (0x61 + 26)) {
-			return [iota, str[index]];
+		if(idx>=0x61&&idx<(0x61+26)) {
+			return [iota,str[index]]
 		}
-		if (idx == 95) {
-			return [iota, str[index]];
+		if(idx==95) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 32) {
-			return [iota, str[index]];
+		iota++
+		if(idx==32) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 58) {
-			return [iota, str[index]];
+		iota++
+		if(idx==58) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 123) {
-			return [iota, str[index]];
+		iota++
+		if(idx==123) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 44) {
-			return [iota, str[index]];
+		iota++
+		if(idx==44) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 59) {
-			return [iota, str[index]];
+		iota++
+		if(idx==59) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 35) {
-			return [iota, str[index]];
+		iota++
+		if(idx==35) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 91) {
-			return [iota, str[index]];
+		iota++
+		if(idx==91) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 40) {
-			return [iota, str[index]];
+		iota++
+		if(idx==40) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 41) {
-			return [iota, str[index]];
+		iota++
+		if(idx==41) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 93) {
-			return [iota, str[index]];
+		iota++
+		if(idx==93) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 10) {
+		iota++
+		if(idx==10) {
 			// "\n"
-			return [iota, str[index]];
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 60) {
-			return [iota, str[index]];
+		iota++
+		if(idx==60) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 62) {
-			return [iota, str[index]];
+		iota++
+		if(idx==62) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx >= 50 && idx < 51) {
-			return [iota, str[index]];
+		iota++
+		if(idx>=50&&idx<51) {
+			return [iota,str[index]]
 		}
-		if (idx == 51) {
-			return [iota, str[index]];
+		if(idx==51) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 125) {
-			return [iota, str[index]];
+		iota++
+		if(idx==125) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 47) {
-			return [iota, str[index]];
+		iota++
+		if(idx==47) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 61) {
-			return [iota, str[index]];
+		iota++
+		if(idx==61) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 38) {
-			return [iota, str[index]];
+		iota++
+		if(idx==38) {
+			return [iota,str[index]]
 		}
-		iota++;
-		if (idx == 46) {
-			return [iota, str[index]];
+		iota++
+		if(idx==46) {
+			return [iota,str[index]]
 		}
-		iota++;
-		console.log(idx, str[index]);
+		iota++
+		console.log(idx,str[index])
 	}
 	static parse_rust_use(str) {
-		let state = {
+		let state={
 			tok_arr: [],
 			tok_tree_stack: [],
 			index: 0,
 			error: false,
-		};
-		let tok_cur, tok_next;
+		}
+		let tok_cur,tok_next
 		function tok_cur_get(vt) {
-			[tok_cur,tok_next] = vt.merge_tok(state, str);
-			if (!tok_cur) {
-				return;
+			[tok_cur,tok_next]=vt.merge_tok(state,str)
+			if(!tok_cur) {
+				return
 			}
-			state.tok_arr.push(tok_cur);
+			state.tok_arr.push(tok_cur)
 		}
 		function parse_inner_token_tree_8(vt) {
-			let dep = 1;
-			while (tok_cur[0] != 9 || dep > 0) {
-				tok_cur_get(vt);
-				if (tok_cur[0] == 8) {
-					dep++;
+			let dep=1
+			while(tok_cur[0]!=9||dep>0) {
+				tok_cur_get(vt)
+				if(tok_cur[0]==8) {
+					dep++
 				}
-				if (tok_cur[0] == 9) {
-					dep--;
+				if(tok_cur[0]==9) {
+					dep--
 				}
 			}
 		}
 		function parse_inner_token_tree_3(vt) {
-			let dep = 1;
-			while (tok_cur[0] != 15 || dep > 0) {
-				tok_cur_get(vt);
-				if (tok_cur[1] == "//") {
-					let com_start = state.index;
-					let com_end = str.indexOf("\n", state.index);
-					if (com_end == -1) {
-						com_end = str.length;
+			let dep=1
+			while(tok_cur[0]!=15||dep>0) {
+				tok_cur_get(vt)
+				if(tok_cur[1]=="//") {
+					let com_start=state.index
+					let com_end=str.indexOf("\n",state.index)
+					if(com_end==-1) {
+						com_end=str.length
 					}
-					state.index = com_end + 1;
-					state.tok_arr.push([-1, str.slice(com_start, state.index)]);
+					state.index=com_end+1
+					state.tok_arr.push([-1,str.slice(com_start,state.index)])
 				}
-				if (tok_cur[0] == 3) {
-					dep++;
+				if(tok_cur[0]==3) {
+					dep++
 				}
-				if (tok_cur[0] == 15) {
-					dep--;
+				if(tok_cur[0]==15) {
+					dep--
 				}
 			}
 		}
 		function parse_inner_token_tree_7(vt) {
-			tok_cur_get(vt);
-			if (tok_next[0] != 8) {
-				console.log(tok_cur, tok_next);
-				return state;
+			tok_cur_get(vt)
+			if(tok_next[0]!=8) {
+				console.log(tok_cur,tok_next)
+				return state
 			}
-			state.tok_tree_stack.push(state.tok_arr);
-			state.tok_arr = [];
-			tok_cur_get(vt);
-			if (tok_cur[0] == 8) {
-				parse_inner_token_tree_8(vt);
+			state.tok_tree_stack.push(state.tok_arr)
+			state.tok_arr=[]
+			tok_cur_get(vt)
+			if(tok_cur[0]==8) {
+				parse_inner_token_tree_8(vt)
 			}
-			let item = state.tok_arr;
+			let item=state.tok_arr
 			// console.log(item);
-			state.tok_arr = state.tok_tree_stack.pop();
-			state.tok_arr.push(item);
-			tok_cur_get(vt);
+			state.tok_arr=state.tok_tree_stack.pop()
+			state.tok_arr.push(item)
+			tok_cur_get(vt)
 		}
-		tok_cur_get(this);
-		if (!tok_cur) {
-			return state;
+		tok_cur_get(this)
+		if(!tok_cur) {
+			return state
 		}
-		while (tok_cur[0] == 6) {
-			if (tok_next[0] != 7) {
-				console.log(tok_cur, tok_next);
-				return state;
+		while(tok_cur[0]==6) {
+			if(tok_next[0]!=7) {
+				console.log(tok_cur,tok_next)
+				return state
 			}
-			state.tok_tree_stack.push(state.tok_arr);
-			state.tok_arr = [];
-			tok_cur_get(this);
-			if (tok_cur[0] == 7) {
-				parse_inner_token_tree_7(this);
+			state.tok_tree_stack.push(state.tok_arr)
+			state.tok_arr=[]
+			tok_cur_get(this)
+			if(tok_cur[0]==7) {
+				parse_inner_token_tree_7(this)
 			}
-			let item = state.tok_arr;
-			state.tok_arr = state.tok_tree_stack.pop();
-			state.tok_arr.push(item);
-			tok_cur_get(this);
-			if (tok_cur[0] == 11) {
-				tok_cur_get(this);
-				continue;
+			let item=state.tok_arr
+			state.tok_arr=state.tok_tree_stack.pop()
+			state.tok_arr.push(item)
+			tok_cur_get(this)
+			if(tok_cur[0]==11) {
+				tok_cur_get(this)
+				continue
 			}
-			console.log(tok_cur, tok_next);
-			return state;
+			console.log(tok_cur,tok_next)
+			return state
 		}
-		xa: if (tok_cur[0] == 0) {
-			if (tok_cur[1] == 'pub') {
-				tok_cur_get(this);
-				break xa;
+		xa: if(tok_cur[0]==0) {
+			if(tok_cur[1]=='pub') {
+				tok_cur_get(this)
+				break xa
 			}
-			if (tok_cur[1] == 'struct') {
-				tok_cur_get(this);
-				tok_cur_get(this);
-				while (tok_cur[0] == 0) {
-					tok_cur_get(this);
+			if(tok_cur[1]=='struct') {
+				tok_cur_get(this)
+				tok_cur_get(this)
+				while(tok_cur[0]==0) {
+					tok_cur_get(this)
 				}
-				if (tok_next[0] != 3) {
-					console.log(tok_cur, tok_next);
-					return state;
+				if(tok_next[0]!=3) {
+					console.log(tok_cur,tok_next)
+					return state
 				}
-				state.tok_tree_stack.push(state.tok_arr);
-				state.tok_arr = [];
-				tok_cur_get(this);
-				if (tok_cur[0] == 3) {
-					parse_inner_token_tree_3(this);
+				state.tok_tree_stack.push(state.tok_arr)
+				state.tok_arr=[]
+				tok_cur_get(this)
+				if(tok_cur[0]==3) {
+					parse_inner_token_tree_3(this)
 				}
-				let item = state.tok_arr;
+				let item=state.tok_arr
 				// console.log(item);
-				state.tok_arr = state.tok_tree_stack.pop();
-				state.tok_arr.push(item);
-				break xa;
+				state.tok_arr=state.tok_tree_stack.pop()
+				state.tok_arr.push(item)
+				break xa
 			}
-			if (tok_cur[1] == 'impl') {
-				tok_cur_get(this);
-				tok_cur_get(this);
-				while (tok_cur[0] == 0) {
-					tok_cur_get(this);
+			if(tok_cur[1]=='impl') {
+				tok_cur_get(this)
+				tok_cur_get(this)
+				while(tok_cur[0]==0) {
+					tok_cur_get(this)
 				}
-				if (tok_cur[0] != 1) {
-					console.log(tok_cur, tok_next);
-					return state;
+				if(tok_cur[0]!=1) {
+					console.log(tok_cur,tok_next)
+					return state
 				}
-				tok_cur_get(this);
-				if (tok_cur[1] != 'for') {
-					console.log(tok_cur, tok_next);
-					return state;
+				tok_cur_get(this)
+				if(tok_cur[1]!='for') {
+					console.log(tok_cur,tok_next)
+					return state
 				}
-				tok_cur_get(this);
-				if (tok_cur[0] != 1) {
-					console.log(tok_cur, tok_next);
-					return state;
+				tok_cur_get(this)
+				if(tok_cur[0]!=1) {
+					console.log(tok_cur,tok_next)
+					return state
 				}
-				tok_cur_get(this);
-				while (tok_cur[0] == 0) {
-					tok_cur_get(this);
+				tok_cur_get(this)
+				while(tok_cur[0]==0) {
+					tok_cur_get(this)
 				}
-				if (tok_next[0] != 3) {
-					console.log(tok_cur, tok_next);
-					return state;
+				if(tok_next[0]!=3) {
+					console.log(tok_cur,tok_next)
+					return state
 				}
-				state.tok_tree_stack.push(state.tok_arr);
-				state.tok_arr = [];
-				tok_cur_get(this);
-				if (tok_cur[0] == 3) {
-					parse_inner_token_tree_3(this);
+				state.tok_tree_stack.push(state.tok_arr)
+				state.tok_arr=[]
+				tok_cur_get(this)
+				if(tok_cur[0]==3) {
+					parse_inner_token_tree_3(this)
 				}
-				let item = state.tok_arr;
+				let item=state.tok_arr
 				// console.log(item);
-				state.tok_arr = state.tok_tree_stack.pop();
-				state.tok_arr.push(item);
-				break xa;
+				state.tok_arr=state.tok_tree_stack.pop()
+				state.tok_arr.push(item)
+				break xa
 			}
-			console.log(tok_cur, tok_next);
-			return state;
+			console.log(tok_cur,tok_next)
+			return state
 		}
-		if (tok_cur[0] == 1) {
-			tok_cur_get(this);
+		if(tok_cur[0]==1) {
+			tok_cur_get(this)
 		}
-		xa: if (tok_cur[0] == 0) {
-			if (tok_cur[1] == 'struct') {
-				tok_cur_get(this);
-				break xa;
+		xa: if(tok_cur[0]==0) {
+			if(tok_cur[1]=='struct') {
+				tok_cur_get(this)
+				break xa
 			}
-			console.log(tok_cur);
-			return state;
+			console.log(tok_cur)
+			return state
 		}
-		if (tok_cur[0] == 1) {
-			tok_cur_get(this);
+		if(tok_cur[0]==1) {
+			tok_cur_get(this)
 		}
-		while (tok_cur[0] == 0) {
-			tok_cur_get(this);
+		while(tok_cur[0]==0) {
+			tok_cur_get(this)
 		}
-		if (tok_next == null) {
-			return state;
+		if(tok_next==null) {
+			return state
 		}
-		if (tok_cur[0] == 8) {
-			parse_inner_token_tree(this);
+		if(tok_cur[0]==8) {
+			parse_inner_token_tree(this)
 		}
-		tok_cur_get(this);
-		if (tok_next == null) {
-			return state;
+		tok_cur_get(this)
+		if(tok_next==null) {
+			return state
 		}
-		console.log(tok_cur, tok_next);
-		return state;
+		console.log(tok_cur,tok_next)
+		return state
 	}
 }
-let t1 = `
+let t1=`
 	console.log(/**/
 	[], /**/
 	[]/**/
 	);
 `;
 `
-${(e=>{
-	/*
-	#[macro_use]
-	extern crate riker_testkit;*/
-	//console.log(/**/
-	//["#", "[", "macro_use", "]"], /**/
-	//["extern", " ", "crate", " ", "riker_testkit", ";"]/**/
-	//);
+${(e => {
+		/*
+		#[macro_use]
+		extern crate riker_testkit;*/
+		//console.log(/**/
+		//["#", "[", "macro_use", "]"], /**/
+		//["extern", " ", "crate", " ", "riker_testkit", ";"]/**/
+		//);
 
-	//use riker::actors::*;
-	//console.log(["use", " ", "riker", "::", "actors", "::", "*", ";"]);
-	/*
-	use riker_testkit::probe::channel::{probe, ChannelProbe};
-	use riker_testkit::probe::{Probe, ProbeReceive};
-	*/
-	// console.log(/**/
-	// ["use", " ", "riker_testkit", "::", "probe", "::", "channel", "::", "{", "probe", ",", " ", "ChannelProbe", "}", ";"], /**/
-	// ["use"," ","riker_testkit","::","probe","::","{","Probe",","," ","ProbeReceive","}",";"]/**/
-	// );
+		//use riker::actors::*;
+		//console.log(["use", " ", "riker", "::", "actors", "::", "*", ";"]);
+		/*
+		use riker_testkit::probe::channel::{probe, ChannelProbe};
+		use riker_testkit::probe::{Probe, ProbeReceive};
+		*/
+		// console.log(/**/
+		// ["use", " ", "riker_testkit", "::", "probe", "::", "channel", "::", "{", "probe", ",", " ", "ChannelProbe", "}", ";"], /**/
+		// ["use"," ","riker_testkit","::","probe","::","{","Probe",","," ","ProbeReceive","}",";"]/**/
+		// );
 
-	/*
-	#[derive(Clone, Debug)]
-	pub struct Add;
-	*/
-	//console.log(/**/
-	//["#", "[", "derive", "(", "Clone", ",", " ", "Debug", ")", "]"], /**/
-	//["pub", " ", "struct", " ", "Add", ";"], /**/
-	//);
+		/*
+		#[derive(Clone, Debug)]
+		pub struct Add;
+		*/
+		//console.log(/**/
+		//["#", "[", "derive", "(", "Clone", ",", " ", "Debug", ")", "]"], /**/
+		//["pub", " ", "struct", " ", "Add", ";"], /**/
+		//);
 
-	/*
-	#[derive(Clone, Debug)]
-	pub struct TestProbe(ChannelProbe<(), ()>);
-	*/
-	//console.log(/**/
-	//['#', '[', 'derive', '(', 'Clone', ',', ' ', 'Debug', ')', ']'], /**/
-	//['pub', ' ', 'struct', ' ', 'TestProbe', '(', 'ChannelProbe', '<', '(', ')', ',', ' ', '(', ')', '>', ')', ';']/**/
-	//);
+		/*
+		#[derive(Clone, Debug)]
+		pub struct TestProbe(ChannelProbe<(), ()>);
+		*/
+		//console.log(/**/
+		//['#', '[', 'derive', '(', 'Clone', ',', ' ', 'Debug', ')', ']'], /**/
+		//['pub', ' ', 'struct', ' ', 'TestProbe', '(', 'ChannelProbe', '<', '(', ')', ',', ' ', '(', ')', '>', ')', ';']/**/
+		//);
 
-	/*
-	#[actor(TestProbe, Add)]
-	#[derive(Default)]
-	struct Counter {
-	    probe: Option<TestProbe>,
-	    count: u32,
-	}
-	*/
-	//console.log(/**/
-	//["#", "[", "actor", "(", "TestProbe", ",", " ", "Add", ")", "]"], /**/
-	//["#", "[", "derive", "(", "Default", ")", "]"], /**/
-	//["struct", " ", "Counter", " ", "{", "\n", "    ", "probe", ":", " ", "Option", "<", "TestProbe", ">", ",", "\n", "    ", "count", ":", " ", "u", "32", ",", "\n", "}"], /**/
-	//);
-
-	/*
-	impl Actor for Counter {
-	    // we used the #[actor] attribute so CounterMsg is the Msg type
-	    type Msg = CounterMsg;
-	
-	    fn recv(&mut self, ctx: &Context<Self::Msg>, msg: Self::Msg, sender: Sender) {
-	        self.receive(ctx, msg, sender);
-	    }
-	}
-	*/
-	console.log(/**/
-	[/**/
-	"impl", " ", "Actor", " ", "for", " ", "Counter", " ", /**/
-	(/**/
-	()=>{
-		return 0,
-		[/**/
-		"{", /**/
-		"\n", "    ", /**/
-		"//", " we used the #[actor] attribute so CounterMsg is the Msg type\n", "    ", /**/
-		"type", " ", "Msg", " ", "=", " ", "CounterMsg", ";", "\n", /**/
-		"\n", "    ", /**/
-		"fn", " ", "recv", /**/
-		[/**/
-		"(", /**/
-		"&", "mut", " ", "self", ",", " ", /**/
-		"ctx", ":", " ", "&", "Context", "<", "Self", "::", "Msg", ">", ",", " ", /**/
-		"msg", ":", " ", "Self", "::", "Msg", ",", " ", /**/
-		"sender", ":", " ", "Sender", /**/
-		")"/**/
-		], /**/
-		" ", /**/
-		[/**/
-		"{", /**/
-		"\n", "        ", /**/
-		"self", ".", "receive", "(", "ctx", ",", " ", "msg", ",", " ", "sender", ")", ";", /**/
-		"\n", /**/
-		"    ", /**/
-		"}"/**/
-		], /**/
-		"\n", /**/
-		"}", /**/
-		]
-	}
-	)()/**/
-	], /**/
-	);
-	let str = ``;
-	let parse_obj = RustParser.parse_rust_use(str);
-	let parse_list = parse_obj.tok_arr;
-	function tok_to_string(e) {
-		if (!e) {
-			return e;
+		/*
+		#[actor(TestProbe, Add)]
+		#[derive(Default)]
+		struct Counter {
+			probe: Option<TestProbe>,
+			count: u32,
 		}
-		if (e[0]instanceof Array) {
-			return e.map(tok_to_string);
-		}
-		return e[1];
-	}
-	let str_list = parse_list.map(tok_to_string);
-	let ic_at = str_list.map(e=>e == "\n");
-	let acc_val = 0;
-	let pta = str_list.map((e,i)=>{
-		acc_val += ic_at[i];
-		if (ic_at[i]) {
-			return -1;
-		}
-		return acc_val;
-	}
-	);
-	let out_arr = Array(acc_val + 1).fill(null).map((e,i)=>str_list.filter((y,j)=>pta[j] == i));
-	let out_flat_items = out_arr.map(e=>{
-		while (e.findIndex(e=>typeof e == 'object') != -1) {
-			let prev = e;
-			e = e.flat();
-			if (prev.length == e.length) {
-				return prev;
+		*/
+		//console.log(/**/
+		//["#", "[", "actor", "(", "TestProbe", ",", " ", "Add", ")", "]"], /**/
+		//["#", "[", "derive", "(", "Default", ")", "]"], /**/
+		//["struct", " ", "Counter", " ", "{", "\n", "    ", "probe", ":", " ", "Option", "<", "TestProbe", ">", ",", "\n", "    ", "count", ":", " ", "u", "32", ",", "\n", "}"], /**/
+		//);
+
+		/*
+		impl Actor for Counter {
+			// we used the #[actor] attribute so CounterMsg is the Msg type
+			type Msg = CounterMsg;
+		
+			fn recv(&mut self, ctx: &Context<Self::Msg>, msg: Self::Msg, sender: Sender) {
+				self.receive(ctx, msg, sender);
 			}
 		}
-		return e;
+		*/
+		console.log(/**/
+			[/**/
+				"impl"," ","Actor"," ","for"," ","Counter"," ", /**/
+				(/**/
+					() => {
+						return 0,
+							[/**/
+								"{", /**/
+								"\n","    ", /**/
+								"//"," we used the #[actor] attribute so CounterMsg is the Msg type\n","    ", /**/
+								"type"," ","Msg"," ","="," ","CounterMsg",";","\n", /**/
+								"\n","    ", /**/
+								"fn"," ","recv", /**/
+								[/**/
+									"(", /**/
+									"&","mut"," ","self",","," ", /**/
+									"ctx",":"," ","&","Context","<","Self","::","Msg",">",","," ", /**/
+									"msg",":"," ","Self","::","Msg",","," ", /**/
+									"sender",":"," ","Sender", /**/
+									")"/**/
+								], /**/
+								" ", /**/
+								[/**/
+									"{", /**/
+									"\n","        ", /**/
+									"self",".","receive","(","ctx",","," ","msg",","," ","sender",")",";", /**/
+									"\n", /**/
+									"    ", /**/
+									"}"/**/
+								], /**/
+								"\n", /**/
+								"}", /**/
+							]
+					}
+				)()/**/
+			], /**/
+		)
+		let str=``
+		let parse_obj=RustParser.parse_rust_use(str)
+		let parse_list=parse_obj.tok_arr
+		function tok_to_string(e) {
+			if(!e) {
+				return e
+			}
+			if(e[0] instanceof Array) {
+				return e.map(tok_to_string)
+			}
+			return e[1]
+		}
+		let str_list=parse_list.map(tok_to_string)
+		let ic_at=str_list.map(e => e=="\n")
+		let acc_val=0
+		let pta=str_list.map((e,i) => {
+			acc_val+=ic_at[i]
+			if(ic_at[i]) {
+				return -1
+			}
+			return acc_val
+		}
+		)
+		let out_arr=Array(acc_val+1).fill(null).map((e,i) => str_list.filter((y,j) => pta[j]==i))
+		let out_flat_items=out_arr.map(e => {
+			while(e.findIndex(e => typeof e=='object')!=-1) {
+				let prev=e
+				e=e.flat()
+				if(prev.length==e.length) {
+					return prev
+				}
+			}
+			return e
+		}
+		)
+		console.log(...out_flat_items)
+		console.log("console.log(/**/\n"+out_flat_items.map(e => JSON.stringify(e)).join(", /**/\n")+", /**/\n);")
+		return ""
 	}
-	)
-	console.log(...out_flat_items);
-	console.log("console.log(/**/\n" + out_flat_items.map(e=>JSON.stringify(e)).join(", /**/\n") + ", /**/\n);");
-	return "";
-}
-)()}
+	)()}
 impl Receive<TestProbe> for Counter {
     type Msg = CounterMsg;
 
@@ -601,5 +601,5 @@ fn actor_stop() {
 
     system.stop(&parent);
     p_assert_eq!(listen, ());
-}`;
+}`
 ""

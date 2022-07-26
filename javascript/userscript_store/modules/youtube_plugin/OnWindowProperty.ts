@@ -15,10 +15,6 @@ export class OnWindowProperty {
 			handler(ev)
 		}
 	}
-	/**
-	 * @param {string | number} ev_name
-	 * @param {any} fn
-	 */
 	removeEventListener(ev_name: string|number,fn: any) {
 		let evt=this._events[ev_name]
 		if(evt===undefined)

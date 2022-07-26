@@ -1,37 +1,11 @@
-done = 0
-let unk_obj = {}
-console.t = {}
-var res = 0;
-function create_dbg_api(e) {
-	class ListInfo {
-	}
-	//SWIG
-	class SwigPyIterator {
-	}
-	//cspell:disable
-	function ListInfo_swigregister() {}
-	function SwigPyIterator_swigregister() {}
-	class ThreadVector {
-	}
-	function ThreadVector_swigregister() {}
-	function GetThreadInfoList() {
-		_.getThreadInfoList(1)
-	}
-	//cspell:enable
-	function BridgeInit() {}
-	function BridgeStart() {}
-	function BridgeAlloc(size) {}
-	function BridgeFree(ptr) {}
-	function BridgeSettingGet(section, key, value) {}
-	function BridgeSettingGetUint(section, key, value) {}
-	function BridgeSettingSet(section, key, value) {}
-	function BridgeSettingSetUint(section, key, value) {}
-	function BridgeSettingFlush() {}
-	function BridgeSettingRead(errorLine) {}
-	function BridgeGetDbgVersion() {}
+done=0
+let unk_obj={}
+console.t={}
+var res=0
+function todo_debug_api(e) {
 	e`MAX_SETTING_SIZE``DBG_VERSION``Bridge[Init,Start,Alloc,Free,GetDbgVersion]``BridgeSetting[Get,GetUint,Set,SetUint,Flush,Read]``MAX_[LABEL,COMMENT,MODULE,IMPORT,BREAKPOINT,CONDITIONAL_[EXPR,TEXT],SCRIPT_LINE,THREAD_NAME,WATCH_NAME,STRING,ERROR,SECTION,COMMAND_LINE,MNEMONIC]._SIZE``PAGE_SIZE``[initialized,paused,running,stopped]``SEG_[DEFAULT,ES,DS,FS,GS,CS,SS]``flag[module,label,comment,bookmark,$function,loop,args,NoFuncOffset]``bp_[none,normal,hardware,memory,dll,exception]``FUNC_[NONE,BEGIN,MIDDLE,END,SINGLE]``LOOP_[NONE,BEGIN,MIDDLE,ENTRY,END,SINGLE]``XREF_[NONE,DATA,JMP,CALL]``ARG_[NONE,BEGIN,MIDDLE,END,SINGLE]`
 
-	"DBG_ ARRAY START";
+	"DBG_ ARRAY START"
 	//cspell:disable
 	e`DBG_[SCRIPT_LOAD[UNLOAD,RUN,STEP,BPTOGGLE,BPGET,CMDEXEC,ABORT,GETLINETYPE,SETIP,GETBRANCHINFO],SYMBOL_ENUM,ASSEMBLE_AT,
 MODBASE_FROM_NAME,DISASM_AT,STACK_COMMENT_GET,SETTINGS_UPDATED,DISASM_FAST_AT,MENU_ENTRY_CLICKED,
@@ -147,20 +121,82 @@ hw_word
 hw_dword
 hw_qword`
 	//cspell:enable
-	return function(e) {
-		return eval(e)
-	}
 }
-while (!done) {
+function create_dbg_api() {
+	class ListInfo {
+	}
+	//SWIG
+	class SwigPyIterator {
+	}
+	//cspell:disable
+	function ListInfo_swigregister() {}
+	function SwigPyIterator_swigregister() {}
+	class ThreadVector {
+	}
+	function ThreadVector_swigregister() {}
+	function GetThreadInfoList() {
+		_.getThreadInfoList(1)
+	}
+	//cspell:enable
+	function BridgeInit() {}
+	function BridgeStart() {}
+	function BridgeAlloc(size) {
+		void size
+	}
+	function BridgeFree(ptr) {
+		void ptr
+	}
+	function BridgeSettingGet(section,key,value) {
+		void section,key,value
+	}
+	function BridgeSettingGetUint(section,key,value) {
+		void section,key,value
+	}
+	function BridgeSettingSet(section,key,value) {
+		void section,key,value
+	}
+	function BridgeSettingSetUint(section,key,value) {
+		void section,key,value
+	}
+	function BridgeSettingFlush() {}
+	function BridgeSettingRead(errorLine) {
+		void errorLine
+	}
+	function BridgeGetDbgVersion() {}
+	//cspell:disable
+	return {
+		ListInfo,ListInfo_swigregister,
+		SwigPyIterator,SwigPyIterator_swigregister,
+		ThreadVector,ThreadVector_swigregister,
+		GetThreadInfoList,
+		BridgeInit,
+		BridgeStart,
+		BridgeAlloc,
+		BridgeFree,
+		BridgeSettingGet,
+		BridgeSettingGetUint,
+		BridgeSettingSet,
+		BridgeSettingSetUint,
+		BridgeSettingFlush,
+		BridgeSettingRead,
+		BridgeGetDbgVersion,
+		eval_fn(value) {
+			return eval(value)
+		}
+	}
+	//cspell:enable
+}
+let x64dbg_api = create_dbg_api()
+while(!done) {
 	try {
-		res = create_dbg_api((function() {
-			var fn = function(e) {
-				if (e[0].indexOf("\n") > -1) {
-					var ar = e[0].split("\n")
-					var dist = 1
-					var results = []
-					ar.forEach(e=>{
-						if (results.indexOf(e.slice(0, dist)) == -1) {
+		res=todo_debug_api((function() {
+			var fn=function(e) {
+				if(e[0].indexOf("\n")>-1) {
+					var ar=e[0].split("\n")
+					var dist=1
+					var results=[]
+					ar.forEach(e => {
+						if(results.indexOf(e.slice(0,dist))==-1) {
 							results.push(e)
 						}
 					}
@@ -170,109 +206,109 @@ while (!done) {
 					console.log(e)
 				}
 				return fn
-			};
+			}
 			return fn
 		}
 		)())
-		done = 1
-	} catch (e) {
+		done=1
+	} catch(e) {
 		function add_message(e) {
-			if (e.message.indexOf("' of undefined") > -1) {
-				var unq_name = e.message.match(/.+'(.+)'.+/)[1]
-				if (typeof unk_obj[unk_obj] == "undefined")
-					unk_obj[unk_obj] = {}
-				Object.defineProperty(unk_obj[unk_obj], unq_name, {
+			if(e.message.indexOf("' of undefined")>-1) {
+				var unq_name=e.message.match(/.+'(.+)'.+/)[1]
+				if(typeof unk_obj[unk_obj]=="undefined")
+					unk_obj[unk_obj]={}
+				Object.defineProperty(unk_obj[unk_obj],unq_name,{
 					get: function() {
-						console.t = +"." + unq_name;
-						console.log(unq_name);
+						console.t=+"."+unq_name
+						console.log(unq_name)
 						return JSON.parse(`{"${unq_name}":{}}`)
 					},
 					set: function() {}
 				})
-				done = 0
+				done=0
 			}
 		}
 		function add_def() {
-			if (e.message.indexOf(" is not defined") > -1) {
-				var unq_obj_t = e.message.slice(0, e.message.indexOf(" is not defined"))
-				Object.defineProperty(window, unq_obj_t, {
+			if(e.message.indexOf(" is not defined")>-1) {
+				var unq_obj_t=e.message.slice(0,e.message.indexOf(" is not defined"))
+				Object.defineProperty(window,unq_obj_t,{
 					get: function() {
-						console.log(console.t);
-						console.t = unq_obj_t;
+						console.log(console.t)
+						console.t=unq_obj_t
 						return unk_obj
 					},
 					set: function() {}
 				})
 			} else {
-				done = 1
+				done=1
 			}
 		}
 		add_def(e)
 		add_message(e)
-		console.log(e);
-		t = e
+		console.log(e)
+		t=e
 	}
 }
 (function() {
-	var logger = function() {
-		var ar = Array.from(Object.keys(Object.getOwnPropertyDescriptors(window)))
-		var ard = ar.indexOf("done")
+	var logger=function() {
+		var ar=Array.from(Object.keys(Object.getOwnPropertyDescriptors(window)))
+		var ard=ar.indexOf("done")
 		console.log(ar.slice(ard))
 	}
-	var wait_for_api = function(cnt) {
-		var ar = Object.getOwnPropertyNames(window)
-		var ard = ar.indexOf("done")
-		console.before = ar.slice(ard)
-		if (console.notify_get) {
-			var result = console.notify_get();
-			console.log("console_api in:" + cnt)
+	var wait_for_api=function(cnt) {
+		var ar=Object.getOwnPropertyNames(window)
+		var ard=ar.indexOf("done")
+		console.before=ar.slice(ard)
+		if(console.notify_get) {
+			var result=console.notify_get()
+			console.log("console_api in:"+cnt)
 			console.log(result)
 			return
 		}
-		setTimeout(wait_for_api, 50, cnt + 1)
+		setTimeout(wait_for_api,50,cnt+1)
 	}
-	var ar = Object.getOwnPropertyNames(window)
-	var ar2 = ar
-	var ard = ar.indexOf("done")
-	var val = ar.slice(ard)
+	var ar=Object.getOwnPropertyNames(window)
+	var ar2=ar
+	var ard=ar.indexOf("done")
+	var val=ar.slice(ard)
 	var c_api
 	var gc_api
 	var sc_api
 	console.log(val)
-	if (val.indexOf("$_") > -1) {
-		c_api = {};
-		gc_api = {};
-		sc_api = {}
-		var cap_n = val.slice(3);
+	if(val.indexOf("$_")>-1) {
+		c_api={}
+		gc_api={}
+		sc_api={}
+		var cap_n=val.slice(3)
 		console.log(cap_n.length)
-		for (var i of cap_n) {
-			var dsc = Object.getOwnPropertyDescriptor(window, i)
-			  , gs = 0
-			if (dsc.get) {
-				gc_api[i] = dsc.get
-				gs = 1
+		for(var i of cap_n) {
+			var dsc=Object.getOwnPropertyDescriptor(window,i)
+				,gs=0
+			if(dsc.get) {
+				gc_api[i]=dsc.get
+				gs=1
 			}
-			if (dsc.set) {
-				sc_api[i] = dsc.set
-				gs = 1
+			if(dsc.set) {
+				sc_api[i]=dsc.set
+				gs=1
 			}
-			if (!gs) {
-				c_api[i] = dsc.value
+			if(!gs) {
+				c_api[i]=dsc.value
 			}
 		}
 	}
-	if (console.before) {
-		console.notify_get = function() {
-			var ar = Object.getOwnPropertyNames(window)
-			var ard = ar.indexOf("done")
-			var ary = ar2.indexOf("done");
-			void ary;
-			var val = ar.slice(ard)
-			return [val, {
+	if(console.before) {
+		console.notify_get=function() {
+			var ar=Object.getOwnPropertyNames(window)
+			var ard=ar.indexOf("done")
+			var ary=ar2.indexOf("done")
+			void ary
+			var val=ar.slice(ard)
+			return [val,{
 				n: c_api,
 				g: gc_api,
 				s: sc_api
-			}];
+			}]
 		}
 	} else {
 		wait_for_api(1)

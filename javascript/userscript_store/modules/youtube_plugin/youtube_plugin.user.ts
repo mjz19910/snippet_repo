@@ -12,4 +12,4 @@
 
 import {entry_point} from "./entry_point"
 
-entry_point();
+entry_point()

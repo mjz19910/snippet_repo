@@ -6,13 +6,6 @@ export class MKState {
 	property_key: PropertyKey
 	target: object
 	property_path: string
-	/**
-	 * @param {{}} value
-	 * @param {PropertyKey} property_key
-	 * @param {object} target
-	 * @param {string} property_path
-	 * @param {boolean} noisy
-	 */
 	constructor(value: {},target: object,property_key: PropertyKey,property_path: string,noisy: boolean) {
 		this.value=value
 		this.property_key=property_key

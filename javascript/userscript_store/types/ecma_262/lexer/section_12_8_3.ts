@@ -4,6 +4,7 @@ import {is_octal_digit} from "../is_octal_digit"
 import {LexerBase} from "./LexerBase"
 import {LexReturnType} from "./LexReturnType"
 import {TokenType} from "../TokenType"
+
 export class section_12_8_3 extends LexerBase {
 	result_error_token: ['Error',string]|null=null
 	/*HexDigits[Sep] */
@@ -461,20 +462,12 @@ export class section_12_8_3 extends LexerBase {
 		}
 		return ["DecimalDigits",off]
 	}
-	/**
-	 * @param {string} str
-	 * @param {any} index
-	 */
 	NonZeroDigit(str: string,index: number): LexReturnType {
 		if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
 			return ["NonZeroDigit",1]
 		}
 		return [null,0]
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	NumericLiteralSeparator(str: string,index: number): LexReturnType {
 		if(str[index]==='_') {
 			return ["NumericLiteralSeparator",1]

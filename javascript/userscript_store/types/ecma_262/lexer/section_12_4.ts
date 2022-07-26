@@ -16,10 +16,6 @@ export class section_12_4 extends LexerBase {
 		}
 		return [null,0]
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	MultiLineComment(str: string,index: number): [string|null,number] {
 		let off=0
 		if(str.slice(index,index+2)==='/*') {
@@ -39,10 +35,6 @@ export class section_12_4 extends LexerBase {
 		return [null,0]
 	}
 	dep=0
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 */
 	MultiLineCommentChars(str: string,index: number): [string|null,number] {
 		let slen=0
 		if(this.dep>64) {
@@ -78,11 +70,6 @@ export class section_12_4 extends LexerBase {
 		this.dep--
 		return [null,slen]
 	}
-	/**
-	 * @param {string} str
-	 * @param {number} index
-	 * @returns {number}
-	 */
 	PostAsteriskCommentChars(str: string,index: number): [string,number] {
 		let idxoff=0
 		let cxlen=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+idxoff)

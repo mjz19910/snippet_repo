@@ -41,4 +41,3 @@ declare function bind<T,U extends any[],V>(): (x: T,...args: U) => V
 declare function f3(x: number,y: string,z: boolean): void
 type T1=typeof bind
 type T2=T1
-

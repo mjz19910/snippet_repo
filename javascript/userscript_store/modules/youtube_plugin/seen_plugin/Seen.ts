@@ -32,9 +32,6 @@ export class Seen {
 		this.all_seen_map.set(index_key,weak_info)
 		return ret
 	}
-	/**
-	 * @param {Function|null} value
-	 */
 	static as_callable(value: Function|null) {
 		const [instance_index,instance_gen,ref_obj]=this.see_value(value)
 		value=null
@@ -58,9 +55,6 @@ export class Seen {
 		this.all_seen_map.set(index_key,weak_info)
 		return ret
 	}
-	/**
-	 * @param {null} value
-	 */
 	static as_constructor(value: null) {
 		const [instance_index,instance_gen,ref_obj]=this.see_value(value)
 		value=null

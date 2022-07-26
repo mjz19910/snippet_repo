@@ -1,0 +1,3 @@
+import {First} from "./First"
+
+export type JS_BLOCK_OPEN_CHARS=First<"()">|First<"{}">

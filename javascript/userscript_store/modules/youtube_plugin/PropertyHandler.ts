@@ -1,16 +1,10 @@
 import {create_proxy} from "./create_proxy"
 
 export class PropertyHandler {
-	/**@type {Map<{}, {}>} */
 	static proxy_map: Map<{},{}>=new Map;
-	/**@type {Map<string, {}>} */
 	static override_map: Map<string,{}>=new Map;
 	key: string
 	on_target_apply_callback: (args: any) => any
-	/**
-	 * @param {string} key
-	 * @param {(args: any) => any} on_target_apply_callback
-	 */
 	constructor(key: string,on_target_apply_callback: (args: any) => any) {
 		this.key=key
 		this.on_target_apply_callback=on_target_apply_callback
@@ -18,9 +12,6 @@ export class PropertyHandler {
 	get() {
 		return PropertyHandler.override_map.get(this.key)
 	}
-	/**
-	 * @param {any} value
-	 */
 	set(value: any) {
 		if(value===void 0) {
 			PropertyHandler.override_map.delete(this.key)

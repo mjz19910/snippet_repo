@@ -11,9 +11,6 @@ export class HTMLToken {
 	static Type=Type
 	m_type
 	m_data!: number|string|{}
-	/**
-	 * @param {number|string} code_num
-	 */
 	static make_character(code_num: string|number) {
 		let obj=new this(HTMLToken.Type.Character,code_num)
 		obj.set_code_point(code_num)

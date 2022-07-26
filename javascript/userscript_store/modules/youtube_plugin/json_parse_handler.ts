@@ -1,7 +1,4 @@
 export class json_parse_handler {
-	/**
-	 * @param {any[]} proxy_args
-	 */
 	apply(...proxy_args: any[]) {
 		let cst=new Error
 		let error_stack=cst.stack

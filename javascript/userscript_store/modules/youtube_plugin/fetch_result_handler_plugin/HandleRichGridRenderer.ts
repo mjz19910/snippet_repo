@@ -2,10 +2,6 @@ import {RichGridRenderer} from "./RichGridRenderer"
 
 export class HandleRichGridRenderer {
 	static debug=false;
-	/**
-	 * @param {string} path
-	 * @param {RichGridRenderer} object
-	 */
 	static run(path: string,object: RichGridRenderer) {
 		let renderer=object
 		if(this.debug)
@@ -21,10 +17,6 @@ export class HandleRichGridRenderer {
 			this.on_contents(object)
 		}
 	}
-	/**
-	 * @param {string[]} keys
-	 * @param {string} path
-	 */
 	static check_item_keys(path: string,keys: string[]) {
 		/**@type {string[]|string|null} */
 		let key: string[]|string|null=null
@@ -44,7 +36,6 @@ export class HandleRichGridRenderer {
 		if(this.debug)
 			console.log('content keys',path,key)
 	}
-	/**@arg {RichGridRenderer} renderer */
 	static on_contents(renderer: RichGridRenderer) {
 		renderer.contents=renderer.contents.filter(content_item => {
 			let {richItemRenderer}=content_item

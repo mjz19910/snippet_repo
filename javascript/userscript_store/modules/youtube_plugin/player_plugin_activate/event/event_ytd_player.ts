@@ -5,11 +5,7 @@ import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_nex
 import {event_box_map} from "./event_box_map"
 import {observer_default_action} from "../../dom_observer/observer_default_action"
 
-/**
- * @this {CustomEventTarget}
- * @param {CustomEventType} event
- * ID(60)
- */
+/** ID(60) */
 export function event_ytd_player(this: CustomEventTarget,event: CustomEventType) {
 	const current_message_id=60
 	let {type,detail,port}=event

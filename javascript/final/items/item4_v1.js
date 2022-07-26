@@ -2,11 +2,11 @@
 -- version_list item 4 --
 v1 (cur-c): snippet_repo_v2/javascript/group1/sub_a/item-_4.js
 */
-let dbg_create = function(trg, str) {
-	undebug(trg);
-	debug(trg, str.replace("//##INJECT", "dbg_create=" + dbg_create.toString()));
-};
-dbg_create(EventTarget.prototype.addEventListener, `x:{
+let dbg_create=function(trg,str) {
+	undebug(trg)
+	debug(trg,str.replace("//##INJECT","dbg_create="+dbg_create.toString()))
+}
+dbg_create(EventTarget.prototype.addEventListener,`x:{
 	if(window.ev===undefined){
 		ev=[];1;
 		//##INJECT
@@ -57,8 +57,8 @@ dbg_create(EventTarget.prototype.addEventListener, `x:{
 	}catch(e){
 		console.log(e);
 	}
-0;}`);
-dbg_create(Promise, `
+0;}`)
+dbg_create(Promise,`
 	if(window.ev===undefined){ev=[]};
 	ev.cur='Promise<constructor>';
 	ev.next='Promise<Executor>';
@@ -69,8 +69,8 @@ dbg_create(Promise, `
 		console.log('Edef');
 	}
 	debug(arguments[0],'ev.cur=ev.next;ev.next=null;ev.push([ev.cur,this,...arguments]);0');0;
-`);
-dbg_create(Function.prototype.call, `
+`)
+dbg_create(Function.prototype.call,`
 	if(typeof E==='function'){
 		do_Ebp();
 		console.log('Edef');
