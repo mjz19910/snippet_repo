@@ -62,11 +62,11 @@ export class PropertyWatcher {
 			watched_function_weak_set.add(this.value)
 		} else {
 			let ck_i=0
-			let ck_str=active_property_watcher_paths[ck_i]
-			let cur_property_path=this.walk_key_path(ck_str,value)
+			let cur_active_property_path=active_property_watcher_paths[ck_i]
+			let cur_property_path=this.walk_key_path(cur_active_property_path,value)
 			for(;ck_i<active_property_watcher_paths.length;ck_i++) {
-				ck_str=active_property_watcher_paths[ck_i]
-				cur_property_path=this.walk_key_path(ck_str,value,cur_property_path)
+				cur_active_property_path=active_property_watcher_paths[ck_i]
+				cur_property_path=this.walk_key_path(cur_active_property_path,value,cur_property_path)
 			}
 			this.value=value
 		}
