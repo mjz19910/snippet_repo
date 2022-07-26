@@ -1,31 +1,32 @@
 import {Box} from "../Box"
-import {BoxExtractType} from "../create_box/BoxExtractType"
+import {BoxExtractType} from "../helper/BoxExtractType"
+
 export function extract_box(v: Box): BoxExtractType {
-	let cur = v
+	let cur=v
 	switch(typeof cur) {
 		case 'function': throw new Error("What")
-		case 'object': if(cur === null)
+		case 'object': if(cur===null)
 			return cur
-			if(cur.type === 'void') {
+			if(cur.type==='void') {
 				throw new Error("Void in arguments to call")
 			}
-			if(cur.type === 'function_box')
+			if(cur.type==='function_box')
 				return cur.value
-			if(cur.type === 'array_box')
+			if(cur.type==='array_box')
 				return cur.value
-			if(cur.type === 'constructor_box')
+			if(cur.type==='constructor_box')
 				return cur.value
-			if(cur.type === 'custom_box')
+			if(cur.type==='custom_box')
 				return cur.value
-			if(cur.type === 'instance_box')
+			if(cur.type==='instance_box')
 				return cur.value
-			if(cur.type === 'object_box')
+			if(cur.type==='object_box')
 				return cur.value
-			if(cur.type === 'promise_box')
+			if(cur.type==='promise_box')
 				return cur.value
-			if(cur.type === 'shape_box')
+			if(cur.type==='shape_box')
 				return cur.value
-			if(cur.type === 'value_box')
+			if(cur.type==='value_box')
 				return cur.value
 			throw new Error("Unhandled box in un_box_all")
 		case 'bigint':
@@ -34,6 +35,6 @@ export function extract_box(v: Box): BoxExtractType {
 		case 'string':
 		case 'symbol':
 		case 'undefined': return cur
-		default: throw new Error("Unexpected typeof " + (typeof cur))
+		default: throw new Error("Unexpected typeof "+(typeof cur))
 	}
 }

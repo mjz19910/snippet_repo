@@ -1,7 +1,8 @@
 import { Box } from "../Box"
-import { BoxExtractType } from "./BoxExtractType"
+import { BoxExtractType } from "../helper/BoxExtractType"
 import { create_box_from_object } from "./create_box_from_object"
 import { create_box_from_function } from "./create_box_from_function"
+
 export function create_box(value: BoxExtractType): Box {
 	switch (typeof value) {
 		case 'bigint': return value

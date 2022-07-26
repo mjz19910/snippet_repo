@@ -2,7 +2,7 @@ import {CSSStyleSheetInitBox} from "../CSSStyleSheetInitBox"
 import {ObjectBox} from "../ObjectBox"
 import {StackVMBox} from "../StackVMBox"
 import {is_CSSStyleSheetInit} from "../is_namespace/is_CSSStyleSheetInit"
-import {is_StackVM} from "../../vm/box_support/extract_stack_vm"
+import {is_StackVM} from "../is_namespace/is_StackVM"
 import {Box} from "../Box"
 import {NodeBox} from "../NodeBox"
 import {DocumentBox} from "../DocumentBox"
@@ -27,7 +27,8 @@ import {is_Node} from "../is_namespace/is_Node"
 import {is_array} from "../is_namespace/is_array"
 import {is_Promise} from "../is_namespace/is_Promise"
 import {is_instruction_type} from "../is_namespace/is_instruction_type"
-import {throw_never} from "./throw_never"
+import {throw_never} from "../helper/throw_never"
+
 export function create_box_from_object(value: ObjectBox_Value): Box {
 	if(value===null) return value
 	if(value===void 0) return new VoidBox
@@ -62,4 +63,3 @@ function create_box_from_array(value: Extract<ObjectBox_Value,any[]>): Box {
 	if(is_array_of(value,is_instruction_type)) return new InstructionTypeArrayBox(value)
 	throw throw_never(value)
 }
-

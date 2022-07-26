@@ -1,6 +1,7 @@
 import {Box} from "../Box"
 import {Primitives} from "../helper/Primitives"
 import {eat_never} from "../helper/eat_never"
+
 export function is_box_object<T>(v: Exclude<Box,Primitives|null>|T):
 	v is Exclude<Box,Primitives|null> {
 	if(!('type' in v)) throw new Error("Invalid")

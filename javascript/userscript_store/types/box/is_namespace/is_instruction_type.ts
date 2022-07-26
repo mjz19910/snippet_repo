@@ -6,6 +6,7 @@ import {is_instruction_block_trace} from "./is_instruction_block_trace"
 import {is_instruction_modify_op} from "./is_instruction_modify_op"
 import {is_number} from "./is_number"
 import {never_cast} from "./never_cast"
+
 export function is_instruction_type<T extends any[]>(value: T|InstructionType): value is InstructionType {
 	if(never_cast<T>(value)) throw new Error("Never")
 	switch(value[0]) {
