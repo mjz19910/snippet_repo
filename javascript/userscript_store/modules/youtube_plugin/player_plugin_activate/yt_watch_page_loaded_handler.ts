@@ -17,7 +17,7 @@ import {overlay_content_div} from "../elements/overlay_content_div"
 import {overlay_hide_ui_input} from "../elements/overlay_hide_ui_input"
 import {plugin_overlay_element} from "../elements/plugin_overlay_element"
 import {g_api} from "../g_api/g_api"
-import {on_yt_navigate} from "../on_yt_navigate"
+import {on_yt_navigate} from "./on_yt_navigate"
 import {on_yt_navigate_finish} from "../on_yt_navigate_finish"
 import {ytd_player} from "../elements/ytd_player"
 
