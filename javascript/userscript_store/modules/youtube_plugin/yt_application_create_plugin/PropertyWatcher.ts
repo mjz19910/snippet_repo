@@ -96,5 +96,5 @@ export class PropertyWatcher {
 	value_tr=""
 	/**@type {Function | null} */
 	function_value: Function|null=null
-	noisy=false
+	noisy: boolean
 }
