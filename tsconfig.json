@@ -2,11 +2,15 @@
 	"compilerOptions": {
 		"experimentalDecorators": true,
 		"target": "esnext",
-		"lib": ["esnext", "DOM"],
-		"types": ["jquery"],
+		"lib": [
+			"esnext",
+			"DOM"
+		],
+		"types": [
+			"jquery"
+		],
 		"declaration": true,
-		//"module": "ESNext",
-		"module":"NodeNext",
+		"module": "NodeNext",
 		"moduleResolution": "node",
 		"sourceMap": true,
 		"noImplicitAny": true,
@@ -16,7 +20,9 @@
 			"./node_modules/@types"
 		]
 	},
-	"include": ["javascript/userscript_store/**/*"],
+	"include": [
+		"javascript/userscript_store/**/*"
+	],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts",
