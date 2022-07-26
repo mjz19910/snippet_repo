@@ -30,11 +30,11 @@ function main() {
 		gain_controller: undefined,
 	}
 	/**@type {<U>(v:U|undefined)=>U} */
-	function ts_remove_undefined(v) {
+	function remove_optional(v) {
 		if(v===undefined) throw new Error("Bad")
 		return v
 	}
-	let g_api=ts_remove_undefined(window.g_api)
+	let g_api=remove_optional(window.g_api)
 	class YtdAppElement extends HTMLElement {
 		/**@type {HTMLStyleElement|undefined}*/
 		ui_plugin_style_element
