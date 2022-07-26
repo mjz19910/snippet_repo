@@ -63,10 +63,10 @@ export class PropertyWatcher {
 		} else {
 			let ck_i=0
 			let ck_str=active_property_watcher_paths[ck_i]
-			let mc=this.walk_key_path(ck_str,value)
+			let cur_property_path=this.walk_key_path(ck_str,value)
 			for(;ck_i<active_property_watcher_paths.length;ck_i++) {
 				ck_str=active_property_watcher_paths[ck_i]
-				mc=this.walk_key_path(ck_str,value,mc)
+				cur_property_path=this.walk_key_path(ck_str,value,cur_property_path)
 			}
 			this.value=value
 		}
