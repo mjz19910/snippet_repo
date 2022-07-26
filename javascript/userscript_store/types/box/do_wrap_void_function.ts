@@ -1,6 +1,7 @@
 import {Box} from "./Box"
 import {extract_box} from "./extract/extract_box"
 import {BoxExtractType} from "./helper/BoxExtractType"
+
 export function do_wrap_void_function(value_to_wrap: (this: BoxExtractType,...args: BoxExtractType[]) => void,this_: Box,...args: Box[]): void {
 	let real_args: BoxExtractType[]=[]
 	for(let i=0;i<args.length;i++) {

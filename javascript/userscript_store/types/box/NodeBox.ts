@@ -1,5 +1,6 @@
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
+
 export class NodeBox
 	extends BoxTemplate<"instance_box",Node>
 	implements BoxVerify<NodeBox,"NodeBox"> {

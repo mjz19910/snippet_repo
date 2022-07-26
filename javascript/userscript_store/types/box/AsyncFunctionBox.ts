@@ -2,6 +2,7 @@ import {Box} from "./Box"
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 import {PromiseBox} from "./PromiseBox"
+
 export class AsyncFunctionBox
 	extends BoxTemplate<"function_box",(...a: Box[]) => Promise<Box>>
 	implements BoxVerify<AsyncFunctionBox,"AsyncFunctionBox">

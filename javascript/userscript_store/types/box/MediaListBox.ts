@@ -1,8 +1,10 @@
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
+
 export class MediaListBox
 	extends BoxTemplate<"instance_box",MediaList>
-	implements BoxVerify<MediaListBox,"MediaListBox"> {
+	implements BoxVerify<MediaListBox,"MediaListBox">
+{
 	readonly type="instance_box"
 	readonly instance_type="MediaList"
 	readonly m_verify_name="MediaListBox"

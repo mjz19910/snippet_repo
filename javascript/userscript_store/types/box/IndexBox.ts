@@ -1,8 +1,12 @@
 import {Box} from "./Box"
 import {BoxTemplate} from "./template/BoxTemplate"
 import {IndexAccess} from "./IndexAccess"
+import {BoxVerify} from "./BoxVerify"
 
-export class IndexBox extends BoxTemplate<"object_box",IndexAccess<Box>> {
+export class IndexBox
+	extends BoxTemplate<"object_box",IndexAccess<Box>>
+	implements BoxVerify<IndexBox,"IndexBox">
+{
 	readonly type="object_box"
 	readonly m_verify_name="IndexBox"
 	readonly like_type="object_box"

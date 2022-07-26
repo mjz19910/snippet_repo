@@ -2,7 +2,7 @@ import {DomInstructionType} from "../../vm/dom_instruction/DomInstructionType"
 import {is_dom_tagged_pack} from "./is_dom_tagged_pack"
 import {is_instruction_type} from "./is_instruction_type"
 import {is_number} from "./is_number"
-import {eat_never} from "./eat_never"
+import {eat_never} from "../helper/eat_never"
 import {assert_type} from "../helper/assert_type"
 import {DomInstructionNullMarker} from "../../vm/dom_instruction/DomInstructionNullMarker"
 

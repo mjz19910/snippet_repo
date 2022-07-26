@@ -1,5 +1,5 @@
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace"
-import {eat_never} from "./eat_never"
+import {eat_never} from "../helper/eat_never"
 import {is_instruction_block_trace_instruction_ptr} from "./is_instruction_block_trace_instruction_ptr"
 import {is_instruction_block_trace_tagged_ptr} from "./is_instruction_block_trace_tagged_ptr"
 import {is_not_type} from "./is_not_type"

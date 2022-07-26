@@ -4,6 +4,7 @@ import {BoxVerify} from "./BoxVerify"
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox"
 import {CSSStyleSheetConstructorArgsTypeState1} from "./CSSStyleSheetConstructorArgsTypeState1"
 import {NoArgsType} from "./NoArgsType"
+
 export class CSSStyleSheetConstructorBox
 	extends BoxTemplate<"constructor_box",typeof CSSStyleSheet>
 	implements BoxVerify<CSSStyleSheetConstructorBox,"CSSStyleSheetConstructorBox">

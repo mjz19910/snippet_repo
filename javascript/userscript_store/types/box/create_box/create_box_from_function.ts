@@ -8,7 +8,7 @@ import {NewableInstancePackObjectBox} from "../NewableInstancePackObjectBox"
 import {FunctionBox_Value} from "../FunctionBox_Value"
 import {AsyncFunctionBox} from "../AsyncFunctionBox"
 import {is_not_type} from "../is_namespace/is_not_type"
-import {cast} from "../is_namespace/cast"
+import {cast} from "../helper/cast"
 
 export function create_box_from_function(value: FunctionBox_Value): Box {
 	if(is_CSSStyleSheetConstructor(value)) {

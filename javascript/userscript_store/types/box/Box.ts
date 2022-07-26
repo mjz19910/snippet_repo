@@ -70,4 +70,3 @@ export type Box=
 	BoxWithPropertiesIsBox|
 	// Generic boxes
 	NewableInstancePackObjectBox
-

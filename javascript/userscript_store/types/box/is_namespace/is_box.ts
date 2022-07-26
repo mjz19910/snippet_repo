@@ -1,7 +1,7 @@
 import {Box} from "../Box"
-import {eat_never} from "./eat_never"
-import {cast} from "./cast"
-import {eat_type} from "./eat_type"
+import {eat_never} from "../helper/eat_never"
+import {cast} from "../helper/cast"
+import {eat_type} from "../helper/eat_type"
 import {is_box_object} from "./is_box_object"
 export function is_box<T>(v: Box|T): v is Box {
 	switch(typeof v) {

@@ -1,5 +1,6 @@
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
+
 export class CSSStyleSheetBox
 	extends BoxTemplate<"instance_box",CSSStyleSheet>
 	implements BoxVerify<CSSStyleSheetBox,"CSSStyleSheetBox">

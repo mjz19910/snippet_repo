@@ -1,6 +1,6 @@
 import {InstructionType} from "../../vm/instruction/InstructionType"
 import {Push} from "../../vm/instruction/stack/Push"
-import {eat_never} from "./eat_never"
+import {eat_never} from "../helper/eat_never"
 import {is_box} from "./is_box"
 import {is_instruction_block_trace} from "./is_instruction_block_trace"
 import {is_instruction_modify_op} from "./is_instruction_modify_op"

@@ -1,32 +1,32 @@
-import {assert_type} from "../helper/assert_type"
 import {Box} from "../Box"
 import {Primitives} from "../helper/Primitives"
 import {VoidBox} from "../VoidBox"
+import {eat_never} from "../helper/eat_never"
 
 export namespace test {
-	export function test_create_from_box(): void {
-		function get_testing_void_box(): Exclude<Box,Primitives|null>|null {
-			return new VoidBox
-		}
-		let b2=get_testing_void_box()
-		switch(b2) {case null: return }
+	function get_testing_void_box(): Exclude<Box,Primitives|null>|null {
+		return new VoidBox
+	}
+	let b2=get_testing_void_box()
+	export function test_create_from_box(): boolean {
+		switch(b2) {case null: return true}
 		switch(b2.type) {
-			case 'array_box': return
-			case 'constructor_box': return
-			case 'custom_box': return
-			case 'document_box': return
-			case 'function_box': return
-			case 'instance_box': return
-			case 'NewableInstancePack<{}>': return
-			case 'object_box': return
-			case 'promise_box': return
-			case 'real_void': return
-			case 'shape_box': return
-			case 'temporary_box': return
-			case 'value_box': return
-			case 'void': return
-			case 'with_properties': return
-			default: assert_type<never>(b2)
+			case 'array_box': return true
+			case 'constructor_box': return true
+			case 'custom_box': return true
+			case 'document_box': return true
+			case 'function_box': return true
+			case 'instance_box': return true
+			case 'NewableInstancePack<{}>': return true
+			case 'object_box': return true
+			case 'promise_box': return true
+			case 'real_void': return true
+			case 'shape_box': return true
+			case 'temporary_box': return true
+			case 'value_box': return true
+			case 'void': return true
+			case 'with_properties': return true
+			default: return eat_never(b2)
 		}
 	}
 }

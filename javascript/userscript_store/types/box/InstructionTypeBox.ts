@@ -1,9 +1,11 @@
 import {InstructionType} from "../vm/instruction/InstructionType"
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
+
 export class InstructionTypeBox
 	extends BoxTemplate<"instance_box",InstructionType>
-	implements BoxVerify<InstructionTypeBox,"InstructionTypeBox"> {
+	implements BoxVerify<InstructionTypeBox,"InstructionTypeBox">
+{
 	readonly type="instance_box"
 	readonly inner_type="InstructionType"
 	readonly m_verify_name="InstructionTypeBox"

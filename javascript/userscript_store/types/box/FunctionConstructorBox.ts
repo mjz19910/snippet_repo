@@ -4,9 +4,11 @@ import {BoxMaker} from "./BoxMaker"
 import {FunctionConstructorFactory} from "./FunctionConstructorFactory"
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
+
 export class FunctionConstructorBox
 	extends BoxTemplate<"constructor_box",typeof Function>
-	implements BoxVerify<FunctionConstructorBox,"FunctionConstructorBox"> {
+	implements BoxVerify<FunctionConstructorBox,"FunctionConstructorBox">
+{
 	readonly type="constructor_box"
 	readonly instance_type="Function"
 	readonly arguments="string[]"

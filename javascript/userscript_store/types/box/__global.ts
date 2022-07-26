@@ -3,4 +3,5 @@ declare global {
 		keys<T>(v: T): (keyof T)[]
 	}
 }
+
 export {}

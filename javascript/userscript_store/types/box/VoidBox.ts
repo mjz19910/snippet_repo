@@ -1,5 +1,6 @@
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
+
 export class VoidBox
 	extends BoxTemplate<"void",void>
 	implements BoxVerify<VoidBox,"VoidBox">

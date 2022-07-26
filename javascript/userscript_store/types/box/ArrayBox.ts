@@ -1,6 +1,7 @@
 import {Box} from "./Box"
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
+
 export class ArrayBox
 	extends BoxTemplate<"array_box",Box[]>
 	implements BoxVerify<ArrayBox,"ArrayBox">

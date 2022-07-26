@@ -2,7 +2,7 @@ import {DomTaggedPack} from "../../vm/dom_instruction/DomTaggedPack"
 import {is_number} from "./is_number"
 import {is_dom_instruction_type} from "./is_dom_instruction_type"
 import {is_instruction_type} from "./is_instruction_type"
-import {eat_never} from "./eat_never"
+import {eat_never} from "../helper/eat_never"
 
 export function is_dom_tagged_pack(value: DomTaggedPack) {
 	switch(value[0]) {
