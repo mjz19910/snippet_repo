@@ -1,5 +1,5 @@
-import {mk} from "./mk"
-import {mk_tree_arr} from "./mk_tree_arr"
+import {init_property_watcher_for_target} from "./init_property_watcher_for_target"
+import {active_property_watcher_paths} from "./active_property_watcher_paths"
 
 export function init_yt_player_application_plugin() {
 	let ar='yt.player.Application'.split('.')
@@ -7,6 +7,6 @@ export function init_yt_player_application_plugin() {
 	ar.push('create')
 	a2.push('createAlternate')
 	let yta_str='yt.player.Application'
-	mk_tree_arr.push(yta_str+'.create',yta_str+'.createAlternate')
-	mk(window,'yt','yt',true)
+	active_property_watcher_paths.push(yta_str+'.create',yta_str+'.createAlternate')
+	init_property_watcher_for_target(window,'yt','yt',true)
 }

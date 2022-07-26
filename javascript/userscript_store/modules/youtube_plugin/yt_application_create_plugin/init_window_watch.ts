@@ -1,6 +1,6 @@
 import {act_found_create_yt_player} from "./act_found_create_yt_player"
-import {win_watch} from "./win_watch"
+import {object_property_watcher} from "./object_property_watcher"
 
 export function init_window_watch() {
-	win_watch.addEventListener('new_window_object',act_found_create_yt_player)
+	object_property_watcher.addEventListener('new-window-property-path',act_found_create_yt_player)
 }

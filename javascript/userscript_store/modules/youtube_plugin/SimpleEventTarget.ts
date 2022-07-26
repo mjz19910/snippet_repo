@@ -1,4 +1,4 @@
-export class OnWindowProperty {
+export class SimpleEventTarget {
 	_events: {[str: string]: any}
 	constructor() {
 		this._events={}
