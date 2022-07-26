@@ -10,7 +10,7 @@ import {init_override_getInitialData} from "./initial_data_plugin/init_override_
 import {init_title_on_save} from "./player_plugin_activate/init_title_on_save"
 import {init_window_watch} from "./loose_plugins/init_window_watch"
 import {init_yt_player_application_plugin} from "./yt_application_create_plugin/init_yt_player_application_plugin"
-import {ObjectInfo} from "./ObjectInfo"
+import {ObjectInfo} from "./misc/ObjectInfo"
 import {start_message_channel_loop} from "./dom_observer/start_message_channel_loop"
 import {init_playlist_arr} from "./loose_plugins/init_playlist_arr"
 

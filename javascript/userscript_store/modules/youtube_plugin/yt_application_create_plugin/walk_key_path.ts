@@ -1,4 +1,4 @@
-import {mk} from "./yt_application_create_plugin/mk"
+import {mk} from "./mk"
 
 export function walk_key_path(cc: {value?: any; value_tr?: any; value_of?: any; noisy_flag?: any},ms: string,obj: {},mc?: string) {
 	let fs
