@@ -48,23 +48,23 @@ run_d=function(...d) {
 			w.t=f
 			w.un=atob.bind(window)
 			w(f,`{
-				let w=(()=>0).debug;
-				let bid;
+				let w=(()=>0).debug
+				let bid
 				try{
-					w.f=${s};
-					bid=+w.un('${btoa(fwd)}');
+					w.f=${s}
+					bid=+w.un('${btoa(fwd)}')
 				}catch(e){
 					w.f=e
-				};
+				}
 				if(w.s){
 					w.s(bid)
 				}else{
 					console.log(w)
-				};
-				w.u(w.t);
+				}
+				w.u(w.t)
 				0
 			}`)
-			//console.log(s);
+			//console.log(s)
 			try {
 				c.user_res=b(f)
 			} catch(e) {

@@ -69,7 +69,7 @@ parse_obj["72"]=function(ar) {
 	return ar.slice(2)
 }
 parse_obj["8a"]=function(ar) {
-	//mov;
+	//mov
 	var num=parseInt(ar[1],16)
 	af=num&0x7
 	bf=((num-af)/8)&7

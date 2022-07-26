@@ -1,1 +1,1 @@
-globalThis.window=globalThis;
+globalThis.window=globalThis

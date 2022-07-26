@@ -733,7 +733,7 @@ keyword_executers.var=function(run_scope) {
 	if(cur.value=="ident") {
 		t_arg_s=cur.data
 		run_scope.i++
-		//parsing ident;;;
+		//parsing ident
 		cur=tokens[run_scope.i+1]
 	} else {
 		console.log("unexpected",cur)

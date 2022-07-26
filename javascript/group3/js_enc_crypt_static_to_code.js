@@ -2315,37 +2315,37 @@ function main() {
 				let rb_len,item,tree
 				let cur_res=this.WhiteSpace(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'whitespace';
+					//max_item = 'whitespace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.LineTerminator(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'line_term';
+					//max_item = 'line_term'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.Comment(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'comment';
+					//max_item = 'comment'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.CommonToken(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'common';
+					//max_item = 'common'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.RegularExpressionLiteral(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'r_brace';
+					//max_item = 'r_brace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.TemplateSubstitutionTail(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'r_brace';
+					//max_item = 'r_brace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
@@ -2358,37 +2358,37 @@ function main() {
 				let rb_len,item,tree
 				let cur_res=this.WhiteSpace(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'whitespace';
+					//max_item = 'whitespace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.LineTerminator(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'line_term';
+					//max_item = 'line_term'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.Comment(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'comment';
+					//max_item = 'comment'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.CommonToken(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'common';
+					//max_item = 'common'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.DivPunctuator(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'r_brace';
+					//max_item = 'r_brace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
 				cur_res=this.TemplateSubstitutionTail(str,index)
 				if(cur_res[1]>max_val) {
-					//max_item = 'r_brace';
+					//max_item = 'r_brace'
 					max_item=cur_res[0]
 					max_val=cur_res[1]
 				}
@@ -2801,10 +2801,10 @@ function main() {
 						let new_iter_idx=t.lex_regex()
 						cur_regexp.lastIndex=new_iter_idx
 						t.cur_regexp=cur_regexp
-						//iter_idx = new_iter_idx;
-						//let rx_items = t.tt_vec.splice(stlen);
-						//cur_obj = new tt_type_switch(rx_items);
-						//t.tt_vec.push(cur_obj);
+						//iter_idx = new_iter_idx
+						//let rx_items = t.tt_vec.splice(stlen)
+						//cur_obj = new tt_type_switch(rx_items)
+						//t.tt_vec.push(cur_obj)
 						t.tt_vec.push(reset_sym)
 						debugger; continue
 					}
@@ -2830,10 +2830,10 @@ function main() {
 						let resp=t.lex_regex()
 						t.cur_regexp=cur_regexp
 						t.cur_regexp.lastIndex=resp.iter_idx
-						//iter_idx = new_iter_idx;
-						//let rx_items = t.tt_vec.splice(stlen);
-						//cur_obj = new tt_type_switch(rx_items);
-						//t.tt_vec.push(cur_obj);
+						//iter_idx = new_iter_idx
+						//let rx_items = t.tt_vec.splice(stlen)
+						//cur_obj = new tt_type_switch(rx_items)
+						//t.tt_vec.push(cur_obj)
 						t.tt_vec.push(resp.value)
 						continue
 					}
@@ -2925,9 +2925,9 @@ function main() {
 	window.js_lex_state=state
 	state.set_regexp(mt_js_kw)
 	state.set_input(code)
-	//state.lex();
-	//let ret = js_lex_state.find_bad();
-	//return ret;
+	//state.lex()
+	//let ret = js_lex_state.find_bad()
+	//return ret
 	//# sourceURL=snippet:///js_enc_crypt_static_to_code
 }
 init()

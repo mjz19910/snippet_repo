@@ -1,8 +1,8 @@
 const module_data = [[4], [function(e, t, r) {
-	"use strict";
+	"use strict"
 	function n(e) {
 		for(var r in e)
-			t.hasOwnProperty(r) || (t[r] = e[r]);
+			t.hasOwnProperty(r) || (t[r] = e[r])
 	}
 	Object.defineProperty(t, "__esModule", {
 		value: !0

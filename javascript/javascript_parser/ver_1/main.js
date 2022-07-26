@@ -229,13 +229,13 @@ export function ecma_parse_main() {
 			\ UnicodeEscapeSequence
 			<ZWNJ>
 			<ZWJ>
-			
+
 			UnicodeIDStart ::
 			any Unicode code point with the Unicode property “ID_Start”
-			
+
 			UnicodeIDContinue ::
 			any Unicode code point with the Unicode property “ID_Continue”
-			`;
+			`
 			PrivateIdentifier(str,index) {
 				if(str[0]!=='#')
 					return 0
@@ -301,7 +301,7 @@ export function ecma_parse_main() {
 				}
 				return 0
 			}
-			_OtherPunct="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
+			_OtherPunct="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ')
 			OtherPunctuator(str,index) {
 				let len=0
 				for(let ci,i=0;i<this._OtherPunct.length;i++) {
@@ -969,7 +969,7 @@ export function ecma_parse_main() {
 	class ident extends tt_any {
 	}
 	class tt_type_switch {
-		// used for regexp;
+		// used for regexp
 		constructor(vec) {
 			this.inner=vec
 		}
@@ -1207,10 +1207,10 @@ export function ecma_parse_main() {
 						let new_iter_idx=t.lex_regex()
 						cur_regexp.lastIndex=new_iter_idx
 						t.cur_regexp=cur_regexp
-						//iter_idx = new_iter_idx;
-						//let rx_items = t.tt_vec.splice(stlen);
-						//cur_obj = new tt_type_switch(rx_items);
-						//t.tt_vec.push(cur_obj);
+						//iter_idx = new_iter_idx
+						//let rx_items = t.tt_vec.splice(stlen)
+						//cur_obj = new tt_type_switch(rx_items)
+						//t.tt_vec.push(cur_obj)
 						t.tt_vec.push(reset_sym)
 						debugger; continue
 					}
@@ -1236,10 +1236,10 @@ export function ecma_parse_main() {
 						let resp=t.lex_regex()
 						t.cur_regexp=cur_regexp
 						t.cur_regexp.lastIndex=resp.iter_idx
-						//iter_idx = new_iter_idx;
-						//let rx_items = t.tt_vec.splice(stlen);
-						//cur_obj = new tt_type_switch(rx_items);
-						//t.tt_vec.push(cur_obj);
+						//iter_idx = new_iter_idx
+						//let rx_items = t.tt_vec.splice(stlen)
+						//cur_obj = new tt_type_switch(rx_items)
+						//t.tt_vec.push(cur_obj)
 						t.tt_vec.push(resp.value)
 						continue
 					}
@@ -1331,8 +1331,8 @@ export function ecma_parse_main() {
 	window.js_lex_state=state
 	state.set_regexp(mt_js_kw)
 	state.set_input(code)
-	//state.lex();
-	//let ret = js_lex_state.find_bad();
-	//return ret;
+	//state.lex()
+	//let ret = js_lex_state.find_bad()
+	//return ret
 	//# sourceURL=https://github.dev/mjz19910/javascript_parser/blob/572930e8a33dab08b49b27f29890424f6a5ef5e4/js_lex_only_ver_0.js#L2029-L2029
 }

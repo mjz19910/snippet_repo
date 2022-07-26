@@ -16,10 +16,10 @@ const TAG_TYPE_INVALID=9
 const TAG_TYPE_ERROR=10
 type_count=0
 const code=`(function (rebuild) {
-    var global;
+    var global
     (function (global) {
-        g_worker_state: WorkerState;
-    })(global = rebuild.global || (rebuild.global = {}));
+        g_worker_state: WorkerState
+    })(global = rebuild.global || (rebuild.global = {}))
 })(rebuild || (rebuild = {}));`
 /**@arg {Parser}self @arg {number} index @arg {import("./TokenType.js").TokenType[]} in_tokens */
 function step_template(self,index,in_tokens) {
