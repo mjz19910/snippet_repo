@@ -1,5 +1,5 @@
 import {yt_watch_page_loaded_handler} from "../player_plugin_activate/yt_watch_page_loaded_handler"
-import {PropertyHandler} from "../PropertyHandler"
+import {PropertyHandler} from "../property_handler_plugin/PropertyHandler"
 import {Seen} from "../seen_plugin/Seen"
 import {ts_remove_undefined} from "../ts_remove_undefined"
 import {g_api} from "./g_api"
