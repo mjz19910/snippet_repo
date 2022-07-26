@@ -54,7 +54,7 @@ function main() {
 					}
 				}
 			}
-		};
+		}
 	}
 	class YtCurrentPage extends HTMLElement {
 		/**@return {YTPlayerData} */
@@ -69,14 +69,14 @@ function main() {
 		}
 	}
 	class Seen {
-		static debug=false;
+		static debug=false
 		/**
 		 * @type {any[]}
 		 */
-		static all_seen_objs=[];
-		static all_seen_map=new Map;
-		static seen_gen_counter=1;
-		static seen_uid_counter=0;
+		static all_seen_objs=[]
+		static all_seen_map=new Map
+		static seen_gen_counter=1
+		static seen_uid_counter=0
 		/**
 		 * @param {null} value
 		 */
@@ -309,7 +309,7 @@ function main() {
 			if(str in window) {
 				debugger
 			}
-			// if(!had_func)console.log('proto', str, create.toString().slice(0, 32), create.toString().length);
+			console.log('proto',str,create.toString().slice(0,32),create.toString().length)
 			return seen_obj
 		}
 		if(typeof value==='boolean') {
