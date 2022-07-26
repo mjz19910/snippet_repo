@@ -18,6 +18,7 @@ export class PropertyWatcher {
 		this.noisy=noisy
 	}
 	define_target_property() {
+		let this_=this
 		if(watched_target_map.has(this.target)&&watched_target_map.get(this.target).names.indexOf(this.property_key)>-1) {
 			return this
 		}
@@ -25,10 +26,10 @@ export class PropertyWatcher {
 			configurable: true,
 			enumerable: true,
 			get() {
-				return this.value
+				return this_.value
 			},
 			set(value) {
-				this.on_property_set(value)
+				this_.on_property_set(value)
 			}
 		})
 		if(watched_target_map.has(this.target)) {
