@@ -1,3 +1,3 @@
 import {WorkerReadyReply} from "types/constants"
 
-export type WorkerReadyReplyTy = typeof WorkerReadyReply
+export type WorkerReadyReplyTy=typeof WorkerReadyReply

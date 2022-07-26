@@ -1,4 +1,4 @@
-import {DomInstructionType} from "../../vm/instruction/vm/DomInstructionType"
+import {DomInstructionType} from "../../vm/dom_instruction/DomInstructionType"
 import { is_dom_instruction_type } from "./is_dom_instruction_type"
 import { is_null } from "./is_null"
 

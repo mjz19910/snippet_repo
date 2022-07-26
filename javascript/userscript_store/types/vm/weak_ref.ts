@@ -5,5 +5,5 @@ export interface WeakRef<T extends object> {
 	 * Returns the WeakRef instance's target object, or undefined if the target object has been
 	 * reclaimed.
 	 */
-	deref(): T | undefined
+	deref(): T|undefined
 }

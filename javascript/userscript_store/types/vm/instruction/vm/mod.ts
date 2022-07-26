@@ -10,9 +10,9 @@ import {VMBlockTrace} from "./VMBlockTrace"
 import {VMPushSelf as VMPushSelf} from "./VMPushSelf"
 
 export {
-	VMBlockTrace, VMBlockTraceOpcode,
-	VMCall, VMCallOpcode,
-	VMPushIP, VMPushIPOpcode,
-	VMPushSelf, VMPushSelfOpcode,
-	VMReturn, VMReturnOpcode,
+	VMBlockTrace,VMBlockTraceOpcode,
+	VMCall,VMCallOpcode,
+	VMPushIP,VMPushIPOpcode,
+	VMPushSelf,VMPushSelfOpcode,
+	VMReturn,VMReturnOpcode,
 }

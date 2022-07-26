@@ -1,5 +1,5 @@
 {
-	"type":"module",
+	"type": "module",
 	"files": [
 		".\\DebugAPI.user.d.ts"
 	],

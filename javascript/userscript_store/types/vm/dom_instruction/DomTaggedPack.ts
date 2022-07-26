@@ -1,4 +1,4 @@
-import {InstructionType} from "../InstructionType"
+import {InstructionType} from "../instruction/InstructionType"
 import {DomInstructionType} from "./DomInstructionType"
 
 export type DomTaggedPack=

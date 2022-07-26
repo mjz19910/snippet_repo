@@ -1,3 +1,3 @@
-export type VarRef = {
+export type VarRef={
 	var: string
 }

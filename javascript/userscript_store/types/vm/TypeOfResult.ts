@@ -1,1 +1,1 @@
-export type TypeOfResult = 'object' | 'function'
+export type TypeOfResult='object'|'function'

@@ -1,3 +1,3 @@
 import {WorkerAsyncMessage} from "types/constants"
 
-export type WorkerAsyncMessageTy = typeof WorkerAsyncMessage
+export type WorkerAsyncMessageTy=typeof WorkerAsyncMessage

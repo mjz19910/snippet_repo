@@ -1,5 +1,5 @@
 import {WorkerVerifyType} from "./WorkerVerifyType"
 
-export type WorkerVerifyCallback = {
+export type WorkerVerifyCallback={
 	(verify_obj: WorkerVerifyType): void
 }

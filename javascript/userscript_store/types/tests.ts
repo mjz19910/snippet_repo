@@ -6,7 +6,7 @@ async function do_import(e: string): Promise<void> {
 		return module_load_failure()
 	}
 }
-function module_load_success(e:{run_tests: () => void}) {
+function module_load_success(e: {run_tests: () => void}) {
 	e.run_tests()
 	console.log("test completed")
 }
@@ -15,7 +15,7 @@ function module_load_failure() {
 }
 
 test_mod_execute_tests([
-	["section_12_8_6",()=>do_import("./ecma_262/section_12_8_6")],
-	["section_12_6",()=>do_import("./ecma_262/section_12_6")],
-	["section_12",()=>do_import("./ecma_262/section_12")],
+	["section_12_8_6",() => do_import("./ecma_262/section_12_8_6")],
+	["section_12_6",() => do_import("./ecma_262/section_12_6")],
+	["section_12",() => do_import("./ecma_262/section_12")],
 ])
