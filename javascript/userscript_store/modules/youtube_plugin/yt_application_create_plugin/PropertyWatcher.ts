@@ -61,11 +61,9 @@ export class PropertyWatcher {
 			}
 			watched_function_weak_set.add(this.value)
 		} else {
-			let cur_active_property_path=active_property_watcher_paths[0]
-			let cur_property_path=this.walk_key_path(cur_active_property_path,value)
+			let cur_property_path=this.walk_key_path(active_property_watcher_paths[0],value)
 			for(let i=0;i<active_property_watcher_paths.length;i++) {
-				cur_active_property_path=active_property_watcher_paths[i]
-				cur_property_path=this.walk_key_path(cur_active_property_path,value,cur_property_path)
+				cur_property_path=this.walk_key_path(active_property_watcher_paths[i],value,cur_property_path)
 			}
 			this.value=value
 		}
