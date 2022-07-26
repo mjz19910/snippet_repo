@@ -1,4 +1,4 @@
-import {InstructionType} from "../vm/instruction/mod"
+import {InstructionType} from "../vm/instruction/InstructionType"
 import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 export class InstructionTypeBox

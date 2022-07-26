@@ -1,11 +1,11 @@
-import {BlockTrace} from "../../vm/instruction/vm/VMBlockTrace"
+import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace"
 import {eat_never} from "./eat_never"
 import {is_instruction_block_trace_instruction_ptr} from "./is_instruction_block_trace_instruction_ptr"
 import {is_instruction_block_trace_tagged_ptr} from "./is_instruction_block_trace_tagged_ptr"
 import {is_not_type} from "./is_not_type"
 import {is_number} from "./is_number"
 
-export function is_instruction_block_trace<T>(value: T|BlockTrace): value is BlockTrace {
+export function is_instruction_block_trace<T>(value: T|VMBlockTrace): value is VMBlockTrace {
 	if(is_not_type<T,any>(value)) throw new Error("Never")
 	switch(value[1]) {
 		case 'block': return value.length===4&&is_number(value[2])&&is_number(value[3])

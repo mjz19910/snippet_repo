@@ -1,3 +1,3 @@
-import {PushSelfOpcode} from "../opcodes/VMPushSelfOpcode"
+import {VMPushSelfOpcode} from "../opcodes/VMPushSelfOpcode"
 
-export type PushSelf=[PushSelfOpcode]
+export type VMPushSelf=[VMPushSelfOpcode]

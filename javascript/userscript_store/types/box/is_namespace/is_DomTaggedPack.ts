@@ -1,4 +1,4 @@
-import {DomTaggedPack} from "../../vm/instruction/vm/VMBlockTrace"
+import {DomTaggedPack} from "../../vm/instruction/vm/DomTaggedPack"
 
 export function is_DomTaggedPack(v: DomTaggedPack): v is DomTaggedPack {
 	switch(v[0]) {

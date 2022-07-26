@@ -2,14 +2,14 @@ import {DropOpcode} from "../opcodes/DropOpcode"
 import {DupOpcode} from "../opcodes/DupOpcode"
 import {PeekOpcode} from "../opcodes/PeekOpcode"
 import {PushOpcode} from "../opcodes/PushOpcode"
+import {Drop} from "./Drop"
+import {Dup} from "./Dup"
+import {Push} from "./Push"
+import {Peek} from "./Peek"
 
-export {Drop} from "./Drop"
-export {Dup} from "./Dup"
-export {Push} from "./Push"
-export {Peek} from "./Peek"
-export{
-	DropOpcode,
-	DupOpcode,
-	PushOpcode,
-	PeekOpcode
+export {
+	Drop, DropOpcode,
+	Dup, DupOpcode,
+	Push, PushOpcode,
+	Peek, PeekOpcode
 }

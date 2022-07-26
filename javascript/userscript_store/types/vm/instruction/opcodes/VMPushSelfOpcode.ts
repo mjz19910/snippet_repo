@@ -1,1 +1,1 @@
-export type PushSelfOpcode='vm_push_self'
+export type VMPushSelfOpcode='vm_push_self'

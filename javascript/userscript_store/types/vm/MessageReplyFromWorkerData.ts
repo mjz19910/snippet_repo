@@ -1,6 +1,4 @@
-import {Box} from "types/box/Box"
-
 export type MessageReplyFromWorkerData={
-	t: Box
-	v: Box
+	t: 5000
+	v: number
 }

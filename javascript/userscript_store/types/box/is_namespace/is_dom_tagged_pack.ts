@@ -1,4 +1,4 @@
-import { DomTaggedPack } from "../../vm/instruction/vm/VMBlockTrace"
+import {DomTaggedPack} from "../../vm/instruction/vm/DomTaggedPack"
 import { is_number } from "./is_number"
 import { is_dom_instruction_type } from "./is_dom_instruction_type"
 import { is_instruction_type } from "./is_instruction_type"

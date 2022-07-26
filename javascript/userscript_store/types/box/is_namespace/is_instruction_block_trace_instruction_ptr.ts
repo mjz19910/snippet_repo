@@ -1,4 +1,4 @@
-import { DomInstructionType } from "../../vm/instruction/vm/VMBlockTrace"
+import {DomInstructionType} from "../../vm/instruction/vm/DomInstructionType"
 import { is_dom_instruction_type } from "./is_dom_instruction_type"
 import { is_null } from "./is_null"
 

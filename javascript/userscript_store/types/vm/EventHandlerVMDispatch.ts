@@ -1,4 +1,4 @@
-import {InstructionType} from "./instruction/mod"
+import {InstructionType} from "./instruction/InstructionType"
 import {AutoBuyInterface} from "./AutoBuyInterface"
 import {SimpleStackVM} from "./SimpleStackVM"
 

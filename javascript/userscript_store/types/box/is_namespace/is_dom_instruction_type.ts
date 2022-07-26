@@ -1,4 +1,5 @@
-import {DomInstructionNullMarker,DomInstructionType} from "../../vm/instruction/vm/VMBlockTrace"
+import {DomInstructionNullMarker} from "../../vm/instruction/vm/VMBlockTrace"
+import {DomInstructionType} from "../../vm/instruction/vm/DomInstructionType"
 import {is_dom_tagged_pack} from "./is_dom_tagged_pack"
 import {is_instruction_type} from "./is_instruction_type"
 import {is_number} from "./is_number"

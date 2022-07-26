@@ -1,3 +1,3 @@
-import {PushIPOpcode} from "../opcodes/VMPushIPOpcode"
+import {VMPushIPOpcode} from "../opcodes/VMPushIPOpcode"
 
-export type PushIP=[PushIPOpcode]
+export type VMPushIP=[VMPushIPOpcode]

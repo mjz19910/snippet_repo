@@ -1,4 +1,4 @@
-import { InstructionType } from "../../vm/instruction/mod"
+import {InstructionType} from "../../vm/instruction/InstructionType"
 import { is_array_of } from "./is_array_of"
 import { is_box } from "./is_box"
 
