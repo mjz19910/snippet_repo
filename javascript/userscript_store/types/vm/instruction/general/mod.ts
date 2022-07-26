@@ -8,8 +8,8 @@ import {Return} from "./Return"
 import {ReturnOpcode} from "../opcodes/ReturnOpcode"
 
 export {
-	Call, CallOpcode,
-	Construct, ConstructOpcode,
-	Get, GetOpcode,
-	Return, ReturnOpcode,
+	Call,CallOpcode,
+	Construct,ConstructOpcode,
+	Get,GetOpcode,
+	Return,ReturnOpcode,
 }

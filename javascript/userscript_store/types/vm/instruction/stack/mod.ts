@@ -8,8 +8,8 @@ import {Push} from "./Push"
 import {Peek} from "./Peek"
 
 export {
-	Drop, DropOpcode,
-	Dup, DupOpcode,
-	Push, PushOpcode,
-	Peek, PeekOpcode
+	Drop,DropOpcode,
+	Dup,DupOpcode,
+	Push,PushOpcode,
+	Peek,PeekOpcode
 }

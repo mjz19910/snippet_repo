@@ -1,3 +1,3 @@
-export type TokenSymbolPtr = {
+export type TokenSymbolPtr={
 	token: symbol
 }

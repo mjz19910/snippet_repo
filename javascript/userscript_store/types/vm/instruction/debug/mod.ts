@@ -1,4 +1,2 @@
-import {BreakpointOpcode} from "../opcodes/BreakpointOpcode"
-
 export {Breakpoint} from "./Breakpoint"
-export {BreakpointOpcode}
+export {BreakpointOpcode} from "../opcodes/BreakpointOpcode"

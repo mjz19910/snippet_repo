@@ -2,7 +2,6 @@ import {DomInstructionType} from "./DomInstructionType"
 import {DomTaggedPack} from "./DomTaggedPack"
 import {VMBlockTraceOpcode} from "../instruction/vm/mod"
 
-
 export type DomInstructionVMBlockTrace=
 	[number,VMBlockTraceOpcode,'begin',DomInstructionType|null]|
 	[number,VMBlockTraceOpcode,'call',DomInstructionType|null]|

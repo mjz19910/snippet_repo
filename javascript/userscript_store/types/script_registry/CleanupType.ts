@@ -1,3 +1,3 @@
-export type CleanupType = {
+export type CleanupType={
 	arr_key: any
 }

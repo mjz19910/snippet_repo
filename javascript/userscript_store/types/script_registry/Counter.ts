@@ -1,5 +1,5 @@
 export class Counter {
-	id = 0
+	id=0
 	inc() {
 		this.id++
 	}

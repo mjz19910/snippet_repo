@@ -1,25 +1,25 @@
 import {IHashMap} from "./IHashMap"
 import {IterationDecision} from "./IterationDecision"
 
-export class HashMap<K, V> implements IHashMap<K, V> {
-	backing_map: Map<K, V> | null
+export class HashMap<K,V> implements IHashMap<K,V> {
+	backing_map: Map<K,V>|null
 	constructor() {
-		this.backing_map = null
+		this.backing_map=null
 	}
 	is_empty() {
-		if(this.backing_map === null) {
+		if(this.backing_map===null) {
 			return true
 		}
-		if(this.backing_map.size === 0) {
+		if(this.backing_map.size===0) {
 			return true
 		}
 		return false
 	}
-	set(key: K, value: V) {
+	set(key: K,value: V) {
 		if(!this.backing_map) {
-			this.backing_map = new Map
+			this.backing_map=new Map
 		}
-		this.backing_map.set(key, value)
+		this.backing_map.set(key,value)
 		return this
 	}
 	clear() {
@@ -36,13 +36,13 @@ export class HashMap<K, V> implements IHashMap<K, V> {
 		}
 		return this.backing_map.has(key)
 	}
-	iterate(callback: (this: this, arg1: K, arg2: V) => IterationDecision) {
+	iterate(callback: (this: this,arg1: K,arg2: V) => IterationDecision) {
 		// from https://github.com/SerenityOS/serenity/blob/master/Userland/DevTools/Profiler/Profile.cpp
 		// on my fs file://home/wsl2/dev/serenity/Userland/DevTools/Profiler/Profile.cpp
 		if(!this.backing_map)
 			return
 		for(let x of this.backing_map.entries()) {
-			if(callback.apply(this, x) === IterationDecision.Break) {
+			if(callback.apply(this,x)===IterationDecision.Break) {
 				break
 			}
 		}

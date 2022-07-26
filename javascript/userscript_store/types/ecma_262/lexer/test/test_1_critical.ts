@@ -4,7 +4,7 @@ import {CanRunTest} from "../../../tests_mod/CanRunTest"
 import {Dispatcher} from "../Dispatcher"
 import {lex_js} from "../section_12"
 import {lexer_format_callback as lexer_format_callback} from "../lexer_format_callback"
-export function throw_bad_error(value:any):never {
+export function throw_bad_error(value: any): never {
 	console.log(value)
 	throw new Error("Bad")
 }

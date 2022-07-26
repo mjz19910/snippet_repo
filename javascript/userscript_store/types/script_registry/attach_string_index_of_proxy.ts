@@ -2,7 +2,7 @@ import {attached_proxy_arr} from "./mod"
 import {str_index_of_inject} from "./str_index_of_inject"
 
 export function attach_string_index_of_proxy() {
-	String.prototype.indexOf = new Proxy(String.prototype.indexOf, {
+	String.prototype.indexOf=new Proxy(String.prototype.indexOf,{
 		apply(...a) {
 			str_index_of_inject()
 			return Reflect.apply(...a)

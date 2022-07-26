@@ -4,18 +4,18 @@ import {List} from "./List"
 import {ParseNode} from "./ParseNode"
 import {ParseResult} from "./ParseResult"
 // https://tc39.es/ecma262/#sec-parsetext
-export function ParseText(sourceText: string, goalSymbol: IGoalSymbol): ParseNode | List<SyntaxError[]> {
+export function ParseText(sourceText: string,goalSymbol: IGoalSymbol): ParseNode|List<SyntaxError[]> {
 	// 11.1.6 Static Semantics: ParseText
-	let parse_tree_root = null
+	let parse_tree_root=null
 	//1. Attempt to parse sourceText using goalSymbol as the goal symbol,
 	//   and analyse the parse result for any early error conditions.
 	//   Parsing and early error detection may be interleaved in an implementation-defined manner.
-	let parse_result: ParseResult = do_parse_to_goal_symbol(sourceText, goalSymbol)
+	let parse_result: ParseResult=do_parse_to_goal_symbol(sourceText,goalSymbol)
 	// 2. If the parse succeeded and no early errors were found,
 	//    return the Parse Node (an instance of goalSymbol) at the root of the parse tree resulting from the parse.
-	if(parse_result.ok() && !parse_result.has_early_error()) {
-		parse_tree_root = parse_result.parse_tree.root
-		return new ParseNode(goalSymbol, parse_tree_root)
+	if(parse_result.ok()&&!parse_result.has_early_error()) {
+		parse_tree_root=parse_result.parse_tree.root
+		return new ParseNode(goalSymbol,parse_tree_root)
 	} else {
 		// 3. Otherwise, return a List of one or more SyntaxError objects representing the parsing errors and/or early errors.
 		if(ParseResult.has_parse_error(parse_result.parse_errors)) {

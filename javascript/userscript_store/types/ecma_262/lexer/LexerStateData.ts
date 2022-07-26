@@ -1,3 +1,3 @@
-export type LexerStateData = {
+export type LexerStateData={
 	cur_index: number
 }

@@ -1,6 +1,5 @@
 import {Box} from "./Box"
 import {VoidBox} from "./VoidBox"
-import {ArrayBox} from "./ArrayBox"
 import {Primitives} from "./helper/Primitives"
 
 export type ExtractKey<T extends Box,U>=
@@ -9,12 +8,3 @@ export type ExtractKey<T extends Box,U>=
 	Exclude<T,VoidBox>[U]:
 	never:
 	never
-
-export function run_tests() {
-	type Test2=ExtractKey<ArrayBox|VoidBox,'value'>
-	type Test3=ExtractKey<Exclude<Box,Primitives>,'value'>
-	let vv: Test2=[new VoidBox]
-	let vv2: Test3=[[new VoidBox]]
-	void vv,vv2
-}
-

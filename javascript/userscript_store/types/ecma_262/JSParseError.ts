@@ -1,7 +1,7 @@
 export class JSParseError extends Error {
-	stack = "JSParseError"
+	stack="JSParseError"
 	constructor(message: string) {
 		super(message)
-		Error.captureStackTrace(this, this.constructor)
+		Error.captureStackTrace(this,this.constructor)
 	}
 }
