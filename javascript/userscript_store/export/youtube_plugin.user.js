@@ -471,9 +471,9 @@ function main() {
 	}
 	class PropertyHandler {
 		/**@type {Map<{}, {}>} */
-		static proxy_map=new Map;
+		static proxy_map=new Map
 		/**@type {Map<string, {}>} */
-		static override_map=new Map;
+		static override_map=new Map
 		/**
 		 * @param {string} key
 		 * @param {(args: any) => any} on_target_apply_callback
@@ -592,20 +592,20 @@ function main() {
 	}
 	class RichItemRenderer {
 		/**@type {{displayAdRenderer?:{}}} */
-		content={};
+		content={}
 	}
 	class RendererContentItem {
-		richItemRenderer=new RichItemRenderer;
+		richItemRenderer=new RichItemRenderer
 	}
 	// { masthead: { [str: string]: any; videoMastheadAdV3Renderer?: any; }; contents: {richItemRenderer:{content:{}}}[]; }
 	class RichGridRenderer {
 		/**@type {{[str:string]:any; videoMastheadAdV3Renderer?: any}} */
-		masthead={};
+		masthead={}
 		/**@type {RendererContentItem[]} */
-		contents=[];
+		contents=[]
 	}
 	class HandleRichGridRenderer {
-		static debug=false;
+		static debug=false
 		/**
 		 * @param {string} path
 		 * @param {RichGridRenderer} object
@@ -826,7 +826,7 @@ function main() {
 				return Reflect.apply(proxy_args[0],proxy_args[1],proxy_args[2])
 			}
 		}
-		//window.fetch=o_fetch;
+		//window.fetch=o_fetch
 		if(any(Function).JSON_parse_changed===undefined) {
 			let orig_json_parse=JSON.parse
 			JSON.parse=new Proxy(JSON.parse,new json_parse_handler)
@@ -870,10 +870,10 @@ function main() {
 		raw_plr_rsp.playerAds=[]
 		raw_plr_rsp.adPlacements=[]
 		return
-	};
+	}
 	function plr_raw_replace_embed() {
 		return
-	};
+	}
 	let ar='yt.player.Application'.split('.')
 	let a2=ar.slice()
 	ar.push('create')
@@ -894,7 +894,7 @@ function main() {
 		} else {
 			plr_raw_replace(player_config)
 		}
-	};
+	}
 	let locked_set=new WeakMap()
 	let ud_func=new WeakSet()
 	class OnWindowProperty {
@@ -997,7 +997,7 @@ function main() {
 	}
 	const ghost_symbol=Symbol.for('ghost')
 	class MKState {
-		[ghost_symbol]=true;
+		[ghost_symbol]=true
 		/**
 		 * @param {{}} value
 		 * @param {PropertyKey} property_key
@@ -1015,11 +1015,11 @@ function main() {
 		run() {
 			return mk_run(this)
 		}
-		value={};
-		value_tr="";
+		value={}
+		value_tr=""
 		/**@type {Function | null} */
-		function_value=null;
-		noisy=false;
+		function_value=null
+		noisy=false
 	}
 	/**
 	 * @param {MKState} cc
@@ -1085,7 +1085,7 @@ function main() {
 	 */
 	function mk(target,property_key,property_path,noisy=false) {
 		return new MKState({},target,property_key,property_path,noisy).run()
-	};
+	}
 	let yta_str='yt.player.Application'
 	mk_tree_arr.push(yta_str+'.create',yta_str+'.createAlternate')
 	mk(window,'yt','yt',true)
@@ -1164,14 +1164,14 @@ function main() {
 		window.yt_playlist_manager=element
 	}
 	class YTPlayerData extends HTMLElement {
-		active_nav=false;
+		active_nav=false
 		/**@type {{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null} */
-		player_=null;
+		player_=null
 		playerResolver_={
 			promise: Promise.resolve()
-		};
-		init_nav=false;
-		is_watch_page_active=false;
+		}
+		init_nav=false
+		is_watch_page_active=false
 		pause() {}
 		play() {}
 	}
@@ -1194,7 +1194,7 @@ function main() {
 	}
 	class Box {
 		/**@readonly*/
-		type="box";
+		type="box"
 		/** @param {HTMLVideoElement[]} value */
 		constructor(value) {
 			this.value=value
@@ -1205,9 +1205,9 @@ function main() {
 	/**@type {Map<string, Box>}*/
 	let box_map=new Map
 	class CustomEventType {
-		type="event_type";
-		detail={};
-		port=new MessagePort;
+		type="event_type"
+		detail={}
+		port=new MessagePort
 	}
 	class CustomEventTarget {
 		constructor() {
@@ -1261,10 +1261,10 @@ function main() {
 	/**@type {[number, number][]}*/
 	let port_state_log=[]
 	class MessagePortState {
-		cint=-1;
-		state_log=port_state_log;
-		time_offset=performance.now();
-		current_event_type="find-ytd-app";
+		cint=-1
+		state_log=port_state_log
+		time_offset=performance.now()
+		current_event_type="find-ytd-app"
 	}
 	let port_state=new MessagePortState
 	g_api.port_state=port_state
@@ -1745,7 +1745,7 @@ function main() {
 		function update_ui_plugin() {
 			if(debug) console.log('update_ui_plugin')
 			setTimeout(update_plugin_overlay)
-		};
+		}
 		current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin)
 		// visibilitychange handler (resume video when page is visible again)
 		let vis_imm=false
@@ -1928,25 +1928,30 @@ function main() {
 	`
 	class HTMLMediaElementGainController {
 		/**@type {Event|undefined}*/
-		last_event=undefined;
+		last_event=undefined
 		/**@type {(HTMLVideoElement | HTMLAudioElement)[]} */
-		attached_element_list=[];
-		audioCtx=new AudioContext();
-		style=document.createElement("style");
+		attached_element_list=[]
+		audioCtx=new AudioContext()
+		style=document.createElement("style")
+		/**@type {DynamicsCompressorNode} */
+		dynamics_compressor
 		constructor() {
 			this.gain_node=this.audioCtx.createGain()
 			this.gain=this.gain_node.gain
 			this.gain_node.connect(this.audioCtx.destination)
 			let dynamics_compressor=this.audioCtx.createDynamicsCompressor()
 			dynamics_compressor.connect(this.gain_node)
-			this.dynamics_compressor=dynamics_compressor;
-			(({knee,attack,release,ratio,threshold}) => {
-				knee.value=27//28 -1
+			this.dynamics_compressor=dynamics_compressor
+			/**@arg {DynamicsCompressorNode} dynamics_compressor */
+			function init_dynamics_compressor(dynamics_compressor) {
+				let {knee,attack,release,ratio,threshold}=dynamics_compressor
+				knee.value=27
 				attack.value=1
 				release.value=1
-				ratio.value=4//3 +1
+				ratio.value=4
 				threshold.value=-24
-			})(dynamics_compressor)
+			}
+			init_dynamics_compressor(dynamics_compressor)
 			this.style.innerHTML=volume_plugin_style_source
 			document.head.append(this.style)
 		}
