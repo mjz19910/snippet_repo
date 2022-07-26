@@ -1,6 +1,6 @@
 import {ytd_player} from "../elements/ytd_player"
 import {overlay_content_div} from "../elements/overlay_content_div"
-import {playlist_arr} from "../playlist_arr"
+import {playlist_arr} from "../loose_plugins/playlist_arr"
 import {update_plugin_overlay} from "./update_plugin_overlay"
 import {wait_for_yt_player} from "../elements/helper/wait_for_yt_player"
 
