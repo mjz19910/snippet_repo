@@ -1,5 +1,7 @@
 import {GenericDataEvent} from "types/vm/GenericDataEvent"
 
+export {}
+
 declare global {
 	interface Window {
 		DebugAPI: {}

@@ -3,8 +3,8 @@ import {WorkerState} from "./vm/WorkerState"
 import {DocumentWriteList} from "./vm/DocumentWriteList"
 import {AutoBuy} from "./vm/AutoBuy"
 
-/* eslint-disable no-undef,no-lone-blocks,no-eval */
-// spell:ignore secondinterval atomsaccu
+export {}
+
 declare global {
 	export interface Window {
 		proxy_set: any[]

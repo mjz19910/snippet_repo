@@ -19,6 +19,7 @@ export class SpecType {
 	done: false|true
 	cost: 100000
 }
+
 declare global {
 	export interface Window {
 		atomepersecond: number
@@ -98,5 +99,3 @@ declare global {
 		stop(): void
 	}
 }
-
-export var window: Window&typeof globalThis

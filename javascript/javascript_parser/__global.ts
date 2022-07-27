@@ -1,3 +1,5 @@
+export {}
+
 declare global {
 	interface WeakRef<T extends object> {
 		readonly [Symbol.toStringTag]: "WeakRef"
@@ -21,5 +23,3 @@ declare global {
 
 	var WeakRef: WeakRefConstructor
 }
-
-export {}

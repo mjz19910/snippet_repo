@@ -1,3 +1,5 @@
+export {}
+
 declare global {
 	interface Window {
 		setup_accessor?: (v: any) => number
@@ -28,5 +30,3 @@ declare global {
 
 	var WeakRef: WeakRefConstructor
 }
-
-export {}
