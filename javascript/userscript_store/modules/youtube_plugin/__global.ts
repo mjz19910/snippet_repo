@@ -1,3 +1,5 @@
+import {HTMLMediaElementGainController} from "./volume_range_plugin/HTMLMediaElementGainController"
+
 export {}
 
 declare global {
@@ -12,7 +14,7 @@ declare global {
 			port_state?: {}
 			plugin_overlay_element?: HTMLElement|null
 			yt_watch_page_loaded_handler?: () => void
-			gain_controller?: {}
+			gain_controller?: HTMLMediaElementGainController
 		}
 		ytPageType?: string
 		playlist_arr?: string[]
