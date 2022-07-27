@@ -605,7 +605,7 @@ function main() {
 		contents=[]
 	}
 	class HandleRichGridRenderer {
-		static debug=false
+		static debug=true
 		/**
 		 * @param {string} path
 		 * @param {RichGridRenderer} object
@@ -630,19 +630,18 @@ function main() {
 		 */
 		static check_item_keys(path,keys) {
 			/**@type {string[]|string|null} */
-			let key=null
 			if(keys.length===1) {
-				key=keys[0]
+				let key=keys[0]
+				switch(path) {
+					case 'richItemRenderer.content':
+						if(key==='videoRenderer') return
+					case 'richGridRenderer.contents[]':
+						if(key==='richItemRenderer') return
+				}
+				if(this.debug) console.log('content keys',path,keys)
 			} else {
-				key=keys
+				console.log('content more keys',path,keys)
 			}
-			switch(path) {
-				case 'richItemRenderer.content':
-					if(key==='videoRenderer') return
-				case 'richGridRenderer.contents[]':
-					if(key==='richItemRenderer') return
-			}
-			if(this.debug) console.log('content keys',path,key)
 		}
 		/**@arg {RichGridRenderer} renderer */
 		static on_contents(renderer) {
