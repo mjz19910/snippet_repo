@@ -1,3 +1,5 @@
+export {}
+
 declare global {
 	interface WeakRef<T extends object> {
 		readonly [Symbol.toStringTag]: "WeakRef"

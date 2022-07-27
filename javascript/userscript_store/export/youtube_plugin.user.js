@@ -42,6 +42,10 @@ function main() {
 		ui_plugin_style_element
 		/**@type {VolumeRange|undefined}*/
 		volume_range
+		/**@type {number|undefined} */
+		app_is_visible
+		/**@type {number|undefined} */
+		ytp_click_cint
 		/**@type {any} */
 		static any_cast_t1 = any
 		/**@type {typeof any<HTMLElement, YtdAppElement>} */
@@ -1819,7 +1823,7 @@ function main() {
 		current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin)
 		// visibilitychange handler (resume video when page is visible again)
 		let vis_imm=false
-		any(ytd_app).app_is_visible=1
+		ytd_app.app_is_visible=1
 		function fire_on_visibility_change_restart_video_playback() {
 			if(!is_watch_page_active()) return
 			if(!ytd_player||!ytd_player.player_) return
@@ -1830,17 +1834,17 @@ function main() {
 		document.addEventListener("visibilitychange",function() {
 			if(!is_watch_page_active()) return
 			if(document.visibilityState==='visible') {
-				any(ytd_app).app_is_visible=1
+				ytd_app.app_is_visible=1
 				if(vis_imm) {
 					fire_on_visibility_change_restart_video_playback()
 					vis_imm=false
 				}
 			} else {
-				any(ytd_app).app_is_visible=0
+				ytd_app.app_is_visible=0
 			}
 		})
 		// spell:ignore cint
-		any(ytd_app).ytp_click_cint=setInterval(() => {
+		ytd_app.ytp_click_cint=setInterval(() => {
 			if(!is_watch_page_active()||!ytd_app) return
 			if(!any(ytd_app).app_is_visible) {
 				vis_imm=true
