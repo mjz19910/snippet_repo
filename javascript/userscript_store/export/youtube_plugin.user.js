@@ -1445,8 +1445,7 @@ function main() {
 	let slow_message_event=true
 	let rep_size=8
 	function dispatch_observer_event() {
-		rep_count++
-		if(rep_count<rep_max) return dom_observer.dispatchEvent({
+		if(++rep_count<rep_max) return dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {},
 			port:message_channel.port1
@@ -2142,7 +2141,7 @@ function main() {
 		}
 	}
 	if(top===window) {
-		continue_callback(message_channel.port1)
+		dispatch_observer_event()
 	}
 }
 main()
