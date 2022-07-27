@@ -59,9 +59,9 @@ function main() {
 		}
 	}
 	class YtCurrentPage extends HTMLElement {
-		/**@return {YTPlayerData} */
+		/**@return {YTDPlayerElement} */
 		getPlayer() {
-			return new YTPlayerData
+			return new YTDPlayerElement
 		}
 	}
 	class YtdPageManagerElement extends HTMLElement {
@@ -1229,7 +1229,7 @@ function main() {
 		yt_playlist_manager=any(element)
 		window.yt_playlist_manager=element
 	}
-	class YTPlayerData extends HTMLElement {
+	class YTDPlayerElement extends HTMLElement {
 		active_nav=false
 		/**@type {{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null} */
 		player_=null
@@ -1242,7 +1242,7 @@ function main() {
 		play() {}
 	}
 	/**
-	 * @type {YTPlayerData | null}
+	 * @type {YTDPlayerElement | null}
 	 */
 	let ytd_player=null
 	/**
