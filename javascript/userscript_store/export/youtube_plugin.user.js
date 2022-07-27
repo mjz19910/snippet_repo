@@ -239,12 +239,11 @@ function main() {
 	 * @type {<T extends any[]>(value:T)=>typeof value}
 	 */
 	function clone_array(arr) {
-		/**@type {typeof arr}*/
-		let copy=any([])
+		arr=arr.slice()
 		for(let i=0;i<arr.length;i++) {
-			copy[i]=deep_clone(arr[i])
+			arr[i]=deep_clone(arr[i])
 		}
-		return copy
+		return arr
 	}
 	/**
 	 * @type {<T extends Map<any, any>>(map:T)=>typeof map}
@@ -593,7 +592,7 @@ function main() {
 		}
 	}
 	class RichItemRenderer {
-		/**@type {{displayAdRenderer?:{}}} */
+		/**@type {{adSlotRenderer?:{}}} */
 		content={}
 	}
 	class RendererContentItem {
@@ -1363,7 +1362,7 @@ function main() {
 		const current_message_id=10
 		let {port,detail,type}=event
 		observer_default_action(type,current_message_id)
-		let target_element=document.getElementsByTagName('ytd-app')[0]
+		let target_element=document.getElementsByTagNameNS("http://www.w3.org/1999/xhtml", 'ytd-app')[0]
 		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_ytd_app(target_element)
 		VolumeRangePlugin()
@@ -1846,9 +1845,11 @@ function main() {
 	}
 	g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
 	class PluginOverlayElement extends HTMLElement {
+		/**@type {typeof any<HTMLDivElement, PluginOverlayElement>} */
+		static any_cast = any
 		/**@arg {HTMLDivElement} value @return {PluginOverlayElement} */
 		static cast(value) {
-			return any(value)
+			return this.any_cast(value)
 		}
 		onupdate() {}
 	}
