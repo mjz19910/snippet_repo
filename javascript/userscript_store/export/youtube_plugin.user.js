@@ -714,7 +714,7 @@ function main() {
 		richGridRenderer(path,renderer) {
 			HandleRichGridRenderer.run(path,renderer)
 		}
-		appendContinuationItemsAction(path,action) {
+		appendContinuationItemsAction(_path,action) {
 			check_item_keys('appendContinuationItemsAction',Object.keys(action))
 			action.continuationItems=action.continuationItems.filter(content_item => {
 				let {richItemRenderer}=content_item
