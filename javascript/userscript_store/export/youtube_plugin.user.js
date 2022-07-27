@@ -613,17 +613,23 @@ function main() {
 		if(keys.length===1) {
 			let key=keys[0]
 			switch(path) {
+				case 'richGridRenderer.contents[]': switch(key) {
+					case 'richItemRenderer': return
+					case 'continuationItemRenderer': return
+				}
+				case 'richGridRenderer.contents[].richItemRenderer': switch(key) {
+					case 'richItemRenderer': return
+				}
 				case 'richItemRenderer.content': switch(key) {
 					case 'videoRenderer': return
 					case 'radioRenderer': return
 					case 'adSlotRenderer': return
 				}
-				case 'richGridRenderer.contents[]': switch(key) {
-					case 'richItemRenderer': return
-					case 'continuationItemRenderer': return
-				}
 				case 'appendContinuationItemsAction.continuationItems[]': switch(key) {
 					case 'richItemRenderer': return
+				}
+				case 'appendContinuationItemsAction.continuationItems[]': switch(key) {
+					case 'continuationItemRenderer': return
 				}
 			}
 			console.log('content key',path,key)
@@ -646,6 +652,15 @@ function main() {
 						switch(key) {
 							case 'continuationItems': continue
 							case 'targetId': continue
+						}
+						console.log('iter content key',path,key)
+					}
+				} return
+				case 'continuationItems[].richItemRenderer': {
+					for(let key of keys) {
+						switch(key) {
+							case 'content': continue
+							case 'trackingParams': continue
 						}
 						console.log('iter content key',path,key)
 					}
