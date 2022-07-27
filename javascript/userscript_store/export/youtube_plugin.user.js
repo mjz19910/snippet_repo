@@ -1424,6 +1424,7 @@ function main() {
 		let target_element=ytd_page_manager.getCurrentPage()
 		if(!target_element) return this.next_tick_action(port,current_message_id)
 		console.log("PageManager:current_page:"+target_element.tagName.toLowerCase())
+		VolumeRangePlugin()
 		if(target_element.tagName=="YTD-WATCH-FLEXY") {
 			on_ytd_watch_flexy(target_element)
 			this.dispatchEvent({type: "ytd-watch-flexy",detail,port})
