@@ -1210,11 +1210,8 @@ function main() {
 		port=new MessagePort
 	}
 	class CustomEventTarget {
-		constructor() {
-			/**@type {{[str: string]:?((this:CustomEventTarget, event: CustomEventType) => void)[]}} */
-			this._events={}
-			this.trace=false
-		}
+		/**@type {{[str: string]:?((this:CustomEventTarget, event: CustomEventType) => void)[]}} */
+		_events={}
 		/**
 		 * @param {string} type
 		 * @param {(this:CustomEventTarget, event: CustomEventType) => void} handler
@@ -1248,7 +1245,15 @@ function main() {
 			}
 		}
 	}
-	let dom_observer=new CustomEventTarget
+	class DomObserver extends CustomEventTarget {
+		trace=false
+		/**@arg {MessagePort} port @arg {number} message_id */
+		next_tick_action(port, message_id) {
+			if(this.trace) console.log("trace_id_"+message_id+":continue")
+			port.postMessage(message_id)
+		}
+	}
+	let dom_observer=new DomObserver
 	g_api.dom_observer=dom_observer
 	/**@arg {MessagePort} port*/
 	function continue_callback(port) {
@@ -1287,17 +1292,12 @@ function main() {
 			found_element=true
 		}
 	}
-	/**@arg {CustomEventTarget} observer @arg {MessagePort} port @arg {number} message_id*/
-	function dom_observer_next_tick_action(observer,port,message_id) {
-		if(observer.trace) console.log("trace_id_"+message_id+":continue")
-		port.postMessage(message_id)
-	}
 	function observer_default_action(type,message_id) {
 		port_state.current_event_type=type
 		try_find_element(message_id)
 	}
 	/**
-	 * @this {CustomEventTarget}
+	 * @this {DomObserver}
 	 * @arg {CustomEventType} event
 	 * ID(10)
 	 * */
@@ -1306,14 +1306,14 @@ function main() {
 		let {port,detail,type}=event
 		observer_default_action(type,current_message_id)
 		let target_element=document.getElementsByTagName('ytd-app')[0]
-		if(!target_element) return dom_observer_next_tick_action(this,port,current_message_id)
+		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_ytd_app(target_element)
 		VolumeRangePlugin()
 		this.dispatchEvent({type: "find-yt-playlist-manager",detail,port})
 	}
 	dom_observer.addEventListener('find-ytd-app',event_find_ytd_app)
 	/**
-	 * @this {CustomEventTarget}
+	 * @this {DomObserver}
 	 * @param {CustomEventType} event
 	 * ID(20)
 	 * */
@@ -1322,13 +1322,13 @@ function main() {
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
 		const target_element=document.getElementsByTagName('yt-playlist-manager')[0]
-		if(!target_element) return dom_observer_next_tick_action(this,port,current_message_id)
+		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_yt_playlist_manager(target_element)
 		this.dispatchEvent({type: "find-ytd-page-manager",detail,port})
 	}
 	dom_observer.addEventListener("find-yt-playlist-manager",event_find_yt_playlist_manager)
 	/**
-	 * @this {CustomEventTarget}
+	 * @this {DomObserver}
 	 * @param {CustomEventType} event
 	 * ID(30)
 	 * */
@@ -1337,7 +1337,7 @@ function main() {
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
 		const target_element=document.getElementsByTagName('ytd-page-manager')[0]
-		if(!target_element) return dom_observer_next_tick_action(this,port,current_message_id)
+		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_ytd_page_manager(target_element)
 		this.dispatchEvent({type: "find-ytd-watch-flexy",detail,port})
 	}
@@ -1347,7 +1347,7 @@ function main() {
 		continue_callback(event.port)
 	})
 	/**
-	 * @this {CustomEventTarget}
+	 * @this {DomObserver}
 	 * @param {CustomEventType} event
 	 * ID(40)
 	 * */
@@ -1356,7 +1356,7 @@ function main() {
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
 		let target_element=ytd_page_manager.getCurrentPage()
-		if(!target_element) return dom_observer_next_tick_action(this,port,current_message_id)
+		if(!target_element) return this.next_tick_action(port,current_message_id)
 		console.log("PageManager:current_page:"+target_element.tagName.toLowerCase())
 		if(target_element.tagName=="YTD-WATCH-FLEXY") {
 			on_ytd_watch_flexy(target_element)
@@ -1371,7 +1371,7 @@ function main() {
 	}
 	dom_observer.addEventListener('find-ytd-watch-flexy',event_find_ytd_watch_flexy)
 	/**
-	 * @this {CustomEventTarget}
+	 * @this {DomObserver}
 	 * @arg {CustomEventType} event
 	 * ID(50)
 	 * */
@@ -1380,13 +1380,13 @@ function main() {
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
 		let target_element=ytd_watch_flexy.getElementsByTagName('ytd-player')[0]
-		if(!target_element) return dom_observer_next_tick_action(this,port,current_message_id)
+		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_ytd_player(target_element)
 		this.dispatchEvent({type: "ytd-player",detail,port})
 	}
 	dom_observer.addEventListener('ytd-watch-flexy',event_ytd_watch_flexy)
 	/**
-	 * @this {CustomEventTarget}
+	 * @this {DomObserver}
 	 * @param {CustomEventType} event
 	 * ID(60)
 	 */
@@ -1395,7 +1395,7 @@ function main() {
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
 		const element_list=document.getElementsByTagName('video')
-		if(element_list.length<=0) return dom_observer_next_tick_action(this,port,current_message_id)
+		if(element_list.length<=0) return this.next_tick_action(port,current_message_id)
 		/**@type {HTMLVideoElement[]}*/
 		let element_list_arr=[...Array.prototype.slice.call(element_list)]
 		box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr))
@@ -1403,7 +1403,7 @@ function main() {
 	}
 	dom_observer.addEventListener('ytd-player',event_ytd_player)
 	/**
-	 * @this {CustomEventTarget}
+	 * @this {DomObserver}
 	 * @param {CustomEventType} event
 	 * ID(70)
 	 */
