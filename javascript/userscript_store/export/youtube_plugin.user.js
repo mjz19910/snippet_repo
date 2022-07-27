@@ -623,7 +623,7 @@ function main() {
 					case 'continuationItemRenderer': return
 				}
 			}
-			if(this.debug) console.log('content key',path,key)
+			console.log('content key',path,key)
 		} else {
 			switch(path) {
 				case 'tabRenderer.content.richGridRenderer': {
