@@ -1216,7 +1216,7 @@ function main() {
 		window.ytd_app=element
 	}
 	/**
-	 * @type {Element | null}
+	 * @type {HTMLElement | null}
 	 */
 	let yt_playlist_manager=null
 	/**
