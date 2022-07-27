@@ -5,7 +5,7 @@ import {rep_count} from "./rep_count"
 import {rep_max} from "./rep_max"
 import {dom_observer} from "./dom_observer"
 
-export function handle_port_message() {
+export function dispatch_observer_event() {
 	rep_count.value++
 	if(rep_count.value<rep_max.value) return dom_observer.dispatchEvent({
 		type: port_state.current_event_type,
@@ -14,6 +14,6 @@ export function handle_port_message() {
 	})
 	port_state.cint=setTimeout(() => {
 		rep_max.value+=rep_size
-		handle_port_message()
+		dispatch_observer_event()
 	},20)
 }

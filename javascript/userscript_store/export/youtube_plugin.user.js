@@ -1444,15 +1444,19 @@ function main() {
 	let message_channel=create_message_channel()
 	let slow_message_event=true
 	let rep_size=8
-	function handle_port_message() {
-		let {port1}=message_channel
+	function dispatch_observer_event() {
 		rep_count++
-		if(rep_count<rep_max) return continue_callback(port1)
+		if(rep_count<rep_max) return dom_observer.dispatchEvent({
+			type: port_state.current_event_type,
+			detail: {},
+			port:message_channel.port1
+		})
 		port_state.cint=setTimeout(() => {
 			rep_max+=rep_size
-			handle_port_message()
+			dispatch_observer_event()
 		},20)
 	}
+	const message_channel_loop_delay=80
 	/**
 	 * @param {MessageEvent<number>} event
 	 */
@@ -1460,10 +1464,10 @@ function main() {
 		if(debug) console.log('msg_port:message %o',event.data)
 		port_state_log.push([performance.now()-port_state.time_offset,event.data])
 		if(slow_message_event) {
-			setTimeout(() => handle_port_message(),500)
-		} else {
-			handle_port_message()
+			setTimeout(dispatch_observer_event,message_channel_loop_delay)
+			return
 		}
+		dispatch_observer_event()
 	}
 	let rep_count=0
 	let rep_max=25
