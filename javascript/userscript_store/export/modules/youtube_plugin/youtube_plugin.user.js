@@ -1426,7 +1426,8 @@ function main() {
 		this.dispatchEvent({type: "find-ytd-watch-flexy",detail,port})
 	}
 	dom_observer.addEventListener("find-ytd-page-manager",event_find_ytd_page_manager)
-	dom_observer.addEventListener('yt-page-type-changed',function(event) {
+	/** @this {DomObserver} @arg {CustomEventType} event */
+	function on_yt_page_type_changed(event) {
 		let {detail,port}=event
 		if(this.trace) console.log("yt-page-type-changed")
 		this.dispatchEvent({
@@ -1434,7 +1435,8 @@ function main() {
 			detail,
 			port
 		})
-	})
+	}
+	dom_observer.addEventListener('yt-page-type-changed',on_yt_page_type_changed)
 	/**
 	 * @this {DomObserver}
 	 * @param {CustomEventType} event
@@ -2077,11 +2079,12 @@ function main() {
 	let gain_controller=null
 	/**@arg {()=>HTMLMediaElementGainController} create_gain_controller @returns {HTMLMediaElementGainController} */
 	function on_gain_controller(create_gain_controller) {
-		if(g_api.gain_controller) {
-			return g_api.gain_controller
+		/**@type {HTMLMediaElementGainController} */
+		let controller=g_api.gain_controller
+		if(!controller) {
+			controller=create_gain_controller()
+			g_api.gain_controller=controller
 		}
-		let controller=create_gain_controller()
-		g_api.gain_controller=controller
 		return controller
 	}
 	class VolumeRange {
