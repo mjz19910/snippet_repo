@@ -445,7 +445,7 @@ function main() {
 			}
 		}
 		let fake_response=new FakeResponse
-		let response_1=any_c(fake_response,Response)
+		let response_1=any_o(fake_response,response)
 		return new Proxy(response_1,{
 			get(...[obj,key,_]) {
 				if(!(key in obj)) {
