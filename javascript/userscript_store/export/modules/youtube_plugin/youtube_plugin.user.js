@@ -13,23 +13,35 @@
 console=window.console
 function main() {
 	const debug=false
+	/** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
+	function cast2_c(value,_constructor_type) {
+		void value,_constructor_type
+		return true
+	}
 	/**
 	 * @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X}
 	 * Copy type from constructor
 	 * */
 	function any_c(value,_constructor_type) {
-		/**@type {any} */
-		const value_any=value
-		return value_any
+		if(cast2_c(value,_constructor_type)) {
+			return value
+		}
+		throw new Error("Failed to cast")
+	}
+	/** @type {<T, U>(value: T|U, copy:U)=>value is U} */
+	function cast2_o(value,copy) {
+		void value,copy
+		return true
 	}
 	/**
 	 * @type {<T, U>(v:T|U, _copy:U)=>U}
 	 * Copy type from existing object
 	*/
-	function any_o(value,_copy) {
-		/**@type {any} */
-		const value_any=value
-		return value_any
+	function any_o(value,copy) {
+		if(cast2_o(value,copy)) {
+			return value
+		}
+		throw new Error("Failed to cast")
 	}
 	window.g_api??={
 		Seen: undefined,
