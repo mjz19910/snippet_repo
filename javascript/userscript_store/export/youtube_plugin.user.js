@@ -611,9 +611,11 @@ function main() {
 		 * @param {RichGridRenderer} renderer
 		 */
 		static run(path,renderer) {
-			this.check_item_keys(path,Object.keys(renderer))
+			let path_parts=path.split(".")
+			let sub_path=path_parts.slice(-3).join(".")
+			this.check_item_keys(sub_path,Object.keys(renderer))
 			if(renderer.masthead) {
-				this.check_item_keys(path + ".masthead",Object.keys(renderer.masthead))
+				this.check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead))
 				if(renderer.masthead.videoMastheadAdV3Renderer) {
 					let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead
 					console.log('masthead',masthead)
@@ -647,14 +649,33 @@ function main() {
 			if(keys.length===1) {
 				let key=keys[0]
 				switch(path) {
-					case 'richItemRenderer.content':
-						if(key==='videoRenderer') return
-					case 'richGridRenderer.contents[]':
-						if(key==='richItemRenderer') return
+					case 'richItemRenderer.content': switch(key) {
+						case 'videoRenderer': return
+						case 'radioRenderer': return
+						case 'adSlotRenderer': return
+					}
+					case 'richGridRenderer.contents[]': switch(key) {
+						case 'richItemRenderer': return
+						case 'continuationItemRenderer': return
+					}
 				}
-				if(this.debug) console.log('content keys',path,keys)
+				if(this.debug) console.log('content key',path,key)
 			} else {
-				console.log('content more keys',path,keys)
+				switch(path) {
+					case 'tabRenderer.content.richGridRenderer': {
+						for(let key of keys) {
+							switch(key) {
+								case 'contents': continue
+								case 'trackingParams': continue
+								case 'header': continue
+								case 'targetId': continue
+								case 'reflowOptions': continue
+							}
+							console.log('iter content key',path,key)
+						}
+					} return
+				}
+				console.log('content path',path)
 			}
 		}
 	}
@@ -715,7 +736,7 @@ function main() {
 			}
 			let api_path=api_parts.slice(2).join(".")
 			debug&&console.log('on_handle_api api_path',api_parts.slice(0,2).join("/"),api_path)
-			this.default_iter(api_path,data)
+			this.handle_any_data(api_path,data)
 			switch(api_parts[2]) {
 				case 'player': this.on_v1_player(api_path,data); break
 			}
@@ -727,13 +748,16 @@ function main() {
 		handle_page_type(data,page_type,response_type) {
 			const debug=false
 			debug&&console.log('handle_page_type with page_type and response_type',page_type,response_type)
-			this.default_iter(page_type,data)
+			this.handle_any_data(page_type,data)
 			switch(response_type) {
 				case 'response': break
 				case 'playerResponse': switch(page_type) {
 					case 'watch': this.on_v1_player(page_type,data); break
 				}
 			}
+		}
+		handle_any_data(path, data) {
+			this.default_iter(path,data)
 		}
 		/**
 		 * @param {[()=>{}, object, []]} apply_args
