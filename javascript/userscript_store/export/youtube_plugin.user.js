@@ -608,12 +608,12 @@ function main() {
 		static debug=true
 		/**
 		 * @param {string} path
-		 * @param {RichGridRenderer} object
+		 * @param {RichGridRenderer} renderer
 		 */
-		static run(path,object) {
-			let renderer=object
-			if(this.debug) console.log('run handler',path)
+		static run(path,renderer) {
+			this.check_item_keys(path,Object.keys(renderer))
 			if(renderer.masthead) {
+				this.check_item_keys(path + ".masthead",Object.keys(renderer.masthead))
 				if(renderer.masthead.videoMastheadAdV3Renderer) {
 					let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead
 					console.log('masthead',masthead)
@@ -621,8 +621,22 @@ function main() {
 				}
 			}
 			if(renderer.contents) {
-				this.on_contents(object)
+				this.on_contents(renderer)
 			}
+		}
+		/**@arg {RichGridRenderer} renderer */
+		static on_contents(renderer) {
+			renderer.contents=renderer.contents.filter(content_item => {
+				let {richItemRenderer}=content_item
+				this.check_item_keys('richGridRenderer.contents[]',Object.keys(content_item))
+				// WARNING: This function is filtering an array (was just "return;")
+				if(!richItemRenderer) return true
+				let {content}=richItemRenderer
+				if(!content) return true
+				this.check_item_keys('richItemRenderer.content',Object.keys(content))
+				if(content.displayAdRenderer) return false
+				return true
+			})
 		}
 		/**
 		 * @param {string[]} keys
@@ -642,20 +656,6 @@ function main() {
 			} else {
 				console.log('content more keys',path,keys)
 			}
-		}
-		/**@arg {RichGridRenderer} renderer */
-		static on_contents(renderer) {
-			renderer.contents=renderer.contents.filter(content_item => {
-				let {richItemRenderer}=content_item
-				this.check_item_keys('richGridRenderer.contents[]',Object.keys(content_item))
-				// WARNING: This function is filtering an array (was just "return;")
-				if(!richItemRenderer) return true
-				let {content}=richItemRenderer
-				if(!content) return true
-				this.check_item_keys('richItemRenderer.content',Object.keys(content))
-				if(content.displayAdRenderer) return false
-				return true
-			})
 		}
 	}
 	class YTFilterHandlers extends YTIterateAllBase {
