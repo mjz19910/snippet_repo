@@ -16,12 +16,12 @@ function main() {
 	/** @type {<T, U>(v:T|U)=>U} */
 	function any(value) {
 		/**@type {any} */
-		const value_any = value
+		const value_any=value
 		return value_any
 	}
 	window.g_api??={
 		Seen: undefined,
-		property_handler_state: undefined,
+		PropertyHandler: undefined,
 		yt_state: undefined,
 		blob_create_args_arr: undefined,
 		yt_handlers: undefined,
@@ -47,9 +47,9 @@ function main() {
 		/**@type {number|undefined} */
 		ytp_click_cint
 		/**@type {any} */
-		static any_cast_t1 = any
+		static any_cast_t1=any
 		/**@type {typeof any<HTMLElement, YtdAppElement>} */
-		static any_cast = this.any_cast_t1
+		static any_cast=this.any_cast_t1
 		/**@arg {HTMLElement} element @return {YtdAppElement} */
 		static cast(element) {
 			return this.any_cast(element)
@@ -247,7 +247,10 @@ function main() {
 	 * @type {<T extends any[]>(value:T)=>typeof value}
 	 */
 	function clone_array(arr) {
-		arr=arr.slice()
+		let cast_fn_1=any
+		/**@type {typeof any<typeof arr, typeof arr>} */
+		let cast_fn=cast_fn_1
+		arr=cast_fn(arr.slice())
 		for(let i=0;i<arr.length;i++) {
 			arr[i]=deep_clone(arr[i])
 		}
@@ -516,7 +519,7 @@ function main() {
 			PropertyHandler.override_map.set(this.key,proxy_override)
 		}
 	}
-	g_api.property_handler_state=PropertyHandler
+	g_api.PropertyHandler=PropertyHandler
 	/**
 	 * @arg {{}} object
 	 * @param {PropertyKey} property
@@ -1182,6 +1185,18 @@ function main() {
 	 * @type {YtdPageManagerElement | null}
 	 */
 	let ytd_page_manager=null
+	/**@arg {HTMLElement} value @returns {YtdPageManagerElement} */
+	function convert_1(value) {
+		let x_const=false
+		/**@type {any} */
+		let any_1=any
+		/**@type {typeof any<HTMLElement, YtdPageManagerElement>} */
+		let any_2=any_1
+		if(x_const) {
+			return any_2(value)
+		}
+		return value
+	}
 	/**
 	 * @param {HTMLElement} element
 	 */
@@ -1189,7 +1204,7 @@ function main() {
 		const element_id="ytd-page-manager"
 		console.log(`on ${element_id}`)
 		element_map.set(element_id,element)
-		ytd_page_manager=any(element)
+		ytd_page_manager=convert_1(element)
 		window.ytd_page_manager=element
 	}
 	class YtdWatchFlexyElement extends HTMLElement {}
@@ -1361,6 +1376,10 @@ function main() {
 		port_state.current_event_type=type
 		try_find_element(message_id)
 	}
+	/**@arg {Document|Element} node @arg {string} child_node_tag_name*/
+	function get_html_elements(node,child_node_tag_name) {
+		return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name)
+	}
 	/**
 	 * @this {DomObserver}
 	 * @arg {CustomEventType} event
@@ -1370,7 +1389,7 @@ function main() {
 		const current_message_id=10
 		let {port,detail,type}=event
 		observer_default_action(type,current_message_id)
-		let target_element=document.getElementsByTagNameNS("http://www.w3.org/1999/xhtml", 'ytd-app')[0]
+		let target_element=get_html_elements(document,'ytd-app')[0]
 		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_ytd_app(target_element)
 		VolumeRangePlugin()
@@ -1386,7 +1405,7 @@ function main() {
 		const current_message_id=20
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
-		const target_element=document.getElementsByTagName('yt-playlist-manager')[0]
+		const target_element=get_html_elements(document,'yt-playlist-manager')[0]
 		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_yt_playlist_manager(target_element)
 		this.dispatchEvent({type: "find-ytd-page-manager",detail,port})
@@ -1401,7 +1420,7 @@ function main() {
 		const current_message_id=30
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
-		const target_element=document.getElementsByTagName('ytd-page-manager')[0]
+		const target_element=get_html_elements(document,'ytd-page-manager')[0]
 		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_ytd_page_manager(target_element)
 		this.dispatchEvent({type: "find-ytd-watch-flexy",detail,port})
@@ -1450,7 +1469,7 @@ function main() {
 		const current_message_id=50
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
-		let target_element=ytd_watch_flexy.getElementsByTagName('ytd-player')[0]
+		let target_element=get_html_elements(ytd_watch_flexy,'ytd-player')[0]
 		if(!target_element) return this.next_tick_action(port,current_message_id)
 		on_ytd_player(target_element)
 		this.dispatchEvent({type: "ytd-player",detail,port})
@@ -1465,7 +1484,7 @@ function main() {
 		const current_message_id=60
 		let {type,detail,port}=event
 		observer_default_action(type,current_message_id)
-		const element_list=document.getElementsByTagName('video')
+		const element_list=get_html_elements(document,'video')
 		if(element_list.length<=0) return this.next_tick_action(port,current_message_id)
 		/**@type {HTMLVideoElement[]}*/
 		let element_list_arr=[...Array.prototype.slice.call(element_list)]
@@ -1855,9 +1874,9 @@ function main() {
 	g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
 	class PluginOverlayElement extends HTMLDivElement {
 		/**@type {any} */
-		static any_cast_t1 = any
+		static any_cast_t1=any
 		/**@type {typeof any<HTMLDivElement, PluginOverlayElement>} */
-		static any_cast = this.any_cast_t1
+		static any_cast=this.any_cast_t1
 		/**@arg {HTMLDivElement} value @return {PluginOverlayElement} */
 		static cast(value) {
 			return this.any_cast(value)
@@ -2056,7 +2075,7 @@ function main() {
 	}
 	/**@type {HTMLMediaElementGainController | null} */
 	let gain_controller=null
-	/**@arg {()=>HTMLMediaElementGainController} create_gain_controller */
+	/**@arg {()=>HTMLMediaElementGainController} create_gain_controller @returns {HTMLMediaElementGainController} */
 	function on_gain_controller(create_gain_controller) {
 		if(g_api.gain_controller) {
 			return g_api.gain_controller
@@ -2175,13 +2194,14 @@ function main() {
 					this.range_element.id="i_r_css"
 					let range_style=this.range_element.style
 					range_style.width="calc(100% + 40px + 8px + 40px)"
-					any(range_style).marginLeft=0
-					any(range_style).marginRight=0
+					range_style.marginLeft="0"
+					range_style.marginRight="0"
 				}
 				this.range_element
 				this.range_element.oninput=() => {
 					if(!this.range_element) return
-					this.setGain(any(this.range_element).value/this.max)
+					let range_value=Number.parseInt(this.range_element.value,10)
+					this.setGain(range_value/this.max)
 				}
 				this.range_element.onkeydown=(event) => this.on_key_down(event)
 				this.range_element.min=""+this.min
