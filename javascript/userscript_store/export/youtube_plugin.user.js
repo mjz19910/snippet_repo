@@ -13,7 +13,7 @@
 console=window.console
 function main() {
 	const debug=false
-	/** @type {<U>(v:U)=>U&Box<any>} */
+	/** @type {<U>(v:U)=>U&HTMLVideoElementArrayBox<any>} */
 	function any(value) {
 		return value
 	}
@@ -1192,9 +1192,9 @@ function main() {
 	function is_watch_page_active() {
 		return ytd_page_manager&&ytd_page_manager.getCurrentPage()&&ytd_page_manager.getCurrentPage().nodeName=="YTD-WATCH-FLEXY"
 	}
-	class Box {
+	class HTMLVideoElementArrayBox {
 		/**@readonly*/
-		type="box"
+		type="HTMLVideoElementArrayBox"
 		/** @param {HTMLVideoElement[]} value */
 		constructor(value) {
 			this.value=value
@@ -1202,7 +1202,7 @@ function main() {
 	}
 	/**@type {Map<string, HTMLElement>}*/
 	let element_map=new Map
-	/**@type {Map<string, Box>}*/
+	/**@type {Map<string, HTMLVideoElementArrayBox>}*/
 	let box_map=new Map
 	class CustomEventType {
 		type="event_type"
@@ -1398,7 +1398,7 @@ function main() {
 		if(element_list.length<=0) return dom_observer_next_tick_action(this,port,current_message_id)
 		/**@type {HTMLVideoElement[]}*/
 		let element_list_arr=[...Array.prototype.slice.call(element_list)]
-		box_map.set('video-list',new Box(element_list_arr))
+		box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr))
 		this.dispatchEvent({type: "video",detail,port})
 	}
 	dom_observer.addEventListener('ytd-player',event_ytd_player)
@@ -1736,7 +1736,7 @@ function main() {
 		if(!ytd_player) return
 		ytd_player.active_nav=false
 		plugin_overlay_element.onupdate=fix_offset
-		on_yt_navigate_finish[0]=log_yt_finish_navigation
+		on_yt_navigate_finish.push(log_yt_finish_navigation)
 		init_ui_plugin()
 		ytd_player.init_nav=true
 		input_modify_css_style.innerHTML="C"
@@ -1779,9 +1779,6 @@ function main() {
 		},15*60*1000)
 	}
 	g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
-	function dummy_event_callback() {
-		on_yt_navigate_finish[0]({})
-	}
 	class PluginOverlayElement extends HTMLElement {
 		/**@arg {HTMLDivElement} value @return {PluginOverlayElement} */
 		static cast(value) {
@@ -1811,7 +1808,7 @@ function main() {
 		plugin_overlay_element.setAttribute("style",player_overlay_style_str)
 		plugin_overlay_element.onupdate()
 		ytd_page_manager.getCurrentPage().append(plugin_overlay_element)
-		dummy_event_callback()
+		log_current_video_data()
 		ytd_page_manager.addEventListener("yt-page-type-changed",function() {
 			if(!ytd_player) return
 			if(!ytd_page_manager) return
