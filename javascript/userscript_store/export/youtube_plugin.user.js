@@ -640,7 +640,10 @@ function main() {
 				} return
 				case 'appendContinuationItemsAction': {
 					for(let key of keys) {
-						switch(key) {}
+						switch(key) {
+							case 'continuationItems': continue
+							case 'targetId': continue
+						}
 						console.log('iter content key',path,key)
 					}
 				} return
@@ -675,8 +678,8 @@ function main() {
 			renderer.contents=renderer.contents.filter(content_item => {
 				let {richItemRenderer}=content_item
 				check_item_keys('richGridRenderer.contents[]',Object.keys(content_item))
-				// WARNING: This function is filtering an array (was just "return;")
 				if(!richItemRenderer) return true
+				check_item_keys('richGridRenderer.contents[].richItemRenderer',Object.keys(content_item))
 				let {content}=richItemRenderer
 				if(!content) return true
 				check_item_keys('richItemRenderer.content',Object.keys(content))
@@ -695,6 +698,17 @@ function main() {
 		}
 		appendContinuationItemsAction(path,action) {
 			check_item_keys('appendContinuationItemsAction',Object.keys(action))
+			action.continuationItems=action.continuationItems.filter(content_item => {
+				let {richItemRenderer}=content_item
+				check_item_keys('appendContinuationItemsAction.continuationItems[]',Object.keys(content_item))
+				if(!richItemRenderer) return true
+				check_item_keys('continuationItems[].richItemRenderer',Object.keys(content_item))
+				let {content}=richItemRenderer
+				if(!content) return true
+				check_item_keys('richItemRenderer.content',Object.keys(content))
+				if(content.adSlotRenderer) return false
+				return true
+			})
 		}
 		/**
 		 * @param {string} path
