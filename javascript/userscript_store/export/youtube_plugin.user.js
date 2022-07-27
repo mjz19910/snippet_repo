@@ -15,7 +15,9 @@ function main() {
 	const debug=false
 	/** @type {<T, U>(v:T|U)=>U} */
 	function any(value) {
-		return value
+		/**@type {any} */
+		let value_any = value
+		return value_any
 	}
 	window.g_api??={
 		Seen: undefined,
