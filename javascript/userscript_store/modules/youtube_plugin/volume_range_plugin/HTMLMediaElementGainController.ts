@@ -1,7 +1,7 @@
 import {volume_plugin_style_source} from "./raw/volume_plugin_style_source"
 
 export class HTMLMediaElementGainController {
-	last_event?: Event
+	last_event: Event|undefined
 	attached_element_list: (HTMLVideoElement|HTMLAudioElement)[]=[]
 	audioCtx=new AudioContext()
 	style=document.createElement("style")

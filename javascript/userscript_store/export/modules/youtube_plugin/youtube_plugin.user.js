@@ -13,8 +13,20 @@
 console=window.console
 function main() {
 	const debug=false
-	/** @type {<T, U>(v:T|U)=>U} */
-	function any(value) {
+	/**
+	 * @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X}
+	 * Copy type from constructor
+	 * */
+	function any_c(value,_constructor_type) {
+		/**@type {any} */
+		const value_any=value
+		return value_any
+	}
+	/**
+	 * @type {<T, U>(v:T|U, _copy:U)=>U}
+	 * Copy type from existing object
+	*/
+	function any_o(value,_copy) {
 		/**@type {any} */
 		const value_any=value
 		return value_any
@@ -44,15 +56,11 @@ function main() {
 		volume_range
 		/**@type {number|undefined} */
 		app_is_visible
-		/**@type {number|undefined} */
+		/**@type {ReturnType<typeof setInterval>|undefined} */
 		ytp_click_cint
-		/**@type {any} */
-		static any_cast_t1=any
-		/**@type {typeof any<HTMLElement, YtdAppElement>} */
-		static any_cast=this.any_cast_t1
 		/**@arg {HTMLElement} element @return {YtdAppElement} */
 		static cast(element) {
-			return this.any_cast(element)
+			return any_c(element,YtdAppElement)
 		}
 		__shady_children={
 			masthead: {
@@ -247,10 +255,7 @@ function main() {
 	 * @type {<T extends any[]>(value:T)=>typeof value}
 	 */
 	function clone_array(arr) {
-		let cast_fn_1=any
-		/**@type {typeof any<typeof arr, typeof arr>} */
-		let cast_fn=cast_fn_1
-		arr=cast_fn(arr.slice())
+		arr=any_o(arr.slice(),arr)
 		for(let i=0;i<arr.length;i++) {
 			arr[i]=deep_clone(arr[i])
 		}
@@ -262,7 +267,7 @@ function main() {
 	function clone_map(map) {
 		let arr=Array.from(map)
 		let cloned_arr=arr.map(/**@return {[any, any]}*/(map_entry) => [map_entry[0],deep_clone(map_entry[1])])
-		return any(new Map(cloned_arr))
+		return any_o(new Map(cloned_arr),map)
 	}
 	/**@arg {{}} obj*/
 	function clone_object(obj) {
@@ -270,6 +275,10 @@ function main() {
 		let cloned_entries=obj_entries.map((object_entry) => [object_entry[0],deep_clone(object_entry[1])])
 		let clone=Object.fromEntries(cloned_entries)
 		return clone
+	}
+	class WithES5Shimmed {
+		/**@type {boolean|undefined} */
+		es5Shimmed=true
 	}
 	/**
 	 * @type {<T>(value:T)=>typeof value}
@@ -308,7 +317,7 @@ function main() {
 				return seen_obj
 			}
 			// was the real one shimmed already
-			if(any(realHTMLElement).es5Shimmed) {
+			if(any_c(realHTMLElement,WithES5Shimmed).es5Shimmed) {
 				// the constructor is still non-shimmed
 				if(create===realHTMLElement.prototype.constructor) {
 					return seen_obj
@@ -436,15 +445,13 @@ function main() {
 			}
 		}
 		let fake_response=new FakeResponse
-		return new Proxy(any(fake_response),{
-			/**
-			 * @param {[FakeResponse, keyof Response, FakeResponse]} obj
-			 */
+		let response_1=any_c(fake_response,Response)
+		return new Proxy(response_1,{
 			get(...[obj,key,_]) {
 				if(!(key in obj)) {
 					return Reflect.get(response,key)
 				}
-				return any(obj)[key]
+				return obj[key]
 			}
 		})
 	}
@@ -579,8 +586,8 @@ function main() {
 			}
 			for(let [key,value] of Object.entries(data)) {
 				this.default_iter(`${path}.${key}`,value)
-				if(any(this)[key]) {
-					any(this)[key](`${path}.${key}`,value)
+				if(this[key]) {
+					this[key](`${path}.${key}`,value)
 				}
 			}
 		}
@@ -902,12 +909,17 @@ function main() {
 				return Reflect.apply(proxy_args[0],proxy_args[1],proxy_args[2])
 			}
 		}
+		class WithJSONParseChanged {
+			/**@type {boolean|undefined} */
+			JSON_parse_changed=true
+		}
+		let tmp_1=any_c(Function,WithJSONParseChanged)
 		//window.fetch=o_fetch
-		if(any(Function).JSON_parse_changed===undefined) {
+		if(tmp_1.JSON_parse_changed===undefined) {
 			let orig_json_parse=JSON.parse
 			JSON.parse=new Proxy(JSON.parse,new json_parse_handler)
 			JSON.parse=orig_json_parse
-			any(Function).JSON_parse_changed=true
+			tmp_1.JSON_parse_changed=true
 		}
 		let navigator_sendBeacon=navigator.sendBeacon
 		navigator.sendBeacon=function(...args) {
@@ -1066,12 +1078,16 @@ function main() {
 	function on_mk_function_property(cc) {
 		/**@this {{}}*/
 		function with_this(/** @type {any} */ ...args) {
-			new_pv_fn(any(this),cc,...args)
+			new_pv_fn(this,cc,...args)
 		}
 		cc.value=with_this
 		ud_func.add(cc.value)
 	}
 	const ghost_symbol=Symbol.for('ghost')
+	class WithGhostSymbol {
+		/**@type {boolean|undefined} */
+		[ghost_symbol]=true
+	}
 	class MKState {
 		[ghost_symbol]=true
 		/**
@@ -1123,7 +1139,7 @@ function main() {
 	 */
 	function on_mk_property_set(cc,obj) {
 		if(ud_func.has(obj)) cc.value=obj
-		if(any(obj)[ghost_symbol]===undefined) {
+		if(any_c(obj,WithGhostSymbol)[ghost_symbol]===undefined) {
 			on_mk_new_property(cc,obj)
 		} else {
 			cc.value=obj
@@ -1185,18 +1201,6 @@ function main() {
 	 * @type {YtdPageManagerElement | null}
 	 */
 	let ytd_page_manager=null
-	/**@arg {HTMLElement} value @returns {YtdPageManagerElement} */
-	function convert_1(value) {
-		let x_const=false
-		/**@type {any} */
-		let any_1=any
-		/**@type {typeof any<HTMLElement, YtdPageManagerElement>} */
-		let any_2=any_1
-		if(x_const) {
-			return any_2(value)
-		}
-		return value
-	}
 	/**
 	 * @param {HTMLElement} element
 	 */
@@ -1204,7 +1208,7 @@ function main() {
 		const element_id="ytd-page-manager"
 		console.log(`on ${element_id}`)
 		element_map.set(element_id,element)
-		ytd_page_manager=convert_1(element)
+		ytd_page_manager=any_c(element,YtdPageManagerElement)
 		window.ytd_page_manager=element
 	}
 	class YtdWatchFlexyElement extends HTMLElement {}
@@ -1219,7 +1223,7 @@ function main() {
 		const element_id="ytd-watch-flexy"
 		console.log(`on ${element_id}`)
 		element_map.set(element_id,element)
-		ytd_watch_flexy=any(element)
+		ytd_watch_flexy=any_c(element,YtdWatchFlexyElement)
 		window.ytd_watch_flexy=element
 	}
 	/**
@@ -1248,7 +1252,7 @@ function main() {
 		const element_id="yt-playlist-manager"
 		console.log(`on ${element_id}`)
 		element_map.set(element_id,element)
-		yt_playlist_manager=any(element)
+		yt_playlist_manager=element
 		window.yt_playlist_manager=element
 	}
 	class YTDPlayerElement extends HTMLElement {
@@ -1274,7 +1278,7 @@ function main() {
 		const element_id="ytd-player"
 		console.log(`on ${element_id}`)
 		element_map.set(element_id,element)
-		ytd_player=any(element)
+		ytd_player=any_c(element,YTDPlayerElement)
 		window.ytd_player=element
 	}
 	function is_watch_page_active() {
@@ -1343,10 +1347,17 @@ function main() {
 	}
 	let dom_observer=new DomObserver
 	g_api.dom_observer=dom_observer
+	/**@arg {number} value @returns {ReturnType<typeof setTimeout>} */
+	function as_timeout_type(value) {
+		/**@type {any} */
+		let value_any=value
+		return value_any
+	}
 	/**@type {[number, number][]}*/
 	let port_state_log=[]
 	class MessagePortState {
-		cint=-1
+		/**@type {ReturnType<typeof setTimeout>} */
+		cint=as_timeout_type(-1)
 		state_log=port_state_log
 		time_offset=performance.now()
 		current_event_type="find-ytd-app"
@@ -1867,7 +1878,7 @@ function main() {
 		// spell:ignore cint
 		ytd_app.ytp_click_cint=setInterval(() => {
 			if(!is_watch_page_active()||!ytd_app) return
-			if(!any(ytd_app).app_is_visible) {
+			if(!ytd_app.app_is_visible) {
 				vis_imm=true
 				return
 			}
@@ -1875,13 +1886,9 @@ function main() {
 	}
 	g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
 	class PluginOverlayElement extends HTMLDivElement {
-		/**@type {any} */
-		static any_cast_t1=any
-		/**@type {typeof any<HTMLDivElement, PluginOverlayElement>} */
-		static any_cast=this.any_cast_t1
 		/**@arg {HTMLDivElement} value @return {PluginOverlayElement} */
 		static cast(value) {
-			return this.any_cast(value)
+			return any_c(value,PluginOverlayElement)
 		}
 		onupdate() {}
 	}
