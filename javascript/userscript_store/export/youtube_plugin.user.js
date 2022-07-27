@@ -1185,7 +1185,7 @@ function main() {
 		ytd_page_manager=any(element)
 		window.ytd_page_manager=element
 	}
-	class YtdWatchFlexyElement extends Element {}
+	class YtdWatchFlexyElement extends HTMLElement {}
 	/**
 	 * @type {YtdWatchFlexyElement | null}
 	 */
@@ -1212,7 +1212,7 @@ function main() {
 		const element_id="ytd-app"
 		console.log(`on ${element_id}`)
 		element_map.set(element_id,element)
-		ytd_app=any(element)
+		ytd_app=YtdAppElement.cast(element)
 		window.ytd_app=element
 	}
 	/**
