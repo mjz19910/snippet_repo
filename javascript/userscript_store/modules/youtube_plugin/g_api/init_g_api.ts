@@ -16,7 +16,7 @@ export function init_g_api() {
 	g_api.value.PropertyHandler=PropertyHandler
 	g_api.value.dom_observer=dom_observer
 	g_api.value.port_state=port_state
-	g_api.value.yt_state=yt_state_map
+	g_api.value.yt_state_map=yt_state_map
 	g_api.value.yt_handlers=yt_handlers
 	g_api.value.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
 	g_api.value.blob_create_args_arr=blob_create_args_arr

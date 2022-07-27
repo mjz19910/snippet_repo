@@ -4,10 +4,8 @@ export class CustomEventTarget {
 	_events: {
 		[str: string]: (<T extends CustomEventTarget>(this: T,event: CustomEventType) => void)[]|undefined
 	}
-	trace: boolean
 	constructor() {
 		this._events={}
-		this.trace=false
 	}
 	addEventListener(type: string,handler: <T extends CustomEventTarget>(this: T,event: CustomEventType) => void) {
 		(this._events[type]??=[]).push(handler)
