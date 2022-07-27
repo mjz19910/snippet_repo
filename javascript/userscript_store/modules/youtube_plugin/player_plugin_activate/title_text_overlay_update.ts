@@ -1,4 +1,4 @@
-import {overlay_hide_ui_input} from "../elements/overlay_hide_ui_input"
+import {overlay_hide_ui_input} from "./elements/overlay_hide_ui_input"
 import {title_text_overlay_enabled} from "./title_text_overlay_enabled"
 import {title_display_update} from "./title_display_update"
 
