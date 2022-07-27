@@ -634,7 +634,7 @@ function main() {
 				let {content}=richItemRenderer
 				if(!content) return true
 				this.check_item_keys('richItemRenderer.content',Object.keys(content))
-				if(content.displayAdRenderer) return false
+				if(content.adSlotRenderer) return false
 				return true
 			})
 		}
