@@ -604,6 +604,50 @@ function main() {
 		/**@type {RendererContentItem[]} */
 		contents=[]
 	}
+	/**
+	 * @param {string[]} keys
+	 * @param {string} path
+	 */
+	function check_item_keys(path,keys) {
+		/**@type {string[]|string|null} */
+		if(keys.length===1) {
+			let key=keys[0]
+			switch(path) {
+				case 'richItemRenderer.content': switch(key) {
+					case 'videoRenderer': return
+					case 'radioRenderer': return
+					case 'adSlotRenderer': return
+				}
+				case 'richGridRenderer.contents[]': switch(key) {
+					case 'richItemRenderer': return
+					case 'continuationItemRenderer': return
+				}
+			}
+			if(this.debug) console.log('content key',path,key)
+		} else {
+			switch(path) {
+				case 'tabRenderer.content.richGridRenderer': {
+					for(let key of keys) {
+						switch(key) {
+							case 'contents': continue
+							case 'trackingParams': continue
+							case 'header': continue
+							case 'targetId': continue
+							case 'reflowOptions': continue
+						}
+						console.log('iter content key',path,key)
+					}
+				} return
+				case 'appendContinuationItemsAction': {
+					for(let key of keys) {
+						switch(key) {}
+						console.log('iter content key',path,key)
+					}
+				} return
+			}
+			console.log('content path',path)
+		}
+	}
 	class HandleRichGridRenderer {
 		static debug=true
 		/**
@@ -613,9 +657,9 @@ function main() {
 		static run(path,renderer) {
 			let path_parts=path.split(".")
 			let sub_path=path_parts.slice(-3).join(".")
-			this.check_item_keys(sub_path,Object.keys(renderer))
+			check_item_keys(sub_path,Object.keys(renderer))
 			if(renderer.masthead) {
-				this.check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead))
+				check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead))
 				if(renderer.masthead.videoMastheadAdV3Renderer) {
 					let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead
 					console.log('masthead',masthead)
@@ -630,53 +674,15 @@ function main() {
 		static on_contents(renderer) {
 			renderer.contents=renderer.contents.filter(content_item => {
 				let {richItemRenderer}=content_item
-				this.check_item_keys('richGridRenderer.contents[]',Object.keys(content_item))
+				check_item_keys('richGridRenderer.contents[]',Object.keys(content_item))
 				// WARNING: This function is filtering an array (was just "return;")
 				if(!richItemRenderer) return true
 				let {content}=richItemRenderer
 				if(!content) return true
-				this.check_item_keys('richItemRenderer.content',Object.keys(content))
+				check_item_keys('richItemRenderer.content',Object.keys(content))
 				if(content.adSlotRenderer) return false
 				return true
 			})
-		}
-		/**
-		 * @param {string[]} keys
-		 * @param {string} path
-		 */
-		static check_item_keys(path,keys) {
-			/**@type {string[]|string|null} */
-			if(keys.length===1) {
-				let key=keys[0]
-				switch(path) {
-					case 'richItemRenderer.content': switch(key) {
-						case 'videoRenderer': return
-						case 'radioRenderer': return
-						case 'adSlotRenderer': return
-					}
-					case 'richGridRenderer.contents[]': switch(key) {
-						case 'richItemRenderer': return
-						case 'continuationItemRenderer': return
-					}
-				}
-				if(this.debug) console.log('content key',path,key)
-			} else {
-				switch(path) {
-					case 'tabRenderer.content.richGridRenderer': {
-						for(let key of keys) {
-							switch(key) {
-								case 'contents': continue
-								case 'trackingParams': continue
-								case 'header': continue
-								case 'targetId': continue
-								case 'reflowOptions': continue
-							}
-							console.log('iter content key',path,key)
-						}
-					} return
-				}
-				console.log('content path',path)
-			}
 		}
 	}
 	class YTFilterHandlers extends YTIterateAllBase {
@@ -686,6 +692,9 @@ function main() {
 		 */
 		richGridRenderer(path,renderer) {
 			HandleRichGridRenderer.run(path,renderer)
+		}
+		appendContinuationItemsAction(path,action) {
+			check_item_keys('appendContinuationItemsAction',Object.keys(action))
 		}
 		/**
 		 * @param {string} path
@@ -756,7 +765,7 @@ function main() {
 				}
 			}
 		}
-		handle_any_data(path, data) {
+		handle_any_data(path,data) {
 			this.default_iter(path,data)
 		}
 		/**
