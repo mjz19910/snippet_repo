@@ -16,7 +16,7 @@ function main() {
 	/** @type {<T, U>(v:T|U)=>U} */
 	function any(value) {
 		/**@type {any} */
-		let value_any = value
+		const value_any = value
 		return value_any
 	}
 	window.g_api??={
@@ -1848,9 +1848,11 @@ function main() {
 		},15*60*1000)
 	}
 	g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
-	class PluginOverlayElement extends HTMLElement {
+	class PluginOverlayElement extends HTMLDivElement {
+		/**@type {any} */
+		static any_cast_t1 = any
 		/**@type {typeof any<HTMLDivElement, PluginOverlayElement>} */
-		static any_cast = any
+		static any_cast = this.any_cast_t1
 		/**@arg {HTMLDivElement} value @return {PluginOverlayElement} */
 		static cast(value) {
 			return this.any_cast(value)
