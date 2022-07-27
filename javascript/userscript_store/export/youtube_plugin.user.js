@@ -13,7 +13,7 @@
 console=window.console
 function main() {
 	const debug=false
-	/** @type {<U>(v:U)=>U&HTMLVideoElementArrayBox<any>} */
+	/** @type {<T, U>(v:T|U)=>U} */
 	function any(value) {
 		return value
 	}
@@ -40,9 +40,11 @@ function main() {
 		ui_plugin_style_element
 		/**@type {VolumeRange|undefined}*/
 		volume_range
+		/**@type {typeof any<HTMLElement, YtdAppElement>} */
+		static any_cast = any
 		/**@arg {HTMLElement} element @return {YtdAppElement} */
 		static cast(element) {
-			return any<HTMLElement,YtdAppElement>(element)
+			return this.any_cast(element)
 		}
 		__shady_children={
 			masthead: {
