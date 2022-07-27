@@ -1,5 +1,5 @@
 import {debug} from "../config/debug"
-import {ytd_app} from "../elements/ytd_app"
+import {ytd_app} from "../player_plugin_activate/elements/ytd_app"
 import {createGainController} from "./createGainController"
 import {gain_controller} from "./gain_controller"
 import {on_gain_controller} from "./on_gain_controller"

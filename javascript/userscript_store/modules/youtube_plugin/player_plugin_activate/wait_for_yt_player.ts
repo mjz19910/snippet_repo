@@ -1,4 +1,4 @@
-import {ytd_player} from "../ytd_player"
+import {ytd_player} from "./elements/ytd_player"
 
 export async function wait_for_yt_player() {
 	if(!ytd_player.value) {

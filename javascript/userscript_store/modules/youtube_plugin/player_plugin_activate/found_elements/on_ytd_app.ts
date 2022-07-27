@@ -1,6 +1,6 @@
-import {YtdAppElement} from "modules/youtube_plugin/elements/types/YtdAppElement"
-import {ytd_app} from "modules/youtube_plugin/elements/ytd_app"
-import {element_map} from "modules/youtube_plugin/player_plugin_activate/event/element_map"
+import {ytd_app} from "../elements/ytd_app"
+import {element_map} from "../event/element_map"
+import {YtdAppElement} from "../types/YtdAppElement"
 
 export function on_ytd_app(element: HTMLElement) {
 	const element_id="ytd-app"

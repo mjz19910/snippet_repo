@@ -1,4 +1,4 @@
-import {ytd_app} from "../elements/ytd_app"
+import {ytd_app} from "./elements/ytd_app"
 import {ui_plugin_css_enabled} from "./ui_plugin_css_enabled"
 
 export function ui_css_toggle_click_handler() {
