@@ -40,8 +40,10 @@ function main() {
 		ui_plugin_style_element
 		/**@type {VolumeRange|undefined}*/
 		volume_range
+		/**@type {any} */
+		static any_cast_t1 = any
 		/**@type {typeof any<HTMLElement, YtdAppElement>} */
-		static any_cast = any
+		static any_cast = this.any_cast_t1
 		/**@arg {HTMLElement} element @return {YtdAppElement} */
 		static cast(element) {
 			return this.any_cast(element)
