@@ -1298,18 +1298,18 @@ function main() {
 		port=new MessagePort
 	}
 	class CustomEventTarget {
-		/**@type {{[str: string]:?((this:this, event: CustomEventType) => void)[]}} */
+		/**@type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
 		_events={}
 		/**
 		 * @param {string} type
-		 * @param {(this:this, event: CustomEventType) => void} handler
+		 * @param {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
 		 */
 		addEventListener(type,handler) {
 			(this._events[type]??=[]).push(handler)
 		}
 		/**
 		 * @param {string} type
-		 * @param {any} handler
+		 * @param {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
 		 */
 		removeEventListener(type,handler) {
 			let event_arr=this._events[type]
