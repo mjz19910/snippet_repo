@@ -1,4 +1,5 @@
 import {HandleRichGridRenderer} from "./HandleRichGridRenderer"
+import {InitialData} from "./InitialData"
 import {RichGridRenderer} from "./RichGridRenderer"
 import {YTIterateAllBase} from "./YTIterateAllBase"
 
@@ -61,8 +62,8 @@ export class YTFilterHandlers extends YTIterateAllBase {
 			}
 		}
 	}
-	on_initial_data(apply_args: [() => {},object,[]]) {
-		let ret=Reflect.apply(...apply_args)
+	on_initial_data<A extends InitialData, B, C extends (this:B) => A>([target, thisArgument, argumentsList]: [C,B,Parameters<C>]) {
+		let ret=target.apply(thisArgument, argumentsList)
 		if(ret.response) {
 			console.log('initial page info:',ret)
 			try {
