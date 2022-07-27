@@ -622,6 +622,9 @@ function main() {
 					case 'richItemRenderer': return
 					case 'continuationItemRenderer': return
 				}
+				case 'appendContinuationItemsAction.continuationItems[]': switch(key) {
+					case 'richItemRenderer': return
+				}
 			}
 			console.log('content key',path,key)
 		} else {
@@ -702,7 +705,7 @@ function main() {
 				let {richItemRenderer}=content_item
 				check_item_keys('appendContinuationItemsAction.continuationItems[]',Object.keys(content_item))
 				if(!richItemRenderer) return true
-				check_item_keys('continuationItems[].richItemRenderer',Object.keys(content_item))
+				check_item_keys('continuationItems[].richItemRenderer',Object.keys(richItemRenderer))
 				let {content}=richItemRenderer
 				if(!content) return true
 				check_item_keys('richItemRenderer.content',Object.keys(content))
