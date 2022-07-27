@@ -1210,11 +1210,11 @@ function main() {
 		port=new MessagePort
 	}
 	class CustomEventTarget {
-		/**@type {{[str: string]:?((this:CustomEventTarget, event: CustomEventType) => void)[]}} */
+		/**@type {{[str: string]:?((this:this, event: CustomEventType) => void)[]}} */
 		_events={}
 		/**
 		 * @param {string} type
-		 * @param {(this:CustomEventTarget, event: CustomEventType) => void} handler
+		 * @param {(this:this, event: CustomEventType) => void} handler
 		 */
 		addEventListener(type,handler) {
 			(this._events[type]??=[]).push(handler)
@@ -1248,21 +1248,13 @@ function main() {
 	class DomObserver extends CustomEventTarget {
 		trace=false
 		/**@arg {MessagePort} port @arg {number} message_id */
-		next_tick_action(port, message_id) {
+		next_tick_action(port,message_id) {
 			if(this.trace) console.log("trace_id_"+message_id+":continue")
 			port.postMessage(message_id)
 		}
 	}
 	let dom_observer=new DomObserver
 	g_api.dom_observer=dom_observer
-	/**@arg {MessagePort} port*/
-	function continue_callback(port) {
-		dom_observer.dispatchEvent({
-			type: port_state.current_event_type,
-			detail: {},
-			port
-		})
-	}
 	/**@type {[number, number][]}*/
 	let port_state_log=[]
 	class MessagePortState {
@@ -1343,8 +1335,13 @@ function main() {
 	}
 	dom_observer.addEventListener("find-ytd-page-manager",event_find_ytd_page_manager)
 	dom_observer.addEventListener('yt-page-type-changed',function(event) {
+		let {detail,port}=event
 		if(this.trace) console.log("yt-page-type-changed")
-		continue_callback(event.port)
+		this.dispatchEvent({
+			type: port_state.current_event_type,
+			detail,
+			port
+		})
 	})
 	/**
 	 * @this {DomObserver}
@@ -1448,7 +1445,7 @@ function main() {
 		if(++rep_count<rep_max) return dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {},
-			port:message_channel.port1
+			port: message_channel.port1
 		})
 		port_state.cint=setTimeout(() => {
 			rep_max+=rep_size
