@@ -2257,5 +2257,4 @@ function VolumeRangePlugin() {
 		}
 	}
 }
-if(top===window)
-	dispatch_observer_event()
+if(top===window) dispatch_observer_event()
