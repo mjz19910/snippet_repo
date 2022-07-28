@@ -5,7 +5,7 @@ import {RendererContentItem} from "./RendererContentItem"
 import {RichGridRenderer} from "./RichGridRenderer"
 import {YTIterateAllBase} from "./YTIterateAllBase"
 
-type ContinuationItem=RendererContentItem
+class ContinuationItem extends RendererContentItem {}
 
 class AppendContinuationItemsAction {
 	continuationItems: ContinuationItem[]=[]

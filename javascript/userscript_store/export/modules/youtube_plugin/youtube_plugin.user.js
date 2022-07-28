@@ -723,8 +723,9 @@ class HandleRichGridRenderer {
 		})
 	}
 }
+class ContinuationItem extends RendererContentItem {}
 class AppendContinuationItemsAction {
-	/**@type {any[]} */
+	/**@type {ContinuationItem[]} */
 	continuationItems=[]
 }
 class YTFilterHandlers extends YTIterateAllBase {
