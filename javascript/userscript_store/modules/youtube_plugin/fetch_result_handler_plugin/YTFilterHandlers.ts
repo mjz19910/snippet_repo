@@ -1,14 +1,37 @@
+import {check_item_keys} from "./check_item_keys"
 import {HandleRichGridRenderer} from "./HandleRichGridRenderer"
 import {InitialData} from "./InitialData"
+import {RendererContentItem} from "./RendererContentItem"
 import {RichGridRenderer} from "./RichGridRenderer"
 import {YTIterateAllBase} from "./YTIterateAllBase"
+
+type ContinuationItem=RendererContentItem
+
+class AppendContinuationItemsAction {
+	continuationItems: ContinuationItem[]=[]
+}
 
 export class YTFilterHandlers extends YTIterateAllBase {
 	richGridRenderer(path: string,renderer: RichGridRenderer) {
 		HandleRichGridRenderer.run(path,renderer)
 	}
+	appendContinuationItemsAction(path: string,action: AppendContinuationItemsAction) {
+		void path
+		check_item_keys('appendContinuationItemsAction',Object.keys(action))
+		action.continuationItems=action.continuationItems.filter(content_item => {
+			let {richItemRenderer}=content_item
+			check_item_keys('appendContinuationItemsAction.continuationItems[]',Object.keys(content_item))
+			if(!richItemRenderer) return true
+			check_item_keys('continuationItems[].richItemRenderer',Object.keys(richItemRenderer))
+			let {content}=richItemRenderer
+			if(!content) return true
+			check_item_keys('richItemRenderer.content',Object.keys(content))
+			if(content.adSlotRenderer) return false
+			return true
+		})
+	}
 	itemSectionRenderer(path: string,renderer: {contents: {}[]}) {
-		this.default_iter(path,renderer)
+		this.handle_any_data(path,renderer)
 		if(renderer.contents===void 0)
 			return
 		renderer.contents=renderer.contents.filter((item) => {
@@ -46,7 +69,7 @@ export class YTFilterHandlers extends YTIterateAllBase {
 		}
 		let api_path=api_parts.slice(2).join(".")
 		debug&&console.log('on_handle_api api_path',api_parts.slice(0,2).join("/"),api_path)
-		this.default_iter(api_path,data)
+		this.handle_any_data(api_path,data)
 		switch(api_parts[2]) {
 			case 'player': this.on_v1_player(api_path,data); break
 		}
@@ -54,7 +77,7 @@ export class YTFilterHandlers extends YTIterateAllBase {
 	handle_page_type(data: {},page_type: string,response_type: string) {
 		const debug=false
 		debug&&console.log('handle_page_type with page_type and response_type',page_type,response_type)
-		this.default_iter(page_type,data)
+		this.handle_any_data(page_type,data)
 		switch(response_type) {
 			case 'response': break
 			case 'playerResponse': switch(page_type) {
@@ -62,8 +85,8 @@ export class YTFilterHandlers extends YTIterateAllBase {
 			}
 		}
 	}
-	on_initial_data<A extends InitialData, B, C extends (this:B) => A>([target, thisArgument, argumentsList]: [C,B,Parameters<C>]) {
-		let ret=target.apply(thisArgument, argumentsList)
+	on_initial_data<A extends InitialData,B,C extends (this: B) => A>([target,thisArgument,argumentsList]: [C,B,Parameters<C>]) {
+		let ret=target.apply(thisArgument,argumentsList)
 		if(ret.response) {
 			console.log('initial page info:',ret)
 			try {
@@ -88,5 +111,8 @@ export class YTFilterHandlers extends YTIterateAllBase {
 			console.log("Can't handle return value",ret)
 		}
 		return ret
+	}
+	handle_any_data(path: string,data: {[str: string]: {}}) {
+		this.default_iter(path,data)
 	}
 }

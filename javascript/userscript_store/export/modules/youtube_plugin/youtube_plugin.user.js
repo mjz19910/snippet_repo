@@ -43,30 +43,10 @@ function any_o(value,copy) {
 	}
 	throw new Error("Failed to cast")
 }
-let g_api={
-	Seen: undefined,
-	PropertyHandler: undefined,
-	yt_state_map: undefined,
-	blob_create_args_arr: undefined,
-	yt_handlers: undefined,
-	dom_observer: undefined,
-	port_state: undefined,
-	plugin_overlay_element: undefined,
-	yt_watch_page_loaded_handler: undefined,
-	gain_controller: undefined,
-}
-window.g_api??={
-	Seen: undefined,
-	PropertyHandler: undefined,
-	yt_state_map: undefined,
-	blob_create_args_arr: undefined,
-	yt_handlers: undefined,
-	dom_observer: undefined,
-	port_state: undefined,
-	plugin_overlay_element: undefined,
-	yt_watch_page_loaded_handler: undefined,
-	gain_controller: undefined,
-}
+/**@type {typeof window.g_api} */
+let g_api={}
+window.g_api??=g_api
+g_api=window.g_api
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
 	ui_plugin_style_element
@@ -612,7 +592,6 @@ class YTIterateAllBase {
 	/**
 	 * @param {string} key
 	 * @param {string} value
-	 * @private
 	 */
 	update_state(key,value) {
 		if(yt_state_map.has(key)) {
@@ -716,6 +695,7 @@ class HandleRichGridRenderer {
 		let path_parts=path.split(".")
 		let sub_path=path_parts.slice(-3).join(".")
 		check_item_keys(sub_path,Object.keys(renderer))
+		if(this.debug) console.log('run handler',path)
 		if(renderer.masthead) {
 			check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead))
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
@@ -743,6 +723,10 @@ class HandleRichGridRenderer {
 		})
 	}
 }
+class AppendContinuationItemsAction {
+	/**@type {any[]} */
+	continuationItems=[]
+}
 class YTFilterHandlers extends YTIterateAllBase {
 	/**
 	 * @param {string} path
@@ -751,7 +735,12 @@ class YTFilterHandlers extends YTIterateAllBase {
 	richGridRenderer(path,renderer) {
 		HandleRichGridRenderer.run(path,renderer)
 	}
-	appendContinuationItemsAction(_path,action) {
+	/**
+	 * @param {string} path
+	 * @param {AppendContinuationItemsAction} action
+	 */
+	appendContinuationItemsAction(path,action) {
+		void path
 		check_item_keys('appendContinuationItemsAction',Object.keys(action))
 		action.continuationItems=action.continuationItems.filter(content_item => {
 			let {richItemRenderer}=content_item
@@ -834,6 +823,10 @@ class YTFilterHandlers extends YTIterateAllBase {
 			}
 		}
 	}
+	/**
+	 * @param {string} path
+	 * @arg {{[str:string]:{}}} data
+	 */
 	handle_any_data(path,data) {
 		this.default_iter(path,data)
 	}

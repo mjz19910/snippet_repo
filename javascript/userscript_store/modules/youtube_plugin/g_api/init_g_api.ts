@@ -10,7 +10,7 @@ import {port_state} from "../dom_observer/port_state"
 import {blob_create_args_arr} from "../blob_logger/blob_create_args_arr"
 
 export function init_g_api() {
-	window.g_api??={}
+	window.g_api??={} as any
 	g_api.value=remove_optional(window.g_api)
 	g_api.value.Seen=Seen
 	g_api.value.PropertyHandler=PropertyHandler

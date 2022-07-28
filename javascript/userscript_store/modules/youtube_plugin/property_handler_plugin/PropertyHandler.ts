@@ -9,7 +9,7 @@ export class PropertyHandler {
 		this.key=key
 		this.on_target_apply_callback=on_target_apply_callback
 	}
-	get() {
+	get():{}|undefined {
 		return PropertyHandler.override_map.get(this.key)
 	}
 	set(value: any) {

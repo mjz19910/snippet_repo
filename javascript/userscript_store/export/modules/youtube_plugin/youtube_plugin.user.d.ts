@@ -9,7 +9,7 @@ export {}
 declare global {
 	interface Window {
 		g_api?: {
-			Seen?: Seen
+			Seen?: typeof Seen
 			PropertyHandler?: typeof PropertyHandler
 			dom_observer?: DomObserver
 			yt_state_map?: Map<string,{}>

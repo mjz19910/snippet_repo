@@ -24,7 +24,7 @@ export class YTIterateAllBase {
 			}
 		}
 	}
-	private update_state(key: string,value: string) {
+	update_state(key: string,value: string) {
 		if(yt_state_map.has(key)) {
 			let stored_state=yt_state_map.get(key)
 			if(stored_state instanceof Array) {
