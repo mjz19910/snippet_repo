@@ -1,15 +1,9 @@
+import {AppendContinuationItemsAction} from "./AppendContinuationItemsAction"
 import {check_item_keys} from "./check_item_keys"
 import {HandleRichGridRenderer} from "./HandleRichGridRenderer"
 import {InitialData} from "./InitialData"
-import {RendererContentItem} from "./RendererContentItem"
 import {RichGridRenderer} from "./RichGridRenderer"
 import {YTIterateAllBase} from "./YTIterateAllBase"
-
-class ContinuationItem extends RendererContentItem {}
-
-class AppendContinuationItemsAction {
-	continuationItems: ContinuationItem[]=[]
-}
 
 export class YTFilterHandlers extends YTIterateAllBase {
 	richGridRenderer(path: string,renderer: RichGridRenderer) {
