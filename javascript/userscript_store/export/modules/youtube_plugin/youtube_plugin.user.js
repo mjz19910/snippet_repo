@@ -2250,11 +2250,8 @@ function VolumeRangePlugin() {
 		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,gain_controller)
 		let container_dom_parent=ytd_app.__shady_children.masthead.$.container.children.center
 		let use_container=true
-		if(use_container) {
-			ytd_app.volume_range.attach_to_element(container_dom_parent)
-		} else {
-			ytd_app.volume_range.attach_to_element(ytd_app)
-		}
+		if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent)
+		else ytd_app.volume_range.attach_to_element(ytd_app)
 	}
 }
 if(top===window) dispatch_observer_event()
