@@ -26,6 +26,7 @@
 	],
 	"exclude": [
 		"**/*-spec.ts",
+		"build",
 		"javascript_build",
 		"node_modules",
 		"typescript_build",

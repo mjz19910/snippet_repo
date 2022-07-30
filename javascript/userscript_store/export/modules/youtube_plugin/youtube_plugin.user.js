@@ -499,6 +499,7 @@ class PropertyHandler {
 		this.key=key
 		this.on_target_apply_callback=on_target_apply_callback
 	}
+	/**@returns {{}|undefined} */
 	get() {
 		return PropertyHandler.override_map.get(this.key)
 	}
