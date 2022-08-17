@@ -171,7 +171,8 @@ function main() {
 			return_type: 'T'
 		})
 		rust_tmp.define('take','Option<T>','any T',take_def,function read(ptr) {
-			unsafe: {
+			// unsafe
+			{
 				return ptr.value
 			}
 		})
