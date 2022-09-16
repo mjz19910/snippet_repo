@@ -10,5 +10,6 @@ class Transmutation {
 	}
 }
 const RECIPES=[
-	new Transmutation(new Element("Copper"), 1, new Element("Silver"), 1/2)
+	new Transmutation(new Element("Copper"), 2, new Element("Silver"), 1),
+	new Transmutation(new Element("Silver"), 5, new Element("Gold"), 2)
 ];
