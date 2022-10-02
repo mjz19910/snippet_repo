@@ -1,6 +1,6 @@
 import {init as window_init} from "./do_create_window.js"
 import {init as document_init} from "./do_create_document.js"
-import {FakeWindow} from "../../FakeWindow.js"
+import {FakeWindow} from "../FakeWindow.js"
 import {FakeDocument} from "../FakeDocument.js"
 import {Badge} from "../std/Badge.js"
 

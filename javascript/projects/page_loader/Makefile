@@ -5,7 +5,6 @@ EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --target esnext
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types ../fake_dom/fwd/mod
 
 .PHONY: clean clean-src-decl build all
 
@@ -19,10 +18,7 @@ ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: ../fake_dom/fwd/mod.d.ts prepare $(TARGET) req-build
-
-prepare:
-	npm i
+build: $(TARGET) req-build
 
 dist/page_loader/mod.d.ts:
 	tsc ${EMIT_JS_DECLARATION} mod.js
