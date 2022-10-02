@@ -3,7 +3,7 @@ EMIT_JS_DECLARATION := -d --emitDeclarationOnly --target esnext --outDir dist --
 EMIT_JS_DECLARATION += --types ../dist/mod
 EMIT_JS_DECLARATION += --types node
 
-.PHONY: clean clean-src-decl build all
+.PHONY: clean build all
 
 all: build
 

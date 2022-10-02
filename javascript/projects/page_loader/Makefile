@@ -6,14 +6,12 @@ EMIT_JS_DECLARATION += --target esnext
 EMIT_JS_DECLARATION += --outDir dist
 EMIT_JS_DECLARATION += --moduleResolution node
 
-.PHONY: clean clean-src-decl build all
+.PHONY: clean build all
 
 all: build
 
-clean: clean-src-decl
+clean:
 	make -C api clean
-
-clean-src-decl:
 ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif

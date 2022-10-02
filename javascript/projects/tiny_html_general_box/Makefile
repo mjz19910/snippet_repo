@@ -1,4 +1,4 @@
-TARGET := dist/tiny_html_general_box/mod.d.ts
+TARGET := dist/mod.d.ts
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_JS_DECLARATION := -d --emitDeclarationOnly
 EMIT_JS_DECLARATION += --allowJs

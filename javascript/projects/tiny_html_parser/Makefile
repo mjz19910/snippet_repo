@@ -6,22 +6,16 @@ EMIT_JS_DECLARATION += --target esnext
 EMIT_JS_DECLARATION += --outDir dist
 EMIT_JS_DECLARATION += --moduleResolution node
 
-.PHONY: clean clean-src-decl build all
+.PHONY: clean build all
 
 all: build
 
-clean: clean-src-decl
-	make -C lex clean
-
-clean-src-decl:
+clean:
 ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: $(TARGET) req-build
+build: $(TARGET)
 
 $(TARGET):
 	tsc ${EMIT_JS_DECLARATION} mod.js
-
-req-build:
-	make -C ../tiny_html_lexer
