@@ -1,22 +1,21 @@
+TARGET := dist/repl_plugin_manager/commands/mod.d.ts
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_JS_DECLARATION := -d --emitDeclarationOnly
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --target esnext
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types ../dist/mod
+EMIT_JS_DECLARATION += --allowJs
+EMIT_JS_DECLARATION += --target esnext
+EMIT_JS_DECLARATION += --outDir dist
+EMIT_JS_DECLARATION += --moduleResolution node
 
-.PHONY: clean build $(SRC_DECL_DIR)
+.PHONY: clean build all
 
-clean: | $(SRC_DECL_DIR)
+all: build
 
-$(SRC_DECL_DIR):
+clean:
+ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
+endif
 
-build: prepare req-build dist/mod.d.ts
+build: $(TARGET)
 
-prepare:
-	npm i
-
-dist/mod.d.ts:
+$(TARGET):
 	tsc ${EMIT_JS_DECLARATION} mod.js

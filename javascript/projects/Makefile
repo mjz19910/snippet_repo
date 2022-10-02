@@ -1,11 +1,15 @@
-PACKAGES := $(filter-out template/,$(wildcard */))
+PACKAGE_EXCLUDE := template/ ipc_api/ misc/
+PACKAGES := $(filter-out $(PACKAGE_EXCLUDE),$(wildcard */))
 
-all: $(PACKAGES)
+all: $(PACKAGES:%/=%/jsconfig.json) $(PACKAGES)
 
 .PHONY:all test $(PACKAGES)
 
+$(PACKAGES:%/=%/jsconfig.json):
+	cp -n template/jsconfig.json $@/jsconfig.json
+
 $(PACKAGES):
-	cp -n template/jsconfig.json $(patsubst %/,%,$(@))/jsconfig.json
+	make -C $@
 
 test:
-	@echo $(PACKAGES:%/=%)
+	@echo $(PACKAGES:%/=%/jsconfig.json)
