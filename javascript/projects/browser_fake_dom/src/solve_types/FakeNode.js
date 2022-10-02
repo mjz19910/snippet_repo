@@ -130,7 +130,7 @@ export class FakeNode extends FakeEventTarget {
 	replaceChild() {
 		throw new Error("Not implemented")
 	}
-	// DOCUMENT_POSITION_[...]
+	// DOCUMENT_POSITION enum
 	/**@readonly*/
 	DOCUMENT_POSITION_DISCONNECTED=1
 	/**@readonly*/
@@ -143,7 +143,7 @@ export class FakeNode extends FakeEventTarget {
 	DOCUMENT_POSITION_CONTAINED_BY=16
 	/**@readonly*/
 	DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC=32
-	// [...]_NODE
+	// NODE type enum
 	/**@readonly*/
 	ELEMENT_NODE=1
 	/**@readonly*/

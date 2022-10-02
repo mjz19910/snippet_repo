@@ -1,5 +1,9 @@
 /**@implements {Document} */
 export class FakeDocument extends Node {
+	/**@type {CSSStyleSheet[]}*/
+	get adoptedStyleSheets() {
+		throw new Error("Not implemented")
+	}
 	/**@type {null}*/
 	get ownerDocument() {
 		throw new Error("Not implemented")
