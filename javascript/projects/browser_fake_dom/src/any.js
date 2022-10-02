@@ -1,4 +1,4 @@
-/** @arg {any} v@returns {any}@deprecated*/
+/** @arg {any} v @returns {any} @deprecated*/
 function any(v) {
 	return v
 }
