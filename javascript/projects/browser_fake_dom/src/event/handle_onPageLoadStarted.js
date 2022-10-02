@@ -16,6 +16,9 @@ export function handle_onPageLoadStarted(window,state) {
 	} else {
 		throw new Error("Expected default_document on new Window")
 	}
+	if(!state.dom_impl_badge) {
+		throw new Error("Expected dom_impl_badge on state")
+	}
 	window.m_document=new_win.document
 	if(state.is_top_level) {
 		window.m_top=window
@@ -25,6 +28,9 @@ export function handle_onPageLoadStarted(window,state) {
 	var new_loc=new FakeLocation()
 	if(!new_loc.location_setup) throw new Error("New location expected to have location_setup")
 	if(!state.href) {
+		if(state.url===void 0) {
+			throw new Error("state.url was undefined")
+		}
 		try {
 			new URL(state.url)
 			state.href=state.url
