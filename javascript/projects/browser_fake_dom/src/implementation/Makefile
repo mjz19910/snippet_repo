@@ -1,4 +1,4 @@
-TARGET := dist/fake_dom/implementation/mod.d.ts
+TARGET := dist/browser_fake_dom/src/implementation/mod.d.ts
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_JS_DECLARATION := -d --emitDeclarationOnly
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
@@ -18,12 +18,7 @@ ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: prepare $(TARGET) req-build
-
-prepare:
-	npm i
+build: $(TARGET)
 
 $(TARGET): *.js
 	tsc ${EMIT_JS_DECLARATION} mod.js
-
-req-build:
