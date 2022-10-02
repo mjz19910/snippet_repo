@@ -1,3 +1,5 @@
+MAKEFLAGS += --no-builtin-rules
+
 TARGET := dist/browser_fake_dom/src/mod.d.ts
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_JS_DECLARATION := -d --emitDeclarationOnly
@@ -7,29 +9,15 @@ EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
 
 .PHONY: clean build all
-
+.SUFFIXES:
 all: build
 
 clean:
-	make -C src/api clean
-	make -C src/browse clean
-	make -C src/event clean
-	make -C src/implementation clean
-	make -C src/std clean
-	make -C src/types clean
 ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
 build: $(TARGET)
 
-$(TARGET): src/*.js
+$(TARGET): src/**/*.js src/**/*.ts
 	tsc ${EMIT_JS_DECLARATION} src/mod.js
-
-req-build:
-	make -C src/api
-	make -C src/browse
-	make -C src/event
-	make -C src/implementation
-	make -C src/std
-	make -C src/types
