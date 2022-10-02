@@ -1,3 +1,4 @@
+TARGET := dist/mod.d.ts
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_TYPESCRIPT_DECLARATION := -d --emitDeclarationOnly
 EMIT_TYPESCRIPT_DECLARATION := $(EMIT_TYPESCRIPT_DECLARATION) --target esnext
@@ -17,12 +18,7 @@ ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: prepare dist/mod.d.ts req-build
+build: $(TARGET)
 
-prepare:
-	npm i
-
-dist/mod.d.ts:
-	tsc ${EMIT_TYPESCRIPT_DECLARATION} mod.ts
-
-req-build:
+$(TARGET): *.js
+	tsc ${EMIT_JS_DECLARATION} mod.js

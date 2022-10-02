@@ -1,35 +1,29 @@
-TARGET := dist/fake_dom/mod.d.ts
+TARGET := dist/browser_fake_dom/src/mod.d.ts
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_JS_DECLARATION := -d --emitDeclarationOnly
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --target esnext
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types ./src/fwd/mod
 
-.PHONY: clean clean-src-decl build all
+.PHONY: clean build all
 
 all: build
 
-clean: clean-src-decl
+clean:
 	make -C src/api clean
 	make -C src/browse clean
 	make -C src/event clean
 	make -C src/implementation clean
 	make -C src/std clean
 	make -C src/types clean
-
-clean-src-decl:
 ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: prepare $(TARGET) req-build
+build: $(TARGET)
 
-prepare:
-	npm i
-
-$(TARGET):
+$(TARGET): src/*.js
 	tsc ${EMIT_JS_DECLARATION} src/mod.js
 
 req-build:

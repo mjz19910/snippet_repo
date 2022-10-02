@@ -1,4 +1,4 @@
-TARGET := dist/fake_dom/api/mod.d.ts
+TARGET := dist/browser_fake_dom/src/api/mod.d.ts
 SRC_DECL_DIR := $(wildcard dist)
 EMIT_JS_DECLARATION := -d --emitDeclarationOnly
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
@@ -18,14 +18,7 @@ ifneq ($(SRC_DECL_DIR),)
 	rm -r $(SRC_DECL_DIR)
 endif
 
-build: prepare $(TARGET) req-build
-
-.ONESHELL:
-prepare:
-# patch npm
-	npm i && return 0
-	../js_browser/patches/apply_patch_a.sh
-	npm i
+build: $(TARGET) req-build
 
 $(TARGET):
 	tsc ${EMIT_JS_DECLARATION} mod.js
