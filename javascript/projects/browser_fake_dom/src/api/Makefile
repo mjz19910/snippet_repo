@@ -5,7 +5,6 @@ EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --target esnext
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types ../fwd/mod
 
 .PHONY: clean clean-src-decl build all
 
