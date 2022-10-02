@@ -85,7 +85,6 @@ export class FakeElement extends FakeNode {
 			case 'html': if(this.is_tag(tag_name)) {
 				/**@type {any}*/
 				let cast_as=this
-				/**@type {import("./FakeHTMLElement.js").FakeHTMLElement}*/
 				let cast_res=cast_as
 				return new CastResult(cast_res)
 			}

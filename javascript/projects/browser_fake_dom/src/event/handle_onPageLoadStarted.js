@@ -6,7 +6,7 @@ import {
 } from "./mod.js"
 /**
  * @argument {FakeWindow} window
- * @argument {import("./../types/onPageLoadStarted.js").PageLoadStateType} state
+ * @argument {import("../types/onPageLoadStarted.js").PageLoadStateType} state
 */
 export function handle_onPageLoadStarted(window,state) {
 	var new_win

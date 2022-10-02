@@ -5,19 +5,19 @@ EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --allowJs
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --target esnext
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --outDir dist
 EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --moduleResolution node
-EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types ./fwd/mod
+EMIT_JS_DECLARATION := $(EMIT_JS_DECLARATION) --types ./src/fwd/mod
 
 .PHONY: clean clean-src-decl build all
 
 all: build
 
 clean: clean-src-decl
-	make -C api clean
-	make -C browse clean
-	make -C event clean
-	make -C implementation clean
-	make -C std clean
-	make -C types clean
+	make -C src/api clean
+	make -C src/browse clean
+	make -C src/event clean
+	make -C src/implementation clean
+	make -C src/std clean
+	make -C src/types clean
 
 clean-src-decl:
 ifneq ($(SRC_DECL_DIR),)
@@ -30,12 +30,12 @@ prepare:
 	npm i
 
 $(TARGET):
-	tsc ${EMIT_JS_DECLARATION} mod.js
+	tsc ${EMIT_JS_DECLARATION} src/mod.js
 
 req-build:
-	make -C api
-	make -C browse
-	make -C event
-	make -C implementation
-	make -C std
-	make -C types
+	make -C src/api
+	make -C src/browse
+	make -C src/event
+	make -C src/implementation
+	make -C src/std
+	make -C src/types

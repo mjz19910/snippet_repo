@@ -5,18 +5,22 @@ import {DocumentImpl,FakeWindow} from "./mod.js"
 // FakeDocument <-> FakeWindow
 // Can't import from "./mod.js" as these depend on each other
 import {FakeNode} from "./FakeNode.js"
-import {HTMLState} from "../page_loader/HTMLState.js"
+import {HTMLState} from "../../page_loader/HTMLState.js"
 import {document_element_factory} from "./api/const.js"
 import {FakeElement} from "./FakeElement.js"
 import {Badge} from "./std/Badge.js"
 import {init as html_element_init} from "./FakeHTMLElement.js"
-import {html_parser_callback} from "../tiny_html_parser/html_parser_callback.js"
+import {html_parser_callback} from "../../tiny_html_parser/html_parser_callback.js"
 /**@arg {any} v @returns {any}*/
 function any(v) {
 	return v
 }
 /**@implements {Document} */
 export class FakeDocument extends FakeNode {
+	/**@returns {CSSStyleSheet[]} */
+	get adoptedStyleSheets() {
+		return []
+	}
 	/**@type {null}*/
 	get ownerDocument() {
 		throw new Error("Not implemented")

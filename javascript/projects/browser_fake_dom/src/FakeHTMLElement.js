@@ -487,7 +487,7 @@ export class FakeHTMLElement extends FakeElement {
 	}
 	/**
 	 *
-	 * @type {<T extends Node>(node:T, child:Node)=>T} e
+	 * @type {<T extends Node>(node:T, child:Node|null)=>T} e
 	 * @param {Node} node_b */
 	insertBefore(node_a,node_b) {
 		void node_a,node_b
