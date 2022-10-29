@@ -84,8 +84,7 @@ export class DebugAPI {
 			}
 		}
 		__d.attach(debug,undebug,null)
-		let activate: DebugFunctionCallbackArgs=['function',func,{},[]]
-		let data: DebugDataBox=['function',this.activate,activate]
+		let data: DebugDataBox=['function',this.activate,func,{},[]]
 		return __d.debuggerGetVarInternal(data,name)
 	}
 	attach(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,getEventListeners: ChromeDevToolsGetEventListeners|null) {
@@ -146,14 +145,7 @@ export class DebugAPI {
 			if(!undebug) return false
 			if(this.current_debug_data) {
 				let dd=this.current_debug_data
-				if(dd[0]==='function') {
-					let [,,k2]=dd
-					let [,v1]=k2
-					undebug(v1)
-				} else if(dd[0]==='class') {
-					let [,,v1]=dd
-					undebug(v1)
-				}
+				undebug(dd[2])
 				return true
 			}
 		}
@@ -238,8 +230,8 @@ export class DebugAPI {
 		// ---- Activate ----
 		let exec_return=null
 		if(this.current_debug_data[0]==='class') {
-			let [,p2,p3]=this.current_debug_data
-			p2(p3)
+			let [,p2,p3,p4]=this.current_debug_data
+			p2(['class', p3,p4])
 		} else if(this.current_debug_data[0]==='function') {
 			let [,p2,p3]=this.current_debug_data
 			p2(p3)
@@ -339,17 +331,15 @@ export class DebugAPI {
 		if(fn===null) throw new Error("Invalid")
 		let dd=this.current_debug_data
 		let ra=dd[2]
-		fn(ra[1],`${dbg_str_func}`)
+		fn(ra,`${dbg_str_func}`)
 		let activate_return=null
 		// ---- Activate ----
 		if(this.current_debug_data[0]==='class') {
-			let [,activate,p3]=this.current_debug_data
-			let [t1,v1,v2]=p3
-			activate_return=activate([t1,v1,v2])
+			let [,activate,v1,v2]=this.current_debug_data
+			activate_return=activate(['class',v1,v2])
 		} else if(this.current_debug_data[0]==='function') {
-			let [,activate,p3]=this.current_debug_data
-			let [t1,v1,v2]=p3
-			activate_return=activate([t1,v1,v2])
+			let [,activate,v1,v2,v3]=this.current_debug_data
+			activate_return=activate(['function',v1,v2,v3])
 		}
 		let breakpoint_result=null
 		if(tmp_value.get) {
