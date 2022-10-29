@@ -20,7 +20,7 @@ const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
 
 class DebugInfoValue {
-	get(/**@type {string}*/_q: string): DebugEvalLostBox|DebugVarBox|DebugNullBox {
+	get(__v: string): DebugEvalLostBox|DebugVarBox|DebugNullBox {
 		return {type: 'no-var',data: null}
 	}
 }
@@ -156,10 +156,6 @@ export class DebugAPI {
 		}
 		return false
 	}
-	/**
-	 * @argument {Function} function_value
-	 * @returns {string}
-	*/
 	stringifyFunction(function_value: Function): string {
 		let function_code=function_value.toString()
 		if(function_code.includes("{}"[0])) {
@@ -169,12 +165,7 @@ export class DebugAPI {
 		}
 		return function_code
 	}
-	/**@type {DebugDataBox | null} */
 	current_debug_data: DebugDataBox|null=null
-	/**
-	 * @param {DebugDataBox} debug_data
-	 * @param {string} var_match
-	 */
 	debuggerGetVarArrayInternal(debug_data: DebugDataBox,var_match: string) {
 		if(!this.hasData("d")||!this.hasData("u")) {
 			return {
