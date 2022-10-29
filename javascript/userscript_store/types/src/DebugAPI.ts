@@ -16,6 +16,7 @@ const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
 
 class DebugInfoValue {
+	valid=false
 	get(__v: string): DebugHiddenVarBox|DebugVarBox|DebugNullBox|null {
 		return null
 	}
@@ -132,6 +133,7 @@ export class DebugAPI {
 					return {type: 'no-var',data: null}
 				}
 			}
+			window.DebugAPI.getData('__k')!.valid=true
 			if(!window.DebugAPI.clearCurrentBreakpoint()) {
 				console.log("failed to clear breakpoint")
 			}
@@ -188,17 +190,14 @@ export class DebugAPI {
 		let rep_arr=[]
 		{
 			rep_arr.push('__v','__v_'+rng_bytes)
-			rep_arr.push('__k','__k_'+rng_bytes)
-			rep_arr.push('__x','__x_'+rng_bytes)
 		}
-		let tmp_key: '__k'='__k'
 		{
 			for(let i=0;i<rep_arr.length;i+=2) {
 				breakpoint_code_string=breakpoint_code_string.replaceAll(rep_arr[i],rep_arr[i+1])
 			}
 		}
 		let tmp_value=new DebugInfoValue
-		this.setData(tmp_key,tmp_value)
+		this.setData('__k',tmp_value)
 		let debug=this.getData('d')
 		if(!debug) throw new Error("Invalid")
 		debug(this.current_debug_data[1],`${breakpoint_code_string}`)
@@ -212,7 +211,7 @@ export class DebugAPI {
 			p2(p3,p4,p5)
 		}
 		let exec_res_arr=[]
-		if(tmp_value.get) {
+		if(tmp_value.valid) {
 			for(let j of vars_arr) {
 				let res=tmp_value.get(j)
 				if(!res) continue
@@ -228,7 +227,7 @@ export class DebugAPI {
 				}
 			}
 		}
-		this.deleteData(tmp_key)
+		this.deleteData('__k')
 		if(exec_res_arr.length) {
 			return {
 				type: 'data',
@@ -302,8 +301,7 @@ export class DebugAPI {
 			let [,activate,v1,v2]=this.current_debug_data
 			activate_return=activate(v1,v2)
 		}
-		let breakpoint_result=null
-		breakpoint_result=tmp_value.get(var_name)
+		let breakpoint_result=tmp_value.get(var_name)
 		this.deleteData(tmp_key)
 		if(breakpoint_result?.type==='var') {
 			return {
