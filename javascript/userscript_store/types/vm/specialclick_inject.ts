@@ -1,5 +1,3 @@
-import {any} from "modules/youtube_plugin/helper/any"
-
 export function specialclick_inject(that: number) {
 	if(window.allspec[that].done==undefined)
 		window.allspec[that].done=false
