@@ -99,7 +99,7 @@ export class DebugAPI {
 			}
 		}
 		__d.attach(debug,undebug,null)
-		let data: DebugFunctionBox=['function',this.activate,func,{},[]]
+		let data: DebugFunctionBox=['function',this.activate_function,func,{},[]]
 		return __d.debuggerGetVarInternal(data,name)
 	}
 	attach(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,getEventListeners: ChromeDevToolsGetEventListeners|null) {
@@ -116,16 +116,11 @@ export class DebugAPI {
 		}
 		return this
 	}
-	activate(tag: 'class',a: new (...a: any[]) => {},b: any[]): {}
-	activate(tag: 'function',a: DebugFunctionType,b: {},c: any[]): any
-	activate(tag: string,...v: any[]) {
-		if(tag==='function') {
-			let [,target,thisArgument,argumentsList]=v
-			return Reflect.apply(target,thisArgument,argumentsList)
-		} else {
-			let [,target_type,argumentsList]=v
-			return Reflect.construct(target_type,argumentsList)
-		}
+	activate_function(target:DebugFunctionType,thisArgument:{},argumentsList:any[]): any {
+		return Reflect.apply(target,thisArgument,argumentsList)
+	}
+	activate_class(target_type: new (...a: any[]) => {},argumentsList: any[]): {} {
+		return Reflect.construct(target_type,argumentsList)
 	}
 	debuggerBreakpointCode() {
 		bp_code: {
@@ -240,10 +235,10 @@ export class DebugAPI {
 		let exec_return=null
 		if(this.current_debug_data[0]==='class') {
 			let [,p2,p3,p4]=this.current_debug_data
-			p2('class',p3,p4)
+			p2(p3,p4)
 		} else if(this.current_debug_data[0]==='function') {
 			let [,p2,p3,p4,p5]=this.current_debug_data
-			p2('function',p3,p4,p5)
+			p2(p3,p4,p5)
 		}
 		let exec_res_arr=[]
 		if(tmp_value.get) {
@@ -281,8 +276,7 @@ export class DebugAPI {
 		}
 	}
 	debuggerGetVarArrayClass(class_value: new (...a: any[]) => {},target_arg_vec: any[],var_match: string) {
-		let callback: ClassCallbackFunction=this.activate
-		let data: DebugClassBox=['class',callback,class_value,target_arg_vec]
+		let data: DebugClassBox=['class',this.activate_class,class_value,target_arg_vec]
 		return this.debuggerGetVarArrayInternal(data,var_match)
 	}
 	/**
