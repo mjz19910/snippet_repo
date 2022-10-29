@@ -6,21 +6,17 @@ import {MapAllKeys} from "./MapAllKeys"
 import {ChromeDevToolsDebug} from "./ChromeDevToolsDebug"
 import {ChromeDevToolsGetEventListeners} from "./ChromeDevToolsGetEventListeners"
 import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug"
-import {ClassCallbackArgs} from "../box/ClassCallbackArgs"
-import {DebugInfoBox} from "../box/DebugInfoBox"
-import {DebugFunctionCallbackArgs} from "types/box/DebugFunctionCallbackArgs"
 import {DebugVarBox} from "types/box/DebugVarBox"
 import {DebugNullBox} from "types/box/DebugNullBox"
-import {DebugEvalLostBox} from "types/box/DebugEvalLostBox"
+import {DebugHiddenVarBox} from "types/box/DebugHiddenVarBox"
 import {DebugFunctionBox} from "types/box/DebugFunctionBox"
 import {DebugClassBox} from "types/box/DebugClassBox"
-import {ClassCallbackFunction} from "types/box/ClassCallbackFunction"
 
 const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
 
 class DebugInfoValue {
-	get(__v: string): DebugEvalLostBox|DebugVarBox|DebugNullBox|null {
+	get(__v: string): DebugHiddenVarBox|DebugVarBox|DebugNullBox|null {
 		return null
 	}
 }
@@ -129,7 +125,10 @@ export class DebugAPI {
 			if(!__k) break bp_code
 			__k.get=(__v) => {
 				if(__v==='__v') {
-					return {type: 'hidden-var',data: null}
+					return {type: 'hidden-var',var: __v}
+				}
+				if(__v==='__k') {
+					return {type: 'hidden-var',var: __v}
 				}
 				try {
 					return {type: 'var',data: [__v,eval(__v)]}
