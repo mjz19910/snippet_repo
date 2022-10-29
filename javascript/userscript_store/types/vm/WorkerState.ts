@@ -10,8 +10,7 @@ import {MessageTypesForWorkerReplies} from "./MessageTypesForWorkerReplies"
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS"
 import {Timer} from "./Timer"
 import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyMessage,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "types/constants"
-
-export const GlobalStateKey = "global_state_key"
+import {GlobalStateKey} from "./GlobalStateKey"
 
 export class WorkerState {
 	flags: Map<string,boolean>
