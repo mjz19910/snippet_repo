@@ -137,10 +137,8 @@ export class DebugAPI {
 					return {type: 'no-var',data: null}
 				}
 			}
-			{
-				if(!window.DebugAPI.clearCurrentBreakpoint()) {
-					console.log("failed to clear breakpoint")
-				}
+			if(!window.DebugAPI.clearCurrentBreakpoint()) {
+				console.log("failed to clear breakpoint")
 			}
 		}
 		0
