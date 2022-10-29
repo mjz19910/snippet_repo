@@ -38,7 +38,6 @@ declare global {
 		gritter: any
 		toTitleCase(v: string): string
 		cint_arr: (string|number[])[]
-		//spell:words adsbygoogle
 		adsbygoogle: {
 			op: any
 			push(v: number): void
