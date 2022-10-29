@@ -317,17 +317,7 @@ export class DebugAPI {
 				dbg_str_func=dbg_str_func.replaceAll(cur0,cur1)
 			}
 		}
-		let tmp_value={
-			type: 'none',
-			/**@arg {string} v */
-			get(v: string) {
-				void v
-				return {
-					type: 'none',
-					data: null
-				}
-			}
-		}
+		let tmp_value=new DebugInfoValue
 		this.setData(tmp_key,tmp_value)
 		let fn: ChromeDevToolsDebug|['d',ChromeDevToolsDebug|null]|null=this.getData('d')
 		if(fn===null) throw new Error("Invalid")
