@@ -190,12 +190,10 @@ export class DebugAPI {
 		}
 		let vars_arr=sr.map(e => String.fromCharCode(e))
 		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('')
-		if(debug_data[0]==='class') {
-			this.current_debug_data=debug_data
-		} else if(debug_data[0]==='function') {
+		if(debug_data[0]==='function') {
 			this.current_debug_data=debug_data
 		} else {
-			throw new Error("Invalid state")
+			this.current_debug_data=debug_data
 		}
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode)
 		let rep_arr=[]
