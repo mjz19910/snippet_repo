@@ -187,10 +187,7 @@ export class DebugAPI {
 		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('')
 		this.current_debug_data=debug_data
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode)
-		let rep_arr=[]
-		{
-			rep_arr.push('__v','__v_'+rng_bytes)
-		}
+		let rep_arr=['__v','__v_'+rng_bytes]
 		{
 			for(let i=0;i<rep_arr.length;i+=2) {
 				breakpoint_code_string=breakpoint_code_string.replaceAll(rep_arr[i],rep_arr[i+1])
