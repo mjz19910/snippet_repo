@@ -121,14 +121,10 @@ export class DebugAPI {
 	debuggerBreakpointCode() {
 		bp_code: {
 			if(!window.DebugAPI) break bp_code
-			let __k=window.DebugAPI.getData('__k')
-			if(!__k) break bp_code
-			__k.get=(__v) => {
-				switch(__v) {
-					case '__k':
-					case '__v': {
-						return {type: 'hidden-var',var: __v}
-					}
+			if(!window.DebugAPI.getData('__k')) break bp_code
+			window.DebugAPI.getData('__k')!.get=(__v) => {
+				if(__v=='__v') {
+					return {type: 'hidden-var',var: __v}
 				}
 				try {
 					return {type: 'var',data: [__v,eval(__v)]}
