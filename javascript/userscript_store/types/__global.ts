@@ -2,6 +2,8 @@ import {RemoteWorkerState} from "./vm/RemoteWorkerState"
 import {WorkerState} from "./vm/WorkerState"
 import {DocumentWriteList} from "./vm/DocumentWriteList"
 import {AutoBuy} from "./vm/AutoBuy"
+import {DebugAPI} from "./DebugAPI"
+import {GenericDataEvent} from "./vm/GenericDataEvent"
 
 export {}
 
@@ -84,6 +86,8 @@ declare global {
 		document_write_list: DocumentWriteList
 		allspec: any[]
 		$: JQueryStatic
+		DebugAPI: DebugAPI
+		GenericDataEvent: typeof GenericDataEvent
 	}
 	export var window: Window&typeof globalThis
 	export var Window: {
