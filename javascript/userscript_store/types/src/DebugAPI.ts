@@ -47,65 +47,40 @@ export class DebugAPI {
 		void val
 		return true
 	}
-	extractData(...q: any[]): typeof q|null {
-		switch(q[0]) {
-			case 'd': return q
-			case 'u': return q
-			case 'getEventListeners': return q
-			case '__k': return q
+	extractData(a: string, _b: any): typeof a|null {
+		switch(a) {
+			case 'd': return a
+			case 'u': return a
+			case 'getEventListeners': return a
+			case '__k': return a
 			default: throw new Error("Unknown key in getData")
 		}
 	}
-	getDataWithKey(...q: any[]): typeof q|null {
+	getDataWithKey(a: 'd', b: ChromeDevToolsDebug): ['d', ChromeDevToolsDebug];
+	getDataWithKey(a: 'u', b: null): ['u', null];
+	getDataWithKey(a: 'getEventListeners', b: null): null;
+	getDataWithKey(a: '__k', b: null): ['__k', null];
+	getDataWithKey(...q: [a: string, b: any]): typeof q|null {
 		switch(q[0]) {
 			case 'd': {
 				let ret=this.data_store.get(q[0])
 				if(!ret) return null
-				let kv: [(typeof q)[0],typeof ret]=[q[0],ret]
-				if(this.do_is_extract(kv,q[0])) {
-					let rr=this.extractData(kv[0],kv[1])
-					if(rr&&rr[0]===q[0]) {
-						return rr
-					}
-				}
-				return null
+				return [q[0], ret]
 			}
 			case 'u': {
 				let ret=this.data_store.get(q[0])
 				if(!ret) return null
-				let kv: [(typeof q)[0],typeof ret]=[q[0],ret]
-				if(this.do_is_extract(kv,q[0])) {
-					let rr=this.extractData(kv[0],kv[1])
-					if(rr&&rr[0]===q[0]) {
-						let o=rr[1]
-						return rr
-					}
-				}
-				return null
+				return [q[0], ret]
 			}
 			case 'getEventListeners': {
 				let ret=this.data_store.get(q[0])
 				if(!ret) return null
-				let kv: [(typeof q)[0],typeof ret]=[q[0],ret]
-				if(this.do_is_extract(kv,q[0])) {
-					let rr=this.extractData(kv[0],kv[1])
-					if(rr&&rr[0]===q[0]) {
-						return rr
-					}
-				}
-				return null
+				return [q[0], ret]
 			}
 			case '__k': {
 				let ret=this.data_store.get(q[0])
 				if(!ret) return null
-				let kv: [(typeof q)[0],typeof ret]=[q[0],ret]
-				if(this.do_is_extract(kv,q[0])) {
-					let rr=this.extractData(kv[0],kv[1])
-					if(rr&&rr[0]===q[0]) {
-						return rr
-					}
-				}
-				return null
+				return [q[0], ret]
 			}
 			default: throw new Error("Unknown key in getData")
 		}
@@ -114,13 +89,13 @@ export class DebugAPI {
 		void x,v
 		return true
 	}
-	setData<T extends string>(...q: [T,any]): boolean {
-		if(!q[1]) return false
-		switch(q[0]) {
-			case 'd': this.data_store.set(q[0],q[1]); break
-			case 'u': this.data_store.set(q[0],q[1]); break
-			case '__k': this.data_store.set(q[0],q[1]); break
-			case 'getEventListeners': this.data_store.set(q[0],q[1]); break
+	setData(a: string, b: any): boolean {
+		if(!b) return false
+		switch(a) {
+			case 'd': this.data_store.set(a,b); break
+			case 'u': this.data_store.set(a,b); break
+			case '__k': this.data_store.set(a,b); break
+			case 'getEventListeners': this.data_store.set(a,b); break
 			default: throw new Error("Unknown key in setData")
 		}
 		return false
@@ -263,8 +238,6 @@ export class DebugAPI {
 		}
 		let vars_arr=sr.map(e => String.fromCharCode(e))
 		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('')
-		let __y=this.event_handler
-		void __y
 		if(debug_data[0]==='class') {
 			this.current_debug_data=debug_data
 		} else if(debug_data[0]==='function') {
