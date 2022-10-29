@@ -47,7 +47,7 @@ export class DebugAPI {
 		void val
 		return true
 	}
-	extractData(a: string, _b: any): typeof a|null {
+	extractData(a: string,_b: any): typeof a|null {
 		switch(a) {
 			case 'd': return a
 			case 'u': return a
@@ -56,31 +56,31 @@ export class DebugAPI {
 			default: throw new Error("Unknown key in getData")
 		}
 	}
-	getDataWithKey(a: 'd', b: ChromeDevToolsDebug): ['d', ChromeDevToolsDebug];
-	getDataWithKey(a: 'u', b: null): ['u', null];
-	getDataWithKey(a: 'getEventListeners', b: null): null;
-	getDataWithKey(a: '__k', b: null): ['__k', null];
-	getDataWithKey(...q: [a: string, b: any]): typeof q|null {
+	getDataWithKey(a: 'd',b: ChromeDevToolsDebug|null): ['d',ChromeDevToolsDebug|null]
+	getDataWithKey(a: 'u',b: null): ['u',null]
+	getDataWithKey(a: 'getEventListeners',b: null): null
+	getDataWithKey(a: '__k',b: null): ['__k',null]
+	getDataWithKey(...q: [a: string,b: any]): typeof q|null {
 		switch(q[0]) {
 			case 'd': {
 				let ret=this.data_store.get(q[0])
 				if(!ret) return null
-				return [q[0], ret]
+				return [q[0],ret]
 			}
 			case 'u': {
 				let ret=this.data_store.get(q[0])
 				if(!ret) return null
-				return [q[0], ret]
+				return [q[0],ret]
 			}
 			case 'getEventListeners': {
 				let ret=this.data_store.get(q[0])
 				if(!ret) return null
-				return [q[0], ret]
+				return [q[0],ret]
 			}
 			case '__k': {
 				let ret=this.data_store.get(q[0])
 				if(!ret) return null
-				return [q[0], ret]
+				return [q[0],ret]
 			}
 			default: throw new Error("Unknown key in getData")
 		}
@@ -89,7 +89,7 @@ export class DebugAPI {
 		void x,v
 		return true
 	}
-	setData(a: string, b: any): boolean {
+	setData(a: string,b: any): boolean {
 		if(!b) return false
 		switch(a) {
 			case 'd': this.data_store.set(a,b); break
@@ -374,7 +374,7 @@ export class DebugAPI {
 			}
 		}
 		this.setData(<any>tmp_key,<any>tmp_value)
-		let fn: ChromeDevToolsDebug|['d', ChromeDevToolsDebug|null]|null=this.getDataWithKey('d',null) as any as ['d', ChromeDevToolsDebug|null]
+		let fn: ChromeDevToolsDebug|['d',ChromeDevToolsDebug|null]|null=this.getDataWithKey('d',null) as any as ['d',ChromeDevToolsDebug|null]
 		if(!fn||fn[0]!=='d'||fn[1]===null) throw new Error("Invalid")
 		fn=fn[1]
 		let dd=this.current_debug_data
