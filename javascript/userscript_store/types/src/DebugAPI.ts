@@ -9,13 +9,13 @@ import {DebugFunctionBox} from "types/box/DebugFunctionBox"
 import {DebugClassBox} from "types/box/DebugClassBox"
 import {DebugInfoValue} from "./DebugInfoValue"
 
-const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
 
 export class DebugAPI {
 	next_remote_id=0
 	data_store: Map<string,any>=new Map
 	event_handler=static_event_target
+	static hex_generator=new HexRandomDataGenerator()
 	static the_instance: DebugAPI|null=null
 	static the(): DebugAPI {
 		if(!this.the_instance) {
@@ -156,7 +156,7 @@ export class DebugAPI {
 			}
 		}
 		let vars_arr=sr.map(e => String.fromCharCode(e))
-		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('')
+		let rng_bytes=Array(5).fill('').map(() => DebugAPI.hex_generator.next_byte()).join('')
 		this.current_debug_data=debug_data
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode)
 		breakpoint_code_string=breakpoint_code_string.replaceAll('__v','__v_'+rng_bytes)
@@ -231,7 +231,7 @@ export class DebugAPI {
 				data: null
 			}
 		}
-		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('')
+		let rng_bytes=Array(5).fill('').map(() => DebugAPI.hex_generator.next_byte()).join('')
 		this.current_debug_data=debug_data
 		let dbg_str_func=this.stringifyFunction(this.debuggerBreakpointCode)
 		dbg_str_func=dbg_str_func.replaceAll('__v','__v_'+rng_bytes)
