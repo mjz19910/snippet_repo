@@ -169,8 +169,8 @@ export class DebugAPI {
 	}
 	debuggerBreakpointCode() {
 		bp_code: {
-			if(!window.DebugAPI.the()) break bp_code
-			let gd=window.DebugAPI.the().getDataWithKey("__k",null)
+			if(!window.DebugAPI) break bp_code
+			let gd=window.DebugAPI.getDataWithKey("__k",null)
 			if(!gd) break bp_code
 			if(gd[0]!=='__k') break bp_code
 			if(!gd[1]) break bp_code
@@ -190,7 +190,7 @@ export class DebugAPI {
 				}
 			}
 			{
-				if(!window.DebugAPI.the().clearCurrentBreakpoint()) {
+				if(!window.DebugAPI.clearCurrentBreakpoint()) {
 					console.log("failed to clear breakpoint")
 				}
 			}

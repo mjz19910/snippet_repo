@@ -5,7 +5,7 @@ export {}
 
 declare global {
 	interface Window {
-		DebugAPI: typeof DebugAPI
+		DebugAPI: DebugAPI
 		GenericDataEvent: typeof GenericDataEvent
 	}
 	interface String {
