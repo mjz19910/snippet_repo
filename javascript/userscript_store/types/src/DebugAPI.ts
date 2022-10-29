@@ -2,7 +2,6 @@ import {GenericEventTarget} from "types/vm/GenericEventTarget"
 import {HexRandomDataGenerator} from "types/vm/HexRandomDataGenerator"
 import {DebugDataBox as DebugDataBox} from "../box/DebugDataBox"
 import {DebugFunctionType} from "../box/DebugFunctionType"
-import {MapAllKeys} from "./MapAllKeys"
 import {ChromeDevToolsDebug} from "./ChromeDevToolsDebug"
 import {ChromeDevToolsGetEventListeners} from "./ChromeDevToolsGetEventListeners"
 import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug"
@@ -44,30 +43,12 @@ export class DebugAPI {
 	hasData(key: string): boolean {
 		return this.data_store.has(key)
 	}
-	do_is_extract<X extends any[],U extends X[0]>(typ: any,val: U): typ is X {
-		void typ
-		void val
-		return true
-	}
-	extractData(a: string,_b: any): typeof a|null {
-		switch(a) {
-			case 'd': return a
-			case 'u': return a
-			case 'getEventListeners': return a
-			case '__k': return a
-			default: throw new Error("Unknown key in getData")
-		}
-	}
 	getData(a: 'd'): ChromeDevToolsDebug|null
 	getData(a: 'u'): ChromeDevToolsUnDebug|null
 	getData(a: 'getEventListeners'): ChromeDevToolsGetEventListeners|null
 	getData(a: '__k'): DebugInfoValue|null
 	getData(a: string): any {
 		return this.data_store.get(a)
-	}
-	retype_data<T extends U,U>(x: U,v: T): x is T {
-		void x,v
-		return true
 	}
 	setData(a: 'd',b: ChromeDevToolsDebug|null): boolean
 	setData(a: 'u',b: ChromeDevToolsUnDebug|null): boolean
@@ -84,7 +65,7 @@ export class DebugAPI {
 		}
 		return false
 	}
-	deleteData<T extends number>(key: MapAllKeys[T]) {
+	deleteData(key: string) {
 		return this.data_store.delete(key)
 	}
 	get_event_listener_var_vec_1(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,func: DebugFunctionType,name: string) {
