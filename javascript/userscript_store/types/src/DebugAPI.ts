@@ -5,21 +5,12 @@ import {DebugFunctionType} from "../box/DebugFunctionType"
 import {ChromeDevToolsDebug} from "./ChromeDevToolsDebug"
 import {ChromeDevToolsGetEventListeners} from "./ChromeDevToolsGetEventListeners"
 import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug"
-import {DebugVarBox} from "types/box/DebugVarBox"
-import {DebugNullBox} from "types/box/DebugNullBox"
-import {DebugHiddenVarBox} from "types/box/DebugHiddenVarBox"
 import {DebugFunctionBox} from "types/box/DebugFunctionBox"
 import {DebugClassBox} from "types/box/DebugClassBox"
+import {DebugInfoValue} from "./DebugInfoValue"
 
 const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
-
-class DebugInfoValue {
-	valid=false
-	get(__v: string): DebugHiddenVarBox|DebugVarBox|DebugNullBox|null {
-		return null
-	}
-}
 
 export class DebugAPI {
 	next_remote_id=0
