@@ -194,12 +194,7 @@ export class DebugAPI {
 		let tmp_key: '__k'='__k'
 		{
 			for(let i=0;i<rep_arr.length;i+=2) {
-				let cur0=rep_arr[i]
-				let cur1=rep_arr[i]+1
-				if(tmp_key===cur0) {
-					tmp_key=cur1 as '__k'
-				}
-				breakpoint_code_string=breakpoint_code_string.replaceAll(cur0,cur1)
+				breakpoint_code_string=breakpoint_code_string.replaceAll(rep_arr[i],rep_arr[i+1])
 			}
 		}
 		let tmp_value=new DebugInfoValue
