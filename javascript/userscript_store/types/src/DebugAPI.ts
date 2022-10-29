@@ -315,9 +315,7 @@ export class DebugAPI {
 			activate_return=activate(v1,v2)
 		}
 		let breakpoint_result=null
-		if(tmp_value.get) {
-			breakpoint_result=tmp_value.get(var_name)
-		}
+		breakpoint_result=tmp_value.get(var_name)
 		this.deleteData(tmp_key)
 		if(breakpoint_result?.type==='var') {
 			return {
