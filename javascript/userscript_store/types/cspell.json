@@ -9,6 +9,7 @@
         "checkspec",
         "cint_arr",
         "debug_id_syms",
+        "DebuggableTypes",
         "deref",
         "noti",
         "plurials",
@@ -17,6 +18,7 @@
         "specialsbought",
         "timeplayed",
         "tonext",
+        "undebug",
         "Unregisters",
         "updateprogress",
         "userscript"

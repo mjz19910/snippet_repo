@@ -921,7 +921,6 @@ class DebugAPI {
 		}
 		let vars_arr=sr.map(e => String.fromCharCode(e))
 		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('')
-		let __y=this.event_handler
 		this.current_function_value=function_value
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode)
 		let rep_arr=[]
@@ -951,7 +950,6 @@ class DebugAPI {
 		if(tmp_value.get) {
 			for(let j of vars_arr) {
 				let res=tmp_value.get(j)
-				let arg_index=-1
 				switch(res.type) {
 					case 'var':
 						exec_res_arr.push(res.data)

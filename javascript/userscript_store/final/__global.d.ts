@@ -1,10 +1,11 @@
+import {DebugAPI} from "types/src/DebugAPI"
 import {GenericDataEvent} from "types/vm/GenericDataEvent"
 
 export {}
 
 declare global {
 	interface Window {
-		DebugAPI: {}
+		DebugAPI: typeof DebugAPI
 		GenericDataEvent: typeof GenericDataEvent
 	}
 	interface String {
