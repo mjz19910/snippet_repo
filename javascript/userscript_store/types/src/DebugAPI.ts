@@ -187,12 +187,7 @@ export class DebugAPI {
 		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('')
 		this.current_debug_data=debug_data
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode)
-		let rep_arr=['__v','__v_'+rng_bytes]
-		{
-			for(let i=0;i<rep_arr.length;i+=2) {
-				breakpoint_code_string=breakpoint_code_string.replaceAll(rep_arr[i],rep_arr[i+1])
-			}
-		}
+		breakpoint_code_string=breakpoint_code_string.replaceAll('__v','__v_'+rng_bytes)
 		let tmp_value=new DebugInfoValue
 		this.setData('__k',tmp_value)
 		let debug=this.getData('d')
@@ -267,25 +262,9 @@ export class DebugAPI {
 		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('')
 		this.current_debug_data=debug_data
 		let dbg_str_func=this.stringifyFunction(this.debuggerBreakpointCode)
-		let rep_arr=[]
-		{
-			rep_arr.push('__v','__v_'+rng_bytes)
-			rep_arr.push('__k','__k_'+rng_bytes)
-			rep_arr.push('__x','__x_'+rng_bytes)
-		}
-		let tmp_key: '__k'='__k'
-		{
-			for(let i=0;i<rep_arr.length;i+=2) {
-				let cur0=rep_arr[i]
-				let cur1=rep_arr[i]+1
-				if(tmp_key===cur0) {
-					tmp_key=cur1 as '__k'
-				}
-				dbg_str_func=dbg_str_func.replaceAll(cur0,cur1)
-			}
-		}
+		dbg_str_func=dbg_str_func.replaceAll('__v','__v_'+rng_bytes)
 		let tmp_value=new DebugInfoValue
-		this.setData(tmp_key,tmp_value)
+		this.setData('__k',tmp_value)
 		let debug=this.getData('d')
 		if(debug===null) throw new Error("Invalid")
 		debug(this.current_debug_data[2],`${dbg_str_func}`)
@@ -299,7 +278,7 @@ export class DebugAPI {
 			activate_return=activate(v1,v2)
 		}
 		let breakpoint_result=tmp_value.get(var_name)
-		this.deleteData(tmp_key)
+		this.deleteData('__k')
 		if(breakpoint_result?.type==='var') {
 			return {
 				type: 'data',
