@@ -116,8 +116,8 @@ export class DebugAPI {
 		}
 		return this
 	}
-	activate(tag: 'class',a: new (...a: any[]) => {},b: any[]): any
-	activate(tag: 'function',a: DebugFunctionType,b: {},c: any[]): {}
+	activate(tag: 'class',a: new (...a: any[]) => {},b: any[]): {}
+	activate(tag: 'function',a: DebugFunctionType,b: {},c: any[]): any
 	activate(tag: string,...v: any[]) {
 		if(tag==='function') {
 			let [,target,thisArgument,argumentsList]=v
