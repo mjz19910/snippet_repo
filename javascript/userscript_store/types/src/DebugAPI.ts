@@ -69,6 +69,10 @@ export class DebugAPI {
 		void x,v
 		return true
 	}
+	setData(a: 'd',b: ChromeDevToolsDebug|null): boolean
+	setData(a: 'u',b: ChromeDevToolsUnDebug|null): boolean
+	setData(a: 'getEventListeners',b: ChromeDevToolsGetEventListeners|null): boolean
+	setData(a: '__k',b: DebugInfoValue|null): boolean
 	setData(a: string,b: any): boolean {
 		if(!b) return false
 		switch(a) {
@@ -222,8 +226,8 @@ export class DebugAPI {
 				breakpoint_code_string=breakpoint_code_string.replaceAll(cur0,cur1)
 			}
 		}
-		let tmp_value=new DebugInfoValue;
-		this.setData(<any>tmp_key,<any>tmp_value)
+		let tmp_value=new DebugInfoValue
+		this.setData(tmp_key,tmp_value)
 		let debug=this.getData('d')
 		if(!debug) throw new Error("Invalid")
 		debug(this.current_debug_data[1],`${breakpoint_code_string}`)
@@ -324,7 +328,7 @@ export class DebugAPI {
 				}
 			}
 		}
-		this.setData(<any>tmp_key,<any>tmp_value)
+		this.setData(tmp_key,tmp_value)
 		let fn: ChromeDevToolsDebug|['d',ChromeDevToolsDebug|null]|null=this.getData('d')
 		if(fn===null) throw new Error("Invalid")
 		let dd=this.current_debug_data
