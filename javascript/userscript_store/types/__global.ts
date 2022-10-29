@@ -85,10 +85,19 @@ declare global {
 		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined
 		document_write_list: DocumentWriteList
 		allspec: any[]
+	}
+
+	// JQuery
+	export interface Window {
 		$: JQueryStatic
+	}
+
+	// DebugAPI
+	export interface Window {
 		DebugAPI: DebugAPI
 		GenericDataEvent: typeof GenericDataEvent
 	}
+
 	export var window: Window&typeof globalThis
 	export var Window: {
 		prototype: Window
