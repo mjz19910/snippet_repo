@@ -12,7 +12,6 @@ declare global {
 	export interface Window {
 		proxy_set: any[]
 		atomepersecond: number
-		//spell:words totalAtome lightreset totalAchi _targets_achi
 		totalAtome: number
 		prestige: number
 		is_in_ignored_fn(): any
