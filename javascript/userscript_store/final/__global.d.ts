@@ -1,4 +1,4 @@
-import {DebugAPI} from "types/src/DebugAPI"
+import {DebugAPI} from "types/DebugAPI"
 import {GenericDataEvent} from "types/vm/GenericDataEvent"
 
 export {}
