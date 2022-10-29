@@ -9,13 +9,9 @@ import {DebugFunctionBox} from "types/box/DebugFunctionBox"
 import {DebugClassBox} from "types/box/DebugClassBox"
 import {DebugInfoValue} from "./DebugInfoValue"
 
-const static_event_target=new GenericEventTarget()
-
 export class DebugAPI {
-	next_remote_id=0
-	data_store: Map<string,any>=new Map
-	event_handler=static_event_target
 	static hex_generator=new HexRandomDataGenerator()
+	static static_event_target=new GenericEventTarget()
 	static the_instance: DebugAPI|null=null
 	static the(): DebugAPI {
 		if(!this.the_instance) {
@@ -23,6 +19,9 @@ export class DebugAPI {
 		}
 		return this.the_instance
 	}
+	next_remote_id=0
+	data_store: Map<string,any>=new Map
+	event_handler=DebugAPI.static_event_target
 	root: DebugAPI|null=null
 	constructor(root: DebugAPI|null=null) {
 		if(root) {
