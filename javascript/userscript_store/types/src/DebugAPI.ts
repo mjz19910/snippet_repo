@@ -15,7 +15,12 @@ import {DebugEvalLostBox} from "types/box/DebugEvalLostBox"
 
 const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
-const MapKeys: MapAllKeys=['d','u','getEventListeners','__k']
+
+class DebugInfoValue {
+	get(/**@type {string}*/_q: string): DebugEvalLostBox|DebugVarBox|DebugNullBox {
+		return {type: 'no-var',data: null}
+	}
+}
 
 export class DebugAPI {
 	next_remote_id=0
@@ -56,7 +61,7 @@ export class DebugAPI {
 	getData(a: 'd'): ChromeDevToolsDebug|null
 	getData(a: 'u'): ChromeDevToolsUnDebug|null
 	getData(a: 'getEventListeners'): ChromeDevToolsGetEventListeners|null
-	getData(a: '__k'): null
+	getData(a: '__k'): DebugInfoValue|null
 	getData(a: string): any {
 		return this.data_store.get(a)
 	}
@@ -222,9 +227,7 @@ export class DebugAPI {
 				breakpoint_code_string=breakpoint_code_string.replaceAll(cur0,cur1)
 			}
 		}
-		let tmp_value={
-			get(/**@type {string}*/_q: string): DebugEvalLostBox|DebugVarBox|DebugNullBox {return {type: 'no-var', data: null}}
-		}
+		let tmp_value=new DebugInfoValue;
 		this.setData(<any>tmp_key,<any>tmp_value)
 		let debug=this.getData('d')
 		if(!debug) throw new Error("Invalid")
@@ -233,7 +236,7 @@ export class DebugAPI {
 		let exec_return=null
 		if(this.current_debug_data[0]==='class') {
 			let [,p2,p3,p4]=this.current_debug_data
-			p2(['class', p3,p4])
+			p2(['class',p3,p4])
 		} else if(this.current_debug_data[0]==='function') {
 			let [,p2,p3]=this.current_debug_data
 			p2(p3)
