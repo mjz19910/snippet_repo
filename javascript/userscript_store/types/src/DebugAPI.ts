@@ -223,7 +223,7 @@ export class DebugAPI {
 					case 'no-var':
 						break
 					case 'hidden-var':
-						console.log('can\'t use dynamic eval for var hidden by eval argument "'+var_name+'"')
+						console.log('can\'t use dynamic eval for shadowed var_name: "'+var_name+'"')
 				}
 			}
 		}
