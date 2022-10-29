@@ -356,11 +356,7 @@ export class DebugAPI {
 	 * @param {string} var_match
 	 */
 	debuggerGetVarArray(run_box: DebugDataBox,var_match: string) {
-		if(run_box[0]==='function') {
-			return this.debuggerGetVarArray_a(run_box,var_match)
-		} else if(run_box[0]==='class') {
-			return this.debuggerGetVarArray_a(run_box,var_match)
-		}
+		return this.debuggerGetVarArray_a(run_box,var_match)
 	}
 	/**
 	 * @param {DebugDataBox} debug_data
