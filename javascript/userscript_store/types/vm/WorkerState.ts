@@ -11,6 +11,8 @@ import {MessageTimeoutFireS} from "./MessageTimeoutFireS"
 import {Timer} from "./Timer"
 import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyMessage,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "types/constants"
 
+export const GlobalStateKey = "global_state_key"
+
 export class WorkerState {
 	flags: Map<string,boolean>
 	worker_code
@@ -166,7 +168,7 @@ export class WorkerState {
 		this[before_destroy_call_name]()
 		worker_state_value.destroy()
 	}
-	static global_state_key: 'g_worker_state'="g_worker_state"
+	static global_state_key: typeof GlobalStateKey=GlobalStateKey
 	static has_global_state() {
 		return window.hasOwnProperty(this.global_state_key)
 	}

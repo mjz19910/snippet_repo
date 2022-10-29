@@ -1,5 +1,5 @@
 import {RemoteWorkerState} from "./vm/RemoteWorkerState"
-import {WorkerState} from "./vm/WorkerState"
+import {GlobalStateKey, WorkerState} from "./vm/WorkerState"
 import {DocumentWriteList} from "./vm/DocumentWriteList"
 import {AutoBuy} from "./vm/AutoBuy"
 import {DebugAPI} from "./DebugAPI"
@@ -73,7 +73,7 @@ declare global {
 		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number
 		remoteClearTimeout: (id?: number) => void
 		remoteClearInterval: (id?: number) => void
-		g_worker_state?: WorkerState
+		[GlobalStateKey]?: WorkerState
 		mute(): void
 		g_mut_observers: any[]
 		g_cs?: any[]
