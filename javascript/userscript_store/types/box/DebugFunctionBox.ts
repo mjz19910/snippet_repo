@@ -1,4 +1,4 @@
-import {DebugFunctionCallbackArgs} from "./DebugFunctionCallbackArgs"
 import {DebugFunctionCallback} from "./DebugFunctionCallback"
+import {DebugFunctionType} from "./DebugFunctionType"
 
-export type DebugFunctionBox=['function',DebugFunctionCallback,DebugFunctionCallbackArgs]
+export type DebugFunctionBox=['function',DebugFunctionCallback,DebugFunctionType,{},any[]]

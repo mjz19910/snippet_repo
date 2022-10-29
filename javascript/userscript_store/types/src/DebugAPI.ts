@@ -151,8 +151,7 @@ export class DebugAPI {
 					let [,v1]=k2
 					undebug(v1)
 				} else if(dd[0]==='class') {
-					let [,,k2]=dd
-					let [,v1]=k2
+					let [,,v1]=dd
 					undebug(v1)
 				}
 				return true
