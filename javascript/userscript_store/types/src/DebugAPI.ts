@@ -302,7 +302,6 @@ export class DebugAPI {
 			rep_arr.push('__k','__k_'+rng_bytes)
 			rep_arr.push('__x','__x_'+rng_bytes)
 		}
-		let map_arr=[dbg_str_func]
 		let tmp_key: '__k'='__k'
 		{
 			for(let i=0;i<rep_arr.length;i+=2) {
@@ -311,9 +310,8 @@ export class DebugAPI {
 				if(tmp_key===cur0) {
 					(tmp_key as any)=cur1
 				}
-				map_arr[0]=map_arr[0].replaceAll(cur0,cur1)
+				dbg_str_func=dbg_str_func.replaceAll(cur0,cur1)
 			}
-			dbg_str_func=map_arr[0]
 		}
 		let tmp_value={
 			type: 'none',
