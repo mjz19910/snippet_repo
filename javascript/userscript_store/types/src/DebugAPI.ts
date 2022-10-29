@@ -33,14 +33,8 @@ export class DebugAPI {
 			this.root=this
 		}
 	}
-	hasData<N extends keyof typeof MapKeys>(key: typeof MapKeys[N]): boolean {
-		for(let i=0;i<MapKeys.length;i++) {
-			let eq=MapKeys[i]
-			if(eq===key) {
-				return this.data_store.has(eq)
-			}
-		}
-		return false
+	hasData(key: string): boolean {
+		return this.data_store.has(key)
 	}
 	do_is_extract<X extends any[],U extends X[0]>(typ: any,val: U): typ is X {
 		void typ
@@ -56,34 +50,12 @@ export class DebugAPI {
 			default: throw new Error("Unknown key in getData")
 		}
 	}
-	getDataWithKey(a: 'd',b: ChromeDevToolsDebug|null): ['d',ChromeDevToolsDebug|null]
-	getDataWithKey(a: 'u',b: null): ['u',null]
-	getDataWithKey(a: 'getEventListeners',b: null): null
-	getDataWithKey(a: '__k',b: null): ['__k',null]
-	getDataWithKey(...q: [a: string,b: any]): typeof q|null {
-		switch(q[0]) {
-			case 'd': {
-				let ret=this.data_store.get(q[0])
-				if(!ret) return null
-				return [q[0],ret]
-			}
-			case 'u': {
-				let ret=this.data_store.get(q[0])
-				if(!ret) return null
-				return [q[0],ret]
-			}
-			case 'getEventListeners': {
-				let ret=this.data_store.get(q[0])
-				if(!ret) return null
-				return [q[0],ret]
-			}
-			case '__k': {
-				let ret=this.data_store.get(q[0])
-				if(!ret) return null
-				return [q[0],ret]
-			}
-			default: throw new Error("Unknown key in getData")
-		}
+	getData(a: 'd'): ChromeDevToolsDebug|null
+	getData(a: 'u'): ChromeDevToolsUnDebug|null
+	getData(a: 'getEventListeners'): ChromeDevToolsGetEventListeners|null
+	getData(a: '__k'): null
+	getData(a: string): any {
+		return this.data_store.get(a)
 	}
 	retype_data<T extends U,U>(x: U,v: T): x is T {
 		void x,v
@@ -118,13 +90,10 @@ export class DebugAPI {
 	}
 	attach(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,getEventListeners: ChromeDevToolsGetEventListeners|null) {
 		//Attach to the chrome DebugApi functions the user specified.
-		let obj_debug=this.getDataWithKey('d',null)
-		let obj_undebug=this.getDataWithKey('u',null)
-		let get_ev_lis=this.getDataWithKey('getEventListeners',null)
-		if(!obj_debug) return this
-		if(!obj_undebug) return this
-		if(!get_ev_lis) return this
-		if(obj_debug[1]!==debug||obj_undebug[1]!==undebug||get_ev_lis[1]!==getEventListeners) {
+		let obj_debug=this.getData('d')
+		let obj_undebug=this.getData('u')
+		let get_ev_lis=this.getData('getEventListeners')
+		if(obj_debug!==debug||obj_undebug!==undebug||get_ev_lis!==getEventListeners) {
 			this.setData('d',debug)
 			this.setData('u',undebug)
 			if(getEventListeners) {
@@ -145,11 +114,9 @@ export class DebugAPI {
 	debuggerBreakpointCode() {
 		bp_code: {
 			if(!window.DebugAPI) break bp_code
-			let gd=window.DebugAPI.getDataWithKey("__k",null)
+			let gd=window.DebugAPI.getData("__k")
 			if(!gd) break bp_code
-			if(gd[0]!=='__k') break bp_code
-			if(!gd[1]) break bp_code
-			gd[1].get=(/** @type {string} */ __v: string) => {
+			gd.get=(/** @type {string} */ __v: string) => {
 				let ret: DebugInfoBox|null
 				if(__v==='__v') {
 					ret={type: 'eval-lost',data: null}
@@ -175,20 +142,18 @@ export class DebugAPI {
 	clearCurrentBreakpoint() {
 		let key: "u"="u"
 		if(this.hasData(key)) {
-			let undebug=this.getDataWithKey(key,null)
+			let undebug=this.getData(key)
 			if(!undebug) return false
-			if(undebug[0]!==key) return false
-			let undebug_2=undebug[1]
-			if(this.current_debug_data&&undebug_2) {
+			if(this.current_debug_data) {
 				let dd=this.current_debug_data
 				if(dd[0]==='function') {
 					let [,,k2]=dd
 					let [,v1]=k2
-					undebug_2(v1)
+					undebug(v1)
 				} else if(dd[0]==='class') {
 					let [,,k2]=dd
 					let [,v1]=k2
-					undebug_2(v1)
+					undebug(v1)
 				}
 				return true
 			}
@@ -215,7 +180,7 @@ export class DebugAPI {
 	 * @param {string} var_match
 	 */
 	debuggerGetVarArray_a(debug_data: DebugDataBox,var_match: string) {
-		if(!this.hasData("d")||!this.getDataWithKey("u",null)) {
+		if(!this.hasData("d")||!this.hasData("u")) {
 			return {
 				type: 'invalid-state-error',
 				data: null
@@ -268,10 +233,9 @@ export class DebugAPI {
 			get(/**@type {string}*/_q: string): {type: 'no-var'|'eval-lost'|null}|{type: 'var'; data: null} {return {type: null}}
 		}
 		this.setData(<any>tmp_key,<any>tmp_value)
-		let debug=this.getDataWithKey('d',null)
+		let debug=this.getData('d')
 		if(!debug) throw new Error("Invalid")
-		if(debug[0]!=='d'||debug[1]===null) throw new Error("Invalid")
-		debug[1](this.current_debug_data[1],`${breakpoint_code_string}`)
+		debug(this.current_debug_data[1],`${breakpoint_code_string}`)
 		// ---- Activate ----
 		let exec_return=null
 		if(this.current_debug_data[0]==='class') {
@@ -334,7 +298,7 @@ export class DebugAPI {
 	 * @param {string} var_name
 	 */
 	debuggerGetVarInternal(debug_data: DebugDataBox,var_name: string) {
-		if(!this.hasData("d")||!this.getDataWithKey("u",null)) {
+		if(!this.hasData("d")||!this.hasData("u")) {
 			return {
 				type: 'invalid-state-error',
 				data: null
@@ -374,9 +338,8 @@ export class DebugAPI {
 			}
 		}
 		this.setData(<any>tmp_key,<any>tmp_value)
-		let fn: ChromeDevToolsDebug|['d',ChromeDevToolsDebug|null]|null=this.getDataWithKey('d',null) as any as ['d',ChromeDevToolsDebug|null]
-		if(!fn||fn[0]!=='d'||fn[1]===null) throw new Error("Invalid")
-		fn=fn[1]
+		let fn: ChromeDevToolsDebug|['d',ChromeDevToolsDebug|null]|null=this.getData('d')
+		if(fn===null) throw new Error("Invalid")
 		let dd=this.current_debug_data
 		let ra=dd[2]
 		fn(ra[1],`${dbg_str_func}`)
