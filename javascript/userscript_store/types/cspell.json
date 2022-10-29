@@ -1,12 +1,14 @@
 {
     "words": [
         "achiSpec",
+        "adsbygoogle",
         "allspec",
         "atomepersecond",
         "atomsaccu",
         "atomsinvest",
         "checkspec",
         "cint_arr",
+        "debug_id_syms",
         "deref",
         "noti",
         "plurials",
@@ -16,6 +18,7 @@
         "timeplayed",
         "tonext",
         "Unregisters",
-        "updateprogress"
+        "updateprogress",
+        "userscript"
     ]
 }
