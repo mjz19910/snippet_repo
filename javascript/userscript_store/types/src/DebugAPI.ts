@@ -326,12 +326,12 @@ export class DebugAPI {
 		fn(ra,`${dbg_str_func}`)
 		let activate_return=null
 		// ---- Activate ----
-		if(this.current_debug_data[0]==='class') {
-			let [,activate,v1,v2]=this.current_debug_data
-			activate_return=activate(v1,v2)
-		} else if(this.current_debug_data[0]==='function') {
+		if(this.current_debug_data[0]==='function') {
 			let [,activate,v1,v2,v3]=this.current_debug_data
 			activate_return=activate(v1,v2,v3)
+		} else {
+			let [,activate,v1,v2]=this.current_debug_data
+			activate_return=activate(v1,v2)
 		}
 		let breakpoint_result=null
 		if(tmp_value.get) {
