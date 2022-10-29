@@ -121,21 +121,16 @@ export class DebugAPI {
 	debuggerBreakpointCode() {
 		bp_code: {
 			if(!window.DebugAPI) break bp_code
-			let gd=window.DebugAPI.getData("__k")
+			let gd=window.DebugAPI.getData('__k')
 			if(!gd) break bp_code
-			gd.get=(/** @type {string} */ __v: string) => {
-				let ret: DebugInfoBox|null
+			gd.get=(__v) => {
 				if(__v==='__v') {
-					ret={type: 'eval-lost',data: null}
-					return ret
+					return {type: 'eval-lost',data: null}
 				}
 				try {
-					let ret_data: [string,any]=[__v,eval(__v)]
-					ret={type: 'var',data: ret_data}
-					return ret
+					return {type: 'var',data: [__v,eval(__v)]}
 				} catch {
-					ret={type: 'no-var',data: null}
-					return ret
+					return {type: 'no-var',data: null}
 				}
 			}
 			{
