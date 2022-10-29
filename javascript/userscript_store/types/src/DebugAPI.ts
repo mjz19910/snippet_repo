@@ -319,7 +319,7 @@ export class DebugAPI {
 		}
 		let tmp_value=new DebugInfoValue
 		this.setData(tmp_key,tmp_value)
-		let fn: ChromeDevToolsDebug|['d',ChromeDevToolsDebug|null]|null=this.getData('d')
+		let fn=this.getData('d')
 		if(fn===null) throw new Error("Invalid")
 		let dd=this.current_debug_data
 		let ra=dd[2]
