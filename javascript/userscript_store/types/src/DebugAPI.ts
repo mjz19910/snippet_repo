@@ -179,7 +179,7 @@ export class DebugAPI {
 	 * @param {DebugDataBox} debug_data
 	 * @param {string} var_match
 	 */
-	debuggerGetVarArray_a(debug_data: DebugDataBox,var_match: string) {
+	debuggerGetVarArrayInternal(debug_data: DebugDataBox,var_match: string) {
 		if(!this.hasData("d")||!this.hasData("u")) {
 			return {
 				type: 'invalid-state-error',
@@ -280,18 +280,16 @@ export class DebugAPI {
 			}
 		}
 	}
-	debuggerGetVarArray_c(class_value: new (...a: any[]) => {},target_arg_vec: any[],var_match: string) {
-		/**@type {ClassCallbackArgs} */
-		let run_box: ClassCallbackArgs=['class',class_value,['class',target_arg_vec]]
-		let data: DebugDataBox=['class',this.activate,run_box]
-		return this.debuggerGetVarArray_a(data,var_match)
+	debuggerGetVarArrayClass(class_value: new (...a: any[]) => {},target_arg_vec: any[],var_match: string) {
+		let data: DebugDataBox=['class',this.activate,class_value,target_arg_vec]
+		return this.debuggerGetVarArrayInternal(data,var_match)
 	}
 	/**
 	 * @param {DebugDataBox} run_box
 	 * @param {string} var_match
 	 */
 	debuggerGetVarArray(run_box: DebugDataBox,var_match: string) {
-		return this.debuggerGetVarArray_a(run_box,var_match)
+		return this.debuggerGetVarArrayInternal(run_box,var_match)
 	}
 	/**
 	 * @param {DebugDataBox} debug_data
