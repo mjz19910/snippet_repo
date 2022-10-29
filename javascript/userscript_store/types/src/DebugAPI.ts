@@ -129,7 +129,7 @@ export class DebugAPI {
 			if(!__k) break bp_code
 			__k.get=(__v) => {
 				if(__v==='__v') {
-					return {type: 'eval-lost',data: null}
+					return {type: 'hidden-var',data: null}
 				}
 				try {
 					return {type: 'var',data: [__v,eval(__v)]}
@@ -233,7 +233,7 @@ export class DebugAPI {
 						break
 					case 'no-var':
 						break
-					case 'eval-lost':
+					case 'hidden-var':
 						console.log('can\'t use dynamic eval for var hidden by eval argument "'+j+'"')
 				}
 			}

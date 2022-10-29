@@ -1,4 +1,4 @@
 export type DebugEvalLostBox={
-	type: 'eval-lost'
+	type: 'hidden-var'
 	data: null
 }
