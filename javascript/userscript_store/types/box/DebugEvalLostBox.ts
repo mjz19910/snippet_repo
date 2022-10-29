@@ -1,4 +1,4 @@
-export type EvalLostBox={
+export type DebugEvalLostBox={
 	type: 'eval-lost'
 	data: null
 }

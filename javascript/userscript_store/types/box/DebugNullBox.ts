@@ -1,4 +1,4 @@
-export type NoVarBox={
+export type DebugNullBox={
 	type: 'no-var'
 	data: null
 }

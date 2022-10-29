@@ -7,7 +7,7 @@ import {ChromeDevToolsDebug} from "./ChromeDevToolsDebug"
 import {ChromeDevToolsGetEventListeners} from "./ChromeDevToolsGetEventListeners"
 import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug"
 import {ClassCallbackArgs} from "../box/ClassCallbackArgs"
-import {DebugInfoBox} from "./DebugInfoBox"
+import {DebugInfoBox} from "../box/DebugInfoBox"
 import {DebugFunctionCallbackArgs} from "types/box/DebugFunctionCallbackArgs"
 
 const random_data_generator=new HexRandomDataGenerator()
