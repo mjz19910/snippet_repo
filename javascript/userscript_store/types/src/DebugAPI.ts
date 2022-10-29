@@ -212,8 +212,8 @@ export class DebugAPI {
 		}
 		let exec_res_arr=[]
 		if(tmp_value.valid) {
-			for(let j of vars_arr) {
-				let res=tmp_value.get(j)
+			for(let var_name of vars_arr) {
+				let res=tmp_value.get(var_name)
 				if(!res) continue
 				switch(res.type) {
 					case null: continue
@@ -223,7 +223,7 @@ export class DebugAPI {
 					case 'no-var':
 						break
 					case 'hidden-var':
-						console.log('can\'t use dynamic eval for var hidden by eval argument "'+j+'"')
+						console.log('can\'t use dynamic eval for var hidden by eval argument "'+var_name+'"')
 				}
 			}
 		}
