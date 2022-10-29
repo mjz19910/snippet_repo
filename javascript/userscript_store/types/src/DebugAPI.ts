@@ -223,7 +223,6 @@ export class DebugAPI {
 			}
 		}
 		let tmp_value={
-			/**@returns {{type:'no-var'|'eval-lost'|null} | {type:'var', data:null}} */
 			get(/**@type {string}*/_q: string): DebugEvalLostBox|DebugVarBox|DebugNullBox {return {type: 'no-var', data: null}}
 		}
 		this.setData(<any>tmp_key,<any>tmp_value)
