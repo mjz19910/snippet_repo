@@ -9,6 +9,9 @@ import {ChromeDevToolsUnDebug} from "./ChromeDevToolsUnDebug"
 import {ClassCallbackArgs} from "../box/ClassCallbackArgs"
 import {DebugInfoBox} from "../box/DebugInfoBox"
 import {DebugFunctionCallbackArgs} from "types/box/DebugFunctionCallbackArgs"
+import {DebugVarBox} from "types/box/DebugVarBox"
+import {DebugNullBox} from "types/box/DebugNullBox"
+import {DebugEvalLostBox} from "types/box/DebugEvalLostBox"
 
 const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
@@ -214,14 +217,14 @@ export class DebugAPI {
 				let cur0=rep_arr[i]
 				let cur1=rep_arr[i]+1
 				if(tmp_key===cur0) {
-					(tmp_key as any)=cur1
+					tmp_key=cur1 as '__k'
 				}
 				breakpoint_code_string=breakpoint_code_string.replaceAll(cur0,cur1)
 			}
 		}
 		let tmp_value={
 			/**@returns {{type:'no-var'|'eval-lost'|null} | {type:'var', data:null}} */
-			get(/**@type {string}*/_q: string): {type: 'no-var'|'eval-lost'|null}|{type: 'var'; data: null} {return {type: null}}
+			get(/**@type {string}*/_q: string): DebugEvalLostBox|DebugVarBox|DebugNullBox {return {type: 'no-var', data: null}}
 		}
 		this.setData(<any>tmp_key,<any>tmp_value)
 		let debug=this.getData('d')
