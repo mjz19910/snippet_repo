@@ -295,7 +295,7 @@ export class DebugAPI {
 				let cur0=rep_arr[i]
 				let cur1=rep_arr[i]+1
 				if(tmp_key===cur0) {
-					(tmp_key as any)=cur1
+					tmp_key=cur1 as '__k'
 				}
 				dbg_str_func=dbg_str_func.replaceAll(cur0,cur1)
 			}
