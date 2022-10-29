@@ -20,8 +20,8 @@ const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
 
 class DebugInfoValue {
-	get(__v: string): DebugEvalLostBox|DebugVarBox|DebugNullBox {
-		return {type: 'no-var',data: null}
+	get(__v: string): DebugEvalLostBox|DebugVarBox|DebugNullBox|null {
+		return null
 	}
 }
 
@@ -317,12 +317,12 @@ export class DebugAPI {
 		let breakpoint_result=null
 		breakpoint_result=tmp_value.get(var_name)
 		this.deleteData(tmp_key)
-		if(breakpoint_result.type==='var') {
+		if(breakpoint_result?.type==='var') {
 			return {
 				type: 'data',
 				data: {
 					result: breakpoint_result.data,
-					return: activate_return
+					callback_result: activate_return
 				}
 			}
 		}
@@ -331,7 +331,7 @@ export class DebugAPI {
 				type: 'unexpected',
 				data: {
 					result: breakpoint_result,
-					return: activate_return
+					callback_result: activate_return
 				}
 			}
 		}
@@ -339,10 +339,9 @@ export class DebugAPI {
 			type: 'no-response',
 			data: {
 				result: null,
-				return: activate_return
+				callback_result: activate_return
 			}
 		}
-
 	}
 	/**
 	 * @param {DebugDataBox} function_value
