@@ -18,8 +18,6 @@ export class DebugAPI {
 	next_remote_id=0
 	data_store: Map<string,any>=new Map
 	event_handler=static_event_target
-	// static simple_parser = new RustSimpleParser
-	// static javascript_parser = new SimpleJavascriptParser
 	static the_instance: DebugAPI|null=null
 	static the(): DebugAPI {
 		if(!this.the_instance) {
@@ -141,7 +139,7 @@ export class DebugAPI {
 		__d.attach(debug,undebug,null)
 		let activate: DebugFunctionCallbackArgs=['function',func,{},[]]
 		let data: DebugDataBox=['function',this.activate,activate]
-		return __d.debuggerGetVar_a(data,name)
+		return __d.debuggerGetVarInternal(data,name)
 	}
 	attach(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,getEventListeners: ChromeDevToolsGetEventListeners|null) {
 		//Attach to the chrome DebugApi functions the user specified.
@@ -362,7 +360,7 @@ export class DebugAPI {
 	 * @param {DebugDataBox} debug_data
 	 * @param {string} var_name
 	 */
-	debuggerGetVar_a(debug_data: DebugDataBox,var_name: string) {
+	debuggerGetVarInternal(debug_data: DebugDataBox,var_name: string) {
 		if(!this.hasData("d")||!this.getDataWithKey("u",null)) {
 			return {
 				type: 'invalid-state-error',
@@ -453,23 +451,10 @@ export class DebugAPI {
 
 	}
 	/**
-	 * @param {DebugDataBox} class_value
-	 * @param {string} var_name
-	 */
-	debuggerGetVar_c(class_value: DebugDataBox,var_name: string) {
-		if(typeof class_value!='function') {
-			return {
-				type: 'argument-error',
-				value: null
-			}
-		}
-		return this.debuggerGetVar_a(class_value,var_name)
-	}
-	/**
 	 * @param {DebugDataBox} function_value
 	 * @param {string} var_name
 	 */
 	debuggerGetVar(function_value: DebugDataBox,var_name: string) {
-		return this.debuggerGetVar_a(function_value,var_name)
+		return this.debuggerGetVarInternal(function_value,var_name)
 	}
 }
