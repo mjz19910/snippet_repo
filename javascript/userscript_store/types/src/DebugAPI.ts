@@ -12,6 +12,9 @@ import {DebugFunctionCallbackArgs} from "types/box/DebugFunctionCallbackArgs"
 import {DebugVarBox} from "types/box/DebugVarBox"
 import {DebugNullBox} from "types/box/DebugNullBox"
 import {DebugEvalLostBox} from "types/box/DebugEvalLostBox"
+import {DebugFunctionBox} from "types/box/DebugFunctionBox"
+import {DebugClassBox} from "types/box/DebugClassBox"
+import {ClassCallbackFunction} from "types/box/ClassCallbackFunction"
 
 const random_data_generator=new HexRandomDataGenerator()
 const static_event_target=new GenericEventTarget()
@@ -96,7 +99,7 @@ export class DebugAPI {
 			}
 		}
 		__d.attach(debug,undebug,null)
-		let data: DebugDataBox=['function',this.activate,func,{},[]]
+		let data: DebugFunctionBox=['function',this.activate,func,{},[]]
 		return __d.debuggerGetVarInternal(data,name)
 	}
 	attach(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,getEventListeners: ChromeDevToolsGetEventListeners|null) {
@@ -113,7 +116,9 @@ export class DebugAPI {
 		}
 		return this
 	}
-	activate(v: DebugFunctionCallbackArgs|ClassCallbackArgs) {
+	activate(a:new (...a: any[]) => {},b:any[]): any
+	activate(a,b,c): {}
+	activate(v: any[]) {
 		if(v[0]==='function') {
 			let [,target,thisArgument,argumentsList]=v
 			return Reflect.apply(target,thisArgument,argumentsList)
@@ -235,10 +240,10 @@ export class DebugAPI {
 		let exec_return=null
 		if(this.current_debug_data[0]==='class') {
 			let [,p2,p3,p4]=this.current_debug_data
-			p2(['class',p3,p4])
+			p2(p3,p4)
 		} else if(this.current_debug_data[0]==='function') {
-			let [,p2,p3]=this.current_debug_data
-			p2(p3)
+			let [,p2,p3,p4,p5]=this.current_debug_data
+			p2(p3,p4,p5)
 		}
 		let exec_res_arr=[]
 		if(tmp_value.get) {
@@ -276,7 +281,8 @@ export class DebugAPI {
 		}
 	}
 	debuggerGetVarArrayClass(class_value: new (...a: any[]) => {},target_arg_vec: any[],var_match: string) {
-		let data: DebugDataBox=['class',this.activate,class_value,target_arg_vec]
+		let callback: ClassCallbackFunction=this.activate
+		let data: DebugClassBox=['class',callback,class_value,target_arg_vec]
 		return this.debuggerGetVarArrayInternal(data,var_match)
 	}
 	/**
