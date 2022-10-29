@@ -116,10 +116,10 @@ export class DebugAPI {
 		}
 		return this
 	}
-	activate(a:new (...a: any[]) => {},b:any[]): any
-	activate(a,b,c): {}
-	activate(v: any[]) {
-		if(v[0]==='function') {
+	activate(tag: 'class',a: new (...a: any[]) => {},b: any[]): any
+	activate(tag: 'function',a: DebugFunctionType,b: {},c: any[]): {}
+	activate(tag: string,...v: any[]) {
+		if(tag==='function') {
 			let [,target,thisArgument,argumentsList]=v
 			return Reflect.apply(target,thisArgument,argumentsList)
 		} else {
@@ -240,10 +240,10 @@ export class DebugAPI {
 		let exec_return=null
 		if(this.current_debug_data[0]==='class') {
 			let [,p2,p3,p4]=this.current_debug_data
-			p2(p3,p4)
+			p2('class',p3,p4)
 		} else if(this.current_debug_data[0]==='function') {
 			let [,p2,p3,p4,p5]=this.current_debug_data
-			p2(p3,p4,p5)
+			p2('function',p3,p4,p5)
 		}
 		let exec_res_arr=[]
 		if(tmp_value.get) {
@@ -334,10 +334,10 @@ export class DebugAPI {
 		// ---- Activate ----
 		if(this.current_debug_data[0]==='class') {
 			let [,activate,v1,v2]=this.current_debug_data
-			activate_return=activate(v1,v2)
+			activate_return=activate('class',v1,v2)
 		} else if(this.current_debug_data[0]==='function') {
 			let [,activate,v1,v2,v3]=this.current_debug_data
-			activate_return=activate(v1,v2,v3)
+			activate_return=activate('function',v1,v2,v3)
 		}
 		let breakpoint_result=null
 		if(tmp_value.get) {

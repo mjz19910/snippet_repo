@@ -1,1 +1,1 @@
-export type ClassCallbackFunction=(a: new (...a: any[]) => {},b: any[]) => any
+export type ClassCallbackFunction=(tag: 'class', constructor: new (...a: any[]) => {},args: any[]) => any
