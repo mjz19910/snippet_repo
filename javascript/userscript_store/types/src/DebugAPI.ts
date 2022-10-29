@@ -304,9 +304,7 @@ export class DebugAPI {
 		this.setData(tmp_key,tmp_value)
 		let debug=this.getData('d')
 		if(debug===null) throw new Error("Invalid")
-		let dd=this.current_debug_data
-		let ra=dd[2]
-		debug(ra,`${dbg_str_func}`)
+		debug(this.current_debug_data[2],`${dbg_str_func}`)
 		let activate_return=null
 		// ---- Activate ----
 		if(this.current_debug_data[0]==='function') {
