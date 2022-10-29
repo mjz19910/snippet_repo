@@ -1,3 +1,3 @@
-import {DebugFunctionCallbackArgs} from "./DebugFunctionCallbackArgs"
+import {DebugFunctionType} from "./DebugFunctionType"
 
-export type DebugFunctionCallback=(v: DebugFunctionCallbackArgs) => {}
+export type DebugFunctionCallback=(a: DebugFunctionType,b: {},args: any[]) => {}

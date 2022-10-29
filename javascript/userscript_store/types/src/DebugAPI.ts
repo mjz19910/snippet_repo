@@ -328,10 +328,10 @@ export class DebugAPI {
 		// ---- Activate ----
 		if(this.current_debug_data[0]==='class') {
 			let [,activate,v1,v2]=this.current_debug_data
-			activate_return=activate(['class',v1,v2])
+			activate_return=activate(v1,v2)
 		} else if(this.current_debug_data[0]==='function') {
 			let [,activate,v1,v2,v3]=this.current_debug_data
-			activate_return=activate(['function',v1,v2,v3])
+			activate_return=activate(v1,v2,v3)
 		}
 		let breakpoint_result=null
 		if(tmp_value.get) {
