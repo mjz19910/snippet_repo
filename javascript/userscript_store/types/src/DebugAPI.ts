@@ -112,7 +112,7 @@ export class DebugAPI {
 		}
 		return this
 	}
-	activate_function(target:DebugFunctionType,thisArgument:{},argumentsList:any[]): any {
+	activate_function(target: DebugFunctionType,thisArgument: {},argumentsList: any[]): any {
 		return Reflect.apply(target,thisArgument,argumentsList)
 	}
 	activate_class(target_type: new (...a: any[]) => {},argumentsList: any[]): {} {
@@ -124,11 +124,11 @@ export class DebugAPI {
 			let __k=window.DebugAPI.getData('__k')
 			if(!__k) break bp_code
 			__k.get=(__v) => {
-				if(__v==='__v') {
-					return {type: 'hidden-var',var: __v}
-				}
-				if(__v==='__k') {
-					return {type: 'hidden-var',var: __v}
+				switch(__v) {
+					case '__v':
+					case '__k': {
+						return {type: 'hidden-var',var: __v}
+					}
 				}
 				try {
 					return {type: 'var',data: [__v,eval(__v)]}
