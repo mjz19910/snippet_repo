@@ -125,8 +125,8 @@ export class DebugAPI {
 			if(!__k) break bp_code
 			__k.get=(__v) => {
 				switch(__v) {
-					case '__v':
-					case '__k': {
+					case '__k':
+					case '__v': {
 						return {type: 'hidden-var',var: __v}
 					}
 				}
