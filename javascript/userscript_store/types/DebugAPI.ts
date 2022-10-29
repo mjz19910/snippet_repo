@@ -112,13 +112,10 @@ export class DebugAPI {
 		0
 	}
 	clearCurrentBreakpoint() {
-		if(this.hasData('u')) {
+		if(this.hasData('u') && this.hasData('u') && this.current_debug_data) {
 			let undebug=this.getData('u')
-			if(!undebug) return false
-			if(this.current_debug_data) {
-				undebug(this.current_debug_data[2])
-				return true
-			}
+			undebug!(this.current_debug_data[2])
+			return true
 		}
 		return false
 	}
