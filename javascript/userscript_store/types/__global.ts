@@ -74,7 +74,7 @@ declare global {
 		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number
 		remoteClearTimeout: (id?: number) => void
 		remoteClearInterval: (id?: number) => void
-		["g_worker_state"]?: WorkerState
+		g_worker_state?: WorkerState
 		mute(): void
 		g_mut_observers: any[]
 		g_cs?: any[]
