@@ -168,19 +168,18 @@ export class WorkerState {
 		this[before_destroy_call_name]()
 		worker_state_value.destroy()
 	}
-	static global_state_key: typeof GlobalStateKey=GlobalStateKey
 	static has_global_state() {
-		return window.hasOwnProperty(this.global_state_key)
+		return window.hasOwnProperty(GlobalStateKey)
 	}
 	static get_global_state(): WorkerState|undefined {
-		return window[this.global_state_key]
+		return window[GlobalStateKey]
 	}
 	static set_global_state(worker_state_value: WorkerState) {
 		this.maybe_delete_old_global_state_value(worker_state_value)
-		window[this.global_state_key]=worker_state_value
+		window[GlobalStateKey]=worker_state_value
 	}
 	static delete_global_state() {
-		delete window[this.global_state_key]
+		delete window[GlobalStateKey]
 	}
 	destroy() {
 		if(this.worker) {
