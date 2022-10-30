@@ -1,19 +1,13 @@
 import {KeepSome} from "./KeepSome";
 
 export class ProxyHandlers {
-	/**
-	 * @param {any} root
-	 */
-	constructor(root) {
+	weak_root: WeakRef<any>
+	count_arr: [number]
+	constructor(root: any) {
 		this.weak_root = new WeakRef(root);
 		this.count_arr = [0];
 	}
-	/**
-	 * @param {string} type
-	 * @param {any} call_args
-	 * @param {any[]} from
-	 */
-	generic(type, call_args, from) {
+	generic(type: string, call_args: any, from: any[]) {
 		let keep_vec = this.weak_root.deref();
 		if(keep_vec === null) {
 			console.log('ProxyHandlers reset KeepSome after gc collect');
@@ -22,43 +16,23 @@ export class ProxyHandlers {
 		}
 		keep_vec.push(from.concat([null, type, 1, call_args]));
 	}
-	/**
-	 * @param {[o: object, k: PropertyKey, v: any, r?: any]} call_args
-	 * @param {any[]} from
-	 */
-	set_(call_args, from) {
+	set_(call_args: [o: object,k: PropertyKey,v: any,r?: any], from: any[]) {
 		this.generic('set', call_args, from);
 		return Reflect.set(...call_args);
 	}
-	/**
-	 * @param {[o: object, k: PropertyKey, r?: any]} call_args
-	 * @param {any[]} from
-	 */
-	get_(call_args, from) {
+	get_(call_args: [o: object,k: PropertyKey,r?: any], from: any[]) {
 		this.generic('get', call_args, from);
 		return Reflect.get(...call_args);
 	}
-	/**
-	 * @param {[f: Function, o: any, l: ArrayLike<any>]} call_args
-	 * @param {any[]} from
-	 */
-	apply_(call_args, from) {
+	apply_(call_args: [f: Function,o: any,l: ArrayLike<any>], from: any[]) {
 		this.generic('apply', call_args, from);
 		return Reflect.apply(...call_args);
 	}
-	/**
-	 * @param {[o: object, k: PropertyKey, o: PropertyDescriptor]} call_args
-	 * @param {any[]} from
-	 */
-	defineProperty_(call_args, from) {
+	defineProperty_(call_args: [o: object,k: PropertyKey,o: PropertyDescriptor], from: any[]) {
 		this.generic('defineProperty', call_args, from);
 		return Reflect.defineProperty(...call_args);
 	}
-	/**
-	 * @param {[o: object, k: PropertyKey]} call_args
-	 * @param {any[]} from
-	 */
-	getOwnPropertyDescriptor_(call_args, from) {
+	getOwnPropertyDescriptor_(call_args: [o: object,k: PropertyKey], from: any[]) {
 		this.generic('getOwnPropertyDescriptor', call_args, from);
 		return Reflect.getOwnPropertyDescriptor(...call_args);
 	}
