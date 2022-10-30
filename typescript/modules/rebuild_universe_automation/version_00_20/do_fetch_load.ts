@@ -3,11 +3,11 @@ import {action_1} from "./action_1"
 import {do_dom_filter} from "./do_dom_filter"
 import {do_load_fire_promise} from "./do_load_fire_promise"
 import {LoadMutationObserver} from "./LoadMutationObserver"
-import {l_log_if} from "./l_log_if"
 import {reset_global_event_handlers} from "./reset_global_event_handlers"
 import {set_jq_proxy} from "./set_jq_proxy"
 import {mut_observers} from "./rebuild_the_universe_auto_v0.2"
 import {real_st,real_si,orig_aev} from "./module_entry_function"
+import {l_log_if} from "../../../vm/l_log_if.js"
 
 export async function do_fetch_load() {
 	reset_global_event_handlers()

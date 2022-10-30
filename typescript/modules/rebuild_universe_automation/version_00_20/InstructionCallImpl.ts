@@ -1,3 +1,4 @@
+import {StackVM} from "./StackVM"
 import {throw_invalid_error} from "./throw_invalid_error";
 
 /**@typedef {import("types/vm/instruction/mod.js").general.Call} InstructionCall */
@@ -22,7 +23,7 @@ export class InstructionCallImpl {
 		});
 	}
 	/**@arg {InstructionCall} instruction @arg {StackVM} vm */
-	static execute_instruction(vm, instruction) {
+	static execute_instruction(vm: StackVM, instruction) {
 		let number_of_arguments = instruction[1];
 		if(typeof number_of_arguments != 'number')
 			throw throw_invalid_error();

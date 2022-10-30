@@ -1,18 +1,15 @@
-import {LOG_LEVEL_INFO} from "types/constants.js";
+import {StackVM} from "../../../vm/StackVM"
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
-import {l_log_if} from "./l_log_if";
 import {throw_invalid_error} from "./throw_invalid_error";
 
 /**@typedef {import("types/vm/instruction/general/Construct.js").Construct} InstructionConstructT */
 export class InstructionConstructE {
-	/**@type {<T>(arr:T[])=>arr is []} */
-	static is_array_empty(arr) {
+	static is_array_empty<T>(arr: T[]): arr is [] {
 		if(arr.length === 0)
 			return true;
 		return false;
 	}
-	/**@type {<T>(arr:T)=>[]|null} */
-	static to_unit_arr(arr) {
+	static to_unit_arr<T>(arr: T): []|null {
 		if(arr instanceof Array) {
 			if(this.is_array_empty(arr)) {
 				return arr;
@@ -20,8 +17,7 @@ export class InstructionConstructE {
 		}
 		return null;
 	}
-	/**@arg {InstructionConstructT} instruction @arg {StackVM} vm */
-	static execute_instruction(vm, instruction) {
+	static execute_instruction(vm: StackVM, instruction: InstructionConstruct) {
 		let number_of_arguments = instruction[1];
 		if(typeof number_of_arguments != 'number')
 			throw throw_invalid_error();
