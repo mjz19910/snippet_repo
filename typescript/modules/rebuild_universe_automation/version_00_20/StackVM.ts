@@ -11,6 +11,7 @@ import {SimpleStackVMParser} from "./SimpleStackVMParser"
 import {InstructionType} from "../../../vm/instruction/InstructionType"
 import {Box} from "../../../box/Box"
 import {StackVMFlags} from "./StackVMFlags"
+import {into_typed} from "./into_typed"
 
 export class StackVM {
 	instructions: InstructionType[]
@@ -56,6 +57,18 @@ export class StackVM {
 	}
 	is_in_instructions(value: number) {
 		return value>=0&&value<this.instructions.length
+	}
+	execute_backup_vm_push_ip() {
+		let this_with_push: {push: StackVM['push']}=this
+		let fn_ptr=safe_get(this_with_push,"push")
+		if(!fn_ptr)
+			throw new Error("push_pc requires a stack")
+		let this_as_StackVM=into_typed<StackVM>(this)
+		if('instruction_pointer' in this_as_StackVM) {
+			fn_ptr.call(this,this_as_StackVM.instruction_pointer)
+		} else {
+			throw new Error("Property missing or invalid: instruction_pointer")
+		}
 	}
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
@@ -112,31 +125,12 @@ export class StackVM {
 				this.instructions[target]=valid_instruction
 			} break
 			case 'vm_push_ip': {
-				instruction
 				if(!this.hasOwnProperty('push')) {
 					throw new Error("push_pc requires a stack")
 				} else if(this instanceof StackVM) {
 					this.push(this.instruction_pointer)
 				} else {
-					console.info('TODO: add instanceof check to push_pc')
-					/**@type {any} */
-					let this_as_any: any=this
-					/**@type {this & {push:StackVM['push'];}} */
-					let this_with_push: this&{push: StackVM['push']=this_as_any;
-					let fn_ptr=safe_get(this_with_push,'push')
-					if(!fn_ptr)
-						throw new Error("push_pc requires a stack")
-					/**@type {<T, U extends T>(proto:T, o:U)=>T}*/
-					function into_typed(proto,obj): T {
-						void proto
-						return obj
-					}
-					let ww2=into_typed(StackVM.prototype,this)
-					if(ww2) {
-						fn_ptr.v.call(this,ww2.instruction_pointer)
-					} else {
-						throw new Error("Property missing or invalid: instruction_pointer")
-					}
+					throw new Error("Unreachable")
 				}
 			} break
 			case 'halt' /*Running*/: {
