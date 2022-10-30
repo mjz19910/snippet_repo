@@ -1,6 +1,5 @@
 import {NonNull} from "../../../api"
-
-type BaseBoxValue=string|bigint|number|boolean|symbol|undefined|{}|Function
+import {BaseBoxValue} from "./BaseBoxValue"
 
 export class BaseBox {
 	type: 'object_box'

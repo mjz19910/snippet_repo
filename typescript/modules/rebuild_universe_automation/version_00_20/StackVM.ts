@@ -160,8 +160,6 @@ export class StackVM {
 					throw throw_invalid_error()
 				if(typeof target_obj!='object')
 					throw throw_invalid_error()
-				let get_name=target_name
-				let the_type=target_obj.type
 				/**@arg {Box} opt @arg {string} get_name @returns {Box} */
 				function do_box_get(opt: Box,get_name: string): Box {
 					if(typeof opt!='object')

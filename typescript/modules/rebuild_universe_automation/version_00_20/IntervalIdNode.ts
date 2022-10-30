@@ -1,8 +1,8 @@
 import {BaseNode} from "./BaseNode";
 
 export class IntervalIdNode extends BaseNode {
-	/** @param {number} id */
-	constructor(id) {
+	m_id:number
+	constructor(id:number) {
 		super();
 		this.m_id = id;
 	}

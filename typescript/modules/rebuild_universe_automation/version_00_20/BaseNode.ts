@@ -1,11 +1,9 @@
 export class BaseNode {
+	m_parent
 	constructor() {
 		this.m_parent = null;
 	}
-	/**
-	 * @param {any} parent
-	 */
-	set_parent(parent) {
+	set_parent(parent:any) {
 		this.m_parent = parent;
 	}
 	run() {
