@@ -9,13 +9,6 @@ export class AutoBuyState {
 	init(): void
 }
 
-export class SpecType {
-	name: 'Breit-Wheeler process'
-	desc: 'Convert pure light to matter.'
-	done: false|true
-	cost: 100000
-}
-
 declare global {
 	export interface Window {
 		atomepersecond: number
@@ -24,7 +17,6 @@ declare global {
 		prestige: number
 		__testing__: false
 		bonusAll(): void
-		allspec: SpecType[]
 		specialclick(index: number): void
 		//spell:words lightreset
 		lightreset(): void
@@ -62,7 +54,6 @@ declare global {
 		arrayNames: string[]
 		/*spell:disable-next-line*/
 		updateprogress(v: any): void
-		$: (val: any) => any
 		seeUnit(v: number): any
 		/*spell:disable-next-line*/
 		checkspec(): void

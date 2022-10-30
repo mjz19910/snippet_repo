@@ -8,6 +8,13 @@ import {GlobalStateKey} from "../vm/GlobalStateKey"
 
 export {}
 
+export interface SpecType {
+	name: string
+	desc: string
+	done: boolean
+	cost: number
+}
+
 declare global {
 	export interface Window {
 		proxy_set: any[]
@@ -83,7 +90,7 @@ declare global {
 		}
 		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined
 		document_write_list: DocumentWriteList
-		allspec: any[]
+		allspec: SpecType[]
 	}
 
 	// JQuery
