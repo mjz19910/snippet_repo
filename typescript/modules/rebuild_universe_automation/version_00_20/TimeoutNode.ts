@@ -1,8 +1,8 @@
-import {BaseNode} from "./BaseNode"
+import {BaseNode2} from "./BaseNode2"
 import {TimeoutNodeTarget} from "./TimeoutNodeTarget"
 import {TimeoutTarget} from "./TimeoutTarget"
 
-export class TimeoutNode extends BaseNode {
+export class TimeoutNode extends BaseNode2 {
 	m_timeout: number
 	m_id: ReturnType<typeof setTimeout>|null
 	m_target: TimeoutNodeTarget|null

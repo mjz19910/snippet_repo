@@ -12,6 +12,7 @@
         "debug_id_syms",
         "DebuggableTypes",
         "deref",
+        "externref",
         "float_milli_from_prev",
         "get_millis_as_pretty_str",
         "lazyload",

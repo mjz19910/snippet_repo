@@ -1,11 +1,11 @@
-import {NonNull} from "../../../api"
+import {NonNull} from "../../../src/api"
 import {BaseBoxValue} from "./BaseBoxValue"
 
 export class BaseBox {
 	type: 'object_box'
 	from: 'BaseBox'
 	value: BaseBoxValue
-	as_type(v: string) {
+	as_type(v: 'string'|'number'|'bigint'|'boolean'|'symbol'|'undefined'|'object'|'function') {
 		if(typeof this.value===v) {
 			return this
 		}

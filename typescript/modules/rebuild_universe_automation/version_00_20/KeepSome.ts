@@ -1,9 +1,9 @@
 export class KeepSome {
-	m_2d_vec:number[][]
+	m_2d_vec: number[][]
 	constructor() {
 		this.m_2d_vec=[]
 	}
-	push(value:number) {
+	push(value: number) {
 		let tmp_val=null
 		let set_index=0
 		this.push_at(set_index,value)
@@ -58,13 +58,13 @@ export class KeepSome {
 			}
 		}
 	}
-	push_at(index:number,value:number) {
+	push_at(index: number,value: number) {
 		while(index>=this.m_2d_vec.length) {
 			this.m_2d_vec.push([])
 		}
 		this.m_2d_vec[index].push(value)
 	}
-	push_all(...a:number[]) {
+	push_all(...a: number[]) {
 		for(let x of a) {
 			this.push(x)
 		}

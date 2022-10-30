@@ -1,11 +1,11 @@
 import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox"
-import {LOG_LEVEL_INFO} from "../../../constants"
+import {LOG_LEVEL_INFO} from "../../../src/constants"
 import {Construct} from "../../../vm/instruction/general/Construct"
 import {l_log_if} from "../../../vm/l_log_if"
 import {StackVM} from "../../../vm/StackVM"
 import {throw_invalid_error} from "./throw_invalid_error"
 
-export class InstructionConstructE {
+export class InstructionConstructImpl {
 	static is_array_empty<T>(arr: T[]): arr is [] {
 		if(arr.length===0)
 			return true

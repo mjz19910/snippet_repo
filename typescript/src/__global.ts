@@ -2,7 +2,7 @@ import {RemoteWorkerState} from "../vm/RemoteWorkerState"
 import {WorkerState} from "../vm/WorkerState"
 import {DocumentWriteList} from "../vm/DocumentWriteList"
 import {AutoBuy} from "../vm/AutoBuy"
-import {DebugAPI} from "../DebugAPI"
+import {DebugAPI} from "./DebugAPI"
 import {GenericDataEvent} from "../vm/GenericDataEvent"
 import {GlobalStateKey} from "../vm/GlobalStateKey"
 
@@ -129,12 +129,6 @@ declare global {
 	}
 	interface CSSStyleSheet extends StyleSheet {
 		replace(string: string): Promise<CSSStyleSheet>
-	}
-	export namespace WebAssembly {
-		var Function: new (types: {
-			parameters: string[]
-			results: string[]
-		},arg1: (...v: any[]) => any) => any
 	}
 	interface String {
 		/**

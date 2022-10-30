@@ -4,7 +4,7 @@ import {throw_invalid_error} from "./throw_invalid_error"
 import {throw_todo_error} from "./throw_todo_error"
 
 export class InstructionCastImpl {
-	static execute_instruction(vm:StackVM,instruction:Cast) {
+	static execute_instruction(vm: StackVM,instruction: Cast) {
 		let obj=vm.pop()
 		if(!obj)
 			throw throw_invalid_error()

@@ -1,8 +1,8 @@
-import {BaseNode} from "./BaseNode"
+import {BaseNode2} from "./BaseNode2"
 import {IntervalTarget} from "./IntervalTarget"
 import {IntervalTargetFn} from "./IntervalTargetFn"
 
-export class IntervalNode extends BaseNode {
+export class IntervalNode extends BaseNode2 {
 	m_target_fn: CallableFunction
 	m_timeout: number
 	id: ReturnType<typeof setInterval>|null

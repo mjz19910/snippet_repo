@@ -1,6 +1,6 @@
-import {BaseNode} from "./BaseNode"
+import {BaseNode2} from "./BaseNode2"
 
-export class IntervalIdNode extends BaseNode {
+export class IntervalIdNode extends BaseNode2 {
 	m_id: number
 	constructor(id: number) {
 		super()

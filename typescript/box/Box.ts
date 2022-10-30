@@ -1,30 +1,31 @@
 import {ArrayBox} from "./ArrayBox"
 import {AsyncFunctionBox} from "./AsyncFunctionBox"
-import {NewableInstancePackObjectBox} from "./NewableInstancePackObjectBox"
 import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox"
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox"
 import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox"
 import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox"
+import {CSSStyleSheetPromiseBox} from "./CSSStyleSheetPromiseBox"
 import {DocumentBox} from "./DocumentBox"
 import {EmptyArrayBox} from "./EmptyArrayBox"
 import {FunctionBox} from "./FunctionBox"
 import {FunctionConstructorBox} from "./FunctionConstructorBox"
 import {GlobalThisBox} from "./GlobalThisBox"
+import {Primitives} from "./helper/Primitives"
+import {IndexBox} from "./IndexBox"
 import {InstructionTypeArrayBox} from "./InstructionTypeArrayBox"
+import {InstructionTypeBox} from "./InstructionTypeBox"
 import {MediaListBox} from "./MediaListBox"
 import {NewableFunctionBox} from "./NewableFunctionBox"
+import {NewableInstancePackObjectBox} from "./NewableInstancePackObjectBox"
 import {NodeBox} from "./NodeBox"
 import {ObjectBox} from "./ObjectBox"
-import {Primitives} from "./helper/Primitives"
-import {CSSStyleSheetPromiseBox} from "./CSSStyleSheetPromiseBox"
 import {PromiseBox} from "./PromiseBox"
-import {VoidPromiseBox} from "./VoidPromiseBox"
 import {RealVoidBox} from "./RealVoidBox"
 import {StackVMBox} from "./StackVMBox"
 import {TemporaryBox} from "./temporary_box/TemporaryBox"
 import {VoidBox} from "./VoidBox"
+import {VoidPromiseBox} from "./VoidPromiseBox"
 import {WindowBox} from "./WindowBox"
-import {IndexBox} from "./IndexBox"
 
 export type Box=
 	// function result
@@ -51,6 +52,8 @@ export type Box=
 	NodeBox|
 	CSSStyleSheetBox|
 	MediaListBox|
+	// StackVM
+	InstructionTypeBox|
 	// object
 	// hard to box returns from normal js (can't find the index sig easily as any object would match)
 	IndexBox|

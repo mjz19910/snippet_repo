@@ -4,12 +4,16 @@ import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructor
 import {NoArgsType} from "../../../box/NoArgsType"
 
 export class CSSStyleSheetConstructorBoxImplSupport {
-	type: "constructor_box"="constructor_box";
-	from: "javascript"="javascript";
-	instance_type: "CSSStyleSheet"="CSSStyleSheet";
-	constructor_type: "CSSStyleSheet"="CSSStyleSheet";
+	type: "constructor_box"
+	from: "javascript"
+	instance_type: "CSSStyleSheet"
+	constructor_type: "CSSStyleSheet"
 	value: typeof CSSStyleSheet
 	constructor(value: typeof CSSStyleSheet) {
+		this.type='constructor_box'
+		this.from='javascript'
+		this.instance_type='CSSStyleSheet'
+		this.constructor_type='CSSStyleSheet'
 		this.value=value
 	}
 	/**@arg {'function'} to_match */

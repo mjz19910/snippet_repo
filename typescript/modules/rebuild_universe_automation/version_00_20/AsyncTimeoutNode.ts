@@ -1,4 +1,4 @@
-import {LOG_LEVEL_INFO} from "../../../constants.js"
+import {LOG_LEVEL_INFO} from "../../../src/constants.js"
 import {l_log_if} from "../../../vm/l_log_if.js"
 import {TimeoutNode} from "./TimeoutNode"
 import {TimeoutNodeTarget} from "./TimeoutNodeTarget"

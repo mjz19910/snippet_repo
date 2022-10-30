@@ -2,7 +2,7 @@ import {InstructionType} from "./instruction/InstructionType"
 import {Box} from "../box/Box"
 import {BaseStackVM} from "./BaseStackVM"
 import {l_log_if} from "./l_log_if"
-import {LOG_LEVEL_VERBOSE} from "../constants"
+import {LOG_LEVEL_VERBOSE} from "../src/constants"
 
 export class DomBuilderVM extends BaseStackVM {
 	exec_stack: ([Box[],InstructionType[]])[]

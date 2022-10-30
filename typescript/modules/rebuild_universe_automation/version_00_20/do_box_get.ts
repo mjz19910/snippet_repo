@@ -3,12 +3,51 @@ import {TempBox} from "./TempBox"
 import {throw_invalid_error} from "./throw_invalid_error"
 import {Box} from "../../../box/Box"
 import {WindowBox} from "../../../box/WindowBox"
+import {InstructionTypeBox} from "../../../box/InstructionTypeBox"
+
+function do_get_for_array_box(opt: Box,get_name: string): Box {
+	if(typeof opt!='object') {
+		throw throw_invalid_error()
+	}
+	if(opt===null) {
+		throw throw_invalid_error()
+	}
+	if(opt.type!='array_box') {
+		throw throw_invalid_error()
+	}
+	let int_num=parseInt(get_name)
+	if(Number.isNaN(int_num)) {
+		throw new Error("Can't parse number")
+	}
+	if(opt.item_type==='Box') {
+		let res=opt.value[int_num]
+		return res
+	} else if(opt.item_type=='instruction_type[]') {
+		let res=opt.value[int_num]
+		return new InstructionTypeBox(res)
+	} else if(opt.item_type===null) {
+		let type_assert: 'EmptyArrayBox'=opt.m_verify_name
+		if(type_assert==='EmptyArrayBox') {
+			console.assert(type_assert==='EmptyArrayBox')
+		}
+	} else {
+		throw new Error("Unknown box in do_get_for_array_box")
+	}
+	let res=opt.value[int_num]
+	if(TempBox.is_box_inner(res)) {
+		return res
+	} else {
+		return res
+	}
+}
 
 export function do_box_get(opt: Box,get_name: string): Box {
-	if(typeof opt!='object')
+	if(typeof opt!='object') {
 		throw throw_invalid_error()
-	if(opt===null)
+	}
+	if(opt===null) {
 		throw throw_invalid_error()
+	}
 	switch(opt.type) {
 		case "shape_box": {
 			let content=opt.value
@@ -28,15 +67,7 @@ export function do_box_get(opt: Box,get_name: string): Box {
 			}
 		}
 		case "array_box": {
-			let int_num=parseInt(get_name)
-			if(Number.isNaN(int_num))
-				throw new Error("Can't parse number")
-			let res=opt.value[int_num]
-			if(TempBox.is_box_inner(res)) {
-				return res
-			} else {
-				return res
-			}
+			return do_get_for_array_box(opt,get_name)
 		}
 		case "constructor_box": throw new Error("Unable to index")
 		case "function_box": throw new Error("Unable to index")

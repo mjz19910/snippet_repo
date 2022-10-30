@@ -1,4 +1,4 @@
-import {DebugAPI} from "./DebugAPI"
+import {DebugAPI} from "./src/DebugAPI"
 import {GenericDataEvent} from "./vm/GenericDataEvent"
 
 window.GenericDataEvent=GenericDataEvent

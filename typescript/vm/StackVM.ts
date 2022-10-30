@@ -2,7 +2,7 @@ import {Box} from "../box/Box"
 import {do_box_get} from "../modules/rebuild_universe_automation/version_00_20/do_box_get"
 import {InstructionCallImpl} from "../modules/rebuild_universe_automation/version_00_20/InstructionCallImpl"
 import {InstructionCastImpl} from "../modules/rebuild_universe_automation/version_00_20/InstructionCastImpl"
-import {InstructionConstructE} from "../modules/rebuild_universe_automation/version_00_20/InstructionConstructE"
+import {InstructionConstructImpl} from "../modules/rebuild_universe_automation/version_00_20/InstructionConstructImpl"
 import {into_typed} from "../modules/rebuild_universe_automation/version_00_20/into_typed"
 import {safe_get} from "../modules/rebuild_universe_automation/version_00_20/safe_get"
 import {StackVMFlags} from "../modules/rebuild_universe_automation/version_00_20/StackVMFlags"
@@ -178,7 +178,7 @@ export class StackVM {
 				}
 			} break
 			case 'call' /*Call*/: InstructionCallImpl.execute_instruction(this,instruction); break
-			case 'construct' /*Construct*/: InstructionConstructE.execute_instruction(this,instruction); break
+			case 'construct' /*Construct*/: InstructionConstructImpl.execute_instruction(this,instruction); break
 			case 'return' /*Call*/: this.return_value=this.pop(); break
 			case 'breakpoint' /*Debug*/: trigger_debug_breakpoint(); break
 			default: throw new Error("Unexpected instruction: "+instruction[0]); break

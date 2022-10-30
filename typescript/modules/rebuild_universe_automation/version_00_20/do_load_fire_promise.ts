@@ -1,5 +1,4 @@
-/**@arg {(value: any) => void} promise_accept */
-export function do_load_fire_promise(promise_accept) {
-	document.firstChild?.remove();
-	promise_accept(null);
+export function do_load_fire_promise(promise_accept:(value: any) => void) {
+	document.firstChild?.remove()
+	promise_accept(null)
 }

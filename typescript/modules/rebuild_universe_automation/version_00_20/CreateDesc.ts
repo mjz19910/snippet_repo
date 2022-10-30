@@ -1,4 +1,3 @@
-
 export type CreateDesc=
 	[1|2,'create','div','state_log',{}]|
 	[2,'create','div','history',string]|

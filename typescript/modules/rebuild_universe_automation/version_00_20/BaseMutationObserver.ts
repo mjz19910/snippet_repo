@@ -1,11 +1,11 @@
 export class BaseMutationObserver {
-	observer: MutationObserver|null;
+	observer: MutationObserver|null
 	constructor() {
-		this.observer = null;
+		this.observer=null
 	}
 	disconnect() {
 		if(!this.observer)
-			return;
-		this.observer.disconnect();
+			return
+		this.observer.disconnect()
 	}
 }
