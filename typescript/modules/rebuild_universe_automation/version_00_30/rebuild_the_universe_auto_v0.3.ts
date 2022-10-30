@@ -53,6 +53,11 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 import {into_typed} from "../version_00_20/into_typed.js"
 import {safe_get} from "../version_00_20/safe_get.js"
 import {StackVMFlags} from "../../../vm/StackVMFlags.js"
+import {InstructionOpcodesList} from "../../../vm/instruction/InstructionOpcodesList.js"
+import {ObjectBox} from "../../../box/ObjectBox.js"
+import {temporary_box_object_index_to_box} from "../../../box/temporary_box/temporary_box_object_index_to_box.js"
+import {temporary_box_from_get} from "../../../box/temporary_box/temporary_box_from_get.js"
+import {FunctionBox} from "../../../box/FunctionBox.js"
 
 // eslint-disable no-undef,no-lone-blocks,no-eval
 
@@ -264,16 +269,29 @@ import {StackVMFlags} from "../../../vm/StackVMFlags.js"
 			return [false,null]
 		}
 	}
-	class ObjectBoxImpl {
+	class ObjectBoxImpl implements ObjectBox {
 		type: "object_box"
+		m_verify_name: "ObjectBox"
 		inner_type: "{}"
 		extension=null
 		value: {}
 		constructor(value: {}) {
 			this.type='object_box'
+			this.m_verify_name='ObjectBox'
 			this.inner_type='{}'
 			this.extension=null
 			this.value=value
+		}
+		verify_name(name: "ObjectBox"): boolean {
+			return this.m_verify_name==='ObjectBox'&&name==='ObjectBox'
+		}
+		as_type(input_typeof: "object" | "function"): [boolean, this | null] {
+			let typeof_=typeof this.value
+			switch(typeof_) {
+				case 'object': return [input_typeof===typeof_,this]
+				case 'function': return [input_typeof===typeof_,this]
+			}
+			return [false,null]
 		}
 	}
 	class NewableFunctionBoxImpl {
@@ -514,48 +532,41 @@ import {StackVMFlags} from "../../../vm/StackVMFlags.js"
 		/** @type {'cast'} */
 		type: 'cast'='cast'
 		debug=false
-		push_box(vm: StackVM,cast_source: "object_index",value: {[x: string]: Box}): void {
-			vm.stack.push({
-				type: 'temporary_box',
-				source: 'cast',
-				extension: null,
-				cast_source,
-				value
-			})
+		push_box(vm: StackVM,value: {[x: string]: Box}): void {
+			vm.stack.push(new temporary_box_object_index_to_box(value))
 		}
 		noisy_push_temporary_box(vm: StackVM,cast_source: 'object_index',obj: {value: never}) {
 			void vm
 			console.warn('noisy box',cast_source,obj)
 			console.log('inner',obj.value)
-			this.push_box(vm,cast_source,obj.value)
+			this.push_box(vm,obj.value)
 		}
-		push_temporary_box(vm: StackVM,cast_source: 'object_index',obj: {value: {[x: string]: Box}}): void {
-			this.push_box(vm,cast_source,obj.value)
+		push_temporary_box(vm: StackVM,obj: {value: {[x: string]: Box}}): void {
+			this.push_box(vm,obj.value)
 		}
-		push_custom_box(vm: StackVM,cast_source: 'object_index',box: StackVMBox) {
+		push_temporary_box_2(vm: StackVM,obj: temporary_box_from_get) {
+			vm.stack.push(obj)
+		}
+		push_custom_box(vm: StackVM,box: StackVMBox) {
 			vm.stack.push(new temporary_box_StackVM(box.value))
 		}
-		/** @arg {StackVM} vm @arg {Exclude<Box, Primitives>} obj @arg {'object_index'} cast_source */
-		cast_to_type(vm: StackVM,obj: Exclude<Box,Primitives>,cast_source: 'object_index') {
+		/** @arg {StackVM} vm @arg {Exclude<Box, Primitives>} obj*/
+		cast_to_type(vm: StackVM,obj: Exclude<Box,Primitives>) {
 			if(obj?.type==='custom_box'&&obj.box_type==='StackVM') {
-				return this.push_custom_box(vm,cast_source,obj)
+				return this.push_custom_box(vm,obj)
 			}
 			if(obj?.type==='temporary_box') {
 				if(obj.source==='get') {
 					console.log('temporary_box',obj)
-					// return this.push_temporary_box(vm, cast_source, obj)
+					return this.push_temporary_box_2(vm, obj)
 				}
 				if(obj.source==='call') {
-					return this.push_temporary_box(vm,cast_source,obj)
+					return this.push_temporary_box(vm,obj)
 				}
 				console.warn('temporary_box not handled in cast',obj)
 				throw 1
 			}
 			if(obj?.type==='object_box') {
-				if(cast_source==='object_index') {
-					console.log(obj)
-					// return this.push_box(vm, cast_source, obj.value)
-				}
 				console.warn('box does not contain a function',obj)
 				throw 1
 			}
@@ -570,7 +581,7 @@ import {StackVMFlags} from "../../../vm/StackVMFlags.js"
 				throw 1
 			}
 			console.warn('unk obj boxed into temporary_box<object_index>',obj)
-			this.push_box(vm,cast_source,obj)
+			this.push_box(vm,obj)
 		}
 		run(vm: StackVM,instruction: Cast) {
 			let obj=vm.stack.pop()
@@ -1012,9 +1023,7 @@ import {StackVMFlags} from "../../../vm/StackVMFlags.js"
 		halt() {
 			this.running=false
 		}
-		/** @arg {import("types/vm/instruction/mod.js").InstructionOpcodesList[number]} opcode */
-		get_instruction(opcode: import("types/vm/instruction/mod.js").InstructionOpcodesList[number]) {
-			/** @type {any} */
+		get_instruction(opcode: InstructionOpcodesList[number]) {
 			let any_map: any=this.instruction_map_obj
 			return any_map[opcode]
 		}
@@ -1053,15 +1062,12 @@ import {StackVMFlags} from "../../../vm/StackVMFlags.js"
 	}
 	class EventHandlerVMDispatch extends StackVM {
 		target_obj: any
-		args_arr: Box[]
+		args_arr: Box[]|null
 		/** @arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions: InstructionType[],target_obj: any) {
-			try {
-				super(instructions)
-				this.target_obj=target_obj
-			} catch(e) {
-				console.log('EventHandlerVMDispatch constructor error',e)
-			}
+			super(instructions)
+			this.target_obj=target_obj
+			this.args_arr=null
 		}
 		/** @arg {Box[]} args_arr */
 		run(...args_arr: Box[]) {

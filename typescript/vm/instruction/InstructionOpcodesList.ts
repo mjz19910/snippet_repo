@@ -1,38 +1,49 @@
 import {AppendOpcode} from "./opcodes/AppendOpcode"
+import {BreakpointOpcode} from "./opcodes/BreakpointOpcode"
+import {CallOpcode} from "./opcodes/CallOpcode"
 import {CastOpcode} from "./opcodes/CastOpcode"
+import {ConstructOpcode} from "./opcodes/ConstructOpcode"
+import {DropOpcode} from "./opcodes/DropOpcode"
+import {DupOpcode} from "./opcodes/DupOpcode"
+import {GetOpcode} from "./opcodes/GetOpcode"
+import {HaltOpcode} from "./opcodes/HaltOpcode"
+import {JeOpcode} from "./opcodes/JeOpcode"
+import {JumpOpcode} from "./opcodes/JumpOpcode"
 import {ModifyOperandOpcode} from "./opcodes/ModifyOperandOpcode"
 import {NopOpcode} from "./opcodes/NopOpcode"
-import * as debug from "./debug/mod"
-import * as general from "./general/mod"
-import * as jump from "./jump/mod"
-import * as push from "./push/mod"
-import * as stack from "./stack/mod"
-import * as turing from "./turing/mod"
-import * as vm from "./vm/mod"
-
+import {PeekOpcode} from "./opcodes/PeekOpcode"
+import {PushOpcode} from "./opcodes/PushOpcode"
+import {PushWindowObjectOpcode} from "./opcodes/PushWindowObjectOpcode"
+import {ReturnOpcode} from "./opcodes/ReturnOpcode"
+import {VMBlockTraceOpcode} from "./opcodes/VMBlockTraceOpcode"
+import {VMCallOpcode} from "./opcodes/VMCallOpcode"
+import {VMPushIPOpcode} from "./opcodes/VMPushIPOpcode"
+import {VMPushSelfOpcode} from "./opcodes/VMPushSelfOpcode"
+import {VMReturnOpcode} from "./opcodes/VMReturnOpcode"
+import {VMPushArgsOpcode} from "./vm/VMPushArgs"
 
 export type InstructionOpcodesList=[
 	append: AppendOpcode,
-	breakpoint: debug.BreakpointOpcode,
-	call: general.CallOpcode,
+	breakpoint: BreakpointOpcode,
+	call: CallOpcode,
 	cast: CastOpcode,
-	construct: general.ConstructOpcode,
-	drop: stack.DropOpcode,
-	dup: stack.DupOpcode,
-	get: general.GetOpcode,
-	halt: turing.HaltOpcode,
-	je: jump.JeOpcode,
-	jump: jump.JumpOpcode,
+	construct: ConstructOpcode,
+	drop: DropOpcode,
+	dup: DupOpcode,
+	get: GetOpcode,
+	halt: HaltOpcode,
+	je: JeOpcode,
+	jump: JumpOpcode,
 	modify_op: ModifyOperandOpcode,
 	nop: NopOpcode,
-	peek: stack.PeekOpcode,
-	push_global_object: push.PushWindowObjectOpcode,
-	push: stack.PushOpcode,
-	return_x: general.ReturnOpcode,
-	vm_block_trace: vm.VMBlockTraceOpcode,
-	vm_call: vm.VMCallOpcode,
-	vm_push_args: push.ArgsOpcode,
-	vm_push_ip: vm.VMPushIPOpcode,
-	vm_push_self: vm.VMPushSelfOpcode,
-	vm_return: vm.VMReturnOpcode
+	peek: PeekOpcode,
+	push_global_object: PushWindowObjectOpcode,
+	push: PushOpcode,
+	return_x: ReturnOpcode,
+	vm_block_trace: VMBlockTraceOpcode,
+	vm_call: VMCallOpcode,
+	vm_push_args: VMPushArgsOpcode,
+	vm_push_ip: VMPushIPOpcode,
+	vm_push_self: VMPushSelfOpcode,
+	vm_return: VMReturnOpcode
 ]

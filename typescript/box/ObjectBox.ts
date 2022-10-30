@@ -6,7 +6,7 @@ export class ObjectBox
 	implements BoxVerify<ObjectBox,"ObjectBox">
 {
 	readonly type="object_box"
-	readonly inner_type='unit'
+	readonly inner_type='{}'
 	readonly m_verify_name="ObjectBox"
 	readonly extension=null
 	verify_name(name: "ObjectBox") {

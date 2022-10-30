@@ -7,7 +7,7 @@ export class InstructionTypeBox
 	implements BoxVerify<InstructionTypeBox,"InstructionTypeBox">
 {
 	readonly type="instance_box"
-	readonly inner_type="InstructionType"
+	readonly instance_type="InstructionType"
 	readonly m_verify_name="InstructionTypeBox"
 	verify_name(name: "InstructionTypeBox") {
 		return this.m_verify_name==='InstructionTypeBox'&&name==='InstructionTypeBox'

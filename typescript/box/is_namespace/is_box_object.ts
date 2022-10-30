@@ -2,7 +2,7 @@ import {Box} from "../Box"
 import {Primitives} from "../helper/Primitives"
 import {eat_never} from "../helper/eat_never"
 
-export function is_box_object<T>(v: Exclude<Box,Primitives|null>|T):
+export function is_box_object(v: Exclude<Box,Primitives|null>):
 	v is Exclude<Box,Primitives|null> {
 	if(!('type' in v)) throw new Error("Invalid")
 	switch(v.type) {
@@ -19,14 +19,15 @@ export function is_box_object<T>(v: Exclude<Box,Primitives|null>|T):
 		}
 		case 'instance_box': switch(v.instance_type) {
 			case 'CSSStyleSheet': return v.verify_name("CSSStyleSheetBox")
+			case 'InstructionType': return v.verify_name("InstructionTypeBox")
 			case 'MediaList': return v.verify_name("MediaListBox")
 			case 'Node': return v.verify_name("NodeBox")
 			default: return eat_never(v)
 		}
 		case 'object_box': switch(v.inner_type) {
-			case 'Window': return v.verify_name("WindowBox")
-			case 'unit': return v.verify_name("ObjectBox")
+			case '{}': return v.verify_name("ObjectBox")
 			case 'Box': return v.verify_name("IndexBox")
+			case 'Window': return v.verify_name("WindowBox")
 			default: return eat_never(v)
 		}
 		case 'promise_box': switch(v.await_type) {
@@ -35,13 +36,13 @@ export function is_box_object<T>(v: Exclude<Box,Primitives|null>|T):
 			case void 0: return v.verify_name("VoidPromiseBox")
 			default: return eat_never(v)
 		}
-		case 'value_box': return v.verify_name("GlobalThisBox")
 		case 'constructor_box': switch(v.instance_type) {
 			case 'CSSStyleSheet': return v.verify_name("CSSStyleSheetConstructorBox")
 			case 'Function': return v.verify_name("FunctionConstructorBox")
 			case null: return v.verify_name("NewableFunctionBox")
 			default: return eat_never(v)
 		}
+		case 'value_box': return v.verify_name("GlobalThisBox")
 		case 'custom_box': return v.verify_name("StackVMBox")
 		case 'document_box': return v.verify_name("DocumentBox")
 		case 'shape_box': return v.verify_name("CSSStyleSheetInitBox")
@@ -56,7 +57,13 @@ export function is_box_object<T>(v: Exclude<Box,Primitives|null>|T):
 			case null: switch(v.source) {
 				case 'call': return v.verify_name("temporary_box_from_call")
 				case 'cast': switch(v.cast_source) {
-					case 'object_index': return v.verify_name("temporary_box_object_index_to_box")
+					case 'object_index': {
+						let {type,source,cast_source,extension,value,...rest} = v;
+						if(Object.keys(rest).length > 0){
+							throw new Error("is_box_object unimplemented")
+						}
+						return v.source === 'cast'
+					}
 					case 'vm_function': return v.verify_name("temporary_box_from_cast_to_vm_function")
 				}
 				case 'create_box': return v.verify_name("temporary_box_from_create_box")
