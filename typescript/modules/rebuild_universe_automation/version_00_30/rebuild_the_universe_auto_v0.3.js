@@ -248,11 +248,7 @@ import {
 			console.log('get','newable function',this.value,key)
 		}
 	}
-	class InstructionImplBase {
-		/** @type {undefined} */
-		get_class_type
-	}
-	class InstructionCallImpl extends InstructionImplBase {
+	class InstructionCallImpl {
 		/** @type {'call'} */
 		type='call'
 		/** @type {boolean} */
@@ -422,7 +418,7 @@ import {
 		}
 
 	}
-	class InstructionConstructImpl extends InstructionImplBase {
+	class InstructionConstructImpl {
 		/** @type {'construct'} */
 		type='construct'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").general.Construct} ins */
@@ -459,7 +455,7 @@ import {
 			log_if(LOG_LEVEL_INFO,"",ins,...vm.stack.slice(vm.stack.length-number_of_arguments))
 		}
 	}
-	class InstructionCastImpl extends InstructionImplBase {
+	class InstructionCastImpl {
 		/** @type {'cast'} */
 		type='cast'
 		debug=false
@@ -548,7 +544,7 @@ import {
 			this.cast_to_type(vm,obj,cast_type)
 		}
 	}
-	class InstructionJeImpl extends InstructionImplBase {
+	class InstructionJeImpl {
 		/** @type {'je'} */
 		type='je'
 		/** @arg {import("types/vm/instruction/mod.js").jump.Je} instruction @arg {StackVM} vm */
@@ -563,7 +559,7 @@ import {
 			}
 		}
 	}
-	class InstructionJmpImpl extends InstructionImplBase {
+	class InstructionJmpImpl {
 		/** @type {'jmp'} */
 		type='jmp'
 		/** @arg {import("types/vm/instruction/mod.js").jump.Jump} instruction @arg {StackVM} vm */
@@ -576,7 +572,7 @@ import {
 			vm.instruction_pointer=target
 		}
 	}
-	class InstructionModifyOpImpl extends InstructionImplBase {
+	class InstructionModifyOpImpl {
 		/** @type {'modify_operand'} */
 		type='modify_operand'
 		/** @arg {import("types/vm/instruction/mod.js").ModifyOperand} instruction @arg {StackVM} vm */
@@ -603,7 +599,7 @@ import {
 			vm.instructions[target]=valid_instruction
 		}
 	}
-	class InstructionVMPushIPImpl extends InstructionImplBase {
+	class InstructionVMPushIPImpl {
 		/** @type {"vm_push_ip"} */
 		type="vm_push_ip"
 		/** @arg {import("types/vm/instruction/mod.js").vm.PushIP} _ins @arg {StackVM} vm */
@@ -618,7 +614,7 @@ import {
 			}
 		}
 	}
-	class InstructionPushImpl extends InstructionImplBase {
+	class InstructionPushImpl {
 		/** @type {'push'} */
 		type='push'
 		/** @arg {import("types/vm/instruction/mod.js").stack.Push} instruction @arg {StackVM} vm */
@@ -629,7 +625,7 @@ import {
 			}
 		}
 	}
-	class InstructionDupImpl extends InstructionImplBase {
+	class InstructionDupImpl {
 		/** @type {'dup'} */
 		type='dup'
 		/** @arg {import("types/vm/instruction/mod.js").stack.Dup} _ins @arg {StackVM} vm */
@@ -638,7 +634,7 @@ import {
 			vm.stack.push(vm.stack.at(-1))
 		}
 	}
-	class InstructionGetImpl extends InstructionImplBase {
+	class InstructionGetImpl {
 		/** @type {'get'} */
 		type='get'
 		/** @arg {StackVM} vm @arg {import("../../../types/vm/box/TemporaryBox.js").TemporaryBox} tmp_box @arg {string} key */
@@ -693,7 +689,7 @@ import {
 			throw new Error("Update types")
 		}
 	}
-	class InstructionHaltImpl extends InstructionImplBase {
+	class InstructionHaltImpl {
 		/** @type {'halt'} */
 		type='halt'
 		/** @arg {import("types/vm/instruction/mod.js").turing.Halt} _i @arg {StackVM} vm */
@@ -701,7 +697,7 @@ import {
 			vm.halt()
 		}
 	}
-	class InstructionReturnImpl extends InstructionImplBase {
+	class InstructionReturnImpl {
 		/** @type {'return'} */
 		type='return'
 		/** @arg {import("types/vm/instruction/mod.js").general.Return} _i @arg {StackVM} vm */
@@ -713,7 +709,7 @@ import {
 			}
 		}
 	}
-	class InstructionBreakpointImpl extends InstructionImplBase {
+	class InstructionBreakpointImpl {
 		/** @type {'breakpoint'} */
 		type='breakpoint'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").debug.Breakpoint} _i */
@@ -722,7 +718,7 @@ import {
 			trigger_debug_breakpoint()
 		}
 	}
-	class InstructionPushVMObjImpl extends InstructionImplBase {
+	class InstructionPushVMObjImpl {
 		/** @type {"vm_push_self"} */
 		type="vm_push_self"
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.PushSelf} _i */
@@ -730,7 +726,7 @@ import {
 			vm.stack.push(new StackVMBoxImpl(vm))
 		}
 	}
-	class InstructionPushGlobalObjectImpl extends InstructionImplBase {
+	class InstructionPushGlobalObjectImpl {
 		/** @type {'push_global_object'} */
 		type='push_global_object'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").push.GlobalObject} _i */
@@ -738,7 +734,7 @@ import {
 			vm.stack.push(new WindowBoxImpl(window))
 		}
 	}
-	class InstructionPeekImpl extends InstructionImplBase {
+	class InstructionPeekImpl {
 		/** @type {'peek'} */
 		type='peek'
 		debug=false
@@ -759,7 +755,7 @@ import {
 	}
 	/** @typedef {import("types/vm/instruction/mod.js").InstructionImplObj<"append", import("types/vm/instruction/mod.js").IAppendImpl, import("types/vm/instruction/Append.js").Append>} IInstructionAppendImplIns */
 	/** @implements {IInstructionAppendImplIns} */
-	class InstructionAppendImpl extends InstructionImplBase {
+	class InstructionAppendImpl {
 		/** @type {"append"} */
 		type="append"
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").Append} _i */
@@ -785,7 +781,7 @@ import {
 			target.value.appendChild(append_obj.value)
 		}
 	}
-	class InstructionPushArgsImpl extends InstructionImplBase {
+	class InstructionPushArgsImpl {
 		/** @type {'vm_push_args'} */
 		type='vm_push_args'
 		/** @arg {StackVM} _vm @arg {never} _i */
@@ -793,7 +789,7 @@ import {
 			throw new Error("Instruction not supported")
 		}
 	}
-	class InstructionDropImpl extends InstructionImplBase {
+	class InstructionDropImpl {
 		/** @type {'drop'} */
 		type='drop'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").stack.Drop} _i */
@@ -801,7 +797,7 @@ import {
 			vm.stack.pop()
 		}
 	}
-	class InstructionVMReturnImpl extends InstructionImplBase {
+	class InstructionVMReturnImpl {
 		/** @type {'vm_return'} */
 		type='vm_return'
 		debug=false
@@ -825,7 +821,7 @@ import {
 			if(this.debug) console.log('vm return',vm.base_ptr,start_stack,vm.stack.slice())
 		}
 	}
-	class InstructionVMCallImpl extends InstructionImplBase {
+	class InstructionVMCallImpl {
 		/** @type {'vm_call'} */
 		type='vm_call'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Call} ins */
@@ -840,14 +836,14 @@ import {
 	class VMFlags {
 		equal=false
 	}
-	class InstructionNopImpl extends InstructionImplBase {
+	class InstructionNopImpl {
 		/** @type {'nop'} */
 		type='nop'
 		/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").Nop} _a */
 		run(_vm,_a) {
 		}
 	}
-	class InstructionBlockTraceImpl extends InstructionImplBase {
+	class InstructionBlockTraceImpl {
 		/** @type {'vm_block_trace'} */
 		type='vm_block_trace'
 		/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").vm.BlockTrace} _i */
