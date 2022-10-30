@@ -1,6 +1,6 @@
-import {DomInstructionType} from "typescript/vm/dom_instruction/DomInstructionType"
 import {VMBlockTraceOpcode} from "../opcodes/VMBlockTraceOpcode"
 import {DomTaggedPack} from "../../dom_instruction/DomTaggedPack"
+import {DomInstructionType} from "../../dom_instruction/DomInstructionType"
 
 export type VMBlockTrace=
 	[VMBlockTraceOpcode,'begin',DomInstructionType|null]|
