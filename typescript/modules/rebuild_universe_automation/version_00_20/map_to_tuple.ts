@@ -1,8 +1,3 @@
-/**
- * @this {any[]}
- * @param {any} e
- * @param {number} i
- */
-export function map_to_tuple(e, i) {
-	return [e, this[i]];
+export function map_to_tuple(this: any[], e:any, i: number) {
+	return [e,this[i]]
 }

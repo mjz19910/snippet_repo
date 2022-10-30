@@ -1,7 +1,6 @@
 import {page_url_no_protocol} from "./page_url_no_protocol";
 
-/**@arg {PopStateEvent} e */
-export function popstate_event_handler(e) {
+export function popstate_event_handler(e: PopStateEvent) {
 	console.log('popstate', e.state, location.href);
 	if(e.state === null) {
 		let non_proto_url = page_url_no_protocol();

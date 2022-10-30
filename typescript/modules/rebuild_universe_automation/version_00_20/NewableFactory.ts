@@ -1,28 +1,26 @@
-import {BaseBox} from "./BaseBox.js";
-import {not_reached} from "./not_reached";
+import {Box} from "../../../box/Box.js"
+import {BaseBox} from "./BaseBox.js"
+import {not_reached} from "./not_reached"
 
 export class NewableFactory {
-	/**@type {"constructor_box"} */
-	type = "constructor_box";
-	/**@type {'box[]'} */
-	arguments = "box[]";
-	/**@type {'box'} */
-	return = "box";
-	/**@type {<T>(fn:{new (...v:Box[]):T})=>Box} */
-	value;
-	/**@arg {Parameters<BaseBox['as_type']>[0]} type */
-	as_type(type) {
+	type: "constructor_box"
+	arguments: 'box[]'
+	return: 'box'
+	value: (fn: new (...v: Box[]) => {}) => Box
+	as_type(type: Parameters<BaseBox['as_type']>[0]) {
 		switch(typeof this.value) {
-			case 'function': this.value; break;
-			default: not_reached();
+			case 'function': this.value; break
+			default: not_reached()
 		}
-		if(typeof this.value === type) {
-			return this;
+		if(typeof this.value===type) {
+			return this
 		}
-		return null;
+		return null
 	}
-	/**@arg {<T>(fn: new (...v: Box[]) => T) => Box} value */
-	constructor(value) {
-		this.value = value;
+	constructor(value: (fn: new (...v: Box[]) => {}) => Box) {
+		this.type='constructor_box'
+		this.arguments='box[]'
+		this.return='box'
+		this.value=value
 	}
 }

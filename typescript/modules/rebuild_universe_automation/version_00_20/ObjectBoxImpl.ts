@@ -1,14 +1,15 @@
 export class ObjectBoxImpl {
-	/**@type {"object_box"} */
-	type: "object_box" = "object_box";
+	type: "object_box"
+	extension: null
+	inner_type: 'unit'
 	value: {}
-	extension = null;
-	/**@type {'unit'} */
-	inner_type: 'unit' = 'unit';
 	as_type(_a: 'object'|'function') {
-		return null;
+		return null
 	}
 	constructor(value: {}) {
-		this.value = value;
+		this.type='object_box'
+		this.extension=null
+		this.inner_type='unit'
+		this.value=value
 	}
 }

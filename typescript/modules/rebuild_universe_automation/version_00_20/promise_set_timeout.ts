@@ -1,7 +1,3 @@
-/**
- * @param {number | undefined} timeout
- * @param {TimerHandler} a
- */
-export function promise_set_timeout(timeout, a) {
+export function promise_set_timeout(timeout: number|undefined, a: TimerHandler) {
 	setTimeout(a, timeout);
 }
