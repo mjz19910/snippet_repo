@@ -1,9 +1,6 @@
 import {got_jquery} from "./got_jquery";
 
-/**
- * @param {typeof $ | undefined} value
- */
-export function set_jq_proxy(value) {
+export function set_jq_proxy(value:typeof $ | undefined) {
 	let s_value = value;
 	Object.defineProperty(window, '$', {
 		get() {
