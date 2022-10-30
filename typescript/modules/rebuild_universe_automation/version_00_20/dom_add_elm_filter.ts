@@ -1,9 +1,6 @@
 import {do_dom_filter} from "./do_dom_filter";
 
-/**
- * @param {HTMLScriptElement} elm
- */
-export function dom_add_elm_filter(elm) {
+export function dom_add_elm_filter(elm: HTMLScriptElement) {
 	if(elm && elm.nodeName === "SCRIPT") {
 		if(!elm.src) {
 			console.log(elm);
