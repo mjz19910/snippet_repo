@@ -1,3 +1,3 @@
 import {ClassCallbackFunction} from "./ClassCallbackFunction"
 
-export type DebugClassBox=['class',ClassCallbackFunction,new (...a: any[]) => {},any[]]
+export type DebugClassBox=[type:'class',callback:ClassCallbackFunction,constructor:new (...a: any[]) => {},args:any[]]

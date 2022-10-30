@@ -1,6 +1,6 @@
-import {DebugVarBox} from "typescript/box/DebugVarBox"
-import {DebugNullBox} from "typescript/box/DebugNullBox"
-import {DebugHiddenVarBox} from "typescript/box/DebugHiddenVarBox"
+import {DebugVarBox} from "./box/DebugVarBox"
+import {DebugNullBox} from "./box/DebugNullBox"
+import {DebugHiddenVarBox} from "./box/DebugHiddenVarBox"
 
 export class DebugInfoValue {
 	valid=false;
