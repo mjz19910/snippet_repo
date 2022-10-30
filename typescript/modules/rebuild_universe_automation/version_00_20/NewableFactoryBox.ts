@@ -2,7 +2,7 @@ import {Box} from "../../../box/Box.js"
 import {BaseBox} from "./BaseBox.js"
 import {throw_unreachable} from "./throw_unreachable"
 
-export class NewableFactory {
+export class NewableFactoryBox {
 	type: "constructor_box"
 	arguments: 'box[]'
 	return: 'box'
