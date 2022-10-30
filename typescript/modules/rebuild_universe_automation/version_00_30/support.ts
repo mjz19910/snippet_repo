@@ -28,9 +28,7 @@ import {MediaListBox} from "../../../box/MediaListBox"
 import {InstructionTypeArrayBox} from "../../../box/InstructionTypeArrayBox"
 import {GlobalThisBox} from "../../../box/GlobalThisBox"
 import {FunctionBox} from "../../../box/FunctionBox"
-type x=ArrayBox
 export {
-	x,
 	turing_Halt as InstructionHalt,
 	general_Return as InstructionReturn,
 	Breakpoint as InstructionBreakpoint,
