@@ -33,9 +33,10 @@ import {
 
 // tampermonkey is overwriting console and
 // I want the real log fn so the line numbers show up
-console=window.console;
 (function() {
 	'use strict'
+	console=window.console
+
 	const AUDIO_ELEMENT_VOLUME=0.58
 	const AudioMuted=true
 
@@ -127,13 +128,13 @@ console=window.console;
 	}
 	class CSSStyleSheetConstructorBoxImpl extends BaseBox {
 		/** @type {"constructor_box"} */
-		type="constructor_box";
+		type="constructor_box"
 		/** @type {"javascript"} */
-		from="javascript";
+		from="javascript"
 		/** @type {"CSSStyleSheet"} */
-		instance_type="CSSStyleSheet";
+		instance_type="CSSStyleSheet"
 		/** @type {"CSSStyleSheet"} */
-		constructor_type="CSSStyleSheet";
+		constructor_type="CSSStyleSheet"
 		/** @arg {'function'|'object'} to_match */
 		as_type(to_match) {
 			if(typeof this.value===to_match) {
@@ -157,9 +158,9 @@ console=window.console;
 	/** @implements {CSSStyleSheetBox} */
 	class CSSStyleSheetBoxImpl extends BaseBox {
 		/** @type {"instance_box"} */
-		type="instance_box";
+		type="instance_box"
 		/** @type {"CSSStyleSheet"} */
-		instance_type="CSSStyleSheet";
+		instance_type="CSSStyleSheet"
 		/** @arg {'object'|'function'} to_match */
 		as_type(to_match) {
 			if(to_match==='object') return this
@@ -176,11 +177,11 @@ console=window.console;
 	/** @implements {PromiseBox} */
 	class PromiseBoxImpl extends BaseBox {
 		/** @type {"promise_box"} */
-		type="promise_box";
+		type="promise_box"
 		/** @type {"Box"} */
-		await_type="Box";
+		await_type="Box"
 		/** @type {"Promise<Box>"} */
-		inner_type="Promise<Box>";
+		inner_type="Promise<Box>"
 		/** @arg {'object'|'function'} to_match */
 		as_type(to_match) {
 			if(to_match==='object') return this
@@ -197,9 +198,9 @@ console=window.console;
 	/** @implements {StackVMBox} */
 	class StackVMBoxImpl extends BaseBox {
 		/** @type {"custom_box"} */
-		type="custom_box";
+		type="custom_box"
 		/** @type {"StackVM"} */
-		box_type="StackVM";
+		box_type="StackVM"
 		/** @type {StackVM} */
 		value
 		/** @arg {StackVM} value */
@@ -211,10 +212,10 @@ console=window.console;
 	/** @implements {WindowBox} */
 	class WindowBoxImpl extends BaseBox {
 		/** @type {"object_box"} */
-		type="object_box";
-		extension=null;
+		type="object_box"
+		extension=null
 		/** @type {"Window"} */
-		inner_type="Window";
+		inner_type="Window"
 		/** @type {Window} */
 		value
 		/** @arg {Window} value */
@@ -226,10 +227,10 @@ console=window.console;
 	/** @implements {ObjectBox} */
 	class ObjectBoxImpl extends BaseBox {
 		/** @type {"object_box"} */
-		type="object_box";
+		type="object_box"
 		/** @type {"unit"} */
-		inner_type="unit";
-		extension=null;
+		inner_type="unit"
+		extension=null
 		/** @type {{}} */
 		value
 		/** @arg {{}} value */
@@ -254,9 +255,9 @@ console=window.console;
 	}
 	class InstructionCallImpl extends InstructionImplBase {
 		/** @type {'call'} */
-		type='call';
+		type='call'
 		/** @type {boolean} */
-		debug=false;
+		debug=false
 		/** @arg {StackVM} vm @arg {Box} fn_box @arg {Box} target_this @arg {Box[]} arg_arr */
 		handle_as_fn_box(vm,fn_box,target_this,arg_arr) {
 			if(fn_box.return_type=='promise') {
@@ -424,7 +425,7 @@ console=window.console;
 	}
 	class InstructionConstructImpl extends InstructionImplBase {
 		/** @type {'construct'} */
-		type='construct';
+		type='construct'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").general.Construct} ins */
 		run(vm,ins) {
 			let number_of_arguments=ins[1]
@@ -462,7 +463,7 @@ console=window.console;
 	class InstructionCastImpl extends InstructionImplBase {
 		/** @type {'cast'} */
 		type='cast'
-		debug=false;
+		debug=false
 		/** @type {(vm:StackVM, cast_source:"object_index", value:{[x:string]:Box})=>void} */
 		push_box(vm,cast_source,value) {
 			vm.stack.push({
@@ -503,7 +504,7 @@ console=window.console;
 			if(obj?.type==='temporary_box') {
 				if(obj.source==='get') {
 					console.log('temporary_box',obj)
-					// return this.push_temporary_box(vm, cast_source, obj);
+					// return this.push_temporary_box(vm, cast_source, obj)
 				}
 				if(obj.source==='call') {
 					return this.push_temporary_box(vm,cast_source,obj)
@@ -514,7 +515,7 @@ console=window.console;
 			if(obj?.type==='object_box') {
 				if(cast_source==='object_index') {
 					console.log(obj)
-					// return this.push_box(vm, cast_source, obj.value);
+					// return this.push_box(vm, cast_source, obj.value)
 				}
 				console.warn('box does not contain a function',obj)
 				throw 1
@@ -550,7 +551,7 @@ console=window.console;
 	}
 	class InstructionJeImpl extends InstructionImplBase {
 		/** @type {'je'} */
-		type='je';
+		type='je'
 		/** @arg {import("types/vm/instruction/mod.js").jump.Je} instruction @arg {StackVM} vm */
 		run(vm,instruction) {
 			let [,target]=instruction
@@ -578,7 +579,7 @@ console=window.console;
 	}
 	class InstructionModifyOpImpl extends InstructionImplBase {
 		/** @type {'modify_operand'} */
-		type='modify_operand';
+		type='modify_operand'
 		/** @arg {import("types/vm/instruction/mod.js").ModifyOperand} instruction @arg {StackVM} vm */
 		run(vm,instruction) {
 			let [,target,offset]=instruction
@@ -631,7 +632,7 @@ console=window.console;
 	}
 	class InstructionDupImpl extends InstructionImplBase {
 		/** @type {'dup'} */
-		type='dup';
+		type='dup'
 		/** @arg {import("types/vm/instruction/mod.js").stack.Dup} _ins @arg {StackVM} vm */
 		run(vm,_ins) {
 			if(vm.stack.length===0) throw new Error("stack underflow")
@@ -640,7 +641,7 @@ console=window.console;
 	}
 	class InstructionGetImpl extends InstructionImplBase {
 		/** @type {'get'} */
-		type='get';
+		type='get'
 		/** @arg {StackVM} vm @arg {import("../../../types/vm/box/TemporaryBox.js").TemporaryBox} tmp_box @arg {string} key */
 		handle_temporary_box(vm,tmp_box,key) {
 			if(tmp_box.source==='cast') {
@@ -686,7 +687,7 @@ console=window.console;
 			if(typeof value_box!='object') throw new Error("Invalid")
 			if(value_box.type==='temporary_box') {
 				console.log('temp box',value_box)
-				// this.handle_temporary_box(vm, value_box, get_key);
+				// this.handle_temporary_box(vm, value_box, get_key)
 				return
 			}
 			this.on_get(vm,value_box,get_key)
@@ -695,7 +696,7 @@ console=window.console;
 	}
 	class InstructionHaltImpl extends InstructionImplBase {
 		/** @type {'halt'} */
-		type='halt';
+		type='halt'
 		/** @arg {import("types/vm/instruction/mod.js").turing.Halt} _i @arg {StackVM} vm */
 		run(vm,_i) {
 			vm.halt()
@@ -724,7 +725,7 @@ console=window.console;
 	}
 	class InstructionPushVMObjImpl extends InstructionImplBase {
 		/** @type {"vm_push_self"} */
-		type="vm_push_self";
+		type="vm_push_self"
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.PushSelf} _i */
 		run(vm,_i) {
 			vm.stack.push(new StackVMBoxImpl(vm))
@@ -732,7 +733,7 @@ console=window.console;
 	}
 	class InstructionPushGlobalObjectImpl extends InstructionImplBase {
 		/** @type {'push_global_object'} */
-		type='push_global_object';
+		type='push_global_object'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").push.GlobalObject} _i */
 		run(vm,_i) {
 			vm.stack.push(new WindowBoxImpl(window))
@@ -741,7 +742,7 @@ console=window.console;
 	class InstructionPeekImpl extends InstructionImplBase {
 		/** @type {'peek'} */
 		type='peek'
-		debug=false;
+		debug=false
 		/** @arg {StackVM} vm @arg {[any, any]} ins */
 		run(vm,ins) {
 			let [,distance]=ins
@@ -761,7 +762,7 @@ console=window.console;
 	/** @implements {IInstructionAppendImplIns} */
 	class InstructionAppendImpl extends InstructionImplBase {
 		/** @type {"append"} */
-		type="append";
+		type="append"
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").Append} _i */
 		run(vm,_i) {
 			if(vm.stack.length<=0) {
@@ -787,7 +788,7 @@ console=window.console;
 	}
 	class InstructionPushArgsImpl extends InstructionImplBase {
 		/** @type {'vm_push_args'} */
-		type='vm_push_args';
+		type='vm_push_args'
 		/** @arg {StackVM} _vm @arg {never} _i */
 		run(_vm,_i) {
 			throw new Error("Instruction not supported")
@@ -795,7 +796,7 @@ console=window.console;
 	}
 	class InstructionDropImpl extends InstructionImplBase {
 		/** @type {'drop'} */
-		type='drop';
+		type='drop'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").stack.Drop} _i */
 		run(vm,_i) {
 			vm.stack.pop()
@@ -803,8 +804,8 @@ console=window.console;
 	}
 	class InstructionVMReturnImpl extends InstructionImplBase {
 		/** @type {'vm_return'} */
-		type='vm_return';
-		debug=false;
+		type='vm_return'
+		debug=false
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Return} _i */
 		run(vm,_i) {
 			let start_stack=vm.stack.slice()
@@ -827,7 +828,7 @@ console=window.console;
 	}
 	class InstructionVMCallImpl extends InstructionImplBase {
 		/** @type {'vm_call'} */
-		type='vm_call';
+		type='vm_call'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Call} ins */
 		run(vm,ins) {
 			let prev_base=vm.base_ptr
@@ -838,18 +839,18 @@ console=window.console;
 		}
 	}
 	class VMFlags {
-		equal=false;
+		equal=false
 	}
 	class InstructionNopImpl extends InstructionImplBase {
 		/** @type {'nop'} */
-		type='nop';
+		type='nop'
 		/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").Nop} _a */
 		run(_vm,_a) {
 		}
 	}
 	class InstructionBlockTraceImpl extends InstructionImplBase {
 		/** @type {'vm_block_trace'} */
-		type='vm_block_trace';
+		type='vm_block_trace'
 		/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").vm.BlockTrace} _i */
 		run(_vm,_i) {
 		}
@@ -1004,7 +1005,7 @@ console=window.console;
 		}
 	}
 	class StackVMParser {
-		static match_regex=/(.+?)(;|$)/gm;
+		static match_regex=/(.+?)(;|$)/gm
 		/** @arg {string[] | number[]} cur @arg {number} arg_loc*/
 		static parse_int_arg(cur,arg_loc) {
 			let cur_item=cur[arg_loc]
@@ -1254,7 +1255,7 @@ console=window.console;
 			} else {
 				this.state_map.set(name,1)
 				return 1
-			};
+			}
 		}
 	}
 	class EventHandlerDispatch {
@@ -1388,7 +1389,7 @@ console=window.console;
 		}
 		/** @arg {string[]} arr */
 		compress_array(arr) {
-			let success,res;
+			let success,res
 			[success,res]=this.try_decompress(arr)
 			if(success) arr=res
 			for(let i=0;i<4;i++) {
@@ -1864,7 +1865,7 @@ console=window.console;
 			if(this.locked_cycle_count>0) {
 				this.locked_cycle_count--
 				if(this.locked_cycle_count%100==0) {
-					// do_update=true;
+					// do_update=true
 					log_if(LOG_LEVEL_INFO,'ratio cycle lcc=%o',this.locked_cycle_count)
 				}
 			} else {
@@ -1972,7 +1973,7 @@ console=window.console;
 				this.update_not_ready()
 				return
 			}
-			// this.div=Math.log2(window.prestige)*AutoBuyRatioDiv;
+			// this.div=Math.log2(window.prestige)*AutoBuyRatioDiv
 			this.div=AutoBuyRatioDiv
 			this.val=Math.log2(window.totalAtome/window.atomepersecond)/this.div
 			if(!Number.isFinite(this.val)) {
@@ -2047,11 +2048,11 @@ console=window.console;
 	/** @implements {NodeBox} */
 	class NodeBoxImpl extends BaseBox {
 		/** @type {"instance_box"} */
-		type="instance_box";
+		type="instance_box"
 		/** @type {'Node'} */
-		instance_type='Node';
+		instance_type='Node'
 		/** @type {"get"|"create"} */
-		from="create";
+		from="create"
 		/** @arg {"get"|"create"|string} from @arg {Node} value */
 		constructor(from,value) {
 			super(null)
@@ -2064,7 +2065,7 @@ console=window.console;
 		}
 	}
 	class DataLoader {
-		static int_parser=new WebAssembly.Function({parameters: ['externref'],results: ['f64']},parseInt);
+		static int_parser=new WebAssembly.Function({parameters: ['externref'],results: ['f64']},parseInt)
 		/** @arg {Storage} storage */
 		constructor(storage) {this.store=storage}
 		/** @arg {string} key @arg {string[]} def_value */
@@ -2196,7 +2197,7 @@ console=window.console;
 	/** @implements {DocumentBox} */
 	class DocumentBoxImpl extends BaseBox {
 		/** @type {"document_box"} */
-		type="document_box";
+		type="document_box"
 		value
 		/** @arg {"object" | "function"} v */
 		as_type(v) {
@@ -2212,11 +2213,11 @@ console=window.console;
 	/** @implements {AsyncFunctionBox} */
 	class AsyncFunctionBoxImpl {
 		/** @type {'function_box'} */
-		type="function_box";
+		type="function_box"
 		/** @type {"promise_box"} */
-		return_type='promise_box';
+		return_type='promise_box'
 		/** @type {"Box"} */
-		await_type='Box';
+		await_type='Box'
 		/** @returns {Box} */
 		wrap_call() {
 			throw 1
@@ -2233,8 +2234,8 @@ console=window.console;
 	/** @implements {VoidBox} */
 	class VoidBoxImpl {
 		/** @type {"void"} */
-		type="void";
-		value=null;
+		type="void"
+		value=null
 		as_type() {
 			return null
 		}
@@ -2271,9 +2272,13 @@ console=window.console;
 		constructor() {
 			this.root_node=new AsyncNodeRoot
 			this.with_async=new AsyncAutoBuy(this)
-			this.timeout_ms=0; this.iter_count=0; this.epoch_len=0
-			this.background_audio=null; this.state_history_arr=null
-			this.skip_save=false; this.has_real_time=false
+			this.timeout_ms=0
+			this.iter_count=0
+			this.epoch_len=0
+			this.background_audio=null
+			this.state_history_arr=null
+			this.skip_save=false
+			this.has_real_time=false
 			/** @type {never[]} */
 			this.cint_arr=[]
 			this.local_data_loader=new DataLoader(localStorage)
@@ -2315,89 +2320,89 @@ console=window.console;
 			}
 			this.async_pre_init().then(() => {
 				log_if(LOG_LEVEL_INFO,'pre_init done')
-			}); this.dom_pre_init()
+			})
+			this.dom_pre_init()
 		}
 		async async_pre_init() {
 			if(!this.background_audio) throw 1
 			if(!(this.background_audio instanceof HTMLAudioElement)) throw 1
-			x: try {
+			try {
 				return await this.background_audio.play()
 			} catch(e) {
 				log_if(LOG_LEVEL_INFO,"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)")
 			}
-			// @FileType(vm_asm);
 			let raw_instructions=`
 			// [none]
-			vm_push_self;
+			vm_push_self;${""}
 			// vm_self
-			cast,object_index;
+			cast,object_index;${""}
 			// vm_self as object_index
-			push,target_obj;
+			push,target_obj;${""}
 			// vm_self target_obj
-			get;
+			get;${""}
 			// vm_self.target_obj
-			dup;
+			dup;${""}
 			// vm_self.target_obj * 2
-			cast,object_index;
+			cast,object_index;${""}
 			// vm_self.target_obj target_obj<object_index>
-			push,background_audio;
+			push,background_audio;${""}
 			// vm_self.target_obj <object_index>target_obj "background_audio"
-			get;
+			get;${""}
 			// vm_self.target_obj target_obj.background_audio
-			dup;
+			dup;${""}
 			// vm_self.target_obj target_obj.background_audio * 2
-			cast,object_index;
+			cast,object_index;${""}
 			// vm_self.target_obj target_obj.background_audio <object_index>background_audio
-			push,play;
+			push,play;${""}
 			// vm_self.target_obj target_obj.background_audio <object_index>background_audio "play"
-			get;
+			get;${""}
 			// vm_self.target_obj target_obj.background_audio background_audio.play
-			cast,vm_function;
+			cast,vm_function;${""}
 			// vm_self.target_obj target_obj.background_audio (background_audio.play as vm_function)
-			call,int(2);
+			call,int(2);${""}
 			// want to "swap;drop;" here
 			// vm_self.target_obj Promise<void>
-			dup;
+			dup;${""}
 			// vm_self.target_obj Promise<void> * 2
-			cast,object_index;
+			cast,object_index;${""}
 			// vm_self.target_obj Promise<void> <object_index>(Promise<void>)
-			push,then;
+			push,then;${""}
 			// vm_self.target_obj Promise<void> <object_index>(Promise<void>) "then"
-			get;
+			get;${""}
 			// vm_self.target_obj Promise<void> (Promise<void>).then
-			cast,vm_function;
+			cast,vm_function;${""}
 			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function)
-			push,%o;
+			push,%o;${""}
 			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function) arg1
-			push,%o;
+			push,%o;${""}
 			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function) arg1 arg2
-			call,int(4);
-			// vm_self.target_obj Promise<void>^
-			drop;
+			call,int(4);${""}
+			// vm_self.target_obj Promise<void>
+			drop;${""}
 			// vm_self.target_obj
-			drop;
+			drop;${""}
 			// [none]
-			push_global_object;
+			push_global_object;${""}
 			// window
-			dup;
+			dup;${""}
 			// window * 2
-			cast,object_index;
+			cast,object_index;${""}
 			// window <object_index>window
-			push,removeEventListener;
+			push,removeEventListener;${""}
 			// window <object_index>window "removeEventListener"
-			get;
+			get;${""}
 			// window window.removeEventListener
-			cast,vm_function;
+			cast,vm_function;${""}
 			// window (window.removeEventListener as vm_function)
-			push,click;
+			push,click;${""}
 			// window (window.removeEventListener as vm_function) "click"
-			vm_push_self;
+			vm_push_self;${""}
 			// window (window.removeEventListener as vm_function) "click" vm_self
-			call,int(4);
+			call,int(4);${""}
 			// vm_self
-			drop;
+			drop;${""}
 			// [none]
-			vm_return;
+			vm_return;${""}
 			`
 			let instructions=StackVMParser.parse_instruction_stream_from_string(raw_instructions,[
 				function() {
@@ -2610,26 +2615,11 @@ console=window.console;
 			let map=trg_map
 			for(let i=0;i<raw_arr.length;i++) {
 				let cur_item=raw_arr[i]
-				// let [depth, action, ...args] = cur_item;
 				switch(cur_item[1]) {
 					case 'get': {
-						// let cur_element, [, , query_arg]=cur_item;
-						// switch(query_arg){
-						// 	case 'body':cur_element=document.body;break;default:cur_element=document.querySelector(query_arg);break;
-						// }
-						// if(!cur_element)throw new Error("build from dom failed, element not found: \""+query_arg+"\"");
-						// stack.push([cur_item[0], "push", new NodeBoxImpl('get', cur_element)])
 						stack.push(cur_item)
 					} break
 					case 'new': {
-						// TODO
-						// const [depth, , class_box, construct_arg_arr, callback, arg_arr]=cur_item;
-						// stack.push(
-						// 	[cur_item[0], 'push', null, this.use_boxed_style_sheet.bind(this, callback), ...construct_arg_arr, class_box],
-						// 	[cur_item[0], 'construct', 1 + construct_arg_arr.length],
-						// 	[depth, 'push', ...arg_arr],
-						// 	[depth, 'call', 3 + arg_arr.length]
-						// );
 					} break
 					case 'create': {
 						const [depth,,element_type,name,content]=cur_item
@@ -2665,15 +2655,7 @@ console=window.console;
 				}
 				if(this.debug_arr.includes('build_dom_from_desc')) console.log('es',stack.at(-1))
 			}
-			// TODO
-			//let instructions=this.parse_dom_stack(stack);
-			//let builder_vm=new StackVM(instructions);
-			//builder_vm.run();
 		}
-		/**@typedef {[number, 'vm_block_trace', 'call', import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionTypePack|null, number]} _PushGroupArgs1 */
-		/**@typedef {[number, 'vm_block_trace', 'call', import("types/vm/instruction/vm/VMBlockTrace.js").DomInstructionTypePack|null, number]} _PushGroupArgs2 */
-		/**@typedef {_PushGroupArgs1} _PushGroupArgs */
-		/** @arg {State_1} state @arg {_PushGroupArgs} args */
 		push_instruction_group(state,...args) {
 			let [stack_ptr,instruction_val,op_1,op_2]=args
 			if(!state.ins_arr_map[stack_ptr]) state.ins_arr_map[stack_ptr]=[]
@@ -2900,7 +2882,7 @@ console=window.console;
 			if(this.timeout_ms) {
 				let element=this.dom_map.get('timeout_element')
 				if(element instanceof HTMLElement) {
-					element.innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms),0)// (this.timeout_avg()[1]);
+					element.innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms),0)
 				}
 			}
 		}
@@ -2972,7 +2954,7 @@ console=window.console;
 			else if(float_milli_from_prev<3e-9&&float_milli_from_prev>-3e-9) {}
 			else {
 				break x
-				// console.log(float_milliseconds, float_milliseconds - 1000);
+				// console.log(float_milliseconds, float_milliseconds - 1000)
 			}
 			let int_milliseconds=~~float_milliseconds
 			if(int_milliseconds>=1000) {
@@ -3175,12 +3157,12 @@ console=window.console;
 				if(cur<min) {
 					min=cur
 				}
-			};
+			}
 			const avg=total/this.timeout_arr.length
 			return [min,avg,max]
 		}
 		/** @type {number[]} */
-		large_diff=[];
+		large_diff=[]
 		calc_timeout_ms() {
 			while(this.timeout_arr.length>60) this.timeout_arr.shift()
 			let max=0
@@ -3188,9 +3170,9 @@ console=window.console;
 			for(var i=0;i<this.timeout_arr.length;i++) {
 				total+=this.timeout_arr[i]
 				max=Math.max(this.timeout_arr[i],max)
-			};
+			}
 			const val=total/this.timeout_arr.length
-			let num=val// max / val;
+			let num=val
 			this.last_value??=num
 			let diff=this.last_value-num
 			this.last_value=num
@@ -3242,7 +3224,7 @@ console=window.console;
 		do_rare_begin_change() {
 			this.do_timeout_inc([1.008,1.03],10)
 		}
-		unit_upgradable_count=0;
+		unit_upgradable_count=0
 		unit_promote_start() {
 			this.timeout_ms=this.calc_timeout_ms()
 			this.pre_total=window.totalAtome
@@ -3410,13 +3392,15 @@ console=window.console;
 		do_game_reset() {
 			if(!this.timeout_ms) {
 				this.timeout_ms=300
-			};
+			}
 			this.next_timeout(this.game_reset_step_1,this.round(this.timeout_ms/3),'1R')
 			this.on_repeat_r()
 		}
 		do_audio_mute_toggle() {
 			if(!AudioMuted) {
-				// this.background_audio.muted=!this.background_audio.muted;
+				if(this.background_audio) {
+					this.background_audio.muted=!this.background_audio.muted
+				}
 				window.mute()
 			}
 		}
@@ -3587,8 +3571,12 @@ console=window.console;
 			if(noti) gritter('Power-up !',toTitleCase(plurials(arrayNames[that]))+" X100 APS",null,"+"+rounding(spec_aps,false,0)+" APS","")
 			//spell:ignore updateprogress
 			updateprogress(that)
-			$('#spec'+that).remove();
-			(that<74)? seeUnit(that+1):seeUnit(that-1)
+			$('#spec'+that).remove()
+			if(that<74) {
+				seeUnit(that+1)
+			} else {
+				seeUnit(that-1)
+			}
 			seeUnit(that)
 			//spell:ignore checkspec
 			checkspec()
@@ -3882,12 +3870,9 @@ console=window.console;
 			window.adsbygoogle=any_cur
 			window.adsbygoogle.op=window.adsbygoogle.push
 			window.adsbygoogle.push=function(e) {
-				// console.log('ads by google push');
 				let cs=document.currentScript
 				/** @type {Element|null} */
 				let ls=null
-				/** @type {Element|null} */
-				let rs
 				if(!cs) return
 				window.g_cs??=[]
 				window.g_cs.push(cs)
