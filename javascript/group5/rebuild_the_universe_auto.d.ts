@@ -56,7 +56,7 @@ declare global {
 		noti: boolean
 		gritter: any
 		toTitleCase(v: string): string
-		cint_arr: string[]
+		cint_arr: (string|number[])[]
 		/*spell:disable-next-line*/
 		adsbygoogle: {
 			op: any,

@@ -1,10 +1,10 @@
-import {RemoteWorkerState} from "./vm/RemoteWorkerState"
-import {WorkerState} from "./vm/WorkerState"
-import {DocumentWriteList} from "./vm/DocumentWriteList"
-import {AutoBuy} from "./vm/AutoBuy"
-import {DebugAPI} from "./DebugAPI"
-import {GenericDataEvent} from "./vm/GenericDataEvent"
-import {GlobalStateKey} from "./vm/GlobalStateKey"
+import {RemoteWorkerState} from "../vm/RemoteWorkerState"
+import {WorkerState} from "../vm/WorkerState"
+import {DocumentWriteList} from "../vm/DocumentWriteList"
+import {AutoBuy} from "../vm/AutoBuy"
+import {DebugAPI} from "../DebugAPI"
+import {GenericDataEvent} from "../vm/GenericDataEvent"
+import {GlobalStateKey} from "../vm/GlobalStateKey"
 
 export {}
 
