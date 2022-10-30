@@ -1,0 +1,3 @@
+import {WorkerUpdateMessageHandlerReply} from "typescript/constants"
+
+export type WorkerUpdateMessageHandlerReplyTy=typeof WorkerUpdateMessageHandlerReply
