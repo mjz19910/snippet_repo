@@ -2,8 +2,8 @@ import {CustomEventTarget} from "modules/youtube_plugin/dom_observer/CustomEvent
 import {CustomEventType} from "modules/youtube_plugin/dom_observer/CustomEventType"
 import {dom_observer_next_tick_action} from "modules/youtube_plugin/dom_observer/dom_observer_next_tick_action"
 import {observer_default_action} from "../../dom_observer/observer_default_action"
+import {ytd_page_manager} from "../elements/ytd_page_manager"
 import {on_ytd_watch_flexy} from "../found_elements/on_ytd_watch_flexy"
-import {ytd_page_manager} from "modules/youtube_plugin/elements/ytd_page_manager"
 
 /** ID(40) */
 export function event_find_ytd_watch_flexy(this: CustomEventTarget,event: CustomEventType) {
