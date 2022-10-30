@@ -644,7 +644,7 @@ import {
 					this.on_get(vm,tmp_box,key)
 				}
 			} else {
-				console.log('tmp_box', tmp_box);
+				console.log('tmp_box',tmp_box)
 				throw new Error("Unable to handle box")
 			}
 		}
@@ -684,7 +684,7 @@ import {
 			if(typeof get_key!='string') throw new Error("Invalid")
 			if(typeof value_box!='object') throw new Error("Invalid")
 			if(value_box.type==='temporary_box') {
-				this.handle_temporary_box(vm, value_box, get_key)
+				this.handle_temporary_box(vm,value_box,get_key)
 				return
 			}
 			this.on_get(vm,value_box,get_key)
