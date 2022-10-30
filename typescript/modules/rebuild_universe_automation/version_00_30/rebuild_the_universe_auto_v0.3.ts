@@ -1,23 +1,3 @@
-// ==UserScript==
-// @name			rebuild the universe auto
-// @namespace		http://tampermonkey.net/
-// @version			0.3
-// @description		rebuildtheuniverse.com automation
-// @author			You
-// @match			http://rebuildtheuniverse.com/?type=real
-// @match			http://rebuildtheuniverse.com/?type=mjz_version
-// @match			http://rebuildtheuniverse.com
-// @match			https://rebuildtheuniverse.com/?type=real
-// @match			https://rebuildtheuniverse.com/?type=mjz_version
-// @match			https://rebuildtheuniverse.com
-// @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/
-// @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=inject
-// @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=mjz_version
-// @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real
-// @run-at			document-start
-// @grant			none
-// ==/UserScript==
-
 import {ArrayBox} from "../../../box/ArrayBox.js"
 import {Box} from "../../../box/Box.js"
 import {EmptyArrayBox} from "../../../box/EmptyArrayBox.js"
@@ -64,6 +44,26 @@ import {DomInstructionType} from "../../../vm/dom_instruction/DomInstructionType
 import {DomExecDescription,DomInstructionStack} from "./typedef.js"
 import {NodeBox} from "../../../box/NodeBox.js"
 import {StackTraceType} from "./StackTraceType"
+// ==UserScript==
+// @name			rebuild the universe auto
+// @namespace		http://tampermonkey.net/
+// @version			0.3
+// @description		rebuildtheuniverse.com automation
+// @author			You
+// @match			http://rebuildtheuniverse.com/?type=real
+// @match			http://rebuildtheuniverse.com/?type=mjz_version
+// @match			http://rebuildtheuniverse.com
+// @match			https://rebuildtheuniverse.com/?type=real
+// @match			https://rebuildtheuniverse.com/?type=mjz_version
+// @match			https://rebuildtheuniverse.com
+// @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/
+// @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=inject
+// @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=mjz_version
+// @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real
+// @run-at			document-start
+// @grant			none
+// ==/UserScript==
+
 
 console=window.console
 
