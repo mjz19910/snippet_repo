@@ -1,10 +1,12 @@
-export class DocumentWriteList {
-	/**
-	 * @type {any[]}
-	 */
-	list;
-	/**@type {import("types/vm/DocumentWriteFn.js").DocumentWriteFn | null} */
-	document_write;
+import {DocumentWriteFn} from "../../../vm/DocumentWriteFn"
+
+export class ProxyDocumentWriteList {
+	list: any[];
+	document_write: DocumentWriteFn|null;
+	attached: boolean
+	end_symbol: symbol
+	attached_document: Document|null
+	document_write_proxy: Document['write']|null
 	constructor() {
 		this.list = [];
 		this.attached = false;
@@ -13,18 +15,12 @@ export class DocumentWriteList {
 		this.attached_document = null;
 		this.document_write_proxy = null;
 	}
-	/**
-	 * @arg {(...text: string[]) => void} target
-	 * @arg {Document} thisArg
-	 * @arg {string[]} argArray
-	 */
-	write(target, thisArg, argArray) {
+	write(target: (...text: string[]) => void, thisArg: Document, argArray: string[]) {
 		console.assert(target === this.document_write);
 		console.assert(thisArg === this.attached_document);
 		this.list.push(argArray, null);
 	}
-	/**@arg {Document} document */
-	attach_proxy(document) {
+	attach_proxy(document: Document) {
 		if(this.attached) {
 			let was_destroyed = this.destroy(true);
 			if(!was_destroyed) {
@@ -41,7 +37,7 @@ export class DocumentWriteList {
 			 * @arg {Document} thisArg
 			 * @arg {string[]} argArray
 			 */
-			apply(target, thisArg, argArray) {
+			apply(target: (...text: string[]) => void, thisArg: Document, argArray: string[]) {
 				this.other.write(target, thisArg, argArray);
 			}
 		};
@@ -51,7 +47,7 @@ export class DocumentWriteList {
 	/**
 	 * @param {boolean} should_try_to_destroy
 	 */
-	destroy(should_try_to_destroy = false) {
+	destroy(should_try_to_destroy: boolean = false) {
 		if(this.attached_document && this.document_write_proxy) {
 			console.assert(this.attached_document.write === this.document_write_proxy);
 			if(this.attached_document.write !== this.document_write_proxy) {
@@ -64,9 +60,9 @@ export class DocumentWriteList {
 			if(doc_1 && this.document_write) {
 				let doc_var = this.document_write;
 				/**@type {any} */
-				let any_var = doc_var;
+				let any_var: any = doc_var;
 				/**@type {Document['write']} */
-				let vv = any_var;
+				let vv: Document['write'] = any_var;
 				doc_1.write = vv;
 			}
 		}

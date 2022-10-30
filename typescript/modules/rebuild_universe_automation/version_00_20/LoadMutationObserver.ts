@@ -1,11 +1,8 @@
 import {BaseMutationObserver} from "./BaseMutationObserver";
 
 export class LoadMutationObserver extends BaseMutationObserver {
-	/**
-	 * @param {Node} target
-	 * @param {(mut_vec: MutationRecord[], mut_observer: MutationObserver) => void} callback
-	 */
-	constructor(target, callback) {
+	m_callback: MutationCallback
+	constructor(target: Node, callback: MutationCallback) {
 		super();
 		this.m_callback = callback;
 		let mutationObserver = new MutationObserver(this.callback.bind(this));
@@ -16,8 +13,7 @@ export class LoadMutationObserver extends BaseMutationObserver {
 		mutationObserver.observe(target, options);
 		this.observer = mutationObserver;
 	}
-	/** @type {MutationCallback} */
-	callback(mutations, observer) {
+	callback(mutations:MutationRecord[], observer: MutationObserver) {
 		this.m_callback(mutations, observer);
 		observer.disconnect();
 	}

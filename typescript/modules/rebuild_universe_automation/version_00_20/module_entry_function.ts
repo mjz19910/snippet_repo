@@ -1,7 +1,7 @@
-import {LOG_LEVEL_INFO} from "types/constants.js";
+import {LOG_LEVEL_INFO} from "../../../constants.js";
 import {action_1} from "./action_1";
 import {DetachedMutationObserver} from "./DetachedMutationObserver";
-import {DocumentWriteList} from "./DocumentWriteList";
+import {ProxyDocumentWriteList} from "./DocumentWriteList";
 import {do_dom_filter} from "./do_dom_filter";
 import {do_load_fire_promise} from "./do_load_fire_promise";
 import {enable_jquery_proxy_if_needed} from "./enable_jquery_proxy_if_needed";
@@ -13,11 +13,11 @@ import {reset_global_event_handlers} from "./reset_global_event_handlers";
 import {set_jq_proxy} from "./set_jq_proxy";
 import {mut_observers} from "./rebuild_the_universe_auto_v0.2";
 /**@type {typeof setTimeout} */
-let real_st;
+let real_st: typeof setTimeout;
 /**@type {typeof setInterval} */
-let real_si;
+let real_si: typeof setInterval;
 /**@type {EventTarget['addEventListener']} */
-let orig_aev;
+let orig_aev: EventTarget['addEventListener'];
 async function do_fetch_load() {
 	reset_global_event_handlers();
 	window.setTimeout = real_st;
@@ -67,18 +67,18 @@ async function do_fetch_load() {
 	/**
 	 * @type {any[]}
 	 */
-	let arr = [];
+	let arr: any[] = [];
 	/**@type {any} */
-	let any_cur = arr;
+	let any_cur: any = arr;
 	window.adsbygoogle = any_cur;
 	window.adsbygoogle.op = window.adsbygoogle.push;
 	window.adsbygoogle.push = function(e) {
 		// console.log('ads by google push');
 		let cs = document.currentScript;
 		/**@type {Element|null} */
-		let ls = null;
+		let ls: Element|null = null;
 		/**@type {Element|null} */
-		let rs;
+		let rs: Element|null;
 		if(!cs)
 			return;
 		window.g_cs ??= [];
@@ -130,9 +130,9 @@ async function do_fetch_load() {
 		let log_data_vec = [];
 		log_data_vec.push(mut_vec.length, document.body != null);
 		/**@type {HTMLScriptElement[]} */
-		let added_scripts = [];
+		let added_scripts: HTMLScriptElement[] = [];
 		/**@type {HTMLScriptElement[]} */
-		let removed_scripts = [];
+		let removed_scripts: HTMLScriptElement[] = [];
 		for(let i = 0; i < mut_vec.length; i++) {
 			let mut_rec = mut_vec[i];
 			let add_node_list = mut_rec.addedNodes;
@@ -200,15 +200,14 @@ export function module_entry_function() {
 	document.addEventListener('onContentLoaded', do_dom_filter);
 	Node.prototype.insertBefore = new Proxy(Node.prototype.insertBefore, {
 		/**@arg {[Node, Node]} parameters */
-		apply(target, thisValue, parameters) {
+		apply(target, thisValue, parameters: [Node,Node]) {
 			if(insert_before_enabled(...parameters)) {
 				return Reflect.apply(target, thisValue, parameters);
 			}
 		}
 	});
-	let document_write_list = new DocumentWriteList;
+	let document_write_list = new ProxyDocumentWriteList;
 	document_write_list.attach_proxy(document);
-	document_write_list.document_write_proxy;
 	window.document_write_list = document_write_list;
 	document.stop = function() {};
 	function nop_timeout() {
@@ -217,12 +216,12 @@ export function module_entry_function() {
 	}
 	real_st = setTimeout;
 	real_si = setInterval;
-	window.setTimeout = nop_timeout;
-	window.setInterval = nop_timeout;
+	window.setTimeout = nop_timeout as unknown as typeof setTimeout;
+	window.setInterval = nop_timeout as unknown as typeof setInterval;
 	/**
 	 * @param {any[]} v
 	 */
-	function no_aev(...v) {
+	function no_aev(...v: any[]) {
 		console.log('aev', v);
 	}
 	orig_aev = EventTarget.prototype.addEventListener;

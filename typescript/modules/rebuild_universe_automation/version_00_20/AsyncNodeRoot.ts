@@ -23,9 +23,9 @@ export class AsyncNodeRoot {
 	}
 	append_raw(timeout_id:number, once = true) {
 		if(once) {
-			this.append_child(new TimeoutIdNode(timeout_id));
+			this.append_child(new TimeoutIdNode(timeout_id) as BaseNode);
 		} else {
-			this.append_child(new IntervalIdNode(timeout_id));
+			this.append_child(new IntervalIdNode(timeout_id) as BaseNode);
 		}
 	}
 	append_child(record:BaseNode) {
