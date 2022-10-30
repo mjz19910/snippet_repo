@@ -1,16 +1,18 @@
+import {FunctionBox} from "../../../box/FunctionBox"
+
 export class FunctionBoxImpl {
-	/**@type {"function_box"} */
-	type = "function_box";
-	return_type = null;
-	/**@arg {'function'} to_match */
-	as_type(to_match) {
-		if(typeof this.value === to_match) {
-			return this;
+	type: "function_box"
+	return_type: null
+	value: FunctionBox['value']
+	as_type(to_match: 'function') {
+		if(typeof this.value===to_match) {
+			return this
 		}
-		return null;
+		return null
 	}
-	/**@arg {FunctionBox['value']} value */
-	constructor(value) {
-		this.value = value;
+	constructor(value: FunctionBox['value']) {
+		this.type='function_box'
+		this.return_type=null
+		this.value=value
 	}
 }

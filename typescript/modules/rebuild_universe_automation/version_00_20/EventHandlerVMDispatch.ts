@@ -1,15 +1,15 @@
-import {ObjectBoxImpl} from "./ObjectBoxImpl";
-import {SimpleStackVM} from "./SimpleStackVM";
+import {ObjectBox} from "../../../box/ObjectBox"
+import {InstructionType} from "../../../vm/instruction/InstructionType"
+import {SimpleStackVM} from "./SimpleStackVM"
 
 export class EventHandlerVMDispatch extends SimpleStackVM {
-	/**@arg {InstructionType[]} instructions @arg {any} target_obj */
-	constructor(instructions, target_obj) {
-		super(instructions);
-		this.target_obj = target_obj;
+	target_obj:any
+	constructor(instructions:InstructionType[],target_obj:any) {
+		super(instructions)
+		this.target_obj=target_obj
 	}
-	/**@arg {Event} event */
-	handleEvent(event) {
-		this.reset();
-		this.run(new ObjectBoxImpl(event));
+	handleEvent(event:Event) {
+		this.reset()
+		this.run(new ObjectBox(event))
 	}
 }

@@ -1,14 +1,11 @@
-import {use_jquery} from "./use_jquery";
+import {use_jquery} from "./use_jquery"
 
-/**
- * @param {typeof $} value
- */
-export function got_jquery(value) {
-	Object.defineProperty(window, '$', {
+export function got_jquery(value: typeof $) {
+	Object.defineProperty(window,'$',{
 		value,
 		writable: true,
 		enumerable: true,
 		configurable: true
-	});
-	use_jquery();
+	})
+	use_jquery()
 }
