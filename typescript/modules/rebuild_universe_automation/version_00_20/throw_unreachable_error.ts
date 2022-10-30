@@ -1,4 +1,3 @@
-/**@returns {never} */
-export function throw_unreachable_error() {
-	throw new Error("Unreachable");
+export function throw_unreachable_error(): never {
+	throw new Error("Unreachable")
 }

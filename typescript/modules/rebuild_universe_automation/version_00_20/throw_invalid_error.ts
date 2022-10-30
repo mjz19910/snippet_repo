@@ -1,3 +1,3 @@
-export function throw_invalid_error() {
-	return new Error("Invalid");
+export function throw_invalid_error(): never {
+	throw new Error("Invalid")
 }

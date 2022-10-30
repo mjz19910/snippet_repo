@@ -1,4 +1,3 @@
-/**@returns {never} */
-export function throw_todo_error() {
-	throw new Error("TODO");
+export function throw_todo_error():never {
+	throw new Error("TODO")
 }

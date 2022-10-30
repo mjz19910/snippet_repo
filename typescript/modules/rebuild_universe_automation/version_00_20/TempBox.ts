@@ -5,13 +5,10 @@ import {Primitives} from "../../../box/helper/Primitives"
 import {RealVoidBox} from "../../../box/RealVoidBox"
 import {VoidBox} from "../../../box/VoidBox"
 import {BaseBox} from "./BaseBox"
+import {generic_box_with_value_in} from "./generic_box_with_value_in"
+import {generic_box_with_value_out} from "./generic_box_with_value_out"
 import {throw_unreachable_error} from "./throw_unreachable_error"
 
-/**@no_typedef {import("api").NonNull<BoxInner>} NonNullInner */
-/**@no_typedef {import("types/vm/instruction/mod.js").InstructionType} InstructionType */
-/**@no_typedef {import("types/vm/box/ExtractKey").default<import("types/vm/box/Box.js").Box, 'value'>} BoxInner */
-type generic_box_with_value_out={value: NonNull<ExtractKey<Box,'value'>>}
-type generic_box_with_value_in=Primitives|null|generic_box_with_value_out
 export class TempBox extends BaseBox {
 	static is_raw(v: Box): v is Primitives {
 		if(v===null)
