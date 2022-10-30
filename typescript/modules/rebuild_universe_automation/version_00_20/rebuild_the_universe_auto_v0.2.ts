@@ -1,4 +1,4 @@
-import {AutoBuy} from "./AutoBuy/mod";
+import {AutoBuy} from "../../../vm/AutoBuy"
 import {BaseMutationObserver} from "./BaseMutationObserver";
 import {module_entry_function} from "./module_entry_function";
 import {NamedIdGenerator} from "./NamedIdGenerator";

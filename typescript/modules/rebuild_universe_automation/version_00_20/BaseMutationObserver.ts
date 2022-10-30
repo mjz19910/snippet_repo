@@ -1,6 +1,6 @@
 export class BaseMutationObserver {
+	observer: MutationObserver|null;
 	constructor() {
-		/**@type {MutationObserver|null} */
 		this.observer = null;
 	}
 	disconnect() {

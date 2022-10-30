@@ -1,9 +1,6 @@
 import {seen_elements} from "./rebuild_the_universe_auto_v0.2";
 
-/**
- * @param {HTMLScriptElement} e
- */
-export function remove_bad_dom_script_element_callback(e) {
+export function remove_bad_dom_script_element_callback(e:HTMLScriptElement) {
 	if(seen_elements.has(e))
 		return;
 	seen_elements.add(e);
@@ -17,12 +14,10 @@ export function remove_bad_dom_script_element_callback(e) {
 		e.remove();
 		return;
 	}
-	//spell:disable-next-line
 	if(e.src.indexOf("opentracker") > -1) {
 		e.remove();
 		return;
 	}
-	//spell:disable-next-line
 	if(e.src.includes("pagead/js/adsbygoogle.js")) {
 		e.remove();
 		return;
