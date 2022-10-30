@@ -1,4 +1,3 @@
-import {LOG_LEVEL_VERBOSE} from "typescript/constants"
 import {array_sample_end} from "./array_sample_end"
 import {AsyncNodeRoot} from "./AsyncNodeRoot"
 import {AsyncTimeoutNode} from "./AsyncTimeoutNode"
@@ -18,9 +17,10 @@ import {SimpleStackVMParser} from "./SimpleStackVMParser"
 import {specialclick_inject} from "./specialclick_inject"
 import {TimeoutTarget} from "./TimeoutTarget"
 import {DataLoader} from "./wasm/DataLoader"
-import {is_in_ignored_from_src_fn} from "typescript/script_registry/mod"
-import {debug_id_syms} from "typescript/mod"
-import {AUDIO_ELEMENT_VOLUME} from "typescript/vars"
+import {debug_id_syms} from "../src/mod"
+import {AUDIO_ELEMENT_VOLUME} from "../vars"
+import {is_in_ignored_from_src_fn} from "../script_registry/mod"
+import {LOG_LEVEL_VERBOSE} from "../src/constants"
 
 export class AutoBuy implements AutoBuyInterface {
 	state_history_arr: any
@@ -492,7 +492,9 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	replace_timeplayed_timer() {
 		//spell:words secondinterval
-		clearInterval(window.secondinterval)
+		if(window.secondinterval!==void 0) {
+			clearInterval(window.secondinterval)
+		}
 		let rate=66/(2110-110)
 		let time_base=performance.now()
 		window.secondinterval=setInterval(function() {

@@ -22,7 +22,7 @@ export class AsyncNodeRoot {
 			}
 		})
 	}
-	append_raw(timeout_id: number,is_timeout_id: boolean) {
+	append_raw(timeout_id: ReturnType<typeof setInterval>|ReturnType<typeof setTimeout>,is_timeout_id: boolean) {
 		this.append_child(new TimeoutIdNode(timeout_id,is_timeout_id))
 	}
 	append_child(record: BaseNode): void {

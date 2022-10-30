@@ -6,6 +6,7 @@ import {DebugAPI} from "./DebugAPI"
 import {GenericDataEvent} from "../vm/GenericDataEvent"
 import {GlobalStateKey} from "../vm/GlobalStateKey"
 import {MulCompression} from "../vm/MulCompression"
+import {l_log_if} from "../vm/l_log_if"
 
 export {}
 
@@ -17,6 +18,11 @@ export interface SpecType {
 }
 
 declare global {
+
+	export interface Window {
+		g_log_if: typeof l_log_if
+	}
+
 	export interface Window {
 		MulCompression: typeof MulCompression
 	}
@@ -67,10 +73,11 @@ declare global {
 			}
 		}
 		_SM_Data: any
+		constelOff():void
 		on_on_timers_moved_first: boolean
 		lightreset(): void
 		specialclick(that: any): void
-		secondinterval?: number
+		secondinterval?: ReturnType<typeof setInterval>
 		atomsaccu: number
 		calcPres(): number
 		g_auto_buy: AutoBuy
