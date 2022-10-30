@@ -30,6 +30,7 @@ import {StackVMBox} from "../../../box/StackVMBox.js"
 import {TemporaryBox} from "../../../box/temporary_box/TemporaryBox.js"
 import {temporary_box_StackVM} from "../../../box/temporary_box/temporary_box_StackVM.js"
 import {Cast} from "../../../vm/instruction/Cast.js"
+import {Breakpoint} from "../../../vm/instruction/debug/Breakpoint.js"
 import {Call} from "../../../vm/instruction/general/Call.js"
 import {Construct} from "../../../vm/instruction/general/Construct.js"
 import {Get} from "../../../vm/instruction/general/Get.js"
@@ -42,6 +43,7 @@ import {Dup} from "../../../vm/instruction/stack/Dup.js"
 import {Push} from "../../../vm/instruction/stack/Push.js"
 import {Halt} from "../../../vm/instruction/turing/Halt.js"
 import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
+import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 
 // eslint-disable no-undef,no-lone-blocks,no-eval
 
@@ -205,8 +207,7 @@ import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 			this.value=value
 		}
 	}
-	/** @implements {StackVMBox} */
-	class StackVMBoxImpl {
+	class StackVMBoxImpl implements StackVMBox {
 		type: "custom_box"
 		box_type: "StackVM"
 		value: StackVM
@@ -242,7 +243,7 @@ import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 	}
 	class NewableFunctionBoxImpl {
 		value: NewableInstancePack<{}>
-		class_value: new(...a: Box[])=>{}
+		class_value: new (...a: Box[]) => {}
 		constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
 			this.value=factory_value
 			this.class_value=class_value
@@ -251,7 +252,7 @@ import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 			console.log('get','newable function',this.value,key)
 		}
 		factory(...args: Box[]) {
-			return this.value(this.class_value, args)
+			return this.value(this.class_value,args)
 		}
 	}
 	class InstructionCallImpl {
@@ -663,11 +664,11 @@ import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 				case 'constructor_box': {
 					switch(value_box.instance_type) {
 						case 'CSSStyleSheet':
-							if(typeof key !='string')throw new Error("Bad")
+							if(typeof key!='string') throw new Error("Bad")
 							new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key)
 							break
 						case null: {
-							new NewableFunctionBoxImpl(value_box.value, value_box.class_value)
+							new NewableFunctionBoxImpl(value_box.value,value_box.class_value)
 						} break
 					}
 				} break
@@ -726,19 +727,15 @@ import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 		}
 	}
 	class InstructionBreakpointImpl {
-		/** @type {'breakpoint'} */
 		type: 'breakpoint'='breakpoint'
-		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").debug.Breakpoint} _i */
-		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").debug.Breakpoint) {
+		run(vm: StackVM,_i: Breakpoint) {
 			console.log(vm.stack)
 			trigger_debug_breakpoint()
 		}
 	}
 	class InstructionPushVMObjImpl {
-		/** @type {"vm_push_self"} */
 		type: "vm_push_self"="vm_push_self"
-		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.PushSelf} _i */
-		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").vm.PushSelf) {
+		run(vm: StackVM,_i: VMPushSelf) {
 			vm.stack.push(new StackVMBoxImpl(vm))
 		}
 	}
@@ -746,7 +743,7 @@ import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 		/** @type {'push_global_object'} */
 		type: 'push_global_object'='push_global_object'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").push.GlobalObject} _i */
-		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").push.GlobalObject) {
+		run(vm: StackVM,_i: PushWindowObject) {
 			vm.stack.push(new WindowBoxImpl(window))
 		}
 	}
@@ -866,7 +863,31 @@ import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 		run(_vm: StackVM,_i: import("types/vm/instruction/mod.js").vm.BlockTrace) {
 		}
 	}
-	/** @type {InstructionList} */
+	type InstructionList=[
+		['append',typeof InstructionAppendImpl],
+		['breakpoint',typeof InstructionBreakpointImpl],
+		['call',typeof InstructionCallImpl],
+		['cast',typeof InstructionCastImpl],
+		['construct',typeof InstructionConstructImpl],
+		['drop',typeof InstructionDropImpl],
+		['dup',typeof InstructionDupImpl],
+		['get',typeof InstructionGetImpl],
+		['halt',typeof InstructionHaltImpl],
+		['je',typeof InstructionJeImpl],
+		['jmp',typeof InstructionJmpImpl],
+		['modify_operand',typeof InstructionModifyOpImpl],
+		['nop',typeof InstructionNopImpl],
+		['peek',typeof InstructionPeekImpl],
+		['push_global_object',typeof InstructionPushGlobalObjectImpl],
+		['push',typeof InstructionPushImpl],
+		['return',typeof InstructionReturnImpl],
+		['vm_block_trace',typeof InstructionBlockTraceImpl],
+		['vm_call',typeof InstructionVMCallImpl],
+		['vm_push_args',typeof InstructionPushArgsImpl],
+		['vm_push_ip',typeof InstructionVMPushIPImpl],
+		['vm_push_self',typeof InstructionPushVMObjImpl],
+		['vm_return',typeof InstructionVMReturnImpl],
+	]
 	const instruction_descriptor_arr: InstructionList=[
 		['append',InstructionAppendImpl],
 		['breakpoint',InstructionBreakpointImpl],
@@ -930,6 +951,15 @@ import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 			this.frame_size=2
 			this.flags=new VMFlags
 			this.instruction_map_obj=this.create_instruction_map(instruction_descriptor_arr)
+		}
+		push(value: Box) {
+			this.stack.push(value)
+		}
+		pop() {
+			return this.stack.pop()
+		}
+		peek_at(distance: number) {
+			return this.stack.at(-1-distance)
 		}
 		/** @arg {number} operand_number_of_arguments */
 		pop_arg_count(operand_number_of_arguments: number) {
