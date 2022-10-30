@@ -63,7 +63,6 @@ declare global {
 		}
 		_SM_Data: any
 		on_on_timers_moved_first: boolean
-		da: any[]
 		lightreset(): void
 		specialclick(that: any): void
 		secondinterval?: number
