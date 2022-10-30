@@ -29,6 +29,8 @@ import {NewableInstancePack} from "../../../box/NewableInstancePack.js"
 import {StackVMBox} from "../../../box/StackVMBox.js"
 import {TemporaryBox} from "../../../box/temporary_box/TemporaryBox.js"
 import {temporary_box_StackVM} from "../../../box/temporary_box/temporary_box_StackVM.js"
+import {WindowBox} from "../../../box/WindowBox.js"
+import {Append} from "../../../vm/instruction/Append.js"
 import {Cast} from "../../../vm/instruction/Cast.js"
 import {Breakpoint} from "../../../vm/instruction/debug/Breakpoint.js"
 import {Call} from "../../../vm/instruction/general/Call.js"
@@ -39,11 +41,18 @@ import {InstructionType} from "../../../vm/instruction/InstructionType.js"
 import {Je} from "../../../vm/instruction/jump/Je.js"
 import {Jump} from "../../../vm/instruction/jump/Jump.js"
 import {ModifyOperand} from "../../../vm/instruction/ModifyOperand.js"
+import {Nop} from "../../../vm/instruction/Nop.js"
+import {PushWindowObject} from "../../../vm/instruction/push/WindowObject.js"
+import {Drop} from "../../../vm/instruction/stack/Drop.js"
 import {Dup} from "../../../vm/instruction/stack/Dup.js"
 import {Push} from "../../../vm/instruction/stack/Push.js"
 import {Halt} from "../../../vm/instruction/turing/Halt.js"
+import {VMBlockTrace} from "../../../vm/instruction/vm/VMBlockTrace.js"
 import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
 import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
+import {into_typed} from "../version_00_20/into_typed.js"
+import {safe_get} from "../version_00_20/safe_get.js"
+import {StackVMFlags} from "../../../vm/StackVMFlags.js"
 
 // eslint-disable no-undef,no-lone-blocks,no-eval
 
@@ -210,23 +219,49 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 	class StackVMBoxImpl implements StackVMBox {
 		type: "custom_box"
 		box_type: "StackVM"
+		m_verify_name: "StackVMBox"
 		value: StackVM
 		constructor(value: StackVM) {
 			this.type='custom_box'
 			this.box_type='StackVM'
+			this.m_verify_name='StackVMBox'
 			this.value=value
 		}
+		verify_name(name: "StackVMBox") {
+			return this.m_verify_name==='StackVMBox'&&name==='StackVMBox'
+		}
+		as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
+			let typeof_=typeof this.value
+			switch(typeof_) {
+				case 'object': return [input_typeof===typeof_,this]
+				case 'function': return [input_typeof===typeof_,this]
+			}
+			return [false,null]
+		}
 	}
-	class WindowBoxImpl {
+	class WindowBoxImpl implements WindowBox {
 		type: "object_box"
 		extension: null
 		inner_type: "Window"
+		m_verify_name: "WindowBox"
 		value: Window
 		constructor(value: Window) {
 			this.type='object_box'
 			this.extension=null
 			this.inner_type='Window'
+			this.m_verify_name='WindowBox'
 			this.value=value
+		}
+		verify_name(name: "WindowBox") {
+			return this.m_verify_name==='WindowBox'&&name==='WindowBox'
+		}
+		as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
+			let typeof_=typeof this.value
+			switch(typeof_) {
+				case 'object': return [input_typeof===typeof_,this]
+				case 'function': return [input_typeof===typeof_,this]
+			}
+			return [false,null]
 		}
 	}
 	class ObjectBoxImpl {
@@ -766,13 +801,9 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 			if(this.debug) console.log('VM: peek',ins,'value',at,'index',offset,vm.stack.length-offset)
 		}
 	}
-	/** @typedef {import("types/vm/instruction/mod.js").InstructionImplObj<"append", import("types/vm/instruction/mod.js").IAppendImpl, import("types/vm/instruction/Append.js").Append>} IInstructionAppendImplIns */
-	/** @implements {IInstructionAppendImplIns} */
 	class InstructionAppendImpl {
-		/** @type {"append"} */
 		type: "append"="append"
-		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").Append} _i */
-		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").Append) {
+		run(vm: StackVM,_i: Append) {
 			if(vm.stack.length<=0) {
 				throw new Error('stack underflow')
 			}
@@ -788,34 +819,30 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 			}
 			if(append_obj===null) throw 1
 			if(target===null) throw 1
+			if(append_obj.type==='instance_box'&&append_obj.m_verify_name==='InstructionTypeBox') throw 1
 			if(!(append_obj.type==='instance_box'&&append_obj.instance_type==='Node')) throw 1
+			if(target.type==='instance_box'&&target.m_verify_name==='InstructionTypeBox') throw 1
 			if(!(target.type==='instance_box'&&target.instance_type==='Node')) throw 1
 			if(append_obj.from!=='create') console.warn('append_obj not user created',append_obj)
 			target.value.appendChild(append_obj.value)
 		}
 	}
 	class InstructionPushArgsImpl {
-		/** @type {'vm_push_args'} */
 		type: 'vm_push_args'='vm_push_args'
-		/** @arg {StackVM} _vm @arg {never} _i */
 		run(_vm: StackVM,_i: never) {
 			throw new Error("Instruction not supported")
 		}
 	}
 	class InstructionDropImpl {
-		/** @type {'drop'} */
 		type: 'drop'='drop'
-		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").stack.Drop} _i */
-		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").stack.Drop) {
+		run(vm: StackVM,_i: Drop) {
 			vm.stack.pop()
 		}
 	}
 	class InstructionVMReturnImpl {
-		/** @type {'vm_return'} */
 		type: 'vm_return'='vm_return'
 		debug=false
-		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Return} _i */
-		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").vm.Return) {
+		run(vm: StackVM,_i: Return) {
 			let start_stack=vm.stack.slice()
 			if(vm.base_ptr===null) {
 				vm.running=false
@@ -835,10 +862,8 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 		}
 	}
 	class InstructionVMCallImpl {
-		/** @type {'vm_call'} */
 		type: 'vm_call'='vm_call'
-		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Call} ins */
-		run(vm: StackVM,ins: import("types/vm/instruction/mod.js").vm.Call) {
+		run(vm: StackVM,ins: Call) {
 			let prev_base=vm.base_ptr
 			vm.stack.push(vm.base_ptr,vm.instruction_pointer)
 			vm.base_ptr=vm.stack.length
@@ -846,21 +871,13 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 			console.log('vm vm_call',ins[1],'stk',vm.base_ptr,prev_base,vm.stack.slice())
 		}
 	}
-	class VMFlags {
-		equal=false
-	}
 	class InstructionNopImpl {
-		/** @type {'nop'} */
 		type: 'nop'='nop'
-		/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").Nop} _a */
-		run(_vm: StackVM,_a: import("types/vm/instruction/mod.js").Nop) {
-		}
+		run(_vm: StackVM,_a: Nop) {}
 	}
 	class InstructionBlockTraceImpl {
-		/** @type {'vm_block_trace'} */
 		type: 'vm_block_trace'='vm_block_trace'
-		/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").vm.BlockTrace} _i */
-		run(_vm: StackVM,_i: import("types/vm/instruction/mod.js").vm.BlockTrace) {
+		run(_vm: StackVM,_i: VMBlockTrace) {
 		}
 	}
 	type InstructionList=[
@@ -914,13 +931,9 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 		['vm_return',InstructionVMReturnImpl],
 	]
 	class StackVM {
-		/** @type {Box} */
 		return_value: Box
-		/** @type {number|null} */
 		jump_instruction_pointer: number|null
-		/** @type {number|null} */
 		base_ptr: number|null
-		/** @type {Box[]} */
 		stack: Box[]
 		instructions: InstructionType[]
 		instruction_pointer: number
@@ -928,7 +941,6 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 		flags: any
 		frame_size: any
 		instruction_map_obj: {}
-		/** @arg {InstructionList} instruction_desc_arr */
 		create_instruction_map(instruction_desc_arr: InstructionList) {
 			let obj={}
 			for(let i=0;i<instruction_desc_arr.length;i++) {
@@ -949,7 +961,7 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 			this.jump_instruction_pointer=null
 			this.base_ptr=null
 			this.frame_size=2
-			this.flags=new VMFlags
+			this.flags=new StackVMFlags
 			this.instruction_map_obj=this.create_instruction_map(instruction_descriptor_arr)
 		}
 		push(value: Box) {
@@ -984,6 +996,18 @@ import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
 		/** @arg {number} value */
 		is_in_instructions(value: number) {
 			return value>=0&&value<this.instructions.length
+		}
+		execute_backup_vm_push_ip() {
+			let this_with_push: {push: StackVM['push']}=this
+			let fn_ptr=safe_get(this_with_push,"push")
+			if(!fn_ptr)
+				throw new Error("push_pc requires a stack")
+			let this_as_StackVM=into_typed<StackVM>(this)
+			if('instruction_pointer' in this_as_StackVM) {
+				fn_ptr.call(this,this_as_StackVM.instruction_pointer)
+			} else {
+				throw new Error("Property missing or invalid: instruction_pointer")
+			}
 		}
 		halt() {
 			this.running=false

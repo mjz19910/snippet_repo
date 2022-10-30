@@ -5,7 +5,7 @@ import {InstructionCastImpl} from "../modules/rebuild_universe_automation/versio
 import {InstructionConstructImpl} from "../modules/rebuild_universe_automation/version_00_20/InstructionConstructImpl"
 import {into_typed} from "../modules/rebuild_universe_automation/version_00_20/into_typed"
 import {safe_get} from "../modules/rebuild_universe_automation/version_00_20/safe_get"
-import {StackVMFlags} from "../modules/rebuild_universe_automation/version_00_20/StackVMFlags"
+import {StackVMFlags} from "./StackVMFlags"
 import {TempBox} from "../modules/rebuild_universe_automation/version_00_20/TempBox"
 import {throw_invalid_error} from "../modules/rebuild_universe_automation/version_00_20/throw_invalid_error"
 import {InstructionType} from "./instruction/InstructionType"
