@@ -1,4 +1,9 @@
 export class PromiseTimeoutTarget {
+	m_promise_accept: ((arg0: undefined) => void)|null
+	m_promise_reject: ((arg0: any) => void)|null
+	m_promise: Promise<any>|null
+	m_callback: ((value?: undefined) => void)|null
+	m_active: boolean
 	constructor() {
 		this.m_promise_accept = null;
 		this.m_promise_reject = null;
@@ -13,28 +18,18 @@ export class PromiseTimeoutTarget {
 		this.m_active = true;
 		return this.m_promise;
 	}
-	/**
-	 * @param {any} accept
-	 * @param {any} reject
-	 */
-	promise_executor(accept, reject) {
+	promise_executor(accept: (arg0: any) => void, reject: (arg0: any) => void) {
 		this.m_promise_accept = accept;
 		this.m_promise_reject = reject;
 		this.m_callback = this.on_result.bind(this);
 	}
-	/**
-	 * @param {any} value
-	 */
 	on_result(value = void 0) {
 		if(!this.m_promise_accept)
 			throw new Error("Missing promise accept handler");
 		this.m_promise_accept(value);
 		this.reset();
 	}
-	/**
-	 * @param {Error} error
-	 */
-	on_error(error) {
+	on_error(error: Error) {
 		if(!this.m_promise_reject)
 			throw new Error("Missing promise accept handler");
 		this.m_promise_reject(error);
