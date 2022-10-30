@@ -1,8 +1,9 @@
 import {Box} from "../../../box/Box"
+import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox"
+import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox"
 import {NoArgsType} from "../../../box/NoArgsType"
-import {CSSStyleSheetBox,CSSStyleSheetConstructorBox} from "../version_00_30/support"
 
-class CSSStyleSheetConstructorBoxImplSupport {
+export class CSSStyleSheetConstructorBoxImplSupport {
 	type: "constructor_box"="constructor_box";
 	from: "javascript"="javascript";
 	instance_type: "CSSStyleSheet"="CSSStyleSheet";
@@ -27,12 +28,15 @@ class CSSStyleSheetConstructorBoxImplSupport {
 		let args_state: CSSStyleSheetConstructorBox['args_type']=initial_state
 		for(let i=0;i<arr.length;i++) {
 			let val=arr[i]
-			if(typeof val!='object') continue
-			if(val===null) continue
+			if(typeof val!='object')
+				continue
+			if(val===null)
+				continue
 			if(val.value instanceof Document) {
 				throw new Error("Unexpected document")
 			}
-			if(val.type!='shape_box') continue
+			if(val.type!='shape_box')
+				continue
 			args_state={
 				value: [val.value],
 				state: 1
@@ -42,20 +46,3 @@ class CSSStyleSheetConstructorBoxImplSupport {
 		return new CSSStyleSheetBox(obj)
 	}
 }
-
-export type CreateDesc=
-	[1|2,'create','div','state_log',{}]|
-	[2,'create','div','history',string]|
-	[2,'create','div',"timeout_element",string]|
-	[2,'create','div',"hours_played",string]|
-	[2,'create','div',"ratio",string]|
-	[2,'create','div',"ratio_change",string]
-
-export type NewDesc=[
-	v:0,
-	type:'new',
-	a:CSSStyleSheetConstructorBoxImplSupport,
-	b:[],
-	c:(obj: CSSStyleSheet,str: string) => Promise<CSSStyleSheet>,
-	d:string[]
-]

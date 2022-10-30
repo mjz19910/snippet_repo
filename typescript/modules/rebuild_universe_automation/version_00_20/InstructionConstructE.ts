@@ -1,8 +1,8 @@
-import {StackVM} from "../../../vm/StackVM"
+import {Construct} from "../../../vm/instruction/general/Construct"
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox";
+import {StackVM} from "./StackVM"
 import {throw_invalid_error} from "./throw_invalid_error";
 
-/**@typedef {import("types/vm/instruction/general/Construct.js").Construct} InstructionConstructT */
 export class InstructionConstructE {
 	static is_array_empty<T>(arr: T[]): arr is [] {
 		if(arr.length === 0)
@@ -17,7 +17,7 @@ export class InstructionConstructE {
 		}
 		return null;
 	}
-	static execute_instruction(vm: StackVM, instruction: InstructionConstruct) {
+	static execute_instruction(vm: StackVM, instruction: Construct) {
 		let number_of_arguments = instruction[1];
 		if(typeof number_of_arguments != 'number')
 			throw throw_invalid_error();
