@@ -9,7 +9,7 @@ import {Je} from "./jump/Je"
 import {Jump} from "./jump/Jump"
 import {ModifyOperand} from "./ModifyOperand"
 import {Nop} from "./Nop"
-import {PushWindowObject} from "./PushWindowObject"
+import {PushWindowObject} from "./push/WindowObject"
 import {Drop} from "./stack/Drop"
 import {Dup} from "./stack/Dup"
 import {Peek} from "./stack/Peek"
@@ -17,10 +17,10 @@ import {Push} from "./stack/Push"
 import {Halt} from "./turing/Halt"
 import {VMBlockTrace} from "./vm/VMBlockTrace"
 import {VMCall} from "./vm/VMCall"
+import {VMPushArgs} from "./vm/VMPushArgs"
 import {VMPushIP} from "./vm/VMPushIP"
 import {VMPushSelf} from "./vm/VMPushSelf"
 import {VMReturn} from "./vm/VMReturn"
-
 
 export type InstructionMap={
 	'append': Append
@@ -42,6 +42,7 @@ export type InstructionMap={
 	'return': Return
 	'vm_block_trace': VMBlockTrace
 	'vm_call': VMCall
+	'vm_push_args': VMPushArgs
 	'vm_push_ip': VMPushIP
 	'vm_push_self': VMPushSelf
 	'vm_return': VMReturn

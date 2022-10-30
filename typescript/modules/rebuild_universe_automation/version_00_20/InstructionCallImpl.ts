@@ -43,19 +43,16 @@ export class InstructionCallImpl {
 		if(a.type==='document_box')
 			throw new Error("document_box not supported")
 		let b=a.as_type('function')
-		if(!b[0])
+		if(b===null)
 			throw new Error("Type mismatch")
-		let c=b[1]
-		if(c===null)
-			throw new Error("Type mismatch")
-		if(c.type==='function_box') {
-			if(c.return_type===null) {
-				let ret=c.value.apply(target_this,arg_arr)
+		if(b.type==='function_box') {
+			if(b.return_type===null) {
+				let ret=b.value.apply(target_this,arg_arr)
 				vm.push(ret)
 			} else {
-				c.wrap_call(target_this,...arg_arr)
+				b.wrap_call(target_this,...arg_arr)
 			}
-		} else if(c.type=='constructor_box') {
+		} else if(b.type=='constructor_box') {
 			throw new Error("Unexpected constructor")
 		} else {
 			throw new Error("Unreachable (type of value is never)")

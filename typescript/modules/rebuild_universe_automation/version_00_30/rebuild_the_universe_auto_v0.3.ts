@@ -62,6 +62,9 @@ import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructor
 import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.js"
 import {NoArgsType} from "../../../box/NoArgsType.js"
 import {VoidBox} from "../../../box/VoidBox.js"
+import {DomInstructionType} from "../../../vm/dom_instruction/DomInstructionType.js"
+import {DomExecDescription,DomInstructionStack} from "./typedef.js"
+import {NodeBox} from "../../../box/NodeBox.js"
 
 // eslint-disable no-undef,no-lone-blocks,no-eval
 
@@ -166,13 +169,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		verify_name(name: "CSSStyleSheetConstructorBox"): boolean {
 			return this.m_verify_name==='CSSStyleSheetConstructorBox'&&name==='CSSStyleSheetConstructorBox'
 		}
-		as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
-			let typeof_=typeof this.value
-			switch(typeof_) {
-				case 'object': return [input_typeof===typeof_,this]
-				case 'function': return [input_typeof===typeof_,this]
-			}
-			return [false,null]
+		as_type(input_typeof: string): this|null {
+			return typeof this.value===input_typeof? this:null
 		}
 		on_get(_vm: StackVM,key: string) {
 			console.log('get','CSSStyleSheetConstructorBox',key)
@@ -195,13 +193,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		verify_name(name: "CSSStyleSheetBox"): boolean {
 			return this.m_verify_name==='CSSStyleSheetBox'&&name==='CSSStyleSheetBox'
 		}
-		as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
-			let typeof_=typeof this.value
-			switch(typeof_) {
-				case 'object': return [input_typeof===typeof_,this]
-				case 'function': return [input_typeof===typeof_,this]
-			}
-			return [false,null]
+		as_type(input_typeof: string): this|null {
+			return typeof this.value===input_typeof? this:null
 		}
 	}
 	class PromiseBoxImpl {
@@ -215,9 +208,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 			this.inner_type='Promise<Box>'
 			this.value=value
 		}
-		as_type(to_match: 'object'|'function') {
-			if(to_match==='object') return this
-			return null
+		as_type(input_typeof: string): [true,this]|[false,null] {
+			return typeof this.value===input_typeof? [true,this]:[false,null]
 		}
 	}
 	class StackVMBoxImpl implements StackVMBox {
@@ -234,13 +226,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		verify_name(name: "StackVMBox") {
 			return this.m_verify_name==='StackVMBox'&&name==='StackVMBox'
 		}
-		as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
-			let typeof_=typeof this.value
-			switch(typeof_) {
-				case 'object': return [input_typeof===typeof_,this]
-				case 'function': return [input_typeof===typeof_,this]
-			}
-			return [false,null]
+		as_type(input_typeof: string): this|null {
+			return typeof this.value===input_typeof? this:null
 		}
 	}
 	class WindowBoxImpl implements WindowBox {
@@ -259,13 +246,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		verify_name(name: "WindowBox") {
 			return this.m_verify_name==='WindowBox'&&name==='WindowBox'
 		}
-		as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
-			let typeof_=typeof this.value
-			switch(typeof_) {
-				case 'object': return [input_typeof===typeof_,this]
-				case 'function': return [input_typeof===typeof_,this]
-			}
-			return [false,null]
+		as_type(input_typeof: string): this|null {
+			return typeof this.value===input_typeof? this:null
 		}
 	}
 	class ObjectBoxImpl implements ObjectBox {
@@ -284,13 +266,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		verify_name(name: "ObjectBox"): boolean {
 			return this.m_verify_name==='ObjectBox'&&name==='ObjectBox'
 		}
-		as_type(input_typeof: "object"|"function"): [boolean,this|null] {
-			let typeof_=typeof this.value
-			switch(typeof_) {
-				case 'object': return [input_typeof===typeof_,this]
-				case 'function': return [input_typeof===typeof_,this]
-			}
-			return [false,null]
+		as_type(input_typeof: string): this|null {
+			return typeof this.value===input_typeof? this:null
 		}
 	}
 	class NewableFunctionBoxImpl {
@@ -422,11 +399,7 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		}
 		handle_as_obj(vm: StackVM,fn_obj: Exclude<Box,Primitives|null>,target_this: Exclude<Box,Primitives>,arg_arr: Box[]) {
 			if(fn_obj.type==='temporary_box') throw 1
-			if(!fn_obj.as_type) {
-				console.log('!fn_obj.as_type',fn_obj)
-				throw new Error("Invalid")
-			}
-			let raw_fn=fn_obj.as_type('function')[1]
+			let raw_fn=fn_obj.as_type('function')
 			if(!raw_fn) {
 				throw new Error("Unreachable (type of value is not 'function')")
 			} else if(raw_fn.type==='function_box') {
@@ -1166,20 +1139,22 @@ import {VoidBox} from "../../../box/VoidBox.js"
 					if(num_to_parse===0) break
 					throw new Error("Assertion failed: cast operand `"+m_arg+"` is invalid")
 				}
-				case 'drop':/*opcode parse*/
+				case 'drop':
 				case 'dup':
 				case 'get':
 				case 'return':
 				case 'halt':
 				case 'vm_push_args':
 				case 'vm_push_self':
-				case 'push_global_object':
+				case 'push_window_object':
 				case 'breakpoint':
-				case 'vm_return':
-					{
-						num_to_parse--
-						ret=[instruction[0]]
-					} break
+				case 'vm_return': {
+					num_to_parse--
+					let v_2=instruction[0]
+					let v_1:InstructionType[0]=v_2
+					let val:InstructionType=[v_1]
+					ret=val
+				} break
 				default: throw new Error("Verify: Unexpected opcode, opcode was `"+instruction[0]+"`")
 			}
 			if(num_to_parse>0) throw new Error("Typechecking failure, data left when processing raw instruction stream")
@@ -2130,22 +2105,20 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		debug_id_syms.push(new WeakRef({sym}))
 		return sym
 	}
-	class NodeBoxImpl {
-		/** @type {"instance_box"} */
-		type: "instance_box"="instance_box"
-		/** @type {'Node'} */
-		instance_type: 'Node'='Node'
-		/** @type {"get"|"create"} */
-		from: "get"|"create"="create"
+	class NodeBoxImpl implements NodeBox {
+		readonly type="instance_box"
+		readonly m_verify_name='NodeBox'
+		readonly instance_type='Node'
+		readonly from="create"
 		value: Node
-		/** @arg {"get"|"create"|string} from @arg {Node} value */
-		constructor(from: "get"|"create"|string,value: Node) {
+		constructor(value: Node) {
 			this.value=value
-			if(from==='get') {
-				this.from=from
-			} else if(from!=='create') {
-				throw new Error("Invalid constructor arguments for NodeBoxImpl")
-			}
+		}
+		verify_name(name: "NodeBox"): boolean {
+			return this.m_verify_name==='NodeBox'&&name==='NodeBox'
+		}
+		as_type(input_typeof: string): [true,this]|[false,null] {
+			return typeof this.value===input_typeof? [true,this]:[false,null]
 		}
 	}
 	function int_parser(value: string): number {
@@ -2302,9 +2275,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 	class DocumentBoxImpl {
 		type: "document_box"="document_box"
 		value: Document
-		as_type(v: "object"|"function") {
-			if(typeof this.value===v) return this
-			return null
+		as_type(input_typeof: string): [true,this]|[false,null] {
+			return typeof this.value===input_typeof? [true,this]:[false,null]
 		}
 		constructor(value: Document) {
 			this.value=value
@@ -2323,9 +2295,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		wrap_call(): Box {
 			throw 1
 		}
-		/** @returns {this|null} */
-		as_type(): this|null {
-			throw 1
+		as_type(input_typeof: string): [true,this]|[false,null] {
+			return typeof this.value===input_typeof? [true,this]:[false,null]
 		}
 		/** @arg {(...a: Box[])=>Promise<Box>} value */
 		constructor(value: (...a: Box[]) => Promise<Box>) {
@@ -2341,13 +2312,14 @@ import {VoidBox} from "../../../box/VoidBox.js"
 		constructor() {
 			this.m_verify_name='VoidBox'
 		}
-		as_type(): [false,null] {
-			return [false,null]
+		as_type(input_typeof: string): [true,this]|[false,null] {
+			return typeof this.value===input_typeof? [true,this]:[false,null]
 		}
 		verify_name(name: "VoidBox"): boolean {
 			return this.m_verify_name==='VoidBox'&&name==='VoidBox'
 		}
 	}
+	type WithId={id: string}
 	class AutoBuy {
 		debug_arr: any
 		root_node: AsyncNodeRoot
@@ -2746,9 +2718,7 @@ import {VoidBox} from "../../../box/VoidBox.js"
 				return res
 			}
 		}
-		/** @arg {DomExecDescription[]} raw_arr */
 		build_dom_from_desc(raw_arr: DomExecDescription[],trg_map=new Map) {
-			/** @type {DomExecDescription[]} */
 			let stack: DomExecDescription[]=[]
 			let map=trg_map
 			for(let i=0;i<raw_arr.length;i++) {
@@ -2763,8 +2733,8 @@ import {VoidBox} from "../../../box/VoidBox.js"
 						const [depth,,element_type,name,content]=cur_item
 						let cur_element=document.createElement(element_type)
 						if(typeof content=='string') cur_element.innerText=content
-						else if(typeof content=='object'&&content.id) {
-							let dom_id=content.id
+						else if(typeof content=='object'&&(content as WithId).id) {
+							let dom_id=(content as WithId).id
 							if(typeof dom_id==='string') {
 								cur_element.id=dom_id
 							}
@@ -2794,33 +2764,28 @@ import {VoidBox} from "../../../box/VoidBox.js"
 				if(this.debug_arr.includes('build_dom_from_desc')) console.log('es',stack.at(-1))
 			}
 		}
-		push_instruction_group(state,...args) {
-			let [stack_ptr,instruction_val,op_1,op_2]=args
-			if(!state.ins_arr_map[stack_ptr]) state.ins_arr_map[stack_ptr]=[]
-			state.ins_arr_map[stack_ptr].push([stack_ptr,instruction_val,op_1,op_2])
+		push_instruction_group(ins_arr_map: DomInstructionStack,stack_ptr: number,instruction: InstructionType) {
+			if(!ins_arr_map[stack_ptr]) ins_arr_map[stack_ptr]=[]
+			let stack_loc=ins_arr_map[stack_ptr]
+			if(stack_loc!==null) stack_loc.push(instruction)
 		}
-		/** @arg {DomInstructionType[]} input_instructions @returns {InstructionType[]} */
-		parse_dom_stack(input_instructions: DomInstructionType[]): InstructionType[] {
-			/** @type {State_1} */
-			let state: State_1={}
-			/** @type {DomInstructionType[][]} */
-			state.depth_ins_map=[]
-			/** @type {DomInstructionStack} */
-			state.ins_arr_map=[]
-			/** @type {number[]} */
-			state.depths=[]
+		parse_dom_stack(input_instructions: any[]): InstructionType[] {
+			let state: {}={}
+			let depth_ins_map: DomInstructionType[][]=[]
+			let ins_arr_map: DomInstructionStack=[]
+			let depths: number[]=[]
 			for(let i=0;i<input_instructions.length;i++) {
 				let cur=input_instructions[i]
 				const [cur_depth,...cur_instruction]=cur
-				const prev_depth=state.depths.at(-1)
+				const prev_depth=depths.at(-1)
 				if(!prev_depth) {
 					continue
 				}
 				if(prev_depth!=cur_depth) {
 					console.log('vm_dom_1',prev_depth,'->',cur_depth)
 					pd: if(cur_depth>prev_depth) {
-						let instructions_at_1=state.ins_arr_map[prev_depth]
-						let ins_dep_at_1=state.depth_ins_map[prev_depth]
+						let instructions_at_1=ins_arr_map[prev_depth]
+						let ins_dep_at_1=depth_ins_map[prev_depth]
 						if(!instructions_at_1) break pd
 						if(!ins_dep_at_1) break pd
 						let ins_item_1=instructions_at_1[0]
@@ -2836,11 +2801,11 @@ import {VoidBox} from "../../../box/VoidBox.js"
 						if(target_depth<0) {
 							break pd
 						}
-						state.depth_ins_map[target_depth]??=[]
-						if(state.depth_ins_map[target_depth].length>0) {
-							state.depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',null])
+						depth_ins_map[target_depth]??=[]
+						if(depth_ins_map[target_depth].length>0) {
+							depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',null])
 							this.push_instruction_group(
-								state,
+								ins_arr_map,
 								target_depth,
 								'vm_block_trace',
 								'begin',
@@ -2848,14 +2813,14 @@ import {VoidBox} from "../../../box/VoidBox.js"
 							)
 						}
 						if(ins_item_1===null) {} else {
-							state.depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',[ins_item_1]])
-							this.push_instruction_group(state,target_depth,'vm_block_trace','begin',[ins_item_1])
+							depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',[ins_item_1] as any])
+							this.push_instruction_group(ins_arr_map,[target_depth,'vm_block_trace','begin',[ins_item_1]])
 						}
 					} else {
 						let ins_item=null
 						let ins_dep_item_2=null
-						let instructions_at_2=state.ins_arr_map[prev_depth]
-						let ins_dep_at_2=state.depth_ins_map[prev_depth]
+						let instructions_at_2=ins_arr_map[prev_depth]
+						let ins_dep_at_2=depth_ins_map[prev_depth]
 						if(!instructions_at_2) break pd
 						ins_item=instructions_at_2[0]
 						ins_dep_item_2=ins_dep_at_2[0]
@@ -2872,28 +2837,27 @@ import {VoidBox} from "../../../box/VoidBox.js"
 						if(target_depth<0) {
 							break pd
 						}
-						state.depth_ins_map[target_depth]??=[]
-						if(state.depth_ins_map[target_depth].length>0) {
-							state.depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',null])
+						depth_ins_map[target_depth]??=[]
+						if(depth_ins_map[target_depth].length>0) {
+							depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',null])
 							this.push_instruction_group(state,target_depth,'vm_block_trace','begin',null)
 						}
-						state.depth_ins_map[target_depth].push([target_depth,'vm_block_trace','call',[ins_item]])
+						depth_ins_map[target_depth].push([target_depth,'vm_block_trace','call',[ins_item] as any])
 						this.push_instruction_group(state,target_depth,'vm_block_trace','call',[ins_item])
 					}
 				}
-				state.depth_ins_map[cur_depth]??=[]
-				state.depth_ins_map[cur_depth].push(cur)
-				let instructions_at=state.ins_arr_map[cur_depth]
+				depth_ins_map[cur_depth]??=[]
+				depth_ins_map[cur_depth].push(cur)
+				let instructions_at=ins_arr_map[cur_depth]
 				if(instructions_at) {
 					instructions_at.push([cur_depth,...cur_instruction])
 				} else {
-					state.ins_arr_map[cur_depth]=[[cur_depth,...cur_instruction]]
+					ins_arr_map[cur_depth]=[[cur_depth,...cur_instruction]]
 				}
-				state.depths.push(cur_depth)
+				depths.push(cur_depth)
 			}
 			/** @type {DomInstructionType[]} */
 			let flat_with_depths: DomInstructionType[]=[]
-			/** @type {DomInstructionStack[0]} */
 			let flat_stack: DomInstructionStack[0]=[]
 			/** @type {InstructionType[]} */
 			let instructions: InstructionType[]=[]

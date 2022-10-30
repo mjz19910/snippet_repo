@@ -1,5 +1,4 @@
-import {IAppendImpl,IBreakpointImpl,ICallImpl,ICastImpl,IConstructImpl,IDropImpl,IDupImpl,IGetImpl,IHaltImpl,IJeImpl,IJumpImpl,IModifyOPImpl,INopImpl,IPeekImpl,IPushWindowObjectImpl,IPushImpl,IReturnImpl,IVMBlockTraceImpl,IVMCallImpl,IVMPushArgsImpl,IVMPushIPImpl,IVMPushSelfImpl,IVMReturnImpl} from "./mod"
-
+import {IAppendImpl, IBreakpointImpl, ICallImpl, ICastImpl, IConstructImpl, IDropImpl, IDupImpl, IGetImpl, IHaltImpl, IJeImpl, IJumpImpl, IModifyOPImpl, INopImpl, IPeekImpl, IPushImpl, IPushWindowObjectImpl, IReturnImpl, IVMBlockTraceImpl, IVMCallImpl, IVMPushArgsImpl, IVMPushIPImpl, IVMPushSelfImpl, IVMReturnImpl} from "./InstructionImpl"
 
 export type InstructionImplMap={
 	'append': IAppendImpl

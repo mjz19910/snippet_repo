@@ -10,7 +10,4 @@ export class BaseVoidBox
 	verify_name(name: "BaseVoidBox") {
 		return this.m_verify_name==="BaseVoidBox"&&name==="BaseVoidBox"
 	}
-	as_type(_x: 'function'|'object'): [boolean,null] {
-		return [false,null]
-	}
 }

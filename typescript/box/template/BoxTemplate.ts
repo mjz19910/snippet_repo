@@ -11,12 +11,7 @@ export abstract class BoxTemplate<
 	abstract verify_name(name: string): boolean
 	abstract readonly m_verify_name: string
 	readonly value: V
-	as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
-		let typeof_=typeof this.value
-		switch(typeof_) {
-			case 'object': return [input_typeof===typeof_,this]
-			case 'function': return [input_typeof===typeof_,this]
-		}
-		return [false,null]
+	as_type(input_typeof: string): this|null {
+		return typeof this.value===input_typeof? this:null
 	}
 }
