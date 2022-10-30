@@ -240,7 +240,6 @@ import {
 		}
 	}
 	class NewableFunctionBoxImpl {
-		/** @arg {import("types/vm/NewableFactory").default<{}>} value */
 		constructor(value) {
 			this.value=value
 		}
