@@ -6,7 +6,7 @@ export class IntervalNode extends BaseNode {
 	m_target_fn: CallableFunction
 	m_timeout: number
 	id: ReturnType<typeof setInterval>|null
-	m_target: IntervalTarget|null
+	m_target: IntervalTargetFn|IntervalTarget|null
 	constructor(target_fn: CallableFunction,timeout=0) {
 		super()
 		this.m_target_fn=target_fn
