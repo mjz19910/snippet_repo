@@ -38,7 +38,6 @@ class CSSStyleSheetConstructorBoxImplSupport {
 				state: 1
 			}
 		}
-		/**@type {CSSStyleSheet} */
 		let obj: CSSStyleSheet=new this.value(...args_state.value)
 		return new CSSStyleSheetBox(obj)
 	}
