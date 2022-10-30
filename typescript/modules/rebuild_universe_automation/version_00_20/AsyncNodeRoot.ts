@@ -1,3 +1,4 @@
+import {BaseNode} from "../../../vm/BaseNode"
 import {IntervalIdNode} from "./IntervalIdNode";
 import {IntervalNode} from "./IntervalNode";
 import {IntervalTarget} from "./IntervalTarget";
@@ -6,17 +7,11 @@ import {TimeoutNode} from "./TimeoutNode";
 import {TimeoutTarget} from "./TimeoutTarget";
 
 export class AsyncNodeRoot {
+	children: BaseNode[]
 	constructor() {
-		/**
-		 * @type {BaseNode[]}
-		 */
 		this.children = [];
 	}
-	/**
-	 * @param {()=>void} target_fn
-	 * @param {number | undefined} timeout
-	 */
-	set(target_fn, timeout, repeat = false) {
+	set(target_fn:()=>void, timeout: number|undefined, repeat = false) {
 		let node;
 		if(repeat) {
 			node = new TimeoutNode(timeout);
@@ -26,24 +21,19 @@ export class AsyncNodeRoot {
 			node.start(new IntervalTarget(null, target_fn));
 		}
 	}
-	/**
-	 * @param {number} timeout_id
-	 */
-	append_raw(timeout_id, once = true) {
+	append_raw(timeout_id:number, once = true) {
 		if(once) {
 			this.append_child(new TimeoutIdNode(timeout_id));
 		} else {
 			this.append_child(new IntervalIdNode(timeout_id));
 		}
 	}
-	/**@arg {BaseNode} record */
-	append_child(record) {
+	append_child(record:BaseNode) {
 		record.remove();
 		record.set_parent(this);
 		this.children.push(record);
 	}
-	/**@arg {BaseNode} record */
-	remove_child(record) {
+	remove_child(record:BaseNode) {
 		let index = this.children.indexOf(record);
 		this.children.splice(index, 1);
 		record.set_parent(null);

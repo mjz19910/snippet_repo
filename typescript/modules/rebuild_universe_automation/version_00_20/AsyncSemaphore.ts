@@ -1,13 +1,14 @@
 import {AsyncTriggerImpl} from "./AsyncTriggerImpl";
 
 export class AsyncSemaphore {
+	notify_waiters_vec: any[]
+	count:number
 	constructor() {
 		/**@type {any[]} */
 		this.notify_waiters_vec = [];
 		this.count = 0;
 	}
-	/**@arg {number} cnt */
-	async inc(cnt) {
+	async inc(cnt: number) {
 		let wait_trigger = new AsyncTriggerImpl;
 		while(this.count > 0) {
 			if(!this.notify_waiters_vec.includes(wait_trigger)) {
@@ -18,8 +19,7 @@ export class AsyncSemaphore {
 		}
 		this.count += cnt;
 	}
-	/**@arg {number} cnt */
-	async dec(cnt) {
+	async dec(cnt: number) {
 		this.count -= cnt;
 		if(this.count <= 0) {
 			do {
