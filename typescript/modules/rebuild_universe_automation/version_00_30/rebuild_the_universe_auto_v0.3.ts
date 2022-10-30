@@ -56,7 +56,6 @@ import {InstructionOpcodesList} from "../../../vm/instruction/InstructionOpcodes
 import {ObjectBox} from "../../../box/ObjectBox.js"
 import {temporary_box_object_index_to_box} from "../../../box/temporary_box/temporary_box_object_index_to_box.js"
 import {temporary_box_from_get} from "../../../box/temporary_box/temporary_box_from_get.js"
-import {FunctionBox} from "../../../box/FunctionBox.js"
 import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox.js"
 import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.js"
 import {NoArgsType} from "../../../box/NoArgsType.js"
