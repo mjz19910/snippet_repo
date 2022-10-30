@@ -1,5 +1,6 @@
 export class CompressedArray extends Array<string>{}
 export class UncompressedArray extends Array<string>{}
+
 export class AutoBuyState {
 	debug: boolean
 	arr: number[]
@@ -7,12 +8,7 @@ export class AutoBuyState {
 	constructor()
 	init(): void
 }
-export class AutoBuy {
-	delay: number
-	state: AutoBuyState
-	state_history_arr: string[]|CompressedArray
-	constructor()
-}
+
 export class SpecType {
 	name: 'Breit-Wheeler process'
 	desc: 'Convert pure light to matter.'
@@ -26,7 +22,6 @@ declare global {
 		//spell:words totalAtome
 		totalAtome: number
 		prestige: number
-		g_auto_buy: AutoBuy
 		__testing__: false
 		bonusAll(): void
 		allspec: SpecType[]
