@@ -1,5 +1,5 @@
 export class BaseNode {
-	m_parent
+	m_parent:any|null
 	constructor() {
 		this.m_parent = null;
 	}

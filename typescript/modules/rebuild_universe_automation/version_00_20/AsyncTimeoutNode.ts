@@ -1,14 +1,9 @@
 import {LOG_LEVEL_INFO} from "../../../constants.js"
-import {l_log_if} from "./l_log_if"
+import {l_log_if} from "../../../vm/l_log_if.js"
 import {TimeoutNode} from "./TimeoutNode"
-
-interface TimeoutNodeTarget {
-	wait(): Promise<any>
-	destroy(): void
-}
+import {TimeoutNodeTarget} from "./TimeoutNodeTarget"
 
 export class AsyncTimeoutNode extends TimeoutNode {
-	m_target?: TimeoutNodeTarget
 	async start_async(target: TimeoutNodeTarget) {
 		l_log_if(LOG_LEVEL_INFO,'start_async')
 		this.m_target=target

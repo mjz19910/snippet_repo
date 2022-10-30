@@ -1,10 +1,11 @@
 import {BaseNode} from "./BaseNode";
+import {TimeoutNodeTarget} from "./TimeoutNodeTarget"
 import {TimeoutTarget} from "./TimeoutTarget"
 
 export class TimeoutNode extends BaseNode {
 	m_timeout: number
 	m_id: ReturnType<typeof setTimeout>|null
-	m_target:TimeoutTarget|null
+	m_target:TimeoutNodeTarget|null
 	constructor(timeout = 0) {
 		super();
 		this.m_timeout = timeout;
@@ -23,7 +24,7 @@ export class TimeoutNode extends BaseNode {
 	start(target:TimeoutTarget | null) {
 		if(!target)
 			throw new Error("No target");
-		this.m_target = target;
+		this.m_target = target as any as TimeoutNodeTarget;
 		this.set();
 	}
 	run() {

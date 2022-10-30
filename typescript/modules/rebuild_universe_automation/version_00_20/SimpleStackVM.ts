@@ -2,7 +2,7 @@ import {Box} from "../../../box/Box"
 import {StackVMBox} from "../../../box/StackVMBox"
 import {WindowBox} from "../../../box/WindowBox"
 import {InstructionType} from "../../../vm/instruction/InstructionType"
-import {StackVM} from "./StackVM"
+import {StackVM} from "../../../vm/StackVM"
 import {throw_invalid_error} from "./throw_invalid_error"
 
 export class SimpleStackVM extends StackVM {
