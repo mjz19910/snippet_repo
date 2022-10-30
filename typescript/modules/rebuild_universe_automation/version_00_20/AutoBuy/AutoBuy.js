@@ -1,4 +1,4 @@
-import {AUDIO_ELEMENT_VOLUME, LOG_LEVEL_ERROR, LOG_LEVEL_INFO, LOG_LEVEL_TRACE} from "types/constants.js";
+import {AUDIO_ELEMENT_VOLUME, LOG_LEVEL_ERROR, LOG_LEVEL_INFO} from "types/constants.js";
 import {AsyncAutoBuy} from "./AsyncAutoBuy";
 import {AsyncNodeRoot} from "../AsyncNodeRoot";
 import {AsyncPromiseBoxImpl} from "../AsyncPromiseBoxImpl";
