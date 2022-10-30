@@ -1,5 +1,5 @@
 import {InstructionType} from "../../../vm/instruction/InstructionType"
-import {not_reached} from "./not_reached"
+import {throw_unreachable} from "./throw_unreachable"
 
 export class SimpleStackVMParser {
 	static match_regex: RegExp
@@ -119,7 +119,7 @@ export class SimpleStackVMParser {
 		if(ret!==null) {
 			throw new Error("Typechecking failure, ret is not null")
 		}
-		not_reached()
+		throw_unreachable()
 	}
 	static verify_raw_instructions(raw_instructions: string[][]): InstructionType[] {
 		const instructions: InstructionType[]=[]

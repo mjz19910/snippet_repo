@@ -7,7 +7,7 @@ import {VoidBox} from "../../../box/VoidBox"
 import {BaseBox} from "./BaseBox"
 import {generic_box_with_value_in} from "./generic_box_with_value_in"
 import {generic_box_with_value_out} from "./generic_box_with_value_out"
-import {throw_unreachable_error} from "./throw_unreachable_error"
+import {throw_unreachable} from "./throw_unreachable"
 
 export class TempBox extends BaseBox {
 	static is_raw(v: Box): v is Primitives {
@@ -38,7 +38,7 @@ export class TempBox extends BaseBox {
 			if(v===null)
 				return v
 		}
-		throw_unreachable_error()
+		throw_unreachable()
 	}
 	m_as_box: NonNull<ExtractKey<Box,'value'>>|null
 	constructor(value: NonNull<ExtractKey<Box,'value'>>|null) {

@@ -1,6 +1,6 @@
 import {Box} from "../../../box/Box.js"
 import {BaseBox} from "./BaseBox.js"
-import {not_reached} from "./not_reached"
+import {throw_unreachable} from "./throw_unreachable"
 
 export class NewableFactory {
 	type: "constructor_box"
@@ -10,7 +10,7 @@ export class NewableFactory {
 	as_type(type: Parameters<BaseBox['as_type']>[0]) {
 		switch(typeof this.value) {
 			case 'function': this.value; break
-			default: not_reached()
+			default: throw_unreachable()
 		}
 		if(typeof this.value===type) {
 			return this
