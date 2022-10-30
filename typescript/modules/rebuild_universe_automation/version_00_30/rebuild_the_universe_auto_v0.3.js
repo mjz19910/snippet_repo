@@ -2249,7 +2249,7 @@ import {
 			}
 			log_if(log_level,...args)
 		}
-		/** @arg {{ [x: string]: any; }} sym_indexed_this @arg {{ sym: any; }} val */
+		/** @arg {{ [x: string]: any }} sym_indexed_this @arg {{ sym: any }} val */
 		syms_iter(sym_indexed_this,val) {
 			if(!sym_indexed_this[val.sym]) return
 			let obj=sym_indexed_this[val.sym]
