@@ -21,7 +21,6 @@
 import {ArrayBox} from "../../../box/ArrayBox.js"
 import {Box} from "../../../box/Box.js"
 import {EmptyArrayBox} from "../../../box/EmptyArrayBox.js"
-import {ExtractKey} from "../../../box/ExtractKey.js"
 import {Primitives} from "../../../box/helper/Primitives.js"
 import {InstructionTypeArrayBox} from "../../../box/InstructionTypeArrayBox.js"
 import {InstructionTypeBox} from "../../../box/InstructionTypeBox.js"
