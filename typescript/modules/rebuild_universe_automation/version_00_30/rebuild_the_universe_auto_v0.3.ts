@@ -61,6 +61,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox.js"
 import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.js"
 import {NoArgsType} from "../../../box/NoArgsType.js"
+import {VoidBox} from "../../../box/VoidBox.js"
 
 // eslint-disable no-undef,no-lone-blocks,no-eval
 
@@ -146,19 +147,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 	}
 	function trigger_debug_breakpoint() {
 		debugger
-	}
-	class BaseBox {
-		value: null
-		constructor(value: null) {
-			this.value=value
-		}
-		/** @arg {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} type */
-		as_type(type: "string"|"number"|"bigint"|"boolean"|"symbol"|"undefined"|"object"|"function") {
-			if(typeof this.value===type) {
-				return this
-			}
-			return null
-		}
 	}
 	class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 		type: "constructor_box"="constructor_box"
@@ -697,7 +685,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				throw new Error("Unable to handle box")
 			}
 		}
-		/** @arg {StackVM} vm @arg {Exclude<Box, Primitives|null>} value_box @arg {string|number} key */
 		on_get(vm: StackVM,value_box: Exclude<Box,Primitives|null>,key: string|number) {
 			switch(value_box.type) {
 				case 'array_box': {
@@ -790,18 +777,14 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		}
 	}
 	class InstructionPushGlobalObjectImpl {
-		/** @type {'push_global_object'} */
 		type: 'push_global_object'='push_global_object'
-		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").push.GlobalObject} _i */
 		run(vm: StackVM,_i: PushWindowObject) {
 			vm.stack.push(new WindowBoxImpl(window))
 		}
 	}
 	class InstructionPeekImpl {
-		/** @type {'peek'} */
 		type: 'peek'='peek'
 		debug=false
-		/** @arg {StackVM} vm @arg {[any, any]} ins */
 		run(vm: StackVM,ins: [any,any]) {
 			let [,distance]=ins
 			let base_ptr=vm.base_ptr
@@ -965,12 +948,10 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			return obj
 		}
-		/** @arg {InstructionType[]} instructions */
 		constructor(instructions: InstructionType[]) {
 			this.instructions=instructions
 			this.instruction_pointer=0
 			this.running=false
-			/** @type {Box[]} */
 			this.stack=[]
 			this.return_value=void 0
 			this.jump_instruction_pointer=null
@@ -988,7 +969,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		peek_at(distance: number) {
 			return this.stack.at(-1-distance)
 		}
-		/** @arg {number} operand_number_of_arguments */
 		pop_arg_count(operand_number_of_arguments: number) {
 			let arguments_arr=[]
 			let arg_count=operand_number_of_arguments
@@ -1008,7 +988,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			this.return_value=void 0
 			this.stack.length=0
 		}
-		/** @arg {number} value */
 		is_in_instructions(value: number) {
 			return value>=0&&value<this.instructions.length
 		}
@@ -1031,7 +1010,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			let any_map: any=this.instruction_map_obj
 			return any_map[opcode]
 		}
-		/** @arg {InstructionType} instruction */
 		execute_instruction(instruction: InstructionType) {
 			let run=this.get_instruction(instruction[0])
 			run.run(this,instruction)
@@ -1067,13 +1045,11 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 	class EventHandlerVMDispatch extends StackVM {
 		target_obj: any
 		args_arr: Box[]|null
-		/** @arg {InstructionType[]} instructions @arg {any} target_obj */
 		constructor(instructions: InstructionType[],target_obj: any) {
 			super(instructions)
 			this.target_obj=target_obj
 			this.args_arr=null
 		}
-		/** @arg {Box[]} args_arr */
 		run(...args_arr: Box[]) {
 			try {
 				this.args_arr=args_arr
@@ -1082,7 +1058,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				console.log('EventHandlerVMDispatch run error',e)
 			}
 		}
-		/** @arg {Event} event */
 		handleEvent(event: Event) {
 			this.reset()
 			this.run(new ObjectBoxImpl(event))
@@ -1090,7 +1065,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 	}
 	class StackVMParser {
 		static match_regex=/(.+?)(;|$)/gm
-		/** @arg {string[] | number[]} cur @arg {number} arg_loc*/
 		static parse_int_arg(cur: string[]|number[],arg_loc: number) {
 			let cur_item=cur[arg_loc]
 			if(typeof cur_item=='string') {
@@ -1101,7 +1075,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				}
 			}
 		}
-		/** @arg {string | string[]} str @arg {any[]} format_list */
 		static parse_string_with_format_ident(str: string|string[],format_list: any[]) {
 			let format_index=str.indexOf('%')
 			let format_type=str[format_index+1]
@@ -1112,7 +1085,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 					console.assert(false,"Assertion failed: %s",'unsupported format spec %'+format_type)
 			}
 		}
-		/** @arg {any[]} cur @arg {any[]} format_list */
 		static parse_current_instruction(cur: any[],format_list: any[]) {
 			let arg_loc=1
 			let arg=cur[arg_loc]
@@ -1126,7 +1098,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				arg=cur[arg_loc]
 			}
 		}
-		/** @arg {string[]} m */
 		static raw_parse_handle_regexp_match(m: string[]) {
 			let iter=m[1].trim()
 			if(iter.startsWith("//")) return null
@@ -1137,7 +1108,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			if(!iter) return null
 			return iter.split(",")
 		}
-		/** @arg {string} string */
 		static parse_string_into_raw_instruction_stream(string: string) {
 			const parser_max_match_iter=300; let parts,arr=[],i=0
 			do {
@@ -1159,7 +1129,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			if(parts) console.assert(false,'StackVM Parser: Iteration limit exceeded (limit=%o)',parser_max_match_iter)
 			return arr
 		}
-		/** @arg {string} string @arg {any[]} format_list */
 		static parse_instruction_stream_from_string(string: string,format_list: any[]) {
 			let raw_instructions=this.parse_string_into_raw_instruction_stream(string)
 			for(let i=0;i<raw_instructions.length;i++) {
@@ -1168,10 +1137,8 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			let instructions=this.verify_raw_instructions(raw_instructions); return instructions
 		}
-		/** @arg {string[]} instruction @returns {InstructionType}*/
 		static verify_instruction(instruction: string[]): InstructionType {
 			let num_to_parse=instruction.length
-			/** @type {InstructionType|null} */
 			let ret: InstructionType|null=null
 			switch(instruction[0]) {
 				case 'push': {
@@ -1221,9 +1188,7 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			throw new Error("Unreachable")
 		}
-		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
 		static verify_raw_instructions(raw_instructions: string[][]): InstructionType[] {
-			/** @type{InstructionType[]}*/
 			const instructions: InstructionType[]=[]
 			for(let i=0;i<raw_instructions.length;i++) {
 				instructions.push(this.verify_instruction(raw_instructions[i]))
@@ -1269,7 +1234,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			this.document_write_proxy=new Proxy(document.write,proxy_handler)
 			document.write=this.document_write_proxy
 		}
-		/** @arg {boolean} should_try_to_destroy */
 		destroy(should_try_to_destroy: boolean=false) {
 			if(this.attached_document&&this.document_write_proxy) {
 				console.assert(this.attached_document.write===this.document_write_proxy)
@@ -1306,7 +1270,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		constructor() {
 			this.m_current=-1
 		}
-		/** @arg {number} current_value */
 		set_current(current_value: number) {
 			this.m_current=current_value
 		}
@@ -1322,7 +1285,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		constructor() {
 			this.state_map=new Map
 		}
-		/** @arg {string} name */
 		current_named(name: string) {
 			let val=this.state_map.get(name)
 			if(val) {
@@ -1331,7 +1293,7 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				return 0
 			}
 		}
-		/** @arg {string} name */
+
 		next_named(name: string) {
 			if(this.state_map.has(name)) {
 				let cur=this.state_map.get(name)+1
@@ -1390,30 +1352,24 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			return to_tuple_arr(this.map_keys(),this.map_values()).filter((e) => e[1]!==void 0)
 		}
-		/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} win_size */
 		calc_for_stats_window_size(stats_arr: any[],arr: any[],win_size: number) {
 			stats_arr[win_size-1]=this.calc_compression_stats(arr,win_size)
 		}
-		/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} index */
 		calc_for_stats_index(stats_arr: any[],arr: any[],index: number) {
 			stats_arr[index]=this.calc_compression_stats(arr,index+1)
 		}
 	}
 	class BaseCompression {
-		/** @arg {string | any[]} src @arg {string | any[]} dst */
 		did_compress(src: string|any[],dst: string|any[]) {
 			return dst.length<src.length
 		}
-		/** @arg {string | any[]} src @arg {string | any[]} dst */
 		did_decompress(src: string|any[],dst: string|any[]) {
 			return dst.length>src.length
 		}
-		/** @arg {string[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
 		compress_result(src: string[],dst: string[]): [boolean,string[]] {
 			if(this.did_compress(src,dst)) return [true,dst]
 			return [false,src]
 		}
-		/** @arg {string[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
 		decompress_result(src: string[],dst: string[]): [boolean,string[]] {
 			if(this.did_decompress(src,dst)) return [true,dst]
 			return [false,dst]
@@ -1427,8 +1383,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			this.stats_calculator=new CompressionStatsCalculator
 			this.compression_stats=[]
 		}
-
-		/** @arg {string[]} arr */
 		try_compress(arr: string[]) {
 			let ret=[]
 			for(let i=0;i<arr.length;i++) {
@@ -1454,7 +1408,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			return this.compress_result(arr,ret)
 		}
-		/** @arg {string[]} arr */
 		try_decompress(arr: string[]) {
 			let ret=[]
 			for(let i=0;i<arr.length;i++) {
@@ -1470,7 +1423,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			return this.decompress_result(arr,ret)
 		}
-		/** @arg {string[]} arr */
 		compress_array(arr: string[]) {
 			let success,res
 			[success,res]=this.try_decompress(arr)
@@ -1493,7 +1445,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		m_once: boolean
 		m_obj: AutoBuyState|AutoBuy|null
 		m_callback: () => void
-		/** @arg {AutoBuyState | AutoBuy | null} obj @arg {()=>void} callback */
 		constructor(obj: AutoBuyState|AutoBuy|null,callback: () => void) {
 			this.m_once=true
 			this.m_obj=obj
@@ -1507,7 +1458,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		m_once: boolean
 		m_obj: any
 		m_callback: any
-		/** @arg {any} obj @arg {any} callback */
 		constructor(obj: any,callback: any) {
 			this.m_once=false
 			this.m_obj=obj
@@ -1541,13 +1491,11 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			this.m_promise_reject=reject
 			this.m_callback=this.on_result.bind(this)
 		}
-		/** @arg {any} value */
 		on_result(value: any=void 0) {
 			if(!this.m_promise_accept) throw new Error("Missing promise accept handler")
 			this.m_promise_accept(value)
 			this.reset()
 		}
-		/** @arg {Error} error */
 		on_error(error: Error) {
 			if(!this.m_promise_reject) throw new Error("Missing promise accept handler")
 			this.m_promise_reject(error)
@@ -1592,7 +1540,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 	}
 	class TimeoutIdNode extends BaseNode {
 		m_id: number
-		/** @arg {number} id */
 		constructor(id: number) {
 			super()
 			this.m_id=id
@@ -1604,7 +1551,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 	}
 	class IntervalIdNode extends BaseNode {
 		m_id: number
-		/** @arg {number} id */
 		constructor(id: number) {
 			super()
 			this.m_id=id
@@ -1617,7 +1563,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 	class IntervalTargetFn {
 		m_callback: any
 		timeout: number
-		/** @arg {any} callback @arg {number} timeout */
 		constructor(callback: any,timeout: number) {
 			this.m_callback=callback
 			this.timeout=timeout
@@ -1643,7 +1588,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		timeout() {
 			return this.m_timeout
 		}
-		/** @arg {any} target */
 		set_target(target: any) {
 			this.m_target=target
 		}
@@ -1669,7 +1613,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		m_timeout: number
 		m_id: ReturnType<typeof setTimeout>|null
 		m_target: TimeoutTargetType1|null
-		/** @arg {CallableFunction} target_fn */
 		constructor(target_fn: CallableFunction,timeout=0) {
 			super()
 			this.m_target_fn=target_fn
@@ -1680,7 +1623,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		set() {
 			this.m_id=setInterval(this.run.bind(this),this.m_timeout)
 		}
-		/** @arg {TimeoutTargetType1 | null} target */
 		start(target: TimeoutTargetType1|null=null) {
 			if(target) {
 				this.m_target=target
@@ -1712,7 +1654,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		timeout() {
 			return this.m_timeout
 		}
-		/** @arg {any} target */
 		set_target(target: any) {
 			this.m_target=target
 		}
@@ -1747,7 +1688,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 	}
 	class IntervalIdNodeRef extends IntervalIdNode {
 		destroy_callback: () => void
-		/** @arg {number} interval_id @arg {() => void} destroy_cb */
 		constructor(interval_id: number,destroy_cb: () => void) {
 			super(interval_id)
 			this.destroy_callback=destroy_cb
@@ -1762,7 +1702,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		constructor() {
 			this.children=[]
 		}
-		/** @arg {()=>void} target_fn @arg {number | undefined} timeout */
 		set(target_fn: () => void,timeout: number|undefined,repeat=false) {
 			let node
 			if(repeat) {
@@ -1773,7 +1712,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				node.start(new IntervalTarget(null,target_fn))
 			}
 		}
-		/** @arg {number} timeout_id */
 		append_raw(timeout_id: number,once=true) {
 			if(once) {
 				this.append_child(new TimeoutIdNode(timeout_id))
@@ -1781,13 +1719,11 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				this.append_child(new IntervalIdNode(timeout_id))
 			}
 		}
-		/** @arg {BaseNode} record */
 		append_child(record: BaseNode) {
 			record.remove()
 			record.set_parent(this)
 			this.children.push(record)
 		}
-		/** @arg {BaseNode} record */
 		remove_child(record: BaseNode) {
 			let index=this.children.indexOf(record)
 			this.children.splice(index,1)
@@ -1807,7 +1743,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		size: number
 		history_size: number
 		time_start: number
-		/** @type {number} */
 		duration: number
 		constructor() {
 			this.size=0
@@ -1829,7 +1764,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		gen_count: number
 		history_size: number
 		// @AverageRatio
-		/** @arg {string} type @arg {RatioOptions} options */
 		constructor(type: string,options: RatioOptions) {
 			this.type=type
 			this.history=[]
@@ -1843,7 +1777,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			this.gen_count=0
 			this.history_size=options.history_size
 		}
-		/** @arg {AverageRatioRoot} avg @arg {number} time_now */
 		do_history_update(avg: AverageRatioRoot,time_now: number) {
 			if(this.value===null) return
 			this.count++
@@ -1859,7 +1792,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				if(next) next.do_history_update(avg,time_now)
 			}
 		}
-		/** @arg {number} value */
 		add_to_ratio(value: number,avg_window=this.size) {
 			if(this.value===null) {
 				this.value=value
@@ -1867,7 +1799,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			this.value=(this.value*(avg_window-1)+value)/avg_window
 		}
-		/** @arg {number} size */
 		set_history_size(size: number) {
 			this.history_size=size
 		}
@@ -1877,30 +1808,25 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		}
 	}
 	class AverageRatioRoot {
-		map: Map<any,any>
-		keys: never[]
-		values: never[]
+		map: Map<string,AverageRatio>
+		keys: string[]
+		values: AverageRatio[]
 		constructor() {
-			/** @type {Map<string, AverageRatio>} */
 			this.map=new Map
-			/** @type {string[]} */
 			this.keys=[]
 			/** @type {AverageRatio[]} */
 			this.values=[]
 		}
-		/** @arg {string} key */
 		get_average(key: string) {
 			let ratio_calc=this.map.get(key)
 			if(!ratio_calc) throw new Error("Ratio not found: "+key)
 			return ratio_calc.get_average()
 		}
-		/** @type {(key:string, value:AverageRatio)=>void} */
-		set_ratio(key,value): void {
+		set_ratio(key: string,value: AverageRatio): void {
 			this.keys.push(key)
 			this.values.push(value)
 			this.map.set(key,value)
 		}
-		/** @arg {AverageRatio} value_obj */
 		next(value_obj: AverageRatio) {
 			let idx=this.values.indexOf(value_obj)
 			if(idx<this.values.length) {
@@ -1908,7 +1834,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			return null
 		}
-		/** @arg {number} value */
 		push(value: number) {
 			let cur=this.map.get(this.keys[0])
 			if(!cur) throw new Error("Invalid")
@@ -1928,10 +1853,10 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 	class AutoBuyState {
 		root_node: AsyncNodeRoot
 		debug: boolean
-		arr: never[]
+		arr: number[]
 		ratio: number
 		last_ratio: number
-		compressor_stats: never[]
+		compressor_stats: number[]
 		arr_max_len: number
 		val: number
 		total_mul: number
@@ -1940,13 +1865,12 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		locked_cycle_count: number
 		is_init_complete: boolean
 		avg: AverageRatioRoot
-		prev_atomepersecond: number
-		div: number
+		prev_atomepersecond?: number
+		div?: number
 		/** @arg {AsyncNodeRoot} root */
 		constructor(root: AsyncNodeRoot) {
 			this.root_node=root
 			this.debug=false
-			/** @type {number[]} */
 			this.arr=[]
 			this.ratio=0
 			this.last_ratio=0
@@ -2097,7 +2021,7 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				default: return AutoBuyMulModifierFactor
 			}
 		}
-		calc_near_val(num) {
+		calc_near_val(num: number) {
 			let exp=0
 			if(num<1||num>10) {
 				while(num<1) {
@@ -2179,7 +2103,7 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 			sessionStorage.history=`${json_tag}@${data_arr.join("|")}`
 			let time_played_data=sessionStorage.time_played_hist
-			let time_played_arr=data_arr.map(() => null)
+			let time_played_arr: (null|string)[]=data_arr.map(() => null)
 			if(time_played_data) {
 				let stored_arr=JSON.parse(time_played_data)
 				for(let i=0;i<stored_arr.length;i++) {
@@ -2199,16 +2123,13 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		}
 	}
 	const named_sym_gen=new NamedIdGenerator
-	/** @type {WeakRef<{sym:symbol}>[]}*/
-	const debug_id_syms: WeakRef<{sym: symbol >[]=[]
-	/** @type {(v:string)=>symbol} */
-	function labeled_sym(name): symbol {
+	const debug_id_syms: WeakRef<{sym: symbol}>[]=[]
+	function labeled_sym(name: string): symbol {
 		const id=named_sym_gen.next_named(name)
 		const sym=Symbol(`${name}@${id}`)
 		debug_id_syms.push(new WeakRef({sym}))
 		return sym
 	}
-	/** @implements {NodeBox} */
 	class NodeBoxImpl {
 		/** @type {"instance_box"} */
 		type: "instance_box"="instance_box"
@@ -2219,7 +2140,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		value: Node
 		/** @arg {"get"|"create"|string} from @arg {Node} value */
 		constructor(from: "get"|"create"|string,value: Node) {
-			super(null)
 			this.value=value
 			if(from==='get') {
 				this.from=from
@@ -2228,37 +2148,52 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 		}
 	}
+	function int_parser(value: string): number {
+		return parseInt(value,10)
+	}
 	class DataLoader {
-		static int_parser=new WebAssembly.Function({parameters: ['externref'],results: ['f64']},parseInt)
 		store: Storage
 		/** @arg {Storage} storage */
 		constructor(storage: Storage) {this.store=storage}
 		/** @arg {string} key @arg {string[]} def_value */
-		load_str_arr(key: string,def_value: string[]) {let data=this.store.getItem(key); if(data===null) return def_value; return data.split(",")}
+		load_str_arr(key: string,def_value: string[]) {
+			let data=this.store.getItem(key)
+			if(data===null)
+				return def_value
+			return data.split(",")
+		}
 		/** @arg {string} key @arg {any} def_value */
-		load_int_arr(key: string,def_value: any,storage_data=this.store.getItem(key)) {if(storage_data===null) return def_value; return this.parse_int_arr(storage_data)}
-		/** @arg {string} key @arg {{ (_e: any): number[]; (): any; }} def_factory */
-		load_int_arr_cb(key: string,def_factory: {(_e: any): number[]; (): any,storage_data=this.store.getItem(key)) {if(storage_data===null) return def_factory(); return this.parse_int_arr(storage_data)}
-		/** @arg {string} string */
-		default_split(string: string) {return string.split(",")}
-		/** @arg {string} data */
-		parse_int_arr(data: string) {return this.default_split(data).map(DataLoader.int_parser)}
+		load_int_arr(key: string,def_value: any,storage_data=this.store.getItem(key)) {
+			if(storage_data===null)
+				return def_value
+			return this.parse_int_arr(storage_data)
+		}
+		load_int_arr_cb(key: string,def_factory: () => number[],storage_data=this.store.getItem(key)) {
+			if(storage_data===null)
+				return def_factory()
+			return this.parse_int_arr(storage_data)
+		}
+		default_split(string: string) {
+			return string.split(",")
+		}
+		parse_int_arr(data: string) {
+			return this.default_split(data).map(int_parser)
+		}
 	}
 	class AsyncAutoBuy {
 		parent: AutoBuy
 		unit_upgradeable_trigger: number
 		main_running: any
 		fast_unit_running: boolean
-		/** @arg {AutoBuy} parent */
 		constructor(parent: AutoBuy) {
 			this.parent=parent
 			this.unit_upgradeable_trigger=30
+			this.fast_unit_running=false
 		}
 		get timeout_ms() {
 			debugger
 			return this.parent.timeout_ms
 		}
-		/** @arg {boolean} no_wait */
 		async do_start_main_async(no_wait: boolean) {
 			if(!no_wait) await this.next_timeout_async(this.parent.timeout_ms,'A')
 			await this.main_async()
@@ -2308,7 +2243,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			try {
 				run_loop: while(this.main_running) {
 					for(this.parent.iter_count=0;;) {
-						// 30
 						this.unit_upgradeable_trigger=30
 						if(this.parent.timeout_ms&&this.parent.timeout_ms>3*60*1000) {
 							this.unit_upgradeable_trigger=8
@@ -2336,6 +2270,8 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 		}
 		async fast_unit_async() {
+			if(!this.parent.timeout_ms)
+				throw new Error("no timeout_ms")
 			this.fast_unit_running=true
 			let count=0
 			while(this.fast_unit_running) {
@@ -2364,17 +2300,13 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		}
 	}
 	class DocumentBoxImpl {
-		/** @type {"document_box"} */
 		type: "document_box"="document_box"
-		value
-		/** @arg {"object" | "function"} v */
+		value: Document
 		as_type(v: "object"|"function") {
 			if(typeof this.value===v) return this
 			return null
 		}
-		/** @arg {Document} value */
 		constructor(value: Document) {
-			super(null)
 			this.value=value
 		}
 	}
@@ -2400,13 +2332,20 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			this.value=value
 		}
 	}
-	/** @implements {VoidBox} */
-	class VoidBoxImpl {
+	class VoidBoxImpl implements VoidBox {
 		/** @type {"void"} */
 		type: "void"="void"
-		value=null
-		as_type() {
-			return null
+		extension=null
+		m_verify_name: "VoidBox"
+		value=void 0
+		constructor() {
+			this.m_verify_name='VoidBox'
+		}
+		as_type(): [false,null] {
+			return [false,null]
+		}
+		verify_name(name: "VoidBox"): boolean {
+			return this.m_verify_name==='VoidBox'&&name==='VoidBox'
 		}
 	}
 	class AutoBuy {
@@ -2415,8 +2354,8 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		with_async: AsyncAutoBuy
 		iter_count: number
 		epoch_len: number
-		background_audio: null
-		state_history_arr: null
+		background_audio: HTMLAudioElement|null
+		state_history_arr: string[]
 		skip_save: boolean
 		has_real_time: boolean
 		cint_arr: never[]
@@ -2432,35 +2371,7 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 		state_history_arr_max_len: number
 		last_value: number
 		pre_total: number
-		test_log(log_level,...args) {
-			if(args.length>0) {
-				args.unshift("test:")
-			} else {
-				args.unshift("test")
-			}
-			log_if(log_level,...args)
-		}
-		/** @arg {{ [x: string]: any }} sym_indexed_this @arg {{ sym: any }} val */
-		syms_iter(sym_indexed_this: {[x: string]: any,val: {sym: any ) {
-			if(!sym_indexed_this[val.sym]) return
-			let obj=sym_indexed_this[val.sym]
-			if(!obj.split) return
-			let str=sym_indexed_this[val.sym]
-			let arr=str.split(",")
-			let trimmed=arr.map((/** @type {string} */ e: string) => e.trim())
-			this.debug_arr.push(...trimmed)
-		}
-		check_for_syms() {
-			/** @type {any} */
-			let this_as_any: any=this
-			/** @type {{[x:symbol]:string}} */
-			let sym_indexed_this: {
-				[x: symbol]: string =this_as_any
-				for(let i=0; i<debug_id_syms.length;i++) {
-				let val=debug_id_syms[i].deref()
-				if(val) this.syms_iter(sym_indexed_this,val)
-			}
-		}
+		use_event_vm: boolean
 		constructor() {
 			this.root_node=new AsyncNodeRoot
 			this.with_async=new AsyncAutoBuy(this)
@@ -2468,7 +2379,6 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			this.iter_count=0
 			this.epoch_len=0
 			this.background_audio=null
-			this.state_history_arr=null
 			this.skip_save=false
 			this.has_real_time=false
 			/** @type {never[]} */
@@ -2486,11 +2396,11 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			this.debug_arr=[]
 			this.flags=new Set()
 			try {
-				this.check_for_syms()
+				this.check_for_symbols()
 			} catch(e) {
 				console.log(e)
 			}
-			this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str',_e => {
+			this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str',() => {
 				let src=[300]
 				src.length=16
 				let data_len=1
@@ -2500,6 +2410,35 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 				}
 				return src
 			})
+			this.state_history_arr_max_len=0
+			this.last_value=0
+			this.pre_total=0
+			this.use_event_vm=false
+		}
+		test_log(log_level: number,format_str: string,...args: any[]) {
+			if(args.length>0) {
+				args.unshift("test:")
+			} else {
+				args.unshift("test")
+			}
+			log_if(log_level,format_str,...args)
+		}
+		iterate_symbols(sym_indexed_this: {[x: string]: any},val: {sym: any}) {
+			if(!sym_indexed_this[val.sym]) return
+			let obj=sym_indexed_this[val.sym]
+			if(!obj.split) return
+			let str=sym_indexed_this[val.sym]
+			let arr=str.split(",")
+			let trimmed=arr.map((e: string) => e.trim())
+			this.debug_arr.push(...trimmed)
+		}
+		check_for_symbols() {
+			let this_as_any: any=this
+			let sym_indexed_this: {[x: symbol]: string}=this_as_any
+			for(let i=0;i<debug_id_syms.length;i++) {
+				let val=debug_id_syms[i].deref()
+				if(val) this.iterate_symbols(sym_indexed_this,val)
+			}
 		}
 		pre_init() {
 			this.background_audio=document.querySelector("#background_audio")
@@ -2608,7 +2547,7 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			])
 			try {
 				let t=this
-				window.addEventListener('click',{
+				let event_handler={
 					handleEvent() {
 						this.run().then(() => {
 							log_if(LOG_LEVEL_INFO,'play success')
@@ -2618,12 +2557,16 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 						window.removeEventListener('click',this)
 					},
 					async run() {
+						if(!t.background_audio) throw new Error("Bad")
 						await t.background_audio.play()
 					}
-				})
-				return
-				let handler=new EventHandlerVMDispatch(instructions,this)
-				window.addEventListener('click',handler)
+				}
+				if(!this.use_event_vm) {
+					window.addEventListener('click',event_handler)
+				} else {
+					let handler=new EventHandlerVMDispatch(instructions,this)
+					window.addEventListener('click',handler)
+				}
 			} catch(e) {
 				console.log('error when setting up EventHandlerVMDispatch',e)
 			}
@@ -2654,8 +2597,8 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			}
 		}
 		dom_pre_init() {
+			type DomExecDescription=any
 			const css_display_style=`#state_log>div{width:max-content}#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`
-			/** @type {DomExecDescription[]} */
 			let create_state_log_arr: DomExecDescription[]=[
 				[0,'push',new DocumentBoxImpl(document),'body'],
 				[0,'get'],
@@ -2667,8 +2610,7 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			function replace_css_style(obj: CSSStyleSheet,str: string) {
 				return obj.replace(str)
 			}
-			/** @this {AutoBuy} */
-			async function css_promise_runner(/** @type {Box[]} */ ...box_arr: Box[]) {
+			async function css_promise_runner(this: AutoBuy,...box_arr: Box[]) {
 				/** @type {Promise<Box>[]} */
 				let promise_arr: Promise<Box>[]=[]
 				for(let i=0;i<box_arr.length;i++) {
@@ -2753,17 +2695,18 @@ import {NoArgsType} from "../../../box/NoArgsType.js"
 			let dom_styles=document.adoptedStyleSheets
 			document.adoptedStyleSheets=[...dom_styles,...styles]
 		}
-		/** @arg {(a:CSSStyleSheet, b:string)=>Promise<CSSStyleSheet>} callback @arg {Box[]} a */
 		use_boxed_style_sheet(callback: (a: CSSStyleSheet,b: string) => Promise<CSSStyleSheet>,...a: Box[]) {
-			/** @type {{v:[], t:0}|{v:[CSSStyleSheet], t:1}|{v:[CSSStyleSheet, string], t:2}} */
 			let extracted_values: {
-				v: []; t: 0|{
-					v: [CSSStyleSheet]; t: 1|{
-						v: [CSSStyleSheet,string]; t: 2={
-							v: [],
-							t: 0
-						}
-						for(let i=0; i<a.length;i++) {
+				v: []; t: 0
+			}|{
+				v: [CSSStyleSheet]; t: 1
+			}|{
+				v: [CSSStyleSheet,string]; t: 2
+			}={
+				v: [],
+				t: 0
+			}
+			for(let i=0;i<a.length;i++) {
 				let v=a[i]
 				switch(typeof v) {
 					default:
