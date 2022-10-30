@@ -1,14 +1,15 @@
+import {StackVM} from "../../../vm/StackVM"
+
 export class StackVMBoxImpl {
-	/**@type {"custom_box"} */
-	type = "custom_box";
-	/**@type {"StackVM"} */
-	box_type = "StackVM";
-	/**@arg {'function'} _a */
-	as_type(_a) {
-		return null;
+	type: "custom_box"
+	box_type: "StackVM"
+	value: StackVM
+	as_type(_a: 'function') {
+		return null
 	}
-	/**@arg {StackVM} value */
-	constructor(value) {
-		this.value = value;
+	constructor(value: StackVM) {
+		this.type='custom_box'
+		this.box_type='StackVM'
+		this.value=value
 	}
 }
