@@ -58,6 +58,9 @@ import {ObjectBox} from "../../../box/ObjectBox.js"
 import {temporary_box_object_index_to_box} from "../../../box/temporary_box/temporary_box_object_index_to_box.js"
 import {temporary_box_from_get} from "../../../box/temporary_box/temporary_box_from_get.js"
 import {FunctionBox} from "../../../box/FunctionBox.js"
+import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox.js"
+import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.js"
+import {NoArgsType} from "../../../box/NoArgsType.js"
 
 // eslint-disable no-undef,no-lone-blocks,no-eval
 
@@ -117,7 +120,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		// i ignore debug messages to avoid 20k timeout took too long messages
 		// trace includes a stack trace, not what i want
 	}
-	/** @arg {number} level*/
 	function human_log_level(level: number) {
 		switch(level) {
 			case LOG_LEVEL_CRIT: return 'crit'
@@ -130,7 +132,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			default: return 'unknown'
 		}
 	}
-	/** @arg {number} level @arg {string} format_str @arg {any[]} args */
 	function log_if(level: number,format_str: string,...args: any[]) {
 		if(level>local_logging_level) return
 		append_console_message(level,format_str,...args)
@@ -153,72 +154,82 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 		/** @arg {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} type */
 		as_type(type: "string"|"number"|"bigint"|"boolean"|"symbol"|"undefined"|"object"|"function") {
-			// never get when it is null
-			if(this.value===null) return null
 			if(typeof this.value===type) {
 				return this
 			}
 			return null
 		}
 	}
-	class CSSStyleSheetConstructorBoxImpl {
-		/** @type {"constructor_box"} */
+	class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 		type: "constructor_box"="constructor_box"
-		/** @type {"javascript"} */
+		arguments: '[options?: CSSStyleSheetInit | undefined]'
+		args_type: NoArgsType
+		m_verify_name: 'CSSStyleSheetConstructorBox'
 		from: "javascript"="javascript"
-		/** @type {"CSSStyleSheet"} */
 		instance_type: "CSSStyleSheet"="CSSStyleSheet"
-		/** @type {"CSSStyleSheet"} */
 		constructor_type: "CSSStyleSheet"="CSSStyleSheet"
 		value: typeof CSSStyleSheet
-		/** @arg {'function'|'object'} to_match */
-		as_type(to_match: 'function'|'object') {
-			if(typeof this.value===to_match) {
-				return this
-			}
-			return null
+		constructor(value: typeof CSSStyleSheet) {
+			this.arguments='[options?: CSSStyleSheetInit | undefined]'
+			this.args_type=new NoArgsType
+			this.m_verify_name='CSSStyleSheetConstructorBox'
+			this.value=value
 		}
-		/** @arg {StackVM} _vm @arg {string} key */
+		verify_name(name: "CSSStyleSheetConstructorBox"): boolean {
+			return this.m_verify_name==='CSSStyleSheetConstructorBox'&&name==='CSSStyleSheetConstructorBox'
+		}
+		as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
+			let typeof_=typeof this.value
+			switch(typeof_) {
+				case 'object': return [input_typeof===typeof_,this]
+				case 'function': return [input_typeof===typeof_,this]
+			}
+			return [false,null]
+		}
 		on_get(_vm: StackVM,key: string) {
 			console.log('get','CSSStyleSheetConstructorBox',key)
 		}
 		factory() {
 			return new CSSStyleSheetBoxImpl(new this.value)
 		}
-		constructor(value: typeof CSSStyleSheet) {
-			this.value=value
-		}
 	}
-	/** @implements {CSSStyleSheetBox} */
-	class CSSStyleSheetBoxImpl {
+	class CSSStyleSheetBoxImpl implements CSSStyleSheetBox {
 		type: "instance_box"
+		m_verify_name: "CSSStyleSheetBox"
 		instance_type: "CSSStyleSheet"
 		value: CSSStyleSheet
-		as_type(to_match: 'object'|'function') {
-			if(to_match==='object') return this
-			return null
-		}
 		constructor(value: CSSStyleSheet) {
 			this.type='instance_box'
+			this.m_verify_name='CSSStyleSheetBox'
 			this.instance_type='CSSStyleSheet'
 			this.value=value
 		}
+		verify_name(name: "CSSStyleSheetBox"): boolean {
+			return this.m_verify_name==='CSSStyleSheetBox'&&name==='CSSStyleSheetBox'
+		}
+		as_type(input_typeof: 'object'|'function'): [boolean,this|null] {
+			let typeof_=typeof this.value
+			switch(typeof_) {
+				case 'object': return [input_typeof===typeof_,this]
+				case 'function': return [input_typeof===typeof_,this]
+			}
+			return [false,null]
+		}
 	}
-	/** @implements {PromiseBox} */
 	class PromiseBoxImpl {
 		type: "promise_box"
 		await_type: "Box"
 		inner_type: "Promise<Box>"
 		value: Promise<Box>
-		as_type(to_match: 'object'|'function') {
-			if(to_match==='object') return this
-			return null
-		}
 		constructor(value: Promise<Box>) {
 			this.type='promise_box'
 			this.await_type='Box'
 			this.inner_type='Promise<Box>'
 			this.value=value
+		}
+		as_type(to_match: 'object'|'function') {
+			if(to_match==='object') return this
+			return null
 		}
 	}
 	class StackVMBoxImpl implements StackVMBox {
@@ -285,7 +296,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		verify_name(name: "ObjectBox"): boolean {
 			return this.m_verify_name==='ObjectBox'&&name==='ObjectBox'
 		}
-		as_type(input_typeof: "object" | "function"): [boolean, this | null] {
+		as_type(input_typeof: "object"|"function"): [boolean,this|null] {
 			let typeof_=typeof this.value
 			switch(typeof_) {
 				case 'object': return [input_typeof===typeof_,this]
@@ -309,9 +320,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 	}
 	class InstructionCallImpl {
-		/** @type {'call'} */
 		type: 'call'='call'
-		/** @type {boolean} */
 		debug: boolean=false
 		handle_as_fn_box(vm: StackVM,fn_box: Box,target_this: Box,arg_arr: Box[]) {
 			if(typeof fn_box!='object') {
@@ -338,7 +347,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 				throw new Error("Unexpected function box type")
 			}
 		}
-		/** @arg {Exclude<Box, Primitives>} object_box @returns {{}|Function|StackVM|null} */
 		unbox_obj(object_box: Exclude<Box,Primitives>): {}|Function|StackVM|null {
 			if(object_box===null) return null
 			if(object_box.type==='temporary_box') {
@@ -384,9 +392,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			console.log('unbox',object_box)
 			throw 1
 		}
-		/** @arg {Box[]} arg_arr */
 		unbox_arr(arg_arr: Box[]) {
-			/** @type {({} | Function | StackVM | Primitives | null)[]} */
 			let arr: ({}|Function|StackVM|Primitives|null)[]=[]
 			for(let i=0;i<arg_arr.length;i++) {
 				let cur=arg_arr[i]
@@ -529,7 +535,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 	}
 	class InstructionCastImpl {
-		/** @type {'cast'} */
 		type: 'cast'='cast'
 		debug=false
 		push_box(vm: StackVM,value: {[x: string]: Box}): void {
@@ -550,7 +555,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		push_custom_box(vm: StackVM,box: StackVMBox) {
 			vm.stack.push(new temporary_box_StackVM(box.value))
 		}
-		/** @arg {StackVM} vm @arg {Exclude<Box, Primitives>} obj*/
 		cast_to_type(vm: StackVM,obj: Exclude<Box,Primitives>) {
 			if(obj?.type==='custom_box'&&obj.box_type==='StackVM') {
 				return this.push_custom_box(vm,obj)
@@ -558,7 +562,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			if(obj?.type==='temporary_box') {
 				if(obj.source==='get') {
 					console.log('temporary_box',obj)
-					return this.push_temporary_box_2(vm, obj)
+					return this.push_temporary_box_2(vm,obj)
 				}
 				if(obj.source==='call') {
 					return this.push_temporary_box(vm,obj)
@@ -595,13 +599,14 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 				default: throw new Error("Missing cast to "+instruction[1])
 			}
 			let cast_type=instruction[1]
-			this.cast_to_type(vm,obj,cast_type)
+			if(cast_type!=='object_index') {
+				throw new Error(`Unsupported operation: Cast(${cast_type})`)
+			}
+			this.cast_to_type(vm,obj)
 		}
 	}
 	class InstructionJeImpl {
-		/** @type {'je'} */
 		type: 'je'='je'
-		/** @arg {import("types/vm/instruction/mod.js").jump.Je} instruction @arg {StackVM} vm */
 		run(vm: StackVM,instruction: Je) {
 			let [,target]=instruction
 			if(typeof target!='number') throw new Error("Invalid")
@@ -634,7 +639,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 				throw new Error("RangeError: Destination is out of instructions range")
 			}
 			let instruction_1=vm.instructions[target]
-			/** @type {[string, ...any[]]} */
 			let instruction_modify: [string,...any[]]=instruction_1
 			let value=null
 			if(vm instanceof StackVM) {
@@ -1228,13 +1232,12 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 	}
 	class DocumentWriteList {
-		/** @type {any[]} */
-		list: any[]
+		list: (string[]|null)[]
 		attached: boolean
 		end_symbol: symbol
-		document_write: null
-		attached_document: null
-		document_write_proxy: null
+		document_write: ((...text: string[]) => void)|null
+		attached_document: Document|null
+		document_write_proxy: ((...text: string[]) => void)|null
 		constructor() {
 			this.list=[]
 			this.attached=false
@@ -1243,13 +1246,11 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			this.attached_document=null
 			this.document_write_proxy=null
 		}
-		/** @arg {(...text: string[]) => void} target @arg {Document} thisArg @arg {string[]} argArray */
 		write(target: (...text: string[]) => void,thisArg: Document,argArray: string[]) {
 			console.assert(target===this.document_write)
 			console.assert(thisArg===this.attached_document)
 			this.list.push(argArray,null)
 		}
-		/** @arg {Document} document */
 		attach_proxy(document: Document) {
 			if(this.attached) {
 				let was_destroyed=this.destroy(true)
@@ -1261,7 +1262,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			this.document_write=document.write
 			let proxy_handler={
 				other: this,
-				/** @arg {(...text: string[]) => void} target @arg {Document} thisArg @arg {string[]} argArray */
 				apply(target: (...text: string[]) => void,thisArg: Document,argArray: string[]) {
 					this.other.write(target,thisArg,argArray)
 				}
@@ -1282,9 +1282,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 				let doc_1=this.attached_document
 				if(doc_1&&this.document_write) {
 					let doc_var=this.document_write
-					/** @type {any} */
 					let any_var: any=doc_var
-					/** @type {Document['write']} */
 					let vv: Document['write']=any_var
 					doc_1.write=vv
 				}
@@ -1348,24 +1346,19 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 	class EventHandlerDispatch {
 		target_obj: {[x: string]: any}
 		target_name: string
-		target_name: any
-		/** @arg {{[x:string]:any}} target_obj @arg {string} target_name */
 		constructor(target_obj: {[x: string]: any},target_name: string) {
 			this.target_obj=target_obj
 			this.target_name=target_name
 		}
-		/** @arg {any} event */
 		handleEvent(event: any) {
 			this.target_obj[this.target_name](event)
 		}
 	}
 	class CompressionStatsCalculator {
-		hit_counts: never[]
-		cache: never[]
+		hit_counts: number[]
+		cache: string[]
 		constructor() {
-			/** @type {number[]} */
 			this.hit_counts=[]
-			/** @type {string[]} */
 			this.cache=[]
 		}
 		map_values() {
@@ -1374,13 +1367,11 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		map_keys() {
 			return this.cache
 		}
-		/** @arg {number} index */
 		add_hit(index: number) {
 			if(!this.map_values()[index]) {
 				this.map_values()[index]=1
 			} else this.map_values()[index]++
 		}
-		/** @arg {string} key */
 		add_item(key: string) {
 			let index=this.map_keys().indexOf(key)
 			if(index==-1) index=this.map_keys().push(key)-1
@@ -1390,7 +1381,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			this.map_keys().length=0
 			this.map_values().length=0
 		}
-		/** @arg {any[]} arr @arg {number} win_size */
 		calc_compression_stats(arr: any[],win_size: number) {
 			this.reset()
 			for(let i=0;i<arr.length;i++) {
@@ -1431,11 +1421,10 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 	}
 	class MulCompression extends BaseCompression {
 		stats_calculator: CompressionStatsCalculator
-		compression_stats: never[]
+		compression_stats: any[]
 		constructor() {
 			super()
 			this.stats_calculator=new CompressionStatsCalculator
-			/** @type {any[]} */
 			this.compression_stats=[]
 		}
 
@@ -1529,10 +1518,10 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 	}
 	class PromiseTimeoutTarget {
-		m_promise_accept: null
-		m_promise_reject: null
-		m_promise: null
-		m_callback: null
+		m_promise_accept: ((value: any) => void)|null
+		m_promise_reject: ((reason?: any) => void)|null
+		m_promise: Promise<any>|null
+		m_callback: ((value?: any) => void)|null
 		m_active: boolean
 		constructor() {
 			this.m_promise_accept=null
@@ -1547,8 +1536,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			this.m_active=true
 			return this.m_promise
 		}
-		/** @arg {any} accept @arg {any} reject */
-		promise_executor(accept: any,reject: any) {
+		promise_executor(accept: (value: any) => void,reject: (reason?: any) => void) {
 			this.m_promise_accept=accept
 			this.m_promise_reject=reject
 			this.m_callback=this.on_result.bind(this)
@@ -1585,11 +1573,10 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 	}
 	class BaseNode {
-		m_parent: null
+		m_parent: any|null
 		constructor() {
 			this.m_parent=null
 		}
-		/** @arg {any} parent */
 		set_parent(parent: any) {
 			this.m_parent=parent
 		}
@@ -1639,10 +1626,14 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			this.m_callback()
 		}
 	}
+	type TimeoutTargetType1={
+		fire(): void
+	}
+
 	class TimeoutNode extends BaseNode {
 		m_timeout: number
-		m_id: null
-		m_target: null
+		m_id: ReturnType<typeof setTimeout>|null
+		m_target: TimeoutTargetType1|null
 		constructor(timeout=0) {
 			super()
 			this.m_timeout=timeout
@@ -1659,8 +1650,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		set() {
 			this.m_id=setTimeout(this.run.bind(this),this.m_timeout)
 		}
-		/** @arg {{} | null} target */
-		start(target: {}|null) {
+		start(target: TimeoutTargetType1|null) {
 			if(!target) throw new Error("No target")
 			this.m_target=target
 			this.set()
@@ -1677,20 +1667,21 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 	class IntervalNode extends BaseNode {
 		m_target_fn: CallableFunction
 		m_timeout: number
-		id: null
-		m_target: {}
+		m_id: ReturnType<typeof setTimeout>|null
+		m_target: TimeoutTargetType1|null
 		/** @arg {CallableFunction} target_fn */
 		constructor(target_fn: CallableFunction,timeout=0) {
 			super()
 			this.m_target_fn=target_fn
 			this.m_timeout=timeout
-			this.id=null
+			this.m_target=null
+			this.m_id=null
 		}
 		set() {
-			this.id=setInterval(this.run.bind(this),this.m_timeout)
+			this.m_id=setInterval(this.run.bind(this),this.m_timeout)
 		}
-		/** @arg {{} | null} target */
-		start(target: {}|null=null) {
+		/** @arg {TimeoutTargetType1 | null} target */
+		start(target: TimeoutTargetType1|null=null) {
 			if(target) {
 				this.m_target=target
 			} else {
@@ -1699,12 +1690,42 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 			this.set()
 		}
 		destroy() {
-			if(this.id!==null) clearInterval(this.id)
+			if(this.m_id!==null) clearInterval(this.m_id)
 		}
 	}
-	class AsyncTimeoutNode extends TimeoutNode {
-		/** @arg {{wait():Promise<any>;destroy():void}} target */
-		async start_async(target: {wait(): Promise<any>; destroy(): void ) {
+	type AsyncTimeoutTarget1={
+		wait(): Promise<any>
+		fire(): void
+		destroy(): void
+	}
+
+	class AsyncTimeoutNode extends BaseNode {
+		m_timeout: number
+		m_id: ReturnType<typeof setTimeout>|null
+		m_target: AsyncTimeoutTarget1|null
+		constructor(timeout=0) {
+			super()
+			this.m_timeout=timeout
+			this.m_id=null
+			this.m_target=null
+		}
+		timeout() {
+			return this.m_timeout
+		}
+		/** @arg {any} target */
+		set_target(target: any) {
+			this.m_target=target
+		}
+		start(target: AsyncTimeoutTarget1|null) {
+			if(!target) throw new Error("No target")
+			this.m_target=target
+			this.set()
+		}
+		destroy() {
+			if(this.m_id!==null) clearTimeout(this.m_id)
+			if(this.m_target) this.m_target.destroy()
+		}
+		async start_async(target: AsyncTimeoutTarget1) {
 			if(!target) throw new Error("unable to start_async without anything to wait for")
 			log_if(LOG_LEVEL_INFO,'start_async')
 			this.m_target=target
@@ -1715,15 +1736,13 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 		set() {
 			log_if(LOG_LEVEL_INFO,'set',this)
-			super.set()
+			this.m_id=setTimeout(this.run.bind(this),this.m_timeout)
 		}
 		run() {
 			log_if(LOG_LEVEL_INFO,'run',this)
-			return super.run()
-		}
-		destroy() {
-			if(this.m_target) this.m_target.destroy()
-			super.destroy()
+			if(this.m_target) this.m_target.fire()
+			this.m_id=null
+			this.remove()
 		}
 	}
 	class IntervalIdNodeRef extends IntervalIdNode {
@@ -1739,9 +1758,8 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 	}
 	class AsyncNodeRoot {
-		children: never[]
+		children: BaseNode[]
 		constructor() {
-			/** @type {BaseNode[]} */
 			this.children=[]
 		}
 		/** @arg {()=>void} target_fn @arg {number | undefined} timeout */
@@ -1786,11 +1804,8 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		}
 	}
 	class RatioOptions {
-		/** @type {number} */
 		size: number
-		/** @type {number} */
 		history_size: number
-		/** @type {number} */
 		time_start: number
 		/** @type {number} */
 		duration: number
@@ -1803,7 +1818,7 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 	}
 	class AverageRatio {
 		type: string
-		history: never[]
+		history: number[]
 		count: number
 		value: number
 		size: number
@@ -1817,7 +1832,6 @@ import {FunctionBox} from "../../../box/FunctionBox.js"
 		/** @arg {string} type @arg {RatioOptions} options */
 		constructor(type: string,options: RatioOptions) {
 			this.type=type
-			/** @type {number[]} */
 			this.history=[]
 			this.count=0
 			this.value=0

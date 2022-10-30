@@ -5,6 +5,7 @@ import {AutoBuy} from "../vm/AutoBuy"
 import {DebugAPI} from "./DebugAPI"
 import {GenericDataEvent} from "../vm/GenericDataEvent"
 import {GlobalStateKey} from "../vm/GlobalStateKey"
+import {MulCompression} from "../vm/MulCompression"
 
 export {}
 
@@ -16,6 +17,10 @@ export interface SpecType {
 }
 
 declare global {
+	export interface Window {
+		MulCompression: typeof MulCompression
+	}
+
 	export interface Window {
 		proxy_set: any[]
 		atomepersecond: number
