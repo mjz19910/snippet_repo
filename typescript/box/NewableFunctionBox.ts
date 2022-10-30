@@ -1,7 +1,6 @@
 import {NewableInstancePack} from "./NewableInstancePack"
 import {Box} from "./Box"
 import {BoxTemplate} from "./template/BoxTemplate"
-import {ObjectBox} from "./ObjectBox"
 import {BoxVerify} from "./BoxVerify"
 
 export class NewableFunctionBox
@@ -9,11 +8,11 @@ export class NewableFunctionBox
 	implements BoxVerify<NewableFunctionBox,"NewableFunctionBox">
 {
 	readonly type="constructor_box"
-	class_value: {new(...a: Box[]): {}}
+	class_value: new(...a: Box[])=>{}
 	readonly instance_type=null
 	readonly arguments="box[]"
 	readonly return="box"
-	constructor(class_value: new (...a: Box[]) => {},factory_value: NewableInstancePack<{}>) {
+	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
 		super(factory_value)
 		this.class_value=class_value
 	}
@@ -22,7 +21,6 @@ export class NewableFunctionBox
 		return this.m_verify_name==='NewableFunctionBox'&&name==='NewableFunctionBox'
 	}
 	factory(...args: Box[]) {
-		let res=new this.class_value(...args)
-		return new ObjectBox(res)
+		return this.value(this.class_value, args)
 	}
 }

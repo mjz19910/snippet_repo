@@ -18,6 +18,31 @@
 // @grant			none
 // ==/UserScript==
 
+import {ArrayBox} from "../../../box/ArrayBox.js"
+import {Box} from "../../../box/Box.js"
+import {EmptyArrayBox} from "../../../box/EmptyArrayBox.js"
+import {ExtractKey} from "../../../box/ExtractKey.js"
+import {Primitives} from "../../../box/helper/Primitives.js"
+import {InstructionTypeArrayBox} from "../../../box/InstructionTypeArrayBox.js"
+import {InstructionTypeBox} from "../../../box/InstructionTypeBox.js"
+import {NewableInstancePack} from "../../../box/NewableInstancePack.js"
+import {StackVMBox} from "../../../box/StackVMBox.js"
+import {TemporaryBox} from "../../../box/temporary_box/TemporaryBox.js"
+import {temporary_box_StackVM} from "../../../box/temporary_box/temporary_box_StackVM.js"
+import {Cast} from "../../../vm/instruction/Cast.js"
+import {Call} from "../../../vm/instruction/general/Call.js"
+import {Construct} from "../../../vm/instruction/general/Construct.js"
+import {Get} from "../../../vm/instruction/general/Get.js"
+import {Return} from "../../../vm/instruction/general/Return.js"
+import {InstructionType} from "../../../vm/instruction/InstructionType.js"
+import {Je} from "../../../vm/instruction/jump/Je.js"
+import {Jump} from "../../../vm/instruction/jump/Jump.js"
+import {ModifyOperand} from "../../../vm/instruction/ModifyOperand.js"
+import {Dup} from "../../../vm/instruction/stack/Dup.js"
+import {Push} from "../../../vm/instruction/stack/Push.js"
+import {Halt} from "../../../vm/instruction/turing/Halt.js"
+import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
+
 // eslint-disable no-undef,no-lone-blocks,no-eval
 
 
@@ -50,8 +75,7 @@
 
 	let local_logging_level=3
 	let LogErrorAsConsoleError=false
-	/** @arg {number} level @arg {string} format_str @arg {any[]} args */
-	function append_console_message(level,format_str,...args) {
+	function append_console_message(level: number,format_str: string,...args: any[]) {
 		update_logger_vars()
 		let level_str=human_log_level(level)
 		if(level_str!=='unknown') {
@@ -78,7 +102,7 @@
 		// trace includes a stack trace, not what i want
 	}
 	/** @arg {number} level*/
-	function human_log_level(level) {
+	function human_log_level(level: number) {
 		switch(level) {
 			case LOG_LEVEL_CRIT: return 'crit'
 			case LOG_LEVEL_ERROR: return 'error'
@@ -91,7 +115,7 @@
 		}
 	}
 	/** @arg {number} level @arg {string} format_str @arg {any[]} args */
-	function log_if(level,format_str,...args) {
+	function log_if(level: number,format_str: string,...args: any[]) {
 		if(level>local_logging_level) return
 		append_console_message(level,format_str,...args)
 	}
@@ -107,14 +131,12 @@
 		debugger
 	}
 	class BaseBox {
-		/** @type {import("final/BaseBox.js").BoxInner | null} */
-		value
-		/** @arg {import("final/BaseBox.js").BoxInner | null} value */
-		constructor(value) {
+		value: null
+		constructor(value: null) {
 			this.value=value
 		}
 		/** @arg {"string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"} type */
-		as_type(type) {
+		as_type(type: "string"|"number"|"bigint"|"boolean"|"symbol"|"undefined"|"object"|"function") {
 			// never get when it is null
 			if(this.value===null) return null
 			if(typeof this.value===type) {
@@ -123,149 +145,148 @@
 			return null
 		}
 	}
-	class CSSStyleSheetConstructorBoxImpl extends BaseBox {
+	class CSSStyleSheetConstructorBoxImpl {
 		/** @type {"constructor_box"} */
-		type="constructor_box"
+		type: "constructor_box"="constructor_box"
 		/** @type {"javascript"} */
-		from="javascript"
+		from: "javascript"="javascript"
 		/** @type {"CSSStyleSheet"} */
-		instance_type="CSSStyleSheet"
+		instance_type: "CSSStyleSheet"="CSSStyleSheet"
 		/** @type {"CSSStyleSheet"} */
-		constructor_type="CSSStyleSheet"
+		constructor_type: "CSSStyleSheet"="CSSStyleSheet"
+		value: typeof CSSStyleSheet
 		/** @arg {'function'|'object'} to_match */
-		as_type(to_match) {
+		as_type(to_match: 'function'|'object') {
 			if(typeof this.value===to_match) {
 				return this
 			}
 			return null
 		}
 		/** @arg {StackVM} _vm @arg {string} key */
-		on_get(_vm,key) {
+		on_get(_vm: StackVM,key: string) {
 			console.log('get','CSSStyleSheetConstructorBox',key)
 		}
 		factory() {
 			return new CSSStyleSheetBoxImpl(new this.value)
 		}
-		/** @arg {typeof CSSStyleSheet} value */
-		constructor(value) {
-			super(null)
+		constructor(value: typeof CSSStyleSheet) {
 			this.value=value
 		}
 	}
 	/** @implements {CSSStyleSheetBox} */
-	class CSSStyleSheetBoxImpl extends BaseBox {
-		/** @type {"instance_box"} */
-		type="instance_box"
-		/** @type {"CSSStyleSheet"} */
-		instance_type="CSSStyleSheet"
-		/** @arg {'object'|'function'} to_match */
-		as_type(to_match) {
+	class CSSStyleSheetBoxImpl {
+		type: "instance_box"
+		instance_type: "CSSStyleSheet"
+		value: CSSStyleSheet
+		as_type(to_match: 'object'|'function') {
 			if(to_match==='object') return this
 			return null
 		}
-		/** @type {CSSStyleSheet} */
-		value
-		/** @arg {CSSStyleSheet} value */
-		constructor(value) {
-			super(null)
+		constructor(value: CSSStyleSheet) {
+			this.type='instance_box'
+			this.instance_type='CSSStyleSheet'
 			this.value=value
 		}
 	}
 	/** @implements {PromiseBox} */
-	class PromiseBoxImpl extends BaseBox {
-		/** @type {"promise_box"} */
-		type="promise_box"
-		/** @type {"Box"} */
-		await_type="Box"
-		/** @type {"Promise<Box>"} */
-		inner_type="Promise<Box>"
-		/** @arg {'object'|'function'} to_match */
-		as_type(to_match) {
+	class PromiseBoxImpl {
+		type: "promise_box"
+		await_type: "Box"
+		inner_type: "Promise<Box>"
+		value: Promise<Box>
+		as_type(to_match: 'object'|'function') {
 			if(to_match==='object') return this
 			return null
 		}
-		/** @type {Promise<Box>} */
-		value
-		/** @arg {Promise<Box>} value */
-		constructor(value) {
-			super(null)
+		constructor(value: Promise<Box>) {
+			this.type='promise_box'
+			this.await_type='Box'
+			this.inner_type='Promise<Box>'
 			this.value=value
 		}
 	}
 	/** @implements {StackVMBox} */
-	class StackVMBoxImpl extends BaseBox {
-		/** @type {"custom_box"} */
-		type="custom_box"
-		/** @type {"StackVM"} */
-		box_type="StackVM"
-		/** @type {StackVM} */
-		value
-		/** @arg {StackVM} value */
-		constructor(value) {
-			super(null)
+	class StackVMBoxImpl {
+		type: "custom_box"
+		box_type: "StackVM"
+		value: StackVM
+		constructor(value: StackVM) {
+			this.type='custom_box'
+			this.box_type='StackVM'
 			this.value=value
 		}
 	}
-	/** @implements {WindowBox} */
-	class WindowBoxImpl extends BaseBox {
-		/** @type {"object_box"} */
-		type="object_box"
-		extension=null
-		/** @type {"Window"} */
-		inner_type="Window"
-		/** @type {Window} */
-		value
-		/** @arg {Window} value */
-		constructor(value) {
-			super(null)
+	class WindowBoxImpl {
+		type: "object_box"
+		extension: null
+		inner_type: "Window"
+		value: Window
+		constructor(value: Window) {
+			this.type='object_box'
+			this.extension=null
+			this.inner_type='Window'
 			this.value=value
 		}
 	}
-	/** @implements {ObjectBox} */
-	class ObjectBoxImpl extends BaseBox {
-		/** @type {"object_box"} */
-		type="object_box"
-		/** @type {"unit"} */
-		inner_type="unit"
+	class ObjectBoxImpl {
+		type: "object_box"
+		inner_type: "{}"
 		extension=null
-		/** @type {{}} */
-		value
-		/** @arg {{}} value */
-		constructor(value) {
-			super(null)
+		value: {}
+		constructor(value: {}) {
+			this.type='object_box'
+			this.inner_type='{}'
+			this.extension=null
 			this.value=value
 		}
 	}
 	class NewableFunctionBoxImpl {
-		constructor(value) {
-			this.value=value
+		value: NewableInstancePack<{}>
+		class_value: new(...a: Box[])=>{}
+		constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
+			this.value=factory_value
+			this.class_value=class_value
 		}
-		/** @arg {StackVM} _vm @arg {string} key */
-		on_get(_vm,key) {
+		on_get(_vm: StackVM,key: string) {
 			console.log('get','newable function',this.value,key)
+		}
+		factory(...args: Box[]) {
+			return this.value(this.class_value, args)
 		}
 	}
 	class InstructionCallImpl {
 		/** @type {'call'} */
-		type='call'
+		type: 'call'='call'
 		/** @type {boolean} */
-		debug=false
-		/** @arg {StackVM} vm @arg {Box} fn_box @arg {Box} target_this @arg {Box[]} arg_arr */
-		handle_as_fn_box(vm,fn_box,target_this,arg_arr) {
-			if(fn_box.return_type=='promise') {
-				return this.handle_as_fn(vm,fn_box.value,target_this,arg_arr)
-			} else if(fn_box.return_type===null) {
-				console.log('fixme: make a type for this',fn_box)
-				return this.handle_as_fn(vm,fn_box.value,target_this,arg_arr)
+		debug: boolean=false
+		handle_as_fn_box(vm: StackVM,fn_box: Box,target_this: Box,arg_arr: Box[]) {
+			if(typeof fn_box!='object') {
+				throw new Error("Bad")
+			}
+			if(fn_box===null) {
+				throw new Error("Bad")
+			}
+			if(typeof target_this!='object') {
+				throw new Error("Bad")
+			}
+			if(target_this===null) {
+				throw new Error("Bad")
+			}
+			if('return_type' in fn_box) {
+				if(fn_box.return_type=='promise_box') {
+					return this.handle_as_fn_impl_promise_box(vm,fn_box.value,target_this,arg_arr)
+				} else if(fn_box.return_type===null) {
+					console.log('fixme: make a type for this',fn_box)
+					return this.handle_as_fn_impl_box(vm,fn_box.value,target_this,arg_arr)
+				}
 			} else {
 				console.log('unexpected box value',fn_box)
 				throw new Error("Unexpected function box type")
 			}
 		}
 		/** @arg {Exclude<Box, Primitives>} object_box @returns {{}|Function|StackVM|null} */
-		unbox_obj(object_box) {
+		unbox_obj(object_box: Exclude<Box,Primitives>): {}|Function|StackVM|null {
 			if(object_box===null) return null
-			const {type,...left_to_unbox}=object_box
 			if(object_box.type==='temporary_box') {
 				const {type,source,value,...rest}=object_box
 				if(Object.keys(rest).length>0) {
@@ -288,8 +309,8 @@
 				}
 				return value
 			}
-			if(type==='instance_box') {
-				const {value,...rest}=left_to_unbox
+			if(object_box.type==='instance_box') {
+				const {type,value,...rest}=object_box
 				if(Object.keys(rest).length>0) {
 					console.log('other enumerable on box',rest)
 				}
@@ -300,16 +321,19 @@
 				if(box_type==='StackVM') {
 					return value
 				}
+				if(Object.keys(rest).length>0) {
+					console.log('other enumerable on box',rest)
+				}
 				console.log('unbox custom_box',{type,box_type},rest)
 				throw 1
 			}
-			console.log('unbox',type,left_to_unbox)
+			console.log('unbox',object_box)
 			throw 1
 		}
 		/** @arg {Box[]} arg_arr */
-		unbox_arr(arg_arr) {
+		unbox_arr(arg_arr: Box[]) {
 			/** @type {({} | Function | StackVM | Primitives | null)[]} */
-			let arr=[]
+			let arr: ({}|Function|StackVM|Primitives|null)[]=[]
 			for(let i=0;i<arg_arr.length;i++) {
 				let cur=arg_arr[i]
 				if(typeof cur==='string') {
@@ -326,46 +350,48 @@
 			}
 			return arr
 		}
-		/** @arg {StackVM} vm @arg {(...a: Box[]) => Box} fn_value @arg {Exclude<Box, Primitives>} target_this @arg {Box[]} arg_arr */
-		handle_as_fn(vm,fn_value,target_this,arg_arr) {
+		handle_as_fn_impl_promise_box(vm: StackVM,fn_value: (...a: Box[]) => Promise<Box>,target_this: Exclude<Box,Primitives>,arg_arr: Box[]) {
 			let real_this=this.unbox_obj(target_this)
 			let ret=fn_value.apply(real_this,arg_arr)
-			/** @type {{type:'temporary_box';source: 'call';extension:null;value: any;}} */
-			let ret_box={
+			let ret_box: {type: 'temporary_box'; source: 'call'; extension: null; value: any}={
 				type: 'temporary_box',
 				source: 'call',
 				extension: null,
 				value: ret
 			}
-			vm.stack.push(ret_box)
+			vm.stack.push(ret_box as unknown as Box)
 		}
-		/** @arg {StackVM} vm @arg {Exclude<Box, Primitives|null>} fn_obj @arg {Exclude<Box, Primitives>} target_this @arg {Box[]} arg_arr */
-		handle_as_obj(vm,fn_obj,target_this,arg_arr) {
+		handle_as_fn_impl_box(vm: StackVM,fn_value: (...a: Box[]) => Box,target_this: Exclude<Box,Primitives>,arg_arr: Box[]) {
+			let real_this=this.unbox_obj(target_this)
+			let ret=fn_value.apply(real_this,arg_arr)
+			let ret_box: {type: 'temporary_box'; source: 'call'; extension: null; value: any}={
+				type: 'temporary_box',
+				source: 'call',
+				extension: null,
+				value: ret
+			}
+			vm.stack.push(ret_box as unknown as Box)
+		}
+		handle_as_obj(vm: StackVM,fn_obj: Exclude<Box,Primitives|null>,target_this: Exclude<Box,Primitives>,arg_arr: Box[]) {
 			if(fn_obj.type==='temporary_box') throw 1
 			if(!fn_obj.as_type) {
 				console.log('!fn_obj.as_type',fn_obj)
 				throw new Error("Invalid")
 			}
-			let raw_fn=fn_obj.as_type('function')
+			let raw_fn=fn_obj.as_type('function')[1]
 			if(!raw_fn) {
 				throw new Error("Unreachable (type of value is not 'function')")
-			}
-			if(raw_fn.type==='function_box') {
+			} else if(raw_fn.type==='function_box') {
 				if(raw_fn.return_type===null) {
-					return this.handle_as_fn(vm,raw_fn.value,target_this,arg_arr)
+					return this.handle_as_fn_impl_box(vm,raw_fn.value,target_this,arg_arr)
 				}
 			} else if(raw_fn.type=='constructor_box') {
 				throw new Error("Unexpected constructor")
-			}
-			else if(raw_fn.type==='function_box') {
-				this.handle_as_fn_box(vm,raw_fn,target_this,arg_arr)
-			}
-			else {
+			} else {
 				throw new Error("Unreachable (type of value is never)")
 			}
 		}
-		/** @arg {import("types/vm/instruction/mod.js").general.Call} instruction @arg {StackVM} vm */
-		run(vm,instruction) {
+		run(vm: StackVM,instruction: Call) {
 			let number_of_arguments=instruction[1]
 			if(typeof number_of_arguments!='number') throw new Error("Invalid")
 			if(number_of_arguments<=1) {
@@ -388,7 +414,7 @@
 			}
 			if(typeof value_box==='function') {
 				if(this.debug) console.log('function is not boxed',value_box)
-				return this.handle_as_fn(vm,value_box,target_this,arg_arr)
+				return this.handle_as_fn_impl_promise_box(vm,value_box,target_this,arg_arr)
 			} else if(value_box===null) {
 				throw new Error("Invalid")
 			} else if(typeof value_box==='object'&&value_box.type==='void') {
@@ -404,11 +430,10 @@
 				throw new Error("Invalid")
 			}
 		}
-		/** @arg {StackVM} vm @arg {TemporaryBox} value_box @arg {Exclude<Box, Primitives>} target_this @arg {Box[]} arg_arr */
-		handle_as_temporary_box(vm,value_box,target_this,arg_arr) {
+		handle_as_temporary_box(vm: StackVM,value_box: TemporaryBox,target_this: Exclude<Box,Primitives>,arg_arr: Box[]) {
 			if(value_box.source==='cast') {
 				if(value_box.cast_source==='vm_function') {
-					return this.handle_as_fn(vm,value_box.value,target_this,arg_arr)
+					return this.handle_as_fn_impl_box(vm,value_box.value,target_this,arg_arr)
 				}
 			}
 			console.log('handle box in call instruction',value_box)
@@ -416,10 +441,8 @@
 
 	}
 	class InstructionConstructImpl {
-		/** @type {'construct'} */
-		type='construct'
-		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").general.Construct} ins */
-		run(vm,ins) {
+		type: 'construct'='construct'
+		run(vm: StackVM,ins: Construct) {
 			let number_of_arguments=ins[1]
 			if(typeof number_of_arguments!='number') throw new Error("Invalid")
 			let [construct_target,...construct_arr]=vm.pop_arg_count(number_of_arguments)
@@ -431,8 +454,7 @@
 				let obj=a.factory(...construct_arr)
 				vm.stack.push(obj)
 			} else if(a.instance_type==='CSSStyleSheet') {
-				/** @type {{s:[options?: CSSStyleSheetInit | undefined], valid_count:1}|{s:[], valid_count:0}} */
-				let valid_args={
+				let valid_args: {s: [options?: CSSStyleSheetInit|undefined],valid_count: 1}|{s: [],valid_count: 0}={
 					s: [],
 					valid_count: 0
 				}
@@ -447,17 +469,16 @@
 					}
 				}
 				let obj=new a.value(...valid_args.s)
-				vm.stack.push(new CSSStyleSheetBoxImpl(obj))
+				vm.stack.push(new CSSStyleSheetBoxImpl(obj) as unknown as Box)
 			}
 			log_if(LOG_LEVEL_INFO,"",ins,...vm.stack.slice(vm.stack.length-number_of_arguments))
 		}
 	}
 	class InstructionCastImpl {
 		/** @type {'cast'} */
-		type='cast'
+		type: 'cast'='cast'
 		debug=false
-		/** @type {(vm:StackVM, cast_source:"object_index", value:{[x:string]:Box})=>void} */
-		push_box(vm,cast_source,value) {
+		push_box(vm: StackVM,cast_source: "object_index",value: {[x: string]: Box}): void {
 			vm.stack.push({
 				type: 'temporary_box',
 				source: 'cast',
@@ -466,30 +487,20 @@
 				value
 			})
 		}
-		/** @arg {StackVM} vm @arg {'object_index'} cast_source @arg {{value:never}} obj */
-		noisy_push_temporary_box(vm,cast_source,obj) {
+		noisy_push_temporary_box(vm: StackVM,cast_source: 'object_index',obj: {value: never}) {
 			void vm
 			console.warn('noisy box',cast_source,obj)
 			console.log('inner',obj.value)
 			this.push_box(vm,cast_source,obj.value)
 		}
-		/** @type {(vm:StackVM, cast_source:'object_index', obj:{value:{[x:string]:Box}})=>void} @arg {StackVM} vm @arg {'object_index'} cast_source */
-		push_temporary_box(vm,cast_source,obj) {
+		push_temporary_box(vm: StackVM,cast_source: 'object_index',obj: {value: {[x: string]: Box}}): void {
 			this.push_box(vm,cast_source,obj.value)
 		}
-		/** @arg {StackVM} vm @arg {'object_index'} cast_source @arg {import("./support.js").StackVMBox} obj */
-		push_custom_box(vm,cast_source,obj) {
-			vm.stack.push({
-				type: 'temporary_box',
-				source: 'cast',
-				extension: 'custom_box_cast',
-				custom_type: obj.box_type,
-				cast_source,
-				value: obj.value
-			})
+		push_custom_box(vm: StackVM,cast_source: 'object_index',box: StackVMBox) {
+			vm.stack.push(new temporary_box_StackVM(box.value))
 		}
 		/** @arg {StackVM} vm @arg {Exclude<Box, Primitives>} obj @arg {'object_index'} cast_source */
-		cast_to_type(vm,obj,cast_source) {
+		cast_to_type(vm: StackVM,obj: Exclude<Box,Primitives>,cast_source: 'object_index') {
 			if(obj?.type==='custom_box'&&obj.box_type==='StackVM') {
 				return this.push_custom_box(vm,cast_source,obj)
 			}
@@ -525,8 +536,7 @@
 			console.warn('unk obj boxed into temporary_box<object_index>',obj)
 			this.push_box(vm,cast_source,obj)
 		}
-		/** @arg {import("types/vm/instruction/mod.js").Cast} instruction @arg {StackVM} vm */
-		run(vm,instruction) {
+		run(vm: StackVM,instruction: Cast) {
 			let obj=vm.stack.pop()
 			if(!obj) throw new Error("Invalid")
 			if(this.debug) {
@@ -543,9 +553,9 @@
 	}
 	class InstructionJeImpl {
 		/** @type {'je'} */
-		type='je'
+		type: 'je'='je'
 		/** @arg {import("types/vm/instruction/mod.js").jump.Je} instruction @arg {StackVM} vm */
-		run(vm,instruction) {
+		run(vm: StackVM,instruction: Je) {
 			let [,target]=instruction
 			if(typeof target!='number') throw new Error("Invalid")
 			if(vm.is_in_instructions(target)) {
@@ -557,10 +567,8 @@
 		}
 	}
 	class InstructionJmpImpl {
-		/** @type {'jmp'} */
-		type='jmp'
-		/** @arg {import("types/vm/instruction/mod.js").jump.Jump} instruction @arg {StackVM} vm */
-		run(vm,instruction) {
+		type: 'jmp'='jmp'
+		run(vm: StackVM,instruction: Jump) {
 			let [,target]=instruction
 			if(typeof target!='number') throw new Error("Invalid")
 			if(vm.is_in_instructions(target)) {
@@ -570,10 +578,8 @@
 		}
 	}
 	class InstructionModifyOpImpl {
-		/** @type {'modify_operand'} */
-		type='modify_operand'
-		/** @arg {import("types/vm/instruction/mod.js").ModifyOperand} instruction @arg {StackVM} vm */
-		run(vm,instruction) {
+		type: 'modify_operand'='modify_operand'
+		run(vm: StackVM,instruction: ModifyOperand) {
 			let [,target,offset]=instruction
 			if(typeof target!='number') throw new Error("Invalid")
 			if(typeof offset!='number') throw new Error("Invalid")
@@ -582,7 +588,7 @@
 			}
 			let instruction_1=vm.instructions[target]
 			/** @type {[string, ...any[]]} */
-			let instruction_modify=instruction_1
+			let instruction_modify: [string,...any[]]=instruction_1
 			let value=null
 			if(vm instanceof StackVM) {
 				value=vm.stack.pop()
@@ -597,10 +603,8 @@
 		}
 	}
 	class InstructionVMPushIPImpl {
-		/** @type {"vm_push_ip"} */
-		type="vm_push_ip"
-		/** @arg {import("types/vm/instruction/mod.js").vm.PushIP} _ins @arg {StackVM} vm */
-		run(vm,_ins) {
+		type: "vm_push_ip"="vm_push_ip"
+		run(vm: StackVM,_ins: VMPushIP) {
 			if(!vm.hasOwnProperty('push')) {
 				throw new Error("push_pc requires a stack")
 			} else if(vm instanceof StackVM) {
@@ -612,10 +616,8 @@
 		}
 	}
 	class InstructionPushImpl {
-		/** @type {'push'} */
-		type='push'
-		/** @arg {import("types/vm/instruction/mod.js").stack.Push} instruction @arg {StackVM} vm */
-		run(vm,instruction) {
+		type: 'push'='push'
+		run(vm: StackVM,instruction: Push) {
 			for(let i=0;i<instruction.length-1;i++) {
 				let item=instruction[i+1]
 				vm.stack.push(item)
@@ -623,19 +625,18 @@
 		}
 	}
 	class InstructionDupImpl {
-		/** @type {'dup'} */
-		type='dup'
-		/** @arg {import("types/vm/instruction/mod.js").stack.Dup} _ins @arg {StackVM} vm */
-		run(vm,_ins) {
+		type: 'dup'='dup'
+		run(vm: StackVM,_ins: Dup) {
 			if(vm.stack.length===0) throw new Error("stack underflow")
 			vm.stack.push(vm.stack.at(-1))
 		}
 	}
+	function use_never_type(value: never) {
+		console.log('used never type',value)
+	}
 	class InstructionGetImpl {
-		/** @type {'get'} */
-		type='get'
-		/** @arg {StackVM} vm @arg {import("../../../types/vm/box/TemporaryBox.js").TemporaryBox} tmp_box @arg {string} key */
-		handle_temporary_box(vm,tmp_box,key) {
+		type: 'get'='get'
+		handle_temporary_box(vm: StackVM,tmp_box: TemporaryBox,key: string) {
 			if(tmp_box.source==='cast') {
 				if(tmp_box.cast_source==='object_index') {
 					this.on_get(vm,tmp_box,key)
@@ -646,35 +647,55 @@
 			}
 		}
 		/** @arg {StackVM} vm @arg {Exclude<Box, Primitives|null>} value_box @arg {string|number} key */
-		on_get(vm,value_box,key) {
-			if(typeof key!='string') throw new Error("Invalid")
+		on_get(vm: StackVM,value_box: Exclude<Box,Primitives|null>,key: string|number) {
 			switch(value_box.type) {
 				case 'array_box': {
 					if(typeof key==='number') {
-						let res=value_box.value[key]
-						vm.stack.push(res)
+						this.array_box_handle_num(value_box,key,vm)
 						return
 					} else {
-						key=parseInt(key,10)
-						if(Number.isNaN(key)) throw new Error("Failed to parse int")
-						let res=value_box.value[key]
-						vm.stack.push(res)
+						let key_alt=parseInt(key,10)
+						if(Number.isNaN(key_alt)) throw new Error("Failed to parse int")
+						this.array_box_handle_num(value_box,key_alt,vm)
 						return
 					}
 				}
 				case 'constructor_box': {
 					switch(value_box.instance_type) {
-						case 'CSSStyleSheet': new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key); break
+						case 'CSSStyleSheet':
+							if(typeof key !='string')throw new Error("Bad")
+							new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key)
+							break
 						case null: {
-							new NewableFunctionBoxImpl(value_box.value)
+							new NewableFunctionBoxImpl(value_box.value, value_box.class_value)
 						} break
 					}
 				} break
 				default: console.log('on_get no handler',value_box.type)
 			}
 		}
-		/** @arg {import("types/vm/instruction/mod.js").general.Get} _ins @arg {StackVM} vm */
-		run(vm,_ins) {
+		private array_box_handle_num(value_box: EmptyArrayBox|ArrayBox|InstructionTypeArrayBox,key: number,vm: StackVM) {
+			switch(value_box.item_type) {
+				case 'Box': {
+					let res=value_box.value[key]
+					vm.stack.push(res)
+				} break
+				case 'instruction_type[]': {
+					let res=value_box.value[key]
+					vm.stack.push(new InstructionTypeBox(res))
+				} break
+				case null: {
+					let verify_type: 'EmptyArrayBox'=value_box.m_verify_name
+					if(verify_type!=='EmptyArrayBox') {
+						use_never_type(verify_type)
+					}
+					let res=value_box.value[key]
+					vm.stack.push(res)
+				}
+			}
+		}
+
+		run(vm: StackVM,_ins: Get) {
 			let get_key=vm.stack.pop()
 			let value_box=vm.stack.pop()
 			if(!value_box) throw new Error("Invalid")
@@ -689,18 +710,14 @@
 		}
 	}
 	class InstructionHaltImpl {
-		/** @type {'halt'} */
-		type='halt'
-		/** @arg {import("types/vm/instruction/mod.js").turing.Halt} _i @arg {StackVM} vm */
-		run(vm,_i) {
+		type: 'halt'='halt'
+		run(vm: StackVM,_i: Halt) {
 			vm.halt()
 		}
 	}
 	class InstructionReturnImpl {
-		/** @type {'return'} */
-		type='return'
-		/** @arg {import("types/vm/instruction/mod.js").general.Return} _i @arg {StackVM} vm */
-		run(vm,_i) {
+		type: 'return'='return'
+		run(vm: StackVM,_i: Return) {
 			if(vm.stack.length>0) {
 				vm.return_value=vm.stack.pop()
 			} else {
@@ -710,35 +727,35 @@
 	}
 	class InstructionBreakpointImpl {
 		/** @type {'breakpoint'} */
-		type='breakpoint'
+		type: 'breakpoint'='breakpoint'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").debug.Breakpoint} _i */
-		run(vm,_i) {
+		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").debug.Breakpoint) {
 			console.log(vm.stack)
 			trigger_debug_breakpoint()
 		}
 	}
 	class InstructionPushVMObjImpl {
 		/** @type {"vm_push_self"} */
-		type="vm_push_self"
+		type: "vm_push_self"="vm_push_self"
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.PushSelf} _i */
-		run(vm,_i) {
+		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").vm.PushSelf) {
 			vm.stack.push(new StackVMBoxImpl(vm))
 		}
 	}
 	class InstructionPushGlobalObjectImpl {
 		/** @type {'push_global_object'} */
-		type='push_global_object'
+		type: 'push_global_object'='push_global_object'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").push.GlobalObject} _i */
-		run(vm,_i) {
+		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").push.GlobalObject) {
 			vm.stack.push(new WindowBoxImpl(window))
 		}
 	}
 	class InstructionPeekImpl {
 		/** @type {'peek'} */
-		type='peek'
+		type: 'peek'='peek'
 		debug=false
 		/** @arg {StackVM} vm @arg {[any, any]} ins */
-		run(vm,ins) {
+		run(vm: StackVM,ins: [any,any]) {
 			let [,distance]=ins
 			let base_ptr=vm.base_ptr
 			if(base_ptr===null) base_ptr=0
@@ -756,9 +773,9 @@
 	/** @implements {IInstructionAppendImplIns} */
 	class InstructionAppendImpl {
 		/** @type {"append"} */
-		type="append"
+		type: "append"="append"
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").Append} _i */
-		run(vm,_i) {
+		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").Append) {
 			if(vm.stack.length<=0) {
 				throw new Error('stack underflow')
 			}
@@ -782,26 +799,26 @@
 	}
 	class InstructionPushArgsImpl {
 		/** @type {'vm_push_args'} */
-		type='vm_push_args'
+		type: 'vm_push_args'='vm_push_args'
 		/** @arg {StackVM} _vm @arg {never} _i */
-		run(_vm,_i) {
+		run(_vm: StackVM,_i: never) {
 			throw new Error("Instruction not supported")
 		}
 	}
 	class InstructionDropImpl {
 		/** @type {'drop'} */
-		type='drop'
+		type: 'drop'='drop'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").stack.Drop} _i */
-		run(vm,_i) {
+		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").stack.Drop) {
 			vm.stack.pop()
 		}
 	}
 	class InstructionVMReturnImpl {
 		/** @type {'vm_return'} */
-		type='vm_return'
+		type: 'vm_return'='vm_return'
 		debug=false
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Return} _i */
-		run(vm,_i) {
+		run(vm: StackVM,_i: import("types/vm/instruction/mod.js").vm.Return) {
 			let start_stack=vm.stack.slice()
 			if(vm.base_ptr===null) {
 				vm.running=false
@@ -822,9 +839,9 @@
 	}
 	class InstructionVMCallImpl {
 		/** @type {'vm_call'} */
-		type='vm_call'
+		type: 'vm_call'='vm_call'
 		/** @arg {StackVM} vm @arg {import("types/vm/instruction/mod.js").vm.Call} ins */
-		run(vm,ins) {
+		run(vm: StackVM,ins: import("types/vm/instruction/mod.js").vm.Call) {
 			let prev_base=vm.base_ptr
 			vm.stack.push(vm.base_ptr,vm.instruction_pointer)
 			vm.base_ptr=vm.stack.length
@@ -837,20 +854,20 @@
 	}
 	class InstructionNopImpl {
 		/** @type {'nop'} */
-		type='nop'
+		type: 'nop'='nop'
 		/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").Nop} _a */
-		run(_vm,_a) {
+		run(_vm: StackVM,_a: import("types/vm/instruction/mod.js").Nop) {
 		}
 	}
 	class InstructionBlockTraceImpl {
 		/** @type {'vm_block_trace'} */
-		type='vm_block_trace'
+		type: 'vm_block_trace'='vm_block_trace'
 		/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").vm.BlockTrace} _i */
-		run(_vm,_i) {
+		run(_vm: StackVM,_i: import("types/vm/instruction/mod.js").vm.BlockTrace) {
 		}
 	}
 	/** @type {InstructionList} */
-	const instruction_descriptor_arr=[
+	const instruction_descriptor_arr: InstructionList=[
 		['append',InstructionAppendImpl],
 		['breakpoint',InstructionBreakpointImpl],
 		['call',InstructionCallImpl],
@@ -877,24 +894,31 @@
 	]
 	class StackVM {
 		/** @type {Box} */
-		return_value
+		return_value: Box
 		/** @type {number|null} */
-		jump_instruction_pointer
+		jump_instruction_pointer: number|null
 		/** @type {number|null} */
-		base_ptr
+		base_ptr: number|null
 		/** @type {Box[]} */
-		stack
+		stack: Box[]
+		instructions: InstructionType[]
+		instruction_pointer: number
+		running: boolean
+		flags: any
+		frame_size: any
+		instruction_map_obj: {}
 		/** @arg {InstructionList} instruction_desc_arr */
-		create_instruction_map(instruction_desc_arr) {
+		create_instruction_map(instruction_desc_arr: InstructionList) {
 			let obj={}
 			for(let i=0;i<instruction_desc_arr.length;i++) {
 				let cur=instruction_desc_arr[i]
-				obj[cur[0]]=new cur[1]
+				let obj_value=obj as unknown as {[x: string]: any}
+				obj_value[cur[0]]=new cur[1]
 			}
 			return obj
 		}
 		/** @arg {InstructionType[]} instructions */
-		constructor(instructions) {
+		constructor(instructions: InstructionType[]) {
 			this.instructions=instructions
 			this.instruction_pointer=0
 			this.running=false
@@ -908,7 +932,7 @@
 			this.instruction_map_obj=this.create_instruction_map(instruction_descriptor_arr)
 		}
 		/** @arg {number} operand_number_of_arguments */
-		pop_arg_count(operand_number_of_arguments) {
+		pop_arg_count(operand_number_of_arguments: number) {
 			let arguments_arr=[]
 			let arg_count=operand_number_of_arguments
 			for(let i=0;i<arg_count;i++) {
@@ -928,20 +952,20 @@
 			this.stack.length=0
 		}
 		/** @arg {number} value */
-		is_in_instructions(value) {
+		is_in_instructions(value: number) {
 			return value>=0&&value<this.instructions.length
 		}
 		halt() {
 			this.running=false
 		}
 		/** @arg {import("types/vm/instruction/mod.js").InstructionOpcodesList[number]} opcode */
-		get_instruction(opcode) {
+		get_instruction(opcode: import("types/vm/instruction/mod.js").InstructionOpcodesList[number]) {
 			/** @type {any} */
-			let any_map=this.instruction_map_obj
+			let any_map: any=this.instruction_map_obj
 			return any_map[opcode]
 		}
 		/** @arg {InstructionType} instruction */
-		execute_instruction(instruction) {
+		execute_instruction(instruction: InstructionType) {
 			let run=this.get_instruction(instruction[0])
 			run.run(this,instruction)
 		}
@@ -974,8 +998,10 @@
 		}
 	}
 	class EventHandlerVMDispatch extends StackVM {
+		target_obj: any
+		args_arr: Box[]
 		/** @arg {InstructionType[]} instructions @arg {any} target_obj */
-		constructor(instructions,target_obj) {
+		constructor(instructions: InstructionType[],target_obj: any) {
 			try {
 				super(instructions)
 				this.target_obj=target_obj
@@ -984,7 +1010,7 @@
 			}
 		}
 		/** @arg {Box[]} args_arr */
-		run(...args_arr) {
+		run(...args_arr: Box[]) {
 			try {
 				this.args_arr=args_arr
 				return super.run()
@@ -993,7 +1019,7 @@
 			}
 		}
 		/** @arg {Event} event */
-		handleEvent(event) {
+		handleEvent(event: Event) {
 			this.reset()
 			this.run(new ObjectBoxImpl(event))
 		}
@@ -1001,7 +1027,7 @@
 	class StackVMParser {
 		static match_regex=/(.+?)(;|$)/gm
 		/** @arg {string[] | number[]} cur @arg {number} arg_loc*/
-		static parse_int_arg(cur,arg_loc) {
+		static parse_int_arg(cur: string[]|number[],arg_loc: number) {
 			let cur_item=cur[arg_loc]
 			if(typeof cur_item=='string') {
 				let arg=cur_item
@@ -1012,7 +1038,7 @@
 			}
 		}
 		/** @arg {string | string[]} str @arg {any[]} format_list */
-		static parse_string_with_format_ident(str,format_list) {
+		static parse_string_with_format_ident(str: string|string[],format_list: any[]) {
 			let format_index=str.indexOf('%')
 			let format_type=str[format_index+1]
 			switch(format_type) {
@@ -1023,7 +1049,7 @@
 			}
 		}
 		/** @arg {any[]} cur @arg {any[]} format_list */
-		static parse_current_instruction(cur,format_list) {
+		static parse_current_instruction(cur: any[],format_list: any[]) {
 			let arg_loc=1
 			let arg=cur[arg_loc]
 			while(arg) {
@@ -1037,7 +1063,7 @@
 			}
 		}
 		/** @arg {string[]} m */
-		static raw_parse_handle_regexp_match(m) {
+		static raw_parse_handle_regexp_match(m: string[]) {
 			let iter=m[1].trim()
 			if(iter.startsWith("//")) return null
 			while(iter.startsWith("/*")) {
@@ -1048,7 +1074,7 @@
 			return iter.split(",")
 		}
 		/** @arg {string} string */
-		static parse_string_into_raw_instruction_stream(string) {
+		static parse_string_into_raw_instruction_stream(string: string) {
 			const parser_max_match_iter=300; let parts,arr=[],i=0
 			do {
 				let saved_last=this.match_regex.lastIndex
@@ -1070,7 +1096,7 @@
 			return arr
 		}
 		/** @arg {string} string @arg {any[]} format_list */
-		static parse_instruction_stream_from_string(string,format_list) {
+		static parse_instruction_stream_from_string(string: string,format_list: any[]) {
 			let raw_instructions=this.parse_string_into_raw_instruction_stream(string)
 			for(let i=0;i<raw_instructions.length;i++) {
 				let raw_instruction=raw_instructions[i]
@@ -1079,10 +1105,10 @@
 			let instructions=this.verify_raw_instructions(raw_instructions); return instructions
 		}
 		/** @arg {string[]} instruction @returns {InstructionType}*/
-		static verify_instruction(instruction) {
+		static verify_instruction(instruction: string[]): InstructionType {
 			let num_to_parse=instruction.length
 			/** @type {InstructionType|null} */
-			let ret=null
+			let ret: InstructionType|null=null
 			switch(instruction[0]) {
 				case 'push': {
 					num_to_parse=0
@@ -1132,9 +1158,9 @@
 			throw new Error("Unreachable")
 		}
 		/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
-		static verify_raw_instructions(raw_instructions) {
+		static verify_raw_instructions(raw_instructions: string[][]): InstructionType[] {
 			/** @type{InstructionType[]}*/
-			const instructions=[]
+			const instructions: InstructionType[]=[]
 			for(let i=0;i<raw_instructions.length;i++) {
 				instructions.push(this.verify_instruction(raw_instructions[i]))
 			}
@@ -1143,7 +1169,12 @@
 	}
 	class DocumentWriteList {
 		/** @type {any[]} */
-		list
+		list: any[]
+		attached: boolean
+		end_symbol: symbol
+		document_write: null
+		attached_document: null
+		document_write_proxy: null
 		constructor() {
 			this.list=[]
 			this.attached=false
@@ -1153,13 +1184,13 @@
 			this.document_write_proxy=null
 		}
 		/** @arg {(...text: string[]) => void} target @arg {Document} thisArg @arg {string[]} argArray */
-		write(target,thisArg,argArray) {
+		write(target: (...text: string[]) => void,thisArg: Document,argArray: string[]) {
 			console.assert(target===this.document_write)
 			console.assert(thisArg===this.attached_document)
 			this.list.push(argArray,null)
 		}
 		/** @arg {Document} document */
-		attach_proxy(document) {
+		attach_proxy(document: Document) {
 			if(this.attached) {
 				let was_destroyed=this.destroy(true)
 				if(!was_destroyed) {
@@ -1171,7 +1202,7 @@
 			let proxy_handler={
 				other: this,
 				/** @arg {(...text: string[]) => void} target @arg {Document} thisArg @arg {string[]} argArray */
-				apply(target,thisArg,argArray) {
+				apply(target: (...text: string[]) => void,thisArg: Document,argArray: string[]) {
 					this.other.write(target,thisArg,argArray)
 				}
 			}
@@ -1179,7 +1210,7 @@
 			document.write=this.document_write_proxy
 		}
 		/** @arg {boolean} should_try_to_destroy */
-		destroy(should_try_to_destroy=false) {
+		destroy(should_try_to_destroy: boolean=false) {
 			if(this.attached_document&&this.document_write_proxy) {
 				console.assert(this.attached_document.write===this.document_write_proxy)
 				if(this.attached_document.write!==this.document_write_proxy) {
@@ -1192,9 +1223,9 @@
 				if(doc_1&&this.document_write) {
 					let doc_var=this.document_write
 					/** @type {any} */
-					let any_var=doc_var
+					let any_var: any=doc_var
 					/** @type {Document['write']} */
-					let vv=any_var
+					let vv: Document['write']=any_var
 					doc_1.write=vv
 				}
 			}
@@ -1213,11 +1244,12 @@
 		}
 	}
 	class UniqueIdGenerator {
+		m_current: number
 		constructor() {
 			this.m_current=-1
 		}
 		/** @arg {number} current_value */
-		set_current(current_value) {
+		set_current(current_value: number) {
 			this.m_current=current_value
 		}
 		current() {
@@ -1228,11 +1260,12 @@
 		}
 	}
 	class NamedIdGenerator {
+		state_map: Map<any,any>
 		constructor() {
 			this.state_map=new Map
 		}
 		/** @arg {string} name */
-		current_named(name) {
+		current_named(name: string) {
 			let val=this.state_map.get(name)
 			if(val) {
 				return val
@@ -1241,7 +1274,7 @@
 			}
 		}
 		/** @arg {string} name */
-		next_named(name) {
+		next_named(name: string) {
 			if(this.state_map.has(name)) {
 				let cur=this.state_map.get(name)+1
 				this.state_map.set(name,cur)
@@ -1253,17 +1286,22 @@
 		}
 	}
 	class EventHandlerDispatch {
+		target_obj: {[x: string]: any}
+		target_name: string
+		target_name: any
 		/** @arg {{[x:string]:any}} target_obj @arg {string} target_name */
-		constructor(target_obj,target_name) {
+		constructor(target_obj: {[x: string]: any},target_name: string) {
 			this.target_obj=target_obj
 			this.target_name=target_name
 		}
 		/** @arg {any} event */
-		handleEvent(event) {
+		handleEvent(event: any) {
 			this.target_obj[this.target_name](event)
 		}
 	}
 	class CompressionStatsCalculator {
+		hit_counts: never[]
+		cache: never[]
 		constructor() {
 			/** @type {number[]} */
 			this.hit_counts=[]
@@ -1277,13 +1315,13 @@
 			return this.cache
 		}
 		/** @arg {number} index */
-		add_hit(index) {
+		add_hit(index: number) {
 			if(!this.map_values()[index]) {
 				this.map_values()[index]=1
 			} else this.map_values()[index]++
 		}
 		/** @arg {string} key */
-		add_item(key) {
+		add_item(key: string) {
 			let index=this.map_keys().indexOf(key)
 			if(index==-1) index=this.map_keys().push(key)-1
 			else this.add_hit(index)
@@ -1293,7 +1331,7 @@
 			this.map_values().length=0
 		}
 		/** @arg {any[]} arr @arg {number} win_size */
-		calc_compression_stats(arr,win_size) {
+		calc_compression_stats(arr: any[],win_size: number) {
 			this.reset()
 			for(let i=0;i<arr.length;i++) {
 				if(i+win_size<arr.length) {
@@ -1303,35 +1341,37 @@
 			return to_tuple_arr(this.map_keys(),this.map_values()).filter((e) => e[1]!==void 0)
 		}
 		/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} win_size */
-		calc_for_stats_window_size(stats_arr,arr,win_size) {
+		calc_for_stats_window_size(stats_arr: any[],arr: any[],win_size: number) {
 			stats_arr[win_size-1]=this.calc_compression_stats(arr,win_size)
 		}
 		/** @arg {any[]} stats_arr @arg {any[]} arr @arg {number} index */
-		calc_for_stats_index(stats_arr,arr,index) {
+		calc_for_stats_index(stats_arr: any[],arr: any[],index: number) {
 			stats_arr[index]=this.calc_compression_stats(arr,index+1)
 		}
 	}
 	class BaseCompression {
 		/** @arg {string | any[]} src @arg {string | any[]} dst */
-		did_compress(src,dst) {
+		did_compress(src: string|any[],dst: string|any[]) {
 			return dst.length<src.length
 		}
 		/** @arg {string | any[]} src @arg {string | any[]} dst */
-		did_decompress(src,dst) {
+		did_decompress(src: string|any[],dst: string|any[]) {
 			return dst.length>src.length
 		}
 		/** @arg {string[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
-		compress_result(src,dst) {
+		compress_result(src: string[],dst: string[]): [boolean,string[]] {
 			if(this.did_compress(src,dst)) return [true,dst]
 			return [false,src]
 		}
 		/** @arg {string[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
-		decompress_result(src,dst) {
+		decompress_result(src: string[],dst: string[]): [boolean,string[]] {
 			if(this.did_decompress(src,dst)) return [true,dst]
 			return [false,dst]
 		}
 	}
 	class MulCompression extends BaseCompression {
+		stats_calculator: CompressionStatsCalculator
+		compression_stats: never[]
 		constructor() {
 			super()
 			this.stats_calculator=new CompressionStatsCalculator
@@ -1340,7 +1380,7 @@
 		}
 
 		/** @arg {string[]} arr */
-		try_compress(arr) {
+		try_compress(arr: string[]) {
 			let ret=[]
 			for(let i=0;i<arr.length;i++) {
 				let item=arr[i]
@@ -1366,7 +1406,7 @@
 			return this.compress_result(arr,ret)
 		}
 		/** @arg {string[]} arr */
-		try_decompress(arr) {
+		try_decompress(arr: string[]) {
 			let ret=[]
 			for(let i=0;i<arr.length;i++) {
 				let item=arr[i]
@@ -1382,7 +1422,7 @@
 			return this.decompress_result(arr,ret)
 		}
 		/** @arg {string[]} arr */
-		compress_array(arr) {
+		compress_array(arr: string[]) {
 			let success,res
 			[success,res]=this.try_decompress(arr)
 			if(success) arr=res
@@ -1401,8 +1441,11 @@
 	}
 	window.MulCompression=MulCompression
 	class TimeoutTarget {
+		m_once: boolean
+		m_obj: AutoBuyState|AutoBuy|null
+		m_callback: () => void
 		/** @arg {AutoBuyState | AutoBuy | null} obj @arg {()=>void} callback */
-		constructor(obj,callback) {
+		constructor(obj: AutoBuyState|AutoBuy|null,callback: () => void) {
 			this.m_once=true
 			this.m_obj=obj
 			this.m_callback=callback
@@ -1412,8 +1455,11 @@
 		}
 	}
 	class IntervalTarget {
+		m_once: boolean
+		m_obj: any
+		m_callback: any
 		/** @arg {any} obj @arg {any} callback */
-		constructor(obj,callback) {
+		constructor(obj: any,callback: any) {
 			this.m_once=false
 			this.m_obj=obj
 			this.m_callback=callback
@@ -1423,6 +1469,11 @@
 		}
 	}
 	class PromiseTimeoutTarget {
+		m_promise_accept: null
+		m_promise_reject: null
+		m_promise: null
+		m_callback: null
+		m_active: boolean
 		constructor() {
 			this.m_promise_accept=null
 			this.m_promise_reject=null
@@ -1437,19 +1488,19 @@
 			return this.m_promise
 		}
 		/** @arg {any} accept @arg {any} reject */
-		promise_executor(accept,reject) {
+		promise_executor(accept: any,reject: any) {
 			this.m_promise_accept=accept
 			this.m_promise_reject=reject
 			this.m_callback=this.on_result.bind(this)
 		}
 		/** @arg {any} value */
-		on_result(value=void 0) {
+		on_result(value: any=void 0) {
 			if(!this.m_promise_accept) throw new Error("Missing promise accept handler")
 			this.m_promise_accept(value)
 			this.reset()
 		}
 		/** @arg {Error} error */
-		on_error(error) {
+		on_error(error: Error) {
 			if(!this.m_promise_reject) throw new Error("Missing promise accept handler")
 			this.m_promise_reject(error)
 			this.reset()
@@ -1474,11 +1525,12 @@
 		}
 	}
 	class BaseNode {
+		m_parent: null
 		constructor() {
 			this.m_parent=null
 		}
 		/** @arg {any} parent */
-		set_parent(parent) {
+		set_parent(parent: any) {
 			this.m_parent=parent
 		}
 		run() {
@@ -1492,8 +1544,9 @@
 		}
 	}
 	class TimeoutIdNode extends BaseNode {
+		m_id: number
 		/** @arg {number} id */
-		constructor(id) {
+		constructor(id: number) {
 			super()
 			this.m_id=id
 		}
@@ -1503,8 +1556,9 @@
 		}
 	}
 	class IntervalIdNode extends BaseNode {
+		m_id: number
 		/** @arg {number} id */
-		constructor(id) {
+		constructor(id: number) {
 			super()
 			this.m_id=id
 		}
@@ -1514,8 +1568,10 @@
 		}
 	}
 	class IntervalTargetFn {
+		m_callback: any
+		timeout: number
 		/** @arg {any} callback @arg {number} timeout */
-		constructor(callback,timeout) {
+		constructor(callback: any,timeout: number) {
 			this.m_callback=callback
 			this.timeout=timeout
 		}
@@ -1524,6 +1580,9 @@
 		}
 	}
 	class TimeoutNode extends BaseNode {
+		m_timeout: number
+		m_id: null
+		m_target: null
 		constructor(timeout=0) {
 			super()
 			this.m_timeout=timeout
@@ -1534,14 +1593,14 @@
 			return this.m_timeout
 		}
 		/** @arg {any} target */
-		set_target(target) {
+		set_target(target: any) {
 			this.m_target=target
 		}
 		set() {
 			this.m_id=setTimeout(this.run.bind(this),this.m_timeout)
 		}
 		/** @arg {{} | null} target */
-		start(target) {
+		start(target: {}|null) {
 			if(!target) throw new Error("No target")
 			this.m_target=target
 			this.set()
@@ -1556,8 +1615,12 @@
 		}
 	}
 	class IntervalNode extends BaseNode {
+		m_target_fn: CallableFunction
+		m_timeout: number
+		id: null
+		m_target: {}
 		/** @arg {CallableFunction} target_fn */
-		constructor(target_fn,timeout=0) {
+		constructor(target_fn: CallableFunction,timeout=0) {
 			super()
 			this.m_target_fn=target_fn
 			this.m_timeout=timeout
@@ -1567,7 +1630,7 @@
 			this.id=setInterval(this.run.bind(this),this.m_timeout)
 		}
 		/** @arg {{} | null} target */
-		start(target=null) {
+		start(target: {}|null=null) {
 			if(target) {
 				this.m_target=target
 			} else {
@@ -1581,7 +1644,7 @@
 	}
 	class AsyncTimeoutNode extends TimeoutNode {
 		/** @arg {{wait():Promise<any>;destroy():void}} target */
-		async start_async(target) {
+		async start_async(target: {wait(): Promise<any>; destroy(): void ) {
 			if(!target) throw new Error("unable to start_async without anything to wait for")
 			log_if(LOG_LEVEL_INFO,'start_async')
 			this.m_target=target
@@ -1604,8 +1667,9 @@
 		}
 	}
 	class IntervalIdNodeRef extends IntervalIdNode {
+		destroy_callback: () => void
 		/** @arg {number} interval_id @arg {() => void} destroy_cb */
-		constructor(interval_id,destroy_cb) {
+		constructor(interval_id: number,destroy_cb: () => void) {
 			super(interval_id)
 			this.destroy_callback=destroy_cb
 		}
@@ -1615,12 +1679,13 @@
 		}
 	}
 	class AsyncNodeRoot {
+		children: never[]
 		constructor() {
 			/** @type {BaseNode[]} */
 			this.children=[]
 		}
 		/** @arg {()=>void} target_fn @arg {number | undefined} timeout */
-		set(target_fn,timeout,repeat=false) {
+		set(target_fn: () => void,timeout: number|undefined,repeat=false) {
 			let node
 			if(repeat) {
 				node=new TimeoutNode(timeout)
@@ -1631,7 +1696,7 @@
 			}
 		}
 		/** @arg {number} timeout_id */
-		append_raw(timeout_id,once=true) {
+		append_raw(timeout_id: number,once=true) {
 			if(once) {
 				this.append_child(new TimeoutIdNode(timeout_id))
 			} else {
@@ -1639,13 +1704,13 @@
 			}
 		}
 		/** @arg {BaseNode} record */
-		append_child(record) {
+		append_child(record: BaseNode) {
 			record.remove()
 			record.set_parent(this)
 			this.children.push(record)
 		}
 		/** @arg {BaseNode} record */
-		remove_child(record) {
+		remove_child(record: BaseNode) {
 			let index=this.children.indexOf(record)
 			this.children.splice(index,1)
 			record.set_parent(null)
@@ -1662,13 +1727,13 @@
 	}
 	class RatioOptions {
 		/** @type {number} */
-		size
+		size: number
 		/** @type {number} */
-		history_size
+		history_size: number
 		/** @type {number} */
-		time_start
+		time_start: number
 		/** @type {number} */
-		duration
+		duration: number
 		constructor() {
 			this.size=0
 			this.history_size=0
@@ -1677,9 +1742,20 @@
 		}
 	}
 	class AverageRatio {
+		type: string
+		history: never[]
+		count: number
+		value: number
+		size: number
+		duration: number
+		time_start: number
+		time_cur_start: number
+		time_cur: number
+		gen_count: number
+		history_size: number
 		// @AverageRatio
 		/** @arg {string} type @arg {RatioOptions} options */
-		constructor(type,options) {
+		constructor(type: string,options: RatioOptions) {
 			this.type=type
 			/** @type {number[]} */
 			this.history=[]
@@ -1694,7 +1770,7 @@
 			this.history_size=options.history_size
 		}
 		/** @arg {AverageRatioRoot} avg @arg {number} time_now */
-		do_history_update(avg,time_now) {
+		do_history_update(avg: AverageRatioRoot,time_now: number) {
 			if(this.value===null) return
 			this.count++
 			this.time_cur=time_now-this.time_start-this.time_cur_start
@@ -1710,7 +1786,7 @@
 			}
 		}
 		/** @arg {number} value */
-		add_to_ratio(value,avg_window=this.size) {
+		add_to_ratio(value: number,avg_window=this.size) {
 			if(this.value===null) {
 				this.value=value
 				return
@@ -1718,7 +1794,7 @@
 			this.value=(this.value*(avg_window-1)+value)/avg_window
 		}
 		/** @arg {number} size */
-		set_history_size(size) {
+		set_history_size(size: number) {
 			this.history_size=size
 		}
 		get_average() {
@@ -1727,6 +1803,9 @@
 		}
 	}
 	class AverageRatioRoot {
+		map: Map<any,any>
+		keys: never[]
+		values: never[]
 		constructor() {
 			/** @type {Map<string, AverageRatio>} */
 			this.map=new Map
@@ -1736,19 +1815,19 @@
 			this.values=[]
 		}
 		/** @arg {string} key */
-		get_average(key) {
+		get_average(key: string) {
 			let ratio_calc=this.map.get(key)
 			if(!ratio_calc) throw new Error("Ratio not found: "+key)
 			return ratio_calc.get_average()
 		}
 		/** @type {(key:string, value:AverageRatio)=>void} */
-		set_ratio(key,value) {
+		set_ratio(key,value): void {
 			this.keys.push(key)
 			this.values.push(value)
 			this.map.set(key,value)
 		}
 		/** @arg {AverageRatio} value_obj */
-		next(value_obj) {
+		next(value_obj: AverageRatio) {
 			let idx=this.values.indexOf(value_obj)
 			if(idx<this.values.length) {
 				return this.values[idx+1]
@@ -1756,7 +1835,7 @@
 			return null
 		}
 		/** @arg {number} value */
-		push(value) {
+		push(value: number) {
 			let cur=this.map.get(this.keys[0])
 			if(!cur) throw new Error("Invalid")
 			let cur_size=cur.size
@@ -1773,8 +1852,24 @@
 		}
 	}
 	class AutoBuyState {
+		root_node: AsyncNodeRoot
+		debug: boolean
+		arr: never[]
+		ratio: number
+		last_ratio: number
+		compressor_stats: never[]
+		arr_max_len: number
+		val: number
+		total_mul: number
+		ratio_mode: number
+		total_cycle_count_change: number
+		locked_cycle_count: number
+		is_init_complete: boolean
+		avg: AverageRatioRoot
+		prev_atomepersecond: number
+		div: number
 		/** @arg {AsyncNodeRoot} root */
-		constructor(root) {
+		constructor(root: AsyncNodeRoot) {
 			this.root_node=root
 			this.debug=false
 			/** @type {number[]} */
@@ -1811,13 +1906,13 @@
 			let ratio_duration=[10*1000,60*1000,5*60*1000,30*60*1000,3*60*60*1000]
 			let ratio_counts=[80,6,5,6,6]
 			/** @arg {number[]} arr @arg {number} i */
-			function mul_3(arr,i) {
+			function mul_3(arr: number[],i: number) {
 				let [a,b=1,c=10]=arr.slice(i)
 				return a*b*c*4
 			}
 			//@AverageRatio
 			/** @arg {AverageRatioRoot} target_obj @arg {number} i @arg {number} now_start */
-			function create_ratio(target_obj,i,now_start) {
+			function create_ratio(target_obj: AverageRatioRoot,i: number,now_start: number) {
 				let obj=new AverageRatio(ratio_types[i],{
 					size: ratio_counts[i],
 					history_size: mul_3(ratio_counts,i),
@@ -1838,7 +1933,7 @@
 			return this.avg.get_average('30min')
 		}
 		/** @arg {number} value */
-		append_value(value) {
+		append_value(value: number) {
 			if(!Number.isFinite(value)) {
 				console.assert(false,'value is not finite')
 			}
@@ -1879,7 +1974,7 @@
 			}
 		}
 		/** @arg {boolean} do_lock */
-		rep_update_ratio_mode(do_lock) {
+		rep_update_ratio_mode(do_lock: boolean) {
 			let mode_ratio_up=this.ratio_mode*.1+.1
 			let mode_ratio_down=this.ratio_mode*.1-.4
 			if(this.ratio>(mode_ratio_up+.4)) return this.on_increase_ratio(do_lock,2)
@@ -1888,19 +1983,19 @@
 			return false
 		}
 		/** @arg {boolean} do_lock */
-		on_decrease_ratio(do_lock,mul=1) {
+		on_decrease_ratio(do_lock: boolean,mul=1) {
 			this.total_mul*=mul
 			this.on_ratio_change(do_lock,-1,1_000*mul)
 			return true
 		}
 		/** @arg {boolean} do_lock */
-		on_increase_ratio(do_lock,mul=1) {
+		on_increase_ratio(do_lock: boolean,mul=1) {
 			this.total_mul*=mul
 			this.on_ratio_change(do_lock,1,500*mul)
 			return true
 		}
 		/** @arg {boolean} do_lock @arg {number} dir_num @arg {number} lock_for */
-		on_ratio_change(do_lock,dir_num,lock_for) {
+		on_ratio_change(do_lock: boolean,dir_num: number,lock_for: number) {
 			if(do_lock) {
 				this.do_ratio_lock(do_lock,dir_num,lock_for)
 			} else {
@@ -1909,7 +2004,7 @@
 			this.on_cycle_count_change(lock_for)
 		}
 		/** @arg {number} lock_for */
-		on_cycle_count_change(lock_for) {
+		on_cycle_count_change(lock_for: number) {
 			this.total_cycle_count_change+=lock_for
 		}
 		finalize_locked_cycle_count() {
@@ -1917,7 +2012,7 @@
 			this.locked_cycle_count-=rem_val
 		}
 		/** @arg {boolean} _do_lock @arg {number} mode_change_direction @arg {number} num_of_cycles */
-		do_ratio_lock(_do_lock,mode_change_direction,num_of_cycles) {
+		do_ratio_lock(_do_lock: boolean,mode_change_direction: number,num_of_cycles: number) {
 			this.ratio_mode+=mode_change_direction
 			this.locked_cycle_count+=num_of_cycles
 		}
@@ -1983,7 +2078,7 @@
 			this.update_ratio_mode()
 		}
 		/** @arg {string} time_played_str */
-		on_game_reset_finish(time_played_str) {
+		on_game_reset_finish(time_played_str: string) {
 			let history_arr_1=this.avg.values[0].history.slice().reverse()
 			let history_item=history_arr_1[0]
 			let history_div_num=6*5*6
@@ -1997,7 +2092,7 @@
 			let json_tag="JSON_HIST"
 			let prev_hist=sessionStorage.history
 			/** @type {string[]} */
-			let data_arr
+			let data_arr: string[]
 			xx: if(prev_hist&&prev_hist.startsWith(json_tag)) {
 				let hist_data=prev_hist.slice(json_tag.length)
 				while(hist_data[0]==='@') {
@@ -2031,24 +2126,25 @@
 	}
 	const named_sym_gen=new NamedIdGenerator
 	/** @type {WeakRef<{sym:symbol}>[]}*/
-	const debug_id_syms=[]
+	const debug_id_syms: WeakRef<{sym: symbol >[]=[]
 	/** @type {(v:string)=>symbol} */
-	function labeled_sym(name) {
+	function labeled_sym(name): symbol {
 		const id=named_sym_gen.next_named(name)
 		const sym=Symbol(`${name}@${id}`)
 		debug_id_syms.push(new WeakRef({sym}))
 		return sym
 	}
 	/** @implements {NodeBox} */
-	class NodeBoxImpl extends BaseBox {
+	class NodeBoxImpl {
 		/** @type {"instance_box"} */
-		type="instance_box"
+		type: "instance_box"="instance_box"
 		/** @type {'Node'} */
-		instance_type='Node'
+		instance_type: 'Node'='Node'
 		/** @type {"get"|"create"} */
-		from="create"
+		from: "get"|"create"="create"
+		value: Node
 		/** @arg {"get"|"create"|string} from @arg {Node} value */
-		constructor(from,value) {
+		constructor(from: "get"|"create"|string,value: Node) {
 			super(null)
 			this.value=value
 			if(from==='get') {
@@ -2060,22 +2156,27 @@
 	}
 	class DataLoader {
 		static int_parser=new WebAssembly.Function({parameters: ['externref'],results: ['f64']},parseInt)
+		store: Storage
 		/** @arg {Storage} storage */
-		constructor(storage) {this.store=storage}
+		constructor(storage: Storage) {this.store=storage}
 		/** @arg {string} key @arg {string[]} def_value */
-		load_str_arr(key,def_value) {let data=this.store.getItem(key); if(data===null) return def_value; return data.split(",")}
+		load_str_arr(key: string,def_value: string[]) {let data=this.store.getItem(key); if(data===null) return def_value; return data.split(",")}
 		/** @arg {string} key @arg {any} def_value */
-		load_int_arr(key,def_value,storage_data=this.store.getItem(key)) {if(storage_data===null) return def_value; return this.parse_int_arr(storage_data)}
+		load_int_arr(key: string,def_value: any,storage_data=this.store.getItem(key)) {if(storage_data===null) return def_value; return this.parse_int_arr(storage_data)}
 		/** @arg {string} key @arg {{ (_e: any): number[]; (): any; }} def_factory */
-		load_int_arr_cb(key,def_factory,storage_data=this.store.getItem(key)) {if(storage_data===null) return def_factory(); return this.parse_int_arr(storage_data)}
+		load_int_arr_cb(key: string,def_factory: {(_e: any): number[]; (): any,storage_data=this.store.getItem(key)) {if(storage_data===null) return def_factory(); return this.parse_int_arr(storage_data)}
 		/** @arg {string} string */
-		default_split(string) {return string.split(",")}
+		default_split(string: string) {return string.split(",")}
 		/** @arg {string} data */
-		parse_int_arr(data) {return this.default_split(data).map(DataLoader.int_parser)}
+		parse_int_arr(data: string) {return this.default_split(data).map(DataLoader.int_parser)}
 	}
 	class AsyncAutoBuy {
+		parent: AutoBuy
+		unit_upgradeable_trigger: number
+		main_running: any
+		fast_unit_running: boolean
 		/** @arg {AutoBuy} parent */
-		constructor(parent) {
+		constructor(parent: AutoBuy) {
 			this.parent=parent
 			this.unit_upgradeable_trigger=30
 		}
@@ -2084,7 +2185,7 @@
 			return this.parent.timeout_ms
 		}
 		/** @arg {boolean} no_wait */
-		async do_start_main_async(no_wait) {
+		async do_start_main_async(no_wait: boolean) {
 			if(!no_wait) await this.next_timeout_async(this.parent.timeout_ms,'A')
 			await this.main_async()
 		}
@@ -2177,7 +2278,7 @@
 			await this.next_timeout_async(this.parent.timeout_ms,'$')
 		}
 		/** @arg {number | undefined} timeout @arg {string} char */
-		async next_timeout_async(timeout,char,silent=false) {
+		async next_timeout_async(timeout: number|undefined,char: string,silent=false) {
 			let node=new AsyncTimeoutNode(timeout)
 			this.parent.root_node.append_child(node)
 			if(!silent) {
@@ -2188,18 +2289,17 @@
 			await node.start_async(new AsyncTimeoutTarget)
 		}
 	}
-	/** @implements {DocumentBox} */
-	class DocumentBoxImpl extends BaseBox {
+	class DocumentBoxImpl {
 		/** @type {"document_box"} */
-		type="document_box"
+		type: "document_box"="document_box"
 		value
 		/** @arg {"object" | "function"} v */
-		as_type(v) {
+		as_type(v: "object"|"function") {
 			if(typeof this.value===v) return this
 			return null
 		}
 		/** @arg {Document} value */
-		constructor(value) {
+		constructor(value: Document) {
 			super(null)
 			this.value=value
 		}
@@ -2207,34 +2307,57 @@
 	/** @implements {AsyncFunctionBox} */
 	class AsyncFunctionBoxImpl {
 		/** @type {'function_box'} */
-		type="function_box"
+		type: 'function_box'="function_box"
 		/** @type {"promise_box"} */
-		return_type='promise_box'
+		return_type: "promise_box"='promise_box'
 		/** @type {"Box"} */
-		await_type='Box'
+		await_type: "Box"='Box'
+		value: (...a: Box[]) => Promise<Box>
 		/** @returns {Box} */
-		wrap_call() {
+		wrap_call(): Box {
 			throw 1
 		}
 		/** @returns {this|null} */
-		as_type() {
+		as_type(): this|null {
 			throw 1
 		}
 		/** @arg {(...a: Box[])=>Promise<Box>} value */
-		constructor(value) {
+		constructor(value: (...a: Box[]) => Promise<Box>) {
 			this.value=value
 		}
 	}
 	/** @implements {VoidBox} */
 	class VoidBoxImpl {
 		/** @type {"void"} */
-		type="void"
+		type: "void"="void"
 		value=null
 		as_type() {
 			return null
 		}
 	}
 	class AutoBuy {
+		debug_arr: any
+		root_node: AsyncNodeRoot
+		with_async: AsyncAutoBuy
+		iter_count: number
+		epoch_len: number
+		background_audio: null
+		state_history_arr: null
+		skip_save: boolean
+		has_real_time: boolean
+		cint_arr: never[]
+		local_data_loader: DataLoader
+		state: AutoBuyState
+		debug: any
+		compressor: MulCompression
+		epoch_start_time: number
+		original_map: Map<any,any>
+		dom_map: Map<any,any>
+		flags: Set<unknown>
+		timeout_arr: any
+		state_history_arr_max_len: number
+		last_value: number
+		pre_total: number
 		test_log(log_level,...args) {
 			if(args.length>0) {
 				args.unshift("test:")
@@ -2244,21 +2367,22 @@
 			log_if(log_level,...args)
 		}
 		/** @arg {{ [x: string]: any }} sym_indexed_this @arg {{ sym: any }} val */
-		syms_iter(sym_indexed_this,val) {
+		syms_iter(sym_indexed_this: {[x: string]: any,val: {sym: any ) {
 			if(!sym_indexed_this[val.sym]) return
 			let obj=sym_indexed_this[val.sym]
 			if(!obj.split) return
 			let str=sym_indexed_this[val.sym]
 			let arr=str.split(",")
-			let trimmed=arr.map((/** @type {string} */ e) => e.trim())
+			let trimmed=arr.map((/** @type {string} */ e: string) => e.trim())
 			this.debug_arr.push(...trimmed)
 		}
 		check_for_syms() {
 			/** @type {any} */
-			let this_as_any=this
+			let this_as_any: any=this
 			/** @type {{[x:symbol]:string}} */
-			let sym_indexed_this=this_as_any
-			for(let i=0;i<debug_id_syms.length;i++) {
+			let sym_indexed_this: {
+				[x: symbol]: string =this_as_any
+				for(let i=0; i<debug_id_syms.length;i++) {
 				let val=debug_id_syms[i].deref()
 				if(val) this.syms_iter(sym_indexed_this,val)
 			}
@@ -2404,7 +2528,7 @@
 					log_if(LOG_LEVEL_ERROR,'play success')
 				},
 				/** @arg {any} err */
-				function(err) {
+				function(err: any) {
 					log_if(LOG_LEVEL_ERROR,err)
 				}
 			])
@@ -2435,8 +2559,8 @@
 			localStorage.auto_buy_history_str=this.state_history_arr.join(",")
 		}
 		/** @arg {string} forced_action */
-		get_timeout_arr_data(forced_action) {
-			if(forced_action=="RESET") return this.timeout_arr.map((/** @type {number} */ e) => ~~(e/4)).join(",")
+		get_timeout_arr_data(forced_action: string) {
+			if(forced_action=="RESET") return this.timeout_arr.map((/** @type {number} */ e: number) => ~~(e/4)).join(",")
 			return this.timeout_arr.join(",")
 		}
 		save_timeout_arr() {
@@ -2458,7 +2582,7 @@
 		dom_pre_init() {
 			const css_display_style=`#state_log>div{width:max-content}#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`
 			/** @type {DomExecDescription[]} */
-			let create_state_log_arr=[
+			let create_state_log_arr: DomExecDescription[]=[
 				[0,'push',new DocumentBoxImpl(document),'body'],
 				[0,'get'],
 				[1,'create','div','state_log',{id: 'state_log'}],
@@ -2466,13 +2590,13 @@
 				[1,'append']
 			]
 			/** @arg {CSSStyleSheet} obj @arg {string} str */
-			function replace_css_style(obj,str) {
+			function replace_css_style(obj: CSSStyleSheet,str: string) {
 				return obj.replace(str)
 			}
 			/** @this {AutoBuy} */
-			async function css_promise_runner(/** @type {Box[]} */ ...box_arr) {
+			async function css_promise_runner(/** @type {Box[]} */ ...box_arr: Box[]) {
 				/** @type {Promise<Box>[]} */
-				let promise_arr=[]
+				let promise_arr: Promise<Box>[]=[]
 				for(let i=0;i<box_arr.length;i++) {
 					let cur=box_arr[i]
 					if(typeof cur!='object') continue
@@ -2484,9 +2608,9 @@
 				}
 				const promise_settle_arr=await Promise.allSettled(promise_arr)
 				/** @type {PromiseFulfilledResult<Box>[]} */
-				let fulfilled_res_arr=[]
+				let fulfilled_res_arr: PromiseFulfilledResult<Box>[]=[]
 				/** @type {PromiseRejectedResult[]} */
-				let rejected_res=[]
+				let rejected_res: PromiseRejectedResult[]=[]
 				for(let i=0;i<promise_settle_arr.length;i++) {
 					let cur=promise_settle_arr[i]
 					if(cur.status==='fulfilled') {
@@ -2497,7 +2621,7 @@
 				}
 				let promise_res_arr=fulfilled_res_arr.map(e_1 => e_1.value)
 				/** @type {CSSStyleSheet[]} */
-				let unbox_arr=[]
+				let unbox_arr: CSSStyleSheet[]=[]
 				for(let i=0;i<promise_res_arr.length;i++) {
 					let cur=promise_res_arr[i]
 					if(typeof cur!='object') continue
@@ -2513,14 +2637,14 @@
 				}
 				this.adopt_styles(...unbox_arr)
 			}
-			async function add_css_style_sheet(/** @type {Box[]} */ ...a) {
+			async function add_css_style_sheet(/** @type {Box[]} */ ...a: Box[]) {
 				let ret=css_promise_runner.call(bound_this,...a)
 				await ret
 				return new VoidBoxImpl
 			}
 			let bound_this=this
 			/** @type {DomExecDescription[]} */
-			let make_css_arr=[
+			let make_css_arr: DomExecDescription[]=[
 				[0,'push',null,new AsyncFunctionBoxImpl(add_css_style_sheet)],
 				[
 					0,'new',new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet),[],
@@ -2532,7 +2656,7 @@
 				[0,'drop']
 			]
 			/** @type {DomExecDescription[]} */
-			let raw_dom_arr=[
+			let raw_dom_arr: DomExecDescription[]=[
 				...create_state_log_arr,
 				[2,'create','div','history',"?3"],
 				[2,'append'],
@@ -2551,18 +2675,21 @@
 			this.build_dom_from_desc(raw_dom_arr,this.dom_map)
 		}
 		/** @arg {CSSStyleSheet[]} styles */
-		adopt_styles(...styles) {
+		adopt_styles(...styles: CSSStyleSheet[]) {
 			let dom_styles=document.adoptedStyleSheets
 			document.adoptedStyleSheets=[...dom_styles,...styles]
 		}
 		/** @arg {(a:CSSStyleSheet, b:string)=>Promise<CSSStyleSheet>} callback @arg {Box[]} a */
-		use_boxed_style_sheet(callback,...a) {
+		use_boxed_style_sheet(callback: (a: CSSStyleSheet,b: string) => Promise<CSSStyleSheet>,...a: Box[]) {
 			/** @type {{v:[], t:0}|{v:[CSSStyleSheet], t:1}|{v:[CSSStyleSheet, string], t:2}} */
-			let extracted_values={
-				v: [],
-				t: 0
-			}
-			for(let i=0;i<a.length;i++) {
+			let extracted_values: {
+				v: []; t: 0|{
+					v: [CSSStyleSheet]; t: 1|{
+						v: [CSSStyleSheet,string]; t: 2={
+							v: [],
+							t: 0
+						}
+						for(let i=0; i<a.length;i++) {
 				let v=a[i]
 				switch(typeof v) {
 					default:
@@ -2603,9 +2730,9 @@
 			}
 		}
 		/** @arg {DomExecDescription[]} raw_arr */
-		build_dom_from_desc(raw_arr,trg_map=new Map) {
+		build_dom_from_desc(raw_arr: DomExecDescription[],trg_map=new Map) {
 			/** @type {DomExecDescription[]} */
-			let stack=[]
+			let stack: DomExecDescription[]=[]
 			let map=trg_map
 			for(let i=0;i<raw_arr.length;i++) {
 				let cur_item=raw_arr[i]
@@ -2640,7 +2767,7 @@
 					case 'dup': case 'breakpoint': case 'drop': case 'call':/*push the item*/case 'push': stack.push(cur_item); break
 					default: {
 						/** @type {any} */
-						let any_cur=cur_item
+						let any_cur: any=cur_item
 						if(!(any_cur instanceof Array)) throw 1
 						const [,action]=any_cur
 						log_if(LOG_LEVEL_ERROR,'might need to handle',action)
@@ -2656,9 +2783,9 @@
 			state.ins_arr_map[stack_ptr].push([stack_ptr,instruction_val,op_1,op_2])
 		}
 		/** @arg {DomInstructionType[]} input_instructions @returns {InstructionType[]} */
-		parse_dom_stack(input_instructions) {
+		parse_dom_stack(input_instructions: DomInstructionType[]): InstructionType[] {
 			/** @type {State_1} */
-			let state={}
+			let state: State_1={}
 			/** @type {DomInstructionType[][]} */
 			state.depth_ins_map=[]
 			/** @type {DomInstructionStack} */
@@ -2748,11 +2875,11 @@
 				state.depths.push(cur_depth)
 			}
 			/** @type {DomInstructionType[]} */
-			let flat_with_depths=[]
+			let flat_with_depths: DomInstructionType[]=[]
 			/** @type {DomInstructionStack[0]} */
-			let flat_stack=[]
+			let flat_stack: DomInstructionStack[0]=[]
 			/** @type {InstructionType[]} */
-			let instructions=[]
+			let instructions: InstructionType[]=[]
 			for(let i=0;i<state.depth_ins_map.length;i++) {
 				let cur_instructions=state.ins_arr_map[i]
 				let cur_ins_with_depths=state.depth_ins_map[i]
@@ -2764,15 +2891,15 @@
 				flat_stack.push([i,"vm_return"])
 			}
 			/** @arg {DomInstructionType} ins */
-			function is_marker_dep_ins(ins) {
+			function is_marker_dep_ins(ins: DomInstructionType) {
 				return ins[1]==='marker'
 			}
 			/** @type {DomInstructionType[]} */
-			let flat_ins=[]
+			let flat_ins: DomInstructionType[]=[]
 			/** @type {DomInstructionType[]} */
-			let flat_dep_ins=[]
+			let flat_dep_ins: DomInstructionType[]=[]
 			/** @type {DomInstructionType[]} */
-			let flat_all_ins=[]
+			let flat_all_ins: DomInstructionType[]=[]
 			for(let i=0;i<flat_stack.length;i++) {
 				let ins=flat_stack[i]
 				let dep_ins=flat_with_depths[i]
@@ -2881,7 +3008,7 @@
 			}
 		}
 		/** @arg {string | number} value @arg {string} pad_char @arg {number} char_num */
-		do_zero_pad(value,pad_char,char_num) {
+		do_zero_pad(value: string|number,pad_char: string,char_num: number) {
 			let string
 			if(typeof value==='number') {
 				string=value.toString()
@@ -2894,7 +3021,7 @@
 			return string
 		}
 		/** @arg {number} timeout_milli @arg {number | undefined} milli_acc */
-		get_millis_as_pretty_str(timeout_milli,milli_acc) {
+		get_millis_as_pretty_str(timeout_milli: number,milli_acc: number|undefined) {
 			let time_arr=[]
 			let float_milliseconds=timeout_milli%1000
 			let milli_len=6
@@ -2928,7 +3055,7 @@
 			return time_arr.join(":")
 		}
 		/** @arg {number} hours_num */
-		get_hours_num_as_pretty_str(hours_num) {
+		get_hours_num_as_pretty_str(hours_num: number) {
 			let int_hours=~~hours_num
 			let time_arr=[]
 			time_arr[0]=this.do_zero_pad(int_hours,'0',2)
@@ -3109,7 +3236,7 @@
 			localStorage.auto_buy_history_str="R"
 		}
 		/** @arg {string} value */
-		state_history_append(value,silent=false) {
+		state_history_append(value: string,silent=false) {
 			this.epoch_len++
 			if(silent) return
 			if(!value) throw new Error("Invalid state append requested")
@@ -3121,7 +3248,7 @@
 			while(this.state_history_arr.length>2000) this.state_history_arr.shift()
 		}
 		/** @arg {Event} _event */
-		history_element_click_handler(_event) {
+		history_element_click_handler(_event: Event) {
 			this.root_node.destroy()
 			this.set_update_timeout()
 			this.set_auto_buy_timeout()
@@ -3156,7 +3283,7 @@
 			return [min,avg,max]
 		}
 		/** @type {number[]} */
-		large_diff=[]
+		large_diff: number[]=[]
 		calc_timeout_ms() {
 			while(this.timeout_arr.length>60) this.timeout_arr.shift()
 			let max=0
@@ -3247,14 +3374,14 @@
 			this.do_timeout_dec([1.006],10)
 		}
 		/** @arg {number} pow_base @arg {number} pow_num @arg {number} div */
-		get_timeout_change(pow_base,pow_num,div) {
+		get_timeout_change(pow_base: number,pow_num: number,div: number) {
 			if(!this.timeout_ms) throw new Error("Invalid")
 			let pow_res=Math.pow(pow_base,pow_num)
 			let res=this.timeout_ms*pow_res
 			return res/div
 		}
 		/** @arg {number} change */
-		update_timeout_inc(change) {
+		update_timeout_inc(change: number) {
 			if(window.__testing__) {
 				return
 			}
@@ -3264,7 +3391,7 @@
 			this.timeout_arr.push(value)
 		}
 		/** @arg {number} change */
-		update_timeout_dec(change) {
+		update_timeout_dec(change: number) {
 			if(window.__testing__) {
 				return
 			}
@@ -3275,31 +3402,32 @@
 			this.timeout_arr.push(value)
 		}
 		/** @arg {number} value */
-		round(value) {
+		round(value: number) {
 			return ~~value
 		}
 		/** @arg {number[]} pow_terms @arg {number} div */
-		do_timeout_dec(pow_terms,div) {
+		do_timeout_dec(pow_terms: number[],div: number) {
 			let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div)
 			this.update_timeout_dec(change)
 		}
 		/** @arg {number[]} pow_terms @arg {number} div */
-		do_timeout_inc(pow_terms,div) {
+		do_timeout_inc(pow_terms: number[],div: number) {
 			let iter_term=Math.pow(pow_terms[1],this.iter_count)
 			let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div)
 			this.update_timeout_inc(change*iter_term)
 		}
 		/** @arg {string} msg @arg {Error} err */
-		next_timeout_async_err_log(msg,err) {
+		next_timeout_async_err_log(msg: string,err: Error) {
 			/** @type {{stack:string}} */
-			let stack_trace={stack: "Error\n    at <anonymous>"}
-			if(err.stack===void 0) Error.captureStackTrace(stack_trace)
+			let stack_trace: {
+				stack: string={stack: "Error\n    at <anonymous>"}
+				if(err.stack===void 0) Error.captureStackTrace(stack_trace)
 			let err_stack_tmp=null
 			if(err.stack) err_stack_tmp=err.stack
 			else err_stack_tmp=stack_trace.stack
 			let err_stack=err_stack_tmp.split("\n").slice(1)
 			/** @arg {string} str */
-			function rm(str) {
+			function rm(str: string) {
 				if(err_stack.length===0) return false
 				if(err_stack[0].includes(str)) {
 					err_stack=err_stack.slice(1)
@@ -3330,9 +3458,9 @@
 			this.next_timeout_async_err_log('next_timeout_async stk',err)
 		}
 		/** @type {number|undefined} */
-		timeout_ms
+		timeout_ms: number|undefined
 		/** @arg {()=>void} trg_fn @arg {number | undefined} timeout @arg {string} char */
-		next_timeout(trg_fn,timeout,char,silent=false) {
+		next_timeout(trg_fn: () => void,timeout: number|undefined,char: string,silent=false) {
 			let node=new TimeoutNode(timeout)
 			this.root_node.append_child(node)
 			node.start(new TimeoutTarget(this,trg_fn))
@@ -3346,7 +3474,7 @@
 			do_auto_unit_promote()
 		}
 		/** @arg {{ done: any; cost: number; }} special_buyable */
-		is_special_done(special_buyable) {
+		is_special_done(special_buyable: {done: any; cost: number ) {
 			return !special_buyable.done&&special_buyable.cost<window.totalAtome
 		}
 		next_special() {
@@ -3418,12 +3546,12 @@
 			}
 		}
 		/** @arg {string} time_played */
-		dispatch_on_game_reset_finish(time_played) {
+		dispatch_on_game_reset_finish(time_played: string) {
 			this.state.on_game_reset_finish(time_played)
 			this.on_game_reset_finish(time_played)
 		}
 		/** @arg {string} time_played */
-		on_game_reset_finish(time_played) {
+		on_game_reset_finish(time_played: string) {
 			console.info('fire lightreset at %s',time_played)
 			let prestige_acc=10000
 			let real_val=calcPres()*100
@@ -3488,20 +3616,20 @@
 	}
 	const auto_buy_obj=new AutoBuy
 	/** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
-	function to_tuple_arr(keys,values) {
+	function to_tuple_arr(keys,values): [T,U][] {
 		/** @type {[typeof keys[0], typeof values[0]][]} */
-		let ret=[]
+		let ret: [typeof keys[0],typeof values[0]][]=[]
 		for(let i=0;i<keys.length;i++) {
 			let k=keys[i]
 			let v=values[i]
 			/** @type {[typeof k, typeof v]} */
-			let item=[k,v]
+			let item: [typeof k,typeof v]=[k,v]
 			ret.push(item)
 		}
 		return ret
 	}
 	/** @arg {string[]} arr @arg {number} rem_target_len */
-	function array_sample_end(arr,rem_target_len) {
+	function array_sample_end(arr: string[],rem_target_len: number) {
 		arr=arr.slice(-300)
 		let rem_len=char_len_of(arr)
 		while(rem_len>rem_target_len) {
@@ -3513,7 +3641,7 @@
 		return arr
 	}
 	/** @arg {any[]} arr */
-	function char_len_of(arr) {
+	function char_len_of(arr: any[]) {
 		return arr.reduce((a,b) => a+b.length,0)+arr.length
 	}
 	function lightreset_inject() {
@@ -3532,7 +3660,7 @@
 		original()
 	}
 	/** @arg {number} that */
-	function specialclick_inject(that) {
+	function specialclick_inject(that: number) {
 		let allspec=window.allspec
 		let totalAtome=window.totalAtome
 		let atomsinvest=window.atomsinvest
@@ -3583,7 +3711,7 @@
 		window.specialsbought=specialsbought
 	}
 	/** @arg {typeof $} value */
-	function got_jquery(value) {
+	function got_jquery(value: typeof $) {
 		Object.defineProperty(window,'$',{
 			value,
 			writable: true,
@@ -3594,12 +3722,12 @@
 	}
 	function use_jquery() {
 		/** @type {typeof $} */
-		let jq=window.$
+		let jq: typeof $=window.$
 		if(!jq) return
 		if(typeof jq!='function') return
 		let res=jq('head')
 		let r_proto=Object.getPrototypeOf(res)
-		r_proto.lazyload=function(/** @type {any} */ ..._a) {}
+		r_proto.lazyload=function(/** @type {any} */ ..._a: any) {}
 		return jq
 	}
 	function proxy_jquery() {
@@ -3607,7 +3735,7 @@
 		set_jq_proxy(val)
 	}
 	/** @arg {typeof $ | undefined} value */
-	function set_jq_proxy(value) {
+	function set_jq_proxy(value: typeof $|undefined) {
 		let s_value=value
 		Object.defineProperty(window,'$',{
 			get() {
@@ -3624,7 +3752,7 @@
 	}
 	let seen_elements=new WeakSet
 	/** @arg {HTMLScriptElement} node */
-	function remove_html_nodes(node) {
+	function remove_html_nodes(node: HTMLScriptElement) {
 		if(seen_elements.has(node)) return
 		seen_elements.add(node)
 		if(!node.src) return
@@ -3666,7 +3794,7 @@
 		do_dom_filter()
 	}
 	/** @arg {HTMLScriptElement} elm */
-	function dom_add_elm_filter(elm) {
+	function dom_add_elm_filter(elm: HTMLScriptElement) {
 		if(elm&&elm.nodeName==="SCRIPT") {
 			if(!elm.src) {
 				console.log(elm)
@@ -3687,7 +3815,7 @@
 		}
 	}
 	/** @arg {(value: any) => void} promise_accept */
-	function do_load_fire_promise(promise_accept) {
+	function do_load_fire_promise(promise_accept: (value: any) => void) {
 		if(document.firstChild) {
 			document.firstChild.remove()
 		}
@@ -3697,7 +3825,7 @@
 		return location.href.slice(location.protocol.length)
 	}
 	/** @arg {PopStateEvent} e */
-	function popstate_event_handler(e) {
+	function popstate_event_handler(e: PopStateEvent) {
 		console.log('popstate',e.state,location.href)
 		if(e.state===null) {
 			let non_proto_url=page_url_no_protocol()
@@ -3715,6 +3843,7 @@
 		window.onpopstate=popstate_event_handler
 	}
 	class BaseMutationObserver {
+		observer: null
 		constructor() {
 			/** @type {MutationObserver|null} */
 			this.observer=null
@@ -3726,7 +3855,7 @@
 	}
 	class DetachedMutationObserver extends BaseMutationObserver {
 		/** @arg {Node} target */
-		constructor(target) {
+		constructor(target: Node) {
 			super()
 			let mutationObserver=new MutationObserver(this.callback)
 			let options={
@@ -3741,13 +3870,14 @@
 			this.observer=mutationObserver
 		}
 		/** @type {(_mutations: MutationRecord[], observer: MutationObserver)=>void} */
-		callback(_mutations,observer) {
+		callback(_mutations,observer): void {
 			observer.disconnect()
 		}
 	}
 	class LoadMutationObserver extends BaseMutationObserver {
+		m_callback: (mut_vec: MutationRecord[],mut_observer: MutationObserver) => void
 		/** @arg {Node} target @arg {(mut_vec: MutationRecord[], mut_observer: MutationObserver) => void} callback */
-		constructor(target,callback) {
+		constructor(target: Node,callback: (mut_vec: MutationRecord[],mut_observer: MutationObserver) => void) {
 			super()
 			this.m_callback=callback
 			let mutationObserver=new MutationObserver(this.callback.bind(this))
@@ -3765,10 +3895,10 @@
 		}
 	}
 	/** @type {BaseMutationObserver[]} */
-	let mut_observers=[]
+	let mut_observers: BaseMutationObserver[]=[]
 	window.g_mut_observers=mut_observers
 	/** @type {(this:Node, node: Node, child: Node | null)=>boolean}*/
-	function insert_before_enabled(node,child) {
+	function insert_before_enabled(node,child): boolean {
 		if(node instanceof HTMLScriptElement) {
 			let should_insert_1=dom_add_elm_filter(node)
 			if(!should_insert_1) return false
@@ -3788,7 +3918,7 @@
 		document.addEventListener('onContentLoaded',do_dom_filter)
 		Node.prototype.insertBefore=new Proxy(Node.prototype.insertBefore,{
 			/** @arg {[Node, Node]} parameters */
-			apply(target,thisValue,parameters) {
+			apply(target,thisValue,parameters: [Node,Node]) {
 				if(insert_before_enabled(...parameters)) {
 					return Reflect.apply(target,thisValue,parameters)
 				}
@@ -3808,7 +3938,7 @@
 		window.setTimeout=nop_timeout
 		window.setInterval=nop_timeout
 		/** @arg {any[]} v */
-		function no_aev(...v) {
+		function no_aev(...v: any[]) {
 			console.log('aev',v)
 		}
 		let orig_aev=EventTarget.prototype.addEventListener
@@ -3858,15 +3988,15 @@
 			}
 			set_jq_proxy(window.$)
 			/** @type {any[]} */
-			let arr=[]
+			let arr: any[]=[]
 			/** @type {any} */
-			let any_cur=arr
+			let any_cur: any=arr
 			window.adsbygoogle=any_cur
 			window.adsbygoogle.op=window.adsbygoogle.push
 			window.adsbygoogle.push=function(e) {
 				let cs=document.currentScript
 				/** @type {Element|null} */
-				let ls=null
+				let ls: Element|null=null
 				if(!cs) return
 				window.g_cs??=[]
 				window.g_cs.push(cs)
@@ -3913,9 +4043,9 @@
 				let log_data_vec=[]
 				log_data_vec.push(mut_vec.length,document.body!=null)
 				/** @type {HTMLScriptElement[]} */
-				let added_scripts=[]
+				let added_scripts: HTMLScriptElement[]=[]
 				/** @type {HTMLScriptElement[]} */
-				let removed_scripts=[]
+				let removed_scripts: HTMLScriptElement[]=[]
 				for(let i=0;i<mut_vec.length;i++) {
 					let mut_rec=mut_vec[i]
 					let add_node_list=mut_rec.addedNodes

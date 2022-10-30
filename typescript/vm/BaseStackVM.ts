@@ -6,7 +6,7 @@ import {NewableFunctionBox} from "../box/NewableFunctionBox"
 import {BaseVMCreate} from "./BaseVMCreate"
 import {l_log_if} from "./l_log_if"
 import {SimpleStackVMParser} from "./SimpleStackVMParser"
-import {LOG_LEVEL_VERBOSE} from "typescript/constants"
+import {LOG_LEVEL_VERBOSE} from "../src/constants"
 
 export class BaseStackVM extends BaseVMCreate {
 	stack: Box[]
