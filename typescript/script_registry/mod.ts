@@ -14,4 +14,4 @@ export let weak_scripts_arr: (WeakFinalInfo|null)[]=[]
 export let script_id=new Counter
 export const attached_proxy_arr: any[]=[]
 export let script_registry: FinalizationRegistry<{}>=new FinalizationRegistry(script_reg_cleanup_callback)
-export {main as script_registry_main} from "./main"
+export {main as script_registry_main} from "./main.js"

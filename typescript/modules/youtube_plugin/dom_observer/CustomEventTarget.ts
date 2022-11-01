@@ -1,6 +1,7 @@
 import {CustomEventType} from "./CustomEventType.js"
 
 export class CustomEventTarget {
+	trace=false
 	_events: {
 		[str: string]: (<T extends CustomEventTarget>(this: T,event: CustomEventType) => void)[]|undefined
 	}

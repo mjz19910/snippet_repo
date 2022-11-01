@@ -1,3 +1,4 @@
-import {DebugClassBox as DebugClassBox} from "./DebugClassBox"
-import {DebugFunctionBox as DebugFunctionBox} from "./DebugFunctionBox"
+import {DebugClassBox} from "./DebugClassBox.js"
+import {DebugFunctionBox} from "./DebugFunctionBox.js"
+
 export type DebugDataBox=DebugClassBox|DebugFunctionBox

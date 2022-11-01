@@ -3,7 +3,8 @@ import {g_ecma_262_do_debug_tests} from "typescript/ecma_262/tests.js"
 import {CanRunTest} from "typescript/tests_mod/CanRunTest.js"
 import {Dispatcher} from "../Dispatcher.js"
 import {lex_js} from "../section_12.js"
-import {lexer_format_callback as lexer_format_callback} from "../lexer_format_callback"
+import {lexer_format_callback} from "../lexer_format_callback.js"
+
 export function test_2_critical(test_runner: CanRunTest,dispatcher: Dispatcher,test_data: Test) {
 	let state=test_data.state
 	if(!state)

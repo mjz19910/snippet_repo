@@ -1,5 +1,5 @@
 import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy.js"
-import {TimeoutMessageRTy as TimeoutMessageReadyTy} from "./TimeoutMessageRTy"
+import {TimeoutMessageRTy} from "./TimeoutMessageRTy.js"
 import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy.js"
 import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy.js"
 import {WorkerReplyTypes} from "./WorkerReplyTypes.js"

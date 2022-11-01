@@ -1,6 +1,6 @@
 import {InstructionType} from "../../vm/instruction/InstructionType.js"
-import { is_array_of } from "./is_array_of"
-import { is_box } from "./is_box"
+import { is_array_of } from "./is_array_of.js"
+import { is_box } from "./is_box.js"
 
 export function is_array_of_InstructionType<T>(value: InstructionType[] | T[]): value is InstructionType[] {
 	return is_array_of(value, function (inner_value): inner_value is InstructionType {

@@ -1,4 +1,4 @@
-import {section_12,Lexer} from "./section_12"
+import {section_12,Lexer} from "./section_12.js"
 import {section_12_2} from "./section_12_2.js"
 import {section_12_3} from "./section_12_3.js"
 import {section_12_4} from "./section_12_4.js"

@@ -10,6 +10,7 @@
         "cint",
         "cint_arr",
         "constelOff",
+        "constexpr",
         "debug_id_syms",
         "DebuggableTypes",
         "deref",

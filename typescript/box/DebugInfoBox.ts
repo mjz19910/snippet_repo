@@ -1,5 +1,5 @@
-import {DebugHiddenVarBox as DebugHiddenVarBox} from "./DebugHiddenVarBox"
-import {DebugNullBox as DebugNullBox} from "./DebugNullBox"
-import {DebugVarBox as DebugVarBox} from "./DebugVarBox"
+import {DebugHiddenVarBox} from "./DebugHiddenVarBox.js"
+import {DebugNullBox} from "./DebugNullBox.js"
+import {DebugVarBox} from "./DebugVarBox.js"
 
 export type DebugInfoBox=DebugHiddenVarBox|DebugVarBox|DebugNullBox

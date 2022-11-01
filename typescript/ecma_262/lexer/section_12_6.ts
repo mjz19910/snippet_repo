@@ -1,7 +1,7 @@
 import {CanRunTest} from "typescript/tests_mod/CanRunTest.js"
 import {TestLock} from "typescript/tests_mod/TestLock.js"
 import {Dispatcher} from "./Dispatcher.js"
-import {debug_flag_override,LexerBase} from "./LexerBase"
+import {debug_flag_override,LexerBase} from "./LexerBase.js"
 import {LexReturnType} from "./LexReturnType.js"
 export class section_12_6 extends LexerBase {
 	constructor(v: Dispatcher) {
