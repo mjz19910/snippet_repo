@@ -1,5 +1,5 @@
 import {Box} from "./Box.js"
-import {NewableInstancePack} from "./NewableInstancePack"
+import {NewableInstancePack} from "./NewableInstancePack.js"
 
 export type FunctionBox_Value=
 	typeof CSSStyleSheet|

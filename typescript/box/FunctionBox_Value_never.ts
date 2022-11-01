@@ -1,5 +1,7 @@
 import {Box} from "./Box.js"
-import {Primitives} from "./helper/Primitives"
-import {FunctionBox_Value} from "./FunctionBox_Value"
+import {Primitives} from "./helper/Primitives.js"
+import {FunctionBox_Value} from "./FunctionBox_Value.js"
 
-export type FunctionBox_Value_never=Exclude<Extract<Exclude<Box,Primitives|null>['value'],Function>,FunctionBox_Value>
+type not_prim_or_null =Exclude<Box,Primitives|null>;
+
+export type FunctionBox_Value_never=Exclude<not_prim_or_null['value'],FunctionBox_Value>
