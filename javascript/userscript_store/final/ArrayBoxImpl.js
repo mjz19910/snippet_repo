@@ -9,7 +9,7 @@ export class ArrayBoxImpl {
 	as_type(_typeof_val) {
 		return null;
 	}
-	/**@arg {import("./BaseBox.js").Box[]} value */
+	/**@arg {import("../../../typescript/box/Box.js").Box[]} value */
 	constructor(value) {
 		this.value = value;
 	}
