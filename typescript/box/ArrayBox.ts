@@ -1,6 +1,6 @@
-import {Box} from "./Box"
-import {BoxTemplate} from "./template/BoxTemplate"
-import {BoxVerify} from "./BoxVerify"
+import {Box} from "./Box.js"
+import {BoxTemplate} from "./template/BoxTemplate.js"
+import {BoxVerify} from "./BoxVerify.js"
 
 export class ArrayBox
 	extends BoxTemplate<"array_box",Box[]>

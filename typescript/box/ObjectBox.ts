@@ -1,5 +1,5 @@
-import {BoxTemplate} from "./template/BoxTemplate"
-import {BoxVerify} from "./BoxVerify"
+import {BoxTemplate} from "./template/BoxTemplate.js"
+import {BoxVerify} from "./BoxVerify.js"
 
 export class ObjectBox
 	extends BoxTemplate<"object_box",Record<never, never>>

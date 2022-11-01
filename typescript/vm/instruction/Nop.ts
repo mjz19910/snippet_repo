@@ -1,3 +1,3 @@
-import {NopOpcode} from "./opcodes/NopOpcode"
+import {NopOpcode} from "./opcodes/NopOpcode.js"
 
 export type Nop=[NopOpcode]

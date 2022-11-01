@@ -1,6 +1,6 @@
-import {InstructionType} from "../vm/instruction/InstructionType"
-import {BoxTemplate} from "./template/BoxTemplate"
-import {BoxVerify} from "./BoxVerify"
+import {InstructionType} from "../vm/instruction/InstructionType.js"
+import {BoxTemplate} from "./template/BoxTemplate.js"
+import {BoxVerify} from "./BoxVerify.js"
 
 export class InstructionTypeArrayBox
 	extends BoxTemplate<"array_box",InstructionType[]>

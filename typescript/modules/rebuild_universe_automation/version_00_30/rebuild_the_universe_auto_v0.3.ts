@@ -249,8 +249,8 @@ class ObjectBoxImpl implements ObjectBox {
 	m_verify_name: "ObjectBox"
 	inner_type: "Record<never, never>"
 	extension=null
-	value: Record<never, never>
-	constructor(value: Record<never, never>) {
+	value: Record<never,never>
+	constructor(value: Record<never,never>) {
 		this.type='object_box'
 		this.m_verify_name='ObjectBox'
 		this.inner_type='Record<never, never>'
@@ -641,7 +641,12 @@ function use_never_type(value: never) {
 	console.log('used never type',value)
 }
 class InstructionGetImpl {
-	type: 'get'='get'
+	type: 'get'
+
+	constructor() {
+		this.type='get'
+	}
+
 	handle_temporary_box(vm: StackVM,tmp_box: TemporaryBox,key: string) {
 		if(tmp_box.source==='cast') {
 			if(tmp_box.cast_source==='object_index') {
@@ -652,6 +657,7 @@ class InstructionGetImpl {
 			throw new Error("Unable to handle box")
 		}
 	}
+
 	on_get(vm: StackVM,value_box: Exclude<Box,Primitives|null>,key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
@@ -679,7 +685,8 @@ class InstructionGetImpl {
 			default: console.log('on_get no handler',value_box.type)
 		}
 	}
-	private array_box_handle_num(value_box: EmptyArrayBox|ArrayBox|InstructionTypeArrayBox,key: number,vm: StackVM) {
+
+	array_box_handle_num(value_box: EmptyArrayBox|ArrayBox|InstructionTypeArrayBox,key: number,vm: StackVM) {
 		switch(value_box.item_type) {
 			case 'Box': {
 				let res=value_box.value[key]

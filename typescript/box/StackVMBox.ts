@@ -1,6 +1,6 @@
-import {StackVM} from "../vm/StackVM"
-import {BoxTemplate} from "./template/BoxTemplate"
-import {BoxVerify} from "./BoxVerify"
+import {StackVM} from "../vm/StackVM.js"
+import {BoxTemplate} from "./template/BoxTemplate.js"
+import {BoxVerify} from "./BoxVerify.js"
 
 export class StackVMBox
 	extends BoxTemplate<"custom_box",StackVM>

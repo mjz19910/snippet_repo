@@ -1,3 +1,3 @@
-import {BreakpointOpcode} from "../opcodes/BreakpointOpcode.ts"
+import {BreakpointOpcode} from "../opcodes/BreakpointOpcode.js"
 
 export type Breakpoint=[BreakpointOpcode]
