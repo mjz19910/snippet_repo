@@ -3,6 +3,8 @@
         "deref",
         "flexy",
         "googlevideo",
+        "undebug",
+        "userscript",
         "youtubei"
     ]
 }

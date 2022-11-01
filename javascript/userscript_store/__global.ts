@@ -1,8 +1,10 @@
+import {GlobalApiObject} from "./GlobalApiObject";
+
 export {}
 
 declare global {
 	interface Window {
-		g_api?: {}|undefined;
+		g_api?: GlobalApiObject|undefined;
 		ytPageType?: string
 		playlist_arr?: string[]
 		ytd_page_manager?: HTMLElement|null
@@ -11,6 +13,7 @@ declare global {
 		yt_playlist_manager?: HTMLElement|null
 		ytd_player?: HTMLElement|null
 		DebugAPI: {};
+		page_type_changes?: string[],
 	}
 	interface WeakRef<T extends object> {
 		readonly [Symbol.toStringTag]: "WeakRef"

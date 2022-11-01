@@ -14,6 +14,7 @@
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
 
+/**@type {typeof window.g_api} */
 let g_api={};
 window.g_api=g_api;
 class Repeat {
@@ -603,6 +604,13 @@ class RustTokenTreeParser {
 	}
 }
 g_api.RustSimpleParser=RustTokenTreeParser;
+class WeakValueRef {
+    id = -1;
+	/**@arg {number} id */
+    constructor(id) {
+        this.id = id;
+    }
+}
 g_api.WeakValueRef=WeakValueRef;
 class CSSCascade {
 	/**
@@ -713,7 +721,7 @@ class TransportMessageObj {
 	construct(connection) {
 		this.w_connection=new WeakRef(connection);
 	}
-	/** @type {number|null} */
+	/** @type {ReturnType<typeof setTimeout>|null} */
 	timeout_id=null;
 	/**
 	 * @param {Window} transport_target
@@ -1011,7 +1019,7 @@ class DebugAPI {
 		return Reflect.apply(function_value,target_obj,arg_vec);
 	}
 	debuggerBreakpointCode() {
-		window.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
+		the_debug_api().getData("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -1031,7 +1039,7 @@ class DebugAPI {
 			}
 		};
 		{
-			if(!window.DebugAPI.the().clearCurrentBreakpoint()) {
+			if(!the_debug_api().clearCurrentBreakpoint()) {
 				console.log("failed to clear breakpoint");
 			}
 		}
@@ -1326,5 +1334,15 @@ class DebugAPI {
 		};
 	}
 }
+/**@type {<T,U extends {the(): DebugAPI}>(v:T|U)=>v is U} */
+function is_debug_api(_v) {
+	return true;
+}
+function the_debug_api() {
+	if(is_debug_api(window.DebugAPI)) {
+		return window.DebugAPI.the();
+	}
+	throw new Error("No debug api");
+}
+window.DebugAPI??=DebugAPI;
 const debug_api=DebugAPI.the();
-window.DebugAPI=DebugAPI;

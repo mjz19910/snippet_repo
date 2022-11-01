@@ -43,10 +43,17 @@ function any_o(value,copy) {
 	}
 	throw new Error("Failed to cast");
 }
+/**
+ * @type {<T>(v1:T, v2: any)=>NonNullable<T>} */
+function default_from(v1, v2) {
+	if(v1) {
+		return v1;
+	}
+	return v2;
+}
 /**@type {typeof window.g_api} */
-let g_api={};
-window.g_api??=g_api;
-g_api=window.g_api;
+let g_api=default_from(window.g_api, {});
+window.g_api=g_api;
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
 	ui_plugin_style_element;
@@ -449,7 +456,9 @@ function handle_fetch_response_1(request_info, /** @type {Response} */ response)
 			if(!(key in obj)) {
 				return Reflect.get(response,key);
 			}
-			return obj[key];
+			/**@type {any} */
+			let any_obj=obj;
+			return any_obj[key];
 		}
 	});
 }
@@ -465,16 +474,19 @@ function fetch_promise_handler(request_info,response) {
  */
 let original_fetch=null;
 /**
- * @param {RequestInfo} request_info
+ * @param {URL|RequestInfo} request_info
  */
 function fetch_inject(request_info) {
+	if(!original_fetch) throw new Error("No original fetch");
 	if(typeof request_info=='string') {
+		return original_fetch(request_info);
+	}
+	if(request_info instanceof URL) {
 		return original_fetch(request_info);
 	}
 	if(request_info.url.includes("googlevideo.com")) {
 		return original_fetch(request_info);
 	}
-	if(!original_fetch) throw new Error("No original fetch");
 	let ret=original_fetch(request_info);
 	return ret.then(fetch_promise_handler.bind(null,request_info));
 }
@@ -571,6 +583,7 @@ let yt_state_map=new Map;
 g_api.yt_state_map=yt_state_map;
 class YTIterateAllBase {
 	/**
+	 * @this {YTIterateAllBase & {[x:string]: any}}
 	 * @param {string} path
 	 * @arg {{[str:string]:{}}} data
 	 */
@@ -617,7 +630,10 @@ class RichItemRenderer {
 	content={};
 }
 class RendererContentItem {
+	/**@type {RichItemRenderer|undefined} */
 	richItemRenderer=new RichItemRenderer;
+	/**@type {{content:{richShelfRenderer:{icon:{iconType:string}|null}}}|undefined} */
+	richSectionRenderer={content:{richShelfRenderer:{icon:null}}};
 }
 // { masthead: { [str: string]: any; videoMastheadAdV3Renderer?: any; }; contents: {richItemRenderer:{content:{}}}[]; }
 class RichGridRenderer {
@@ -629,12 +645,13 @@ class RichGridRenderer {
 /**
  * @param {string[]} keys
  * @param {string} path
+ * @return {void}
  */
 function check_item_keys(path,keys) {
 	/**@type {string[]|string|null} */
 	x: if(keys.length===2) {
 		if(keys[1]=='remove_content_item') {
-			let [key_0,key_1,...keys_r]=keys;
+			let [key_0,,...keys_r]=keys;
 			keys=[key_0,...keys_r];
 		} else {
 			if(path==='.contents[].richItemRenderer') break x;
@@ -715,16 +732,29 @@ function check_item_keys(path,keys) {
 		}
 	}
 }
+/**
+ * @param {RendererContentItem[]} items
+ */
 function filter_section_renderers_from_item_arr(items) {
-	let sections=items.map((e,i) => [i,e]).filter(([i,e]) => e.richSectionRenderer);
+	let sections=items.map(
+		/**@return {[number,RendererContentItem]} */
+		(e,i) => [i,e]).filter(([i,e]) => e.richSectionRenderer);
 	for(let i=0;i<sections.length;i++) {
+		/**@type {[a:number,b:RendererContentItem, c?:"short" | null]} */
 		let e=sections[i];
 		e[2]=section_item_type(e[1]);
 		if(e[2]==='short') {
-			e[1].remove_content_item=true;
+			if('remove_content_item' in e[1]) {
+				/**@type {any} */
+				let any_item = e[1];
+				/**@type {Record<"remove_content_item", boolean>} */
+				let record = any_item;
+				record.remove_content_item=true;
+			}
 		}
 	}
 }
+/**@arg {RendererContentItem} item */
 function section_item_type(item) {
 	if(!item.richSectionRenderer) return null;
 	if(!item.richSectionRenderer.content.richShelfRenderer.icon) return null;
@@ -767,8 +797,14 @@ class HandleRichGridRenderer {
 		let t=this;
 		renderer.contents=renderer.contents.filter((content_item,content_index) => {
 			check_item_keys('.contents[]',Object.keys(content_item));
-			if(content_item.remove_content_item) {
-				return false;
+			if('remove_content_item' in content_item) {
+				/**@type {any} */
+				let any_item = content_item;
+				/**@type {Record<"remove_content_item", boolean>} */
+				let record = any_item;
+				if(record.remove_content_item) {
+					return false;
+				}
 			}
 			if(!content_item.richItemRenderer) return true;
 			check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
@@ -787,6 +823,43 @@ class ContinuationItem extends RendererContentItem {}
 class AppendContinuationItemsAction {
 	/**@type {ContinuationItem[]} */
 	continuationItems=[];
+}
+class InitialDataType {
+	/**@type {{}|undefined} */
+	response={};
+	page="";
+	playerResponse="";
+}
+/**
+ * @arg {YTFilterHandlers} cls
+ * @param {[()=>InitialDataType, object, []]} apply_args
+ */
+ function filter_on_initial_data(cls, apply_args) {
+	let ret=Reflect.apply(...apply_args);
+	if(ret.response) {
+		console.log(cls.class_name+': initial page info:',ret);
+		try {
+			if(window.ytPageType) {
+				if(ret.page==="browse") {
+					cls.handle_page_type(ret.response,window.ytPageType,'response');
+					if(ret.playerResponse) {
+						console.log(cls.class_name+": playerResponse in ret.page === 'browse'");
+						debugger;
+					}
+				} else {
+					console.log(cls.class_name+': page info ret type',ret.page);
+					cls.handle_page_type(ret.response,window.ytPageType,'response');
+					cls.handle_page_type(ret.playerResponse,window.ytPageType,'playerResponse');
+				}
+			}
+		} catch(err) {
+			console.log(cls.class_name+": init filter error");
+			console.log(err);
+		}
+	} else {
+		console.log(cls.class_name+": unhandled return value:",ret);
+	}
+	return ret;
 }
 class YTFilterHandlers extends YTIterateAllBase {
 	debug=true;
@@ -809,8 +882,14 @@ class YTFilterHandlers extends YTIterateAllBase {
 		filter_section_renderers_from_item_arr(action.continuationItems);
 		action.continuationItems=action.continuationItems.filter(content_item => {
 			check_item_keys('.continuationItems[]',Object.keys(content_item));
-			if(content_item.remove_content_item) {
-				return false;
+			if('remove_content_item' in content_item) {
+				/**@type {any} */
+				let any_item = content_item;
+				/**@type {Record<"remove_content_item", boolean>} */
+				let record = any_item;
+				if(record.remove_content_item) {
+					return false;
+				}
 			}
 			if(!content_item.richItemRenderer) return true;
 			check_item_keys('.continuationItems[].richItemRenderer',Object.keys(content_item.richItemRenderer));
@@ -892,6 +971,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	/**
 	 * @arg {{}} data
 	 * @param {string} page_type
+	 * @arg {'response'|'playerResponse'} response_type
 	 */
 	handle_page_type(data,page_type,response_type) {
 		const debug=false;
@@ -912,34 +992,10 @@ class YTFilterHandlers extends YTIterateAllBase {
 		this.default_iter(path,data);
 	}
 	/**
-	 * @param {[()=>{}, object, []]} apply_args
+	 * @param {any} apply_args
 	 */
 	on_initial_data(apply_args) {
-		let ret=Reflect.apply(...apply_args);
-		if(ret.response) {
-			console.log(this.class_name+': initial page info:',ret);
-			try {
-				if(window.ytPageType) {
-					if(ret.page==="browse") {
-						this.handle_page_type(ret.response,window.ytPageType,'response');
-						if(ret.playerResponse) {
-							console.log(this.class_name+": playerResponse in ret.page === 'browse'");
-							debugger;
-						}
-					} else {
-						console.log(this.class_name+': page info ret type',ret.page);
-						this.handle_page_type(ret.response,window.ytPageType,'response');
-						this.handle_page_type(ret.playerResponse,window.ytPageType,'playerResponse');
-					}
-				}
-			} catch(err) {
-				console.log(this.class_name+": init filter error");
-				console.log(err);
-			}
-		} else {
-			console.log(this.class_name+": unhandled return value:",ret);
-		}
-		return ret;
+		return filter_on_initial_data(this,apply_args);
 	}
 }
 /**
@@ -1555,6 +1611,12 @@ class HTMLVideoElementArrayBox {
 }
 
 class YTNavigateFinishEvent {
+	/**@arg {Event} value @return {YTNavigateFinishEvent} */
+	static cast(value) {
+		/**@type {any} */
+		let ret=value;
+		return ret;
+	}
 	detail={
 		pageType: "any"
 	};
@@ -1627,9 +1689,10 @@ function on_ytd_app(element) {
 	element_map.set(element_id,element);
 	ytd_app=YtdAppElement.cast(element);
 	window.ytd_app=element;
-	ytd_app.addEventListener("yt-navigate-finish",function(/**@type {YTNavigateFinishEvent}*/ event) {
+	ytd_app.addEventListener("yt-navigate-finish",function(event) {
+		let real_event = YTNavigateFinishEvent.cast(event);
 		for(let handler of on_yt_navigate_finish) {
-			handler(event);
+			handler(real_event);
 		}
 	});
 	ytd_app.ui_plugin_style_element=document.createElement("style");

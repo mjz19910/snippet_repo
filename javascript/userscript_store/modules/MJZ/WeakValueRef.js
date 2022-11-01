@@ -1,4 +1,4 @@
-class WeakValueRef {
+export class WeakValueRef {
 	id=-1
 	/**
 	 * @param {number} id
