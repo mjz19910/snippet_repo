@@ -1,18 +1,18 @@
 import {calc_ratio} from "./calc_ratio.js";
 
 export class AverageRatio {
-	arr;
 	history: number[];
 	count;
+	arr;
 	len;
 	history_len;
 	weight;
 	human_duration;
 	// @AverageRatio
-	constructor(max_len: number,max_history_len: number,weight: number,human_duration: string,initial_arr: number[]=[]) {
-		this.arr=initial_arr;
+	constructor(initial_arr: number[],max_len: number,max_history_len: number,weight: number,human_duration: string) {
 		this.history=[];
 		this.count=0;
+		this.arr=initial_arr;
 		this.len=max_len;
 		this.history_len=max_history_len;
 		this.weight=weight;

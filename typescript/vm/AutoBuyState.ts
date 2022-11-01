@@ -43,13 +43,13 @@ export class AutoBuyState {
 			return
 		}
 		this.val=window.totalAtome/window.atomepersecond
-		let rep_val=this.val/(100*4*window.prestige)
-		if(Number.isFinite(rep_val)) {
+		let initial_arr=[this.val/(100*4*window.prestige)]
+		if(Number.isFinite(initial_arr[0])) {
 			for(let i=0;i<8;i++) {
-				this.arr.push(rep_val*.75)
+				this.arr.push(initial_arr[0]*.75)
 			}
 		} else {
-			rep_val=0.75
+			initial_arr[0]=0.75
 		}
 		let ratio_names=['10sec','1min','5min','30min','3hour']
 		let ratio_counts=[80,6,5,6,6]
@@ -61,7 +61,7 @@ export class AutoBuyState {
 		}
 		//@AverageRatio
 		function create_ratio(i: number) {
-			return new AverageRatio(ratio_counts[i],mul_3(ratio_counts,i),ratio_mul[i],ratio_human[i],[rep_val])
+			return new AverageRatio(initial_arr,ratio_counts[i],mul_3(ratio_counts,i),ratio_mul[i],ratio_human[i])
 		}
 		for(let i=0;i<5;i++) {
 			let obj=create_ratio(i)
