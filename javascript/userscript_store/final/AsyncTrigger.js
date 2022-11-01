@@ -1,34 +1,24 @@
 export class AsyncTrigger {
 	m_set_flag;
-	/**
-	 * @type {null}
-	 */
+	/** @type {null} */
 	trigger_handler;
 	promise_set;
-	/**
-	 * @type {(value: any) => void}
-	 */
+	/** @type {(value: any) => void} */
 	m_set_result;
-	/**
-	 * @type {(arg0?: any) => void}
-	 */
+	/** @type {(arg0?: any) => void} */
 	m_set_error;
-	/**
-	 * @type {((value: any) => void)|null}
-	 */
+	/** @type {((value: any) => void)|null} */
 	m_notify_result = null;
-	/**
-	 * @type {((arg0?: any) => void)|null}
-	 */
+	/** @type {((arg0?: any) => void)|null} */
 	m_notify_error = null;
 	constructor() {
 		this.notify_promise = null;
 		this.m_set_flag = true;
 		this.trigger_handler = null;
 		this.m_can_notify = false;
-		/**@type {null| ((value: any) => void)} */
+		/** @type {null| ((value: any) => void)} */
 		let accept_fn = null;
-		/**@type {null | ((reason?: any) => void)} */
+		/** @type {null | ((reason?: any) => void)} */
 		let reject_fn = null;
 		this.promise_set = new Promise((accept, reject) => {
 			accept_fn = accept;
@@ -43,30 +33,22 @@ export class AsyncTrigger {
 		}
 		this.m_set_flag = false;
 	}
-	/**
-	 * @param {any} _value
-	 */
+	/** @param {any} _value */
 	default_accept(_value) {
 		return;
 	}
-	/**
-	 * @param {any} error
-	 */
+	/** @param {any} error */
 	default_reject(error) {
 		throw error;
 	}
-	/**
-	 * @param {any} cnt
-	 */
+	/** @param {any} cnt */
 	set(cnt) {
 		if(!this.m_set_flag) {
 			this.m_set_result(cnt);
 			this.m_set_flag = true;
 		}
 	}
-	/**
-	 * @param {any} opt_error
-	 */
+	/** @param {any} opt_error */
 	set_error(opt_error) {
 		if(!this.m_set_flag) {
 			if(opt_error)
@@ -79,18 +61,14 @@ export class AsyncTrigger {
 		let ret = this.promise_set;
 		return ret;
 	}
-	/**
-	 * @param {any} cnt
-	 */
+	/** @param {any} cnt */
 	notify(cnt) {
 		if(this.m_can_notify && this.m_notify_result) {
 			this.m_notify_result(cnt);
 			this.m_can_notify = false;
 		}
 	}
-	/**
-	 * @param {any} error
-	 */
+	/** @param {any} error */
 	notify_error(error) {
 		if(this.m_can_notify && this.m_notify_error) {
 			this.m_notify_error(error);
