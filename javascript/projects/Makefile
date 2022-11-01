@@ -13,3 +13,8 @@ $(PACKAGES):
 
 test:
 	@echo $(PACKAGES:%/=%/jsconfig.json)
+
+clean:
+	for dir in $(PACKAGES); do \
+		make -C $$dir clean;\
+	done

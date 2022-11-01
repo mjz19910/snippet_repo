@@ -6,7 +6,7 @@ import {LoadMutationObserver} from "./LoadMutationObserver.js"
 import {reset_global_event_handlers} from "./reset_global_event_handlers.js"
 import {set_jq_proxy} from "./set_jq_proxy.js"
 import {mut_observers} from "./rebuild_the_universe_auto_v0.2.js"
-import {real_st,real_si,orig_aev} from "./module_entry_function"
+import {real_st,real_si,orig_aev} from "./module_entry_function.js"
 import {l_log_if} from "../../../vm/l_log_if.js"
 
 export async function do_fetch_load() {
@@ -59,16 +59,16 @@ export async function do_fetch_load() {
 	 * @type {any[]}
 	 */
 	let arr: any[]=[]
-	/**@type {any} */
+	/** @type {any} */
 	let any_cur: any=arr
 	window.adsbygoogle=any_cur
 	window.adsbygoogle.op=window.adsbygoogle.push
 	window.adsbygoogle.push=function(e) {
 		// console.log('ads by google push');
 		let cs=document.currentScript
-		/**@type {Element|null} */
+		/** @type {Element|null} */
 		let ls: Element|null=null
-		/**@type {Element|null} */
+		/** @type {Element|null} */
 		let rs: Element|null
 		if(!cs)
 			return
@@ -120,9 +120,9 @@ export async function do_fetch_load() {
 	mut_observers.push(new LoadMutationObserver(document,function(mut_vec,mut_observer) {
 		let log_data_vec=[]
 		log_data_vec.push(mut_vec.length,document.body!=null)
-		/**@type {HTMLScriptElement[]} */
+		/** @type {HTMLScriptElement[]} */
 		let added_scripts: HTMLScriptElement[]=[]
-		/**@type {HTMLScriptElement[]} */
+		/** @type {HTMLScriptElement[]} */
 		let removed_scripts: HTMLScriptElement[]=[]
 		for(let i=0;i<mut_vec.length;i++) {
 			let mut_rec=mut_vec[i]
