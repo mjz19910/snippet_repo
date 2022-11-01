@@ -2314,9 +2314,9 @@ class AsyncFunctionBoxImpl implements AsyncFunctionBox {
 }
 class VoidBoxImpl implements VoidBox {
 	type: "void";
-	extension:null;
+	extension: null;
 	m_verify_name: "VoidBox";
-	value:undefined;
+	value: undefined;
 	constructor() {
 		this.type='void';
 		this.extension=null;
@@ -2331,6 +2331,16 @@ class VoidBoxImpl implements VoidBox {
 	}
 }
 type WithId={id: string;};
+export function destroy_cint_arr(cint_arr: [1|2,number][]) {
+	for(let i=0;i<cint_arr.length;i+=2) {
+		let cint_item=cint_arr[i];
+		switch(cint_item[0]) {
+			case 1: clearTimeout(cint_item[1]); break;
+			case 2: clearInterval(cint_item[1]); break;
+			default: console.assert(false,'cant destroy cint item (%o)',cint_item); break;
+		}
+	}
+}
 class AutoBuy {
 	debug_arr: any;
 	root_node: AsyncNodeRoot;
@@ -2341,7 +2351,6 @@ class AutoBuy {
 	state_history_arr: string[];
 	skip_save: boolean;
 	has_real_time: boolean;
-	cint_arr: never[];
 	local_data_loader: DataLoader;
 	state: AutoBuyState;
 	debug: any;
@@ -2364,8 +2373,6 @@ class AutoBuy {
 		this.background_audio=null;
 		this.skip_save=false;
 		this.has_real_time=false;
-		/** @type {never[]} */
-		this.cint_arr=[];
 		this.local_data_loader=new DataLoader(localStorage);
 		this.state=new AutoBuyState(this.root_node);
 		this.debug=this.state.debug;
@@ -2373,9 +2380,7 @@ class AutoBuy {
 		this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str',["S"]);
 		this.epoch_start_time=Date.now();
 		this.original_map=new Map;
-		/** @type {Map<string, (Node|string)>} */
 		this.dom_map=new Map;
-		/** @type {string[]} */
 		this.debug_arr=[];
 		this.flags=new Set();
 		try {
@@ -2520,10 +2525,8 @@ class AutoBuy {
 			`;
 		let instructions=StackVMParser.parse_instruction_stream_from_string(raw_instructions,[
 			function() {
-				// LOG_LEVEL_INFO
 				log_if(LOG_LEVEL_ERROR,'play success');
 			},
-			/** @arg {any} err */
 			function(err: any) {
 				log_if(LOG_LEVEL_ERROR,err);
 			}
@@ -2558,9 +2561,8 @@ class AutoBuy {
 		if(this.skip_save) return;
 		localStorage.auto_buy_history_str=this.state_history_arr.join(",");
 	}
-	/** @arg {string} forced_action */
 	get_timeout_arr_data(forced_action: string) {
-		if(forced_action=="RESET") return this.timeout_arr.map((/** @type {number} */ e: number) => ~~(e/4)).join(",");
+		if(forced_action=="RESET") return this.timeout_arr.map((e: number) => ~~(e/4)).join(",");
 		return this.timeout_arr.join(",");
 	}
 	save_timeout_arr() {
@@ -2589,12 +2591,10 @@ class AutoBuy {
 			[1,'dup'],
 			[1,'append']
 		];
-		/** @arg {CSSStyleSheet} obj @arg {string} str */
 		function replace_css_style(obj: CSSStyleSheet,str: string) {
 			return obj.replace(str);
 		}
 		async function css_promise_runner(this: AutoBuy,...box_arr: Box[]) {
-			/** @type {Promise<Box>[]} */
 			let promise_arr: Promise<Box>[]=[];
 			for(let i=0;i<box_arr.length;i++) {
 				let cur=box_arr[i];
@@ -2606,9 +2606,7 @@ class AutoBuy {
 				}
 			}
 			const promise_settle_arr=await Promise.allSettled(promise_arr);
-			/** @type {PromiseFulfilledResult<Box>[]} */
 			let fulfilled_res_arr: PromiseFulfilledResult<Box>[]=[];
-			/** @type {PromiseRejectedResult[]} */
 			let rejected_res: PromiseRejectedResult[]=[];
 			for(let i=0;i<promise_settle_arr.length;i++) {
 				let cur=promise_settle_arr[i];
@@ -2619,7 +2617,6 @@ class AutoBuy {
 				}
 			}
 			let promise_res_arr=fulfilled_res_arr.map(e_1 => e_1.value);
-			/** @type {CSSStyleSheet[]} */
 			let unbox_arr: CSSStyleSheet[]=[];
 			for(let i=0;i<promise_res_arr.length;i++) {
 				let cur=promise_res_arr[i];
@@ -2636,13 +2633,12 @@ class AutoBuy {
 			}
 			this.adopt_styles(...unbox_arr);
 		}
-		async function add_css_style_sheet(/** @type {Box[]} */ ...a: Box[]) {
+		async function add_css_style_sheet(...a: Box[]) {
 			let ret=css_promise_runner.call(bound_this,...a);
 			await ret;
 			return new VoidBoxImpl;
 		}
 		let bound_this=this;
-		/** @type {DomExecDescription[]} */
 		let make_css_arr: DomExecDescription[]=[
 			[0,'push',null,new AsyncFunctionBoxImpl(add_css_style_sheet)],
 			[
@@ -2654,7 +2650,6 @@ class AutoBuy {
 			/*drop the promise*/
 			[0,'drop']
 		];
-		/** @type {DomExecDescription[]} */
 		let raw_dom_arr: DomExecDescription[]=[
 			...create_state_log_arr,
 			[2,'create','div','history',"?3"],
@@ -2673,7 +2668,6 @@ class AutoBuy {
 		];
 		this.build_dom_from_desc(raw_dom_arr,this.dom_map);
 	}
-	/** @arg {CSSStyleSheet[]} styles */
 	adopt_styles(...styles: CSSStyleSheet[]) {
 		let dom_styles=document.adoptedStyleSheets;
 		document.adoptedStyleSheets=[...dom_styles,...styles];
@@ -2764,7 +2758,6 @@ class AutoBuy {
 				} break;
 				case 'dup': case 'breakpoint': case 'drop': case 'call':/*push the item*/case 'push': stack.push(cur_item); break;
 				default: {
-					/** @type {any} */
 					let any_cur: any=cur_item;
 					if(!(any_cur instanceof Array)) throw 1;
 					const [,action]=any_cur;
@@ -2861,10 +2854,8 @@ class AutoBuy {
 			}
 			depths.push(cur_depth);
 		}
-		/** @type {DomInstructionType[]} */
 		let flat_with_depths: DomInstructionType[]=[];
 		let flat_stack: DomInstructionStack[0]=[];
-		/** @type {InstructionType[]} */
 		let instructions: InstructionType[]=[];
 		for(let i=0;i<depth_ins_map.length;i++) {
 			let cur_instructions=ins_arr_map[i];
@@ -2876,15 +2867,11 @@ class AutoBuy {
 			flat_stack.push(...cur_instructions);
 			flat_stack.push([i,"vm_return"]);
 		}
-		/** @arg {DomInstructionType} ins */
 		function is_marker_dep_ins(ins: DomInstructionType) {
 			return ins[1]==='marker';
 		}
-		/** @type {DomInstructionType[]} */
 		let flat_ins: DomInstructionType[]=[];
-		/** @type {DomInstructionType[]} */
 		let flat_dep_ins: DomInstructionType[]=[];
-		/** @type {DomInstructionType[]} */
 		let flat_all_ins: DomInstructionType[]=[];
 		for(let i=0;i<flat_stack.length;i++) {
 			let ins=flat_stack[i];
@@ -2976,14 +2963,6 @@ class AutoBuy {
 	}
 	destroy() {
 		this.root_node.destroy();
-		for(let i=0;i<this.cint_arr.length;i+=2) {
-			let cint_item=this.cint_arr[i];
-			switch(cint_item[0]) {
-				case 1: clearTimeout(cint_item[1]); break;
-				case 2: clearInterval(cint_item[1]); break;
-				default: console.assert(false,'cant destroy cint item (%o)',cint_item); break;
-			}
-		}
 	}
 	update_timeout_element() {
 		if(this.timeout_ms) {
@@ -2993,7 +2972,6 @@ class AutoBuy {
 			}
 		}
 	}
-	/** @arg {string | number} value @arg {string} pad_char @arg {number} char_num */
 	do_zero_pad(value: string|number,pad_char: string,char_num: number) {
 		let string;
 		if(typeof value==='number') {
@@ -3006,7 +2984,6 @@ class AutoBuy {
 		}
 		return string;
 	}
-	/** @arg {number} timeout_milli @arg {number | undefined} milli_acc */
 	get_millis_as_pretty_str(timeout_milli: number,milli_acc: number|undefined) {
 		let time_arr=[];
 		let float_milliseconds=timeout_milli%1000;
@@ -3040,7 +3017,6 @@ class AutoBuy {
 		}
 		return time_arr.join(":");
 	}
-	/** @arg {number} hours_num */
 	get_hours_num_as_pretty_str(hours_num: number) {
 		let int_hours=~~hours_num;
 		let time_arr=[];
@@ -3222,7 +3198,6 @@ class AutoBuy {
 		this.state_history_arr=["R"];
 		localStorage.auto_buy_history_str="R";
 	}
-	/** @arg {string} value */
 	state_history_append(value: string,silent=false) {
 		this.epoch_len++;
 		if(silent) return;
@@ -3234,7 +3209,6 @@ class AutoBuy {
 		if(this.state.debug) console.log('history append',last,value);
 		while(this.state_history_arr.length>2000) this.state_history_arr.shift();
 	}
-	/** @arg {Event} _event */
 	history_element_click_handler(_event: Event) {
 		this.root_node.destroy();
 		this.set_update_timeout();
@@ -3269,7 +3243,6 @@ class AutoBuy {
 		const avg=total/this.timeout_arr.length;
 		return [min,avg,max];
 	}
-	/** @type {number[]} */
 	large_diff: number[]=[];
 	calc_timeout_ms() {
 		while(this.timeout_arr.length>60) this.timeout_arr.shift();
@@ -3360,14 +3333,12 @@ class AutoBuy {
 	do_fast_unit_change() {
 		this.do_timeout_dec([1.006],10);
 	}
-	/** @arg {number} pow_base @arg {number} pow_num @arg {number} div */
 	get_timeout_change(pow_base: number,pow_num: number,div: number) {
 		if(!this.timeout_ms) throw new Error("Invalid");
 		let pow_res=Math.pow(pow_base,pow_num);
 		let res=this.timeout_ms*pow_res;
 		return res/div;
 	}
-	/** @arg {number} change */
 	update_timeout_inc(change: number) {
 		if(window.__testing__) {
 			return;
@@ -3377,7 +3348,6 @@ class AutoBuy {
 		log_if(LOG_LEVEL_INFO,'inc',this.timeout_ms,value-this.timeout_ms);
 		this.timeout_arr.push(value);
 	}
-	/** @arg {number} change */
 	update_timeout_dec(change: number) {
 		if(window.__testing__) {
 			return;
@@ -3388,22 +3358,18 @@ class AutoBuy {
 		log_if(LOG_LEVEL_INFO,'dec',this.timeout_ms,this.timeout_ms-value);
 		this.timeout_arr.push(value);
 	}
-	/** @arg {number} value */
 	round(value: number) {
 		return ~~value;
 	}
-	/** @arg {number[]} pow_terms @arg {number} div */
 	do_timeout_dec(pow_terms: number[],div: number) {
 		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
 		this.update_timeout_dec(change);
 	}
-	/** @arg {number[]} pow_terms @arg {number} div */
 	do_timeout_inc(pow_terms: number[],div: number) {
 		let iter_term=Math.pow(pow_terms[1],this.iter_count);
 		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
 		this.update_timeout_inc(change*iter_term);
 	}
-	/** @arg {string} msg @arg {Error} err */
 	next_timeout_async_err_log(msg: string,err: Error) {
 		let stack_trace: StackTraceType={stack: "Error\n    at <anonymous>"};
 		if(err.stack===void 0) Error.captureStackTrace(stack_trace);
@@ -3411,7 +3377,6 @@ class AutoBuy {
 		if(err.stack) err_stack_tmp=err.stack;
 		else err_stack_tmp=stack_trace.stack;
 		let err_stack=err_stack_tmp.split("\n").slice(1);
-		/** @arg {string} str */
 		function rm(str: string) {
 			if(err_stack.length===0) return false;
 			if(err_stack[0].includes(str)) {
@@ -3441,9 +3406,7 @@ class AutoBuy {
 		let err=new Error;
 		this.next_timeout_async_err_log('next_timeout_async stk',err);
 	}
-	/** @type {number|undefined} */
-	timeout_ms: number|undefined;
-	/** @arg {()=>void} trg_fn @arg {number | undefined} timeout @arg {string} char */
+	timeout_ms?: number;
 	next_timeout(trg_fn: () => void,timeout: number|undefined,char: string,silent=false) {
 		let node=new TimeoutNode(timeout);
 		this.root_node.append_child(node);
@@ -3457,7 +3420,6 @@ class AutoBuy {
 	do_unit_promote() {
 		do_auto_unit_promote();
 	}
-	/** @arg {{ done: any; cost: number; }} special_buyable */
 	is_special_done(special_buyable: {done: any; cost: number;}) {
 		return !special_buyable.done&&special_buyable.cost<window.totalAtome;
 	}
@@ -3529,17 +3491,15 @@ class AutoBuy {
 			this.dispatch_on_game_reset_finish("0.000");
 		}
 	}
-	/** @arg {string} time_played */
 	dispatch_on_game_reset_finish(time_played: string) {
 		this.state.on_game_reset_finish(time_played);
 		this.on_game_reset_finish(time_played);
 	}
-	/** @arg {string} time_played */
 	on_game_reset_finish(time_played: string) {
 		console.info('fire lightreset at %s',time_played);
 		let prestige_acc=10000;
 		let real_val=window.calcPres()*100;
-		let [real,num,exponent]=this.state.calc_near_val(real_val);
+		let [,num,exponent]=this.state.calc_near_val(real_val);
 		let near_val=(~~(num*prestige_acc))/prestige_acc;
 		if(exponent<=-2||exponent>=2) {
 			console.info('p_calc_1:expected prestige (%o,%o)%%',near_val,exponent);
@@ -3609,7 +3569,6 @@ function to_tuple_arr<T,U>(keys: T[],values: U[]): [T,U][] {
 	}
 	return ret;
 }
-/** @arg {string[]} arr @arg {number} rem_target_len */
 function array_sample_end(arr: string[],rem_target_len: number) {
 	arr=arr.slice(-300);
 	let rem_len=char_len_of(arr);
@@ -3621,7 +3580,6 @@ function array_sample_end(arr: string[],rem_target_len: number) {
 	}
 	return arr;
 }
-/** @arg {any[]} arr */
 function char_len_of(arr: any[]) {
 	return arr.reduce((a,b) => a+b.length,0)+arr.length;
 }
@@ -3640,7 +3598,6 @@ function lightreset_inject() {
 	}
 	original();
 }
-/** @arg {number} that */
 function specialclick_inject(that: number) {
 	let allspec=window.allspec;
 	let totalAtome=window.totalAtome;
@@ -3691,7 +3648,6 @@ function specialclick_inject(that: number) {
 	window.atomepersecond=atomepersecond;
 	window.specialsbought=specialsbought;
 }
-/** @arg {typeof $} value */
 function got_jquery(value: typeof $) {
 	Object.defineProperty(window,'$',{
 		value,
@@ -3702,20 +3658,18 @@ function got_jquery(value: typeof $) {
 	use_jquery();
 }
 function use_jquery() {
-	/** @type {typeof $} */
 	let jq: typeof $=window.$;
 	if(!jq) return;
 	if(typeof jq!='function') return;
 	let res=jq('head');
 	let r_proto=Object.getPrototypeOf(res);
-	r_proto.lazyload=function(/** @type {any} */ ..._a: any) {};
+	r_proto.lazyload=function(..._a: any[]) {};
 	return jq;
 }
 function proxy_jquery() {
 	let val=use_jquery();
 	set_jq_proxy(val);
 }
-/** @arg {typeof $ | undefined} value */
 function set_jq_proxy(value: typeof $|undefined) {
 	let s_value=value;
 	Object.defineProperty(window,'$',{
@@ -3732,7 +3686,6 @@ function set_jq_proxy(value: typeof $|undefined) {
 	});
 }
 let seen_elements=new WeakSet;
-/** @arg {HTMLScriptElement} node */
 function remove_html_nodes(node: HTMLScriptElement) {
 	if(seen_elements.has(node)) return;
 	seen_elements.add(node);
@@ -3773,7 +3726,6 @@ function action_1() {
 	}
 	do_dom_filter();
 }
-/** @arg {HTMLScriptElement} elm */
 function dom_add_elm_filter(elm: HTMLScriptElement) {
 	if(elm&&elm.nodeName==="SCRIPT") {
 		if(!elm.src) {
@@ -3794,7 +3746,6 @@ function enable_jquery_proxy_if_needed() {
 		proxy_jquery();
 	}
 }
-/** @arg {(value: any) => void} promise_accept */
 function do_load_fire_promise(promise_accept: (value: any) => void) {
 	if(document.firstChild) {
 		document.firstChild.remove();
@@ -3804,7 +3755,6 @@ function do_load_fire_promise(promise_accept: (value: any) => void) {
 function page_url_no_protocol() {
 	return location.href.slice(location.protocol.length);
 }
-/** @arg {PopStateEvent} e */
 function popstate_event_handler(e: PopStateEvent) {
 	console.log('popstate',e.state,location.href);
 	if(e.state===null) {
@@ -3825,7 +3775,6 @@ function reset_global_event_handlers() {
 class BaseMutationObserver {
 	observer: MutationObserver|null;
 	constructor() {
-		/** @type {MutationObserver|null} */
 		this.observer=null;
 	}
 	disconnect() {
@@ -3834,7 +3783,6 @@ class BaseMutationObserver {
 	}
 }
 class DetachedMutationObserver extends BaseMutationObserver {
-	/** @arg {Node} target */
 	constructor(target: Node) {
 		super();
 		let mutationObserver=new MutationObserver(this.callback);
@@ -3849,14 +3797,12 @@ class DetachedMutationObserver extends BaseMutationObserver {
 		mutationObserver.observe(target,options);
 		this.observer=mutationObserver;
 	}
-	/** @type {(_mutations: MutationRecord[], observer: MutationObserver)=>void} */
 	callback(_mutations: MutationRecord[],observer: MutationObserver): void {
 		observer.disconnect();
 	}
 }
 class LoadMutationObserver extends BaseMutationObserver {
 	m_callback: (mut_vec: MutationRecord[],mut_observer: MutationObserver) => void;
-	/** @arg {Node} target @arg {(mut_vec: MutationRecord[], mut_observer: MutationObserver) => void} callback */
 	constructor(target: Node,callback: (mut_vec: MutationRecord[],mut_observer: MutationObserver) => void) {
 		super();
 		this.m_callback=callback;
@@ -3873,7 +3819,6 @@ class LoadMutationObserver extends BaseMutationObserver {
 		observer.disconnect();
 	}
 }
-/** @type {BaseMutationObserver[]} */
 let mut_observers: BaseMutationObserver[]=[];
 window.g_mut_observers=mut_observers;
 function insert_before_enabled(node: Node,child: Node|null): boolean {
@@ -3895,7 +3840,6 @@ function main() {
 	enable_jquery_proxy_if_needed();
 	document.addEventListener('onContentLoaded',do_dom_filter);
 	Node.prototype.insertBefore=new Proxy(Node.prototype.insertBefore,{
-		/** @arg {[Node, Node]} parameters */
 		apply(target,thisValue,parameters: [Node,Node]) {
 			if(insert_before_enabled(...parameters)) {
 				return Reflect.apply(target,thisValue,parameters);
@@ -3915,7 +3859,6 @@ function main() {
 	let real_si=setInterval;
 	window.setTimeout=nop_timeout as unknown as (typeof setTimeout);
 	window.setInterval=nop_timeout as unknown as (typeof setInterval);
-	/** @arg {any[]} v */
 	function no_aev(...v: any[]) {
 		console.log('aev',v);
 	}
@@ -3965,15 +3908,12 @@ function main() {
 			la.disconnect();
 		}
 		set_jq_proxy(window.$);
-		/** @type {any[]} */
 		let arr: any[]=[];
-		/** @type {any} */
 		let any_cur: any=arr;
 		window.adsbygoogle=any_cur;
 		window.adsbygoogle.op=window.adsbygoogle.push;
 		window.adsbygoogle.push=function(e) {
 			let cs=document.currentScript;
-			/** @type {Element|null} */
 			let ls: Element|null=null;
 			let rs: Element|null=null;
 			if(!cs) return;
@@ -4022,9 +3962,7 @@ function main() {
 		mut_observers.push(new LoadMutationObserver(document,function(mut_vec,mut_observer) {
 			let log_data_vec=[];
 			log_data_vec.push(mut_vec.length,document.body!=null);
-			/** @type {HTMLScriptElement[]} */
 			let added_scripts: HTMLScriptElement[]=[];
-			/** @type {HTMLScriptElement[]} */
 			let removed_scripts: HTMLScriptElement[]=[];
 			for(let i=0;i<mut_vec.length;i++) {
 				let mut_rec=mut_vec[i];
