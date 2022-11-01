@@ -10,7 +10,10 @@ export function is_box<T>(v: Box|T): v is Box {
 		case 'boolean': return true
 		case 'function': return false
 		case 'number': return true
-		case 'object': return is_box_object(v)
+		case 'object':{
+			if(v === null) return true;
+			return is_box_object(v);
+		}
 		case 'string': return true
 		case 'symbol': return true
 		case 'undefined': return true

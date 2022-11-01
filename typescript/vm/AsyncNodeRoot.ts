@@ -17,9 +17,11 @@ export class AsyncNodeRoot {
 		}
 		this.append_child(node)
 		node.start({
+			wait(){throw new Error("Not impl")},
 			fire() {
 				target_fn()
-			}
+			},
+			destroy(){}
 		})
 	}
 	append_raw(timeout_id: ReturnType<typeof setInterval>|ReturnType<typeof setTimeout>,is_timeout_id: boolean) {
