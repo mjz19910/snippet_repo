@@ -45,14 +45,14 @@ function any_o(value,copy) {
 }
 /**
  * @type {<T>(v1:T, v2: any)=>NonNullable<T>} */
-function default_from(v1, v2) {
+function default_from(v1,v2) {
 	if(v1) {
 		return v1;
 	}
 	return v2;
 }
 /**@type {typeof window.g_api} */
-let g_api=default_from(window.g_api, {});
+let g_api=default_from(window.g_api,{});
 window.g_api=g_api;
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
@@ -633,7 +633,7 @@ class RendererContentItem {
 	/**@type {RichItemRenderer|undefined} */
 	richItemRenderer=new RichItemRenderer;
 	/**@type {{content:{richShelfRenderer:{icon:{iconType:string}|null}}}|undefined} */
-	richSectionRenderer={content:{richShelfRenderer:{icon:null}}};
+	richSectionRenderer={content: {richShelfRenderer: {icon: null}}};
 }
 // { masthead: { [str: string]: any; videoMastheadAdV3Renderer?: any; }; contents: {richItemRenderer:{content:{}}}[]; }
 class RichGridRenderer {
@@ -746,9 +746,9 @@ function filter_section_renderers_from_item_arr(items) {
 		if(e[2]==='short') {
 			if('remove_content_item' in e[1]) {
 				/**@type {any} */
-				let any_item = e[1];
+				let any_item=e[1];
 				/**@type {Record<"remove_content_item", boolean>} */
-				let record = any_item;
+				let record=any_item;
 				record.remove_content_item=true;
 			}
 		}
@@ -799,9 +799,9 @@ class HandleRichGridRenderer {
 			check_item_keys('.contents[]',Object.keys(content_item));
 			if('remove_content_item' in content_item) {
 				/**@type {any} */
-				let any_item = content_item;
+				let any_item=content_item;
 				/**@type {Record<"remove_content_item", boolean>} */
-				let record = any_item;
+				let record=any_item;
 				if(record.remove_content_item) {
 					return false;
 				}
@@ -834,7 +834,7 @@ class InitialDataType {
  * @arg {YTFilterHandlers} cls
  * @param {[()=>InitialDataType, object, []]} apply_args
  */
- function filter_on_initial_data(cls, apply_args) {
+function filter_on_initial_data(cls,apply_args) {
 	let ret=Reflect.apply(...apply_args);
 	if(ret.response) {
 		console.log(cls.class_name+': initial page info:',ret);
@@ -884,9 +884,9 @@ class YTFilterHandlers extends YTIterateAllBase {
 			check_item_keys('.continuationItems[]',Object.keys(content_item));
 			if('remove_content_item' in content_item) {
 				/**@type {any} */
-				let any_item = content_item;
+				let any_item=content_item;
 				/**@type {Record<"remove_content_item", boolean>} */
-				let record = any_item;
+				let record=any_item;
 				if(record.remove_content_item) {
 					return false;
 				}
@@ -1419,6 +1419,7 @@ function get_ytd_page_mgr() {
 	throw new Error("No ytd_page_manager");
 }
 
+/** @type {(()=>void)[]}*/
 let on_ytd_page_mgr_found=[];
 
 /**
@@ -1513,6 +1514,7 @@ dom_observer.addEventListener('ytd-watch-flexy',event_ytd_watch_flexy);
 window.page_type_changes??=[];
 let page_type_changes=window.page_type_changes;
 
+/** @type {string | null}*/
 let last_page_type=null;
 
 function is_watch_page_active() {
@@ -1567,6 +1569,7 @@ function event_find_ytd_player(event) {
 	const current_message_id=51;
 	let {type,detail,port}=event;
 	observer_default_action(type,current_message_id);
+	if(!ytd_watch_flexy) throw new Error("Missing ytd_watch_flexy element");
 	let target_element=get_html_elements(ytd_watch_flexy,'ytd-player')[0];
 	if(!target_element) return this.next_tick_action(port,current_message_id);
 	on_ytd_player(target_element);
@@ -1643,9 +1646,8 @@ function log_page_type_change(event) {
 		}
 		return;
 	}
-	let t=this;
 	function found_handler() {
-		log_page_type_change.call(t,event);
+		log_page_type_change(event);
 		let index=on_ytd_page_mgr_found.indexOf(found_handler);
 		on_ytd_page_mgr_found.splice(index,1);
 	}
@@ -1690,7 +1692,7 @@ function on_ytd_app(element) {
 	ytd_app=YtdAppElement.cast(element);
 	window.ytd_app=element;
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
-		let real_event = YTNavigateFinishEvent.cast(event);
+		let real_event=YTNavigateFinishEvent.cast(event);
 		for(let handler of on_yt_navigate_finish) {
 			handler(real_event);
 		}
@@ -1722,6 +1724,7 @@ function on_ytd_app(element) {
 		}
 	},15*60*1000);
 	document.addEventListener("visibilitychange",function() {
+		if(!ytd_app) throw new Error("No ytd-app");
 		if(!is_watch_page_active()) return;
 		if(document.visibilityState==='visible') {
 			ytd_app.app_is_visible=1;
@@ -1757,7 +1760,7 @@ function attach_volume_range_to_page() {
 	if(!ytd_app.__shady_children.masthead) return;
 	let player_masthead=ytd_app.__shady_children.masthead;
 	if(!player_masthead.$) return;
-	if(!ytd_app.volume_range) {
+	if(!ytd_app.volume_range&&gain_controller) {
 		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,gain_controller);
 		let container_dom_parent=player_masthead.$.container.children.center;
 		let use_container=true;
@@ -1867,6 +1870,7 @@ function create_message_channel() {
 }
 
 function fire_observer_event() {
+	if(!message_channel) throw new Error("bad");
 	dom_observer.dispatchEvent({
 		type: port_state.current_event_type,
 		detail: {},
@@ -1911,6 +1915,7 @@ function try_find_element(message_id) {
 		found_element=true;
 	}
 }
+/** @param {string} type @param {number} message_id */
 function observer_default_action(type,message_id) {
 	port_state.current_event_type=type;
 	try_find_element(message_id);
@@ -1987,12 +1992,20 @@ let player_overlay_style_str=`
 		width: 10px;
 	`;
 let waiting_for_ytd_player=false;
+/** @type {number | NodeJS.Timeout | null} */
 let current_timeout=null;
 function init_ui_plugin() {
 	if(waiting_for_ytd_player) return;
-	if(current_timeout>0) {
+	if(current_timeout===null)
+		return;
+	if(typeof current_timeout==='number') {
+		if(current_timeout>0) {
+			clearTimeout(current_timeout);
+			current_timeout=null;
+		}
+	} else if('hasRef' in current_timeout) {
 		clearTimeout(current_timeout);
-		current_timeout=0;
+		current_timeout=null;
 	}
 	if(!ytd_player||!ytd_player.player_) {
 		console.log('wait for player');
@@ -2096,7 +2109,11 @@ function on_yt_action(event) {
 		title_text_overlay_update();
 	}
 }
-document.addEventListener('yt-action',on_yt_action);
+{
+	/**@type {any} */
+	let any_document=document;
+	any_document.addEventListener('yt-action',on_yt_action);
+}
 
 function update_plugin_overlay() {
 	if(!plugin_overlay_element) return;
@@ -2121,6 +2138,7 @@ function yt_watch_page_loaded_handler() {
 	var input_modify_css_style=document.createElement("div");
 	overlay_hide_ui_input=document.createElement("div");
 	if(!plugin_overlay_element) {
+		if(!g_api) throw new Error("bad");
 		let overlay_element=PluginOverlayElement.cast(document.createElement("div"));
 		g_api.plugin_overlay_element=overlay_element;
 		overlay_element.id="mz_overlay";
@@ -2322,7 +2340,8 @@ class HTMLMediaElementGainController {
 let gain_controller=null;
 /**@returns {HTMLMediaElementGainController} */
 function on_gain_controller() {
-	/**@type {HTMLMediaElementGainController} */
+	if(!g_api) throw new Error();
+	/**@type {HTMLMediaElementGainController|undefined} */
 	let controller=g_api.gain_controller;
 	if(!controller) {
 		controller=new HTMLMediaElementGainController;

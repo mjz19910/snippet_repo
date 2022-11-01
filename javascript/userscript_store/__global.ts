@@ -4,7 +4,7 @@ export {}
 
 declare global {
 	interface Window {
-		g_api?: GlobalApiObject|undefined;
+		g_api?: GlobalApiObject;
 		ytPageType?: string
 		playlist_arr?: string[]
 		ytd_page_manager?: HTMLElement|null
