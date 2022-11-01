@@ -1038,7 +1038,7 @@ class DebugAPI {
 				};
 			}
 		};
-		if(window.DebugAPI && !window.DebugAPI.the().clearCurrentBreakpoint()) {
+		if(window.DebugAPI&&!window.DebugAPI.the().clearCurrentBreakpoint()) {
 			console.log("failed to clear breakpoint");
 		}
 		0;
