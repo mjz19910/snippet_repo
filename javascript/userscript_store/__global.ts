@@ -1,10 +1,8 @@
-import {GApiType} from "typescript/modules/youtube_plugin/g_api/GApiType.js";
-
 export {}
 
 declare global {
 	interface Window {
-		g_api?: GApiType|undefined;
+		g_api?: {}|undefined;
 		ytPageType?: string
 		playlist_arr?: string[]
 		ytd_page_manager?: HTMLElement|null
@@ -12,7 +10,7 @@ declare global {
 		ytd_app?: HTMLElement|null
 		yt_playlist_manager?: HTMLElement|null
 		ytd_player?: HTMLElement|null
-		DebugAPI: typeof DebugAPI;
+		DebugAPI: {};
 	}
 	interface WeakRef<T extends object> {
 		readonly [Symbol.toStringTag]: "WeakRef"

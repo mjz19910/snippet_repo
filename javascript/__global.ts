@@ -1,10 +1,8 @@
-import {GApiType} from "typescript/modules/youtube_plugin/g_api/GApiType.js";
-
 export {}
 
 declare global {
 	interface Window {
-		g_api?: GApiType|undefined;
+		g_api?: {}|undefined;
 		ytPageType?: string
 		playlist_arr?: string[]
 		ytd_page_manager?: HTMLElement|null
