@@ -2,11 +2,11 @@ import {BoxTemplate} from "./template/BoxTemplate"
 import {BoxVerify} from "./BoxVerify"
 
 export class ObjectBox
-	extends BoxTemplate<"object_box",{}>
+	extends BoxTemplate<"object_box",Record<never, never>>
 	implements BoxVerify<ObjectBox,"ObjectBox">
 {
 	readonly type="object_box"
-	readonly inner_type='{}'
+	readonly inner_type="Record<never, never>"
 	readonly m_verify_name="ObjectBox"
 	readonly extension=null
 	verify_name(name: "ObjectBox") {

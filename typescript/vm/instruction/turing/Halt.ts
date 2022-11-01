@@ -1,3 +1,3 @@
-import {HaltOpcode} from "../opcodes/HaltOpcode.ts"
+import {HaltOpcode} from "../opcodes/HaltOpcode.js"
 
 export type Halt=[HaltOpcode]

@@ -1,3 +1,3 @@
-import {GetOpcode} from "../opcodes/GetOpcode.ts"
+import {GetOpcode} from "../opcodes/GetOpcode.js"
 
 export type Get=[GetOpcode]

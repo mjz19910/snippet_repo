@@ -1,3 +1,3 @@
-import {DropOpcode} from "../opcodes/DropOpcode.ts"
+import {DropOpcode} from "../opcodes/DropOpcode.js"
 
 export type Drop=[DropOpcode]

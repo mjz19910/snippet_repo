@@ -1,3 +1,3 @@
-import {PushWindowObjectOpcode as PushWindowObjectOpcode} from "../opcodes/PushWindowObjectOpcode.ts"
+import {PushWindowObjectOpcode} from "../opcodes/PushWindowObjectOpcode.js"
 
 export type PushWindowObject=[PushWindowObjectOpcode]

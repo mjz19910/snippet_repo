@@ -1,3 +1,3 @@
-import {JumpOpcode} from "../opcodes/JumpOpcode.ts"
+import {JumpOpcode} from "../opcodes/JumpOpcode.js"
 
 export type Jump=[JumpOpcode,number]

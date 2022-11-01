@@ -1,3 +1,3 @@
-import {DupOpcode} from "../opcodes/DupOpcode.ts"
+import {DupOpcode} from "../opcodes/DupOpcode.js"
 
 export type Dup=[DupOpcode]
