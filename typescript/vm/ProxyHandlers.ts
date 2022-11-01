@@ -1,4 +1,4 @@
-import {KeepSome} from "./KeepSome"
+import {KeepSome} from "./KeepSome.js"
 
 export class ProxyHandlers {
 	weak_root: WeakRef<never|KeepSome>

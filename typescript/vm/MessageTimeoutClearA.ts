@@ -1,4 +1,4 @@
-import {TimeoutClearATy} from "./TimeoutClearATy"
+import {TimeoutClearATy} from "./TimeoutClearATy.js"
 
 export type MessageTimeoutClearA={
 	t: TimeoutClearATy

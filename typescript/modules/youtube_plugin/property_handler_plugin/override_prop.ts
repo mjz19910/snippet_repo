@@ -1,4 +1,4 @@
-import {PropertyHandler} from "./PropertyHandler"
+import {PropertyHandler} from "./PropertyHandler.js"
 
 export function override_prop(object: {},property: PropertyKey,property_handler: PropertyHandler) {
 	Object.defineProperty(object,property,{

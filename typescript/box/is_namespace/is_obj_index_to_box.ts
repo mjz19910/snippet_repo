@@ -1,5 +1,5 @@
-import {ObjectIndexToBox} from "../helper/ObjectIndexToBox"
-import {is_box} from "./is_box"
+import {ObjectIndexToBox} from "../helper/ObjectIndexToBox.js"
+import {is_box} from "./is_box.js"
 
 export function is_obj_index_to_box<T extends string>(v: ObjectIndexToBox<T>,test: T) {
 	if(v.hasOwnProperty(test)) {

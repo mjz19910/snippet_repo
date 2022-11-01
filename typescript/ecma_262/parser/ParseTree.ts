@@ -1,4 +1,4 @@
-import {IParseTreeRoot} from "./IParseTreeRoot"
+import {IParseTreeRoot} from "./IParseTreeRoot.js"
 export class ParseTree {
 	root: IParseTreeRoot
 	constructor(root: {}) {

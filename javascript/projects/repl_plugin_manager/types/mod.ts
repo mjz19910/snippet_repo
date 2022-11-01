@@ -1,4 +1,4 @@
-import {Context} from "./shadow_vm"
+import {Context} from "./shadow_vm.js"
 import {REPLCommand,REPLServer} from "./shadow_repl"
 export function use_imports() {
 	let tt: Context|REPLServer|REPLCommand|null=null

@@ -1,4 +1,4 @@
-import {got_jquery} from "./got_jquery"
+import {got_jquery} from "./got_jquery.js"
 
 export function set_jq_proxy(value: typeof $|undefined) {
 	let s_value=value

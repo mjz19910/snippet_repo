@@ -1,4 +1,4 @@
-import {RefVarInfo} from "./RefVarInfo"
+import {RefVarInfo} from "./RefVarInfo.js"
 
 export type RefVarMsg={
 	t: number

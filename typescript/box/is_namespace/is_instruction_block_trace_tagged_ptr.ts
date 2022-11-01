@@ -1,6 +1,6 @@
-import {DomTaggedPack} from "../../vm/dom_instruction/DomTaggedPack"
-import {is_dom_tagged_pack} from "./is_dom_tagged_pack"
-import {is_null} from "./is_null"
+import {DomTaggedPack} from "../../vm/dom_instruction/DomTaggedPack.js"
+import {is_dom_tagged_pack} from "./is_dom_tagged_pack.js"
+import {is_null} from "./is_null.js"
 
 export function is_instruction_block_trace_tagged_ptr(
 	value:

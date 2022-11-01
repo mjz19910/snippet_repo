@@ -1,4 +1,4 @@
-import {CustomEventTarget} from "./CustomEventTarget"
+import {CustomEventTarget} from "./CustomEventTarget.js"
 
 export class DomObserver extends CustomEventTarget {
 	trace=false

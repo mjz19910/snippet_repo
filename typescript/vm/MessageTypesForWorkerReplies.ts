@@ -1,7 +1,7 @@
-import {MessageTimeoutFireS} from "./MessageTimeoutFireS"
-import {MessageWorkerDestroyMessage} from "./MessageWorkerDestroyMessage"
-import {MessageReplyMessage1} from "./MessageReplyMessage1"
-import {MessageReplyMessage2} from "./MessageReplyMessage2"
-import {MessageReplyFromWorker} from "./MessageReplyFromWorker"
+import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js"
+import {MessageWorkerDestroyMessage} from "./MessageWorkerDestroyMessage.js"
+import {MessageReplyMessage1} from "./MessageReplyMessage1.js"
+import {MessageReplyMessage2} from "./MessageReplyMessage2.js"
+import {MessageReplyFromWorker} from "./MessageReplyFromWorker.js"
 
 export type MessageTypesForWorkerReplies=MessageReplyFromWorker|MessageReplyMessage2|MessageReplyMessage1|MessageWorkerDestroyMessage|MessageTimeoutFireS

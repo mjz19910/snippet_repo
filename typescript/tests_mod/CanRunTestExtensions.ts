@@ -1,8 +1,8 @@
-import {TestTreeNode} from "./TestNodeBase"
-import {MarkerHandler} from "./MarkerHandler"
-import {CanWaitFor} from "./CanWaitFor"
-import {CanInitTestSet} from "./CanInitTestSet"
-import {AsyncTest} from "./AsyncTest"
+import {TestTreeNode} from "./TestNodeBase.js"
+import {MarkerHandler} from "./MarkerHandler.js"
+import {CanWaitFor} from "./CanWaitFor.js"
+import {CanInitTestSet} from "./CanInitTestSet.js"
+import {AsyncTest} from "./AsyncTest.js"
 export interface CanRunTestExtensions extends
 	AsyncTest,
 	TestTreeNode,

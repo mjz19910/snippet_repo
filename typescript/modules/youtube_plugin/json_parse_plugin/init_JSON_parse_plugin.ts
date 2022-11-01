@@ -1,4 +1,4 @@
-import {json_parse_handler} from "./json_parse_handler"
+import {json_parse_handler} from "./json_parse_handler.js"
 
 export function init_JSON_parse_plugin() {
 	let Function_any: any=Function

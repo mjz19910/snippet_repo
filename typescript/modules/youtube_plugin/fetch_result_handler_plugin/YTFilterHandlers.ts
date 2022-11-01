@@ -1,9 +1,9 @@
-import {AppendContinuationItemsAction} from "./AppendContinuationItemsAction"
-import {check_item_keys} from "./check_item_keys"
-import {HandleRichGridRenderer} from "./HandleRichGridRenderer"
-import {InitialData} from "./InitialData"
-import {RichGridRenderer} from "./RichGridRenderer"
-import {YTIterateAllBase} from "./YTIterateAllBase"
+import {AppendContinuationItemsAction} from "./AppendContinuationItemsAction.js"
+import {check_item_keys} from "./check_item_keys.js"
+import {HandleRichGridRenderer} from "./HandleRichGridRenderer.js"
+import {InitialData} from "./InitialData.js"
+import {RichGridRenderer} from "./RichGridRenderer.js"
+import {YTIterateAllBase} from "./YTIterateAllBase.js"
 
 export class YTFilterHandlers extends YTIterateAllBase {
 	richGridRenderer(path: string,renderer: RichGridRenderer) {

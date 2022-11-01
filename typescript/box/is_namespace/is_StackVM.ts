@@ -1,5 +1,5 @@
-import {StackVM} from "../../vm/StackVM"
-import {cast2} from "../helper/cast2"
+import {StackVM} from "../../vm/StackVM.js"
+import {cast2} from "../helper/cast2.js"
 
 export function is_StackVM<T>(value: T|StackVM): value is StackVM {
 	if(value===null) return false

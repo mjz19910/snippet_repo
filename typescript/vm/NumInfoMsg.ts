@@ -1,4 +1,4 @@
-import {NumInfo} from "./NumInfo"
+import {NumInfo} from "./NumInfo.js"
 
 export type NumInfoMsg={
 	t: number

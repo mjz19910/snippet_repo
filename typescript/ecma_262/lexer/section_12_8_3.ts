@@ -1,9 +1,9 @@
-import {is_ascii_digit} from "../../AK/CharacterTypes"
-import {Dispatcher} from "./Dispatcher"
-import {is_octal_digit} from "../is_octal_digit"
-import {LexerBase} from "./LexerBase"
-import {LexReturnType} from "./LexReturnType"
-import {TokenType} from "../TokenType"
+import {is_ascii_digit} from "../../AK/CharacterTypes.js"
+import {Dispatcher} from "./Dispatcher.js"
+import {is_octal_digit} from "../is_octal_digit.js"
+import {LexerBase} from "./LexerBase.js"
+import {LexReturnType} from "./LexReturnType.js"
+import {TokenType} from "../TokenType.js"
 
 export class section_12_8_3 extends LexerBase {
 	result_error_token: ['Error',string]|null=null

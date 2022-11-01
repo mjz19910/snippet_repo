@@ -1,12 +1,12 @@
-import {RemoteWorkerState} from "../vm/RemoteWorkerState"
-import {WorkerState} from "../vm/WorkerState"
-import {DocumentWriteList} from "../vm/DocumentWriteList"
-import {AutoBuy} from "../vm/AutoBuy"
-import {DebugAPI} from "./DebugAPI"
-import {GenericDataEvent} from "../vm/GenericDataEvent"
-import {GlobalStateKey} from "../vm/GlobalStateKey"
-import {MulCompression} from "../vm/MulCompression"
-import {l_log_if} from "../vm/l_log_if"
+import {RemoteWorkerState} from "../vm/RemoteWorkerState.js"
+import {WorkerState} from "../vm/WorkerState.js"
+import {DocumentWriteList} from "../vm/DocumentWriteList.js"
+import {AutoBuy} from "../vm/AutoBuy.js"
+import {DebugAPI} from "./DebugAPI.js"
+import {GenericDataEvent} from "../vm/GenericDataEvent.js"
+import {GlobalStateKey} from "../vm/GlobalStateKey.js"
+import {MulCompression} from "../vm/MulCompression.js"
+import {l_log_if} from "../vm/l_log_if.js"
 
 export {}
 

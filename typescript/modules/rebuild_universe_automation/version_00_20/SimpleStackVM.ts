@@ -1,9 +1,9 @@
-import {Box} from "../../../box/Box"
-import {StackVMBox} from "../../../box/StackVMBox"
-import {WindowBox} from "../../../box/WindowBox"
-import {InstructionType} from "../../../vm/instruction/InstructionType"
-import {StackVM} from "../../../vm/StackVM"
-import {throw_invalid_error} from "./throw_invalid_error"
+import {Box} from "../../../box/Box.js"
+import {StackVMBox} from "../../../box/StackVMBox.js"
+import {WindowBox} from "../../../box/WindowBox.js"
+import {InstructionType} from "../../../vm/instruction/InstructionType.js"
+import {StackVM} from "../../../vm/StackVM.js"
+import {throw_invalid_error} from "./throw_invalid_error.js"
 
 export class SimpleStackVM extends StackVM {
 	args_vec: Box[]|null

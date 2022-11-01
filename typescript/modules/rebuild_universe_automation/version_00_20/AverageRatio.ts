@@ -1,4 +1,4 @@
-import {AverageRatioRoot} from "./AverageRatioRoot"
+import {AverageRatioRoot} from "./AverageRatioRoot.js"
 
 export class AverageRatio {
 	type: string

@@ -1,4 +1,4 @@
-import {FunctionBox} from "../../../box/FunctionBox"
+import {FunctionBox} from "../../../box/FunctionBox.js"
 
 export class FunctionBoxImpl {
 	type: "function_box"

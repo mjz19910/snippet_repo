@@ -1,5 +1,5 @@
-import {AutoBuy} from "../../../vm/AutoBuy"
-import {AutoBuyState} from "./AutoBuyState"
+import {AutoBuy} from "../../../vm/AutoBuy.js"
+import {AutoBuyState} from "./AutoBuyState.js"
 
 export class TimeoutTarget {
 	m_once: boolean

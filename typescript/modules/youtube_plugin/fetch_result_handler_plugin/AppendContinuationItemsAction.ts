@@ -1,4 +1,4 @@
-import {ContinuationItem} from "./ContinuationItem"
+import {ContinuationItem} from "./ContinuationItem.js"
 
 export class AppendContinuationItemsAction {
 	continuationItems: ContinuationItem[]=[];

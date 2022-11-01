@@ -1,5 +1,5 @@
-import {WorkerUpdateMessageHandlerReplyTy} from "./WorkerUpdateMessageHandlerReplyTy"
-import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy"
+import {WorkerUpdateMessageHandlerReplyTy} from "./WorkerUpdateMessageHandlerReplyTy.js"
+import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy.js"
 
 export type MessageWorkerUpdateMessageHandlerReply={
 	t: WorkerUpdateMessageHandlerReplyTy

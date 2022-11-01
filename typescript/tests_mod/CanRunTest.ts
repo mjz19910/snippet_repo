@@ -1,4 +1,4 @@
-import {TestRunnerBase} from "./TestRunnerBase"
-import {CanRunTestBase} from "./CanRunTestBase"
-import {CanRunTestExtensions} from "./CanRunTestExtensions"
+import {TestRunnerBase} from "./TestRunnerBase.js"
+import {CanRunTestBase} from "./CanRunTestBase.js"
+import {CanRunTestExtensions} from "./CanRunTestExtensions.js"
 export interface CanRunTest extends TestRunnerBase,CanRunTestBase,CanRunTestExtensions {}

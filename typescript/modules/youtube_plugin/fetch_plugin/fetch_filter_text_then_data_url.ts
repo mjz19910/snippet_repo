@@ -1,5 +1,5 @@
-import {debug} from "../config/debug"
-import {yt_handlers} from "../fetch_result_handler_plugin/yt_handlers"
+import {debug} from "../config/debug.js"
+import {yt_handlers} from "../fetch_result_handler_plugin/yt_handlers.js"
 
 export function fetch_filter_text_then_data_url(url: string|URL,response_obj: {}) {
 	let url_obj=new URL(url)

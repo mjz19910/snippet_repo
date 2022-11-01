@@ -1,4 +1,4 @@
-import {ScriptEventTargetType} from "./ScriptEventTargetType"
+import {ScriptEventTargetType} from "./ScriptEventTargetType.js"
 
 export class ScriptStateHost {
 	static event_target: ScriptEventTargetType={

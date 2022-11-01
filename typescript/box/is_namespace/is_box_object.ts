@@ -1,6 +1,6 @@
-import {Box} from "../Box"
-import {Primitives} from "../helper/Primitives"
-import {eat_never} from "../helper/eat_never"
+import {Box} from "../Box.js"
+import {Primitives} from "../helper/Primitives.js"
+import {eat_never} from "../helper/eat_never.js"
 
 export function is_box_object(v: Exclude<Box,Primitives|null>):
 	v is Exclude<Box,Primitives|null> {

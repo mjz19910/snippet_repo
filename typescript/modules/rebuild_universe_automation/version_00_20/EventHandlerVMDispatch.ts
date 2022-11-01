@@ -1,6 +1,6 @@
-import {ObjectBox} from "../../../box/ObjectBox"
-import {InstructionType} from "../../../vm/instruction/InstructionType"
-import {SimpleStackVM} from "./SimpleStackVM"
+import {ObjectBox} from "../../../box/ObjectBox.js"
+import {InstructionType} from "../../../vm/instruction/InstructionType.js"
+import {SimpleStackVM} from "./SimpleStackVM.js"
 
 export class EventHandlerVMDispatch extends SimpleStackVM {
 	target_obj: any

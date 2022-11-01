@@ -1,4 +1,4 @@
-import {BoxExtractType} from "../helper/BoxExtractType"
+import {BoxExtractType} from "../helper/BoxExtractType.js"
 
 export function is_empty_arr(v: Extract<BoxExtractType, any[]>): v is [] {
 	if(v.length === 0) {

@@ -1,5 +1,5 @@
-import {MessageReplyFromWorkerData} from "./MessageReplyFromWorkerData"
-import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy"
+import {MessageReplyFromWorkerData} from "./MessageReplyFromWorkerData.js"
+import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy.js"
 
 export type MessageReplyFromWorker={
 	t: ReplyFromWorkerTy

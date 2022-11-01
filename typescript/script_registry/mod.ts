@@ -1,8 +1,8 @@
-import {Counter} from "./Counter"
-import {HeldType} from "./HeldType"
-import {script_reg_cleanup_callback} from "./script_reg_cleanup_callback"
-import {PtrWithKeySymbolToWeakTokenSymbolPtr} from "./TokenType"
-import {WeakFinalInfo} from "./WeakFinalInfo"
+import {Counter} from "./Counter.js"
+import {HeldType} from "./HeldType.js"
+import {script_reg_cleanup_callback} from "./script_reg_cleanup_callback.js"
+import {PtrWithKeySymbolToWeakTokenSymbolPtr} from "./TokenType.js"
+import {WeakFinalInfo} from "./WeakFinalInfo.js"
 
 export let is_in_userscript_fn: {flag: boolean}={flag: false}
 export let is_in_userscript: {flag: boolean}={flag: false}

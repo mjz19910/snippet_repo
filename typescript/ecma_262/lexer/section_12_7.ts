@@ -1,10 +1,10 @@
-import {FlyString} from "../../AK/FlyString"
-import {Dispatcher} from "./Dispatcher"
-import {LexerBase} from "./LexerBase"
-import {LexReturnType} from "./LexReturnType"
+import {FlyString} from "../../AK/FlyString.js"
+import {Dispatcher} from "./Dispatcher.js"
+import {LexerBase} from "./LexerBase.js"
+import {LexReturnType} from "./LexReturnType.js"
 import {JSTokenizerTokenType as TokenType} from "../JSTokenizerTokenType"
-import {IterationDecision} from "../IterationDecision"
-import {HashMap} from "../HashMap"
+import {IterationDecision} from "../IterationDecision.js"
+import {HashMap} from "../HashMap.js"
 
 // HashMap<FlyString, TokenType> Lexer::s_keywords
 const s_keywords=new HashMap<FlyString,TokenType>()

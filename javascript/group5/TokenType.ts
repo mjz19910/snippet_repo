@@ -1,9 +1,9 @@
-import {BoxedTokensValue} from "./BoxedTokensValue"
-import {TokenTypeInvalid} from "./TokenTypeInvalid"
-import {TokenTypeSpecial} from "./TokenTypeSpecial"
-import {TokenTypeKeyword} from "./TokenTypeKeyword"
-import {TokenTypeWhitespace} from "./TokenTypeWhitespace"
-import {TokenTypeWord} from "./TokenTypeWord"
+import {BoxedTokensValue} from "./BoxedTokensValue.js"
+import {TokenTypeInvalid} from "./TokenTypeInvalid.js"
+import {TokenTypeSpecial} from "./TokenTypeSpecial.js"
+import {TokenTypeKeyword} from "./TokenTypeKeyword.js"
+import {TokenTypeWhitespace} from "./TokenTypeWhitespace.js"
+import {TokenTypeWord} from "./TokenTypeWord.js"
 
 export type TokenType=
 	TokenTypeWord|

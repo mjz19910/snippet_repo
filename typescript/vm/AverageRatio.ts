@@ -1,4 +1,4 @@
-import {calc_ratio} from "./calc_ratio"
+import {calc_ratio} from "./calc_ratio.js"
 
 export class AverageRatio {
 	arr

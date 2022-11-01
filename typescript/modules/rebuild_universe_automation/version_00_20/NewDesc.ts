@@ -1,4 +1,4 @@
-import {CSSStyleSheetConstructorBoxImplSupport} from "./CSSStyleSheetConstructorBoxImplSupport"
+import {CSSStyleSheetConstructorBoxImplSupport} from "./CSSStyleSheetConstructorBoxImplSupport.js"
 
 
 export type NewDesc=[

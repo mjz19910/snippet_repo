@@ -1,8 +1,8 @@
-import {attach_event_target_add_event_listener_proxy} from "./attach_event_target_add_event_listener_proxy"
-import {attach_promise_then_proxy} from "./attach_promise_then_proxy"
-import {attach_request_animation_frame_proxy} from "./attach_request_animation_frame_proxy"
-import {attach_string_index_of_proxy} from "./attach_string_index_of_proxy"
-import {attached_proxy_arr} from "./mod"
+import {attach_event_target_add_event_listener_proxy} from "./attach_event_target_add_event_listener_proxy.js"
+import {attach_promise_then_proxy} from "./attach_promise_then_proxy.js"
+import {attach_request_animation_frame_proxy} from "./attach_request_animation_frame_proxy.js"
+import {attach_string_index_of_proxy} from "./attach_string_index_of_proxy.js"
+import {attached_proxy_arr} from "./mod.js"
 
 export function main() {
 	window.proxy_set=attached_proxy_arr

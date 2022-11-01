@@ -1,4 +1,4 @@
-import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy"
+import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy.js"
 import {is_in_userscript,attached_proxy_arr} from "./mod"
 
 export function attach_event_target_add_event_listener_proxy() {

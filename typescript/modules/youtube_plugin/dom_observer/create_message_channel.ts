@@ -1,5 +1,5 @@
-import {MessageChannelWithReadonlyPorts} from "./MessageChannelWithReadonlyPorts"
-import {on_port_message} from "./on_port_message"
+import {MessageChannelWithReadonlyPorts} from "./MessageChannelWithReadonlyPorts.js"
+import {on_port_message} from "./on_port_message.js"
 
 export function create_message_channel(): Readonly<MessageChannelWithReadonlyPorts> {
 	let channel=Object.freeze(new MessageChannel())

@@ -1,6 +1,6 @@
-import {List} from "./List"
+import {List} from "./List.js"
 import {GoalSymbol,HostDefined,IRealm,ScriptRecord} from "./ParseScript"
-import {ParseText} from "./section_11_1_6"
+import {ParseText} from "./section_11_1_6.js"
 // https://tc39.es/ecma262/#sec-parse-script
 export function ParseScript(sourceText: string,realm: IRealm,hostDefined: HostDefined) {
 	// 1. Let script be ParseText(sourceText, Script).

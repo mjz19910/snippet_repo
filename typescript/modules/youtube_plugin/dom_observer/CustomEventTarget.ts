@@ -1,4 +1,4 @@
-import {CustomEventType} from "./CustomEventType"
+import {CustomEventType} from "./CustomEventType.js"
 
 export class CustomEventTarget {
 	_events: {

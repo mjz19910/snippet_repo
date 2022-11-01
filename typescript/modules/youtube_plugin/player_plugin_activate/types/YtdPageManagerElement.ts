@@ -1,4 +1,4 @@
-import {YtCurrentPage} from "./YtCurrentPage"
+import {YtCurrentPage} from "./YtCurrentPage.js"
 
 export class YtdPageManagerElement extends HTMLElement {
 	/**@return {YtCurrentPage} */

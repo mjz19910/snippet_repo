@@ -1,4 +1,4 @@
-import {AbstractTarget} from "./AbstractTarget"
+import {AbstractTarget} from "./AbstractTarget.js"
 
 export class IntervalTarget extends AbstractTarget {
 	once

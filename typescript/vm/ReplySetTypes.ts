@@ -1,5 +1,5 @@
-import {ReplySetSingleTy} from "./ReplySetSingleTy"
-import {ReplySetRepeatingTy} from "./ReplySetRepeatingTy"
+import {ReplySetSingleTy} from "./ReplySetSingleTy.js"
+import {ReplySetRepeatingTy} from "./ReplySetRepeatingTy.js"
 
 export type ReplySetTypes={
 	single: ReplySetSingleTy

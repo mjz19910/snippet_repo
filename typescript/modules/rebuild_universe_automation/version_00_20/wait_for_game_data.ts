@@ -1,4 +1,4 @@
-import {on_game_data_set} from "./on_game_data_set"
+import {on_game_data_set} from "./on_game_data_set.js"
 
 export function wait_for_game_data() {
 	if(window._SM_Data) {

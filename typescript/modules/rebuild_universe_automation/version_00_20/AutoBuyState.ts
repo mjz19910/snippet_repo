@@ -1,12 +1,12 @@
 import {LOG_LEVEL_ERROR,LOG_LEVEL_INFO} from "../../../src/constants"
-import {BaseNode} from "../../../vm/BaseNode"
-import {l_log_if} from "../../../vm/l_log_if"
-import {AsyncNodeRoot} from "./AsyncNodeRoot"
-import {AverageRatio} from "./AverageRatio"
-import {AverageRatioRoot} from "./AverageRatioRoot"
+import {BaseNode} from "../../../vm/BaseNode.js"
+import {l_log_if} from "../../../vm/l_log_if.js"
+import {AsyncNodeRoot} from "./AsyncNodeRoot.js"
+import {AverageRatio} from "./AverageRatio.js"
+import {AverageRatioRoot} from "./AverageRatioRoot.js"
 import {AutoBuyMulModifierFactor,AutoBuyRatioDiv} from "./const.js"
-import {TimeoutNode} from "./TimeoutNode"
-import {TimeoutTarget} from "./TimeoutTarget"
+import {TimeoutNode} from "./TimeoutNode.js"
+import {TimeoutTarget} from "./TimeoutTarget.js"
 
 export class AutoBuyState {
 	root_node: AsyncNodeRoot

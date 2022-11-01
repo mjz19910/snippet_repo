@@ -1,6 +1,6 @@
-import {port_state} from "modules/youtube_plugin/dom_observer/port_state"
-import {CustomEventTarget} from "modules/youtube_plugin/dom_observer/CustomEventTarget"
-import {CustomEventType} from "modules/youtube_plugin/dom_observer/CustomEventType"
+import {port_state} from "modules/youtube_plugin/dom_observer/port_state.js"
+import {CustomEventTarget} from "modules/youtube_plugin/dom_observer/CustomEventTarget.js"
+import {CustomEventType} from "modules/youtube_plugin/dom_observer/CustomEventType.js"
 
 export function on_yt_page_type_changed(this: CustomEventTarget,event: CustomEventType) {
 	let {detail,port}=event

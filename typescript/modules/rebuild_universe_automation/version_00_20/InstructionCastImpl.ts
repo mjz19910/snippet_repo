@@ -1,7 +1,7 @@
-import {Cast} from "../../../vm/instruction/Cast"
-import {StackVM} from "../../../vm/StackVM"
-import {throw_invalid_error} from "./throw_invalid_error"
-import {throw_todo_error} from "./throw_todo_error"
+import {Cast} from "../../../vm/instruction/Cast.js"
+import {StackVM} from "../../../vm/StackVM.js"
+import {throw_invalid_error} from "./throw_invalid_error.js"
+import {throw_todo_error} from "./throw_todo_error.js"
 
 export class InstructionCastImpl {
 	static execute_instruction(vm: StackVM,instruction: Cast) {

@@ -1,4 +1,4 @@
-import {WorkerState} from "./WorkerState"
+import {WorkerState} from "./WorkerState.js"
 
 export class PromiseExecutorHandle {
 	m_closed

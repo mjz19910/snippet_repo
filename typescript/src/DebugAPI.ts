@@ -1,13 +1,13 @@
-import {GenericEventTarget} from "../vm/GenericEventTarget"
-import {HexRandomDataGenerator} from "../vm/HexRandomDataGenerator"
+import {GenericEventTarget} from "../vm/GenericEventTarget.js"
+import {HexRandomDataGenerator} from "../vm/HexRandomDataGenerator.js"
 import {DebugDataBox as DebugDataBox} from "../box/DebugDataBox"
-import {DebugFunctionType} from "../box/DebugFunctionType"
-import {ChromeDevToolsDebug} from "../dev_tools_debugger/ChromeDevToolsDebug"
-import {ChromeDevToolsGetEventListeners} from "../dev_tools_debugger/ChromeDevToolsGetEventListeners"
-import {ChromeDevToolsUnDebug} from "../dev_tools_debugger/ChromeDevToolsUnDebug"
-import {DebugFunctionBox} from "../box/DebugFunctionBox"
-import {DebugClassBox} from "../box/DebugClassBox"
-import {DebugInfoValue} from "./DebugInfoValue"
+import {DebugFunctionType} from "../box/DebugFunctionType.js"
+import {ChromeDevToolsDebug} from "../dev_tools_debugger/ChromeDevToolsDebug.js"
+import {ChromeDevToolsGetEventListeners} from "../dev_tools_debugger/ChromeDevToolsGetEventListeners.js"
+import {ChromeDevToolsUnDebug} from "../dev_tools_debugger/ChromeDevToolsUnDebug.js"
+import {DebugFunctionBox} from "../box/DebugFunctionBox.js"
+import {DebugClassBox} from "../box/DebugClassBox.js"
+import {DebugInfoValue} from "./DebugInfoValue.js"
 
 export class DebugAPI {
 	static hex_generator=new HexRandomDataGenerator()

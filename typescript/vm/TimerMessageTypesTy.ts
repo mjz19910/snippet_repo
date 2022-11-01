@@ -1,7 +1,7 @@
-import {WorkerAsyncMessageTy} from "./WorkerAsyncMessageTy"
-import {TimeoutFireInfoTy} from "./TimeoutFireInfoTy"
-import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy"
-import {ReplyTypes} from "./ReplyTypes"
+import {WorkerAsyncMessageTy} from "./WorkerAsyncMessageTy.js"
+import {TimeoutFireInfoTy} from "./TimeoutFireInfoTy.js"
+import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy.js"
+import {ReplyTypes} from "./ReplyTypes.js"
 
 export type TimerMessageTypesTy={
 	async: WorkerAsyncMessageTy

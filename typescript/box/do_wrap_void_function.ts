@@ -1,6 +1,6 @@
 import {Box} from "./Box.js"
-import {extract_box} from "./extract/extract_box"
-import {BoxExtractType} from "./helper/BoxExtractType"
+import {extract_box} from "./extract/extract_box.js"
+import {BoxExtractType} from "./helper/BoxExtractType.js"
 
 export function do_wrap_void_function(value_to_wrap: (this: BoxExtractType,...args: BoxExtractType[]) => void,this_: Box,...args: Box[]): void {
 	let real_args: BoxExtractType[]=[]

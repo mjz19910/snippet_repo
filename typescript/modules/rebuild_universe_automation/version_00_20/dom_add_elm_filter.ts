@@ -1,4 +1,4 @@
-import {do_dom_filter} from "./do_dom_filter"
+import {do_dom_filter} from "./do_dom_filter.js"
 
 export function dom_add_elm_filter(elm: HTMLScriptElement) {
 	if(elm&&elm.nodeName==="SCRIPT") {

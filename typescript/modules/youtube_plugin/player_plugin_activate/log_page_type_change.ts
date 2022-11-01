@@ -1,5 +1,5 @@
-import {ytd_page_manager} from "./elements/ytd_page_manager"
-import {playlist_arr} from "./playlist_arr"
+import {ytd_page_manager} from "./elements/ytd_page_manager.js"
+import {playlist_arr} from "./playlist_arr.js"
 
 export function log_page_type_change(event: {detail?: {pageType: string}}) {
 	let {detail}=event

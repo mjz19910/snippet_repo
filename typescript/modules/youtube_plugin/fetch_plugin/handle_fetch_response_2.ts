@@ -1,4 +1,4 @@
-import {bind_promise_handler} from "./bind_promise_handler"
+import {bind_promise_handler} from "./bind_promise_handler.js"
 
 export function handle_fetch_response_2(request_info: RequestInfo|URL,ov: Promise<string>): Promise<string> {
 	return {

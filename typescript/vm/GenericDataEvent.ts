@@ -1,5 +1,5 @@
-import {Box} from "typescript/box/Box"
-import {GenericEvent} from "./GenericEvent"
+import {Box} from "typescript/box/Box.js"
+import {GenericEvent} from "./GenericEvent.js"
 
 export class GenericDataEvent extends GenericEvent {
 	data: Box

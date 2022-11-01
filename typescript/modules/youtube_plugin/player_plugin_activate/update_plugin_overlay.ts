@@ -1,4 +1,4 @@
-import {plugin_overlay_element} from "./elements/plugin_overlay_element"
+import {plugin_overlay_element} from "./elements/plugin_overlay_element.js"
 
 export function update_plugin_overlay() {
 	if(!plugin_overlay_element.value)

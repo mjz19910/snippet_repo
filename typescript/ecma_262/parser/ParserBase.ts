@@ -1,4 +1,4 @@
-import {ParserDispatcher} from "./ParserDispatcher"
+import {ParserDispatcher} from "./ParserDispatcher.js"
 
 export class ParserBase {
 	readonly type="ecma_parser_base"

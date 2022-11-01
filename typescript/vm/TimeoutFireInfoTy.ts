@@ -1,5 +1,5 @@
-import {TimeoutFireSTy} from "./TimeoutFireSTy"
-import {TimeoutFireRTy} from "./TimeoutFireRTy"
+import {TimeoutFireSTy} from "./TimeoutFireSTy.js"
+import {TimeoutFireRTy} from "./TimeoutFireRTy.js"
 
 export type TimeoutFireInfoTy={
 	single: TimeoutFireSTy

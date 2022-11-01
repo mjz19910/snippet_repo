@@ -1,5 +1,5 @@
-import {BoxVerify} from "../BoxVerify"
-import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate"
+import {BoxVerify} from "../BoxVerify.js"
+import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate.js"
 export class temporary_box_from_create_box
 	extends TemporaryBoxTemplate<Function|FunctionConstructor>
 	implements BoxVerify<temporary_box_from_create_box,"temporary_box_from_create_box">

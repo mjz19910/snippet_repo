@@ -1,10 +1,10 @@
-import {HTMLVideoElementArrayBox} from "../../box/HTMLVideoElementArrayBox"
-import {CustomEventTarget} from "../../dom_observer/CustomEventTarget"
-import {CustomEventType} from "../../dom_observer/CustomEventType"
-import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action"
-import {event_box_map} from "./event_box_map"
-import {observer_default_action} from "../../dom_observer/observer_default_action"
-import {const_plugin_activate} from "./const_plugin_activate"
+import {HTMLVideoElementArrayBox} from "../../box/HTMLVideoElementArrayBox.js"
+import {CustomEventTarget} from "../../dom_observer/CustomEventTarget.js"
+import {CustomEventType} from "../../dom_observer/CustomEventType.js"
+import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action.js"
+import {event_box_map} from "./event_box_map.js"
+import {observer_default_action} from "../../dom_observer/observer_default_action.js"
+import {const_plugin_activate} from "./const_plugin_activate.js"
 
 /** ID(60) */
 export function event_find_video(this: CustomEventTarget,event: CustomEventType) {

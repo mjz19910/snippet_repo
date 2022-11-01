@@ -1,7 +1,7 @@
 import {LOG_LEVEL_INFO} from "../../../src/constants.js"
 import {l_log_if} from "../../../vm/l_log_if.js"
-import {TimeoutNode} from "./TimeoutNode"
-import {TimeoutNodeTarget} from "./TimeoutNodeTarget"
+import {TimeoutNode} from "./TimeoutNode.js"
+import {TimeoutNodeTarget} from "./TimeoutNodeTarget.js"
 
 export class AsyncTimeoutNode extends TimeoutNode {
 	async start_async(target: TimeoutNodeTarget) {

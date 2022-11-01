@@ -1,5 +1,5 @@
-import {attached_proxy_arr} from "./mod"
-import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy"
+import {attached_proxy_arr} from "./mod.js"
+import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy.js"
 
 export function attach_request_animation_frame_proxy() {
 	window.requestAnimationFrame=new Proxy(window.requestAnimationFrame,{

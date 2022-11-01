@@ -1,5 +1,5 @@
-import {attached_proxy_arr} from "./mod"
-import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy"
+import {attached_proxy_arr} from "./mod.js"
+import {replace_cb_with_safe_proxy} from "./replace_cb_with_safe_proxy.js"
 
 export function attach_promise_then_proxy() {
 	Promise.prototype.then=new Proxy(Promise.prototype.then,{

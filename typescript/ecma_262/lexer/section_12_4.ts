@@ -1,5 +1,5 @@
-import {LexerBase} from "./LexerBase"
-import {JSParseError} from "../JSParseError"
+import {LexerBase} from "./LexerBase.js"
+import {JSParseError} from "../JSParseError.js"
 export class section_12_4 extends LexerBase {
 	Comment(str: string,index: number): [string|null,number] {
 		let ml_len=this.MultiLineComment(str,index)

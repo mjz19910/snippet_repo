@@ -1,9 +1,9 @@
-import {clone_object} from "./clone_object"
-import {Seen} from "../seen_plugin/Seen"
-import {realHTMLElement} from "./realHTMLElement"
-import {clone_null_proto_object} from "./clone_null_proto_object"
-import {clone_map} from "./clone_map"
-import {clone_array} from "./clone_array"
+import {clone_object} from "./clone_object.js"
+import {Seen} from "../seen_plugin/Seen.js"
+import {realHTMLElement} from "./realHTMLElement.js"
+import {clone_null_proto_object} from "./clone_null_proto_object.js"
+import {clone_map} from "./clone_map.js"
+import {clone_array} from "./clone_array.js"
 
 export function deep_clone_object<T extends {}|any[]|Map<any,any>|null>(value: T): T {
 	// check for null, it is a primitive

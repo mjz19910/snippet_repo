@@ -1,5 +1,5 @@
-import {TimeoutSetSTy} from "./TimeoutSetSTy"
-import {SetSingleMessageData} from "./SetSingleMessageData"
+import {TimeoutSetSTy} from "./TimeoutSetSTy.js"
+import {SetSingleMessageData} from "./SetSingleMessageData.js"
 
 export type MessageTimeoutSetS={
 	t: TimeoutSetSTy

@@ -1,8 +1,8 @@
-import {DomObserver} from "../dom_observer/DomObserver"
-import {MessagePortState} from "../dom_observer/MessagePortState"
-import {PropertyHandler} from "../property_handler_plugin/PropertyHandler"
-import {Seen} from "../seen_plugin/Seen"
-import {HTMLMediaElementGainController} from "../volume_range_plugin/HTMLMediaElementGainController"
+import {DomObserver} from "../dom_observer/DomObserver.js"
+import {MessagePortState} from "../dom_observer/MessagePortState.js"
+import {PropertyHandler} from "../property_handler_plugin/PropertyHandler.js"
+import {Seen} from "../seen_plugin/Seen.js"
+import {HTMLMediaElementGainController} from "../volume_range_plugin/HTMLMediaElementGainController.js"
 
 export class GApiType {
 	Seen?: typeof Seen

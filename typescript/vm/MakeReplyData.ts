@@ -1,5 +1,5 @@
-import {LocalOrRemoteIdVarType} from "./LocalOrRemoteIdVarType"
-import {MakeReplyDataType} from "./MakeReplyDataType"
+import {LocalOrRemoteIdVarType} from "./LocalOrRemoteIdVarType.js"
+import {MakeReplyDataType} from "./MakeReplyDataType.js"
 
 export class MakeReplyData {
 	t: number

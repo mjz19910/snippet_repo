@@ -1,6 +1,6 @@
-import {Box} from "../Box"
-import {BoxVerify} from "../BoxVerify"
-import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate"
+import {Box} from "../Box.js"
+import {BoxVerify} from "../BoxVerify.js"
+import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate.js"
 export class temporary_box_from_object
 	extends TemporaryBoxTemplate<{[x: string]: Box}>
 	implements BoxVerify<temporary_box_from_object,"temporary_box_from_create_box_from_obj"> {

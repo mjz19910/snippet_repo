@@ -1,5 +1,5 @@
-import {check_item_keys} from "./check_item_keys"
-import {RichGridRenderer} from "./RichGridRenderer"
+import {check_item_keys} from "./check_item_keys.js"
+import {RichGridRenderer} from "./RichGridRenderer.js"
 
 export class HandleRichGridRenderer {
 	static debug=false

@@ -1,5 +1,5 @@
-import {cur_event_fns} from "./constants"
-import {has_reg_id} from "./has_reg_id"
+import {cur_event_fns} from "./constants.js"
+import {has_reg_id} from "./has_reg_id.js"
 import {is_in_ignored_from_src_fn, is_in_userscript,is_in_userscript_fn} from "./mod"
 
 export function get_nearest_script() {

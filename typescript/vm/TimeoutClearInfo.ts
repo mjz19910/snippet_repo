@@ -1,7 +1,7 @@
-import {TimeoutClearSTy} from "./TimeoutClearSTy"
-import {TimeoutClearRTy} from "./TimeoutClearRTy"
-import {TimeoutClearATy} from "./TimeoutClearATy"
-import {TimeoutClearInfoTy} from "./TimeoutClearInfoTy"
+import {TimeoutClearSTy} from "./TimeoutClearSTy.js"
+import {TimeoutClearRTy} from "./TimeoutClearRTy.js"
+import {TimeoutClearATy} from "./TimeoutClearATy.js"
+import {TimeoutClearInfoTy} from "./TimeoutClearInfoTy.js"
 import {TimeoutClearS,TimeoutClearR,TimeoutClearA} from "typescript/src/constants.js"
 
 export class TimeoutClearInfo implements TimeoutClearInfoTy {

@@ -1,4 +1,4 @@
-import {NonEmptyArray} from "../helper/NonEmptyArray"
+import {NonEmptyArray} from "../helper/NonEmptyArray.js"
 export function is_array_of<
 	U
 >(

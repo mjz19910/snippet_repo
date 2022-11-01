@@ -1,4 +1,4 @@
-import {GApiType} from "./g_api/GApiType"
+import {GApiType} from "./g_api/GApiType.js"
 
 export {}
 

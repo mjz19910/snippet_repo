@@ -1,6 +1,6 @@
 import {Box} from "./Box.js"
-import {VoidBox} from "./VoidBox"
-import {Primitives} from "./helper/Primitives"
+import {VoidBox} from "./VoidBox.js"
+import {Primitives} from "./helper/Primitives.js"
 
 export type ExtractKey<T extends Box,U>=
 	T extends Exclude<Box,Primitives|null>?

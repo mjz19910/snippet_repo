@@ -1,6 +1,6 @@
-import {ytd_page_manager} from "../elements/ytd_page_manager"
-import {element_map} from "../event/element_map"
-import {YtdPageManagerElement} from "../types/YtdPageManagerElement"
+import {ytd_page_manager} from "../elements/ytd_page_manager.js"
+import {element_map} from "../event/element_map.js"
+import {YtdPageManagerElement} from "../types/YtdPageManagerElement.js"
 
 export function on_ytd_page_manager(element: HTMLElement) {
 	const element_id="ytd-page-manager"

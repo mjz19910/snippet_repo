@@ -1,5 +1,5 @@
-import {AverageRatio} from "./AverageRatio"
-import {throw_invalid_error} from "./throw_invalid_error"
+import {AverageRatio} from "./AverageRatio.js"
+import {throw_invalid_error} from "./throw_invalid_error.js"
 
 export class AverageRatioRoot {
 	map: Map<string,AverageRatio>

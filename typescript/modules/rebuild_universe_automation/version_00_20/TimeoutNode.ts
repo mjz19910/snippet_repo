@@ -1,6 +1,6 @@
-import {BaseNode2} from "./BaseNode2"
-import {TimeoutNodeTarget} from "./TimeoutNodeTarget"
-import {TimeoutTarget} from "./TimeoutTarget"
+import {BaseNode2} from "./BaseNode2.js"
+import {TimeoutNodeTarget} from "./TimeoutNodeTarget.js"
+import {TimeoutTarget} from "./TimeoutTarget.js"
 
 export class TimeoutNode extends BaseNode2 {
 	m_timeout: number

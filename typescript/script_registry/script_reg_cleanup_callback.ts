@@ -1,4 +1,4 @@
-import {CleanupType} from "./CleanupType"
+import {CleanupType} from "./CleanupType.js"
 import {scripts_tokens,weak_scripts_arr} from "./mod"
 
 export function script_reg_cleanup_callback(held: CleanupType) {

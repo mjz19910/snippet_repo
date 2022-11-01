@@ -1,5 +1,5 @@
-import {LexerBase} from "./LexerBase"
-import {LexReturnType} from "./LexReturnType"
+import {LexerBase} from "./LexerBase.js"
+import {LexReturnType} from "./LexReturnType.js"
 
 export class section_12_8 extends LexerBase {
 	RegularExpressionNonTerminator(str: string,index: number): LexReturnType {

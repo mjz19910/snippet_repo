@@ -1,6 +1,6 @@
-import {DomInstructionType} from "./DomInstructionType"
-import {DomTaggedPack} from "./DomTaggedPack"
-import {VMBlockTraceOpcode} from "../instruction/vm/mod"
+import {DomInstructionType} from "./DomInstructionType.js"
+import {DomTaggedPack} from "./DomTaggedPack.js"
+import {VMBlockTraceOpcode} from "../instruction/vm/mod.js"
 
 export type DomInstructionVMBlockTrace=
 	[number,VMBlockTraceOpcode,'begin',DomInstructionType|null]|

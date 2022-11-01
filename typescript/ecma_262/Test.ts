@@ -1,5 +1,5 @@
-import {CanRunTest} from "typescript/tests_mod/CanRunTest"
-import {LexerStateData} from "./lexer/LexerStateData"
+import {CanRunTest} from "typescript/tests_mod/CanRunTest.js"
+import {LexerStateData} from "./lexer/LexerStateData.js"
 export class Test {
 	input: string
 	result?: string

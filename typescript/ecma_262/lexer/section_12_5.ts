@@ -1,6 +1,6 @@
-import {Dispatcher} from "./Dispatcher"
-import {LexerBase} from "./LexerBase"
-import {LexReturnType} from "./LexReturnType"
+import {Dispatcher} from "./Dispatcher.js"
+import {LexerBase} from "./LexerBase.js"
+import {LexReturnType} from "./LexReturnType.js"
 export class section_12_5 extends LexerBase {
 	CommonToken(str: any,index: any): LexReturnType {
 		/**@type {['IdentifierName', 'PrivateIdentifier', 'Punctuator', 'NumericLiteral', 'StringLiteral', 'Template']} */

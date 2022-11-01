@@ -1,8 +1,8 @@
-import {current_timeout} from "./current_timeout"
-import {ytd_player} from "./elements/ytd_player"
-import {waiting_for_ytd_player} from "./waiting_for_ytd_player"
-import {activate_nav} from "./activate_nav"
-import {wait_for_yt_player} from "./wait_for_yt_player"
+import {current_timeout} from "./current_timeout.js"
+import {ytd_player} from "./elements/ytd_player.js"
+import {waiting_for_ytd_player} from "./waiting_for_ytd_player.js"
+import {activate_nav} from "./activate_nav.js"
+import {wait_for_yt_player} from "./wait_for_yt_player.js"
 
 export function init_ui_plugin() {
 	if(waiting_for_ytd_player.value)

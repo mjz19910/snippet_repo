@@ -1,4 +1,4 @@
-import {BaseTimeoutNode} from "./BaseTimeoutNode"
+import {BaseTimeoutNode} from "./BaseTimeoutNode.js"
 
 export class TimeoutIdNode extends BaseTimeoutNode {
 	id: ReturnType<typeof setInterval>|ReturnType<typeof setTimeout>|null

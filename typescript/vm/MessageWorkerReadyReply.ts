@@ -1,5 +1,5 @@
-import {WorkerReadyReplyTy} from "./WorkerReadyReplyTy"
-import {TimeoutMessageRTy} from "./TimeoutMessageRTy"
+import {WorkerReadyReplyTy} from "./WorkerReadyReplyTy.js"
+import {TimeoutMessageRTy} from "./TimeoutMessageRTy.js"
 
 export type MessageWorkerReadyReply={
 	t: WorkerReadyReplyTy

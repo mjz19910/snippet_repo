@@ -1,9 +1,9 @@
-import {TestLock} from "typescript/tests_mod/TestLock"
-// import {CanRunTest} from "types/tests_mod/TestRunner"
-import {Dispatcher} from "../Dispatcher"
-import {Test} from "../../Test"
-import {test_1_critical} from "./test_1_critical"
-import {CanRunTest} from "typescript/tests_mod/CanRunTest"
+import {TestLock} from "typescript/tests_mod/TestLock.js"
+// import {CanRunTest} from "types/tests_mod/TestRunner.js"
+import {Dispatcher} from "../Dispatcher.js"
+import {Test} from "../../Test.js"
+import {test_1_critical} from "./test_1_critical.js"
+import {CanRunTest} from "typescript/tests_mod/CanRunTest.js"
 export async function run_test_1(test_runner: CanRunTest,lock: TestLock,dispatcher: Dispatcher) {
 	let input=`(function(){let the_var=12;})`
 	let test_1=new Test(input,`${input}[eof]`)

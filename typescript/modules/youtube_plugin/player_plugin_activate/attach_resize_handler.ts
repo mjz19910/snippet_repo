@@ -1,5 +1,5 @@
-import {on_yt_action} from "./on_yt_action"
-import {plugin_overlay_element} from "./elements/plugin_overlay_element"
+import {on_yt_action} from "./on_yt_action.js"
+import {plugin_overlay_element} from "./elements/plugin_overlay_element.js"
 
 export function attach_resize_handler() {
 	document.addEventListener('yt-action',on_yt_action as (this: Document,ev: Event) => void)

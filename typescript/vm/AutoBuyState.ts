@@ -1,8 +1,8 @@
-import {AverageRatioRoot} from "./AverageRatioRoot"
-import {AsyncTimeoutNode} from "./AsyncTimeoutNode"
-import {TimeoutTarget} from "./TimeoutTarget"
-import {AverageRatio} from "./AverageRatio"
-import {AutoBuyRootType} from "./AutoBuyRootType"
+import {AverageRatioRoot} from "./AverageRatioRoot.js"
+import {AsyncTimeoutNode} from "./AsyncTimeoutNode.js"
+import {TimeoutTarget} from "./TimeoutTarget.js"
+import {AverageRatio} from "./AverageRatio.js"
+import {AutoBuyRootType} from "./AutoBuyRootType.js"
 
 export class AutoBuyState {
 	root_node

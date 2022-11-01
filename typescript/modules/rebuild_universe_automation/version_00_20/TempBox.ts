@@ -1,13 +1,13 @@
-import {NonNull} from "../../../src/api"
-import {Box} from "../../../box/Box"
-import {ExtractKey} from "../../../box/ExtractKey"
-import {Primitives} from "../../../box/helper/Primitives"
-import {RealVoidBox} from "../../../box/RealVoidBox"
-import {VoidBox} from "../../../box/VoidBox"
-import {BaseBox} from "./BaseBox"
-import {generic_box_with_value_in} from "./generic_box_with_value_in"
-import {generic_box_with_value_out} from "./generic_box_with_value_out"
-import {throw_unreachable} from "./throw_unreachable"
+import {NonNull} from "../../../src/api.js"
+import {Box} from "../../../box/Box.js"
+import {ExtractKey} from "../../../box/ExtractKey.js"
+import {Primitives} from "../../../box/helper/Primitives.js"
+import {RealVoidBox} from "../../../box/RealVoidBox.js"
+import {VoidBox} from "../../../box/VoidBox.js"
+import {BaseBox} from "./BaseBox.js"
+import {generic_box_with_value_in} from "./generic_box_with_value_in.js"
+import {generic_box_with_value_out} from "./generic_box_with_value_out.js"
+import {throw_unreachable} from "./throw_unreachable.js"
 
 export class TempBox extends BaseBox {
 	static is_raw(v: Box): v is Primitives {

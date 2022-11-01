@@ -279,12 +279,12 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 	type MessageTimeoutMessageR={
 		t: TimeoutMessageRTy
 		v: never
-	}
+	};
 	type WorkerMessageType=MessageTimeoutClearR|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetS|MessageTimeoutSetR|MessageTimeoutClearS
 	type UpdateMessageHandlerType={
 		init: string
 		onmessage: string
-	}
+	};
 	onmessage=function(e: MessageEvent<WorkerMessageType>) {
 		if(!message_types) return
 		let worker_msg_types=new TimeoutWorkerTypes
@@ -361,7 +361,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 					t: typeof reply_message_types.from_worker
 					v: {
 						t: typeof message_types.reply.set.single
-						v: [local_id: number,msg_t: typeof msg.t,u_msg_t: typeof user_msg.t,u_msg_v: typeof user_msg.v]
+						v: [local_id: ReturnType<typeof setTimeout>,msg_t: typeof msg.t,u_msg_t: typeof user_msg.t,u_msg_v: typeof user_msg.v]
 					}
 				}={
 					t: reply_message_types.from_worker,

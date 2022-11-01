@@ -1,5 +1,5 @@
-import {CompressionStatsCalculator} from "./CompressionStatsCalculator"
-import {BaseCompression} from "./BaseCompression"
+import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js"
+import {BaseCompression} from "./BaseCompression.js"
 
 export class MulCompression extends BaseCompression {
 	stats_calculator

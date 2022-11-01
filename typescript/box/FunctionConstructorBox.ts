@@ -12,21 +12,21 @@ export class FunctionConstructorBox implements BoxVerify<FunctionConstructorBox,
 	readonly arguments="string[]"
 	readonly return="box"
 	readonly instance_factory: FunctionConstructorFactory
-	readonly constructor_value: typeof Function
+	readonly value: typeof Function
 	readonly box_maker: BoxMaker<string,FunctionBox>
 	readonly m_verify_name="FunctionConstructorBox"
 	as_type(input_typeof: AnyTypeOfResult): this|null {
-		return typeof this.constructor_value===input_typeof? this:null
+		return typeof this.value===input_typeof? this:null
 	}
 	verify_name(name: "FunctionConstructorBox") {
 		return this.m_verify_name==='FunctionConstructorBox'&&name==='FunctionConstructorBox'
 	}
 	constructor(
-		constructor_value: typeof Function,
+		value: typeof Function,
 		instance_factory: FunctionConstructorFactory,
 		box_maker: BoxMaker<string,FunctionBox>
 	) {
-		this.constructor_value=constructor_value
+		this.value=value
 		this.instance_factory=instance_factory
 		this.box_maker=box_maker
 	}

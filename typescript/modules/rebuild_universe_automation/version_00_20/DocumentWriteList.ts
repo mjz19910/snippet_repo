@@ -1,4 +1,4 @@
-import {DocumentWriteFn} from "../../../vm/DocumentWriteFn"
+import {DocumentWriteFn} from "../../../vm/DocumentWriteFn.js"
 
 export class ProxyDocumentWriteList {
 	list: any[]

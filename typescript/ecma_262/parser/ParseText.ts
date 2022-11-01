@@ -1,8 +1,8 @@
-import {do_parse_to_goal_symbol} from "./do_parse_to_goal_symbol"
-import {IGoalSymbol} from "./IGoalSymbol"
-import {List} from "./List"
-import {ParseNode} from "./ParseNode"
-import {ParseResult} from "./ParseResult"
+import {do_parse_to_goal_symbol} from "./do_parse_to_goal_symbol.js"
+import {IGoalSymbol} from "./IGoalSymbol.js"
+import {List} from "./List.js"
+import {ParseNode} from "./ParseNode.js"
+import {ParseResult} from "./ParseResult.js"
 // https://tc39.es/ecma262/#sec-parsetext
 export function ParseText(sourceText: string,goalSymbol: IGoalSymbol): ParseNode|List<SyntaxError[]> {
 	// 11.1.6 Static Semantics: ParseText

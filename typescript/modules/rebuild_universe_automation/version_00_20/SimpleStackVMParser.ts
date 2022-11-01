@@ -1,5 +1,5 @@
-import {InstructionType} from "../../../vm/instruction/InstructionType"
-import {throw_unreachable} from "./throw_unreachable"
+import {InstructionType} from "../../../vm/instruction/InstructionType.js"
+import {throw_unreachable} from "./throw_unreachable.js"
 
 export class SimpleStackVMParser {
 	static match_regex: RegExp

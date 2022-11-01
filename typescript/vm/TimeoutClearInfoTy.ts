@@ -1,6 +1,6 @@
-import {TimeoutClearSTy} from "./TimeoutClearSTy"
-import {TimeoutClearRTy} from "./TimeoutClearRTy"
-import {TimeoutClearATy} from "./TimeoutClearATy"
+import {TimeoutClearSTy} from "./TimeoutClearSTy.js"
+import {TimeoutClearRTy} from "./TimeoutClearRTy.js"
+import {TimeoutClearATy} from "./TimeoutClearATy.js"
 
 export type TimeoutClearInfoTy={
 	single: TimeoutClearSTy

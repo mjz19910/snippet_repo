@@ -1,6 +1,6 @@
-import {ReplyClearSingleTy} from "./ReplyClearSingleTy"
-import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy"
-import {ReplyClearAnyTy} from "./ReplyClearAnyTy"
+import {ReplyClearSingleTy} from "./ReplyClearSingleTy.js"
+import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy.js"
+import {ReplyClearAnyTy} from "./ReplyClearAnyTy.js"
 
 export type ReplyClearTypes={
 	single: ReplyClearSingleTy

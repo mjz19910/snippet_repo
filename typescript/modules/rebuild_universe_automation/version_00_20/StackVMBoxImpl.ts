@@ -1,4 +1,4 @@
-import {StackVM} from "../../../vm/StackVM"
+import {StackVM} from "../../../vm/StackVM.js"
 
 export class StackVMBoxImpl {
 	type: "custom_box"

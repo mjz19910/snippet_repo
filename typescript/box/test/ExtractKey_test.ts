@@ -1,8 +1,8 @@
-import {Box} from "../Box"
-import {VoidBox} from "../VoidBox"
-import {ArrayBox} from "../ArrayBox"
-import {Primitives} from "../helper/Primitives"
-import {ExtractKey} from "../ExtractKey"
+import {Box} from "../Box.js"
+import {VoidBox} from "../VoidBox.js"
+import {ArrayBox} from "../ArrayBox.js"
+import {Primitives} from "../helper/Primitives.js"
+import {ExtractKey} from "../ExtractKey.js"
 
 export namespace test {
 	export function ExtractKey_test() {

@@ -1,12 +1,12 @@
-import {TestLock} from "typescript/tests_mod/TestLock"
-import {Dispatcher} from "./Dispatcher"
-import {LexerBase} from "./LexerBase"
-import {LexerStateData} from "./LexerStateData"
-import {LexReturnType} from "./LexReturnType"
+import {TestLock} from "typescript/tests_mod/TestLock.js"
+import {Dispatcher} from "./Dispatcher.js"
+import {LexerBase} from "./LexerBase.js"
+import {LexerStateData} from "./LexerStateData.js"
+import {LexReturnType} from "./LexReturnType.js"
 import {ItemInfoType,item_info_type_to_string} from "../mod"
-import {run_test_1} from "./test/run_test_1"
-import {run_test_2} from "./test/run_test_2"
-import {CanRunTest} from "typescript/tests_mod/CanRunTest"
+import {run_test_1} from "./test/run_test_1.js"
+import {run_test_2} from "./test/run_test_2.js"
+import {CanRunTest} from "typescript/tests_mod/CanRunTest.js"
 function lexer_produce_input_element(ecma_dispatcher: Dispatcher,str: string,index: number): LexReturnType {
 	let max_item=null,max_val=0
 	let item_info=null

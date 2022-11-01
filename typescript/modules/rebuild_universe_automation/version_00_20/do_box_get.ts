@@ -1,9 +1,9 @@
-import {MediaListBox} from "../../../box/MediaListBox"
-import {TempBox} from "./TempBox"
-import {throw_invalid_error} from "./throw_invalid_error"
-import {Box} from "../../../box/Box"
-import {WindowBox} from "../../../box/WindowBox"
-import {InstructionTypeBox} from "../../../box/InstructionTypeBox"
+import {MediaListBox} from "../../../box/MediaListBox.js"
+import {TempBox} from "./TempBox.js"
+import {throw_invalid_error} from "./throw_invalid_error.js"
+import {Box} from "../../../box/Box.js"
+import {WindowBox} from "../../../box/WindowBox.js"
+import {InstructionTypeBox} from "../../../box/InstructionTypeBox.js"
 
 function do_get_for_array_box(opt: Box,get_name: string): Box {
 	if(typeof opt!='object') {

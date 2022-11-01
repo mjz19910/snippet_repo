@@ -1,5 +1,5 @@
-import {EventListenerValue} from "./EventListenerValue"
-import {GenericEvent} from "./GenericEvent"
+import {EventListenerValue} from "./EventListenerValue.js"
+import {GenericEvent} from "./GenericEvent.js"
 
 export class GenericEventTarget {
 	_events: Map<string,EventListenerValue[]>

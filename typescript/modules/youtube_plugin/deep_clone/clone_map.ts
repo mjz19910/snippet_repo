@@ -1,4 +1,4 @@
-import {clone_each_entry} from "./clone_each_entry"
+import {clone_each_entry} from "./clone_each_entry.js"
 
 export function clone_map<T, U, X extends Map<T, U>>(map: X): X {
 	let arr=Array.from(map)

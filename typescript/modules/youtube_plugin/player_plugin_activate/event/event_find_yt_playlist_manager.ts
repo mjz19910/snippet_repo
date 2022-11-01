@@ -1,8 +1,8 @@
-import {CustomEventTarget} from "../../dom_observer/CustomEventTarget"
-import {CustomEventType} from "../../dom_observer/CustomEventType"
-import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action"
-import {observer_default_action} from "../../dom_observer/observer_default_action"
-import {on_yt_playlist_manager} from "../found_elements/on_yt_playlist_manager"
+import {CustomEventTarget} from "../../dom_observer/CustomEventTarget.js"
+import {CustomEventType} from "../../dom_observer/CustomEventType.js"
+import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action.js"
+import {observer_default_action} from "../../dom_observer/observer_default_action.js"
+import {on_yt_playlist_manager} from "../found_elements/on_yt_playlist_manager.js"
 
 /** ID(20) */
 export function event_find_yt_playlist_manager(this: CustomEventTarget,event: CustomEventType) {

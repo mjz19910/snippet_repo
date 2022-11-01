@@ -1,6 +1,6 @@
-import {InstructionType} from "./instruction/InstructionType"
-import {AutoBuyInterface} from "./AutoBuyInterface"
-import {SimpleStackVM} from "./SimpleStackVM"
+import {InstructionType} from "./instruction/InstructionType.js"
+import {AutoBuyInterface} from "./AutoBuyInterface.js"
+import {SimpleStackVM} from "./SimpleStackVM.js"
 
 export class EventHandlerVMDispatch extends SimpleStackVM<Event> {
 	target_obj

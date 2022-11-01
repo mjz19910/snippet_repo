@@ -1,5 +1,5 @@
-import {init_property_watcher_for_target} from "../property_watcher_plugin/init_property_watcher_for_target"
-import {active_property_watcher_paths} from "../property_watcher_plugin/active_property_watcher_paths"
+import {init_property_watcher_for_target} from "../property_watcher_plugin/init_property_watcher_for_target.js"
+import {active_property_watcher_paths} from "../property_watcher_plugin/active_property_watcher_paths.js"
 
 export function init_yt_player_application_plugin() {
 	let ar='yt.player.Application'.split('.')

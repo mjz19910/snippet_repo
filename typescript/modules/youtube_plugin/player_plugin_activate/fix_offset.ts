@@ -1,6 +1,6 @@
-import {ytd_player} from "./elements/ytd_player"
-import {plugin_overlay_element} from "./elements/plugin_overlay_element"
-import {sumOffset} from "./sumOffset"
+import {ytd_player} from "./elements/ytd_player.js"
+import {plugin_overlay_element} from "./elements/plugin_overlay_element.js"
+import {sumOffset} from "./sumOffset.js"
 
 export function fix_offset() {
 	if(!ytd_player.value)

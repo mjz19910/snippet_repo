@@ -1,4 +1,4 @@
-import {Box} from "../../../box/Box"
+import {Box} from "../../../box/Box.js"
 
 export class PromiseBox {
 	type: "promise_box"

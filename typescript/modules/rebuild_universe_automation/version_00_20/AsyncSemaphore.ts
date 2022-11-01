@@ -1,4 +1,4 @@
-import {AsyncTriggerImpl} from "./AsyncTriggerImpl"
+import {AsyncTriggerImpl} from "./AsyncTriggerImpl.js"
 
 export class AsyncSemaphore {
 	notify_waiters_vec: any[]

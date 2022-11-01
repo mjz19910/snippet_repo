@@ -1,4 +1,4 @@
-import {TypeManipulation} from "./tools/TypeManipulation"
+import {TypeManipulation} from "./tools/TypeManipulation.js"
 type ReturnValueI<T>=T extends (...a: any[]) => infer U? U:never
 export type IntIntLim<T extends number,LIM extends number,U extends 0[]>=
 	T extends LIM? never:

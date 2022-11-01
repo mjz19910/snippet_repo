@@ -1,7 +1,7 @@
-import {Box} from "../../../box/Box"
-import {Call} from "../../../vm/instruction/general/Call"
-import {StackVM} from "../../../vm/StackVM"
-import {throw_invalid_error} from "./throw_invalid_error"
+import {Box} from "../../../box/Box.js"
+import {Call} from "../../../vm/instruction/general/Call.js"
+import {StackVM} from "../../../vm/StackVM.js"
+import {throw_invalid_error} from "./throw_invalid_error.js"
 
 export class InstructionCallImpl {
 	static unbox_value(v: Box) {

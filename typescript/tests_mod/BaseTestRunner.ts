@@ -1,8 +1,8 @@
-import {GenTestCallback} from "./GenTestCallback"
-import {CanRunTest} from "./CanRunTest"
-import {TestLock} from "./TestLock"
-import {GenTestCallbackTemplate} from "./GenTestCallbackTemplate"
-import {debug} from "./const"
+import {GenTestCallback} from "./GenTestCallback.js"
+import {CanRunTest} from "./CanRunTest.js"
+import {TestLock} from "./TestLock.js"
+import {GenTestCallbackTemplate} from "./GenTestCallbackTemplate.js"
+import {debug} from "./const.js"
 export class BaseTestRunner implements CanRunTest {
 	total=0
 	successful=0

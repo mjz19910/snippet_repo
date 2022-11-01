@@ -1,5 +1,5 @@
-import {ParserBase} from "./ParserBase"
-import {ParseReturnType} from "./ParseReturnType"
+import {ParserBase} from "./ParserBase.js"
+import {ParseReturnType} from "./ParseReturnType.js"
 
 export class section_14 extends ParserBase {
 	// TODO: support the set of flags needed (none so far)

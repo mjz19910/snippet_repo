@@ -1,5 +1,5 @@
-import {ArrayManipulation} from "./ArrayManipulation"
-import {StringManipulation} from "./StringManipulation"
+import {ArrayManipulation} from "./ArrayManipulation.js"
+import {StringManipulation} from "./StringManipulation.js"
 export declare namespace Manipulation {
 	type Reverse<U extends any[]|string>=U extends string? StringManipulation.Reverse<U>:U extends any[]? ArrayManipulation.Reverse<U>:never
 	type GReverse<T>=T extends any[]? ArrayManipulation.Reverse<T>:T extends string? StringManipulation.Reverse<T>:never

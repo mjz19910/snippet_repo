@@ -1,5 +1,5 @@
-import {LexerBase} from "./LexerBase"
-import {LexReturnType} from "./LexReturnType"
+import {LexerBase} from "./LexerBase.js"
+import {LexReturnType} from "./LexReturnType.js"
 export class section_12_2 extends LexerBase {
 	WhiteSpace(str: string,index: number): LexReturnType {
 		if(str[index]===' ') {

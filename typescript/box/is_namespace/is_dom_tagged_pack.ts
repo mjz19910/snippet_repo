@@ -1,8 +1,8 @@
-import {DomTaggedPack} from "../../vm/dom_instruction/DomTaggedPack"
-import {is_number} from "./is_number"
-import {is_dom_instruction_type} from "./is_dom_instruction_type"
-import {is_instruction_type} from "./is_instruction_type"
-import {eat_never} from "../helper/eat_never"
+import {DomTaggedPack} from "../../vm/dom_instruction/DomTaggedPack.js"
+import {is_number} from "./is_number.js"
+import {is_dom_instruction_type} from "./is_dom_instruction_type.js"
+import {is_instruction_type} from "./is_instruction_type.js"
+import {eat_never} from "../helper/eat_never.js"
 
 export function is_dom_tagged_pack(value: DomTaggedPack) {
 	switch(value[0]) {

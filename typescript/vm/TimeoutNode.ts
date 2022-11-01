@@ -1,5 +1,5 @@
-import {AbstractTarget} from "./AbstractTarget"
-import {BaseTimeoutNode} from "./BaseTimeoutNode"
+import {AbstractTarget} from "./AbstractTarget.js"
+import {BaseTimeoutNode} from "./BaseTimeoutNode.js"
 
 export class TimeoutNode extends BaseTimeoutNode {
 	id: number|null|undefined

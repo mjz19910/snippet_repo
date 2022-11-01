@@ -1,5 +1,5 @@
-import {g_api} from "../g_api/g_api"
-import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController"
+import {g_api} from "../g_api/g_api.js"
+import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController.js"
 
 export function on_gain_controller(create_gain_controller: () => HTMLMediaElementGainController): HTMLMediaElementGainController {
 	if(g_api.value&&g_api.value.gain_controller) {

@@ -1,6 +1,6 @@
-import {DomInstructionType} from "../../vm/dom_instruction/DomInstructionType"
-import {is_dom_instruction_type} from "./is_dom_instruction_type"
-import {is_null} from "./is_null"
+import {DomInstructionType} from "../../vm/dom_instruction/DomInstructionType.js"
+import {is_dom_instruction_type} from "./is_dom_instruction_type.js"
+import {is_null} from "./is_null.js"
 
 export function is_instruction_block_trace_instruction_ptr(
 	value:

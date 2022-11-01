@@ -1,9 +1,9 @@
-import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox"
-import {LOG_LEVEL_INFO} from "../../../src/constants"
-import {Construct} from "../../../vm/instruction/general/Construct"
-import {l_log_if} from "../../../vm/l_log_if"
-import {StackVM} from "../../../vm/StackVM"
-import {throw_invalid_error} from "./throw_invalid_error"
+import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.js"
+import {LOG_LEVEL_INFO} from "../../../src/constants.js"
+import {Construct} from "../../../vm/instruction/general/Construct.js"
+import {l_log_if} from "../../../vm/l_log_if.js"
+import {StackVM} from "../../../vm/StackVM.js"
+import {throw_invalid_error} from "./throw_invalid_error.js"
 
 export class InstructionConstructImpl {
 	static is_array_empty<T>(arr: T[]): arr is [] {

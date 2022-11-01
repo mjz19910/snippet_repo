@@ -1,4 +1,4 @@
-import {PromiseExecutorRejectCallback} from "./PromiseExecutorRejectCallback"
+import {PromiseExecutorRejectCallback} from "./PromiseExecutorRejectCallback.js"
 
 export class AsyncTrigger {
 	m_set_flag: boolean

@@ -1,4 +1,4 @@
-import {TypeEraseClass} from "../TypeEraseClass"
+import {TypeEraseClass} from "../TypeEraseClass.js"
 
 export function convert_type_erase_convert<T,U>(
 	value: TypeEraseClass<T>|TypeEraseClass<U>,

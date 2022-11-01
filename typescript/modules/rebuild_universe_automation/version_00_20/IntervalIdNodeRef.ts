@@ -1,4 +1,4 @@
-import {IntervalIdNode} from "./IntervalIdNode"
+import {IntervalIdNode} from "./IntervalIdNode.js"
 
 export class IntervalIdNodeRef extends IntervalIdNode {
 	destroy_callback: () => void

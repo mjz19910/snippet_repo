@@ -1,4 +1,4 @@
-import {proxy_jquery} from "./proxy_jquery"
+import {proxy_jquery} from "./proxy_jquery.js"
 
 export function enable_jquery_proxy_if_needed() {
 	let enable_proxy=true

@@ -1,5 +1,5 @@
-import {NonNull} from "../../../src/api"
-import {BaseBoxValue} from "./BaseBoxValue"
+import {NonNull} from "../../../src/api.js"
+import {BaseBoxValue} from "./BaseBoxValue.js"
 
 export class BaseBox {
 	type: 'object_box'

@@ -1,4 +1,4 @@
-import {port_state_log} from "./port_state_log"
+import {port_state_log} from "./port_state_log.js"
 
 export class MessagePortState {
 	cint:ReturnType<typeof setTimeout>=-1 as unknown as ReturnType<typeof setTimeout>

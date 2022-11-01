@@ -1,4 +1,4 @@
-import {null_resolver} from "./null_resolver"
+import {null_resolver} from "./null_resolver.js"
 export class TestLock {
 	notify_promise: Promise<void>|null=null
 	m_locked=false

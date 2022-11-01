@@ -1,4 +1,4 @@
-import {ModifyOperand} from "../../vm/instruction/ModifyOperand"
+import {ModifyOperand} from "../../vm/instruction/ModifyOperand.js"
 
 export function is_instruction_modify_op<T extends Array<any>>(v: T|ModifyOperand): v is ModifyOperand {
 	if(v.length===3&&

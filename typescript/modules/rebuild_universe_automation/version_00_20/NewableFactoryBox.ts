@@ -1,6 +1,6 @@
 import {Box} from "../../../box/Box.js"
 import {BaseBox} from "./BaseBox.js"
-import {throw_unreachable} from "./throw_unreachable"
+import {throw_unreachable} from "./throw_unreachable.js"
 
 export class NewableFactoryBox {
 	type: "constructor_box"

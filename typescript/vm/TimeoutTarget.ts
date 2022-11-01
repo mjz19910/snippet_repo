@@ -1,6 +1,6 @@
-import {AbstractTarget} from "./AbstractTarget"
-import {TimeoutTargetObjects} from "./TimeoutTargetObjects"
-import {TimeoutCallbackType} from "./TimeoutCallbackType"
+import {AbstractTarget} from "./AbstractTarget.js"
+import {TimeoutTargetObjects} from "./TimeoutTargetObjects.js"
+import {TimeoutCallbackType} from "./TimeoutCallbackType.js"
 
 export class TimeoutTarget extends AbstractTarget {
 	once

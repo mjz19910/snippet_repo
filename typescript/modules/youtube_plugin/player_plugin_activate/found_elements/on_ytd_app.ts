@@ -1,6 +1,6 @@
-import {ytd_app} from "../elements/ytd_app"
-import {element_map} from "../event/element_map"
-import {YtdAppElement} from "../types/YtdAppElement"
+import {ytd_app} from "../elements/ytd_app.js"
+import {element_map} from "../event/element_map.js"
+import {YtdAppElement} from "../types/YtdAppElement.js"
 
 export function on_ytd_app(element: HTMLElement) {
 	const element_id="ytd-app"

@@ -1,5 +1,5 @@
 import {Box} from "./Box.js"
-import {is_box} from "./is_namespace/is_box"
+import {is_box} from "./is_namespace/is_box.js"
 
 export function extract_like_type<
 	T,U extends TypedPropertyDescriptor<T>,C extends TypedPropertyDescriptor<Box>

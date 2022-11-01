@@ -1,3 +1,3 @@
-import {RemoveFirst} from "./RemoveFirst"
+import {RemoveFirst} from "./RemoveFirst.js"
 
 export type JS_BLOCK_CLOSE_CHARS=RemoveFirst<"()">|RemoveFirst<"{}">

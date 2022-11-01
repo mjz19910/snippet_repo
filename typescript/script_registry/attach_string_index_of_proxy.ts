@@ -1,5 +1,5 @@
-import {attached_proxy_arr} from "./mod"
-import {str_index_of_inject} from "./str_index_of_inject"
+import {attached_proxy_arr} from "./mod.js"
+import {str_index_of_inject} from "./str_index_of_inject.js"
 
 export function attach_string_index_of_proxy() {
 	String.prototype.indexOf=new Proxy(String.prototype.indexOf,{

@@ -1,6 +1,6 @@
-import {ytd_player} from "../elements/ytd_player"
-import {element_map} from "../event/element_map"
-import {YTDPlayerElement} from "../types/YTDPlayerElement"
+import {ytd_player} from "../elements/ytd_player.js"
+import {element_map} from "../event/element_map.js"
+import {YTDPlayerElement} from "../types/YTDPlayerElement.js"
 
 export function on_ytd_player(element: HTMLElement) {
 	const element_id="ytd-player"

@@ -1,4 +1,4 @@
-import {dom_add_elm_filter} from "./dom_add_elm_filter"
+import {dom_add_elm_filter} from "./dom_add_elm_filter.js"
 
 export function insert_before_enabled(node: Node,child: Node|null): boolean {
 	if(node instanceof HTMLScriptElement) {

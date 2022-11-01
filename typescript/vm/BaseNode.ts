@@ -1,4 +1,4 @@
-import {BaseNodeParent} from "./BaseNodeParent"
+import {BaseNodeParent} from "./BaseNodeParent.js"
 
 export class BaseNode {
 	parent: BaseNodeParent|null

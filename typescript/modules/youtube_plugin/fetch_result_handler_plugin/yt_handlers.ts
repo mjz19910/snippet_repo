@@ -1,3 +1,3 @@
-import {YTFilterHandlers} from "./YTFilterHandlers"
+import {YTFilterHandlers} from "./YTFilterHandlers.js"
 
 export let yt_handlers=new YTFilterHandlers

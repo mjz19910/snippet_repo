@@ -1,6 +1,6 @@
-import {Seen} from "../seen_plugin/Seen"
-import {deep_clone_object} from "./deep_clone_object"
-import {log_value} from "../helper/log_value"
+import {Seen} from "../seen_plugin/Seen.js"
+import {deep_clone_object} from "./deep_clone_object.js"
+import {log_value} from "../helper/log_value.js"
 
 export function deep_clone<T>(value: T): T {
 	switch(typeof value) {

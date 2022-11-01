@@ -1,4 +1,4 @@
-import {Box} from "../Box"
+import {Box} from "../Box.js"
 
 export type temporary_box_from_cast_push_box={
 	type: 'temporary_box'

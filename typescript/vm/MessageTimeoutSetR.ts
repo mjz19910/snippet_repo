@@ -1,5 +1,5 @@
-import {TimeoutSetRTy} from "./TimeoutSetRTy"
-import {SetRepeatingMessageData} from "./SetRepeatingMessageData"
+import {TimeoutSetRTy} from "./TimeoutSetRTy.js"
+import {SetRepeatingMessageData} from "./SetRepeatingMessageData.js"
 
 export type MessageTimeoutSetR={
 	t: TimeoutSetRTy

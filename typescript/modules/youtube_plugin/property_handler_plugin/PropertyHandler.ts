@@ -1,4 +1,4 @@
-import {create_proxy} from "./create_proxy"
+import {create_proxy} from "./create_proxy.js"
 
 export class PropertyHandler {
 	static proxy_map: Map<{},{}>=new Map

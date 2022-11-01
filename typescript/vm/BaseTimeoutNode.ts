@@ -1,4 +1,4 @@
-import {BaseNode} from "./BaseNode"
+import {BaseNode} from "./BaseNode.js"
 
 export class BaseTimeoutNode extends BaseNode {
 	timeout

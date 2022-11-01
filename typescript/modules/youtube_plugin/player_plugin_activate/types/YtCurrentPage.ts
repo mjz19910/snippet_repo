@@ -1,4 +1,4 @@
-import {YTDPlayerElement} from "./YTDPlayerElement"
+import {YTDPlayerElement} from "./YTDPlayerElement.js"
 
 export class YtCurrentPage extends HTMLElement {
 	/**@return {YTDPlayerElement} */

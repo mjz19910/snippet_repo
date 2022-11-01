@@ -1,7 +1,7 @@
-import {Box} from "../Box"
-import {Primitives} from "../helper/Primitives"
-import {VoidBox} from "../VoidBox"
-import {eat_never} from "../helper/eat_never"
+import {Box} from "../Box.js"
+import {Primitives} from "../helper/Primitives.js"
+import {VoidBox} from "../VoidBox.js"
+import {eat_never} from "../helper/eat_never.js"
 
 export namespace test {
 	function get_testing_void_box(): Exclude<Box,Primitives|null>|null {

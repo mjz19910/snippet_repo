@@ -1,7 +1,7 @@
-import {Box} from "../../../box/Box"
-import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox"
-import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox"
-import {NoArgsType} from "../../../box/NoArgsType"
+import {Box} from "../../../box/Box.js"
+import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.js"
+import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox.js"
+import {NoArgsType} from "../../../box/NoArgsType.js"
 
 export class CSSStyleSheetConstructorBoxImplSupport {
 	type: "constructor_box"

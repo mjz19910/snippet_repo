@@ -1,5 +1,5 @@
-import {CanRunTest} from "./CanRunTest"
-import {BaseTestRunner} from "./BaseTestRunner"
+import {CanRunTest} from "./CanRunTest.js"
+import {BaseTestRunner} from "./BaseTestRunner.js"
 
 export class RootTestRunner extends BaseTestRunner implements CanRunTest {
 	constructor() {

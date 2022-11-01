@@ -1,4 +1,4 @@
-import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController"
+import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController.js"
 
 export function createGainController() {
 	return new HTMLMediaElementGainController

@@ -1,13 +1,13 @@
-import {yt_watch_page_loaded_handler} from "../player_plugin_activate/yt_watch_page_loaded_handler"
-import {PropertyHandler} from "../property_handler_plugin/PropertyHandler"
-import {Seen} from "../seen_plugin/Seen"
-import {remove_optional} from "../helper/remove_optional"
-import {g_api} from "./g_api"
-import {yt_state_map} from "../fetch_result_handler_plugin/yt_state_map"
-import {yt_handlers} from "../fetch_result_handler_plugin/yt_handlers"
-import {dom_observer} from "../dom_observer/dom_observer"
-import {port_state} from "../dom_observer/port_state"
-import {blob_create_args_arr} from "../blob_logger/blob_create_args_arr"
+import {yt_watch_page_loaded_handler} from "../player_plugin_activate/yt_watch_page_loaded_handler.js"
+import {PropertyHandler} from "../property_handler_plugin/PropertyHandler.js"
+import {Seen} from "../seen_plugin/Seen.js"
+import {remove_optional} from "../helper/remove_optional.js"
+import {g_api} from "./g_api.js"
+import {yt_state_map} from "../fetch_result_handler_plugin/yt_state_map.js"
+import {yt_handlers} from "../fetch_result_handler_plugin/yt_handlers.js"
+import {dom_observer} from "../dom_observer/dom_observer.js"
+import {port_state} from "../dom_observer/port_state.js"
+import {blob_create_args_arr} from "../blob_logger/blob_create_args_arr.js"
 
 export function init_g_api() {
 	window.g_api??={} as any

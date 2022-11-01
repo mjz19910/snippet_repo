@@ -1,4 +1,4 @@
-import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController"
+import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController.js"
 
 export class VolumeRange {
 	cache: boolean

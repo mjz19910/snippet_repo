@@ -1,4 +1,4 @@
-import {GApiType} from "modules/youtube_plugin/g_api/GApiType"
+import {GApiType} from "modules/youtube_plugin/g_api/GApiType.js"
 
 export {}
 

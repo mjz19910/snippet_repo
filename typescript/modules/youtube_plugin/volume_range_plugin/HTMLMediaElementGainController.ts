@@ -1,4 +1,4 @@
-import {volume_plugin_style_source} from "./css/volume_plugin_style_source"
+import {volume_plugin_style_source} from "./css/volume_plugin_style_source.js"
 
 export class HTMLMediaElementGainController {
 	last_event: Event|undefined

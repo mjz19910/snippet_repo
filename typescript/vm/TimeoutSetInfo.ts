@@ -1,6 +1,6 @@
-import {TimeoutSetSTy} from "./TimeoutSetSTy"
-import {TimeoutSetRTy} from "./TimeoutSetRTy"
-import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy"
+import {TimeoutSetSTy} from "./TimeoutSetSTy.js"
+import {TimeoutSetRTy} from "./TimeoutSetRTy.js"
+import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy.js"
 import {TimeoutSetS,TimeoutSetR} from "typescript/src/constants.js"
 
 export class TimeoutSetInfo implements TimeoutSetInfoTy {

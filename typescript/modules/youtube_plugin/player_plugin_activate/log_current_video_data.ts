@@ -1,8 +1,8 @@
-import {ytd_player} from "./elements/ytd_player"
-import {overlay_content_div} from "./elements/overlay_content_div"
-import {playlist_arr} from "./playlist_arr"
-import {update_plugin_overlay} from "./update_plugin_overlay"
-import {wait_for_yt_player} from "./wait_for_yt_player"
+import {ytd_player} from "./elements/ytd_player.js"
+import {overlay_content_div} from "./elements/overlay_content_div.js"
+import {playlist_arr} from "./playlist_arr.js"
+import {update_plugin_overlay} from "./update_plugin_overlay.js"
+import {wait_for_yt_player} from "./wait_for_yt_player.js"
 
 export function log_current_video_data() {
 	if(!ytd_player.value) return

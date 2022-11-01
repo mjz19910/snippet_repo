@@ -1,5 +1,5 @@
-import {Box} from "typescript/box/Box"
-import {ReplyMessage1Ty} from "./ReplyMessage1Ty"
+import {Box} from "typescript/box/Box.js"
+import {ReplyMessage1Ty} from "./ReplyMessage1Ty.js"
 
 export type MessageReplyMessage1={
 	t: ReplyMessage1Ty

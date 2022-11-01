@@ -1,5 +1,5 @@
-import {StateInFunction} from "./StateInFunction"
-import {StateLetDefine} from "./StateLetDefine"
-import {StateVarDefine} from "./StateVarDefine"
+import {StateInFunction} from "./StateInFunction.js"
+import {StateLetDefine} from "./StateLetDefine.js"
+import {StateVarDefine} from "./StateVarDefine.js"
 
 export type StateType=StateInFunction|StateLetDefine|StateVarDefine

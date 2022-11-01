@@ -1,11 +1,11 @@
-import {InstructionType} from "../../vm/instruction/InstructionType"
-import {Push} from "../../vm/instruction/stack/Push"
-import {eat_never} from "../helper/eat_never"
-import {is_box} from "./is_box"
-import {is_instruction_block_trace} from "./is_instruction_block_trace"
-import {is_instruction_modify_op} from "./is_instruction_modify_op"
-import {is_number} from "./is_number"
-import {never_cast} from "./never_cast"
+import {InstructionType} from "../../vm/instruction/InstructionType.js"
+import {Push} from "../../vm/instruction/stack/Push.js"
+import {eat_never} from "../helper/eat_never.js"
+import {is_box} from "./is_box.js"
+import {is_instruction_block_trace} from "./is_instruction_block_trace.js"
+import {is_instruction_modify_op} from "./is_instruction_modify_op.js"
+import {is_number} from "./is_number.js"
+import {never_cast} from "./never_cast.js"
 
 export function is_instruction_type<T extends any[]>(value: T|InstructionType): value is InstructionType {
 	if(never_cast<T>(value)) throw new Error("Never")

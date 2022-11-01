@@ -1,4 +1,4 @@
-import {BaseMutationObserver} from "./BaseMutationObserver"
+import {BaseMutationObserver} from "./BaseMutationObserver.js"
 
 export class DetachedMutationObserver extends BaseMutationObserver {
 	constructor(target: Node) {

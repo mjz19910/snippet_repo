@@ -1,5 +1,5 @@
-import {CanRunTest} from "./CanRunTest"
-import {BaseTestRunner} from "./BaseTestRunner"
+import {CanRunTest} from "./CanRunTest.js"
+import {BaseTestRunner} from "./BaseTestRunner.js"
 export class TestEngine extends BaseTestRunner implements CanRunTest {
 	test_started=false
 	m_is_user_completing_tests=false
