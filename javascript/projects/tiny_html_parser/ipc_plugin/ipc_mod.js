@@ -1,4 +1,5 @@
-import {HTMLLexerAPI,set_html_lexer} from "../html_parser_callback.js"
+import {set_html_lexer} from "../set_html_lexer";
+import {HTMLLexerAPI} from "../HTMLLexerAPI";
 /**@type {typeof handle_set_lexer}*/
 export function ipc_call(fn,arg_arr) {
 	console.log('ipc call',fn,arg_arr)
