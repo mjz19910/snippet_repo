@@ -8,7 +8,7 @@
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
-// eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences
+/* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
 console=window.console
 
@@ -468,6 +468,12 @@ let original_fetch=null
  * @param {RequestInfo} request_info
  */
 function fetch_inject(request_info) {
+	if(typeof request_info == 'string') {
+		return original_fetch(request_info)
+	}
+	if(request_info.url.includes("googlevideo.com")) {
+		return original_fetch(request_info)
+	}
 	if(!original_fetch) throw new Error("No original fetch")
 	let ret=original_fetch(request_info)
 	return ret.then(fetch_promise_handler.bind(null,request_info))
@@ -499,7 +505,6 @@ class PropertyHandler {
 		this.key=key
 		this.on_target_apply_callback=on_target_apply_callback
 	}
-	/**@returns {{}|undefined} */
 	get() {
 		return PropertyHandler.override_map.get(this.key)
 	}
@@ -627,76 +632,124 @@ class RichGridRenderer {
  */
 function check_item_keys(path,keys) {
 	/**@type {string[]|string|null} */
+	x: if(keys.length===2) {
+		if(keys[1] == 'remove_content_item') {
+			let [key_0, key_1, ...keys_r]=keys;
+			keys=[key_0, ...keys_r];
+		} else {
+			if(path === '.contents[].richItemRenderer') break x;
+			if (path === '.continuationItems[].richItemRenderer') break x;
+			if (path === 'appendContinuationItemsAction') break x;
+			console.log('left over keys', path, keys);
+		}
+	}
+	switch(path) {
+		case 'tabRenderer.content.richGridRenderer': break;
+		case '.contents[]': break;
+		case '.contents[].richItemRenderer': break;
+		case '.contents[].richItemRenderer.content': break;
+		case '.continuationItems[]': return check_item_keys('.contents[]', keys);
+		case '.continuationItems[].richItemRenderer': return check_item_keys('.contents[].richItemRenderer', keys);
+		case '.continuationItems[].richItemRenderer.content': return check_item_keys('.contents[].richItemRenderer.content', keys);
+		case 'appendContinuationItemsAction': break;
+		default: console.log("new check_item_keys path [0.0]:", path); break;
+	}
 	if(keys.length===1) {
 		let key=keys[0]
 		switch(path) {
-			case 'richGridRenderer.contents[]': switch(key) {
-				case 'richItemRenderer': return
-				case 'continuationItemRenderer': return
-			}
-			case 'richGridRenderer.contents[].richItemRenderer': switch(key) {
-				case 'richItemRenderer': return
-			}
-			case 'richItemRenderer.content': switch(key) {
-				case 'videoRenderer': return
-				case 'radioRenderer': return
-				case 'adSlotRenderer': return
-			}
-			case 'appendContinuationItemsAction.continuationItems[]': switch(key) {
-				case 'richItemRenderer': return
-			}
-			case 'appendContinuationItemsAction.continuationItems[]': switch(key) {
-				case 'continuationItemRenderer': return
-			}
+			case '.contents[]': switch(key) {
+				case 'richItemRenderer': return;
+				case 'richSectionRenderer': return;
+				case 'continuationItemRenderer': return;
+				case 'compactVideoRenderer': return;
+				case 'compactRadioRenderer': return;
+				case 'compactPlaylistRenderer': return;
+				case 'commentThreadRenderer': return;
+				case 'itemSectionRenderer': return;
+				default: console.log('len=1 [0.1]: iter content key',path,key); return;
+			} break;
+			case '.contents[].richItemRenderer': switch(key) {
+				default: console.log('len=1 [0.2]: iter content key',path,key); return;
+			} break;
+			case '.contents[].richItemRenderer.content': switch(key) {
+				case 'adSlotRenderer': return;
+				case 'radioRenderer': return;
+				case 'videoRenderer': return;
+				default: console.log('len=1 [0.3]: iter content key',path,key); return;
+			} break;
+			default: console.log('len=1 [0.d]: content path and key',path,key); break;
 		}
-		console.log('content key',path,key)
 	} else {
 		switch(path) {
 			case 'tabRenderer.content.richGridRenderer': {
 				for(let key of keys) {
 					switch(key) {
-						case 'contents': continue
-						case 'trackingParams': continue
-						case 'header': continue
-						case 'targetId': continue
-						case 'reflowOptions': continue
+						case 'contents': continue;
+						case 'trackingParams': continue;
+						case 'header': continue;
+						case 'targetId': continue;
+						case 'reflowOptions': continue;
 					}
-					console.log('iter content key',path,key)
+					console.log('len>1 [2.0]: iter content key',path,key);
 				}
-			} return
+			} break;
+			case '.contents[].richItemRenderer': {
+				for(let key of keys) {
+					switch(key) {
+						case 'content': continue;
+						case 'trackingParams': continue;
+					}
+					console.log('len>1 [2.1]: iter content key',path,key);
+				}
+			} break;
 			case 'appendContinuationItemsAction': {
 				for(let key of keys) {
 					switch(key) {
-						case 'continuationItems': continue
-						case 'targetId': continue
+						case 'continuationItems': continue;
+						case 'targetId': continue;
 					}
-					console.log('iter content key',path,key)
+					console.log('len>1 [2.2]: iter content key',path,key);
 				}
-			} return
-			case 'continuationItems[].richItemRenderer': {
-				for(let key of keys) {
-					switch(key) {
-						case 'content': continue
-						case 'trackingParams': continue
-					}
-					console.log('iter content key',path,key)
-				}
-			} return
+			} break;
+			default: console.log('len>1 [2.d]: content path',path); break;
 		}
-		console.log('content path',path)
+	}
+}
+function filter_section_renderers_from_item_arr(items) {
+	let sections=items.map((e,i)=>[i,e]).filter(([i,e])=>e.richSectionRenderer)
+	for (let i=0;i<sections.length;i++) {
+		let e=sections[i];
+		e[2]=section_item_type(e[1]);
+		if(e[2] === 'short') {
+			e[1].remove_content_item=true;
+		}
+	}
+}
+function section_item_type(item) {
+	if(!item.richSectionRenderer) return null;
+	if(!item.richSectionRenderer.content.richShelfRenderer.icon) return null;
+	let icon_type=item.richSectionRenderer.content.richShelfRenderer.icon.iconType;
+	switch(icon_type) {
+		case "YOUTUBE_SHORTS_BRAND_24": return "short"
+		default: return null
 	}
 }
 class HandleRichGridRenderer {
-	static debug=true
+	static debug=true;
+	static debug_level = 2;
+	/**@readonly*/
+	static class_name="HandleRichGridRenderer";
+	static entry="richGridRenderer";
 	/**
 	 * @param {string} path
 	 * @param {RichGridRenderer} renderer
 	 */
-	static run(path,renderer) {
+	static richGridRenderer(path,renderer) {
 		let path_parts=path.split(".")
 		let sub_path=path_parts.slice(-3).join(".")
 		check_item_keys(sub_path,Object.keys(renderer))
-		if(this.debug) console.log('run handler',path)
+		if(this.debug) console.log('run handler',sub_path)
+		filter_section_renderers_from_item_arr(renderer.contents);
 		if(renderer.masthead) {
 			check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead))
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
@@ -706,20 +759,26 @@ class HandleRichGridRenderer {
 			}
 		}
 		if(renderer.contents) {
-			this.on_contents(renderer)
+			this.on_contents(path, renderer)
 		}
 	}
-	/**@arg {RichGridRenderer} renderer */
-	static on_contents(renderer) {
-		renderer.contents=renderer.contents.filter(content_item => {
-			let {richItemRenderer}=content_item
-			check_item_keys('richGridRenderer.contents[]',Object.keys(content_item))
-			if(!richItemRenderer) return true
-			check_item_keys('richGridRenderer.contents[].richItemRenderer',Object.keys(content_item))
-			let {content}=richItemRenderer
-			if(!content) return true
-			check_item_keys('richItemRenderer.content',Object.keys(content))
-			if(content.adSlotRenderer) return false
+	/**@arg {string} path @arg {RichGridRenderer} renderer */
+	static on_contents(path, renderer) {
+		let t=this
+		renderer.contents=renderer.contents.filter((content_item, content_index) => {
+			check_item_keys('.contents[]',Object.keys(content_item))
+			if(content_item.remove_content_item) {
+				return false
+			}
+			if(!content_item.richItemRenderer) return true
+			check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer))
+			console.assert(content_item.richItemRenderer.content, "richItemRenderer has content");
+			let {content}=content_item.richItemRenderer
+			check_item_keys('.contents[].richItemRenderer.content',Object.keys(content))
+			if(content.adSlotRenderer) {
+				if(t.debug && t.debug_level > 2) console.log(this.class_name, 'adSlotRenderer=', content.adSlotRenderer)
+				return false
+			}
 			return true
 		})
 	}
@@ -730,29 +789,38 @@ class AppendContinuationItemsAction {
 	continuationItems=[]
 }
 class YTFilterHandlers extends YTIterateAllBase {
+	debug=true
+	/**@readonly*/
+	class_name="YTFilterHandlers"
 	/**
 	 * @param {string} path
 	 * @param {RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
-		HandleRichGridRenderer.run(path,renderer)
+		HandleRichGridRenderer.richGridRenderer(path,renderer)
 	}
 	/**
 	 * @param {string} path
 	 * @param {AppendContinuationItemsAction} action
 	 */
 	appendContinuationItemsAction(path,action) {
-		void path
+		let t=this
 		check_item_keys('appendContinuationItemsAction',Object.keys(action))
+		filter_section_renderers_from_item_arr(action.continuationItems);
 		action.continuationItems=action.continuationItems.filter(content_item => {
-			let {richItemRenderer}=content_item
-			check_item_keys('appendContinuationItemsAction.continuationItems[]',Object.keys(content_item))
-			if(!richItemRenderer) return true
-			check_item_keys('continuationItems[].richItemRenderer',Object.keys(richItemRenderer))
-			let {content}=richItemRenderer
-			if(!content) return true
-			check_item_keys('richItemRenderer.content',Object.keys(content))
-			if(content.adSlotRenderer) return false
+			check_item_keys('.continuationItems[]',Object.keys(content_item))
+			if(content_item.remove_content_item) {
+				return false
+			}
+			if(!content_item.richItemRenderer) return true
+			check_item_keys('.continuationItems[].richItemRenderer',Object.keys(content_item.richItemRenderer))
+			if(!content_item.richItemRenderer.content) return true
+			let {content}=content_item.richItemRenderer
+			check_item_keys('.continuationItems[].richItemRenderer.content',Object.keys(content))
+			if(content.adSlotRenderer) {
+				if(t.debug) console.log(t.class_name+": "+path+'.adSlotRenderer=', content.adSlotRenderer)
+				return false
+			}
 			return true
 		})
 	}
@@ -767,8 +835,17 @@ class YTFilterHandlers extends YTIterateAllBase {
 			let keys=Object.keys(item)
 			for(let key of keys) {
 				switch(key) {
-					case 'promotedSparklesWebRenderer': return false
-					case 'compactPromotedVideoRenderer': return false
+					case 'promotedSparklesWebRenderer': return false;
+					case 'compactPromotedVideoRenderer': return false;
+					case 'shelfRenderer': return true;
+					case 'commentsEntryPointHeaderRenderer': return true;
+					case 'continuationItemRenderer': return true;
+					case 'compactVideoRenderer': return true;
+					case 'compactRadioRenderer': return true;
+					case 'compactPlaylistRenderer': return true;
+					default:
+						console.log("section unk", key)
+						return true
 				}
 			}
 			return true
@@ -776,13 +853,15 @@ class YTFilterHandlers extends YTIterateAllBase {
 	}
 	/**
 	 * @param {{playerAds?: any[]; adPlacements?: any[];}} data
-	 * @param {string} _path
+	 * @param {string} path
 	 */
-	on_v1_player(_path,data) {
+	on_v1_player(path,data) {
 		if(data.playerAds) {
+			if(this.debug)console.log(this.class_name+": "+path+'.playerAds=', data.playerAds)
 			data.playerAds=[]
 		}
 		if(data.adPlacements) {
+			if(this.debug)console.log(this.class_name+": "+path+'.adPlacements=', data.adPlacements)
 			data.adPlacements=[]
 		}
 	}
@@ -796,15 +875,15 @@ class YTFilterHandlers extends YTIterateAllBase {
 		if(path_url==="/getDatasyncIdsEndpoint") return
 		let api_parts=url_as_URL.pathname.slice(1).split("/")
 		if(api_parts[0]!=='youtubei') {
-			console.log('unknown api path',url_as_URL.pathname)
+			console.log(this.class_name+": "+'unknown api path',url_as_URL.pathname)
 			return
 		}
 		if(api_parts[1]!=='v1') {
-			console.log('unknown api path',url_as_URL.pathname)
+			console.log(this.class_name+": "+'unknown api path',url_as_URL.pathname)
 			return
 		}
 		let api_path=api_parts.slice(2).join(".")
-		debug&&console.log('on_handle_api api_path',api_parts.slice(0,2).join("/"),api_path)
+		debug&&console.log(this.class_name+": "+'on_handle_api api_path',api_parts.slice(0,2).join("/"),api_path)
 		this.handle_any_data(api_path,data)
 		switch(api_parts[2]) {
 			case 'player': this.on_v1_player(api_path,data); break
@@ -816,7 +895,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	handle_page_type(data,page_type,response_type) {
 		const debug=false
-		debug&&console.log('handle_page_type with page_type and response_type',page_type,response_type)
+		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type,response_type)
 		this.handle_any_data(page_type,data)
 		switch(response_type) {
 			case 'response': break
@@ -838,27 +917,27 @@ class YTFilterHandlers extends YTIterateAllBase {
 	on_initial_data(apply_args) {
 		let ret=Reflect.apply(...apply_args)
 		if(ret.response) {
-			console.log('initial page info:',ret)
+			console.log(this.class_name+': initial page info:',ret)
 			try {
 				if(window.ytPageType) {
 					if(ret.page==="browse") {
 						this.handle_page_type(ret.response,window.ytPageType,'response')
 						if(ret.playerResponse) {
-							console.log("playerResponse in ret.page === 'browse'")
+							console.log(this.class_name+": playerResponse in ret.page === 'browse'")
 							debugger
 						}
 					} else {
-						console.log('page info ret type',ret.page)
+						console.log(this.class_name+': page info ret type',ret.page)
 						this.handle_page_type(ret.response,window.ytPageType,'response')
 						this.handle_page_type(ret.playerResponse,window.ytPageType,'playerResponse')
 					}
 				}
 			} catch(err) {
-				console.log('init filter error')
+				console.log(this.class_name+": init filter error")
 				console.log(err)
 			}
 		} else {
-			console.log("Can't handle return value",ret)
+			console.log(this.class_name+": unhandled return value:",ret)
 		}
 		return ret
 	}
@@ -962,13 +1041,16 @@ g_api.yt_handlers=yt_handlers
 	})
 	Image=OriginalImage
 }
+let plr_raw_replace_debug = true
 function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */ player_config) {
 	let raw_plr_rsp=player_config.args.raw_player_response
 	if(raw_plr_rsp===void 0) {
 		console.log('yt_cfg',player_config)
 		return
 	}
+	if(plr_raw_replace_debug)console.log("plr_raw_replace", "::", 'args.raw_player_response.playerAds=', raw_plr_rsp.playerAds)
 	raw_plr_rsp.playerAds=[]
+	if(plr_raw_replace_debug)console.log("plr_raw_replace", "::", 'args.raw_player_response.adPlacements=', raw_plr_rsp.adPlacements)
 	raw_plr_rsp.adPlacements=[]
 	return
 }
@@ -1206,109 +1288,7 @@ function log_if_level(logging_level,logger_format,...logger_args) {
 		console.log(logger_format,...logger_args)
 	}
 }
-log_if_level
-window.playlist_arr??=[]
-/**@type {string[]} */
-let playlist_arr=window.playlist_arr
-/**
- * @type {YtdPageManagerElement | null}
- */
-let ytd_page_manager=null
-/**
- * @param {HTMLElement} element
- */
-function on_ytd_page_manager(element) {
-	const element_id="ytd-page-manager"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	ytd_page_manager=any_c(element,YtdPageManagerElement)
-	window.ytd_page_manager=element
-}
-class YtdWatchFlexyElement extends HTMLElement {}
-/**
- * @type {YtdWatchFlexyElement | null}
- */
-let ytd_watch_flexy=null
-/**
- * @param {HTMLElement} element
- */
-function on_ytd_watch_flexy(element) {
-	const element_id="ytd-watch-flexy"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	ytd_watch_flexy=any_c(element,YtdWatchFlexyElement)
-	window.ytd_watch_flexy=element
-}
-/**
- * @type {YtdAppElement | null}
- */
-// yt display app
-let ytd_app=null
-/**
- * @param {HTMLElement} element
- */
-function on_ytd_app(element) {
-	const element_id="ytd-app"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	ytd_app=YtdAppElement.cast(element)
-	window.ytd_app=element
-}
-/**
- * @type {HTMLElement | null}
- */
-let yt_playlist_manager=null
-/**
- * @param {HTMLElement} element
- */
-function on_yt_playlist_manager(element) {
-	const element_id="yt-playlist-manager"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	yt_playlist_manager=element
-	window.yt_playlist_manager=element
-}
-class YTDPlayerElement extends HTMLElement {
-	active_nav=false
-	/**@type {{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null} */
-	player_=null
-	playerResolver_={
-		promise: Promise.resolve()
-	}
-	init_nav=false
-	is_watch_page_active=false
-	pause() {}
-	play() {}
-}
-/**
- * @type {YTDPlayerElement | null}
- */
-let ytd_player=null
-/**
- * @param {HTMLElement} element
- */
-function on_ytd_player(element) {
-	const element_id="ytd-player"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	ytd_player=any_c(element,YTDPlayerElement)
-	window.ytd_player=element
-}
-function is_watch_page_active() {
-	return ytd_page_manager&&ytd_page_manager.getCurrentPage()&&ytd_page_manager.getCurrentPage().nodeName=="YTD-WATCH-FLEXY"
-}
-class HTMLVideoElementArrayBox {
-	/**@readonly*/
-	type="HTMLVideoElementArrayBox"
-	/** @param {HTMLVideoElement[]} value */
-	constructor(value) {
-		this.value=value
-	}
-}
-/**@type {Map<string, HTMLElement>}*/
-let element_map=new Map
-/**@type {Map<string, HTMLVideoElementArrayBox>}*/
-let box_map=new Map
+
 class CustomEventType {
 	type="event_type"
 	detail={}
@@ -1350,106 +1330,532 @@ class CustomEventTarget {
 		}
 	}
 }
+
 class DomObserver extends CustomEventTarget {
 	trace=false
 	/**@arg {MessagePort} port @arg {number} message_id */
 	next_tick_action(port,message_id) {
-		if(this.trace) console.log("trace_id_"+message_id+":continue")
-		port.postMessage(message_id)
+		if(this.trace) console.log("trace_id_"+message_id+":continue");
+		// port.postMessage() -> on_port_message;
+		port.postMessage(message_id);
 	}
 }
-let dom_observer=new DomObserver
-g_api.dom_observer=dom_observer
-/**@arg {number} value @returns {ReturnType<typeof setTimeout>} */
-function as_timeout_type(value) {
-	/**@type {any} */
-	let value_any=value
-	return value_any
+let dom_observer=new DomObserver;
+g_api.dom_observer=dom_observer;
+
+window.playlist_arr??=[];
+/**@type {string[]} */
+let playlist_arr=window.playlist_arr
+/**
+ * @type {YtdPageManagerElement | null}
+ */
+let ytd_page_manager=null;
+
+function has_ytd_page_mgr() {
+	return ytd_page_manager !== null;
 }
-/**@type {[number, number][]}*/
-let port_state_log=[]
-class MessagePortState {
-	/**@type {ReturnType<typeof setTimeout>} */
-	cint=as_timeout_type(-1)
-	state_log=port_state_log
-	time_offset=performance.now()
-	current_event_type="find-ytd-app"
+
+/** @returns {YtdPageManagerElement}*/
+function get_ytd_page_mgr() {
+	if(ytd_page_manager !== null) {
+		return ytd_page_manager;
+	}
+	throw new Error("No ytd_page_manager");
 }
-let port_state=new MessagePortState
-g_api.port_state=port_state
-let found_element_arr=[
-	"yt-playlist-manager",
-	"video",
-]
-/**@type {string}*/
-let find_element_tag_name='video'
-let found_element=false
-/**@arg {number} message_id*/
-function try_find_element(message_id) {
-	if(found_element_arr.includes(find_element_tag_name)) return
-	if(found_element) return
-	if(!find_element_tag_name) return
-	let element=document.getElementsByTagName(find_element_tag_name)[0]
-	if(element) {
-		console.log('found element at message_id=%o',message_id)
-		debugger
-		found_element=true
+
+let on_ytd_page_mgr_found=[];
+
+/**
+ * @param {HTMLElement} element
+ */
+function on_ytd_page_manager(element) {
+	const element_id="ytd-page-manager"
+	console.log(`on ${element_id}`)
+	element_map.set(element_id,element)
+	ytd_page_manager=any_c(element,YtdPageManagerElement)
+	window.ytd_page_manager=element;
+	for (let handler of on_ytd_page_mgr_found) {
+		handler();
 	}
 }
-function observer_default_action(type,message_id) {
-	port_state.current_event_type=type
-	try_find_element(message_id)
-}
-/**@arg {Document|Element} node @arg {string} child_node_tag_name*/
-function get_html_elements(node,child_node_tag_name) {
-	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name)
-}
-/**
- * @this {DomObserver}
- * @arg {CustomEventType} event
- * ID(10)
- * */
-function event_find_ytd_app(event) {
-	const current_message_id=10
-	let {port,detail,type}=event
-	observer_default_action(type,current_message_id)
-	let target_element=get_html_elements(document,'ytd-app')[0]
-	if(!target_element) return this.next_tick_action(port,current_message_id)
-	on_ytd_app(target_element)
-	VolumeRangePlugin()
-	this.dispatchEvent({type: "find-yt-playlist-manager",detail,port})
-}
-dom_observer.addEventListener('find-ytd-app',event_find_ytd_app)
-/**
- * @this {DomObserver}
- * @param {CustomEventType} event
- * ID(20)
- * */
-function event_find_yt_playlist_manager(event) {
-	const current_message_id=20
-	let {type,detail,port}=event
-	observer_default_action(type,current_message_id)
-	const target_element=get_html_elements(document,'yt-playlist-manager')[0]
-	if(!target_element) return this.next_tick_action(port,current_message_id)
-	on_yt_playlist_manager(target_element)
-	this.dispatchEvent({type: "find-ytd-page-manager",detail,port})
-}
-dom_observer.addEventListener("find-yt-playlist-manager",event_find_yt_playlist_manager)
 /**
  * @this {DomObserver}
  * @param {CustomEventType} event
  * ID(30)
  * */
 function event_find_ytd_page_manager(event) {
-	const current_message_id=30
-	let {type,detail,port}=event
-	observer_default_action(type,current_message_id)
-	const target_element=get_html_elements(document,'ytd-page-manager')[0]
-	if(!target_element) return this.next_tick_action(port,current_message_id)
-	on_ytd_page_manager(target_element)
-	this.dispatchEvent({type: "find-ytd-watch-flexy",detail,port})
+	const current_message_id=30;
+	let {type,detail,port}=event;
+	observer_default_action(type,current_message_id);
+	const target_element=get_html_elements(document,'ytd-page-manager')[0];
+	if(!target_element) return this.next_tick_action(port,current_message_id);
+	on_ytd_page_manager(target_element);
+	this.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
 }
-dom_observer.addEventListener("find-ytd-page-manager",event_find_ytd_page_manager)
+dom_observer.addEventListener("find-ytd-page-manager",event_find_ytd_page_manager);
+
+class YtdWatchFlexyElement extends HTMLElement {}
+/**
+ * @type {YtdWatchFlexyElement | null}
+ */
+let ytd_watch_flexy=null
+/**
+ * @param {HTMLElement} element
+ */
+function on_ytd_watch_flexy(element) {
+	const element_id="ytd-watch-flexy";
+	console.log(`on ${element_id}`);
+	element_map.set(element_id,element);
+	ytd_watch_flexy=any_c(element,YtdWatchFlexyElement);
+	window.ytd_watch_flexy=element;
+	ytd_watch_flexy.addEventListener("yt-navigate",function(event) {
+		for(let handler of on_yt_navigate) {
+			handler(event)
+		}
+	});
+}
+/**
+ * @this {DomObserver}
+ * @param {CustomEventType} event
+ * ID(40)
+ * */
+function event_find_ytd_watch_flexy(event) {
+	const current_message_id=40;
+	let {type,detail,port}=event;
+	observer_default_action(type,current_message_id);
+	let current_page_element=get_ytd_page_mgr().getCurrentPage();
+	if(!current_page_element) return this.next_tick_action(port,current_message_id);
+	current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+	console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
+	VolumeRange.create();
+	if(current_page_element.tagName=="YTD-WATCH-FLEXY") {
+		on_ytd_watch_flexy(current_page_element);
+		this.dispatchEvent({type: "ytd-watch-flexy",detail,port});
+	} else {
+		get_ytd_page_mgr().addEventListener(
+			"yt-page-type-changed",
+			() => this.dispatchEvent({type: "yt-page-type-changed",detail,port}),
+			{once: true}
+		)
+	}
+}
+dom_observer.addEventListener('find-ytd-watch-flexy',event_find_ytd_watch_flexy);
+
+/**
+ * @this {DomObserver}
+ * @arg {CustomEventType} event
+ * ID(50)
+ * */
+function event_ytd_watch_flexy(event) {
+	const current_message_id=50;
+	let {type,detail,port}=event;
+	observer_default_action(type,current_message_id);
+	this.dispatchEvent({type: "find-ytd-player",detail,port});
+}
+dom_observer.addEventListener('ytd-watch-flexy',event_ytd_watch_flexy);
+
+window.page_type_changes??=[];
+let page_type_changes=window.page_type_changes;
+
+let last_page_type = null;
+
+function is_watch_page_active() {
+	return has_ytd_page_mgr()&&get_ytd_page_mgr().getCurrentPage()&&get_ytd_page_mgr().getCurrentPage().nodeName=="YTD-WATCH-FLEXY"
+}
+
+function page_changed_next_frame() {
+	if(!plugin_overlay_element) return
+	if(!has_ytd_page_mgr()) return
+	plugin_overlay_element.onupdate()
+	get_ytd_page_mgr().getCurrentPage().append(plugin_overlay_element)
+}
+
+/**@type {Map<string, HTMLElement>}*/
+let element_map=new Map;
+/**@type {Map<string, HTMLVideoElementArrayBox>}*/
+let box_map=new Map;
+
+class YTDPlayerElement extends HTMLElement {
+	active_nav=false
+	/**@type {{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null} */
+	player_=null
+	playerResolver_={
+		promise: Promise.resolve()
+	}
+	init_nav=false
+	is_watch_page_active=false
+	pause() {}
+	play() {}
+}
+/**
+ * @type {YTDPlayerElement | null}
+ */
+let ytd_player=null
+/**
+ * @param {HTMLElement} element
+ */
+function on_ytd_player(element) {
+	const element_id="ytd-player"
+	console.log(`on ${element_id}`)
+	element_map.set(element_id,element)
+	ytd_player=any_c(element,YTDPlayerElement)
+	window.ytd_player=element
+}
+
+/**
+ * @this {DomObserver}
+ * @arg {CustomEventType} event
+ * ID(51)
+ * */
+function event_find_ytd_player(event){
+	const current_message_id=51;
+	let {type,detail,port}=event;
+	observer_default_action(type,current_message_id);
+	let target_element=get_html_elements(ytd_watch_flexy,'ytd-player')[0];
+	if(!target_element) return this.next_tick_action(port,current_message_id);
+	on_ytd_player(target_element);
+	this.dispatchEvent({type: "ytd-player",detail,port});
+}
+dom_observer.addEventListener('find-ytd-player',event_find_ytd_player);
+
+/**
+ * @this {DomObserver}
+ * @param {CustomEventType} event
+ * ID(60)
+ */
+function event_ytd_player(event) {
+	const current_message_id=60;
+	let {type,detail,port}=event;
+	observer_default_action(type,current_message_id);
+	const element_list=get_html_elements(document,'video');
+	if(element_list.length<=0) return this.next_tick_action(port,current_message_id);
+	/**@type {HTMLVideoElement[]}*/
+	let element_list_arr=[...Array.prototype.slice.call(element_list)];
+	box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
+	this.dispatchEvent({type: "video",detail,port});
+}
+dom_observer.addEventListener('ytd-player',event_ytd_player);
+
+// visibilitychange handler (resume video when page is visible again)
+function fire_on_visibility_change_restart_video_playback() {
+	if(!is_watch_page_active()) return
+	if(!ytd_player||!ytd_player.player_) return
+	if(ytd_player.player_.getPlayerState()!=2) return
+	ytd_player.pause()
+	ytd_player.play()
+}
+
+class HTMLVideoElementArrayBox {
+	/**@readonly*/
+	type="HTMLVideoElementArrayBox"
+	/** @param {HTMLVideoElement[]} value */
+	constructor(value) {
+		this.value=value
+	}
+}
+
+class YTNavigateFinishEvent {
+	detail={
+		pageType:"any"
+	}
+}
+
+/**
+ * @type {((event:YTNavigateFinishEvent)=>void)[]}
+ */
+let on_yt_navigate_finish=[];
+
+/**
+ * @param {YTNavigateFinishEvent} event
+ */
+function log_page_type_change(event) {
+	let {detail}=event;
+	if(!detail) return;
+	if(has_ytd_page_mgr()) {
+		if(last_page_type !== detail.pageType){
+			let page_manager_current_tag_name=get_ytd_page_mgr().getCurrentPage().tagName.toLowerCase();
+			let nav_load_str=`last_page_type_change={current_page: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
+			page_type_changes.push(nav_load_str);
+			console.log(nav_load_str);
+			last_page_type = detail.pageType;
+		}
+		return;
+	}
+	let t=this;
+	function found_handler() {
+		log_page_type_change.call(t, event);
+		let index = on_ytd_page_mgr_found.indexOf(found_handler);
+		on_ytd_page_mgr_found.splice(index,1);
+	}
+	on_ytd_page_mgr_found.push(found_handler);
+}
+on_yt_navigate_finish.push(log_page_type_change);
+
+function log_current_video_data() {
+	if(!ytd_player) return;
+	if(!ytd_player.player_) {
+		wait_for_yt_player().then(log_current_video_data);
+		return;
+	}
+	const video_data=ytd_player.player_.getVideoData();
+	update_plugin_overlay();
+	if(video_data.video_id===undefined) return;
+	if(video_data.eventId===void 0) return;
+	const {video_id,title,author}=video_data;
+	const playlist_log_str=`[${author},${video_id}] ${title}`;
+	if(playlist_log_str===playlist_arr.at(-1)) return;
+	playlist_arr.push(playlist_log_str);
+	console.log(playlist_log_str);
+	if(!overlay_content_div) return;
+	overlay_content_div.innerText=`[${video_id}] ${title}`;
+}
+on_yt_navigate_finish.push(log_current_video_data);
+
+
+/**
+ * @type {YtdAppElement | null}
+ */
+// yt display app
+let ytd_app=null
+let vis_imm = false;
+/**
+ * @param {HTMLElement} element
+ */
+function on_ytd_app(element) {
+	const element_id="ytd-app"
+	console.log(`on ${element_id}`)
+	element_map.set(element_id,element)
+	ytd_app=YtdAppElement.cast(element)
+	window.ytd_app=element;
+	ytd_app.addEventListener("yt-navigate-finish",function(/**@type {YTNavigateFinishEvent}*/ event) {
+		for(let handler of on_yt_navigate_finish) {
+			handler(event);
+		}
+	});
+	ytd_app.ui_plugin_style_element=document.createElement("style");
+	let css_str=`
+		ytd-watch-next-secondary-results-renderer {
+			overflow-x:scroll;
+			height:80vh;
+		}
+		/*# sourceURL=yt_css_user */
+	`;
+	ytd_app.ui_plugin_style_element.innerHTML=css_str;
+	if(document.visibilityState==='visible') {
+		ytd_app.app_is_visible=1;
+		if(vis_imm) {
+			fire_on_visibility_change_restart_video_playback();
+			vis_imm=false;
+		}
+	} else {
+		ytd_app.app_is_visible=0;
+	}
+	// spell:ignore cint
+	ytd_app.ytp_click_cint=setInterval(() => {
+		if(!is_watch_page_active()||!ytd_app) return;
+		if(!ytd_app.app_is_visible) {
+			vis_imm=true;
+			return;
+		}
+	},15*60*1000);
+	document.addEventListener("visibilitychange",function() {
+		if(!is_watch_page_active()) return;
+		if(document.visibilityState==='visible') {
+			ytd_app.app_is_visible=1;
+			if(vis_imm) {
+				fire_on_visibility_change_restart_video_playback();
+				vis_imm=false;
+			}
+		} else {
+			ytd_app.app_is_visible=0;
+		}
+	});
+}
+
+/**
+ * @this {DomObserver}
+ * @arg {CustomEventType} event
+ * ID(10)
+ * */
+function event_find_ytd_app(event) {
+	const current_message_id=10;
+	let {port,detail,type}=event;
+	observer_default_action(type,current_message_id);
+	let target_element=get_html_elements(document,'ytd-app')[0];
+	if(!target_element) return this.next_tick_action(port,current_message_id);
+	on_ytd_app(target_element);
+	VolumeRange.create();
+	this.dispatchEvent({type: "find-yt-playlist-manager",detail,port});
+}
+dom_observer.addEventListener('find-ytd-app',event_find_ytd_app);
+
+function attach_volume_range_to_page() {
+	if(!ytd_app) return;
+	if(!ytd_app.__shady_children.masthead) return;
+	let player_masthead = ytd_app.__shady_children.masthead;
+	if(!player_masthead.$) return;
+	if(!ytd_app.volume_range) {
+		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,gain_controller)
+		let container_dom_parent=player_masthead.$.container.children.center;
+		let use_container=true;
+		if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent)
+		else ytd_app.volume_range.attach_to_element(ytd_app);
+	}
+}
+
+let ui_plugin_css_enabled=false
+function ui_css_toggle_click_handler() {
+	if(ui_plugin_css_enabled) {
+		if(ytd_app&&ytd_app.ui_plugin_style_element) {
+			ytd_app.ui_plugin_style_element.remove()
+		}
+		ui_plugin_css_enabled=false
+	} else {
+		if(ytd_app&&ytd_app.ui_plugin_style_element) {
+			document.head.append(ytd_app.ui_plugin_style_element)
+		}
+		ui_plugin_css_enabled=true
+	}
+}
+
+/**
+ * @type {HTMLElement | null}
+ */
+let yt_playlist_manager=null
+/**
+ * @param {HTMLElement} element
+ */
+function on_yt_playlist_manager(element) {
+	const element_id="yt-playlist-manager"
+	console.log(`on ${element_id}`)
+	element_map.set(element_id,element)
+	yt_playlist_manager=element
+	window.yt_playlist_manager=element
+}
+/**
+ * @this {DomObserver}
+ * @param {CustomEventType} event
+ * ID(20)
+ * */
+function event_find_yt_playlist_manager(event) {
+	const current_message_id=20;
+	let {type,detail,port}=event;
+	observer_default_action(type,current_message_id);
+	const target_element=get_html_elements(document,'yt-playlist-manager')[0];
+	if(!target_element) return this.next_tick_action(port,current_message_id);
+	on_yt_playlist_manager(target_element);
+	this.dispatchEvent({type: "find-ytd-page-manager",detail,port});
+}
+dom_observer.addEventListener("find-yt-playlist-manager",event_find_yt_playlist_manager);
+
+/**@arg {number} value @returns {ReturnType<typeof setTimeout>} */
+function as_timeout_type(value) {
+	/**@type {any} */
+	let value_any=value
+	return value_any
+}
+
+/**@type {[number, number][]}*/
+let port_state_log=[];
+class MessagePortState {
+	/**@type {ReturnType<typeof setTimeout>} */
+	cint=as_timeout_type(-1);
+	port_state_log=port_state_log;
+	time_offset=performance.now();
+	current_event_type="find-ytd-app";
+}
+let port_state=new MessagePortState;
+g_api.port_state=port_state;
+
+let slow_message_event=false;
+const message_channel_loop_delay=80;
+/**
+ * @param {MessageEvent<number>} event
+ */
+function on_port_message(event) {
+	if(debug) console.log('msg_port:message %o',event.data);
+	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
+	if(slow_message_event) {
+		setTimeout(dispatch_observer_event, message_channel_loop_delay);
+		return;
+	}
+	dispatch_observer_event();
+}
+
+class MessageChannelWithReadonlyPorts {
+	get port1() {
+		return Object.freeze(MessageChannel.prototype.port1)
+	}
+	get port2() {
+		return Object.freeze(MessageChannel.prototype.port2)
+	}
+}
+
+/**@type {Readonly<MessageChannelWithReadonlyPorts>|null} */
+let message_channel=null;
+/**@return {Readonly<MessageChannelWithReadonlyPorts>} */
+function create_message_channel() {
+	let channel=Object.freeze(new MessageChannel())
+	let {port1,port2}=channel
+	port2.onmessage=on_port_message
+	Object.freeze(port1)
+	Object.freeze(port2)
+	return channel
+}
+
+function fire_observer_event() {
+	dom_observer.dispatchEvent({
+		type: port_state.current_event_type,
+		detail: {},
+		port: message_channel.port1,
+	});
+}
+
+let always_dispatch_event=false;
+let rep_count=0;
+let rep_max=300;
+function dispatch_observer_event() {
+	if(!message_channel) throw new Error("Bad");
+	rep_count+=1;
+	if(always_dispatch_event) {
+		return fire_observer_event();
+	}
+	if(rep_count%rep_max==(rep_max-1)) {
+		port_state.cint=setTimeout(fire_observer_event,10);
+		return;
+	}
+	return fire_observer_event();
+}
+
+message_channel=create_message_channel();
+
+let found_element_arr=[
+	"yt-playlist-manager",
+	"video",
+]
+/**@type {string}*/
+let find_element_tag_name='video';
+let found_element=false;
+/**@arg {number} message_id*/
+function try_find_element(message_id) {
+	if(found_element_arr.includes(find_element_tag_name)) return;
+	if(found_element) return;
+	if(!find_element_tag_name) return;
+	let element=document.getElementsByTagName(find_element_tag_name)[0];
+	if(element) {
+		console.log('found element at message_id=%o',message_id);
+		debugger;
+		found_element=true;
+	}
+}
+function observer_default_action(type,message_id) {
+	port_state.current_event_type=type;
+	try_find_element(message_id);
+}
+/**@arg {Document|Element} node @arg {string} child_node_tag_name*/
+function get_html_elements(node,child_node_tag_name) {
+	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name)
+}
 /** @this {DomObserver} @arg {CustomEventType} event */
 function on_yt_page_type_changed(event) {
 	let {detail,port}=event
@@ -1460,64 +1866,8 @@ function on_yt_page_type_changed(event) {
 		port
 	})
 }
-dom_observer.addEventListener('yt-page-type-changed',on_yt_page_type_changed)
-/**
- * @this {DomObserver}
- * @param {CustomEventType} event
- * ID(40)
- * */
-function event_find_ytd_watch_flexy(event) {
-	const current_message_id=40
-	let {type,detail,port}=event
-	observer_default_action(type,current_message_id)
-	let target_element=ytd_page_manager.getCurrentPage()
-	if(!target_element) return this.next_tick_action(port,current_message_id)
-	console.log("PageManager:current_page:"+target_element.tagName.toLowerCase())
-	VolumeRangePlugin()
-	if(target_element.tagName=="YTD-WATCH-FLEXY") {
-		on_ytd_watch_flexy(target_element)
-		this.dispatchEvent({type: "ytd-watch-flexy",detail,port})
-	} else {
-		ytd_page_manager.addEventListener(
-			"yt-page-type-changed",
-			() => this.dispatchEvent({type: "yt-page-type-changed",detail,port}),
-			{once: true}
-		)
-	}
-}
-dom_observer.addEventListener('find-ytd-watch-flexy',event_find_ytd_watch_flexy)
-/**
- * @this {DomObserver}
- * @arg {CustomEventType} event
- * ID(50)
- * */
-function event_ytd_watch_flexy(event) {
-	const current_message_id=50
-	let {type,detail,port}=event
-	observer_default_action(type,current_message_id)
-	let target_element=get_html_elements(ytd_watch_flexy,'ytd-player')[0]
-	if(!target_element) return this.next_tick_action(port,current_message_id)
-	on_ytd_player(target_element)
-	this.dispatchEvent({type: "ytd-player",detail,port})
-}
-dom_observer.addEventListener('ytd-watch-flexy',event_ytd_watch_flexy)
-/**
- * @this {DomObserver}
- * @param {CustomEventType} event
- * ID(60)
- */
-function event_ytd_player(event) {
-	const current_message_id=60
-	let {type,detail,port}=event
-	observer_default_action(type,current_message_id)
-	const element_list=get_html_elements(document,'video')
-	if(element_list.length<=0) return this.next_tick_action(port,current_message_id)
-	/**@type {HTMLVideoElement[]}*/
-	let element_list_arr=[...Array.prototype.slice.call(element_list)]
-	box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr))
-	this.dispatchEvent({type: "video",detail,port})
-}
-dom_observer.addEventListener('ytd-player',event_ytd_player)
+dom_observer.addEventListener('yt-page-type-changed',on_yt_page_type_changed);
+
 /**
  * @this {DomObserver}
  * @param {CustomEventType} event
@@ -1539,57 +1889,7 @@ function event_plugin_activate() {
 		yt_watch_page_loaded_handler()
 }
 dom_observer.addEventListener('plugin-activate',event_plugin_activate)
-const realHTMLElement=HTMLElement
-class MessageChannelWithReadonlyPorts {
-	get port1() {
-		return Object.freeze(MessageChannel.prototype.port1)
-	}
-	get port2() {
-		return Object.freeze(MessageChannel.prototype.port2)
-	}
-}
-/**@return {Readonly<MessageChannelWithReadonlyPorts>} */
-function create_message_channel() {
-	let channel=Object.freeze(new MessageChannel())
-	let {port1,port2}=channel
-	port2.onmessage=on_port_message
-	Object.freeze(port1)
-	Object.freeze(port2)
-	return channel
-}
-let message_channel=create_message_channel()
-let slow_message_event=true
-let rep_size=8
-function dispatch_observer_event() {
-	if(++rep_count<rep_max) return dom_observer.dispatchEvent({
-		type: port_state.current_event_type,
-		detail: {},
-		port: message_channel.port1
-	})
-	port_state.cint=setTimeout(() => {
-		rep_max+=rep_size
-		dispatch_observer_event()
-	},20)
-}
-const message_channel_loop_delay=80
-/**
- * @param {MessageEvent<number>} event
- */
-function on_port_message(event) {
-	if(debug) console.log('msg_port:message %o',event.data)
-	port_state_log.push([performance.now()-port_state.time_offset,event.data])
-	if(slow_message_event) {
-		setTimeout(dispatch_observer_event,message_channel_loop_delay)
-		return
-	}
-	dispatch_observer_event()
-}
-let rep_count=0
-let rep_max=25
-/**
- * @type {((event:{})=>void)[]}
- */
-var on_yt_navigate_finish=[]
+const realHTMLElement=HTMLElement;
 /**
  * @type {((event:{})=>void)[]}
  */
@@ -1680,6 +1980,8 @@ function sumOffset(element) {
 	}
 	return cache
 }
+/**@type {PluginOverlayElement | null} */
+let plugin_overlay_element=null;
 function fix_offset() {
 	if(!ytd_player) return
 	if(!plugin_overlay_element) return
@@ -1731,88 +2033,24 @@ function on_yt_action(event) {
 		title_text_overlay_update()
 	}
 }
-document.addEventListener('yt-action',on_yt_action)
-/**
- * @param {{ detail?: { pageType: string; }; }} event
- */
-function log_page_type_change(event) {
-	let {detail}=event
-	if(detail) {
-		let s_val=detail.pageType
-		switch(s_val) {
-			default: {
-				if(ytd_page_manager) {
-					let page_manager_current_tag_name=ytd_page_manager.getCurrentPage().tagName.toLowerCase()
-					let nav_load_str=`:: current_page ${page_manager_current_tag_name} -> ${detail.pageType}`
-					playlist_arr.push(nav_load_str)
-					console.log(nav_load_str)
-				} else {
-					let nav_load_str=`:: current_page = ${detail.pageType}`
-					playlist_arr.push(nav_load_str)
-					console.log(nav_load_str)
-				}
-			} return
-		}
-	}
-}
+document.addEventListener('yt-action',on_yt_action);
+
 function update_plugin_overlay() {
-	if(!plugin_overlay_element) return
-	plugin_overlay_element.onupdate()
+	if(!plugin_overlay_element) return;
+	plugin_overlay_element.onupdate();
 }
-function log_current_video_data() {
-	if(!ytd_player) return
-	if(!ytd_player.player_) {
-		wait_for_yt_player().then(log_current_video_data)
-		return
-	}
-	const video_data=ytd_player.player_.getVideoData()
-	update_plugin_overlay()
-	if(video_data.video_id===undefined) return
-	if(video_data.eventId===void 0) return
-	const {video_id,title,author}=video_data
-	const playlist_log_str=`[${author},${video_id}] ${title}`
-	if(playlist_log_str===playlist_arr.at(-1)) return
-	playlist_arr.push(playlist_log_str)
-	console.log(playlist_log_str)
-	if(!overlay_content_div) return
-	overlay_content_div.innerText=`[${video_id}] ${title}`
-}
-/**
- * @param {{ detail?: { pageType: string; }; }} event
- */
-function log_yt_finish_navigation(event) {
-	log_page_type_change(event)
-	log_current_video_data()
-}
+
 function title_display_toggle() {
 	title_on=!title_on
 	title_display_update()
 	localStorage.title_save_data=JSON.stringify({value: title_on})
 }
-let ui_plugin_css_enabled=false
-function ui_css_toggle_click_handler() {
-	if(ui_plugin_css_enabled) {
-		if(ytd_app&&ytd_app.ui_plugin_style_element) {
-			ytd_app.ui_plugin_style_element.remove()
-		}
-		ui_plugin_css_enabled=false
-	} else {
-		if(ytd_app&&ytd_app.ui_plugin_style_element) {
-			document.head.append(ytd_app.ui_plugin_style_element)
-		}
-		ui_plugin_css_enabled=true
-	}
+function update_ui_plugin() {
+	if(debug) console.log('update_ui_plugin');
+	setTimeout(update_plugin_overlay);
 }
 function yt_watch_page_loaded_handler() {
-	if(!ytd_app) {
-		console.log("no ytd-app")
-		return
-	}
-	if(!yt_playlist_manager) {
-		console.log("no yt-playlist-manager")
-		return
-	}
-	if(!ytd_page_manager) {
+	if(!has_ytd_page_mgr()) {
 		console.log("no ytd-page-manager")
 		return
 	}
@@ -1823,79 +2061,28 @@ function yt_watch_page_loaded_handler() {
 		let overlay_element=PluginOverlayElement.cast(document.createElement("div"))
 		g_api.plugin_overlay_element=overlay_element
 		overlay_element.id="mz_overlay"
-		plugin_overlay_element=overlay_element
-		let custom_style_element=document.createElement("style")
-		ytd_app.ui_plugin_style_element=custom_style_element
-		ytd_watch_flexy.addEventListener("yt-navigate",function(event) {
-			for(let handler of on_yt_navigate) {
-				handler(event)
-			}
-		})
-		ytd_app.addEventListener("yt-navigate-finish",function(event) {
-			for(let handler of on_yt_navigate_finish) {
-				handler(event)
-			}
-		})
+		plugin_overlay_element=overlay_element;
 	}
 	for(let i;i=plugin_overlay_element.childNodes[0];) i.remove()
-	overlay_content_div.style.userSelect="all"
-	overlay_content_div.style.width='max-content'
-	plugin_overlay_element.append(overlay_content_div)
-	input_modify_css_style.style.float="left"
-	overlay_hide_ui_input.style.float="left"
-	overlay_hide_ui_input.style.clear="left"
-	overlay_hide_ui_input.innerHTML="H"
-	overlay_hide_ui_input.onclick=title_display_toggle
-	title_text_overlay_update()
-	plugin_overlay_element.append(input_modify_css_style)
-	plugin_overlay_element.append(overlay_hide_ui_input)
-	title_display_update()
-	var css_str=`ytd-watch-next-secondary-results-renderer{overflow-x:scroll;height:80vh;}\n/*# sourceURL=yt_css_user */`
-	if(ytd_app.ui_plugin_style_element) ytd_app.ui_plugin_style_element.innerHTML=css_str
-	if(!ytd_player) return
-	ytd_player.active_nav=false
-	plugin_overlay_element.onupdate=fix_offset
-	on_yt_navigate_finish.push(log_yt_finish_navigation)
-	init_ui_plugin()
-	ytd_player.init_nav=true
-	input_modify_css_style.innerHTML="C"
-	input_modify_css_style.onclick=ui_css_toggle_click_handler
-	let current_page_element=ytd_page_manager.getCurrentPage()
-	function update_ui_plugin() {
-		if(debug) console.log('update_ui_plugin')
-		setTimeout(update_plugin_overlay)
-	}
-	current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin)
-	// visibilitychange handler (resume video when page is visible again)
-	let vis_imm=false
-	ytd_app.app_is_visible=1
-	function fire_on_visibility_change_restart_video_playback() {
-		if(!is_watch_page_active()) return
-		if(!ytd_player||!ytd_player.player_) return
-		if(ytd_player.player_.getPlayerState()!=2) return
-		ytd_player.pause()
-		ytd_player.play()
-	}
-	document.addEventListener("visibilitychange",function() {
-		if(!is_watch_page_active()) return
-		if(document.visibilityState==='visible') {
-			ytd_app.app_is_visible=1
-			if(vis_imm) {
-				fire_on_visibility_change_restart_video_playback()
-				vis_imm=false
-			}
-		} else {
-			ytd_app.app_is_visible=0
-		}
-	})
-	// spell:ignore cint
-	ytd_app.ytp_click_cint=setInterval(() => {
-		if(!is_watch_page_active()||!ytd_app) return
-		if(!ytd_app.app_is_visible) {
-			vis_imm=true
-			return
-		}
-	},15*60*1000)
+	overlay_content_div.style.userSelect="all";
+	overlay_content_div.style.width='max-content';
+	plugin_overlay_element.append(overlay_content_div);
+	input_modify_css_style.style.float="left";
+	overlay_hide_ui_input.style.float="left";
+	overlay_hide_ui_input.style.clear="left";
+	overlay_hide_ui_input.innerHTML="H";
+	overlay_hide_ui_input.onclick=title_display_toggle;
+	title_text_overlay_update();
+	plugin_overlay_element.append(input_modify_css_style);
+	plugin_overlay_element.append(overlay_hide_ui_input);
+	title_display_update();
+	if(!ytd_player) return;
+	ytd_player.active_nav=false;
+	plugin_overlay_element.onupdate=fix_offset;
+	init_ui_plugin();
+	ytd_player.init_nav=true;
+	input_modify_css_style.innerHTML="C";
+	input_modify_css_style.onclick=ui_css_toggle_click_handler;
 }
 g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
 class PluginOverlayElement extends HTMLDivElement {
@@ -1905,33 +2092,24 @@ class PluginOverlayElement extends HTMLDivElement {
 	}
 	onupdate() {}
 }
-/**@type {PluginOverlayElement | null} */
-let plugin_overlay_element=null
-function page_changed_next_frame() {
-	if(!plugin_overlay_element) return
-	if(!ytd_page_manager) return
-	plugin_overlay_element.onupdate()
-	ytd_page_manager.getCurrentPage().append(plugin_overlay_element)
-}
 window.addEventListener("resize",function() {
 	plugin_overlay_element&&plugin_overlay_element.onupdate()
 })
 function activate_nav() {
 	if(debug) console.log('activate_nav:fire')
-	VolumeRangePlugin()
+	VolumeRange.create();
 	if(!ytd_player) return
-	if(!ytd_page_manager) return
+	if(!has_ytd_page_mgr()) return
 	if(ytd_player.active_nav) return
 	if(!plugin_overlay_element) return
 	ytd_player.active_nav=true
 	plugin_overlay_element.setAttribute("style",player_overlay_style_str)
 	plugin_overlay_element.onupdate()
-	ytd_page_manager.getCurrentPage().append(plugin_overlay_element)
-	log_current_video_data()
-	ytd_page_manager.addEventListener("yt-page-type-changed",function() {
-		if(!ytd_player) return
-		if(!ytd_page_manager) return
-		if(ytd_page_manager.getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
+	get_ytd_page_mgr().getCurrentPage().append(plugin_overlay_element)
+	log_current_video_data();
+	get_ytd_page_mgr().addEventListener("yt-page-type-changed",function() {
+		if(!ytd_player) return;
+		if(get_ytd_page_mgr().getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
 			ytd_player.is_watch_page_active=false
 			plugin_overlay_element&&plugin_overlay_element.remove()
 			return
@@ -1943,171 +2121,162 @@ function activate_nav() {
 }
 let volume_plugin_style_source=`
 	#rh_css {
-		--w:calc(100% - 16px - 185px - 728px - 225px);
-		--cv:calc(100% / 3.98);
-		--fo:0.6px;
-		width:calc(var(--w) / 2 - 25px);
-		margin-left:calc(var(--w) * -0.5 - 8px - 25px);
-		margin-right:calc(var(--w) / -2 + 50px);
-		z-index:1
+		--w: calc(100% - 16px - 264px - 728px - 225px);
+		--cv: calc(100% / 3.98);
+		--fo: 0.6px;
+		position: absolute;
+		left: 168px;
+		width: calc(var(--w) / 2);
+		z-index: 1;
 	}
-	@media screen and (max-width: calc(1250px + 10px)) {
+	@media screen and (max-width: 1260px) {
 		#rh_css {
-			display:none;
+			display: none;
 		}
 	}
 	#i_r_css {
 		outline: none;
 	}
+	@media screen and (prefers-color-scheme: light) {
+		#i_r_css {
+			--bg-range-color: #ff000040;
+			background: #fff;
+		}
+	}
+	@media screen and (prefers-color-scheme: dark) {
+		#i_r_css {
+			--bg-range-color: #ff000086;
+			background: transparent;
+		}
+	}
 	@supports selector(::-webkit-slider-thumb) {
-		#i_r_css::-webkit-slider-runnable-track{
-			padding:0;
-			margin:0;
+		#i_r_css::-webkit-slider-runnable-track {
+			padding: 0;
+			margin: 0;
+			background: repeating-linear-gradient(90deg, transparent, #ff000014 var(--fo), var(--bg-range-color) var(--cv));
 		}
-		@media screen and (prefers-color-scheme: light){
-			#i_r_css::-webkit-slider-runnable-track,#i_r_css::-moz-range-track{
-				background:repeating-linear-gradient(90deg,transparent,transparent var(--fo),#ff000040 var(--cv));
-			}
-			#i_r_css{
-				background:#fff;
-			}
+		#i_r_css {
+			border-style: solid;
+			border-width: 0 2.5px;
+			border-right-color: #f00;
+			border-left-color: #f00;
+			appearance: none;
+			padding: 0;
+			display: block;
+			z-index: 1;
 		}
-		@media screen and (prefers-color-scheme: dark){
-			#i_r_css::-webkit-slider-runnable-track{
-				background:repeating-linear-gradient(90deg,transparent,#ff000014 var(--fo),#ff000086 var(--cv));
-			}
-			#i_r_css{
-				background:transparent;
-			}
-		}
-		#i_r_css{
-			border-style:solid;
-			border-width:0 2.5px;
-			border-right-color:#f00;
-			border-left-color:#f00;
-			appearance:none;
-			padding:0;
-			display:block;
-			z-index:1;
-		}
-		#i_r_css::-webkit-slider-thumb{
-			appearance:none;
-			width:4px;
-			height:8px;
-			color:#000;
-			background:#000;
-			border:0;
+		#i_r_css::-webkit-slider-thumb {
+			appearance: none;
+			width: 4px;
+			height: 8px;
+			color: #000;
+			background: #000;
+			border: 0;
 		}
 	}
 	@supports selector(::-moz-range-thumb) {
 		#i_r_css::-moz-range-track {
-			padding:0;
-			margin:0;
-			height:8px;
-		}
-		@media screen and (prefers-color-scheme: light) {
-			#i_r_css::-moz-range-track {
-				background:repeating-linear-gradient(90deg, transparent, transparent var(--fo), #ff000040 var(--cv));
-			}
-			#i_r_css{
-				background:#fff;
-			}
-		}
-		@media screen and (prefers-color-scheme: dark) {
-			#i_r_css::-moz-range-track {
-				background:repeating-linear-gradient(90deg, transparent, #ff000014 var(--fo), #ff000086 var(--cv));
-			}
-			#i_r_css {
-				background:transparent;
-			}
+			padding: 0;
+			margin: 0;
+			height: 8px;
+			background: repeating-linear-gradient(90deg, transparent, #ff000014 var(--fo), var(--bg-range-color) var(--cv));
 		}
 		#i_r_css {
 			height: 8px;
-			border-style:solid;
-			border-width:0 2.5px;
-			border-color:#f00;
-			border-right-color:#f00;
-			appearance:none;
-			padding:0;
-			display:block;
+			border-style: solid;
+			border-width: 0 2.5px;
+			border-color: #f00;
+			border-right-color: #f00;
+			appearance: none;
+			padding: 0;
+			display: block;
 		}
 		#i_r_css::-moz-range-thumb {
-			appearance:none;
-			width:4px;
-			height:8px;
-			color:#000;
-			background:#000;
-			border:0;
+			appearance: none;
+			width: 4px;
+			height: 8px;
+			color: #000;
+			background: #000;
+			border: 0;
 		}
 	}
 	/\*# sourceURL=youtube_volume_plugin_style_source*\/
-	`
+`;
 class HTMLMediaElementGainController {
 	/**@type {Event|undefined}*/
-	last_event=undefined
+	last_event;
 	/**@type {(HTMLVideoElement | HTMLAudioElement)[]} */
-	attached_element_list=[]
-	audioCtx=new AudioContext()
-	style=document.createElement("style")
+	attached_element_list=[];
+	audioCtx=new AudioContext();
+	style=document.createElement("style");
 	/**@type {DynamicsCompressorNode} */
-	dynamics_compressor
+	dynamics_compressor;
+	/**
+	 * @type {MediaElementAudioSourceNode[]}
+	 */
+	media_element_source_list=[];
 	constructor() {
-		this.gain_node=this.audioCtx.createGain()
-		this.gain=this.gain_node.gain
-		this.gain_node.connect(this.audioCtx.destination)
-		let dynamics_compressor=this.audioCtx.createDynamicsCompressor()
-		dynamics_compressor.connect(this.gain_node)
-		this.dynamics_compressor=dynamics_compressor
+		this.gain_node=this.audioCtx.createGain();
+		this.gain=this.gain_node.gain;
+		this.gain_node.connect(this.audioCtx.destination);
+		let dynamics_compressor=this.audioCtx.createDynamicsCompressor();
+		dynamics_compressor.connect(this.gain_node);
+		this.dynamics_compressor=dynamics_compressor;
 		/**@arg {DynamicsCompressorNode} dynamics_compressor */
 		function init_dynamics_compressor(dynamics_compressor) {
-			let {knee,attack,release,ratio,threshold}=dynamics_compressor
-			knee.value=27
-			attack.value=1
-			release.value=1
-			ratio.value=4
-			threshold.value=-24
+			let {knee,attack,release,ratio,threshold}=dynamics_compressor;
+			knee.value=27;
+			attack.value=1;
+			release.value=1;
+			ratio.value=4;
+			threshold.value=-24;
 		}
-		init_dynamics_compressor(dynamics_compressor)
-		this.style.innerHTML=volume_plugin_style_source
-		document.head.append(this.style)
+		init_dynamics_compressor(dynamics_compressor);
+		this.style.innerHTML=volume_plugin_style_source;
+		document.head.append(this.style);
 	}
 	/**
 	 * @param {number} gain
 	 */
 	setGain(gain) {
-		this.gain.value=gain
+		this.gain.value=gain;
 	}
-	/**
-	 * @type {MediaElementAudioSourceNode[]}
-	 */
-	media_element_source_list=[];
 	/**
 	 * @param {NodeListOf<HTMLMediaElement>} media_node_list
 	 */
 	attach_element_list(media_node_list) {
 		for(let i=0;i<media_node_list.length;i++) {
-			let video_element=media_node_list[i]
-			if(this.attached_element_list.includes(video_element)) continue
-			let media_element_source=this.audioCtx.createMediaElementSource(video_element)
-			media_element_source.connect(this.dynamics_compressor)
-			this.attached_element_list.push(video_element)
-			this.media_element_source_list.push(media_element_source)
+			let video_element=media_node_list[i];
+			if(this.attached_element_list.includes(video_element)) continue;
+			let media_element_source=this.audioCtx.createMediaElementSource(video_element);
+			media_element_source.connect(this.dynamics_compressor);
+			this.attached_element_list.push(video_element);
+			this.media_element_source_list.push(media_element_source);
 		}
 	}
 }
 /**@type {HTMLMediaElementGainController | null} */
 let gain_controller=null
-/**@arg {()=>HTMLMediaElementGainController} create_gain_controller @returns {HTMLMediaElementGainController} */
-function on_gain_controller(create_gain_controller) {
+/**@returns {HTMLMediaElementGainController} */
+function on_gain_controller() {
 	/**@type {HTMLMediaElementGainController} */
 	let controller=g_api.gain_controller
 	if(!controller) {
-		controller=create_gain_controller()
-		g_api.gain_controller=controller
+		controller=new HTMLMediaElementGainController;
+		g_api.gain_controller=controller;
 	}
 	return controller
 }
 class VolumeRange {
+	static enabled = true
+	static create() {
+		if(!this.enabled) return
+		if(debug) console.log('create VolumeRange')
+		if(!gain_controller) gain_controller=on_gain_controller()
+		if(!gain_controller) return
+		gain_controller.attach_element_list(document.querySelectorAll("video"))
+		attach_volume_range_to_page();
+	}
 	/**
 	 * @param {number} min
 	 * @param {number} max
@@ -2220,7 +2389,6 @@ class VolumeRange {
 				range_style.marginLeft="0"
 				range_style.marginRight="0"
 			}
-			this.range_element
 			this.range_element.oninput=() => {
 				if(!this.range_element) return
 				let range_value=Number.parseInt(this.range_element.value,10)
@@ -2235,24 +2403,6 @@ class VolumeRange {
 			this.view_div.append(this.range_element)
 		}
 		view_parent.insertAdjacentElement("beforebegin",this.view_div)
-	}
-}
-function createGainController() {
-	return new HTMLMediaElementGainController
-}
-function VolumeRangePlugin() {
-	if(debug) console.log('VolumeRangePlugin')
-	if(!gain_controller) gain_controller=on_gain_controller(createGainController)
-	if(!gain_controller) return
-	gain_controller.attach_element_list(document.querySelectorAll("video"))
-	if(!ytd_app) return
-	if(!ytd_app.__shady_children.masthead.$) return
-	if(!ytd_app.volume_range) {
-		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,gain_controller)
-		let container_dom_parent=ytd_app.__shady_children.masthead.$.container.children.center
-		let use_container=true
-		if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent)
-		else ytd_app.volume_range.attach_to_element(ytd_app)
 	}
 }
 if(top===window) dispatch_observer_event()
