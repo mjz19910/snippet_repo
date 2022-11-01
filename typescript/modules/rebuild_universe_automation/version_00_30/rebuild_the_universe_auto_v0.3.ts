@@ -44,6 +44,7 @@ import {DomInstructionType} from "../../../vm/dom_instruction/DomInstructionType
 import {DomExecDescription,DomInstructionStack} from "./typedef.js";
 import {NodeBox} from "../../../box/NodeBox.js";
 import {StackTraceType} from "./StackTraceType.js";
+import {AsyncFunctionBox} from "typescript/box/AsyncFunctionBox.js";
 
 // ==UserScript==
 // @name			rebuild the universe auto
@@ -2137,15 +2138,15 @@ function int_parser(value: string): number {
 }
 class DataLoader {
 	store: Storage;
-	constructor(storage: Storage) {this.store=storage;}
-	/** @arg {string} key @arg {string[]} def_value */
+	constructor(storage: Storage) {
+		this.store=storage;
+	}
 	load_str_arr(key: string,def_value: string[]) {
 		let data=this.store.getItem(key);
 		if(data===null)
 			return def_value;
 		return data.split(",");
 	}
-	/** @arg {string} key @arg {any} def_value */
 	load_int_arr(key: string,def_value: any,storage_data=this.store.getItem(key)) {
 		if(storage_data===null)
 			return def_value;
@@ -2270,7 +2271,6 @@ class AsyncAutoBuy {
 		this.parent.do_fast_unit_change();
 		await this.next_timeout_async(this.parent.timeout_ms,'$');
 	}
-	/** @arg {number | undefined} timeout @arg {string} char */
 	async next_timeout_async(timeout: number|undefined,char: string,silent=false) {
 		let node=new AsyncTimeoutNode(timeout);
 		this.parent.root_node.append_child(node);
@@ -2292,35 +2292,36 @@ class DocumentBoxImpl {
 		this.value=value;
 	}
 }
-/** @implements {AsyncFunctionBox} */
-class AsyncFunctionBoxImpl {
-	/** @type {'function_box'} */
+class AsyncFunctionBoxImpl implements AsyncFunctionBox {
 	type: 'function_box'="function_box";
-	/** @type {"promise_box"} */
 	return_type: "promise_box"='promise_box';
-	/** @type {"Box"} */
 	await_type: "Box"='Box';
 	value: (...a: Box[]) => Promise<Box>;
-	/** @returns {Box} */
+	m_verify_name: "AsyncFunctionBox";
+	verify_name(name: "AsyncFunctionBox"): boolean {
+		return this.m_verify_name==='AsyncFunctionBox'&&name==='AsyncFunctionBox';
+	}
 	wrap_call(): Box {
 		throw 1;
 	}
-	as_type(input_typeof: string): [true,this]|[false,null] {
-		return typeof this.value===input_typeof? [true,this]:[false,null];
+	as_type(input_typeof: string): this|null {
+		return typeof this.value===input_typeof? this:null;
 	}
-	/** @arg {(...a: Box[])=>Promise<Box>} value */
 	constructor(value: (...a: Box[]) => Promise<Box>) {
+		this.m_verify_name='AsyncFunctionBox';
 		this.value=value;
 	}
 }
 class VoidBoxImpl implements VoidBox {
-	/** @type {"void"} */
-	type: "void"="void";
-	extension=null;
+	type: "void";
+	extension:null;
 	m_verify_name: "VoidBox";
-	value=void 0;
+	value:undefined;
 	constructor() {
+		this.type='void';
+		this.extension=null;
 		this.m_verify_name='VoidBox';
+		this.value=void 0;
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
