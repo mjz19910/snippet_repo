@@ -1,8 +1,8 @@
 import {can_be_object} from "./can_be_object";
 
-/**@type {<T>(v:T)=>({} & T)|null} */
-export function as_object_or_null(v) {
-	if(can_be_object(v)) {
+/**@type {<T,U extends {}>(v:T|U,x:T)=>T|null} */
+export function as_object_or_null(v, x) {
+	if(can_be_object(v,x)) {
 		return v;
 	}
 	return null;
