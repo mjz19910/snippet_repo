@@ -1,3 +1,3 @@
-import {ReturnOpcode} from "../opcodes/ReturnOpcode.ts"
+import {ReturnOpcode} from "../opcodes/ReturnOpcode.js"
 
 export type Return = [ReturnOpcode]
