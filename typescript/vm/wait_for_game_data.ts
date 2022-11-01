@@ -1,4 +1,4 @@
-import {cint_arr} from "typescript/main.js"
+import {cint_arr} from "typescript/src/rebuild_auto_main.js";
 import {on_game_data_set} from "./on_game_data_set.js"
 import {remove_cint_item} from "./remove_cint_item.js"
 

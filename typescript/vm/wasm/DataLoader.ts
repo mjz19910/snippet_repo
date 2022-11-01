@@ -1,5 +1,4 @@
 export class DataLoader {
-	static int_parser=new WebAssembly.Function({parameters: ['externref'],results: ['f64']},parseInt)
 	store: Storage
 	null_sym: symbol
 	constructor(storage: Storage) {
@@ -18,12 +17,11 @@ export class DataLoader {
 			return this.create_default(def_value)
 		return this.parse_int_arr(storage_data)
 	}
-	parse_int=DataLoader.int_parser
 	default_split(string: string) {
 		return string.split(",")
 	}
 	parse_int_arr(data: any) {
-		return this.default_split(data).map(DataLoader.int_parser)
+		return this.default_split(data).map(parseInt)
 	}
 	create_default(value_or_factory: () => any) {
 		let value=this.null_sym
