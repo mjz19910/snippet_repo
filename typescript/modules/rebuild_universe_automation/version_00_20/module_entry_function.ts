@@ -39,9 +39,6 @@ export function module_entry_function() {
 	real_si=setInterval;
 	window.setTimeout=nop_timeout as unknown as typeof setTimeout;
 	window.setInterval=nop_timeout as unknown as typeof setInterval;
-	/**
-	 * @param {any[]} v
-	 */
 	function no_aev(...v: any[]) {
 		console.log('aev',v);
 	}

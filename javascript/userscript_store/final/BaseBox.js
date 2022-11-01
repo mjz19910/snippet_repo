@@ -1,13 +1,13 @@
 export class BaseBox {
 	/**@type {'object_box'} */
-	type = "object_box";
+	type="object_box";
 	/**@type {'BaseBox'} */
-	from = "BaseBox";
+	from="BaseBox";
 	/**@type {BoxInner} */
 	value;
 	/**@arg {string} v */
 	as_type(v) {
-		if(typeof this.value === v) {
+		if(typeof this.value===v) {
 			return this;
 		}
 		return null;
@@ -19,17 +19,17 @@ export class BaseBox {
 			case 'bigint':
 			case 'number':
 			case 'boolean':
-			case 'symbol':this.value = value;break;
-			case 'object': this.value = value; break;
-			case 'function':this.value = value;break;
-			default: this.value = value; break;
-			case 'undefined':throw new Error("Never happens");
+			case 'symbol': this.value=value; break;
+			case 'object': this.value=value; break;
+			case 'function': this.value=value; break;
+			default: this.value=value; break;
+			case 'undefined': throw new Error("Never happens");
 		}
-		this.value = value;
+		this.value=value;
 	}
 	/**@arg {'object'|'function'} to_match */
 	as_box(to_match) {
-		if(typeof this.value === to_match)
+		if(typeof this.value===to_match)
 			return this;
 		return null;
 	}

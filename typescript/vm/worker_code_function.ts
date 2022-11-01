@@ -56,12 +56,12 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		type: TimerTag;
 		local_id: ReturnType<typeof setTimeout>=-1;
 		active=true;
-		constructor(type:TimerTag) {
+		constructor(type: TimerTag) {
 			this.type=type;
 		}
 	}
 	class RemoteTimer {
-		m_remote_id_to_state_map: Map<number, RemoteTimerItem>;
+		m_remote_id_to_state_map: Map<number,RemoteTimerItem>;
 		m_api_info: NL<TimerApi>;
 		base_id;
 		constructor(api_info: NL<TimerApi>) {

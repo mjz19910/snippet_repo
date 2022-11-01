@@ -1,9 +1,10 @@
-# Group format 
+# Group format
+
 Described in `api/group_format.py`
 
 # cSpell comments
-```js
 
+```js
 // cspell:disable-next-line
 // cspell:disable
 // cspell:enable
@@ -18,10 +19,11 @@ Described in `api/group_format.py`
 
 # Commit format
 
-G{group number as int}: {description}
-{%(commit prefix)s joined with %(+)t}: {description}
+G{group number as int}: {description} {%(commit prefix)s joined with %(+)t}:
+{description}
 
 %(commit prefix) can be any of
+
 - G{int}
 - README
 - JSSnippet
@@ -32,7 +34,9 @@ G{group number as int}: {description}
 - SnippetREADME
 
 # CommitDSL
+
 - the DSL for my commit format
+
 ```
 syntax -u1 (...(1))
 	...(1) is -u1 ((...) as -ty (inner token tree))

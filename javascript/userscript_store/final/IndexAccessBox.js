@@ -1,8 +1,8 @@
 export class IndexAccessBox {
 	/**@type {"object_index"} */
-	type = "object_index";
+	type="object_index";
 	/**@type {"Box"} */
-	index_type = "Box";
+	index_type="Box";
 	/**@type {import("../../../typescript/vm/IndexAccess.js").IndexAccess<Box>} */
 	value;
 	/**@arg {'function'} _to_match */
@@ -11,6 +11,6 @@ export class IndexAccessBox {
 	}
 	/**@arg {import("../../../typescript/vm/IndexAccess.js").IndexAccess<Box>} value */
 	constructor(value) {
-		this.value = value;
+		this.value=value;
 	}
 }
