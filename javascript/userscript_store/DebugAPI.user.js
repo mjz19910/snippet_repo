@@ -32,7 +32,7 @@ class Repeat {
 		let tm_map=this.map.get(value);
 		if(!tm_map) throw new Error("no-reach");
 		if(tm_map.has(times)) {
-			let rep =tm_map.get(times);
+			let rep=tm_map.get(times);
 			if(!rep) throw new Error("no-reach");
 			return rep;
 		} else {
@@ -228,8 +228,8 @@ class HexRandomDataGenerator {
 		this.used_bits=0;
 		/**@type {{value:number,bit_count:number}|null} */
 		this.cur_part={
-			value:0,
-			bit_count:0,
+			value: 0,
+			bit_count: 0,
 		};
 	}
 	reset() {
@@ -605,11 +605,11 @@ class RustTokenTreeParser {
 }
 g_api.RustSimpleParser=RustTokenTreeParser;
 class WeakValueRef {
-    id = -1;
+	id=-1;
 	/**@arg {number} id */
-    constructor(id) {
-        this.id = id;
-    }
+	constructor(id) {
+		this.id=id;
+	}
 }
 g_api.WeakValueRef=WeakValueRef;
 class CSSCascade {
@@ -760,8 +760,8 @@ class TransportMessageObj {
 			console.log('lost connection in clear');
 			return;
 		}
-		if(this.elevation_id === null)throw new Error();
-		if(this.elevation_id === void 0)throw new Error();
+		if(this.elevation_id===null) throw new Error();
+		if(this.elevation_id===void 0) throw new Error();
 		this.w_connection.deref()?.clear_elevation_by_id(this.elevation_id);
 	}
 }
@@ -896,7 +896,7 @@ class APIProxyManager {
 	}
 	start_postMessage_proxy() {
 		/**@type {any} */
-		let win_post_message = window.postMessage;
+		let win_post_message=window.postMessage;
 		window.postMessage=this.create_proxy_for_function('postMessage_sent',win_post_message);
 	}
 }
@@ -984,7 +984,7 @@ class DebugAPI {
 				throw 1;
 			}
 		}]);
-		return this.debuggerGetVar_a(func,activate,name, []);
+		return this.debuggerGetVar_a(func,activate,name,[]);
 	}
 	/**
 	 * @param {any} debug
@@ -1019,7 +1019,7 @@ class DebugAPI {
 		return Reflect.apply(function_value,target_obj,arg_vec);
 	}
 	debuggerBreakpointCode() {
-		the_debug_api().getData("__k").get=(/** @type {string} */ __v) => {
+		if(window.DebugAPI) window.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -1038,10 +1038,8 @@ class DebugAPI {
 				};
 			}
 		};
-		{
-			if(!the_debug_api().clearCurrentBreakpoint()) {
-				console.log("failed to clear breakpoint");
-			}
+		if(window.DebugAPI && !window.DebugAPI.the().clearCurrentBreakpoint()) {
+			console.log("failed to clear breakpoint");
 		}
 		0;
 	}
@@ -1074,7 +1072,7 @@ class DebugAPI {
 	 * @param {any[]} target_activate_args
 	 */
 	debuggerGetVarArray_a(function_value,activate,var_match,target_obj,target_activate_args) {
-		let activate_vec = [target_obj, target_activate_args]
+		let activate_vec=[target_obj,target_activate_args];
 		if(!this.hasData("d")||!this.getData("u")) {
 			return {
 				type: 'invalid-state-error',
@@ -1170,7 +1168,7 @@ class DebugAPI {
 	 */
 	debuggerGetVarArray_c(class_value,target_arg_vec,var_match) {
 		if(target_arg_vec instanceof Array) {
-			return this.debuggerGetVarArray_a(class_value,this.activateClass,var_match,target_arg_vec[0], target_arg_vec.slice(1));
+			return this.debuggerGetVarArray_a(class_value,this.activateClass,var_match,target_arg_vec[0],target_arg_vec.slice(1));
 		}
 		return {
 			type: 'argument-error',
@@ -1239,7 +1237,7 @@ class DebugAPI {
 			valid=false;
 			/**@arg {string} __v @returns {{type: 'hidden-var',var: string}|{type: 'var',data: [string,any]}|{type: 'no-var', data: null}|null} */
 			get(__v) {
-				return null
+				return null;
 			}
 		}
 		let tmp_value=new DebugInfoValue;
@@ -1334,15 +1332,5 @@ class DebugAPI {
 		};
 	}
 }
-/**@type {<T,U extends {the(): DebugAPI}>(v:T|U)=>v is U} */
-function is_debug_api(_v) {
-	return true;
-}
-function the_debug_api() {
-	if(is_debug_api(window.DebugAPI)) {
-		return window.DebugAPI.the();
-	}
-	throw new Error("No debug api");
-}
 window.DebugAPI??=DebugAPI;
-const debug_api=DebugAPI.the();
+const debug_api=window.DebugAPI.the();

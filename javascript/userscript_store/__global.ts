@@ -12,7 +12,7 @@ declare global {
 		ytd_app?: HTMLElement|null
 		yt_playlist_manager?: HTMLElement|null
 		ytd_player?: HTMLElement|null
-		DebugAPI: {};
+		DebugAPI?: typeof DebugAPI;
 		page_type_changes?: string[],
 	}
 	interface WeakRef<T extends object> {
