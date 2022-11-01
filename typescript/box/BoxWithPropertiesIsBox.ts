@@ -1,6 +1,6 @@
 import {BoxTemplate} from "./template/BoxTemplate.js"
 import {BoxVerify} from "./BoxVerify.js"
-import {BoxWithPropertiesObjType} from "./BoxWithPropertiesObjType"
+import {BoxWithPropertiesObjType} from "./BoxWithPropertiesObjType.js"
 
 export class BoxWithPropertiesIsBox
 	extends BoxTemplate<'with_properties',{}>

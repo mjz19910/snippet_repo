@@ -1,4 +1,4 @@
-import {NewableInstancePack} from "./NewableInstancePack"
+import {NewableInstancePack} from "./NewableInstancePack.js"
 import {Box} from "./Box.js"
 import {BoxTemplate} from "./template/BoxTemplate.js"
 import {BoxVerify} from "./BoxVerify.js"

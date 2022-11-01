@@ -1,6 +1,6 @@
 import {Box} from "./Box.js"
 import {BoxTemplate} from "./template/BoxTemplate.js"
-import {IndexAccess} from "./IndexAccess"
+import {IndexAccess} from "./IndexAccess.js"
 import {BoxVerify} from "./BoxVerify.js"
 
 export class IndexBox

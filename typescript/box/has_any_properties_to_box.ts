@@ -1,8 +1,8 @@
 import {Box} from "./Box.js"
-import {is_obj_index_to_box} from "./is_namespace/is_obj_index_to_box"
-import {box_value_property_cache} from "./const"
-import {ObjectIndexToBox} from "./helper/ObjectIndexToBox"
-import {convert_to_type} from "./helper/convert_to_type"
+import {is_obj_index_to_box} from "./is_namespace/is_obj_index_to_box.js"
+import {box_value_property_cache} from "./const.js"
+import {ObjectIndexToBox} from "./helper/ObjectIndexToBox.js"
+import {convert_to_type} from "./helper/convert_to_type.js"
 
 export function has_any_properties_to_box<
 	T extends string,

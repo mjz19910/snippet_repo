@@ -1,9 +1,9 @@
 import {Box} from "./Box.js"
 import {BoxTemplate} from "./template/BoxTemplate.js"
 import {BoxVerify} from "./BoxVerify.js"
-import {CSSStyleSheetBox} from "./CSSStyleSheetBox"
-import {CSSStyleSheetConstructorArgsTypeState1} from "./CSSStyleSheetConstructorArgsTypeState1"
-import {NoArgsType} from "./NoArgsType"
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js"
+import {CSSStyleSheetConstructorArgsTypeState1} from "./CSSStyleSheetConstructorArgsTypeState1.js"
+import {NoArgsType} from "./NoArgsType.js"
 
 export class CSSStyleSheetConstructorBox
 	extends BoxTemplate<"constructor_box",typeof CSSStyleSheet>
