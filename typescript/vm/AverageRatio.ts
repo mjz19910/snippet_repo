@@ -1,47 +1,47 @@
-import {calc_ratio} from "./calc_ratio.js"
+import {calc_ratio} from "./calc_ratio.js";
 
 export class AverageRatio {
-	arr
-	history: number[]
-	count
-	len
-	history_len
-	weight
-	human_duration
+	arr;
+	history: number[];
+	count;
+	len;
+	history_len;
+	weight;
+	human_duration;
 	// @AverageRatio
 	constructor(max_len: number,max_history_len: number,weight: number,human_duration: string,initial_arr: number[]=[]) {
-		this.arr=initial_arr
-		this.history=[]
-		this.count=0
-		this.len=max_len
-		this.history_len=max_history_len
-		this.weight=weight
-		this.human_duration=human_duration
+		this.arr=initial_arr;
+		this.history=[];
+		this.count=0;
+		this.len=max_len;
+		this.history_len=max_history_len;
+		this.weight=weight;
+		this.human_duration=human_duration;
 	}
 	add(value: number,from_prev: boolean,debug=false) {
 		if(from_prev) {
 			if(debug)
-				console.log("ratio add",this.human_duration,(value*100).toFixed(5))
-			this.arr.unshift(value)
-			this.history.unshift(value)
+				console.log("ratio add",this.human_duration,(value*100).toFixed(5));
+			this.arr.unshift(value);
+			this.history.unshift(value);
 			if(this.history.length>this.history_len)
-				this.history.pop()
+				this.history.pop();
 			if(this.arr.length>this.len)
-				this.arr.pop()
-			this.count++
+				this.arr.pop();
+			this.count++;
 			if(this.count>this.len) {
-				this.count=0
-				return true
+				this.count=0;
+				return true;
 			}
 		} else {
-			this.arr[0]=value
+			this.arr[0]=value;
 		}
-		return false
+		return false;
 	}
 	can_average() {
-		return this.arr.length>1
+		return this.arr.length>1;
 	}
 	get_average() {
-		return calc_ratio(this.arr)
+		return calc_ratio(this.arr);
 	}
 }
