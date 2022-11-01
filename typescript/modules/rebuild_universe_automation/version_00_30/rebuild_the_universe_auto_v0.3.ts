@@ -505,12 +505,6 @@ class InstructionCastImpl {
 	push_box(vm: StackVM,value: {[x: string]: Box}): void {
 		vm.stack.push(new temporary_box_object_index_to_box(value))
 	}
-	noisy_push_temporary_box(vm: StackVM,cast_source: 'object_index',obj: {value: never}) {
-		void vm
-		console.warn('noisy box',cast_source,obj)
-		console.log('inner',obj.value)
-		this.push_box(vm,obj.value)
-	}
 	push_temporary_box(vm: StackVM,obj: {value: {[x: string]: Box}}): void {
 		this.push_box(vm,obj.value)
 	}
