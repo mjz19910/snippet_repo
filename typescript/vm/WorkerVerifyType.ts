@@ -1,4 +1,4 @@
-import {TIMER_REPEATING,TIMER_SINGLE,TIMER_TAG_COUNT} from "typescript/src/constants.js"
+import {TIMER_REPEATING,TIMER_SINGLE,TIMER_TAG_COUNT} from "src/constants.js"
 
 export type WorkerVerifyType={
 	TIMER_SINGLE: typeof TIMER_SINGLE

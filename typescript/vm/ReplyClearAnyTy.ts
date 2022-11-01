@@ -1,3 +1,3 @@
-import {ReplyClearAny} from "typescript/src/constants.js"
+import {ReplyClearAny} from "src/constants.js"
 
 export type ReplyClearAnyTy=typeof ReplyClearAny

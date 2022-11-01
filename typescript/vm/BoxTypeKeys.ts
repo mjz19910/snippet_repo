@@ -1,4 +1,4 @@
-import {Box} from "typescript/box/Box.js"
-import {Primitives} from "typescript/box/helper/Primitives.js"
+import {Box} from "box/Box.js"
+import {Primitives} from "box/helper/Primitives.js"
 
 export type BoxTypeKeys=Exclude<Box,Primitives|null>['type']

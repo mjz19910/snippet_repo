@@ -1,3 +1,3 @@
-import {WorkerUpdateMessageHandlerReply} from "typescript/src/constants.js"
+import {WorkerUpdateMessageHandlerReply} from "src/constants.js"
 
 export type WorkerUpdateMessageHandlerReplyTy=typeof WorkerUpdateMessageHandlerReply

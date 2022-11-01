@@ -1,6 +1,6 @@
-import {Test} from "typescript/ecma_262/Test.js"
-import {CanRunTest} from "typescript/tests_mod/CanRunTest.js"
-import {TestLock} from "typescript/tests_mod/TestLock.js"
+import {Test} from "ecma_262/Test.js"
+import {CanRunTest} from "tests_mod/CanRunTest.js"
+import {TestLock} from "tests_mod/TestLock.js"
 import {Dispatcher} from "../Dispatcher.js"
 import {test_2_critical} from "./test_2_critical.js"
 export async function run_test_2(test_runner: CanRunTest,lock: TestLock,dispatcher: Dispatcher) {

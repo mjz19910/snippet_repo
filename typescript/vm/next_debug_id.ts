@@ -1,4 +1,4 @@
-import {debug_id_gen, debug_id_syms} from "typescript/src/mod.js";
+import {debug_id_gen, debug_id_syms} from "src/mod.js";
 
 export function next_debug_id() {
 	const id=debug_id_gen.next()

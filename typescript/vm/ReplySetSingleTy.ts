@@ -1,3 +1,3 @@
-import {ReplySetSingle} from "typescript/src/constants.js"
+import {ReplySetSingle} from "src/constants.js"
 
 export type ReplySetSingleTy=typeof ReplySetSingle

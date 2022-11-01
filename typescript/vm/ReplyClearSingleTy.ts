@@ -1,3 +1,3 @@
-import {ReplyClearSingle} from "typescript/src/constants.js"
+import {ReplyClearSingle} from "src/constants.js"
 
 export type ReplyClearSingleTy=typeof ReplyClearSingle

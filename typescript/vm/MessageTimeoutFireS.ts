@@ -1,4 +1,4 @@
-import {Box} from "typescript/box/Box.js"
+import {Box} from "box/Box.js"
 import {TimeoutFireSTy} from "./TimeoutFireSTy.js"
 
 export type MessageTimeoutFireS={

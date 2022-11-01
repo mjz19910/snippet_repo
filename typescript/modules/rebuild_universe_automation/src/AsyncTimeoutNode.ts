@@ -1,6 +1,6 @@
-import {LOG_LEVEL_INFO} from "typescript/src/constants.js";
-import {l_log_if} from "typescript/vm/l_log_if.js";
-import {TimeoutNode} from "typescript/vm/TimeoutNode.js";
+import {LOG_LEVEL_INFO} from "src/constants.js";
+import {l_log_if} from "vm/l_log_if.js";
+import {TimeoutNode} from "vm/TimeoutNode.js";
 import {TimeoutNodeTarget} from "./TimeoutNodeTarget.js"
 
 export class AsyncTimeoutNode extends TimeoutNode {

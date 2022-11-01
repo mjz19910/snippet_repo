@@ -1,3 +1,3 @@
-import {ReplySetRepeating} from "typescript/src/constants.js"
+import {ReplySetRepeating} from "src/constants.js"
 
 export type ReplySetRepeatingTy=typeof ReplySetRepeating

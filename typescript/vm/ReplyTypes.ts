@@ -7,7 +7,7 @@ import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy.js"
 import {ReplyToWorkerTy} from "./ReplyToWorkerTy.js"
 import {ReplySetMessages} from "./ReplySetMessages.js"
 import {ReplyClearMessages} from "./ReplyClearMessages.js"
-import {ReplyMessage1,ReplyMessage2,ReplyFromWorker,ReplyToWorker,WorkerDestroyMessage,WorkerUpdateMessageHandlerReply,WorkerReadyReply} from "typescript/src/constants.js"
+import {ReplyMessage1,ReplyMessage2,ReplyFromWorker,ReplyToWorker,WorkerDestroyMessage,WorkerUpdateMessageHandlerReply,WorkerReadyReply} from "src/constants.js"
 
 export class ReplyTypes {
 	msg1: ReplyMessage1Ty=ReplyMessage1

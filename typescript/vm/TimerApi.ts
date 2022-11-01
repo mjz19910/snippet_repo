@@ -1,4 +1,4 @@
-import {ReplyClearRepeating,ReplyClearSingle,ReplyFromWorker,ReplySetRepeating,ReplySetSingle,TimeoutClearS,TimeoutMessageReady,TimeoutSetR,TimeoutSetS,WorkerReadyReply} from "typescript/src/constants.js"
+import {ReplyClearRepeating,ReplyClearSingle,ReplyFromWorker,ReplySetRepeating,ReplySetSingle,TimeoutClearS,TimeoutMessageReady,TimeoutSetR,TimeoutSetS,WorkerReadyReply} from "src/constants.js"
 import {MakeReplyData} from "./MakeReplyData.js"
 import {NoDataMsg} from "./NoDataMsg.js"
 import {NumInfoMsg} from "./NumInfoMsg.js"

@@ -1,3 +1,3 @@
-import {TimeoutSingleReply} from "typescript/src/constants.js"
+import {TimeoutSingleReply} from "src/constants.js"
 
 export type TimeoutSingleReplyTy=typeof TimeoutSingleReply

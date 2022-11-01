@@ -1,3 +1,3 @@
-import {TimeoutSetTypes} from "typescript/src/constants.js"
+import {TimeoutSetTypes} from "src/constants.js"
 
 export type TimeoutSetTypesTy=typeof TimeoutSetTypes

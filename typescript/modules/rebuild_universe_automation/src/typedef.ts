@@ -1,4 +1,4 @@
-import {DomInstructionType} from "typescript/vm/dom_instruction/DomInstructionType.js";
+import {DomInstructionType} from "vm/dom_instruction/DomInstructionType.js";
 import {CreateDesc} from "./CreateDesc.js"
 import {NewDesc} from "./NewDesc.js"
 

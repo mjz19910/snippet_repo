@@ -1,3 +1,3 @@
-import {ReplyMessage2} from "typescript/src/constants.js"
+import {ReplyMessage2} from "src/constants.js"
 
 export type ReplyMessage2Ty=typeof ReplyMessage2

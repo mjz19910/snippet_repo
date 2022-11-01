@@ -4,7 +4,7 @@ import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy.js"
 import {WorkerReplyTypes} from "./WorkerReplyTypes.js"
 import {TimeoutSetInfo} from "./TimeoutSetInfo.js"
 import {TimeoutClearInfo} from "./TimeoutClearInfo.js"
-import {TimeoutMessageReady,TimeoutSetTypes,WorkerUpdateMessageHandler} from "typescript/src/constants.js"
+import {TimeoutMessageReady,TimeoutSetTypes,WorkerUpdateMessageHandler} from "src/constants.js"
 import {TimeoutMessageReplyTy} from "./TimeoutMessageReplyTy.js";
 
 export class TimeoutWorkerTypes implements TimeoutWorkerTypesTy {

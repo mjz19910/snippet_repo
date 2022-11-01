@@ -1,8 +1,8 @@
-import {Box} from "typescript/box/Box.js";
-import {CSSStyleSheetBox} from "typescript/box/CSSStyleSheetBox.js";
-import {CSSStyleSheetConstructorArgsTypeState1} from "typescript/box/CSSStyleSheetConstructorArgsTypeState1.js";
-import {CSSStyleSheetConstructorBox} from "typescript/box/CSSStyleSheetConstructorBox.js";
-import {NoArgsType} from "typescript/box/NoArgsType.js";
+import {Box} from "box/Box.js";
+import {CSSStyleSheetBox} from "box/CSSStyleSheetBox.js";
+import {CSSStyleSheetConstructorArgsTypeState1} from "box/CSSStyleSheetConstructorArgsTypeState1.js";
+import {CSSStyleSheetConstructorBox} from "box/CSSStyleSheetConstructorBox.js";
+import {NoArgsType} from "box/NoArgsType.js";
 
 export class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 	type: "constructor_box";
