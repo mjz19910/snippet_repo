@@ -1,11 +1,11 @@
-import {ReplyClearRepeating,ReplyClearSingle,ReplyFromWorker,ReplySetRepeating,ReplySetSingle,TimeoutClearS,TimeoutMessageR,TimeoutSetR,TimeoutSetS,WorkerReadyReply} from "typescript/constants"
-import {MakeReplyData} from "./MakeReplyData"
-import {NoDataMsg} from "./NoDataMsg"
-import {NumInfoMsg} from "./NumInfoMsg"
-import {RefVarMsg} from "./RefVarMsg"
-import {TimeoutClearStrings} from "./TimeoutClearStrings"
-import {TimeoutSetStrings} from "./TimeoutSetStrings"
-import {TimerMessageTypes} from "./TimerMessageTypes"
+import {ReplyClearRepeating,ReplyClearSingle,ReplyFromWorker,ReplySetRepeating,ReplySetSingle,TimeoutClearS,TimeoutMessageR,TimeoutSetR,TimeoutSetS,WorkerReadyReply} from "typescript/src/constants.js"
+import {MakeReplyData} from "./MakeReplyData.js"
+import {NoDataMsg} from "./NoDataMsg.js"
+import {NumInfoMsg} from "./NumInfoMsg.js"
+import {RefVarMsg} from "./RefVarMsg.js"
+import {TimeoutClearStrings} from "./TimeoutClearStrings.js"
+import {TimeoutSetStrings} from "./TimeoutSetStrings.js"
+import {TimerMessageTypes} from "./TimerMessageTypes.js"
 
 export class TimerApi {
 	msg_types: TimerMessageTypes=new TimerMessageTypes

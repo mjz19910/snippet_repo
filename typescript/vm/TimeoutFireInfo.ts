@@ -1,7 +1,7 @@
 import {TimeoutFireSTy} from "./TimeoutFireSTy"
 import {TimeoutFireRTy} from "./TimeoutFireRTy"
 import {TimeoutFireInfoTy} from "./TimeoutFireInfoTy"
-import {TimeoutFireS,TimeoutFireR} from "typescript/constants"
+import {TimeoutFireS,TimeoutFireR} from "typescript/src/constants.js"
 
 export class TimeoutFireInfo implements TimeoutFireInfoTy {
 	single: TimeoutFireSTy=TimeoutFireS

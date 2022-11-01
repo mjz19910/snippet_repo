@@ -1,13 +1,13 @@
-import {action_1} from "./action_1"
-import {DetachedMutationObserver} from "./DetachedMutationObserver"
-import {ProxyDocumentWriteList} from "./DocumentWriteList"
-import {do_dom_filter} from "./do_dom_filter"
-import {enable_jquery_proxy_if_needed} from "./enable_jquery_proxy_if_needed"
-import {insert_before_enabled} from "./insert_before_enabled"
-import {page_url_no_protocol} from "./page_url_no_protocol"
-import {reset_global_event_handlers} from "./reset_global_event_handlers"
-import {mut_observers} from "./rebuild_the_universe_auto_v0.2"
-import {do_fetch_load} from "./do_fetch_load"
+import {action_1} from "./action_1.js"
+import {DetachedMutationObserver} from "./DetachedMutationObserver.js"
+import {ProxyDocumentWriteList} from "./DocumentWriteList.js"
+import {do_dom_filter} from "./do_dom_filter.js"
+import {enable_jquery_proxy_if_needed} from "./enable_jquery_proxy_if_needed.js"
+import {insert_before_enabled} from "./insert_before_enabled.js"
+import {page_url_no_protocol} from "./page_url_no_protocol.js"
+import {reset_global_event_handlers} from "./reset_global_event_handlers.js"
+import {mut_observers} from "./rebuild_the_universe_auto_v0.2.js"
+import {do_fetch_load} from "./do_fetch_load.js"
 
 export let real_st: typeof setTimeout
 export let real_si: typeof setInterval

@@ -1,6 +1,6 @@
-import {DocumentWriteFnProxyHandler} from "./DocumentWriteFnProxyHandler"
-import {DocumentWriteFn} from "./DocumentWriteFn"
-import {Nullable2dArray} from "./Nullable2dArray"
+import {DocumentWriteFnProxyHandler} from "./DocumentWriteFnProxyHandler.js"
+import {DocumentWriteFn} from "./DocumentWriteFn.js"
+import {Nullable2dArray} from "./Nullable2dArray.js"
 
 export class DocumentWriteList {
 	list: Nullable2dArray<string>

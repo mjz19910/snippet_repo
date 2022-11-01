@@ -6,7 +6,7 @@ import {Timer} from "./Timer"
 import {do_worker_verify} from "./do_worker_verify"
 import {l_log_if} from "./l_log_if"
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle"
-import {LOG_LEVEL_WARN,TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyMessage} from "typescript/constants"
+import {LOG_LEVEL_WARN,TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyMessage} from "typescript/src/constants.js"
 
 export function move_timers_to_worker_promise_executor(
 	executor_accept: (arg0: WorkerState|null) => void,

@@ -1,23 +1,23 @@
-import {TimeoutSetTypes,TimeoutSetStringS,TimeoutSetStringR,TimeoutClearStringS,TimeoutClearStringR} from "typescript/constants"
-import {MessageTimeoutClearR} from "./MessageTimeoutClearR"
-import {MessageTimeoutClearS} from "./MessageTimeoutClearS"
-import {MessageTimeoutSetR} from "./MessageTimeoutSetR"
-import {MessageTimeoutSetS} from "./MessageTimeoutSetS"
-import {RecursivePartial} from "./RecursivePartial"
-import {ReplyToWorkerTy} from "./ReplyToWorkerTy"
-import {TimeoutClearRTy} from "./TimeoutClearRTy"
-import {TimeoutClearStringsTy} from "./TimeoutClearStringsTy"
-import {TimeoutClearSTy} from "./TimeoutClearSTy"
-import {TimeoutMessageRTy} from "./TimeoutMessageRTy"
-import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy"
-import {TimeoutSetStringsTy} from "./TimeoutSetStringsTy"
-import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy"
-import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy"
-import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes"
-import {TimerApi} from "./TimerApi"
-import {TimerTag} from "./TimerTag"
-import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy"
-import {WorkerVerifyCallback} from "./WorkerVerifyCallback"
+import {TimeoutClearStringR, TimeoutClearStringS, TimeoutSetStringR, TimeoutSetStringS, TimeoutSetTypes} from "typescript/src/constants.js"
+import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js"
+import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js"
+import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js"
+import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js"
+import {RecursivePartial} from "./RecursivePartial.js"
+import {ReplyToWorkerTy} from "./ReplyToWorkerTy.js"
+import {TimeoutClearRTy} from "./TimeoutClearRTy.js"
+import {TimeoutClearStringsTy} from "./TimeoutClearStringsTy.js"
+import {TimeoutClearSTy} from "./TimeoutClearSTy.js"
+import {TimeoutMessageRTy} from "./TimeoutMessageRTy.js"
+import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy.js"
+import {TimeoutSetStringsTy} from "./TimeoutSetStringsTy.js"
+import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy.js"
+import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy.js"
+import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js"
+import {TimerApi} from "./TimerApi.js"
+import {TimerTag} from "./TimerTag.js"
+import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy.js"
+import {WorkerVerifyCallback} from "./WorkerVerifyCallback.js"
 export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 	const TIMER_SINGLE=1
 	const TIMER_REPEATING=2
@@ -143,7 +143,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			this.verify_tag(tag)
 			let obj={
 				active: true,
-				local_id: -1,
+				local_id: -1 as unknown as ReturnType<typeof setTimeout>,
 				type: tag
 			}
 			this.m_remote_id_to_state_map.set(remote_id,obj)

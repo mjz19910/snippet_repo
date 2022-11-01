@@ -1,4 +1,4 @@
-import {BaseMutationObserver} from "./BaseMutationObserver"
+import {BaseMutationObserver} from "./BaseMutationObserver.js"
 
 export class LoadMutationObserver extends BaseMutationObserver {
 	m_callback: MutationCallback

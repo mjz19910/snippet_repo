@@ -6,7 +6,7 @@ import {ReplyTypes} from "./ReplyTypes"
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes"
 import {TimeoutFireInfo} from "./TimeoutFireInfo"
 import {ReplyTypesTy} from "./ReplyTypesTy"
-import {WorkerAsyncMessage} from "typescript/constants"
+import {WorkerAsyncMessage} from "typescript/src/constants.js"
 
 export class TimerMessageTypes implements TimerMessageTypesTy {
 	async: WorkerAsyncMessageTy=WorkerAsyncMessage

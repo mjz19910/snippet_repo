@@ -6,7 +6,7 @@ import {TimeoutSetStrings} from "./TimeoutSetStrings"
 import {TimerTag} from "./TimerTag"
 import {DispatchMessageType} from "./DispatchMessageType"
 import {TimeoutClearStrings} from "./TimeoutClearStrings"
-import {TIMER_SINGLE,TIMER_REPEATING,TIMER_TAG_COUNT,ReplySetSingle,ReplySetRepeating,ReplyClearSingle} from "typescript/constants"
+import {TIMER_SINGLE,TIMER_REPEATING,TIMER_TAG_COUNT,ReplySetSingle,ReplySetRepeating,ReplyClearSingle} from "typescript/src/constants.js"
 import {SetMessageData} from "./SetMessageData"
 import {is_in_ignored_from_src_fn,is_in_userscript} from "typescript/script_registry/mod"
 export class Timer {

@@ -1,6 +1,6 @@
-import {BaseNode2} from "./BaseNode2"
-import {IntervalTarget} from "./IntervalTarget"
-import {IntervalTargetFn} from "./IntervalTargetFn"
+import {BaseNode2} from "./BaseNode2.js"
+import {IntervalTarget} from "./IntervalTarget.js"
+import {IntervalTargetFn} from "./IntervalTargetFn.js"
 
 export class IntervalNode extends BaseNode2 {
 	m_target_fn: CallableFunction

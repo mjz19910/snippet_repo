@@ -1,8 +1,9 @@
-import {InstructionType} from "./instruction/InstructionType"
-import {Box} from "../box/Box"
-import {BaseStackVM} from "./BaseStackVM"
-import {l_log_if} from "./l_log_if"
-import {LOG_LEVEL_VERBOSE} from "../src/constants"
+import {InstructionType} from "./instruction/InstructionType.js"
+import {Box} from "../box/Box.js"
+import {BaseStackVM} from "./BaseStackVM.js"
+import {l_log_if} from "./l_log_if.js"
+import {LOG_LEVEL_VERBOSE} from "../src/constants.js"
+import {is_dom_peek} from "./is_dom_peek.js"
 
 export class DomBuilderVM extends BaseStackVM {
 	exec_stack: ([Box[],InstructionType[]])[]
@@ -61,6 +62,7 @@ export class DomBuilderVM extends BaseStackVM {
 				l_log_if(LOG_LEVEL_VERBOSE,'append to dom',[target,child_to_append])
 			} break
 			default /*Debug*/: {
+				if(is_dom_peek(instruction))throw new Error("Bad")
 				super.execute_instruction(instruction)
 			} break
 		}

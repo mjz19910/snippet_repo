@@ -1,5 +1,5 @@
-import {TimeoutSetStringR,TimeoutSetStringS} from "typescript/constants"
-import {TimeoutSetStringsTy} from "./TimeoutSetStringsTy"
+import {TimeoutSetStringR,TimeoutSetStringS} from "typescript/src/constants.js"
+import {TimeoutSetStringsTy} from "./TimeoutSetStringsTy.js"
 
 export class TimeoutSetStrings implements TimeoutSetStringsTy {
 	single: typeof TimeoutSetStringS=TimeoutSetStringS
