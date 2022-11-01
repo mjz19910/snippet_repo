@@ -453,32 +453,6 @@ function main() {
 						}
 					} while(true) return [js_out,js_in,js_tmp]
 				}
-				let js_parse_ident_dot=(js_in,js_tmp) => {
-					let js_out=[]
-					let wt=js_in.pop()
-					let m
-					if(m=wt.match(/^[a-zA-Z_$]/)) {
-						m=wt.match(/^[a-zA-z_$]([0-9a-zA-Z$_]+)?/)
-						js_out.push(m[0])
-						wt=wt.slice(m[0].length)
-					} else {
-						js_out.push(wt)
-						return [js_out,js_in,js_tmp]
-					}
-					if(wt[0]=='.') {
-						let dc=js_out.pop()+'.'
-						let ret=js_parse_ident([wt.slice(1)],[])
-						let js_out_tmp=ret[0]
-						js_out.push(dc+js_out_tmp[0],js_out_tmp[1])
-					}
-					return [js_out,js_in,js_tmp]
-
-				}
-				let is_constructor=false
-				function js_parse_eq(e) {
-					return e
-				}
-				let is_class_function=false
 				let js_parse_block_enter=e => {
 					if(e[0].match(/{/)) {
 						let js_class_methods=[]
@@ -737,7 +711,7 @@ function main() {
 						ss_sp=isp
 						if(ss_sp=='if') {
 							cs=stk.pop()
-							ss_sp='ifblk'
+							ss_sp='ifBlock'
 							return
 						}
 						if(ix2=='fn') {

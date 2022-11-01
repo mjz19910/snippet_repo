@@ -10,13 +10,13 @@
 // ==/UserScript==
 /* eslint-disable no-native-reassign,no-implicit-globals,no-undef,no-lone-blocks,no-sequences */
 
-console=window.console
+console=window.console;
 
-const debug=false
+const debug=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
-	void value,_constructor_type
-	return true
+	void value,_constructor_type;
+	return true;
 }
 /**
  * @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X}
@@ -24,14 +24,14 @@ function cast2_c(value,_constructor_type) {
  * */
 function any_c(value,_constructor_type) {
 	if(cast2_c(value,_constructor_type)) {
-		return value
+		return value;
 	}
-	throw new Error("Failed to cast")
+	throw new Error("Failed to cast");
 }
 /** @type {<T, U>(value: T|U, copy:U)=>value is U} */
 function cast2_o(value,copy) {
-	void value,copy
-	return true
+	void value,copy;
+	return true;
 }
 /**
  * @type {<T, U>(v:T|U, _copy:U)=>U}
@@ -39,26 +39,26 @@ function cast2_o(value,copy) {
 */
 function any_o(value,copy) {
 	if(cast2_o(value,copy)) {
-		return value
+		return value;
 	}
-	throw new Error("Failed to cast")
+	throw new Error("Failed to cast");
 }
 /**@type {typeof window.g_api} */
-let g_api={}
-window.g_api??=g_api
-g_api=window.g_api
+let g_api={};
+window.g_api??=g_api;
+g_api=window.g_api;
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
-	ui_plugin_style_element
+	ui_plugin_style_element;
 	/**@type {VolumeRange|undefined}*/
-	volume_range
+	volume_range;
 	/**@type {number|undefined} */
-	app_is_visible
+	app_is_visible;
 	/**@type {ReturnType<typeof setInterval>|undefined} */
-	ytp_click_cint
+	ytp_click_cint;
 	/**@arg {HTMLElement} element @return {YtdAppElement} */
 	static cast(element) {
-		return any_c(element,YtdAppElement)
+		return any_c(element,YtdAppElement);
 	}
 	__shady_children={
 		masthead: {
@@ -70,213 +70,213 @@ class YtdAppElement extends HTMLElement {
 				}
 			}
 		}
-	}
+	};
 }
 class YtCurrentPage extends HTMLElement {
 	/**@return {YTDPlayerElement} */
 	getPlayer() {
-		return new YTDPlayerElement
+		return new YTDPlayerElement;
 	}
 }
 class YtdPageManagerElement extends HTMLElement {
 	/**@return {YtCurrentPage} */
 	getCurrentPage() {
-		return new YtCurrentPage
+		return new YtCurrentPage;
 	}
 }
 class Seen {
-	static debug=false
+	static debug=false;
 	/**
 	 * @type {any[]}
 	 */
-	static all_seen_objs=[]
-	static all_seen_map=new Map
-	static seen_gen_counter=1
-	static seen_uid_counter=0
+	static all_seen_objs=[];
+	static all_seen_map=new Map;
+	static seen_gen_counter=1;
+	static seen_uid_counter=0;
 	/**
 	 * @param {null} value
 	 */
 	static as_any(value) {
-		let weak_info,ret
-		const [instance_index,instance_gen,ref_obj]=this.see_value(value)
-		const index_key=instance_index+"@"+instance_gen
-		if(this.debug) console.log('any',index_key,value)
-		value=null
+		let weak_info,ret;
+		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
+		const index_key=instance_index+"@"+instance_gen;
+		if(this.debug) console.log('any',index_key,value);
+		value=null;
 		if(this.all_seen_map.has(index_key)) {
-			weak_info=this.all_seen_map.get(index_key)
-			ret=weak_info.deref()
+			weak_info=this.all_seen_map.get(index_key);
+			ret=weak_info.deref();
 			if(ret!==null) {
-				return ret
+				return ret;
 			}
 		}
-		let obj_id=this.seen_uid_counter
-		this.seen_uid_counter++
+		let obj_id=this.seen_uid_counter;
+		this.seen_uid_counter++;
 		ret={
 			type: 'any',
 			any_key: index_key,
 			obj_id,
-		}
-		weak_info=new WeakRef(ret)
-		ref_obj.info=weak_info
-		this.all_seen_map.set(index_key,weak_info)
-		return ret
+		};
+		weak_info=new WeakRef(ret);
+		ref_obj.info=weak_info;
+		this.all_seen_map.set(index_key,weak_info);
+		return ret;
 	}
 	/**
 	 * @param {Function|null} value
 	 */
 	static as_callable(value) {
-		const [instance_index,instance_gen,ref_obj]=this.see_value(value)
-		value=null
-		const index_key=instance_index+"@"+instance_gen
+		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
+		value=null;
+		const index_key=instance_index+"@"+instance_gen;
 		if(this.all_seen_map.has(index_key)) {
-			let seen_info=this.all_seen_map.get(index_key)
-			if(this.debug) console.log('get callable',index_key,seen_info.deref())
-			if(seen_info.deref()!==null) return seen_info.deref()
+			let seen_info=this.all_seen_map.get(index_key);
+			if(this.debug) console.log('get callable',index_key,seen_info.deref());
+			if(seen_info.deref()!==null) return seen_info.deref();
 		}
-		let obj_id=this.seen_uid_counter
-		this.seen_uid_counter++
+		let obj_id=this.seen_uid_counter;
+		this.seen_uid_counter++;
 		let ret={
 			type: 'callable',
 			fn_index_key: index_key,
 			obj_id
-		}
-		let weak_info=new WeakRef(ret)
-		ref_obj.info=weak_info
-		this.all_seen_map.set(index_key,weak_info)
-		return ret
+		};
+		let weak_info=new WeakRef(ret);
+		ref_obj.info=weak_info;
+		this.all_seen_map.set(index_key,weak_info);
+		return ret;
 	}
 	/**
 	 * @param {null} value
 	 */
 	static as_constructor(value) {
-		const [instance_index,instance_gen,ref_obj]=this.see_value(value)
-		value=null
-		const index_key=instance_index+"@"+instance_gen
+		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
+		value=null;
+		const index_key=instance_index+"@"+instance_gen;
 		if(this.all_seen_map.has(index_key)) {
-			let seen_info=this.all_seen_map.get(index_key)
-			if(this.debug) console.log('get constructor',index_key,seen_info.deref())
-			if(seen_info.deref()!==null) return seen_info.deref()
+			let seen_info=this.all_seen_map.get(index_key);
+			if(this.debug) console.log('get constructor',index_key,seen_info.deref());
+			if(seen_info.deref()!==null) return seen_info.deref();
 		}
-		let obj_id=this.seen_uid_counter
-		this.seen_uid_counter++
+		let obj_id=this.seen_uid_counter;
+		this.seen_uid_counter++;
 		let ret={
 			type: 'constructor',
 			constructor_key: index_key,
 			obj_id
-		}
-		let weak_info=new WeakRef(ret)
-		ref_obj.info=weak_info
-		this.all_seen_map.set(index_key,weak_info)
-		return ret
+		};
+		let weak_info=new WeakRef(ret);
+		ref_obj.info=weak_info;
+		this.all_seen_map.set(index_key,weak_info);
+		return ret;
 	}
 	/**
 	 * @param {{} | null} instance
 	 * @param {{ constructor_tag: any; prototype_tag: any; }} prototype_info
 	 */
 	static as_instance(instance,prototype_info) {
-		const [instance_index,instance_gen,ref_obj]=this.see_value(instance)
-		instance=null
-		const index_key=instance_index+"@"+instance_gen
+		const [instance_index,instance_gen,ref_obj]=this.see_value(instance);
+		instance=null;
+		const index_key=instance_index+"@"+instance_gen;
 		if(this.all_seen_map.has(index_key)) {
-			let seen_info=this.all_seen_map.get(index_key)
-			if(this.debug) console.log('get instance',index_key,seen_info.deref())
-			if(seen_info.deref()!==null) return seen_info.deref()
+			let seen_info=this.all_seen_map.get(index_key);
+			if(this.debug) console.log('get instance',index_key,seen_info.deref());
+			if(seen_info.deref()!==null) return seen_info.deref();
 		}
-		let obj_id=this.seen_uid_counter
-		this.seen_uid_counter++
+		let obj_id=this.seen_uid_counter;
+		this.seen_uid_counter++;
 		let ret={
 			type: 'instance',
 			index_key,
 			prototype_info,
 			obj_id
-		}
-		let weak_info=new WeakRef(ret)
-		ref_obj.info=weak_info
-		this.all_seen_map.set(index_key,weak_info)
-		return ret
+		};
+		let weak_info=new WeakRef(ret);
+		ref_obj.info=weak_info;
+		this.all_seen_map.set(index_key,weak_info);
+		return ret;
 	}
 	/**
 	 * @param {any} value
 	 */
 	static see_value(value) {
-		let index=this.seen_index_of(value)
+		let index=this.seen_index_of(value);
 		iz: if(index>-1) {
-			let ref_obj_seen=this.all_seen_objs[index]
-			let ref_obj=ref_obj_seen.ref.deref()
-			if(ref_obj===null) break iz
-			return [index,this.seen_gen_counter,ref_obj]
+			let ref_obj_seen=this.all_seen_objs[index];
+			let ref_obj=ref_obj_seen.ref.deref();
+			if(ref_obj===null) break iz;
+			return [index,this.seen_gen_counter,ref_obj];
 		}
 		let ref_obj={
 			ref: new WeakRef(value)
-		}
-		index=this.all_seen_objs.push(ref_obj)-1
-		return [index,this.seen_gen_counter,ref_obj]
+		};
+		index=this.all_seen_objs.push(ref_obj)-1;
+		return [index,this.seen_gen_counter,ref_obj];
 	}
 	/**
 	 * @param {any} value
 	 */
 	static seen_index_of(value) {
-		let arr=this.all_seen_objs
-		let index=-1
-		let remove_cnt=0
+		let arr=this.all_seen_objs;
+		let index=-1;
+		let remove_cnt=0;
 		for(let i=0;i<arr.length;i++) {
-			let obj=arr[i]
-			let ref=obj.ref
-			let item=ref.deref()
+			let obj=arr[i];
+			let ref=obj.ref;
+			let item=ref.deref();
 			if(item===null) {
-				remove_cnt++
-				continue
+				remove_cnt++;
+				continue;
 			}
 			if(item===value) {
-				index=i
-				break
+				index=i;
+				break;
 			}
 		}
 		if(remove_cnt>arr.length/4) {
-			let new_arr=[]
-			this.seen_gen_counter++
+			let new_arr=[];
+			this.seen_gen_counter++;
 			for(let i=0;i<arr.length;i++) {
-				let obj=arr[i]
-				let ref=obj.ref
-				let item=ref.deref()
-				if(item===null) continue
-				new_arr.push(obj)
+				let obj=arr[i];
+				let ref=obj.ref;
+				let item=ref.deref();
+				if(item===null) continue;
+				new_arr.push(obj);
 			}
-			this.all_seen_objs=new_arr
-			index=this.seen_index_of(value)
+			this.all_seen_objs=new_arr;
+			index=this.seen_index_of(value);
 		}
-		return index
+		return index;
 	}
 }
-g_api.Seen=Seen
+g_api.Seen=Seen;
 /**
  * @type {<T extends any[]>(value:T)=>typeof value}
  */
 function clone_array(arr) {
-	arr=any_o(arr.slice(),arr)
+	arr=any_o(arr.slice(),arr);
 	for(let i=0;i<arr.length;i++) {
-		arr[i]=deep_clone(arr[i])
+		arr[i]=deep_clone(arr[i]);
 	}
-	return arr
+	return arr;
 }
 /**
  * @type {<T extends Map<any, any>>(map:T)=>typeof map}
  */
 function clone_map(map) {
-	let arr=Array.from(map)
-	let cloned_arr=arr.map(/**@return {[any, any]}*/(map_entry) => [map_entry[0],deep_clone(map_entry[1])])
-	return any_o(new Map(cloned_arr),map)
+	let arr=Array.from(map);
+	let cloned_arr=arr.map(/**@return {[any, any]}*/(map_entry) => [map_entry[0],deep_clone(map_entry[1])]);
+	return any_o(new Map(cloned_arr),map);
 }
 /**@arg {{}} obj*/
 function clone_object(obj) {
-	let obj_entries=Object.entries(obj)
-	let cloned_entries=obj_entries.map((object_entry) => [object_entry[0],deep_clone(object_entry[1])])
-	let clone=Object.fromEntries(cloned_entries)
-	return clone
+	let obj_entries=Object.entries(obj);
+	let cloned_entries=obj_entries.map((object_entry) => [object_entry[0],deep_clone(object_entry[1])]);
+	let clone=Object.fromEntries(cloned_entries);
+	return clone;
 }
 class WithES5Shimmed {
 	/**@type {boolean|undefined} */
-	es5Shimmed=true
+	es5Shimmed=true;
 }
 /**
  * @type {<T>(value:T)=>typeof value}
@@ -285,88 +285,88 @@ function deep_clone(value) {
 	if(typeof value==='object') {
 		if(value===null) {
 			// null is a primitive
-			return value
+			return value;
 		}
 		if(value instanceof Array) {
-			return clone_array(value)
+			return clone_array(value);
 		}
 		if(value instanceof Map) {
 			/**@type {typeof value}*/
-			let copy=clone_map(value)
-			return copy
+			let copy=clone_map(value);
+			return copy;
 		}
 		if(Object.getPrototypeOf(value)===null) {
-			let obj=clone_object(value)
-			Object.setPrototypeOf(obj,null)
-			return obj
+			let obj=clone_object(value);
+			Object.setPrototypeOf(obj,null);
+			return obj;
 		}
 		if(Object.getPrototypeOf(value).constructor===Object) {
-			return clone_object(value)
+			return clone_object(value);
 		}
-		let create=Object.getPrototypeOf(value).constructor
-		let proto=Object.getPrototypeOf(value)
-		let str=Object.getPrototypeOf(value).constructor.name
+		let create=Object.getPrototypeOf(value).constructor;
+		let proto=Object.getPrototypeOf(value);
+		let str=Object.getPrototypeOf(value).constructor.name;
 		let seen_obj=Seen.as_instance(value,{
 			constructor_tag: Seen.as_constructor(create),
 			prototype_tag: Seen.as_any(proto)
-		})
+		});
 		if(create===HTMLVideoElement) {
 			// don't recurse into exact dom elements
-			return seen_obj
+			return seen_obj;
 		}
 		// was the real one shimmed already
 		if(any_c(realHTMLElement,WithES5Shimmed).es5Shimmed) {
 			// the constructor is still non-shimmed
 			if(create===realHTMLElement.prototype.constructor) {
-				return seen_obj
+				return seen_obj;
 			}
 		}
 		if(create===realHTMLElement) {
-			return seen_obj
+			return seen_obj;
 		}
 		// you probably want to fix this...
 		if(str in window) {
-			debugger
+			debugger;
 		}
-		console.log('proto',str,create.toString().slice(0,32),create.toString().length)
-		return seen_obj
+		console.log('proto',str,create.toString().slice(0,32),create.toString().length);
+		return seen_obj;
 	}
 	if(typeof value==='boolean') {
 		// booleans are primitive
-		return value
+		return value;
 	}
 	if(typeof value==='string') {
 		// strings are constant
-		return value
+		return value;
 	}
 	if(typeof value==='number') {
 		// numbers are constant
-		return value
+		return value;
 	}
 	if(typeof value==='function') {
 		if(value.name in window) {
-			debugger
+			debugger;
 		}
-		return Seen.as_callable(value)
+		return Seen.as_callable(value);
 	}
 	if(typeof value==='undefined') {
 		// undefined is the signal for a bug.
-		debugger
-		return value
+		debugger;
+		return value;
 	}
-	console.log('unk',typeof value,value)
-	return value
+	console.log('unk',typeof value,value);
+	return value;
 }
 function fetch_filter_text_then_data_url(/** @type {string | URL} */ url, /** @type {{}} */ response_obj) {
-	let url_obj=new URL(url)
+	let url_obj=new URL(url);
 	if(debug) {
-		console.log('url & response_obj',url,response_obj)
+		console.log('url & response_obj',url,response_obj);
 	}
 	try {
-		yt_handlers.on_handle_api(response_obj,url_obj)
+		yt_handlers.on_handle_api(response_obj,url_obj);
 	} catch(err) {
-		console.log('filter error')
-		console.log(err)
+		console.log('filter error');
+		console.log(err);
 	}
 }
 /**
@@ -376,30 +376,30 @@ function fetch_filter_text_then_data_url(/** @type {string | URL} */ url, /** @t
  * @param {(arg0: unknown) => void} onrejected
  */
 function handle_json_parse(request_info,onfulfilled,onrejected,response_text) {
-	let original_json_parse=JSON.parse
-	if(debug) console.log('JSON.parse = new Proxy()')
+	let original_json_parse=JSON.parse;
+	if(debug) console.log('JSON.parse = new Proxy()');
 	JSON.parse=new Proxy(JSON.parse,{
 		apply: function(...proxy_args) {
-			if(debug) console.log('JSON.parse()')
-			let obj=Reflect.apply(...proxy_args)
-			if(debug) console.log('request_info.url')
+			if(debug) console.log('JSON.parse()');
+			let obj=Reflect.apply(...proxy_args);
+			if(debug) console.log('request_info.url');
 			if(request_info.url) {
-				fetch_filter_text_then_data_url(request_info.url,obj)
+				fetch_filter_text_then_data_url(request_info.url,obj);
 			} else {
-				if(debug) console.log("handle_json_parse no url",request_info,obj)
+				if(debug) console.log("handle_json_parse no url",request_info,obj);
 			}
-			return obj
+			return obj;
 		}
-	})
-	let ret
+	});
+	let ret;
 	try {
-		ret=onfulfilled(response_text)
+		ret=onfulfilled(response_text);
 	} catch(err) {
-		onrejected(err)
+		onrejected(err);
 	} finally {
-		JSON.parse=original_json_parse
+		JSON.parse=original_json_parse;
 	}
-	return ret
+	return ret;
 }
 /**
  * @param {any} request_info
@@ -407,8 +407,8 @@ function handle_json_parse(request_info,onfulfilled,onrejected,response_text) {
  * @param {((reason: any) => any | PromiseLike<any>) | null | undefined} onrejected
  */
 function bind_promise_handler(request_info,onfulfilled,onrejected) {
-	if(debug) console.log('handle_json_parse.bind()')
-	return handle_json_parse.bind(null,request_info,onfulfilled,onrejected)
+	if(debug) console.log('handle_json_parse.bind()');
+	return handle_json_parse.bind(null,request_info,onfulfilled,onrejected);
 }
 /**
  * @param {any} request_info
@@ -419,17 +419,17 @@ function handle_fetch_response_2(request_info,ov) {
 	return {
 		/**@type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
 		then(onfulfilled,onrejected) {
-			return ov.then(bind_promise_handler(request_info,onfulfilled,onrejected))
+			return ov.then(bind_promise_handler(request_info,onfulfilled,onrejected));
 		},
 		/**@type {<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null | undefined) => Promise<any>} */
 		catch(onrejected) {
-			return ov.catch(onrejected)
+			return ov.catch(onrejected);
 		},
 		finally(onfinally) {
-			return ov.finally(onfinally)
+			return ov.finally(onfinally);
 		},
 		[Symbol.toStringTag]: "Promise",
-	}
+	};
 }
 /**
  * @param {RequestInfo} request_info
@@ -438,45 +438,45 @@ function handle_fetch_response_2(request_info,ov) {
 function handle_fetch_response_1(request_info, /** @type {Response} */ response) {
 	class FakeResponse {
 		text() {
-			if(debug) console.log('response.text()')
-			return handle_fetch_response_2(request_info,response.text())
+			if(debug) console.log('response.text()');
+			return handle_fetch_response_2(request_info,response.text());
 		}
 	}
-	let fake_response=new FakeResponse
-	let response_1=any_o(fake_response,response)
+	let fake_response=new FakeResponse;
+	let response_1=any_o(fake_response,response);
 	return new Proxy(response_1,{
 		get(...[obj,key,_]) {
 			if(!(key in obj)) {
-				return Reflect.get(response,key)
+				return Reflect.get(response,key);
 			}
-			return obj[key]
+			return obj[key];
 		}
-	})
+	});
 }
 /**
  * @param {RequestInfo} request_info
  * @param {Response} response
  */
 function fetch_promise_handler(request_info,response) {
-	return handle_fetch_response_1(request_info,response)
+	return handle_fetch_response_1(request_info,response);
 }
 /**
  * @type {typeof fetch | null}
  */
-let original_fetch=null
+let original_fetch=null;
 /**
  * @param {RequestInfo} request_info
  */
 function fetch_inject(request_info) {
-	if(typeof request_info == 'string') {
-		return original_fetch(request_info)
+	if(typeof request_info=='string') {
+		return original_fetch(request_info);
 	}
 	if(request_info.url.includes("googlevideo.com")) {
-		return original_fetch(request_info)
+		return original_fetch(request_info);
 	}
-	if(!original_fetch) throw new Error("No original fetch")
-	let ret=original_fetch(request_info)
-	return ret.then(fetch_promise_handler.bind(null,request_info))
+	if(!original_fetch) throw new Error("No original fetch");
+	let ret=original_fetch(request_info);
+	return ret.then(fetch_promise_handler.bind(null,request_info));
 }
 /**
  * @param {(arg0: [target: any, thisArg: any, argArray: any[]]) => void} callback
@@ -485,52 +485,52 @@ function fetch_inject(request_info) {
 function create_proxy(value,callback) {
 	return new Proxy(value,{
 		apply(...arr) {
-			return callback(arr)
+			return callback(arr);
 		}
-	})
+	});
 }
 function do_proxy_call_getInitialData(/** @type {any} */ args) {
-	return yt_handlers.on_initial_data(args)
+	return yt_handlers.on_initial_data(args);
 }
 class PropertyHandler {
 	/**@type {Map<{}, {}>} */
-	static proxy_map=new Map
+	static proxy_map=new Map;
 	/**@type {Map<string, {}>} */
-	static override_map=new Map
+	static override_map=new Map;
 	/**
 	 * @param {string} key
 	 * @param {(args: any) => any} on_target_apply_callback
 	 */
 	constructor(key,on_target_apply_callback) {
-		this.key=key
-		this.on_target_apply_callback=on_target_apply_callback
+		this.key=key;
+		this.on_target_apply_callback=on_target_apply_callback;
 	}
 	get() {
-		return PropertyHandler.override_map.get(this.key)
+		return PropertyHandler.override_map.get(this.key);
 	}
 	/**
 	 * @param {any} value
 	 */
 	set(value) {
 		if(value===void 0) {
-			PropertyHandler.override_map.delete(this.key)
-			return
+			PropertyHandler.override_map.delete(this.key);
+			return;
 		} else if(value===null) {
-			PropertyHandler.override_map.set(this.key,value)
-			return
+			PropertyHandler.override_map.set(this.key,value);
+			return;
 		}
 		if(PropertyHandler.proxy_map.has(value)) {
-			let nv=PropertyHandler.proxy_map.get(value)
-			if(!nv) return
-			PropertyHandler.override_map.set(this.key,nv)
-			return
+			let nv=PropertyHandler.proxy_map.get(value);
+			if(!nv) return;
+			PropertyHandler.override_map.set(this.key,nv);
+			return;
 		}
-		let proxy_override=create_proxy(value,this.on_target_apply_callback)
-		PropertyHandler.proxy_map.set(value,proxy_override)
-		PropertyHandler.override_map.set(this.key,proxy_override)
+		let proxy_override=create_proxy(value,this.on_target_apply_callback);
+		PropertyHandler.proxy_map.set(value,proxy_override);
+		PropertyHandler.override_map.set(this.key,proxy_override);
 	}
 }
-g_api.PropertyHandler=PropertyHandler
+g_api.PropertyHandler=PropertyHandler;
 /**
  * @arg {{}} object
  * @param {PropertyKey} property
@@ -539,36 +539,36 @@ g_api.PropertyHandler=PropertyHandler
 function override_prop(object,property,property_handler) {
 	Object.defineProperty(object,property,{
 		get() {
-			return property_handler.get()
+			return property_handler.get();
 		},
 		set(value) {
-			return property_handler.set(value)
+			return property_handler.set(value);
 		}
-	})
+	});
 }
-override_prop(window,"getInitialData",new PropertyHandler("getInitialData",do_proxy_call_getInitialData))
+override_prop(window,"getInitialData",new PropertyHandler("getInitialData",do_proxy_call_getInitialData));
 class ObjectInfo {
 	constructor() {
-		let [gr_0,gr_1,gr_2]="{{:,:}}".split(":")
-		this.chunk_beg=gr_0
-		this.chunk_sep=gr_1
-		this.chunk_end=gr_2
-		this.key_sep=this.chunk_end+this.chunk_sep+this.chunk_beg
+		let [gr_0,gr_1,gr_2]="{{:,:}}".split(":");
+		this.chunk_beg=gr_0;
+		this.chunk_sep=gr_1;
+		this.chunk_end=gr_2;
+		this.key_sep=this.chunk_end+this.chunk_sep+this.chunk_beg;
 	}
 	/**
 	 * @param {{}} object
 	 * @param {((value: string, index: number, array: string[]) => value is string) | undefined} [filter_function]
 	 */
 	keys_of(object,filter_function) {
-		let object_keys=Object.keys(object)
-		if(filter_function) object_keys=object_keys.filter(filter_function)
-		return this.chunk_beg+object_keys.join(this.key_sep)+this.chunk_end
+		let object_keys=Object.keys(object);
+		if(filter_function) object_keys=object_keys.filter(filter_function);
+		return this.chunk_beg+object_keys.join(this.key_sep)+this.chunk_end;
 	}
 }
-ObjectInfo.instance=new ObjectInfo
+ObjectInfo.instance=new ObjectInfo;
 /**@type {Map<string, {}>}*/
-let yt_state_map=new Map
-g_api.yt_state_map=yt_state_map
+let yt_state_map=new Map;
+g_api.yt_state_map=yt_state_map;
 class YTIterateAllBase {
 	/**
 	 * @param {string} path
@@ -576,22 +576,22 @@ class YTIterateAllBase {
 	 */
 	default_iter(path,data) {
 		if(data===void 0) {
-			return
+			return;
 		}
 		if(typeof data==='string') {
-			this.update_state(path,data)
-			return
+			this.update_state(path,data);
+			return;
 		}
 		if(data instanceof Array) {
 			for(let [key,value] of data.entries()) {
-				this.default_iter(`${path}[${key}]`,value)
+				this.default_iter(`${path}[${key}]`,value);
 			}
-			return
+			return;
 		}
 		for(let [key,value] of Object.entries(data)) {
-			this.default_iter(`${path}.${key}`,value)
+			this.default_iter(`${path}.${key}`,value);
 			if(this[key]) {
-				this[key](`${path}.${key}`,value)
+				this[key](`${path}.${key}`,value);
 			}
 		}
 	}
@@ -601,30 +601,30 @@ class YTIterateAllBase {
 	 */
 	update_state(key,value) {
 		if(yt_state_map.has(key)) {
-			let stored_state=yt_state_map.get(key)
+			let stored_state=yt_state_map.get(key);
 			if(stored_state instanceof Array) {
-				stored_state.push(value)
-				return
+				stored_state.push(value);
+				return;
 			}
-			yt_state_map.set(key,[stored_state,value])
+			yt_state_map.set(key,[stored_state,value]);
 		} else {
-			yt_state_map.set(key,[value])
+			yt_state_map.set(key,[value]);
 		}
 	}
 }
 class RichItemRenderer {
 	/**@type {{adSlotRenderer?:{}}} */
-	content={}
+	content={};
 }
 class RendererContentItem {
-	richItemRenderer=new RichItemRenderer
+	richItemRenderer=new RichItemRenderer;
 }
 // { masthead: { [str: string]: any; videoMastheadAdV3Renderer?: any; }; contents: {richItemRenderer:{content:{}}}[]; }
 class RichGridRenderer {
 	/**@type {{[str:string]:any; videoMastheadAdV3Renderer?: any}} */
-	masthead={}
+	masthead={};
 	/**@type {RendererContentItem[]} */
-	contents=[]
+	contents=[];
 }
 /**
  * @param {string[]} keys
@@ -633,14 +633,14 @@ class RichGridRenderer {
 function check_item_keys(path,keys) {
 	/**@type {string[]|string|null} */
 	x: if(keys.length===2) {
-		if(keys[1] == 'remove_content_item') {
-			let [key_0, key_1, ...keys_r]=keys;
-			keys=[key_0, ...keys_r];
+		if(keys[1]=='remove_content_item') {
+			let [key_0,key_1,...keys_r]=keys;
+			keys=[key_0,...keys_r];
 		} else {
-			if(path === '.contents[].richItemRenderer') break x;
-			if (path === '.continuationItems[].richItemRenderer') break x;
-			if (path === 'appendContinuationItemsAction') break x;
-			console.log('left over keys', path, keys);
+			if(path==='.contents[].richItemRenderer') break x;
+			if(path==='.continuationItems[].richItemRenderer') break x;
+			if(path==='appendContinuationItemsAction') break x;
+			console.log('left over keys',path,keys);
 		}
 	}
 	switch(path) {
@@ -648,14 +648,14 @@ function check_item_keys(path,keys) {
 		case '.contents[]': break;
 		case '.contents[].richItemRenderer': break;
 		case '.contents[].richItemRenderer.content': break;
-		case '.continuationItems[]': return check_item_keys('.contents[]', keys);
-		case '.continuationItems[].richItemRenderer': return check_item_keys('.contents[].richItemRenderer', keys);
-		case '.continuationItems[].richItemRenderer.content': return check_item_keys('.contents[].richItemRenderer.content', keys);
+		case '.continuationItems[]': return check_item_keys('.contents[]',keys);
+		case '.continuationItems[].richItemRenderer': return check_item_keys('.contents[].richItemRenderer',keys);
+		case '.continuationItems[].richItemRenderer.content': return check_item_keys('.contents[].richItemRenderer.content',keys);
 		case 'appendContinuationItemsAction': break;
-		default: console.log("new check_item_keys path [0.0]:", path); break;
+		default: console.log("new check_item_keys path [0.0]:",path); break;
 	}
 	if(keys.length===1) {
-		let key=keys[0]
+		let key=keys[0];
 		switch(path) {
 			case '.contents[]': switch(key) {
 				case 'richItemRenderer': return;
@@ -716,11 +716,11 @@ function check_item_keys(path,keys) {
 	}
 }
 function filter_section_renderers_from_item_arr(items) {
-	let sections=items.map((e,i)=>[i,e]).filter(([i,e])=>e.richSectionRenderer)
-	for (let i=0;i<sections.length;i++) {
+	let sections=items.map((e,i) => [i,e]).filter(([i,e]) => e.richSectionRenderer);
+	for(let i=0;i<sections.length;i++) {
 		let e=sections[i];
 		e[2]=section_item_type(e[1]);
-		if(e[2] === 'short') {
+		if(e[2]==='short') {
 			e[1].remove_content_item=true;
 		}
 	}
@@ -730,13 +730,13 @@ function section_item_type(item) {
 	if(!item.richSectionRenderer.content.richShelfRenderer.icon) return null;
 	let icon_type=item.richSectionRenderer.content.richShelfRenderer.icon.iconType;
 	switch(icon_type) {
-		case "YOUTUBE_SHORTS_BRAND_24": return "short"
-		default: return null
+		case "YOUTUBE_SHORTS_BRAND_24": return "short";
+		default: return null;
 	}
 }
 class HandleRichGridRenderer {
 	static debug=true;
-	static debug_level = 2;
+	static debug_level=2;
 	/**@readonly*/
 	static class_name="HandleRichGridRenderer";
 	static entry="richGridRenderer";
@@ -745,94 +745,94 @@ class HandleRichGridRenderer {
 	 * @param {RichGridRenderer} renderer
 	 */
 	static richGridRenderer(path,renderer) {
-		let path_parts=path.split(".")
-		let sub_path=path_parts.slice(-3).join(".")
-		check_item_keys(sub_path,Object.keys(renderer))
-		if(this.debug) console.log('run handler',sub_path)
+		let path_parts=path.split(".");
+		let sub_path=path_parts.slice(-3).join(".");
+		check_item_keys(sub_path,Object.keys(renderer));
+		if(this.debug) console.log('run handler',sub_path);
 		filter_section_renderers_from_item_arr(renderer.contents);
 		if(renderer.masthead) {
-			check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead))
+			check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
-				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead
-				console.log('masthead',masthead)
-				renderer.masthead=masthead
+				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
+				console.log('masthead',masthead);
+				renderer.masthead=masthead;
 			}
 		}
 		if(renderer.contents) {
-			this.on_contents(path, renderer)
+			this.on_contents(path,renderer);
 		}
 	}
 	/**@arg {string} path @arg {RichGridRenderer} renderer */
-	static on_contents(path, renderer) {
-		let t=this
-		renderer.contents=renderer.contents.filter((content_item, content_index) => {
-			check_item_keys('.contents[]',Object.keys(content_item))
+	static on_contents(path,renderer) {
+		let t=this;
+		renderer.contents=renderer.contents.filter((content_item,content_index) => {
+			check_item_keys('.contents[]',Object.keys(content_item));
 			if(content_item.remove_content_item) {
-				return false
+				return false;
 			}
-			if(!content_item.richItemRenderer) return true
-			check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer))
-			console.assert(content_item.richItemRenderer.content, "richItemRenderer has content");
-			let {content}=content_item.richItemRenderer
-			check_item_keys('.contents[].richItemRenderer.content',Object.keys(content))
+			if(!content_item.richItemRenderer) return true;
+			check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
+			console.assert(content_item.richItemRenderer.content,"richItemRenderer has content");
+			let {content}=content_item.richItemRenderer;
+			check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
 			if(content.adSlotRenderer) {
-				if(t.debug && t.debug_level > 2) console.log(this.class_name, 'adSlotRenderer=', content.adSlotRenderer)
-				return false
+				if(t.debug&&t.debug_level>2) console.log(this.class_name,'adSlotRenderer=',content.adSlotRenderer);
+				return false;
 			}
-			return true
-		})
+			return true;
+		});
 	}
 }
 class ContinuationItem extends RendererContentItem {}
 class AppendContinuationItemsAction {
 	/**@type {ContinuationItem[]} */
-	continuationItems=[]
+	continuationItems=[];
 }
 class YTFilterHandlers extends YTIterateAllBase {
-	debug=true
+	debug=true;
 	/**@readonly*/
-	class_name="YTFilterHandlers"
+	class_name="YTFilterHandlers";
 	/**
 	 * @param {string} path
 	 * @param {RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
-		HandleRichGridRenderer.richGridRenderer(path,renderer)
+		HandleRichGridRenderer.richGridRenderer(path,renderer);
 	}
 	/**
 	 * @param {string} path
 	 * @param {AppendContinuationItemsAction} action
 	 */
 	appendContinuationItemsAction(path,action) {
-		let t=this
-		check_item_keys('appendContinuationItemsAction',Object.keys(action))
+		let t=this;
+		check_item_keys('appendContinuationItemsAction',Object.keys(action));
 		filter_section_renderers_from_item_arr(action.continuationItems);
 		action.continuationItems=action.continuationItems.filter(content_item => {
-			check_item_keys('.continuationItems[]',Object.keys(content_item))
+			check_item_keys('.continuationItems[]',Object.keys(content_item));
 			if(content_item.remove_content_item) {
-				return false
+				return false;
 			}
-			if(!content_item.richItemRenderer) return true
-			check_item_keys('.continuationItems[].richItemRenderer',Object.keys(content_item.richItemRenderer))
-			if(!content_item.richItemRenderer.content) return true
-			let {content}=content_item.richItemRenderer
-			check_item_keys('.continuationItems[].richItemRenderer.content',Object.keys(content))
+			if(!content_item.richItemRenderer) return true;
+			check_item_keys('.continuationItems[].richItemRenderer',Object.keys(content_item.richItemRenderer));
+			if(!content_item.richItemRenderer.content) return true;
+			let {content}=content_item.richItemRenderer;
+			check_item_keys('.continuationItems[].richItemRenderer.content',Object.keys(content));
 			if(content.adSlotRenderer) {
-				if(t.debug) console.log(t.class_name+": "+path+'.adSlotRenderer=', content.adSlotRenderer)
-				return false
+				if(t.debug) console.log(t.class_name+": "+path+'.adSlotRenderer=',content.adSlotRenderer);
+				return false;
 			}
-			return true
-		})
+			return true;
+		});
 	}
 	/**
 	 * @param {string} path
 	 * @param {{ contents: {}[]; }} renderer
 	 */
 	itemSectionRenderer(path,renderer) {
-		this.default_iter(path,renderer)
-		if(renderer.contents===void 0) return
+		this.default_iter(path,renderer);
+		if(renderer.contents===void 0) return;
 		renderer.contents=renderer.contents.filter((item) => {
-			let keys=Object.keys(item)
+			let keys=Object.keys(item);
 			for(let key of keys) {
 				switch(key) {
 					case 'promotedSparklesWebRenderer': return false;
@@ -844,12 +844,12 @@ class YTFilterHandlers extends YTIterateAllBase {
 					case 'compactRadioRenderer': return true;
 					case 'compactPlaylistRenderer': return true;
 					default:
-						console.log("section unk", key)
-						return true
+						console.log("section unk",key);
+						return true;
 				}
 			}
-			return true
-		})
+			return true;
+		});
 	}
 	/**
 	 * @param {{playerAds?: any[]; adPlacements?: any[];}} data
@@ -857,12 +857,12 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	on_v1_player(path,data) {
 		if(data.playerAds) {
-			if(this.debug)console.log(this.class_name+": "+path+'.playerAds=', data.playerAds)
-			data.playerAds=[]
+			if(this.debug) console.log(this.class_name+": "+path+'.playerAds=',data.playerAds);
+			data.playerAds=[];
 		}
 		if(data.adPlacements) {
-			if(this.debug)console.log(this.class_name+": "+path+'.adPlacements=', data.adPlacements)
-			data.adPlacements=[]
+			if(this.debug) console.log(this.class_name+": "+path+'.adPlacements=',data.adPlacements);
+			data.adPlacements=[];
 		}
 	}
 	/**
@@ -870,23 +870,23 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 * @param {URL} url_as_URL
 	 */
 	on_handle_api(data,url_as_URL) {
-		const debug=false
-		let path_url=url_as_URL.pathname
-		if(path_url==="/getDatasyncIdsEndpoint") return
-		let api_parts=url_as_URL.pathname.slice(1).split("/")
+		const debug=false;
+		let path_url=url_as_URL.pathname;
+		if(path_url==="/getDatasyncIdsEndpoint") return;
+		let api_parts=url_as_URL.pathname.slice(1).split("/");
 		if(api_parts[0]!=='youtubei') {
-			console.log(this.class_name+": "+'unknown api path',url_as_URL.pathname)
-			return
+			console.log(this.class_name+": "+'unknown api path',url_as_URL.pathname);
+			return;
 		}
 		if(api_parts[1]!=='v1') {
-			console.log(this.class_name+": "+'unknown api path',url_as_URL.pathname)
-			return
+			console.log(this.class_name+": "+'unknown api path',url_as_URL.pathname);
+			return;
 		}
-		let api_path=api_parts.slice(2).join(".")
-		debug&&console.log(this.class_name+": "+'on_handle_api api_path',api_parts.slice(0,2).join("/"),api_path)
-		this.handle_any_data(api_path,data)
+		let api_path=api_parts.slice(2).join(".");
+		debug&&console.log(this.class_name+": "+'on_handle_api api_path',api_parts.slice(0,2).join("/"),api_path);
+		this.handle_any_data(api_path,data);
 		switch(api_parts[2]) {
-			case 'player': this.on_v1_player(api_path,data); break
+			case 'player': this.on_v1_player(api_path,data); break;
 		}
 	}
 	/**
@@ -894,13 +894,13 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 * @param {string} page_type
 	 */
 	handle_page_type(data,page_type,response_type) {
-		const debug=false
-		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type,response_type)
-		this.handle_any_data(page_type,data)
+		const debug=false;
+		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type,response_type);
+		this.handle_any_data(page_type,data);
 		switch(response_type) {
-			case 'response': break
+			case 'response': break;
 			case 'playerResponse': switch(page_type) {
-				case 'watch': this.on_v1_player(page_type,data); break
+				case 'watch': this.on_v1_player(page_type,data); break;
 			}
 		}
 	}
@@ -909,193 +909,193 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 * @arg {{[str:string]:{}}} data
 	 */
 	handle_any_data(path,data) {
-		this.default_iter(path,data)
+		this.default_iter(path,data);
 	}
 	/**
 	 * @param {[()=>{}, object, []]} apply_args
 	 */
 	on_initial_data(apply_args) {
-		let ret=Reflect.apply(...apply_args)
+		let ret=Reflect.apply(...apply_args);
 		if(ret.response) {
-			console.log(this.class_name+': initial page info:',ret)
+			console.log(this.class_name+': initial page info:',ret);
 			try {
 				if(window.ytPageType) {
 					if(ret.page==="browse") {
-						this.handle_page_type(ret.response,window.ytPageType,'response')
+						this.handle_page_type(ret.response,window.ytPageType,'response');
 						if(ret.playerResponse) {
-							console.log(this.class_name+": playerResponse in ret.page === 'browse'")
-							debugger
+							console.log(this.class_name+": playerResponse in ret.page === 'browse'");
+							debugger;
 						}
 					} else {
-						console.log(this.class_name+': page info ret type',ret.page)
-						this.handle_page_type(ret.response,window.ytPageType,'response')
-						this.handle_page_type(ret.playerResponse,window.ytPageType,'playerResponse')
+						console.log(this.class_name+': page info ret type',ret.page);
+						this.handle_page_type(ret.response,window.ytPageType,'response');
+						this.handle_page_type(ret.playerResponse,window.ytPageType,'playerResponse');
 					}
 				}
 			} catch(err) {
-				console.log(this.class_name+": init filter error")
-				console.log(err)
+				console.log(this.class_name+": init filter error");
+				console.log(err);
 			}
 		} else {
-			console.log(this.class_name+": unhandled return value:",ret)
+			console.log(this.class_name+": unhandled return value:",ret);
 		}
-		return ret
+		return ret;
 	}
 }
 /**
  * @type {any[]}
  */
-let blob_create_args_arr=[]
-let leftover_args=[]
-g_api.blob_create_args_arr=blob_create_args_arr
-let yt_handlers=new YTFilterHandlers
-g_api.yt_handlers=yt_handlers
+let blob_create_args_arr=[];
+let leftover_args=[];
+g_api.blob_create_args_arr=blob_create_args_arr;
+let yt_handlers=new YTFilterHandlers;
+g_api.yt_handlers=yt_handlers;
 {
 	// PROTOTYPE MODIFIERS
 	/**
 	 * @type {Map<string, any[]>}
 	 */
-	let created_blobs=new Map
-	let active_blob_set=new Set
+	let created_blobs=new Map;
+	let active_blob_set=new Set;
 	URL.createObjectURL=new Proxy(URL.createObjectURL,{
 		apply(...arr) {
-			let [target_fn,this_,args]=arr
-			let [url_source,...rest]=args
+			let [target_fn,this_,args]=arr;
+			let [url_source,...rest]=args;
 			if(rest.length>0) {
-				leftover_args.push([target_fn,this_,rest])
+				leftover_args.push([target_fn,this_,rest]);
 			}
-			blob_create_args_arr.push(url_source)
-			let ret=Reflect.apply(...arr)
-			created_blobs.set(ret,url_source)
-			active_blob_set.add(ret)
-			return ret
+			blob_create_args_arr.push(url_source);
+			let ret=Reflect.apply(...arr);
+			created_blobs.set(ret,url_source);
+			active_blob_set.add(ret);
+			return ret;
 		}
-	})
+	});
 	URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
 		apply(...proxy_args) {
-			let val=proxy_args[2][0]
-			active_blob_set.delete(val)
-			return Reflect.apply(...proxy_args)
+			let val=proxy_args[2][0];
+			active_blob_set.delete(val);
+			return Reflect.apply(...proxy_args);
 		}
-	})
-	original_fetch=fetch
-	window.fetch=fetch_inject
-	fetch_inject.__proxy_target__=original_fetch
+	});
+	original_fetch=fetch;
+	window.fetch=fetch_inject;
+	fetch_inject.__proxy_target__=original_fetch;
 	class json_parse_handler {
 		/**
 		 * @param {any[]} proxy_args
 		 */
 		apply(...proxy_args) {
-			let cst=new Error
-			let error_stack=cst.stack
-			if(!error_stack) throw new Error("Unable to handle error without stack")
-			let string_arr=error_stack.split('\n')
-			string_arr=string_arr.slice(2)
-			string_arr=string_arr.map(str => str.split('()'[0])[0].slice(4+3,-1))
-			string_arr=string_arr.map(str => str.match(/^Object/)===null&&str||str.slice(6))
-			string_arr=string_arr.map(str => '{'+str+'}')
-			let simple_error_stack=string_arr.join('!')
+			let cst=new Error;
+			let error_stack=cst.stack;
+			if(!error_stack) throw new Error("Unable to handle error without stack");
+			let string_arr=error_stack.split('\n');
+			string_arr=string_arr.slice(2);
+			string_arr=string_arr.map(str => str.split('()'[0])[0].slice(4+3,-1));
+			string_arr=string_arr.map(str => str.match(/^Object/)===null&&str||str.slice(6));
+			string_arr=string_arr.map(str => '{'+str+'}');
+			let simple_error_stack=string_arr.join('!');
 			if(simple_error_stack==="{Se}!{._.uf}!{b}!{.apply}") {
-				return false
+				return false;
 			}
-			return Reflect.apply(proxy_args[0],proxy_args[1],proxy_args[2])
+			return Reflect.apply(proxy_args[0],proxy_args[1],proxy_args[2]);
 		}
 	}
 	class WithJSONParseChanged {
 		/**@type {boolean|undefined} */
-		JSON_parse_changed=true
+		JSON_parse_changed=true;
 	}
-	let tmp_1=any_c(Function,WithJSONParseChanged)
+	let tmp_1=any_c(Function,WithJSONParseChanged);
 	//window.fetch=o_fetch
 	if(tmp_1.JSON_parse_changed===undefined) {
-		let orig_json_parse=JSON.parse
-		JSON.parse=new Proxy(JSON.parse,new json_parse_handler)
-		JSON.parse=orig_json_parse
-		tmp_1.JSON_parse_changed=true
+		let orig_json_parse=JSON.parse;
+		JSON.parse=new Proxy(JSON.parse,new json_parse_handler);
+		JSON.parse=orig_json_parse;
+		tmp_1.JSON_parse_changed=true;
 	}
-	let navigator_sendBeacon=navigator.sendBeacon
+	let navigator_sendBeacon=navigator.sendBeacon;
 	navigator.sendBeacon=function(...args) {
 		if(typeof args[0]==='string'&&args[0].indexOf("/api/stats/qoe")>-1) {
-			return true
+			return true;
 		}
-		console.log("send_beacon",args[0])
-		return navigator_sendBeacon.call(this,...args)
-	}
-	let OriginalImage=Image
+		console.log("send_beacon",args[0]);
+		return navigator_sendBeacon.call(this,...args);
+	};
+	let OriginalImage=Image;
 	Image=new Proxy(Image,{
 		construct(...proxy_args) {
-			let c_cls=proxy_args[0]
+			let c_cls=proxy_args[0];
 			let tc=class extends c_cls {
 				set src(_src) {
-					if(_src.indexOf('/api/stats/qoe?')>-1) return
-					super.src=_src
+					if(_src.indexOf('/api/stats/qoe?')>-1) return;
+					super.src=_src;
 				}
 				get src() {
-					return super.src
+					return super.src;
 				}
-			}
-			let c_args=proxy_args[1]
-			let ret=new tc(...c_args)
-			return ret
+			};
+			let c_args=proxy_args[1];
+			let ret=new tc(...c_args);
+			return ret;
 		}
-	})
-	Image=OriginalImage
+	});
+	Image=OriginalImage;
 }
-let plr_raw_replace_debug = true
+let plr_raw_replace_debug=true;
 function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */ player_config) {
-	let raw_plr_rsp=player_config.args.raw_player_response
+	let raw_plr_rsp=player_config.args.raw_player_response;
 	if(raw_plr_rsp===void 0) {
-		console.log('yt_cfg',player_config)
-		return
+		console.log('yt_cfg',player_config);
+		return;
 	}
-	if(plr_raw_replace_debug)console.log("plr_raw_replace", "::", 'args.raw_player_response.playerAds=', raw_plr_rsp.playerAds)
-	raw_plr_rsp.playerAds=[]
-	if(plr_raw_replace_debug)console.log("plr_raw_replace", "::", 'args.raw_player_response.adPlacements=', raw_plr_rsp.adPlacements)
-	raw_plr_rsp.adPlacements=[]
-	return
+	if(plr_raw_replace_debug) console.log("plr_raw_replace","::",'args.raw_player_response.playerAds=',raw_plr_rsp.playerAds);
+	raw_plr_rsp.playerAds=[];
+	if(plr_raw_replace_debug) console.log("plr_raw_replace","::",'args.raw_player_response.adPlacements=',raw_plr_rsp.adPlacements);
+	raw_plr_rsp.adPlacements=[];
+	return;
 }
 function plr_raw_replace_embed() {
-	return
+	return;
 }
-let ar='yt.player.Application'.split('.')
-let a2=ar.slice()
-ar.push('create')
-a2.push('createAlternate')
+let ar='yt.player.Application'.split('.');
+let a2=ar.slice();
+ar.push('create');
+a2.push('createAlternate');
 /**
  * @type {any[]}
  */
-let mk_tree_arr=[]
+let mk_tree_arr=[];
 function act_found_create_yt_player(/** @type {{ data: { type: string; data: [any, any, any]; }; }} */ event) {
-	let tr=event.data.type
-	if(tr!='yt.player.Application.createAlternate'&&tr!='yt.player.Application.create') return
-	let [,,value]=event.data.data
-	let [,player_config,static_config]=value
-	if(!player_config) return
+	let tr=event.data.type;
+	if(tr!='yt.player.Application.createAlternate'&&tr!='yt.player.Application.create') return;
+	let [,,value]=event.data.data;
+	let [,player_config,static_config]=value;
+	if(!player_config) return;
 	if(static_config.isEmbed) {
-		void player_config
-		plr_raw_replace_embed()
+		void player_config;
+		plr_raw_replace_embed();
 	} else {
-		plr_raw_replace(player_config)
+		plr_raw_replace(player_config);
 	}
 }
-let locked_set=new WeakMap()
-let ud_func=new WeakSet()
+let locked_set=new WeakMap();
+let ud_func=new WeakSet();
 class OnWindowProperty {
 	constructor() {
 		/**@type {{[str:string]:any}} */
-		this._events={}
+		this._events={};
 	}
 	/**
 	 * @param {{ type: any; data?: { type: any; data: any[]; }; }} ev
 	 */
 	dispatchEvent(ev) {
-		let evt=this._events[ev.type].slice()
-		if(evt===undefined) return
+		let evt=this._events[ev.type].slice();
+		if(evt===undefined) return;
 		for(let i=0;i<evt.length;i++) {
-			let hnd=evt[i]
-			if(hnd.disposed) continue
-			let handler=hnd.handler
-			handler(ev)
+			let hnd=evt[i];
+			if(hnd.disposed) continue;
+			let handler=hnd.handler;
+			handler(ev);
 		}
 	}
 	/**
@@ -1103,13 +1103,13 @@ class OnWindowProperty {
 	 * @param {any} fn
 	 */
 	removeEventListener(ev_name,fn) {
-		let evt=this._events[ev_name]
-		if(evt===undefined) return
+		let evt=this._events[ev_name];
+		if(evt===undefined) return;
 		for(let i=0;i<evt.length;i++) {
-			let ce=evt[i]
+			let ce=evt[i];
 			if(!ce.disposed&&ce.handler===fn) {
-				evt.splice(i,1)
-				i-=1
+				evt.splice(i,1);
+				i-=1;
 			}
 		}
 	}
@@ -1118,7 +1118,7 @@ class OnWindowProperty {
 	 * @param {(event: { data: { type: any; data: [any, any, any]; }; }) => void} fn
 	 */
 	addEventListener(ev_name,fn) {
-		(this._events[ev_name]??=[]).push({disposed: false,handler: fn})
+		(this._events[ev_name]??=[]).push({disposed: false,handler: fn});
 	}
 }
 /**
@@ -1128,44 +1128,44 @@ class OnWindowProperty {
  * @arg {string} [mc]
  */
 function walk_key_path(cc,ms,obj,mc) {
-	let fs
-	let mt=ms.match(cc.value_tr)
+	let fs;
+	let mt=ms.match(cc.value_tr);
 	if(mt!==null) {
-		fs=mt[0]
+		fs=mt[0];
 	} else {
-		return mc
+		return mc;
 	}
-	let f2=ms.slice(fs.length+1)
-	let dx=f2.indexOf('.')
-	let pq
+	let f2=ms.slice(fs.length+1);
+	let dx=f2.indexOf('.');
+	let pq;
 	if(dx>-1) {
-		pq=f2.slice(0,dx)
+		pq=f2.slice(0,dx);
 	} else {
-		pq=f2
+		pq=f2;
 	}
 	if(pq.length>0) {
 		if((cc.value_tr+'.'+pq)==mc) {
-			return cc.value_tr+'.'+pq
+			return cc.value_tr+'.'+pq;
 		}
-		mk(obj,pq,cc.value_tr+'.'+pq,cc.noisy_flag)
-		return cc.value_tr+'.'+pq
+		mk(obj,pq,cc.value_tr+'.'+pq,cc.noisy_flag);
+		return cc.value_tr+'.'+pq;
 	}
 }
-let win_watch=new OnWindowProperty
+let win_watch=new OnWindowProperty;
 /**
  * @param {any} val
  * @param {MKState} cc
  */
 function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
-	let ret
-	let act_cb_obj={fired: false,ret: ret}
-	win_watch.dispatchEvent({type: 'new_window_object',data: {type: cc.value_tr,data: [cc.function_value,val,args,act_cb_obj]}})
+	let ret;
+	let act_cb_obj={fired: false,ret: ret};
+	win_watch.dispatchEvent({type: 'new_window_object',data: {type: cc.value_tr,data: [cc.function_value,val,args,act_cb_obj]}});
 	if(!act_cb_obj.fired&&cc.function_value) {
-		ret=cc.function_value.apply(val,args)
+		ret=cc.function_value.apply(val,args);
 	} else {
-		ret=act_cb_obj.ret
+		ret=act_cb_obj.ret;
 	}
-	return ret
+	return ret;
 }
 /**
  * @param {MKState} cc
@@ -1173,18 +1173,18 @@ function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 function on_mk_function_property(cc) {
 	/**@this {{}}*/
 	function with_this(/** @type {any} */ ...args) {
-		new_pv_fn(this,cc,...args)
+		new_pv_fn(this,cc,...args);
 	}
-	cc.value=with_this
-	ud_func.add(cc.value)
+	cc.value=with_this;
+	ud_func.add(cc.value);
 }
-const ghost_symbol=Symbol.for('ghost')
+const ghost_symbol=Symbol.for('ghost');
 class WithGhostSymbol {
 	/**@type {boolean|undefined} */
-	[ghost_symbol]=true
+	[ghost_symbol]=true;
 }
 class MKState {
-	[ghost_symbol]=true
+	[ghost_symbol]=true;
 	/**
 	 * @param {{}} value
 	 * @param {PropertyKey} property_key
@@ -1193,20 +1193,20 @@ class MKState {
 	 * @param {boolean} noisy
 	 */
 	constructor(value,target,property_key,property_path,noisy) {
-		this.value=value
-		this.property_key=property_key
-		this.target=target
-		this.property_path=property_path
-		this.noisy=noisy
+		this.value=value;
+		this.property_key=property_key;
+		this.target=target;
+		this.property_path=property_path;
+		this.noisy=noisy;
 	}
 	run() {
-		return mk_run(this)
+		return mk_run(this);
 	}
-	value={}
-	value_tr=""
+	value={};
+	value_tr="";
 	/**@type {Function | null} */
-	function_value=null
-	noisy=false
+	function_value=null;
+	noisy=false;
 }
 /**
  * @param {MKState} cc
@@ -1214,18 +1214,18 @@ class MKState {
  */
 function on_mk_new_property(cc,obj) {
 	if(obj instanceof Function) {
-		cc.function_value=obj
-		on_mk_function_property(cc)
+		cc.function_value=obj;
+		on_mk_function_property(cc);
 	} else {
-		let mc
-		let ck_i=0
-		let ck_str=mk_tree_arr[ck_i]
-		mc=walk_key_path(cc,ck_str,obj,mc)
+		let mc;
+		let ck_i=0;
+		let ck_str=mk_tree_arr[ck_i];
+		mc=walk_key_path(cc,ck_str,obj,mc);
 		for(;ck_i<mk_tree_arr.length;ck_i++) {
-			ck_str=mk_tree_arr[ck_i]
-			mc=walk_key_path(cc,ck_str,obj,mc)
+			ck_str=mk_tree_arr[ck_i];
+			mc=walk_key_path(cc,ck_str,obj,mc);
 		}
-		cc.value=obj
+		cc.value=obj;
 	}
 }
 /**
@@ -1233,11 +1233,11 @@ function on_mk_new_property(cc,obj) {
  * @param {{}} obj
  */
 function on_mk_property_set(cc,obj) {
-	if(ud_func.has(obj)) cc.value=obj
+	if(ud_func.has(obj)) cc.value=obj;
 	if(any_c(obj,WithGhostSymbol)[ghost_symbol]===undefined) {
-		on_mk_new_property(cc,obj)
+		on_mk_new_property(cc,obj);
 	} else {
-		cc.value=obj
+		cc.value=obj;
 	}
 }
 /**
@@ -1245,24 +1245,24 @@ function on_mk_property_set(cc,obj) {
  */
 function mk_run(cc) {
 	if(locked_set.has(cc.target)&&locked_set.get(cc.target).names.indexOf(cc.property_key)>-1) {
-		return cc
+		return cc;
 	}
 	Object.defineProperty(cc.target,cc.property_key,{
 		configurable: true,
 		enumerable: true,
 		get() {
-			return cc.value
+			return cc.value;
 		},
 		set(val) {
-			on_mk_property_set(cc,val)
+			on_mk_property_set(cc,val);
 		}
-	})
+	});
 	if(locked_set.has(cc.target)) {
-		locked_set.get(cc.target).names.push(cc.property_key)
+		locked_set.get(cc.target).names.push(cc.property_key);
 	} else {
-		locked_set.set(cc.target,{names: [cc.property_key]})
+		locked_set.set(cc.target,{names: [cc.property_key]});
 	}
-	return cc
+	return cc;
 }
 /**
  * @param {object} target
@@ -1271,13 +1271,13 @@ function mk_run(cc) {
  * @param {boolean} noisy
  */
 function mk(target,property_key,property_path,noisy=false) {
-	return new MKState({},target,property_key,property_path,noisy).run()
+	return new MKState({},target,property_key,property_path,noisy).run();
 }
-let yta_str='yt.player.Application'
-mk_tree_arr.push(yta_str+'.create',yta_str+'.createAlternate')
-mk(window,'yt','yt',true)
-win_watch.addEventListener('new_window_object',act_found_create_yt_player)
-const LOGGING_LEVEL=1
+let yta_str='yt.player.Application';
+mk_tree_arr.push(yta_str+'.create',yta_str+'.createAlternate');
+mk(window,'yt','yt',true);
+win_watch.addEventListener('new_window_object',act_found_create_yt_player);
+const LOGGING_LEVEL=1;
 /**
  * @param {number} logging_level
  * @param {string} logger_format
@@ -1285,54 +1285,54 @@ const LOGGING_LEVEL=1
  */
 function log_if_level(logging_level,logger_format,...logger_args) {
 	if(logging_level>LOGGING_LEVEL) {
-		console.log(logger_format,...logger_args)
+		console.log(logger_format,...logger_args);
 	}
 }
 
 class CustomEventType {
-	type="event_type"
-	detail={}
-	port=new MessagePort
+	type="event_type";
+	detail={};
+	port=new MessagePort;
 }
 class CustomEventTarget {
 	/**@type {{[str: string]:?(<T extends CustomEventTarget>(this:T, event: CustomEventType) => void)[]}} */
-	_events={}
+	_events={};
 	/**
 	 * @param {string} type
 	 * @param {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
 	 */
 	addEventListener(type,handler) {
-		(this._events[type]??=[]).push(handler)
+		(this._events[type]??=[]).push(handler);
 	}
 	/**
 	 * @param {string} type
 	 * @param {<T extends CustomEventTarget>(this:T, event: CustomEventType) => void} handler
 	 */
 	removeEventListener(type,handler) {
-		let event_arr=this._events[type]
-		if(!event_arr) return
-		if(event_arr.length) return
+		let event_arr=this._events[type];
+		if(!event_arr) return;
+		if(event_arr.length) return;
 		for(let i=event_arr.length-1;i>=0;i--) {
-			let cur=event_arr[i]
-			if(cur!==handler) continue
-			event_arr.splice(i,1)
+			let cur=event_arr[i];
+			if(cur!==handler) continue;
+			event_arr.splice(i,1);
 		}
 	}
 	/**
 	 * @param {CustomEventType} event
 	 */
 	dispatchEvent(event) {
-		let msg_arr=this._events[event.type]
-		if(!msg_arr) return
+		let msg_arr=this._events[event.type];
+		if(!msg_arr) return;
 		for(let i=0;i<msg_arr.length;i++) {
-			let cur=msg_arr[i]
-			cur.call(this,event)
+			let cur=msg_arr[i];
+			cur.call(this,event);
 		}
 	}
 }
 
 class DomObserver extends CustomEventTarget {
-	trace=false
+	trace=false;
 	/**@arg {MessagePort} port @arg {number} message_id */
 	next_tick_action(port,message_id) {
 		if(this.trace) console.log("trace_id_"+message_id+":continue");
@@ -1345,19 +1345,19 @@ g_api.dom_observer=dom_observer;
 
 window.playlist_arr??=[];
 /**@type {string[]} */
-let playlist_arr=window.playlist_arr
+let playlist_arr=window.playlist_arr;
 /**
  * @type {YtdPageManagerElement | null}
  */
 let ytd_page_manager=null;
 
 function has_ytd_page_mgr() {
-	return ytd_page_manager !== null;
+	return ytd_page_manager!==null;
 }
 
 /** @returns {YtdPageManagerElement}*/
 function get_ytd_page_mgr() {
-	if(ytd_page_manager !== null) {
+	if(ytd_page_manager!==null) {
 		return ytd_page_manager;
 	}
 	throw new Error("No ytd_page_manager");
@@ -1369,12 +1369,12 @@ let on_ytd_page_mgr_found=[];
  * @param {HTMLElement} element
  */
 function on_ytd_page_manager(element) {
-	const element_id="ytd-page-manager"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	ytd_page_manager=any_c(element,YtdPageManagerElement)
+	const element_id="ytd-page-manager";
+	console.log(`on ${element_id}`);
+	element_map.set(element_id,element);
+	ytd_page_manager=any_c(element,YtdPageManagerElement);
 	window.ytd_page_manager=element;
-	for (let handler of on_ytd_page_mgr_found) {
+	for(let handler of on_ytd_page_mgr_found) {
 		handler();
 	}
 }
@@ -1398,7 +1398,7 @@ class YtdWatchFlexyElement extends HTMLElement {}
 /**
  * @type {YtdWatchFlexyElement | null}
  */
-let ytd_watch_flexy=null
+let ytd_watch_flexy=null;
 /**
  * @param {HTMLElement} element
  */
@@ -1410,7 +1410,7 @@ function on_ytd_watch_flexy(element) {
 	window.ytd_watch_flexy=element;
 	ytd_watch_flexy.addEventListener("yt-navigate",function(event) {
 		for(let handler of on_yt_navigate) {
-			handler(event)
+			handler(event);
 		}
 	});
 }
@@ -1436,7 +1436,7 @@ function event_find_ytd_watch_flexy(event) {
 			"yt-page-type-changed",
 			() => this.dispatchEvent({type: "yt-page-type-changed",detail,port}),
 			{once: true}
-		)
+		);
 	}
 }
 dom_observer.addEventListener('find-ytd-watch-flexy',event_find_ytd_watch_flexy);
@@ -1457,17 +1457,17 @@ dom_observer.addEventListener('ytd-watch-flexy',event_ytd_watch_flexy);
 window.page_type_changes??=[];
 let page_type_changes=window.page_type_changes;
 
-let last_page_type = null;
+let last_page_type=null;
 
 function is_watch_page_active() {
-	return has_ytd_page_mgr()&&get_ytd_page_mgr().getCurrentPage()&&get_ytd_page_mgr().getCurrentPage().nodeName=="YTD-WATCH-FLEXY"
+	return has_ytd_page_mgr()&&get_ytd_page_mgr().getCurrentPage()&&get_ytd_page_mgr().getCurrentPage().nodeName=="YTD-WATCH-FLEXY";
 }
 
 function page_changed_next_frame() {
-	if(!plugin_overlay_element) return
-	if(!has_ytd_page_mgr()) return
-	plugin_overlay_element.onupdate()
-	get_ytd_page_mgr().getCurrentPage().append(plugin_overlay_element)
+	if(!plugin_overlay_element) return;
+	if(!has_ytd_page_mgr()) return;
+	plugin_overlay_element.onupdate();
+	get_ytd_page_mgr().getCurrentPage().append(plugin_overlay_element);
 }
 
 /**@type {Map<string, HTMLElement>}*/
@@ -1476,30 +1476,30 @@ let element_map=new Map;
 let box_map=new Map;
 
 class YTDPlayerElement extends HTMLElement {
-	active_nav=false
+	active_nav=false;
 	/**@type {{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null} */
-	player_=null
+	player_=null;
 	playerResolver_={
 		promise: Promise.resolve()
-	}
-	init_nav=false
-	is_watch_page_active=false
+	};
+	init_nav=false;
+	is_watch_page_active=false;
 	pause() {}
 	play() {}
 }
 /**
  * @type {YTDPlayerElement | null}
  */
-let ytd_player=null
+let ytd_player=null;
 /**
  * @param {HTMLElement} element
  */
 function on_ytd_player(element) {
-	const element_id="ytd-player"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	ytd_player=any_c(element,YTDPlayerElement)
-	window.ytd_player=element
+	const element_id="ytd-player";
+	console.log(`on ${element_id}`);
+	element_map.set(element_id,element);
+	ytd_player=any_c(element,YTDPlayerElement);
+	window.ytd_player=element;
 }
 
 /**
@@ -1507,7 +1507,7 @@ function on_ytd_player(element) {
  * @arg {CustomEventType} event
  * ID(51)
  * */
-function event_find_ytd_player(event){
+function event_find_ytd_player(event) {
 	const current_message_id=51;
 	let {type,detail,port}=event;
 	observer_default_action(type,current_message_id);
@@ -1538,26 +1538,26 @@ dom_observer.addEventListener('ytd-player',event_ytd_player);
 
 // visibilitychange handler (resume video when page is visible again)
 function fire_on_visibility_change_restart_video_playback() {
-	if(!is_watch_page_active()) return
-	if(!ytd_player||!ytd_player.player_) return
-	if(ytd_player.player_.getPlayerState()!=2) return
-	ytd_player.pause()
-	ytd_player.play()
+	if(!is_watch_page_active()) return;
+	if(!ytd_player||!ytd_player.player_) return;
+	if(ytd_player.player_.getPlayerState()!=2) return;
+	ytd_player.pause();
+	ytd_player.play();
 }
 
 class HTMLVideoElementArrayBox {
 	/**@readonly*/
-	type="HTMLVideoElementArrayBox"
+	type="HTMLVideoElementArrayBox";
 	/** @param {HTMLVideoElement[]} value */
 	constructor(value) {
-		this.value=value
+		this.value=value;
 	}
 }
 
 class YTNavigateFinishEvent {
 	detail={
-		pageType:"any"
-	}
+		pageType: "any"
+	};
 }
 
 /**
@@ -1572,19 +1572,19 @@ function log_page_type_change(event) {
 	let {detail}=event;
 	if(!detail) return;
 	if(has_ytd_page_mgr()) {
-		if(last_page_type !== detail.pageType){
+		if(last_page_type!==detail.pageType) {
 			let page_manager_current_tag_name=get_ytd_page_mgr().getCurrentPage().tagName.toLowerCase();
 			let nav_load_str=`last_page_type_change={current_page: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 			page_type_changes.push(nav_load_str);
 			console.log(nav_load_str);
-			last_page_type = detail.pageType;
+			last_page_type=detail.pageType;
 		}
 		return;
 	}
 	let t=this;
 	function found_handler() {
-		log_page_type_change.call(t, event);
-		let index = on_ytd_page_mgr_found.indexOf(found_handler);
+		log_page_type_change.call(t,event);
+		let index=on_ytd_page_mgr_found.indexOf(found_handler);
 		on_ytd_page_mgr_found.splice(index,1);
 	}
 	on_ytd_page_mgr_found.push(found_handler);
@@ -1616,16 +1616,16 @@ on_yt_navigate_finish.push(log_current_video_data);
  * @type {YtdAppElement | null}
  */
 // yt display app
-let ytd_app=null
-let vis_imm = false;
+let ytd_app=null;
+let vis_imm=false;
 /**
  * @param {HTMLElement} element
  */
 function on_ytd_app(element) {
-	const element_id="ytd-app"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	ytd_app=YtdAppElement.cast(element)
+	const element_id="ytd-app";
+	console.log(`on ${element_id}`);
+	element_map.set(element_id,element);
+	ytd_app=YtdAppElement.cast(element);
 	window.ytd_app=element;
 	ytd_app.addEventListener("yt-navigate-finish",function(/**@type {YTNavigateFinishEvent}*/ event) {
 		for(let handler of on_yt_navigate_finish) {
@@ -1692,45 +1692,45 @@ dom_observer.addEventListener('find-ytd-app',event_find_ytd_app);
 function attach_volume_range_to_page() {
 	if(!ytd_app) return;
 	if(!ytd_app.__shady_children.masthead) return;
-	let player_masthead = ytd_app.__shady_children.masthead;
+	let player_masthead=ytd_app.__shady_children.masthead;
 	if(!player_masthead.$) return;
 	if(!ytd_app.volume_range) {
-		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,gain_controller)
+		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,gain_controller);
 		let container_dom_parent=player_masthead.$.container.children.center;
 		let use_container=true;
-		if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent)
+		if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent);
 		else ytd_app.volume_range.attach_to_element(ytd_app);
 	}
 }
 
-let ui_plugin_css_enabled=false
+let ui_plugin_css_enabled=false;
 function ui_css_toggle_click_handler() {
 	if(ui_plugin_css_enabled) {
 		if(ytd_app&&ytd_app.ui_plugin_style_element) {
-			ytd_app.ui_plugin_style_element.remove()
+			ytd_app.ui_plugin_style_element.remove();
 		}
-		ui_plugin_css_enabled=false
+		ui_plugin_css_enabled=false;
 	} else {
 		if(ytd_app&&ytd_app.ui_plugin_style_element) {
-			document.head.append(ytd_app.ui_plugin_style_element)
+			document.head.append(ytd_app.ui_plugin_style_element);
 		}
-		ui_plugin_css_enabled=true
+		ui_plugin_css_enabled=true;
 	}
 }
 
 /**
  * @type {HTMLElement | null}
  */
-let yt_playlist_manager=null
+let yt_playlist_manager=null;
 /**
  * @param {HTMLElement} element
  */
 function on_yt_playlist_manager(element) {
-	const element_id="yt-playlist-manager"
-	console.log(`on ${element_id}`)
-	element_map.set(element_id,element)
-	yt_playlist_manager=element
-	window.yt_playlist_manager=element
+	const element_id="yt-playlist-manager";
+	console.log(`on ${element_id}`);
+	element_map.set(element_id,element);
+	yt_playlist_manager=element;
+	window.yt_playlist_manager=element;
 }
 /**
  * @this {DomObserver}
@@ -1751,8 +1751,8 @@ dom_observer.addEventListener("find-yt-playlist-manager",event_find_yt_playlist_
 /**@arg {number} value @returns {ReturnType<typeof setTimeout>} */
 function as_timeout_type(value) {
 	/**@type {any} */
-	let value_any=value
-	return value_any
+	let value_any=value;
+	return value_any;
 }
 
 /**@type {[number, number][]}*/
@@ -1776,7 +1776,7 @@ function on_port_message(event) {
 	if(debug) console.log('msg_port:message %o',event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
 	if(slow_message_event) {
-		setTimeout(dispatch_observer_event, message_channel_loop_delay);
+		setTimeout(dispatch_observer_event,message_channel_loop_delay);
 		return;
 	}
 	dispatch_observer_event();
@@ -1784,10 +1784,10 @@ function on_port_message(event) {
 
 class MessageChannelWithReadonlyPorts {
 	get port1() {
-		return Object.freeze(MessageChannel.prototype.port1)
+		return Object.freeze(MessageChannel.prototype.port1);
 	}
 	get port2() {
-		return Object.freeze(MessageChannel.prototype.port2)
+		return Object.freeze(MessageChannel.prototype.port2);
 	}
 }
 
@@ -1795,12 +1795,12 @@ class MessageChannelWithReadonlyPorts {
 let message_channel=null;
 /**@return {Readonly<MessageChannelWithReadonlyPorts>} */
 function create_message_channel() {
-	let channel=Object.freeze(new MessageChannel())
-	let {port1,port2}=channel
-	port2.onmessage=on_port_message
-	Object.freeze(port1)
-	Object.freeze(port2)
-	return channel
+	let channel=Object.freeze(new MessageChannel());
+	let {port1,port2}=channel;
+	port2.onmessage=on_port_message;
+	Object.freeze(port1);
+	Object.freeze(port2);
+	return channel;
 }
 
 function fire_observer_event() {
@@ -1832,7 +1832,7 @@ message_channel=create_message_channel();
 let found_element_arr=[
 	"yt-playlist-manager",
 	"video",
-]
+];
 /**@type {string}*/
 let find_element_tag_name='video';
 let found_element=false;
@@ -1854,17 +1854,17 @@ function observer_default_action(type,message_id) {
 }
 /**@arg {Document|Element} node @arg {string} child_node_tag_name*/
 function get_html_elements(node,child_node_tag_name) {
-	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name)
+	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);
 }
 /** @this {DomObserver} @arg {CustomEventType} event */
 function on_yt_page_type_changed(event) {
-	let {detail,port}=event
-	if(this.trace) console.log("yt-page-type-changed")
+	let {detail,port}=event;
+	if(this.trace) console.log("yt-page-type-changed");
 	this.dispatchEvent({
 		type: port_state.current_event_type,
 		detail,
 		port
-	})
+	});
 }
 dom_observer.addEventListener('yt-page-type-changed',on_yt_page_type_changed);
 
@@ -1874,26 +1874,26 @@ dom_observer.addEventListener('yt-page-type-changed',on_yt_page_type_changed);
  * ID(70)
  */
 function event_video_element_list(event) {
-	const current_message_id=70
-	let {type,detail,port}=event
-	observer_default_action(type,current_message_id)
+	const current_message_id=70;
+	let {type,detail,port}=event;
+	observer_default_action(type,current_message_id);
 	if(!box_map.has("video-list")) {
-		console.log('no video element list')
-		return
+		console.log('no video element list');
+		return;
 	}
-	this.dispatchEvent({type: "plugin-activate",detail,port})
+	this.dispatchEvent({type: "plugin-activate",detail,port});
 }
-dom_observer.addEventListener('video',event_video_element_list)
+dom_observer.addEventListener('video',event_video_element_list);
 function event_plugin_activate() {
 	if(is_watch_page_active())
-		yt_watch_page_loaded_handler()
+		yt_watch_page_loaded_handler();
 }
-dom_observer.addEventListener('plugin-activate',event_plugin_activate)
+dom_observer.addEventListener('plugin-activate',event_plugin_activate);
 const realHTMLElement=HTMLElement;
 /**
  * @type {((event:{})=>void)[]}
  */
-var on_yt_navigate=[]
+var on_yt_navigate=[];
 // spell:words monospace
 let player_overlay_style_str=`
 		position: absolute;
@@ -1922,39 +1922,39 @@ let player_overlay_style_str=`
 		-webkit-mask-clip: text;
 		user-select: none;
 		width: 10px;
-	`
-let waiting_for_ytd_player=false
-let current_timeout=null
+	`;
+let waiting_for_ytd_player=false;
+let current_timeout=null;
 function init_ui_plugin() {
-	if(waiting_for_ytd_player) return
+	if(waiting_for_ytd_player) return;
 	if(current_timeout>0) {
-		clearTimeout(current_timeout)
-		current_timeout=0
+		clearTimeout(current_timeout);
+		current_timeout=0;
 	}
 	if(!ytd_player||!ytd_player.player_) {
-		console.log('wait for player')
-		waiting_for_ytd_player=true
+		console.log('wait for player');
+		waiting_for_ytd_player=true;
 		wait_for_yt_player().then(function() {
-			waiting_for_ytd_player=false
-			init_ui_plugin()
-		})
-		return
+			waiting_for_ytd_player=false;
+			init_ui_plugin();
+		});
+		return;
 	}
 	if(!ytd_player.player_.getVideoData) {
-		current_timeout=setTimeout(init_ui_plugin,0)
-		return
+		current_timeout=setTimeout(init_ui_plugin,0);
+		return;
 	}
 	if(ytd_player.active_nav) {
-		console.log('ytd-player:active_nav = true')
-		return
+		console.log('ytd-player:active_nav = true');
+		return;
 	}
-	current_timeout=setTimeout(activate_nav,0)
+	current_timeout=setTimeout(activate_nav,0);
 }
 async function wait_for_yt_player() {
 	if(!ytd_player) {
-		throw new Error("No ytd_player to await")
+		throw new Error("No ytd_player to await");
 	}
-	await ytd_player.playerResolver_.promise
+	await ytd_player.playerResolver_.promise;
 }
 /**
  * @param {HTMLElement} element
@@ -1963,74 +1963,74 @@ function sumOffset(element) {
 	let cache={
 		top_offset: 0,
 		left_offset: 0
-	}
+	};
 	/**@type {HTMLElement | null} */
-	let cur_element=null
-	cur_element=element
+	let cur_element=null;
+	cur_element=element;
 	for(;;) {
-		cache.top_offset+=cur_element.offsetTop
-		cache.left_offset+=cur_element.offsetLeft
+		cache.top_offset+=cur_element.offsetTop;
+		cache.left_offset+=cur_element.offsetLeft;
 		/**@type {Element|null}*/
-		let next_element=cur_element.offsetParent
+		let next_element=cur_element.offsetParent;
 		if(next_element instanceof HTMLElement) {
-			cur_element=next_element
+			cur_element=next_element;
 		} else {
-			break
+			break;
 		}
 	}
-	return cache
+	return cache;
 }
 /**@type {PluginOverlayElement | null} */
 let plugin_overlay_element=null;
 function fix_offset() {
-	if(!ytd_player) return
-	if(!plugin_overlay_element) return
-	let player_offset=sumOffset(ytd_player)
-	plugin_overlay_element.style.top=player_offset.top_offset+"px"
-	plugin_overlay_element.style.left=player_offset.left_offset+"px"
+	if(!ytd_player) return;
+	if(!plugin_overlay_element) return;
+	let player_offset=sumOffset(ytd_player);
+	plugin_overlay_element.style.top=player_offset.top_offset+"px";
+	plugin_overlay_element.style.left=player_offset.left_offset+"px";
 }
-let title_text_overlay_enabled=true
+let title_text_overlay_enabled=true;
 /**@type {HTMLDivElement | null}*/
-let overlay_hide_ui_input=null
+let overlay_hide_ui_input=null;
 /**@type {HTMLDivElement | null}*/
-let overlay_content_div=null
+let overlay_content_div=null;
 function title_text_overlay_update() {
-	title_display_update()
-	if(!overlay_hide_ui_input) return
+	title_display_update();
+	if(!overlay_hide_ui_input) return;
 	if(title_text_overlay_enabled) {
-		overlay_hide_ui_input.style.color=''
+		overlay_hide_ui_input.style.color='';
 	} else {
-		overlay_hide_ui_input.style.color='#888'
+		overlay_hide_ui_input.style.color='#888';
 	}
 }
-let title_save=localStorage.title_save_data
+let title_save=localStorage.title_save_data;
 if(!title_save) {
-	title_save=localStorage.title_save_data='{"value":false}'
+	title_save=localStorage.title_save_data='{"value":false}';
 }
-let title_on=JSON.parse(title_save).value
+let title_on=JSON.parse(title_save).value;
 function title_display_update() {
-	if(!overlay_content_div) return
+	if(!overlay_content_div) return;
 	if(title_on&&title_text_overlay_enabled) {
-		overlay_content_div.style.display=""
+		overlay_content_div.style.display="";
 	} else {
-		overlay_content_div.style.display="none"
+		overlay_content_div.style.display="none";
 	}
 }
 /**@type {(detail:any)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}}*/
 function is_yt_fullscreen_change_action(detail) {
-	return detail.actionName==='yt-fullscreen-change-action'
+	return detail.actionName==='yt-fullscreen-change-action';
 }
 /**
  * @param {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event
  */
 function on_yt_action(event) {
-	let {detail}=event
+	let {detail}=event;
 	if(is_yt_fullscreen_change_action(detail)) {
-		let {args}=detail
-		fix_offset()
-		setTimeout(fix_offset)
-		title_text_overlay_enabled=!args[0]
-		title_text_overlay_update()
+		let {args}=detail;
+		fix_offset();
+		setTimeout(fix_offset);
+		title_text_overlay_enabled=!args[0];
+		title_text_overlay_update();
 	}
 }
 document.addEventListener('yt-action',on_yt_action);
@@ -2041,9 +2041,9 @@ function update_plugin_overlay() {
 }
 
 function title_display_toggle() {
-	title_on=!title_on
-	title_display_update()
-	localStorage.title_save_data=JSON.stringify({value: title_on})
+	title_on=!title_on;
+	title_display_update();
+	localStorage.title_save_data=JSON.stringify({value: title_on});
 }
 function update_ui_plugin() {
 	if(debug) console.log('update_ui_plugin');
@@ -2051,19 +2051,19 @@ function update_ui_plugin() {
 }
 function yt_watch_page_loaded_handler() {
 	if(!has_ytd_page_mgr()) {
-		console.log("no ytd-page-manager")
-		return
+		console.log("no ytd-page-manager");
+		return;
 	}
-	overlay_content_div=document.createElement("div")
-	var input_modify_css_style=document.createElement("div")
-	overlay_hide_ui_input=document.createElement("div")
+	overlay_content_div=document.createElement("div");
+	var input_modify_css_style=document.createElement("div");
+	overlay_hide_ui_input=document.createElement("div");
 	if(!plugin_overlay_element) {
-		let overlay_element=PluginOverlayElement.cast(document.createElement("div"))
-		g_api.plugin_overlay_element=overlay_element
-		overlay_element.id="mz_overlay"
+		let overlay_element=PluginOverlayElement.cast(document.createElement("div"));
+		g_api.plugin_overlay_element=overlay_element;
+		overlay_element.id="mz_overlay";
 		plugin_overlay_element=overlay_element;
 	}
-	for(let i;i=plugin_overlay_element.childNodes[0];) i.remove()
+	for(let i;i=plugin_overlay_element.childNodes[0];) i.remove();
 	overlay_content_div.style.userSelect="all";
 	overlay_content_div.style.width='max-content';
 	plugin_overlay_element.append(overlay_content_div);
@@ -2084,40 +2084,40 @@ function yt_watch_page_loaded_handler() {
 	input_modify_css_style.innerHTML="C";
 	input_modify_css_style.onclick=ui_css_toggle_click_handler;
 }
-g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler
+g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler;
 class PluginOverlayElement extends HTMLDivElement {
 	/**@arg {HTMLDivElement} value @return {PluginOverlayElement} */
 	static cast(value) {
-		return any_c(value,PluginOverlayElement)
+		return any_c(value,PluginOverlayElement);
 	}
 	onupdate() {}
 }
 window.addEventListener("resize",function() {
-	plugin_overlay_element&&plugin_overlay_element.onupdate()
-})
+	plugin_overlay_element&&plugin_overlay_element.onupdate();
+});
 function activate_nav() {
-	if(debug) console.log('activate_nav:fire')
+	if(debug) console.log('activate_nav:fire');
 	VolumeRange.create();
-	if(!ytd_player) return
-	if(!has_ytd_page_mgr()) return
-	if(ytd_player.active_nav) return
-	if(!plugin_overlay_element) return
-	ytd_player.active_nav=true
-	plugin_overlay_element.setAttribute("style",player_overlay_style_str)
-	plugin_overlay_element.onupdate()
-	get_ytd_page_mgr().getCurrentPage().append(plugin_overlay_element)
+	if(!ytd_player) return;
+	if(!has_ytd_page_mgr()) return;
+	if(ytd_player.active_nav) return;
+	if(!plugin_overlay_element) return;
+	ytd_player.active_nav=true;
+	plugin_overlay_element.setAttribute("style",player_overlay_style_str);
+	plugin_overlay_element.onupdate();
+	get_ytd_page_mgr().getCurrentPage().append(plugin_overlay_element);
 	log_current_video_data();
 	get_ytd_page_mgr().addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
 		if(get_ytd_page_mgr().getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
-			ytd_player.is_watch_page_active=false
-			plugin_overlay_element&&plugin_overlay_element.remove()
-			return
+			ytd_player.is_watch_page_active=false;
+			plugin_overlay_element&&plugin_overlay_element.remove();
+			return;
 		} else {
-			ytd_player.is_watch_page_active=true
+			ytd_player.is_watch_page_active=true;
 		}
-		requestAnimationFrame(page_changed_next_frame)
-	})
+		requestAnimationFrame(page_changed_next_frame);
+	});
 }
 let volume_plugin_style_source=`
 	#rh_css {
@@ -2256,25 +2256,25 @@ class HTMLMediaElementGainController {
 	}
 }
 /**@type {HTMLMediaElementGainController | null} */
-let gain_controller=null
+let gain_controller=null;
 /**@returns {HTMLMediaElementGainController} */
 function on_gain_controller() {
 	/**@type {HTMLMediaElementGainController} */
-	let controller=g_api.gain_controller
+	let controller=g_api.gain_controller;
 	if(!controller) {
 		controller=new HTMLMediaElementGainController;
 		g_api.gain_controller=controller;
 	}
-	return controller
+	return controller;
 }
 class VolumeRange {
-	static enabled = true
+	static enabled=true;
 	static create() {
-		if(!this.enabled) return
-		if(debug) console.log('create VolumeRange')
-		if(!gain_controller) gain_controller=on_gain_controller()
-		if(!gain_controller) return
-		gain_controller.attach_element_list(document.querySelectorAll("video"))
+		if(!this.enabled) return;
+		if(debug) console.log('create VolumeRange');
+		if(!gain_controller) gain_controller=on_gain_controller();
+		if(!gain_controller) return;
+		gain_controller.attach_element_list(document.querySelectorAll("video"));
 		attach_volume_range_to_page();
 	}
 	/**
@@ -2284,32 +2284,32 @@ class VolumeRange {
 	 * @param {HTMLMediaElementGainController} obj
 	 */
 	constructor(min,max,overdrive,obj) {
-		this.cache=true
-		this.max=max
-		this.min=min
-		this.overdrive=overdrive
-		this.gain_controller=obj
+		this.cache=true;
+		this.max=max;
+		this.min=min;
+		this.overdrive=overdrive;
+		this.gain_controller=obj;
 	}
 	/**
 	 * @param {number} gain
 	 */
 	setGain(gain) {
-		this.gain_controller.setGain(gain)
-		this.setGainCache(gain)
+		this.gain_controller.setGain(gain);
+		this.setGainCache(gain);
 	}
 	/**
 	 * @param {any} gain
 	 */
 	setGainCache(gain) {
-		if(!this.cache) return
-		this.setHistoryStateCache('filter_gain',gain)
+		if(!this.cache) return;
+		this.setHistoryStateCache('filter_gain',gain);
 	}
 	getGainCache() {
-		if(!this.cache) return null
+		if(!this.cache) return null;
 		if(typeof history.state=='object') {
-			return this.getHistoryStateCache('filter_gain')
+			return this.getHistoryStateCache('filter_gain');
 		}
-		return null
+		return null;
 	}
 	/**
 	 * @param {string} key
@@ -2317,51 +2317,51 @@ class VolumeRange {
 	 */
 	setHistoryStateCache(key,value) {
 		if(typeof history.state==='object') {
-			history.replaceState({...history.state,[key]: value},document.title)
+			history.replaceState({...history.state,[key]: value},document.title);
 		} else {
-			console.log('history-replace',[history.state])
-			history.replaceState({[key]: value},document.title)
+			console.log('history-replace',[history.state]);
+			history.replaceState({[key]: value},document.title);
 		}
 	}
 	/**
 	 * @param {string} key
 	 */
 	getHistoryStateCache(key) {
-		if(!this.cache) return null
+		if(!this.cache) return null;
 		if(history.state!==null&&history.state.hasOwnProperty(key)) {
-			let {[key]: value}=history.state
-			return value
+			let {[key]: value}=history.state;
+			return value;
 		}
-		return null
+		return null;
 	}
 	loadCachedGain() {
-		if(!this.cache) return 1*this.max
-		console.log('history-cache',[history.state])
-		let c_gain=this.getGainCache()
-		if(c_gain===null) c_gain=1
-		return c_gain*this.max
+		if(!this.cache) return 1*this.max;
+		console.log('history-cache',[history.state]);
+		let c_gain=this.getGainCache();
+		if(c_gain===null) c_gain=1;
+		return c_gain*this.max;
 	}
 	max_compressor_reduction=-0.00011033167538698763;
 	/**
 	 * @param {KeyboardEvent} event
 	 */
 	on_key_down(event) {
-		if(!this.range_element) return
-		this.gain_controller.last_event=event
+		if(!this.range_element) return;
+		this.gain_controller.last_event=event;
 		if(event.key=="f") {
-			var compressor_reduction_factor=this.gain_controller.dynamics_compressor.reduction
+			var compressor_reduction_factor=this.gain_controller.dynamics_compressor.reduction;
 			if(compressor_reduction_factor>0) {
-				console.log('+',compressor_reduction_factor)
-				return
+				console.log('+',compressor_reduction_factor);
+				return;
 			}
-			let new_gain=Math.log((compressor_reduction_factor)*-1)
-			if(new_gain>0) return
-			new_gain=(new_gain*-1)/(Math.log(this.max_compressor_reduction*-1)*-1/2)
-			console.log('ng',new_gain,compressor_reduction_factor)
-			if(new_gain>this.overdrive) new_gain=this.overdrive
-			if(new_gain<this.min) new_gain=this.min
-			this.range_element.value=""+Math.floor(this.max*new_gain)
-			this.setGain(new_gain)
+			let new_gain=Math.log((compressor_reduction_factor)*-1);
+			if(new_gain>0) return;
+			new_gain=(new_gain*-1)/(Math.log(this.max_compressor_reduction*-1)*-1/2);
+			console.log('ng',new_gain,compressor_reduction_factor);
+			if(new_gain>this.overdrive) new_gain=this.overdrive;
+			if(new_gain<this.min) new_gain=this.min;
+			this.range_element.value=""+Math.floor(this.max*new_gain);
+			this.setGain(new_gain);
 		}
 	}
 	/**
@@ -2369,40 +2369,40 @@ class VolumeRange {
 	 */
 	attach_to_element(view_parent) {
 		if(!this.view_div) {
-			let element=document.getElementById('rh_css')
+			let element=document.getElementById('rh_css');
 			if(!element) {
-				element=document.createElement("div")
-				element.id='rh_css'
+				element=document.createElement("div");
+				element.id='rh_css';
 			}
-			this.view_div=element
+			this.view_div=element;
 		}
 		if(!this.range_element) {
-			let element=document.getElementById('i_r_css')
-			if(element instanceof HTMLInputElement) this.range_element=element
+			let element=document.getElementById('i_r_css');
+			if(element instanceof HTMLInputElement) this.range_element=element;
 			if(!this.range_element) {
-				if(element) element.remove()
-				this.range_element=document.createElement('input')
-				this.range_element.type="range"
-				this.range_element.id="i_r_css"
-				let range_style=this.range_element.style
-				range_style.width="calc(100% + 40px + 8px + 40px)"
-				range_style.marginLeft="0"
-				range_style.marginRight="0"
+				if(element) element.remove();
+				this.range_element=document.createElement('input');
+				this.range_element.type="range";
+				this.range_element.id="i_r_css";
+				let range_style=this.range_element.style;
+				range_style.width="calc(100% + 40px + 8px + 40px)";
+				range_style.marginLeft="0";
+				range_style.marginRight="0";
 			}
 			this.range_element.oninput=() => {
-				if(!this.range_element) return
-				let range_value=Number.parseInt(this.range_element.value,10)
-				this.setGain(range_value/this.max)
-			}
-			this.range_element.onkeydown=(event) => this.on_key_down(event)
-			this.range_element.min=""+this.min
-			this.range_element.max=""+this.overdrive
-			let new_gain=this.loadCachedGain()
-			this.range_element.value=""+new_gain
-			this.setGain(new_gain/this.max)
-			this.view_div.append(this.range_element)
+				if(!this.range_element) return;
+				let range_value=Number.parseInt(this.range_element.value,10);
+				this.setGain(range_value/this.max);
+			};
+			this.range_element.onkeydown=(event) => this.on_key_down(event);
+			this.range_element.min=""+this.min;
+			this.range_element.max=""+this.overdrive;
+			let new_gain=this.loadCachedGain();
+			this.range_element.value=""+new_gain;
+			this.setGain(new_gain/this.max);
+			this.view_div.append(this.range_element);
 		}
-		view_parent.insertAdjacentElement("beforebegin",this.view_div)
+		view_parent.insertAdjacentElement("beforebegin",this.view_div);
 	}
 }
-if(top===window) dispatch_observer_event()
+if(top===window) dispatch_observer_event();
