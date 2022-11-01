@@ -1,6 +1,6 @@
-import {StackVM} from "../../vm/StackVM"
-import {BoxVerify} from "../BoxVerify"
-import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate"
+import {StackVM} from "../../vm/StackVM.ts"
+import {BoxVerify} from "../BoxVerify.ts"
+import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate.ts"
 export class temporary_box_StackVM
 	extends TemporaryBoxTemplate<StackVM>
 	implements BoxVerify<temporary_box_StackVM,"temporary_box_StackVM"> {
