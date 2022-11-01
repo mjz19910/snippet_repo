@@ -23,7 +23,7 @@ G{group number as int}: {description}
 
 %(commit prefix) can be any of
 - G{int}
-- README 
+- README
 - JSSnippet
 - JSSnipReadme
 - JSSnipGroup{int}
