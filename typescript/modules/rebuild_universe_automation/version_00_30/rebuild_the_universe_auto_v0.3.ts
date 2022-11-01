@@ -279,7 +279,10 @@ class NewableFunctionBoxImpl {
 	}
 }
 class InstructionCallImpl {
-	type: 'call'='call'
+	type: 'call'
+	constructor() {
+		this.type='call'
+	}
 	debug: boolean=false
 	handle_as_fn_box(vm: StackVM,fn_box: Box,target_this: Box,arg_arr: Box[]) {
 		if(typeof fn_box!='object') {
@@ -456,7 +459,10 @@ class InstructionCallImpl {
 
 }
 class InstructionConstructImpl {
-	type: 'construct'='construct'
+	type: 'construct'
+	constructor() {
+		this.type='construct'
+	}
 	run(vm: StackVM,ins: Construct) {
 		let number_of_arguments=ins[1]
 		if(typeof number_of_arguments!='number') throw new Error("Invalid")
@@ -490,8 +496,12 @@ class InstructionConstructImpl {
 	}
 }
 class InstructionCastImpl {
-	type: 'cast'='cast'
-	debug=false
+	type: 'cast'
+	debug: boolean
+	constructor() {
+		this.type='cast'
+		this.debug=false
+	}
 	push_box(vm: StackVM,value: {[x: string]: Box}): void {
 		vm.stack.push(new temporary_box_object_index_to_box(value))
 	}
@@ -561,7 +571,10 @@ class InstructionCastImpl {
 	}
 }
 class InstructionJeImpl {
-	type: 'je'='je'
+	type: 'je'
+	constructor() {
+		this.type='je'
+	}
 	run(vm: StackVM,instruction: Je) {
 		let [,target]=instruction
 		if(typeof target!='number') throw new Error("Invalid")
@@ -574,7 +587,10 @@ class InstructionJeImpl {
 	}
 }
 class InstructionJmpImpl {
-	type: 'jmp'='jmp'
+	type: 'jmp'
+	constructor() {
+		this.type='jmp'
+	}
 	run(vm: StackVM,instruction: Jump) {
 		let [,target]=instruction
 		if(typeof target!='number') throw new Error("Invalid")
@@ -585,7 +601,10 @@ class InstructionJmpImpl {
 	}
 }
 class InstructionModifyOpImpl {
-	type: 'modify_operand'='modify_operand'
+	type: 'modify_operand'
+	constructor() {
+		this.type='modify_operand'
+	}
 	run(vm: StackVM,instruction: ModifyOperand) {
 		let [,target,offset]=instruction
 		if(typeof target!='number') throw new Error("Invalid")
@@ -609,7 +628,10 @@ class InstructionModifyOpImpl {
 	}
 }
 class InstructionVMPushIPImpl {
-	type: "vm_push_ip"="vm_push_ip"
+	type: "vm_push_ip"
+	constructor() {
+		this.type='vm_push_ip'
+	}
 	run(vm: StackVM,_ins: VMPushIP) {
 		if(!vm.hasOwnProperty('push')) {
 			throw new Error("push_pc requires a stack")
@@ -622,7 +644,10 @@ class InstructionVMPushIPImpl {
 	}
 }
 class InstructionPushImpl {
-	type: 'push'='push'
+	type: 'push'
+	constructor() {
+		this.type='push'
+	}
 	run(vm: StackVM,instruction: Push) {
 		for(let i=0;i<instruction.length-1;i++) {
 			let item=instruction[i+1]
@@ -631,7 +656,10 @@ class InstructionPushImpl {
 	}
 }
 class InstructionDupImpl {
-	type: 'dup'='dup'
+	type: 'dup'
+	constructor() {
+		this.type='dup'
+	}
 	run(vm: StackVM,_ins: Dup) {
 		if(vm.stack.length===0) throw new Error("stack underflow")
 		vm.stack.push(vm.stack.at(-1))
