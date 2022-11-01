@@ -54,7 +54,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 	let fire_pause: any[]=[];
 	class RemoteTimerItem {
 		type: TimerTag;
-		local_id: ReturnType<typeof setTimeout>=-1;
+		local_id: NodeJS.Timeout=-1 as unknown as NodeJS.Timeout;
 		active=true;
 		constructor(type: TimerTag) {
 			this.type=type;
@@ -138,10 +138,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 				throw new Error("tag verification failed in RemoteTimer");
 			}
 		}
-		verify_state(state: {
-			local_id: number;
-			type: TimerTag;
-		},remote_id: number) {
+		verify_state(state: RemoteTimerItem,remote_id: number) {
 			if(!this.validate_state(state,remote_id)) {
 				console.info("Removed invalid local_state");
 				if(!this.m_api_info)
@@ -160,18 +157,15 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			}
 			return true;
 		}
-		validate_state(state: {
-			local_id?: number;
-			type: TimerTag;
-		},_remote_id: number) {
+		validate_state(state: RemoteTimerItem,_remote_id: number) {
 			return this.validate_tag(state.type);
 		}
-		clear(remote_id: number): number|null|undefined {
+		clear(remote_id: number): NodeJS.Timeout|null {
 			if(this.m_remote_id_to_state_map.has(remote_id)) {
 				let state=this.m_remote_id_to_state_map.get(remote_id)!;
 				this.verify_state(state,remote_id);
 				if(!this.m_api_info)
-					return;
+					return null;
 				if(state.type===TIMER_SINGLE) {
 					globalThis[this.m_api_info.clear_names.single](state.local_id);
 				}
@@ -203,7 +197,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 						t: typeof reply_message_types.from_worker;
 						v: {
 							t: typeof message_types.reply.clear.single;
-							v: [remote_id: number,local_id: number,msg_from: TimeoutClearSTy];
+							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearSTy];
 						};
 					}={
 						t: reply_message_types.from_worker,
@@ -220,7 +214,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 						t: typeof reply_message_types.from_worker;
 						v: {
 							t: typeof message_types.reply.clear.repeating;
-							v: [remote_id: number,local_id: number,msg_from: TimeoutClearRTy];
+							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearRTy];
 						};
 					}={
 						t: reply_message_types.from_worker,

@@ -1,1 +1,1 @@
-export let current_timeout: {value:number|null}={value:null}
+export let current_timeout: {value:ReturnType<typeof setTimeout>|null}={value:null}

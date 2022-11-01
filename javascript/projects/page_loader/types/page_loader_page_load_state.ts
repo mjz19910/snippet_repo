@@ -5,7 +5,10 @@ import {data} from "mod.js";
 import {on_page_data_loaded} from "on_page_data_loaded.js";
 import {fake} from "../../browser_fake_dom/src/mod.js";
 
-class FetchRequestState extends FetchStateFlags {
+class FetchRequestState {
+	silent=false
+	no_repl=false
+	follow_redirects=false
 	async on_redirect_status_code() {
 		if(!this.m_incoming_message) return
 		let msg_headers=this.m_incoming_message.headers
@@ -68,7 +71,7 @@ class FetchRequestState extends FetchStateFlags {
 		process.stdout.write('.')
 		await new Promise((accept,reject) => {
 			if(!this.m_incoming_message) return reject(new Error("No incoming message"))
-			this.m_incoming_message.on('data',(/** @type {Uint8Array} */ e) => {
+			this.m_incoming_message.on('data',(e:Uint8Array) => {
 				chunk_offset+=e.length
 				while(chunk_offset>chunk_sz) {
 					process.stdout.write('.')
@@ -113,7 +116,17 @@ class FetchRequestState extends FetchStateFlags {
 	 * @arg {Partial<FetchStateFlags>} [opts]
 	 */
 	constructor(url:string | null,opts?:Partial<FetchStateFlags>) {
-		super(opts);
+		if(opts) {
+			if(opts.no_repl!==void 0) {
+				this.no_repl=opts.no_repl
+			}
+			if(opts.follow_redirects!==void 0) {
+				this.follow_redirects=opts.follow_redirects
+			}
+			if(opts.silent!==void 0) {
+				this.silent=opts.silent
+			}
+		}
 		this.url=url;
 	}
 }

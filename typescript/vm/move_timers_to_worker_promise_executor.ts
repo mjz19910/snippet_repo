@@ -79,10 +79,10 @@ export function move_timers_to_worker_promise_executor(
 	window.remoteClearTimeout=remoteClearTimeout;
 	window.remoteClearInterval=remoteClearInterval;
 	if(!failed) {
-		window.setTimeout=remoteSetTimeout;
-		window.setInterval=remoteSetInterval;
-		window.clearTimeout=remoteClearTimeout;
-		window.clearInterval=remoteClearInterval;
+		window.setTimeout=remoteSetTimeout as typeof setTimeout;
+		window.setInterval=remoteSetInterval as typeof setInterval;
+		window.clearTimeout=remoteClearTimeout as typeof clearTimeout;
+		window.clearInterval=remoteClearInterval as typeof clearInterval;
 	}
 	return {
 		get() {

@@ -1,5 +1,5 @@
 export class YtdAppElement extends HTMLElement {
-	ytp_click_cint?: number
+	ytp_click_cint?: ReturnType<typeof setTimeout>;
 	app_is_visible?: number
 	ui_plugin_style_element: HTMLStyleElement|undefined
 	volume_range: {}|undefined
