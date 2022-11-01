@@ -45,6 +45,7 @@ import {DomExecDescription,DomInstructionStack} from "./typedef.js";
 import {NodeBox} from "../../../box/NodeBox.js";
 import {StackTraceType} from "./StackTraceType.js";
 import {AsyncFunctionBox} from "typescript/box/AsyncFunctionBox.js";
+import {WithId} from "./WithId.js";
 
 // ==UserScript==
 // @name			rebuild the universe auto
@@ -2330,7 +2331,6 @@ class VoidBoxImpl implements VoidBox {
 		return this.m_verify_name==='VoidBox'&&name==='VoidBox';
 	}
 }
-type WithId={id: string;};
 class AutoBuy {
 	debug_arr: any;
 	root_node: AsyncNodeRoot;
