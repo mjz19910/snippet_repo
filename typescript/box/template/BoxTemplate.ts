@@ -1,5 +1,5 @@
-import {BoxInterface} from "../BoxInterface"
-export type AnyTypeOfResult="string"|"number"|"bigint"|"boolean"|"symbol"|"undefined"|"object"|"function"
+import {BoxInterface} from "../BoxInterface.js"
+
 export abstract class BoxTemplate<
 	T extends string,
 	V extends object|Function|void
