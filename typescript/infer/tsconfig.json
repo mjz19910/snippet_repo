@@ -14,7 +14,7 @@
 	},
 	"include": [
 		"**/*"
-	],
+, "../modules/rebuild_universe_automation/rebuild_the_universe_auto.d.ts"	],
 	"exclude": [
 		"node_modules",
 		"**/*-spec.ts"
