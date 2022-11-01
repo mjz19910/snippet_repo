@@ -5,6 +5,7 @@ import {CSSStyleSheetBox} from "typescript/box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "typescript/box/CSSStyleSheetConstructorBox.js";
 import {EmptyArrayBox} from "typescript/box/EmptyArrayBox.js";
 import {Primitives} from "typescript/box/helper/Primitives.js";
+import {throw_never} from "typescript/box/helper/throw_never.js";
 import {InstructionTypeArrayBox} from "typescript/box/InstructionTypeArrayBox.js";
 import {InstructionTypeBox} from "typescript/box/InstructionTypeBox.js";
 import {NewableInstancePack} from "typescript/box/NewableInstancePack.js";
@@ -18,7 +19,9 @@ import {temporary_box_object_index_to_box} from "typescript/box/temporary_box/te
 import {temporary_box_StackVM} from "typescript/box/temporary_box/temporary_box_StackVM.js";
 import {VoidBox} from "typescript/box/VoidBox.js";
 import {WindowBox} from "typescript/box/WindowBox.js";
+import {throw_bad_error} from "typescript/ecma_262/lexer/test/throw_bad_error.js";
 import {DomInstructionType} from "typescript/vm/dom_instruction/DomInstructionType.js";
+import {DomTaggedPack} from "typescript/vm/dom_instruction/DomTaggedPack.js";
 import {Append} from "typescript/vm/instruction/Append.js";
 import {Cast} from "typescript/vm/instruction/Cast.js";
 import {Breakpoint} from "typescript/vm/instruction/debug/Breakpoint.js";
@@ -2806,7 +2809,7 @@ class AutoBuy {
 					}
 				} else {
 					let ins_item: DomInstructionType|null=null;
-					let ins_dep_item_2=null;
+					let ins_dep_item_2: DomInstructionType|null=null;
 					let instructions_at_2=ins_arr_map[prev_depth];
 					let ins_dep_at_2=depth_ins_map[prev_depth];
 					if(!instructions_at_2) break pd;
@@ -2817,10 +2820,28 @@ class AutoBuy {
 						ins_dep_item_2&&ins_dep_item_2[1]==='vm_block_trace'&&ins_dep_item_2[3]
 					) {
 						ins_item=ins_item[3];
-						ins_dep_item_2=ins_dep_item_2[3][0];
+						switch(ins_dep_item_2[2]) {
+							case 'begin': ins_dep_item_2=ins_dep_item_2[3]; break;
+							case 'block': throw new Error("Bad");
+							case 'call': {
+								if(ins_dep_item_2[3]===null) throw new Error("Bad");
+								ins_dep_item_2=ins_dep_item_2[3];
+							} break;
+							case 'tagged': {
+								let tag_pack: DomTaggedPack=ins_dep_item_2[3];
+								if(ins_dep_item_2[3]===null) throw new Error("Bad");
+								switch(tag_pack[0]) {
+									case 'dom': ins_dep_item_2=tag_pack[1]; break;
+									case 'dom_mem': throw new Error("Bad");
+									case 'vm': throw new Error("Bad");
+								}
+							}
+						}
 						debugger;
 					}
-					console.log('vm_2','dep',prev_depth,'in idx',input_instructions.indexOf(ins_dep_item_2));
+					if(ins_dep_item_2!==null) {
+						console.log('vm_2','dep',prev_depth,'in idx',input_instructions.indexOf(ins_dep_item_2));
+					}
 					let target_depth=prev_depth-1;
 					if(target_depth<0) {
 						break pd;
@@ -2869,7 +2890,7 @@ class AutoBuy {
 			if(ins[1]!==dep_ins[1]) console.assert(false,ins,dep_ins);
 			if(ins[1]==='vm_block_trace') {
 				flat_ins.push(ins);
-				flat_dep_ins.push([dep_ins[0],'vm_block_trace',ins[2],ins[3]]);
+				flat_dep_ins.push(ins);
 				flat_all_ins.push(dep_ins);
 				continue;
 			}
@@ -2889,11 +2910,11 @@ class AutoBuy {
 				} else {
 				}
 			}
-			if(ins[1]==='vm_block_trace'&&dep_ins[1]==='vm_block_trace') {
+			if(ins[1]==='vm_block_trace'&&dep_ins[1]==='vm_block_trace'&&ins[2]==='call'&&dep_ins[2]==='call') {
 				if(!ins[3]) throw 1;
 				if(!dep_ins[3]) throw 1;
-				let idx=flat_ins.indexOf(ins[3][0]);
-				let dep_idx=flat_dep_ins.indexOf(dep_ins[3][0]);
+				let idx=flat_ins.indexOf(ins[3]);
+				let dep_idx=flat_dep_ins.indexOf(dep_ins[3]);
 				flat_ins_dep_2.push([dep_ins[0],'vm_block_trace','block',dep_idx]);
 				instructions.push(['vm_block_trace','block',dep_ins[0],idx]);
 			}
@@ -2910,15 +2931,38 @@ class AutoBuy {
 					case "je": instructions.push([ins[1],ins[2]]); break;
 					case "jmp": instructions.push([ins[1],ins[2]]); break;
 					case "peek": instructions.push([ins[1],ins[2]]); break;
-					case "vm_block_trace": instructions.push([ins[1],ins[2],ins[3]]); break;
+					case "vm_block_trace": {
+						switch(ins[2]) {
+							case 'begin': instructions.push([ins[1],ins[2],ins[3]]); break;
+							case 'block': instructions.push([ins[1],ins[2],ins[3],ins[4]]); break;
+							case 'call': instructions.push([ins[1],ins[2],ins[3]]); break;
+							case 'tagged': instructions.push([ins[1],ins[2],ins[3]]); break;
+							case 'tagged_begin': instructions.push([ins[1],ins[2],ins[3]]); break;
+							case 'tagged_call': instructions.push([ins[1],ins[2],ins[3]]); break;
+						}
+					} break;
 					case 'modify_operand': instructions.push([ins[1],ins[2],ins[3]]); break;
-					default: instructions.push([ins[1]]); break;
+					case 'append': instructions.push([ins[1]]); break;
+					case 'breakpoint': instructions.push([ins[1]]); break;
+					case 'get': instructions.push([ins[1]]); break;
+					case 'drop': instructions.push([ins[1]]); break;
+					case 'dup': instructions.push([ins[1]]); break;
+					case 'halt': instructions.push([ins[1]]); break;
+					case 'nop': instructions.push([ins[1]]); break;
+					case 'return': instructions.push([ins[1]]); break;
+					case 'vm_push_args': instructions.push([ins[1]]); break;
+					case 'vm_push_ip': instructions.push([ins[1]]); break;
+					case 'vm_push_self': instructions.push([ins[1]]); break;
+					case 'vm_return': instructions.push([ins[1]]); break;
+					case 'push_window_object': instructions.push([ins[1]]); break;
+					case 'dom_filter': throw_bad_error(ins);
+					default: throw_never(ins);
 				}
 			}
-			if(dep_ins[1]==='vm_block_trace') {
+			if(dep_ins[1]==='vm_block_trace' && dep_ins[2] === 'tagged') {
 				let dx=dep_ins[3];
-				if(dx) {
-					let dep_idx=flat_dep_ins.indexOf(dx[0]);
+				if(dx && dx[0] == 'dom') {
+					let dep_idx=flat_dep_ins.indexOf(dx[1]);
 					flat_ins_dep_2.push([dep_ins[0],'vm_block_trace','call',dep_idx]);
 				}
 			}

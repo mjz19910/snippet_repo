@@ -1,4 +1,4 @@
-import {ReplyClearRepeating,ReplyClearSingle,ReplyFromWorker,ReplySetRepeating,ReplySetSingle,TimeoutClearS,TimeoutMessageR,TimeoutSetR,TimeoutSetS,WorkerReadyReply} from "typescript/src/constants.js"
+import {ReplyClearRepeating,ReplyClearSingle,ReplyFromWorker,ReplySetRepeating,ReplySetSingle,TimeoutClearS,TimeoutMessageReady,TimeoutSetR,TimeoutSetS,WorkerReadyReply} from "typescript/src/constants.js"
 import {MakeReplyData} from "./MakeReplyData.js"
 import {NoDataMsg} from "./NoDataMsg.js"
 import {NumInfoMsg} from "./NumInfoMsg.js"
@@ -15,11 +15,11 @@ export class TimerApi {
 	to_handle: (NoDataMsg|NumInfoMsg|RefVarMsg)[]
 	constructor() {
 		this.to_handle=[
-			{t: TimeoutMessageR},
+			{t: TimeoutMessageReady},
 			{t: TimeoutSetS},
 			{t: TimeoutSetR},
 			{t: TimeoutClearS},
-			new MakeReplyData(ReplyFromWorker,WorkerReadyReply,TimeoutMessageR,{}),
+			new MakeReplyData(ReplyFromWorker,WorkerReadyReply,TimeoutMessageReady,{}),
 			// TimeoutSetTypeS
 			new MakeReplyData(ReplyFromWorker,ReplySetSingle,{
 				var: 'local_id'

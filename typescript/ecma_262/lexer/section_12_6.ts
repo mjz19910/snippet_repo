@@ -72,6 +72,7 @@ export class section_12_6 extends LexerBase {
 		}
 		// $
 		if(str[index]==='$') return ["IdentifierPartChar",1]
+		// spell:disable-next-line
 		// <ZWNJ>
 		if(str[index]==='\u200C') return ["IdentifierPartChar",1]
 		// <ZWJ>

@@ -16,7 +16,7 @@ import {DomInstructionReturn} from "./DomInstructionReturn.js"
 import {DomInstructionHalt} from "./DomInstructionHalt.js"
 import {DomInstructionGet} from "./DomInstructionGet.js"
 import {DomInstructionNop} from "./DomInstructionNop.js"
-import {DomInstructionPushGlobalObject} from "./DomInstructionPushGlobalObject.js"
+import {DomInstructionPushWindowObject} from "./DomInstructionPushGlobalObject.js"
 import {DomInstructionDup} from "./DomInstructionDup.js"
 import {DomInstructionDrop} from "./DomInstructionDrop.js"
 import {DomInstructionCons} from "./DomInstructionCons.js"
@@ -43,7 +43,7 @@ export type DomInstructionType=
 	DomInstructionVMCall|
 	DomInstructionDup|
 	DomInstructionDrop|
-	DomInstructionPushGlobalObject|
+	DomInstructionPushWindowObject|
 	DomInstructionNop|
 	DomInstructionGet|
 	DomInstructionHalt|

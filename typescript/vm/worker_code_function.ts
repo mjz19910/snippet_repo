@@ -5,7 +5,7 @@ import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
 import {ReplyToWorkerTy} from "./ReplyToWorkerTy.js";
 import {TimeoutClearRTy} from "./TimeoutClearRTy.js";
 import {TimeoutClearSTy} from "./TimeoutClearSTy.js";
-import {TimeoutMessageRTy} from "./TimeoutMessageRTy.js";
+import {TimeoutMessageReplyTy} from "./TimeoutMessageReplyTy.js";
 import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy.js";
 import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
@@ -251,7 +251,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		v: UpdateMessageHandlerType;
 	};
 	type MessageTimeoutMessageR={
-		t: TimeoutMessageRTy;
+		t: TimeoutMessageReplyTy;
 		v: never;
 	};
 	type WorkerMessageType=MessageTimeoutClearR|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetS|MessageTimeoutSetR|MessageTimeoutClearS;

@@ -1,4 +1,3 @@
-import {DomInstructionFilter6} from "./DomInstructionFilter6.js"
-import {DomInstructionFilter7} from "./DomInstructionFilter7.js"
+type ArgAny4=[4,any,any,any,any];
 
-export type DomInstructionFilter=DomInstructionFilter6|DomInstructionFilter7
+export type DomInstructionFilter=[number,'dom_filter',ArgAny4];

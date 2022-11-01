@@ -1,1 +1,3 @@
-export type DomInstructionPushGlobalObject=[number,"push_global_object"]
+import {PushWindowObjectOpcode} from "../instruction/opcodes/PushWindowObjectOpcode.js";
+
+export type DomInstructionPushWindowObject=[number,PushWindowObjectOpcode]
