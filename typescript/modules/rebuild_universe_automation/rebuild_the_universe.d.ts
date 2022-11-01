@@ -11,62 +11,6 @@ export class AutoBuyState {
 
 declare global {
 	export interface Window {
-		atomepersecond: number;
-		//spell:words totalAtome
-		totalAtome: number;
-		prestige: number;
-		__testing__: false;
-		bonusAll(): void;
-		specialclick(index: number): void;
-		//spell:words lightreset
-		lightreset(): void;
-		timeplayed: number;
-		//spell:words totalAchi
-		totalAchi(): number;
-		//spell:words _targets_achi
-		_targets_achi: any[];
-		arUnit: any[];
-		Get_Unit_Type(v: any): any;
-		getUnitPromoCost(v: any): number;
-		Find_ToNext(v: number): number;
-		_targets: any[];
-		mainCalc(v: any): void;
-		tonext(v: number): void;
-		//spell:disable-next-line
-		specialsbought: number;
-		doc: Document;
-		rounding(v: number,x: any,y: any): string;
-		/*spell:disable-next-line*/
-		atomsinvest: number;
-		calcDiff(v: number): number;
-		/*spell:disable-next-line*/
-		noti: boolean;
-		gritter: any;
-		toTitleCase(v: string): string;
-		cint_arr: (string|number[])[];
-		/*spell:disable-next-line*/
-		adsbygoogle: {
-			op: any,
-			push(v: number): void;
-		};
-		/*spell:disable-next-line*/
-		plurials(v: string): string;
-		arrayNames: string[];
-		/*spell:disable-next-line*/
-		updateprogress(v: any): void;
-		seeUnit(v: number): any;
-		/*spell:disable-next-line*/
-		checkspec(): void;
-		/*spell:disable-next-line*/
-		achiSpec(): void;
-		Pace: {
-			bar: {
-				progress: number,
-				finish: Function;
-			};
-		};
-		_SM_Data: any;
-		on_on_timers_moved_first: boolean;
 	}
 	export var Window: {
 		prototype: Window;

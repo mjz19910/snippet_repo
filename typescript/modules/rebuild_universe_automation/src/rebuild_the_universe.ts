@@ -2442,76 +2442,76 @@ class AutoBuy {
 		}
 		let raw_instructions=`
 			// [none]
-			vm_push_self;${""}
+			vm_push_self;
 			// vm_self
-			cast,object_index;${""}
+			cast,object_index;
 			// vm_self as object_index
-			push,target_obj;${""}
+			push,target_obj;
 			// vm_self target_obj
-			get;${""}
+			get;
 			// vm_self.target_obj
-			dup;${""}
+			dup;
 			// vm_self.target_obj * 2
-			cast,object_index;${""}
+			cast,object_index;
 			// vm_self.target_obj target_obj<object_index>
-			push,background_audio;${""}
+			push,background_audio;
 			// vm_self.target_obj <object_index>target_obj "background_audio"
-			get;${""}
+			get;
 			// vm_self.target_obj target_obj.background_audio
-			dup;${""}
+			dup;
 			// vm_self.target_obj target_obj.background_audio * 2
-			cast,object_index;${""}
+			cast,object_index;
 			// vm_self.target_obj target_obj.background_audio <object_index>background_audio
-			push,play;${""}
+			push,play;
 			// vm_self.target_obj target_obj.background_audio <object_index>background_audio "play"
-			get;${""}
+			get;
 			// vm_self.target_obj target_obj.background_audio background_audio.play
-			cast,vm_function;${""}
+			cast,vm_function;
 			// vm_self.target_obj target_obj.background_audio (background_audio.play as vm_function)
-			call,int(2);${""}
+			call,int(2);
 			// want to "swap;drop;" here
 			// vm_self.target_obj Promise<void>
-			dup;${""}
+			dup;
 			// vm_self.target_obj Promise<void> * 2
-			cast,object_index;${""}
+			cast,object_index;
 			// vm_self.target_obj Promise<void> <object_index>(Promise<void>)
-			push,then;${""}
+			push,then;
 			// vm_self.target_obj Promise<void> <object_index>(Promise<void>) "then"
-			get;${""}
+			get;
 			// vm_self.target_obj Promise<void> (Promise<void>).then
-			cast,vm_function;${""}
+			cast,vm_function;
 			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function)
-			push,%o;${""}
+			push,%o;
 			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function) arg1
-			push,%o;${""}
+			push,%o;
 			// vm_self.target_obj Promise<void> ((Promise<void>).then as vm_function) arg1 arg2
-			call,int(4);${""}
+			call,int(4);
 			// vm_self.target_obj Promise<void>
-			drop;${""}
+			drop;
 			// vm_self.target_obj
-			drop;${""}
+			drop;
 			// [none]
-			push_global_object;${""}
+			push_global_object;
 			// window
-			dup;${""}
+			dup;
 			// window * 2
-			cast,object_index;${""}
+			cast,object_index;
 			// window <object_index>window
-			push,removeEventListener;${""}
+			push,removeEventListener;
 			// window <object_index>window "removeEventListener"
-			get;${""}
+			get;
 			// window window.removeEventListener
-			cast,vm_function;${""}
+			cast,vm_function;
 			// window (window.removeEventListener as vm_function)
-			push,click;${""}
+			push,click;
 			// window (window.removeEventListener as vm_function) "click"
-			vm_push_self;${""}
+			vm_push_self;
 			// window (window.removeEventListener as vm_function) "click" vm_self
-			call,int(4);${""}
+			call,int(4);
 			// vm_self
-			drop;${""}
+			drop;
 			// [none]
-			vm_return;${""}
+			vm_return;
 			`;
 		let instructions=StackVMParser.parse_instruction_stream_from_string(raw_instructions,[
 			function() {
