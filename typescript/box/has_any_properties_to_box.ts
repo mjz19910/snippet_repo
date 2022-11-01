@@ -1,23 +1,22 @@
-import {Box} from "./Box.js"
-import {is_obj_index_to_box} from "./is_namespace/is_obj_index_to_box.js"
-import {box_value_property_cache} from "./const.js"
-import {ObjectIndexToBox} from "./helper/ObjectIndexToBox.js"
-import {convert_to_type} from "./helper/convert_to_type.js"
+import {Box} from "./Box.js";
+import {is_obj_index_to_box} from "./is_namespace/is_obj_index_to_box.js";
+import {box_value_property_cache} from "./const.js";
+import {ObjectIndexToBox} from "./helper/ObjectIndexToBox.js";
+import {convert_to_type} from "./helper/convert_to_type.js";
 
 export function has_any_properties_to_box<
 	T extends string,
 	C extends ObjectIndexToBox<T>
->(v: {[x: string]: Box},props: T[]): v is C {
-	let on: typeof v|null=v
-	let has_some_to_return_box=false
+>(v: C,props: T[]): v is C {
+	let on: typeof v|null=v;
+	let has_some_to_return_box=false;
 	for(let i=0;i<props.length;i++) {
-		let vv=props[i]
-		if(convert_to_type<C,{}>(on)) {
-			if(is_obj_index_to_box(on,vv)) {
-				box_value_property_cache.add(vv)
-				has_some_to_return_box=true
-			}
-		}
+		let vv=props[i];
+		let val1=convert_to_type<C,ObjectIndexToBox<T>>(on);
+		let val2=convert_to_type<{},ObjectIndexToBox<T>>(val1);
+		if(!is_obj_index_to_box(val2,vv)) continue;
+		box_value_property_cache.add(vv);
+		has_some_to_return_box=true;
 	}
-	return has_some_to_return_box
+	return has_some_to_return_box;
 }
