@@ -1,4 +1,4 @@
-import {NonNull} from "../../../src/api.js"
+import {NonNull} from "../../../src/NonNull.js"
 import {Box} from "../../../box/Box.js"
 import {ExtractKey} from "../../../box/ExtractKey.js"
 

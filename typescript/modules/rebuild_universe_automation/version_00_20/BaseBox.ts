@@ -1,4 +1,4 @@
-import {NonNull} from "../../../src/api.js"
+import {NonNull} from "../../../src/NonNull.js"
 import {BaseBoxValue} from "./BaseBoxValue.js"
 
 export class BaseBox {

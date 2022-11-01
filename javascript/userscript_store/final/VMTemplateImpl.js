@@ -1,5 +1,5 @@
 export class VMTemplateImpl {
-	/** @arg {InstructionType} instruction */
+	/** @arg {import("../../../typescript/vm/instruction/InstructionType").InstructionType} instruction */
 	execute_instruction(instruction) {
 		switch(instruction[0]) {
 			default: {

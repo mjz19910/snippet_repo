@@ -2,7 +2,7 @@ import {VMTemplateImpl} from "./VMTemplateImpl";
 
 export class VMTemplate extends VMTemplateImpl {
 	/**
-	 * @param {InstructionType} instruction
+	 * @param {import("../../../typescript/vm/instruction/InstructionType").InstructionType} instruction
 	 */
 	execute_instruction(instruction) {
 		switch(instruction[0]) {
