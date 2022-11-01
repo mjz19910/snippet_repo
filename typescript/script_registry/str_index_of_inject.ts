@@ -1,5 +1,5 @@
 import {get_nearest_script} from "./get_nearest_script.js"
-import {is_in_ignored_from_src_fn, is_in_userscript, scripts} from "./mod"
+import {is_in_ignored_from_src_fn, is_in_userscript, scripts} from "./mod.js"
 import {register_obj_with_registry} from "./register_obj_with_registry.js"
 export function str_index_of_inject() {
 	let cur_script=get_nearest_script()

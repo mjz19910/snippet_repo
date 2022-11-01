@@ -1,4 +1,4 @@
-import {LOG_LEVEL_ERROR,LOG_LEVEL_INFO} from "../../../src/constants"
+import {LOG_LEVEL_ERROR,LOG_LEVEL_INFO} from "../../../src/constants.js"
 import {BaseNode} from "../../../vm/BaseNode.js"
 import {l_log_if} from "../../../vm/l_log_if.js"
 import {AsyncNodeRoot} from "./AsyncNodeRoot.js"

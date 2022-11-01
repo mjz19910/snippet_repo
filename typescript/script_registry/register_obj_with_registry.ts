@@ -1,6 +1,6 @@
 import {WeakFinalInfo} from "./WeakFinalInfo.js"
 import {HeldType} from "./HeldType.js"
-import {scripts_holders,scripts_tokens,weak_scripts_arr,script_id,script_registry} from "./mod"
+import {scripts_holders,scripts_tokens,weak_scripts_arr,script_id,script_registry} from "./mod.js"
 export function register_obj_with_registry(obj: any) {
 	let obj_id
 	let scripts_res: WeakFinalInfo[]=[]
