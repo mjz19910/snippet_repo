@@ -30,8 +30,8 @@ export class ParseResult {
 	 * @abstract
 	 * @type {ParseTree|undefined} */
 	parse_tree: ParseTree|undefined
-	/**@type {SyntaxError[]|undefined} */
+	/** @type {SyntaxError[]|undefined} */
 	parse_errors: SyntaxError[]|undefined
-	/**@type {SyntaxError[]|undefined} */
+	/** @type {SyntaxError[]|undefined} */
 	early_errors: SyntaxError[]|undefined
 }

@@ -3,7 +3,7 @@ import {LexerBase} from "./LexerBase.js"
 import {LexReturnType} from "./LexReturnType.js"
 export class section_12_5 extends LexerBase {
 	CommonToken(str: any,index: any): LexReturnType {
-		/**@type {['IdentifierName', 'PrivateIdentifier', 'Punctuator', 'NumericLiteral', 'StringLiteral', 'Template']} */
+		/** @type {['IdentifierName', 'PrivateIdentifier', 'Punctuator', 'NumericLiteral', 'StringLiteral', 'Template']} */
 		let common_token: ['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template']=['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template']
 		let acc: {[U in typeof common_token[number]]: (x: string,y: number) => LexReturnType}=new Dispatcher
 		let type=null,len=0

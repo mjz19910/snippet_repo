@@ -16,14 +16,12 @@ export class CSSStyleSheetConstructorBoxImplSupport {
 		this.constructor_type='CSSStyleSheet'
 		this.value=value
 	}
-	/**@arg {'function'} to_match */
 	as_type(to_match: 'function') {
 		if(typeof this.value===to_match) {
 			return this
 		}
 		return null
 	}
-	/**@arg {Box[]} arr */
 	factory(...arr: Box[]) {
 		let initial_state: NoArgsType={
 			state: 0,

@@ -3,13 +3,13 @@ import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.js"
 import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox.js"
 
 export class CSSStyleSheetConstructorBoxImpl {
-	/**@type {"constructor_box"} */
+	/** @type {"constructor_box"} */
 	type: "constructor_box"
-	/**@type {"javascript"} */
+	/** @type {"javascript"} */
 	from: "javascript"
-	/**@type {"CSSStyleSheet"} */
+	/** @type {"CSSStyleSheet"} */
 	instance_type: "CSSStyleSheet"
-	/**@type {"CSSStyleSheet"} */
+	/** @type {"CSSStyleSheet"} */
 	constructor_type: "CSSStyleSheet"
 	value: typeof CSSStyleSheet
 	constructor(value: typeof CSSStyleSheet) {

@@ -254,7 +254,7 @@ export class AutoBuyState {
 		let json_hist=JSON.stringify(history_arr_2)
 		let json_tag="JSON_HIST@"
 		let prev_hist=sessionStorage.getItem('history')
-		/**@type {string[]} */
+		/** @type {string[]} */
 		let data_arr: string[]
 		if(prev_hist&&prev_hist.startsWith(json_tag)) {
 			let hist_data=prev_hist.slice("JSON_HIST@".length)
@@ -274,10 +274,10 @@ export class AutoBuyState {
 			data_arr=[json_hist]
 		}
 		sessionStorage.history=`${json_tag}${data_arr.length.toFixed(0)}:${data_arr.join("|")}`
-		/**@type {(string|null)[]} */
+		/** @type {(string|null)[]} */
 		let time_played_arr: (string|null)[]=data_arr.map(_e => null)
 		if(sessionStorage.time_played_hist) {
-			/**@type {string} */
+			/** @type {string} */
 			let data: string=sessionStorage.time_played_hist
 			data.split("@").map(e => {
 				let [index,time_str]=e.split("|")
@@ -286,7 +286,7 @@ export class AutoBuyState {
 			})
 		}
 		time_played_arr[time_played_arr.length-1]=time_played_str
-		/**@type {[number, (string | null)][]} */
+		/** @type {[number, (string | null)][]} */
 		let t_play_tmp: [number,(string|null)][]=time_played_arr.map((e,i) => [i,e])
 		t_play_tmp=t_play_tmp.filter(e => e[1]!==null)
 		let t_play_tmp_2=t_play_tmp.map(e => `${e[0]}|${e[1]}`)

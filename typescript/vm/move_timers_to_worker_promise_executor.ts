@@ -29,8 +29,7 @@ export function move_timers_to_worker_promise_executor(
 	const worker_code_blob=new Blob(["(",worker_code_function.toString(),")()","\n//# sourceURL=$__.0"])
 	let id_generator=new UniqueIdGenerator
 	let timer=new Timer(id_generator,new TimerApi)
-	/**@type {PromiseExecutorHandle|null} */
-	let executor_handle=null
+	let executor_handle:PromiseExecutorHandle|null=null
 	if(!failed) {
 		executor_handle=new PromiseExecutorHandle(executor_accept,executor_reject)
 	}
