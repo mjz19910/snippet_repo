@@ -41,6 +41,7 @@
         "undebug",
         "Unregisters",
         "updateprogress",
-        "userscript"
+        "userscript",
+        "userscripts"
     ]
 }

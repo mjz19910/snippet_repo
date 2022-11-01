@@ -1,6 +1,4 @@
-function data_loader_parse_value(value: string) {
-	return parseInt(value,10)
-}
+import {data_loader_parse_value} from "./data_loader_parse_value.js";
 
 export class DataLoader {
 	store: Storage

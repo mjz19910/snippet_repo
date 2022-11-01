@@ -1,4 +1,5 @@
-import {Box} from "../../../box/Box.js"
+import {Box} from "typescript/box/Box.js";
+
 
 export class AsyncPromiseBoxImpl {
 	type: "function_box"

@@ -1,4 +1,4 @@
-import {seen_elements} from "./rebuild_the_universe_auto_v0.2.js"
+import {seen_elements} from "./rebuild_the_universe_entry_old.js"
 
 export function remove_bad_dom_script_element_callback(e: HTMLScriptElement) {
 	if(seen_elements.has(e))

@@ -5,7 +5,7 @@ import {do_load_fire_promise} from "./do_load_fire_promise.js";
 import {LoadMutationObserver} from "./LoadMutationObserver.js";
 import {reset_global_event_handlers} from "./reset_global_event_handlers.js";
 import {set_jq_proxy} from "./set_jq_proxy.js";
-import {mut_observers} from "./rebuild_the_universe_auto_v0.2.js";
+import {mut_observers} from "./rebuild_the_universe_entry_old.js";
 import {real_st,real_si,orig_aev} from "./module_entry_function.js";
 import {l_log_if} from "../../../vm/l_log_if.js";
 

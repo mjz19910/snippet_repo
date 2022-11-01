@@ -75,7 +75,7 @@ export function do_box_get(opt: Box,get_name: string): Box {
 		case "void": throw new Error("Unable to index type is void")
 		case "object_box": {
 			if(opt) {
-				if(opt.inner_type==='{}') {
+				if(opt.inner_type==='Record<never, never>') {
 					console.info('is this (%o) really a unit (ie has no properties)',opt.value)
 					throw new Error("Unable to index unit object")
 				}
