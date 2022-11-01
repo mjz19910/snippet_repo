@@ -1,5 +1,5 @@
-import {BoxTemplate} from "./template/BoxTemplate"
-import {BoxVerify} from "./BoxVerify"
+import {BoxTemplate} from "./template/BoxTemplate.js"
+import {BoxVerify} from "./BoxVerify.js"
 
 export class VoidPromiseBox
 	extends BoxTemplate<"promise_box",Promise<void>>

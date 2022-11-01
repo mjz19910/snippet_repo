@@ -1,4 +1,4 @@
-import {Box} from "./Box"
+import {Box} from "./Box.js"
 import {is_obj_index_to_box} from "./is_namespace/is_obj_index_to_box"
 import {box_value_property_cache} from "./const"
 import {ObjectIndexToBox} from "./helper/ObjectIndexToBox"

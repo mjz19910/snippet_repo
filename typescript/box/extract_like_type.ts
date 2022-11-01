@@ -1,4 +1,4 @@
-import {Box} from "./Box"
+import {Box} from "./Box.js"
 import {is_box} from "./is_namespace/is_box"
 
 export function extract_like_type<

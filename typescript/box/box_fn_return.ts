@@ -1,5 +1,5 @@
 import {FunctionBox} from "./FunctionBox"
-import {Box} from "./Box"
+import {Box} from "./Box.js"
 import {NewableFunctionConstructor} from "./NewableFunctionConstructor"
 
 export function box_fn_return(box_value: NewableFunctionConstructor): FunctionBox {

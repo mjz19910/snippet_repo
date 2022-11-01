@@ -1,7 +1,7 @@
-import {Box} from "./Box"
-import {BoxTemplate} from "./template/BoxTemplate"
-import {BoxVerify} from "./BoxVerify"
-import {PromiseBox} from "./PromiseBox"
+import {Box} from "./Box.js"
+import {BoxTemplate} from "./template/BoxTemplate.js"
+import {BoxVerify} from "./BoxVerify.js"
+import {PromiseBox} from "./PromiseBox.js"
 
 export class AsyncFunctionBox
 	extends BoxTemplate<"function_box",(...a: Box[]) => Promise<Box>>

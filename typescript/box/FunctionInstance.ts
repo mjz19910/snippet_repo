@@ -1,3 +1,3 @@
-import {Box} from "./Box"
+import {Box} from "./Box.js"
 
 export type FunctionInstance=(...a: Box[]) => Box

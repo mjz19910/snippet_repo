@@ -1,5 +1,5 @@
-import {BoxTemplate} from "./template/BoxTemplate"
-import {BoxVerify} from "./BoxVerify"
+import {BoxTemplate} from "./template/BoxTemplate.js"
+import {BoxVerify} from "./BoxVerify.js"
 import {BoxWithPropertiesObjType} from "./BoxWithPropertiesObjType"
 
 export class BoxWithPropertiesIsBox

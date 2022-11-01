@@ -1,4 +1,4 @@
-import {Box} from "./Box"
+import {Box} from "./Box.js"
 import {VoidBox} from "./VoidBox"
 import {Primitives} from "./helper/Primitives"
 

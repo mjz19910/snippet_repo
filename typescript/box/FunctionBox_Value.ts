@@ -1,4 +1,4 @@
-import {Box} from "./Box"
+import {Box} from "./Box.js"
 import {NewableInstancePack} from "./NewableInstancePack"
 
 export type FunctionBox_Value=

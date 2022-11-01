@@ -1,7 +1,7 @@
-import {Box} from "./Box"
-import {BoxTemplate} from "./template/BoxTemplate"
+import {Box} from "./Box.js"
+import {BoxTemplate} from "./template/BoxTemplate.js"
 import {IndexAccess} from "./IndexAccess"
-import {BoxVerify} from "./BoxVerify"
+import {BoxVerify} from "./BoxVerify.js"
 
 export class IndexBox
 	extends BoxTemplate<"object_box",IndexAccess<Box>>

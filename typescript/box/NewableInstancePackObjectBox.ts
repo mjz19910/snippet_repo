@@ -1,5 +1,5 @@
 import {NewableInstancePack} from "./NewableInstancePack"
-import {BoxTemplate} from "./template/BoxTemplate"
+import {BoxTemplate} from "./template/BoxTemplate.js"
 
 export class NewableInstancePackObjectBox extends BoxTemplate<"NewableInstancePack<{}>",NewableInstancePack<{}>> {
 	readonly type="NewableInstancePack<{}>"

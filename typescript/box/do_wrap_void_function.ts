@@ -1,4 +1,4 @@
-import {Box} from "./Box"
+import {Box} from "./Box.js"
 import {extract_box} from "./extract/extract_box"
 import {BoxExtractType} from "./helper/BoxExtractType"
 
