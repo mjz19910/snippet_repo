@@ -2,8 +2,9 @@ import {FakeEventTarget} from "./EventTarget.js";
 import {FakeDocument} from "./FakeDocument.js"
 import {FakeExternal} from "./FakeExternal.js"
 import {no_impl} from "./no_impl.js"
+import {FakeWindowType} from "./types/FakeWindowType.js";
 /**@implements {Window}*/
-export class FakeWindowNoImpl extends FakeEventTarget {
+export class FakeWindowNoImpl extends FakeWindowType {
 	// spell:ignore onbeforeinput
 	onbeforeinput=null;
 	oncancel=null;
