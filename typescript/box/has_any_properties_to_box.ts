@@ -1,5 +1,5 @@
 import {is_obj_index_to_box} from "./is_namespace/is_obj_index_to_box.js";
-import {box_value_property_cache} from "./const.js";
+import {box_value_property_cache} from "./box_value_property_cache.js";
 import {ObjectIndexToBox} from "./helper/ObjectIndexToBox.js";
 import {convert_to_type} from "./helper/convert_to_type.js";
 

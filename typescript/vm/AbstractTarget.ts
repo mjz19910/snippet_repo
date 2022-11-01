@@ -1,5 +1,9 @@
 export class AbstractTarget {
-	fire() {
-		throw new Error("Attempt to call an abstract class")
+	wait(): Promise<void> {
+		return Promise.resolve();
 	}
+	fire() {
+		throw new Error("Attempt to call an abstract class");
+	}
+	destroy() {}
 }
