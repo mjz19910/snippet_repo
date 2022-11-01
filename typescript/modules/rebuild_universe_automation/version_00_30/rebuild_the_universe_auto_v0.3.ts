@@ -247,10 +247,10 @@ class WindowBoxImpl implements WindowBox {
 class ObjectBoxImpl implements ObjectBox {
 	type: "object_box"
 	m_verify_name: "ObjectBox"
-	inner_type: "{}"
+	inner_type: "Record<never, never>"
 	extension=null
-	value: {}
-	constructor(value: {}) {
+	value: Record<never, never>
+	constructor(value: (typeof this)['value']) {
 		this.type='object_box'
 		this.m_verify_name='ObjectBox'
 		this.inner_type='{}'
