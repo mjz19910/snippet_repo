@@ -1,6 +1,6 @@
-import {VMBlockTraceOpcode} from "../opcodes/VMBlockTraceOpcode"
-import {DomTaggedPack} from "../../dom_instruction/DomTaggedPack"
-import {DomInstructionType} from "../../dom_instruction/DomInstructionType"
+import {VMBlockTraceOpcode} from "../opcodes/VMBlockTraceOpcode.ts"
+import {DomTaggedPack} from "../../dom_instruction/DomTaggedPack.ts"
+import {DomInstructionType} from "../../dom_instruction/DomInstructionType.ts"
 
 export type VMBlockTrace=
 	[VMBlockTraceOpcode,'begin',DomInstructionType|null]|

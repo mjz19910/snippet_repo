@@ -1,3 +1,3 @@
-import {VMPushSelfOpcode} from "../opcodes/VMPushSelfOpcode"
+import {VMPushSelfOpcode} from "../opcodes/VMPushSelfOpcode.ts"
 
 export type VMPushSelf=[VMPushSelfOpcode]

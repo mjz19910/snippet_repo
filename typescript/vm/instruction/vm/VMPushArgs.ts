@@ -1,3 +1,3 @@
-export type VMPushArgsOpcode='vm_push_args'
+import { VMPushArgsOpcode } from "../opcodes/VMPushArgsOpcode.ts";
 
 export type VMPushArgs=[VMPushArgsOpcode]

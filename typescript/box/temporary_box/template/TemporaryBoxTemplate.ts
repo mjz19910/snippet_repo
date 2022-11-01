@@ -1,2 +1,2 @@
-import {BoxTemplate} from "../../template/BoxTemplate"
-export abstract class TemporaryBoxTemplate<T extends void|object|Function> extends BoxTemplate<"temporary_box",T> {}
+import {BoxTemplate} from "../../template/BoxTemplate.ts"
+export abstract class TemporaryBoxTemplate<T extends void|Record<never, never>|(()=>void)> extends BoxTemplate<"temporary_box",T> {}

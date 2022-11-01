@@ -1,49 +1,49 @@
-import {ArrayBox} from "../../../box/ArrayBox.js"
-import {Box} from "../../../box/Box.js"
-import {EmptyArrayBox} from "../../../box/EmptyArrayBox.js"
-import {Primitives} from "../../../box/helper/Primitives.js"
-import {InstructionTypeArrayBox} from "../../../box/InstructionTypeArrayBox.js"
-import {InstructionTypeBox} from "../../../box/InstructionTypeBox.js"
-import {NewableInstancePack} from "../../../box/NewableInstancePack.js"
-import {StackVMBox} from "../../../box/StackVMBox.js"
-import {TemporaryBox} from "../../../box/temporary_box/TemporaryBox.js"
-import {temporary_box_StackVM} from "../../../box/temporary_box/temporary_box_StackVM.js"
-import {WindowBox} from "../../../box/WindowBox.js"
-import {Append} from "../../../vm/instruction/Append.js"
-import {Cast} from "../../../vm/instruction/Cast.js"
-import {Breakpoint} from "../../../vm/instruction/debug/Breakpoint.js"
-import {Call} from "../../../vm/instruction/general/Call.js"
-import {Construct} from "../../../vm/instruction/general/Construct.js"
-import {Get} from "../../../vm/instruction/general/Get.js"
-import {Return} from "../../../vm/instruction/general/Return.js"
-import {InstructionType} from "../../../vm/instruction/InstructionType.js"
-import {Je} from "../../../vm/instruction/jump/Je.js"
-import {Jump} from "../../../vm/instruction/jump/Jump.js"
-import {ModifyOperand} from "../../../vm/instruction/ModifyOperand.js"
-import {Nop} from "../../../vm/instruction/Nop.js"
-import {PushWindowObject} from "../../../vm/instruction/push/WindowObject.js"
-import {Drop} from "../../../vm/instruction/stack/Drop.js"
-import {Dup} from "../../../vm/instruction/stack/Dup.js"
-import {Push} from "../../../vm/instruction/stack/Push.js"
-import {Halt} from "../../../vm/instruction/turing/Halt.js"
-import {VMBlockTrace} from "../../../vm/instruction/vm/VMBlockTrace.js"
-import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.js"
-import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.js"
-import {into_typed} from "../version_00_20/into_typed.js"
-import {safe_get} from "../version_00_20/safe_get.js"
-import {StackVMFlags} from "../../../vm/StackVMFlags.js"
-import {InstructionOpcodesList} from "../../../vm/instruction/InstructionOpcodesList.js"
-import {ObjectBox} from "../../../box/ObjectBox.js"
-import {temporary_box_object_index_to_box} from "../../../box/temporary_box/temporary_box_object_index_to_box.js"
-import {temporary_box_from_get} from "../../../box/temporary_box/temporary_box_from_get.js"
-import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox.js"
-import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.js"
-import {NoArgsType} from "../../../box/NoArgsType.js"
-import {VoidBox} from "../../../box/VoidBox.js"
-import {DomInstructionType} from "../../../vm/dom_instruction/DomInstructionType.js"
-import {DomExecDescription,DomInstructionStack} from "./typedef.js"
-import {NodeBox} from "../../../box/NodeBox.js"
-import {StackTraceType} from "./StackTraceType"
+import {ArrayBox} from "../../../box/ArrayBox.ts"
+import {Box} from "../../../box/Box.ts"
+import {EmptyArrayBox} from "../../../box/EmptyArrayBox.ts"
+import {Primitives} from "../../../box/helper/Primitives.ts"
+import {InstructionTypeArrayBox} from "../../../box/InstructionTypeArrayBox.ts"
+import {InstructionTypeBox} from "../../../box/InstructionTypeBox.ts"
+import {NewableInstancePack} from "../../../box/NewableInstancePack.ts"
+import {StackVMBox} from "../../../box/StackVMBox.ts"
+import {TemporaryBox} from "../../../box/temporary_box/TemporaryBox.ts"
+import {temporary_box_StackVM} from "../../../box/temporary_box/temporary_box_StackVM.ts"
+import {WindowBox} from "../../../box/WindowBox.ts"
+import {Append} from "../../../vm/instruction/Append.ts"
+import {Cast} from "../../../vm/instruction/Cast.ts"
+import {Breakpoint} from "../../../vm/instruction/debug/Breakpoint.ts"
+import {Call} from "../../../vm/instruction/general/Call.ts"
+import {Construct} from "../../../vm/instruction/general/Construct.ts"
+import {Get} from "../../../vm/instruction/general/Get.ts"
+import {Return} from "../../../vm/instruction/general/Return.ts"
+import {InstructionType} from "../../../vm/instruction/InstructionType.ts"
+import {Je} from "../../../vm/instruction/jump/Je.ts"
+import {Jump} from "../../../vm/instruction/jump/Jump.ts"
+import {ModifyOperand} from "../../../vm/instruction/ModifyOperand.ts"
+import {Nop} from "../../../vm/instruction/Nop.ts"
+import {PushWindowObject} from "../../../vm/instruction/push/WindowObject.ts"
+import {Drop} from "../../../vm/instruction/stack/Drop.ts"
+import {Dup} from "../../../vm/instruction/stack/Dup.ts"
+import {Push} from "../../../vm/instruction/stack/Push.ts"
+import {Halt} from "../../../vm/instruction/turing/Halt.ts"
+import {VMBlockTrace} from "../../../vm/instruction/vm/VMBlockTrace.ts"
+import {VMPushIP} from "../../../vm/instruction/vm/VMPushIP.ts"
+import {VMPushSelf} from "../../../vm/instruction/vm/VMPushSelf.ts"
+import {into_typed} from "../version_00_20/into_typed.ts"
+import {safe_get} from "../version_00_20/safe_get.ts"
+import {StackVMFlags} from "../../../vm/StackVMFlags.ts"
+import {InstructionOpcodesList} from "../../../vm/instruction/InstructionOpcodesList.ts"
+import {ObjectBox} from "../../../box/ObjectBox.ts"
+import {temporary_box_object_index_to_box} from "../../../box/temporary_box/temporary_box_object_index_to_box.ts"
+import {temporary_box_from_get} from "../../../box/temporary_box/temporary_box_from_get.ts"
+import {CSSStyleSheetConstructorBox} from "../../../box/CSSStyleSheetConstructorBox.ts"
+import {CSSStyleSheetBox} from "../../../box/CSSStyleSheetBox.ts"
+import {NoArgsType} from "../../../box/NoArgsType.ts"
+import {VoidBox} from "../../../box/VoidBox.ts"
+import {DomInstructionType} from "../../../vm/dom_instruction/DomInstructionType.ts"
+import {DomExecDescription,DomInstructionStack} from "./typedef.ts"
+import {NodeBox} from "../../../box/NodeBox.ts"
+import {StackTraceType} from "./StackTraceType.ts"
 // ==UserScript==
 // @name			rebuild the universe auto
 // @namespace		http://tampermonkey.net/
@@ -85,7 +85,7 @@ let local_logging_level=3
 let LogErrorAsConsoleError=false
 function append_console_message(level: number,format_str: string,...args: any[]) {
 	update_logger_vars()
-	let level_str=human_log_level(level)
+	const level_str=human_log_level(level)
 	if(level_str!=='unknown') {
 		format_str="[%s] "+format_str
 	} else {
@@ -155,7 +155,16 @@ class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 		return this.m_verify_name==='CSSStyleSheetConstructorBox'&&name==='CSSStyleSheetConstructorBox'
 	}
 	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null
+		switch(typeof this.value) {
+			case "bigint": return input_typeof==="bigint"? this:null
+			case "boolean": return input_typeof==="boolean"? this:null
+			case "function": return input_typeof==="function"? this:null
+			case "number": return input_typeof==="number"? this:null
+			case "object": return input_typeof==="object"? this:null
+			case "string": return input_typeof==="string"? this:null
+			case "symbol": return input_typeof==="symbol"? this:null
+			case "undefined": return input_typeof==="undefined"? this:null
+		}
 	}
 	on_get(_vm: StackVM,key: string) {
 		console.log('get','CSSStyleSheetConstructorBox',key)
@@ -3073,25 +3082,25 @@ class AutoBuy {
 		return time_arr.join(":")
 	}
 	update_hours_played() {
-		let float_hours=((window.timeplayed/30)/60)
-		let time_played_str=this.get_hours_num_as_pretty_str(float_hours)
-		let hours_played_e=this.dom_map.get('hours_played')
+		const float_hours=((window.timeplayed/30)/60)
+		const time_played_str=this.get_hours_num_as_pretty_str(float_hours)
+		const hours_played_e=this.dom_map.get('hours_played')
 		if(hours_played_e instanceof HTMLElement) hours_played_e.innerText=time_played_str
 		this.dom_map.set('time_played_str',time_played_str)
 	}
 	update_ratio_element() {
-		let ratio=this.dom_map.get('ratio')
+		const ratio=this.dom_map.get('ratio')
 		if(!ratio) return
 		if(!(ratio instanceof HTMLElement)) return
 		ratio.innerText=(this.state.ratio*100).toFixed(2)+"%"
 	}
 	update_ratio_change_element() {
-		let last_ratio=this.state.last_ratio*100
-		let cur_ratio=this.state.ratio*100
-		let ratio_diff=cur_ratio-last_ratio
+		const last_ratio=this.state.last_ratio*100
+		const cur_ratio=this.state.ratio*100
+		const ratio_diff=cur_ratio-last_ratio
 		let char_value="+"
 		if(ratio_diff<0) char_value=''
-		let ratio_change=this.dom_map.get('ratio_change')
+		const ratio_change=this.dom_map.get('ratio_change')
 		if(ratio_change&&ratio_change instanceof HTMLElement) ratio_change.innerText=char_value+ratio_diff.toExponential(3)
 	}
 	update_history_element() {
@@ -3128,16 +3137,16 @@ class AutoBuy {
 		this.next_timeout(this.init_impl,200,'init',true)
 	}
 	set_secondinterval() {
-		let disabled=false
+		const disabled=false
 		if(disabled) return
 		//spell:words secondinterval
 		if(window.secondinterval!==void 0) clearInterval(window.secondinterval)
 		let time_base=performance.now()
-		let interval_id=setInterval(function() {
-			let real_time=performance.now()
-			let time_diff=real_time-time_base
+		const interval_id=setInterval(function() {
+			const real_time=performance.now()
+			const time_diff=real_time-time_base
 			time_base=real_time
-			let real_rate=time_diff/2000
+			const real_rate=time_diff/2000
 			// we lost some time here, the diff was too large (got a 10 hours playtime from putting my pc to sleep)
 			if(time_diff>2000) {
 				// assume a max of 2 seconds passed
@@ -3153,11 +3162,11 @@ class AutoBuy {
 	}
 	set_timeplayed_update_interval() {
 		this.root_node.append_raw(setInterval(function() {
-			let doc=window.doc
-			let rounding=window.rounding
-			let totalAtome=window.totalAtome
-			let timeplayed=window.timeplayed
-			let calcPres=window.calcPres
+			const doc=window.doc
+			const rounding=window.rounding
+			const totalAtome=window.totalAtome
+			const timeplayed=window.timeplayed
+			const calcPres=window.calcPres
 			doc.title=rounding(totalAtome,false,1).toString()+" atoms"
 			//spell:words atomsaccu presnbr
 			let atomsaccu_e=doc.getElementById('atomsaccu')

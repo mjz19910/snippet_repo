@@ -1,3 +1,3 @@
-import {CallOpcode} from "../opcodes/CallOpcode"
+import {CallOpcode} from "../opcodes/CallOpcode.ts"
 
 export type Call=[CallOpcode,number]

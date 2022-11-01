@@ -1,6 +1,6 @@
-import {Box} from "../Box"
-import {BoxVerify} from "../BoxVerify"
-import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate"
+import {Box} from "../Box.ts"
+import {BoxVerify} from "../BoxVerify.ts"
+import {TemporaryBoxTemplate} from "./template/TemporaryBoxTemplate.ts"
 export class temporary_box_object_index_to_box
 	extends TemporaryBoxTemplate<{[x: string]: Box}>
 	implements BoxVerify<temporary_box_object_index_to_box,"temporary_box_object_index_to_box"> {

@@ -1,3 +1,3 @@
-import {VMReturnOpcode} from "../opcodes/VMReturnOpcode"
+import {VMReturnOpcode} from "../opcodes/VMReturnOpcode.ts"
 
 export type VMReturn=[VMReturnOpcode]
