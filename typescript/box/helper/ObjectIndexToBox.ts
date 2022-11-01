@@ -1,3 +1,3 @@
-import {Box} from "../Box.js"
+import {Box} from "../Box.js";
 
-export type ObjectIndexToBox<T extends string>={[U in T]: Box}
+export type ObjectIndexToBox<T extends string>={[U in T]: U extends Box? Box:never};
