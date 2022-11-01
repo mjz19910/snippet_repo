@@ -16,7 +16,7 @@ export class AutoBuyState {
 	locked_cycles
 	is_init_complete
 	avg
-	ratio_mult: number
+	ratio_multiplier: number
 	div: number
 	constructor(root: AutoBuyRootType) {
 		this.root_node=root
@@ -29,7 +29,7 @@ export class AutoBuyState {
 		this.ratio_mode=0
 		this.locked_cycles=0
 		this.prev_atomepersecond=0
-		this.ratio_mult=0
+		this.ratio_multiplier=0
 		this.div=0
 		this.is_init_complete=false
 		this.avg=new AverageRatioRoot
@@ -171,8 +171,8 @@ export class AutoBuyState {
 			node.start(new TimeoutTarget(this,this.update,'not ready AutoBuyState.update'))
 			return
 		}
-		this.ratio_mult=window.prestige
-		this.div=60*this.ratio_mult*8
+		this.ratio_multiplier=window.prestige
+		this.div=60*this.ratio_multiplier*8
 		this.val=window.totalAtome/window.atomepersecond/this.div
 		if(!Number.isFinite(this.val)) {
 			this.val=1
