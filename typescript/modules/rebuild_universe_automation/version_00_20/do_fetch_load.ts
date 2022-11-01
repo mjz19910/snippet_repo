@@ -59,17 +59,13 @@ export async function do_fetch_load() {
 	 * @type {any[]}
 	 */
 	let arr: any[]=[]
-	/** @type {any} */
 	let any_cur: any=arr
 	window.adsbygoogle=any_cur
 	window.adsbygoogle.op=window.adsbygoogle.push
 	window.adsbygoogle.push=function(e) {
-		// console.log('ads by google push');
 		let cs=document.currentScript
-		/** @type {Element|null} */
-		let ls: Element|null=null
-		/** @type {Element|null} */
-		let rs: Element|null
+		let ls: Element|null=null;
+		let rs: Element|null=null;
 		if(!cs)
 			return
 		window.g_cs??=[]
@@ -79,7 +75,7 @@ export async function do_fetch_load() {
 			let ad_slot=cs.previousElementSibling
 			if(prev.previousElementSibling)
 				ls=prev.previousElementSibling
-			if(cs.nextElementSibling)
+			if(cs.nextElementSibling && rs===null)
 				rs=cs.nextElementSibling
 			if(ad_slot)
 				ad_slot.remove()
@@ -120,9 +116,7 @@ export async function do_fetch_load() {
 	mut_observers.push(new LoadMutationObserver(document,function(mut_vec,mut_observer) {
 		let log_data_vec=[]
 		log_data_vec.push(mut_vec.length,document.body!=null)
-		/** @type {HTMLScriptElement[]} */
 		let added_scripts: HTMLScriptElement[]=[]
-		/** @type {HTMLScriptElement[]} */
 		let removed_scripts: HTMLScriptElement[]=[]
 		for(let i=0;i<mut_vec.length;i++) {
 			let mut_rec=mut_vec[i]
