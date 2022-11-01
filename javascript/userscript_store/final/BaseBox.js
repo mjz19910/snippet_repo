@@ -3,7 +3,7 @@
  * @typedef {import("../../../typescript/box/helper/Primitives.js").Primitives} Primitives
  * @typedef {Exclude<BoxN1, Primitives>} BoxN2
  * @typedef {BoxN2['value']} BoxInner */
-/**@typedef {import("../../../typescript/box/Box.js").Box} Box */
+/** @typedef {import("../../../typescript/box/Box.js").Box} Box */
 export class BaseBox {
 	/**@type {'object_box'} */
 	type = "object_box";
