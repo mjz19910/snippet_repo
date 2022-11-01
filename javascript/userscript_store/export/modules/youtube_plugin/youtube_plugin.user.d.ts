@@ -1,10 +1,7 @@
-import {GApiType} from "modules/youtube_plugin/g_api/GApiType.js"
-
 export {}
 
 declare global {
 	interface Window {
-		g_api?: GApiType
 		ytPageType?: string
 		playlist_arr?: string[]
 		ytd_page_manager?: HTMLElement|null

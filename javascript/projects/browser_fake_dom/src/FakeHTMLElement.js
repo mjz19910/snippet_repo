@@ -4,6 +4,13 @@ import {FakeElement} from "./FakeElement.js"
 // !!! FakeHTMLElement -> ./FakeElement.js -> ./api/CastResult.js -> FakeHTMLElement.js
 /**@implements {HTMLElement} */
 export class FakeHTMLElement extends FakeElement {
+	ariaColIndexText=null;
+	ariaInvalid=null
+	ariaRowIndexText=null;
+	role=null;
+	// spell:ignore onbeforeinput
+	onbeforeinput=null;
+	oncancel=null;
 	get inert() {
 		return false
 	}

@@ -493,12 +493,15 @@ export class FakeDocument extends FakeNode {
 	ontransitionstart=null
 	onvolumechange=null
 	onwaiting=null
-	//spell:ignore onwebkitanimationend onwebkitanimationiteration onwebkitanimationstart onwebkittransitionend
+	// spell:ignore onwebkitanimationend onwebkitanimationiteration onwebkitanimationstart onwebkittransitionend
 	onwebkitanimationend=null
 	onwebkitanimationiteration=null
 	onwebkitanimationstart=null
 	onwebkittransitionend=null
 	onwheel=null
+	// spell:ignore onbeforeinput
+	onbeforeinput=null
+	oncancel=null;
 	/**@type {number} */
 	get childElementCount() {
 		throw new Error("Not implemented")
