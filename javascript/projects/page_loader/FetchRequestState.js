@@ -1,5 +1,5 @@
 import {ClientRequest,IncomingMessage} from "http"
-import {fake} from "../browser_fake_dom/src/mod.js"
+import {fake} from "../browser_fake_dom/src/browse/mod.js";
 import {FetchStateFlags} from "./FetchStateFlags.js"
 import {fetch_url} from "./fetch_url.js"
 import {data} from "./mod.js"

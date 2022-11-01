@@ -18,7 +18,6 @@ import {NullBadge} from "./NullBadge.js"
 
 export {
 	create_fake,
-	fake,
 }
 
 export {

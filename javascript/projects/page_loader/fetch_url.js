@@ -1,6 +1,7 @@
 import * as http from "http"
 import * as https from "https"
-import {create_fake,fake} from "../browser_fake_dom/src/mod.js"
+import {fake} from "../browser_fake_dom/src/browse/mod.js";
+import {create_fake} from "../browser_fake_dom/src/mod.js"
 import {FetchRequestState} from "./FetchRequestState.js"
 import {fix_fetch_url} from "./fix_fetch_url.js"
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js"

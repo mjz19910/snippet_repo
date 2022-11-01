@@ -1,4 +1,4 @@
-import {fake} from "../browser_fake_dom/src/mod.js"
+import {fake} from "../browser_fake_dom/src/browse/mod.js";
 import {FetchRequestState} from "./FetchRequestState.js"
 /**@param {FetchRequestState} state */
 export async function run_fetch_algorithm(state) {

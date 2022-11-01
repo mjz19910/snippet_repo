@@ -2,8 +2,8 @@ import {FetchStateFlags} from "FetchStateFlags.js";
 import {fetch_url} from "fetch_url.js";
 import {ClientRequest, IncomingMessage} from "http";
 import {data} from "mod.js";
-import {on_page_data_loaded} from "on_page_data_loaded.js";
-import {fake} from "../../browser_fake_dom/src/mod.js";
+import {fake} from "../../browser_fake_dom/src/browse/mod.js";
+import {on_page_data_loaded} from "../on_page_data_loaded.js";
 
 class FetchRequestState {
 	silent=false
