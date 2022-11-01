@@ -24,7 +24,8 @@
 		"allowJs": true,
 	},
 	"include": [
-		"typescript/**/*"
+		"typescript/**/*",
+		"javascript/**/*",
 	],
 	"exclude": [
 		"node_modules",
