@@ -117,11 +117,11 @@ export class FetchRequestState extends FetchStateFlags {
 	constructor(url,opts) {
 		super(opts)
 		this.url=url
-		/**@type {{get(url:{},cb:(x:IncomingMessage)=>void):ClientRequest} | undefined} */
-		this.m_start_request_module=undefined
-		/** @type {ClientRequest | undefined} */
-		this.m_client_request=undefined
-		/** @type {IncomingMessage | undefined} */
-		this.m_incoming_message=undefined
+		/**@type {{get(url:{},cb:(x:IncomingMessage)=>void):ClientRequest} | null} */
+		this.m_start_request_module=null
+		/** @type {ClientRequest | null} */
+		this.m_client_request=null
+		/** @type {IncomingMessage | null} */
+		this.m_incoming_message=null
 	}
 }
