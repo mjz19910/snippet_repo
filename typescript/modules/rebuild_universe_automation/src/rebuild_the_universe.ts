@@ -4,8 +4,8 @@ import {Box} from "typescript/box/Box.js";
 import {CSSStyleSheetBox} from "typescript/box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "typescript/box/CSSStyleSheetConstructorBox.js";
 import {EmptyArrayBox} from "typescript/box/EmptyArrayBox.js";
+import {assert_type} from "typescript/box/helper/assert_type.js";
 import {Primitives} from "typescript/box/helper/Primitives.js";
-import {throw_never} from "typescript/box/helper/throw_never.js";
 import {InstructionTypeArrayBox} from "typescript/box/InstructionTypeArrayBox.js";
 import {InstructionTypeBox} from "typescript/box/InstructionTypeBox.js";
 import {NewableInstancePack} from "typescript/box/NewableInstancePack.js";
@@ -2956,7 +2956,7 @@ class AutoBuy {
 					case 'vm_return': instructions.push([ins[1]]); break;
 					case 'push_window_object': instructions.push([ins[1]]); break;
 					case 'dom_filter': throw_bad_error(ins);
-					default: throw_never(ins);
+					default: assert_type<never>(ins); throw new Error("assert");
 				}
 			}
 			if(dep_ins[1]==='vm_block_trace' && dep_ins[2] === 'tagged') {

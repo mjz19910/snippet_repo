@@ -1,4 +1,4 @@
-export function is_globalThis(value: typeof globalThis|CSSStyleSheetInit): value is typeof globalThis {
+export function is_globalThis<T>(value: T|typeof globalThis): value is typeof globalThis {
 	let dsc=Object.getOwnPropertyDescriptors(value)
 	if(dsc.AbortController)
 		return true

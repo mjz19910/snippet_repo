@@ -8,7 +8,7 @@ import {is_number} from "./is_number.js"
 import {never_cast} from "./never_cast.js"
 
 export function is_instruction_type<T extends any[]>(value: T|InstructionType): value is InstructionType {
-	if(never_cast<T>(value)) throw new Error("Never")
+	if(never_cast<T>(value)) throw new Error("Never");
 	switch(value[0]) {
 		case 'push': if(value.length===1) return true
 			for(let i=1;i<value.length;i++) {
