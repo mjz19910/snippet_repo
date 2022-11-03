@@ -8,6 +8,7 @@ import {l_log_if} from "./l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {LOG_LEVEL_VERBOSE} from "../src/constants.js";
 import {VoidBox} from "box/VoidBox.js";
+import {NumberBox} from "box/NumberBox.js";
 
 export class BaseStackVM extends BaseVMCreate {
 	stack: Box[];
@@ -29,7 +30,7 @@ export class BaseStackVM extends BaseVMCreate {
 		if(this.stack.length===0) {
 			throw new Error("stack underflow");
 		}
-		let pop_value=this.stack.pop();
+		let pop_value=this.stack.pop()!;
 		return pop_value;
 	}
 	pop_arg_count(operand_number_of_arguments: any) {
@@ -47,7 +48,7 @@ export class BaseStackVM extends BaseVMCreate {
 		switch(instruction[0]) {
 			case 'push' /*Stack*/: {
 				for(let i=0;i<instruction.length-1;i++) {
-					let item=instruction[i+1];
+					let item=instruction[i+1] as Box;
 					this.push(item);
 				}
 			} break;
@@ -135,7 +136,7 @@ export class BaseStackVM extends BaseVMCreate {
 				}
 			} break;
 			case 'push_pc': {
-				this.push(this.instruction_pointer);
+				this.push(new NumberBox(this.instruction_pointer));
 			} break;
 			default: {
 				super.execute_instruction(instruction);
