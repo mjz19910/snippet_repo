@@ -4,7 +4,7 @@ import {eat_never} from "../helper/eat_never.js"
 import {is_box} from "./is_box.js"
 import {is_instruction_block_trace} from "./is_instruction_block_trace.js"
 import {is_instruction_modify_op} from "./is_instruction_modify_op.js"
-import {is_number} from "./is_number.js"
+import {assume_is_number} from "./assume_is_number.js"
 import {never_cast} from "./never_cast.js"
 
 export function is_instruction_type<T extends any[]>(value: T|InstructionType): value is InstructionType {
@@ -42,7 +42,7 @@ export function is_instruction_type<T extends any[]>(value: T|InstructionType): 
 			case 'jmp':
 			case 'peek':
 			case 'vm_call':
-			case 'call': return is_number(value[1])
+			case 'call': return assume_is_number(value[1])
 			case 'cast': switch(value[1]) {
 				case 'object_index': return true
 				case 'object_index_to_function': return true
