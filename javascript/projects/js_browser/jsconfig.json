@@ -7,7 +7,8 @@
 			"DOM",
 		],
 		"types": [
-			"node"
+			"node",
+			"treeverse",
 		],
 		"strict": true,
 		"declaration": true,

@@ -5,5 +5,8 @@
 	"files": [
 		"*.js",
 		"plugin/*.js"
-	]
+	],
+	"dependencies": {
+		"treeverse": "^3.0.0"
+	}
 }
