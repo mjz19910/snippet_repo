@@ -4,7 +4,6 @@ import {CanRunTest} from "../../../tests_mod/CanRunTest.js"
 import {Dispatcher} from "../Dispatcher.js"
 import {lex_js} from "../section_12.js"
 import {lexer_format_callback} from "../lexer_format_callback.js"
-import {throw_bad_error} from "./throw_bad_error.js";
 
 export function test_1_critical(test_runner: CanRunTest,dispatcher: Dispatcher,test_data: Test) {
 	let state=test_data.state
@@ -29,7 +28,7 @@ export function test_1_critical(test_runner: CanRunTest,dispatcher: Dispatcher,t
 					console.log('token stream eof reached')
 				}
 			} break
-			default: throw_bad_error(cur)
+			default: throw new Error("Bad");
 		}
 	}
 	state.cur_index=0
