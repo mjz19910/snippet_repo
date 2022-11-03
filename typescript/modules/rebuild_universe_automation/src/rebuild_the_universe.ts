@@ -4,8 +4,7 @@ import {Box} from "box/Box.js";
 import {CSSStyleSheetBox} from "box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "box/CSSStyleSheetConstructorBox.js";
 import {EmptyArrayBox} from "box/EmptyArrayBox.js";
-import {assert_type} from "box/helper/assert_type.js";
-import {Primitives} from "box/helper/Primitives.js";
+import {Primitives} from "box/Primitives.js";
 import {InstructionTypeArrayBox} from "box/InstructionTypeArrayBox.js";
 import {InstructionTypeBox} from "box/InstructionTypeBox.js";
 import {NewableInstancePack} from "box/NewableInstancePack.js";
@@ -2956,12 +2955,12 @@ class AutoBuy {
 					case 'vm_return': instructions.push([ins[1]]); break;
 					case 'push_window_object': instructions.push([ins[1]]); break;
 					case 'dom_filter': throw_bad_error(ins);
-					default: assert_type<never>(ins); throw new Error("assert");
+					default: let v: never=ins; v; throw new Error("assert");
 				}
 			}
-			if(dep_ins[1]==='vm_block_trace' && dep_ins[2] === 'tagged') {
+			if(dep_ins[1]==='vm_block_trace'&&dep_ins[2]==='tagged') {
 				let dx=dep_ins[3];
-				if(dx && dx[0] == 'dom') {
+				if(dx&&dx[0]=='dom') {
 					let dep_idx=flat_dep_ins.indexOf(dx[1]);
 					flat_ins_dep_2.push([dep_ins[0],'vm_block_trace','call',dep_idx]);
 				}
