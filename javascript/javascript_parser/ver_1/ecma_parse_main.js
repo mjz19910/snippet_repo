@@ -1,6 +1,6 @@
 export function ecma_parse_main() {
 	'use strict'
-	ecmascript: {
+	{
 		class ecma_12_2 {
 			static _attach(root) {
 				root.export(this,'12.2',['WhiteSpace'])
