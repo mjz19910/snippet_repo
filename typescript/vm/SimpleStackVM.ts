@@ -10,6 +10,7 @@ function construct_with_constructor_box<ArgsType extends any[]>(value: CSSStyleS
 	switch(value.instance_type) {
 		case 'CSSStyleSheet': return value.factory(...arg_arr)
 	}
+	throw new Error("Bad");
 }
 
 export class SimpleStackVM<T> extends BaseStackVM {
@@ -38,7 +39,7 @@ export class SimpleStackVM<T> extends BaseStackVM {
 					switch(target_obj.type) {
 						case 'array_box': throw new Error("Call not a function")
 						case 'constructor_box': {
-							let ret=construct_with_constructor_box(target_obj,arg_arr)
+							let ret=construct_with_constructor_box(target_obj,arg_arr);
 							this.push(ret)
 						} break
 						case 'custom_box': {

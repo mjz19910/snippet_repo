@@ -25,31 +25,8 @@ import {StackVMBox} from "./StackVMBox.js"
 import {VoidBox} from "./VoidBox.js"
 import {VoidPromiseBox} from "./VoidPromiseBox.js"
 import {WindowBox} from "./WindowBox.js"
-import {AnyTypeOfResult} from "./template/AnyTypeOfResult.js";
-
-export class NumberBox {
-	type: 'number'
-	value: number
-	constructor(value:number) {
-		this.type='number';
-		this.value=value;
-	}
-	as_type(input_typeof: AnyTypeOfResult): this|null {
-		return typeof this.value===input_typeof? this:null
-	}
-}
-
-export class StringBox {
-	type: 'string';
-	value: string;
-	constructor(value:string) {
-		this.type='string';
-		this.value=value;
-	}
-	as_type(input_typeof: AnyTypeOfResult): this|null {
-		return typeof this.value===input_typeof? this:null
-	}
-}
+import {NumberBox} from "./NumberBox.js";
+import {StringBox} from "./StringBox.js";
 
 export type Box=
 	NumberBox|

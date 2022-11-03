@@ -1,6 +1,8 @@
 import {ArrayBox} from "box/ArrayBox.js";
 import {AsyncFunctionBox} from "box/AsyncFunctionBox.js";
-import {Box, NumberBox} from "box/Box.js";
+import {Box} from "box/Box.js";
+import {StringBox} from "box/StringBox.js";
+import {NumberBox} from "box/NumberBox.js";
 import {CSSStyleSheetBox} from "box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "box/CSSStyleSheetConstructorBox.js";
 import {EmptyArrayBox} from "box/EmptyArrayBox.js";
@@ -1054,7 +1056,7 @@ class StackVMParser {
 			case 'push': {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				ret=[instruction[0],...push_operands];
+				ret=[instruction[0],...push_operands.map(e=>new StringBox(e))];
 			} break;
 			case 'call'/*1 argument*/: {
 				if(typeof instruction[1]==='number'&&Number.isFinite(instruction[1])) {

@@ -1,4 +1,5 @@
 import {Box} from "../box/Box.js";
+import {NumberBox} from "../box/NumberBox.js";
 import {StackVMFlags} from "./StackVMFlags.js";
 import {InstructionType} from "./instruction/InstructionType.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
@@ -56,7 +57,7 @@ export class StackVM {
 			case 'je': {
 				let [,target]=instruction;
 				if(typeof target!='number')
-					throw throw_invalid_error();
+					throw new Error("Invalid");
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Jump target is out of instructions range");
 				}
@@ -67,7 +68,7 @@ export class StackVM {
 			case 'jmp': {
 				let [,target]=instruction;
 				if(typeof target!='number')
-					throw throw_invalid_error();
+					throw new Error("Invalid");
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Jump target is out of instructions range");
 				}
@@ -76,9 +77,9 @@ export class StackVM {
 			case 'modify_operand': {
 				let [,target,offset]=instruction;
 				if(typeof target!='number')
-					throw throw_invalid_error();
+					throw new Error("Invalid");
 				if(typeof offset!='number')
-					throw throw_invalid_error();
+					throw new Error("Invalid");
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Destination is out of instructions range");
 				}
@@ -99,7 +100,7 @@ export class StackVM {
 					}
 				}
 				if(instruction_modify===void 0)
-					throw throw_invalid_error();
+					throw new Error("Invalid");
 				instruction_modify[offset]=value;
 				let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify,[0]);
 				this.instructions[target]=valid_instruction;
@@ -108,7 +109,7 @@ export class StackVM {
 				if(!this.hasOwnProperty('push')) {
 					throw new Error("push_pc requires a stack");
 				} else if(this instanceof StackVM) {
-					this.push(this.instruction_pointer);
+					this.push(new NumberBox(this.instruction_pointer));
 				} else {
 					throw new Error("Unreachable");
 				}
@@ -118,8 +119,9 @@ export class StackVM {
 				this.running=false;
 			} break;
 			case 'push' /*Stack*/: {
-				for(let i=0;i<instruction.length-1;i++) {
-					let item=instruction[i+1];
+				let [,...rest]=instruction;
+				for(let i=0;i<rest.length;i++) {
+					let item=rest[i];
 					this.push(item);
 				}
 			} break;
@@ -130,37 +132,25 @@ export class StackVM {
 					throw new Error("Stack underflow when executing dup instruction");
 				this.push(top);
 			} break;
-			case 'cast': InstructionCastImpl.execute_instruction(this,instruction); break;
+			case 'cast': throw new Error("TODO");
 			case 'get' /*Object*/: {
 				let target_name=this.pop();
 				let target_obj=this.pop();
 				if(!target_obj)
-					throw throw_invalid_error();
+					throw new Error("Invalid");
 				if(typeof target_name!='string')
-					throw throw_invalid_error();
+					throw new Error("Invalid");
 				if(typeof target_obj!='object')
-					throw throw_invalid_error();
-				let res=do_box_get(target_obj,target_name);
-				console.log('VM: get result',res);
-				switch(typeof res) {
-					case 'bigint': res;
-					case 'boolean': res;
-				}
-				if(TempBox.is_raw(res)) {
-					this.push(res);
-				} else if(TempBox.is_box_inner(res)) {
-					this.push(res);
-				} else {
-					if(res===null) {
-						this.push(res);
-						break;
-					}
-					this.push(res);
-				}
+					throw new Error("Invalid");
+				throw new Error("Unable to do box_get");
+			}
+			case 'call' /*Call*/: throw new Error("No call impl");
+			case 'construct' /*Construct*/: throw new Error("No construct impl");
+			case 'return' /*Call*/: {
+				let top = this.pop();
+				if(!top) throw new Error("Stack underflow");
+				this.return_value=top;
 			} break;
-			case 'call' /*Call*/: InstructionCallImpl.execute_instruction(this,instruction); break;
-			case 'construct' /*Construct*/: InstructionConstructImpl.execute_instruction(this,instruction); break;
-			case 'return' /*Call*/: this.return_value=this.pop(); break;
 			case 'breakpoint' /*Debug*/: trigger_debug_breakpoint(); break;
 			default: throw new Error("Unexpected instruction: "+instruction[0]); break;
 		}

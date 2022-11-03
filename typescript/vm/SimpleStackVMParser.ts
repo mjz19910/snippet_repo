@@ -1,6 +1,7 @@
 import {InstructionType} from "./instruction/InstructionType.js"
 import {Box} from "../box/Box.js"
 import {FormattableTypes} from "./FormattableTypes.js"
+import {StringBox} from "box/StringBox.js";
 
 export class SimpleStackVMParser {
 	static match_regex=/(.+?)(;|$)/gm
@@ -92,8 +93,8 @@ export class SimpleStackVMParser {
 		switch(m_opcode) {
 			// variable argument count
 			case 'push':
-				left[0]=0
-				return [m_opcode,...m_operands]
+				left[0]=0;
+				return [m_opcode,...m_operands.map(e=>new StringBox(e))];
 			case 'call' /*1 argument*/:
 				left[0]-=2
 				if(typeof m_operands[0]==='number'&&Number.isFinite(m_operands[0]))
