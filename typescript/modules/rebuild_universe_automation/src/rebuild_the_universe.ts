@@ -442,8 +442,6 @@ class InstructionCallImpl {
 			throw new Error("Invalid");
 		} else if(typeof value_box==='object'&&value_box.type==='void') {
 			throw new Error("Attempt to call a void value");
-		} else if(typeof value_box==='object'&&value_box.type==='temporary_box') {
-			this.handle_as_temporary_box(vm,value_box,target_this,arg_arr);
 		} else {
 			if(typeof value_box==='object') {
 				console.log('VM: call error value_box not handled',typeof value_box,value_box,value_box.value);
@@ -452,14 +450,6 @@ class InstructionCallImpl {
 			console.log('VM: call invalid value',typeof value_box,value_box);
 			throw new Error("Invalid");
 		}
-	}
-	handle_as_temporary_box(vm: StackVM,value_box: TemporaryBox,target_this: Exclude<Box,Primitives>,arg_arr: Box[]) {
-		if(value_box.source==='cast') {
-			if(value_box.cast_source==='vm_function') {
-				return this.handle_as_fn_impl_box(vm,value_box.value,target_this,arg_arr);
-			}
-		}
-		console.log('handle box in call instruction',value_box);
 	}
 
 }
