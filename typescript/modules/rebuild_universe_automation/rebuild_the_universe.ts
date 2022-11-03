@@ -36,9 +36,6 @@ import {VMBlockTrace} from "vm/instruction/vm/VMBlockTrace.js";
 import {VMPushIP} from "vm/instruction/vm/VMPushIP.js";
 import {VMPushSelf} from "vm/instruction/vm/VMPushSelf.js";
 import {StackVMFlags} from "vm/StackVMFlags.js";
-import {StackTraceType} from "./StackTraceType.js";
-import {DomExecDescription} from "./typedef.js";
-import {WithId} from "./WithId.js";
 import {DocumentBox} from "box/DocumentBox.js";
 
 // ==UserScript==
@@ -60,8 +57,6 @@ import {DocumentBox} from "box/DocumentBox.js";
 // @run-at			document-start
 // @grant			none
 // ==/UserScript==
-
-
 console=window.console;
 
 const AUDIO_ELEMENT_VOLUME=0.58;
@@ -2514,29 +2509,29 @@ class AutoBuy {
 		}`;
 		let displaySheet=new CSSStyleSheet;
 		displaySheet.replaceSync(css_display_style);
-		document.adoptedStyleSheets = [...document.adoptedStyleSheets, displaySheet];
+		document.adoptedStyleSheets=[...document.adoptedStyleSheets,displaySheet];
 		let state_log=document.createElement('state_log');
 		document.body.append(state_log);
 		let history=document.createElement("div");
 		history.textContent="?3";
 		state_log.append(history);
-		this.dom_map.set('history', history);
+		this.dom_map.set('history',history);
 		let timeout_element=document.createElement("div");
 		timeout_element.textContent="0";
 		state_log.append(timeout_element);
-		this.dom_map.set('timeout_element', timeout_element);
+		this.dom_map.set('timeout_element',timeout_element);
 		let hours_played=document.createElement("div");
 		hours_played.textContent="0.000 hours";
 		state_log.append(hours_played);
-		this.dom_map.set('hours_played', hours_played);
-		let ratio = document.createElement('div');
+		this.dom_map.set('hours_played',hours_played);
+		let ratio=document.createElement('div');
 		ratio.textContent="0.00%";
 		state_log.append(ratio);
-		this.dom_map.set('ratio', ratio);
+		this.dom_map.set('ratio',ratio);
 		let ratio_change=document.createElement('div');
 		ratio_change.textContent='0.000e+0';
 		state_log.append(ratio_change);
-		this.dom_map.set('ratio_change', ratio_change);
+		this.dom_map.set('ratio_change',ratio_change);
 	}
 	init_dom() {
 		const font_size_px=22;
@@ -2973,7 +2968,7 @@ class AutoBuy {
 		this.update_timeout_inc(change*iter_term);
 	}
 	next_timeout_async_err_log(msg: string,err: Error) {
-		let stack_trace: StackTraceType={stack: "Error\n    at <anonymous>"};
+		let stack_trace: {stack: string;}={stack: "Error\n    at <anonymous>"};
 		if(err.stack===void 0) Error.captureStackTrace(stack_trace);
 		let err_stack_tmp=null;
 		if(err.stack) err_stack_tmp=err.stack;
