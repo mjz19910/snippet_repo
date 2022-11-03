@@ -8,3 +8,6 @@ build:
 
 copy_to_window:
 	perl export.pl src/rebuild_the_universe.ts | win32yank.exe -i
+
+clean:
+	rm -r build
