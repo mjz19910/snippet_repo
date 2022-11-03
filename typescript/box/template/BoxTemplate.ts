@@ -1,10 +1,9 @@
-import {BoxInterface} from "../BoxInterface.js"
 import {AnyTypeOfResult} from "./AnyTypeOfResult.js"
 
 export abstract class BoxTemplate<
 	T extends string,
 	V extends object|Function|void
-> implements BoxInterface {
+> {
 	constructor(value: V) {
 		this.value=value
 	}
