@@ -33,7 +33,7 @@ function not_null(value) {
 
 async function run() {
 	const wasm_header=[0,0x61,0x73,0x6d,1,0,0,0];
-	// const empty_wasm_module=await WebAssembly.compile(new Uint8Array([...wasm_header]))
+	// const empty_wasm_module=await WebAssembly.compile(new Uint8Array(wasm_header));
 	/**
 	 * @type {WebAssembly.Module[]}
 	 */
