@@ -334,10 +334,10 @@ class InstructionCallImpl {
 				console.log('other enumerable on box',rest);
 			}
 			console.log('unbox custom_box',{type,box_type},rest);
-			throw 1;
+			throw new Error("Bad");
 		}
 		console.log('unbox',object_box);
-		throw 1;
+		throw new Error("Bad");
 	}
 	unbox_arr(arg_arr: Box[]) {
 		let arr: ({}|Function|StackVM|Primitives|null)[]=[];
@@ -482,17 +482,17 @@ class InstructionCastImpl {
 		}
 		if(obj?.type==='object_box') {
 			console.warn('box does not contain a function',obj);
-			throw 1;
+			throw new Error("Bad");
 		}
 		if(obj?.type) {
 			console.warn('unk box',obj);
-			throw 1;
+			throw new Error("Bad");
 		}
 		if(typeof obj!=='object'&&typeof obj!=='function') {
-			throw 1;
+			throw new Error("Bad");
 		}
 		if(obj===null) {
-			throw 1;
+			throw new Error("Bad");
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
@@ -746,13 +746,12 @@ class InstructionAppendImpl {
 			console.log(target,append_obj,vm.stack.slice());
 			throw new Error("Element target not object");
 		}
-		if(append_obj===null) throw 1;
-		if(target===null) throw 1;
-		if(append_obj.type==='instance_box'&&append_obj.m_verify_name==='InstructionTypeBox') throw 1;
-		if(!(append_obj.type==='instance_box'&&append_obj.instance_type==='Node')) throw 1;
-		if(target.type==='instance_box'&&target.m_verify_name==='InstructionTypeBox') throw 1;
-		if(!(target.type==='instance_box'&&target.instance_type==='Node')) throw 1;
-		if(append_obj.from!=='create') console.warn('append_obj not user created',append_obj);
+		if(append_obj===null) throw new Error("Bad");
+		if(target===null) throw new Error("Bad");
+		if(append_obj.type==='instance_box'&&append_obj.m_verify_name==='InstructionTypeBox') throw new Error("Bad");
+		if(!(append_obj.type==='instance_box'&&append_obj.instance_type==='Node')) throw new Error("Bad");
+		if(target.type==='instance_box'&&target.m_verify_name==='InstructionTypeBox') throw new Error("Bad");
+		if(!(target.type==='instance_box'&&target.instance_type==='Node')) throw new Error("Bad");
 		target.value.appendChild(append_obj.value);
 	}
 }
@@ -2045,7 +2044,6 @@ class NodeBoxImpl implements NodeBox {
 	readonly type="instance_box";
 	readonly m_verify_name='NodeBox';
 	readonly instance_type='Node';
-	readonly from="create";
 	value: Node;
 	constructor(value: Node) {
 		this.value=value;
@@ -2232,7 +2230,7 @@ class AsyncFunctionBoxImpl implements AsyncFunctionBox {
 		return this.m_verify_name==='AsyncFunctionBox'&&name==='AsyncFunctionBox';
 	}
 	wrap_call(): Box {
-		throw 1;
+		throw new Error("Not implemented");
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
@@ -2365,8 +2363,8 @@ class AutoBuy {
 		this.dom_pre_init();
 	}
 	async async_pre_init() {
-		if(!this.background_audio) throw 1;
-		if(!(this.background_audio instanceof HTMLAudioElement)) throw 1;
+		if(!this.background_audio) throw new Error("Missing data");
+		if(!(this.background_audio instanceof HTMLAudioElement)) throw new Error("Missing data");
 		try {
 			return await this.background_audio.play();
 		} catch(e) {
@@ -2680,7 +2678,7 @@ class AutoBuy {
 				case 'dup': case 'breakpoint': case 'drop': case 'call':/*push the item*/case 'push': stack.push(cur_item); break;
 				default: {
 					let any_cur: any=cur_item;
-					if(!(any_cur instanceof Array)) throw 1;
+					if(!(any_cur instanceof Array)) throw new Error("Bad");
 					const [,action]=any_cur;
 					log_if(LOG_LEVEL_ERROR,'might need to handle',action);
 					debugger;
@@ -2839,8 +2837,8 @@ class AutoBuy {
 				}
 			}
 			if(ins[1]==='vm_block_trace'&&dep_ins[1]==='vm_block_trace'&&ins[2]==='call'&&dep_ins[2]==='call') {
-				if(!ins[3]) throw 1;
-				if(!dep_ins[3]) throw 1;
+				if(!ins[3]) throw new Error("Bad");
+				if(!dep_ins[3]) throw new Error("Bad");
 				let idx=flat_ins.indexOf(ins[3]);
 				let dep_idx=flat_dep_ins.indexOf(dep_ins[3]);
 				flat_ins_dep_2.push([dep_ins[0],'vm_block_trace','block',dep_idx]);
