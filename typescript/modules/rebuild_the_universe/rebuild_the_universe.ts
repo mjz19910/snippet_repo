@@ -861,13 +861,16 @@ class StackVM {
 	running: boolean;
 	flags: any;
 	frame_size: any;
-	instruction_map_obj: {};
+	instruction_map_obj: {
+		[k: string]: InstanceType<InstructionList[number][1]>;
+	};
 	create_instruction_map(instruction_desc_arr: InstructionList) {
-		let obj={};
+		let obj: {
+			[k: string]: InstanceType<InstructionList[number][1]>;
+		}={};
 		for(let i=0;i<instruction_desc_arr.length;i++) {
 			let cur=instruction_desc_arr[i];
-			let obj_value=obj as unknown as {[x: string]: any;};
-			obj_value[cur[0]]=new cur[1];
+			obj[cur[0]]=new cur[1];
 		}
 		return obj;
 	}
@@ -922,12 +925,12 @@ class StackVM {
 		this.running=false;
 	}
 	get_instruction(opcode: InstructionOpcodesList[number]) {
-		let any_map: any=this.instruction_map_obj;
-		return any_map[opcode];
+		return this.instruction_map_obj[opcode];
 	}
 	execute_instruction(instruction: InstructionType) {
 		let run=this.get_instruction(instruction[0]);
-		run.run(this,instruction);
+		let run_fn=(run.run as (this: typeof run,a: StackVM,i: InstructionType) => void);
+		run_fn.call(run,this,instruction);
 	}
 	run() {
 		this.running=true;
