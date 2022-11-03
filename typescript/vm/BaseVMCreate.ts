@@ -55,6 +55,6 @@ export class BaseVMCreate extends AbstractVM {
 			this.execute_instruction(instruction)
 			this.instruction_pointer++
 		}
-		return null
+		return new NullBox(null);
 	}
 }
