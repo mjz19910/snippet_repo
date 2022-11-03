@@ -1,4 +1,4 @@
-export function is_not_type<T,Drop>(value: T|Drop): value is T {
+export function is_not_type<T>(value: T|{}): value is T {
 	void value
 	return false
 }

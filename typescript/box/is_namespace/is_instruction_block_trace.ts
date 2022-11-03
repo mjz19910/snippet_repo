@@ -2,11 +2,10 @@ import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js"
 import {eat_never} from "../helper/eat_never.js"
 import {is_instruction_block_trace_instruction_ptr} from "./is_instruction_block_trace_instruction_ptr.js"
 import {is_instruction_block_trace_tagged_ptr} from "./is_instruction_block_trace_tagged_ptr.js"
-import {is_not_type} from "./is_not_type.js"
 import {is_number} from "./is_number.js"
 
 export function is_instruction_block_trace<T>(value: T|VMBlockTrace): value is VMBlockTrace {
-	if(is_not_type<T,any>(value)) throw new Error("Never")
+	if(!(value instanceof Array)) return false;
 	switch(value[1]) {
 		case 'block': return value.length===4&&is_number(value[2])&&is_number(value[3])
 		case 'begin':

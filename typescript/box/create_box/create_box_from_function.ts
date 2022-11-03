@@ -14,13 +14,13 @@ export function create_box_from_function(value: FunctionBox_Value): Box {
 	if(is_CSSStyleSheetConstructor(value)) {
 		return new CSSStyleSheetConstructorBox(value)
 	}
-	if(is_not_type<(...a: Box[]) => Box,Function>(value)) {
+	if(is_not_type<(...a: Box[]) => Box>(value)) {
 		return new FunctionBox(value)
 	}
-	if(is_not_type<NewableInstancePack<{}>,Function>(value)) {
+	if(is_not_type<NewableInstancePack<{}>>(value)) {
 		return new NewableInstancePackObjectBox(value)
 	}
-	if(is_not_type<(...a: Box[]) => Promise<Box>,Function>(value)) {
+	if(is_not_type<(...a: Box[]) => Promise<Box>>(value)) {
 		return new AsyncFunctionBox(value)
 	}
 	if(is_FunctionConstructor(value)) return new temporary_box_from_create_box(value)
