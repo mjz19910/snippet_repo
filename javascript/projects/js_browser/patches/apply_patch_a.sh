@@ -1,3 +1,3 @@
 #!/bin/bash
 cd `dirname $0`
-patch -p0 --strip=2 --unified --backup --forward `realpath link_to_patch_a_target.js` npm_patch_a.patch 2>&-
+patch -p0 --strip=2 --unified --backup --forward `cat patch_target.url` npm_patch_a.patch 2>&-
