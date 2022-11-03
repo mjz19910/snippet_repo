@@ -1,16 +1,9 @@
 import {Box} from "../box/Box.js";
-import {do_box_get} from "../modules/rebuild_the_universe/src/do_box_get.js";
-import {InstructionCallImpl} from "../modules/rebuild_the_universe/src/InstructionCallImpl.js";
-import {InstructionCastImpl} from "../modules/rebuild_the_universe/src/InstructionCastImpl.js";
-import {InstructionConstructImpl} from "../modules/rebuild_the_universe/src/InstructionConstructImpl.js";
-import {into_typed} from "../modules/rebuild_the_universe/src/into_typed.js";
-import {safe_get} from "../modules/rebuild_the_universe/src/safe_get.js";
 import {StackVMFlags} from "./StackVMFlags.js";
-import {TempBox} from "../modules/rebuild_the_universe/src/TempBox.js";
-import {throw_invalid_error} from "../modules/rebuild_the_universe/src/throw_invalid_error.js";
 import {InstructionType} from "./instruction/InstructionType.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
+import {VoidBox} from "box/VoidBox.js";
 
 export class StackVM {
 	instructions: InstructionType[];
@@ -24,7 +17,7 @@ export class StackVM {
 		this.instruction_pointer=0;
 		this.running=false;
 		this.stack=[];
-		this.return_value=void 0;
+		this.return_value=new VoidBox(void 0);
 		this.flags=new StackVMFlags;
 	}
 	push(value: Box) {
@@ -43,30 +36,20 @@ export class StackVM {
 			if(this.stack.length<=0) {
 				throw new Error('stack underflow in pop_arg_count');
 			}
-			arguments_arr.unshift(this.pop());
+			let top = this.pop();
+			if(!top) throw new Error('stack underflow in pop_arg_count');
+			arguments_arr.unshift(top);
 		}
 		return arguments_arr;
 	}
 	reset() {
 		this.running=false;
 		this.instruction_pointer=0;
-		this.return_value=void 0;
+		this.return_value=new VoidBox(void 0);
 		this.stack.length=0;
 	}
 	is_in_instructions(value: number) {
 		return value>=0&&value<this.instructions.length;
-	}
-	execute_backup_vm_push_ip() {
-		let this_with_push: {push: StackVM['push'];}=this;
-		let fn_ptr=safe_get(this_with_push,"push");
-		if(!fn_ptr)
-			throw new Error("push_pc requires a stack");
-		let this_as_StackVM=into_typed<StackVM>(this);
-		if('instruction_pointer' in this_as_StackVM) {
-			fn_ptr.call(this,this_as_StackVM.instruction_pointer);
-		} else {
-			throw new Error("Property missing or invalid: instruction_pointer");
-		}
 	}
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {

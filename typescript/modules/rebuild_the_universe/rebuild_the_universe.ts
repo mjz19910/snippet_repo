@@ -1,6 +1,6 @@
 import {ArrayBox} from "box/ArrayBox.js";
 import {AsyncFunctionBox} from "box/AsyncFunctionBox.js";
-import {Box} from "box/Box.js";
+import {Box, NumberBox} from "box/Box.js";
 import {CSSStyleSheetBox} from "box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "box/CSSStyleSheetConstructorBox.js";
 import {EmptyArrayBox} from "box/EmptyArrayBox.js";
@@ -572,7 +572,7 @@ class InstructionVMPushIPImpl {
 		if(!vm.hasOwnProperty('push')) {
 			throw new Error("push_pc requires a stack");
 		} else if(vm instanceof StackVM) {
-			vm.stack.push(vm.instruction_pointer);
+			vm.stack.push(new NumberBox(vm.instruction_pointer));
 		} else {
 			console.info('TODO: add instanceof check to push_pc');
 			throw new Error("Property missing or invalid");
@@ -585,8 +585,9 @@ class InstructionPushImpl {
 		this.type='push';
 	}
 	run(vm: StackVM,instruction: Push) {
-		for(let i=0;i<instruction.length-1;i++) {
-			let item=instruction[i+1];
+		let [,...rest]=instruction;
+		for(let i=0;i<rest.length;i++) {
+			let item=rest[i];
 			vm.stack.push(item);
 		}
 	}
@@ -598,7 +599,9 @@ class InstructionDupImpl {
 	}
 	run(vm: StackVM,_ins: Dup) {
 		if(vm.stack.length===0) throw new Error("stack underflow");
-		vm.stack.push(vm.stack.at(-1));
+		let res=vm.stack.at(-1);
+		if(!res) throw new Error("bad");
+		vm.stack.push(res);
 	}
 }
 function use_never_type(value: never) {
@@ -680,7 +683,7 @@ class InstructionReturnImpl {
 	type: 'return'='return';
 	run(vm: StackVM,_i: Return) {
 		if(vm.stack.length>0) {
-			vm.return_value=vm.stack.pop();
+			vm.return_value=vm.stack.pop()!;
 		} else {
 			throw new Error("Stack underflow on return");
 		}
@@ -764,10 +767,6 @@ class InstructionVMReturnImpl {
 	debug=false;
 	run(vm: StackVM,_i: Return) {
 		let start_stack=vm.stack.slice();
-		if(vm.base_ptr===null) {
-			vm.running=false;
-			return;
-		}
 		if(vm.base_ptr!=vm.stack.length) {
 			console.log('TODO: support returning values');
 			vm.stack.length=vm.base_ptr;
@@ -785,7 +784,8 @@ class InstructionVMCallImpl {
 	type: 'vm_call'='vm_call';
 	run(vm: StackVM,ins: Call) {
 		let prev_base=vm.base_ptr;
-		vm.stack.push(vm.base_ptr,vm.instruction_pointer);
+		vm.stack.push(new NumberBox(vm.base_ptr));
+		vm.stack.push(new NumberBox(vm.instruction_pointer));
 		vm.base_ptr=vm.stack.length;
 		vm.jump_instruction_pointer=ins[1];
 		console.log('vm vm_call',ins[1],'stk',vm.base_ptr,prev_base,vm.stack.slice());
@@ -853,7 +853,7 @@ const instruction_descriptor_arr: InstructionList=[
 class StackVM {
 	return_value: Box;
 	jump_instruction_pointer: number|null;
-	base_ptr: number|null;
+	base_ptr: number;
 	stack: Box[];
 	instructions: InstructionType[];
 	instruction_pointer: number;
@@ -875,9 +875,9 @@ class StackVM {
 		this.instruction_pointer=0;
 		this.running=false;
 		this.stack=[];
-		this.return_value=void 0;
+		this.return_value=new VoidBoxImpl(void 0);
 		this.jump_instruction_pointer=null;
-		this.base_ptr=null;
+		this.base_ptr=0;
 		this.frame_size=2;
 		this.flags=new StackVMFlags;
 		this.instruction_map_obj=this.create_instruction_map(instruction_descriptor_arr);
@@ -886,19 +886,23 @@ class StackVM {
 		this.stack.push(value);
 	}
 	pop() {
-		return this.stack.pop();
+		let value=this.stack.pop();
+		if(!value) throw new Error("Stack underflow");
+		return value;
 	}
 	peek_at(distance: number) {
 		return this.stack.at(-1-distance);
 	}
 	pop_arg_count(operand_number_of_arguments: number) {
-		let arguments_arr=[];
+		let arguments_arr: Box[]=[];
 		let arg_count=operand_number_of_arguments;
 		for(let i=0;i<arg_count;i++) {
 			if(this.stack.length<=0) {
 				throw new Error('stack underflow in pop_arg_count');
 			}
-			arguments_arr.unshift(this.stack.pop());
+			let top = this.stack.pop();
+			if(!top) throw new Error('stack underflow in pop_arg_count');
+			arguments_arr.unshift(top);
 		}
 		return arguments_arr;
 	}
@@ -906,15 +910,12 @@ class StackVM {
 		this.running=false;
 		this.instruction_pointer=0;
 		this.jump_instruction_pointer=null;
-		this.base_ptr=null;
-		this.return_value=void 0;
+		this.base_ptr=0;
+		this.return_value=new VoidBoxImpl(void 0);
 		this.stack.length=0;
 	}
 	is_in_instructions(value: number) {
 		return value>=0&&value<this.instructions.length;
-	}
-	execute_backup_vm_push_ip() {
-		this.push.call(this,this.instruction_pointer);
 	}
 	halt() {
 		this.running=false;
@@ -964,12 +965,8 @@ class EventHandlerVMDispatch extends StackVM {
 		this.args_arr=null;
 	}
 	run(...args_arr: Box[]) {
-		try {
-			this.args_arr=args_arr;
-			return super.run();
-		} catch(e) {
-			console.log('EventHandlerVMDispatch run error',e);
-		}
+		this.args_arr=args_arr;
+		return super.run();
 	}
 	handleEvent(event: Event) {
 		this.reset();
@@ -2240,11 +2237,11 @@ class VoidBoxImpl implements VoidBox {
 	extension: null;
 	m_verify_name: "VoidBox";
 	value: undefined;
-	constructor() {
+	constructor(value: undefined) {
 		this.type='void';
 		this.extension=null;
 		this.m_verify_name='VoidBox';
-		this.value=void 0;
+		this.value=value;
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
