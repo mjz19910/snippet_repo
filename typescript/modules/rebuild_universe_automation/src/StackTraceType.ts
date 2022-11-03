@@ -1,3 +1,3 @@
 export type StackTraceType={
-	stack: string
-}
+	stack: string;
+};

@@ -1,4 +1,4 @@
-import {CSSStyleSheetConstructorBoxImpl} from "./CSSStyleSheetConstructorBoxImpl.js"
+import {CSSStyleSheetConstructorBoxImpl} from "./CSSStyleSheetConstructorBoxImpl.js";
 
 export type NewDesc=[
 	v: 0,
@@ -7,4 +7,4 @@ export type NewDesc=[
 	b: [],
 	c: (obj: CSSStyleSheet,str: string) => Promise<CSSStyleSheet>,
 	d: string[]
-]
+];
