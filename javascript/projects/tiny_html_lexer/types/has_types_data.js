@@ -7,7 +7,7 @@ export function down_cast_func(v) {
 export function drop_type(_) {
     return true
 }
-export function has_types_arr_with(v,cx) {
+export function has_types_arr_with(v,_cx) {
     if(v!==null) {
         if(!is_fn(v))
             return false
