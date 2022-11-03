@@ -2502,399 +2502,44 @@ class AutoBuy {
 		}
 	}
 	dom_pre_init() {
-		const css_display_style=`#state_log>div{width:max-content}#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`;
-		let create_state_log_arr: DomExecDescription[]=[
-			[0,'push',new DocumentBoxImpl(document),'body'],
-			[0,'get'],
-			[1,'create_id','div','state_log'],
-			[1,'dup'],
-			[1,'append']
-		];
-		function replace_css_style(obj: CSSStyleSheet,str: string) {
-			return obj.replace(str);
+		const css_display_style=`
+		#state_log>div {
+			width:max-content;
 		}
-		async function css_promise_runner(this: AutoBuy,...box_arr: Box[]) {
-			let promise_arr: Promise<Box>[]=[];
-			for(let i=0;i<box_arr.length;i++) {
-				let cur=box_arr[i];
-				if(typeof cur!='object') continue;
-				if(cur===null) continue;
-				if(cur.type!='promise_box') continue;
-				if(cur.await_type==='Box') {
-					promise_arr.push(cur.value);
-				}
-			}
-			const promise_settle_arr=await Promise.allSettled(promise_arr);
-			let fulfilled_res_arr: PromiseFulfilledResult<Box>[]=[];
-			let rejected_res: PromiseRejectedResult[]=[];
-			for(let i=0;i<promise_settle_arr.length;i++) {
-				let cur=promise_settle_arr[i];
-				if(cur.status==='fulfilled') {
-					fulfilled_res_arr.push(cur);
-				} else {
-					rejected_res.push(cur);
-				}
-			}
-			let promise_res_arr=fulfilled_res_arr.map(e_1 => e_1.value);
-			let unbox_arr: CSSStyleSheet[]=[];
-			for(let i=0;i<promise_res_arr.length;i++) {
-				let cur=promise_res_arr[i];
-				if(typeof cur!='object') continue;
-				if(cur===null) continue;
-				if(cur.type!='instance_box') continue;
-				if(cur.instance_type!="CSSStyleSheet") continue;
-				unbox_arr.push(cur.value);
-			}
-			if(rejected_res.length>0) {
-				console.log('css settle error',rejected_res,'res',unbox_arr);
-			} else {
-				console.log('css settle',unbox_arr);
-			}
-			this.adopt_styles(...unbox_arr);
-		}
-		async function add_css_style_sheet(...a: Box[]) {
-			let ret=css_promise_runner.call(bound_this,...a);
-			await ret;
-			return new VoidBoxImpl;
-		}
-		let bound_this=this;
-		let make_css_arr: DomExecDescription[]=[
-			[0,'push',null,new AsyncFunctionBoxImpl(add_css_style_sheet)],
-			[
-				0,'new',new CSSStyleSheetConstructorBoxImpl(CSSStyleSheet),[],
-				replace_css_style,
-				[css_display_style]
-			],
-			[0,'call',3],
-			/*drop the promise*/
-			[0,'drop']
-		];
-		let raw_dom_arr: DomExecDescription[]=[
-			...create_state_log_arr,
-			[2,'create','div','history',"?3"],
-			[2,'append'],
-			[2,'create','div','timeout_element',"0"],
-			[2,'append'],
-			[2,'create','div','hours_played',"0.000 hours"],
-			[2,'append'],
-			[2,'create','div','ratio',0..toFixed(2)+"%"],
-			[2,'append'],
-			[2,'create','div','ratio_change',0..toExponential(3)],
-			[2,'append'],
-			[1,'drop'],
-			[0,'drop'],
-			...make_css_arr
-		];
-		this.build_dom_from_desc(raw_dom_arr,this.dom_map);
-	}
-	adopt_styles(...styles: CSSStyleSheet[]) {
-		let dom_styles=document.adoptedStyleSheets;
-		document.adoptedStyleSheets=[...dom_styles,...styles];
-	}
-	use_boxed_style_sheet(callback: (a: CSSStyleSheet,b: string) => Promise<CSSStyleSheet>,...a: Box[]) {
-		let extracted_values: {
-			v: []; t: 0;
-		}|{
-			v: [CSSStyleSheet]; t: 1;
-		}|{
-			v: [CSSStyleSheet,string]; t: 2;
-		}={
-			v: [],
-			t: 0
-		};
-		for(let i=0;i<a.length;i++) {
-			let v=a[i];
-			switch(typeof v) {
-				default:
-					console.assert(false,'Assertion need to handle `case "%s":`',typeof v);
-					break;
-				case 'object':
-					if(v===null) break;
-					if(v.type==='instance_box'&&v.instance_type==='CSSStyleSheet') {
-						extracted_values={
-							v: [v.value],
-							t: 1
-						};
-					}
-					if(v instanceof CSSStyleSheet) {
-						// it already got converted to a value for us
-						extracted_values={
-							v: [v],
-							t: 1
-						};
-					}
-					break;
-				case 'string':
-					if(extracted_values.t===1) {
-						extracted_values={
-							v: [extracted_values.v[0],v],
-							t: 2
-						};
-					}
-			}
-		}
-		if(extracted_values&&extracted_values.t===2) {
-			let ret=callback(...extracted_values.v);
-			let r2=ret.then(function(v) {
-				return new CSSStyleSheetBoxImpl(v);
-			});
-			let res=new PromiseBoxImpl(r2);
-			return res;
-		}
-	}
-	build_dom_from_desc(raw_arr: DomExecDescription[],trg_map=new Map) {
-		let stack: DomExecDescription[]=[];
-		let map=trg_map;
-		for(let i=0;i<raw_arr.length;i++) {
-			let cur_item=raw_arr[i];
-			switch(cur_item[1]) {
-				case 'get': {
-					stack.push(cur_item);
-				} break;
-				case 'new': {
-				} break;
-				case 'create': {
-					const [depth,,element_type,name,content]=cur_item;
-					let cur_element=document.createElement(element_type);
-					cur_element.innerText=content;
-					map.set(name,cur_element);
-					stack.push([depth,"push",new NodeBoxImpl(cur_element)]);
-				} break;
-				case 'create_id': {
-					const [depth,,element_type,name]=cur_item;
-					let cur_element=document.createElement(element_type);
-					cur_element.id=name;
-					map.set(name,cur_element);
-					stack.push([depth,"push",new NodeBoxImpl(cur_element)]);
-				} break;
-				case 'append': {
-					let depth=cur_item[0];
-					// peek at the value on the top of the previous frame
-					stack.push([depth,"peek",0]);
-					stack.push(cur_item);
-				} break;
-				case 'dup': case 'breakpoint': case 'drop': case 'call':/*push the item*/case 'push': stack.push(cur_item); break;
-				default: {
-					let any_cur: any=cur_item;
-					if(!(any_cur instanceof Array)) throw new Error("Bad");
-					const [,action]=any_cur;
-					log_if(LOG_LEVEL_ERROR,'might need to handle',action);
-					debugger;
-				} break;
-			}
-			if(this.debug_arr.includes('build_dom_from_desc')) console.log('es',stack.at(-1));
-		}
-	}
-	push_instruction_group(ins_arr_map: (DomInstructionType[]|null)[],instruction: DomInstructionType) {
-		let [stack_ptr]=instruction;
-		if(!ins_arr_map[stack_ptr]) ins_arr_map[stack_ptr]=[];
-		let stack_loc=ins_arr_map[stack_ptr];
-		if(stack_loc!==null) stack_loc.push(instruction);
-	}
-	parse_dom_stack(input_instructions: DomInstructionType[]): InstructionType[] {
-		let depth_ins_map: DomInstructionType[][]=[];
-		let ins_arr_map: (DomInstructionType[]|null)[]=[];
-		let depths: number[]=[];
-		for(let i=0;i<input_instructions.length;i++) {
-			let cur=input_instructions[i];
-			const [cur_depth,...cur_instruction]=cur;
-			const prev_depth=depths.at(-1);
-			if(!prev_depth) {
-				continue;
-			}
-			if(prev_depth!=cur_depth) {
-				console.log('vm_dom_1',prev_depth,'->',cur_depth);
-				pd: if(cur_depth>prev_depth) {
-					let instructions_at_1=ins_arr_map[prev_depth];
-					let ins_dep_at_1=depth_ins_map[prev_depth];
-					if(!instructions_at_1) break pd;
-					if(!ins_dep_at_1) break pd;
-					let ins_item_1=instructions_at_1[0];
-					let ins_dep_item_1=ins_dep_at_1[0];
-					while(ins_item_1[1]==='vm_block_trace'&&ins_item_1[3]) {
-						let src_ty=ins_item_1[3];
-						ins_item_1=(src_ty as any)[0];
-						console.log(ins_dep_item_1);
-						debugger;
-					}
-					console.log('vm_1','dep',prev_depth,'in idx',input_instructions.indexOf(ins_dep_item_1));
-					let target_depth=prev_depth-1;
-					if(target_depth<0) {
-						break pd;
-					}
-					depth_ins_map[target_depth]??=[];
-					if(depth_ins_map[target_depth].length>0) {
-						depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',null]);
-						this.push_instruction_group(ins_arr_map,[target_depth,'vm_block_trace','begin',null]);
-					}
-					if(ins_item_1===null) {} else {
-						depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',[ins_item_1] as any]);
-						this.push_instruction_group(ins_arr_map,[target_depth,'vm_block_trace','begin',[ins_item_1] as any]);
-					}
-				} else {
-					let ins_item: DomInstructionType|null=null;
-					let ins_dep_item_2: DomInstructionType|null=null;
-					let instructions_at_2=ins_arr_map[prev_depth];
-					let ins_dep_at_2=depth_ins_map[prev_depth];
-					if(!instructions_at_2) break pd;
-					ins_item=instructions_at_2[0];
-					ins_dep_item_2=ins_dep_at_2[0];
-					while(
-						ins_item&&ins_item[1]==='vm_block_trace'&&ins_item[2]==='call'&&ins_item[3]&&
-						ins_dep_item_2&&ins_dep_item_2[1]==='vm_block_trace'&&ins_dep_item_2[3]
-					) {
-						ins_item=ins_item[3];
-						switch(ins_dep_item_2[2]) {
-							case 'begin': ins_dep_item_2=ins_dep_item_2[3]; break;
-							case 'block': throw new Error("Bad");
-							case 'call': {
-								if(ins_dep_item_2[3]===null) throw new Error("Bad");
-								ins_dep_item_2=ins_dep_item_2[3];
-							} break;
-							case 'tagged': {
-								let tag_pack: DomTaggedPack=ins_dep_item_2[3];
-								if(ins_dep_item_2[3]===null) throw new Error("Bad");
-								switch(tag_pack[0]) {
-									case 'dom': ins_dep_item_2=tag_pack[1]; break;
-									case 'dom_mem': throw new Error("Bad");
-									case 'vm': throw new Error("Bad");
-								}
-							}
-						}
-						debugger;
-					}
-					if(ins_dep_item_2!==null) {
-						console.log('vm_2','dep',prev_depth,'in idx',input_instructions.indexOf(ins_dep_item_2));
-					}
-					let target_depth=prev_depth-1;
-					if(target_depth<0) {
-						break pd;
-					}
-					depth_ins_map[target_depth]??=[];
-					if(depth_ins_map[target_depth].length>0) {
-						depth_ins_map[target_depth].push([target_depth,'vm_block_trace','begin',null]);
-						this.push_instruction_group(ins_arr_map,[target_depth,'vm_block_trace','begin',null]);
-					}
-					depth_ins_map[target_depth].push([target_depth,'vm_block_trace','call',ins_item]);
-					this.push_instruction_group(ins_arr_map,[target_depth,'vm_block_trace','call',ins_item]);
-				}
-			}
-			depth_ins_map[cur_depth]??=[];
-			depth_ins_map[cur_depth].push(cur);
-			let instructions_at=ins_arr_map[cur_depth];
-			if(instructions_at) {
-				instructions_at.push([cur_depth,...cur_instruction]);
-			} else {
-				ins_arr_map[cur_depth]=[[cur_depth,...cur_instruction]];
-			}
-			depths.push(cur_depth);
-		}
-		let flat_with_depths: DomInstructionType[]=[];
-		let flat_stack: DomInstructionType[]|null=[];
-		let instructions: InstructionType[]=[];
-		for(let i=0;i<depth_ins_map.length;i++) {
-			let cur_instructions=ins_arr_map[i];
-			let cur_ins_with_depths=depth_ins_map[i];
-			if(!cur_ins_with_depths) continue;
-			if(!cur_instructions) continue;
-			flat_with_depths.push(...cur_ins_with_depths);
-			flat_with_depths.push([i,"vm_return"]);
-			flat_stack.push(...cur_instructions);
-			flat_stack.push([i,"vm_return"]);
-		}
-		function is_marker_dep_ins(ins: DomInstructionType) {
-			return ins[1]==='marker';
-		}
-		let flat_ins: DomInstructionType[]=[];
-		let flat_dep_ins: DomInstructionType[]=[];
-		let flat_all_ins: DomInstructionType[]=[];
-		for(let i=0;i<flat_stack.length;i++) {
-			let ins=flat_stack[i];
-			let dep_ins=flat_with_depths[i];
-			if(ins[1]!==dep_ins[1]) console.assert(false,ins,dep_ins);
-			if(ins[1]==='vm_block_trace') {
-				flat_ins.push(ins);
-				flat_dep_ins.push(ins);
-				flat_all_ins.push(dep_ins);
-				continue;
-			}
-			flat_all_ins.push(dep_ins);
-			if(!is_marker_dep_ins(dep_ins)) flat_dep_ins.push(dep_ins);
-			if(!is_marker_dep_ins(ins)) flat_ins.push(ins);
-		}
-		let flat_ins_dep_2=[];
-		for(let i=0;i<flat_ins.length;i++) {
-			let ins=flat_ins[i];
-			let dep_ins=flat_dep_ins[i];
-			if(ins[1]==='vm_call_at') {
-				let ix=ins[2];
-				if(ix[0]==='dom') {
-					let idx=flat_ins.indexOf(ix[1]);
-					instructions.push(['vm_call',idx]);
-				} else {
-				}
-			}
-			if(ins[1]==='vm_block_trace'&&dep_ins[1]==='vm_block_trace'&&ins[2]==='call'&&dep_ins[2]==='call') {
-				if(!ins[3]) throw new Error("Bad");
-				if(!dep_ins[3]) throw new Error("Bad");
-				let idx=flat_ins.indexOf(ins[3]);
-				let dep_idx=flat_dep_ins.indexOf(dep_ins[3]);
-				flat_ins_dep_2.push([dep_ins[0],'vm_block_trace','block',dep_idx]);
-				instructions.push(['vm_block_trace','block',dep_ins[0],idx]);
-			}
-			flat_ins_dep_2.push(dep_ins);
-			if(!is_marker_dep_ins(ins)) {
-				switch(ins[1]) {
-					case 'push': instructions.push([ins[1],...ins.slice(2)]); break;
-					case 'marker': break;
-					case 'vm_call_at': break;
-					case 'vm_call': instructions.push([ins[1],ins[2]]); break;
-					case 'call': instructions.push([ins[1],ins[2]]); break;
-					case "cast": instructions.push([ins[1],ins[2]]); break;
-					case "construct": instructions.push([ins[1],ins[2]]); break;
-					case "je": instructions.push([ins[1],ins[2]]); break;
-					case "jmp": instructions.push([ins[1],ins[2]]); break;
-					case "peek": instructions.push([ins[1],ins[2]]); break;
-					case "vm_block_trace": {
-						switch(ins[2]) {
-							case 'begin': instructions.push([ins[1],ins[2],ins[3]]); break;
-							case 'block': instructions.push([ins[1],ins[2],ins[3],ins[4]]); break;
-							case 'call': instructions.push([ins[1],ins[2],ins[3]]); break;
-							case 'tagged': instructions.push([ins[1],ins[2],ins[3]]); break;
-							case 'tagged_begin': instructions.push([ins[1],ins[2],ins[3]]); break;
-							case 'tagged_call': instructions.push([ins[1],ins[2],ins[3]]); break;
-						}
-					} break;
-					case 'modify_operand': instructions.push([ins[1],ins[2],ins[3]]); break;
-					case 'append': instructions.push([ins[1]]); break;
-					case 'breakpoint': instructions.push([ins[1]]); break;
-					case 'get': instructions.push([ins[1]]); break;
-					case 'drop': instructions.push([ins[1]]); break;
-					case 'dup': instructions.push([ins[1]]); break;
-					case 'halt': instructions.push([ins[1]]); break;
-					case 'nop': instructions.push([ins[1]]); break;
-					case 'return': instructions.push([ins[1]]); break;
-					case 'vm_push_args': instructions.push([ins[1]]); break;
-					case 'vm_push_ip': instructions.push([ins[1]]); break;
-					case 'vm_push_self': instructions.push([ins[1]]); break;
-					case 'vm_return': instructions.push([ins[1]]); break;
-					case 'push_window_object': instructions.push([ins[1]]); break;
-					case 'dom_filter': throw_bad_error(ins);
-					case 'create_id': throw_bad_error(ins);
-					case 'create': throw_bad_error(ins);
-					default: let v: never=ins; v; throw new Error("assert");
-				}
-			}
-			if(dep_ins[1]==='vm_block_trace'&&dep_ins[2]==='tagged') {
-				let dx=dep_ins[3];
-				if(dx&&dx[0]=='dom') {
-					let dep_idx=flat_dep_ins.indexOf(dx[1]);
-					flat_ins_dep_2.push([dep_ins[0],'vm_block_trace','call',dep_idx]);
-				}
-			}
-		}
-		console.log('parse_dom_stack instructions',flat_ins_dep_2,instructions);
-		return instructions;
+		#state_log {
+			top:0px;
+			width:30px;
+			position:fixed;
+			z-index:101;
+			font-family:monospace;
+			font-size:22px;
+			color:lightgray;
+		}`;
+		let displaySheet=new CSSStyleSheet;
+		displaySheet.replaceSync(css_display_style);
+		document.adoptedStyleSheets = [...document.adoptedStyleSheets, displaySheet];
+		let state_log=document.createElement('state_log');
+		document.body.append(state_log);
+		let history=document.createElement("div");
+		history.textContent="?3";
+		state_log.append(history);
+		this.dom_map.set('history', history);
+		let timeout_element=document.createElement("div");
+		timeout_element.textContent="0";
+		state_log.append(timeout_element);
+		this.dom_map.set('timeout_element', timeout_element);
+		let hours_played=document.createElement("div");
+		hours_played.textContent="0.000 hours";
+		state_log.append(hours_played);
+		this.dom_map.set('hours_played', hours_played);
+		let ratio = document.createElement('div');
+		ratio.textContent="0.00%";
+		state_log.append(ratio);
+		this.dom_map.set('ratio', ratio);
+		let ratio_change=document.createElement('div');
+		ratio_change.textContent='0.000e+0';
+		state_log.append(ratio_change);
+		this.dom_map.set('ratio_change', ratio_change);
 	}
 	init_dom() {
 		const font_size_px=22;
