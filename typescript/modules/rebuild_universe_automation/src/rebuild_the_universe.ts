@@ -12,10 +12,6 @@ import {NoArgsType} from "box/NoArgsType.js";
 import {NodeBox} from "box/NodeBox.js";
 import {ObjectBox} from "box/ObjectBox.js";
 import {StackVMBox} from "box/StackVMBox.js";
-import {TemporaryBox} from "box/temporary_box/TemporaryBox.js";
-import {temporary_box_from_get} from "box/temporary_box/temporary_box_from_get.js";
-import {temporary_box_object_index_to_box} from "box/temporary_box/temporary_box_object_index_to_box.js";
-import {temporary_box_StackVM} from "box/temporary_box/temporary_box_StackVM.js";
 import {VoidBox} from "box/VoidBox.js";
 import {WindowBox} from "box/WindowBox.js";
 import {throw_bad_error} from "ecma_262/lexer/test/throw_bad_error.js";
@@ -316,21 +312,6 @@ class InstructionCallImpl {
 	}
 	unbox_obj(object_box: Exclude<Box,Primitives>): {}|Function|StackVM|null {
 		if(object_box===null) return null;
-		if(object_box.type==='temporary_box') {
-			const {type,source,value,...rest}=object_box;
-			if(Object.keys(rest).length>0) {
-				console.log('unbox temporary_box with extra',type,source,value,rest);
-				throw 1;
-			}
-			if(source==='get') {
-				return value;
-			}
-			if(source==='call') {
-				return value;
-			}
-			console.log('unbox temporary_box',type,source,value,rest);
-			throw 1;
-		}
 		if(object_box.type==='object_box') {
 			const {type,value,...rest}=object_box;
 			if(Object.keys(rest).length>0) {
@@ -400,7 +381,6 @@ class InstructionCallImpl {
 		vm.stack.push(ret_box as unknown as Box);
 	}
 	handle_as_obj(vm: StackVM,fn_obj: Exclude<Box,Primitives|null>,target_this: Exclude<Box,Primitives>,arg_arr: Box[]) {
-		if(fn_obj.type==='temporary_box') throw 1;
 		let raw_fn=fn_obj.as_type('function');
 		if(!raw_fn) {
 			throw new Error("Unreachable (type of value is not 'function')");
@@ -497,32 +477,9 @@ class InstructionCastImpl {
 		this.type='cast';
 		this.debug=false;
 	}
-	push_box(vm: StackVM,value: {[x: string]: Box;}): void {
-		vm.stack.push(new temporary_box_object_index_to_box(value));
-	}
-	push_temporary_box(vm: StackVM,obj: {value: {[x: string]: Box;};}): void {
-		this.push_box(vm,obj.value);
-	}
-	push_temporary_box_2(vm: StackVM,obj: temporary_box_from_get) {
-		vm.stack.push(obj);
-	}
-	push_custom_box(vm: StackVM,box: StackVMBox) {
-		vm.stack.push(new temporary_box_StackVM(box.value));
-	}
 	cast_to_type(vm: StackVM,obj: Exclude<Box,Primitives>) {
 		if(obj?.type==='custom_box'&&obj.box_type==='StackVM') {
-			return this.push_custom_box(vm,obj);
-		}
-		if(obj?.type==='temporary_box') {
-			if(obj.source==='get') {
-				console.log('temporary_box',obj);
-				return this.push_temporary_box_2(vm,obj);
-			}
-			if(obj.source==='call') {
-				return this.push_temporary_box(vm,obj);
-			}
-			console.warn('temporary_box not handled in cast',obj);
-			throw 1;
+			throw new Error("TODO: cast to type");
 		}
 		if(obj?.type==='object_box') {
 			console.warn('box does not contain a function',obj);
@@ -539,7 +496,6 @@ class InstructionCastImpl {
 			throw 1;
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
-		this.push_box(vm,obj);
 	}
 	run(vm: StackVM,instruction: Cast) {
 		let obj=vm.stack.pop();
@@ -664,17 +620,6 @@ class InstructionGetImpl {
 		this.type='get';
 	}
 
-	handle_temporary_box(vm: StackVM,tmp_box: TemporaryBox,key: string) {
-		if(tmp_box.source==='cast') {
-			if(tmp_box.cast_source==='object_index') {
-				this.on_get(vm,tmp_box,key);
-			}
-		} else {
-			console.log('tmp_box',tmp_box);
-			throw new Error("Unable to handle box");
-		}
-	}
-
 	on_get(vm: StackVM,value_box: Exclude<Box,Primitives|null>,key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
@@ -730,10 +675,6 @@ class InstructionGetImpl {
 		if(!value_box) throw new Error("Invalid");
 		if(typeof get_key!='string') throw new Error("Invalid");
 		if(typeof value_box!='object') throw new Error("Invalid");
-		if(value_box.type==='temporary_box') {
-			this.handle_temporary_box(vm,value_box,get_key);
-			return;
-		}
 		this.on_get(vm,value_box,get_key);
 		throw new Error("Update types");
 	}

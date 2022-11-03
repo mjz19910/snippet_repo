@@ -22,7 +22,6 @@ import {ObjectBox} from "./ObjectBox.js"
 import {PromiseBox} from "./PromiseBox.js"
 import {RealVoidBox} from "./RealVoidBox.js"
 import {StackVMBox} from "./StackVMBox.js"
-import {TemporaryBox} from "./temporary_box/TemporaryBox.js"
 import {VoidBox} from "./VoidBox.js"
 import {VoidPromiseBox} from "./VoidPromiseBox.js"
 import {WindowBox} from "./WindowBox.js"
@@ -67,8 +66,6 @@ export type Box=
 	// No value (Void)
 	VoidBox|
 	RealVoidBox|
-	// Temporary
-	TemporaryBox|
 	// Box with stuff
 	BoxWithPropertiesIsBox|
 	// Generic boxes
