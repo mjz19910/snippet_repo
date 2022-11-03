@@ -3,7 +3,7 @@
 all: build
 
 build:
-	mkdir build/userscripts
+	mkdir -p build/userscripts
 	perl export.pl src/rebuild_the_universe.ts > build/userscripts/rebuild_the_universe_auto.user.ts
 
 copy_to_window:
