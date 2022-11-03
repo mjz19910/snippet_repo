@@ -1,6 +1,7 @@
 import {InstructionType} from "./instruction/InstructionType.js"
 import {Box} from "../box/Box.js"
 import {AbstractVM} from "./AbstractVM.js"
+import {NullBox} from "box/NullBox.js";
 
 export class BaseVMCreate extends AbstractVM {
 	flags: Map<string,boolean>
