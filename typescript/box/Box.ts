@@ -67,7 +67,7 @@ export type Box=
 	// No value (Void)
 	VoidBox|
 	RealVoidBox|
-	// Temporary box for when stuff is asserted to be true (ie, typeof value_to_box === "function")
+	// Temporary
 	TemporaryBox|
 	// Box with stuff
 	BoxWithPropertiesIsBox|
