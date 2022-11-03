@@ -1,48 +1,40 @@
-export function has_types_data(_v: (...a: any extends infer U? U[]:never) => void): _v is (() => void)&{types: []} {
-	return true
+export function has_types_data(_v: (...a: any extends infer U? U[]:never) => void): _v is (() => void)&{types: [];} {
+	return true;
 }
 
 export function down_cast_func(v: ((...a: any[]) => void)|null): v is () => void {
-	return v!==null
+	return v!==null;
 }
 export function drop_type(_: Function|(() => void)): _ is () => void {
-	return true
+	return true;
 }
-export function has_types_arr_with(
-	v: {types: typeof cx[]}|((...a: any[]) => void)|null,
-	cx: any extends infer U? U extends {}? U[]:never:never
-): v is {types: typeof cx} {
-	if(v===null) return false
-	if(!is_fn(v)) return false
-	let s: {
+export function has_types_arr_with<T>(
+	v: {types: T[];}|((...a: any[]) => void),
+	_cx: T[]
+): v is {types: T[];} {
+	if(!is_fn(v)) return false;
+	type U={
 		t: 'x',
-		v: typeof v
-	}|{
+		v: {types: T[];}|((...a: any[]) => void);
+	};
+	type V={
 		t: 'y',
-		v: Object&{
-			types: typeof cx
-		}
-	}={
-		t: 'x',
-		v,
-	}
-	if(0) {
-		s={
-			t: 'y',v: {
-				types: [],
-			}
-		}
-	}
-	if(!cast_to_object_and_fn(s)) return false
+		v: {types: T[];};
+	};
+	function as<U,V>(x: U): U|V {
+		return x;
+	};
+	let s=as<U,V>({t: 'x',v});
+	if(!cast_to_object_and_fn<U['v']>(s)) return false;
 	if(!s.v.hasOwnProperty('types'))
-		s.v.types=[]
-	return true
+		s.v.types=[];
+	return true;
 }
 
-export function cast_to_object_and_fn(_: {t: 'x',v: () => void}|{t: 'y',v: {}}): _ is {t: 'y',v: {}} {
-	return true
+export function cast_to_object_and_fn<T>(_: {t: 'x',v: T|(() => void);}|{t: 'y',v: T;}): _ is {t: 'y',v: T;} {
+	return true;
 }
 
-export function is_fn(v: {types: any[]}|((...a: any[]) => void)): v is () => void {
-	return v!==null
+export function is_fn<T>(v: T|((...a: any[]) => void)): v is () => void {
+	return v!==null;
 }
