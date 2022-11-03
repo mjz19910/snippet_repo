@@ -17,16 +17,16 @@ import {MediaListBox} from "./MediaListBox.js";
 import {NewableFunctionBox} from "./NewableFunctionBox.js";
 import {NewableInstancePackObjectBox} from "./NewableInstancePackObjectBox.js";
 import {NodeBox} from "./NodeBox.js";
+import {NullBox} from "./NullBox.js";
+import {NumberBox} from "./NumberBox.js";
 import {ObjectBox} from "./ObjectBox.js";
 import {PromiseBox} from "./PromiseBox.js";
 import {RealVoidBox} from "./RealVoidBox.js";
 import {StackVMBox} from "./StackVMBox.js";
+import {StringBox} from "./StringBox.js";
 import {VoidBox} from "./VoidBox.js";
 import {VoidPromiseBox} from "./VoidPromiseBox.js";
 import {WindowBox} from "./WindowBox.js";
-import {NumberBox} from "./NumberBox.js";
-import {StringBox} from "./StringBox.js";
-import {NullBox} from "./NullBox.js";
 
 export type Box=
 	NumberBox|
