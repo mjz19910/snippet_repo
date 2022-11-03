@@ -799,8 +799,7 @@ class InstructionNopImpl {
 }
 class InstructionBlockTraceImpl {
 	type: 'vm_block_trace'='vm_block_trace';
-	run(_vm: StackVM,_i: VMBlockTrace) {
-	}
+	run(_vm: StackVM,_i: VMBlockTrace) {}
 }
 type InstructionList=[
 	['append',typeof InstructionAppendImpl],
@@ -902,7 +901,7 @@ class StackVM {
 			if(this.stack.length<=0) {
 				throw new Error('stack underflow in pop_arg_count');
 			}
-			let top = this.stack.pop();
+			let top=this.stack.pop();
 			if(!top) throw new Error('stack underflow in pop_arg_count');
 			arguments_arr.unshift(top);
 		}
@@ -1056,7 +1055,7 @@ class StackVMParser {
 			case 'push': {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				ret=[instruction[0],...push_operands.map(e=>new StringBox(e))];
+				ret=[instruction[0],...push_operands.map(e => new StringBox(e))];
 			} break;
 			case 'call'/*1 argument*/: {
 				if(typeof instruction[1]==='number'&&Number.isFinite(instruction[1])) {
