@@ -1,12 +1,11 @@
 import {Box} from "../Box.js";
 import {Primitives} from "../helper/Primitives.js";
 import {assume_is_never} from "../helper/assume_is_never.js";
-import {drop_cast2} from "./drop_cast2.js";
+import {assume_not_type} from "./assume_not_type.js";
 
 export function is_box_object<T>(v: T|Exclude<Box,Primitives|null>):
 	v is Exclude<Box,Primitives|null> {
-	if(drop_cast2<typeof v,T>(v)) throw new Error("Bad");
-	if(!('type' in v)) throw new Error("Invalid");
+	if(assume_not_type<T>(v)) throw new Error("Never");
 	switch(v.type) {
 		case 'array_box': switch(v.item_type) {
 			case "Box": return v.verify_name("ArrayBox");
