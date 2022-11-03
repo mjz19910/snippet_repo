@@ -77,7 +77,7 @@ var parsejs=class {
 					throw RangeError("this not instance of "+m_class)
 				}
 				if(typeof fn!="function") {
-					throw TypeError("sethandler called but parameter 2 is not a function")
+					throw TypeError("set_handler called but parameter 2 is not a function")
 				}
 				this.keyword_handlers.set(n,fn.bind(this))
 			}
