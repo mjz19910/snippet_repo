@@ -63,31 +63,31 @@ var parsejs=class {
 		for(var i of kwo) {
 			ns.add(i)
 		}
-		this.keywordhandlers=new Map
-		let mclass=this.constructor
+		this.keyword_handlers=new Map
+		let m_class=this.constructor
 		for(i of Object.getOwnPropertyNames(Reflect.getPrototypeOf(this))) {
 			if(i.match(/eat_/)) {
-				this.keywordhandlers.set(i.substr(4),this[i].bind(this))
+				this.keyword_handlers.set(i.substr(4),this[i].bind(this))
 			}
 		}
 		this.state.primitives=["null","undefined","true","false","NaN","Infinity","-Infinity","String"]
 		if(s) {
-			let sethandler=function(n,fn) {
-				if(!this instanceof mclass) {
-					throw RangeError("this not instance of "+mclass)
+			function set_handler(n,fn) {
+				if(!this instanceof m_class) {
+					throw RangeError("this not instance of "+m_class)
 				}
 				if(typeof fn!="function") {
 					throw TypeError("sethandler called but parameter 2 is not a function")
 				}
-				this.keywordhandlers.set(n,fn.bind(this))
+				this.keyword_handlers.set(n,fn.bind(this))
 			}
-			let gethandler=function(g) {
-				if(!this instanceof mclass) {
-					throw RangeError("this not instance of "+mclass)
+			function get_handler(g) {
+				if(!this instanceof m_class) {
+					throw RangeError("this not instance of "+m_class)
 				}
-				this.keywordhandlers.get(g)
+				this.keyword_handlers.get(g)
 			}
-			s(this,sethandler,gethandler)
+			s(this,set_handler,get_handler)
 		}
 	}
 	expectraw(s,ptr,state,expected) {
@@ -737,9 +737,9 @@ var parsejs=class {
 					}
 					var hit=s.substr(len,i)
 					if(state.keywords.has(hit)) {
-						if(this.keywordhandlers.has(hit)) {
+						if(this.keyword_handlers.has(hit)) {
 							len+=hit.length
-							len=this.keywordhandlers.get(hit)(s,len,state)
+							len=this.keyword_handlers.get(hit)(s,len,state)
 							continue
 						} else {
 							state.tok.push({
