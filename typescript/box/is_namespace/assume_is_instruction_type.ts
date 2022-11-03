@@ -2,22 +2,22 @@ import {InstructionType} from "../../vm/instruction/InstructionType.js"
 import {Push} from "../../vm/instruction/stack/Push.js"
 import {assume_is_never} from "../helper/assume_is_never.js"
 import {is_box} from "./is_box.js"
-import {is_instruction_block_trace} from "./is_instruction_block_trace.js"
+import {assume_is_instruction_block_trace} from "./assume_is_instruction_block_trace.js"
 import {is_instruction_modify_op} from "./is_instruction_modify_op.js"
 import {assume_is_number} from "./assume_is_number.js"
-import {never_cast} from "./never_cast.js"
+import {assume_not_type} from "./assume_not_type.js"
 
 export function assume_is_instruction_type<T extends any[]>(value: T|InstructionType): value is InstructionType {
-	if(never_cast<T>(value)) throw new Error("Never");
+	if(assume_not_type<T>(value)) throw new Error("Never");
 	switch(value[0]) {
 		case 'push': if(value.length===1) return true
 			for(let i=1;i<value.length;i++) {
 				if(is_box(value[i])) continue
 				return false
 			}
-			if(never_cast<Push>(value)) throw new Error("Never")
+			if(assume_not_type<Push>(value)) throw new Error("Never")
 			return assume_is_never(value)
-		case 'vm_block_trace': return is_instruction_block_trace(value)
+		case 'vm_block_trace': return assume_is_instruction_block_trace(value)
 	}
 	switch(value.length) {
 		case 1: switch(value[0]) {

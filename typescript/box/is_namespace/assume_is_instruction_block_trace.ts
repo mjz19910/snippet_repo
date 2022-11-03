@@ -5,7 +5,7 @@ import {is_null} from "./is_null.js";
 import {assume_is_dom_tagged_pack} from "./assume_is_dom_tagged_pack.js";
 import {assume_is_dom_instruction_type} from "./assume_is_dom_instruction_type.js";
 
-export function is_instruction_block_trace<T>(value: T|VMBlockTrace): value is VMBlockTrace {
+export function assume_is_instruction_block_trace<T>(value: T|VMBlockTrace): value is VMBlockTrace {
 	if(!(value instanceof Array)) return false;
 	switch(value[1]) {
 		case 'block': return value.length===4&&assume_is_number(value[2])&&assume_is_number(value[3]);
