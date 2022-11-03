@@ -855,11 +855,11 @@ export function ecma_parse_main() {
 			/*Template ::
 			NoSubstitutionTemplate
 			TemplateHead*/
-			Template(str,index) {
+			Template(str,_index) {
 				// TODO:implement template parsing without Substitution
 				if(str[0]==='`') {
 					console.info('Impl is never for Template')
-					// this is a template, but we dont know how to parse it
+					// this is a template, but we don't know how to parse it
 					return ['Template',0]
 				}
 				return [null,0]
