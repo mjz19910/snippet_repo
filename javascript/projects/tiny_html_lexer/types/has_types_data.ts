@@ -1,13 +1,7 @@
-export function has_types_data(_v: (...a: any extends infer U? U[]:never) => void): _v is (() => void)&{types: [];} {
+export function drop_type<T>(_: T|(() => void)): _ is () => void {
 	return true;
 }
 
-export function down_cast_func(v: ((...a: any[]) => void)|null): v is () => void {
-	return v!==null;
-}
-export function drop_type(_: Function|(() => void)): _ is () => void {
-	return true;
-}
 export function has_types_arr_with<T>(
 	v: {types: T[];}|((...a: any[]) => void),
 	_cx: T[]
