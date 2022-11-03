@@ -4,6 +4,7 @@
 		"target": "esnext",
 		"lib": [
 			"esnext",
+			"DOM",
 		],
 		"types": [],
 		"strict": true,
