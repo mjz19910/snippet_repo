@@ -26,7 +26,7 @@ import {PromiseBox} from "../PromiseBox.js";
 import {is_Node} from "../is_namespace/is_Node.js";
 import {is_array} from "../is_namespace/is_array.js";
 import {is_Promise} from "../is_namespace/is_Promise.js";
-import {is_instruction_type} from "../is_namespace/is_instruction_type.js";
+import {assume_is_instruction_type} from "../is_namespace/assume_is_instruction_type.js";
 import {InstructionTypeBox} from "../InstructionTypeBox.js";
 import {assert_type} from "../helper/assert_type.js";
 
@@ -46,7 +46,7 @@ export function create_box_from_object(value: ObjectBox_Value): Box {
 		throw new Error("assert");
 	}
 	if(is_array(value)) {
-		if(is_array_of(value,is_instruction_type)) return new InstructionTypeArrayBox(value);
+		if(is_array_of(value,assume_is_instruction_type)) return new InstructionTypeArrayBox(value);
 		if(is_array(value)) throw new Error("Unable to box array");
 		assert_type<never>(value);
 		throw new Error("assert");
@@ -64,7 +64,7 @@ export function create_box_from_object(value: ObjectBox_Value): Box {
 function create_box_from_array(value: Extract<ObjectBox_Value,any[]>): Box {
 	if(is_empty_arr(value)) return new EmptyArrayBox(value);
 	if(is_array_of(value,is_box)) return new ArrayBox(value);
-	if(is_array_of(value,is_instruction_type)) return new InstructionTypeArrayBox(value);
+	if(is_array_of(value,assume_is_instruction_type)) return new InstructionTypeArrayBox(value);
 	if(value[0]==='vm_block_trace') return new InstructionTypeBox(value);
 	assert_type<never>(value);
 	throw new Error("assert");

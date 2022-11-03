@@ -1,7 +1,7 @@
 import {Box} from "../Box.js"
 import {Primitives} from "../helper/Primitives.js"
 import {VoidBox} from "../VoidBox.js"
-import {eat_never} from "../helper/eat_never.js"
+import {assume_is_never} from "../helper/assume_is_never.js"
 
 export namespace test {
 	function get_testing_void_box(): Exclude<Box,Primitives|null>|null {
@@ -26,7 +26,7 @@ export namespace test {
 			case 'value_box': return true
 			case 'void': return true
 			case 'with_properties': return true
-			default: return eat_never(b2)
+			default: return assume_is_never(b2)
 		}
 	}
 }

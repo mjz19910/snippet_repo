@@ -1,6 +1,6 @@
 import {Box} from "../Box.js";
 import {Primitives} from "../helper/Primitives.js";
-import {eat_never} from "../helper/eat_never.js";
+import {assume_is_never} from "../helper/assume_is_never.js";
 import {drop_cast2} from "./drop_cast2.js";
 
 export function is_box_object<T>(v: T|Exclude<Box,Primitives|null>):
@@ -12,37 +12,37 @@ export function is_box_object<T>(v: T|Exclude<Box,Primitives|null>):
 			case "Box": return v.verify_name("ArrayBox");
 			case "instruction_type[]": return v.verify_name("InstructionTypeArrayBox");
 			case null: return v.verify_name("EmptyArrayBox");
-			default: return eat_never(v);
+			default: return assume_is_never(v);
 		}
 		case 'function_box': switch(v.return_type) {
 			case "promise_box": return v.verify_name("AsyncFunctionBox");
 			case null: return v.verify_name("FunctionBox");
-			default: return eat_never(v);
+			default: return assume_is_never(v);
 		}
 		case 'instance_box': switch(v.instance_type) {
 			case 'CSSStyleSheet': return v.verify_name("CSSStyleSheetBox");
 			case 'InstructionType': return v.verify_name("InstructionTypeBox");
 			case 'MediaList': return v.verify_name("MediaListBox");
 			case 'Node': return v.verify_name("NodeBox");
-			default: return eat_never(v);
+			default: return assume_is_never(v);
 		}
 		case 'object_box': switch(v.inner_type) {
 			case 'Record<never, never>': return v.verify_name("ObjectBox");
 			case 'Box': return v.verify_name("IndexBox");
 			case 'Window': return v.verify_name("WindowBox");
-			default: return eat_never(v);
+			default: return assume_is_never(v);
 		}
 		case 'promise_box': switch(v.await_type) {
 			case 'Box': return v.verify_name("PromiseBox");
 			case 'CSSStyleSheet': return v.verify_name("CSSStyleSheetPromiseBox");
 			case void 0: return v.verify_name("VoidPromiseBox");
-			default: return eat_never(v);
+			default: return assume_is_never(v);
 		}
 		case 'constructor_box': switch(v.instance_type) {
 			case 'CSSStyleSheet': return v.verify_name("CSSStyleSheetConstructorBox");
 			case 'Function': return v.verify_name("FunctionConstructorBox");
 			case null: return v.verify_name("NewableFunctionBox");
-			default: return eat_never(v);
+			default: return assume_is_never(v);
 		}
 		case 'value_box': return v.verify_name("GlobalThisBox");
 		case 'custom_box': return v.verify_name("StackVMBox");
@@ -69,10 +69,10 @@ export function is_box_object<T>(v: T|Exclude<Box,Primitives|null>):
 					case 'vm_function': return v.verify_name("temporary_box_from_cast_to_vm_function");
 				}
 				case 'create_box': return v.verify_name("temporary_box_from_create_box");
-				default: return eat_never(v);
+				default: return assume_is_never(v);
 			}
-			default: return eat_never(v);
+			default: return assume_is_never(v);
 		}
-		default: return eat_never(v);
+		default: return assume_is_never(v);
 	}
 }
