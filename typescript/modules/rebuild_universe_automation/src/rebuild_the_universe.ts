@@ -2656,16 +2656,14 @@ class AutoBuy {
 				case 'create': {
 					const [depth,,element_type,name,content]=cur_item;
 					let cur_element=document.createElement(element_type);
-					if(typeof content=='string') cur_element.innerText=content;
-					else if(typeof content=='object'&&(content as WithId).id) {
-						let dom_id=(content as WithId).id;
-						if(typeof dom_id==='string') {
-							cur_element.id=dom_id;
-						}
-					} else {
-						log_if(LOG_LEVEL_ERROR,'bad typeof == %s for content in build_dom; content=%o',typeof content,content);
-						log_if(LOG_LEVEL_TRACE,"Info: case 'create' args are",element_type,name);
-					}
+					cur_element.innerText=content;
+					map.set(name,cur_element);
+					stack.push([depth,"push",new NodeBoxImpl(cur_element)]);
+				} break;
+				case 'create_id': {
+					const [depth,,element_type,name]=cur_item;
+					let cur_element=document.createElement(element_type);
+					cur_element.id=name;
 					map.set(name,cur_element);
 					stack.push([depth,"push",new NodeBoxImpl(cur_element)]);
 				} break;
