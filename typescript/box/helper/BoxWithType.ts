@@ -1,3 +1,4 @@
-import {Primitives} from "./Primitives.js"
+import {BoxInterface} from "box/BoxInterface.js";
 import {Box} from "../Box.js"
-export type BoxWithType=Exclude<Box,Primitives|null>
+
+export type BoxWithType=Extract<Box,BoxInterface>
