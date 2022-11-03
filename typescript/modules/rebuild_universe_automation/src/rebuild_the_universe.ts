@@ -39,11 +39,10 @@ import {VMBlockTrace} from "vm/instruction/vm/VMBlockTrace.js";
 import {VMPushIP} from "vm/instruction/vm/VMPushIP.js";
 import {VMPushSelf} from "vm/instruction/vm/VMPushSelf.js";
 import {StackVMFlags} from "vm/StackVMFlags.js";
-import {into_typed} from "./into_typed.js";
-import {safe_get} from "./safe_get.js";
 import {StackTraceType} from "./StackTraceType.js";
-import {DomExecDescription,DomInstructionStack} from "./typedef.js";
+import {DomExecDescription} from "./typedef.js";
 import {WithId} from "./WithId.js";
+import {DocumentBox} from "box/DocumentBox.js";
 
 // ==UserScript==
 // @name			rebuild the universe auto
@@ -924,16 +923,7 @@ class StackVM {
 		return value>=0&&value<this.instructions.length;
 	}
 	execute_backup_vm_push_ip() {
-		let this_with_push: {push: StackVM['push'];}=this;
-		let fn_ptr=safe_get(this_with_push,"push");
-		if(!fn_ptr)
-			throw new Error("push_pc requires a stack");
-		let this_as_StackVM=into_typed<StackVM>(this);
-		if('instruction_pointer' in this_as_StackVM) {
-			fn_ptr.call(this,this_as_StackVM.instruction_pointer);
-		} else {
-			throw new Error("Property missing or invalid: instruction_pointer");
-		}
+		this.push.call(this,this.instruction_pointer);
 	}
 	halt() {
 		this.running=false;
@@ -2216,13 +2206,19 @@ class AsyncAutoBuy {
 		await node.start_async(new AsyncTimeoutTarget);
 	}
 }
-class DocumentBoxImpl {
-	type: "document_box"="document_box";
+class DocumentBoxImpl implements DocumentBox {
+	type: "document_box";
+	m_verify_name: "DocumentBox";
 	value: Document;
-	as_type(input_typeof: string): [true,this]|[false,null] {
-		return typeof this.value===input_typeof? [true,this]:[false,null];
+	as_type(input_typeof: string): this|null {
+		return typeof this.value===input_typeof? this:null;
+	}
+	verify_name(name: "DocumentBox"): boolean {
+		return this.m_verify_name===name&&name==="DocumentBox";
 	}
 	constructor(value: Document) {
+		this.type='document_box';
+		this.m_verify_name='DocumentBox';
 		this.value=value;
 	}
 }
@@ -2505,12 +2501,11 @@ class AutoBuy {
 		}
 	}
 	dom_pre_init() {
-		type DomExecDescription=any;
 		const css_display_style=`#state_log>div{width:max-content}#state_log{top:0px;width:30px;position:fixed;z-index:101;font-family:monospace;font-size:22px;color:lightgray}`;
 		let create_state_log_arr: DomExecDescription[]=[
 			[0,'push',new DocumentBoxImpl(document),'body'],
 			[0,'get'],
-			[1,'create','div','state_log',{id: 'state_log'}],
+			[1,'create_id','div','state_log'],
 			[1,'dup'],
 			[1,'append']
 		];
@@ -2691,7 +2686,7 @@ class AutoBuy {
 			if(this.debug_arr.includes('build_dom_from_desc')) console.log('es',stack.at(-1));
 		}
 	}
-	push_instruction_group(ins_arr_map: DomInstructionStack,instruction: DomInstructionType) {
+	push_instruction_group(ins_arr_map: (DomInstructionType[]|null)[],instruction: DomInstructionType) {
 		let [stack_ptr]=instruction;
 		if(!ins_arr_map[stack_ptr]) ins_arr_map[stack_ptr]=[];
 		let stack_loc=ins_arr_map[stack_ptr];
@@ -2699,7 +2694,7 @@ class AutoBuy {
 	}
 	parse_dom_stack(input_instructions: DomInstructionType[]): InstructionType[] {
 		let depth_ins_map: DomInstructionType[][]=[];
-		let ins_arr_map: DomInstructionStack=[];
+		let ins_arr_map: (DomInstructionType[]|null)[]=[];
 		let depths: number[]=[];
 		for(let i=0;i<input_instructions.length;i++) {
 			let cur=input_instructions[i];
@@ -2796,7 +2791,7 @@ class AutoBuy {
 			depths.push(cur_depth);
 		}
 		let flat_with_depths: DomInstructionType[]=[];
-		let flat_stack: DomInstructionStack[0]=[];
+		let flat_stack: DomInstructionType[]|null=[];
 		let instructions: InstructionType[]=[];
 		for(let i=0;i<depth_ins_map.length;i++) {
 			let cur_instructions=ins_arr_map[i];
@@ -2886,6 +2881,8 @@ class AutoBuy {
 					case 'vm_return': instructions.push([ins[1]]); break;
 					case 'push_window_object': instructions.push([ins[1]]); break;
 					case 'dom_filter': throw_bad_error(ins);
+					case 'create_id': throw_bad_error(ins);
+					case 'create': throw_bad_error(ins);
 					default: let v: never=ins; v; throw new Error("assert");
 				}
 			}
