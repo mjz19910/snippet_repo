@@ -2223,9 +2223,9 @@ class DocumentBoxImpl implements DocumentBox {
 	}
 }
 class AsyncFunctionBoxImpl implements AsyncFunctionBox {
-	type: 'function_box'="function_box";
-	return_type: "promise_box"='promise_box';
-	await_type: "Box"='Box';
+	type: 'function_box';
+	return_type: 'promise_box';
+	await_type: 'Box';
 	value: (...a: Box[]) => Promise<Box>;
 	m_verify_name: "AsyncFunctionBox";
 	verify_name(name: "AsyncFunctionBox"): boolean {
@@ -2238,6 +2238,9 @@ class AsyncFunctionBoxImpl implements AsyncFunctionBox {
 		return typeof this.value===input_typeof? this:null;
 	}
 	constructor(value: (...a: Box[]) => Promise<Box>) {
+		this.type='function_box';
+		this.return_type='promise_box';
+		this.await_type='Box';
 		this.m_verify_name='AsyncFunctionBox';
 		this.value=value;
 	}
