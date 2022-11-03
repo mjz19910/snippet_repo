@@ -518,8 +518,6 @@ function main() {
 		}
 	}
 	let worker_state=new WorkerStateModel()
-	async function worker_work_state_1(state) {}
-	async function worker_work_state_2(state) {}
 	async function on_worker_async_work() {
 		let gg=0
 		let cx=worker_state
