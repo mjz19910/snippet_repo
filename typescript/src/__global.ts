@@ -35,11 +35,6 @@ declare global {
 		style: CSSStyleDeclaration;
 	}
 
-	interface Document {
-		adoptedStyleSheets: CSSStyleSheet[];
-		stop(): void;
-	}
-
 	interface CSSStyleSheet extends StyleSheet {
 		replace(string: string): Promise<CSSStyleSheet>;
 	}

@@ -3757,6 +3757,13 @@ function no_aev(...v: any[]) {
 	console.log('aev',v);
 }
 
+declare global {
+	interface Document {
+		adoptedStyleSheets: CSSStyleSheet[];
+		stop(): void;
+	}
+}
+
 function main() {
 	if(location.pathname.match('test')) {
 		return;
@@ -3790,14 +3797,17 @@ function main() {
 		document_write_list,
 	});
 }
+
 function init() {
 	update_logger_vars();
 	auto_buy_obj.global_init();
 	window.g_log_if=log_if;
 }
+
 init();
 log_if(LOG_LEVEL_TRACE,'userscript main');
 main();
+
 class URLHandlerState {
 	non_proto_url: string="";
 	page_url: string="";
