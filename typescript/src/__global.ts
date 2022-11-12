@@ -23,47 +23,6 @@ declare global {
 	}
 
 	interface Window {
-		// on_game_data_set.ts
-		Pace: PaceType;
-
-		// use_jquery.ts
-		$: JQueryStatic;
-
-		// script_registry/main.ts
-		proxy_set: ((...args: any[]) => any)[];
-
-		// AutoBuyState.ts
-		atomepersecond: number;
-		prestige: number;
-
-		// do_auto_unit_promote.ts
-		arUnit: any[];
-		Get_Unit_Type(v: any): any;
-		getUnitPromoCost(v: any): number;
-		Find_ToNext(v: number): number;
-		_targets_achi: any[];
-		totalAchi(): number;
-		_targets: any[];
-		mainCalc(v: any): void;
-		tonext(v: number): void;
-
-		// lightreset_inject.ts
-		g_auto_buy: AutoBuy;
-
-		// specialclick_inject.ts
-		specialsbought: number;
-		atomsinvest: number;
-		calcDiff(v: number): number;
-		noti: boolean;
-		gritter: any;
-		toTitleCase(v: string): string;
-		plurials(v: string): string;
-		arrayNames: string[];
-		updateprogress(v: any): void;
-		seeUnit(v: number): any;
-		checkspec(): void;
-		achiSpec(): void;
-
 		is_in_ignored_fn(): boolean;
 		constelOff(): void;
 		g_proxy_state: {
