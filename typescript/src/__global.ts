@@ -8,6 +8,7 @@ import {GlobalStateKey} from "./vm/GlobalStateKey.js";
 import {MulCompression} from "./vm/MulCompression.js";
 import {l_log_if} from "./vm/l_log_if.js";
 import {SpecType} from "./SpecType.js";
+import {PaceType} from "./PaceType.js";
 
 export {};
 
@@ -22,7 +23,27 @@ declare global {
 	}
 
 	interface Window {
-		proxy_set: ((...args: any[])=>any)[];
+		document_write_list: DocumentWriteList;
+
+		adsbygoogle: {
+			op: any;
+			push(v: number): void;
+		};
+
+		cint_arr: (string|number[])[];
+
+		on_on_timers_moved_first: boolean;
+
+		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
+		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
+		remoteClearTimeout: (id?: number) => void;
+		remoteClearInterval: (id?: number) => void;
+
+		_SM_Data: unknown;
+
+		Pace: PaceType;
+
+		proxy_set: ((...args: any[]) => any)[];
 		atomepersecond: number;
 		totalAtome: number;
 		prestige: number;
@@ -49,26 +70,13 @@ declare global {
 		noti: boolean;
 		gritter: any;
 		toTitleCase(v: string): string;
-		cint_arr: (string|number[])[];
-		adsbygoogle: {
-			op: any;
-			push(v: number): void;
-		};
 		plurials(v: string): string;
 		arrayNames: string[];
 		updateprogress(v: any): void;
 		seeUnit(v: number): any;
 		checkspec(): void;
 		achiSpec(): void;
-		Pace: {
-			bar: {
-				progress: number;
-				finish: Function;
-			};
-		};
-		_SM_Data: unknown;
 		constelOff(): void;
-		on_on_timers_moved_first: boolean;
 		lightreset(): void;
 		specialclick(that: any): void;
 		secondinterval?: ReturnType<typeof setInterval>;
@@ -81,10 +89,6 @@ declare global {
 				count_arr: any[];
 			};
 		};
-		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
-		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
-		remoteClearTimeout: (id?: number) => void;
-		remoteClearInterval: (id?: number) => void;
 		[GlobalStateKey]?: WorkerState;
 		mute(): void;
 		g_mut_observers: any[];
@@ -94,7 +98,6 @@ declare global {
 			cur: string;
 		};
 		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
-		document_write_list: DocumentWriteList;
 		allspec: SpecType[];
 	}
 
