@@ -50,6 +50,21 @@ declare global {
 	interface Window {
 		_SM_Data: unknown;
 	}
+
+	// on_game_data_set.ts
+	interface Window {
+		Pace: {
+			bar: {
+				progress: number;
+				finish: Function;
+			};
+		};
+	}
+
+	// use_jquery.ts
+	interface Window {
+		$: JQueryStatic;
+	}
 }
 
 export const cint_arr: (string|number[])[]=[];

@@ -7,27 +7,21 @@ import {GenericDataEvent} from "./vm/GenericDataEvent.js";
 import {GlobalStateKey} from "./vm/GlobalStateKey.js";
 import {MulCompression} from "./vm/MulCompression.js";
 import {l_log_if} from "./vm/l_log_if.js";
+import {SpecType} from "./SpecType.js";
 
 export {};
 
-export interface SpecType {
-	name: string;
-	desc: string;
-	done: boolean;
-	cost: number;
-}
-
 declare global {
 
-	export interface Window {
+	interface Window {
 		g_log_if: typeof l_log_if;
 	}
 
-	export interface Window {
+	interface Window {
 		MulCompression: typeof MulCompression;
 	}
 
-	export interface Window {
+	interface Window {
 		proxy_set: any[];
 		atomepersecond: number;
 		totalAtome: number;
@@ -105,23 +99,23 @@ declare global {
 	}
 
 	// JQuery
-	export interface Window {
+	interface Window {
 		$: JQueryStatic;
 	}
 
 	// DebugAPI
-	export interface Window {
+	interface Window {
 		DebugAPI: DebugAPI;
 		GenericDataEvent: typeof GenericDataEvent;
 	}
 
-	export var window: Window&typeof globalThis;
-	export var Window: {
+	var window: Window&typeof globalThis;
+	var Window: {
 		prototype: Window;
 		new(): Window;
 	};
 
-	export interface ErrorConstructor {
+	interface ErrorConstructor {
 		new(message?: string): Error;
 		(message?: string): Error;
 		readonly prototype: Error;
