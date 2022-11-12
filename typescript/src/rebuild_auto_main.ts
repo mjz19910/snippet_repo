@@ -3,6 +3,7 @@ import {dom_add_elm_filter} from "./vm/dom_add_elm_filter.js";
 import {move_timers_to_worker_promise_executor} from "./vm/move_timers_to_worker_promise_executor.js";
 import {on_timers_moved} from "./vm/on_timers_moved.js";
 import {proxy_jquery} from "./vm/proxy_jquery.js";
+import {RemoteWorkerState} from "./vm/RemoteWorkerState.js";
 import {remove_bad_dom_script_element} from "./vm/remove_bad_dom_script_element.js";
 
 declare global {
@@ -31,6 +32,21 @@ declare global {
 		// don't make an error, just do nothing
 		stop(): void;
 	}
+
+
+	// move_timers_to_worker_promise_executor.ts
+	interface Window {
+		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
+		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
+		remoteClearTimeout: (id?: number) => void;
+		remoteClearInterval: (id?: number) => void;
+	}
+	module globalThis {
+		var remote_worker_state: RemoteWorkerState;
+	}
+
+
+	// on_timers_moved.ts
 }
 
 export const cint_arr: (string|number[])[]=[];
