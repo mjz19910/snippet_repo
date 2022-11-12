@@ -3301,6 +3301,12 @@ function remove_html_nodes(node: HTMLScriptElement) {
 function remove_bad_dom_script_element() {
 	Array.prototype.forEach.call(document.querySelectorAll("script"),remove_html_nodes);
 }
+declare global {
+	interface Window {
+		constelOff(): void;
+	}
+}
+
 function on_game_data_set() {
 	log_if(LOG_LEVEL_INFO,'game data init');
 	remove_bad_dom_script_element();
