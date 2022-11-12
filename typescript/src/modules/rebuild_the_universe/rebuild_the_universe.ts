@@ -3270,55 +3270,56 @@ function lightreset_inject() {
 	}
 	original();
 }
-function specialclick_inject(that: number) {
-	let allspec=window.allspec;
-	let totalAtome=window.totalAtome;
-	let atomsinvest=window.atomsinvest;
-	let doc=window.doc;
-	let gritter=window.gritter;
-	let specialsbought=window.specialsbought,noti=window.noti;
-	let rounding=window.rounding,calcDiff=window.calcDiff,arUnit=window.arUnit,atomepersecond=window.atomepersecond;
-	let arrayNames=window.arrayNames,plurials=window.plurials,toTitleCase=window.toTitleCase;
-	let updateprogress=window.updateprogress,seeUnit=window.seeUnit,checkspec=window.checkspec,achiSpec=window.achiSpec;
-	if(allspec[that].done==undefined) allspec[that].done=false;
-	if(allspec[that].cost<=totalAtome&&allspec[that].done==false) {
-		let specialsbought_e=doc.getElementById('specialsbought');
-		if(specialsbought_e) specialsbought_e.innerText=rounding(++specialsbought,false,0);
-		if(that==74) {
-		}
-		atomsinvest+=allspec[that].cost;
-		let atomsinvest_e=doc.getElementById("atomsinvest");
-		if(atomsinvest_e) atomsinvest_e.innerText=rounding(atomsinvest,false,0);
-		allspec[that].done=true;
-		totalAtome-=allspec[that].cost;
-		var diff1=calcDiff(that);
-		for(var a in arUnit[that][17]) arUnit[that][17][a]*=100;
-		arUnit[that][5]*=100;
-		var spec_aps=0;
-		if(arUnit[that][4]>0) {
-			spec_aps=(calcDiff(that)-diff1);
-			atomepersecond+=spec_aps;
-		}
-		//spell:ignore noti plurials
-		if(noti) gritter('Power-up !',toTitleCase(plurials(arrayNames[that]))+" X100 APS",null,"+"+rounding(spec_aps,false,0)+" APS","");
-		//spell:ignore updateprogress
-		updateprogress(that);
-		$('#spec'+that).remove();
-		if(that<74) {
-			seeUnit(that+1);
-		} else {
-			seeUnit(that-1);
-		}
-		seeUnit(that);
-		//spell:ignore checkspec
-		checkspec();
-		//spell:ignore achiSpec
-		achiSpec();
+
+declare global {
+	interface Window {
+		specialsbought: number;
+		atomsinvest: number;
+		calcDiff(v: number): number;
+		noti: boolean;
+		gritter: any;
+		toTitleCase(v: string): string;
+		plurials(v: string): string;
+		arrayNames: string[];
+		updateprogress(v: any): void;
+		seeUnit(v: number): any;
+		checkspec(): void;
+		achiSpec(): void;
 	}
-	window.totalAtome=totalAtome;
-	window.atomsinvest=atomsinvest;
-	window.atomepersecond=atomepersecond;
-	window.specialsbought=specialsbought;
+}
+
+function specialclick_inject(that: number) {
+	if(window.allspec[that].done==undefined)
+		window.allspec[that].done=false;
+	if(window.allspec[that].cost<=window.totalAtome&&window.allspec[that].done==false) {
+		let specialsbought_e=window.doc.getElementById('specialsbought');
+		let atomsinvest_e=window.doc.getElementById('atomsinvest');
+		if(!specialsbought_e||!atomsinvest_e)
+			throw new Error("Invalid");
+		specialsbought_e.innerText=window.rounding(++window.specialsbought,false,0);
+		window.atomsinvest+=window.allspec[that].cost;
+		atomsinvest_e.innerText=window.rounding(window.atomsinvest,false,0);
+		window.allspec[that].done=true;
+		window.totalAtome-=window.allspec[that].cost;
+		var diff1=window.calcDiff(that);
+		for(var a in window.arUnit[that][17])
+			window.arUnit[that][17][a]*=100;
+		window.arUnit[that][5]*=100;
+		var spec_aps=0;
+		if(window.arUnit[that][4]>0) {
+			spec_aps=(window.calcDiff(that)-diff1);
+			window.atomepersecond+=spec_aps;
+		}
+		if(window.noti)
+			window.gritter('Power-up !',window.toTitleCase(window.plurials(window.arrayNames[that]))+" X100 APS",null,"+"+window.rounding(spec_aps,false,0)+" APS","");
+		window.updateprogress(that);
+		$('#spec'+that).remove();
+		if(that<74) window.seeUnit(that+1);
+		else window.seeUnit(that-1);
+		window.seeUnit(that);
+		window.checkspec();
+		window.achiSpec();
+	}
 }
 function got_jquery(value: typeof $) {
 	Object.defineProperty(window,'$',{
