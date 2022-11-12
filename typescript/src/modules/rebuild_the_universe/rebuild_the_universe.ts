@@ -3465,17 +3465,19 @@ let real_st: typeof setTimeout;
 let real_si: typeof setInterval;
 let orig_aev: EventTarget['addEventListener'];
 
+function make_load_promise(a: (reason?: any) => void) {
+	window.addEventListener('load',function lis() {
+		setTimeout(a);
+		window.removeEventListener('load',lis);
+	});
+}
+
 async function do_fetch_load() {
 	reset_global_event_handlers();
 	window.setTimeout=real_st;
 	window.setInterval=real_si;
 	EventTarget.prototype.addEventListener=orig_aev;
-	await new Promise(function(a) {
-		window.addEventListener('load',function lis() {
-			setTimeout(a);
-			window.removeEventListener('load',lis);
-		});
-	});
+	await new Promise(make_load_promise);
 	reset_global_event_handlers();
 	let orig_url=location.href;
 	let loc_url=location.origin+location.pathname;
