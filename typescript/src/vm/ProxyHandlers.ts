@@ -7,13 +7,6 @@ export class ProxyHandlers {
 		this.weak_root=new WeakRef(root);
 		this.count_arr=[0];
 	}
-	stack_overflow_check() {
-		window.g_proxy_state.hand.count_arr[0]++;
-		if(window.g_proxy_state.hand.count_arr[0]<window.g_proxy_state.hand.count_arr[1]) {
-			return window.g_proxy_state.hand.stack_overflow_check();
-		}
-		return window.g_proxy_state.hand.count_arr[0];
-	}
 	generic(type: string,call_args: any,from: any[]) {
 		let keep_vec=this.weak_root.deref();
 		if(keep_vec===null) {
