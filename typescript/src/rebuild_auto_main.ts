@@ -24,19 +24,6 @@ declare global {
 }
 
 declare global {
-	// script_registry/main.ts
-	interface Window {
-		proxy_set: ((...args: any[]) => any)[];
-	}
-
-
-	// AutoBuyState.ts
-	interface Window {
-		atomepersecond: number;
-		prestige: number;
-	}
-
-
 	// do_auto_unit_promote.ts
 	interface Window {
 		arUnit: any[];
