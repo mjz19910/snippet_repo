@@ -52,20 +52,6 @@ declare global {
 		// script_registry/main.ts
 		proxy_set: ((...args: any[]) => any)[];
 
-		// AutoBuy.ts
-		timeplayed: number;
-		secondinterval?: ReturnType<typeof setInterval>;
-		doc: Document;
-		rounding(v: number,x: any,y: any): string;
-		totalAtome: number;
-		atomsaccu: number;
-		calcPres(): number;
-		lightreset(): void;
-		specialclick(that: any): void;
-		__testing__: false;
-		bonusAll(): void;
-		allspec: SpecType[];
-
 		// AutoBuyState.ts
 		atomepersecond: number;
 		prestige: number;
