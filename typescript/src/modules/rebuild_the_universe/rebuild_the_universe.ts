@@ -2254,6 +2254,17 @@ class VoidBoxImpl implements VoidBox {
 		return this.m_verify_name==='VoidBox'&&name==='VoidBox';
 	}
 }
+
+declare global {
+	interface Window {
+		mute(): void;
+	}
+}
+
+function call_mute_fn() {
+	window.mute();
+}
+
 class AutoBuy {
 	debug_arr: any;
 	root_node: AsyncNodeRoot;
@@ -3067,7 +3078,7 @@ class AutoBuy {
 			if(this.background_audio) {
 				this.background_audio.muted=!this.background_audio.muted;
 			}
-			window.mute();
+			call_mute_fn();
 		}
 	}
 	game_reset_step_1() {

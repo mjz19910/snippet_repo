@@ -25,7 +25,6 @@ declare global {
 
 declare global {
 	interface Window {
-		mute(): void;
 		g_mut_observers: any[];
 		g_cs?: any[];
 		g_page_content: {
