@@ -21,9 +21,10 @@ declare global {
 	interface Window {
 		MulCompression: typeof MulCompression;
 	}
+}
 
+declare global {
 	interface Window {
-		is_in_ignored_fn(): boolean;
 		constelOff(): void;
 		g_proxy_state: {
 			hand: {
