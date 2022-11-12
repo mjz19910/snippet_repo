@@ -75,18 +75,21 @@ declare global {
 
 		g_auto_buy: AutoBuy;
 
-		is_in_ignored_fn(): boolean;
-		bonusAll(): void;
-		specialclick(index: number): void;
-		lightreset(): void;
-		totalAchi(): number;
-		Get_Unit_Type(v: any): any;
-		getUnitPromoCost(v: any): number;
-		Find_ToNext(v: number): number;
-		mainCalc(v: any): void;
-		tonext(v: number): void;
 		specialsbought: number;
-		rounding(v: number,x: any,y: any): string;
+		atomsinvest: number;
+		calcDiff(v: number): number;
+		noti: boolean;
+		gritter: any;
+		toTitleCase(v: string): string;
+		plurials(v: string): string;
+		arrayNames: string[];
+		updateprogress(v: any): void;
+		seeUnit(v: number): any;
+		checkspec(): void;
+		achiSpec(): void;
+
+		is_in_ignored_fn(): boolean;
+		specialsbought: number;
 		atomsinvest: number;
 		calcDiff(v: number): number;
 		noti: boolean;
