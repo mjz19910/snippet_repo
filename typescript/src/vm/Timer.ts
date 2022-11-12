@@ -8,7 +8,8 @@ import {DispatchMessageType} from "./DispatchMessageType.js"
 import {TimeoutClearStrings} from "./TimeoutClearStrings.js"
 import {TIMER_SINGLE,TIMER_REPEATING,TIMER_TAG_COUNT,ReplySetSingle,ReplySetRepeating,ReplyClearSingle} from "../constants.js"
 import {SetMessageData} from "./SetMessageData.js"
-import {is_in_ignored_from_src_fn,is_in_userscript} from "script_registry/mod.js"
+import {is_in_ignored_from_src_fn,is_in_userscript} from "../script_registry/mod.js"
+
 export class Timer {
 	id_generator
 	m_remote_id_to_main_state_map: any
