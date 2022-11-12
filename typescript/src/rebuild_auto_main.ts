@@ -10,25 +10,18 @@ import {RemoteWorkerState} from "./vm/RemoteWorkerState.js";
 import {remove_bad_dom_script_element} from "./vm/remove_bad_dom_script_element.js";
 
 declare global {
+	// rebuild_auto_main.ts
 	interface Window {
 		document_write_list: DocumentWriteList;
-	}
-
-	interface Window {
 		adsbygoogle: {
 			op: any;
 			push(v: number): void;
 		};
-	}
-
-	interface Window {
 		cint_arr: (string|number[])[];
-	}
-
-	interface Window {
 		on_on_timers_moved_first: boolean;
 	}
 
+	// rebuild_auto_main.ts
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
 
@@ -45,6 +38,7 @@ declare global {
 		remoteClearInterval: (id?: number) => void;
 	}
 
+	// move_timers_to_worker_promise_executor.ts
 	module globalThis {
 		var remote_worker_state: RemoteWorkerState;
 	}
