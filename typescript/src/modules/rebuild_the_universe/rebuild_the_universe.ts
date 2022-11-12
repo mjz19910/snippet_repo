@@ -123,10 +123,11 @@ function log_if(level: number,format_str: string,...args: any[]) {
 	append_console_message(level,format_str,...args);
 }
 function update_logger_vars() {
-	if(sessionStorage.LogErrorAsConsoleError) {
+	if(!globalThis.sessionStorage) return;
+	if(globalThis.sessionStorage.LogErrorAsConsoleError) {
 		LogErrorAsConsoleError=sessionStorage.LogErrorAsConsoleError==='true';
 	}
-	if(sessionStorage.LoggingLevel) {
+	if(globalThis.sessionStorage.LoggingLevel) {
 		local_logging_level=parseInt(sessionStorage.LoggingLevel,10);
 	}
 }
@@ -2088,18 +2089,20 @@ class DataLoader {
 		this.store=storage;
 	}
 	load_str_arr(key: string,def_value: string[]) {
+		if(!this.store)
+			return def_value;
 		let data=this.store.getItem(key);
 		if(data===null)
 			return def_value;
 		return data.split(",");
 	}
-	load_int_arr(key: string,def_value: any,storage_data=this.store.getItem(key)) {
-		if(storage_data===null)
+	load_int_arr(key: string,def_value: number[],storage_data=this.store?.getItem(key)) {
+		if(!storage_data)
 			return def_value;
 		return this.parse_int_arr(storage_data);
 	}
-	load_int_arr_cb(key: string,def_factory: () => number[],storage_data=this.store.getItem(key)) {
-		if(storage_data===null)
+	load_int_arr_cb(key: string,def_factory: () => number[],storage_data=this.store?.getItem(key)) {
+		if(!storage_data)
 			return def_factory();
 		return this.parse_int_arr(storage_data);
 	}
@@ -3777,7 +3780,8 @@ declare global {
 }
 
 function main() {
-	if(location.pathname.match('test')) {
+	if(!globalThis.location) return;
+	if(globalThis.location.pathname.match('test')) {
 		return;
 	}
 	reset_global_event_handlers();
