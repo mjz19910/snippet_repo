@@ -11,7 +11,7 @@ import {init_playlist_arr} from "./player_plugin_activate/init_playlist_arr.js";
 import {init_title_on_save} from "./player_plugin_activate/init_title_on_save.js";
 import {init_window_watch} from "./yt_application_create_plugin/init_window_watch.js";
 import {init_yt_player_application_plugin} from "./yt_application_create_plugin/init_yt_player_application_plugin.js";
-import {start_message_channel_loop} from "./dom_observer/start_message_channel_loop.js"
+import {start_message_channel_loop} from "./dom_observer/start_message_channel_loop.js";
 
 export function entry_point() {
 	attach_resize_handler();
