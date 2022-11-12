@@ -24,12 +24,6 @@ declare global {
 }
 
 declare global {
-	// use_jquery.ts
-	interface Window {
-		$: JQueryStatic;
-	}
-
-
 	// script_registry/main.ts
 	interface Window {
 		proxy_set: ((...args: any[]) => any)[];
