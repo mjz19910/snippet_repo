@@ -23,17 +23,6 @@ declare global {
 	}
 
 	interface Window {
-		document_write_list: DocumentWriteList;
-
-		adsbygoogle: {
-			op: any;
-			push(v: number): void;
-		};
-
-		cint_arr: (string|number[])[];
-
-		on_on_timers_moved_first: boolean;
-
 		// move_timers_to_worker_promise_executor.ts
 		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
 		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
