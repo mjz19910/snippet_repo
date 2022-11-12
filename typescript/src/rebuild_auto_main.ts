@@ -10,13 +10,6 @@ import {RemoteWorkerState} from "./vm/RemoteWorkerState.js";
 import {remove_bad_dom_script_element} from "./vm/remove_bad_dom_script_element.js";
 
 declare global {
-	interface Window {
-		document_write_list: DocumentWriteList;
-		adsbygoogle: GoogleAdList;
-		cint_arr: (string|number[])[];
-		on_on_timers_moved_first: boolean;
-	}
-
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
 		stop(): void;

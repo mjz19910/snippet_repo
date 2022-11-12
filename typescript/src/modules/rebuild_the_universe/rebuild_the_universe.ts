@@ -17,6 +17,7 @@ import {StackVMBox} from "../../box/StackVMBox.js";
 import {StringBox} from "../../box/StringBox.js";
 import {VoidBox} from "../../box/VoidBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
+import {GoogleAdList} from "../../GoogleAdList.js";
 import {IPageContent} from "../../IPageContent.js";
 import {SpecType} from "../../SpecType.js";
 import {Append} from "../../vm/instruction/Append.js";
@@ -3611,6 +3612,15 @@ function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () =>
 		console.info('load observer ',...log_data_vec);
 		reset_global_event_handlers();
 		mut_observer.disconnect();
+	}
+}
+
+declare global {
+	interface Window {
+		document_write_list: DocumentWriteList;
+		adsbygoogle: GoogleAdList;
+		cint_arr: (string|number[])[];
+		on_on_timers_moved_first: boolean;
 	}
 }
 
