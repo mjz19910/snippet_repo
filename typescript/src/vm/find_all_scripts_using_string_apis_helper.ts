@@ -1,4 +1,4 @@
-import {is_in_ignored_from_src_fn,is_in_userscript} from "script_registry/mod.js"
+import {is_in_ignored_from_src_fn, is_in_userscript} from "../script_registry/mod.js";
 import {ScriptStateHost} from "./ScriptStateHost.js"
 
 export function init_script_registry() {
