@@ -3330,6 +3330,13 @@ function got_jquery(value: typeof $) {
 	});
 	use_jquery();
 }
+
+declare global {
+	interface Window {
+		$: JQueryStatic;
+	}
+}
+
 function use_jquery() {
 	let jq: typeof $=window.$;
 	if(!jq) return;
@@ -3389,6 +3396,13 @@ function on_game_data_set() {
 	setTimeout(auto_buy_obj.init.bind(auto_buy_obj),300);
 	window.constelOff();
 }
+
+declare global {
+	interface Window {
+		_SM_Data: unknown;
+	}
+}
+
 function wait_for_game_data() {
 	if(window._SM_Data) {
 		on_game_data_set();
@@ -3533,6 +3547,12 @@ function make_load_promise(a: (reason?: any) => void) {
 		setTimeout(a);
 		window.removeEventListener('load',lis);
 	});
+}
+
+declare global {
+	interface Window {
+		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
+	}
 }
 
 function create_load_with_fetch_page() {
