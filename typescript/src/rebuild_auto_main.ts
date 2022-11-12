@@ -10,6 +10,13 @@ declare global {
 		document_write_list: DocumentWriteList;
 	}
 
+	interface Window {
+		adsbygoogle: {
+			op: any;
+			push(v: number): void;
+		};
+	}
+
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[]
 
