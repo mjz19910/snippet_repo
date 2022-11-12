@@ -72,7 +72,7 @@ declare global {
 	interface Window {
 		proxy_set: ((...args: any[]) => any)[];
 	}
-	
+
 	// AutoBuy.ts
 	interface Window {
 		timeplayed: number;
