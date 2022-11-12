@@ -1,12 +1,3 @@
-import {AutoBuy} from "./AutoBuy.js";
-
-declare global {
-	// lightreset_inject.ts
-	interface Window {
-		g_auto_buy: AutoBuy;
-	}
-}
-
 export function lightreset_inject() {
 	window.g_auto_buy.state_history_clear_for_reset();
 	window.g_auto_buy.skip_save=true;

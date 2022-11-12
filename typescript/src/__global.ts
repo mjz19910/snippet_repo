@@ -10,10 +10,6 @@ declare global {
 	interface Window {
 		g_log_if: typeof l_log_if;
 	}
-
-	interface Window {
-		MulCompression: typeof MulCompression;
-	}
 }
 
 declare global {

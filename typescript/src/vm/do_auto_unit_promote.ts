@@ -1,5 +1,4 @@
 declare global {
-	// do_auto_unit_promote.ts
 	interface Window {
 		arUnit: any[];
 		Get_Unit_Type(v: any): any;
