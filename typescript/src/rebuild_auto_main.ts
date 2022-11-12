@@ -43,6 +43,7 @@ declare global {
 		remoteClearTimeout: (id?: number) => void;
 		remoteClearInterval: (id?: number) => void;
 	}
+
 	module globalThis {
 		var remote_worker_state: RemoteWorkerState;
 	}
@@ -52,6 +53,7 @@ declare global {
 	interface Window {
 		_SM_Data: unknown;
 	}
+
 
 	// on_game_data_set.ts
 	interface Window {
@@ -63,15 +65,18 @@ declare global {
 		};
 	}
 
+
 	// use_jquery.ts
 	interface Window {
 		$: JQueryStatic;
 	}
 
+
 	// script_registry/main.ts
 	interface Window {
 		proxy_set: ((...args: any[]) => any)[];
 	}
+
 
 	// AutoBuy.ts
 	interface Window {
@@ -89,11 +94,13 @@ declare global {
 		allspec: SpecType[];
 	}
 
+
 	// AutoBuyState.ts
 	interface Window {
 		atomepersecond: number;
 		prestige: number;
 	}
+
 
 	// do_auto_unit_promote.ts
 	interface Window {
@@ -108,10 +115,12 @@ declare global {
 		tonext(v: number): void;
 	}
 
-	// lightreset_inject()
+
+	// lightreset_inject.ts
 	interface Window {
 		g_auto_buy: AutoBuy;
 	}
+
 
 	// specialclick_inject.ts
 	interface Window {
