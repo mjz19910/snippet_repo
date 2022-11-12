@@ -8,12 +8,6 @@ export {};
 
 declare global {
 	interface Window {
-		g_log_if: typeof l_log_if;
-	}
-}
-
-declare global {
-	interface Window {
 		g_page_content: IPageContent;
 		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
 	}

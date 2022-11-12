@@ -62,7 +62,7 @@ import {StackVMFlags} from "../../vm/StackVMFlags.js";
 // @run-at			document-start
 // @grant			none
 // ==/UserScript==
-console=window.console;
+console=globalThis.console;
 
 const AUDIO_ELEMENT_VOLUME=0.58;
 const AudioMuted=true;
@@ -1364,6 +1364,7 @@ declare global {
 		MulCompression: typeof MulCompression;
 	}
 }
+let window = globalThis as unknown as Window;
 window.MulCompression=MulCompression;
 class TimeoutTarget {
 	m_once: boolean;
@@ -2333,7 +2334,7 @@ class AutoBuy {
 		this.background_audio=null;
 		this.skip_save=false;
 		this.has_real_time=false;
-		this.local_data_loader=new DataLoader(localStorage);
+		this.local_data_loader=new DataLoader(globalThis.localStorage);
 		this.state=new AutoBuyState(this.root_node);
 		this.debug=this.state.debug;
 		this.compressor=new MulCompression;
@@ -3741,17 +3742,28 @@ function do_page_replace() {
 	document.close();
 }
 
-function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]) {
-	console.log('nop timeout');
-	return -1;
-}
-nop_timeout.__promisify__={} as (typeof setTimeout)['__promisify__'];
+function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): NodeJS.Timeout;
+function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number;
 
-function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]) {
+function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number|NodeJS.Timeout {
 	console.log('nop timeout');
 	return -1;
 }
-nop_timeout.__promisify__={} as (typeof setInterval)['__promisify__'];
+
+namespace nop_timeout {
+	export const __promisify__ = setTimeout.__promisify__;
+}
+function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): NodeJS.Timer;
+function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number;
+
+function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number|NodeJS.Timer {
+	console.log('nop timeout');
+	return -1;
+}
+
+namespace nop_timer {
+	export const __promisify__ = setInterval.__promisify__;
+}
 
 function no_aev(...v: any[]) {
 	console.log('aev',v);
@@ -3796,6 +3808,12 @@ function main() {
 		non_proto_url,
 		document_write_list,
 	});
+}
+
+declare global {
+	interface Window {
+		g_log_if: typeof log_if;
+	}
 }
 
 function init() {
