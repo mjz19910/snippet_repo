@@ -3472,6 +3472,18 @@ function make_load_promise(a: (reason?: any) => void) {
 	});
 }
 
+function create_load_with_fetch_page() {
+	return new Promise(function(a) {
+		if(localStorage.justReset==='true') {
+			return a(null);
+		}
+		window.g_do_load=do_load_fire_promise.bind(null,a);
+		document.writeln(`<head></head><body><a href onclick="g_do_load()">load with fetch</a></body>`);
+		reset_global_event_handlers();
+		document.close();
+	});
+}
+
 async function do_fetch_load() {
 	reset_global_event_handlers();
 	window.setTimeout=real_st;
@@ -3489,19 +3501,9 @@ async function do_fetch_load() {
 	let hist_state={
 		gen: next_gen
 	};
-	let skip=true;
-	x: {
-		if(skip) break x;
-		await new Promise(function(a) {
-			if(localStorage.justReset==='true') {
-				return a(null);
-			}
-			window.g_do_load=do_load_fire_promise.bind(null,a);
-			document.writeln(`<head></head><body><a href onclick="g_do_load()">load with fetch</a></body>`);
-			reset_global_event_handlers();
-			document.close();
-		});
-	}
+	let do_create_fetch_page=false;
+	if(do_create_fetch_page)
+		await create_load_with_fetch_page();
 	reset_global_event_handlers();
 	history.pushState(hist_state,'',orig_url);
 	const rb_html=await (await fetch(loc_url)).text();
