@@ -3435,6 +3435,11 @@ class LoadMutationObserver extends BaseMutationObserver {
 	}
 }
 let mut_observers: BaseMutationObserver[]=[];
+declare global {
+	interface Window {
+		g_mut_observers: any[];
+	}
+}
 window.g_mut_observers=mut_observers;
 function insert_before_enabled(node: Node,child: Node|null): boolean {
 	if(node instanceof HTMLScriptElement) {
