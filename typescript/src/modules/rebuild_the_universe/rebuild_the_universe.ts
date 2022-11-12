@@ -3490,6 +3490,47 @@ function pop_mut_observer() {
 	la.disconnect();
 }
 
+let loaded_scripts_count: number;
+let script_num: number;
+
+function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () => void;}) {
+	let log_data_vec=[];
+	log_data_vec.push(mut_vec.length,document.body!=null);
+	let added_scripts: HTMLScriptElement[]=[];
+	let removed_scripts: HTMLScriptElement[]=[];
+	for(let i=0;i<mut_vec.length;i++) {
+		let mut_rec=mut_vec[i];
+		let add_node_list=mut_rec.addedNodes;
+		for(let j=0;j<add_node_list.length;j++) {
+			let cur_node=add_node_list[j];
+			if(!cur_node) {
+				debugger;
+				continue;
+			}
+			if(cur_node instanceof HTMLScriptElement) {
+				added_scripts.push(cur_node);
+			}
+		}
+		let remove_node_list=mut_rec.removedNodes;
+		for(let j=0;j<remove_node_list.length;j++) {
+			let cur_node=remove_node_list[j];
+			if(cur_node instanceof HTMLScriptElement) {
+				removed_scripts.push(cur_node);
+			}
+		}
+	}
+	if(document.body) log_data_vec.push('b',document.body.children.length);
+	else log_data_vec.push('h',document.head.children.length);
+	log_data_vec.push(document.querySelectorAll("script").length);
+	loaded_scripts_count+=added_scripts.length;
+	if(loaded_scripts_count>=script_num) {
+		log_if(LOG_LEVEL_INFO,'observer script count',loaded_scripts_count,script_num);
+		console.info('load observer ',...log_data_vec);
+		reset_global_event_handlers();
+		mut_observer.disconnect();
+	}
+}
+
 async function do_fetch_load() {
 	reset_global_event_handlers();
 	window.setTimeout=real_st;
@@ -3563,46 +3604,10 @@ async function do_fetch_load() {
 		if(did_rep) continue;
 		rb_html_tmp=rb_html_tmp.replace(rem_str_1,on_html_replace);
 	}
-	let script_num=[...rb_html_tmp.matchAll(/<\s*script.*?>/g)].length;
-	let loaded_scripts_count=0;
+	script_num=[...rb_html_tmp.matchAll(/<\s*script.*?>/g)].length;
+	loaded_scripts_count=0;
 	console.log(rc);
-	mut_observers.push(new LoadMutationObserver(document,function(mut_vec,mut_observer) {
-		let log_data_vec=[];
-		log_data_vec.push(mut_vec.length,document.body!=null);
-		let added_scripts: HTMLScriptElement[]=[];
-		let removed_scripts: HTMLScriptElement[]=[];
-		for(let i=0;i<mut_vec.length;i++) {
-			let mut_rec=mut_vec[i];
-			let add_node_list=mut_rec.addedNodes;
-			for(let j=0;j<add_node_list.length;j++) {
-				let cur_node=add_node_list[j];
-				if(!cur_node) {
-					debugger;
-					continue;
-				}
-				if(cur_node instanceof HTMLScriptElement) {
-					added_scripts.push(cur_node);
-				}
-			}
-			let remove_node_list=mut_rec.removedNodes;
-			for(let j=0;j<remove_node_list.length;j++) {
-				let cur_node=remove_node_list[j];
-				if(cur_node instanceof HTMLScriptElement) {
-					removed_scripts.push(cur_node);
-				}
-			}
-		}
-		if(document.body) log_data_vec.push('b',document.body.children.length);
-		else log_data_vec.push('h',document.head.children.length);
-		log_data_vec.push(document.querySelectorAll("script").length);
-		loaded_scripts_count+=added_scripts.length;
-		if(loaded_scripts_count>=script_num) {
-			log_if(LOG_LEVEL_INFO,'observer script count',loaded_scripts_count,script_num);
-			console.info('load observer ',...log_data_vec);
-			reset_global_event_handlers();
-			mut_observer.disconnect();
-		}
-	}));
+	mut_observers.push(new LoadMutationObserver(document,mutation_observe));
 	mut_observers[0].disconnect();
 	window.g_page_content={
 		request_content: rb_html,
