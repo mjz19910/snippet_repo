@@ -23,9 +23,6 @@ declare global {
 	}
 
 	interface Window {
-		// on_timers_moved.ts
-		_SM_Data: unknown;
-
 		// on_game_data_set.ts
 		Pace: PaceType;
 
