@@ -10,7 +10,6 @@ import {RemoteWorkerState} from "./vm/RemoteWorkerState.js";
 import {remove_bad_dom_script_element} from "./vm/remove_bad_dom_script_element.js";
 
 declare global {
-	// rebuild_auto_main.ts
 	interface Window {
 		document_write_list: DocumentWriteList;
 		adsbygoogle: {
@@ -21,7 +20,6 @@ declare global {
 		on_on_timers_moved_first: boolean;
 	}
 
-	// rebuild_auto_main.ts
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
 		stop(): void;
