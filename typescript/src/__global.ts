@@ -23,12 +23,6 @@ declare global {
 	}
 
 	interface Window {
-		// move_timers_to_worker_promise_executor.ts
-		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
-		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
-		remoteClearTimeout: (id?: number) => void;
-		remoteClearInterval: (id?: number) => void;
-
 		// on_timers_moved.ts
 		_SM_Data: unknown;
 
@@ -103,12 +97,6 @@ declare global {
 		(message?: string): Error;
 		readonly prototype: Error;
 		captureStackTrace<T>(obj: {stack?: string;},constructorOpt?: T): void;
-	}
-
-
-	// move_timers_to_worker_promise_executor.ts
-	module globalThis {
-		var remote_worker_state: RemoteWorkerState|undefined;
 	}
 
 	interface HTMLDivElement {

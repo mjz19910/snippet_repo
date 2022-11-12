@@ -7,6 +7,7 @@ import {do_worker_verify} from "./do_worker_verify.js";
 import {l_log_if} from "./l_log_if.js";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
 import {LOG_LEVEL_WARN,TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyMessage} from "../constants.js";
+import {RemoteWorkerState} from "./RemoteWorkerState.js";
 
 declare global {
 	interface Window {
@@ -14,6 +15,10 @@ declare global {
 		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
 		remoteClearTimeout: (id?: number) => void;
 		remoteClearInterval: (id?: number) => void;
+	}
+
+	module globalThis {
+		var remote_worker_state: RemoteWorkerState|undefined;
 	}
 }
 

@@ -24,20 +24,6 @@ declare global {
 }
 
 declare global {
-	// move_timers_to_worker_promise_executor.ts
-	interface Window {
-		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
-		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
-		remoteClearTimeout: (id?: number) => void;
-		remoteClearInterval: (id?: number) => void;
-	}
-
-	// move_timers_to_worker_promise_executor.ts
-	module globalThis {
-		var remote_worker_state: RemoteWorkerState|undefined;
-	}
-
-
 	// on_timers_moved.ts
 	interface Window {
 		_SM_Data: unknown;
