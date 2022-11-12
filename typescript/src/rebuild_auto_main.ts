@@ -5,6 +5,15 @@ import {proxy_jquery} from "vm/proxy_jquery.js"
 import {remove_bad_dom_script_element} from "vm/remove_bad_dom_script_element.js"
 import {on_timers_moved} from "vm/on_timers_moved.js"
 
+declare global {
+	interface Document {
+		adoptedStyleSheets: CSSStyleSheet[]
+
+		// don't make an error, just do nothing
+		stop(): void
+	}
+}
+
 export const cint_arr: (string|number[])[]=[]
 
 export function rebuild_auto_main() {
