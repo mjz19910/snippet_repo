@@ -1,4 +1,4 @@
-import {test_mod_execute_tests} from "./tests_mod/main.js"
+import {test_mod_execute_tests} from "./src/tests_mod/main.js"
 async function do_import(e: string): Promise<void> {
 	try {
 		return module_load_success(await import(e))
