@@ -3648,7 +3648,8 @@ function do_page_replace() {
 	document.close();
 }
 
-function nop_timeout() {
+
+function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]) {
 	console.log('nop timeout');
 	return -1;
 }
