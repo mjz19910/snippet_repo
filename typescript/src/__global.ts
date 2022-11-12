@@ -1,14 +1,8 @@
-import {RemoteWorkerState} from "./vm/RemoteWorkerState.js";
-import {WorkerState} from "./vm/WorkerState.js";
-import {DocumentWriteList} from "./vm/DocumentWriteList.js";
-import {AutoBuy} from "./vm/AutoBuy.js";
 import {DebugAPI} from "./DebugAPI.js";
 import {GenericDataEvent} from "./vm/GenericDataEvent.js";
-import {GlobalStateKey} from "./vm/GlobalStateKey.js";
 import {MulCompression} from "./vm/MulCompression.js";
 import {l_log_if} from "./vm/l_log_if.js";
-import {SpecType} from "./SpecType.js";
-import {PaceType} from "./PaceType.js";
+import {IPageContent} from "./IPageContent.js";
 
 export {};
 
@@ -22,14 +16,9 @@ declare global {
 		MulCompression: typeof MulCompression;
 	}
 }
-
 declare global {
 	interface Window {
-		g_current_script_list?: any[];
-		g_page_content: {
-			request_content: string;
-			cur: string;
-		};
+		g_page_content: IPageContent;
 		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
 	}
 
