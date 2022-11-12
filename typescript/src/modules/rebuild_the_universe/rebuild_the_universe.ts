@@ -3648,6 +3648,15 @@ function do_page_replace() {
 	document.close();
 }
 
+function nop_timeout() {
+	console.log('nop timeout');
+	return -1;
+}
+
+function no_aev(...v: any[]) {
+	console.log('aev',v);
+}
+
 function main() {
 	if(location.pathname.match('test')) {
 		return;
@@ -3667,17 +3676,10 @@ function main() {
 	document_write_list.document_write_proxy;
 	window.document_write_list=document_write_list;
 	document.stop=function() {};
-	function nop_timeout() {
-		console.log('nop timeout');
-		return -1;
-	}
 	real_st=setTimeout;
 	real_si=setInterval;
 	window.setTimeout=nop_timeout as unknown as (typeof setTimeout);
 	window.setInterval=nop_timeout as unknown as (typeof setInterval);
-	function no_aev(...v: any[]) {
-		console.log('aev',v);
-	}
 	let orig_aev=EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener=no_aev;
 	let page_url=location.href;
