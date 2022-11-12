@@ -23,24 +23,6 @@ declare global {
 	}
 }
 
-declare global {
-	// specialclick_inject.ts
-	interface Window {
-		specialsbought: number;
-		atomsinvest: number;
-		calcDiff(v: number): number;
-		noti: boolean;
-		gritter: any;
-		toTitleCase(v: string): string;
-		plurials(v: string): string;
-		arrayNames: string[];
-		updateprogress(v: any): void;
-		seeUnit(v: number): any;
-		checkspec(): void;
-		achiSpec(): void;
-	}
-}
-
 export const cint_arr: (string|number[])[]=[];
 
 export function rebuild_auto_main() {
