@@ -6,6 +6,10 @@ import {remove_bad_dom_script_element} from "vm/remove_bad_dom_script_element.js
 import {on_timers_moved} from "vm/on_timers_moved.js"
 
 declare global {
+	interface Window {
+		document_write_list: DocumentWriteList;
+	}
+
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[]
 
