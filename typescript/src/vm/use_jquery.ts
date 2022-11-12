@@ -1,3 +1,9 @@
+declare global {
+	interface Window {
+		$: JQueryStatic;
+	}
+}
+
 export function use_jquery() {
 	let jq=window.$
 	if(!jq)
