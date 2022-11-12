@@ -1,3 +1,3 @@
-import {WorkerReadyReply} from "constants.js"
+import {WorkerReadyReply} from "../constants.js"
 
 export type WorkerReadyReplyTy=typeof WorkerReadyReply

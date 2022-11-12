@@ -1,3 +1,3 @@
-import {ReplyClearRepeating} from "constants.js"
+import {ReplyClearRepeating} from "../constants.js"
 
 export type ReplyClearRepeatingTy=typeof ReplyClearRepeating

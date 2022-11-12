@@ -1,3 +1,3 @@
-import {TimeoutFireS} from "constants.js"
+import {TimeoutFireS} from "../constants.js"
 
 export type TimeoutFireSTy=typeof TimeoutFireS

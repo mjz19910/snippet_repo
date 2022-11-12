@@ -9,7 +9,7 @@ import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js"
 import {MessageTypesForWorkerReplies} from "./MessageTypesForWorkerReplies.js"
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js"
 import {Timer} from "./Timer.js"
-import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyMessage,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "constants.js"
+import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyMessage,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js"
 import {GlobalStateKey} from "./GlobalStateKey.js"
 
 export class WorkerState {
