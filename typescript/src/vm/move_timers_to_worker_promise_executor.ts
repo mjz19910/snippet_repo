@@ -8,6 +8,15 @@ import {l_log_if} from "./l_log_if.js";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
 import {LOG_LEVEL_WARN,TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyMessage} from "../constants.js";
 
+declare global {
+	interface Window {
+		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
+		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
+		remoteClearTimeout: (id?: number) => void;
+		remoteClearInterval: (id?: number) => void;
+	}
+}
+
 export function move_timers_to_worker_promise_executor(
 	executor_accept: (arg0: WorkerState|null) => void,
 	executor_reject: () => void) {
