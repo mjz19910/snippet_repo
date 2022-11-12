@@ -17,6 +17,14 @@ declare global {
 		};
 	}
 
+	interface Window {
+		cint_arr: (string|number[])[];
+	}
+
+	interface Window {
+		on_on_timers_moved_first: boolean;
+	}
+
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[]
 
