@@ -12,6 +12,12 @@ import {Timer} from "./Timer.js";
 import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyMessage,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
 
+declare global {
+	interface Window {
+		[GlobalStateKey]?: WorkerState;
+	}
+}
+
 export class WorkerState {
 	flags: Map<string,boolean>;
 	worker_code;
@@ -171,14 +177,14 @@ export class WorkerState {
 		return window.hasOwnProperty(GlobalStateKey);
 	}
 	static get_global_state(): WorkerState|undefined {
-		return (window as {[GlobalStateKey]?: WorkerState;})[GlobalStateKey];
+		return window[GlobalStateKey];
 	}
 	static set_global_state(worker_state_value: WorkerState) {
 		this.maybe_delete_old_global_state_value(worker_state_value);
-		(window as {[GlobalStateKey]?: WorkerState;})[GlobalStateKey]=worker_state_value;
+		window[GlobalStateKey]=worker_state_value;
 	}
 	static delete_global_state() {
-		delete (window as {[GlobalStateKey]?: WorkerState;})[GlobalStateKey];
+		delete window[GlobalStateKey];
 	}
 	destroy() {
 		if(this.worker) {

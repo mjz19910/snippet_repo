@@ -25,13 +25,6 @@ declare global {
 
 declare global {
 	interface Window {
-		constelOff(): void;
-		g_proxy_state: {
-			hand: {
-				stack_overflow_check: () => any;
-				count_arr: any[];
-			};
-		};
 		[GlobalStateKey]?: WorkerState;
 		mute(): void;
 		g_mut_observers: any[];
