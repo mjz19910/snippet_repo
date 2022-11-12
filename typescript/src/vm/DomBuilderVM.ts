@@ -4,7 +4,7 @@ import {BaseStackVM} from "./BaseStackVM.js";
 import {l_log_if} from "./l_log_if.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {is_dom_peek} from "./is_dom_peek.js";
-import {NumberBox} from "box/NumberBox.js";
+import {NumberBox} from "../box/NumberBox.js";
 
 export class DomBuilderVM extends BaseStackVM {
 	exec_stack: ([Box[],InstructionType[]])[];

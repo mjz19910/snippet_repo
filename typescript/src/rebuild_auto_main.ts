@@ -1,3 +1,5 @@
+import {SpecType} from "./SpecType.js";
+import {AutoBuy} from "./vm/AutoBuy.js";
 import {DocumentWriteList} from "./vm/DocumentWriteList.js";
 import {dom_add_elm_filter} from "./vm/dom_add_elm_filter.js";
 import {move_timers_to_worker_promise_executor} from "./vm/move_timers_to_worker_promise_executor.js";
@@ -69,6 +71,62 @@ declare global {
 	// script_registry/main.ts
 	interface Window {
 		proxy_set: ((...args: any[]) => any)[];
+	}
+	
+	// AutoBuy.ts
+	interface Window {
+		timeplayed: number;
+		secondinterval?: ReturnType<typeof setInterval>;
+		doc: Document;
+		rounding(v: number,x: any,y: any): string;
+		totalAtome: number;
+		atomsaccu: number;
+		calcPres(): number;
+		lightreset(): void;
+		specialclick(that: any): void;
+		__testing__: false;
+		bonusAll(): void;
+		allspec: SpecType[];
+	}
+
+	// AutoBuyState.ts
+	interface Window {
+		atomepersecond: number;
+		prestige: number;
+	}
+
+	// do_auto_unit_promote.ts
+	interface Window {
+		arUnit: any[];
+		Get_Unit_Type(v: any): any;
+		getUnitPromoCost(v: any): number;
+		Find_ToNext(v: number): number;
+		_targets_achi: any[];
+		totalAchi(): number;
+		_targets: any[];
+		mainCalc(v: any): void;
+		tonext(v: number): void;
+	}
+
+	// lightreset_inject()
+	interface Window {
+		g_auto_buy: AutoBuy;
+	}
+
+	// specialclick_inject.ts
+	interface Window {
+		specialsbought: number;
+		atomsinvest: number;
+		calcDiff(v: number): number;
+		noti: boolean;
+		gritter: any;
+		toTitleCase(v: string): string;
+		plurials(v: string): string;
+		arrayNames: string[];
+		updateprogress(v: any): void;
+		seeUnit(v: number): any;
+		checkspec(): void;
+		achiSpec(): void;
 	}
 }
 

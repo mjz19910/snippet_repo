@@ -1,4 +1,4 @@
-import {NullBox} from "box/NullBox.js";
+import {NullBox} from "../box/NullBox.js";
 import {Box} from "../box/Box.js";
 import {AbstractVM} from "./AbstractVM.js";
 import {InstructionType} from "./instruction/InstructionType.js";

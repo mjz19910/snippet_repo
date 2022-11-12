@@ -1,5 +1,5 @@
-import {NumberBox} from "box/NumberBox.js";
-import {VoidBox} from "box/VoidBox.js";
+import {NumberBox} from "../box/NumberBox.js";
+import {VoidBox} from "../box/VoidBox.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {Box} from "../box/Box.js";
 import {IndexBox} from "../box/IndexBox.js";
