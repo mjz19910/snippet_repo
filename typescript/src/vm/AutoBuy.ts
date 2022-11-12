@@ -17,7 +17,7 @@ import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {specialclick_inject} from "./specialclick_inject.js";
 import {TimeoutTarget} from "./TimeoutTarget.js";
 import {DataLoader} from "./wasm/DataLoader.js";
-import {debug_id_syms} from "../mod.js";
+import {debug_id_syms} from "../debug_id_syms.js";
 import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
 import {is_in_ignored_from_src_fn} from "../script_registry/mod.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
@@ -81,7 +81,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.state_history_arr=null;
 		this.skip_save=false;
 		this.cint_arr=[];
-		this.local_data_loader=new DataLoader(localStorage);
+		this.local_data_loader=new DataLoader(globalThis.localStorage);
 		this.state=new AutoBuyState(this.root_node);
 		this.debug=this.state.debug;
 		this.compressor=new MulCompression;
