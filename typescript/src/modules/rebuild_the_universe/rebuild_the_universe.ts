@@ -3648,11 +3648,17 @@ function do_page_replace() {
 	document.close();
 }
 
-
 function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]) {
 	console.log('nop timeout');
 	return -1;
 }
+nop_timeout.__promisify__={} as (typeof setTimeout)['__promisify__'];
+
+function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]) {
+	console.log('nop timeout');
+	return -1;
+}
+nop_timeout.__promisify__={} as (typeof setInterval)['__promisify__'];
 
 function no_aev(...v: any[]) {
 	console.log('aev',v);
@@ -3679,8 +3685,8 @@ function main() {
 	document.stop=function() {};
 	real_st=setTimeout;
 	real_si=setInterval;
-	window.setTimeout=nop_timeout as (typeof setTimeout);
-	window.setInterval=nop_timeout as (typeof setInterval);
+	window.setTimeout=nop_timeout;
+	window.setInterval=nop_timer;
 	orig_aev=EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener=no_aev;
 	let page_url=location.href;

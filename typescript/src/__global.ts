@@ -41,8 +41,6 @@ declare global {
 
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
-
-		// don't make an error, just do nothing
 		stop(): void;
 	}
 
