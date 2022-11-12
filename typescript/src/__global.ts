@@ -63,17 +63,24 @@ declare global {
 		atomepersecond: number;
 		prestige: number;
 
+		arUnit: any[];
+		Get_Unit_Type(v: any): any;
+		getUnitPromoCost(v: any): number;
+		Find_ToNext(v: number): number;
+		_targets_achi: any[];
+		totalAchi(): number;
+		_targets: any[];
+		mainCalc(v: any): void;
+		tonext(v: number): void;
+
 		is_in_ignored_fn(): any;
 		bonusAll(): void;
 		specialclick(index: number): void;
 		lightreset(): void;
 		totalAchi(): number;
-		_targets_achi: any[];
-		arUnit: any[];
 		Get_Unit_Type(v: any): any;
 		getUnitPromoCost(v: any): number;
 		Find_ToNext(v: number): number;
-		_targets: any[];
 		mainCalc(v: any): void;
 		tonext(v: number): void;
 		specialsbought: number;
