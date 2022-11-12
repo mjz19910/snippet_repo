@@ -22,7 +22,7 @@ declare global {
 	}
 
 	interface Window {
-		proxy_set: any[];
+		proxy_set: ((...args: any[])=>any)[];
 		atomepersecond: number;
 		totalAtome: number;
 		prestige: number;

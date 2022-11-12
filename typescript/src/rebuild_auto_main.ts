@@ -65,6 +65,11 @@ declare global {
 	interface Window {
 		$: JQueryStatic;
 	}
+
+	// script_registry/main.ts
+	interface Window {
+		proxy_set: ((...args: any[]) => any)[];
+	}
 }
 
 export const cint_arr: (string|number[])[]=[];
