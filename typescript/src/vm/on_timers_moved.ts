@@ -3,7 +3,6 @@ import {on_game_data_set} from "./on_game_data_set.js"
 import {wait_for_game_data} from "./wait_for_game_data.js"
 
 declare global {
-	// on_timers_moved.ts
 	interface Window {
 		_SM_Data: unknown;
 	}
