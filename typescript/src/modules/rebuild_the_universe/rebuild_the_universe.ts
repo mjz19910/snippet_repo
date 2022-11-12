@@ -3298,12 +3298,12 @@ function remove_html_nodes(node: HTMLScriptElement) {
 	if(new URL(node.src).origin!=location.origin) return;
 	if(node.src.indexOf("ads")>-1||node.src.indexOf("track")>-1) return node.remove();
 }
-function do_dom_filter() {
+function remove_bad_dom_script_element() {
 	Array.prototype.forEach.call(document.querySelectorAll("script"),remove_html_nodes);
 }
 function on_game_data_set() {
 	log_if(LOG_LEVEL_INFO,'game data init');
-	do_dom_filter();
+	remove_bad_dom_script_element();
 	auto_buy_obj.pre_init();
 	setTimeout(auto_buy_obj.init.bind(auto_buy_obj),300);
 	window.constelOff();
@@ -3322,7 +3322,7 @@ function action_1() {
 	} else {
 		wait_for_game_data();
 	}
-	do_dom_filter();
+	remove_bad_dom_script_element();
 }
 function dom_add_elm_filter(elm: HTMLScriptElement) {
 	if(elm&&elm.nodeName==="SCRIPT") {
@@ -3331,7 +3331,7 @@ function dom_add_elm_filter(elm: HTMLScriptElement) {
 			return true;
 		}
 		if(elm.src&&new URL(elm.src).origin===location.origin) {
-			do_dom_filter();
+			remove_bad_dom_script_element();
 			return true;
 		}
 		return false;
@@ -3436,7 +3436,7 @@ function main() {
 	}
 	reset_global_event_handlers();
 	enable_jquery_proxy_if_needed();
-	document.addEventListener('onContentLoaded',do_dom_filter);
+	document.addEventListener('onContentLoaded',remove_bad_dom_script_element);
 	Node.prototype.insertBefore=new Proxy(Node.prototype.insertBefore,{
 		apply(target,thisValue,parameters: [Node,Node]) {
 			if(insert_before_enabled(...parameters)) {
@@ -3532,7 +3532,7 @@ function main() {
 				}
 			}
 			window.adsbygoogle.op(e);
-			do_dom_filter();
+			remove_bad_dom_script_element();
 		};
 		let rb_html_tmp=rb_html.replace(/https:\/\/apis.google.com\/js\/platform.js/,"");
 		//spell:disable-next-line
