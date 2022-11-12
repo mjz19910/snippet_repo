@@ -7,7 +7,6 @@ import {IPageContent} from "./IPageContent.js";
 export {};
 
 declare global {
-
 	interface Window {
 		g_log_if: typeof l_log_if;
 	}
@@ -16,6 +15,7 @@ declare global {
 		MulCompression: typeof MulCompression;
 	}
 }
+
 declare global {
 	interface Window {
 		g_page_content: IPageContent;
