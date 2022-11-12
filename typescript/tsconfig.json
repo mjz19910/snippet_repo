@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
 		"experimentalDecorators": true,
-		"target": "esnext",
+		"target": "ESNext",
 		"lib": [
-			"esnext",
+			"ESNext",
 			"DOM"
 		],
 		"types": [
@@ -11,7 +11,7 @@
 			"node",
 		],
 		"declaration": true,
-		"module": "NodeNext",
+		"module": "ESNext",
 		"moduleResolution": "NodeNext",
 		"sourceMap": true,
 		"noImplicitAny": true,
