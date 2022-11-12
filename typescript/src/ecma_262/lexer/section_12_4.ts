@@ -37,61 +37,61 @@ export class section_12_4 extends LexerBase {
 	}
 	dep=0
 	MultiLineCommentChars(str: string,index: number): [string|null,number] {
-		let slen=0
+		let start_len=0
 		if(this.dep>64) {
 			throw Error('stack overflow')
 		}
 		this.dep++
-		let ml_na=this.MultiLineNotAsteriskChar(str,index+slen)
+		let ml_na=this.MultiLineNotAsteriskChar(str,index+start_len)
 		if(ml_na[1]>0) {
-			slen++
+			start_len++
 			for(;;) {
-				let [,ml_na]=this.MultiLineNotAsteriskChar(str,index+slen)
+				let [,ml_na]=this.MultiLineNotAsteriskChar(str,index+start_len)
 				if(ml_na>0) {
-					slen+=ml_na
+					start_len+=ml_na
 					continue
 				}
-				if(str[index+slen]==='*') {
-					let [,pac]=this.PostAsteriskCommentChars(str,index+slen+1)
+				if(str[index+start_len]==='*') {
+					let [,pac]=this.PostAsteriskCommentChars(str,index+start_len+1)
 					if(pac>0) {
-						slen++
-						slen+=pac
+						start_len++
+						start_len+=pac
 					}
 				}
 				break
 			}
 		}
-		if(str[index+slen]==='*') {
-			let [,pac]=this.PostAsteriskCommentChars(str,index+slen+1)
+		if(str[index+start_len]==='*') {
+			let [,pac]=this.PostAsteriskCommentChars(str,index+start_len+1)
 			if(pac>0) {
-				slen++
-				slen+=pac
+				start_len++
+				start_len+=pac
 			}
 		}
 		this.dep--
-		return [null,slen]
+		return [null,start_len]
 	}
 	PostAsteriskCommentChars(str: string,index: number): [string,number] {
-		let idxoff=0
-		let cxlen=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+idxoff)
-		if(cxlen[0]===null) throw new Error("Parse error")
-		if(cxlen[1]>0) {
-			idxoff+=cxlen[1]
-			let la=this.MultiLineCommentChars(str,index+idxoff)
-			idxoff+=la[1]
-			return ["PostAsteriskCommentChars",idxoff]
+		let index_offset=0
+		let offset_1=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+index_offset)
+		if(offset_1[0]===null) throw new Error("Parse error")
+		if(offset_1[1]>0) {
+			index_offset+=offset_1[1]
+			let la=this.MultiLineCommentChars(str,index+index_offset)
+			index_offset+=la[1]
+			return ["PostAsteriskCommentChars",index_offset]
 		}
-		if(cxlen[1]===0) {
-			if(str[index+idxoff]==='*') {
-				idxoff++
-				let len=this.PostAsteriskCommentChars(str,index+idxoff)
-				if(!len[0]) throw new Error("Recursive call to PostAsteriskCommentChars failed")
-				if(len[0]&&len[1]>0) {
-					return ["PostAsteriskCommentChars",len[1]+idxoff]
+		if(offset_1[1]===0) {
+			if(str[index+index_offset]==='*') {
+				index_offset++
+				let offset_2=this.PostAsteriskCommentChars(str,index+index_offset)
+				if(!offset_2[0]) throw new Error("Recursive call to PostAsteriskCommentChars failed")
+				if(offset_2[0]&&offset_2[1]>0) {
+					return ["PostAsteriskCommentChars",offset_2[1]+index_offset]
 				}
 			}
 		}
-		return ["PostAsteriskCommentChars",idxoff]
+		return ["PostAsteriskCommentChars",index_offset]
 	}
 	MultiLineNotAsteriskChar(str: string,index: number): [string|null,number] {
 		if(str[index]!=='*') {
