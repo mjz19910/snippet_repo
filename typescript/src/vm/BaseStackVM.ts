@@ -7,8 +7,8 @@ import {BaseVMCreate} from "./BaseVMCreate.js";
 import {l_log_if} from "./l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {LOG_LEVEL_VERBOSE} from "../src/constants.js";
-import {VoidBox} from "box/VoidBox.js";
-import {NumberBox} from "box/NumberBox.js";
+import {VoidBox} from "src/box/VoidBox.js";
+import {NumberBox} from "src/box/NumberBox.js";
 
 export class BaseStackVM extends BaseVMCreate {
 	stack: Box[];

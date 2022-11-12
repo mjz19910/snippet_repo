@@ -1,6 +1,6 @@
-import {DebugVarBox} from "../box/DebugVarBox.js"
-import {DebugNullBox} from "../box/DebugNullBox.js"
-import {DebugHiddenVarBox} from "../box/DebugHiddenVarBox.js"
+import {DebugVarBox} from "./box/DebugVarBox.js"
+import {DebugNullBox} from "./box/DebugNullBox.js"
+import {DebugHiddenVarBox} from "./box/DebugHiddenVarBox.js"
 
 export class DebugInfoValue {
 	valid=false;
