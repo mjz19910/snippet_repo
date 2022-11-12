@@ -26,8 +26,9 @@ declare global {
 		adoptedStyleSheets: CSSStyleSheet[];
 		stop(): void;
 	}
+}
 
-
+declare global {
 	// move_timers_to_worker_promise_executor.ts
 	interface Window {
 		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
