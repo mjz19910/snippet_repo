@@ -1,5 +1,6 @@
 import {ListWithArray} from "./ListWithArray.js";
 import {ListWithOneItem} from "./ListWithOneItem.js";
+
 export class List<T> {
 	contents: ListWithOneItem<T[]>|ListWithArray<T>;
 	constructor(...e: T[]) {

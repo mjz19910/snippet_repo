@@ -1,5 +1,6 @@
-import {LexerBase} from "./LexerBase.js"
-import {LexReturnType} from "./LexReturnType.js"
+import {LexerBase} from "./LexerBase.js";
+import {LexReturnType} from "./LexReturnType.js";
+
 export class section_12_8_5 extends LexerBase {
 	RegularExpressionLiteral(str: string,index: number): LexReturnType {
 		let len=0

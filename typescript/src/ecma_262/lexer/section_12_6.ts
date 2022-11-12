@@ -3,6 +3,7 @@ import {TestLock} from "tests_mod/TestLock.js"
 import {Dispatcher} from "./Dispatcher.js"
 import {debug_flag_override,LexerBase} from "./LexerBase.js"
 import {LexReturnType} from "./LexReturnType.js"
+
 export class section_12_6 extends LexerBase {
 	constructor(v: Dispatcher) {
 		super(v)

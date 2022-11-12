@@ -1,6 +1,7 @@
 import {Dispatcher} from "./Dispatcher.js";
 import {LexerBase} from "./LexerBase.js";
 import {LexReturnType} from "./LexReturnType.js";
+
 export class section_12_5 extends LexerBase {
 	CommonToken(str: any,index: any): LexReturnType {
 		let common_token: ['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template']=['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template'];

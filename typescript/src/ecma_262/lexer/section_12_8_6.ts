@@ -1,8 +1,8 @@
-import {TestLock} from "tests_mod/TestLock.js"
-import {CanRunTest} from "tests_mod/CanRunTest.js"
-import {Dispatcher} from "./Dispatcher.js"
-import {LexerBase} from "./LexerBase.js"
-import {LexReturnType} from "./LexReturnType.js"
+import {CanRunTest} from "tests_mod/CanRunTest.js";
+import {TestLock} from "tests_mod/TestLock.js";
+import {Dispatcher} from "./Dispatcher.js";
+import {LexerBase} from "./LexerBase.js";
+import {LexReturnType} from "./LexReturnType.js";
 
 export class section_12_8_6 extends LexerBase {
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
