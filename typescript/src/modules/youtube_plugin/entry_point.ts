@@ -14,18 +14,32 @@ import {init_yt_player_application_plugin} from "./yt_application_create_plugin/
 import {start_message_channel_loop} from "./dom_observer/start_message_channel_loop.js";
 
 export function entry_point() {
-	attach_resize_handler();
+	if(globalThis.document) {
+		attach_resize_handler();
+	}
 	init_blob_logger();
 	init_dom_observer();
-	init_fetch_plugin();
-	init_g_api();
-	init_Image_plugin();
+	if(globalThis.window) {
+		init_fetch_plugin();
+		init_g_api();
+	}
+	if(globalThis.Image) {
+		init_Image_plugin();
+	}
 	init_JSON_parse_plugin();
-	init_navigator_sendBeacon_plugin();
-	init_override_getInitialData();
-	init_playlist_arr();
-	init_title_on_save();
+	if(globalThis.navigator) {
+		init_navigator_sendBeacon_plugin();
+	}
+	if(globalThis.window) {
+		init_override_getInitialData();
+		init_playlist_arr();
+	}
+	if(globalThis.localStorage){
+		init_title_on_save();
+	}
 	init_window_watch();
-	init_yt_player_application_plugin();
-	start_message_channel_loop();
+	if(globalThis.window) {
+		init_yt_player_application_plugin();
+		start_message_channel_loop();
+	}
 }
