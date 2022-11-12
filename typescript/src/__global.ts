@@ -89,17 +89,7 @@ declare global {
 		achiSpec(): void;
 
 		is_in_ignored_fn(): boolean;
-		calcDiff(v: number): number;
-		toTitleCase(v: string): string;
-		plurials(v: string): string;
-		updateprogress(v: any): void;
-		seeUnit(v: number): any;
-		checkspec(): void;
-		achiSpec(): void;
 		constelOff(): void;
-		lightreset(): void;
-		specialclick(that: any): void;
-		calcPres(): number;
 		g_proxy_state: {
 			hand: {
 				stack_overflow_check: () => any;
