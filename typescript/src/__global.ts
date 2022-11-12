@@ -73,7 +73,9 @@ declare global {
 		mainCalc(v: any): void;
 		tonext(v: number): void;
 
-		is_in_ignored_fn(): any;
+		g_auto_buy: AutoBuy;
+
+		is_in_ignored_fn(): boolean;
 		bonusAll(): void;
 		specialclick(index: number): void;
 		lightreset(): void;
@@ -100,7 +102,6 @@ declare global {
 		lightreset(): void;
 		specialclick(that: any): void;
 		calcPres(): number;
-		g_auto_buy: AutoBuy;
 		g_proxy_state: {
 			hand: {
 				stack_overflow_check: () => any;
