@@ -3679,8 +3679,8 @@ function main() {
 	document.stop=function() {};
 	real_st=setTimeout;
 	real_si=setInterval;
-	window.setTimeout=nop_timeout as unknown as (typeof setTimeout);
-	window.setInterval=nop_timeout as unknown as (typeof setInterval);
+	window.setTimeout=nop_timeout as (typeof setTimeout);
+	window.setInterval=nop_timeout as (typeof setInterval);
 	orig_aev=EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener=no_aev;
 	let page_url=location.href;
