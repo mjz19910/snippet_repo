@@ -1,4 +1,4 @@
-import {TimeoutClearStringR,TimeoutClearStringS} from "src/constants.js"
+import {TimeoutClearStringR,TimeoutClearStringS} from "constants.js"
 import {TimeoutClearStringsTy} from "./TimeoutClearStringsTy.js"
 
 export class TimeoutClearStrings implements TimeoutClearStringsTy {

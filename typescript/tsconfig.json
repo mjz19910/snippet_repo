@@ -20,7 +20,7 @@
 		"typeRoots": [
 			"./node_modules/@types"
 		],
-		"baseUrl": ".",
+		"baseUrl": "src",
 		"allowJs": true,
 		"checkJs": true,
 		"incremental": true,
@@ -34,7 +34,7 @@
         "esm": true
     },
 	"include": [
-		"**/*",
+		"src/**/*",
 	],
 	"exclude": [
 		"node_modules",

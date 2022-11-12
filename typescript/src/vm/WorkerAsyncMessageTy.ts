@@ -1,3 +1,3 @@
-import {WorkerAsyncMessage} from "src/constants.js"
+import {WorkerAsyncMessage} from "constants.js"
 
 export type WorkerAsyncMessageTy=typeof WorkerAsyncMessage

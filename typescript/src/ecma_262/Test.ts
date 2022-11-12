@@ -1,4 +1,4 @@
-import {CanRunTest} from "src/tests_mod/CanRunTest.js"
+import {CanRunTest} from "tests_mod/CanRunTest.js"
 import {LexerStateData} from "./lexer/LexerStateData.js"
 export class Test {
 	input: string

@@ -1,9 +1,9 @@
-import {Test} from "../../Test.js"
-import {g_ecma_262_do_debug_tests} from "../../tests.js"
-import {CanRunTest} from "../../../src/tests_mod/CanRunTest.js"
-import {Dispatcher} from "../Dispatcher.js"
-import {lex_js} from "../section_12.js"
-import {lexer_format_callback} from "../lexer_format_callback.js"
+import {CanRunTest} from "tests_mod/CanRunTest.js";
+import {Test} from "../../Test.js";
+import {g_ecma_262_do_debug_tests} from "../../tests.js";
+import {Dispatcher} from "../Dispatcher.js";
+import {lexer_format_callback} from "../lexer_format_callback.js";
+import {lex_js} from "../section_12.js";
 
 export function test_1_critical(test_runner: CanRunTest,dispatcher: Dispatcher,test_data: Test) {
 	let state=test_data.state

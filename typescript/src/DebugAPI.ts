@@ -1,5 +1,5 @@
-import {GenericEventTarget} from "../vm/GenericEventTarget.js";
-import {HexRandomDataGenerator} from "../vm/HexRandomDataGenerator.js";
+import {GenericEventTarget} from "./vm/GenericEventTarget.js";
+import {HexRandomDataGenerator} from "./vm/HexRandomDataGenerator.js";
 import {DebugDataBox} from "./box/DebugDataBox.js";
 import {DebugFunctionType} from "./box/DebugFunctionType.js";
 import {ChromeDevToolsDebug} from "./dev_tools_debugger/ChromeDevToolsDebug.js";

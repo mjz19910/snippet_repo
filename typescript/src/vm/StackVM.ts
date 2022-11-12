@@ -4,7 +4,7 @@ import {StackVMFlags} from "./StackVMFlags.js";
 import {InstructionType} from "./instruction/InstructionType.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
-import {VoidBox} from "src/box/VoidBox.js";
+import {VoidBox} from "box/VoidBox.js";
 
 export class StackVM {
 	instructions: InstructionType[];

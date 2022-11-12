@@ -1,3 +1,3 @@
-import {ReplyToWorker} from "src/constants.js"
+import {ReplyToWorker} from "constants.js"
 
 export type ReplyToWorkerTy=typeof ReplyToWorker

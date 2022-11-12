@@ -1,14 +1,14 @@
-import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
-import {InstructionType} from "./instruction/InstructionType.js";
+import {NumberBox} from "box/NumberBox.js";
+import {VoidBox} from "box/VoidBox.js";
+import {LOG_LEVEL_VERBOSE} from "constants.js";
 import {Box} from "../box/Box.js";
 import {IndexBox} from "../box/IndexBox.js";
+import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
 import {NewableFunctionBox} from "../box/NewableFunctionBox.js";
 import {BaseVMCreate} from "./BaseVMCreate.js";
+import {InstructionType} from "./instruction/InstructionType.js";
 import {l_log_if} from "./l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
-import {LOG_LEVEL_VERBOSE} from "../src/constants.js";
-import {VoidBox} from "src/box/VoidBox.js";
-import {NumberBox} from "src/box/NumberBox.js";
 
 export class BaseStackVM extends BaseVMCreate {
 	stack: Box[];

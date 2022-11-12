@@ -1,3 +1,3 @@
-import {TimeoutMessageReady} from "src/constants.js"
+import {TimeoutMessageReady} from "constants.js"
 
 export type TimeoutMessageReplyTy=typeof TimeoutMessageReady

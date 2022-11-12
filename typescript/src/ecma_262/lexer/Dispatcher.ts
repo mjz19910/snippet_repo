@@ -1,17 +1,18 @@
-import {section_12,Lexer} from "./section_12.js"
-import {section_12_2} from "./section_12_2.js"
-import {section_12_3} from "./section_12_3.js"
-import {section_12_4} from "./section_12_4.js"
-import {section_12_5} from "./section_12_5.js"
-import {section_12_6} from "./section_12_6.js"
-import {section_12_7} from "./section_12_7.js"
-import {section_12_8_3} from "./section_12_8_3.js"
-import {section_12_8_4} from "./section_12_8_4.js"
-import {section_12_8_5} from "./section_12_8_5.js"
-import {section_12_8_6} from "./section_12_8_6.js"
-import {section_12_8} from "./section_12_8.js"
-import {EnvSettingsType} from "../EnvSettingsType.js"
-import {DispatcherIndexType} from "./DispatcherIndexType.js"
+import {EnvSettingsType} from "../EnvSettingsType.js";
+import {DispatcherIndexType} from "./DispatcherIndexType.js";
+import {Lexer,section_12} from "./section_12.js";
+import {section_12_2} from "./section_12_2.js";
+import {section_12_3} from "./section_12_3.js";
+import {section_12_4} from "./section_12_4.js";
+import {section_12_5} from "./section_12_5.js";
+import {section_12_6} from "./section_12_6.js";
+import {section_12_7} from "./section_12_7.js";
+import {section_12_8} from "./section_12_8.js";
+import {section_12_8_3} from "./section_12_8_3.js";
+import {section_12_8_4} from "./section_12_8_4.js";
+import {section_12_8_5} from "./section_12_8_5.js";
+import {section_12_8_6} from "./section_12_8_6.js";
+
 export class Dispatcher {
 	[x: string]: DispatcherIndexType
 	lexer: Lexer=new Lexer(this)
