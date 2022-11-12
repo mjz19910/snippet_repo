@@ -3484,6 +3484,12 @@ function create_load_with_fetch_page() {
 	});
 }
 
+function pop_mut_observer() {
+	let la=mut_observers.pop();
+	if(!la) throw new Error("mut_observers underflow");
+	la.disconnect();
+}
+
 async function do_fetch_load() {
 	reset_global_event_handlers();
 	window.setTimeout=real_st;
@@ -3507,11 +3513,7 @@ async function do_fetch_load() {
 	reset_global_event_handlers();
 	history.pushState(hist_state,'',orig_url);
 	const rb_html=await (await fetch(loc_url)).text();
-	{
-		let la=mut_observers.pop();
-		if(!la) throw new Error("mut_observers underflow");
-		la.disconnect();
-	}
+	pop_mut_observer();
 	set_jq_proxy(window.$);
 	let arr: any[]=[];
 	let any_cur: any=arr;
