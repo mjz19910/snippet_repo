@@ -11,7 +11,7 @@
 			"node",
 		],
 		"declaration": true,
-		"module": "AMD",
+		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"sourceMap": true,
 		"noImplicitAny": true,
