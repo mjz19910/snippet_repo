@@ -24,26 +24,6 @@ declare global {
 }
 
 declare global {
-	// do_auto_unit_promote.ts
-	interface Window {
-		arUnit: any[];
-		Get_Unit_Type(v: any): any;
-		getUnitPromoCost(v: any): number;
-		Find_ToNext(v: number): number;
-		_targets_achi: any[];
-		totalAchi(): number;
-		_targets: any[];
-		mainCalc(v: any): void;
-		tonext(v: number): void;
-	}
-
-
-	// lightreset_inject.ts
-	interface Window {
-		g_auto_buy: AutoBuy;
-	}
-
-
 	// specialclick_inject.ts
 	interface Window {
 		specialsbought: number;
