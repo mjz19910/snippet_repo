@@ -35,7 +35,7 @@ export function rebuild_auto_main() {
 	let new_arr=[] as unknown as GoogleAdList;
 	window.adsbygoogle=new_arr;
 	adsbygoogle.op=adsbygoogle.push;
-	adsbygoogle.push=e=>{
+	adsbygoogle.push=e => {
 		adsbygoogle.op(e);
 		remove_bad_dom_script_element();
 	};
