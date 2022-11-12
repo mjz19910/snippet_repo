@@ -3631,6 +3631,23 @@ async function do_fetch_load() {
 	};
 }
 
+function on_dom_load() {
+	window.setTimeout=real_st;
+	window.setInterval=real_si;
+	EventTarget.prototype.addEventListener=orig_aev;
+	document.addEventListener('DOMContentLoaded',function() {
+		setTimeout(action_1,300);
+	});
+}
+
+function do_page_replace() {
+	mut_observers.push(new DetachedMutationObserver(document));
+	document.writeln("");
+	reset_global_event_handlers();
+	do_fetch_load();
+	document.close();
+}
+
 function main() {
 	if(location.pathname.match('test')) {
 		return;
@@ -3663,21 +3680,6 @@ function main() {
 	}
 	let orig_aev=EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener=no_aev;
-	function on_dom_load() {
-		window.setTimeout=real_st;
-		window.setInterval=real_si;
-		EventTarget.prototype.addEventListener=orig_aev;
-		document.addEventListener('DOMContentLoaded',function() {
-			setTimeout(action_1,300);
-		});
-	}
-	function do_page_replace() {
-		mut_observers.push(new DetachedMutationObserver(document));
-		document.writeln("");
-		reset_global_event_handlers();
-		do_fetch_load();
-		document.close();
-	}
 	let page_url=location.href;
 	let non_proto_url=page_url_no_protocol();
 	if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
