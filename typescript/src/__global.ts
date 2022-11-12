@@ -89,14 +89,9 @@ declare global {
 		achiSpec(): void;
 
 		is_in_ignored_fn(): boolean;
-		specialsbought: number;
-		atomsinvest: number;
 		calcDiff(v: number): number;
-		noti: boolean;
-		gritter: any;
 		toTitleCase(v: string): string;
 		plurials(v: string): string;
-		arrayNames: string[];
 		updateprogress(v: any): void;
 		seeUnit(v: number): any;
 		checkspec(): void;
