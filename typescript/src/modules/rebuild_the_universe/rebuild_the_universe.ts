@@ -3680,37 +3680,15 @@ function main() {
 	real_si=setInterval;
 	window.setTimeout=nop_timeout as unknown as (typeof setTimeout);
 	window.setInterval=nop_timeout as unknown as (typeof setInterval);
-	let orig_aev=EventTarget.prototype.addEventListener;
+	orig_aev=EventTarget.prototype.addEventListener;
 	EventTarget.prototype.addEventListener=no_aev;
 	let page_url=location.href;
 	let non_proto_url=page_url_no_protocol();
-	if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
-		do_page_replace();
-	} else if(non_proto_url=="//rebuildtheuniverse.com/?type=mjz_version") {
-		do_page_replace();
-	} else if(page_url=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=mjz_version") {
-		do_page_replace();
-	} else if(non_proto_url=="//rebuildtheuniverse.com/?type=real") {
-		on_dom_load();
-	} else if(page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real") {
-		on_dom_load();
-	} else if(page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=inject") {
-		document.stop=function() {};
-		on_dom_load();
-		document_write_list.destroy();
-	} else if(non_proto_url=="//rebuildtheuniverse.com/") {
-		window.setTimeout=real_st;
-		window.setInterval=real_si;
-		EventTarget.prototype.addEventListener=orig_aev;
-		document_write_list.destroy();
-	} else if(page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/") {
-		window.setTimeout=real_st;
-		window.setInterval=real_si;
-		EventTarget.prototype.addEventListener=orig_aev;
-		document_write_list.destroy();
-	} else {
-		console.log('handle location pathname',location.pathname);
-	}
+	fire_url_handler({
+		page_url,
+		non_proto_url,
+		document_write_list,
+	});
 }
 function init() {
 	update_logger_vars();
@@ -3720,3 +3698,38 @@ function init() {
 init();
 log_if(LOG_LEVEL_TRACE,'userscript main');
 main();
+class URLHandlerState {
+	non_proto_url: string="";
+	page_url: string="";
+	document_write_list=new DocumentWriteList;
+}
+
+function fire_url_handler(state: URLHandlerState) {
+	if(state.non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
+		do_page_replace();
+	} else if(state.non_proto_url=="//rebuildtheuniverse.com/?type=mjz_version") {
+		do_page_replace();
+	} else if(state.page_url=="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=mjz_version") {
+		do_page_replace();
+	} else if(state.non_proto_url=="//rebuildtheuniverse.com/?type=real") {
+		on_dom_load();
+	} else if(state.page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real") {
+		on_dom_load();
+	} else if(state.page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=inject") {
+		document.stop=function() {};
+		on_dom_load();
+		state.document_write_list.destroy();
+	} else if(state.non_proto_url=="//rebuildtheuniverse.com/") {
+		window.setTimeout=real_st;
+		window.setInterval=real_si;
+		EventTarget.prototype.addEventListener=orig_aev;
+		state.document_write_list.destroy();
+	} else if(state.page_url==="https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/") {
+		window.setTimeout=real_st;
+		window.setInterval=real_si;
+		EventTarget.prototype.addEventListener=orig_aev;
+		state.document_write_list.destroy();
+	} else {
+		console.log('handle location pathname',location.pathname);
+	}
+}
