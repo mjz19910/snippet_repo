@@ -3533,24 +3533,24 @@ function main() {
 		window.adsbygoogle=any_cur;
 		window.adsbygoogle.op=window.adsbygoogle.push;
 		window.adsbygoogle.push=function(e) {
-			let cs=document.currentScript;
-			let ls: Element|null=null;
-			let rs: Element|null=null;
-			if(!cs) return;
-			window.g_cs??=[];
-			window.g_cs.push(cs);
-			let prev=cs.previousElementSibling;
-			if(prev&&prev instanceof HTMLElement&&prev.dataset.adSlot) {
-				let ad_slot=cs.previousElementSibling;
-				if(prev.previousElementSibling) ls=prev.previousElementSibling;
-				if(cs.nextElementSibling) rs=cs.nextElementSibling;
-				console.log('cs nextElementSibling',rs);
-				if(ad_slot) ad_slot.remove();
-				cs.remove();
-				while(ls&&ls instanceof HTMLScriptElement&&ls.src&&ls.src.includes("adsbygoogle")) {
-					let ls_tmp=ls.previousElementSibling;
-					ls.remove();
-					ls=ls_tmp;
+			let current_script_element=document.currentScript;
+			let next_prev_sibling: Element|null=null;
+			let next_sibling: Element|null=null;
+			if(!current_script_element) return;
+			window.g_current_script_list??=[];
+			window.g_current_script_list.push(current_script_element);
+			let prev_sibling=current_script_element.previousElementSibling;
+			if(prev_sibling&&prev_sibling instanceof HTMLElement&&prev_sibling.dataset.adSlot) {
+				let ad_slot_sibling=current_script_element.previousElementSibling;
+				if(prev_sibling.previousElementSibling) next_prev_sibling=prev_sibling.previousElementSibling;
+				if(current_script_element.nextElementSibling) next_sibling=current_script_element.nextElementSibling;
+				console.log('cs nextElementSibling',next_sibling);
+				if(ad_slot_sibling) ad_slot_sibling.remove();
+				current_script_element.remove();
+				while(next_prev_sibling&&next_prev_sibling instanceof HTMLScriptElement&&next_prev_sibling.src&&next_prev_sibling.src.includes("adsbygoogle")) {
+					let ls_tmp=next_prev_sibling.previousElementSibling;
+					next_prev_sibling.remove();
+					next_prev_sibling=ls_tmp;
 				}
 			}
 			window.adsbygoogle.op(e);

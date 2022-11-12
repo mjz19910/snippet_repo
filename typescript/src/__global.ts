@@ -25,8 +25,7 @@ declare global {
 
 declare global {
 	interface Window {
-		g_mut_observers: any[];
-		g_cs?: any[];
+		g_current_script_list?: any[];
 		g_page_content: {
 			request_content: string;
 			cur: string;
