@@ -6,7 +6,7 @@ import {Timer} from "./Timer.js";
 import {do_worker_verify} from "./do_worker_verify.js";
 import {l_log_if} from "./l_log_if.js";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {LOG_LEVEL_WARN,TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyMessage} from "constants.js";
+import {LOG_LEVEL_WARN,TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyMessage} from "../constants.js";
 
 export function move_timers_to_worker_promise_executor(
 	executor_accept: (arg0: WorkerState|null) => void,
