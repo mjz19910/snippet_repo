@@ -34,13 +34,16 @@ declare global {
 
 		on_on_timers_moved_first: boolean;
 
+		// move_timers_to_worker_promise_executor.ts
 		remoteSetTimeout: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
 		remoteSetInterval: (handler: TimerHandler,timeout?: number,...target_args: any[]) => number;
 		remoteClearTimeout: (id?: number) => void;
 		remoteClearInterval: (id?: number) => void;
 
+		// on_timers_moved.ts
 		_SM_Data: unknown;
 
+		// on_game_data_set.ts
 		Pace: PaceType;
 
 		// use_jquery.ts
@@ -128,6 +131,7 @@ declare global {
 	}
 
 	module globalThis {
+		// move_timers_to_worker_promise_executor.ts
 		var remote_worker_state: RemoteWorkerState;
 	}
 
