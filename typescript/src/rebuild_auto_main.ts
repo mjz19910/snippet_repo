@@ -1,5 +1,5 @@
+import {GoogleAdList} from "./GoogleAdList.js";
 import {PaceType} from "./PaceType.js";
-import {SpecType} from "./SpecType.js";
 import {AutoBuy} from "./vm/AutoBuy.js";
 import {DocumentWriteList} from "./vm/DocumentWriteList.js";
 import {dom_add_elm_filter} from "./vm/dom_add_elm_filter.js";
@@ -12,10 +12,7 @@ import {remove_bad_dom_script_element} from "./vm/remove_bad_dom_script_element.
 declare global {
 	interface Window {
 		document_write_list: DocumentWriteList;
-		adsbygoogle: {
-			op: any;
-			push(v: number): void;
-		};
+		adsbygoogle: GoogleAdList;
 		cint_arr: (string|number[])[];
 		on_on_timers_moved_first: boolean;
 	}
