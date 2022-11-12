@@ -1,18 +1,26 @@
-import {ReplyClearRepeating,ReplyClearSingle,ReplyFromWorker,ReplySetRepeating,ReplySetSingle,TimeoutClearS,TimeoutMessageReady,TimeoutSetR,TimeoutSetS,WorkerReadyReply} from "constants.js"
-import {MakeReplyData} from "./MakeReplyData.js"
-import {NoDataMsg} from "./NoDataMsg.js"
-import {NumInfoMsg} from "./NumInfoMsg.js"
-import {RefVarMsg} from "./RefVarMsg.js"
-import {TimeoutClearStrings} from "./TimeoutClearStrings.js"
-import {TimeoutSetStrings} from "./TimeoutSetStrings.js"
-import {TimerMessageTypes} from "./TimerMessageTypes.js"
+import {
+	ReplyClearRepeating,ReplyClearSingle,
+	ReplyFromWorker,
+	ReplySetRepeating,ReplySetSingle,
+	TimeoutClearS,
+	TimeoutMessageReady,
+	TimeoutSetR,TimeoutSetS,
+	WorkerReadyReply
+} from "../constants.js";
+import {MakeReplyData} from "./MakeReplyData.js";
+import {NoDataMsg} from "./NoDataMsg.js";
+import {NumInfoMsg} from "./NumInfoMsg.js";
+import {RefVarMsg} from "./RefVarMsg.js";
+import {TimeoutClearStrings} from "./TimeoutClearStrings.js";
+import {TimeoutSetStrings} from "./TimeoutSetStrings.js";
+import {TimerMessageTypes} from "./TimerMessageTypes.js";
 
 export class TimerApi {
-	msg_types: TimerMessageTypes=new TimerMessageTypes
-	set_names: TimeoutSetStrings=new TimeoutSetStrings
-	clear_names: TimeoutClearStrings=new TimeoutClearStrings
-	handled: number[]=[]
-	to_handle: (NoDataMsg|NumInfoMsg|RefVarMsg)[]
+	msg_types: TimerMessageTypes=new TimerMessageTypes;
+	set_names: TimeoutSetStrings=new TimeoutSetStrings;
+	clear_names: TimeoutClearStrings=new TimeoutClearStrings;
+	handled: number[]=[];
+	to_handle: (NoDataMsg|NumInfoMsg|RefVarMsg)[];
 	constructor() {
 		this.to_handle=[
 			{t: TimeoutMessageReady},
@@ -36,6 +44,6 @@ export class TimerApi {
 			new MakeReplyData(ReplyFromWorker,ReplyClearRepeating,{
 				var: 'remote_id'
 			},{})
-		]
+		];
 	}
 }

@@ -72,7 +72,7 @@ declare global {
 				finish: Function;
 			};
 		};
-		_SM_Data: any;
+		_SM_Data: unknown;
 		constelOff(): void;
 		on_on_timers_moved_first: boolean;
 		lightreset(): void;

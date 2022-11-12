@@ -47,6 +47,9 @@ declare global {
 
 
 	// on_timers_moved.ts
+	interface Window {
+		_SM_Data: unknown;
+	}
 }
 
 export const cint_arr: (string|number[])[]=[];
