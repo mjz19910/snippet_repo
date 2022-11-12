@@ -25,7 +25,6 @@ declare global {
 
 declare global {
 	interface Window {
-		[GlobalStateKey]?: WorkerState;
 		mute(): void;
 		g_mut_observers: any[];
 		g_cs?: any[];
