@@ -43,10 +43,13 @@ declare global {
 
 		Pace: PaceType;
 
+		// use_jquery.ts
 		$: JQueryStatic;
 
+		// script_registry/main.ts
 		proxy_set: ((...args: any[]) => any)[];
 
+		// AutoBuy.ts
 		timeplayed: number;
 		secondinterval?: ReturnType<typeof setInterval>;
 		doc: Document;
@@ -60,9 +63,11 @@ declare global {
 		bonusAll(): void;
 		allspec: SpecType[];
 
+		// AutoBuyState.ts
 		atomepersecond: number;
 		prestige: number;
 
+		// do_auto_unit_promote.ts
 		arUnit: any[];
 		Get_Unit_Type(v: any): any;
 		getUnitPromoCost(v: any): number;
@@ -73,8 +78,10 @@ declare global {
 		mainCalc(v: any): void;
 		tonext(v: number): void;
 
+		// lightreset_inject.ts
 		g_auto_buy: AutoBuy;
 
+		// specialclick_inject.ts
 		specialsbought: number;
 		atomsinvest: number;
 		calcDiff(v: number): number;
@@ -107,22 +114,11 @@ declare global {
 		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
 	}
 
-	// JQuery
-	interface Window {
-		$: JQueryStatic;
-	}
-
 	// DebugAPI
 	interface Window {
 		DebugAPI: DebugAPI;
 		GenericDataEvent: typeof GenericDataEvent;
 	}
-
-	var window: Window&typeof globalThis;
-	var Window: {
-		prototype: Window;
-		new(): Window;
-	};
 
 	interface ErrorConstructor {
 		new(message?: string): Error;
@@ -130,21 +126,26 @@ declare global {
 		readonly prototype: Error;
 		captureStackTrace<T>(obj: {stack?: string;},constructorOpt?: T): void;
 	}
+
 	module globalThis {
 		var remote_worker_state: RemoteWorkerState;
 	}
+
 	interface HTMLDivElement {
 		style: CSSStyleDeclaration;
 	}
+
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
 
 		// don't make an error, just do nothing
 		stop(): void;
 	}
+
 	interface CSSStyleSheet extends StyleSheet {
 		replace(string: string): Promise<CSSStyleSheet>;
 	}
+
 	interface String {
 		/**
 		 * Replace all instances of a substring in a string, using a regular expression or search string.
@@ -160,6 +161,7 @@ declare global {
 		 */
 		replaceAll(searchValue: string|RegExp,replacer: (substring: string,...args: any[]) => string): string;
 	}
+
 	interface WeakRef<T extends object> {
 		readonly [Symbol.toStringTag]: "WeakRef";
 
