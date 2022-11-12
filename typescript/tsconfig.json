@@ -20,7 +20,6 @@
 		"typeRoots": [
 			"./node_modules/@types"
 		],
-		"baseUrl": "src",
 		"allowJs": true,
 		"checkJs": true,
 		"incremental": true,
