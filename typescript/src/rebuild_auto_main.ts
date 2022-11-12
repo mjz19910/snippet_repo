@@ -1,3 +1,4 @@
+import {PaceType} from "./PaceType.js";
 import {SpecType} from "./SpecType.js";
 import {AutoBuy} from "./vm/AutoBuy.js";
 import {DocumentWriteList} from "./vm/DocumentWriteList.js";
@@ -57,12 +58,7 @@ declare global {
 
 	// on_game_data_set.ts
 	interface Window {
-		Pace: {
-			bar: {
-				progress: number;
-				finish: Function;
-			};
-		};
+		Pace: PaceType;
 	}
 
 
