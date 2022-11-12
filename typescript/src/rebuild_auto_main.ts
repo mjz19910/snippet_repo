@@ -66,23 +66,6 @@ declare global {
 	}
 
 
-	// AutoBuy.ts
-	interface Window {
-		timeplayed: number;
-		secondinterval?: ReturnType<typeof setInterval>;
-		doc: Document;
-		rounding(v: number,x: any,y: any): string;
-		totalAtome: number;
-		atomsaccu: number;
-		calcPres(): number;
-		lightreset(): void;
-		specialclick(that: any): void;
-		__testing__: false;
-		bonusAll(): void;
-		allspec: SpecType[];
-	}
-
-
 	// AutoBuyState.ts
 	interface Window {
 		atomepersecond: number;
