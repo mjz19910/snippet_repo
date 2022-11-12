@@ -130,9 +130,10 @@ declare global {
 		captureStackTrace<T>(obj: {stack?: string;},constructorOpt?: T): void;
 	}
 
+
+	// move_timers_to_worker_promise_executor.ts
 	module globalThis {
-		// move_timers_to_worker_promise_executor.ts
-		var remote_worker_state: RemoteWorkerState;
+		var remote_worker_state: RemoteWorkerState|undefined;
 	}
 
 	interface HTMLDivElement {

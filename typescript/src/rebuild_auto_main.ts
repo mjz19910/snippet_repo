@@ -40,7 +40,7 @@ declare global {
 
 	// move_timers_to_worker_promise_executor.ts
 	module globalThis {
-		var remote_worker_state: RemoteWorkerState;
+		var remote_worker_state: RemoteWorkerState|undefined;
 	}
 
 
