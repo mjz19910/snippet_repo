@@ -43,16 +43,30 @@ declare global {
 
 		Pace: PaceType;
 
+		$: JQueryStatic;
+
 		proxy_set: ((...args: any[]) => any)[];
-		atomepersecond: number;
+
+		timeplayed: number;
+		secondinterval?: ReturnType<typeof setInterval>;
+		doc: Document;
+		rounding(v: number,x: any,y: any): string;
 		totalAtome: number;
-		prestige: number;
-		is_in_ignored_fn(): any;
+		atomsaccu: number;
+		calcPres(): number;
+		lightreset(): void;
+		specialclick(that: any): void;
 		__testing__: false;
+		bonusAll(): void;
+		allspec: SpecType[];
+
+		atomepersecond: number;
+		prestige: number;
+
+		is_in_ignored_fn(): any;
 		bonusAll(): void;
 		specialclick(index: number): void;
 		lightreset(): void;
-		timeplayed: number;
 		totalAchi(): number;
 		_targets_achi: any[];
 		arUnit: any[];
@@ -63,7 +77,6 @@ declare global {
 		mainCalc(v: any): void;
 		tonext(v: number): void;
 		specialsbought: number;
-		doc: Document;
 		rounding(v: number,x: any,y: any): string;
 		atomsinvest: number;
 		calcDiff(v: number): number;
@@ -79,8 +92,6 @@ declare global {
 		constelOff(): void;
 		lightreset(): void;
 		specialclick(that: any): void;
-		secondinterval?: ReturnType<typeof setInterval>;
-		atomsaccu: number;
 		calcPres(): number;
 		g_auto_buy: AutoBuy;
 		g_proxy_state: {
@@ -98,7 +109,6 @@ declare global {
 			cur: string;
 		};
 		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
-		allspec: SpecType[];
 	}
 
 	// JQuery
