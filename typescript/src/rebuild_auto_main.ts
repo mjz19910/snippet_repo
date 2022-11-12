@@ -24,12 +24,6 @@ declare global {
 }
 
 declare global {
-	// on_game_data_set.ts
-	interface Window {
-		Pace: PaceType;
-	}
-
-
 	// use_jquery.ts
 	interface Window {
 		$: JQueryStatic;
