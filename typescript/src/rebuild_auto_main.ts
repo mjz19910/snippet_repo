@@ -32,10 +32,7 @@ export function rebuild_auto_main() {
 		proxy_jquery();
 	}
 	let adsbygoogle=window.adsbygoogle;
-	let new_arr=[] as unknown as {
-		op: any;
-		push(v: number): void;
-	};
+	let new_arr=[] as unknown as GoogleAdList;
 	window.adsbygoogle=new_arr;
 	adsbygoogle.op=adsbygoogle.push;
 	adsbygoogle.push=function(e: any) {
