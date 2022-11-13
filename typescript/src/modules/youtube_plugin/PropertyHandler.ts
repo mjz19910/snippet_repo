@@ -2,7 +2,7 @@ export class PropertyHandler<T> {
 	static instances: PropertyHandler<any>[]=[];
 	proxy_map: Map<()=>T,()=>T>=new Map;
 	override_value: {value: (()=>T)|undefined;};
-	on_target_apply_callback: <_A>(args: [() => T, null, []]) => T;
+	on_target_apply_callback: <A extends () => T>(args: [A, null, Parameters<A>]) => T;
 	constructor(on_target_apply_callback: PropertyHandler<T>['on_target_apply_callback'],value: (()=>T)|undefined) {
 		this.override_value={value};
 		this.on_target_apply_callback=on_target_apply_callback;
