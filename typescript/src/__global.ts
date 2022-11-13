@@ -1,8 +1,10 @@
+import {ErrorStackTrace} from "./ErrorStackTrace";
+
 export {};
 
 declare global {
 	interface ErrorConstructor {
-		captureStackTrace<T>(obj: {stack?: string;},constructorOpt?: T): void;
+		captureStackTrace<T>(obj: ErrorStackTrace,constructorOpt?: T): void;
 	}
 
 	interface HTMLDivElement {
