@@ -1,7 +1,5 @@
-import {debug} from "../debug.js"
-
 export class Seen {
-	static debug=debug.value
+	static debug=false;
 	static all_seen_objs: any[]=[]
 	static all_seen_map=new Map
 	static seen_gen_counter=1
