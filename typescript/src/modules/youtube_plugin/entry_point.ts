@@ -6,7 +6,6 @@ import {init_g_api} from "./init_g_api.js";
 import {init_Image_plugin} from "./init_Image_plugin.js";
 import {init_navigator_sendBeacon_plugin} from "./init_navigator_sendBeacon_plugin.js";
 import {init_override_getInitialData} from "./init_override_getInitialData.js";
-import {init_json_parse_plugin} from "./init_json_parse_plugin.js";
 import {attach_resize_handler} from "./player_plugin_activate/attach_resize_handler.js";
 import {init_playlist_arr} from "./player_plugin_activate/init_playlist_arr.js";
 import {init_title_on_save} from "./player_plugin_activate/init_title_on_save.js";
@@ -26,7 +25,6 @@ export function entry_point() {
 	if(globalThis.Image) {
 		init_Image_plugin();
 	}
-	init_json_parse_plugin();
 	if(globalThis.navigator) {
 		init_navigator_sendBeacon_plugin();
 	}
