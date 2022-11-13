@@ -1,7 +1,5 @@
 import {DebugAPI} from "./DebugAPI.js";
 import {GenericDataEvent} from "./vm/GenericDataEvent.js";
-import {MulCompression} from "./vm/MulCompression.js";
-import {l_log_if} from "./vm/l_log_if.js";
 import {IPageContent} from "./IPageContent.js";
 
 export {};
