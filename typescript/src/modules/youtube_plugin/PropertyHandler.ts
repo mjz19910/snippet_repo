@@ -5,7 +5,7 @@ export class PropertyHandler<
 	U extends [target: any,thisArg: any,argArray: any[]],
 	T extends (args: U) => any
 > {
-	static instances: PropertyHandler<[any,any,any[]], (args:any[])=>any>[]=[];
+	static instances: PropertyHandler<any,any>[]=[];
 	proxy_map: Map<Box,Box>=new Map;
 	override_value: {value: Box;}={value: new VoidBox};
 	on_target_apply_callback: T;
