@@ -1,5 +1,3 @@
-// import stuck
+import {MessageChannel} from "./MessageChannel";
 
-import {MessageChannelWithReadonlyPorts} from "./MessageChannelWithReadonlyPorts.js";
-
-export let message_channel:{value: Readonly<MessageChannelWithReadonlyPorts>| null};
+export let message_channel:MessageChannel={value:null};
