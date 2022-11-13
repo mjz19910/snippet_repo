@@ -186,7 +186,7 @@ class InstructionCallImpl {
 			throw new Error("Unexpected function box type");
 		}
 	}
-	handle_as_fn_impl_promise_box(vm: StackVM,fn_value: (...a: Box[]) => Promise<Box>,target_this: Box,arg_arr: Box[]) {
+	handle_as_fn_impl_promise_box(vm: StackVM,_fn_value: (...a: Box[]) => Promise<Box>,_target_this: Box,_arg_arr: Box[]) {
 		//let real_this=this.unbox_obj(target_this);
 		//let ret=fn_value.apply(real_this,arg_arr);
 		let ret_box: {
@@ -214,7 +214,7 @@ class InstructionCallImpl {
 		};
 		vm.stack.push(ret_box as unknown as Box);
 	}
-	handle_as_obj(vm: StackVM,fn_obj: Box,target_this: Box,arg_arr: Box[]) {
+	handle_as_obj(_vm: StackVM,_fn_obj: Box,_target_this: Box,_arg_arr: Box[]) {
 		// let raw_fn=fn_obj.as_type('function');
 		// if(!raw_fn) {
 		// 	throw new Error("Unreachable (type of value is not 'function')");
@@ -312,7 +312,7 @@ class InstructionCastImpl {
 		this.type='cast';
 		this.debug=false;
 	}
-	cast_to_type(vm: StackVM,obj: Box) {
+	cast_to_type(_vm: StackVM,obj: Box) {
 		if(obj?.type==='custom_box') {
 			throw new Error("TODO: custom_box");
 		}
@@ -455,7 +455,7 @@ class InstructionGetImpl {
 		this.type='get';
 	}
 
-	on_get(vm: StackVM,value_box: Box,key: string|number) {
+	on_get(_vm: StackVM,value_box: Box,_key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
 				/* if(typeof key==='number') {
