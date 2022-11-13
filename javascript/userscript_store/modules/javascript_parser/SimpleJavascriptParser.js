@@ -1,4 +1,5 @@
 export class SimpleJavascriptParser {
+	/**@type {{}|null} */
 	token_generator=null;
 	/**@returns {{_attach(v:{}):void}[]} */
 	ecma_262_section_12_factory() {
@@ -144,6 +145,14 @@ export class SimpleJavascriptParser {
 					this.index+=cur[1];
 					return ret;
 				}
+			}
+			/**
+			 * @param {any} _a
+			 * @param {number} _b
+			 * @returns {any[]}
+			 */
+			InputElementDiv(_a, _b) {
+				throw new Error();
 			}
 			static add_proto() {
 				js_root.import_all_items(this);
