@@ -1,5 +1,3 @@
-// import stuck
-
 import {debug} from "../debug.js";
 import {dispatch_observer_event} from "./dispatch_observer_event.js";
 import {message_channel_loop_delay,slow_message_event} from "./options.js";

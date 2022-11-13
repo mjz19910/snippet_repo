@@ -1,5 +1,3 @@
-// import stuck
-
 import {MessageChannelWithReadonlyPorts} from "./MessageChannelWithReadonlyPorts.js"
 
 export function create_message_channel(on_port_message:(event: MessageEvent<number>)=>void): Readonly<MessageChannelWithReadonlyPorts> {
