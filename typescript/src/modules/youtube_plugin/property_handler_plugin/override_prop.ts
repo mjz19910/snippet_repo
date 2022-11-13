@@ -1,12 +1,6 @@
-import {PropertyHandler} from "./PropertyHandler.js"
+import {PropertyHandler} from "./PropertyHandler.js";
 
-export function override_prop(object: {},property: PropertyKey,property_handler: PropertyHandler) {
-	Object.defineProperty(object,property,{
-		get() {
-			return property_handler.get()
-		},
-		set(value) {
-			return property_handler.set(value)
-		}
-	})
+export function override_prop<X extends string,T extends {[U in X]: any}>(object: T,property: X,property_handler: PropertyHandler) {
+	object[property];
+	Object.defineProperty(object,property,property_handler);
 }
