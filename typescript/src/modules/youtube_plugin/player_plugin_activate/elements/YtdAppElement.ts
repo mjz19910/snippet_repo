@@ -1,21 +1,33 @@
-export class YtdAppElement extends HTMLElement {
+type MastheadContainerChildren={
+	center: Element;
+};
+
+type MastheadContainer={
+	children: MastheadContainerChildren;
+};
+
+type MastheadNext={
+	container: MastheadContainer;
+};
+
+interface MastheadChildren {
+	$: MastheadNext;
+}
+
+interface YtdAppChildren {
+	masthead: MastheadChildren;
+}
+
+export interface YtdAppElement extends HTMLElement {
 	ytp_click_cint?: ReturnType<typeof setTimeout>;
-	app_is_visible?: number
-	ui_plugin_style_element: HTMLStyleElement|undefined
-	volume_range: {}|undefined
-	static cast(element: HTMLElement) {
-		let element_any: any = element
-		return element_any
-	}
-	__shady_children={
-		masthead: {
-			$: {
-				container: {
-					children: {
-						center: new Element
-					}
-				}
-			}
-		}
-	}
+	app_is_visible?: number;
+	ui_plugin_style_element: HTMLStyleElement|undefined;
+	volume_range: {}|undefined;
+	__shady_children: YtdAppChildren;
+}
+
+namespace YtdAppElement {
+	export function cast(element: HTMLElement): YtdAppElement {
+		return element as YtdAppElement;
+	};
 }

@@ -1,7 +1,5 @@
 import {YtCurrentPage} from "./YtCurrentPage.js";
 
-export class YtdPageManagerElement extends HTMLElement {
-	getCurrentPage(): YtCurrentPage {
-		return new YtCurrentPage;
-	}
+export interface YtdPageManagerElement extends HTMLElement {
+	getCurrentPage(): YtCurrentPage;
 }
