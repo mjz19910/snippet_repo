@@ -6,12 +6,12 @@ import {attach_string_index_of_proxy} from "./attach_string_index_of_proxy.js";
 
 declare global {
 	interface Window {
-		proxy_set: ((...args: any[]) => any)[];
+		attached_proxy_arr: ((...args: any[]) => any)[];
 	}
 }
 
 export function script_registry_main() {
-	window.proxy_set=attached_proxy_arr;
+	window.attached_proxy_arr=attached_proxy_arr;
 	attach_event_target_add_event_listener_proxy();
 	attach_request_animation_frame_proxy();
 	attach_promise_then_proxy();

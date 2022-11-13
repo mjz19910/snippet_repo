@@ -6,7 +6,7 @@ import {scripts} from "./scripts.js";
 
 export function str_index_of_inject() {
 	let cur_script=get_nearest_script();
-	if(cur_script===void 0 || cur_script === null) {
+	if(cur_script===void 0||cur_script===null) {
 		if(is_in_ignored_from_src_fn.flag)
 			return;
 		if(!is_in_userscript.flag)
