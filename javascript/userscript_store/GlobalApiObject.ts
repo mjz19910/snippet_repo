@@ -1,3 +1,4 @@
+// youtube_plugin
 export interface GlobalApiObject {
 	gain_controller?: HTMLMediaElementGainController;
 	yt_watch_page_loaded_handler?: {};
@@ -11,6 +12,7 @@ export interface GlobalApiObject {
 	Seen?: {};
 };
 
+// DebugAPI
 export interface GlobalApiObject {
 	Repeat?: {},
 	CompressRepeated?: {},
