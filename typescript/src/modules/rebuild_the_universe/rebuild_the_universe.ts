@@ -8,7 +8,6 @@ import {EmptyArrayBox} from "../../box/EmptyArrayBox.js";
 import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
 import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
 import {NewableInstancePack} from "../../box/NewableInstancePack.js";
-import {NoArgsType} from "../../box/NoArgsType.js";
 import {NodeBox} from "../../box/NodeBox.js";
 import {NumberBox} from "../../box/NumberBox.js";
 import {ObjectBox} from "../../box/ObjectBox.js";
