@@ -12,6 +12,7 @@
         "cint_arr",
         "constelOff",
         "constexpr",
+        "dbgln",
         "debug_id_syms",
         "DebuggableTypes",
         "deref",
