@@ -1,3 +1,3 @@
-import {WeakTokenSymbolWithKey} from "./WeakTokenSymbolWithKey.js";
+import {WeakRefWithKey} from "./WeakRefWithKey.js";
 
-export let scripts_tokens: (WeakTokenSymbolWithKey|null)[]=[];
+export let scripts_tokens: (WeakRefWithKey|null)[]=[];

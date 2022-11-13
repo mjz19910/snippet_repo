@@ -1,6 +1,6 @@
 import {Counter} from "./Counter.js";
 import {script_reg_cleanup_callback} from "./script_reg_cleanup_callback.js";
-import {WeakTokenSymbolWithKey} from "./WeakTokenSymbolWithKey.js";
+import {WeakRefWithKey} from "./WeakRefWithKey.js";
 import {WeakFinalInfo} from "./WeakFinalInfo.js";
 
 export let weak_scripts_arr: (WeakFinalInfo|null)[]=[];
