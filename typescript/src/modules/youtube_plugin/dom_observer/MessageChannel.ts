@@ -1,5 +1,5 @@
-import {MessageChannelWithReadonlyPorts} from "./MessageChannelWithReadonlyPorts.js";
+import {ReadonlyMessageChannel} from "./MessageChannelWithReadonlyPorts.js";
 
 export interface MessageChannel {
-	value: Readonly<MessageChannelWithReadonlyPorts>|null;
+	value: Readonly<ReadonlyMessageChannel>|null;
 }
