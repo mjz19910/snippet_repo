@@ -21,13 +21,12 @@ export class PropertyHandler {
 			this.override_value.value=value;
 			return;
 		}
-		let proxy_override: Box;
 		if(this.proxy_map.has(value)) {
 			let proxy_override=this.proxy_map.get(value);
 			if(!proxy_override) return;
 			this.override_value.value=proxy_override;
 		} else {
-			proxy_override=create_proxy(value,this.on_target_apply_callback);
+			let proxy_override=create_proxy(value,this.on_target_apply_callback);
 			this.proxy_map.set(value,proxy_override);
 			this.override_value.value=proxy_override;
 		}
