@@ -1,3 +1,3 @@
-import {YTDPlayerElement} from "../YTDPlayerElement.js"
+import {YtdPlayerElement} from "./YtdPlayerElement.js";
 
-export let ytd_player: {value:YTDPlayerElement|null}={value:null}
+export let ytd_player: {value:YtdPlayerElement|null}={value:null}
