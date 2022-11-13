@@ -1,4 +1,3 @@
-
 export interface SpecType {
 	name: string;
 	desc: string;

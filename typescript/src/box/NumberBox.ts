@@ -1,6 +1,5 @@
 import {AnyTypeOfResult} from "./template/AnyTypeOfResult.js";
 
-
 export class NumberBox {
 	type: 'number';
 	value: number;
