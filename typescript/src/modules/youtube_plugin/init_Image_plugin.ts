@@ -1,22 +1,22 @@
 export function init_Image_plugin() {
-	let OriginalImage=Image
+	let OriginalImage=Image;
 	Image=new Proxy(Image,{
 		construct(...proxy_args) {
-			let c_cls=proxy_args[0]
+			let c_cls=proxy_args[0];
 			let tc=class extends c_cls {
 				set src(_src) {
 					if(_src.indexOf('/api/stats/qoe?')>-1)
-						return
-					super.src=_src
+						return;
+					super.src=_src;
 				}
 				get src() {
-					return super.src
+					return super.src;
 				}
-			}
-			let c_args=proxy_args[1]
-			let ret=new tc(...c_args)
-			return ret
+			};
+			let c_args=proxy_args[1];
+			let ret=new tc(...c_args);
+			return ret;
 		}
-	})
-	Image=OriginalImage
+	});
+	Image=OriginalImage;
 }
