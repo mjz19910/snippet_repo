@@ -135,7 +135,7 @@ function trigger_debug_breakpoint() {
 class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 	type: "constructor_box";
 	readonly arguments = [{name:"options", opt:true, value:{types:["CSSStyleSheetInit", "undefined"]}}] as const;
-	args_type: NoArgsType;
+	args_type: [options?: CSSStyleSheetInit|undefined];
 	m_verify_name: "CSSStyleSheetConstructorBox";
 	from: "javascript";
 	instance_type: "CSSStyleSheet";
@@ -143,7 +143,7 @@ class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 	value: typeof CSSStyleSheet;
 	constructor(value: typeof CSSStyleSheet) {
 		this.type="constructor_box";
-		this.args_type=new NoArgsType;
+		this.args_type=[];
 		this.m_verify_name="CSSStyleSheetConstructorBox";
 		this.from="javascript";
 		this.instance_type="CSSStyleSheet";
