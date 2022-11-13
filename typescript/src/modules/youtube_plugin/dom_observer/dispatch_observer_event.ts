@@ -1,3 +1,5 @@
+// import stuck
+
 import {message_channel} from "./message_channel.js";
 import {rep_size} from "./options.js";
 import {port_state} from "./port_state.js";
