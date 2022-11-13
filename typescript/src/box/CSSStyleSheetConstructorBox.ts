@@ -24,7 +24,7 @@ export class CSSStyleSheetConstructorBox
 			if(typeof val!='object') continue;
 			if(val===null) continue;
 			if(val.type!='shape_box') continue;
-			valid_args=[val.value];
+			valid_args[0]=val.value;
 		}
 		let value=this.value;
 		let obj: CSSStyleSheet=new value(...valid_args);
