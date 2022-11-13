@@ -180,10 +180,8 @@ export class AutoBuy implements AutoBuyInterface {
 	dom_pre_init() {
 		const css_display_style=`
 			#state_log>div{width:max-content}
-			#state_log{top:0px;width:30px;position:fixed;z-index:121;font-family:monospace;font-size:22px;color:lightgray}`;
-		function style_sheet_gen(instance: {replace: (arg0: any) => void;},args: any[]) {
-			instance.replace(args[0]);
-		}
+			#state_log{top:0px;width:30px;position:fixed;z-index:121;font-family:monospace;font-size:22px;color:lightgray}
+		`;
 		this.display_style_sheet=new CSSStyleSheet;
 		this.display_style_sheet.replace(css_display_style);
 		// dom element init
