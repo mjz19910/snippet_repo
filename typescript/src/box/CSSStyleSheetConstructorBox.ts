@@ -11,7 +11,7 @@ export class CSSStyleSheetConstructorBox
 {
 	readonly type="constructor_box"
 	readonly instance_type="CSSStyleSheet"
-	readonly arguments="[options?: CSSStyleSheetInit | undefined]"
+	readonly arguments=[{name:"options", opt:true, value:{types:["CSSStyleSheetInit", "undefined"]}}] as const
 	readonly args_type: CSSStyleSheetConstructorArgsTypeState1|NoArgsType=new NoArgsType
 	readonly m_verify_name="CSSStyleSheetConstructorBox"
 	verify_name(name: "CSSStyleSheetConstructorBox") {
