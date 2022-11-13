@@ -1,6 +1,6 @@
+import {YtdPlayerElement} from "../elements/YtdPlayerElement.js";
 import {ytd_player} from "../elements/ytd_player.js";
 import {element_map} from "../event/element_map.js";
-import {YTDPlayerElement} from "../YTDPlayerElement.js";
 
 declare global {
 	interface Window {
@@ -13,7 +13,7 @@ export function on_ytd_player(element: HTMLElement) {
 	console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
 	let any_element: any=element;
-	let expected_element: YTDPlayerElement=any_element;
+	let expected_element: YtdPlayerElement=any_element;
 	ytd_player.value=expected_element;
 	window.ytd_player=element;
 }
