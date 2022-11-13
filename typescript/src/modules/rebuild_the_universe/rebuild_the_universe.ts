@@ -1512,14 +1512,15 @@ class IntervalTargetFn {
 		this.m_callback();
 	}
 }
-type TimeoutTargetType1={
-	fire(): void;
+
+abstract class AbstractFire {
+	abstract fire(): void;
 };
 
 class TimeoutNode extends BaseNode {
 	m_timeout: number;
 	m_id: ReturnType<typeof setTimeout>|null;
-	m_target: TimeoutTargetType1|null;
+	m_target: AbstractFire|null;
 	constructor(timeout=0) {
 		super();
 		this.m_timeout=timeout;
@@ -1532,7 +1533,7 @@ class TimeoutNode extends BaseNode {
 	set() {
 		this.m_id=setTimeout(this.run.bind(this),this.m_timeout);
 	}
-	start(target: TimeoutTargetType1|null) {
+	start(target: AbstractFire|null) {
 		if(!target) throw new Error("No target");
 		this.m_target=target;
 		this.set();
@@ -1551,7 +1552,7 @@ class IntervalNode extends BaseNode {
 	m_target_fn: CallableFunction;
 	m_timeout: number;
 	m_id: ReturnType<typeof setTimeout>|null;
-	m_target: TimeoutTargetType1|null;
+	m_target: AbstractFire|null;
 	constructor(target_fn: CallableFunction,timeout=0) {
 		super();
 		this.m_target_fn=target_fn;
@@ -1562,7 +1563,7 @@ class IntervalNode extends BaseNode {
 	set() {
 		this.m_id=setInterval(this.run.bind(this),this.m_timeout);
 	}
-	start(target: TimeoutTargetType1|null=null) {
+	start(target: AbstractFire|null=null) {
 		if(target) {
 			this.m_target=target;
 		} else {
