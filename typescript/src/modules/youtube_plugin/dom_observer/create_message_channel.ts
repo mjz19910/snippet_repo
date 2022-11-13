@@ -1,9 +1,8 @@
 // import stuck
 
 import {MessageChannelWithReadonlyPorts} from "./MessageChannelWithReadonlyPorts.js"
-import {on_port_message} from "./on_port_message.js"
 
-export function create_message_channel(): Readonly<MessageChannelWithReadonlyPorts> {
+export function create_message_channel(on_port_message:(event: MessageEvent<number>)=>void): Readonly<MessageChannelWithReadonlyPorts> {
 	let channel=Object.freeze(new MessageChannel())
 	let {port1,port2}=channel
 	port2.onmessage=on_port_message
