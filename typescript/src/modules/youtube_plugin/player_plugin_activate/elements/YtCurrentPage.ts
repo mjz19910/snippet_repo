@@ -1,7 +1,7 @@
-import {YTDPlayerElement} from "./YTDPlayerElement.js";
+import {YtdPlayerElement} from "./YtdPlayerElement.js";
 
 export class YtCurrentPage extends HTMLElement {
-	getPlayer(): YTDPlayerElement {
-		return new YTDPlayerElement;
+	getPlayer(): YtdPlayerElement {
+		return new YtdPlayerElement;
 	}
 }
