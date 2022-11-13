@@ -1470,12 +1470,12 @@ class BaseNode {
 	}
 	destroy() {
 		if(this.m_parent) this.m_parent.remove_child(this);
-		let item=this.m_children.shift();
+		let item=this.m_children.at(-1);
 		if(!item) return;
 		do {
 			console.info('timer destroy',item);
 			item.destroy();
-			item=this.m_children.shift();
+			item=this.m_children.at(-1);
 		} while(item);
 	}
 }
