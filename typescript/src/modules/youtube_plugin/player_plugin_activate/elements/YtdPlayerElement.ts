@@ -1,12 +1,12 @@
 import {YtPlayerApi} from "./YtPlayerApi";
 import {YtPlayerApiResolver} from "./YtPlayerApiResolver";
 
-export class YtdPlayerElement extends HTMLElement {
-	active_nav=false;
-	player_: YtPlayerApi|null=null;
-	playerResolver_=new YtPlayerApiResolver;
-	init_nav=false;
-	is_watch_page_active=false;
-	pause() {}
-	play() {}
+export interface YtdPlayerElement extends HTMLElement {
+	active_nav: boolean;
+	player_: YtPlayerApi|null;
+	playerResolver_: YtPlayerApiResolver;
+	init_nav: boolean;
+	is_watch_page_active: boolean;
+	pause(): void;
+	play(): void;
 }
