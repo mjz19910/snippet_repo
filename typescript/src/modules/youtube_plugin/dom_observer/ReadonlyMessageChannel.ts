@@ -1,4 +1,4 @@
 export interface ReadonlyMessageChannel {
-	port1: Readonly<MessagePort>;
-	port2: Readonly<MessagePort>;
+	readonly port1: Readonly<MessagePort>;
+	readonly port2: Readonly<MessagePort>;
 }
