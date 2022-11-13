@@ -760,7 +760,7 @@ const instruction_descriptor_arr: InstructionList=[
 export type InstructionMap={
 	'append': ["append"];
 	'breakpoint': ["breakpoint"];
-	'call': ["call", number];
+	'call': ["call",number];
 	'cast': ['cast',CastOperandTarget];
 	'construct': ["construct"];
 	'drop': ["drop"];
@@ -773,7 +773,7 @@ export type InstructionMap={
 	'nop': ["nop"];
 	'peek': ["peek"];
 	'push_window_object': ["push_window_object"];
-	'push': ["push", ...Box[]];
+	'push': ["push",...Box[]];
 	'return': ["return"];
 	'vm_block_trace': ["vm_block_trace"];
 	'vm_call': ["vm_call"];
@@ -997,7 +997,7 @@ class StackVMParser {
 			case 'push': {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				ret=[instruction[0],...push_operands.map(e =>({type:'string', value:e}))];
+				ret=[instruction[0],...push_operands.map(e => ({type: 'string',value: e}))];
 			} break;
 			case 'call'/*1 argument*/: {
 				if(typeof instruction[1]==='number'&&Number.isFinite(instruction[1])) {
@@ -3713,6 +3713,14 @@ declare global {
 	}
 }
 
+function create_document_write_list() {
+	let document_write_list=new DocumentWriteList;
+	document_write_list.attach_proxy(document);
+	document_write_list.document_write_proxy;
+	window.document_write_list=document_write_list;
+	return document_write_list;
+}
+
 function main() {
 	if(!globalThis.location) return;
 	if(globalThis.location.pathname.match('test')) {
@@ -3728,10 +3736,6 @@ function main() {
 			}
 		}
 	});
-	let document_write_list=new DocumentWriteList;
-	document_write_list.attach_proxy(document);
-	document_write_list.document_write_proxy;
-	window.document_write_list=document_write_list;
 	document.stop=function() {};
 	real_st=setTimeout;
 	real_si=setInterval;
@@ -3741,6 +3745,7 @@ function main() {
 	EventTarget.prototype.addEventListener=no_aev;
 	let page_url=location.href;
 	let non_proto_url=page_url_no_protocol();
+	let document_write_list=create_document_write_list();
 	fire_url_handler({
 		page_url,
 		non_proto_url,
@@ -3759,10 +3764,6 @@ function init() {
 	auto_buy_obj.global_init();
 	window.g_log_if=log_if;
 }
-
-init();
-log_if(LOG_LEVEL_TRACE,'userscript main');
-main();
 
 class URLHandlerState {
 	non_proto_url: string="";
@@ -3799,3 +3800,7 @@ function fire_url_handler(state: URLHandlerState) {
 		console.log('handle location pathname',location.pathname);
 	}
 }
+
+init();
+log_if(LOG_LEVEL_TRACE,'userscript main');
+main();
