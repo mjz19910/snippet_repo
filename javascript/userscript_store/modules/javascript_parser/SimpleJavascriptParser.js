@@ -99,11 +99,7 @@ export class SimpleJavascriptParser {
 		}
 		class js_token_generator {
 			static EOF_TOKEN=Symbol();
-			/**
-			 * @param {undefined} [str]
-			 */
-			constructor(str) {
-				this.str=null;
+			constructor() {
 				this.index=0;
 			}
 			/**
