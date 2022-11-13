@@ -6,6 +6,7 @@ import {script_id} from "./script_id.js";
 import {scripts_holders} from "./scripts_holders.js";
 import {scripts_tokens} from "./scripts_tokens.js";
 import {WeakRefWithKey} from "./WeakRefWithKey.js";
+
 export function register_obj_with_registry(obj: any) {
 	let obj_id;
 	let scripts_res: WeakFinalInfo[]=[];
