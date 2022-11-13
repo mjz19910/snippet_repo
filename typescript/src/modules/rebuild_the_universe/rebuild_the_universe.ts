@@ -103,8 +103,6 @@ function append_console_message(level: number,format_str: string,...args: any[])
 	} else {
 		console.info(format_str,level_str,...args);
 	}
-	// i ignore debug messages to avoid 20k timeout took too long messages
-	// trace includes a stack trace, not what i want
 }
 function human_log_level(level: number) {
 	switch(level) {
