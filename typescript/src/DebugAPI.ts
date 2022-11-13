@@ -11,7 +11,6 @@ import {DebugInfoValue} from "./DebugInfoValue.js";
 import {GenericDataEvent} from "./vm/GenericDataEvent.js";
 
 declare global {
-	// DebugAPI
 	interface Window {
 		DebugAPI: DebugAPI;
 		GenericDataEvent: typeof GenericDataEvent;
