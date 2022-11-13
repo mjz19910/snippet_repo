@@ -1367,7 +1367,12 @@ declare global {
 }
 let window=globalThis as unknown as Window;
 window.MulCompression=MulCompression;
-class TimeoutTarget<T> {
+
+abstract class AbstractFire {
+	abstract fire(): void;
+};
+
+class TimeoutTarget<T> implements AbstractFire {
 	m_once: boolean;
 	m_obj: T;
 	m_callback: (this: T) => void;
@@ -1380,7 +1385,7 @@ class TimeoutTarget<T> {
 		this.m_callback.call(this.m_obj);
 	}
 }
-class IntervalTarget<T> {
+class IntervalTarget<T> implements AbstractFire {
 	m_once: boolean;
 	m_obj: T;
 	m_callback: (this: T) => void;
@@ -1512,10 +1517,6 @@ class IntervalTargetFn {
 		this.m_callback();
 	}
 }
-
-abstract class AbstractFire {
-	abstract fire(): void;
-};
 
 class TimeoutNode extends BaseNode {
 	m_timeout: number;
