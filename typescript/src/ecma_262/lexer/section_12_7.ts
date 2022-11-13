@@ -1,4 +1,3 @@
-import {FlyString} from "../../AK/FlyString.js";
 import {Dispatcher} from "./Dispatcher.js";
 import {LexerBase} from "./LexerBase.js";
 import {LexReturnType} from "./LexReturnType.js";
@@ -7,13 +6,13 @@ import {IterationDecision} from "../IterationDecision.js";
 import {HashMap} from "../HashMap.js";
 
 // HashMap<FlyString, TokenType> Lexer::s_keywords
-const s_keywords=new HashMap<FlyString,JSTokenizerTokenType>();
+const s_keywords=new HashMap<string,JSTokenizerTokenType>();
 // HashMap<String, TokenType> Lexer::s_three_char_tokens
-const s_three_char_tokens=new HashMap<FlyString,JSTokenizerTokenType>();
+const s_three_char_tokens=new HashMap<string,JSTokenizerTokenType>();
 // HashMap<String, TokenType> Lexer::s_two_char_tokens
-const s_two_char_tokens=new HashMap<FlyString,JSTokenizerTokenType>();
+const s_two_char_tokens=new HashMap<string,JSTokenizerTokenType>();
 // HashMap<char, TokenType> Lexer::s_single_char_tokens
-const s_single_char_tokens=new HashMap<FlyString,JSTokenizerTokenType>();
+const s_single_char_tokens=new HashMap<string,JSTokenizerTokenType>();
 
 export class section_12_7 extends LexerBase {
 	constructor(dis: Dispatcher) {
