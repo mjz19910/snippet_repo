@@ -3568,7 +3568,6 @@ export interface GoogleAdList {
 
 declare global {
 	interface Window {
-		document_write_list: DocumentWriteList;
 		adsbygoogle: GoogleAdList;
 		cint_arr: (string|number[])[];
 		on_on_timers_moved_first: boolean;
@@ -3706,6 +3705,11 @@ function no_aev(...v: any[]) {
 	console.log('aev',v);
 }
 
+declare global {
+	interface Window {
+		document_write_list: DocumentWriteList;
+	}
+}
 
 function create_document_write_list() {
 	let document_write_list=new DocumentWriteList;
