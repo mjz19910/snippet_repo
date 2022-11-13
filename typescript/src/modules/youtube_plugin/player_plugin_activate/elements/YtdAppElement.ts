@@ -26,7 +26,7 @@ export interface YtdAppElement extends HTMLElement {
 	__shady_children: YtdAppChildren;
 }
 
-namespace YtdAppElement {
+export namespace YtdAppElement {
 	export function cast(element: HTMLElement): YtdAppElement {
 		return element as YtdAppElement;
 	};

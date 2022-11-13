@@ -4,7 +4,7 @@ import {YtdAppElement} from "../elements/YtdAppElement.js";
 
 declare global {
 	interface Window {
-		ytd_app?: HTMLElement|null;
+		ytd_app?: YtdAppElement|null;
 	}
 }
 
@@ -12,8 +12,7 @@ export function on_ytd_app(element: HTMLElement) {
 	const element_id="ytd-app";
 	console.log(`on ${element_id}`);
 	element_map.set(element_id,element);
-	let any_element: any=element;
-	let expected_element: YtdAppElement=any_element;
+	let expected_element=YtdAppElement.cast(element);
 	ytd_app.value=expected_element;
-	window.ytd_app=element;
+	window.ytd_app=expected_element;
 }
