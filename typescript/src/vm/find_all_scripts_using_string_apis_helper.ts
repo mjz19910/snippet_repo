@@ -1,4 +1,5 @@
-import {is_in_ignored_from_src_fn,is_in_userscript} from "../script_registry/script_registry.js";
+import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_src_fn.js";
+import {is_in_userscript} from "../script_registry/is_in_userscript.js";
 import {ScriptStateHost} from "./ScriptStateHost.js";
 
 declare global {
