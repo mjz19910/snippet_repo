@@ -1,21 +1,6 @@
-import {DebugAPI} from "./DebugAPI.js";
-import {GenericDataEvent} from "./vm/GenericDataEvent.js";
-import {IPageContent} from "./IPageContent.js";
-
 export {};
 
 declare global {
-	interface Window {
-		g_page_content: IPageContent;
-		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
-	}
-
-	// DebugAPI
-	interface Window {
-		DebugAPI: DebugAPI;
-		GenericDataEvent: typeof GenericDataEvent;
-	}
-
 	interface ErrorConstructor {
 		new(message?: string): Error;
 		(message?: string): Error;

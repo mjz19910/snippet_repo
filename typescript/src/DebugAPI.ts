@@ -8,6 +8,15 @@ import {ChromeDevToolsUnDebug} from "./dev_tools_debugger/ChromeDevToolsUnDebug.
 import {DebugFunctionBox} from "./box/DebugFunctionBox.js";
 import {DebugClassBox} from "./box/DebugClassBox.js";
 import {DebugInfoValue} from "./DebugInfoValue.js";
+import {GenericDataEvent} from "./vm/GenericDataEvent.js";
+
+declare global {
+	// DebugAPI
+	interface Window {
+		DebugAPI: DebugAPI;
+		GenericDataEvent: typeof GenericDataEvent;
+	}
+}
 
 export class DebugAPI {
 	static hex_generator=new HexRandomDataGenerator();
