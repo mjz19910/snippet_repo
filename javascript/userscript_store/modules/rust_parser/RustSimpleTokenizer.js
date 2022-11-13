@@ -1,4 +1,4 @@
-import {SyntaxError} from "../MJZ/SyntaxError.js"
+import {SyntaxError} from "./SyntaxError";
 
 export class RustSimpleTokenizer {
 	constructor() {
