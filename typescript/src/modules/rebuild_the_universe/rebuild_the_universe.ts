@@ -1365,7 +1365,7 @@ declare global {
 		MulCompression: typeof MulCompression;
 	}
 }
-let window = globalThis as unknown as Window;
+let window=globalThis as unknown as Window;
 window.MulCompression=MulCompression;
 class TimeoutTarget {
 	m_once: boolean;
@@ -3745,12 +3745,12 @@ function do_page_replace() {
 	document.close();
 }
 
-function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number {
+function nop_timeout(_handler: TimerHandler,_timeout?: number|undefined,..._args: any[]): number {
 	console.log('nop timeout');
 	return -1;
 }
 
-function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number {
+function nop_timer(_handler: TimerHandler,_timeout?: number|undefined,..._args: any[]): number {
 	console.log('nop timeout');
 	return -1;
 }
