@@ -12,7 +12,7 @@
 		],
 		"declaration": true,
 		"module": "ESNext",
-		"moduleResolution": "NodeNext",
+		"moduleResolution": "Node",
 		"sourceMap": true,
 		"noImplicitAny": true,
 		"outDir": "./build",
