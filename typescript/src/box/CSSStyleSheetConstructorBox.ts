@@ -18,19 +18,16 @@ export class CSSStyleSheetConstructorBox
 		return this.m_verify_name==='CSSStyleSheetConstructorBox'&&name==='CSSStyleSheetConstructorBox'
 	}
 	factory(...arr: Box[]) {
-		let valid_args: CSSStyleSheetConstructorArgsTypeState1|NoArgsType=new NoArgsType
+		let valid_args: [options?: CSSStyleSheetInit | undefined]=[]
 		for(let i=0;i<arr.length;i++) {
 			let val=arr[i]
 			if(typeof val!='object') continue
 			if(val===null) continue
 			if(val.type!='shape_box') continue
-			valid_args={
-				value: [val.value],
-				state: 1
-			}
+			valid_args=[val.value];
 		}
 		let value=this.value
-		let obj: CSSStyleSheet=new value(...valid_args.value)
+		let obj: CSSStyleSheet=new value(...valid_args)
 		return new CSSStyleSheetBox(obj)
 	}
 }
