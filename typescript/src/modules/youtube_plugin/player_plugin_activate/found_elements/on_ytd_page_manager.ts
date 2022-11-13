@@ -1,6 +1,6 @@
 import {ytd_page_manager} from "../elements/ytd_page_manager.js";
 import {element_map} from "../event/element_map.js";
-import {YtdPageManagerElement} from "../elements/YtdPageManagerElement.js";
+import {YtdPageManagerElement} from "../elements/interfaces/YtdPageManagerElement.js";
 
 declare global {
 	interface Window {
