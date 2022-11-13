@@ -1,5 +1,5 @@
 import {MessageChannelWithReadonlyPorts} from "./MessageChannelWithReadonlyPorts.js";
 
-export type MessageChannel={
+export interface MessageChannel {
 	value: Readonly<MessageChannelWithReadonlyPorts>|null;
-};
+}
