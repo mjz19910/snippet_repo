@@ -1149,5 +1149,4 @@ export function ecma_parse_main() {
 		let res_description=token_gen.describe_token(res_item);
 		console.log(res_description);
 	}
-	//# sourceURL=https://github.dev/mjz19910/javascript_parser/blob/master/js_lex_only_ver_1.js
 }
