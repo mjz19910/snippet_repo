@@ -1,5 +1,5 @@
 import {CleanupType} from "./CleanupType.js"
-import {scripts_tokens,weak_scripts_arr} from "./mod.js"
+import {scripts_tokens,weak_scripts_arr} from "./script_registry.js"
 
 export function script_reg_cleanup_callback(held: CleanupType) {
 	let arr_key=held.arr_key

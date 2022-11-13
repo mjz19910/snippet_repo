@@ -19,7 +19,7 @@ import {TimeoutTarget} from "./TimeoutTarget.js";
 import {DataLoader} from "./wasm/DataLoader.js";
 import {debug_id_syms} from "../debug_id_syms.js";
 import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
-import {is_in_ignored_from_src_fn} from "../script_registry/mod.js";
+import {is_in_ignored_from_src_fn} from "../script_registry/script_registry.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {SpecType} from "../SpecType.js";
 
