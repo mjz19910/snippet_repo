@@ -19,11 +19,16 @@
 // ==/UserScript==
 console=globalThis.console;
 
-const AUDIO_ELEMENT_VOLUME=0.58;
+let enter_count=0;
+
+let AUDIO_ELEMENT_VOLUME=0.58;
+console.log(`enter ${enter_count++}`);
 const AudioMuted=true;
+console.log(`enter ${enter_count++}`);
 
 const AutoBuyMulModifierFactor=1;
 const AutoBuyRatioDiv=4;
+console.log(`enter ${enter_count++}`);
 
 const LOG_LEVEL_CRIT=1;
 const LOG_LEVEL_ERROR=2;
@@ -32,9 +37,11 @@ const LOG_LEVEL_NOTICE=4;
 const LOG_LEVEL_INFO=5;
 const LOG_LEVEL_DEBUG=6;
 const LOG_LEVEL_TRACE=7;
+console.log(`enter ${enter_count++}`);
 
 let local_logging_level=3;
 let LogErrorAsConsoleError=false;
+console.log(`enter ${enter_count++}`);
 function append_console_message(level: number,format_str: string,...args: any[]) {
 	update_logger_vars();
 	const level_str=human_log_level(level);
@@ -86,79 +93,6 @@ function update_logger_vars() {
 }
 function trigger_debug_breakpoint() {
 	debugger;
-}
-class CSSStyleSheetConstructorBoxImpl {
-	type: "constructor_box";
-	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
-	args_type: [options?: CSSStyleSheetInit|undefined];
-	m_verify_name: "CSSStyleSheetConstructorBox";
-	from: "javascript";
-	instance_type: "CSSStyleSheet";
-	constructor_type: "CSSStyleSheet";
-	value: typeof CSSStyleSheet;
-	constructor(value: typeof CSSStyleSheet) {
-		this.type="constructor_box";
-		this.args_type=[];
-		this.m_verify_name="CSSStyleSheetConstructorBox";
-		this.from="javascript";
-		this.instance_type="CSSStyleSheet";
-		this.constructor_type="CSSStyleSheet";
-		this.value=value;
-	}
-	verify_name(name: "CSSStyleSheetConstructorBox"): boolean {
-		return this.m_verify_name==='CSSStyleSheetConstructorBox'&&name==='CSSStyleSheetConstructorBox';
-	}
-	as_type(input_typeof: string): this|null {
-		switch(typeof this.value) {
-			case "bigint": return input_typeof==="bigint"? this:null;
-			case "boolean": return input_typeof==="boolean"? this:null;
-			case "function": return input_typeof==="function"? this:null;
-			case "number": return input_typeof==="number"? this:null;
-			case "object": return input_typeof==="object"? this:null;
-			case "string": return input_typeof==="string"? this:null;
-			case "symbol": return input_typeof==="symbol"? this:null;
-			case "undefined": return input_typeof==="undefined"? this:null;
-		}
-	}
-	on_get(_vm: StackVM,key: string) {
-		console.log('get','CSSStyleSheetConstructorBox',key);
-	}
-	factory() {
-		return new CSSStyleSheetBoxImpl(new this.value);
-	}
-}
-class CSSStyleSheetBoxImpl {
-	type: "instance_box";
-	m_verify_name: "CSSStyleSheetBox";
-	instance_type: "CSSStyleSheet";
-	value: CSSStyleSheet;
-	constructor(value: CSSStyleSheet) {
-		this.type='instance_box';
-		this.m_verify_name='CSSStyleSheetBox';
-		this.instance_type='CSSStyleSheet';
-		this.value=value;
-	}
-	verify_name(name: "CSSStyleSheetBox"): boolean {
-		return this.m_verify_name==='CSSStyleSheetBox'&&name==='CSSStyleSheetBox';
-	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
-	}
-}
-class PromiseBoxImpl {
-	type: "promise_box";
-	await_type: "Box";
-	inner_type: "Promise<Box>";
-	value: Promise<Box>;
-	constructor(value: Promise<Box>) {
-		this.type='promise_box';
-		this.await_type='Box';
-		this.inner_type='Promise<Box>';
-		this.value=value;
-	}
-	as_type(input_typeof: string): [true,this]|[false,null] {
-		return typeof this.value===input_typeof? [true,this]:[false,null];
-	}
 }
 class StackVMBoxImpl {
 	type: "custom_box";
@@ -221,28 +155,13 @@ class ObjectBoxImpl {
 
 type Box={type: string,value: unknown;};
 
-type NewableInstancePack<T>=(box_value: new (...a: Box[]) => T,construct_args: Box[]) => Box;
-class NewableFunctionBoxImpl {
-	value: NewableInstancePack<{}>;
-	class_value: new (...a: Box[]) => {};
-	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
-		this.value=factory_value;
-		this.class_value=class_value;
-	}
-	on_get(_vm: StackVM,key: string) {
-		console.log('get','newable function',this.value,key);
-	}
-	factory(...args: Box[]) {
-		return this.value(this.class_value,args);
-	}
-}
 class InstructionCallImpl {
 	type: 'call';
 	constructor() {
 		this.type='call';
 	}
 	debug: boolean=false;
-	handle_as_fn_box(vm: StackVM,fn_box: Box,target_this: Box,arg_arr: Box[]) {
+	handle_as_fn_box(fn_box: Box,target_this: Box) {
 		if(typeof fn_box!='object') {
 			throw new Error("Bad");
 		}
@@ -281,7 +200,7 @@ class InstructionCallImpl {
 		};
 		vm.stack.push(ret_box as unknown as Box);
 	}
-	handle_as_fn_impl_box(vm: StackVM,fn_value: (...a: Box[]) => Box,target_this: Box,arg_arr: Box[]) {
+	handle_as_fn_impl_box(vm: StackVM) {
 		//let real_this=this.unbox_obj(target_this);
 		//let ret=fn_value.apply(real_this,arg_arr);
 		let ret_box: {
@@ -528,9 +447,6 @@ class InstructionDupImpl {
 		if(!res) throw new Error("bad");
 		vm.stack.push(res);
 	}
-}
-function use_never_type(value: never) {
-	console.log('used never type',value);
 }
 class InstructionGetImpl {
 	type: 'get';
@@ -1118,21 +1034,6 @@ class DocumentWriteList {
 		if(should_try_to_destroy) {
 			return true;
 		}
-	}
-}
-class UniqueIdGenerator {
-	m_current: number;
-	constructor() {
-		this.m_current=-1;
-	}
-	set_current(current_value: number) {
-		this.m_current=current_value;
-	}
-	current() {
-		return this.m_current;
-	}
-	next() {
-		return this.m_current++;
 	}
 }
 class NamedIdGenerator {
@@ -2152,45 +2053,6 @@ class AsyncAutoBuy {
 		}
 		this.parent.state_history_append(char,silent);
 		await node.start_async(new AsyncTimeoutTarget);
-	}
-}
-class DocumentBoxImpl {
-	type: "document_box";
-	m_verify_name: "DocumentBox";
-	value: Document;
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
-	}
-	verify_name(name: "DocumentBox"): boolean {
-		return this.m_verify_name===name&&name==="DocumentBox";
-	}
-	constructor(value: Document) {
-		this.type='document_box';
-		this.m_verify_name='DocumentBox';
-		this.value=value;
-	}
-}
-class AsyncFunctionBoxImpl {
-	type: 'function_box';
-	return_type: 'promise_box';
-	await_type: 'Box';
-	value: (...a: Box[]) => Promise<Box>;
-	m_verify_name: "AsyncFunctionBox";
-	verify_name(name: "AsyncFunctionBox"): boolean {
-		return this.m_verify_name==='AsyncFunctionBox'&&name==='AsyncFunctionBox';
-	}
-	wrap_call(): Box {
-		throw new Error("Not implemented");
-	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
-	}
-	constructor(value: (...a: Box[]) => Promise<Box>) {
-		this.type='function_box';
-		this.return_type='promise_box';
-		this.await_type='Box';
-		this.m_verify_name='AsyncFunctionBox';
-		this.value=value;
 	}
 }
 class VoidBoxImpl {
