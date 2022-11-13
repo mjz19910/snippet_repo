@@ -1,4 +1,4 @@
-import {HTMLVideoElementArrayBox} from "../../box/HTMLVideoElementArrayBox.js";
+import {HTMLVideoElementArrayBox} from "./HTMLVideoElementArrayBox.js";
 import {CustomEventTarget} from "../../dom_observer/CustomEventTarget.js";
 import {CustomEventType} from "../../dom_observer/CustomEventType.js";
 import {dom_observer_next_tick_action} from "../../dom_observer/dom_observer_next_tick_action.js";
