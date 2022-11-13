@@ -34,7 +34,7 @@ export function entry_point() {
 		init_override_getInitialData();
 		init_playlist_arr();
 	}
-	if(globalThis.localStorage){
+	if(globalThis.localStorage) {
 		init_title_on_save();
 	}
 	init_window_watch();
