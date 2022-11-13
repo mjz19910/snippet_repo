@@ -1,9 +1,10 @@
 import {do_proxy_call_getInitialData} from "./fetch_result_handler_plugin/do_proxy_call_getInitialData.js";
+import {InitialData} from "./fetch_result_handler_plugin/InitialData.js";
 import {PropertyHandler} from "./PropertyHandler.js";
 
 declare global {
 	interface Window {
-		getInitialData(): {};
+		getInitialData(): InitialData;
 	}
 }
 
