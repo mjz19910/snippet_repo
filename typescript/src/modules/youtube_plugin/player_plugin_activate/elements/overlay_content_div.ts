@@ -1,1 +1,1 @@
-export let overlay_content_div: {value:HTMLDivElement|null}={value:null}
+export const overlay_content_div: {value:HTMLDivElement|null}={value:null}

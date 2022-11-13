@@ -1,1 +1,1 @@
-export let rep_max={value:25}
+export const rep_max={value:25}

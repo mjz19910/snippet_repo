@@ -1,1 +1,1 @@
-export let playlist_arr: {value: string[]|null}={value: null}
+export const playlist_arr: {value: string[]|null}={value: null}

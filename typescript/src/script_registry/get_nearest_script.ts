@@ -1,6 +1,8 @@
-import {cur_event_fns} from "./constants.js"
-import {has_reg_id} from "./has_reg_id.js"
-import {is_in_ignored_from_src_fn, is_in_userscript,is_in_userscript_fn} from "./mod.js"
+import {cur_event_fns} from "./constants.js";
+import {has_reg_id} from "./has_reg_id.js";
+import {is_in_ignored_from_src_fn} from "./is_in_ignored_from_src_fn.js";
+import {is_in_userscript} from "./is_in_userscript.js";
+import {is_in_userscript_fn} from "./is_in_userscript_fn.js";
 
 export function get_nearest_script() {
 	if(document.currentScript!==null) {

@@ -1,1 +1,1 @@
-export let watched_target_map=new WeakMap()
+export const watched_target_map=new WeakMap()

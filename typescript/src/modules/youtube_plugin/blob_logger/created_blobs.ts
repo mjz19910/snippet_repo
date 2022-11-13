@@ -1,1 +1,1 @@
-export let created_blobs: Map<string,any[]>=new Map
+export const created_blobs: Map<string,any[]>=new Map

@@ -1,1 +1,1 @@
-export let waiting_for_ytd_player={value:false}
+export const waiting_for_ytd_player={value:false}

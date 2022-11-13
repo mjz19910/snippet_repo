@@ -1,4 +1,4 @@
-export let found_element_arr=[
+export const found_element_arr=[
 	"yt-playlist-manager",
 	"video",
 ]

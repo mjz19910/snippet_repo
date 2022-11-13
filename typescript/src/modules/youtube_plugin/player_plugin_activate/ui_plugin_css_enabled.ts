@@ -1,1 +1,1 @@
-export let ui_plugin_css_enabled={value:false}
+export const ui_plugin_css_enabled={value:false}

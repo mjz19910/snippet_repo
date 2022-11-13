@@ -1,1 +1,1 @@
-export let yt_navigate_handler_array: ((event: {}) => void)[]=[]
+export const yt_navigate_handler_array: ((event: {}) => void)[]=[]

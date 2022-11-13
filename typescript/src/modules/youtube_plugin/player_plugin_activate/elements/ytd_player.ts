@@ -1,3 +1,3 @@
 import {YtdPlayerElement} from "./interfaces/YtdPlayerElement.js";
 
-export let ytd_player: {value:YtdPlayerElement|null}={value:null}
+export const ytd_player: {value:YtdPlayerElement|null}={value:null}

@@ -1,1 +1,1 @@
-export let title_on:{value:boolean|null}={value:null}
+export const title_on:{value:boolean|null}={value:null}

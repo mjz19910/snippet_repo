@@ -1,1 +1,1 @@
-export let rep_count={value:0}
+export const rep_count={value:0}

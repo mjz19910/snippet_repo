@@ -1,1 +1,1 @@
-export let original_fetch: {value:typeof fetch|null}={value:null}
+export const original_fetch: {value:typeof fetch|null}={value:null}

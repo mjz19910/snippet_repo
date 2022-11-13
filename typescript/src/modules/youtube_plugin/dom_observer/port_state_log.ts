@@ -1,1 +1,1 @@
-export let port_state_log: [number,number][]=[]
+export const port_state_log: [number,number][]=[]

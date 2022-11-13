@@ -1,3 +1,3 @@
 import {YtdWatchFlexyElement} from "./interfaces/YtdWatchFlexyElement.js"
 
-export let ytd_watch_flexy: {value:YtdWatchFlexyElement|null}={value:null}
+export const ytd_watch_flexy: {value:YtdWatchFlexyElement|null}={value:null}

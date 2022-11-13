@@ -1,1 +1,1 @@
-export let leftover_args:[<T, X extends any[]>(...x:X)=>T, any, any][]=[]
+export const leftover_args:[<T, X extends any[]>(...x:X)=>T, any, any][]=[]
