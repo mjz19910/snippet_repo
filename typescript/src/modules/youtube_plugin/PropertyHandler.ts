@@ -1,13 +1,15 @@
 import {Box} from "../../box/Box.js";
 import {VoidBox} from "../../box/VoidBox.js";
-import {PropertyHandlerCallbackType} from "./PropertyHandlerCallbackType";
 
-export class PropertyHandler {
-	static instances: PropertyHandler[]=[];
+export class PropertyHandler<
+	U extends [target: any,thisArg: any,argArray: any[]],
+	T extends (args: U) => any
+> {
+	static instances: PropertyHandler<[any,any,any[]], (args:any[])=>any>[]=[];
 	proxy_map: Map<Box,Box>=new Map;
 	override_value: {value: Box;}={value: new VoidBox};
-	on_target_apply_callback: (args: PropertyHandlerCallbackType) => any;
-	constructor(on_target_apply_callback: (args: PropertyHandlerCallbackType) => any) {
+	on_target_apply_callback: T;
+	constructor(on_target_apply_callback: T) {
 		this.on_target_apply_callback=on_target_apply_callback;
 	}
 	get(): Box {
@@ -24,7 +26,7 @@ export class PropertyHandler {
 		} else {
 			let t=this;
 			let proxy_override=new Proxy(value,{
-				apply(...arr) {
+				apply(...arr: U) {
 					return t.on_target_apply_callback(arr);
 				}
 			});
