@@ -136,7 +136,7 @@ class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 	type: "constructor_box";
 	readonly arguments = [{name:"options", opt:true, value:{types:["CSSStyleSheetInit", "undefined"]}}] as const;
 	args_type: NoArgsType;
-	m_verify_name: 'CSSStyleSheetConstructorBox';
+	m_verify_name: "CSSStyleSheetConstructorBox";
 	from: "javascript";
 	instance_type: "CSSStyleSheet";
 	constructor_type: "CSSStyleSheet";
@@ -144,7 +144,7 @@ class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 	constructor(value: typeof CSSStyleSheet) {
 		this.type="constructor_box";
 		this.args_type=new NoArgsType;
-		this.m_verify_name='CSSStyleSheetConstructorBox';
+		this.m_verify_name="CSSStyleSheetConstructorBox";
 		this.from="javascript";
 		this.instance_type="CSSStyleSheet";
 		this.constructor_type="CSSStyleSheet";
