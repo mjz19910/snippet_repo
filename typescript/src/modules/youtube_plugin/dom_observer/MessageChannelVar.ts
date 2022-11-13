@@ -1,5 +1,5 @@
 import {ReadonlyMessageChannel} from "./ReadonlyMessageChannel";
 
-export interface MessageChannel {
+export interface MessageChannelVar {
 	value: ReadonlyMessageChannel|null;
 }
