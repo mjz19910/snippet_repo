@@ -1,4 +1,4 @@
-import {debug} from "../config/debug.js"
+import {debug} from "../debug.js"
 import {ytd_app} from "../player_plugin_activate/elements/ytd_app.js"
 import {createGainController} from "./createGainController.js"
 import {gain_controller} from "./gain_controller.js"

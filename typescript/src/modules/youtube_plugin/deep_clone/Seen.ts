@@ -1,4 +1,4 @@
-import {debug} from "../config/debug.js"
+import {debug} from "../debug.js"
 
 export class Seen {
 	static debug=debug.value

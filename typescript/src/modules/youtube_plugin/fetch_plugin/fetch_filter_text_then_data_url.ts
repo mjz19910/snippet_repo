@@ -1,4 +1,4 @@
-import {debug} from "../config/debug.js"
+import {debug} from "../debug.js"
 import {yt_handlers} from "../fetch_result_handler_plugin/yt_handlers.js"
 
 export function fetch_filter_text_then_data_url(url: string|URL,response_obj: {}) {

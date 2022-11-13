@@ -1,5 +1,5 @@
 import {clone_object} from "./clone_object.js"
-import {Seen} from "../seen_plugin/Seen.js"
+import {Seen} from "./Seen.js"
 import {realHTMLElement} from "./realHTMLElement.js"
 import {clone_null_proto_object} from "./clone_null_proto_object.js"
 import {clone_map} from "./clone_map.js"

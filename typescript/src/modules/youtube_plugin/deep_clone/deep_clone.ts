@@ -1,4 +1,4 @@
-import {Seen} from "../seen_plugin/Seen.js"
+import {Seen} from "./Seen.js"
 import {deep_clone_object} from "./deep_clone_object.js"
 import {log_value} from "../helper/log_value.js"
 
