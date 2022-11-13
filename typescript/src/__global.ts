@@ -2,9 +2,6 @@ export {};
 
 declare global {
 	interface ErrorConstructor {
-		new(message?: string): Error;
-		(message?: string): Error;
-		readonly prototype: Error;
 		captureStackTrace<T>(obj: {stack?: string;},constructorOpt?: T): void;
 	}
 
