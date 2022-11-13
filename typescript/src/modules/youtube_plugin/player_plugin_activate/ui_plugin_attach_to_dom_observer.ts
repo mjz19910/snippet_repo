@@ -7,10 +7,10 @@ import {const_plugin_activate} from "./event/const_plugin_activate.js"
 import {event_plugin_activate} from "./event/event_plugin_activate.js"
 import {event_find_video} from "./event/event_ytd_player.js"
 import {event_ytd_watch_flexy} from "./event/event_ytd_watch_flexy.js"
-import {on_yt_page_type_changed} from "./event/event_yt_page_type_changed.js"
+import {event_yt_page_type_changed} from "./event/event_yt_page_type_changed.js"
 
 export function ui_plugin_attach_to_dom_observer(dom_observer:CustomEventTarget) {
-	dom_observer.addEventListener('yt-page-type-changed',on_yt_page_type_changed)
+	dom_observer.addEventListener('yt-page-type-changed',event_yt_page_type_changed)
 
 	dom_observer.addEventListener('find-ytd-app',event_find_ytd_app)
 	dom_observer.addEventListener('find-yt-playlist-manager',event_find_yt_playlist_manager)
