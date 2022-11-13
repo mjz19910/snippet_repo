@@ -43,12 +43,9 @@ function any_o(value,copy) {
 	}
 	throw new Error("Failed to cast");
 }
-/**
- * @type {<T>(v1:T, v2: any)=>NonNullable<T>} */
+/** @type {<T>(v1:T,v2:T extends object?T:never)=>NonNullable<T>} */
 function default_from(v1,v2) {
-	if(v1) {
-		return v1;
-	}
+	if(v1) return v1;
 	return v2;
 }
 /**@type {typeof window.g_api} */
