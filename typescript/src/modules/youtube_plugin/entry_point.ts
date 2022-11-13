@@ -2,7 +2,7 @@ import {init_blob_logger} from "./blob_logger/init_blob_logger.js";
 import {init_dom_observer} from "./dom_observer/init_dom_observer.js";
 import {start_message_channel_loop} from "./dom_observer/start_message_channel_loop.js";
 import {init_fetch_plugin} from "./fetch_plugin/init_fetch_plugin.js";
-import {init_g_api} from "./g_api/init_g_api.js";
+import {init_g_api} from "./init_g_api.js";
 import {init_Image_plugin} from "./init_Image_plugin.js";
 import {init_navigator_sendBeacon_plugin} from "./init_navigator_sendBeacon_plugin.js";
 import {init_override_getInitialData} from "./init_override_getInitialData.js";
