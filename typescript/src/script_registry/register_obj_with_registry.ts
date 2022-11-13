@@ -7,7 +7,7 @@ import {scripts_holders} from "./scripts_holders.js";
 import {scripts_tokens} from "./scripts_tokens.js";
 import {WeakRefWithKey} from "./WeakRefWithKey.js";
 
-export function register_obj_with_registry(obj: any) {
+export function register_obj_with_registry<T extends object>(obj: T) {
 	let obj_id;
 	let scripts_res: WeakFinalInfo[]=[];
 	for(let i=0;i<weak_scripts_arr.length;i++) {
