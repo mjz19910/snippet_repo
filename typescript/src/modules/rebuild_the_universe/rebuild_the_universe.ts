@@ -133,18 +133,22 @@ function trigger_debug_breakpoint() {
 	debugger;
 }
 class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
-	type: "constructor_box"="constructor_box";
+	type: "constructor_box";
 	arguments: '[options?: CSSStyleSheetInit | undefined]';
 	args_type: NoArgsType;
 	m_verify_name: 'CSSStyleSheetConstructorBox';
-	from: "javascript"="javascript";
-	instance_type: "CSSStyleSheet"="CSSStyleSheet";
-	constructor_type: "CSSStyleSheet"="CSSStyleSheet";
+	from: "javascript";
+	instance_type: "CSSStyleSheet";
+	constructor_type: "CSSStyleSheet";
 	value: typeof CSSStyleSheet;
 	constructor(value: typeof CSSStyleSheet) {
+		this.type="constructor_box";
 		this.arguments='[options?: CSSStyleSheetInit | undefined]';
 		this.args_type=new NoArgsType;
 		this.m_verify_name='CSSStyleSheetConstructorBox';
+		this.from="javascript";
+		this.instance_type="CSSStyleSheet";
+		this.constructor_type="CSSStyleSheet";
 		this.value=value;
 	}
 	verify_name(name: "CSSStyleSheetConstructorBox"): boolean {
