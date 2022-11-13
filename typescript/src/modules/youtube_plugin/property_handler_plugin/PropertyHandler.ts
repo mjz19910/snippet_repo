@@ -22,8 +22,7 @@ export class PropertyHandler {
 			return;
 		}
 		if(this.proxy_map.has(value)) {
-			let proxy_override=this.proxy_map.get(value);
-			if(!proxy_override) return;
+			let proxy_override=this.proxy_map.get(value)!;
 			this.override_value.value=proxy_override;
 		} else {
 			let proxy_override=create_proxy(value,this.on_target_apply_callback);
