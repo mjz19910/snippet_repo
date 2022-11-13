@@ -402,7 +402,7 @@ class GenericEventTarget {
 g_api.GenericEventTarget=GenericEventTarget;
 const static_event_target=new GenericEventTarget;
 class Dumper {
-	/**@type {null} */
+	/**@type {(<T>(value:T)=>void)|null} */
 	m_dump_value=null;
 	/**@arg {null} value */
 	dump_value(value) {
