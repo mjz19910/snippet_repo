@@ -1,21 +1,16 @@
-import {Box} from "../../box/Box.js";
-import {VoidBox} from "../../box/VoidBox.js";
-
-export class PropertyHandler<
-	U extends [target: any,thisArg: any,argArray: any[]],
-	T extends (args: U) => any
-> {
-	static instances: PropertyHandler<any,any>[]=[];
-	proxy_map: Map<Box,Box>=new Map;
-	override_value: {value: Box;}={value: new VoidBox};
-	on_target_apply_callback: T;
-	constructor(on_target_apply_callback: T) {
+export class PropertyHandler<T> {
+	static instances: PropertyHandler<any>[]=[];
+	proxy_map: Map<()=>T,()=>T>=new Map;
+	override_value: {value: (()=>T)|undefined;};
+	on_target_apply_callback: <A extends () => T>(args: [A, null, Parameters<A>]) => T;
+	constructor(on_target_apply_callback: PropertyHandler<T>['on_target_apply_callback'],value: (()=>T)|undefined) {
+		this.override_value={value};
 		this.on_target_apply_callback=on_target_apply_callback;
 	}
-	get(): Box {
+	get(): (()=>T)|undefined {
 		return this.override_value.value;
 	}
-	set(value: Box) {
+	set(value: (()=>T)|undefined) {
 		if(value===void 0||value===null) {
 			this.override_value.value=value;
 			return;
@@ -26,8 +21,8 @@ export class PropertyHandler<
 		} else {
 			let t=this;
 			let proxy_override=new Proxy(value,{
-				apply(...arr: U) {
-					return t.on_target_apply_callback(arr);
+				apply(...args: [() => T, null, []]) {
+					return t.on_target_apply_callback(args);
 				}
 			});
 			this.proxy_map.set(value,proxy_override);
