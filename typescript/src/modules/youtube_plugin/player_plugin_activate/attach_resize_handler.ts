@@ -1,4 +1,4 @@
-import {on_yt_action} from "./on_yt_action.js"
+import {on_yt_action} from "./found_elements/on_yt_action.js"
 import {plugin_overlay_element} from "./elements/plugin_overlay_element.js"
 
 export function attach_resize_handler() {

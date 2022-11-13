@@ -1,6 +1,6 @@
 import {ytd_player} from "../elements/ytd_player.js";
 import {element_map} from "../event/element_map.js";
-import {YTDPlayerElement} from "../types/YTDPlayerElement.js";
+import {YTDPlayerElement} from "../YTDPlayerElement.js";
 
 declare global {
 	interface Window {

@@ -1,6 +1,6 @@
 import {DomObserver} from "./dom_observer/DomObserver.js";
 import {MessagePortState} from "./dom_observer/MessagePortState.js";
-import {PluginOverlayElement} from "./player_plugin_activate/types/PluginOverlayElement.js";
+import {PluginOverlayElement} from "./player_plugin_activate/elements/PluginOverlayElement.js";
 import {PropertyHandler} from "./PropertyHandler.js";
 import {Seen} from "./deep_clone/Seen.js";
 import {HTMLMediaElementGainController} from "./volume_range_plugin/HTMLMediaElementGainController.js";
