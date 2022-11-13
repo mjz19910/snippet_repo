@@ -3706,12 +3706,6 @@ function no_aev(...v: any[]) {
 	console.log('aev',v);
 }
 
-declare global {
-	interface Document {
-		adoptedStyleSheets: CSSStyleSheet[];
-		stop(): void;
-	}
-}
 
 function create_document_write_list() {
 	let document_write_list=new DocumentWriteList;
@@ -3719,6 +3713,13 @@ function create_document_write_list() {
 	document_write_list.document_write_proxy;
 	window.document_write_list=document_write_list;
 	return document_write_list;
+}
+
+declare global {
+	interface Document {
+		adoptedStyleSheets: CSSStyleSheet[];
+		stop(): void;
+	}
 }
 
 function main() {
