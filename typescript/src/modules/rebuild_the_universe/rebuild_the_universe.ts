@@ -1367,11 +1367,11 @@ declare global {
 }
 let window=globalThis as unknown as Window;
 window.MulCompression=MulCompression;
-class TimeoutTarget {
+class TimeoutTarget<T> {
 	m_once: boolean;
-	m_obj: AutoBuyState|AutoBuy|null;
-	m_callback: () => void;
-	constructor(obj: AutoBuyState|AutoBuy|null,callback: () => void) {
+	m_obj: T;
+	m_callback: (this: T) => void;
+	constructor(obj: T,callback: TimeoutTarget<T>['m_callback']) {
 		this.m_once=true;
 		this.m_obj=obj;
 		this.m_callback=callback;
@@ -1380,11 +1380,11 @@ class TimeoutTarget {
 		this.m_callback.call(this.m_obj);
 	}
 }
-class IntervalTarget {
+class IntervalTarget<T> {
 	m_once: boolean;
-	m_obj: any;
-	m_callback: any;
-	constructor(obj: any,callback: any) {
+	m_obj: T;
+	m_callback: (this: T) => void;
+	constructor(obj: T,callback: IntervalTarget<T>['m_callback']) {
 		this.m_once=false;
 		this.m_obj=obj;
 		this.m_callback=callback;
@@ -1463,7 +1463,7 @@ class BaseNode {
 	}
 	remove_child(record: BaseNode) {
 		let index=this.m_children.indexOf(record);
-		if(index > -1) {
+		if(index>-1) {
 			this.m_children.splice(index,1);
 			record.set_parent(null);
 		}
@@ -1528,9 +1528,6 @@ class TimeoutNode extends BaseNode {
 	}
 	timeout() {
 		return this.m_timeout;
-	}
-	set_target(target: any) {
-		this.m_target=target;
 	}
 	set() {
 		this.m_id=setTimeout(this.run.bind(this),this.m_timeout);
