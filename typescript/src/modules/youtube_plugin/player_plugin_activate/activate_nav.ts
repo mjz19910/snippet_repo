@@ -15,9 +15,9 @@ export function activate_nav() {
 	if(ytd_player.value.active_nav) return;
 	if(!plugin_overlay_element.value) return;
 	ytd_player.value.active_nav=true;
-	plugin_overlay_element.value.as_extends_base().setAttribute("style",player_overlay_style_source);
+	plugin_overlay_element.value.setAttribute("style",player_overlay_style_source);
 	plugin_overlay_element.value.onupdate();
-	ytd_page_manager.value.getCurrentPage().append(plugin_overlay_element.value.as_extends_base());
+	ytd_page_manager.value.getCurrentPage().append(plugin_overlay_element.value);
 	if(yt_navigate_finish_handler_array.length<=0)
 		throw new Error("Dummy callback failure");
 	yt_navigate_finish_handler_array[0]({});
@@ -26,7 +26,7 @@ export function activate_nav() {
 		if(!ytd_page_manager.value) return;
 		if(ytd_page_manager.value.getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
 			ytd_player.value.is_watch_page_active=false;
-			plugin_overlay_element.value&&plugin_overlay_element.value.as_extends_base().remove();
+			plugin_overlay_element.value&&plugin_overlay_element.value.remove();
 			return;
 		} else {
 			ytd_player.value.is_watch_page_active=true;
