@@ -133,7 +133,7 @@ function trigger_debug_breakpoint() {
 }
 class CSSStyleSheetConstructorBoxImpl implements CSSStyleSheetConstructorBox {
 	type: "constructor_box";
-	readonly arguments = [{name:"options", opt:true, value:{types:["CSSStyleSheetInit", "undefined"]}}] as const;
+	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
 	args_type: [options?: CSSStyleSheetInit|undefined];
 	m_verify_name: "CSSStyleSheetConstructorBox";
 	from: "javascript";
@@ -972,7 +972,7 @@ class EventHandlerVMDispatch extends StackVM {
 		this.target_obj=target_obj;
 		this.args_arr=null;
 	}
-	run(...args_arr: Box[]) {
+	override run(...args_arr: Box[]) {
 		this.args_arr=args_arr;
 		return super.run();
 	}
@@ -1442,26 +1442,41 @@ class PromiseTimeoutTarget {
 	}
 }
 class AsyncTimeoutTarget extends PromiseTimeoutTarget {
-	wait() {
+	override wait() {
 		return super.wait();
 	}
 }
 class BaseNode {
-	m_parent: any|null;
+	m_children: BaseNode[];
+	m_parent: BaseNode|null;
 	constructor() {
+		this.m_children=[];
 		this.m_parent=null;
 	}
-	set_parent(parent: any) {
+	run() {}
+	set_parent(parent: BaseNode|null) {
 		this.m_parent=parent;
 	}
-	run() {
-		// do nothing
+	append_child(record: BaseNode) {
+		record.set_parent(this);
+		this.m_children.push(record);
 	}
-	remove() {
-		if(this.m_parent) this.m_parent.remove_child(this);
+	remove_child(record: BaseNode) {
+		let index=this.m_children.indexOf(record);
+		if(index > -1) {
+			this.m_children.splice(index,1);
+			record.set_parent(null);
+		}
 	}
 	destroy() {
-		this.remove();
+		if(this.m_parent) this.m_parent.remove_child(this);
+		let item=this.m_children.shift();
+		if(!item) return;
+		do {
+			console.info('timer destroy',item);
+			item.destroy();
+			item=this.m_children.shift();
+		} while(item);
 	}
 }
 class TimeoutIdNode extends BaseNode {
@@ -1470,7 +1485,7 @@ class TimeoutIdNode extends BaseNode {
 		super();
 		this.m_id=id;
 	}
-	destroy() {
+	override destroy() {
 		if(this.m_id!==null) clearTimeout(this.m_id);
 		super.destroy();
 	}
@@ -1481,7 +1496,7 @@ class IntervalIdNode extends BaseNode {
 		super();
 		this.m_id=id;
 	}
-	destroy() {
+	override destroy() {
 		if(this.m_id!==null) clearInterval(this.m_id);
 		super.destroy();
 	}
@@ -1525,13 +1540,14 @@ class TimeoutNode extends BaseNode {
 		this.m_target=target;
 		this.set();
 	}
-	run() {
+	override run() {
 		if(this.m_target) this.m_target.fire();
 		this.m_id=null;
-		this.remove();
+		this.destroy();
 	}
-	destroy() {
+	override destroy() {
 		if(this.m_id!==null) clearTimeout(this.m_id);
+		super.destroy();
 	}
 }
 class IntervalNode extends BaseNode {
@@ -1557,8 +1573,9 @@ class IntervalNode extends BaseNode {
 		}
 		this.set();
 	}
-	destroy() {
+	override destroy() {
 		if(this.m_id!==null) clearInterval(this.m_id);
+		super.destroy();
 	}
 }
 type AsyncTimeoutTarget1={
@@ -1588,10 +1605,6 @@ class AsyncTimeoutNode extends BaseNode {
 		this.m_target=target;
 		this.set();
 	}
-	destroy() {
-		if(this.m_id!==null) clearTimeout(this.m_id);
-		if(this.m_target) this.m_target.destroy();
-	}
 	async start_async(target: AsyncTimeoutTarget1) {
 		if(!target) throw new Error("unable to start_async without anything to wait for");
 		log_if(LOG_LEVEL_INFO,'start_async');
@@ -1605,11 +1618,16 @@ class AsyncTimeoutNode extends BaseNode {
 		log_if(LOG_LEVEL_INFO,'set',this);
 		this.m_id=setTimeout(this.run.bind(this),this.m_timeout);
 	}
-	run() {
+	override run() {
 		log_if(LOG_LEVEL_INFO,'run',this);
 		if(this.m_target) this.m_target.fire();
 		this.m_id=null;
-		this.remove();
+		this.destroy();
+	}
+	override destroy() {
+		if(this.m_id!==null) clearTimeout(this.m_id);
+		if(this.m_target) this.m_target.destroy();
+		super.destroy();
 	}
 }
 class IntervalIdNodeRef extends IntervalIdNode {
@@ -1618,15 +1636,14 @@ class IntervalIdNodeRef extends IntervalIdNode {
 		super(interval_id);
 		this.destroy_callback=destroy_cb;
 	}
-	destroy() {
+	override destroy() {
 		this.destroy_callback();
 		super.destroy();
 	}
 }
-class AsyncNodeRoot {
-	children: BaseNode[];
+class AsyncNodeRoot extends BaseNode {
 	constructor() {
-		this.children=[];
+		super();
 	}
 	set(target_fn: () => void,timeout: number|undefined,repeat=false) {
 		let node;
@@ -1644,25 +1661,6 @@ class AsyncNodeRoot {
 		} else {
 			this.append_child(new IntervalIdNode(timeout_id));
 		}
-	}
-	append_child(record: BaseNode) {
-		record.remove();
-		record.set_parent(this);
-		this.children.push(record);
-	}
-	remove_child(record: BaseNode) {
-		let index=this.children.indexOf(record);
-		this.children.splice(index,1);
-		record.set_parent(null);
-	}
-	destroy() {
-		let item=this.children.shift();
-		if(!item) return;
-		do {
-			console.info('timer destroy',item);
-			item.destroy();
-			item=this.children.shift();
-		} while(item);
 	}
 }
 class RatioOptions {

@@ -28,10 +28,11 @@
 		"strictFunctionTypes": true,
 		"strictPropertyInitialization": true,
 		"alwaysStrict": true,
+		"noImplicitOverride": true,
 	},
 	"ts-node": {
-        "esm": true
-    },
+		"esm": true,
+	},
 	"include": [
 		"src/**/*",
 	],
