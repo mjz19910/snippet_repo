@@ -3745,27 +3745,14 @@ function do_page_replace() {
 	document.close();
 }
 
-function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): NodeJS.Timeout;
-function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number;
-
-function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number|NodeJS.Timeout {
+function nop_timeout(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number {
 	console.log('nop timeout');
 	return -1;
 }
 
-namespace nop_timeout {
-	export const __promisify__ = setTimeout.__promisify__;
-}
-function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): NodeJS.Timer;
-function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number;
-
-function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number|NodeJS.Timer {
+function nop_timer(_handler: TimerHandler, _timeout?: number | undefined, ..._args: any[]): number {
 	console.log('nop timeout');
 	return -1;
-}
-
-namespace nop_timer {
-	export const __promisify__ = setInterval.__promisify__;
 }
 
 function no_aev(...v: any[]) {
