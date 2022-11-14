@@ -72,9 +72,7 @@ export class Lexer extends LexerBase {
 		void outputs;
 		let res1=this.m_dispatcher.InputElementRegExpOrTemplateTail(str,index);
 		if(!res1[0]) return [null,0];
-		console.assert(false);
-		void res1;
-		return [null,0];
+		return res1;
 	}
 }
 
