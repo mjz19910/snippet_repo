@@ -68,15 +68,23 @@ function produce_input_element_or_div(ecma_dispatcher: Dispatcher,str: string,in
 	return [max_item,max_val];
 }
 
+class StopIteration {}
+
 export class Lexer extends LexerBase {
 	do_let_parse(str: string,index: number,outputs: LexReturnType[]=[]) {
-		let res1=this.m_dispatcher.InputElementRegExpOrTemplateTail(str,index);
-		if(!res1[0]) {
-			outputs.push([null,0]);
-			return;
+		try {
+			let res1=this.m_dispatcher.InputElementRegExpOrTemplateTail(str,index);
+			if(!res1[0]) {
+				outputs.push([null,0]);
+				throw new StopIteration();
+			}
+			outputs.push(res1);
+		} catch(val) {
+			if(val instanceof StopIteration) {} else {
+				throw val;
+			}
 		}
-		outputs.push(res1);
-		return res1;
+		return;
 	}
 }
 
