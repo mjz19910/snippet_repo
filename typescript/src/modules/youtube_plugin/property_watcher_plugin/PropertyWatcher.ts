@@ -92,6 +92,7 @@ export class PropertyWatcher {
 			init_property_watcher_for_target(value,property_name,this.value_tr+'.'+property_name,this.noisy);
 			return this.value_tr+'.'+property_name;
 		}
+		return "";
 	}
 	value={};
 	value_tr="";
