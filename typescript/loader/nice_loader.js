@@ -1,6 +1,6 @@
 import {system_modules} from "./system_modules.js";
 
-const debug=true;
+const debug=false;
 
 class ContextType {
 	/**@type {string[]}*/
