@@ -1,4 +1,4 @@
-import {rebuild_auto_main} from "rebuild_auto_main.js";
+import {rebuild_auto_main} from "root:rebuild_auto_main.js";
 import {ScriptStateHost} from "./ScriptStateHost.js"
 export default function entry_point() {
 	rebuild_auto_main()

@@ -1,4 +1,4 @@
-import {Box} from "box/Box.js"
+import {Box} from "root:box/Box.js"
 import {ReplySetSingleTy} from "./ReplySetSingleTy.js"
 
 export type MessageReplySetSingle={

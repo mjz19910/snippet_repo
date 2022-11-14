@@ -1,4 +1,4 @@
-import {debug_id_syms} from "debug_id_syms.js";
+import {debug_id_syms} from "root:debug_id_syms.js";
 import {debug_id_gen} from "../debug_id_gen.js";
 
 export function next_debug_id() {

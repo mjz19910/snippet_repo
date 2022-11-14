@@ -1,5 +1,5 @@
-import {CanRunTest} from "tests_mod/CanRunTest.js";
-import {TestLock} from "tests_mod/TestLock.js";
+import {CanRunTest} from "root:tests_mod/CanRunTest.js";
+import {TestLock} from "root:tests_mod/TestLock.js";
 import {Test} from "../../Test.js";
 import {Dispatcher} from "../Dispatcher.js";
 import {test_1_critical} from "./test_1_critical.js";

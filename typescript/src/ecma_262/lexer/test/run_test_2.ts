@@ -1,5 +1,5 @@
 import {Test} from "ecma_262/Test.js";
-import {CanRunTest} from "tests_mod/CanRunTest.js";
+import {CanRunTest} from "root:tests_mod/CanRunTest.js";
 import {TestLock} from "tests_mod/TestLock.js";
 import {Dispatcher} from "../Dispatcher.js";
 import {test_2_critical} from "./test_2_critical.js";

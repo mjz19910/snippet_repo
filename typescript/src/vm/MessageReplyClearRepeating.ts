@@ -1,4 +1,4 @@
-import {Box} from "box/Box.js"
+import {Box} from "root:box/Box.js"
 import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy.js"
 
 export type MessageReplyClearRepeating={
