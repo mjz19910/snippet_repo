@@ -1,12 +1,12 @@
 .PHONY: all clean
-NODE_OPTIONS_ORIG=$(NODE_OPTIONS)
-all: build/tests.js
 
-run: build/tests.js
-	NODE_OPTIONS="$(NODE_OPTIONS_ORIG)" node --es-module-specifier-resolution=node build/tests.js
+all: build/src/tests.js
 
-build/tests.js: tests.ts */*.ts */*/*.ts
-	NODE_OPTIONS= tsc --outDir build --sourceMap true --target esnext tests.ts
+run: build/src/tests.js
+	node build/src/tests.js
+
+build/src/tests.js: src/tests.ts src/**/*.ts
+	NODE_OPTIONS= tsc --outDir build --sourceMap true --target ESNext --module ESNext src/tests.ts
 
 clean:
 ifneq ($(wildcard build),)
