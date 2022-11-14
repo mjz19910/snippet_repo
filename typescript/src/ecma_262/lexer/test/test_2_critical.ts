@@ -5,8 +5,6 @@ import {Test} from "../../Test.js";
 
 export function test_2_critical(dispatcher: Dispatcher,test_data: Test) {
 	let state=test_data.state;
-	if(!state)
-		throw new Error("Missing test state");
 	state.cur_index=0;
 	let js_r2=eval(test_data.input);
 	console.log('js result',js_r2);

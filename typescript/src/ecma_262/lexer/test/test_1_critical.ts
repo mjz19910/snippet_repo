@@ -5,9 +5,6 @@ import {lex_js} from "../section_12.js";
 
 export function test_1_critical(dispatcher: Dispatcher,test_data: Test) {
 	let state=test_data.state;
-	if(!state)
-		throw new Error("Missing test state");
-	// Test 1 (test_1_code)
 	let res_arr=lex_js(state,dispatcher,test_data.input);
 	for(let i=0;i<res_arr.length;i++) {
 		let cur=res_arr[i];
