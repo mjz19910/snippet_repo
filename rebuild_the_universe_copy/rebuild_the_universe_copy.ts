@@ -19,7 +19,7 @@
 // ==/UserScript==
 console=globalThis.console;
 
-let AUDIO_ELEMENT_VOLUME=0.58;
+const AUDIO_ELEMENT_VOLUME=0.58;
 const AudioMuted=true;
 
 const AutoBuyMulModifierFactor=1;
@@ -33,7 +33,7 @@ const LOG_LEVEL_INFO=5;
 const LOG_LEVEL_DEBUG=6;
 const LOG_LEVEL_TRACE=7;
 
-let local_logging_level=7;
+let local_logging_level=3;
 let LogErrorAsConsoleError=false;
 
 function append_console_message(level: number,format_str: string,...args: any[]) {
@@ -78,11 +78,11 @@ function log_if(level: number,format_str: string,...args: any[]) {
 }
 function update_logger_vars() {
 	if(!globalThis.sessionStorage) return;
-	if(globalThis.sessionStorage.LogErrorAsConsoleError) {
-		LogErrorAsConsoleError=sessionStorage.LogErrorAsConsoleError==='true';
+	if(globalThis.sessionStorage["LogErrorAsConsoleError"]) {
+		LogErrorAsConsoleError=sessionStorage["LogErrorAsConsoleError"]==='true';
 	}
-	if(globalThis.sessionStorage.LoggingLevel) {
-		local_logging_level=parseInt(sessionStorage.LoggingLevel,10);
+	if(globalThis.sessionStorage["LoggingLevel"]) {
+		local_logging_level=parseInt(sessionStorage["LoggingLevel"],10);
 	}
 }
 function trigger_debug_breakpoint() {
@@ -295,7 +295,7 @@ class InstructionConstructImpl {
 			let obj=new a.value(...valid_args.s);
 			vm.stack.push(new CSSStyleSheetBoxImpl(obj) as unknown as Box);
 		} */
-		log_if(LOG_LEVEL_INFO,"",ins,...vm.stack.slice(vm.stack.length-number_of_arguments));
+		log_if(LOG_LEVEL_INFO,"",ins,...vm.stack.slice(vm.stack.length-number_of_arguments), construct_arr);
 	}
 }
 type CastOperandTarget="object_index"|"vm_function";
@@ -1027,6 +1027,7 @@ class DocumentWriteList {
 		if(should_try_to_destroy) {
 			return true;
 		}
+		throw new Error("TODO");
 	}
 }
 class NamedIdGenerator {
@@ -1854,7 +1855,7 @@ class AutoBuyState {
 		});
 		let json_hist=JSON.stringify(history_arr_2);
 		let json_tag="JSON_HIST";
-		let prev_hist=sessionStorage.history;
+		let prev_hist=sessionStorage["history"];
 		let data_arr: string[];
 		if(prev_hist&&prev_hist.startsWith(json_tag)) {
 			let hist_data=prev_hist.slice(json_tag.length);
@@ -1866,8 +1867,8 @@ class AutoBuyState {
 		} else {
 			data_arr=[json_hist];
 		}
-		sessionStorage.history=`${json_tag}@${data_arr.join("|")}`;
-		let time_played_data=sessionStorage.time_played_hist;
+		sessionStorage["history"]=`${json_tag}@${data_arr.join("|")}`;
+		let time_played_data=sessionStorage["time_played_hist"];
 		let time_played_arr: (null|string)[]=data_arr.map(() => null);
 		if(time_played_data) {
 			let stored_arr=JSON.parse(time_played_data);
@@ -1878,7 +1879,7 @@ class AutoBuyState {
 		} else {
 			time_played_arr=[time_played_str];
 		}
-		sessionStorage.time_played_hist=JSON.stringify(time_played_arr);
+		sessionStorage["time_played_hist"]=JSON.stringify(time_played_arr);
 	}
 	reset() {
 		this.ratio*=0.75;
@@ -2307,7 +2308,7 @@ class AutoBuy {
 	}
 	save_state_history_arr() {
 		if(this.skip_save) return;
-		localStorage.auto_buy_history_str=this.state_history_arr.join(",");
+		localStorage["auto_buy_history_str"]=this.state_history_arr.join(",");
 	}
 	get_timeout_arr_data(forced_action: string) {
 		if(forced_action=="RESET") return this.timeout_arr.map((e: number) => ~~(e/4)).join(",");
@@ -2315,16 +2316,16 @@ class AutoBuy {
 	}
 	save_timeout_arr() {
 		let forced_action,action_count;
-		let action_data=localStorage.auto_buy_forced_action;
+		let action_data=localStorage["auto_buy_forced_action"];
 		if(action_data) [forced_action,action_count]=action_data.split(",");
-		localStorage.auto_buy_timeout_str=this.get_timeout_arr_data(forced_action);
+		localStorage["auto_buy_timeout_str"]=this.get_timeout_arr_data(forced_action);
 		if(action_count!==void 0) {
 			action_count=parseInt(action_count);
 			if(Number.isFinite(action_count)) {
 				if(action_count>0) {
-					localStorage.auto_buy_forced_action=[forced_action,action_count-1];
+					localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];
 				} else if(forced_action!=="NONE") {
-					localStorage.auto_buy_forced_action="NONE,0";
+					localStorage["auto_buy_forced_action"]="NONE,0";
 				}
 			}
 		}
@@ -2629,7 +2630,7 @@ class AutoBuy {
 	}
 	state_history_clear_for_reset() {
 		this.state_history_arr=["R"];
-		localStorage.auto_buy_history_str="R";
+		localStorage["auto_buy_history_str"]="R";
 	}
 	state_history_append(value: string,silent=false) {
 		this.epoch_len++;
@@ -3047,8 +3048,8 @@ function lightreset_inject() {
 	window.g_auto_buy.skip_save=true;
 	window.addEventListener('unload',function() {
 		window.g_auto_buy.skip_save=false;
-		localStorage.auto_buy_timeout_str="300,300,300,300";
-		localStorage.long_wait=12000;
+		localStorage["auto_buy_timeout_str"]="300,300,300,300";
+		localStorage["long_wait"]=12000;
 	});
 	let original=window.g_auto_buy.original_map.get('lightreset');
 	if(!original) {
@@ -3335,7 +3336,7 @@ declare global {
 }
 function create_load_with_fetch_page() {
 	return new Promise(function(a) {
-		if(localStorage.justReset==='true') {
+		if(localStorage["justReset"]==='true') {
 			return a(null);
 		}
 		window.g_do_load=do_load_fire_promise.bind(null,a);
@@ -3439,7 +3440,7 @@ async function do_fetch_load() {
 		window.g_current_script_list??=[];
 		window.g_current_script_list.push(current_script_element);
 		let prev_sibling=current_script_element.previousElementSibling;
-		if(prev_sibling&&prev_sibling instanceof HTMLElement&&prev_sibling.dataset.adSlot) {
+		if(prev_sibling&&prev_sibling instanceof HTMLElement&&prev_sibling.dataset["adSlot"]) {
 			let ad_slot_sibling=current_script_element.previousElementSibling;
 			if(prev_sibling.previousElementSibling) next_prev_sibling=prev_sibling.previousElementSibling;
 			if(current_script_element.nextElementSibling) next_sibling=current_script_element.nextElementSibling;
@@ -3549,6 +3550,7 @@ declare global {
 		stop(): void;
 	}
 }
+
 function main() {
 	if(!globalThis.location) return;
 	if(globalThis.location.pathname.match('test')) {
@@ -3562,6 +3564,7 @@ function main() {
 			if(insert_before_enabled(...parameters)) {
 				return Reflect.apply(target,thisValue,parameters);
 			}
+			return target;
 		}
 	});
 	document.stop=function() {};
@@ -3580,21 +3583,25 @@ function main() {
 		document_write_list,
 	});
 }
+
 declare global {
 	interface Window {
 		g_log_if: typeof log_if;
 	}
 }
+
 function init() {
 	update_logger_vars();
 	auto_buy_obj.global_init();
 	window.g_log_if=log_if;
 }
+
 class URLHandlerState {
 	non_proto_url: string="";
 	page_url: string="";
 	document_write_list=new DocumentWriteList;
 }
+
 function fire_url_handler(state: URLHandlerState) {
 	if(state.non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
 		do_page_replace();
