@@ -1,12 +1,9 @@
 import {GoogleAdList} from "./GoogleAdList.js";
-import {PaceType} from "./PaceType.js";
-import {AutoBuy} from "./vm/AutoBuy.js";
 import {DocumentWriteList} from "./vm/DocumentWriteList.js";
 import {dom_add_elm_filter} from "./vm/dom_add_elm_filter.js";
 import {move_timers_to_worker_promise_executor} from "./vm/move_timers_to_worker_promise_executor.js";
 import {on_timers_moved} from "./vm/on_timers_moved.js";
 import {proxy_jquery} from "./vm/proxy_jquery.js";
-import {RemoteWorkerState} from "./vm/RemoteWorkerState.js";
 import {remove_bad_dom_script_element} from "./vm/remove_bad_dom_script_element.js";
 
 export const cint_arr: (string|number[])[]=[];
