@@ -1,3 +1,3 @@
-export type ErrorStackTrace={
+export interface ErrorStackTrace {
 	stack?: string;
-};
+}
