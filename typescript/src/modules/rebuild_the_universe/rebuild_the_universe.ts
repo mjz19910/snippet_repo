@@ -683,11 +683,8 @@ class StackVM {
 	halt() {
 		this.running=false;
 	}
-	get_instruction(opcode: InstructionType[0]) {
-		return this.instruction_map_obj[opcode];
-	}
 	execute_instruction(instruction: InstructionType) {
-		let run=this.get_instruction(instruction[0]) as GeneralInstructionType;
+		let run=this.instruction_map_obj[instruction[0]] as GeneralInstructionType;
 		run.run(this,instruction);
 	}
 	run() {
