@@ -38,7 +38,7 @@
 		"esm": true,
 	},
 	"include": [
-		"src/**/*",
+		"src/**/*", "../../../programming/typescript/ts_infer.ts",
 	],
 	"exclude": [
 		"node_modules",
