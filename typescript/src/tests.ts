@@ -3,7 +3,11 @@ import * as section_12_6 from "./ecma_262/lexer/section_12_6.js";
 import * as section_12 from "./ecma_262/lexer/section_12.js";
 import {test_mod_execute_tests} from "./tests_mod/main.js";
 
-async function do_import<T extends {run_tests: () => void;}>(e: string): Promise<T> {
+interface RunTestType {
+	run_tests: () => void;
+}
+
+async function do_import<T extends RunTestType>(e: string): Promise<T> {
 	try {
 		let module_: T=await import(e);
 		module_load_success(module_);
@@ -13,7 +17,7 @@ async function do_import<T extends {run_tests: () => void;}>(e: string): Promise
 		throw result_1;
 	}
 }
-function module_load_success<T extends {run_tests: () => void;}>(module_: T) {
+function module_load_success<T extends RunTestType>(module_: T) {
 	module_.run_tests();
 	console.log("test completed");
 }
