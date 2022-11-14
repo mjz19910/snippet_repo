@@ -1,33 +1,32 @@
-import {AbstractTarget} from "./AbstractTarget.js";
+import {AbstractFire} from "./AbstractFire";
 import {BaseNode} from "./BaseNode.js";
+import {IntervalTargetFn} from "./IntervalTargetFn";
 
 export class IntervalNode extends BaseNode {
-	timeout: number;
-	id: NodeJS.Timeout|null;
-	target: AbstractTarget|null;
-	constructor(timeout=0) {
+	m_target_fn: CallableFunction;
+	m_timeout: number;
+	m_id: ReturnType<typeof setTimeout>|null;
+	m_target: AbstractFire|null;
+	constructor(target_fn: CallableFunction,timeout=0) {
 		super();
-		this.timeout=timeout;
-		this.id=null;
-		this.target=null;
+		this.m_target_fn=target_fn;
+		this.m_timeout=timeout;
+		this.m_target=null;
+		this.m_id=null;
 	}
 	set() {
-		this.id=setInterval(this.run.bind(this),this.timeout);
+		this.m_id=setInterval(this.run.bind(this),this.m_timeout);
 	}
-	set_target(target: any): void {
-		this.target=target;
-	}
-	start(target: AbstractTarget|null) {
-		if(target)
-			this.set_target(target);
+	start(target: AbstractFire|null=null) {
+		if(target) {
+			this.m_target=target;
+		} else {
+			this.m_target=new IntervalTargetFn(this.m_target_fn,this.m_timeout);
+		}
 		this.set();
 	}
 	override destroy() {
+		if(this.m_id!==null) clearInterval(this.m_id);
 		super.destroy();
-		if(this.id!==null)
-			clearInterval(this.id);
-	}
-	run() {
-		if(this.target) this.target.fire();
 	}
 }

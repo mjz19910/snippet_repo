@@ -475,7 +475,7 @@ class InstructionCastImpl {
 			throw new Error("Bad");
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
-		console.log("cast_to_type vm_ip", vm.instruction_pointer);
+		console.log("cast_to_type vm_ip",vm.instruction_pointer);
 	}
 	run(vm: StackVM,instruction: Cast) {
 		let obj=vm.stack.pop();
@@ -1511,11 +1511,11 @@ class TimeoutNode extends BaseNode {
 	override run() {
 		if(this.m_target) this.m_target.fire();
 		this.m_id=null;
-		this.destroy();
+		if(this.m_parent) this.m_parent.remove_child(this);
 	}
 	override destroy() {
-		if(this.m_id!==null) clearTimeout(this.m_id);
 		super.destroy();
+		if(this.m_id!==null) clearTimeout(this.m_id);
 	}
 }
 class IntervalNode extends BaseNode {
@@ -1610,9 +1610,6 @@ class IntervalIdNodeRef extends IntervalIdNode {
 	}
 }
 class AsyncNodeRoot extends BaseNode {
-	constructor() {
-		super();
-	}
 	set(target_fn: () => void,timeout: number|undefined,repeat=false) {
 		let node;
 		if(repeat) {

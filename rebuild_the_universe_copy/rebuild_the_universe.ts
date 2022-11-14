@@ -1318,8 +1318,8 @@ class TimeoutIdNode extends BaseNode {
 		this.m_id=id;
 	}
 	override destroy() {
-		if(this.m_id!==null) clearTimeout(this.m_id);
 		super.destroy();
+		if(this.m_id!==null) clearTimeout(this.m_id);
 	}
 }
 class IntervalIdNode extends BaseNode {

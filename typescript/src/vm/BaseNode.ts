@@ -1,19 +1,33 @@
-import {BaseNodeParent} from "./BaseNodeParent.js";
-
-export abstract class BaseNode {
-	parent: BaseNodeParent|null;
+export class BaseNode {
+	m_children: BaseNode[];
+	m_parent: BaseNode|null;
 	constructor() {
-		this.parent=null;
+		this.m_children=[];
+		this.m_parent=null;
 	}
-	set_parent(parent: BaseNodeParent|null) {
-		this.parent=parent;
+	run() {}
+	set_parent(parent: BaseNode|null) {
+		this.m_parent=parent;
 	}
-	remove() {
-		if(this.parent)
-			this.parent.remove_child(this);
+	append_child(record: BaseNode) {
+		record.set_parent(this);
+		this.m_children.push(record);
 	}
-	abstract run(): void;
+	remove_child(record: BaseNode) {
+		let index=this.m_children.indexOf(record);
+		if(index>-1) {
+			this.m_children.splice(index,1);
+			record.set_parent(null);
+		}
+	}
 	destroy() {
-		this.remove();
+		if(this.m_parent) this.m_parent.remove_child(this);
+		let item=this.m_children.at(-1);
+		if(!item) return;
+		do {
+			console.info('timer destroy',item);
+			item.destroy();
+			item=this.m_children.at(-1);
+		} while(item);
 	}
 }

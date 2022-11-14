@@ -1,9 +1,6 @@
-import {BaseNode} from "./BaseNode.js"
-
-export class BaseTimeoutNode extends BaseNode {
+export class BaseTimeoutNode {
 	timeout
 	constructor(timeout: number|undefined) {
-		super()
 		this.timeout=timeout
 	}
 	get_timeout() {

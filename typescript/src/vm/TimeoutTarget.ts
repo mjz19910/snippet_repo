@@ -1,20 +1,15 @@
-import {AbstractTarget} from "./AbstractTarget.js"
-import {TimeoutTargetObjects} from "./TimeoutTargetObjects.js"
-import {TimeoutCallbackType} from "./TimeoutCallbackType.js"
+import {AbstractFire} from "./AbstractFire.js";
 
-export class TimeoutTarget extends AbstractTarget {
-	once
-	obj
-	callback
-	description
-	constructor(obj: TimeoutTargetObjects,callback: TimeoutCallbackType,description: string) {
-		super()
-		this.once=true
-		this.obj=obj
-		this.callback=callback
-		this.description=description
+export class TimeoutTarget<T> implements AbstractFire {
+	m_once: boolean;
+	m_obj: T;
+	m_callback: (this: T) => void;
+	constructor(obj: T,callback: TimeoutTarget<T>['m_callback']) {
+		this.m_once=true;
+		this.m_obj=obj;
+		this.m_callback=callback;
 	}
-	override fire() {
-		this.callback.call(this.obj)
+	fire() {
+		this.m_callback.call(this.m_obj);
 	}
 }
