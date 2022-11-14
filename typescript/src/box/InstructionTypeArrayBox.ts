@@ -1,4 +1,4 @@
-import {InstructionType} from "../vm/instruction/InstructionType.js";
+import {InstructionType} from "vm/instruction/InstructionType.js";
 import {BoxVerify} from "./BoxVerify.js";
 import {BoxTemplate} from "./template/BoxTemplate.js";
 
