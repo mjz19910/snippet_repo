@@ -13,3 +13,17 @@ export class TimeoutTarget<T> implements AbstractFire {
 		this.m_callback.call(this.m_obj);
 	}
 }
+
+export class TimeoutTargetWithDesc<T> implements AbstractFire {
+	m_obj: T;
+	m_callback: (this: T) => void;
+	m_description: string;
+	constructor(obj: T,callback: TimeoutTarget<T>['m_callback'], description: string) {
+		this.m_obj=obj;
+		this.m_callback=callback;
+		this.m_description=description;
+	}
+	fire() {
+		this.m_callback.call(this.m_obj);
+	}
+}

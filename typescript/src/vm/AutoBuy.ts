@@ -15,7 +15,7 @@ import {l_log_if} from "./l_log_if.js";
 import {MulCompression} from "./MulCompression.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {specialclick_inject} from "./specialclick_inject.js";
-import {TimeoutTarget} from "./TimeoutTarget.js";
+import {TimeoutTarget, TimeoutTargetWithDesc} from "./TimeoutTarget.js";
 import {DataLoader} from "./wasm/DataLoader.js";
 import {debug_id_syms} from "../debug_id_syms.js";
 import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
@@ -536,7 +536,7 @@ export class AutoBuy implements AutoBuyInterface {
 			atomsaccu.innerHTML=window.rounding(window.atomsaccu,false,0);
 			timeplayed_e.innerHTML=(Math.round(window.timeplayed/30)/60).toFixed(2)+" hours";
 			presnbr_e.innerHTML="<br>"+(window.calcPres()*100).toFixed(0)+" % APS boost";
-		},(230-300)),false);
+		},(230-300)));
 	}
 	init_impl() {
 		this.global_init();
@@ -762,7 +762,7 @@ export class AutoBuy implements AutoBuyInterface {
 	next_timeout(trg_fn: () => void,timeout: number,char: string,silent=false) {
 		let node=new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
-		node.start(new TimeoutTarget(this,trg_fn,char));
+		node.start(new TimeoutTargetWithDesc(this,trg_fn,char));
 		if(!silent&&this.timeout_element)
 			this.timeout_element.innerText=timeout.toString();
 		this.state_history_append(char,silent);

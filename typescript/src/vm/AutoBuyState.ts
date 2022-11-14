@@ -1,6 +1,6 @@
 import {AverageRatioRoot} from "./AverageRatioRoot.js";
 import {AsyncTimeoutNode} from "./AsyncTimeoutNode.js";
-import {TimeoutTarget} from "./TimeoutTarget.js";
+import {TimeoutTarget, TimeoutTargetWithDesc} from "./TimeoutTarget.js";
 import {AverageRatio} from "./AverageRatio.js";
 import {AutoBuyRootType} from "./AutoBuyRootType.js";
 
@@ -46,7 +46,7 @@ export class AutoBuyState {
 		if(window.atomepersecond===0) {
 			let node=new AsyncTimeoutNode(0);
 			this.root_node.append_child(node);
-			node.start(new TimeoutTarget(this,this.init,'not ready AutoBuyState.update'));
+			node.start(new TimeoutTargetWithDesc(this,this.init,'not ready AutoBuyState.update'));
 			return;
 		}
 		this.val=window.totalAtome/window.atomepersecond;
@@ -175,7 +175,7 @@ export class AutoBuyState {
 			console.log('fail',this.div,window.atomepersecond,window.totalAtome);
 			let node=new AsyncTimeoutNode(80);
 			this.root_node.append_child(node);
-			node.start(new TimeoutTarget(this,this.update,'not ready AutoBuyState.update'));
+			node.start(new TimeoutTargetWithDesc(this,this.update,'not ready AutoBuyState.update'));
 			return;
 		}
 		this.ratio_multiplier=window.prestige;
@@ -186,7 +186,7 @@ export class AutoBuyState {
 			console.log('fail',this.div,window.atomepersecond,window.totalAtome);
 			let node=new AsyncTimeoutNode(80);
 			this.root_node.append_child(node);
-			node.start(new TimeoutTarget(this,this.update,'not ready AutoBuyState.update'));
+			node.start(new TimeoutTargetWithDesc(this,this.update,'not ready AutoBuyState.update'));
 			return;
 		}
 		this.val*=this.get_mul_modifier();
