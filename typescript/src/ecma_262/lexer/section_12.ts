@@ -93,6 +93,7 @@ export class Lexer extends LexerBase {
 		this.outputs=outputs;
 		try {
 			this.parse_one_element();
+			this.parse_one_element();
 		} catch(val) {
 			if(val instanceof StopIteration) {} else {
 				throw val;
