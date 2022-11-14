@@ -8,7 +8,6 @@ export class VoidBox
 	readonly type="void";
 	readonly extension=null;
 	readonly m_verify_name="VoidBox";
-	readonly value=void 0;
 	verify_name(name: "VoidBox") {
 		return this.m_verify_name==="VoidBox"&&name==="VoidBox";
 	}
