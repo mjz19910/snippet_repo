@@ -1,4 +1,4 @@
-import {Box} from "box/Box.js"
+import {Box} from "../box/Box.js"
 import {ReplyMessage2Ty} from "./ReplyMessage2Ty.js"
 
 export type MessageReplyMessage2={

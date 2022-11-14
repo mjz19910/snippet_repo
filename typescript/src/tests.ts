@@ -25,11 +25,11 @@ function module_load_failure() {
 	console.log("failed to load module");
 }
 
-export const used_modules=([
+export const used_modules=[
 	section_12_8_6,
 	section_12_6,
 	section_12,
-] as const) satisfies readonly RunTestType[];
+] satisfies (readonly RunTestType[]);
 
 test_mod_execute_tests([
 	//["section_12_8_6",function(): Promise<typeof section_12_8_6> {return do_import("./ecma_262/lexer/section_12_8_6");}],
