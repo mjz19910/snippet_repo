@@ -9,9 +9,13 @@ all: build/tests.js
 run: build/tests.js
 	node build/tests.js
 
-build/tests.js: src/tests.ts
+define no-node-opt
 	@NODE_OPTIONS=
 	export NODE_OPTIONS
+endef
+
+build/tests.js: src/tests.ts
+	$(no-node-opt)
 	xargs </dev/null -t tsc --outDir build --sourceMap true --target ESNext --module ESNext src/tests.ts
 
 clean:
