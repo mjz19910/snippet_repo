@@ -1,4 +1,4 @@
-import {auto_buy_obj} from "../mod.js";
+import {auto_buy_obj} from "../auto_buy_obj.js";
 import {PaceType} from "../PaceType.js";
 import {pace_finish_proxy_apply} from "./pace_finish_proxy_apply.js";
 import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.js";

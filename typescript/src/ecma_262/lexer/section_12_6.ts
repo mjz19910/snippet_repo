@@ -83,6 +83,8 @@ export class section_12_6 extends LexerBase {
 	// https://tc39.es/ecma262/#prod-UnicodeIDContinue
 	UnicodeIDContinue(str: string,index: number) {
 		// FIXME: this is hard to support
+		console.error("todo", str, index);
+		throw new Error("TODO");
 	}
 }
 

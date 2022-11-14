@@ -24,7 +24,8 @@ export class section_12_8_5 extends LexerBase {
 	// https://tc39.es/ecma262/#prod-RegularExpressionBody
 	RegularExpressionBody(str: string,index: number): LexReturnType {
 		// RegularExpressionFirstChar RegularExpressionChars
-		let res=this.RegularExpressionFirstChar(str,index)
+		let res=this.RegularExpressionFirstChar(str,index);
+		console.error("todo", res);
 		throw new Error("TODO")
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionFirstChar

@@ -19,7 +19,6 @@ export class section_12_3 extends LexerBase {
 	}
 	// https://tc39.es/ecma262/#prod-LineTerminatorSequence
 	LineTerminatorSequence(str: string,index: number): LexReturnType {
-		let len
 		// <LF>
 		if(str[index]==='\u000a') return ["LineTerminatorSequence",1]
 		// <CR> [lookahead ≠ <LF>]

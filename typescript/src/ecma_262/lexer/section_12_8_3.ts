@@ -542,8 +542,9 @@ export class section_12_8_3 extends LexerBase {
 			}
 			return ["LegacyOctalLikeDecimalIntegerLiteral",len+1]
 		}
-		let tmp=this.OctalDigit(str,index+2)
-		throw new Error("Not implemented")
+		let tmp=this.OctalDigit(str,index+2);
+		console.error("todo", tmp);
+		throw new Error("Not implemented");
 	}
 	NonOctalDigit(str: string,index: number): LexReturnType {
 		if(str[index]==='8'||str[index]==='9') {

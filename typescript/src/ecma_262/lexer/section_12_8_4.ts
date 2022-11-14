@@ -187,6 +187,7 @@ export class section_12_8_4 extends LexerBase {
 		if(len0>len1[1]) {
 			act=1
 		}
+		console.error("todo", act);
 		if(str[index]==='x') {
 			return 1
 		}
@@ -196,6 +197,8 @@ export class section_12_8_4 extends LexerBase {
 		if(len1[1]>0&&len1[1]>len0) {
 			return len1
 		}
+		console.error("todo", str,index);
+		throw new Error("TODO");
 	}
 	// https://tc39.es/ecma262/#prod-LegacyOctalEscapeSequence
 	LegacyOctalEscapeSequence(str: string,index: number): LexReturnType {

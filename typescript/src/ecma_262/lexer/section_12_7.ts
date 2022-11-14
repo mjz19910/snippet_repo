@@ -322,7 +322,7 @@ export class section_12_7 extends LexerBase {
 			return ['OtherPunctuator',4];
 		}
 		let result: string|null=null;
-		s_three_char_tokens.iterate(function(key,value) {
+		s_three_char_tokens.iterate(function(key) {
 			// I think all the 3 char tokens are valid as OtherPunctuator productions
 			if(str.startsWith(key,index)) {
 				result=key;
@@ -332,7 +332,7 @@ export class section_12_7 extends LexerBase {
 		});
 		if(result) return [true,3];
 		result=null;
-		s_two_char_tokens.iterate(function(key,value) {
+		s_two_char_tokens.iterate(function(key) {
 			// skip DivPunctuator with length 2
 			if(key==='/=') return IterationDecision.Continue;
 			// TODO: exclude some tokens that are parsed elsewhere

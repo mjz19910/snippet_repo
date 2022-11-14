@@ -34,6 +34,7 @@ export class section_14_2 extends ParserBase {
 	// https://tc39.es/ecma262/#prod-StatementList
 	// StatementList[Yield, Await, Return] :
 	StatementList(str: string,index: number): ParseReturnType {
+		console.error("todo", str,index);
 		return [null,0];
 	}
 	// https://tc39.es/ecma262/#prod-StatementListItem
