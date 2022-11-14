@@ -96,6 +96,9 @@ export class Lexer extends LexerBase {
 			this.parse_one_element();
 			this.parse_one_element();
 			this.parse_one_element();
+			let last=this.outputs.at(-1);
+			if(!last) throw new StopIteration();
+			console.log(this.str.slice(this.index-this.outputs.at(-1)[1]))
 		} catch(val) {
 			if(val instanceof StopIteration) {} else {
 				throw val;
