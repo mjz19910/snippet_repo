@@ -31,5 +31,6 @@ export function test_1_critical(dispatcher: Dispatcher,test_data: Test) {
 	let log_res=res_arr.map(lexer_format_callback.bind(null,state,test_data.input));
 	let log_fmt=res_arr.map(() => "%s").join("");
 	test_data.complete_test(log_res.join(""));
-	console.log('test_ecma_12_6 res_arr for test_1 '+log_fmt,...log_res);
+	console.log('test_ecma_12_6 res_arr for test_1');
+	console.log(log_fmt,...log_res);
 }
