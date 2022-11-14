@@ -13,7 +13,8 @@ export function test_2_critical(dispatcher: Dispatcher,test_data: Test) {
 	let res_arr=lex_js(state,dispatcher,test_data.input);
 	state.cur_index=0;
 	let log_res=res_arr.map(lexer_format_callback.bind(null,state,test_data.input));
-	test_data.complete_test(log_res.join(""));
 	let log_fmt=res_arr.map(() => "%s").join("");
-	console.log('test_ecma_12_6 res_arr for test_2 '+log_fmt,...log_res);
+	test_data.complete_test(log_res.join(""));
+	console.log('test_ecma_12_6 res_arr for test_2');
+	console.log(log_fmt,...log_res);
 }
