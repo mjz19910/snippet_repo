@@ -19,6 +19,7 @@ async function do_import<T>(e: string): Promise<T> {
 		errors.push(result_1);
 	}
 	module_load_failure();
+	console.log(errors);
 	throw new AggregateError(errors);
 }
 function module_load_success(e: {run_tests: () => void}) {
