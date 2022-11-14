@@ -70,7 +70,6 @@ function produce_input_element_or_div(ecma_dispatcher: Dispatcher,str: string,in
 
 export class Lexer extends LexerBase {
 	do_let_parse(str: string,index: number,outputs: LexReturnType[]=[]) {
-		void outputs;
 		let res1=this.m_dispatcher.InputElementRegExpOrTemplateTail(str,index);
 		if(!res1[0]) {
 			outputs.push([null,0]);
