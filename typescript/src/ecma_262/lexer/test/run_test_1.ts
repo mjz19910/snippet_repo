@@ -1,7 +1,7 @@
 import {Test} from "../../Test.js";
 import {Dispatcher} from "../Dispatcher.js";
 import {lexer_format_callback} from "../lexer_format_callback.js";
-import {lex_js} from "../section_12.js";
+import {lex_js} from "../lex_js";
 
 export function run_test_1() {
 	let input=`(function(){let the_var=12;})`;
