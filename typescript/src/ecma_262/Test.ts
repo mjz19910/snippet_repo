@@ -4,7 +4,7 @@ export class Test {
 	input: string;
 	result?: string;
 	expected: string;
-	state?: LexerStateData;
+	state: LexerStateData;
 	constructor(input: string,expected_output: string) {
 		this.input=input;
 		this.expected=expected_output;
