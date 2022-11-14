@@ -35,7 +35,7 @@ const LOG_LEVEL_INFO=5;
 const LOG_LEVEL_DEBUG=6;
 const LOG_LEVEL_TRACE=7;
 
-let local_logging_level=3;
+let local_logging_level=7;
 let LogErrorAsConsoleError=false;
 
 function append_console_message(level: number,format_str: string,...args: any[]) {
