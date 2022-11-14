@@ -1,11 +1,16 @@
 .PHONY: all clean build/tests.js
 
-NODE_OPTIONS := --experimental-specifier-resolution=node --experimental-loader ./loader/nice_loader.js ${NODE_OPTIONS}
+.ONESHELL: run
+
+NODE_OPTIONS := ${NODE_OPTIONS}
+
+NODE_OPTIONS += --experimental-specifier-resolution=node --experimental-loader ./loader/nice_loader.js
 
 all: build/tests.js
 
 run: build/tests.js
-	NODE_OPTIONS="${NODE_OPTIONS}" node build/tests.js
+	export NODE_OPTIONS="${NODE_OPTIONS}"
+	node build/tests.js
 
 build/tests.js: src/tests.ts
 	NODE_OPTIONS= tsc --outDir build --sourceMap true --target ESNext --module ESNext src/tests.ts
