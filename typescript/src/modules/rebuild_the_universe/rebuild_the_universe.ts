@@ -522,56 +522,56 @@ class InstructionBlockTraceImpl {
 	type: 'vm_block_trace'='vm_block_trace';
 	run(_vm: StackVM,_i: InstructionMap[this['type']]) {}
 }
-type InstructionList=[
-	['append',typeof InstructionAppendImpl],
-	['breakpoint',typeof InstructionBreakpointImpl],
-	['call',typeof InstructionCallImpl],
-	['cast',typeof InstructionCastImpl],
-	['construct',typeof InstructionConstructImpl],
-	['drop',typeof InstructionDropImpl],
-	['dup',typeof InstructionDupImpl],
-	['get',typeof InstructionGetImpl],
-	['halt',typeof InstructionHaltImpl],
-	['je',typeof InstructionJeImpl],
-	['jmp',typeof InstructionJmpImpl],
-	['modify_operand',typeof InstructionModifyOpImpl],
-	['nop',typeof InstructionNopImpl],
-	['peek',typeof InstructionPeekImpl],
-	['push_window_object',typeof InstructionPushWindowObjectImpl],
-	['push',typeof InstructionPushImpl],
-	['return',typeof InstructionReturnImpl],
-	['vm_block_trace',typeof InstructionBlockTraceImpl],
-	['vm_call',typeof InstructionVMCallImpl],
-	['vm_push_args',typeof InstructionPushArgsImpl],
-	['vm_push_ip',typeof InstructionVMPushIPImpl],
-	['vm_push_self',typeof InstructionPushVMObjImpl],
-	['vm_return',typeof InstructionVMReturnImpl],
-];
-const instruction_descriptor_arr: InstructionList=[
-	['append',InstructionAppendImpl],
-	['breakpoint',InstructionBreakpointImpl],
-	['call',InstructionCallImpl],
-	['cast',InstructionCastImpl],
-	['construct',InstructionConstructImpl],
-	['drop',InstructionDropImpl],
-	['dup',InstructionDupImpl],
-	['get',InstructionGetImpl],
-	['halt',InstructionHaltImpl],
-	['je',InstructionJeImpl],
-	['jmp',InstructionJmpImpl],
-	['modify_operand',InstructionModifyOpImpl],
-	['nop',InstructionNopImpl],
-	['peek',InstructionPeekImpl],
-	['push_window_object',InstructionPushWindowObjectImpl],
-	['push',InstructionPushImpl],
-	['return',InstructionReturnImpl],
-	['vm_block_trace',InstructionBlockTraceImpl],
-	['vm_call',InstructionVMCallImpl],
-	['vm_push_args',InstructionPushArgsImpl],
-	['vm_push_ip',InstructionVMPushIPImpl],
-	['vm_push_self',InstructionPushVMObjImpl],
-	['vm_return',InstructionVMReturnImpl],
-];
+const InstructionNames=[
+	'append',
+	'breakpoint',
+	'call',
+	'cast',
+	'construct',
+	'drop',
+	'dup',
+	'get',
+	'halt',
+	'je',
+	'jmp',
+	'modify_operand',
+	'nop',
+	'peek',
+	'push_window_object',
+	'push',
+	'return',
+	'vm_block_trace',
+	'vm_call',
+	'vm_push_args',
+	'vm_push_ip',
+	'vm_push_self',
+	'vm_return',
+] as const;
+const instruction_class_map={
+	'append': InstructionAppendImpl,
+	'breakpoint': InstructionBreakpointImpl,
+	'call': InstructionCallImpl,
+	'cast': InstructionCastImpl,
+	'construct': InstructionConstructImpl,
+	'drop': InstructionDropImpl,
+	'dup': InstructionDupImpl,
+	'get': InstructionGetImpl,
+	'halt': InstructionHaltImpl,
+	'je': InstructionJeImpl,
+	'jmp': InstructionJmpImpl,
+	'modify_operand': InstructionModifyOpImpl,
+	'nop': InstructionNopImpl,
+	'peek': InstructionPeekImpl,
+	'push_window_object': InstructionPushWindowObjectImpl,
+	'push': InstructionPushImpl,
+	'return': InstructionReturnImpl,
+	'vm_block_trace': InstructionBlockTraceImpl,
+	'vm_call': InstructionVMCallImpl,
+	'vm_push_args': InstructionPushArgsImpl,
+	'vm_push_ip': InstructionVMPushIPImpl,
+	'vm_push_self': InstructionPushVMObjImpl,
+	'vm_return': InstructionVMReturnImpl,
+};
 type InstructionMap={
 	'append': ["append"];
 	'breakpoint': ["breakpoint"];
@@ -604,6 +604,11 @@ class StackVMFlags {
 		this.equal=false;
 	}
 }
+
+interface GeneralInstructionType {
+	run(this: GeneralInstructionType,a: StackVM,i: InstructionType): void;
+}
+
 class StackVM {
 	return_value: Box;
 	jump_instruction_pointer: number|null;
@@ -615,18 +620,8 @@ class StackVM {
 	flags: any;
 	frame_size: any;
 	instruction_map_obj: {
-		[k: string]: InstanceType<InstructionList[number][1]>;
+		[U in keyof typeof instruction_class_map]: InstanceType<typeof instruction_class_map[U]>;
 	};
-	create_instruction_map(instruction_desc_arr: InstructionList) {
-		let obj: {
-			[k: string]: InstanceType<InstructionList[number][1]>;
-		}={};
-		for(let i=0;i<instruction_desc_arr.length;i++) {
-			let cur=instruction_desc_arr[i];
-			obj[cur[0]]=new cur[1];
-		}
-		return obj;
-	}
 	constructor(instructions: InstructionType[]) {
 		this.instructions=instructions;
 		this.instruction_pointer=0;
@@ -637,7 +632,18 @@ class StackVM {
 		this.base_ptr=0;
 		this.frame_size=2;
 		this.flags=new StackVMFlags;
-		this.instruction_map_obj=this.create_instruction_map(instruction_descriptor_arr);
+		this.instruction_map_obj=this.create_instruction_map(instruction_class_map);
+	}
+	create_instruction_map(instruction_desc_arr: typeof instruction_class_map) {
+		let obj:{
+			[U in keyof typeof instruction_class_map]?: InstanceType<typeof instruction_class_map[keyof typeof instruction_class_map]>;
+		}={};
+		for(let i of InstructionNames) {
+			obj[i]=new instruction_desc_arr[i];
+		}
+		return obj as {
+			[U in keyof typeof instruction_class_map]: InstanceType<typeof instruction_class_map[U]>;
+		};
 	}
 	push(value: Box) {
 		this.stack.push(value);
@@ -681,9 +687,8 @@ class StackVM {
 		return this.instruction_map_obj[opcode];
 	}
 	execute_instruction(instruction: InstructionType) {
-		let run=this.get_instruction(instruction[0]);
-		let run_fn=(run.run as (this: typeof run,a: StackVM,i: InstructionType) => void);
-		run_fn.call(run,this,instruction);
+		let run=this.get_instruction(instruction[0]) as GeneralInstructionType;
+		run.run(this,instruction);
 	}
 	run() {
 		this.running=true;
