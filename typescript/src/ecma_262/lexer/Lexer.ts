@@ -16,12 +16,9 @@ export class Lexer extends LexerBase {
 	}
 	parse_one_element() {
 		let res=this.m_dispatcher.InputElementRegExpOrTemplateTail(this.str,this.index);
-		if(!res[0]) {
-			this.outputs.push([null,0]);
-			throw new StopIteration();
-		}
-		this.index+=res[1];
 		this.outputs.push(res);
+		if(!res[0]) throw new StopIteration();
+		this.index+=res[1];
 	}
 	get_last_token() {
 		let last=this.get_last_info();
