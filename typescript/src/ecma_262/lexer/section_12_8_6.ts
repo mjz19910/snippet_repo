@@ -1,4 +1,3 @@
-import {CanRunTest} from "tests_mod/CanRunTest.js";
 import {TestLock} from "../../tests_mod/TestLock.js";
 import {Dispatcher} from "./Dispatcher.js";
 import {LexerBase} from "./LexerBase.js";
@@ -315,25 +314,20 @@ export class section_12_8_6 extends LexerBase {
 	}
 }
 
-export async function run_tests_impl(test_runner: CanRunTest,lock: TestLock) {
+export async function run_tests_impl() {
 	let dispatcher=new Dispatcher
 	let test_string=`
 	let v=\`Hi there\`
-	`
-	await lock.lock()
+	`;
 	let res=dispatcher.Template(test_string,test_string.indexOf('`'))
 	if(res[0]) {
 		let result=test_string.slice(test_string.indexOf('`'),test_string.indexOf('`')+res[1]+1)
-		// console.log('ecma 12.8.6 result', result, res)
-		result
-		test_runner.report_test_success()
+		console.log('ecma 12.8.6 result', result, res)
 	} else {
-		test_runner.report_test_failure()
 		console.assert(false,"Test failed: ecma_12_8_6 (Template)",res)
 	}
-	await lock.unlock()
 }
 
-export function run_tests(test_runner: CanRunTest,lock: TestLock) {
-	test_runner.start_async(run_tests_impl,test_runner,lock)
+export function run_tests() {
+	run_tests_impl();
 }
