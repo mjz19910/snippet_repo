@@ -9,7 +9,7 @@ build/tests.js: tests.ts */*.ts */*/*.ts
 	NODE_OPTIONS= tsc --outDir build --sourceMap true --target esnext tests.ts
 
 clean:
-ifneq ($(wildcard build/*),)
+ifneq ($(wildcard build),)
 	[ -d build ] && rm -r build
 else
 endif
