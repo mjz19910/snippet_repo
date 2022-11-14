@@ -5,14 +5,14 @@ import {test_mod_execute_tests} from "./tests_mod/main.js";
 async function do_import<T>(e: string): Promise<T> {
 	let errors=[];
 	try {
-		let module_=await import(e);
+		let module_=await import("./"+e);
 		module_load_success(module_);
 		return module_;
 	} catch(result_1) {
 		errors.push(result_1);
 	}
 	try {
-		let module_string="build/"+e+".js";
+		let module_string="./"+e+".js";
 		let module_=await import(module_string);
 		module_load_success(module_);
 		return module_;
@@ -30,6 +30,12 @@ function module_load_success(e: {run_tests: () => void;}) {
 function module_load_failure() {
 	console.log("failed to load module");
 }
+
+export const used_modules=[
+	section_12_8_6,
+	section_12_6,
+	section_12,
+];
 
 test_mod_execute_tests([
 	["section_12_8_6",function(): Promise<typeof section_12_8_6> {return do_import("./ecma_262/section_12_8_6");}],
