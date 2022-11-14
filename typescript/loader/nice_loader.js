@@ -1,3 +1,5 @@
+import {system_modules} from "./system_modules.js";
+
 const debug=true;
 
 class ContextType {
@@ -23,5 +25,17 @@ export async function resolve(specifier,context,defaultResolve) {
 			throw err;
 		}
 	}
-	return defaultResolve(specifier,context,defaultResolve);
+	if(system_modules.includes(specifier)) {
+		return defaultResolve(specifier,context,defaultResolve);
+	}
+	try {
+		return await defaultResolve(specifier+".js",context,defaultResolve);
+	} catch {}
+	if(debug) console.log('Failed to load import specifier: ',specifier);
+	try {
+		return await defaultResolve(specifier,context,defaultResolve);
+	} catch(err) {
+		if(debug) console.log('Failed to load import specifier: ',specifier);
+		throw err;
+	}
 }
