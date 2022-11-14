@@ -59,5 +59,6 @@ export class DocumentWriteList {
 		if(should_try_to_destroy) {
 			return true;
 		}
+		throw new Error("TODO");
 	}
 }

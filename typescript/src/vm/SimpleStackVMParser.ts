@@ -13,6 +13,7 @@ export class SimpleStackVMParser {
 				return parseInt(str_int,10)
 			}
 		}
+		throw new Error("TODO");
 	}
 	static parse_string_with_format_ident(str: string,format_list: FormattableTypes[]) {
 		let format_index=str.indexOf('%')
@@ -26,6 +27,7 @@ export class SimpleStackVMParser {
 			default:
 				console.log("%s",'unsupported format spec %'+format_type)
 		}
+		throw new Error("TODO");
 	}
 	static parse_current_instruction(cur: (number|string|((err: Box) => void))[],format_list: FormattableTypes[]) {
 		let arg_loc=1

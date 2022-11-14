@@ -35,8 +35,8 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			this.m_timer=timer;
 		}
 		set(tag: TimerTag,remote_id: number,timeout: number) {
-			if(this.m_timer)
-				return this.m_timer.set(tag,remote_id,timeout);
+			if(!this.m_timer) throw new Error("Bad");
+			return this.m_timer.set(tag,remote_id,timeout);
 		}
 		clear(msg: MessageTimeoutClearS|MessageTimeoutClearR) {
 			if(this.m_timer)

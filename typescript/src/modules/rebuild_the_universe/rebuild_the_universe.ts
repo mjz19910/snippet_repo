@@ -1,14 +1,11 @@
 import {ArrayBox} from "../../box/ArrayBox.js";
-import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
 import {Box} from "../../box/Box.js";
 import {CSSStyleSheetBox} from "../../box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "../../box/CSSStyleSheetConstructorBox.js";
-import {DocumentBox} from "../../box/DocumentBox.js";
 import {EmptyArrayBox} from "../../box/EmptyArrayBox.js";
 import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
 import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
 import {NewableInstancePack} from "../../box/NewableInstancePack.js";
-import {NodeBox} from "../../box/NodeBox.js";
 import {NumberBox} from "../../box/NumberBox.js";
 import {ObjectBox} from "../../box/ObjectBox.js";
 import {Primitives} from "../../box/Primitives.js";
@@ -121,11 +118,11 @@ function log_if(level: number,format_str: string,...args: any[]) {
 }
 function update_logger_vars() {
 	if(!globalThis.sessionStorage) return;
-	if(globalThis.sessionStorage.LogErrorAsConsoleError) {
-		LogErrorAsConsoleError=sessionStorage.LogErrorAsConsoleError==='true';
+	if(globalThis.sessionStorage["LogErrorAsConsoleError"]) {
+		LogErrorAsConsoleError=sessionStorage["LogErrorAsConsoleError"]==='true';
 	}
-	if(globalThis.sessionStorage.LoggingLevel) {
-		local_logging_level=parseInt(sessionStorage.LoggingLevel,10);
+	if(globalThis.sessionStorage["LoggingLevel"]) {
+		local_logging_level=parseInt(sessionStorage["LoggingLevel"],10);
 	}
 }
 function trigger_debug_breakpoint() {
@@ -187,21 +184,6 @@ class CSSStyleSheetBoxImpl implements CSSStyleSheetBox {
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
-	}
-}
-class PromiseBoxImpl {
-	type: "promise_box";
-	await_type: "Box";
-	inner_type: "Promise<Box>";
-	value: Promise<Box>;
-	constructor(value: Promise<Box>) {
-		this.type='promise_box';
-		this.await_type='Box';
-		this.inner_type='Promise<Box>';
-		this.value=value;
-	}
-	as_type(input_typeof: string): [true,this]|[false,null] {
-		return typeof this.value===input_typeof? [true,this]:[false,null];
 	}
 }
 class StackVMBoxImpl implements StackVMBox {
@@ -493,6 +475,7 @@ class InstructionCastImpl {
 			throw new Error("Bad");
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
+		console.log("cast_to_type vm_ip", vm.instruction_pointer);
 	}
 	run(vm: StackVM,instruction: Cast) {
 		let obj=vm.stack.pop();
@@ -1183,21 +1166,7 @@ class DocumentWriteList {
 		if(should_try_to_destroy) {
 			return true;
 		}
-	}
-}
-class UniqueIdGenerator {
-	m_current: number;
-	constructor() {
-		this.m_current=-1;
-	}
-	set_current(current_value: number) {
-		this.m_current=current_value;
-	}
-	current() {
-		return this.m_current;
-	}
-	next() {
-		return this.m_current++;
+		throw new Error("TODO");
 	}
 }
 class NamedIdGenerator {
@@ -2021,7 +1990,7 @@ class AutoBuyState {
 		});
 		let json_hist=JSON.stringify(history_arr_2);
 		let json_tag="JSON_HIST";
-		let prev_hist=sessionStorage.history;
+		let prev_hist=sessionStorage["history"];
 		let data_arr: string[];
 		if(prev_hist&&prev_hist.startsWith(json_tag)) {
 			let hist_data=prev_hist.slice(json_tag.length);
@@ -2033,8 +2002,8 @@ class AutoBuyState {
 		} else {
 			data_arr=[json_hist];
 		}
-		sessionStorage.history=`${json_tag}@${data_arr.join("|")}`;
-		let time_played_data=sessionStorage.time_played_hist;
+		sessionStorage["history"]=`${json_tag}@${data_arr.join("|")}`;
+		let time_played_data=sessionStorage["time_played_hist"];
 		let time_played_arr: (null|string)[]=data_arr.map(() => null);
 		if(time_played_data) {
 			let stored_arr=JSON.parse(time_played_data);
@@ -2045,7 +2014,7 @@ class AutoBuyState {
 		} else {
 			time_played_arr=[time_played_str];
 		}
-		sessionStorage.time_played_hist=JSON.stringify(time_played_arr);
+		sessionStorage["time_played_hist"]=JSON.stringify(time_played_arr);
 	}
 	reset() {
 		this.ratio*=0.75;
@@ -2061,21 +2030,6 @@ function labeled_sym(name: string): symbol {
 	const sym=Symbol(`${name}@${id}`);
 	debug_id_syms.push(new WeakRef({sym}));
 	return sym;
-}
-class NodeBoxImpl implements NodeBox {
-	readonly type="instance_box";
-	readonly m_verify_name='NodeBox';
-	readonly instance_type='Node';
-	value: Node;
-	constructor(value: Node) {
-		this.value=value;
-	}
-	verify_name(name: "NodeBox"): boolean {
-		return this.m_verify_name==='NodeBox'&&name==='NodeBox';
-	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
-	}
 }
 function int_parser(value: string): number {
 	return parseInt(value,10);
@@ -2226,45 +2180,6 @@ class AsyncAutoBuy {
 		}
 		this.parent.state_history_append(char,silent);
 		await node.start_async(new AsyncTimeoutTarget);
-	}
-}
-class DocumentBoxImpl implements DocumentBox {
-	type: "document_box";
-	m_verify_name: "DocumentBox";
-	value: Document;
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
-	}
-	verify_name(name: "DocumentBox"): boolean {
-		return this.m_verify_name===name&&name==="DocumentBox";
-	}
-	constructor(value: Document) {
-		this.type='document_box';
-		this.m_verify_name='DocumentBox';
-		this.value=value;
-	}
-}
-class AsyncFunctionBoxImpl implements AsyncFunctionBox {
-	type: 'function_box';
-	return_type: 'promise_box';
-	await_type: 'Box';
-	value: (...a: Box[]) => Promise<Box>;
-	m_verify_name: "AsyncFunctionBox";
-	verify_name(name: "AsyncFunctionBox"): boolean {
-		return this.m_verify_name==='AsyncFunctionBox'&&name==='AsyncFunctionBox';
-	}
-	wrap_call(): Box {
-		throw new Error("Not implemented");
-	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
-	}
-	constructor(value: (...a: Box[]) => Promise<Box>) {
-		this.type='function_box';
-		this.return_type='promise_box';
-		this.await_type='Box';
-		this.m_verify_name='AsyncFunctionBox';
-		this.value=value;
 	}
 }
 class VoidBoxImpl implements VoidBox {
@@ -2520,7 +2435,7 @@ class AutoBuy {
 	}
 	save_state_history_arr() {
 		if(this.skip_save) return;
-		localStorage.auto_buy_history_str=this.state_history_arr.join(",");
+		localStorage["auto_buy_history_str"]=this.state_history_arr.join(",");
 	}
 	get_timeout_arr_data(forced_action: string) {
 		if(forced_action=="RESET") return this.timeout_arr.map((e: number) => ~~(e/4)).join(",");
@@ -2528,16 +2443,16 @@ class AutoBuy {
 	}
 	save_timeout_arr() {
 		let forced_action,action_count;
-		let action_data=localStorage.auto_buy_forced_action;
+		let action_data=localStorage["auto_buy_forced_action"];
 		if(action_data) [forced_action,action_count]=action_data.split(",");
-		localStorage.auto_buy_timeout_str=this.get_timeout_arr_data(forced_action);
+		localStorage["auto_buy_timeout_str"]=this.get_timeout_arr_data(forced_action);
 		if(action_count!==void 0) {
 			action_count=parseInt(action_count);
 			if(Number.isFinite(action_count)) {
 				if(action_count>0) {
-					localStorage.auto_buy_forced_action=[forced_action,action_count-1];
+					localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];
 				} else if(forced_action!=="NONE") {
-					localStorage.auto_buy_forced_action="NONE,0";
+					localStorage["auto_buy_forced_action"]="NONE,0";
 				}
 			}
 		}
@@ -2842,7 +2757,7 @@ class AutoBuy {
 	}
 	state_history_clear_for_reset() {
 		this.state_history_arr=["R"];
-		localStorage.auto_buy_history_str="R";
+		localStorage["auto_buy_history_str"]="R";
 	}
 	state_history_append(value: string,silent=false) {
 		this.epoch_len++;
@@ -3262,8 +3177,8 @@ function lightreset_inject() {
 	window.g_auto_buy.skip_save=true;
 	window.addEventListener('unload',function() {
 		window.g_auto_buy.skip_save=false;
-		localStorage.auto_buy_timeout_str="300,300,300,300";
-		localStorage.long_wait=12000;
+		localStorage["auto_buy_timeout_str"]="300,300,300,300";
+		localStorage["long_wait"]=12000;
 	});
 	let original=window.g_auto_buy.original_map.get('lightreset');
 	if(!original) {
@@ -3559,7 +3474,7 @@ declare global {
 
 function create_load_with_fetch_page() {
 	return new Promise(function(a) {
-		if(localStorage.justReset==='true') {
+		if(localStorage["justReset"]==='true') {
 			return a(null);
 		}
 		window.g_do_load=do_load_fire_promise.bind(null,a);
@@ -3662,7 +3577,7 @@ async function do_fetch_load() {
 		window.g_current_script_list??=[];
 		window.g_current_script_list.push(current_script_element);
 		let prev_sibling=current_script_element.previousElementSibling;
-		if(prev_sibling&&prev_sibling instanceof HTMLElement&&prev_sibling.dataset.adSlot) {
+		if(prev_sibling&&prev_sibling instanceof HTMLElement&&prev_sibling.dataset["adSlot"]) {
 			let ad_slot_sibling=current_script_element.previousElementSibling;
 			if(prev_sibling.previousElementSibling) next_prev_sibling=prev_sibling.previousElementSibling;
 			if(current_script_element.nextElementSibling) next_sibling=current_script_element.nextElementSibling;
@@ -3776,6 +3691,7 @@ function main() {
 			if(insert_before_enabled(...parameters)) {
 				return Reflect.apply(target,thisValue,parameters);
 			}
+			return target;
 		}
 	});
 	let document_write_list=new DocumentWriteList;

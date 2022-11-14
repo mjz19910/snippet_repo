@@ -98,7 +98,7 @@ export class AutoBuy implements AutoBuyInterface {
 				this.debug_arr.push(...split_data.map((e: string) => e.trim()));
 			}
 		}
-		this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str',(e: any) => {
+		this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str',() => {
 			let src=[300];
 			src.length=16;
 			let data_len=1;
@@ -153,7 +153,7 @@ export class AutoBuy implements AutoBuyInterface {
 	save_state_history_arr() {
 		if(this.skip_save)
 			return;
-		localStorage.auto_buy_history_str=this.state_history_arr.join(",");
+		localStorage["auto_buy_history_str"]=this.state_history_arr.join(",");
 	}
 	get_timeout_arr_data(forced_action: string) {
 		if(forced_action=="RESET")
@@ -162,17 +162,17 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	save_timeout_arr() {
 		let forced_action,action_count;
-		let action_data=localStorage.auto_buy_forced_action;
+		let action_data=localStorage["auto_buy_forced_action"];
 		if(action_data)
 			[forced_action,action_count]=action_data.split(",");
-		localStorage.auto_buy_timeout_str=this.get_timeout_arr_data(forced_action);
+		localStorage["auto_buy_timeout_str"]=this.get_timeout_arr_data(forced_action);
 		if(action_count!==void 0) {
 			action_count=parseInt(action_count);
 			if(Number.isFinite(action_count)) {
 				if(action_count>0) {
-					localStorage.auto_buy_forced_action=[forced_action,action_count-1];
+					localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];
 				} else if(forced_action!=="NONE") {
-					localStorage.auto_buy_forced_action="NONE,0";
+					localStorage["auto_buy_forced_action"]="NONE,0";
 				}
 			}
 		}
@@ -512,6 +512,7 @@ export class AutoBuy implements AutoBuyInterface {
 			clearInterval(window.secondinterval);
 		}
 		let rate=66/(2110-110);
+		console.error("todo", rate);
 		let time_base=performance.now();
 		window.secondinterval=setInterval(function() {
 			let real_time=performance.now();
@@ -538,7 +539,6 @@ export class AutoBuy implements AutoBuyInterface {
 		},(230-300)),false);
 	}
 	init_impl() {
-		let t=this;
 		this.global_init();
 		this.init_dom();
 		this.state.init();
@@ -553,7 +553,7 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	state_history_clear_for_reset() {
 		this.state_history_arr=["R"];
-		localStorage.auto_buy_history_str="R";
+		localStorage["auto_buy_history_str"]="R";
 	}
 	state_history_append(value: any,silent=false) {
 		Promise.resolve().then(this.async_compress.bind(this));
@@ -568,6 +568,7 @@ export class AutoBuy implements AutoBuyInterface {
 			this.state_history_arr.shift();
 	}
 	history_element_click_handler(event: any) {
+		console.error("todo", event);
 		this.root_node.destroy();
 		this.dom_reset();
 		this.reset();

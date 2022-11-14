@@ -18,7 +18,7 @@ export class BaseStackVM extends BaseVMCreate {
 		this.stack=[];
 		this.return_value=new VoidBox(void 0);
 	}
-	reset() {
+	override reset() {
 		super.reset();
 		this.stack.length=0;
 		this.return_value=new VoidBox(void 0);
@@ -44,7 +44,7 @@ export class BaseStackVM extends BaseVMCreate {
 		}
 		return arguments_arr;
 	}
-	execute_instruction(instruction: InstructionType|['push_pc']) {
+	override execute_instruction(instruction: InstructionType|['push_pc']) {
 		switch(instruction[0]) {
 			case 'push' /*Stack*/: {
 				for(let i=0;i<instruction.length-1;i++) {
@@ -143,7 +143,7 @@ export class BaseStackVM extends BaseVMCreate {
 			} break;
 		}
 	}
-	run(): Box {
+	override run(): Box {
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
 			let instruction=this.instructions[this.instruction_pointer];

@@ -14,7 +14,7 @@ export class TimeoutTarget extends AbstractTarget {
 		this.callback=callback
 		this.description=description
 	}
-	fire() {
+	override fire() {
 		this.callback.call(this.obj)
 	}
 }

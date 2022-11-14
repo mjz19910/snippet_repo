@@ -1,18 +1,18 @@
-import {AbstractTarget} from "./AbstractTarget.js"
+import {AbstractTarget} from "./AbstractTarget.js";
 
 export class IntervalTarget extends AbstractTarget {
-	once
-	obj
-	callback
-	description
+	once;
+	obj;
+	callback;
+	description;
 	constructor(obj: never,callback: () => void,description: never) {
-		super()
-		this.once=false
-		this.obj=obj
-		this.callback=callback
-		this.description=description
+		super();
+		this.once=false;
+		this.obj=obj;
+		this.callback=callback;
+		this.description=description;
 	}
-	fire() {
-		this.callback.call(this.obj)
+	override fire() {
+		this.callback.call(this.obj);
 	}
 }

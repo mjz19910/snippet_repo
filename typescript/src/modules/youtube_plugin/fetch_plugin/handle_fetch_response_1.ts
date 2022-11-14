@@ -4,7 +4,7 @@ import {handle_fetch_response_2} from "./handle_fetch_response_2.js"
 export function handle_fetch_response_1(request_info: RequestInfo|URL,response: Response): Response {
 	let overridden_props = ['text']
 	class FakeResponse extends Response {
-		text(): Promise<string> {
+		override text(): Promise<string> {
 			if(debug.value) console.log('response.text()')
 			return handle_fetch_response_2(request_info,response.text())
 		}
