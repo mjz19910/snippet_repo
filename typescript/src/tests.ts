@@ -13,8 +13,8 @@ async function do_import<T extends {run_tests: () => void;}>(e: string): Promise
 		throw result_1;
 	}
 }
-function module_load_success(module: {run_tests: () => void;}) {
-	module.run_tests();
+function module_load_success<T extends {run_tests: () => void;}>(module_: T) {
+	module_.run_tests();
 	console.log("test completed");
 }
 function module_load_failure() {
