@@ -1403,15 +1403,17 @@ class IntervalNode extends BaseNode {
 		super.destroy();
 	}
 }
-type AsyncTimeoutTarget1={
+
+interface AsyncFire {
 	wait(): Promise<any>;
 	fire(): void;
 	destroy(): void;
-};
+}
+
 class AsyncTimeoutNode extends BaseNode {
 	m_timeout: number;
 	m_id: ReturnType<typeof setTimeout>|null;
-	m_target: AsyncTimeoutTarget1|null;
+	m_target: AsyncFire|null;
 	constructor(timeout=0) {
 		super();
 		this.m_timeout=timeout;
@@ -1424,12 +1426,12 @@ class AsyncTimeoutNode extends BaseNode {
 	set_target(target: any) {
 		this.m_target=target;
 	}
-	start(target: AsyncTimeoutTarget1|null) {
+	start(target: AsyncFire|null) {
 		if(!target) throw new Error("No target");
 		this.m_target=target;
 		this.set();
 	}
-	async start_async(target: AsyncTimeoutTarget1) {
+	async start_async(target: AsyncFire) {
 		if(!target) throw new Error("unable to start_async without anything to wait for");
 		log_if(LOG_LEVEL_INFO,'start_async');
 		this.m_target=target;

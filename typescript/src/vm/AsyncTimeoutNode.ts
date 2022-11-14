@@ -4,8 +4,7 @@ import {TimeoutNode} from "./TimeoutNode.js";
 export class AsyncTimeoutNode extends TimeoutNode {
 	override run() {
 		super.run();
-		if(this.m_target)
-			this.m_target.fire();
+		if(this.m_target) this.m_target.fire();
 	}
 	start_async(target: AsyncTimeoutTarget|null) {
 		if(target) {

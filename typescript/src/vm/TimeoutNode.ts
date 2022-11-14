@@ -1,10 +1,10 @@
-import {AbstractTarget} from "./AbstractTarget.js";
+import {AbstractFire} from "./AbstractFire.js";
 import {BaseNode} from "./BaseNode.js";
 
 export class TimeoutNode extends BaseNode {
 	m_timeout: number;
 	m_id: ReturnType<typeof setInterval>|null;
-	m_target: AbstractTarget|null;
+	m_target: AbstractFire|null;
 	constructor(timeout=0) {
 		super();
 		this.m_parent=null;
@@ -18,7 +18,7 @@ export class TimeoutNode extends BaseNode {
 	set() {
 		this.m_id=setInterval(this.run.bind(this),this.m_timeout);
 	}
-	start(target: AbstractTarget|null|undefined) {
+	start(target: AbstractFire|null|undefined) {
 		if(target)
 			this.m_target=target;
 		this.set();
