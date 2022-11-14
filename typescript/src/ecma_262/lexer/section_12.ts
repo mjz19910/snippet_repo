@@ -93,7 +93,9 @@ export class Lexer extends LexerBase {
 			this.parse_one_element();
 			this.parse_one_element();
 			this.parse_one_element();
-			debugger;
+			this.parse_one_element();
+			this.parse_one_element();
+			this.parse_one_element();
 		} catch(val) {
 			if(val instanceof StopIteration) {} else {
 				throw val;
