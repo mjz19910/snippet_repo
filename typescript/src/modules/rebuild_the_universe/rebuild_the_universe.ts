@@ -150,41 +150,10 @@ class ObjectBoxImpl {
 type Box={type: string,value: unknown;};
 
 class InstructionCallImpl {
+	debug: boolean=false;
 	type: 'call';
 	constructor() {
 		this.type='call';
-	}
-	debug: boolean=false;
-	handle_as_fn_impl_promise_box(vm: StackVM,_fn_value: (...a: Box[]) => Promise<Box>,_target_this: Box,_arg_arr: Box[]) {
-		//let real_this=this.unbox_obj(target_this);
-		//let ret=fn_value.apply(real_this,arg_arr);
-		let ret_box: {
-			type: 'temporary_box'; source: 'call'; extension: null;
-			// value: any
-		}={
-			type: 'temporary_box',
-			source: 'call',
-			extension: null,
-			//value: ret
-		};
-		vm.stack.push(ret_box as unknown as Box);
-	}
-	handle_as_fn_impl_box(vm: StackVM) {
-		//let real_this=this.unbox_obj(target_this);
-		//let ret=fn_value.apply(real_this,arg_arr);
-		let ret_box: {
-			type: 'temporary_box'; source: 'call'; extension: null;
-			//value: any;
-		}={
-			type: 'temporary_box',
-			source: 'call',
-			extension: null,
-			//value: ret
-		};
-		vm.stack.push(ret_box as unknown as Box);
-	}
-	handle_as_obj(_vm: StackVM,_fn_obj: Box,_target_this: Box,_arg_arr: Box[]) {
-		throw new Error("TODO");
 	}
 	run(vm: StackVM,instruction: ['call',number]) {
 		let number_of_arguments=instruction[1];
