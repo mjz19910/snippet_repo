@@ -199,8 +199,7 @@ function lexer_produce_input_or_regexp_or_template_tail(state: LexerStateData,di
 					if(!res_mul[0]) throw new Error("BAD");
 					console.log('parsed let def',res_mul,res_arr_inner);
 					state.cur_index+=res_mul[1];
-					continue;
-				} break;
+				} continue;
 			}
 			state.cur_index+=res[1];
 		}
