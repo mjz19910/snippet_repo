@@ -6,6 +6,7 @@ import {LexerStateData} from "./LexerStateData.js";
 import {LexReturnType} from "./LexReturnType.js";
 import {run_test_1} from "./test/run_test_1.js";
 import {run_test_2} from "./test/run_test_2.js";
+import {lexer_format_callback} from "./lexer_format_callback.js";
 
 function lexer_produce_input_element(ecma_dispatcher: Dispatcher,str: string,index: number): LexReturnType {
 	let max_item=null,max_val=0;
@@ -68,10 +69,14 @@ function produce_input_element_or_div(ecma_dispatcher: Dispatcher,str: string,in
 }
 
 export class Lexer extends LexerBase {
-	do_let_parse(str: string,index: number,outputs: LexReturnType[]=[]): LexReturnType {
+	do_let_parse(str: string,index: number,outputs: LexReturnType[]=[]) {
 		void outputs;
 		let res1=this.m_dispatcher.InputElementRegExpOrTemplateTail(str,index);
-		if(!res1[0]) return [null,0];
+		if(!res1[0]) {
+			outputs.push([null,0]);
+			return;
+		}
+		outputs.push(res1);
 		return res1;
 	}
 }
@@ -190,13 +195,13 @@ function lexer_produce_input_or_regexp_or_template_tail(state: LexerStateData,di
 			switch(mat) {
 				case 'let': {
 					let res_arr_inner: LexReturnType[]=[];
-					let res_mul=dispatcher.lexer.do_let_parse(str,state.cur_index,res_arr_inner);
-					if(res_mul[0]===null) {
-						throw new Error("FIXME");
+					dispatcher.lexer.do_let_parse(str,state.cur_index,res_arr_inner);
+					console.log('parsed let def',res_arr_inner.map(lexer_format_callback.bind(null,state,str)));
+					for(let val of res_arr_inner) {
+						if(val[0]) {
+							state.cur_index+=val[1];
+						}
 					}
-					if(!res_mul[0]) throw new Error("BAD");
-					console.log('parsed let def',res_mul,res_arr_inner);
-					state.cur_index+=res_mul[1];
 				} continue;
 			}
 			state.cur_index+=res[1];
