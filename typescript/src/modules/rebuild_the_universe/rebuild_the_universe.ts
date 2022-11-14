@@ -60,6 +60,7 @@ function append_console_message(level: number,format_str: string,...args: any[])
 		console.info(format_str,level_str,...args);
 	}
 }
+
 function human_log_level(level: number) {
 	switch(level) {
 		case LOG_LEVEL_CRIT: return 'crit';
@@ -72,10 +73,12 @@ function human_log_level(level: number) {
 		default: return 'unknown';
 	}
 }
+
 function log_if(level: number,format_str: string,...args: any[]) {
 	if(level>local_logging_level) return;
 	append_console_message(level,format_str,...args);
 }
+
 function update_logger_vars() {
 	if(!globalThis.sessionStorage) return;
 	if(globalThis.sessionStorage["LogErrorAsConsoleError"]) {
@@ -85,9 +88,11 @@ function update_logger_vars() {
 		local_logging_level=parseInt(sessionStorage["LoggingLevel"],10);
 	}
 }
+
 function trigger_debug_breakpoint() {
 	debugger;
 }
+
 class StackVMBoxImpl {
 	type: "custom_box";
 	box_type: "StackVM";
@@ -106,6 +111,7 @@ class StackVMBoxImpl {
 		return typeof this.value===input_typeof? this:null;
 	}
 }
+
 class WindowBoxImpl {
 	type: "object_box";
 	extension: null;
@@ -126,6 +132,7 @@ class WindowBoxImpl {
 		return typeof this.value===input_typeof? this:null;
 	}
 }
+
 class ObjectBoxImpl {
 	type: "object_box";
 	m_verify_name: "ObjectBox";
@@ -165,6 +172,7 @@ class InstructionCallImpl {
 		console.log('TODO: vm_call',target_this,value_box,arg_arr);
 	}
 }
+
 class InstructionConstructImpl {
 	type: 'construct';
 	constructor() {
@@ -202,7 +210,9 @@ class InstructionConstructImpl {
 		log_if(LOG_LEVEL_INFO,"",ins,...vm.stack.slice(vm.stack.length-number_of_arguments),construct_arr);
 	}
 }
+
 type CastOperandTarget="object_index"|"vm_function";
+
 class InstructionCastImpl {
 	type: 'cast';
 	debug: boolean;
@@ -248,6 +258,7 @@ class InstructionCastImpl {
 		this.cast_to_type(vm,obj);
 	}
 }
+
 class InstructionJeImpl {
 	type: 'je';
 	constructor() {
@@ -264,6 +275,7 @@ class InstructionJeImpl {
 		}
 	}
 }
+
 class InstructionJmpImpl {
 	type: 'jmp';
 	constructor() {
@@ -278,6 +290,7 @@ class InstructionJmpImpl {
 		vm.instruction_pointer=target;
 	}
 }
+
 class InstructionModifyOpImpl {
 	type: 'modify_operand';
 	constructor() {
@@ -305,6 +318,7 @@ class InstructionModifyOpImpl {
 		vm.instructions[target]=valid_instruction;
 	}
 }
+
 class InstructionVMPushIPImpl {
 	type: "vm_push_ip";
 	constructor() {
@@ -321,6 +335,7 @@ class InstructionVMPushIPImpl {
 		}
 	}
 }
+
 class InstructionPushImpl {
 	type: 'push';
 	constructor() {
@@ -335,6 +350,7 @@ class InstructionPushImpl {
 		}
 	}
 }
+
 class InstructionDupImpl {
 	type: 'dup';
 	constructor() {
@@ -347,13 +363,12 @@ class InstructionDupImpl {
 		vm.stack.push(res);
 	}
 }
+
 class InstructionGetImpl {
 	type: 'get';
-
 	constructor() {
 		this.type='get';
 	}
-
 	on_get(_vm: StackVM,value_box: Box,_key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
@@ -384,7 +399,6 @@ class InstructionGetImpl {
 			default: console.log('on_get no handler',value_box.type);
 		}
 	}
-
 	run(vm: StackVM,_ins: InstructionMap[this['type']]) {
 		let get_key=vm.stack.pop();
 		let value_box=vm.stack.pop();
@@ -395,12 +409,14 @@ class InstructionGetImpl {
 		throw new Error("Update types");
 	}
 }
+
 class InstructionHaltImpl {
 	type: 'halt'='halt';
 	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		vm.halt();
 	}
 }
+
 class InstructionReturnImpl {
 	type: 'return'='return';
 	run(vm: StackVM,_i: InstructionMap[this['type']]) {
@@ -411,6 +427,7 @@ class InstructionReturnImpl {
 		}
 	}
 }
+
 class InstructionBreakpointImpl {
 	type: 'breakpoint'='breakpoint';
 	run(vm: StackVM,_i: InstructionMap[this['type']]) {
@@ -418,18 +435,21 @@ class InstructionBreakpointImpl {
 		trigger_debug_breakpoint();
 	}
 }
+
 class InstructionPushVMObjImpl {
 	type: "vm_push_self"="vm_push_self";
 	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
 }
+
 class InstructionPushWindowObjectImpl {
 	type: 'push_window_object'='push_window_object';
 	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		vm.stack.push(new WindowBoxImpl(window));
 	}
 }
+
 class InstructionPeekImpl {
 	type: 'peek'='peek';
 	debug=false;
@@ -447,6 +467,7 @@ class InstructionPeekImpl {
 		if(this.debug) console.log('VM: peek',ins,'value',at,'index',offset,vm.stack.length-offset);
 	}
 }
+
 class InstructionAppendImpl {
 	type: "append"="append";
 	run(vm: StackVM,_i: InstructionMap[this['type']]) {
@@ -473,18 +494,21 @@ class InstructionAppendImpl {
 		throw new Error("TODO");
 	}
 }
+
 class InstructionPushArgsImpl {
 	type: 'vm_push_args'='vm_push_args';
 	run(_vm: StackVM,_i: InstructionMap[this['type']]) {
 		throw new Error("Instruction not supported");
 	}
 }
+
 class InstructionDropImpl {
 	type: 'drop'='drop';
 	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		vm.stack.pop();
 	}
 }
+
 class InstructionVMReturnImpl {
 	type: 'vm_return'='vm_return';
 	debug=false;
@@ -503,6 +527,7 @@ class InstructionVMReturnImpl {
 		if(this.debug) console.log('vm return',vm.base_ptr,start_stack,vm.stack.slice());
 	}
 }
+
 class InstructionVMCallImpl {
 	type: 'vm_call'='vm_call';
 	run(vm: StackVM,ins: InstructionMap[this['type']]) {
@@ -514,14 +539,17 @@ class InstructionVMCallImpl {
 		console.log('vm vm_call',ins[1],'stk',vm.base_ptr,prev_base,vm.stack.slice());
 	}
 }
+
 class InstructionNopImpl {
 	type: 'nop'='nop';
 	run(_vm: StackVM,_a: InstructionMap[this['type']]) {}
 }
+
 class InstructionBlockTraceImpl {
 	type: 'vm_block_trace'='vm_block_trace';
 	run(_vm: StackVM,_i: InstructionMap[this['type']]) {}
 }
+
 const InstructionNames=[
 	'append',
 	'breakpoint',
@@ -547,6 +575,7 @@ const InstructionNames=[
 	'vm_push_self',
 	'vm_return',
 ] as const;
+
 const instruction_class_map={
 	'append': InstructionAppendImpl,
 	'breakpoint': InstructionBreakpointImpl,
@@ -572,6 +601,7 @@ const instruction_class_map={
 	'vm_push_self': InstructionPushVMObjImpl,
 	'vm_return': InstructionVMReturnImpl,
 };
+
 type InstructionMap={
 	'append': ["append"];
 	'breakpoint': ["breakpoint"];
@@ -597,7 +627,9 @@ type InstructionMap={
 	'vm_push_self': ["vm_push_self"];
 	'vm_return': ["vm_return"];
 };
+
 type InstructionType=InstructionMap[keyof InstructionMap];
+
 class StackVMFlags {
 	equal: boolean;
 	constructor() {
