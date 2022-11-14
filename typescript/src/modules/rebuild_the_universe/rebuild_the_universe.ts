@@ -283,7 +283,7 @@ class InstructionModifyOpImpl {
 	constructor() {
 		this.type='modify_operand';
 	}
-	run(vm: StackVM,instruction: [this['type'],number,number]) {
+	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
 		let [,target,offset]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
 		if(typeof offset!='number') throw new Error("Invalid");
@@ -433,7 +433,7 @@ class InstructionPushWindowObjectImpl {
 class InstructionPeekImpl {
 	type: 'peek'='peek';
 	debug=false;
-	run(vm: StackVM,ins: [any,any]) {
+	run(vm: StackVM,ins: InstructionMap[this['type']]) {
 		let [,distance]=ins;
 		let base_ptr=vm.base_ptr;
 		if(base_ptr===null) base_ptr=0;
@@ -584,9 +584,9 @@ type InstructionMap={
 	'halt': ["halt"];
 	'je': ["je",number];
 	'jmp': ["jmp"];
-	'modify_operand': ["modify_operand"];
+	'modify_operand': ["modify_operand",number,number];
 	'nop': ["nop"];
-	'peek': ["peek"];
+	'peek': ["peek", number];
 	'push_window_object': ["push_window_object"];
 	'push': ["push",...Box[]];
 	'return': ["return"];
