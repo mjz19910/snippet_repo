@@ -199,7 +199,7 @@ class InstructionConstructImpl {
 			let obj=new a.value(...valid_args.s);
 			vm.stack.push(new CSSStyleSheetBoxImpl(obj) as unknown as Box);
 		} */
-		log_if(LOG_LEVEL_INFO,"",ins,...vm.stack.slice(vm.stack.length-number_of_arguments), construct_arr);
+		log_if(LOG_LEVEL_INFO,"",ins,...vm.stack.slice(vm.stack.length-number_of_arguments),construct_arr);
 	}
 }
 type CastOperandTarget="object_index"|"vm_function";
@@ -327,7 +327,7 @@ class InstructionPushImpl {
 		this.type='push';
 	}
 	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
-		let instruction_:["push", ...Box[]] = instruction;
+		let instruction_: ["push",...Box[]]=instruction;
 		let [,...rest]=instruction_;
 		for(let i=0;i<rest.length;i++) {
 			let item=rest[i];
@@ -577,12 +577,12 @@ type InstructionMap={
 	'breakpoint': ["breakpoint"];
 	'call': ["call",number];
 	'cast': ['cast',CastOperandTarget];
-	'construct': ["construct", number];
+	'construct': ["construct",number];
 	'drop': ["drop"];
 	'dup': ["dup"];
 	'get': ["get"];
 	'halt': ["halt"];
-	'je': ["je", number];
+	'je': ["je",number];
 	'jmp': ["jmp"];
 	'modify_operand': ["modify_operand"];
 	'nop': ["nop"];
@@ -591,7 +591,7 @@ type InstructionMap={
 	'push': ["push",...Box[]];
 	'return': ["return"];
 	'vm_block_trace': ["vm_block_trace"];
-	'vm_call': ["vm_call", number];
+	'vm_call': ["vm_call",number];
 	'vm_push_args': ["vm_push_args"];
 	'vm_push_ip': ["vm_push_ip"];
 	'vm_push_self': ["vm_push_self"];
