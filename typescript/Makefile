@@ -12,7 +12,7 @@ run: build/tests.js
 build/tests.js: src/tests.ts
 	@NODE_OPTIONS=
 	export NODE_OPTIONS
-	echo | xargs -t tsc --outDir build --sourceMap true --target ESNext --module ESNext src/tests.ts
+	printf "" | xargs -t tsc --outDir build --sourceMap true --target ESNext --module ESNext src/tests.ts
 
 clean:
 ifneq ($(wildcard build),)
