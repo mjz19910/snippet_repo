@@ -155,7 +155,7 @@ class InstructionCallImpl {
 	constructor() {
 		this.type='call';
 	}
-	run(vm: StackVM,instruction: ['call',number]) {
+	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
 		let number_of_arguments=instruction[1];
 		if(typeof number_of_arguments!='number') throw new Error("Invalid");
 		if(number_of_arguments<=1) {
@@ -170,7 +170,7 @@ class InstructionConstructImpl {
 	constructor() {
 		this.type='construct';
 	}
-	run(vm: StackVM,ins: ['construct',number]) {
+	run(vm: StackVM,ins: InstructionMap[this['type']]) {
 		let number_of_arguments=ins[1];
 		if(typeof number_of_arguments!='number') throw new Error("Invalid");
 		let [construct_target,...construct_arr]=vm.pop_arg_count(number_of_arguments);
@@ -253,7 +253,7 @@ class InstructionJeImpl {
 	constructor() {
 		this.type='je';
 	}
-	run(vm: StackVM,instruction: ['je',number]) {
+	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
 		let [,target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
@@ -448,7 +448,7 @@ class InstructionPeekImpl {
 }
 class InstructionAppendImpl {
 	type: "append"="append";
-	run(vm: StackVM,_i: [this['type']]) {
+	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		if(vm.stack.length<=0) {
 			throw new Error('stack underflow');
 		}
@@ -474,20 +474,20 @@ class InstructionAppendImpl {
 }
 class InstructionPushArgsImpl {
 	type: 'vm_push_args'='vm_push_args';
-	run(_vm: StackVM,_i: [this['type']]) {
+	run(_vm: StackVM,_i: InstructionMap[this['type']]) {
 		throw new Error("Instruction not supported");
 	}
 }
 class InstructionDropImpl {
 	type: 'drop'='drop';
-	run(vm: StackVM,_i: [this['type']]) {
+	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		vm.stack.pop();
 	}
 }
 class InstructionVMReturnImpl {
 	type: 'vm_return'='vm_return';
 	debug=false;
-	run(vm: StackVM,_i: [this['type']]) {
+	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		let start_stack=vm.stack.slice();
 		if(vm.base_ptr!=vm.stack.length) {
 			console.log('TODO: support returning values');
@@ -504,7 +504,7 @@ class InstructionVMReturnImpl {
 }
 class InstructionVMCallImpl {
 	type: 'vm_call'='vm_call';
-	run(vm: StackVM,ins: [this['type'],number]) {
+	run(vm: StackVM,ins: InstructionMap[this['type']]) {
 		let prev_base=vm.base_ptr;
 		vm.stack.push({type: 'number',value: vm.base_ptr});
 		vm.stack.push({type: 'number',value: vm.instruction_pointer});
@@ -515,11 +515,11 @@ class InstructionVMCallImpl {
 }
 class InstructionNopImpl {
 	type: 'nop'='nop';
-	run(_vm: StackVM,_a: [this['type']]) {}
+	run(_vm: StackVM,_a: InstructionMap[this['type']]) {}
 }
 class InstructionBlockTraceImpl {
 	type: 'vm_block_trace'='vm_block_trace';
-	run(_vm: StackVM,_i: [this['type']]) {}
+	run(_vm: StackVM,_i: InstructionMap[this['type']]) {}
 }
 type InstructionList=[
 	['append',typeof InstructionAppendImpl],
@@ -576,12 +576,12 @@ type InstructionMap={
 	'breakpoint': ["breakpoint"];
 	'call': ["call",number];
 	'cast': ['cast',CastOperandTarget];
-	'construct': ["construct"];
+	'construct': ["construct", number];
 	'drop': ["drop"];
 	'dup': ["dup"];
 	'get': ["get"];
 	'halt': ["halt"];
-	'je': ["je"];
+	'je': ["je", number];
 	'jmp': ["jmp"];
 	'modify_operand': ["modify_operand"];
 	'nop': ["nop"];
@@ -590,7 +590,7 @@ type InstructionMap={
 	'push': ["push",...Box[]];
 	'return': ["return"];
 	'vm_block_trace': ["vm_block_trace"];
-	'vm_call': ["vm_call"];
+	'vm_call': ["vm_call", number];
 	'vm_push_args': ["vm_push_args"];
 	'vm_push_ip': ["vm_push_ip"];
 	'vm_push_self': ["vm_push_self"];
