@@ -6,7 +6,6 @@ import {lex_js} from "../section_12.js";
 export function run_test_2() {
 	let input=`(class {#name=12;})`;
 	let dispatcher=new Dispatcher(input);
-	// Test 2 (test_2_code)
 	let test_data=new Test(input,"(class {#name=12;})[eof]");
 	let state=test_data.state;
 	state.cur_index=0;
