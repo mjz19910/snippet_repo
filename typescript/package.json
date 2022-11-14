@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"files": [
-		".\\DebugAPI.user.d.ts"
+		"./DebugAPI.user.d.ts"
 	],
 	"devDependencies": {
 		"@types/express": "^4.17.14",
