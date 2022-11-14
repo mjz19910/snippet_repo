@@ -155,21 +155,6 @@ class InstructionCallImpl {
 		this.type='call';
 	}
 	debug: boolean=false;
-	handle_as_fn_box(fn_box: Box,target_this: Box) {
-		if(typeof fn_box!='object') {
-			throw new Error("Bad");
-		}
-		if(fn_box===null) {
-			throw new Error("Bad");
-		}
-		if(typeof target_this!='object') {
-			throw new Error("Bad");
-		}
-		if(target_this===null) {
-			throw new Error("Bad");
-		}
-		throw new Error("TODO");
-	}
 	handle_as_fn_impl_promise_box(vm: StackVM,_fn_value: (...a: Box[]) => Promise<Box>,_target_this: Box,_arg_arr: Box[]) {
 		//let real_this=this.unbox_obj(target_this);
 		//let ret=fn_value.apply(real_this,arg_arr);
@@ -199,19 +184,7 @@ class InstructionCallImpl {
 		vm.stack.push(ret_box as unknown as Box);
 	}
 	handle_as_obj(_vm: StackVM,_fn_obj: Box,_target_this: Box,_arg_arr: Box[]) {
-		// let raw_fn=fn_obj.as_type('function');
-		// if(!raw_fn) {
-		// 	throw new Error("Unreachable (type of value is not 'function')");
-		// } else if(raw_fn.type==='function_box') {
-		// 	if(raw_fn.return_type===null) {
-		// 		return this.handle_as_fn_impl_box(vm,raw_fn.value,target_this,arg_arr);
-		// 	}
-		// } else if(raw_fn.type=='constructor_box') {
-		// 	throw new Error("Unexpected constructor");
-		// } else
-		{
-			throw new Error("Unreachable (type of value is never)");
-		}
+		throw new Error("TODO");
 	}
 	run(vm: StackVM,instruction: ['call',number]) {
 		let number_of_arguments=instruction[1];
@@ -220,35 +193,7 @@ class InstructionCallImpl {
 			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 		}
 		let [target_this,value_box,...arg_arr]=vm.pop_arg_count(number_of_arguments);
-		if(typeof target_this!=='object') {
-			throw new Error("Need to box into js objects to use as this object");
-		}
-		if(this.debug) {
-			console.log('VM: call',target_this,'fn box',value_box,arg_arr);
-		}
-		if(value_box===void 0) {
-			console.info('VM Error: Processing call instruction',instruction,target_this,value_box,arg_arr);
-			throw new Error("Tried to call undefined");
-		}
-		if(typeof value_box==='string') {
-			console.info('VM Error: Processing call instruction',instruction,target_this,value_box,arg_arr);
-			throw new Error("Tried to call a string(your asm code is outdated)");
-		}
-		if(typeof value_box==='function') {
-			if(this.debug) console.log('function is not boxed',value_box);
-			return this.handle_as_fn_impl_promise_box(vm,value_box,target_this,arg_arr);
-		} else if(value_box===null) {
-			throw new Error("Invalid");
-		} else if(typeof value_box==='object'&&value_box.type==='void') {
-			throw new Error("Attempt to call a void value");
-		} else {
-			if(typeof value_box==='object') {
-				console.log('VM: call error value_box not handled',typeof value_box,value_box,value_box.value);
-				this.handle_as_obj(vm,value_box,target_this,arg_arr);
-			}
-			console.log('VM: call invalid value',typeof value_box,value_box);
-			throw new Error("Invalid");
-		}
+		console.log('TODO: vm_call',target_this,value_box,arg_arr);
 	}
 }
 class InstructionConstructImpl {
