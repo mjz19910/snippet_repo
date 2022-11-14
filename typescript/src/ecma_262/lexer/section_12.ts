@@ -7,6 +7,7 @@ import {LexReturnType} from "./LexReturnType.js";
 import {run_test_1} from "./test/run_test_1.js";
 import {run_test_2} from "./test/run_test_2.js";
 import {lexer_format_callback} from "./lexer_format_callback.js";
+import {StopIteration} from "./StopIteration";
 
 function lexer_produce_input_element(ecma_dispatcher: Dispatcher,str: string,index: number): LexReturnType {
 	let max_item=null,max_val=0;
@@ -67,8 +68,6 @@ function produce_input_element_or_div(ecma_dispatcher: Dispatcher,str: string,in
 	}
 	return [max_item,max_val];
 }
-
-class StopIteration {}
 
 export class Lexer extends LexerBase {
 	str!: string;
