@@ -3,9 +3,9 @@ import * as section_12_6 from "./ecma_262/lexer/section_12_6.js";
 import * as section_12 from "./ecma_262/lexer/section_12.js";
 import {test_mod_execute_tests} from "./tests_mod/main.js";
 
-async function do_import<T>(e: string): Promise<T> {
+async function do_import<T extends {run_tests: () => void;}>(e: string): Promise<T> {
 	try {
-		let module_=await import(e);
+		let module_: T=await import(e);
 		module_load_success(module_);
 		return module_;
 	} catch(result_1) {
@@ -13,8 +13,8 @@ async function do_import<T>(e: string): Promise<T> {
 		throw result_1;
 	}
 }
-function module_load_success(e: {run_tests: () => void;}) {
-	e.run_tests();
+function module_load_success(module: {run_tests: () => void;}) {
+	module.run_tests();
 	console.log("test completed");
 }
 function module_load_failure() {
