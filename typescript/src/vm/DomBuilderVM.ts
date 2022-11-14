@@ -86,7 +86,7 @@ export class DomBuilderVM extends BaseStackVM {
 		if(typeof box.value!='object')
 			throw new Error("Unbox failed: Box is not boxing an object");
 	}
-	run() {
+	override run() {
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
 			let instruction=this.instructions[this.instruction_pointer];
@@ -104,11 +104,12 @@ export class DomBuilderVM extends BaseStackVM {
 						throw new Error("Invalid");
 					}
 					[this.stack,this.instructions]=exec_top;
-					let base_ptr=this.stack.pop();
-					let next_ip=this.stack.pop();
-					if(typeof next_ip!='number')
-						throw new Error("Invalid");
-					this.instruction_pointer=next_ip;
+					let base_ptr=this.pop();
+					let next_ip=this.pop();
+					if(base_ptr.type !== 'number') throw new Error("Invalid");
+					if(next_ip.type !== 'number') throw new Error("Invalid");
+					this.base_pointer=base_ptr.value;
+					this.instruction_pointer=next_ip.value;
 					l_log_if(LOG_LEVEL_VERBOSE,'returned to',this.instruction_pointer,this.exec_stack.length);
 					continue;
 				}

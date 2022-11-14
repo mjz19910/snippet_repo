@@ -1,11 +1,13 @@
 import {AbstractTarget} from "./AbstractTarget.js";
-import {BaseTimeoutNode} from "./BaseTimeoutNode.js";
+import {BaseNode} from "./BaseNode.js";
 
-export class IntervalNode extends BaseTimeoutNode {
+export class IntervalNode extends BaseNode {
+	timeout: number;
 	id: NodeJS.Timeout|null;
 	target: AbstractTarget|null;
 	constructor(timeout=0) {
-		super(timeout);
+		super();
+		this.timeout=timeout;
 		this.id=null;
 		this.target=null;
 	}
@@ -20,8 +22,12 @@ export class IntervalNode extends BaseTimeoutNode {
 			this.set_target(target);
 		this.set();
 	}
-	destroy() {
+	override destroy() {
+		super.destroy();
 		if(this.id!==null)
 			clearInterval(this.id);
+	}
+	run() {
+		if(this.target) this.target.fire();
 	}
 }

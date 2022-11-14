@@ -2,7 +2,7 @@ import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget.js";
 import {TimeoutNode} from "./TimeoutNode.js";
 
 export class AsyncTimeoutNode extends TimeoutNode {
-	run() {
+	override run() {
 		super.run();
 		if(this.m_target)
 			this.m_target.fire();

@@ -4,12 +4,12 @@ export function init_Image_plugin() {
 		construct(...proxy_args) {
 			let c_cls=proxy_args[0];
 			let tc=class extends c_cls {
-				set src(_src) {
+				override set src(_src) {
 					if(_src.indexOf('/api/stats/qoe?')>-1)
 						return;
 					super.src=_src;
 				}
-				get src() {
+				override get src() {
 					return super.src;
 				}
 			};

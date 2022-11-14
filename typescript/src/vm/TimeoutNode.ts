@@ -20,11 +20,12 @@ export class TimeoutNode extends BaseTimeoutNode {
 			this.m_target=target
 		this.set()
 	}
-	run() {
-		this.m_timer_id=null
-		this.remove()
+	override run() {
+		super.run();
+		this.m_timer_id=null;
+		this.remove();
 	}
-	destroy() {
+	override destroy() {
 		if(this.m_timer_id!==null)
 			clearTimeout(this.m_timer_id)
 	}

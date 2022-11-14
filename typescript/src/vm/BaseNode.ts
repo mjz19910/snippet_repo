@@ -1,21 +1,19 @@
-import {BaseNodeParent} from "./BaseNodeParent.js"
+import {BaseNodeParent} from "./BaseNodeParent.js";
 
-export class BaseNode {
-	parent: BaseNodeParent|null
+export abstract class BaseNode {
+	parent: BaseNodeParent|null;
 	constructor() {
-		this.parent=null
+		this.parent=null;
 	}
 	set_parent(parent: BaseNodeParent|null) {
-		this.parent=parent
+		this.parent=parent;
 	}
 	remove() {
 		if(this.parent)
-			this.parent.remove_child(this)
+			this.parent.remove_child(this);
 	}
-	run() {
-		// do nothing
-	}
+	abstract run(): void;
 	destroy() {
-		this.remove()
+		this.remove();
 	}
 }

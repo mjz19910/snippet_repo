@@ -1,31 +1,31 @@
-import {CanRunTest} from "./CanRunTest.js"
-import {BaseTestRunner} from "./BaseTestRunner.js"
+import {CanRunTest} from "./CanRunTest.js";
+import {BaseTestRunner} from "./BaseTestRunner.js";
 export class TestEngine extends BaseTestRunner implements CanRunTest {
-	test_started=false
-	m_is_user_completing_tests=false
-	is_running_test_set=false
+	override m_test_started=false;
+	override is_running_test_set=false;
+	m_is_user_completing_tests=false;
 	is_user_reporting_completion() {
-		return this.m_is_user_completing_tests
+		return this.m_is_user_completing_tests;
 	}
 	set_is_user_completing_tests(value: boolean) {
-		this.m_is_user_completing_tests=value
+		this.m_is_user_completing_tests=value;
 	}
 	async handle_async_test_set_if_needed() {
 		if(this.async_init_promise) {
-			await this.async_init_promise
+			await this.async_init_promise;
 			if(this.is_running_test_set) {
-				this.test_started=true
+				this.m_test_started=true;
 			}
-			this.async_init_promise=null
+			this.async_init_promise=null;
 		}
 	}
-	async_init_promise: Promise<void>|null=null
+	async_init_promise: Promise<void>|null=null;
 	init_async_test(promise: Promise<void>) {
-		this.async_init_promise=promise
+		this.async_init_promise=promise;
 	}
 	constructor(parent: CanRunTest) {
-		super(parent)
-		this.is_running_test_set=false
-		this.test_started=false
+		super(parent);
+		this.is_running_test_set=false;
+		this.m_test_started=false;
 	}
 }

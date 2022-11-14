@@ -7,12 +7,14 @@ export class BaseVMCreate extends AbstractVM {
 	flags: Map<string,boolean>;
 	instructions;
 	instruction_pointer;
+	base_pointer;
 	running;
 	constructor(instructions: InstructionType[]) {
 		super();
 		this.flags=new Map;
 		this.instructions=instructions;
 		this.instruction_pointer=0;
+		this.base_pointer=0;
 		this.running=false;
 	}
 	reset() {
