@@ -1,4 +1,4 @@
-import {CanRunTest} from "root:tests_mod/CanRunTest.js";
+import {CanRunTest} from "tests_mod/CanRunTest.js";
 import {TestLock} from "../../tests_mod/TestLock.js";
 import {Dispatcher} from "./Dispatcher.js";
 import {LexerBase} from "./LexerBase.js";

@@ -1,4 +1,4 @@
-import {StackVM} from "root:vm/StackVM.js"
+import {StackVM} from "vm/StackVM.js"
 import {BoxTemplate} from "./template/BoxTemplate.js"
 import {BoxVerify} from "./BoxVerify.js"
 

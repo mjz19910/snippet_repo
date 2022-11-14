@@ -1,5 +1,5 @@
-import {CanRunTest} from "root:tests_mod/CanRunTest.js"
 import {LexerStateData} from "./lexer/LexerStateData.js"
+
 export class Test {
 	input: string
 	result?: string
@@ -9,12 +9,7 @@ export class Test {
 		this.input=input
 		this.expected=expected_output
 	}
-	complete_test(test_runner: CanRunTest,result: string) {
-		this.result=result
-		if(this.result!==this.expected) {
-			test_runner.report_test_failure()
-		} else {
-			test_runner.report_test_success()
-		}
+	complete_test(result: string) {
+		this.result=result;
 	}
 }

@@ -1,5 +1,3 @@
-import {CanRunTest} from "root:tests_mod/CanRunTest.js";
-import {TestLock} from "root:tests_mod/TestLock.js";
 import {item_info_type_to_string} from "../item_info_type_to_string.js";
 import {ItemInfoType} from "../ItemInfoType.js";
 import {Dispatcher} from "./Dispatcher.js";
@@ -259,8 +257,7 @@ export function lex_js(state: LexerStateData,dispatcher: Dispatcher,str: string)
 	return res_arr
 }
 
-export function run_tests(test_runner: CanRunTest,lock: TestLock) {
-	let dispatcher=new Dispatcher
-	test_runner.start_async_template<Dispatcher>(run_test_1,test_runner,lock,dispatcher)
-	test_runner.start_async_template<Dispatcher>(run_test_2,test_runner,lock,dispatcher)
+export function run_tests() {
+	run_test_1();
+	run_test_2();
 }

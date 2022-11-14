@@ -1,16 +1,13 @@
-import {Test} from "root:ecma_262/Test.js";
-import {CanRunTest} from "root:tests_mod/CanRunTest.js";
-import {TestLock} from "root:tests_mod/TestLock.js";
+import {Test} from "../../Test.js";
 import {Dispatcher} from "../Dispatcher.js";
 import {test_2_critical} from "./test_2_critical.js";
 
-export async function run_test_2(test_runner: CanRunTest,lock: TestLock,dispatcher: Dispatcher) {
+export function run_test_2() {
+	let dispatcher=new Dispatcher;
 	// Test 2 (test_2_code)
 	let test_2=new Test(
 		`(class {#name=12;})`,
 		"(class {#name=12;})[eof]"
-	)
-	await lock.lock()
-	test_2_critical(test_runner,dispatcher,test_2)
-	await lock.unlock()
+	);
+	test_2_critical(dispatcher,test_2);
 }

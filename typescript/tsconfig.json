@@ -30,11 +30,6 @@
 		"noUnusedParameters": true,
 		"useUnknownInCatchVariables": true,
 		"isolatedModules": true,
-		"paths": {
-			"root:*": [
-				"./src/*"
-			]
-		}
 	},
 	"ts-node": {
 		"esm": true,
