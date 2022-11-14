@@ -19,8 +19,6 @@
 // ==/UserScript==
 console=globalThis.console;
 
-let enter_count=0;
-
 let AUDIO_ELEMENT_VOLUME=0.58;
 const AudioMuted=true;
 
