@@ -168,19 +168,7 @@ class InstructionCallImpl {
 		if(target_this===null) {
 			throw new Error("Bad");
 		}
-		if('return_type' in fn_box) {
-			if(fn_box.return_type=='promise_box') {
-				//return this.handle_as_fn_impl_promise_box(vm,fn_box.value,target_this,arg_arr);
-				throw new Error("TODO");
-			} else if(fn_box.return_type===null) {
-				console.log('fixme: make a type for this',fn_box);
-				//return this.handle_as_fn_impl_box(vm,fn_box.value,target_this,arg_arr);
-				throw new Error("TODO");
-			}
-		} else {
-			console.log('unexpected box value',fn_box);
-			throw new Error("Unexpected function box type");
-		}
+		throw new Error("TODO");
 	}
 	handle_as_fn_impl_promise_box(vm: StackVM,_fn_value: (...a: Box[]) => Promise<Box>,_target_this: Box,_arg_arr: Box[]) {
 		//let real_this=this.unbox_obj(target_this);
