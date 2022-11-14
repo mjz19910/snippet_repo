@@ -3631,6 +3631,7 @@ function fire_url_handler(state: URLHandlerState) {
 		console.log('handle location pathname',location.pathname);
 	}
 }
+
 init();
 log_if(LOG_LEVEL_TRACE,'userscript main');
 main();
