@@ -37,6 +37,5 @@ export function run_test_1() {
 	let log_fmt="%s".repeat(res_arr.length-1);
 	test_data.complete_test(log_res.join(""));
 	console.log('test_ecma_12 res_arr for test_1');
-	console.log(res_arr);
 	console.log(log_fmt,...log_res);
 }
