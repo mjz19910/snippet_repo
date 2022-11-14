@@ -26,12 +26,14 @@
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
 		"noPropertyAccessFromIndexSignature": true,
-		"noUnusedLocals":true,
-		"noUnusedParameters":true,
-		"useUnknownInCatchVariables":true,
-		"isolatedModules":true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"useUnknownInCatchVariables": true,
+		"isolatedModules": true,
 		"paths": {
-			"root:*": ["./src/*"]
+			"root:*": [
+				"./src/*"
+			]
 		}
 	},
 	"ts-node": {
