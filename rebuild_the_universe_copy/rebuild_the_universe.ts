@@ -667,7 +667,7 @@ const instruction_descriptor_arr: InstructionList=[
 	['vm_push_self',InstructionPushVMObjImpl],
 	['vm_return',InstructionVMReturnImpl],
 ];
-export type InstructionMap={
+type InstructionMap={
 	'append': ["append"];
 	'breakpoint': ["breakpoint"];
 	'call': ["call",number];
@@ -3147,7 +3147,7 @@ function set_jq_proxy(value: typeof $|undefined) {
 		enumerable: true,
 		configurable: true
 	});
-}let seen_elements=new WeakSet;
+} let seen_elements=new WeakSet;
 function remove_html_nodes(node: HTMLScriptElement) {
 	if(seen_elements.has(node)) return;
 	seen_elements.add(node);
@@ -3309,7 +3309,7 @@ function insert_before_enabled(node: Node,child: Node|null): boolean {
 	}
 	return true;
 }
-export interface IPageContent {
+interface IPageContent {
 	request_content: string;
 	cur: string;
 }
@@ -3390,7 +3390,7 @@ function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () =>
 	}
 }
 
-export interface GoogleAdList {
+interface GoogleAdList {
 	op: any;
 	push(v: number): void;
 }
@@ -3627,3 +3627,5 @@ function fire_url_handler(state: URLHandlerState) {
 init();
 log_if(LOG_LEVEL_TRACE,'userscript main');
 main();
+
+export {};
