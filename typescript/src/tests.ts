@@ -4,26 +4,14 @@ import * as section_12 from "./ecma_262/lexer/section_12.js";
 import {test_mod_execute_tests} from "./tests_mod/main.js";
 
 async function do_import<T>(e: string): Promise<T> {
-	let errors=[];
 	try {
-		let module_=await import("./"+e);
+		let module_=await import(e);
 		module_load_success(module_);
 		return module_;
 	} catch(result_1) {
-		errors.push(result_1);
+		module_load_failure();
+		throw result_1;
 	}
-	try {
-		let module_string="./"+e+".js";
-		let module_=await import(module_string);
-		errors.pop();
-		module_load_success(module_);
-		return module_;
-	} catch(result_1) {
-		errors.push(result_1);
-	}
-	module_load_failure();
-	console.log(errors);
-	throw new AggregateError(errors);
 }
 function module_load_success(e: {run_tests: () => void;}) {
 	e.run_tests();
