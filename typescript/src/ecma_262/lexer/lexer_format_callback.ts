@@ -18,7 +18,5 @@ export function lexer_format_callback(state: LexerStateData,code: string,res: Le
 	if(state.cur_index<=(code.length-1)) {
 		return `E\`${code[state.cur_index]}\``
 	}
-	console.log('eof with');
-	console.log(res);
 	return "[eof]";
 }
