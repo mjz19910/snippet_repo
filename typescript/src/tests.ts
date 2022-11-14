@@ -15,6 +15,7 @@ async function do_import<T>(e: string): Promise<T> {
 	try {
 		let module_string="./"+e+".js";
 		let module_=await import(module_string);
+		errors.pop();
 		module_load_success(module_);
 		return module_;
 	} catch(result_1) {

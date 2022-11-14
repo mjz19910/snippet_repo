@@ -7,6 +7,9 @@ export function run_test_1() {
 	let input=`(function(){let the_var=12;})`;
 	let test_1=new Test(input,`${input}[eof]`);
 	let test_result=eval(test_1.input);
+	test_1.state={
+		cur_index:0,
+	};
 	console.log('test_result', test_result);
 	test_1_critical(dispatcher,test_1);
 }
