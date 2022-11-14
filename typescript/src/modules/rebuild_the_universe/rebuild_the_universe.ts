@@ -340,7 +340,7 @@ class InstructionDupImpl {
 	constructor() {
 		this.type='dup';
 	}
-	run(vm: StackVM,_ins: [this['type']]) {
+	run(vm: StackVM,_ins: InstructionMap[this['type']]) {
 		if(vm.stack.length===0) throw new Error("stack underflow");
 		let res=vm.stack.at(-1);
 		if(!res) throw new Error("bad");
@@ -385,7 +385,7 @@ class InstructionGetImpl {
 		}
 	}
 
-	run(vm: StackVM,_ins: [this['type']]) {
+	run(vm: StackVM,_ins: InstructionMap[this['type']]) {
 		let get_key=vm.stack.pop();
 		let value_box=vm.stack.pop();
 		if(!value_box) throw new Error("Invalid");
@@ -397,13 +397,13 @@ class InstructionGetImpl {
 }
 class InstructionHaltImpl {
 	type: 'halt'='halt';
-	run(vm: StackVM,_i: [this['type']]) {
+	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		vm.halt();
 	}
 }
 class InstructionReturnImpl {
 	type: 'return'='return';
-	run(vm: StackVM,_i: [this['type']]) {
+	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		if(vm.stack.length>0) {
 			vm.return_value=vm.stack.pop()!;
 		} else {
@@ -413,20 +413,20 @@ class InstructionReturnImpl {
 }
 class InstructionBreakpointImpl {
 	type: 'breakpoint'='breakpoint';
-	run(vm: StackVM,_i: [this['type']]) {
+	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		console.log(vm.stack);
 		trigger_debug_breakpoint();
 	}
 }
 class InstructionPushVMObjImpl {
 	type: "vm_push_self"="vm_push_self";
-	run(vm: StackVM,_i: [this['type']]) {
+	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
 }
-class InstructionPushGlobalObjectImpl {
-	type: 'push_global_object'='push_global_object';
-	run(vm: StackVM,_i: [this['type']]) {
+class InstructionPushWindowObjectImpl {
+	type: 'push_window_object'='push_window_object';
+	run(vm: StackVM,_i: InstructionMap[this['type']]) {
 		vm.stack.push(new WindowBoxImpl(window));
 	}
 }
@@ -537,7 +537,7 @@ type InstructionList=[
 	['modify_operand',typeof InstructionModifyOpImpl],
 	['nop',typeof InstructionNopImpl],
 	['peek',typeof InstructionPeekImpl],
-	['push_global_object',typeof InstructionPushGlobalObjectImpl],
+	['push_global_object',typeof InstructionPushWindowObjectImpl],
 	['push',typeof InstructionPushImpl],
 	['return',typeof InstructionReturnImpl],
 	['vm_block_trace',typeof InstructionBlockTraceImpl],
@@ -562,7 +562,7 @@ const instruction_descriptor_arr: InstructionList=[
 	['modify_operand',InstructionModifyOpImpl],
 	['nop',InstructionNopImpl],
 	['peek',InstructionPeekImpl],
-	['push_global_object',InstructionPushGlobalObjectImpl],
+	['push_global_object',InstructionPushWindowObjectImpl],
 	['push',InstructionPushImpl],
 	['return',InstructionReturnImpl],
 	['vm_block_trace',InstructionBlockTraceImpl],
