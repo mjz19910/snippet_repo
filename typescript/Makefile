@@ -7,3 +7,6 @@ run: build/tests.js
 
 build/tests.js: tests.ts */*.ts */*/*.ts
 	NODE_OPTIONS= tsc --outDir build --sourceMap true --target esnext tests.ts
+
+clean:
+	rm -r build
