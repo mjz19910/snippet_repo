@@ -536,7 +536,7 @@ export class AutoBuy implements AutoBuyInterface {
 			atomsaccu.innerHTML=window.rounding(window.atomsaccu,false,0);
 			timeplayed_e.innerHTML=(Math.round(window.timeplayed/30)/60).toFixed(2)+" hours";
 			presnbr_e.innerHTML="<br>"+(window.calcPres()*100).toFixed(0)+" % APS boost";
-		},(230-300)));
+		},(230-300)), false);
 	}
 	init_impl() {
 		this.global_init();

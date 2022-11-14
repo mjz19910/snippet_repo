@@ -17,11 +17,12 @@ export class AsyncNodeRoot extends BaseNode {
 			node.start(new IntervalTarget(null,target_fn));
 		}
 	}
-	append_raw(timeout_id: ReturnType<typeof setTimeout>, once=true) {
-		if(once) {
-			this.append_child(new TimeoutIdNode(timeout_id));
-		} else {
-			this.append_child(new IntervalIdNode(timeout_id));
-		}
+	create_timeout(timer_handler: CallableFunction, delay: number, ...args: any[]) {
+		let timeout_id=setInterval(timer_handler, delay, ...args);
+		this.append_child(new TimeoutIdNode(timeout_id));
+	}
+	create_timer(timer_handler: CallableFunction, delay: number, ...args: any[]) {
+		let interval_id=setInterval(timer_handler, delay, ...args);
+		this.append_child(new IntervalIdNode(interval_id));
 	}
 }

@@ -1,8 +1,8 @@
 import {BaseNode} from "./BaseNode.js";
 
 export class TimeoutIdNode extends BaseNode {
-	m_id: ReturnType<typeof setTimeout>;
-	constructor(id: ReturnType<typeof setTimeout>) {
+	m_id: number;
+	constructor(id: number) {
 		super();
 		this.m_id=id;
 	}
