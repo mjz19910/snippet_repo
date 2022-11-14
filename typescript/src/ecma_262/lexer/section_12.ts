@@ -70,9 +70,9 @@ function produce_input_element_or_div(ecma_dispatcher: Dispatcher,str: string,in
 }
 
 export class Lexer extends LexerBase {
-	str!: string;
-	index!: number;
-	outputs!: LexReturnType[];
+	str: string;
+	index: number;
+	outputs: LexReturnType[];
 	constructor(dispatcher: Dispatcher, str: string) {
 		super(dispatcher);
 		this.str=str;
@@ -88,10 +88,7 @@ export class Lexer extends LexerBase {
 		this.index+=res[1];
 		this.outputs.push(res);
 	}
-	do_let_parse(str: string,index: number,outputs: LexReturnType[]=[]) {
-		this.str=str;
-		this.index=index;
-		this.outputs=outputs;
+	do_let_parse() {
 		try {
 			this.parse_one_element();
 			this.parse_one_element();
@@ -219,7 +216,9 @@ function lexer_produce_input_or_regexp_or_template_tail(state: LexerStateData,di
 			switch(mat) {
 				case 'let': {
 					let res_arr_inner: LexReturnType[]=[];
-					dispatcher.lexer.do_let_parse(str,state.cur_index,res_arr_inner);
+					dispatcher.lexer.index=state.cur_index;
+					dispatcher.lexer.outputs=res_arr_inner;
+					dispatcher.lexer.do_let_parse();
 					console.log('parsed let def');
 					console.log(res_arr_inner.map(lexer_format_callback.bind(null,state,str)));
 					for(let val of res_arr_inner) {
