@@ -6,6 +6,7 @@ async function do_import<T>(e: string): Promise<T> {
 		module_load_success(module_);
 		return module_;
 	} catch(result_1) {
+		console.log(result_1);
 		module_load_failure();
 		throw result_1;
 	}
