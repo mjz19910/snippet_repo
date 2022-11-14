@@ -701,7 +701,6 @@ class StackVMFlags {
 		this.equal=false;
 	}
 }
-
 class StackVM {
 	return_value: Box;
 	jump_instruction_pointer: number|null;
@@ -1199,11 +1198,9 @@ declare global {
 }
 let window=globalThis as unknown as Window;
 window.MulCompression=MulCompression;
-
 abstract class AbstractFire {
 	abstract fire(): void;
 };
-
 class TimeoutTarget<T> implements AbstractFire {
 	m_once: boolean;
 	m_obj: T;
@@ -1349,7 +1346,6 @@ class IntervalTargetFn {
 		this.m_callback();
 	}
 }
-
 class TimeoutNode extends BaseNode {
 	m_timeout: number;
 	m_id: ReturnType<typeof setTimeout>|null;
@@ -1414,7 +1410,6 @@ type AsyncTimeoutTarget1={
 	fire(): void;
 	destroy(): void;
 };
-
 class AsyncTimeoutNode extends BaseNode {
 	m_timeout: number;
 	m_id: ReturnType<typeof setTimeout>|null;
@@ -2069,27 +2064,22 @@ class VoidBoxImpl {
 		return this.m_verify_name==='VoidBox'&&name==='VoidBox';
 	}
 }
-
 declare global {
 	interface Window {
 		mute(): void;
 	}
 }
-
 function call_mute_fn() {
 	window.mute();
 }
-
 declare global {
 	interface Window {
 		g_auto_buy: AutoBuy;
 	}
 }
-
 interface ErrorStackTrace {
 	stack?: string;
 }
-
 declare global {
 	interface ErrorConstructor {
 		captureStackTrace<T>(obj: ErrorStackTrace,constructorOpt?: T): void;
@@ -2099,7 +2089,6 @@ declare global {
 		style: CSSStyleDeclaration;
 	}
 }
-
 class AutoBuy {
 	debug_arr: any;
 	root_node: AsyncNodeRoot;
@@ -2956,7 +2945,6 @@ class AutoBuy {
 		this.next_timeout(this.on_repeat_r,1*1000,'r');
 	}
 }
-
 declare global {
 	interface Window {
 		arUnit: any[];
@@ -2970,7 +2958,6 @@ declare global {
 		tonext(v: number): void;
 	}
 }
-
 function do_auto_unit_promote() {
 	var out=[],maxed=[];
 	for(var k=0;k<window.arUnit.length;k++) {
@@ -3070,7 +3057,6 @@ function lightreset_inject() {
 	}
 	original();
 }
-
 declare global {
 	interface Window {
 		specialsbought: number;
@@ -3087,7 +3073,6 @@ declare global {
 		achiSpec(): void;
 	}
 }
-
 function specialclick_inject(that: number) {
 	if(window.allspec[that].done==undefined)
 		window.allspec[that].done=false;
@@ -3130,13 +3115,11 @@ function got_jquery(value: typeof $) {
 	});
 	use_jquery();
 }
-
 declare global {
 	interface Window {
 		$: JQueryStatic;
 	}
 }
-
 function use_jquery() {
 	let jq: typeof $=window.$;
 	if(!jq) return;
@@ -3164,8 +3147,7 @@ function set_jq_proxy(value: typeof $|undefined) {
 		enumerable: true,
 		configurable: true
 	});
-}
-let seen_elements=new WeakSet;
+}let seen_elements=new WeakSet;
 function remove_html_nodes(node: HTMLScriptElement) {
 	if(seen_elements.has(node)) return;
 	seen_elements.add(node);
@@ -3188,7 +3170,6 @@ declare global {
 		constelOff(): void;
 	}
 }
-
 function on_game_data_set() {
 	log_if(LOG_LEVEL_INFO,'game data init');
 	remove_bad_dom_script_element();
@@ -3196,13 +3177,11 @@ function on_game_data_set() {
 	setTimeout(auto_buy_obj.init.bind(auto_buy_obj),300);
 	window.constelOff();
 }
-
 declare global {
 	interface Window {
 		_SM_Data: unknown;
 	}
 }
-
 function wait_for_game_data() {
 	if(window._SM_Data) {
 		on_game_data_set();
@@ -3330,36 +3309,30 @@ function insert_before_enabled(node: Node,child: Node|null): boolean {
 	}
 	return true;
 }
-
 export interface IPageContent {
 	request_content: string;
 	cur: string;
 }
-
 declare global {
 	interface Window {
 		g_current_script_list?: any[];
 		g_page_content: IPageContent;
 	}
 }
-
 let real_st: typeof setTimeout;
 let real_si: typeof setInterval;
 let orig_aev: EventTarget['addEventListener'];
-
 function make_load_promise(a: (reason?: any) => void) {
 	window.addEventListener('load',function lis() {
 		setTimeout(a);
 		window.removeEventListener('load',lis);
 	});
 }
-
 declare global {
 	interface Window {
 		g_do_load: ((promise_accept: (value: any) => void) => void)|undefined;
 	}
 }
-
 function create_load_with_fetch_page() {
 	return new Promise(function(a) {
 		if(localStorage.justReset==='true') {
@@ -3371,7 +3344,6 @@ function create_load_with_fetch_page() {
 		document.close();
 	});
 }
-
 function pop_mut_observer() {
 	let la=mut_observers.pop();
 	if(!la) throw new Error("mut_observers underflow");
@@ -3380,7 +3352,6 @@ function pop_mut_observer() {
 
 let loaded_scripts_count: number;
 let script_num: number;
-
 function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () => void;}) {
 	let log_data_vec=[];
 	log_data_vec.push(mut_vec.length,document.body!=null);
@@ -3431,7 +3402,6 @@ declare global {
 		on_on_timers_moved_first: boolean;
 	}
 }
-
 async function do_fetch_load() {
 	reset_global_event_handlers();
 	window.setTimeout=real_st;
@@ -3531,7 +3501,6 @@ async function do_fetch_load() {
 		}
 	};
 }
-
 function on_dom_load() {
 	window.setTimeout=real_st;
 	window.setInterval=real_si;
@@ -3562,13 +3531,11 @@ function nop_timer(_handler: TimerHandler,_timeout?: number|undefined,..._args: 
 function no_aev(...v: any[]) {
 	console.log('aev',v);
 }
-
 declare global {
 	interface Window {
 		document_write_list: DocumentWriteList;
 	}
 }
-
 function create_document_write_list() {
 	let document_write_list=new DocumentWriteList;
 	document_write_list.attach_proxy(document);
@@ -3576,14 +3543,12 @@ function create_document_write_list() {
 	window.document_write_list=document_write_list;
 	return document_write_list;
 }
-
 declare global {
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
 		stop(): void;
 	}
 }
-
 function main() {
 	if(!globalThis.location) return;
 	if(globalThis.location.pathname.match('test')) {
@@ -3615,25 +3580,21 @@ function main() {
 		document_write_list,
 	});
 }
-
 declare global {
 	interface Window {
 		g_log_if: typeof log_if;
 	}
 }
-
 function init() {
 	update_logger_vars();
 	auto_buy_obj.global_init();
 	window.g_log_if=log_if;
 }
-
 class URLHandlerState {
 	non_proto_url: string="";
 	page_url: string="";
 	document_write_list=new DocumentWriteList;
 }
-
 function fire_url_handler(state: URLHandlerState) {
 	if(state.non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
 		do_page_replace();
@@ -3663,7 +3624,6 @@ function fire_url_handler(state: URLHandlerState) {
 		console.log('handle location pathname',location.pathname);
 	}
 }
-
 init();
 log_if(LOG_LEVEL_TRACE,'userscript main');
 main();
