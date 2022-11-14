@@ -234,6 +234,7 @@ function lexer_produce_input_or_regexp_or_template_tail(state: LexerStateData,di
 			let mat=str.slice(state.cur_index,state.cur_index+res[1]);
 			switch(mat) {
 				case 'let': {
+					res_arr.pop();
 					let res_arr_inner: LexReturnType[]=[];
 					dispatcher.lexer.index=state.cur_index;
 					dispatcher.lexer.outputs=res_arr_inner;

@@ -34,8 +34,9 @@ export function run_test_1() {
 	}
 	state.cur_index=0;
 	let log_res=res_arr.map(lexer_format_callback.bind(null,state,test_data.input));
-	let log_fmt=res_arr.map(() => "%s").join("");
+	let log_fmt="%s".repeat(res_arr.length-5);
 	test_data.complete_test(log_res.join(""));
 	console.log('test_ecma_12 res_arr for test_1');
+	console.log(res_arr);
 	console.log(log_fmt,...log_res);
 }
