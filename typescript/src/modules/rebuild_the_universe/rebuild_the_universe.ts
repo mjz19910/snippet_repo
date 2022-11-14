@@ -310,7 +310,7 @@ class InstructionVMPushIPImpl {
 	constructor() {
 		this.type='vm_push_ip';
 	}
-	run(vm: StackVM,_ins: [this['type']]) {
+	run(vm: StackVM,_ins: InstructionMap[this['type']]) {
 		if(!vm.hasOwnProperty('push')) {
 			throw new Error("push_pc requires a stack");
 		} else if(vm instanceof StackVM) {
@@ -326,8 +326,9 @@ class InstructionPushImpl {
 	constructor() {
 		this.type='push';
 	}
-	run(vm: StackVM,instruction: [this['type']]) {
-		let [,...rest]=instruction;
+	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
+		let instruction_:["push", ...Box[]] = instruction;
+		let [,...rest]=instruction_;
 		for(let i=0;i<rest.length;i++) {
 			let item=rest[i];
 			vm.stack.push(item);
