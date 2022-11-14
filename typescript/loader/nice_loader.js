@@ -15,11 +15,9 @@ class ContextType {
 export async function resolve(specifier,context,defaultResolve) {
 	if(debug) console.log('spec',specifier);
 	if(debug) console.log('ctx',context);
-	if(specifier.startsWith("root:")) {
+	if(specifier.endsWith(".js")) {
 		try {
-			specifier=specifier.slice(specifier.indexOf(":")+1);
-			specifier=process.cwd()+"/build/"+specifier;
-			return await defaultResolve(specifier,context,defaultResolve);
+			return defaultResolve(specifier,context,defaultResolve);
 		} catch(err) {
 			if(debug) console.log('Failed to load import specifier: ',specifier);
 			throw err;
