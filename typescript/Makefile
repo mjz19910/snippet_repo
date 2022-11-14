@@ -1,4 +1,4 @@
-.PHONY: all
+.PHONY: all clean
 NODE_OPTIONS_ORIG=$(NODE_OPTIONS)
 all: build/tests.js
 
