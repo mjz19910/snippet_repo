@@ -17,13 +17,13 @@
 				"name": "Launch Program",
 				"program": "${file}",
 				"request": "launch",
-				"type": "pwa-node"
+				"type": "node"
 			},
 			{
 				"name": "Attach by Process ID",
 				"processId": "${command:PickProcess}",
 				"request": "attach",
-				"type": "pwa-node"
+				"type": "node"
 			}
 		]
 	}

@@ -1,0 +1,40 @@
+{
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"target": "ESNext",
+		"lib": [
+			"ESNext",
+		],
+		"types": [
+			"node",
+		],
+		"declaration": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"outDir": "./build",
+		"strict": true,
+		"typeRoots": [
+			"./node_modules/@types"
+		],
+		"allowJs": true,
+		"checkJs": true,
+		"incremental": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"useUnknownInCatchVariables": true,
+		"isolatedModules": true,
+	},
+	"include": [
+		"**/*",
+	],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts",
+		"./build"
+	],
+}

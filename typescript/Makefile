@@ -1,5 +1,7 @@
 .PHONY: all clean
 
+NODE_OPTIONS := --experimental-specifier-resolution=node --experimental-loader ./loader/nice_loader.js ${NODE_OPTIONS}
+
 all: build/tests.js
 
 run: build/tests.js
