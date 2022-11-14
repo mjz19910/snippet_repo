@@ -22,13 +22,10 @@ console=globalThis.console;
 let enter_count=0;
 
 let AUDIO_ELEMENT_VOLUME=0.58;
-console.log(`enter ${enter_count++}`);
 const AudioMuted=true;
-console.log(`enter ${enter_count++}`);
 
 const AutoBuyMulModifierFactor=1;
 const AutoBuyRatioDiv=4;
-console.log(`enter ${enter_count++}`);
 
 const LOG_LEVEL_CRIT=1;
 const LOG_LEVEL_ERROR=2;
@@ -37,11 +34,10 @@ const LOG_LEVEL_NOTICE=4;
 const LOG_LEVEL_INFO=5;
 const LOG_LEVEL_DEBUG=6;
 const LOG_LEVEL_TRACE=7;
-console.log(`enter ${enter_count++}`);
 
 let local_logging_level=3;
 let LogErrorAsConsoleError=false;
-console.log(`enter ${enter_count++}`);
+
 function append_console_message(level: number,format_str: string,...args: any[]) {
 	update_logger_vars();
 	const level_str=human_log_level(level);
