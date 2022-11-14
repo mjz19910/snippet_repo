@@ -224,6 +224,7 @@ function lexer_produce_input_or_regexp_or_template_tail(state: LexerStateData,di
 					dispatcher.lexer.do_let_parse();
 					console.log('parsed let def');
 					console.log(res_arr_inner.map(lexer_format_callback.bind(null,state,str)));
+					res_arr.push(...res_arr_inner);
 					state.cur_index=dispatcher.lexer.index;
 				} continue;
 			}
