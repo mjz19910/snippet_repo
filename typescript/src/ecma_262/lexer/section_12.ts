@@ -80,12 +80,13 @@ export class Lexer extends LexerBase {
 		this.outputs=[];
 	}
 	parse_one_element() {
-		let res1=this.m_dispatcher.InputElementRegExpOrTemplateTail(this.str,this.index);
-		if(!res1[0]) {
+		let res=this.m_dispatcher.InputElementRegExpOrTemplateTail(this.str,this.index);
+		if(!res[0]) {
 			this.outputs.push([null,0]);
 			throw new StopIteration();
 		}
-		this.outputs.push(res1);
+		this.index+=res[1];
+		this.outputs.push(res);
 	}
 	do_let_parse(str: string,index: number,outputs: LexReturnType[]=[]) {
 		this.str=str;
@@ -94,6 +95,7 @@ export class Lexer extends LexerBase {
 		try {
 			this.parse_one_element();
 			this.parse_one_element();
+			debugger;
 		} catch(val) {
 			if(val instanceof StopIteration) {} else {
 				throw val;
@@ -218,7 +220,8 @@ function lexer_produce_input_or_regexp_or_template_tail(state: LexerStateData,di
 				case 'let': {
 					let res_arr_inner: LexReturnType[]=[];
 					dispatcher.lexer.do_let_parse(str,state.cur_index,res_arr_inner);
-					console.log('parsed let def',res_arr_inner.map(lexer_format_callback.bind(null,state,str)));
+					console.log('parsed let def');
+					console.log(res_arr_inner.map(lexer_format_callback.bind(null,state,str)));
 					for(let val of res_arr_inner) {
 						if(val[0]) {
 							state.cur_index+=val[1];
