@@ -92,6 +92,7 @@ export class Lexer extends LexerBase {
 		try {
 			this.parse_one_element();
 			this.parse_one_element();
+			this.parse_one_element();
 			debugger;
 		} catch(val) {
 			if(val instanceof StopIteration) {} else {
@@ -221,11 +222,7 @@ function lexer_produce_input_or_regexp_or_template_tail(state: LexerStateData,di
 					dispatcher.lexer.do_let_parse();
 					console.log('parsed let def');
 					console.log(res_arr_inner.map(lexer_format_callback.bind(null,state,str)));
-					for(let val of res_arr_inner) {
-						if(val[0]) {
-							state.cur_index+=val[1];
-						}
-					}
+					state.cur_index=dispatcher.lexer.index;
 				} continue;
 			}
 			state.cur_index+=res[1];
