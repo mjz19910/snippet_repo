@@ -11,7 +11,7 @@ export function run_test_1() {
 	test_data.state={
 		cur_index:0,
 	};
-	console.log('test_result', test_result);
+	console.log('run_test_1 test_result', test_result.toString());
 	let state=test_data.state;
 	let res_arr=lex_js(state,dispatcher,test_data.input);
 	for(let i=0;i<res_arr.length;i++) {
