@@ -171,9 +171,11 @@ class InstructionCallImpl {
 		if('return_type' in fn_box) {
 			if(fn_box.return_type=='promise_box') {
 				//return this.handle_as_fn_impl_promise_box(vm,fn_box.value,target_this,arg_arr);
+				throw new Error("TODO");
 			} else if(fn_box.return_type===null) {
 				console.log('fixme: make a type for this',fn_box);
 				//return this.handle_as_fn_impl_box(vm,fn_box.value,target_this,arg_arr);
+				throw new Error("TODO");
 			}
 		} else {
 			console.log('unexpected box value',fn_box);
