@@ -74,11 +74,11 @@ export class Lexer extends LexerBase {
 	str!: string;
 	index!: number;
 	outputs!: LexReturnType[];
-	constructor(dispatcher: Dispatcher, str: string, outputs: LexReturnType[]) {
+	constructor(dispatcher: Dispatcher, str: string) {
 		super(dispatcher);
 		this.str=str;
 		this.index=0;
-		this.outputs=outputs;
+		this.outputs=[];
 	}
 	parse_one_element() {
 		let res1=this.m_dispatcher.InputElementRegExpOrTemplateTail(this.str,this.index);

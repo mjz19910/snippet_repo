@@ -1,6 +1,5 @@
 import {EnvSettingsType} from "../EnvSettingsType.js";
 import {DispatcherIndexType} from "./DispatcherIndexType.js";
-import {LexReturnType} from "./LexReturnType.js";
 import {Lexer,section_12} from "./section_12.js";
 import {section_12_2} from "./section_12_2.js";
 import {section_12_3} from "./section_12_3.js";
@@ -33,8 +32,8 @@ export class Dispatcher {
 		type: 'environment_settings',
 		is_strict: false,
 	}
-	constructor(str: string, outputs: LexReturnType[]) {
-		this.lexer=new Lexer(this,str, outputs);
+	constructor(str: string) {
+		this.lexer=new Lexer(this,str);
 	}
 	DivPunctuator(str: string,index: number) {
 		return this.ecma_12_7.DivPunctuator(str,index)

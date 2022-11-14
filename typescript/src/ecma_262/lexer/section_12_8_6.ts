@@ -314,10 +314,10 @@ export class section_12_8_6 extends LexerBase {
 }
 
 export async function run_tests_impl() {
-	let dispatcher=new Dispatcher;
 	let test_string=`
 	let v=\`Hi there\`
 	`;
+	let dispatcher=new Dispatcher(test_string);
 	let res=dispatcher.Template(test_string,test_string.indexOf('`'));
 	if(res[0]) {
 		let result=test_string.slice(test_string.indexOf('`'),test_string.indexOf('`')+res[1]+1);
