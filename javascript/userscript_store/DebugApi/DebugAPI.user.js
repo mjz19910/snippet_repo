@@ -365,9 +365,18 @@ class BaseCompression {
 	}
 }
 class MulCompression extends BaseCompression {
+	stats_calculator;
+	/**@type {never[][]} */
+	compression_stats;
+	constructor() {
+		super();
+		this.stats_calculator=new CompressionStatsCalculator;
+		this.compression_stats=[];
+	}
 	/**
 	 * @param {TU<string, number>[]} arr
 	 * @returns {DualR}
+	 * @todo (MulCompression,try_compress_dual)
 	 */
 	try_compress_dual(arr) {
 		/**@type {TX<string, number>[]} */
@@ -394,14 +403,6 @@ class MulCompression extends BaseCompression {
 		}
 		let ret_1=this.compress_result(arr,ret);
 		return ret_1;
-	}
-	stats_calculator;
-	/**@type {never[][]} */
-	compression_stats;
-	constructor() {
-		super();
-		this.stats_calculator=new CompressionStatsCalculator;
-		this.compression_stats=[];
 	}
 	/** @arg {number[]} arr @returns {[true, (number|Repeat<number>)[]]|[false,number[]]} */
 	try_compress_num(arr) {
