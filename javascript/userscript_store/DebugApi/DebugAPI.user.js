@@ -136,7 +136,7 @@ class Repeat {
 	static map=new Map;
 	/**@type {Map<number, Map<number, Repeat<number>>>} */
 	static map_num=new Map;
-	/**@type {Map<abstract new (...args: any) => any, <T>()=>WMap<T>} */
+	/**@type {Map<abstract new (...args: any) => any, <T>()=>WMap<T>>} */
 	map_instance=new Map;
 	/**
 	 * @template {abstract new (...args: any) => any} U
