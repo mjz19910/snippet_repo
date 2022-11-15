@@ -608,6 +608,10 @@ function gen_function_prototype_use(safe_function_prototype) {
 	return {funcs,bound_funcs};
 }
 
+/** @type {string[]} */
+let function_as_string_vec=[];
+window.g_api.function_as_string_vec=function_as_string_vec;
+
 function resolve_function_constructor() {
 	if(globalThis.Node===void 0) {
 		// we are in Node, there is no DOM
@@ -631,8 +635,11 @@ function run_modules_plugin() {
 	let function_prototype_apply=function_prototype.apply;
 	let function_prototype_bind=function_prototype.bind;
 
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_call=function_prototype_call.bind(function_prototype_call);
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_apply=function_prototype_call.bind(function_prototype_apply);
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_call_bind=function_prototype_call.bind(function_prototype_bind);
 
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
@@ -671,8 +678,6 @@ function run_modules_plugin() {
 		[function_prototype_bind,function_prototype_bind,bound_bind_bind],
 	];
 	console.log(bound_function_prototype_vec);
-	/** @type {string[]} */
-	let function_as_string_vec=[];
 	Function.prototype.call=npc;
 	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function npc(thisArg,...argArray) {
@@ -712,7 +717,6 @@ function run_modules_plugin() {
 		return ret;
 	};
 	Function.prototype.apply=function_prototype_apply_inject;
-	window.g_api.function_as_string_vec=function_as_string_vec;
 }
 g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 
