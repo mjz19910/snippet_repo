@@ -764,12 +764,7 @@ function calc_next(obj,max_id) {
 	/**@type {DualR} */
 	let compress_result=compressionStatsCalc.compressor.try_compress_dual(next.arr_dual);
 	if(!compress_result[0]) {
-		/**@type {TU<string, number>[]} */
-		let res=[];
-		for(let i of compress_result[1]) {
-			res.push(i);
-		}
-		next.arr_dual=res;
+		next.arr_dual=compress_result[1];
 	} else {
 		next.arr_dual_x=compress_result[1];
 	}
