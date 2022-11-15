@@ -863,42 +863,42 @@ function run_calc(obj) {
 }
 function test_1() {
 	/* version_list file: group1/sub_a/item-_9.js */
-	/**
-	 * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
-	 */
-	function flat_obj(obj) {
-		let ret=[];
-		while(obj.next) {
-			let {next}=obj;
-			ret.push(obj);
-			obj=next;
-		}
+}
+/**
+ * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
+ */
+function flat_obj(obj) {
+	let ret=[];
+	while(obj.next) {
+		let {next}=obj;
 		ret.push(obj);
-		return ret;
+		obj=next;
 	}
-	/**
-	 * @type {any[]}
-	 */
-	let g_obj_arr;
-	/**
-	 * @param {string | number} val
-	 */
-	function do_decode(val) {
-		if(typeof val==='number') {
-			let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
-			if(!fv) {
-				console.log('not found',val);
-				return;
-			}
-			id_map[val]=fv.value.slice(2);
-		} else {
-			let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
-			if(!fv) {
-				console.log('not found',val);
-				return;
-			}
-			id_map_str.set(val,fv.value.slice(2));
+	ret.push(obj);
+	return ret;
+}
+/**
+ * @type {any[]}
+ */
+let g_obj_arr;
+/**
+ * @param {string | number} val
+ */
+function do_decode(val) {
+	if(typeof val==='number') {
+		let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
+		if(!fv) {
+			console.log('not found',val);
+			return;
 		}
+		id_map[val]=fv.value.slice(2);
+	} else {
+		let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
+		if(!fv) {
+			console.log('not found',val);
+			return;
+		}
+		id_map_str.set(val,fv.value.slice(2));
 	}
 }
 /**
