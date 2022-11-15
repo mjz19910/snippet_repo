@@ -743,129 +743,127 @@ function next_chunk(arr,start) {
 	}
 	return c_len;
 }
-test_1();
+/**
+ * @type {string[]}
+ */
+let ids=[];
+/**
+ * @param {any} value
+ */
+function get_ids(value) {
+	let ss=JSON.stringify(value);
+	return ids.indexOf(ss);
+}
+/**
+ * @param {IValue} obj
+ */
+function calc_cur(obj) {
+	if(!obj.stats_win||obj.arr_str===void 0) return;
+	obj.stats=sorted_comp_stats(obj.arr_str,obj.stats_win);
+}
+/**
+ * @param {IValue} obj
+ * @param {number} max_id
+ */
+function calc_next(obj,max_id) {
+	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
+		return null;
+	}
+	let f_val=obj.stats[0];
+	let rep_val=f_val[1];
+	if(!obj.next) {
+		return null;
+	}
+	/**@type {WithId & Partial<IDValueData>} */
+	let next=obj;
+	next.value=[max_id,'=',rep_val];
+	next.log_val=[max_id,'=',f_val[0],f_val[1]];
+	if(obj.arr_str===void 0) throw new Error("No arr");
+	next.arr_dual=compressionStatsCalc.replace_range(obj.arr_str,rep_val,max_id);
+	if(next.arr_str) return null;
+	let compress_result=compressionStatsCalc.comp.try_compress_dual(next.arr_dual);
+	if(compress_result[0]) {
+		next.arr_dual_x=compress_result[1];
+	} else {
+		next.arr_dual=compress_result[1];
+	}
+	return compress_result;
+}
+/**
+ * @param {IValue} value
+ * @param {IValue} next
+ */
+function assign_next(value,next) {
+	value.next=next;
+	return next;
+}
+/**@implements {IValue} */
+class Value {
+	/** @param {number} id */
+	constructor(id) {
+		this.id=id;
+	}
+}
+/**
+ * @param {IValue} obj
+ */
+function run_calc(obj) {
+	obj.stats_win=2;
+	calc_cur(obj);
+	if(!obj.stats) {
+		return null;
+	}
+	if(obj.stats.length===0) {
+		return null;
+	}
+	max_id++;
+	let br_obj=Object.assign({},obj);
+	if(!br_obj.stats_win) {
+		return null;
+	}
+	br_obj.stats_win++;
+	calc_cur(br_obj);
+	let br_res=calc_next(br_obj,max_id);
+	console.log('br_res',br_res);
+	let res=calc_next(obj,max_id);
+	/**@type {IValue|undefined} */
+	let br_next=br_obj.next;
+	/**@type {IValue|undefined} */
+	let next=obj.next;
+	while(true) {
+		if(!next||next.arr_str===void 0) {
+			break;
+		}
+		if(!br_next||br_next.arr_str===void 0) {
+			break;
+		}
+		if(obj.stats_win>30) {
+			break;
+		}
+		if(br_next.arr_str.length+1>=next.arr_str.length) {
+			break;
+		}
+		let br_st=br_next.arr_str.length;
+		br_obj.stats_win++;
+		obj.stats_win++;
+		calc_cur(br_obj);
+		br_next=assign_next(br_obj,new Value(obj.id+1));
+		br_res=calc_next(br_obj,max_id);
+		calc_cur(obj);
+		next=assign_next(br_obj,new Value(obj.id+1));
+		res=calc_next(obj,max_id);
+		if(!br_next.arr_str) continue;
+		let cd=br_st-br_next.arr_str.length;
+		if(cd<=1) break;
+	}
+	if(!res) {
+		return [false,null];
+	}
+	return [true,res];
+}
 function test_1() {
 	/* version_list file: group1/sub_a/item-_9.js */
 	let max_id=0;
-	/**
-	 * @type {string[]}
-	 */
-	let ids=[];
-	/**
-	 * @param {any} value
-	 */
-	function get_ids(value) {
-		let ss=JSON.stringify(value);
-		return ids.indexOf(ss);
-	}
-
-	/**
-	 * @param {IValue} obj
-	 */
-	function calc_cur(obj) {
-		if(!obj.stats_win||obj.arr_str===void 0) return;
-		obj.stats=sorted_comp_stats(obj.arr_str,obj.stats_win);
-	}
-	/**
-	 * @param {IValue} obj
-	 * @param {number} max_id
-	 */
-	function calc_next(obj,max_id) {
-		if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
-			return null;
-		}
-		let f_val=obj.stats[0];
-		let rep_val=f_val[1];
-		if(!obj.next) {
-			return null;
-		}
-		/**@type {WithId & Partial<IDValueData>} */
-		let next=obj;
-		next.value=[max_id,'=',rep_val];
-		next.log_val=[max_id,'=',f_val[0],f_val[1]];
-		if(obj.arr_str===void 0) throw new Error("No arr");
-		next.arr_dual=compressionStatsCalc.replace_range(obj.arr_str,rep_val,max_id);
-		if(next.arr_str) return null;
-		let compress_result=compressionStatsCalc.comp.try_compress_dual(next.arr_dual);
-		if(compress_result[0]) {
-			next.arr_dual_x=compress_result[1];
-		} else {
-			next.arr_dual=compress_result[1];
-		}
-		return compress_result;
-	}
-	/**
-	 * @param {IValue} value
-	 * @param {IValue} next
-	 */
-	function assign_next(value,next) {
-		value.next=next;
-		return next;
-	}
-	/**@implements {IValue} */
-	class Value {
-		/** @param {number} id */
-		constructor(id) {
-			this.id=id;
-		}
-	}
-	/**
-	 * @param {IValue} obj
-	 */
-	function run_calc(obj) {
-		obj.stats_win=2;
-		calc_cur(obj);
-		if(!obj.stats) {
-			return null;
-		}
-		if(obj.stats.length===0) {
-			return null;
-		}
-		max_id++;
-		let br_obj=Object.assign({},obj);
-		if(!br_obj.stats_win) {
-			return null;
-		}
-		br_obj.stats_win++;
-		calc_cur(br_obj);
-		let br_res=calc_next(br_obj,max_id);
-		console.log('br_res',br_res);
-		let res=calc_next(obj,max_id);
-		/**@type {IValue|undefined} */
-		let br_next=br_obj.next;
-		/**@type {IValue|undefined} */
-		let next=obj.next;
-		while(true) {
-			if(!next||next.arr_str===void 0) {
-				break;
-			}
-			if(!br_next||br_next.arr_str===void 0) {
-				break;
-			}
-			if(obj.stats_win>30) {
-				break;
-			}
-			if(br_next.arr_str.length+1>=next.arr_str.length) {
-				break;
-			}
-			let br_st=br_next.arr_str.length;
-			br_obj.stats_win++;
-			obj.stats_win++;
-			calc_cur(br_obj);
-			br_next=assign_next(br_obj,new Value(obj.id+1));
-			br_res=calc_next(br_obj,max_id);
-			calc_cur(obj);
-			next=assign_next(br_obj,new Value(obj.id+1));
-			res=calc_next(obj,max_id);
-			if(!br_next.arr_str) continue;
-			let cd=br_st-br_next.arr_str.length;
-			if(cd<=1) break;
-		}
-		if(!res) {
-			return [false,null];
-		}
-		return [true,res];
-	}
 	/**
 	 * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
 	 */
@@ -1103,6 +1101,7 @@ function test_1() {
 	}
 	g_api.compress_main=new VV(compress_main);
 }
+test_1();
 class HexRandomDataGenerator {
 	constructor() {
 		this.random_num=Math.random();
