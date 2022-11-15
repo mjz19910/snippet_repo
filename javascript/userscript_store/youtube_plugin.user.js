@@ -1553,6 +1553,13 @@ function as_node(value) {
 	return value;
 }
 
+/**@return {HTMLDivElement} */
+function createOverlayContent() {
+	let element=document.createElement("div");
+	element.style.userSelect="all";
+	element.style.width='max-content';
+	return element;
+}
 
 /**@type {HTMLDivElement}*/
 let overlay_content_div=createOverlayContent();
@@ -2137,14 +2144,6 @@ function fix_offset() {
 let title_save=localStorage.title_save_data;
 if(!title_save) {
 	title_save=localStorage.title_save_data='{"value":false}';
-}
-
-/**@return {HTMLDivElement} */
-function createOverlayContent() {
-	let element=document.createElement("div");
-	element.style.userSelect="all";
-	element.style.width='max-content';
-	return element;
 }
 
 function log_current_video_data() {
