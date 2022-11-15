@@ -247,7 +247,7 @@ function to_tuple_arr(keys,values) {
 	return ret;
 }
 g_api.to_tuple_arr=to_tuple_arr;
-/** @type {<T, U>(v:any[], r:T, rr: U)=>boolean} */
+/** @param {any[]} arr @param {number} idx @param {number} range */
 function range_matches(arr,idx,range) {
 	for(let i=idx;i<arr.length;i++) {
 		if(arr[i]!==range) return false;
