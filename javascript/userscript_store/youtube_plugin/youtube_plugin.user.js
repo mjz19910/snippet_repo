@@ -860,7 +860,7 @@ class HandleRichGridRenderer {
 			}
 			if(!content_item.richItemRenderer) return true;
 			check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
-			console.assert(content_item.richItemRenderer.content != void 0,"richItemRenderer has content");
+			console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
 			let {content}=content_item.richItemRenderer;
 			check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
 			if(content.adSlotRenderer) {
@@ -1064,30 +1064,40 @@ g_api.blob_create_args_arr=blob_create_args_arr;
 let yt_handlers=new YTFilterHandlers;
 g_api.yt_handlers=yt_handlers;
 function setup_prototype_modify() {
-	/** @type {Map<string, any[]>}*/
+	/** @type {Map<string, Blob | MediaSource>}*/
 	let created_blobs=new Map;
 	window.created_blobs=created_blobs;
+	/** @type {Set<string>}*/
 	let active_blob_set=new Set;
 	window.active_blob_set=active_blob_set;
 	URL.createObjectURL=new Proxy(URL.createObjectURL,{
-		apply(...arr) {
-			let [target_fn,this_,args]=arr;
+		/**
+		 * @arg {typeof URL['createObjectURL']} target
+		 * @arg {typeof URL} thisArg
+		 * @arg {[Blob | MediaSource]} args
+		*/
+		apply(target,thisArg,args) {
 			let [url_source,...rest]=args;
 			if(rest.length>0) {
-				leftover_args.push([target_fn,this_,rest]);
+				leftover_args.push([target,thisArg,rest]);
 			}
 			blob_create_args_arr.push(url_source);
-			let ret=Reflect.apply(...arr);
+			let ret=Reflect.apply(target,thisArg,args);
 			created_blobs.set(ret,url_source);
 			active_blob_set.add(ret);
 			return ret;
 		}
 	});
 	URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
-		apply(...proxy_args) {
-			let val=proxy_args[2][0];
+		/**
+		 * @arg {typeof URL['revokeObjectURL']} target
+		 * @arg {typeof URL} thisArg
+		 * @arg {[string]} args
+		*/
+		apply(target,thisArg,args) {
+			let val=args[0];
 			active_blob_set.delete(val);
-			return Reflect.apply(...proxy_args);
+			return Reflect.apply(target,thisArg,args);
 		}
 	});
 	original_fetch=fetch;

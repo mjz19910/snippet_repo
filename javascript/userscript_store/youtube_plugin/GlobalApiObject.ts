@@ -7,7 +7,7 @@ export interface GlobalApiObject {
 	dom_observer?: {};
 	yt_handlers?: {};
 	blob_create_args_arr?: {};
-	yt_state_map?: {};
-	PropertyHandler?: {};
-	Seen?: {};
+	yt_state_map?: Map<string, {}>;
+	PropertyHandler?: typeof PropertyHandler;
+	Seen?: Seen;
 };

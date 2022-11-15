@@ -14,8 +14,8 @@ declare global {
 	}
 
 	interface Window {
-		created_blobs: Map<string, unknown>;
-		active_blob_set: Set<unknown>;
+		created_blobs: Map<string, Blob | MediaSource>;
+		active_blob_set: Set<string>;
 	}
 
 	interface Window {
