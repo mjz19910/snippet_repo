@@ -550,12 +550,8 @@ function found_modules(a,c,m_require) {
 };
 
 
-/**
- * @param {(this: Function, thisArg: any, ...argArray: any[]) => any} oc
- * @param {{ (a: any, c: any, m_require: any): void; (arg0: any, arg1: any, arg2: any): void; }} cb
- */
-function run_modules_plugin(oc,cb) {
-	void oc;
+// run_modules_plugin();
+function run_modules_plugin() {
 	/**@type {any} */
 	let fn_call=Function.prototype.call;
 	/**@type {{rep?:boolean}} */
@@ -565,9 +561,6 @@ function run_modules_plugin(oc,cb) {
 		return;
 	}
 	let function_prototype=resolve_function_constructor().prototype;
-	if(globalThis.Node===void 0) {
-		let function_prototype=Function.prototype;
-	}
 
 	let function_prototype_call=function_prototype.call;
 	let function_prototype_apply=function_prototype.apply;
@@ -641,7 +634,7 @@ function run_modules_plugin(oc,cb) {
 						var mods=Object.entries(argArray[2]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
 						if(mods.length>0) {
 							console.log("found module cache:","require."+mods[0][0]);
-							cb(ars[0][1],mods[0][1],argArray[2]);
+							found_modules(ars[0][1],mods[0][1],argArray[2]);
 						}
 					}
 				}
