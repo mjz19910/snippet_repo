@@ -857,7 +857,7 @@ class CompressionStatsCalculator {
 				return false;
 			}
 			/**
-			 * @type {{ compressor: { try_decompress: (arg0: any) => any[]; }; state_history_arr: any; }}
+			 * @type {AutoBuy}
 			 */
 			let g_auto_buy;
 			/**

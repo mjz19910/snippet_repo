@@ -9,6 +9,10 @@ declare global {
 }
 
 declare global {
+	class AutoBuy {
+		compressor: any;
+	}
+
 	type IDValueT=WithId&Partial<IdData>;
 
 	interface WithId {
@@ -20,10 +24,10 @@ declare global {
 		arr_1: (string|number|Repeat<string>|Repeat<number>)[];
 		arr_2: (["U",number]|["T",string])[];
 		next: WithId;
-		rep_arr: (["U", number] | ["T", string])[];
+		rep_arr: (["U",number]|["T",string])[];
 		value: [number,'=',number];
 		arr_rep: number[];
-		log_val: [number,'=',string, number];
+		log_val: [number,'=',string,number];
 		stats: [string,number][];
 		arr_str: string[];
 		arr_num: number[];
