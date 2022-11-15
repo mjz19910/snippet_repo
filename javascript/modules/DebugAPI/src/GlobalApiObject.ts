@@ -1,5 +1,28 @@
+import {CreateObjURLCache, GenericEvent, getPlaybackRateMap} from "./mod.js";
+import {IterExtensions} from "./IterExtensions";
+import {to_tuple_arr} from "./to_tuple_arr";
+import {CompressRepeated} from "./CompressRepeated";
+import {Repeat} from "./Repeat.js";
+import {VoidCallback} from "./VoidCallback.js";
+import {range_matches} from "./range_matches.js";
+import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
+import {HexRandomDataGenerator} from "./HexRandomDataGenerator.js";
+import {EventListenerValue} from "./EventListenerValue.js";
+import {GenericDataEvent} from "./GenericDataEvent.js";
+import {Dumper} from "./Dumper.js";
+import {RustSimpleTokenizer} from "./RustSimpleTokenizer.js";
+import {RustTokenTreeParser} from "./RustTokenTreeParser.js";
+import {WeakValueRef} from "./WeakValueRef.js";
+import {CSSCascade} from "./CSSCascade.js";
+import {OriginState} from "./OriginState.js";
+import {RemoteOriginConnection} from "./RemoteOriginConnection.js";
+import {APIProxyManager} from "./APIProxyManager.js";
+import {LoggingEventTarget} from "./LoggingEventTarget.js";
+import {DebugAPI} from "./DebugAPI.js";
+
 // DebugAPI
 export interface GlobalApiObject {
+	parse_html_to_binary_arr: (html: string) => unknown[];
 	run_modules_plugin: VoidCallback;
 	run_wasm_plugin: VoidCallback;
 	compress_main: VoidCallback;
@@ -16,7 +39,7 @@ export interface GlobalApiObject {
 	EventListenerValue: typeof EventListenerValue;
 	GenericEvent: typeof GenericEvent;
 	GenericDataEvent: typeof GenericDataEvent;
-	GenericEventTarget: typeof GenericEventTarget;
+	GenericEventTarget: typeof GenericEventTarget.;
 	Dumper: typeof Dumper;
 	RustSimpleTokenizer: typeof RustSimpleTokenizer;
 	RustSimpleParser: typeof RustTokenTreeParser;

@@ -1,4 +1,5 @@
 import {GlobalApiObject} from "./GlobalApiObject";
+import {Repeat} from "./Repeat.js";
 
 export {};
 
