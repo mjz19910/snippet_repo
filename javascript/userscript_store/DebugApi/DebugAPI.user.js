@@ -403,8 +403,8 @@ class MulCompression extends BaseCompression {
 			ret.push(item);
 		}
 		if(this.did_compress(arr,ret))
-			return ["X",ret];
-		return ["T",arr];
+			return [true,ret];
+		return [false,arr];
 	}
 	/**
 	 * @template {ST} U
@@ -763,7 +763,7 @@ function calc_next(obj,max_id) {
 	if(next.arr_str) return null;
 	/**@type {DualR} */
 	let compress_result=compressionStatsCalc.compressor.try_compress_dual(next.arr_dual);
-	if(compress_result[0]==='T') {
+	if(!compress_result[0]) {
 		/**@type {TU<string, number>[]} */
 		let res=[];
 		for(let i of compress_result[1]) {

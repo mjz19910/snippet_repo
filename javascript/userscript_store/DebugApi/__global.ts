@@ -21,7 +21,7 @@ declare global {
 
 	type ST={type:symbol} & (new (...args: any) => any);
 
-	type DualR=["T", TU<string,number>[]] | ["X", TX<string,number>[]];
+	type DualR=[false, TU<string,number>[]] | [true, TX<string,number>[]];
 
 	type IValue=WithId&Partial<IDValueData>;
 
