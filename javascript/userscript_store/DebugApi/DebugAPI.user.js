@@ -983,7 +983,7 @@ function decode_map(value) {
 	return value;
 }
 /**
- * @type {<U extends {},V extends {},T extends V|U[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
+ * @type {<T extends {}|{}[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
  */
 function deep_eq(obj_1,obj_2) {
 	if(obj_1===obj_2)
@@ -1013,14 +1013,18 @@ function deep_eq(obj_1,obj_2) {
 	throw new Error("Fixme");
 }
 /**
- * @param {string | any[]} arr
- * @param {any} value
+ * @arg {string[][]} arr_2d
+ * @arg {number} key
+ * @param {string} value
  */
-function deep_includes(arr,value) {
+function shallow_includes(arr_2d,key,value) {
+	if(arr_2d[key]===void 0) {
+		arr_2d[key]=[];
+	}
+	let arr=arr_2d[key];
 	for(let i=0;i<arr.length;i++) {
-		let is_eq=deep_eq(arr[i],value);
-		if(is_eq)
-			return true;
+		if(arr[i]!==value) continue;
+		return true;
 	}
 	return false;
 }
@@ -1051,13 +1055,12 @@ function compress_main() {
 	}
 	ids=[...new Set(src_arr)];
 	id_groups=[];
-	src_arr.forEach(value => {
+	for(let value of src_arr) {
 		let ii=ids.indexOf(value);
-		id_groups[ii]??=[];
-		if(!deep_includes(id_groups[ii],value))
+		if(!shallow_includes(id_groups,ii,value)) {
 			id_groups[ii].push(value);
+		}
 	}
-	);
 	el_ids=src_arr.map(get_ids);
 	max_id=new Set(el_ids).size;
 	let arr=compressionStatsCalc.compressor.try_compress_T(NumType,el_ids);
