@@ -625,14 +625,6 @@ function resolve_function_constructor() {
 }
 
 function run_modules_plugin() {
-	/**@type {any} */
-	let fn_call=Function.prototype.call;
-	/**@type {{rep?:boolean}} */
-	let fn_call_1=fn_call;
-	if(fn_call_1.rep) {
-		location.reload();
-		return;
-	}
 	let function_prototype=resolve_function_constructor().prototype;
 
 	let function_prototype_call=function_prototype.call;
