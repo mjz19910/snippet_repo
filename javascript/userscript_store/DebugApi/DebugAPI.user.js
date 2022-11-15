@@ -747,11 +747,10 @@ function next_chunk(arr,start) {
  */
 let ids=[];
 /**
- * @param {any} value
+ * @param {string} value
  */
 function get_ids(value) {
-	let ss=JSON.stringify(value);
-	return ids.indexOf(ss);
+	return ids.indexOf(value);
 }
 /**
  * @param {IValue} obj
@@ -1030,20 +1029,11 @@ function deep_includes(arr,value) {
  */
 let g_auto_buy;
 /**
- * @type {any[]}
+ * @type {string[]}
  */
 let src_arr;
-/**
- * @type {{ event_log: any[]; }}
- */
-let g_dom_observer;
 function compress_init() {
 	dr_map=[];
-	if(g_auto_buy) {
-		src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
-	} else {
-		src_arr=g_dom_observer.event_log;
-	}
 }
 /**
  * @type {any[][]}
@@ -1053,10 +1043,16 @@ let el_ids;
 class NumType {static type=Symbol.for("number");}
 function compress_main() {
 	compress_init();
-	ids=[...new Set((src_arr.map(e => JSON.stringify(e))))];
+	if(g_auto_buy) {
+		src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
+	} else {
+		console.log("TODO: use event_log (can't find it)");
+		return;
+	}
+	ids=[...new Set(src_arr)];
 	id_groups=[];
 	src_arr.forEach(e => {
-		let ii=ids.indexOf(JSON.stringify(e));
+		let ii=ids.indexOf(e);
 		id_groups[ii]??=[];
 		if(!deep_includes(id_groups[ii],e))
 			id_groups[ii].push(e);
