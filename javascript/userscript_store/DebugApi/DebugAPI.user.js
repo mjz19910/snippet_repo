@@ -512,23 +512,165 @@ class MulCompression extends BaseCompression {
 
 /**
  * @param {(key:"apply"|"bind"|"call")=>void} bound_function
- * @param {Extract<keyof Function,string>[]} keys
+ * @param {("apply"|"bind"|"call"|symbol)[]} keys
  */
 function do_iter(bound_function,keys) {
 	for(let key of keys) {
 		switch(key) {
 			case 'apply': bound_function(key); break;
-			case 'arguments': break;
 			case 'bind': bound_function(key); break;
 			case 'call': bound_function(key); break;
-			case 'caller': break;
-			case 'length': break;
-			case 'name': break;
-			case 'prototype': break;
-			case 'toString': break;
+			default: break;
 		}
 	}
 }
+
+function resolve_function_constructor() {
+	if(globalThis.Node===void 0) {
+		// we are in Node, there is no DOM
+		return Function;
+	}
+	let iframe_element=document.createElement("iframe");
+	document.head.append(iframe_element);
+
+	if(!iframe_element.contentWindow) throw new Error("No content window");
+
+	let content_window_r=iframe_element.contentWindow;
+	let content_window=content_window_r.self;
+
+	return content_window.Function;
+}
+/**
+ * @param {any} a
+ * @param {any} c
+ * @param {any} m_require
+ */
+function found_modules(a,c,m_require) {
+	void a,c,m_require;
+};
+
+
+/**
+ * @param {(this: Function, thisArg: any, ...argArray: any[]) => any} oc
+ * @param {{ (a: any, c: any, m_require: any): void; (arg0: any, arg1: any, arg2: any): void; }} cb
+ */
+function run_modules_plugin(oc,cb) {
+	void oc;
+	/**@type {any} */
+	let fn_call=Function.prototype.call;
+	/**@type {{rep?:boolean}} */
+	let fn_call_1=fn_call;
+	if(fn_call_1.rep) {
+		location.reload();
+		return;
+	}
+	let function_prototype=resolve_function_constructor().prototype;
+	if(globalThis.Node===void 0) {
+		let function_prototype=Function.prototype;
+	}
+
+	let function_prototype_call=function_prototype.call;
+	let function_prototype_apply=function_prototype.apply;
+	let function_prototype_bind=function_prototype.bind;
+
+	let bound_function_prototype_call=function_prototype_call.bind(function_prototype_call);
+	let bound_function_prototype_call_1=function_prototype_call.bind(function_prototype_apply);
+	let bound_function_prototype_call_2=function_prototype_call.bind(function_prototype_bind);
+
+	let bound_function_prototype_bind=function_prototype_bind.bind(function_prototype_call);
+	let bound_function_prototype_bind_1=function_prototype_bind.bind(function_prototype_apply);
+	let bound_function_prototype_bind_2=function_prototype_bind.bind(function_prototype_bind);
+
+	let bound_function_prototype_apply=function_prototype_apply.bind(function_prototype_call);
+	let bound_function_prototype_apply_1=function_prototype_apply.bind(function_prototype_apply);
+	let bound_function_prototype_apply_2=function_prototype_apply.bind(function_prototype_bind);
+
+	let safe_function_prototype=Object.assign({},function_prototype);
+	console.log(safe_function_prototype);
+
+	function gen_function_prototype_use_1() {
+		/** @type {["apply","bind","call"]}*/
+		let keys=["apply","bind","call"];
+		let apply_=safe_function_prototype[keys[0]];
+		let bind_=safe_function_prototype[keys[1]];
+		let call_=safe_function_prototype[keys[2]];
+		/** @type {[typeof apply_,typeof bind_,typeof call_]}*/
+		let funcs=[apply_,bind_,call_];
+
+		let bound_bind=apply_.bind(bind_);
+		let bound_call=apply_.bind(call_);
+		let bound_apply=apply_.bind(apply_);
+
+		/** @type {[typeof bound_apply,typeof bound_bind,typeof bound_call]}*/
+		let bound_funcs=[
+			bound_apply,
+			bound_call,
+			bound_apply,
+		];
+		return {funcs,bound_funcs};
+	}
+
+	let info=gen_function_prototype_use_1();
+	console.log(info);
+
+	let bound_function_prototype_vec=[
+		[function_prototype_call,function_prototype_call,bound_function_prototype_call],
+		[function_prototype_call,function_prototype_apply,bound_function_prototype_call_1],
+		[function_prototype_call,function_prototype_bind,bound_function_prototype_call_2],
+		[function_prototype_apply,function_prototype_call,bound_function_prototype_apply],
+		[function_prototype_apply,function_prototype_apply,bound_function_prototype_apply_1],
+		[function_prototype_apply,function_prototype_bind,bound_function_prototype_apply_2],
+		[function_prototype_bind,function_prototype_call,bound_function_prototype_bind],
+		[function_prototype_bind,function_prototype_apply,bound_function_prototype_bind_1],
+		[function_prototype_bind,function_prototype_bind,bound_function_prototype_bind_2],
+	];
+	console.log(bound_function_prototype_vec);
+	/** @type {string[]} */
+	let s_func=[];
+	Function.prototype.call=npc;
+	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
+	function npc(thisArg,...argArray) {
+		var c;
+		switch(argArray.length) {
+			case 2:
+				if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
+					var ars=Object.entries(argArray[2]).filter(([j,e]) => e instanceof Array);
+					var ars_i=ars[0][1].indexOf(this);
+					if(ars[0][1].indexOf(this)>-1) {
+						console.log("found module array:","require."+ars[0][0]);
+						var mods=Object.entries(argArray[2]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
+						if(mods.length>0) {
+							console.log("found module cache:","require."+mods[0][0]);
+							cb(ars[0][1],mods[0][1],argArray[2]);
+						}
+					}
+				}
+			default:
+				c=bound_function_prototype_apply(this,[thisArg,...argArray]);
+		}
+		if(s_func.indexOf(this.toString())==-1) {
+			s_func.push(this.toString());
+		}
+		return c;
+	};
+	/**
+	 * @this {{}}
+	 * @param {any} tv
+	 * @param {any} r
+	 */
+	function nac(tv,r) {
+		var c;
+		c=bound_function_prototype_apply(this,[tv,r]);
+		if(s_func.indexOf(this.toString())==-1) {
+			s_func.push(this.toString());
+		}
+		return c;
+	};
+	Function.prototype.apply=nac;
+	npc.rep=1;
+	window.g_api.s_func=s_func;
+	return s_func;
+};
 
 class CompressionStatsCalculator {
 	constructor() {
@@ -602,138 +744,6 @@ class CompressionStatsCalculator {
 		return ret;
 	}
 	test() {
-		/**
-		 * @param {any} a
-		 * @param {any} c
-		 * @param {any} m_require
-		 */
-		function found_modules(a,c,m_require) {
-			void a,c,m_require;
-		};
-		/**
-		 * @param {(this: Function, thisArg: any, ...argArray: any[]) => any} oc
-		 * @param {{ (a: any, c: any, m_require: any): void; (arg0: any, arg1: any, arg2: any): void; }} cb
-		 */
-		function rv(oc,cb) {
-			void oc;
-			/**@type {any} */
-			let fn_call=Function.prototype.call;
-			/**@type {{rep?:boolean}} */
-			let fn_call_1=fn_call;
-			if(fn_call_1.rep) {
-				location.reload();
-				return;
-			}
-			var iframe_element=document.createElement("iframe");
-			document.head.append(iframe_element);
-
-			if(!iframe_element.contentWindow) throw new Error("No content window");
-
-			let content_window_r=iframe_element.contentWindow;
-			let content_window=content_window_r.self;
-
-			let i_Function=content_window.Function;
-			let function_prototype=i_Function.prototype;
-
-			let function_prototype_call=function_prototype.call;
-			let function_prototype_apply=function_prototype.apply;
-			let function_prototype_bind=function_prototype.bind;
-
-			let bound_function_prototype_call=function_prototype_call.bind(function_prototype_call);
-			let bound_function_prototype_call_1=function_prototype_call.bind(function_prototype_apply);
-			let bound_function_prototype_call_2=function_prototype_call.bind(function_prototype_bind);
-
-			let bound_function_prototype_bind=function_prototype_bind.bind(function_prototype_call);
-			let bound_function_prototype_bind_1=function_prototype_bind.bind(function_prototype_apply);
-			let bound_function_prototype_bind_2=function_prototype_bind.bind(function_prototype_bind);
-
-			let bound_function_prototype_apply=function_prototype_apply.bind(function_prototype_call);
-			let bound_function_prototype_apply_1=function_prototype_apply.bind(function_prototype_apply);
-			let bound_function_prototype_apply_2=function_prototype_apply.bind(function_prototype_bind);
-
-			let safe_function_prototype={
-				...function_prototype,
-			};
-			console.log(safe_function_prototype);
-
-			/** @param {any} v */
-			function ANY(v) {
-				return v;
-			}
-
-			function gen_function_prototype_use_1() {
-				let obj=safe_function_prototype;
-				/**@type {Extract<keyof Function,string>[]} */
-				let keys=ANY(Object.keys(obj));
-				do_iter(gen_function_prototype_use_2,keys);
-				obj.apply.bind(obj.apply);
-			}
-
-			function gen_function_prototype_use_2(key_1) {}
-
-			gen_function_prototype_use_1();
-
-			let bound_function_prototype_vec=[
-				[function_prototype_call,function_prototype_call,bound_function_prototype_call],
-				[function_prototype_call,function_prototype_apply,bound_function_prototype_call_1],
-				[function_prototype_call,function_prototype_bind,bound_function_prototype_call_2],
-				[function_prototype_apply,function_prototype_call,bound_function_prototype_apply],
-				[function_prototype_apply,function_prototype_apply,bound_function_prototype_apply_1],
-				[function_prototype_apply,function_prototype_bind,bound_function_prototype_apply_2],
-				[function_prototype_bind,function_prototype_call,bound_function_prototype_bind],
-				[function_prototype_bind,function_prototype_apply,bound_function_prototype_bind_1],
-				[function_prototype_bind,function_prototype_bind,bound_function_prototype_bind_2],
-			];
-			console.log(bound_function_prototype_vec);
-			/** @type {string[]} */
-			let s_func=[];
-			Function.prototype.call=npc;
-			/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
-			function npc(thisArg,...argArray) {
-				var c;
-				switch(argArray.length) {
-					case 2:
-						if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-							var ars=Object.entries(argArray[2]).filter(([j,e]) => e instanceof Array);
-							var ars_i=ars[0][1].indexOf(this);
-							if(ars[0][1].indexOf(this)>-1) {
-								console.log("found module array:","require."+ars[0][0]);
-								var mods=Object.entries(argArray[2]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
-								if(mods.length>0) {
-									console.log("found module cache:","require."+mods[0][0]);
-									cb(ars[0][1],mods[0][1],argArray[2]);
-								}
-							}
-						}
-					default:
-						c=apply_function_proto_call(this,[thisArg,...argArray]);
-				}
-				if(s_func.indexOf(this.toString())==-1) {
-					s_func.push(this.toString());
-				}
-				return c;
-			};
-			/**
-			 * @this {{}}
-			 * @param {any} tv
-			 * @param {any} r
-			 */
-			function nac(tv,r) {
-				var c;
-				c=bound_function_prototype_apply(this,[tv,r]);
-				if(s_func.indexOf(this.toString())==-1) {
-					s_func.push(this.toString());
-				}
-				return c;
-			};
-			Function.prototype.apply=nac;
-			npc.rep=1;
-			window.g_api.s_func=s_func;
-			return s_func;
-		};
-		rv(Function.prototype.call,found_modules);
-		void [rv,found_modules];
-
 		let obj={
 			arr: [],
 		};
