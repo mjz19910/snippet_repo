@@ -130,6 +130,15 @@ class WMap {
 
 /** @template T */
 class Repeat {
+	/**
+	 * @template T
+	 * @arg {Map<number, Map<number, Repeat<T>>>} mp
+	 * @arg {{}} item
+	 * @param {number} off
+	 */
+	static get_with(mp,item,off) {
+		throw new Error("Method not implemented.");
+	}
 	/**@type {Repeat<null>} */
 	static N=new Repeat(null,0);
 	/**@type {Map<string, Map<number, Repeat<string>>>} */
@@ -397,8 +406,8 @@ class MulCompression extends BaseCompression {
 		return ret_1;
 	}
 	/**
-	 * @template {InstanceType<U>} T
 	 * @template {abstract new (...args: any) => any} U
+	 * @template {InstanceType<U>} T
 	 * @arg {U} c_k
 	 * @arg {T[]} arr
 	 * @returns {[true, X<T>[]]|[false,T[]]} */
@@ -415,6 +424,7 @@ class MulCompression extends BaseCompression {
 					}
 					if(off>1) {
 						let mp=Repeat.N.get_map_T(c_k,item);
+						Repeat.get_with(mp,item,off);
 						ret.push(new Repeat(item,off));
 						i+=off-1;
 						continue;
@@ -950,6 +960,7 @@ class CompressionStatsCalculator {
 			 */
 			let id_groups;
 			let el_ids;
+			class NumType {static type=Symbol.for("number")}
 			function compress_main() {
 				compress_init();
 				ids=[...new Set((src_arr.map(e => JSON.stringify(e))))];
@@ -963,7 +974,7 @@ class CompressionStatsCalculator {
 				);
 				el_ids=src_arr.map(get_ids);
 				max_id=new Set(el_ids).size;
-				let arr=csc.comp.try_compress_T(Symbol.for("number"), el_ids);
+				let arr=csc.comp.try_compress_T(NumType, el_ids);
 				/**@type {IValue} */
 				let obj_start={
 					id: 0,
