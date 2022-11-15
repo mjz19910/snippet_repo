@@ -599,7 +599,6 @@ function run_wasm_plugin() {
 
 	wasm_global_memory_view.set(wasm_header,0);
 }
-
 g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
 
 function run_modules_plugin() {
@@ -721,7 +720,8 @@ function run_modules_plugin() {
 	npc.rep=1;
 	window.g_api.s_func=s_func;
 	return s_func;
-};
+}
+g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 
 class CompressionStatsCalculator {
 	constructor() {
