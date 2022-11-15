@@ -1717,9 +1717,13 @@ let css_str=`
 	}
 	/*# sourceURL=yt_css_user */
 `;
+/**
+ * @param {string} css_content
+ */
 function createStyleElement(css_content) {
 	let style=document.createElement("style");
-	ui_plugin_style_element.innerHTML=css_content;
+	style.innerHTML=css_content;
+	return style;
 }
 let ui_plugin_style_element=createStyleElement(css_str);
 ui_plugin_style_element.innerHTML=css_str;
@@ -2000,6 +2004,7 @@ function yt_watch_page_loaded_handler() {
 	debugger;
 	title_text_overlay_update();
 	init_ui_plugin();
+	if(!ytd_player) return;
 	ytd_player.active_nav=false;
 	ytd_player.init_nav=true;
 }
@@ -2039,7 +2044,7 @@ let player_overlay_style_str=`
 		width: 10px;
 	`;
 let waiting_for_ytd_player=false;
-/** @type {number | NodeJS.Timeout | null} */
+/** @type {number | null} */
 let current_timeout=null;
 function init_ui_plugin() {
 	if(waiting_for_ytd_player) return;
@@ -2335,11 +2340,19 @@ let volume_plugin_style_source=`
 	/\*# sourceURL=youtube_volume_plugin_style_source*\/
 `;
 
+/**
+ * @param {AudioContext} audio_ctx
+ * @param {AudioNode} next_node
+ */
 function createGainNode(audio_ctx,next_node) {
 	let node=audio_ctx.createGain();
 	node.connect(next_node);
 	return node;
 }
+/**
+ * @param {AudioContext} audio_ctx
+ * @param {AudioNode} next_node
+ */
 function createDynamicsCompressor(audio_ctx,next_node) {
 	let node=audio_ctx.createDynamicsCompressor();
 	node.connect(next_node);
