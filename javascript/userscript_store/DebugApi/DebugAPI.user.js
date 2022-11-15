@@ -55,7 +55,7 @@ function getPlaybackRateMap(include_uninteresting) {
 		if(!include_uninteresting&&i===100) continue;
 		let elem=document.querySelectorAll(sel(i.toString()));
 		if(elem.length==1) {
-			progress_map.set("some:"+i,elem[0]);
+			progress_map.set("some:"+i,[...elem]);
 		} else if(elem.length>0) {
 			progress_map.set("some:"+i,[...elem]);
 		}
@@ -524,14 +524,14 @@ class CompressionStatsCalculator {
 			}
 
 			/**
-			 * @param {WithNext} obj
+			 * @param {WithId} obj
 			 */
 			function calc_cur(obj) {
-				if(!obj.stats_win) return;
+				if(!obj.stats_win||obj.arr===void 0) return;
 				obj.stats=sorted_comp_stats(obj.arr,obj.stats_win);
 			}
 			/**
-			 * @param {WithNext} obj
+			 * @param {WithId} obj
 			 * @param {number} max_id
 			 */
 			function calc_next(obj,max_id) {
@@ -544,7 +544,8 @@ class CompressionStatsCalculator {
 					return null;
 				}
 				obj.next.value=[max_id,'=',rep_val];
-				obj.next.log_val=[max_id,'=',f_val[0][0],rep_val,'*',f_val[1]];
+				obj.next.log_val=[max_id,'=',f_val[0],f_val[1]];
+				if(obj.arr===void 0) throw new Error("No arr");
 				obj.next.rep_arr=csc.replace_range(obj.arr,rep_val,max_id);
 				if(obj.next.arr)
 					return null;
@@ -553,7 +554,7 @@ class CompressionStatsCalculator {
 				return compress_result;
 			}
 			/**
-			 * @param {WithNext} obj
+			 * @param {WithId} obj
 			 */
 			function run_calc(obj) {
 				obj.stats_win=2;
@@ -568,7 +569,7 @@ class CompressionStatsCalculator {
 					id: obj.id+1
 				};
 				max_id++;
-				/**@type {WithNext} */
+				/**@type {WithId} */
 				let br_obj=Object.assign({},obj,{next: {id: obj.id+1}});
 				if(!br_obj.stats_win) {
 					return null;
@@ -577,7 +578,7 @@ class CompressionStatsCalculator {
 				calc_cur(br_obj);
 				let br_res=calc_next(br_obj,max_id);
 				let res=calc_next(obj,max_id);
-				while(br_obj.next&&br_obj.next.arr&&br_obj.next.arr.length+1<obj.next.arr.length&&obj.stats_win<30) {
+				while(br_obj.next&&br_obj.next.arr!==void 0&&obj.next.arr!==void 0&&br_obj.next.arr.length+1<obj.next.arr.length&&obj.stats_win<30) {
 					let br_st=br_obj.next.arr.length;
 					br_obj.stats_win++;
 					obj.stats_win++;
@@ -802,7 +803,7 @@ class CompressionStatsCalculator {
 				el_ids=src_arr.map(get_ids);
 				max_id=new Set(el_ids).size;
 				let arr=csc.comp.try_compress_num(el_ids)[1];
-				/**@type {WithNext} */
+				/**@type {WithId} */
 				let obj_start={
 					id: 0,
 					arr_rep: el_ids,

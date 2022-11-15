@@ -1,13 +1,27 @@
 // DebugAPI
 export interface GlobalApiObject {
-	s_func: string[];
-	HexRandomDataGenerator: typeof HexRandomDataGenerator;
-	CompressionStatsCalculator: typeof CompressionStatsCalculator;
-	range_matches: (arr: any[],idx: number,range: number) => boolean;
-	to_tuple_arr: <T,U>(a: T[],b: U[]) => [T,U][];
-	CompressRepeated: typeof CompressRepeated;
-	Repeat: typeof Repeat;
 	IterExtensions: typeof IterExtensions;
+	getPlaybackRateMap: typeof getPlaybackRateMap;
 	CreateObjURLCache: typeof CreateObjURLCache;
-	getPlaybackRateMap: (include_uninteresting: boolean) => Map<any,any>;
+	Repeat: typeof Repeat;
+	CompressRepeated: typeof CompressRepeated;
+	to_tuple_arr: typeof to_tuple_arr;
+	range_matches: typeof range_matches;
+	s_func: string[];
+	CompressionStatsCalculator: typeof CompressionStatsCalculator;
+	HexRandomDataGenerator: typeof HexRandomDataGenerator;
+	EventListenerValue: typeof EventListenerValue;
+	GenericEvent: typeof GenericEvent;
+	GenericDataEvent: typeof GenericDataEvent;
+	GenericEventTarget: typeof GenericEventTarget;
+	Dumper: typeof Dumper;
+	RustSimpleTokenizer: typeof RustSimpleTokenizer;
+	RustSimpleParser: typeof RustTokenTreeParser;
+	WeakValueRef: typeof WeakValueRef;
+	CSSCascade: typeof CSSCascade;
+	OriginState: typeof OriginState;
+	ConnectToRemoteOrigin: typeof RemoteOriginConnection;
+	APIProxyManager: typeof APIProxyManager;
+	LoggingEventTarget: typeof LoggingEventTarget;
+	DebugAPI: any;
 }

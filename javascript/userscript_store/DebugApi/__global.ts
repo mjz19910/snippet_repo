@@ -9,15 +9,15 @@ declare global {
 }
 
 declare global {
-	interface WithNext {
+	interface WithId {
 		rep_arr?: any[];
 		value?: any[];
-		log_val?: boolean[];
+		log_val?: [number,'=',string, number];
 		id: number;
-		arr_rep: number[];
-		next?: WithNext;
+		arr_rep?: number[];
+		next?: WithId;
 		stats?: [string,number][];
-		arr: any[];
+		arr?: any[];
 		stats_win?: number;
 	}
 
