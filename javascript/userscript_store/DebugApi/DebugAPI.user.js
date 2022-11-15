@@ -623,6 +623,7 @@ class CompressionStatsCalculator {
 				value.next=next;
 				return next;
 			}
+			/**@implements {IValue} */
 			class Value {
 				/** @param {number} id */
 				constructor(id) {

@@ -10,7 +10,8 @@ declare global {
 
 declare global {
 	class AutoBuy {
-		compressor: any;
+		compressor: MulCompression;
+		state_history_arr: string[];
 	}
 
 	interface IValue extends WithId,Partial<IDValueData> {}
