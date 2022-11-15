@@ -638,7 +638,7 @@ function run_modules_plugin() {
 	};
 	console.log(safe_function_prototype);
 
-	function gen_function_prototype_use_1() {
+	function gen_function_prototype_use() {
 		/** @type {["apply","bind","call"]}*/
 		let keys=["apply","bind","call"];
 		let apply_=safe_function_prototype[keys[0]];
@@ -660,7 +660,7 @@ function run_modules_plugin() {
 		return {funcs,bound_funcs};
 	}
 
-	let info=gen_function_prototype_use_1();
+	let info=gen_function_prototype_use();
 	console.log(info);
 
 	let bound_function_prototype_vec=[
