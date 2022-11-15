@@ -562,7 +562,7 @@ const wasm_header=new Uint8Array([0,0x61,0x73,0x6d,1,0,0,0]);
 /**
  * @param {string | any[]} arr
  */
-function encode_string(arr) {
+function wasm_encode_string(arr) {
 	if(arr.length>=128) {
 		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
 		throw new Error("varInt Error");
