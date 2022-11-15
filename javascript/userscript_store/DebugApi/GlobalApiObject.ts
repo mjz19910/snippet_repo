@@ -1,5 +1,6 @@
 // DebugAPI
 export interface GlobalApiObject {
+	run_modules_plugin: VoidCallback;
 	run_wasm_plugin: VoidCallback;
 	compress_main: VoidCallback;
 	IterExtensions: typeof IterExtensions;
