@@ -569,9 +569,9 @@ function run_modules_plugin() {
 	let bound_function_prototype_bind_1=function_prototype_bind.bind(function_prototype_apply);
 	let bound_function_prototype_bind_2=function_prototype_bind.bind(function_prototype_bind);
 
-	/**@type {(this_:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>void} */
+	/**@type {(this_:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_function_prototype_apply=function_prototype_apply.bind(function_prototype_call);
-	/**@type {(this_:Function, applyArgs:[thisArg:any, nApplyArgs:any[]])=>void} */
+	/**@type {(this_:Function, applyArgs:[thisArg:any, nApplyArgs:any[]])=>any} */
 	let bound_function_prototype_apply_1=function_prototype_apply.bind(function_prototype_apply);
 	/**@type {(this_:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
 	let bound_function_prototype_apply_2=function_prototype_apply.bind(function_prototype_bind);
