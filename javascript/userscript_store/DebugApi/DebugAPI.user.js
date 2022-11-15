@@ -546,6 +546,36 @@ function resolve_function_constructor() {
 	return content_window.Function;
 }
 
+const wasm_header=new Uint8Array([0,0x61,0x73,0x6d,1,0,0,0]);
+
+/**
+ * @param {number} id
+ * @param {string | any[]} arr
+ */
+ function wasm_encode_section(id,arr) {
+	if(arr.length>=128) {
+		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
+		return null;
+	}
+	return [id,arr.length,...arr];
+}
+/**
+ * @param {string | any[]} arr
+ */
+function encode_string(arr) {
+	if(arr.length>=128) {
+		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
+		return null;
+	}
+	return [arr.length,...arr];
+}
+
+/** @type {<T>(v:T|null)=>T} */
+function not_null(value) {
+	if(value===null) throw new Error("Unexpected null");
+	return value;
+}
+
 function run_modules_plugin() {
 	/**@type {any} */
 	let fn_call=Function.prototype.call;
