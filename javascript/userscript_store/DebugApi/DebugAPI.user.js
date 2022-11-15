@@ -604,13 +604,50 @@ class CompressionStatsCalculator {
 				location.reload();
 				return;
 			}
-			var fr=document.createElement("iframe");
-			document.head.append(fr);
-			if(!fr.contentWindow) throw new Error("No content window");
-			let content_window=fr.contentWindow.self;
-			var function_proto_call=content_window.Function.prototype.call;
-			var function_proto_apply_bound_to_function_proto_call=content_window.Function.prototype.apply.bind(function_proto_call);
-			var function_prototype_apply_bound_to_function_prototype_apply=content_window.Function.prototype.apply.bind(content_window.Function.prototype.apply);
+			var iframe_element=document.createElement("iframe");
+			document.head.append(iframe_element);
+
+			if(!iframe_element.contentWindow) throw new Error("No content window");
+
+			let content_window_r=iframe_element.contentWindow;
+			let content_window=content_window_r.self;
+
+			let i_Function=content_window.Function;
+			let function_prototype=i_Function.prototype;
+
+			let function_prototype_call=function_prototype.call;
+			let function_prototype_apply=function_prototype.apply;
+			let function_prototype_bind=function_prototype.bind;
+
+			let bound_function_prototype_call=function_prototype_call.bind(function_prototype_call);
+			let bound_function_prototype_call_1=function_prototype_call.bind(function_prototype_apply);
+			let bound_function_prototype_call_2=function_prototype_call.bind(function_prototype_bind);
+
+			let bound_function_prototype_bind=function_prototype_bind.bind(function_prototype_call);
+			let bound_function_prototype_bind_1=function_prototype_bind.bind(function_prototype_apply);
+			let bound_function_prototype_bind_2=function_prototype_bind.bind(function_prototype_bind);
+
+			let bound_function_prototype_apply=function_prototype_apply.bind(function_prototype_call);
+			let bound_function_prototype_apply_1=function_prototype_apply.bind(function_prototype_apply);
+			let bound_function_prototype_apply_2=function_prototype_apply.bind(function_prototype_bind);
+
+			let safe_function_prototype={
+				...function_prototype,
+			};
+			console.log(safe_function_prototype);
+
+			let bound_function_prototype_vec=[
+				[function_prototype_call,function_prototype_call, bound_function_prototype_call],
+				[function_prototype_call,function_prototype_apply, bound_function_prototype_call_1],
+				[function_prototype_call,function_prototype_bind, bound_function_prototype_call_2],
+				[function_prototype_apply,function_prototype_call, bound_function_prototype_apply],
+				[function_prototype_apply,function_prototype_apply, bound_function_prototype_apply_1],
+				[function_prototype_apply,function_prototype_bind, bound_function_prototype_apply_2],
+				[function_prototype_bind,function_prototype_call, bound_function_prototype_bind],
+				[function_prototype_bind,function_prototype_apply, bound_function_prototype_bind_1],
+				[function_prototype_bind,function_prototype_bind, bound_function_prototype_bind_2],
+			];
+			console.log(bound_function_prototype_vec);
 			/** @type {string[]} */
 			let s_func=[];
 			Function.prototype.call=npc;
@@ -632,7 +669,7 @@ class CompressionStatsCalculator {
 							}
 						}
 					default:
-						c=function_proto_apply_bound_to_function_proto_call(this,[thisArg,...argArray]);
+						c=apply_function_proto_call(this,[thisArg,...argArray]);
 				}
 				if(s_func.indexOf(this.toString())==-1) {
 					s_func.push(this.toString());
@@ -646,7 +683,7 @@ class CompressionStatsCalculator {
 			 */
 			function nac(tv,r) {
 				var c;
-				c=function_prototype_apply_bound_to_function_prototype_apply(this,[tv,r]);
+				c=bound_function_prototype_apply(this,[tv,r]);
 				if(s_func.indexOf(this.toString())==-1) {
 					s_func.push(this.toString());
 				}
@@ -670,11 +707,11 @@ class CompressionStatsCalculator {
 }
 g_api.CompressionStatsCalculator=CompressionStatsCalculator;
 
-let stats_calculator_info = {
-	stats_calculator:new CompressionStatsCalculator,
+let stats_calculator_info={
+	stats_calculator: new CompressionStatsCalculator,
 	/**@type {[string, number][][]} */
-	compression_stats:[],
-}
+	compression_stats: [],
+};
 
 g_api.range_matches=range_matches;
 class VV {
@@ -772,8 +809,8 @@ function calc_next(obj,max_id) {
 			/**@type {TU<string, number>|[]} */
 			let res_1=[];
 			switch(i[0]) {
-				case 'T': if(typeof i[1] === 'string')res_1=[i[0],i[1]]; break;
-				case 'U': if(typeof i[1] === 'number')res_1=[i[0],i[1]]; break;
+				case 'T': if(typeof i[1]==='string') res_1=[i[0],i[1]]; break;
+				case 'U': if(typeof i[1]==='number') res_1=[i[0],i[1]]; break;
 			}
 			if(!res_1) {
 				throw new Error();
