@@ -678,9 +678,9 @@ function run_modules_plugin() {
 		[function_prototype_bind,function_prototype_bind,bound_bind_bind],
 	];
 	console.log(bound_function_prototype_vec);
-	Function.prototype.call=npc;
+	Function.prototype.call=function_prototype_call_inject;
 	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
-	function npc(thisArg,...argArray) {
+	function function_prototype_call_inject(thisArg,...argArray) {
 		var c;
 		switch(argArray.length) {
 			case 2:
