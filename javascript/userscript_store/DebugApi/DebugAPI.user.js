@@ -583,26 +583,8 @@ class CompressionStatsCalculator {
 	 * @returns {(["T", T]|["U", U])[]}
 	 * */
 	replace_range(arr,range,replacement) {
-		class AH {
-			/**
-			 * @param {["U", U][]} val
-			 */
-			get_arr_u(val) {
-				return val;
-			}
-			/**
-			 * @param {["T", T][]} val
-			 */
-			get_arr_t(val) {
-				return val;
-			}
-			/**@param {(["T", T]|["U", U])[]} val */
-			get_arr(val) {
-				return val;
-			}
-		}
-		let h=new AH;
-		let ret=h.get_arr([]);
+		/**@type {(["T", T]|["U", U])[]} */
+		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			if(range_matches(arr,range,i)) {
 				i+=1;
