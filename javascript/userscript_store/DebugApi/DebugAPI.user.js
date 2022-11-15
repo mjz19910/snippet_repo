@@ -894,9 +894,9 @@ class CompressionStatsCalculator {
 					id: 0,
 					arr_rep: el_ids,
 				};
-				if(arr[0]) {
+				if(arr[0]===true) {
 					obj_start.arr_rep_num=arr[1];
-				} else {
+				} else if(arr[0]===false) {
 					obj_start.arr_num=arr[1];
 				}
 				for(let i=0,cur=obj_start;i<3000;i++) {
