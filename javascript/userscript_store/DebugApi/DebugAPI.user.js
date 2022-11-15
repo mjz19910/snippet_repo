@@ -379,8 +379,8 @@ class CompressionStatsCalculator {
 		this.hit_counts=[];
 		/** @type {string[]} */
 		this.cache=[];
-		/**@type {MulCompression|null} */
-		this.compressor=null;
+		/**@type {MulCompression} */
+		this.compressor=new MulCompression;
 	}
 	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
 	calc_for_stats_index(stats_arr,arr,index) {
@@ -661,8 +661,8 @@ class MulCompression extends BaseCompression {
 		if(success)
 			arr=res;
 		for(let i=0;i<4;i++) {
-			this.stats_calculator.calc_for_stats_index(this.compression_stats,arr,i);
-			let ls=this.compression_stats[i];
+			stats_calculator_info.stats_calculator.calc_for_stats_index(stats_calculator_info.compression_stats,arr,i);
+			let ls=stats_calculator_info.compression_stats[i];
 			if(ls.length>0) {
 				continue;
 			}
