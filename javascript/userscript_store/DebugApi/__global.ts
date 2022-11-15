@@ -4,29 +4,13 @@ export {}
 
 declare global {
 	interface NodeListOf<TNode extends Node> extends NodeList {
-		[Symbol.iterator](): IterableIterator<TNode>
+		//[Symbol.iterator](): IterableIterator<TNode>
 	}
 }
 
 declare global {
 	interface Window {
 		g_api: GlobalApiObject;
-	}
-
-	interface Window {
-		created_blobs: Map<string, unknown>;
-		active_blob_set: Set<unknown>;
-	}
-
-	interface Window {
-		ytPageType?: string
-		playlist_arr?: string[]
-		ytd_page_manager?: HTMLElement|null
-		ytd_watch_flexy?: HTMLElement|null
-		ytd_app?: HTMLElement|null
-		yt_playlist_manager?: HTMLElement|null
-		ytd_player?: HTMLElement|null
-		page_type_changes?: string[],
 	}
 
 	interface Window {
