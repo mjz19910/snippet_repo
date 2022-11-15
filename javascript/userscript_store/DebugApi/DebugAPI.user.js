@@ -639,9 +639,9 @@ function run_modules_plugin() {
 	let function_prototype_apply=function_prototype.apply;
 	let function_prototype_bind=function_prototype.bind;
 
-	let bound_function_prototype_call=function_prototype_call.bind(function_prototype_call);
-	let bound_function_prototype_call_1=function_prototype_call.bind(function_prototype_apply);
-	let bound_function_prototype_call_2=function_prototype_call.bind(function_prototype_bind);
+	let bound_call_call=function_prototype_call.bind(function_prototype_call);
+	let bound_call_apply=function_prototype_call.bind(function_prototype_apply);
+	let bound_call_bind=function_prototype_call.bind(function_prototype_bind);
 
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_bind_call=function_prototype_bind.bind(function_prototype_call);
@@ -668,9 +668,9 @@ function run_modules_plugin() {
 	console.log(info);
 
 	let bound_function_prototype_vec=[
-		[function_prototype_call,function_prototype_call,bound_function_prototype_call],
-		[function_prototype_call,function_prototype_apply,bound_function_prototype_call_1],
-		[function_prototype_call,function_prototype_bind,bound_function_prototype_call_2],
+		[function_prototype_call,function_prototype_call,bound_call_call],
+		[function_prototype_call,function_prototype_apply,bound_call_apply],
+		[function_prototype_call,function_prototype_bind,bound_call_bind],
 		[function_prototype_apply,function_prototype_call,bound_apply_call],
 		[function_prototype_apply,function_prototype_apply,bound_apply_apply],
 		[function_prototype_apply,function_prototype_bind,bound_apply_bind],
