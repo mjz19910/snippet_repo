@@ -131,7 +131,7 @@ class WMap {
 /** @template T */
 class Repeat {
 	/**@type {Repeat<null>} */
-	static rep_null=new Repeat(null, 0);
+	static rep_null=new Repeat(null,0);
 	/**@type {Map<string, Map<number, Repeat<string>>>} */
 	static map=new Map;
 	/**@type {Map<number, Map<number, Repeat<number>>>} */
@@ -141,17 +141,16 @@ class Repeat {
 	/**
 	 * @template {abstract new (...args: any) => any} U
 	 * @template {InstanceType<U>} V
-	 * @arg {Repeat<null>} rep_null
 	 * @arg {U} constructor_key
 	 * @arg {V} _
 	 * @returns {Map<number, Map<number, Repeat<V>>>}
 	 * */
-	get_map_T(constructor_key, rep_null, _) {
-		let res=rep_null.map_instance.get(constructor_key);
+	get_map_T(constructor_key,_) {
+		let res=Repeat.rep_null.map_instance.get(constructor_key);
 		if(!res) {
 			/**@type {Map<number, Map<number, Repeat<V>>>} */
 			let map=new Map;
-			rep_null.map_instance.set(constructor_key, ()=>new WMap(map));
+			Repeat.rep_null.map_instance.set(constructor_key,() => new WMap(map));
 			return map;
 		}
 		/**@type {WMap<V>} */
@@ -166,12 +165,12 @@ class Repeat {
 	 * @arg {number} key
 	 * @returns {boolean}
 	 * */
-	 has_map_T(constructor_key, rep_null, key) {
+	has_map_T(constructor_key,rep_null,key) {
 		let res=rep_null.map_instance.get(constructor_key);
 		if(!res) {
 			/**@type {Map<number, Map<number, Repeat<V>>>} */
 			let map=new Map;
-			rep_null.map_instance.set(constructor_key, ()=>new WMap(map));
+			rep_null.map_instance.set(constructor_key,() => new WMap(map));
 			return false;
 		}
 		/**@type {WMap<V>} */
@@ -234,11 +233,11 @@ class Repeat {
 
 g_api.Repeat=Repeat;
 class CompressRepeated {
-	/** @param {string | any[]} src @param {(string|Repeat<string>)[]} dst */
+	/** @template T @param {T[]} src @param {(T|Repeat<T>)[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
-	/** @param {(string | Repeat<string>)[]} src @param {string | any[]} dst */
+	/** @template T @param {T[]} src @param {(T|Repeat<T>)[]} dst */
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
@@ -313,6 +312,13 @@ class CompressRepeated {
 	}
 }
 g_api.CompressRepeated=CompressRepeated;
+/**@template T */
+class W {
+	/**@arg {T} val */
+	constructor(val) {
+		this.val=val;
+	}
+}
 /**@type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
 	/**@type {[typeof keys[0], typeof values[0]][]} */
@@ -376,10 +382,7 @@ class MulCompression extends BaseCompression {
 					}
 					if(off>1) {
 						switch(item[0]) {
-							case 'T':{
-								let x=Repeat.get(item[1],off);
-								ret.push(['T',x]);
-							} break;
+							case 'T': ret.push(['T',Repeat.get(item[1],off)]); break;
 							case 'U': ret.push(['U',Repeat.get_num(item[1],off)]); break;
 						}
 						i+=off-1;
