@@ -2153,7 +2153,7 @@ function log_current_video_data() {
 		return;
 	}
 	const video_data=ytd_player.player_.getVideoData();
-	update_plugin_overlay();
+	plugin_overlay_element.onupdate();
 	if(video_data.video_id===undefined) return;
 	if(video_data.eventId===void 0) return;
 	const {video_id,title,author}=video_data;
@@ -2203,11 +2203,6 @@ function on_yt_action(event) {
 	any_document.addEventListener('yt-action',on_yt_action);
 }
 
-function update_plugin_overlay() {
-	if(!plugin_overlay_element) return;
-	plugin_overlay_element.onupdate();
-}
-
 function title_display_toggle() {
 	title_on=!title_on;
 	title_text_overlay_update();
@@ -2215,7 +2210,7 @@ function title_display_toggle() {
 }
 function update_ui_plugin() {
 	if(debug) console.log('update_ui_plugin');
-	setTimeout(update_plugin_overlay);
+	setTimeout(plugin_overlay_element.onupdate.bind(plugin_overlay_element));
 }
 
 
