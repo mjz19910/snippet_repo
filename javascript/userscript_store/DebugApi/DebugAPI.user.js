@@ -396,7 +396,7 @@ class MulCompression extends BaseCompression {
 		let ret_1=this.compress_result(arr,ret);
 		return ret_1;
 	}
-	/** @arg {number[]} arr @returns {[true, (number|Repeat<number>)[]]|[false,number[]]} */
+	/** @arg {number[]} arr @returns {[true, X<number>[]]|[false,number[]]} */
 	try_compress_num(arr) {
 		/**@type {(number|Repeat<number>)[]} */
 		let ret=[];
