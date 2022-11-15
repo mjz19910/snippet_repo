@@ -10,14 +10,14 @@ declare global {
 
 declare global {
 	interface WithId {
-		rep_arr?: any[];
-		value?: any[];
-		log_val?: [number,'=',string, number];
 		id: number;
-		arr_rep?: number[];
 		next?: WithId;
+		rep_arr?: (["U", number] | ["T", string])[];
+		value?: [number,'=',number];
+		arr_rep?: number[];
+		log_val?: [number,'=',string, number];
 		stats?: [string,number][];
-		arr?: any[];
+		arr?: string[];
 		stats_win?: number;
 	}
 

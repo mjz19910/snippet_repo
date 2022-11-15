@@ -303,6 +303,9 @@ class BaseCompression {
 	}
 }
 class MulCompression extends BaseCompression {
+	try_compress_dual(rep_arr) {
+		throw new Error("Method not implemented.");
+	}
 	stats_calculator;
 	/**@type {never[][]} */
 	compression_stats;
@@ -311,7 +314,7 @@ class MulCompression extends BaseCompression {
 		this.stats_calculator=new CompressionStatsCalculator;
 		this.compression_stats=[];
 	}
-	/** @arg {number[]} arr @returns {} */
+	/** @arg {number[]} arr @returns {[true, (number|Repeat<number>)[]]|[false,number[]]} */
 	try_compress_num(arr) {
 		/**@type {(number|Repeat<number>)[]} */
 		let ret=[];
@@ -324,7 +327,7 @@ class MulCompression extends BaseCompression {
 						off++;
 					}
 					if(off>1) {
-						ret.push(Repeat.get_num(item, off));
+						ret.push(Repeat.get_num(item,off));
 						i+=off-1;
 						continue;
 					}
@@ -334,8 +337,8 @@ class MulCompression extends BaseCompression {
 		}
 		return this.compress_result_num(arr,ret);
 	}
-	
-	/** @arg {number[]} arr @arg {(number|Repeat<number>)[]} ret */
+
+	/** @arg {number[]} arr @arg {(number|Repeat<number>)[]} ret @returns {[true, (number|Repeat<number>)[]]|[false,number[]]} */
 	compress_result_num(arr,ret) {
 		if(this.did_compress(arr,ret))
 			return [true,ret];
@@ -450,16 +453,43 @@ class CompressionStatsCalculator {
 		let values=this.map_values();
 		return to_tuple_arr(keys,values);
 	}
-	/** @type {<T, U>(v:T[], r:number, rr: U)=>(T|U)[]} */
-	replace_range(arr,range,range_replacement) {
-		let ret=[];
+	/**
+	 * @template T
+	 * @template U
+	 * @arg {T[]} arr
+	 * @arg {number} range
+	 * @arg {U} replacement
+	 * @returns {(["T", T]|["U", U])[]}
+	 * */
+	replace_range(arr,range,replacement) {
+		class AH {
+			/**
+			 * @param {["U", U][]} val
+			 */
+			get_arr_u(val) {
+				return val;
+			}
+			/**
+			 * @param {["T", T][]} val
+			 */
+			get_arr_t(val) {
+				return val;
+			}
+			/**@param {(["T", T]|["U", U])[]} val */
+			get_arr(val) {
+				return val;
+			}
+		}
+		let h=new AH;
+		let ret=h.get_arr([]);
 		for(let i=0;i<arr.length;i++) {
 			if(range_matches(arr,i,range)) {
 				i+=1;
-				ret.push(range_replacement);
+				ret.push(['U',replacement]);
 				continue;
 			}
-			ret.push(arr[i]);
+			let rest=arr[i];
+			ret.push(['T',rest]);
 		}
 		return ret;
 	}
@@ -549,7 +579,7 @@ class CompressionStatsCalculator {
 				obj.next.rep_arr=csc.replace_range(obj.arr,rep_val,max_id);
 				if(obj.next.arr)
 					return null;
-				let compress_result=csc.comp.try_compress(obj.next.rep_arr);
+				let compress_result=csc.comp.try_compress_dual(obj.next.rep_arr);
 				obj.next.arr=compress_result[1];
 				return compress_result;
 			}
@@ -686,11 +716,11 @@ class CompressionStatsCalculator {
 			 * @type {any[]}
 			 */
 			let id_map;
-			
+
 			/**
 			 * @type {Map<string, any>}
 			 */
-			 let id_map_str;
+			let id_map_str;
 			/**
 			 * @type {any[]}
 			 */
@@ -728,7 +758,7 @@ class CompressionStatsCalculator {
 			function deep_eq(obj_1,obj_2) {
 				if(obj_1===obj_2)
 					return true;
-				if(obj_1 instanceof Array && obj_2 instanceof Array) {
+				if(obj_1 instanceof Array&&obj_2 instanceof Array) {
 					if(obj_1.length===obj_2.length) {
 						for(let i=0;i<obj_1.length;i++) {
 							let cur=obj_1[i];
@@ -747,7 +777,7 @@ class CompressionStatsCalculator {
 						return true;
 					return false;
 				}
-				if(obj_1 instanceof Map && obj_2 instanceof Map) {
+				if(obj_1 instanceof Map&&obj_2 instanceof Map) {
 					return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
 				}
 				throw new Error("Fixme");
