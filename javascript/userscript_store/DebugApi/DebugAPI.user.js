@@ -576,7 +576,11 @@ function run_modules_plugin() {
 	let bound_function_prototype_apply_1=function_prototype_apply.bind(function_prototype_apply);
 	let bound_function_prototype_apply_2=function_prototype_apply.bind(function_prototype_bind);
 
-	let safe_function_prototype=Object.assign({},function_prototype);
+	let safe_function_prototype={
+		apply:function_prototype.apply,
+		bind:function_prototype.bind,
+		call:function_prototype.call,
+	};
 	console.log(safe_function_prototype);
 
 	function gen_function_prototype_use_1() {
