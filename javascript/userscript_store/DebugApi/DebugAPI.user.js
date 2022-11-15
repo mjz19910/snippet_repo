@@ -343,7 +343,7 @@ class BaseCompression {
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {TR<U,T>} */
+	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
@@ -484,9 +484,9 @@ class MulCompression extends BaseCompression {
 			}
 			break;
 		}
-		[success,res]=this.try_compress(arr);
-		if(success)
-			return res;
+		let res_1=this.try_compress(arr);
+		if(res_1[0])
+			return res_1[1];
 		return arr;
 	}
 }
