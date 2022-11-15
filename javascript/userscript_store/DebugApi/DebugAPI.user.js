@@ -648,11 +648,11 @@ function run_modules_plugin() {
 	let bound_function_prototype_bind_2=function_prototype_bind.bind(function_prototype_bind);
 
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_function_prototype_apply_call=function_prototype_apply.bind(function_prototype_call);
+	let bound_apply_bind_call=function_prototype_apply.bind(function_prototype_call);
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, nApplyArgs:any[]])=>any} */
-	let bound_function_prototype_apply_apply=function_prototype_apply.bind(function_prototype_apply);
+	let bound_apply_bind_apply=function_prototype_apply.bind(function_prototype_apply);
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
-	let bound_function_prototype_apply_bind=function_prototype_apply.bind(function_prototype_bind);
+	let bound_apply_bind_bind=function_prototype_apply.bind(function_prototype_bind);
 
 	let safe_function_prototype={
 		apply: function_prototype.apply,
@@ -668,9 +668,9 @@ function run_modules_plugin() {
 		[function_prototype_call,function_prototype_call,bound_function_prototype_call],
 		[function_prototype_call,function_prototype_apply,bound_function_prototype_call_1],
 		[function_prototype_call,function_prototype_bind,bound_function_prototype_call_2],
-		[function_prototype_apply,function_prototype_call,bound_function_prototype_apply_call],
-		[function_prototype_apply,function_prototype_apply,bound_function_prototype_apply_apply],
-		[function_prototype_apply,function_prototype_bind,bound_function_prototype_apply_bind],
+		[function_prototype_apply,function_prototype_call,bound_apply_bind_call],
+		[function_prototype_apply,function_prototype_apply,bound_apply_bind_apply],
+		[function_prototype_apply,function_prototype_bind,bound_apply_bind_bind],
 		[function_prototype_bind,function_prototype_call,bound_function_prototype_bind],
 		[function_prototype_bind,function_prototype_apply,bound_function_prototype_bind_1],
 		[function_prototype_bind,function_prototype_bind,bound_function_prototype_bind_2],
@@ -697,7 +697,7 @@ function run_modules_plugin() {
 					}
 				}
 			default:
-				c=bound_function_prototype_apply_call(this,[thisArg,argArray]);
+				c=bound_apply_bind_call(this,[thisArg,argArray]);
 		}
 		if(s_func.indexOf(this.toString())==-1) {
 			s_func.push(this.toString());
@@ -711,7 +711,7 @@ function run_modules_plugin() {
 	 */
 	function nac(tv,r) {
 		var c;
-		c=bound_function_prototype_apply_call(this,[tv,r]);
+		c=bound_apply_bind_call(this,[tv,r]);
 		if(s_func.indexOf(this.toString())==-1) {
 			s_func.push(this.toString());
 		}
