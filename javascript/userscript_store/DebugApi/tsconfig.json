@@ -16,13 +16,13 @@
 		"sourceMap": true,
 		"noImplicitAny": true,
 		"outDir": "./build",
-		"strict": true,
 		"typeRoots": [
 			"./node_modules/@types"
 		],
 		"baseUrl": ".",
 		"allowJs": true,
 		"checkJs": true,
+		"strict": true,
 	},
 	"include": [
 		"**/*",

@@ -1,26 +1,12 @@
 // DebugAPI
 export interface GlobalApiObject {
+	HexRandomDataGenerator: typeof HexRandomDataGenerator;
+	CompressionStatsCalculator: typeof CompressionStatsCalculator;
+	range_matches: (arr: string,idx: number,range: string) => boolean;
+	to_tuple_arr: <T,U>(a: T[],b: U[]) => [T,U][];
+	CompressRepeated: typeof CompressRepeated;
+	Repeat: typeof Repeat;
 	IterExtensions: typeof IterExtensions;
 	CreateObjURLCache: typeof CreateObjURLCache;
 	getPlaybackRateMap: (include_uninteresting: boolean) => Map<any,any>;
-	Repeat: never,
-	CompressRepeated: never,
-	to_tuple_arr: never,
-	range_matches: never,
-	CompressionStatsCalculator: never,
-	HexRandomDataGenerator: never,
-	EventListenerValue: never,
-	GenericEvent: never,
-	GenericDataEvent: never,
-	GenericEventTarget: never,
-	Dumper: never,
-	RustSimpleTokenizer: never,
-	RustSimpleParser: never,
-	WeakValueRef: never,
-	CSSCascade: never,
-	OriginState: never,
-	ConnectToRemoteOrigin: never,
-	APIProxyManager: never,
-	LoggingEventTarget: never,
-	DebugAPI: typeof DebugAPI;
 }

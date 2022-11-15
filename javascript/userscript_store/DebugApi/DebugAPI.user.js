@@ -248,9 +248,9 @@ function to_tuple_arr(keys,values) {
 }
 g_api.to_tuple_arr=to_tuple_arr;
 /**
- * @param {string | any[]} arr
+ * @param {string} arr
  * @param {number} idx
- * @param {string | any[]} range
+ * @param {string} range
  */
 function range_matches(arr,idx,range) {
 	for(let i=0;i<range.length;i++) {
@@ -319,6 +319,78 @@ class CompressionStatsCalculator {
 			ret.push(arr[i]);
 		}
 		return ret;
+	}
+	test() {
+		/* spell:words
+-- version_list template --
+v1 (cur): snippet_repo_v2/javascript/final/items/item9_v1.js
+v2 (new): snippet_repo_v2/javascript/group1/sub_a/item-_9.js
+*/
+		var found_modules=function(a,c,m_require) {
+			void a,c,m_require;
+		};
+		var rv=function(oc,cb) {
+			void oc;
+			if(Function.prototype.call.rep) {
+				location.reload();
+				return;
+			}
+			var fr=document.createElement("iframe");
+			document.head.append(fr);
+			if(!fr.contentWindow) throw new Error("No content window");
+			let content_window=fr.contentWindow.self;
+			var fpc=content_window.Function.prototype.call;
+			var fa=content_window.Function.prototype.apply.bind(fpc);
+			var fb=content_window.Function.prototype.apply.bind(content_window.Function.prototype.apply);
+			var npc
+			/**
+			 * @type {string[]}
+			 */
+			let s_func=[];
+			var nac;
+			/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
+			npc=Function.prototype.call=function(thisArg, ...argArray) {
+				var c;
+				switch(argArray.length) {
+					case 2:
+						if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
+							var ars=Object.entries(argArray[2]).filter(([j,e]) => e instanceof Array);
+							var ars_i=ars[0][1].indexOf(this);
+							if(ars[0][1].indexOf(this)>-1) {
+								console.log("found module array:","require."+ars[0][0]);
+								var mods=Object.entries(argArray[2]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
+								if(mods.length>0) {
+									console.log("found module cache:","require."+mods[0][0]);
+									cb(ars[0][1],mods[0][1],argArray[2]);
+								}
+							}
+						}
+					default:
+						c=fa(this,[thisArg, ...argArray]);
+				}
+				if(s_func.indexOf(this.toString())==-1) {
+					s_func.push(this.toString());
+				}
+				return c;
+			};
+			nac=function(tv,r) {
+				var c;
+				c=fb(this,[tv,r]);
+				if(s_func.indexOf(this.toString())==-1) {
+					s_func.push(this.toString());
+				}
+				return c;
+			};
+			Function.prototype.apply=nac;
+			npc.rep=1;
+			window.sfunc=s_func;
+			return s_func;
+		};
+		rv(Function.prototype.call,found_modules)
+		void [rv,found_modules];
+
+		let obj={};
+		let res=csc.replace_range(obj.arr,rep_val,max_id);
 	}
 }
 g_api.CompressionStatsCalculator=CompressionStatsCalculator;
