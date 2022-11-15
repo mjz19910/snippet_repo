@@ -963,7 +963,7 @@ class CompressionStatsCalculator {
 				);
 				el_ids=src_arr.map(get_ids);
 				max_id=new Set(el_ids).size;
-				let arr=csc.comp.try_compress_T(0, el_ids);
+				let arr=csc.comp.try_compress_T(Symbol.for("number"), el_ids);
 				/**@type {IValue} */
 				let obj_start={
 					id: 0,
