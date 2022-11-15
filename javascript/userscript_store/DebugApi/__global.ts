@@ -3,12 +3,6 @@ import {GlobalApiObject} from "./GlobalApiObject";
 export {}
 
 declare global {
-	interface NodeListOf<TNode extends Node> extends NodeList {
-		//[Symbol.iterator](): IterableIterator<TNode>
-	}
-}
-
-declare global {
 	interface Window {
 		g_api: GlobalApiObject;
 	}
