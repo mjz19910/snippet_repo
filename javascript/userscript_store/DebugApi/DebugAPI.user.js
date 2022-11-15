@@ -648,14 +648,10 @@ class CompressionStatsCalculator {
 				if(obj.stats.length===0) {
 					return null;
 				}
-				/**@type {WithId&Partial<IdData>|undefined} */
-				let next={id: obj.id+1};
-				assign_next(obj,next);
 				max_id++;
 				let br_obj=Object.assign({},obj);
 				/**@type {WithId&Partial<IdData>|undefined} */
-				let br_next={id: obj.id+1};
-				assign_next(br_obj,br_next);
+				let br_next=assign_next(br_obj,new WithIdImpl(obj.id+1));
 				if(!br_obj.stats_win) {
 					return null;
 				}
@@ -665,7 +661,8 @@ class CompressionStatsCalculator {
 				console.log('br_res',br_res);
 				let res=calc_next(obj,max_id);
 				br_next=get_next(br_obj);
-				next=get_next(obj);
+				/**@type {WithId&Partial<IdData>|undefined} */
+				let next=get_next(obj);
 				while(true) {
 					if(!next||next.arr_str===void 0) {
 						break;
