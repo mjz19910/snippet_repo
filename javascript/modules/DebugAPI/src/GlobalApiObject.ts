@@ -1,4 +1,4 @@
-import {GenericEvent, GenericEventTarget, getPlaybackRateMap} from "./mod.js";
+import {getPlaybackRateMap} from "./mod.js";
 import {CreateObjURLCache} from "./CreateObjURLCache";
 import {IterExtensions} from "./IterExtensions";
 import {to_tuple_arr} from "./to_tuple_arr";
@@ -20,6 +20,8 @@ import {RemoteOriginConnection} from "./RemoteOriginConnection.js";
 import {APIProxyManager} from "./APIProxyManager.js";
 import {LoggingEventTarget} from "./LoggingEventTarget.js";
 import {DebugAPI} from "./DebugAPI.js";
+import {GenericEventTarget} from "./GenericEventTarget.js";
+import {GenericEvent} from "./GenericEvent.js";
 
 // DebugAPI
 export interface GlobalApiObject {

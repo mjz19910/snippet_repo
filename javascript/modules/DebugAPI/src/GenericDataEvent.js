@@ -1,4 +1,4 @@
-import {GenericEvent} from "./mod";
+import {GenericEvent} from "./GenericEvent";
 
 export class GenericDataEvent extends GenericEvent {
 	/**

@@ -24,8 +24,6 @@ export type ST={type:symbol} & (new (...args: any) => any);
 
 export type DualR=[false, TU<string,number>[]] | [true, TX<string,number>[]];
 
-export type IValue=WithId&Partial<IDValueData>;
-
 export type SafeFunctionPrototype={
 	apply: (this: Function, thisArg: any, argArray?: any) => any;
 	bind: (this: Function, thisArg: any, ...argArray: any[]) => any;
@@ -52,6 +50,10 @@ export interface IDValueData {
 }
 
 declare global {
+	type IValue=WithId&Partial<IDValueData>;
+
+
+
 	interface Window {
 		g_api: GlobalApiObject;
 	}
