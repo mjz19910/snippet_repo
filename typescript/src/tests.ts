@@ -1,7 +1,7 @@
 import * as section_12_8_6 from "./ecma_262/lexer/section_12_8_6.js";
 import * as section_12_6 from "./ecma_262/lexer/section_12_6.js";
 import * as section_12 from "./ecma_262/lexer/section_12.js";
-import {test_mod_execute_tests} from "./tests_mod/main.js";
+import {test_mod_execute_tests} from "./tests_mod/test_mod_execute_tests.js";
 
 interface RunTestType {
 	run_tests: () => void;
@@ -34,5 +34,6 @@ export const used_modules=[
 test_mod_execute_tests([
 	//["section_12_8_6",function(): Promise<typeof section_12_8_6> {return do_import("./ecma_262/lexer/section_12_8_6");}],
 	//["section_12_6",function(): Promise<typeof section_12_6> {return do_import("./ecma_262/lexer/section_12_6");}],
-	["section_12",function(): Promise<typeof section_12> {return do_import("./ecma_262/lexer/section_12");}],
+	()=>["section_12",function(): Promise<typeof section_12> {return do_import("./ecma_262/lexer/section_12");}, []],
+	()=>["test", function() {}, []]
 ]);

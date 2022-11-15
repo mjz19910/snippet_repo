@@ -1,18 +1,15 @@
-import {GenTestCallback} from "./GenTestCallback.js"
-import {CanRunTest} from "./CanRunTest.js"
-import {TestLock} from "./TestLock.js"
 import {GenTestCallbackTemplate} from "./GenTestCallbackTemplate.js"
 import {debug} from "./const.js"
-export class BaseTestRunner implements CanRunTest {
+export class BaseTestRunner {
 	m_total=0
 	m_successful=0
 	m_failed=0
 	m_finished=0
 	m_pre_start_test: number=0
 	m_test_started=false
-	m_parent: CanRunTest|null
+	m_parent: BaseTestRunner|null
 	on_complete_callback=() => {}
-	constructor(parent: CanRunTest|null) {
+	constructor(parent: BaseTestRunner|null) {
 		this.m_parent=parent
 	}
 	on_done() {
@@ -62,22 +59,18 @@ export class BaseTestRunner implements CanRunTest {
 		this.is_running_test_set=true
 		this.m_test_started=true
 	}
-	start_test(lock: TestLock,name: string,test_gen: GenTestCallback): void {
+	start_test<T>(name: string, value: T,test_gen: GenTestCallbackTemplate<T>): void {
 		try {
 			let engine=this
-			test_gen(engine,lock)
+			test_gen(engine, value);
 		} catch(e) {
 			console.error('test threw an error',name,e)
 			this.report_test_failure()
 		}
 	}
-	start_async(test_gen: GenTestCallback,test_runner: CanRunTest,lock: TestLock) {
-		test_runner.on_test_init()
-		test_gen(test_runner,lock)
-	}
-	start_async_template<T>(test_gen: GenTestCallbackTemplate<T>,test_runner: CanRunTest,lock: TestLock,extra_arg: T) {
-		test_runner.on_test_init()
-		test_gen(test_runner,lock,extra_arg)
+	start_async<T>(test_gen: GenTestCallbackTemplate<T>,value: T) {
+		this.on_test_init();
+		test_gen(this,value);
 	}
 	async wait_impl() {
 		if(this.m_total>0) {
@@ -88,7 +81,7 @@ export class BaseTestRunner implements CanRunTest {
 			})
 		}
 	}
-	children: CanRunTest[]=[]
+	children: BaseTestRunner[]=[]
 	async wait() {
 		if(this.children.length===0) {
 			return this.wait_impl()

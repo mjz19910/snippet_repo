@@ -1,3 +1,3 @@
-import {CanRunTest} from "./CanRunTest.js"
-import {TestLock} from "./TestLock.js"
-export type GenTestCallbackTemplate<T>=(runner: CanRunTest,lock: TestLock,extra_arg: T) => void
+import {BaseTestRunner} from "./BaseTestRunner.js";
+
+export type GenTestCallbackTemplate<T>=(test_runner: BaseTestRunner, extra_arg: T) => void
