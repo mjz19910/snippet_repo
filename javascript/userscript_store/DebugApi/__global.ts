@@ -9,11 +9,12 @@ declare global {
 }
 
 declare global {
-	interface WithId extends Partial<IdData> {
+	interface WithId {
 		id: number;
 	}
 
 	interface IdData {
+		arr_rep_num: (number|Repeat<number>)[];
 		arr_1: (string|number|Repeat<string>|Repeat<number>)[];
 		arr_2: (["U",number]|["T",string])[];
 		next: WithId;
@@ -22,7 +23,8 @@ declare global {
 		arr_rep: number[];
 		log_val: [number,'=',string, number];
 		stats: [string,number][];
-		arr: string[];
+		arr_str: string[];
+		arr_num: number[];
 		stats_win: number;
 	}
 

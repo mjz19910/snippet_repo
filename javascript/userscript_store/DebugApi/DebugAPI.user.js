@@ -320,8 +320,8 @@ class MulCompression extends BaseCompression {
 					}
 					if(off>1) {
 						switch(item[0]) {
-							case 'T':ret.push(Repeat.get(item[1],off));break;
-							case 'U':ret.push(Repeat.get_num(item[1],off)); break;
+							case 'T': ret.push(Repeat.get(item[1],off)); break;
+							case 'U': ret.push(Repeat.get_num(item[1],off)); break;
 						}
 						i+=off-1;
 						continue;
@@ -581,14 +581,14 @@ class CompressionStatsCalculator {
 			}
 
 			/**
-			 * @param {WithId} obj
+			 * @param {WithId&Partial<IdData>} obj
 			 */
 			function calc_cur(obj) {
-				if(!obj.stats_win||obj.arr===void 0) return;
-				obj.stats=sorted_comp_stats(obj.arr,obj.stats_win);
+				if(!obj.stats_win||obj.arr_str===void 0) return;
+				obj.stats=sorted_comp_stats(obj.arr_str,obj.stats_win);
 			}
 			/**
-			 * @param {WithId} obj
+			 * @param {WithId&Partial<IdData>} obj
 			 * @param {number} max_id
 			 */
 			function calc_next(obj,max_id) {
@@ -600,22 +600,44 @@ class CompressionStatsCalculator {
 				if(!obj.next) {
 					return null;
 				}
-				obj.next.value=[max_id,'=',rep_val];
-				obj.next.log_val=[max_id,'=',f_val[0],f_val[1]];
-				if(obj.arr===void 0) throw new Error("No arr");
-				obj.next.rep_arr=csc.replace_range(obj.arr,rep_val,max_id);
-				if(obj.next.arr)
+				/**@type {WithId&Partial<IdData>} */
+				let next=obj;
+				next.value=[max_id,'=',rep_val];
+				next.log_val=[max_id,'=',f_val[0],f_val[1]];
+				if(obj.arr_str===void 0) throw new Error("No arr");
+				next.rep_arr=csc.replace_range(obj.arr_str,rep_val,max_id);
+				if(next.arr_str)
 					return null;
-				let compress_result=csc.comp.try_compress_dual(obj.next.rep_arr);
+				let compress_result=csc.comp.try_compress_dual(next.rep_arr);
 				if(compress_result[0]) {
-					obj.next.arr_1=compress_result[1];
+					next.arr_1=compress_result[1];
 				} else {
-					obj.next.arr_2=compress_result[1];
+					next.arr_2=compress_result[1];
 				}
 				return compress_result;
 			}
 			/**
-			 * @param {WithId} obj
+			 * @param {WithId & Partial<IdData>} value
+			 */
+			function get_next(value) {
+				return value.next;
+			}
+			/**
+			 * @param {WithId & Partial<IdData>} value
+			 * @param {WithId & Partial<IdData>} next
+			 */
+			function assign_next(value,next) {
+				value.next=next;
+				return next;
+			}
+			class WithIdImpl {
+				/** @param {number} id */
+				constructor(id) {
+					this.id=id;
+				}
+			}
+			/**
+			 * @param {WithId&Partial<IdData>} obj
 			 */
 			function run_calc(obj) {
 				obj.stats_win=2;
@@ -626,35 +648,48 @@ class CompressionStatsCalculator {
 				if(obj.stats.length===0) {
 					return null;
 				}
-				obj.next={
-					id: obj.id+1
-				};
+				/**@type {WithId&Partial<IdData>|undefined} */
+				let next={id: obj.id+1};
+				assign_next(obj,next);
 				max_id++;
-				/**@type {WithId} */
-				let br_obj=Object.assign({},obj,{next: {id: obj.id+1}});
+				let br_obj=Object.assign({},obj);
+				/**@type {WithId&Partial<IdData>|undefined} */
+				let br_next={id: obj.id+1};
+				assign_next(br_obj,br_next);
 				if(!br_obj.stats_win) {
 					return null;
 				}
 				br_obj.stats_win++;
 				calc_cur(br_obj);
 				let br_res=calc_next(br_obj,max_id);
+				console.log('br_res',br_res);
 				let res=calc_next(obj,max_id);
-				while(br_obj.next&&br_obj.next.arr!==void 0&&obj.next.arr!==void 0&&br_obj.next.arr.length+1<obj.next.arr.length&&obj.stats_win<30) {
-					let br_st=br_obj.next.arr.length;
+				br_next=get_next(br_obj);
+				next=get_next(obj);
+				while(true) {
+					if(!next||next.arr_str===void 0) {
+						break;
+					}
+					if(!br_next||br_next.arr_str===void 0) {
+						break;
+					}
+					if(obj.stats_win>30) {
+						break;
+					}
+					if(br_next.arr_str.length+1>=next.arr_str.length) {
+						break;
+					}
+					let br_st=br_next.arr_str.length;
 					br_obj.stats_win++;
 					obj.stats_win++;
 					calc_cur(br_obj);
-					br_obj.next={
-						id: obj.id+1
-					};
+					br_next=assign_next(br_obj,new WithIdImpl(obj.id+1));
 					br_res=calc_next(br_obj,max_id);
 					calc_cur(obj);
-					obj.next={
-						id: obj.id+1
-					};
+					next=assign_next(br_obj,new WithIdImpl(obj.id+1));
 					res=calc_next(obj,max_id);
-					if(!br_obj.next.arr) continue;
-					let cd=br_st-br_obj.next.arr.length;
+					if(!br_next.arr_str) continue;
+					let cd=br_st-br_next.arr_str.length;
 					if(cd<=1) break;
 				}
 				if(!res) {
@@ -863,13 +898,17 @@ class CompressionStatsCalculator {
 				);
 				el_ids=src_arr.map(get_ids);
 				max_id=new Set(el_ids).size;
-				let arr=csc.comp.try_compress_num(el_ids)[1];
-				/**@type {WithId} */
+				let arr=csc.comp.try_compress_num(el_ids);
+				/**@type {WithId&Partial<IdData>} */
 				let obj_start={
 					id: 0,
 					arr_rep: el_ids,
-					arr
 				};
+				if(arr[0]) {
+					obj_start.arr_rep_num=arr[1];
+				} else {
+					obj_start.arr_num=arr[1];
+				}
 				for(let i=0,cur=obj_start;i<3000;i++) {
 					let comp_res=run_calc(cur);
 					if(!cur.stats) throw new Error();
