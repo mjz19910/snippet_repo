@@ -131,7 +131,7 @@ class WMap {
 /** @template T */
 class Repeat {
 	/**@type {Repeat<null>} */
-	static rep_null=new Repeat(null,0);
+	static N=new Repeat(null,0);
 	/**@type {Map<string, Map<number, Repeat<string>>>} */
 	static map=new Map;
 	/**@type {Map<number, Map<number, Repeat<number>>>} */
@@ -146,11 +146,11 @@ class Repeat {
 	 * @returns {Map<number, Map<number, Repeat<V>>>}
 	 * */
 	get_map_T(constructor_key,_) {
-		let res=Repeat.rep_null.map_instance.get(constructor_key);
+		let res=Repeat.N.map_instance.get(constructor_key);
 		if(!res) {
 			/**@type {Map<number, Map<number, Repeat<V>>>} */
 			let map=new Map;
-			Repeat.rep_null.map_instance.set(constructor_key,() => new WMap(map));
+			Repeat.N.map_instance.set(constructor_key,() => new WMap(map));
 			return map;
 		}
 		/**@type {WMap<V>} */
@@ -396,9 +396,14 @@ class MulCompression extends BaseCompression {
 		let ret_1=this.compress_result(arr,ret);
 		return ret_1;
 	}
-	/** @arg {number[]} arr @returns {[true, X<number>[]]|[false,number[]]} */
-	try_compress_num(arr) {
-		/**@type {(number|Repeat<number>)[]} */
+	/**
+	 * @template {InstanceType<U>} T
+	 * @template {abstract new (...args: any) => any} U
+	 * @arg {U} c_k
+	 * @arg {T[]} arr
+	 * @returns {[true, X<T>[]]|[false,T[]]} */
+	try_compress_T(c_k, arr) {
+		/**@type {X<T>[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -409,7 +414,8 @@ class MulCompression extends BaseCompression {
 						off++;
 					}
 					if(off>1) {
-						ret.push(Repeat.get_num(item,off));
+						let mp=Repeat.N.get_map_T(c_k,item);
+						ret.push(new Repeat(item,off));
 						i+=off-1;
 						continue;
 					}
@@ -417,11 +423,17 @@ class MulCompression extends BaseCompression {
 			}
 			ret.push(item);
 		}
-		return this.compress_result_num(arr,ret);
+		return this.compress_result_T(c_k,arr,ret);
 	}
 
-	/** @arg {number[]} arr @arg {(number|Repeat<number>)[]} ret @returns {[true, (number|Repeat<number>)[]]|[false,number[]]} */
-	compress_result_num(arr,ret) {
+	/**
+	 * @template {InstanceType<U>} T
+	 * @template {abstract new (...args: any) => any} U
+	 * @arg {U} c_k
+	 * @arg {T[]} arr
+	 * @arg {X<T>[]} ret
+	 * @returns {[true, X<T>[]]|[false,T[]]} */
+	compress_result_T(c_k,arr,ret) {
 		if(this.did_compress(arr,ret))
 			return [true,ret];
 		return [false,arr];
@@ -951,7 +963,7 @@ class CompressionStatsCalculator {
 				);
 				el_ids=src_arr.map(get_ids);
 				max_id=new Set(el_ids).size;
-				let arr=csc.comp.try_compress_num(el_ids);
+				let arr=csc.comp.try_compress_T(0, el_ids);
 				/**@type {IValue} */
 				let obj_start={
 					id: 0,
