@@ -7,10 +7,6 @@ declare global {
 		g_api: GlobalApiObject;
 	}
 
-	interface Window {
-		DebugAPI?: typeof DebugAPI;
-	}
-
 	interface WeakRef<T extends object> {
 		readonly [Symbol.toStringTag]: "WeakRef"
 

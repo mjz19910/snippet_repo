@@ -1119,7 +1119,7 @@ class DebugAPI {
 		return Reflect.apply(function_value,target_obj,arg_vec);
 	}
 	debuggerBreakpointCode() {
-		if(window.DebugAPI) window.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
+		window.g_api.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -1138,7 +1138,7 @@ class DebugAPI {
 				};
 			}
 		};
-		if(window.DebugAPI&&!window.DebugAPI.the().clearCurrentBreakpoint()) {
+		if(!window.g_api.DebugAPI.the().clearCurrentBreakpoint()) {
 			console.log("failed to clear breakpoint");
 		}
 		0;
@@ -1432,5 +1432,5 @@ class DebugAPI {
 		};
 	}
 }
-window.DebugAPI??=DebugAPI;
-const debug_api=window.DebugAPI.the();
+g_api.DebugAPI=DebugAPI;
+const debug_api=window.g_api.DebugAPI.the();

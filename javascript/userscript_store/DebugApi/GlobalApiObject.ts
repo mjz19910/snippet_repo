@@ -22,4 +22,5 @@ export interface GlobalApiObject {
 	ConnectToRemoteOrigin: never,
 	APIProxyManager: never,
 	LoggingEventTarget: never,
+	DebugAPI: typeof DebugAPI;
 }
