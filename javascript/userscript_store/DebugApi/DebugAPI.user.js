@@ -705,12 +705,11 @@ function run_modules_plugin() {
 	 * @param {any} r
 	 */
 	function function_prototype_apply_inject(tv,r) {
-		var c;
-		c=bound_apply_call(this,[tv,r]);
+		let ret=bound_apply_call(this,[tv,r]);
 		if(s_func.indexOf(this.toString())==-1) {
 			s_func.push(this.toString());
 		}
-		return c;
+		return ret;
 	};
 	Function.prototype.apply=function_prototype_apply_inject;
 	window.g_api.s_func=s_func;
