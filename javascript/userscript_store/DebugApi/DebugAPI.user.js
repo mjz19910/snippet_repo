@@ -532,7 +532,7 @@ class CompressionStatsCalculator {
 		this.hit_counts=[];
 		/** @type {string[]} */
 		this.cache=[];
-		this.comp=new MulCompression;
+		this.compressor=new MulCompression;
 	}
 	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
 	calc_for_stats_index(stats_arr,arr,index) {
@@ -780,7 +780,7 @@ function calc_next(obj,max_id) {
 	if(obj.arr_str===void 0) throw new Error("No arr");
 	next.arr_dual=compressionStatsCalc.replace_range(obj.arr_str,rep_val,max_id);
 	if(next.arr_str) return null;
-	let compress_result=compressionStatsCalc.comp.try_compress_dual(next.arr_dual);
+	let compress_result=compressionStatsCalc.compressor.try_compress_dual(next.arr_dual);
 	if(compress_result[0]) {
 		next.arr_dual_x=compress_result[1];
 	} else {
@@ -1064,7 +1064,7 @@ function compress_main() {
 	);
 	el_ids=src_arr.map(get_ids);
 	max_id=new Set(el_ids).size;
-	let arr=compressionStatsCalc.comp.try_compress_T(NumType,el_ids);
+	let arr=compressionStatsCalc.compressor.try_compress_T(NumType,el_ids);
 	/**@type {IValue} */
 	let obj_start={
 		id: 0,
