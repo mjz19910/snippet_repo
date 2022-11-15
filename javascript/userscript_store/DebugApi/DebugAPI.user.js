@@ -248,15 +248,108 @@ function to_tuple_arr(keys,values) {
 }
 g_api.to_tuple_arr=to_tuple_arr;
 /**
- * @param {string} arr
+ * @param {any[]} arr
  * @param {number} idx
- * @param {string} range
+ * @param {number} range
  */
 function range_matches(arr,idx,range) {
-	for(let i=0;i<range.length;i++) {
-		if(arr[idx+i]!==range[i]) return false;
+	for(let i=idx;i<arr.length;i++) {
+		if(arr[i]!==range) return false;
 	}
 	return true;
+}
+export class BaseCompression {
+	/** @arg {string[]} src @arg {string[]} dst */
+	did_compress(src,dst) {
+		return dst.length<src.length;
+	}
+	/** @arg {string[]} src @arg {string[]} dst */
+	did_decompress(src,dst) {
+		return dst.length>src.length;
+	}
+	/** @arg {string[]} src @arg {string[]} dst */
+	compress_result(src,dst) {
+		if(this.did_compress(src,dst))
+			return [true,dst];
+		return [false,src];
+	}
+	/** @arg {string[]} src @arg {string[]} dst @returns {[res: boolean,dst: string[]]} */
+	decompress_result(src,dst) {
+		// maybe this is not a decompression, just a modification to make
+		// later decompression work
+		if(this.did_decompress(src,dst))
+			return [true,dst];
+		return [false,dst];
+	}
+}
+export class MulCompression extends BaseCompression {
+	stats_calculator;
+	/**@type {never[][]} */
+	compression_stats;
+	constructor() {
+		super();
+		this.stats_calculator=new CompressionStatsCalculator;
+		this.compression_stats=[];
+	}
+	/** @arg {string[]} arr */
+	try_compress(arr) {
+		let ret=[];
+		for(let i=0;i<arr.length;i++) {
+			let item=arr[i];
+			if(i+1<arr.length) {
+				if(item===arr[i+1]) {
+					let off=1;
+					while(item===arr[i+off]) {
+						off++;
+					}
+					if(off>1) {
+						ret.push(`${item}${off}`);
+						i+=off-1;
+						continue;
+					}
+				}
+			}
+			ret.push(item);
+		}
+		return this.compress_result(arr,ret);
+	}
+	/**@arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
+	try_decompress(arr) {
+		let ret=[];
+		for(let i=0;i<arr.length;i++) {
+			let item=arr[i];
+			if(i+1<arr.length) {
+				let [item_type,num_data]=[item[0],item.slice(1)];
+				let parsed=parseInt(num_data);
+				if(!Number.isNaN(parsed)) {
+					for(let j=0;j<parsed;j++)
+						ret.push(item_type);
+					continue;
+				}
+			}
+			ret.push(arr[i]);
+		}
+		return this.decompress_result(arr,ret);
+	}
+	/**@arg {string[]} arr */
+	compress_array(arr) {
+		let success,res;
+		[success,res]=this.try_decompress(arr);
+		if(success)
+			arr=res;
+		for(let i=0;i<4;i++) {
+			this.stats_calculator.calc_for_stats_index(this.compression_stats,arr,i);
+			let ls=this.compression_stats[i];
+			if(ls.length>0) {
+				continue;
+			}
+			break;
+		}
+		[success,res]=this.try_compress(arr);
+		if(success)
+			return res;
+		return arr;
+	}
 }
 g_api.range_matches=range_matches;
 class CompressionStatsCalculator {
@@ -267,6 +360,11 @@ class CompressionStatsCalculator {
 		this.cache=[];
 		/** @type {any[]} */
 		this.real=[];
+		this.comp=new MulCompression;
+	}
+	/**@arg {[[string, any], number][][]} stats_arr @arg {string[]} arr @arg {number} index */
+	calc_for_stats_index(stats_arr,arr,index) {
+		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
 	/** @param {number} index */
 	add_hit(index) {
@@ -276,7 +374,7 @@ class CompressionStatsCalculator {
 	}
 	/**
 	 * @param {string} key
-	 * @param {any[]} real
+	 * @param {string[]} real
 	 */
 	add_item(key,real) {
 		let index=this.cache.indexOf(key);
@@ -291,7 +389,7 @@ class CompressionStatsCalculator {
 		this.hit_counts.length=0;
 		this.real.length=0;
 	}
-	/** @param {any[]} arr @param {number} win_size */
+	/** @param {string[]} arr @param {number} win_size */
 	calc_compression_stats(arr,win_size) {
 		this.reset();
 		for(let i=0;i<arr.length;i++) {
@@ -303,16 +401,15 @@ class CompressionStatsCalculator {
 		return to_tuple_arr(to_tuple_arr(this.cache,this.real),this.hit_counts);
 	}
 	/**
-	 * @param {string | any[]} arr
-	 * @param {string | any[]} range
+	 * @param {any[]} arr
+	 * @param {number} range
 	 * @param {any} range_replacement
 	 */
 	replace_range(arr,range,range_replacement) {
-		if(range.length<=0) return arr;
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			if(range_matches(arr,i,range)) {
-				i+=range.length-1;
+				i+=1;
 				ret.push(range_replacement);
 				continue;
 			}
@@ -321,17 +418,326 @@ class CompressionStatsCalculator {
 		return ret;
 	}
 	test() {
-		/* spell:words
--- version_list template --
-v1 (cur): snippet_repo_v2/javascript/final/items/item9_v1.js
-v2 (new): snippet_repo_v2/javascript/group1/sub_a/item-_9.js
-*/
-		var found_modules=function(a,c,m_require) {
+		let csc=this;
+		test_1();
+		function test_1() {
+			/* version_list file: group1/sub_a/item-_9.js */
+			/**
+			 * @param {[unknown, number][]} stats
+			 */
+			function log_stats(stats) {
+				console.log(...stats.sort((a,b) => b[1]-a[1]));
+			}
+			log_stats([]);
+			/**
+			 * @param {any[]} arr
+			 * @param {number} calc_win
+			 */
+			function sorted_comp_stats(arr,calc_win) {
+				let ret=csc.calc_compression_stats(arr,calc_win);
+				ret.sort((a,b) => b[1]-a[1]);
+				return ret;
+			}
+			next_chunk([],0);
+			/**
+			 * @param {any[]} arr
+			 * @param {number} start
+			 */
+			function next_chunk(arr,start) {
+				let s_arr;
+				let last;
+				let c_len;
+				for(let i=start;i<start+30;i++) {
+					if(s_arr) {
+						last=s_arr[0][1];
+					}
+					s_arr=sorted_comp_stats(arr,i);
+					if(!last)
+						continue;
+					let diff=last-s_arr[0][1];
+					if(diff===0)
+						continue;
+					if(diff===1) {
+						c_len=i;
+						break;
+					}
+					console.log(s_arr[0],...s_arr.slice(0,8).map(e => e[1]));
+				}
+				return c_len;
+			}
+			/**
+			 * @type {string[]}
+			 */
+			let ids=[];
+			/**
+			 * @param {any} value
+			 */
+			function get_ids(value) {
+				let ss=JSON.stringify(value);
+				return ids.indexOf(ss);
+			}
+
+			/**
+			 * @param {NewType} obj
+			 */
+			function calc_cur(obj) {
+				obj.stats=sorted_comp_stats(obj.arr,obj.stats_win);
+			}
+			/**
+			 * @param {NewType} obj
+			 * @param {number} max_id
+			 */
+			function calc_next(obj,max_id) {
+				if(obj.stats.length===0) {
+					return null;
+				}
+				let f_val=obj.stats[0];
+				let rep_val=f_val[0][1];
+				obj.next.value=[max_id,'=',...rep_val];
+				obj.next.log_val=[max_id,'=',f_val[0][0],rep_val,'*',f_val[1]];
+				obj.next.rep_arr=csc.replace_range(obj.arr,rep_val,max_id);
+				if(obj.next.arr)
+					return null;
+				let compress_result=csc.comp.try_compress(obj.next.rep_arr);
+				obj.next.arr=compress_result[1];
+				return compress_result;
+			}
+			/**
+			 * @param {NewType} obj
+			 */
+			function run_calc(obj) {
+				obj.stats_win=2;
+				calc_cur(obj);
+				if(obj.stats.length===0) {
+					return null;
+				}
+				obj.next={
+					id: obj.id+1
+				};
+				max_id++;
+				/**@type {NewType} */
+				let br_obj=Object.assign({},obj,{next: {id: obj.id+1}});
+				br_obj.stats_win++;
+				calc_cur(br_obj);
+				let br_res=calc_next(br_obj,max_id);
+				let res=calc_next(obj,max_id);
+				while(br_obj.next.arr&&br_obj.next.arr.length+1<obj.next.arr.length&&obj.stats_win<30) {
+					let br_st=br_obj.next.arr.length;
+					br_obj.stats_win++;
+					obj.stats_win++;
+					calc_cur(br_obj);
+					br_obj.next={
+						id: obj.id+1
+					};
+					br_res=calc_next(br_obj,max_id);
+					calc_cur(obj);
+					obj.next={
+						id: obj.id+1
+					};
+					res=calc_next(obj,max_id);
+					if(!br_obj.next.arr) continue;
+					let cd=br_st-br_obj.next.arr.length;
+					if(cd<=1) break;
+				}
+				if(!res) {
+					return [false,null];
+				}
+				return [true,res];
+			}
+			function flat_obj(obj) {
+				let ret=[];
+				while(obj.next) {
+					let {next}=obj;
+					ret.push(obj);
+					obj=next;
+				}
+				ret.push(obj);
+				return ret;
+			}
+			function do_decode(val) {
+				if(typeof val==='number') {
+					let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
+					if(!fv) {
+						console.log('not found',val);
+						return;
+					}
+					id_map[val]=fv.value.slice(2);
+				} else {
+					let fv=g_obj_arr.slice(1).find(e => e.value[0]===val.value);
+					if(!fv) {
+						console.log('not found',val);
+						return;
+					}
+					id_map[val.value]=fv.value.slice(2);
+				}
+			}
+			function try_decode(e,deep=true) {
+				if(typeof e==='number') {
+					if(dr_map[e]) {
+						return dr_map[e];
+					}
+					if(id_map[e]) {
+						let res=id_map[e];
+						if(!deep) return res;
+						let dec_res=[];
+						for(let i=0;i<res.length;i++) {
+							let cur_res=decode_map(res[i]);
+							dec_res[i]=cur_res;
+						}
+						dr_map[e]=dec_res;
+						return dec_res;
+					}
+					if(ids_dec[e]) {
+						return ids_dec[e];
+					}
+				}
+				if(e instanceof g_api.Repeat) {
+					if(dr_map[e.value]) {
+						return dr_map[e.value];
+					}
+					if(id_map[e.value]) {
+						let res=id_map[e.value];
+						let dec_res=[];
+						for(let i=0;i<res.length;i++) {
+							let cur_res=decode_map(res[i]);
+							dec_res[i]=cur_res;
+						}
+						window.dr_map??=[];
+						let ret=new g_api.Repeat(dec_res,e.times);
+						dr_map[e.value]=ret;
+						return ret;
+					}
+					if(ids_dec[e.value]) {
+						return new g_api.Repeat(ids_dec[e.value],e.times);
+					}
+				}
+				return null;
+			}
+			function init_decode() {
+				window.dr_map=[];
+				ids_dec=ids.map(e => JSON.parse(e));
+				id_map=[];
+			}
+			function decode_map(e) {
+				if(!window.id_map)
+					init_decode();
+				let dec=try_decode(e);
+				if(!dec) {
+					do_decode(e);
+				}
+				dec=try_decode(e);
+				if(!dec) {
+					console.log(e);
+				} else {
+					return dec;
+				}
+				return e;
+			}
+			function deep_eq(obj_1,obj_2) {
+				if(obj_1===obj_2)
+					return true;
+				if(obj_2 instanceof Array) {
+					if(obj_1.length===obj_2.length) {
+						for(let i=0;i<obj_1.length;i++) {
+							let cur=obj_1[i];
+							let cur_other=obj_2[i];
+							if(!deep_eq(cur,cur_other)) {
+								return false;
+							}
+						}
+						return true;
+					}
+					return false;
+				}
+				if(Object.getPrototypeOf(obj_1)===Object.prototype) {
+					let is_eq=deep_eq(Object.entries(obj_1),Object.entries(obj_2));
+					if(is_eq)
+						return true;
+					return false;
+				}
+				if(obj_2 instanceof Map) {
+					return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
+				}
+				throw new Error("Fixme");
+			}
+			function deep_includes(arr,value) {
+				for(let i=0;i<arr.length;i++) {
+					let is_eq=deep_eq(arr[i],value);
+					if(is_eq)
+						return true;
+				}
+				return false;
+			}
+			function compress_init() {
+				window.dr_map=[];
+				window.csc??(csc=new CompressionStatsCalculator);
+				csc.comp=new window.g_api.CompressRepeated;
+				if(window.g_auto_buy) {
+					src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
+				} else {
+					src_arr=g_dom_observer.event_log;
+				}
+			}
+			function compress_main() {
+				compress_init();
+				ids=[...new Set((src_arr.map(e => JSON.stringify(e))))];
+				id_groups=[];
+				src_arr.forEach(e => {
+					let ii=ids.indexOf(JSON.stringify(e));
+					id_groups[ii]??=[];
+					if(!deep_includes(id_groups[ii],e))
+						id_groups[ii].push(e);
+				}
+				);
+				el_ids=src_arr.map(get_ids);
+				max_id=new Set(el_ids).size;
+				let arr=csc.comp.try_compress(el_ids)[1];
+				let obj_start={
+					id: 0,
+					arr_rep: el_ids,
+					arr
+				};
+				for(let i=0,cur=obj_start;i<3000;i++) {
+					let comp_res=run_calc(cur);
+					let obj=cur;
+					if(obj.log_val&&comp_res===null) {
+						console.log('id:'+obj.id,'[',...obj.log_val,']',obj.stats_win);
+					}
+					if(cur.stats.length===0) {
+						break;
+					}
+					if(cur.stats[0][1]===1) {
+						break;
+					}
+					if(cur.next) {
+						cur=cur.next;
+						continue;
+					} else {
+						break;
+					}
+				}
+				window.g_obj_arr=flat_obj(obj_start);
+			}
+		}
+		/**
+		 * @param {any} a
+		 * @param {any} c
+		 * @param {any} m_require
+		 */
+		function found_modules(a,c,m_require) {
 			void a,c,m_require;
 		};
-		var rv=function(oc,cb) {
+		/**
+		 * @param {(this: Function, thisArg: any, ...argArray: any[]) => any} oc
+		 * @param {{ (a: any, c: any, m_require: any): void; (arg0: any, arg1: any, arg2: any): void; }} cb
+		 */
+		function rv(oc,cb) {
 			void oc;
-			if(Function.prototype.call.rep) {
+			/**@type {any} */
+			let fn_call=Function.prototype.call;
+			/**@type {{rep?:boolean}} */
+			let fn_call_1=fn_call;
+			if(fn_call_1.rep) {
 				location.reload();
 				return;
 			}
@@ -342,14 +748,11 @@ v2 (new): snippet_repo_v2/javascript/group1/sub_a/item-_9.js
 			var fpc=content_window.Function.prototype.call;
 			var fa=content_window.Function.prototype.apply.bind(fpc);
 			var fb=content_window.Function.prototype.apply.bind(content_window.Function.prototype.apply);
-			var npc
-			/**
-			 * @type {string[]}
-			 */
+			/** @type {string[]} */
 			let s_func=[];
-			var nac;
+			Function.prototype.call=npc;
 			/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
-			npc=Function.prototype.call=function(thisArg, ...argArray) {
+			function npc(thisArg,...argArray) {
 				var c;
 				switch(argArray.length) {
 					case 2:
@@ -366,14 +769,19 @@ v2 (new): snippet_repo_v2/javascript/group1/sub_a/item-_9.js
 							}
 						}
 					default:
-						c=fa(this,[thisArg, ...argArray]);
+						c=fa(this,[thisArg,...argArray]);
 				}
 				if(s_func.indexOf(this.toString())==-1) {
 					s_func.push(this.toString());
 				}
 				return c;
 			};
-			nac=function(tv,r) {
+			/**
+			 * @this {{}}
+			 * @param {any} tv
+			 * @param {any} r
+			 */
+			function nac(tv,r) {
 				var c;
 				c=fb(this,[tv,r]);
 				if(s_func.indexOf(this.toString())==-1) {
@@ -383,14 +791,18 @@ v2 (new): snippet_repo_v2/javascript/group1/sub_a/item-_9.js
 			};
 			Function.prototype.apply=nac;
 			npc.rep=1;
-			window.sfunc=s_func;
+			window.g_api.s_func=s_func;
 			return s_func;
 		};
-		rv(Function.prototype.call,found_modules)
+		rv(Function.prototype.call,found_modules);
 		void [rv,found_modules];
 
-		let obj={};
-		let res=csc.replace_range(obj.arr,rep_val,max_id);
+		let obj={
+			arr: [],
+		};
+		let rep_val=0.03/(100*4*1);
+		let max_id=0;
+		let res=this.replace_range(obj.arr,rep_val,max_id);
 	}
 }
 g_api.CompressionStatsCalculator=CompressionStatsCalculator;

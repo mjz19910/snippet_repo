@@ -40,12 +40,12 @@ export class CompressionStatsCalculator {
 		let mk=this.map_keys()
 		let mv=this.map_values()
 		let tuple_of: [string,number][]=to_tuple_arr(mk,mv)
-		return tuple_of
+		return to_tuple_arr(to_tuple_arr(this.cache,this.real),this.hit_counts);
 	}
-	calc_for_stats_window_size(stats_arr: [string,number][][],arr: string[],win_size: number) {
+	calc_for_stats_window_size(stats_arr: [[string, any], number][][],arr: string[],win_size: number) {
 		stats_arr[win_size-1]=this.calc_compression_stats(arr,win_size)
 	}
-	calc_for_stats_index(stats_arr: [string,number][][],arr: string[],index: number) {
+	calc_for_stats_index(stats_arr: [[string, any], number][][],arr: string[],index: number) {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1)
 	}
 }
