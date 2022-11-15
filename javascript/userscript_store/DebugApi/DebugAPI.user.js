@@ -861,9 +861,7 @@ function run_calc(obj) {
 	}
 	return [true,res];
 }
-function test_1() {
-	/* version_list file: group1/sub_a/item-_9.js */
-}
+/* version_list file: group1/sub_a/item-_9.js */
 /**
  * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
  */
@@ -1100,7 +1098,6 @@ function compress_main() {
 	g_obj_arr=flat_obj(obj_start);
 }
 g_api.compress_main=new VV(compress_main);
-test_1();
 class HexRandomDataGenerator {
 	constructor() {
 		this.random_num=Math.random();
