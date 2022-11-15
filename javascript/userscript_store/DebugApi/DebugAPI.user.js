@@ -440,13 +440,12 @@ class MulCompression extends BaseCompression {
 	/**
 	 * @template {InstanceType<U>} T
 	 * @template {abstract new (...args: any) => any} U
-	 * @arg {U} c_k
+	 * @arg {U} _
 	 * @arg {T[]} arr
 	 * @arg {X<T>[]} ret
 	 * @returns {[true, X<T>[]]|[false,T[]]} */
-	compress_result_T(c_k,arr,ret) {
-		if(this.did_compress(arr,ret))
-			return [true,ret];
+	compress_result_T(_,arr,ret) {
+		if(this.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];
 	}
 	/** @arg {string[]} arr */
