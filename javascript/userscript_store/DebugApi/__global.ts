@@ -18,7 +18,7 @@ declare global {
 			value: any[];
 			id: number;
 		};
-		stats: [[string,any],number][];
+		stats: [string, number][];
 		arr: any[];
 		stats_win: number;
 	}

@@ -247,11 +247,7 @@ function to_tuple_arr(keys,values) {
 	return ret;
 }
 g_api.to_tuple_arr=to_tuple_arr;
-/**
- * @param {any[]} arr
- * @param {number} idx
- * @param {number} range
- */
+/** @type {<T, U>(v:any[], r:T, rr: U)=>boolean} */
 function range_matches(arr,idx,range) {
 	for(let i=idx;i<arr.length;i++) {
 		if(arr[i]!==range) return false;
@@ -400,11 +396,7 @@ class CompressionStatsCalculator {
 		let values=this.map_values();
 		return to_tuple_arr(keys,values);
 	}
-	/**
-	 * @param {any[]} arr
-	 * @param {number} range
-	 * @param {any} range_replacement
-	 */
+	/** @type {<T, U>(v:T[], r:number, rr: U)=>(T|U)[]} */
 	replace_range(arr,range,range_replacement) {
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
@@ -492,8 +484,8 @@ class CompressionStatsCalculator {
 					return null;
 				}
 				let f_val=obj.stats[0];
-				let rep_val=f_val[0][1];
-				obj.next.value=[max_id,'=',...rep_val];
+				let rep_val=f_val[1];
+				obj.next.value=[max_id,'=',rep_val];
 				obj.next.log_val=[max_id,'=',f_val[0][0],rep_val,'*',f_val[1]];
 				obj.next.rep_arr=csc.replace_range(obj.arr,rep_val,max_id);
 				if(obj.next.arr)
@@ -803,6 +795,7 @@ class CompressionStatsCalculator {
 		let rep_val=0.03/(100*4*1);
 		let max_id=0;
 		let res=this.replace_range(obj.arr,rep_val,max_id);
+		console.log("compressed", res);
 	}
 }
 g_api.CompressionStatsCalculator=CompressionStatsCalculator;
