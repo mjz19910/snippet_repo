@@ -343,7 +343,7 @@ class BaseCompression {
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @template T,U @arg {T[]} src @arg {(U)[]} dst @returns {[false,T[]]|[true, U[]]} */
+	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {TR<U,T>} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
@@ -361,10 +361,10 @@ class BaseCompression {
 class MulCompression extends BaseCompression {
 	/**
 	 * @param {TU<string, number>[]} arr
-	 * @returns {[false, TU<string, number>[]] | [true, (["U", X<number>] | ["T", X<string>])[]]}
+	 * @returns {DualR}
 	 */
 	try_compress_dual(arr) {
-		/**@type {(["U", X<number>] | ["T", X<string>])[]} */
+		/**@type {TX<string, number>[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];

@@ -17,8 +17,10 @@ declare global {
 	type TU<A,B>=["T", A]|["U", B];
 
 	type X<T>=T|Repeat<T>;
+	type TX<A,B>=["T", X<A>]|["U", X<B>];
+	type TR<A,B>=[true, A[]]|[false,B[]];
 
-	type DualR=[false, TU<string,number>[]] | [true, (["U", X<number>] | ["T", X<string>])[]];
+	type DualR=[false, TU<string,number>[]] | [true, TX<string,number>[]];
 
 	type IValue=WithId&Partial<IDValueData>;
 
