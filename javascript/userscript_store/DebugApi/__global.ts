@@ -13,17 +13,17 @@ declare global {
 		compressor: any;
 	}
 
-	type IDValueT=WithId&Partial<IdData>;
+	interface IValue extends WithId,Partial<IDValueData> {}
 
 	interface WithId {
 		id: number;
 	}
 
-	interface IdData {
+	interface IDValueData {
 		arr_rep_num: (number|Repeat<number>)[];
 		arr_1: (string|number|Repeat<string>|Repeat<number>)[];
 		arr_2: (["U",number]|["T",string])[];
-		next: WithId;
+		next: IValue;
 		rep_arr: (["U",number]|["T",string])[];
 		value: [number,'=',number];
 		arr_rep: number[];
