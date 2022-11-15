@@ -525,6 +525,11 @@ function do_iter(bound_function,keys) {
 	}
 }
 
+/** @param {any} a @param {any} c @param {any} m_require */
+ function found_modules(a,c,m_require) {
+	void a,c,m_require;
+};
+
 function resolve_function_constructor() {
 	if(globalThis.Node===void 0) {
 		// we are in Node, there is no DOM
@@ -540,14 +545,6 @@ function resolve_function_constructor() {
 
 	return content_window.Function;
 }
-/**
- * @param {any} a
- * @param {any} c
- * @param {any} m_require
- */
-function found_modules(a,c,m_require) {
-	void a,c,m_require;
-};
 
 function run_modules_plugin() {
 	/**@type {any} */
@@ -572,8 +569,11 @@ function run_modules_plugin() {
 	let bound_function_prototype_bind_1=function_prototype_bind.bind(function_prototype_apply);
 	let bound_function_prototype_bind_2=function_prototype_bind.bind(function_prototype_bind);
 
+	/**@type {(this_:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>void} */
 	let bound_function_prototype_apply=function_prototype_apply.bind(function_prototype_call);
+	/**@type {(this_:Function, applyArgs:[thisArg:any, nApplyArgs:any[]])=>void} */
 	let bound_function_prototype_apply_1=function_prototype_apply.bind(function_prototype_apply);
+	/**@type {(this_:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
 	let bound_function_prototype_apply_2=function_prototype_apply.bind(function_prototype_bind);
 
 	let safe_function_prototype={
@@ -641,7 +641,7 @@ function run_modules_plugin() {
 					}
 				}
 			default:
-				c=bound_function_prototype_apply(this,[thisArg,...argArray]);
+				c=bound_function_prototype_apply(this,[thisArg, argArray]);
 		}
 		if(s_func.indexOf(this.toString())==-1) {
 			s_func.push(this.toString());
@@ -649,7 +649,7 @@ function run_modules_plugin() {
 		return c;
 	};
 	/**
-	 * @this {{}}
+	 * @this {()=>void}
 	 * @param {any} tv
 	 * @param {any} r
 	 */
