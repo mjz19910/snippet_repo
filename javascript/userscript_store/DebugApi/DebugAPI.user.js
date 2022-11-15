@@ -510,6 +510,26 @@ class MulCompression extends BaseCompression {
 	}
 }
 
+/**
+ * @param {(key:"apply"|"bind"|"call")=>void} bound_function
+ * @param {Extract<keyof Function,string>[]} keys
+ */
+function do_iter(bound_function,keys) {
+	for(let key of keys) {
+		switch(key) {
+			case 'apply': bound_function(key); break;
+			case 'arguments': break;
+			case 'bind': bound_function(key); break;
+			case 'call': bound_function(key); break;
+			case 'caller': break;
+			case 'length': break;
+			case 'name': break;
+			case 'prototype': break;
+			case 'toString': break;
+		}
+	}
+}
+
 class CompressionStatsCalculator {
 	constructor() {
 		/** @type {number[]} */
@@ -636,16 +656,33 @@ class CompressionStatsCalculator {
 			};
 			console.log(safe_function_prototype);
 
+			/** @param {any} v */
+			function ANY(v) {
+				return v;
+			}
+
+			function gen_function_prototype_use_1() {
+				let obj=safe_function_prototype;
+				/**@type {Extract<keyof Function,string>[]} */
+				let keys=ANY(Object.keys(obj));
+				do_iter(gen_function_prototype_use_2,keys);
+				obj.apply.bind(obj.apply);
+			}
+
+			function gen_function_prototype_use_2(key_1) {}
+
+			gen_function_prototype_use_1();
+
 			let bound_function_prototype_vec=[
-				[function_prototype_call,function_prototype_call, bound_function_prototype_call],
-				[function_prototype_call,function_prototype_apply, bound_function_prototype_call_1],
-				[function_prototype_call,function_prototype_bind, bound_function_prototype_call_2],
-				[function_prototype_apply,function_prototype_call, bound_function_prototype_apply],
-				[function_prototype_apply,function_prototype_apply, bound_function_prototype_apply_1],
-				[function_prototype_apply,function_prototype_bind, bound_function_prototype_apply_2],
-				[function_prototype_bind,function_prototype_call, bound_function_prototype_bind],
-				[function_prototype_bind,function_prototype_apply, bound_function_prototype_bind_1],
-				[function_prototype_bind,function_prototype_bind, bound_function_prototype_bind_2],
+				[function_prototype_call,function_prototype_call,bound_function_prototype_call],
+				[function_prototype_call,function_prototype_apply,bound_function_prototype_call_1],
+				[function_prototype_call,function_prototype_bind,bound_function_prototype_call_2],
+				[function_prototype_apply,function_prototype_call,bound_function_prototype_apply],
+				[function_prototype_apply,function_prototype_apply,bound_function_prototype_apply_1],
+				[function_prototype_apply,function_prototype_bind,bound_function_prototype_apply_2],
+				[function_prototype_bind,function_prototype_call,bound_function_prototype_bind],
+				[function_prototype_bind,function_prototype_apply,bound_function_prototype_bind_1],
+				[function_prototype_bind,function_prototype_bind,bound_function_prototype_bind_2],
 			];
 			console.log(bound_function_prototype_vec);
 			/** @type {string[]} */
