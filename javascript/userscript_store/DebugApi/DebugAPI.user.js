@@ -1036,7 +1036,7 @@ function compress_init() {
 	dr_map=[];
 }
 /**
- * @type {any[][]}
+ * @type {string[][]}
  */
 let id_groups;
 let el_ids;
@@ -1051,11 +1051,11 @@ function compress_main() {
 	}
 	ids=[...new Set(src_arr)];
 	id_groups=[];
-	src_arr.forEach(e => {
-		let ii=ids.indexOf(e);
+	src_arr.forEach(value => {
+		let ii=ids.indexOf(value);
 		id_groups[ii]??=[];
-		if(!deep_includes(id_groups[ii],e))
-			id_groups[ii].push(e);
+		if(!deep_includes(id_groups[ii],value))
+			id_groups[ii].push(value);
 	}
 	);
 	el_ids=src_arr.map(get_ids);
