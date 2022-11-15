@@ -697,7 +697,6 @@ class CompressionStatsCalculator {
 			arr: [],
 		};
 		let rep_val=0.03/(100*4*1);
-		let max_id=0;
 		let res=this.replace_range(obj.arr,rep_val,max_id);
 		console.log("compressed",res);
 	}
@@ -804,6 +803,7 @@ class Value {
 		this.id=id;
 	}
 }
+let max_id=0;
 /**
  * @param {IValue} obj
  */
@@ -863,7 +863,6 @@ function run_calc(obj) {
 }
 function test_1() {
 	/* version_list file: group1/sub_a/item-_9.js */
-	let max_id=0;
 	/**
 	 * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
 	 */
@@ -901,206 +900,206 @@ function test_1() {
 			id_map_str.set(val,fv.value.slice(2));
 		}
 	}
-	/**
-	 * @param {string | number | Repeat<number>} e
-	 */
-	function try_decode(e,deep=true) {
-		if(typeof e==='number') {
-			if(dr_map[e]) {
-				return dr_map[e];
-			}
-			if(id_map[e]) {
-				let res=id_map[e];
-				if(!deep) return res;
-				let dec_res=[];
-				for(let i=0;i<res.length;i++) {
-					let cur_res=decode_map(res[i]);
-					dec_res[i]=cur_res;
-				}
-				dr_map[e]=dec_res;
-				return dec_res;
-			}
-			if(ids_dec[e]) {
-				return ids_dec[e];
-			}
+}
+/**
+ * @param {string | number | Repeat<number>} e
+ */
+function try_decode(e,deep=true) {
+	if(typeof e==='number') {
+		if(dr_map[e]) {
+			return dr_map[e];
 		}
-		if(e instanceof g_api.Repeat) {
-			if(dr_map[e.value]) {
-				return dr_map[e.value];
+		if(id_map[e]) {
+			let res=id_map[e];
+			if(!deep) return res;
+			let dec_res=[];
+			for(let i=0;i<res.length;i++) {
+				let cur_res=decode_map(res[i]);
+				dec_res[i]=cur_res;
 			}
-			if(id_map[e.value]) {
-				let res=id_map[e.value];
-				let dec_res=[];
-				for(let i=0;i<res.length;i++) {
-					let cur_res=decode_map(res[i]);
-					dec_res[i]=cur_res;
-				}
-				let ret=new g_api.Repeat(dec_res,e.times);
-				dr_map[e.value]=ret;
-				return ret;
-			}
-			if(ids_dec[e.value]) {
-				return new g_api.Repeat(ids_dec[e.value],e.times);
-			}
+			dr_map[e]=dec_res;
+			return dec_res;
 		}
-		return null;
+		if(ids_dec[e]) {
+			return ids_dec[e];
+		}
 	}
-	/**
-	 * @type {any[]}
-	 */
-	let id_map;
+	if(e instanceof g_api.Repeat) {
+		if(dr_map[e.value]) {
+			return dr_map[e.value];
+		}
+		if(id_map[e.value]) {
+			let res=id_map[e.value];
+			let dec_res=[];
+			for(let i=0;i<res.length;i++) {
+				let cur_res=decode_map(res[i]);
+				dec_res[i]=cur_res;
+			}
+			let ret=new g_api.Repeat(dec_res,e.times);
+			dr_map[e.value]=ret;
+			return ret;
+		}
+		if(ids_dec[e.value]) {
+			return new g_api.Repeat(ids_dec[e.value],e.times);
+		}
+	}
+	return null;
+}
+/**
+ * @type {any[]}
+ */
+let id_map;
 
-	/**
-	 * @type {Map<string, any>}
-	 */
-	let id_map_str;
-	/**
-	 * @type {any[]}
-	 */
-	let ids_dec;
-	/**
-	 * @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}
-	 */
-	let dr_map;
-	function init_decode() {
-		dr_map=[];
-		ids_dec=ids.map(e => JSON.parse(e));
-		id_map=[];
-		id_map_str=new Map;
+/**
+ * @type {Map<string, any>}
+ */
+let id_map_str;
+/**
+ * @type {any[]}
+ */
+let ids_dec;
+/**
+ * @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}
+ */
+let dr_map;
+function init_decode() {
+	dr_map=[];
+	ids_dec=ids.map(e => JSON.parse(e));
+	id_map=[];
+	id_map_str=new Map;
+}
+/** @param {string|number} value @returns {string|number} */
+function decode_map(value) {
+	if(!id_map)
+		init_decode();
+	/**@type {number} */
+	let dec=try_decode(value);
+	if(!dec) {
+		do_decode(value);
 	}
-	/** @param {string|number} value @returns {string|number} */
-	function decode_map(value) {
-		if(!id_map)
-			init_decode();
-		/**@type {number} */
-		let dec=try_decode(value);
-		if(!dec) {
-			do_decode(value);
-		}
-		dec=try_decode(value);
-		if(!dec) {
-			console.log(value);
-		} else {
-			return dec;
-		}
-		return value;
+	dec=try_decode(value);
+	if(!dec) {
+		console.log(value);
+	} else {
+		return dec;
 	}
-	/**
-	 * @type {<U extends {},V extends {},T extends V|U[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
-	 */
-	function deep_eq(obj_1,obj_2) {
-		if(obj_1===obj_2)
-			return true;
-		if(obj_1 instanceof Array&&obj_2 instanceof Array) {
-			if(obj_1.length===obj_2.length) {
-				for(let i=0;i<obj_1.length;i++) {
-					let cur=obj_1[i];
-					let cur_other=obj_2[i];
-					if(!deep_eq(cur,cur_other)) {
-						return false;
-					}
+	return value;
+}
+/**
+ * @type {<U extends {},V extends {},T extends V|U[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
+ */
+function deep_eq(obj_1,obj_2) {
+	if(obj_1===obj_2)
+		return true;
+	if(obj_1 instanceof Array&&obj_2 instanceof Array) {
+		if(obj_1.length===obj_2.length) {
+			for(let i=0;i<obj_1.length;i++) {
+				let cur=obj_1[i];
+				let cur_other=obj_2[i];
+				if(!deep_eq(cur,cur_other)) {
+					return false;
 				}
-				return true;
 			}
-			return false;
-		}
-		if(Object.getPrototypeOf(obj_1)===Object.prototype) {
-			let is_eq=deep_eq(Object.entries(obj_1),Object.entries(obj_2));
-			if(is_eq)
-				return true;
-			return false;
-		}
-		if(obj_1 instanceof Map&&obj_2 instanceof Map) {
-			return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
-		}
-		throw new Error("Fixme");
-	}
-	/**
-	 * @param {string | any[]} arr
-	 * @param {any} value
-	 */
-	function deep_includes(arr,value) {
-		for(let i=0;i<arr.length;i++) {
-			let is_eq=deep_eq(arr[i],value);
-			if(is_eq)
-				return true;
+			return true;
 		}
 		return false;
 	}
-	/**
-	 * @type {AutoBuy}
-	 */
-	let g_auto_buy;
-	/**
-	 * @type {any[]}
-	 */
-	let src_arr;
-	/**
-	 * @type {{ event_log: any[]; }}
-	 */
-	let g_dom_observer;
-	function compress_init() {
-		dr_map=[];
-		if(g_auto_buy) {
-			src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
-		} else {
-			src_arr=g_dom_observer.event_log;
-		}
+	if(Object.getPrototypeOf(obj_1)===Object.prototype) {
+		let is_eq=deep_eq(Object.entries(obj_1),Object.entries(obj_2));
+		if(is_eq)
+			return true;
+		return false;
 	}
-	/**
-	 * @type {any[][]}
-	 */
-	let id_groups;
-	let el_ids;
-	class NumType {static type=Symbol.for("number");}
-	function compress_main() {
-		compress_init();
-		ids=[...new Set((src_arr.map(e => JSON.stringify(e))))];
-		id_groups=[];
-		src_arr.forEach(e => {
-			let ii=ids.indexOf(JSON.stringify(e));
-			id_groups[ii]??=[];
-			if(!deep_includes(id_groups[ii],e))
-				id_groups[ii].push(e);
-		}
-		);
-		el_ids=src_arr.map(get_ids);
-		max_id=new Set(el_ids).size;
-		let arr=compressionStatsCalc.comp.try_compress_T(NumType,el_ids);
-		/**@type {IValue} */
-		let obj_start={
-			id: 0,
-			arr_rep: el_ids,
-		};
-		if(arr[0]===true) {
-			obj_start.arr_rep_num=arr[1];
-		} else if(arr[0]===false) {
-			obj_start.arr_num=arr[1];
-		}
-		for(let i=0,cur=obj_start;i<3000;i++) {
-			let comp_res=run_calc(cur);
-			if(!cur.stats) throw new Error();
-			let obj=cur;
-			if(obj.log_val&&comp_res===null) {
-				console.log('id:'+obj.id,'[',...obj.log_val,']',obj.stats_win);
-			}
-			if(cur.stats.length===0) {
-				break;
-			}
-			if(cur.stats[0][1]===1) {
-				break;
-			}
-			if(cur.next) {
-				cur=cur.next;
-				continue;
-			} else {
-				break;
-			}
-		}
-		g_obj_arr=flat_obj(obj_start);
+	if(obj_1 instanceof Map&&obj_2 instanceof Map) {
+		return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
 	}
-	g_api.compress_main=new VV(compress_main);
+	throw new Error("Fixme");
 }
+/**
+ * @param {string | any[]} arr
+ * @param {any} value
+ */
+function deep_includes(arr,value) {
+	for(let i=0;i<arr.length;i++) {
+		let is_eq=deep_eq(arr[i],value);
+		if(is_eq)
+			return true;
+	}
+	return false;
+}
+/**
+ * @type {AutoBuy}
+ */
+let g_auto_buy;
+/**
+ * @type {any[]}
+ */
+let src_arr;
+/**
+ * @type {{ event_log: any[]; }}
+ */
+let g_dom_observer;
+function compress_init() {
+	dr_map=[];
+	if(g_auto_buy) {
+		src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
+	} else {
+		src_arr=g_dom_observer.event_log;
+	}
+}
+/**
+ * @type {any[][]}
+ */
+let id_groups;
+let el_ids;
+class NumType {static type=Symbol.for("number");}
+function compress_main() {
+	compress_init();
+	ids=[...new Set((src_arr.map(e => JSON.stringify(e))))];
+	id_groups=[];
+	src_arr.forEach(e => {
+		let ii=ids.indexOf(JSON.stringify(e));
+		id_groups[ii]??=[];
+		if(!deep_includes(id_groups[ii],e))
+			id_groups[ii].push(e);
+	}
+	);
+	el_ids=src_arr.map(get_ids);
+	max_id=new Set(el_ids).size;
+	let arr=compressionStatsCalc.comp.try_compress_T(NumType,el_ids);
+	/**@type {IValue} */
+	let obj_start={
+		id: 0,
+		arr_rep: el_ids,
+	};
+	if(arr[0]===true) {
+		obj_start.arr_rep_num=arr[1];
+	} else if(arr[0]===false) {
+		obj_start.arr_num=arr[1];
+	}
+	for(let i=0,cur=obj_start;i<3000;i++) {
+		let comp_res=run_calc(cur);
+		if(!cur.stats) throw new Error();
+		let obj=cur;
+		if(obj.log_val&&comp_res===null) {
+			console.log('id:'+obj.id,'[',...obj.log_val,']',obj.stats_win);
+		}
+		if(cur.stats.length===0) {
+			break;
+		}
+		if(cur.stats[0][1]===1) {
+			break;
+		}
+		if(cur.next) {
+			cur=cur.next;
+			continue;
+		} else {
+			break;
+		}
+	}
+	g_obj_arr=flat_obj(obj_start);
+}
+g_api.compress_main=new VV(compress_main);
 test_1();
 class HexRandomDataGenerator {
 	constructor() {
