@@ -1,4 +1,5 @@
 import {GlobalApiObject} from "./GlobalApiObject";
+import {MulCompression} from "./MulCompression.js";
 import {Repeat} from "./Repeat.js";
 
 export {};
