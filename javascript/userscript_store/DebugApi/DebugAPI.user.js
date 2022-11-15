@@ -608,9 +608,9 @@ class CompressionStatsCalculator {
 			document.head.append(fr);
 			if(!fr.contentWindow) throw new Error("No content window");
 			let content_window=fr.contentWindow.self;
-			var fpc=content_window.Function.prototype.call;
-			var fa=content_window.Function.prototype.apply.bind(fpc);
-			var fb=content_window.Function.prototype.apply.bind(content_window.Function.prototype.apply);
+			var function_proto_call=content_window.Function.prototype.call;
+			var function_proto_apply_bound_to_function_proto_call=content_window.Function.prototype.apply.bind(function_proto_call);
+			var function_prototype_apply_bound_to_function_prototype_apply=content_window.Function.prototype.apply.bind(content_window.Function.prototype.apply);
 			/** @type {string[]} */
 			let s_func=[];
 			Function.prototype.call=npc;
@@ -632,7 +632,7 @@ class CompressionStatsCalculator {
 							}
 						}
 					default:
-						c=fa(this,[thisArg,...argArray]);
+						c=function_proto_apply_bound_to_function_proto_call(this,[thisArg,...argArray]);
 				}
 				if(s_func.indexOf(this.toString())==-1) {
 					s_func.push(this.toString());
@@ -646,7 +646,7 @@ class CompressionStatsCalculator {
 			 */
 			function nac(tv,r) {
 				var c;
-				c=fb(this,[tv,r]);
+				c=function_prototype_apply_bound_to_function_prototype_apply(this,[tv,r]);
 				if(s_func.indexOf(this.toString())==-1) {
 					s_func.push(this.toString());
 				}
