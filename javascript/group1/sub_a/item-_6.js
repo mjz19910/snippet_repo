@@ -10,7 +10,7 @@ v2 (cur): snippet_repo_v2/javascript/group1/sub_a/item-_6.js
 function encode_section(id,arr) {
 	if(arr.length>=128) {
 		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
-		return null;
+		throw new Error("varInt Error");
 	}
 	return [id,arr.length,...arr];
 }
