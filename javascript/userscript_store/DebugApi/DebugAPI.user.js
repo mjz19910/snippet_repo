@@ -548,6 +548,12 @@ function resolve_function_constructor() {
 
 const wasm_header=new Uint8Array([0,0x61,0x73,0x6d,1,0,0,0]);
 
+const wasm_global_memory=new WebAssembly.Memory({initial:1});
+
+let wasm_global_memory_view=new Uint8Array(wasm_global_memory.buffer)
+
+wasm_global_memory_view.set(wasm_header, 0);
+
 /**
  * @param {number} id
  * @param {string | any[]} arr
