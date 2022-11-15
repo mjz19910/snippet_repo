@@ -8,6 +8,11 @@ declare global {
 	}
 
 	interface Window {
+		created_blobs: Map<string, unknown>;
+		active_blob_set: Set<unknown>;
+	}
+
+	interface Window {
 		ytPageType?: string
 		playlist_arr?: string[]
 		ytd_page_manager?: HTMLElement|null

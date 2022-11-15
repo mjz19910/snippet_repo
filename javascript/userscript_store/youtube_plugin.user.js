@@ -18,10 +18,7 @@ function cast2_c(value,_constructor_type) {
 	void value,_constructor_type;
 	return true;
 }
-/**
- * @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X}
- * Copy type from constructor
- * */
+/** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(v:T|X, _constructor_type:U)=>X} */
 function any_c(value,_constructor_type) {
 	if(cast2_c(value,_constructor_type)) {
 		return value;
@@ -33,24 +30,28 @@ function cast2_o(value,copy) {
 	void value,copy;
 	return true;
 }
-/**
- * @type {<T, U>(v:T|U, _copy:U)=>U}
- * Copy type from existing object
-*/
+/** @type {<T, U>(v:T|U, _copy:U)=>U} */
 function any_o(value,copy) {
 	if(cast2_o(value,copy)) {
 		return value;
 	}
 	throw new Error("Failed to cast");
 }
-/** @type {<T>(v1:T,v2:T extends object?T:never)=>NonNullable<T>} */
+
+/** @type {<T, U>(v1:T, v2: T|U)=>NonNullable<T>} */
 function default_from(v1,v2) {
-	if(v1) return v1;
-	return v2;
+	if(v1) {
+		return v1;
+	}
+	let res=any_o(v2,v1);
+	if(res===void 0||res===null) throw new Error("Not null");
+	return res;
 }
+
 /**@type {typeof window.g_api} */
 let g_api=default_from(window.g_api,{});
 window.g_api=g_api;
+
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
 	ui_plugin_style_element;
@@ -76,18 +77,21 @@ class YtdAppElement extends HTMLElement {
 		}
 	};
 }
+
 class YtCurrentPage extends HTMLElement {
 	/**@return {YTDPlayerElement} */
 	getPlayer() {
 		return new YTDPlayerElement;
 	}
 }
+
 class YtdPageManagerElement extends HTMLElement {
 	/**@return {YtCurrentPage} */
 	getCurrentPage() {
 		return new YtCurrentPage;
 	}
 }
+
 class Seen {
 	static debug=false;
 	/**
@@ -253,6 +257,9 @@ class Seen {
 	}
 }
 g_api.Seen=Seen;
+
+const realHTMLElement=HTMLElement;
+
 /**
  * @type {<T extends any[]>(value:T)=>typeof value}
  */
@@ -361,69 +368,98 @@ function deep_clone(value) {
 	console.log('unk',typeof value,value);
 	return value;
 }
-function fetch_filter_text_then_data_url(/** @type {string | URL} */ url, /** @type {{}} */ response_obj) {
-	let url_obj=new URL(url);
-	if(debug) {
-		console.log('url & response_obj',url,response_obj);
+/**@arg {string|URL} url */
+function to_url(url) {
+	if(url instanceof URL) {
+		return url;
+	} else {
+		return new URL(url);
 	}
+}
+/**@arg {string|URL|Request} request @arg {{}} response_obj */
+function fetch_filter_text_then_data_url(request,response_obj) {
 	try {
-		yt_handlers.on_handle_api(response_obj,url_obj);
+		yt_handlers.on_handle_api(request,response_obj);
 	} catch(err) {
 		console.log('filter error');
 		console.log(err);
 	}
 }
 /**
- * @param {(arg0: any) => any} onfulfilled
- * @param {any} request_info
+ * @param {string|URL|{url:string}} request
+ * @arg {{}|undefined} options
+ * @param {((arg0: any) => any)|undefined|null} onfulfilled
+ * @param {((arg0: any) => void)|undefined|null} on_rejected
  * @arg {string} response_text
- * @param {(arg0: unknown) => void} onrejected
  */
-function handle_json_parse(request_info,onfulfilled,onrejected,response_text) {
+function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
+	if(debug) console.log('handle_json_parse',request,options);
 	let original_json_parse=JSON.parse;
 	if(debug) console.log('JSON.parse = new Proxy()');
-	JSON.parse=new Proxy(JSON.parse,{
+	JSON.parse=new Proxy(original_json_parse,{
 		apply: function(...proxy_args) {
 			if(debug) console.log('JSON.parse()');
 			let obj=Reflect.apply(...proxy_args);
-			if(debug) console.log('request_info.url');
-			if(request_info.url) {
-				fetch_filter_text_then_data_url(request_info.url,obj);
+			if(debug) console.log('request.url');
+			function c1() {
+				if(typeof request=='string') {
+					return {url: to_url(request)};
+				}
+				if(request instanceof URL) {
+					return {url: request};
+				}
+				return request;
+			}
+			let request_1=c1();
+			if(request_1.url) {
+				fetch_filter_text_then_data_url(request_1.url,obj);
 			} else {
-				if(debug) console.log("handle_json_parse no url",request_info,obj);
+				if(debug) console.log("handle_json_parse no url",request,obj);
 			}
 			return obj;
 		}
 	});
 	let ret;
 	try {
-		ret=onfulfilled(response_text);
+		if(onfulfilled) {
+			ret=onfulfilled(response_text);
+		} else {
+			ret=response_text;
+		}
 	} catch(err) {
-		onrejected(err);
+		if(on_rejected) return on_rejected(err);
+		throw err;
 	} finally {
 		JSON.parse=original_json_parse;
 	}
 	return ret;
 }
 /**
- * @param {any} request_info
- * @param {((value: any) => any | PromiseLike<any>) | null | undefined} onfulfilled
- * @param {((reason: any) => any | PromiseLike<any>) | null | undefined} onrejected
+ * @param {string|URL|{url:string}} request
+ * @arg {{}|undefined} options
+ * @param {((value: any) => any | PromiseLike<any>)|undefined|null} onfulfilled
+ * @param {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
  */
-function bind_promise_handler(request_info,onfulfilled,onrejected) {
+function bind_promise_handler(request,options,onfulfilled,onrejected) {
 	if(debug) console.log('handle_json_parse.bind()');
-	return handle_json_parse.bind(null,request_info,onfulfilled,onrejected);
+	let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
+	return ret;
+}
+/**@arg {any} e @returns {any} */
+function any(e) {
+	return e;
 }
 /**
- * @param {any} request_info
+ * @arg {string|URL|Request} request
+ * @arg {{}|undefined} options
  * @arg {Promise<any>} ov
  * @return {Promise<any>}
  */
-function handle_fetch_response_2(request_info,ov) {
+function handle_fetch_response_2(request,options,ov) {
 	return {
 		/**@type {<T, TResult2 = never>(onfulfilled?: ((value: T) => T | PromiseLike<T>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null)=>Promise<T | TResult2>} */
 		then(onfulfilled,onrejected) {
-			return ov.then(bind_promise_handler(request_info,onfulfilled,onrejected));
+			return ov.then(bind_promise_handler(request,options,onfulfilled,onrejected));
 		},
 		/**@type {<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null | undefined) => Promise<any>} */
 		catch(onrejected) {
@@ -436,57 +472,74 @@ function handle_fetch_response_2(request_info,ov) {
 	};
 }
 /**
- * @param {RequestInfo} request_info
- * @return {Response}
+ * @arg {string|URL|Request} request
+ * @arg {{}|undefined} options
+ * @arg {Response} response
+ * @returns {Promise<Response>}
  */
-function handle_fetch_response_1(request_info, /** @type {Response} */ response) {
+function fetch_promise_handler(request,options,response) {
+	let handled_keys=['text'];
 	class FakeResponse {
 		text() {
 			if(debug) console.log('response.text()');
-			return handle_fetch_response_2(request_info,response.text());
+			return handle_fetch_response_2(request,options,response.text());
 		}
 	}
 	let fake_response=new FakeResponse;
-	let response_1=any_o(fake_response,response);
-	return new Proxy(response_1,{
-		get(...[obj,key,_]) {
-			if(!(key in obj)) {
+	let response_1=any(fake_response);
+	/**@type {Promise<Response>} */
+	let fake_as_response=response_1;
+	return new Proxy(fake_as_response,{
+		get(obj,key,_proxy) {
+			if(typeof key=='symbol') {
+				return Reflect.get(response,key);
+			}
+			if(!handled_keys.includes(key)) {
 				return Reflect.get(response,key);
 			}
 			/**@type {any} */
-			let any_obj=obj;
-			return any_obj[key];
+			let obj_1=obj;
+			return obj_1[key];
 		}
 	});
 }
 /**
- * @param {RequestInfo} request_info
- * @param {Response} response
+ * @param {{ code: number; }} rejection
+ * @returns {Promise<Response>}
  */
-function fetch_promise_handler(request_info,response) {
-	return handle_fetch_response_1(request_info,response);
+function fetch_rejection_handler(rejection) {
+	if(rejection instanceof DOMException) {
+		if(rejection.message==="") {
+			throw rejection;
+		}
+	}
+	console.log('fetch_rejection_handler',rejection);
+	console.log(rejection);
+	throw rejection;
 }
 /**
  * @type {typeof fetch | null}
  */
 let original_fetch=null;
 /**
- * @param {URL|RequestInfo} request_info
- */
-function fetch_inject(request_info) {
+ * @arg {string|URL|Request} url_or_request @arg {{}} [options]
+ * @returns {Promise<Response>}
+*/
+function fetch_inject(url_or_request,options) {
 	if(!original_fetch) throw new Error("No original fetch");
-	if(typeof request_info=='string') {
-		return original_fetch(request_info);
+	if(options) {
+		console.log('fetch_log_with_options',url_or_request,options);
 	}
-	if(request_info instanceof URL) {
-		return original_fetch(request_info);
+	if(typeof url_or_request==='string'&&url_or_request.startsWith('https://www.gstatic.com')) {
+		return original_fetch(url_or_request,options);
 	}
-	if(request_info.url.includes("googlevideo.com")) {
-		return original_fetch(request_info);
-	}
-	let ret=original_fetch(request_info);
-	return ret.then(fetch_promise_handler.bind(null,request_info));
+	let ret=original_fetch(url_or_request,options);
+	let ret_1=ret.then(fetch_promise_handler.bind(null,url_or_request,options),fetch_rejection_handler);
+	return ret_1;
 }
+
+fetch_inject.__proxy_target__=window.fetch;
+
 /**
  * @param {(arg0: [target: any, thisArg: any, argArray: any[]]) => void} callback
  * @param {any} value
@@ -498,45 +551,47 @@ function create_proxy(value,callback) {
 		}
 	});
 }
-function do_proxy_call_getInitialData(/** @type {any} */ args) {
+/** @arg {any[]} args */
+function do_proxy_call_getInitialData(args) {
 	return yt_handlers.on_initial_data(args);
 }
 class PropertyHandler {
-	/**@type {Map<{}, {}>} */
-	static proxy_map=new Map;
-	/**@type {Map<string, {}>} */
-	static override_map=new Map;
-	/**
-	 * @param {string} key
-	 * @param {(args: any) => any} on_target_apply_callback
-	 */
-	constructor(key,on_target_apply_callback) {
-		this.key=key;
+	/** @type {PropertyHandler[]} */
+	static instances=[];
+	/** @type {Map<{}, {}>} */
+	proxy_map=new Map;
+	/** @type {{value: any}} */
+	override_value={value: void 0};
+	/** @param {(args: [any, any, any]) => any} on_target_apply_callback */
+	constructor(on_target_apply_callback) {
 		this.on_target_apply_callback=on_target_apply_callback;
+		PropertyHandler.instances.push(this);
 	}
 	get() {
-		return PropertyHandler.override_map.get(this.key);
+		return this.override_value.value;
 	}
 	/**
 	 * @param {any} value
 	 */
 	set(value) {
-		if(value===void 0) {
-			PropertyHandler.override_map.delete(this.key);
-			return;
-		} else if(value===null) {
-			PropertyHandler.override_map.set(this.key,value);
+		if(value===void 0||value===null) {
+			this.override_value.value=value;
 			return;
 		}
-		if(PropertyHandler.proxy_map.has(value)) {
-			let nv=PropertyHandler.proxy_map.get(value);
-			if(!nv) return;
-			PropertyHandler.override_map.set(this.key,nv);
-			return;
+		if(this.proxy_map.has(value)) {
+			let proxy_override=this.proxy_map.get(value);
+			if(!proxy_override) return;
+			this.override_value.value=proxy_override;
+		} else {
+			let t=this;
+			let proxy_override=new Proxy(value,{
+				apply(...arr) {
+					return t.on_target_apply_callback(arr);
+				}
+			});
+			this.proxy_map.set(value,proxy_override);
+			this.override_value.value=proxy_override;
 		}
-		let proxy_override=create_proxy(value,this.on_target_apply_callback);
-		PropertyHandler.proxy_map.set(value,proxy_override);
-		PropertyHandler.override_map.set(this.key,proxy_override);
 	}
 }
 g_api.PropertyHandler=PropertyHandler;
@@ -555,7 +610,8 @@ function override_prop(object,property,property_handler) {
 		}
 	});
 }
-override_prop(window,"getInitialData",new PropertyHandler("getInitialData",do_proxy_call_getInitialData));
+override_prop(window,"getInitialData",new PropertyHandler(do_proxy_call_getInitialData));
+override_prop(window,"getInitialCommand",new PropertyHandler((/**@type {[any,any,any]} */args) => Reflect.apply(...args)));
 class ObjectInfo {
 	constructor() {
 		let [gr_0,gr_1,gr_2]="{{:,:}}".split(":");
@@ -741,19 +797,18 @@ function filter_section_renderers_from_item_arr(items) {
 		let e=sections[i];
 		e[2]=section_item_type(e[1]);
 		if(e[2]==='short') {
-			if('remove_content_item' in e[1]) {
-				/**@type {any} */
-				let any_item=e[1];
-				/**@type {Record<"remove_content_item", boolean>} */
-				let record=any_item;
-				record.remove_content_item=true;
-			}
+			/**@type {any} */
+			let any_item=e[1];
+			/**@type {Record<"remove_content_item", boolean>} */
+			let record=any_item;
+			record.remove_content_item=true;
 		}
 	}
 }
 /**@arg {RendererContentItem} item */
 function section_item_type(item) {
 	if(!item.richSectionRenderer) return null;
+	if(!item.richSectionRenderer.content.richShelfRenderer) return null;
 	if(!item.richSectionRenderer.content.richShelfRenderer.icon) return null;
 	let icon_type=item.richSectionRenderer.content.richShelfRenderer.icon.iconType;
 	switch(icon_type) {
@@ -805,7 +860,7 @@ class HandleRichGridRenderer {
 			}
 			if(!content_item.richItemRenderer) return true;
 			check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
-			console.assert(content_item.richItemRenderer.content,"richItemRenderer has content");
+			console.assert(content_item.richItemRenderer.content != void 0,"richItemRenderer has content");
 			let {content}=content_item.richItemRenderer;
 			check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
 			if(content.adSlotRenderer) {
@@ -943,19 +998,24 @@ class YTFilterHandlers extends YTIterateAllBase {
 	}
 	/**
 	 * @arg {{}} data
-	 * @param {URL} url_as_URL
+	 * @param {string|URL|Request} request
 	 */
-	on_handle_api(data,url_as_URL) {
+	on_handle_api(request,data) {
 		const debug=false;
-		let path_url=url_as_URL.pathname;
+		if(typeof request==='string') {
+			request=new URL(request);
+		} else if(request instanceof Request) {
+			request=new URL(request.url);
+		}
+		let path_url=request.pathname;
 		if(path_url==="/getDatasyncIdsEndpoint") return;
-		let api_parts=url_as_URL.pathname.slice(1).split("/");
+		let api_parts=request.pathname.slice(1).split("/");
 		if(api_parts[0]!=='youtubei') {
-			console.log(this.class_name+": "+'unknown api path',url_as_URL.pathname);
+			console.log(this.class_name+": "+'unknown api path',request.pathname);
 			return;
 		}
 		if(api_parts[1]!=='v1') {
-			console.log(this.class_name+": "+'unknown api path',url_as_URL.pathname);
+			console.log(this.class_name+": "+'unknown api path',request.pathname);
 			return;
 		}
 		let api_path=api_parts.slice(2).join(".");
@@ -1003,13 +1063,12 @@ let leftover_args=[];
 g_api.blob_create_args_arr=blob_create_args_arr;
 let yt_handlers=new YTFilterHandlers;
 g_api.yt_handlers=yt_handlers;
-{
-	// PROTOTYPE MODIFIERS
-	/**
-	 * @type {Map<string, any[]>}
-	 */
+function setup_prototype_modify() {
+	/** @type {Map<string, any[]>}*/
 	let created_blobs=new Map;
+	window.created_blobs=created_blobs;
 	let active_blob_set=new Set;
+	window.active_blob_set=active_blob_set;
 	URL.createObjectURL=new Proxy(URL.createObjectURL,{
 		apply(...arr) {
 			let [target_fn,this_,args]=arr;
@@ -1034,38 +1093,6 @@ g_api.yt_handlers=yt_handlers;
 	original_fetch=fetch;
 	window.fetch=fetch_inject;
 	fetch_inject.__proxy_target__=original_fetch;
-	class json_parse_handler {
-		/**
-		 * @param {any[]} proxy_args
-		 */
-		apply(...proxy_args) {
-			let cst=new Error;
-			let error_stack=cst.stack;
-			if(!error_stack) throw new Error("Unable to handle error without stack");
-			let string_arr=error_stack.split('\n');
-			string_arr=string_arr.slice(2);
-			string_arr=string_arr.map(str => str.split('()'[0])[0].slice(4+3,-1));
-			string_arr=string_arr.map(str => str.match(/^Object/)===null&&str||str.slice(6));
-			string_arr=string_arr.map(str => '{'+str+'}');
-			let simple_error_stack=string_arr.join('!');
-			if(simple_error_stack==="{Se}!{._.uf}!{b}!{.apply}") {
-				return false;
-			}
-			return Reflect.apply(proxy_args[0],proxy_args[1],proxy_args[2]);
-		}
-	}
-	class WithJSONParseChanged {
-		/**@type {boolean|undefined} */
-		JSON_parse_changed=true;
-	}
-	let tmp_1=any_c(Function,WithJSONParseChanged);
-	//window.fetch=o_fetch
-	if(tmp_1.JSON_parse_changed===undefined) {
-		let orig_json_parse=JSON.parse;
-		JSON.parse=new Proxy(JSON.parse,new json_parse_handler);
-		JSON.parse=orig_json_parse;
-		tmp_1.JSON_parse_changed=true;
-	}
 	let navigator_sendBeacon=navigator.sendBeacon;
 	navigator.sendBeacon=function(...args) {
 		if(typeof args[0]==='string'&&args[0].indexOf("/api/stats/qoe")>-1) {
@@ -1094,6 +1121,7 @@ g_api.yt_handlers=yt_handlers;
 	});
 	Image=OriginalImage;
 }
+setup_prototype_modify();
 let plr_raw_replace_debug=true;
 function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */ player_config) {
 	let raw_plr_rsp=player_config.args.raw_player_response;
@@ -1518,11 +1546,35 @@ function is_watch_page_active() {
 	return has_ytd_page_mgr()&&get_ytd_page_mgr().getCurrentPage()&&get_ytd_page_mgr().getCurrentPage().nodeName=="YTD-WATCH-FLEXY";
 }
 
+/**
+ * @param {Node} value
+ */
+function as_node(value) {
+	return value;
+}
+
+
+/**@type {HTMLDivElement}*/
+let overlay_content_div=createOverlayContent();
+
+let input_modify_css_style=document.createElement("div");
+input_modify_css_style.style.float="left";
+input_modify_css_style.innerHTML="C";
+input_modify_css_style.onclick=ui_css_toggle_click_handler;
+
+
+/**@type {HTMLDivElement}*/
+let overlay_hide_ui_input=document.createElement("div");
+overlay_hide_ui_input.style.float="left";
+overlay_hide_ui_input.style.clear="left";
+overlay_hide_ui_input.innerHTML="H";
+overlay_hide_ui_input.onclick=title_display_toggle;
+
 function page_changed_next_frame() {
 	if(!plugin_overlay_element) return;
 	if(!has_ytd_page_mgr()) return;
 	plugin_overlay_element.onupdate();
-	get_ytd_page_mgr().getCurrentPage().append(plugin_overlay_element);
+	get_ytd_page_mgr().getCurrentPage().append(as_node(plugin_overlay_element));
 }
 
 /**@type {Map<string, HTMLElement>}*/
@@ -1652,33 +1704,35 @@ function log_page_type_change(event) {
 }
 on_yt_navigate_finish.push(log_page_type_change);
 
-function log_current_video_data() {
-	if(!ytd_player) return;
-	if(!ytd_player.player_) {
-		wait_for_yt_player().then(log_current_video_data);
-		return;
-	}
-	const video_data=ytd_player.player_.getVideoData();
-	update_plugin_overlay();
-	if(video_data.video_id===undefined) return;
-	if(video_data.eventId===void 0) return;
-	const {video_id,title,author}=video_data;
-	const playlist_log_str=`[${author},${video_id}] ${title}`;
-	if(playlist_log_str===playlist_arr.at(-1)) return;
-	playlist_arr.push(playlist_log_str);
-	console.log(playlist_log_str);
-	if(!overlay_content_div) return;
-	overlay_content_div.innerText=`[${video_id}] ${title}`;
-}
-on_yt_navigate_finish.push(log_current_video_data);
-
-
 /**
  * @type {YtdAppElement | null}
  */
 // yt display app
 let ytd_app=null;
 let vis_imm=false;
+let css_str=`
+	ytd-watch-next-secondary-results-renderer {
+		overflow-x:scroll;
+		height:80vh;
+	}
+	/*# sourceURL=yt_css_user */
+`;
+function createStyleElement(css_content) {
+	let style=document.createElement("style");
+	ui_plugin_style_element.innerHTML=css_content;
+}
+let ui_plugin_style_element=createStyleElement(css_str);
+ui_plugin_style_element.innerHTML=css_str;
+let ui_plugin_css_enabled=false;
+function ui_css_toggle_click_handler() {
+	if(ui_plugin_css_enabled) {
+		ui_plugin_style_element.remove();
+		ui_plugin_css_enabled=false;
+	} else {
+		document.head.append(ui_plugin_style_element);
+		ui_plugin_css_enabled=true;
+	}
+}
 /**
  * @param {HTMLElement} element
  */
@@ -1694,15 +1748,7 @@ function on_ytd_app(element) {
 			handler(real_event);
 		}
 	});
-	ytd_app.ui_plugin_style_element=document.createElement("style");
-	let css_str=`
-		ytd-watch-next-secondary-results-renderer {
-			overflow-x:scroll;
-			height:80vh;
-		}
-		/*# sourceURL=yt_css_user */
-	`;
-	ytd_app.ui_plugin_style_element.innerHTML=css_str;
+	ytd_app.ui_plugin_style_element=ui_plugin_style_element;
 	if(document.visibilityState==='visible') {
 		ytd_app.app_is_visible=1;
 		if(vis_imm) {
@@ -1766,20 +1812,7 @@ function attach_volume_range_to_page() {
 	}
 }
 
-let ui_plugin_css_enabled=false;
-function ui_css_toggle_click_handler() {
-	if(ui_plugin_css_enabled) {
-		if(ytd_app&&ytd_app.ui_plugin_style_element) {
-			ytd_app.ui_plugin_style_element.remove();
-		}
-		ui_plugin_css_enabled=false;
-	} else {
-		if(ytd_app&&ytd_app.ui_plugin_style_element) {
-			document.head.append(ytd_app.ui_plugin_style_element);
-		}
-		ui_plugin_css_enabled=true;
-	}
-}
+
 
 /**
  * @type {HTMLElement | null}
@@ -1854,10 +1887,10 @@ class MessageChannelWithReadonlyPorts {
 	}
 }
 
-/**@type {Readonly<MessageChannelWithReadonlyPorts>|null} */
-let message_channel=null;
-/**@return {Readonly<MessageChannelWithReadonlyPorts>} */
-function create_message_channel() {
+/**@type {{value:Readonly<MessageChannelWithReadonlyPorts>|null}} */
+let message_channel={value: null};
+/**@arg {(event: MessageEvent<number>)=>void} on_port_message @returns {Readonly<MessageChannelWithReadonlyPorts>} */
+function create_message_channel(on_port_message) {
 	let channel=Object.freeze(new MessageChannel());
 	let {port1,port2}=channel;
 	port2.onmessage=on_port_message;
@@ -1867,11 +1900,11 @@ function create_message_channel() {
 }
 
 function fire_observer_event() {
-	if(!message_channel) throw new Error("bad");
+	if(!message_channel.value) throw new Error("bad");
 	dom_observer.dispatchEvent({
 		type: port_state.current_event_type,
 		detail: {},
-		port: message_channel.port1,
+		port: message_channel.value.port1,
 	});
 }
 
@@ -1879,7 +1912,7 @@ let always_dispatch_event=false;
 let rep_count=0;
 let rep_max=300;
 function dispatch_observer_event() {
-	if(!message_channel) throw new Error("Bad");
+	if(!message_channel.value) throw new Error("Bad");
 	rep_count+=1;
 	if(always_dispatch_event) {
 		return fire_observer_event();
@@ -1891,7 +1924,12 @@ function dispatch_observer_event() {
 	return fire_observer_event();
 }
 
-message_channel=create_message_channel();
+function start_message_channel_loop() {
+	message_channel.value=create_message_channel(on_port_message);
+	if(top===window) {
+		dispatch_observer_event();
+	}
+}
 
 let found_element_arr=[
 	"yt-playlist-manager",
@@ -1942,6 +1980,7 @@ function event_video_element_list(event) {
 	const current_message_id=70;
 	let {type,detail,port}=event;
 	observer_default_action(type,current_message_id);
+	console.log("video-list");
 	if(!box_map.has("video-list")) {
 		console.log('no video element list');
 		return;
@@ -1949,12 +1988,23 @@ function event_video_element_list(event) {
 	this.dispatchEvent({type: "plugin-activate",detail,port});
 }
 dom_observer.addEventListener('video',event_video_element_list);
-function event_plugin_activate() {
-	if(is_watch_page_active())
-		yt_watch_page_loaded_handler();
+
+function yt_watch_page_loaded_handler() {
+	if(!is_watch_page_active()) {
+		return;
+	}
+	if(!has_ytd_page_mgr()) {
+		console.log("no ytd-page-manager");
+		return;
+	}
+	debugger;
+	title_text_overlay_update();
+	init_ui_plugin();
+	ytd_player.active_nav=false;
+	ytd_player.init_nav=true;
 }
-dom_observer.addEventListener('plugin-activate',event_plugin_activate);
-const realHTMLElement=HTMLElement;
+dom_observer.addEventListener('plugin-activate',yt_watch_page_loaded_handler);
+
 /**
  * @type {((event:{})=>void)[]}
  */
@@ -2053,8 +2103,24 @@ function sumOffset(element) {
 	}
 	return cache;
 }
-/**@type {PluginOverlayElement | null} */
-let plugin_overlay_element=null;
+
+/**@returns {PluginOverlayElement} */
+function createPluginOverlay() {
+	let element=document.createElement("div");
+	element.id="mz_overlay";
+	element.append(overlay_content_div);
+	element.append(input_modify_css_style);
+	element.append(overlay_hide_ui_input);
+	/**@type {any} */
+	let any=element;
+	any.onupdate=fix_offset;
+	return any;
+}
+
+/**@type {PluginOverlayElement} */
+let plugin_overlay_element=createPluginOverlay();
+g_api.plugin_overlay_element=plugin_overlay_element;
+
 function fix_offset() {
 	if(!ytd_player) return;
 	if(!plugin_overlay_element) return;
@@ -2062,30 +2128,51 @@ function fix_offset() {
 	plugin_overlay_element.style.top=player_offset.top_offset+"px";
 	plugin_overlay_element.style.left=player_offset.left_offset+"px";
 }
-let title_text_overlay_enabled=true;
-/**@type {HTMLDivElement | null}*/
-let overlay_hide_ui_input=null;
-/**@type {HTMLDivElement | null}*/
-let overlay_content_div=null;
-function title_text_overlay_update() {
-	title_display_update();
-	if(!overlay_hide_ui_input) return;
-	if(title_text_overlay_enabled) {
-		overlay_hide_ui_input.style.color='';
-	} else {
-		overlay_hide_ui_input.style.color='#888';
-	}
-}
+
 let title_save=localStorage.title_save_data;
 if(!title_save) {
 	title_save=localStorage.title_save_data='{"value":false}';
 }
+
+/**@return {HTMLDivElement} */
+function createOverlayContent() {
+	let element=document.createElement("div");
+	element.style.userSelect="all";
+	element.style.width='max-content';
+	return element;
+}
+
+function log_current_video_data() {
+	if(!ytd_player) return;
+	if(!ytd_player.player_) {
+		wait_for_yt_player().then(log_current_video_data);
+		return;
+	}
+	const video_data=ytd_player.player_.getVideoData();
+	update_plugin_overlay();
+	if(video_data.video_id===undefined) return;
+	if(video_data.eventId===void 0) return;
+	const {video_id,title,author}=video_data;
+	const playlist_log_str=`[${author},${video_id}] ${title}`;
+	if(playlist_log_str===playlist_arr.at(-1)) return;
+	playlist_arr.push(playlist_log_str);
+	console.log(playlist_log_str);
+	overlay_content_div.innerText=`[${video_id}] ${title}`;
+}
+on_yt_navigate_finish.push(log_current_video_data);
+
+let title_text_overlay_enabled=true;
 let title_on=JSON.parse(title_save).value;
-function title_display_update() {
-	if(!overlay_content_div) return;
-	if(title_on&&title_text_overlay_enabled) {
-		overlay_content_div.style.display="";
+function title_text_overlay_update() {
+	if(title_text_overlay_enabled) {
+		overlay_hide_ui_input.style.color='';
+		if(title_on) {
+			overlay_content_div.style.display="";
+		} else {
+			overlay_content_div.style.display="none";
+		}
 	} else {
+		overlay_hide_ui_input.style.color='#888';
 		overlay_content_div.style.display="none";
 	}
 }
@@ -2119,56 +2206,23 @@ function update_plugin_overlay() {
 
 function title_display_toggle() {
 	title_on=!title_on;
-	title_display_update();
+	title_text_overlay_update();
 	localStorage.title_save_data=JSON.stringify({value: title_on});
 }
 function update_ui_plugin() {
 	if(debug) console.log('update_ui_plugin');
 	setTimeout(update_plugin_overlay);
 }
-function yt_watch_page_loaded_handler() {
-	if(!has_ytd_page_mgr()) {
-		console.log("no ytd-page-manager");
-		return;
-	}
-	overlay_content_div=document.createElement("div");
-	var input_modify_css_style=document.createElement("div");
-	overlay_hide_ui_input=document.createElement("div");
-	if(!plugin_overlay_element) {
-		if(!g_api) throw new Error("bad");
-		let overlay_element=PluginOverlayElement.cast(document.createElement("div"));
-		g_api.plugin_overlay_element=overlay_element;
-		overlay_element.id="mz_overlay";
-		plugin_overlay_element=overlay_element;
-	}
-	for(let i;i=plugin_overlay_element.childNodes[0];) i.remove();
-	overlay_content_div.style.userSelect="all";
-	overlay_content_div.style.width='max-content';
-	plugin_overlay_element.append(overlay_content_div);
-	input_modify_css_style.style.float="left";
-	overlay_hide_ui_input.style.float="left";
-	overlay_hide_ui_input.style.clear="left";
-	overlay_hide_ui_input.innerHTML="H";
-	overlay_hide_ui_input.onclick=title_display_toggle;
-	title_text_overlay_update();
-	plugin_overlay_element.append(input_modify_css_style);
-	plugin_overlay_element.append(overlay_hide_ui_input);
-	title_display_update();
-	if(!ytd_player) return;
-	ytd_player.active_nav=false;
-	plugin_overlay_element.onupdate=fix_offset;
-	init_ui_plugin();
-	ytd_player.init_nav=true;
-	input_modify_css_style.innerHTML="C";
-	input_modify_css_style.onclick=ui_css_toggle_click_handler;
-}
-g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler;
+
+
 class PluginOverlayElement extends HTMLDivElement {
-	/**@arg {HTMLDivElement} value @return {PluginOverlayElement} */
-	static cast(value) {
-		return any_c(value,PluginOverlayElement);
-	}
 	onupdate() {}
+}
+/**@arg {{}} value @return {{}} */
+function cast_as_plugin_overlay(value) {
+	/**@type {any} */
+	let any=value;
+	return any;
 }
 window.addEventListener("resize",function() {
 	plugin_overlay_element&&plugin_overlay_element.onupdate();
@@ -2280,13 +2334,36 @@ let volume_plugin_style_source=`
 	}
 	/\*# sourceURL=youtube_volume_plugin_style_source*\/
 `;
+
+function createGainNode(audio_ctx,next_node) {
+	let node=audio_ctx.createGain();
+	node.connect(next_node);
+	return node;
+}
+function createDynamicsCompressor(audio_ctx,next_node) {
+	let node=audio_ctx.createDynamicsCompressor();
+	node.connect(next_node);
+	let {
+		knee,
+		attack,
+		release,
+		ratio,
+		threshold,
+	}=node;
+	knee.value=27;
+	attack.value=1;
+	release.value=1;
+	ratio.value=4;
+	threshold.value=-24;
+	return node;
+}
 class HTMLMediaElementGainController {
 	/**@type {Event|undefined}*/
 	last_event;
 	/**@type {(HTMLVideoElement | HTMLAudioElement)[]} */
 	attached_element_list=[];
 	audioCtx=new AudioContext();
-	style=document.createElement("style");
+	style=createStyleElement(volume_plugin_style_source);
 	/**@type {DynamicsCompressorNode} */
 	dynamics_compressor;
 	/**
@@ -2294,30 +2371,15 @@ class HTMLMediaElementGainController {
 	 */
 	media_element_source_list=[];
 	constructor() {
-		this.gain_node=this.audioCtx.createGain();
-		this.gain=this.gain_node.gain;
-		this.gain_node.connect(this.audioCtx.destination);
-		let dynamics_compressor=this.audioCtx.createDynamicsCompressor();
-		dynamics_compressor.connect(this.gain_node);
-		this.dynamics_compressor=dynamics_compressor;
-		/**@arg {DynamicsCompressorNode} dynamics_compressor */
-		function init_dynamics_compressor(dynamics_compressor) {
-			let {knee,attack,release,ratio,threshold}=dynamics_compressor;
-			knee.value=27;
-			attack.value=1;
-			release.value=1;
-			ratio.value=4;
-			threshold.value=-24;
-		}
-		init_dynamics_compressor(dynamics_compressor);
-		this.style.innerHTML=volume_plugin_style_source;
+		this.gain_node=createGainNode(this.audioCtx,this.audioCtx.destination);
+		this.dynamics_compressor=createDynamicsCompressor(this.audioCtx,this.gain_node);
 		document.head.append(this.style);
 	}
 	/**
 	 * @param {number} gain
 	 */
 	setGain(gain) {
-		this.gain.value=gain;
+		this.gain_node.gain.value=gain;
 	}
 	/**
 	 * @param {NodeListOf<HTMLMediaElement>} media_node_list
@@ -2325,6 +2387,7 @@ class HTMLMediaElementGainController {
 	attach_element_list(media_node_list) {
 		for(let i=0;i<media_node_list.length;i++) {
 			let video_element=media_node_list[i];
+			video_element.crossOrigin='anonymous';
 			if(this.attached_element_list.includes(video_element)) continue;
 			let media_element_source=this.audioCtx.createMediaElementSource(video_element);
 			media_element_source.connect(this.dynamics_compressor);
@@ -2333,6 +2396,7 @@ class HTMLMediaElementGainController {
 		}
 	}
 }
+
 /**@type {HTMLMediaElementGainController | null} */
 let gain_controller=null;
 /**@returns {HTMLMediaElementGainController} */
@@ -2484,4 +2548,10 @@ class VolumeRange {
 		view_parent.insertAdjacentElement("beforebegin",this.view_div);
 	}
 }
-if(top===window) dispatch_observer_event();
+function main() {
+	start_message_channel_loop();
+}
+main();
+/*
+
+*/
