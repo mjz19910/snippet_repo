@@ -717,37 +717,36 @@ function sorted_comp_stats(arr,calc_win) {
 	ret.sort((a,b) => b[1]-a[1]);
 	return ret;
 }
+/**
+ * @param {any[]} arr
+ * @param {number} start
+ */
+function next_chunk(arr,start) {
+	let s_arr;
+	let last;
+	let c_len;
+	for(let i=start;i<start+30;i++) {
+		if(s_arr) {
+			last=s_arr[0][1];
+		}
+		s_arr=sorted_comp_stats(arr,i);
+		if(!last)
+			continue;
+		let diff=last-s_arr[0][1];
+		if(diff===0)
+			continue;
+		if(diff===1) {
+			c_len=i;
+			break;
+		}
+		console.log(s_arr[0],...s_arr.slice(0,8).map(e => e[1]));
+	}
+	return c_len;
+}
 test_1();
 function test_1() {
 	/* version_list file: group1/sub_a/item-_9.js */
 	let max_id=0;
-	next_chunk([],0);
-	/**
-	 * @param {any[]} arr
-	 * @param {number} start
-	 */
-	function next_chunk(arr,start) {
-		let s_arr;
-		let last;
-		let c_len;
-		for(let i=start;i<start+30;i++) {
-			if(s_arr) {
-				last=s_arr[0][1];
-			}
-			s_arr=sorted_comp_stats(arr,i);
-			if(!last)
-				continue;
-			let diff=last-s_arr[0][1];
-			if(diff===0)
-				continue;
-			if(diff===1) {
-				c_len=i;
-				break;
-			}
-			console.log(s_arr[0],...s_arr.slice(0,8).map(e => e[1]));
-		}
-		return c_len;
-	}
 	/**
 	 * @type {string[]}
 	 */
