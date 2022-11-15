@@ -14,6 +14,9 @@ export interface GlobalApiObject {
 
 // DebugAPI
 export interface GlobalApiObject {
+	IterExtensions: typeof IterExtensions;
+	CreateObjURLCache: typeof CreateObjURLCache;
+	getPlaybackRateMap: (include_uninteresting: boolean) => Map<any,any>;
 	Repeat?: {},
 	CompressRepeated?: {},
 	to_tuple_arr?:{},

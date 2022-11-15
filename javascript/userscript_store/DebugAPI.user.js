@@ -15,8 +15,108 @@
 /* eslint-disable no-undef */
 
 /**@type {typeof window.g_api} */
-let g_api={};
+let g_api=window.g_api??{};
 window.g_api=g_api;
+class IterExtensions {
+	static init() {
+		let map=new Map;
+		let val_iter=map.values();
+		let proto=Object.getPrototypeOf(val_iter);
+		proto.map=function(/** @type {(arg0: any) => any} */ func) {
+			let t=this;
+			function next() {
+				let iter=t.next();
+				if(iter.done) return iter;
+				iter.value=func(iter.value);
+				return iter;
+			}
+			return {
+				next,
+				[Symbol.iterator]() {
+					return this;
+				}
+			};
+		};
+	}
+}
+g_api.IterExtensions=IterExtensions;
+IterExtensions.init();
+/**
+ * @param {boolean} include_uninteresting
+ */
+function getPlaybackRateMap(include_uninteresting) {
+	let progress_map=new Map;
+	if(include_uninteresting) {
+		let elem_list=document.querySelectorAll("ytd-compact-video-renderer:has(#overlays:not(* > #progress))");
+		elem_list.length>0&&progress_map.set("none",[...elem_list]);
+	}
+	let sel=(/**@type {string}*/e) => `ytd-compact-video-renderer:has(#progress[style="width: ${e}%;"])`;
+	for(let i=0;i<=100;i++) {
+		if(!include_uninteresting&&i===100) continue;
+		let elem=document.querySelectorAll(sel(i.toString()));
+		if(elem.length==1) {
+			progress_map.set("some:"+i,elem[0]);
+		} else if(elem.length>0) {
+			progress_map.set("some:"+i,[...elem]);
+		}
+	}; return progress_map;
+};
+g_api.getPlaybackRateMap=getPlaybackRateMap;
+class CreateObjURLCache {
+	/** @readonly */
+	static originalScope={
+		createObjectURL: URL.createObjectURL,
+		revokeObjectURL: URL.revokeObjectURL,
+	};
+	/**
+	 * @type {[(Blob | MediaSource)[], string, boolean][]}
+	 */
+	static expired=[];
+	/**@type {Map<string, [(Blob | MediaSource)[], string, boolean]>} */
+	static cache=new Map;
+	static enable() {
+		this.update_scope(this.getScope());
+	}
+	static disable() {
+		this.update_scope(this.originalScope);
+	}
+	/**
+	 * @param {CreateObjURLCache.originalScope} scope
+	 */
+	static update_scope(scope) {
+		URL.createObjectURL=scope.createObjectURL;
+		URL.revokeObjectURL=scope.revokeObjectURL;
+	}
+	static getScope() {
+		let base=this.originalScope;
+		/**@type {CreateObjURLCache.originalScope} */
+		let scope={createObjectURL,revokeObjectURL};
+		return scope;
+		/**
+		 * @param {[Blob | MediaSource]} args
+		 */
+		function createObjectURL(...args) {
+			let ret=base.createObjectURL(...args);
+			CreateObjURLCache.cache.set(ret,[args,ret,true]);
+			return ret;
+		}
+		/**
+		 * @param {[string]} args
+		 */
+		function revokeObjectURL(...args) {
+			let key=args[0];
+			let cache_value=CreateObjURLCache.cache.get(key);
+			CreateObjURLCache.cache.delete(key);
+			if(cache_value) {
+				CreateObjURLCache.expired.push(cache_value);
+			}
+			let ret=base.revokeObjectURL(...args);
+			return ret;
+		}
+	}
+}
+g_api.CreateObjURLCache=CreateObjURLCache;
+CreateObjURLCache.enable();
 class Repeat {
 	/**@type {Map<string, Map<number, Repeat>>} */
 	static map=new Map;
@@ -402,7 +502,7 @@ class GenericEventTarget {
 g_api.GenericEventTarget=GenericEventTarget;
 const static_event_target=new GenericEventTarget;
 class Dumper {
-	/**@type {(<T>(value:T)=>void)|null} */
+	/**@type {null} */
 	m_dump_value=null;
 	/**@arg {null} value */
 	dump_value(value) {
