@@ -402,8 +402,9 @@ class MulCompression extends BaseCompression {
 			}
 			ret.push(item);
 		}
-		let ret_1=this.compress_result(arr,ret);
-		return ret_1;
+		if(this.did_compress(arr,ret))
+			return ["X",ret];
+		return ["T",arr];
 	}
 	/**
 	 * @template {ST} U
@@ -761,11 +762,17 @@ function calc_next(obj,max_id) {
 	if(obj.arr_str===void 0) throw new Error("No arr");
 	next.arr_dual=compressionStatsCalc.replace_range(obj.arr_str,rep_val,max_id);
 	if(next.arr_str) return null;
+	/**@type {DualR} */
 	let compress_result=compressionStatsCalc.compressor.try_compress_dual(next.arr_dual);
-	if(compress_result[0]) {
-		next.arr_dual_x=compress_result[1];
+	if(compress_result[0]==='T') {
+		/**@type {TU<string, number>[]} */
+		let res=[];
+		for(let i of compress_result[1]) {
+			res.push(i);
+		}
+		next.arr_dual=res;
 	} else {
-		next.arr_dual=compress_result[1];
+		next.arr_dual_x=compress_result[1];
 	}
 	return compress_result;
 }
