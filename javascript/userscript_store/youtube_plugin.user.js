@@ -1553,30 +1553,6 @@ function as_node(value) {
 	return value;
 }
 
-/**@return {HTMLDivElement} */
-function createOverlayContent() {
-	let element=document.createElement("div");
-	element.style.userSelect="all";
-	element.style.width='max-content';
-	return element;
-}
-
-/**@type {HTMLDivElement}*/
-let overlay_content_div=createOverlayContent();
-
-let input_modify_css_style=document.createElement("div");
-input_modify_css_style.style.float="left";
-input_modify_css_style.innerHTML="C";
-input_modify_css_style.onclick=ui_css_toggle_click_handler;
-
-
-/**@type {HTMLDivElement}*/
-let overlay_hide_ui_input=document.createElement("div");
-overlay_hide_ui_input.style.float="left";
-overlay_hide_ui_input.style.clear="left";
-overlay_hide_ui_input.innerHTML="H";
-overlay_hide_ui_input.onclick=title_display_toggle;
-
 function page_changed_next_frame() {
 	if(!plugin_overlay_element) return;
 	if(!has_ytd_page_mgr()) return;
@@ -2115,6 +2091,30 @@ function sumOffset(element) {
 	}
 	return cache;
 }
+
+/**@return {HTMLDivElement} */
+function createOverlayContent() {
+	let element=document.createElement("div");
+	element.style.userSelect="all";
+	element.style.width='max-content';
+	return element;
+}
+
+/**@type {HTMLDivElement}*/
+let overlay_content_div=createOverlayContent();
+
+let input_modify_css_style=document.createElement("div");
+input_modify_css_style.style.float="left";
+input_modify_css_style.innerHTML="C";
+input_modify_css_style.onclick=ui_css_toggle_click_handler;
+
+
+/**@type {HTMLDivElement}*/
+let overlay_hide_ui_input=document.createElement("div");
+overlay_hide_ui_input.style.float="left";
+overlay_hide_ui_input.style.clear="left";
+overlay_hide_ui_input.innerHTML="H";
+overlay_hide_ui_input.onclick=title_display_toggle;
 
 /**@returns {PluginOverlayElement} */
 function createPluginOverlay() {
