@@ -526,7 +526,7 @@ function do_iter(bound_function,keys) {
 }
 
 /** @param {any} a @param {any} c @param {any} m_require */
- function found_modules(a,c,m_require) {
+function found_modules(a,c,m_require) {
 	void a,c,m_require;
 };
 
@@ -546,19 +546,11 @@ function resolve_function_constructor() {
 	return content_window.Function;
 }
 
-const wasm_header=new Uint8Array([0,0x61,0x73,0x6d,1,0,0,0]);
-
-const wasm_global_memory=new WebAssembly.Memory({initial:1});
-
-let wasm_global_memory_view=new Uint8Array(wasm_global_memory.buffer)
-
-wasm_global_memory_view.set(wasm_header, 0);
-
 /**
  * @param {number} id
  * @param {string | any[]} arr
  */
- function wasm_encode_section(id,arr) {
+function wasm_encode_section(id,arr) {
 	if(arr.length>=128) {
 		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
 		throw new Error("varInt Error");
@@ -580,6 +572,16 @@ function wasm_encode_string(arr) {
 function not_null(value) {
 	if(value===null) throw new Error("Unexpected null");
 	return value;
+}
+
+function run_wasm_plugin() {
+	const wasm_header=new Uint8Array([0,0x61,0x73,0x6d,1,0,0,0]);
+
+	const wasm_global_memory=new WebAssembly.Memory({initial: 1});
+
+	let wasm_global_memory_view=new Uint8Array(wasm_global_memory.buffer);
+
+	wasm_global_memory_view.set(wasm_header,0);
 }
 
 function run_modules_plugin() {
@@ -613,9 +615,9 @@ function run_modules_plugin() {
 	let bound_function_prototype_apply_2=function_prototype_apply.bind(function_prototype_bind);
 
 	let safe_function_prototype={
-		apply:function_prototype.apply,
-		bind:function_prototype.bind,
-		call:function_prototype.call,
+		apply: function_prototype.apply,
+		bind: function_prototype.bind,
+		call: function_prototype.call,
 	};
 	console.log(safe_function_prototype);
 
@@ -677,7 +679,7 @@ function run_modules_plugin() {
 					}
 				}
 			default:
-				c=bound_function_prototype_apply(this,[thisArg, argArray]);
+				c=bound_function_prototype_apply(this,[thisArg,argArray]);
 		}
 		if(s_func.indexOf(this.toString())==-1) {
 			s_func.push(this.toString());
