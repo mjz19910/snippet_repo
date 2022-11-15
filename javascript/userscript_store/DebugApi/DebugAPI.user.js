@@ -681,7 +681,7 @@ function run_modules_plugin() {
 	Function.prototype.call=function_prototype_call_inject;
 	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg,...argArray) {
-		var c;
+		let ret;
 		switch(argArray.length) {
 			case 2:
 				if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
@@ -697,12 +697,12 @@ function run_modules_plugin() {
 					}
 				}
 			default:
-				c=bound_apply_call(this,[thisArg,argArray]);
+				ret=bound_apply_call(this,[thisArg,argArray]);
 		}
 		if(function_as_string_vec.indexOf(this.toString())==-1) {
 			function_as_string_vec.push(this.toString());
 		}
-		return c;
+		return ret;
 	};
 	/**
 	 * @this {()=>void}
