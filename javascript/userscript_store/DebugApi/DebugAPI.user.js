@@ -643,9 +643,9 @@ function run_modules_plugin() {
 	let bound_function_prototype_call_1=function_prototype_call.bind(function_prototype_apply);
 	let bound_function_prototype_call_2=function_prototype_call.bind(function_prototype_bind);
 
-	let bound_function_prototype_bind=function_prototype_bind.bind(function_prototype_call);
-	let bound_function_prototype_bind_1=function_prototype_bind.bind(function_prototype_apply);
-	let bound_function_prototype_bind_2=function_prototype_bind.bind(function_prototype_bind);
+	let bound_bind_bind_call=function_prototype_bind.bind(function_prototype_call);
+	let bound_bind_bind_apply=function_prototype_bind.bind(function_prototype_apply);
+	let bound_bind_bind_bind=function_prototype_bind.bind(function_prototype_bind);
 
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
 	let bound_apply_bind_call=function_prototype_apply.bind(function_prototype_call);
@@ -671,9 +671,9 @@ function run_modules_plugin() {
 		[function_prototype_apply,function_prototype_call,bound_apply_bind_call],
 		[function_prototype_apply,function_prototype_apply,bound_apply_bind_apply],
 		[function_prototype_apply,function_prototype_bind,bound_apply_bind_bind],
-		[function_prototype_bind,function_prototype_call,bound_function_prototype_bind],
-		[function_prototype_bind,function_prototype_apply,bound_function_prototype_bind_1],
-		[function_prototype_bind,function_prototype_bind,bound_function_prototype_bind_2],
+		[function_prototype_bind,function_prototype_call,bound_bind_bind_call],
+		[function_prototype_bind,function_prototype_apply,bound_bind_bind_apply],
+		[function_prototype_bind,function_prototype_bind,bound_bind_bind_bind],
 	];
 	console.log(bound_function_prototype_vec);
 	/** @type {string[]} */
