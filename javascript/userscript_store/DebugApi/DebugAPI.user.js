@@ -365,14 +365,6 @@ class BaseCompression {
 	}
 }
 class MulCompression extends BaseCompression {
-	stats_calculator;
-	/**@type {never[][]} */
-	compression_stats;
-	constructor() {
-		super();
-		this.stats_calculator=new CompressionStatsCalculator;
-		this.compression_stats=[];
-	}
 	/**
 	 * @param {TU<string, number>[]} arr
 	 * @returns {DualR}
@@ -492,6 +484,14 @@ class MulCompression extends BaseCompression {
 		if(res_1[0])
 			return res_1[1];
 		return arr;
+	}
+	stats_calculator;
+	/**@type {[string, number][][]} */
+	compression_stats;
+	constructor() {
+		super();
+		this.stats_calculator=new CompressionStatsCalculator;
+		this.compression_stats=[];
 	}
 }
 g_api.range_matches=range_matches;
