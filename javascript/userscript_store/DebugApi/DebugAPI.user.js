@@ -526,25 +526,201 @@ class VV {
 	}
 	compress_main() {this.m_cb();}
 }
+class CompressionStatsCalculator {
+	constructor() {
+		/** @type {number[]} */
+		this.hit_counts=[];
+		/** @type {string[]} */
+		this.cache=[];
+		this.comp=new MulCompression;
+	}
+	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
+	calc_for_stats_index(stats_arr,arr,index) {
+		stats_arr[index]=this.calc_compression_stats(arr,index+1);
+	}
+	/** @param {number} index */
+	add_hit(index) {
+		if(!this.hit_counts[index]) {
+			this.hit_counts[index]=1;
+		} else this.hit_counts[index]++;
+	}
+	/** @param {string} key */
+	add_item(key) {
+		let index=this.cache.indexOf(key);
+		if(index==-1) {
+			index=this.cache.push(key)-1;
+		}
+		this.add_hit(index);
+	}
+	reset() {
+		this.cache.length=0;
+		this.hit_counts.length=0;
+	}
+	map_values() {
+		return this.hit_counts;
+	}
+	map_keys() {
+		return this.cache;
+	}
+	/** @param {string[]} arr @param {number} win_size */
+	calc_compression_stats(arr,win_size) {
+		this.reset();
+		for(let i=0;i<arr.length;i++) {
+			if(i+win_size<arr.length) {
+				this.add_item(arr.slice(i,i+win_size).join(","));
+			}
+		}
+		let keys=this.map_keys();
+		let values=this.map_values();
+		return to_tuple_arr(keys,values);
+	}
+	/**
+	 * @template T
+	 * @template U
+	 * @arg {T[]} arr
+	 * @arg {number} range
+	 * @arg {U} replacement
+	 * @returns {(["T", T]|["U", U])[]}
+	 * */
+	replace_range(arr,range,replacement) {
+		class AH {
+			/**
+			 * @param {["U", U][]} val
+			 */
+			get_arr_u(val) {
+				return val;
+			}
+			/**
+			 * @param {["T", T][]} val
+			 */
+			get_arr_t(val) {
+				return val;
+			}
+			/**@param {(["T", T]|["U", U])[]} val */
+			get_arr(val) {
+				return val;
+			}
+		}
+		let h=new AH;
+		let ret=h.get_arr([]);
+		for(let i=0;i<arr.length;i++) {
+			if(range_matches(arr,range,i)) {
+				i+=1;
+				ret.push(['U',replacement]);
+				continue;
+			}
+			let rest=arr[i];
+			ret.push(['T',rest]);
+		}
+		return ret;
+	}
+	test() {
+		/**
+		 * @param {any} a
+		 * @param {any} c
+		 * @param {any} m_require
+		 */
+		function found_modules(a,c,m_require) {
+			void a,c,m_require;
+		};
+		/**
+		 * @param {(this: Function, thisArg: any, ...argArray: any[]) => any} oc
+		 * @param {{ (a: any, c: any, m_require: any): void; (arg0: any, arg1: any, arg2: any): void; }} cb
+		 */
+		function rv(oc,cb) {
+			void oc;
+			/**@type {any} */
+			let fn_call=Function.prototype.call;
+			/**@type {{rep?:boolean}} */
+			let fn_call_1=fn_call;
+			if(fn_call_1.rep) {
+				location.reload();
+				return;
+			}
+			var fr=document.createElement("iframe");
+			document.head.append(fr);
+			if(!fr.contentWindow) throw new Error("No content window");
+			let content_window=fr.contentWindow.self;
+			var fpc=content_window.Function.prototype.call;
+			var fa=content_window.Function.prototype.apply.bind(fpc);
+			var fb=content_window.Function.prototype.apply.bind(content_window.Function.prototype.apply);
+			/** @type {string[]} */
+			let s_func=[];
+			Function.prototype.call=npc;
+			/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
+			function npc(thisArg,...argArray) {
+				var c;
+				switch(argArray.length) {
+					case 2:
+						if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
+							var ars=Object.entries(argArray[2]).filter(([j,e]) => e instanceof Array);
+							var ars_i=ars[0][1].indexOf(this);
+							if(ars[0][1].indexOf(this)>-1) {
+								console.log("found module array:","require."+ars[0][0]);
+								var mods=Object.entries(argArray[2]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
+								if(mods.length>0) {
+									console.log("found module cache:","require."+mods[0][0]);
+									cb(ars[0][1],mods[0][1],argArray[2]);
+								}
+							}
+						}
+					default:
+						c=fa(this,[thisArg,...argArray]);
+				}
+				if(s_func.indexOf(this.toString())==-1) {
+					s_func.push(this.toString());
+				}
+				return c;
+			};
+			/**
+			 * @this {{}}
+			 * @param {any} tv
+			 * @param {any} r
+			 */
+			function nac(tv,r) {
+				var c;
+				c=fb(this,[tv,r]);
+				if(s_func.indexOf(this.toString())==-1) {
+					s_func.push(this.toString());
+				}
+				return c;
+			};
+			Function.prototype.apply=nac;
+			npc.rep=1;
+			window.g_api.s_func=s_func;
+			return s_func;
+		};
+		rv(Function.prototype.call,found_modules);
+		void [rv,found_modules];
+
+		let obj={
+			arr: [],
+		};
+		let rep_val=0.03/(100*4*1);
+		let max_id=0;
+		let res=this.replace_range(obj.arr,rep_val,max_id);
+		console.log("compressed",res);
+	}
+}
+g_api.CompressionStatsCalculator=CompressionStatsCalculator;
+let compressionStatsCalc=new CompressionStatsCalculator;
+/** @param {[unknown, number][]} stats */
+function log_stats(stats) {
+	console.log(...stats.sort((a,b) => b[1]-a[1]));
+}
+/**
+ * @param {string[]} arr
+ * @param {number} calc_win
+ */
+function sorted_comp_stats(arr,calc_win) {
+	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win);
+	ret.sort((a,b) => b[1]-a[1]);
+	return ret;
+}
 test_1();
 function test_1() {
 	/* version_list file: group1/sub_a/item-_9.js */
-	/**
-	 * @param {[unknown, number][]} stats
-	 */
-	function log_stats(stats) {
-		console.log(...stats.sort((a,b) => b[1]-a[1]));
-	}
-	log_stats([]);
-	/**
-	 * @param {any[]} arr
-	 * @param {number} calc_win
-	 */
-	function sorted_comp_stats(arr,calc_win) {
-		let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win);
-		ret.sort((a,b) => b[1]-a[1]);
-		return ret;
-	}
+	let max_id=0;
 	next_chunk([],0);
 	/**
 	 * @param {any[]} arr
@@ -928,184 +1104,6 @@ function test_1() {
 	}
 	g_api.compress_main=new VV(compress_main);
 }
-class CompressionStatsCalculator {
-	constructor() {
-		/** @type {number[]} */
-		this.hit_counts=[];
-		/** @type {string[]} */
-		this.cache=[];
-		this.comp=new MulCompression;
-	}
-	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
-	calc_for_stats_index(stats_arr,arr,index) {
-		stats_arr[index]=this.calc_compression_stats(arr,index+1);
-	}
-	/** @param {number} index */
-	add_hit(index) {
-		if(!this.hit_counts[index]) {
-			this.hit_counts[index]=1;
-		} else this.hit_counts[index]++;
-	}
-	/** @param {string} key */
-	add_item(key) {
-		let index=this.cache.indexOf(key);
-		if(index==-1) {
-			index=this.cache.push(key)-1;
-		}
-		this.add_hit(index);
-	}
-	reset() {
-		this.cache.length=0;
-		this.hit_counts.length=0;
-	}
-	map_values() {
-		return this.hit_counts;
-	}
-	map_keys() {
-		return this.cache;
-	}
-	/** @param {string[]} arr @param {number} win_size */
-	calc_compression_stats(arr,win_size) {
-		this.reset();
-		for(let i=0;i<arr.length;i++) {
-			if(i+win_size<arr.length) {
-				this.add_item(arr.slice(i,i+win_size).join(","));
-			}
-		}
-		let keys=this.map_keys();
-		let values=this.map_values();
-		return to_tuple_arr(keys,values);
-	}
-	/**
-	 * @template T
-	 * @template U
-	 * @arg {T[]} arr
-	 * @arg {number} range
-	 * @arg {U} replacement
-	 * @returns {(["T", T]|["U", U])[]}
-	 * */
-	replace_range(arr,range,replacement) {
-		class AH {
-			/**
-			 * @param {["U", U][]} val
-			 */
-			get_arr_u(val) {
-				return val;
-			}
-			/**
-			 * @param {["T", T][]} val
-			 */
-			get_arr_t(val) {
-				return val;
-			}
-			/**@param {(["T", T]|["U", U])[]} val */
-			get_arr(val) {
-				return val;
-			}
-		}
-		let h=new AH;
-		let ret=h.get_arr([]);
-		for(let i=0;i<arr.length;i++) {
-			if(range_matches(arr,range,i)) {
-				i+=1;
-				ret.push(['U',replacement]);
-				continue;
-			}
-			let rest=arr[i];
-			ret.push(['T',rest]);
-		}
-		return ret;
-	}
-	test() {
-		let compressionStatsCalc=this;
-		/**
-		 * @param {any} a
-		 * @param {any} c
-		 * @param {any} m_require
-		 */
-		function found_modules(a,c,m_require) {
-			void a,c,m_require;
-		};
-		/**
-		 * @param {(this: Function, thisArg: any, ...argArray: any[]) => any} oc
-		 * @param {{ (a: any, c: any, m_require: any): void; (arg0: any, arg1: any, arg2: any): void; }} cb
-		 */
-		function rv(oc,cb) {
-			void oc;
-			/**@type {any} */
-			let fn_call=Function.prototype.call;
-			/**@type {{rep?:boolean}} */
-			let fn_call_1=fn_call;
-			if(fn_call_1.rep) {
-				location.reload();
-				return;
-			}
-			var fr=document.createElement("iframe");
-			document.head.append(fr);
-			if(!fr.contentWindow) throw new Error("No content window");
-			let content_window=fr.contentWindow.self;
-			var fpc=content_window.Function.prototype.call;
-			var fa=content_window.Function.prototype.apply.bind(fpc);
-			var fb=content_window.Function.prototype.apply.bind(content_window.Function.prototype.apply);
-			/** @type {string[]} */
-			let s_func=[];
-			Function.prototype.call=npc;
-			/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
-			function npc(thisArg,...argArray) {
-				var c;
-				switch(argArray.length) {
-					case 2:
-						if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-							var ars=Object.entries(argArray[2]).filter(([j,e]) => e instanceof Array);
-							var ars_i=ars[0][1].indexOf(this);
-							if(ars[0][1].indexOf(this)>-1) {
-								console.log("found module array:","require."+ars[0][0]);
-								var mods=Object.entries(argArray[2]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
-								if(mods.length>0) {
-									console.log("found module cache:","require."+mods[0][0]);
-									cb(ars[0][1],mods[0][1],argArray[2]);
-								}
-							}
-						}
-					default:
-						c=fa(this,[thisArg,...argArray]);
-				}
-				if(s_func.indexOf(this.toString())==-1) {
-					s_func.push(this.toString());
-				}
-				return c;
-			};
-			/**
-			 * @this {{}}
-			 * @param {any} tv
-			 * @param {any} r
-			 */
-			function nac(tv,r) {
-				var c;
-				c=fb(this,[tv,r]);
-				if(s_func.indexOf(this.toString())==-1) {
-					s_func.push(this.toString());
-				}
-				return c;
-			};
-			Function.prototype.apply=nac;
-			npc.rep=1;
-			window.g_api.s_func=s_func;
-			return s_func;
-		};
-		rv(Function.prototype.call,found_modules);
-		void [rv,found_modules];
-
-		let obj={
-			arr: [],
-		};
-		let rep_val=0.03/(100*4*1);
-		let max_id=0;
-		let res=this.replace_range(obj.arr,rep_val,max_id);
-		console.log("compressed",res);
-	}
-}
-g_api.CompressionStatsCalculator=CompressionStatsCalculator;
 class HexRandomDataGenerator {
 	constructor() {
 		this.random_num=Math.random();
