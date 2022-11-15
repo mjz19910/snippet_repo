@@ -345,7 +345,7 @@ class BaseCompression {
 	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
-	/** @arg {string[]} src @arg {string[]} dst */
+	/** @template T @arg {T[]} src @arg {T[]} dst */
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
