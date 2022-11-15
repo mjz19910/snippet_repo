@@ -3,7 +3,7 @@ import {flat_obj} from "./flat_obj";
 import {make_group_from_item} from "./make_group_from_item";
 import {NumType} from "./NumType";
 import {run_calc} from "./run_calc";
-import {g_auto_buy,src_arr,ids,id_groups,el_ids,get_ids,compressionStatsCalc} from "./mod";
+import {g_auto_buy,src_arr,ids,id_groups,el_ids,get_ids,compressionStatsCalc, max_id, g_obj_arr} from "./mod";
 
 export function compress_main() {
 	compress_init();
@@ -14,9 +14,9 @@ export function compress_main() {
 		return;
 	}
 	ids.value=[...new Set(src_arr.value)];
-	id_groups=[];
+	id_groups.value=[];
 	for(let value of src_arr.value) {
-		make_group_from_item(id_groups,ids.value.indexOf(value),value);
+		make_group_from_item(id_groups.value,ids.value.indexOf(value),value);
 	}
 	el_ids.value=src_arr.value.map(get_ids);
 	max_id.value=new Set(el_ids.value).size;
@@ -24,7 +24,7 @@ export function compress_main() {
 	/**@type {IValue} */
 	let obj_start={
 		id: 0,
-		arr_rep: el_ids,
+		arr_rep: el_ids.value,
 	};
 	if(arr[0]===true) {
 		obj_start.arr_rep_num=arr[1];
@@ -52,5 +52,5 @@ export function compress_main() {
 			break;
 		}
 	}
-	g_obj_arr=flat_obj(obj_start);
+	g_obj_arr.value=flat_obj(obj_start);
 }

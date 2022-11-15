@@ -18,6 +18,7 @@ import {APIProxyManager} from "./APIProxyManager";
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator";
 import {CompressRepeated} from "./CompressRepeated";
 import {compress_main} from "./compress_main";
+import {CreateObjURLCache} from "./CreateObjURLCache";
 import {CSSCascade} from "./CSSCascade";
 import {DebugAPI} from "./DebugAPI";
 import {Dumper} from "./Dumper";
@@ -37,7 +38,6 @@ import {run_wasm_plugin} from "./run_wasm_plugin";
 import {RustSimpleTokenizer} from "./RustSimpleTokenizer";
 import {RustTokenTreeParser} from "./RustTokenTreeParser";
 import {to_tuple_arr} from "./to_tuple_arr";
-import {Value} from "./Value.js";
 import {VoidCallback} from "./VoidCallback";
 import {WeakValueRef} from "./WeakValueRef";
 
@@ -68,59 +68,6 @@ export function getPlaybackRateMap(include_uninteresting) {
 	return progress_map;
 };
 g_api.getPlaybackRateMap=getPlaybackRateMap;
-export class CreateObjURLCache {
-	/** @readonly */
-	static originalScope={
-		createObjectURL: URL.createObjectURL,
-		revokeObjectURL: URL.revokeObjectURL,
-	};
-	/**
-	 * @type {[(Blob | MediaSource)[], string, boolean][]}
-	 */
-	static expired=[];
-	/**@type {Map<string, [(Blob | MediaSource)[], string, boolean]>} */
-	static cache=new Map;
-	static enable() {
-		this.update_scope(this.getScope());
-	}
-	static disable() {
-		this.update_scope(this.originalScope);
-	}
-	/**
-	 * @param {CreateObjURLCache.originalScope} scope
-	 */
-	static update_scope(scope) {
-		URL.createObjectURL=scope.createObjectURL;
-		URL.revokeObjectURL=scope.revokeObjectURL;
-	}
-	static getScope() {
-		let base=this.originalScope;
-		/**@type {CreateObjURLCache.originalScope} */
-		let scope={createObjectURL,revokeObjectURL};
-		return scope;
-		/**
-		 * @param {[Blob | MediaSource]} args
-		 */
-		function createObjectURL(...args) {
-			let ret=base.createObjectURL(...args);
-			CreateObjURLCache.cache.set(ret,[args,ret,true]);
-			return ret;
-		}
-		/**
-		 * @param {[string]} args
-		 */
-		function revokeObjectURL(...args) {
-			let key=args[0];
-			let cache_value=CreateObjURLCache.cache.get(key);
-			CreateObjURLCache.cache.delete(key);
-			if(cache_value) {
-				CreateObjURLCache.expired.push(cache_value);
-			}
-			let ret=base.revokeObjectURL(...args);
-			return ret;
-		}
-	}
-}
 g_api.CreateObjURLCache=CreateObjURLCache;
 CreateObjURLCache.enable();
 
@@ -161,13 +108,13 @@ export function get_ids(value) {
 }
 export let max_id=new NewTypeWrapper(0);
 /**
- * @type {any[]}
+ * @type {NewTypeWrapper<any[]>}
  */
-export let g_obj_arr;
+export let g_obj_arr=new NewTypeWrapper([]);
 /**
  * @type {any[]}
  */
-export let id_map;
+export let id_map=[];
 
 /**
  * @type {Map<string, any>}
@@ -180,17 +127,15 @@ export let ids_dec;
 /**
  * @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}
  */
-export let dr_map;
+export let dr_map=[];
 export function init_decode() {
-	dr_map=[];
-	ids_dec=ids.map(e => JSON.parse(e));
-	id_map=[];
+	ids_dec=ids.value.map(e => JSON.parse(e));
 	id_map_str=new Map;
 }
 /**
  * @type {<T extends {}|{}[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
  */
-function deep_eq(obj_1,obj_2) {
+export function deep_eq(obj_1,obj_2) {
 	if(obj_1===obj_2)
 		return true;
 	if(obj_1 instanceof Array&&obj_2 instanceof Array) {
@@ -251,7 +196,7 @@ export class GenericEvent {
 }
 g_api.GenericEvent=GenericEvent;
 g_api.GenericDataEvent=GenericDataEvent;
-class GenericEventTarget {
+export class GenericEventTarget {
 	constructor() {
 		/**@type {Map<string,EventListenerValue[]>} */
 		this._events=new Map;

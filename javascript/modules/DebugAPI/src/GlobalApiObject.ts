@@ -1,4 +1,5 @@
-import {CreateObjURLCache, GenericEvent, getPlaybackRateMap} from "./mod.js";
+import {GenericEvent, GenericEventTarget, getPlaybackRateMap} from "./mod.js";
+import {CreateObjURLCache} from "./CreateObjURLCache";
 import {IterExtensions} from "./IterExtensions";
 import {to_tuple_arr} from "./to_tuple_arr";
 import {CompressRepeated} from "./CompressRepeated";
@@ -39,7 +40,7 @@ export interface GlobalApiObject {
 	EventListenerValue: typeof EventListenerValue;
 	GenericEvent: typeof GenericEvent;
 	GenericDataEvent: typeof GenericDataEvent;
-	GenericEventTarget: typeof GenericEventTarget.;
+	GenericEventTarget: typeof GenericEventTarget;
 	Dumper: typeof Dumper;
 	RustSimpleTokenizer: typeof RustSimpleTokenizer;
 	RustSimpleParser: typeof RustTokenTreeParser;
