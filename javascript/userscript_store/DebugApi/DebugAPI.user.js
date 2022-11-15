@@ -549,8 +549,6 @@ function found_modules(a,c,m_require) {
 	void a,c,m_require;
 };
 
-
-// run_modules_plugin();
 function run_modules_plugin() {
 	/**@type {any} */
 	let fn_call=Function.prototype.call;
