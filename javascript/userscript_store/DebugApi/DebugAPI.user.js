@@ -279,7 +279,7 @@ function range_matches(arr,idx,range) {
 	return true;
 }
 class BaseCompression {
-	/** @template T @arg {T[]} src @arg {T[]} dst */
+	/** @template T,U @arg {T[]} src @arg {U[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
@@ -287,7 +287,7 @@ class BaseCompression {
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @arg {string[]} src @arg {string[]} dst @returns {[boolean,string[]]} */
+	/** @template T,U @arg {T[]} src @arg {(U)[]} dst @returns {[false,T[]]|[true, U[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
@@ -303,8 +303,35 @@ class BaseCompression {
 	}
 }
 class MulCompression extends BaseCompression {
-	try_compress_dual(rep_arr) {
-		throw new Error("Method not implemented.");
+	/**
+	 * @param {(["U", number] | ["T", string])[]} arr
+	 * @returns {[false, (["U", number] | ["T", string])[]] | [true, (string | number | Repeat<string> | Repeat<number>)[]]}
+	 */
+	try_compress_dual(arr) {
+		/**@type {(number|Repeat<number>|string|Repeat<string>)[]} */
+		let ret=[];
+		for(let i=0;i<arr.length;i++) {
+			let item=arr[i];
+			if(i+1<arr.length) {
+				if(item===arr[i+1]) {
+					let off=1;
+					while(item===arr[i+off]) {
+						off++;
+					}
+					if(off>1) {
+						switch(item[0]) {
+							case 'T':ret.push(Repeat.get(item[1],off));break;
+							case 'U':ret.push(Repeat.get_num(item[1],off)); break;
+						}
+						i+=off-1;
+						continue;
+					}
+				}
+			}
+			ret.push(item[1]);
+		}
+		let ret_1=this.compress_result(arr,ret);
+		return ret_1;
 	}
 	stats_calculator;
 	/**@type {never[][]} */
@@ -580,7 +607,11 @@ class CompressionStatsCalculator {
 				if(obj.next.arr)
 					return null;
 				let compress_result=csc.comp.try_compress_dual(obj.next.rep_arr);
-				obj.next.arr=compress_result[1];
+				if(compress_result[0]) {
+					obj.next.arr_1=compress_result[1];
+				} else {
+					obj.next.arr_2=compress_result[1];
+				}
 				return compress_result;
 			}
 			/**

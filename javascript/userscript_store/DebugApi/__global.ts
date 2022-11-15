@@ -9,16 +9,21 @@ declare global {
 }
 
 declare global {
-	interface WithId {
+	interface WithId extends Partial<IdData> {
 		id: number;
-		next?: WithId;
-		rep_arr?: (["U", number] | ["T", string])[];
-		value?: [number,'=',number];
-		arr_rep?: number[];
-		log_val?: [number,'=',string, number];
-		stats?: [string,number][];
-		arr?: string[];
-		stats_win?: number;
+	}
+
+	interface IdData {
+		arr_1: (string|number|Repeat<string>|Repeat<number>)[];
+		arr_2: (["U",number]|["T",string])[];
+		next: WithId;
+		rep_arr: (["U", number] | ["T", string])[];
+		value: [number,'=',number];
+		arr_rep: number[];
+		log_val: [number,'=',string, number];
+		stats: [string,number][];
+		arr: string[];
+		stats_win: number;
 	}
 
 	interface Window {
