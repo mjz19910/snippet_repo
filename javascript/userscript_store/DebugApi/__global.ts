@@ -14,24 +14,30 @@ declare global {
 		state_history_arr: string[];
 	}
 
-	interface IValue extends WithId,Partial<IDValueData> {}
+	type TU<A,B>=["T", A]|["U", B];
+
+	type X<T>=T|Repeat<T>;
+
+	type DualR=[false, TU<string,number>[]] | [true, (["U", X<number>] | ["T", X<string>])[]];
+
+	type IValue=WithId&Partial<IDValueData>;
 
 	interface WithId {
 		id: number;
 	}
 
 	interface IDValueData {
-		arr_rep_num: (number|Repeat<number>)[];
-		arr_1: (string|number|Repeat<string>|Repeat<number>)[];
-		arr_2: (["U",number]|["T",string])[];
+		arr_dual: TU<string, number>[];
+		arr_dual_x: TU<X<string>,X<number>>[];
+		arr_rep_str: X<string>[];
+		arr_rep_num: X<number>[];
+		arr_str: string[];
+		arr_num: number[];
 		next: IValue;
-		rep_arr: (["U",number]|["T",string])[];
 		value: [number,'=',number];
 		arr_rep: number[];
 		log_val: [number,'=',string,number];
 		stats: [string,number][];
-		arr_str: string[];
-		arr_num: number[];
 		stats_win: number;
 	}
 

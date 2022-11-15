@@ -117,12 +117,67 @@ class CreateObjURLCache {
 }
 g_api.CreateObjURLCache=CreateObjURLCache;
 CreateObjURLCache.enable();
+
+/**@template T */
+class WMap {
+	/**
+	 * @param {Map<number, Map<number, Repeat<T>>>} map
+	 */
+	constructor(map) {
+		this.value=map;
+	}
+}
+
 /** @template T */
 class Repeat {
+	/**@type {Repeat<null>} */
+	static rep_null=new Repeat(null, 0);
 	/**@type {Map<string, Map<number, Repeat<string>>>} */
 	static map=new Map;
 	/**@type {Map<number, Map<number, Repeat<number>>>} */
 	static map_num=new Map;
+	/**@type {Map<abstract new (...args: any) => any, <T>()=>WMap<T>} */
+	map_instance=new Map;
+	/**
+	 * @template {abstract new (...args: any) => any} U
+	 * @template {InstanceType<U>} V
+	 * @arg {Repeat<null>} rep_null
+	 * @arg {U} constructor_key
+	 * @arg {V} value
+	 * @returns {Map<number, Map<number, Repeat<V>>>}
+	 * */
+	set_map_T(constructor_key, rep_null, value) {
+		let res=rep_null.map_instance.get(constructor_key);
+		if(!res) {
+			/**@type {Map<number, Map<number, Repeat<V>>>} */
+			let map=new Map;
+			rep_null.map_instance.set(constructor_key, ()=>new WMap(map));
+			return map;
+		}
+		/**@type {WMap<V>} */
+		let map=res();
+		return map.value;
+	}
+	/**
+	 * @template {abstract new (...args: any) => any} U
+	 * @template {InstanceType<U>} V
+	 * @arg {Repeat<null>} rep_null
+	 * @arg {U} constructor_key
+	 * @arg {number} key
+	 * @returns {boolean}
+	 * */
+	 has_map_T(constructor_key, rep_null, key) {
+		let res=rep_null.map_instance.get(constructor_key);
+		if(!res) {
+			/**@type {Map<number, Map<number, Repeat<V>>>} */
+			let map=new Map;
+			rep_null.map_instance.set(constructor_key, ()=>new WMap(map));
+			return false;
+		}
+		/**@type {WMap<V>} */
+		let map=res();
+		return map.value.has(key);
+	}
 	/**
 	 * @param {string} value
 	 * @param {number} times
@@ -176,6 +231,7 @@ class Repeat {
 		return this.value+"x"+this.times;
 	}
 }
+
 g_api.Repeat=Repeat;
 class CompressRepeated {
 	/** @param {string | any[]} src @param {(string|Repeat<string>)[]} dst */
@@ -271,10 +327,10 @@ function to_tuple_arr(keys,values) {
 	return ret;
 }
 g_api.to_tuple_arr=to_tuple_arr;
-/** @param {any[]} arr @param {number} idx @param {number} range */
-function range_matches(arr,idx,range) {
-	for(let i=idx;i<arr.length;i++) {
-		if(arr[i]!==range) return false;
+/** @param {any[]} arr @param {number} index @param {number} value */
+function range_matches(arr,value,index) {
+	for(let i=index;i<arr.length;i++) {
+		if(arr[i]!==value) return false;
 	}
 	return true;
 }
@@ -304,11 +360,11 @@ class BaseCompression {
 }
 class MulCompression extends BaseCompression {
 	/**
-	 * @param {(["U", number] | ["T", string])[]} arr
-	 * @returns {[false, (["U", number] | ["T", string])[]] | [true, (string | number | Repeat<string> | Repeat<number>)[]]}
+	 * @param {TU<string, number>[]} arr
+	 * @returns {[false, TU<string, number>[]] | [true, (["U", X<number>] | ["T", X<string>])[]]}
 	 */
 	try_compress_dual(arr) {
-		/**@type {(number|Repeat<number>|string|Repeat<string>)[]} */
+		/**@type {(["U", X<number>] | ["T", X<string>])[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -320,15 +376,18 @@ class MulCompression extends BaseCompression {
 					}
 					if(off>1) {
 						switch(item[0]) {
-							case 'T': ret.push(Repeat.get(item[1],off)); break;
-							case 'U': ret.push(Repeat.get_num(item[1],off)); break;
+							case 'T':{
+								let x=Repeat.get(item[1],off);
+								ret.push(['T',x]);
+							} break;
+							case 'U': ret.push(['U',Repeat.get_num(item[1],off)]); break;
 						}
 						i+=off-1;
 						continue;
 					}
 				}
 			}
-			ret.push(item[1]);
+			ret.push(item);
 		}
 		let ret_1=this.compress_result(arr,ret);
 		return ret_1;
@@ -510,7 +569,7 @@ class CompressionStatsCalculator {
 		let h=new AH;
 		let ret=h.get_arr([]);
 		for(let i=0;i<arr.length;i++) {
-			if(range_matches(arr,i,range)) {
+			if(range_matches(arr,range,i)) {
 				i+=1;
 				ret.push(['U',replacement]);
 				continue;
@@ -600,18 +659,18 @@ class CompressionStatsCalculator {
 				if(!obj.next) {
 					return null;
 				}
-				/**@type {IValue} */
+				/**@type {WithId & Partial<IDValueData>} */
 				let next=obj;
 				next.value=[max_id,'=',rep_val];
 				next.log_val=[max_id,'=',f_val[0],f_val[1]];
 				if(obj.arr_str===void 0) throw new Error("No arr");
-				next.rep_arr=csc.replace_range(obj.arr_str,rep_val,max_id);
+				next.arr_dual=csc.replace_range(obj.arr_str,rep_val,max_id);
 				if(next.arr_str) return null;
-				let compress_result=csc.comp.try_compress_dual(next.rep_arr);
+				let compress_result=csc.comp.try_compress_dual(next.arr_dual);
 				if(compress_result[0]) {
-					next.arr_1=compress_result[1];
+					next.arr_dual_x=compress_result[1];
 				} else {
-					next.arr_2=compress_result[1];
+					next.arr_dual=compress_result[1];
 				}
 				return compress_result;
 			}
