@@ -117,13 +117,16 @@ class CreateObjURLCache {
 }
 g_api.CreateObjURLCache=CreateObjURLCache;
 CreateObjURLCache.enable();
+/** @template T */
 class Repeat {
-	/**@type {Map<string, Map<number, Repeat>>} */
+	/**@type {Map<string, Map<number, Repeat<string>>>} */
 	static map=new Map;
+	/**@type {Map<number, Map<number, Repeat<number>>>} */
+	static map_num=new Map;
 	/**
 	 * @param {string} value
 	 * @param {number} times
-	 * @returns {Repeat}
+	 * @returns {Repeat<string>}
 	 */
 	static get(value,times) {
 		if(!this.map.has(value)) {
@@ -142,8 +145,28 @@ class Repeat {
 		}
 	}
 	/**
-	 * @param {any} value
-	 * @param {any} times
+	 * @param {number} value
+	 * @param {number} times
+	 */
+	static get_num(value,times) {
+		if(!this.map_num.has(value)) {
+			this.map_num.set(value,new Map);
+		}
+		let tm_map=this.map_num.get(value);
+		if(!tm_map) throw new Error("no-reach");
+		if(tm_map.has(times)) {
+			let rep=tm_map.get(times);
+			if(!rep) throw new Error("no-reach");
+			return rep;
+		} else {
+			let rep=new this(value,times);
+			tm_map.set(times,rep);
+			return rep;
+		}
+	}
+	/**
+	 * @param {T} value
+	 * @param {number} times
 	 */
 	constructor(value,times) {
 		this.value=value;
@@ -155,20 +178,20 @@ class Repeat {
 }
 g_api.Repeat=Repeat;
 class CompressRepeated {
-	/** @param {string | any[]} src @param {(string|Repeat)[]} dst */
+	/** @param {string | any[]} src @param {(string|Repeat<string>)[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
-	/** @param {(string | Repeat)[]} src @param {string | any[]} dst */
+	/** @param {(string | Repeat<string>)[]} src @param {string | any[]} dst */
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @param {string[]} src @param {(string|Repeat)[]} dst @returns {[boolean, (string|Repeat)[]]} */
+	/** @param {string[]} src @param {(string|Repeat<string>)[]} dst @returns {[boolean, (string|Repeat<string>)[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
-	/** @param {(string | Repeat)[]} src @param {string[]} dst @returns {[boolean, string[]]} */
+	/** @param {(string | Repeat<string>)[]} src @param {string[]} dst @returns {[boolean, string[]]} */
 	decompress_result(src,dst) {
 		if(this.did_decompress(src,dst)) return [true,dst];
 		return [false,dst];
@@ -186,7 +209,7 @@ class CompressRepeated {
 	}
 	/** @param {string[]} arr */
 	try_compress(arr) {
-		/**@type {(string|Repeat)[]} */
+		/**@type {(string|Repeat<string>)[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -204,8 +227,9 @@ class CompressRepeated {
 		}
 		return this.compress_result(arr,ret);
 	}
-	/** @param {(string | Repeat)[]} arr */
+	/** @param {(string | Repeat<string>)[]} arr */
 	try_decompress(arr) {
+		/**@type {string[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -215,7 +239,7 @@ class CompressRepeated {
 				for(let j=0;j<times;j++)ret.push(value);
 				continue;
 			}
-			ret.push(arr[i]);
+			ret.push(item);
 		}
 		return this.decompress_result(arr,ret);
 	}
@@ -255,7 +279,7 @@ function range_matches(arr,idx,range) {
 	return true;
 }
 class BaseCompression {
-	/** @arg {string[]} src @arg {string[]} dst */
+	/** @template T @arg {T[]} src @arg {T[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
@@ -263,7 +287,7 @@ class BaseCompression {
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @arg {string[]} src @arg {string[]} dst */
+	/** @arg {string[]} src @arg {string[]} dst @returns {[boolean,string[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
@@ -286,6 +310,36 @@ class MulCompression extends BaseCompression {
 		super();
 		this.stats_calculator=new CompressionStatsCalculator;
 		this.compression_stats=[];
+	}
+	/** @arg {number[]} arr @returns {} */
+	try_compress_num(arr) {
+		/**@type {(number|Repeat<number>)[]} */
+		let ret=[];
+		for(let i=0;i<arr.length;i++) {
+			let item=arr[i];
+			if(i+1<arr.length) {
+				if(item===arr[i+1]) {
+					let off=1;
+					while(item===arr[i+off]) {
+						off++;
+					}
+					if(off>1) {
+						ret.push(Repeat.get_num(item, off));
+						i+=off-1;
+						continue;
+					}
+				}
+			}
+			ret.push(item);
+		}
+		return this.compress_result_num(arr,ret);
+	}
+	
+	/** @arg {number[]} arr @arg {(number|Repeat<number>)[]} ret */
+	compress_result_num(arr,ret) {
+		if(this.did_compress(arr,ret))
+			return [true,ret];
+		return [false,arr];
 	}
 	/** @arg {string[]} arr */
 	try_compress(arr) {
@@ -470,21 +524,25 @@ class CompressionStatsCalculator {
 			}
 
 			/**
-			 * @param {NewType} obj
+			 * @param {WithNext} obj
 			 */
 			function calc_cur(obj) {
+				if(!obj.stats_win) return;
 				obj.stats=sorted_comp_stats(obj.arr,obj.stats_win);
 			}
 			/**
-			 * @param {NewType} obj
+			 * @param {WithNext} obj
 			 * @param {number} max_id
 			 */
 			function calc_next(obj,max_id) {
-				if(obj.stats.length===0) {
+				if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
 					return null;
 				}
 				let f_val=obj.stats[0];
 				let rep_val=f_val[1];
+				if(!obj.next) {
+					return null;
+				}
 				obj.next.value=[max_id,'=',rep_val];
 				obj.next.log_val=[max_id,'=',f_val[0][0],rep_val,'*',f_val[1]];
 				obj.next.rep_arr=csc.replace_range(obj.arr,rep_val,max_id);
@@ -495,11 +553,14 @@ class CompressionStatsCalculator {
 				return compress_result;
 			}
 			/**
-			 * @param {NewType} obj
+			 * @param {WithNext} obj
 			 */
 			function run_calc(obj) {
 				obj.stats_win=2;
 				calc_cur(obj);
+				if(!obj.stats) {
+					return null;
+				}
 				if(obj.stats.length===0) {
 					return null;
 				}
@@ -507,13 +568,16 @@ class CompressionStatsCalculator {
 					id: obj.id+1
 				};
 				max_id++;
-				/**@type {NewType} */
+				/**@type {WithNext} */
 				let br_obj=Object.assign({},obj,{next: {id: obj.id+1}});
+				if(!br_obj.stats_win) {
+					return null;
+				}
 				br_obj.stats_win++;
 				calc_cur(br_obj);
 				let br_res=calc_next(br_obj,max_id);
 				let res=calc_next(obj,max_id);
-				while(br_obj.next.arr&&br_obj.next.arr.length+1<obj.next.arr.length&&obj.stats_win<30) {
+				while(br_obj.next&&br_obj.next.arr&&br_obj.next.arr.length+1<obj.next.arr.length&&obj.stats_win<30) {
 					let br_st=br_obj.next.arr.length;
 					br_obj.stats_win++;
 					obj.stats_win++;
@@ -570,9 +634,12 @@ class CompressionStatsCalculator {
 						console.log('not found',val);
 						return;
 					}
-					id_map[val]=fv.value.slice(2);
+					id_map_str.set(val,fv.value.slice(2));
 				}
 			}
+			/**
+			 * @param {string | number | Repeat<number>} e
+			 */
 			function try_decode(e,deep=true) {
 				if(typeof e==='number') {
 					if(dr_map[e]) {
@@ -604,7 +671,6 @@ class CompressionStatsCalculator {
 							let cur_res=decode_map(res[i]);
 							dec_res[i]=cur_res;
 						}
-						window.dr_map??=[];
 						let ret=new g_api.Repeat(dec_res,e.times);
 						dr_map[e.value]=ret;
 						return ret;
@@ -619,18 +685,24 @@ class CompressionStatsCalculator {
 			 * @type {any[]}
 			 */
 			let id_map;
+			
+			/**
+			 * @type {Map<string, any>}
+			 */
+			 let id_map_str;
 			/**
 			 * @type {any[]}
 			 */
 			let ids_dec;
 			/**
-			 * @type {any[][]}
+			 * @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}
 			 */
 			let dr_map;
 			function init_decode() {
 				dr_map=[];
 				ids_dec=ids.map(e => JSON.parse(e));
 				id_map=[];
+				id_map_str=new Map;
 			}
 			/** @param {string|number} value @returns {string|number} */
 			function decode_map(value) {
@@ -649,10 +721,13 @@ class CompressionStatsCalculator {
 				}
 				return value;
 			}
+			/**
+			 * @type {<U extends {},V extends {},T extends V|U[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
+			 */
 			function deep_eq(obj_1,obj_2) {
 				if(obj_1===obj_2)
 					return true;
-				if(obj_2 instanceof Array) {
+				if(obj_1 instanceof Array && obj_2 instanceof Array) {
 					if(obj_1.length===obj_2.length) {
 						for(let i=0;i<obj_1.length;i++) {
 							let cur=obj_1[i];
@@ -671,11 +746,15 @@ class CompressionStatsCalculator {
 						return true;
 					return false;
 				}
-				if(obj_2 instanceof Map) {
+				if(obj_1 instanceof Map && obj_2 instanceof Map) {
 					return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
 				}
 				throw new Error("Fixme");
 			}
+			/**
+			 * @param {string | any[]} arr
+			 * @param {any} value
+			 */
 			function deep_includes(arr,value) {
 				for(let i=0;i<arr.length;i++) {
 					let is_eq=deep_eq(arr[i],value);
@@ -684,16 +763,31 @@ class CompressionStatsCalculator {
 				}
 				return false;
 			}
+			/**
+			 * @type {{ compressor: { try_decompress: (arg0: any) => any[]; }; state_history_arr: any; }}
+			 */
+			let g_auto_buy;
+			/**
+			 * @type {any[]}
+			 */
+			let src_arr;
+			/**
+			 * @type {{ event_log: any[]; }}
+			 */
+			let g_dom_observer;
 			function compress_init() {
-				window.dr_map=[];
-				window.csc??(csc=new CompressionStatsCalculator);
-				csc.comp=new window.g_api.CompressRepeated;
-				if(window.g_auto_buy) {
+				dr_map=[];
+				if(g_auto_buy) {
 					src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
 				} else {
 					src_arr=g_dom_observer.event_log;
 				}
 			}
+			/**
+			 * @type {any[][]}
+			 */
+			let id_groups;
+			let el_ids;
 			function compress_main() {
 				compress_init();
 				ids=[...new Set((src_arr.map(e => JSON.stringify(e))))];
@@ -707,7 +801,8 @@ class CompressionStatsCalculator {
 				);
 				el_ids=src_arr.map(get_ids);
 				max_id=new Set(el_ids).size;
-				let arr=csc.comp.try_compress(el_ids)[1];
+				let arr=csc.comp.try_compress_num(el_ids)[1];
+				/**@type {WithNext} */
 				let obj_start={
 					id: 0,
 					arr_rep: el_ids,
@@ -715,6 +810,7 @@ class CompressionStatsCalculator {
 				};
 				for(let i=0,cur=obj_start;i<3000;i++) {
 					let comp_res=run_calc(cur);
+					if(!cur.stats) throw new Error();
 					let obj=cur;
 					if(obj.log_val&&comp_res===null) {
 						console.log('id:'+obj.id,'[',...obj.log_val,']',obj.stats_win);

@@ -9,19 +9,18 @@ declare global {
 }
 
 declare global {
-	interface NewType {
+	interface WithNext {
+		rep_arr?: any[];
+		value?: any[];
+		log_val?: boolean[];
 		id: number;
-		next: {
-			arr?: any;
-			rep_arr?: any[];
-			log_val?: any[];
-			value?: any[];
-			id: number;
-		};
-		stats: [string, number][];
+		arr_rep: number[];
+		next?: WithNext;
+		stats?: [string,number][];
 		arr: any[];
-		stats_win: number;
+		stats_win?: number;
 	}
+
 	interface Window {
 		g_api: GlobalApiObject;
 	}
