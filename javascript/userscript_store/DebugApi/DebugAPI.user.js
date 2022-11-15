@@ -574,6 +574,18 @@ function not_null(value) {
 	return value;
 }
 
+class VoidCallback {
+	/**
+	 * @param {()=>void} callback
+	 */
+	constructor(callback) {
+		this.m_cb=callback;
+	}
+	execute() {
+		this.m_cb();
+	}
+}
+
 let wasm_header=null;
 let wasm_global_memory=null;
 let wasm_global_memory_view=null;
@@ -587,6 +599,8 @@ function run_wasm_plugin() {
 
 	wasm_global_memory_view.set(wasm_header,0);
 }
+
+g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
 
 function run_modules_plugin() {
 	/**@type {any} */
@@ -798,15 +812,6 @@ let stats_calculator_info={
 };
 
 g_api.range_matches=range_matches;
-class VV {
-	/**
-	 * @param {any} callback
-	 */
-	constructor(callback) {
-		this.m_cb=callback;
-	}
-	compress_main() {this.m_cb();}
-}
 let compressionStatsCalc=new CompressionStatsCalculator;
 /** @param {[unknown, number][]} stats */
 function log_stats(stats) {
@@ -1211,7 +1216,7 @@ function compress_main() {
 	}
 	g_obj_arr=flat_obj(obj_start);
 }
-g_api.compress_main=new VV(compress_main);
+g_api.compress_main=new VoidCallback(compress_main);
 class HexRandomDataGenerator {
 	constructor() {
 		this.random_num=Math.random();
