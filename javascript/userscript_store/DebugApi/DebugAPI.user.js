@@ -145,21 +145,21 @@ class Repeat {
 	static map=new Map;
 	/**@type {Map<number, Map<number, Repeat<number>>>} */
 	static map_num=new Map;
-	/**@type {Map<abstract new (...args: any) => any, <T>()=>WMap<T>>} */
+	/**@type {Map<symbol, <T>()=>WMap<T>>} */
 	map_instance=new Map;
 	/**
-	 * @template {abstract new (...args: any) => any} U
+	 * @template {ST} U
 	 * @template {InstanceType<U>} V
 	 * @arg {U} constructor_key
 	 * @arg {V} _
 	 * @returns {Map<number, Map<number, Repeat<V>>>}
 	 * */
 	get_map_T(constructor_key,_) {
-		let res=Repeat.N.map_instance.get(constructor_key);
+		let res=Repeat.N.map_instance.get(constructor_key.type);
 		if(!res) {
 			/**@type {Map<number, Map<number, Repeat<V>>>} */
 			let map=new Map;
-			Repeat.N.map_instance.set(constructor_key,() => new WMap(map));
+			Repeat.N.map_instance.set(constructor_key.type,() => new WMap(map));
 			return map;
 		}
 		/**@type {WMap<V>} */
@@ -167,7 +167,7 @@ class Repeat {
 		return map.value;
 	}
 	/**
-	 * @template {abstract new (...args: any) => any} U
+	 * @template {ST} U
 	 * @template {InstanceType<U>} V
 	 * @arg {Repeat<null>} rep_null
 	 * @arg {U} constructor_key
@@ -175,11 +175,11 @@ class Repeat {
 	 * @returns {boolean}
 	 * */
 	has_map_T(constructor_key,rep_null,key) {
-		let res=rep_null.map_instance.get(constructor_key);
+		let res=rep_null.map_instance.get(constructor_key.type);
 		if(!res) {
 			/**@type {Map<number, Map<number, Repeat<V>>>} */
 			let map=new Map;
-			rep_null.map_instance.set(constructor_key,() => new WMap(map));
+			rep_null.map_instance.set(constructor_key.type,() => new WMap(map));
 			return false;
 		}
 		/**@type {WMap<V>} */
@@ -406,7 +406,7 @@ class MulCompression extends BaseCompression {
 		return ret_1;
 	}
 	/**
-	 * @template {abstract new (...args: any) => any} U
+	 * @template {ST} U
 	 * @template {InstanceType<U>} T
 	 * @arg {U} c_k
 	 * @arg {T[]} arr

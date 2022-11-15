@@ -19,6 +19,8 @@ declare global {
 	type X<T>=T|Repeat<T>;
 	type TX<A,B>=["T", X<A>]|["U", X<B>];
 
+	type ST={type:symbol} & (new (...args: any) => any);
+
 	type DualR=[false, TU<string,number>[]] | [true, TX<string,number>[]];
 
 	type IValue=WithId&Partial<IDValueData>;
