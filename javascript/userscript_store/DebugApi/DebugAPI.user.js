@@ -258,7 +258,7 @@ function range_matches(arr,idx,range) {
 	}
 	return true;
 }
-export class BaseCompression {
+class BaseCompression {
 	/** @arg {string[]} src @arg {string[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
@@ -282,7 +282,7 @@ export class BaseCompression {
 		return [false,dst];
 	}
 }
-export class MulCompression extends BaseCompression {
+class MulCompression extends BaseCompression {
 	stats_calculator;
 	/**@type {never[][]} */
 	compression_stats;
@@ -358,11 +358,9 @@ class CompressionStatsCalculator {
 		this.hit_counts=[];
 		/** @type {string[]} */
 		this.cache=[];
-		/** @type {any[]} */
-		this.real=[];
 		this.comp=new MulCompression;
 	}
-	/**@arg {[[string, any], number][][]} stats_arr @arg {string[]} arr @arg {number} index */
+	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
 	calc_for_stats_index(stats_arr,arr,index) {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
@@ -372,14 +370,10 @@ class CompressionStatsCalculator {
 			this.hit_counts[index]=1;
 		} else this.hit_counts[index]++;
 	}
-	/**
-	 * @param {string} key
-	 * @param {string[]} real
-	 */
-	add_item(key,real) {
+	/** @param {string} key */
+	add_item(key) {
 		let index=this.cache.indexOf(key);
 		if(index==-1) {
-			this.real.push(real);
 			index=this.cache.push(key)-1;
 		}
 		this.add_hit(index);
@@ -387,18 +381,24 @@ class CompressionStatsCalculator {
 	reset() {
 		this.cache.length=0;
 		this.hit_counts.length=0;
-		this.real.length=0;
+	}
+	map_values() {
+		return this.hit_counts;
+	}
+	map_keys() {
+		return this.cache;
 	}
 	/** @param {string[]} arr @param {number} win_size */
 	calc_compression_stats(arr,win_size) {
 		this.reset();
 		for(let i=0;i<arr.length;i++) {
 			if(i+win_size<arr.length) {
-				let arr_slice=arr.slice(i,i+win_size);
-				this.add_item(arr_slice.join(","),arr_slice);
+				this.add_item(arr.slice(i,i+win_size).join(","));
 			}
 		}
-		return to_tuple_arr(to_tuple_arr(this.cache,this.real),this.hit_counts);
+		let keys=this.map_keys();
+		let values=this.map_values();
+		return to_tuple_arr(keys,values);
 	}
 	/**
 	 * @param {any[]} arr
