@@ -704,7 +704,7 @@ function run_modules_plugin() {
 	 * @param {any} tv
 	 * @param {any} r
 	 */
-	function nac(tv,r) {
+	function function_prototype_apply_inject(tv,r) {
 		var c;
 		c=bound_apply_call(this,[tv,r]);
 		if(s_func.indexOf(this.toString())==-1) {
@@ -712,8 +712,7 @@ function run_modules_plugin() {
 		}
 		return c;
 	};
-	Function.prototype.apply=nac;
-	npc.rep=1;
+	Function.prototype.apply=function_prototype_apply_inject;
 	window.g_api.s_func=s_func;
 	return s_func;
 }
