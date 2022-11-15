@@ -25,5 +25,5 @@ export interface GlobalApiObject {
 	ConnectToRemoteOrigin: typeof RemoteOriginConnection;
 	APIProxyManager: typeof APIProxyManager;
 	LoggingEventTarget: typeof LoggingEventTarget;
-	DebugAPI: any;
+	DebugAPI: typeof DebugAPI;
 }
