@@ -143,10 +143,10 @@ class Repeat {
 	 * @template {InstanceType<U>} V
 	 * @arg {Repeat<null>} rep_null
 	 * @arg {U} constructor_key
-	 * @arg {V} value
+	 * @arg {V} _
 	 * @returns {Map<number, Map<number, Repeat<V>>>}
 	 * */
-	set_map_T(constructor_key, rep_null, value) {
+	get_map_T(constructor_key, rep_null, _) {
 		let res=rep_null.map_instance.get(constructor_key);
 		if(!res) {
 			/**@type {Map<number, Map<number, Repeat<V>>>} */
