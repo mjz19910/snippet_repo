@@ -672,7 +672,7 @@ function run_modules_plugin() {
 	];
 	console.log(bound_function_prototype_vec);
 	/** @type {string[]} */
-	let s_func=[];
+	let function_as_string_vec=[];
 	Function.prototype.call=npc;
 	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function npc(thisArg,...argArray) {
@@ -694,8 +694,8 @@ function run_modules_plugin() {
 			default:
 				c=bound_apply_call(this,[thisArg,argArray]);
 		}
-		if(s_func.indexOf(this.toString())==-1) {
-			s_func.push(this.toString());
+		if(function_as_string_vec.indexOf(this.toString())==-1) {
+			function_as_string_vec.push(this.toString());
 		}
 		return c;
 	};
@@ -706,14 +706,13 @@ function run_modules_plugin() {
 	 */
 	function function_prototype_apply_inject(tv,r) {
 		let ret=bound_apply_call(this,[tv,r]);
-		if(s_func.indexOf(this.toString())==-1) {
-			s_func.push(this.toString());
+		if(function_as_string_vec.indexOf(this.toString())==-1) {
+			function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};
 	Function.prototype.apply=function_prototype_apply_inject;
-	window.g_api.s_func=s_func;
-	return s_func;
+	window.g_api.function_as_string_vec=function_as_string_vec;
 }
 g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 

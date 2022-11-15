@@ -10,7 +10,7 @@ export interface GlobalApiObject {
 	CompressRepeated: typeof CompressRepeated;
 	to_tuple_arr: typeof to_tuple_arr;
 	range_matches: typeof range_matches;
-	s_func: string[];
+	function_as_string_vec: string[];
 	CompressionStatsCalculator: typeof CompressionStatsCalculator;
 	HexRandomDataGenerator: typeof HexRandomDataGenerator;
 	EventListenerValue: typeof EventListenerValue;
