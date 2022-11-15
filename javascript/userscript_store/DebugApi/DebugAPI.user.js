@@ -14,7 +14,7 @@
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
 
-/**@type {typeof window.g_api} */
+/** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
 window.g_api=g_api;
 class IterExtensions {
