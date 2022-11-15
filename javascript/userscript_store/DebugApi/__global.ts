@@ -9,6 +9,8 @@ declare global {
 }
 
 declare global {
+	type IDValueT=WithId&Partial<IdData>;
+
 	interface WithId {
 		id: number;
 	}

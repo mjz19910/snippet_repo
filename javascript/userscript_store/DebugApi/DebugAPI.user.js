@@ -581,14 +581,14 @@ class CompressionStatsCalculator {
 			}
 
 			/**
-			 * @param {WithId&Partial<IdData>} obj
+			 * @param {IDValueT} obj
 			 */
 			function calc_cur(obj) {
 				if(!obj.stats_win||obj.arr_str===void 0) return;
 				obj.stats=sorted_comp_stats(obj.arr_str,obj.stats_win);
 			}
 			/**
-			 * @param {WithId&Partial<IdData>} obj
+			 * @param {IDValueT} obj
 			 * @param {number} max_id
 			 */
 			function calc_next(obj,max_id) {
@@ -600,7 +600,7 @@ class CompressionStatsCalculator {
 				if(!obj.next) {
 					return null;
 				}
-				/**@type {WithId&Partial<IdData>} */
+				/**@type {IDValueT} */
 				let next=obj;
 				next.value=[max_id,'=',rep_val];
 				next.log_val=[max_id,'=',f_val[0],f_val[1]];
@@ -617,27 +617,27 @@ class CompressionStatsCalculator {
 				return compress_result;
 			}
 			/**
-			 * @param {WithId & Partial<IdData>} value
+			 * @param {IDValueT} value
 			 */
 			function get_next(value) {
 				return value.next;
 			}
 			/**
-			 * @param {WithId & Partial<IdData>} value
-			 * @param {WithId & Partial<IdData>} next
+			 * @param {IDValueT} value
+			 * @param {IDValueT} next
 			 */
 			function assign_next(value,next) {
 				value.next=next;
 				return next;
 			}
-			class WithIdImpl {
+			class IDValue {
 				/** @param {number} id */
 				constructor(id) {
 					this.id=id;
 				}
 			}
 			/**
-			 * @param {WithId&Partial<IdData>} obj
+			 * @param {IDValueT} obj
 			 */
 			function run_calc(obj) {
 				obj.stats_win=2;
@@ -650,8 +650,6 @@ class CompressionStatsCalculator {
 				}
 				max_id++;
 				let br_obj=Object.assign({},obj);
-				/**@type {WithId&Partial<IdData>|undefined} */
-				let br_next=assign_next(br_obj,new WithIdImpl(obj.id+1));
 				if(!br_obj.stats_win) {
 					return null;
 				}
@@ -660,8 +658,9 @@ class CompressionStatsCalculator {
 				let br_res=calc_next(br_obj,max_id);
 				console.log('br_res',br_res);
 				let res=calc_next(obj,max_id);
-				br_next=get_next(br_obj);
-				/**@type {WithId&Partial<IdData>|undefined} */
+				/**@type {IDValueT|undefined} */
+				let br_next=get_next(br_obj);
+				/**@type {IDValueT|undefined} */
 				let next=get_next(obj);
 				while(true) {
 					if(!next||next.arr_str===void 0) {
@@ -680,10 +679,10 @@ class CompressionStatsCalculator {
 					br_obj.stats_win++;
 					obj.stats_win++;
 					calc_cur(br_obj);
-					br_next=assign_next(br_obj,new WithIdImpl(obj.id+1));
+					br_next=assign_next(br_obj,new IDValue(obj.id+1));
 					br_res=calc_next(br_obj,max_id);
 					calc_cur(obj);
-					next=assign_next(br_obj,new WithIdImpl(obj.id+1));
+					next=assign_next(br_obj,new IDValue(obj.id+1));
 					res=calc_next(obj,max_id);
 					if(!br_next.arr_str) continue;
 					let cd=br_st-br_next.arr_str.length;
@@ -896,7 +895,7 @@ class CompressionStatsCalculator {
 				el_ids=src_arr.map(get_ids);
 				max_id=new Set(el_ids).size;
 				let arr=csc.comp.try_compress_num(el_ids);
-				/**@type {WithId&Partial<IdData>} */
+				/**@type {IDValueT} */
 				let obj_start={
 					id: 0,
 					arr_rep: el_ids,
