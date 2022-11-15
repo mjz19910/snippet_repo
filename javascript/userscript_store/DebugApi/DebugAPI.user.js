@@ -411,7 +411,7 @@ class MulCompression extends BaseCompression {
 	 * @arg {U} c_k
 	 * @arg {T[]} arr
 	 * @returns {[true, X<T>[]]|[false,T[]]} */
-	try_compress_T(c_k, arr) {
+	try_compress_T(c_k,arr) {
 		/**@type {X<T>[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
@@ -517,6 +517,417 @@ class MulCompression extends BaseCompression {
 	}
 }
 g_api.range_matches=range_matches;
+class VV {
+	/**
+	 * @param {any} callback
+	 */
+	constructor(callback) {
+		this.m_cb=callback;
+	}
+	compress_main() {this.m_cb();}
+}
+test_1();
+function test_1() {
+	/* version_list file: group1/sub_a/item-_9.js */
+	/**
+	 * @param {[unknown, number][]} stats
+	 */
+	function log_stats(stats) {
+		console.log(...stats.sort((a,b) => b[1]-a[1]));
+	}
+	log_stats([]);
+	/**
+	 * @param {any[]} arr
+	 * @param {number} calc_win
+	 */
+	function sorted_comp_stats(arr,calc_win) {
+		let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win);
+		ret.sort((a,b) => b[1]-a[1]);
+		return ret;
+	}
+	next_chunk([],0);
+	/**
+	 * @param {any[]} arr
+	 * @param {number} start
+	 */
+	function next_chunk(arr,start) {
+		let s_arr;
+		let last;
+		let c_len;
+		for(let i=start;i<start+30;i++) {
+			if(s_arr) {
+				last=s_arr[0][1];
+			}
+			s_arr=sorted_comp_stats(arr,i);
+			if(!last)
+				continue;
+			let diff=last-s_arr[0][1];
+			if(diff===0)
+				continue;
+			if(diff===1) {
+				c_len=i;
+				break;
+			}
+			console.log(s_arr[0],...s_arr.slice(0,8).map(e => e[1]));
+		}
+		return c_len;
+	}
+	/**
+	 * @type {string[]}
+	 */
+	let ids=[];
+	/**
+	 * @param {any} value
+	 */
+	function get_ids(value) {
+		let ss=JSON.stringify(value);
+		return ids.indexOf(ss);
+	}
+
+	/**
+	 * @param {IValue} obj
+	 */
+	function calc_cur(obj) {
+		if(!obj.stats_win||obj.arr_str===void 0) return;
+		obj.stats=sorted_comp_stats(obj.arr_str,obj.stats_win);
+	}
+	/**
+	 * @param {IValue} obj
+	 * @param {number} max_id
+	 */
+	function calc_next(obj,max_id) {
+		if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
+			return null;
+		}
+		let f_val=obj.stats[0];
+		let rep_val=f_val[1];
+		if(!obj.next) {
+			return null;
+		}
+		/**@type {WithId & Partial<IDValueData>} */
+		let next=obj;
+		next.value=[max_id,'=',rep_val];
+		next.log_val=[max_id,'=',f_val[0],f_val[1]];
+		if(obj.arr_str===void 0) throw new Error("No arr");
+		next.arr_dual=compressionStatsCalc.replace_range(obj.arr_str,rep_val,max_id);
+		if(next.arr_str) return null;
+		let compress_result=compressionStatsCalc.comp.try_compress_dual(next.arr_dual);
+		if(compress_result[0]) {
+			next.arr_dual_x=compress_result[1];
+		} else {
+			next.arr_dual=compress_result[1];
+		}
+		return compress_result;
+	}
+	/**
+	 * @param {IValue} value
+	 * @param {IValue} next
+	 */
+	function assign_next(value,next) {
+		value.next=next;
+		return next;
+	}
+	/**@implements {IValue} */
+	class Value {
+		/** @param {number} id */
+		constructor(id) {
+			this.id=id;
+		}
+	}
+	/**
+	 * @param {IValue} obj
+	 */
+	function run_calc(obj) {
+		obj.stats_win=2;
+		calc_cur(obj);
+		if(!obj.stats) {
+			return null;
+		}
+		if(obj.stats.length===0) {
+			return null;
+		}
+		max_id++;
+		let br_obj=Object.assign({},obj);
+		if(!br_obj.stats_win) {
+			return null;
+		}
+		br_obj.stats_win++;
+		calc_cur(br_obj);
+		let br_res=calc_next(br_obj,max_id);
+		console.log('br_res',br_res);
+		let res=calc_next(obj,max_id);
+		/**@type {IValue|undefined} */
+		let br_next=br_obj.next;
+		/**@type {IValue|undefined} */
+		let next=obj.next;
+		while(true) {
+			if(!next||next.arr_str===void 0) {
+				break;
+			}
+			if(!br_next||br_next.arr_str===void 0) {
+				break;
+			}
+			if(obj.stats_win>30) {
+				break;
+			}
+			if(br_next.arr_str.length+1>=next.arr_str.length) {
+				break;
+			}
+			let br_st=br_next.arr_str.length;
+			br_obj.stats_win++;
+			obj.stats_win++;
+			calc_cur(br_obj);
+			br_next=assign_next(br_obj,new Value(obj.id+1));
+			br_res=calc_next(br_obj,max_id);
+			calc_cur(obj);
+			next=assign_next(br_obj,new Value(obj.id+1));
+			res=calc_next(obj,max_id);
+			if(!br_next.arr_str) continue;
+			let cd=br_st-br_next.arr_str.length;
+			if(cd<=1) break;
+		}
+		if(!res) {
+			return [false,null];
+		}
+		return [true,res];
+	}
+	/**
+	 * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
+	 */
+	function flat_obj(obj) {
+		let ret=[];
+		while(obj.next) {
+			let {next}=obj;
+			ret.push(obj);
+			obj=next;
+		}
+		ret.push(obj);
+		return ret;
+	}
+	/**
+	 * @type {any[]}
+	 */
+	let g_obj_arr;
+	/**
+	 * @param {string | number} val
+	 */
+	function do_decode(val) {
+		if(typeof val==='number') {
+			let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
+			if(!fv) {
+				console.log('not found',val);
+				return;
+			}
+			id_map[val]=fv.value.slice(2);
+		} else {
+			let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
+			if(!fv) {
+				console.log('not found',val);
+				return;
+			}
+			id_map_str.set(val,fv.value.slice(2));
+		}
+	}
+	/**
+	 * @param {string | number | Repeat<number>} e
+	 */
+	function try_decode(e,deep=true) {
+		if(typeof e==='number') {
+			if(dr_map[e]) {
+				return dr_map[e];
+			}
+			if(id_map[e]) {
+				let res=id_map[e];
+				if(!deep) return res;
+				let dec_res=[];
+				for(let i=0;i<res.length;i++) {
+					let cur_res=decode_map(res[i]);
+					dec_res[i]=cur_res;
+				}
+				dr_map[e]=dec_res;
+				return dec_res;
+			}
+			if(ids_dec[e]) {
+				return ids_dec[e];
+			}
+		}
+		if(e instanceof g_api.Repeat) {
+			if(dr_map[e.value]) {
+				return dr_map[e.value];
+			}
+			if(id_map[e.value]) {
+				let res=id_map[e.value];
+				let dec_res=[];
+				for(let i=0;i<res.length;i++) {
+					let cur_res=decode_map(res[i]);
+					dec_res[i]=cur_res;
+				}
+				let ret=new g_api.Repeat(dec_res,e.times);
+				dr_map[e.value]=ret;
+				return ret;
+			}
+			if(ids_dec[e.value]) {
+				return new g_api.Repeat(ids_dec[e.value],e.times);
+			}
+		}
+		return null;
+	}
+	/**
+	 * @type {any[]}
+	 */
+	let id_map;
+
+	/**
+	 * @type {Map<string, any>}
+	 */
+	let id_map_str;
+	/**
+	 * @type {any[]}
+	 */
+	let ids_dec;
+	/**
+	 * @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}
+	 */
+	let dr_map;
+	function init_decode() {
+		dr_map=[];
+		ids_dec=ids.map(e => JSON.parse(e));
+		id_map=[];
+		id_map_str=new Map;
+	}
+	/** @param {string|number} value @returns {string|number} */
+	function decode_map(value) {
+		if(!id_map)
+			init_decode();
+		/**@type {number} */
+		let dec=try_decode(value);
+		if(!dec) {
+			do_decode(value);
+		}
+		dec=try_decode(value);
+		if(!dec) {
+			console.log(value);
+		} else {
+			return dec;
+		}
+		return value;
+	}
+	/**
+	 * @type {<U extends {},V extends {},T extends V|U[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
+	 */
+	function deep_eq(obj_1,obj_2) {
+		if(obj_1===obj_2)
+			return true;
+		if(obj_1 instanceof Array&&obj_2 instanceof Array) {
+			if(obj_1.length===obj_2.length) {
+				for(let i=0;i<obj_1.length;i++) {
+					let cur=obj_1[i];
+					let cur_other=obj_2[i];
+					if(!deep_eq(cur,cur_other)) {
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+		if(Object.getPrototypeOf(obj_1)===Object.prototype) {
+			let is_eq=deep_eq(Object.entries(obj_1),Object.entries(obj_2));
+			if(is_eq)
+				return true;
+			return false;
+		}
+		if(obj_1 instanceof Map&&obj_2 instanceof Map) {
+			return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
+		}
+		throw new Error("Fixme");
+	}
+	/**
+	 * @param {string | any[]} arr
+	 * @param {any} value
+	 */
+	function deep_includes(arr,value) {
+		for(let i=0;i<arr.length;i++) {
+			let is_eq=deep_eq(arr[i],value);
+			if(is_eq)
+				return true;
+		}
+		return false;
+	}
+	/**
+	 * @type {AutoBuy}
+	 */
+	let g_auto_buy;
+	/**
+	 * @type {any[]}
+	 */
+	let src_arr;
+	/**
+	 * @type {{ event_log: any[]; }}
+	 */
+	let g_dom_observer;
+	function compress_init() {
+		dr_map=[];
+		if(g_auto_buy) {
+			src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
+		} else {
+			src_arr=g_dom_observer.event_log;
+		}
+	}
+	/**
+	 * @type {any[][]}
+	 */
+	let id_groups;
+	let el_ids;
+	class NumType {static type=Symbol.for("number");}
+	function compress_main() {
+		compress_init();
+		ids=[...new Set((src_arr.map(e => JSON.stringify(e))))];
+		id_groups=[];
+		src_arr.forEach(e => {
+			let ii=ids.indexOf(JSON.stringify(e));
+			id_groups[ii]??=[];
+			if(!deep_includes(id_groups[ii],e))
+				id_groups[ii].push(e);
+		}
+		);
+		el_ids=src_arr.map(get_ids);
+		max_id=new Set(el_ids).size;
+		let arr=compressionStatsCalc.comp.try_compress_T(NumType,el_ids);
+		/**@type {IValue} */
+		let obj_start={
+			id: 0,
+			arr_rep: el_ids,
+		};
+		if(arr[0]===true) {
+			obj_start.arr_rep_num=arr[1];
+		} else if(arr[0]===false) {
+			obj_start.arr_num=arr[1];
+		}
+		for(let i=0,cur=obj_start;i<3000;i++) {
+			let comp_res=run_calc(cur);
+			if(!cur.stats) throw new Error();
+			let obj=cur;
+			if(obj.log_val&&comp_res===null) {
+				console.log('id:'+obj.id,'[',...obj.log_val,']',obj.stats_win);
+			}
+			if(cur.stats.length===0) {
+				break;
+			}
+			if(cur.stats[0][1]===1) {
+				break;
+			}
+			if(cur.next) {
+				cur=cur.next;
+				continue;
+			} else {
+				break;
+			}
+		}
+		g_obj_arr=flat_obj(obj_start);
+	}
+	g_api.compress_main=new VV(compress_main);
+}
 class CompressionStatsCalculator {
 	constructor() {
 		/** @type {number[]} */
@@ -606,408 +1017,7 @@ class CompressionStatsCalculator {
 		return ret;
 	}
 	test() {
-		let csc=this;
-		test_1();
-		function test_1() {
-			/* version_list file: group1/sub_a/item-_9.js */
-			/**
-			 * @param {[unknown, number][]} stats
-			 */
-			function log_stats(stats) {
-				console.log(...stats.sort((a,b) => b[1]-a[1]));
-			}
-			log_stats([]);
-			/**
-			 * @param {any[]} arr
-			 * @param {number} calc_win
-			 */
-			function sorted_comp_stats(arr,calc_win) {
-				let ret=csc.calc_compression_stats(arr,calc_win);
-				ret.sort((a,b) => b[1]-a[1]);
-				return ret;
-			}
-			next_chunk([],0);
-			/**
-			 * @param {any[]} arr
-			 * @param {number} start
-			 */
-			function next_chunk(arr,start) {
-				let s_arr;
-				let last;
-				let c_len;
-				for(let i=start;i<start+30;i++) {
-					if(s_arr) {
-						last=s_arr[0][1];
-					}
-					s_arr=sorted_comp_stats(arr,i);
-					if(!last)
-						continue;
-					let diff=last-s_arr[0][1];
-					if(diff===0)
-						continue;
-					if(diff===1) {
-						c_len=i;
-						break;
-					}
-					console.log(s_arr[0],...s_arr.slice(0,8).map(e => e[1]));
-				}
-				return c_len;
-			}
-			/**
-			 * @type {string[]}
-			 */
-			let ids=[];
-			/**
-			 * @param {any} value
-			 */
-			function get_ids(value) {
-				let ss=JSON.stringify(value);
-				return ids.indexOf(ss);
-			}
-
-			/**
-			 * @param {IValue} obj
-			 */
-			function calc_cur(obj) {
-				if(!obj.stats_win||obj.arr_str===void 0) return;
-				obj.stats=sorted_comp_stats(obj.arr_str,obj.stats_win);
-			}
-			/**
-			 * @param {IValue} obj
-			 * @param {number} max_id
-			 */
-			function calc_next(obj,max_id) {
-				if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
-					return null;
-				}
-				let f_val=obj.stats[0];
-				let rep_val=f_val[1];
-				if(!obj.next) {
-					return null;
-				}
-				/**@type {WithId & Partial<IDValueData>} */
-				let next=obj;
-				next.value=[max_id,'=',rep_val];
-				next.log_val=[max_id,'=',f_val[0],f_val[1]];
-				if(obj.arr_str===void 0) throw new Error("No arr");
-				next.arr_dual=csc.replace_range(obj.arr_str,rep_val,max_id);
-				if(next.arr_str) return null;
-				let compress_result=csc.comp.try_compress_dual(next.arr_dual);
-				if(compress_result[0]) {
-					next.arr_dual_x=compress_result[1];
-				} else {
-					next.arr_dual=compress_result[1];
-				}
-				return compress_result;
-			}
-			/**
-			 * @param {IValue} value
-			 * @param {IValue} next
-			 */
-			function assign_next(value,next) {
-				value.next=next;
-				return next;
-			}
-			/**@implements {IValue} */
-			class Value {
-				/** @param {number} id */
-				constructor(id) {
-					this.id=id;
-				}
-			}
-			/**
-			 * @param {IValue} obj
-			 */
-			function run_calc(obj) {
-				obj.stats_win=2;
-				calc_cur(obj);
-				if(!obj.stats) {
-					return null;
-				}
-				if(obj.stats.length===0) {
-					return null;
-				}
-				max_id++;
-				let br_obj=Object.assign({},obj);
-				if(!br_obj.stats_win) {
-					return null;
-				}
-				br_obj.stats_win++;
-				calc_cur(br_obj);
-				let br_res=calc_next(br_obj,max_id);
-				console.log('br_res',br_res);
-				let res=calc_next(obj,max_id);
-				/**@type {IValue|undefined} */
-				let br_next=br_obj.next;
-				/**@type {IValue|undefined} */
-				let next=obj.next;
-				while(true) {
-					if(!next||next.arr_str===void 0) {
-						break;
-					}
-					if(!br_next||br_next.arr_str===void 0) {
-						break;
-					}
-					if(obj.stats_win>30) {
-						break;
-					}
-					if(br_next.arr_str.length+1>=next.arr_str.length) {
-						break;
-					}
-					let br_st=br_next.arr_str.length;
-					br_obj.stats_win++;
-					obj.stats_win++;
-					calc_cur(br_obj);
-					br_next=assign_next(br_obj,new Value(obj.id+1));
-					br_res=calc_next(br_obj,max_id);
-					calc_cur(obj);
-					next=assign_next(br_obj,new Value(obj.id+1));
-					res=calc_next(obj,max_id);
-					if(!br_next.arr_str) continue;
-					let cd=br_st-br_next.arr_str.length;
-					if(cd<=1) break;
-				}
-				if(!res) {
-					return [false,null];
-				}
-				return [true,res];
-			}
-			/**
-			 * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
-			 */
-			function flat_obj(obj) {
-				let ret=[];
-				while(obj.next) {
-					let {next}=obj;
-					ret.push(obj);
-					obj=next;
-				}
-				ret.push(obj);
-				return ret;
-			}
-			/**
-			 * @type {any[]}
-			 */
-			let g_obj_arr;
-			/**
-			 * @param {string | number} val
-			 */
-			function do_decode(val) {
-				if(typeof val==='number') {
-					let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
-					if(!fv) {
-						console.log('not found',val);
-						return;
-					}
-					id_map[val]=fv.value.slice(2);
-				} else {
-					let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
-					if(!fv) {
-						console.log('not found',val);
-						return;
-					}
-					id_map_str.set(val,fv.value.slice(2));
-				}
-			}
-			/**
-			 * @param {string | number | Repeat<number>} e
-			 */
-			function try_decode(e,deep=true) {
-				if(typeof e==='number') {
-					if(dr_map[e]) {
-						return dr_map[e];
-					}
-					if(id_map[e]) {
-						let res=id_map[e];
-						if(!deep) return res;
-						let dec_res=[];
-						for(let i=0;i<res.length;i++) {
-							let cur_res=decode_map(res[i]);
-							dec_res[i]=cur_res;
-						}
-						dr_map[e]=dec_res;
-						return dec_res;
-					}
-					if(ids_dec[e]) {
-						return ids_dec[e];
-					}
-				}
-				if(e instanceof g_api.Repeat) {
-					if(dr_map[e.value]) {
-						return dr_map[e.value];
-					}
-					if(id_map[e.value]) {
-						let res=id_map[e.value];
-						let dec_res=[];
-						for(let i=0;i<res.length;i++) {
-							let cur_res=decode_map(res[i]);
-							dec_res[i]=cur_res;
-						}
-						let ret=new g_api.Repeat(dec_res,e.times);
-						dr_map[e.value]=ret;
-						return ret;
-					}
-					if(ids_dec[e.value]) {
-						return new g_api.Repeat(ids_dec[e.value],e.times);
-					}
-				}
-				return null;
-			}
-			/**
-			 * @type {any[]}
-			 */
-			let id_map;
-
-			/**
-			 * @type {Map<string, any>}
-			 */
-			let id_map_str;
-			/**
-			 * @type {any[]}
-			 */
-			let ids_dec;
-			/**
-			 * @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}
-			 */
-			let dr_map;
-			function init_decode() {
-				dr_map=[];
-				ids_dec=ids.map(e => JSON.parse(e));
-				id_map=[];
-				id_map_str=new Map;
-			}
-			/** @param {string|number} value @returns {string|number} */
-			function decode_map(value) {
-				if(!id_map)
-					init_decode();
-				/**@type {number} */
-				let dec=try_decode(value);
-				if(!dec) {
-					do_decode(value);
-				}
-				dec=try_decode(value);
-				if(!dec) {
-					console.log(value);
-				} else {
-					return dec;
-				}
-				return value;
-			}
-			/**
-			 * @type {<U extends {},V extends {},T extends V|U[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
-			 */
-			function deep_eq(obj_1,obj_2) {
-				if(obj_1===obj_2)
-					return true;
-				if(obj_1 instanceof Array&&obj_2 instanceof Array) {
-					if(obj_1.length===obj_2.length) {
-						for(let i=0;i<obj_1.length;i++) {
-							let cur=obj_1[i];
-							let cur_other=obj_2[i];
-							if(!deep_eq(cur,cur_other)) {
-								return false;
-							}
-						}
-						return true;
-					}
-					return false;
-				}
-				if(Object.getPrototypeOf(obj_1)===Object.prototype) {
-					let is_eq=deep_eq(Object.entries(obj_1),Object.entries(obj_2));
-					if(is_eq)
-						return true;
-					return false;
-				}
-				if(obj_1 instanceof Map&&obj_2 instanceof Map) {
-					return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
-				}
-				throw new Error("Fixme");
-			}
-			/**
-			 * @param {string | any[]} arr
-			 * @param {any} value
-			 */
-			function deep_includes(arr,value) {
-				for(let i=0;i<arr.length;i++) {
-					let is_eq=deep_eq(arr[i],value);
-					if(is_eq)
-						return true;
-				}
-				return false;
-			}
-			/**
-			 * @type {AutoBuy}
-			 */
-			let g_auto_buy;
-			/**
-			 * @type {any[]}
-			 */
-			let src_arr;
-			/**
-			 * @type {{ event_log: any[]; }}
-			 */
-			let g_dom_observer;
-			function compress_init() {
-				dr_map=[];
-				if(g_auto_buy) {
-					src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
-				} else {
-					src_arr=g_dom_observer.event_log;
-				}
-			}
-			/**
-			 * @type {any[][]}
-			 */
-			let id_groups;
-			let el_ids;
-			class NumType {static type=Symbol.for("number")}
-			function compress_main() {
-				compress_init();
-				ids=[...new Set((src_arr.map(e => JSON.stringify(e))))];
-				id_groups=[];
-				src_arr.forEach(e => {
-					let ii=ids.indexOf(JSON.stringify(e));
-					id_groups[ii]??=[];
-					if(!deep_includes(id_groups[ii],e))
-						id_groups[ii].push(e);
-				}
-				);
-				el_ids=src_arr.map(get_ids);
-				max_id=new Set(el_ids).size;
-				let arr=csc.comp.try_compress_T(NumType, el_ids);
-				/**@type {IValue} */
-				let obj_start={
-					id: 0,
-					arr_rep: el_ids,
-				};
-				if(arr[0]===true) {
-					obj_start.arr_rep_num=arr[1];
-				} else if(arr[0]===false) {
-					obj_start.arr_num=arr[1];
-				}
-				for(let i=0,cur=obj_start;i<3000;i++) {
-					let comp_res=run_calc(cur);
-					if(!cur.stats) throw new Error();
-					let obj=cur;
-					if(obj.log_val&&comp_res===null) {
-						console.log('id:'+obj.id,'[',...obj.log_val,']',obj.stats_win);
-					}
-					if(cur.stats.length===0) {
-						break;
-					}
-					if(cur.stats[0][1]===1) {
-						break;
-					}
-					if(cur.next) {
-						cur=cur.next;
-						continue;
-					} else {
-						break;
-					}
-				}
-				g_obj_arr=flat_obj(obj_start);
-			}
-		}
+		let compressionStatsCalc=this;
 		/**
 		 * @param {any} a
 		 * @param {any} c

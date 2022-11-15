@@ -1,5 +1,6 @@
 // DebugAPI
 export interface GlobalApiObject {
+	compress_main: VV;
 	IterExtensions: typeof IterExtensions;
 	getPlaybackRateMap: typeof getPlaybackRateMap;
 	CreateObjURLCache: typeof CreateObjURLCache;
