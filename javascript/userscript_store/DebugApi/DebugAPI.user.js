@@ -767,13 +767,16 @@ function calc_next(obj,max_id) {
 		/**@type {TU<string, number>[]} */
 		let res=[];
 		for(let i of compress_result[1]) {
-			if(typeof i[1]==='string') {
-				res.push(i);
-			} else if(typeof i[1]==='number') {
-				res.push(i);
-			} else {
-				throw new Error("Unexpected state");
+			/**@type {TU<string, number>|[]} */
+			let res_1=[];
+			switch(i[0]) {
+				case 'T': if(typeof i[1] === 'string')res_1=[i[0],i[1]]; break;
+				case 'U': if(typeof i[1] === 'number')res_1=[i[0],i[1]]; break;
 			}
+			if(!res_1) {
+				throw new Error();
+			}
+			if(res_1.length) res.push(res_1);
 		}
 		next.arr_dual=res;
 	} else {
