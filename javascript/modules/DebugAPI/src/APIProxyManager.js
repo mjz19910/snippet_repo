@@ -1,3 +1,5 @@
+import {LoggingEventTarget} from "./LoggingEventTarget.js";
+
 export class APIProxyManager {
 	/**
 	 * @param {LoggingEventTarget} event_handler
