@@ -1017,16 +1017,14 @@ function deep_eq(obj_1,obj_2) {
  * @arg {number} key
  * @param {string} value
  */
-function shallow_includes(arr_2d,key,value) {
-	if(arr_2d[key]===void 0) {
-		arr_2d[key]=[];
-	}
+function make_group_from_item(arr_2d,key,value) {
+	arr_2d[key]??=[];
 	let arr=arr_2d[key];
 	for(let i=0;i<arr.length;i++) {
 		if(arr[i]!==value) continue;
-		return true;
+		return;
 	}
-	return false;
+	arr_2d[key].push(value);
 }
 /**
  * @type {AutoBuy}
@@ -1056,10 +1054,7 @@ function compress_main() {
 	ids=[...new Set(src_arr)];
 	id_groups=[];
 	for(let value of src_arr) {
-		let ii=ids.indexOf(value);
-		if(!shallow_includes(id_groups,ii,value)) {
-			id_groups[ii].push(value);
-		}
+		make_group_from_item(id_groups,ids.indexOf(value),value);
 	}
 	el_ids=src_arr.map(get_ids);
 	max_id=new Set(el_ids).size;
