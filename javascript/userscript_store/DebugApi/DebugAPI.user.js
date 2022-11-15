@@ -536,6 +536,9 @@ class CompressionStatsCalculator {
 				}
 				return [true,res];
 			}
+			/**
+			 * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
+			 */
 			function flat_obj(obj) {
 				let ret=[];
 				while(obj.next) {
@@ -546,6 +549,13 @@ class CompressionStatsCalculator {
 				ret.push(obj);
 				return ret;
 			}
+			/**
+			 * @type {any[]}
+			 */
+			let g_obj_arr;
+			/**
+			 * @param {string | number} val
+			 */
 			function do_decode(val) {
 				if(typeof val==='number') {
 					let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
@@ -555,12 +565,12 @@ class CompressionStatsCalculator {
 					}
 					id_map[val]=fv.value.slice(2);
 				} else {
-					let fv=g_obj_arr.slice(1).find(e => e.value[0]===val.value);
+					let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
 					if(!fv) {
 						console.log('not found',val);
 						return;
 					}
-					id_map[val.value]=fv.value.slice(2);
+					id_map[val]=fv.value.slice(2);
 				}
 			}
 			function try_decode(e,deep=true) {
@@ -605,25 +615,39 @@ class CompressionStatsCalculator {
 				}
 				return null;
 			}
+			/**
+			 * @type {any[]}
+			 */
+			let id_map;
+			/**
+			 * @type {any[]}
+			 */
+			let ids_dec;
+			/**
+			 * @type {any[][]}
+			 */
+			let dr_map;
 			function init_decode() {
-				window.dr_map=[];
+				dr_map=[];
 				ids_dec=ids.map(e => JSON.parse(e));
 				id_map=[];
 			}
-			function decode_map(e) {
-				if(!window.id_map)
+			/** @param {string|number} value @returns {string|number} */
+			function decode_map(value) {
+				if(!id_map)
 					init_decode();
-				let dec=try_decode(e);
+				/**@type {number} */
+				let dec=try_decode(value);
 				if(!dec) {
-					do_decode(e);
+					do_decode(value);
 				}
-				dec=try_decode(e);
+				dec=try_decode(value);
 				if(!dec) {
-					console.log(e);
+					console.log(value);
 				} else {
 					return dec;
 				}
-				return e;
+				return value;
 			}
 			function deep_eq(obj_1,obj_2) {
 				if(obj_1===obj_2)
@@ -708,7 +732,7 @@ class CompressionStatsCalculator {
 						break;
 					}
 				}
-				window.g_obj_arr=flat_obj(obj_start);
+				g_obj_arr=flat_obj(obj_start);
 			}
 		}
 		/**
@@ -795,7 +819,7 @@ class CompressionStatsCalculator {
 		let rep_val=0.03/(100*4*1);
 		let max_id=0;
 		let res=this.replace_range(obj.arr,rep_val,max_id);
-		console.log("compressed", res);
+		console.log("compressed",res);
 	}
 }
 g_api.CompressionStatsCalculator=CompressionStatsCalculator;

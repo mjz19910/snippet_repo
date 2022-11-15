@@ -12,10 +12,10 @@ declare global {
 	interface NewType {
 		id: number;
 		next: {
-			arr: any;
-			rep_arr: any[];
-			log_val: any[];
-			value: any[];
+			arr?: any;
+			rep_arr?: any[];
+			log_val?: any[];
+			value?: any[];
 			id: number;
 		};
 		stats: [string, number][];
