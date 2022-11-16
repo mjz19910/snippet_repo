@@ -1,10 +1,11 @@
 import {spawn} from "child_process";
 import {dirname,join} from "path";
 import {import_ipc_plugin} from "./import_ipc_plugin.js";
+import {IpcLoader} from "./ipc_loader_state.js";
 /**
  * @param {unknown} error
  * @param {string} import_string
- * @arg {{depth: number}} state
+ * @arg {IpcLoader} state
  */
 export async function handle_failed_import(state,error,import_string) {
 	let mod=null;

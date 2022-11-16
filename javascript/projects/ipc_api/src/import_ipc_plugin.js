@@ -1,17 +1,18 @@
 import {debug} from "../../debug.js";
 import {handle_failed_import} from "./handle_failed_import.js";
+import {IpcLoader} from "./ipc_loader_state.js";
 import {g_loaded_ipc_plugins} from "./mod.js";
 import {ReplPluginManagerModule} from "./ReplPluginManagerModule.js";
 import {try_import_module} from "./try_import_module.js";
 
 
-/** @arg {{depth: number}} state @arg {string} plugin_key */
-export async function import_ipc_plugin(state, plugin_key) {
+/** @arg {IpcLoader} state @arg {string} plugin_key */
+export async function import_ipc_plugin(state,plugin_key) {
 	switch(plugin_key) {
 		case 'repl_plugin_manager/mod.js': {
 			/**@type {`../../${typeof plugin_key}`}*/
 			const module_page_loader_str=`../../${plugin_key}`;
-			return await ReplPluginManagerModule.import_ipc_plugin(plugin_key,module_page_loader_str);
+			return await ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
 		}
 		case 'tiny_html_lexer': break;
 		case 'tiny_html_parser': break;
@@ -26,7 +27,7 @@ export async function import_ipc_plugin(state, plugin_key) {
 		let mod=await try_import_module(plugin_key,`../../${plugin_key}/ipc_index.js`);
 		return mod;
 	} catch(error) {
-		await handle_failed_import(error,plugin_key);
+		await handle_failed_import(state,error,plugin_key);
 		if(g_loaded_ipc_plugins.has(plugin_key)) {
 			return g_loaded_ipc_plugins.get(plugin_key);
 		} else {

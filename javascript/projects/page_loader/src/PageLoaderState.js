@@ -3,7 +3,7 @@ import {fake} from "../browser_fake_dom/src/browse/mod.js";
 import {HTMLTokenizer} from "../html_lexer/mod_index.js";
 import {fetch_url} from "./fetch_url.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
-import {data} from "./mod.js";
+import {data} from "../mod_index.js";
 import {on_page_data_loaded} from "./on_page_data_loaded.js";
 import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js";
 import {RequestModule} from "./RequestModule.js";

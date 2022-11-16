@@ -1,9 +1,9 @@
 import {mkdir,writeFile} from "fs/promises";
 import {dirname} from "path";
-import {PageLoaderState} from "../page_loader/PageLoaderState.js";
-import {HTMLLexerResult} from "./src/HTMLLexerResult.js";
-import {HTMLTokenizer} from "./mod_index.js";
+import {PageLoaderState} from "../../page_loader/PageLoaderState.js";
+import {HTMLLexerResult} from "./HTMLLexerResult.js";
 import {g_html_lexer} from "./g_html_lexer.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.js";
 /**
  * @template T
  * @arg {T} this_T

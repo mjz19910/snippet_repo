@@ -24,7 +24,8 @@
 		"paths": {}
 	},
 	"include": [
-		"**/*",
+		"src/**/*",
+		"mod_index.js",
 	],
 	"exclude": [
 		"node_modules",
