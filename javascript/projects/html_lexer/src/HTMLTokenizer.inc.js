@@ -57,7 +57,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
         this.m_state=new_state;
     }
     /**@type {Extract<typeof State[keyof typeof State], number>}*/
-    m_state=-1;
+    m_state=0;
     /**@type {HTMLToken|null}*/
     m_current_token=null;
     /**
@@ -118,7 +118,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
 // 244 "HTMLTokenizerDefine.cppjs" 2
 
 
-class HTMLTokenizerH {
+class HTMLTokenizerIncH {
     static State=class State {
         /** @readonly */ InvalidState=0
         /** @readonly */ Data=1
