@@ -1,6 +1,6 @@
 import {ClientRequest,IncomingMessage} from "http";
 import {fake} from "../browser_fake_dom/src/browse/mod.js";
-import {HTMLLexerState} from "../tiny_html_lexer/mod_index.js";
+import {HTMLTokenizer} from "../tiny_html_lexer/mod_index.js";
 import {fetch_url} from "./fetch_url.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
 import {data} from "./mod.js";
@@ -21,7 +21,7 @@ export class PageLoaderState {
 	m_client_request=null;
 	/** @type {IncomingMessage | null} */
 	m_incoming_message=null;
-	/** @type {HTMLLexerState | null} */
+	/** @type {HTMLTokenizer | null} */
 	lexer_state=null;
 	/**@type {PageLoaderHTMLState | null} */
 	html_state=null;

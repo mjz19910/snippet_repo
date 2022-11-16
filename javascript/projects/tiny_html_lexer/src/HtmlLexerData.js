@@ -1,11 +1,12 @@
 import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
+import {CppArray} from "./CppArray.js";
 import {SourcePosition} from "./SourcePosition.js";
 import {State} from "./State.js";
 import {StringBuilder} from "./StringBuilder.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
 
-export class HtmlLexerData {
+export class HTMLTokenizerH {
 	m_current_builder=new StringBuilder();
 	text_decoder=new StringDecoder('ascii');
 	ctx_inner=null;

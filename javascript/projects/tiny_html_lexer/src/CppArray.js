@@ -1,5 +1,5 @@
 /**@template T */
-class CppArray {
+export class CppArray {
 	/**@type {T[]} */
 	inner=[];
 	is_empty() {

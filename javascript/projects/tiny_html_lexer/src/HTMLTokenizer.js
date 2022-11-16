@@ -1,10 +1,10 @@
 import {will_reconsume_in} from "./will_reconsume_in.js";
 import {HTMLToken} from "./HTMLToken.js";
 import {throw_todo} from "./throw_todo";
-import {HtmlLexerData} from "./HtmlLexerData";
+import {HTMLTokenizerH} from "./HtmlLexerData";
 import {State} from "./State.js";
 
-export class HTMLTokenizer extends HtmlLexerData {
+export class HTMLTokenizer extends HTMLTokenizerH {
 	dont_consume_next_input_character() {
 		this.restore_to(this.m_prev_utf8_iterator);
 	}
