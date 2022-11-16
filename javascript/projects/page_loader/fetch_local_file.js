@@ -1,9 +1,9 @@
-import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js"
+import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js";
 
 /**
  * @param {string} _filename
  */
 export function fetch_local_file(_filename) {
-	let fetch_state=new PageLoaderFetchRequestState(null)
-	fetch_state
+	let fetch_state=new PageLoaderFetchRequestState(null);
+	fetch_state;
 }
