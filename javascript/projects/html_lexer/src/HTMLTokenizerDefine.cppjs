@@ -153,8 +153,6 @@
     }                     \
     }
 
-#define TOKENIZER_TRACE_DEBUG false
-
 #define ENUMERATE_TOKENIZER_STATES                                        \
     __ENUMERATE_TOKENIZER_STATE(Data)                                     \
     __ENUMERATE_TOKENIZER_STATE(RCDATA)                                   \

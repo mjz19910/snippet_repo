@@ -5,6 +5,8 @@ import {HTMLTokenizerH} from "./HtmlLexerData";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 
+const TOKENIZER_TRACE_DEBUG=false;
+
 export class HTMLTokenizer extends HTMLTokenizerH {
     dont_consume_next_input_character() {
         this.restore_to(this.m_prev_utf8_iterator);
@@ -94,7 +96,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
      */
     nth_last_position(n) {
         if(n+1>this.m_source_positions.size()) {
-            dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,m_source_positions.size());
+            dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,this.m_source_positions.size());
             return new HTMLToken.Position(0,0);
         };
         return this.m_source_positions.at(this.m_source_positions.size()-1-n);
