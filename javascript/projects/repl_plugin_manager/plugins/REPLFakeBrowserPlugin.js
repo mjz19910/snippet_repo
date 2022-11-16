@@ -14,7 +14,7 @@ class ObjMaybeKeys {
 	}
 	/** @param {string} key */
 	update(key) {
-		this.type="keys";
+		if(this.type!=="keys") this.type="keys";
 		this.arr.push(key);
 	}
 }
