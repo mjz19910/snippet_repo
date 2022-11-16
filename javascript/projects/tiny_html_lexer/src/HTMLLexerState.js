@@ -5,6 +5,10 @@ import {HTMLToken} from "./HTMLToken.js";
 import {State} from "./State.js";
 import {throw_todo} from "./throw_todo";
 
+class Utf8Iterator {}
+
+class SourcePosition {}
+
 export class HTMLLexerState {
 	dont_consume_next_input_character() {
 		this.restore_to(this.m_prev_utf8_iterator);
@@ -44,7 +48,7 @@ export class HTMLLexerState {
 	 * @param {State} new_state
 	 */
 	emit_character_and_reconsume_in(code_point,new_state) {
-		this.m_queued_tokens.push(HTMLToken.make_character(code_point))
+		this.m_queued_tokens.push(HTMLToken.make_character(code_point));
 		will_reconsume_in(this,new_state);
 		this.m_state=new_state;
 	}
@@ -66,40 +70,29 @@ export class HTMLLexerState {
 	}
 	text_decoder=new StringDecoder('ascii');
 	ctx_inner=null;
-	/**
-	 * @param {Uint8Array} input
-	 */
+	cur_lex=-1;
+	/** @type {any[]} */
+	lex_arr=[];
+	lex_mode=0;
+	is_in_tag_attrs=false;
+	is_in_tag_content=false;
+	is_in_script_tag=false;
+	i=0;
+	states=State;
+	/**@type {string|null}*/
+	cur_char=null;
+	/** @type {SourcePosition[]} */
+	m_source_positions=[];
+	/** @type {Utf8Iterator|null} */
+	m_prev_utf8_iterator=null;
+	m_return_state=State.InvalidState;
+	m_current_state=this.states.Data;
+	empty_vm_context=createContext(Object.create(null));
+	/** @param {Uint8Array} input */
 	constructor(input) {
-		this.ctx=createContext(Object.create(null));
-		this.cur_lex=-1;
-		/** @type {any[]} */
-		this.lex_arr=[];
-		this.lex_mode=0;
-		this.is_in_tag_attrs=false;
-		this.is_in_tag_content=false;
-		this.is_in_script_tag=false;
-		this.i=0;
-		this.states=State;
-		/**
-		 * @type {Uint8Array}
-		 */
-		this.html=new Uint8Array();
-		/**@type {typeof State[keyof typeof State]} */
-		this.m_current_state=this.states.Data;
 		this.html=input;
 		this.html_str=this.text_decoder.end(Buffer.from(this.html));
-		/**@type {string|null}*/
-		this.cur_char=null;
-		this.m_return_state=State.InvalidState;
-		/** @type {null} */
-		this.m_prev_utf8_iterator=null;
-		/**
-		 * @type {void[]}
-		 */
-		this.m_source_positions=[];
 	}
-	/**@type {null} */
-	m_prev_utf8_iterator;
 	/**@arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type*/
 	create_new_token(type) {
 		this.m_current_token=new HTMLToken(type,0);
