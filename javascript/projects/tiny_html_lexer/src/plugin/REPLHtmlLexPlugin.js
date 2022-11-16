@@ -1,7 +1,7 @@
 import {any} from "any";
 import {get_repl_plugin_value} from "../../../page_loader/get_cached_repl_plugin.js/index.js.js";
 import {PageLoaderFetchRequestState} from "../../../page_loader/PageLoaderFetchRequestState.js";
-import {ReplPluginReplSupport} from "../../../repl_plugin_manager/ReplPluginReplSupport.js";
+import {ReplPluginReplSupport} from "../../../repl_plugin_manager/ReplPluginManager.js/index.js";
 
 class HTMLLexResult {
 	/**@type {never[]}*/

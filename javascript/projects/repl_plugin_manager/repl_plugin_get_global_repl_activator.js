@@ -1,14 +1,14 @@
 import {g_repl_plugin_value} from "./g_repl_plugin_value.js";
 import {ReplLocalState} from "./ReplLocalState.js";
-import {ReplPluginReplSupport} from "./ReplPluginReplSupport";
+import {ReplPluginManager} from "./ReplPluginManager";
 
 /**
- * @returns {ReplPluginReplSupport | null}
+ * @returns {ReplPluginManager | null}
  * @param {ReplLocalState} state
  */
 export function repl_plugin_get_global_repl_activator(state) {
 	if(!g_repl_plugin_value.value) {
-		g_repl_plugin_value.value=new ReplPluginReplSupport(state);
+		g_repl_plugin_value.value=new ReplPluginManager(state);
 		return g_repl_plugin_value.value;
 	} else {
 		g_repl_plugin_value.value.update(state);

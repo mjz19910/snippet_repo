@@ -33,18 +33,20 @@ class InitPluginContext {
 	reload() {}
 }
 
-export function get_context_plugin() {
-	return class REPLContextPlugin extends REPLPlugin {
-		enable() {
-			/**@type {InitPluginContext} */
-			let ctx=any(this.repl.context);
-			ctx.get_vars=get_vars
-			ctx.get_dom_state=get_dom_state
-			ctx.import_module=async_import
-			ctx.do_eval_script=eval_script
-			/**@type {PageLoaderFetchRequestState} */
-			let real_state=any(this.state);
-			ctx.reload=make_reload_page_request_handler(real_state);
-		}
+export class REPLContextPlugin extends REPLPlugin {
+	enable() {
+		/**@type {InitPluginContext} */
+		let ctx=any(this.repl.context);
+		ctx.get_vars=get_vars
+		ctx.get_dom_state=get_dom_state
+		ctx.import_module=async_import
+		ctx.do_eval_script=eval_script
+		/**@type {PageLoaderFetchRequestState} */
+		let real_state=any(this.repl.m_request_state);
+		ctx.reload=make_reload_page_request_handler(real_state);
 	}
+}
+
+export function get_context_plugin() {
+	return REPLContextPlugin;
 }

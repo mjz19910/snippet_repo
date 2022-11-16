@@ -1,11 +1,9 @@
-import {ReplLocalState} from "../ReplLocalState.js";
-import {ReplPluginReplSupport} from "../ReplPluginReplSupport.js";
+import {ReplPluginManager} from "../ReplPluginManager.js";
 
 export class REPLPlugin {
-	/** @param {ReplPluginReplSupport} repl @param {ReplLocalState} state */
-	constructor(repl,state) {
+	/** @param {ReplPluginManager} repl*/
+	constructor(repl) {
 		this.repl=repl;
-		this.state=state;
 	}
 	enable() {}
 }

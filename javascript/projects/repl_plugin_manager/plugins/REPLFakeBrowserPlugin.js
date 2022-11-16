@@ -1,5 +1,6 @@
+import {any} from "../../browser_fake_dom/src/any.js";
 import {ReplLocalState} from "../ReplLocalState.js";
-import {ReplPluginReplSupport} from "../ReplPluginReplSupport.js";
+import {ReplPluginManager} from "../ReplPluginManager.js";
 import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
 import {get_from_store} from "./get_from_store";
 
@@ -19,23 +20,31 @@ class ObjMaybeKeys {
 	}
 }
 
+class FakeBrowserPluginContext {
+	/**@type {(name: keyof BrowserPluginIndexType)=>BrowserPluginIndexType[keyof BrowserPluginIndexType]|null} */
+	get_from_store=()=>{
+		throw new Error("Abstract context method");
+	};
+}
+
 export class REPLFakeBrowserPlugin {
-	/** @param {ReplPluginReplSupport} repl @param {ReplLocalState} state */
-	constructor(repl,state) {
+	/** @param {ReplPluginManager} repl */
+	constructor(repl) {
 		this.repl=repl;
-		this.state=state;
 	}
 	/**@type {ObjMaybeKeys|null}*/
 	obj=null;
-	/**@template T */
 	enable() {
-		/**@type {typeof get_from_store<T>} */
-		let my_get_store = get_from_store
 		// TODO get fake passed in to us
 		// this.repl.context.get_fake_window = () => fake.window
 		// this.repl.context.get_fake_document = () => fake.document
-		let get_from_store_bound=my_get_store.bind(null,this.obj);
-		this.repl.context.get_from_store=get_from_store_bound;
+		let get_from_store_bound=get_from_store.bind(null,this.obj);
+		let ctx=this.wrap_context(this.repl.context);
+		ctx.get_from_store=get_from_store_bound;
+	}
+	/**@arg {import('vm').Context} context @returns {FakeBrowserPluginContext} */
+	wrap_context(context) {
+		return any(context);
 	}
 	/**
 	 * @param {string} key

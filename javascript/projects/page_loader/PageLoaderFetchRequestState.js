@@ -1,9 +1,10 @@
 import {ClientRequest,IncomingMessage} from "http";
 import {fake} from "../browser_fake_dom/src/browse/mod.js";
 import {fetch_url} from "./fetch_url.js";
-import {get_repl_plugin_value} from "./get_cached_repl_plugin.js/index.js.js";
+import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
 import {data} from "./mod.js";
 import {on_page_data_loaded} from "./on_page_data_loaded.js";
+
 export class PageLoaderFetchRequestState {
 	silent=false;
 	no_repl=false;
@@ -106,7 +107,7 @@ export class PageLoaderFetchRequestState {
 	}
 	on_request_finished() {
 		console.log('todo activate repl');
-		get_repl_plugin_value(this).on_finished();
+		get_cached_repl_plugin(this).on_finished();
 	}
 	/**
 	 * @arg {string | null} url
@@ -125,7 +126,7 @@ export class PageLoaderFetchRequestState {
 			}
 		}
 		this.url=url;
-		/**@type {{get(url:{},cb:(x:IncomingMessage)=>void):ClientRequest} | null} */
+		/**@type {RequestModule | null} */
 		this.m_start_request_module=null;
 		/** @type {ClientRequest | null} */
 		this.m_client_request=null;
@@ -133,7 +134,7 @@ export class PageLoaderFetchRequestState {
 		this.m_incoming_message=null;
 	}
 	copy() {
-		let {...keys} = this;
-		return keys;
+		let copy=new PageLoaderFetchRequestState(this.url, this);
+		return copy;
 	}
 }

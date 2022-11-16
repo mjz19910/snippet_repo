@@ -8,33 +8,33 @@ import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
 
 const delete_all_javascript_api=false;
 
-export class ReplPluginReplSupport {
+export class ReplPluginManager {
 	/**
 	 * @param {string} arg0
 	 */
 	setPrompt(arg0) {
-		this.get_repl().setPrompt(arg0);
+		this.get_repl_runtime().setPrompt(arg0);
 	}
 	pause() {
-		this.get_repl().pause();
+		this.get_repl_runtime().pause();
 	}
 	repl_active=false;
 	/**@type {import("vm").Context|null} */
 	m_context=null;
 	/**@type {REPLServerRuntime|null} */
-	m_base_repl_opt=null;
+	m_repl_runtime=null;
 	/** @arg {ReplLocalState} state */
 	constructor(state) {
 		this.m_request_state=state;
 	}
 	displayPrompt() {
-		this.get_repl().displayPrompt();
+		this.get_repl_runtime().displayPrompt();
 	}
-	create_repl() {
-		this.m_base_repl_opt=REPLServerRuntime.start_repl({
+	create_repl_plugin() {
+		this.m_repl_runtime=REPLServerRuntime.start_repl({
 			prompt: "",
 		});
-		let base_repl=this.m_base_repl_opt;
+		let base_repl=this.m_repl_runtime;
 		base_repl.pause();
 		let system_val=spawnSync("bash",["-c","echo ${HISTFILE%/zsh_history}"]);
 		console.log(system_val.output);
@@ -52,47 +52,47 @@ export class ReplPluginReplSupport {
 			vm.runInContext('delete this.global',context);
 		}
 		this.m_context=context;
-		this.m_context.get_repl=() => this.m_base_repl_opt;
+		this.m_context.get_repl=() => this.m_repl_runtime;
 	}
 	activate() {
 		if(this.repl_activating) return;
 		if(this.m_request_state.no_repl) return;
-		if(!this.m_base_repl_opt) this.create_repl();
+		if(!this.m_repl_runtime) this.create_repl_plugin();
 		this.repl_activating=true;
-		bind_plugins(this,this.m_request_state);
+		bind_plugins(this);
 	}
 	/**
 	 * @param {string} keyword
 	 * @param {import("repl").REPLCommand} cmd
 	 */
 	defineCommand(keyword,cmd) {
-		this.get_repl().defineCommand(keyword,cmd);
+		this.get_repl_runtime().defineCommand(keyword,cmd);
 	}
 	get context() {
 		if(!this.m_context)
 			throw new Error("No repl context");
 		return this.m_context;
 	}
-	get_repl() {
-		if(!this.m_base_repl_opt) {
-			this.create_repl();
+	get_repl_runtime() {
+		if(!this.m_repl_runtime) {
+			this.create_repl_plugin();
 		}
-		if(!this.m_base_repl_opt) throw new Error("repl create failed");
-		return this.m_base_repl_opt;
+		if(!this.m_repl_runtime) throw new Error("repl create failed");
+		return this.m_repl_runtime;
 	}
 	on_finished() {
-		if(!this.m_base_repl_opt)
+		if(!this.m_repl_runtime)
 			throw new Error("No repl");
-		this.m_base_repl_opt.resume();
-		this.m_base_repl_opt.setPrompt("> ");
-		this.m_base_repl_opt.displayPrompt();
+		this.m_repl_runtime.resume();
+		this.m_repl_runtime.setPrompt("> ");
+		this.m_repl_runtime.displayPrompt();
 	}
 	refresh() {
-		this.m_base_repl_opt?.displayPrompt();
+		this.m_repl_runtime?.displayPrompt();
 	}
 	/**@arg {()=>void} callback */
 	do_logging(callback) {
-		if(this.m_base_repl_opt) {
+		if(this.m_repl_runtime) {
 			process.stdout.write("\r");
 			callback();
 			this.refresh();
