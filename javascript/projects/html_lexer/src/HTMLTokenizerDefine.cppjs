@@ -243,7 +243,7 @@
 #include "HTMLTokenizer.js"
 
 #define __ENUMERATE_TOKENIZER_STATE(state)/** @readonly */ state=__COUNTER__;\n
-class HTMLTokenizerIncH {
+export class HTMLTokenizerIncH {
     static State=class State {
         /** @readonly */ InvalidState=__COUNTER__;
         ENUMERATE_TOKENIZER_STATES

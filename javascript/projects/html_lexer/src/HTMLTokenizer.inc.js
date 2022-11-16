@@ -118,7 +118,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
 // 244 "HTMLTokenizerDefine.cppjs" 2
 
 
-class HTMLTokenizerIncH {
+export class HTMLTokenizerIncH {
     static State=class State {
         /** @readonly */ InvalidState=0;
         /** @readonly */ Data=1;
