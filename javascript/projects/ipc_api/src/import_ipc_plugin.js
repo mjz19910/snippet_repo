@@ -5,8 +5,8 @@ import {ReplPluginManagerModule} from "./ReplPluginManagerModule.js";
 import {try_import_module} from "./try_import_module.js";
 
 
-/** @param {string} plugin_key */
-export async function import_ipc_plugin(plugin_key) {
+/** @arg {{depth: number}} state @arg {string} plugin_key */
+export async function import_ipc_plugin(state, plugin_key) {
 	switch(plugin_key) {
 		case 'repl_plugin_manager/mod.js': {
 			/**@type {`../../${typeof plugin_key}`}*/
@@ -25,8 +25,8 @@ export async function import_ipc_plugin(plugin_key) {
 	try {
 		let mod=await try_import_module(plugin_key,`../../${plugin_key}/ipc_index.js`);
 		return mod;
-	} catch(e) {
-		await handle_failed_import(e,args);
+	} catch(error) {
+		await handle_failed_import(error,plugin_key);
 		if(g_loaded_ipc_plugins.has(plugin_key)) {
 			return g_loaded_ipc_plugins.get(plugin_key);
 		} else {

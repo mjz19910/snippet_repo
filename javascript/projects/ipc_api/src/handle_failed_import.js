@@ -2,20 +2,21 @@ import {spawn} from "child_process";
 import {dirname,join} from "path";
 import {import_ipc_plugin} from "./import_ipc_plugin.js";
 /**
- * @param {unknown} err
- * @param {[string]} import_args
+ * @param {unknown} error
+ * @param {string} import_string
+ * @arg {{depth: number}} state
  */
-export async function handle_failed_import(err,import_args) {
+export async function handle_failed_import(state,error,import_string) {
 	let mod=null;
-	let e=err;
+	let errors=[];
 	while(mod===null) {
 		if(state.depth>8) {
 			throw new Error("ipc plugin loader overflow (import depth too high)");
 		}
-		if(!(e instanceof Error))
+		if(!(error instanceof Error))
 			throw new Error("Bad error");
-		if(!e.stack) throw new Error("No Error stack");
-		let stk=e.stack;
+		if(!error.stack) throw new Error("No Error stack");
+		let stk=error.stack;
 		let imp_mod=stk.split("\n")[0];
 		console.log(stk);
 		let imp_line=stk.split("\n")[1].split("from")[1].trim().replaceAll(";","");
@@ -27,35 +28,31 @@ export async function handle_failed_import(err,import_args) {
 		let target_re_compile=join(mod_dir,imp_real).replace("file:","");
 		const args=['-t','ESNext',target_re_compile];
 		console.log('tsc',args.join(" "));
-		let result=await new Promise(function(acc,rej) {
-			acc;
+		let result=await new Promise(function(resolve,reject) {
+			resolve;
 			let cp=spawn("tsc",args,{});
 			cp.stdout.on("data",e => {
 				process.stdout.write(e);
 			});
 			cp.on("error",err => {
-				rej(err);
+				reject(err);
 			});
-			cp.on("exit",e => {
-				console.log('tsc exit',e);
-				acc(e);
+			cp.on("exit",(code) => {
+				console.log('tsc exit',code);
+				resolve(code);
 			});
 		});
-		if(result!==0)
-			throw new Error("Failed to recompile");
-		let failed_to_load=false;
+		if(result!==0) new Error("Failed to recompile");
 		try {
-			switch(import_args[0]) {
-				case 'repl_plugin_manager/mod.js': return import_ipc_plugin(import_args[0],import_args[1]);
-				case 'tiny_html_lexer': return import_ipc_plugin(import_args[0],import_args[1]);
-				case 'tiny_html_parser': return import_ipc_plugin(import_args[0],import_args[1]);
-				default: failed_to_load=true; break;
+			switch(import_string[0]) {
+				case 'repl_plugin_manager/mod.js': return import_ipc_plugin(state,import_string);
+				case 'tiny_html_lexer': return import_ipc_plugin(state,import_string);
+				case 'tiny_html_parser': return import_ipc_plugin(state,import_string);
+				default: throw new Error("Unable to load "+import_string[0]);
 			}
 		} catch(err) {
-			e=err;
+			errors.push(err);
 		}
-		if(failed_to_load) {
-			throw new Error("Unable to load "+import_args[0]);
-		}
+		throw new AggregateError([error,...errors]);
 	}
 }
