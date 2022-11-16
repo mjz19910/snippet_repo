@@ -71,7 +71,7 @@ export class ReplPluginReplSupport {
 	 * @param {import("repl").REPLCommand} cmd
 	 */
 	defineCommand(keyword,cmd) {
-		this.get_repl.defineCommand(keyword,cmd);
+		this.get_repl().defineCommand(keyword,cmd);
 	}
 	get context() {
 		if(!this.m_context)
