@@ -13,7 +13,7 @@ export function get_from_store(st,name) {
 				case 'window': return st.value[nx]
 			}
 			console.log('case needed for',name)
-		case 'no-keys':
+		case 'no_keys':
 	}
 	return null
 }
