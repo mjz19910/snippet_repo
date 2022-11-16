@@ -1,6 +1,6 @@
 import {mkdir,writeFile} from "fs/promises"
-import {g_html_lexer} from "g_html_lexer.js";
-import {dirname} from "path"
+import {g_html_lexer} from "./g_html_lexer.js";
+import {dirname} from "path";
 import {HTMLState} from "./HTMLState.js";
 /**
  * @param {HTMLState} html_state

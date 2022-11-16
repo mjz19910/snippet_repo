@@ -5,7 +5,7 @@ download-site() {
 }
 
 download-youtube() {
-	node ./parse_dom_preload_1.js
+	node --experimental-loader "./nice_loader.js" ./parse_dom_preload_1.js
 }
 
 start-node-nice-loader-module() {

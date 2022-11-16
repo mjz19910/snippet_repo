@@ -1,16 +1,10 @@
-import {
-	DOMBadge,
-	FakeDocument,
-	FakeLocation,
-	FakeStorage,
-	NullBadge,
-} from "./mod.js";
 // FakeDocument <- FakeWindow -> FakeWindowNoImpl
 import {FakeWindowBadge} from "./implementation/WindowBadge.js";
 import {Badge} from "./std/Badge.js";
 import {no_impl} from "./no_impl.js";
 import {FakeExternal} from "./FakeExternal.js";
 import {FakeWindowType} from "./types/FakeWindowType.js";
+import {FakeDocument} from "./FakeDocument.js";
 /**@implements {Window} */
 export class FakeWindow extends FakeWindowType {
 	// spell:ignore onbeforeinput
