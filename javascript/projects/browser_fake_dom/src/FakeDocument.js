@@ -13,7 +13,6 @@ import {html_parser_callback} from "../../tiny_html_parser/html_parser_callback.
 import {DocumentImpl} from "./DocumentImpl.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {any} from "./any";
-import {TinyHTMLParserState} from "../../tiny_html_parser/TinyHTMLParserState.js";
 
 /**@implements {Document} */
 export class FakeDocument extends FakeNode {

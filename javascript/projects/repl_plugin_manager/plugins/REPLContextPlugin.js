@@ -1,4 +1,4 @@
-import {any} from "../../browser_fake_dom/src/any.1.js";
+import {any} from "../../browser_fake_dom/src/any.js";
 import {make_reload_page_handler as make_reload_page_request_handler} from "../../page_loader/make_reload_page_handler.js"
 import {PageLoaderFetchRequestState} from "../../page_loader/PageLoaderFetchRequestState.js";
 import {eval_script} from "../detail/eval.js"

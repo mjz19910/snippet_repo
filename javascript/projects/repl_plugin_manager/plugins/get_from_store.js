@@ -1,4 +1,4 @@
-import {any} from "../../browser_fake_dom/src/any.1.js";
+import {any} from "../../browser_fake_dom/src/any.js";
 import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
 import {REPLFakeBrowserPlugin} from "./REPLFakeBrowserPlugin";
 /**

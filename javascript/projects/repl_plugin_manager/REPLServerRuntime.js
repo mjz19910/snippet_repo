@@ -1,6 +1,6 @@
 import {Interface} from 'readline';
 import repl,{REPLServer} from 'repl';
-import {any} from '../browser_fake_dom/src/any.1.js';
+import {any} from '../browser_fake_dom/src/any.js';
 
 
 /**@implements {REPLServer} */
