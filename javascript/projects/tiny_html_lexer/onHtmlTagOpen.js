@@ -28,11 +28,11 @@ export function lexerTagOpen(state) {
 		case 'EOF':
 			log_parse_error();
 			state.m_queued_tokens.push(HTMLToken.make_character('<'));
-			return state.EMIT_EOF();
+			return state.EmitEof();
 		default:
 			if(state.cur_char===null) throw new Error("Typecheck assert");
 			log_parse_error();
-			state.EMIT_CHARACTER_AND_RECONSUME_IN('<',State.Data);
+			state.emitCharacterAndReconsumeIn('<',State.Data);
 	}
 }
 

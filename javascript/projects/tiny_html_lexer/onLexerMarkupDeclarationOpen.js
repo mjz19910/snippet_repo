@@ -3,6 +3,6 @@
  */
 export function lexerMarkupDeclarationOpen(state) {
 	state
-	state.DONT_CONSUME_NEXT_INPUT_CHARACTER()
+	state.DoNotConsumeNextInputCharacter()
 	throw new Error("Function not implemented.")
 }
