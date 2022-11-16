@@ -1,13 +1,14 @@
+import {NodeInternalData} from "../page_loader/NodeInternalData.js";
+import {PageLoaderState} from "../page_loader/PageLoaderState.js";
 import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLexBox.js";
 import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLexBox.js";
-import {HTMLLexerState} from "./HTMLLexerState.js";
 import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLexBox.js";
 import {HTMLTagLex} from "../tiny_html_general_box/HTMLTagLex.js";
+import {HTMLLexerResult} from "./HTMLLexerResult";
+import {HTMLLexerState} from "./HTMLLexerState.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
-import {NodeInternalData} from "../page_loader/NodeInternalData.js";
 import {State} from "./State.js";
 import {state_to_string} from "./state_to_string";
-import {HTMLLexerResult} from "./HTMLLexerResult";
 
 export const abc_chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -23,9 +24,10 @@ export const h_enc={
 	amp: [38],
 };
 
-/** @param {Uint8Array} html */
-export function lex_html(state, html) {
-	let lexer=new HTMLLexerState(html);
+/** @arg {PageLoaderState} state @param {Uint8Array} html */
+export function lex_html(state,html) {
+	state.lexer_state=new HTMLLexerState(html);
+	let lexer=state.lexer_state;
 	var document_root=new NodeInternalData('root',0,[],null);
 	/**@type {0|1|2}*/
 	lexer.lex_mode=0;
@@ -61,7 +63,9 @@ export function lex_html(state, html) {
 				throw new Error("Not implemented yet");
 		}
 	}
-	return new HTMLLexerResult(lexer,elements,document_root);
+	return new HTMLLexerResult(state,function() {
+		return elements;
+	},document_root);
 }
 
 export function use_types() {

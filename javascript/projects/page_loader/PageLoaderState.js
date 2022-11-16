@@ -140,8 +140,11 @@ export class PageLoaderState {
 		}
 		this.url=url;
 	}
+	/**@type {string|undefined} */
+	stack_location;
 	copy() {
 		let copy=new PageLoaderState(this.url,this);
+		copy.stack_location=new Error().stack;
 		return copy;
 	}
 }

@@ -3,16 +3,16 @@
 // FakeDocument -> FakeWindow
 // FakeDocument <-> FakeWindow
 // Can't import from "./mod.js" as these depend on each other
-import {FakeNode} from "./FakeNode.js";
-import {PageLoaderHTMLState} from "../../page_loader/PageLoaderHTMLState.js";
-import {document_element_factory} from "./api/const.js";
-import {FakeElement} from "./FakeElement.js";
-import {Badge} from "./std/Badge.js";
-import {init as html_element_init} from "./FakeHTMLElement.js";
+import {PageLoaderState} from "../../page_loader/PageLoaderState.js";
 import {html_parser_callback} from "../../tiny_html_parser/html_parser_callback.js";
-import {DocumentImpl} from "./DocumentImpl.js";
-import {FakeWindow} from "./FakeWindow.js";
 import {any} from "./any";
+import {document_element_factory} from "./api/const.js";
+import {DocumentImpl} from "./DocumentImpl.js";
+import {FakeElement} from "./FakeElement.js";
+import {init as html_element_init} from "./FakeHTMLElement.js";
+import {FakeNode} from "./FakeNode.js";
+import {FakeWindow} from "./FakeWindow.js";
+import {Badge} from "./std/Badge.js";
 
 /**@implements {Document} */
 export class FakeDocument extends FakeNode {
@@ -576,13 +576,7 @@ export class FakeDocument extends FakeNode {
 		return document_element_factory.construct_dom_node(a);
 	}
 	/**
-	 * @arg {import("./types/callback_types.js").HTMLParserCallback} f
-	 */
-	setHTMLParserCallback(f) {
-		this.html_parser_callback=f;
-	}
-	/**
-	 * @param {PageLoaderHTMLState} state
+	 * @param {PageLoaderState} state
 	 * @param {Uint8Array} html_bytes
 	 * @returns {Promise<{}|null>}
 	 */

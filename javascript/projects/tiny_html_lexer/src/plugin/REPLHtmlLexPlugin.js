@@ -4,54 +4,39 @@ import {get_cached_repl_plugin} from "../../../page_loader/get_cached_repl_plugi
 import {PageLoaderState} from "../../../page_loader/PageLoaderState.js";
 import {ReplPluginManager} from "../../../repl_plugin_manager/ReplPluginManager.js";
 
-class HTMLLexResult {
-	/**@type {never[]}*/
-	lex_arr;
-	/**@type {never[]}*/
-	elements;
-	/**@type {Record<never,unknown>|null}*/
-	document_root;
-	/**
-	 * @param {never[]} lex_arr
-	 * @param {never[]} elements
-	 * @param {Record<never,unknown>|null|null} document_root
-	 */
-	constructor(lex_arr,elements,document_root) {
-		this.lex_arr=lex_arr;
-		this.elements=elements;
-		this.document_root=document_root;
-	}
-	is_null_result() {
-		return this.document_root===null;
-	}
-}
-
 class LexContext {
 	/**
 	 * @param {REPLHtmlLexPlugin} plugin
 	 */
 	constructor(plugin) {
-		/** @type {(()=>Uint8Array|undefined)|undefined} */
+		let state=plugin.parse_result.page_state;
+		/** @type {(()=>Uint8Array)} */
 		this.get_page_content=() => {
-			return new Uint8Array(0);
+			if(!state.lexer_state) {
+				throw new Error("no lexer state");
+			}
+			return state.lexer_state.html;
 		};
-		/** @type {(()=>HTMLLexerResult['lex_arr']|undefined)|undefined} */
-		this.get_lex_arr=() => {
-			return plugin.parse_result.lex_arr;
+		/** @type {(()=>HTMLLexerResult)} */
+		this.get_parse_result=() => {
+			return plugin.parse_result;
 		};
 		this.get_lex_elements=() => {
 			return plugin.parse_result.elements;
 		};
 	}
+	/** @arg {REPLHtmlLexPlugin} plugin */
+	static attach_to_repl_context(plugin) {
+		LexContext.copy_to(new this(plugin), plugin.repl.context);
+	}
 	/**
-	 * @type {any}
+	 * @param {LexContext} src_context
+	 * @param {import("vm").Context} dst_context
 	 */
-	get_lex_elements;
-	/** @arg {LexContext} context @arg {REPLHtmlLexPlugin} plugin */
-	init(context,plugin) {
-		context.get_page_content=() => plugin.lexer_buffer;
-		context.get_lex_arr=() => plugin.parse_result&&plugin.parse_result.lex_arr;
-		context.get_lex_elements=() => plugin.parse_result&&plugin.parse_result.elements;
+	static copy_to(src_context,dst_context) {
+		dst_context.get_page_content=src_context.get_page_content;
+		dst_context.get_parse_result=src_context.get_parse_result;
+		dst_context.get_lex_elements=src_context.get_lex_elements;
 	}
 }
 
@@ -66,8 +51,8 @@ export class REPLHtmlLexPlugin {
 		this.repl=get_cached_repl_plugin(state);
 		this.state=state;
 		this.context=new LexContext(this);
-		this.context.init(any(this.repl.context),this);
-		this.parse_result=new HTMLLexerResult(state,[],null);
+		LexContext.copy_to(new LexContext(this), this.repl.context);
+		this.parse_result=new HTMLLexerResult(state,()=>[],null);
 	}
 	get active() {
 		return !this.state.no_repl;

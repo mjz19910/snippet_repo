@@ -8,6 +8,7 @@ import {PageLoaderState} from "../page_loader/PageLoaderState.js";
  * @arg {PageLoaderState} html_state
  * @arg {Uint8Array} html
  * @arg {HTMLLexerResult} parse_result
+ * @returns {HTMLLexerResult}
  */
 export function on_html_lex_result(html_state,html,parse_result) {
 	let state=html_state;
