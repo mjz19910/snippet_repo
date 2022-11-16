@@ -1,12 +1,14 @@
 import {ClientRequest,IncomingMessage} from "http";
-import {fake} from "../browser_fake_dom/src/browse/mod.js";
-import {HTMLTokenizer} from "../html_lexer/mod_index.js";
+import {fake} from "../../browser_fake_dom/index.js";
+import {HTMLTokenizer} from "../../html_lexer/mod_index.js";
 import {fetch_url} from "./fetch_url.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
-import {data} from "../index.js";
 import {on_page_data_loaded} from "./on_page_data_loaded.js";
 import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js";
 import {RequestModule} from "./RequestModule.js";
+
+/**@type {Buffer[]} */
+export let cached_data_buffer=[];
 
 export class PageLoaderState {
 	/**@arg {any[]} arr */
@@ -101,7 +103,7 @@ export class PageLoaderState {
 					process.stdout.write('.');
 					chunk_offset-=chunk_sz;
 				}
-				data.push(Buffer.from(e));
+				cached_data_buffer.push(Buffer.from(e));
 			});
 			this.m_incoming_message.on('error',(err) => {
 				this.on_error_result(err);
@@ -110,7 +112,7 @@ export class PageLoaderState {
 			});
 			this.m_incoming_message.on('end',() => {
 				process.stdout.write("\n");
-				let all_content_buffer=Buffer.concat(data);
+				let all_content_buffer=Buffer.concat(cached_data_buffer);
 				let data_u8_arr=Uint8Array.from(all_content_buffer);
 				let res=this.on_incoming_message_result(data_u8_arr);
 				res.then(accept,reject);
