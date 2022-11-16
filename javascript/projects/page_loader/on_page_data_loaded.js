@@ -22,7 +22,7 @@ export async function on_page_data_loaded(window,document,state,err,html_documen
 	var html_state=new PageLoaderHTMLState(state)
 	console.log("TODO: get_repl_activator")
 	/**@type {ReplSupport} */
-	let repl=get_repl_activator(state);
+	let repl=new ReplSupport();
 	if(repl && !state.no_repl) {
 	 	repl.context.get_http_req_state=()=>state
 	 	repl.context.get_html_task_state=()=>html_state

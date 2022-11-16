@@ -1,8 +1,8 @@
-import {repl_activator} from "../repl_activator.js"
+import {ReplPluginReplSupport} from "../repl_activator.js"
 import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js"
 import {get_from_store} from "./get_from_store"
 export class REPLFakeBrowserPlugin {
-	/** @param {repl_activator} repl @param {{}} state */
+	/** @param {ReplPluginReplSupport} repl @param {{}} state */
 	constructor(repl,state) {
 		this.repl=repl
 		this.state=state
