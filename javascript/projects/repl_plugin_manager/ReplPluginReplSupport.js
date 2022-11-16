@@ -1,6 +1,5 @@
 import {spawnSync} from "child_process";
 import process from "process";
-import repl from 'repl';
 import vm from 'vm';
 import {bind_plugins} from "./plugins/mod.js";
 import {ReplLocalState} from "./ReplLocalState";
@@ -32,23 +31,19 @@ export class ReplPluginReplSupport {
 		this.get_repl().displayPrompt();
 	}
 	create_repl() {
-		let n_repl=REPLServerRuntime.start_repl({
+		this.m_base_repl_opt=REPLServerRuntime.start_repl({
 			prompt: "",
 		});
-		/**@type {any} */
-		let a_repl=n_repl;
-		/**@type {REPLServerRuntime} */
-		let r_repl=a_repl;
-		this.m_base_repl_opt=r_repl;
-		this.m_base_repl_opt.pause();
+		let base_repl = this.m_base_repl_opt;
+		base_repl.pause();
 		let system_val=spawnSync("bash",["-c","echo ${HISTFILE%/zsh_history}"]);
 		console.log(system_val.output);
-		this.m_base_repl_opt.setupHistory("./.history/repl_plugin_history",function(err,_repl) {
+		base_repl.setupHistory("./.history/repl_plugin_history",function(err,_repl) {
 			if(err) console.log('error when writing history',err);
 		});
-		this.m_base_repl_opt.historySize=120000;
-		this.m_base_repl_opt.removeHistoryDuplicates=true;
-		let context=this.m_base_repl_opt.context;
+		base_repl.historySize=120000;
+		base_repl.removeHistoryDuplicates=true;
+		let context=base_repl.context;
 		context.rm_all=rm_all_properties_from_obj;
 		if(delete_all_javascript_api) {
 			vm.runInContext('rm_all(this)',context);
@@ -109,20 +104,6 @@ export class ReplPluginReplSupport {
 	update(state) {
 		this.m_request_state=state;
 	}
-}
-/**@type {ReplPluginReplSupport|null} */
-export let g_repl_activator=null;
-/**
- * @returns {ReplPluginReplSupport | null}
- * @param {ReplLocalState} state
- */
-export function get_repl_activator(state) {
-	if(!g_repl_activator) {
-		g_repl_activator=new ReplPluginReplSupport(state);
-	} else {
-		g_repl_activator.update(state);
-	}
-	return g_repl_activator;
 }
 
 export function use_types() {

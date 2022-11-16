@@ -1,4 +1,4 @@
-import {ReplPluginReplSupport} from "../repl_activator.js"
+import {ReplPluginReplSupport} from "../ReplPluginReplSupport.js/index.js"
 import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js"
 import {get_from_store} from "./get_from_store"
 export class REPLFakeBrowserPlugin {

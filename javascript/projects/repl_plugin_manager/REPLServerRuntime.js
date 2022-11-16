@@ -18,6 +18,7 @@ export class REPLServerRuntime extends Interface {
 	 * @param {repl.REPLServer} real_value
 	 */
 	constructor(input, real_value) {
+		debugger;
 		super(input);
 		this.X=real_value;
 	}
