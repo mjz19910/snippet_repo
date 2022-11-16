@@ -1,5 +1,5 @@
 /**@template T */
-export class CppArray {
+export class CppVector {
 	/**
 	 * @param {T} value
 	 */
