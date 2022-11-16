@@ -63,6 +63,17 @@ export class HTMLTokenizer extends HTMLTokenizerH {
             return new NullOptional();
         return new Optional(it.deref());
     }
+    /**
+     * @param {number} n
+     */
+     nth_last_position(n) {
+        if(n+1>this.m_source_positions.size()) {
+            dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,this.m_source_positions.size());
+            return new HTMLToken.Position(0,0);
+        };
+        return this.m_source_positions.at(this.m_source_positions.size()-1-n);
+    }
+    next_token() {}
     dont_consume_next_input_character() {
         this.restore_to(this.m_prev_utf8_iterator);
     }
@@ -146,16 +157,6 @@ export class HTMLTokenizer extends HTMLTokenizerH {
         }
 
         this.m_current_token.set_start_position("Badge_HTMLTokenizer",this.nth_last_position(offset));
-    }
-    /**
-     * @param {number} n
-     */
-    nth_last_position(n) {
-        if(n+1>this.m_source_positions.size()) {
-            dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,this.m_source_positions.size());
-            return new HTMLToken.Position(0,0);
-        };
-        return this.m_source_positions.at(this.m_source_positions.size()-1-n);
     }
     /**@arg {State} next_state */
     reconsume_in(next_state) {

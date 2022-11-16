@@ -1,9 +1,9 @@
-import {NodeInternalData} from "../../page_loader/NodeInternalData.js";
-import {PageLoaderState} from "../../page_loader/PageLoaderState.js";
-import {HTMLDataLex} from "../../box_plugin/HTMLDataLexBox.js";
-import {HTMLEntityLex} from "../../box_plugin/HTMLEntityLexBox.js";
-import {HTMLSpecialLex} from "../../box_plugin/HTMLSpecialLexBox.js";
-import {HTMLTagLex} from "../../box_plugin/HTMLTagLex.js";
+import {NodeInternalData} from "../../page_loader/index.js";
+import {PageLoaderState} from "../../page_loader/index.js";
+import {HTMLDataLex} from "../../box_plugin/index.js";
+import {HTMLEntityLex} from "../../box_plugin/index.js";
+import {HTMLSpecialLex} from "../../box_plugin/index.js";
+import {HTMLTagLex} from "../../box_plugin/index.js";
 
 /**
  * @typedef {(HTMLDataLex | HTMLEntityLex | HTMLSpecialLex | HTMLTagLex)[]} ElementArray
