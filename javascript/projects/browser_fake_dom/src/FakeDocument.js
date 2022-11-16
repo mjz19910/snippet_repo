@@ -14,11 +14,10 @@ import {FakeNode} from "./FakeNode.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {Badge} from "./std/Badge.js";
 
-/**@implements {Document} */
-export class FakeDocument extends FakeNode {
+class NoImplFakeDocument extends FakeNode {
 	/**@returns {CSSStyleSheet[]} */
 	get adoptedStyleSheets() {
-		return [];
+		throw new Error("Not implemented");
 	}
 	/**@type {null}*/
 	get ownerDocument() {
@@ -76,13 +75,10 @@ export class FakeDocument extends FakeNode {
 	get currentScript() {
 		throw new Error("Not implemented");
 	}
-	/**@type {typeof window} */
-	get defaultView() {
-		return any(this.m_defaultView);
-	}
-	set defaultView(value) {
-		this.m_defaultView=any(value);
-	}
+}
+
+/**@implements {Document} */
+export class FakeDocument extends NoImplFakeDocument {
 	/**@type {string} */
 	get designMode() {
 		throw new Error("Not implemented");
@@ -600,5 +596,16 @@ export class FakeDocument extends FakeNode {
 		void this.#window_badge;
 		this.m_location=window.location;
 		this.m_defaultView=window;
+	}
+	/**@type {typeof window} */
+	get defaultView() {
+		return any(this.m_defaultView);
+	}
+	set defaultView(value) {
+		if(value instanceof FakeWindow) {
+			this.m_defaultView=value;
+		} else {
+			throw new Error("set defaultView to value not instanceof FakeWindow");
+		}
 	}
 }
