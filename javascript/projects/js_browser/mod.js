@@ -3,12 +3,14 @@ import {handle_onPageLoadStarted} from "../browser_fake_dom/src/event/handle_onP
 import {PageLoaderState} from "../page_loader/index.js";
 import {on_page_data_loaded} from "../page_loader/index.js";
 import {PageLoadStateType} from "../browser_fake_dom/index.js";
+import {do_create_window} from "../browser_fake_dom/index.js";
+
 /**
  * @param {PageLoadStateType} state
  */
 export function init_wget(state) {
 	if(!fake.window) {
-		create_fake.window();
+		fake.window=do_create_window();
 	}
 	if(!fake.window) throw new Error("No window");
 	handle_onPageLoadStarted(fake.window,state);

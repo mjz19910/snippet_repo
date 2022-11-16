@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from "path";
 import process from "process";
-import {PageLoadStateType} from '../browser_fake_dom/src/types/PageLoadStateType.js';
+import {PageLoadStateType} from '../browser_fake_dom/index.js';
 import {init_wget,wget_on_static_page_load} from "./mod.js";
 
 function main() {

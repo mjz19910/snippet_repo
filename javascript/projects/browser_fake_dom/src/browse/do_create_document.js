@@ -3,7 +3,7 @@ import {BrowseBadge} from "./BrowseBadge.js"
 import {fake} from "./mod.js"
 /**@type {FakeDocument|null} */
 export let fake_document=null
-export function init() {
+export function do_create_document() {
 	let fake_window=fake.window
 	if(!fake_window) throw new Error("Init window first")
 	fake_document=new FakeDocument(fake_window,new BrowseBadge)

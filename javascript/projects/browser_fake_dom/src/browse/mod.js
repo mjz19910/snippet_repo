@@ -1,13 +1,13 @@
-import {init as window_init} from "./do_create_window.js";
-import {init as document_init} from "./do_create_document.js";
+import {do_create_window} from "./do_create_window.js";
+import {do_create_document} from "./do_create_document.js";
 import {FakeWindow} from "../FakeWindow.js";
 import {FakeDocument} from "../FakeDocument.js";
 import {DomBadge} from "../implementation/DomBadge.js";
 import {Badge} from "../std/Badge.js";
 
 export const create_fake=Object.freeze({
-	window: window_init,
-	document: document_init,
+	window: do_create_window,
+	document: do_create_document,
 });
 
 class FakeHolder {
