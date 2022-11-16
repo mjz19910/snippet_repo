@@ -27,7 +27,6 @@ export async function handle_failed_import(state,error,import_string) {
 		let mod_dir=dirname(imp_mod);
 		let target_re_compile=join(mod_dir,imp_real).replace("file:","");
 		let result=await new Promise(function(resolve,reject) {
-			resolve;
 			let cp=spawn("tsc",['-t','ESNext',target_re_compile],{});
 			cp.stdout.on("data",e => {
 				process.stdout.write(e);
