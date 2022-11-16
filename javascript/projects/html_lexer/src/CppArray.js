@@ -2,7 +2,9 @@
 export class CppArray {
 	/** @param {number} arg0 */
 	at(arg0) {
-		return this.inner.at(arg0);
+		let value=this.inner.at(arg0);
+		if(!value) throw new Error("Out of range");
+		return value;
 	}
 	size() {
 		return this.inner.length;

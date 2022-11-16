@@ -1,5 +1,4 @@
 import {HTMLToken} from "./HTMLToken.js";
-import {nth_last_position} from "./nth_last_position";
 
 /**
  * @param {import("./HTMLTokenizer").HTMLTokenizer} state
@@ -19,5 +18,5 @@ export function create_new_token(state,type) {
 			break;
 	}
 
-	state.m_current_token.set_start_position({},nth_last_position(state,offset));
+	state.m_current_token.set_start_position("Badge_HTMLTokenizer",state.nth_last_position(offset));
 }
