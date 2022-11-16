@@ -1,7 +1,7 @@
-import {HTMLLexerState} from "./HTMLLexerState.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.js";
 import {lex_special_raw} from "./lex_special_raw.js";
 
-/** @param {HTMLLexerState} state */
+/** @param {HTMLTokenizer} state */
 export function lex_tag_open(state) {
 	if(1)
 		throw new Error("Not implemented");

@@ -1,9 +1,9 @@
-import {HTMLLexerState} from "./HTMLLexerState.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.js";
 /**
  * @type {string[]}
  */
 const cc_map=[];
-/**@arg {HTMLLexerState} state*/
+/**@arg {HTMLTokenizer} state*/
 export function lex_data(state) {
         if(!cc_map[state.cur_lex]) {
                 cc_map[state.cur_lex]=String.fromCharCode(state.cur_lex);

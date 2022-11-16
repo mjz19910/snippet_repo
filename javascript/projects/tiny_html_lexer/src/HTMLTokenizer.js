@@ -4,7 +4,7 @@ import {throw_todo} from "./throw_todo";
 import {HtmlLexerData} from "./HtmlLexerData";
 import {State} from "./State.js";
 
-export class HTMLLexerState extends HtmlLexerData {
+export class HTMLTokenizer extends HtmlLexerData {
 	dont_consume_next_input_character() {
 		this.restore_to(this.m_prev_utf8_iterator);
 	}
@@ -14,8 +14,10 @@ export class HTMLLexerState extends HtmlLexerData {
 		if(!iterator) throw new Error("no iterator");
 		let diff=iterator.sub(new_iterator);
 		if(diff>0) {
-			for(let i=0;i<diff;++i)
-				this.m_source_positions.pop();
+			for (let i = 0; i < diff; ++i) {
+				if (!this.m_source_positions.is_empty())
+					this.m_source_positions.take_last();
+			}
 		} else {
 			// Going forwards...?
 			throw_todo();
@@ -95,5 +97,10 @@ export class HTMLLexerState extends HtmlLexerData {
 	/**@arg {State} next_state */
 	reconsume_in(next_state) {
 		this.m_current_state=next_state;
+	}
+	consume_current_builder() {
+		let str=this.m_current_builder.to_string();
+		this.m_current_builder.clear();
+		return str;
 	}
 }

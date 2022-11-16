@@ -2,9 +2,11 @@ import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
 import {SourcePosition} from "./SourcePosition.js";
 import {State} from "./State.js";
-import {Utf8Iterator} from "./Utf8Iterator.js";
+import {StringBuilder} from "./StringBuilder.js";
+import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
 
 export class HtmlLexerData {
+	m_current_builder=new StringBuilder();
 	text_decoder=new StringDecoder('ascii');
 	ctx_inner=null;
 	cur_lex=-1;
@@ -18,9 +20,9 @@ export class HtmlLexerData {
 	states=State;
 	/**@type {string|null}*/
 	cur_char=null;
-	/** @type {SourcePosition[]} */
-	m_source_positions=[];
-	/** @type {Utf8Iterator|null} */
+	/** @type {CppArray<SourcePosition>} */
+	m_source_positions=new CppArray();
+	/** @type {Utf8CodePointIterator|null} */
 	m_prev_utf8_iterator=null;
 	m_return_state=State.InvalidState;
 	m_current_state=this.states.Data;

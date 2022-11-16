@@ -8,7 +8,7 @@ import {HTMLEntityLex} from "../../tiny_html_general_box/HTMLEntityLexBox.js";
 import {HTMLSpecialLex} from "../../tiny_html_general_box/HTMLSpecialLexBox.js";
 import {HTMLTagLex} from "../../tiny_html_general_box/HTMLTagLex.js";
 import {HTMLLexerResult} from "./HTMLLexerResult";
-import {HTMLLexerState} from "./HTMLLexerState.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {State} from "./State.js";
 import {state_to_string} from "./state_to_string";
@@ -30,7 +30,7 @@ export const h_enc={
 
 /** @arg {PageLoaderState} state @param {Uint8Array} html */
 export function lex_html(state,html) {
-	state.lexer_state=new HTMLLexerState(html);
+	state.lexer_state=new HTMLTokenizer(html);
 	let lexer=state.lexer_state;
 	var document_root=new NodeInternalData('root',0,[],null);
 	/**@type {0|1|2}*/

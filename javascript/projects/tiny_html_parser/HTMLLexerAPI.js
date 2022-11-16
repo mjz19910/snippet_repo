@@ -1,6 +1,6 @@
 import {PageLoaderState} from "../page_loader/PageLoaderState.js";
 import {HTMLLexerResult} from "../tiny_html_lexer/src/HTMLLexerResult.js/index.js";
-import {HTMLLexerState} from "../tiny_html_lexer/src/HTMLLexerState.js/index.js";
+import {HTMLLexerState} from "../tiny_html_lexer/src/HTMLTokenizer.js/index.js.js";
 import {lex_html} from "../tiny_html_lexer/src/lex_html.js/index.js";
 import {on_html_lex_result} from "../tiny_html_lexer/src/on_html_lex_result.js/index.js";
 

@@ -16,13 +16,13 @@ export function on_html_lex_result(state,html,parse_result) {
 
 import {lex_data} from "./lex_data.js";
 import {ok_char_int8s} from "./lex_html.js";
-import {HTMLLexerState} from "./HTMLLexerState.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.js";
 import {repl_plugin_get_global_repl_activator} from "../../repl_plugin_manager/repl_plugin_get_global_repl_activator.js";
 import {g_html_lex_plugin} from "./g_html_lex_plugin.js";
 import {REPLHtmlLexPlugin} from "./plugin/REPLHtmlLexPlugin.js";
 
 /**
- * @param {HTMLLexerState} state
+ * @param {HTMLTokenizer} state
  */
 export function do_html_lex_step(state) {
 	if(state.lex_mode===0) {

@@ -1,6 +1,6 @@
-import {HTMLLexerState} from "./HTMLLexerState.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.js";
 
-/**@arg {HTMLLexerState} state*/
+/**@arg {HTMLTokenizer} state*/
 export function lex_special(state) {
 	if(1)
 		throw new Error("Not implemented");
