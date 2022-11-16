@@ -17,7 +17,7 @@ export function init_wget(state,req_url) {
 /**
  * @arg {Uint8Array} page_content
  * @arg {string} page_url
- * @param {import("../browser_fake_dom/types/onPageLoadStarted.js").PageLoadStateType} state
+ * @param {import("../browser_fake_dom/src/types/onPageLoadStarted.js").PageLoadStateType} state
  */
 export function wget_on_static_page_load(state,page_content,page_url) {
 	if(!fake.document) throw new Error("No document");
