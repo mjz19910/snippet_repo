@@ -5,13 +5,53 @@ import {HTMLTokenizerH} from "./HtmlLexerData";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
+import {Optional} from "./Optional.js";
+import {Utf8View} from "./Utf8View.js";
 
 const TOKENIZER_TRACE_DEBUG=false;
 
 export class HTMLTokenizer extends HTMLTokenizerH {
+    m_utf8_view=new Utf8View;
+    next_code_point() {
+        if(this.m_utf8_iterator.eq(this.m_utf8_view.end()))
+            return new Optional(null);
+
+        /**@type {string} */
+        let code_point;
+        // https://html.spec.whatwg.org/multipage/parsing.html#preprocessing-the-input-stream:tokenization
+        // https://infra.spec.whatwg.org/#normalize-newlines
+        if(this.peek_code_point(0).value_or(0)=='\r'&&this.peek_code_point(1).value_or(0)=='\n') {
+            // replace every U+000D CR U+000A LF code point pair with a single U+000A LF code point,
+            this.skip(2);
+            code_point='\n';
+        } else if(this.peek_code_point(0).value_or(0)=='\r') {
+            // replace every remaining U+000D CR code point with a U+000A LF code point.
+            this.skip(1);
+            code_point='\n';
+        } else {
+            this.skip(1);
+            code_point=this.m_prev_utf8_iterator.deref();
+        }
+
+        dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer) Next code_point: {}",code_point);
+        return new Optional(code_point);
+    }
+    skip(arg0) {
+        throw new Error("Method not implemented.");
+    }
+    /** @param {number} offset */
+     peek_code_point(offset) {
+        let it=this.m_utf8_iterator;
+        for(let i=0;i<offset&&it!=this.m_utf8_view.end();++i)
+            it.inc();
+        if(it==this.m_utf8_view.end())
+            return {};
+        return new Optional(it.deref());
+    }
     dont_consume_next_input_character() {
         this.restore_to(this.m_prev_utf8_iterator);
     }
+    m_utf8_iterator=new Utf8CodePointIterator([],0);
     /** @param {Utf8CodePointIterator} new_iterator */
     restore_to(new_iterator) {
         let iterator=this.m_prev_utf8_iterator;
