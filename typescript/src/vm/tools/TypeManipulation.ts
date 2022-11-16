@@ -40,7 +40,8 @@ export declare namespace TypeManipulation {
 	type NegDec<T extends number>=Extract<[null, undefined][T], undefined> extends null ? -1:
 	[null][T] extends null ? T extends -2 ? -3 : ['e', T]
 	: T extends 1 ? 0 : IntDec<T> */
-	type IAz=IntInc<12,[]>;
+	type RIntInc<T extends number>=IntInc<T, []>;
+	type IAz=RIntInc<12>;
 	/* type IA1=IntInc<1>
 	type IA2=IntInc<2>
 	type IA4=IntInc<4>
