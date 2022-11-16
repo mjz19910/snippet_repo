@@ -1,5 +1,5 @@
-import {HTMLLexerState} from "./src/HTMLLexerState.js/index.js"
-import {drop_type,has_types_arr_with} from "./src/types/has_types_data.js"
+import {HTMLLexerState} from "./src/HTMLLexerState.js/index.js.js"
+import {drop_type,has_types_arr_with} from "./src/types/has_types_data.js.js"
 
 /**
  * @param {HTMLLexerState} state

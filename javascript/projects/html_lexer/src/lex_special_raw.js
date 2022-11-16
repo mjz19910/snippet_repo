@@ -1,6 +1,6 @@
-import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLexBox.js"
-import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLexBox.js"
-import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLexBox.js"
+import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLexBox.js.js"
+import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLexBox.js.js"
+import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLexBox.js.js"
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js"
 class ErrorOr {
 	/**
