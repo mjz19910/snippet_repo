@@ -8,14 +8,32 @@ import {get_vars} from "../get_vars.js"
 import {REPLPlugin} from "./REPLPlugin.js";
 
 class InitPluginContext {
-	get_vars;
-	get_dom_state;
-	import_module;
-	do_eval_script;
+	/**
+	 * @type {() => { get_dom_state: () => { request?: {} | undefined; }; }}
+	 */
+	get_vars() {
+		return {
+			/**@returns {{ request?: {} | undefined; }} */
+			get_dom_state() {
+				return {};
+			}
+		};
+	};
+	get_dom_state() {
+		return {};
+	};
+	/**
+	 * @type {(mod: string) => Promise<any>}
+	 */
+	async import_module() {};
+	/**
+	 * @type {(e: string) => any}
+	 */
+	do_eval_script(string) {};
 	reload() {}
 }
 
-export function get_plugin() {
+export function get_context_plugin() {
 	return class REPLContextPlugin extends REPLPlugin {
 		enable() {
 			/**@type {InitPluginContext} */

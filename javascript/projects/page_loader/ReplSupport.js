@@ -1,18 +1,5 @@
-import * as repl from "repl";
+import {ReplPluginReplSupport} from "../repl_plugin_manager/ReplPluginReplSupport.js";
 
-export class ReplSupport {
-	base_repl;
-	constructor() {
-		this.base_repl=repl.start("");
-	}
-	/**
-	 * @param {boolean | undefined} [preserveCursor]
-	 */
-	displayPrompt(preserveCursor) {
-		this.base_repl.displayPrompt(preserveCursor);
-	}
-	get context() {
-		return this.base_repl.context;
-	}
+export class ReplSupport extends ReplPluginReplSupport {
 	repl_active=false;
 }
