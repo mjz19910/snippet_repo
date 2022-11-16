@@ -6,4 +6,3 @@ export class REPLPlugin {
 	}
 	enable() {}
 }
-
