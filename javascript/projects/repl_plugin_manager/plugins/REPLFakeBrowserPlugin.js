@@ -27,11 +27,14 @@ export class REPLFakeBrowserPlugin {
 	}
 	/**@type {ObjMaybeKeys|null}*/
 	obj=null;
+	/**@template T */
 	enable() {
+		/**@type {typeof get_from_store<T>} */
+		let my_get_store = get_from_store
 		// TODO get fake passed in to us
 		// this.repl.context.get_fake_window = () => fake.window
 		// this.repl.context.get_fake_document = () => fake.document
-		let get_from_store_bound=get_from_store.bind(null,this.obj);
+		let get_from_store_bound=my_get_store.bind(null,this.obj);
 		this.repl.context.get_from_store=get_from_store_bound;
 	}
 	/**

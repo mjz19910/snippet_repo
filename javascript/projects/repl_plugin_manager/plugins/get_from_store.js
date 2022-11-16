@@ -1,19 +1,22 @@
-import {REPLFakeBrowserPlugin} from "./REPLFakeBrowserPlugin"
+import {any} from "../../browser_fake_dom/src/any.1.js";
+import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
+import {REPLFakeBrowserPlugin} from "./REPLFakeBrowserPlugin";
 /**
- * @arg {REPLFakeBrowserPlugin['obj']} st
- * @param {string} name
+ * @arg {REPLFakeBrowserPlugin['obj']} object_store
+ * @param {keyof BrowserPluginIndexType} name
+ * @returns {BrowserPluginIndexType[keyof BrowserPluginIndexType]|null}
  */
-export function get_from_store(st,name) {
-	if(!st)
-		return null
-	switch(st.type) {
+export function get_from_store(object_store,name) {
+	if(!object_store)
+		return null;
+	switch(object_store.type) {
 		case 'keys':
-			let nx=name
+			let nx=name;
 			switch(nx) {
-				case 'window': return st.value[nx]
+				case 'window': return object_store.value[nx];
+				default: console.log('case needed for',name);
 			}
-			console.log('case needed for',name)
 		case 'no_keys':
 	}
-	return null
+	return null;
 }

@@ -12,7 +12,7 @@ import {init as html_element_init} from "./FakeHTMLElement.js";
 import {html_parser_callback} from "../../tiny_html_parser/html_parser_callback.js";
 import {DocumentImpl} from "./DocumentImpl.js";
 import {FakeWindow} from "./FakeWindow.js";
-import {any} from "./any.1";
+import {any} from "./any";
 import {TinyHTMLParserState} from "../../tiny_html_parser/TinyHTMLParserState.js";
 
 /**@implements {Document} */
