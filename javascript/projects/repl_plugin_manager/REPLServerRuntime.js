@@ -156,6 +156,7 @@ class RLInterface extends NodeEventEmitter {
 export class REPLServerRuntime extends RLInterface {
 	/**@arg {string | repl.ReplOptions} [options] @returns {REPLServerRuntime} */
 	static start_repl(options) {
+		console.log("start repl");
 		return new REPLServerRuntime(repl.start(options));
 	}
 	/**@type {REPLServer} */
