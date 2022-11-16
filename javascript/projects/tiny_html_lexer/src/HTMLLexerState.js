@@ -10,7 +10,7 @@ export class HTMLLexerState extends HtmlLexerData {
 	}
 	/** @param {any} new_iterator */
 	restore_to(new_iterator) {
-		let iterator=this.get_prev_utf8_iterator();
+		let iterator=this.m_prev_utf8_iterator;
 		if(!iterator) throw new Error("no iterator");
 		let diff=iterator.sub(new_iterator);
 		if(diff>0) {
