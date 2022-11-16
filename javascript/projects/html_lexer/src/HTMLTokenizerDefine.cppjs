@@ -239,7 +239,7 @@
 #ifdef JS_MODE
 
 #include "HTMLTokenizer.js"
-
+#ifdef NO_ENABLED
 #define __ENUMERATE_TOKENIZER_STATE(state)/** @readonly */ state=__COUNTER__;<line>
 export class HTMLTokenizerIncH {
     static State=class State {
@@ -248,5 +248,6 @@ export class HTMLTokenizerIncH {
     };
 }
 #undef __ENUMERATE_TOKENIZER_STATE
+#endif
 
 #endif
