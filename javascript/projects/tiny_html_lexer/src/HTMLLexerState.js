@@ -1,23 +1,18 @@
-import {StringDecoder} from "string_decoder";
-import {createContext} from "vm";
 import {will_reconsume_in} from "./will_reconsume_in.js";
 import {HTMLToken} from "./HTMLToken.js";
-import {State} from "./State.js";
 import {throw_todo} from "./throw_todo";
+import {HtmlLexerData} from "./HtmlLexerData";
+import {State} from "./State.js";
 
-class Utf8Iterator {}
-
-class SourcePosition {}
-
-export class HTMLLexerState {
+export class HTMLLexerState extends HtmlLexerData {
 	dont_consume_next_input_character() {
 		this.restore_to(this.m_prev_utf8_iterator);
 	}
-	/**
-	 * @param {any} new_iterator
-	 */
+	/** @param {any} new_iterator */
 	restore_to(new_iterator) {
-		let diff=this.m_utf8_iterator-new_iterator;
+		let iterator=this.get_prev_utf8_iterator();
+		if(!iterator) throw new Error("no iterator");
+		let diff=iterator.sub(new_iterator);
 		if(diff>0) {
 			for(let i=0;i<diff;++i)
 				this.m_source_positions.pop();
@@ -68,28 +63,9 @@ export class HTMLLexerState {
 	decode_range(off,len) {
 		return this.text_decoder.end(Buffer.from(this.html.subarray(off,off+len)));
 	}
-	text_decoder=new StringDecoder('ascii');
-	ctx_inner=null;
-	cur_lex=-1;
-	/** @type {any[]} */
-	lex_arr=[];
-	lex_mode=0;
-	is_in_tag_attrs=false;
-	is_in_tag_content=false;
-	is_in_script_tag=false;
-	i=0;
-	states=State;
-	/**@type {string|null}*/
-	cur_char=null;
-	/** @type {SourcePosition[]} */
-	m_source_positions=[];
-	/** @type {Utf8Iterator|null} */
-	m_prev_utf8_iterator=null;
-	m_return_state=State.InvalidState;
-	m_current_state=this.states.Data;
-	empty_vm_context=createContext(Object.create(null));
 	/** @param {Uint8Array} input */
 	constructor(input) {
+		super();
 		this.html=input;
 		this.html_str=this.text_decoder.end(Buffer.from(this.html));
 	}
