@@ -1,5 +1,5 @@
-import {g_repl_activator} from "g_repl_activator.js";
-import {ReplLocalState} from "ReplLocalState.js";
+import {g_repl_activator} from "./g_repl_activator.js";
+import {ReplLocalState} from "./ReplLocalState.js";
 import {ReplPluginReplSupport} from "./ReplPluginReplSupport";
 
 /**

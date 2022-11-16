@@ -74,8 +74,10 @@ export class ReplPluginReplSupport {
 		return this.m_context;
 	}
 	get_repl() {
-		if(!this.m_base_repl_opt)
-			throw new Error("No repl");
+		if(!this.m_base_repl_opt) {
+			this.create_repl();
+		}
+		if(!this.m_base_repl_opt) throw new Error("repl create failed");
 		return this.m_base_repl_opt;
 	}
 	on_finished() {

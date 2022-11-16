@@ -1,33 +1,25 @@
-import {get_repl_activator} from "../mod.js"
-/**
- * @type {ReloadCommand | null}
- */
-let g_reload_command_plugin=null
+import {get_repl_activator} from "../../page_loader/get_repl_activator.js";
+
 export class ReloadCommand {
-	constructor() {
-		if(g_reload_command_plugin!==null) {
-			throw new Error("Tried to construct another singleton")
-		}
-		g_reload_command_plugin=this
-	}
-	/**@type {(state:{})=>void}*/
-	run_action=() => {}
 	/**
-	 * @this {import("repl").REPLServer}
+	 * @param {import("../ReplLocalState.js").ReplLocalState} state
+	 */
+	run_action(state) {
+		console.log("no action", state);
+	};
+	/**
 	 * @param {any} state
 	 */
 	action(state) {
-		this.clearBufferedCommand()
-		let repl=get_repl_activator(state)
-		if(repl&&repl.m_request_state&&this) {
-			g_reload_command_plugin?.run_action?.(repl.m_request_state)
-		}
-		this.displayPrompt()
+		let repl=get_repl_activator(state);
+		repl.clearBufferedCommand();
+		this.run_action(repl.m_request_state);
+		repl.displayPrompt();
 	}
 	/**
 	 * @param {(state: {}) => void} target_function
 	 */
 	set_target_action(target_function) {
-		this.run_action=target_function
+		this.run_action=target_function;
 	}
 }

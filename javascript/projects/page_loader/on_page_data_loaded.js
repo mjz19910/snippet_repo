@@ -1,8 +1,7 @@
-import {get_repl_activator} from "./get_repl_activator.js";
-import {ReplSupport} from "./ReplSupport.js";
 import {do_html_load} from "./do_html_load.js"
 import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js"
 import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js";
+import {ReplPluginReplSupport} from "../repl_plugin_manager/ReplPluginReplSupport.js";
 
 /**
  * @arg {Parameters<typeof do_html_load>[0]} window
@@ -21,8 +20,8 @@ export async function on_page_data_loaded(window,document,state,err,html_documen
 	if(!html_document_content) throw new Error("Unexpected null content")
 	var html_state=new PageLoaderHTMLState(state)
 	console.log("TODO: get_repl_activator")
-	/**@type {ReplSupport} */
-	let repl=new ReplSupport();
+	/**@type {ReplPluginReplSupport} */
+	let repl=new ReplPluginReplSupport(state);
 	if(repl && !state.no_repl) {
 	 	repl.context.get_http_req_state=()=>state
 	 	repl.context.get_html_task_state=()=>html_state

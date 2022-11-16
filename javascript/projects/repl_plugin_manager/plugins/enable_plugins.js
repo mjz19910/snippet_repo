@@ -1,4 +1,5 @@
-import {REPLPlugin} from "./mod.js";
+import {REPLPlugin} from "./REPLPlugin.js";
+
 /**
  * @param {REPLPlugin[]} list
  */

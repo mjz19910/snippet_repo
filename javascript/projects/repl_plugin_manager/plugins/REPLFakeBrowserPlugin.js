@@ -1,4 +1,4 @@
-import {ReplLocalState} from "ReplLocalState.js";
+import {ReplLocalState} from "../ReplLocalState.js";
 import {ReplPluginReplSupport} from "../ReplPluginReplSupport.js";
 import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
 import {get_from_store} from "./get_from_store";

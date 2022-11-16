@@ -1,5 +1,5 @@
-import {ReplLocalState} from "ReplLocalState.js";
-import {ReplPluginReplSupport} from "ReplPluginReplSupport.js";
+import {ReplLocalState} from "../ReplLocalState.js";
+import {ReplPluginReplSupport} from "../ReplPluginReplSupport.js";
 import {REPLPlugin} from "./REPLPlugin.js";
 
 /**
