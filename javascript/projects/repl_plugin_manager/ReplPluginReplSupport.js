@@ -34,7 +34,7 @@ export class ReplPluginReplSupport {
 		this.m_base_repl_opt=REPLServerRuntime.start_repl({
 			prompt: "",
 		});
-		let base_repl = this.m_base_repl_opt;
+		let base_repl=this.m_base_repl_opt;
 		base_repl.pause();
 		let system_val=spawnSync("bash",["-c","echo ${HISTFILE%/zsh_history}"]);
 		console.log(system_val.output);

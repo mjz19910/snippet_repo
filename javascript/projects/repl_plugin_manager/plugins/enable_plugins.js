@@ -1,14 +1,14 @@
-import {REPLPlugin} from "./mod.js"
+import {REPLPlugin} from "./mod.js";
 /**
  * @param {REPLPlugin[]} list
  */
 export function enable_plugins(list) {
 	for(let item of list) {
-		item.enable()
+		item.enable();
 	}
 }
 export function use_types() {
 	return [
 		REPLPlugin,
-	]
+	];
 }
