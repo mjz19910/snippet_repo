@@ -1,8 +1,12 @@
 /**@template T */
 export class CppArray {
-    size() {
-        return this.inner.length;
-    }
+	/** @param {number} arg0 */
+	at(arg0) {
+		this.inner.at(arg0);
+	}
+	size() {
+		return this.inner.length;
+	}
 	/**@type {T[]} */
 	inner=[];
 	is_empty() {

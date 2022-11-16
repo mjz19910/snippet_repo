@@ -97,7 +97,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
             dbgln_if(TOKENIZER_TRACE_DEBUG, "(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).", n, m_source_positions.size());
             return new HTMLToken.Position( 0, 0);
         };
-        return m_source_positions.at(m_source_positions.size() - 1 - n);
+        return this.m_source_positions.at(this.m_source_positions.size() - 1 - n);
 	}
 	/**@arg {State} next_state */
 	reconsume_in(next_state) {
