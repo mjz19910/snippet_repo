@@ -1,9 +1,4 @@
 {
 	"type": "module",
-	"name": "html-lexer",
-	"main": "mod.js",
-	"files": [
-		"*.js",
-		"plugin/*.js"
-	]
+	"name": "tiny-html-lexer"
 }

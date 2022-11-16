@@ -1,4 +1,4 @@
-import {lexerData} from "./onLexerData.js";
+import {lexerData} from "./onHtmlLexerData.js";
 import {lexerMarkupDeclarationOpen} from "./onLexerMarkupDeclarationOpen.js";
 import {lexerRAWTEXT} from "./onLexerRAWTEXT.js";
 import {lexerRCDATA} from "./onLexerRCDATA.js";
