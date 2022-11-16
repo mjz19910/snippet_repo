@@ -1,4 +1,4 @@
-import {PageLoaderState} from "./PageLoaderState.js/index.js";
+import {PageLoaderState} from "./PageLoaderState.js";
 /**
  * @param {PageLoaderState} state
  */

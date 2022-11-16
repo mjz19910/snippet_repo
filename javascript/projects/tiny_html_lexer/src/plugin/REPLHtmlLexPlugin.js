@@ -1,7 +1,7 @@
 import {any} from "any";
 import {HTMLLexerResult} from "HTMLLexerResult.js";
 import {get_cached_repl_plugin} from "../../../page_loader/get_cached_repl_plugin.js";
-import {PageLoaderState} from "../../../page_loader/PageLoaderState.js/index.js";
+import {PageLoaderState} from "../../../page_loader/PageLoaderState.js";
 import {ReplPluginManager} from "../../../repl_plugin_manager/ReplPluginManager.js";
 
 class HTMLLexResult {
@@ -67,7 +67,7 @@ export class REPLHtmlLexPlugin {
 		this.state=state;
 		this.context=new LexContext(this);
 		this.context.init(any(this.repl.context),this);
-		this.parse_result=new HTMLLexerResult(state.lexer_state,[],null);
+		this.parse_result=new HTMLLexerResult(state,[],null);
 	}
 	get active() {
 		return !this.state.no_repl;

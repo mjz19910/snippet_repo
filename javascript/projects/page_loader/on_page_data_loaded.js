@@ -17,8 +17,8 @@ export async function on_page_data_loaded(window,document,state,err,html_documen
 		return
 	}
 	// document content should not be null if there is no error
-	if(!html_document_content) throw new Error("Unexpected null content")
-	var html_state=new PageLoaderHTMLState(state)
+	if(!html_document_content) throw new Error("Unexpected null content");
+	state.html_state=new PageLoaderHTMLState(state);
 	console.log("TODO: get_repl_activator")
 	/**@type {ReplPluginManager} */
 	let repl=new ReplPluginManager(state);

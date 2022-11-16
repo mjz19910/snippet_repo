@@ -1,6 +1,6 @@
 import {any} from "../../browser_fake_dom/src/any.js";
-import {make_reload_page_handler as make_reload_page_request_handler} from "../../page_loader/make_reload_page_handler.js"
-import {PageLoaderState} from "../../page_loader/PageLoaderState.js/index.js";
+import {make_reload_page_request_handler} from "../../page_loader/make_reload_page_request_handler.js"
+import {PageLoaderState} from "../../page_loader/PageLoaderState.js";
 import {eval_script} from "../detail/eval.js"
 import {async_import} from "../detail/import.js"
 import {get_dom_state} from "../get_dom_state.js"

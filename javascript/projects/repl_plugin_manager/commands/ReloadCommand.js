@@ -1,4 +1,4 @@
-import {get_repl_plugin_value} from "../../page_loader/get_cached_repl_plugin.js/index.js.js";
+import {get_repl_plugin_value} from "../../page_loader/get_cached_repl_plugin.js.js";
 
 export class ReloadCommand {
 	/**

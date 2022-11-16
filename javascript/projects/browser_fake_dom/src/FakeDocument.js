@@ -587,11 +587,7 @@ export class FakeDocument extends FakeNode {
 	 * @returns {Promise<{}|null>}
 	 */
 	async parseHTMLContent(state,html_bytes) {
-		let parse_cb=this.html_parser_callback;
-		if(!parse_cb) {
-			return null;
-		}
-		return await parse_cb(this,state,html_bytes);
+		return await html_parser_callback(this,state,html_bytes);
 	}
 	#private_data;
 	/**

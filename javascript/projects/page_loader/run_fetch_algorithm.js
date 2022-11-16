@@ -1,5 +1,5 @@
 import {fake} from "../browser_fake_dom/src/browse/mod.js";
-import {PageLoaderState} from "./PageLoaderState.js/index.js"
+import {PageLoaderState} from "./PageLoaderState.js"
 /**@param {PageLoaderState} state */
 export async function run_fetch_algorithm(state) {
 	if(!fake.document)

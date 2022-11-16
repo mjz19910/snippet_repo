@@ -1,4 +1,4 @@
-import {HTMLDataLex} from "./HTMLDataLex.js"
+import {HTMLDataLex} from "./HTMLDataLexBox.js"
 export class HTMLTagLex {
 	/**@readonly */
 	type="tag"

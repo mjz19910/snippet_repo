@@ -5,7 +5,7 @@ import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js"
 import {NodeInternalData} from "./NodeInternalData.js"
 import {resolve_http_url} from "./resolve_http_url.js"
 import {wait} from "./wait.js"
-import {PageLoaderState} from "./PageLoaderState.js/index.js"
+import {PageLoaderState} from "./PageLoaderState.js"
 
 /**@type {Buffer[]} */
 export let data=[]

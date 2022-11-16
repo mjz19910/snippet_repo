@@ -1,12 +1,24 @@
 import {ClientRequest,IncomingMessage} from "http";
 import {fake} from "../browser_fake_dom/src/browse/mod.js";
+import {HTMLLexerState} from "../tiny_html_lexer/HTMLLexerState.js";
 import {fetch_url} from "./fetch_url.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
 import {data} from "./mod.js";
 import {on_page_data_loaded} from "./on_page_data_loaded.js";
+import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js";
 import {RequestModule} from "./RequestModule.js";
 
 export class PageLoaderState {
+	/**@type {RequestModule | null} */
+	m_start_request_module=null;
+	/** @type {ClientRequest | null} */
+	m_client_request=null;
+	/** @type {IncomingMessage | null} */
+	m_incoming_message=null;
+	/** @type {HTMLLexerState | null} */
+	lexer_state=null;
+	/**@type {PageLoaderHTMLState | null} */
+	html_state=null;
 	silent=false;
 	no_repl=false;
 	follow_redirects=false;
@@ -127,15 +139,9 @@ export class PageLoaderState {
 			}
 		}
 		this.url=url;
-		/**@type {RequestModule | null} */
-		this.m_start_request_module=null;
-		/** @type {ClientRequest | null} */
-		this.m_client_request=null;
-		/** @type {IncomingMessage | null} */
-		this.m_incoming_message=null;
 	}
 	copy() {
-		let copy=new PageLoaderState(this.url, this);
+		let copy=new PageLoaderState(this.url,this);
 		return copy;
 	}
 }

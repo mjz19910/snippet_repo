@@ -1,5 +1,4 @@
 import {mkdir,writeFile} from "fs/promises";
-import {on_html_lex_result} from "../tiny_html_lexer/on_html_lex_result.js";
 import {PageLoaderHTMLState} from "../page_loader/PageLoaderHTMLState.js";
 import {g_html_lexer} from "./g_html_lexer.js";
 import {dirname} from "path";
@@ -25,9 +24,9 @@ export async function html_parser_callback(this_T,html_state,html) {
 	await mkdir(dirname(file_path),{recursive: true});
 	await writeFile(file_path,html);
 	try {
-		let lex_result=g_html_lexer.value.self_lex_html(html);
 		let new_html_state=html_state.copy();
-		let parse_result=g_html_lexer.value.on_lex_result(new_html_state,lex_result);
+		let lex_result=g_html_lexer.value.self_lex_html(new_html_state,html);
+		let parse_result=g_html_lexer.value.on_lex_result(new_html_state,html,lex_result);
 		// TODO: parse the lexed tags into a DOM tree and
 		// attach the root node of that tree to document_root
 		return parse_result;

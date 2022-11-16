@@ -2,7 +2,7 @@ import {g_html_lex_plugin} from "g_html_lex_plugin.js";
 import {REPLHtmlLexPlugin} from "./src/plugin/REPLHtmlLexPlugin.js";
 import {repl_plugin_get_global_repl_activator} from "../repl_plugin_manager/repl_plugin_get_global_repl_activator.js";
 import {HTMLLexerResult} from "HTMLLexerResult.js";
-import {PageLoaderState} from "../page_loader/PageLoaderState.js/index.js";
+import {PageLoaderState} from "../page_loader/PageLoaderState.js";
 
 /**
  * @arg {PageLoaderState} html_state

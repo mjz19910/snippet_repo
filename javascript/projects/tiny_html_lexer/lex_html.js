@@ -1,7 +1,7 @@
-import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLex.js";
-import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLex.js";
+import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLexBox.js";
+import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLexBox.js";
 import {HTMLLexerState} from "./HTMLLexerState.js";
-import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLex.js";
+import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLexBox.js";
 import {HTMLTagLex} from "../tiny_html_general_box/HTMLTagLex.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {NodeInternalData} from "../page_loader/NodeInternalData.js";
@@ -24,7 +24,7 @@ export const h_enc={
 };
 
 /** @param {Uint8Array} html */
-export function lex_html(html) {
+export function lex_html(state, html) {
 	let lexer=new HTMLLexerState(html);
 	var document_root=new NodeInternalData('root',0,[],null);
 	/**@type {0|1|2}*/
