@@ -1,5 +1,15 @@
 /**@template T */
 export class CppArray {
+    append(arg0) {
+        throw new Error("Method not implemented.");
+    }
+    last() {
+		let last_val=this.inner.at(-1);
+		if(!last_val) {
+			throw new Error("Underflow");
+		}
+        return last_val;
+    }
 	/** @param {number} arg0 */
 	at(arg0) {
 		let value=this.inner.at(arg0);

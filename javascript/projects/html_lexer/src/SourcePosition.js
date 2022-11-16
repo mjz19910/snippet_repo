@@ -6,5 +6,7 @@ export class SourcePosition {
 	constructor(a,b){
 		this.a=a;
 		this.b=b;
+        this.column=undefined;
+        this.line=undefined;
 	}
 }
