@@ -1,5 +1,5 @@
-import {g_repl_plugin_value} from "../repl_plugin_manager/g_repl_plugin_value.js";
-import {ReplPluginManager} from "../repl_plugin_manager/ReplPluginManager.js";
+import {g_repl_plugin_value} from "../repl_plugin/g_repl_plugin_value.js";
+import {ReplPluginManager} from "../repl_plugin/ReplPluginManager.js";
 import {PageLoaderState} from "./PageLoaderState.js";
 
 /**@arg {PageLoaderState} state */

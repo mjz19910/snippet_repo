@@ -2,7 +2,7 @@ import {any} from "any";
 import {HTMLLexerResult} from "HTMLLexerResult.js";
 import {get_cached_repl_plugin} from "../../../page_loader/get_cached_repl_plugin.js";
 import {PageLoaderState} from "../../../page_loader/PageLoaderState.js";
-import {ReplPluginManager} from "../../../repl_plugin_manager/ReplPluginManager.js";
+import {ReplPluginManager} from "../../../repl_plugin/ReplPluginManager.js";
 
 class LexContext {
 	/**
