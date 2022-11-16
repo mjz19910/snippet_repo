@@ -46,8 +46,7 @@ export async function handle_failed_import(state,error,import_string) {
 		try {
 			switch(import_string[0]) {
 				case 'repl_plugin_manager/mod.js': return import_ipc_plugin(state,import_string);
-				case 'tiny_html_lexer': return import_ipc_plugin(state,import_string);
-				case 'tiny_html_parser': return import_ipc_plugin(state,import_string);
+				case 'html_lexer': return import_ipc_plugin(state,import_string);
 				default: throw new Error("Unable to load "+import_string[0]);
 			}
 		} catch(err) {
