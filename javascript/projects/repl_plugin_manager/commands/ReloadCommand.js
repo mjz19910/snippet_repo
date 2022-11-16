@@ -1,4 +1,4 @@
-import {get_repl_activator} from "../../page_loader/get_repl_activator.js";
+import {get_repl_plugin_value} from "../../page_loader/get_cached_repl_plugin.js/index.js.js";
 
 export class ReloadCommand {
 	/**
@@ -11,7 +11,7 @@ export class ReloadCommand {
 	 * @param {any} state
 	 */
 	action(state) {
-		let repl=get_repl_activator(state);
+		let repl=get_repl_plugin_value(state);
 		repl.clearBufferedCommand();
 		this.run_action(repl.m_request_state);
 		repl.displayPrompt();

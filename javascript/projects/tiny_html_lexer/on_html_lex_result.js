@@ -1,12 +1,12 @@
 import {g_html_lex_plugin} from "g_html_lex_plugin.js";
-import {lex_html} from "./lex_html.js";
 import {REPLHtmlLexPlugin} from "./src/plugin/REPLHtmlLexPlugin.js";
 import {repl_plugin_get_global_repl_activator} from "../repl_plugin_manager/repl_plugin_get_global_repl_activator.js";
+import {HTMLLexerResult} from "HTMLLexerResult.js";
 
 /**
  * @arg {{request_state:{no_repl:boolean};}} html_state
  * @arg {Uint8Array} html
- * @arg {ReturnType<typeof lex_html>} parse_result
+ * @arg {HTMLLexerResult} parse_result
  */
 export function on_html_lex_result(html_state,html,parse_result) {
 	let state=html_state.request_state;
@@ -25,9 +25,4 @@ export function on_html_lex_result(html_state,html,parse_result) {
 		}
 	}
 	return real_result;
-}
-export function use_types() {
-	return [
-		lex_html,
-	];
 }

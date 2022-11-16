@@ -1,6 +1,7 @@
 import {ClientRequest,IncomingMessage} from "http";
 import {fake} from "../browser_fake_dom/src/browse/mod.js";
 import {fetch_url} from "./fetch_url.js";
+import {get_repl_plugin_value} from "./get_cached_repl_plugin.js/index.js.js";
 import {data} from "./mod.js";
 import {on_page_data_loaded} from "./on_page_data_loaded.js";
 export class PageLoaderFetchRequestState {
@@ -105,11 +106,7 @@ export class PageLoaderFetchRequestState {
 	}
 	on_request_finished() {
 		console.log('todo activate repl');
-		// TODO: find get_repl_activator
-		let repl={
-			on_finished() {}
-		};
-		repl.on_finished();
+		get_repl_plugin_value(this).on_finished();
 	}
 	/**
 	 * @arg {string | null} url
@@ -134,5 +131,9 @@ export class PageLoaderFetchRequestState {
 		this.m_client_request=null;
 		/** @type {IncomingMessage | null} */
 		this.m_incoming_message=null;
+	}
+	copy() {
+		let {...keys} = this;
+		return keys;
 	}
 }

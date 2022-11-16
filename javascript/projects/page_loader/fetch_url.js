@@ -4,13 +4,13 @@ import {create_fake, fake} from "../browser_fake_dom/src/browse/mod.js";
 import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js"
 import {fix_fetch_url} from "./fix_fetch_url.js"
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js"
-import {get_repl_activator} from "./get_repl_activator.js";
+import {get_repl_plugin_value} from "./get_cached_repl_plugin.js/index.js.js";
 /**
  * @arg {PageLoaderFetchRequestState} state
  */
 export async function fetch_url(state,silent=false) {
 	if(!state.url) throw new Error("No url to get");
-	let repl=get_repl_activator(state);
+	let repl=get_repl_plugin_value(state);
 	if(repl&&!repl.repl_active) {
 		if(!state.no_repl) {
 			repl.activate()

@@ -1,5 +1,5 @@
 import {any} from "any";
-import {get_repl_activator} from "../../../page_loader/get_repl_activator.js";
+import {get_repl_plugin_value} from "../../../page_loader/get_cached_repl_plugin.js/index.js.js";
 import {PageLoaderFetchRequestState} from "../../../page_loader/PageLoaderFetchRequestState.js";
 import {ReplPluginReplSupport} from "../../../repl_plugin_manager/ReplPluginReplSupport.js";
 
@@ -62,7 +62,7 @@ export class REPLHtmlLexPlugin {
 	 * @param {PageLoaderFetchRequestState} state
 	 */
 	constructor(state) {
-		this.repl=get_repl_activator(state);
+		this.repl=get_repl_plugin_value(state);
 		this.state=state;
 		this.context=new LexContext(this);
 		this.context.init(any(this.repl.context),this);

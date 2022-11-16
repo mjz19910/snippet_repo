@@ -7,6 +7,7 @@ import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {NodeInternalData} from "../page_loader/NodeInternalData.js";
 import {State} from "./State.js";
 import {state_to_string} from "./state_to_string";
+import {HTMLLexerResult} from "./HTMLLexerResult";
 
 export const abc_chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -22,21 +23,7 @@ export const h_enc={
 	amp: [38],
 };
 
-class HTMLLexerResult {
-	/**
-	 * @param {HTMLLexerState} lexer
-	 * @param {(HTMLSpecialLex | HTMLDataLex | HTMLEntityLex | HTMLTagLex)[]} elements
-	 * @param {NodeInternalData} document_root
-	 */
-	constructor(lexer,elements,document_root) {
-		this.lex_arr=lexer.lex_arr;
-		this.elements=elements;
-		this.doc_root=document_root;
-	}
-}
-/**
- * @param {Uint8Array} html
- */
+/** @param {Uint8Array} html */
 export function lex_html(html) {
 	let lexer=new HTMLLexerState(html);
 	var document_root=new NodeInternalData('root',0,[],null);
