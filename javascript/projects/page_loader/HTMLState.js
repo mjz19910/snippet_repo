@@ -1,5 +1,5 @@
-import {FetchRequestState} from "mod.js";
 import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js"
+import {FetchRequestState} from "./FetchRequestState.js";
 export class HTMLState {
 	/** @type {any[]} */
 	tasks=[]

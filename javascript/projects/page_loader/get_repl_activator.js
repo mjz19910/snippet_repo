@@ -1,4 +1,4 @@
-import {FetchRequestState} from "mod.js";
+import {FetchRequestState} from "./FetchRequestState.js";
 import {ReplSupport} from "./ReplSupport";
 
 /**@arg {FetchRequestState} _state */

@@ -1,13 +1,4 @@
-class DOMTagLoadHandlers {}
+import {HTMLState} from "../../../tiny_html_parser/HTMLState.js";
+import {html_parser_callback} from "../../../tiny_html_parser/html_parser_callback.js";
 
-class _HTMLState {
-	tasks:any[]=[]
-	document_impl_root=null
-	request_state;
-	tag_handlers:DOMTagLoadHandlers|undefined;
-	constructor(state:{url:string;no_repl:boolean}|null) {
-		this.request_state=state;
-	}
-}
-
-export type HTMLParserCallback=(...args: [_HTMLState, Uint8Array]) => Promise<{} | null>
+export type HTMLParserCallback=(...args: Parameters<typeof html_parser_callback>) => Promise<{} | null>

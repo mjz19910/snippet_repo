@@ -1,7 +1,7 @@
-import process,{exit} from "process"
+import process from "process";
 import {DOMBadge} from "../browser_fake_dom/src/implementation/DOMBadge.js";
+import {FetchRequestState} from "../page_loader/FetchRequestState.js";
 import {fetch_url} from "../page_loader/fetch_url.js"
-import {FetchRequestState} from "../page_loader/mod.js"
 import {init_wget} from "./mod.js"
 export function main() {
 	process.on('unhandledRejection',error => {
@@ -19,7 +19,7 @@ export function main() {
 	},req_url)
 	if(!ok) {
 		console.log('init failed')
-		exit(1)
+		process.exit(1);
 	}
 	let state=new FetchRequestState(req_url)
 	fetch_url(state)

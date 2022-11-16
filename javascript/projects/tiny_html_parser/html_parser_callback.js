@@ -3,10 +3,13 @@ import {g_html_lexer} from "./g_html_lexer.js";
 import {dirname} from "path";
 import {HTMLState} from "./HTMLState.js";
 /**
+ * @template T
+ * @arg {T} this_T
  * @param {HTMLState} html_state
  * @param {Uint8Array} html
  */
-export async function html_parser_callback(html_state,html) {
+export async function html_parser_callback(this_T, html_state,html) {
+	void this_T;
 	let file_path=""
 	if(!html_state.request_state) throw new Error("no request state")
 	let file_url=html_state.request_state.url
