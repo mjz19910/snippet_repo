@@ -37,6 +37,7 @@ words:
   - cmap
   - comlen
   - constexpr
+  - cppjs
   - cres
   - cstruct
   - cxlen
@@ -91,6 +92,7 @@ words:
   - jqts
   - jsfilt
   - jsfout
+  - keyof
   - lazyload
   - lightgray
   - lightreset
@@ -132,6 +134,7 @@ words:
   - plen
   - plurials
   - precreate
+  - predef
   - presfn
   - primordials
   - printf
@@ -165,8 +168,10 @@ words:
   - sslen
   - sssx
   - start_objs
+  - stdc
   - stid
   - stlen
+  - subarray
   - symin
   - syms
   - tampermonkey

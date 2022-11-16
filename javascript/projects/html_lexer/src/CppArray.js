@@ -1,5 +1,8 @@
 /**@template T */
 export class CppArray {
+    size() {
+        return this.inner.length;
+    }
 	/**@type {T[]} */
 	inner=[];
 	is_empty() {

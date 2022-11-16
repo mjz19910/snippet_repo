@@ -3,165 +3,7 @@ import {HTMLToken} from "./HTMLToken.js";
 import {throw_todo} from "./throw_todo";
 import {HTMLTokenizerH} from "./HtmlLexerData";
 import {State} from "./State.js";
-
-/*
-#define CONSUME_NEXT_INPUT_CHARACTER \
-    current_input_character = next_code_point();
-
-#define SWITCH_TO(new_state)                       \
-    do {                                           \
-        VERIFY(m_current_builder.is_empty());      \
-        SWITCH_TO_WITH_UNCLEAN_BUILDER(new_state); \
-    } while (0)
-
-#define SWITCH_TO_WITH_UNCLEAN_BUILDER(new_state) \
-    do {                                          \
-        will_switch_to(State::new_state);         \
-        this.m_state = State::new_state;               \
-        CONSUME_NEXT_INPUT_CHARACTER;             \
-        continue;
-
-#define RECONSUME_IN(new_state)              \
-    do {                                     \
-        will_reconsume_in(State::new_state); \
-        m_state = State::new_state;          \
-        goto new_state;                      \
-    } while (0)
-
-#define SWITCH_TO_RETURN_STATE          \
-    do {                                \
-        will_switch_to(m_return_state); \
-        m_state = m_return_state;       \
-        goto _StartOfFunction;          \
-    } while (0)
-
-#define RECONSUME_IN_RETURN_STATE                \
-    do {                                         \
-        will_reconsume_in(m_return_state);       \
-        m_state = m_return_state;                \
-        if (current_input_character.has_value()) \
-            restore_to(m_prev_utf8_iterator);    \
-        goto _StartOfFunction;                   \
-    } while (0)
-
-#define SWITCH_TO_AND_EMIT_CURRENT_TOKEN(new_state)     \
-    do {                                                \
-        VERIFY(m_current_builder.is_empty());           \
-        will_switch_to(State::new_state);               \
-        m_state = State::new_state;                     \
-        will_emit(m_current_token);                     \
-        m_queued_tokens.enqueue(move(m_current_token)); \
-        return m_queued_tokens.dequeue();               \
-    } while (0)
-
-#define EMIT_CHARACTER_AND_RECONSUME_IN(code_point, new_state)          \
-    do {                                                                \
-        m_queued_tokens.enqueue(HTMLToken::make_character(code_point)); \
-        will_reconsume_in(State::new_state);                            \
-        m_state = State::new_state;                                     \
-        goto new_state;                                                 \
-    } while (0)
-
-#define FLUSH_CODEPOINTS_CONSUMED_AS_A_CHARACTER_REFERENCE       \
-    do {                                                         \
-        for (auto code_point : m_temporary_buffer) {             \
-            if (consumed_as_part_of_an_attribute()) {            \
-                m_current_builder.append_code_point(code_point); \
-            } else {                                             \
-                create_new_token(HTMLToken::Type::Character);    \
-                m_current_token.set_code_point(code_point);      \
-                m_queued_tokens.enqueue(move(m_current_token));  \
-            }                                                    \
-        }                                                        \
-    } while (0)
-
-#define DONT_CONSUME_NEXT_INPUT_CHARACTER \
-    do {                                  \
-        restore_to(m_prev_utf8_iterator); \
-    } while (0)
-
-#define ON(code_point) \
-    if (current_input_character.has_value() && current_input_character.value() == code_point)
-
-#define ON_EOF \
-    if (!current_input_character.has_value())
-
-#define ON_ASCII_ALPHA \
-    if (current_input_character.has_value() && is_ascii_alpha(current_input_character.value()))
-
-#define ON_ASCII_ALPHANUMERIC \
-    if (current_input_character.has_value() && is_ascii_alphanumeric(current_input_character.value()))
-
-#define ON_ASCII_UPPER_ALPHA \
-    if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()))
-
-#define ON_ASCII_LOWER_ALPHA \
-    if (current_input_character.has_value() && is_ascii_lower_alpha(current_input_character.value()))
-
-#define ON_ASCII_DIGIT \
-    if (current_input_character.has_value() && is_ascii_digit(current_input_character.value()))
-
-#define ON_ASCII_HEX_DIGIT \
-    if (current_input_character.has_value() && is_ascii_hex_digit(current_input_character.value()))
-
-#define ON_WHITESPACE \
-    if (current_input_character.has_value() && is_ascii(current_input_character.value()) && "\t\n\f "sv.contains(current_input_character.value()))
-
-#define ANYTHING_ELSE if (1)
-
-#define EMIT_EOF                                        \
-    do {                                                \
-        if (m_has_emitted_eof)                          \
-            return {};                                  \
-        m_has_emitted_eof = true;                       \
-        create_new_token(HTMLToken::Type::EndOfFile);   \
-        will_emit(m_current_token);                     \
-        m_queued_tokens.enqueue(move(m_current_token)); \
-        return m_queued_tokens.dequeue();               \
-    } while (0)
-
-#define EMIT_CURRENT_TOKEN                              \
-    do {                                                \
-        VERIFY(m_current_builder.is_empty());           \
-        will_emit(m_current_token);                     \
-        m_queued_tokens.enqueue(move(m_current_token)); \
-        return m_queued_tokens.dequeue();               \
-    } while (0)
-
-#define EMIT_CHARACTER(code_point)                      \
-    do {                                                \
-        create_new_token(HTMLToken::Type::Character);   \
-        m_current_token.set_code_point(code_point);     \
-        m_queued_tokens.enqueue(move(m_current_token)); \
-        return m_queued_tokens.dequeue();               \
-    } while (0)
-
-#define EMIT_CURRENT_CHARACTER \
-    EMIT_CHARACTER(current_input_character.value());
-
-#define SWITCH_TO_AND_EMIT_CHARACTER(code_point, new_state) \
-    do {                                                    \
-        will_switch_to(State::new_state);                   \
-        m_state = State::new_state;                         \
-        EMIT_CHARACTER(code_point);                         \
-    } while (0)
-
-#define SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(new_state) \
-    SWITCH_TO_AND_EMIT_CHARACTER(current_input_character.value(), new_state)
-
-#define BEGIN_STATE(state) \
-    state:                 \
-    case State::state: {   \
-        {                  \
-            {
-
-#define END_STATE         \
-    VERIFY_NOT_REACHED(); \
-    break;                \
-    }                     \
-    }                     \
-    }
-*/
+import {dbgln_if} from "./dbgln_if.js";
 
 export class HTMLTokenizer extends HTMLTokenizerH {
 	dont_consume_next_input_character() {
@@ -245,13 +87,17 @@ export class HTMLTokenizer extends HTMLTokenizerH {
 				break;
 		}
 
-		this.m_current_token.set_start_position({},this.nth_last_position(offset));
+		this.m_current_token.set_start_position("Badge_HTMLTokenizer",this.nth_last_position(offset));
 	}
 	/**
-	 * @param {number} _offset
+	 * @param {number} n
 	 */
-	nth_last_position(_offset) {
-		return {};
+	nth_last_position(n) {
+		if (n + 1 > this.m_source_positions.size()) {
+            dbgln_if(TOKENIZER_TRACE_DEBUG, "(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).", n, m_source_positions.size());
+            return new HTMLToken.Position( 0, 0);
+        };
+        return m_source_positions.at(m_source_positions.size() - 1 - n);
 	}
 	/**@arg {State} next_state */
 	reconsume_in(next_state) {

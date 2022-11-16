@@ -29,8 +29,8 @@ export class HTMLToken {
 		this.m_data=code_point
 	}
 	/**
-	 * @param {{}} data
-	 * @param {{}} _pos
+	 * @param {never} data
+	 * @param {never} _pos
 	 */
 	set_start_position(data,_pos) {
 		this.m_data=data
