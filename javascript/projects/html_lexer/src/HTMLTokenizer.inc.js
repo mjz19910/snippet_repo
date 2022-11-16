@@ -201,5 +201,5 @@ export class HTMLTokenizerIncH {
 		/** @readonly */ HexadecimalCharacterReference=78;
 		/** @readonly */ DecimalCharacterReference=79;
 		/** @readonly */ NumericCharacterReferenceEnd=80;
-    }
+    };
 }
