@@ -23,6 +23,11 @@ export const h_enc={
 };
 
 class HTMLLexerResult {
+	/**
+	 * @param {HTMLLexerState} lexer
+	 * @param {(HTMLSpecialLex | HTMLDataLex | HTMLEntityLex | HTMLTagLex)[]} elements
+	 * @param {NodeInternalData} document_root
+	 */
 	constructor(lexer,elements,document_root) {
 		this.lex_arr=lexer.lex_arr;
 		this.elements=elements;
@@ -70,11 +75,6 @@ export function lex_html(html) {
 		}
 	}
 	return new HTMLLexerResult(lexer,elements,document_root);
-	return {
-		lex_arr: lexer.lex_arr,
-		elements,
-		document_root
-	};
 }
 
 export function use_types() {
