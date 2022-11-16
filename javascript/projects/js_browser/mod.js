@@ -1,19 +1,17 @@
 import {create_fake, fake} from "../browser_fake_dom/src/browse/mod.js";
 import {handle_onPageLoadStarted} from "../browser_fake_dom/src/event/handle_onPageLoadStarted.js";
-import {PageLoaderState} from "../page_loader/PageLoaderState.js";
-import {on_page_data_loaded} from "../page_loader/on_page_data_loaded.js";
+import {PageLoaderState} from "../page_loader/index.js";
+import {on_page_data_loaded} from "../page_loader/index.js";
+import {PageLoadStateType} from "../browser_fake_dom/src/types/onPageLoadStarted.js";
 /**
- * @arg {string} req_url
- * @param {Parameters<typeof handle_onPageLoadStarted>[1]} state
+ * @param {PageLoadStateType} state
  */
-export function init_wget(state,req_url) {
+export function init_wget(state) {
 	if(!fake.window) {
 		create_fake.window();
 	}
 	if(!fake.window) throw new Error("No window");
 	handle_onPageLoadStarted(fake.window,state);
-	state.url=req_url;
-	return state;
 }
 /**
  * @arg {Uint8Array} page_content
