@@ -1,4 +1,4 @@
-import {HTMLAnchorElement,HTMLDivElement,FakeElement} from "../mod.js"
+import {FakeElement} from "../FakeElement.js";
 import {doc_js_has_obj} from "./const.js"
 export class DomNodeFactory {
 	#node_factory={

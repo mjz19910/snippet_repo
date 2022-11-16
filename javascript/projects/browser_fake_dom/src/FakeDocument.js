@@ -1,4 +1,3 @@
-import {DocumentImpl,FakeWindow} from "./mod.js"
 // FakeDocument <- FakeWindow -> FakeWindowNoImpl
 // FakeDocument -> FakeNode
 // FakeDocument -> FakeWindow
@@ -11,6 +10,8 @@ import {FakeElement} from "./FakeElement.js"
 import {Badge} from "./std/Badge.js"
 import {init as html_element_init} from "./FakeHTMLElement.js"
 import {html_parser_callback} from "../../tiny_html_parser/html_parser_callback.js"
+import {DocumentImpl} from "./DocumentImpl.js";
+import {FakeWindow} from "./FakeWindow.js";
 /**@arg {any} v @returns {any}*/
 function any(v) {
 	return v

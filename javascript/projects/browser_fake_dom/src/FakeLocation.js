@@ -1,4 +1,4 @@
-import {FakeDOMStringList} from "./mod.js"
+import {FakeDOMStringList} from "./FakeDOMStringList.js";
 import {Badge} from "./std/Badge.js"
 /**@implements {URL} */
 class FakeURL {

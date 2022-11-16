@@ -5,8 +5,18 @@ import {no_impl} from "./no_impl.js";
 import {FakeExternal} from "./FakeExternal.js";
 import {FakeWindowType} from "./types/FakeWindowType.js";
 import {FakeDocument} from "./FakeDocument.js";
+import {FakeLocation} from "./FakeLocation.js";
+import {FakeStorage} from "./FakeStorage.js";
+import {NullBadge} from "./NullBadge.js";
+import {DOMBadge} from "./implementation/DOMBadge.js";
 /**@implements {Window} */
 export class FakeWindow extends FakeWindowType {
+	/**@type {FakeDocument|null} */
+	#my_document=null;
+	/**@arg {DOMBadge} _ */
+	has_document(_) {
+		return this.#my_document !== null;
+	}
 	// spell:ignore onbeforeinput
 	onbeforeinput=null;
 	oncancel=null;
@@ -24,7 +34,12 @@ export class FakeWindow extends FakeWindowType {
 	/**@type {number}*/
 	get devicePixelRatio() {throw no_impl();}
 	/**@type {FakeDocument} */
-	get document() {throw no_impl();}
+	get document() {
+		if(!this.#my_document){
+			this.#my_document=new FakeDocument(this, new DOMBadge);
+		}
+		return this.#my_document;
+	}
 	/**@type {Event}*/
 	get event() {throw no_impl();}
 	/**@type {FakeExternal&{AddSearchProvider:()=>void}}*/

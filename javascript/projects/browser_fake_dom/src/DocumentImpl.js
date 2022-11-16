@@ -1,7 +1,7 @@
 import {fake} from "./browse/mod.js";
 import {FakeDocument} from "./FakeDocument.js"
 import {FakeNode} from "./FakeNode.js"
-import {DOMBadge} from "./mod.js"
+import {DOMBadge} from "./implementation/DOMBadge.js";
 /**@implements {DocumentType} */
 class FakeDocumentType extends FakeNode {
     /**@type {string}*/
