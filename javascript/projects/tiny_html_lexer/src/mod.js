@@ -1,4 +1,4 @@
-import {HTMLLexerResult} from "HTMLLexerResult.js";
+import {HTMLLexerResult} from "./HTMLLexerResult.js";
 import {PageLoaderState} from "../../page_loader/PageLoaderState.js";
 
 /**
@@ -14,9 +14,9 @@ export function on_html_lex_result(state,html,parse_result) {
 	return new HTMLLexerResult(state,() => [],null);
 }
 
-import {lex_data} from "../lex_data.js";
-import {ok_char_int8s} from "../lex_html.js";
-import {HTMLLexerState} from "../HTMLLexerState.js";
+import {lex_data} from "./lex_data.js";
+import {ok_char_int8s} from "./lex_html.js";
+import {HTMLLexerState} from "./HTMLLexerState.js";
 import {repl_plugin_get_global_repl_activator} from "../../repl_plugin_manager/repl_plugin_get_global_repl_activator.js";
 import {g_html_lex_plugin} from "./g_html_lex_plugin.js";
 import {REPLHtmlLexPlugin} from "./plugin/REPLHtmlLexPlugin.js";

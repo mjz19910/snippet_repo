@@ -1,13 +1,10 @@
-import {lexerData} from "./onHtmlLexerData.js";
+import {HTMLLexerState} from "./HTMLLexerState.js";
 import {lexerMarkupDeclarationOpen} from "./onLexerMarkupDeclarationOpen.js";
 import {lexerRAWTEXT} from "./onLexerRAWTEXT.js";
 import {lexerRCDATA} from "./onLexerRCDATA.js";
 
-/**
- * @param {import("./HTMLLexerState").HTMLLexerState} state
- */
+/** @param {HTMLLexerState} state */
 export function on_any_html(state) {
-	lexerData(state);
 	lexerMarkupDeclarationOpen(state);
 	lexerRAWTEXT(state);
 	lexerRCDATA(state);

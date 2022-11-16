@@ -1,14 +1,12 @@
 import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
-import {will_reconsume_in} from "will_reconsume_in.js";
+import {will_reconsume_in} from "./will_reconsume_in.js";
 import {HTMLToken} from "./HTMLToken.js";
 import {State} from "./State.js";
-/**@returns {never} */
-function throw_todo() {
-	throw new Error("TODO");
-}
+import {throw_todo} from "./throw_todo";
+
 export class HTMLLexerState {
-	DONT_CONSUME_NEXT_INPUT_CHARACTER() {
+	dont_consume_next_input_character() {
 		this.restore_to(this.m_prev_utf8_iterator);
 	}
 	/**
@@ -30,14 +28,14 @@ export class HTMLLexerState {
 			return {};
 		this.m_has_emitted_eof=true;
 		this.create_new_token(HTMLToken.Type.EndOfFile);
-		this.willEmit(this.m_current_token);
+		this.will_emit(this.m_current_token);
 		this.m_queued_tokens.push(this.m_current_token);
 		return this.m_queued_tokens.shift();
 	}
 	/**
 	 * @param {HTMLToken | null} m_current_token
 	 */
-	willEmit(m_current_token) {
+	will_emit(m_current_token) {
 		m_current_token;
 		throw new Error("Method not implemented.");
 	}
@@ -45,7 +43,7 @@ export class HTMLLexerState {
 	 * @param {string} code_point
 	 * @param {State} new_state
 	 */
-	emitCharacterAndReconsumeIn(code_point,new_state) {
+	emit_character_and_reconsume_in(code_point,new_state) {
 		this.m_queued_tokens.push(HTMLToken.make_character(code_point))
 		will_reconsume_in(this,new_state);
 		this.m_state=new_state;
@@ -63,7 +61,7 @@ export class HTMLLexerState {
 	 * @param {number} off
 	 * @param {number} len
 	 */
-	dec(off,len) {
+	decode_range(off,len) {
 		return this.text_decoder.end(Buffer.from(this.html.subarray(off,off+len)));
 	}
 	text_decoder=new StringDecoder('ascii');

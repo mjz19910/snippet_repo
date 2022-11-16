@@ -1,5 +1,5 @@
 /**
- * @param {import("./HTMLLexerState").HTMLLexerState} state
+ * @param {import("./src/HTMLLexerState").HTMLLexerState} state
  */
 export function lexerMarkupDeclarationOpen(state) {
 	state

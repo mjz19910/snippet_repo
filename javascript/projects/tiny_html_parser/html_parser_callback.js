@@ -1,8 +1,8 @@
 import {mkdir,writeFile} from "fs/promises";
 import {dirname} from "path";
 import {PageLoaderState} from "../page_loader/PageLoaderState.js";
-import {HTMLLexerResult} from "../tiny_html_lexer/HTMLLexerResult.js";
-import {HTMLLexerState} from "../tiny_html_lexer/HTMLLexerState.js";
+import {HTMLLexerResult} from "../tiny_html_lexer/src/HTMLLexerResult.js";
+import {HTMLLexerState} from "../tiny_html_lexer/mod_index.js";
 import {g_html_lexer} from "./g_html_lexer.js";
 /**
  * @template T

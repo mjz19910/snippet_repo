@@ -1,17 +1,18 @@
-import {HTMLToken} from "HTMLToken.js";
-import {log_parse_error} from "log_parse_error.js";
-import {get_char_type} from "src/get_char_type.js";
-import {NodeInternalData} from "../page_loader/NodeInternalData.js";
-import {PageLoaderState} from "../page_loader/PageLoaderState.js";
-import {HTMLDataLex} from "../tiny_html_general_box/HTMLDataLexBox.js";
-import {HTMLEntityLex} from "../tiny_html_general_box/HTMLEntityLexBox.js";
-import {HTMLSpecialLex} from "../tiny_html_general_box/HTMLSpecialLexBox.js";
-import {HTMLTagLex} from "../tiny_html_general_box/HTMLTagLex.js";
+import {HTMLToken} from "./HTMLToken.js";
+import {log_parse_error} from "./log_parse_error.js";
+import {get_char_type} from "./get_char_type.js";
+import {NodeInternalData} from "../../page_loader/NodeInternalData.js";
+import {PageLoaderState} from "../../page_loader/PageLoaderState.js";
+import {HTMLDataLex} from "../../tiny_html_general_box/HTMLDataLexBox.js";
+import {HTMLEntityLex} from "../../tiny_html_general_box/HTMLEntityLexBox.js";
+import {HTMLSpecialLex} from "../../tiny_html_general_box/HTMLSpecialLexBox.js";
+import {HTMLTagLex} from "../../tiny_html_general_box/HTMLTagLex.js";
 import {HTMLLexerResult} from "./HTMLLexerResult";
 import {HTMLLexerState} from "./HTMLLexerState.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {State} from "./State.js";
 import {state_to_string} from "./state_to_string";
+import {lex_data} from "./lex_data.js";
 
 export const abc_chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -43,9 +44,12 @@ export function lex_html(state,html) {
 	// tags (also newline and crlf)
 	for(lexer.i=0;lexer.i<lexer.html.length;lexer.i++) {
 		lexer.cur_lex=lexer.html[lexer.i];
-		lexer.cur_char=lexer.dec(lexer.i,1);
+		lexer.cur_char=lexer.decode_range(lexer.i,1);
 		let state=lexer;
 		switch(lexer.m_current_state) {
+			case State.MarkupDeclarationOpen: {
+
+			} break;
 			case State.TagOpen: {
 				console.log(state.i,state.cur_char);
 				switch(get_char_type(state.cur_char)) {
@@ -72,7 +76,22 @@ export function lex_html(state,html) {
 					default:
 						if(state.cur_char===null) throw new Error("Typecheck assert");
 						log_parse_error();
-						state.emitCharacterAndReconsumeIn('<',State.Data);
+						state.emit_character_and_reconsume_in('<',State.Data);
+				}
+			} break;
+			case State.Data: {
+				switch(state.cur_char) {
+					case '\0': lex_data(state); break;
+					case '&':
+						state.m_return_state=State.Data;
+						state.m_current_state=State.CharacterReference;
+						break;
+					case '<':
+						state.m_current_state=State.TagOpen;
+						lex_data(state);
+						break;
+					case null: state.m_is_eof=true; break;
+					default: lex_data(state); break;
 				}
 			} break;
 			default: throw new Error(`State (${state_to_string(lexer.m_current_state)}) not implemented.`);

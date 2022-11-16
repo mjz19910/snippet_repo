@@ -1,8 +1,8 @@
-import {HTMLToken} from "../HTMLToken.js";
-import {nth_last_position} from "../nth_last_position";
+import {HTMLToken} from "./HTMLToken.js";
+import {nth_last_position} from "./nth_last_position";
 
 /**
- * @param {import("../HTMLLexerState").HTMLLexerState} state
+ * @param {import("./HTMLLexerState").HTMLLexerState} state
  * @arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type
  */
 export function create_new_token(state,type) {

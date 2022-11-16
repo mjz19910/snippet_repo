@@ -5,7 +5,7 @@ import {State} from "./State.js"
 
 // void HTMLTokenizer::will_reconsume_in
 /**
- * @param {import("./HTMLLexerState").HTMLLexerState} state
+ * @param {import("./src/HTMLLexerState").HTMLLexerState} state
  * @param {Extract<typeof State[keyof typeof State], number>} new_state
  */
 export function will_reconsume_in(state,new_state) {

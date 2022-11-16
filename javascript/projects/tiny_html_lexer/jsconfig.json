@@ -1,6 +1,5 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"target": "esnext",
 		"lib": [
 			"esnext",
@@ -22,10 +21,10 @@
 		"typeRoots": [
 			"./node_modules/@types"
 		],
-		"paths": {}
 	},
 	"include": [
-		"**/*",
+		"mod_index.js",
+		"src/**/*",
 	],
 	"exclude": [
 		"node_modules",
