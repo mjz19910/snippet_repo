@@ -1,7 +1,8 @@
 import {any} from "any";
-import {get_repl_plugin_value} from "../../../page_loader/get_cached_repl_plugin.js/index.js.js";
-import {PageLoaderFetchRequestState} from "../../../page_loader/PageLoaderFetchRequestState.js";
-import {ReplPluginReplSupport} from "../../../repl_plugin_manager/ReplPluginManager.js/index.js";
+import {HTMLLexerResult} from "HTMLLexerResult.js";
+import {get_cached_repl_plugin} from "../../../page_loader/get_cached_repl_plugin.js";
+import {PageLoaderState} from "../../../page_loader/PageLoaderState.js/index.js";
+import {ReplPluginManager} from "../../../repl_plugin_manager/ReplPluginManager.js";
 
 class HTMLLexResult {
 	/**@type {never[]}*/
@@ -34,7 +35,7 @@ class LexContext {
 		this.get_page_content=() => {
 			return new Uint8Array(0);
 		};
-		/** @type {(()=>HTMLLexResult['lex_arr']|undefined)|undefined} */
+		/** @type {(()=>HTMLLexerResult['lex_arr']|undefined)|undefined} */
 		this.get_lex_arr=() => {
 			return plugin.parse_result.lex_arr;
 		};
@@ -55,24 +56,24 @@ class LexContext {
 }
 
 export class REPLHtmlLexPlugin {
-	/**@type {ReplPluginReplSupport} */
+	/**@type {ReplPluginManager} */
 	repl;
 	context;
 	/**
-	 * @param {PageLoaderFetchRequestState} state
+	 * @param {PageLoaderState} state
 	 */
 	constructor(state) {
-		this.repl=get_repl_plugin_value(state);
+		this.repl=get_cached_repl_plugin(state);
 		this.state=state;
 		this.context=new LexContext(this);
 		this.context.init(any(this.repl.context),this);
-		this.parse_result=new HTMLLexResult([],[],null);
+		this.parse_result=new HTMLLexerResult(state.lexer_state,[],null);
 	}
 	get active() {
 		return !this.state.no_repl;
 	}
 	/**
-	 * @param {HTMLLexResult} parse_result
+	 * @param {HTMLLexerResult} parse_result
 	 */
 	update_parse_result(parse_result) {
 		this.parse_result=parse_result;

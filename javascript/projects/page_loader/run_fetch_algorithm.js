@@ -1,6 +1,6 @@
 import {fake} from "../browser_fake_dom/src/browse/mod.js";
-import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js"
-/**@param {PageLoaderFetchRequestState} state */
+import {PageLoaderState} from "./PageLoaderState.js/index.js"
+/**@param {PageLoaderState} state */
 export async function run_fetch_algorithm(state) {
 	if(!fake.document)
 		throw new Error("Missing document")

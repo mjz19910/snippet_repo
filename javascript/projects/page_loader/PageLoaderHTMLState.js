@@ -1,13 +1,13 @@
 import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js";
-import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js";
+import {PageLoaderState} from "./PageLoaderState.js";
 export class PageLoaderHTMLState {
 	/** @type {any[]} */
 	tasks=[];
-	/** @type {PageLoaderFetchRequestState|null} */
+	/** @type {PageLoaderState|null} */
 	request_state;
 	/**@type {DOMTagLoadHandlers|undefined} */
 	tag_handlers;
-	/** @param {PageLoaderFetchRequestState|null} state */
+	/** @param {PageLoaderState|null} state */
 	constructor(state) {
 		this.request_state=state;
 	}

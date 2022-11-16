@@ -14,7 +14,7 @@
 		"allowJs": true,
 		"strictNullChecks": true,
 		"module": "ESNext",
-		"moduleResolution": "Node",
+		"moduleResolution": "NodeNext",
 		"sourceMap": true,
 		"noImplicitAny": true,
 		"outDir": "./build",

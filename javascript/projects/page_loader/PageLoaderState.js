@@ -4,8 +4,9 @@ import {fetch_url} from "./fetch_url.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
 import {data} from "./mod.js";
 import {on_page_data_loaded} from "./on_page_data_loaded.js";
+import {RequestModule} from "./RequestModule.js";
 
-export class PageLoaderFetchRequestState {
+export class PageLoaderState {
 	silent=false;
 	no_repl=false;
 	follow_redirects=false;
@@ -42,8 +43,8 @@ export class PageLoaderFetchRequestState {
 			if(page_content.length<300) {
 				console.log("all content\n%s",page_content);
 			}
-			/**@type {PageLoaderFetchRequestState} */
-			let page_load_state=new PageLoaderFetchRequestState(this.url);
+			/**@type {PageLoaderState} */
+			let page_load_state=new PageLoaderState(this.url);
 			page_load_state.no_repl=this.no_repl;
 			await on_page_data_loaded(fake.window,fake.document,page_load_state,null,page_content);
 			console.log('in_message_result_tag loaded',this.url);
@@ -111,7 +112,7 @@ export class PageLoaderFetchRequestState {
 	}
 	/**
 	 * @arg {string | null} url
-	 * @arg {Partial<PageLoaderFetchRequestState>} [opts]
+	 * @arg {Partial<PageLoaderState>} [opts]
 	 */
 	constructor(url,opts) {
 		if(opts) {
@@ -134,7 +135,7 @@ export class PageLoaderFetchRequestState {
 		this.m_incoming_message=null;
 	}
 	copy() {
-		let copy=new PageLoaderFetchRequestState(this.url, this);
+		let copy=new PageLoaderState(this.url, this);
 		return copy;
 	}
 }

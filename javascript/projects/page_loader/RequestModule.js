@@ -1,1 +1,2 @@
-class RequestModule {}
+
+export class RequestModule {}

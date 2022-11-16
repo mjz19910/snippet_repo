@@ -1,7 +1,7 @@
 import {fetch_url} from "./fetch_url.js";
-import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js";
+import {PageLoaderState} from "./PageLoaderState.js/index.js";
 
-/** @param {PageLoaderFetchRequestState} state */
+/** @param {PageLoaderState} state */
 export function make_reload_page_handler(state) {
 	return async () => {
 		console.log('make_reload_page_handler use');
@@ -11,6 +11,6 @@ export function make_reload_page_handler(state) {
 
 export function use_types() {
 	return [
-		PageLoaderFetchRequestState,
+		PageLoaderState,
 	];
 }

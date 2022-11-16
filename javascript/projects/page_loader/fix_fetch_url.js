@@ -1,6 +1,6 @@
-import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js";
+import {PageLoaderState} from "./PageLoaderState.js/index.js";
 /**
- * @param {PageLoaderFetchRequestState} state
+ * @param {PageLoaderState} state
  */
 export function fix_fetch_url(state) {
 	if(!state.url)
@@ -18,6 +18,6 @@ export function fix_fetch_url(state) {
 
 export function use_types() {
 	return [
-		PageLoaderFetchRequestState,
+		PageLoaderState,
 	];
 }

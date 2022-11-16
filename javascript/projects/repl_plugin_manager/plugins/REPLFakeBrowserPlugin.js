@@ -1,31 +1,9 @@
 import {any} from "../../browser_fake_dom/src/any.js";
-import {ReplLocalState} from "../ReplLocalState.js";
 import {ReplPluginManager} from "../ReplPluginManager.js";
 import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
+import {FakeBrowserPluginContext} from "./FakeBrowserPluginContext.js";
 import {get_from_store} from "./get_from_store";
-
-class ObjMaybeKeys {
-	/**@type {"keys"|"no_keys"} */
-	type="no_keys";
-	/** @type {string[]} */
-	arr=[];
-	/** @param {BrowserPluginIndexType} value */
-	constructor(value) {
-		this.value=value;
-	}
-	/** @param {string} key */
-	update(key) {
-		if(this.type!=="keys") this.type="keys";
-		this.arr.push(key);
-	}
-}
-
-class FakeBrowserPluginContext {
-	/**@type {(name: keyof BrowserPluginIndexType)=>BrowserPluginIndexType[keyof BrowserPluginIndexType]|null} */
-	get_from_store=()=>{
-		throw new Error("Abstract context method");
-	};
-}
+import {ObjMaybeKeys} from "./ObjMaybeKeys";
 
 export class REPLFakeBrowserPlugin {
 	/** @param {ReplPluginManager} repl */

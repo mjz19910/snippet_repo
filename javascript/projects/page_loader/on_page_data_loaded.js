@@ -1,6 +1,6 @@
 import {do_html_load} from "./do_html_load.js"
 import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js"
-import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js";
+import {PageLoaderState} from "./PageLoaderState.js";
 import {ReplPluginManager} from "../repl_plugin_manager/ReplPluginManager.js";
 
 /**
@@ -8,7 +8,7 @@ import {ReplPluginManager} from "../repl_plugin_manager/ReplPluginManager.js";
  * @arg {Error|null} err
  * @arg {Uint8Array|null} html_document_content
  * @arg {Parameters<typeof do_html_load>[1]} document
- * @arg {PageLoaderFetchRequestState} state
+ * @arg {PageLoaderState} state
  */
 export async function on_page_data_loaded(window,document,state,err,html_document_content) {
 	console.log("on_page_data_loaded")
