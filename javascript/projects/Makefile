@@ -4,7 +4,7 @@ PACKAGES := $(filter-out $(PACKAGE_EXCLUDE),$(wildcard */))
 all: $(PACKAGES:%/=%/jsconfig.json) $(PACKAGES)
 
 help:
-	echo 'cd js_browser && . ./run.zsh'
+	@echo 'cd js_browser && . ./run.zsh'
 
 .PHONY:all test $(PACKAGES)
 
