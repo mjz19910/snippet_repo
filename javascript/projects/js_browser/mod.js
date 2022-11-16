@@ -2,7 +2,7 @@ import {create_fake, fake} from "../browser_fake_dom/src/browse/mod.js";
 import {handle_onPageLoadStarted} from "../browser_fake_dom/src/event/handle_onPageLoadStarted.js";
 import {PageLoaderState} from "../page_loader/index.js";
 import {on_page_data_loaded} from "../page_loader/index.js";
-import {PageLoadStateType} from "../browser_fake_dom/src/types/onPageLoadStarted.js";
+import {PageLoadStateType} from "../browser_fake_dom/index.js";
 /**
  * @param {PageLoadStateType} state
  */
@@ -16,7 +16,7 @@ export function init_wget(state) {
 /**
  * @arg {Uint8Array} page_content
  * @arg {string} page_url
- * @param {import("../browser_fake_dom/src/types/onPageLoadStarted.js").PageLoadStateType} state
+ * @param {import("../browser_fake_dom/src/types/PageLoadStateType.js").PageLoadStateType} state
  */
 export function wget_on_static_page_load(state,page_content,page_url) {
 	if(!fake.document) throw new Error("No document");

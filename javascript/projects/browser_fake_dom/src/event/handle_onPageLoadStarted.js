@@ -8,7 +8,7 @@ import {handle_requestAnimationFrame} from "./handle_requestAnimationFrame.js";
 
 /**
  * @argument {FakeWindow} window
- * @argument {import("../types/onPageLoadStarted.js").PageLoadStateType} state
+ * @argument {import("../types/PageLoadStateType.js").PageLoadStateType} state
 */
 export function handle_onPageLoadStarted(window,state) {
 	var new_win;
