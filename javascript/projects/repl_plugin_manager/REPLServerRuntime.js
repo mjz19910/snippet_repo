@@ -1,6 +1,5 @@
 import {Interface} from 'readline';
 import repl,{REPLServer} from 'repl';
-import {EventEmitter} from 'stream';
 import {any} from '../browser_fake_dom/src/any.js';
 
 /**@template T */
@@ -14,9 +13,10 @@ class XHolder {
 		this.X=x_val;
 	}
 }
+/**@typedef {import('./REPLServerRuntime.ty.js').EventEmitterType} EventEmitterType */
 
 
-/**@implements {EventEmitter} @extends {XHolder<EventEmitter>} */
+/**@implements {EventEmitterType} @extends {XHolder<EventEmitterType>} */
 class NodeEventEmitter extends XHolder {
 	/** @param {string} event_name */
 	listeners(event_name) {
@@ -124,16 +124,17 @@ class RLInterface extends NodeEventEmitter {
 	getPrompt() {
 		return this.X.getPrompt();
 	}
-	/**
-	 * @param {string} value
-	 */
+	/** @param {string} value */
 	setPrompt(value) {
 		return this.X.setPrompt(value);
 	}
-	prompt() {}
 	/**
-	 * @arg {[query: string, callback: (answer: string) => void]|[query: string, options: EventEmitter.Abortable,callback: (answer: string) => void]} args
+	 * @param {boolean} [x]
 	 */
+	prompt(x) {
+		this.X.prompt(x);
+	}
+	/** @arg {[query: string, callback: (answer: string) => void]|[query: string, options: import('stream').EventEmitter.Abortable,callback: (answer: string) => void]} args */
 	question(...args) {
 		if(args.length==2) {
 			this.X.question(...args);

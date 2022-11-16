@@ -1,5 +1,6 @@
 import repl from 'repl';
-import {REPLServerRuntime} from 'REPLServerRuntime.js';
+import {REPLServerRuntime} from './REPLServerRuntime.js';
+export interface EventEmitterType extends NodeJS.EventEmitter {}
 
 export type CallbackType={
 	(err: Error|null,_repl: repl.REPLServer & REPLServerRuntime): void;
