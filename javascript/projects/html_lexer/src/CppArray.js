@@ -2,7 +2,7 @@
 export class CppArray {
 	/** @param {number} arg0 */
 	at(arg0) {
-		this.inner.at(arg0);
+		return this.inner.at(arg0);
 	}
 	size() {
 		return this.inner.length;
