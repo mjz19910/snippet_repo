@@ -1,8 +1,16 @@
 import {Interface} from 'readline';
 import repl,{REPLServer} from 'repl';
+import {any} from '../browser_fake_dom/src/any.1.js';
+
 
 /**@implements {REPLServer} */
 export class REPLServerRuntime extends Interface {
+	/**@arg {string | repl.ReplOptions} [options] @returns {REPLServerRuntime} */
+	static start_repl(options) {
+		let repl_base=repl.start(options);
+		let repl_this=new REPLServerRuntime(repl_base.input,repl_base);
+		return any(repl_base);
+	}
 	/**@type {REPLServer} */
 	X;
 	/**

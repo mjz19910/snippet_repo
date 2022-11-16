@@ -1,6 +1,6 @@
 import {spawnSync} from "child_process";
 import process from "process";
-import repl,{REPLServer} from 'repl';
+import repl from 'repl';
 import vm from 'vm';
 import {bind_plugins} from "./plugins/mod.js";
 import {ReplLocalState} from "./ReplLocalState";
@@ -22,7 +22,7 @@ export class ReplPluginReplSupport {
 	repl_active=false;
 	/**@type {import("vm").Context|null} */
 	m_context=null;
-	/**@type {(REPLServer & REPLServerRuntime)|null} */
+	/**@type {REPLServerRuntime|null} */
 	m_base_repl_opt=null;
 	/** @arg {ReplLocalState} state */
 	constructor(state) {
@@ -32,12 +32,12 @@ export class ReplPluginReplSupport {
 		this.get_repl().displayPrompt();
 	}
 	create_repl() {
-		let n_repl=repl.start({
+		let n_repl=REPLServerRuntime.start_repl({
 			prompt: "",
 		});
 		/**@type {any} */
 		let a_repl=n_repl;
-		/**@type {REPLServer & REPLServerRuntime} */
+		/**@type {REPLServerRuntime} */
 		let r_repl=a_repl;
 		this.m_base_repl_opt=r_repl;
 		this.m_base_repl_opt.pause();

@@ -2017,14 +2017,8 @@ declare global {
 		g_auto_buy: AutoBuy;
 	}
 }
-interface ErrorStackTrace {
-	stack?: string;
-}
-declare global {
-	interface ErrorConstructor {
-		captureStackTrace<T>(obj: ErrorStackTrace,constructorOpt?: T): void;
-	}
 
+declare global {
 	interface HTMLDivElement {
 		style: CSSStyleDeclaration;
 	}
