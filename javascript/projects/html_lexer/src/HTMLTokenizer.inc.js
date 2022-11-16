@@ -26,17 +26,14 @@ export class HTMLTokenizer extends HTMLTokenizerH {
         let code_point;
         // https://html.spec.whatwg.org/multipage/parsing.html//preprocessing-the-input-stream:tokenization
         // https://infra.spec.whatwg.org///normalize-newlines
-        if(this.peek_code_point(0).value_or(0)=='\r'.charCodeAt(0)&&this.peek_code_point(1).value_or(0)=='
-		'.charCodeAt(0)) {
+        if(this.peek_code_point(0).value_or(0)=='\r'.charCodeAt(0)&&this.peek_code_point(1).value_or(0)=='\n'.charCodeAt(0)) {
             // replace every U+000D CR U+000A LF code point pair with a single U+000A LF code point,
             this.skip(2);
-            code_point='
-		'.charCodeAt(0);
+            code_point='\n'.charCodeAt(0);
         } else if(this.peek_code_point(0).value_or(0)=='\r'.charCodeAt(0)) {
             // replace every remaining U+000D CR code point with a U+000A LF code point.
             this.skip(1);
-            code_point='
-		'.charCodeAt(0);
+            code_point='\n'.charCodeAt(0);
         } else {
             this.skip(1);
             code_point=this.m_prev_utf8_iterator.deref();
@@ -53,8 +50,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
             this.m_prev_utf8_iterator=this.m_utf8_iterator;
             let code_point=this.m_utf8_iterator.deref();
             if(!this.m_source_positions.is_empty()) {
-                if(code_point=='
-		'.charCodeAt(0)) {
+                if(code_point=='\n'.charCodeAt(0)) {
                     this.m_source_positions.last().column=0;
                     this.m_source_positions.last().line++;
                 } else {
