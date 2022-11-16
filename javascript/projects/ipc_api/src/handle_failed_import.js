@@ -34,6 +34,9 @@ export async function handle_failed_import(state,error,import_string) {
 			cp.stdout.on("data",e => {
 				process.stdout.write(e);
 			});
+			cp.stderr.on("data",e => {
+				process.stderr.write(e);
+			});
 			cp.on("error",err => {
 				reject(err);
 			});
