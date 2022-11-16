@@ -12,7 +12,7 @@ export class PageLoaderState {
 	/**@arg {any[]} arr */
 	use_types(...arr) {this.use_base(arr);}
 	/**@arg {any[]} arr */
-	use(...arr) {this.use_base(arr);}
+	use_values(...arr) {this.use_base(arr);}
 	/**@arg {any[]} _arr */
 	use_base(_arr) {}
 	/**@type {RequestModule | null} */

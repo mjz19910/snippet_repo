@@ -9,7 +9,7 @@ import {PageLoaderState} from "../../page_loader/PageLoaderState.js";
  * check use_types file for on_html_lex_result
  */
 export function on_html_lex_result(state,html,parse_result) {
-	state.use(html,parse_result);
+	state.use_values(html,parse_result);
 	state.use_types(repl_plugin_get_global_repl_activator(state),g_html_lex_plugin,REPLHtmlLexPlugin);
 	return new HTMLLexerResult(state,() => [],null);
 }
