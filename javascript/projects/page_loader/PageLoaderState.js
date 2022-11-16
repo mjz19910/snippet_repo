@@ -10,11 +10,11 @@ import {RequestModule} from "./RequestModule.js";
 
 export class PageLoaderState {
 	/**@arg {any[]} arr */
-	use_types(...arr) {this.use_base(arr);}
+	use_types(...arr) {this.use_arg_vec(arr);}
 	/**@arg {any[]} arr */
-	use_values(...arr) {this.use_base(arr);}
+	use_values(...arr) {this.use_arg_vec(arr);}
 	/**@arg {any[]} _arr */
-	use_base(_arr) {}
+	use_arg_vec(_arr) {}
 	/**@type {RequestModule | null} */
 	m_start_request_module=null;
 	/** @type {ClientRequest | null} */
