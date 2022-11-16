@@ -13,6 +13,7 @@ function main() {
 	const abs_file_path=path.resolve(req_file_path)
 	const req_url="file://"+abs_file_path
 	let state=init_wget({
+		url: req_url,
 		no_repl: false,
 	},req_url)
 	fs.readFile(abs_file_path,(err,data) => {

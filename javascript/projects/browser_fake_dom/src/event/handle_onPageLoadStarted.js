@@ -1,11 +1,11 @@
 import {FakeLocation} from "../FakeLocation.js";
 import {FakeWindow} from "../FakeWindow.js";
 import {DOMBadge} from "../implementation/DOMBadge.js";
-import {
-	handle_addEventListener,handle_removeEventListener,
-	handle_requestAnimationFrame,
-	handle_dispatchEvent,
-} from "./mod.js";
+import {handle_addEventListener} from "./handle_addEventListener.js";
+import {handle_dispatchEvent} from "./handle_dispatchEvent.js";
+import {handle_removeEventListener} from "./handle_removeEventListener.js";
+import {handle_requestAnimationFrame} from "./handle_requestAnimationFrame.js";
+
 /**
  * @argument {FakeWindow} window
  * @argument {import("../types/onPageLoadStarted.js").PageLoadStateType} state
@@ -13,15 +13,9 @@ import {
 export function handle_onPageLoadStarted(window,state) {
 	var new_win;
 	new_win=new FakeWindow(new DOMBadge);
-	if(new_win.default_document) {
-		new_win.default_document();
-	} else {
-		throw new Error("Expected default_document on new Window");
-	}
 	if(!state.dom_impl_badge) {
 		throw new Error("Expected dom_impl_badge on state");
 	}
-	window.m_document=new_win.document;
 	if(state.is_top_level) {
 		window.m_top=window;
 	} else {

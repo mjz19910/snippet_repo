@@ -1,3 +1,4 @@
+import {FetchRequestState} from "mod.js";
 import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js"
 export class HTMLState {
 	/** @type {any[]} */
@@ -6,7 +7,7 @@ export class HTMLState {
 	request_state;
 	/**@type {DOMTagLoadHandlers|undefined} */
 	tag_handlers;
-	/** @param {{url:string;no_repl:boolean}|null} state */
+	/** @param {FetchRequestState|null} state */
 	constructor(state) {
 		this.request_state=state;
 	}

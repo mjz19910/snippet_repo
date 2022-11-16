@@ -1,4 +1,5 @@
 import process,{exit} from "process"
+import {DOMBadge} from "../browser_fake_dom/src/implementation/DOMBadge.js";
 import {fetch_url} from "../page_loader/fetch_url.js"
 import {FetchRequestState} from "../page_loader/mod.js"
 import {init_wget} from "./mod.js"
@@ -12,6 +13,8 @@ export function main() {
 	})
 	const req_url="https://www.youtube.com/watch?v=8h-fqAnIn0A"
 	let ok=init_wget({
+		url:req_url,
+		dom_impl_badge: new DOMBadge,
 		no_repl: false,
 	},req_url)
 	if(!ok) {

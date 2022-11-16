@@ -13,8 +13,6 @@ export class HTMLIFrameElement extends FakeHTMLElement {
 			this.#child_window={window: new FakeWindow(dom_impl_badge)};
 			var new_win=this.#child_window.window;
 			new_win.location=new FakeLocation;
-			if(!new_win.default_document) throw new Error("Invalid");
-			new_win.default_document();
 			var attr=element_to_tree_node.get(this).private.attributes;
 			console.log('iframe',attr.src);
 			if(!new_win.location.location_setup) throw new Error("Invalid");

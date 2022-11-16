@@ -430,8 +430,6 @@ export class FakeWindow extends FakeWindowType {
 	 * @type {any}
 	 */
 	setup_accessor;
-	/**@type {(()=>void) | undefined} */
-	default_document;
 	/**
 	 * @param {Badge|NullBadge|DOMBadge} badge
 	 */
@@ -439,12 +437,6 @@ export class FakeWindow extends FakeWindowType {
 		super();
 		this.m_top=this;
 		this.location=new FakeLocation;
-		this.default_document=void 0;
-		this.default_document=() => {
-			let badge=new FakeWindowBadge(this);
-			this.m_document=new FakeDocument(this,badge);
-			this.default_document=void 0;
-		};
 		this.constructed_badge=badge;
 	}
 }
