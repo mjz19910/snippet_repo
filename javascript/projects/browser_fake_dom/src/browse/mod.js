@@ -4,12 +4,12 @@ import {FakeWindow} from "../FakeWindow.js"
 import {FakeDocument} from "../FakeDocument.js"
 import {Badge} from "../std/Badge.js"
 
-const create_fake=Object.freeze({
+export const create_fake=Object.freeze({
 	window: window_init,
 	document: document_init,
 })
 
-const fake={
+export const fake={
 	/**@type {FakeWindow|null}*/
 	window: null,
 	/**@type {FakeDocument|null}*/
@@ -24,9 +24,4 @@ const fake={
 		}
 		badge.invalidate()
 	},
-}
-
-export {
-	create_fake,
-	fake,
 }
