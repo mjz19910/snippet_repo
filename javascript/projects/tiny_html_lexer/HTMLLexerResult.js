@@ -11,12 +11,12 @@ import {HTMLTagLex} from "../tiny_html_general_box/HTMLTagLex.js";
 
 export class HTMLLexerResult {
 	/**
-	 * @param {PageLoaderState} page_state
+	 * @param {PageLoaderState} state
 	 * @param {()=>ElementArray} get_element_array
 	 * @param {NodeInternalData|null} document_root
 	 */
-	constructor(page_state,get_element_array,document_root) {
-		this.page_state=page_state;
+	constructor(state,get_element_array,document_root) {
+		this.state=state;
 		this.elements=get_element_array();
 		this.document_root=document_root;
 	}

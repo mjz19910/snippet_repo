@@ -9,6 +9,8 @@ import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js";
 import {RequestModule} from "./RequestModule.js";
 
 export class PageLoaderState {
+	/**@arg {any[]} _arr */
+	use(..._arr) {}
 	/**@type {RequestModule | null} */
 	m_start_request_module=null;
 	/** @type {ClientRequest | null} */

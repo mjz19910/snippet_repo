@@ -9,7 +9,7 @@ class LexContext {
 	 * @param {REPLHtmlLexPlugin} plugin
 	 */
 	constructor(plugin) {
-		let state=plugin.parse_result.page_state;
+		let state=plugin.parse_result.state;
 		/** @type {(()=>Uint8Array)} */
 		this.get_page_content=() => {
 			if(!state.lexer_state) {
