@@ -3,13 +3,29 @@ import {ReplPluginReplSupport} from "../ReplPluginReplSupport.js";
 import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
 import {get_from_store} from "./get_from_store";
 
+class ObjMaybeKeys {
+	/**@type {"keys"|"no_keys"} */
+	type="no_keys";
+	/** @type {string[]} */
+	arr=[];
+	/** @param {BrowserPluginIndexType} value */
+	constructor(value) {
+		this.value=value;
+	}
+	/** @param {string} key */
+	update(key) {
+		this.type="keys";
+		this.arr.push(key);
+	}
+}
+
 export class REPLFakeBrowserPlugin {
 	/** @param {ReplPluginReplSupport} repl @param {ReplLocalState} state */
 	constructor(repl,state) {
 		this.repl=repl;
 		this.state=state;
 	}
-	/**@type {{type:"no-keys", arr:[],value:BrowserPluginIndexType}|{type:"keys", arr:string[], value:BrowserPluginIndexType}|null}*/
+	/**@type {ObjMaybeKeys|null}*/
 	obj=null;
 	enable() {
 		// TODO get fake passed in to us
@@ -23,20 +39,12 @@ export class REPLFakeBrowserPlugin {
 	 */
 	update_stored_keys(key) {
 		if(!this.obj) return;
-		this.obj={
-			type: 'keys',
-			arr: [...this.obj.arr,key],
-			value: this.obj.value,
-		};
+		this.obj.update(key);
 	}
 	/**
 	 * @param {BrowserPluginIndexType} object
 	 */
 	set_object_store(object) {
-		this.obj={
-			type: 'no-keys',
-			arr: [],
-			value: object
-		};
+		this.obj=new ObjMaybeKeys(object);
 	}
 }
