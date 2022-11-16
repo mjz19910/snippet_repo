@@ -26,11 +26,9 @@ export async function handle_failed_import(state,error,import_string) {
 		let imp_real=JSON.parse(imp_line).replace(/(?<=.+)\.js/g,".ts");
 		let mod_dir=dirname(imp_mod);
 		let target_re_compile=join(mod_dir,imp_real).replace("file:","");
-		const args=['-t','ESNext',target_re_compile];
-		console.log('tsc',args.join(" "));
 		let result=await new Promise(function(resolve,reject) {
 			resolve;
-			let cp=spawn("tsc",args,{});
+			let cp=spawn("tsc",['-t','ESNext',target_re_compile],{});
 			cp.stdout.on("data",e => {
 				process.stdout.write(e);
 			});
