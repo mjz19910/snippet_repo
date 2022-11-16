@@ -5,7 +5,7 @@ import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js"
 import {NodeInternalData} from "./NodeInternalData.js"
 import {resolve_http_url} from "./resolve_http_url.js"
 import {wait} from "./wait.js"
-import {FetchRequestState} from "./FetchRequestState.js"
+import {PageLoaderFetchRequestState} from "./PageLoaderFetchRequestState.js"
 
 /**@type {Buffer[]} */
 export let data=[]
@@ -14,7 +14,7 @@ export let dom_state={}
 
 export function use_imports() {
 	return [
-		FetchRequestState,
+		PageLoaderFetchRequestState,
 		add_element,
 		do_exec,
 		DOMTagDescription,

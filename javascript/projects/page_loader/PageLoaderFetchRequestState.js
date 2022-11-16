@@ -4,7 +4,7 @@ import {FetchStateFlags} from "./FetchStateFlags.js"
 import {fetch_url} from "./fetch_url.js"
 import {data} from "./mod.js"
 import {on_page_data_loaded} from "./on_page_data_loaded.js"
-export class FetchRequestState extends FetchStateFlags {
+export class PageLoaderFetchRequestState extends FetchStateFlags {
 	async on_redirect_status_code() {
 		if(!this.m_incoming_message) return
 		let msg_headers=this.m_incoming_message.headers
@@ -38,10 +38,9 @@ export class FetchRequestState extends FetchStateFlags {
 			if(page_content.length<300) {
 				console.log("all content\n%s",page_content)
 			}
-			let page_load_state={
-				url: this.url,
-				no_repl: this.no_repl
-			}
+			/**@type {PageLoaderFetchRequestState} */
+			let page_load_state=new PageLoaderFetchRequestState(this.url);
+			page_load_state.no_repl=this.no_repl;
 			await on_page_data_loaded(fake.window,fake.document,page_load_state,null,page_content)
 			console.log('in_message_result_tag loaded',this.url)
 		}

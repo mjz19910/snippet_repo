@@ -4,7 +4,7 @@
 // FakeDocument <-> FakeWindow
 // Can't import from "./mod.js" as these depend on each other
 import {FakeNode} from "./FakeNode.js";
-import {HTMLState} from "../../page_loader/HTMLState.js";
+import {PageLoaderHTMLState} from "../../page_loader/PageLoaderHTMLState.js";
 import {document_element_factory} from "./api/const.js";
 import {FakeElement} from "./FakeElement.js";
 import {Badge} from "./std/Badge.js";
@@ -13,6 +13,7 @@ import {html_parser_callback} from "../../tiny_html_parser/html_parser_callback.
 import {DocumentImpl} from "./DocumentImpl.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {any} from "./any.1";
+import {TinyHTMLParserState} from "../../tiny_html_parser/TinyHTMLParserState.js";
 
 /**@implements {Document} */
 export class FakeDocument extends FakeNode {
@@ -582,7 +583,7 @@ export class FakeDocument extends FakeNode {
 		this.html_parser_callback=f;
 	}
 	/**
-	 * @param {HTMLState} state
+	 * @param {PageLoaderHTMLState} state
 	 * @param {Uint8Array} html_bytes
 	 * @returns {Promise<{}|null>}
 	 */

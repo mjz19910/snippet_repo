@@ -1,6 +1,6 @@
 import process from "process";
 import {DOMBadge} from "../browser_fake_dom/src/implementation/DOMBadge.js";
-import {FetchRequestState} from "../page_loader/FetchRequestState.js";
+import {PageLoaderFetchRequestState} from "../page_loader/PageLoaderFetchRequestState.js";
 import {fetch_url} from "../page_loader/fetch_url.js"
 import {init_wget} from "./mod.js"
 export function main() {
@@ -21,7 +21,7 @@ export function main() {
 		console.log('init failed')
 		process.exit(1);
 	}
-	let state=new FetchRequestState(req_url)
+	let state=new PageLoaderFetchRequestState(req_url)
 	fetch_url(state)
 }
 main()

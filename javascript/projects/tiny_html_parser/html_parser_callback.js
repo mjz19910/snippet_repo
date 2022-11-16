@@ -1,11 +1,11 @@
 import {mkdir,writeFile} from "fs/promises"
+import {PageLoaderHTMLState} from "../page_loader/PageLoaderHTMLState.js";
 import {g_html_lexer} from "./g_html_lexer.js";
 import {dirname} from "path";
-import {HTMLState} from "./HTMLState.js";
 /**
  * @template T
  * @arg {T} this_T
- * @param {HTMLState} html_state
+ * @param {PageLoaderHTMLState} html_state
  * @param {Uint8Array} html
  */
 export async function html_parser_callback(this_T, html_state,html) {

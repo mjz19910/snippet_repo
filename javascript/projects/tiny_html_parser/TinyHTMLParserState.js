@@ -1,4 +1,4 @@
-export class HTMLState {
+export class TinyHTMLParserState {
 	/** @type {any[]} */
 	tasks=[]
 	document_impl_root=null
