@@ -4,6 +4,7 @@ import {throw_todo} from "./throw_todo";
 import {HTMLTokenizerH} from "./HtmlLexerData";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
+import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
 
 const TOKENIZER_TRACE_DEBUG=false;
 
@@ -11,7 +12,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
     dont_consume_next_input_character() {
         this.restore_to(this.m_prev_utf8_iterator);
     }
-    /** @param {any} new_iterator */
+    /** @param {Utf8CodePointIterator} new_iterator */
     restore_to(new_iterator) {
         let iterator=this.m_prev_utf8_iterator;
         if(!iterator) throw new Error("no iterator");
