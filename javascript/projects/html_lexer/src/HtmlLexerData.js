@@ -24,7 +24,7 @@ export class HTMLTokenizerH {
 	/** @type {CppArray<SourcePosition>} */
 	m_source_positions=new CppArray();
 	/** @type {Utf8CodePointIterator} */
-	m_prev_utf8_iterator=new Utf8CodePointIterator(0);
+	m_prev_utf8_iterator=new Utf8CodePointIterator([],0);
 	m_return_state=State.InvalidState;
 	m_current_state=this.states.Data;
 	empty_vm_context=createContext(Object.create(null));

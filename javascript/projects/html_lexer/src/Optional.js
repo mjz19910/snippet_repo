@@ -1,3 +1,9 @@
+export class NullOptional {
+    /**@template T @param {T} dv */
+    value_or(dv) {
+        return dv;
+    }
+}
 /**@template T */
 export class Optional {
     /**@type {T|null} */

@@ -9,7 +9,7 @@ export class Utf8CodePointIterator {
 		return this.pos==other_iter.pos;
 	}
 	deref() {
-		return this.target[this.pos];
+		return this.target[this.pos].charCodeAt(0);
 	}
 	/** @param {{ pos: number; }} new_iterator */
 	sub(new_iterator) {

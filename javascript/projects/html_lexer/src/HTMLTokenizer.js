@@ -5,7 +5,7 @@ import {HTMLTokenizerH} from "./HtmlLexerData";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
-import {Optional} from "./Optional.js";
+import {NullOptional, Optional} from "./Optional.js";
 import {Utf8View} from "./Utf8View.js";
 
 const TOKENIZER_TRACE_DEBUG=false;
@@ -16,18 +16,18 @@ export class HTMLTokenizer extends HTMLTokenizerH {
         if(this.m_utf8_iterator.eq(this.m_utf8_view.end()))
             return new Optional(null);
 
-        /**@type {string} */
+        /**@type {number} */
         let code_point;
         // https://html.spec.whatwg.org/multipage/parsing.html#preprocessing-the-input-stream:tokenization
         // https://infra.spec.whatwg.org/#normalize-newlines
-        if(this.peek_code_point(0).value_or(0)=='\r'&&this.peek_code_point(1).value_or(0)=='\n') {
+        if(this.peek_code_point(0).value_or(0)=='\r'.charCodeAt(0)&&this.peek_code_point(1).value_or(0)=='\n'.charCodeAt(0)) {
             // replace every U+000D CR U+000A LF code point pair with a single U+000A LF code point,
             this.skip(2);
-            code_point='\n';
-        } else if(this.peek_code_point(0).value_or(0)=='\r') {
+            code_point='\n'.charCodeAt(0);
+        } else if(this.peek_code_point(0).value_or(0)=='\r'.charCodeAt(0)) {
             // replace every remaining U+000D CR code point with a U+000A LF code point.
             this.skip(1);
-            code_point='\n';
+            code_point='\n'.charCodeAt(0);
         } else {
             this.skip(1);
             code_point=this.m_prev_utf8_iterator.deref();
@@ -36,16 +36,31 @@ export class HTMLTokenizer extends HTMLTokenizerH {
         dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer) Next code_point: {}",code_point);
         return new Optional(code_point);
     }
-    skip(arg0) {
-        throw new Error("Method not implemented.");
+    /** @param {number} count */
+    skip(count) {
+        if(!this.m_source_positions.is_empty())
+            this.m_source_positions.append(this.m_source_positions.last());
+        for(let i=0;i<count;++i) {
+            this.m_prev_utf8_iterator=this.m_utf8_iterator;
+            let code_point=this.m_utf8_iterator.deref();
+            if(!this.m_source_positions.is_empty()) {
+                if(code_point=='\n'.charCodeAt(0)) {
+                    this.m_source_positions.last().column=0;
+                    this.m_source_positions.last().line++;
+                } else {
+                    this.m_source_positions.last().column++;
+                }
+            }
+            this.m_utf8_iterator.inc();
+        }
     }
     /** @param {number} offset */
-     peek_code_point(offset) {
+    peek_code_point(offset) {
         let it=this.m_utf8_iterator;
         for(let i=0;i<offset&&it!=this.m_utf8_view.end();++i)
             it.inc();
         if(it==this.m_utf8_view.end())
-            return {};
+            return new NullOptional();
         return new Optional(it.deref());
     }
     dont_consume_next_input_character() {
