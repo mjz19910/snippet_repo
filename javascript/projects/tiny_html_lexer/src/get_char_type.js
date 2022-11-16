@@ -1,4 +1,4 @@
-import {is_ascii_alpha} from "./is_ascii_alpha"
+import {is_ascii_alpha} from "../is_ascii_alpha"
 
 /**
  * @param {string | null} input

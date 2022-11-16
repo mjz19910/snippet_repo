@@ -25,7 +25,7 @@ export class HTMLLexerState {
 		}
 		this.m_utf8_iterator=new_iterator;
 	}
-	EmitEof() {
+	emit_eof() {
 		if(this.m_has_emitted_eof)
 			return {};
 		this.m_has_emitted_eof=true;
@@ -126,7 +126,7 @@ export class HTMLLexerState {
 		return {};
 	}
 	/**@arg {State} next_state */
-	RECONSUME_IN(next_state) {
+	reconsume_in(next_state) {
 		this.m_current_state=next_state;
 	}
 }

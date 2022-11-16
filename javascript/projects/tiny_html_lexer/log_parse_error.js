@@ -1,4 +1,4 @@
-import {TOKENIZER_TRACE_DEBUG} from "./onHtmlTagOpen"
+import {TOKENIZER_TRACE_DEBUG} from "./src/onHtmlTagOpen"
 import {dbgln_if} from "./src/dbgln_if"
 import {SourceLocation} from "./SourceLocation";
 
