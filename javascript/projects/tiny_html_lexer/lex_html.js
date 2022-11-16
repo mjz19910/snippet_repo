@@ -7,19 +7,27 @@ import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {NodeInternalData} from "../page_loader/NodeInternalData.js";
 import {State} from "./State.js";
 import {state_to_string} from "./state_to_string";
+
 export const abc_chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 export const num_chars="0123456789";
+
 /**@type {number[]}*/
 export const ok_char_int8s=[];
+
 export const h_enc={
 	raquo: [187],
 	nbsp: [160],
 	copy: [169],
 	amp: [38],
 };
-/**@arg {any} v @returns {any}*/
-export function any(v) {
-	return v;
+
+class HTMLLexerResult {
+	constructor(lexer,elements,document_root) {
+		this.lex_arr=lexer.lex_arr;
+		this.elements=elements;
+		this.doc_root=document_root;
+	}
 }
 /**
  * @param {Uint8Array} html
@@ -61,6 +69,7 @@ export function lex_html(html) {
 				throw new Error("Not implemented yet");
 		}
 	}
+	return new HTMLLexerResult(lexer,elements,document_root);
 	return {
 		lex_arr: lexer.lex_arr,
 		elements,

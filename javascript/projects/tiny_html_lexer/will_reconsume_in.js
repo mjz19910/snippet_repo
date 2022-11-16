@@ -1,5 +1,5 @@
 import {TOKENIZER_TRACE_DEBUG} from "./onHtmlTagOpen"
-import {dbgln_if} from "./dbgln_if"
+import {dbgln_if} from "./src/dbgln_if"
 import {state_name} from "./state_name"
 import {State} from "./State.js"
 

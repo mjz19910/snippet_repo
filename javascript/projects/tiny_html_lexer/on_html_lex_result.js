@@ -1,6 +1,6 @@
 import {g_html_lex_plugin} from "g_html_lex_plugin.js";
 import {lex_html} from "./lex_html.js";
-import {REPLHtmlLexPlugin} from "./plugin/REPLHtmlLexPlugin.js";
+import {REPLHtmlLexPlugin} from "./src/plugin/REPLHtmlLexPlugin.js";
 import {repl_plugin_get_global_repl_activator} from "../repl_plugin_manager/repl_plugin_get_global_repl_activator.js";
 
 /**

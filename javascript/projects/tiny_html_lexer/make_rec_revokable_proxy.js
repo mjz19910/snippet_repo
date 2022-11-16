@@ -1,4 +1,4 @@
-import {any} from "./lex_html.js"
+import {any} from "./any";
 /**
  * @param {{proxy:ObjectConstructor;revoke:()=>void}[]} proxy_list
  * @param {ObjectConstructor} value
