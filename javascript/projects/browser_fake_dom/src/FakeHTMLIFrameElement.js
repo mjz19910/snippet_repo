@@ -2,13 +2,13 @@ import {FakeHTMLElement} from "./FakeHTMLElement.js";
 import {FakeLocation} from "./FakeLocation.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {element_to_tree_node} from "./api/const.js";
-import {DOMBadge} from "./implementation/DOMBadge.js";
+import {DomBadge} from "./implementation/DomBadge.js";
 
 export class HTMLIFrameElement extends FakeHTMLElement {
 	/**@type {{window:FakeWindow}|null} */
 	#child_window=null;
 	get contentWindow() {
-		let dom_impl_badge=new DOMBadge;
+		let dom_impl_badge=new DomBadge;
 		if(typeof this.#child_window=='undefined') {
 			this.#child_window={window: new FakeWindow(dom_impl_badge)};
 			var new_win=this.#child_window.window;

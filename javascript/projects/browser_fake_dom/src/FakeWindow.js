@@ -8,12 +8,12 @@ import {FakeDocument} from "./FakeDocument.js";
 import {FakeLocation} from "./FakeLocation.js";
 import {FakeStorage} from "./FakeStorage.js";
 import {NullBadge} from "./NullBadge.js";
-import {DOMBadge} from "./implementation/DOMBadge.js";
+import {DomBadge} from "./implementation/DomBadge.js";
 /**@implements {Window} */
 export class FakeWindow extends FakeWindowType {
 	/**@type {FakeDocument|null} */
 	#my_document=null;
-	/**@arg {DOMBadge} _ */
+	/**@arg {DomBadge} _ */
 	has_document(_) {
 		return this.#my_document !== null;
 	}
@@ -36,7 +36,7 @@ export class FakeWindow extends FakeWindowType {
 	/**@type {FakeDocument} */
 	get document() {
 		if(!this.#my_document){
-			this.#my_document=new FakeDocument(this, new DOMBadge);
+			this.#my_document=new FakeDocument(this, new DomBadge);
 		}
 		return this.#my_document;
 	}
@@ -431,7 +431,7 @@ export class FakeWindow extends FakeWindowType {
 	 */
 	setup_accessor;
 	/**
-	 * @param {Badge|NullBadge|DOMBadge} badge
+	 * @param {Badge|NullBadge|DomBadge} badge
 	 */
 	constructor(badge) {
 		super();
@@ -445,6 +445,6 @@ export function use_types() {
 	return [
 		Badge,
 		NullBadge,
-		DOMBadge,
+		DomBadge,
 	];
 }

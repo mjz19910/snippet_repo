@@ -1,6 +1,6 @@
 import {create_fake, fake} from "../browser_fake_dom/src/browse/mod.js";
 import {handle_onPageLoadStarted} from "../browser_fake_dom/src/event/handle_onPageLoadStarted.js";
-import {PageLoaderFetchRequestState} from "../page_loader/PageLoaderFetchRequestState.js";
+import {PageLoaderState} from "../page_loader/PageLoaderState.js";
 import {on_page_data_loaded} from "../page_loader/on_page_data_loaded.js";
 /**
  * @arg {string} req_url
@@ -28,7 +28,7 @@ export function wget_on_static_page_load(state,page_content,page_url) {
 		url: page_url,
 		no_repl: state.no_repl,
 	};
-	let req_state=new PageLoaderFetchRequestState(page_url, {});
+	let req_state=new PageLoaderState(page_url, {});
 	req_state.no_repl=state.no_repl;
 	on_page_data_loaded(fake.window,fake.document,req_state,null,page_content);
 	let repl={

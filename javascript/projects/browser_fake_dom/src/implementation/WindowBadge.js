@@ -1,6 +1,6 @@
 import {FakeWindow} from "../FakeWindow.js";
 import {Badge} from "../std/Badge.js"
-import {DOMBadge} from "./DOMBadge.js";
+import {DomBadge} from "./DomBadge.js";
 export class FakeWindowBadge extends Badge {
 	m_has_error=false
 	/**@type {Error|null} */
@@ -10,7 +10,7 @@ export class FakeWindowBadge extends Badge {
 	 */
 	constructor(window) {
 		super()
-		if(window.has_document(new DOMBadge)) {
+		if(window.has_document(new DomBadge)) {
 			this.m_has_error=true;
 			this.m_failure_reason=new Error("Window already has a document attached");
 		}
@@ -18,9 +18,9 @@ export class FakeWindowBadge extends Badge {
 	is_valid() {
 		return !this.m_has_error
 	}
-	create_validation_error() {
+	create_validation_err() {
 		if(this.m_failure_reason===null) {
-			return super.create_validation_error()
+			return super.create_validation_err()
 		} else {
 			return this.m_failure_reason
 		}

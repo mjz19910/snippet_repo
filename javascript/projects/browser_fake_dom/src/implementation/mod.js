@@ -1,7 +1,7 @@
 import {FakeWindowBadge} from "./WindowBadge.js"
-import {DOMBadge} from "./DOMBadge.js"
+import {DomBadge} from "./DomBadge.js"
 
 export {
-	DOMBadge,
+	DomBadge,
 	FakeWindowBadge
 }

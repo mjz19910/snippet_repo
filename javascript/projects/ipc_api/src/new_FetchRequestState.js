@@ -1,7 +1,7 @@
-import {PageLoaderFetchRequestState} from "../../page_loader/PageLoaderFetchRequestState.js"
+import {PageLoaderState} from "../../page_loader/PageLoaderState.js"
 /**
  * @param {string} url
  */
 export async function new_FetchRequestState(url) {
-	return new PageLoaderFetchRequestState(url)
+	return new PageLoaderState(url)
 }

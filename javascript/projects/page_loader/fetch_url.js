@@ -25,7 +25,7 @@ export async function fetch_url(state,silent=false) {
 		}
 		console.log('fetch_url_tag get',state.url);
 	}
-	//const dom_impl_badge = new DOMBadge
+	//const dom_impl_badge = new DomBadge
 	//let new_url=fetch_state.url
 	/* fake.with_badge(dom_impl_badge, (fake) => {
 		if(!fake.document)throw new Error("Missing fake document")

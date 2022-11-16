@@ -2,7 +2,7 @@ import {PageLoaderState} from "../page_loader/PageLoaderState.js";
 import {HTMLLexerResult} from "../tiny_html_lexer/HTMLLexerResult.js";
 import {HTMLLexerState} from "../tiny_html_lexer/HTMLLexerState.js";
 import {lex_html} from "../tiny_html_lexer/lex_html.js";
-import {on_html_lex_result} from "../tiny_html_lexer/on_html_lex_result.js";
+import {on_html_lex_result} from "../tiny_html_lexer/src/on_html_lex_result.js/index.js";
 
 export class HTMLLexerAPI {
 	/** @arg {PageLoaderState} state @arg {Uint8Array} input*/

@@ -1,6 +1,6 @@
 import {FakeLocation} from "../FakeLocation.js";
 import {FakeWindow} from "../FakeWindow.js";
-import {DOMBadge} from "../implementation/DOMBadge.js";
+import {DomBadge} from "../implementation/DomBadge.js";
 import {handle_addEventListener} from "./handle_addEventListener.js";
 import {handle_dispatchEvent} from "./handle_dispatchEvent.js";
 import {handle_removeEventListener} from "./handle_removeEventListener.js";
@@ -12,7 +12,7 @@ import {handle_requestAnimationFrame} from "./handle_requestAnimationFrame.js";
 */
 export function handle_onPageLoadStarted(window,state) {
 	var new_win;
-	new_win=new FakeWindow(new DOMBadge);
+	new_win=new FakeWindow(new DomBadge);
 	if(!state.dom_impl_badge) {
 		throw new Error("Expected dom_impl_badge on state");
 	}

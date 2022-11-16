@@ -1,5 +1,5 @@
 import {create_fake,fake} from "./browse/mod.js";
-import {DocumentImpl} from "./DocumentImpl.js";
+import {FakeDOMImplementation} from "./FakeDOMImplementation.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeDOMStringList} from "./FakeDOMStringList.js";
 import {FakeElement} from "./FakeElement.js";
@@ -13,7 +13,7 @@ import {FakeNode} from "./FakeNode.js";
 import {FakeStorage} from "./FakeStorage.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {FakeWindowNoImpl} from "./FakeWindowNoImpl.js";
-import {DOMBadge} from "./implementation/mod.js";
+import {DomBadge} from "./implementation/mod.js";
 import {NullBadge} from "./NullBadge.js";
 
 export function use_imports() {
@@ -24,8 +24,8 @@ export function use_imports() {
 		fake
 	]);
 	groups.push([
-		DocumentImpl,
-		DOMBadge,
+		FakeDOMImplementation,
+		DomBadge,
 		FakeDOMStringList,
 		FakeDocument,
 		FakeElement,
