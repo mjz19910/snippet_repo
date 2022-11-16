@@ -247,7 +247,7 @@ export class HTMLTokenizerIncH {
     static State=class State {
         /** @readonly */ InvalidState=__COUNTER__;
         ENUMERATE_TOKENIZER_STATES
-    }
+    };
 }
 #undef __ENUMERATE_TOKENIZER_STATE
 
