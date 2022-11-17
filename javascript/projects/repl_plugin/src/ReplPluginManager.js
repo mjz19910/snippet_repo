@@ -2,9 +2,9 @@ import {spawnSync} from "child_process";
 import process from "process";
 import vm from 'vm';
 import {PageLoaderState} from "../../page_loader/index.js";
-import {bind_plugins} from "./plugins/bind_plugins";
-import {REPLServerRuntime} from "./REPLServerRuntime.js/index.js";
-import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js/index.js";
+import {bind_plugins} from "./plugins/bind_plugins.js";
+import {REPLServerRuntime} from "./REPLServerRuntime.js";
+import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
 
 const delete_all_javascript_api=false;
 

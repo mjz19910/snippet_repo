@@ -1,6 +1,6 @@
 import {DOMTagLoadHandlers} from "./DOMTagLoadHandlers.js";
-import {FakeDocument} from "../browser_fake_dom/src/FakeDocument.js";
-import {FakeWindow} from "../browser_fake_dom/src/FakeWindow.js";
+import {FakeDocument} from "../../browser_fake_dom/index.js";
+import {FakeWindow} from "../../browser_fake_dom/index.js";
 import {PageLoaderState} from "./PageLoaderState.js";
 /**
  * @param {FakeDocument} document

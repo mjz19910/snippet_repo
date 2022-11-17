@@ -4,14 +4,13 @@
 // 1 "HTMLTokenizerDefine.cppjs"
 // 241 "HTMLTokenizerDefine.cppjs"
 // 1 "HTMLTokenizer.js" 1
-import {will_reconsume_in} from "./will_reconsume_in.js";
 import {HTMLToken} from "./HTMLToken.js";
 import {throw_todo} from "./throw_todo";
 import {HTMLTokenizerH} from "./HtmlLexerData";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
-import {NullOptional, Optional} from "./Optional.js";
+import {NullOptional,Optional} from "./Optional.js";
 import {Utf8View} from "./Utf8View.js";
 
 const TOKENIZER_TRACE_DEBUG=false;
@@ -111,7 +110,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
      */
     emit_character_and_reconsume_in(code_point,new_state) {
         this.m_queued_tokens.push(HTMLToken.make_character(code_point));
-        will_reconsume_in(this,new_state);
+        this.will_reconsume_in(new_state);
         this.m_state=new_state;
     }
     /**@type {Extract<typeof State[keyof typeof State], number>}*/

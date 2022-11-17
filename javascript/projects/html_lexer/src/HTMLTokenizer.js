@@ -1,12 +1,12 @@
-import {will_reconsume_in} from "./will_reconsume_in.js";
 import {HTMLToken} from "./HTMLToken.js";
 import {throw_todo} from "./throw_todo";
 import {HTMLTokenizerH} from "./HtmlLexerData";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
-import {NullOptional, Optional} from "./Optional.js";
+import {NullOptional,Optional} from "./Optional.js";
 import {Utf8View} from "./Utf8View.js";
+import {state_name} from "./state_name.js";
 
 const TOKENIZER_TRACE_DEBUG=false;
 
@@ -66,7 +66,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
     /**
      * @param {number} n
      */
-     nth_last_position(n) {
+    nth_last_position(n) {
         if(n+1>this.m_source_positions.size()) {
             dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,this.m_source_positions.size());
             return new HTMLToken.Position(0,0);
@@ -95,29 +95,31 @@ export class HTMLTokenizer extends HTMLTokenizerH {
         this.m_utf8_iterator=new_iterator;
     }
     emit_eof() {
-        if(this.m_has_emitted_eof)
-            return {};
+        if(this.m_has_emitted_eof) return new NullOptional();
         this.m_has_emitted_eof=true;
         this.create_new_token(HTMLToken.Type.EndOfFile);
         this.will_emit(this.m_current_token);
         this.m_queued_tokens.push(this.m_current_token);
-        return this.m_queued_tokens.shift();
+        let last_token=this.m_queued_tokens.shift();
+        if(last_token===void 0) {
+            return new NullOptional;
+        }
+        return new Optional(this.m_queued_tokens.shift());
     }
-    /**
-     * @param {HTMLToken | null} m_current_token
-     */
+    /** @param {HTMLToken | null} m_current_token */
     will_emit(m_current_token) {
         m_current_token;
         throw new Error("Method not implemented.");
     }
-    /**
-     * @param {string} code_point
-     * @param {State} new_state
-     */
+    /** @param {string} code_point @param {State} new_state */
     emit_character_and_reconsume_in(code_point,new_state) {
         this.m_queued_tokens.push(HTMLToken.make_character(code_point));
-        will_reconsume_in(this,new_state);
+        this.will_reconsume_in(new_state);
         this.m_state=new_state;
+    }
+    /** @param {State} new_state */
+    will_reconsume_in(new_state) {
+        dbgln_if(TOKENIZER_TRACE_DEBUG,"[{}] Reconsume in {}",state_name(this.m_state),state_name(new_state));
     }
     /**@type {Extract<typeof State[keyof typeof State], number>}*/
     m_state=0;
