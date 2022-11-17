@@ -23,7 +23,7 @@
 		],
 	},
 	"include": [
-		"mod_index.js",
+		"index.js",
 		"src/**/*",
 	],
 	"exclude": [

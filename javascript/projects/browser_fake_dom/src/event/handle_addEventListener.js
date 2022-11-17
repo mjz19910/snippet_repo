@@ -1,16 +1,16 @@
-/**
- * @param {{ [x: string]: { func: any; op: any; }[]; }} wind_event_lis
- */
-export function handle_addEventListener(wind_event_lis) {
+import {EventStore} from "./EventStore.js";
+
+/** @param {EventStore} event_store */
+export function handle_addEventListener(event_store) {
 	return function(/** @type {string | number} */ name, /** @type {any} */ func, /** @type {any} */ options) {
-		console.log("addEventListener")
-		console.log('  - ',name)
-		if(!wind_event_lis[name]) {
-			wind_event_lis[name]=[]
+		console.log("addEventListener");
+		console.log('  - ',name);
+		if(!event_store[name]) {
+			event_store[name]=[];
 		}
-		wind_event_lis[name].push({
+		event_store[name].push({
 			func: func,
 			op: options
-		})
-	}
+		});
+	};
 }

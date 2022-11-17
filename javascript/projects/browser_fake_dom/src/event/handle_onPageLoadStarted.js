@@ -2,15 +2,13 @@ import {PageLoaderState} from "../../../page_loader/index.js";
 import {FakeLocation} from "../FakeLocation.js";
 import {FakeWindow} from "../FakeWindow.js";
 import {DomBadge} from "../implementation/DomBadge.js";
+import {EventStore} from "./EventStore.js";
 import {handle_addEventListener} from "./handle_addEventListener.js";
 import {handle_dispatchEvent} from "./handle_dispatchEvent.js";
 import {handle_removeEventListener} from "./handle_removeEventListener.js";
 import {handle_requestAnimationFrame} from "./handle_requestAnimationFrame.js";
 
-/**
- * @argument {FakeWindow} window
- * @argument {PageLoaderState} base_state
-*/
+/** @argument {FakeWindow} window @argument {PageLoaderState} base_state */
 export function handle_onPageLoadStarted(window,base_state) {
 	var new_win;
 	new_win=new FakeWindow(new DomBadge);
@@ -45,8 +43,7 @@ export function handle_onPageLoadStarted(window,base_state) {
 	}
 	new_loc.location_setup(state.dom_impl_badge,state.href);
 	new_win.location=new_loc;
-	/**@type {{ [x: string]: { func: any; op: any; }[]; }} */
-	var wind_event_lis={};
+	var wind_event_lis=new EventStore;
 	window.addEventListener=handle_addEventListener(wind_event_lis);
 	window.removeEventListener=handle_removeEventListener(wind_event_lis);
 	window.requestAnimationFrame=handle_requestAnimationFrame(setTimeout);

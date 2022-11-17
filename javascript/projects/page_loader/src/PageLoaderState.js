@@ -1,6 +1,6 @@
 import {ClientRequest,IncomingMessage} from "http";
 import {fake,PageLoadStateType} from "../../browser_fake_dom/index.js";
-import {HTMLTokenizer} from "../../html_lexer/mod_index.js";
+import {HTMLTokenizer} from "../../html_lexer/index.js";
 import {fetch_url} from "./fetch_url.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
 import {on_page_data_loaded} from "./on_page_data_loaded.js";

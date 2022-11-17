@@ -4,7 +4,7 @@
 // FakeDocument <-> FakeWindow
 // Can't import from "./mod.js" as these depend on each other
 import {PageLoaderState} from "../../page_loader/index.js";
-import {html_parser_callback} from "../../html_lexer/src/html_parser_callback.js";
+import {html_parser_callback} from "../../html_lexer/index.js";
 import {any} from "./any";
 import {document_element_factory} from "./api/const.js";
 import {FakeDOMImplementation} from "./FakeDOMImplementation.js";
