@@ -1,5 +1,5 @@
 import {spawn} from "child_process";
-import {dirname,join} from "path";
+import * as path from "path";
 import {import_ipc_plugin} from "./import_ipc_plugin.js";
 import {IpcLoader} from "./ipc_loader_state.js";
 
@@ -26,8 +26,8 @@ export async function handle_failed_import(state,error,import_string) {
 		if(!imp_line) throw new Error("Error does not come from failed import");
 		if(!imp_mod) throw new Error("Module line not found");
 		let imp_real=JSON.parse(imp_line).replace(/(?<=.+)\.js/g,".ts");
-		let mod_dir=dirname(imp_mod);
-		let target_re_compile=join(mod_dir,imp_real).replace("file:","");
+		let mod_dir=path.dirname(imp_mod);
+		let target_re_compile=path.join(mod_dir,imp_real).replace("file:","");
 		let result=await new Promise(function(resolve,reject) {
 			let cp=spawn("tsc",['-t','ESNext',target_re_compile],{});
 			cp.stdout.on("data",e => {
