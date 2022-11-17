@@ -3,7 +3,7 @@ import {CreateObjURLCache} from "../CreateObjURLCache";
 import {IterExtensions} from "../IterExtensions";
 import {to_tuple_arr} from "../to_tuple_arr";
 import {CompressRepeated} from "../CompressRepeated";
-import {Repeat} from "../repeat/Repeat.js/index.js";
+import {Repeat} from "../repeat/Repeat.js";
 import {range_matches} from "../range_matches.js";
 import {CompressionStatsCalculator} from "../compress/CompressionStatsCalculator.js";
 import {HexRandomDataGenerator} from "../HexRandomDataGenerator.js";

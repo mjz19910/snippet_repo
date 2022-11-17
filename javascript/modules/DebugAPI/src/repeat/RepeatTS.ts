@@ -1,6 +1,7 @@
 import {ST} from "./ST.js";
 import {TU} from "./TU.js";
 import {WMap} from "./WMap";
+import {WMapTS} from "./WMapTS.js";
 
 type G<T>=RepeatTS<T>;
 
@@ -39,16 +40,16 @@ export class RepeatTS<T> {
 	static N: RepeatTS<null>=new RepeatTS(null,0);
 	static map: Map<string,Map<number,RepeatTS<string>>>=new Map;
 	static map_num: Map<number,Map<number,RepeatTS<number>>>=new Map;
-	map_instance: Map<symbol,<T>() => WMap<T>>=new Map;
+	map_instance: Map<symbol,<T>() => WMapTS<T>>=new Map;
 	get_map_T<U extends ST,V extends InstanceType<U>>(constructor_key: U,_: V): Map<number,Map<number,RepeatTS<V>>> {
 		let res=RepeatTS.N.map_instance.get(constructor_key.type);
 		if(!res) {
 			/**@type {Map<number, Map<number, RepeatTS<V>>>} */
 			let map: Map<number,Map<number,RepeatTS<V>>>=new Map;
-			RepeatTS.N.map_instance.set(constructor_key.type,() => new WMap(map));
+			RepeatTS.N.map_instance.set(constructor_key.type,() => new WMapTS(map));
 			return map;
 		}
-		let map: WMap<V>=res();
+		let map: WMapTS<V>=res();
 		return map.value;
 	}
 	has_map_T<U extends ST,V extends InstanceType<U>>(constructor_key: U,rep_null: RepeatTS<null>,key: number): boolean {
@@ -56,10 +57,10 @@ export class RepeatTS<T> {
 		if(!res) {
 			/**@type {Map<number, Map<number, RepeatTS<V>>>} */
 			let map: Map<number,Map<number,RepeatTS<V>>>=new Map;
-			rep_null.map_instance.set(constructor_key.type,() => new WMap(map));
+			rep_null.map_instance.set(constructor_key.type,() => new WMapTS(map));
 			return false;
 		}
-		let map: WMap<V>=res();
+		let map: WMapTS<V>=res();
 		return map.value.has(key);
 	}
 	static get(value: string,times: number): RepeatTS<string> {
