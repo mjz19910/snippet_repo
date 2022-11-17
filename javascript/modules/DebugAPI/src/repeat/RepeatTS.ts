@@ -5,12 +5,24 @@ import {WMapTS} from "./WMapTS.js";
 
 type D=string;
 type E=number;
-type F<K,V>=Map<K,V>;
-const F=Map;
-type S<T>=RepeatTS<T>;
+class F<K,V> extends Map<K,V> {
+	__key:"test"="test";
+	static from<K,V>(start: Map<K,V>) {
+		let res_ent:[K,V][]=[];
+		for (let i of start.entries()) {
+			if(i[1] instanceof F) {
+				res_ent.push([i[0], i[1]]);
+			} else if(i[1] instanceof Map) {
+				let [a,b]=i;
+				res_ent.push([a,b]);
+			}
+		}
+		return new F<K,V>(res_ent);
+	}
+}
 
-export class RepeatTS<T> {
-	static from_TU_entry(item: B<D,E>,times: number): C<D,E> {
+class S<T> {
+	static from_TU_entry(item: B<D,E>,times: E): C<D,E> {
 		switch(item[0]) {
 			case 'T': return ['T',S.get(item[1],times)];
 			case 'U': return ['U',S.get_num(item[1],times)];
@@ -25,10 +37,10 @@ export class RepeatTS<T> {
 		map.set(value,x);
 		return x;
 	}
-	static get_with<T>(map: F<T,F<number,S<T>>>,value: T,times: number) {
+	static get_with<T>(map: F<T,F<E,S<T>>>,value: T,times: E) {
 		let tt=map.get(value);
-		if(tt === void 0)return null;
-		let tm_map=this.map_1<typeof map,T,number,S<T>>(map,value);
+		if(tt===void 0) return null;
+		let tm_map=this.map_1<typeof map,T,E,S<T>>(map,value);
 		if(!tm_map) throw 1;
 		let rep=tm_map.get(times);
 		if(rep) {
@@ -39,35 +51,40 @@ export class RepeatTS<T> {
 			return rep;
 		}
 	}
-	static N: S<null>=new RepeatTS(null,0);
-	static map: Map<string,Map<number,RepeatTS<string>>>=new Map;
-	static map_num: Map<number,Map<number,RepeatTS<number>>>=new Map;
-	map_instance: Map<symbol,<T>() => WMapTS<T,any>>=new Map;
-	get_map_T<U extends A, V extends InstanceType<U>, >(constructor_key: U,_: V): Map<V,Map<number,RepeatTS<V>>> {
-		let res=RepeatTS.N.map_instance.get(constructor_key.type);
+	static N: S<null>=new S(null,0);
+	static map: F<string,F<E,S<string>>>=new F;
+	static map_num: F<E,F<E,S<E>>>=new F;
+	map_instance: F<symbol,<T>() => WMapTS<T,any>>=new F;
+	get_map_T<U extends A,V extends InstanceType<U>,Z>(constructor_key: U,_: V): F<Z,F<E,S<V>>> {
+		let res=S.N.map_instance.get(constructor_key.type);
 		if(!res) {
-			/**@type {Map<V, Map<number, RepeatTS<V>>>} */
-			let map: Map<V,Map<number,RepeatTS<V>>>=new Map;
-			RepeatTS.N.map_instance.set(constructor_key.type,() => new WMapTS(map));
+			let map: F<V,F<E,S<V>>>=new F;
+			S.N.map_instance.set(constructor_key.type,() => new WMapTS(map));
 			return map;
 		}
-		let map: WMapTS<V,any>=res();
-		return map.value;
+		let map: WMapTS<V,Z>=res();
+		let rx=F.from(map.value);
+		let top_entries:[Z,F<E, S<V>>][]=[];
+		for (let i of rx.entries()) {
+			let as_f=F.from(i[1]);
+			top_entries.push([i[0],as_f]);
+		}
+		return new F(top_entries);
 	}
-	has_map_T<U extends A,V extends InstanceType<U>,C>(constructor_key: U,rep_null: RepeatTS<null>,key: C): boolean {
+	has_map_T<U extends A,V extends InstanceType<U>,C>(constructor_key: U,rep_null: S<null>,key: C): boolean {
 		let res=rep_null.map_instance.get(constructor_key.type);
 		if(!res) {
-			/**@type {Map<number, Map<number, RepeatTS<V>>>} */
-			let map: Map<number,Map<number,RepeatTS<V>>>=new Map;
+			/**@type {Map<E, Map<E, S<V>>>} */
+			let map: Map<E,Map<E,S<V>>>=new Map;
 			rep_null.map_instance.set(constructor_key.type,() => new WMapTS(map));
 			return false;
 		}
 		let map: WMapTS<V,C>=res();
 		return map.value.has(key);
 	}
-	static get(value: string,times: number): S<string> {
+	static get(value: string,times: E): S<string> {
 		if(!this.map.has(value)) {
-			this.map.set(value,new Map);
+			this.map.set(value,new F);
 		}
 		let tm_map=this.map.get(value);
 		if(!tm_map)
@@ -83,9 +100,9 @@ export class RepeatTS<T> {
 			return rep;
 		}
 	}
-	static get_num(value: number,times: number) {
+	static get_num(value: E,times: E) {
 		if(!this.map_num.has(value)) {
-			this.map_num.set(value,new Map);
+			this.map_num.set(value,new F);
 		}
 		let tm_map=this.map_num.get(value);
 		if(!tm_map)
@@ -103,15 +120,15 @@ export class RepeatTS<T> {
 	}
 	value;
 	times;
-	constructor(value: T,times: number) {
+	constructor(value: T,times: E) {
 		this.value=value;
 		this.times=times;
 	}
 	toString() {
-		if(typeof this.value==='number') {
+		if(typeof this.value==='string') {
 			return this.value+"x"+this.times;
 		}
 	}
 }
 
-const S=RepeatTS;
+export {S as RepeatTS};
