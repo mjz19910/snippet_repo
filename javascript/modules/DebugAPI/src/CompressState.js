@@ -14,8 +14,12 @@ export class CompressState {
 		this.arr=arr;
 		this.item=null;
 		this.ret=[];
+		this.constructor_key=null;
 	}
-	/**@arg {<T>(v:T|U)=>v is U} cast_func */
+	set_constructor_key(value) {
+		this.constructor_key=value;
+	}
+	/** @arg {<T>(v:T|U)=>v is U} cast_func */
 	run(cast_func) {
 		debugger;
 		for(;this.i<this.arr.length;this.i++) {
@@ -32,7 +36,7 @@ export class CompressState {
 				let use_item=this.compress_rle_TU_to_TX(vq,cast_func);
 				if(use_item) continue;
 			} else {
-				let use_item=this.compress_rle_T_X(x, cast_func);
+				let use_item=this.compress_rle_T_X(x, this.constructor_key, cast_func);
 				if(use_item) continue;
 			}
 			if(!cast_func(item)) continue;
@@ -57,20 +61,48 @@ export class CompressState {
 		return true;
 	}
 	/**
-	 * @template {abstract new (...args: any[]) => any} U
-	 * @template {InstanceType<U>} T
+	 * @template {import("./ST.js").ST&{type:symbol}} R
 	 * @arg {T} item
-	 * @arg {U} constructor_key
+	 * @arg {R} constructor_key
+	 * @arg {<T>(v:T|U)=>v is U} cast_func
 	 * */
-	 compress_rle_T_X(item,constructor_key) {
+	compress_rle_T_X(item,constructor_key,cast_func) {
 		let state=this;
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let times=1;
 		while(item===state.arr[state.i+times]) times++;
 		if(times==1) return false;
-		let mp=Repeat.N.get_map_T(constructor_key,item);
-		Repeat.get_with(mp,item,times);
-		state.ret.push(new Repeat(item,times));
+		/**@template T,U @arg {T} v @returns {v is U} */
+		function is_type(v) {return v!==null;}
+		/**@template T @arg {T|InstanceType<R>} v @returns {InstanceType<R>|null} */
+		function into_type(v) {
+			/**@type {typeof is_type<T, InstanceType<R>>} */
+			let itv=is_type;
+			if(!itv(v)) return null;
+			return v;
+		}
+		if(!cast_func(item)) return false;
+		let itp=into_type(item);
+		if(!itp) return false;
+		let mp=Repeat.N.get_map_T(constructor_key,itp);
+		if(item instanceof Repeat) {
+			if(typeof item.value==='number') {
+				/**@type {Repeat<number>} */
+				let item_repeat=item;
+				Repeat.get_with(mp,item_repeat,times);
+			}
+		}
+		/**@template T @arg {T|U} v @returns {U|null} */
+		function into_type_ret(v) {
+			/**@type {typeof is_type<T|U,U>} */
+			let itv=is_type;
+			if(!itv(v)) return null;
+			return v;
+		}
+		let item_=new Repeat(item,times);
+		let blank=into_type_ret(item_);
+		if(!blank) return false;
+		state.ret.push(blank);
 		state.i+=times-1;
 		return true;
 	}

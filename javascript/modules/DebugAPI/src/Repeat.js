@@ -16,12 +16,27 @@ export class Repeat {
 	}
 	/**
 	 * @template T
-	 * @arg {Map<T, Map<number, Repeat<T>>>} mp
+	 * @arg {Map<T, Map<number, Repeat<T>>>} map
 	 * @arg {Repeat<T>} item
 	 * @param {number} times
 	 */
-	static get_with(mp,item,times) {
-		mp.get(item.value)?.get(times);
+	static get_with(map,item,times) {
+		if(!map.has(value)) {
+			this.map.set(value,new Map);
+		}
+		let tm_map=this.map.get(value);
+		if(!tm_map)
+			throw new Error("no-reach");
+		if(tm_map.has(times)) {
+			let rep=tm_map.get(times);
+			if(!rep)
+				throw new Error("no-reach");
+			return rep;
+		} else {
+			let rep=new this(value,times);
+			tm_map.set(times,rep);
+			return rep;
+		}
 	}
 	/**@type {Repeat<null>} */
 	static N=new Repeat(null,0);
@@ -32,18 +47,18 @@ export class Repeat {
 	/**@type {Map<symbol, <T>()=>WMap<T>>} */
 	map_instance=new Map;
 	/**
-	 * @template {import("./ST.js").ST & {key:symbol}} U
+	 * @template {import("./ST.js").ST & {type:symbol}} U
 	 * @template {InstanceType<U>} V
 	 * @arg {U} constructor_key
 	 * @arg {V} _
 	 * @returns {Map<number, Map<number, Repeat<V>>>}
 	 * */
 	get_map_T(constructor_key,_) {
-		let res=Repeat.N.map_instance.get(constructor_key.key);
+		let res=Repeat.N.map_instance.get(constructor_key.type);
 		if(!res) {
 			/**@type {Map<number, Map<number, Repeat<V>>>} */
 			let map=new Map;
-			Repeat.N.map_instance.set(constructor_key.key,() => new WMap(map));
+			Repeat.N.map_instance.set(constructor_key.type,() => new WMap(map));
 			return map;
 		}
 		/**@type {WMap<V>} */
@@ -51,7 +66,7 @@ export class Repeat {
 		return map.value;
 	}
 	/**
-	 * @template {import("./ST.js").ST} U
+	 * @template {import("./ST.js").ST & {key:symbol}} U
 	 * @template {InstanceType<U>} V
 	 * @arg {Repeat<null>} rep_null
 	 * @arg {U} constructor_key
@@ -59,11 +74,11 @@ export class Repeat {
 	 * @returns {boolean}
 	 * */
 	has_map_T(constructor_key,rep_null,key) {
-		let res=rep_null.map_instance.get(constructor_key.type);
+		let res=rep_null.map_instance.get(constructor_key.key);
 		if(!res) {
 			/**@type {Map<number, Map<number, Repeat<V>>>} */
 			let map=new Map;
-			rep_null.map_instance.set(constructor_key.type,() => new WMap(map));
+			rep_null.map_instance.set(constructor_key.key,() => new WMap(map));
 			return false;
 		}
 		/**@type {WMap<V>} */

@@ -36,7 +36,7 @@ export class MulCompression extends BaseCompression {
 		return state.run(/**@type {<T>(_v:T|B)=>_v is B} */function(_v) {return true;});
 	}
 	/**
-	 * @template {import("./ST.js").ST & {key:symbol}} U
+	 * @template {import("./ST.js").ST & {type:symbol}} U
 	 * @template {InstanceType<U>} T
 	 * @arg {U} constructor_key
 	 * @arg {T[]} arr
@@ -53,7 +53,7 @@ export class MulCompression extends BaseCompression {
 		return this.compress_result_state(state);
 	}
 	/**
-	 * @template {import("./ST.js").ST & {key:symbol}} U
+	 * @template {import("./ST.js").ST & {type:symbol}} U
 	 * @template {InstanceType<U>} T
 	 * @arg {CompressState<T, import("./X.js").X<T>>} state
 	 * @arg {T} item
