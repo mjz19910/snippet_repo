@@ -13,19 +13,11 @@ export class MulCompression extends BaseCompression {
 	 * @param {{i:number,arr:import("./TU.js").TU<string, number>[],item:import("./TU.js").TU<string, number>,ret:import("./TX.js").TX<string, number>[]}} state
 	 */
 	try_compress_dual_iter(state) {
-		if(state.i+1>=state.arr.length) return;
-		if(state.item!==state.arr[state.i+1]) {
-			return;
-		}
+		if(state.i+1>=state.arr.length && state.item!==state.arr[state.i+1]) return;
 		let off=1;
-		while(state.item===state.arr[state.i+off]) {
-			off++;
-		}
+		while(state.item===state.arr[state.i+off]) off++;
 		if(off==1) return;
-		switch(state.item[0]) {
-			case 'T': state.ret.push(['T',Repeat.get(state.item[1],off)]); break;
-			case 'U': state.ret.push(['U',Repeat.get_num(state.item[1],off)]); break;
-		}
+		state.ret.push(Repeat.from_TU_entry(state.item,off));
 		state.i+=off-1;
 	}
 	/**
