@@ -8,6 +8,14 @@ declare global {
 	interface NodeListOf<TNode extends Node> extends NodeList {
 		[Symbol.iterator](): IterableIterator<TNode>;
 	}
+	type TU<A,B>=["T", A]|["U", B];
+
+	type X<T>=T|Repeat<T>;
+	type TX<A,B>=["T", X<A>]|["U", X<B>];
+
+	type ST={type:symbol} & (new (...args: any) => any);
+
+	type DualR=[false, TU<string,number>[]] | [true, TX<string,number>[]];
 }
 
 export class AutoBuy {
@@ -34,22 +42,23 @@ export interface WithId {
 	id: number;
 }
 
-export interface IDValueData {
-	arr_dual: TU<string, number>[];
-	arr_dual_x: TU<X<string>,X<number>>[];
-	arr_rep_str: X<string>[];
-	arr_rep_num: X<number>[];
-	arr_str: string[];
-	arr_num: number[];
-	next: IValue;
-	value: [number,'=',number];
-	arr_rep: number[];
-	log_val: [number,'=',string,number];
-	stats: [string,number][];
-	stats_win: number;
-}
-
 declare global {
+	interface IDValueData {
+		arr_dual: TU<string, number>[];
+		arr_dual_x: TU<X<string>,X<number>>[];
+		arr_rep_str: X<string>[];
+		arr_rep_num: X<number>[];
+		arr_str: string[];
+		arr_num: number[];
+		next: IValue;
+		value: [number,'=',number];
+		arr_rep: number[];
+		log_val: [number,'=',string,number];
+		stats: [string,number][];
+		stats_win: number;
+	}
+
+
 	type IValue=WithId&Partial<IDValueData>;
 
 

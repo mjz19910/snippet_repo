@@ -1,10 +1,11 @@
-import {compressionStatsCalc} from "./mod";
+import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 
 /**
+ * @param {CompressionStatsCalculator} stats
  * @param {IValue} obj
  * @param {number} max_id
  */
-export function calc_next(obj,max_id) {
+export function calc_next(stats,obj,max_id) {
 	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
 		return null;
 	}
@@ -13,17 +14,17 @@ export function calc_next(obj,max_id) {
 	if(!obj.next) {
 		return null;
 	}
-	/**@type {WithId & Partial<IDValueData>} */
+	/**@type {IValue} */
 	let next=obj;
 	next.value=[max_id,'=',rep_val];
 	next.log_val=[max_id,'=',f_val[0],f_val[1]];
 	if(obj.arr_str===void 0)
 		throw new Error("No arr");
-	next.arr_dual=compressionStatsCalc.replace_range(obj.arr_str,rep_val,max_id);
+	next.arr_dual=stats.replace_range(obj.arr_str,rep_val,max_id);
 	if(next.arr_str)
 		return null;
 	/**@type {DualR} */
-	let compress_result=compressionStatsCalc.compressor.try_compress_dual(next.arr_dual);
+	let compress_result=stats.compressor.try_compress_dual(next.arr_dual);
 	if(!compress_result[0]) {
 		/**@type {TU<string, number>[]} */
 		let res=[];

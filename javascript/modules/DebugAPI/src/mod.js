@@ -46,7 +46,7 @@ import {WeakValueRef} from "./WeakValueRef";
 import {AutoBuy} from "./__global.js";
 
 /** @type {typeof window['g_api']} */
-export let g_api=window.g_api??{};
+let g_api=window.g_api??{};
 window.g_api=g_api;
 g_api.IterExtensions=IterExtensions;
 IterExtensions.init();
@@ -58,26 +58,16 @@ g_api.Repeat=Repeat;
 g_api.CompressRepeated=CompressRepeated;
 g_api.to_tuple_arr=to_tuple_arr;
 
-export let wasm_header=null;
-export let wasm_global_memory=null;
-export let wasm_global_memory_view=null;
 g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
 
-/** @type {string[]} */
-export let function_as_string_vec=[];
-window.g_api.function_as_string_vec=function_as_string_vec;
+window.g_api.function_as_string_vec=[];
 
 g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 
 g_api.CompressionStatsCalculator=CompressionStatsCalculator;
 
-export let stats_calculator_info={
-	stats_calculator: new CompressionStatsCalculator,
-	/**@type {[string, number][][]} */
-	compression_stats: [],
-};
-
 g_api.range_matches=range_matches;
+
 export let compressionStatsCalc=new CompressionStatsCalculator;
 /**
  * @type {NewTypeWrapper<string[]>}

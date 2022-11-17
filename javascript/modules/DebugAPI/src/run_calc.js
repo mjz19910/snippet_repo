@@ -6,10 +6,11 @@ import {max_id} from "./mod";
 
 /**
  * @param {IValue} obj
+ * @param {import("./CompressionStatsCalculator").CompressionStatsCalculator} stats
  */
-export function run_calc(obj) {
+export function run_calc(stats,obj) {
 	obj.stats_win=2;
-	calc_cur(obj);
+	calc_cur(stats,obj);
 	if(!obj.stats) {
 		return null;
 	}
@@ -22,10 +23,10 @@ export function run_calc(obj) {
 		return null;
 	}
 	br_obj.stats_win++;
-	calc_cur(br_obj);
-	let br_res=calc_next(br_obj,max_id.value);
+	calc_cur(stats,br_obj);
+	let br_res=calc_next(stats,br_obj,max_id.value);
 	console.log('br_res',br_res);
-	let res=calc_next(obj,max_id.value);
+	let res=calc_next(stats,obj,max_id.value);
 	/**@type {IValue|undefined} */
 	let br_next=br_obj.next;
 	/**@type {IValue|undefined} */
@@ -46,12 +47,12 @@ export function run_calc(obj) {
 		let br_st=br_next.arr_str.length;
 		br_obj.stats_win++;
 		obj.stats_win++;
-		calc_cur(br_obj);
+		calc_cur(stats,br_obj);
 		br_next=assign_next(br_obj,new Value(obj.id+1));
-		br_res=calc_next(br_obj,max_id.value);
-		calc_cur(obj);
+		br_res=calc_next(stats,br_obj,max_id.value);
+		calc_cur(stats,obj);
 		next=assign_next(br_obj,new Value(obj.id+1));
-		res=calc_next(obj,max_id.value);
+		res=calc_next(stats,obj,max_id.value);
 		if(!br_next.arr_str)
 			continue;
 		let cd=br_st-br_next.arr_str.length;

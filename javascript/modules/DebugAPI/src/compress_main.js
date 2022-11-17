@@ -4,8 +4,12 @@ import {make_group_from_item} from "./make_group_from_item";
 import {NumType} from "./NumType";
 import {run_calc} from "./run_calc";
 import {g_auto_buy,src_arr,ids,id_groups,el_ids,get_ids,compressionStatsCalc, max_id, g_obj_arr} from "./mod";
+import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 
-export function compress_main() {
+/**
+ * @param {CompressionStatsCalculator} stats
+ */
+export function compress_main(stats) {
 	compress_init();
 	if(g_auto_buy) {
 		src_arr.value=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
@@ -32,7 +36,7 @@ export function compress_main() {
 		obj_start.arr_num=arr[1];
 	}
 	for(let i=0,cur=obj_start;i<3000;i++) {
-		let comp_res=run_calc(cur);
+		let comp_res=run_calc(stats,cur);
 		if(!cur.stats)
 			throw new Error();
 		let obj=cur;

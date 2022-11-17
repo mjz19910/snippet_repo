@@ -1,7 +1,6 @@
 import {found_modules} from "./found_modules";
 import {gen_function_prototype_use} from "./gen_function_prototype_use";
 import {resolve_function_constructor} from "./resolve_function_constructor";
-import {function_as_string_vec} from "./mod";
 
 export function run_modules_plugin() {
 	let function_prototype=resolve_function_constructor().prototype;
@@ -74,8 +73,8 @@ export function run_modules_plugin() {
 			default:
 				ret=bound_apply_call(this,[thisArg,argArray]);
 		}
-		if(function_as_string_vec.indexOf(this.toString())==-1) {
-			function_as_string_vec.push(this.toString());
+		if(window.g_api.function_as_string_vec.indexOf(this.toString())==-1) {
+			window.g_api.function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};
@@ -86,8 +85,8 @@ export function run_modules_plugin() {
 	 */
 	function function_prototype_apply_inject(tv,r) {
 		let ret=bound_apply_call(this,[tv,r]);
-		if(function_as_string_vec.indexOf(this.toString())==-1) {
-			function_as_string_vec.push(this.toString());
+		if(window.g_api.function_as_string_vec.indexOf(this.toString())==-1) {
+			window.g_api.function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};

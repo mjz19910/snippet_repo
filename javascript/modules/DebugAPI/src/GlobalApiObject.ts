@@ -26,9 +26,9 @@ import {GenericEvent} from "./GenericEvent.js";
 // DebugAPI
 export interface GlobalApiObject {
 	parse_html_to_binary_arr: (html: string) => unknown[];
-	run_modules_plugin: VoidCallback;
-	run_wasm_plugin: VoidCallback;
-	compress_main: VoidCallback;
+	run_modules_plugin: VoidCallback<[],void>;
+	run_wasm_plugin: VoidCallback<[],void>;
+	compress_main: VoidCallback<[stats: CompressionStatsCalculator],void>;
 	IterExtensions: typeof IterExtensions;
 	getPlaybackRateMap: typeof getPlaybackRateMap;
 	CreateObjURLCache: typeof CreateObjURLCache;

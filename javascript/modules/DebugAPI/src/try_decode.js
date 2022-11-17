@@ -1,5 +1,5 @@
 import {Repeat} from "./Repeat";
-import {dr_map,id_map,ids_dec,g_api} from "./mod";
+import {dr_map,id_map,ids_dec} from "./mod";
 import {decode_map} from "./decode_map";
 
 /**
@@ -37,12 +37,12 @@ export function try_decode(e,deep=true) {
 				let cur_res=decode_map(res[i]);
 				dec_res[i]=cur_res;
 			}
-			let ret=new g_api.Repeat(dec_res,e.times);
+			let ret=new Repeat(dec_res,e.times);
 			dr_map[e.value]=ret;
 			return ret;
 		}
 		if(ids_dec[e.value]) {
-			return new g_api.Repeat(ids_dec[e.value],e.times);
+			return new Repeat(ids_dec[e.value],e.times);
 		}
 	}
 	return null;

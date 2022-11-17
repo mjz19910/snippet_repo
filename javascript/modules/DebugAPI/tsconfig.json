@@ -19,13 +19,13 @@
 		"typeRoots": [
 			"~/workspace/node_types/node_modules/@types"
 		],
-		"baseUrl": ".",
 		"allowJs": true,
 		"checkJs": true,
 		"strict": true,
 	},
 	"include": [
 		"src/**/*",
+		"dead_src/**/*",
 	],
 	"exclude": [
 		"node_modules",

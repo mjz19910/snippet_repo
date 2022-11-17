@@ -1,10 +1,11 @@
-import {sorted_comp_stats} from "./sorted_comp_stats";
+import {sorted_comp_stats} from "../src/sorted_comp_stats";
 
 /**
  * @param {any[]} arr
  * @param {number} start
+ * @param {import("../src/CompressionStatsCalculator").CompressionStatsCalculator} calc_stats
  */
-function next_chunk(arr,start) {
+export function next_chunk(calc_stats,arr,start) {
 	let s_arr;
 	let last;
 	let c_len;
@@ -12,7 +13,7 @@ function next_chunk(arr,start) {
 		if(s_arr) {
 			last=s_arr[0][1];
 		}
-		s_arr=sorted_comp_stats(arr,i);
+		s_arr=sorted_comp_stats(calc_stats,arr,i);
 		if(!last)
 			continue;
 		let diff=last-s_arr[0][1];

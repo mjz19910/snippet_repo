@@ -1,12 +1,11 @@
-
+/** @template {any[]} U @template C */
 export class VoidCallback {
-	/**
-	 * @param {()=>void} callback
-	 */
+	/** @param {(...args: U) => C} callback */
 	constructor(callback) {
 		this.m_cb=callback;
 	}
-	execute() {
-		this.m_cb();
+	/** @param {U} args */
+	execute(...args) {
+		return this.m_cb(...args);
 	}
 }

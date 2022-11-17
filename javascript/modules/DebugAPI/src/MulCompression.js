@@ -1,6 +1,12 @@
 import {BaseCompression} from "./BaseCompression";
+import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 import {Repeat} from "./Repeat";
-import {stats_calculator_info} from "./mod";
+
+let stats_calculator_info={
+	stats_calculator: new CompressionStatsCalculator,
+	/**@type {[string, number][][]} */
+	compression_stats: [],
+};
 
 export class MulCompression extends BaseCompression {
 	/**
