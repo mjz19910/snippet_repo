@@ -273,8 +273,7 @@ export class HTMLTokenizerIncH {
 
 
 export class HTMLTokenizer extends HTMLTokenizerBase {
-    /** @returns {Optional<number>} */
-    next_code_point() {
+    next_code_point():Optional<number> {
         if(this.m_utf8_iterator.eq(this.m_utf8_view.end()))
             return new Optional;
 
@@ -298,8 +297,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer) Next code_point: {}",code_point);
         return new Optional(code_point);
     }
-    /** @param {number} count */
-    skip(count) {
+    skip(count:number) {
         if(!this.m_source_positions.is_empty())
             this.m_source_positions.append(this.m_source_positions.last());
         for(let i=0;i<count;++i) {
@@ -316,8 +314,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             this.m_utf8_iterator.inc();
         }
     }
-    /** @param {number} offset */
-    peek_code_point(offset) {
+    peek_code_point(offset:number) {
         let it=this.m_utf8_iterator;
         for(let i=0;i<offset&&it.neq(this.m_utf8_view.end());++i)
             it.inc();
@@ -325,10 +322,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             return new Optional();
         return new Optional(it.deref());
     }
-    /**
-     * @param {number} n
-     */
-    nth_last_position(n) {
+    nth_last_position(n:number) {
         if(n+1>this.m_source_positions.size()) {
             dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,this.m_source_positions.size());
             return new HTMLToken.Position(0,0);
@@ -336,23 +330,25 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         return this.m_source_positions.at(this.m_source_positions.size()-1-n);
     }
     #ifndef DO_CPP
-    /** @returns {Optional<HTMLToken>} */
-    next_token()
+    next_token():Optional<HTMLToken>
     {
-        if (!m_source_positions.is_empty()) {
-            let last_position = m_source_positions.last();
-            m_source_positions.clear_with_capacity();
-            m_source_positions.append(move(last_position));
+        let m_source_positions=this.m_source_positions;
+        let m_queued_tokens=this.m_queued_tokens;
+        let m_aborted=this.m_aborted;
+        if (!this.m_source_positions.is_empty()) {
+            let last_position = this.m_source_positions.last();
+            this.m_source_positions.clear_with_capacity();
+            this.m_source_positions.append(move(last_position));
         }
-    _StartOfFunction:
-        if (!m_queued_tokens.is_empty())
-            return m_queued_tokens.dequeue();
+    //_StartOfFunction:
+        if (!this.m_queued_tokens.is_empty())
+            return this.m_queued_tokens.dequeue();
 
-        if (m_aborted)
+        if (this.m_aborted)
             return {};
 
         for (;;) {
-            let current_input_character = next_code_point();
+            let current_input_character = this.next_code_point();
             switch (m_state) {
                 // 13.2.5.1 Data state, https://html.spec.whatwg.org/multipage/parsing.html#data-state
                 BEGIN_STATE(Data)
