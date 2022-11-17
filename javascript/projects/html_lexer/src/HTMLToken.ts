@@ -9,8 +9,7 @@ function __builtin_trap() {
     throw new Error("Trap");
 }
 
-function ak_verification_failed(message)
-{
+function ak_verification_failed(message) {
     dbgln("VERIFICATION FAILED: {}", message);
     __builtin_trap();
 }
@@ -98,7 +97,7 @@ export class HTMLToken {
         this.m_start_position=start_position;
     }
     tag_name() {
-        (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed("this.is_start_tag() || this.is_end_tag()" "\n" "HTMLToken.cppts" ":" __stringify(97)) : (void)0);
+        (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed("this.is_start_tag() || this.is_end_tag()" "\n" "HTMLToken.cppts" ":" __stringify(96)) : (void)0);
         return this.m_string_data;
     }
     is_end_tag(): any {
