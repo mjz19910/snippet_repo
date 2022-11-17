@@ -338,7 +338,6 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 this.m_source_positions.append(move(last_position));
             }
         }
-        while(true) {}
         _StartOfFunction:
         if(!this.m_queued_tokens.is_empty())
             return this.m_queued_tokens.dequeue();
