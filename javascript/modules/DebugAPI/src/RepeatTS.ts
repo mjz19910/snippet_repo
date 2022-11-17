@@ -2,7 +2,9 @@ import {ST} from "./ST.js";
 import {TU} from "./TU.js";
 import {WMap} from "./WMap";
 
-type X<T>=T|RepeatTS<T>;
+type G<T>=RepeatTS<T>;
+
+type X<T>=T|G<T>;
 
 type TX<A,B>=["T",X<A>]|["U",X<B>];
 
