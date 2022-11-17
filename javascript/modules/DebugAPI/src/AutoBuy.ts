@@ -1,4 +1,4 @@
-import {MulCompression} from "./compress/MulCompression.js/index.js";
+import {MulCompression} from "./compress/MulCompression.js";
 
 
 export class AutoBuy {

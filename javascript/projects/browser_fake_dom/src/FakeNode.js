@@ -1,4 +1,5 @@
 import {FakeEventTarget} from "./EventTarget.js"
+
 /**@implements {Node} */
 export class FakeNode extends FakeEventTarget {
 	/**@type {string}*/

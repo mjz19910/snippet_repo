@@ -2,8 +2,18 @@ import {MulCompression} from "./MulCompression";
 import {range_matches} from "../range_matches";
 import {to_tuple_arr} from "../to_tuple_arr";
 import {max_id} from "../mod";
+import {CompressTU} from "./CompressTU.js";
 
 export class CompressionStatsCalculator {
+	/**
+        * @param {import("../repeat/TypeAOrTypeB.js").TypeAOrTypeB<string, number>[]} arr
+        * @returns {import("../DualR.js").DualR}
+        * @todo (MulCompression,try_compress_dual)
+        */
+       try_compress_dual(arr) {
+               let ex=new CompressTU(arr);
+               return ex.try_compress_dual();
+       }
 	constructor() {
 		/** @type {number[]} */
 		this.hit_counts=[];
