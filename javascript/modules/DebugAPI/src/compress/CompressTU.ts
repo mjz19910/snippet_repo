@@ -4,7 +4,7 @@ import {TX} from "../repeat/TX.js";
 import {BaseCompression} from "./BaseCompression.js";
 
 export class CompressTU {
-	i=0;
+	i: number;
 	arr: TU<string,number>[]=[];
 	ret: TX<string,number>[]=[];
 	// @returns {import("../DualR.js").DualR}
@@ -26,5 +26,10 @@ export class CompressTU {
 		this.ret.push(Repeat.from_TU_entry(item,off));
 		this.i+=off-1;
 		return true;
+	}
+	constructor(arr: TU<string,number>[]) {
+		this.i=0;
+		this.arr=arr;
+		this.ret=[];
 	}
 }

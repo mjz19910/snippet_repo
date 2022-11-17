@@ -24,14 +24,8 @@ export class MulCompression extends BaseCompression {
 	 * @todo (MulCompression,try_compress_dual)
 	 */
 	try_compress_dual(arr) {
-		let ex=new CompressTU();
-		ex.arr=arr;
-		let ret=ex.try_compress_dual();
-		if(ret.type==='TU'){
-			return [false, ret.value];
-		} else if(ret.type==="TX") {
-			return [true, ret.value];
-		}
+		let ex=new CompressTU(arr);
+		return ex.try_compress_dual();
 		/**@type {CompressState<import("../repeat/TU.js").TU<string, number>, import("../repeat/TX.js").TX<string, number>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
