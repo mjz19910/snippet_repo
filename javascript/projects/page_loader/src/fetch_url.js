@@ -4,6 +4,7 @@ import {PageLoaderState} from "./PageLoaderState.js";
 import {fix_fetch_url} from "./fix_fetch_url.js";
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
+import {RequestModule} from "./RequestModule.js";
 /**
  * @arg {PageLoaderState} state
  */
@@ -31,9 +32,10 @@ export async function fetch_url(state,silent=false) {
 		if(!fake.document)throw new Error("Missing fake document")
 		fake.document.location.assign(new_url)
 	}); */
+	let req_mod=state.m_start_request_module;
 	switch(p_url.protocol) {
-		case 'http:': state.m_start_request_module=http; break;
-		case 'https:': state.m_start_request_module=https; break;
+		case 'http:': req_mod.http_import={is_https: false,value: http}; break;
+		case 'https:': req_mod.http_import={is_https: true,value: https}; break;
 		default: throw new Error("Unknown protocol: "+p_url.protocol);
 	}
 	if(!state.on_incoming_message)
