@@ -14,7 +14,7 @@ export class MulCompression extends BaseCompression {
 	 * @param {{i:number,arr:import("./TU.js").TU<string, number>[],ret:import("./TX.js").TX<string, number>[]}} state
 	 * @arg {import("./TU.js").TU<string, number>} item
 	 */
-	try_compress_dual_iter(state,item) {
+	compress_rle_TU_to_TX(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return;
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
@@ -33,7 +33,7 @@ export class MulCompression extends BaseCompression {
 		let state=new CompressState(arr,ret);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
-			this.try_compress_dual_iter(state,item);
+			this.compress_rle_TU_to_TX(state,item);
 			state.ret.push(item);
 		}
 		if(this.did_compress(arr,ret)) return [true,ret];

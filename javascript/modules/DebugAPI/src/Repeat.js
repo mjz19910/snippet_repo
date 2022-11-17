@@ -17,11 +17,11 @@ export class Repeat {
 	/**
 	 * @template T
 	 * @arg {Map<number, Map<number, Repeat<T>>>} mp
-	 * @arg {{}} item
+	 * @arg {Repeat<T>} item
 	 * @param {number} off
 	 */
 	static get_with(mp,item,off) {
-		throw new Error("Method not implemented.");
+		mp.get(off)?.get(off);
 	}
 	/**@type {Repeat<null>} */
 	static N=new Repeat(null,0);
