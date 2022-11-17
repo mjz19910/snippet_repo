@@ -17,6 +17,7 @@ export class ReplPluginManager {
 		if(repl_internal.X===void 0) {
 			console.log("unable use repl_internal as X is missing");
 		}
+		debugger;
 		repl_internal.setPrompt(arg0);
 	}
 	pause() {
