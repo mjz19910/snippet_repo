@@ -260,6 +260,7 @@
 #ifdef JS_MODE
 
 #ifdef NO_ENABLED
+// State class gen
 #define __ENUMERATE_TOKENIZER_STATE(state)/** @readonly */ state=__COUNTER__;<line>
 export class HTMLTokenizerIncH {
     static State=class State {
@@ -268,8 +269,7 @@ export class HTMLTokenizerIncH {
     };
 }
 #undef __ENUMERATE_TOKENIZER_STATE
-#endif
-
+// GoToTargets gen
 #define __ENUMERATE_TOKENIZER_STATE(state) #state|<line>
 export type GoToTargets=
 ENUMERATE_TOKENIZER_STATES
@@ -278,14 +278,13 @@ ENUMERATE_TOKENIZER_STATES
 
 #endif
 
+#endif
+
 
 export class HTMLTokenizer extends HTMLTokenizerBase {
     m_goto_pos:"_StartOfFunction"|"None"="None";
     next_token():Optional<HTMLToken>
     {
-        let m_source_positions=this.m_source_positions;
-        let m_queued_tokens=this.m_queued_tokens;
-        let m_aborted=this.m_aborted;
         if (!this.m_source_positions.is_empty()) {
             let last_position = this.m_source_positions.last();
             this.m_source_positions.clear_with_capacity();
@@ -705,14 +704,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON('"'.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                this.m_current_token.ensure_doctype_data().system_identifier = {};
+                                this.m_current_token.ensure_doctype_data().system_identifier = "";
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
                                 SWITCH_TO(DOCTYPESystemIdentifierDoubleQuoted);
                             }
                             ON('\''.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                this.m_current_token.ensure_doctype_data().system_identifier = {};
+                                this.m_current_token.ensure_doctype_data().system_identifier = "";
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
                                 SWITCH_TO(DOCTYPESystemIdentifierSingleQuoted);
                             }
@@ -1287,7 +1286,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON('&'.charCodeAt(0))
                             {
-                                m_return_state = State.AttributeValueDoubleQuoted;
+                                this.m_return_state = State.AttributeValueDoubleQuoted;
                                 SWITCH_TO_WITH_UNCLEAN_BUILDER(CharacterReference);
                             }
                             ON(0)
@@ -1319,7 +1318,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON('&'.charCodeAt(0))
                             {
-                                m_return_state = State.AttributeValueSingleQuoted;
+                                this.m_return_state = State.AttributeValueSingleQuoted;
                                 SWITCH_TO_WITH_UNCLEAN_BUILDER(CharacterReference);
                             }
                             ON(0)
@@ -1352,7 +1351,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON('&'.charCodeAt(0))
                             {
-                                m_return_state = State.AttributeValueUnquoted;
+                                this.m_return_state = State.AttributeValueUnquoted;
                                 SWITCH_TO_WITH_UNCLEAN_BUILDER(CharacterReference);
                             }
                             ON('>'.charCodeAt(0))
@@ -1933,7 +1932,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON('&'.charCodeAt(0))
                             {
-                                m_return_state = State.RCDATA;
+                                this.m_return_state = State.RCDATA;
                                 SWITCH_TO(CharacterReference);
                             }
                             ON('<'.charCodeAt(0))

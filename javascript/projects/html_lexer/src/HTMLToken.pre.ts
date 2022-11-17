@@ -1,7 +1,6 @@
 import {HTMLTokenBase} from "./HTMLTokenBase.js";
 import {Optional} from "./Optional.js";
 import {Variant} from "./Variant.js";
-import {cpp__stringify} from "./__stringify";
 
 type u32=number;
 

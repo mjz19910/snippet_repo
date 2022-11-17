@@ -3,9 +3,9 @@
 // 0 "<command-line>"
 // 1 "HTMLTokenizer.cppts"
 // 1 "HTMLTokenizer.pre.ts" 1
-import {HTMLToken} from "./HTMLToken.1";
-import {throw_todo} from "./throw_todo";
-import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl";
+import {HTMLToken} from "./HTMLToken.1.js";
+import {throw_todo} from "./throw_todo.js";
+import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl.js";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
@@ -36,102 +36,10 @@ export function use_imports() {
         HTMLTokenizerBase,
     ];
 }
-// 2 "HTMLTokenizer.cppts" 2
-// 274 "HTMLTokenizer.cppts"
-export type GoToTargets=
-"Data"|
-"RCDATA"|
-"RAWTEXT"|
-"ScriptData"|
-"PLAINTEXT"|
-"TagOpen"|
-"EndTagOpen"|
-"TagName"|
-"RCDATALessThanSign"|
-"RCDATAEndTagOpen"|
-"RCDATAEndTagName"|
-"RAWTEXTLessThanSign"|
-"RAWTEXTEndTagOpen"|
-"RAWTEXTEndTagName"|
-"ScriptDataLessThanSign"|
-"ScriptDataEndTagOpen"|
-"ScriptDataEndTagName"|
-"ScriptDataEscapeStart"|
-"ScriptDataEscapeStartDash"|
-"ScriptDataEscaped"|
-"ScriptDataEscapedDash"|
-"ScriptDataEscapedDashDash"|
-"ScriptDataEscapedLessThanSign"|
-"ScriptDataEscapedEndTagOpen"|
-"ScriptDataEscapedEndTagName"|
-"ScriptDataDoubleEscapeStart"|
-"ScriptDataDoubleEscaped"|
-"ScriptDataDoubleEscapedDash"|
-"ScriptDataDoubleEscapedDashDash"|
-"ScriptDataDoubleEscapedLessThanSign"|
-"ScriptDataDoubleEscapeEnd"|
-"BeforeAttributeName"|
-"AttributeName"|
-"AfterAttributeName"|
-"BeforeAttributeValue"|
-"AttributeValueDoubleQuoted"|
-"AttributeValueSingleQuoted"|
-"AttributeValueUnquoted"|
-"AfterAttributeValueQuoted"|
-"SelfClosingStartTag"|
-"BogusComment"|
-"MarkupDeclarationOpen"|
-"CommentStart"|
-"CommentStartDash"|
-"Comment"|
-"CommentLessThanSign"|
-"CommentLessThanSignBang"|
-"CommentLessThanSignBangDash"|
-"CommentLessThanSignBangDashDash"|
-"CommentEndDash"|
-"CommentEnd"|
-"CommentEndBang"|
-"DOCTYPE"|
-"BeforeDOCTYPEName"|
-"DOCTYPEName"|
-"AfterDOCTYPEName"|
-"AfterDOCTYPEPublicKeyword"|
-"BeforeDOCTYPEPublicIdentifier"|
-"DOCTYPEPublicIdentifierDoubleQuoted"|
-"DOCTYPEPublicIdentifierSingleQuoted"|
-"AfterDOCTYPEPublicIdentifier"|
-"BetweenDOCTYPEPublicAndSystemIdentifiers"|
-"AfterDOCTYPESystemKeyword"|
-"BeforeDOCTYPESystemIdentifier"|
-"DOCTYPESystemIdentifierDoubleQuoted"|
-"DOCTYPESystemIdentifierSingleQuoted"|
-"AfterDOCTYPESystemIdentifier"|
-"BogusDOCTYPE"|
-"CDATASection"|
-"CDATASectionBracket"|
-"CDATASectionEnd"|
-"CharacterReference"|
-"NamedCharacterReference"|
-"AmbiguousAmpersand"|
-"NumericCharacterReference"|
-"HexadecimalCharacterReferenceStart"|
-"DecimalCharacterReferenceStart"|
-"HexadecimalCharacterReference"|
-"DecimalCharacterReference"|
-"NumericCharacterReferenceEnd"|
-"None";
-
-
-
-
-
 export class HTMLTokenizer extends HTMLTokenizerBase {
     m_goto_pos:"_StartOfFunction"|"None"="None";
     next_token():Optional<HTMLToken>
     {
-        let m_source_positions=this.m_source_positions;
-        let m_queued_tokens=this.m_queued_tokens;
-        let m_aborted=this.m_aborted;
         if (!this.m_source_positions.is_empty()) {
             let last_position = this.m_source_positions.last();
             this.m_source_positions.clear_with_capacity();
@@ -497,10 +405,10 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                if (this.to_ascii_uppercase(current_input_character.value()) == 'P'.charCodeAt(0) && this.consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
+                                if (to_ascii_uppercase(current_input_character.value()) == 'P' && consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","645"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEPublicKeyword); this.m_state = State.AfterDOCTYPEPublicKeyword; current_input_character = this.next_code_point();; } while (0); } while (0);
                                 }
-                                if (this.to_ascii_uppercase(current_input_character.value()) == 'S'.charCodeAt(0) && this.consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
+                                if (to_ascii_uppercase(current_input_character.value()) == 'S' && consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","648"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPESystemKeyword); this.m_state = State.AfterDOCTYPESystemKeyword; current_input_character = this.next_code_point();; } while (0); } while (0);
                                 }
                                 this.log_parse_error();
@@ -563,14 +471,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                this.m_current_token.ensure_doctype_data().system_identifier = {};
+                                this.m_current_token.ensure_doctype_data().system_identifier = "";
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
                                 do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","710"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                this.m_current_token.ensure_doctype_data().system_identifier = {};
+                                this.m_current_token.ensure_doctype_data().system_identifier = "";
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
                                 do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","717"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
@@ -1161,7 +1069,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
-                                m_return_state = State.AttributeValueDoubleQuoted;
+                                this.m_return_state = State.AttributeValueDoubleQuoted;
                                 do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = this.next_code_point();; } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
@@ -1194,7 +1102,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
-                                m_return_state = State.AttributeValueSingleQuoted;
+                                this.m_return_state = State.AttributeValueSingleQuoted;
                                 do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = this.next_code_point();; } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
@@ -1228,7 +1136,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
-                                m_return_state = State.AttributeValueUnquoted;
+                                this.m_return_state = State.AttributeValueUnquoted;
                                 do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = this.next_code_point();; } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
@@ -1617,7 +1525,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && this.is_ascii_alphanumeric(current_input_character.value()))
                             {
-                                if (consumed_as_part_of_an_attribute()) {
+                                if (this.consumed_as_part_of_an_attribute()) {
                                     this.m_current_builder.append_code_point(current_input_character.value());
                                     continue;
                                 } else {
@@ -1830,7 +1738,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
-                                m_return_state = State.RCDATA;
+                                this.m_return_state = State.RCDATA;
                                 do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1937"].join("")) : void 0); do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
@@ -2737,5 +2645,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         }
         console.log("fallthrough", lp, this.m_goto_pos);
         throw new Error("fallthrough");
+    }
+    is_ascii_alphanumeric(arg0: number) {
+        throw new Error("Method not implemented.");
     }
 }

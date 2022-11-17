@@ -1,20 +1,20 @@
-import {HTMLToken} from "./HTMLToken.1";
-import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl";
+import {HTMLToken} from "./HTMLToken.1.js";
+import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl.js";
 import {State} from "./State.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
 import {Optional} from "./Optional.js";
 import {Utf8View} from "./Utf8View.js";
 import {CppVector} from "./CppArray.js";
 import {StringBuilder} from "./StringBuilder.js";
-import {Queue} from "./Queue";
-import {CppPtr} from "./CppPtr";
+import {Queue} from "./Queue.js";
+import {CppPtr} from "./CppPtr.js";
 import {InsertionPoint} from "./InsertionPoint";
 import {SourcePosition} from "./SourcePosition.js";
 import {TextCodec} from "./TextCodec";
 import {HTMLToken_Type} from "./HTMLToken_Type.js";
 import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {dbgln_if} from "./dbgln_if.js";
-import {GoToTargets} from "./HTMLTokenizer.js";
+import {GoToTargets} from "./GoToTargets";
 import {CaseSensitivity} from "./CaseSensitivity.js";
 
 export class HTMLTokenizerBase extends HTMLTokenizerImpl {
@@ -129,7 +129,7 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     switch_to(_x: State) {throw new Error("TODO");}
     will_emit(_x: HTMLToken) {throw new Error("TODO");}
     current_end_tag_token_is_appropriate(): boolean {throw new Error("TODO");}
-    consumed_as_part_of_an_attribute() {throw new Error("TODO");}
+    consumed_as_part_of_an_attribute(): boolean {throw new Error("TODO");}
     restore_to(_x:Utf8CodePointIterator) {throw new Error("TODO");}
     log_parse_error() {throw new Error("");}
     is_ascii_alpha(arg0: number): boolean {

@@ -33,14 +33,11 @@ export class HTMLTokenBase {
     set_end_position(arg0: {},arg1: SourcePosition) {
         throw new Error("Method not implemented.");
     }
-    set_tag_name(arg0: void) {
+    set_tag_name(arg0: string) {
         throw new Error("Method not implemented.");
     }
     ensure_doctype_data() {
         throw new Error("Method not implemented.");
-    }
-    opt(): Optional<HTMLTokenBase> {
-        return new Optional(this);
     }
     static from_type(type: HTMLToken_Type): HTMLTokenBase {
         let obj=new this;

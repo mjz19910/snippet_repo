@@ -6,46 +6,7 @@
         : void 0)
 
 export class HTMLToken extends HTMLTokenBase {
-    static from_type(type:HTMLToken_Type): HTMLToken
-    {
-        let obj=new this;
-        obj.m_type=type;
-        switch (obj.m_type) {
-        case this.Type.Character:
-            obj.m_data.set(0);
-            break;
-        case this.Type.DOCTYPE:
-            obj.m_data.set(new OwnPtr<DoctypeData>());
-            break;
-        case this.Type.StartTag:
-        case this.Type.EndTag:
-            obj.m_data.set(new OwnPtr<Vector<Attribute>>());
-            break;
-        default:
-            break;
-        }
-        return obj;
-    }
-    static make_character(code_num: string) {
-        let obj=new this;
-        obj.m_data.set(HTMLToken.Type.Character);
-        obj.set_code_point(code_num);
-        return obj;
-    }
-    set_code_point(code_point: CodePoint|null) {
-        this.m_code_point=code_point;
-    }
-    set_start_position(_badge: "Badge_HTMLTokenizer",start_position: SourcePosition) {
-        this.m_start_position=start_position;
-    }
-    tag_name() {
-        VERIFY(this.is_start_tag() || this.is_end_tag());
-        return this.m_string_data;
-    }
-    is_end_tag(): any {
-        throw new Error("Method not implemented.");
-    }
-    is_start_tag(): boolean {
-        throw new Error("Method not implemented.");
+    opt(): Optional<HTMLTokenBase> {
+        return new Optional(this);
     }
 }
