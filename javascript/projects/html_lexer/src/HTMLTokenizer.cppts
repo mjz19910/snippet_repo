@@ -29,11 +29,11 @@ import {ak_verification_failed} from "./ak_verification_failed.js";
     do {                                     \
         this.will_reconsume_in(State.new_state); \
         this.m_state = State.new_state;          \
-        this.m_goto_target=#new_state \
+        this.m_goto_target=#new_state; \
         break _StartOfFunction;       \
     } while (0)
 
-// for goto _StartOfFunction
+// for(goto)=_StartOfFunction
 class StateSwitch {}
 
 
@@ -41,7 +41,7 @@ class StateSwitch {}
     do {                                \
         this.will_switch_to(this.m_return_state); \
         this.m_state = this.m_return_state;       \
-        this.m_goto_target="_StartOfFunction"  \
+        this.m_goto_target="_StartOfFunction";  \
         break _StartOfFunction;    \
     } while (0)
 
@@ -51,7 +51,7 @@ class StateSwitch {}
         this.m_state = this.m_return_state;                \
         if (current_input_character.has_value()) \
             this.restore_to(this.m_prev_utf8_iterator);    \
-        this.m_goto_target="_StartOfFunction"  \
+        this.m_goto_target="_StartOfFunction";  \
         break _StartOfFunction;    \
     } while (0)
 
@@ -68,15 +68,15 @@ class StateSwitch {}
 #define EMIT_CHARACTER_AND_RECONSUME_IN(code_point, new_state)          \
     do {                                                                \
         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point)); \
-        will_reconsume_in(State.new_state);                            \
-        m_state = State.new_state;                                     \
-        this.m_goto_target=#new_state \
+        this.will_reconsume_in(State.new_state);                            \
+        this.m_state = State.new_state;                                     \
+        this.m_goto_target=#new_state; \
         break _StartOfFunction;       \
     } while (0)
 
 #define FLUSH_CODEPOINTS_CONSUMED_AS_A_CHARACTER_REFERENCE      \
     do {                                                        \
-        for (let code_point of m_temporary_buffer) {            \
+        for (let code_point of this.m_temporary_buffer) {            \
             if (this.consumed_as_part_of_an_attribute()) {           \
                 this.m_current_builder.append_code_point(code_point);\
             } else {                                            \
@@ -116,7 +116,7 @@ class StateSwitch {}
     if (current_input_character.has_value() && is_ascii_hex_digit(current_input_character.value()))
 
 #define ON_WHITESPACE \
-    if (current_input_character.has_value() && is_ascii(current_input_character.value()) && "\t\n\f "sv.contains(current_input_character.value()))
+    if (current_input_character.has_value() && is_ascii(current_input_character.value()) && "\t\n\f ".contains(current_input_character.value()))
 
 #define ANYTHING_ELSE if (1)
 
@@ -1425,27 +1425,32 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON('"')
                             {
                                 this.log_parse_error();
-                                goto AnythingElseAttributeValueUnquoted;
+                                m_current_builder.append_code_point(current_input_character.value());
+                                continue;
                             }
                             ON('\'')
                             {
                                 this.log_parse_error();
-                                goto AnythingElseAttributeValueUnquoted;
+                                m_current_builder.append_code_point(current_input_character.value());
+                                continue;
                             }
                             ON('<')
                             {
                                 this.log_parse_error();
-                                goto AnythingElseAttributeValueUnquoted;
+                                m_current_builder.append_code_point(current_input_character.value());
+                                continue;
                             }
                             ON('=')
                             {
                                 this.log_parse_error();
-                                goto AnythingElseAttributeValueUnquoted;
+                                m_current_builder.append_code_point(current_input_character.value());
+                                continue;
                             }
                             ON('`')
                             {
                                 this.log_parse_error();
-                                goto AnythingElseAttributeValueUnquoted;
+                                m_current_builder.append_code_point(current_input_character.value());
+                                continue;
                             }
                             ON_EOF
                             {
@@ -1454,7 +1459,6 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                            AnythingElseAttributeValueUnquoted:
                                 m_current_builder.append_code_point(current_input_character.value());
                                 continue;
                             }
@@ -1716,8 +1720,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         // 13.2.5.72 Character reference state, https://html.spec.whatwg.org/multipage/parsing.html#character-reference-state
                         BEGIN_STATE(CharacterReference)
                         {
-                            m_temporary_buffer.clear();
-                            m_temporary_buffer.append('&');
+                            this.m_temporary_buffer.clear();
+                            this.m_temporary_buffer.append('&');
 
                             ON_ASCII_ALPHANUMERIC
                             {
@@ -1725,7 +1729,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON('#')
                             {
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 SWITCH_TO_WITH_UNCLEAN_BUILDER(NumericCharacterReference);
                             }
                             ANYTHING_ELSE
@@ -1746,7 +1750,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (match.has_value()) {
                                 skip(match->entity.length() - 1);
                                 for (let ch of match.value().entity)
-                                    m_temporary_buffer.append(ch);
+                                    this.m_temporary_buffer.append(ch);
 
                                 if (consumed_as_part_of_an_attribute() && !match.value().entity.ends_with(';')) {
                                     let next_code_point = peek_code_point(0);
@@ -1760,7 +1764,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                     this.log_parse_error();
                                 }
 
-                                m_temporary_buffer = match.value().code_points;
+                                this.m_temporary_buffer = match.value().code_points;
 
                                 FLUSH_CODEPOINTS_CONSUMED_AS_A_CHARACTER_REFERENCE;
                                 SWITCH_TO_RETURN_STATE;
@@ -1800,16 +1804,16 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         // 13.2.5.75 Numeric character reference state, https://html.spec.whatwg.org/multipage/parsing.html#numeric-character-reference-state
                         BEGIN_STATE(NumericCharacterReference)
                         {
-                            m_character_reference_code = 0;
+                            this.m_character_reference_code = 0;
 
                             ON('X')
                             {
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 SWITCH_TO_WITH_UNCLEAN_BUILDER(HexadecimalCharacterReferenceStart);
                             }
                             ON('x')
                             {
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 SWITCH_TO_WITH_UNCLEAN_BUILDER(HexadecimalCharacterReferenceStart);
                             }
                             ANYTHING_ELSE
@@ -1856,20 +1860,20 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON_ASCII_DIGIT
                             {
-                                m_character_reference_code *= 16;
-                                m_character_reference_code += current_input_character.value() - 0x30;
+                                this.m_character_reference_code *= 16;
+                                this.m_character_reference_code += current_input_character.value() - 0x30;
                                 continue;
                             }
                             ON_ASCII_UPPER_ALPHA
                             {
-                                m_character_reference_code *= 16;
-                                m_character_reference_code += current_input_character.value() - 0x37;
+                                this.m_character_reference_code *= 16;
+                                this.m_character_reference_code += current_input_character.value() - 0x37;
                                 continue;
                             }
                             ON_ASCII_LOWER_ALPHA
                             {
-                                m_character_reference_code *= 16;
-                                m_character_reference_code += current_input_character.value() - 0x57;
+                                this.m_character_reference_code *= 16;
+                                this.m_character_reference_code += current_input_character.value() - 0x57;
                                 continue;
                             }
                             ON(';')
@@ -1889,8 +1893,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON_ASCII_DIGIT
                             {
-                                m_character_reference_code *= 10;
-                                m_character_reference_code += current_input_character.value() - 0x30;
+                                this.m_character_reference_code *= 10;
+                                this.m_character_reference_code += current_input_character.value() - 0x30;
                                 continue;
                             }
                             ON(';')
@@ -1910,65 +1914,70 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             DONT_CONSUME_NEXT_INPUT_CHARACTER;
 
-                            if (m_character_reference_code == 0) {
+                            if (this.m_character_reference_code == 0) {
                                 this.log_parse_error();
-                                m_character_reference_code = 0xFFFD;
+                                this.m_character_reference_code = 0xFFFD;
                             }
-                            if (m_character_reference_code > 0x10ffff) {
+                            if (this.m_character_reference_code > 0x10ffff) {
                                 this.log_parse_error();
-                                m_character_reference_code = 0xFFFD;
+                                this.m_character_reference_code = 0xFFFD;
                             }
-                            if (is_unicode_surrogate(m_character_reference_code)) {
+                            if (is_unicode_surrogate(this.m_character_reference_code)) {
                                 this.log_parse_error();
-                                m_character_reference_code = 0xFFFD;
+                                this.m_character_reference_code = 0xFFFD;
                             }
-                            if (is_unicode_noncharacter(m_character_reference_code)) {
+                            if (is_unicode_noncharacter(this.m_character_reference_code)) {
                                 this.log_parse_error();
                             }
-                            if (m_character_reference_code == 0xd || (is_unicode_control(m_character_reference_code) && !is_ascii_space(m_character_reference_code))) {
+                            if (this.m_character_reference_code == 0xd || (is_unicode_control(this.m_character_reference_code) && !is_ascii_space(this.m_character_reference_code))) {
                                 this.log_parse_error();
-                                constexpr struct {
-                                    u32 number;
-                                    u32 code_point;
-                                } conversion_table[] = {
-                                    { 0x80, 0x20AC },
-                                    { 0x82, 0x201A },
-                                    { 0x83, 0x0192 },
-                                    { 0x84, 0x201E },
-                                    { 0x85, 0x2026 },
-                                    { 0x86, 0x2020 },
-                                    { 0x87, 0x2021 },
-                                    { 0x88, 0x02C6 },
-                                    { 0x89, 0x2030 },
-                                    { 0x8A, 0x0160 },
-                                    { 0x8B, 0x2039 },
-                                    { 0x8C, 0x0152 },
-                                    { 0x8E, 0x017D },
-                                    { 0x91, 0x2018 },
-                                    { 0x92, 0x2019 },
-                                    { 0x93, 0x201C },
-                                    { 0x94, 0x201D },
-                                    { 0x95, 0x2022 },
-                                    { 0x96, 0x2013 },
-                                    { 0x97, 0x2014 },
-                                    { 0x98, 0x02DC },
-                                    { 0x99, 0x2122 },
-                                    { 0x9A, 0x0161 },
-                                    { 0x9B, 0x203A },
-                                    { 0x9C, 0x0153 },
-                                    { 0x9E, 0x017E },
-                                    { 0x9F, 0x0178 },
+                                class X {
+                                    number: number;
+                                    code_point: number;
+                                    constructor(a,b) {
+                                        this.number=a;
+                                        this.code_point=b;
+                                    }
                                 };
+                                let conversion_table = [
+                                    new X(0x80,0x20AC),
+                                    new X(0x82,0x201A),
+                                    new X(0x83,0x0192),
+                                    new X(0x84,0x201E),
+                                    new X(0x85,0x2026),
+                                    new X(0x86,0x2020),
+                                    new X(0x87,0x2021),
+                                    new X(0x88,0x02C6),
+                                    new X(0x89,0x2030),
+                                    new X(0x8A,0x0160),
+                                    new X(0x8B,0x2039),
+                                    new X(0x8C,0x0152),
+                                    new X(0x8E,0x017D),
+                                    new X(0x91,0x2018),
+                                    new X(0x92,0x2019),
+                                    new X(0x93,0x201C),
+                                    new X(0x94,0x201D),
+                                    new X(0x95,0x2022),
+                                    new X(0x96,0x2013),
+                                    new X(0x97,0x2014),
+                                    new X(0x98,0x02DC),
+                                    new X(0x99,0x2122),
+                                    new X(0x9A,0x0161),
+                                    new X(0x9B,0x203A),
+                                    new X(0x9C,0x0153),
+                                    new X(0x9E,0x017E),
+                                    new X(0x9F,0x0178),
+                                ];
                                 for (let entry of conversion_table) {
-                                    if (m_character_reference_code == entry.number) {
-                                        m_character_reference_code = entry.code_point;
+                                    if (this.m_character_reference_code == entry.number) {
+                                        this.m_character_reference_code = entry.code_point;
                                         break;
                                     }
                                 }
                             }
 
-                            m_temporary_buffer.clear();
-                            m_temporary_buffer.append(m_character_reference_code);
+                            this.m_temporary_buffer.clear();
+                            this.m_temporary_buffer.append(this.m_character_reference_code);
                             FLUSH_CODEPOINTS_CONSUMED_AS_A_CHARACTER_REFERENCE;
                             SWITCH_TO_RETURN_STATE;
                         }
@@ -2007,7 +2016,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON('/')
                             {
-                                m_temporary_buffer.clear();
+                                this.m_temporary_buffer.clear();
                                 SWITCH_TO(RCDATAEndTagOpen);
                             }
                             ANYTHING_ELSE
@@ -2043,7 +2052,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (!current_end_tag_token_is_appropriate()) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
-                                    for (let code_point of m_temporary_buffer)
+                                    for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RCDATA);
                                 }
@@ -2055,7 +2064,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (!current_end_tag_token_is_appropriate()) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
-                                    for (let code_point of m_temporary_buffer)
+                                    for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RCDATA);
                                 }
@@ -2067,7 +2076,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (!current_end_tag_token_is_appropriate()) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
-                                    for (let code_point of m_temporary_buffer)
+                                    for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RCDATA);
                                 }
@@ -2075,14 +2084,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON_ASCII_UPPER_ALPHA
                             {
-                                m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 continue;
                             }
                             ON_ASCII_LOWER_ALPHA
                             {
-                                m_current_builder.append_code_point(current_input_character.value());
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_current_builder.append_code_point(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 continue;
                             }
                             ANYTHING_ELSE
@@ -2090,8 +2099,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
-                                m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer)
+                                this.m_current_builder.clear();
+                                for (let code_point of this.m_temporary_buffer)
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 RECONSUME_IN(RCDATA);
                             }
@@ -2126,7 +2135,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON('/')
                             {
-                                m_temporary_buffer.clear();
+                                this.m_temporary_buffer.clear();
                                 SWITCH_TO(RAWTEXTEndTagOpen);
                             }
                             ANYTHING_ELSE
@@ -2162,7 +2171,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (!current_end_tag_token_is_appropriate()) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
-                                    for (let code_point of m_temporary_buffer)
+                                    for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RAWTEXT);
                                 }
@@ -2174,7 +2183,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (!current_end_tag_token_is_appropriate()) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
-                                    for (let code_point of m_temporary_buffer)
+                                    for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RAWTEXT);
                                 }
@@ -2186,7 +2195,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (!current_end_tag_token_is_appropriate()) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
-                                    for (let code_point of m_temporary_buffer)
+                                    for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RAWTEXT);
                                 }
@@ -2194,14 +2203,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON_ASCII_UPPER_ALPHA
                             {
-                                m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 continue;
                             }
                             ON_ASCII_LOWER_ALPHA
                             {
-                                m_current_builder.append(current_input_character.value());
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_current_builder.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 continue;
                             }
                             ANYTHING_ELSE
@@ -2210,7 +2219,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer)
+                                for (let code_point of this.m_temporary_buffer)
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 RECONSUME_IN(RAWTEXT);
                             }
@@ -2264,7 +2273,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON('/')
                             {
-                                m_temporary_buffer.clear();
+                                this.m_temporary_buffer.clear();
                                 SWITCH_TO(ScriptDataEndTagOpen);
                             }
                             ON('!')
@@ -2345,12 +2354,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON('/')
                             {
-                                m_temporary_buffer.clear();
+                                this.m_temporary_buffer.clear();
                                 SWITCH_TO(ScriptDataEscapedEndTagOpen);
                             }
                             ON_ASCII_ALPHA
                             {
-                                m_temporary_buffer.clear();
+                                this.m_temporary_buffer.clear();
                                 EMIT_CHARACTER_AND_RECONSUME_IN('<', ScriptDataDoubleEscapeStart);
                             }
                             ANYTHING_ELSE
@@ -2390,7 +2399,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer) {
+                                for (let code_point of this.m_temporary_buffer) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 }
                                 RECONSUME_IN(ScriptDataEscaped);
@@ -2405,7 +2414,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer) {
+                                for (let code_point of this.m_temporary_buffer) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 }
                                 RECONSUME_IN(ScriptDataEscaped);
@@ -2420,7 +2429,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer) {
+                                for (let code_point of this.m_temporary_buffer) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 }
                                 RECONSUME_IN(ScriptDataEscaped);
@@ -2428,13 +2437,13 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON_ASCII_UPPER_ALPHA
                             {
                                 m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 continue;
                             }
                             ON_ASCII_LOWER_ALPHA
                             {
                                 m_current_builder.append(current_input_character.value());
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 continue;
                             }
                             ANYTHING_ELSE
@@ -2443,7 +2452,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer) {
+                                for (let code_point of this.m_temporary_buffer) {
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 }
                                 RECONSUME_IN(ScriptDataEscaped);
@@ -2455,11 +2464,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         BEGIN_STATE(ScriptDataDoubleEscapeStart)
                         {
                             let temporary_buffer_equal_to_script = () => {
-                                if (m_temporary_buffer.size() != 6)
+                                if (this.m_temporary_buffer.size() != 6)
                                     return false;
 
                                 // FIXME: Is there a better way of doing this?
-                                return m_temporary_buffer[0] == 's' && m_temporary_buffer[1] == 'c' && m_temporary_buffer[2] == 'r' && m_temporary_buffer[3] == 'i' && m_temporary_buffer[4] == 'p' && m_temporary_buffer[5] == 't';
+                                return this.m_temporary_buffer[0] == 's' && this.m_temporary_buffer[1] == 'c' && this.m_temporary_buffer[2] == 'r' && this.m_temporary_buffer[3] == 'i' && this.m_temporary_buffer[4] == 'p' && this.m_temporary_buffer[5] == 't';
                             };
                             ON_WHITESPACE
                             {
@@ -2484,12 +2493,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON_ASCII_UPPER_ALPHA
                             {
-                                m_temporary_buffer.append(to_ascii_lowercase(current_input_character.value()));
+                                this.m_temporary_buffer.append(to_ascii_lowercase(current_input_character.value()));
                                 EMIT_CURRENT_CHARACTER;
                             }
                             ON_ASCII_LOWER_ALPHA
                             {
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 EMIT_CURRENT_CHARACTER;
                             }
                             ANYTHING_ELSE
@@ -2592,7 +2601,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON('/')
                             {
-                                m_temporary_buffer.clear();
+                                this.m_temporary_buffer.clear();
                                 SWITCH_TO_AND_EMIT_CHARACTER('/', ScriptDataDoubleEscapeEnd);
                             }
                             ANYTHING_ELSE
@@ -2606,11 +2615,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         BEGIN_STATE(ScriptDataDoubleEscapeEnd)
                         {
                             let temporary_buffer_equal_to_script = () => {
-                                if (m_temporary_buffer.size() != 6)
+                                if (this.m_temporary_buffer.size() != 6)
                                     return false;
 
                                 // FIXME: Is there a better way of doing this?
-                                return m_temporary_buffer[0] == 's' && m_temporary_buffer[1] == 'c' && m_temporary_buffer[2] == 'r' && m_temporary_buffer[3] == 'i' && m_temporary_buffer[4] == 'p' && m_temporary_buffer[5] == 't';
+                                return this.m_temporary_buffer[0] == 's' && this.m_temporary_buffer[1] == 'c' && this.m_temporary_buffer[2] == 'r' && this.m_temporary_buffer[3] == 'i' && this.m_temporary_buffer[4] == 'p' && this.m_temporary_buffer[5] == 't';
                             };
                             ON_WHITESPACE
                             {
@@ -2635,12 +2644,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON_ASCII_UPPER_ALPHA
                             {
-                                m_temporary_buffer.append(to_ascii_lowercase(current_input_character.value()));
+                                this.m_temporary_buffer.append(to_ascii_lowercase(current_input_character.value()));
                                 EMIT_CURRENT_CHARACTER;
                             }
                             ON_ASCII_LOWER_ALPHA
                             {
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 EMIT_CURRENT_CHARACTER;
                             }
                             ANYTHING_ELSE
@@ -2735,7 +2744,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer)
+                                for (let code_point of this.m_temporary_buffer)
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 RECONSUME_IN(ScriptData);
                             }
@@ -2748,7 +2757,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer)
+                                for (let code_point of this.m_temporary_buffer)
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 RECONSUME_IN(ScriptData);
                             }
@@ -2761,20 +2770,20 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer)
+                                for (let code_point of this.m_temporary_buffer)
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 RECONSUME_IN(ScriptData);
                             }
                             ON_ASCII_UPPER_ALPHA
                             {
                                 m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 continue;
                             }
                             ON_ASCII_LOWER_ALPHA
                             {
                                 m_current_builder.append(current_input_character.value());
-                                m_temporary_buffer.append(current_input_character.value());
+                                this.m_temporary_buffer.append(current_input_character.value());
                                 continue;
                             }
                             ANYTHING_ELSE
@@ -2783,7 +2792,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 m_current_builder.clear();
-                                for (let code_point of m_temporary_buffer)
+                                for (let code_point of this.m_temporary_buffer)
                                     this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                 RECONSUME_IN(ScriptData);
                             }
