@@ -10,12 +10,12 @@ import {handle_requestAnimationFrame} from "./handle_requestAnimationFrame.js";
 
 /**
  * @argument {FakeWindow} window
- * @argument {PageLoaderState} state
+ * @argument {PageLoaderState} base_state
 */
-export function handle_onPageLoadStarted(window,state) {
+export function handle_onPageLoadStarted(window,base_state) {
 	var new_win;
 	new_win=new FakeWindow(new DomBadge);
-	let ex_state=new PageLoadStateType();
+	let state=base_state.page_load_state;
 	if(!state.dom_impl_badge) {
 		throw new Error("Expected dom_impl_badge on state");
 	}

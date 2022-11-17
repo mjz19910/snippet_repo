@@ -1,5 +1,5 @@
 import {HTMLLexerResult} from "./HTMLLexerResult.js";
-import {PageLoaderState} from "../../page_loader/PageLoaderState.js";
+import {PageLoaderState} from "../../page_loader/index.js";
 
 /**
  * @arg {PageLoaderState} state

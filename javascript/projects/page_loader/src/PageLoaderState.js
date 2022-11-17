@@ -1,5 +1,5 @@
 import {ClientRequest,IncomingMessage} from "http";
-import {fake} from "../../browser_fake_dom/index.js";
+import {fake,PageLoadStateType} from "../../browser_fake_dom/index.js";
 import {HTMLTokenizer} from "../../html_lexer/mod_index.js";
 import {fetch_url} from "./fetch_url.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
@@ -147,6 +147,7 @@ export class PageLoaderState {
 			}
 		}
 		this.url=url;
+		this.page_load_state=new PageLoadStateType();;
 	}
 	/**@type {string|undefined} */
 	stack_location;

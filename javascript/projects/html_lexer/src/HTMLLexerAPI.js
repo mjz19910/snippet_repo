@@ -1,4 +1,4 @@
-import {PageLoaderState} from "../page_loader/PageLoaderState.js";
+import {PageLoaderState} from "../page_loader/index.js";
 import {HTMLLexerResult} from "../html_lexer/src/HTMLLexerResult.js/index.js";
 import {HTMLLexerState} from "../html_lexer/src/HTMLTokenizer.js/index.js.js";
 import {lex_html} from "../html_lexer/src/lex_html.js/index.js";
