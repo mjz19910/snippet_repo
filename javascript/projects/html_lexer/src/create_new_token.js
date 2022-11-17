@@ -1,4 +1,4 @@
-import {HTMLToken} from "./HTMLToken.js";
+import {HTMLToken} from "./HTMLToken.1";
 
 /**
  * @param {import("./HTMLTokenizer.jstxt").HTMLTokenizer} state
