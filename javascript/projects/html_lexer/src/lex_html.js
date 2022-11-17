@@ -1,4 +1,4 @@
-import {get_html_lex_box} from "../../box_plugin/index.js";
+import {HTMLDataLexBox} from "../../box_plugin/index.js";
 import {NodeInternalData,PageLoaderState} from "../../page_loader/index.js";
 import {get_char_type} from "./get_char_type.js";
 import {HTMLLexerResult} from "./HTMLLexerResult";
@@ -95,7 +95,7 @@ export function lex_html(state,html) {
 		console.log(lexer.i,lexer.cur_char);
 	}
 	// stage 2, collect into tags marked if they open or close
-	/**@type {(HTMLDataLex|HTMLEntityLex|HTMLSpecialLex|HTMLTagLex)[]} */
+	/**@type {(HTMLDataLexBox|HTMLEntityLexBox|HTMLSpecialLex|HTMLTagLex)[]} */
 	let elements=[];
 	for(let i=0;i<lexer.lex_arr.length;i++) {
 		let item=lexer.lex_arr[i];
