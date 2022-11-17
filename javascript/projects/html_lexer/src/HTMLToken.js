@@ -1,13 +1,15 @@
 export class HTMLToken {
 	static Type=class {
-        /**@readonly*/ static Invalid=1
-        /**@readonly*/ static DOCTYPE=2
-        /**@readonly*/ static StartTag=3
-        /**@readonly*/ static EndTag=4
-        /**@readonly*/ static Comment=5
-        /**@readonly*/ static Character=6
-        /**@readonly*/ static EndOfFile=7
+        /**@readonly*/ static Invalid=0
+        /**@readonly*/ static DOCTYPE=1
+        /**@readonly*/ static StartTag=2
+        /**@readonly*/ static EndTag=3
+        /**@readonly*/ static Comment=4
+        /**@readonly*/ static Character=5
+        /**@readonly*/ static EndOfFile=6
 	}
+	/** @type {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']],number>} */
+	m_type;
 	/**
 	 * @param {number|string} code_num
 	 */
@@ -17,7 +19,6 @@ export class HTMLToken {
 		obj.set_code_point(code_num)
 		return obj
 	}
-	/**@arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type*/
 	constructor() {
 		this.m_type=HTMLToken.Type.Invalid;
 		this.m_data=null;
