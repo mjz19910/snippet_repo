@@ -83,8 +83,7 @@ export class MulCompression extends BaseCompression {
 	 * @arg {import("./X.js").X<T>[]} ret
 	 * @returns {[true, import("./X.js").X<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
-		if(this.did_compress(arr,ret))
-			return [true,ret];
+		if(this.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];
 	}
 	/** @arg {string[]} arr */
