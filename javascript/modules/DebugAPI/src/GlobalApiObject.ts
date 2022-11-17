@@ -4,28 +4,28 @@ import {IterExtensions} from "./IterExtensions";
 import {to_tuple_arr} from "./to_tuple_arr";
 import {CompressRepeated} from "./CompressRepeated";
 import {Repeat} from "./Repeat.js";
-import {VoidCallback} from "./VoidCallback.js";
 import {range_matches} from "./range_matches.js";
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 import {HexRandomDataGenerator} from "./HexRandomDataGenerator.js";
 import {EventListenerValue} from "./EventListenerValue.js";
 import {GenericDataEvent} from "./GenericDataEvent.js";
 import {Dumper} from "./Dumper.js";
-import {RustSimpleTokenizer} from "./RustSimpleTokenizer.js";
-import {RustTokenTreeParser} from "./RustTokenTreeParser.js";
+import {RustSimpleTokenizer} from "./debug_api/RustSimpleTokenizer.js";
+import {RustTokenTreeParser} from "./debug_api/RustTokenTreeParser.js";
 import {WeakValueRef} from "./WeakValueRef.js";
 import {CSSCascade} from "./CSSCascade.js";
 import {OriginState} from "./OriginState.js";
-import {RemoteOriginConnection} from "./RemoteOriginConnection.js";
-import {APIProxyManager} from "./APIProxyManager.js";
-import {LoggingEventTarget} from "./LoggingEventTarget.js";
-import {DebugAPI} from "./DebugAPI.js";
+import {RemoteOriginConnection} from "./debug_api/RemoteOriginConnection.js";
+import {APIProxyManager} from "./debug_api/APIProxyManager.js";
+import {LoggingEventTarget} from "./debug_api/LoggingEventTarget.js";
+import {DebugAPI} from "./debug_api/DebugAPI.js";
 import {GenericEventTarget} from "./GenericEventTarget.js";
 import {GenericEvent} from "./GenericEvent.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
 // DebugAPI
 export interface GlobalApiObject {
+	any_api_logger: APIProxyManager;
 	parse_html_to_binary_arr: (html: string) => unknown[];
 	run_modules_plugin: VoidCallbackWith<()=>void>;
 	run_wasm_plugin: VoidCallbackWith<()=>void>;

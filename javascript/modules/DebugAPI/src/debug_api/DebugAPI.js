@@ -2,16 +2,15 @@ import {APIProxyManager} from "./APIProxyManager";
 import {LoggingEventTarget} from "./LoggingEventTarget";
 import {RemoteOriginConnection} from "./RemoteOriginConnection";
 import {RustTokenTreeParser} from "./RustTokenTreeParser";
-import {static_event_target,random_data_generator} from "./mod";
+import {static_event_target,random_data_generator} from "../mod";
 
 export class DebugAPI {
 	constructor() {
 		let do_postMessage_logging=false;
 		if(do_postMessage_logging) {
-			this.any_api_logger.start_postMessage_proxy();
+			window.g_api.any_api_logger.start_postMessage_proxy();
 		}
 	}
-	any_api_logger=new APIProxyManager(new LoggingEventTarget);
 	next_remote_id=0;
 	data_store=new Map;
 	event_handler=static_event_target;

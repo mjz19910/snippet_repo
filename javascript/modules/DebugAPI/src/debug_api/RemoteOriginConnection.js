@@ -1,5 +1,5 @@
-import {OriginState} from "./OriginState";
-import {TransportMessageObj} from "./TransportMessageObj";
+import {OriginState} from "../OriginState";
+import {TransportMessageObj} from "../TransportMessageObj";
 
 export class RemoteOriginConnection {
 	// @Update on minor version change

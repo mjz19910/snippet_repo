@@ -14,13 +14,13 @@
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
 
-import {APIProxyManager} from "./APIProxyManager";
+import {APIProxyManager} from "./debug_api/APIProxyManager";
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator";
 import {CompressRepeated} from "./CompressRepeated";
 import {compress_main} from "./compress_main";
 import {CreateObjURLCache} from "./CreateObjURLCache";
 import {CSSCascade} from "./CSSCascade";
-import {DebugAPI} from "./DebugAPI";
+import {DebugAPI} from "./debug_api/DebugAPI";
 import {Dumper} from "./Dumper";
 import {EventListenerValue} from "./EventListenerValue";
 import {GenericDataEvent} from "./GenericDataEvent";
@@ -29,17 +29,17 @@ import {GenericEventTarget} from "./GenericEventTarget.js";
 import {getPlaybackRateMap} from "./getPlaybackRateMap";
 import {HexRandomDataGenerator} from "./HexRandomDataGenerator";
 import {IterExtensions} from "./IterExtensions";
-import {LoggingEventTarget} from "./LoggingEventTarget";
+import {LoggingEventTarget} from "./debug_api/LoggingEventTarget";
 import {NewTypeWrapper} from "./NewTypeWrapper.js";
 import {OriginState} from "./OriginState";
 import {parse_html_to_binary_arr} from "./parse_html_to_binary_arr";
 import {range_matches} from "./range_matches";
-import {RemoteOriginConnection} from "./RemoteOriginConnection";
+import {RemoteOriginConnection} from "./debug_api/RemoteOriginConnection";
 import {Repeat} from "./Repeat";
 import {run_modules_plugin} from "./run_modules_plugin";
 import {run_wasm_plugin} from "./run_wasm_plugin";
-import {RustSimpleTokenizer} from "./RustSimpleTokenizer";
-import {RustTokenTreeParser} from "./RustTokenTreeParser";
+import {RustSimpleTokenizer} from "./debug_api/RustSimpleTokenizer";
+import {RustTokenTreeParser} from "./debug_api/RustTokenTreeParser";
 import {to_tuple_arr} from "./to_tuple_arr";
 import {VoidCallback} from "./VoidCallback";
 import {WeakValueRef} from "./WeakValueRef";
@@ -120,6 +120,7 @@ g_api.CSSCascade=CSSCascade;
 g_api.OriginState=OriginState;
 g_api.ConnectToRemoteOrigin=RemoteOriginConnection;
 g_api.APIProxyManager=APIProxyManager;
+g_api.any_api_logger=new APIProxyManager(new LoggingEventTarget);
 g_api.LoggingEventTarget=LoggingEventTarget;
 export const html_parsing_div_element=document.createElement("div");
 g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
