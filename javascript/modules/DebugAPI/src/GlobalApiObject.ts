@@ -1,4 +1,4 @@
-import {getPlaybackRateMap} from "./mod.js";
+import {getPlaybackRateMap} from "./getPlaybackRateMap";
 import {CreateObjURLCache} from "./CreateObjURLCache";
 import {IterExtensions} from "./IterExtensions";
 import {to_tuple_arr} from "./to_tuple_arr";

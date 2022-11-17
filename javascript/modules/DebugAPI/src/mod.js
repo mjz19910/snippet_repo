@@ -26,6 +26,7 @@ import {EventListenerValue} from "./EventListenerValue";
 import {GenericDataEvent} from "./GenericDataEvent";
 import {GenericEvent} from "./GenericEvent.js";
 import {GenericEventTarget} from "./GenericEventTarget.js";
+import {getPlaybackRateMap} from "./getPlaybackRateMap";
 import {HexRandomDataGenerator} from "./HexRandomDataGenerator";
 import {IterExtensions} from "./IterExtensions";
 import {LoggingEventTarget} from "./LoggingEventTarget";
@@ -49,27 +50,6 @@ export let g_api=window.g_api??{};
 window.g_api=g_api;
 g_api.IterExtensions=IterExtensions;
 IterExtensions.init();
-/**
- * @param {boolean} include_uninteresting
- */
-export function getPlaybackRateMap(include_uninteresting) {
-	let progress_map=new Map;
-	if(include_uninteresting) {
-		let elem_list=document.querySelectorAll("ytd-compact-video-renderer:has(#overlays:not(* > #progress))");
-		elem_list.length>0&&progress_map.set("none",[...elem_list]);
-	}
-	let sel=(/**@type {string}*/e) => `ytd-compact-video-renderer:has(#progress[style="width: ${e}%;"])`;
-	for(let i=0;i<=100;i++) {
-		if(!include_uninteresting&&i===100) continue;
-		let elem=document.querySelectorAll(sel(i.toString()));
-		if(elem.length==1) {
-			progress_map.set("some:"+i,[...elem]);
-		} else if(elem.length>0) {
-			progress_map.set("some:"+i,[...elem]);
-		}
-	}
-	return progress_map;
-};
 g_api.getPlaybackRateMap=getPlaybackRateMap;
 g_api.CreateObjURLCache=CreateObjURLCache;
 CreateObjURLCache.enable();
@@ -135,43 +115,9 @@ export function init_decode() {
 	ids_dec=ids.value.map(e => JSON.parse(e));
 	id_map_str=new Map;
 }
-/**
- * @type {<T extends {}|{}[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
- */
-export function deep_eq(obj_1,obj_2) {
-	if(obj_1===obj_2)
-		return true;
-	if(obj_1 instanceof Array&&obj_2 instanceof Array) {
-		if(obj_1.length===obj_2.length) {
-			for(let i=0;i<obj_1.length;i++) {
-				let cur=obj_1[i];
-				let cur_other=obj_2[i];
-				if(!deep_eq(cur,cur_other)) {
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-	if(Object.getPrototypeOf(obj_1)===Object.prototype) {
-		let is_eq=deep_eq(Object.entries(obj_1),Object.entries(obj_2));
-		if(is_eq)
-			return true;
-		return false;
-	}
-	if(obj_1 instanceof Map&&obj_2 instanceof Map) {
-		return deep_eq([...obj_1.entries()],[...obj_2.entries()]);
-	}
-	throw new Error("Fixme");
-}
-/**
- * @type {AutoBuy}
- */
+/** @type {AutoBuy} */
 export let g_auto_buy=new AutoBuy;
-/**
- * @type {NewTypeWrapper<string[]>}
- */
+/** @type {NewTypeWrapper<string[]>} */
 export let src_arr=new NewTypeWrapper([]);
 /** @type {NewTypeWrapper<string[][]>} */
 export let id_groups=new NewTypeWrapper([]);
@@ -199,5 +145,3 @@ export const html_parsing_div_element=document.createElement("div");
 g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 g_api.DebugAPI=DebugAPI;
 export const debug_api=window.g_api.DebugAPI.the();
-
-export {};
