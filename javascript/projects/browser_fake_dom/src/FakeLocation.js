@@ -1,3 +1,4 @@
+import {any} from "./any.js";
 import {fake} from "./browse/fake.js";
 import {FakeDOMStringList} from "./FakeDOMStringList.js";
 import {DomBadge} from "./implementation/DomBadge.js";
@@ -34,6 +35,8 @@ class FakeURL {
 
 /**@implements {Location}*/
 export class FakeLocation {
+	/**@type {Location} */
+	X=any({});
 	/**@type {Badge|null} */
 	#dom_impl_badge=null;
 	#original_location_str;
@@ -48,10 +51,14 @@ export class FakeLocation {
 		return dom_list;
 	}
 	/**
-	 * @param {any} value_to_assign_location_to
+	 * @param {string|URL} value
 	 */
-	assign(value_to_assign_location_to) {
-		void value_to_assign_location_to;
+	assign(value) {
+		if(typeof value==='string') {
+			this.#location_url.href=value;
+		} else {
+			this.#location_url.href=value.href;
+		}
 	}
 	get hash() {return this.#location_url.hash;}
 	set hash(v) {this.#location_url.hash=v;}
