@@ -14,6 +14,7 @@ export class ReplPluginManager {
 	 */
 	setPrompt(arg0) {
 		let repl_internal=this.get_repl_runtime();
+		debugger;
 		if(repl_internal.X===void 0) {
 			console.log("unable use repl_internal as X is missing");
 		}
@@ -99,7 +100,7 @@ export class ReplPluginManager {
 		this.m_repl_runtime.displayPrompt();
 	}
 	refresh() {
-		this.m_repl_runtime?.displayPrompt();
+		this.get_repl_runtime().displayPrompt();
 	}
 	/**@arg {()=>void} callback */
 	do_logging(callback) {
