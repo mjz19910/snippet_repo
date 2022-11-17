@@ -16,7 +16,7 @@ export class CompressState {
 		this.ret=[];
 	}
 	/**@arg {<T>(v:{t:T}|{t:U})=>v is {t:U}} cast_func */
-	next(cast_func) {
+	run(cast_func) {
 		for(;this.i<this.arr.length;this.i++) {
 			let item=this.arr[this.i];
 			/**@template T @arg {T[]} v @returns {v is ['T', U]} */
