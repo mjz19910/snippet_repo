@@ -7,10 +7,10 @@ export class CompressState {
 	item;
 	/** @type {U[]} */
 	ret;
-	/** @param {T[]} arr @arg {U[]} ret */
-	constructor(arr,ret) {
+	/** @param {T[]} arr */
+	constructor(arr) {
 		this.arr=arr;
 		this.item=null;
-		this.ret=ret;
+		this.ret=[];
 	}
 }

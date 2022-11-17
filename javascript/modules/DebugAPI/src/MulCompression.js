@@ -29,17 +29,15 @@ export class MulCompression extends BaseCompression {
 	 * @todo (MulCompression,try_compress_dual)
 	 */
 	try_compress_dual(arr) {
-		/**@type {import("./TX.js").TX<string, number>[]} */
-		let ret=[];
-		let state=new CompressState(arr,ret);
+		/**@type {CompressState<import("./TU.js").TU<string, number>, import("./TX.js").TX<string, number>>} */
+		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
 			let use_item=this.compress_rle_TU_to_TX(state,item);
 			if(use_item) continue;
 			state.ret.push(item);
 		}
-		if(this.did_compress(arr,ret)) return [true,ret];
-		return [false,arr];
+		return this.compress_result_state(state);
 	}
 	/**
 	 * @template {import("./ST.js").ST} U
@@ -50,15 +48,15 @@ export class MulCompression extends BaseCompression {
 	try_compress_T(arr,constructor_key) {
 		/**@type {import("./X.js").X<T>[]} */
 		let ret=[];
-		let state=new CompressState(arr,ret);
+		/**@type {CompressState<T,import("./X.js").X<T>>} */
+		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
 			let use_item=this.compress_rle_T_X(state,item,constructor_key);
 			if(use_item) continue;
 			state.ret.push(item);
 		}
-		if(this.did_compress(arr,ret)) return [true,ret];
-		return [false,arr];
+		return this.compress_result_state(state);
 	}
 	/**
 	 * @template {import("./ST.js").ST} U
@@ -105,16 +103,15 @@ export class MulCompression extends BaseCompression {
 	}
 	/** @arg {string[]} arr */
 	try_compress(arr) {
-		/**@type {string[]} */
-		let ret=[];
-		let state=new CompressState(arr,ret);
+		/**@type {CompressState<string, string>} */
+		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
 			let use_item=this.compress_rle(state,item);
 			if(use_item) continue;
 			state.ret.push(item);
 		}
-		return this.compress_result(arr,ret);
+		return this.compress_result_state(state);
 	}
 	/**@arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
 	try_decompress(arr) {
