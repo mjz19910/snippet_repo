@@ -1,7 +1,6 @@
+import {get_cached_repl_plugin,PageLoaderState} from "../../../page_loader/index.js";
+import {ReplPluginManager} from "../../../repl_plugin/index.js";
 import {HTMLLexerResult} from "../HTMLLexerResult.js";
-import {get_cached_repl_plugin} from "../../../page_loader/index.js";
-import {PageLoaderState} from "../../../page_loader/index.js";
-import {ReplPluginManager} from "../../../repl_plugin/src/ReplPluginManager.js/index.js";
 import {LexContext} from "./LexContext";
 
 export class REPLHtmlLexPlugin {
