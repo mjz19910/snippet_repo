@@ -12,15 +12,15 @@ export class HTMLToken {
 	 * @param {number|string} code_num
 	 */
 	static make_character(code_num) {
-		let obj=new this(HTMLToken.Type.Character)
+		let obj=new this;
+		obj.m_type=HTMLToken.Type.Character;
 		obj.set_code_point(code_num)
 		return obj
 	}
 	/**@arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type*/
-	constructor(type) {
-		this.type=type
-		/*HTMLToken token { Type::Character }
-		token.set_code_point(code_point)*/
+	constructor() {
+		this.m_type=HTMLToken.Type.Invalid;
+		this.m_data=null;
 	}
 	/**
 	 * @param {number|string} code_point
