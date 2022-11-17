@@ -1,2 +1,2 @@
 
-export type ST={type: symbol;}&(new (...args: any) => any);
+export type ST=abstract new (...args: any) => any;
