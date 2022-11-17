@@ -5,18 +5,7 @@
         ? ak_verification_failed([#expr,"\n",__FILE__,":",__stringify(__LINE__)].join("")) \
         : void 0)
 
-export class HTMLToken {
-    static Position=SourcePosition;
-    static Type=HTMLToken_Type;
-    m_type: HTMLToken_Type|null;
-    m_data!: Variant<[Empty, u32, OwnPtr<DoctypeData>, OwnPtr<Vector<Attribute>>]>;
-    m_code_point: CodePoint|null = null;
-    m_start_position: SourcePosition|null = null;
-    m_string_data: any;
-    constructor() {
-        this.m_type=HTMLToken_Type.Invalid;
-        this.set_code_point(new CodePoint);
-    }
+export class HTMLToken extends HTMLTokenBase {
     static from_type(type:HTMLToken_Type): HTMLToken
     {
         let obj=new this;
