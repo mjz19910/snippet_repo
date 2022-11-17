@@ -1,5 +1,6 @@
 import {BaseCompression} from "./BaseCompression";
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
+import {CompressState} from "./CompressState";
 import {Repeat} from "./Repeat";
 
 let stats_calculator_info={
@@ -29,22 +30,6 @@ export class MulCompression extends BaseCompression {
 	try_compress_dual(arr) {
 		/**@type {import("./TX.js").TX<string, number>[]} */
 		let ret=[];
-		/**@template T @template U */
-		class CompressState {
-			i=0;
-			/** @type {T[]} */
-			arr;
-			/** @type {T|null} */
-			item;
-			/** @type {U[]} */
-			ret;
-			/** @param {T[]} arr @arg {U[]} ret */
-			constructor(arr,ret) {
-				this.arr=arr;
-				this.item=null;
-				this.ret=ret;
-			}
-		}
 		let state=new CompressState(arr,ret);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
