@@ -1,4 +1,4 @@
-import {fake} from "./browse/mod.js";
+import {fake} from "./browse/FakeHolder.js/index.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeNode} from "./FakeNode.js";
 import {DomBadge} from "./implementation/DomBadge.js";

@@ -9,13 +9,14 @@ import {FakeLocation} from "./FakeLocation.js";
 import {FakeStorage} from "./FakeStorage.js";
 import {NullBadge} from "./NullBadge.js";
 import {DomBadge} from "./implementation/DomBadge.js";
+import {intercept_setTimeoutAPI} from "./api/setTimeout.js";
 /**@implements {Window} */
 export class FakeWindow extends FakeWindowType {
 	/**@type {FakeDocument|null} */
 	#my_document=null;
 	/**@arg {DomBadge} _ */
 	has_document(_) {
-		return this.#my_document !== null;
+		return this.#my_document!==null;
 	}
 	// spell:ignore onbeforeinput
 	onbeforeinput=null;
@@ -35,8 +36,8 @@ export class FakeWindow extends FakeWindowType {
 	get devicePixelRatio() {throw no_impl();}
 	/**@type {FakeDocument} */
 	get document() {
-		if(!this.#my_document){
-			this.#my_document=new FakeDocument(this, new DomBadge);
+		if(!this.#my_document) {
+			this.#my_document=new FakeDocument(this,new DomBadge);
 		}
 		return this.#my_document;
 	}
@@ -438,6 +439,7 @@ export class FakeWindow extends FakeWindowType {
 		this.m_top=this;
 		this.location=new FakeLocation;
 		this.constructed_badge=badge;
+		this.setTimeout=intercept_setTimeoutAPI(this.setTimeout);
 	}
 }
 
