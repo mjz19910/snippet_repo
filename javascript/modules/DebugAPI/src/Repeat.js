@@ -17,14 +17,14 @@ export class Repeat {
 	/**
 	 * @template T
 	 * @arg {Map<T, Map<number, Repeat<T>>>} map
-	 * @arg {Repeat<T>} item
+	 * @arg {T} value
 	 * @param {number} times
 	 */
-	static get_with(map,item,times) {
+	static get_with(map,value,times) {
 		if(!map.has(value)) {
-			this.map.set(value,new Map);
+			map.set(value,new Map);
 		}
-		let tm_map=this.map.get(value);
+		let tm_map=map.get(value);
 		if(!tm_map)
 			throw new Error("no-reach");
 		if(tm_map.has(times)) {
