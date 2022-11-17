@@ -13,6 +13,10 @@ export class REPLFakeBrowserPlugin {
 	/**@type {ObjMaybeKeys|null}*/
 	obj=null;
 	enable() {
+		if(!this.obj) {
+			console.log("enable without obj");
+			return;
+		}
 		// TODO get fake passed in to us
 		// this.repl.context.get_fake_window = () => fake.window
 		// this.repl.context.get_fake_document = () => fake.document

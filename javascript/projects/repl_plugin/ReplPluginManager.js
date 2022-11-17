@@ -1,8 +1,8 @@
 import {spawnSync} from "child_process";
 import process from "process";
 import vm from 'vm';
+import {PageLoaderState} from "../page_loader/index.js";
 import {bind_plugins} from "./plugins/bind_plugins";
-import {ReplLocalState} from "./ReplLocalState";
 import {REPLServerRuntime} from "./REPLServerRuntime.js";
 import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
 
@@ -23,7 +23,7 @@ export class ReplPluginManager {
 	m_context=null;
 	/**@type {REPLServerRuntime|null} */
 	m_repl_runtime=null;
-	/** @arg {ReplLocalState} state */
+	/** @arg {PageLoaderState} state */
 	constructor(state) {
 		this.m_request_state=state;
 	}
@@ -101,15 +101,9 @@ export class ReplPluginManager {
 		}
 	}
 	/**
-	 * @param {ReplLocalState} state
+	 * @param {PageLoaderState} state
 	 */
 	update(state) {
 		this.m_request_state=state;
 	}
-}
-
-export function use_types() {
-	return [
-		ReplLocalState,
-	];
 }

@@ -1,7 +1,7 @@
 import {ReplPluginManager} from "../ReplPluginManager.js";
-import {create_plugins} from "./create_plugins.js";
-import {enable_plugins} from "./enable_plugins.js";
-import {plugins} from "./mod";
+import {REPLCommandsPlugin} from "./REPLCommandsPlugin.js";
+import {REPLContextPlugin} from "./REPLContextPlugin.js";
+import {REPLFakeBrowserPlugin} from "./REPLFakeBrowserPlugin.js";
 
 /**
  * @param {ReplPluginManager} manager
@@ -9,5 +9,7 @@ import {plugins} from "./mod";
 
 export function bind_plugins(manager) {
 	console.log('plug bind');
-	enable_plugins(create_plugins(plugins,manager));
+	new REPLCommandsPlugin(manager).enable();
+	new REPLContextPlugin(manager).enable();
+	new REPLFakeBrowserPlugin(manager).enable();
 }

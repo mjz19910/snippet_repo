@@ -4,6 +4,7 @@ export {DOMTagDescription} from "./src/DOMTagDescription.js";
 export {DOMTagLoadHandlers} from "./src/DOMTagLoadHandlers.js";
 export {do_exec} from "./src/do_exec.js";
 export {fetch_url} from "./src/fetch_url.js";
+export {get_cached_repl_plugin} from "./src/get_cached_repl_plugin.js";
 export {make_reload_page_request_handler} from "./src/make_reload_page_request_handler.js";
 export {NodeInternalData} from "./src/NodeInternalData.js";
 export {on_page_data_loaded} from "./src/on_page_data_loaded.js";
