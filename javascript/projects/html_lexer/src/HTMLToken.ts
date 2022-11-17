@@ -77,7 +77,7 @@ export function use_types() {
     ] as const;
 }
 
-abstract class HTMLTokenBase {
+class HTMLTokenBase {
     static Position=SourcePosition;
     static Type=HTMLToken_Type;
     m_type: HTMLToken_Type|null;
@@ -85,7 +85,9 @@ abstract class HTMLTokenBase {
     m_code_point: CodePoint|null = null;
     m_start_position: SourcePosition|null = null;
     m_string_data: any;
-    abstract set_code_point(v:CodePoint):void;
+    set_code_point(code_point: CodePoint|null) {
+        this.m_code_point=code_point;
+    }
     constructor() {
         this.m_type=HTMLToken_Type.Invalid;
         this.m_data=new Variant(any([]));
