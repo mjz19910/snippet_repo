@@ -15,12 +15,13 @@ export class MulCompression extends BaseCompression {
 	 * @arg {import("./TU.js").TU<string, number>} item
 	 */
 	compress_rle_TU_to_TX(state,item) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return;
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return true;
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return;
+		if(off==1) return true;
 		state.ret.push(Repeat.from_TU_entry(item,off));
 		state.i+=off-1;
+		return true;
 	}
 	/**
 	 * @param {import("./TU.js").TU<string, number>[]} arr
@@ -33,7 +34,8 @@ export class MulCompression extends BaseCompression {
 		let state=new CompressState(arr,ret);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
-			this.compress_rle_TU_to_TX(state,item);
+			let use_item=this.compress_rle_TU_to_TX(state,item);
+			if(use_item) continue;
 			state.ret.push(item);
 		}
 		if(this.did_compress(arr,ret)) return [true,ret];
@@ -51,7 +53,8 @@ export class MulCompression extends BaseCompression {
 		let state=new CompressState(arr,ret);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
-			this.compress_rle_T_X(state,item,constructor_key);
+			let use_item=this.compress_rle_T_X(state,item,constructor_key);
+			if(use_item) continue;
 			state.ret.push(item);
 		}
 		if(this.did_compress(arr,ret)) return [true,ret];
@@ -65,14 +68,15 @@ export class MulCompression extends BaseCompression {
 	 * @arg {U} constructor_key
 	 * */
 	compress_rle_T_X(state,item,constructor_key) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return;
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return;
+		if(off==1) return false;
 		let mp=Repeat.N.get_map_T(constructor_key,item);
 		Repeat.get_with(mp,item,off);
 		state.ret.push(new Repeat(item,off));
 		state.i+=off-1;
+		return true;
 	}
 
 	/**
@@ -86,25 +90,29 @@ export class MulCompression extends BaseCompression {
 		if(this.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];
 	}
+	/**
+	 * @param {{i:number,arr:string[],ret:string[]}} state
+	 * @arg {string} item
+	 */
+	compress_rle(state,item) {
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
+		let off=1;
+		while(item===state.arr[state.i+off]) off++;
+		if(off==1) return false;
+		state.ret.push(`${item}${off}`);
+		state.i+=off-1;
+		return true;
+	}
 	/** @arg {string[]} arr */
 	try_compress(arr) {
+		/**@type {string[]} */
 		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(i+1<arr.length) {
-				if(item===arr[i+1]) {
-					let off=1;
-					while(item===arr[i+off]) {
-						off++;
-					}
-					if(off>1) {
-						ret.push(`${item}${off}`);
-						i+=off-1;
-						continue;
-					}
-				}
-			}
-			ret.push(item);
+		let state=new CompressState(arr,ret);
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle(state,item);
+			if(use_item) continue;
+			state.ret.push(item);
 		}
 		return this.compress_result(arr,ret);
 	}
