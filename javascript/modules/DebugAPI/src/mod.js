@@ -35,7 +35,7 @@ import {OriginState} from "./OriginState";
 import {parse_html_to_binary_arr} from "./parse_html_to_binary_arr";
 import {range_matches} from "./range_matches";
 import {RemoteOriginConnection} from "./debug_api/RemoteOriginConnection";
-import {Repeat} from "./Repeat";
+import {Repeat} from "./repeat/Repeat";
 import {run_modules_plugin} from "./run_modules_plugin";
 import {run_wasm_plugin} from "./run_wasm_plugin";
 import {RustSimpleTokenizer} from "./debug_api/RustSimpleTokenizer";

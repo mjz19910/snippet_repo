@@ -1,7 +1,7 @@
 import {BaseCompression} from "./BaseCompression";
-import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator.js/index.js";
+import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 import {CompressState} from "./CompressState";
-import {Repeat} from "./Repeat";
+import {Repeat} from "../repeat/Repeat";
 
 let stats_calculator_info={
 	stats_calculator: new CompressionStatsCalculator,
@@ -11,8 +11,8 @@ let stats_calculator_info={
 
 export class MulCompression extends BaseCompression {
 	/**
-	 * @param {{i:number,arr:import("./TU.js").TU<string, number>[],ret:import("./TX.js").TX<string, number>[]}} state
-	 * @arg {import("./TU.js").TU<string, number>} item
+	 * @param {{i:number,arr:import("../repeat/TU.js").TU<string, number>[],ret:import("../repeat/TX.js").TX<string, number>[]}} state
+	 * @arg {import("../repeat/TU.js").TU<string, number>} item
 	 */
 	compress_rle_TU_to_TX(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return true;
@@ -24,12 +24,12 @@ export class MulCompression extends BaseCompression {
 		return true;
 	}
 	/**
-	 * @param {import("./TU.js").TU<string, number>[]} arr
-	 * @returns {import("./DualR.js").DualR}
+	 * @param {import("../repeat/TU.js").TU<string, number>[]} arr
+	 * @returns {import("../DualR.js").DualR}
 	 * @todo (MulCompression,try_compress_dual)
 	 */
 	try_compress_dual(arr) {
-		/**@type {CompressState<import("./TU.js").TU<string, number>, import("./TX.js").TX<string, number>>} */
+		/**@type {CompressState<import("../repeat/TU.js").TU<string, number>, import("../repeat/TX.js").TX<string, number>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -40,15 +40,15 @@ export class MulCompression extends BaseCompression {
 		return this.compress_result_state(state);
 	}
 	/**
-	 * @template {import("./ST.js").ST} U
+	 * @template {import("../repeat/ST.js").ST} U
 	 * @template {InstanceType<U>} T
 	 * @arg {U} constructor_key
 	 * @arg {T[]} arr
-	 * @returns {[true, import("./X.js").X<T>[]]|[false,T[]]} */
+	 * @returns {[true, import("../repeat/X.js").X<T>[]]|[false,T[]]} */
 	try_compress_T(arr,constructor_key) {
-		/**@type {import("./X.js").X<T>[]} */
+		/**@type {import("../repeat/X.js").X<T>[]} */
 		let ret=[];
-		/**@type {CompressState<T,import("./X.js").X<T>>} */
+		/**@type {CompressState<T,import("../repeat/X.js").X<T>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -59,9 +59,9 @@ export class MulCompression extends BaseCompression {
 		return this.compress_result_state(state);
 	}
 	/**
-	 * @template {import("./ST.js").ST} U
+	 * @template {import("../repeat/ST.js").ST} U
 	 * @template {InstanceType<U>} T
-	 * @arg {CompressState<T, import("./X.js").X<T>>} state
+	 * @arg {CompressState<T, import("../repeat/X.js").X<T>>} state
 	 * @arg {T} item
 	 * @arg {U} constructor_key
 	 * */
@@ -82,8 +82,8 @@ export class MulCompression extends BaseCompression {
 	 * @template {abstract new (...args: any) => any} U
 	 * @arg {U} _
 	 * @arg {T[]} arr
-	 * @arg {import("./X.js").X<T>[]} ret
-	 * @returns {[true, import("./X.js").X<T>[]]|[false,T[]]} */
+	 * @arg {import("../repeat/X.js").X<T>[]} ret
+	 * @returns {[true, import("../repeat/X.js").X<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
 		if(this.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];

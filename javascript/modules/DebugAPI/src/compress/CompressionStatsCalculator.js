@@ -1,4 +1,4 @@
-import {MulCompression} from "../MulCompression";
+import {MulCompression} from "./MulCompression";
 import {range_matches} from "../range_matches";
 import {to_tuple_arr} from "../to_tuple_arr";
 import {max_id} from "../mod";

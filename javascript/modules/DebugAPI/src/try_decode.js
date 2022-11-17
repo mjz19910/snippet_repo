@@ -1,4 +1,4 @@
-import {Repeat} from "./Repeat";
+import {Repeat} from "./repeat/Repeat";
 import {dr_map,id_map,ids_dec} from "./mod";
 import {decode_map} from "./decode_map";
 

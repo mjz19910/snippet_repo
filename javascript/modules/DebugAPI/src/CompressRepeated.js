@@ -1,4 +1,4 @@
-import {Repeat} from "./Repeat";
+import {Repeat} from "./repeat/Repeat";
 
 export class CompressRepeated {
 	/** @template T @param {T[]} src @param {(T|Repeat<T>)[]} dst */

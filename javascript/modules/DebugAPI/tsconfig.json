@@ -1,7 +1,8 @@
 {
 	"compilerOptions": {
-		"experimentalDecorators": true,
-		"target": "esnext",
+		"target": "ESNext",
+		"module": "NodeNext",
+		"moduleResolution": "Node16",
 		"lib": [
 			"esnext",
 			"DOM"
@@ -10,17 +11,16 @@
 			"jquery",
 			"node",
 		],
-		"declaration": true,
-		"module": "Node16",
-		"moduleResolution": "Node",
-		"sourceMap": true,
-		"noImplicitAny": true,
 		"outDir": "./build",
 		"typeRoots": [
 			"~/workspace/node_types/node_modules/@types"
 		],
 		"allowJs": true,
 		"checkJs": true,
+		"declaration": true,
+		"experimentalDecorators": true,
+		"noImplicitAny": true,
+		"sourceMap": true,
 		"strict": true,
 	},
 	"include": [

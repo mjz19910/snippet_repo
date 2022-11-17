@@ -1,5 +1,5 @@
-import {TU} from "./TU";
-import {X} from "./X";
+import {TU} from "./repeat/TU";
+import {X} from "./repeat/X";
 import {IDValueBase} from "./IDValueBase";
 
 
