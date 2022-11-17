@@ -23,13 +23,13 @@ export function calc_next(stats,obj,max_id) {
 	next.arr_dual=stats.replace_range(obj.arr_str,rep_val,max_id);
 	if(next.arr_str)
 		return null;
-	/**@type {DualR} */
+	/**@type {import("./DualR.js").DualR} */
 	let compress_result=stats.compressor.try_compress_dual(next.arr_dual);
 	if(!compress_result[0]) {
-		/**@type {TU<string, number>[]} */
+		/**@type {import("./TU.js").TU<string, number>[]} */
 		let res=[];
 		for(let i of compress_result[1]) {
-			/**@type {TU<string, number>|[]} */
+			/**@type {import("./TU.js").TU<string, number>|[]} */
 			let res_1=[];
 			switch(i[0]) {
 				case 'T': if(typeof i[1]==='string')

@@ -27,6 +27,7 @@ import {GenericDataEvent} from "./GenericDataEvent";
 import {GenericEvent} from "./GenericEvent.js";
 import {GenericEventTarget} from "./GenericEventTarget.js";
 import {getPlaybackRateMap} from "./getPlaybackRateMap";
+import {GObjType} from "./GObjType.js";
 import {HexRandomDataGenerator} from "./HexRandomDataGenerator";
 import {IterExtensions} from "./IterExtensions";
 import {LoggingEventTarget} from "./LoggingEventTarget";
@@ -43,7 +44,7 @@ import {RustTokenTreeParser} from "./RustTokenTreeParser";
 import {to_tuple_arr} from "./to_tuple_arr";
 import {VoidCallback} from "./VoidCallback";
 import {WeakValueRef} from "./WeakValueRef";
-import {AutoBuy} from "./__global.js";
+import {AutoBuy} from "./AutoBuy";
 
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
@@ -68,21 +69,11 @@ g_api.CompressionStatsCalculator=CompressionStatsCalculator;
 
 g_api.range_matches=range_matches;
 
-export let compressionStatsCalc=new CompressionStatsCalculator;
-/**
- * @type {NewTypeWrapper<string[]>}
- */
+/** @type {NewTypeWrapper<string[]>} */
 export let ids=new NewTypeWrapper([]);
-/**
- * @param {string} value
- */
-export function get_ids(value) {
-	return ids.value.indexOf(value);
-}
 export let max_id=new NewTypeWrapper(0);
-/**
- * @type {NewTypeWrapper<any[]>}
- */
+
+/** @type {NewTypeWrapper<IValue[]>} */
 export let g_obj_arr=new NewTypeWrapper([]);
 /**
  * @type {any[]}

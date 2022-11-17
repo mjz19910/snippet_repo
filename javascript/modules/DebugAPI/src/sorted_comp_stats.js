@@ -1,5 +1,4 @@
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
-import {compressionStatsCalc} from "./mod";
 
 /**
  * @arg {CompressionStatsCalculator} calc_stats

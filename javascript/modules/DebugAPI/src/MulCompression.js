@@ -10,12 +10,12 @@ let stats_calculator_info={
 
 export class MulCompression extends BaseCompression {
 	/**
-	 * @param {TU<string, number>[]} arr
-	 * @returns {DualR}
+	 * @param {import("./TU.js").TU<string, number>[]} arr
+	 * @returns {import("./DualR.js").DualR}
 	 * @todo (MulCompression,try_compress_dual)
 	 */
 	try_compress_dual(arr) {
-		/**@type {TX<string, number>[]} */
+		/**@type {import("./TX.js").TX<string, number>[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -42,13 +42,13 @@ export class MulCompression extends BaseCompression {
 		return [false,arr];
 	}
 	/**
-	 * @template {ST} U
+	 * @template {import("./ST.js").ST} U
 	 * @template {InstanceType<U>} T
 	 * @arg {U} c_k
 	 * @arg {T[]} arr
-	 * @returns {[true, X<T>[]]|[false,T[]]} */
+	 * @returns {[true, import("./X.js").X<T>[]]|[false,T[]]} */
 	try_compress_T(c_k,arr) {
-		/**@type {X<T>[]} */
+		/**@type {import("./X.js").X<T>[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -77,8 +77,8 @@ export class MulCompression extends BaseCompression {
 	 * @template {abstract new (...args: any) => any} U
 	 * @arg {U} _
 	 * @arg {T[]} arr
-	 * @arg {X<T>[]} ret
-	 * @returns {[true, X<T>[]]|[false,T[]]} */
+	 * @arg {import("./X.js").X<T>[]} ret
+	 * @returns {[true, import("./X.js").X<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
 		if(this.did_compress(arr,ret))
 			return [true,ret];

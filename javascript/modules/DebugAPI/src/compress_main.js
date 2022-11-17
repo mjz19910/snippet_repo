@@ -3,8 +3,10 @@ import {flat_obj} from "./flat_obj";
 import {make_group_from_item} from "./make_group_from_item";
 import {NumType} from "./NumType";
 import {run_calc} from "./run_calc";
-import {g_auto_buy,src_arr,ids,id_groups,el_ids,get_ids,compressionStatsCalc, max_id, g_obj_arr} from "./mod";
+import {g_auto_buy,src_arr,ids,id_groups,el_ids,max_id,g_obj_arr} from "./mod";
+import {get_ids} from "./get_ids";
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
+import {IDValueData} from "./IDValueData.js";
 
 /**
  * @param {CompressionStatsCalculator} stats
@@ -24,12 +26,9 @@ export function compress_main(stats) {
 	}
 	el_ids.value=src_arr.value.map(get_ids);
 	max_id.value=new Set(el_ids.value).size;
-	let arr=compressionStatsCalc.compressor.try_compress_T(NumType,el_ids.value);
-	/**@type {IValue} */
-	let obj_start={
-		id: 0,
-		arr_rep: el_ids.value,
-	};
+	let arr=stats.compressor.try_compress_T(NumType,el_ids.value);
+	let obj_start=new IDValueData(0,null);
+	obj_start.arr_rep=el_ids.value;
 	if(arr[0]===true) {
 		obj_start.arr_rep_num=arr[1];
 	} else if(arr[0]===false) {
@@ -37,24 +36,17 @@ export function compress_main(stats) {
 	}
 	for(let i=0,cur=obj_start;i<3000;i++) {
 		let comp_res=run_calc(stats,cur);
-		if(!cur.stats)
-			throw new Error();
-		let obj=cur;
-		if(obj.log_val&&comp_res===null) {
-			console.log('id:'+obj.id,'[',...obj.log_val,']',obj.stats_win);
+		if(!cur.stats) break;
+		if(cur.log_val&&comp_res===null) {
+			console.log('id:'+cur.id,'[',...cur.log_val,']',cur.stats_win);
 		}
-		if(cur.stats.length===0) {
-			break;
+		if(cur.stats.length===0) break;
+		if(cur.stats[0][1]===1) break;
+		if(!cur.next) break;
+		if(!(cur.next instanceof IDValueData)) {
+			throw new Error("Don't know how to use this type (cur.next is not IDValueData)");
 		}
-		if(cur.stats[0][1]===1) {
-			break;
-		}
-		if(cur.next) {
-			cur=cur.next;
-			continue;
-		} else {
-			break;
-		}
+		cur=cur.next;
 	}
 	g_obj_arr.value=flat_obj(obj_start);
 }

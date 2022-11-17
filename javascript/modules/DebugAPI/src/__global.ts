@@ -1,6 +1,5 @@
 import {GlobalApiObject} from "./GlobalApiObject";
-import {MulCompression} from "./MulCompression.js";
-import {Repeat} from "./Repeat.js";
+import {IDValueData} from "./IDValueData";
 
 export {};
 
@@ -8,60 +7,10 @@ declare global {
 	interface NodeListOf<TNode extends Node> extends NodeList {
 		[Symbol.iterator](): IterableIterator<TNode>;
 	}
-	type TU<A,B>=["T", A]|["U", B];
-
-	type X<T>=T|Repeat<T>;
-	type TX<A,B>=["T", X<A>]|["U", X<B>];
-
-	type ST={type:symbol} & (new (...args: any) => any);
-
-	type DualR=[false, TU<string,number>[]] | [true, TX<string,number>[]];
-}
-
-export class AutoBuy {
-	compressor: MulCompression = new MulCompression;
-	state_history_arr: string[]=[];
-}
-
-export type TU<A,B>=["T", A]|["U", B];
-
-export type X<T>=T|Repeat<T>;
-export type TX<A,B>=["T", X<A>]|["U", X<B>];
-
-export type ST={type:symbol} & (new (...args: any) => any);
-
-export type DualR=[false, TU<string,number>[]] | [true, TX<string,number>[]];
-
-export type SafeFunctionPrototype={
-	apply: (this: Function, thisArg: any, argArray?: any) => any;
-	bind: (this: Function, thisArg: any, ...argArray: any[]) => any;
-	call: (this: Function, thisArg: any, ...argArray: any[]) => any;
-};
-
-export interface WithId {
-	id: number;
 }
 
 declare global {
-	interface IDValueData {
-		arr_dual: TU<string, number>[];
-		arr_dual_x: TU<X<string>,X<number>>[];
-		arr_rep_str: X<string>[];
-		arr_rep_num: X<number>[];
-		arr_str: string[];
-		arr_num: number[];
-		next: IValue;
-		value: [number,'=',number];
-		arr_rep: number[];
-		log_val: [number,'=',string,number];
-		stats: [string,number][];
-		stats_win: number;
-	}
-
-
-	type IValue=WithId&Partial<IDValueData>;
-
-
+	type IValue=IDValueData;
 
 	interface Window {
 		g_api: GlobalApiObject;
