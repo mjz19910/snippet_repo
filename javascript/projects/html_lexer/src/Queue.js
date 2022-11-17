@@ -1,18 +1,18 @@
 /** @template T */
-
 export class Queue {
+    /** @arg {T} arg0 */
+    enqueue(arg0) {
+        this.array_que.push(arg0);
+    }
     /**@returns {T} */
     dequeue() {
-        let last=this.queue.pop();
-        if(last === void 0) throw new Error("");
+        let last=this.array_que.pop();
+        if(last===void 0) throw new Error("");
         return last;
     }
     is_empty() {
-        return this.queue.length===0;
+        return this.array_que.length===0;
     }
     /**@type {T[]} */
-    queue;
-    constructor() {
-        this.queue=[];
-    }
+    array_que=[];
 }

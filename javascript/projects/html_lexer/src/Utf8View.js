@@ -1,8 +1,23 @@
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
 
 export class Utf8View {
-    m_value=[];
+    begin() {
+        let iter=new Utf8CodePointIterator;
+        iter.target=this.m_value;
+        iter.pos=0;
+        return iter;
+    }
+    /**@arg {string} m_decoded_input */
+    static from(m_decoded_input) {
+        let val=new this;
+        val.m_value=m_decoded_input;
+        return val;
+    }
+    m_value="";
     end() {
-        return new Utf8CodePointIterator(this.m_value,this.m_value.length);
+        let iter=new Utf8CodePointIterator;
+        iter.target=this.m_value;
+        iter.pos=this.m_value.length;
+        return iter;
     }
 }

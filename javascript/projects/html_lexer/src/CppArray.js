@@ -1,5 +1,9 @@
 /**@template T */
 export class CppVector {
+    /** @param {T} arg0 */
+    empend(arg0) {
+		this.inner.push(arg0);
+    }
 	clear_with_capacity() {
 		this.inner.length=0;
 	}

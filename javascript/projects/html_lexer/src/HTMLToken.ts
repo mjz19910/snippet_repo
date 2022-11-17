@@ -96,6 +96,9 @@ class HTMLTokenBase {
 
 
 export class HTMLToken extends HTMLTokenBase {
+    ensure_doctype_data() {
+        throw new Error("Method not implemented.");
+    }
     opt(): Optional<HTMLToken> {
         return new Optional(this);
     }

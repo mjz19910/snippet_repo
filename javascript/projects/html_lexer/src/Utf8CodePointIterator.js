@@ -19,10 +19,10 @@ export class Utf8CodePointIterator {
 	sub(new_iterator) {
 		return this.pos-new_iterator.pos;
 	}
-	/** @type {string[]} */
+	/** @type {string} */
 	target;
 	constructor() {
-		this.target=[];
+		this.target="";
 		this.pos=0;
 	}
 }
