@@ -1,6 +1,6 @@
 import path,{relative} from "path";
 import {default as process} from "process";
-import {do_create_window,fake,handle_onPageLoadStarted} from "../../browser_fake_dom/index.js";
+import {fake,handle_onPageLoadStarted} from "../../browser_fake_dom/index.js";
 import {fetch_url} from "../../ipc_api/index.js";
 import {import_ipc_plugin} from "../../ipc_api/index.js";
 import {ipc_loader_state} from "../../ipc_api/index.js";
@@ -58,7 +58,6 @@ function main() {
 	}
 	let url=cmd_argv[0];
 	let state=new PageLoaderState(url,{no_repl,follow_redirects});
-	if(!fake.window) fake.window=do_create_window();
 	handle_onPageLoadStarted(fake.window,state);
 	async_main(url);
 }
