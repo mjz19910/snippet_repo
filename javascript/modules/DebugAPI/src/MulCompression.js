@@ -10,8 +10,10 @@ let stats_calculator_info={
 
 export class MulCompression extends BaseCompression {
 	/**
+	 * @template T
 	 * @param {import("./TU.js").TU<string, number>[]} arr
-	 * @returns {import("./DualR.js").DualR}
+	 * @returns {T}
+	 * // import("./DualR.js").DualR
 	 * @todo (MulCompression,try_compress_dual)
 	 */
 	try_compress_dual(arr) {
