@@ -1,15 +1,15 @@
-import {fake,PageLoadStateType} from "../browser_fake_dom/index.js";
+import {fake} from "../browser_fake_dom/index.js";
 import {on_page_data_loaded,PageLoaderState} from "../page_loader/index.js";
 
 /**
- * @param {PageLoadStateType} state
+ * @param {PageLoaderState} state
  */
 export function init_wget(state) {
 }
 /**
  * @arg {Uint8Array} page_content
  * @arg {string} page_url
- * @param {PageLoadStateType} state
+ * @param {PageLoaderState} state
  */
 export function wget_on_static_page_load(state,page_content,page_url) {
 	if(!fake.document) throw new Error("No document");

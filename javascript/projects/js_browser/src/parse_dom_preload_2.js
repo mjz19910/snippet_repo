@@ -21,7 +21,7 @@ function usage(long_help,node_path,script_path) {
 
 Options:
   --follow-redirects                follow redirects from the server
-  --no-repl                         dont start the repl
+  --no-repl                         don't start the repl
   --help                            show this text
 `);
 	} else {

@@ -199,7 +199,7 @@ export class REPLServerRuntime extends RLInterface {
 	/**
 	 * @type {this['X']['setupHistory']}
 	 * @param {string} path
-	 * @param {import('./REPLServerRuntime.ty.js').CallbackType} callback
+	 * @param {import('./CallbackType.js').CallbackType} callback
 	 */
 	setupHistory(path,callback) {
 		this.X.setupHistory(path,callback);
