@@ -1,14 +1,9 @@
-import {NodeInternalData} from "../../page_loader/index.js";
-import {PageLoaderState} from "../../page_loader/index.js";
-import {HTMLDataLex} from "../../box_plugin/index.js";
-import {HTMLEntityLex} from "../../box_plugin/index.js";
-import {HTMLSpecialLex} from "../../box_plugin/index.js";
-import {HTMLTagLex} from "../../box_plugin/index.js";
+import {HTMLDataLexBox,HTMLEntityLexBox,HTMLSpecialLexBox,HTMLTagLexBox} from "../../box_plugin/index.js";
+import {NodeInternalData,PageLoaderState} from "../../page_loader/index.js";
 
 /**
- * @typedef {(HTMLDataLex | HTMLEntityLex | HTMLSpecialLex | HTMLTagLex)[]} ElementArray
+ * @typedef {(HTMLDataLexBox | HTMLEntityLexBox | HTMLSpecialLexBox | HTMLTagLexBox)[]} ElementArray
  */
-
 export class HTMLLexerResult {
 	/**
 	 * @param {PageLoaderState} state
