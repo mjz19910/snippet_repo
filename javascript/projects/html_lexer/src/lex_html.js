@@ -44,6 +44,9 @@ export function lex_html(state,html) {
 	for(lexer.i=0;lexer.i<lexer.html.length;lexer.i++) {
 		lexer.cur_lex=lexer.html[lexer.i];
 		lexer.cur_char=lexer.decode_range(lexer.i,1);
+		if(lexer.i > 32) {
+			break;
+		}
 		let state=lexer;
 		switch(lexer.m_current_state) {
 			case State.MarkupDeclarationOpen: {
