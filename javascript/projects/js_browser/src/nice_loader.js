@@ -18,6 +18,9 @@ class ContextType {
 
 let module_map=new Map();
 
+/**@type {{value:import("./nice_loader_types.js").ResolveFn|null}} */
+const base_import={value:null};
+
 export class IpcLoader {
 	depth=0;
 	/**@type {(()=>void)[]} */
@@ -53,7 +56,7 @@ export class ReplPluginManagerModule {
 	}
 }
 
-class HtmlLexerManagerModule {
+export class HtmlLexerManagerModule {
 	/**
 	 * @arg {IpcLoader} state
 	 * @arg {"html_lexer"} load_key
@@ -83,8 +86,9 @@ class HtmlLexerManagerModule {
  * @param {string} module_path
  */
 export async function try_import_module(plugin_key,module_path) {
+	if(base_import.value===null)return null;
 	/** @type {{}} */
-	let mod=await import(module_path);
+	let mod=await base_import.value(module_path);
 	module_map.set(plugin_key,mod);
 	return mod;
 }
@@ -98,26 +102,23 @@ export async function handle_failed_import(state,error,import_string) {
 	let mod=null;
 	let errors=[];
 	while(mod===null) {
-		if(state.depth>0) {
+		if(state.depth>1) {
 			throw new Error("ipc plugin loader overflow (import depth too high)");
 		}
 		if(!(error instanceof Error))
 			throw new Error("Bad error");
 		if(!error.stack) throw new Error("No Error stack");
 		let stk=error.stack;
-		debugger;
 		let imp_mod=stk.split("\n")[0];
-		console.log(stk);
-		let line_part_1=stk.split("\n")[1];
-		console.log(line_part_1);
+		let idx_start_1=imp_mod.indexOf("from");
+		let idx_start_2=imp_mod.indexOf("find");
+		console.log("load 1", imp_mod.slice(idx_start_2,idx_start_1));
+		console.log("load 2", imp_mod.slice(idx_start_1+4));
+		let imp_mod_name=imp_mod.split("from")[1].trim().replaceAll(";","");
+		console.log("load 3", imp_mod_name);
+		let imp_real=imp_mod_name.replace(/(?<=.+)\.js/g,".ts");
+		let mod_dir=path.dirname(imp_mod_name);
 		debugger;
-		console.log(line_part_1.split("from"));
-		let imp_line=line_part_1.split("from")[1].trim().replaceAll(";","");
-		console.log(imp_mod,imp_line);
-		if(!imp_line) throw new Error("Error does not come from failed import");
-		if(!imp_mod) throw new Error("Module line not found");
-		let imp_real=JSON.parse(imp_line).replace(/(?<=.+)\.js/g,".ts");
-		let mod_dir=path.dirname(imp_mod);
 		let target_re_compile=path.join(mod_dir,imp_real).replace("file:","");
 		let result=await new Promise(function(resolve,reject) {
 			let cp=child_process_spawn("tsc",['-t','ESNext',target_re_compile],{});
@@ -151,6 +152,7 @@ export async function handle_failed_import(state,error,import_string) {
 
 /** @arg {IpcLoader} state @arg {string} plugin_key @arg {any} context @arg {import("./nice_loader_types.js").ResolveFn} defaultResolve */
 export async function import_ipc_plugin(state,plugin_key, context, defaultResolve) {
+	base_import.value=defaultResolve;
 	switch(plugin_key) {
 		case 'repl_plugin_manager/mod.js': {
 			/**@type {`../../${typeof plugin_key}`}*/
