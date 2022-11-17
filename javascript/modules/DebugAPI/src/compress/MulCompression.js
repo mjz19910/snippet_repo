@@ -1,13 +1,7 @@
 import {BaseCompression} from "./BaseCompression";
-import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 import {CompressState} from "./CompressState";
 import {Repeat} from "../repeat/Repeat";
-
-let stats_calculator_info={
-	stats_calculator: new CompressionStatsCalculator,
-	/**@type {[string, number][][]} */
-	compression_stats: [],
-};
+import {stats_calculator_info} from "./stats_calculator_info.js";
 
 export class MulCompression extends BaseCompression {
 	/**
@@ -122,8 +116,7 @@ export class MulCompression extends BaseCompression {
 				let [item_type,num_data]=[item[0],item.slice(1)];
 				let parsed=parseInt(num_data);
 				if(!Number.isNaN(parsed)) {
-					for(let j=0;j<parsed;j++)
-						ret.push(item_type);
+					for(let j=0;j<parsed;j++) ret.push(item_type);
 					continue;
 				}
 			}
@@ -135,19 +128,15 @@ export class MulCompression extends BaseCompression {
 	compress_array(arr) {
 		let success,res;
 		[success,res]=this.try_decompress(arr);
-		if(success)
-			arr=res;
+		if(success) arr=res;
 		for(let i=0;i<4;i++) {
 			stats_calculator_info.stats_calculator.calc_for_stats_index(stats_calculator_info.compression_stats,arr,i);
 			let ls=stats_calculator_info.compression_stats[i];
-			if(ls.length>0) {
-				continue;
-			}
+			if(ls.length>0) continue;
 			break;
 		}
 		let res_1=this.try_compress(arr);
-		if(res_1[0])
-			return res_1[1];
+		if(res_1[0]) return res_1[1];
 		return arr;
 	}
 }
