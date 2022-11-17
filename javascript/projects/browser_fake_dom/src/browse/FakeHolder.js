@@ -18,7 +18,7 @@ export class FakeHolder {
 	}
 	/**
 	 * @arg {DomBadge} badge
-	 * @param {(val:typeof this) => void} callback
+	 * @param {(val:FakeHolder) => void} callback
 	 */
 	with_badge(badge,callback) {
 		if(badge.is_valid()) {

@@ -138,7 +138,7 @@ class RLInterface extends NodeEventEmitter {
 	}
 	pause() {
 		let vv=this.X.pause();
-		if(this.X!==vv) {
+		if(vv!==void 0&&this.X!==vv) {
 			this.X=vv;
 		}
 		return this;

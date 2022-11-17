@@ -5,6 +5,8 @@ import {fix_fetch_url} from "./fix_fetch_url.js";
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
 import {RequestModule} from "./RequestModule.js";
+import {DomBadge} from "../../browser_fake_dom/src/implementation/DomBadge.js";
+import {fake,FakeDocument,FakeWindow} from "../../browser_fake_dom/index.js";
 /**
  * @arg {PageLoaderState} state
  */
@@ -25,19 +27,25 @@ export async function fetch_url(state,silent=false) {
 		}
 		console.log('fetch_url_tag get',state.url);
 	}
-	//const dom_impl_badge = new DomBadge
-	//let new_url=fetch_state.url
-	/* fake.with_badge(dom_impl_badge, (fake) => {
-		if(!fake.document)throw new Error("Missing fake document")
-		fake.document.location.assign(new_url)
-	}); */
+	const dom_impl_badge=new DomBadge;
+	let new_url=state.url;
+	fake.window=new FakeWindow(new DomBadge);
+	fake.document=new FakeDocument(fake.window,new DomBadge);
+	fake.with_badge(dom_impl_badge,(fake) => {
+		if(!fake.document) throw new Error("Missing fake document");
+		debugger;
+		fake.document.location.assign(new_url);
+	});
 	let req_mod=state.m_start_request_module;
 	switch(p_url.protocol) {
 		case 'http:': req_mod.http_import={is_https: false,value: http}; break;
 		case 'https:': req_mod.http_import={is_https: true,value: https}; break;
 		default: throw new Error("Unknown protocol: "+p_url.protocol);
 	}
-	if(!state.on_incoming_message)
-		throw new Error("No Handler for server response");
-	await run_fetch_algorithm(state);
+	if(!state.on_incoming_message) throw new Error("No Handler for server response");
+	try {
+		await run_fetch_algorithm(state);
+	} catch(err) {
+		console.log("Fetch algo error",err);
+	}
 }

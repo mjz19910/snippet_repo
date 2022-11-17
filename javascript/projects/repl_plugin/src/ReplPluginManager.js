@@ -14,11 +14,9 @@ export class ReplPluginManager {
 	 */
 	setPrompt(arg0) {
 		let repl_internal=this.get_repl_runtime();
-		debugger;
 		if(repl_internal.X===void 0) {
 			console.log("unable use repl_internal as X is missing");
 		}
-		debugger;
 		repl_internal.setPrompt(arg0);
 	}
 	pause() {
@@ -36,8 +34,11 @@ export class ReplPluginManager {
 	displayPrompt() {
 		this.get_repl_runtime().displayPrompt();
 	}
+	get internalX() {
+		if(!this.m_repl_runtime) throw new Error("");
+		return this.m_repl_runtime.X;
+	}
 	create_repl_plugin() {
-		debugger;
 		this.m_repl_runtime=REPLServerRuntime.start_repl({
 			prompt: "",
 		});
