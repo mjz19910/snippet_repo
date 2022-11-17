@@ -15,7 +15,7 @@ export function on_html_lex_result(state,html,parse_result) {
 }
 
 import {repl_plugin_get_global_repl_activator} from "../../repl_plugin/index.js";
-import {g_html_lex_plugin} from "./g_html_lex_plugin.js";
+import {g_html_lex_plugin} from "./plugin/g_html_lex_plugin.js/index.js";
 import {HTMLTokenizer} from "./HTMLTokenizer.js";
 import {lex_data} from "./lex_data.js";
 import {ok_char_int8s} from "./lex_html.js";
