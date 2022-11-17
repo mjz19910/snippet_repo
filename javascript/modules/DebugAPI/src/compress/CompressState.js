@@ -1,16 +1,12 @@
-/**@template T @template U */
-export class CompressState {
-	i=0;
-	/** @type {T[]} */
-	arr;
+import {CompressStateBase} from "./CompressStateBase";
+
+/**@template T @template U @extends {CompressStateBase<T,U>} */
+export class CompressState extends CompressStateBase {
 	/** @type {T|null} */
 	item;
-	/** @type {U[]} */
-	ret;
 	/** @param {T[]} arr */
 	constructor(arr) {
-		this.arr=arr;
+		super(0,arr,[]);
 		this.item=null;
-		this.ret=[];
 	}
 }

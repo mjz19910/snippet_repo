@@ -1,20 +1,20 @@
-import {CompressState} from "./CompressState.js";
+import {CompressStateBase} from "./CompressStateBase.js";
 
 export class BaseCompression {
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	did_compress(src,dst) {
+	static did_compress(src,dst) {
 		return dst.length<src.length;
 	}
 	/** @template T @arg {T[]} src @arg {T[]} dst */
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/**@template T,U @arg {CompressState<T, U>} state */
-	compress_result_state(state) {
+	/**@template T,U @arg {CompressStateBase<T, U>} state */
+	static compress_result_state(state) {
 		return this.compress_result(state.arr, state.ret);
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
-	compress_result(src,dst) {
+	static compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
 		return [false,src];
