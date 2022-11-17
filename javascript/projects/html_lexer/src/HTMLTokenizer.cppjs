@@ -30,11 +30,15 @@
         goto new_state;                      \
     } while (0)
 
+// for goto _StartOfFunction
+class StateSwitch {}
+
+
 #define SWITCH_TO_RETURN_STATE          \
     do {                                \
-        this.will_switch_to(m_return_state); \
-        this.m_state = m_return_state;       \
-        goto _StartOfFunction;          \
+        this.will_switch_to(this.m_return_state); \
+        this.m_state = this.m_return_state;       \
+        return StateSwitch;    \
     } while (0)
 
 #define RECONSUME_IN_RETURN_STATE                \
@@ -43,7 +47,7 @@
         this.m_state = this.m_return_state;                \
         if (current_input_character.has_value()) \
             this.restore_to(this.m_prev_utf8_iterator);    \
-        goto _StartOfFunction;                   \
+        return StateSwitch;                   \
     } while (0)
 
 #define SWITCH_TO_AND_EMIT_CURRENT_TOKEN(new_state)     \
@@ -331,14 +335,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         return this.m_source_positions.at(this.m_source_positions.size()-1-n);
     }
     next_token() {
-        if(this.m_skip_to_start_of_func) {
+        if(!this.m_skip_to_start_of_func) {
             if(!this.m_source_positions.is_empty()) {
                 let last_position=this.m_source_positions.last();
                 this.m_source_positions.clear_with_capacity();
                 this.m_source_positions.append(move(last_position));
             }
         }
-        _StartOfFunction:
+        // _StartOfFunction:
         if(!this.m_queued_tokens.is_empty())
             return this.m_queued_tokens.dequeue();
 
