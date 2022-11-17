@@ -15,4 +15,18 @@ export class ObjMaybeKeys {
 			this.type="keys";
 		this.arr.push(key);
 	}
+	/**
+	 * @param {keyof BrowserPluginData} name
+	 */
+	get_from_store(name) {
+		switch(this.type) {
+			case 'keys':
+				let nx=name;
+				switch(nx) {
+					case 'window': return this.value[nx];
+					default: console.log('case needed for',name);
+				}
+			case 'no_keys':
+		}
+	}
 }

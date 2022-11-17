@@ -1,8 +1,7 @@
-import {any} from "../../browser_fake_dom/src/any.js";
+import {fake} from "../../browser_fake_dom/index.js";
+import {any} from "../any.js";
 import {ReplPluginManager} from "../ReplPluginManager.js";
 import {BrowserPluginData} from "./BrowserPluginIndexType.js";
-import {FakeBrowserPluginContext} from "./FakeBrowserPluginContext.js";
-import {get_from_store} from "./get_from_store";
 import {ObjMaybeKeys} from "./ObjMaybeKeys";
 
 export class REPLFakeBrowserPlugin {
@@ -17,14 +16,13 @@ export class REPLFakeBrowserPlugin {
 			console.log("enable without obj");
 			return;
 		}
-		// TODO get fake passed in to us
-		// this.repl.context.get_fake_window = () => fake.window
-		// this.repl.context.get_fake_document = () => fake.document
-		let get_from_store_bound=get_from_store.bind(null,this.obj);
+		this.repl.context.get_fake_window=() => fake.window;
+		this.repl.context.get_fake_document=() => fake.document;
+		let get_from_store_bound=this.obj.get_from_store.bind(this.obj);
 		let ctx=this.wrap_context(this.repl.context);
 		ctx.get_from_store=get_from_store_bound;
 	}
-	/**@arg {import('vm').Context} context @returns {FakeBrowserPluginContext} */
+	/**@arg {import('vm').Context} context @returns {ObjMaybeKeys} */
 	wrap_context(context) {
 		return any(context);
 	}
