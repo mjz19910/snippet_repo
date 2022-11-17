@@ -60,27 +60,41 @@ export class FakeLocation {
 			this.#location_url.href=value.href;
 		}
 	}
-	get hash() {return this.#location_url.hash;}
-	set hash(v) {this.#location_url.hash=v;}
-	get host() {return this.#location_url.host;}
-	set host(v) {this.#location_url.host=v;}
-	get hostname() {return this.#location_url.hostname;}
-	set hostname(v) {this.#location_url.hostname=v;}
-	get href() {return this.#location_url.href;}
-	set href(v) {
-		if(v.match("https?://")) {
-			this.#location_url.href=v;
+	get hash() {
+		return this.#location_url.hash;
+	}
+	set hash(v) {
+		this.#location_url.hash=v;
+	}
+	get host() {
+		return this.#location_url.host;
+	}
+	set host(v) {
+		this.#location_url.host=v;
+	}
+	get hostname() {
+		return this.#location_url.hostname;
+	}
+	set hostname(v) {
+		this.#location_url.hostname=v;
+	}
+	get href() {
+		return this.#location_url.href;
+	}
+	set href(value) {
+		if(value.match("https?://")) {
+			this.#location_url.href=value;
 			return;
 		}
-		if(v.match(/(?:[\/\w])+\?.+/)) {
-			var idx=v.indexOf("?");
-			var pn=v.slice(0,idx);
-			var s=v.slice(idx,v.length);
+		if(value.match(/(?:[\/\w])+\?.+/)) {
+			var idx=value.indexOf("?");
+			var pn=value.slice(0,idx);
+			var s=value.slice(idx,value.length);
 			console.log(pn,s);
 			return;
 		}
-		console.log(this.#location_url.search,v);
-		this.#location_url.search=v;
+		console.log(this.#location_url.search,value);
+		this.#location_url.href=value;
 	}
 	get origin() {return this.#location_url.origin;}
 	get pathname() {return this.#location_url.pathname;}
