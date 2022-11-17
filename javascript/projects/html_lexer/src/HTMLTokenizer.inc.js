@@ -4,9 +4,10 @@
 // 1 "HTMLTokenizerDefine.cppjs"
 // 243 "HTMLTokenizerDefine.cppjs"
 // 1 "HTMLTokenizer.cppjs" 1
+// 1 "HTMLTokenizer.pre.js" 1
 import {HTMLToken} from "./HTMLToken.js";
 import {throw_todo} from "./throw_todo";
-import {HTMLTokenizerImpl} from "./HtmlLexerData";
+import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
@@ -14,46 +15,66 @@ import {NullOptional,Optional} from "./Optional.js";
 import {Utf8View} from "./Utf8View.js";
 import {state_name} from "./state_name.js";
 import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
-import {CppVector} from "./CppArray.js";
+
+export function use_imports() {
+    return [
+        HTMLToken,
+        throw_todo,
+        HTMLTokenizerImpl,
+        State,
+        dbgln_if,
+        Utf8CodePointIterator,
+        NullOptional,
+        Optional,
+        Utf8View,
+        state_name,
+        TOKENIZER_TRACE_DEBUG,
+    ];
+}
 
 /** @template T */
-class Queue {
-
+export class Queue {
+    /**@type {T} */
+    inner;
+    /** @arg {T} v */
+    constructor(v) {
+        this.inner=v;
+    }
 }
 
 /**
  * @template T
  * @param {T} value
  */
-function move(value) {
+export function move(value) {
     return value;
 }
 
 /**@template T */
-class CppPtr {
+export class CppPtr {
     /** @type {T|null} */
     ptr=null;
-    /** @arg {T} v */
+    /** @template T @arg {T} v */
     static from(v) {
+        /**@type {CppPtr<T>} */
         let value=new CppPtr;
         value.ptr=v;
         return value;
     }
 }
 
-class InsertionPoint {
+export class InsertionPoint {
     position=0;
     defined=false;
 };
-
-class StringBuilder {}
+// 2 "HTMLTokenizer.cppjs" 2
 
 export class HTMLTokenizer extends HTMLTokenizerImpl {
     /**@type {CppPtr<HTMLParser>} */
     m_parser=new CppPtr;
     m_state=State.Data;
     m_return_state=State.Data;
-    m_temporary_buffer=new CppVector;
+    m_temporary_buffer=new CppVector([0]);
     m_decoded_input="";
     m_insertion_point=new InsertionPoint;
     m_old_insertion_point=new InsertionPoint;
@@ -61,7 +82,7 @@ export class HTMLTokenizer extends HTMLTokenizerImpl {
     m_utf8_iterator=new Utf8CodePointIterator;
     m_prev_utf8_iterator=new Utf8CodePointIterator;
     m_current_token=new HTMLToken;
-    m_current_builder=new StringBuilder;
+    m_current_builder=new StringBuilder();
     m_last_emitted_start_tag_name=new Optional("");
     m_explicit_eof_inserted=false;
     m_has_emitted_eof=false;

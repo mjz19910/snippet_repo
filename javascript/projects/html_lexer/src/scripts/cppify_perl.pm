@@ -7,5 +7,6 @@ while (<>) {
 	s/^[\t]+$//gm;
 	s/\n\n/\n/g;
 	s/<line2?>\s/\n/g;
+	s/\n\n+//gm;
 	print;
 }
