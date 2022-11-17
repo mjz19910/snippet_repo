@@ -53,6 +53,31 @@ export class ReplPluginManagerModule {
 	}
 }
 
+class HtmlLexerManagerModule {
+	/**
+	 * @arg {IpcLoader} state
+	 * @arg {"html_lexer"} load_key
+	 * @arg {"../../html_lexer"} path
+	 */
+	 static async import_ipc_plugin(state,load_key,path) {
+		state.depth++;
+		let mod=null;
+		try {
+			mod=await try_import_module(load_key,path);
+		} catch(e) {
+			await handle_failed_import(state,e,load_key);
+			if(module_map.has(load_key)) {
+				return module_map.get(load_key);
+			} else {
+				throw new Error("Handling error did not load plugin");
+			}
+		} finally {
+			state.depth--;
+		}
+		return mod;
+	}
+}
+
 /**
  * @param {string} plugin_key
  * @param {string} module_path
@@ -133,8 +158,10 @@ export async function import_ipc_plugin(state,plugin_key, context, defaultResolv
 			return ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
 		}
 		case 'html_lexer': {
-			return ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
-		} break;
+			/**@type {`../../${typeof plugin_key}`}*/
+			const module_page_loader_str=`../../${plugin_key}`;
+			return HtmlLexerManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
+		}
 		case './src/HTMLTokenizer.js': break;
 		default: return null;
 	}
@@ -142,7 +169,7 @@ export async function import_ipc_plugin(state,plugin_key, context, defaultResolv
 		return module_map.get(plugin_key);
 	}
 	if(loader_debug) console.log('imp depth',state.depth);
-	if(state.depth > 0) {
+	if(state.depth > 1) {
 		throw new Error("Too deep");
 	}
  	state.depth++;
