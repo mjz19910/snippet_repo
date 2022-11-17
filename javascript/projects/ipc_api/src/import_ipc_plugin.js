@@ -1,7 +1,7 @@
 import {debug} from "../../debug.js";
 import {handle_failed_import} from "./handle_failed_import.js";
 import {IpcLoader} from "./ipc_loader_state.js";
-import {g_loaded_ipc_plugins} from "./mod.js";
+import {g_loaded_ipc_plugins} from "./g_loaded_ipc_plugin_map.js/index.js.js";
 import {ReplPluginManagerModule} from "./ReplPluginManagerModule.js";
 import {try_import_module} from "./try_import_module.js";
 
