@@ -139,7 +139,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
     next_token()
     {
         if (!m_source_positions.is_empty()) {
-            auto last_position = m_source_positions.last();
+            let last_position = m_source_positions.last();
             m_source_positions.clear_with_capacity();
             m_source_positions.append(move(last_position));
         }
@@ -151,7 +151,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             return {};
 
         for (;;) {
-            auto current_input_character = next_code_point();
+            let current_input_character = next_code_point();
             switch (m_state) {
                 // 13.2.5.1 Data state, https://html.spec.whatwg.org/multipage/parsing.html//data-state
                 /*<csw>state:</csw>*/ case State.Data: { { {
@@ -1546,17 +1546,17 @@ m_queued_tokens.enqueue(move(m_current_token));
                 // 13.2.5.73 Named character reference state, https://html.spec.whatwg.org/multipage/parsing.html//named-character-reference-state
                 /*<csw>state:</csw>*/ case State.NamedCharacterReference: { { {
                 {
-                    size_t byte_offset = m_utf8_view.byte_offset_of(m_prev_utf8_iterator);
+                    let byte_offset = m_utf8_view.byte_offset_of(m_prev_utf8_iterator);
 
-                    auto match = HTML::code_points_from_entity(m_decoded_input.substring_view(byte_offset, m_decoded_input.length() - byte_offset));
+                    let match = HTML::code_points_from_entity(m_decoded_input.substring_view(byte_offset, m_decoded_input.length() - byte_offset));
 
                     if (match.has_value()) {
                         skip(match->entity.length() - 1);
-                        for (auto ch : match.value().entity)
+                        for (let ch of match.value().entity)
                             m_temporary_buffer.append(ch);
 
                         if (consumed_as_part_of_an_attribute() && !match.value().entity.ends_with(';')) {
-                            auto next_code_point = peek_code_point(0);
+                            let next_code_point = peek_code_point(0);
                             if (next_code_point.has_value() && (next_code_point.value() == '=' || is_ascii_alphanumeric(next_code_point.value()))) {
                                 
 do { 
@@ -1808,7 +1808,7 @@ m_queued_tokens.enqueue(move(m_current_token));
                             { 0x9E, 0x017E },
                             { 0x9F, 0x0178 },
                         };
-                        for (auto& entry : conversion_table) {
+                        for (let entry of conversion_table) {
                             if (m_character_reference_code == entry.number) {
                                 m_character_reference_code = entry.code_point;
                                 break;
@@ -1910,7 +1910,7 @@ return this.m_queued_tokens.dequeue();
                         if (!current_end_tag_token_is_appropriate()) {
                             m_queued_tokens.enqueue(HTMLToken::make_character('<'));
                             m_queued_tokens.enqueue(HTMLToken::make_character('/'));
-                            for (auto code_point : m_temporary_buffer)
+                            for (let code_point of m_temporary_buffer)
                                 m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                             do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; goto RCDATA; } while (0);
                         }
@@ -1922,7 +1922,7 @@ return this.m_queued_tokens.dequeue();
                         if (!current_end_tag_token_is_appropriate()) {
                             m_queued_tokens.enqueue(HTMLToken::make_character('<'));
                             m_queued_tokens.enqueue(HTMLToken::make_character('/'));
-                            for (auto code_point : m_temporary_buffer)
+                            for (let code_point of m_temporary_buffer)
                                 m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                             do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; goto RCDATA; } while (0);
                         }
@@ -1934,7 +1934,7 @@ return this.m_queued_tokens.dequeue();
                         if (!current_end_tag_token_is_appropriate()) {
                             m_queued_tokens.enqueue(HTMLToken::make_character('<'));
                             m_queued_tokens.enqueue(HTMLToken::make_character('/'));
-                            for (auto code_point : m_temporary_buffer)
+                            for (let code_point of m_temporary_buffer)
                                 m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                             do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; goto RCDATA; } while (0);
                         }
@@ -1958,7 +1958,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer)
+                        for (let code_point of m_temporary_buffer)
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; goto RCDATA; } while (0);
                     }
@@ -2035,7 +2035,7 @@ return this.m_queued_tokens.dequeue();
                         if (!current_end_tag_token_is_appropriate()) {
                             m_queued_tokens.enqueue(HTMLToken::make_character('<'));
                             m_queued_tokens.enqueue(HTMLToken::make_character('/'));
-                            for (auto code_point : m_temporary_buffer)
+                            for (let code_point of m_temporary_buffer)
                                 m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                             do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; goto RAWTEXT; } while (0);
                         }
@@ -2047,7 +2047,7 @@ return this.m_queued_tokens.dequeue();
                         if (!current_end_tag_token_is_appropriate()) {
                             m_queued_tokens.enqueue(HTMLToken::make_character('<'));
                             m_queued_tokens.enqueue(HTMLToken::make_character('/'));
-                            for (auto code_point : m_temporary_buffer)
+                            for (let code_point of m_temporary_buffer)
                                 m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                             do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; goto RAWTEXT; } while (0);
                         }
@@ -2059,7 +2059,7 @@ return this.m_queued_tokens.dequeue();
                         if (!current_end_tag_token_is_appropriate()) {
                             m_queued_tokens.enqueue(HTMLToken::make_character('<'));
                             m_queued_tokens.enqueue(HTMLToken::make_character('/'));
-                            for (auto code_point : m_temporary_buffer)
+                            for (let code_point of m_temporary_buffer)
                                 m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                             do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; goto RAWTEXT; } while (0);
                         }
@@ -2083,7 +2083,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer)
+                        for (let code_point of m_temporary_buffer)
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; goto RAWTEXT; } while (0);
                     }
@@ -2293,7 +2293,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer) {
+                        for (let code_point of m_temporary_buffer) {
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         }
                         do { this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; goto ScriptDataEscaped; } while (0);
@@ -2308,7 +2308,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer) {
+                        for (let code_point of m_temporary_buffer) {
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         }
                         do { this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; goto ScriptDataEscaped; } while (0);
@@ -2323,7 +2323,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer) {
+                        for (let code_point of m_temporary_buffer) {
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         }
                         do { this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; goto ScriptDataEscaped; } while (0);
@@ -2346,7 +2346,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer) {
+                        for (let code_point of m_temporary_buffer) {
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         }
                         do { this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; goto ScriptDataEscaped; } while (0);
@@ -2357,7 +2357,7 @@ return this.m_queued_tokens.dequeue();
                 // 13.2.5.26 Script data double escape start state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-double-escape-start-state
                 /*<csw>state:</csw>*/ case State.ScriptDataDoubleEscapeStart: { { {
                 {
-                    auto temporary_buffer_equal_to_script = [this]() -> bool {
+                    let temporary_buffer_equal_to_script = () => {
                         if (m_temporary_buffer.size() != 6)
                             return false;
 
@@ -2538,7 +2538,7 @@ return this.m_queued_tokens.dequeue();
                 // 13.2.5.31 Script data double escape end state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-double-escape-end-state
                 /*<csw>state:</csw>*/ case State.ScriptDataDoubleEscapeEnd: { { {
                 {
-                    auto temporary_buffer_equal_to_script = [this]() -> bool {
+                    let temporary_buffer_equal_to_script = () => {
                         if (m_temporary_buffer.size() != 6)
                             return false;
 
@@ -2686,7 +2686,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer)
+                        for (let code_point of m_temporary_buffer)
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; goto ScriptData; } while (0);
                     }
@@ -2699,7 +2699,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer)
+                        for (let code_point of m_temporary_buffer)
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; goto ScriptData; } while (0);
                     }
@@ -2712,7 +2712,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer)
+                        for (let code_point of m_temporary_buffer)
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; goto ScriptData; } while (0);
                     }
@@ -2734,7 +2734,7 @@ return this.m_queued_tokens.dequeue();
                         m_queued_tokens.enqueue(HTMLToken::make_character('/'));
                         // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
                         m_current_builder.clear();
-                        for (auto code_point : m_temporary_buffer)
+                        for (let code_point of m_temporary_buffer)
                             m_queued_tokens.enqueue(HTMLToken::make_character(code_point));
                         do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; goto ScriptData; } while (0);
                     }
