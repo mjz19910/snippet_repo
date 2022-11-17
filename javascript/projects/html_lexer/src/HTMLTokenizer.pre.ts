@@ -10,6 +10,8 @@ import {state_name} from "./state_name.js";
 import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {move} from "./move.js";
 import {HTMLTokenizerBase} from "./HTMLTokenizerBase.js";
+import {ak_verification_failed} from "./ak_verification_failed.js";
+
 
 export function use_imports() {
     return [
@@ -24,6 +26,7 @@ export function use_imports() {
         state_name,
         TOKENIZER_TRACE_DEBUG,
         move,
+        ak_verification_failed,
         HTMLTokenizerBase,
     ];
 }

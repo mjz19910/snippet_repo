@@ -12,8 +12,10 @@ import {InsertionPoint} from "./InsertionPoint";
 import {SourcePosition} from "./SourcePosition.js";
 import {TextCodec} from "./TextCodec";
 import {HTMLToken_Type} from "./HTMLToken_Type.js";
+import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
+import {dbgln_if} from "./dbgln_if.js";
 
-type GoToTargets="TagName"|"BogusComment"|"Data"|""|""|""|""|""|"None";
+type GoToTargets="TagName"|"BogusComment"|"Data"|"ScriptData"|"CDATASection"|"None";
 
 
 export class HTMLTokenizerBase extends HTMLTokenizerImpl {
@@ -59,6 +61,64 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
         this.m_prev_utf8_iterator=this.m_utf8_view.begin();
         this.m_source_positions.empend(SourcePosition.from(0,0));
     }
+    next_code_point():Optional<number> {
+        if(this.m_utf8_iterator.eq(this.m_utf8_view.end()))
+            return new Optional;
+
+        /** @type {number} */
+        let code_point;
+        // https://html.spec.whatwg.org/multipage/parsing.html//preprocessing-the-input-stream:tokenization
+        // https://infra.spec.whatwg.org///normalize-newlines
+        if(this.peek_code_point(0).value_or(0)=='\r'.charCodeAt(0)&&this.peek_code_point(1).value_or(0)=='\n'.charCodeAt(0)) {
+            // replace every U+000D CR U+000A LF code point pair with a single U+000A LF code point,
+            this.skip(2);
+            code_point='\n'.charCodeAt(0);
+        } else if(this.peek_code_point(0).value_or(0)=='\r'.charCodeAt(0)) {
+            // replace every remaining U+000D CR code point with a U+000A LF code point.
+            this.skip(1);
+            code_point='\n'.charCodeAt(0);
+        } else {
+            this.skip(1);
+            code_point=this.m_prev_utf8_iterator.deref();
+        }
+
+        dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer) Next code_point: {}",code_point);
+        return new Optional(code_point);
+    }
+    peek_code_point(offset:number) {
+        let it=this.m_utf8_iterator;
+        for(let i=0;i<offset&&it.neq(this.m_utf8_view.end());++i)
+            it.inc();
+        if(it.eq(this.m_utf8_view.end()))
+            return new Optional();
+        return new Optional(it.deref());
+    }
+    skip(count:number) {
+        if(!this.m_source_positions.is_empty())
+            this.m_source_positions.append(this.m_source_positions.last());
+        for(let i=0;i<count;++i) {
+            this.m_prev_utf8_iterator=this.m_utf8_iterator;
+            let code_point=this.m_utf8_iterator.deref();
+            if(!this.m_source_positions.is_empty()) {
+                if(code_point=='\n'.charCodeAt(0)) {
+                    this.m_source_positions.last().column=0;
+                    this.m_source_positions.last().line++;
+                } else {
+                    this.m_source_positions.last().column++;
+                }
+            }
+            this.m_utf8_iterator.inc();
+        }
+    }
+    nth_last_position(n:number) {
+        if(n+1>this.m_source_positions.size()) {
+            dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer.nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,this.m_source_positions.size());
+            return new HTMLToken.Position(0,0);
+        };
+        return this.m_source_positions.at(this.m_source_positions.size()-1-n);
+    }
+    
+    // ----------- TODO -----------
     consume_next_if_match() {throw new Error("TODO");}
     create_new_token(_x: HTMLToken_Type) {throw new Error("TODO");}
     insert_input_at_insertion_point() {throw new Error("TODO");}
@@ -67,10 +127,13 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     will_switch_to(_x: State) {console.log("todo log");}
     will_reconsume_in(_x: State) {throw new Error("TODO");}
     switch_to(_x: State) {throw new Error("TODO");}
-    will_emit(_x: State) {throw new Error("TODO");}
+    will_emit(_x: HTMLToken) {throw new Error("TODO");}
     current_end_tag_token_is_appropriate() {throw new Error("TODO");}
     consumed_as_part_of_an_attribute() {throw new Error("TODO");}
     restore_to() {throw new Error("TODO");}
     consume_current_builder() {throw new Error("TODO");}
     log_parse_error() {throw new Error("");}
+    is_ascii_alpha(arg0: number): boolean {
+        throw new Error("Method not implemented.");
+    }
 }

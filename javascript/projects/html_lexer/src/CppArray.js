@@ -37,4 +37,7 @@ export class CppVector {
 	take_last() {
 		this.inner.pop();
 	}
+	[Symbol.iterator]() {
+		return this.inner[Symbol.iterator]();
+	}
 }
