@@ -2,7 +2,6 @@ import {Repeat} from "../repeat/Repeat";
 import {TU} from "../repeat/TU.js";
 import {TX} from "../repeat/TX.js";
 import {BaseCompression} from "./BaseCompression.js";
-import {CompressState} from "./CompressState.js";
 
 export class CompressTU {
 	i=0;
@@ -17,13 +16,7 @@ export class CompressTU {
 			if(use_item) continue;
 			state.ret.push(item);
 		}
-		let cs: CompressState<TU<string,number>,TX<string,number>>={
-			i: this.i,
-			arr: this.arr,
-			item: null,
-			ret: this.ret,
-		};
-		return BaseCompression.compress_result_state(cs);
+		return BaseCompression.compress_result_state(this);
 	}
 	compress_rle_TU_to_TX(item: TU<string,number>) {
 		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
