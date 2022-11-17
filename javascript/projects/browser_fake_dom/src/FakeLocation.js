@@ -116,13 +116,23 @@ export class FakeLocation {
 	set port(v) {this.#location_url.port=v;}
 	get protocol() {return this.#location_url.protocol;}
 	set protocol(v) {this.#location_url.protocol=v;}
-	reload() {
-		fake.with_badge(new DomBadge);
-	}
+	reload() {}
 	replace() {}
 	get search() {return this.#location_url.search;}
 	set search(v) {this.#location_url.search=v;}
-	constructor() {
+	/**
+	 * @param {FakeLocation | string} [location_url]
+	 * @arg {DomBadge} [dom_badge]
+	 */
+	constructor(dom_badge, location_url) {
+		if(dom_badge && location_url && dom_badge instanceof Badge && dom_badge.is_valid()) {
+			if(typeof location_url == "string") {
+				this.#original_location_str=location_url;
+				this.#dom_impl_badge=dom_badge;
+			}
+		} else {
+			throw new TypeError("Illegal constructor");
+		}
 		this.#original_location_str="";
 		/**@type {undefined | ((dom_impl_badge:Badge,href:string)=>void)} */
 		this.location_setup=function(dom_impl_badge=new Badge,href) {

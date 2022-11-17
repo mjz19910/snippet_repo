@@ -15,12 +15,10 @@ export class Utf8CodePointIterator {
 	sub(new_iterator) {
 		return this.pos-new_iterator.pos;
 	}
-	/**
-	 * @arg {number} pos
-	 * @param {string[]} target
-	 */
-	constructor(target,pos) {
-		this.target=target;
-		this.pos=pos;
+	/** @type {string[]} */
+	target;
+	constructor() {
+		this.target=[];
+		this.pos=0;
 	}
 }

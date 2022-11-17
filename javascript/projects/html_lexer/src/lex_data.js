@@ -1,4 +1,4 @@
-import {HTMLTokenizer} from "./HTMLTokenizer.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.jstxt/index.js";
 /**
  * @type {string[]}
  */

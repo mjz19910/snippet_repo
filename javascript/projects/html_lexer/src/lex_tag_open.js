@@ -1,4 +1,4 @@
-import {HTMLTokenizer} from "./HTMLTokenizer.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.jstxt/index.js";
 import {lex_special_raw} from "./lex_special_raw.js";
 
 /** @param {HTMLTokenizer} state */

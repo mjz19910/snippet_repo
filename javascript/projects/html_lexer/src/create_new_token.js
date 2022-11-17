@@ -1,7 +1,7 @@
 import {HTMLToken} from "./HTMLToken.js";
 
 /**
- * @param {import("./HTMLTokenizer").HTMLTokenizer} state
+ * @param {import("./HTMLTokenizer.jstxt").HTMLTokenizer} state
  * @arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type
  */
 export function create_new_token(state,type) {

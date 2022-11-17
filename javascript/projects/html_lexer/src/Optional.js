@@ -6,17 +6,36 @@ export class NullOptional {
 }
 /**@template T */
 export class Optional {
-    /**@type {T|null} */
-    opt_value;
+    value() {
+        if(this.m_has_value) {
+            return this.m_value;
+        }
+        throw new Error("Empty optional");
+    }
+    has_value() {
+        return this.m_has_value;
+    }
+    m_has_value=false;
+    /**@type {T} */
+    m_value;
     /** @param {T} dv */
     value_or(dv) {
-        if(this.opt_value!==null) {
-            return this.opt_value;
+        if(this.m_has_value) {
+            return this.m_value;
         }
         return dv;
     }
-    /** @param {T|null} opt_value */
+    /** @param {T} opt_value */
     constructor(opt_value) {
-        this.opt_value=opt_value;
+        this.m_value=opt_value;
+    }
+    set_null() {
+        this.m_has_value=false;
+    }
+    /** @template T @arg {T} v */
+    static null_opt(v) {
+        let opt=new Optional(v);
+        opt.set_null();
+        return opt;
     }
 }

@@ -1,17 +1,20 @@
 // FakeDocument <- FakeWindow -> FakeWindowNoImpl
-import {FakeWindowBadge} from "./implementation/WindowBadge.js";
-import {Badge} from "./std/Badge.js";
-import {no_impl} from "./no_impl.js";
-import {FakeExternal} from "./FakeExternal.js";
-import {FakeWindowType} from "./types/FakeWindowType.js";
+import {any} from "./any.js";
+import {intercept_setTimeoutAPI} from "./api/setTimeout.js";
 import {FakeDocument} from "./FakeDocument.js";
+import {FakeExternal} from "./FakeExternal.js";
 import {FakeLocation} from "./FakeLocation.js";
 import {FakeStorage} from "./FakeStorage.js";
-import {NullBadge} from "./NullBadge.js";
 import {DomBadge} from "./implementation/DomBadge.js";
-import {intercept_setTimeoutAPI} from "./api/setTimeout.js";
+import {no_impl} from "./no_impl.js";
+import {NullBadge} from "./NullBadge.js";
+import {Badge} from "./std/Badge.js";
+import {FakeWindowType} from "./types/FakeWindowType.js";
+
 /**@implements {Window} */
 export class FakeWindow extends FakeWindowType {
+	/**@type {Window} */
+	X=any({});
 	/**@type {FakeDocument|null} */
 	#my_document=null;
 	/**@arg {DomBadge} _ */
@@ -413,11 +416,13 @@ export class FakeWindow extends FakeWindowType {
 	}
 	/**@type {FakeLocation} */
 	m_location=new FakeLocation;
+	/**@returns {FakeLocation} */
 	get location() {
 		return this.m_location;
 	}
+	/**@arg {string|FakeLocation} value */
 	set location(value) {
-		this.m_location.assign(value);
+		this.m_location=new FakeLocation(new DomBadge, value);
 	}
 	/**@type {FakeStorage|null} */
 	m_localStorage=null;

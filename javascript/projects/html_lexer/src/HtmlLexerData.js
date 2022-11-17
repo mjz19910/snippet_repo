@@ -1,6 +1,7 @@
 import {StringDecoder} from "string_decoder";
 import {createContext} from "vm";
 import {CppVector} from "./CppArray.js";
+import {HTMLToken} from "./HTMLToken.js";
 import {SourcePosition} from "./SourcePosition.js";
 import {State} from "./State.js";
 import {StringBuilder} from "./StringBuilder.js";
@@ -21,8 +22,6 @@ export class HTMLTokenizerH {
 	states=State;
 	/**@type {string|null}*/
 	cur_char=null;
-	/** @type {CppVector<SourcePosition>} */
-	m_source_positions=new CppVector();
 	/** @type {Utf8CodePointIterator} */
 	m_prev_utf8_iterator=new Utf8CodePointIterator([],0);
 	m_return_state=State.InvalidState;

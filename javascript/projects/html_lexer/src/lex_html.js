@@ -6,7 +6,7 @@ import {NodeInternalData,PageLoaderState} from "../../page_loader/index.js";
 import {get_char_type} from "./get_char_type.js";
 import {HTMLLexerResult} from "./HTMLLexerResult";
 import {HTMLToken} from "./HTMLToken.js";
-import {HTMLTokenizer} from "./HTMLTokenizer.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.jstxt/index.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
 import {lex_data} from "./lex_data.js";
 import {log_parse_error} from "./log_parse_error.js";

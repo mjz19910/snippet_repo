@@ -1,5 +1,8 @@
 /**@template T */
 export class CppVector {
+	clear_with_capacity() {
+		this.inner.length=0;
+	}
 	/**
 	 * @param {T} value
 	 */

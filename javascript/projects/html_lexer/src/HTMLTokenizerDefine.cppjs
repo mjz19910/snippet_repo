@@ -9,15 +9,15 @@
 
 #define SWITCH_TO_WITH_UNCLEAN_BUILDER(new_state) \
     do {                                          \
-        this.will_switch_to(State::new_state);         \
-        this.m_state = State::new_state;               \
+        this.will_switch_to(State.new_state);         \
+        this.m_state = State.new_state;               \
         CONSUME_NEXT_INPUT_CHARACTER;              \
     } while (0)
 
 #define RECONSUME_IN(new_state)              \
     do {                                     \
-        this.will_reconsume_in(State::new_state); \
-        this.m_state = State::new_state;          \
+        this.will_reconsume_in(State.new_state); \
+        this.m_state = State.new_state;          \
         goto new_state;                      \
     } while (0)
 
@@ -40,8 +40,8 @@
 #define SWITCH_TO_AND_EMIT_CURRENT_TOKEN(new_state)     \
     do {                                                \
         VERIFY(m_current_builder.is_empty());           \
-        will_switch_to(State::new_state);               \
-        m_state = State::new_state;                     \
+        will_switch_to(State.new_state);               \
+        m_state = State.new_state;                     \
         will_emit(this.m_current_token);                     \
         m_queued_tokens.enqueue(move(this.m_current_token)); \
         return m_queued_tokens.dequeue();               \
@@ -49,30 +49,31 @@
 
 #define EMIT_CHARACTER_AND_RECONSUME_IN(code_point, new_state)          \
     do {                                                                \
-        m_queued_tokens.enqueue(HTMLToken::make_character(code_point)); \
-        will_reconsume_in(State::new_state);                            \
-        m_state = State::new_state;                                     \
+        m_queued_tokens.enqueue(HTMLToken.make_character(code_point)); \
+        will_reconsume_in(State.new_state);                            \
+        m_state = State.new_state;                                     \
         goto new_state;                                                 \
     } while (0)
 
-#define FLUSH_CODEPOINTS_CONSUMED_AS_A_CHARACTER_REFERENCE       \
-    do {                                                         \
-        for (auto code_point : m_temporary_buffer) {             \
-            if (consumed_as_part_of_an_attribute()) {            \
-                m_current_builder.append_code_point(code_point); \
-            } else {                                             \
-                create_new_token(HTMLToken::Type::Character);    \
-                m_current_token.set_code_point(code_point);      \
-                m_queued_tokens.enqueue(move(m_current_token));  \
-            }                                                    \
-        }                                                        \
+#define FLUSH_CODEPOINTS_CONSUMED_AS_A_CHARACTER_REFERENCE       <line>\
+    do {                                                         <line>\
+        for (let code_point of m_temporary_buffer) {             <line>\
+            if (this.consumed_as_part_of_an_attribute()) {            <line>\
+                this.m_current_builder.append_code_point(code_point); <line>\
+            } else {                                             <line>\
+                create_new_token(HTMLToken.Type.Character);    <line>\
+                if(!this.m_current_token) throw new Error();     <line>\
+                m_current_token.set_code_point(code_point);      <line>\
+                m_queued_tokens.enqueue(move(m_current_token));  <line>\
+            }                                                    <line>\
+        }                                                        <line>\
     } while (0)
 
 #define DONT_CONSUME_NEXT_INPUT_CHARACTER \
     this.restore_to(this.m_prev_utf8_iterator);
 
 #define ON(code_point) \
-    if (current_input_character.has_value() && current_input_character.value() == code_point)
+    if (current_input_character.has_value() && current_input_character.value() == code_point.toCharCode(0))
 
 #define ON_EOF \
     if (!current_input_character.has_value())
@@ -102,29 +103,30 @@
 
 #define EMIT_EOF                                        \
     do {                                                \
-        if (m_has_emitted_eof)                          \
-            return {};                                  \
-        m_has_emitted_eof = true;                       \
-        create_new_token(HTMLToken::Type::EndOfFile);   \
-        will_emit(m_current_token);                     \
-        m_queued_tokens.enqueue(move(m_current_token)); \
-        return m_queued_tokens.dequeue();               \
+        if (this.m_has_emitted_eof)                          \
+            return Optional.null_opt(0);               \
+        this.m_has_emitted_eof = true;                       \
+        this.create_new_token(HTMLToken.Type.EndOfFile);   \
+        this.will_emit(m_current_token);                     \
+        this.m_queued_tokens.enqueue(move(this.m_current_token)); \
+        return this.m_queued_tokens.dequeue();             \
     } while (0)
 
 #define EMIT_CURRENT_TOKEN                              \
     do {                                                \
-        VERIFY(m_current_builder.is_empty());           \
-        will_emit(m_current_token);                     \
-        m_queued_tokens.enqueue(move(m_current_token)); \
-        return m_queued_tokens.dequeue();               \
+        VERIFY(this.m_current_builder.is_empty());           \
+        this.will_emit(m_current_token);                     \
+        this.m_queued_tokens.enqueue(move(m_current_token)); \
+        return this.m_queued_tokens.dequeue();               \
     } while (0)
 
 #define EMIT_CHARACTER(code_point)                      \
-    do {                                                \
-        create_new_token(HTMLToken::Type::Character);   \
-        m_current_token.set_code_point(code_point);     \
-        m_queued_tokens.enqueue(move(m_current_token)); \
-        return m_queued_tokens.dequeue();               \
+    do {                                                <line>\
+        this.create_new_token(HTMLToken.Type.Character);<line>\
+        if(!this.m_current_token) throw new Error();   <line>\
+        this.m_current_token.set_code_point(code_point);     <line>\
+        this.m_queued_tokens.enqueue(move(m_current_token)); <line>\
+        return this.m_queued_tokens.dequeue();               <line>\
     } while (0)
 
 #define EMIT_CURRENT_CHARACTER \
@@ -132,8 +134,8 @@
 
 #define SWITCH_TO_AND_EMIT_CHARACTER(code_point, new_state) \
     do {                                                    \
-        will_switch_to(State::new_state);                   \
-        m_state = State::new_state;                         \
+        this.will_switch_to(State.new_state);                   \
+        this.m_state = State.new_state;                         \
         EMIT_CHARACTER(code_point);                         \
     } while (0)
 
@@ -141,8 +143,8 @@
     SWITCH_TO_AND_EMIT_CHARACTER(current_input_character.value(), new_state)
 
 #define BEGIN_STATE(state) \
-    state:                 \
-    case State::state: {   \
+    /*<csw>state:</csw>*/\
+    case State.state: {   \
         {                  \
             {
 
@@ -238,7 +240,7 @@
 
 #ifdef JS_MODE
 
-#include "HTMLTokenizer.js"
+#include "HTMLTokenizer.cppjs"
 #ifdef NO_ENABLED
 #define __ENUMERATE_TOKENIZER_STATE(state)/** @readonly */ state=__COUNTER__;<line>
 export class HTMLTokenizerIncH {
