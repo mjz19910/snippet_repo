@@ -94,8 +94,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer) Next code_point: {}",code_point);
         return new Optional(code_point);
     }
-    /** @param {number} count */
-    skip(count) {
+    skip(count:number) {
         if(!this.m_source_positions.is_empty())
             this.m_source_positions.append(this.m_source_positions.last());
         for(let i=0;i<count;++i) {
@@ -112,8 +111,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             this.m_utf8_iterator.inc();
         }
     }
-    /** @param {number} offset */
-    peek_code_point(offset) {
+    peek_code_point(offset:number) {
         let it=this.m_utf8_iterator;
         for(let i=0;i<offset&&it.neq(this.m_utf8_view.end());++i)
             it.inc();
@@ -121,20 +119,18 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             return new Optional();
         return new Optional(it.deref());
     }
-    /**
-     * @param {number} n
-     */
-    nth_last_position(n) {
+    nth_last_position(n:number) {
         if(n+1>this.m_source_positions.size()) {
             dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer::nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,this.m_source_positions.size());
             return new HTMLToken.Position(0,0);
         };
         return this.m_source_positions.at(this.m_source_positions.size()-1-n);
     }
-
-    /** @returns {Optional<HTMLToken>} */
-    next_token()
+    next_token(): Optional<HTMLToken>
     {
+        let m_source_positions=this.m_source_positions;
+        let m_queued_tokens=this.m_queued_tokens;
+        let m_aborted=this.m_aborted;
         if (!m_source_positions.is_empty()) {
             let last_position = m_source_positions.last();
             m_source_positions.clear_with_capacity();
@@ -142,10 +138,10 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         }
     _StartOfFunction:
         if (!m_queued_tokens.is_empty())
-            return m_queued_tokens.dequeue();
+            return m_queued_tokens.dequeue().opt();
 
         if (m_aborted)
-            return {};
+            return new Optional;
 
         for (;;) {
             let current_input_character = next_code_point();

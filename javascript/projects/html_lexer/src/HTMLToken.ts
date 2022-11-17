@@ -6,6 +6,7 @@
 import {any} from "../../browser_fake_dom/src/any.js";
 import {ak_verification_failed} from "./ak_verification_failed.js";
 import {HTMLToken_Type} from "./HTMLToken_Type";
+import {Optional} from "./Optional.js";
 import {SourcePosition} from "./SourcePosition.js";
 
 export function dbgln(msg: string,...val: any[]) {
@@ -95,6 +96,9 @@ class HTMLTokenBase {
 
 
 export class HTMLToken extends HTMLTokenBase {
+    opt(): Optional<HTMLToken> {
+        return new Optional(this);
+    }
     static from_type(type:HTMLToken_Type): HTMLToken
     {
         let obj=new this;
