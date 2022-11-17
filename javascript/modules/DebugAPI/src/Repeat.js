@@ -1,14 +1,13 @@
 import {WMap} from "./WMap";
 
 /** @template T */
-
 export class Repeat {
 	/**
 	 * @arg {import("./TU.js").TU<string, number>} item
 	 * @returns {import("./TX.js").TX<string, number>}
 	 * @param {number} times
 	 */
-	static from_TU_entry(item, times) {
+	static from_TU_entry(item,times) {
 		switch(item[0]) {
 			case 'T': return ['T',Repeat.get(item[1],times)];
 			case 'U': return ['U',Repeat.get_num(item[1],times)];

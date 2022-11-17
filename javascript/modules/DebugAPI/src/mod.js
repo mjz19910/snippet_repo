@@ -27,7 +27,6 @@ import {GenericDataEvent} from "./GenericDataEvent";
 import {GenericEvent} from "./GenericEvent.js";
 import {GenericEventTarget} from "./GenericEventTarget.js";
 import {getPlaybackRateMap} from "./getPlaybackRateMap";
-import {GObjType} from "./GObjType.js";
 import {HexRandomDataGenerator} from "./HexRandomDataGenerator";
 import {IterExtensions} from "./IterExtensions";
 import {LoggingEventTarget} from "./LoggingEventTarget";
