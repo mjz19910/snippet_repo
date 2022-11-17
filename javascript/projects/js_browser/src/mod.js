@@ -1,5 +1,5 @@
-import {fake} from "../browser_fake_dom/index.js";
-import {on_page_data_loaded,PageLoaderState} from "../page_loader/index.js";
+import {fake} from "../../browser_fake_dom/index.js";
+import {on_page_data_loaded,PageLoaderState} from "../../page_loader/index.js";
 
 /**
  * @param {PageLoaderState} state
