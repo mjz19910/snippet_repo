@@ -81,8 +81,8 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_aborted=false;
     m_source_positions: CppVector<InstanceType<typeof HTMLToken['Position']>>=new CppVector;
     m_skip_to_start_of_func=false;
-    consume_next_if_match() {}
-    create_new_token() {}
+    consume_next_if_match() {throw new Error("TODO");}
+    create_new_token() {throw new Error("TODO");}
     /**for HTMLTokenizer() */
     construct_1() {
         this.m_decoded_input="";
@@ -103,17 +103,17 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
         this.m_prev_utf8_iterator=this.m_utf8_view.begin();
         this.m_source_positions.empend(SourcePosition.from(0,0));
     }
-    insert_input_at_insertion_point() {}
-    insert_eof() {}
-    is_eof_inserted() {}
-    will_switch_to() {}
-    will_reconsume_in() {}
-    switch_to() {}
-    will_emit() {}
-    current_end_tag_token_is_appropriate() {}
-    consumed_as_part_of_an_attribute() {}
-    restore_to() {}
-    consume_current_builder() {}
+    insert_input_at_insertion_point() {throw new Error("TODO");}
+    insert_eof() {throw new Error("TODO");}
+    is_eof_inserted() {throw new Error("TODO");}
+    will_switch_to() {throw new Error("TODO");}
+    will_reconsume_in() {throw new Error("TODO");}
+    switch_to() {throw new Error("TODO");}
+    will_emit() {throw new Error("TODO");}
+    current_end_tag_token_is_appropriate() {throw new Error("TODO");}
+    consumed_as_part_of_an_attribute() {throw new Error("TODO");}
+    restore_to() {throw new Error("TODO");}
+    consume_current_builder() {throw new Error("TODO");}
 }
 // 277 "HTMLTokenizer.cppts" 2
 
