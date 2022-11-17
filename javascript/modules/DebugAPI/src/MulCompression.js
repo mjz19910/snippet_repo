@@ -37,8 +37,7 @@ export class MulCompression extends BaseCompression {
 			}
 			ret.push(item);
 		}
-		if(this.did_compress(arr,ret))
-			return [true,ret];
+		if(this.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];
 	}
 	/**
