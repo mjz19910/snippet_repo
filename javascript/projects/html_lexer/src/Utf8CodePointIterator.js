@@ -1,4 +1,8 @@
 export class Utf8CodePointIterator {
+    /** @param {Utf8CodePointIterator} arg0 */
+    neq(arg0) {
+		return !this.eq(arg0);
+    }
 	inc() {
 		++this.pos;
 	}

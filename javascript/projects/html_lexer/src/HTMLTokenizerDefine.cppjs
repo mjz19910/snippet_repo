@@ -1,3 +1,12 @@
+
+#define VERIFY(expr) \
+    (!(expr)   \
+        ? ak_verification_failed([#expr,"\n",__FILE__,":",__stringify(__LINE__)].join("")) \
+        : void 0)
+
+
+
+
 #define CONSUME_NEXT_INPUT_CHARACTER \
     current_input_character = next_code_point();
 
@@ -73,7 +82,7 @@
     this.restore_to(this.m_prev_utf8_iterator);
 
 #define ON(code_point) \
-    if (current_input_character.has_value() && current_input_character.value() == code_point.toCharCode(0))
+    if (current_input_character.has_value() && current_input_character.value() == code_point.charCodeAt(0))
 
 #define ON_EOF \
     if (!current_input_character.has_value())
@@ -240,7 +249,6 @@
 
 #ifdef JS_MODE
 
-#include "HTMLTokenizer.cppjs"
 #ifdef NO_ENABLED
 #define __ENUMERATE_TOKENIZER_STATE(state)/** @readonly */ state=__COUNTER__;<line>
 export class HTMLTokenizerIncH {

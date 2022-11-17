@@ -32,7 +32,7 @@ export class Optional {
     set_null() {
         this.m_has_value=false;
     }
-    /** @template T @arg {T} v */
+    /** @template T @arg {NonNullable<T>} v */
     static null_opt(v) {
         let opt=new Optional(v);
         opt.set_null();

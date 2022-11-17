@@ -1,9 +1,11 @@
+#include "HTMLTokenizerDefine.cppjs"
 #include "HTMLTokenizer.pre.js"
 
 export class HTMLTokenizer extends HTMLTokenizerBase {
+    /** @returns {Optional<number>} */
     next_code_point() {
         if(this.m_utf8_iterator.eq(this.m_utf8_view.end()))
-            return Optional.null_opt(0);
+            return new Optional;
 
         /** @type {number} */
         let code_point;
@@ -46,9 +48,9 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
     /** @param {number} offset */
     peek_code_point(offset) {
         let it=this.m_utf8_iterator;
-        for(let i=0;i<offset&&it!=this.m_utf8_view.end();++i)
+        for(let i=0;i<offset&&it.neq(this.m_utf8_view.end());++i)
             it.inc();
-        if(it==this.m_utf8_view.end())
+        if(it.eq(this.m_utf8_view.end()))
             return new Optional();
         return new Optional(it.deref());
     }
@@ -82,12 +84,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     // 13.2.5.1 Data state, https://html.spec.whatwg.org/multipage/parsing.html#data-state
                     BEGIN_STATE(Data)
             {
-                ON('&');
+                ON('&')
                 {
                     m_return_state=State.Data;
                     SWITCH_TO(CharacterReference);
                 }
-                ON('<');
+                ON('<')
                 {
                     SWITCH_TO(TagOpen);
                 }
@@ -110,11 +112,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.6 Tag open state, https://html.spec.whatwg.org/multipage/parsing.html#tag-open-state
             BEGIN_STATE(TagOpen)
             {
-                ON('!');
+                ON('!')
                 {
                     SWITCH_TO(MarkupDeclarationOpen);
                 }
-                ON('/');
+                ON('/')
                 {
                     SWITCH_TO(EndTagOpen);
                 }
@@ -123,7 +125,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     create_new_token(HTMLToken.Type.StartTag);
                     RECONSUME_IN(TagName);
                 }
-                ON('?');
+                ON('?')
                 {
                     this.log_parse_error();
                     this.create_new_token(HTMLToken.Type.Comment);
@@ -153,13 +155,13 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.set_end_position({},nth_last_position(1));
                     SWITCH_TO(BeforeAttributeName);
                 }
-                ON('/');
+                ON('/')
                 {
                     this.m_current_token.set_tag_name(consume_current_builder());
                     this.m_current_token.set_end_position({},nth_last_position(0));
                     SWITCH_TO(SelfClosingStartTag);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.m_current_token.set_tag_name(consume_current_builder());
                     this.m_current_token.set_end_position({},nth_last_position(1));
@@ -201,7 +203,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     create_new_token(HTMLToken.Type.EndTag);
                     RECONSUME_IN(TagName);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     SWITCH_TO(Data);
@@ -257,7 +259,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.41 Bogus comment state, https://html.spec.whatwg.org/multipage/parsing.html#bogus-comment-state
             BEGIN_STATE(BogusComment)
             {
-                ON('>');
+                ON('>')
                 {
                     this.m_current_token.set_comment(consume_current_builder());
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
@@ -288,7 +290,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     SWITCH_TO(BeforeDOCTYPEName);
                 }
-                ON('>');
+                ON('>')
                 {
                     RECONSUME_IN(BeforeDOCTYPEName);
                 }
@@ -330,7 +332,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.ensure_doctype_data().missing_name=false;
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(DOCTYPEName);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     create_new_token(HTMLToken.Type.DOCTYPE);
@@ -363,7 +365,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.ensure_doctype_data().name=consume_current_builder();
                     SWITCH_TO(AfterDOCTYPEName);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.m_current_token.ensure_doctype_data().name=consume_current_builder();
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
@@ -401,7 +403,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     continue;
                 }
-                ON('>');
+                ON('>')
                 {
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                 }
@@ -434,7 +436,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     SWITCH_TO(BeforeDOCTYPEPublicIdentifier);
                 }
-                ON('"');
+                ON('"')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().missing_public_identifier=false;
@@ -446,7 +448,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.ensure_doctype_data().missing_public_identifier=false;
                     SWITCH_TO(DOCTYPEPublicIdentifierSingleQuoted);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().force_quirks=true;
@@ -475,7 +477,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     SWITCH_TO(BeforeDOCTYPESystemIdentifier);
                 }
-                ON('"');
+                ON('"')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().system_identifier={};
@@ -489,7 +491,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.ensure_doctype_data().missing_system_identifier=false;
                     SWITCH_TO(DOCTYPESystemIdentifierSingleQuoted);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().force_quirks=true;
@@ -518,7 +520,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     continue;
                 }
-                ON('"');
+                ON('"')
                 {
                     this.m_current_token.ensure_doctype_data().missing_public_identifier=false;
                     SWITCH_TO(DOCTYPEPublicIdentifierDoubleQuoted);
@@ -528,7 +530,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.ensure_doctype_data().missing_public_identifier=false;
                     SWITCH_TO(DOCTYPEPublicIdentifierSingleQuoted);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().force_quirks=true;
@@ -557,7 +559,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     continue;
                 }
-                ON('"');
+                ON('"')
                 {
                     this.m_current_token.ensure_doctype_data().missing_system_identifier=false;
                     SWITCH_TO(DOCTYPESystemIdentifierDoubleQuoted);
@@ -567,7 +569,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.ensure_doctype_data().missing_system_identifier=false;
                     SWITCH_TO(DOCTYPESystemIdentifierSingleQuoted);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().force_quirks=true;
@@ -592,7 +594,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.59 DOCTYPE public identifier (double-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html#doctype-public-identifier-(double-quoted)-state
             BEGIN_STATE(DOCTYPEPublicIdentifierDoubleQuoted)
             {
-                ON('"');
+                ON('"')
                 {
                     this.m_current_token.ensure_doctype_data().public_identifier=consume_current_builder();
                     SWITCH_TO(AfterDOCTYPEPublicIdentifier);
@@ -603,7 +605,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().public_identifier=consume_current_builder();
@@ -639,7 +641,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().public_identifier=consume_current_builder();
@@ -664,7 +666,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.65 DOCTYPE system identifier (double-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html#doctype-system-identifier-(double-quoted)-state
             BEGIN_STATE(DOCTYPESystemIdentifierDoubleQuoted)
             {
-                ON('"');
+                ON('"')
                 {
                     this.m_current_token.ensure_doctype_data().system_identifier=consume_current_builder();
                     SWITCH_TO(AfterDOCTYPESystemIdentifier);
@@ -675,7 +677,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().system_identifier=consume_current_builder();
@@ -711,7 +713,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().system_identifier=consume_current_builder();
@@ -740,11 +742,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     SWITCH_TO(BetweenDOCTYPEPublicAndSystemIdentifiers);
                 }
-                ON('>');
+                ON('>')
                 {
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                 }
-                ON('"');
+                ON('"')
                 {
                     this.log_parse_error();
                     this.m_current_token.ensure_doctype_data().missing_system_identifier=false;
@@ -779,11 +781,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     continue;
                 }
-                ON('>');
+                ON('>')
                 {
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                 }
-                ON('"');
+                ON('"')
                 {
                     this.m_current_token.ensure_doctype_data().missing_system_identifier=false;
                     SWITCH_TO(DOCTYPESystemIdentifierDoubleQuoted);
@@ -816,7 +818,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     continue;
                 }
-                ON('>');
+                ON('>')
                 {
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                 }
@@ -838,7 +840,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.68 Bogus DOCTYPE state, https://html.spec.whatwg.org/multipage/parsing.html#bogus-doctype-state
             BEGIN_STATE(BogusDOCTYPE)
             {
-                ON('>');
+                ON('>')
                 {
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                 }
@@ -866,13 +868,13 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     continue;
                 }
-                ON('/');
+                ON('/')
                 {
                     if(m_current_token.has_attributes())
                         this.m_current_token.last_attribute().name_end_position=nth_last_position(1);
                     RECONSUME_IN(AfterAttributeName);
                 }
-                ON('>');
+                ON('>')
                 {
                     RECONSUME_IN(AfterAttributeName);
                 }
@@ -880,7 +882,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     RECONSUME_IN(AfterAttributeName);
                 }
-                ON('=');
+                ON('=')
                 {
                     this.log_parse_error();
                     HTMLToken::Attribute new_attribute;
@@ -902,7 +904,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.40 Self-closing start tag state, https://html.spec.whatwg.org/multipage/parsing.html#self-closing-start-tag-state
             BEGIN_STATE(SelfClosingStartTag)
             {
-                ON('>');
+                ON('>')
                 {
                     this.m_current_token.set_self_closing(true);
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
@@ -928,12 +930,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.last_attribute().local_name=consume_current_builder();
                     RECONSUME_IN(AfterAttributeName);
                 }
-                ON('/');
+                ON('/')
                 {
                     this.m_current_token.last_attribute().local_name=consume_current_builder();
                     RECONSUME_IN(AfterAttributeName);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.m_current_token.last_attribute().local_name=consume_current_builder();
                     RECONSUME_IN(AfterAttributeName);
@@ -943,7 +945,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.last_attribute().local_name=consume_current_builder();
                     RECONSUME_IN(AfterAttributeName);
                 }
-                ON('=');
+                ON('=')
                 {
                     this.m_current_token.last_attribute().name_end_position=nth_last_position(1);
                     this.m_current_token.last_attribute().local_name=consume_current_builder();
@@ -960,7 +962,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
-                ON('"');
+                ON('"')
                 {
                     this.log_parse_error();
                             goto AnythingElseAttributeName;
@@ -970,7 +972,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.log_parse_error();
                             goto AnythingElseAttributeName;
                 }
-                ON('<');
+                ON('<')
                 {
                     this.log_parse_error();
                             goto AnythingElseAttributeName;
@@ -991,16 +993,16 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     continue;
                 }
-                ON('/');
+                ON('/')
                 {
                     SWITCH_TO(SelfClosingStartTag);
                 }
-                ON('=');
+                ON('=')
                 {
                     this.m_current_token.last_attribute().name_end_position=nth_last_position(1);
                     SWITCH_TO(BeforeAttributeValue);
                 }
-                ON('>');
+                ON('>')
                 {
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                 }
@@ -1027,7 +1029,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     continue;
                 }
-                ON('"');
+                ON('"')
                 {
                     SWITCH_TO(AttributeValueDoubleQuoted);
                 }
@@ -1035,7 +1037,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     SWITCH_TO(AttributeValueSingleQuoted);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
@@ -1050,12 +1052,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.36 Attribute value (double-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html#attribute-value-(double-quoted)-state
             BEGIN_STATE(AttributeValueDoubleQuoted)
             {
-                ON('"');
+                ON('"')
                 {
                     this.m_current_token.last_attribute().value=consume_current_builder();
                     SWITCH_TO(AfterAttributeValueQuoted);
                 }
-                ON('&');
+                ON('&')
                 {
                     m_return_state=State.AttributeValueDoubleQuoted;
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CharacterReference);
@@ -1087,7 +1089,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.last_attribute().value=consume_current_builder();
                     SWITCH_TO(AfterAttributeValueQuoted);
                 }
-                ON('&');
+                ON('&')
                 {
                     m_return_state=State.AttributeValueSingleQuoted;
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CharacterReference);
@@ -1120,12 +1122,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.m_current_token.last_attribute().value_end_position=nth_last_position(1);
                     SWITCH_TO(BeforeAttributeName);
                 }
-                ON('&');
+                ON('&')
                 {
                     m_return_state=State.AttributeValueUnquoted;
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CharacterReference);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.m_current_token.last_attribute().value=consume_current_builder();
                     this.m_current_token.last_attribute().value_end_position=nth_last_position(1);
@@ -1137,7 +1139,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
-                ON('"');
+                ON('"')
                 {
                     this.log_parse_error();
                             goto AnythingElseAttributeValueUnquoted;
@@ -1147,17 +1149,17 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     this.log_parse_error();
                             goto AnythingElseAttributeValueUnquoted;
                 }
-                ON('<');
+                ON('<')
                 {
                     this.log_parse_error();
                             goto AnythingElseAttributeValueUnquoted;
                 }
-                ON('=');
+                ON('=')
                 {
                     this.log_parse_error();
                             goto AnythingElseAttributeValueUnquoted;
                 }
-                ON('`');
+                ON('`')
                 {
                     this.log_parse_error();
                             goto AnythingElseAttributeValueUnquoted;
@@ -1184,11 +1186,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     SWITCH_TO(BeforeAttributeName);
                 }
-                ON('/');
+                ON('/')
                 {
                     SWITCH_TO(SelfClosingStartTag);
                 }
-                ON('>');
+                ON('>')
                 {
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                 }
@@ -1208,11 +1210,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.43 Comment start state, https://html.spec.whatwg.org/multipage/parsing.html#comment-start-state
             BEGIN_STATE(CommentStart)
             {
-                ON('-');
+                ON('-')
                 {
                     SWITCH_TO(CommentStartDash);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
@@ -1227,11 +1229,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.44 Comment start dash state, https://html.spec.whatwg.org/multipage/parsing.html#comment-start-dash-state
             BEGIN_STATE(CommentStartDash)
             {
-                ON('-');
+                ON('-')
                 {
                     SWITCH_TO(CommentEnd);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
@@ -1252,12 +1254,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.45 Comment state, https://html.spec.whatwg.org/multipage/parsing.html#comment-state
             BEGIN_STATE(Comment)
             {
-                ON('<');
+                ON('<')
                 {
                     m_current_builder.append_code_point(current_input_character.value());
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentLessThanSign);
                 }
-                ON('-');
+                ON('-')
                 {
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentEndDash);
                 }
@@ -1284,16 +1286,16 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.51 Comment end state, https://html.spec.whatwg.org/multipage/parsing.html#comment-end-state
             BEGIN_STATE(CommentEnd)
             {
-                ON('>');
+                ON('>')
                 {
                     this.m_current_token.set_comment(consume_current_builder());
                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                 }
-                ON('!');
+                ON('!')
                 {
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentEndBang);
                 }
-                ON('-');
+                ON('-')
                 {
                     m_current_builder.append('-');
                     continue;
@@ -1315,12 +1317,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.52 Comment end bang state, https://html.spec.whatwg.org/multipage/parsing.html#comment-end-bang-state
             BEGIN_STATE(CommentEndBang)
             {
-                ON('-');
+                ON('-')
                 {
                     m_current_builder.append("--!"sv);
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentEndDash);
                 }
-                ON('>');
+                ON('>')
                 {
                     this.log_parse_error();
                     this.m_current_token.set_comment(consume_current_builder());
@@ -1343,7 +1345,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.50 Comment end dash state, https://html.spec.whatwg.org/multipage/parsing.html#comment-end-dash-state
             BEGIN_STATE(CommentEndDash)
             {
-                ON('-');
+                ON('-')
                 {
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentEnd);
                 }
@@ -1364,12 +1366,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.46 Comment less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html#comment-less-than-sign-state
             BEGIN_STATE(CommentLessThanSign)
             {
-                ON('!');
+                ON('!')
                 {
                     m_current_builder.append_code_point(current_input_character.value());
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentLessThanSignBang);
                 }
-                ON('<');
+                ON('<')
                 {
                     m_current_builder.append_code_point(current_input_character.value());
                     continue;
@@ -1384,7 +1386,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.47 Comment less-than sign bang state, https://html.spec.whatwg.org/multipage/parsing.html#comment-less-than-sign-bang-state
             BEGIN_STATE(CommentLessThanSignBang)
             {
-                ON('-');
+                ON('-')
                 {
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentLessThanSignBangDash);
                 }
@@ -1398,7 +1400,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.48 Comment less-than sign bang dash state, https://html.spec.whatwg.org/multipage/parsing.html#comment-less-than-sign-bang-dash-state
             BEGIN_STATE(CommentLessThanSignBangDash)
             {
-                ON('-');
+                ON('-')
                 {
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentLessThanSignBangDashDash);
                 }
@@ -1412,7 +1414,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             // 13.2.5.49 Comment less-than sign bang dash dash state, https://html.spec.whatwg.org/multipage/parsing.html#comment-less-than-sign-bang-dash-dash-state
             BEGIN_STATE(CommentLessThanSignBangDashDash)
             {
-                ON('>');
+                ON('>')
                 {
                     RECONSUME_IN(CommentEnd);
                 }
@@ -1438,7 +1440,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 {
                     RECONSUME_IN(NamedCharacterReference);
                 }
-                ON('#');
+                ON('#')
                 {
                     m_temporary_buffer.append(current_input_character.value());
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(NumericCharacterReference);
@@ -1460,8 +1462,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
 
                 if(match.has_value()) {
                     skip(match->entity.length()-1);
-                    for(auto ch : match.value().entity)
-                    m_temporary_buffer.append(ch);
+                    for(let ch of match.value().entity)
+                        m_temporary_buffer.append(ch);
 
                     if(consumed_as_part_of_an_attribute()&&!match.value().entity.ends_with(';')) {
                                 auto next_code_point=peek_code_point(0);
@@ -1500,7 +1502,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         EMIT_CURRENT_CHARACTER;
                     }
                 }
-                ON(';');
+                ON(';')
                 {
                     this.log_parse_error();
                     RECONSUME_IN_RETURN_STATE;
@@ -1517,12 +1519,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             {
                 m_character_reference_code=0;
 
-                ON('X');
+                ON('X')
                 {
                     m_temporary_buffer.append(current_input_character.value());
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(HexadecimalCharacterReferenceStart);
                 }
-                ON('x');
+                ON('x')
                 {
                     m_temporary_buffer.append(current_input_character.value());
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(HexadecimalCharacterReferenceStart);
@@ -1587,7 +1589,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     m_character_reference_code+=current_input_character.value()-0x57;
                     continue;
                 }
-                ON(';');
+                ON(';')
                 {
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(NumericCharacterReferenceEnd);
                 }
@@ -1608,7 +1610,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     m_character_reference_code+=current_input_character.value()-0x30;
                     continue;
                 }
-                ON(';');
+                ON(';')
                 {
                     SWITCH_TO_WITH_UNCLEAN_BUILDER(NumericCharacterReferenceEnd);
                 }
@@ -1692,12 +1694,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.2 RCDATA state, https://html.spec.whatwg.org/multipage/parsing.html#rcdata-state
         BEGIN_STATE(RCDATA)
         {
-            ON('&');
+            ON('&')
             {
                 m_return_state=State.RCDATA;
                 SWITCH_TO(CharacterReference);
             }
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO(RCDATALessThanSign);
             }
@@ -1720,7 +1722,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.9 RCDATA less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html#rcdata-less-than-sign-state
         BEGIN_STATE(RCDATALessThanSign)
         {
-            ON('/');
+            ON('/')
             {
                 m_temporary_buffer.clear();
                 SWITCH_TO(RCDATAEndTagOpen);
@@ -1764,7 +1766,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 }
                 SWITCH_TO(BeforeAttributeName);
             }
-            ON('/');
+            ON('/')
             {
                 this.m_current_token.set_tag_name(consume_current_builder());
                 if(!current_end_tag_token_is_appropriate()) {
@@ -1776,7 +1778,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 }
                 SWITCH_TO(SelfClosingStartTag);
             }
-            ON('>');
+            ON('>')
             {
                 this.m_current_token.set_tag_name(consume_current_builder());
                 if(!current_end_tag_token_is_appropriate()) {
@@ -1816,7 +1818,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.3 RAWTEXT state, https://html.spec.whatwg.org/multipage/parsing.html#rawtext-state
         BEGIN_STATE(RAWTEXT)
         {
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO(RAWTEXTLessThanSign);
             }
@@ -1839,7 +1841,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.12 RAWTEXT less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html#rawtext-less-than-sign-state
         BEGIN_STATE(RAWTEXTLessThanSign)
         {
-            ON('/');
+            ON('/')
             {
                 m_temporary_buffer.clear();
                 SWITCH_TO(RAWTEXTEndTagOpen);
@@ -1883,7 +1885,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 }
                 SWITCH_TO(BeforeAttributeName);
             }
-            ON('/');
+            ON('/')
             {
                 this.m_current_token.set_tag_name(consume_current_builder());
                 if(!current_end_tag_token_is_appropriate()) {
@@ -1895,7 +1897,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 }
                 SWITCH_TO(SelfClosingStartTag);
             }
-            ON('>');
+            ON('>')
             {
                 this.m_current_token.set_tag_name(consume_current_builder());
                 if(!current_end_tag_token_is_appropriate()) {
@@ -1935,7 +1937,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.4 Script data state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-state
         BEGIN_STATE(ScriptData)
         {
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO(ScriptDataLessThanSign);
             }
@@ -1977,12 +1979,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.15 Script data less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-less-than-sign-state
         BEGIN_STATE(ScriptDataLessThanSign)
         {
-            ON('/');
+            ON('/')
             {
                 m_temporary_buffer.clear();
                 SWITCH_TO(ScriptDataEndTagOpen);
             }
-            ON('!');
+            ON('!')
             {
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('!'));
@@ -1998,7 +2000,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.18 Script data escape start state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-escape-start-state
         BEGIN_STATE(ScriptDataEscapeStart)
         {
-            ON('-');
+            ON('-')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('-',ScriptDataEscapeStartDash);
             }
@@ -2012,7 +2014,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.19 Script data escape start dash state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-escape-start-dash-state
         BEGIN_STATE(ScriptDataEscapeStartDash)
         {
-            ON('-');
+            ON('-')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('-',ScriptDataEscapedDashDash);
             }
@@ -2026,15 +2028,15 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.22 Script data escaped dash dash state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-escaped-dash-dash-state
         BEGIN_STATE(ScriptDataEscapedDashDash)
         {
-            ON('-');
+            ON('-')
             {
                 EMIT_CHARACTER('-');
             }
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO(ScriptDataEscapedLessThanSign);
             }
-            ON('>');
+            ON('>')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('>',ScriptData);
             }
@@ -2058,7 +2060,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.23 Script data escaped less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-escaped-less-than-sign-state
         BEGIN_STATE(ScriptDataEscapedLessThanSign)
         {
-            ON('/');
+            ON('/')
             {
                 m_temporary_buffer.clear();
                 SWITCH_TO(ScriptDataEscapedEndTagOpen);
@@ -2110,7 +2112,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 }
                 RECONSUME_IN(ScriptDataEscaped);
             }
-            ON('/');
+            ON('/')
             {
                 this.m_current_token.set_tag_name(consume_current_builder());
                 if(current_end_tag_token_is_appropriate())
@@ -2125,7 +2127,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 }
                 RECONSUME_IN(ScriptDataEscaped);
             }
-            ON('>');
+            ON('>')
             {
                 this.m_current_token.set_tag_name(consume_current_builder());
                 if(current_end_tag_token_is_appropriate())
@@ -2183,14 +2185,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 else
                     SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(ScriptDataEscaped);
             }
-            ON('/');
+            ON('/')
             {
                 if(temporary_buffer_equal_to_script())
                     SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(ScriptDataDoubleEscaped);
                 else
                     SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(ScriptDataEscaped);
             }
-            ON('>');
+            ON('>')
             {
                 if(temporary_buffer_equal_to_script())
                     SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(ScriptDataDoubleEscaped);
@@ -2217,11 +2219,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.27 Script data double escaped state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-double-escaped-state
         BEGIN_STATE(ScriptDataDoubleEscaped)
         {
-            ON('-');
+            ON('-')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('-',ScriptDataDoubleEscapedDash);
             }
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('<',ScriptDataDoubleEscapedLessThanSign);
             }
@@ -2245,11 +2247,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.28 Script data double escaped dash state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-double-escaped-dash-state
         BEGIN_STATE(ScriptDataDoubleEscapedDash)
         {
-            ON('-');
+            ON('-')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('-',ScriptDataDoubleEscapedDashDash);
             }
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('<',ScriptDataDoubleEscapedLessThanSign);
             }
@@ -2273,15 +2275,15 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.29 Script data double escaped dash dash state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-double-escaped-dash-dash-state
         BEGIN_STATE(ScriptDataDoubleEscapedDashDash)
         {
-            ON('-');
+            ON('-')
             {
                 EMIT_CHARACTER('-');
             }
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('<',ScriptDataDoubleEscapedLessThanSign);
             }
-            ON('>');
+            ON('>')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('>',ScriptData);
             }
@@ -2305,7 +2307,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.30 Script data double escaped less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-double-escaped-less-than-sign-state
         BEGIN_STATE(ScriptDataDoubleEscapedLessThanSign)
         {
-            ON('/');
+            ON('/')
             {
                 m_temporary_buffer.clear();
                 SWITCH_TO_AND_EMIT_CHARACTER('/',ScriptDataDoubleEscapeEnd);
@@ -2334,14 +2336,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 else
                     SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(ScriptDataDoubleEscaped);
             }
-            ON('/');
+            ON('/')
             {
                 if(temporary_buffer_equal_to_script())
                     SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(ScriptDataEscaped);
                 else
                     SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(ScriptDataDoubleEscaped);
             }
-            ON('>');
+            ON('>')
             {
                 if(temporary_buffer_equal_to_script())
                     SWITCH_TO_AND_EMIT_CURRENT_CHARACTER(ScriptDataEscaped);
@@ -2368,11 +2370,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.21 Script data escaped dash state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-escaped-dash-state
         BEGIN_STATE(ScriptDataEscapedDash)
         {
-            ON('-');
+            ON('-')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('-',ScriptDataEscapedDashDash);
             }
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO(ScriptDataEscapedLessThanSign);
             }
@@ -2396,11 +2398,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.20 Script data escaped state, https://html.spec.whatwg.org/multipage/parsing.html#script-data-escaped-state
         BEGIN_STATE(ScriptDataEscaped)
         {
-            ON('-');
+            ON('-')
             {
                 SWITCH_TO_AND_EMIT_CHARACTER('-',ScriptDataEscapedDash);
             }
-            ON('<');
+            ON('<')
             {
                 SWITCH_TO(ScriptDataEscapedLessThanSign);
             }
@@ -2454,7 +2456,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 RECONSUME_IN(ScriptData);
             }
-            ON('/');
+            ON('/')
             {
                 this.m_current_token.set_tag_name(consume_current_builder());
                 if(current_end_tag_token_is_appropriate())
@@ -2467,7 +2469,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 RECONSUME_IN(ScriptData);
             }
-            ON('>');
+            ON('>')
             {
                 this.m_current_token.set_tag_name(consume_current_builder());
                 if(current_end_tag_token_is_appropriate())
@@ -2508,7 +2510,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.69 CDATA section state, https://html.spec.whatwg.org/multipage/parsing.html#cdata-section-state
         BEGIN_STATE(CDATASection)
         {
-            ON(']');
+            ON(']')
             {
                 SWITCH_TO(CDATASectionBracket);
             }
@@ -2527,7 +2529,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.70 CDATA section bracket state, https://html.spec.whatwg.org/multipage/parsing.html#cdata-section-bracket-state
         BEGIN_STATE(CDATASectionBracket)
         {
-            ON(']');
+            ON(']')
             {
                 SWITCH_TO(CDATASectionEnd);
             }
@@ -2541,11 +2543,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         // 13.2.5.71 CDATA section end state, https://html.spec.whatwg.org/multipage/parsing.html#cdata-section-end-state
         BEGIN_STATE(CDATASectionEnd)
         {
-            ON(']');
+            ON(']')
             {
                 EMIT_CHARACTER(']');
             }
-            ON('>');
+            ON('>')
             {
                 SWITCH_TO(Data);
             }

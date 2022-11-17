@@ -13,6 +13,7 @@ import {StringBuilder} from "./StringBuilder.js";
 import {Queue} from "./Queue";
 import {CppPtr} from "./CppPtr";
 import {InsertionPoint} from "./InsertionPoint";
+import {move} from "./move.js";
 
 export function use_imports() {
     return [
@@ -26,6 +27,7 @@ export function use_imports() {
         Utf8View,
         state_name,
         TOKENIZER_TRACE_DEBUG,
+        move,
     ];
 }
 
