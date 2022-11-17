@@ -12,13 +12,5 @@ export class RequestModule {
 		is_https: false,
 		value: http,
 	};
-	/**
-	 * @arg {string | http.RequestOptions | URL} options
-	 * @arg {(res: http.IncomingMessage) => void} [callback]
-	 */
-	get(options,callback) {
-		if(this.http_import.is_https) {
-			return http.get(options,callback);
-		}
-	}
+	get=http.get.bind(http);
 }
