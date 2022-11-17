@@ -1,15 +1,9 @@
-import {fake} from "../../browser_fake_dom/index.js";
 import {PageLoaderState} from "./PageLoaderState.js";
 
-/**@param {PageLoaderState} state */
-export async function run_fetch_algorithm(state) {
-	if(!fake.document)
-		throw new Error("Missing document");
-	await new Promise(function(accept,reject) {
-		if(!state.url)
-			throw new Error("Invalid state");
-		if(!state.on_incoming_message)
-			throw new Error("No Handler for server response");
+/**@param {PageLoaderState} state @returns {Promise<void>} */
+export function run_fetch_algorithm(state) {
+	return new Promise(function(accept,reject) {
+		if(!state.url) throw new Error("Invalid state");
 		state.m_client_request=state.m_start_request_module.get(
 			state.url,
 			(incoming_message) => {

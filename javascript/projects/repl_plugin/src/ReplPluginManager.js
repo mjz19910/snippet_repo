@@ -83,8 +83,9 @@ export class ReplPluginManager {
 		this.get_repl_runtime().defineCommand(keyword,cmd);
 	}
 	get context() {
-		if(!this.m_context)
-			throw new Error("No repl context");
+		if(!this.m_context) {
+			this.m_context=this.get_repl_runtime().context;
+		}
 		return this.m_context;
 	}
 	get_repl_runtime() {

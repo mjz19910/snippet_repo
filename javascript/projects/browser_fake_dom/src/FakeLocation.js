@@ -5,30 +5,43 @@ import {DomBadge} from "./implementation/DomBadge.js";
 import {Badge} from "./std/Badge.js";
 /**@implements {URL} */
 class FakeURL {
+	X=new URL("file://");
 	/**@type {string}*/
-	get hash() {throw new Error("NoImpl");}
+	get hash() {return this.X.hash;}
+	set hash(value) {this.X.hash=value;}
 	/**@type {string}*/
-	get host() {throw new Error("NoImpl");}
+	get host() {return this.X.host;}
+	set host(value) {this.X.host=value;}
 	/**@type {string}*/
-	get hostname() {throw new Error("NoImpl");}
+	get hostname() {return this.X.hostname;}
+	set hostname(value) {this.X.hostname=value;}
 	/**@type {string}*/
-	get href() {throw new Error("NoImpl");}
+	get href() {return this.X.href;}
+	set href(value) {this.X.href=value;}
 	/**@type {string}*/
-	get origin() {throw new Error("NoImpl");}
+	get origin() {return this.X.origin;}
+	set origin(_value) {throw new Error("Attempt to set readonly property");}
 	/**@type {string}*/
-	get password() {throw new Error("NoImpl");}
+	get password() {return this.X.password;}
+	set password(value) {this.X.password=value;}
 	/**@type {string}*/
-	get pathname() {throw new Error("NoImpl");}
+	get pathname() {return this.X.pathname;}
+	set pathname(value) {this.X.pathname=value;}
 	/**@type {string}*/
-	get port() {throw new Error("NoImpl");}
+	get port() {return this.X.port;}
+	set port(value) {this.X.port=value;}
 	/**@type {string}*/
-	get protocol() {throw new Error("NoImpl");}
+	get protocol() {return this.X.protocol;}
+	set protocol(value) {this.X.protocol=value;}
 	/**@type {string}*/
-	get search() {throw new Error("NoImpl");}
+	get search() {return this.X.search;}
+	set search(value) {this.X.search=value;}
 	/**@type {URLSearchParams}*/
-	get searchParams() {throw new Error("NoImpl");}
+	get searchParams() {return this.X.searchParams;}
+	set searchParams(_value) {throw new Error("Attempt to set readonly value");}
 	/**@type {string}*/
-	get username() {throw new Error("NoImpl");}
+	get username() {return this.X.username;}
+	set username(value) {this.X.username=value;}
 	/**@returns {string} */
 	toJSON() {throw new Error("NoImpl");}
 }
@@ -93,7 +106,7 @@ export class FakeLocation {
 			console.log(pn,s);
 			return;
 		}
-		console.log(this.#location_url.search,value);
+		console.log("%o",value);
 		this.#location_url.href=value;
 	}
 	get origin() {return this.#location_url.origin;}

@@ -13,8 +13,7 @@ export class REPLFakeBrowserPlugin {
 	obj=null;
 	enable() {
 		if(!this.obj) {
-			console.log("FakeBrowserPlugin.enable() without obj");
-			return;
+			this.obj=new ObjMaybeKeys(fake);
 		}
 		this.repl.context.get_fake_window=() => fake.window;
 		this.repl.context.get_fake_document=() => fake.document;

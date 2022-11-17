@@ -32,13 +32,12 @@ export async function fetch_url(state,silent=false) {
 	fake.document=new FakeDocument(fake.window,new DomBadge);
 	fake.with_badge(dom_impl_badge,(fake) => {
 		if(!fake.document) throw new Error("Missing fake document");
-		debugger;
 		fake.document.location.assign(new_url);
 	});
 	let req_mod=state.m_start_request_module;
 	switch(p_url.protocol) {
-		case 'http:': req_mod.http_import={is_https: false,value: http}; break;
-		case 'https:': req_mod.http_import={is_https: true,value: https}; break;
+		case 'http:': req_mod.init({is_https: false,value: http}); break;
+		case 'https:': req_mod.init({is_https: true,value: https}); break;
 		default: throw new Error("Unknown protocol: "+p_url.protocol);
 	}
 	if(!state.on_incoming_message) throw new Error("No Handler for server response");
