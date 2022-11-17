@@ -27,6 +27,7 @@ export class IpcLoader {
 
 import * as path from "path";
 import {spawn as child_process_spawn} from "child_process";
+import {ReplPluginManagerModule} from "../../ipc_api/src/ReplPluginManagerModule.js";
 
 /**
  * @param {string} plugin_key
@@ -98,8 +99,8 @@ export async function handle_failed_import(state,error,import_string) {
 	}
 }
 
-/** @arg {IpcLoader} state @arg {string} plugin_key @arg {any} context */
-export async function import_ipc_plugin(state,plugin_key, context) {
+/** @arg {IpcLoader} state @arg {string} plugin_key @arg {any} context @arg {import("./nice_loader_types.js").ResolveFn} defaultResolve */
+export async function import_ipc_plugin(state,plugin_key, context, defaultResolve) {
 	switch(plugin_key) {
 		case 'repl_plugin_manager/mod.js': {
 			/**@type {`../../${typeof plugin_key}`}*/
@@ -145,15 +146,15 @@ export async function resolve(specifier,context,defaultResolve) {
 	if(loader_debug) console.log('ctx',context);
 	if(specifier.endsWith(".js")) {
 		try {
-			return await import_ipc_plugin(ipc_load_data,specifier,context);
+			return await import_ipc_plugin(ipc_load_data,specifier,context, defaultResolve);
 		} catch (err) {
-			errors.push(err);
+			console.log(err);
 		}
 		try {
 			return await defaultResolve(specifier,context,defaultResolve);
 		} catch(err) {
 			if(loader_debug) console.log('Failed to load import specifier: ',specifier);
-			errors.push(err);
+			throw err;
 		}
 	}
 	if(system_modules.includes(specifier)) {
@@ -161,8 +162,8 @@ export async function resolve(specifier,context,defaultResolve) {
 	}
 	try {
 		return await defaultResolve(specifier+".js",context,defaultResolve);
-	} catch (e) {
-		errors.push(e);
+	} catch (err) {
+		errors.push(err);
 	}
 	if(loader_debug) console.log('Failed to load import specifier: ',specifier);
 	try {
