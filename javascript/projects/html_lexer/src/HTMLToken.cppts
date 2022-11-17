@@ -1,12 +1,9 @@
-import {HTMLToken_Type} from "./HTMLToken_Type";
-import {SourcePosition} from "./SourcePosition.js";
-
 #include "HTMLToken.pre.ts"
 
 #define VERIFY(expr) \
     (!(expr)   \
         ? ak_verification_failed([#expr,"\n",__FILE__,":",__stringify(__LINE__)].join("")) \
-        : (void)0)
+        : void 0)
 
 export class HTMLToken {
     static Position=SourcePosition;

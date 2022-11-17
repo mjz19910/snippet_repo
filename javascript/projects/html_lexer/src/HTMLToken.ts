@@ -2,9 +2,6 @@
 // 0 "<built-in>"
 // 0 "<command-line>"
 // 1 "HTMLToken.cppts"
-import {HTMLToken_Type} from "./HTMLToken_Type";
-import {SourcePosition} from "./SourcePosition.js";
-
 // 1 "HTMLToken.pre.ts" 1
 import {HTMLToken_Type} from "./HTMLToken_Type";
 import {SourcePosition} from "./SourcePosition.js";
@@ -77,7 +74,7 @@ export function use_types() {
         ...ex,HTMLToken_Type,SourcePosition
     ] as const;
 }
-// 5 "HTMLToken.cppts" 2
+// 2 "HTMLToken.cppts" 2
 
 
 
@@ -129,7 +126,7 @@ export class HTMLToken {
         this.m_start_position=start_position;
     }
     tag_name() {
-        (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","HTMLToken.cppts",":",__stringify(56)].join("")) : (void)0);
+        (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","HTMLToken.cppts",":",__stringify(53)].join("")) : 0);
         return this.m_string_data;
     }
     is_end_tag(): any {
