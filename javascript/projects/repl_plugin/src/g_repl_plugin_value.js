@@ -1,4 +1,4 @@
-import {ReplPluginReplSupport} from "./ReplPluginManager.js";
+import {ReplPluginManager} from "./ReplPluginManager.js";
 
-/**@type {{value:ReplPluginReplSupport|null}} */
+/**@type {{value:ReplPluginManager|null}} */
 export let g_repl_plugin_value={value: null};
