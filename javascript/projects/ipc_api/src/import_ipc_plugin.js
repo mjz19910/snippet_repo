@@ -1,4 +1,4 @@
-import {debug} from "../../debug.js";
+import {debug} from "../../debug.mjs";
 import {handle_failed_import} from "./handle_failed_import.js";
 import {IpcLoader} from "./ipc_loader_state.js";
 import {g_loaded_ipc_plugin_map} from "./g_loaded_ipc_plugin_map.js";

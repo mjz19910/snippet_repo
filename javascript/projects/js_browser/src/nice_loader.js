@@ -27,7 +27,31 @@ export class IpcLoader {
 
 import * as path from "path";
 import {spawn as child_process_spawn} from "child_process";
-import {ReplPluginManagerModule} from "../../ipc_api/src/ReplPluginManagerModule.js";
+
+export class ReplPluginManagerModule {
+	/**
+	 * @arg {IpcLoader} state
+	 * @arg {"repl_plugin_manager/mod.js"} load_key
+	 * @arg {"../../repl_plugin_manager/mod.js"} path
+	 */
+	static async import_ipc_plugin(state,load_key,path) {
+		state.depth++;
+		let mod=null;
+		try {
+			mod=await try_import_module(load_key,path);
+		} catch(e) {
+			await handle_failed_import(state,e,load_key);
+			if(module_map.has(load_key)) {
+				return module_map.get(load_key);
+			} else {
+				throw new Error("Handling error did not load plugin");
+			}
+		} finally {
+			state.depth--;
+		}
+		return mod;
+	}
+}
 
 /**
  * @param {string} plugin_key
@@ -49,13 +73,14 @@ export async function handle_failed_import(state,error,import_string) {
 	let mod=null;
 	let errors=[];
 	while(mod===null) {
-		if(state.depth>8) {
+		if(state.depth>0) {
 			throw new Error("ipc plugin loader overflow (import depth too high)");
 		}
 		if(!(error instanceof Error))
 			throw new Error("Bad error");
 		if(!error.stack) throw new Error("No Error stack");
 		let stk=error.stack;
+		debugger;
 		let imp_mod=stk.split("\n")[0];
 		console.log(stk);
 		let line_part_1=stk.split("\n")[1];
@@ -111,13 +136,16 @@ export async function import_ipc_plugin(state,plugin_key, context, defaultResolv
 			return ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
 		} break;
 		case './src/HTMLTokenizer.js': break;
-		default: throw new Error("No types for "+plugin_key);
+		default: return null;
 	}
 	if(module_map.has(plugin_key)) {
 		return module_map.get(plugin_key);
 	}
 	if(loader_debug) console.log('imp depth',state.depth);
-	state.depth++;
+	if(state.depth > 0) {
+		throw new Error("Too deep");
+	}
+ 	state.depth++;
 	try {
 		let mod=await try_import_module(plugin_key,`${plugin_key}`);
 		return mod;
@@ -143,10 +171,13 @@ let ipc_load_data=new IpcLoader;
 export async function resolve(specifier,context,defaultResolve) {
 	let errors=[];
 	if(loader_debug) console.log('spec',specifier);
-	if(loader_debug) console.log('ctx',context);
+	if(loader_debug) console.log('ctx',context.parentURL);
 	if(specifier.endsWith(".js")) {
 		try {
-			return await import_ipc_plugin(ipc_load_data,specifier,context, defaultResolve);
+			let res=await import_ipc_plugin(ipc_load_data,specifier,context, defaultResolve);
+			if(res !== null) {
+				return res;
+			}
 		} catch (err) {
 			console.log(err);
 		}

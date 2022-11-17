@@ -1,7 +1,7 @@
-import {handle_failed_import} from "./handle_failed_import";
+import {handle_failed_import} from "./handle_failed_import.js";
 import {IpcLoader} from "./ipc_loader_state.js";
-import {g_loaded_ipc_plugin_map} from "./g_loaded_ipc_plugin_map";
-import {try_import_module} from "./try_import_module";
+import {g_loaded_ipc_plugin_map} from "./g_loaded_ipc_plugin_map.js";
+import {try_import_module} from "./try_import_module.js";
 
 export class ReplPluginManagerModule {
 	static async import_plugin() {

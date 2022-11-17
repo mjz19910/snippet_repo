@@ -1,4 +1,4 @@
-import {g_loaded_ipc_plugin_map} from "./g_loaded_ipc_plugin_map"
+import {g_loaded_ipc_plugin_map} from "./g_loaded_ipc_plugin_map.js"
 /**
  * @param {string} plugin_key
  * @param {string} module_path
