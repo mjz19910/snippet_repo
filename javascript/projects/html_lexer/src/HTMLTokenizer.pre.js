@@ -10,6 +10,9 @@ import {state_name} from "./state_name.js";
 import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {CppVector} from "./CppArray.js";
 import {StringBuilder} from "./StringBuilder.js";
+import {Queue} from "./Queue";
+import {CppPtr} from "./CppPtr";
+import {InsertionPoint} from "./InsertionPoint";
 
 export function use_imports() {
     return [
@@ -25,41 +28,6 @@ export function use_imports() {
         TOKENIZER_TRACE_DEBUG,
     ];
 }
-
-/** @template T */
-export class Queue {
-    /**@type {T[]} */
-    inner;
-    constructor() {
-        this.inner=[];
-    }
-}
-
-/**
- * @template T
- * @param {T} value
- */
-export function move(value) {
-    return value;
-}
-
-/**@template T */
-export class CppPtr {
-    /** @type {T|null} */
-    ptr=null;
-    /** @template T @arg {T} v */
-    static from(v) {
-        /**@type {CppPtr<T>} */
-        let value=new CppPtr;
-        value.ptr=v;
-        return value;
-    }
-}
-
-export class InsertionPoint {
-    position=0;
-    defined=false;
-};
 
 export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     /**@type {CppPtr<HTMLParser>} */

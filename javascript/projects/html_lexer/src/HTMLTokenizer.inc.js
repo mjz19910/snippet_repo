@@ -33,6 +33,9 @@ export function use_imports() {
 
 /** @template T */
 export class Queue {
+    is_empty() {
+        throw new Error("Method not implemented.");
+    }
     /**@type {T[]} */
     inner;
     constructor() {
