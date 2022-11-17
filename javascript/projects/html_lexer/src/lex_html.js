@@ -50,7 +50,32 @@ export function lex_html(state,html) {
 		let state=lexer;
 		switch(lexer.m_current_state) {
 			case State.MarkupDeclarationOpen: {
-
+				lexer.DONT_CONSUME_NEXT_INPUT_CHARACTER();
+                if (consume_next_if_match("--"sv)) {
+                    create_new_token(HTMLToken::Type::Comment);
+                    m_current_token.set_start_position({}, nth_last_position(3));
+                    SWITCH_TO(CommentStart);
+                }
+                if (consume_next_if_match("DOCTYPE"sv, CaseSensitivity::CaseInsensitive)) {
+                    SWITCH_TO(DOCTYPE);
+                }
+                if (consume_next_if_match("[CDATA["sv)) {
+                    // We keep the parser optional so that syntax highlighting can be lexer-only.
+                    // The parser registers itself with the lexer it creates.
+                    if (m_parser != nullptr && m_parser->adjusted_current_node().namespace_() != Namespace::HTML) {
+                        SWITCH_TO(CDATASection);
+                    } else {
+                        create_new_token(HTMLToken::Type::Comment);
+                        m_current_builder.append("[CDATA["sv);
+                        SWITCH_TO_WITH_UNCLEAN_BUILDER(BogusComment);
+                    }
+                }
+                ANYTHING_ELSE
+                {
+                    log_parse_error();
+                    create_new_token(HTMLToken::Type::Comment);
+                    SWITCH_TO(BogusComment);
+                }
 			} break;
 			case State.TagOpen: {
 				console.log(state.i,state.cur_char);
