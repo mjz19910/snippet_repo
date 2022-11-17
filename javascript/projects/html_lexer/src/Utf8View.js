@@ -1,3 +1,4 @@
+import {StringView} from "./StringView.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
 
 export class Utf8View {
@@ -7,13 +8,13 @@ export class Utf8View {
         iter.pos=0;
         return iter;
     }
-    /**@arg {string} m_decoded_input */
+    /**@arg {StringView} m_decoded_input */
     static from(m_decoded_input) {
         let val=new this;
         val.m_value=m_decoded_input;
         return val;
     }
-    m_value="";
+    m_value=new StringView;
     end() {
         let iter=new Utf8CodePointIterator;
         iter.target=this.m_value;

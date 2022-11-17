@@ -16,6 +16,7 @@ import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {move} from "./move.js";
 import {HTMLTokenizerBase} from "./HTMLTokenizerBase.js";
 import {ak_verification_failed} from "./ak_verification_failed.js";
+import {CaseSensitivity} from "./CaseSensitivity.js";
 
 
 export function use_imports() {
@@ -33,6 +34,7 @@ export function use_imports() {
         move,
         ak_verification_failed,
         HTMLTokenizerBase,
+        CaseSensitivity,
     ];
 }
 // 2 "HTMLTokenizer.cppts" 2
@@ -224,7 +226,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (this.consume_next_if_match("[CDATA[")) {
                                 // We keep the parser optional so that syntax highlighting can be lexer-only.
                                 // The parser registers itself with the lexer it creates.
-                                if (m_parser != nullptr && m_parser->adjusted_current_node().namespace_() != Namespace.HTML) {
+                                if (this.m_parser != nullptr && this.m_parser.deref().adjusted_current_node().namespace_() != Namespace.HTML) {
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","467"].join("")) : void 0); do { this.will_switch_to(State.CDATASection); this.m_state = State.CDATASection; current_input_character = this.next_code_point();; } while (0); } while (0);
                                 } else {
                                     this.create_new_token(HTMLToken.Type.Comment);
@@ -1486,12 +1488,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         /*<csw>state:</csw>*/
                         	case State.NamedCharacterReference: { { { 
                         {
-                            let byte_offset = m_utf8_view.byte_offset_of(m_prev_utf8_iterator);
+                            let byte_offset = this.m_utf8_view.byte_offset_of(this.m_prev_utf8_iterator);
 
-                            let match = HTML.code_points_from_entity(m_decoded_input.substring_view(byte_offset, m_decoded_input.length() - byte_offset));
+                            let match = HTML.code_points_from_entity(this.m_decoded_input.substring_view(byte_offset, this.m_decoded_input.length() - byte_offset));
 
                             if (match.has_value()) {
-                                skip(match->entity.length() - 1);
+                                skip(match.deref().entity.length() - 1);
                                 for (let ch of match.value().entity)
                                     this.m_temporary_buffer.append(ch);
 
@@ -2392,7 +2394,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                     return false;
 
                                 // FIXME: Is there a better way of doing this?
-                                return this.m_temporary_buffer[0] == 's' && this.m_temporary_buffer[1] == 'c' && this.m_temporary_buffer[2] == 'r' && this.m_temporary_buffer[3] == 'i' && this.m_temporary_buffer[4] == 'p' && this.m_temporary_buffer[5] == 't';
+                                return this.m_temporary_buffer[0] == 's'.charCodeAt(0) && this.m_temporary_buffer[1] == 'c'.charCodeAt(0) && this.m_temporary_buffer[2] == 'r'.charCodeAt(0) && this.m_temporary_buffer[3] == 'i'.charCodeAt(0) && this.m_temporary_buffer[4] == 'p'.charCodeAt(0) && this.m_temporary_buffer[5] == 't'.charCodeAt(0);
                             };
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {

@@ -1,3 +1,5 @@
+import {StringView} from "./StringView.js";
+
 export class Utf8CodePointIterator {
     /** @param {Utf8CodePointIterator} arg0 */
     neq(arg0) {
@@ -19,10 +21,10 @@ export class Utf8CodePointIterator {
 	sub(new_iterator) {
 		return this.pos-new_iterator.pos;
 	}
-	/** @type {string} */
+	/** @type {StringView} */
 	target;
 	constructor() {
-		this.target="";
+		this.target=new StringView;
 		this.pos=0;
 	}
 }

@@ -6,16 +6,22 @@ import {DoctypeData} from "./DoctypeData";
 import {Empty} from "./Empty.js";
 import {HTMLTokenBase} from "./HTMLTokenBase";
 import {HTMLToken_Type} from "./HTMLToken_Type";
-import {move} from "./move.js";
 import {MyDocTypeData} from "./MyDocTypeData";
 import {Optional} from "./Optional.js";
 import {OwnPtr} from "./OwnPtr";
 import {SourcePosition} from "./SourcePosition.js";
+import {TokenAttr} from "./TokenAttr";
 import {u32} from "./u32.js";
 import {Variant} from "./Variant.js";
 import {Vector} from "./Vector";
 
 export class HTMLToken {
+    last_attribute(): TokenAttr {
+        throw new Error("Method not implemented.");
+    }
+    has_attributes(): boolean {
+        throw new Error("Method not implemented.");
+    }
     static Position=SourcePosition;
     static Type=HTMLToken_Type;
     m_type: HTMLToken_Type|null;
@@ -84,5 +90,11 @@ export class HTMLToken {
     }
     set_code_point(code_point: CodePoint|null) {
         this.m_code_point=code_point;
+    }
+}
+
+export namespace HTMLToken {
+    export class Attribute {
+        name_start_position=new SourcePosition(0,0);
     }
 }

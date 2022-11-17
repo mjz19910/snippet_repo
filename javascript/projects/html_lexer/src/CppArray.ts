@@ -1,4 +1,9 @@
 export class CppVector<T> extends Array<T> {
+	at(x: number): T {
+		let value=super.at(x);
+		if(value === void 0) throw new Error("");
+		return value;
+	}
     clear() {
         throw new Error("Method not implemented.");
     }

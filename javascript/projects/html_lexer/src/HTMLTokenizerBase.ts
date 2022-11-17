@@ -16,13 +16,14 @@ import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {GoToTargets} from "./GoToTargets";
 import {CaseSensitivity} from "./CaseSensitivity.js";
+import {StringView} from "./StringView";
 
 export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_parser: CppPtr<HTMLParser>=new CppPtr;
     m_state=State.Data;
     m_return_state=State.Data;
     m_temporary_buffer=new CppVector<number>();
-    m_decoded_input:string;
+    m_decoded_input:StringView;
     m_insertion_point=new InsertionPoint;
     m_old_insertion_point=new InsertionPoint;
     m_utf8_view:Utf8View;
@@ -117,7 +118,6 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
         };
         return this.m_source_positions.at(this.m_source_positions.size()-1-n);
     }
-    
     // ----------- TODO -----------
     consume_next_if_match(_x:string, y?:CaseSensitivity):boolean {throw new Error("TODO");}
     create_new_token(_x: HTMLToken_Type) {throw new Error("TODO");}
@@ -154,5 +154,8 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
         let string = this.m_current_builder.to_string();
         this.m_current_builder.clear();
         return string;
+    }
+    is_ascii_alphanumeric(arg0: number) {
+        throw new Error("Method not implemented.");
     }
 }
