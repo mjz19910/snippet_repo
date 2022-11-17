@@ -1,3 +1,4 @@
+export {make_reload_page_request_handler} from "./src/make_reload_page_request_handler.js";
 export {add_element} from "./src/add_element.js";
 export {DOMTagDescription} from "./src/DOMTagDescription.js";
 export {DOMTagLoadHandlers} from "./src/DOMTagLoadHandlers.js";

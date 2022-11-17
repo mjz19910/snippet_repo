@@ -1,4 +1,4 @@
-import {FakeWindow} from "../../browser_fake_dom/src/FakeWindow.js";
+import {FakeWindow} from "../../browser_fake_dom/index.js";
 
 export class BrowserPluginIndexType {
 	window;

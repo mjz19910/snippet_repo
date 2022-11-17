@@ -1,3 +1,5 @@
+import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
+
 export class ObjMaybeKeys {
 	/**@type {"keys"|"no_keys"} */
 	type="no_keys";
