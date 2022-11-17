@@ -181,7 +181,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
     next_token():Optional<HTMLToken>
     {
         let m_source_positions=this.m_source_positions;
-        let this.m_queued_tokens=this.m_queued_tokens;
+        let m_queued_tokens=this.m_queued_tokens;
         let m_aborted=this.m_aborted;
         if (!this.m_source_positions.is_empty()) {
             let last_position = this.m_source_positions.last();

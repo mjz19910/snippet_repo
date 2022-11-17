@@ -29,7 +29,8 @@ import {ak_verification_failed} from "./ak_verification_failed.js";
     do {                                     \
         this.will_reconsume_in(State.new_state); \
         this.m_state = State.new_state;          \
-        goto new_state;                      \
+        this.m_goto_target=#new_state \
+        break _StartOfFunction;       \
     } while (0)
 
 // for goto _StartOfFunction
@@ -69,7 +70,8 @@ class StateSwitch {}
         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point)); \
         will_reconsume_in(State.new_state);                            \
         m_state = State.new_state;                                     \
-        goto new_state;                                                 \
+        this.m_goto_target=#new_state \
+        break _StartOfFunction;       \
     } while (0)
 
 #define FLUSH_CODEPOINTS_CONSUMED_AS_A_CHARACTER_REFERENCE      \
@@ -345,6 +347,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             this.m_source_positions.append(move(last_position));
         }
         let lp=0;
+        let current_input_character;
         while(lp < 5) {
             lp++;
 
@@ -356,7 +359,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     return new Optional;
 
                 for (;;) {
-                    let current_input_character = this.next_code_point();
+                    current_input_character = this.next_code_point();
                     switch (this.m_state) {
                         // 13.2.5.1 Data state, https://html.spec.whatwg.org/multipage/parsing.html#data-state
                         BEGIN_STATE(Data)
@@ -1242,17 +1245,20 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON('"')
                             {
                                 this.log_parse_error();
-                                goto AnythingElseAttributeName;
+                                this.m_goto_target="AnythingElseAttributeName";
+                                break _StartOfFunction;
                             }
                             ON('\'')
                             {
                                 this.log_parse_error();
-                                goto AnythingElseAttributeName;
+                                this.m_goto_target="AnythingElseAttributeName";
+                                break _StartOfFunction;
                             }
                             ON('<')
                             {
                                 this.log_parse_error();
-                                goto AnythingElseAttributeName;
+                                this.m_goto_target="AnythingElseAttributeName";
+                                break _StartOfFunction;
                             }
                             ANYTHING_ELSE
                             {
