@@ -1,4 +1,4 @@
-import {fake,do_create_window,handle_onPageLoadStarted,PageLoadStateType} from "../browser_fake_dom/index.js";
+import {fake,PageLoadStateType} from "../browser_fake_dom/index.js";
 import {on_page_data_loaded,PageLoaderState} from "../page_loader/index.js";
 
 /**
