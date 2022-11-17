@@ -270,6 +270,12 @@ export class HTMLTokenizerIncH {
 #undef __ENUMERATE_TOKENIZER_STATE
 #endif
 
+#define __ENUMERATE_TOKENIZER_STATE(state) #state|<line>
+export type GoToTargets=
+ENUMERATE_TOKENIZER_STATES
+"None";
+#undef __ENUMERATE_TOKENIZER_STATE
+
 #endif
 
 
@@ -447,22 +453,22 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         BEGIN_STATE(MarkupDeclarationOpen)
                         {
                             DONT_CONSUME_NEXT_INPUT_CHARACTER;
-                            if (consume_next_if_match("--"sv)) {
+                            if (this.consume_next_if_match("--")) {
                                 this.create_new_token(HTMLToken.Type.Comment);
                                 this.m_current_token.set_start_position({}, this.nth_last_position(3));
                                 SWITCH_TO(CommentStart);
                             }
-                            if (consume_next_if_match("DOCTYPE"sv, CaseSensitivity.CaseInsensitive)) {
+                            if (this.consume_next_if_match("DOCTYPE", CaseSensitivity.CaseInsensitive)) {
                                 SWITCH_TO(DOCTYPE);
                             }
-                            if (consume_next_if_match("[CDATA["sv)) {
+                            if (this.consume_next_if_match("[CDATA[")) {
                                 // We keep the parser optional so that syntax highlighting can be lexer-only.
                                 // The parser registers itself with the lexer it creates.
                                 if (m_parser != nullptr && m_parser->adjusted_current_node().namespace_() != Namespace.HTML) {
                                     SWITCH_TO(CDATASection);
                                 } else {
                                     this.create_new_token(HTMLToken.Type.Comment);
-                                    this.m_current_builder.append("[CDATA["sv);
+                                    this.m_current_builder.append("[CDATA[");
                                     SWITCH_TO_WITH_UNCLEAN_BUILDER(BogusComment);
                                 }
                             }
@@ -635,10 +641,10 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                if (to_ascii_uppercase(current_input_character.value()) == 'P' && consume_next_if_match("UBLIC"sv, CaseSensitivity.CaseInsensitive)) {
+                                if (to_ascii_uppercase(current_input_character.value()) == 'P' && consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
                                     SWITCH_TO(AfterDOCTYPEPublicKeyword);
                                 }
-                                if (to_ascii_uppercase(current_input_character.value()) == 'S' && consume_next_if_match("YSTEM"sv, CaseSensitivity.CaseInsensitive)) {
+                                if (to_ascii_uppercase(current_input_character.value()) == 'S' && consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
                                     SWITCH_TO(AfterDOCTYPESystemKeyword);
                                 }
                                 this.log_parse_error();
@@ -1534,7 +1540,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                this.m_current_builder.append("--"sv);
+                                this.m_current_builder.append("--");
                                 RECONSUME_IN(Comment);
                             }
                         }
@@ -1545,7 +1551,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             ON('-'.charCodeAt(0))
                             {
-                                this.m_current_builder.append("--!"sv);
+                                this.m_current_builder.append("--!");
                                 SWITCH_TO_WITH_UNCLEAN_BUILDER(CommentEndDash);
                             }
                             ON('>'.charCodeAt(0))
@@ -1562,7 +1568,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                this.m_current_builder.append("--!"sv);
+                                this.m_current_builder.append("--!");
                                 RECONSUME_IN(Comment);
                             }
                         }

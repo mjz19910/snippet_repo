@@ -14,21 +14,20 @@ import {TextCodec} from "./TextCodec";
 import {HTMLToken_Type} from "./HTMLToken_Type.js";
 import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {dbgln_if} from "./dbgln_if.js";
-
-type GoToTargets="TagName"|"BogusComment"|"Data"|"ScriptData"|"CDATASection"|"None";
-
+import {GoToTargets} from "./HTMLTokenizer.js";
+import {CaseSensitivity} from "./CaseSensitivity.js";
 
 export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_parser: CppPtr<HTMLParser>=new CppPtr;
     m_state=State.Data;
     m_return_state=State.Data;
-    m_temporary_buffer=new CppVector;
-    m_decoded_input="";
+    m_temporary_buffer=new CppVector<number>();
+    m_decoded_input:string;
     m_insertion_point=new InsertionPoint;
     m_old_insertion_point=new InsertionPoint;
-    m_utf8_view=new Utf8View;
-    m_utf8_iterator=new Utf8CodePointIterator;
-    m_prev_utf8_iterator=new Utf8CodePointIterator;
+    m_utf8_view:Utf8View;
+    m_utf8_iterator:Utf8CodePointIterator;
+    m_prev_utf8_iterator:Utf8CodePointIterator;
     m_current_token=new HTMLToken;
     m_current_builder=new StringBuilder;
     m_last_emitted_start_tag_name=new Optional("");
@@ -42,7 +41,8 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_skip_to_start_of_func=false;
     m_goto_target:GoToTargets="None";
     /**for HTMLTokenizer() */
-    construct_1() {
+    constructor() {
+        super();
         this.m_decoded_input="";
         this.m_utf8_view=new Utf8View;
         this.m_utf8_view.m_value;
@@ -119,7 +119,7 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     }
     
     // ----------- TODO -----------
-    consume_next_if_match() {throw new Error("TODO");}
+    consume_next_if_match(_x:string, y?:CaseSensitivity):boolean {throw new Error("TODO");}
     create_new_token(_x: HTMLToken_Type) {throw new Error("TODO");}
     insert_input_at_insertion_point() {throw new Error("TODO");}
     insert_eof() {throw new Error("TODO");}
@@ -130,13 +130,29 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     will_emit(_x: HTMLToken) {throw new Error("TODO");}
     current_end_tag_token_is_appropriate(): boolean {throw new Error("TODO");}
     consumed_as_part_of_an_attribute() {throw new Error("TODO");}
-    restore_to() {throw new Error("TODO");}
-    consume_current_builder() {throw new Error("TODO");}
+    restore_to(_x:Utf8CodePointIterator) {throw new Error("TODO");}
     log_parse_error() {throw new Error("");}
     is_ascii_alpha(arg0: number): boolean {
         throw new Error("Method not implemented.");
     }
     is_ascii(arg0: number):boolean {
         throw new Error("Method not implemented.");
+    }
+    is_ascii_lower_alpha(arg0: number): boolean {
+        throw new Error("Method not implemented.");
+    }
+    is_ascii_upper_alpha(arg0: number):boolean {
+        throw new Error("Method not implemented.");
+    }
+    to_ascii_lowercase(arg0: number): number {
+        throw new Error("Method not implemented.");
+    }
+    to_ascii_uppercase(arg0: number): number {
+        throw new Error("Method not implemented.");
+    }
+    consume_current_builder() {
+        let string = this.m_current_builder.to_string();
+        this.m_current_builder.clear();
+        return string;
     }
 }
