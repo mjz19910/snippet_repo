@@ -1,13 +1,17 @@
 #!/usr/bin/env zsh
-#spell:words preload
-download-site() {
-	node --no-warnings --experimental-loader "src/nice_loader.js" "src/parse_dom_preload_2.js" "$@"
+
+start_node () {
+	node --no-warnings --experimental-loader "./src/nice_loader.js" "$@"
 }
 
-download-youtube() {
-	node --experimental-loader "src/nice_loader.js" ./parse_dom_preload_1.js
+js-download-site() {
+	start_node "./src/parse_dom_preload_2.js" "$@"
 }
 
-start-node-nice-loader-module() {
-	node --no-warnings --experimental-loader "src/nice_loader.js" "$@"
+js-download-youtube() {
+	start_node "./src/parse_dom_preload_1.js"
+}
+
+node_nice_js() {
+	start_node "$@"
 }

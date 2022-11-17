@@ -1,4 +1,4 @@
-import {PageLoaderState} from "../../page_loader/index.js";
+import {PageLoaderState} from "../../../page_loader/index.js";
 import {g_reload_command_plugin} from "../commands/g_reload_command_plugin.js";
 import {REPLPlugin} from "./REPLPlugin.js";
 

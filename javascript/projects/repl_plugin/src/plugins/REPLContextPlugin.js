@@ -1,5 +1,5 @@
-import {any} from "../../browser_fake_dom/src/any.js";
-import {make_reload_page_request_handler,PageLoaderState,DomState} from "../../page_loader/index.js";
+import {any} from "../any.js";
+import {make_reload_page_request_handler,PageLoaderState} from "../../../page_loader/index.js";
 import {eval_script} from "../detail/eval.js";
 import {async_import} from "../detail/import.js";
 import {get_page_loader_dom_state} from "../get_page_loader_dom_state.js";
@@ -14,7 +14,7 @@ class InitPluginContext {
 	 * @type {(e: string) => any}
 	 */
 	do_eval_script(string) {
-		console.log('do_eval_script', string);
+		console.log('do_eval_script',string);
 	};
 	reload() {}
 }

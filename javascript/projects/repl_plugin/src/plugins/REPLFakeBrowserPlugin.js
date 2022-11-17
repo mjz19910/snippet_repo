@@ -1,8 +1,8 @@
-import {fake} from "../../browser_fake_dom/index.js";
+import {fake} from "../../../browser_fake_dom/index.js";
 import {any} from "../any.js";
 import {ReplPluginManager} from "../ReplPluginManager.js";
 import {BrowserPluginData} from "./BrowserPluginIndexType.js";
-import {ObjMaybeKeys} from "./ObjMaybeKeys";
+import {ObjMaybeKeys} from "./ObjMaybeKeys.js";
 
 export class REPLFakeBrowserPlugin {
 	/** @param {ReplPluginManager} repl */
