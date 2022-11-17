@@ -151,7 +151,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
             {
                 if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                 {
-                    m_return_state=State.Data;
+                    this.m_return_state=State.Data;
                     do { (!(m_current_builder.is_empty()) ? ak_verification_failed(["m_current_builder.is_empty()","\n","HTMLTokenizer.cppjs",":",__stringify(90)].join("")) : void 0); do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = next_code_point();; } while (0); } while (0);
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
@@ -240,14 +240,14 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()));
                 {
-                    m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                    this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
                     this.m_current_token.set_end_position({},nth_last_position(0));
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     this.m_current_token.set_end_position({},nth_last_position(0));
                     continue;
                 }
@@ -259,7 +259,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     this.m_current_token.set_end_position({},nth_last_position(0));
                     continue;
                 }
@@ -314,7 +314,7 @@ return this.m_queued_tokens.dequeue();
                         do { (!(m_current_builder.is_empty()) ? ak_verification_failed(["m_current_builder.is_empty()","\n","HTMLTokenizer.cppjs",":",__stringify(243)].join("")) : void 0); do { this.will_switch_to(State.CDATASection); this.m_state = State.CDATASection; current_input_character = next_code_point();; } while (0); } while (0);
                     } else {
                         create_new_token(HTMLToken.Type.Comment);
-                        m_current_builder.append("[CDATA["sv);
+                        this.m_current_builder.append("[CDATA["sv);
                         do { this.will_switch_to(State.BogusComment); this.m_state = State.BogusComment; current_input_character = next_code_point();; } while (0);
                     }
                 }
@@ -343,12 +343,12 @@ return this.m_queued_tokens.dequeue();
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -391,7 +391,7 @@ return this.m_queued_tokens.dequeue();
                 if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()));
                 {
                     create_new_token(HTMLToken.Type.DOCTYPE);
-                    m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                    this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
                     this.m_current_token.ensure_doctype_data().missing_name=false;
                     do { this.will_switch_to(State.DOCTYPEName); this.m_state = State.DOCTYPEName; current_input_character = next_code_point();; } while (0);
                 }
@@ -399,7 +399,7 @@ return this.m_queued_tokens.dequeue();
                 {
                     this.log_parse_error();
                     create_new_token(HTMLToken.Type.DOCTYPE);
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     this.m_current_token.ensure_doctype_data().missing_name=false;
                     do { this.will_switch_to(State.DOCTYPEName); this.m_state = State.DOCTYPEName; current_input_character = next_code_point();; } while (0);
                 }
@@ -421,7 +421,7 @@ return this.m_queued_tokens.dequeue();
                 if (1);
                 {
                     create_new_token(HTMLToken.Type.DOCTYPE);
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     this.m_current_token.ensure_doctype_data().missing_name=false;
                     do { this.will_switch_to(State.DOCTYPEName); this.m_state = State.DOCTYPEName; current_input_character = next_code_point();; } while (0);
                 }
@@ -443,13 +443,13 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()));
                 {
-                    m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                    this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (!current_input_character.has_value());
@@ -461,7 +461,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -673,7 +673,7 @@ return this.m_queued_tokens.dequeue();
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
@@ -692,7 +692,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -709,7 +709,7 @@ return this.m_queued_tokens.dequeue();
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
@@ -728,7 +728,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -745,7 +745,7 @@ return this.m_queued_tokens.dequeue();
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
@@ -764,7 +764,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -781,7 +781,7 @@ return this.m_queued_tokens.dequeue();
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
@@ -800,7 +800,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -958,7 +958,7 @@ return this.m_queued_tokens.dequeue();
                     this.log_parse_error();
                     HTMLToken::Attribute new_attribute;
                     new_attribute.name_start_position=nth_last_position(1);
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     this.m_current_token.add_attribute(move(new_attribute));
                     do { this.will_switch_to(State.AttributeName); this.m_state = State.AttributeName; current_input_character = next_code_point();; } while (0);
                 }
@@ -1024,13 +1024,13 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()));
                 {
-                    m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                    this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
@@ -1051,7 +1051,7 @@ return this.m_queued_tokens.dequeue();
                 if (1);
                 {
                     AnythingElseAttributeName:
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -1130,13 +1130,13 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                 {
-                    m_return_state=State.AttributeValueDoubleQuoted;
+                    this.m_return_state=State.AttributeValueDoubleQuoted;
                     do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = next_code_point();; } while (0);
                 }
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (!current_input_character.has_value());
@@ -1146,7 +1146,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -1162,13 +1162,13 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                 {
-                    m_return_state=State.AttributeValueSingleQuoted;
+                    this.m_return_state=State.AttributeValueSingleQuoted;
                     do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = next_code_point();; } while (0);
                 }
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (!current_input_character.has_value());
@@ -1178,7 +1178,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -1195,7 +1195,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                 {
-                    m_return_state=State.AttributeValueUnquoted;
+                    this.m_return_state=State.AttributeValueUnquoted;
                     do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = next_code_point();; } while (0);
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
@@ -1207,7 +1207,7 @@ return this.m_queued_tokens.dequeue();
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
@@ -1243,7 +1243,7 @@ return this.m_queued_tokens.dequeue();
                 if (1);
                 {
                     AnythingElseAttributeValueUnquoted:
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -1316,7 +1316,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append('-');
+                    this.m_current_builder.append('-');
                     do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; goto Comment; } while (0);
                 }
             }
@@ -1327,7 +1327,7 @@ return this.m_queued_tokens.dequeue();
             {
                 if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     do { this.will_switch_to(State.CommentLessThanSign); this.m_state = State.CommentLessThanSign; current_input_character = next_code_point();; } while (0);
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
@@ -1337,7 +1337,7 @@ return this.m_queued_tokens.dequeue();
                 if (current_input_character.has_value() && current_input_character.value() == 0 .charCodeAt(0));
                 {
                     this.log_parse_error();
-                    m_current_builder.append_code_point(0xFFFD);
+                    this.m_current_builder.append_code_point(0xFFFD);
                     continue;
                 }
                 if (!current_input_character.has_value());
@@ -1348,7 +1348,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
             }
@@ -1368,7 +1368,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                 {
-                    m_current_builder.append('-');
+                    this.m_current_builder.append('-');
                     continue;
                 }
                 if (!current_input_character.has_value());
@@ -1379,7 +1379,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append("--"sv);
+                    this.m_current_builder.append("--"sv);
                     do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; goto Comment; } while (0);
                 }
             }
@@ -1390,7 +1390,7 @@ return this.m_queued_tokens.dequeue();
             {
                 if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                 {
-                    m_current_builder.append("--!"sv);
+                    this.m_current_builder.append("--!"sv);
                     do { this.will_switch_to(State.CommentEndDash); this.m_state = State.CommentEndDash; current_input_character = next_code_point();; } while (0);
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
@@ -1407,7 +1407,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append("--!"sv);
+                    this.m_current_builder.append("--!"sv);
                     do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; goto Comment; } while (0);
                 }
             }
@@ -1428,7 +1428,7 @@ return this.m_queued_tokens.dequeue();
                 }
                 if (1);
                 {
-                    m_current_builder.append('-');
+                    this.m_current_builder.append('-');
                     do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; goto Comment; } while (0);
                 }
             }
@@ -1439,12 +1439,12 @@ return this.m_queued_tokens.dequeue();
             {
                 if (current_input_character.has_value() && current_input_character.value() == '!'.charCodeAt(0))
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     do { this.will_switch_to(State.CommentLessThanSignBang); this.m_state = State.CommentLessThanSignBang; current_input_character = next_code_point();; } while (0);
                 }
                 if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                 {
-                    m_current_builder.append_code_point(current_input_character.value());
+                    this.m_current_builder.append_code_point(current_input_character.value());
                     continue;
                 }
                 if (1);
@@ -1591,7 +1591,7 @@ m_queued_tokens.enqueue(move(m_current_token));
                 if (current_input_character.has_value() && is_ascii_alphanumeric(current_input_character.value()));
                 {
                     if(consumed_as_part_of_an_attribute()) {
-                        m_current_builder.append_code_point(current_input_character.value());
+                        this.m_current_builder.append_code_point(current_input_character.value());
                         continue;
                     } else {
                         do { 
@@ -1833,7 +1833,7 @@ m_queued_tokens.enqueue(move(m_current_token));
         {
             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
             {
-                m_return_state=State.RCDATA;
+                this.m_return_state=State.RCDATA;
                 do { (!(m_current_builder.is_empty()) ? ak_verification_failed(["m_current_builder.is_empty()","\n","HTMLTokenizer.cppjs",":",__stringify(1700)].join("")) : void 0); do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = next_code_point();; } while (0); } while (0);
             }
             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
@@ -1935,13 +1935,13 @@ return this.m_queued_tokens.dequeue();
             }
             if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()));
             {
-                m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
                 m_temporary_buffer.append(current_input_character.value());
                 continue;
             }
             if (current_input_character.has_value() && is_ascii_lower_alpha(current_input_character.value()));
             {
-                m_current_builder.append_code_point(current_input_character.value());
+                this.m_current_builder.append_code_point(current_input_character.value());
                 m_temporary_buffer.append(current_input_character.value());
                 continue;
             }
@@ -1950,7 +1950,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer)
                 m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; goto RCDATA; } while (0);
@@ -2060,13 +2060,13 @@ return this.m_queued_tokens.dequeue();
             }
             if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()));
             {
-                m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
                 m_temporary_buffer.append(current_input_character.value());
                 continue;
             }
             if (current_input_character.has_value() && is_ascii_lower_alpha(current_input_character.value()));
             {
-                m_current_builder.append(current_input_character.value());
+                this.m_current_builder.append(current_input_character.value());
                 m_temporary_buffer.append(current_input_character.value());
                 continue;
             }
@@ -2075,7 +2075,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer)
                 m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; goto RAWTEXT; } while (0);
@@ -2285,7 +2285,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer) {
                     m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 }
@@ -2300,7 +2300,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer) {
                     m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 }
@@ -2315,7 +2315,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer) {
                     m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 }
@@ -2323,13 +2323,13 @@ return this.m_queued_tokens.dequeue();
             }
             if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()));
             {
-                m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
                 m_temporary_buffer.append(current_input_character.value());
                 continue;
             }
             if (current_input_character.has_value() && is_ascii_lower_alpha(current_input_character.value()));
             {
-                m_current_builder.append(current_input_character.value());
+                this.m_current_builder.append(current_input_character.value());
                 m_temporary_buffer.append(current_input_character.value());
                 continue;
             }
@@ -2338,7 +2338,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer) {
                     m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 }
@@ -2678,7 +2678,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer)
                 m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; goto ScriptData; } while (0);
@@ -2691,7 +2691,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer)
                 m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; goto ScriptData; } while (0);
@@ -2704,20 +2704,20 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer)
                 m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; goto ScriptData; } while (0);
             }
             if (current_input_character.has_value() && is_ascii_upper_alpha(current_input_character.value()));
             {
-                m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
                 m_temporary_buffer.append(current_input_character.value());
                 continue;
             }
             if (current_input_character.has_value() && is_ascii_lower_alpha(current_input_character.value()));
             {
-                m_current_builder.append(current_input_character.value());
+                this.m_current_builder.append(current_input_character.value());
                 m_temporary_buffer.append(current_input_character.value());
                 continue;
             }
@@ -2726,7 +2726,7 @@ return this.m_queued_tokens.dequeue();
                 m_queued_tokens.enqueue(HTMLToken.make_character('<'));
                 m_queued_tokens.enqueue(HTMLToken.make_character('/'));
                 // NOTE: The spec doesn't mention this, but it seems that m_current_token (an end tag) is just dropped in this case.
-                m_current_builder.clear();
+                this.m_current_builder.clear();
                 for(auto code_point : m_temporary_buffer)
                 m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; goto ScriptData; } while (0);
