@@ -1,6 +1,5 @@
 import * as http from "http";
 import * as https from "https";
-import {create_fake,fake} from "../browser_fake_dom/src/browse/mod.js";
 import {PageLoaderState} from "./PageLoaderState.js";
 import {fix_fetch_url} from "./fix_fetch_url.js";
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
@@ -36,10 +35,6 @@ export async function fetch_url(state,silent=false) {
 		case 'https:': state.m_start_request_module=https; break;
 		default: throw new Error("Unknown protocol: "+p_url.protocol);
 	}
-	if(!fake.window)
-		create_fake.window();
-	if(!fake.document)
-		create_fake.document();
 	if(!state.on_incoming_message)
 		throw new Error("No Handler for server response");
 	await run_fetch_algorithm(state);

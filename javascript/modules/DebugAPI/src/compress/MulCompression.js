@@ -2,6 +2,7 @@ import {BaseCompression} from "./BaseCompression";
 import {CompressState} from "./CompressState";
 import {Repeat} from "../repeat/Repeat";
 import {stats_calculator_info} from "./stats_calculator_info.js";
+import {NumType} from "../NumType.js";
 
 export class MulCompression extends BaseCompression {
 	/**
@@ -33,8 +34,8 @@ export class MulCompression extends BaseCompression {
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
 		if(off==1) return false;
-		let mp=Repeat.N.get_map_T(constructor_key,item);
-		Repeat.get_with(mp,item,off);
+		let compression_map=Repeat.N.get_map_T(constructor_key,item);
+		Repeat.get_with(compression_map,item,off);
 		state.ret.push(new Repeat(item,off));
 		state.i+=off-1;
 		return true;

@@ -1,90 +1,106 @@
-import {AnyRepeat2TS as C} from "./AnyRepeat2TS";
-import {ConstructorWithSymbolType as A} from "./ConstructorWithSymbolType.js";
-import {TypeAOrTypeB as B} from "./TypeAOrTypeB.js";
-import {WMapTS} from "./WMapTS.js";
+import {AnyOrRepeatTS} from "./AnyOrRepeatTS.js";
+import {AnyRepeat2TS} from "./AnyRepeat2TS";
+import {ConstructorWithSymbolType} from "./ConstructorWithSymbolType.js";
+import {TypeAOrTypeB} from "./TypeAOrTypeB.js";
 
-type D=string;
-type E=number;
-class F<K,V> extends Map<K,V> {
-	__key:"test"="test";
-	static from<K,V>(start: Map<K,V>) {
-		let res_ent:[K,V][]=[];
-		for (let i of start.entries()) {
-			if(i[1] instanceof F) {
-				res_ent.push([i[0], i[1]]);
-			} else if(i[1] instanceof Map) {
-				let [a,b]=i;
-				res_ent.push([a,b]);
-			}
-		}
-		return new F<K,V>(res_ent);
-	}
-}
+type X=ConstructorWithSymbolType;
 
-class S<T> {
-	static from_TU_entry(item: B<D,E>,times: E): C<D,E> {
-		switch(item[0]) {
-			case 'T': return ['T',S.get(item[1],times)];
-			case 'U': return ['U',S.get_num(item[1],times)];
+type A<T extends new (...args: any) => any>=InstanceType<T>;
+
+class RepeatTS<T> {
+	map_instance_or_d1: Map<symbol,Map<T,<U extends X>(constructor_key_2: U) => AnyOrRepeatTS<InstanceType<U>>>>=new Map;
+	map_instance_or: Map<symbol,<T,U>() => Map<T,AnyOrRepeatTS<U>>>=new Map;
+	base_map=new Map<
+		symbol,
+		<T extends X,U extends A<T>>(constructor_key_1: T,_: U) =>
+			Map<
+				T['type'],
+				<T extends X,U extends A<T>>(constructor_key_2: T,_: U) =>
+					Map<
+						T['type'],
+						AnyOrRepeatTS<U>
+					>
+			>
+	>;
+	map_instance_or_d0(): Map<symbol,<T extends X,U extends A<T>>(constructor_key_1: T,_: U) =>Map<T['type'],<T extends X,U extends A<T>>(constructor_key_2: T,_: U) =>Map<T['type'],AnyOrRepeatTS<U>>>> {
+		return this.base_map;
+
+	};
+	get_map_T_or<T extends X,U extends A<T>>(constructor_key_0: T,_: U) {
+		let res=this.base_map.get(constructor_key_0.type);
+		if(!res) {
+			let t=this;
+			this.base_map.set(
+				constructor_key_0.type,
+				<T extends X,U extends InstanceType<T>>(constructor_key_1: T,_: U) => {
+					let m_res=t.map_instance_or_d1.get(constructor_key_1.type);
+					if(!m_res) m_res=new Map<InstanceType<T>,<U extends X>(constructor_key_2: U) => AnyOrRepeatTS<InstanceType<U>>>;
+					t.map_instance_or_d1.set(constructor_key_1.type,m_res);
+					return new Map;
+				}
+			);
+			let ret=this.base_map.get(constructor_key_0.type);
+			if(!ret) throw new Error("bad");
+			return ret;
+		}
+		return res;
+	}
+	static from_TU_entry(a: TypeAOrTypeB<string,number>,b: number): AnyRepeat2TS<string,number> {
+		switch(a[0]) {
+			case 'T': return ['T',RepeatTS.get(a[1],b)];
+			case 'U': return ['U',RepeatTS.get_num(a[1],b)];
 		}
 	}
-	static map_1<M extends F<T,F<C,V>>,T,C,V>(map: M,value: T) {
-		if(map.has(value)) {
-			return map.get(value);
+	static map_1<M extends Map<T,Map<C,V>>,T,C,V>(a: M,b: T) {
+		if(a.has(b)) {
+			let v=a.get(b);
+			if(v===void 0) throw new Error("Unreachable");
+			return v;
 		}
-		/**@type {F<C,V>} */
-		let x: F<C,V>=new F;
-		map.set(value,x);
+		/**@type {Map<C,V>} */
+		let x: Map<C,V>=new Map;
+		a.set(b,x);
 		return x;
 	}
-	static get_with<T>(map: F<T,F<E,S<T>>>,value: T,times: E) {
-		let tt=map.get(value);
-		if(tt===void 0) return null;
-		let tm_map=this.map_1<typeof map,T,E,S<T>>(map,value);
-		if(!tm_map) throw 1;
-		let rep=tm_map.get(times);
-		if(rep) {
-			return rep;
+	static get_with<T>(a: Map<T,Map<number,RepeatTS<T>>>,b: T,c: number) {
+		let d=a.get(b);
+		if(d===void 0) return null;
+		let h=this.map_1<typeof a,T,number,RepeatTS<T>>(a,b);
+		if(!h) throw 1;
+		let i=h.get(c);
+		if(i) {
+			return i;
 		} else {
-			let rep=new this(value,times);
-			tm_map.set(times,rep);
+			let rep=new this(b,c);
+			h.set(c,rep);
 			return rep;
 		}
 	}
-	static N: S<null>=new S(null,0);
-	static map: F<string,F<E,S<string>>>=new F;
-	static map_num: F<E,F<E,S<E>>>=new F;
-	map_instance: F<symbol,<T>() => WMapTS<T,any>>=new F;
-	get_map_T<U extends A,V extends InstanceType<U>,Z>(constructor_key: U,_: V): F<Z,F<E,S<V>>> {
-		let res=S.N.map_instance.get(constructor_key.type);
+	static N: RepeatTS<null>=new RepeatTS(null,0);
+	static map: Map<string,Map<number,RepeatTS<string>>>=new Map;
+	static map_num: Map<number,Map<number,RepeatTS<number>>>=new Map;
+	static map_T: Map<symbol,<T,U>() => Map<T,RepeatTS<U>>>=new Map;
+	map_instance: Map<symbol,<T,U>() => Map<T,RepeatTS<U>>>=new Map;
+	get_map_T<U extends ConstructorWithSymbolType>(constructor_key: U,_: InstanceType<U>): <T,U>() => Map<T,RepeatTS<U>> {
+		let res=RepeatTS.N.map_instance.get(constructor_key.type);
 		if(!res) {
-			let map: F<V,F<E,S<V>>>=new F;
-			S.N.map_instance.set(constructor_key.type,() => new WMapTS(map));
-			return map;
+			RepeatTS.N.map_instance.set(constructor_key.type,() => new Map);
+			return () => new Map;
 		}
-		let map: WMapTS<V,Z>=res();
-		let rx=F.from(map.value);
-		let top_entries:[Z,F<E, S<V>>][]=[];
-		for (let i of rx.entries()) {
-			let as_f=F.from(i[1]);
-			top_entries.push([i[0],as_f]);
-		}
-		return new F(top_entries);
+		return res;
 	}
-	has_map_T<U extends A,V extends InstanceType<U>,C>(constructor_key: U,rep_null: S<null>,key: C): boolean {
-		let res=rep_null.map_instance.get(constructor_key.type);
+	has_map_T<U extends ConstructorWithSymbolType,V extends InstanceType<U>,C>(constructor_key: U,key: C): boolean {
+		let res=RepeatTS.map_T.get(constructor_key.type);
 		if(!res) {
-			/**@type {Map<E, Map<E, S<V>>>} */
-			let map: Map<E,Map<E,S<V>>>=new Map;
-			rep_null.map_instance.set(constructor_key.type,() => new WMapTS(map));
+			RepeatTS.map_T.set(constructor_key.type,() => new Map);
 			return false;
 		}
-		let map: WMapTS<V,C>=res();
-		return map.value.has(key);
+		let rq=res<C,V>();
+		return rq.has(key);
 	}
-	static get(value: string,times: E): S<string> {
+	static get(value: string,times: number): RepeatTS<string> {
 		if(!this.map.has(value)) {
-			this.map.set(value,new F);
+			this.map.set(value,new Map);
 		}
 		let tm_map=this.map.get(value);
 		if(!tm_map)
@@ -100,9 +116,9 @@ class S<T> {
 			return rep;
 		}
 	}
-	static get_num(value: E,times: E) {
+	static get_num(value: number,times: number) {
 		if(!this.map_num.has(value)) {
-			this.map_num.set(value,new F);
+			this.map_num.set(value,new Map);
 		}
 		let tm_map=this.map_num.get(value);
 		if(!tm_map)
@@ -120,7 +136,7 @@ class S<T> {
 	}
 	value;
 	times;
-	constructor(value: T,times: E) {
+	constructor(value: T,times: number) {
 		this.value=value;
 		this.times=times;
 	}
@@ -131,4 +147,4 @@ class S<T> {
 	}
 }
 
-export {S as RepeatTS};
+export {RepeatTS};

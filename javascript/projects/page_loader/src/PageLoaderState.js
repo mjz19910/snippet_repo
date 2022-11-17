@@ -17,8 +17,8 @@ export class PageLoaderState {
 	use_values(...arr) {this.use_arg_vec(arr);}
 	/**@arg {any[]} _arr */
 	use_arg_vec(_arr) {}
-	/**@type {RequestModule | null} */
-	m_start_request_module=null;
+	/**@type {RequestModule} */
+	m_start_request_module=new RequestModule();
 	/** @type {ClientRequest | null} */
 	m_client_request=null;
 	/** @type {IncomingMessage | null} */

@@ -1,4 +1,4 @@
-const loader_debug=false;
+const loader_debug=true;
 
 const system_modules=[
 	'repl',

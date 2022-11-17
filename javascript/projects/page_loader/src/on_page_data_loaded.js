@@ -1,7 +1,7 @@
 import {do_html_load} from "./do_html_load.js";
 import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js";
 import {PageLoaderState} from "./PageLoaderState.js";
-import {ReplPluginManager} from "../repl_plugin/ReplPluginManager.js";
+import {ReplPluginManager} from "../../repl_plugin/index.js";
 
 /**
  * @arg {Parameters<typeof do_html_load>[0]} window
