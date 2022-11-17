@@ -29,7 +29,6 @@ export async function fetch_url(state,silent=false) {
 	}
 	const dom_impl_badge=new DomBadge;
 	let new_url=state.url;
-	fake.window=new FakeWindow(new DomBadge);
 	fake.document=new FakeDocument(fake.window,new DomBadge);
 	fake.with_badge(dom_impl_badge,(fake) => {
 		if(!fake.document) throw new Error("Missing fake document");
