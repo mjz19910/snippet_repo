@@ -1,6 +1,7 @@
 // 2 "HTMLTokenizer.cppts" 2
 // 274 "HTMLTokenizer.cppts"
 export type GoToTargets=
+    "_StartOfFunction"|
     "Data"|
     "RCDATA"|
     "RAWTEXT"|
