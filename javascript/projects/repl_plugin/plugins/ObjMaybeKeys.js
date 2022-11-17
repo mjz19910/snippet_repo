@@ -1,11 +1,11 @@
-import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
+import {BrowserPluginData} from "./BrowserPluginIndexType.js";
 
 export class ObjMaybeKeys {
 	/**@type {"keys"|"no_keys"} */
 	type="no_keys";
 	/** @type {string[]} */
 	arr=[];
-	/** @param {BrowserPluginIndexType} value */
+	/** @param {BrowserPluginData} value */
 	constructor(value) {
 		this.value=value;
 	}

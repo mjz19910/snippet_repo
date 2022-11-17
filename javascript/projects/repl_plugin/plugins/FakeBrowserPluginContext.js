@@ -1,8 +1,10 @@
-import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
+import {BrowserPluginData} from "./BrowserPluginIndexType.js";
 
 export class FakeBrowserPluginContext {
-	/**@type {(name: keyof BrowserPluginIndexType)=>BrowserPluginIndexType[keyof BrowserPluginIndexType]|null} */
-	get_from_store=() => {
+	/**
+	 * @arg {keyof BrowserPluginData} name
+	 * @returns {BrowserPluginData[keyof BrowserPluginData]} */
+	get_from_store(name) {
 		throw new Error("Abstract context method");
 	};
 }

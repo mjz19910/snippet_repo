@@ -1,11 +1,9 @@
 import {FakeWindow} from "../../browser_fake_dom/index.js";
 
-export class BrowserPluginIndexType {
+export class BrowserPluginData {
 	window;
-	/**@arg {FakeWindow|null} window */
+	/**@arg {FakeWindow} window */
 	constructor(window) {
-		if(window!=null) {
-			this.window=window
-		}
+		this.window=window;
 	}
 }

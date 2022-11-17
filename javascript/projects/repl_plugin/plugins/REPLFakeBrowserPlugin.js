@@ -1,6 +1,6 @@
 import {any} from "../../browser_fake_dom/src/any.js";
 import {ReplPluginManager} from "../ReplPluginManager.js";
-import {BrowserPluginIndexType} from "./BrowserPluginIndexType.js";
+import {BrowserPluginData} from "./BrowserPluginIndexType.js";
 import {FakeBrowserPluginContext} from "./FakeBrowserPluginContext.js";
 import {get_from_store} from "./get_from_store";
 import {ObjMaybeKeys} from "./ObjMaybeKeys";
@@ -36,7 +36,7 @@ export class REPLFakeBrowserPlugin {
 		this.obj.update(key);
 	}
 	/**
-	 * @param {BrowserPluginIndexType} object
+	 * @param {BrowserPluginData} object
 	 */
 	set_object_store(object) {
 		this.obj=new ObjMaybeKeys(object);
