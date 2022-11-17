@@ -32,8 +32,7 @@ export function use_imports() {
 }
 
 export class HTMLTokenizerBase extends HTMLTokenizerImpl {
-    /**@type {CppPtr<HTMLParser>} */
-    m_parser=new CppPtr;
+    m_parser: CppPtr<HTMLParser>=new CppPtr;
     m_state=State.Data;
     m_return_state=State.Data;
     m_temporary_buffer=new CppVector;
@@ -48,12 +47,10 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_last_emitted_start_tag_name=new Optional("");
     m_explicit_eof_inserted=false;
     m_has_emitted_eof=false;
-    /**@type {Queue<HTMLToken>} */
-    m_queued_tokens=new Queue;
+    m_queued_tokens: Queue<HTMLToken>=new Queue;
     m_character_reference_code=0;
     m_blocked=false;
     m_aborted=false;
-    /** @type {CppVector<InstanceType<typeof HTMLToken['Position']>>} */
-	m_source_positions=new CppVector;
+    m_source_positions: CppVector<InstanceType<typeof HTMLToken['Position']>>=new CppVector;
     m_skip_to_start_of_func=false;
 }
