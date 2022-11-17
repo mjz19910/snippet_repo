@@ -4,21 +4,24 @@ import {CodePoint} from "./CodePoint";
 import {DoctypeData} from "./DoctypeData";
 import {HTMLTokenBase} from "./HTMLTokenBase";
 import {HTMLToken_Type} from "./HTMLToken_Type";
+import {MyDocTypeData} from "./MyDocTypeData";
 import {Optional} from "./Optional.js";
 import {OwnPtr} from "./OwnPtr";
 import {SourcePosition} from "./SourcePosition.js";
 import {Vector} from "./Vector";
 import {cpp__stringify} from "./__stringify";
 
-
 export class HTMLToken extends HTMLTokenBase {
+    set_comment(arg0: void) {
+        throw new Error("Method not implemented.");
+    }
     set_end_position(arg0: {},arg1: SourcePosition) {
         throw new Error("Method not implemented.");
     }
     set_tag_name(arg0: void) {
         throw new Error("Method not implemented.");
     }
-    ensure_doctype_data() {
+    ensure_doctype_data(): MyDocTypeData {
         throw new Error("Method not implemented.");
     }
     opt(): Optional<HTMLToken> {
