@@ -22,13 +22,14 @@ import {LoggingEventTarget} from "./LoggingEventTarget.js";
 import {DebugAPI} from "./DebugAPI.js";
 import {GenericEventTarget} from "./GenericEventTarget.js";
 import {GenericEvent} from "./GenericEvent.js";
+import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
 // DebugAPI
 export interface GlobalApiObject {
 	parse_html_to_binary_arr: (html: string) => unknown[];
-	run_modules_plugin: VoidCallback<[],void>;
-	run_wasm_plugin: VoidCallback<[],void>;
-	compress_main: VoidCallback<[stats: CompressionStatsCalculator],void>;
+	run_modules_plugin: VoidCallbackWith<()=>void>;
+	run_wasm_plugin: VoidCallbackWith<()=>void>;
+	compress_main: VoidCallbackWith<(stats: CompressionStatsCalculator)=>void>;
 	IterExtensions: typeof IterExtensions;
 	getPlaybackRateMap: typeof getPlaybackRateMap;
 	CreateObjURLCache: typeof CreateObjURLCache;

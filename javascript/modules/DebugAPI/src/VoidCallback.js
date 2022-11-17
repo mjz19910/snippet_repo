@@ -2,10 +2,10 @@
 export class VoidCallback {
 	/** @param {(...args: U) => C} callback */
 	constructor(callback) {
-		this.m_cb=callback;
+		this.m_callback=callback;
 	}
 	/** @param {U} args */
 	execute(...args) {
-		return this.m_cb(...args);
+		return this.m_callback(...args);
 	}
 }
