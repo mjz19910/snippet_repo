@@ -3,6 +3,7 @@
 // 0 "<command-line>"
 // 1 "HTMLToken.cppts"
 // 1 "HTMLToken.pre.ts" 1
+import {any} from "../../browser_fake_dom/src/any.js";
 import {HTMLToken_Type} from "./HTMLToken_Type";
 import {SourcePosition} from "./SourcePosition.js";
 
@@ -69,10 +70,28 @@ export function use_types() {
         CodePoint,
         __stringify,
         ak_verification_failed,
+        HTMLTokenBase,
     ] as const;
     return [
         ...ex,HTMLToken_Type,SourcePosition
     ] as const;
+}
+
+abstract class HTMLTokenBase {
+    static Position=SourcePosition;
+    static Type=HTMLToken_Type;
+    m_type: HTMLToken_Type|null;
+    m_data: Variant<[Empty, u32, OwnPtr<DoctypeData>, OwnPtr<Vector<Attribute>>]>;
+    m_code_point: CodePoint|null = null;
+    m_start_position: SourcePosition|null = null;
+    m_string_data: any;
+    abstract set_code_point(v:CodePoint):void;
+    constructor() {
+        this.m_type=HTMLToken_Type.Invalid;
+        this.m_data=new Variant(any([]));
+        this.m_data.set(Empty);
+        this.set_code_point(new CodePoint);
+    }
 }
 // 2 "HTMLToken.cppts" 2
 
@@ -81,18 +100,7 @@ export function use_types() {
 
 
 
-export class HTMLToken {
-    static Position=SourcePosition;
-    static Type=HTMLToken_Type;
-    m_type: HTMLToken_Type|null;
-    m_data!: Variant<[Empty, u32, OwnPtr<DoctypeData>, OwnPtr<Vector<Attribute>>]>;
-    m_code_point: CodePoint|null = null;
-    m_start_position: SourcePosition|null = null;
-    m_string_data: any;
-    constructor() {
-        this.m_type=HTMLToken_Type.Invalid;
-        this.set_code_point(new CodePoint);
-    }
+export class HTMLToken extends HTMLTokenBase {
     static from_type(type:HTMLToken_Type): HTMLToken
     {
         let obj=new this;
@@ -126,7 +134,7 @@ export class HTMLToken {
         this.m_start_position=start_position;
     }
     tag_name() {
-        (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","HTMLToken.cppts",":",__stringify(53)].join("")) : 0);
+        (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","HTMLToken.cppts",":",__stringify(42)].join("")) : void 0);
         return this.m_string_data;
     }
     is_end_tag(): any {
