@@ -3,7 +3,7 @@ import {dirname} from "path";
 import {PageLoaderState} from "../../page_loader/index.js";
 import {HTMLLexerResult} from "./HTMLLexerResult.js";
 import {g_html_lexer} from "./g_html_lexer.js";
-import {HTMLTokenizer} from "./HTMLTokenizer.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.1";
 /**
  * @template T
  * @arg {T} this_T

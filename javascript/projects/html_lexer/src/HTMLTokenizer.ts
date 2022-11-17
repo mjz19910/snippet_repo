@@ -38,6 +38,7 @@ export function use_imports() {
 // 2 "HTMLTokenizer.cppts" 2
 // 284 "HTMLTokenizer.cppts"
 export class HTMLTokenizer extends HTMLTokenizerBase {
+    m_goto_pos:"_StartOfFunction"|"None"="None";
     next_token():Optional<HTMLToken>
     {
         if (!this.m_source_positions.is_empty()) {
@@ -2636,14 +2637,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                     }
                 }
             }
-            if(this.m_goto_target==="_StartOfFunction") {
-                this.m_goto_target="None";
+            if(this.m_goto_pos==="_StartOfFunction") {
+                this.m_goto_pos="None";
                 continue;
             } else {
                 break;
             }
         }
-        console.log("fallthrough", lp, this.m_goto_target);
+        console.log("fallthrough", lp, this.m_goto_pos);
         throw new Error("fallthrough");
     }
 }
