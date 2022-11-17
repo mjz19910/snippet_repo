@@ -33,10 +33,10 @@ export class MulCompression extends BaseCompression {
 	try_compress_dual(arr) {
 		/**@type {CompressState<A, B>} */
 		let state=new CompressState(arr);
-		return state.run(/**@type {<T>(_v:T|B)=>_v is B} */function(_v){return true});
+		return state.run(/**@type {<T>(_v:T|B)=>_v is B} */function(_v) {return true;});
 	}
 	/**
-	 * @template {import("./ST.js").ST} U
+	 * @template {import("./ST.js").ST & {key:symbol}} U
 	 * @template {InstanceType<U>} T
 	 * @arg {U} constructor_key
 	 * @arg {T[]} arr
