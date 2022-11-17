@@ -1,13 +1,12 @@
 import {Repeat} from "../repeat/Repeat";
-import {TU} from "../repeat/TU.js";
+import {TypeAOrTypeB} from "../repeat/TypeAOrTypeB.js";
 import {AnyRepeat2} from "../repeat/AnyRepeat2.js";
 import {BaseCompression} from "./BaseCompression.js";
 
 export class CompressTU {
 	i: number;
-	arr: TU<string,number>[]=[];
+	arr: TypeAOrTypeB<string,number>[]=[];
 	ret: AnyRepeat2<string,number>[]=[];
-	// @returns {import("../DualR.js").DualR}
 	try_compress_dual() {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
@@ -18,7 +17,7 @@ export class CompressTU {
 		}
 		return BaseCompression.compress_result_state(this);
 	}
-	compress_rle_TU_to_TX(item: TU<string,number>) {
+	compress_rle_TU_to_TX(item: TypeAOrTypeB<string,number>) {
 		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
 		let off=1;
 		while(item===this.arr[this.i+off]) off++;
@@ -27,7 +26,7 @@ export class CompressTU {
 		this.i+=off-1;
 		return true;
 	}
-	constructor(arr: TU<string,number>[]) {
+	constructor(arr: TypeAOrTypeB<string,number>[]) {
 		this.i=0;
 		this.arr=arr;
 		this.ret=[];

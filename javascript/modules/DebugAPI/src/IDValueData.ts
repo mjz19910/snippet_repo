@@ -1,11 +1,11 @@
-import {TU} from "./repeat/TU";
+import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB";
 import {AnyOrRepeat} from "./repeat/AnyOrRepeat";
 import {IDValueBase} from "./IDValueBase";
 
 
 export class IDValueData extends IDValueBase {
-	arr_dual: TU<string,number>[];
-	arr_dual_x: TU<AnyOrRepeat<string>,AnyOrRepeat<number>>[];
+	arr_dual: TypeAOrTypeB<string,number>[];
+	arr_dual_x: TypeAOrTypeB<AnyOrRepeat<string>,AnyOrRepeat<number>>[];
 	arr_rep_str: AnyOrRepeat<string>[];
 	arr_rep_num: AnyOrRepeat<number>[];
 	arr_str: string[];

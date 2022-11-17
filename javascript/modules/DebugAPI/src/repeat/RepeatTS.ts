@@ -1,5 +1,5 @@
 import {ConstructorWithSymbolType} from "./ConstructorWithSymbolType.js";
-import {TU} from "./TU.js";
+import {TypeAOrTypeB} from "./TypeAOrTypeB.js";
 import {WMap} from "./WMap";
 import {WMapTS} from "./WMapTS.js";
 
@@ -10,7 +10,7 @@ type X<T>=T|G<T>;
 type TX<A,B>=["T",X<A>]|["U",X<B>];
 
 export class RepeatTS<T> {
-	static from_TU_entry(item: TU<string,number>,times: number): TX<string,number> {
+	static from_TU_entry(item: TypeAOrTypeB<string,number>,times: number): TX<string,number> {
 		switch(item[0]) {
 			case 'T': return ['T',RepeatTS.get(item[1],times)];
 			case 'U': return ['U',RepeatTS.get_num(item[1],times)];

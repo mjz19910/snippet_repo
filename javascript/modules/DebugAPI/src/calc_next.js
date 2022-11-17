@@ -26,10 +26,10 @@ export function calc_next(stats,obj,max_id) {
 	/**@type {import("./DualR.js").DualR} */
 	let compress_result=stats.compressor.try_compress_dual(next.arr_dual);
 	if(!compress_result[0]) {
-		/**@type {import("./repeat/TU.js").TU<string, number>[]} */
+		/**@type {import("./repeat/TypeAOrTypeB.js").TypeAOrTypeB<string, number>[]} */
 		let res=[];
 		for(let i of compress_result[1]) {
-			/**@type {import("./repeat/TU.js").TU<string, number>|[]} */
+			/**@type {import("./repeat/TypeAOrTypeB.js").TypeAOrTypeB<string, number>|[]} */
 			let res_1=[];
 			switch(i[0]) {
 				case 'T': if(typeof i[1]==='string')

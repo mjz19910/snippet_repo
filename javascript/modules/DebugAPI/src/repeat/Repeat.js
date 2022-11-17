@@ -3,7 +3,7 @@ import {WMap} from "./WMap";
 /** @template T */
 export class Repeat {
 	/**
-	 * @arg {import("./TU.js").TU<string, number>} item
+	 * @arg {import("./TypeAOrTypeB.js").TypeAOrTypeB<string, number>} item
 	 * @returns {import("./AnyRepeat2.js").AnyRepeat2<string, number>}
 	 * @param {number} times
 	 */
