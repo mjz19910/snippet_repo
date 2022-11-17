@@ -14,6 +14,7 @@ export function main() {
 	const req_url="https://www.youtube.com/watch?v=8h-fqAnIn0A"
 	let state=new PageLoaderState(req_url);
 	if(!fake.window) fake.window=new FakeWindow(new DomBadge);
+	state.page_load_state.dom_impl_badge=new DomBadge;
 	handle_onPageLoadStarted(fake.window,state);
 	fetch_url(state)
 }

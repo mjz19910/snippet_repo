@@ -1,4 +1,7 @@
 import {FakeDocument} from "./FakeDocument.js";
 
-/**@implements {XMLDocument} */
-export class FakeXMLDocument extends FakeDocument {}
+export function get_FakeXMLDocument() {
+	/**@implements {XMLDocument} */
+	class FakeXMLDocument extends FakeDocument {}
+	return FakeXMLDocument;
+}

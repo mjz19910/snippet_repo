@@ -1,10 +1,11 @@
 import {fake} from "./browse/fake.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeDocumentType} from "./FakeDocumentType";
-import {FakeXMLDocument} from "./FakeXMLDocument";
+import {get_FakeXMLDocument} from "./FakeXMLDocument";
 import {DomBadge} from "./implementation/DomBadge.js";
 
 export function get_FakeDOMImplementation() {
+    let FakeXMLDocument=get_FakeXMLDocument();
     /**@implements {DOMImplementation} */
     class FakeDOMImplementation {
         X=new DOMImplementation;
