@@ -1,4 +1,4 @@
 import {TU} from "./repeat/TU";
-import {TX} from "./repeat/TX";
+import {AnyRepeat2} from "./repeat/AnyRepeat2";
 
-export type DualR=[true,TX<string,number>[]]|[false,TU<string,number>[]];
+export type DualR=[true,AnyRepeat2<string,number>[]]|[false,TU<string,number>[]];

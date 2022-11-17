@@ -1,12 +1,12 @@
 import {Repeat} from "../repeat/Repeat";
 import {TU} from "../repeat/TU.js";
-import {TX} from "../repeat/TX.js";
+import {AnyRepeat2} from "../repeat/AnyRepeat2.js";
 import {BaseCompression} from "./BaseCompression.js";
 
 export class CompressTU {
 	i: number;
 	arr: TU<string,number>[]=[];
-	ret: TX<string,number>[]=[];
+	ret: AnyRepeat2<string,number>[]=[];
 	// @returns {import("../DualR.js").DualR}
 	try_compress_dual() {
 		let state=this;

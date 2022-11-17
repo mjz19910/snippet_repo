@@ -2,41 +2,16 @@ import {BaseCompression} from "./BaseCompression";
 import {CompressState} from "./CompressState";
 import {Repeat} from "../repeat/Repeat";
 import {stats_calculator_info} from "./stats_calculator_info.js";
-import {CompressTU} from "./CompressTU.js";
 
 export class MulCompression extends BaseCompression {
 	/**
-	 * @param {{i:number,arr:import("../repeat/TU.js").TU<string, number>[],ret:import("../repeat/TX.js").TX<string, number>[]}} state
-	 * @arg {import("../repeat/TU.js").TU<string, number>} item
-	 */
-	compress_rle_TU_to_TX(state,item) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return true;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return true;
-		state.ret.push(Repeat.from_TU_entry(item,off));
-		state.i+=off-1;
-		return true;
-	}
-	/**
-	 * @param {import("../repeat/TU.js").TU<string, number>[]} arr
-	 * @returns {import("../DualR.js").DualR}
-	 * @todo (MulCompression,try_compress_dual)
-	 */
-	try_compress_dual(arr) {
-		let ex=new CompressTU(arr);
-		return ex.try_compress_dual();
-	}
-	/**
-	 * @template {import("../repeat/ST.js").ST} U
+	 * @template {import("../repeat/ConstructorWithSymbolType.js").ConstructorWithSymbolType} U
 	 * @template {InstanceType<U>} T
 	 * @arg {U} constructor_key
 	 * @arg {T[]} arr
-	 * @returns {[true, import("../repeat/X.js").X<T>[]]|[false,T[]]} */
+	 * @returns {[true, import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>[]]|[false,T[]]} */
 	try_compress_T(arr,constructor_key) {
-		/**@type {import("../repeat/X.js").X<T>[]} */
-		let ret=[];
-		/**@type {CompressState<T,import("../repeat/X.js").X<T>>} */
+		/**@type {CompressState<T,import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -47,9 +22,9 @@ export class MulCompression extends BaseCompression {
 		return MulCompression.compress_result_state(state);
 	}
 	/**
-	 * @template {import("../repeat/ST.js").ST} U
+	 * @template {import("../repeat/ConstructorWithSymbolType.js").ConstructorWithSymbolType} U
 	 * @template {InstanceType<U>} T
-	 * @arg {CompressState<T, import("../repeat/X.js").X<T>>} state
+	 * @arg {CompressState<T, import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>>} state
 	 * @arg {T} item
 	 * @arg {U} constructor_key
 	 * */
@@ -70,8 +45,8 @@ export class MulCompression extends BaseCompression {
 	 * @template {abstract new (...args: any) => any} U
 	 * @arg {U} _
 	 * @arg {T[]} arr
-	 * @arg {import("../repeat/X.js").X<T>[]} ret
-	 * @returns {[true, import("../repeat/X.js").X<T>[]]|[false,T[]]} */
+	 * @arg {import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>[]} ret
+	 * @returns {[true, import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
 		if(MulCompression.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];

@@ -4,7 +4,7 @@ import {WMap} from "./WMap";
 export class Repeat {
 	/**
 	 * @arg {import("./TU.js").TU<string, number>} item
-	 * @returns {import("./TX.js").TX<string, number>}
+	 * @returns {import("./AnyRepeat2.js").AnyRepeat2<string, number>}
 	 * @param {number} times
 	 */
 	static from_TU_entry(item,times) {
@@ -46,7 +46,7 @@ export class Repeat {
 	/**@type {Map<symbol, <T>()=>WMap<T>>} */
 	map_instance=new Map;
 	/**
-	 * @template {import("./ST.js").ST & {type:symbol}} U
+	 * @template {import("./ConstructorWithSymbolType.js").ConstructorWithSymbolType & {type:symbol}} U
 	 * @template {InstanceType<U>} V
 	 * @arg {U} constructor_key
 	 * @arg {V} _
@@ -65,7 +65,7 @@ export class Repeat {
 		return map.value;
 	}
 	/**
-	 * @template {import("./ST.js").ST & {key:symbol}} U
+	 * @template {import("./ConstructorWithSymbolType.js").ConstructorWithSymbolType & {key:symbol}} U
 	 * @template {InstanceType<U>} V
 	 * @arg {Repeat<null>} rep_null
 	 * @arg {U} constructor_key
