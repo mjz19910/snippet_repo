@@ -113,6 +113,7 @@ words:
   - nocheckin
   - nodenext
   - noframe
+  - noncharacter
   - noti
   - nthis
   - nuxt_visitor
@@ -193,6 +194,7 @@ words:
   - trgfs
   - Typecheck
   - typechecked
+  - UBLIC
   - uerr
   - undebug
   - Unforgeable
@@ -207,6 +209,7 @@ words:
   - workch
   - xarray
   - xmhrp
+  - YSTEM
   - ytd_watch_flexy
   - ZWNJ
 ignoreWords: []
