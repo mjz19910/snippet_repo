@@ -1,4 +1,7 @@
 import {HTMLDataLexBox} from "../../box_plugin/index.js";
+import {HTMLEntityLexBox} from "../../box_plugin/src/HTMLEntityLexBox.js";
+import {HTMLSpecialLexBox} from "../../box_plugin/src/HTMLSpecialLexBox.js";
+import {HTMLTagLexBox} from "../../box_plugin/src/HTMLTagLexBox.js";
 import {NodeInternalData,PageLoaderState} from "../../page_loader/index.js";
 import {get_char_type} from "./get_char_type.js";
 import {HTMLLexerResult} from "./HTMLLexerResult";
@@ -63,7 +66,7 @@ export function lex_html(state,html) {
 						log_parse_error();
 						state.create_new_token(HTMLToken.Type.Comment);
 						if(!state.m_current_token) throw new Error("Bad");
-						state.m_current_token.set_start_position({},state.nth_last_position(2));
+						state.m_current_token.set_start_position("Badge_HTMLTokenizer",state.nth_last_position(2));
 						state.reconsume_in(State.BogusComment);
 					case 'EOF':
 						log_parse_error();
@@ -95,7 +98,7 @@ export function lex_html(state,html) {
 		console.log(lexer.i,lexer.cur_char);
 	}
 	// stage 2, collect into tags marked if they open or close
-	/**@type {(HTMLDataLexBox|HTMLEntityLexBox|HTMLSpecialLex|HTMLTagLex)[]} */
+	/**@type {(HTMLDataLexBox|HTMLEntityLexBox|HTMLSpecialLexBox|HTMLTagLexBox)[]} */
 	let elements=[];
 	for(let i=0;i<lexer.lex_arr.length;i++) {
 		let item=lexer.lex_arr[i];

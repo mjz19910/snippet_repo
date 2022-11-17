@@ -1,9 +1,9 @@
 import {HTMLDataLexBox} from "./HTMLDataLexBox.js";
-import {HTMLEntityLex} from "./HTMLEntityLexBox.js";
-import {HTMLSpecialLex} from "./HTMLSpecialLexBox.js";
-import {HTMLTagLex} from "./HTMLTagLex.js";
+import {HTMLEntityLexBox} from "./HTMLEntityLexBox.js";
+import {HTMLSpecialLexBox as HTMLSpecialLexBox} from "./HTMLSpecialLexBox.js";
+import {HTMLTagLexBox as HTMLTagLexBox} from "./HTMLTagLexBox.js";
 
-/**@returns {HTMLDataLexBox|HTMLEntityLex|HTMLSpecialLex|HTMLTagLex} */
+/**@returns {HTMLDataLexBox|HTMLEntityLexBox|HTMLSpecialLexBox|HTMLTagLexBox} */
 export function get_html_lex_box() {
 	return new HTMLDataLexBox();
 }

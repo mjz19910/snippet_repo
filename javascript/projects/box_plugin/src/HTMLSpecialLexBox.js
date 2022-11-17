@@ -1,6 +1,4 @@
-export class HTMLSpecialLex {
-	/**@readonly */
-	type = "special"
-	/** @type {string} */
-	value = ""
+export class HTMLSpecialLexBox {
+	/** @readonly */ type="special";
+	value="";
 }

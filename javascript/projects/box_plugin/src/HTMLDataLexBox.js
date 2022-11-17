@@ -1,5 +1,4 @@
 export class HTMLDataLexBox {
-	/**@type {"data"} */
-	type="data"
-	value=""
+	/** @readonly */ type="data";
+	value="";
 }

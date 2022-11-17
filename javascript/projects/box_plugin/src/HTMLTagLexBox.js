@@ -1,7 +1,7 @@
 import {HTMLDataLexBox} from "./HTMLDataLexBox.js"
-export class HTMLTagLex {
-	/**@readonly */
-	type="tag"
+
+export class HTMLTagLexBox {
+	/** @readonly */ type="tag"
 	m_start_tag
 	/**
 	 * @arg {HTMLDataLexBox} value

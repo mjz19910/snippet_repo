@@ -19,7 +19,7 @@
 		"noImplicitAny": true,
 		"outDir": "./build",
 		"typeRoots": [
-			"~/workspace/node_types/node_modules/@types"
+			"./node_modules/@types"
 		],
 	},
 	"include": [

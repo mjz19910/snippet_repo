@@ -1,9 +1,11 @@
 {
 	"type": "module",
 	"name": "html-lexer-box",
-	"main":"mod.js",
+	"main": "mod.js",
 	"files": [
 		"*.js"
 	],
-	"dependencies": {}
+	"devDependencies": {
+		"@types/node": "^18.11.9"
+	}
 }

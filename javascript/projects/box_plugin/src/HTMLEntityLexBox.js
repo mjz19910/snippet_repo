@@ -1,5 +1,4 @@
-export class HTMLEntityLex {
-	/**@readonly*/
-	type="entity"
-	value=""
+export class HTMLEntityLexBox {
+	/** @readonly */ type="entity";
+	value="";
 }
