@@ -35,7 +35,7 @@ export class HTMLToken {
     set_tag_name(arg0: string) {
         throw new Error("Method not implemented.");
     }
-    ensure_doctype_data() {
+    ensure_doctype_data():MyDocTypeData {
         throw new Error("Method not implemented.");
     }
     static from_type(type: HTMLToken_Type): HTMLTokenBase {

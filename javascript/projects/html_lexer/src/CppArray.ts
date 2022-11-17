@@ -1,17 +1,16 @@
-/**@template T */
-export class CppVector extends Array {
+export class CppVector<T> extends Array<T> {
     clear() {
         throw new Error("Method not implemented.");
     }
     /** @param {T} arg0 */
-    empend(arg0) {
+    empend(arg0: T) {
 		this.push(arg0);
     }
 	clear_with_capacity() {
 		this.length=0;
 	}
 	/** @param {T} value */
-	append(value) {
+	append(value: T) {
 		this.push(value);
 	}
 	last() {

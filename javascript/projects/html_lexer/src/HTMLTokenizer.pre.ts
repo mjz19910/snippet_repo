@@ -11,6 +11,7 @@ import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {move} from "./move.js";
 import {HTMLTokenizerBase} from "./HTMLTokenizerBase.js";
 import {ak_verification_failed} from "./ak_verification_failed.js";
+import {CaseSensitivity} from "./CaseSensitivity.js";
 
 
 export function use_imports() {
@@ -28,5 +29,6 @@ export function use_imports() {
         move,
         ak_verification_failed,
         HTMLTokenizerBase,
+        CaseSensitivity,
     ];
 }

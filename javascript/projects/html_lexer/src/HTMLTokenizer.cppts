@@ -640,10 +640,10 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                if (to_ascii_uppercase(current_input_character.value()) == 'P' && consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
+                                if (this.to_ascii_uppercase(current_input_character.value()) == 'P'.charCodeAt(0) && consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
                                     SWITCH_TO(AfterDOCTYPEPublicKeyword);
                                 }
-                                if (to_ascii_uppercase(current_input_character.value()) == 'S' && consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
+                                if (this.to_ascii_uppercase(current_input_character.value()) == 'S'.charCodeAt(0) && consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
                                     SWITCH_TO(AfterDOCTYPESystemKeyword);
                                 }
                                 this.log_parse_error();
@@ -1698,7 +1698,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
 
                                 if (consumed_as_part_of_an_attribute() && !match.value().entity.ends_with(';')) {
                                     let next_code_point = peek_code_point(0);
-                                    if (next_code_point.has_value() && (next_code_point.value() == '=' || this.is_ascii_alphanumeric(next_code_point.value()))) {
+                                    if (next_code_point.has_value() && (next_code_point.value() == '='.charCodeAt(0) || this.is_ascii_alphanumeric(next_code_point.value()))) {
                                         FLUSH_CODEPOINTS_CONSUMED_AS_A_CHARACTER_REFERENCE;
                                         SWITCH_TO_RETURN_STATE;
                                     }

@@ -4,6 +4,7 @@ import {Optional} from "./Optional.js";
 import {move} from "./move.js";
 import {HTMLTokenizerBase} from "./HTMLTokenizerBase.js";
 import {ak_verification_failed} from "./ak_verification_failed.js";
+import {CaseSensitivity} from "./CaseSensitivity.js";
 
 // 2 "HTMLTokenizer.cppts" 2
 // 284 "HTMLTokenizer.cppts"
@@ -201,7 +202,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                         this.restore_to(this.m_prev_utf8_iterator);;
                                         if(this.consume_next_if_match("--")) {
                                             this.create_new_token(HTMLToken.Type.Comment);
-                                            this.m_current_token.set_start_position({},this.nth_last_position(3));
+                                            this.m_current_token.set_start_position("Badge_HTMLTokenizer",this.nth_last_position(3));
                                             do {(!(this.m_current_builder.is_empty())? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","458"].join("")):void 0); do {this.will_switch_to(State.CommentStart); this.m_state=State.CommentStart; current_input_character=this.next_code_point();;} while(0);} while(0);
                                         }
                                         if(this.consume_next_if_match("DOCTYPE",CaseSensitivity.CaseInsensitive)) {
@@ -210,7 +211,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                         if(this.consume_next_if_match("[CDATA[")) {
                                             // We keep the parser optional so that syntax highlighting can be lexer-only.
                                             // The parser registers itself with the lexer it creates.
-                                            if(m_parser!=nullptr&&m_parser-  >adjusted_current_node().namespace_()!=Namespace.HTML) {
+                                            if(this.m_parser.is_not_null()&&this.m_parser.deref().adjusted_current_node().namespace_()!=Namespace.HTML) {
                                                 do {(!(this.m_current_builder.is_empty())? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","467"].join("")):void 0); do {this.will_switch_to(State.CDATASection); this.m_state=State.CDATASection; current_input_character=this.next_code_point();;} while(0);} while(0);
                                             } else {
                                                 this.create_new_token(HTMLToken.Type.Comment);
@@ -407,10 +408,10 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                             } while(0);
                                         }
                                         if(1) {
-                                            if(to_ascii_uppercase(current_input_character.value())=='P'&&consume_next_if_match("UBLIC",CaseSensitivity.CaseInsensitive)) {
+                                            if(this.to_ascii_uppercase(current_input_character.value())=='P'.charCodeAt(0)&&consume_next_if_match("UBLIC",CaseSensitivity.CaseInsensitive)) {
                                                 do {(!(this.m_current_builder.is_empty())? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","644"].join("")):void 0); do {this.will_switch_to(State.AfterDOCTYPEPublicKeyword); this.m_state=State.AfterDOCTYPEPublicKeyword; current_input_character=this.next_code_point();;} while(0);} while(0);
                                             }
-                                            if(to_ascii_uppercase(current_input_character.value())=='S'&&consume_next_if_match("YSTEM",CaseSensitivity.CaseInsensitive)) {
+                                            if(this.to_ascii_uppercase(current_input_character.value())=='S'.charCodeAt(0)&&consume_next_if_match("YSTEM",CaseSensitivity.CaseInsensitive)) {
                                                 do {(!(this.m_current_builder.is_empty())? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","647"].join("")):void 0); do {this.will_switch_to(State.AfterDOCTYPESystemKeyword); this.m_state=State.AfterDOCTYPESystemKeyword; current_input_character=this.next_code_point();;} while(0);} while(0);
                                             }
                                             this.log_parse_error();

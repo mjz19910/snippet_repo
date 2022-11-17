@@ -406,10 +406,10 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                if (to_ascii_uppercase(current_input_character.value()) == 'P' && consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
+                                if (this.to_ascii_uppercase(current_input_character.value()) == 'P'.charCodeAt(0) && consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","644"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEPublicKeyword); this.m_state = State.AfterDOCTYPEPublicKeyword; current_input_character = this.next_code_point();; } while (0); } while (0);
                                 }
-                                if (to_ascii_uppercase(current_input_character.value()) == 'S' && consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
+                                if (this.to_ascii_uppercase(current_input_character.value()) == 'S'.charCodeAt(0) && consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","647"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPESystemKeyword); this.m_state = State.AfterDOCTYPESystemKeyword; current_input_character = this.next_code_point();; } while (0); } while (0);
                                 }
                                 this.log_parse_error();
@@ -1497,7 +1497,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
 
                                 if (consumed_as_part_of_an_attribute() && !match.value().entity.ends_with(';')) {
                                     let next_code_point = peek_code_point(0);
-                                    if (next_code_point.has_value() && (next_code_point.value() == '=' || this.is_ascii_alphanumeric(next_code_point.value()))) {
+                                    if (next_code_point.has_value() && (next_code_point.value() == '='.charCodeAt(0) || this.is_ascii_alphanumeric(next_code_point.value()))) {
                                         do { for (let code_point of this.m_temporary_buffer) { if (this.consumed_as_part_of_an_attribute()) { this.m_current_builder.append_code_point(code_point); } else { this.create_new_token(HTMLToken.Type.Character); if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(code_point); this.m_queued_tokens.enqueue(move(this.m_current_token)); } } } while (0);
                                         do { this.will_switch_to(this.m_return_state); this.m_state = this.m_return_state; this.m_goto_target="_StartOfFunction"; break _StartOfFunction; } while (0);
                                     }
