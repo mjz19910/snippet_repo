@@ -36,11 +36,17 @@ export class ReplPluginManager {
 		});
 		let base_repl=this.m_repl_runtime;
 		base_repl.pause();
-		let system_val=spawnSync("bash",["-c","echo ${HISTFILE%/zsh_history}"]);
-		console.log(system_val.output);
-		base_repl.setupHistory("./.history/repl_plugin_history",function(err,_repl) {
-			if(err) console.log('error when writing history',err);
-		});
+		hist_block: {
+			let system_val=spawnSync("bash",["-c","echo ${HISTFILE%/zsh_history}"]);
+			console.log(system_val.output);
+			let xxx=true;
+			if(xxx) {
+				break hist_block;
+			}
+			base_repl.setupHistory("./.history/repl_plugin_history",function(err,_repl) {
+				if(err) console.log('error when writing history',err);
+			});
+		}
 		base_repl.historySize=120000;
 		base_repl.removeHistoryDuplicates=true;
 		let context=base_repl.context;

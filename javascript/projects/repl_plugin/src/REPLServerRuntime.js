@@ -114,7 +114,10 @@ class RLInterface extends NodeEventEmitter {
 	setPrompt(value) {
 		if(!this.X) {
 			debugger;
-			throw new Error("No internal X");
+			let err=new Error("No internal X");
+			console.log(err);
+			debugger;
+			throw err;
 		}
 		return this.X.setPrompt(value);
 	}
