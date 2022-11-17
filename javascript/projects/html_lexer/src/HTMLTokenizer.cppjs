@@ -48,12 +48,12 @@
 
 #define SWITCH_TO_AND_EMIT_CURRENT_TOKEN(new_state)     \
     do {                                                \
-        VERIFY(m_current_builder.is_empty());           \
-        will_switch_to(State.new_state);               \
-        m_state = State.new_state;                     \
-        will_emit(this.m_current_token);                     \
-        m_queued_tokens.enqueue(move(this.m_current_token)); \
-        return m_queued_tokens.dequeue();               \
+        VERIFY(this.m_current_builder.is_empty());           \
+        this.will_switch_to(State.new_state);               \
+        this.m_state = State.new_state;                     \
+        this.will_emit(this.m_current_token);                     \
+        this.m_queued_tokens.enqueue(move(this.m_current_token)); \
+        return this.m_queued_tokens.dequeue();               \
     } while (0)
 
 #define EMIT_CHARACTER_AND_RECONSUME_IN(code_point, new_state)          \
@@ -338,6 +338,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                 this.m_source_positions.append(move(last_position));
             }
         }
+        while(true) {}
+        _StartOfFunction:
         if(!this.m_queued_tokens.is_empty())
             return this.m_queued_tokens.dequeue();
 
@@ -347,281 +349,281 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         for(;;) {
             let current_input_character=this.next_code_point();
             switch(m_state) {
-                    // 13.2.5.1 Data state, https://html.spec.whatwg.org/multipage/parsing.html#data-state
-                    BEGIN_STATE(Data)
-            {
-                ON('&')
+                // 13.2.5.1 Data state, https://html.spec.whatwg.org/multipage/parsing.html#data-state
+                BEGIN_STATE(Data)
                 {
-                    this.m_return_state=State.Data;
-                    SWITCH_TO(CharacterReference);
-                }
-                ON('<')
-                {
-                    SWITCH_TO(TagOpen);
-                }
-                ON(0);
-                {
-                    this.log_parse_error();
-                    EMIT_CURRENT_CHARACTER;
-                }
-                ON_EOF;
-                {
-                    EMIT_EOF;
-                }
-                ANYTHING_ELSE;
-                {
-                    EMIT_CURRENT_CHARACTER;
-                }
-            }
-            END_STATE;
-
-            // 13.2.5.6 Tag open state, https://html.spec.whatwg.org/multipage/parsing.html#tag-open-state
-            BEGIN_STATE(TagOpen)
-            {
-                ON('!')
-                {
-                    SWITCH_TO(MarkupDeclarationOpen);
-                }
-                ON('/')
-                {
-                    SWITCH_TO(EndTagOpen);
-                }
-                ON_ASCII_ALPHA;
-                {
-                    create_new_token(HTMLToken.Type.StartTag);
-                    RECONSUME_IN(TagName);
-                }
-                ON('?')
-                {
-                    this.log_parse_error();
-                    this.create_new_token(HTMLToken.Type.Comment);
-                    this.m_current_token.set_start_position({},this.nth_last_position(2));
-                    RECONSUME_IN(BogusComment);
-                }
-                ON_EOF;
-                {
-                    this.log_parse_error();
-                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                    EMIT_EOF;
-                }
-                ANYTHING_ELSE;
-                {
-                    this.log_parse_error();
-                    EMIT_CHARACTER_AND_RECONSUME_IN('<',Data);
-                }
-            }
-            END_STATE;
-
-            // 13.2.5.8 Tag name state, https://html.spec.whatwg.org/multipage/parsing.html#tag-name-state
-            BEGIN_STATE(TagName)
-            {
-                ON_WHITESPACE;
-                {
-                    this.m_current_token.set_tag_name(consume_current_builder());
-                    this.m_current_token.set_end_position({},nth_last_position(1));
-                    SWITCH_TO(BeforeAttributeName);
-                }
-                ON('/')
-                {
-                    this.m_current_token.set_tag_name(consume_current_builder());
-                    this.m_current_token.set_end_position({},nth_last_position(0));
-                    SWITCH_TO(SelfClosingStartTag);
-                }
-                ON('>')
-                {
-                    this.m_current_token.set_tag_name(consume_current_builder());
-                    this.m_current_token.set_end_position({},nth_last_position(1));
-                    SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
-                }
-                ON_ASCII_UPPER_ALPHA;
-                {
-                    this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
-                    this.m_current_token.set_end_position({},nth_last_position(0));
-                    continue;
-                }
-                ON(0);
-                {
-                    this.log_parse_error();
-                    this.m_current_builder.append_code_point(0xFFFD);
-                    this.m_current_token.set_end_position({},nth_last_position(0));
-                    continue;
-                }
-                ON_EOF;
-                {
-                    this.log_parse_error();
-                    this.m_current_token.set_end_position({},nth_last_position(0));
-                    EMIT_EOF;
-                }
-                ANYTHING_ELSE;
-                {
-                    this.m_current_builder.append_code_point(current_input_character.value());
-                    this.m_current_token.set_end_position({},nth_last_position(0));
-                    continue;
-                }
-            }
-            END_STATE;
-
-            // 13.2.5.7 End tag open state, https://html.spec.whatwg.org/multipage/parsing.html#end-tag-open-state
-            BEGIN_STATE(EndTagOpen)
-            {
-                ON_ASCII_ALPHA;
-                {
-                    create_new_token(HTMLToken.Type.EndTag);
-                    RECONSUME_IN(TagName);
-                }
-                ON('>')
-                {
-                    this.log_parse_error();
-                    SWITCH_TO(Data);
-                }
-                ON_EOF;
-                {
-                    this.log_parse_error();
-                    m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                    m_queued_tokens.enqueue(HTMLToken.make_character('/'));
-                    EMIT_EOF;
-                }
-                ANYTHING_ELSE;
-                {
-                    this.log_parse_error();
-                    create_new_token(HTMLToken.Type.Comment);
-                    RECONSUME_IN(BogusComment);
-                }
-            }
-            END_STATE;
-
-            // 13.2.5.42 Markup declaration open state, https://html.spec.whatwg.org/multipage/parsing.html#markup-declaration-open-state
-            BEGIN_STATE(MarkupDeclarationOpen)
-            {
-                DONT_CONSUME_NEXT_INPUT_CHARACTER;
-                if(consume_next_if_match("--"sv)) {
-                    create_new_token(HTMLToken.Type.Comment);
-                    this.m_current_token.set_start_position({},nth_last_position(3));
-                    SWITCH_TO(CommentStart);
-                }
-                if(consume_next_if_match("DOCTYPE"sv,CaseSensitivity.CaseInsensitive)) {
-                    SWITCH_TO(DOCTYPE);
-                }
-                if(consume_next_if_match("[CDATA["sv)) {
-                    // We keep the parser optional so that syntax highlighting can be lexer-only.
-                    // The parser registers itself with the lexer it creates.
-                    if(m_parser!=nullptr&&m_parser->adjusted_current_node().namespace_()!=Namespace::HTML) {
-                        SWITCH_TO(CDATASection);
-                    } else {
-                        create_new_token(HTMLToken.Type.Comment);
-                        this.m_current_builder.append("[CDATA["sv);
-                        SWITCH_TO_WITH_UNCLEAN_BUILDER(BogusComment);
+                    ON('&')
+                    {
+                        this.m_return_state=State.Data;
+                        SWITCH_TO(CharacterReference);
+                    }
+                    ON('<')
+                    {
+                        SWITCH_TO(TagOpen);
+                    }
+                    ON(0);
+                    {
+                        this.log_parse_error();
+                        EMIT_CURRENT_CHARACTER;
+                    }
+                    ON_EOF;
+                    {
+                        EMIT_EOF;
+                    }
+                    ANYTHING_ELSE;
+                    {
+                        EMIT_CURRENT_CHARACTER;
                     }
                 }
-                ANYTHING_ELSE;
-                {
-                    this.log_parse_error();
-                    create_new_token(HTMLToken.Type.Comment);
-                    SWITCH_TO(BogusComment);
-                }
-            }
-            END_STATE;
+                END_STATE;
 
-            // 13.2.5.41 Bogus comment state, https://html.spec.whatwg.org/multipage/parsing.html#bogus-comment-state
-            BEGIN_STATE(BogusComment)
-            {
-                ON('>')
+                // 13.2.5.6 Tag open state, https://html.spec.whatwg.org/multipage/parsing.html#tag-open-state
+                BEGIN_STATE(TagOpen)
                 {
-                    this.m_current_token.set_comment(consume_current_builder());
-                    SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
+                    ON('!')
+                    {
+                        SWITCH_TO(MarkupDeclarationOpen);
+                    }
+                    ON('/')
+                    {
+                        SWITCH_TO(EndTagOpen);
+                    }
+                    ON_ASCII_ALPHA;
+                    {
+                        create_new_token(HTMLToken.Type.StartTag);
+                        RECONSUME_IN(TagName);
+                    }
+                    ON('?')
+                    {
+                        this.log_parse_error();
+                        this.create_new_token(HTMLToken.Type.Comment);
+                        this.m_current_token.set_start_position({},this.nth_last_position(2));
+                        RECONSUME_IN(BogusComment);
+                    }
+                    ON_EOF;
+                    {
+                        this.log_parse_error();
+                        this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
+                        EMIT_EOF;
+                    }
+                    ANYTHING_ELSE;
+                    {
+                        this.log_parse_error();
+                        EMIT_CHARACTER_AND_RECONSUME_IN('<',Data);
+                    }
                 }
-                ON_EOF;
-                {
-                    m_queued_tokens.enqueue(move(m_current_token));
-                    EMIT_EOF;
-                }
-                ON(0);
-                {
-                    this.log_parse_error();
-                    this.m_current_builder.append_code_point(0xFFFD);
-                    continue;
-                }
-                ANYTHING_ELSE;
-                {
-                    this.m_current_builder.append_code_point(current_input_character.value());
-                    continue;
-                }
-            }
-            END_STATE;
+                END_STATE;
 
-            // 13.2.5.53 DOCTYPE state, https://html.spec.whatwg.org/multipage/parsing.html#doctype-state
-            BEGIN_STATE(DOCTYPE)
-            {
-                ON_WHITESPACE;
+                // 13.2.5.8 Tag name state, https://html.spec.whatwg.org/multipage/parsing.html#tag-name-state
+                BEGIN_STATE(TagName)
                 {
-                    SWITCH_TO(BeforeDOCTYPEName);
+                    ON_WHITESPACE;
+                    {
+                        this.m_current_token.set_tag_name(consume_current_builder());
+                        this.m_current_token.set_end_position({},nth_last_position(1));
+                        SWITCH_TO(BeforeAttributeName);
+                    }
+                    ON('/')
+                    {
+                        this.m_current_token.set_tag_name(consume_current_builder());
+                        this.m_current_token.set_end_position({},nth_last_position(0));
+                        SWITCH_TO(SelfClosingStartTag);
+                    }
+                    ON('>')
+                    {
+                        this.m_current_token.set_tag_name(consume_current_builder());
+                        this.m_current_token.set_end_position({},nth_last_position(1));
+                        SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
+                    }
+                    ON_ASCII_UPPER_ALPHA;
+                    {
+                        this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                        this.m_current_token.set_end_position({},nth_last_position(0));
+                        continue;
+                    }
+                    ON(0);
+                    {
+                        this.log_parse_error();
+                        this.m_current_builder.append_code_point(0xFFFD);
+                        this.m_current_token.set_end_position({},nth_last_position(0));
+                        continue;
+                    }
+                    ON_EOF;
+                    {
+                        this.log_parse_error();
+                        this.m_current_token.set_end_position({},nth_last_position(0));
+                        EMIT_EOF;
+                    }
+                    ANYTHING_ELSE;
+                    {
+                        this.m_current_builder.append_code_point(current_input_character.value());
+                        this.m_current_token.set_end_position({},nth_last_position(0));
+                        continue;
+                    }
                 }
-                ON('>')
-                {
-                    RECONSUME_IN(BeforeDOCTYPEName);
-                }
-                ON_EOF;
-                {
-                    this.log_parse_error();
-                    create_new_token(HTMLToken.Type.DOCTYPE);
-                    this.m_current_token.ensure_doctype_data().force_quirks=true;
-                    m_queued_tokens.enqueue(move(m_current_token));
-                    EMIT_EOF;
-                }
-                ANYTHING_ELSE;
-                {
-                    this.log_parse_error();
-                    RECONSUME_IN(BeforeDOCTYPEName);
-                }
-            }
-            END_STATE;
+                END_STATE;
 
-            // 13.2.5.54 Before DOCTYPE name state, https://html.spec.whatwg.org/multipage/parsing.html#before-doctype-name-state
-            BEGIN_STATE(BeforeDOCTYPEName)
-            {
-                ON_WHITESPACE;
+                // 13.2.5.7 End tag open state, https://html.spec.whatwg.org/multipage/parsing.html#end-tag-open-state
+                BEGIN_STATE(EndTagOpen)
                 {
-                    continue;
+                    ON_ASCII_ALPHA;
+                    {
+                        create_new_token(HTMLToken.Type.EndTag);
+                        RECONSUME_IN(TagName);
+                    }
+                    ON('>')
+                    {
+                        this.log_parse_error();
+                        SWITCH_TO(Data);
+                    }
+                    ON_EOF;
+                    {
+                        this.log_parse_error();
+                        m_queued_tokens.enqueue(HTMLToken.make_character('<'));
+                        m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                        EMIT_EOF;
+                    }
+                    ANYTHING_ELSE;
+                    {
+                        this.log_parse_error();
+                        create_new_token(HTMLToken.Type.Comment);
+                        RECONSUME_IN(BogusComment);
+                    }
                 }
-                ON_ASCII_UPPER_ALPHA;
+                END_STATE;
+
+                // 13.2.5.42 Markup declaration open state, https://html.spec.whatwg.org/multipage/parsing.html#markup-declaration-open-state
+                BEGIN_STATE(MarkupDeclarationOpen)
                 {
-                    create_new_token(HTMLToken.Type.DOCTYPE);
-                    this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
-                    this.m_current_token.ensure_doctype_data().missing_name=false;
-                    SWITCH_TO_WITH_UNCLEAN_BUILDER(DOCTYPEName);
+                    DONT_CONSUME_NEXT_INPUT_CHARACTER;
+                    if(consume_next_if_match("--"sv)) {
+                        create_new_token(HTMLToken.Type.Comment);
+                        this.m_current_token.set_start_position({},nth_last_position(3));
+                        SWITCH_TO(CommentStart);
+                    }
+                    if(consume_next_if_match("DOCTYPE"sv,CaseSensitivity.CaseInsensitive)) {
+                        SWITCH_TO(DOCTYPE);
+                    }
+                    if(consume_next_if_match("[CDATA["sv)) {
+                        // We keep the parser optional so that syntax highlighting can be lexer-only.
+                        // The parser registers itself with the lexer it creates.
+                        if(m_parser!=nullptr&&m_parser->adjusted_current_node().namespace_()!=Namespace::HTML) {
+                            SWITCH_TO(CDATASection);
+                        } else {
+                            create_new_token(HTMLToken.Type.Comment);
+                            this.m_current_builder.append("[CDATA["sv);
+                            SWITCH_TO_WITH_UNCLEAN_BUILDER(BogusComment);
+                        }
+                    }
+                    ANYTHING_ELSE;
+                    {
+                        this.log_parse_error();
+                        create_new_token(HTMLToken.Type.Comment);
+                        SWITCH_TO(BogusComment);
+                    }
                 }
-                ON(0);
+                END_STATE;
+
+                // 13.2.5.41 Bogus comment state, https://html.spec.whatwg.org/multipage/parsing.html#bogus-comment-state
+                BEGIN_STATE(BogusComment)
                 {
-                    this.log_parse_error();
-                    create_new_token(HTMLToken.Type.DOCTYPE);
-                    this.m_current_builder.append_code_point(0xFFFD);
-                    this.m_current_token.ensure_doctype_data().missing_name=false;
-                    SWITCH_TO_WITH_UNCLEAN_BUILDER(DOCTYPEName);
+                    ON('>')
+                    {
+                        this.m_current_token.set_comment(consume_current_builder());
+                        SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
+                    }
+                    ON_EOF;
+                    {
+                        m_queued_tokens.enqueue(move(m_current_token));
+                        EMIT_EOF;
+                    }
+                    ON(0);
+                    {
+                        this.log_parse_error();
+                        this.m_current_builder.append_code_point(0xFFFD);
+                        continue;
+                    }
+                    ANYTHING_ELSE;
+                    {
+                        this.m_current_builder.append_code_point(current_input_character.value());
+                        continue;
+                    }
                 }
-                ON('>')
+                END_STATE;
+
+                // 13.2.5.53 DOCTYPE state, https://html.spec.whatwg.org/multipage/parsing.html#doctype-state
+                BEGIN_STATE(DOCTYPE)
                 {
-                    this.log_parse_error();
-                    create_new_token(HTMLToken.Type.DOCTYPE);
-                    this.m_current_token.ensure_doctype_data().force_quirks=true;
-                    SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
+                    ON_WHITESPACE;
+                    {
+                        SWITCH_TO(BeforeDOCTYPEName);
+                    }
+                    ON('>')
+                    {
+                        RECONSUME_IN(BeforeDOCTYPEName);
+                    }
+                    ON_EOF;
+                    {
+                        this.log_parse_error();
+                        create_new_token(HTMLToken.Type.DOCTYPE);
+                        this.m_current_token.ensure_doctype_data().force_quirks=true;
+                        m_queued_tokens.enqueue(move(m_current_token));
+                        EMIT_EOF;
+                    }
+                    ANYTHING_ELSE;
+                    {
+                        this.log_parse_error();
+                        RECONSUME_IN(BeforeDOCTYPEName);
+                    }
                 }
-                ON_EOF;
+                END_STATE;
+
+                // 13.2.5.54 Before DOCTYPE name state, https://html.spec.whatwg.org/multipage/parsing.html#before-doctype-name-state
+                BEGIN_STATE(BeforeDOCTYPEName)
                 {
-                    this.log_parse_error();
-                    create_new_token(HTMLToken.Type.DOCTYPE);
-                    this.m_current_token.ensure_doctype_data().force_quirks=true;
-                    m_queued_tokens.enqueue(move(m_current_token));
-                    EMIT_EOF;
+                    ON_WHITESPACE;
+                    {
+                        continue;
+                    }
+                    ON_ASCII_UPPER_ALPHA;
+                    {
+                        create_new_token(HTMLToken.Type.DOCTYPE);
+                        this.m_current_builder.append_code_point(to_ascii_lowercase(current_input_character.value()));
+                        this.m_current_token.ensure_doctype_data().missing_name=false;
+                        SWITCH_TO_WITH_UNCLEAN_BUILDER(DOCTYPEName);
+                    }
+                    ON(0);
+                    {
+                        this.log_parse_error();
+                        create_new_token(HTMLToken.Type.DOCTYPE);
+                        this.m_current_builder.append_code_point(0xFFFD);
+                        this.m_current_token.ensure_doctype_data().missing_name=false;
+                        SWITCH_TO_WITH_UNCLEAN_BUILDER(DOCTYPEName);
+                    }
+                    ON('>')
+                    {
+                        this.log_parse_error();
+                        create_new_token(HTMLToken.Type.DOCTYPE);
+                        this.m_current_token.ensure_doctype_data().force_quirks=true;
+                        SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
+                    }
+                    ON_EOF;
+                    {
+                        this.log_parse_error();
+                        create_new_token(HTMLToken.Type.DOCTYPE);
+                        this.m_current_token.ensure_doctype_data().force_quirks=true;
+                        m_queued_tokens.enqueue(move(m_current_token));
+                        EMIT_EOF;
+                    }
+                    ANYTHING_ELSE;
+                    {
+                        create_new_token(HTMLToken.Type.DOCTYPE);
+                        this.m_current_builder.append_code_point(current_input_character.value());
+                        this.m_current_token.ensure_doctype_data().missing_name=false;
+                        SWITCH_TO_WITH_UNCLEAN_BUILDER(DOCTYPEName);
+                    }
                 }
-                ANYTHING_ELSE;
-                {
-                    create_new_token(HTMLToken.Type.DOCTYPE);
-                    this.m_current_builder.append_code_point(current_input_character.value());
-                    this.m_current_token.ensure_doctype_data().missing_name=false;
-                    SWITCH_TO_WITH_UNCLEAN_BUILDER(DOCTYPEName);
-                }
-            }
-            END_STATE;
+                END_STATE;
 
             // 13.2.5.55 DOCTYPE name state, https://html.spec.whatwg.org/multipage/parsing.html#doctype-name-state
             BEGIN_STATE(DOCTYPEName)
