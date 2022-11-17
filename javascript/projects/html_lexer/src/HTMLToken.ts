@@ -4,20 +4,12 @@
 // 1 "HTMLToken.cppts"
 // 1 "HTMLToken.pre.ts" 1
 import {any} from "../../browser_fake_dom/src/any.js";
+import {ak_verification_failed} from "./ak_verification_failed.js";
 import {HTMLToken_Type} from "./HTMLToken_Type";
 import {SourcePosition} from "./SourcePosition.js";
 
-function dbgln(msg: string,...val: any[]) {
+export function dbgln(msg: string,...val: any[]) {
     console.log(msg,...val);
-}
-
-function __builtin_trap() {
-    throw new Error("Trap");
-}
-
-function ak_verification_failed(message:string) {
-    dbgln("VERIFICATION FAILED: {}",message);
-    __builtin_trap();
 }
 
 function __stringify(value: any): string {

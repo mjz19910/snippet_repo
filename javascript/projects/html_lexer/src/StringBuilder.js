@@ -1,4 +1,7 @@
 export class StringBuilder {
+    is_empty() {
+		return true;
+    }
 	clear() {
 		throw new Error("Method not implemented.");
 	}
