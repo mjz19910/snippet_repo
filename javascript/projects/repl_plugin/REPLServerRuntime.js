@@ -1,22 +1,8 @@
 import {Interface} from 'readline';
 import repl,{REPLServer} from 'repl';
-import {any} from '../browser_fake_dom/src/any.js';
+import {XHolder} from './XHolder';
 
-/**@template T */
-class XHolder {
-	/**@type {T} */
-	X;
-	/**
-	 * @param {T} x_val
-	 */
-	constructor(x_val) {
-		this.X=x_val;
-	}
-}
-/**@typedef {import('./REPLServerRuntime.ty.js').EventEmitterType} EventEmitterType */
-
-
-/**@implements {EventEmitterType} @extends {XHolder<EventEmitterType>} */
+/**@implements {NodeJS.EventEmitter} @extends {XHolder<NodeJS.EventEmitter>} */
 class NodeEventEmitter extends XHolder {
 	/** @param {string} event_name */
 	listeners(event_name) {
