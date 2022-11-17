@@ -1,6 +1,6 @@
 import {Interface} from 'readline';
 import repl,{REPLServer} from 'repl';
-import {XHolder} from './XHolder';
+import {XHolder} from './XHolder.js';
 
 /**@implements {NodeJS.EventEmitter} @extends {XHolder<NodeJS.EventEmitter>} */
 class NodeEventEmitter extends XHolder {

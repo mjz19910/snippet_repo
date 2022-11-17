@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from "path";
 import process from "process";
-import {do_create_window,fake,handle_onPageLoadStarted,PageLoadStateType} from '../browser_fake_dom/index.js';
-import {PageLoaderState} from '../page_loader/index.js';
+import {do_create_window,fake,handle_onPageLoadStarted} from '../../browser_fake_dom/index.js';
+import {PageLoaderState} from '../../page_loader/index.js';
 import {wget_on_static_page_load} from "./mod.js";
 
 function main() {

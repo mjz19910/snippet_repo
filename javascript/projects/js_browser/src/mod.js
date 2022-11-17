@@ -1,5 +1,6 @@
 import {fake} from "../../browser_fake_dom/index.js";
 import {on_page_data_loaded,PageLoaderState} from "../../page_loader/index.js";
+import {repl_plugin_get_global_repl_activator} from "../../repl_plugin/src/repl_plugin_get_global_repl_activator.js";
 
 /**
  * @param {PageLoaderState} state
@@ -19,13 +20,13 @@ export function wget_on_static_page_load(state,page_content,page_url) {
 		url: page_url,
 		no_repl: state.no_repl,
 	};
-	let req_state=new PageLoaderState(page_url,{});
+	let req_state=new PageLoaderState(page_url,static_req_state);
 	req_state.no_repl=state.no_repl;
 	on_page_data_loaded(fake.window,fake.document,req_state,null,page_content);
 	let repl={
 		on_finished() {}
 	};
-	// get_repl_activator(static_req_state)
+	repl_plugin_get_global_repl_activator(req_state);
 	if(repl) {
 		repl.on_finished();
 	}

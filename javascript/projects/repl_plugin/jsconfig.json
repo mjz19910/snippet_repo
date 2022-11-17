@@ -14,14 +14,13 @@
 		"allowJs": true,
 		"strictNullChecks": true,
 		"module": "ESNext",
-		"moduleResolution": "Node",
+		"moduleResolution": "Node16",
 		"sourceMap": true,
 		"noImplicitAny": true,
 		"outDir": "./build",
 		"typeRoots": [
 			"./node_modules/@types"
 		],
-		"paths": {}
 	},
 	"include": [
 		"**/*",

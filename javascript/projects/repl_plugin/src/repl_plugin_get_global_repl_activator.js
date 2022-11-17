@@ -1,10 +1,10 @@
+import {PageLoaderState} from "../../page_loader/index.js";
 import {g_repl_plugin_value} from "./g_repl_plugin_value.js";
-import {ReplLocalState} from "./ReplLocalState.js";
-import {ReplPluginManager} from "./ReplPluginManager";
+import {ReplPluginManager} from "./ReplPluginManager.js";
 
 /**
  * @returns {ReplPluginManager | null}
- * @param {ReplLocalState} state
+ * @param {PageLoaderState} state
  */
 export function repl_plugin_get_global_repl_activator(state) {
 	if(!g_repl_plugin_value.value) {
@@ -16,8 +16,3 @@ export function repl_plugin_get_global_repl_activator(state) {
 	}
 }
 
-export function use_types() {
-	return [
-		ReplLocalState,
-	];
-}

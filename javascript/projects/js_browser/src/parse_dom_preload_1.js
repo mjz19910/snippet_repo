@@ -1,7 +1,7 @@
 import process from "process";
-import {PageLoaderState} from "../page_loader/index.js";
-import {fetch_url} from "../page_loader/index.js";
-import {do_create_window, fake, handle_onPageLoadStarted, PageLoadStateType} from "../browser_fake_dom/index.js";
+import {PageLoaderState} from "../../page_loader/index.js";
+import {fetch_url} from "../../page_loader/index.js";
+import {do_create_window, fake, handle_onPageLoadStarted, PageLoadStateType} from "../../browser_fake_dom/index.js";
 export function main() {
 	process.on('unhandledRejection',error => {
 		if(error instanceof Error) {

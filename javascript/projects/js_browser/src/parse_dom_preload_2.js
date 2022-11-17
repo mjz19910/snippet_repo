@@ -1,11 +1,11 @@
 import path,{relative} from "path";
 import {default as process} from "process";
-import {do_create_window,fake,handle_onPageLoadStarted} from "../browser_fake_dom/index.js";
-import {fetch_url} from "../ipc_api/src/fetch_url.js";
-import {import_ipc_plugin} from "../ipc_api/src/import_ipc_plugin.js";
-import {ipc_loader_state} from "../ipc_api/src/ipc_loader_state.js";
-import {new_FetchRequestState} from "../ipc_api/src/new_FetchRequestState.js";
-import {PageLoaderState} from "../page_loader/index.js";
+import {do_create_window,fake,handle_onPageLoadStarted} from "../../browser_fake_dom/index.js";
+import {fetch_url} from "../../ipc_api/index.js";
+import {import_ipc_plugin} from "../../ipc_api/index.js";
+import {ipc_loader_state} from "../../ipc_api/index.js";
+import {new_FetchRequestState} from "../../ipc_api/index.js";
+import {PageLoaderState} from "../../page_loader/index.js";
 const saved_console=console;
 process.on('unhandledRejection',error => {
 	saved_console.log('unhandled promise rejection',error);
