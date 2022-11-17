@@ -1,10 +1,4 @@
-export class NullOptional {
-    /**@template T @param {T} dv */
-    value_or(dv) {
-        return dv;
-    }
-}
-/**@template T */
+/** @template T */
 export class Optional {
     value() {
         if(this.m_has_value) {
@@ -16,18 +10,24 @@ export class Optional {
         return this.m_has_value;
     }
     m_has_value=false;
-    /**@type {T} */
+    /**@type {NonNullable<T>|null} */
     m_value;
     /** @param {T} dv */
     value_or(dv) {
         if(this.m_has_value) {
+            if(this.m_value == null) throw new Error("Runtime error");
             return this.m_value;
         }
         return dv;
     }
-    /** @param {T} opt_value */
-    constructor(opt_value) {
-        this.m_value=opt_value;
+    /** @param {[x: NonNullable<T>]|[]} args */
+    constructor(...args) {
+        if(args.length===0) {
+            this.m_has_value=false;
+            this.m_value=null;
+        } else {
+            this.m_value=args[0];
+        }
     }
     set_null() {
         this.m_has_value=false;

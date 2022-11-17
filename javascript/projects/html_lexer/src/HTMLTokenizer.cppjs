@@ -49,7 +49,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         for(let i=0;i<offset&&it!=this.m_utf8_view.end();++i)
             it.inc();
         if(it==this.m_utf8_view.end())
-            return new NullOptional();
+            return new Optional();
         return new Optional(it.deref());
     }
     /**
@@ -2599,14 +2599,14 @@ restore_to(new_iterator) {
     this.m_utf8_iterator=new_iterator;
 }
 emit_eof() {
-    if(this.m_has_emitted_eof) return new NullOptional();
+    if(this.m_has_emitted_eof) return new Optional();
     this.m_has_emitted_eof=true;
     this.create_new_token(HTMLToken.Type.EndOfFile);
     this.will_emit(this.m_current_token);
     this.m_queued_tokens.push(this.m_current_token);
     let last_token=this.m_queued_tokens.shift();
     if(last_token===void 0) {
-        return new NullOptional;
+        return new Optional;
     }
     return new Optional(this.m_queued_tokens.shift());
 }

@@ -4,7 +4,7 @@ import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
-import {NullOptional,Optional} from "./Optional.js";
+import {Optional} from "./Optional.js";
 import {Utf8View} from "./Utf8View.js";
 import {state_name} from "./state_name.js";
 import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
@@ -19,7 +19,6 @@ export function use_imports() {
         State,
         dbgln_if,
         Utf8CodePointIterator,
-        NullOptional,
         Optional,
         Utf8View,
         state_name,
@@ -84,7 +83,7 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_character_reference_code=0;
     m_blocked=false;
     m_aborted=false;
-    /** @type {CppVector<typeof HTMLToken['Position']>} */
-	m_source_positions=new CppVector();
+    /** @type {CppVector<InstanceType<typeof HTMLToken['Position']>>} */
+	m_source_positions=new CppVector;
     m_skip_to_start_of_func=false;
 }
