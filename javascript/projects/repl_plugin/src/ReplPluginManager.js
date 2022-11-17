@@ -37,6 +37,7 @@ export class ReplPluginManager {
 		this.get_repl_runtime().displayPrompt();
 	}
 	create_repl_plugin() {
+		debugger;
 		this.m_repl_runtime=REPLServerRuntime.start_repl({
 			prompt: "",
 		});
