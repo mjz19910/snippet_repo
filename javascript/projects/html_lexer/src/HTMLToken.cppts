@@ -1,52 +1,12 @@
 import {HTMLToken_Type} from "./HTMLToken_Type";
 import {SourcePosition} from "./SourcePosition.js";
 
-function __builtin_trap() {
-    throw new Error("Trap");
-}
-
-function ak_verification_failed(message) {
-    dbgln("VERIFICATION FAILED: {}", message);
-    __builtin_trap();
-}
+#include "HTMLToken.pre.ts"
 
 #define VERIFY(expr) \
     (!(expr)   \
-        ? ak_verification_failed(#expr "\n" __FILE__ ":" __stringify(__LINE__)) \
+        ? ak_verification_failed([#expr,"\n",__FILE__,":",__stringify(__LINE__)].join("")) \
         : (void)0)
-
-class CodePoint {}
-
-/** @template T */
-class OwnPtr<T> {
-    ptr:T|null = null;
-}
-
-class Vector<T> {
-    x:T;
-    constructor(x:T) {
-        this.x = x;
-    }
-}
-
-class Variant<T extends any[]> {
-    set<V extends number>(arg0: T[V]) {
-        this.erased=arg0;
-    }
-    x:T;
-    erased:any;
-    constructor(x:T) {
-        this.x=x;
-    }
-}
-
-class Empty {}
-
-type u32 = number;
-
-class DoctypeData {}
-
-class Attribute {}
 
 export class HTMLToken {
     static Position=SourcePosition;

@@ -5,31 +5,38 @@
 import {HTMLToken_Type} from "./HTMLToken_Type";
 import {SourcePosition} from "./SourcePosition.js";
 
+// 1 "HTMLToken.pre.ts" 1
+import {HTMLToken_Type} from "./HTMLToken_Type";
+import {SourcePosition} from "./SourcePosition.js";
+
+function dbgln(msg: string,...val: any[]) {
+    console.log(msg,...val);
+}
+
 function __builtin_trap() {
     throw new Error("Trap");
 }
 
-function ak_verification_failed(message) {
-    dbgln("VERIFICATION FAILED: {}", message);
+function ak_verification_failed(message:string) {
+    dbgln("VERIFICATION FAILED: {}",message);
     __builtin_trap();
 }
 
-
-
-
-
+function __stringify(value: any): string {
+    return value.toString();
+}
 
 class CodePoint {}
 
 /** @template T */
 class OwnPtr<T> {
-    ptr:T|null = null;
+    ptr: T|null=null;
 }
 
 class Vector<T> {
-    x:T;
-    constructor(x:T) {
-        this.x = x;
+    x: T;
+    constructor(x: T) {
+        this.x=x;
     }
 }
 
@@ -37,20 +44,45 @@ class Variant<T extends any[]> {
     set<V extends number>(arg0: T[V]) {
         this.erased=arg0;
     }
-    x:T;
-    erased:any;
-    constructor(x:T) {
+    x: T;
+    erased: any;
+    constructor(x: T) {
         this.x=x;
     }
 }
 
 class Empty {}
 
-type u32 = number;
+type u32=number;
 
 class DoctypeData {}
 
 class Attribute {}
+
+export function use_types() {
+    let u_types:u32|null=null;
+    let ex=[
+        u_types,
+        Attribute,
+        DoctypeData,
+        Empty,
+        Variant,
+        Vector,
+        OwnPtr,
+        CodePoint,
+        __stringify,
+        ak_verification_failed,
+    ] as const;
+    return [
+        ...ex,HTMLToken_Type,SourcePosition
+    ] as const;
+}
+// 5 "HTMLToken.cppts" 2
+
+
+
+
+
 
 export class HTMLToken {
     static Position=SourcePosition;
@@ -97,7 +129,7 @@ export class HTMLToken {
         this.m_start_position=start_position;
     }
     tag_name() {
-        (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed("this.is_start_tag() || this.is_end_tag()" "\n" "HTMLToken.cppts" ":" __stringify(96)) : (void)0);
+        (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","HTMLToken.cppts",":",__stringify(56)].join("")) : (void)0);
         return this.m_string_data;
     }
     is_end_tag(): any {

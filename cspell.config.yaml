@@ -38,6 +38,7 @@ words:
   - comlen
   - constexpr
   - cppjs
+  - cppts
   - cres
   - cstruct
   - cxlen
