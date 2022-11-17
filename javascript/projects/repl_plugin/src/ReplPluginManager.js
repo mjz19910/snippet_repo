@@ -13,7 +13,11 @@ export class ReplPluginManager {
 	 * @param {string} arg0
 	 */
 	setPrompt(arg0) {
-		this.get_repl_runtime().setPrompt(arg0);
+		let repl_internal=this.get_repl_runtime();
+		if(repl_internal.X===void 0) {
+			console.log("unable use repl_internal as X is missing");
+		}
+		repl_internal.setPrompt(arg0);
 	}
 	pause() {
 		this.get_repl_runtime().pause();
