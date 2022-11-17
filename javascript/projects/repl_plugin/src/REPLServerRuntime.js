@@ -112,7 +112,10 @@ class RLInterface extends NodeEventEmitter {
 	}
 	/** @param {string} value */
 	setPrompt(value) {
-		if(!this.X) throw new Error("No internal X");
+		if(!this.X) {
+			debugger;
+			throw new Error("No internal X");
+		}
 		return this.X.setPrompt(value);
 	}
 	/**
