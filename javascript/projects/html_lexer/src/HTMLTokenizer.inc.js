@@ -143,7 +143,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
         for(let i=0;i<offset&&it!=this.m_utf8_view.end();++i)
             it.inc();
         if(it==this.m_utf8_view.end())
-            return new Optional;
+            return new Optional();
         return new Optional(it.deref());
     }
     /**
