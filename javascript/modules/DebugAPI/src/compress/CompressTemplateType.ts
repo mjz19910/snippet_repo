@@ -25,14 +25,11 @@ export class CompressTemplateType<T extends InstanceType<U>,U extends Constructo
 		}
 		return BaseCompression.compress_result_state(state);
 	}
-	try_compress_T<U extends ConstructorWithSymbolType,T extends InstanceType<U>>(arr: T[],constructor_key: U): [true,AnyOrRepeat<T>[]]|[false,T[]] {
-		let sq=new CompressTemplateType(arr,constructor_key);
-		sq.try_compress_T_this();
-		sq.arr;
-		let state: CompressState<T,AnyOrRepeat<T>>=new CompressState(arr);
+	try_compress_T(): [true,AnyOrRepeat<T>[]]|[false,T[]] {
+		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
-			let use_item=this.compress_rle_T_X(state,item,constructor_key);
+			let use_item=this.compress_rle_T_X(item);
 			if(use_item) continue;
 			state.ret.push(item);
 		}
