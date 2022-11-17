@@ -1,8 +1,5 @@
+import {HTMLLexerResult,HTMLTokenizer,lex_html,on_html_lex_result} from "../../html_lexer/index.js";
 import {PageLoaderState} from "../../page_loader/index.js";
-import {HTMLLexerResult} from "../../html_lexer/index.js";
-import {HTMLTokenizer} from "../../html_lexer/index.js";
-import {lex_html} from "../../html_lexer/index.js";
-import {on_html_lex_result} from "../../html_lexer/src/on_html_lex_result.js";
 
 export class HTMLLexerAPI {
 	/** @arg {PageLoaderState} state @arg {Uint8Array} input*/

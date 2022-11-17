@@ -1,5 +1,5 @@
-import {HTMLLexerResult} from "./HTMLLexerResult.js";
 import {PageLoaderState} from "../../page_loader/index.js";
+import {HTMLLexerResult} from "./HTMLLexerResult.js";
 
 /**
  * @arg {PageLoaderState} state
@@ -14,11 +14,11 @@ export function on_html_lex_result(state,html,parse_result) {
 	return new HTMLLexerResult(state,() => [],null);
 }
 
-import {lex_data} from "./lex_data.js";
-import {ok_char_int8s} from "./lex_html.js";
-import {HTMLTokenizer} from "./HTMLTokenizer.js";
 import {repl_plugin_get_global_repl_activator} from "../../repl_plugin/index.js";
 import {g_html_lex_plugin} from "./g_html_lex_plugin.js";
+import {HTMLTokenizer} from "./HTMLTokenizer.js";
+import {lex_data} from "./lex_data.js";
+import {ok_char_int8s} from "./lex_html.js";
 import {REPLHtmlLexPlugin} from "./plugin/REPLHtmlLexPlugin.js";
 
 /**
