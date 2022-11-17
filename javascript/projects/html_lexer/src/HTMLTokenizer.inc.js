@@ -6,7 +6,7 @@
 // 1 "HTMLTokenizer.cppjs" 1
 import {HTMLToken} from "./HTMLToken.js";
 import {throw_todo} from "./throw_todo";
-import {HTMLTokenizerH} from "./HtmlLexerData";
+import {HTMLTokenizerImpl} from "./HtmlLexerData";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
@@ -46,7 +46,9 @@ class InsertionPoint {
     defined=false;
 };
 
-export class HTMLTokenizer extends HTMLTokenizerH {
+class StringBuilder {}
+
+export class HTMLTokenizer extends HTMLTokenizerImpl {
     /**@type {CppPtr<HTMLParser>} */
     m_parser=new CppPtr;
     m_state=State.Data;
@@ -59,7 +61,7 @@ export class HTMLTokenizer extends HTMLTokenizerH {
     m_utf8_iterator=new Utf8CodePointIterator;
     m_prev_utf8_iterator=new Utf8CodePointIterator;
     m_current_token=new HTMLToken;
-    m_current_builder=new StringBuilder();
+    m_current_builder=new StringBuilder;
     m_last_emitted_start_tag_name=new Optional("");
     m_explicit_eof_inserted=false;
     m_has_emitted_eof=false;
