@@ -145,8 +145,13 @@ export class REPLServerRuntime extends RLInterface {
 	/**@arg {string | repl.ReplOptions} [options] @returns {REPLServerRuntime} */
 	static start_repl(options) {
 		console.log("start repl");
-		debugger;
-		return new REPLServerRuntime(repl.start(options));
+		let repl_value=repl.start(options);
+		console.log("repl_value");
+		console.log(repl_value);
+		let res=new REPLServerRuntime(repl_value);
+		console.log("res");
+		console.log(res);
+		return res;
 	}
 	/**@type {REPLServer} */
 	X;
