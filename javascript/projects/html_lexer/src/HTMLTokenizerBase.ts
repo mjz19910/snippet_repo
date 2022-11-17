@@ -128,12 +128,15 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     will_reconsume_in(_x: State) {throw new Error("TODO");}
     switch_to(_x: State) {throw new Error("TODO");}
     will_emit(_x: HTMLToken) {throw new Error("TODO");}
-    current_end_tag_token_is_appropriate() {throw new Error("TODO");}
+    current_end_tag_token_is_appropriate(): boolean {throw new Error("TODO");}
     consumed_as_part_of_an_attribute() {throw new Error("TODO");}
     restore_to() {throw new Error("TODO");}
     consume_current_builder() {throw new Error("TODO");}
     log_parse_error() {throw new Error("");}
     is_ascii_alpha(arg0: number): boolean {
+        throw new Error("Method not implemented.");
+    }
+    is_ascii(arg0: number):boolean {
         throw new Error("Method not implemented.");
     }
 }

@@ -371,44 +371,44 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON_WHITESPACE
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
-                                this.m_current_token.set_end_position({}, nth_last_position(1));
+                                this.m_current_token.set_end_position({}, this.nth_last_position(1));
                                 SWITCH_TO(BeforeAttributeName);
                             }
                             ON('/'.charCodeAt(0))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
-                                this.m_current_token.set_end_position({}, nth_last_position(0));
+                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
                                 SWITCH_TO(SelfClosingStartTag);
                             }
                             ON('>'.charCodeAt(0))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
-                                this.m_current_token.set_end_position({}, nth_last_position(1));
+                                this.m_current_token.set_end_position({}, this.nth_last_position(1));
                                 SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                             }
                             ON_ASCII_UPPER_ALPHA
                             {
                                 this.m_current_builder.append_code_point(this.to_ascii_lowercase(current_input_character.value()));
-                                this.m_current_token.set_end_position({}, nth_last_position(0));
+                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
                                 continue;
                             }
                             ON(0)
                             {
                                 this.log_parse_error();
                                 this.m_current_builder.append_code_point(0xFFFD);
-                                this.m_current_token.set_end_position({}, nth_last_position(0));
+                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
                                 continue;
                             }
                             ON_EOF
                             {
                                 this.log_parse_error();
-                                this.m_current_token.set_end_position({}, nth_last_position(0));
+                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
                                 EMIT_EOF;
                             }
                             ANYTHING_ELSE
                             {
                                 this.m_current_builder.append_code_point(current_input_character.value());
-                                this.m_current_token.set_end_position({}, nth_last_position(0));
+                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
                                 continue;
                             }
                         }
@@ -449,7 +449,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             DONT_CONSUME_NEXT_INPUT_CHARACTER;
                             if (consume_next_if_match("--"sv)) {
                                 this.create_new_token(HTMLToken.Type.Comment);
-                                this.m_current_token.set_start_position({}, nth_last_position(3));
+                                this.m_current_token.set_start_position({}, this.nth_last_position(3));
                                 SWITCH_TO(CommentStart);
                             }
                             if (consume_next_if_match("DOCTYPE"sv, CaseSensitivity.CaseInsensitive)) {
@@ -1090,7 +1090,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON('/'.charCodeAt(0))
                             {
                                 if (this.m_current_token.has_attributes())
-                                    this.m_current_token.last_attribute().name_end_position = nth_last_position(1);
+                                    this.m_current_token.last_attribute().name_end_position = this.nth_last_position(1);
                                 RECONSUME_IN(AfterAttributeName);
                             }
                             ON('>'.charCodeAt(0))
@@ -1105,7 +1105,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.log_parse_error();
                                 HTMLToken.Attribute new_attribute;
-                                new_attribute.name_start_position = nth_last_position(1);
+                                new_attribute.name_start_position = this.nth_last_position(1);
                                 this.m_current_builder.append_code_point(current_input_character.value());
                                 this.m_current_token.add_attribute(move(new_attribute));
                                 SWITCH_TO_WITH_UNCLEAN_BUILDER(AttributeName);
@@ -1113,7 +1113,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ANYTHING_ELSE
                             {
                                 HTMLToken.Attribute new_attribute;
-                                new_attribute.name_start_position = nth_last_position(1);
+                                new_attribute.name_start_position = this.nth_last_position(1);
                                 this.m_current_token.add_attribute(move(new_attribute));
                                 RECONSUME_IN(AttributeName);
                             }
@@ -1166,7 +1166,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON('='.charCodeAt(0))
                             {
-                                this.m_current_token.last_attribute().name_end_position = nth_last_position(1);
+                                this.m_current_token.last_attribute().name_end_position = this.nth_last_position(1);
                                 this.m_current_token.last_attribute().local_name = this.consume_current_builder();
                                 SWITCH_TO(BeforeAttributeValue);
                             }
@@ -1221,7 +1221,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON('='.charCodeAt(0))
                             {
-                                this.m_current_token.last_attribute().name_end_position = nth_last_position(1);
+                                this.m_current_token.last_attribute().name_end_position = this.nth_last_position(1);
                                 SWITCH_TO(BeforeAttributeValue);
                             }
                             ON('>'.charCodeAt(0))
@@ -1236,8 +1236,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ANYTHING_ELSE
                             {
                                 this.m_current_token.add_attribute({});
-                                if (!m_source_positions.is_empty())
-                                    this.m_current_token.last_attribute().name_start_position = m_source_positions.last();
+                                if (!this.m_source_positions.is_empty())
+                                    this.m_current_token.last_attribute().name_start_position = this.m_source_positions.last();
                                 RECONSUME_IN(AttributeName);
                             }
                         }
@@ -1246,7 +1246,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         // 13.2.5.35 Before attribute value state, https://html.spec.whatwg.org/multipage/parsing.html#before-attribute-value-state
                         BEGIN_STATE(BeforeAttributeValue)
                         {
-                            this.m_current_token.last_attribute().value_start_position = nth_last_position(1);
+                            this.m_current_token.last_attribute().value_start_position = this.nth_last_position(1);
                             ON_WHITESPACE
                             {
                                 continue;
@@ -1341,7 +1341,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON_WHITESPACE
                             {
                                 this.m_current_token.last_attribute().value = this.consume_current_builder();
-                                this.m_current_token.last_attribute().value_end_position = nth_last_position(1);
+                                this.m_current_token.last_attribute().value_end_position = this.nth_last_position(1);
                                 SWITCH_TO(BeforeAttributeName);
                             }
                             ON('&'.charCodeAt(0))
@@ -1352,7 +1352,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON('>'.charCodeAt(0))
                             {
                                 this.m_current_token.last_attribute().value = this.consume_current_builder();
-                                this.m_current_token.last_attribute().value_end_position = nth_last_position(1);
+                                this.m_current_token.last_attribute().value_end_position = this.nth_last_position(1);
                                 SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
                             }
                             ON(0)
@@ -1407,7 +1407,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         // 13.2.5.39 After attribute value (quoted) state, https://html.spec.whatwg.org/multipage/parsing.html#after-attribute-value-(quoted)-state
                         BEGIN_STATE(AfterAttributeValueQuoted)
                         {
-                            this.m_current_token.last_attribute().value_end_position = nth_last_position(1);
+                            this.m_current_token.last_attribute().value_end_position = this.nth_last_position(1);
                             ON_WHITESPACE
                             {
                                 SWITCH_TO(BeforeAttributeName);
