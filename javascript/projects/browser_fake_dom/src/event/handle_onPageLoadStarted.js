@@ -24,12 +24,15 @@ export function handle_onPageLoadStarted(window,base_state) {
 	var new_loc=new FakeLocation();
 	if(!new_loc.location_setup) throw new Error("New location expected to have location_setup");
 	if(!state.href) {
-		if(state.url===void 0) {
-			throw new Error("state.url was undefined");
+		if(base_state.url===void 0) {
+			throw new Error("base_state.url was undefined");
+		}
+		if(base_state.url===null) {
+			throw new Error("base_state.url was null");
 		}
 		try {
-			new URL(state.url);
-			state.href=state.url;
+			new URL(base_state.url);
+			state.href=base_state.url;
 		} catch {
 			try {
 				new URL("http://"+state.url);

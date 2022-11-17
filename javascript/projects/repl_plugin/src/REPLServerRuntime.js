@@ -112,6 +112,7 @@ class RLInterface extends NodeEventEmitter {
 	}
 	/** @param {string} value */
 	setPrompt(value) {
+		if(!this.X) throw new Error("No internal X");
 		return this.X.setPrompt(value);
 	}
 	/**
@@ -144,6 +145,7 @@ export class REPLServerRuntime extends RLInterface {
 	/**@arg {string | repl.ReplOptions} [options] @returns {REPLServerRuntime} */
 	static start_repl(options) {
 		console.log("start repl");
+		debugger;
 		return new REPLServerRuntime(repl.start(options));
 	}
 	/**@type {REPLServer} */
