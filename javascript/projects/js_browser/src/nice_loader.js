@@ -171,7 +171,7 @@ let ipc_load_data=new IpcLoader;
 export async function resolve(specifier,context,defaultResolve) {
 	let errors=[];
 	if(loader_debug) console.log('spec',specifier);
-	if(loader_debug) console.log('ctx',context.parentURL);
+	if(loader_debug) console.log('parent module',context.parentURL);
 	if(specifier.endsWith(".js")) {
 		try {
 			let res=await import_ipc_plugin(ipc_load_data,specifier,context, defaultResolve);
