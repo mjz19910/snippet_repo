@@ -1,4 +1,4 @@
-import {GlobalApiObject} from "./GlobalApiObject";
+import {GlobalApiObject} from "./global_api/GlobalApiObject";
 import {IDValueData} from "./IDValueData";
 
 export {};

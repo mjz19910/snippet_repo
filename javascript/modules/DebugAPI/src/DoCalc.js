@@ -53,7 +53,7 @@ export class DoCalc {
 		}
 	}
 	/**
-	 * @param {import("./CompressionStatsCalculator").CompressionStatsCalculator} stats
+	 * @param {import("./compress/CompressionStatsCalculator").CompressionStatsCalculator} stats
 	 * @param {IDValueData} obj
 	 */
 	constructor(stats,obj) {

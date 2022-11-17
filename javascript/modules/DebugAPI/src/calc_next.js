@@ -1,4 +1,4 @@
-import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
+import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator.js/index.js";
 
 /**
  * @param {CompressionStatsCalculator} stats

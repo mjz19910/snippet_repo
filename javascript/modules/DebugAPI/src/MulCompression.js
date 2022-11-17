@@ -1,5 +1,5 @@
 import {BaseCompression} from "./BaseCompression";
-import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
+import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator.js/index.js";
 import {CompressState} from "./CompressState";
 import {Repeat} from "./Repeat";
 

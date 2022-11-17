@@ -3,7 +3,7 @@ import {sorted_comp_stats} from "../src/sorted_comp_stats";
 /**
  * @param {any[]} arr
  * @param {number} start
- * @param {import("../src/CompressionStatsCalculator").CompressionStatsCalculator} calc_stats
+ * @param {import("../src/compress/CompressionStatsCalculator").CompressionStatsCalculator} calc_stats
  */
 export function next_chunk(calc_stats,arr,start) {
 	let s_arr;

@@ -1,0 +1,57 @@
+import {getPlaybackRateMap} from "../getPlaybackRateMap";
+import {CreateObjURLCache} from "../CreateObjURLCache";
+import {IterExtensions} from "../IterExtensions";
+import {to_tuple_arr} from "../to_tuple_arr";
+import {CompressRepeated} from "../CompressRepeated";
+import {Repeat} from "../Repeat.js";
+import {range_matches} from "../range_matches.js";
+import {CompressionStatsCalculator} from "../compress/CompressionStatsCalculator.js/index.js";
+import {HexRandomDataGenerator} from "../HexRandomDataGenerator.js";
+import {EventListenerValue} from "../EventListenerValue.js";
+import {GenericDataEvent} from "../GenericDataEvent.js";
+import {Dumper} from "../Dumper.js";
+import {RustSimpleTokenizer} from "../debug_api/RustSimpleTokenizer.js";
+import {RustTokenTreeParser} from "../debug_api/RustTokenTreeParser.js";
+import {WeakValueRef} from "../WeakValueRef.js";
+import {CSSCascade} from "../CSSCascade.js";
+import {OriginState} from "../OriginState.js";
+import {RemoteOriginConnection} from "../debug_api/RemoteOriginConnection.js";
+import {APIProxyManager} from "../debug_api/APIProxyManager.js";
+import {LoggingEventTarget} from "../debug_api/LoggingEventTarget.js";
+import {DebugAPI} from "../debug_api/DebugAPI.js";
+import {GenericEventTarget} from "../GenericEventTarget.js";
+import {GenericEvent} from "../GenericEvent.js";
+import {VoidCallbackWith} from "../VoidCallbackWith.js";
+
+// DebugAPI
+export interface GlobalApiObject {
+	any_api_logger: APIProxyManager;
+	parse_html_to_binary_arr: (html: string) => unknown[];
+	run_modules_plugin: VoidCallbackWith<()=>void>;
+	run_wasm_plugin: VoidCallbackWith<()=>void>;
+	compress_main: VoidCallbackWith<(stats: CompressionStatsCalculator)=>void>;
+	IterExtensions: typeof IterExtensions;
+	getPlaybackRateMap: typeof getPlaybackRateMap;
+	CreateObjURLCache: typeof CreateObjURLCache;
+	Repeat: typeof Repeat;
+	CompressRepeated: typeof CompressRepeated;
+	to_tuple_arr: typeof to_tuple_arr;
+	range_matches: typeof range_matches;
+	function_as_string_vec: string[];
+	CompressionStatsCalculator: typeof CompressionStatsCalculator;
+	HexRandomDataGenerator: typeof HexRandomDataGenerator;
+	EventListenerValue: typeof EventListenerValue;
+	GenericEvent: typeof GenericEvent;
+	GenericDataEvent: typeof GenericDataEvent;
+	GenericEventTarget: typeof GenericEventTarget;
+	Dumper: typeof Dumper;
+	RustSimpleTokenizer: typeof RustSimpleTokenizer;
+	RustSimpleParser: typeof RustTokenTreeParser;
+	WeakValueRef: typeof WeakValueRef;
+	CSSCascade: typeof CSSCascade;
+	OriginState: typeof OriginState;
+	ConnectToRemoteOrigin: typeof RemoteOriginConnection;
+	APIProxyManager: typeof APIProxyManager;
+	LoggingEventTarget: typeof LoggingEventTarget;
+	DebugAPI: typeof DebugAPI;
+}
