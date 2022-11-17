@@ -18,7 +18,8 @@ export async function fetch_url(state,silent=false) {
 	fix_fetch_url(state);
 	let p_url=new URL(state.url);
 	if(!silent) {
-		if(repl&&!state.no_repl) {
+		if(!state.no_repl) {
+			debugger;
 			repl.pause();
 			repl.setPrompt("");
 		}
