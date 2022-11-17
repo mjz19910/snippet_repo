@@ -217,7 +217,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             this.restore_to(this.m_prev_utf8_iterator);;
                             if (this.consume_next_if_match("--")) {
                                 this.create_new_token(HTMLToken.Type.Comment);
-                                this.m_current_token.set_start_position({}, this.nth_last_position(3));
+                                this.m_current_token.set_start_position("Badge_HTMLTokenizer", this.nth_last_position(3));
                                 do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","458"].join("")) : void 0); do { this.will_switch_to(State.CommentStart); this.m_state = State.CommentStart; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (this.consume_next_if_match("DOCTYPE", CaseSensitivity.CaseInsensitive)) {

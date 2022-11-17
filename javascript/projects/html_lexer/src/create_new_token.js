@@ -1,11 +1,11 @@
 import {HTMLToken} from "./HTMLToken.1";
 
 /**
- * @param {import("./HTMLTokenizer.jstxt").HTMLTokenizer} state
+ * @param {import("./HTMLTokenizer.js").HTMLTokenizer} state
  * @arg {Extract<typeof HTMLToken['Type'][keyof typeof HTMLToken['Type']], number>} type
  */
 export function create_new_token(state,type) {
-	state.m_current_token=new HTMLToken(type,0);
+	state.m_current_token=new HTMLToken();
 	let offset=0;
 	switch(type) {
 		case HTMLToken.Type.StartTag:
