@@ -1,18 +1,14 @@
-import {HTMLToken} from "./HTMLToken.js";
-import {log_parse_error} from "./log_parse_error.js";
+import {get_html_lex_box} from "../../box_plugin/index.js";
+import {NodeInternalData,PageLoaderState} from "../../page_loader/index.js";
 import {get_char_type} from "./get_char_type.js";
-import {NodeInternalData} from "../../page_loader/index.js";
-import {PageLoaderState} from "../../page_loader/index.js";
-import {HTMLDataLex} from "../../box_plugin/HTMLDataLexBox.js";
-import {HTMLEntityLex} from "../../box_plugin/HTMLEntityLexBox.js";
-import {HTMLSpecialLex} from "../../box_plugin/HTMLSpecialLexBox.js";
-import {HTMLTagLex} from "../../box_plugin/HTMLTagLex.js";
 import {HTMLLexerResult} from "./HTMLLexerResult";
+import {HTMLToken} from "./HTMLToken.js";
 import {HTMLTokenizer} from "./HTMLTokenizer.js";
 import {js_type_html_lex_arr} from "./js_type_html_lex_arr.js";
+import {lex_data} from "./lex_data.js";
+import {log_parse_error} from "./log_parse_error.js";
 import {State} from "./State.js";
 import {state_to_string} from "./state_to_string";
-import {lex_data} from "./lex_data.js";
 
 export const abc_chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -99,7 +95,7 @@ export function lex_html(state,html) {
 		console.log(lexer.i,lexer.cur_char);
 	}
 	// stage 2, collect into tags marked if they open or close
-	/**@type {(HTMLSpecialLex|HTMLDataLex|HTMLEntityLex|HTMLTagLex)[]} */
+	/**@type {(HTMLDataLex|HTMLEntityLex|HTMLSpecialLex|HTMLTagLex)[]} */
 	let elements=[];
 	for(let i=0;i<lexer.lex_arr.length;i++) {
 		let item=lexer.lex_arr[i];

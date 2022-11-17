@@ -1,10 +1,10 @@
-import {HTMLDataLex} from "./HTMLDataLexBox.js"
+import {HTMLDataLexBox} from "./HTMLDataLexBox.js"
 export class HTMLTagLex {
 	/**@readonly */
 	type="tag"
 	m_start_tag
 	/**
-	 * @arg {HTMLDataLex} value
+	 * @arg {HTMLDataLexBox} value
 	 * @param {string} start_value
 	 * @param {string} end_value
 	 */
