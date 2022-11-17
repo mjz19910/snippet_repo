@@ -2,7 +2,6 @@ import {PageLoaderState} from "../../../page_loader/index.js";
 import {FakeLocation} from "../FakeLocation.js";
 import {FakeWindow} from "../FakeWindow.js";
 import {DomBadge} from "../implementation/DomBadge.js";
-import {PageLoadStateType} from "../types/PageLoadStateType.js";
 import {handle_addEventListener} from "./handle_addEventListener.js";
 import {handle_dispatchEvent} from "./handle_dispatchEvent.js";
 import {handle_removeEventListener} from "./handle_removeEventListener.js";
