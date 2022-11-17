@@ -7,8 +7,7 @@ import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
 import {NullOptional,Optional} from "./Optional.js";
 import {Utf8View} from "./Utf8View.js";
 import {state_name} from "./state_name.js";
-
-const TOKENIZER_TRACE_DEBUG=false;
+import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 
 export class HTMLTokenizer extends HTMLTokenizerH {
     m_utf8_view=new Utf8View;
