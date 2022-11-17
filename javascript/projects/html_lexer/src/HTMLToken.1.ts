@@ -12,6 +12,12 @@ import {cpp__stringify} from "./__stringify";
 
 
 export class HTMLToken extends HTMLTokenBase {
+    set_end_position(arg0: {},arg1: SourcePosition) {
+        throw new Error("Method not implemented.");
+    }
+    set_tag_name(arg0: void) {
+        throw new Error("Method not implemented.");
+    }
     ensure_doctype_data() {
         throw new Error("Method not implemented.");
     }

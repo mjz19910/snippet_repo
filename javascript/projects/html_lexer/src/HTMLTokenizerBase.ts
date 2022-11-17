@@ -11,6 +11,9 @@ import {CppPtr} from "./CppPtr";
 import {InsertionPoint} from "./InsertionPoint";
 import {SourcePosition} from "./SourcePosition.js";
 import {TextCodec} from "./TextCodec";
+import {HTMLToken_Type} from "./HTMLToken_Type.js";
+
+type GoToTargets="TagName"|"BogusComment"|"Data"|""|""|""|""|""|"None";
 
 
 export class HTMLTokenizerBase extends HTMLTokenizerImpl {
@@ -35,6 +38,7 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_aborted=false;
     m_source_positions: CppVector<InstanceType<typeof HTMLToken['Position']>>=new CppVector;
     m_skip_to_start_of_func=false;
+    m_goto_target:GoToTargets="None";
     /**for HTMLTokenizer() */
     construct_1() {
         this.m_decoded_input="";
@@ -56,16 +60,17 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
         this.m_source_positions.empend(SourcePosition.from(0,0));
     }
     consume_next_if_match() {throw new Error("TODO");}
-    create_new_token() {throw new Error("TODO");}
+    create_new_token(_x: HTMLToken_Type) {throw new Error("TODO");}
     insert_input_at_insertion_point() {throw new Error("TODO");}
     insert_eof() {throw new Error("TODO");}
     is_eof_inserted() {throw new Error("TODO");}
-    will_switch_to() {throw new Error("TODO");}
-    will_reconsume_in() {throw new Error("TODO");}
-    switch_to() {throw new Error("TODO");}
-    will_emit() {throw new Error("TODO");}
+    will_switch_to(_x: State) {console.log("todo log");}
+    will_reconsume_in(_x: State) {throw new Error("TODO");}
+    switch_to(_x: State) {throw new Error("TODO");}
+    will_emit(_x: State) {throw new Error("TODO");}
     current_end_tag_token_is_appropriate() {throw new Error("TODO");}
     consumed_as_part_of_an_attribute() {throw new Error("TODO");}
     restore_to() {throw new Error("TODO");}
     consume_current_builder() {throw new Error("TODO");}
+    log_parse_error() {throw new Error("");}
 }

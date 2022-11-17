@@ -2,7 +2,7 @@
 export class Optional {
     value() {
         if(this.m_has_value) {
-            return this.m_value;
+            if(this.m_value !== null) return this.m_value;
         }
         throw new Error("Empty optional");
     }
