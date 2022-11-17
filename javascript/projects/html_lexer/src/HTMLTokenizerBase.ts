@@ -35,8 +35,6 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_aborted=false;
     m_source_positions: CppVector<InstanceType<typeof HTMLToken['Position']>>=new CppVector;
     m_skip_to_start_of_func=false;
-    consume_next_if_match() {throw new Error("TODO");}
-    create_new_token() {throw new Error("TODO");}
     /**for HTMLTokenizer() */
     construct_1() {
         this.m_decoded_input="";
@@ -57,6 +55,8 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
         this.m_prev_utf8_iterator=this.m_utf8_view.begin();
         this.m_source_positions.empend(SourcePosition.from(0,0));
     }
+    consume_next_if_match() {throw new Error("TODO");}
+    create_new_token() {throw new Error("TODO");}
     insert_input_at_insertion_point() {throw new Error("TODO");}
     insert_eof() {throw new Error("TODO");}
     is_eof_inserted() {throw new Error("TODO");}
