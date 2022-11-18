@@ -1,9 +1,5 @@
-import {CppPtr} from "./CppPtr.js";
-
-class CppChar {}
-
 export class StringView {
-	static from_sub_view(string: string) {
+	static from(string: string) {
 		let sv=new StringView;
 		sv.m_characters=string;
 		sv.m_length=string.length;
@@ -17,7 +13,7 @@ export class StringView {
     }
     substring_view(byte_offset: number,arg1: number) {
 		let res=this.m_characters.slice(byte_offset,arg1);
-		return StringView.from_sub_view(res);
+		return StringView.from(res);
     }
 	length() {
 		return this.m_length;

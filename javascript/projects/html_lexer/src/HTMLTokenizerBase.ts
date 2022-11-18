@@ -21,7 +21,7 @@ import {SourceLocation} from "./SourceLocation.js";
 export class HTMLTokenizerBase {
     /**for HTMLTokenizer() */
     constructor() {
-        this.m_decoded_input=new StringView("");
+        this.m_decoded_input=new StringView;
         this.m_utf8_view=new Utf8View;
         this.m_utf8_view.m_value;
         this.m_utf8_iterator=this.m_utf8_view.begin();
@@ -95,22 +95,25 @@ export class HTMLTokenizerBase {
         return this.m_source_positions.at(this.m_source_positions.size()-1-n);
     }
     // ----------- TODO -----------
-    consume_next_if_match(string: StringView,case_sensitivity: CaseSensitivity): boolean {
-        for(let i=0;i<string.length();++i) {
+    consume_next_if_match(string: string,case_sensitivity?: CaseSensitivity): boolean {
+        if(!case_sensitivity){
+            case_sensitivity=CaseSensitivity.CaseInsensitive;
+        }
+        for(let i=0;i<string.length;++i) {
             let code_point=this.peek_code_point(i);
             if(!code_point.has_value()) return false;
             // FIXME: This should be more Unicode-aware.
             if(case_sensitivity==CaseSensitivity.CaseInsensitive) {
                 if(code_point.value()<0x80) {
-                    if(this.to_ascii_lowercase(code_point.value())!=this.to_ascii_lowercase(string.at_u32(i)))
+                    if(this.to_ascii_lowercase(code_point.value())!=this.to_ascii_lowercase(string.charCodeAt(i)))
                         return false;
                     continue;
                 }
             }
-            if(code_point.value()!=string.at_u32(i))
+            if(code_point.value()!=string.charCodeAt(i))
                 return false;
         }
-        this.skip(string.length());
+        this.skip(string.length);
         return true;
     }
     create_new_token(type: HTMLToken.Type) {
