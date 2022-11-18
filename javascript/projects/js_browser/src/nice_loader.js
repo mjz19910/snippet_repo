@@ -30,6 +30,7 @@ export class IpcLoader {
 
 import * as path from "path";
 import {spawn as child_process_spawn} from "child_process";
+import {ReplPluginManager} from "../../repl_plugin/index.js";
 
 export class ReplPluginManagerModule {
 	/**
@@ -131,14 +132,15 @@ function dir_func_3(b) {
 /** @param {A} b */
 function dir_func_4(b) {
 	if(!b.error_line) throw new Error();
-	b.imported_from=b.arr.slice(6)[0];
+	b.imported_from=b.arr.slice(b.arr.indexOf("from")+1).join(" ");
 	console.log("imported from",a.imported_from);
 }
 
 /** @param {A} b */
 function dir_func_5(b) {
 	if(!b.error_line) throw new Error();
-	b.import_target=b.arr.slice(3)[0];
+	let idx_start=b.arr.indexOf("find")+2;
+	b.import_target=b.arr.slice(idx_start,b.arr.indexOf("imported")).join(" ").slice(1,-1);
 	console.log("import_target",b.import_target);
 }
 
@@ -252,8 +254,8 @@ let ipc_load_data=new IpcLoader;
  * @param {import("./nice_loader_types.js").ResolveFn} defaultResolve
  */
 export async function resolve(specifier,context,defaultResolve) {
-	let errors=[];
-	if(loader_debug) console.log('spec',specifier);
+	let errors=[];ReplPluginManager
+	if(loader_debug) console.log('spec: '+specifier+" -> "+path.resolve(path.dirname(context.parentURL),specifier));
 	if(loader_debug) console.log('parent module',context.parentURL);
 	if(specifier.endsWith(".js")) {
 		try {
