@@ -153,11 +153,9 @@ export class REPLServerRuntime extends RLInterface {
 		console.log("start repl");
 		let repl_value=repl.start(options);
 		console.log("repl_value");
-		console.log(repl_value);
-		let res=new REPLServerRuntime(repl_value);
+		let repl_value_wrapped=new REPLServerRuntime(repl_value);
 		console.log("res");
-		console.log(res);
-		return res;
+		return repl_value_wrapped;
 	}
 	/**@type {REPLServer} */
 	X;
