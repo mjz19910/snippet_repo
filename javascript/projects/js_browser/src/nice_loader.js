@@ -12,6 +12,7 @@ const system_modules=[
 	'vm',
 ];
 
+/** @template T */
 class ContextType {
 	/**@type {string[]}*/
 	conditions=[];
@@ -28,74 +29,79 @@ export class IpcLoader {
 	depth=0;
 	/**@type {(()=>void)[]} */
 	exports=[];
+	/**@type {([true,Error]|[false,unknown])[]} */
+	errors=[];
+	/**@type {null|[path:string,context:ContextType<any>,nextResolve:import("./nice_loader_types.js").ResolveFn]} */
+	args=null;
+	/**@type {string|null} */
+	plugin_key=null;
 }
 
 
 export class ReplPluginManagerModule {
-	/**
+
+}
+/**
 	 * @arg {IpcLoader} state
-	 * @arg {"repl_plugin_manager/mod.js"} load_key
-	 * @arg {"../../repl_plugin_manager/mod.js"} path
-	 * @param {{ conditions: string[]; importAssertions: {}; parentURL: string; }} context
-	 * @param {import("./nice_loader_types.js").ResolveFn} defaultResolve
 	 */
-	static async import_ipc_plugin(state,load_key,path,context,defaultResolve) {
-		state.depth++;
-		let mod=null;
-		try {
-			mod=await try_import_module(load_key,path,context,defaultResolve);
-		} catch(err) {
-			await handle_failed_import(state,err,load_key,context,defaultResolve);
-			if(module_map.has(load_key)) {
-				return module_map.get(load_key);
-			} else {
-				throw new Error("Handling error did not load plugin");
-			}
-		} finally {
-			state.depth--;
+async function import_ipc_plugin(state) {
+	state.depth++;
+	let mod=null;
+	try {
+		mod=await try_import_module(state);
+	} catch(err) {
+		state.errors.push(err);
+		await handle_failed_import(state,load_key,context,defaultResolve);
+		if(module_map.has(load_key)) {
+			return module_map.get(load_key);
+		} else {
+			throw new Error("Handling error did not load plugin");
 		}
-		return mod;
+	} finally {
+		state.depth--;
 	}
+	return mod;
 }
 
 export class HtmlLexerManagerModule {
 	/**
 	* @arg {IpcLoader} state
-	* @arg {"html_lexer"} load_key
-	* @arg {"../../html_lexer"} path
-	* @param {{ conditions: string[]; importAssertions: {}; parentURL: string; }} context
-	* @param {import("./nice_loader_types.js").ResolveFn} defaultResolve
 	*/
-	static async import_ipc_plugin(state,load_key,path,context,defaultResolve) {
+	static async import_ipc_plugin(state) {
 		state.depth++;
 		let mod=null;
 		try {
-			mod=await try_import_module(load_key,path,context,defaultResolve);
+			mod=await try_import_module(state);
 		} catch(e) {
-			await handle_failed_import(state,e,load_key,context,defaultResolve);
+			if(e instanceof Error) {
+				state.errors.push(e);
+			} else {
+				console.log("got non error");
+				console.log(e);
+				console.error("HERE");
+			}
+			await handle_failed_import(state);
 			if(module_map.has(load_key)) {
 				return module_map.get(load_key);
 			} else {
 				throw new Error("Handling error did not load plugin");
 			}
-		} finally {
-			state.depth--;
 		}
 		return mod;
 	}
 }
 
 /**
- * @param {string} plugin_key
- * @param {string} module_path
- * @arg {import("./nice_loader_types.js").ResolveFn} arg2
- * @param {{ conditions: string[]; importAssertions: {}; parentURL: string; }} arg1
+ * @param {IpcLoader} state
  */
-export async function try_import_module(plugin_key,module_path,arg1,arg2) {
+export async function try_import_module(state) {
 	if(base_import.value===null) return null;
+	if(state.args===null) return null;
+	if(state.plugin_key===null) return null;
+	let x=state.args;
 	/** @type {{}} */
-	let mod=await base_import.value(module_path,arg1,arg2);
-	module_map.set(plugin_key,mod);
+	let mod=await base_import.value(x[0],x[1],x[2]);
+	module_map.set(state.plugin_key,mod);
 	return mod;
 }
 
@@ -149,93 +155,51 @@ function dir_func_6(b) {
 	b.import_target_ts=b.import_target.replace(/(?<=.+)\.js/g,".ts");
 }
 
-/**
- * @param {unknown} error
- * @param {string} import_string
- * @arg {IpcLoader} state
- * @param {{ conditions: string[]; importAssertions: {}; parentURL: string; }} context
- * @param {import("./nice_loader_types.js").ResolveFn} defaultResolve
- */
-export async function handle_failed_import(state,error,import_string,context,defaultResolve) {
-	let mod=null;
+/** @arg {IpcLoader} state */
+export async function handle_failed_import(state) {
 	let errors=[];
-	while(mod===null) {
-		if(state.depth>1) {
-			throw new Error("Import depth too high");
-		}
-		if(!(error instanceof Error)) throw new Error("Bad error");
-		if(!error.stack) throw new Error("No Error stack");
-		a.stack=error.stack;
-		dir_func_2(a);
-		if(!a.error_line) throw new Error("no imp_mod");
-		dir_func_3(a);
-		dir_func_4(a);
-		dir_func_5(a);
-		dir_func_6(a);
-		if(!a.import_target_ts) throw new Error();
-		debugger;
-		let target_re_compile=a.import_target_ts.replace("file:","");
-		let result=await new Promise(function(resolve,reject) {
-			let cp=child_process_spawn("tsc",['-t','ESNext',"--outDir","./build/",target_re_compile],{});
-			cp.stdout.on("data",e => {
-				process.stdout.write(e);
-			});
-			cp.stderr.on("data",e => {
-				process.stderr.write(e);
-			});
-			cp.on("error",err => {
-				reject(err);
-			});
-			cp.on("exit",(code) => {
-				console.log('tsc exit',code);
-				resolve(code);
-			});
+	let last_error=state.errors.at(-1);
+	if(!(last_error instanceof Error)) throw new Error("Bad error");
+	if(!last_error.stack) throw new Error("No Error stack");
+	a.stack=last_error.stack;
+	dir_func_2(a);
+	if(!a.error_line) throw new Error("no imp_mod");
+	dir_func_3(a);
+	dir_func_4(a);
+	dir_func_5(a);
+	dir_func_6(a);
+	if(!a.import_target_ts) throw new Error();
+	debugger;
+	let target_re_compile=a.import_target_ts.replace("file:","");
+	let result=await new Promise(function(resolve,reject) {
+		let cp=child_process_spawn("tsc",['-t','ESNext',"--outDir","./build/",target_re_compile],{});
+		cp.stdout.on("data",e => {
+			process.stdout.write(e);
 		});
-		if(result!==0) new Error("Failed to recompile");
-		try {
-			return await defaultResolve(import_string, context, defaultResolve);
-			switch(import_string[0]) {
-				case 'repl_plugin_manager/mod.js': return import_ipc_plugin(state,import_string,context,defaultResolve);
-				case 'html_lexer': return import_ipc_plugin(state,import_string,context,defaultResolve);
-				default: throw new Error("Unable to load "+import_string[0]);
-			}
-		} catch(err) {
-			errors.push(err);
-		}
-		throw new AggregateError([error,...errors]);
-	}
+		cp.stderr.on("data",e => {
+			process.stderr.write(e);
+		});
+		cp.on("error",err => {
+			reject(err);
+		});
+		cp.on("exit",(code) => {
+			console.log('tsc exit',code);
+			resolve(code);
+		});
+	});
+	if(result!==0) new Error("Failed to recompile");
 }
 
-/** @arg {IpcLoader} state @arg {string} plugin_key @arg {any} context @arg {import("./nice_loader_types.js").ResolveFn} defaultResolve */
-export async function import_ipc_plugin(state,plugin_key,context,defaultResolve) {
-	base_import.value=defaultResolve;
-	switch(plugin_key) {
-		case 'repl_plugin_manager/mod.js': {
-			/**@type {`../../${typeof plugin_key}`}*/
-			const module_page_loader_str=`../../${plugin_key}`;
-			return ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str,context,defaultResolve);
-		}
-		case 'html_lexer': {
-			/**@type {`../../${typeof plugin_key}`}*/
-			const module_page_loader_str=`../../${plugin_key}`;
-			return HtmlLexerManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str,context,defaultResolve);
-		}
-		case './src/HTMLTokenizer.js': break;
-		default: return null;
-	}
-	if(module_map.has(plugin_key)) {
-		return module_map.get(plugin_key);
-	}
+/** @arg {IpcLoader} state */
+export async function import_ipc_plugin(state) {
 	if(loader_debug) console.log('imp depth',state.depth);
-	if(state.depth>1) {
-		throw new Error("Too deep");
-	}
 	state.depth++;
 	try {
-		let mod=await try_import_module(plugin_key,`${plugin_key}`,context,defaultResolve);
+		let mod=await try_import_module(state);
 		return mod;
-	} catch(error) {
-		await handle_failed_import(state,error,plugin_key,context,defaultResolve);
+	} catch(err) {
+		state.errors.push([false,err]);
+		await handle_failed_import(state);
 		if(module_map.has(plugin_key)) {
 			return module_map.get(plugin_key);
 		} else {
@@ -255,14 +219,24 @@ let ipc_load_data=new IpcLoader;
  */
 export async function resolve(specifier,context,defaultResolve) {
 	let errors=[];
-	if(loader_debug) {
-		if(context.parentURL) {
+	let plugin_key;
+	debugger;
+	if(context.parentURL) {
+		if(loader_debug) {
 			console.log('spec: '+specifier+" -> "+path.resolve(specifier));
-		} else {
-			console.log('spec: '+specifier);
+			console.log('parent module',context.parentURL);
 		}
+		plugin_key=`${context.parentURL}:${specifier}`;
+	} else {
+		plugin_key=specifier;
 	}
-	if(loader_debug) console.log('parent module',context.parentURL);
+	if(loader_debug) {
+		console.log("resolve plugin_key");
+		console.log(plugin_key);
+	}
+	if(module_map.has(plugin_key)) {
+		return module_map.get(plugin_key);
+	}
 	if(specifier.endsWith(".js")) {
 		try {
 			let res=await import_ipc_plugin(ipc_load_data,specifier,context,defaultResolve);
@@ -270,17 +244,13 @@ export async function resolve(specifier,context,defaultResolve) {
 				return res;
 			}
 		} catch(err) {
-			console.log(err);
+			errors.push(err);
 		}
 		try {
 			return await defaultResolve(specifier,context,defaultResolve);
 		} catch(err) {
-			if(loader_debug) console.log('Failed to load import specifier:',specifier);
-			throw err;
+			errors.push(err);
 		}
-	}
-	if(system_modules.includes(specifier)) {
-		return defaultResolve(specifier,context,defaultResolve);
 	}
 	try {
 		return await defaultResolve(specifier+".js",context,defaultResolve);
@@ -294,5 +264,11 @@ export async function resolve(specifier,context,defaultResolve) {
 		if(loader_debug) console.log('Failed to load import specifier: "'+specifier+'"');
 		errors.push(err);
 	}
+	if(system_modules.includes(specifier)) {
+		return defaultResolve(specifier,context,defaultResolve);
+	}
+	console.log("tried all imports");
+	console.log(specifier);
+	console.log(context.parentURL);
 	throw new AggregateError(errors,"All import failures",{});
 }
