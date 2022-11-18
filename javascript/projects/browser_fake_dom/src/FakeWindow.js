@@ -5,10 +5,10 @@ import {FakeDocument} from "./FakeDocument.js";
 import {FakeExternal} from "./FakeExternal.js";
 import {FakeLocation} from "./FakeLocation.js";
 import {FakeStorage} from "./FakeStorage.js";
-import {DomBadge} from "./implementation/DomBadge.js";
+import {DomBadge} from "./DomBadge.js/index.js";
 import {no_impl} from "./no_impl.js";
 import {NullBadge} from "./NullBadge.js";
-import {Badge} from "./Badge.js/index.js";
+import {Badge} from "./Badge.js";
 import {FakeWindowType} from "./types/FakeWindowType.js";
 
 /**@implements {Window} */

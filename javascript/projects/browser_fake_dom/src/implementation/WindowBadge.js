@@ -1,6 +1,6 @@
 import {FakeWindow} from "../FakeWindow.js";
 import {Badge} from "../Badge.js/index.js"
-import {DomBadge} from "./DomBadge.js";
+import {DomBadge} from "../DomBadge.js/index.js";
 export class FakeWindowBadge extends Badge {
 	m_has_error=false
 	/**@type {Error|null} */

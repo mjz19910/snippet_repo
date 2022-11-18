@@ -2,7 +2,7 @@ import {fake} from "./browse/fake.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeDocumentType} from "./FakeDocumentType";
 import {get_FakeXMLDocument} from "./FakeXMLDocument";
-import {DomBadge} from "./implementation/DomBadge.js";
+import {DomBadge} from "./DomBadge.js/index.js";
 
 export function get_FakeDOMImplementation() {
     let FakeXMLDocument=get_FakeXMLDocument();

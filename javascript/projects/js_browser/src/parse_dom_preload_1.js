@@ -2,7 +2,7 @@ import process from "process";
 import {PageLoaderState} from "../../page_loader/index.js";
 import {fetch_url} from "../../page_loader/index.js";
 import {fake, FakeWindow, handle_onPageLoadStarted} from "../../browser_fake_dom/index.js";
-import {DomBadge} from "../../browser_fake_dom/src/implementation/DomBadge.js";
+import {DomBadge} from "../../browser_fake_dom/src/DomBadge.js/index.js";
 export function main() {
 	process.on('unhandledRejection',error => {
 		if(error instanceof Error) {

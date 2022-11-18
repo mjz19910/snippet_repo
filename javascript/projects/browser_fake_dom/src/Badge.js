@@ -1,25 +1,25 @@
 // base Badge, always invalid
 export class Badge {
 	/**
-	 * @param {Badge|undefined} badge
+	 * @param {Badge|{}|undefined} badge
 	 */
 	static verify(badge) {
-		if(!badge) throw Badge.create_missing_badge_err();
-		if(!badge.is_valid) throw badge.create_validation_err();
-		badge.invalidate();
+		if(!badge) throw create_missing_badge_err();
+		if(badge instanceof Badge) {
+			if(!badge.is_valid) throw create_validation_err();
+			if(!badge.is_valid()) throw create_validation_err();
+		}
+		throw create_wrong_prototype_err();
 	}
-	m_valid=false;
-	invalidate() {
-		this.m_valid=false;
-	}
-	is_valid() {
-		return this.m_valid;
-	}
-	is_null_badge=false;
-	create_validation_err() {
-		return new Error("Badge is invalid");
-	}
-	static create_missing_badge_err() {
-		return new Error("Badge is missing");
-	}
+	/**@type {undefined|(()=>true)} */
+	is_valid=() => true;
+}
+function create_validation_err() {
+	return new Error("Badge is invalid");
+}
+function create_missing_badge_err() {
+	return new Error("Badge is missing");
+}
+function create_wrong_prototype_err() {
+	return new Error("Badge prototype is invalid");
 }

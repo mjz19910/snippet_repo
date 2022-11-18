@@ -1,4 +1,5 @@
-import {Badge} from "../Badge.js/index.js";
+import {Badge} from "./Badge.js";
+
 export class DomBadge extends Badge {
 	m_validity=true;
 	is_null_badge=false;
