@@ -1,4 +1,3 @@
-import {Attribute} from "../Attribute.js";
 import * as super_ from "../HTMLToken.js";
 import {move} from "../move.js";
 import {Optional} from "../Optional.js";
@@ -15,7 +14,6 @@ export function use_types() {
         OwnPtr,
         move,
         Vector,
-        Attribute,
         ak_verification_failed,
     ] as const;
     return ex;

@@ -22,7 +22,7 @@ export class Utf8View {
     end() {
         let iter=new Utf8CodePointIterator;
         iter.target=this.m_value;
-        iter.pos=this.m_value.length;
+        iter.pos=this.m_value.length();
         return iter;
     }
 }

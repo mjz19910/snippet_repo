@@ -4,7 +4,6 @@
 // 1 "from_cpp/HTMLToken.cppts"
 import {HTMLTokenBase} from "../HTMLTokenBase.js";
 // 1 "from_cpp/HTMLToken.pre.ts" 1
-import {Attribute} from "../Attribute.js";
 import * as super_ from "../HTMLToken.js";
 import {move} from "../move.js";
 import {Optional} from "../Optional.js";
@@ -20,7 +19,6 @@ export function use_types() {
         OwnPtr,
         move,
         Vector,
-        Attribute,
     ] as const;
     return ex;
 }
@@ -37,12 +35,12 @@ export class HTMLToken extends HTMLTokenBase {
         (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","from_cpp/HTMLToken.cppts",":","10"].join("")) : void 0);
         this.ensure_tag_attributes().deref().append(move(attribute));
     }
-    ensure_tag_attributes(): Ref<Vector<Attribute>> {
+    ensure_tag_attributes(): Ref<Vector<HTMLTokenBase.Attribute>> {
         (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","from_cpp/HTMLToken.cppts",":","14"].join("")) : void 0);
         // 3 == OwnPtr<Vector<Attribute>>
-        let ptr: Ref<OwnPtr<Vector<Attribute>>> = Ref.wrap(this.m_data.get<3>().deref());
+        let ptr: Ref<OwnPtr<Vector<HTMLTokenBase.Attribute>>> = Ref.wrap(this.m_data.get<3>().deref());
         if (ptr.is_null())
-            ptr.assign(Ref.wrap(new Vector<Attribute>()));
+            ptr.assign(Ref.wrap(new Vector<HTMLTokenBase.Attribute>()));
         return Ref.wrap(ptr.deref().deref());
     }
 }

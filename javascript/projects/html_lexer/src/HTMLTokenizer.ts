@@ -41,7 +41,7 @@ export function use_imports() {
 }
 
 export namespace HTML {
-    class CodePointEntity {
+    export class CodePointEntity {
         entity: any;
         code_points!: Vector<number>;
         static from(v: StringView) {
@@ -1715,7 +1715,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 class X {
                                     number: number;
                                     code_point: number;
-                                    constructor(a,b) {
+                                    constructor(a: number,b: number) {
                                         this.number=a;
                                         this.code_point=b;
                                     }
@@ -2252,7 +2252,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                     return false;
 
                                 // FIXME: Is there a better way of doing this?
-                                return this.m_temporary_buffer[0] == 's' && this.m_temporary_buffer[1] == 'c' && this.m_temporary_buffer[2] == 'r' && this.m_temporary_buffer[3] == 'i' && this.m_temporary_buffer[4] == 'p' && this.m_temporary_buffer[5] == 't';
+                                return this.m_temporary_buffer[0] == 's'.charCodeAt(0) && this.m_temporary_buffer[1] == 'c'.charCodeAt(0) && this.m_temporary_buffer[2] == 'r'.charCodeAt(0) && this.m_temporary_buffer[3] == 'i'.charCodeAt(0) && this.m_temporary_buffer[4] == 'p'.charCodeAt(0) && this.m_temporary_buffer[5] == 't'.charCodeAt(0);
                             };
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {
