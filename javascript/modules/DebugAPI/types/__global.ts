@@ -1,4 +1,4 @@
-import {GlobalApiObject} from "./global_api/GlobalApiObject";
+import {GlobalApiObject} from "./GlobalApiObject";
 
 export {};
 

@@ -2,7 +2,7 @@ import {DoCalc} from "./DoCalc";
 
 /**
  * @param {IDValueData} obj
- * @param {import("./compress/CompressionStatsCalculator").CompressionStatsCalculator} stats
+ * @param {import("../types/CompressionStatsCalculator").CompressionStatsCalculator} stats
  */
 export function run_calc(stats,obj) {
 	let calc_value=new DoCalc(stats,obj);

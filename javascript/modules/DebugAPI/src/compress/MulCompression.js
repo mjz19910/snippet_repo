@@ -1,40 +1,35 @@
+import {Repeat} from "../../types/repeat/Repeat.js";
+import {stats_calculator_info} from "../../types/stats_calculator_info.js";
 import {BaseCompression} from "./BaseCompression";
 import {CompressState} from "./CompressState";
-import {Repeat} from "../repeat/Repeat";
-import {stats_calculator_info} from "./stats_calculator_info.js";
 
 export class MulCompression extends BaseCompression {
 	/**
-	 * @template {import("../repeat/ConstructorWithSymbolType.js").InstanceRecord} U
-	 * @template {InstanceType<U>} T
-	 * @arg {U} constructor_key
+	 * @template T
 	 * @arg {T[]} arr
-	 * @returns {[true, import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>[]]|[false,T[]]} */
-	try_compress_T(arr,constructor_key) {
-		/**@type {CompressState<T,import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>>} */
+	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	try_compress_T(arr) {
+		/**@type {CompressState<T,AnyOrRepeat<T>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
-			let use_item=this.compress_rle_T_X(state,item,constructor_key);
+			let use_item=this.compress_rle_T_X(state,item);
 			if(use_item) continue;
 			state.ret.push(item);
 		}
 		return MulCompression.compress_result_state(state);
 	}
 	/**
-	 * @template {import("../repeat/ConstructorWithSymbolType.js").InstanceRecord} U
+	 * @template {RecordKeyG<symbol>} U
 	 * @template {InstanceType<U>} T
-	 * @arg {CompressState<T, import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>>} state
+	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
 	 * @arg {T} item
-	 * @arg {U} constructor_key
 	 * */
-	compress_rle_T_X(state,item,constructor_key) {
+	compress_rle_T_X(state,item) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
 		if(off==1) return false;
-		let compression_map=Repeat.N.get_map_T(constructor_key,item);
-		Repeat.get_with(compression_map,item,off);
 		state.ret.push(new Repeat(item,off));
 		state.i+=off-1;
 		return true;
@@ -45,8 +40,8 @@ export class MulCompression extends BaseCompression {
 	 * @template {abstract new (...args: any) => any} U
 	 * @arg {U} _
 	 * @arg {T[]} arr
-	 * @arg {import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>[]} ret
-	 * @returns {[true, import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>[]]|[false,T[]]} */
+	 * @arg {AnyOrRepeat<T>[]} ret
+	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
 		if(MulCompression.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];

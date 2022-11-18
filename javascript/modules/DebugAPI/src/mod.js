@@ -15,7 +15,7 @@
 /* eslint-disable no-undef */
 
 import {APIProxyManager} from "./debug_api/APIProxyManager";
-import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator";
+import {CompressionStatsCalculator} from "../types/CompressionStatsCalculator";
 import {CompressRepeated} from "./CompressRepeated";
 import {compress_main} from "./compress_main";
 import {CreateObjURLCache} from "./CreateObjURLCache";
@@ -43,7 +43,7 @@ import {RustTokenTreeParser} from "./debug_api/RustTokenTreeParser";
 import {to_tuple_arr} from "./to_tuple_arr";
 import {VoidCallback} from "./VoidCallback";
 import {WeakValueRef} from "./WeakValueRef";
-import {AutoBuy} from "./AutoBuy";
+import {AutoBuy} from "../types/AutoBuy";
 
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};

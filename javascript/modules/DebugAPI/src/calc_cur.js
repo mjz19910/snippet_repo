@@ -1,9 +1,9 @@
-import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator.js";
-import {sorted_comp_stats} from "./sorted_comp_stats";
+import {CompressionStatsCalculator} from "../types/CompressionStatsCalculator.js";
+import {sorted_comp_stats} from "../types/sorted_comp_stats";
 
 /**
  * @arg {CompressionStatsCalculator} stats
- * @param {IDValue} obj
+ * @param {IDValueG} obj
  */
 export function calc_cur(stats,obj) {
 	if(!obj.stats_win||obj.arr_str===void 0)

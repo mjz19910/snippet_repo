@@ -9,7 +9,7 @@ export class DoCalc {
 		return this.m_return_value;
 	}
 	/**
-	 * @type {import("./DualR.js").DualR|null}
+	 * @type {import("../types/DualR.js").DualR|null}
 	 */
 	m_return_value=null;
 	run() {
@@ -53,7 +53,7 @@ export class DoCalc {
 		}
 	}
 	/**
-	 * @param {import("./compress/CompressionStatsCalculator").CompressionStatsCalculator} stats
+	 * @param {import("../types/CompressionStatsCalculator").CompressionStatsCalculator} stats
 	 * @param {IDValueData} obj
 	 */
 	constructor(stats,obj) {

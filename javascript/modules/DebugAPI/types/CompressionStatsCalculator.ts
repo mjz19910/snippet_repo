@@ -1,19 +1,22 @@
-import {MulCompression} from "./MulCompression";
-import {range_matches} from "../range_matches";
-import {to_tuple_arr} from "../to_tuple_arr";
-import {max_id} from "../mod";
+import {MulCompression} from "../src/compress/MulCompression";
+import {range_matches} from "../src/range_matches";
+import {to_tuple_arr} from "../src/to_tuple_arr";
+import {max_id} from "../src/mod";
 import {CompressTU} from "./CompressTU.js";
+import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB.js";
+import {DualR} from "./DualR.js";
 
 export class CompressionStatsCalculator {
 	/**
-        * @param {import("../repeat/TypeAOrTypeB.js").TypeAOrTypeB<string, number>[]} arr
-        * @returns {import("../DualR.js").DualR}
-        * @todo (MulCompression,try_compress_dual)
-        */
-       try_compress_dual(arr) {
-               let ex=new CompressTU(arr);
-               return ex.try_compress_dual();
-       }
+	 * (MulCompression,try_compress_dual)
+	 */
+	try_compress_dual(arr: TypeAOrTypeB<string,number>[]): DualR {
+		let ex=new CompressTU(arr);
+		return ex.try_compress_dual();
+	}
+	hit_counts:number[]=[];
+	cache:string[]=[];
+	compressor=new MulCompression;
 	constructor() {
 		/** @type {number[]} */
 		this.hit_counts=[];
@@ -23,18 +26,18 @@ export class CompressionStatsCalculator {
 		this.compressor=new MulCompression;
 	}
 	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
-	calc_for_stats_index(stats_arr,arr,index) {
+	calc_for_stats_index(stats_arr: [string,number][][],arr: string[],index: number) {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
 	/** @param {number} index */
-	add_hit(index) {
+	add_hit(index: number) {
 		if(!this.hit_counts[index]) {
 			this.hit_counts[index]=1;
 		} else
 			this.hit_counts[index]++;
 	}
 	/** @param {string} key */
-	add_item(key) {
+	add_item(key: string) {
 		let index=this.cache.indexOf(key);
 		if(index==-1) {
 			index=this.cache.push(key)-1;
@@ -51,8 +54,7 @@ export class CompressionStatsCalculator {
 	map_keys() {
 		return this.cache;
 	}
-	/** @param {string[]} arr @param {number} win_size */
-	calc_compression_stats(arr,win_size) {
+	calc_compression_stats(arr: string[],win_size: number) {
 		this.reset();
 		for(let i=0;i<arr.length;i++) {
 			if(i+win_size<arr.length) {
@@ -61,19 +63,11 @@ export class CompressionStatsCalculator {
 		}
 		let keys=this.map_keys();
 		let values=this.map_values();
-		return to_tuple_arr(keys,values);
+		return to_tuple_arr<string,number>(keys,values);
 	}
-	/**
-	 * @template T
-	 * @template U
-	 * @arg {T[]} arr
-	 * @arg {number} range
-	 * @arg {U} replacement
-	 * @returns {(["T", T]|["U", U])[]}
-	 * */
-	replace_range(arr,range,replacement) {
+	replace_range<T,U>(arr: T[],range: number,replacement: U): (["T",T]|["U",U])[] {
 		/**@type {(["T", T]|["U", U])[]} */
-		let ret=[];
+		let ret: (["T",T]|["U",U])[]=[];
 		for(let i=0;i<arr.length;i++) {
 			if(range_matches(arr,range,i)) {
 				i+=1;

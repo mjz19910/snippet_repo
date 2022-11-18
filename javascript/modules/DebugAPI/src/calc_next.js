@@ -1,4 +1,4 @@
-import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator.js";
+import {CompressionStatsCalculator} from "../types/CompressionStatsCalculator.js";
 
 /**
  * @param {CompressionStatsCalculator} stats
@@ -23,7 +23,7 @@ export function calc_next(stats,obj,max_id) {
 	next.arr_dual=stats.replace_range(obj.arr_str,rep_val,max_id);
 	if(next.arr_str)
 		return null;
-	/**@type {import("./DualR.js").DualR} */
+	/**@type {import("../types/DualR.js").DualR} */
 	let compress_result=stats.compressor.try_compress_dual(next.arr_dual);
 	if(!compress_result[0]) {
 		/**@type {import("./repeat/TypeAOrTypeB.js").TypeAOrTypeB<string, number>[]} */

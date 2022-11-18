@@ -1,3 +1,3 @@
 export class NumType {
-	static type=Symbol.for("number");
+	static key=Symbol.for("number");
 }

@@ -1,12 +1,12 @@
-import {Repeat} from "../repeat/Repeat";
-import {TypeAOrTypeB} from "../repeat/TypeAOrTypeB.js";
-import {AnyRepeat2} from "../repeat/AnyOrRepeat2.js";
-import {BaseCompression} from "./BaseCompression.js";
+import {BaseCompression} from "../src/compress/BaseCompression.js";
+import {AnyOrRepeat2} from "./repeat/AnyOrRepeat2.js";
+import {Repeat} from "./repeat/Repeat.js";
+import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB.js";
 
 export class CompressTU {
 	i: number;
 	arr: TypeAOrTypeB<string,number>[]=[];
-	ret: AnyRepeat2<string,number>[]=[];
+	ret: AnyOrRepeat2<string,number>[]=[];
 	try_compress_dual() {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
