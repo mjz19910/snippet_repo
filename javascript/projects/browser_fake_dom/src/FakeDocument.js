@@ -6,13 +6,12 @@
 import {PageLoaderState} from "../../page_loader/index.js";
 import {html_parser_callback} from "../../html_lexer/index.js";
 import {any} from "./any";
-import {document_element_factory} from "./api_const.js/index.js";
+import {document_element_factory} from "./api_const.js";
 import {get_FakeDOMImplementation} from "./FakeDOMImplementation.js";
 import {FakeElement} from "./FakeElement.js";
 import {init as html_element_init} from "./FakeHTMLElement.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {NoImplFakeDocument} from "./NoImplFakeDocument";
-import {Badge} from "./Badge.ts/index.js";
 
 /**@implements {Document} */
 export class FakeDocument extends NoImplFakeDocument {
@@ -455,7 +454,7 @@ export class FakeDocument extends NoImplFakeDocument {
 			this.#dom_script_element_added_callback(dom_script_element);
 	}
 	/**
-	 * @param {import("./types/TagName.js").TagName|string} a
+	 * @param {import("./TagName.js").TagName|string} a
 	 * @returns {FakeElement}
 	 */
 	construct_dom_node(a) {
@@ -475,8 +474,8 @@ export class FakeDocument extends NoImplFakeDocument {
 	 * @argument {Badge} window_badge
 	 */
 	constructor(window,window_badge) {
-		if(!window_badge.is_valid()) {
-			throw window_badge.create_validation_err();
+		if(window_badge.verify() !== 0) {
+			throw new Error("window_badge");
 		}
 		let x={};
 		super(x);

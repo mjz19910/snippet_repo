@@ -119,6 +119,7 @@ let ipc_load_data=new IpcLoader;
  * @param {import("./nice_loader_types.js").ResolveFn<any>} nextResolve
  */
 export async function resolve(specifier,context,nextResolve) {
+	console.log('main module load:'+JSON.stringify(specifier))
 	let state=ipc_load_data;
 	let errors=[];
 	if(context.parentURL) {
@@ -161,6 +162,6 @@ export async function resolve(specifier,context,nextResolve) {
 	console.log(specifier);
 	console.log(context.parentURL);
 	console.log("resolve plugin_key");
-	console.log(plugin_key.slice(plugin_key.indexOf("wsl2/workspace")+8));
+	console.log(state.plugin_key.slice(state.plugin_key.indexOf("wsl2/workspace")+8));
 	throw new AggregateError(errors,"All import failures",{});
 }
