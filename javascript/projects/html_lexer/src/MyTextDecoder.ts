@@ -2,10 +2,10 @@ import {StringView} from "./StringView.js";
 
 export class MyTextDecoder {
     to_utf8(input: BufferSource): StringView {
-        return new StringView(this.x.decode(input));
+        return new StringView(this.m_text_decoder.decode(input));
     }
-    x: TextDecoder;
-    constructor(x: TextDecoder) {
-        this.x=x;
+    m_text_decoder: TextDecoder;
+    constructor(text_decoder: TextDecoder) {
+        this.m_text_decoder=text_decoder;
     }
 }
