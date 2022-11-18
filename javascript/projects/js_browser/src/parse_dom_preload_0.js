@@ -1,8 +1,6 @@
 import * as fs from 'fs';
 import * as path from "path";
 import * as process from "process";
-import {fake,handle_onPageLoadStarted} from '../../browser_fake_dom/index.js';
-import {PageLoaderState} from '../../page_loader/index.js';
 import {wget_on_static_page_load} from "./mod.js";
 
 function main() {
@@ -12,9 +10,8 @@ function main() {
 	const req_file_path="./artifacts/google_mail_html.html";
 	const abs_file_path=path.resolve(req_file_path);
 	const req_url="file://"+abs_file_path;
-	const state=new PageLoaderState(req_url);
+	const state=new get_page_loader_dom_state(req_url);
 	state.url=req_url;
-	handle_onPageLoadStarted(fake.window,state);
 	fs.readFile(abs_file_path,(err,data) => {
 		if(err) {
 			console.log(err,data);

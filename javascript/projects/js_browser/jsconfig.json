@@ -7,7 +7,6 @@
 		],
 		"types": [
 			"node",
-			"treeverse",
 		],
 		"strict": true,
 		"declaration": true,
@@ -22,7 +21,6 @@
 		"typeRoots": [
 			"~/workspace/node_types/node_modules/@types"
 		],
-		"paths": {}
 	},
 	"include": [
 		"src/**/*",
