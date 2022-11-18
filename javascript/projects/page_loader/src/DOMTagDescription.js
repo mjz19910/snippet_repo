@@ -1,3 +1,1 @@
-export class DOMTagDescription {
-	tagName=null
-}
+export class DOMTagDescription {}

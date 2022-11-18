@@ -2,14 +2,6 @@
 export class FakeEventTarget {
 	/**@type {{[x:string]:{t: string | number;fn: any}[]}} */
 	#listeners={}
-	#private
-	/**
-	 * @param {any} private_data
-	 */
-	constructor(private_data) {
-		this.#private=private_data
-		this.#private
-	}
 	/**
 	 * @param {string | number} e
 	 * @param {any} fn

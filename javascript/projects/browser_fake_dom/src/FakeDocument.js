@@ -1,17 +1,90 @@
-import {PageLoaderState} from "../../page_loader/index.js";
-import {html_parser_callback} from "../../html_lexer/index.js";
 import {any} from "./any.js";
-import {document_element_factory} from "./api_const.js";
 import {get_FakeDOMImplementation} from "./FakeDOMImplementation.js";
-import {FakeElement} from "./FakeElement.js";
-import {init as html_element_init} from "./FakeHTMLElement.js";
+import {FakeHTMLElement} from "./FakeHTMLElement.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {NoImplFakeDocument} from "./NoImplFakeDocument.js";
 
+export class FakeArgsHolder {
+	/**@type {any[]} */
+	static values=[];
+}
+
+/** @implements {Node} */
+class FakeNode {
+	baseURI="";
+	childNodes=any([]);
+	firstChild=any(null);
+	isConnected=any(null);
+}
+
+/**@implements {DocumentType} */
+class FakeDocumentType extends FakeNode {
+	name="";
+	ownerDocument=any({});
+	constructor() {
+		super();
+	}
+}
+
+/** @implements {DOMImplementation} */
+class FakeDOMImplementation {
+	/**@type {"html"} */
+	element_type_tag="html";
+	/**
+	 * @returns {XMLDocument}
+	 * @param {string|null} namespace
+	 * @param {string | null} qualName
+	 * @param {DocumentType | null | undefined} doctype
+	 */
+	createDocument(namespace,qualName,doctype) {
+		let doc=new FakeXMLDocument;
+		let args=[namespace,qualName,doctype];
+		doc.args=args;
+		return doc;
+	}
+	/**
+	 * @param {any} qualifiedName
+	 * @param {any} publicId
+	 * @param {any} systemId
+	 */
+	createDocumentType(qualifiedName,publicId,systemId) {
+		return new FakeDocumentType(qualifiedName,publicId,systemId);
+	}
+	/**
+	 * @param {string} title
+	 */
+	createHTMLDocument(title) {
+		let v=false;
+		if(v) {
+			this.X.createHTMLDocument(title);
+		}
+		let new_document=new FakeDocument;
+		new_document.m_title=title;
+		return new_document;
+	}
+	/** @param {any[]} args @returns {true} */
+	hasFeature(...args) {
+		console.log('has feature request',...args,"pretending that it is supported");
+		return true;
+	}
+}
+
+
 /**@implements {Document} */
 export class FakeDocument extends NoImplFakeDocument {
+	delayed_values={
+		FakeDOMImplementation: null,
+	};
+	async delayed_init() {
+		this.delayed_values.FakeDOMImplementation=await get_FakeDOMImplementation();
+	}
+	/**@type {DOMImplementation} */
 	get implementation() {
-		return new (get_FakeDOMImplementation());
+		return new FakeDOMImplementation;
+	}
+	/**@type {HTMLElement} */
+	get documentElement() {
+		return new FakeHTMLElement;
 	}
 	/**@type {string} */
 	get inputEncoding() {
@@ -78,7 +151,7 @@ export class FakeDocument extends NoImplFakeDocument {
 	m_title=null;
 	/**@type {string}*/
 	get title() {
-		if(this.m_title === null) {
+		if(this.m_title===null) {
 			throw new Error("No document title");
 		}
 		return this.m_title;
@@ -425,62 +498,6 @@ export class FakeDocument extends NoImplFakeDocument {
 	evaluate() {
 		throw new Error("Not implemented");
 	}
-	/**@type {any} */
-	doc_root;
-	/**@type {any} */
-	#dom_script_element_added_callback;
-	#window_badge;
-	/**@type {typeof html_parser_callback|undefined} */
-	html_parser_callback;
-	document_tag_handlers={};
-	/**@type {HTMLElement} */
-	documentElement=new (html_element_init());
-	/**
-	 * @param {any} f
-	 */
-	set_dom_script_element_added_callback(f) {
-		this.#dom_script_element_added_callback=f;
-	}
-	/**
-	 * @param {any} dom_script_element
-	 */
-	add_script_to_document(dom_script_element) {
-		if(this.#dom_script_element_added_callback)
-			this.#dom_script_element_added_callback(dom_script_element);
-	}
-	/**
-	 * @param {import("./TagName.js").TagName|string} a
-	 * @returns {FakeElement}
-	 */
-	construct_dom_node(a) {
-		return document_element_factory.construct_dom_node(a);
-	}
-	/**
-	 * @param {PageLoaderState} state
-	 * @param {Uint8Array} html_bytes
-	 * @returns {Promise<{}|null>}
-	 */
-	async parseHTMLContent(state,html_bytes) {
-		return await html_parser_callback(this,state,html_bytes);
-	}
-	#private_data;
-	/**
-	 * @argument {FakeWindow} window
-	 * @argument {Badge} window_badge
-	 */
-	constructor(window,window_badge) {
-		if(window_badge.verify() !== 0) {
-			throw new Error("window_badge");
-		}
-		let x={};
-		super(x);
-		this.#private_data=x;
-		this.#private_data;
-		this.#window_badge=window_badge;
-		void this.#window_badge;
-		this.m_location=window.location;
-		this.m_defaultView=window;
-	}
 	/**@type {typeof window} */
 	get defaultView() {
 		return any(this.m_defaultView);
@@ -492,4 +509,10 @@ export class FakeDocument extends NoImplFakeDocument {
 			throw new Error("set defaultView to value not instanceof FakeWindow");
 		}
 	}
+}
+
+/**@implements {XMLDocument} */
+class FakeXMLDocument extends FakeDocument {
+	/**@type {any[]} */
+	args=[];
 }

@@ -1,7 +1,4 @@
-import {FakeDocument} from "./FakeDocument.js";
-
-export function get_FakeXMLDocument() {
-	/**@implements {XMLDocument} */
-	class FakeXMLDocument extends FakeDocument {}
+export async function get_FakeXMLDocument() {
+	let imp=await import("./FakeDocument.js")
 	return FakeXMLDocument;
 }
