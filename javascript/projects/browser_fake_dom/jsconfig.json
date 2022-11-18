@@ -24,7 +24,7 @@
 		"paths": {}
 	},
 	"include": [
-		"index.js",
+		"index.ts",
 		"src/**/*",
 		"badge/__global.ts",
 		"badge/BadgeRegistry.ts",

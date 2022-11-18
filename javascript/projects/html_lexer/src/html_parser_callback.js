@@ -1,7 +1,6 @@
 import {mkdir,writeFile} from "fs/promises";
 import {dirname} from "path";
 import {PageLoaderState} from "../../page_loader/index.js";
-import {HTMLLexerResult} from "./HTMLLexerResult.js";
 import {g_html_lexer} from "./g_html_lexer.js";
 import {HTMLTokenizer} from "./HTMLTokenizer.js";
 
@@ -10,7 +9,7 @@ import {HTMLTokenizer} from "./HTMLTokenizer.js";
  * @arg {T} this_T
  * @param {PageLoaderState} state
  * @param {Uint8Array} html
- * @returns {Promise<HTMLLexerResult|null>}
+ * @returns {Promise<null>}
  */
 export async function html_parser_callback(this_T,state,html) {
 	void this_T;
@@ -34,12 +33,9 @@ export async function html_parser_callback(this_T,state,html) {
 		let new_state=state.copy();
 		new_state.lexer_state=new HTMLTokenizer;
 		g_html_lexer.value.self_lex_html(new_state,html);
-		let parse_result=g_html_lexer.value.on_lex_result(new_state,html);
-		// TODO: parse the lexed tags into a DOM tree and
-		// attach the root node of that tree to document_root
-		return parse_result;
+		g_html_lexer.value.on_lex_result(new_state,html);
 	} catch(e) {
 		console.log(e);
-		return null;
 	}
+	return null;
 }

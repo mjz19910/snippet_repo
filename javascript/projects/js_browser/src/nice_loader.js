@@ -1,5 +1,6 @@
 import * as path from "path";
 import {spawn as child_process_spawn} from "child_process";
+import {env} from "process";
 
 const system_modules=[
 	'repl',
@@ -86,31 +87,35 @@ export class IpcLoader {
 		if(state.args.length === 0) return;
 		let [specifier,context,nextResolve]=state.args;
 		let errors=[];
-		let prev_log_dir="";
-		let parent_url_parts;
+		let prev_log_dir="file://"+env.PWD||"";
+		/**@type {string[]} */
+		let parent_url_parts=[];
 		let start_index;
 		let log_path;
-		let log_dir;
+		let log_dir=prev_log_dir;
+		/** @param {string} source_url */
+		function get_parent_url_parts(source_url) {
+			parent_url_parts=source_url.split("/");
+			start_index=parent_url_parts.indexOf("javascript")+2;
+			log_path=parent_url_parts.slice(start_index).join("/");
+			log_dir=path.dirname(log_path);
+		}
+		if(!context.parentURL) {
+			get_parent_url_parts(specifier);
+			console.log('main_module_load 2:'+JSON.stringify([log_path]));
+			return nextResolve(specifier,context,nextResolve);
+		}
+		if(specifier.startsWith("file:")) {
+			return nextResolve(specifier,context,nextResolve);
+		}
 		if(context.parentURL) {
-			parent_url_parts=context.parentURL.split("/");
-			start_index=parent_url_parts.indexOf("javascript")+1;
-			log_path=parent_url_parts.slice(start_index).join("/");
-			log_dir=path.dirname(log_path);
-			prev_log_dir=last_log_dir;
-			last_log_dir=log_dir;
-			parent_url_parts=context.parentURL.split("/");
-			start_index=parent_url_parts.indexOf("javascript")+prev_log_dir.split("/").length-1;
-			log_path=parent_url_parts.slice(start_index).join("/");
-			log_dir=path.dirname(log_path);
-			let disabled_1=true;
-			if(!disabled_1) {
-				if(!this.no_logging) console.log('main_module_load 1:'+(JSON.stringify([log_path,"->",path.join(log_dir,specifier)]).replace(',"->",'," -> ")));
-			}
+			get_parent_url_parts(context.parentURL);
+			let a=[log_path,"->",path.join(log_dir,specifier)];
+			let json_str=JSON.stringify(a).replace(',"->",'," -> ");
+			console.log('main_module_load 3:'+json_str);
 			state.plugin_key=`${context.parentURL}:${specifier}`;
 		} else {
-			parent_url_parts=specifier.split("/");
-			start_index=parent_url_parts.indexOf("javascript")+1;
-			log_path=parent_url_parts.slice(start_index).join("/");
+			get_parent_url_parts(specifier);
 			console.log('main_module_load 2:'+JSON.stringify([log_path]));
 			state.plugin_key=specifier;
 		}
@@ -118,13 +123,12 @@ export class IpcLoader {
 			return module_map.get(state.plugin_key);
 		}
 		if(specifier.endsWith(".js")) {
-			state.depth++;
 			try {
+				state.depth++;
 				if(!state.args.length) return null;
 				if(state.plugin_key===null) return null;
-				let x=state.args;
 				/** @type {{}} */
-				let mod=await nextResolve(x[0],x[1],x[2]);
+				let mod=await nextResolve(specifier,context,nextResolve);
 				module_map.set(state.plugin_key,mod);
 				return mod;
 			} catch(err) {
@@ -165,10 +169,7 @@ export class IpcLoader {
 			return nextResolve(specifier,context,nextResolve);
 		}
 		if(context.parentURL) {
-			parent_url_parts=context.parentURL.split("/");
-			start_index=parent_url_parts.indexOf("javascript")+prev_log_dir.split("/").length-1;
-			log_path=parent_url_parts.slice(start_index).join("/");
-			log_dir=path.dirname(log_path);
+			get_parent_url_parts(context.parentURL);
 			console.log('module fail:'+JSON.stringify([log_path,specifier]));
 		} else {
 			console.log("specifier:"+specifier);

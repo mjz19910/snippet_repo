@@ -1,4 +1,4 @@
-import {HTMLLexerResult,HTMLTokenizer,on_html_lex_result} from "../index.js";
+import {HTMLTokenizer} from "../index.js";
 import {PageLoaderState} from "../../page_loader/index.js";
 import {repl_plugin_get_global_repl_activator} from "../../repl_plugin/index.js";
 import {g_html_lex_plugin} from "./g_html_lex_plugin.js";

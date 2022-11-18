@@ -11,7 +11,7 @@
     do {                                          \
         this.will_switch_to(State.new_state);         \
         this.m_state = State.new_state;               \
-        CONSUME_NEXT_INPUT_CHARACTER;              \
+        CONSUME_NEXT_INPUT_CHARACTER     \
     } while (0)
 
 #define RECONSUME_IN(new_state)              \

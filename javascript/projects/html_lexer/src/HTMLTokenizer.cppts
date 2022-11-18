@@ -3,9 +3,9 @@
 #include "edited_defines.cppts"
 
 // '<'
-#define TAG_START_TOKENS_1 this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ;
+#define TAG_START_TOKENS_1 this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
 // '/'
-#define TAG_START_TOKENS_2 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+#define TAG_START_TOKENS_2 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
 
 // open tag_name </
 #define TAG_START_TOKENS_1_2 \

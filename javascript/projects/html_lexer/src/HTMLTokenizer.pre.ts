@@ -12,8 +12,8 @@ import {move} from "./move.js";
 import {HTMLTokenizerBase} from "./HTMLTokenizerBase.js";
 import {CaseSensitivity} from "./CaseSensitivity.js";
 import {ak_verification_failed} from "./ak_verification_failed.js";
-import {StringView} from "./StringView.js";
-import {Vector} from "./Vector.js";
+import {HTML} from "./HTML.js";
+import {Namespace} from "./HTMLParser.js";
 
 
 export function use_imports() {
@@ -32,22 +32,7 @@ export function use_imports() {
         HTMLTokenizerBase,
         CaseSensitivity,
         ak_verification_failed,
+        HTML,
+        Namespace,
     ];
-}
-
-export namespace HTML {
-    export class CodePointEntity {
-        entity: any;
-        code_points!: Vector<number>;
-        static from(v: StringView) {
-            return new Optional(new this(v))
-        }
-        x;
-        constructor(x: StringView){
-            this.x=x;
-        }
-    }
-    export function code_points_from_entity (v:StringView) {
-        return CodePointEntity.from(v);
-    }
 }

@@ -14,8 +14,8 @@ export class REPLHtmlLexPlugin {
 		this.repl=get_cached_repl_plugin(state);
 		this.state=state;
 		this.context=new LexContext(this);
-		LexContext.copy_to(new LexContext(this),this.repl.context);
-		this.parse_result=new HTMLLexerResult(state,() => [],null);
+		this.repl.context.lex_ctx=this.context;
+		this.parse_result=new HTMLLexerResult(state,[],null);
 	}
 	get active() {
 		return !this.state.no_repl;
