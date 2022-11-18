@@ -21,13 +21,9 @@
 		"typeRoots": [
 			"~/workspace/node_types/node_modules/@types"
 		],
-		"paths": {}
 	},
 	"include": [
-		"index.ts",
 		"src/**/*",
-		"badge/__global.ts",
-		"src/BadgeRegistry.ts",
 	],
 	"exclude": [
 		"node_modules",
