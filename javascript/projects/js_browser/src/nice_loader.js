@@ -61,6 +61,7 @@ export class IpcLoader {
 		if(this.error_header.includes("ENOTDIR")) {
 			console.log("Dir error");
 			console.log("Error header", this.error_header);
+			this.error_code="ENOTDIR";
 		}
 		this.arr=this.error_header.split(" ")||[];
 		idx_start=this.arr.indexOf("from");
@@ -79,13 +80,18 @@ export class IpcLoader {
 /** @arg {IpcLoader} state */
 function get_typescript_file_to_compile(state) {
 	state.dir_start();
-	if(!state.import_target_ts) throw new Error();
+	if(!state.import_target_ts) return null;
 	return state.import_target_ts;
 }
 
 /** @arg {IpcLoader} state */
 export async function handle_failed_import(state) {
-	let target_re_compile=get_typescript_file_to_compile(state).replace("file:","");
+	let recompile_target=get_typescript_file_to_compile(state);
+	if(!recompile_target) {
+		module_map.set(state.plugin_key, {});
+		return {};
+	}
+	let target_re_compile=recompile_target.replace("file:","");
 	let result=await new Promise(function(resolve,reject) {
 		let cp=child_process_spawn("tsc",['-t','ESNext',"-m","ESNext","--outDir","./build/",target_re_compile],{});
 		cp.stdout.on("data",e => {
@@ -113,21 +119,20 @@ let ipc_load_data=new IpcLoader;
  * @param {import("./nice_loader_types.js").ResolveFn<any>} nextResolve
  */
 export async function resolve(specifier,context,nextResolve) {
+	let state=ipc_load_data;
 	let errors=[];
-	let plugin_key;
 	if(context.parentURL) {
-		plugin_key=`${context.parentURL}:${specifier}`;
+		state.plugin_key=`${context.parentURL}:${specifier}`;
 	} else {
-		plugin_key=specifier;
+		state.plugin_key=specifier;
 		if(loader_debug) {
 			console.log('main module load:'+JSON.stringify(specifier));
 		}
 	}
-	if(module_map.has(plugin_key)) {
-		return module_map.get(plugin_key);
+	if(module_map.has(state.plugin_key)) {
+		return module_map.get(state.plugin_key);
 	}
 	if(specifier.endsWith(".js")) {
-		let state=ipc_load_data;
 		ipc_load_data.args=[specifier,context,nextResolve];
 		state.depth++;
 		try {
