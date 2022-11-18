@@ -156,6 +156,7 @@ function dir_func_6(b) {
 	if(!b.import_target) throw new Error("missing import_target");
 	b.import_target_ts=b.import_target.replace(/(?<=.+)\.js/g,".ts");
 }
+
 /** @arg {IpcLoader} b */
 function get_last_error_stack(b) {
 	let last_error=b.errors.at(-1);
