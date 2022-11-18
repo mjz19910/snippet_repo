@@ -19,28 +19,6 @@ import {HTMLParser} from "./HTMLParser.js";
 import {SourceLocation} from "./SourceLocation.js";
 
 export class HTMLTokenizerBase {
-    m_parser: CppPtr<HTMLParser>=new CppPtr;
-    m_state=State.Data;
-    m_return_state=State.Data;
-    m_temporary_buffer=new Vector<number>();
-    m_decoded_input: StringView;
-    m_insertion_point=new InsertionPoint;
-    m_old_insertion_point=new InsertionPoint;
-    m_utf8_view: Utf8View;
-    m_utf8_iterator: Utf8CodePointIterator;
-    m_prev_utf8_iterator: Utf8CodePointIterator;
-    m_current_token=new HTMLTokenBase;
-    m_current_builder=new StringBuilder;
-    m_last_emitted_start_tag_name=new Optional("");
-    m_explicit_eof_inserted=false;
-    m_has_emitted_eof=false;
-    m_queued_tokens: Queue<HTMLTokenBase>=new Queue;
-    m_character_reference_code=0;
-    m_blocked=false;
-    m_aborted=false;
-    m_source_positions: Vector<InstanceType<typeof HTMLTokenBase['Position']>>=new Vector;
-    m_skip_to_start_of_func=false;
-    m_goto_target: GoToTargets="None";
     /**for HTMLTokenizer() */
     constructor() {
         this.m_decoded_input=new StringView("");
@@ -65,8 +43,7 @@ export class HTMLTokenizerBase {
         if(this.m_utf8_iterator.eq(this.m_utf8_view.end()))
             return new Optional;
 
-        /** @type {number} */
-        let code_point;
+        let code_point: number;
         // https://html.spec.whatwg.org/multipage/parsing.html//preprocessing-the-input-stream:tokenization
         // https://infra.spec.whatwg.org///normalize-newlines
         if(this.peek_code_point(0).value_or(0)=='\r'.charCodeAt(0)&&this.peek_code_point(1).value_or(0)=='\n'.charCodeAt(0)) {
@@ -118,8 +95,40 @@ export class HTMLTokenizerBase {
         return this.m_source_positions.at(this.m_source_positions.size()-1-n);
     }
     // ----------- TODO -----------
-    consume_next_if_match(_x: string,y?: CaseSensitivity): boolean {throw new Error("TODO");}
-    create_new_token(_x: HTMLToken.Type) {throw new Error("TODO");}
+    consume_next_if_match(string: StringView,case_sensitivity: CaseSensitivity): boolean {
+        for(let i=0;i<string.length();++i) {
+            let code_point=this.peek_code_point(i);
+            if(!code_point.has_value()) return false;
+            // FIXME: This should be more Unicode-aware.
+            if(case_sensitivity==CaseSensitivity.CaseInsensitive) {
+                if(code_point.value()<0x80) {
+                    if(this.to_ascii_lowercase(code_point.value())!=this.to_ascii_lowercase(string.at_u32(i)))
+                        return false;
+                    continue;
+                }
+            }
+            if(code_point.value()!=string.at_u32(i))
+                return false;
+        }
+        this.skip(string.length());
+        return true;
+    }
+    create_new_token(type: HTMLToken.Type) {
+        this.m_current_token=HTMLTokenBase.from_type(type);
+        let offset=0;
+        switch(type) {
+            case HTMLToken.Type.StartTag:
+                offset=1;
+                break;
+            case HTMLToken.Type.EndTag:
+                offset=2;
+                break;
+            default:
+                break;
+        }
+
+        this.m_current_token.set_start_position("Badge<HTMLTokenizer>",this.nth_last_position(offset));
+    }
     insert_input_at_insertion_point() {throw new Error("TODO");}
     insert_eof() {throw new Error("TODO");}
     is_eof_inserted() {throw new Error("TODO");}
@@ -177,4 +186,26 @@ export class HTMLTokenizerBase {
     is_ascii_space(m_character_reference_code: number): boolean {
         throw new Error("Method not implemented.");
     }
+    m_parser: CppPtr<HTMLParser>=new CppPtr;
+    m_state=State.Data;
+    m_return_state=State.Data;
+    m_temporary_buffer=new Vector<number>();
+    m_decoded_input: StringView;
+    m_insertion_point=new InsertionPoint;
+    m_old_insertion_point=new InsertionPoint;
+    m_utf8_view: Utf8View;
+    m_utf8_iterator: Utf8CodePointIterator;
+    m_prev_utf8_iterator: Utf8CodePointIterator;
+    m_current_token=new HTMLTokenBase;
+    m_current_builder=new StringBuilder;
+    m_last_emitted_start_tag_name=new Optional("");
+    m_explicit_eof_inserted=false;
+    m_has_emitted_eof=false;
+    m_queued_tokens: Queue<HTMLTokenBase>=new Queue;
+    m_character_reference_code=0;
+    m_blocked=false;
+    m_aborted=false;
+    m_source_positions: Vector<InstanceType<typeof HTMLTokenBase['Position']>>=new Vector;
+    m_skip_to_start_of_func=false;
+    m_goto_target: GoToTargets="None";
 }

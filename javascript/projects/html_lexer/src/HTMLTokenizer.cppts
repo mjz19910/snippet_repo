@@ -74,7 +74,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.log_parse_error();
                                 this.create_new_token(HTMLToken.Type.Comment);
-                                this.m_current_token.set_start_position("Badge_HTMLTokenizer", this.nth_last_position(2));
+                                this.m_current_token.set_start_position("Badge<HTMLTokenizer>", this.nth_last_position(2));
                                 RECONSUME_IN(BogusComment);
                             }
                             ON_EOF
@@ -175,7 +175,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             DONT_CONSUME_NEXT_INPUT_CHARACTER;
                             if (this.consume_next_if_match("--")) {
                                 this.create_new_token(HTMLToken.Type.Comment);
-                                this.m_current_token.set_start_position("Badge_HTMLTokenizer", this.nth_last_position(3));
+                                this.m_current_token.set_start_position("Badge<HTMLTokenizer>", this.nth_last_position(3));
                                 SWITCH_TO(CommentStart);
                             }
                             if (this.consume_next_if_match("DOCTYPE", CaseSensitivity.CaseInsensitive)) {

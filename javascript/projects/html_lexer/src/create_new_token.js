@@ -18,5 +18,5 @@ export function create_new_token(state,type) {
 			break;
 	}
 
-	state.m_current_token.set_start_position("Badge_HTMLTokenizer",state.nth_last_position(offset));
+	state.m_current_token.set_start_position("Badge<HTMLTokenizer>",state.nth_last_position(offset));
 }

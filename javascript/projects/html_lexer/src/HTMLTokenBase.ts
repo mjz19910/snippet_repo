@@ -61,7 +61,7 @@ export class HTMLTokenBase {
         obj.set_code_point(code_num);
         return obj;
     }
-    set_start_position(_badge: "Badge_HTMLTokenizer",start_position: HTMLTokenBase.Position) {
+    set_start_position(_badge: "Badge<HTMLTokenizer>",start_position: HTMLTokenBase.Position) {
         this.m_start_position=start_position;
     }
     m_string_data: string="";
