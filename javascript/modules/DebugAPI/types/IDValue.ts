@@ -5,18 +5,6 @@ declare global {
 	var IDValueG: typeof IDValue;
 }
 
-function assume_is_object<T>(v: {x: {};}|{x: T;}): v is {x: {};} {
-	if(v.x) {
-		if(Object.getPrototypeOf(v.x)===Object.prototype) {
-			return true;
-		};
-	}
-	if(Object.keys(Object.getOwnPropertyDescriptors(v.x)).length===0) {
-		return true;
-	}
-	return false;
-}
-
 export class IDValue {
 	set_arr_T<T>(arr: T[]) {
 		if(arr.length===0) throw new Error("Unable to use zero length array");

@@ -1,7 +1,7 @@
 import {calc_cur} from "./calc_cur";
 import {calc_next} from "./calc_next";
 import {max_id} from "./mod";
-import {IDValueData} from "../types/IDValueData.js";
+import {IDValueData} from "../types/IDValue.js";
 import {get_next} from "./get_next";
 
 export class DoCalc {

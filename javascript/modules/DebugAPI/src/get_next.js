@@ -1,4 +1,4 @@
-import {IDValueData} from "../types/IDValueData.js";
+import {IDValueData} from "../types/IDValue.js";
 
 /**@arg {IDValueBase} next */
 export function get_next({next}) {

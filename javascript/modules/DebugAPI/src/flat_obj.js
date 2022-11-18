@@ -1,4 +1,4 @@
-import {IDValueData} from "../types/IDValueData";
+import {IDValueData} from "../types/IDValue";
 
 /** @param {IDValueData} obj */
 export function flat_obj(obj) {

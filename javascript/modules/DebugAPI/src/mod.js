@@ -35,7 +35,7 @@ import {OriginState} from "./OriginState";
 import {parse_html_to_binary_arr} from "./parse_html_to_binary_arr";
 import {range_matches} from "./range_matches";
 import {RemoteOriginConnection} from "./debug_api/RemoteOriginConnection";
-import {Repeat} from "./repeat/Repeat";
+import {Repeat} from "../types/repeat/Repeat.js";
 import {run_modules_plugin} from "./run_modules_plugin";
 import {run_wasm_plugin} from "./run_wasm_plugin";
 import {RustSimpleTokenizer} from "./debug_api/RustSimpleTokenizer";
@@ -44,6 +44,7 @@ import {to_tuple_arr} from "./to_tuple_arr";
 import {VoidCallback} from "./VoidCallback";
 import {WeakValueRef} from "./WeakValueRef";
 import {AutoBuy} from "../types/AutoBuy";
+import {IDValue} from "../types/IDValue.js";
 
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
@@ -72,7 +73,7 @@ g_api.range_matches=range_matches;
 export let ids=new NewTypeWrapper([]);
 export let max_id=new NewTypeWrapper(0);
 
-/** @type {NewTypeWrapper<IDValueData[]>} */
+/** @type {NewTypeWrapper<IDValue[]>} */
 export let g_obj_arr=new NewTypeWrapper([]);
 /**
  * @type {any[]}
