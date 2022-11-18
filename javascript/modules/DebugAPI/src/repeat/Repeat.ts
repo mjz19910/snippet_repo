@@ -1,43 +1,47 @@
 import {AnyOrRepeat} from "./AnyOrRepeat.js";
-import {AnyRepeat2TS} from "./AnyOrRepeat2";
+import {AnyRepeat2TS as AnyRepeat2} from "./AnyOrRepeat2";
 import {ConstructorWithSymbolType} from "./ConstructorWithSymbolType.js";
 import {TypeAOrTypeB} from "./TypeAOrTypeB.js";
 
 namespace S {
-	export type A<T extends new (...args: any) => any>=InstanceType<T>;
+	export type I_T<T extends new (...args: any) => any>=InstanceType<T>;
 	export type B=ConstructorWithSymbolType;
-	// Map === S.C
+	// Map === C
 	export type C<A,B>=Map<A,B>;
 }
 
+type I_T<T extends new (...args: any) => any>=InstanceType<T>;
+type C_W_S_T=ConstructorWithSymbolType;
+type A_O_R<U>=AnyOrRepeat<U>;
+
 export class Repeat<T> {
-	map_instance_or_d1: Map<symbol,Map<T,<U extends S.B>(constructor_key_2: U) => AnyOrRepeat<S.A<U>>>>=new Map;
-	map_instance_or: Map<symbol,<T,U>() => Map<T,AnyOrRepeat<U>>>=new Map;
+	map_instance_or_d1: Map<symbol,Map<T,<U extends C_W_S_T>(constructor_key_2: U) => A_O_R<I_T<U>>>>=new Map;
+	map_instance_or: Map<symbol,<T,U>() => Map<T,A_O_R<U>>>=new Map;
 	base_map=new Map<
 		symbol,
-		<T extends S.B,U extends S.A<T>>(constructor_key_1: T,_: U) =>
+		<T extends C_W_S_T,U extends I_T<T>>(constructor_key_1: T,_: U) =>
 			Map<
 				T['type'],
-				<T extends S.B,U extends S.A<T>>(constructor_key_2: T,_: U) =>
+				<T extends C_W_S_T,U extends I_T<T>>(constructor_key_2: T,_: U) =>
 					Map<
 						T['type'],
-						AnyOrRepeat<U>
+						A_O_R<U>
 					>
 			>
 	>;
-	map_instance_or_d0(): Map<symbol,<T extends S.B,U extends S.A<T>>(constructor_key_1: T,_: U) =>Map<T['type'],<T extends S.B,U extends S.A<T>>(constructor_key_2: T,_: U) =>Map<T['type'],AnyOrRepeat<U>>>> {
+	map_instance_or_d0(): Map<symbol,<T extends C_W_S_T,U extends I_T<T>>(constructor_key_1: T,_: U) =>Map<T['type'],<T extends C_W_S_T,U extends I_T<T>>(constructor_key_2: T,_: U) =>Map<T['type'],AnyOrRepeat<U>>>> {
 		return this.base_map;
 
 	};
-	get_map_T_or<T extends S.B,U extends S.A<T>>(constructor_key_0: T,_: U) {
+	get_map_T_or<T extends C_W_S_T,U extends I_T<T>>(constructor_key_0: T,_: U) {
 		let res=this.base_map.get(constructor_key_0.type);
 		if(!res) {
 			let t=this;
 			this.base_map.set(
 				constructor_key_0.type,
-				<T extends S.B,U extends InstanceType<T>>(constructor_key_1: T,_: U) => {
+				<T extends C_W_S_T,U extends I_T<T>>(constructor_key_1: T,_: U) => {
 					let m_res=t.map_instance_or_d1.get(constructor_key_1.type);
-					if(!m_res) m_res=new Map<InstanceType<T>,<U extends S.B>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>;
+					if(!m_res) m_res=new Map<I_T<T>,<U extends C_W_S_T>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>;
 					t.map_instance_or_d1.set(constructor_key_1.type,m_res);
 					return new Map;
 				}
@@ -48,7 +52,7 @@ export class Repeat<T> {
 		}
 		return res;
 	}
-	static from_TU_entry(a: TypeAOrTypeB<string,number>,b: number): AnyRepeat2TS<string,number> {
+	static from_TU_entry(a: TypeAOrTypeB<string,number>,b: number): AnyRepeat2<string,number> {
 		switch(a[0]) {
 			case 'T': return ['T',Repeat.get(a[1],b)];
 			case 'U': return ['U',Repeat.get_num(a[1],b)];
@@ -148,10 +152,5 @@ export class Repeat<T> {
 	constructor(value: T,times: number) {
 		this.value=value;
 		this.times=times;
-	}
-	toString() {
-		if(typeof this.value==='string') {
-			return this.value+"x"+this.times;
-		}
 	}
 }
