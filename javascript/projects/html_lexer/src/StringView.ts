@@ -7,7 +7,7 @@ export class StringView {
 	length() {
 		return this.X.length;
 	}
-	constructor(x: string|undefined) {
+	constructor(x?: string) {
 		if(typeof x == "string") {
 			this.m_empty=false;
 			this.X=x;

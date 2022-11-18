@@ -1,5 +1,6 @@
 import {spawnSync} from "child_process";
-import process from "process";
+import path from "path";
+import process, {env} from "process";
 import vm from 'vm';
 import {PageLoaderState} from "../../page_loader/index.js";
 import {bind_plugins} from "./plugins/bind_plugins.js";
@@ -51,13 +52,14 @@ export class ReplPluginManager {
 		});
 		let base_repl=this.m_repl_runtime;
 		base_repl.pause();
-		debugger;
-		hist_block: {
-			let system_val=spawnSync("bash",["-c","echo ${HISTFILE%/zsh_history}"]);
-			console.log(system_val.output);
+		a: {
+			let cur_dir=env.PWD;
+			if(!cur_dir) break a;
+			let basename=path.basename(cur_dir);
+			console.log(basename);
 			let xxx=true;
 			if(xxx) {
-				break hist_block;
+				break a;
 			}
 			base_repl.setupHistory("./.history/repl_plugin_history",function(err,_repl) {
 				if(err) console.log('error when writing history',err);

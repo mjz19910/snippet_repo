@@ -58,6 +58,7 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
         this.m_source_positions.empend(HTMLToken.Position.from(0, 0));
     }
     next_code_point() {
+        debugger;
         if (this.m_utf8_iterator.eq(this.m_utf8_view.end()))
             return new Optional;
         /** @type {number} */
