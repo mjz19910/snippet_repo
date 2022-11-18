@@ -1,3 +1,6 @@
+import * as path from "path";
+import {spawn as child_process_spawn} from "child_process";
+
 const loader_debug=true;
 
 const system_modules=[
@@ -27,10 +30,6 @@ export class IpcLoader {
 	exports=[];
 }
 
-
-import * as path from "path";
-import {spawn as child_process_spawn} from "child_process";
-import {ReplPluginManager} from "../../repl_plugin/index.js";
 
 export class ReplPluginManagerModule {
 	/**
@@ -254,7 +253,7 @@ let ipc_load_data=new IpcLoader;
  * @param {import("./nice_loader_types.js").ResolveFn} defaultResolve
  */
 export async function resolve(specifier,context,defaultResolve) {
-	let errors=[];ReplPluginManager
+	let errors=[];
 	if(loader_debug) console.log('spec: '+specifier+" -> "+path.resolve(path.dirname(context.parentURL),specifier));
 	if(loader_debug) console.log('parent module',context.parentURL);
 	if(specifier.endsWith(".js")) {
