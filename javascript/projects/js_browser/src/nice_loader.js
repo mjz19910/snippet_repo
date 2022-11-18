@@ -69,11 +69,10 @@ export class HtmlLexerManagerModule {
 	*/
 	static async import_ipc_plugin(state) {
 		state.depth++;
-		let mod=null;
 		try {
-			mod=await try_import_module(state);
-		} catch(e) {
-			state.errors.push(e);
+			return await try_import_module(state);
+		} catch(err) {
+			state.errors.push(err);
 			await handle_failed_import(state);
 			if(module_map.has(state.plugin_key)) {
 				return module_map.get(state.plugin_key);
@@ -81,7 +80,6 @@ export class HtmlLexerManagerModule {
 				throw new Error("Handling error did not load plugin");
 			}
 		}
-		return mod;
 	}
 }
 
