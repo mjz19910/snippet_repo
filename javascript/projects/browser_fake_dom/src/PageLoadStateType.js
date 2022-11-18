@@ -1,5 +1,3 @@
-import {Badge} from "../Badge.ts/index.js";
-
 export class PageLoadStateType {
     /**@type {Badge|undefined} */
     dom_impl_badge;

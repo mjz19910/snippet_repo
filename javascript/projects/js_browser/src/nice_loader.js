@@ -47,6 +47,7 @@ export class IpcLoader {
 	import_target_ts;
 	split_error_into_lines=false;
 	dir_start() {
+		if(this.args.length===0) return;
 		this.last_error=this.errors.at(-1);
 		if(this.last_error instanceof Error) {
 			this.stack=this.last_error.stack;
@@ -67,7 +68,12 @@ export class IpcLoader {
 		idx_start=this.arr.indexOf("from");
 		if(idx_start>-1) {
 			this.imported_from=this.arr.slice(idx_start+1).join(" ");
-			console.log("imported from",this.imported_from);
+		}
+		if(this.imported_from) {
+			let parent_url_parts=this.imported_from.split("/");
+			let start_index=parent_url_parts.indexOf("snippet_repo")+3;
+			let log_path=parent_url_parts.slice(start_index).join("/");
+			console.log("imported from:"+JSON.stringify([log_path]));
 		}
 		idx_start=this.arr.indexOf("find");
 		if(idx_start>-1) {
@@ -119,16 +125,17 @@ let ipc_load_data=new IpcLoader;
  * @param {import("./nice_loader_types.js").ResolveFn<any>} nextResolve
  */
 export async function resolve(specifier,context,nextResolve) {
-	console.log('main module load:'+JSON.stringify(specifier))
 	let state=ipc_load_data;
 	let errors=[];
 	if(context.parentURL) {
+		let parent_url_parts=context.parentURL.split("/");
+		let start_index=parent_url_parts.indexOf("javascript")+1;
+		let log_path=parent_url_parts.slice(start_index).join("/");
+		console.log('main module load 1:'+JSON.stringify([log_path,specifier]));
 		state.plugin_key=`${context.parentURL}:${specifier}`;
 	} else {
+		console.log('main_module_load 2:'+JSON.stringify(specifier));
 		state.plugin_key=specifier;
-		if(loader_debug) {
-			console.log('main module load:'+JSON.stringify(specifier));
-		}
 	}
 	if(module_map.has(state.plugin_key)) {
 		return module_map.get(state.plugin_key);
@@ -158,10 +165,26 @@ export async function resolve(specifier,context,nextResolve) {
 	if(system_modules.includes(specifier)) {
 		return nextResolve(specifier,context,nextResolve);
 	}
-	console.log("tried all imports");
-	console.log(specifier);
-	console.log(context.parentURL);
-	console.log("resolve plugin_key");
-	console.log(state.plugin_key.slice(state.plugin_key.indexOf("wsl2/workspace")+8));
+	if(context.parentURL) {
+		console.log("Failed to import:"+specifier);
+		let parent_url_parts=context.parentURL.split("/");
+		let start_index=parent_url_parts.indexOf("javascript")+1;
+		let log_path=parent_url_parts.slice(start_index).join("/");
+		console.log('module fail:'+JSON.stringify([log_path,specifier]));
+	} else {
+		console.log("specifier:"+specifier);
+	}
+	if(context.parentURL) {
+		console.log(state.plugin_key.slice(state.plugin_key.indexOf("wsl2/workspace")+8));
+	} else {
+		let parent_url_parts=context.parentURL.split("/");
+		let start_index=parent_url_parts.indexOf("javascript");
+		console.log([
+			parent_url_parts.slice(start_index).join("/"),
+			":",
+			specifier,
+		].join(""));
+	}
+	return {};
 	throw new AggregateError(errors,"All import failures",{});
 }

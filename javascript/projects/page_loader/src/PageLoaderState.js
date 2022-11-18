@@ -1,5 +1,6 @@
 import {ClientRequest,IncomingMessage} from "http";
-import {fake,PageLoadStateType} from "../../browser_fake_dom/index.js";
+import {fake,FakeWindow,PageLoadStateType} from "../../browser_fake_dom/index.js";
+import {BaseBadge} from "../../browser_fake_dom/src/BaseBadge.js";
 import {HTMLTokenizer} from "../../html_lexer/index.js";
 import {fetch_url} from "./fetch_url.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
@@ -11,6 +12,9 @@ import {RequestModule} from "./RequestModule.js";
 export let cached_data_buffer=[];
 
 export class PageLoaderState {
+	create_window() {
+		return new FakeWindow(new BaseBadge);
+	}
 	/**@arg {any[]} arr */
 	use_types(...arr) {this.use_arg_vec(arr);}
 	/**@arg {any[]} arr */

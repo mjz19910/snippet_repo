@@ -1,9 +1,7 @@
-import {PageLoaderState} from "../../../page_loader/index.js";
-import {fake} from "../browse/fake.js";
-import {FakeLocation} from "../FakeLocation.js";
-import {FakeWindow} from "../FakeWindow.js";
-import {BaseBadge} from "../BaseBadge.js/index.js";
+import {PageLoaderState} from "../../page_loader/index.js";
 import {EventStore} from "./EventStore.js";
+import {fake} from "./fake.js";
+import {FakeWindow} from "./FakeWindow.js";
 import {handle_addEventListener} from "./handle_addEventListener.js";
 import {handle_dispatchEvent} from "./handle_dispatchEvent.js";
 import {handle_removeEventListener} from "./handle_removeEventListener.js";
@@ -12,7 +10,7 @@ import {handle_requestAnimationFrame} from "./handle_requestAnimationFrame.js";
 /** @argument {FakeWindow} window @argument {PageLoaderState} base_state */
 export function handle_onPageLoadStarted(window,base_state) {
 	var new_win;
-	new_win=new FakeWindow(new BaseBadge);
+	new_win=base_state.create_window();
 	let state=base_state.page_load_state;
 	if(!state.dom_impl_badge) {
 		throw new Error("Expected dom_impl_badge on state");

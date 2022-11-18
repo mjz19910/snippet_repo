@@ -1,4 +1,4 @@
-import {any} from "./any.js" assert { type: "json" };
+import {any} from "./any.js";
 import {intercept_setTimeoutAPI} from "./setTimeout.js";
 import {EmptyBadge} from "./EmptyBadge.js";
 import {FakeDocument} from "./FakeDocument.js";
