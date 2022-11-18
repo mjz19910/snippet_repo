@@ -27,6 +27,19 @@ Options:
 	}
 }
 function main() {
+	async_main().then(() => {
+		console.log("app promise done");
+	},(err) => {
+		console.log("error reason=",err);
+		console.error(err);
+	});
+}
+
+main();
+
+const debug=false;
+
+async function async_main() {
 	let follow_redirects=false;
 	let no_repl=false;
 	let node_path=process.argv[0];
@@ -35,9 +48,11 @@ function main() {
 	if(path.basename(node_path)=='node') {
 		process.argv.shift();
 	}
-	const script_arg=path.relative(process.cwd(),process.argv[0]);
+	const script_path=path.relative(process.cwd(),process.argv[0]);
 	if(process.argv.length<=1) {
-		usage(false,path.basename(node_path),script_arg);
+		node_path=path.basename(node_path);
+		console.log(`Usage: ${path.basename(node_path)} ${script_path} [options] [URL]
+       ${path.basename(node_path)} ${script_path} --help`);
 		return;
 	}
 	const cmd_argv=process.argv.slice(1);
@@ -50,23 +65,18 @@ function main() {
 		cmd_argv.shift();
 	}
 	if(cmd_argv[0]==='--help') {
-		usage(true,path.basename(node_path),script_arg);
+		console.log(`Usage: ${path.basename(node_path)} ${script_path} [options] [URL]
+
+Options:
+  --follow-redirects                follow redirects from the server
+  --no-repl                         don't start the repl
+  --help                            show this text
+`);
 		return;
 	}
 	let url=cmd_argv[0];
 	let state=new PageLoaderState(url,{no_repl,follow_redirects});
 	handle_onPageLoadStarted(fake.window,state);
-	async_main(url);
-}
-
-main();
-
-const debug=false;
-
-/**
- * @param {string} url
- */
-async function async_main(url) {
 	let res=await new_FetchRequestState(url);
 	let lexer=await import_ipc_plugin(ipc_loader_state,"html_lexer");
 	if(!lexer) throw new Error("Can't import lexer plugin");

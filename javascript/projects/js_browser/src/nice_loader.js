@@ -38,21 +38,32 @@ export class IpcLoader {
 	/**@type {string|undefined} */
 	stack;
 	/**@type {string|undefined} */
-	error_line;
+	error_header;
 	/**@type {string|undefined} */
 	imported_from;
 	/**@type {string|undefined} */
 	import_target;
 	/**@type {string|undefined} */
 	import_target_ts;
+	split_error_into_lines=false;
 	dir_start() {
 		this.last_error=this.errors.at(-1);
 		if(this.last_error instanceof Error) {
 			this.stack=this.last_error.stack;
 		}
-		this.error_line=this.stack?.split("\n")[0];
-		this.arr=this.error_line?.split(" ")||[];
-		let idx_start=this.arr.indexOf("from");
+		if(!this.stack) return;
+		let idx_start=this.stack.indexOf("\n");
+		if(this.split_error_into_lines) {
+			this.error_lines=this.stack.split("\n");
+		}
+		this.error_header=this.stack.slice(0, idx_start);
+		if(!this.error_header) return;
+		if(this.error_header.includes("ENOTDIR")) {
+			console.log("Dir error");
+			console.log("Error header", this.error_header);
+		}
+		this.arr=this.error_header.split(" ")||[];
+		idx_start=this.arr.indexOf("from");
 		if(idx_start>-1) {
 			this.imported_from=this.arr.slice(idx_start+1).join(" ");
 			console.log("imported from",this.imported_from);
