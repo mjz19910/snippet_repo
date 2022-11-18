@@ -126,19 +126,20 @@ function dir_func_2(b) {
 function dir_func_3(b) {
 	if(!b.error_line) throw new Error();
 	b.arr=b.error_line.split(" ");
-	console.log("load 1",b.arr);
 }
 
 /** @param {A} b */
 function dir_func_4(b) {
 	if(!b.error_line) throw new Error();
 	b.imported_from=b.arr.slice(6)[0];
+	console.log("imported from",a.imported_from);
 }
 
 /** @param {A} b */
 function dir_func_5(b) {
 	if(!b.error_line) throw new Error();
 	b.import_target=b.arr.slice(3)[0];
+	console.log("import_target",b.import_target);
 }
 
 /**@arg {A} b */
@@ -169,20 +170,12 @@ export async function handle_failed_import(state,error,import_string,context,def
 		dir_func_3(a);
 		dir_func_4(a);
 		dir_func_5(a);
-		console.log("imported from",a.imported_from);
-		if(!a.imported_from) throw new Error("");
-		let x={
-			...a,
-			mod_dir: path.dirname(a.imported_from),
-			real_dir_name: path.basename(a.imported_from),
-			imp_real: null,
-		};
 		dir_func_6(a);
 		if(!a.import_target_ts) throw new Error();
 		debugger;
 		let target_re_compile=a.import_target_ts.replace("file:","");
 		let result=await new Promise(function(resolve,reject) {
-			let cp=child_process_spawn("tsc",['-t','ESNext',target_re_compile],{});
+			let cp=child_process_spawn("tsc",['-t','ESNext',"--outDir","./build/",target_re_compile],{});
 			cp.stdout.on("data",e => {
 				process.stdout.write(e);
 			});
