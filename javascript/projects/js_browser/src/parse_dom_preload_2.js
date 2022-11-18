@@ -72,6 +72,5 @@ async function async_main(url) {
 	if(!lexer) throw new Error("Can't import lexer plugin");
 	let repl_plugin=await import_ipc_plugin(ipc_loader_state,"repl_plugin_manager/mod.js");
 	if(debug) console.log('repl plug',repl_plugin);
-	await Promise.resolve();
 	await fetch_url(res);
 }
