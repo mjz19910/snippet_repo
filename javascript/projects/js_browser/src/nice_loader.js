@@ -46,46 +46,24 @@ export class ReplPluginManagerModule {
 	 */
 async function import_ipc_plugin(state) {
 	state.depth++;
-	let mod=null;
 	try {
-		mod=await try_import_module(state);
+		if(base_import.value===null) return null;
+		if(state.args===null) return null;
+		if(state.plugin_key===null) return null;
+		let x=state.args;
+		/** @type {{}} */
+		let mod=await base_import.value(x[0],x[1],x[2]);
+		module_map.set(state.plugin_key,mod);
+		return mod;
 	} catch(err) {
 		state.errors.push(err);
-		await handle_failed_import(state,load_key,context,defaultResolve);
-		if(module_map.has(load_key)) {
-			return module_map.get(load_key);
-		} else {
-			throw new Error("Handling error did not load plugin");
-		}
-	} finally {
-		state.depth--;
-	}
-	return mod;
+		await handle_failed_import(state);
+	} finally {state.depth--;}
+	if(!module_map.has(state.plugin_key)) throw new Error("Handling error did not load plugin");
+	return module_map.get(state.plugin_key);
 }
 
-export class HtmlLexerManagerModule {
-	/**
-	* @arg {IpcLoader} state
-	*/
-	static async import_ipc_plugin(state) {
-		state.depth++;
-		try {
-			return await try_import_module(state);
-		} catch(err) {
-			state.errors.push(err);
-			await handle_failed_import(state);
-			if(module_map.has(state.plugin_key)) {
-				return module_map.get(state.plugin_key);
-			} else {
-				throw new Error("Handling error did not load plugin");
-			}
-		}
-	}
-}
-
-/**
- * @param {IpcLoader} state
- */
+/** @param {IpcLoader} state */
 export async function try_import_module(state) {
 	if(base_import.value===null) return null;
 	if(state.args===null) return null;
@@ -170,10 +148,9 @@ function get_typescript_file_to_compile(state) {
 
 /** @arg {IpcLoader} state */
 export async function handle_failed_import(state) {
-	let typescript_file_to_compile = get_typescript_file_to_compile();
-	let target_re_compile=a.import_target_ts.replace("file:","");
+	let target_re_compile=get_typescript_file_to_compile().replace("file:","");
 	let result=await new Promise(function(resolve,reject) {
-		let cp=child_process_spawn("tsc",['-t','ESNext',"--outDir","./build/",target_re_compile],{});
+		let cp=child_process_spawn("tsc",['-t','ESNext', "-m", "ESNext","--outDir","./build/",target_re_compile],{});
 		cp.stdout.on("data",e => {
 			process.stdout.write(e);
 		});
@@ -191,34 +168,14 @@ export async function handle_failed_import(state) {
 	if(result!==0) new Error("Failed to recompile");
 }
 
-/** @arg {IpcLoader} state */
-export async function import_ipc_plugin(state) {
-	if(loader_debug) console.log('imp depth',state.depth);
-	state.depth++;
-	try {
-		let mod=await try_import_module(state);
-		return mod;
-	} catch(err) {
-		state.errors.push([false,err]);
-		await handle_failed_import(state);
-		if(module_map.has(plugin_key)) {
-			return module_map.get(plugin_key);
-		} else {
-			throw new Error("Handling error did not load plugin");
-		}
-	} finally {
-		state.depth--;
-	}
-}
-
 let ipc_load_data=new IpcLoader;
 
 /**
  * @param {string} specifier
- * @param {ContextType} context
- * @param {import("./nice_loader_types.js").ResolveFn} defaultResolve
+ * @param {ContextType<any>} context
+ * @param {import("./nice_loader_types.js").ResolveFn<any>} nextResolve
  */
-export async function resolve(specifier,context,defaultResolve) {
+export async function resolve(specifier,context,nextResolve) {
 	let errors=[];
 	let plugin_key;
 	debugger;
@@ -240,7 +197,7 @@ export async function resolve(specifier,context,defaultResolve) {
 	}
 	if(specifier.endsWith(".js")) {
 		try {
-			let res=await import_ipc_plugin(ipc_load_data,specifier,context,defaultResolve);
+			let res=await import_ipc_plugin(ipc_load_data,specifier,context,nextResolve);
 			if(res!==null) {
 				return res;
 			}
@@ -248,25 +205,25 @@ export async function resolve(specifier,context,defaultResolve) {
 			errors.push(err);
 		}
 		try {
-			return await defaultResolve(specifier,context,defaultResolve);
+			return await nextResolve(specifier,context,nextResolve);
 		} catch(err) {
 			errors.push(err);
 		}
 	}
 	try {
-		return await defaultResolve(specifier+".js",context,defaultResolve);
+		return await nextResolve(specifier+".js",context,nextResolve);
 	} catch(err) {
 		errors.push(err);
 	}
 	if(loader_debug) console.log('Failed to load import specifier: "'+specifier+'"');
 	try {
-		return await defaultResolve(specifier,context,defaultResolve);
+		return await nextResolve(specifier,context,nextResolve);
 	} catch(err) {
 		if(loader_debug) console.log('Failed to load import specifier: "'+specifier+'"');
 		errors.push(err);
 	}
 	if(system_modules.includes(specifier)) {
-		return defaultResolve(specifier,context,defaultResolve);
+		return nextResolve(specifier,context,nextResolve);
 	}
 	console.log("tried all imports");
 	console.log(specifier);
