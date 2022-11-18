@@ -6,6 +6,12 @@ export class Badge {
 	static verify(badge) {
 		if(!badge) throw create_missing_badge_err();
 		if(!badge.m_validity) throw create_validation_err();
+		badge.verify();
+	}
+	/**@type {0} */
+	#verify=0;
+	verify() {
+		return this.#verify === 0;
 	}
 	/**@type {boolean|undefined} */
 	m_validity=true;
