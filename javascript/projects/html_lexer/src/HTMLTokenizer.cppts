@@ -2,30 +2,6 @@
 #include "from_cpp/VERIFY.cppts"
 #include "edited_defines.cppts"
 
-#ifdef JS_MODE
-
-#ifdef NO_ENABLED
-// State class gen
-#define __ENUMERATE_TOKENIZER_STATE(state)/** @readonly */ state=__COUNTER__;<line>
-export class HTMLTokenizerIncH {
-    static State=class State {
-        /** @readonly */ InvalidState=__COUNTER__;
-        ENUMERATE_TOKENIZER_STATES
-    };
-}
-#undef __ENUMERATE_TOKENIZER_STATE
-// GoToTargets gen
-#define __ENUMERATE_TOKENIZER_STATE(state) #state|<line>
-export type GoToTargets=
-ENUMERATE_TOKENIZER_STATES
-"None";
-#undef __ENUMERATE_TOKENIZER_STATE
-
-#endif
-
-#endif
-
-
 export class HTMLTokenizer extends HTMLTokenizerBase {
     m_goto_pos:"_StartOfFunction"|"None"="None";
     next_token():Optional<HTMLToken>

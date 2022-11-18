@@ -100,6 +100,25 @@ namespace Web::HTML {
     __ENUMERATE_TOKENIZER_STATE(NumericCharacterReferenceEnd)
 
 
+#ifndef JS_MODE
+// State class gen
+#define __ENUMERATE_TOKENIZER_STATE(state)/** @readonly */ state=__COUNTER__;<line>
+export class HTMLTokenizerIncH {
+    static State=class State {
+        /** @readonly */ InvalidState=__COUNTER__;
+        ENUMERATE_TOKENIZER_STATES
+    };
+}
+#undef __ENUMERATE_TOKENIZER_STATE
+// GoToTargets gen
+#define __ENUMERATE_TOKENIZER_STATE(state) #state|<line>
+export type GoToTargets=
+ENUMERATE_TOKENIZER_STATES
+"None";
+#undef __ENUMERATE_TOKENIZER_STATE
+
+#endif
+
 #ifdef NO_ENUM_STATES
 class HTMLTokenizer {
 public:
