@@ -28,74 +28,61 @@ export class IpcLoader {
 	exports=[];
 	/**@type {unknown[]} */
 	errors=[];
-	/**@type {null|[path:string,context:ContextType<any>,nextResolve:import("./nice_loader_types.js").ResolveFn<any>]} */
-	args=null;
-	/**@type {string|null} */
-	plugin_key=null;
-	/**@type {string|null} */
-	stack=null;
-	/**@type {string|null} */
-	error_line=null;
-	/**@type {string|null} */
-	imported_from=null;
-	/**@type {string|null} */
-	import_target=null;
-	/**@type {string|null} */
-	import_target_ts=null;
+	/**@type {[]|[path:string,context:ContextType<any>,nextResolve:import("./nice_loader_types.js").ResolveFn<any>]} */
+	args=[];
 	/**@type {string[]} */
 	arr=[];
-}
-
-/** @param {IpcLoader} b */
-function dir_func_2(b) {
-	if(!b.stack) throw new Error("no stack");
-	b.error_line=b.stack.split("\n")[0];
-	if(!b.error_line) throw new Error("no error_line");
-}
-
-/** @param {IpcLoader} b */
-function dir_func_3(b) {
-	if(!b.error_line) throw new Error();
-	b.arr=b.error_line.split(" ");
-}
-
-/** @param {IpcLoader} b */
-function dir_func_4(b) {
-	if(!b.error_line) throw new Error();
-	b.imported_from=b.arr.slice(b.arr.indexOf("from")+1).join(" ");
-	if(!b.imported_from) throw new Error("no error_line");
-	console.log("imported from",b.imported_from);
-}
-
-/** @param {IpcLoader} b */
-function dir_func_5(b) {
-	if(!b.error_line) throw new Error();
-	let idx_start=b.arr.indexOf("find")+2;
-	b.import_target=b.arr.slice(idx_start,b.arr.indexOf("imported")).join(" ").slice(1,-1);
-	console.log("import_target",b.import_target);
-}
-
-/**@arg {IpcLoader} b */
-function dir_func_6(b) {
-	if(!b.import_target) throw new Error("missing import_target");
-	b.import_target_ts=b.import_target.replace(/(?<=.+)\.js/g,".ts");
-}
-
-/** @arg {IpcLoader} b */
-function get_last_error_stack(b) {
-	let err=b.errors.at(-1);
-	if(!(err instanceof Error)) throw new Error("Bad error");
-	if(!err.stack) throw new Error("No Error stack");
-	b.stack=err.stack;
+	/**@type {string|undefined} */
+	plugin_key;
+	/**@type {string|undefined} */
+	stack;
+	/**@type {string|undefined} */
+	error_line;
+	/**@type {string|undefined} */
+	imported_from;
+	/**@type {string|undefined} */
+	import_target;
+	/**@type {string|undefined} */
+	import_target_ts;
+	dir_start() {
+		this.last_error=this.errors.at(-1);
+	}
+	dir_func_1() {
+		if(this.last_error instanceof Error) {
+			this.stack=this.last_error.stack||null;
+		}
+	}
+	dir_func_2() {
+		this.error_line=this.stack?.split("\n")[0]||null;
+	}
+	dir_func_3() {
+		this.arr=this.error_line?.split(" ")||[];
+	}
+	dir_func_4() {
+		this.imported_from=this.arr.slice(this.arr.indexOf("from")+1).join(" ");
+		console.log("imported from",this.imported_from);
+	}
+	dir_func_5() {
+		let idx_start=this.arr.indexOf("find");
+		if(idx_start>-1) {
+			this.import_target=this.arr.slice(idx_start+2,this.arr.indexOf("imported")).join(" ").slice(1,-1);
+			console.log("import_target",this.import_target);
+		}
+	}
+	dir_func_6() {
+		this.import_target_ts=this.import_target?.replace(/(?<=.+)\.js/g,".ts")||null;
+	}
 }
 
 function get_typescript_file_to_compile(state) {
-	get_last_error_stack(state);
-	dir_func_2(a);
-	dir_func_3(a);
-	dir_func_4(a);
-	dir_func_5(a);
-	dir_func_6(a);
+	let a=state;
+	let b=a;
+	a.dir_func_1(state);
+	a.dir_func_2(a);
+	a.dir_func_3(a);
+	a.dir_func_4(a);
+	a.dir_func_5(a);
+	a.dir_func_6(a);
 	if(!a.import_target_ts) throw new Error();
 	return a.import_target_ts;
 }
