@@ -1,7 +1,7 @@
-import fs from 'fs';
-import path from "path";
-import process from "process";
-import {do_create_window,fake,handle_onPageLoadStarted} from '../../browser_fake_dom/index.js';
+import * as fs from 'fs';
+import * as path from "path";
+import * as process from "process";
+import {fake,handle_onPageLoadStarted} from '../../browser_fake_dom/index.js';
 import {PageLoaderState} from '../../page_loader/index.js';
 import {wget_on_static_page_load} from "./mod.js";
 
@@ -14,7 +14,6 @@ function main() {
 	const req_url="file://"+abs_file_path;
 	const state=new PageLoaderState(req_url);
 	state.url=req_url;
-	if(!fake.window) fake.window=do_create_window();
 	handle_onPageLoadStarted(fake.window,state);
 	fs.readFile(abs_file_path,(err,data) => {
 		if(err) {
@@ -24,4 +23,5 @@ function main() {
 		wget_on_static_page_load(state,Uint8Array.from(data),req_url);
 	});
 }
+
 main();
