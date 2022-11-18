@@ -29,7 +29,7 @@ export class IpcLoader {
 	depth=0;
 	/**@type {(()=>void)[]} */
 	exports=[];
-	/**@type {([true,Error]|[false,unknown])[]} */
+	/**@type {unknown[]} */
 	errors=[];
 	/**@type {null|[path:string,context:ContextType<any>,nextResolve:import("./nice_loader_types.js").ResolveFn]} */
 	args=null;
@@ -73,16 +73,10 @@ export class HtmlLexerManagerModule {
 		try {
 			mod=await try_import_module(state);
 		} catch(e) {
-			if(e instanceof Error) {
-				state.errors.push(e);
-			} else {
-				console.log("got non error");
-				console.log(e);
-				console.error("HERE");
-			}
+			state.errors.push(e);
 			await handle_failed_import(state);
-			if(module_map.has(load_key)) {
-				return module_map.get(load_key);
+			if(module_map.has(state.plugin_key)) {
+				return module_map.get(state.plugin_key);
 			} else {
 				throw new Error("Handling error did not load plugin");
 			}
@@ -165,8 +159,7 @@ function get_last_error_stack(b) {
 	return last_error.stack;
 }
 
-/** @arg {IpcLoader} state */
-export async function handle_failed_import(state) {
+function get_typescript_file_to_compile(state) {
 	a.stack=get_last_error_stack(state);
 	dir_func_2(a);
 	dir_func_3(a);
@@ -174,7 +167,12 @@ export async function handle_failed_import(state) {
 	dir_func_5(a);
 	dir_func_6(a);
 	if(!a.import_target_ts) throw new Error();
-	debugger;
+	return a.import_target_ts;
+}
+
+/** @arg {IpcLoader} state */
+export async function handle_failed_import(state) {
+	let typescript_file_to_compile = get_typescript_file_to_compile();
 	let target_re_compile=a.import_target_ts.replace("file:","");
 	let result=await new Promise(function(resolve,reject) {
 		let cp=child_process_spawn("tsc",['-t','ESNext',"--outDir","./build/",target_re_compile],{});
