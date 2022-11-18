@@ -7,25 +7,7 @@ import {PageLoaderState} from "../../page_loader/index.js";
 process.on('unhandledRejection',(/** @type {any} */ error) => {
 	console.log('unhandled promise rejection',error);
 });
-/**
- * @arg {boolean} long_help
- * @param {string} node_path
- * @param {string} script_path
- */
-function usage(long_help,node_path,script_path) {
-	if(long_help) {
-		console.log(`Usage: ${node_path} ${script_path} [options] [URL]
 
-Options:
-  --follow-redirects                follow redirects from the server
-  --no-repl                         don't start the repl
-  --help                            show this text
-`);
-	} else {
-		console.log(`Usage: ${path.basename(node_path)} ${script_path} [options] [URL]
-       ${path.basename(node_path)} ${script_path} --help`);
-	}
-}
 function main() {
 	async_main().then(() => {
 		console.log("app promise done");
