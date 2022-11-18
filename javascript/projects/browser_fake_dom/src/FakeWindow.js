@@ -1,7 +1,6 @@
 // FakeDocument <- FakeWindow -> FakeWindowNoImpl
 import {any} from "./any.js";
 import {intercept_setTimeoutAPI} from "./api/setTimeout.js";
-import {EmptyBadge} from "./EmptyBadge.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeExternal} from "./FakeExternal.js";
 import {FakeLocation} from "./FakeLocation.js";
@@ -416,7 +415,7 @@ export class FakeWindow extends FakeWindowType {
 		this.m_top=any_set;
 	}
 	/**@type {FakeLocation} */
-	m_location=new FakeLocation(new EmptyBadge);
+	m_location=new FakeLocation;
 	/**@returns {FakeLocation} */
 	get location() {
 		return this.m_location;

@@ -12,9 +12,6 @@ const delete_all_javascript_api=false;
 let repl_create_count=0;
 
 export class ReplPluginManager {
-	clearBufferedCommand() {
-		this.get_repl_runtime().clearBufferedCommand();
-	}
 	/**
 	 * @param {string} arg0
 	 */

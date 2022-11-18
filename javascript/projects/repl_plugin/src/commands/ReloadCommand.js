@@ -12,7 +12,7 @@ export class ReloadCommand {
 	 */
 	action(state) {
 		let repl=get_cached_repl_plugin(state);
-		repl.internalX.clearBufferedCommand();
+		repl.clearBufferedCommand();
 		this.run_action(repl.m_request_state);
 		repl.displayPrompt();
 	}
