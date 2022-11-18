@@ -2,99 +2,6 @@
 #include "from_cpp/VERIFY.cppts"
 #include "edited_defines.cppts"
 
-// '<'
-#define TAG_START_TOKENS_1 this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
-// '/'
-#define TAG_START_TOKENS_2 this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
-
-// open tag_name </
-#define TAG_START_TOKENS_1_2 \
-    TAG_START_TOKENS_1\
-    TAG_START_TOKENS_2
-
-#define ENUMERATE_TOKENIZER_STATES                                        \
-    __ENUMERATE_TOKENIZER_STATE(Data)                                     \
-    __ENUMERATE_TOKENIZER_STATE(RCDATA)                                   \
-    __ENUMERATE_TOKENIZER_STATE(RAWTEXT)                                  \
-    __ENUMERATE_TOKENIZER_STATE(ScriptData)                               \
-    __ENUMERATE_TOKENIZER_STATE(PLAINTEXT)                                \
-    __ENUMERATE_TOKENIZER_STATE(TagOpen)                                  \
-    __ENUMERATE_TOKENIZER_STATE(EndTagOpen)                               \
-    __ENUMERATE_TOKENIZER_STATE(TagName)                                  \
-    __ENUMERATE_TOKENIZER_STATE(RCDATALessThanSign)                       \
-    __ENUMERATE_TOKENIZER_STATE(RCDATAEndTagOpen)                         \
-    __ENUMERATE_TOKENIZER_STATE(RCDATAEndTagName)                         \
-    __ENUMERATE_TOKENIZER_STATE(RAWTEXTLessThanSign)                      \
-    __ENUMERATE_TOKENIZER_STATE(RAWTEXTEndTagOpen)                        \
-    __ENUMERATE_TOKENIZER_STATE(RAWTEXTEndTagName)                        \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataLessThanSign)                   \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEndTagOpen)                     \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEndTagName)                     \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEscapeStart)                    \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEscapeStartDash)                \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEscaped)                        \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEscapedDash)                    \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEscapedDashDash)                \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEscapedLessThanSign)            \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEscapedEndTagOpen)              \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataEscapedEndTagName)              \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataDoubleEscapeStart)              \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataDoubleEscaped)                  \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataDoubleEscapedDash)              \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataDoubleEscapedDashDash)          \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataDoubleEscapedLessThanSign)      \
-    __ENUMERATE_TOKENIZER_STATE(ScriptDataDoubleEscapeEnd)                \
-    __ENUMERATE_TOKENIZER_STATE(BeforeAttributeName)                      \
-    __ENUMERATE_TOKENIZER_STATE(AttributeName)                            \
-    __ENUMERATE_TOKENIZER_STATE(AfterAttributeName)                       \
-    __ENUMERATE_TOKENIZER_STATE(BeforeAttributeValue)                     \
-    __ENUMERATE_TOKENIZER_STATE(AttributeValueDoubleQuoted)               \
-    __ENUMERATE_TOKENIZER_STATE(AttributeValueSingleQuoted)               \
-    __ENUMERATE_TOKENIZER_STATE(AttributeValueUnquoted)                   \
-    __ENUMERATE_TOKENIZER_STATE(AfterAttributeValueQuoted)                \
-    __ENUMERATE_TOKENIZER_STATE(SelfClosingStartTag)                      \
-    __ENUMERATE_TOKENIZER_STATE(BogusComment)                             \
-    __ENUMERATE_TOKENIZER_STATE(MarkupDeclarationOpen)                    \
-    __ENUMERATE_TOKENIZER_STATE(CommentStart)                             \
-    __ENUMERATE_TOKENIZER_STATE(CommentStartDash)                         \
-    __ENUMERATE_TOKENIZER_STATE(Comment)                                  \
-    __ENUMERATE_TOKENIZER_STATE(CommentLessThanSign)                      \
-    __ENUMERATE_TOKENIZER_STATE(CommentLessThanSignBang)                  \
-    __ENUMERATE_TOKENIZER_STATE(CommentLessThanSignBangDash)              \
-    __ENUMERATE_TOKENIZER_STATE(CommentLessThanSignBangDashDash)          \
-    __ENUMERATE_TOKENIZER_STATE(CommentEndDash)                           \
-    __ENUMERATE_TOKENIZER_STATE(CommentEnd)                               \
-    __ENUMERATE_TOKENIZER_STATE(CommentEndBang)                           \
-    __ENUMERATE_TOKENIZER_STATE(DOCTYPE)                                  \
-    __ENUMERATE_TOKENIZER_STATE(BeforeDOCTYPEName)                        \
-    __ENUMERATE_TOKENIZER_STATE(DOCTYPEName)                              \
-    __ENUMERATE_TOKENIZER_STATE(AfterDOCTYPEName)                         \
-    __ENUMERATE_TOKENIZER_STATE(AfterDOCTYPEPublicKeyword)                \
-    __ENUMERATE_TOKENIZER_STATE(BeforeDOCTYPEPublicIdentifier)            \
-    __ENUMERATE_TOKENIZER_STATE(DOCTYPEPublicIdentifierDoubleQuoted)      \
-    __ENUMERATE_TOKENIZER_STATE(DOCTYPEPublicIdentifierSingleQuoted)      \
-    __ENUMERATE_TOKENIZER_STATE(AfterDOCTYPEPublicIdentifier)             \
-    __ENUMERATE_TOKENIZER_STATE(BetweenDOCTYPEPublicAndSystemIdentifiers) \
-    __ENUMERATE_TOKENIZER_STATE(AfterDOCTYPESystemKeyword)                \
-    __ENUMERATE_TOKENIZER_STATE(BeforeDOCTYPESystemIdentifier)            \
-    __ENUMERATE_TOKENIZER_STATE(DOCTYPESystemIdentifierDoubleQuoted)      \
-    __ENUMERATE_TOKENIZER_STATE(DOCTYPESystemIdentifierSingleQuoted)      \
-    __ENUMERATE_TOKENIZER_STATE(AfterDOCTYPESystemIdentifier)             \
-    __ENUMERATE_TOKENIZER_STATE(BogusDOCTYPE)                             \
-    __ENUMERATE_TOKENIZER_STATE(CDATASection)                             \
-    __ENUMERATE_TOKENIZER_STATE(CDATASectionBracket)                      \
-    __ENUMERATE_TOKENIZER_STATE(CDATASectionEnd)                          \
-    __ENUMERATE_TOKENIZER_STATE(CharacterReference)                       \
-    __ENUMERATE_TOKENIZER_STATE(NamedCharacterReference)                  \
-    __ENUMERATE_TOKENIZER_STATE(AmbiguousAmpersand)                       \
-    __ENUMERATE_TOKENIZER_STATE(NumericCharacterReference)                \
-    __ENUMERATE_TOKENIZER_STATE(HexadecimalCharacterReferenceStart)       \
-    __ENUMERATE_TOKENIZER_STATE(DecimalCharacterReferenceStart)           \
-    __ENUMERATE_TOKENIZER_STATE(HexadecimalCharacterReference)            \
-    __ENUMERATE_TOKENIZER_STATE(DecimalCharacterReference)                \
-    __ENUMERATE_TOKENIZER_STATE(NumericCharacterReferenceEnd)
-
-
 #ifdef JS_MODE
 
 #ifdef NO_ENABLED
@@ -197,7 +104,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON_EOF
                             {
                                 this.log_parse_error();
-                                TAG_START_TOKENS_1
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
                                 EMIT_EOF;
                             }
                             ANYTHING_ELSE
@@ -273,7 +180,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             ON_EOF
                             {
                                 this.log_parse_error();
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 EMIT_EOF;
                             }
                             ANYTHING_ELSE
@@ -1817,7 +1725,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 RECONSUME_IN(RCDATA);
                             }
                         }
@@ -1830,7 +1739,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    TAG_START_TOKENS_1_2
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RCDATA);
@@ -1841,7 +1751,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    TAG_START_TOKENS_1_2
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RCDATA);
@@ -1852,7 +1763,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    TAG_START_TOKENS_1_2
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RCDATA);
@@ -1873,7 +1785,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -1931,7 +1844,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 RECONSUME_IN(RAWTEXT);
                             }
                         }
@@ -1944,7 +1858,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    TAG_START_TOKENS_1_2
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RAWTEXT);
@@ -1955,7 +1870,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    TAG_START_TOKENS_1_2
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RAWTEXT);
@@ -1966,7 +1882,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    TAG_START_TOKENS_1_2
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     RECONSUME_IN(RAWTEXT);
@@ -1987,7 +1904,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2049,7 +1967,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ON('!'.charCodeAt(0))
                             {
-                                TAG_START_TOKENS_1
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('!'.charCodeAt(0)));
                                 SWITCH_TO(ScriptDataEscapeStart);
                             }
@@ -2150,7 +2068,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 RECONSUME_IN(ScriptDataEscaped);
                             }
                         }
@@ -2165,7 +2084,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (this.current_end_tag_token_is_appropriate())
                                     SWITCH_TO(BeforeAttributeName);
 
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2179,7 +2099,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (this.current_end_tag_token_is_appropriate())
                                     SWITCH_TO(SelfClosingStartTag);
 
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2193,7 +2114,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (this.current_end_tag_token_is_appropriate())
                                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
 
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2215,7 +2137,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2491,7 +2414,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 RECONSUME_IN(ScriptData);
                             }
                         }
@@ -2505,7 +2429,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
                                     SWITCH_TO(BeforeAttributeName);
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2517,7 +2442,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
                                     SWITCH_TO(SelfClosingStartTag);
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2529,7 +2455,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
                                     SWITCH_TO_AND_EMIT_CURRENT_TOKEN(Data);
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2550,7 +2477,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             ANYTHING_ELSE
                             {
-                                TAG_START_TOKENS_1_2
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
