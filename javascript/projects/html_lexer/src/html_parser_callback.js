@@ -3,7 +3,8 @@ import {dirname} from "path";
 import {PageLoaderState} from "../../page_loader/index.js";
 import {HTMLLexerResult} from "./HTMLLexerResult.js";
 import {g_html_lexer} from "./g_html_lexer.js";
-import {HTMLTokenizer} from "./HTMLTokenizer.1";
+import {HTMLTokenizer} from "./HTMLTokenizer.js";
+
 /**
  * @template T
  * @arg {T} this_T
@@ -31,9 +32,9 @@ export async function html_parser_callback(this_T,state,html) {
 	await writeFile(file_path,html);
 	try {
 		let new_state=state.copy();
-		new_state.lexer_state=new HTMLTokenizer(html);
-		let lex_result=g_html_lexer.value.self_lex_html(new_state,html);
-		let parse_result=g_html_lexer.value.on_lex_result(new_state,html,lex_result);
+		new_state.lexer_state=new HTMLTokenizer;
+		g_html_lexer.value.self_lex_html(new_state,html);
+		let parse_result=g_html_lexer.value.on_lex_result(new_state,html);
 		// TODO: parse the lexed tags into a DOM tree and
 		// attach the root node of that tree to document_root
 		return parse_result;
