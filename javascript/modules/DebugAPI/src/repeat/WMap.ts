@@ -1,4 +1,4 @@
-import {RepeatTS} from "./RepeatTS.js";
+import {RepeatTS} from "./Repeat.js";
 
 export class WMapTS<T,V> {
 	value: Map<V,Map<number,RepeatTS<T>>>;

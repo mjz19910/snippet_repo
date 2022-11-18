@@ -1,7 +1,7 @@
 import {ConstructorWithSymbolType} from "../repeat/ConstructorWithSymbolType.js";
 import {BaseCompression} from "./BaseCompression.js";
-import {RepeatTS} from "../repeat/RepeatTS.js";
-import {AnyOrRepeatTS} from "../repeat/AnyOrRepeatTS.js";
+import {RepeatTS} from "../repeat/Repeat.js";
+import {AnyOrRepeatTS} from "../repeat/AnyOrRepeat.js";
 import {type} from "jquery";
 import {NumType} from "../NumType.js";
 

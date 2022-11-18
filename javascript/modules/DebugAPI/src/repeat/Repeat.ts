@@ -1,5 +1,5 @@
-import {AnyOrRepeatTS} from "./AnyOrRepeatTS.js";
-import {AnyRepeat2TS} from "./AnyRepeat2TS";
+import {AnyOrRepeatTS} from "./AnyOrRepeat.js";
+import {AnyRepeat2TS} from "./AnyOrRepeat2";
 import {ConstructorWithSymbolType} from "./ConstructorWithSymbolType.js";
 import {TypeAOrTypeB} from "./TypeAOrTypeB.js";
 

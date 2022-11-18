@@ -1,6 +1,6 @@
 import {Repeat} from "../repeat/Repeat";
 import {TypeAOrTypeB} from "../repeat/TypeAOrTypeB.js";
-import {AnyRepeat2} from "../repeat/AnyRepeat2.js";
+import {AnyRepeat2} from "../repeat/AnyOrRepeat2.js";
 import {BaseCompression} from "./BaseCompression.js";
 
 export class CompressTU {

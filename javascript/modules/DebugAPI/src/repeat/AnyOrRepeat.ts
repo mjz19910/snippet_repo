@@ -1,3 +1,3 @@
-import {Repeat} from "./Repeat.js";
+import {RepeatTS} from "./Repeat.js";
 
-export type AnyOrRepeat<T>=T|Repeat<T>;
+export type AnyOrRepeatTS<T>=T|RepeatTS<T>;
