@@ -3,38 +3,41 @@ import {AnyRepeat2TS} from "./AnyOrRepeat2";
 import {ConstructorWithSymbolType} from "./ConstructorWithSymbolType.js";
 import {TypeAOrTypeB} from "./TypeAOrTypeB.js";
 
-type X=ConstructorWithSymbolType;
 namespace S {
 	export type A<T extends new (...args: any) => any>=InstanceType<T>;
+	export type B=ConstructorWithSymbolType;
+	// Map === S.C
+	export type C<A,B>=Map<A,B>;
 }
-class Repeat<T> {
-	map_instance_or_d1: Map<symbol,Map<T,<U extends X>(constructor_key_2: U) => AnyOrRepeat<S.A<U>>>>=new Map;
+
+export class Repeat<T> {
+	map_instance_or_d1: Map<symbol,Map<T,<U extends S.B>(constructor_key_2: U) => AnyOrRepeat<S.A<U>>>>=new Map;
 	map_instance_or: Map<symbol,<T,U>() => Map<T,AnyOrRepeat<U>>>=new Map;
 	base_map=new Map<
 		symbol,
-		<T extends X,U extends S.A<T>>(constructor_key_1: T,_: U) =>
+		<T extends S.B,U extends S.A<T>>(constructor_key_1: T,_: U) =>
 			Map<
 				T['type'],
-				<T extends X,U extends S.A<T>>(constructor_key_2: T,_: U) =>
+				<T extends S.B,U extends S.A<T>>(constructor_key_2: T,_: U) =>
 					Map<
 						T['type'],
 						AnyOrRepeat<U>
 					>
 			>
 	>;
-	map_instance_or_d0(): Map<symbol,<T extends X,U extends S.A<T>>(constructor_key_1: T,_: U) =>Map<T['type'],<T extends X,U extends S.A<T>>(constructor_key_2: T,_: U) =>Map<T['type'],AnyOrRepeat<U>>>> {
+	map_instance_or_d0(): Map<symbol,<T extends S.B,U extends S.A<T>>(constructor_key_1: T,_: U) =>Map<T['type'],<T extends S.B,U extends S.A<T>>(constructor_key_2: T,_: U) =>Map<T['type'],AnyOrRepeat<U>>>> {
 		return this.base_map;
 
 	};
-	get_map_T_or<T extends X,U extends S.A<T>>(constructor_key_0: T,_: U) {
+	get_map_T_or<T extends S.B,U extends S.A<T>>(constructor_key_0: T,_: U) {
 		let res=this.base_map.get(constructor_key_0.type);
 		if(!res) {
 			let t=this;
 			this.base_map.set(
 				constructor_key_0.type,
-				<T extends X,U extends InstanceType<T>>(constructor_key_1: T,_: U) => {
+				<T extends S.B,U extends InstanceType<T>>(constructor_key_1: T,_: U) => {
 					let m_res=t.map_instance_or_d1.get(constructor_key_1.type);
-					if(!m_res) m_res=new Map<InstanceType<T>,<U extends X>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>;
+					if(!m_res) m_res=new Map<InstanceType<T>,<U extends S.B>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>;
 					t.map_instance_or_d1.set(constructor_key_1.type,m_res);
 					return new Map;
 				}
