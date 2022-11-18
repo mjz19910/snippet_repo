@@ -3,7 +3,7 @@ import {sorted_comp_stats} from "./sorted_comp_stats";
 
 /**
  * @arg {CompressionStatsCalculator} stats
- * @param {IDValueData} obj
+ * @param {IDValue} obj
  */
 export function calc_cur(stats,obj) {
 	if(!obj.stats_win||obj.arr_str===void 0)

@@ -1,3 +1,3 @@
-import {AnyOrRepeatTS} from "./AnyOrRepeat";
+import {AnyOrRepeat} from "./AnyOrRepeat";
 
-export type AnyRepeat2TS<T,U>=["T",AnyOrRepeatTS<T>]|["U",AnyOrRepeatTS<U>];
+export type AnyRepeat2TS<T,U>=["T",AnyOrRepeat<T>]|["U",AnyOrRepeat<U>];

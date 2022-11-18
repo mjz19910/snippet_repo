@@ -1,14 +1,14 @@
 import {ConstructorWithSymbolType} from "../repeat/ConstructorWithSymbolType.js";
 import {BaseCompression} from "./BaseCompression.js";
-import {RepeatTS} from "../repeat/Repeat.js";
-import {AnyOrRepeatTS} from "../repeat/AnyOrRepeat.js";
+import {Repeat} from "../repeat/Repeat.js";
+import {AnyOrRepeat} from "../repeat/AnyOrRepeat.js";
 import {type} from "jquery";
 import {NumType} from "../NumType.js";
 
 export class CompressTemplateType<T extends InstanceType<U>,U extends ConstructorWithSymbolType> {
 	i: number;
 	arr: T[]=[];
-	ret: AnyOrRepeatTS<T>[]=[];
+	ret: AnyOrRepeat<T>[]=[];
 	constructor_key: U;
 	constructor(arr: T[],constructor_key: U) {
 		this.i=0;
@@ -33,7 +33,7 @@ export class CompressTemplateType<T extends InstanceType<U>,U extends Constructo
 		while(item===state.arr[state.i+j]) j++;
 		if(j==1) return false;
 		let times=j;
-		let item_map=RepeatTS.N.get_map_T_or<U,T>(this.constructor_key,item);
+		let item_map=Repeat.N.get_map_T_or<U,T>(this.constructor_key,item);
 		let map=item_map(NumType,times);
 		let mq=map.get(NumType.type);
 		if(!mq) return false;
@@ -42,7 +42,7 @@ export class CompressTemplateType<T extends InstanceType<U>,U extends Constructo
 		if(ma!==void 0) {
 			state.ret.push(ma);
 		} else {
-			let q=new RepeatTS(item,times);
+			let q=new Repeat(item,times);
 			state.ret.push(q);
 		}
 		state.i+=times-1;

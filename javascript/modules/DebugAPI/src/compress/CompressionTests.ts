@@ -9,7 +9,10 @@ export function test_try_compress(target: MulCompression) {
 	target.try_compress_T(arr,NumType);
 	let state=new CompressState<number,AnyOrRepeat<number>>(arr);
 	target.compress_rle_T_X(state,arr[0],NumType);
-	let compression_map=Repeat.N.get_map_T(NumType,arr[0]);
-	Repeat.get_with(compression_map,arr[0],2);
-	state.ret.push(new Repeat(arr[0],2));
+	let function_1=Repeat.N.get_map_T(NumType,arr[0]);
+	let map_2=function_1<number,number>();
+	let map3=Repeat.get_require(map_2,arr[0]);
+	if(map3 === null) {
+		state.ret.push(new Repeat(arr[0],2));
+	}
 }

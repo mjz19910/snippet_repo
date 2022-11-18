@@ -1,5 +1,5 @@
-import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB";
-import {AnyOrRepeat} from "./repeat/AnyOrRepeat";
+import {TypeAOrTypeB} from "../src/repeat/TypeAOrTypeB";
+import {AnyOrRepeat} from "../src/repeat/AnyOrRepeat";
 
 declare global {
 	type IDValue=X.IDValue;

@@ -3,7 +3,7 @@ import {CreateObjURLCache} from "../CreateObjURLCache";
 import {IterExtensions} from "../IterExtensions";
 import {to_tuple_arr} from "../to_tuple_arr";
 import {CompressRepeated} from "../CompressRepeated";
-import {Repeat} from "../repeat/Repeat.js";
+import {Repeat as Repeat} from "../repeat/Repeat.js";
 import {range_matches} from "../range_matches.js";
 import {CompressionStatsCalculator} from "../compress/CompressionStatsCalculator.js";
 import {HexRandomDataGenerator} from "../HexRandomDataGenerator.js";
@@ -21,7 +21,7 @@ import {LoggingEventTarget} from "../debug_api/LoggingEventTarget.js";
 import {DebugAPI} from "../debug_api/DebugAPI.js";
 import {GenericEventTarget} from "../GenericEventTarget.js";
 import {GenericEvent} from "../GenericEvent.js";
-import {VoidCallbackWith} from "../VoidCallbackWith.js";
+import {VoidCallbackWith} from "../../types/VoidCallbackWith.js";
 
 // DebugAPI
 export interface GlobalApiObject {

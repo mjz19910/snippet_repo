@@ -6,7 +6,7 @@ import {run_calc} from "./run_calc";
 import {g_auto_buy,src_arr,ids,id_groups,el_ids,max_id,g_obj_arr} from "./mod";
 import {get_ids} from "./get_ids";
 import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator.js";
-import {IDValueData} from "./IDValueData.js";
+import {IDValueData} from "../types/IDValueData.js";
 
 /**
  * @param {CompressionStatsCalculator} stats
