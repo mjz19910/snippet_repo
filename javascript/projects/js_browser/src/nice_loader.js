@@ -105,7 +105,7 @@ export async function try_import_module(state) {
 	return mod;
 }
 
-class A {
+class ImportData {
 	/**@type {string|null} */
 	stack=null;
 	/**@type {string|null} */
@@ -120,22 +120,22 @@ class A {
 	arr=[];
 }
 
-let a=new A;
+let a=new ImportData;
 
-/** @param {A} b */
+/** @param {ImportData} b */
 function dir_func_2(b) {
 	if(!b.stack) throw new Error("no stack");
 	b.error_line=b.stack.split("\n")[0];
 	if(!a.error_line) throw new Error("no error_line");
 }
 
-/** @param {A} b */
+/** @param {ImportData} b */
 function dir_func_3(b) {
 	if(!b.error_line) throw new Error();
 	b.arr=b.error_line.split(" ");
 }
 
-/** @param {A} b */
+/** @param {ImportData} b */
 function dir_func_4(b) {
 	if(!b.error_line) throw new Error();
 	b.imported_from=b.arr.slice(b.arr.indexOf("from")+1).join(" ");
@@ -143,7 +143,7 @@ function dir_func_4(b) {
 	console.log("imported from",b.imported_from);
 }
 
-/** @param {A} b */
+/** @param {ImportData} b */
 function dir_func_5(b) {
 	if(!b.error_line) throw new Error();
 	let idx_start=b.arr.indexOf("find")+2;
@@ -151,7 +151,7 @@ function dir_func_5(b) {
 	console.log("import_target",b.import_target);
 }
 
-/**@arg {A} b */
+/**@arg {ImportData} b */
 function dir_func_6(b) {
 	if(!b.import_target) throw new Error("missing import_target");
 	b.import_target_ts=b.import_target.replace(/(?<=.+)\.js/g,".ts");
