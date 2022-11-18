@@ -1,5 +1,8 @@
 /** @template T */
 export class Optional {
+    deref() {
+        return this.value();
+    }
     value() {
         if(this.m_has_value) {
             if(this.m_value !== null) return this.m_value;

@@ -3,7 +3,7 @@
 // 0 "<command-line>"
 // 1 "HTMLTokenizer.cppts"
 // 1 "HTMLTokenizer.pre.ts" 1
-import {HTMLToken} from "./HTMLToken.1";
+import {HTMLToken} from "./HTMLToken";
 import {throw_todo} from "./throw_todo";
 import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl";
 import {State} from "./State.js";
@@ -15,8 +15,10 @@ import {state_name} from "./state_name.js";
 import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {move} from "./move.js";
 import {HTMLTokenizerBase} from "./HTMLTokenizerBase.js";
-import {ak_verification_failed} from "./ak_verification_failed.js";
 import {CaseSensitivity} from "./CaseSensitivity.js";
+import {ak_verification_failed} from "./ak_verification_failed.js";
+import {StringView} from "./StringView.js";
+import {Vector} from "./Vector.js";
 
 
 export function use_imports() {
@@ -32,13 +34,41 @@ export function use_imports() {
         state_name,
         TOKENIZER_TRACE_DEBUG,
         move,
-        ak_verification_failed,
         HTMLTokenizerBase,
         CaseSensitivity,
+        ak_verification_failed,
     ];
 }
+
+export namespace HTML {
+    class CodePointEntity {
+        entity: any;
+        code_points!: Vector<number>;
+        static from(v: StringView) {
+            return new Optional(new this(v))
+        }
+        x;
+        constructor(x: StringView){
+            this.x=x;
+        }
+    }
+    export function code_points_from_entity (v:StringView) {
+        return CodePointEntity.from(v);
+    }
+}
 // 2 "HTMLTokenizer.cppts" 2
-// 284 "HTMLTokenizer.cppts"
+// 1 "from_cpp/VERIFY.cppts" 1
+// 3 "HTMLTokenizer.cppts" 2
+// 1 "edited_defines.cppts" 1
+// 4 "HTMLTokenizer.cppts" 2
+
+// '<'
+
+// '/'
+
+
+// open tag_name </
+// 122 "HTMLTokenizer.cppts"
 export class HTMLTokenizer extends HTMLTokenizerBase {
     m_goto_pos:"_StartOfFunction"|"None"="None";
     next_token():Optional<HTMLToken>
@@ -70,11 +100,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
                                 this.m_return_state = State.Data;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","314"].join("")) : void 0); do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","152"].join("")) : void 0); do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","318"].join("")) : void 0); do { this.will_switch_to(State.TagOpen); this.m_state = State.TagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","156"].join("")) : void 0); do { this.will_switch_to(State.TagOpen); this.m_state = State.TagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -90,7 +120,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","334"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","172"].join("")) : void 0); break; } } }
 
                         // 13.2.5.6 Tag open state, https://html.spec.whatwg.org/multipage/parsing.html//tag-open-state
                         /*<csw>state:</csw>*/
@@ -98,11 +128,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '!'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","341"].join("")) : void 0); do { this.will_switch_to(State.MarkupDeclarationOpen); this.m_state = State.MarkupDeclarationOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","179"].join("")) : void 0); do { this.will_switch_to(State.MarkupDeclarationOpen); this.m_state = State.MarkupDeclarationOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","345"].join("")) : void 0); do { this.will_switch_to(State.EndTagOpen); this.m_state = State.EndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","183"].join("")) : void 0); do { this.will_switch_to(State.EndTagOpen); this.m_state = State.EndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && this.is_ascii_alpha(current_input_character.value()))
                             {
@@ -119,16 +149,16 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (!current_input_character.has_value())
                             {
                                 this.log_parse_error();
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ;
                                 do { if (this.m_has_emitted_eof) return new Optional; this.m_has_emitted_eof = true; this.create_new_token(HTMLToken.Type.EndOfFile); this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (1)
                             {
                                 this.log_parse_error();
-                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<')); this.will_reconsume_in(State.Data); this.m_state = State.Data; this.m_goto_target="Data"; break _StartOfFunction; } while (0);
+                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.will_reconsume_in(State.Data); this.m_state = State.Data; this.m_goto_target="Data"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","371"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","209"].join("")) : void 0); break; } } }
 
                         // 13.2.5.8 Tag name state, https://html.spec.whatwg.org/multipage/parsing.html//tag-name-state
                         /*<csw>state:</csw>*/
@@ -137,48 +167,48 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
-                                this.m_current_token.set_end_position({}, this.nth_last_position(1));
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","380"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                this.m_current_token.set_end_position("Badge<HTMLTokenizer>", this.nth_last_position(1));
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","218"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
-                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","386"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                this.m_current_token.set_end_position("Badge<HTMLTokenizer>", this.nth_last_position(0));
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","224"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
-                                this.m_current_token.set_end_position({}, this.nth_last_position(1));
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","392"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                this.m_current_token.set_end_position("Badge<HTMLTokenizer>", this.nth_last_position(1));
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","230"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && this.is_ascii_upper_alpha(current_input_character.value()))
                             {
                                 this.m_current_builder.append_code_point(this.to_ascii_lowercase(current_input_character.value()));
-                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
+                                this.m_current_token.set_end_position("Badge<HTMLTokenizer>", this.nth_last_position(0));
                                 continue;
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
                                 this.log_parse_error();
                                 this.m_current_builder.append_code_point(0xFFFD);
-                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
+                                this.m_current_token.set_end_position("Badge<HTMLTokenizer>", this.nth_last_position(0));
                                 continue;
                             }
                             if (!current_input_character.has_value())
                             {
                                 this.log_parse_error();
-                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
+                                this.m_current_token.set_end_position("Badge<HTMLTokenizer>", this.nth_last_position(0));
                                 do { if (this.m_has_emitted_eof) return new Optional; this.m_has_emitted_eof = true; this.create_new_token(HTMLToken.Type.EndOfFile); this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (1)
                             {
                                 this.m_current_builder.append_code_point(current_input_character.value());
-                                this.m_current_token.set_end_position({}, this.nth_last_position(0));
+                                this.m_current_token.set_end_position("Badge<HTMLTokenizer>", this.nth_last_position(0));
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","420"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","258"].join("")) : void 0); break; } } }
 
                         // 13.2.5.7 End tag open state, https://html.spec.whatwg.org/multipage/parsing.html//end-tag-open-state
                         /*<csw>state:</csw>*/
@@ -192,13 +222,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","433"].join("")) : void 0); do { this.will_switch_to(State.Data); this.m_state = State.Data; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","271"].join("")) : void 0); do { this.will_switch_to(State.Data); this.m_state = State.Data; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
                                 this.log_parse_error();
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 do { if (this.m_has_emitted_eof) return new Optional; this.m_has_emitted_eof = true; this.create_new_token(HTMLToken.Type.EndOfFile); this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (1)
@@ -208,7 +237,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BogusComment); this.m_state = State.BogusComment; this.m_goto_target="BogusComment"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","449"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","286"].join("")) : void 0); break; } } }
 
                         // 13.2.5.42 Markup declaration open state, https://html.spec.whatwg.org/multipage/parsing.html//markup-declaration-open-state
                         /*<csw>state:</csw>*/
@@ -218,16 +247,16 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (this.consume_next_if_match("--")) {
                                 this.create_new_token(HTMLToken.Type.Comment);
                                 this.m_current_token.set_start_position("Badge_HTMLTokenizer", this.nth_last_position(3));
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","458"].join("")) : void 0); do { this.will_switch_to(State.CommentStart); this.m_state = State.CommentStart; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","295"].join("")) : void 0); do { this.will_switch_to(State.CommentStart); this.m_state = State.CommentStart; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (this.consume_next_if_match("DOCTYPE", CaseSensitivity.CaseInsensitive)) {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","461"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPE); this.m_state = State.DOCTYPE; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","298"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPE); this.m_state = State.DOCTYPE; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (this.consume_next_if_match("[CDATA[")) {
                                 // We keep the parser optional so that syntax highlighting can be lexer-only.
                                 // The parser registers itself with the lexer it creates.
-                                if (this.m_parser != nullptr && this.m_parser.deref().adjusted_current_node().namespace_() != Namespace.HTML) {
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","467"].join("")) : void 0); do { this.will_switch_to(State.CDATASection); this.m_state = State.CDATASection; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                if (this.m_parser.is_not_null() && this.m_parser.deref().adjusted_current_node().namespace_() != Namespace.HTML) {
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","304"].join("")) : void 0); do { this.will_switch_to(State.CDATASection); this.m_state = State.CDATASection; current_input_character = this.next_code_point();; } while (0); } while (0);
                                 } else {
                                     this.create_new_token(HTMLToken.Type.Comment);
                                     this.m_current_builder.append("[CDATA[");
@@ -238,10 +267,10 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.log_parse_error();
                                 this.create_new_token(HTMLToken.Type.Comment);
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","478"].join("")) : void 0); do { this.will_switch_to(State.BogusComment); this.m_state = State.BogusComment; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","315"].join("")) : void 0); do { this.will_switch_to(State.BogusComment); this.m_state = State.BogusComment; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","481"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","318"].join("")) : void 0); break; } } }
 
                         // 13.2.5.41 Bogus comment state, https://html.spec.whatwg.org/multipage/parsing.html//bogus-comment-state
                         /*<csw>state:</csw>*/
@@ -250,7 +279,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.m_current_token.set_comment(this.consume_current_builder());
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","489"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","326"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -269,7 +298,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","508"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","345"].join("")) : void 0); break; } } }
 
                         // 13.2.5.53 DOCTYPE state, https://html.spec.whatwg.org/multipage/parsing.html//doctype-state
                         /*<csw>state:</csw>*/
@@ -277,7 +306,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","515"].join("")) : void 0); do { this.will_switch_to(State.BeforeDOCTYPEName); this.m_state = State.BeforeDOCTYPEName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","352"].join("")) : void 0); do { this.will_switch_to(State.BeforeDOCTYPEName); this.m_state = State.BeforeDOCTYPEName; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
@@ -297,7 +326,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BeforeDOCTYPEName); this.m_state = State.BeforeDOCTYPEName; this.m_goto_target="BeforeDOCTYPEName"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","535"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","372"].join("")) : void 0); break; } } }
 
                         // 13.2.5.54 Before DOCTYPE name state, https://html.spec.whatwg.org/multipage/parsing.html//before-doctype-name-state
                         /*<csw>state:</csw>*/
@@ -327,7 +356,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.log_parse_error();
                                 this.create_new_token(HTMLToken.Type.DOCTYPE);
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","564"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","401"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -345,7 +374,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_switch_to(State.DOCTYPEName); this.m_state = State.DOCTYPEName; current_input_character = this.next_code_point();; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","582"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","419"].join("")) : void 0); break; } } }
 
                         // 13.2.5.55 DOCTYPE name state, https://html.spec.whatwg.org/multipage/parsing.html//doctype-name-state
                         /*<csw>state:</csw>*/
@@ -354,12 +383,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {
                                 this.m_current_token.ensure_doctype_data().name = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","590"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEName); this.m_state = State.AfterDOCTYPEName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","427"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEName); this.m_state = State.AfterDOCTYPEName; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().name = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","595"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","432"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && this.is_ascii_upper_alpha(current_input_character.value()))
                             {
@@ -385,7 +414,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","621"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","458"].join("")) : void 0); break; } } }
 
                         // 13.2.5.56 After DOCTYPE name state, https://html.spec.whatwg.org/multipage/parsing.html//after-doctype-name-state
                         /*<csw>state:</csw>*/
@@ -397,7 +426,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","632"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","469"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -408,18 +437,18 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                if (this.to_ascii_uppercase(current_input_character.value()) == 'P'.charCodeAt(0) && consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","644"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEPublicKeyword); this.m_state = State.AfterDOCTYPEPublicKeyword; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                if (this.to_ascii_uppercase(current_input_character.value()) == 'P'.charCodeAt(0) && this.consume_next_if_match("UBLIC", CaseSensitivity.CaseInsensitive)) {
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","481"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEPublicKeyword); this.m_state = State.AfterDOCTYPEPublicKeyword; current_input_character = this.next_code_point();; } while (0); } while (0);
                                 }
-                                if (this.to_ascii_uppercase(current_input_character.value()) == 'S'.charCodeAt(0) && consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","647"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPESystemKeyword); this.m_state = State.AfterDOCTYPESystemKeyword; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                if (this.to_ascii_uppercase(current_input_character.value()) == 'S'.charCodeAt(0) && this.consume_next_if_match("YSTEM", CaseSensitivity.CaseInsensitive)) {
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","484"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPESystemKeyword); this.m_state = State.AfterDOCTYPESystemKeyword; current_input_character = this.next_code_point();; } while (0); } while (0);
                                 }
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
                                 do { this.will_reconsume_in(State.BogusDOCTYPE); this.m_state = State.BogusDOCTYPE; this.m_goto_target="BogusDOCTYPE"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","654"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","491"].join("")) : void 0); break; } } }
 
                         // 13.2.5.57 After DOCTYPE public keyword state, https://html.spec.whatwg.org/multipage/parsing.html//after-doctype-public-keyword-state
                         /*<csw>state:</csw>*/
@@ -427,25 +456,25 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","661"].join("")) : void 0); do { this.will_switch_to(State.BeforeDOCTYPEPublicIdentifier); this.m_state = State.BeforeDOCTYPEPublicIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","498"].join("")) : void 0); do { this.will_switch_to(State.BeforeDOCTYPEPublicIdentifier); this.m_state = State.BeforeDOCTYPEPublicIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().missing_public_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","667"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPEPublicIdentifierDoubleQuoted); this.m_state = State.DOCTYPEPublicIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","504"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPEPublicIdentifierDoubleQuoted); this.m_state = State.DOCTYPEPublicIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().missing_public_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","673"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPEPublicIdentifierSingleQuoted); this.m_state = State.DOCTYPEPublicIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","510"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPEPublicIdentifierSingleQuoted); this.m_state = State.DOCTYPEPublicIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","679"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","516"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -461,7 +490,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BogusDOCTYPE); this.m_state = State.BogusDOCTYPE; this.m_goto_target="BogusDOCTYPE"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","695"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","532"].join("")) : void 0); break; } } }
 
                         // 13.2.5.63 After DOCTYPE system keyword state, https://html.spec.whatwg.org/multipage/parsing.html//after-doctype-system-keyword-state
                         /*<csw>state:</csw>*/
@@ -469,27 +498,27 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","702"].join("")) : void 0); do { this.will_switch_to(State.BeforeDOCTYPESystemIdentifier); this.m_state = State.BeforeDOCTYPESystemIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","539"].join("")) : void 0); do { this.will_switch_to(State.BeforeDOCTYPESystemIdentifier); this.m_state = State.BeforeDOCTYPESystemIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().system_identifier = "";
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","709"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","546"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().system_identifier = "";
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","716"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","553"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","722"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","559"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -505,7 +534,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BogusDOCTYPE); this.m_state = State.BogusDOCTYPE; this.m_goto_target="BogusDOCTYPE"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","738"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","575"].join("")) : void 0); break; } } }
 
                         // 13.2.5.58 Before DOCTYPE public identifier state, https://html.spec.whatwg.org/multipage/parsing.html//before-doctype-public-identifier-state
                         /*<csw>state:</csw>*/
@@ -518,18 +547,18 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().missing_public_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","750"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPEPublicIdentifierDoubleQuoted); this.m_state = State.DOCTYPEPublicIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","587"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPEPublicIdentifierDoubleQuoted); this.m_state = State.DOCTYPEPublicIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().missing_public_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","755"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPEPublicIdentifierSingleQuoted); this.m_state = State.DOCTYPEPublicIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","592"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPEPublicIdentifierSingleQuoted); this.m_state = State.DOCTYPEPublicIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","761"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","598"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -545,7 +574,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BogusDOCTYPE); this.m_state = State.BogusDOCTYPE; this.m_goto_target="BogusDOCTYPE"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","777"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","614"].join("")) : void 0); break; } } }
 
                         // 13.2.5.64 Before DOCTYPE system identifier state, https://html.spec.whatwg.org/multipage/parsing.html//before-doctype-system-identifier-state
                         /*<csw>state:</csw>*/
@@ -558,18 +587,18 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","789"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","626"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","794"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","631"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","800"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","637"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -585,7 +614,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BogusDOCTYPE); this.m_state = State.BogusDOCTYPE; this.m_goto_target="BogusDOCTYPE"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","816"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","653"].join("")) : void 0); break; } } }
 
                         // 13.2.5.59 DOCTYPE public identifier (double-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html//doctype-public-identifier-(double-quoted)-state
                         /*<csw>state:</csw>*/
@@ -594,7 +623,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().public_identifier = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","824"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEPublicIdentifier); this.m_state = State.AfterDOCTYPEPublicIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","661"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEPublicIdentifier); this.m_state = State.AfterDOCTYPEPublicIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -607,7 +636,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().public_identifier = this.consume_current_builder();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","837"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","674"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -622,7 +651,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","852"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","689"].join("")) : void 0); break; } } }
 
                         // 13.2.5.60 DOCTYPE public identifier (single-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html//doctype-public-identifier-(single-quoted)-state
                         /*<csw>state:</csw>*/
@@ -631,7 +660,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().public_identifier = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","860"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEPublicIdentifier); this.m_state = State.AfterDOCTYPEPublicIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","697"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPEPublicIdentifier); this.m_state = State.AfterDOCTYPEPublicIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -644,7 +673,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().public_identifier = this.consume_current_builder();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","873"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","710"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -659,7 +688,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","888"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","725"].join("")) : void 0); break; } } }
 
                         // 13.2.5.65 DOCTYPE system identifier (double-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html//doctype-system-identifier-(double-quoted)-state
                         /*<csw>state:</csw>*/
@@ -668,7 +697,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().system_identifier = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","896"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPESystemIdentifier); this.m_state = State.AfterDOCTYPESystemIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","733"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPESystemIdentifier); this.m_state = State.AfterDOCTYPESystemIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -681,7 +710,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().system_identifier = this.consume_current_builder();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","909"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","746"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -696,7 +725,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","924"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","761"].join("")) : void 0); break; } } }
 
                         // 13.2.5.66 DOCTYPE system identifier (single-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html//doctype-system-identifier-(single-quoted)-state
                         /*<csw>state:</csw>*/
@@ -705,7 +734,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().system_identifier = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","932"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPESystemIdentifier); this.m_state = State.AfterDOCTYPESystemIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","769"].join("")) : void 0); do { this.will_switch_to(State.AfterDOCTYPESystemIdentifier); this.m_state = State.AfterDOCTYPESystemIdentifier; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -718,7 +747,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().system_identifier = this.consume_current_builder();
                                 this.m_current_token.ensure_doctype_data().force_quirks = true;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","945"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","782"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -733,7 +762,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","960"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","797"].join("")) : void 0); break; } } }
 
                         // 13.2.5.61 After DOCTYPE public identifier state, https://html.spec.whatwg.org/multipage/parsing.html//after-doctype-public-identifier-state
                         /*<csw>state:</csw>*/
@@ -741,23 +770,23 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","967"].join("")) : void 0); do { this.will_switch_to(State.BetweenDOCTYPEPublicAndSystemIdentifiers); this.m_state = State.BetweenDOCTYPEPublicAndSystemIdentifiers; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","804"].join("")) : void 0); do { this.will_switch_to(State.BetweenDOCTYPEPublicAndSystemIdentifiers); this.m_state = State.BetweenDOCTYPEPublicAndSystemIdentifiers; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","971"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","808"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","977"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","814"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.log_parse_error();
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","983"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","820"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -773,7 +802,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BogusDOCTYPE); this.m_state = State.BogusDOCTYPE; this.m_goto_target="BogusDOCTYPE"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","999"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","836"].join("")) : void 0); break; } } }
 
                         // 13.2.5.62 Between DOCTYPE public and system identifiers state, https://html.spec.whatwg.org/multipage/parsing.html//between-doctype-public-and-system-identifiers-state
                         /*<csw>state:</csw>*/
@@ -785,17 +814,17 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1010"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","847"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1015"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","852"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierDoubleQuoted); this.m_state = State.DOCTYPESystemIdentifierDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.m_current_token.ensure_doctype_data().missing_system_identifier = false;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1020"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","857"].join("")) : void 0); do { this.will_switch_to(State.DOCTYPESystemIdentifierSingleQuoted); this.m_state = State.DOCTYPESystemIdentifierSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -811,7 +840,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BogusDOCTYPE); this.m_state = State.BogusDOCTYPE; this.m_goto_target="BogusDOCTYPE"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1036"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","873"].join("")) : void 0); break; } } }
 
                         // 13.2.5.67 After DOCTYPE system identifier state, https://html.spec.whatwg.org/multipage/parsing.html//after-doctype-system-identifier-state
                         /*<csw>state:</csw>*/
@@ -823,7 +852,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1047"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","884"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -838,7 +867,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BogusDOCTYPE); this.m_state = State.BogusDOCTYPE; this.m_goto_target="BogusDOCTYPE"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1062"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","899"].join("")) : void 0); break; } } }
 
                         // 13.2.5.68 Bogus DOCTYPE state, https://html.spec.whatwg.org/multipage/parsing.html//bogus-doctype-state
                         /*<csw>state:</csw>*/
@@ -846,7 +875,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1069"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","906"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -863,7 +892,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1086"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","923"].join("")) : void 0); break; } } }
 
                         // 13.2.5.32 Before attribute name state, https://html.spec.whatwg.org/multipage/parsing.html//before-attribute-name-state
                         /*<csw>state:</csw>*/
@@ -890,7 +919,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '='.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                HTMLToken.Attribute new_attribute;
+                                let new_attribute=new HTMLToken.Attribute;
                                 new_attribute.name_start_position = this.nth_last_position(1);
                                 this.m_current_builder.append_code_point(current_input_character.value());
                                 this.m_current_token.add_attribute(move(new_attribute));
@@ -898,13 +927,13 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                HTMLToken.Attribute new_attribute;
+                                let new_attribute=new HTMLToken.Attribute;
                                 new_attribute.name_start_position = this.nth_last_position(1);
                                 this.m_current_token.add_attribute(move(new_attribute));
                                 do { this.will_reconsume_in(State.AttributeName); this.m_state = State.AttributeName; this.m_goto_target="AttributeName"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1126"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","963"].join("")) : void 0); break; } } }
 
                         // 13.2.5.40 Self-closing start tag state, https://html.spec.whatwg.org/multipage/parsing.html//self-closing-start-tag-state
                         /*<csw>state:</csw>*/
@@ -913,7 +942,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.m_current_token.set_self_closing(true);
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1134"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","971"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -926,7 +955,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; this.m_goto_target="BeforeAttributeName"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1147"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","984"].join("")) : void 0); break; } } }
 
                         // 13.2.5.33 Attribute name state, https://html.spec.whatwg.org/multipage/parsing.html//attribute-name-state
                         /*<csw>state:</csw>*/
@@ -956,7 +985,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.last_attribute().name_end_position = this.nth_last_position(1);
                                 this.m_current_token.last_attribute().local_name = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1176"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeValue); this.m_state = State.BeforeAttributeValue; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1013"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeValue); this.m_state = State.BeforeAttributeValue; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && this.is_ascii_upper_alpha(current_input_character.value()))
                             {
@@ -994,7 +1023,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1214"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1051"].join("")) : void 0); break; } } }
 
                         // 13.2.5.34 After attribute name state, https://html.spec.whatwg.org/multipage/parsing.html//after-attribute-name-state
                         /*<csw>state:</csw>*/
@@ -1006,16 +1035,16 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1225"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1062"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '='.charCodeAt(0))
                             {
                                 this.m_current_token.last_attribute().name_end_position = this.nth_last_position(1);
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1230"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeValue); this.m_state = State.BeforeAttributeValue; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1067"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeValue); this.m_state = State.BeforeAttributeValue; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1234"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1071"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -1024,13 +1053,13 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_current_token.add_attribute({});
+                                this.m_current_token.add_attribute(new HTMLToken.Attribute);
                                 if (!this.m_source_positions.is_empty())
                                     this.m_current_token.last_attribute().name_start_position = this.m_source_positions.last();
                                 do { this.will_reconsume_in(State.AttributeName); this.m_state = State.AttributeName; this.m_goto_target="AttributeName"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1249"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1086"].join("")) : void 0); break; } } }
 
                         // 13.2.5.35 Before attribute value state, https://html.spec.whatwg.org/multipage/parsing.html//before-attribute-value-state
                         /*<csw>state:</csw>*/
@@ -1043,23 +1072,23 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1261"].join("")) : void 0); do { this.will_switch_to(State.AttributeValueDoubleQuoted); this.m_state = State.AttributeValueDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1098"].join("")) : void 0); do { this.will_switch_to(State.AttributeValueDoubleQuoted); this.m_state = State.AttributeValueDoubleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1265"].join("")) : void 0); do { this.will_switch_to(State.AttributeValueSingleQuoted); this.m_state = State.AttributeValueSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1102"].join("")) : void 0); do { this.will_switch_to(State.AttributeValueSingleQuoted); this.m_state = State.AttributeValueSingleQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1270"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1107"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (1)
                             {
                                 do { this.will_reconsume_in(State.AttributeValueUnquoted); this.m_state = State.AttributeValueUnquoted; this.m_goto_target="AttributeValueUnquoted"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1277"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1114"].join("")) : void 0); break; } } }
 
                         // 13.2.5.36 Attribute value (double-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html//attribute-value-(double-quoted)-state
                         /*<csw>state:</csw>*/
@@ -1068,7 +1097,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '"'.charCodeAt(0))
                             {
                                 this.m_current_token.last_attribute().value = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1285"].join("")) : void 0); do { this.will_switch_to(State.AfterAttributeValueQuoted); this.m_state = State.AfterAttributeValueQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1122"].join("")) : void 0); do { this.will_switch_to(State.AfterAttributeValueQuoted); this.m_state = State.AfterAttributeValueQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
@@ -1092,7 +1121,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1309"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1146"].join("")) : void 0); break; } } }
 
                         // 13.2.5.37 Attribute value (single-quoted) state, https://html.spec.whatwg.org/multipage/parsing.html//attribute-value-(single-quoted)-state
                         /*<csw>state:</csw>*/
@@ -1101,7 +1130,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '\''.charCodeAt(0))
                             {
                                 this.m_current_token.last_attribute().value = this.consume_current_builder();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1317"].join("")) : void 0); do { this.will_switch_to(State.AfterAttributeValueQuoted); this.m_state = State.AfterAttributeValueQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1154"].join("")) : void 0); do { this.will_switch_to(State.AfterAttributeValueQuoted); this.m_state = State.AfterAttributeValueQuoted; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
@@ -1125,7 +1154,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1341"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1178"].join("")) : void 0); break; } } }
 
                         // 13.2.5.38 Attribute value (unquoted) state, https://html.spec.whatwg.org/multipage/parsing.html//attribute-value-(single-quoted)-state
                         /*<csw>state:</csw>*/
@@ -1135,7 +1164,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.last_attribute().value = this.consume_current_builder();
                                 this.m_current_token.last_attribute().value_end_position = this.nth_last_position(1);
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1350"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1187"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
@@ -1146,7 +1175,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.last_attribute().value = this.consume_current_builder();
                                 this.m_current_token.last_attribute().value_end_position = this.nth_last_position(1);
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1361"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1198"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -1195,7 +1224,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1410"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1247"].join("")) : void 0); break; } } }
 
                         // 13.2.5.39 After attribute value (quoted) state, https://html.spec.whatwg.org/multipage/parsing.html//after-attribute-value-(quoted)-state
                         /*<csw>state:</csw>*/
@@ -1204,15 +1233,15 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             this.m_current_token.last_attribute().value_end_position = this.nth_last_position(1);
                             if (current_input_character.has_value() && this.is_ascii(current_input_character.value()) && "\t\n\f ".includes(String.fromCharCode(current_input_character.value())))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1418"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1255"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1422"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1259"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1426"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1263"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -1225,7 +1254,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; this.m_goto_target="BeforeAttributeName"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1439"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1276"].join("")) : void 0); break; } } }
 
                         // 13.2.5.43 Comment start state, https://html.spec.whatwg.org/multipage/parsing.html//comment-start-state
                         /*<csw>state:</csw>*/
@@ -1233,19 +1262,19 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1446"].join("")) : void 0); do { this.will_switch_to(State.CommentStartDash); this.m_state = State.CommentStartDash; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1283"].join("")) : void 0); do { this.will_switch_to(State.CommentStartDash); this.m_state = State.CommentStartDash; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1451"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1288"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (1)
                             {
                                 do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; this.m_goto_target="Comment"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1458"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1295"].join("")) : void 0); break; } } }
 
                         // 13.2.5.44 Comment start dash state, https://html.spec.whatwg.org/multipage/parsing.html//comment-start-dash-state
                         /*<csw>state:</csw>*/
@@ -1253,12 +1282,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1465"].join("")) : void 0); do { this.will_switch_to(State.CommentEnd); this.m_state = State.CommentEnd; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1302"].join("")) : void 0); do { this.will_switch_to(State.CommentEnd); this.m_state = State.CommentEnd; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.log_parse_error();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1470"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1307"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -1267,11 +1296,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_current_builder.append('-');
+                                this.m_current_builder.append('-'.charCodeAt(0));
                                 do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; this.m_goto_target="Comment"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1483"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1320"].join("")) : void 0); break; } } }
 
                         // 13.2.5.45 Comment state, https://html.spec.whatwg.org/multipage/parsing.html//comment-state
                         /*<csw>state:</csw>*/
@@ -1304,7 +1333,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 continue;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1515"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1352"].join("")) : void 0); break; } } }
 
                         // 13.2.5.51 Comment end state, https://html.spec.whatwg.org/multipage/parsing.html//comment-end-state
                         /*<csw>state:</csw>*/
@@ -1313,7 +1342,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.m_current_token.set_comment(this.consume_current_builder());
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1523"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1360"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '!'.charCodeAt(0))
                             {
@@ -1321,7 +1350,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                this.m_current_builder.append('-');
+                                this.m_current_builder.append('-'.charCodeAt(0));
                                 continue;
                             }
                             if (!current_input_character.has_value())
@@ -1336,7 +1365,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; this.m_goto_target="Comment"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1546"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1383"].join("")) : void 0); break; } } }
 
                         // 13.2.5.52 Comment end bang state, https://html.spec.whatwg.org/multipage/parsing.html//comment-end-bang-state
                         /*<csw>state:</csw>*/
@@ -1351,7 +1380,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.log_parse_error();
                                 this.m_current_token.set_comment(this.consume_current_builder());
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1560"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1397"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -1365,7 +1394,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; this.m_goto_target="Comment"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1574"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1411"].join("")) : void 0); break; } } }
 
                         // 13.2.5.50 Comment end dash state, https://html.spec.whatwg.org/multipage/parsing.html//comment-end-dash-state
                         /*<csw>state:</csw>*/
@@ -1383,11 +1412,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_current_builder.append('-');
+                                this.m_current_builder.append('-'.charCodeAt(0));
                                 do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; this.m_goto_target="Comment"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1595"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1432"].join("")) : void 0); break; } } }
 
                         // 13.2.5.46 Comment less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html//comment-less-than-sign-state
                         /*<csw>state:</csw>*/
@@ -1408,7 +1437,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; this.m_goto_target="Comment"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1615"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1452"].join("")) : void 0); break; } } }
 
                         // 13.2.5.47 Comment less-than sign bang state, https://html.spec.whatwg.org/multipage/parsing.html//comment-less-than-sign-bang-state
                         /*<csw>state:</csw>*/
@@ -1423,7 +1452,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.Comment); this.m_state = State.Comment; this.m_goto_target="Comment"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1629"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1466"].join("")) : void 0); break; } } }
 
                         // 13.2.5.48 Comment less-than sign bang dash state, https://html.spec.whatwg.org/multipage/parsing.html//comment-less-than-sign-bang-dash-state
                         /*<csw>state:</csw>*/
@@ -1438,7 +1467,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.CommentEndDash); this.m_state = State.CommentEndDash; this.m_goto_target="CommentEndDash"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1643"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1480"].join("")) : void 0); break; } } }
 
                         // 13.2.5.49 Comment less-than sign bang dash dash state, https://html.spec.whatwg.org/multipage/parsing.html//comment-less-than-sign-bang-dash-dash-state
                         /*<csw>state:</csw>*/
@@ -1458,14 +1487,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.CommentEnd); this.m_state = State.CommentEnd; this.m_goto_target="CommentEnd"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1662"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1499"].join("")) : void 0); break; } } }
 
                         // 13.2.5.72 Character reference state, https://html.spec.whatwg.org/multipage/parsing.html//character-reference-state
                         /*<csw>state:</csw>*/
                         	case State.CharacterReference: { { { 
                         {
                             this.m_temporary_buffer.clear();
-                            this.m_temporary_buffer.append('&');
+                            this.m_temporary_buffer.append('&'.charCodeAt(0));
 
                             if (current_input_character.has_value() && this.is_ascii_alphanumeric(current_input_character.value()))
                             {
@@ -1482,7 +1511,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(this.m_return_state); this.m_state = this.m_return_state; if (current_input_character.has_value()) this.restore_to(this.m_prev_utf8_iterator); this.m_goto_target="_StartOfFunction"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1685"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1522"].join("")) : void 0); break; } } }
 
                         // 13.2.5.73 Named character reference state, https://html.spec.whatwg.org/multipage/parsing.html//named-character-reference-state
                         /*<csw>state:</csw>*/
@@ -1493,12 +1522,12 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             let match = HTML.code_points_from_entity(this.m_decoded_input.substring_view(byte_offset, this.m_decoded_input.length() - byte_offset));
 
                             if (match.has_value()) {
-                                skip(match.deref().entity.length() - 1);
+                                this.skip(match.deref().entity.length() - 1);
                                 for (let ch of match.value().entity)
                                     this.m_temporary_buffer.append(ch);
 
-                                if (consumed_as_part_of_an_attribute() && !match.value().entity.ends_with(';')) {
-                                    let next_code_point = peek_code_point(0);
+                                if (this.consumed_as_part_of_an_attribute() && !match.value().entity.ends_with(';')) {
+                                    let next_code_point = this.peek_code_point(0);
                                     if (next_code_point.has_value() && (next_code_point.value() == '='.charCodeAt(0) || this.is_ascii_alphanumeric(next_code_point.value()))) {
                                         do { for (let code_point of this.m_temporary_buffer) { if (this.consumed_as_part_of_an_attribute()) { this.m_current_builder.append_code_point(code_point); } else { this.create_new_token(HTMLToken.Type.Character); if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(code_point); this.m_queued_tokens.enqueue(move(this.m_current_token)); } } } while (0);
                                         do { this.will_switch_to(this.m_return_state); this.m_state = this.m_return_state; this.m_goto_target="_StartOfFunction"; break _StartOfFunction; } while (0);
@@ -1520,7 +1549,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.AmbiguousAmpersand); this.m_state = State.AmbiguousAmpersand; this.m_goto_target="AmbiguousAmpersand"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1722"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1559"].join("")) : void 0); break; } } }
 
                         // 13.2.5.74 Ambiguous ampersand state, https://html.spec.whatwg.org/multipage/parsing.html//ambiguous-ampersand-state
                         /*<csw>state:</csw>*/
@@ -1528,7 +1557,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && this.is_ascii_alphanumeric(current_input_character.value()))
                             {
-                                if (consumed_as_part_of_an_attribute()) {
+                                if (this.consumed_as_part_of_an_attribute()) {
                                     this.m_current_builder.append_code_point(current_input_character.value());
                                     continue;
                                 } else {
@@ -1545,7 +1574,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(this.m_return_state); this.m_state = this.m_return_state; if (current_input_character.has_value()) this.restore_to(this.m_prev_utf8_iterator); this.m_goto_target="_StartOfFunction"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1746"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1583"].join("")) : void 0); break; } } }
 
                         // 13.2.5.75 Numeric character reference state, https://html.spec.whatwg.org/multipage/parsing.html//numeric-character-reference-state
                         /*<csw>state:</csw>*/
@@ -1568,7 +1597,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.DecimalCharacterReferenceStart); this.m_state = State.DecimalCharacterReferenceStart; this.m_goto_target="DecimalCharacterReferenceStart"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1768"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1605"].join("")) : void 0); break; } } }
 
                         // 13.2.5.76 Hexadecimal character reference start state, https://html.spec.whatwg.org/multipage/parsing.html//hexadecimal-character-reference-start-state
                         /*<csw>state:</csw>*/
@@ -1585,7 +1614,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(this.m_return_state); this.m_state = this.m_return_state; if (current_input_character.has_value()) this.restore_to(this.m_prev_utf8_iterator); this.m_goto_target="_StartOfFunction"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1784"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1621"].join("")) : void 0); break; } } }
 
                         // 13.2.5.77 Decimal character reference start state, https://html.spec.whatwg.org/multipage/parsing.html//decimal-character-reference-start-state
                         /*<csw>state:</csw>*/
@@ -1602,7 +1631,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(this.m_return_state); this.m_state = this.m_return_state; if (current_input_character.has_value()) this.restore_to(this.m_prev_utf8_iterator); this.m_goto_target="_StartOfFunction"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1800"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1637"].join("")) : void 0); break; } } }
 
                         // 13.2.5.78 Hexadecimal character reference state, https://html.spec.whatwg.org/multipage/parsing.html//decimal-character-reference-start-state
                         /*<csw>state:</csw>*/
@@ -1636,7 +1665,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.NumericCharacterReferenceEnd); this.m_state = State.NumericCharacterReferenceEnd; this.m_goto_target="NumericCharacterReferenceEnd"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1833"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1670"].join("")) : void 0); break; } } }
 
                         // 13.2.5.79 Decimal character reference state, https://html.spec.whatwg.org/multipage/parsing.html//decimal-character-reference-state
                         /*<csw>state:</csw>*/
@@ -1658,7 +1687,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.NumericCharacterReferenceEnd); this.m_state = State.NumericCharacterReferenceEnd; this.m_goto_target="NumericCharacterReferenceEnd"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1854"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1691"].join("")) : void 0); break; } } }
 
                         // 13.2.5.80 Numeric character reference end state, https://html.spec.whatwg.org/multipage/parsing.html//numeric-character-reference-end-state
                         /*<csw>state:</csw>*/
@@ -1674,11 +1703,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.log_parse_error();
                                 this.m_character_reference_code = 0xFFFD;
                             }
-                            if (is_unicode_surrogate(this.m_character_reference_code)) {
+                            if (this.is_unicode_surrogate(this.m_character_reference_code)) {
                                 this.log_parse_error();
                                 this.m_character_reference_code = 0xFFFD;
                             }
-                            if (is_unicode_noncharacter(this.m_character_reference_code)) {
+                            if (this.is_unicode_noncharacter(this.m_character_reference_code)) {
                                 this.log_parse_error();
                             }
                             if (this.m_character_reference_code == 0xd || (this.is_unicode_control(this.m_character_reference_code) && !this.is_ascii_space(this.m_character_reference_code))) {
@@ -1733,7 +1762,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             do { for (let code_point of this.m_temporary_buffer) { if (this.consumed_as_part_of_an_attribute()) { this.m_current_builder.append_code_point(code_point); } else { this.create_new_token(HTMLToken.Type.Character); if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(code_point); this.m_queued_tokens.enqueue(move(this.m_current_token)); } } } while (0);
                             do { this.will_switch_to(this.m_return_state); this.m_state = this.m_return_state; this.m_goto_target="_StartOfFunction"; break _StartOfFunction; } while (0);
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1928"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1765"].join("")) : void 0); break; } } }
 
                         // 13.2.5.2 RCDATA state, https://html.spec.whatwg.org/multipage/parsing.html//rcdata-state
                         /*<csw>state:</csw>*/
@@ -1742,11 +1771,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '&'.charCodeAt(0))
                             {
                                 this.m_return_state = State.RCDATA;
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1936"].join("")) : void 0); do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1773"].join("")) : void 0); do { this.will_switch_to(State.CharacterReference); this.m_state = State.CharacterReference; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1940"].join("")) : void 0); do { this.will_switch_to(State.RCDATALessThanSign); this.m_state = State.RCDATALessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1777"].join("")) : void 0); do { this.will_switch_to(State.RCDATALessThanSign); this.m_state = State.RCDATALessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -1762,7 +1791,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1956"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1793"].join("")) : void 0); break; } } }
 
                         // 13.2.5.9 RCDATA less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html//rcdata-less-than-sign-state
                         /*<csw>state:</csw>*/
@@ -1771,14 +1800,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
                                 this.m_temporary_buffer.clear();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1964"].join("")) : void 0); do { this.will_switch_to(State.RCDATAEndTagOpen); this.m_state = State.RCDATAEndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1801"].join("")) : void 0); do { this.will_switch_to(State.RCDATAEndTagOpen); this.m_state = State.RCDATAEndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (1)
                             {
-                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<')); this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
+                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1971"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1808"].join("")) : void 0); break; } } }
 
                         // 13.2.5.10 RCDATA end tag open state, https://html.spec.whatwg.org/multipage/parsing.html//rcdata-end-tag-open-state
                         /*<csw>state:</csw>*/
@@ -1791,12 +1820,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1988"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1824"].join("")) : void 0); break; } } }
 
                         // 13.2.5.11 RCDATA end tag name state, https://html.spec.whatwg.org/multipage/parsing.html//rcdata-end-tag-name-state
                         /*<csw>state:</csw>*/
@@ -1806,37 +1834,34 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
                                 }
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2003"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1838"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
                                 }
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2015"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1849"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
                                 }
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2027"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1860"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && this.is_ascii_upper_alpha(current_input_character.value()))
                             {
@@ -1852,8 +1877,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -1861,7 +1885,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2052"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1884"].join("")) : void 0); break; } } }
 
                         // 13.2.5.3 RAWTEXT state, https://html.spec.whatwg.org/multipage/parsing.html//rawtext-state
                         /*<csw>state:</csw>*/
@@ -1869,7 +1893,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2059"].join("")) : void 0); do { this.will_switch_to(State.RAWTEXTLessThanSign); this.m_state = State.RAWTEXTLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1891"].join("")) : void 0); do { this.will_switch_to(State.RAWTEXTLessThanSign); this.m_state = State.RAWTEXTLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -1885,7 +1909,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2075"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1907"].join("")) : void 0); break; } } }
 
                         // 13.2.5.12 RAWTEXT less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html//rawtext-less-than-sign-state
                         /*<csw>state:</csw>*/
@@ -1894,14 +1918,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
                                 this.m_temporary_buffer.clear();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2083"].join("")) : void 0); do { this.will_switch_to(State.RAWTEXTEndTagOpen); this.m_state = State.RAWTEXTEndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1915"].join("")) : void 0); do { this.will_switch_to(State.RAWTEXTEndTagOpen); this.m_state = State.RAWTEXTEndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (1)
                             {
-                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<')); this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
+                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2090"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1922"].join("")) : void 0); break; } } }
 
                         // 13.2.5.13 RAWTEXT end tag open state, https://html.spec.whatwg.org/multipage/parsing.html//rawtext-end-tag-open-state
                         /*<csw>state:</csw>*/
@@ -1914,12 +1938,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2107"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1938"].join("")) : void 0); break; } } }
 
                         // 13.2.5.14 RAWTEXT end tag name state, https://html.spec.whatwg.org/multipage/parsing.html//rawtext-end-tag-name-state
                         /*<csw>state:</csw>*/
@@ -1929,37 +1952,34 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
                                 }
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2122"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1952"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
                                 }
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2134"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1963"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
                                 }
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2146"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","1974"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && this.is_ascii_upper_alpha(current_input_character.value()))
                             {
@@ -1975,8 +1995,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -1984,7 +2003,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2171"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","1998"].join("")) : void 0); break; } } }
 
                         // 13.2.5.4 Script data state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-state
                         /*<csw>state:</csw>*/
@@ -1992,7 +2011,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2178"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataLessThanSign); this.m_state = State.ScriptDataLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2005"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataLessThanSign); this.m_state = State.ScriptDataLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -2008,7 +2027,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2194"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2021"].join("")) : void 0); break; } } }
 
                         // 13.2.5.5 PLAINTEXT state, https://html.spec.whatwg.org/multipage/parsing.html//plaintext-state
                         /*<csw>state:</csw>*/
@@ -2028,7 +2047,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2213"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2040"].join("")) : void 0); break; } } }
 
                         // 13.2.5.15 Script data less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-less-than-sign-state
                         /*<csw>state:</csw>*/
@@ -2037,20 +2056,20 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
                                 this.m_temporary_buffer.clear();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2221"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEndTagOpen); this.m_state = State.ScriptDataEndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2048"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEndTagOpen); this.m_state = State.ScriptDataEndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '!'.charCodeAt(0))
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('!'));
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2227"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapeStart); this.m_state = State.ScriptDataEscapeStart; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('!'.charCodeAt(0)));
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2054"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapeStart); this.m_state = State.ScriptDataEscapeStart; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (1)
                             {
-                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<')); this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; this.m_goto_target="ScriptData"; break _StartOfFunction; } while (0);
+                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; this.m_goto_target="ScriptData"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2234"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2061"].join("")) : void 0); break; } } }
 
                         // 13.2.5.18 Script data escape start state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-escape-start-state
                         /*<csw>state:</csw>*/
@@ -2058,14 +2077,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataEscapeStartDash); this.m_state = State.ScriptDataEscapeStartDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataEscapeStartDash); this.m_state = State.ScriptDataEscapeStartDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (1)
                             {
                                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; this.m_goto_target="ScriptData"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2248"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2075"].join("")) : void 0); break; } } }
 
                         // 13.2.5.19 Script data escape start dash state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-escape-start-dash-state
                         /*<csw>state:</csw>*/
@@ -2073,14 +2092,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataEscapedDashDash); this.m_state = State.ScriptDataEscapedDashDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataEscapedDashDash); this.m_state = State.ScriptDataEscapedDashDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (1)
                             {
                                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; this.m_goto_target="ScriptData"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2262"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2089"].join("")) : void 0); break; } } }
 
                         // 13.2.5.22 Script data escaped dash dash state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-escaped-dash-dash-state
                         /*<csw>state:</csw>*/
@@ -2088,15 +2107,15 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2273"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapedLessThanSign); this.m_state = State.ScriptDataEscapedLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2100"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapedLessThanSign); this.m_state = State.ScriptDataEscapedLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptData); this.m_state = State.ScriptData; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('>'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptData); this.m_state = State.ScriptData; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('>'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -2113,7 +2132,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_switch_to(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2294"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2121"].join("")) : void 0); break; } } }
 
                         // 13.2.5.23 Script data escaped less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-escaped-less-than-sign-state
                         /*<csw>state:</csw>*/
@@ -2122,19 +2141,19 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
                                 this.m_temporary_buffer.clear();
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2302"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapedEndTagOpen); this.m_state = State.ScriptDataEscapedEndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2129"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapedEndTagOpen); this.m_state = State.ScriptDataEscapedEndTagOpen; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && this.is_ascii_alpha(current_input_character.value()))
                             {
                                 this.m_temporary_buffer.clear();
-                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<')); this.will_reconsume_in(State.ScriptDataDoubleEscapeStart); this.m_state = State.ScriptDataDoubleEscapeStart; this.m_goto_target="ScriptDataDoubleEscapeStart"; break _StartOfFunction; } while (0);
+                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.will_reconsume_in(State.ScriptDataDoubleEscapeStart); this.m_state = State.ScriptDataDoubleEscapeStart; this.m_goto_target="ScriptDataDoubleEscapeStart"; break _StartOfFunction; } while (0);
                             }
                             if (1)
                             {
-                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<')); this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; this.m_goto_target="ScriptDataEscaped"; break _StartOfFunction; } while (0);
+                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; this.m_goto_target="ScriptDataEscaped"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2314"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2141"].join("")) : void 0); break; } } }
 
                         // 13.2.5.24 Script data escaped end tag open state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-escaped-end-tag-open-state
                         /*<csw>state:</csw>*/
@@ -2147,12 +2166,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 do { this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; this.m_goto_target="ScriptDataEscaped"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2331"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2157"].join("")) : void 0); break; } } }
 
                         // 13.2.5.25 Script data escaped end tag name state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-escaped-end-tag-name-state
                         /*<csw>state:</csw>*/
@@ -2162,10 +2180,9 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2340"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2166"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
 
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2177,10 +2194,9 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2355"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2180"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
 
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2192,10 +2208,9 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2370"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2194"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
 
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2217,8 +2232,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2227,7 +2241,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; this.m_goto_target="ScriptDataEscaped"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2405"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2227"].join("")) : void 0); break; } } }
 
                         // 13.2.5.26 Script data double escape start state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-double-escape-start-state
                         /*<csw>state:</csw>*/
@@ -2276,7 +2290,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; this.m_goto_target="ScriptDataEscaped"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2453"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2275"].join("")) : void 0); break; } } }
 
                         // 13.2.5.27 Script data double escaped state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-double-escaped-state
                         /*<csw>state:</csw>*/
@@ -2284,11 +2298,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataDoubleEscapedDash); this.m_state = State.ScriptDataDoubleEscapedDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataDoubleEscapedDash); this.m_state = State.ScriptDataDoubleEscapedDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataDoubleEscapedLessThanSign); this.m_state = State.ScriptDataDoubleEscapedLessThanSign; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('<'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataDoubleEscapedLessThanSign); this.m_state = State.ScriptDataDoubleEscapedLessThanSign; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('<'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -2305,7 +2319,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2481"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2303"].join("")) : void 0); break; } } }
 
                         // 13.2.5.28 Script data double escaped dash state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-double-escaped-dash-state
                         /*<csw>state:</csw>*/
@@ -2313,11 +2327,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataDoubleEscapedDashDash); this.m_state = State.ScriptDataDoubleEscapedDashDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataDoubleEscapedDashDash); this.m_state = State.ScriptDataDoubleEscapedDashDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataDoubleEscapedLessThanSign); this.m_state = State.ScriptDataDoubleEscapedLessThanSign; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('<'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataDoubleEscapedLessThanSign); this.m_state = State.ScriptDataDoubleEscapedLessThanSign; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('<'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -2334,7 +2348,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_switch_to(State.ScriptDataDoubleEscaped); this.m_state = State.ScriptDataDoubleEscaped; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2509"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2331"].join("")) : void 0); break; } } }
 
                         // 13.2.5.29 Script data double escaped dash dash state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-double-escaped-dash-dash-state
                         /*<csw>state:</csw>*/
@@ -2342,15 +2356,15 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataDoubleEscapedLessThanSign); this.m_state = State.ScriptDataDoubleEscapedLessThanSign; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('<'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataDoubleEscapedLessThanSign); this.m_state = State.ScriptDataDoubleEscapedLessThanSign; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('<'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptData); this.m_state = State.ScriptData; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('>'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptData); this.m_state = State.ScriptData; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('>'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -2367,7 +2381,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_switch_to(State.ScriptDataDoubleEscaped); this.m_state = State.ScriptDataDoubleEscaped; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2541"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2363"].join("")) : void 0); break; } } }
 
                         // 13.2.5.30 Script data double escaped less-than sign state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-double-escaped-less-than-sign-state
                         /*<csw>state:</csw>*/
@@ -2376,14 +2390,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (current_input_character.has_value() && current_input_character.value() == '/'.charCodeAt(0))
                             {
                                 this.m_temporary_buffer.clear();
-                                do { this.will_switch_to(State.ScriptDataDoubleEscapeEnd); this.m_state = State.ScriptDataDoubleEscapeEnd; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('/'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataDoubleEscapeEnd); this.m_state = State.ScriptDataDoubleEscapeEnd; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('/'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (1)
                             {
                                 do { this.will_reconsume_in(State.ScriptDataDoubleEscaped); this.m_state = State.ScriptDataDoubleEscaped; this.m_goto_target="ScriptDataDoubleEscaped"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2556"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2378"].join("")) : void 0); break; } } }
 
                         // 13.2.5.31 Script data double escape end state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-double-escape-end-state
                         /*<csw>state:</csw>*/
@@ -2432,7 +2446,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.ScriptDataDoubleEscaped); this.m_state = State.ScriptDataDoubleEscaped; this.m_goto_target="ScriptDataDoubleEscaped"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2604"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2426"].join("")) : void 0); break; } } }
 
                         // 13.2.5.21 Script data escaped dash state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-escaped-dash-state
                         /*<csw>state:</csw>*/
@@ -2440,11 +2454,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataEscapedDashDash); this.m_state = State.ScriptDataEscapedDashDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataEscapedDashDash); this.m_state = State.ScriptDataEscapedDashDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2615"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapedLessThanSign); this.m_state = State.ScriptDataEscapedLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2437"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapedLessThanSign); this.m_state = State.ScriptDataEscapedLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -2461,7 +2475,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_switch_to(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2632"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2454"].join("")) : void 0); break; } } }
 
                         // 13.2.5.20 Script data escaped state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-escaped-state
                         /*<csw>state:</csw>*/
@@ -2469,11 +2483,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == '-'.charCodeAt(0))
                             {
-                                do { this.will_switch_to(State.ScriptDataEscapedDash); this.m_state = State.ScriptDataEscapedDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
+                                do { this.will_switch_to(State.ScriptDataEscapedDash); this.m_state = State.ScriptDataEscapedDash; do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point('-'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '<'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2643"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapedLessThanSign); this.m_state = State.ScriptDataEscapedLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2465"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapedLessThanSign); this.m_state = State.ScriptDataEscapedLessThanSign; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == 0)
                             {
@@ -2490,7 +2504,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2660"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2482"].join("")) : void 0); break; } } }
 
                         // 13.2.5.16 Script data end tag open state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-end-tag-open-state
                         /*<csw>state:</csw>*/
@@ -2503,12 +2517,11 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; this.m_goto_target="ScriptData"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2677"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2498"].join("")) : void 0); break; } } }
 
                         // 13.2.5.17 Script data end tag name state, https://html.spec.whatwg.org/multipage/parsing.html//script-data-end-tag-name-state
                         /*<csw>state:</csw>*/
@@ -2518,9 +2531,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2686"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2507"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2531,9 +2543,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2699"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2519"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2544,9 +2555,8 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
-                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2712"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                    do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2531"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2567,8 +2577,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('/'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2576,7 +2585,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; this.m_goto_target="ScriptData"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2744"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2561"].join("")) : void 0); break; } } }
 
                         // 13.2.5.69 CDATA section state, https://html.spec.whatwg.org/multipage/parsing.html//cdata-section-state
                         /*<csw>state:</csw>*/
@@ -2584,7 +2593,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == ']'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2751"].join("")) : void 0); do { this.will_switch_to(State.CDATASectionBracket); this.m_state = State.CDATASectionBracket; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2568"].join("")) : void 0); do { this.will_switch_to(State.CDATASectionBracket); this.m_state = State.CDATASectionBracket; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (!current_input_character.has_value())
                             {
@@ -2596,7 +2605,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(current_input_character.value()); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);;
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2763"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2580"].join("")) : void 0); break; } } }
 
                         // 13.2.5.70 CDATA section bracket state, https://html.spec.whatwg.org/multipage/parsing.html//cdata-section-bracket-state
                         /*<csw>state:</csw>*/
@@ -2604,14 +2613,14 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == ']'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2770"].join("")) : void 0); do { this.will_switch_to(State.CDATASectionEnd); this.m_state = State.CDATASectionEnd; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2587"].join("")) : void 0); do { this.will_switch_to(State.CDATASectionEnd); this.m_state = State.CDATASectionEnd; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (1)
                             {
-                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character(']')); this.will_reconsume_in(State.CDATASection); this.m_state = State.CDATASection; this.m_goto_target="CDATASection"; break _StartOfFunction; } while (0);
+                                do { this.m_queued_tokens.enqueue(HTMLToken.make_character(']'.charCodeAt(0))); this.will_reconsume_in(State.CDATASection); this.m_state = State.CDATASection; this.m_goto_target="CDATASection"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2777"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2594"].join("")) : void 0); break; } } }
 
                         // 13.2.5.71 CDATA section end state, https://html.spec.whatwg.org/multipage/parsing.html//cdata-section-end-state
                         /*<csw>state:</csw>*/
@@ -2619,34 +2628,34 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                         {
                             if (current_input_character.has_value() && current_input_character.value() == ']'.charCodeAt(0))
                             {
-                                do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(']'); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
+                                do { this.create_new_token(HTMLToken.Type.Character);if(!this.m_current_token) throw new Error(); this.m_current_token.set_code_point(']'.charCodeAt(0)); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '>'.charCodeAt(0))
                             {
-                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2788"].join("")) : void 0); do { this.will_switch_to(State.Data); this.m_state = State.Data; current_input_character = this.next_code_point();; } while (0); } while (0);
+                                do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2605"].join("")) : void 0); do { this.will_switch_to(State.Data); this.m_state = State.Data; current_input_character = this.next_code_point();; } while (0); } while (0);
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character(']'));
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character(']'));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character(']'.charCodeAt(0)));
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character(']'.charCodeAt(0)));
                                 do { this.will_reconsume_in(State.CDATASection); this.m_state = State.CDATASection; this.m_goto_target="CDATASection"; break _StartOfFunction; } while (0);
                             }
                         }
-                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2797"].join("")) : void 0); break; } } }
+                        (!(false) ? ak_verification_failed(["false","\n","HTMLTokenizer.cppts",":","2614"].join("")) : void 0); break; } } }
 
                     default:
                         throw new Error("TODO()");
                     }
                 }
             }
-            if(this.m_goto_pos==="_StartOfFunction") {
-                this.m_goto_pos="None";
+            if(this.m_goto_target==="_StartOfFunction") {
+                this.m_goto_target="None";
                 continue;
             } else {
                 break;
             }
         }
-        console.log("fallthrough", lp, this.m_goto_pos);
+        console.log("fallthrough", lp, this.m_goto_target);
         throw new Error("fallthrough");
     }
 }

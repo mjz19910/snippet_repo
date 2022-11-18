@@ -1,33 +1,43 @@
-// 0 "HTMLToken.cppts"
-// 0 "<built-in>"
-// 0 "<command-line>"
-// 1 "HTMLToken.cppts"
-// 1 "HTMLToken.pre.ts" 1
 import {HTMLTokenBase} from "./HTMLTokenBase.js";
 import {Optional} from "./Optional.js";
-import {Variant} from "./Variant.js";
-
-type u32=number;
-
-export function use_types() {
-    let u_types:u32|null=null;
-    let ex=[
-        u_types,
-        Variant,
-        Optional,
-        HTMLTokenBase,
-    ] as const;
-    return ex;
-}
-// 2 "HTMLToken.cppts" 2
-
-
-
-
-
 
 export class HTMLToken extends HTMLTokenBase {
-    opt(): Optional<HTMLToken> {
+    opt(): Optional<HTMLTokenBase> {
         return new Optional(this);
+    }
+}
+
+export namespace HTMLToken {
+    export class Attribute {
+        prefix!: string;
+        local_name="";
+        namespace_!: string;
+        value="";
+        name_start_position=new Position(0,0);
+        value_start_position=new Position(0,0);
+        name_end_position=new Position(0,0);
+        value_end_position=new Position(0,0);
+    }
+
+    export enum Type {
+        Invalid,
+        DOCTYPE,
+        StartTag,
+        EndTag,
+        Comment,
+        Character,
+        EndOfFile
+    }
+
+    export class Position {
+        static from(arg0: number,arg1: number) {
+            return new this(arg0,arg1);
+        }
+        column;
+        line;
+        constructor(column: number,line: number) {
+            this.column=column;
+            this.line=line;
+        }
     }
 }

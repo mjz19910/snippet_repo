@@ -1,10 +1,9 @@
 export class Variant<T extends any[]> {
+    get<V extends number>():T[V] {
+        return this.erased;
+    }
     set<V extends number>(arg0: T[V]) {
         this.erased=arg0;
     }
-    x: T;
     erased: any;
-    constructor(x: T) {
-        this.x=x;
-    }
 }

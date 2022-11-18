@@ -1,4 +1,4 @@
-import {HTMLToken} from "./HTMLToken.1";
+import {HTMLToken} from "./HTMLToken";
 import {throw_todo} from "./throw_todo";
 import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl";
 import {State} from "./State.js";
@@ -10,8 +10,10 @@ import {state_name} from "./state_name.js";
 import {TOKENIZER_TRACE_DEBUG} from "./defines.js";
 import {move} from "./move.js";
 import {HTMLTokenizerBase} from "./HTMLTokenizerBase.js";
-import {ak_verification_failed} from "./ak_verification_failed.js";
 import {CaseSensitivity} from "./CaseSensitivity.js";
+import {ak_verification_failed} from "./ak_verification_failed.js";
+import {StringView} from "./StringView.js";
+import {Vector} from "./Vector.js";
 
 
 export function use_imports() {
@@ -27,8 +29,25 @@ export function use_imports() {
         state_name,
         TOKENIZER_TRACE_DEBUG,
         move,
-        ak_verification_failed,
         HTMLTokenizerBase,
         CaseSensitivity,
+        ak_verification_failed,
     ];
+}
+
+export namespace HTML {
+    export class CodePointEntity {
+        entity: any;
+        code_points!: Vector<number>;
+        static from(v: StringView) {
+            return new Optional(new this(v))
+        }
+        x;
+        constructor(x: StringView){
+            this.x=x;
+        }
+    }
+    export function code_points_from_entity (v:StringView) {
+        return CodePointEntity.from(v);
+    }
 }

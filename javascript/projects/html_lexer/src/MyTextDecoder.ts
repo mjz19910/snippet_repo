@@ -1,6 +1,8 @@
+import {StringView} from "./StringView.js";
+
 export class MyTextDecoder {
-    to_utf8(input: BufferSource): string {
-        return this.x.decode(input);
+    to_utf8(input: BufferSource): StringView {
+        return new StringView(this.x.decode(input));
     }
     x: TextDecoder;
     constructor(x: TextDecoder) {
