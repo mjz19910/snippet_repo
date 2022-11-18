@@ -3,14 +3,7 @@ export class BadgeRegistry {
 	register<T extends Badge>(arg0: T) {
 		this.registered_badges.add(arg0);
 	}
-	is_registered<T extends {}>(arg0:T): boolean {
+	is_registered<T extends {}>(arg0: T): boolean {
 		return this.registered_badges.has(arg0);
 	}
 }
-
-declare global {
-	namespace globalThis {
-		var badge_registry:BadgeRegistry|undefined;
-	}
-}
-
