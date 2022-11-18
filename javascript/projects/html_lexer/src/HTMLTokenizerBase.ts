@@ -1,5 +1,4 @@
 import {HTMLToken} from "./HTMLToken.js";
-import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl.js";
 import {State} from "./State.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
 import {Optional} from "./Optional.js";
@@ -18,7 +17,7 @@ import {HTMLTokenBase} from "./HTMLTokenBase.js";
 import {Vector} from "./Vector.js";
 import {HTMLParser} from "./HTMLParser.js";
 
-export class HTMLTokenizerBase extends HTMLTokenizerImpl {
+export class HTMLTokenizerBase {
     m_parser: CppPtr<HTMLParser>=new CppPtr;
     m_state=State.Data;
     m_return_state=State.Data;
@@ -43,7 +42,6 @@ export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_goto_target:GoToTargets="None";
     /**for HTMLTokenizer() */
     constructor() {
-        super();
         this.m_decoded_input=new StringView("");
         this.m_utf8_view=new Utf8View;
         this.m_utf8_view.m_value;

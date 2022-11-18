@@ -1,6 +1,5 @@
 import {HTMLToken} from "./HTMLToken";
 import {throw_todo} from "./throw_todo";
-import {HTMLTokenizerImpl} from "./HTMLTokenizerImpl";
 import {State} from "./State.js";
 import {dbgln_if} from "./dbgln_if.js";
 import {Utf8CodePointIterator} from "./Utf8CodePointIterator.js";
@@ -20,7 +19,6 @@ export function use_imports() {
     return [
         HTMLToken,
         throw_todo,
-        HTMLTokenizerImpl,
         State,
         dbgln_if,
         Utf8CodePointIterator,
