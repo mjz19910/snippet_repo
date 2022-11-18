@@ -4,6 +4,7 @@ import {AnyOrRepeat} from "../src/repeat/AnyOrRepeat";
 declare global {
 	type IDValue=X.IDValue;
 }
+
 namespace X {
 	export class IDValue {
 		id: number;

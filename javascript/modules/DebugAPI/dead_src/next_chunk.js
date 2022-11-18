@@ -6,6 +6,7 @@ import {sorted_comp_stats} from "../src/sorted_comp_stats";
  * @param {import("../src/compress/CompressionStatsCalculator").CompressionStatsCalculator} calc_stats
  */
 export function next_chunk(calc_stats,arr,start) {
+	let obj=new IDValue
 	let s_arr;
 	let last;
 	let c_len;
