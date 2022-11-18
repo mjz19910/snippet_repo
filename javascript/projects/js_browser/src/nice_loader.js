@@ -104,7 +104,6 @@ let ipc_load_data=new IpcLoader;
 export async function resolve(specifier,context,nextResolve) {
 	let errors=[];
 	let plugin_key;
-	debugger;
 	if(context.parentURL) {
 		plugin_key=`${context.parentURL}:${specifier}`;
 	} else {

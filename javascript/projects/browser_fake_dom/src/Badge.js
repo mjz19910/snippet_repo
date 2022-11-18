@@ -1,11 +1,10 @@
 // base Badge, always invalid
 export class Badge {
 	/**
-	 * @param {Badge|{}|undefined} badge
+	 * @param {Badge|undefined} badge
 	 */
 	static verify(badge) {
 		if(!badge) throw create_missing_badge_err();
-		if(!(badge instanceof Badge)) throw create_wrong_prototype_err();
 		if(!badge.m_validity) throw create_validation_err();
 	}
 	/**@type {boolean|undefined} */
