@@ -5,8 +5,6 @@ process.on('unhandledRejection',(/** @type {unknown} */ error) => {
 	console.log('unhandled promise rejection',error);
 });
 
-const debug=false;
-
 async function async_main() {
 	let node_path=process.argv[0];
 	// Drop the node program from the argv array, the user can
