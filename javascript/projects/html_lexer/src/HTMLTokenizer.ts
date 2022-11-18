@@ -19,6 +19,7 @@ import {CaseSensitivity} from "./CaseSensitivity.js";
 import {ak_verification_failed} from "./ak_verification_failed.js";
 import {StringView} from "./StringView.js";
 import {Vector} from "./Vector.js";
+import {Namespace} from "./HTMLParser.js";
 
 
 export function use_imports() {
