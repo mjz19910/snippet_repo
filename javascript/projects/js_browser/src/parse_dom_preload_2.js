@@ -58,8 +58,11 @@ function main() {
 	handle_onPageLoadStarted(fake.window,state);
 	async_main(url);
 }
+
 main();
+
 const debug=false;
+
 /**
  * @param {string} url
  */
