@@ -1,6 +1,6 @@
 import {spawnSync} from "child_process";
 import path from "path";
-import process, {env} from "process";
+import process,{env} from "process";
 import vm from 'vm';
 import {PageLoaderState} from "../../page_loader/index.js";
 import {bind_plugins} from "./plugins/bind_plugins.js";
@@ -12,6 +12,9 @@ const delete_all_javascript_api=false;
 let repl_create_count=0;
 
 export class ReplPluginManager {
+	clearBufferedCommand() {
+		this.get_repl_runtime().clearBufferedCommand();
+	}
 	/**
 	 * @param {string} arg0
 	 */
@@ -43,7 +46,7 @@ export class ReplPluginManager {
 	}
 	create_repl_plugin() {
 		repl_create_count++;
-		console.log('repl_start count', repl_create_count);
+		console.log('repl_start count',repl_create_count);
 		this.m_repl_runtime=REPLServerRuntime.start_repl({
 			prompt: "",
 		});
