@@ -1,8 +1,4 @@
-import {CastResult} from "./CastResult.js";
-import {FakeNode} from "./FakeNode.js";
-import {Result} from "./Result.js";
-
-export class FakeElement extends FakeNode {
+export class FakeElement {
 	tag_description={};
 	/**@type {{get?: (arg0: any) => any;set?: (arg0: any, arg1: {}) => void;}} */
 	#prototype={};
@@ -27,14 +23,7 @@ export class FakeElement extends FakeNode {
 	 * @param {{ base_object: any; proto_private: { get?: (n: any) => any; set?: (n: any, v: any) => void; }; }} rin
 	 */
 	constructor(rin) {
-		/**@type {{proto_private:{get?: (n: any) => any;set?: (n: any, v: any) => void;}}} */
-		var x={proto_private: {}};
-		super(x);
-		if(!rin.base_object&&x.proto_private) {
-			this.#instance_private_set('prototype',x.proto_private);
-		} else {
-			this.#instance_private_set('prototype',{});
-		}
+		this.#instance_private_set('prototype',{});
 		rin.proto_private={
 			get: FakeElement.#private_get.bind(FakeElement,this),
 			set: FakeElement.#private_set.bind(FakeElement,this)
@@ -75,20 +64,5 @@ export class FakeElement extends FakeNode {
 	is_tag(tag_name) {
 		console.debug("tag name not handled in is_tag",tag_name);
 		return true;
-	}
-	/**
-	 * @param {"html"} tag_name
-	 * @returns {CastResult | Result}
-	 */
-	castNodeTo(tag_name) {
-		switch(tag_name) {
-			case 'html': if(this.is_tag(tag_name)) {
-				/**@type {any}*/
-				let cast_as=this;
-				let cast_res=cast_as;
-				return new CastResult(cast_res);
-			}
-			default: return new Result;
-		}
 	}
 }
