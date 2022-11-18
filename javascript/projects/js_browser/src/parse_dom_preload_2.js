@@ -8,17 +8,6 @@ process.on('unhandledRejection',(/** @type {any} */ error) => {
 	console.log('unhandled promise rejection',error);
 });
 
-function main() {
-	async_main().then(() => {
-		console.log("app promise done");
-	},(err) => {
-		console.log("error reason=",err);
-		console.error(err);
-	});
-}
-
-main();
-
 const debug=false;
 
 async function async_main() {
@@ -65,4 +54,12 @@ Options:
 	let repl_plugin=await import_ipc_plugin(ipc_loader_state,"repl_plugin_manager/mod.js");
 	if(debug) console.log('repl plug',repl_plugin);
 	await fetch_url(res);
+}
+
+try {
+	await async_main();
+	console.log("app promise done");
+} catch(err) {
+	console.log(err);
+	throw err;
 }
