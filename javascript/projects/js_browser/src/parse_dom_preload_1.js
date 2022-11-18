@@ -3,7 +3,8 @@ import {PageLoaderState} from "../../page_loader/index.js";
 import {fetch_url} from "../../page_loader/index.js";
 import {fake, FakeWindow, handle_onPageLoadStarted} from "../../browser_fake_dom/index.js";
 import {BaseBadge} from "./BaseBadge.js";
-export function main() {
+
+function main() {
 	process.on('unhandledRejection',error => {
 		if(error instanceof Error) {
 			console.log('unhandledRejection',error.message)
@@ -18,4 +19,5 @@ export function main() {
 	handle_onPageLoadStarted(fake.window,state);
 	fetch_url(state)
 }
+
 main()
