@@ -1,9 +1,16 @@
-export class StringView extends String {
+export class StringView {
+	m_empty=true;
+	X="";
     substring_view(byte_offset: number,arg1: number) {
-		return new StringView(this.slice(byte_offset,arg1));
+		return new StringView(this.X.slice(byte_offset,arg1));
     }
-	//@ts-ignore
 	length() {
-		return super.length;
+		return this.X.length;
+	}
+	constructor(x: string|undefined) {
+		if(typeof x == "string") {
+			this.m_empty=false;
+			this.X=x;
+		}
 	}
 }
