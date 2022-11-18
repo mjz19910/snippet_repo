@@ -1,14 +1,11 @@
-import path,{relative} from "path";
-import {default as process} from "process";
+import * as path from "path";
+import * as process from "process";
 import {fake,handle_onPageLoadStarted} from "../../browser_fake_dom/index.js";
-import {fetch_url} from "../../ipc_api/index.js";
-import {import_ipc_plugin} from "../../ipc_api/index.js";
-import {ipc_loader_state} from "../../ipc_api/index.js";
-import {new_FetchRequestState} from "../../ipc_api/index.js";
+import {fetch_url,import_ipc_plugin,ipc_loader_state,new_FetchRequestState} from "../../ipc_api/index.js";
 import {PageLoaderState} from "../../page_loader/index.js";
-const saved_console=console;
-process.on('unhandledRejection',error => {
-	saved_console.log('unhandled promise rejection',error);
+
+process.on('unhandledRejection',(/** @type {any} */ error) => {
+	console.log('unhandled promise rejection',error);
 });
 /**
  * @arg {boolean} long_help
@@ -38,7 +35,7 @@ function main() {
 	if(path.basename(node_path)=='node') {
 		process.argv.shift();
 	}
-	const script_arg=relative(process.cwd(),process.argv[0]);
+	const script_arg=path.relative(process.cwd(),process.argv[0]);
 	if(process.argv.length<=1) {
 		usage(false,path.basename(node_path),script_arg);
 		return;
