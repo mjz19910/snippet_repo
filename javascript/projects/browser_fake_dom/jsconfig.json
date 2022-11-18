@@ -25,7 +25,9 @@
 	},
 	"include": [
 		"index.js",
-		"src/**/*", "badge/__global.ts", "badge/BadgeRegistry.ts",
+		"src/**/*",
+		"badge/__global.ts",
+		"badge/BadgeRegistry.ts",
 	],
 	"exclude": [
 		"node_modules",
