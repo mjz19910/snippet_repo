@@ -1,4 +1,2 @@
-export interface ConstructorWithSymbolType {
-	type: symbol;
-	new(...args: any[]): any;
-};
+type Constructor=new (...args: any[]) => any;
+export type InstanceRecord=Constructor&Record<"type",symbol>;

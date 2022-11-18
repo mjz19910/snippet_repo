@@ -1,41 +1,37 @@
 import {AnyOrRepeat} from "./AnyOrRepeat.js";
 import {AnyRepeat2TS as AnyRepeat2} from "./AnyOrRepeat2";
-import {ConstructorWithSymbolType} from "./ConstructorWithSymbolType.js";
+import {InstanceRecord} from "./ConstructorWithSymbolType.js";
 import {TypeAOrTypeB} from "./TypeAOrTypeB.js";
 
+type L1Map<W extends InstanceRecord,X>=Map<W['type'],AnyOrRepeat<X>>;
+
+type L2Map<V extends InstanceRecord>=Map<V['type'],<W extends InstanceRecord,X extends InstanceType<W>>(constructor_key_2: W,_: X) => L1Map<W,X>>;
+
+type L3Map=Map<symbol,<T extends InstanceRecord,U extends InstanceType<T>>(constructor_key_1: T,_: U) => L2Map<T>>;
+// + T + U - U; (T) ->
+
 export class Repeat<T> {
-	map_instance_or_d1: Map<symbol,Map<T,<U extends ConstructorWithSymbolType>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>>=new Map;
+	map_instance_or_d1: Map<symbol,Map<T,<U extends InstanceRecord>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>>=new Map;
 	map_instance_or: Map<symbol,<T,U>() => Map<T,AnyOrRepeat<U>>>=new Map;
-	base_map=new Map<
-		symbol,
-		<T extends ConstructorWithSymbolType,U extends InstanceType<T>>(constructor_key_1: T,_: U) =>
-			Map<
-				T['type'],
-				<T extends ConstructorWithSymbolType,U extends InstanceType<T>>(constructor_key_2: T,_: U) =>
-					Map<
-						T['type'],
-						AnyOrRepeat<U>
-					>
-			>
-	>;
-	map_instance_or_d0(): Map<symbol,<T extends ConstructorWithSymbolType,U extends InstanceType<T>>(constructor_key_1: T,_: U) =>Map<T['type'],<T extends ConstructorWithSymbolType,U extends InstanceType<T>>(constructor_key_2: T,_: U) =>Map<T['type'],AnyOrRepeat<U>>>> {
-		return this.base_map;
+	static base_map: L3Map=new Map();
+	base_map(): L3Map {
+		return Repeat.base_map;
 
 	};
-	get_map_T_or<T extends ConstructorWithSymbolType,U extends InstanceType<T>>(constructor_key_0: T,_: U) {
-		let res=this.base_map.get(constructor_key_0.type);
+	get_map_T_or<T extends InstanceRecord,U extends InstanceType<T>>(constructor_key_0: T,_: U) {
+		let map=this.base_map();
+		let res=map.get(constructor_key_0.type);
 		if(!res) {
 			let t=this;
-			this.base_map.set(
-				constructor_key_0.type,
-				<T extends ConstructorWithSymbolType,U extends InstanceType<T>>(constructor_key_1: T,_: U) => {
-					let m_res=t.map_instance_or_d1.get(constructor_key_1.type);
-					if(!m_res) m_res=new Map<InstanceType<T>,<U extends ConstructorWithSymbolType>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>;
-					t.map_instance_or_d1.set(constructor_key_1.type,m_res);
-					return new Map;
-				}
-			);
-			let ret=this.base_map.get(constructor_key_0.type);
+			let l3_fn=<T extends InstanceRecord,U extends InstanceType<T>>(constructor_key_1: T,_: U): L2Map<T> => {
+				let m_res=t.map_instance_or_d1.get(constructor_key_1.type);
+				if(!m_res) m_res=new Map<InstanceType<T>,<U extends InstanceRecord>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>;
+				t.map_instance_or_d1.set(constructor_key_1.type,m_res);
+				let ret_map: L2Map<T>=new Map;
+				return ret_map;
+			};
+			map.set(constructor_key_0.type,l3_fn);
+			let ret=map.get(constructor_key_0.type);
 			if(!ret) throw new Error("bad");
 			return ret;
 		}
@@ -58,7 +54,7 @@ export class Repeat<T> {
 		a.set(b,x);
 		return x;
 	}
-	static get_require<U extends Map<any,any> extends Map<any,infer U> ? U : never, T>(v:Map<T,U>|null, k:T): U|null {
+	static get_require<U extends Map<any,any> extends Map<any,infer U>? U:never,T>(v: Map<T,U>|null,k: T): U|null {
 		if(!v) return null;
 		let x=v.get(k);
 		if(x===void 0) return null;
@@ -83,7 +79,7 @@ export class Repeat<T> {
 	static map_num: Map<number,Map<number,Repeat<number>>>=new Map;
 	static map_T: Map<symbol,<T,U>() => Map<T,Repeat<U>>>=new Map;
 	map_instance: Map<symbol,<T,U>() => Map<T,Repeat<U>>>=new Map;
-	get_map_T<U extends ConstructorWithSymbolType>(constructor_key: U,_: InstanceType<U>): <T,U>() => Map<T,Repeat<U>> {
+	get_map_T<U extends InstanceRecord>(constructor_key: U,_: InstanceType<U>): <T,U>() => Map<T,Repeat<U>> {
 		let res=Repeat.N.map_instance.get(constructor_key.type);
 		if(!res) {
 			Repeat.N.map_instance.set(constructor_key.type,() => new Map);
@@ -91,7 +87,7 @@ export class Repeat<T> {
 		}
 		return res;
 	}
-	has_map_T<U extends ConstructorWithSymbolType,V extends InstanceType<U>,C>(constructor_key: U,key: C): boolean {
+	has_map_T<U extends InstanceRecord,V extends InstanceType<U>,C>(constructor_key: U,key: C): boolean {
 		let res=Repeat.map_T.get(constructor_key.type);
 		if(!res) {
 			Repeat.map_T.set(constructor_key.type,() => new Map);

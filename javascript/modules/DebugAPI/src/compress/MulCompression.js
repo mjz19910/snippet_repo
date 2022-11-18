@@ -5,7 +5,7 @@ import {stats_calculator_info} from "./stats_calculator_info.js";
 
 export class MulCompression extends BaseCompression {
 	/**
-	 * @template {import("../repeat/ConstructorWithSymbolType.js").ConstructorWithSymbolType} U
+	 * @template {import("../repeat/ConstructorWithSymbolType.js").InstanceRecord} U
 	 * @template {InstanceType<U>} T
 	 * @arg {U} constructor_key
 	 * @arg {T[]} arr
@@ -22,7 +22,7 @@ export class MulCompression extends BaseCompression {
 		return MulCompression.compress_result_state(state);
 	}
 	/**
-	 * @template {import("../repeat/ConstructorWithSymbolType.js").ConstructorWithSymbolType} U
+	 * @template {import("../repeat/ConstructorWithSymbolType.js").InstanceRecord} U
 	 * @template {InstanceType<U>} T
 	 * @arg {CompressState<T, import("../repeat/AnyOrRepeat.js").AnyOrRepeat<T>>} state
 	 * @arg {T} item

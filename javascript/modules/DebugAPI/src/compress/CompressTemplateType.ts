@@ -1,11 +1,11 @@
-import {ConstructorWithSymbolType} from "../repeat/ConstructorWithSymbolType.js";
+import {InstanceRecord} from "../repeat/ConstructorWithSymbolType.js";
 import {BaseCompression} from "./BaseCompression.js";
 import {Repeat} from "../repeat/Repeat.js";
 import {AnyOrRepeat} from "../repeat/AnyOrRepeat.js";
 import {type} from "jquery";
 import {NumType} from "../NumType.js";
 
-export class CompressTemplateType<T extends InstanceType<U>,U extends ConstructorWithSymbolType> {
+export class CompressTemplateType<T extends InstanceType<U>,U extends InstanceRecord> {
 	i: number;
 	arr: T[]=[];
 	ret: AnyOrRepeat<T>[]=[];
