@@ -4,7 +4,7 @@ import {fake,handle_onPageLoadStarted} from "../../browser_fake_dom/index.js";
 import {fetch_url,import_ipc_plugin,ipc_loader_state,new_FetchRequestState} from "../../ipc_api/index.js";
 import {PageLoaderState} from "../../page_loader/index.js";
 
-process.on('unhandledRejection',(/** @type {any} */ error) => {
+process.on('unhandledRejection',(/** @type {unknown} */ error) => {
 	console.log('unhandled promise rejection',error);
 });
 
