@@ -443,7 +443,7 @@ export class FakeWindow extends FakeWindowType {
 	constructor(badge) {
 		super();
 		this.m_top=this;
-		this.location=new FakeLocation;
+		this.location=new FakeLocation(new EmptyBadge);
 		this.constructed_badge=badge;
 		this.setTimeout=intercept_setTimeoutAPI(this.setTimeout);
 	}

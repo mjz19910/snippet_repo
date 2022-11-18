@@ -1,4 +1,5 @@
 import {PageLoaderState} from "../../../page_loader/index.js";
+import {fake} from "../browse/fake.js";
 import {FakeLocation} from "../FakeLocation.js";
 import {FakeWindow} from "../FakeWindow.js";
 import {DomBadge} from "../implementation/DomBadge.js";
@@ -21,7 +22,7 @@ export function handle_onPageLoadStarted(window,base_state) {
 	} else {
 		new_win.m_top=window;
 	}
-	var new_loc=new FakeLocation();
+	var new_loc=fake.window.location;
 	if(!new_loc.location_setup) throw new Error("New location expected to have location_setup");
 	if(!state.href) {
 		if(base_state.url===void 0) {
