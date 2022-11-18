@@ -193,6 +193,7 @@ export async function handle_failed_import(state,error,import_string,context,def
 		});
 		if(result!==0) new Error("Failed to recompile");
 		try {
+			return await defaultResolve(import_string, context, defaultResolve);
 			switch(import_string[0]) {
 				case 'repl_plugin_manager/mod.js': return import_ipc_plugin(state,import_string,context,defaultResolve);
 				case 'html_lexer': return import_ipc_plugin(state,import_string,context,defaultResolve);
@@ -254,7 +255,13 @@ let ipc_load_data=new IpcLoader;
  */
 export async function resolve(specifier,context,defaultResolve) {
 	let errors=[];
-	if(loader_debug) console.log('spec: '+specifier+" -> "+path.resolve(path.dirname(context.parentURL),specifier));
+	if(loader_debug) {
+		if(context.parentURL) {
+			console.log('spec: '+specifier+" -> "+path.resolve(path.dirname(context.parentURL),specifier));
+		} else {
+			console.log('spec: '+specifier);
+		}
+	}
 	if(loader_debug) console.log('parent module',context.parentURL);
 	if(specifier.endsWith(".js")) {
 		try {

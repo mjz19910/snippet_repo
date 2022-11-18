@@ -16,6 +16,7 @@ import {CaseSensitivity} from "./CaseSensitivity.js";
 import {StringView} from "./StringView";
 import {HTMLTokenBase} from "./HTMLTokenBase.js";
 import {Vector} from "./Vector.js";
+import {HTMLParser} from "./HTMLParser.js";
 
 export class HTMLTokenizerBase extends HTMLTokenizerImpl {
     m_parser: CppPtr<HTMLParser>=new CppPtr;
