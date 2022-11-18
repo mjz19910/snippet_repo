@@ -49,18 +49,21 @@ export class IpcLoader {
 	}
 	dir_func_1() {
 		if(this.last_error instanceof Error) {
-			this.stack=this.last_error.stack||null;
+			this.stack=this.last_error.stack;
 		}
 	}
 	dir_func_2() {
-		this.error_line=this.stack?.split("\n")[0]||null;
+		this.error_line=this.stack?.split("\n")[0];
 	}
 	dir_func_3() {
 		this.arr=this.error_line?.split(" ")||[];
 	}
 	dir_func_4() {
-		this.imported_from=this.arr.slice(this.arr.indexOf("from")+1).join(" ");
-		console.log("imported from",this.imported_from);
+		let idx_start=this.arr.indexOf("from");
+		if(idx_start>-1) {
+			this.imported_from=this.arr.slice(idx_start+1).join(" ");
+			console.log("imported from",this.imported_from);
+		}
 	}
 	dir_func_5() {
 		let idx_start=this.arr.indexOf("find");
@@ -70,19 +73,19 @@ export class IpcLoader {
 		}
 	}
 	dir_func_6() {
-		this.import_target_ts=this.import_target?.replace(/(?<=.+)\.js/g,".ts")||null;
+		this.import_target_ts=this.import_target?.replace(/(?<=.+)\.js/g,".ts");
 	}
 }
-
+/** @arg {IpcLoader} state */
 function get_typescript_file_to_compile(state) {
 	let a=state;
 	let b=a;
-	a.dir_func_1(state);
-	a.dir_func_2(a);
-	a.dir_func_3(a);
-	a.dir_func_4(a);
-	a.dir_func_5(a);
-	a.dir_func_6(a);
+	a.dir_func_1();
+	a.dir_func_2();
+	a.dir_func_3();
+	a.dir_func_4();
+	a.dir_func_5();
+	a.dir_func_6();
 	if(!a.import_target_ts) throw new Error();
 	return a.import_target_ts;
 }
