@@ -1,8 +1,7 @@
-import {fake} from "../browse/fake.js";
-import {event_handler_type} from "../event_handler_type.js"
-/**
- * @param {{[x:string]:{op?:any;func:typeof event_handler_type}[]}} wind_event_lis
- */
+import {fake} from "./fake.js";
+import {event_handler_type} from "./event_handler_type.js"
+
+/** @param {{[x:string]:{op?:any;func:typeof event_handler_type}[]}} wind_event_lis */
 export function handle_dispatchEvent(wind_event_lis) {
 	if(!fake.window) throw new Error("No window")
 	return function(/** @type {{type:string;}} */ event) {

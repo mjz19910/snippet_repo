@@ -1,8 +1,7 @@
 import {any} from "./any.js";
-import {fake} from "./fake.js";
 import {FakeDOMStringList} from "./FakeDOMStringList.js";
 import {BaseBadge} from "./BaseBadge.js";
-import {Badge} from "./Badge.ts/index.js";
+
 /**@implements {URL} */
 class FakeURL {
 	X=new URL("file://");
