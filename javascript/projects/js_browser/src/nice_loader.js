@@ -257,7 +257,7 @@ export async function resolve(specifier,context,defaultResolve) {
 	let errors=[];
 	if(loader_debug) {
 		if(context.parentURL) {
-			console.log('spec: '+specifier+" -> "+path.resolve(path.dirname(context.parentURL),specifier));
+			console.log('spec: '+specifier+" -> "+path.resolve(specifier));
 		} else {
 			console.log('spec: '+specifier);
 		}
@@ -287,11 +287,11 @@ export async function resolve(specifier,context,defaultResolve) {
 	} catch(err) {
 		errors.push(err);
 	}
-	if(loader_debug) console.log('Failed to load import specifier: ',specifier);
+	if(loader_debug) console.log('Failed to load import specifier: "'+specifier+'"');
 	try {
 		return await defaultResolve(specifier,context,defaultResolve);
 	} catch(err) {
-		if(loader_debug) console.log('Failed to load import specifier: ',specifier);
+		if(loader_debug) console.log('Failed to load import specifier: "'+specifier+'"');
 		errors.push(err);
 	}
 	throw new AggregateError(errors,"All import failures",{});
