@@ -22,60 +22,16 @@ class ContextType {
 
 let module_map=new Map();
 
-/**@type {{value:import("./nice_loader_types.js").ResolveFn|null}} */
-const base_import={value: null};
-
 export class IpcLoader {
 	depth=0;
 	/**@type {(()=>void)[]} */
 	exports=[];
 	/**@type {unknown[]} */
 	errors=[];
-	/**@type {null|[path:string,context:ContextType<any>,nextResolve:import("./nice_loader_types.js").ResolveFn]} */
+	/**@type {null|[path:string,context:ContextType<any>,nextResolve:import("./nice_loader_types.js").ResolveFn<any>]} */
 	args=null;
 	/**@type {string|null} */
 	plugin_key=null;
-}
-
-
-export class ReplPluginManagerModule {
-
-}
-/**
-	 * @arg {IpcLoader} state
-	 */
-async function import_ipc_plugin(state) {
-	state.depth++;
-	try {
-		if(base_import.value===null) return null;
-		if(state.args===null) return null;
-		if(state.plugin_key===null) return null;
-		let x=state.args;
-		/** @type {{}} */
-		let mod=await base_import.value(x[0],x[1],x[2]);
-		module_map.set(state.plugin_key,mod);
-		return mod;
-	} catch(err) {
-		state.errors.push(err);
-		await handle_failed_import(state);
-	} finally {state.depth--;}
-	if(!module_map.has(state.plugin_key)) throw new Error("Handling error did not load plugin");
-	return module_map.get(state.plugin_key);
-}
-
-/** @param {IpcLoader} state */
-export async function try_import_module(state) {
-	if(base_import.value===null) return null;
-	if(state.args===null) return null;
-	if(state.plugin_key===null) return null;
-	let x=state.args;
-	/** @type {{}} */
-	let mod=await base_import.value(x[0],x[1],x[2]);
-	module_map.set(state.plugin_key,mod);
-	return mod;
-}
-
-class ImportData {
 	/**@type {string|null} */
 	stack=null;
 	/**@type {string|null} */
@@ -150,7 +106,7 @@ function get_typescript_file_to_compile(state) {
 export async function handle_failed_import(state) {
 	let target_re_compile=get_typescript_file_to_compile().replace("file:","");
 	let result=await new Promise(function(resolve,reject) {
-		let cp=child_process_spawn("tsc",['-t','ESNext', "-m", "ESNext","--outDir","./build/",target_re_compile],{});
+		let cp=child_process_spawn("tsc",['-t','ESNext',"-m","ESNext","--outDir","./build/",target_re_compile],{});
 		cp.stdout.on("data",e => {
 			process.stdout.write(e);
 		});
@@ -180,46 +136,38 @@ export async function resolve(specifier,context,nextResolve) {
 	let plugin_key;
 	debugger;
 	if(context.parentURL) {
-		if(loader_debug) {
-			console.log('spec: '+specifier+" -> "+path.resolve(specifier));
-			console.log('parent module',context.parentURL);
-		}
 		plugin_key=`${context.parentURL}:${specifier}`;
 	} else {
 		plugin_key=specifier;
-	}
-	if(loader_debug) {
-		console.log("resolve plugin_key");
-		console.log(plugin_key);
+		if(loader_debug) {
+			console.log('main module load:'+JSON.stringify(specifier));
+		}
 	}
 	if(module_map.has(plugin_key)) {
 		return module_map.get(plugin_key);
 	}
 	if(specifier.endsWith(".js")) {
+		let state=ipc_load_data;
+		ipc_load_data.args=[specifier,context,nextResolve];
+		state.depth++;
 		try {
-			let res=await import_ipc_plugin(ipc_load_data,specifier,context,nextResolve);
-			if(res!==null) {
-				return res;
-			}
+			if(base_import.value===null) return null;
+			if(state.args===null) return null;
+			if(state.plugin_key===null) return null;
+			let x=state.args;
+			/** @type {{}} */
+			let mod=await nextResolve(x[0],x[1],x[2]);
+			module_map.set(state.plugin_key,mod);
+			return mod;
 		} catch(err) {
-			errors.push(err);
-		}
-		try {
-			return await nextResolve(specifier,context,nextResolve);
-		} catch(err) {
-			errors.push(err);
-		}
+			state.errors.push(err);
+			await handle_failed_import(state);
+		} finally {state.depth--;}
+		if(module_map.has(state.plugin_key)) return module_map.get(state.plugin_key);
 	}
-	try {
-		return await nextResolve(specifier+".js",context,nextResolve);
-	} catch(err) {
-		errors.push(err);
-	}
-	if(loader_debug) console.log('Failed to load import specifier: "'+specifier+'"');
 	try {
 		return await nextResolve(specifier,context,nextResolve);
 	} catch(err) {
-		if(loader_debug) console.log('Failed to load import specifier: "'+specifier+'"');
 		errors.push(err);
 	}
 	if(system_modules.includes(specifier)) {
@@ -228,5 +176,7 @@ export async function resolve(specifier,context,nextResolve) {
 	console.log("tried all imports");
 	console.log(specifier);
 	console.log(context.parentURL);
+	console.log("resolve plugin_key");
+	console.log(plugin_key.slice(plugin_key.indexOf("wsl2/workspace")+8));
 	throw new AggregateError(errors,"All import failures",{});
 }

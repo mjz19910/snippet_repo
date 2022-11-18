@@ -1,4 +1,3 @@
-// FakeDocument <- FakeWindow -> FakeWindowNoImpl
 import {any} from "./any.js";
 import {intercept_setTimeoutAPI} from "./api/setTimeout.js";
 import {FakeDocument} from "./FakeDocument.js";
