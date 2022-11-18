@@ -157,7 +157,6 @@ function dir_func_6(b) {
 
 /** @arg {IpcLoader} state */
 export async function handle_failed_import(state) {
-	let errors=[];
 	let last_error=state.errors.at(-1);
 	if(!(last_error instanceof Error)) throw new Error("Bad error");
 	if(!last_error.stack) throw new Error("No Error stack");
