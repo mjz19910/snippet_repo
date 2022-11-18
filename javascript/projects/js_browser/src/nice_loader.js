@@ -99,6 +99,54 @@ export async function try_import_module(plugin_key,module_path,arg1,arg2) {
 	return mod;
 }
 
+class A {
+	/**@type {string|null} */
+	stack=null;
+	/**@type {string|null} */
+	error_line=null;
+	/**@type {string|null} */
+	imported_from=null;
+	/**@type {string|null} */
+	import_target=null;
+	/**@type {string|null} */
+	import_target_ts=null;
+	/**@type {string[]} */
+	arr=[];
+}
+
+let a=new A;
+
+/** @param {A} b */
+function dir_func_2(b) {
+	if(!b.stack) throw new Error("no stack");
+	b.error_line=b.stack.split("\n")[0];
+}
+
+/** @param {A} b */
+function dir_func_3(b) {
+	if(!b.error_line) throw new Error();
+	b.arr=b.error_line.split(" ");
+	console.log("load 1",b.arr);
+}
+
+/** @param {A} b */
+function dir_func_4(b) {
+	if(!b.error_line) throw new Error();
+	b.imported_from=b.arr.slice(6)[0];
+}
+
+/** @param {A} b */
+function dir_func_5(b) {
+	if(!b.error_line) throw new Error();
+	b.import_target=b.arr.slice(3)[0];
+}
+
+/**@arg {A} b */
+function dir_func_6(b) {
+	if(!b.import_target) throw new Error("missing import_target");
+	b.import_target_ts=b.import_target.replace(/(?<=.+)\.js/g,".ts");
+}
+
 /**
  * @param {unknown} error
  * @param {string} import_string
@@ -115,18 +163,24 @@ export async function handle_failed_import(state,error,import_string,context,def
 		}
 		if(!(error instanceof Error)) throw new Error("Bad error");
 		if(!error.stack) throw new Error("No Error stack");
-		let stk=error.stack;
-		let imp_mod=stk.split("\n")[0];
-		let idx_start_1=imp_mod.indexOf("from");
-		let idx_start_2=imp_mod.indexOf("find");
-		console.log("load 1",imp_mod.slice(idx_start_2,idx_start_1));
-		console.log("load 2",imp_mod.slice(idx_start_1+4));
-		let imp_mod_name=imp_mod.split("from")[1].trim().replaceAll(";","");
-		console.log("load 3",imp_mod_name);
-		let imp_real=imp_mod_name.replace(/(?<=.+)\.js/g,".ts");
-		let mod_dir=path.dirname(imp_mod_name);
+		a.stack=error.stack;
+		dir_func_2(a);
+		if(!a.error_line) throw new Error("no imp_mod");
+		dir_func_3(a);
+		dir_func_4(a);
+		dir_func_5(a);
+		console.log("imported from",a.imported_from);
+		if(!a.imported_from) throw new Error("");
+		let x={
+			...a,
+			mod_dir: path.dirname(a.imported_from),
+			real_dir_name: path.basename(a.imported_from),
+			imp_real: null,
+		};
+		dir_func_6(a);
+		if(!a.import_target_ts) throw new Error();
 		debugger;
-		let target_re_compile=path.join(mod_dir,imp_real).replace("file:","");
+		let target_re_compile=a.import_target_ts.replace("file:","");
 		let result=await new Promise(function(resolve,reject) {
 			let cp=child_process_spawn("tsc",['-t','ESNext',target_re_compile],{});
 			cp.stdout.on("data",e => {
@@ -220,7 +274,7 @@ export async function resolve(specifier,context,defaultResolve) {
 		try {
 			return await defaultResolve(specifier,context,defaultResolve);
 		} catch(err) {
-			if(loader_debug) console.log('Failed to load import specifier: ',specifier);
+			if(loader_debug) console.log('Failed to load import specifier:',specifier);
 			throw err;
 		}
 	}
