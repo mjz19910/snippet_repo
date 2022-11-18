@@ -134,7 +134,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (!current_input_character.has_value())
                             {
                                 this.log_parse_error();
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
                                 do { if (this.m_has_emitted_eof) return new Optional; this.m_has_emitted_eof = true; this.create_new_token(HTMLToken.Type.EndOfFile); this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (1)
@@ -212,7 +212,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             if (!current_input_character.has_value())
                             {
                                 this.log_parse_error();
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 do { if (this.m_has_emitted_eof) return new Optional; this.m_has_emitted_eof = true; this.create_new_token(HTMLToken.Type.EndOfFile); this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
                             }
                             if (1)
@@ -1805,7 +1805,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
                             }
                         }
@@ -1819,7 +1819,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
@@ -1830,7 +1830,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
@@ -1841,7 +1841,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RCDATA); this.m_state = State.RCDATA; this.m_goto_target="RCDATA"; break _StartOfFunction; } while (0);
@@ -1862,7 +1862,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -1923,7 +1923,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
                             }
                         }
@@ -1937,7 +1937,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
@@ -1948,7 +1948,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
@@ -1959,7 +1959,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (!this.current_end_tag_token_is_appropriate()) {
-                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                    this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                     for (let code_point of this.m_temporary_buffer)
                                         this.m_queued_tokens.enqueue(HTMLToken.make_character(code_point));
                                     do { this.will_reconsume_in(State.RAWTEXT); this.m_state = State.RAWTEXT; this.m_goto_target="RAWTEXT"; break _StartOfFunction; } while (0);
@@ -1980,7 +1980,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2045,7 +2045,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (current_input_character.has_value() && current_input_character.value() == '!'.charCodeAt(0))
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0)));
                                 this.m_queued_tokens.enqueue(HTMLToken.make_character('!'.charCodeAt(0)));
                                 do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2054"].join("")) : void 0); do { this.will_switch_to(State.ScriptDataEscapeStart); this.m_state = State.ScriptDataEscapeStart; current_input_character = this.next_code_point(); } while (0); } while (0);
                             }
@@ -2151,7 +2151,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 do { this.will_reconsume_in(State.ScriptDataEscaped); this.m_state = State.ScriptDataEscaped; this.m_goto_target="ScriptDataEscaped"; break _StartOfFunction; } while (0);
                             }
                         }
@@ -2167,7 +2167,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (this.current_end_tag_token_is_appropriate())
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2166"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point(); } while (0); } while (0);
 
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2181,7 +2181,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (this.current_end_tag_token_is_appropriate())
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2180"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point(); } while (0); } while (0);
 
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2195,7 +2195,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 if (this.current_end_tag_token_is_appropriate())
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2194"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
 
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2217,7 +2217,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer) {
@@ -2502,7 +2502,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 do { this.will_reconsume_in(State.ScriptData); this.m_state = State.ScriptData; this.m_goto_target="ScriptData"; break _StartOfFunction; } while (0);
                             }
                         }
@@ -2517,7 +2517,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2507"].join("")) : void 0); do { this.will_switch_to(State.BeforeAttributeName); this.m_state = State.BeforeAttributeName; current_input_character = this.next_code_point(); } while (0); } while (0);
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2529,7 +2529,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2519"].join("")) : void 0); do { this.will_switch_to(State.SelfClosingStartTag); this.m_state = State.SelfClosingStartTag; current_input_character = this.next_code_point(); } while (0); } while (0);
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2541,7 +2541,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                                 this.m_current_token.set_tag_name(this.consume_current_builder());
                                 if (this.current_end_tag_token_is_appropriate())
                                     do { (!(this.m_current_builder.is_empty()) ? ak_verification_failed(["this.m_current_builder.is_empty()","\n","HTMLTokenizer.cppts",":","2531"].join("")) : void 0); this.will_switch_to(State.Data); this.m_state = State.Data; this.will_emit(this.m_current_token); this.m_queued_tokens.enqueue(move(this.m_current_token)); return this.m_queued_tokens.dequeue().opt(); } while (0);
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
@@ -2562,7 +2562,7 @@ export class HTMLTokenizer extends HTMLTokenizerBase {
                             }
                             if (1)
                             {
-                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))) ; this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0))) ;
+                                this.m_queued_tokens.enqueue(HTMLToken.make_character('<'.charCodeAt(0))); this.m_queued_tokens.enqueue(HTMLToken.make_character('/'.charCodeAt(0)));
                                 // NOTE: The spec doesn't mention this, but it seems that this.m_current_token (an end tag) is just dropped in this case.
                                 this.m_current_builder.clear();
                                 for (let code_point of this.m_temporary_buffer)
