@@ -126,6 +126,7 @@ let a=new A;
 function dir_func_2(b) {
 	if(!b.stack) throw new Error("no stack");
 	b.error_line=b.stack.split("\n")[0];
+	if(!a.error_line) throw new Error("no error_line");
 }
 
 /** @param {A} b */
@@ -138,7 +139,8 @@ function dir_func_3(b) {
 function dir_func_4(b) {
 	if(!b.error_line) throw new Error();
 	b.imported_from=b.arr.slice(b.arr.indexOf("from")+1).join(" ");
-	console.log("imported from",a.imported_from);
+	if(!b.imported_from) throw new Error("no error_line");
+	console.log("imported from",b.imported_from);
 }
 
 /** @param {A} b */
@@ -154,15 +156,18 @@ function dir_func_6(b) {
 	if(!b.import_target) throw new Error("missing import_target");
 	b.import_target_ts=b.import_target.replace(/(?<=.+)\.js/g,".ts");
 }
+/** @arg {IpcLoader} b */
+function get_last_error_stack(b) {
+	let last_error=b.errors.at(-1);
+	if(!(last_error instanceof Error)) throw new Error("Bad error");
+	if(!last_error.stack) throw new Error("No Error stack");
+	return last_error.stack;
+}
 
 /** @arg {IpcLoader} state */
 export async function handle_failed_import(state) {
-	let last_error=state.errors.at(-1);
-	if(!(last_error instanceof Error)) throw new Error("Bad error");
-	if(!last_error.stack) throw new Error("No Error stack");
-	a.stack=last_error.stack;
+	a.stack=get_last_error_stack(state);
 	dir_func_2(a);
-	if(!a.error_line) throw new Error("no imp_mod");
 	dir_func_3(a);
 	dir_func_4(a);
 	dir_func_5(a);
