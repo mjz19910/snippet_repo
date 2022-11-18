@@ -16,18 +16,19 @@ import {StringView} from "./StringView";
 import {HTMLTokenBase} from "./HTMLTokenBase.js";
 import {Vector} from "./Vector.js";
 import {HTMLParser} from "./HTMLParser.js";
+import {SourceLocation} from "./SourceLocation.js";
 
 export class HTMLTokenizerBase {
     m_parser: CppPtr<HTMLParser>=new CppPtr;
     m_state=State.Data;
     m_return_state=State.Data;
     m_temporary_buffer=new Vector<number>();
-    m_decoded_input:StringView;
+    m_decoded_input: StringView;
     m_insertion_point=new InsertionPoint;
     m_old_insertion_point=new InsertionPoint;
-    m_utf8_view:Utf8View;
-    m_utf8_iterator:Utf8CodePointIterator;
-    m_prev_utf8_iterator:Utf8CodePointIterator;
+    m_utf8_view: Utf8View;
+    m_utf8_iterator: Utf8CodePointIterator;
+    m_prev_utf8_iterator: Utf8CodePointIterator;
     m_current_token=new HTMLTokenBase;
     m_current_builder=new StringBuilder;
     m_last_emitted_start_tag_name=new Optional("");
@@ -39,7 +40,7 @@ export class HTMLTokenizerBase {
     m_aborted=false;
     m_source_positions: Vector<InstanceType<typeof HTMLTokenBase['Position']>>=new Vector;
     m_skip_to_start_of_func=false;
-    m_goto_target:GoToTargets="None";
+    m_goto_target: GoToTargets="None";
     /**for HTMLTokenizer() */
     constructor() {
         this.m_decoded_input=new StringView("");
@@ -60,7 +61,7 @@ export class HTMLTokenizerBase {
         this.m_prev_utf8_iterator=this.m_utf8_view.begin();
         this.m_source_positions.empend(HTMLToken.Position.from(0,0));
     }
-    next_code_point():Optional<number> {
+    next_code_point(): Optional<number> {
         if(this.m_utf8_iterator.eq(this.m_utf8_view.end()))
             return new Optional;
 
@@ -84,7 +85,7 @@ export class HTMLTokenizerBase {
         dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer) Next code_point: {}",code_point);
         return new Optional(code_point);
     }
-    peek_code_point(offset:number) {
+    peek_code_point(offset: number) {
         let it=this.m_utf8_iterator;
         for(let i=0;i<offset&&it.neq(this.m_utf8_view.end());++i)
             it.inc();
@@ -92,7 +93,7 @@ export class HTMLTokenizerBase {
             return new Optional<number>();
         return new Optional(it.deref());
     }
-    skip(count:number) {
+    skip(count: number) {
         if(!this.m_source_positions.is_empty())
             this.m_source_positions.append(this.m_source_positions.last());
         for(let i=0;i<count;++i) {
@@ -109,7 +110,7 @@ export class HTMLTokenizerBase {
             this.m_utf8_iterator.inc();
         }
     }
-    nth_last_position(n:number) {
+    nth_last_position(n: number) {
         if(n+1>this.m_source_positions.size()) {
             dbgln_if(TOKENIZER_TRACE_DEBUG,"(Tokenizer.nth_last_position) Invalid position requested: {}th-last of {}. Returning (0-0).",n,this.m_source_positions.size());
             return new HTMLToken.Position(0,0);
@@ -117,7 +118,7 @@ export class HTMLTokenizerBase {
         return this.m_source_positions.at(this.m_source_positions.size()-1-n);
     }
     // ----------- TODO -----------
-    consume_next_if_match(_x:string, y?:CaseSensitivity):boolean {throw new Error("TODO");}
+    consume_next_if_match(_x: string,y?: CaseSensitivity): boolean {throw new Error("TODO");}
     create_new_token(_x: HTMLToken.Type) {throw new Error("TODO");}
     insert_input_at_insertion_point() {throw new Error("TODO");}
     insert_eof() {throw new Error("TODO");}
@@ -128,18 +129,20 @@ export class HTMLTokenizerBase {
     will_emit(_x: HTMLToken) {throw new Error("TODO");}
     current_end_tag_token_is_appropriate(): boolean {throw new Error("TODO");}
     consumed_as_part_of_an_attribute(): boolean {throw new Error("TODO");}
-    restore_to(_x:Utf8CodePointIterator) {throw new Error("TODO");}
-    log_parse_error() {throw new Error("");}
+    restore_to(_x: Utf8CodePointIterator) {throw new Error("TODO");}
+    log_parse_error(location=SourceLocation.current()) {
+        dbgln_if(TOKENIZER_TRACE_DEBUG,"Parse error (tokenization) {}",location);
+    }
     is_ascii_alpha(arg0: number): boolean {
         throw new Error("Method not implemented.");
     }
-    is_ascii(arg0: number):boolean {
+    is_ascii(arg0: number): boolean {
         throw new Error("Method not implemented.");
     }
     is_ascii_lower_alpha(arg0: number): boolean {
         throw new Error("Method not implemented.");
     }
-    is_ascii_upper_alpha(arg0: number):boolean {
+    is_ascii_upper_alpha(arg0: number): boolean {
         throw new Error("Method not implemented.");
     }
     to_ascii_lowercase(arg0: number): number {
@@ -149,7 +152,7 @@ export class HTMLTokenizerBase {
         throw new Error("Method not implemented.");
     }
     consume_current_builder() {
-        let string = this.m_current_builder.to_string();
+        let string=this.m_current_builder.to_string();
         this.m_current_builder.clear();
         return string;
     }
