@@ -9,6 +9,9 @@ import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
 const delete_all_javascript_api=false;
 
 export class ReplPluginManager {
+	clearBufferedCommand() {
+		this.get_repl_runtime().clearBufferedCommand();
+	}
 	/**
 	 * @param {string} arg0
 	 */

@@ -1,164 +1,84 @@
-export class State {
-	/**@readonly*/static InvalidState=0
-	/**@readonly*/static Data=1
-	/**@readonly*/static RCDATA=2
-	/**@readonly*/static RAWTEXT=3
-	/**@readonly*/static ScriptData=4
-	/**@readonly*/static PLAINTEXT=5
-	/**@readonly*/static TagOpen=6
-	/**@readonly*/static EndTagOpen=7
-	/**@readonly*/static TagName=8
-	/**@readonly*/static RCDATALessThanSign=9
-	/**@readonly*/static RCDATAEndTagOpen=10
-	/**@readonly*/static RCDATAEndTagName=11
-	/**@readonly*/static RAWTEXTLessThanSign=12
-	/**@readonly*/static RAWTEXTEndTagOpen=13
-	/**@readonly*/static RAWTEXTEndTagName=14
-	/**@readonly*/static ScriptDataLessThanSign=15
-	/**@readonly*/static ScriptDataEndTagOpen=16
-	/**@readonly*/static ScriptDataEndTagName=17
-	/**@readonly*/static ScriptDataEscapeStart=18
-	/**@readonly*/static ScriptDataEscapeStartDash=19
-	/**@readonly*/static ScriptDataEscaped=20
-	/**@readonly*/static ScriptDataEscapedDash=21
-	/**@readonly*/static ScriptDataEscapedDashDash=22
-	/**@readonly*/static ScriptDataEscapedLessThanSign=23
-	/**@readonly*/static ScriptDataEscapedEndTagOpen=24
-	/**@readonly*/static ScriptDataEscapedEndTagName=25
-	/**@readonly*/static ScriptDataDoubleEscapeStart=26
-	/**@readonly*/static ScriptDataDoubleEscaped=27
-	/**@readonly*/static ScriptDataDoubleEscapedDash=28
-	/**@readonly*/static ScriptDataDoubleEscapedDashDash=29
-	/**@readonly*/static ScriptDataDoubleEscapedLessThanSign=30
-	/**@readonly*/static ScriptDataDoubleEscapeEnd=31
-	/**@readonly*/static BeforeAttributeName=32
-	/**@readonly*/static AttributeName=33
-	/**@readonly*/static AfterAttributeName=34
-	/**@readonly*/static BeforeAttributeValue=35
-	/**@readonly*/static AttributeValueDoubleQuoted=36
-	/**@readonly*/static AttributeValueSingleQuoted=37
-	/**@readonly*/static AttributeValueUnquoted=38
-	/**@readonly*/static AfterAttributeValueQuoted=39
-	/**@readonly*/static SelfClosingStartTag=40
-	/**@readonly*/static BogusComment=41
-	/**@readonly*/static MarkupDeclarationOpen=42
-	/**@readonly*/static CommentStart=43
-	/**@readonly*/static CommentStartDash=44
-	/**@readonly*/static Comment=45
-	/**@readonly*/static CommentLessThanSign=46
-	/**@readonly*/static CommentLessThanSignBang=47
-	/**@readonly*/static CommentLessThanSignBangDash=48
-	/**@readonly*/static CommentLessThanSignBangDashDash=49
-	/**@readonly*/static CommentEndDash=50
-	/**@readonly*/static CommentEnd=51
-	/**@readonly*/static CommentEndBang=52
-	/**@readonly*/static DOCTYPE=53
-	/**@readonly*/static BeforeDOCTYPEName=54
-	/**@readonly*/static DOCTYPEName=55
-	/**@readonly*/static AfterDOCTYPEName=56
-	/**@readonly*/static AfterDOCTYPEPublicKeyword=57
-	/**@readonly*/static BeforeDOCTYPEPublicIdentifier=58
-	/**@readonly*/static DOCTYPEPublicIdentifierDoubleQuoted=59
-	/**@readonly*/static DOCTYPEPublicIdentifierSingleQuoted=60
-	/**@readonly*/static AfterDOCTYPEPublicIdentifier=61
-	/**@readonly*/static BetweenDOCTYPEPublicAndSystemIdentifiers=62
-	/**@readonly*/static AfterDOCTYPESystemKeyword=63
-	/**@readonly*/static BeforeDOCTYPESystemIdentifier=64
-	/**@readonly*/static DOCTYPESystemIdentifierDoubleQuoted=65
-	/**@readonly*/static DOCTYPESystemIdentifierSingleQuoted=66
-	/**@readonly*/static AfterDOCTYPESystemIdentifier=67
-	/**@readonly*/static BogusDOCTYPE=68
-	/**@readonly*/static CDATASection=69
-	/**@readonly*/static CDATASectionBracket=70
-	/**@readonly*/static CDATASectionEnd=71
-	/**@readonly*/static CharacterReference=72
-	/**@readonly*/static NamedCharacterReference=73
-	/**@readonly*/static AmbiguousAmpersand=74
-	/**@readonly*/static NumericCharacterReference=75
-	/**@readonly*/static HexadecimalCharacterReferenceStart=76
-	/**@readonly*/static DecimalCharacterReferenceStart=77
-	/**@readonly*/static HexadecimalCharacterReference=78
-	/**@readonly*/static DecimalCharacterReference=79
-	/**@readonly*/static NumericCharacterReferenceEnd=80
-	/**@readonly*/static 0="InvalidState"
-	/**@readonly*/static 1="Data"
-	/**@readonly*/static 2="RCDATA"
-	/**@readonly*/static 3="RAWTEXT"
-	/**@readonly*/static 4="ScriptData"
-	/**@readonly*/static 5="PLAINTEXT"
-	/**@readonly*/static 6="TagOpen"
-	/**@readonly*/static 7="EndTagOpen"
-	/**@readonly*/static 8="TagName"
-	/**@readonly*/static 9="RCDATALessThanSign"
-	/**@readonly*/static 10="RCDATAEndTagOpen"
-	/**@readonly*/static 11="RCDATAEndTagName"
-	/**@readonly*/static 12="RAWTEXTLessThanSign"
-	/**@readonly*/static 13="RAWTEXTEndTagOpen"
-	/**@readonly*/static 14="RAWTEXTEndTagName"
-	/**@readonly*/static 15="ScriptDataLessThanSign"
-	/**@readonly*/static 16="ScriptDataEndTagOpen"
-	/**@readonly*/static 17="ScriptDataEndTagName"
-	/**@readonly*/static 18="ScriptDataEscapeStart"
-	/**@readonly*/static 19="ScriptDataEscapeStartDash"
-	/**@readonly*/static 20="ScriptDataEscaped"
-	/**@readonly*/static 21="ScriptDataEscapedDash"
-	/**@readonly*/static 22="ScriptDataEscapedDashDash"
-	/**@readonly*/static 23="ScriptDataEscapedLessThanSign"
-	/**@readonly*/static 24="ScriptDataEscapedEndTagOpen"
-	/**@readonly*/static 25="ScriptDataEscapedEndTagName"
-	/**@readonly*/static 26="ScriptDataDoubleEscapeStart"
-	/**@readonly*/static 27="ScriptDataDoubleEscaped"
-	/**@readonly*/static 28="ScriptDataDoubleEscapedDash"
-	/**@readonly*/static 29="ScriptDataDoubleEscapedDashDash"
-	/**@readonly*/static 30="ScriptDataDoubleEscapedLessThanSign"
-	/**@readonly*/static 31="ScriptDataDoubleEscapeEnd"
-	/**@readonly*/static 32="BeforeAttributeName"
-	/**@readonly*/static 33="AttributeName"
-	/**@readonly*/static 34="AfterAttributeName"
-	/**@readonly*/static 35="BeforeAttributeValue"
-	/**@readonly*/static 36="AttributeValueDoubleQuoted"
-	/**@readonly*/static 37="AttributeValueSingleQuoted"
-	/**@readonly*/static 38="AttributeValueUnquoted"
-	/**@readonly*/static 39="AfterAttributeValueQuoted"
-	/**@readonly*/static 40="SelfClosingStartTag"
-	/**@readonly*/static 41="BogusComment"
-	/**@readonly*/static 42="MarkupDeclarationOpen"
-	/**@readonly*/static 43="CommentStart"
-	/**@readonly*/static 44="CommentStartDash"
-	/**@readonly*/static 45="Comment"
-	/**@readonly*/static 46="CommentLessThanSign"
-	/**@readonly*/static 47="CommentLessThanSignBang"
-	/**@readonly*/static 48="CommentLessThanSignBangDash"
-	/**@readonly*/static 49="CommentLessThanSignBangDashDash"
-	/**@readonly*/static 50="CommentEndDash"
-	/**@readonly*/static 51="CommentEnd"
-	/**@readonly*/static 52="CommentEndBang"
-	/**@readonly*/static 53="DOCTYPE"
-	/**@readonly*/static 54="BeforeDOCTYPEName"
-	/**@readonly*/static 55="DOCTYPEName"
-	/**@readonly*/static 56="AfterDOCTYPEName"
-	/**@readonly*/static 57="AfterDOCTYPEPublicKeyword"
-	/**@readonly*/static 58="BeforeDOCTYPEPublicIdentifier"
-	/**@readonly*/static 59="DOCTYPEPublicIdentifierDoubleQuoted"
-	/**@readonly*/static 60="DOCTYPEPublicIdentifierSingleQuoted"
-	/**@readonly*/static 61="AfterDOCTYPEPublicIdentifier"
-	/**@readonly*/static 62="BetweenDOCTYPEPublicAndSystemIdentifiers"
-	/**@readonly*/static 63="AfterDOCTYPESystemKeyword"
-	/**@readonly*/static 64="BeforeDOCTYPESystemIdentifier"
-	/**@readonly*/static 65="DOCTYPESystemIdentifierDoubleQuoted"
-	/**@readonly*/static 66="DOCTYPESystemIdentifierSingleQuoted"
-	/**@readonly*/static 67="AfterDOCTYPESystemIdentifier"
-	/**@readonly*/static 68="BogusDOCTYPE"
-	/**@readonly*/static 69="CDATASection"
-	/**@readonly*/static 70="CDATASectionBracket"
-	/**@readonly*/static 71="CDATASectionEnd"
-	/**@readonly*/static 72="CharacterReference"
-	/**@readonly*/static 73="NamedCharacterReference"
-	/**@readonly*/static 74="AmbiguousAmpersand"
-	/**@readonly*/static 75="NumericCharacterReference"
-	/**@readonly*/static 76="HexadecimalCharacterReferenceStart"
-	/**@readonly*/static 77="DecimalCharacterReferenceStart"
-	/**@readonly*/static 78="HexadecimalCharacterReference"
-	/**@readonly*/static 79="DecimalCharacterReference"
-	/**@readonly*/static 80="NumericCharacterReferenceEnd"
-}
+export var State;
+(function (State) {
+    State[State["InvalidState"] = 0] = "InvalidState";
+    State[State["Data"] = 1] = "Data";
+    State[State["RCDATA"] = 2] = "RCDATA";
+    State[State["RAWTEXT"] = 3] = "RAWTEXT";
+    State[State["ScriptData"] = 4] = "ScriptData";
+    State[State["PLAINTEXT"] = 5] = "PLAINTEXT";
+    State[State["TagOpen"] = 6] = "TagOpen";
+    State[State["EndTagOpen"] = 7] = "EndTagOpen";
+    State[State["TagName"] = 8] = "TagName";
+    State[State["RCDATALessThanSign"] = 9] = "RCDATALessThanSign";
+    State[State["RCDATAEndTagOpen"] = 10] = "RCDATAEndTagOpen";
+    State[State["RCDATAEndTagName"] = 11] = "RCDATAEndTagName";
+    State[State["RAWTEXTLessThanSign"] = 12] = "RAWTEXTLessThanSign";
+    State[State["RAWTEXTEndTagOpen"] = 13] = "RAWTEXTEndTagOpen";
+    State[State["RAWTEXTEndTagName"] = 14] = "RAWTEXTEndTagName";
+    State[State["ScriptDataLessThanSign"] = 15] = "ScriptDataLessThanSign";
+    State[State["ScriptDataEndTagOpen"] = 16] = "ScriptDataEndTagOpen";
+    State[State["ScriptDataEndTagName"] = 17] = "ScriptDataEndTagName";
+    State[State["ScriptDataEscapeStart"] = 18] = "ScriptDataEscapeStart";
+    State[State["ScriptDataEscapeStartDash"] = 19] = "ScriptDataEscapeStartDash";
+    State[State["ScriptDataEscaped"] = 20] = "ScriptDataEscaped";
+    State[State["ScriptDataEscapedDash"] = 21] = "ScriptDataEscapedDash";
+    State[State["ScriptDataEscapedDashDash"] = 22] = "ScriptDataEscapedDashDash";
+    State[State["ScriptDataEscapedLessThanSign"] = 23] = "ScriptDataEscapedLessThanSign";
+    State[State["ScriptDataEscapedEndTagOpen"] = 24] = "ScriptDataEscapedEndTagOpen";
+    State[State["ScriptDataEscapedEndTagName"] = 25] = "ScriptDataEscapedEndTagName";
+    State[State["ScriptDataDoubleEscapeStart"] = 26] = "ScriptDataDoubleEscapeStart";
+    State[State["ScriptDataDoubleEscaped"] = 27] = "ScriptDataDoubleEscaped";
+    State[State["ScriptDataDoubleEscapedDash"] = 28] = "ScriptDataDoubleEscapedDash";
+    State[State["ScriptDataDoubleEscapedDashDash"] = 29] = "ScriptDataDoubleEscapedDashDash";
+    State[State["ScriptDataDoubleEscapedLessThanSign"] = 30] = "ScriptDataDoubleEscapedLessThanSign";
+    State[State["ScriptDataDoubleEscapeEnd"] = 31] = "ScriptDataDoubleEscapeEnd";
+    State[State["BeforeAttributeName"] = 32] = "BeforeAttributeName";
+    State[State["AttributeName"] = 33] = "AttributeName";
+    State[State["AfterAttributeName"] = 34] = "AfterAttributeName";
+    State[State["BeforeAttributeValue"] = 35] = "BeforeAttributeValue";
+    State[State["AttributeValueDoubleQuoted"] = 36] = "AttributeValueDoubleQuoted";
+    State[State["AttributeValueSingleQuoted"] = 37] = "AttributeValueSingleQuoted";
+    State[State["AttributeValueUnquoted"] = 38] = "AttributeValueUnquoted";
+    State[State["AfterAttributeValueQuoted"] = 39] = "AfterAttributeValueQuoted";
+    State[State["SelfClosingStartTag"] = 40] = "SelfClosingStartTag";
+    State[State["BogusComment"] = 41] = "BogusComment";
+    State[State["MarkupDeclarationOpen"] = 42] = "MarkupDeclarationOpen";
+    State[State["CommentStart"] = 43] = "CommentStart";
+    State[State["CommentStartDash"] = 44] = "CommentStartDash";
+    State[State["Comment"] = 45] = "Comment";
+    State[State["CommentLessThanSign"] = 46] = "CommentLessThanSign";
+    State[State["CommentLessThanSignBang"] = 47] = "CommentLessThanSignBang";
+    State[State["CommentLessThanSignBangDash"] = 48] = "CommentLessThanSignBangDash";
+    State[State["CommentLessThanSignBangDashDash"] = 49] = "CommentLessThanSignBangDashDash";
+    State[State["CommentEndDash"] = 50] = "CommentEndDash";
+    State[State["CommentEnd"] = 51] = "CommentEnd";
+    State[State["CommentEndBang"] = 52] = "CommentEndBang";
+    State[State["DOCTYPE"] = 53] = "DOCTYPE";
+    State[State["BeforeDOCTYPEName"] = 54] = "BeforeDOCTYPEName";
+    State[State["DOCTYPEName"] = 55] = "DOCTYPEName";
+    State[State["AfterDOCTYPEName"] = 56] = "AfterDOCTYPEName";
+    State[State["AfterDOCTYPEPublicKeyword"] = 57] = "AfterDOCTYPEPublicKeyword";
+    State[State["BeforeDOCTYPEPublicIdentifier"] = 58] = "BeforeDOCTYPEPublicIdentifier";
+    State[State["DOCTYPEPublicIdentifierDoubleQuoted"] = 59] = "DOCTYPEPublicIdentifierDoubleQuoted";
+    State[State["DOCTYPEPublicIdentifierSingleQuoted"] = 60] = "DOCTYPEPublicIdentifierSingleQuoted";
+    State[State["AfterDOCTYPEPublicIdentifier"] = 61] = "AfterDOCTYPEPublicIdentifier";
+    State[State["BetweenDOCTYPEPublicAndSystemIdentifiers"] = 62] = "BetweenDOCTYPEPublicAndSystemIdentifiers";
+    State[State["AfterDOCTYPESystemKeyword"] = 63] = "AfterDOCTYPESystemKeyword";
+    State[State["BeforeDOCTYPESystemIdentifier"] = 64] = "BeforeDOCTYPESystemIdentifier";
+    State[State["DOCTYPESystemIdentifierDoubleQuoted"] = 65] = "DOCTYPESystemIdentifierDoubleQuoted";
+    State[State["DOCTYPESystemIdentifierSingleQuoted"] = 66] = "DOCTYPESystemIdentifierSingleQuoted";
+    State[State["AfterDOCTYPESystemIdentifier"] = 67] = "AfterDOCTYPESystemIdentifier";
+    State[State["BogusDOCTYPE"] = 68] = "BogusDOCTYPE";
+    State[State["CDATASection"] = 69] = "CDATASection";
+    State[State["CDATASectionBracket"] = 70] = "CDATASectionBracket";
+    State[State["CDATASectionEnd"] = 71] = "CDATASectionEnd";
+    State[State["CharacterReference"] = 72] = "CharacterReference";
+    State[State["NamedCharacterReference"] = 73] = "NamedCharacterReference";
+    State[State["AmbiguousAmpersand"] = 74] = "AmbiguousAmpersand";
+    State[State["NumericCharacterReference"] = 75] = "NumericCharacterReference";
+    State[State["HexadecimalCharacterReferenceStart"] = 76] = "HexadecimalCharacterReferenceStart";
+    State[State["DecimalCharacterReferenceStart"] = 77] = "DecimalCharacterReferenceStart";
+    State[State["HexadecimalCharacterReference"] = 78] = "HexadecimalCharacterReference";
+    State[State["DecimalCharacterReference"] = 79] = "DecimalCharacterReference";
+    State[State["NumericCharacterReferenceEnd"] = 80] = "NumericCharacterReferenceEnd";
+})(State || (State = {}));

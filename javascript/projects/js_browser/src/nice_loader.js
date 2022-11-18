@@ -126,19 +126,21 @@ function dir_func_2(b) {
 function dir_func_3(b) {
 	if(!b.error_line) throw new Error();
 	b.arr=b.error_line.split(" ");
-	console.log("load 1",b.arr);
 }
 
 /** @param {A} b */
 function dir_func_4(b) {
 	if(!b.error_line) throw new Error();
-	b.imported_from=b.arr.slice(6)[0];
+	b.imported_from=b.arr.slice(b.arr.indexOf("from")+1).join(" ");
+	console.log("imported_from",b.imported_from);
 }
 
 /** @param {A} b */
 function dir_func_5(b) {
 	if(!b.error_line) throw new Error();
-	b.import_target=b.arr.slice(3)[0];
+	let idx_start=b.arr.indexOf("find")+2;
+	b.import_target=b.arr.slice(idx_start,b.arr.indexOf("imported")).join(" ").slice(1,-1);
+	console.log("import_target",b.import_target);
 }
 
 /**@arg {A} b */
@@ -260,7 +262,7 @@ let ipc_load_data=new IpcLoader;
  */
 export async function resolve(specifier,context,defaultResolve) {
 	let errors=[];
-	if(loader_debug) console.log('spec',specifier);
+	if(loader_debug) console.log('spec',path.resolve(specifier));
 	if(loader_debug) console.log('parent module',context.parentURL);
 	if(specifier.endsWith(".js")) {
 		try {

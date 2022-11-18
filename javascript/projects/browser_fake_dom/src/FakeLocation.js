@@ -1,5 +1,6 @@
 import {any} from "./any.js";
 import {fake} from "./browse/fake.js";
+import {EmptyBadge} from "./EmptyBadge.js";
 import {FakeDOMStringList} from "./FakeDOMStringList.js";
 import {DomBadge} from "./implementation/DomBadge.js";
 import {Badge} from "./std/Badge.js";
@@ -122,16 +123,18 @@ export class FakeLocation {
 	set search(v) {this.#location_url.search=v;}
 	/**
 	 * @param {FakeLocation | string} [location_url]
-	 * @arg {DomBadge} [dom_badge]
+	 * @arg {DomBadge|EmptyBadge} [dom_badge]
 	 */
-	constructor(dom_badge, location_url) {
-		if(dom_badge && location_url && dom_badge instanceof Badge && dom_badge.is_valid()) {
-			if(typeof location_url == "string") {
-				this.#original_location_str=location_url;
-				this.#dom_impl_badge=dom_badge;
+	constructor(dom_badge,location_url) {
+		if(!(dom_badge instanceof EmptyBadge)) {
+			if(dom_badge&&location_url&&dom_badge instanceof Badge&&dom_badge.is_valid()) {
+				if(typeof location_url=="string") {
+					this.#original_location_str=location_url;
+					this.#dom_impl_badge=dom_badge;
+				}
+			} else {
+				throw new TypeError("Illegal constructor");
 			}
-		} else {
-			throw new TypeError("Illegal constructor");
 		}
 		this.#original_location_str="";
 		/**@type {undefined | ((dom_impl_badge:Badge,href:string)=>void)} */
