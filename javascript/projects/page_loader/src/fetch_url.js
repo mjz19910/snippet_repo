@@ -5,7 +5,7 @@ import {fix_fetch_url} from "./fix_fetch_url.js";
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
 import {RequestModule} from "./RequestModule.js";
-import {DomBadge} from "../../browser_fake_dom/src/DomBadge.js/index.js";
+import {BaseBadge} from "../../browser_fake_dom/src/BaseBadge.js/index.js";
 import {fake,FakeDocument,FakeWindow} from "../../browser_fake_dom/index.js";
 /**
  * @arg {PageLoaderState} state
@@ -27,9 +27,9 @@ export async function fetch_url(state,silent=false) {
 		}
 		console.log('fetch_url_tag get',state.url);
 	}
-	const dom_impl_badge=new DomBadge;
+	const dom_impl_badge=new BaseBadge;
 	let new_url=state.url;
-	fake.document=new FakeDocument(fake.window,new DomBadge);
+	fake.document=new FakeDocument(fake.window,new BaseBadge);
 	fake.with_badge(dom_impl_badge,(fake) => {
 		if(!fake.document) throw new Error("Missing fake document");
 		fake.document.location.assign(new_url);

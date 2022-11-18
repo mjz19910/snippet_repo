@@ -1,7 +1,7 @@
 import {any} from "./any.js";
 import {fake} from "./fake.js/index.js";
 import {FakeDOMStringList} from "./FakeDOMStringList.js";
-import {DomBadge} from "./DomBadge.js/index.js";
+import {BaseBadge} from "./BaseBadge.js/index.js";
 import {Badge} from "./Badge.ts/index.js";
 /**@implements {URL} */
 class FakeURL {
@@ -122,7 +122,7 @@ export class FakeLocation {
 	set search(v) {this.#location_url.search=v;}
 	/**
 	 * @param {FakeLocation | string} [location_url]
-	 * @arg {DomBadge} [dom_badge]
+	 * @arg {BaseBadge} [dom_badge]
 	 */
 	constructor(dom_badge, location_url) {
 		if(dom_badge && location_url && dom_badge instanceof Badge && dom_badge.is_valid()) {

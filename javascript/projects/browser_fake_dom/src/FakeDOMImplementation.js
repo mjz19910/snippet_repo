@@ -2,7 +2,7 @@ import {fake} from "./fake.js/index.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeDocumentType} from "./FakeDocumentType";
 import {get_FakeXMLDocument} from "./FakeXMLDocument";
-import {DomBadge} from "./DomBadge.js/index.js";
+import {BaseBadge} from "./BaseBadge.js/index.js";
 
 export function get_FakeDOMImplementation() {
     let FakeXMLDocument=get_FakeXMLDocument();
@@ -22,7 +22,7 @@ export function get_FakeDOMImplementation() {
             if(v) {
                 this.X.createDocument(namespace,qualName,doctype);
             }
-            new FakeXMLDocument(fake.window,new DomBadge);
+            new FakeXMLDocument(fake.window,new BaseBadge);
             throw new Error("TODO");
         }
         /**
@@ -46,7 +46,7 @@ export function get_FakeDOMImplementation() {
             if(v) {
                 this.X.createHTMLDocument(title);
             }
-            let new_document=new FakeDocument(fake.window,new DomBadge);
+            let new_document=new FakeDocument(fake.window,new BaseBadge);
             new_document.m_title=title;
             return new_document;
         }

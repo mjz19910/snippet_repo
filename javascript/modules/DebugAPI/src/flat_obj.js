@@ -2,7 +2,7 @@ import {IDValueData} from "./IDValueData";
 
 /** @param {IDValueData} obj */
 export function flat_obj(obj) {
-	/**@type {IValue[]} */
+	/**@type {IDValueData[]} */
 	let ret=[];
 	while(obj.next) {
 		let {next}=obj;

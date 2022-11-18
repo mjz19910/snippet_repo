@@ -1,7 +1,7 @@
 import {DoCalc} from "./DoCalc";
 
 /**
- * @param {IValue} obj
+ * @param {IDValueData} obj
  * @param {import("./compress/CompressionStatsCalculator").CompressionStatsCalculator} stats
  */
 export function run_calc(stats,obj) {

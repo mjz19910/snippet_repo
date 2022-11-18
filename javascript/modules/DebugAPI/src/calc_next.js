@@ -2,7 +2,7 @@ import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator.
 
 /**
  * @param {CompressionStatsCalculator} stats
- * @param {IValue} obj
+ * @param {IDValueData} obj
  * @param {number} max_id
  */
 export function calc_next(stats,obj,max_id) {
@@ -14,7 +14,7 @@ export function calc_next(stats,obj,max_id) {
 	if(!obj.next) {
 		return null;
 	}
-	/**@type {IValue} */
+	/**@type {IDValueData} */
 	let next=obj;
 	next.value=[max_id,'=',rep_val];
 	next.log_val=[max_id,'=',f_val[0],f_val[1]];

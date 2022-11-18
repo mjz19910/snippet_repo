@@ -5,7 +5,7 @@ import {FakeDocument} from "./FakeDocument.js";
 import {FakeExternal} from "./FakeExternal.js";
 import {FakeLocation} from "./FakeLocation.js";
 import {FakeStorage} from "./FakeStorage.js";
-import {BaseBadge} from "./DomBadge.js";
+import {BaseBadge} from "./BaseBadge.js";
 import {no_impl} from "./no_impl.js";
 import {NullBadge} from "./NullBadge.js";
 import {FakeWindowType} from "./FakeWindowType.js";

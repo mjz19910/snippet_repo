@@ -72,7 +72,7 @@ g_api.range_matches=range_matches;
 export let ids=new NewTypeWrapper([]);
 export let max_id=new NewTypeWrapper(0);
 
-/** @type {NewTypeWrapper<IValue[]>} */
+/** @type {NewTypeWrapper<IDValueData[]>} */
 export let g_obj_arr=new NewTypeWrapper([]);
 /**
  * @type {any[]}

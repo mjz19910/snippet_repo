@@ -1,21 +1,23 @@
 import {GlobalApiObject} from "./global_api/GlobalApiObject";
-import {IDValueData} from "./IDValueData";
 
 export {};
 
+//@@iterator for NodeListOf
 declare global {
 	interface NodeListOf<TNode extends Node> extends NodeList {
 		[Symbol.iterator](): IterableIterator<TNode>;
 	}
 }
 
+// g_api on window object
 declare global {
-	type IValue=IDValueData;
-
 	interface Window {
 		g_api: GlobalApiObject;
 	}
+}
 
+// WeakRef
+declare global {
 	interface WeakRef<T extends object> {
 		readonly [Symbol.toStringTag]: "WeakRef";
 
