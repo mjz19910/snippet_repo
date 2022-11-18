@@ -12,7 +12,7 @@ import {FakeElement} from "./FakeElement.js";
 import {init as html_element_init} from "./FakeHTMLElement.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {NoImplFakeDocument} from "./NoImplFakeDocument";
-import {Badge} from "./std/Badge.js";
+import {Badge} from "./Badge.js/index.js";
 
 /**@implements {Document} */
 export class FakeDocument extends NoImplFakeDocument {

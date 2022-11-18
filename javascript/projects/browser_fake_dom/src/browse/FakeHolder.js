@@ -2,7 +2,7 @@ import {any} from "../any.js";
 import {FakeDocument} from "../FakeDocument.js";
 import {FakeWindow} from "../FakeWindow.js";
 import {DomBadge} from "../implementation/DomBadge.js";
-import {Badge} from "../std/Badge.js";
+import {Badge} from "../Badge.js/index.js";
 
 export class FakeHolder {
 	/**@type {FakeWindow} */

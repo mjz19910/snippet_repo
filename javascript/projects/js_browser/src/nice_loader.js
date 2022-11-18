@@ -16,6 +16,7 @@ const system_modules=[
 class ContextType {
 	/**@type {string[]}*/
 	conditions=[];
+	/**@type {T extends string?{[x:string]: T}:{}} */
 	importAssertions={};
 	parentURL="";
 }
@@ -120,8 +121,7 @@ export async function resolve(specifier,context,nextResolve) {
 		ipc_load_data.args=[specifier,context,nextResolve];
 		state.depth++;
 		try {
-			if(base_import.value===null) return null;
-			if(state.args===null) return null;
+			if(!state.args.length) return null;
 			if(state.plugin_key===null) return null;
 			let x=state.args;
 			/** @type {{}} */

@@ -1,4 +1,4 @@
-import {Badge} from "../std/Badge.js";
+import {Badge} from "../Badge.js/index.js";
 
 export class PageLoadStateType {
     /**@type {Badge|undefined} */

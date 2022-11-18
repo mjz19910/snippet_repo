@@ -1,5 +1,5 @@
 import {FakeWindow} from "../FakeWindow.js";
-import {Badge} from "../std/Badge.js"
+import {Badge} from "../Badge.js/index.js"
 import {DomBadge} from "./DomBadge.js";
 export class FakeWindowBadge extends Badge {
 	m_has_error=false

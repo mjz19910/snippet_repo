@@ -1,5 +1,6 @@
 import {any} from "./any.js";
 import {intercept_setTimeoutAPI} from "./api/setTimeout.js";
+import {EmptyBadge} from "./EmptyBadge.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeExternal} from "./FakeExternal.js";
 import {FakeLocation} from "./FakeLocation.js";
@@ -7,7 +8,7 @@ import {FakeStorage} from "./FakeStorage.js";
 import {DomBadge} from "./implementation/DomBadge.js";
 import {no_impl} from "./no_impl.js";
 import {NullBadge} from "./NullBadge.js";
-import {Badge} from "./std/Badge.js";
+import {Badge} from "./Badge.js/index.js";
 import {FakeWindowType} from "./types/FakeWindowType.js";
 
 /**@implements {Window} */
