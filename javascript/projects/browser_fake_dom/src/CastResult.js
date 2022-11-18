@@ -1,6 +1,5 @@
-// FakeHTMLElement -> [./FakeElement.js -> [./Element.js, ./api/CastResult.js], ./FakeDocument.js]
-// !!! FakeHTMLElement -> ./api/CastResult.js -> FakeHTMLElement.js
 import {FakeHTMLElementType} from "./FakeHTMLElementType.js"
+
 export class CastResult {
 	/**@readonly*/
 	type="cast_result"

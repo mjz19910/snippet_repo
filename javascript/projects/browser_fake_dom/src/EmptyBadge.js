@@ -1,3 +1,7 @@
-import {Badge} from "./Badge.js";
-
-export class EmptyBadge extends Badge {}
+/**@implements {Badge} */
+export class EmptyBadge {
+	/**@readonly*/ _verify=0;
+	verify() {
+		return this._verify;
+	}
+}

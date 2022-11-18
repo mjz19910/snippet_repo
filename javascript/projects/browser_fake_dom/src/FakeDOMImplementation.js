@@ -1,4 +1,4 @@
-import {fake} from "./browse/fake.js";
+import {fake} from "./fake.js/index.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeDocumentType} from "./FakeDocumentType";
 import {get_FakeXMLDocument} from "./FakeXMLDocument";

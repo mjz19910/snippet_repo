@@ -1,4 +1,4 @@
-import {Badge} from "./Badge.js/index.js"
+import {Badge} from "./Badge.ts/index.js"
 
 /**@implements {Storage} */
 export class FakeStorage {

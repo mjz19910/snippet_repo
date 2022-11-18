@@ -1,10 +1,10 @@
-import {FakeElement} from "../FakeElement.js";
-import {doc_js_has_obj} from "./const.js"
+import {FakeElement} from "./FakeElement.js";
+import {doc_js_has_obj} from "./api_const.js"
 export class DomNodeFactory {
 	#node_factory={
 		handled_tags: ["A","DIV","FORM","IFRAME","SCRIPT","UNKNOWN"],
 		/**
-		 * @argument {import("../types/TagName.js").TagName|string} tagName
+		 * @argument {import("./TagName.js").TagName|string} tagName
 		 **/
 		createNode(tagName) {
 			switch(tagName) {
@@ -17,7 +17,7 @@ export class DomNodeFactory {
 				default: throw new Error("element type not handled for `"+tagName.toLowerCase()+"`")
 			}
 		},
-		/**@argument {import("../types/TagName.js").TagName|string} tagName*/
+		/**@argument {import("./TagName.js").TagName|string} tagName*/
 		hasElementConstructorForTagName(tagName) {
 			return this.handled_tags.includes(tagName)
 		},
@@ -26,7 +26,7 @@ export class DomNodeFactory {
 		}
 	}
 	/**
-	 * @argument {import("../types/TagName.js").TagName|string} tagName
+	 * @argument {import("./TagName.js").TagName|string} tagName
 	 * @returns {Element & FakeElement} */
 	construct_dom_node(tagName) {
 		if(!this.#node_factory.hasElementConstructorForTagName(tagName)) {

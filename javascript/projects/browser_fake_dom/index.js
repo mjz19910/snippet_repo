@@ -1,4 +1,4 @@
-export {fake} from "./src/browse/fake.js";
+export {fake} from "./src/fake.js/index.js";
 export {handle_onPageLoadStarted} from "./src/event/handle_onPageLoadStarted.js";
 export {FakeDocument} from "./src/FakeDocument.js";
 export {FakeWindow} from "./src/FakeWindow.js";

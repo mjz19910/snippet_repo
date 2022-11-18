@@ -1,15 +1,14 @@
 import {any} from "./any.js" assert { type: "json" };
-import {intercept_setTimeoutAPI} from "./api/setTimeout.js";
+import {intercept_setTimeoutAPI} from "./setTimeout.js";
 import {EmptyBadge} from "./EmptyBadge.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeExternal} from "./FakeExternal.js";
 import {FakeLocation} from "./FakeLocation.js";
 import {FakeStorage} from "./FakeStorage.js";
-import {DomBadge} from "./DomBadge.js";
+import {BaseBadge} from "./DomBadge.js";
 import {no_impl} from "./no_impl.js";
 import {NullBadge} from "./NullBadge.js";
-import {Badge} from "./Badge.js";
-import {FakeWindowType} from "./types/FakeWindowType.js";
+import {FakeWindowType} from "./FakeWindowType.js";
 
 /**@implements {Window} */
 export class FakeWindow extends FakeWindowType {
@@ -17,7 +16,7 @@ export class FakeWindow extends FakeWindowType {
 	X=any({});
 	/**@type {FakeDocument|null} */
 	#my_document=null;
-	/**@arg {DomBadge} _ */
+	/**@arg {BaseBadge} _ */
 	has_document(_) {
 		return this.#my_document!==null;
 	}
@@ -40,7 +39,7 @@ export class FakeWindow extends FakeWindowType {
 	/**@type {FakeDocument} */
 	get document() {
 		if(!this.#my_document) {
-			this.#my_document=new FakeDocument(this,new DomBadge);
+			this.#my_document=new FakeDocument(this,new BaseBadge);
 		}
 		return this.#my_document;
 	}
@@ -422,7 +421,7 @@ export class FakeWindow extends FakeWindowType {
 	}
 	/**@arg {string|FakeLocation} value */
 	set location(value) {
-		this.m_location=new FakeLocation(new DomBadge, value);
+		this.m_location=new FakeLocation(new BaseBadge, value);
 	}
 	/**@type {FakeStorage|null} */
 	m_localStorage=null;
@@ -437,7 +436,7 @@ export class FakeWindow extends FakeWindowType {
 	 */
 	setup_accessor;
 	/**
-	 * @param {Badge|NullBadge|DomBadge} badge
+	 * @param {Badge|NullBadge|BaseBadge} badge
 	 */
 	constructor(badge) {
 		super();
@@ -452,6 +451,6 @@ export function use_types() {
 	return [
 		Badge,
 		NullBadge,
-		DomBadge,
+		BaseBadge,
 	];
 }

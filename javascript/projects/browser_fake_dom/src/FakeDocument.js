@@ -6,13 +6,13 @@
 import {PageLoaderState} from "../../page_loader/index.js";
 import {html_parser_callback} from "../../html_lexer/index.js";
 import {any} from "./any";
-import {document_element_factory} from "./api/const.js";
+import {document_element_factory} from "./api_const.js/index.js";
 import {get_FakeDOMImplementation} from "./FakeDOMImplementation.js";
 import {FakeElement} from "./FakeElement.js";
 import {init as html_element_init} from "./FakeHTMLElement.js";
 import {FakeWindow} from "./FakeWindow.js";
 import {NoImplFakeDocument} from "./NoImplFakeDocument";
-import {Badge} from "./Badge.js/index.js";
+import {Badge} from "./Badge.ts/index.js";
 
 /**@implements {Document} */
 export class FakeDocument extends NoImplFakeDocument {

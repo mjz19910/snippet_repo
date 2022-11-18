@@ -1,8 +1,8 @@
-import {any} from "../any.js";
-import {FakeDocument} from "../FakeDocument.js";
-import {FakeWindow} from "../FakeWindow.js";
+import {any} from "./any.js";
+import {FakeDocument} from "./FakeDocument.js";
+import {FakeWindow} from "./FakeWindow.js";
 import {DomBadge} from "../DomBadge.js/index.js";
-import {Badge} from "../Badge.js/index.js";
+import {Badge} from "../Badge.ts/index.js";
 
 export class FakeHolder {
 	/**@type {FakeWindow} */

@@ -1,4 +1,4 @@
-import {CastResult} from "./api/CastResult.js"
+import {CastResult} from "./CastResult.js/index.js"
 import {FakeNode} from "./FakeNode.js"
 import {Result} from "./Result.js"
 // FakeHTMLElement -> [./FakeElement.js -> [./Element.js, ./api/CastResult.js], ./FakeDocument.js]
