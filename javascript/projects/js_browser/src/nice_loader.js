@@ -46,53 +46,34 @@ export class IpcLoader {
 	import_target_ts;
 	dir_start() {
 		this.last_error=this.errors.at(-1);
-	}
-	dir_func_1() {
 		if(this.last_error instanceof Error) {
 			this.stack=this.last_error.stack;
 		}
-	}
-	dir_func_2() {
 		this.error_line=this.stack?.split("\n")[0];
-	}
-	dir_func_3() {
 		this.arr=this.error_line?.split(" ")||[];
-	}
-	dir_func_4() {
 		let idx_start=this.arr.indexOf("from");
 		if(idx_start>-1) {
 			this.imported_from=this.arr.slice(idx_start+1).join(" ");
 			console.log("imported from",this.imported_from);
 		}
-	}
-	dir_func_5() {
-		let idx_start=this.arr.indexOf("find");
+		idx_start=this.arr.indexOf("find");
 		if(idx_start>-1) {
 			this.import_target=this.arr.slice(idx_start+2,this.arr.indexOf("imported")).join(" ").slice(1,-1);
 			console.log("import_target",this.import_target);
 		}
-	}
-	dir_func_6() {
 		this.import_target_ts=this.import_target?.replace(/(?<=.+)\.js/g,".ts");
 	}
 }
 /** @arg {IpcLoader} state */
 function get_typescript_file_to_compile(state) {
-	let a=state;
-	let b=a;
-	a.dir_func_1();
-	a.dir_func_2();
-	a.dir_func_3();
-	a.dir_func_4();
-	a.dir_func_5();
-	a.dir_func_6();
-	if(!a.import_target_ts) throw new Error();
-	return a.import_target_ts;
+	state.dir_start();
+	if(!state.import_target_ts) throw new Error();
+	return state.import_target_ts;
 }
 
 /** @arg {IpcLoader} state */
 export async function handle_failed_import(state) {
-	let target_re_compile=get_typescript_file_to_compile().replace("file:","");
+	let target_re_compile=get_typescript_file_to_compile(state).replace("file:","");
 	let result=await new Promise(function(resolve,reject) {
 		let cp=child_process_spawn("tsc",['-t','ESNext',"-m","ESNext","--outDir","./build/",target_re_compile],{});
 		cp.stdout.on("data",e => {
