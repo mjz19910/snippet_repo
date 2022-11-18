@@ -127,7 +127,6 @@ export class PageLoaderState {
 		this.on_request_finished();
 	}
 	on_request_finished() {
-		console.log('todo activate repl');
 		get_cached_repl_plugin(this).on_finished();
 	}
 	/**

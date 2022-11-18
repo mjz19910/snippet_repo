@@ -8,6 +8,8 @@ import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
 
 const delete_all_javascript_api=false;
 
+let repl_create_count=0;
+
 export class ReplPluginManager {
 	clearBufferedCommand() {
 		this.get_repl_runtime().clearBufferedCommand();
@@ -42,11 +44,14 @@ export class ReplPluginManager {
 		return this.m_repl_runtime.X;
 	}
 	create_repl_plugin() {
+		repl_create_count++;
+		console.log('repl_start count', repl_create_count);
 		this.m_repl_runtime=REPLServerRuntime.start_repl({
 			prompt: "",
 		});
 		let base_repl=this.m_repl_runtime;
 		base_repl.pause();
+		debugger;
 		hist_block: {
 			let system_val=spawnSync("bash",["-c","echo ${HISTFILE%/zsh_history}"]);
 			console.log(system_val.output);
@@ -99,11 +104,9 @@ export class ReplPluginManager {
 		return this.m_repl_runtime;
 	}
 	on_finished() {
-		if(!this.m_repl_runtime)
-			throw new Error("No repl");
-		this.m_repl_runtime.resume();
-		this.m_repl_runtime.setPrompt("> ");
-		this.m_repl_runtime.displayPrompt();
+		this.get_repl_runtime().resume();
+		this.get_repl_runtime().setPrompt("> ");
+		this.get_repl_runtime().displayPrompt();
 	}
 	refresh() {
 		this.get_repl_runtime().displayPrompt();
