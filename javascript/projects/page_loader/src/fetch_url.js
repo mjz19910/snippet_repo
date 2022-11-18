@@ -5,7 +5,7 @@ import {fix_fetch_url} from "./fix_fetch_url.js";
 import {run_fetch_algorithm} from "./run_fetch_algorithm.js";
 import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
 import {RequestModule} from "./RequestModule.js";
-import {BaseBadge} from "../../browser_fake_dom/src/BaseBadge.js/index.js";
+import {BaseBadge} from "../../browser_fake_dom/src/BaseBadge.js";
 import {fake,FakeDocument,FakeWindow} from "../../browser_fake_dom/index.js";
 /**
  * @arg {PageLoaderState} state

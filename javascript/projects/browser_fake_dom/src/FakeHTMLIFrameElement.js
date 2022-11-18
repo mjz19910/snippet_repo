@@ -1,8 +1,8 @@
 import {FakeHTMLElement} from "./FakeHTMLElement.js";
 import {FakeLocation} from "./FakeLocation.js";
 import {FakeWindow} from "./FakeWindow.js";
-import {element_to_tree_node} from "./api_const.js/index.js";
-import {BaseBadge} from "./BaseBadge.js/index.js";
+import {element_to_tree_node} from "./api_const.js";
+import {BaseBadge} from "./BaseBadge.js";
 
 export class HTMLIFrameElement extends FakeHTMLElement {
 	/**@type {{window:FakeWindow}|null} */

@@ -1,8 +1,6 @@
 import * as path from "path";
 import {spawn as child_process_spawn} from "child_process";
 
-const loader_debug=true;
-
 const system_modules=[
 	'repl',
 	'http',
@@ -57,11 +55,11 @@ export class IpcLoader {
 		if(this.split_error_into_lines) {
 			this.error_lines=this.stack.split("\n");
 		}
-		this.error_header=this.stack.slice(0, idx_start);
+		this.error_header=this.stack.slice(0,idx_start);
 		if(!this.error_header) return;
 		if(this.error_header.includes("ENOTDIR")) {
 			console.log("Dir error");
-			console.log("Error header", this.error_header);
+			console.log("Error header",this.error_header);
 			this.error_code="ENOTDIR";
 		}
 		this.arr=this.error_header.split(" ")||[];
@@ -73,12 +71,12 @@ export class IpcLoader {
 			let parent_url_parts=this.imported_from.split("/");
 			let start_index=parent_url_parts.indexOf("snippet_repo")+3;
 			let log_path=parent_url_parts.slice(start_index).join("/");
-			console.log("imported from:"+JSON.stringify([log_path]));
+			console.log("imported_from_value: "+JSON.stringify([log_path]));
 		}
 		idx_start=this.arr.indexOf("find");
 		if(idx_start>-1) {
 			this.import_target=this.arr.slice(idx_start+2,this.arr.indexOf("imported")).join(" ").slice(1,-1);
-			console.log("import_target",this.import_target);
+			console.log("import_target_value: "+JSON.stringify([this.import_target]));
 		}
 		this.import_target_ts=this.import_target?.replace(/(?<=.+)\.js/g,".ts");
 	}
@@ -90,34 +88,8 @@ function get_typescript_file_to_compile(state) {
 	return state.import_target_ts;
 }
 
-/** @arg {IpcLoader} state */
-export async function handle_failed_import(state) {
-	let recompile_target=get_typescript_file_to_compile(state);
-	if(!recompile_target) {
-		module_map.set(state.plugin_key, {});
-		return {};
-	}
-	let target_re_compile=recompile_target.replace("file:","");
-	let result=await new Promise(function(resolve,reject) {
-		let cp=child_process_spawn("tsc",['-t','ESNext',"-m","ESNext","--outDir","./build/",target_re_compile],{});
-		cp.stdout.on("data",e => {
-			process.stdout.write(e);
-		});
-		cp.stderr.on("data",e => {
-			process.stderr.write(e);
-		});
-		cp.on("error",err => {
-			reject(err);
-		});
-		cp.on("exit",(code) => {
-			console.log('tsc exit',code);
-			resolve(code);
-		});
-	});
-	if(result!==0) new Error("Failed to recompile");
-}
-
 let ipc_load_data=new IpcLoader;
+let last_log_dir="";
 
 /**
  * @param {string} specifier
@@ -127,11 +99,26 @@ let ipc_load_data=new IpcLoader;
 export async function resolve(specifier,context,nextResolve) {
 	let state=ipc_load_data;
 	let errors=[];
+	let prev_log_dir="";
+	let parent_url_parts;
+	let start_index;
+	let log_path;
+	let log_dir;
 	if(context.parentURL) {
-		let parent_url_parts=context.parentURL.split("/");
-		let start_index=parent_url_parts.indexOf("javascript")+1;
-		let log_path=parent_url_parts.slice(start_index).join("/");
-		console.log('main module load 1:'+JSON.stringify([log_path,specifier]));
+		parent_url_parts=context.parentURL.split("/");
+		start_index=parent_url_parts.indexOf("javascript")+1;
+		log_path=parent_url_parts.slice(start_index).join("/");
+		log_dir=path.dirname(log_path);
+		prev_log_dir=last_log_dir;
+		last_log_dir=log_dir;
+		parent_url_parts=context.parentURL.split("/");
+		start_index=parent_url_parts.indexOf("javascript")+prev_log_dir.split("/").length-1;
+		log_path=parent_url_parts.slice(start_index).join("/");
+		log_dir=path.dirname(log_path);
+		let disabled_1=true;
+		if(!disabled_1) {
+			console.log('main_module_load 1:'+(JSON.stringify([log_path,"->",path.join(log_dir,specifier)]).replace(',"->",'," -> ")));
+		}
 		state.plugin_key=`${context.parentURL}:${specifier}`;
 	} else {
 		console.log('main_module_load 2:'+JSON.stringify(specifier));
@@ -153,7 +140,30 @@ export async function resolve(specifier,context,nextResolve) {
 			return mod;
 		} catch(err) {
 			state.errors.push(err);
-			await handle_failed_import(state);
+			let recompile_target=get_typescript_file_to_compile(state);
+			if(!recompile_target) {
+				debugger;
+				recompile_target=get_typescript_file_to_compile(state);
+				throw state.errors[0];
+			}
+			let target_re_compile=recompile_target.replace("file:","");
+			let result=await new Promise(function(resolve,reject) {
+				let cp=child_process_spawn("tsc",['-t','ESNext',"-m","ESNext","--outDir","./build/",target_re_compile],{});
+				cp.stdout.on("data",e => {
+					process.stdout.write(e);
+				});
+				cp.stderr.on("data",e => {
+					process.stderr.write(e);
+				});
+				cp.on("error",err => {
+					reject(err);
+				});
+				cp.on("exit",(code) => {
+					console.log('tsc exit',code);
+					resolve(code);
+				});
+			});
+			if(result!==0) new Error("Failed to recompile");
 		} finally {state.depth--;}
 		if(module_map.has(state.plugin_key)) return module_map.get(state.plugin_key);
 	}
@@ -166,10 +176,10 @@ export async function resolve(specifier,context,nextResolve) {
 		return nextResolve(specifier,context,nextResolve);
 	}
 	if(context.parentURL) {
-		console.log("Failed to import:"+specifier);
-		let parent_url_parts=context.parentURL.split("/");
-		let start_index=parent_url_parts.indexOf("javascript")+1;
-		let log_path=parent_url_parts.slice(start_index).join("/");
+		parent_url_parts=context.parentURL.split("/");
+		start_index=parent_url_parts.indexOf("javascript")+prev_log_dir.split("/").length-1;
+		log_path=parent_url_parts.slice(start_index).join("/");
+		log_dir=path.dirname(log_path);
 		console.log('module fail:'+JSON.stringify([log_path,specifier]));
 	} else {
 		console.log("specifier:"+specifier);
@@ -177,14 +187,16 @@ export async function resolve(specifier,context,nextResolve) {
 	if(context.parentURL) {
 		console.log(state.plugin_key.slice(state.plugin_key.indexOf("wsl2/workspace")+8));
 	} else {
-		let parent_url_parts=context.parentURL.split("/");
-		let start_index=parent_url_parts.indexOf("javascript");
+		parent_url_parts=context.parentURL.split("/");
+		start_index=parent_url_parts.indexOf("javascript");
 		console.log([
 			parent_url_parts.slice(start_index).join("/"),
 			":",
 			specifier,
 		].join(""));
 	}
-	return {};
+	if(errors.length===1) {
+		throw errors[0];
+	}
 	throw new AggregateError(errors,"All import failures",{});
 }

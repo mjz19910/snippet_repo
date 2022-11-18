@@ -1,8 +1,8 @@
-import {fake} from "./fake.js/index.js";
+import {fake} from "./fake.js";
 import {FakeDocument} from "./FakeDocument.js";
-import {FakeDocumentType} from "./FakeDocumentType";
-import {get_FakeXMLDocument} from "./FakeXMLDocument";
-import {BaseBadge} from "./BaseBadge.js/index.js";
+import {FakeDocumentType} from "./FakeDocumentType.js";
+import {get_FakeXMLDocument} from "./FakeXMLDocument.js";
+import {BaseBadge} from "./BaseBadge.js";
 
 export function get_FakeDOMImplementation() {
     let FakeXMLDocument=get_FakeXMLDocument();

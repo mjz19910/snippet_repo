@@ -1,7 +1,7 @@
 import {any} from "./any.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeWindow} from "./FakeWindow.js";
-import {BaseBadge} from "../BaseBadge.js/index.js";
+import {BaseBadge} from "../BaseBadge.js";
 import {Badge} from "../Badge.ts/index.js";
 
 export class FakeHolder {

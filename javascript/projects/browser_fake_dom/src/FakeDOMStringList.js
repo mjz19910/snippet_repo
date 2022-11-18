@@ -1,5 +1,5 @@
 import {Badge} from "./Badge.ts/index.js"
-import {error_factory} from "./error_factory.js/index.js"
+import {error_factory} from "./error_factory.js"
 export class FakeDOMStringList extends Array {
 	/**@type {{[x:string|number]:any} & string[]} */
 	#strings=[]
