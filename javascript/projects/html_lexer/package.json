@@ -1,6 +1,6 @@
 {
 	"type": "module",
-	"name": "tiny-html-lexer",
+	"name": "html-lexer",
 	"devDependencies": {
 		"@types/node": "^18.11.9"
 	}
