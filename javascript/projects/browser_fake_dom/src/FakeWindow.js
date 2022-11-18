@@ -1,11 +1,11 @@
-import {any} from "./any.js";
+import {any} from "./any.js" assert { type: "json" };
 import {intercept_setTimeoutAPI} from "./api/setTimeout.js";
 import {EmptyBadge} from "./EmptyBadge.js";
 import {FakeDocument} from "./FakeDocument.js";
 import {FakeExternal} from "./FakeExternal.js";
 import {FakeLocation} from "./FakeLocation.js";
 import {FakeStorage} from "./FakeStorage.js";
-import {DomBadge} from "./DomBadge.js/index.js";
+import {DomBadge} from "./DomBadge.js";
 import {no_impl} from "./no_impl.js";
 import {NullBadge} from "./NullBadge.js";
 import {Badge} from "./Badge.js";

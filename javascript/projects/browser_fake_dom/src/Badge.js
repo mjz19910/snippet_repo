@@ -6,10 +6,10 @@ export class Badge {
 	static verify(badge) {
 		if(!badge) throw create_missing_badge_err();
 		if(!(badge instanceof Badge)) throw create_wrong_prototype_err();
-		if(!badge.is_valid) throw create_validation_err();
+		if(!badge.m_validity) throw create_validation_err();
 	}
-	/**@type {true|undefined} */
-	is_valid=true;
+	/**@type {boolean|undefined} */
+	m_validity=true;
 }
 function create_validation_err() {
 	return new Error("Badge is invalid");

@@ -12,11 +12,11 @@ const system_modules=[
 	'vm',
 ];
 
-/** @template T */
+/** @template T @type {T} */
 class ContextType {
 	/**@type {string[]}*/
 	conditions=[];
-	/**@type {T extends string?{[x:string]: T}:{}} */
+	/** @type {{}} */
 	importAssertions={};
 	parentURL="";
 }
