@@ -516,6 +516,15 @@ function range_matches(arr,value,index) {
 }
 
 class BaseCompression {
+	/** @arg {CompressDual} arg0 @returns {DualR} */
+	static compress_result_state_dual(arg0) {
+		return this.compress_result_dual(arg0.arr,arg0.ret);
+	}
+	/** @arg {(["string", string] | ["number", number])[]} src @arg {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} dst @returns {DualR} */
+	static compress_result_dual(src,dst) {
+		if(this.did_compress(src,dst)) return [true,dst];
+		return [false,src];
+	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
 	static did_compress(src,dst) {
 		return dst.length<src.length;
@@ -524,7 +533,7 @@ class BaseCompression {
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/**@template T,U @arg {CompressStateBase<T, U>} state */
+	/**@template T,U @arg {CompressStateBase<T, U>} state*/
 	static compress_result_state(state) {
 		return this.compress_result(state.arr,state.ret);
 	}
@@ -570,8 +579,6 @@ export class CompressState extends CompressStateBase {
 		this.item=null;
 	}
 }
-
-/**@template T @typedef {T|Repeat<T>} AnyOrRepeat */
 
 class MulCompression extends BaseCompression {
 	/**
@@ -882,96 +889,97 @@ function run_modules_plugin() {
 }
 g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 
-class CompressionStatsCalculator {
-	constructor() {
-		/** @type {number[]} */
-		this.hit_counts=[];
-		/** @type {string[]} */
-		this.cache=[];
-		/**@type {MulCompression} */
-		this.compressor=new MulCompression;
-	}
-	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
-	calc_for_stats_index(stats_arr,arr,index) {
-		stats_arr[index]=this.calc_compression_stats(arr,index+1);
-	}
-	/** @param {number} index */
-	add_hit(index) {
-		if(!this.hit_counts[index]) {
-			this.hit_counts[index]=1;
-		} else this.hit_counts[index]++;
-	}
-	/** @param {string} key */
-	add_item(key) {
-		let index=this.cache.indexOf(key);
-		if(index==-1) {
-			index=this.cache.push(key)-1;
+{
+	class CompressionStatsCalculator {
+		constructor() {
+			/** @type {number[]} */
+			this.hit_counts=[];
+			/** @type {string[]} */
+			this.cache=[];
+			/**@type {MulCompression} */
+			this.compressor=new MulCompression;
 		}
-		this.add_hit(index);
-	}
-	reset() {
-		this.cache.length=0;
-		this.hit_counts.length=0;
-	}
-	map_values() {
-		return this.hit_counts;
-	}
-	map_keys() {
-		return this.cache;
-	}
-	/** @param {string[]} arr @param {number} win_size */
-	calc_compression_stats(arr,win_size) {
-		this.reset();
-		for(let i=0;i<arr.length;i++) {
-			if(i+win_size<arr.length) {
-				this.add_item(arr.slice(i,i+win_size).join(","));
+		/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
+		calc_for_stats_index(stats_arr,arr,index) {
+			stats_arr[index]=this.calc_compression_stats(arr,index+1);
+		}
+		/** @param {number} index */
+		add_hit(index) {
+			if(!this.hit_counts[index]) {
+				this.hit_counts[index]=1;
+			} else this.hit_counts[index]++;
+		}
+		/** @param {string} key */
+		add_item(key) {
+			let index=this.cache.indexOf(key);
+			if(index==-1) {
+				index=this.cache.push(key)-1;
 			}
+			this.add_hit(index);
 		}
-		let keys=this.map_keys();
-		let values=this.map_values();
-		return to_tuple_arr(keys,values);
-	}
-	/**
-	 * @template T
-	 * @template U
-	 * @arg {T[]} arr
-	 * @arg {number} range
-	 * @arg {U} replacement
-	 * @returns {(["T", T]|["U", U])[]}
-	 * */
-	replace_range(arr,range,replacement) {
-		/**@type {(["T", T]|["U", U])[]} */
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			if(range_matches(arr,range,i)) {
-				i+=1;
-				ret.push(['U',replacement]);
-				continue;
+		reset() {
+			this.cache.length=0;
+			this.hit_counts.length=0;
+		}
+		map_values() {
+			return this.hit_counts;
+		}
+		map_keys() {
+			return this.cache;
+		}
+		/** @param {string[]} arr @param {number} win_size */
+		calc_compression_stats(arr,win_size) {
+			this.reset();
+			for(let i=0;i<arr.length;i++) {
+				if(i+win_size<arr.length) {
+					this.add_item(arr.slice(i,i+win_size).join(","));
+				}
 			}
-			let rest=arr[i];
-			ret.push(['T',rest]);
+			let keys=this.map_keys();
+			let values=this.map_values();
+			return to_tuple_arr(keys,values);
 		}
-		return ret;
+		/**
+		 * @template T
+		 * @template U
+		 * @arg {T[]} arr
+		 * @arg {number} range
+		 * @arg {U} replacement
+		 * @returns {(["T", T]|["U", U])[]}
+		 * */
+		replace_range(arr,range,replacement) {
+			/**@type {(["T", T]|["U", U])[]} */
+			let ret=[];
+			for(let i=0;i<arr.length;i++) {
+				if(range_matches(arr,range,i)) {
+					i+=1;
+					ret.push(['U',replacement]);
+					continue;
+				}
+				let rest=arr[i];
+				ret.push(['T',rest]);
+			}
+			return ret;
+		}
+		test() {
+			let obj={
+				arr: [],
+			};
+			let rep_val=0.03/(100*4*1);
+			let res=this.replace_range(obj.arr,rep_val,max_id);
+			console.log("compressed",res);
+		}
 	}
-	test() {
-		let obj={
-			arr: [],
-		};
-		let rep_val=0.03/(100*4*1);
-		let res=this.replace_range(obj.arr,rep_val,max_id);
-		console.log("compressed",res);
-	}
+	g_api.CompressionStatsCalculator=CompressionStatsCalculator;
 }
-g_api.CompressionStatsCalculator=CompressionStatsCalculator;
-
 let stats_calculator_info={
-	stats_calculator: new CompressionStatsCalculator,
+	stats_calculator: new g_api.CompressionStatsCalculator,
 	/**@type {[string, number][][]} */
 	compression_stats: [],
 };
 
 g_api.range_matches=range_matches;
-let compressionStatsCalc=new CompressionStatsCalculator;
+let compressionStatsCalc=stats_calculator_info.stats_calculator;
 /** @param {[unknown, number][]} stats */
 function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]));
@@ -990,7 +998,7 @@ function sorted_comp_stats(arr,calc_win) {
  * @param {number} start
  */
 function next_chunk(arr,start) {
-	let s_arr;
+	let s_arr=null;
 	let last;
 	let c_len;
 	for(let i=start;i<start+30;i++) {
@@ -1018,7 +1026,7 @@ function get_ids(value) {
 	return ids.indexOf(value);
 }
 
-/**@arg {CompressionStatsCalculator} this_ @arg {Partial<IDValue>} obj */
+/**@arg {InstanceType<typeof g_api['CompressionStatsCalculator']>} this_ @arg {Partial<IDValue>} obj */
 function sorted_comp_stats(this_,obj) {
 	if(obj.arr_str!=null&&obj.stats_win!=null) {
 		/**@type {[string,number][]} */
@@ -1027,7 +1035,7 @@ function sorted_comp_stats(this_,obj) {
 		let t=types[0];
 		if(!t) return;
 		let [z,x]=t;
-		if(typeof z==='string' && typeof x==='number'){
+		if(typeof z==='string'&&typeof x==='number') {
 			ret.push([z,x]);
 		}
 		obj.stats=ret;
@@ -1035,11 +1043,11 @@ function sorted_comp_stats(this_,obj) {
 	}
 }
 
-/** @arg {CompressionStatsCalculator} stats @param {IDValue} obj */
- function calc_cur(stats,obj) {
+/** @arg {InstanceType<typeof g_api['CompressionStatsCalculator']>} stats @param {IDValue} obj */
+function calc_cur(stats,obj) {
 	if(!obj.stats_win||obj.arr_str===void 0)
 		return;
-	sorted_comp_stats(stats, obj);
+	sorted_comp_stats(stats,obj);
 }
 
 class IDValue {
@@ -1083,7 +1091,7 @@ class DoCalc {
 		return this.m_return_value;
 	}
 	/**
-	 * @type {[true,AnyOrRepeat2<string,number>[]]|[false,(string|number)[]]|null}
+	 * @type {DualR|null}
 	 */
 	m_return_value=null;
 	run() {
@@ -1125,9 +1133,10 @@ class DoCalc {
 			let cd=br_st-this.br_next.arr_str.length;
 			if(cd<=1) break;
 		}
+		return null;
 	}
 	/**
-	 * @param {CompressionStatsCalculator} stats
+	 * @param {InstanceType<typeof g_api['CompressionStatsCalculator']>} stats
 	 * @param {IDValue} obj
 	 */
 	constructor(stats,obj) {
@@ -1179,6 +1188,7 @@ class DoCalc {
 	}
 }
 g_api.DoCalc=DoCalc;
+
 class CompressDual {
 	/**@type {number} */
 	i;
@@ -1186,6 +1196,7 @@ class CompressDual {
 	arr=[];
 	/**@type {(["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]} */
 	ret=[];
+	/**@returns {DualR} */
 	try_compress_dual() {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
@@ -1194,7 +1205,7 @@ class CompressDual {
 			if(use_item) continue;
 			state.ret.push(item);
 		}
-		return BaseCompression.compress_result_state(this);
+		return BaseCompression.compress_result_state_dual(this);
 	}
 	/**@arg {(["string", string] | ["number", number])} item */
 	compress_rle_TU_to_TX(item) {
@@ -1216,11 +1227,11 @@ class CompressDual {
 
 
 /**
- * @param {CompressionStatsCalculator} stats
+ * @param {InstanceType<typeof g_api['CompressionStatsCalculator']>} stats
  * @param {IDValue} obj
  * @param {number} max_id
  */
- export function calc_next(stats,obj,max_id) {
+export function calc_next(stats,obj,max_id) {
 	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
 		return null;
 	}
@@ -1239,8 +1250,8 @@ class CompressDual {
 	next.arr_dual=[];
 	for(let i of rep_range) {
 		switch(i[0]) {
-			case 'T':next.arr_dual.push(["string", i[1]]); break;
-			case 'U':next.arr_dual.push(["number", i[1]]); break;
+			case 'T': next.arr_dual.push(["string",i[1]]); break;
+			case 'U': next.arr_dual.push(["number",i[1]]); break;
 		}
 	}
 	if(next.arr_str)
@@ -1281,69 +1292,48 @@ function assign_next(value,next) {
 	value.next=next;
 	return next;
 }
-/**@implements {IValue} */
+/**@implements {IDValue} */
 class Value {
 	/** @param {number} id */
 	constructor(id) {
 		this.id=id;
 	}
+	/** @type {any} */
+	next;
+	/** @type {any} */
+	arr_dual;
+	/** @type {any} */
+	arr_dual_x;
+	/** @type {any} */
+	arr_rep_str;
+	/** @type {any} */
+	arr_rep_num;
+	/** @type {any} */
+	arr_str;
+	/** @type {any} */
+	arr_num;
+	/** @type {any} */
+	value;
+	/** @type {any} */
+	arr_rep;
+	/** @type {any} */
+	log_val;
+	/** @type {any} */
+	stats;
+	/** @type {any} */
+	stats_win;
 }
-let max_id={value:0};
+Value;
+
+let max_id={value: 0};
 /**
  * @param {IDValue} obj
+ * @param {InstanceType<typeof g_api['CompressionStatsCalculator']>} stats
  */
-function run_calc(obj) {
-	obj.stats_win=2;
-	calc_cur(obj);
-	if(!obj.stats) {
-		return null;
-	}
-	if(obj.stats.length===0) {
-		return null;
-	}
-	max_id++;
-	let br_obj=Object.assign({},obj);
-	if(!br_obj.stats_win) {
-		return null;
-	}
-	br_obj.stats_win++;
-	calc_cur(br_obj);
-	let br_res=calc_next(br_obj,max_id);
-	console.log('br_res',br_res);
-	let res=calc_next(obj,max_id);
-	/**@type {IDValue|undefined} */
-	let br_next=br_obj.next;
-	/**@type {IDValue|undefined} */
-	let next=obj.next;
-	while(true) {
-		if(!next||next.arr_str===void 0) {
-			break;
-		}
-		if(!br_next||br_next.arr_str===void 0) {
-			break;
-		}
-		if(obj.stats_win>30) {
-			break;
-		}
-		if(br_next.arr_str.length+1>=next.arr_str.length) {
-			break;
-		}
-		let br_st=br_next.arr_str.length;
-		br_obj.stats_win++;
-		obj.stats_win++;
-		calc_cur(br_obj);
-		br_next=assign_next(br_obj,new Value(obj.id+1));
-		br_res=calc_next(br_obj,max_id);
-		calc_cur(obj);
-		next=assign_next(br_obj,new Value(obj.id+1));
-		res=calc_next(obj,max_id);
-		if(!br_next.arr_str) continue;
-		let cd=br_st-br_next.arr_str.length;
-		if(cd<=1) break;
-	}
-	if(!res) {
-		return [false,null];
-	}
+ export function run_calc(stats,obj) {
+	let calc_value=new DoCalc(stats,obj);
+	let res=calc_value.get_result();
+	if(!res) return [false,null];
 	return [true,res];
 }
 /* version_list file: group1/sub_a/item-_9.js */

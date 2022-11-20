@@ -87,7 +87,7 @@ declare global {
 }
 
 interface DoCalc {
-	get_result():[true,AnyOrRepeat2<string,number>[]]|[false,(string|number)[]]|null;
+	get_result():[true,(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]]|[false,(string|number)[]]|null;
 	m_return_value:[true,AnyOrRepeat2<string,number>[]]|[false,(string|number)[]]|null;
 	run():null;
 }
@@ -103,13 +103,17 @@ interface CompressionStatsCalculator {
 	reset():void;
 	map_values():void;
 	map_keys():void;
-	calc_compression_stats(arr: any,win_size: any):void;
+	calc_compression_stats(arr: any,win_size: any): [string, number][];
 	replace_range(arr: any,range: any,replacement: any):void;
 	test():void;
 }
 
 interface CompressionStatsCalculatorNew {
 		new (): CompressionStatsCalculator;
+}
+
+declare global {
+	type DualR=[true,(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]]|[false,(["string",string]|["number",number])[]];
 }
 
 // DebugAPI
