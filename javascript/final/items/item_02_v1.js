@@ -4,7 +4,7 @@ v1 (cur): snippet_repo/javascript/final/items/item_02_v1.js
 */
 class FakeJavascriptObject {
 	/**
-	 * @param {any} vm
+	 * @param {RustFakeVM} vm
 	 */
 	constructor(vm) {
 		this.vm=vm;
@@ -26,7 +26,7 @@ class FakeJavascriptObject {
 }
 class RustIDBFactory extends FakeJavascriptObject {
 	/**
-	 * @param {any} vm
+	 * @param {RustFakeVM} vm
 	 */
 	constructor(vm) {
 		super(vm);
@@ -39,7 +39,7 @@ class RustIDBFactory extends FakeJavascriptObject {
 		if(version===0) {
 			throw TypeError('The version provided must not be 0.');
 		}
-		let environment=this.get_field('[[Realm]]').get_field('[[HostDefined]]');
+		let environment=this.get_field('[[Realm]]')?.get_field('[[HostDefined]]');
 		this.todo(environment);
 	}
 }
@@ -99,9 +99,7 @@ class RustRootBuilder extends RustBuilderTrait {
 		super();
 		this.children_crate_vec=[];
 	}
-	/**
-	 * @param {{ children: any[]; }} crate
-	 */
+	/** @param {{ children: any[]; }} crate */
 	add_crate_child(crate) {
 		this.children_crate_vec.push(crate);
 	}
@@ -119,16 +117,12 @@ class RustExportBuilder extends RustBuilderTrait {
 		this.export_as_value=null;
 		this.export_item=null;
 	}
-	/**
-	 * @param {string} export_as_define
-	 */
+	/** @param {string} export_as_define */
 	export_as(export_as_define) {
 		this.export_as_value=export_as_define;
 		return this;
 	}
-	/**
-	 * @param {RustStdCrate} value
-	 */
+	/** @param {RustStdCrate} value */
 	crate(value) {
 		this.export_item={
 			type: 'crate',
@@ -213,7 +207,8 @@ class RustFakeVM {
 	set_host_intrinsic(value) {
 		this.intrinsic_data.host=value;
 	}
-	todo() {
+	todo(...args) {
+		console.log("todo-args", ...args);
 		console.log(new Error('todo'));
 	}
 }
