@@ -590,7 +590,7 @@ class MulCompression extends BaseCompression {
 		return MulCompression.compress_result_state(state);
 	}
 	/**
-	 * @template {RecordKeyG<symbol>} U
+	 * @template {RecordKey<symbol>} U
 	 * @template {InstanceType<U>} T
 	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
 	 * @arg {T} item
@@ -607,7 +607,7 @@ class MulCompression extends BaseCompression {
 
 	/**
 	 * @template {InstanceType<U>} T
-	 * @template {abstract new (...args: any) => any} U
+	 * @template {new (...args: any) => any} U
 	 * @arg {U} _
 	 * @arg {T[]} arr
 	 * @arg {AnyOrRepeat<T>[]} ret
