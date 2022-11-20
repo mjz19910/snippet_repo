@@ -284,17 +284,6 @@ class CreateObjURLCache {
 g_api.CreateObjURLCache=CreateObjURLCache;
 CreateObjURLCache.enable();
 
-/**@template A @typedef {((new (...args: any) => any) &{key: A})} RecordKey */
-
-/**@template T @extends {AA}*/
-/*class RecordKey {
-	@type {T}
-	key;
-	constructor(...args) {
-		this.key=args[0];
-	}
-};*/
-
 /**@template T @arg {T} [t] @returns {t is undefined} */
 function is_undefined(t) {
 	return typeof t==="undefined";
