@@ -745,10 +745,10 @@ class VoidCallback {
 	 * @param {()=>void} callback
 	 */
 	constructor(callback) {
-		this.m_cb=callback;
+		this.m_callback=callback;
 	}
 	execute() {
-		this.m_cb();
+		this.m_callback();
 	}
 }
 
@@ -884,7 +884,6 @@ function run_modules_plugin() {
 	};
 	Function.prototype.apply=nac;
 	npc.rep=1;
-	window.g_api.s_func=s_func;
 	return s_func;
 }
 g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
