@@ -84,6 +84,8 @@ class addEventListenerExt {
 		this.init_overwrite("dispatchEvent");
 		this.init_overwrite("removeEventListener");
 	}
+	/**@type {Window[]} */
+	static window_list=[window];
 	/**
 	 * @param {[any, any, any[]]} list
 	 */
@@ -92,6 +94,9 @@ class addEventListenerExt {
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
 			console.log(key,val);
+			if(val === window) {
+				real_value[key]="window:"+this.window_list.indexOf(val);
+			}
 			JSON.stringify(val);
 		}
 		let value=JSON.stringify(real_value);
