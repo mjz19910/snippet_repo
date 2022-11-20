@@ -98,36 +98,35 @@ class addEventListenerExt {
 		let [target,orig_this,args]=list;
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
-			console.log(key,val);
-			if(val === window) {
+			if(val===window) {
 				real_value[key]="window:"+this.window_list.indexOf(val);
 				continue;
 			}
 			let is_react_element=false;
-			if(val instanceof Object && '__reactContainer$' in val) {
+			if(val instanceof Object&&'__reactContainer$' in val) {
 				is_react_element=true;
 			}
-			if(val instanceof Object && '__reactFiber$' in val) {
+			if(val instanceof Object&&'__reactFiber$' in val) {
 				is_react_element=true;
+			}
+			let index=this.object_ids.findIndex(e => e.deref()===val);
+			if(index>-1) {
+				real_value[key]="react:weak_id:"+index;
+				continue;
 			}
 			if(is_react_element) {
 				console.log("react_element");
-				let index=this.object_ids.findIndex(e=>e.deref()===val);
-				if(index>-1) {
-					real_value[key]="react:weak_id:"+index;
-					continue;
-				}
 				index=this.object_ids.push(new WeakRef(val));
 				real_value[key]="react:weak_id:"+index;
 				continue;
 			}
 			let failed=false;
-			try{JSON.stringify(val)}catch{
+			try {JSON.stringify(val);} catch {
 				failed=true;
 			};
 			if(failed) {
 				if(!this.failed_obj) {
-					this.failed_obj={v:real_value};
+					this.failed_obj={v: real_value};
 				}
 				console.log("skip, will stringify circular structure");
 				return;
