@@ -1058,8 +1058,6 @@ class IDValue {
 		this.arr_dual=[];
 		/** @type {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} */
 		this.arr_dual_compressed=[];
-		/** @type {never[]} */
-		this.arr_rep_str=[];
 		/** @type {AnyOrRepeat<number>[]} */
 		this.arr_rep_num=[];
 		/** @type {string[]} */
@@ -1286,8 +1284,6 @@ class Value {
 	arr_dual;
 	/** @type {any} */
 	arr_dual_compressed;
-	/** @type {any} */
-	arr_rep_str;
 	/** @type {any} */
 	arr_rep_num;
 	/** @type {any} */

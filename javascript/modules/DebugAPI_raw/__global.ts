@@ -10,7 +10,6 @@ declare global {
 	}
 }
 
-class StatsCalcEmpty {};
 class VoidCallback<U extends any[],C> {
 	m_callback: ((...args: U) => C);
 	constructor(callback: (...args: U) => C) {
@@ -20,17 +19,6 @@ class VoidCallback<U extends any[],C> {
 	execute(...args: U) {
 		return this.m_callback(...args);
 	}
-}
-
-interface ReversePrototypeChainInterface {
-	add_target(target: {}): void;
-	generate(): void;
-}
-
-class ReversePrototypeChain implements ReversePrototypeChainInterface {
-	constructor(base: {},targets: {}[]) {};
-	add_target(target: {}) {};
-	generate() {};
 }
 
 type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
@@ -76,7 +64,6 @@ declare global {
 		next: IDValue|null;
 		arr_dual: (["string",string]|["number",number])[];
 		arr_dual_compressed: (["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[];
-		arr_rep_str: never[];//AnyOrRepeat<string>[];
 		arr_rep_num: never[];//AnyOrRepeat<number>[];
 		arr_str: string[];
 		arr_num: number[];
@@ -264,8 +251,6 @@ class MulCompressionAlt extends BaseCompressionAlt {
 	}
 }
 
-
-class CompressionStatsCalculatorAlt {}
 declare global {
 	type dbg_T1={
 		type: 'argument-error';
@@ -357,7 +342,7 @@ interface GlobalApiObject {
 	parse_html_to_binary_arr: (html: string) => unknown[];
 	run_modules_plugin: VoidCallbackWith<() => void>;
 	run_wasm_plugin: VoidCallbackWith<() => void>;
-	compress_main: VoidCallbackWith<(stats: CompressionStatsCalculatorAlt) => void>;
+	compress_main: VoidCallbackWith<(stats: {}) => void>;
 	IterExtensions: {};
 	getPlaybackRateMap: {};
 	CreateObjURLCache: {};
