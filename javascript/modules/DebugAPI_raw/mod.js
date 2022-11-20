@@ -2375,7 +2375,7 @@ class DebugAPI {
 	get_k(key) {
 		return this.data_store.get(key);
 	}
-	/** @arg {"getEventListeners"} key @returns {(x:{})=>{[x: string]: {}[]}} */
+	/** @arg {"getEventListeners"} key @returns {(x:{})=>{[x: string]: EventListenerInternal[]}} */
 	get_getEventListeners(key) {
 		return this.data_store.get(key);
 	}
@@ -2390,7 +2390,7 @@ class DebugAPI {
 	}
 	/**
 	 * @param {any} element
-	 * @returns {{[x: string]: {}[]}}
+	 * @returns {{[x: string]: EventListenerInternal[]}}
 	 */
 	getEventListeners(element) {
 		if(!this.hasData('getEventListeners'))
