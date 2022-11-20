@@ -768,34 +768,32 @@ function run_wasm_plugin() {
 g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
 
 function run_modules_plugin() {
-	/**@type {any} */
-	let fn_call=Function.prototype.call;
-	/**@type {{rep?:boolean}} */
-	let fn_call_1=fn_call;
-	if(fn_call_1.rep) {
-		location.reload();
-		return;
-	}
 	let function_prototype=resolve_function_constructor().prototype;
 
 	let function_prototype_call=function_prototype.call;
 	let function_prototype_apply=function_prototype.apply;
 	let function_prototype_bind=function_prototype.bind;
 
-	let bound_function_prototype_call=function_prototype_call.bind(function_prototype_call);
-	let bound_function_prototype_call_1=function_prototype_call.bind(function_prototype_apply);
-	let bound_function_prototype_call_2=function_prototype_call.bind(function_prototype_bind);
-
-	let bound_function_prototype_bind=function_prototype_bind.bind(function_prototype_call);
-	let bound_function_prototype_bind_1=function_prototype_bind.bind(function_prototype_apply);
-	let bound_function_prototype_bind_2=function_prototype_bind.bind(function_prototype_bind);
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	let bound_call_call=function_prototype_call.bind(function_prototype_call);
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	let bound_call_apply=function_prototype_call.bind(function_prototype_apply);
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	let bound_call_bind=function_prototype_call.bind(function_prototype_bind);
 
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
-	let bound_function_prototype_apply=function_prototype_apply.bind(function_prototype_call);
+	let bound_bind_call=function_prototype_bind.bind(function_prototype_call);
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	let bound_bind_apply=function_prototype_bind.bind(function_prototype_apply);
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	let bound_bind_bind=function_prototype_bind.bind(function_prototype_bind);
+
+	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...callArgs:any[]])=>any} */
+	let bound_apply_call=function_prototype_apply.bind(function_prototype_call);
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, nApplyArgs:any[]])=>any} */
-	let bound_function_prototype_apply_1=function_prototype_apply.bind(function_prototype_apply);
+	let bound_apply_apply=function_prototype_apply.bind(function_prototype_apply);
 	/**@type {(selfThisArg:Function, applyArgs:[thisArg:any, ...bindArgs:any[]])=>(...args:any[])=>any}*/
-	let bound_function_prototype_apply_2=function_prototype_apply.bind(function_prototype_bind);
+	let bound_apply_bind=function_prototype_apply.bind(function_prototype_bind);
 
 	let safe_function_prototype={
 		apply: function_prototype.apply,
@@ -804,49 +802,25 @@ function run_modules_plugin() {
 	};
 	console.log(safe_function_prototype);
 
-	function gen_function_prototype_use() {
-		/** @type {["apply","bind","call"]}*/
-		let keys=["apply","bind","call"];
-		let apply_=safe_function_prototype[keys[0]];
-		let bind_=safe_function_prototype[keys[1]];
-		let call_=safe_function_prototype[keys[2]];
-		/** @type {[typeof apply_,typeof bind_,typeof call_]}*/
-		let funcs=[apply_,bind_,call_];
-
-		let bound_bind=apply_.bind(bind_);
-		let bound_call=apply_.bind(call_);
-		let bound_apply=apply_.bind(apply_);
-
-		/** @type {[typeof bound_apply,typeof bound_bind,typeof bound_call]}*/
-		let bound_funcs=[
-			bound_apply,
-			bound_call,
-			bound_apply,
-		];
-		return {funcs,bound_funcs};
-	}
-
-	let info=gen_function_prototype_use();
+	let info=gen_function_prototype_use(safe_function_prototype);
 	console.log(info);
 
 	let bound_function_prototype_vec=[
-		[function_prototype_call,function_prototype_call,bound_function_prototype_call],
-		[function_prototype_call,function_prototype_apply,bound_function_prototype_call_1],
-		[function_prototype_call,function_prototype_bind,bound_function_prototype_call_2],
-		[function_prototype_apply,function_prototype_call,bound_function_prototype_apply],
-		[function_prototype_apply,function_prototype_apply,bound_function_prototype_apply_1],
-		[function_prototype_apply,function_prototype_bind,bound_function_prototype_apply_2],
-		[function_prototype_bind,function_prototype_call,bound_function_prototype_bind],
-		[function_prototype_bind,function_prototype_apply,bound_function_prototype_bind_1],
-		[function_prototype_bind,function_prototype_bind,bound_function_prototype_bind_2],
+		[function_prototype_call,function_prototype_call,bound_call_call],
+		[function_prototype_call,function_prototype_apply,bound_call_apply],
+		[function_prototype_call,function_prototype_bind,bound_call_bind],
+		[function_prototype_apply,function_prototype_call,bound_apply_call],
+		[function_prototype_apply,function_prototype_apply,bound_apply_apply],
+		[function_prototype_apply,function_prototype_bind,bound_apply_bind],
+		[function_prototype_bind,function_prototype_call,bound_bind_call],
+		[function_prototype_bind,function_prototype_apply,bound_bind_apply],
+		[function_prototype_bind,function_prototype_bind,bound_bind_bind],
 	];
 	console.log(bound_function_prototype_vec);
-	/** @type {string[]} */
-	let s_func=[];
-	Function.prototype.call=npc;
+	Function.prototype.call=function_prototype_call_inject;
 	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
-	function npc(thisArg,...argArray) {
-		var c;
+	function function_prototype_call_inject(thisArg,...argArray) {
+		let ret;
 		switch(argArray.length) {
 			case 2:
 				if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
@@ -862,29 +836,26 @@ function run_modules_plugin() {
 					}
 				}
 			default:
-				c=bound_function_prototype_apply(this,[thisArg,argArray]);
+				ret=bound_apply_call(this,[thisArg,argArray]);
 		}
-		if(s_func.indexOf(this.toString())==-1) {
-			s_func.push(this.toString());
+		if(window.g_api.function_as_string_vec.indexOf(this.toString())==-1) {
+			window.g_api.function_as_string_vec.push(this.toString());
 		}
-		return c;
+		return ret;
 	};
 	/**
 	 * @this {()=>void}
 	 * @param {any} tv
 	 * @param {any} r
 	 */
-	function nac(tv,r) {
-		var c;
-		c=bound_function_prototype_apply(this,[tv,r]);
-		if(s_func.indexOf(this.toString())==-1) {
-			s_func.push(this.toString());
+	function function_prototype_apply_inject(tv,r) {
+		let ret=bound_apply_call(this,[tv,r]);
+		if(window.g_api.function_as_string_vec.indexOf(this.toString())==-1) {
+			window.g_api.function_as_string_vec.push(this.toString());
 		}
-		return c;
+		return ret;
 	};
-	Function.prototype.apply=nac;
-	npc.rep=1;
-	return s_func;
+	Function.prototype.apply=function_prototype_apply_inject;
 }
 g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 
