@@ -17,8 +17,35 @@
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
 window.g_api=g_api;
+
+class ReversePrototypeChain {
+	generate() {
+		let np=Object.create(null);
+		for(let target in this.targets) {
+			this.process_target(target,np);
+		}
+	}
+	/**
+	 * @param {string} target
+	 * @param {{}} dest
+	 */
+	process_target(target,dest) {
+		console.log(target,dest);
+	}
+	/**
+	 * @param {{}} base
+	 * @param {{}[]} targets
+	 */
+	constructor(base,targets) {
+		this.base=base;
+		this.targets=targets;
+	}
+}
+g_api.ReversePrototypeChain=ReversePrototypeChain;
+
 let x={};
 g_api.tmp=x;
+
 x.a=EventTarget.prototype;
 class addEventListenerExt {
 	static orig={
