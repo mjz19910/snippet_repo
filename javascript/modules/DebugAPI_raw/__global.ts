@@ -64,7 +64,7 @@ declare global {
 		next: IDValue|null;
 		arr_dual: (["string",string]|["number",number])[];
 		arr_dual_compressed: (["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[];
-		arr_rep_num: never[];//AnyOrRepeat<number>[];
+		arr_rep_num: AnyOrRepeat<number>[];
 		arr_str: string[];
 		arr_num: number[];
 		value: [number,'=',number]|null;
