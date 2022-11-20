@@ -1,7 +1,7 @@
 /* spell:words myhtml_tokenizer deref polymorphed deinit Copypasta
 --- version_list item 1 ---
-v1 (old-o): snippet_repo_v2/javascript/final/myhtml_tokenizer.js
-v2 (cur-c): snippet_repo_v2/javascript/group1/sub_a/item-_1.js
+v1 (old-o): snippet_repo/javascript/final/myhtml_tokenizer.js
+v2 (cur-c): snippet_repo/javascript/group1/sub_a/item-_1.js
 */
 /**
  * @param {TemplateStringsArray} v

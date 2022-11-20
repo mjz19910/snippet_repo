@@ -1,8 +1,8 @@
 /* spell:words
 --- version_list item 1 ---
-v1 (old): snippet_repo_v2/javascript/final/items/item_01_v1.js
-v2 (old): snippet_repo_v2/javascript/final/items/item_01_v2.js
-v3 (unk): snippet_repo_v2/javascript/group2/item_01.js
+v1 (old): snippet_repo/javascript/final/items/item_01_v1.js
+v2 (old): snippet_repo/javascript/final/items/item_01_v2.js
+v3 (unk): snippet_repo/javascript/group2/item_01.js
 */
 //cspell:disable
 let extensionId="cjpalhdlnbpafiamejdnhcphjbkeiagm";

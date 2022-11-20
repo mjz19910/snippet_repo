@@ -1,6 +1,6 @@
 /* spell:words kongregate
 --- version_list item 2 ---
-v1 (spl-f): snippet_repo_v2/javascript/final/kongregate_yet-another-merge-game.js
+v1 (spl-f): snippet_repo/javascript/final/kongregate_yet-another-merge-game.js
 */
 function main() {
 	var fnlist=[]

@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 2 ---
-v1 (spl-f): snippet_repo_v2/javascript/final/reddit_continueThread.js
+v1 (spl-f): snippet_repo/javascript/final/reddit_continueThread.js
 */
 function main() {
 	var fnlist=[]

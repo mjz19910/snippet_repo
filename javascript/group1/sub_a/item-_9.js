@@ -1,7 +1,7 @@
 /* spell:words
 -- version_list template --
-v1 (old): snippet_repo_v2/javascript/final/items/item9_v1.js
-v2 (cur): snippet_repo_v2/javascript/group1/sub_a/item-_9.js
+v1 (old): snippet_repo/javascript/final/items/item9_v1.js
+v2 (cur): snippet_repo/javascript/group1/sub_a/item-_9.js
 */
 function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]))

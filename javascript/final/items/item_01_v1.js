@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 1 ---
-v1 (cur): snippet_repo_v2/javascript/final/items/item_01_v1.js
+v1 (cur): snippet_repo/javascript/final/items/item_01_v1.js
 */
 class RustProcess {
 	/**@arg {()=>void} value */

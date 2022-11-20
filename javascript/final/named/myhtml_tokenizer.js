@@ -1,6 +1,6 @@
 /* cspell:words myhtml_tokenizer rcdata rawtext
 --- version_list item 1 ---
-v1 (old-s): snippet_repo_v2/javascript/final/myhtml_tokenizer.js
+v1 (old-s): snippet_repo/javascript/final/myhtml_tokenizer.js
 */
 `
 // ***********
