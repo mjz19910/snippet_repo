@@ -138,15 +138,15 @@ class addEventListenerExt {
 	static init_overwrite(target) {
 		let t=this;
 		switch(target) {
-			case "addEventListener": this.target_prototype[target]=function(...args) {
+			case "addEventListener": t.target_prototype[target]=function(...args) {
 				t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; break;
-			case 'removeEventListener': this.target_prototype[target]=function(...args) {
+			case 'removeEventListener': t.target_prototype[target]=function(...args) {
 				t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; break;
-			case 'dispatchEvent': this.target_prototype[target]=function(...args) {
+			case 'dispatchEvent': t.target_prototype[target]=function(...args) {
 				t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; return;
