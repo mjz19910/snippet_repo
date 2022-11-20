@@ -1047,7 +1047,7 @@ class IDValue {
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
-		/** @type {(["U", number] | ["T", never])[]} */
+		/** @type {(["string", string] | ["number", number])[]} */
 		this.arr_dual=[];
 		/** @type {never[]} */
 		this.arr_dual_x=[];
@@ -1071,7 +1071,14 @@ class IDValue {
 	}
 }
 
-export class DoCalc {
+/**@arg {IDValue} next */
+function get_next({next}) {
+	if(next===null)
+		throw new Error("Unexpected type");
+	return next;
+}
+
+class DoCalc {
 	get_result() {
 		return this.m_return_value;
 	}
@@ -1171,13 +1178,13 @@ export class DoCalc {
 		}
 	}
 }
-
-class CompressTU {
+g_api.DoCalc=DoCalc;
+class CompressDual {
 	/**@type {number} */
 	i;
-	/**@type {TypeAOrTypeB<string,number>[]} */
+	/**@type {(["string", string] | ["number", number])[]} */
 	arr=[];
-	/**@type {AnyOrRepeat2<string,number>[]} */
+	/**@type {(["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]} */
 	ret=[];
 	try_compress_dual() {
 		let state=this;
@@ -1189,7 +1196,8 @@ class CompressTU {
 		}
 		return BaseCompression.compress_result_state(this);
 	}
-	compress_rle_TU_to_TX(item: TypeAOrTypeB<string,number>) {
+	/**@arg {(["string", string] | ["number", number])} item */
+	compress_rle_TU_to_TX(item) {
 		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
 		let off=1;
 		while(item===this.arr[this.i+off]) off++;
@@ -1198,7 +1206,8 @@ class CompressTU {
 		this.i+=off-1;
 		return true;
 	}
-	constructor(arr: TypeAOrTypeB<string,number>[]) {
+	/**@arg {(["string", string] | ["number", number])[]} arr */
+	constructor(arr) {
 		this.i=0;
 		this.arr=arr;
 		this.ret=[];
@@ -1226,11 +1235,18 @@ class CompressTU {
 	next.log_val=[max_id,'=',f_val[0],f_val[1]];
 	if(obj.arr_str===void 0)
 		throw new Error("No arr");
-	next.arr_dual=stats.replace_range(obj.arr_str,rep_val,max_id);
+	let rep_range=stats.replace_range(obj.arr_str,rep_val,max_id);
+	next.arr_dual=[];
+	for(let i of rep_range) {
+		switch(i[0]) {
+			case 'T':next.arr_dual.push(["string", i[1]]); break;
+			case 'U':next.arr_dual.push(["number", i[1]]); break;
+		}
+	}
 	if(next.arr_str)
 		return null;
-	let com=new CompressTU(next.arr_dual);
-	/**@type {import("../types/DualR.js").DualR} */
+	let com=new CompressDual(next.arr_dual);
+	/**@type {DualR} */
 	let compress_result=com.try_compress_dual();
 	if(!compress_result[0]) {
 		/**@type {TypeAOrTypeB<string, number>[]} */
@@ -1272,7 +1288,7 @@ class Value {
 		this.id=id;
 	}
 }
-let max_id=0;
+let max_id={value:0};
 /**
  * @param {IDValue} obj
  */

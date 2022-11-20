@@ -86,8 +86,35 @@ declare global {
 	}
 }
 
+interface DoCalc {
+	get_result():[true,AnyOrRepeat2<string,number>[]]|[false,(string|number)[]]|null;
+	m_return_value:[true,AnyOrRepeat2<string,number>[]]|[false,(string|number)[]]|null;
+	run():null;
+}
+
+interface DoCalcNew {
+	new (stats:CompressionStatsCalculator,obj:IDValue): DoCalc;
+}
+
+interface CompressionStatsCalculator {
+	calc_for_stats_index(stats_arr: any,arr: any,index: any):void;
+	add_hit(index: any):void;
+	add_item(key: any):void;
+	reset():void;
+	map_values():void;
+	map_keys():void;
+	calc_compression_stats(arr: any,win_size: any):void;
+	replace_range(arr: any,range: any,replacement: any):void;
+	test():void;
+}
+
+interface CompressionStatsCalculatorNew {
+		new (): CompressionStatsCalculator;
+}
+
 // DebugAPI
 interface GlobalApiObject {
+	DoCalc: DoCalcNew;
 	reversePrototypeChain: ReversePrototypeChain;
 	ReversePrototypeChain: typeof ReversePrototypeChain;
 	tmp: {};
@@ -104,7 +131,7 @@ interface GlobalApiObject {
 	to_tuple_arr: {};
 	range_matches: {};
 	function_as_string_vec: string[];
-	CompressionStatsCalculator: typeof StatsCalcEmpty;
+	CompressionStatsCalculator: CompressionStatsCalculatorNew;
 	HexRandomDataGenerator: {};
 	EventListenerValue: {};
 	GenericEvent: {};
