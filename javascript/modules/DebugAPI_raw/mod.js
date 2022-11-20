@@ -338,7 +338,7 @@ class Repeat {
 			/**@template {RecordKey<symbol>} T @arg {T} sym */
 			return (sym) => {
 				let value=Repeat.map_sym.get(sym.key);
-				if(value === void 0)throw 1;
+				if(value===void 0) throw 1;
 				return value;
 			};
 		}
@@ -526,7 +526,7 @@ class BaseCompression {
 	}
 	/**@template T,U @arg {CompressStateBase<T, U>} state */
 	static compress_result_state(state) {
-		return this.compress_result(state.arr, state.ret);
+		return this.compress_result(state.arr,state.ret);
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
 	static compress_result(src,dst) {
@@ -767,6 +767,29 @@ function run_wasm_plugin() {
 }
 g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
 
+/**@arg {SafeFunctionPrototype} safe_function_prototype */
+function gen_function_prototype_use(safe_function_prototype) {
+	/** @type {["apply","bind","call"]}*/
+	let keys=["apply","bind","call"];
+	let apply_=safe_function_prototype[keys[0]];
+	let bind_=safe_function_prototype[keys[1]];
+	let call_=safe_function_prototype[keys[2]];
+	/** @type {[typeof apply_,typeof bind_,typeof call_]}*/
+	let funcs=[apply_,bind_,call_];
+
+	let bound_bind=apply_.bind(bind_);
+	let bound_call=apply_.bind(call_);
+	let bound_apply=apply_.bind(apply_);
+
+	/** @type {[typeof bound_apply,typeof bound_bind,typeof bound_call]}*/
+	let bound_funcs=[
+		bound_apply,
+		bound_call,
+		bound_apply,
+	];
+	return {funcs,bound_funcs};
+}
+
 function run_modules_plugin() {
 	let function_prototype=resolve_function_constructor().prototype;
 
@@ -988,25 +1011,169 @@ function next_chunk(arr,start) {
 	}
 	return c_len;
 }
-/**
- * @type {string[]}
- */
+/** @type {string[]} */
 let ids=[];
-/**
- * @param {string} value
- */
+/** @param {string} value */
 function get_ids(value) {
 	return ids.indexOf(value);
 }
-/**
- * @param {IValue} obj
- */
-function calc_cur(obj) {
-	if(!obj.stats_win||obj.arr_str===void 0) return;
-	obj.stats=sorted_comp_stats(obj.arr_str,obj.stats_win);
+
+/**@arg {CompressionStatsCalculator} this_ @arg {Partial<IDValue>} obj */
+function sorted_comp_stats(this_,obj) {
+	if(obj.arr_str!=null&&obj.stats_win!=null) {
+		/**@type {[string,number][]} */
+		let ret=[];
+		let types=this_.calc_compression_stats(obj.arr_str,obj.stats_win);
+		let t=types[0];
+		if(!t) return;
+		let [z,x]=t;
+		if(typeof z==='string' && typeof x==='number'){
+			ret.push([z,x]);
+		}
+		obj.stats=ret;
+		obj.stats.sort((a,b) => b[1]-a[1]);
+	}
 }
+
+/** @arg {CompressionStatsCalculator} stats @param {IDValue} obj */
+ function calc_cur(stats,obj) {
+	if(!obj.stats_win||obj.arr_str===void 0)
+		return;
+	sorted_comp_stats(stats, obj);
+}
+
+class IDValue {
+	/**@arg {number} id @arg {IDValue|null} next */
+	constructor(id,next) {
+		this.id=id;
+		this.next=next;
+		/** @type {never[]} */
+		this.arr_dual=[];
+		/** @type {never[]} */
+		this.arr_dual_x=[];
+		/** @type {never[]} */
+		this.arr_rep_str=[];
+		/** @type {never[]} */
+		this.arr_rep_num=[];
+		/** @type {never[]} */
+		this.arr_str=[];
+		/** @type {never[]} */
+		this.arr_num=[];
+		/**@type {{}|null} */
+		this.value=null;
+		/** @type {never[]} */
+		this.arr_rep=[];
+		/**@type {{}|null} */
+		this.log_val=null;
+		/** @type {[string, number][]} */
+		this.stats=[];
+		this.stats_win=0;
+	}
+}
+
+export class DoCalc {
+	get_result() {
+		return this.m_return_value;
+	}
+	/**
+	 * @type {[true,AnyOrRepeat2<string,number>[]]|[false,(string|number)[]]|null}
+	 */
+	m_return_value=null;
+	run() {
+		this.obj.stats_win=2;
+		calc_cur(this.stats,this.obj);
+		if(!this.obj.stats) {
+			return null;
+		}
+		if(this.obj.stats.length===0) {
+			return null;
+		}
+		max_id.value++;
+		this.br_obj=Object.assign({},this.obj);
+		if(!this.br_obj.stats_win) {
+			return null;
+		}
+		this.br_obj.stats_win++;
+		calc_cur(this.stats,this.br_obj);
+		this.br_res=calc_next(this.stats,this.br_obj,max_id.value);
+		console.log('br_res',this.br_res);
+		this.m_return_value=calc_next(this.stats,this.obj,max_id.value);
+		this.br_next=get_next(this.br_obj);
+		this.next=get_next(this.obj);
+		while(true) {
+			if(!this.next||this.next.arr_str===void 0) break;
+			if(!this.br_next||this.br_next.arr_str===void 0) break;
+			if(this.obj.stats_win>30) break;
+			if(this.br_next.arr_str.length+1>=this.next.arr_str.length) break;
+			let br_st=this.br_next.arr_str.length;
+			this.br_obj.stats_win++;
+			this.obj.stats_win++;
+			calc_cur(this.stats,this.br_obj);
+			this.br_next=new IDValue(this.obj.id+1,this.br_obj);
+			this.br_res=calc_next(this.stats,this.br_obj,max_id.value);
+			calc_cur(this.stats,this.obj);
+			this.next=new IDValue(this.obj.id+1,this.br_obj);
+			this.res=calc_next(this.stats,this.obj,max_id.value);
+			if(!this.br_next.arr_str) continue;
+			let cd=br_st-this.br_next.arr_str.length;
+			if(cd<=1) break;
+		}
+	}
+	/**
+	 * @param {CompressionStatsCalculator} stats
+	 * @param {IDValue} obj
+	 */
+	constructor(stats,obj) {
+		this.stats=stats;
+		x: {
+			this.obj=obj;
+			this.obj.stats_win=2;
+			calc_cur(stats,this.obj);
+			if(!this.obj.stats) {
+				this.m_return_value=null;
+				break x;
+			}
+			if(this.obj.stats.length===0) {
+				this.m_return_value=null;
+				break x;
+			}
+			max_id.value++;
+			this.br_obj=Object.assign({},this.obj);
+			if(!this.br_obj.stats_win) {
+				this.m_return_value=null;
+				break x;
+			}
+			this.br_obj.stats_win++;
+			calc_cur(stats,this.br_obj);
+			this.br_res=calc_next(stats,this.br_obj,max_id.value);
+			console.log('br_res',this.br_res);
+			this.m_return_value=calc_next(stats,this.obj,max_id.value);
+			this.br_next=get_next(this.br_obj);
+			this.next=get_next(this.obj);
+			while(true) {
+				if(!this.next||this.next.arr_str===void 0) break;
+				if(!this.br_next||this.br_next.arr_str===void 0) break;
+				if(this.obj.stats_win>30) break;
+				if(this.br_next.arr_str.length+1>=this.next.arr_str.length) break;
+				let br_st=this.br_next.arr_str.length;
+				this.br_obj.stats_win++;
+				this.obj.stats_win++;
+				calc_cur(stats,this.br_obj);
+				this.br_next=new IDValue(this.obj.id+1,this.br_obj);
+				this.br_res=calc_next(stats,this.br_obj,max_id.value);
+				calc_cur(stats,this.obj);
+				this.next=new IDValue(this.obj.id+1,this.br_obj);
+				this.res=calc_next(stats,this.obj,max_id.value);
+				if(!this.br_next.arr_str) continue;
+				let cd=br_st-this.br_next.arr_str.length;
+				if(cd<=1) break;
+			}
+		}
+	}
+}
+
 /**
- * @param {IValue} obj
+ * @param {IDValue} obj
  * @param {number} max_id
  */
 function calc_next(obj,max_id) {
@@ -1049,8 +1216,8 @@ function calc_next(obj,max_id) {
 	return compress_result;
 }
 /**
- * @param {IValue} value
- * @param {IValue} next
+ * @param {IDValue} value
+ * @param {IDValue} next
  */
 function assign_next(value,next) {
 	value.next=next;
@@ -1065,7 +1232,7 @@ class Value {
 }
 let max_id=0;
 /**
- * @param {IValue} obj
+ * @param {IDValue} obj
  */
 function run_calc(obj) {
 	obj.stats_win=2;
@@ -1086,9 +1253,9 @@ function run_calc(obj) {
 	let br_res=calc_next(br_obj,max_id);
 	console.log('br_res',br_res);
 	let res=calc_next(obj,max_id);
-	/**@type {IValue|undefined} */
+	/**@type {IDValue|undefined} */
 	let br_next=br_obj.next;
-	/**@type {IValue|undefined} */
+	/**@type {IDValue|undefined} */
 	let next=obj.next;
 	while(true) {
 		if(!next||next.arr_str===void 0) {
@@ -1320,7 +1487,7 @@ function compress_main() {
 	el_ids=src_arr.map(get_ids);
 	max_id=new Set(el_ids).size;
 	let arr=compressionStatsCalc.compressor.try_compress_T(NumType,el_ids);
-	/**@type {IValue} */
+	/**@type {IDValue} */
 	let obj_start={
 		id: 0,
 		arr_rep: el_ids,

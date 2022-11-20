@@ -10,7 +10,7 @@ export function next_chunk<T>(calc_stats: CompressionStatsCalculator,arr: T[],st
 		if(s_arr) {
 			last=s_arr[0][1];
 		}
-		let t=new IDValueG(i,null);
+		let t=new IDValue(i,null);
 		t.id=i;
 		t.set_arr_T(arr);
 		sorted_comp_stats(calc_stats,t);

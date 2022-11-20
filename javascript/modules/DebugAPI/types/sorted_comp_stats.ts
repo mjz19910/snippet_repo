@@ -1,7 +1,7 @@
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 
-/**@arg {CompressionStatsCalculator} this_ @arg {Partial<IDValueG>} obj */
-export function sorted_comp_stats(this_: CompressionStatsCalculator,obj: Partial<IDValueG>) {
+/**@arg {CompressionStatsCalculator} this_ @arg {Partial<IDValue>} obj */
+export function sorted_comp_stats(this_: CompressionStatsCalculator,obj: Partial<IDValue>) {
 	if(obj.arr_str!=null&&obj.stats_win!=null) {
 		/**@type {[string,number][]} */
 		let ret: [string,number][]=[];

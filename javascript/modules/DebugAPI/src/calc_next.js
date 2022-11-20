@@ -2,7 +2,7 @@ import {CompressionStatsCalculator} from "../types/CompressionStatsCalculator.js
 
 /**
  * @param {CompressionStatsCalculator} stats
- * @param {IDValueData} obj
+ * @param {IDValue} obj
  * @param {number} max_id
  */
 export function calc_next(stats,obj,max_id) {

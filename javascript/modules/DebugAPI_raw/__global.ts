@@ -9,6 +9,7 @@ declare global {
 		g_api: GlobalApiObject;
 	}
 }
+
 class StatsCalcEmpty {};
 class VoidCallback<U extends any[],C> {
 	m_callback: ((...args: U) => C);
@@ -33,6 +34,56 @@ class ReversePrototypeChain implements ReversePrototypeChainInterface {
 }
 
 type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
+
+// SafeFunctionPrototype
+declare global {
+	type SafeFunctionPrototype={
+		apply: (this: Function,thisArg: any,argArray?: any) => any;
+		bind: (this: Function,thisArg: any,...argArray: any[]) => any;
+		call: (this: Function,thisArg: any,...argArray: any[]) => any;
+	};
+}
+
+type TypeAOrTypeB<TypeA,TypeB>=["T",TypeA]|["U",TypeB];
+
+class Repeat<T> {
+	value;
+	times;
+	constructor(value: T,times: number) {
+		this.value=value;
+		this.times=times;
+	}
+}
+
+declare global {
+	type AnyOrRepeat<T> = T|Repeat<T>;
+}
+
+declare global {
+	type AnyOrRepeat2<T,U>=["T",AnyOrRepeat<T>]|["U",AnyOrRepeat<U>];
+}
+
+
+declare global {
+	class IDValue {
+		set_arr_T<T>(arr: T[]): void;
+		id: number;
+		next: IDValue|null;
+		arr_dual: TypeAOrTypeB<string,number>[];
+		arr_dual_x: TypeAOrTypeB<AnyOrRepeat<string>,AnyOrRepeat<number>>[];
+		arr_rep_str: AnyOrRepeat<string>[];
+		arr_rep_num: AnyOrRepeat<number>[];
+		arr_str: string[];
+		arr_num: number[];
+		value: [number,'=',number]|null;
+		arr_rep: number[];
+		log_val: [number,'=',string,number]|null;
+		stats: [string,number][];
+		stats_win: number;
+		constructor(id: number,next: IDValue|null);
+	}
+}
+
 // DebugAPI
 interface GlobalApiObject {
 	reversePrototypeChain: ReversePrototypeChain;

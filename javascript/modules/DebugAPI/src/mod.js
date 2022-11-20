@@ -44,7 +44,6 @@ import {to_tuple_arr} from "./to_tuple_arr";
 import {VoidCallback} from "./VoidCallback";
 import {WeakValueRef} from "./WeakValueRef";
 import {AutoBuy} from "../types/AutoBuy";
-import {IDValue} from "../types/IDValue.js";
 
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};

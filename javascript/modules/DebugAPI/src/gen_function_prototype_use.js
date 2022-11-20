@@ -1,4 +1,4 @@
-/**@arg {SafeFunctionPrototype} safe_function_prototype */
+/**@arg {import("../types/SafeFunctionPrototype.js").SafeFunctionPrototype} safe_function_prototype */
 export function gen_function_prototype_use(safe_function_prototype) {
 	/** @type {["apply","bind","call"]}*/
 	let keys=["apply","bind","call"];

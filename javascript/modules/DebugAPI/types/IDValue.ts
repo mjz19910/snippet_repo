@@ -1,11 +1,11 @@
 import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB.js";
 
 declare global {
-	type IDValueG=IDValue;
-	var IDValueG: typeof IDValue;
+	type IDValue=IDValueI;
+	var IDValue: typeof IDValueI;
 }
 
-export class IDValue {
+export class IDValueI {
 	set_arr_T<T>(arr: T[]) {
 		if(arr.length===0) throw new Error("Unable to use zero length array");
 		let item=arr[0] as any;
@@ -13,7 +13,7 @@ export class IDValue {
 		console.log('new_proto',Object.getPrototypeOf(item));
 	}
 	id: number;
-	next: IDValue|null;
+	next: IDValueI|null;
 	arr_dual: TypeAOrTypeB<string,number>[];
 	arr_dual_x: TypeAOrTypeB<AnyOrRepeat<string>,AnyOrRepeat<number>>[];
 	arr_rep_str: AnyOrRepeat<string>[];
@@ -25,7 +25,7 @@ export class IDValue {
 	log_val: [number,'=',string,number]|null;
 	stats: [string,number][];
 	stats_win: number;
-	constructor(id: number,next: IDValue|null) {
+	constructor(id: number,next: IDValueI|null) {
 		this.id=id;
 		this.next=next;
 		this.arr_dual=[];
