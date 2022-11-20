@@ -55,10 +55,11 @@ class ReversePrototypeChain {
 	}
 }
 g_api.ReversePrototypeChain=ReversePrototypeChain;
-g_api.reversePrototypeChain=new ReversePrototypeChain(Object.prototype,[]);
+let reversePrototypeChain=new ReversePrototypeChain(Object.prototype,[]);
+g_api.reversePrototypeChain=reversePrototypeChain;
 
 {
-	let xx=g_api.reversePrototypeChain;
+	let xx=reversePrototypeChain;
 	xx.add_target(window);
 	xx.generate();
 }
@@ -1626,11 +1627,13 @@ export function compress_main(stats) {
 	}
 	g_obj_arr.value=flat_obj(obj_start);
 }
-// g_api.compress_main=new VoidCallback(compress_main,[new CompressionStatsCalculator]);
 
-g_api.obj={
-	x:(new CompressionStatsCalculator).compressor,
+/** @param {any} v */
+function any(v) {
+	return v;
 }
+
+g_api.compress_main=any(new VoidCallback(compress_main,[new CompressionStatsCalculator]));
 
 class HexRandomDataGenerator {
 	constructor() {

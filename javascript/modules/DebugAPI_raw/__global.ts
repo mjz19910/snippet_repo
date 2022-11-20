@@ -331,12 +331,20 @@ declare global {
 	};
 }
 
+interface DebugAPI_the {
+	get_k(v: string): any;
+	clearCurrentBreakpoint(): boolean;
+}
+
+type DebugAPIType={
+	the(): DebugAPI_the;
+};
+
 // DebugAPI
 interface GlobalApiObject {
-	obj: {x: MulCompressionAlt;};
 	DoCalc: {};
-	reversePrototypeChain: ReversePrototypeChain;
-	ReversePrototypeChain: typeof ReversePrototypeChain;
+	reversePrototypeChain: {};
+	ReversePrototypeChain: {};
 	tmp: {};
 	any_api_logger: {};
 	parse_html_to_binary_arr: (html: string) => unknown[];
@@ -366,7 +374,7 @@ interface GlobalApiObject {
 	ConnectToRemoteOrigin: {};
 	APIProxyManager: {};
 	LoggingEventTarget: {};
-	DebugAPI: typeof DebugAPIAlt;
+	DebugAPI: DebugAPIType;
 	addEventListener: {};
 }
 
