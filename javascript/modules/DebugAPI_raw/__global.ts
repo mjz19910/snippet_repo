@@ -154,7 +154,7 @@ class BaseCompressionAlt {
 	}
 }
 
-export class CompressStateBase<T,U> {
+class CompressStateBase<T,U> {
 	/** @type {number} */
 	i: number;
 	/** @type {T[]} */
@@ -169,85 +169,10 @@ export class CompressStateBase<T,U> {
 	}
 }
 
-export class CompressState<T,U> extends CompressStateBase<T,U> {
+class CompressState<T,U> extends CompressStateBase<T,U> {
 	item: T|null=null;
 	constructor(arr: T[]) {
 		super(0,arr,[]);
-	}
-}
-
-class MulCompressionAlt extends BaseCompressionAlt {
-	/**
-	 * @template T
-	 * @arg {T[]} arr
-	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
-	try_compress_T<T>(arr: T[]): [true,AnyOrRepeat<T>[]]|[false,T[]] {
-		/**@type {CompressState<T,T|Repeat<T>>} */
-		let state: CompressState<T,T|Repeat<T>>=new CompressState(arr);
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle_T_X(state,item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return MulCompressionAlt.compress_result_state(state);
-	}
-	/**
-	 * @template {RecordKey<symbol>} U
-	 * @template {InstanceType<U>} T
-	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
-	 * @arg {T} item
-	 * */
-	compress_rle_T_X<U,T>(state: CompressState<T,AnyOrRepeat<T>>,item: T) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return false;
-		state.ret.push(new Repeat(item,off));
-		state.i+=off-1;
-		return true;
-	}
-	compress_result_T<T,U extends new (...args: any) => any>(_: U,arr: T[],ret: AnyOrRepeat<T>[]): [true,AnyOrRepeat<T>[]]|[false,T[]] {
-		if(MulCompressionAlt.did_compress(arr,ret)) return [true,ret];
-		return [false,arr];
-	}
-	compress_rle(state: {i: number; arr: string[]; ret: string[];},item: string) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return false;
-		state.ret.push(`${item}${off}`);
-		state.i+=off-1;
-		return true;
-	}
-	try_compress(arr: string[]) {
-		let state: CompressState<string,string>=new CompressState(arr);
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle(state,item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return MulCompressionAlt.compress_result_state(state);
-	}
-	try_decompress(arr: string[]): [res: boolean,dst: string[]] {
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(i+1<arr.length) {
-				let [item_type,num_data]=[item[0],item.slice(1)];
-				let parsed=parseInt(num_data);
-				if(!Number.isNaN(parsed)) {
-					for(let j=0;j<parsed;j++) ret.push(item_type);
-					continue;
-				}
-			}
-			ret.push(arr[i]);
-		}
-		return this.decompress_result(arr,ret);
-	}
-	compress_array(_arr: string[]): string[] {
-		throw 1;
 	}
 }
 
