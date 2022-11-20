@@ -169,6 +169,13 @@ type DebugAPIType={
 	the(): DebugAPI_the;
 };
 
+type Constructor=new () => any;
+
+declare global {
+	type RecordKey<T>=Constructor&{key: T;};
+}
+
+
 // DebugAPI
 interface GlobalApiObject {
 	DoCalc: {};

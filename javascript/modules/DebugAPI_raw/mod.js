@@ -18,6 +18,11 @@
 let g_api=window.g_api??{};
 window.g_api=g_api;
 
+/** @param {any} v */
+function any(v) {
+	return v;
+}
+
 class ReversePrototypeChain {
 	generate() {
 		let np=Object.create(null);
@@ -202,9 +207,8 @@ class IterExtensions {
 }
 g_api.IterExtensions=IterExtensions;
 IterExtensions.init();
-/**
- * @param {boolean} include_uninteresting
- */
+
+/** @param {boolean} include_uninteresting */
 function getPlaybackRateMap(include_uninteresting) {
 	let progress_map=new Map;
 	if(include_uninteresting) {
@@ -223,6 +227,7 @@ function getPlaybackRateMap(include_uninteresting) {
 	}; return progress_map;
 };
 g_api.getPlaybackRateMap=getPlaybackRateMap;
+
 class CreateObjURLCache {
 	/** @readonly */
 	static originalScope={
@@ -278,16 +283,6 @@ class CreateObjURLCache {
 }
 g_api.CreateObjURLCache=CreateObjURLCache;
 CreateObjURLCache.enable();
-
-/**@template T */
-class WMap {
-	/**
-	 * @param {Map<number, Map<number, Repeat<T>>>} map
-	 */
-	constructor(map) {
-		this.value=map;
-	}
-}
 
 /**@template A @typedef {((new (...args: any) => any) &{key: A})} RecordKey */
 
@@ -1709,11 +1704,6 @@ function compress_main(stats) {
 	g_obj_arr.value=flat_obj(obj_start);
 }
 
-/** @param {any} v */
-function any(v) {
-	return v;
-}
-
 g_api.compress_main=any(new VoidCallback(compress_main,[new CompressionStatsCalculator]));
 
 class HexRandomDataGenerator {
@@ -1782,6 +1772,7 @@ class HexRandomDataGenerator {
 }
 g_api.HexRandomDataGenerator=HexRandomDataGenerator;
 let random_data_generator=new HexRandomDataGenerator;
+
 class EventListenerValue {
 	/**
 	 * @param {EventListenerOrEventListenerObject|null} callback
@@ -1795,6 +1786,7 @@ class EventListenerValue {
 	}
 }
 g_api.EventListenerValue=EventListenerValue;
+
 class GenericEvent {
 	#default_prevented=false;
 	type='unknown';
@@ -1812,6 +1804,7 @@ class GenericEvent {
 	}
 }
 g_api.GenericEvent=GenericEvent;
+
 class GenericDataEvent extends GenericEvent {
 	/**
 	 * @param {string} type
@@ -1823,6 +1816,7 @@ class GenericDataEvent extends GenericEvent {
 	}
 }
 g_api.GenericDataEvent=GenericDataEvent;
+
 class GenericEventTarget {
 	constructor() {
 		/**@type {Map<string,EventListenerValue[]>} */
@@ -1895,6 +1889,7 @@ class GenericEventTarget {
 }
 g_api.GenericEventTarget=GenericEventTarget;
 const static_event_target=new GenericEventTarget;
+
 class Dumper {
 	/**@type {null} */
 	m_dump_value=null;
@@ -1905,7 +1900,7 @@ class Dumper {
 	}
 }
 g_api.Dumper=Dumper;
-const local_dumper=new Dumper;
+
 class RustSimpleTokenizer {
 	constructor() {
 		this.index=0;
@@ -2076,6 +2071,7 @@ class RustSimpleTokenizer {
 	}
 }
 g_api.RustSimpleTokenizer=RustSimpleTokenizer;
+
 class RustTokenTreeParser {
 	tokenizer=new RustSimpleTokenizer;
 	/**
@@ -2106,6 +2102,7 @@ class WeakValueRef {
 	}
 }
 g_api.WeakValueRef=WeakValueRef;
+
 class CSSCascade {
 	/**
 	 * @param {{ sheet: any; }} style_element
@@ -2188,63 +2185,56 @@ class CSSCascade {
 	}
 }
 g_api.CSSCascade=CSSCascade;
+
 class TransportMessageObj {
-	/**@type {RemoteOriginConnection|null} */
-	m_connection=null;
-	/**@type {number|null|undefined} */
-	elevation_id=null;
+	/**@type {RemoteOriginConnection} */
+	m_connection;
+	/**@type {number} */
+	m_elevation_id;
 	/** @type {Window|null} */
-	current_target=null;
-	/**
-	 * @param {any} message_event_response
-	 */
+	m_current_target;
+	/** @type {ReturnType<typeof setTimeout>|null} */
+	m_timeout_id=null;
+	/** @param {any} message_event_response */
 	handleEvent(message_event_response) {
 		this.m_connection.transport_init_maybe_complete({
 			event: message_event_response,
 			handler: this
 		});
 	}
-	/**
-	 * @param {RemoteOriginConnection} connection
-	 */
-	construct(connection) {
-		this.m_connection=connection;
-	}
-	/** @type {ReturnType<typeof setTimeout>|null} */
-	timeout_id=null;
-	/**
-	 * @param {Window} transport_target
-	 * @param {number} timeout_ms
-	 */
-	start(transport_target,timeout_ms) {
+	/** @param {number} timeout_ms */
+	start(timeout_ms) {
 		if(!this.m_connection) throw new Error();
-		this.elevation_id=this.m_connection.elevate_object(this);
-		this.connect(transport_target);
-		this.timeout_id=setTimeout(() => {
+		this.m_timeout_id=setTimeout(() => {
 			if(!this.m_connection) throw new Error();
 			this.disconnect();
 			this.clear();
 		},timeout_ms);
 	}
-	/**
-	 * @param {Window} target
-	 */
+	/** @param {Window} target */
 	connect(target) {
-		if(this.current_target!==null&&this.current_target!==target)
+		if(this.m_current_target!==null&&this.m_current_target!==target)
 			this.disconnect();
-		this.current_target=target;
-		this.current_target.addEventListener('message',this);
+		this.m_current_target=target;
+		this.m_current_target.addEventListener('message',this);
 	}
 	disconnect() {
-		if(this.current_target) {
-			this.current_target.removeEventListener('message',this);
+		if(this.m_current_target) {
+			this.m_current_target.removeEventListener('message',this);
+			this.m_current_target=null;
 		}
 	}
 	clear() {
-		if(!this.m_connection) throw new Error();
-		if(this.elevation_id===null) throw new Error();
-		if(this.elevation_id===void 0) throw new Error();
-		this.m_connection.clear_elevation_by_id(this.elevation_id);
+		this.m_connection.clear_elevation_by_id(this.m_elevation_id);
+	}
+	/**
+	 * @param {RemoteOriginConnection} connection
+	 * @param {Window} target
+	 */
+	constructor(connection, target) {
+		this.m_connection=connection;
+		this.m_elevation_id=connection.get_next_elevation_id();
+		this.m_current_target=target;
 	}
 }
 class OriginState {
@@ -2276,7 +2266,7 @@ class RemoteOriginConnection {
 		this.event_transport_map=new WeakMap;
 		this.state=OriginState;
 		/**
-		 * @type {{}|null)[]}
+		 * @type {({}|null)[]}
 		 */
 		this.elevated_array=[];
 		this.state.is_top=this.state.window===this.state.top;
@@ -2318,9 +2308,8 @@ class RemoteOriginConnection {
 			}
 		},"*",[channel.port1]);
 		this.event_transport_map.set(response_message_event_transport_target,post_message_event_transport_target);
-		let message_object=new TransportMessageObj;
-		message_object.construct(this);
-		message_object.start(response_message_event_transport_target,300);
+		let message_object=new TransportMessageObj(this,response_message_event_transport_target);
+		message_object.start(300);
 	}
 	/**
 	 * @param {number} elevated_id
@@ -2336,6 +2325,9 @@ class RemoteOriginConnection {
 		let elevated_id=this.max_elevated_id++;
 		this.elevated_array[elevated_id]=object;
 		return elevated_id;
+	}
+	get_next_elevation_id() {
+		return this.max_elevated_id++;
 	}
 	/**
 	 * @param {any} message_event
@@ -2422,7 +2414,6 @@ class DebugAPI {
 	next_remote_id=0;
 	data_store=new Map;
 	event_handler=static_event_target;
-	static udp_like_remote_origin_connection=new RemoteOriginConnection();
 	static token_tree_parser=new RustTokenTreeParser;
 	/**@type {DebugAPI|null} */
 	static m_the=null;
