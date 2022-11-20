@@ -92,6 +92,7 @@ class addEventListenerExt {
 	 * @param {[any, any, any[]]} list
 	 */
 	static add_to_call_list(list) {
+		if(this.failed_obj) return;
 		let [target,orig_this,args]=list;
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
