@@ -571,11 +571,13 @@ export class CompressState extends CompressStateBase {
 	}
 }
 
+/**@template T @typedef {T|Repeat<T>} AnyOrRepeat */
+
 class MulCompression extends BaseCompression {
 	/**
 	 * @template T
 	 * @arg {T[]} arr
-	 * @returns {[true, T|Repeat<T>[]]|[false,T[]]} */
+	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
 	try_compress_T(arr) {
 		/**@type {CompressState<T,T|Repeat<T>>} */
 		let state=new CompressState(arr);

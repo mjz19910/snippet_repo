@@ -20,7 +20,7 @@ export class MulCompression extends BaseCompression {
 		return MulCompression.compress_result_state(state);
 	}
 	/**
-	 * @template {RecordKeyG<symbol>} U
+	 * @template {RecordKey<symbol>} U
 	 * @template {InstanceType<U>} T
 	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
 	 * @arg {T} item

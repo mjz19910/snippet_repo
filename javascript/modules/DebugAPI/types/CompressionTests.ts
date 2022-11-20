@@ -9,7 +9,7 @@ export function test_try_compress(target: MulCompression) {
 	let state=new CompressState<number,AnyOrRepeat<number>>(arr);
 	target.compress_rle_T_X(state,arr[0]);
 	let value_map_map=Repeat.N.get_map_T(NumType,arr[0]);
-	let value_map=value_map_map<RecordKeyG<symbol>>(NumType);
+	let value_map=value_map_map<RecordKey<symbol>>(NumType);
 	console.log("value_map", value_map);
 	state.ret.push(new Repeat(arr[0],2));
 }

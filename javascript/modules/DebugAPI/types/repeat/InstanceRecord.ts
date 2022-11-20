@@ -1,9 +1,9 @@
 type Constructor=new (...args: any[]) => any;
 
-export interface RecordKey<T> extends Constructor {
+export interface RecordKeyL<T> extends Constructor {
 	key: T;
 };
 
 declare global {
-	interface RecordKeyG<T> extends RecordKey<T> {}
+	interface RecordKey<T> extends RecordKeyL<T> {}
 }

@@ -1,5 +1,4 @@
 import {AnyOrRepeat2} from "./AnyOrRepeat2";
-import {RecordKey} from "./InstanceRecord.js";
 import {is_undefined} from "./is_undefined";
 import {RepeatMapType} from "./RepeatMapType";
 import {TypeAOrTypeB} from "./TypeAOrTypeB.js";

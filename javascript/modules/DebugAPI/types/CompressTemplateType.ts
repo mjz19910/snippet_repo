@@ -2,7 +2,7 @@ import {BaseCompression} from "../src/compress/BaseCompression.js";
 import {NumType} from "../src/NumType.js";
 import {Repeat} from "./repeat/Repeat.js";
 
-export class CompressTemplateType<T extends InstanceType<U>,U extends RecordKeyG<U>> {
+export class CompressTemplateType<T extends InstanceType<U>,U extends RecordKey<U>> {
 	i: number;
 	arr: T[]=[];
 	ret: AnyOrRepeat<T>[]=[];
