@@ -9,4 +9,4 @@ export class VoidCallback<U extends any[],C> {
 	}
 }
 
-export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>, ReturnType<T>>;
+export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;

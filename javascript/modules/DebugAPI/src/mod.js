@@ -32,7 +32,7 @@ import {IterExtensions} from "./IterExtensions";
 import {LoggingEventTarget} from "./debug_api/LoggingEventTarget";
 import {NewTypeWrapper} from "./NewTypeWrapper.js";
 import {OriginState} from "./OriginState";
-import {parse_html_to_binary_arr} from "./parse_html_to_binary_arr";
+import {parse_html_to_binary_arr} from "../types/parse_html_to_binary_arr";
 import {range_matches} from "./range_matches";
 import {RemoteOriginConnection} from "./debug_api/RemoteOriginConnection";
 import {Repeat} from "../types/repeat/Repeat.js";
