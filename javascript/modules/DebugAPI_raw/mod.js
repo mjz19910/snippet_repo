@@ -889,91 +889,90 @@ function run_modules_plugin() {
 }
 g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 
-{
-	class CompressionStatsCalculator {
-		constructor() {
-			/** @type {number[]} */
-			this.hit_counts=[];
-			/** @type {string[]} */
-			this.cache=[];
-			/**@type {MulCompression} */
-			this.compressor=new MulCompression;
-		}
-		/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
-		calc_for_stats_index(stats_arr,arr,index) {
-			stats_arr[index]=this.calc_compression_stats(arr,index+1);
-		}
-		/** @param {number} index */
-		add_hit(index) {
-			if(!this.hit_counts[index]) {
-				this.hit_counts[index]=1;
-			} else this.hit_counts[index]++;
-		}
-		/** @param {string} key */
-		add_item(key) {
-			let index=this.cache.indexOf(key);
-			if(index==-1) {
-				index=this.cache.push(key)-1;
-			}
-			this.add_hit(index);
-		}
-		reset() {
-			this.cache.length=0;
-			this.hit_counts.length=0;
-		}
-		map_values() {
-			return this.hit_counts;
-		}
-		map_keys() {
-			return this.cache;
-		}
-		/** @param {string[]} arr @param {number} win_size */
-		calc_compression_stats(arr,win_size) {
-			this.reset();
-			for(let i=0;i<arr.length;i++) {
-				if(i+win_size<arr.length) {
-					this.add_item(arr.slice(i,i+win_size).join(","));
-				}
-			}
-			let keys=this.map_keys();
-			let values=this.map_values();
-			return to_tuple_arr(keys,values);
-		}
-		/**
-		 * @template T
-		 * @template U
-		 * @arg {T[]} arr
-		 * @arg {number} range
-		 * @arg {U} replacement
-		 * @returns {(["T", T]|["U", U])[]}
-		 * */
-		replace_range(arr,range,replacement) {
-			/**@type {(["T", T]|["U", U])[]} */
-			let ret=[];
-			for(let i=0;i<arr.length;i++) {
-				if(range_matches(arr,range,i)) {
-					i+=1;
-					ret.push(['U',replacement]);
-					continue;
-				}
-				let rest=arr[i];
-				ret.push(['T',rest]);
-			}
-			return ret;
-		}
-		test() {
-			let obj={
-				arr: [],
-			};
-			let rep_val=0.03/(100*4*1);
-			let res=this.replace_range(obj.arr,rep_val,max_id);
-			console.log("compressed",res);
-		}
+class CompressionStatsCalculator {
+	constructor() {
+		/** @type {number[]} */
+		this.hit_counts=[];
+		/** @type {string[]} */
+		this.cache=[];
+		/**@type {MulCompression} */
+		this.compressor=new MulCompression;
 	}
-	g_api.CompressionStatsCalculator=CompressionStatsCalculator;
+	/**@arg {[string, number][][]} stats_arr @arg {string[]} arr @arg {number} index */
+	calc_for_stats_index(stats_arr,arr,index) {
+		stats_arr[index]=this.calc_compression_stats(arr,index+1);
+	}
+	/** @param {number} index */
+	add_hit(index) {
+		if(!this.hit_counts[index]) {
+			this.hit_counts[index]=1;
+		} else this.hit_counts[index]++;
+	}
+	/** @param {string} key */
+	add_item(key) {
+		let index=this.cache.indexOf(key);
+		if(index==-1) {
+			index=this.cache.push(key)-1;
+		}
+		this.add_hit(index);
+	}
+	reset() {
+		this.cache.length=0;
+		this.hit_counts.length=0;
+	}
+	map_values() {
+		return this.hit_counts;
+	}
+	map_keys() {
+		return this.cache;
+	}
+	/** @param {string[]} arr @param {number} win_size */
+	calc_compression_stats(arr,win_size) {
+		this.reset();
+		for(let i=0;i<arr.length;i++) {
+			if(i+win_size<arr.length) {
+				this.add_item(arr.slice(i,i+win_size).join(","));
+			}
+		}
+		let keys=this.map_keys();
+		let values=this.map_values();
+		return to_tuple_arr(keys,values);
+	}
+	/**
+	 * @template T
+	 * @template U
+	 * @arg {T[]} arr
+	 * @arg {number} range
+	 * @arg {U} replacement
+	 * @returns {(["T", T]|["U", U])[]}
+	 * */
+	replace_range(arr,range,replacement) {
+		/**@type {(["T", T]|["U", U])[]} */
+		let ret=[];
+		for(let i=0;i<arr.length;i++) {
+			if(range_matches(arr,range,i)) {
+				i+=1;
+				ret.push(['U',replacement]);
+				continue;
+			}
+			let rest=arr[i];
+			ret.push(['T',rest]);
+		}
+		return ret;
+	}
+	test() {
+		let obj={
+			arr: [],
+		};
+		let rep_val=0.03/(100*4*1);
+		let res=this.replace_range(obj.arr,rep_val,max_id);
+		console.log("compressed",res);
+	}
 }
+g_api.CompressionStatsCalculator=CompressionStatsCalculator;
+
 let stats_calculator_info={
-	stats_calculator: new g_api.CompressionStatsCalculator,
+	stats_calculator: new CompressionStatsCalculator,
 	/**@type {[string, number][][]} */
 	compression_stats: [],
 };
@@ -1019,14 +1018,14 @@ function next_chunk(arr,start) {
 	}
 	return c_len;
 }
-/** @type {string[]} */
-let ids=[];
+/** @type {{value:string[]}} */
+let ids={value: []};
 /** @param {string} value */
 function get_ids(value) {
-	return ids.indexOf(value);
+	return ids.value.indexOf(value);
 }
 
-/**@arg {InstanceType<typeof g_api['CompressionStatsCalculator']>} this_ @arg {Partial<IDValue>} obj */
+/**@arg {CompressionStatsCalculator} this_ @arg {Partial<IDValue>} obj */
 function sorted_comp_stats(this_,obj) {
 	if(obj.arr_str!=null&&obj.stats_win!=null) {
 		/**@type {[string,number][]} */
@@ -1043,7 +1042,7 @@ function sorted_comp_stats(this_,obj) {
 	}
 }
 
-/** @arg {InstanceType<typeof g_api['CompressionStatsCalculator']>} stats @param {IDValue} obj */
+/** @arg {CompressionStatsCalculator} stats @param {IDValue} obj */
 function calc_cur(stats,obj) {
 	if(!obj.stats_win||obj.arr_str===void 0)
 		return;
@@ -1057,21 +1056,21 @@ class IDValue {
 		this.next=next;
 		/** @type {(["string", string] | ["number", number])[]} */
 		this.arr_dual=[];
-		/** @type {never[]} */
-		this.arr_dual_x=[];
+		/** @type {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} */
+		this.arr_dual_compressed=[];
 		/** @type {never[]} */
 		this.arr_rep_str=[];
-		/** @type {never[]} */
+		/** @type {AnyOrRepeat<number>[]} */
 		this.arr_rep_num=[];
-		/** @type {never[]} */
+		/** @type {string[]} */
 		this.arr_str=[];
-		/** @type {never[]} */
+		/** @type {number[]} */
 		this.arr_num=[];
-		/**@type {{}|null} */
+		/**@type {[number,'=',number]|null} */
 		this.value=null;
-		/** @type {never[]} */
+		/** @type {number[]} */
 		this.arr_rep=[];
-		/**@type {{}|null} */
+		/**@type {[number,'=',string,number]|null} */
 		this.log_val=null;
 		/** @type {[string, number][]} */
 		this.stats=[];
@@ -1136,7 +1135,7 @@ class DoCalc {
 		return null;
 	}
 	/**
-	 * @param {InstanceType<typeof g_api['CompressionStatsCalculator']>} stats
+	 * @param {CompressionStatsCalculator} stats
 	 * @param {IDValue} obj
 	 */
 	constructor(stats,obj) {
@@ -1227,7 +1226,7 @@ class CompressDual {
 
 
 /**
- * @param {InstanceType<typeof g_api['CompressionStatsCalculator']>} stats
+ * @param {CompressionStatsCalculator} stats
  * @param {IDValue} obj
  * @param {number} max_id
  */
@@ -1260,26 +1259,9 @@ export function calc_next(stats,obj,max_id) {
 	/**@type {DualR} */
 	let compress_result=com.try_compress_dual();
 	if(!compress_result[0]) {
-		/**@type {TypeAOrTypeB<string, number>[]} */
-		let res=[];
-		for(let i of compress_result[1]) {
-			/**@type {TypeAOrTypeB<string, number>|[]} */
-			let res_1=[];
-			switch(i[0]) {
-				case 'T': if(typeof i[1]==='string')
-					res_1=[i[0],i[1]]; break;
-				case 'U': if(typeof i[1]==='number')
-					res_1=[i[0],i[1]]; break;
-			}
-			if(!res_1) {
-				throw new Error();
-			}
-			if(res_1.length)
-				res.push(res_1);
-		}
-		next.arr_dual=res;
+		next.arr_dual=compress_result[1];
 	} else {
-		next.arr_dual_x=compress_result[1];
+		next.arr_dual_compressed=compress_result[1];
 	}
 	return compress_result;
 }
@@ -1303,7 +1285,7 @@ class Value {
 	/** @type {any} */
 	arr_dual;
 	/** @type {any} */
-	arr_dual_x;
+	arr_dual_compressed;
 	/** @type {any} */
 	arr_rep_str;
 	/** @type {any} */
@@ -1328,9 +1310,9 @@ Value;
 let max_id={value: 0};
 /**
  * @param {IDValue} obj
- * @param {InstanceType<typeof g_api['CompressionStatsCalculator']>} stats
+ * @param {CompressionStatsCalculator} stats
  */
- export function run_calc(stats,obj) {
+export function run_calc(stats,obj) {
 	let calc_value=new DoCalc(stats,obj);
 	let res=calc_value.get_result();
 	if(!res) return [false,null];
@@ -1351,40 +1333,56 @@ function flat_obj(obj) {
 	return ret;
 }
 /**
- * @type {any[]}
+ * @type {{value:IDValue[]}}
  */
-let g_obj_arr;
+let g_obj_arr={value: []};
+
+/** @param {number|string} val @param {unknown} e */
+function find_matching_value(val,e) {
+	if(typeof val==='string') {
+
+	} else {
+		if(typeof e==='object'&&e!==null&&'value' in e&&e.value instanceof Array) {
+			return e.value[0]===val;
+		}
+		return false;
+	}
+}
+
+/** @param {string | number} val */
+function key_not_found(val) {
+	console.log('not found',val);
+}
+
 /**
  * @param {string | number} val
  */
 function do_decode(val) {
+	let fv=g_obj_arr.value.slice(1).find(e => find_matching_value(val,e));
+	if(!fv) return key_not_found(val);
 	if(typeof val==='number') {
-		let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
-		if(!fv) {
-			console.log('not found',val);
-			return;
+		if(typeof fv==='object'&&'value' in fv&&fv.value instanceof Array) {
+			let [,,keep]=fv.value;
+			id_map[val]=keep;
 		}
-		id_map[val]=fv.value.slice(2);
+		console.log('not found',val,fv);
 	} else {
-		let fv=g_obj_arr.slice(1).find(e => e.value[0]===val);
-		if(!fv) {
-			console.log('not found',val);
-			return;
+		if(typeof fv==='object'&&'value' in fv&&fv.value instanceof Array) {
+			let [,,keep]=fv.value;
+			id_map_str.set(val,keep);
 		}
-		id_map_str.set(val,fv.value.slice(2));
+		console.log('not found',val,fv);
 	}
 }
-/**
- * @param {string | number | Repeat<number>} e
- */
-function try_decode(e,deep=true) {
+export function try_decode(e,deep=true) {
 	if(typeof e==='number') {
 		if(dr_map[e]) {
 			return dr_map[e];
 		}
 		if(id_map[e]) {
 			let res=id_map[e];
-			if(!deep) return res;
+			if(!deep)
+				return res;
 			let dec_res=[];
 			for(let i=0;i<res.length;i++) {
 				let cur_res=decode_map(res[i]);
@@ -1397,7 +1395,7 @@ function try_decode(e,deep=true) {
 			return ids_dec[e];
 		}
 	}
-	if(e instanceof g_api.Repeat) {
+	if(e instanceof Repeat) {
 		if(dr_map[e.value]) {
 			return dr_map[e.value];
 		}
@@ -1408,38 +1406,77 @@ function try_decode(e,deep=true) {
 				let cur_res=decode_map(res[i]);
 				dec_res[i]=cur_res;
 			}
-			let ret=new g_api.Repeat(dec_res,e.times);
+			let ret=new Repeat(dec_res,e.times);
 			dr_map[e.value]=ret;
 			return ret;
 		}
 		if(ids_dec[e.value]) {
-			return new g_api.Repeat(ids_dec[e.value],e.times);
+			return new Repeat(ids_dec[e.value],e.times);
 		}
 	}
 	return null;
 }
-/**
- * @type {any[]}
- */
-let id_map;
 
-/**
- * @type {Map<string, any>}
- */
-let id_map_str;
-/**
- * @type {any[]}
- */
+/** @type {number[]} */
+let id_map=[];
+/** @type {Map<string, number>} */
+let id_map_str=new Map;
+/**@type {JsonValueBox[]} */
 let ids_dec;
-/**
- * @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}
- */
-let dr_map;
+/** @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]} */
+let dr_map=[];
+
+class JsonNullBox {
+	type="null";
+	value=null;
+}
+
+class JsonValueBox {
+	value;
+	/** @param {JsonNullBox|JsonArrayBox} value */
+	constructor(value) {
+		this.value=value;
+	}
+}
+
+class JsonArrayBox {
+	type="array";
+	value;
+	/**@arg {JsonValueBox[]} value */
+	constructor(value) {
+		this.value=value;
+	}
+}
+
+class SafeJsonParser {
+	/** @param {string} e */
+	parse(e) {
+		/** @type {unknown} */
+		let res_unk=JSON.parse(e);
+		return this.convert(res_unk);
+	}
+	/** @param {unknown} obj */
+	convert(obj) {
+		if(obj === null) {
+			return new JsonValueBox(new JsonNullBox);
+		}
+		if(obj instanceof Array) {
+			/**@type {JsonValueBox[]} */
+			let new_arr=[];
+			for(let [k,v] of obj.entries()) {
+				let res=this.convert(v);
+				new_arr[k]=res;
+			}
+			return new JsonValueBox(new JsonArrayBox(new_arr));
+		}
+		console.log('don\'t know how to handle', obj);
+		throw new Error("parse more");
+	}
+}
+
 function init_decode() {
-	dr_map=[];
-	ids_dec=ids.map(e => JSON.parse(e));
-	id_map=[];
-	id_map_str=new Map;
+	let parser=new SafeJsonParser;
+	ids_dec=ids.value.map(e => parser.parse(e));
 }
 /** @param {string|number} value @returns {string|number} */
 function decode_map(value) {
@@ -1502,70 +1539,67 @@ function make_group_from_item(arr_2d,key,value) {
 	}
 	arr_2d[key].push(value);
 }
+
+
+class AutoBuy {
+	compressor=new MulCompression;
+	/**@type {string[]} */
+	state_history_arr=[];
+}
+
 /**
  * @type {AutoBuy}
  */
 let g_auto_buy;
-/**
- * @type {string[]}
- */
-let src_arr;
+/** @type {{value:string[]}} */
+let src_arr={value: []};
 function compress_init() {
 	dr_map=[];
 }
-/**
- * @type {string[][]}
- */
-let id_groups;
-let el_ids;
-class NumType {static type=Symbol.for("number");}
-function compress_main() {
+/** @type {{value:string[][]}} */
+let id_groups={value: []};
+/** @type {{value:number[]}} */
+let el_ids={value: []};
+
+/** @param {CompressionStatsCalculator} stats */
+export function compress_main(stats) {
 	compress_init();
 	if(g_auto_buy) {
-		src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
+		src_arr.value=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
 	} else {
 		console.log("TODO: use event_log (can't find it)");
 		return;
 	}
-	ids=[...new Set(src_arr)];
-	id_groups=[];
-	for(let value of src_arr) {
-		make_group_from_item(id_groups,ids.indexOf(value),value);
+	ids.value=[...new Set(src_arr.value)];
+	id_groups.value=[];
+	for(let value of src_arr.value) {
+		make_group_from_item(id_groups.value,ids.value.indexOf(value),value);
 	}
-	el_ids=src_arr.map(get_ids);
-	max_id=new Set(el_ids).size;
-	let arr=compressionStatsCalc.compressor.try_compress_T(NumType,el_ids);
-	/**@type {IDValue} */
-	let obj_start={
-		id: 0,
-		arr_rep: el_ids,
-	};
+	el_ids.value=src_arr.value.map(get_ids);
+	max_id.value=new Set(el_ids.value).size;
+	let arr=stats.compressor.try_compress_T(el_ids.value);
+	let obj_start=new IDValue(0,null);
+	obj_start.arr_rep=el_ids.value;
 	if(arr[0]===true) {
 		obj_start.arr_rep_num=arr[1];
 	} else if(arr[0]===false) {
 		obj_start.arr_num=arr[1];
 	}
 	for(let i=0,cur=obj_start;i<3000;i++) {
-		let comp_res=run_calc(cur);
-		if(!cur.stats) throw new Error();
-		let obj=cur;
-		if(obj.log_val&&comp_res===null) {
-			console.log('id:'+obj.id,'[',...obj.log_val,']',obj.stats_win);
+		let comp_res=run_calc(stats,cur);
+		if(!cur.stats) break;
+		if(cur.log_val&&comp_res===null) {
+			console.log('id:'+cur.id,'[',...cur.log_val,']',cur.stats_win);
 		}
-		if(cur.stats.length===0) {
-			break;
+		if(cur.stats.length===0) break;
+		if(cur.stats[0][1]===1) break;
+		if(!cur.next) break;
+		if(!(cur.next instanceof IDValue)) {
+			throw new Error("Don't know how to use this type (cur.next is not IDValue)");
 		}
-		if(cur.stats[0][1]===1) {
-			break;
-		}
-		if(cur.next) {
-			cur=cur.next;
-			continue;
-		} else {
-			break;
-		}
+		cur=cur.next;
 	}
-	g_obj_arr=flat_obj(obj_start);
+	g_obj_arr.value=flat_obj(obj_start);
 }
 g_api.compress_main=new VoidCallback(compress_main);
 class HexRandomDataGenerator {

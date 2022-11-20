@@ -54,7 +54,7 @@ class Repeat<T> {
 }
 
 declare global {
-	type AnyOrRepeat<T> = T|Repeat<T>;
+	type AnyOrRepeat<T>=T|Repeat<T>;
 }
 
 declare global {
@@ -71,10 +71,10 @@ declare global {
 		set_arr_T<T>(arr: T[]): void;
 		id: number;
 		next: IDValue|null;
-		arr_dual: TypeAOrTypeB<string,number>[];
-		arr_dual_x: TypeAOrTypeB<AnyOrRepeat<string>,AnyOrRepeat<number>>[];
-		arr_rep_str: AnyOrRepeat<string>[];
-		arr_rep_num: AnyOrRepeat<number>[];
+		arr_dual: (["string",string]|["number",number])[];
+		arr_dual_compressed: (["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[];
+		arr_rep_str: never[];//AnyOrRepeat<string>[];
+		arr_rep_num: never[];//AnyOrRepeat<number>[];
 		arr_str: string[];
 		arr_num: number[];
 		value: [number,'=',number]|null;
@@ -86,39 +86,13 @@ declare global {
 	}
 }
 
-interface DoCalc {
-	get_result():[true,(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]]|[false,(string|number)[]]|null;
-	m_return_value:[true,AnyOrRepeat2<string,number>[]]|[false,(string|number)[]]|null;
-	run():null;
-}
-
-interface DoCalcNew {
-	new (stats:CompressionStatsCalculator,obj:IDValue): DoCalc;
-}
-
-interface CompressionStatsCalculator {
-	calc_for_stats_index(stats_arr: any,arr: any,index: any):void;
-	add_hit(index: any):void;
-	add_item(key: any):void;
-	reset():void;
-	map_values():void;
-	map_keys():void;
-	calc_compression_stats(arr: any,win_size: any): [string, number][];
-	replace_range(arr: any,range: any,replacement: any):void;
-	test():void;
-}
-
-interface CompressionStatsCalculatorNew {
-		new (): CompressionStatsCalculator;
-}
-
 declare global {
-	type DualR=[true,(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]]|[false,(["string",string]|["number",number])[]];
+	type DualR=[true,(["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]]|[false,(["string",string]|["number",number])[]];
 }
 
 // DebugAPI
 interface GlobalApiObject {
-	DoCalc: DoCalcNew;
+	DoCalc: {};
 	reversePrototypeChain: ReversePrototypeChain;
 	ReversePrototypeChain: typeof ReversePrototypeChain;
 	tmp: {};
@@ -135,7 +109,7 @@ interface GlobalApiObject {
 	to_tuple_arr: {};
 	range_matches: {};
 	function_as_string_vec: string[];
-	CompressionStatsCalculator: CompressionStatsCalculatorNew;
+	CompressionStatsCalculator: {};
 	HexRandomDataGenerator: {};
 	EventListenerValue: {};
 	GenericEvent: {};
