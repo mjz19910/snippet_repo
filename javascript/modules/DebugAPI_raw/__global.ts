@@ -204,7 +204,7 @@ interface GlobalApiObject {
 	APIProxyManager: {};
 	LoggingEventTarget: {};
 	DebugAPI: DebugAPIType;
-	addEventListener: {};
+	addEventListenerExt: {};
 }
 
 // g_api on window object

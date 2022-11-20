@@ -156,7 +156,7 @@ class addEventListenerExt {
 	}
 }
 addEventListenerExt.init();
-g_api.addEventListener=addEventListenerExt;
+g_api.addEventListenerExt=addEventListenerExt;
 
 class IterExtensions {
 	static init() {
