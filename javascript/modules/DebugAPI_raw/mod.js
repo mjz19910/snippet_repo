@@ -111,7 +111,7 @@ class addEventListenerExt {
 			}
 			let index=this.object_ids.findIndex(e => e.deref()===val);
 			if(index>-1) {
-				real_value[key]="react:weak_id:"+index;
+				real_value[key]="weak_id:"+index;
 				continue;
 			}
 			if(is_react_element) {
