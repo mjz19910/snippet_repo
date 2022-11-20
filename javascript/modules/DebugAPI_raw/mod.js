@@ -514,17 +514,22 @@ function range_matches(arr,value,index) {
 	}
 	return true;
 }
+
 class BaseCompression {
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	did_compress(src,dst) {
+	static did_compress(src,dst) {
 		return dst.length<src.length;
 	}
 	/** @template T @arg {T[]} src @arg {T[]} dst */
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
+	/**@template T,U @arg {CompressStateBase<T, U>} state */
+	static compress_result_state(state) {
+		return this.compress_result(state.arr, state.ret);
+	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
-	compress_result(src,dst) {
+	static compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
 		return [false,src];
@@ -539,68 +544,63 @@ class BaseCompression {
 	}
 }
 
+/**@template T @template U */
+export class CompressStateBase {
+	/** @type {number} */
+	i;
+	/** @type {T[]} */
+	arr;
+	/** @type {U[]} */
+	ret;
+	/** @arg {number} i @arg {T[]} arr @arg {U[]} ret */
+	constructor(i,arr,ret) {
+		this.i=i;
+		this.arr=arr;
+		this.ret=ret;
+	}
+}
+
+/**@template T @template U @extends {CompressStateBase<T,U>} */
+export class CompressState extends CompressStateBase {
+	/** @type {T|null} */
+	item;
+	/** @param {T[]} arr */
+	constructor(arr) {
+		super(0,arr,[]);
+		this.item=null;
+	}
+}
+
 class MulCompression extends BaseCompression {
 	/**
-	 * @param {TU<string, number>[]} arr
-	 * @returns {DualR}
-	 * @todo (MulCompression,try_compress_dual)
-	 */
-	try_compress_dual(arr) {
-		/**@type {TX<string, number>[]} */
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(i+1<arr.length) {
-				if(item===arr[i+1]) {
-					let off=1;
-					while(item===arr[i+off]) {
-						off++;
-					}
-					if(off>1) {
-						switch(item[0]) {
-							case 'T': ret.push(['T',Repeat.get(item[1],off)]); break;
-							case 'U': ret.push(['U',Repeat.get_num(item[1],off)]); break;
-						}
-						i+=off-1;
-						continue;
-					}
-				}
-			}
-			ret.push(item);
+	 * @template T
+	 * @arg {T[]} arr
+	 * @returns {[true, T|Repeat<T>[]]|[false,T[]]} */
+	try_compress_T(arr) {
+		/**@type {CompressState<T,T|Repeat<T>>} */
+		let state=new CompressState(arr);
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle_T_X(state,item);
+			if(use_item) continue;
+			state.ret.push(item);
 		}
-		if(this.did_compress(arr,ret))
-			return [true,ret];
-		return [false,arr];
+		return MulCompression.compress_result_state(state);
 	}
 	/**
-	 * @template {ST} U
+	 * @template {RecordKeyG<symbol>} U
 	 * @template {InstanceType<U>} T
-	 * @arg {U} c_k
-	 * @arg {T[]} arr
-	 * @returns {[true, X<T>[]]|[false,T[]]} */
-	try_compress_T(c_k,arr) {
-		/**@type {X<T>[]} */
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(i+1<arr.length) {
-				if(item===arr[i+1]) {
-					let off=1;
-					while(item===arr[i+off]) {
-						off++;
-					}
-					if(off>1) {
-						let mp=Repeat.N.get_map_T(c_k,item);
-						Repeat.get_with(mp,item,off);
-						ret.push(new Repeat(item,off));
-						i+=off-1;
-						continue;
-					}
-				}
-			}
-			ret.push(item);
-		}
-		return this.compress_result_T(c_k,arr,ret);
+	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
+	 * @arg {T} item
+	 * */
+	compress_rle_T_X(state,item) {
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
+		let off=1;
+		while(item===state.arr[state.i+off]) off++;
+		if(off==1) return false;
+		state.ret.push(new Repeat(item,off));
+		state.i+=off-1;
+		return true;
 	}
 
 	/**
@@ -608,33 +608,36 @@ class MulCompression extends BaseCompression {
 	 * @template {abstract new (...args: any) => any} U
 	 * @arg {U} _
 	 * @arg {T[]} arr
-	 * @arg {X<T>[]} ret
-	 * @returns {[true, X<T>[]]|[false,T[]]} */
+	 * @arg {AnyOrRepeat<T>[]} ret
+	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
-		if(this.did_compress(arr,ret)) return [true,ret];
+		if(MulCompression.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];
+	}
+	/**
+	 * @param {{i:number,arr:string[],ret:string[]}} state
+	 * @arg {string} item
+	 */
+	compress_rle(state,item) {
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
+		let off=1;
+		while(item===state.arr[state.i+off]) off++;
+		if(off==1) return false;
+		state.ret.push(`${item}${off}`);
+		state.i+=off-1;
+		return true;
 	}
 	/** @arg {string[]} arr */
 	try_compress(arr) {
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(i+1<arr.length) {
-				if(item===arr[i+1]) {
-					let off=1;
-					while(item===arr[i+off]) {
-						off++;
-					}
-					if(off>1) {
-						ret.push(`${item}${off}`);
-						i+=off-1;
-						continue;
-					}
-				}
-			}
-			ret.push(item);
+		/**@type {CompressState<string, string>} */
+		let state=new CompressState(arr);
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle(state,item);
+			if(use_item) continue;
+			state.ret.push(item);
 		}
-		return this.compress_result(arr,ret);
+		return MulCompression.compress_result_state(state);
 	}
 	/**@arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
 	try_decompress(arr) {
@@ -645,8 +648,7 @@ class MulCompression extends BaseCompression {
 				let [item_type,num_data]=[item[0],item.slice(1)];
 				let parsed=parseInt(num_data);
 				if(!Number.isNaN(parsed)) {
-					for(let j=0;j<parsed;j++)
-						ret.push(item_type);
+					for(let j=0;j<parsed;j++) ret.push(item_type);
 					continue;
 				}
 			}
@@ -658,22 +660,19 @@ class MulCompression extends BaseCompression {
 	compress_array(arr) {
 		let success,res;
 		[success,res]=this.try_decompress(arr);
-		if(success)
-			arr=res;
+		if(success) arr=res;
 		for(let i=0;i<4;i++) {
 			stats_calculator_info.stats_calculator.calc_for_stats_index(stats_calculator_info.compression_stats,arr,i);
 			let ls=stats_calculator_info.compression_stats[i];
-			if(ls.length>0) {
-				continue;
-			}
+			if(ls.length>0) continue;
 			break;
 		}
 		let res_1=this.try_compress(arr);
-		if(res_1[0])
-			return res_1[1];
+		if(res_1[0]) return res_1[1];
 		return arr;
 	}
 }
+
 
 /**
  * @param {(key:"apply"|"bind"|"call")=>void} bound_function
