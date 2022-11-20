@@ -103,14 +103,14 @@ class addEventListenerExt {
 				real_value[key]="window:"+this.window_list.indexOf(val);
 				continue;
 			}
-			if('__reactContainer$' in val) {
+			if(val instanceof Object && '__reactContainer$' in val) {
 				console.log("react_element");
 				let index=this.object_ids.findIndex(e=>e.deref()===val);
 				if(index>-1) {
 					real_value[key]="react:weak_id:"+index;
 					continue;
 				}
-				index=this.object_ids.push(val);
+				index=this.object_ids.push(new WeakRef(val));
 				real_value[key]="react:weak_id:"+index;
 				continue;
 			}
