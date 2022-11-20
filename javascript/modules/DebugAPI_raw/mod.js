@@ -86,6 +86,8 @@ class addEventListenerExt {
 	}
 	/**@type {Window[]} */
 	static window_list=[window];
+	/**@type {null|{v:any}} */
+	static failed_obj=null;
 	/**
 	 * @param {[any, any, any[]]} list
 	 */
@@ -97,7 +99,17 @@ class addEventListenerExt {
 			if(val === window) {
 				real_value[key]="window:"+this.window_list.indexOf(val);
 			}
-			JSON.stringify(val);
+			let failed=false;
+			try{JSON.stringify(val)}catch{
+				failed=true;
+			};
+			if(failed) {
+				if(!this.failed_obj) {
+					this.failed_obj={v:real_value};
+				}
+				console.log("skip, will stringify circular structure");
+				return;
+			}
 		}
 		let value=JSON.stringify(real_value);
 		let call_list=this.call_list.deref();
