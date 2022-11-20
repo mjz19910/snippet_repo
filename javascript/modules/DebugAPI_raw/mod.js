@@ -103,7 +103,14 @@ class addEventListenerExt {
 				real_value[key]="window:"+this.window_list.indexOf(val);
 				continue;
 			}
+			let is_react_element=false;
 			if(val instanceof Object && '__reactContainer$' in val) {
+				is_react_element=true;
+			}
+			if(val instanceof Object && '__reactFiber$' in val) {
+				is_react_element=true;
+			}
+			if(is_react_element) {
 				console.log("react_element");
 				let index=this.object_ids.findIndex(e=>e.deref()===val);
 				if(index>-1) {
