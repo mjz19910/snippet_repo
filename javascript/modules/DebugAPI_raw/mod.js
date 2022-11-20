@@ -75,14 +75,41 @@ class addEventListenerExt {
 		removeEventListener: x.a.removeEventListener,
 	};
 	/**
-	 * @type {any[][]}
+	 * @type {WeakRef<WeakRef<any[]>[]>}
 	 */
-	static call_list=[];
+	static call_list=new WeakRef([]);
 	static target_prototype=x.a;
 	static init() {
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
 		this.init_overwrite("removeEventListener");
+	}
+	/**
+	 * @param {[any, any, any[]]} list
+	 */
+	static add_to_call_list(list) {
+		let [target,orig_this,args]=list;
+		let real_value=[target,args.length+1,orig_this,...args];
+		let value=JSON.stringify(real_value);
+		let call_list=this.call_list.deref();
+		if(call_list===void 0) {
+			call_list=[];
+			this.call_list=new WeakRef(call_list);
+		}
+		let id=call_list.push(new WeakRef([real_value]));
+		let info=[value,id];
+		if(args[1]!==null) {
+			Object.defineProperty(args[1],'weak_inner',{
+				configurable: true,
+				enumerable: true,
+				writable: true,
+				value: value,
+			});
+			if('weak_inner' in args[1]) {
+				args[1].weak_inner=info;
+			}
+		}
+		call_list.push(new WeakRef(info));
 	}
 	/**
 	 * @param {Extract<keyof EventTarget,string>} target
@@ -91,15 +118,15 @@ class addEventListenerExt {
 		let t=this;
 		switch(target) {
 			case "addEventListener": this.target_prototype[target]=function(...args) {
-				t.call_list.push([target,args.length+1,this,...args]);
+				t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; break;
 			case 'removeEventListener': this.target_prototype[target]=function(...args) {
-				t.call_list.push([target,args.length+1,this,...args]);
+				t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; break;
 			case 'dispatchEvent': this.target_prototype[target]=function(...args) {
-				t.call_list.push([target,args.length+1,this,...args]);
+				t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; return;
 			default: throw 1;
