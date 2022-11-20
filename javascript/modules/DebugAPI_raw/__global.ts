@@ -200,7 +200,8 @@ interface GlobalApiObject {
 	WeakValueRef: {};
 	CSSCascade: {};
 	OriginState: {};
-	ConnectToRemoteOrigin: {};
+	RemoteOriginConnection: {};
+	remote_origin: {};
 	APIProxyManager: {};
 	LoggingEventTarget: {};
 	DebugAPI: DebugAPIType;

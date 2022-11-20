@@ -2189,8 +2189,8 @@ class CSSCascade {
 }
 g_api.CSSCascade=CSSCascade;
 class TransportMessageObj {
-	/**@type {WeakRef<RemoteOriginConnection>|null} */
-	w_connection=null;
+	/**@type {RemoteOriginConnection|null} */
+	m_connection=null;
 	/**@type {number|null|undefined} */
 	elevation_id=null;
 	/** @type {Window|null} */
@@ -2199,12 +2199,7 @@ class TransportMessageObj {
 	 * @param {any} message_event_response
 	 */
 	handleEvent(message_event_response) {
-		if(this.w_connection&&this.w_connection.deref()==null) {
-			console.log('lost connection in handleEvent');
-			this.disconnect();
-			return;
-		}
-		this.w_connection&&this.w_connection.deref()?.transport_init_maybe_complete({
+		this.m_connection.transport_init_maybe_complete({
 			event: message_event_response,
 			handler: this
 		});
@@ -2213,7 +2208,7 @@ class TransportMessageObj {
 	 * @param {RemoteOriginConnection} connection
 	 */
 	construct(connection) {
-		this.w_connection=new WeakRef(connection);
+		this.m_connection=connection;
 	}
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	timeout_id=null;
@@ -2222,14 +2217,11 @@ class TransportMessageObj {
 	 * @param {number} timeout_ms
 	 */
 	start(transport_target,timeout_ms) {
-		if(!this.w_connection) throw new Error();
-		this.elevation_id=this.w_connection.deref()?.elevate_object(this);
+		if(!this.m_connection) throw new Error();
+		this.elevation_id=this.m_connection.elevate_object(this);
 		this.connect(transport_target);
 		this.timeout_id=setTimeout(() => {
-			if(!this.w_connection) throw new Error();
-			if(this.w_connection.deref()==null) {
-				console.log('lost connection in timeout');
-			}
+			if(!this.m_connection) throw new Error();
 			this.disconnect();
 			this.clear();
 		},timeout_ms);
@@ -2249,14 +2241,10 @@ class TransportMessageObj {
 		}
 	}
 	clear() {
-		if(!this.w_connection) throw new Error();
-		if(this.w_connection.deref()==null) {
-			console.log('lost connection in clear');
-			return;
-		}
+		if(!this.m_connection) throw new Error();
 		if(this.elevation_id===null) throw new Error();
 		if(this.elevation_id===void 0) throw new Error();
-		this.w_connection.deref()?.clear_elevation_by_id(this.elevation_id);
+		this.m_connection.clear_elevation_by_id(this.elevation_id);
 	}
 }
 class OriginState {
@@ -2288,7 +2276,7 @@ class RemoteOriginConnection {
 		this.event_transport_map=new WeakMap;
 		this.state=OriginState;
 		/**
-		 * @type {(WeakRef<any>|null)[]}
+		 * @type {{}|null)[]}
 		 */
 		this.elevated_array=[];
 		this.state.is_top=this.state.window===this.state.top;
@@ -2339,7 +2327,6 @@ class RemoteOriginConnection {
 	 */
 	clear_elevation_by_id(elevated_id) {
 		this.elevated_array[elevated_id]=null;
-		//TODO
 	}
 	max_elevated_id=0;
 	/**
@@ -2347,20 +2334,23 @@ class RemoteOriginConnection {
 	 */
 	elevate_object(object) {
 		let elevated_id=this.max_elevated_id++;
-		this.elevated_array[elevated_id]=new WeakRef(object);
+		this.elevated_array[elevated_id]=object;
 		return elevated_id;
 	}
 	/**
 	 * @param {any} message_event
 	 */
 	transport_init_maybe_complete(message_event) {
-		//TODO
+		console.log('transport connected', message_event);
 	}
 	start_root_server() {
-		//TODO
+		window.addEventListener("message", function(event) {
+			console.log(`Received message: ${event.data}`);
+		});
 	}
 }
-g_api.ConnectToRemoteOrigin=RemoteOriginConnection;
+g_api.RemoteOriginConnection=RemoteOriginConnection;
+g_api.remote_origin=new RemoteOriginConnection();
 class APIProxyManager {
 	/**
 	 * @param {LoggingEventTarget} event_handler
