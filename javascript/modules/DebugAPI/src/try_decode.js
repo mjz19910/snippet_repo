@@ -2,9 +2,7 @@ import {Repeat} from "../types/repeat/Repeat";
 import {dr_map,id_map,ids_dec} from "./mod";
 import {decode_map} from "./decode_map";
 
-/**
- * @param {string | number | Repeat<number>} e
- */
+/** @param {string | number | Repeat<number>} e */
 export function try_decode(e,deep=true) {
 	if(typeof e==='number') {
 		if(dr_map[e]) {

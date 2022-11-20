@@ -665,7 +665,7 @@ class MulCompression extends BaseCompression {
 		}
 		return this.decompress_result(arr,ret);
 	}
-	/**@arg {string[]} arr */
+	/**@arg {string[]} arr @returns {string[]} */
 	compress_array(arr) {
 		let success,res;
 		[success,res]=this.try_decompress(arr);
@@ -747,15 +747,15 @@ function not_null(value) {
 	return value;
 }
 
+/** @template {any[]} T */
 class VoidCallback {
-	/**
-	 * @param {()=>void} callback
-	 */
-	constructor(callback) {
+	/** @param {(...arg0:T)=>void} callback @arg {T} params */
+	constructor(callback, params) {
 		this.m_callback=callback;
+		this.m_params=params;
 	}
 	execute() {
-		this.m_callback();
+		this.m_callback(...this.m_params);
 	}
 }
 
@@ -772,7 +772,7 @@ function run_wasm_plugin() {
 
 	wasm_global_memory_view.set(wasm_header,0);
 }
-g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
+g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin,[]);
 
 /**@arg {SafeFunctionPrototype} safe_function_prototype */
 function gen_function_prototype_use(safe_function_prototype) {
@@ -887,7 +887,7 @@ function run_modules_plugin() {
 	};
 	Function.prototype.apply=function_prototype_apply_inject;
 }
-g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
+g_api.run_modules_plugin=new VoidCallback(run_modules_plugin,[]);
 
 class CompressionStatsCalculator {
 	constructor() {
@@ -1320,7 +1320,7 @@ export function run_calc(stats,obj) {
 }
 /* version_list file: group1/sub_a/item-_9.js */
 /**
- * @param {{ id?: number; arr_rep?: any; arr?: boolean | string[]; next?: any; }} obj
+ * @param {IDValue} obj
  */
 function flat_obj(obj) {
 	let ret=[];
@@ -1354,6 +1354,9 @@ function key_not_found(val) {
 	console.log('not found',val);
 }
 
+/** @type {number[]} */
+let id_map_one=[];
+
 /**
  * @param {string | number} val
  */
@@ -1363,7 +1366,7 @@ function do_decode(val) {
 	if(typeof val==='number') {
 		if(typeof fv==='object'&&'value' in fv&&fv.value instanceof Array) {
 			let [,,keep]=fv.value;
-			id_map[val]=keep;
+			id_map_one[val]=keep;
 		}
 		console.log('not found',val,fv);
 	} else {
@@ -1374,50 +1377,76 @@ function do_decode(val) {
 		console.log('not found',val,fv);
 	}
 }
-export function try_decode(e,deep=true) {
+
+/** @type {(string | number)[][]} */
+let dr_map_num=[];
+
+/**
+ * @type {(string | number)[][]}
+ */
+let ids_dec_num=[];
+
+/**
+ * @type {Repeat<(string | number)[]>[]}
+ */
+let dr_map_rep=[];
+
+/** @type {(string | number)[][]} */
+let id_map_rep=[];
+
+/** @type {(string | number)[][]} */
+let id_map_num=[];
+
+/** @type {number[]} */
+let ids_dec_rep=[];
+
+/** @param {string | number | Repeat<number>} e @returns {['dr_map_num', any]|['id_map_num',any]|['dr_map_rep', any]|['ids_dec_rep',any]|['ids_dec_num',any]|null} */
+function try_decode(e,deep=true) {
 	if(typeof e==='number') {
-		if(dr_map[e]) {
-			return dr_map[e];
+		if(dr_map_num[e]) {
+			return ['dr_map_num', dr_map_num[e]];
 		}
-		if(id_map[e]) {
-			let res=id_map[e];
+		if(id_map_num[e]) {
+			/**@type {(string | number)[]} */
+			let res=id_map_num[e];
 			if(!deep)
-				return res;
+				return ['id_map_num', res];
 			let dec_res=[];
 			for(let i=0;i<res.length;i++) {
 				let cur_res=decode_map(res[i]);
 				dec_res[i]=cur_res;
 			}
-			dr_map[e]=dec_res;
-			return dec_res;
+			dr_map_num[e]=dec_res;
+			return ['dr_map_num',dec_res];
 		}
-		if(ids_dec[e]) {
-			return ids_dec[e];
+		if(ids_dec_num[e]) {
+			return ['ids_dec_num',ids_dec_num[e]];
 		}
 	}
 	if(e instanceof Repeat) {
 		if(dr_map[e.value]) {
-			return dr_map[e.value];
+			return ['dr_map_rep',dr_map[e.value]];
 		}
-		if(id_map[e.value]) {
-			let res=id_map[e.value];
+		if(id_map_rep[e.value]) {
+			/**@type {(string | number)[]} */
+			let res=id_map_rep[e.value];
 			let dec_res=[];
 			for(let i=0;i<res.length;i++) {
 				let cur_res=decode_map(res[i]);
 				dec_res[i]=cur_res;
 			}
 			let ret=new Repeat(dec_res,e.times);
-			dr_map[e.value]=ret;
-			return ret;
+			dr_map_rep[e.value]=ret;
+			return ['dr_map_rep',ret];
 		}
-		if(ids_dec[e.value]) {
-			return new Repeat(ids_dec[e.value],e.times);
+		if(ids_dec_rep[e.value]) {
+			return ['ids_dec_rep',new Repeat(ids_dec_rep[e.value],e.times)];
 		}
 	}
 	return null;
 }
 
-/** @type {number[]} */
+/** @type {number[][]} */
 let id_map=[];
 /** @type {Map<string, number>} */
 let id_map_str=new Map;
@@ -1482,7 +1511,6 @@ function init_decode() {
 function decode_map(value) {
 	if(!id_map)
 		init_decode();
-	/**@type {number} */
 	let dec=try_decode(value);
 	if(!dec) {
 		do_decode(value);
@@ -1491,7 +1519,8 @@ function decode_map(value) {
 	if(!dec) {
 		console.log(value);
 	} else {
-		return dec;
+		console.log("handle decode_map", value);
+		throw 1;
 	}
 	return value;
 }
@@ -1601,7 +1630,12 @@ export function compress_main(stats) {
 	}
 	g_obj_arr.value=flat_obj(obj_start);
 }
-g_api.compress_main=new VoidCallback(compress_main);
+g_api.compress_main=new VoidCallback(compress_main,[new CompressionStatsCalculator]);
+
+g_api.obj={
+	x:new CompressionStatsCalculator,
+}
+
 class HexRandomDataGenerator {
 	constructor() {
 		this.random_num=Math.random();
@@ -2293,7 +2327,8 @@ function parse_html_to_binary_arr(html) {
 	html_parsing_div_element.innerHTML=html;
 	return Array.prototype.map.call(html_parsing_div_element.textContent,e => e.charCodeAt(0));
 }
-window.parse_html_to_binary_arr=parse_html_to_binary_arr;
+g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
+
 class DebugAPI {
 	constructor() {
 		let do_postMessage_logging=false;

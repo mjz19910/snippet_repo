@@ -51,6 +51,9 @@ class Repeat<T> {
 		this.value=value;
 		this.times=times;
 	}
+	static from_TU_entry(a: ["string",string]|["number",number],b: number): ["string",string|Repeat<string>]|["number",number|Repeat<number>] {
+		throw 1;
+	}
 }
 
 declare global {
@@ -90,8 +93,216 @@ declare global {
 	type DualR=[true,(["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]]|[false,(["string",string]|["number",number])[]];
 }
 
+class CompressDual {
+	/**@type {number} */
+	i: number;
+	/**@type {(["string", string] | ["number", number])[]} */
+	arr: (["string",string]|["number",number])[]=[];
+	/**@type {(["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]} */
+	ret: (["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]=[];
+	/**@returns {DualR} */
+	try_compress_dual(): DualR {
+		let state=this;
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle_TU_to_TX(item);
+			if(use_item) continue;
+			state.ret.push(item);
+		}
+		return BaseCompressionAlt.compress_result_state_dual(this);
+	}
+	/**@arg {(["string", string] | ["number", number])} item */
+	compress_rle_TU_to_TX(item: (["string",string]|["number",number])) {
+		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
+		let off=1;
+		while(item===this.arr[this.i+off]) off++;
+		if(off==1) return false;
+		this.ret.push(Repeat.from_TU_entry(item,off));
+		this.i+=off-1;
+		return true;
+	}
+	/**@arg {(["string", string] | ["number", number])[]} arr */
+	constructor(arr: (["string",string]|["number",number])[]) {
+		this.i=0;
+		this.arr=arr;
+		this.ret=[];
+	}
+}
+
+class BaseCompressionAlt {
+	/** @arg {CompressDual} arg0 @returns {DualR} */
+	static compress_result_state_dual(arg0: CompressDual): DualR {
+		return this.compress_result_dual(arg0.arr,arg0.ret);
+	}
+	/** @arg {(["string", string] | ["number", number])[]} src @arg {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} dst @returns {DualR} */
+	static compress_result_dual(src: (["string",string]|["number",number])[],dst: (["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]): DualR {
+		if(this.did_compress(src,dst)) return [true,dst];
+		return [false,src];
+	}
+	/** @template T,U @arg {T[]} src @arg {U[]} dst */
+	static did_compress<T, 	U>(src: T[],dst: U[]) {
+		return dst.length<src.length;
+	}
+	/** @template T @arg {T[]} src @arg {T[]} dst */
+	did_decompress<T>(src: T[],dst: T[]) {
+		return dst.length>src.length;
+	}
+	/**@template T,U @arg {CompressStateBase<T, U>} state*/
+	static compress_result_state<T, 	U>(state: CompressStateBase<T,U>) {
+		return this.compress_result(state.arr,state.ret);
+	}
+	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
+	static compress_result<T, 	U>(src: T[],dst: U[]): [true,U[]]|[false,T[]] {
+		if(this.did_compress(src,dst))
+			return [true,dst];
+		return [false,src];
+	}
+	/** @arg {string[]} src @arg {string[]} dst @returns {[res: boolean,dst: string[]]} */
+	decompress_result(src: string[],dst: string[]): [res: boolean,dst: string[]] {
+		// maybe this is not a decompression, just a modification to make
+		// later decompression work
+		if(this.did_decompress(src,dst))
+			return [true,dst];
+		return [false,dst];
+	}
+}
+
+export class CompressStateBase<T,U> {
+	/** @type {number} */
+	i: number;
+	/** @type {T[]} */
+	arr: T[];
+	/** @type {U[]} */
+	ret: U[];
+	/** @arg {number} i @arg {T[]} arr @arg {U[]} ret */
+	constructor(i: number,arr: T[],ret: U[]) {
+		this.i=i;
+		this.arr=arr;
+		this.ret=ret;
+	}
+}
+
+export class CompressState<T,U> extends CompressStateBase<T,U> {
+	item:T|null=null;
+	constructor(arr: T[]) {
+		super(0,arr,[]);
+	}
+}
+
+class MulCompressionAlt extends BaseCompressionAlt {
+	/**
+	 * @template T
+	 * @arg {T[]} arr
+	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	try_compress_T<T>(arr: T[]): [true,AnyOrRepeat<T>[]]|[false,T[]] {
+		/**@type {CompressState<T,T|Repeat<T>>} */
+		let state: CompressState<T,T|Repeat<T>>=new CompressState(arr);
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle_T_X(state,item);
+			if(use_item) continue;
+			state.ret.push(item);
+		}
+		return MulCompressionAlt.compress_result_state(state);
+	}
+	/**
+	 * @template {RecordKey<symbol>} U
+	 * @template {InstanceType<U>} T
+	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
+	 * @arg {T} item
+	 * */
+	compress_rle_T_X<U, 	T>(state: CompressState<T,AnyOrRepeat<T>>,item: T) {
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
+		let off=1;
+		while(item===state.arr[state.i+off]) off++;
+		if(off==1) return false;
+		state.ret.push(new Repeat(item,off));
+		state.i+=off-1;
+		return true;
+	}
+
+	/**
+	 * @template {InstanceType<U>} T
+	 * @template {new (...args: any) => any} U
+	 * @arg {U} _
+	 * @arg {T[]} arr
+	 * @arg {AnyOrRepeat<T>[]} ret
+	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	compress_result_T<T, 	U>(_: U,arr: T[],ret: AnyOrRepeat<T>[]): [true,AnyOrRepeat<T>[]]|[false,T[]] {
+		if(MulCompressionAlt.did_compress(arr,ret)) return [true,ret];
+		return [false,arr];
+	}
+	/**
+	 * @param {{i:number,arr:string[],ret:string[]}} state
+	 * @arg {string} item
+	 */
+	compress_rle(state: {i: number; arr: string[]; ret: string[];},item: string) {
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
+		let off=1;
+		while(item===state.arr[state.i+off]) off++;
+		if(off==1) return false;
+		state.ret.push(`${item}${off}`);
+		state.i+=off-1;
+		return true;
+	}
+	/** @arg {string[]} arr */
+	try_compress(arr: string[]) {
+		/**@type {CompressState<string, string>} */
+		let state: CompressState<string,string>=new CompressState(arr);
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle(state,item);
+			if(use_item) continue;
+			state.ret.push(item);
+		}
+		return MulCompressionAlt.compress_result_state(state);
+	}
+	/**@arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
+	try_decompress(arr: string[]): [res: boolean,dst: string[]] {
+		let ret=[];
+		for(let i=0;i<arr.length;i++) {
+			let item=arr[i];
+			if(i+1<arr.length) {
+				let [item_type,num_data]=[item[0],item.slice(1)];
+				let parsed=parseInt(num_data);
+				if(!Number.isNaN(parsed)) {
+					for(let j=0;j<parsed;j++) ret.push(item_type);
+					continue;
+				}
+			}
+			ret.push(arr[i]);
+		}
+		return this.decompress_result(arr,ret);
+	}
+	/**@arg {string[]} _arr */
+	compress_array(_arr: string[]):string[] {
+		throw 1;
+	}
+}
+
+
+class CallStats {
+	hit_counts: []=[];
+	cache: []=[];
+	compressor: MulCompressionAlt=new MulCompressionAlt;
+	add_item: []=[];
+	add_hit: []=[];
+	reset: []=[];
+	map_values: []=[];
+	map_keys: []=[];
+	calc_compression_stats(arr:string[],win_size:number): [string, number][] {
+		throw 1;
+	}
+	replace_range: []=[];
+	test: []=[];
+	calc_for_stats_index(stats_arr:[string, number][][],arr:string[],index:number) {
+		stats_arr[index]=this.calc_compression_stats(arr,index+1);
+	}
+}
+
 // DebugAPI
 interface GlobalApiObject {
+	obj: {x: CompressionStatsCalculator;};
 	DoCalc: {};
 	reversePrototypeChain: ReversePrototypeChain;
 	ReversePrototypeChain: typeof ReversePrototypeChain;
@@ -100,7 +311,7 @@ interface GlobalApiObject {
 	parse_html_to_binary_arr: (html: string) => unknown[];
 	run_modules_plugin: VoidCallbackWith<() => void>;
 	run_wasm_plugin: VoidCallbackWith<() => void>;
-	compress_main: VoidCallbackWith<(stats: StatsCalcEmpty) => void>;
+	compress_main: VoidCallbackWith<(stats: CallStats) => void>;
 	IterExtensions: {};
 	getPlaybackRateMap: {};
 	CreateObjURLCache: {};
