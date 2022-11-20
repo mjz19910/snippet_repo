@@ -281,7 +281,7 @@ class MulCompressionAlt extends BaseCompressionAlt {
 }
 
 
-class CallStats {
+class CompressionStatsCalculatorAlt {
 	hit_counts: []=[];
 	cache: []=[];
 	compressor: MulCompressionAlt=new MulCompressionAlt;
@@ -302,7 +302,7 @@ class CallStats {
 
 // DebugAPI
 interface GlobalApiObject {
-	obj: {x: CompressionStatsCalculator;};
+	obj: {x: CompressionStatsCalculatorAlt;};
 	DoCalc: {};
 	reversePrototypeChain: ReversePrototypeChain;
 	ReversePrototypeChain: typeof ReversePrototypeChain;
@@ -311,7 +311,7 @@ interface GlobalApiObject {
 	parse_html_to_binary_arr: (html: string) => unknown[];
 	run_modules_plugin: VoidCallbackWith<() => void>;
 	run_wasm_plugin: VoidCallbackWith<() => void>;
-	compress_main: VoidCallbackWith<(stats: CallStats) => void>;
+	compress_main: VoidCallbackWith<(stats: CompressionStatsCalculatorAlt) => void>;
 	IterExtensions: {};
 	getPlaybackRateMap: {};
 	CreateObjURLCache: {};
