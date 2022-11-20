@@ -21,16 +21,28 @@ class VoidCallback<U extends any[],C> {
 	}
 }
 
-type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>, ReturnType<T>>;
+interface ReversePrototypeChainInterface {
+	add_target(target: {}): void;
+	generate(): void;
+}
+
+class ReversePrototypeChain implements ReversePrototypeChainInterface {
+	constructor(base: {},targets: {}[]) {};
+	add_target(target: {}) {};
+	generate() {};
+}
+
+type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
 // DebugAPI
 interface GlobalApiObject {
+	reversePrototypeChain: ReversePrototypeChain;
 	ReversePrototypeChain: typeof ReversePrototypeChain;
 	tmp: {};
 	any_api_logger: {};
 	parse_html_to_binary_arr: (html: string) => unknown[];
-	run_modules_plugin: VoidCallbackWith<()=>void>;
-	run_wasm_plugin: VoidCallbackWith<()=>void>;
-	compress_main: VoidCallbackWith<(stats: StatsCalcEmpty)=>void>;
+	run_modules_plugin: VoidCallbackWith<() => void>;
+	run_wasm_plugin: VoidCallbackWith<() => void>;
+	compress_main: VoidCallbackWith<(stats: StatsCalcEmpty) => void>;
 	IterExtensions: {};
 	getPlaybackRateMap: {};
 	CreateObjURLCache: {};

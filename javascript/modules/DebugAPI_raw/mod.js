@@ -21,16 +21,22 @@ window.g_api=g_api;
 class ReversePrototypeChain {
 	generate() {
 		let np=Object.create(null);
-		for(let target in this.targets) {
+		for(let target of this.targets) {
 			this.process_target(target,np);
 		}
 	}
 	/**
-	 * @param {string} target
+	 * @param {{}} target
 	 * @param {{}} dest
 	 */
 	process_target(target,dest) {
-		console.log(target,dest);
+		let proto=target;
+		let list=[];
+		while(proto) {
+			list.push(proto);
+			proto=Object.getPrototypeOf(proto);
+		}
+		console.log(target,dest,list);
 	}
 	/**
 	 * @param {{}} base
@@ -40,8 +46,22 @@ class ReversePrototypeChain {
 		this.base=base;
 		this.targets=targets;
 	}
+	/**
+	 * @param {{}} target
+	 */
+	add_target(target) {
+		if(this.targets.includes(target)) return;
+		this.targets.push(target);
+	}
 }
 g_api.ReversePrototypeChain=ReversePrototypeChain;
+g_api.reversePrototypeChain=new ReversePrototypeChain(Object.prototype, []);
+
+{
+	let xx=g_api.reversePrototypeChain;
+	xx.add_target(window);
+	xx.generate();
+}
 
 let x={};
 g_api.tmp=x;
