@@ -169,13 +169,6 @@ class CompressStateBase<T,U> {
 	}
 }
 
-class CompressState<T,U> extends CompressStateBase<T,U> {
-	item: T|null=null;
-	constructor(arr: T[]) {
-		super(0,arr,[]);
-	}
-}
-
 declare global {
 	type dbg_T1={
 		type: 'argument-error';
