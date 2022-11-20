@@ -140,7 +140,7 @@ class BaseCompressionAlt {
 		return [false,src];
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	static did_compress<T, 	U>(src: T[],dst: U[]) {
+	static did_compress<T,U>(src: T[],dst: U[]) {
 		return dst.length<src.length;
 	}
 	/** @template T @arg {T[]} src @arg {T[]} dst */
@@ -148,11 +148,11 @@ class BaseCompressionAlt {
 		return dst.length>src.length;
 	}
 	/**@template T,U @arg {CompressStateBase<T, U>} state*/
-	static compress_result_state<T, 	U>(state: CompressStateBase<T,U>) {
+	static compress_result_state<T,U>(state: CompressStateBase<T,U>) {
 		return this.compress_result(state.arr,state.ret);
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
-	static compress_result<T, 	U>(src: T[],dst: U[]): [true,U[]]|[false,T[]] {
+	static compress_result<T,U>(src: T[],dst: U[]): [true,U[]]|[false,T[]] {
 		if(this.did_compress(src,dst))
 			return [true,dst];
 		return [false,src];
@@ -183,7 +183,7 @@ export class CompressStateBase<T,U> {
 }
 
 export class CompressState<T,U> extends CompressStateBase<T,U> {
-	item:T|null=null;
+	item: T|null=null;
 	constructor(arr: T[]) {
 		super(0,arr,[]);
 	}
@@ -211,7 +211,7 @@ class MulCompressionAlt extends BaseCompressionAlt {
 	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
 	 * @arg {T} item
 	 * */
-	compress_rle_T_X<U, 	T>(state: CompressState<T,AnyOrRepeat<T>>,item: T) {
+	compress_rle_T_X<U,T>(state: CompressState<T,AnyOrRepeat<T>>,item: T) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
@@ -220,22 +220,10 @@ class MulCompressionAlt extends BaseCompressionAlt {
 		state.i+=off-1;
 		return true;
 	}
-
-	/**
-	 * @template {InstanceType<U>} T
-	 * @template {new (...args: any) => any} U
-	 * @arg {U} _
-	 * @arg {T[]} arr
-	 * @arg {AnyOrRepeat<T>[]} ret
-	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
-	compress_result_T<T, 	U>(_: U,arr: T[],ret: AnyOrRepeat<T>[]): [true,AnyOrRepeat<T>[]]|[false,T[]] {
+	compress_result_T<T,U extends new (...args: any) => any>(_: U,arr: T[],ret: AnyOrRepeat<T>[]): [true,AnyOrRepeat<T>[]]|[false,T[]] {
 		if(MulCompressionAlt.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];
 	}
-	/**
-	 * @param {{i:number,arr:string[],ret:string[]}} state
-	 * @arg {string} item
-	 */
 	compress_rle(state: {i: number; arr: string[]; ret: string[];},item: string) {
 		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
 		let off=1;
@@ -245,9 +233,7 @@ class MulCompressionAlt extends BaseCompressionAlt {
 		state.i+=off-1;
 		return true;
 	}
-	/** @arg {string[]} arr */
 	try_compress(arr: string[]) {
-		/**@type {CompressState<string, string>} */
 		let state: CompressState<string,string>=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -257,7 +243,6 @@ class MulCompressionAlt extends BaseCompressionAlt {
 		}
 		return MulCompressionAlt.compress_result_state(state);
 	}
-	/**@arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
 	try_decompress(arr: string[]): [res: boolean,dst: string[]] {
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
@@ -274,35 +259,329 @@ class MulCompressionAlt extends BaseCompressionAlt {
 		}
 		return this.decompress_result(arr,ret);
 	}
-	/**@arg {string[]} _arr */
-	compress_array(_arr: string[]):string[] {
+	compress_array(_arr: string[]): string[] {
 		throw 1;
 	}
 }
 
 
 class CompressionStatsCalculatorAlt {
-	hit_counts: []=[];
-	cache: []=[];
+	hit_counts: number[]=[];
+	cache: string[]=[];
 	compressor: MulCompressionAlt=new MulCompressionAlt;
 	add_item: []=[];
 	add_hit: []=[];
 	reset: []=[];
 	map_values: []=[];
 	map_keys: []=[];
-	calc_compression_stats(arr:string[],win_size:number): [string, number][] {
+	calc_compression_stats(arr: string[],win_size: number): [string,number][] {
 		throw 1;
 	}
 	replace_range: []=[];
 	test: []=[];
-	calc_for_stats_index(stats_arr:[string, number][][],arr:string[],index:number) {
+	calc_for_stats_index(stats_arr: [string,number][][],arr: string[],index: number) {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
+	}
+}
+declare global {
+	type dbg_T1={
+		type: 'argument-error';
+		data: null;
+	};
+
+	type dbg_T2={
+		type: "argument-error";
+		data: null;
+	};
+
+	type dbg_T3={
+		type: "data";
+		data: {
+			result: [string,any];
+			return: any;
+		};
+	};
+
+	type dbg_T4={
+		type: "unexpected";
+		data: {
+			result: {
+				type: 'hidden-var';
+				var: string;
+			}|{
+				type: 'no-var';
+				data: null;
+			};
+			return: any;
+		};
+	};
+
+	type dbg_T5={
+		type: 'invalid-state-error';
+		data: null;
+	};
+
+	type dbg_T6={
+		type: 'data-arr';
+		data: {
+			result: any[];
+			return: any;
+		};
+	};
+
+	type dbg_t1={
+		type: "no-response";
+		data: {
+			result:null,
+		};
+	};
+
+	type dbg_t2={
+		type: 'no-response-null-result';
+		data: {
+			result: null;
+			return: any;
+		};
+	};
+
+	type dbg_result=dbg_T1|dbg_T2|dbg_T3|dbg_T4|dbg_T5|dbg_T6|dbg_t1|dbg_t2;
+}
+
+class DebugAPIAlt {
+	any_api_logger=(function() {
+		function get_val(): {} {
+			throw 1;
+		}
+		return get_val();
+	})();
+	next_remote_id=0;
+	data_store=new Map;
+	event_handler=(function() {
+		function get_val(): {} {
+			throw 1;
+		}
+		return get_val();
+	})();
+	static udp_like_remote_origin_connection=(function() {
+		function get_val(): {} {
+			throw 1;
+		}
+		return get_val();
+	})();
+	static token_tree_parser=(function() {
+		function get_val(): {} {
+			throw 1;
+		}
+		return get_val();
+	})();
+	static m_the: DebugAPIAlt|null=null;
+	static the(): DebugAPIAlt {
+		if(!this.m_the) {
+			this.m_the=new this;
+		}
+		return this.m_the;
+	}
+	/** @arg {string} key @returns {boolean} */
+	hasData(key: string): boolean {
+		return this.data_store.has(key);
+	}
+	/** @arg {string} key @returns {any} */
+	getData(key: string): any {
+		return this.data_store.get(key);
+	}
+	/** @arg {string} key @arg {any} value @returns {this} */
+	setData(key: string,value: any): this {
+		this.data_store.set(key,value);
+		return this;
+	}
+	/** @arg {string} key @returns {boolean} */
+	deleteData(key: string): boolean {
+		return this.data_store.delete(key);
+	}
+	/**
+	 * @param {any} element @returns {boolean}
+	 */
+	getEventListeners(element: any): boolean {
+		if(!this.hasData('getEventListeners'))
+			throw 1;
+		return this.getData('getEventListeners')(element);
+	}
+	/**
+	 * @param {any} debug
+	 * @param {any} undebug
+	 * @param {(this: any, ...args: readonly any[]) => any} func
+	 * @param {any} name
+	 */
+	get_event_listener_var_vec_1(debug: any,undebug: any,func: (this: any,...args: readonly any[]) => any,name: any): {} {
+		throw 1;
+	}
+	/**
+	 * @param {any} debug
+	 * @param {any} undebug
+	 * @param {null} getEventListeners @returns {this}
+	 */
+	attach(debug: any,undebug: any,getEventListeners: null): this {
+		//Attach to the chrome DebugApi functions the user specified.
+		let obj_debug=this.getData('d');
+		let obj_undebug=this.getData('u');
+		let get_ev_lis=this.getData('getEventListeners');
+		if(obj_debug!==debug||obj_undebug!==undebug||get_ev_lis!==getEventListeners) {
+			this.setData('d',debug);
+			this.setData('u',undebug);
+			this.setData('getEventListeners',getEventListeners);
+		}
+		return this;
+	}
+	/**
+	 * @param {new (...arg0: any[]) => any} class_value
+	 * @param {any[]} arg_vec @returns {boolean}
+	 */
+	activateClass(class_value: new (...arg0: any[]) => any,arg_vec: any[]): boolean {
+		return new class_value(...arg_vec);
+	}
+	/**
+	 * @param {any} function_value
+	 * @param {any} target_obj
+	 * @param {any} arg_vec @returns {boolean}
+	 */
+	activateApply(function_value: any,target_obj: any,arg_vec: any): boolean {
+		return Reflect.apply(function_value,target_obj,arg_vec);
+	}
+	/** @returns {void} */
+	debuggerBreakpointCode(): void {
+		window.g_api.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v: string) => {
+			if(__v==='__v') {
+				return {
+					type: 'eval-hidden-var',
+					data: null,
+				};
+			}
+			try {
+				return {
+					type: 'var',
+					data: [__v,eval(__v)]
+				};
+			} catch {
+				return {
+					type: 'no-var',
+					data: null
+				};
+			}
+		};
+		if(!window.g_api.DebugAPI.the().clearCurrentBreakpoint()) {
+			console.log("failed to clear breakpoint");
+		}
+		0;
+	}
+	current_function_value?: (this: any,...args: readonly any[]) => any;
+	/** @returns {boolean} */
+	clearCurrentBreakpoint(): boolean {
+		let undebug;
+		if(undebug=this.getData("u")) {
+			undebug(this.current_function_value);
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * @argument {Function} function_value
+	 * @returns {string}
+	*/
+	stringifyFunction(function_value: Function): string {
+		let function_code=function_value.toString();
+		if(function_code.includes("{}"[0])) {
+			function_code=function_code.slice(function_code.indexOf("{}"[0]));
+		} else {
+			console.log(function_code);
+		}
+		return function_code;
+	}
+	/**
+	 * @param {any} function_value
+	 * @param {any} activate
+	 * @param {string} var_match
+	 * @arg {any} target_obj
+	 * @param {any[]} target_activate_args
+	 */
+	debuggerGetVarArray_a(function_value: any,activate: any,var_match: string,target_obj: any,target_activate_args: any[]): dbg_result {
+		function_value; activate; var_match; target_obj; target_activate_args;
+		throw 1;
+	}
+	/**
+	 * @param {any} class_value
+	 * @param {any} target_arg_vec
+	 * @param {any} var_match
+	 */
+	debuggerGetVarArray_c(class_value: any,target_arg_vec: any,var_match: any): dbg_result {
+		if(target_arg_vec instanceof Array) {
+			return this.debuggerGetVarArray_a(class_value,this.activateClass,var_match,target_arg_vec[0],target_arg_vec.slice(1));
+		}
+		return {
+			type: 'argument-error',
+			data: null
+		};
+	}
+	/**
+	 * @param {any} function_value
+	 * @param {any} target_obj
+	 * @param {any} target_arg_vec
+	 * @param {any} var_match
+	 */
+	debuggerGetVarArray(function_value: any,target_obj: any,target_arg_vec: any,var_match: any): dbg_result {
+		if(target_arg_vec instanceof Array) {
+			return this.debuggerGetVarArray_a(function_value,this.activateApply,var_match,target_obj,target_arg_vec);
+		}
+		return {
+			type: 'argument-error',
+			data: null
+		};
+	}
+	/**
+	 * @param {(this: any, ...args: readonly any[]) => any} function_value
+	 * @param {any} activate
+	 * @param {any} var_name
+	 * @param {any[]} activate_vec
+	 */
+	debuggerGetVar_a(function_value: (this: any,...args: readonly any[]) => any,activate: any,var_name: any,activate_vec: any[]): dbg_result {
+		function_value; activate; var_name; activate_vec;
+		throw 1;
+
+	}
+	/**
+	 * @param {any} class_value
+	 * @param {any} target_arg_vec
+	 * @param {any} var_name
+	 */
+	debuggerGetVar_c(class_value: any,target_arg_vec: any,var_name: any) {
+		if(typeof class_value!='function') {
+			return {
+				type: 'argument-error',
+				value: null
+			};
+		}
+		if(target_arg_vec instanceof Array) {
+			return this.debuggerGetVar_a(class_value,this.activateClass,var_name,target_arg_vec);
+		}
+		return {
+			type: 'argument-error',
+			value: null
+		};
+	}
+	/**
+	 * @param {any} function_value
+	 * @param {any} target_obj
+	 * @param {any} target_arg_vec
+	 * @param {any} var_name
+	 */
+	debuggerGetVar(function_value: any,target_obj: any,target_arg_vec: any,var_name: any) {
+		function_value; target_arg_vec; target_obj; var_name;
+		throw 1;
 	}
 }
 
 // DebugAPI
 interface GlobalApiObject {
-	obj: {x: CompressionStatsCalculatorAlt;};
+	obj: {x: MulCompressionAlt;};
 	DoCalc: {};
 	reversePrototypeChain: ReversePrototypeChain;
 	ReversePrototypeChain: typeof ReversePrototypeChain;
@@ -335,7 +614,7 @@ interface GlobalApiObject {
 	ConnectToRemoteOrigin: {};
 	APIProxyManager: {};
 	LoggingEventTarget: {};
-	DebugAPI: {};
+	DebugAPI: typeof DebugAPIAlt;
 	addEventListener: {};
 }
 

@@ -1630,10 +1630,10 @@ export function compress_main(stats) {
 	}
 	g_obj_arr.value=flat_obj(obj_start);
 }
-g_api.compress_main=new VoidCallback(compress_main,[new CompressionStatsCalculator]);
+// g_api.compress_main=new VoidCallback(compress_main,[new CompressionStatsCalculator]);
 
 g_api.obj={
-	x:new CompressionStatsCalculator,
+	x:(new CompressionStatsCalculator).compressor,
 }
 
 class HexRandomDataGenerator {
@@ -2329,6 +2329,18 @@ function parse_html_to_binary_arr(html) {
 }
 g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 
+/**
+ * @typedef {{type: "data";data: {result: [string, any];return: any;};}} DATA_RES
+ */
+
+/**
+ * @typedef {{type: "argument-error";data: null;}} ARG_ERR
+ */
+
+/**
+ * @typedef {{type: 'invalid-state-error';data: null;}} dbg_ISE
+ */
+
 class DebugAPI {
 	constructor() {
 		let do_postMessage_logging=false;
@@ -2351,25 +2363,25 @@ class DebugAPI {
 		}
 		return this.m_the;
 	}
-	/** @arg {string} key */
+	/** @arg {string} key @returns {boolean} */
 	hasData(key) {
 		return this.data_store.has(key);
 	}
-	/** @arg {string} key */
+	/** @arg {string} key @returns {any} */
 	getData(key) {
 		return this.data_store.get(key);
 	}
-	/** @arg {string} key @arg {any} value */
+	/** @arg {string} key @arg {any} value @returns {this} */
 	setData(key,value) {
 		this.data_store.set(key,value);
 		return this;
 	}
-	/** @arg {string} key */
+	/** @arg {string} key @returns {boolean} */
 	deleteData(key) {
 		return this.data_store.delete(key);
 	}
 	/**
-	 * @param {any} element
+	 * @param {any} element @returns {boolean}
 	 */
 	getEventListeners(element) {
 		if(!this.hasData('getEventListeners'))
@@ -2380,7 +2392,7 @@ class DebugAPI {
 	 * @param {any} debug
 	 * @param {any} undebug
 	 * @param {(this: any, ...args: readonly any[]) => any} func
-	 * @param {any} name
+	 * @param {any} name @returns {{}}
 	 */
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
@@ -2404,7 +2416,7 @@ class DebugAPI {
 	/**
 	 * @param {any} debug
 	 * @param {any} undebug
-	 * @param {null} getEventListeners
+	 * @param {null} getEventListeners @returns {this}
 	 */
 	attach(debug,undebug,getEventListeners) {
 		//Attach to the chrome DebugApi functions the user specified.
@@ -2420,7 +2432,7 @@ class DebugAPI {
 	}
 	/**
 	 * @param {new (...arg0: any[]) => any} class_value
-	 * @param {any[]} arg_vec
+	 * @param {any[]} arg_vec @returns {boolean}
 	 */
 	activateClass(class_value,arg_vec) {
 		return new class_value(...arg_vec);
@@ -2428,11 +2440,12 @@ class DebugAPI {
 	/**
 	 * @param {any} function_value
 	 * @param {any} target_obj
-	 * @param {any} arg_vec
+	 * @param {any} arg_vec @returns {boolean}
 	 */
 	activateApply(function_value,target_obj,arg_vec) {
 		return Reflect.apply(function_value,target_obj,arg_vec);
 	}
+	/** @returns {void} */
 	debuggerBreakpointCode() {
 		window.g_api.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
@@ -2458,6 +2471,7 @@ class DebugAPI {
 		}
 		0;
 	}
+	/** @returns {boolean} */
 	clearCurrentBreakpoint() {
 		let undebug;
 		if(undebug=this.getData("u")) {
@@ -2485,6 +2499,7 @@ class DebugAPI {
 	 * @param {string} var_match
 	 * @arg {any} target_obj
 	 * @param {any[]} target_activate_args
+	 * @returns {dbg_result}
 	 */
 	debuggerGetVarArray_a(function_value,activate,var_match,target_obj,target_activate_args) {
 		let activate_vec=[target_obj,target_activate_args];
@@ -2561,7 +2576,7 @@ class DebugAPI {
 		this.deleteData(tmp_key);
 		if(exec_res_arr.length) {
 			return {
-				type: 'data',
+				type: 'data-arr',
 				data: {
 					result: exec_res_arr,
 					return: exec_return
@@ -2569,7 +2584,7 @@ class DebugAPI {
 			};
 		}
 		return {
-			type: 'no-response',
+			type: 'no-response-null-result',
 			data: {
 				result: null,
 				return: exec_return
@@ -2580,6 +2595,7 @@ class DebugAPI {
 	 * @param {any} class_value
 	 * @param {any} target_arg_vec
 	 * @param {any} var_match
+	 * @returns {dbg_result}
 	 */
 	debuggerGetVarArray_c(class_value,target_arg_vec,var_match) {
 		if(target_arg_vec instanceof Array) {
@@ -2595,6 +2611,7 @@ class DebugAPI {
 	 * @param {any} target_obj
 	 * @param {any} target_arg_vec
 	 * @param {any} var_match
+	 * @returns {dbg_result}
 	 */
 	debuggerGetVarArray(function_value,target_obj,target_arg_vec,var_match) {
 		if(target_arg_vec instanceof Array) {
@@ -2610,21 +2627,26 @@ class DebugAPI {
 	 * @param {any} activate
 	 * @param {any} var_name
 	 * @param {any[]} activate_vec
+	 * @returns {dbg_result}
 	 */
 	debuggerGetVar_a(function_value,activate,var_name,activate_vec) {
 		if(!this.hasData("d")||!this.getData("u")) {
-			return {
+			/** @type {dbg_ISE} */
+			let ret={
 				/**@type {"invalid-state-error"} */
 				type: 'invalid-state-error',
 				data: null
 			};
+			return ret;
 		}
 		if(typeof function_value!='function') {
-			return {
+			/** @type {{type: "argument-error", data:null}} */
+			let ret={
 				/**@type {"argument-error"} */
 				type: 'argument-error',
 				data: null
 			};
+			return ret;
 		}
 		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('');
 		this.current_function_value=function_value;
@@ -2666,7 +2688,8 @@ class DebugAPI {
 		}
 		this.deleteData(tmp_key);
 		if(breakpoint_result?.type==='var') {
-			return {
+			/**@type {{type:"data", data: {result:[string,any],return:any}}} */
+			let ret={
 				/**@type {"data"} */
 				type: 'data',
 				data: {
@@ -2674,9 +2697,11 @@ class DebugAPI {
 					return: activate_return
 				}
 			};
+			return ret;
 		}
 		if(breakpoint_result) {
-			return {
+			/**@type {{type:"unexpected", data: {result:{type: 'hidden-var';var: string}|{type: 'no-var';data: null},return:any}}} */
+			let ret={
 				/**@type {"unexpected"} */
 				type: 'unexpected',
 				data: {
@@ -2684,8 +2709,10 @@ class DebugAPI {
 					return: activate_return
 				}
 			};
+			return ret;
 		}
-		return {
+		/**@type {{type:"no-response", data: {result:null,return:any}}} */
+		let ret={
 			/**@type {"no-response"} */
 			type: 'no-response',
 			data: {
@@ -2693,26 +2720,45 @@ class DebugAPI {
 				return: activate_return
 			}
 		};
+		return ret;
 
 	}
 	/**
 	 * @param {any} class_value
 	 * @param {any} target_arg_vec
 	 * @param {any} var_name
+	 * @returns {dbg_result}
 	 */
 	debuggerGetVar_c(class_value,target_arg_vec,var_name) {
 		if(typeof class_value!='function') {
-			return {
+			/**@type {dbg_T2} */
+			let ret= {
 				type: 'argument-error',
-				value: null
+				data: null
 			};
+			return ret;
 		}
 		if(target_arg_vec instanceof Array) {
-			return this.debuggerGetVar_a(class_value,this.activateClass,var_name,target_arg_vec);
+			let ret=this.debuggerGetVar_a(class_value,this.activateClass,var_name,target_arg_vec);
+			if(ret.type === 'argument-error') {
+				return {
+					type:'argument-error',
+					data:ret.data
+				}
+			}
+			if(ret.type === 'data') {
+				return {
+					type:'data',
+					data:ret.data,
+				}
+			}
+			if(ret.type === 'unexpected') {
+				return ret;
+			}
 		}
 		return {
 			type: 'argument-error',
-			value: null
+			data: null
 		};
 	}
 	/**
@@ -2748,4 +2794,4 @@ class DebugAPI {
 	}
 }
 g_api.DebugAPI=DebugAPI;
-const debug_api=window.g_api.DebugAPI.the();
+
