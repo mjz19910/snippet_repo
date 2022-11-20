@@ -16,6 +16,10 @@ declare global {
 	}
 }
 
+declare global {
+	type TypeAOrTypeB<TypeA,TypeB>=["T",TypeA]|["U",TypeB];
+}
+
 // WeakRef
 declare global {
 	interface WeakRef<T extends object> {

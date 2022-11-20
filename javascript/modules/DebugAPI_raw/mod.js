@@ -1047,7 +1047,7 @@ class IDValue {
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
-		/** @type {never[]} */
+		/** @type {(["U", number] | ["T", never])[]} */
 		this.arr_dual=[];
 		/** @type {never[]} */
 		this.arr_dual_x=[];
@@ -1172,11 +1172,46 @@ export class DoCalc {
 	}
 }
 
+class CompressTU {
+	/**@type {number} */
+	i;
+	/**@type {TypeAOrTypeB<string,number>[]} */
+	arr=[];
+	/**@type {AnyOrRepeat2<string,number>[]} */
+	ret=[];
+	try_compress_dual() {
+		let state=this;
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle_TU_to_TX(item);
+			if(use_item) continue;
+			state.ret.push(item);
+		}
+		return BaseCompression.compress_result_state(this);
+	}
+	compress_rle_TU_to_TX(item: TypeAOrTypeB<string,number>) {
+		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
+		let off=1;
+		while(item===this.arr[this.i+off]) off++;
+		if(off==1) return false;
+		this.ret.push(Repeat.from_TU_entry(item,off));
+		this.i+=off-1;
+		return true;
+	}
+	constructor(arr: TypeAOrTypeB<string,number>[]) {
+		this.i=0;
+		this.arr=arr;
+		this.ret=[];
+	}
+}
+
+
 /**
+ * @param {CompressionStatsCalculator} stats
  * @param {IDValue} obj
  * @param {number} max_id
  */
-function calc_next(obj,max_id) {
+ export function calc_next(stats,obj,max_id) {
 	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
 		return null;
 	}
@@ -1185,29 +1220,35 @@ function calc_next(obj,max_id) {
 	if(!obj.next) {
 		return null;
 	}
-	/**@type {WithId & Partial<IDValueData>} */
+	/**@type {IDValue} */
 	let next=obj;
 	next.value=[max_id,'=',rep_val];
 	next.log_val=[max_id,'=',f_val[0],f_val[1]];
-	if(obj.arr_str===void 0) throw new Error("No arr");
-	next.arr_dual=compressionStatsCalc.replace_range(obj.arr_str,rep_val,max_id);
-	if(next.arr_str) return null;
-	/**@type {DualR} */
-	let compress_result=compressionStatsCalc.compressor.try_compress_dual(next.arr_dual);
+	if(obj.arr_str===void 0)
+		throw new Error("No arr");
+	next.arr_dual=stats.replace_range(obj.arr_str,rep_val,max_id);
+	if(next.arr_str)
+		return null;
+	let com=new CompressTU(next.arr_dual);
+	/**@type {import("../types/DualR.js").DualR} */
+	let compress_result=com.try_compress_dual();
 	if(!compress_result[0]) {
-		/**@type {TU<string, number>[]} */
+		/**@type {TypeAOrTypeB<string, number>[]} */
 		let res=[];
 		for(let i of compress_result[1]) {
-			/**@type {TU<string, number>|[]} */
+			/**@type {TypeAOrTypeB<string, number>|[]} */
 			let res_1=[];
 			switch(i[0]) {
-				case 'T': if(typeof i[1]==='string') res_1=[i[0],i[1]]; break;
-				case 'U': if(typeof i[1]==='number') res_1=[i[0],i[1]]; break;
+				case 'T': if(typeof i[1]==='string')
+					res_1=[i[0],i[1]]; break;
+				case 'U': if(typeof i[1]==='number')
+					res_1=[i[0],i[1]]; break;
 			}
 			if(!res_1) {
 				throw new Error();
 			}
-			if(res_1.length) res.push(res_1);
+			if(res_1.length)
+				res.push(res_1);
 		}
 		next.arr_dual=res;
 	} else {
@@ -1215,6 +1256,7 @@ function calc_next(obj,max_id) {
 	}
 	return compress_result;
 }
+
 /**
  * @param {IDValue} value
  * @param {IDValue} next

@@ -1,13 +1,11 @@
-import {IDValueData} from "../types/IDValue";
-
-/** @param {IDValueData} obj */
+/** @param {IDValue} obj */
 export function flat_obj(obj) {
-	/**@type {IDValueData[]} */
+	/**@type {IDValue[]} */
 	let ret=[];
 	while(obj.next) {
 		let {next}=obj;
 		ret.push(obj);
-		if(!(next instanceof IDValueData)) throw new Error("Unexpected type");
+		if(!(next instanceof IDValue)) throw new Error("Unexpected type");
 		obj=next;
 	}
 	ret.push(obj);

@@ -44,8 +44,6 @@ declare global {
 	};
 }
 
-type TypeAOrTypeB<TypeA,TypeB>=["T",TypeA]|["U",TypeB];
-
 class Repeat<T> {
 	value;
 	times;
@@ -61,6 +59,10 @@ declare global {
 
 declare global {
 	type AnyOrRepeat2<T,U>=["T",AnyOrRepeat<T>]|["U",AnyOrRepeat<U>];
+}
+
+declare global {
+	type TypeAOrTypeB<TypeA,TypeB>=["T",TypeA]|["U",TypeB];
 }
 
 
