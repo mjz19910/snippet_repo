@@ -332,7 +332,7 @@ declare global {
 	type dbg_t1={
 		type: "no-response";
 		data: {
-			result:null,
+			result: null,
 		};
 	};
 
@@ -345,6 +345,12 @@ declare global {
 	};
 
 	type dbg_result=dbg_T1|dbg_T2|dbg_T3|dbg_T4|dbg_T5|dbg_T6|dbg_t1|dbg_t2;
+}
+
+declare global {
+	interface dbg_get_ty {
+		get: (__v: string) => {type: string; data: null;}|{type: string; data: any[];};
+	}
 }
 
 class DebugAPIAlt {
@@ -387,6 +393,10 @@ class DebugAPIAlt {
 	}
 	/** @arg {string} key @returns {any} */
 	getData(key: string): any {
+		return this.data_store.get(key);
+	}
+	/** @arg {"__k"} key @returns {dbg_get_ty} */
+	get_k(key: "__k"): dbg_get_ty {
 		return this.data_store.get(key);
 	}
 	/** @arg {string} key @arg {any} value @returns {this} */
@@ -449,7 +459,7 @@ class DebugAPIAlt {
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode(): void {
-		window.g_api.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v: string) => {
+		window.g_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v: string) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',

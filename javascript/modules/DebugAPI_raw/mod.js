@@ -2371,6 +2371,14 @@ class DebugAPI {
 	getData(key) {
 		return this.data_store.get(key);
 	}
+	/** @arg {"__k"} key @returns {dbg_get_ty} */
+	get_k(key) {
+		return this.data_store.get(key);
+	}
+	/** @arg {"getEventListeners"} key @returns {(x:{})=>{[x: string]: {}[]}} */
+	get_getEventListeners(key) {
+		return this.data_store.get(key);
+	}
 	/** @arg {string} key @arg {any} value @returns {this} */
 	setData(key,value) {
 		this.data_store.set(key,value);
@@ -2381,12 +2389,13 @@ class DebugAPI {
 		return this.data_store.delete(key);
 	}
 	/**
-	 * @param {any} element @returns {boolean}
+	 * @param {any} element
+	 * @returns {{[x: string]: {}[]}}
 	 */
 	getEventListeners(element) {
 		if(!this.hasData('getEventListeners'))
 			throw 1;
-		return this.getData('getEventListeners')(element);
+		return this.get_getEventListeners('getEventListeners')(element);
 	}
 	/**
 	 * @param {any} debug
@@ -2447,7 +2456,7 @@ class DebugAPI {
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
-		window.g_api.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
+		window.g_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
