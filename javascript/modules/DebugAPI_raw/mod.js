@@ -90,6 +90,9 @@ class addEventListenerExt {
 	static add_to_call_list(list) {
 		let [target,orig_this,args]=list;
 		let real_value=[target,args.length+1,orig_this,...args];
+		for(let [key,val] of real_value.entries()) {
+			console.log(key,val);
+		}
 		let value=JSON.stringify(real_value);
 		let call_list=this.call_list.deref();
 		if(call_list===void 0) {
