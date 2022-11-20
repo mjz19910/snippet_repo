@@ -17,11 +17,50 @@
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
 window.g_api=g_api;
+let x={};
+g_api.tmp=x;
+x.a=EventTarget.prototype;
 class addEventListenerExt {
+	static orig={
+		addEventListener: x.a.addEventListener,
+		dispatchEvent: x.a.dispatchEvent,
+		removeEventListener: x.a.removeEventListener,
+	};
+	/**
+	 * @type {any[][]}
+	 */
+	static call_list=[];
+	static target_prototype=x.a;
 	static init() {
+		this.init_overwrite("addEventListener");
+		this.init_overwrite("dispatchEvent");
+		this.init_overwrite("removeEventListener");
+	}
+	/**
+	 * @param {Extract<keyof EventTarget,string>} target
+	 */
+	static init_overwrite(target) {
+		let t=this;
+		switch(target) {
+			case "addEventListener": this.target_prototype[target]=function(...args) {
+				t.call_list.push([target,args.length+1,this,...args]);
+				return t.orig[target].call(this,...args);
+			}; break;
+			case 'removeEventListener': this.target_prototype[target]=function(...args) {
+				t.call_list.push([target,args.length+1,this,...args]);
+				return t.orig[target].call(this,...args);
+			}; break;
+			case 'dispatchEvent': this.target_prototype[target]=function(...args) {
+				t.call_list.push([target,args.length+1,this,...args]);
+				return t.orig[target].call(this,...args);
+			}; return;
+			default: throw 1;
+		}
 	}
 }
+addEventListenerExt.init();
 g_api.addEventListener=addEventListenerExt;
+
 class IterExtensions {
 	static init() {
 		let map=new Map;

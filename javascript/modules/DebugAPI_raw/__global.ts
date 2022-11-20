@@ -24,6 +24,7 @@ class VoidCallback<U extends any[],C> {
 type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>, ReturnType<T>>;
 // DebugAPI
 interface GlobalApiObject {
+	tmp: {};
 	any_api_logger: {};
 	parse_html_to_binary_arr: (html: string) => unknown[];
 	run_modules_plugin: VoidCallbackWith<()=>void>;
