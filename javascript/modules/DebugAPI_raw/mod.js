@@ -55,7 +55,7 @@ class ReversePrototypeChain {
 	}
 }
 g_api.ReversePrototypeChain=ReversePrototypeChain;
-g_api.reversePrototypeChain=new ReversePrototypeChain(Object.prototype, []);
+g_api.reversePrototypeChain=new ReversePrototypeChain(Object.prototype,[]);
 
 {
 	let xx=g_api.reversePrototypeChain;
@@ -219,14 +219,36 @@ class WMap {
 	}
 }
 
+/**@template A @typedef {((new (...args: any) => any) &{key: A})} RecordKey */
+
+/**@template T @extends {AA}*/
+/*class RecordKey {
+	@type {T}
+	key;
+	constructor(...args) {
+		this.key=args[0];
+	}
+};*/
+
+/**@template T @arg {T} [t] @returns {t is undefined} */
+function is_undefined(t) {
+	return typeof t==="undefined";
+}
+
 /** @template T */
 class Repeat {
-	map_instance_or_d1: Map<symbol,Map<T,<U extends RecordKey<string>>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>>=new Map;
-	map_instance_or: Map<symbol,<T,U>() => Map<T,AnyOrRepeat<U>>>=new Map;
-	static base_map: Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => RepeatMapType<A,B,C>>=new Map;
-	static cache_set=new Map<any,any>();
-	static cache_get<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B): Map<A,C> {
-		let value: Map<A,C>|null=null;
+	/**@type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat<InstanceType<U>>>>} */
+	map_instance_or_d1=new Map;
+	/**@type {Map<symbol,<T,U>() => Map<T,U|Repeat<U>>>} */
+	map_instance_or=new Map;
+	/**@type {Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|Repeat<C>>>} */
+	static base_map=new Map;
+	/**@type {Map<any,any>} */
+	static cache_set=new Map();
+	/**@template A @template {RecordKey<A>} B @template {InstanceType<B>} C @arg {B} q @returns {Map<A,C} */
+	static cache_get(q) {
+		/**@type {Map<A,C>|null} */
+		let value=null;
 		if(this.cache_set.has(q.key)) {
 			value=this.cache_set.get(q.key);
 		}
@@ -235,8 +257,10 @@ class Repeat {
 		this.cache_set.set(q.key,value);
 		return value;
 	}
-	get_map_T_or<K,T extends RecordKey<K>,U extends InstanceType<T>>(constructor_key_0: T,value: U) {
-		let map=Repeat.cache_get<K,T,U>(constructor_key_0);
+	/**@template A @template {RecordKey<A>} B @template {InstanceType<B>} C @arg {B} constructor_key_0 @arg {C} value */
+	get_map_T_or(constructor_key_0,value) {
+		/**@type {Map<A, C>} */
+		let map=Repeat.cache_get(constructor_key_0);
 		if(!map) return null;
 		let res=map.get(constructor_key_0.key);
 		if(is_undefined(res)) {
@@ -245,33 +269,40 @@ class Repeat {
 		}
 		return res;
 	}
-	static from_TU_entry(a: TypeAOrTypeB<string,number>,b: number): AnyOrRepeat2<string,number> {
+	/**@arg {["string",string]|["number",number]} a @arg {number} b @returns {["string",string|Repeat<string>]|["number",number|Repeat<number>]} */
+	static from_TU_entry(a,b) {
 		switch(a[0]) {
-			case 'T': return ['T',Repeat.get(a[1],b)];
-			case 'U': return ['U',Repeat.get_num(a[1],b)];
+			case 'string': return ['string',Repeat.get(a[1],b)];
+			case 'number': return ['number',Repeat.get_num(a[1],b)];
 		}
 	}
-	static map_1<M extends Map<T,Map<C,V>>,T,C,V>(a: M,b: T) {
+	/**@template A,B @arg {[A,B]} _args */
+	static drop2(..._args) {}
+	/**@template {Map<B,Map<C,D>>} A @template B,C,D @arg {A} a @arg {B} b @arg {C} c @arg {D} d */
+	static map_1(a,b,c,d) {
+		this.drop2(c,d);
 		if(a.has(b)) {
 			let v=a.get(b);
 			if(v===void 0) throw new Error("Unreachable");
 			return v;
 		}
-		/**@type {Map<C,V>} */
-		let x: Map<C,V>=new Map;
+		/**@type {Map<C,D>} */
+		let x=new Map;
 		a.set(b,x);
 		return x;
 	}
-	static get_require<U extends Map<any,any> extends Map<any,infer U>? U:never,T>(v: Map<T,U>|null,k: T): U|null {
+	/**@template {Map<any,any> extends Map<any,infer U>? U:never} U @template T @arg {Map<T,U>|null} v @arg {T} k @returns {U|null} */
+	static get_require(v,k) {
 		if(!v) return null;
 		let x=v.get(k);
 		if(x===void 0) return null;
 		return x;
 	}
-	static get_with<T>(a: Map<T,Map<number,Repeat<T>>>,b: T,c: number) {
+	/**@template T  @arg {Map<T,Map<number,Repeat<T>>>} a @arg {T} b @arg {number} c */
+	static get_with(a,b,c) {
 		let d=a.get(b);
 		if(d===void 0) return null;
-		let h=this.map_1<typeof a,T,number,Repeat<T>>(a,b);
+		let h=this.map_1(a,b,{},{});
 		if(!h) throw 1;
 		let i=h.get(c);
 		if(i) {
@@ -282,36 +313,50 @@ class Repeat {
 			return rep;
 		}
 	}
-	static N: Repeat<null>=new Repeat(null,0);
-	static map: Map<string,Map<number,Repeat<string>>>=new Map;
-	static map_num: Map<number,Map<number,Repeat<number>>>=new Map;
-	static map_T: Map<symbol,<T,U>() => Map<T,Repeat<U>>>=new Map;
-	static map_sym: Map<symbol,{}>=new Map;
-	map_instance: Map<symbol,<T,U>() => Map<T,Repeat<U>>>=new Map;
-	static once_getter<T extends RecordKey<symbol>>(i_rec: T) {
+	static N=new Repeat(null,0);
+	/**@type {Map<string,Map<number,Repeat<string>>>} */
+	static map=new Map;
+	/**@type {Map<number,Map<number,Repeat<number>>>} */
+	static map_num=new Map;
+	/**@type {Map<symbol,{}>} */
+	static map_sym=new Map;
+	/**@type {Map<symbol,<T,U>(t:T,u:U) => Map<T,Repeat<U>>>} */
+	map_T=new Map;
+	/**@type {Map<string,Map<number,Repeat<string>>>} */
+	map_instance=new Map;
+	/** @template {RecordKey<symbol>} T @arg {T} i_rec */
+	static once_getter(i_rec) {
 		return this.map_sym.get(i_rec.key);
 	}
-	map_once: Map<symbol,T>=new Map;
-	get_map_T<U extends RecordKey<symbol>>(constructor_key: U,_: InstanceType<U>) {
-		let res=Repeat.N.map_instance.get(constructor_key.key);
+	/**@type {Map<symbol,T>} */
+	map_once=new Map;
+	/**@template {RecordKey<symbol>} U @arg {U} constructor_key @arg {InstanceType<U>} _ */
+	get_map_T(constructor_key,_) {
+		let res=Repeat.N.map_T.get(constructor_key.key);
 		if(!res) {
-			Repeat.N.map_instance.set(constructor_key.key,() => new Map);
-			return <T extends RecordKey<symbol>>(sym: T) => {
-				return Repeat.map_sym.get(sym.key)!;
+			Repeat.N.map_T.set(constructor_key.key,() => new Map);
+			/**@template {RecordKey<symbol>} T @arg {T} sym */
+			return (sym) => {
+				let value=Repeat.map_sym.get(sym.key);
+				if(value === void 0)throw 1;
+				return value;
 			};
 		}
 		return res;
 	}
-	has_map_T<U extends RecordKey<symbol>,V extends InstanceType<U>,C>(constructor_key: U,key: C): boolean {
-		let res=Repeat.map_T.get(constructor_key.key);
+	// U=RecordKey<symbol> V=InstanceType<U> C=C
+	/**@template {RecordKey<symbol>} U @template {InstanceType<U>} V @template C @arg {U} constructor_key @arg {C} key @arg {V} value*/
+	has_map_T(constructor_key,key,value) {
+		let res=Repeat.N.map_T.get(constructor_key.key);
 		if(!res) {
-			Repeat.map_T.set(constructor_key.key,() => new Map);
+			Repeat.N.map_T.set(constructor_key.key,() => new Map);
 			return false;
 		}
-		let rq=res<C,V>();
+		let rq=res(key,value);
 		return rq.has(key);
 	}
-	static get(value: string,times: number): Repeat<string> {
+	/**@arg {string} value @arg {number} times */
+	static get(value,times) {
 		if(!this.map.has(value)) {
 			this.map.set(value,new Map);
 		}
@@ -329,7 +374,8 @@ class Repeat {
 			return rep;
 		}
 	}
-	static get_num(value: number,times: number) {
+	/**@arg {number} value @arg {number} times */
+	static get_num(value,times) {
 		if(!this.map_num.has(value)) {
 			this.map_num.set(value,new Map);
 		}
@@ -349,7 +395,8 @@ class Repeat {
 	}
 	value;
 	times;
-	constructor(value: T,times: number) {
+	/** @arg {T} value @arg {number} times */
+	constructor(value,times) {
 		this.value=value;
 		this.times=times;
 	}

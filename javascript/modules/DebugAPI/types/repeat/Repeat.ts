@@ -19,7 +19,7 @@ export class Repeat<T> {
 		this.cache_set.set(q.key,value);
 		return value;
 	}
-	get_map_T_or<K,T extends RecordKey<K>,U extends InstanceType<T>>(constructor_key_0: T,value: U) {
+	get_map_T_or<K,T extends RecordKey<K>,U extends InstanceType<T>>(constructor_key_0: T,value: U): U|null {
 		let map=Repeat.cache_get<K,T,U>(constructor_key_0);
 		if(!map) return null;
 		let res=map.get(constructor_key_0.key);
