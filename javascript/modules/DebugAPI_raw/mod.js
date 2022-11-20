@@ -221,76 +221,107 @@ class WMap {
 
 /** @template T */
 class Repeat {
-	/**
-	 * @template T
-	 * @arg {Map<number, Map<number, Repeat<T>>>} mp
-	 * @arg {{}} item
-	 * @param {number} off
-	 */
-	static get_with(mp,item,off) {
-		throw new Error("Method not implemented.");
-	}
-	/**@type {Repeat<null>} */
-	static N=new Repeat(null,0);
-	/**@type {Map<string, Map<number, Repeat<string>>>} */
-	static map=new Map;
-	/**@type {Map<number, Map<number, Repeat<number>>>} */
-	static map_num=new Map;
-	/**@type {Map<symbol, <T>()=>WMap<T>>} */
-	map_instance=new Map;
-	/**
-	 * @template {ST} U
-	 * @template {InstanceType<U>} V
-	 * @arg {U} constructor_key
-	 * @arg {V} _
-	 * @returns {Map<number, Map<number, Repeat<V>>>}
-	 * */
-	get_map_T(constructor_key,_) {
-		let res=Repeat.N.map_instance.get(constructor_key.type);
-		if(!res) {
-			/**@type {Map<number, Map<number, Repeat<V>>>} */
-			let map=new Map;
-			Repeat.N.map_instance.set(constructor_key.type,() => new WMap(map));
-			return map;
+	map_instance_or_d1: Map<symbol,Map<T,<U extends RecordKey<string>>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>>=new Map;
+	map_instance_or: Map<symbol,<T,U>() => Map<T,AnyOrRepeat<U>>>=new Map;
+	static base_map: Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => RepeatMapType<A,B,C>>=new Map;
+	static cache_set=new Map<any,any>();
+	static cache_get<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B): Map<A,C> {
+		let value: Map<A,C>|null=null;
+		if(this.cache_set.has(q.key)) {
+			value=this.cache_set.get(q.key);
 		}
-		/**@type {WMap<V>} */
-		let map=res();
-		return map.value;
+		if(value) return value;
+		value=new Map;
+		this.cache_set.set(q.key,value);
+		return value;
 	}
-	/**
-	 * @template {ST} U
-	 * @template {InstanceType<U>} V
-	 * @arg {Repeat<null>} rep_null
-	 * @arg {U} constructor_key
-	 * @arg {number} key
-	 * @returns {boolean}
-	 * */
-	has_map_T(constructor_key,rep_null,key) {
-		let res=rep_null.map_instance.get(constructor_key.type);
+	get_map_T_or<K,T extends RecordKey<K>,U extends InstanceType<T>>(constructor_key_0: T,value: U) {
+		let map=Repeat.cache_get<K,T,U>(constructor_key_0);
+		if(!map) return null;
+		let res=map.get(constructor_key_0.key);
+		if(is_undefined(res)) {
+			map.set(constructor_key_0.key,value);
+			return value;
+		}
+		return res;
+	}
+	static from_TU_entry(a: TypeAOrTypeB<string,number>,b: number): AnyOrRepeat2<string,number> {
+		switch(a[0]) {
+			case 'T': return ['T',Repeat.get(a[1],b)];
+			case 'U': return ['U',Repeat.get_num(a[1],b)];
+		}
+	}
+	static map_1<M extends Map<T,Map<C,V>>,T,C,V>(a: M,b: T) {
+		if(a.has(b)) {
+			let v=a.get(b);
+			if(v===void 0) throw new Error("Unreachable");
+			return v;
+		}
+		/**@type {Map<C,V>} */
+		let x: Map<C,V>=new Map;
+		a.set(b,x);
+		return x;
+	}
+	static get_require<U extends Map<any,any> extends Map<any,infer U>? U:never,T>(v: Map<T,U>|null,k: T): U|null {
+		if(!v) return null;
+		let x=v.get(k);
+		if(x===void 0) return null;
+		return x;
+	}
+	static get_with<T>(a: Map<T,Map<number,Repeat<T>>>,b: T,c: number) {
+		let d=a.get(b);
+		if(d===void 0) return null;
+		let h=this.map_1<typeof a,T,number,Repeat<T>>(a,b);
+		if(!h) throw 1;
+		let i=h.get(c);
+		if(i) {
+			return i;
+		} else {
+			let rep=new this(b,c);
+			h.set(c,rep);
+			return rep;
+		}
+	}
+	static N: Repeat<null>=new Repeat(null,0);
+	static map: Map<string,Map<number,Repeat<string>>>=new Map;
+	static map_num: Map<number,Map<number,Repeat<number>>>=new Map;
+	static map_T: Map<symbol,<T,U>() => Map<T,Repeat<U>>>=new Map;
+	static map_sym: Map<symbol,{}>=new Map;
+	map_instance: Map<symbol,<T,U>() => Map<T,Repeat<U>>>=new Map;
+	static once_getter<T extends RecordKey<symbol>>(i_rec: T) {
+		return this.map_sym.get(i_rec.key);
+	}
+	map_once: Map<symbol,T>=new Map;
+	get_map_T<U extends RecordKey<symbol>>(constructor_key: U,_: InstanceType<U>) {
+		let res=Repeat.N.map_instance.get(constructor_key.key);
 		if(!res) {
-			/**@type {Map<number, Map<number, Repeat<V>>>} */
-			let map=new Map;
-			rep_null.map_instance.set(constructor_key.type,() => new WMap(map));
+			Repeat.N.map_instance.set(constructor_key.key,() => new Map);
+			return <T extends RecordKey<symbol>>(sym: T) => {
+				return Repeat.map_sym.get(sym.key)!;
+			};
+		}
+		return res;
+	}
+	has_map_T<U extends RecordKey<symbol>,V extends InstanceType<U>,C>(constructor_key: U,key: C): boolean {
+		let res=Repeat.map_T.get(constructor_key.key);
+		if(!res) {
+			Repeat.map_T.set(constructor_key.key,() => new Map);
 			return false;
 		}
-		/**@type {WMap<V>} */
-		let map=res();
-		return map.value.has(key);
+		let rq=res<C,V>();
+		return rq.has(key);
 	}
-	/**
-	 * @param {string} value
-	 * @param {number} times
-	 * @returns {Repeat<string>}
-	 */
-	static get(value,times) {
+	static get(value: string,times: number): Repeat<string> {
 		if(!this.map.has(value)) {
 			this.map.set(value,new Map);
 		}
 		let tm_map=this.map.get(value);
-		if(!tm_map) throw new Error("no-reach");
+		if(!tm_map)
+			throw new Error("no-reach");
 		if(tm_map.has(times)) {
 			let rep=tm_map.get(times);
-			if(!rep) throw new Error("no-reach");
+			if(!rep)
+				throw new Error("no-reach");
 			return rep;
 		} else {
 			let rep=new this(value,times);
@@ -298,19 +329,17 @@ class Repeat {
 			return rep;
 		}
 	}
-	/**
-	 * @param {number} value
-	 * @param {number} times
-	 */
-	static get_num(value,times) {
+	static get_num(value: number,times: number) {
 		if(!this.map_num.has(value)) {
 			this.map_num.set(value,new Map);
 		}
 		let tm_map=this.map_num.get(value);
-		if(!tm_map) throw new Error("no-reach");
+		if(!tm_map)
+			throw new Error("no-reach");
 		if(tm_map.has(times)) {
 			let rep=tm_map.get(times);
-			if(!rep) throw new Error("no-reach");
+			if(!rep)
+				throw new Error("no-reach");
 			return rep;
 		} else {
 			let rep=new this(value,times);
@@ -318,11 +347,9 @@ class Repeat {
 			return rep;
 		}
 	}
-	/**
-	 * @param {T} value
-	 * @param {number} times
-	 */
-	constructor(value,times) {
+	value;
+	times;
+	constructor(value: T,times: number) {
 		this.value=value;
 		this.times=times;
 	}

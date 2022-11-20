@@ -137,4 +137,7 @@ export class Repeat<T> {
 		this.value=value;
 		this.times=times;
 	}
+	toString() {
+		return this.value+"x"+this.times;
+	}
 }
