@@ -99,6 +99,7 @@ class addEventListenerExt {
 			console.log(key,val);
 			if(val === window) {
 				real_value[key]="window:"+this.window_list.indexOf(val);
+				continue;
 			}
 			let failed=false;
 			try{JSON.stringify(val)}catch{
