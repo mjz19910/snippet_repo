@@ -238,15 +238,15 @@ function is_undefined(t) {
 
 /** @template T */
 class Repeat {
-	/**@type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat<InstanceType<U>>>>} */
+	/** @type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat<InstanceType<U>>>>} */
 	map_instance_or_d1=new Map;
-	/**@type {Map<symbol,<T,U>() => Map<T,U|Repeat<U>>>} */
+	/** @type {Map<symbol,<T,U>() => Map<T,U|Repeat<U>>>} */
 	map_instance_or=new Map;
-	/**@type {Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|Repeat<C>>>} */
+	/** @type {Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|Repeat<C>>>} */
 	static base_map=new Map;
-	/**@type {Map<any,any>} */
+	/** @type {Map<any,any>} */
 	static cache_set=new Map();
-	/**@template A @template {RecordKey<A>} B @template {InstanceType<B>} C @arg {B} q @returns {Map<A,C} */
+	/** @template A @template {RecordKey<A>} B @template {InstanceType<B>} C @arg {B} q @returns {Map<A,C>} */
 	static cache_get(q) {
 		/**@type {Map<A,C>|null} */
 		let value=null;
@@ -555,7 +555,7 @@ class BaseCompression {
 }
 
 /**@template T @template U */
-export class CompressStateBase {
+class CompressStateBase {
 	/** @type {number} */
 	i;
 	/** @type {T[]} */
@@ -571,7 +571,7 @@ export class CompressStateBase {
 }
 
 /**@template T @template U @extends {CompressStateBase<T,U>} */
-export class CompressState extends CompressStateBase {
+class CompressState extends CompressStateBase {
 	/** @type {T|null} */
 	item;
 	/** @param {T[]} arr */
@@ -751,7 +751,7 @@ function not_null(value) {
 /** @template {any[]} T */
 class VoidCallback {
 	/** @param {(...arg0:T)=>void} callback @arg {T} params */
-	constructor(callback, params) {
+	constructor(callback,params) {
 		this.m_callback=callback;
 		this.m_params=params;
 	}
@@ -796,6 +796,24 @@ function gen_function_prototype_use(safe_function_prototype) {
 		bound_apply,
 	];
 	return {funcs,bound_funcs};
+}
+
+class ModuleLoadDbg {
+	/**@arg {any} thisArg @arg {[any,any,any]} argArray */
+	evaluate_len_3(thisArg,argArray) {
+		if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
+			var ars=Object.entries(argArray[1]).filter(([j,e]) => e instanceof Array);
+			var ars_i=ars[0][1].indexOf(this);
+			if(ars[0][1].indexOf(this)>-1) {
+				console.log("found module array:","require."+ars[0][0]);
+				var mods=Object.entries(argArray[1]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
+				if(mods.length>0) {
+					console.log("found module cache:","require."+mods[0][0]);
+					found_modules(ars[0][1],mods[0][1],argArray[2]);
+				}
+			}
+		}
+	}
 }
 
 function run_modules_plugin() {
@@ -855,11 +873,11 @@ function run_modules_plugin() {
 		switch(argArray.length) {
 			case 2:
 				if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-					var ars=Object.entries(argArray[2]).filter(([j,e]) => e instanceof Array);
+					var ars=Object.entries(argArray[1]).filter(([j,e]) => e instanceof Array);
 					var ars_i=ars[0][1].indexOf(this);
 					if(ars[0][1].indexOf(this)>-1) {
 						console.log("found module array:","require."+ars[0][0]);
-						var mods=Object.entries(argArray[2]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
+						var mods=Object.entries(argArray[1]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
 						if(mods.length>0) {
 							console.log("found module cache:","require."+mods[0][0]);
 							found_modules(ars[0][1],mods[0][1],argArray[2]);
@@ -1229,7 +1247,7 @@ class CompressDual {
  * @param {IDValue} obj
  * @param {number} max_id
  */
-export function calc_next(stats,obj,max_id) {
+function calc_next(stats,obj,max_id) {
 	if(obj.stats===void 0||(obj.stats!==void 0&&obj.stats.length===0)) {
 		return null;
 	}
@@ -1305,20 +1323,14 @@ class Value {
 Value;
 
 let max_id={value: 0};
-/**
- * @param {IDValue} obj
- * @param {CompressionStatsCalculator} stats
- */
-export function run_calc(stats,obj) {
+/** @param {IDValue} obj @param {CompressionStatsCalculator} stats */
+function run_calc(stats,obj) {
 	let calc_value=new DoCalc(stats,obj);
 	let res=calc_value.get_result();
 	if(!res) return [false,null];
 	return [true,res];
 }
-/* version_list file: group1/sub_a/item-_9.js */
-/**
- * @param {IDValue} obj
- */
+/** @param {IDValue} obj */
 function flat_obj(obj) {
 	let ret=[];
 	while(obj.next) {
@@ -1401,13 +1413,13 @@ let ids_dec_rep=[];
 function try_decode(e,deep=true) {
 	if(typeof e==='number') {
 		if(dr_map_num[e]) {
-			return ['dr_map_num', dr_map_num[e]];
+			return ['dr_map_num',dr_map_num[e]];
 		}
 		if(id_map_num[e]) {
 			/**@type {(string | number)[]} */
 			let res=id_map_num[e];
 			if(!deep)
-				return ['id_map_num', res];
+				return ['id_map_num',res];
 			let dec_res=[];
 			for(let i=0;i<res.length;i++) {
 				let cur_res=decode_map(res[i]);
@@ -1483,7 +1495,7 @@ class SafeJsonParser {
 	}
 	/** @param {unknown} obj */
 	convert(obj) {
-		if(obj === null) {
+		if(obj===null) {
 			return new JsonValueBox(new JsonNullBox);
 		}
 		if(obj instanceof Array) {
@@ -1495,7 +1507,7 @@ class SafeJsonParser {
 			}
 			return new JsonValueBox(new JsonArrayBox(new_arr));
 		}
-		console.log('don\'t know how to handle', obj);
+		console.log('don\'t know how to handle',obj);
 		throw new Error("parse more");
 	}
 }
@@ -1516,7 +1528,7 @@ function decode_map(value) {
 	if(!dec) {
 		console.log(value);
 	} else {
-		console.log("handle decode_map", value);
+		console.log("handle decode_map",value);
 		throw 1;
 	}
 	return value;
@@ -1588,7 +1600,7 @@ let id_groups={value: []};
 let el_ids={value: []};
 
 /** @param {CompressionStatsCalculator} stats */
-export function compress_main(stats) {
+function compress_main(stats) {
 	compress_init();
 	if(g_auto_buy) {
 		src_arr.value=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1];
@@ -2740,7 +2752,7 @@ class DebugAPI {
 	debuggerGetVar_c(class_value,target_arg_vec,var_name) {
 		if(typeof class_value!='function') {
 			/**@type {dbg_T2} */
-			let ret= {
+			let ret={
 				type: 'argument-error',
 				data: null
 			};
@@ -2748,19 +2760,19 @@ class DebugAPI {
 		}
 		if(target_arg_vec instanceof Array) {
 			let ret=this.debuggerGetVar_a(class_value,this.activateClass,var_name,target_arg_vec);
-			if(ret.type === 'argument-error') {
+			if(ret.type==='argument-error') {
 				return {
-					type:'argument-error',
-					data:ret.data
-				}
+					type: 'argument-error',
+					data: ret.data
+				};
 			}
-			if(ret.type === 'data') {
+			if(ret.type==='data') {
 				return {
-					type:'data',
-					data:ret.data,
-				}
+					type: 'data',
+					data: ret.data,
+				};
 			}
-			if(ret.type === 'unexpected') {
+			if(ret.type==='unexpected') {
 				return ret;
 			}
 		}
