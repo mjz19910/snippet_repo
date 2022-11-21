@@ -2549,6 +2549,7 @@ class TransportMessageObj {
 		this.m_missing_keep_alive_counter++;
 		this.post_message({
 			type: "keep_alive",
+			side: "client",
 		});
 	}
 	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
