@@ -2647,12 +2647,19 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/**@type {{port:MessagePort}[]} */
 	connections=[];
 	client_max_id=0;
-	/** @arg {MessageEvent<unknown>} event @arg {number} client_id */
-	on_connect_request_message(event,client_id) {
-		if(typeof event.data!=='object'||event.data===null||!('type' in event.data)) return false;
+	/**
+	 * @arg {MessageEvent<unknown>} event
+	 * @arg {number} client_id
+	 * @param {{ did_misbehave: boolean; }} state
+	 */
+	on_connect_request_message(state,event,client_id) {
+		if(typeof event.data!=='object'||event.data===null||!('type' in event.data)) {
+			state.did_misbehave=true;
+			return;
+		}
 		switch(event.data.type) {
 			case remote_origin.post_message_connect_message_type: break;
-			default: return false;
+			default: state.did_misbehave=true; return;
 		}
 		let connection_port=event.ports[0];
 		let handler=new RemoteHandler(this,connection_port);
@@ -2660,7 +2667,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		connection_port.addEventListener("message",handler);
 		this.post_port_message(connection_port,{type: "listening",client_id});
 		this.connections.push({port: connection_port});
-		return true;
 	}
 	/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
 	post_port_message(target_port,message) {
@@ -2675,10 +2681,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			let message_data=event.data;
 			if(typeof message_data==='object') {
 				let misbehaved=event.ports.length!==1;
-				if(!misbehaved) {
-					misbehaved=t.on_connect_request_message(event,client_id);
+				let state={
+					did_misbehave:event.ports.length!==1,
 				}
-				if(misbehaved) {
+				if(!state.did_misbehave) {
+					t.on_connect_request_message(state,event,client_id);
+				}
+				if(state.did_misbehave) {
 					console.log(`Client(${client_id}) misbehaved: connect api not followed`);
 					console.log("Received message object",message_data);
 					console.log("Received message ports",event.ports);
