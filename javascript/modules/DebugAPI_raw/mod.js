@@ -310,11 +310,14 @@ class AddEventListenerExt {
 		if(is_react_element) {
 			console.log("react_element",val);
 			this.convert_to_id_key(real_value,key,val,"react");
+			return true;
 		} else if(val instanceof IDBDatabase||val instanceof IDBTransaction) {
 			// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
 			this.convert_to_id_key(real_value,key,val,"idb");
+			return true;
 		} else if(val instanceof ServiceWorkerContainer) {
 			this.convert_to_id_key(real_value,key,val,"service_worker");
+			return true;
 		}
 		let failed=false;
 		try {
@@ -357,7 +360,7 @@ class AddEventListenerExt {
 				switch(typeof val) {
 					case 'object': {
 						let ret=this.args_iter_on_object(real_value,key,val);
-						if(ret) return
+						if(ret) return;
 					} break;
 					case 'function': return this.args_iter_on_function(real_value,key,val);
 					default: break;
@@ -2380,7 +2383,7 @@ class TransportMessageObj {
 			event: message_event_response,
 			handler: this
 		});
-		if(!this.m_remote_side_connected && this.m_timeout_id) {
+		if(!this.m_remote_side_connected&&this.m_timeout_id) {
 			this.m_remote_side_connected=true;
 			clearTimeout(this.m_timeout_id);
 		}
@@ -2502,7 +2505,7 @@ class RemoteOriginConnection {
 			}
 		},"*",[channel.port1]);
 		this.event_transport_map.set(response_message_event_transport_target,post_message_event_transport_target);
-		let message_object=new TransportMessageObj(this,channel.port2, response_message_event_transport_target);
+		let message_object=new TransportMessageObj(this,channel.port2,response_message_event_transport_target);
 		message_object.start(300);
 	}
 	/**
@@ -2525,14 +2528,14 @@ class RemoteOriginConnection {
 	}
 	/** @arg {{event: MessageEvent<RemoteOriginMessage>;handler: TransportMessageObj;}} message_event */
 	transport_init_maybe_complete(message_event) {
-		console.log('transport connected',message_event.event);
+		console.log('transport connected',message_event.event.data);
 	}
 	/**@type {{port:MessagePort}[]} */
 	connections=[];
 	start_root_server() {
 		let t=this;
 		/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
-		function post_port_message(target_port, message) {
+		function post_port_message(target_port,message) {
 			target_port.postMessage(message);
 		}
 		window.addEventListener("message",function(event) {
@@ -2553,7 +2556,7 @@ class RemoteOriginConnection {
 					},
 				};
 				connection_port.addEventListener("message",handler);
-				post_port_message(connection_port, {type: "listening"});
+				post_port_message(connection_port,{type: "listening"});
 				t.connections.push({port: connection_port});
 			}
 		});
