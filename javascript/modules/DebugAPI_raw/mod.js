@@ -288,7 +288,7 @@ function define_normal_value(obj,key,value) {
 
 /** @param {EventTarget} prototype */
 function overwrite_addEventListener(prototype) {
-	/** @type {WeakRef<any>[]} */
+	/** @type {WeakRef<{}>[]} */
 	let arg_list=[];
 	prototype.addEventListener=new Proxy(prototype.addEventListener,{
 		apply(...args) {
