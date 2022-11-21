@@ -377,7 +377,7 @@ class AddEventListenerExt {
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return true;
-		if('m_current_target' in val) {
+		if('m_com_port' in val) {
 			if('m_elevation_id' in val) {
 				this.convert_to_id_key(real_value,key,val,"TransportMessageObj:"+val.m_elevation_id);
 			} else {
@@ -2486,6 +2486,23 @@ class TransportMessageObj {
 	m_timeout_id=null;
 	m_remote_side_connected=false;
 	m_connection_timeout=0;
+	m_tries_left=0;
+	process_reconnect() {
+		if(this.m_tries_left<12) {
+			console.log("reconnect tries_left",this.m_tries_left);
+		}
+		if(this.m_tries_left>1) {
+			let timeout;
+			if(this.m_tries_left<7) {
+				timeout=this.m_connection_timeout/this.m_tries_left;
+			} else {
+				timeout=this.m_connection_timeout/8;
+			}
+			this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),timeout*30);
+			this.m_tries_left--;
+			this.m_connection.request_new_port(this);
+		}
+	}
 	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
 	handleEvent(message_event_response) {
 		/** @type {ReportInfo<TransportMessageObj>} */
@@ -2508,24 +2525,11 @@ class TransportMessageObj {
 				if(this.m_reconnecting) return;
 				this.disconnect();
 				this.m_connection.transport_disconnected(report_info);
-				let tries_left=12;
+				this.m_tries_left=12;
 				this.m_reconnecting=true;
 				this.m_timeout_id=setTimeout(function request_new_connection(obj) {
-					if(tries_left<12) {
-						console.log("reconnect tries_left",tries_left);
-					}
-					if(tries_left>1) {
-						tries_left--;
-						obj.m_connection.request_new_port(obj);
-						let timeout;
-						if(tries_left<7) {
-							timeout=obj.m_connection_timeout/tries_left;
-						} else {
-							timeout=(obj.m_connection_timeout/8)*30;
-						}
-						this.m_timeout_id=setTimeout(request_new_connection,timeout*30,obj);
-					}
-				},(this.m_connection_timeout/8)*30,this);
+					obj.process_reconnect();
+				},(this.m_connection_timeout/8)*4,this);
 			} break;
 		}
 	}
@@ -2644,9 +2648,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @arg {TransportMessageObj} transport_handler */
 	request_connection(transport_handler) {
-		if(!this.m_connect_target) {
+		if(!this.m_connect_target)
 			return false;
-		}
 		let channel=new MessageChannel;
 		this.m_connect_target.postMessage({
 			type: "ConnectOverPostMessage",
