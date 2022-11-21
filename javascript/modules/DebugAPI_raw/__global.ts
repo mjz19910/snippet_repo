@@ -175,6 +175,11 @@ declare global {
 	type RecordKey<T>=Constructor&{key: T;};
 }
 
+declare global {
+	type depth_type=['depth',number,depth_or_any[]];
+	type depth_or_any=['real_holder',unknown]|['json_value_id', string, number]|depth_type;
+}
+
 
 // DebugAPI
 interface GlobalApiObject {

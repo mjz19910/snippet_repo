@@ -233,7 +233,7 @@ class addEventListenerExt {
 		removeEventListener: x.a.removeEventListener,
 	};
 	/**
-	 * @type {WeakRef<WeakRef<any[]>[]>|undefined}
+	 * @type {WeakRef<WeakRef<depth_or_any>[]>|undefined}
 	 */
 	static call_list;
 	static target_prototype=x.a;
@@ -339,14 +339,16 @@ class addEventListenerExt {
 			console.log("gc keep call_list",call_list);
 			this.call_list=new WeakRef(call_list);
 		}
-		let call_list_info=[real_value];
-		console.log("gc keep `${[real_value]}`",call_list_info);
+		/** @type {['real_holder', any]} */
+		let call_list_info=['real_holder',real_value];
+		console.log("gc keep real_holder",call_list_info);
 		let id=call_list.push(new WeakRef(call_list_info))-1;
-		let info=[value,id];
+		/** @type {['json_value_id', string, number]} */
+		let info=['json_value_id', value,id];
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
 		}
-		console.log("gc keep info",info);
+		console.log("gc keep json_value_id",info);
 		call_list.push(new WeakRef(info));
 	}
 	/** @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
