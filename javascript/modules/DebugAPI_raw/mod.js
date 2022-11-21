@@ -105,13 +105,12 @@ class ReversePrototypeChain {
 		this.cache_prototype(cache_key, prototype);
 		x: if (next_proto) {
 			let next = this.add_one(next_proto, this.list.at(index - 1), index - 1);
-			if(!next) {
+			if(!next)
 				break x;
-			}
-			let idx = this.destination[cache_key].child.prototypes.findIndex(e=>e.name === next.name)
-			if (idx < 0) {
+			let non_null_next=next;
+			let idx = this.destination[cache_key].child.prototypes.findIndex(e=>e.name === non_null_next.name)
+			if (idx < 0)
 				this.destination[cache_key].child.prototypes.push(next);
-			}
 		}
 		return this.destination[cache_key];
 	}
