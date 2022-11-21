@@ -2354,8 +2354,6 @@ class CSSCascade {
 g_api.CSSCascade=CSSCascade;
 
 class TransportMessageObj {
-	/**@type {RemoteOriginConnection} */
-	m_connection;
 	/**@type {number} */
 	m_elevation_id;
 	/** @type {ReturnType<typeof setTimeout>|null} */
@@ -2375,7 +2373,7 @@ class TransportMessageObj {
 				timeout=this.m_connection_timeout/8;
 			}
 			if(this.m_reconnecting) {
-				this.m_connection.request_new_port(this);
+				remote_origin.request_new_port(this);
 				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),timeout*30);
 				this.m_tries_left--;
 			}
@@ -2420,7 +2418,7 @@ class TransportMessageObj {
 		};
 		switch(message_event_response.data.type) {
 			case "listening": {
-				this.m_connection.transport_connected(report_info);
+				remote_origin.transport_connected(report_info);
 				if(this.m_reconnecting) {
 					this.m_reconnecting=false;
 				}
@@ -2434,7 +2432,7 @@ class TransportMessageObj {
 			case "disconnected": {
 				if(this.m_reconnecting) return;
 				this.disconnect();
-				this.m_connection.transport_disconnected(report_info);
+				remote_origin.transport_disconnected(report_info);
 				this.m_tries_left=12;
 				this.m_reconnecting=true;
 				this.m_remote_side_connected=false;
@@ -2460,9 +2458,8 @@ class TransportMessageObj {
 	}
 	start_timeout() {
 		this.m_timeout_id=setTimeout(() => {
-			if(!this.m_connection) throw new Error();
 			this.disconnect();
-			this.m_connection.request_new_port(this);
+			remote_origin.request_new_port(this);
 		},this.m_connection_timeout);
 	}
 	disconnect() {
@@ -2471,16 +2468,14 @@ class TransportMessageObj {
 			this.m_com_port=null;
 			this.m_remote_side_connected=false;
 			clearInterval(this.m_keep_alive_interval);
-			this.m_connection.clear_elevation_by_id(this.m_elevation_id);
+			remote_origin.clear_elevation_by_id(this.m_elevation_id);
 		}
 	}
 	/**
-	 * @param {RemoteOriginConnection} connection
 	 * @arg {number} connection_timeout
 	 */
-	constructor(connection,connection_timeout) {
-		this.m_connection=connection;
-		this.m_elevation_id=connection.get_next_elevation_id();
+	constructor(connection_timeout) {
+		this.m_elevation_id=remote_origin.get_next_elevation_id();
 		this.m_connection_timeout=connection_timeout;
 		this.m_com_port=null;
 	}
@@ -2615,7 +2610,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @param {Window} remote_event_target
 	 */
 	init_transport_over(remote_event_target) {
-		let message_object=new TransportMessageObj(this,300);
+		let message_object=new TransportMessageObj(300);
 		this.m_transport_connection=message_object;
 		this.m_connect_target=remote_event_target;
 		this.request_connection(message_object);
@@ -2665,7 +2660,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			this.event_transport_map.set(message_event.event.source,window);
 		}
 	}
-	/**@type {{port:MessagePort}[]} */
+	/**@type {RemoteSocket[]} */
 	connections=[];
 	client_max_id=0;
 	/**
@@ -2687,6 +2682,12 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		connection_port.start();
 		connection_port.addEventListener("message",handler);
 		this.post_port_message(connection_port,{type: "listening",client_id});
+		let prev_connection_index=this.connections.findIndex(e=>{
+			return e.first_event.source === event.source
+		});
+		if(prev_connection_index>-1){
+			this.connections.splice(prev_connection_index,1);
+		}
 		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
 	}
 	/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
