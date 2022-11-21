@@ -58,9 +58,11 @@ export class UrlFetcher {
 				return [...cls.values()];
 			}
 			let classList_=simplify_class_list(classList);
-			console.log({childNodes: [childNodes],nodeType,rawTagName,classList: classList_,id});
 			if(state.depth > 1) {
+				console.log({childNodes: childNodes.filter(/**@returns {e is node_html_parser.HTMLElement}*/e=>e instanceof node_html_parser.HTMLElement).map(e=>"<"+e.rawTagName+">"),nodeType,rawTagName,classList: classList_,id});
 				return;
+			} else {
+				console.log({childNodes: [childNodes],nodeType,rawTagName,classList: classList_,id});
 			}
 			for(let i of childNodes) {
 				state.depth++;
