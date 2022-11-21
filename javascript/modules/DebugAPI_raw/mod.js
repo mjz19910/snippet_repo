@@ -226,8 +226,8 @@ function define_normal_value(obj,key,value) {
 }
 
 x.a=EventTarget.prototype;
-class addEventListenerExt {
-	static orig={
+class AddEventListenerExt {
+	orig={
 		addEventListener: x.a.addEventListener,
 		dispatchEvent: x.a.dispatchEvent,
 		removeEventListener: x.a.removeEventListener,
@@ -235,8 +235,9 @@ class addEventListenerExt {
 	/**
 	 * @type {WeakRef<WeakRef<depth_or_any>[]>|undefined}
 	 */
-	static call_list;
-	static target_prototype=x.a;
+	call_list;
+	target_prototype=x.a;
+	call_list_create_count=0;
 	static init() {
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
@@ -337,6 +338,7 @@ class addEventListenerExt {
 		let call_list=this.call_list?.deref();
 		if(call_list===void 0) {
 			call_list=[];
+			this.call_list_create_count++;
 			console.log("gc keep call_list",call_list);
 			this.call_list=new WeakRef(call_list);
 		}
@@ -374,6 +376,7 @@ class addEventListenerExt {
 						acc_list=[];
 					}
 				}
+				this.keep("next_list",next_list);
 				extract_list=next_list;
 				cur_depth++;
 			}
@@ -452,8 +455,10 @@ class addEventListenerExt {
 		}
 	}
 }
-addEventListenerExt.init();
-g_api.addEventListenerExt=addEventListenerExt;
+g_api.AddEventListenerExt=AddEventListenerExt;
+let add_event_listener_ext=new AddEventListenerExt;
+add_event_listener_ext.init();
+g_api.add_event_listener_ext=add_event_listener_ext;
 
 class IterExtensions {
 	static init() {

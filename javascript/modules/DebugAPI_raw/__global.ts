@@ -177,7 +177,7 @@ declare global {
 
 declare global {
 	type depth_type=['depth',number,WeakRef<depth_or_any[]>];
-	type json_value_id_type=['json_value_id', string, number, WeakRef<["real_holder", any]>];
+	type json_value_id_type=['json_value_id',string,number,WeakRef<["real_holder",any]>];
 	type depth_or_any=['real_holder',unknown]|json_value_id_type|depth_type;
 }
 
@@ -218,7 +218,8 @@ interface GlobalApiObject {
 	APIProxyManager: {};
 	LoggingEventTarget: {};
 	DebugAPI: DebugAPIType;
-	addEventListenerExt: {};
+	AddEventListenerExt: {};
+	add_event_listener_ext: {};
 }
 
 // g_api on window object
