@@ -339,6 +339,7 @@ class addEventListenerExt {
 		let call_list=this.call_list.deref();
 		if(call_list===void 0) {
 			call_list=[];
+			console.log("gc keep call_list", call_list);
 			this.call_list=new WeakRef(call_list);
 		}
 		let id=call_list.push(new WeakRef([real_value]));
