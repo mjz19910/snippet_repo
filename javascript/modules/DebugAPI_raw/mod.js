@@ -2373,6 +2373,7 @@ class TransportMessageObj {
 	m_current_target;
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
+	m_remote_side_connected=false;
 	/** @param {MessageEvent<{type:"listening"}>} message_event_response */
 	handleEvent(message_event_response) {
 		console.log("TransportMessageObj_handle_event", message_event_response);
@@ -2380,6 +2381,10 @@ class TransportMessageObj {
 			event: message_event_response,
 			handler: this
 		});
+		if(!this.m_remote_side_connected && this.m_timeout_id) {
+			this.m_remote_side_connected=true;
+			clearTimeout(this.m_timeout_id);
+		}
 	}
 	/** @param {number} timeout_ms */
 	start(timeout_ms) {
