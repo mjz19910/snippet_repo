@@ -377,25 +377,25 @@ class AddEventListenerExt {
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
 	clear_count=0;
-	/** @private @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
+	/** @returns {void} @private @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
-			return true;
+			return;
 		if(val instanceof TransportMessageObj) {
 			this.convert_to_id_key(real_value,key,val,"TransportMessageObj:elevated_"+val.m_elevation_id);
-			return true;
+			return;
 		}
 		if(val===window) {
 			real_value[key]="window:"+this.window_list.indexOf(window);
-			return true;
+			return;
 		}
 		if(val instanceof Node) {
 			real_value[key]=this.generate_node_id(val);
-			return true;
+			return;
 		}
 		if(val instanceof Document) {
 			real_value[key]=this.generate_node_id(val);
-			return true;
+			return;
 		}
 		let is_react_element=false;
 		if('__reactContainer$' in val) {
@@ -404,27 +404,20 @@ class AddEventListenerExt {
 		if('__reactFiber$' in val) {
 			is_react_element=true;
 		}
-		{
-			let index=this.object_ids.findIndex(e => e.deref()===val);
-			if(index>-1) {
-				this.convert_to_namespaced_string(real_value,val,key,index);
-				return true;
-			}
-		}
 		if(is_react_element) {
 			console.log("react_element",val);
 			this.convert_to_id_key(real_value,key,val,"react");
-			return true;
+			return;
 		} else if(val instanceof IDBDatabase||val instanceof IDBTransaction) {
 			// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
 			this.convert_to_id_key(real_value,key,val,"idb");
-			return true;
+			return;
 		} else if("ServiceWorkerContainer" in window&&val instanceof ServiceWorkerContainer) {
 			this.convert_to_id_key(real_value,key,val,"ServiceWorkerContainer");
-			return true;
+			return;
 		}
 		real_value[key]="cleared_out:"+this.clear_count++;
-		return true;
+		return;
 	}
 	is_calc_circular=false;
 	/** @private @param {[unknown,number,unknown,...unknown[]]} real_value */
@@ -471,23 +464,13 @@ class AddEventListenerExt {
 		let [target,orig_this,args]=list;
 		/**@type {[unknown,number,unknown,...unknown[]]} */
 		let real_value=[target,args.length+1,orig_this,...args];
-		let is_circular=false;
 		for(let [key,val] of real_value.entries()) {
 			switch(typeof val) {
-				case 'object': {
-					let ret=this.args_iter_on_object(real_value,key,val);
-					if(!ret) {
-						is_circular=true;
-						continue;
-					}
-				} break;
+				case 'object': this.args_iter_on_object(real_value,key,val); break;
 				case 'function': this.args_iter_on_function(real_value,key,val); break;
 				default: break;
 			}
 		}
-		if(is_circular)
-			return;
-		this.use_tmp_non_circular(real_value);
 	}
 	do_gc_keep_log=false;
 	/** @param {string} key @param {unknown} value */
