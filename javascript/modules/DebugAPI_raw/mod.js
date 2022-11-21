@@ -2498,13 +2498,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			if(this.state.opener===null) {
 				this.start_root_server();
 			} else {
-				this.init_transport_over(this.state.opener,this.state.window);
+				this.init_transport_over(this.state.opener);
 				this.start_root_server();
 				this.setup_root_proxy();
 			}
 		} else {
 			if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
-			this.init_transport_over(this.state.top,this.state.window);
+			this.init_transport_over(this.state.top);
 		}
 	}
 	setup_root_proxy() {
@@ -2512,9 +2512,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/**
 	 * @param {Window} remote_event_target
-	 * @param {Window} local_event_target
 	 */
-	init_transport_over(remote_event_target,local_event_target) {
+	init_transport_over(remote_event_target) {
 		this.m_connect_target=remote_event_target;
 		let channel=new MessageChannel;
 		this.m_connect_target.postMessage({
