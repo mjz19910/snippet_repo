@@ -352,31 +352,35 @@ class addEventListenerExt {
 				if(inner === void 0)
 					continue;
 				if(inner[0]==='depth') {
-					extract_list.push(...inner[2]);
+					let deref_val=inner[2].deref();
+					if(!deref_val)
+						continue;
+					extract_list.push(...deref_val);
 					continue;
 				}
 				extract_list.push(inner);
 			}
 			call_list.length=0;
-			/** @type {depth_type} */
-			let depth_info=['depth',1,extract_list];
 			let cur_depth=1;
 			while(extract_list.length > 30) {
 				/** @type {depth_or_any[]} */
 				let next_list=[];
+				let acc_list=next_list.slice();
 				let num=0;
-				/** @type {depth_or_any[]} */
-				let acc_list=[];
 				for(let i=0;i<extract_list.length;i++) {
 					acc_list.push(extract_list[i]);
 					if(num%i === 29) {
-						next_list.push(['depth', cur_depth, acc_list]);
+						this.keep("acc_list",acc_list);
+						next_list.push(['depth', cur_depth, new WeakRef(acc_list)]);
 						acc_list=[];
 					}
 				}
 				extract_list=next_list;
 				cur_depth++;
 			}
+			this.keep("extract_list",extract_list);
+			/** @type {depth_type} */
+			let depth_info=['depth',1,new WeakRef(extract_list)];
 			call_list.push(new WeakRef(depth_info));
 		}
 		let real_holder_ref=new WeakRef(call_list_info);
@@ -386,8 +390,12 @@ class addEventListenerExt {
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
 		}
-		console.log("gc keep json_value_id",info);
+		this.keep("json_value_id", info);
 		call_list.push(new WeakRef(info));
+	}
+	/** @param {string} key @param {unknown} value */
+	static keep(key, value) {
+		console.log(`gc_keep: ${key}`, value);
 	}
 	/** @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
 	static convert_to_id_key(real_value,key,val,namespace) {
