@@ -272,26 +272,26 @@ class AddEventListenerExt {
 	/** @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
-			return;
+			return true;
 		if('m_current_target' in val) {
-			debugger;
 			if('m_elevation_id' in val) {
 				this.convert_to_id_key(real_value,key,val,"TransportMessageObj:"+val.m_elevation_id);
 			} else {
 				this.convert_to_id_key(real_value,key,val,"TransportMessageObj:unk");
 			}
+			return true;
 		}
 		if(val===window) {
 			real_value[key]="window:"+this.window_list.indexOf(window);
-			return;
+			return true;
 		}
 		if(val instanceof Node) {
 			real_value[key]=this.generate_node_id(val);
-			return;
+			return true;
 		}
 		if(val instanceof Document) {
 			real_value[key]=this.generate_node_id(val);
-			return;
+			return true;
 		}
 		let is_react_element=false;
 		if('__reactContainer$' in val) {
@@ -304,7 +304,7 @@ class AddEventListenerExt {
 			let index=this.object_ids.findIndex(e => e.deref()===val);
 			if(index>-1) {
 				this.convert_to_namespaced_string(real_value,val,key,index);
-				return;
+				return true;
 			}
 		}
 		if(is_react_element) {
@@ -327,9 +327,9 @@ class AddEventListenerExt {
 				this.failed_obj={v: real_value};
 			}
 			console.log("skip, will stringify circular structure",real_value,key,val);
-			return;
+			return false;
 		} else {
-			this.use_tmp_non_circular(real_value);
+			return true;
 		}
 	}
 	/** @param {[unknown,number,unknown,...unknown[]]} real_value @returns {[boolean, number]} */
@@ -352,6 +352,17 @@ class AddEventListenerExt {
 		let [is_circular,index]=this.calculate_circular_info(real_value);
 		if(is_circular) {
 			console.log('tried to stringify circular object',real_value[index]);
+			debugger;
+			for(let [key,val] of [real_value[index]].entries()) {
+				switch(typeof val) {
+					case 'object': {
+						let ret=this.args_iter_on_object(real_value,key,val);
+						if(ret) return
+					} break;
+					case 'function': return this.args_iter_on_function(real_value,key,val);
+					default: break;
+				}
+			}
 			return;
 		}
 		x: try {
@@ -458,13 +469,22 @@ class AddEventListenerExt {
 		let [target,orig_this,args]=list;
 		/**@type {[unknown,number,unknown,...unknown[]]} */
 		let real_value=[target,args.length+1,orig_this,...args];
+		let is_circular=false;
 		for(let [key,val] of real_value.entries()) {
 			switch(typeof val) {
-				case 'object': return this.args_iter_on_object(real_value,key,val);
-				case 'function': return this.args_iter_on_function(real_value,key,val);
+				case 'object': {
+					let ret=this.args_iter_on_object(real_value,key,val);
+					if(!ret) {
+						is_circular=true;
+						continue;
+					}
+				} break;
+				case 'function': this.args_iter_on_function(real_value,key,val); break;
 				default: break;
 			}
 		}
+		if(is_circular)
+			return;
 		this.use_tmp_non_circular(real_value);
 	}
 	do_gc_keep_log=false;
