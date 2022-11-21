@@ -2638,19 +2638,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @param {Window} remote_event_target
 	 */
 	init_transport_over(remote_event_target) {
-		this.m_connect_target=remote_event_target;
-		let channel=new MessageChannel;
-		this.m_connect_target.postMessage({
-			type: "ConnectOverPostMessage",
-			data: {
-				type: "start",
-				source: null,
-				port_transfer_vec: null
-			}
-		},"*",[channel.port1]);
 		let message_object=new TransportMessageObj(this,300);
-		this.m_transport_map.set(message_object,{connected: false});
-		message_object.connect(channel.port2);
+		this.m_connect_target=remote_event_target;
+		this.request_connection(message_object);
 	}
 	/** @arg {TransportMessageObj} transport_handler */
 	request_connection(transport_handler) {
