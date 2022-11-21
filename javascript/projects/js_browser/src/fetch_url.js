@@ -2,6 +2,7 @@ import * as http from "http";
 import * as https from "https";
 import {PageLoaderState} from "./page_loader.js";
 
+/** @param {PageLoaderState} state @param {typeof http|typeof https} cur_api */
 function async_api_use_for_get(state,cur_api) {
 	cur_api.get(state.url,(resp) => {
 		let data='';
