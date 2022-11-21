@@ -279,6 +279,11 @@ class addEventListenerExt {
 				real_value[key]="idb:weak_id:"+index;
 				continue;
 			}
+			if(val instanceof ServiceWorkerContainer) {
+				index=this.object_ids.push(new WeakRef(val));
+				real_value[key]="service_worker:weak_id:"+index;
+				continue;
+			}
 			let failed=false;
 			try {JSON.stringify(val);} catch {
 				failed=true;
