@@ -2404,15 +2404,14 @@ class TransportMessageObj {
 			this.disconnect();
 			this.clear();
 		},timeout_ms);
-		this.m_com_port.start();
-		this.m_com_port.addEventListener("message",this);
 	}
 	/** @param {Window} target */
 	connect(target) {
 		if(this.m_current_target!==null&&this.m_current_target!==target)
 			this.disconnect();
 		this.m_current_target=target;
-		this.m_current_target.addEventListener('message',this);
+		this.m_com_port.start();
+		this.m_com_port.addEventListener("message",this);
 	}
 	disconnect() {
 		if(this.m_current_target) {
