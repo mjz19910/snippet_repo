@@ -54,20 +54,19 @@ class UseRealConsole {
 	dir=saved_console.dir.bind(base_console);
 	dirxml=saved_console.dirxml.bind(base_console);
 	error=saved_console.error.bind(base_console);
-	group=saved_console.group.bind(base_console);;
+	group=saved_console.group.bind(base_console);
 	groupCollapsed=saved_console.groupCollapsed.bind(base_console);
 	groupEnd=saved_console.groupEnd.bind(base_console);
 	info=saved_console.info.bind(base_console);
 	table=saved_console.table.bind(base_console);
-	time=saved_console.time.bind(base_console);;
+	time=saved_console.time.bind(base_console);
 	timeEnd=saved_console.timeEnd.bind(base_console);
 	timeLog=saved_console.timeLog.bind(base_console);
 	timeStamp=saved_console.timeStamp.bind(base_console);
 	trace=saved_console.trace.bind(base_console);
-	warn=saved_console.warn.bind(base_console);;
-	profile=saved_console.profile.bind(base_console);;
-	profileEnd=saved_console.profileEnd.bind(base_console);;
-	Console=base_console.Console;
+	warn=saved_console.warn.bind(base_console);
+	profile=saved_console.profile.bind(base_console);
+	profileEnd=saved_console.profileEnd.bind(base_console);
 }
 
 const console=new UseRealConsole;
