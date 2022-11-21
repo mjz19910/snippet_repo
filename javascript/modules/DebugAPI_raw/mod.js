@@ -253,7 +253,7 @@ class addEventListenerExt {
 	/** @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
 	static convert_to_namespaced_string(real_value,val,key,index) {
 		if(!(this.namespace_key in val))
-		throw new Error("Unreachable");
+			throw new Error("Unreachable");
 		if(typeof val[this.namespace_key]!=='string') {
 			console.log("unable to find namespace (not a string)",val);
 			real_value[key]=`weak_id:${index}`;
@@ -321,8 +321,9 @@ class addEventListenerExt {
 				console.log("skip, will stringify circular structure",real_value,key,val);
 				return;
 			}
+		} else {
+			this.convert_to_namespaced_string(real_value,val,key,index);
 		}
-		this.convert_to_namespaced_string(real_value,val,key,index);
 	}
 	/** @param {[any, any, any[]]} list */
 	static add_to_call_list_impl(list) {
