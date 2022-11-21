@@ -343,10 +343,12 @@ class AddEventListenerExt {
 		}
 		return [false,-1];
 	}
+	is_calc_circular=false;
 	/** @param {[unknown,number,unknown,...unknown[]]} real_value */
 	use_tmp_non_circular(real_value) {
 		let [_tv,_a_len,_x,...args]=real_value;
 		let value;
+		this.is_calc_circular=true;
 		let [is_circular,index]=this.calculate_circular_info(real_value);
 		if(is_circular) {
 			console.log('tried to stringify circular object',real_value[index]);
@@ -358,6 +360,8 @@ class AddEventListenerExt {
 		} catch(e) {
 			debugger;
 			throw e;
+		} finally {
+			this.is_calc_circular=false;
 		}
 		let call_list=this.call_list?.deref();
 		if(call_list===void 0) {
