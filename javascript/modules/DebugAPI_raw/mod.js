@@ -360,7 +360,8 @@ class addEventListenerExt {
 			call_list.length=0;
 			/** @type {depth_type} */
 			let depth_info=['depth',1,extract_list];
-			if(extract_list.length > 30) {
+			let cur_depth=1;
+			while(extract_list.length > 30) {
 				/** @type {depth_or_any[]} */
 				let next_list=[];
 				let num=0;
@@ -369,10 +370,12 @@ class addEventListenerExt {
 				for(let i=0;i<extract_list.length;i++) {
 					acc_list.push(extract_list[i]);
 					if(num%i === 29) {
-						next_list.push(['depth', 1, acc_list]);
+						next_list.push(['depth', cur_depth, acc_list]);
 						acc_list=[];
 					}
 				}
+				extract_list=next_list;
+				cur_depth++;
 			}
 			call_list.push(new WeakRef(depth_info));
 		}
