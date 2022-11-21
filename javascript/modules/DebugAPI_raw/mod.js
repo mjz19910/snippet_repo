@@ -351,6 +351,7 @@ class AddEventListenerExt {
 		if(call_list.length>30) {
 			/** @type {depth_or_any[]} */
 			let extract_list=[];
+			debugger;
 			for(let i=0;i<call_list.length;i++) {
 				let ref=call_list[i];
 				let inner=ref.deref();
@@ -370,10 +371,9 @@ class AddEventListenerExt {
 				/** @type {depth_or_any[]} */
 				let next_list=[];
 				let acc_list=next_list.slice();
-				let num=0;
 				for(let i=0;i<extract_list.length;i++) {
 					acc_list.push(extract_list[i]);
-					if(num%i===29) {
+					if(i%30===29) {
 						this.keep("acc_list",acc_list);
 						next_list.push(['depth',cur_depth,new WeakRef(acc_list)]);
 						acc_list=[];
