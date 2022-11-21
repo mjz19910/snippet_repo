@@ -322,7 +322,7 @@ function overwrite_addEventListener(prototype) {
 			return Reflect.apply(target,callback,argArray);
 		}
 	});
-	prototype.constructor.__arg_list_for_add_event_listeners=arg_list;
+	define_normal_value(prototype.constructor,"__arg_list_for_add_event_listeners",arg_list);
 }
 
 /** @param {EventListenerOrEventListenerObject} handler */
@@ -2615,7 +2615,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(cur_window.opener===null) {
 			this.init_transport_over(cur_window);
 		} else {
-			if(cur_window.opener.top !== cur_window.opener) {
+			if(cur_window.opener.top!==cur_window.opener) {
 				console.log("need to go up more");
 			}
 			this.init_with_opener(cur_window.opener);
