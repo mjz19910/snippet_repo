@@ -2649,6 +2649,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/**@type {{port:MessagePort}[]} */
 	connections=[];
 	client_max_id=0;
+	/** @arg {MessageEvent<unknown>} event */
 	on_connect_request_message(event) {
 		let connection_port=event.ports[0];
 		let handler={
@@ -2679,11 +2680,12 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				}
 				console.log("Received message object",message_data);
 				console.log("Received message ports",event.ports);
+				t.on_connect_request_message(event);
 			}
 		});
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
-				post_port_message(connection.port,{type: "disconnected"});
+				t.post_port_message(connection.port,{type: "disconnected"});
 			}
 		});
 		window.addEventListener("unload",function() {
