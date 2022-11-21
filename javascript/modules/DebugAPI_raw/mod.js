@@ -332,6 +332,16 @@ function do_message_handler_overwrite(handler) {
 			handler.handleEvent(event);
 			return;
 		}
+		if(event instanceof MessageEvent) {
+			/** @type {unknown} */
+			let d=event.data;
+			if(typeof d==='object'&&d!==null&&'type' in d) {
+				if(d.type===remote_origin.post_message_connect_message_type) {
+					if(debug) console.log("skip page event handler for "+d.type);
+					return;
+				}
+			}
+		}
 		handler.call(this,event);
 	}
 }
