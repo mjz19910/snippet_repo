@@ -307,6 +307,8 @@ class AddEventListenerExt {
 			this.convert_to_id_key(real_value,key,val,"idb");
 		} else if(val instanceof ServiceWorkerContainer) {
 			this.convert_to_id_key(real_value,key,val,"service_worker");
+		} else if('m_current_target' in val && 'm_elevation_id' in val) {
+			this.convert_to_id_key(real_value,key,val,"TransportMessageObj:"+val.m_elevation_id);
 		}
 		let failed=false;
 		try {
@@ -327,7 +329,15 @@ class AddEventListenerExt {
 	/** @param {[unknown,number,unknown,...unknown[]]} real_value */
 	use_tmp_non_circular(real_value) {
 		let [_tv,_a_len,_x,...args]=real_value;
-		let value=JSON.stringify(real_value);
+		let value;
+		x: try {
+			value=JSON.stringify(real_value);
+			break x;
+		} catch(e) {
+			throw e;
+		} finally {
+			debugger;
+		}
 		let call_list=this.call_list?.deref();
 		if(call_list===void 0) {
 			call_list=[];
