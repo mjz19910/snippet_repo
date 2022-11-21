@@ -454,59 +454,6 @@ class AddEventListenerExt {
 		/** @type {['real_holder', any]} */
 		let call_list_info=['real_holder',real_value];
 		this.keep("real_holder",call_list_info);
-		if(call_list.length>30) {
-			/** @type {depth_or_any[]} */
-			let extract_list=[];
-			/** @type { depth_or_any[]} */
-			let tmp_list=[];
-			for(let i=0;i<call_list.length;i++) {
-				let ret_obj=this.use_tmp_list(tmp_list,call_list,i);
-				let inner;
-				if(ret_obj[0]) {
-					i--;
-					inner=ret_obj[1];
-				} else {
-					let ref=ret_obj[1];
-					inner=ref.deref();
-				}
-				if(inner===void 0)
-					continue;
-				if(inner[0]==='depth') {
-					let deref_val=inner[2].deref();
-					if(!deref_val)
-						continue;
-					tmp_list.push(...deref_val);
-					continue;
-				}
-				extract_list.push(inner);
-			}
-			let cur_depth=1;
-			while(extract_list.length>30) {
-				/** @type {depth_or_any[]} */
-				let next_list=[];
-				let acc_list=next_list.slice();
-				for(let i=0;i<extract_list.length;i++) {
-					acc_list.push(extract_list[i]);
-					if(i%30===29) {
-						this.keep("acc_list",acc_list);
-						next_list.push(['depth',cur_depth,new WeakRef(acc_list)]);
-						acc_list=[];
-					}
-				}
-				next_list.push(...acc_list);
-				this.keep("next_list",next_list);
-				extract_list=next_list;
-				cur_depth++;
-			}
-			this.keep("extract_list",extract_list);
-			/** @type {depth_type} */
-			let depth_info=['depth',cur_depth,new WeakRef(extract_list)];
-			call_list=[];
-			this.keep("depth adjust call_list",call_list);
-			this.call_list=new WeakRef(call_list);
-			this.keep("depth_info",depth_info);
-			call_list.push(new WeakRef(depth_info));
-		}
 		let real_holder_ref=new WeakRef(call_list_info);
 		let id=this.object_max_id++;
 		/** @type {value_id_type} */
