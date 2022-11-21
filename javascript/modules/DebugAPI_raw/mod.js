@@ -50,6 +50,7 @@ class ReversePrototypeChain {
 		for (let target of this.targets) {
 			this.process_target(target);
 		}
+		console.log(this.destination);
 	}
 	/** @arg {{}|null} value */
 	get_cache_key(value) {
