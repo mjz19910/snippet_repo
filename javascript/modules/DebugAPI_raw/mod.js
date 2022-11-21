@@ -2375,6 +2375,7 @@ class TransportMessageObj {
 	m_timeout_id=null;
 	/** @param {MessageEvent<{type:"listening"}>} message_event_response */
 	handleEvent(message_event_response) {
+		console.log("TransportMessageObj_handle_event", message_event_response);
 		this.m_connection.transport_init_maybe_complete({
 			event: message_event_response,
 			handler: this
@@ -2388,9 +2389,7 @@ class TransportMessageObj {
 			this.disconnect();
 			this.clear();
 		},timeout_ms);
-		if(!this.m_connection.port)
-			throw new Error("no connection port");
-		this.m_connection.port.addEventListener("message",this);
+		this.m_com_port.addEventListener("message",this);
 	}
 	/** @param {Window} target */
 	connect(target) {
@@ -2410,10 +2409,12 @@ class TransportMessageObj {
 	}
 	/**
 	 * @param {RemoteOriginConnection} connection
+	 * @param {MessagePort} communication_port
 	 * @param {Window} target
 	 */
-	constructor(connection,target) {
+	constructor(connection,communication_port,target) {
 		this.m_connection=connection;
+		this.m_com_port=communication_port;
 		this.m_elevation_id=connection.get_next_elevation_id();
 		this.m_current_target=target;
 	}
@@ -2487,7 +2488,6 @@ class RemoteOriginConnection {
 	 */
 	init_transport_over(post_message_event_transport_target,response_message_event_transport_target) {
 		let channel=new MessageChannel;
-		this.port=channel.port2;
 		post_message_event_transport_target.postMessage({
 			type: "ConnectOverPostMessage",
 			data: {
@@ -2497,7 +2497,7 @@ class RemoteOriginConnection {
 			}
 		},"*",[channel.port1]);
 		this.event_transport_map.set(response_message_event_transport_target,post_message_event_transport_target);
-		let message_object=new TransportMessageObj(this,response_message_event_transport_target);
+		let message_object=new TransportMessageObj(this,channel.port2, response_message_event_transport_target);
 		message_object.start(300);
 	}
 	/**
