@@ -1,6 +1,6 @@
 import {ClientRequest,IncomingMessage} from "http";
 import {fetch_url} from "./fetch_url.js";
-import {UrlFetcher} from "./UrlFetcher.js";
+import {UrlFetcher} from "./url_fetcher/UrlFetcher.js";
 
 /**@type {Buffer[]} */
 export let cached_data_buffer=[];
