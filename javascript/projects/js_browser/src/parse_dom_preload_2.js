@@ -53,6 +53,7 @@ async function new_FetchRequestState(url) {
 }
 
 import {IPCPlugin as HtmlLexer} from "../../html_lexer/ipc_index.js";
+import {IPCPlugin as repl_plugin_manager} from "../../repl_plugin_manager/ipc_index.js";
 
 /**
  * @param {{url:string}} state
@@ -60,9 +61,7 @@ import {IPCPlugin as HtmlLexer} from "../../html_lexer/ipc_index.js";
 async function do_browse(state) {
 	let res=await new_FetchRequestState(state.url);
 	res.set_html_lexer(new HtmlLexer);
-	let ipc_loader_state=new IpcLoader;
-	let repl_plugin=await import_ipc_plugin(ipc_loader_state,"repl_plugin_manager/mod.js");
-	if(debug) console.log('repl plug',repl_plugin);
+	if(debug) console.log('repl plug',repl_plugin_manager);
 	await Promise.resolve();
 	await fetch_url(res);
 }
