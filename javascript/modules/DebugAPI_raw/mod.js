@@ -2411,11 +2411,8 @@ class TransportMessageObj {
 			} break;
 		}
 	}
-	/** @param {MessagePort} port @arg {Window} target */
-	connect(port,target) {
-		if(this.m_current_target!==null&&this.m_current_target!==target)
-			this.disconnect();
-		this.m_current_target=target;
+	/** @param {MessagePort} port */
+	connect(port) {
 		this.m_com_port=port;
 		this.m_com_port.start();
 		this.m_com_port.addEventListener("message",this);
@@ -2426,12 +2423,11 @@ class TransportMessageObj {
 		},this.m_connection_timeout);
 	}
 	disconnect() {
-		if(this.m_current_target&&this.m_com_port) {
+		if(this.m_com_port) {
 			this.m_com_port.removeEventListener('message',this);
-			this.m_current_target=null;
 			this.m_com_port=null;
+			this.m_remote_side_connected=false;
 		}
-		this.m_remote_side_connected=false;
 	}
 	clear() {
 		this.m_connection.clear_elevation_by_id(this.m_elevation_id);
@@ -2537,7 +2533,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		},"*",[channel.port1]);
 		let message_object=new TransportMessageObj(this,300);
 		this.m_transport_map.set(message_object,{connected: false});
-		message_object.connect(channel.port2,remote_event_target);
+		message_object.connect(channel.port2);
 	}
 	/** @arg {TransportMessageObj} transport_handler */
 	request_connection(transport_handler) {
@@ -2553,7 +2549,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				port_transfer_vec: null
 			}
 		},"*",[channel.port1]);
-		transport_handler.connect(channel.port2,this.m_connect_target);
+		transport_handler.connect(channel.port2);
 	}
 	/**
 	 * @param {number} elevated_id
