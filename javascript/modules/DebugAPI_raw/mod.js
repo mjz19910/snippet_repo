@@ -2415,7 +2415,7 @@ class TransportMessageObj {
 	}
 	disconnect() {
 		if(this.m_current_target) {
-			this.m_current_target.removeEventListener('message',this);
+			this.m_com_port.removeEventListener('message',this);
 			this.m_current_target=null;
 		}
 	}
