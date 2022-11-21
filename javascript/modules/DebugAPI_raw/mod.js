@@ -458,6 +458,9 @@ class AddEventListenerExt {
 	node_id_max=0;
 	/** @private @param {Node} val */
 	generate_node_id(val) {
+		if(val.__id_holder) {
+			return val.__id_holder.value;
+		}
 		let list=this.node_list.deref();
 		if(!list) {
 			list=[];
