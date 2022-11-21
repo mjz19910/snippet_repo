@@ -2454,9 +2454,11 @@ class TransportMessageObj {
 				}
 			} break;
 			case "disconnected": {
+				if(this.m_reconnecting) return;
 				this.disconnect();
 				this.m_connection.transport_disconnected(report_info);
-				let tries_left=30;
+				let tries_left=12;
+				this.m_reconnecting=true;
 				this.m_timeout_id=setTimeout(function request_new_connection(obj) {
 					console.log("reconnect tries_left",tries_left);
 					if(tries_left > 1) {
@@ -2470,7 +2472,7 @@ class TransportMessageObj {
 						}
 						this.m_timeout_id=setTimeout(request_new_connection,timeout*30,obj);
 					}
-				},this.m_connection_timeout/tries_left,this);
+				},(this.m_connection_timeout/8)*30,this);
 			} break;
 		}
 	}
