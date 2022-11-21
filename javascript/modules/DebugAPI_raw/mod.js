@@ -41,12 +41,17 @@ class ReversePrototypeChain {
 		/** @typedef {{__proto__:null,name:string,prototype:{}|null,child:destination_child_type}} destination_index_type */
 		/** @type {{[x: string]: destination_index_type}} */
 		this.destination = Object.create(null);
-		/** @type {{}[]} */
+		/** @type {({}|null)[]} */
 		this.object_cache=[];
 		this.null_cache_key = this.get_cache_key(null);
 		this.cache_prototype(this.null_cache_key, null);
 	}
 	generate() {
+		for (let i = 0; i < window.length; i++) {
+			if(this.window_list.includes(window[i]))
+				continue;
+			this.window_list.push(window[i]);
+		}
 		for (let target of this.targets) {
 			this.process_target(target);
 		}
@@ -54,19 +59,19 @@ class ReversePrototypeChain {
 	}
 	/** @arg {{}|null} value */
 	get_cache_key(value) {
+		if(!this.object_cache.includes(value)) {
+			this.object_cache.push(value);
+		}
+		let object_index=this.object_cache.indexOf(value);
 		if(!value) {
-			return "a_null::0";
+			return `a_null::${object_index}`;
 		}
 		if (this.window_list.includes(any(value))) {
 			return "window_id::" + this.window_list.indexOf(any(value));
 		}
 		if (value === g_api)
-			return "self::g_api";
+			return `self::g_api:${object_index}`;
 		let key;
-		if(!this.object_cache.includes(value)) {
-			this.object_cache.push(value);
-		}
-		let object_index=this.object_cache.indexOf(value);
 		if(Symbol.toStringTag in value) {
 			key=value[Symbol.toStringTag];
 		}
@@ -78,7 +83,7 @@ class ReversePrototypeChain {
 				return `constructor_key::${constructor_name}:${object_index}`;
 			}
 		} else if (key) {
-			return "to_string_tag::" + key;
+			return `to_string_tag::${key}:${object_index}`;
 		}
 		try {
 			if (value.hasOwnProperty('constructor')) {
@@ -264,6 +269,12 @@ class addEventListenerExt {
 				console.log("react_element");
 				index=this.object_ids.push(new WeakRef(val));
 				real_value[key]="react:weak_id:"+index;
+				continue;
+			}
+			if(val instanceof IDBDatabase) {
+				// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
+				index=this.object_ids.push(new WeakRef(val));
+				real_value[key]="idb:weak_id:"+index;
 				continue;
 			}
 			let failed=false;
