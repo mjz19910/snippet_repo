@@ -23,8 +23,9 @@ export async function import_ipc_plugin(state,plugin_key) {
 			const module_page_loader_str=`../../${plugin_key}`;
 			try{
 				return await ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
-			} catch(e) {
-				throw new AggregateError([e], "import failure");
+			} catch(/**@type {any}*/e) {
+				Error.captureStackTrace(e);
+				throw e;
 			}
 		}
 		case 'tiny_html_lexer': break;
