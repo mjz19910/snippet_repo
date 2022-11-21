@@ -2725,8 +2725,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/**@type {{port:MessagePort}[]} */
 	connections=[];
 	client_max_id=0;
-	/** @arg {MessageEvent<unknown>} event */
-	on_connect_request_message(event) {
+	/** @arg {MessageEvent<unknown>} event @arg {number} client_id */
+	on_connect_request_message(event,client_id) {
 		if(typeof event.data !== 'object' || event.data === null || !('type' in event.data)) return false;
 		switch(event.data.type) {
 			case remote_origin.post_message_connect_message_type: break
@@ -2741,7 +2741,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			},
 		};
 		connection_port.addEventListener("message",handler);
-		this.post_port_message(connection_port,{type: "listening"});
+		this.post_port_message(connection_port,{type: "listening", client_id});
 		this.connections.push({port: connection_port});
 		return true;
 	}
@@ -2755,6 +2755,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		/** @arg {MessageEvent<unknown>} event */
 		function on_message_event(event) {
 			let client_id=t.client_max_id++;
+			if(client_id === 1) {
+				debugger;
+			}
 			let message_data=event.data;
 			if(typeof message_data==='object') {
 				let misbehaved;
@@ -2764,7 +2767,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 					return;
 				}
 				if(!misbehaved) {
-					misbehaved=t.on_connect_request_message(event);
+					misbehaved=t.on_connect_request_message(event,client_id);
 				}
 				if(misbehaved) {
 					console.log("Received message object",message_data);
