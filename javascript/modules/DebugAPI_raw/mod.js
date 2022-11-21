@@ -2417,6 +2417,7 @@ class TransportMessageObj {
 			if(!this.m_connection) throw new Error();
 			this.disconnect();
 			this.clear();
+			this.m_connection.request_new_port(this);
 		},this.m_connection_timeout);
 	}
 	disconnect() {
