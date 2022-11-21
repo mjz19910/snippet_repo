@@ -1,40 +1,18 @@
 import * as http from "http";
 import * as https from "https";
 import {PageLoaderState} from "./page_loader.js";
-import { parse } from 'node-html-parser';
-
-/** @param {PageLoaderState} state @param {typeof http|typeof https} cur_api */
-function async_api_use_for_get(state,cur_api) {
-	cur_api.get(state.url,(resp) => {
-		let data='';
-
-		// A chunk of data has been received.
-		resp.on('data',(chunk) => {
-			data+=chunk;
-		});
-
-		// The whole response has been received. Print out the result.
-		resp.on('end',() => {
-			const root = parse(data);
-			console.log(root);
-		});
-	}).on("error",(err) => {
-		console.log("Error: "+err.message);
-	});
-}
-
 
 /**
  * @param {PageLoaderState} state
  */
 function async_http_get(state) {
-	async_api_use_for_get(state,http);
+	state.fetcher.async_api_use_for_get(state,http);
 }
 /**
  * @param {PageLoaderState} state
  */
 function async_https_get(state) {
-	async_api_use_for_get(state,https);
+	state.fetcher.async_api_use_for_get(state,https);
 }
 
 

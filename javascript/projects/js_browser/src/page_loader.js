@@ -1,5 +1,6 @@
 import {ClientRequest,IncomingMessage} from "http";
 import {fetch_url} from "./fetch_url.js";
+import {UrlFetcher} from "./UrlFetcher.js";
 
 /**@type {Buffer[]} */
 export let cached_data_buffer=[];
@@ -9,6 +10,7 @@ export class PageLoaderState {
 	set_html_lexer(arg0) {
 		this.m_page_html_lexer=arg0;
 	}
+	fetcher=new UrlFetcher;
 	/** @type {ClientRequest | null} */
 	m_client_request=null;
 	/** @type {IncomingMessage | null} */
