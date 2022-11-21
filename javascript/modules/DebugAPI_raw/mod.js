@@ -37,7 +37,7 @@ class ReversePrototypeChain {
 		this.targets = targets;
 		/** @type {{}[]} */
 		this.values=[];
-		/** @typedef {{__proto__:null,prototypes:{name:string}[],values:{}[]}} destination_child_type */
+		/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
 		/** @typedef {{__proto__:null,name:string,prototype:{}|null,child:destination_child_type}} destination_index_type */
 		/** @type {{[x: string]: destination_index_type}} */
 		this.destination = Object.create(null);
@@ -117,9 +117,10 @@ class ReversePrototypeChain {
 	/** @param {string} key @param {{}} value */
 	add_prototype_value(key, value) {
 		let prototypes=this.destination[key].child.prototypes;
-		if(prototypes.includes(value))
+		let index=prototypes.findIndex(e=>e.prototype === value);
+		if(index>=0)
 			return;
-		prototypes.push(value);
+		prototypes.push({__proto__:null,name:key,prototype:value,child:{}});
 	}
 	/**
 	 * @param {{}} target
@@ -132,8 +133,10 @@ class ReversePrototypeChain {
 			this.list.push(proto);
 			proto = Object.getPrototypeOf(proto);
 		}
-		let index = 0;
+		if(this.list.length === 0)
+			return;
 		let final = this.list.at(-1);
+		if(final ===void 0) throw new Error("Unexpected");
 		this.add_prototype_value(this.null_cache_key, final);
 		let item_0 = this.list.at(-2);
 		this.add_one(final, item_0, -2);
