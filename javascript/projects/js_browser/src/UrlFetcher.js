@@ -6,15 +6,18 @@ export class UrlFetcher {
 	async_api_use_for_get(state,cur_api) {
 		let t=this;
 		cur_api.get(state.url,(resp) => {
+			/**@type {Buffer[]} */
+			let buffer_list=[]
 			let data='';
 
 			// A chunk of data has been received.
 			resp.on('data',(chunk) => {
-				data+=chunk;
+				buffer_list.push(chunk)
 			});
 
 			// The whole response has been received. Print out the result.
 			resp.on('end',() => {
+				data=Buffer.concat(buffer_list).toString();
 				t.on_response_end(data);
 			});
 		}).on("error",(err) => {
