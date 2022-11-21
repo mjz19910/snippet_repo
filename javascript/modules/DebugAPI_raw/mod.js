@@ -122,16 +122,23 @@ class ReversePrototypeChain {
 		if(index>=0)
 			return;
 		let sub_key=this.get_cache_key(value);
-		prototypes.push({
-			__proto__:null,
-			name:sub_key,
-			prototype:value,
-			child:{
+		let dest_value=this.destination[sub_key];
+		if(dest_value) {
+			prototypes.push(dest_value);
+		} else {
+			let sub_value={
 				__proto__:null,
-				prototypes:[],
-				values:[]
-			}
-		});
+				name:sub_key,
+				prototype:value,
+				child:{
+					__proto__:null,
+					prototypes:[],
+					values:[]
+				}
+			};
+			this.destination[sub_key] = sub_value;
+			prototypes.push(sub_value);
+		}
 	}
 	/**
 	 * @param {{}} target
