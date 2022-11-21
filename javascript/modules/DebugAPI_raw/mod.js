@@ -2615,6 +2615,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(cur_window.opener===null) {
 			this.init_transport_over(cur_window);
 		} else {
+			if(cur_window.opener.top !== cur_window.opener) {
+				console.log("need to go up more");
+			}
 			this.init_with_opener(cur_window.opener);
 		}
 	}
