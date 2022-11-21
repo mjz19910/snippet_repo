@@ -70,9 +70,57 @@ class UseRealConsole {
 
 const console=new UseRealConsole;
 
+
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
 window.g_api=g_api;
+
+class LoggingEventTarget {
+	dispatchEvent=console.log.bind(console);
+}
+g_api.LoggingEventTarget=LoggingEventTarget;
+
+class APIProxyManager {
+	/**
+	 * @param {LoggingEventTarget} event_handler
+	 */
+	constructor(event_handler) {
+		this.event_handler=event_handler;
+	}
+	/**
+	 * @param {string} message_to_send
+	 * @param {()=>void} function_value
+	 */
+	create_proxy_for_function(message_to_send,function_value) {
+		let event_handler=this.event_handler;
+		let obj={
+			event_handler,
+			/**@arg {[target: () => void, thisArg: any, argArray: any[]]} post_message_proxy_spread */
+			apply(...post_message_proxy_spread) {
+				this.event_handler.dispatchEvent({
+					type: message_to_send,
+					data: post_message_proxy_spread
+				});
+				let ret=Reflect.apply(...post_message_proxy_spread);
+				return ret;
+			}
+		};
+		return new Proxy(function_value,obj);
+	}
+	start_postMessage_proxy() {
+		/**@type {any} */
+		let win_post_message=window.postMessage;
+		window.postMessage=this.create_proxy_for_function('postMessage_sent',win_post_message);
+	}
+}
+g_api.APIProxyManager=APIProxyManager;
+
+let any_api_logger=new APIProxyManager(new LoggingEventTarget);
+
+let do_postMessage_logging=true;
+if(do_postMessage_logging) {
+	any_api_logger.start_postMessage_proxy();
+}
 
 /** @param {any} v */
 function any(v) {
@@ -2695,44 +2743,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 }
 g_api.RemoteOriginConnection=RemoteOriginConnection;
 g_api.remote_origin=new RemoteOriginConnection();
-class APIProxyManager {
-	/**
-	 * @param {LoggingEventTarget} event_handler
-	 */
-	constructor(event_handler) {
-		this.event_handler=event_handler;
-	}
-	/**
-	 * @param {string} message_to_send
-	 * @param {()=>void} function_value
-	 */
-	create_proxy_for_function(message_to_send,function_value) {
-		let event_handler=this.event_handler;
-		let obj={
-			event_handler,
-			/**@arg {[target: () => void, thisArg: any, argArray: any[]]} post_message_proxy_spread */
-			apply(...post_message_proxy_spread) {
-				this.event_handler.dispatchEvent({
-					type: message_to_send,
-					data: post_message_proxy_spread
-				});
-				let ret=Reflect.apply(...post_message_proxy_spread);
-				return ret;
-			}
-		};
-		return new Proxy(function_value,obj);
-	}
-	start_postMessage_proxy() {
-		/**@type {any} */
-		let win_post_message=window.postMessage;
-		window.postMessage=this.create_proxy_for_function('postMessage_sent',win_post_message);
-	}
-}
-g_api.APIProxyManager=APIProxyManager;
-class LoggingEventTarget {
-	dispatchEvent=console.log.bind(console);
-}
-g_api.LoggingEventTarget=LoggingEventTarget;
+
 const html_parsing_div_element=document.createElement("div");
 /**
  * @param {string} html
@@ -2754,13 +2765,6 @@ g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 /**
  * @typedef {{type: 'invalid-state-error';data: null;}} dbg_ISE
  */
-
-let any_api_logger=new APIProxyManager(new LoggingEventTarget);
-
-let do_postMessage_logging=true;
-if(do_postMessage_logging) {
-	any_api_logger.start_postMessage_proxy();
-}
 
 class DebugAPI {
 	next_remote_id=0;
