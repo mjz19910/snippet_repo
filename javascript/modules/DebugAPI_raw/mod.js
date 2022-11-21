@@ -19,7 +19,7 @@ const debug=false;
 const base_console=window.console;
 
 const console={
-	...Object.fromEntries(Object.entries(base_console).map(([k,v])=>{
+	...Object.fromEntries(Object.entries(base_console).map(([k,v]) => {
 		if(typeof v==='function') {
 			return [k,v.bind(base_console)];
 		}
@@ -286,6 +286,17 @@ function define_normal_value(obj,key,value) {
 	});
 }
 
+/** @param {EventTarget} prototype */
+function overwrite_addEventListener(prototype) {
+	let arg_list=[];
+	prototype.addEventListener=new Proxy(prototype.addEventListener,{
+		apply(...args) {
+			arg_list.push(new WeakRef(args));
+			return Reflect.apply(...args);
+		}
+	});
+}
+
 x.a=EventTarget.prototype;
 class AddEventListenerExt {
 	/** @private */
@@ -297,6 +308,7 @@ class AddEventListenerExt {
 	/** @private */
 	target_prototype=x.a;
 	constructor() {
+		overwrite_addEventListener(this.target_prototype);
 		if(!debug) return;
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
@@ -426,7 +438,7 @@ class AddEventListenerExt {
 		}
 		list.push(new WeakRef(val));
 		let node_id=this.node_id_max++;
-		let id_holder={value:node_id};
+		let id_holder={value: node_id};
 		val.__id_holder=id_holder;
 		ids.push(new WeakRef(id_holder));
 		this.node_list=new WeakRef(list);
@@ -472,7 +484,7 @@ class AddEventListenerExt {
 			let msg_event=args[0];
 			let d=msg_event.data;
 			if(typeof d==='object'&&d!==null&&'type' in d) {
-				if(d.type === remote_origin.post_message_connect_message_type) {
+				if(d.type===remote_origin.post_message_connect_message_type) {
 					if(debug) console.log("skip page event handler for "+d.type);
 					return;
 				}
@@ -2328,16 +2340,16 @@ class TransportMessageObj {
 	m_missing_keep_alive_counter=0;
 	keep_alive_send() {
 		this.m_missing_keep_alive_counter++;
-		if(this.m_missing_keep_alive_counter > 1) {
+		if(this.m_missing_keep_alive_counter>1) {
 			console.log("missed keep alive interval");
 		}
-		if(this.m_missing_keep_alive_counter > 8) {
+		if(this.m_missing_keep_alive_counter>8) {
 			console.log("keep alive disabled (no replies for 8 intervals)");
 			clearInterval(this.m_keep_alive_interval);
 		}
-		if(this.m_missing_keep_alive_counter > 0) {
+		if(this.m_missing_keep_alive_counter>0) {
 			// drain it slowly
-			if(Math.random() < 0.1) {
+			if(Math.random()<0.1) {
 				this.m_missing_keep_alive_counter--;
 			}
 		}
@@ -2378,7 +2390,7 @@ class TransportMessageObj {
 			case "keep_alive": {
 			} break;
 			case "keep_alive_reply": {
-				if(this.m_missing_keep_alive_counter > 0) {
+				if(this.m_missing_keep_alive_counter>0) {
 					this.m_missing_keep_alive_counter--;
 				}
 			} break;
@@ -2389,7 +2401,7 @@ class TransportMessageObj {
 		this.m_com_port=port;
 		this.m_com_port.start();
 		this.m_com_port.addEventListener("message",this);
-		if(this.m_timeout_id !== null) return;
+		if(this.m_timeout_id!==null) return;
 		this.start_timeout();
 	}
 	start_timeout() {
@@ -2461,15 +2473,15 @@ class RemoteHandler {
 		this.connection_port.postMessage(message_data);
 	}
 	/** @type {RemoteOriginConnection} */
-    root;
+	root;
 	/** @type {MessagePort} */
-    connection_port;
+	connection_port;
 	/** @arg {MessageEvent<RemoteOriginMessage>} event */
-    handleEvent(event) {
+	handleEvent(event) {
 		this.root.on_child_event(event,this);
 	};
 	/** @param {RemoteOriginConnection} root @param {MessagePort} connection_port */
-	constructor(root, connection_port) {
+	constructor(root,connection_port) {
 		this.root=root;
 		this.connection_port=connection_port;
 	}
@@ -2487,13 +2499,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @type {RemoteOriginMessage[]} */
 	unhandled_child_events=[];
 	/** @param {MessageEvent<RemoteOriginMessage>} event @arg {RemoteHandler} remote_handler */
-	on_child_event(event, remote_handler) {
+	on_child_event(event,remote_handler) {
 		if(this.m_flags.does_proxy_to_opener) {
 			console.log("TODO proxy message to opener");
 		}
 		let {data}=event;
 		switch(data.type) {
-			case 'keep_alive':{
+			case 'keep_alive': {
 				remote_handler.post_message({
 					type: "keep_alive_reply",
 					side: data.side,
@@ -2584,16 +2596,16 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event @arg {number} client_id */
 	on_connect_request_message(event,client_id) {
-		if(typeof event.data !== 'object' || event.data === null || !('type' in event.data)) return false;
+		if(typeof event.data!=='object'||event.data===null||!('type' in event.data)) return false;
 		switch(event.data.type) {
-			case remote_origin.post_message_connect_message_type: break
+			case remote_origin.post_message_connect_message_type: break;
 			default: return false;
 		}
 		let connection_port=event.ports[0];
 		let handler=new RemoteHandler(this,connection_port);
 		connection_port.start();
 		connection_port.addEventListener("message",handler);
-		this.post_port_message(connection_port,{type: "listening", client_id});
+		this.post_port_message(connection_port,{type: "listening",client_id});
 		this.connections.push({port: connection_port});
 		return true;
 	}
