@@ -2544,7 +2544,9 @@ class TransportMessageObj {
 		}
 		this.m_com_port.postMessage(message_data);
 	}
+	m_missing_keep_alive_counter=0;
 	keep_alive_send() {
+		this.m_missing_keep_alive_counter++;
 		this.post_message({
 			type: "keep_alive",
 		});
@@ -2579,7 +2581,9 @@ class TransportMessageObj {
 				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),(this.m_connection_timeout/8)*4);
 			} break;
 			case "keep_alive": {
-
+			} break;
+			case "keep_alive_reply": {
+				this.m_missing_keep_alive_counter--;
 			} break;
 		}
 	}

@@ -184,7 +184,7 @@ declare global {
 declare global {
 	type RemoteOriginListening={type: "listening",client_id: number;};
 	type RemoteOriginDisconnected={type: "disconnected";};
-	type RemoteOriginKeepAlive={type: "keep_alive";};
+	type RemoteOriginKeepAlive={type: "keep_alive"|"keep_alive_reply";};
 	type RemoteOriginMessage=
 		RemoteOriginListening|
 		RemoteOriginDisconnected|
