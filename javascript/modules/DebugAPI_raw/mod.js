@@ -14,6 +14,8 @@
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
 
+const debug=false;
+
 const base_console=window.console;
 
 const saved_console={
@@ -692,7 +694,7 @@ class AddEventListenerExt {
 			let d=msg_event.data;
 			if(typeof d==='object'&&d!==null&&'type' in d) {
 				if(d.type === remote_origin.post_message_connect_message_type) {
-					console.log("skip page event handler for "+d.type);
+					if(debug) console.log("skip page event handler for "+d.type);
 					return;
 				}
 			}
