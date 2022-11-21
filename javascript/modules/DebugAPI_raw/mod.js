@@ -324,9 +324,9 @@ class AddEventListenerExt {
 	}
 	/**
 	 * @param {depth_or_any[]} tmp
-	 * @param {depth_or_any[]} cur
+	 * @param {WeakRef<depth_or_any>[]} cur
 	 * @param {number} index
-	 * @returns {[true,depth_or_any]|[false,depth_or_any]}
+	 * @returns {[true,depth_or_any]|[false,WeakRef<depth_or_any>]}
 	 */
 	use_tmp_list(tmp,cur,index) {
 		if(tmp.length>0) {
@@ -365,13 +365,18 @@ class AddEventListenerExt {
 		if(call_list.length>30) {
 			/** @type {depth_or_any[]} */
 			let extract_list=[];
-			/** @type {depth_or_any[]} */
+			/** @type { depth_or_any[]} */
 			let tmp_list=[];
 			for(let i=0;i<call_list.length;i++) {
-				let ret_obj=this.use_tmp_list(tmp_list,extract_list,i);
-				if(ret_obj[0]) {i--;}
-				let ref=ret_obj[1];
-				let inner=ref.deref();
+				let ret_obj=this.use_tmp_list(tmp_list,call_list,i);
+				let inner;
+				if(ret_obj[0]) {
+					i--;
+					inner=ret_obj[1];
+				} else {
+					let ref=ret_obj[1];
+					inner=ref.deref();
+				}
 				if(inner===void 0)
 					continue;
 				if(inner[0]==='depth') {
