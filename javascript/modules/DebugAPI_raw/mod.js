@@ -2546,6 +2546,21 @@ function elevate_event_handler(handler) {
 	add_event_listener_ext.elevated_event_handlers.push(handler);
 }
 
+class RemoteSocket {
+	/**
+	 * @param {MessagePort} port
+	 * @param {RemoteHandler} handler
+	 * @param {number} client_id
+	 * @arg {MessageEvent} event
+	 */
+	constructor(port, handler, client_id, event) {
+		this.port=port;
+		this.handler=handler;
+		this.client_id=client_id;
+		this.first_event=event;
+	}
+}
+
 class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @param {TransportMessageObj} obj */
 	request_new_port(obj) {
@@ -2672,7 +2687,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		connection_port.start();
 		connection_port.addEventListener("message",handler);
 		this.post_port_message(connection_port,{type: "listening",client_id});
-		this.connections.push({port: connection_port});
+		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
 	}
 	/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
 	post_port_message(target_port,message) {
@@ -2686,7 +2701,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			let client_id=t.client_max_id++;
 			let message_data=event.data;
 			if(typeof message_data==='object') {
-				let misbehaved=event.ports.length!==1;
 				let state={
 					did_misbehave:event.ports.length!==1,
 				}
@@ -2700,7 +2714,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				}
 			}
 		}
-		elevate_event_handler(handler);
+		elevate_event_handler(on_message_event);
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
