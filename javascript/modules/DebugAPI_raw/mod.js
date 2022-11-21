@@ -2465,7 +2465,7 @@ class RemoteOriginConnection {
 	sha_1_initial="f615a9c";
 	constructor() {
 		this.max_elevate_id=0;
-		/**@type {WeakMap<Window, Window>} */
+		/**@type {WeakMap<MessageEventSource|Window, Window>} */
 		this.event_transport_map=new WeakMap;
 		this.state=OriginState;
 		/**
@@ -2537,6 +2537,9 @@ class RemoteOriginConnection {
 	/** @arg {{event: MessageEvent<RemoteOriginMessage>;handler: TransportMessageObj;}} message_event */
 	transport_init_maybe_complete(message_event) {
 		console.log('transport connected',message_event.event.data);
+		if(message_event.event.source !== null) {
+			this.event_transport_map.set(message_event.event.source,window);
+		}
 	}
 	/**@type {{port:MessagePort}[]} */
 	connections=[];
