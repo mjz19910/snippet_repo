@@ -5,10 +5,13 @@ const debug=false;
 let g_loaded_ipc_plugins=new Map;
 
 class ReplPluginManagerModule {
+	/** @type {IpcLoader} */
+	static IPCLoader;
 	/** @param {IpcLoader} state @param {string} key @param {string} module_path */
-	static import_ipc_plugin(state,key,module_path) {
-		console.log("TODO use args",state,key);
-		return import(module_path);
+	static async import_ipc_plugin(state,key,module_path) {
+		this.IPCLoader=state;
+		let module_=await import(module_path);
+		g_loaded_ipc_plugins.set(key,module_);
 	}
 }
 
