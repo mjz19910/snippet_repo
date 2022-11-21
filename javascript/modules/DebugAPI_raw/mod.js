@@ -2456,13 +2456,19 @@ class TransportMessageObj {
 			case "disconnected": {
 				this.disconnect();
 				this.m_connection.transport_disconnected(report_info);
-				let tries_left=8;
+				let tries_left=30;
 				this.m_timeout_id=setTimeout(function request_new_connection(obj) {
 					console.log("reconnect tries_left",tries_left);
 					if(tries_left > 1) {
 						tries_left--;
 						obj.m_connection.request_new_port(obj);
-						this.m_timeout_id=setTimeout(request_new_connection,obj.m_connection_timeout/tries_left,obj);
+						let timeout;
+						if(tries_left < 7) {
+							timeout=obj.m_connection_timeout/tries_left;
+						} else {
+							timeout=obj.m_connection_timeout/8;
+						}
+						this.m_timeout_id=setTimeout(request_new_connection,timeout,obj);
 					}
 				},this.m_connection_timeout/tries_left,this);
 			} break;
