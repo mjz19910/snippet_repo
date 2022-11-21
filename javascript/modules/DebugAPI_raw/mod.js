@@ -18,59 +18,14 @@ const debug=false;
 
 const base_console=window.console;
 
-const saved_console={
-	log: base_console.log,
-	assert: base_console.assert,
-	clear: base_console.clear,
-	count: base_console.count,
-	countReset: base_console.countReset,
-	debug: base_console.debug,
-	dir: base_console.dir,
-	dirxml: base_console.dirxml,
-	error: base_console.error,
-	group: base_console.group,
-	groupCollapsed: base_console.groupCollapsed,
-	groupEnd: base_console.groupEnd,
-	info: base_console.info,
-	table: base_console.table,
-	time: base_console.time,
-	timeEnd: base_console.timeEnd,
-	timeLog: base_console.timeLog,
-	timeStamp: base_console.timeStamp,
-	trace: base_console.trace,
-	warn: base_console.warn,
-	profile: base_console.profile,
-	profileEnd: base_console.profileEnd,
+const console={
+	...Object.fromEntries(Object.entries(base_console).map(([k,v])=>{
+		if(typeof v==='function') {
+			return [k,v.bind(base_console)];
+		}
+		return [k,v];
+	})),
 };
-
-/**@implements {Console} */
-class UseRealConsole {
-	assert=saved_console.assert.bind(base_console);
-	log=saved_console.log.bind(base_console);
-	clear=saved_console.clear.bind(base_console);
-	count=saved_console.count.bind(base_console);
-	countReset=saved_console.countReset.bind(base_console);
-	debug=saved_console.debug.bind(base_console);
-	dir=saved_console.dir.bind(base_console);
-	dirxml=saved_console.dirxml.bind(base_console);
-	error=saved_console.error.bind(base_console);
-	group=saved_console.group.bind(base_console);
-	groupCollapsed=saved_console.groupCollapsed.bind(base_console);
-	groupEnd=saved_console.groupEnd.bind(base_console);
-	info=saved_console.info.bind(base_console);
-	table=saved_console.table.bind(base_console);
-	time=saved_console.time.bind(base_console);
-	timeEnd=saved_console.timeEnd.bind(base_console);
-	timeLog=saved_console.timeLog.bind(base_console);
-	timeStamp=saved_console.timeStamp.bind(base_console);
-	trace=saved_console.trace.bind(base_console);
-	warn=saved_console.warn.bind(base_console);
-	profile=saved_console.profile.bind(base_console);
-	profileEnd=saved_console.profileEnd.bind(base_console);
-}
-
-const console=new UseRealConsole;
-
 
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
