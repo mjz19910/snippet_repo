@@ -33,9 +33,6 @@ function async_http_get(state) {
  */
 function async_https_get(state) {
 	async_api_use_for_get(state,https);
-	https.get(state.url,(resp) => {
-		console.log(resp);
-	});
 }
 
 
