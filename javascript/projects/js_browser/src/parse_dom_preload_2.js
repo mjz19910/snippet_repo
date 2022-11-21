@@ -108,7 +108,6 @@ try {
 	await async_main();
 	console.log("app promise done");
 } catch(err) {
-	console.log(err);
 	throw err;
 }
 
