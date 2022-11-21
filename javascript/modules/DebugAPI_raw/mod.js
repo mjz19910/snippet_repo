@@ -2467,7 +2467,21 @@ class OriginState {
 }
 g_api.OriginState=OriginState;
 
-class RemoteOriginConnection {
+class RemoteOriginConnectionData {
+	// @Update on minor version change
+	// version 0.3.0 sha1 initial commit
+	sha_1_initial="f615a9c";
+	m_flags={does_proxy_to_opener: false};
+	m_transport_map=new Map;
+	max_elevate_id=0;
+	/**@type {WeakMap<MessageEventSource|Window, Window>} */
+	event_transport_map=new WeakMap;
+	state=OriginState;
+	/** @type {({}|null)[]} */
+	elevated_array=[];
+}
+
+class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @param {TransportMessageObj} obj */
 	request_new_port(obj) {
 		if(!this.m_connect_target) {
@@ -2483,18 +2497,8 @@ class RemoteOriginConnection {
 	on_child_event(event) {
 		console.log(event);
 	}
-	// @Update on minor version change
-	// version 0.3.0 sha1 initial commit
-	sha_1_initial="f615a9c";
 	constructor() {
-		this.max_elevate_id=0;
-		/**@type {WeakMap<MessageEventSource|Window, Window>} */
-		this.event_transport_map=new WeakMap;
-		this.state=OriginState;
-		/**
-		 * @type {({}|null)[]}
-		 */
-		this.elevated_array=[];
+		super();
 		this.state.is_top=this.state.window===this.state.top;
 		this.state.is_root=this.state.opener===null;
 		if(!this.state.is_top)
@@ -2512,8 +2516,6 @@ class RemoteOriginConnection {
 			this.init_transport_over(this.state.top,this.state.window);
 		}
 	}
-	m_flags={does_proxy_to_opener: false};
-	m_transport_map=new Map;
 	setup_root_proxy() {
 		this.m_flags.does_proxy_to_opener=true;
 	}
