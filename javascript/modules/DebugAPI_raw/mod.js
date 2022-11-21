@@ -2466,9 +2466,9 @@ class TransportMessageObj {
 						if(tries_left < 7) {
 							timeout=obj.m_connection_timeout/tries_left;
 						} else {
-							timeout=obj.m_connection_timeout/8;
+							timeout=(obj.m_connection_timeout/8)*30;
 						}
-						this.m_timeout_id=setTimeout(request_new_connection,timeout,obj);
+						this.m_timeout_id=setTimeout(request_new_connection,timeout*30,obj);
 					}
 				},this.m_connection_timeout/tries_left,this);
 			} break;
