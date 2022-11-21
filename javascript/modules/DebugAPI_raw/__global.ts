@@ -177,7 +177,7 @@ declare global {
 
 declare global {
 	type depth_type=['depth',number,WeakRef<depth_or_any[]>];
-	type value_id_type=['value_id',number,WeakRef<["real_holder",any]>];
+	type value_id_type=['value_id',number,["real_holder",any]];
 	type depth_or_any=['real_holder',unknown]|value_id_type|depth_type;
 }
 

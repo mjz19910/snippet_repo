@@ -454,10 +454,9 @@ class AddEventListenerExt {
 		/** @type {['real_holder', any]} */
 		let call_list_info=['real_holder',real_value];
 		this.keep("real_holder",call_list_info);
-		let real_holder_ref=new WeakRef(call_list_info);
 		let id=this.object_max_id++;
 		/** @type {value_id_type} */
-		let info=['value_id',id,real_holder_ref];
+		let info=['value_id',id,call_list_info];
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
 		}
