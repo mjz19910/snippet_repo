@@ -290,35 +290,34 @@ class addEventListenerExt {
 		if('__reactFiber$' in val) {
 			is_react_element=true;
 		}
-		let index=this.object_ids.findIndex(e => e.deref()===val);
-		if(index>-1) {
-			this.convert_to_namespaced_string(real_value,val,key,index);
-			return;
-		} else if(is_react_element) {
-			console.log("react_element",val);
-			index=this.add_object_id(val,"react");
-		} else if(val instanceof IDBDatabase||val instanceof IDBTransaction) {
-			// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
-			index=this.add_object_id(val,"idb");
-		} else if(val instanceof ServiceWorkerContainer) {
-			index=this.add_object_id(val,"service_worker");
-		}
-		if(index===-1) {
-			let failed=false;
-			try {
-				JSON.stringify(val);
-			} catch {
-				failed=true;
-			};
-			if(failed) {
-				if(!this.failed_obj) {
-					this.failed_obj={v: real_value};
-				}
-				console.log("skip, will stringify circular structure",real_value,key,val);
+		{
+			let index=this.object_ids.findIndex(e => e.deref()===val);
+			if(index>-1) {
+				this.convert_to_namespaced_string(real_value,val,key,index);
 				return;
 			}
-		} else {
-			this.convert_to_namespaced_string(real_value,val,key,index);
+		}
+		if(is_react_element) {
+			console.log("react_element",val);
+			this.convert_to_id_key(real_value,key,val,"react");
+		} else if(val instanceof IDBDatabase||val instanceof IDBTransaction) {
+			// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
+			this.convert_to_id_key(real_value,key,val,"idb");
+		} else if(val instanceof ServiceWorkerContainer) {
+			this.convert_to_id_key(real_value,key,val,"service_worker");
+		}
+		let failed=false;
+		try {
+			JSON.stringify(val);
+		} catch {
+			failed=true;
+		};
+		if(failed) {
+			if(!this.failed_obj) {
+				this.failed_obj={v: real_value};
+			}
+			console.log("skip, will stringify circular structure",real_value,key,val);
+			return;
 		}
 	}
 	/** @param {[any, any, any[]]} list */
@@ -350,6 +349,11 @@ class addEventListenerExt {
 		console.log("gc keep info",info);
 		call_list.push(new WeakRef(info));
 	}
+	/** @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
+	static convert_to_id_key(real_value,key,val,namespace) {
+		let index=this.add_object_id(val,namespace);
+		this.convert_to_namespaced_string(real_value,val,key,index);
+	}
 	/** @template {CallableFunction} T @param {unknown[]} real_value @param {number} key @param {T} val */
 	static args_iter_on_function(real_value,key,val) {
 		let index=this.object_ids.findIndex(e => e.deref()===val);
@@ -357,6 +361,7 @@ class addEventListenerExt {
 			this.convert_to_namespaced_string(real_value,val,key,index);
 			return;
 		}
+		this.convert_to_id_key(real_value,key,val,"function");
 	}
 	/** @param {[any, any, any[]]} list */
 	static add_to_call_list(list) {
