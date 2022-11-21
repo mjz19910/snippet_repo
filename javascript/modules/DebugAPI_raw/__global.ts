@@ -188,6 +188,10 @@ declare global {
 }
 
 declare global {
+	type EventListenersT=EventListenerOrEventListenerObject|((v:MessageEvent<any>)=>void)
+}
+
+declare global {
 	type ReportInfo<T>={
 		event: MessageEvent<RemoteOriginMessage>;
 		handler: T;

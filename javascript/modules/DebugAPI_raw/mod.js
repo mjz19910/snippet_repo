@@ -356,7 +356,7 @@ class AddEventListenerExt {
 	object_max_id=1;
 	/** @readonly */
 	namespace_key="__g_api__namespace";
-	/** @type {EventListenerOrEventListenerObject[]} */
+	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
 	/** @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
 	convert_to_namespaced_string(real_value,val,key,index) {
@@ -2740,7 +2740,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				this.root.on_child_event(event);
 			},
 		};
-		add_event_listener_ext.elevated_event_handlers.push(handler);
 		connection_port.addEventListener("message",handler);
 		this.post_port_message(connection_port,{type: "listening"});
 		this.connections.push({port: connection_port});
@@ -2773,6 +2772,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				}
 			}
 		}
+		add_event_listener_ext.elevated_event_handlers.push(on_message_event);
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
