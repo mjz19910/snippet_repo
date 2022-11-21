@@ -376,7 +376,7 @@ class AddEventListenerExt {
 	}
 	/** @private */
 	clear_count=0;
-	/** @returns {void} @private @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
+	/** @private @returns {void} @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
