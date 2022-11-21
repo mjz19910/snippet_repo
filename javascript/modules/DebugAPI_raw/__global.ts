@@ -211,7 +211,7 @@ declare global {
 
 declare global {
 	interface EventTarget {
-		__arg_list:WeakRef<{}>[];
+		__arg_list:WeakRef<{}>[][];
 	}
 }
 
