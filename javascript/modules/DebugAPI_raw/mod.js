@@ -2550,6 +2550,10 @@ class TransportMessageObj {
 		if(this.m_missing_keep_alive_counter > 1) {
 			console.log("missed keep alive interval");
 		}
+		if(this.m_missing_keep_alive_counter > 8) {
+			console.log("keep alive disabled (no replies for 8 intervals)");
+			clearInterval(this.m_keep_alive_interval);
+		}
 		if(this.m_missing_keep_alive_counter > 0) {
 			// drain it slowly
 			if(Math.random() < 0.1) {
