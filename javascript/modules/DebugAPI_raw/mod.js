@@ -322,6 +322,20 @@ class AddEventListenerExt {
 			return;
 		}
 	}
+	/**
+	 * @param {depth_or_any[]} tmp
+	 * @param {depth_or_any[]} cur
+	 * @param {number} index
+	 * @returns {[true,depth_or_any]|[false,depth_or_any]}
+	 */
+	use_tmp_list(tmp,cur,index) {
+		if(tmp.length>0) {
+			let value=tmp.shift();
+			if(!value) {throw new Error("Unreachable");}
+			return [true,value];
+		}
+		return [false,cur[index]];
+	}
 	/** @param {[any, any, any[]]} list */
 	add_to_call_list_impl(list) {
 		let [target,orig_this,args]=list;
@@ -339,7 +353,7 @@ class AddEventListenerExt {
 		if(call_list===void 0) {
 			call_list=[];
 			this.call_list_create_count++;
-			if(this.call_list_create_count > 1) {
+			if(this.call_list_create_count>1) {
 				console.log("call list lost");
 			}
 			this.keep("call_list",call_list);
@@ -351,9 +365,12 @@ class AddEventListenerExt {
 		if(call_list.length>30) {
 			/** @type {depth_or_any[]} */
 			let extract_list=[];
-			debugger;
+			/** @type {depth_or_any[]} */
+			let tmp_list=[];
 			for(let i=0;i<call_list.length;i++) {
-				let ref=call_list[i];
+				let ret_obj=this.use_tmp_list(tmp_list,extract_list,i);
+				if(ret_obj[0]) {i--;}
+				let ref=ret_obj[1];
 				let inner=ref.deref();
 				if(inner===void 0)
 					continue;
@@ -361,7 +378,7 @@ class AddEventListenerExt {
 					let deref_val=inner[2].deref();
 					if(!deref_val)
 						continue;
-					extract_list.push(...deref_val);
+					tmp_list.push(...deref_val);
 					continue;
 				}
 				extract_list.push(inner);
@@ -379,6 +396,7 @@ class AddEventListenerExt {
 						acc_list=[];
 					}
 				}
+				next_list.push(...acc_list);
 				this.keep("next_list",next_list);
 				extract_list=next_list;
 				cur_depth++;
@@ -387,9 +405,9 @@ class AddEventListenerExt {
 			/** @type {depth_type} */
 			let depth_info=['depth',cur_depth,new WeakRef(extract_list)];
 			call_list=[];
-			this.keep("depth adjust call_list", call_list);
+			this.keep("depth adjust call_list",call_list);
 			this.call_list=new WeakRef(call_list);
-			this.keep("depth_info", depth_info);
+			this.keep("depth_info",depth_info);
 			call_list.push(new WeakRef(depth_info));
 		}
 		let real_holder_ref=new WeakRef(call_list_info);
@@ -404,7 +422,7 @@ class AddEventListenerExt {
 	}
 	/** @param {string} key @param {unknown} value */
 	keep(key,value) {
-		if(this.call_list_create_count > 1)
+		if(this.call_list_create_count>1)
 			return;
 		console.log(`gc_keep: ${key}`,value);
 	}
