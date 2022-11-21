@@ -2404,9 +2404,11 @@ class TransportMessageObj {
 				this.m_connection.transport_disconnected(report_info);
 				let tries=8;
 				setTimeout(function request_new_connection(obj) {
-					tries--;
-					obj.m_connection.request_new_port(obj);
-					setTimeout(request_new_connection,obj.m_connection_timeout/tries,obj);
+					if(tries > 1) {
+						tries--;
+						obj.m_connection.request_new_port(obj);
+						setTimeout(request_new_connection,obj.m_connection_timeout/tries,obj);
+					}
 				},this.m_connection_timeout/tries,this);
 			} break;
 		}
