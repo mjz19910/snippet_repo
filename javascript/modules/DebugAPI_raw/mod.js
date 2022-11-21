@@ -2318,7 +2318,7 @@ class TransportMessageObj {
 	m_current_target;
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
-	/** @param {any} message_event_response */
+	/** @param {MessageEvent<{type:"listening"}>} message_event_response */
 	handleEvent(message_event_response) {
 		this.m_connection.transport_init_maybe_complete({
 			event: message_event_response,
