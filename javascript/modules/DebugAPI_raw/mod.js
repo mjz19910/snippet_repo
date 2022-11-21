@@ -2693,10 +2693,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	client_max_id=0;
 	/**
 	 * @arg {MessageEvent<unknown>} event
-	 * @arg {number} client_id
 	 * @param {{ did_misbehave: boolean; }} state
 	 */
-	on_connect_request_message(state,event,client_id) {
+	on_connect_request_message(state,event) {
 		if(typeof event.data!=='object'||event.data===null||!('type' in event.data)) {
 			state.did_misbehave=true;
 			return;
@@ -2705,6 +2704,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			case remote_origin.post_message_connect_message_type: break;
 			default: state.did_misbehave=true; return;
 		}
+		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
 		let handler=new RemoteHandler(this,connection_port);
 		connection_port.start();
@@ -2727,17 +2727,16 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		let t=this;
 		/** @arg {MessageEvent<unknown>} event */
 		function on_message_event(event) {
-			let client_id=t.client_max_id++;
 			let message_data=event.data;
 			if(typeof message_data==='object') {
 				let state={
 					did_misbehave: event.ports.length!==1,
 				};
 				if(!state.did_misbehave) {
-					t.on_connect_request_message(state,event,client_id);
+					t.on_connect_request_message(state,event);
 				}
 				if(state.did_misbehave) {
-					console.log(`Client(${client_id}) misbehaved: connect api not followed`);
+					console.log(`Client misbehaved: connect api not followed`);
 					console.log("Received message object",message_data);
 					console.log("Received message ports",event.ports);
 				}
