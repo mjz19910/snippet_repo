@@ -659,8 +659,10 @@ class AddEventListenerExt {
 			case "addEventListener": t.target_prototype[target]=function(...args) {
 				t.add_to_call_list([target,this,args]);
 				let original_function=args[1];
-				args[1]=function(...args) {
-					t.eventFireInterceptor(original_function,this,args);
+				if(!t.elevated_functions.includes(original_function)) {
+					args[1]=function(...args) {
+						t.eventFireInterceptor(original_function,this,args);
+					}
 				}
 				return t.orig[target].call(this,...args);
 			}; break;
