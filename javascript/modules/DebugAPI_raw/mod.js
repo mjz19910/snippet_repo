@@ -24,39 +24,148 @@ function any(v) {
 }
 
 class ReversePrototypeChain {
-	generate() {
-		let np=Object.create(null);
-		for(let target of this.targets) {
-			this.process_target(target,np);
-		}
-	}
-	/**
-	 * @param {{}} target
-	 * @param {{}} dest
-	 */
-	process_target(target,dest) {
-		let proto=target;
-		let list=[];
-		while(proto) {
-			list.push(proto);
-			proto=Object.getPrototypeOf(proto);
-		}
-		console.log(dest);
-	}
 	/**
 	 * @param {{}} base
 	 * @param {{}[]} targets
 	 */
-	constructor(base,targets) {
-		this.base=base;
-		this.targets=targets;
+	constructor(base, targets) {
+		this.window_list = [];
+		for (let i = 0; i < window.length; i++) {
+			this.window_list.push(window[i]);
+		}
+		this.base = base;
+		this.targets = targets;
+		/** @type {{}[]} */
+		this.values=[];
+		/** @typedef {{__proto__:null,prototypes:{name:string}[],values:{}[]}} destination_child_type */
+		/** @typedef {{__proto__:null,name:string,prototype:{}|null,child:destination_child_type}} destination_index_type */
+		/** @type {{[x: string]: destination_index_type}} */
+		this.destination = Object.create(null);
+		/** @type {{}[]} */
+		this.object_cache=[];
+		this.null_cache_key = this.get_cache_key(null);
+		this.cache_prototype(this.null_cache_key, null);
+	}
+	generate() {
+		for (let target of this.targets) {
+			this.process_target(target);
+		}
+	}
+	/** @arg {{}|null} value */
+	get_cache_key(value) {
+		if(!value) {
+			return "a_null::0";
+		}
+		if (this.window_list.includes(any(value))) {
+			return "window_id::" + this.window_list.indexOf(any(value));
+		}
+		let key;
+		if(Symbol.toStringTag in value) {
+			key=value[Symbol.toStringTag];
+		}
+		if (key) {
+			if (value.hasOwnProperty('constructor')) {
+				return "constructor::" + value.constructor.name + ":" + (value.constructor.prototype === value) + ":" + key;
+			}
+			return "other::" + key;
+		}
+		if (value === g_api)
+			return "self::g_api";
+		try {
+			if (value.hasOwnProperty('constructor')) {
+				return "constructor::" + value.constructor.name + ":" + (value.constructor.prototype === value);
+			}
+		} catch {}
+		let index=this.object_cache.indexOf(value);
+		if(index < 0) {
+			index=this.object_cache.push(value)-1;
+		}
+		return "cache_id::" + index;
+	}
+	/** @param {string} cache_key @param {{} | null} prototype */
+	cache_prototype(cache_key, prototype) {
+		this.destination[cache_key] ??= {
+			__proto__: null,
+			name: cache_key,
+			prototype,
+			child: {
+				__proto__: null,
+				prototypes: [],
+				values: [],
+			}
+		};
+	}
+	/** @param {{} | undefined} prototype @param {{} | undefined} next_proto @param {number} index */
+	add_one(prototype, next_proto, index) {
+		if(!this.list)
+			throw new Error("No prototype list");
+		if (prototype === void 0)
+			return;
+		let cache_key = this.get_cache_key(prototype);
+		this.cache_prototype(cache_key, prototype);
+		x: if (next_proto) {
+			let next = this.add_one(next_proto, this.list.at(index - 1), index - 1);
+			if(!next) {
+				break x;
+			}
+			let idx = this.destination[cache_key].child.prototypes.findIndex(e=>e.name === next.name)
+			if (idx < 0) {
+				this.destination[cache_key].child.prototypes.push(next);
+			}
+		}
+		return this.destination[cache_key];
+	}
+	/** @param {string} key @param {{}} value */
+	add_prototype_value(key, value) {
+		let prototypes=this.destination[key].child.prototypes;
+		if(prototypes.includes(value))
+			return;
+		prototypes.push(value);
 	}
 	/**
 	 * @param {{}} target
 	 */
+	process_target(target) {
+		let proto = target;
+		/** @type {{}[]} */
+		this.list = [];
+		while (proto) {
+			this.list.push(proto);
+			proto = Object.getPrototypeOf(proto);
+		}
+		let index = 0;
+		let final = this.list.at(-1);
+		this.add_prototype_value(this.null_cache_key, final);
+		let item_0 = this.list.at(-2);
+		this.add_one(final, item_0, -2);
+		for(let x of this.values) {
+			let prototype=Object.getPrototypeOf(x);
+			let cache_key = this.get_cache_key(prototype);
+			if(!this.destination[cache_key]) {
+				this.cache_prototype(cache_key, prototype);
+			}
+			let values=this.destination[cache_key].child.values;
+			if(values.includes(x)) {
+				continue;
+			}
+			values.push(x);
+		}
+	}
+	/** @param {{}} target */
 	add_target(target) {
-		if(this.targets.includes(target)) return;
-		this.targets.push(target);
+		let prototype = Object.getPrototypeOf(target);
+		p: {
+			if(prototype === null)
+				break p;
+			if (this.targets.includes(prototype))
+				break p;
+			this.targets.push(prototype);
+		}
+		v: {
+			if (this.values.includes(target))
+				break v;
+			this.values.push(target);
+		}
 	}
 }
 g_api.ReversePrototypeChain=ReversePrototypeChain;
