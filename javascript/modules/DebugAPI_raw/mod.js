@@ -531,9 +531,15 @@ class AddEventListenerExt {
 	generate_node_id(val) {
 		let lost_index=this.node_list.findIndex(e => e.deref()===void 0);
 		if(lost_index>-1) {
-			this.node_list.splice(lost_index,1);
-			this.node_list_ids.splice(lost_index,1);
-			console.log("dom gc happened",lost_index);
+			let lost_indexes=[];
+			for(let x=this.node_list.length-1;x>0;x--) {
+				if(this.node_list[x].deref()===void 0) {
+					this.node_list.splice(x,1);
+					this.node_list_ids.splice(x,1);
+					lost_indexes.unshift(x);
+				}
+			}
+			console.log("dom gc happened",lost_indexes);
 		}
 		let index=this.node_list.findIndex(e => e.deref()===val);
 		if(index===-1) {
