@@ -2612,10 +2612,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(cur_window.top!==null&&cur_window.top!==cur_window) {
 			this.init_with_next_parent(cur_window.top);
 		}
-		if(cur_window.opener.top!==cur_window.opener&&cur_window.opener.top!==null) {
-			this.init_with_next_parent(cur_window.opener.top);
-			return;
-		}
 		if(cur_window.opener===null) {
 			this.init_transport_over(cur_window);
 		} else {
