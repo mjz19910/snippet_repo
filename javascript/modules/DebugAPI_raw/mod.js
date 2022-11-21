@@ -14,6 +14,8 @@
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
 
+console=window.console;
+
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
 window.g_api=g_api;
@@ -539,7 +541,7 @@ class AddEventListenerExt {
 					lost_indexes.unshift(x);
 				}
 			}
-			console.log("dom gc happened",lost_indexes);
+			console.log("dom gc happened",lost_indexes, "new_len",this.node_list.length);
 		}
 		let index=this.node_list.findIndex(e => e.deref()===val);
 		if(index===-1) {
