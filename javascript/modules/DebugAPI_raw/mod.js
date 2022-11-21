@@ -2755,14 +2755,14 @@ g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
  * @typedef {{type: 'invalid-state-error';data: null;}} dbg_ISE
  */
 
+let any_api_logger=new APIProxyManager(new LoggingEventTarget);
+
+let do_postMessage_logging=true;
+if(do_postMessage_logging) {
+	any_api_logger.start_postMessage_proxy();
+}
+
 class DebugAPI {
-	constructor() {
-		let do_postMessage_logging=false;
-		if(do_postMessage_logging) {
-			this.any_api_logger.start_postMessage_proxy();
-		}
-	}
-	any_api_logger=new APIProxyManager(new LoggingEventTarget);
 	next_remote_id=0;
 	data_store=new Map;
 	event_handler=static_event_target;
