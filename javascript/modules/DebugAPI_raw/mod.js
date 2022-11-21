@@ -2477,10 +2477,7 @@ class RemoteOriginConnectionData {
 class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @param {TransportMessageObj} obj */
 	request_new_port(obj) {
-		if(!this.m_connect_target) {
-			return false;
-		}
-		this.request_connection(obj);
+		return this.request_connection(obj);
 	}
 	/** @arg {ReportInfo<TransportMessageObj>} arg0 */
 	transport_disconnected(arg0) {
