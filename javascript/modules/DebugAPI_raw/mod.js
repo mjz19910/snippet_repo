@@ -2587,22 +2587,46 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	constructor() {
 		super();
+		let s=this.state;
 		this.state.is_top=this.state.window===this.state.top;
 		this.state.is_root=this.state.opener===null;
-		if(!this.state.is_top)
-			this.state.is_root=false;
-		if(this.state.is_top) {
-			if(this.state.opener===null) {
-				this.start_root_server();
-			} else {
-				this.init_transport_over(this.state.opener);
-				this.start_root_server();
-				this.setup_root_proxy();
-			}
-		} else {
-			if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
-			this.init_transport_over(this.state.top);
+		if(!s.is_top)
+			s.is_root=false;
+		if(s.is_top&&s.opener===null) {
+			this.start_root_server();
+			return;
 		}
+		if(s.is_top&&s.opener!==null) {
+			if(s.opener.top!==s.opener&&s.opener.top!==null) {
+				this.init_with_next_parent(s.opener.top);
+				return;
+			}
+			this.init_with_opener(s.opener);
+			return;
+		}
+		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
+		this.init_with_next_parent(this.state.top);
+	}
+	/** @param {Window} cur_window */
+	init_with_next_parent(cur_window) {
+		if(cur_window.top!==null&&cur_window.top!==cur_window) {
+			this.init_with_next_parent(cur_window.top);
+		}
+		if(cur_window.opener.top!==cur_window.opener&&cur_window.opener.top!==null) {
+			this.init_with_next_parent(cur_window.opener.top);
+			return;
+		}
+		if(cur_window.opener===null) {
+			this.init_transport_over(cur_window);
+		} else {
+			this.init_with_opener(cur_window.opener);
+		}
+	}
+	/** @param {Window} opener */
+	init_with_opener(opener) {
+		this.init_transport_over(opener);
+		this.start_root_server();
+		this.setup_root_proxy();
 	}
 	setup_root_proxy() {
 		this.m_flags.does_proxy_to_opener=true;
