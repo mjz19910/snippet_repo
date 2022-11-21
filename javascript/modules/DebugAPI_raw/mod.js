@@ -454,13 +454,13 @@ class AddEventListenerExt {
 			console.log("err in add to call list",e);
 		}
 	}
-	/** @type {Node[]} */
+	/** @type {WeakRef<Node>[]} */
 	node_list=[];
 	/** @param {Node} val */
 	generate_node_id(val) {
-		let index=this.node_list.indexOf(val);
+		let index=this.node_list.findIndex(e=>e.deref()===val);
 		if(index===-1) {
-			index=this.node_list.push(val)-1;
+			index=this.node_list.push(new WeakRef(val))-1;
 		}
 		return index;
 	}
