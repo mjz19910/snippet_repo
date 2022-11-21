@@ -2533,6 +2533,8 @@ class TransportMessageObj {
 				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),timeout*30);
 				this.m_tries_left--;
 			}
+		} else {
+			this.start_timeout();
 		}
 	}
 	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
@@ -2551,6 +2553,7 @@ class TransportMessageObj {
 				if(!this.m_remote_side_connected&&this.m_timeout_id) {
 					this.m_remote_side_connected=true;
 					clearTimeout(this.m_timeout_id);
+					this.m_timeout_id=null;
 				}
 			} break;
 			case "disconnected": {
@@ -2560,9 +2563,7 @@ class TransportMessageObj {
 				this.m_tries_left=12;
 				this.m_reconnecting=true;
 				this.m_remote_side_connected=false;
-				this.m_timeout_id=setTimeout(function request_new_connection(obj) {
-					obj.process_reconnect();
-				},(this.m_connection_timeout/8)*4,this);
+				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),(this.m_connection_timeout/8)*4);
 			} break;
 		}
 	}
@@ -2571,6 +2572,10 @@ class TransportMessageObj {
 		this.m_com_port=port;
 		this.m_com_port.start();
 		this.m_com_port.addEventListener("message",this);
+		if(this.m_timeout_id !== null) return;
+		this.start_timeout();
+	}
+	start_timeout() {
 		this.m_timeout_id=setTimeout(() => {
 			if(!this.m_connection) throw new Error();
 			this.disconnect();
@@ -2684,10 +2689,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 	/** @arg {TransportMessageObj} transport_handler */
 	request_connection(transport_handler) {
-		if(!this.m_connect_target || transport_handler.m_com_port)
+		if(!this.m_connect_target)
 			return false;
 		let channel=new MessageChannel;
-		console.log("post request ConnectOverPostMessage", transport_handler);
+		console.log("post request ConnectOverPostMessage");
 		this.m_connect_target.postMessage({
 			type: this.post_message_connect_message_type,
 			data: {
@@ -2757,9 +2762,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		/** @arg {MessageEvent<unknown>} event */
 		function on_message_event(event) {
 			let client_id=t.client_max_id++;
-			if(client_id === 1) {
-				debugger;
-			}
 			let message_data=event.data;
 			if(typeof message_data==='object') {
 				let misbehaved;
