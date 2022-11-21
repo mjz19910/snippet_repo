@@ -297,17 +297,9 @@ function overwrite_addEventListener(prototype) {
 			/** @type {arg_list_item_type[]} */
 			let rq=[];
 			cq.forEach(e=>{
-				if(typeof e === 'object') {
-					rq.push(new WeakRef(e));
-					return;
-				}
-				if(typeof e === "function") {
-					rq.push(new WeakRef(e));
-					return;
-				}
 				switch(typeof e) {
 					case 'function':
-					case 'object': throw 1;
+					case 'object': rq.push(new WeakRef(e)); break;
 					case 'bigint':
 					case 'boolean':
 					case 'number':
