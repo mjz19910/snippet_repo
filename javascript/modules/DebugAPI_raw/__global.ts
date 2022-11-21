@@ -182,13 +182,18 @@ declare global {
 }
 
 declare global {
-	type RemoteOriginListening={type:"listening", client_id:number};
-	type RemoteOriginDisconnected={type:"disconnected"};
-	type RemoteOriginMessage=RemoteOriginListening|RemoteOriginDisconnected;
+	type RemoteOriginListening={type: "listening",client_id: number;};
+	type RemoteOriginDisconnected={type: "disconnected";};
+	type RemoteOriginKeepAlive={type: "keep_alive";};
+	type RemoteOriginMessage=
+		RemoteOriginListening|
+		RemoteOriginDisconnected|
+		RemoteOriginKeepAlive;
+	interface BlockEnd {}
 }
 
 declare global {
-	type EventListenersT=EventListenerOrEventListenerObject|((v:MessageEvent<any>)=>void)
+	type EventListenersT=EventListenerOrEventListenerObject|((v: MessageEvent<any>) => void);
 }
 
 declare global {

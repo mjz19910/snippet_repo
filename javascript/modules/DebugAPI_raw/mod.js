@@ -2537,6 +2537,18 @@ class TransportMessageObj {
 			this.start_timeout();
 		}
 	}
+	/** @arg {RemoteOriginMessage} message_data */
+	post_message(message_data) {
+		if(!this.m_com_port) {
+			throw new Error("unable to use missing port");
+		}
+		this.m_com_port.postMessage(message_data);
+	}
+	keep_alive_send() {
+		this.post_message({
+			type: "keep_alive",
+		});
+	}
 	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
 	handleEvent(message_event_response) {
 		/** @type {ReportInfo<TransportMessageObj>} */
@@ -2555,6 +2567,7 @@ class TransportMessageObj {
 					clearTimeout(this.m_timeout_id);
 					this.m_timeout_id=null;
 				}
+				this.m_keep_alive_interval=setInterval(this.keep_alive_send.bind(this),3000);
 			} break;
 			case "disconnected": {
 				if(this.m_reconnecting) return;
@@ -2564,6 +2577,9 @@ class TransportMessageObj {
 				this.m_reconnecting=true;
 				this.m_remote_side_connected=false;
 				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),(this.m_connection_timeout/8)*4);
+			} break;
+			case "keep_alive": {
+
 			} break;
 		}
 	}
