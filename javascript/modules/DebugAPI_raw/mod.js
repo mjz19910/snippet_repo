@@ -344,23 +344,36 @@ class addEventListenerExt {
 		let call_list_info=['real_holder',real_value];
 		console.log("gc keep real_holder",call_list_info);
 		if(call_list.length>30) {
+			/** @type {depth_or_any[]} */
 			let extract_list=[];
-			let max_depth=0;
 			for(let i=0;i<call_list.length;i++) {
 				let ref=call_list[i];
 				let inner=ref.deref();
 				if(inner === void 0)
 					continue;
 				if(inner[0]==='depth') {
-					if(max_depth > inner[1]) {
-						max_depth=inner[1];
-					}
+					extract_list.push(...inner[2]);
+					continue;
 				}
 				extract_list.push(inner);
 			}
 			call_list.length=0;
 			/** @type {depth_type} */
 			let depth_info=['depth',1,extract_list];
+			if(extract_list.length > 30) {
+				/** @type {depth_or_any[]} */
+				let next_list=[];
+				let num=0;
+				/** @type {depth_or_any[]} */
+				let acc_list=[];
+				for(let i=0;i<extract_list.length;i++) {
+					acc_list.push(extract_list[i]);
+					if(num%i === 29) {
+						next_list.push(['depth', 1, acc_list]);
+						acc_list=[];
+					}
+				}
+			}
 			call_list.push(new WeakRef(depth_info));
 		}
 		let real_holder_ref=new WeakRef(call_list_info);
