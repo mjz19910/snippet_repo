@@ -238,22 +238,22 @@ class AddEventListenerExt {
 	call_list;
 	target_prototype=x.a;
 	call_list_create_count=0;
-	static init() {
+	constructor() {
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
 		this.init_overwrite("removeEventListener");
 	}
 	/**@type {Window[]} */
-	static window_list=[window];
+	window_list=[window];
 	/**@type {null|{v:any}} */
-	static failed_obj=null;
+	failed_obj=null;
 	/** @type {WeakRef<{}>[]} */
-	static object_ids=[];
-	static object_max_id=1;
+	object_ids=[];
+	object_max_id=1;
 	/** @readonly */
-	static namespace_key="__g_api__namespace";
+	namespace_key="__g_api__namespace";
 	/** @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
-	static convert_to_namespaced_string(real_value,val,key,index) {
+	convert_to_namespaced_string(real_value,val,key,index) {
 		if(!(this.namespace_key in val))
 			throw new Error("Unreachable");
 		if(typeof val[this.namespace_key]!=='string') {
@@ -265,12 +265,12 @@ class AddEventListenerExt {
 		return;
 	}
 	/** @param {{}} val @param {string} namespace */
-	static add_object_id(val,namespace) {
+	add_object_id(val,namespace) {
 		define_normal_value(val,this.namespace_key,namespace);
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
 	/** @param {unknown[]} real_value @param {number} key @param {{} | null} val */
-	static args_iter_on_object(real_value,key,val) {
+	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
 		if(val===window) {
@@ -323,7 +323,7 @@ class AddEventListenerExt {
 		}
 	}
 	/** @param {[any, any, any[]]} list */
-	static add_to_call_list_impl(list) {
+	add_to_call_list_impl(list) {
 		let [target,orig_this,args]=list;
 		/**@type {unknown[]} */
 		let real_value=[target,args.length+1,orig_this,...args];
@@ -397,16 +397,16 @@ class AddEventListenerExt {
 		call_list.push(new WeakRef(info));
 	}
 	/** @param {string} key @param {unknown} value */
-	static keep(key,value) {
+	keep(key,value) {
 		console.log(`gc_keep: ${key}`,value);
 	}
 	/** @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
-	static convert_to_id_key(real_value,key,val,namespace) {
+	convert_to_id_key(real_value,key,val,namespace) {
 		let index=this.add_object_id(val,namespace);
 		this.convert_to_namespaced_string(real_value,val,key,index);
 	}
 	/** @template {CallableFunction} T @param {unknown[]} real_value @param {number} key @param {T} val */
-	static args_iter_on_function(real_value,key,val) {
+	args_iter_on_function(real_value,key,val) {
 		let index=this.object_ids.findIndex(e => e.deref()===val);
 		if(index>-1) {
 			this.convert_to_namespaced_string(real_value,val,key,index);
@@ -415,7 +415,7 @@ class AddEventListenerExt {
 		this.convert_to_id_key(real_value,key,val,"function");
 	}
 	/** @param {[any, any, any[]]} list */
-	static add_to_call_list(list) {
+	add_to_call_list(list) {
 		if(this.failed_obj) return;
 		try {
 			this.add_to_call_list_impl(list);
@@ -424,19 +424,17 @@ class AddEventListenerExt {
 		}
 	}
 	/** @type {Node[]} */
-	static node_list=[];
+	node_list=[];
 	/** @param {Node} val */
-	static generate_node_id(val) {
+	generate_node_id(val) {
 		let index=this.node_list.indexOf(val);
 		if(index===-1) {
 			index=this.node_list.push(val)-1;
 		}
 		return index;
 	}
-	/**
-	 * @param {Extract<keyof EventTarget,string>} target
-	 */
-	static init_overwrite(target) {
+	/** @param {Extract<keyof EventTarget,string>} target */
+	init_overwrite(target) {
 		let t=this;
 		switch(target) {
 			case "addEventListener": t.target_prototype[target]=function(...args) {
@@ -457,7 +455,6 @@ class AddEventListenerExt {
 }
 g_api.AddEventListenerExt=AddEventListenerExt;
 let add_event_listener_ext=new AddEventListenerExt;
-add_event_listener_ext.init();
 g_api.add_event_listener_ext=add_event_listener_ext;
 
 class IterExtensions {
