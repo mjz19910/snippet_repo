@@ -2488,6 +2488,9 @@ class RemoteOriginConnection {
 					},
 				};
 				connection_port.addEventListener("message",handler);
+				connection_port.postMessage({
+					type:"listening"
+				});
 				t.connections.push({port: connection_port});
 			}
 		});
