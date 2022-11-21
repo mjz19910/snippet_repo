@@ -262,6 +262,11 @@ class addEventListenerExt {
 		real_value[key]=`weak_id:${val[this.namespace_key]}:${index}`;
 		return;
 	}
+	/** @param {{}} val @param {string} namespace */
+	static add_object_id(val, namespace) {
+		define_normal_value(val,this.namespace_key,namespace);
+		return this.object_ids.push(new WeakRef(val))-1;
+	}
 	/** @param {unknown[]} real_value @param {number} key @param {{} | null} val */
 	static args_iter_on_object(real_value,key,val) {
 		if(val===null)
@@ -289,23 +294,14 @@ class addEventListenerExt {
 		if(index>-1) {
 			this.convert_to_namespaced_string(real_value,val,key,index);
 			return;
-		}
-		if(is_react_element) {
-			console.log("react_element");
-			index=this.object_ids.push(new WeakRef(val));
-			define_normal_value(val,this.namespace_key,"react");
-			return;
-		}
-		if(val instanceof IDBDatabase||val instanceof IDBTransaction) {
+		} else if(is_react_element) {
+			console.log("react_element", val);
+			index=this.add_object_id(val,"react");
+		} else if(val instanceof IDBDatabase||val instanceof IDBTransaction) {
 			// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
-			index=this.object_ids.push(new WeakRef(val));
-			define_normal_value(val,this.namespace_key,"idb");
-			return;
-		}
-		if(val instanceof ServiceWorkerContainer) {
-			index=this.object_ids.push(new WeakRef(val));
-			define_normal_value(val,this.namespace_key,"service_worker");
-			return;
+			index=this.add_object_id(val,"idb");
+		} else if(val instanceof ServiceWorkerContainer) {
+			index=this.add_object_id(val, "service_worker");
 		}
 		if(index===-1) {
 			let failed=false;
@@ -333,6 +329,7 @@ class addEventListenerExt {
 		for(let [key,val] of real_value.entries()) {
 			switch(typeof val) {
 				case 'object':this.args_iter_on_object(real_value,key,val);break;
+				case 'function': break;
 				default:
 			}
 		}
