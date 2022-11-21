@@ -110,6 +110,7 @@ class APIProxyManager {
 		return new Proxy(function_value,obj);
 	}
 	start_postMessage_proxy() {
+		if(!debug) return;
 		/**@type {any} */
 		let win_post_message=window.postMessage;
 		window.postMessage=this.create_proxy_for_function('postMessage_sent',win_post_message);
@@ -338,9 +339,7 @@ class AddEventListenerExt {
 		dispatchEvent: x.a.dispatchEvent,
 		removeEventListener: x.a.removeEventListener,
 	};
-	/**
-	 * @type {WeakRef<WeakRef<depth_or_any>[]>|undefined}
-	 */
+	/** @private @type {WeakRef<WeakRef<depth_or_any>[]>|undefined} */
 	call_list;
 	target_prototype=x.a;
 	call_list_create_count=0;
@@ -360,7 +359,7 @@ class AddEventListenerExt {
 	namespace_key="__g_api__namespace";
 	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
-	/** @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
+	/** @private @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
 	convert_to_namespaced_string(real_value,val,key,index) {
 		if(!(this.namespace_key in val))
 			throw new Error("Unreachable");
@@ -372,12 +371,13 @@ class AddEventListenerExt {
 		real_value[key]=`weak_id:${val[this.namespace_key]}:${index}`;
 		return;
 	}
-	/** @param {{}} val @param {string} namespace */
+	/** @private @param {{}} val @param {string} namespace */
 	add_object_id(val,namespace) {
 		define_normal_value(val,this.namespace_key,namespace);
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
-	/** @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
+	clear_count=0;
+	/** @private @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return true;
@@ -423,23 +423,10 @@ class AddEventListenerExt {
 			this.convert_to_id_key(real_value,key,val,"ServiceWorkerContainer");
 			return true;
 		}
-		let failed=false;
-		try {
-			JSON.stringify(val);
-		} catch {
-			failed=true;
-		};
-		if(failed) {
-			if(!this.failed_obj) {
-				this.failed_obj={v: real_value};
-			}
-			console.log("skip, will stringify circular structure",real_value,key,val);
-			return false;
-		} else {
-			return true;
-		}
+		real_value[key]="cleared_out:"+this.clear_count++;
+		return true;
 	}
-	/** @param {[unknown,number,unknown,...unknown[]]} real_value @returns {[boolean, number]} */
+	/** @private @param {[unknown,number,unknown,...unknown[]]} real_value @returns {[boolean, number]} */
 	calculate_circular_info(real_value) {
 		for(let [key,val] of real_value.entries()) {
 			switch(typeof val) {
@@ -451,36 +438,9 @@ class AddEventListenerExt {
 		return [false,-1];
 	}
 	is_calc_circular=false;
-	/** @param {[unknown,number,unknown,...unknown[]]} real_value */
+	/** @private @param {[unknown,number,unknown,...unknown[]]} real_value */
 	use_tmp_non_circular(real_value) {
 		let [_tv,_a_len,_x,...args]=real_value;
-		let value;
-		this.is_calc_circular=true;
-		let [is_circular,index]=this.calculate_circular_info(real_value);
-		if(is_circular) {
-			console.log('tried to stringify circular object',real_value[index]);
-			debugger;
-			for(let [key,val] of [real_value[index]].entries()) {
-				switch(typeof val) {
-					case 'object': {
-						let ret=this.args_iter_on_object(real_value,key,val);
-						if(ret) return;
-					} break;
-					case 'function': return this.args_iter_on_function(real_value,key,val);
-					default: break;
-				}
-			}
-			return;
-		}
-		x: try {
-			value=JSON.stringify(real_value);
-			break x;
-		} catch(e) {
-			debugger;
-			throw e;
-		} finally {
-			this.is_calc_circular=false;
-		}
 		let call_list=this.call_list?.deref();
 		if(call_list===void 0) {
 			call_list=[];
@@ -549,12 +509,12 @@ class AddEventListenerExt {
 		}
 		let real_holder_ref=new WeakRef(call_list_info);
 		let id=this.object_max_id++;
-		/** @type {json_value_id_type} */
-		let info=['json_value_id',value,id,real_holder_ref];
+		/** @type {value_id_type} */
+		let info=['value_id',id,real_holder_ref];
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
 		}
-		this.keep("json_value_id",info);
+		this.keep("value_id",info);
 		call_list.push(new WeakRef(info));
 	}
 	/**
@@ -619,6 +579,7 @@ class AddEventListenerExt {
 	}
 	/** @param {[any, any, any[]]} list */
 	add_to_call_list(list) {
+		if(!debug) return;
 		if(this.failed_obj) return;
 		try {
 			this.add_to_call_list_impl(list);
@@ -661,7 +622,7 @@ class AddEventListenerExt {
 			case "addEventListener":
 				/** @arg {[string,EventListenerOrEventListenerObject,any?]} args */
 				t.target_prototype[target]=function(...args) {
-					t.add_to_call_list([target,this,args]);
+					if(debug) t.add_to_call_list([target,this,args]);
 					let original_function=args[1];
 					if(!t.elevated_event_handlers.includes(original_function)) {
 						/** @arg {[evt: Event]} args */
@@ -672,11 +633,11 @@ class AddEventListenerExt {
 					return t.orig.addEventListener.call(this,...args);
 				}; break;
 			case 'removeEventListener': t.target_prototype[target]=function(...args) {
-				t.add_to_call_list([target,this,args]);
+				if(debug) t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; break;
 			case 'dispatchEvent': t.target_prototype[target]=function(...args) {
-				t.add_to_call_list([target,this,args]);
+				if(debug) t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; return;
 			default: throw 1;
