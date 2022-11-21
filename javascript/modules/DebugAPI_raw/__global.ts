@@ -209,7 +209,11 @@ declare global {
 	};
 }
 
-
+declare global {
+	interface EventTarget {
+		__arg_list:WeakRef<{}>[];
+	}
+}
 
 // DebugAPI
 interface GlobalApiObject {
