@@ -425,11 +425,14 @@ class AddEventListenerExt {
 		this.keep("json_value_id",info);
 		call_list.push(new WeakRef(info));
 	}
+	do_gc_keep_log=false;
 	/** @param {string} key @param {unknown} value */
 	keep(key,value) {
 		if(this.call_list_create_count>1)
 			return;
-		console.log(`gc_keep: ${key}`,value);
+		if(this.do_gc_keep_log) {
+			console.log(`gc_keep: ${key}`,value);
+		}
 	}
 	/** @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
 	convert_to_id_key(real_value,key,val,namespace) {
@@ -2387,12 +2390,15 @@ class RemoteOriginConnection {
 		this.setup_root_proxy(this.state.window);
 		if(!this.state.is_top)
 			this.state.is_root=false;
-		if(this.state.opener===null) {
-			this.start_root_server();
-		} else {
-			if(this.state.is_top) {
+		if(this.state.is_top) {
+			if(this.state.opener===null) {
+				this.start_root_server();
+			} else {
 				this.init_transport_over(this.state.opener,this.state.window);
 			}
+		} else {
+			if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
+			this.init_transport_over(this.state.top,this.state.window);
 		}
 	}
 	/**
