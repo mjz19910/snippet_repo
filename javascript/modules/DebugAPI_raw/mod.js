@@ -297,7 +297,7 @@ function overwrite_addEventListener(prototype) {
 			let cq=[callback,argArray.length,...argArray];
 			/** @type {arg_list_item_type[]} */
 			let rq=[];
-			cq.forEach(e=>{
+			cq.forEach(e => {
 				switch(typeof e) {
 					case 'function':
 					case 'object': rq.push(new WeakRef(e)); break;
@@ -310,9 +310,10 @@ function overwrite_addEventListener(prototype) {
 				}
 			});
 			arg_list.push(rq);
-			if(argArray[0] === "message") {
+			x: if(argArray[0]==="message") {
 				console.log("message event listener");
 				let handler=argArray[1];
+				if(handler===null) break x;
 				argArray[1]=do_message_handler_overwrite(handler);
 			}
 			return Reflect.apply(target,callback,argArray);
@@ -321,12 +322,15 @@ function overwrite_addEventListener(prototype) {
 	prototype.__arg_list_for_add_event_listeners=arg_list;
 }
 
-/** @param {EventListenerOrEventListenerObject | null} handler */
+/** @param {EventListenerOrEventListenerObject} handler */
 function do_message_handler_overwrite(handler) {
+	if(add_event_listener_ext.elevated_event_handlers.includes(handler)) {
+		return handler;
+	}
 	/** @this {{}} */
-	return function (/** @type {Event} */ event) {
+	return function(/** @type {Event} */ event) {
 		if(typeof handler==='object') {
-			if(handler === null) {
+			if(handler===null) {
 				throw new Error("invalid handler");
 			}
 			handler.handleEvent(event);
@@ -343,7 +347,7 @@ function do_message_handler_overwrite(handler) {
 			}
 		}
 		handler.call(this,event);
-	}
+	};
 }
 
 x.a=EventTarget.prototype;
