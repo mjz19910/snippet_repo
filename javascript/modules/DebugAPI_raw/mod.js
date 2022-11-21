@@ -2404,10 +2404,10 @@ class TransportMessageObj {
 			case "disconnected": {
 				this.m_current_target=null;
 				this.m_connection.transport_disconnected(report_info);
-				this.m_remote_side_connected=false;
 				setTimeout(function(obj) {
 					obj.m_connection.request_new_port(obj);
 				},this.m_connection_timeout/8,this);
+				this.disconnect();
 			} break;
 		}
 	}
@@ -2431,6 +2431,7 @@ class TransportMessageObj {
 			this.m_current_target=null;
 			this.m_com_port=null;
 		}
+		this.m_remote_side_connected=false;
 	}
 	clear() {
 		this.m_connection.clear_elevation_by_id(this.m_elevation_id);
