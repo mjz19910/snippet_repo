@@ -2378,7 +2378,9 @@ class TransportMessageObj {
 			case "keep_alive": {
 			} break;
 			case "keep_alive_reply": {
-				this.m_missing_keep_alive_counter--;
+				if(this.m_missing_keep_alive_counter > 0) {
+					this.m_missing_keep_alive_counter--;
+				}
 			} break;
 		}
 	}
