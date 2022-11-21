@@ -55,7 +55,9 @@ class ReversePrototypeChain {
 		for (let target of this.targets) {
 			this.process_target(target);
 		}
-		console.log(this.destination);
+		if(top === window) {
+			console.log(this.destination);
+		}
 	}
 	/** @arg {{}|null} value */
 	get_cache_key(value) {
@@ -271,7 +273,7 @@ class addEventListenerExt {
 				real_value[key]="react:weak_id:"+index;
 				continue;
 			}
-			if(val instanceof IDBDatabase) {
+			if(val instanceof IDBDatabase || val instanceof IDBTransaction) {
 				// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
 				index=this.object_ids.push(new WeakRef(val));
 				real_value[key]="idb:weak_id:"+index;
