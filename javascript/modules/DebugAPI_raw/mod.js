@@ -349,7 +349,7 @@ class addEventListenerExt {
 			for(let i=0;i<call_list.length;i++) {
 				let ref=call_list[i];
 				let inner=ref.deref();
-				if(inner === void 0)
+				if(inner===void 0)
 					continue;
 				if(inner[0]==='depth') {
 					let deref_val=inner[2].deref();
@@ -362,16 +362,16 @@ class addEventListenerExt {
 			}
 			call_list.length=0;
 			let cur_depth=1;
-			while(extract_list.length > 30) {
+			while(extract_list.length>30) {
 				/** @type {depth_or_any[]} */
 				let next_list=[];
 				let acc_list=next_list.slice();
 				let num=0;
 				for(let i=0;i<extract_list.length;i++) {
 					acc_list.push(extract_list[i]);
-					if(num%i === 29) {
+					if(num%i===29) {
 						this.keep("acc_list",acc_list);
-						next_list.push(['depth', cur_depth, new WeakRef(acc_list)]);
+						next_list.push(['depth',cur_depth,new WeakRef(acc_list)]);
 						acc_list=[];
 					}
 				}
@@ -390,12 +390,12 @@ class addEventListenerExt {
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
 		}
-		this.keep("json_value_id", info);
+		this.keep("json_value_id",info);
 		call_list.push(new WeakRef(info));
 	}
 	/** @param {string} key @param {unknown} value */
-	static keep(key, value) {
-		console.log(`gc_keep: ${key}`, value);
+	static keep(key,value) {
+		console.log(`gc_keep: ${key}`,value);
 	}
 	/** @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
 	static convert_to_id_key(real_value,key,val,namespace) {
