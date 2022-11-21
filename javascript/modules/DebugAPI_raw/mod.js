@@ -2402,14 +2402,15 @@ class TransportMessageObj {
 			case "disconnected": {
 				this.disconnect();
 				this.m_connection.transport_disconnected(report_info);
-				let tries=8;
-				setTimeout(function request_new_connection(obj) {
-					if(tries > 1) {
-						tries--;
+				let tries_left=8;
+				this.m_timeout_id=setTimeout(function request_new_connection(obj) {
+					console.log("reconnect tries_left",tries_left);
+					if(tries_left > 1) {
+						tries_left--;
 						obj.m_connection.request_new_port(obj);
-						setTimeout(request_new_connection,obj.m_connection_timeout/tries,obj);
+						this.m_timeout_id=setTimeout(request_new_connection,obj.m_connection_timeout/tries_left,obj);
 					}
-				},this.m_connection_timeout/tries,this);
+				},this.m_connection_timeout/tries_left,this);
 			} break;
 		}
 	}
@@ -2487,7 +2488,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @arg {ReportInfo<TransportMessageObj>} arg0 */
 	transport_disconnected(arg0) {
-		console.log('transport connected',arg0.event.data);
+		console.log('transport disconnected',arg0.event.data,arg0.event);
 	}
 	/** @param {MessageEvent<unknown>} event */
 	on_child_event(event) {
@@ -2548,6 +2549,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			}
 		},"*",[channel.port1]);
 		transport_handler.connect(channel.port2);
+		return true;
 	}
 	/**
 	 * @param {number} elevated_id
@@ -2576,6 +2578,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/**@type {{port:MessagePort}[]} */
 	connections=[];
+	client_max_id=0;
 	start_root_server() {
 		let t=this;
 		/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
@@ -2584,12 +2587,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			target_port.postMessage(message);
 		}
 		window.addEventListener("message",function(event) {
+			let client_id=t.client_max_id++;
 			let message_data=event.data;
 			if(typeof message_data==='object') {
 				console.log("Received message object",message_data);
 				console.log("Received message ports",event.ports);
 				if(event.ports.length!==1) {
-					console.log("Client misbehaved: connect api not followed");
+					console.log(`Client(${client_id}) misbehaved: connect api not followed`);
 					return;
 				}
 				let connection_port=event.ports[0];
