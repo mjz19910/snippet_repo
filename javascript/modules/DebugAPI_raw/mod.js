@@ -248,6 +248,7 @@ class addEventListenerExt {
 	static failed_obj=null;
 	/** @type {WeakRef<{}>[]} */
 	static object_ids=[];
+	static object_max_id=1;
 	/** @readonly */
 	static namespace_key="__g_api__namespace";
 	/** @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
@@ -342,9 +343,13 @@ class addEventListenerExt {
 		/** @type {['real_holder', any]} */
 		let call_list_info=['real_holder',real_value];
 		console.log("gc keep real_holder",call_list_info);
-		let id=call_list.push(new WeakRef(call_list_info))-1;
-		/** @type {['json_value_id', string, number]} */
-		let info=['json_value_id', value,id];
+		if(call_list.length > 30) {
+
+		}
+		let real_holder_ref=new WeakRef(call_list_info);
+		let id=this.object_max_id++;
+		/** @type {json_value_id_type} */
+		let info=['json_value_id', value,id,real_holder_ref];
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
 		}

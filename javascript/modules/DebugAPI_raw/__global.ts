@@ -177,7 +177,8 @@ declare global {
 
 declare global {
 	type depth_type=['depth',number,depth_or_any[]];
-	type depth_or_any=['real_holder',unknown]|['json_value_id', string, number]|depth_type;
+	type json_value_id_type=['json_value_id', string, number, WeakRef<["real_holder", any]>];
+	type depth_or_any=['real_holder',unknown]|json_value_id_type|depth_type;
 }
 
 
