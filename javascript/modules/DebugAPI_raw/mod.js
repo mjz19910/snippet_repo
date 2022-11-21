@@ -453,7 +453,7 @@ class AddEventListenerExt {
 	/** @private @type {WeakRef<WeakRef<Node>[]>} */
 	node_list=new WeakRef([]);
 	/** @private @type {WeakRef<WeakRef<{value:number}>[]>} */
-	node_list_ids=[];
+	node_list_ids=new WeakRef([]);
 	/** @private */
 	node_id_max=0;
 	/** @private @param {Node} val */
