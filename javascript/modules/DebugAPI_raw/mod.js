@@ -121,9 +121,10 @@ class ReversePrototypeChain {
 		let index=prototypes.findIndex(e=>e.prototype === value);
 		if(index>=0)
 			return;
+		let sub_key=this.get_cache_key(value);
 		prototypes.push({
 			__proto__:null,
-			name:key,
+			name:sub_key,
 			prototype:value,
 			child:{
 				__proto__:null,
