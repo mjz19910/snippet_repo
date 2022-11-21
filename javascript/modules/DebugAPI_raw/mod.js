@@ -2453,6 +2453,7 @@ class TransportMessageObj {
 	connect(port) {
 		this.m_com_port=port;
 		this.m_com_port.start();
+		elevate_event_handler(this);
 		this.m_com_port.addEventListener("message",this);
 		if(this.m_timeout_id!==null) return;
 		this.start_timeout();
@@ -2538,6 +2539,11 @@ class RemoteHandler {
 		this.root=root;
 		this.connection_port=connection_port;
 	}
+}
+
+/** @param {EventListenersT} handler */
+function elevate_event_handler(handler) {
+	add_event_listener_ext.elevated_event_handlers.push(handler);
 }
 
 class RemoteOriginConnection extends RemoteOriginConnectionData {
@@ -2694,7 +2700,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				}
 			}
 		}
-		add_event_listener_ext.elevated_event_handlers.push(on_message_event);
+		elevate_event_handler(handler);
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
