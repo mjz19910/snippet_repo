@@ -301,15 +301,21 @@ function overwrite_addEventListener(prototype) {
 				switch(typeof e) {
 					case 'function':
 					case 'object': {
-						if(e === null) {
+						if(e===null) {
 							return rq.push(e);
 						}
 						rq.push(new WeakRef(e));
 					} break;
+					case 'string': {
+						if(e.length<128) {
+							rq.push(e);
+						} else {
+							rq.push(JSON.stringify(e.slice(0,120))+"...(truncated)");
+						}
+					} break;
 					case 'bigint':
 					case 'boolean':
 					case 'number':
-					case 'string':
 					case 'symbol':
 					case 'undefined': rq.push(e); break;
 				}
