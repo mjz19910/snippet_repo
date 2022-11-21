@@ -2133,7 +2133,10 @@ class RemoteOriginConnection {
 	}
 	start_root_server() {
 		window.addEventListener("message", function(event) {
-			console.log(`Received message: ${event.data}`);
+			let message_data=event.data;
+			if(typeof message_data==='object') {
+				console.log(`Received message object: ${message_data}`);
+			}
 		});
 	}
 }
