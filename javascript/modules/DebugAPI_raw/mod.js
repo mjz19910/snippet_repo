@@ -2333,6 +2333,9 @@ class TransportMessageObj {
 			this.disconnect();
 			this.clear();
 		},timeout_ms);
+		if(!this.m_connection.port)
+			throw new Error("no connection port");
+		this.m_connection.port.addEventListener("message",this);
 	}
 	/** @param {Window} target */
 	connect(target) {
@@ -2489,7 +2492,7 @@ class RemoteOriginConnection {
 				};
 				connection_port.addEventListener("message",handler);
 				connection_port.postMessage({
-					type:"listening"
+					type: "listening"
 				});
 				t.connections.push({port: connection_port});
 			}
