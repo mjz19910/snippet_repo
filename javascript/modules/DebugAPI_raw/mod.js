@@ -66,15 +66,15 @@ class ReversePrototypeChain {
 		}
 		if (key) {
 			if (value.hasOwnProperty('constructor')) {
-				return "constructor::" + value.constructor.name + ":" + (value.constructor.prototype === value) + ":" + key;
+				return "constructor_key::" + value.constructor.name + ":" + key;
 			}
-			return "other::" + key;
+			return "to_string_tag::" + key;
 		}
 		if (value === g_api)
 			return "self::g_api";
 		try {
 			if (value.hasOwnProperty('constructor')) {
-				return "constructor::" + value.constructor.name + ":" + (value.constructor.prototype === value);
+				return "constructor_not_g_api::" + value.constructor.name;
 			}
 		} catch {}
 		let index=this.object_cache.indexOf(value);
@@ -121,7 +121,16 @@ class ReversePrototypeChain {
 		let index=prototypes.findIndex(e=>e.prototype === value);
 		if(index>=0)
 			return;
-		prototypes.push({__proto__:null,name:key,prototype:value,child:{}});
+		prototypes.push({
+			__proto__:null,
+			name:key,
+			prototype:value,
+			child:{
+				__proto__:null,
+				prototypes:[],
+				values:[]
+			}
+		});
 	}
 	/**
 	 * @param {{}} target
