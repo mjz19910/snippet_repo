@@ -184,12 +184,18 @@ declare global {
 declare global {
 	type RemoteOriginListening={type: "listening",client_id: number;};
 	type RemoteOriginDisconnected={type: "disconnected";};
-	type RemoteOriginKeepAlive={type: "keep_alive"|"keep_alive_reply";side:"client"|"server"};
+	type RemoteOriginKeepAlive={type: "keep_alive"|"keep_alive_reply"; side: "client"|"server";};
 	type RemoteOriginMessage=
 		RemoteOriginListening|
 		RemoteOriginDisconnected|
 		RemoteOriginKeepAlive;
 	interface BlockEnd {}
+}
+
+declare global {
+	interface Node {
+		__id_holder?: {value: number;};
+	}
 }
 
 declare global {

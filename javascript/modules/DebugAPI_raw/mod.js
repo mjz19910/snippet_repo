@@ -334,28 +334,26 @@ function define_normal_value(obj,key,value) {
 
 x.a=EventTarget.prototype;
 class AddEventListenerExt {
+	/** @private */
 	orig={
 		addEventListener: x.a.addEventListener,
 		dispatchEvent: x.a.dispatchEvent,
 		removeEventListener: x.a.removeEventListener,
 	};
-	/** @private @type {WeakRef<WeakRef<depth_or_any>[]>|undefined} */
-	call_list;
+	/** @private */
 	target_prototype=x.a;
-	call_list_create_count=0;
 	constructor() {
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
 		this.init_overwrite("removeEventListener");
 	}
-	/**@type {Window[]} */
+	/** @private @type {Window[]} */
 	window_list=[window];
-	/**@type {null|{v:any}} */
+	/** @private @type {null|{v:any}} */
 	failed_obj=null;
-	/** @type {WeakRef<{}>[]} */
+	/** @private @type {WeakRef<{}>[]} */
 	object_ids=[];
-	object_max_id=1;
-	/** @readonly */
+	/** @private @readonly */
 	namespace_key="__g_api__namespace";
 	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
@@ -376,6 +374,7 @@ class AddEventListenerExt {
 		define_normal_value(val,this.namespace_key,namespace);
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
+	/** @private */
 	clear_count=0;
 	/** @returns {void} @private @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
 	args_iter_on_object(real_value,key,val) {
@@ -419,46 +418,6 @@ class AddEventListenerExt {
 		real_value[key]="cleared_out:"+this.clear_count++;
 		return;
 	}
-	is_calc_circular=false;
-	/** @private @param {[unknown,number,unknown,...unknown[]]} real_value */
-	use_tmp_non_circular(real_value) {
-		let [_tv,_a_len,_x,...args]=real_value;
-		let call_list=this.call_list?.deref();
-		if(call_list===void 0) {
-			call_list=[];
-			this.call_list_create_count++;
-			if(this.call_list_create_count>1) {
-				console.log("call list lost");
-			}
-			this.keep("call_list",call_list);
-			this.call_list=new WeakRef(call_list);
-		}
-		/** @type {['real_holder', any]} */
-		let call_list_info=['real_holder',real_value];
-		this.keep("real_holder",call_list_info);
-		let id=this.object_max_id++;
-		/** @type {value_id_type} */
-		let info=['value_id',id,call_list_info];
-		if(args[1]!==null&&typeof args[1]==='object') {
-			define_normal_value(args[1],"weak_inner",info);
-		}
-		this.keep("value_id",info);
-		call_list.push(new WeakRef(info));
-	}
-	/**
-	 * @param {depth_or_any[]} tmp
-	 * @param {WeakRef<depth_or_any>[]} cur
-	 * @param {number} index
-	 * @returns {[true,depth_or_any]|[false,WeakRef<depth_or_any>]}
-	 */
-	use_tmp_list(tmp,cur,index) {
-		if(tmp.length>0) {
-			let value=tmp.shift();
-			if(!value) {throw new Error("Unreachable");}
-			return [true,value];
-		}
-		return [false,cur[index]];
-	}
 	/** @private @param {[unknown, unknown, unknown[]]} list */
 	add_to_call_list_impl(list) {
 		let [target,orig_this,args]=list;
@@ -472,21 +431,12 @@ class AddEventListenerExt {
 			}
 		}
 	}
-	do_gc_keep_log=false;
-	/** @param {string} key @param {unknown} value */
-	keep(key,value) {
-		if(this.call_list_create_count>1)
-			return;
-		if(this.do_gc_keep_log) {
-			console.log(`gc_keep: ${key}`,value);
-		}
-	}
-	/** @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
+	/** @private @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
 	convert_to_id_key(real_value,key,val,namespace) {
 		let index=this.add_object_id(val,namespace);
 		this.convert_to_namespaced_string(real_value,val,key,index);
 	}
-	/** @template {CallableFunction} T @param {unknown[]} real_value @param {number} key @param {T} val */
+	/** @private @template {CallableFunction} T @param {unknown[]} real_value @param {number} key @param {T} val */
 	args_iter_on_function(real_value,key,val) {
 		this.convert_to_id_key(real_value,key,val,"function");
 	}
@@ -500,16 +450,28 @@ class AddEventListenerExt {
 			console.log("err in add to call list",e);
 		}
 	}
-	/** @type {WeakRef<Node>[]} */
-	node_list=[];
-	/** @type {number[]} */
+	/** @private @type {WeakRef<WeakRef<Node>[]>} */
+	node_list=new WeakRef([]);
+	/** @private @type {WeakRef<WeakRef<{value:number}>[]>} */
 	node_list_ids=[];
+	/** @private */
 	node_id_max=0;
-	/** @param {Node} val */
+	/** @private @param {Node} val */
 	generate_node_id(val) {
-		this.node_list.push(new WeakRef(val));
+		let list=this.node_list.deref();
+		if(!list) {
+			list=[];
+		}
+		let ids=this.node_list_ids.deref();
+		if(!ids) {
+			ids=[];
+		}
+		list.push(new WeakRef(val));
 		let node_id=this.node_id_max++;
-		this.node_list_ids.push(node_id);
+		let id_holder={value:node_id};
+		val.__id_holder=id_holder;
+		ids.push(new WeakRef(id_holder));
+		this.node_list=new WeakRef(list);
 		return node_id;
 	}
 	/** @private @param {Extract<keyof EventTarget,string>} target */
@@ -541,6 +503,7 @@ class AddEventListenerExt {
 		}
 	}
 	/**
+	 * @private
 	 * @param {EventListenerOrEventListenerObject} arg_function
 	 * @param {[string, EventListenerOrEventListenerObject, any?]} arg_this
 	 * @param {[evt: Event]} args
