@@ -5,7 +5,9 @@ import {fetch_url} from "./fetch_url.js";
 export let cached_data_buffer=[];
 
 export class PageLoaderState {
-	create_window() {
+	/** @param {import("../../html_lexer/ipc_index.js").IPCPlugin} arg0 */
+	set_html_lexer(arg0) {
+		this.m_page_html_lexer=arg0;
 	}
 	/** @type {ClientRequest | null} */
 	m_client_request=null;
