@@ -17,29 +17,29 @@
 const base_console=window.console;
 
 const saved_console={
-	log:base_console.log,
-	assert:base_console.assert,
-	clear:base_console.clear,
-	count:base_console.count,
-	countReset:base_console.countReset,
-	debug:base_console.debug,
-	dir:base_console.dir,
-	dirxml:base_console.dirxml,
-	error:base_console.error,
-	group:base_console.group,
-	groupCollapsed:base_console.groupCollapsed,
-	groupEnd:base_console.groupEnd,
-	info:base_console.info,
-	table:base_console.table,
-	time:base_console.time,
-	timeEnd:base_console.timeEnd,
-	timeLog:base_console.timeLog,
-	timeStamp:base_console.timeStamp,
-	trace:base_console.trace,
-	warn:base_console.warn,
-	profile:base_console.profile,
-	profileEnd:base_console.profileEnd,
-}
+	log: base_console.log,
+	assert: base_console.assert,
+	clear: base_console.clear,
+	count: base_console.count,
+	countReset: base_console.countReset,
+	debug: base_console.debug,
+	dir: base_console.dir,
+	dirxml: base_console.dirxml,
+	error: base_console.error,
+	group: base_console.group,
+	groupCollapsed: base_console.groupCollapsed,
+	groupEnd: base_console.groupEnd,
+	info: base_console.info,
+	table: base_console.table,
+	time: base_console.time,
+	timeEnd: base_console.timeEnd,
+	timeLog: base_console.timeLog,
+	timeStamp: base_console.timeStamp,
+	trace: base_console.trace,
+	warn: base_console.warn,
+	profile: base_console.profile,
+	profileEnd: base_console.profileEnd,
+};
 
 /**@implements {Console} */
 class UseRealConsole {
@@ -2448,6 +2448,9 @@ class TransportMessageObj {
 		switch(message_event_response.data.type) {
 			case "listening": {
 				this.m_connection.transport_connected(report_info);
+				if(this.m_reconnecting) {
+					this.m_reconnecting=false;
+				}
 				if(!this.m_remote_side_connected&&this.m_timeout_id) {
 					this.m_remote_side_connected=true;
 					clearTimeout(this.m_timeout_id);
@@ -2460,12 +2463,14 @@ class TransportMessageObj {
 				let tries_left=12;
 				this.m_reconnecting=true;
 				this.m_timeout_id=setTimeout(function request_new_connection(obj) {
-					console.log("reconnect tries_left",tries_left);
-					if(tries_left > 1) {
+					if(tries_left<12) {
+						console.log("reconnect tries_left",tries_left);
+					}
+					if(tries_left>1) {
 						tries_left--;
 						obj.m_connection.request_new_port(obj);
 						let timeout;
-						if(tries_left < 7) {
+						if(tries_left<7) {
 							timeout=obj.m_connection_timeout/tries_left;
 						} else {
 							timeout=(obj.m_connection_timeout/8)*30;
