@@ -343,7 +343,7 @@ class AddEventListenerExt {
 		let value;
 		let [is_circular, index]=this.verify_non_circular(real_value);
 		if(is_circular) {
-			console.log('tried to stringify circular object');
+			console.log('tried to stringify circular object at index=', index, real_value);
 			return;
 		}
 		x: try {
