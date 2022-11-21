@@ -471,13 +471,13 @@ class AddEventListenerExt {
 	node_id_max=0;
 	/** @param {Node} val */
 	generate_node_id(val) {
-		let lost_index=this.node_list.findIndex(e=>e.deref()===void 0);
+		let lost_index=this.node_list.findIndex(e => e.deref()===void 0);
 		if(lost_index>-1) {
 			this.node_list.splice(lost_index,1);
 			this.node_list_ids.splice(lost_index,1);
-			console.log("dom gc happened", lost_index);
+			console.log("dom gc happened",lost_index);
 		}
-		let index=this.node_list.findIndex(e=>e.deref()===val);
+		let index=this.node_list.findIndex(e => e.deref()===val);
 		if(index===-1) {
 			this.node_list.push(new WeakRef(val));
 			let node_id=this.node_id_max++;
@@ -2379,6 +2379,10 @@ class OriginState {
 	static is_root;
 }
 g_api.OriginState=OriginState;
+
+/** @template {EventListenerObject} T @arg {T} x */
+function as_eventListenerObject(x) {return x;}
+
 class RemoteOriginConnection {
 	// @Update on minor version change
 	// version 0.3.0 sha1 initial commit
@@ -2461,11 +2465,25 @@ class RemoteOriginConnection {
 	transport_init_maybe_complete(message_event) {
 		console.log('transport connected',message_event);
 	}
+	/**@type {{port:MessagePort}[]} */
+	connections=[];
 	start_root_server() {
+		let t=this;
 		window.addEventListener("message",function(event) {
 			let message_data=event.data;
 			if(typeof message_data==='object') {
-				console.log(`Received message object: `,message_data);
+				console.log("Received message object",message_data);
+				console.log("Received message ports",event.ports);
+				if(event.ports.length!==1) {
+					console.log("Client misbehaved: connect api not followed");
+					return;
+				}
+				let connection_port=event.ports[0];
+				connection_port.addEventListener("message",as_eventListenerObject({
+					root: t,
+					handleEvent(event) {},
+				}));
+				t.connections.push({port: connection_port});
 			}
 		});
 	}
