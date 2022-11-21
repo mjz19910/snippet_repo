@@ -263,7 +263,7 @@ class addEventListenerExt {
 		return;
 	}
 	/** @param {{}} val @param {string} namespace */
-	static add_object_id(val, namespace) {
+	static add_object_id(val,namespace) {
 		define_normal_value(val,this.namespace_key,namespace);
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
@@ -295,13 +295,13 @@ class addEventListenerExt {
 			this.convert_to_namespaced_string(real_value,val,key,index);
 			return;
 		} else if(is_react_element) {
-			console.log("react_element", val);
+			console.log("react_element",val);
 			index=this.add_object_id(val,"react");
 		} else if(val instanceof IDBDatabase||val instanceof IDBTransaction) {
 			// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
 			index=this.add_object_id(val,"idb");
 		} else if(val instanceof ServiceWorkerContainer) {
-			index=this.add_object_id(val, "service_worker");
+			index=this.add_object_id(val,"service_worker");
 		}
 		if(index===-1) {
 			let failed=false;
@@ -328,8 +328,8 @@ class addEventListenerExt {
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
 			switch(typeof val) {
-				case 'object':this.args_iter_on_object(real_value,key,val); break;
-				case 'function': break;
+				case 'object': this.args_iter_on_object(real_value,key,val); break;
+				case 'function': this.args_iter_on_function(real_value,key,val); break;
 				default:
 			}
 		}
@@ -337,18 +337,26 @@ class addEventListenerExt {
 		let call_list=this.call_list.deref();
 		if(call_list===void 0) {
 			call_list=[];
-			console.log("gc keep call_list", call_list);
+			console.log("gc keep call_list",call_list);
 			this.call_list=new WeakRef(call_list);
 		}
 		let call_list_info=[real_value];
-		console.log("gc keep `${[real_value]}`", call_list_info);
+		console.log("gc keep `${[real_value]}`",call_list_info);
 		let id=call_list.push(new WeakRef(call_list_info))-1;
 		let info=[value,id];
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
 		}
-		console.log("gc keep info", info);
+		console.log("gc keep info",info);
 		call_list.push(new WeakRef(info));
+	}
+	/** @template {CallableFunction} T @param {unknown[]} real_value @param {number} key @param {T} val */
+	static args_iter_on_function(real_value,key,val) {
+		let index=this.object_ids.findIndex(e => e.deref()===val);
+		if(index>-1) {
+			this.convert_to_namespaced_string(real_value,val,key,index);
+			return;
+		}
 	}
 	/** @param {[any, any, any[]]} list */
 	static add_to_call_list(list) {
