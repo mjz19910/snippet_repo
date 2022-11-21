@@ -1,7 +1,4 @@
 declare class DOMTokenList {
-    private _set;
-    private _afterUpdate;
-    private _validate;
     constructor(valuesInit?: string[], afterUpdate?: (t: DOMTokenList) => void);
     add(c: string): void;
     replace(c1: string, c2: string): void;

@@ -28,6 +28,7 @@ export class UrlFetcher {
 
 	/** @param {string} data */
 	on_response_end(data) {
+		/** @type {import("node-html-parser").HTMLElement} */
 		const root=parse(data,{
 			lowerCaseTagName: false,
 			comment: true,
@@ -50,9 +51,11 @@ export class UrlFetcher {
 	}
 	/** @param {ReturnType<typeof parse>['childNodes'][number]} element */
 	show_dom_node(element) {
-		if('rawTagName' in element && 'classList' in element && 'id' in element) {
+		if(element instanceof node_html_parser.HTMLElement) {
 			let {childNodes: root_child_nodes,nodeType,rawTagName,classList,id}=element;
-			/** @arg {typeof node_html_parser['DOMTokenList']} cls */
+			/** @type {import("node-html-parser")|null} */
+			let xx=null;
+			/** @arg {DOMTokenList} cls */
 			function simplify_class_list(cls) {
 				return [...cls.values()];
 			}
