@@ -2394,7 +2394,6 @@ class TransportMessageObj {
 		this.m_timeout_id=setTimeout(() => {
 			if(!this.m_connection) throw new Error();
 			this.disconnect();
-			this.clear();
 			this.m_connection.request_new_port(this);
 		},this.m_connection_timeout);
 	}
@@ -2403,10 +2402,9 @@ class TransportMessageObj {
 			this.m_com_port.removeEventListener('message',this);
 			this.m_com_port=null;
 			this.m_remote_side_connected=false;
+			clearInterval(this.m_keep_alive_interval);
+			this.m_connection.clear_elevation_by_id(this.m_elevation_id);
 		}
-	}
-	clear() {
-		this.m_connection.clear_elevation_by_id(this.m_elevation_id);
 	}
 	/**
 	 * @param {RemoteOriginConnection} connection
