@@ -310,7 +310,7 @@ function overwrite_addEventListener(prototype) {
 						if(e.length<128) {
 							rq.push(e);
 						} else {
-							rq.push(JSON.stringify(e.slice(0,120))+"...(truncated)");
+							rq.push(JSON.stringify(e.slice(0,128-15))+"...(truncated)");
 						}
 					} break;
 					case 'bigint':
