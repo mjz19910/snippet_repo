@@ -360,7 +360,6 @@ class addEventListenerExt {
 				}
 				extract_list.push(inner);
 			}
-			call_list.length=0;
 			let cur_depth=1;
 			while(extract_list.length>30) {
 				/** @type {depth_or_any[]} */
@@ -381,6 +380,7 @@ class addEventListenerExt {
 			this.keep("extract_list",extract_list);
 			/** @type {depth_type} */
 			let depth_info=['depth',1,new WeakRef(extract_list)];
+			call_list.length=0;
 			call_list.push(new WeakRef(depth_info));
 		}
 		let real_holder_ref=new WeakRef(call_list_info);
