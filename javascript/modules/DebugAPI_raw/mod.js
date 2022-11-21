@@ -2354,7 +2354,7 @@ class CSSCascade {
 g_api.CSSCascade=CSSCascade;
 
 class TransportMessageObj {
-	/**@type {number} */
+	/**@type {number|undefined} */
 	m_elevation_id;
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
@@ -2449,6 +2449,7 @@ class TransportMessageObj {
 	}
 	/** @param {MessagePort} port */
 	connect(port) {
+		this.m_elevation_id=remote_origin.get_next_elevation_id();
 		this.m_com_port=port;
 		this.m_com_port.start();
 		elevate_event_handler(this);
@@ -2463,19 +2464,19 @@ class TransportMessageObj {
 		},this.m_connection_timeout);
 	}
 	disconnect() {
-		if(this.m_com_port) {
-			this.m_com_port.removeEventListener('message',this);
-			this.m_com_port=null;
-			this.m_remote_side_connected=false;
-			clearInterval(this.m_keep_alive_interval);
+		if(!this.m_com_port)
+			return;
+		this.m_com_port.removeEventListener('message',this);
+		this.m_com_port=null;
+		this.m_remote_side_connected=false;
+		clearInterval(this.m_keep_alive_interval);
+		if(this.m_elevation_id)
 			remote_origin.clear_elevation_by_id(this.m_elevation_id);
-		}
 	}
 	/**
 	 * @arg {number} connection_timeout
 	 */
 	constructor(connection_timeout) {
-		this.m_elevation_id=remote_origin.get_next_elevation_id();
 		this.m_connection_timeout=connection_timeout;
 		this.m_com_port=null;
 	}
@@ -2548,7 +2549,7 @@ class RemoteSocket {
 	 * @param {number} client_id
 	 * @arg {MessageEvent} event
 	 */
-	constructor(port, handler, client_id, event) {
+	constructor(port,handler,client_id,event) {
 		this.port=port;
 		this.handler=handler;
 		this.client_id=client_id;
@@ -2613,7 +2614,11 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		let message_object=new TransportMessageObj(300);
 		this.m_transport_connection=message_object;
 		this.m_connect_target=remote_event_target;
-		this.request_connection(message_object);
+	}
+	init() {
+		// may not need init
+		if(!this.m_transport_connection) return;
+		this.request_connection(this.m_transport_connection);
 	}
 	/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
 	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
@@ -2682,10 +2687,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		connection_port.start();
 		connection_port.addEventListener("message",handler);
 		this.post_port_message(connection_port,{type: "listening",client_id});
-		let prev_connection_index=this.connections.findIndex(e=>{
-			return e.first_event.source === event.source
+		let prev_connection_index=this.connections.findIndex(e => {
+			return e.first_event.source===event.source;
 		});
-		if(prev_connection_index>-1){
+		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
 		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
@@ -2703,8 +2708,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			let message_data=event.data;
 			if(typeof message_data==='object') {
 				let state={
-					did_misbehave:event.ports.length!==1,
-				}
+					did_misbehave: event.ports.length!==1,
+				};
 				if(!state.did_misbehave) {
 					t.on_connect_request_message(state,event,client_id);
 				}
@@ -2729,6 +2734,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 }
 g_api.RemoteOriginConnection=RemoteOriginConnection;
 let remote_origin=new RemoteOriginConnection();
+remote_origin.init();
 g_api.remote_origin=remote_origin;
 
 const html_parsing_div_element=document.createElement("div");
