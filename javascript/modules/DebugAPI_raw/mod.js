@@ -300,7 +300,12 @@ function overwrite_addEventListener(prototype) {
 			cq.forEach(e => {
 				switch(typeof e) {
 					case 'function':
-					case 'object': rq.push(new WeakRef(e)); break;
+					case 'object': {
+						if(e === null) {
+							return rq.push(e);
+						}
+						rq.push(new WeakRef(e));
+					} break;
 					case 'bigint':
 					case 'boolean':
 					case 'number':
