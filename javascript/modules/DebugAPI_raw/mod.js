@@ -461,13 +461,13 @@ class AddEventListenerExt {
 	node_id_max=0;
 	/** @param {Node} val */
 	generate_node_id(val) {
-		let index=this.node_list.findIndex(e=>e.deref()===val);
 		let lost_index=this.node_list.findIndex(e=>e.deref()===void 0);
 		if(lost_index>-1) {
 			this.node_list.splice(lost_index,1);
 			this.node_list_ids.splice(lost_index,1);
 			console.log("dom gc happened", lost_index);
 		}
+		let index=this.node_list.findIndex(e=>e.deref()===val);
 		if(index===-1) {
 			this.node_list.push(new WeakRef(val));
 			let node_id=this.node_id_max++;
