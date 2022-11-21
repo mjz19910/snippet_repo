@@ -331,8 +331,9 @@ class addEventListenerExt {
 		/**@type {unknown[]} */
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
-			if(typeof val==="object") {
-				this.args_iter_on_object(real_value,key,val);
+			switch(typeof val) {
+				case 'object':this.args_iter_on_object(real_value,key,val);break;
+				default:
 			}
 		}
 		let value=JSON.stringify(real_value);
