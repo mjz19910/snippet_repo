@@ -2417,7 +2417,6 @@ class TransportMessageObj {
 		this.m_com_port=communication_port;
 		this.m_elevation_id=connection.get_next_elevation_id();
 		this.m_current_target=target;
-		this.connect(target);
 	}
 }
 class OriginState {
