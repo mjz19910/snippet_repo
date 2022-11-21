@@ -317,8 +317,8 @@ class AddEventListenerExt {
 			// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
 			this.convert_to_id_key(real_value,key,val,"idb");
 			return true;
-		} else if(val instanceof ServiceWorkerContainer) {
-			this.convert_to_id_key(real_value,key,val,"service_worker");
+		} else if("ServiceWorkerContainer" in window&&val instanceof ServiceWorkerContainer) {
+			this.convert_to_id_key(real_value,key,val,"ServiceWorkerContainer");
 			return true;
 		}
 		let failed=false;
@@ -541,7 +541,7 @@ class AddEventListenerExt {
 					lost_indexes.unshift(x);
 				}
 			}
-			console.log("dom gc happened",lost_indexes, "new_len",this.node_list.length);
+			console.log("dom gc happened",lost_indexes,"new_len",this.node_list.length);
 		}
 		let index=this.node_list.findIndex(e => e.deref()===val);
 		if(index===-1) {
@@ -2385,25 +2385,30 @@ class TransportMessageObj {
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
 	m_remote_side_connected=false;
-	/** @param {MessageEvent<{type:"listening"}>} message_event_response */
+	m_connect_timeout=0;
+	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
 	handleEvent(message_event_response) {
-		this.m_connection.transport_init_maybe_complete({
+		/** @type {ReportInfo<this>} */
+		let report_info={
 			event: message_event_response,
-			handler: this
-		});
-		if(!this.m_remote_side_connected&&this.m_timeout_id) {
-			this.m_remote_side_connected=true;
-			clearTimeout(this.m_timeout_id);
+			handler: this,
 		}
-	}
-	/** @param {number} timeout_ms */
-	start(timeout_ms) {
-		if(!this.m_connection) throw new Error();
-		this.m_timeout_id=setTimeout(() => {
-			if(!this.m_connection) throw new Error();
-			this.disconnect();
-			this.clear();
-		},timeout_ms);
+		switch(message_event_response.data.type) {
+			case "listening":{
+				this.m_connection.transport_connected(report_info);
+				if(!this.m_remote_side_connected&&this.m_timeout_id) {
+					this.m_remote_side_connected=true;
+					clearTimeout(this.m_timeout_id);
+				}
+			} break;
+			case "disconnected": {
+				this.m_connection.transport_disconnected(report_info);
+				this.m_remote_side_connected=false;
+				setTimeout(function() {
+
+				},this.m_connect_timeout/8);
+			} break;
+		}
 	}
 	/** @param {Window} target */
 	connect(target) {
@@ -2426,13 +2431,21 @@ class TransportMessageObj {
 	 * @param {RemoteOriginConnection} connection
 	 * @param {MessagePort} communication_port
 	 * @param {Window} target
+	 * @arg {number} connection_timeout
 	 */
-	constructor(connection,communication_port,target) {
+	constructor(connection,communication_port,target,connection_timeout) {
 		this.m_connection=connection;
 		this.m_com_port=communication_port;
 		this.m_elevation_id=connection.get_next_elevation_id();
 		this.m_current_target=target;
 		this.connect(target);
+		if(!this.m_connection) throw new Error();
+		this.m_connect_timeout=connection_timeout;
+		this.m_timeout_id=setTimeout(() => {
+			if(!this.m_connection) throw new Error();
+			this.disconnect();
+			this.clear();
+		},connection_timeout);
 	}
 }
 class OriginState {
@@ -2456,6 +2469,9 @@ class OriginState {
 g_api.OriginState=OriginState;
 
 class RemoteOriginConnection {
+	transport_disconnected(arg0) {
+		console.log('transport connected',arg0.event.data);
+	}
 	/** @param {MessageEvent<unknown>} event */
 	on_child_event(event) {
 		console.log(event);
@@ -2474,7 +2490,6 @@ class RemoteOriginConnection {
 		this.elevated_array=[];
 		this.state.is_top=this.state.window===this.state.top;
 		this.state.is_root=this.state.opener===null;
-		this.setup_root_proxy(this.state.window);
 		if(!this.state.is_top)
 			this.state.is_root=false;
 		if(this.state.is_top) {
@@ -2482,22 +2497,19 @@ class RemoteOriginConnection {
 				this.start_root_server();
 			} else {
 				this.init_transport_over(this.state.opener,this.state.window);
+				this.start_root_server();
+				this.setup_root_proxy();
 			}
 		} else {
 			if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
 			this.init_transport_over(this.state.top,this.state.window);
 		}
 	}
-	/**
-	 * @param {Window & typeof globalThis} window
-	 */
-	setup_root_proxy(window) {
-		//TODO
-		let todo=true;
-		if(!todo) {
-			return window;
-		}
+	m_flags={does_proxy_to_opener:false};
+	setup_root_proxy() {
+		this.m_flags.does_proxy_to_opener=true;
 	}
+	m_transport_map=new Map;
 	/**
 	 * @param {Window} post_message_event_transport_target
 	 * @param {Window} response_message_event_transport_target
@@ -2513,8 +2525,8 @@ class RemoteOriginConnection {
 			}
 		},"*",[channel.port1]);
 		this.event_transport_map.set(response_message_event_transport_target,post_message_event_transport_target);
-		let message_object=new TransportMessageObj(this,channel.port2,response_message_event_transport_target);
-		message_object.start(300);
+		let message_object=new TransportMessageObj(this,channel.port2,response_message_event_transport_target,300);
+		this.m_transport_map.set(message_object, {connected:false});
 	}
 	/**
 	 * @param {number} elevated_id
@@ -2535,9 +2547,9 @@ class RemoteOriginConnection {
 		return this.max_elevated_id++;
 	}
 	/** @arg {{event: MessageEvent<RemoteOriginMessage>;handler: TransportMessageObj;}} message_event */
-	transport_init_maybe_complete(message_event) {
+	transport_connected(message_event) {
 		console.log('transport connected',message_event.event.data);
-		if(message_event.event.source !== null) {
+		if(message_event.event.source!==null) {
 			this.event_transport_map.set(message_event.event.source,window);
 		}
 	}
@@ -2547,6 +2559,7 @@ class RemoteOriginConnection {
 		let t=this;
 		/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
 		function post_port_message(target_port,message) {
+			console.log("root_post_message",message);
 			target_port.postMessage(message);
 		}
 		window.addEventListener("message",function(event) {
@@ -2569,6 +2582,11 @@ class RemoteOriginConnection {
 				connection_port.addEventListener("message",handler);
 				post_port_message(connection_port,{type: "listening"});
 				t.connections.push({port: connection_port});
+			}
+		});
+		window.addEventListener("beforeunload",function() {
+			for(let connection of t.connections) {
+				connection.port.postMessage({type: "disconnect"});
 			}
 		});
 	}

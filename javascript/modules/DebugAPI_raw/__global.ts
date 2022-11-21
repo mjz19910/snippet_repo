@@ -183,8 +183,17 @@ declare global {
 
 declare global {
 	type RemoteOriginListening={type:"listening"};
-	type RemoteOriginMessage=RemoteOriginListening;
+	type RemoteOriginDisconnected={type:"disconnected"};
+	type RemoteOriginMessage=RemoteOriginListening|RemoteOriginDisconnected;
 }
+
+declare global {
+	type ReportInfo<T>={
+		event: MessageEvent<RemoteOriginMessage>;
+		handler: T;
+	};
+}
+
 
 
 // DebugAPI
