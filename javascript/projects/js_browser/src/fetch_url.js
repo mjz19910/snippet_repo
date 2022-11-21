@@ -7,24 +7,16 @@ import {PageLoaderState} from "./page_loader.js";
  * @param {PageLoaderState} state
  */
 function async_http_get(state) {
-	http.get(state.url,(/** @type {any} */ err, /** @type {any} */ res) => {
-		if(err) {
-			console.log("",err);
-			return;
-		}
-		console.log(res);
+	http.get(state.url,(resp) => {
+		console.log(resp);
 	});
 }
 /**
  * @param {PageLoaderState} state
  */
 function async_https_get(state) {
-	https.get(state.url,(/** @type {any} */ err, /** @type {any} */ res) => {
-		if(err) {
-			console.log("",err);
-			return;
-		}
-		console.log(res);
+	https.get(state.url,(resp) => {
+		console.log(resp);
 	});
 }
 
