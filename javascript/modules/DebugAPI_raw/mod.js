@@ -456,13 +456,19 @@ class AddEventListenerExt {
 	}
 	/** @type {WeakRef<Node>[]} */
 	node_list=[];
+	/** @type {number[]} */
+	node_list_ids=[];
+	node_id_max=0;
 	/** @param {Node} val */
 	generate_node_id(val) {
 		let index=this.node_list.findIndex(e=>e.deref()===val);
 		if(index===-1) {
-			index=this.node_list.push(new WeakRef(val))-1;
+			this.node_list.push(new WeakRef(val));
+			let node_id=this.node_id_max++;
+			this.node_list_ids.push(node_id);
+			return node_id;
 		}
-		return index;
+		return this.node_list_ids[index];
 	}
 	/** @param {Extract<keyof EventTarget,string>} target */
 	init_overwrite(target) {
