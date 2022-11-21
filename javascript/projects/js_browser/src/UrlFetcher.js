@@ -52,4 +52,16 @@ export class UrlFetcher {
 			console.log(element);
 		}
 	}
+	/** @param {ReturnType<typeof parse>} element */
+	show_dom_node(element) {
+		let root=element;
+		let {childNodes: root_child_nodes,nodeType,rawTagName,classList,id}=root;
+		/** @arg {typeof root['classList']} cls */
+		function simplify_class_list(cls) {
+			return [...cls.values()];
+		}
+		let classList_=simplify_class_list(classList);
+		console.log(Object.keys(root));
+		console.log({childNodes: [root_child_nodes],nodeType,rawTagName,classList: classList_,id});
+	}
 }
