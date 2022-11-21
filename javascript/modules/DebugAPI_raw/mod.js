@@ -2530,10 +2530,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @arg {TransportMessageObj} transport_handler */
 	request_connection(transport_handler) {
-		let channel=new MessageChannel;
 		if(!this.m_connect_target) {
 			return false;
 		}
+		let channel=new MessageChannel;
 		this.m_connect_target.postMessage({
 			type: "ConnectOverPostMessage",
 			data: {
