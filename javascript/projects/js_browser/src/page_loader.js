@@ -1,27 +1,16 @@
 import {ClientRequest,IncomingMessage} from "http";
-import {fake,FakeWindow,PageLoadStateType} from "../../browser_fake_dom/index.js";
-import {BaseBadge} from "../../browser_fake_dom/src/BaseBadge.js";
 import {fetch_url} from "./fetch_url.js";
-import {get_cached_repl_plugin} from "./get_cached_repl_plugin.js";
-import {on_page_data_loaded} from "./on_page_data_loaded.js";
-import {PageLoaderHTMLState} from "./PageLoaderHTMLState.js";
-import {RequestModule} from "./RequestModule.js";
 
 /**@type {Buffer[]} */
 export let cached_data_buffer=[];
 
 export class PageLoaderState {
 	create_window() {
-		return new FakeWindow(new BaseBadge);
 	}
-	/**@type {RequestModule} */
-	m_start_request_module=new RequestModule;
 	/** @type {ClientRequest | null} */
 	m_client_request=null;
 	/** @type {IncomingMessage | null} */
 	m_incoming_message=null;
-	/**@type {PageLoaderHTMLState} */
-	html_state=new PageLoaderHTMLState;
 	silent=false;
 	no_repl=false;
 	follow_redirects=false;
@@ -104,6 +93,6 @@ export class PageLoaderState {
 			}
 		}
 		this.url=url;
-		this.page_load_state=new PageLoadStateType();;
+		this.page_load_state=new PageLoaderState(this.url);
 	}
 }

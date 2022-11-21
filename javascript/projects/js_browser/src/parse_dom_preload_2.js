@@ -1,5 +1,8 @@
 import * as path from "path";
 import * as process from "process";
+import {fetch_url} from "./fetch_url.js";
+import {import_ipc_plugin} from "./ipc_plugin.js";
+import {IpcLoader} from "./nice_loader.js";
 import {PageLoaderState} from "./page_loader.js";
 
 class UndefinedParseResult {
@@ -50,10 +53,11 @@ async function new_FetchRequestState(url) {
 }
 
 /**
- * @param {{}} state
+ * @param {{url:string}} state
  */
 async function do_browse(state) {
-	let res=await new_FetchRequestState(url);
+	let res=await new_FetchRequestState(state.url);
+	let ipc_loader_state=new IpcLoader;
 	let lexer=await import_ipc_plugin(ipc_loader_state,"html_lexer");
 	if(!lexer) throw new Error("Can't import lexer plugin");
 	let repl_plugin=await import_ipc_plugin(ipc_loader_state,"repl_plugin_manager/mod.js");
@@ -93,7 +97,10 @@ Options:
 `);
 		return;
 	}
-	let state={};
+	let url=cmd_argv[0];
+	let state={
+		url
+	};
 	await do_browse(state);
 }
 
