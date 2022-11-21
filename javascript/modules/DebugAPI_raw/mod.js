@@ -2402,9 +2402,12 @@ class TransportMessageObj {
 			case "disconnected": {
 				this.disconnect();
 				this.m_connection.transport_disconnected(report_info);
-				setTimeout(function(obj) {
+				let tries=8;
+				setTimeout(function request_new_connection(obj) {
+					tries--;
 					obj.m_connection.request_new_port(obj);
-				},this.m_connection_timeout/8,this);
+					setTimeout(request_new_connection,obj.m_connection_timeout/tries,obj);
+				},this.m_connection_timeout/tries,this);
 			} break;
 		}
 	}
