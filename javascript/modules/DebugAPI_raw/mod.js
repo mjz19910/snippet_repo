@@ -327,9 +327,25 @@ class AddEventListenerExt {
 		}
 	}
 	/** @param {[unknown,number,unknown,...unknown[]]} real_value */
+	verify_non_circular(real_value) {
+		for(let [key,val] of real_value.entries()) {
+			switch(typeof val) {
+				case 'object':
+				case 'function': try{JSON.stringify(val)} catch{ return [false, key]};
+				default: break;
+			}
+		}
+		return [true, -1];
+	}
+	/** @param {[unknown,number,unknown,...unknown[]]} real_value */
 	use_tmp_non_circular(real_value) {
 		let [_tv,_a_len,_x,...args]=real_value;
 		let value;
+		let [is_circular, index]=this.verify_non_circular(real_value);
+		if(is_circular) {
+			console.log('tried to stringify circular object');
+			return;
+		}
 		x: try {
 			value=JSON.stringify(real_value);
 			break x;
