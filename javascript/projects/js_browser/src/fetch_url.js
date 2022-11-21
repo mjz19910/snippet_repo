@@ -1,6 +1,34 @@
 import * as http from "http";
 import * as https from "https";
 import {PageLoaderState} from "./page_loader.js";
+
+
+/**
+ * @param {PageLoaderState} state
+ */
+function async_http_get(state) {
+	http.get(state.url,(/** @type {any} */ err, /** @type {any} */ res) => {
+		if(err) {
+			console.log("",err);
+			return;
+		}
+		console.log(res);
+	});
+}
+/**
+ * @param {PageLoaderState} state
+ */
+function async_https_get(state) {
+	https.get(state.url,(/** @type {any} */ err, /** @type {any} */ res) => {
+		if(err) {
+			console.log("",err);
+			return;
+		}
+		console.log(res);
+	});
+}
+
+
 /**
  * @arg {PageLoaderState} state
  */
@@ -42,11 +70,9 @@ export async function fetch_url(state,silent=false) {
 	} catch(err) {
 		console.log("Fetch algo error",err);
 	}
-	http.get(state.url, (/** @type {any} */ err, /** @type {any} */ res) => {
-		if(err) {
-			console.log("",err);
-			return;
-		}
-		console.log(res);
-	});
+	if(p_url.protocol==="https") {
+		async_https_get(state);
+		return;
+	}
+	async_http_get(state);
 }
