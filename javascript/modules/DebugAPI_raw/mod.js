@@ -306,14 +306,14 @@ function overwrite_addEventListener(prototype) {
 					return;
 				}
 				switch(typeof e) {
-					case 'function': throw 1;
-					case 'object': throw 2;
-					case 'bigint': rq.push(e);
-					case 'boolean': rq.push(e);
-					case 'number': rq.push(e);
-					case 'string': rq.push(e);
-					case 'symbol': rq.push(e);
-					case 'undefined': rq.push(e);
+					case 'function':
+					case 'object': throw 1;
+					case 'bigint':
+					case 'boolean':
+					case 'number':
+					case 'string':
+					case 'symbol':
+					case 'undefined': rq.push(e); break;
 				}
 			});
 			arg_list.push(rq);
