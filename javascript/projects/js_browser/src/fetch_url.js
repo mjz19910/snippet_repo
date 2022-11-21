@@ -16,7 +16,6 @@ function async_api_use_for_get(state,cur_api) {
 		resp.on('end',() => {
 			console.log(data);
 		});
-		console.log(resp);
 	}).on("error",(err) => {
 		console.log("Error: "+err.message);
 	});
