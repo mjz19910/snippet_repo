@@ -14,7 +14,7 @@ function async_api_use_for_get(state,cur_api) {
 
 		// The whole response has been received. Print out the result.
 		resp.on('end',() => {
-			console.log(JSON.parse(data).explanation);
+			console.log(data);
 		});
 		console.log(resp);
 	}).on("error",(err) => {
