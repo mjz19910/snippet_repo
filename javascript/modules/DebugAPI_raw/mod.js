@@ -60,21 +60,28 @@ class ReversePrototypeChain {
 		if (this.window_list.includes(any(value))) {
 			return "window_id::" + this.window_list.indexOf(any(value));
 		}
+		if (value === g_api)
+			return "self::g_api";
 		let key;
+		if(!this.object_cache.includes(value)) {
+			this.object_cache.push(value);
+		}
+		let object_index=this.object_cache.indexOf(value);
 		if(Symbol.toStringTag in value) {
 			key=value[Symbol.toStringTag];
 		}
-		if (key) {
-			if (value.hasOwnProperty('constructor')) {
-				return "constructor_key::" + value.constructor.name + ":" + key;
+		if (value.hasOwnProperty('constructor')) {
+			let constructor_name=value.constructor.name;
+			if(key) {
+				return `constructor_key::${constructor_name}:${key}:${object_index}`;
+			} else {
+				return `constructor_key::${constructor_name}:${object_index}`;
 			}
+		} else if (key) {
 			return "to_string_tag::" + key;
 		}
-		if (value === g_api)
-			return "self::g_api";
 		try {
 			if (value.hasOwnProperty('constructor')) {
-				return "constructor_not_g_api::" + value.constructor.name;
 			}
 		} catch {}
 		let index=this.object_cache.indexOf(value);
