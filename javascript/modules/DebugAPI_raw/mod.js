@@ -293,7 +293,7 @@ function overwrite_addEventListener(prototype) {
 	prototype.addEventListener=new Proxy(prototype.addEventListener,{
 		apply(target,callback,argArray) {
 			/** @type {{}[]} */
-			let cq=[target,callback,argArray.length,...argArray];
+			let cq=[callback,argArray.length,...argArray];
 			/** @type {arg_list_item_type[]} */
 			let rq=[];
 			cq.forEach(e=>{
