@@ -126,7 +126,7 @@ export class IpcLoader {
 		if(specifier.endsWith(".js")) {
 			let fast_resolve=true;
 			if(fast_resolve)
-				return nextResolve(specifier,context,nextResolve);
+				return await nextResolve(specifier,context,nextResolve);
 			try {
 				state.depth++;
 				if(!state.args.length) return null;
