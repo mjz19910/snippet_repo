@@ -339,12 +339,15 @@ class AddEventListenerExt {
 		if(call_list===void 0) {
 			call_list=[];
 			this.call_list_create_count++;
-			console.log("gc keep call_list",call_list);
+			if(this.call_list_create_count > 1) {
+				console.log("call list lost");
+			}
+			this.keep("call_list",call_list);
 			this.call_list=new WeakRef(call_list);
 		}
 		/** @type {['real_holder', any]} */
 		let call_list_info=['real_holder',real_value];
-		console.log("gc keep real_holder",call_list_info);
+		this.keep("real_holder",call_list_info);
 		if(call_list.length>30) {
 			/** @type {depth_or_any[]} */
 			let extract_list=[];
@@ -398,6 +401,8 @@ class AddEventListenerExt {
 	}
 	/** @param {string} key @param {unknown} value */
 	keep(key,value) {
+		if(this.call_list_create_count > 1)
+			return;
 		console.log(`gc_keep: ${key}`,value);
 	}
 	/** @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
