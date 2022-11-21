@@ -93,6 +93,5 @@ export class PageLoaderState {
 			}
 		}
 		this.url=url;
-		this.page_load_state=new PageLoaderState(this.url);
 	}
 }
