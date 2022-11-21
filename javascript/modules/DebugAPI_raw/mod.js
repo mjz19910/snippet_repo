@@ -328,7 +328,7 @@ class addEventListenerExt {
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
 			switch(typeof val) {
-				case 'object':this.args_iter_on_object(real_value,key,val);break;
+				case 'object':this.args_iter_on_object(real_value,key,val); break;
 				case 'function': break;
 				default:
 			}
@@ -340,7 +340,9 @@ class addEventListenerExt {
 			console.log("gc keep call_list", call_list);
 			this.call_list=new WeakRef(call_list);
 		}
-		let id=call_list.push(new WeakRef([real_value]));
+		let call_list_info=[real_value];
+		console.log("gc keep `${[real_value]}`", call_list_info);
+		let id=call_list.push(new WeakRef(call_list_info))-1;
 		let info=[value,id];
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
