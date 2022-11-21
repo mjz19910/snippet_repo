@@ -2392,9 +2392,9 @@ class TransportMessageObj {
 		let report_info={
 			event: message_event_response,
 			handler: this,
-		}
+		};
 		switch(message_event_response.data.type) {
-			case "listening":{
+			case "listening": {
 				this.m_connection.transport_connected(report_info);
 				if(!this.m_remote_side_connected&&this.m_timeout_id) {
 					this.m_remote_side_connected=true;
@@ -2426,7 +2426,7 @@ class TransportMessageObj {
 		},this.m_connection_timeout);
 	}
 	disconnect() {
-		if(this.m_current_target && this.m_com_port) {
+		if(this.m_current_target&&this.m_com_port) {
 			this.m_com_port.removeEventListener('message',this);
 			this.m_current_target=null;
 			this.m_com_port=null;
@@ -2512,7 +2512,7 @@ class RemoteOriginConnection {
 			this.init_transport_over(this.state.top,this.state.window);
 		}
 	}
-	m_flags={does_proxy_to_opener:false};
+	m_flags={does_proxy_to_opener: false};
 	setup_root_proxy() {
 		this.m_flags.does_proxy_to_opener=true;
 	}
@@ -2533,7 +2533,7 @@ class RemoteOriginConnection {
 			}
 		},"*",[channel.port1]);
 		let message_object=new TransportMessageObj(this,300);
-		this.m_transport_map.set(message_object, {connected:false});
+		this.m_transport_map.set(message_object,{connected: false});
 		message_object.connect(channel.port2,remote_event_target);
 	}
 	/** @arg {TransportMessageObj} transport_handler */
@@ -2612,6 +2612,9 @@ class RemoteOriginConnection {
 			for(let connection of t.connections) {
 				connection.port.postMessage({type: "disconnect"});
 			}
+		});
+		window.addEventListener("unload",function() {
+			t.connections.length=0;
 		});
 	}
 }
