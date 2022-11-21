@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as process from "process";
+import {PageLoaderState} from "./page_loader.js";
 
 class UndefinedParseResult {
 	/**
@@ -14,14 +15,14 @@ class JSONParseResult {
 	/**
 	 * @param {any} value
 	 */
-	constructor(value){
-		this.value = value;
+	constructor(value) {
+		this.value=value;
 	}
 	/**
 	 * @param {boolean} fallback
 	 */
 	bool(fallback) {
-		if(typeof this.value==='boolean'){
+		if(typeof this.value==='boolean') {
 			return this.value;
 		}
 		return fallback;
@@ -32,7 +33,7 @@ class JSONParseResult {
  * @param {string | undefined} env_value
  */
 function try_parse_env(env_value) {
-	if(env_value === undefined) {
+	if(env_value===undefined) {
 		return new UndefinedParseResult;
 	}
 	return new JSONParseResult(JSON.parse(env_value));
@@ -43,6 +44,10 @@ const debug=try_parse_env(process.env.DEBUG).bool(false);
 process.on('unhandledRejection',(/** @type {unknown} */ error) => {
 	console.log('unhandled promise rejection',error);
 });
+/** @param {string} url */
+async function new_FetchRequestState(url) {
+	return new PageLoaderState(url);
+}
 
 /**
  * @param {{}} state
@@ -88,7 +93,7 @@ Options:
 `);
 		return;
 	}
-	let state={}
+	let state={};
 	await do_browse(state);
 }
 
