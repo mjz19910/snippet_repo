@@ -212,7 +212,7 @@ declare global {
 
 declare global {
 	type arg_list_item_type=WeakRef<{}>|bigint|boolean|string|number|symbol;
-	interface EventTarget {
+	interface Function {
 		__arg_list_for_add_event_listeners:arg_list_item_type[][];
 	}
 }
