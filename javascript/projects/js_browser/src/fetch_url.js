@@ -17,6 +17,7 @@ export async function fetch_url(state,silent=false) {
 	console.log("TODO: fix_fetch_url");
 	/*fix_fetch_url(state);*/
 	let p_url=new URL(state.url);
+	p_url;
 	if(!silent) {
 		/* if(!state.no_repl) {
 			repl.pause();
