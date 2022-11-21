@@ -385,7 +385,7 @@ class AddEventListenerExt {
 			}
 			this.keep("extract_list",extract_list);
 			/** @type {depth_type} */
-			let depth_info=['depth',1,new WeakRef(extract_list)];
+			let depth_info=['depth',cur_depth,new WeakRef(extract_list)];
 			call_list=[];
 			this.keep("depth adjust call_list", call_list);
 			this.call_list=new WeakRef(call_list);
