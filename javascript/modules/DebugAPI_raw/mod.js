@@ -2680,12 +2680,14 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		this.m_connect_target=remote_event_target;
 		this.request_connection(message_object);
 	}
-	post_message_connect_message_type="ConnectOverPostMessage_"+sha_1_initial;
+	/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
+	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 	/** @arg {TransportMessageObj} transport_handler */
 	request_connection(transport_handler) {
-		if(!this.m_connect_target)
+		if(!this.m_connect_target || transport_handler.m_com_port)
 			return false;
 		let channel=new MessageChannel;
+		console.log("post request ConnectOverPostMessage", transport_handler);
 		this.m_connect_target.postMessage({
 			type: this.post_message_connect_message_type,
 			data: {
