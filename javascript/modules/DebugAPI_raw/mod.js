@@ -356,8 +356,8 @@ class AddEventListenerExt {
 	object_max_id=1;
 	/** @readonly */
 	namespace_key="__g_api__namespace";
-	/** @type {CallableFunction[]} */
-	elevated_functions=[];
+	/** @type {EventListenerOrEventListenerObject[]} */
+	elevated_event_handlers=[];
 	/** @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
 	convert_to_namespaced_string(real_value,val,key,index) {
 		if(!(this.namespace_key in val))
@@ -656,16 +656,19 @@ class AddEventListenerExt {
 	init_overwrite(target) {
 		let t=this;
 		switch(target) {
-			case "addEventListener": t.target_prototype[target]=function(...args) {
-				t.add_to_call_list([target,this,args]);
-				let original_function=args[1];
-				if(!t.elevated_functions.includes(original_function)) {
-					args[1]=function(...args) {
-						t.eventFireInterceptor(original_function,this,args);
+			case "addEventListener":
+				/** @arg {[string,EventListenerOrEventListenerObject,any?]} args */
+				t.target_prototype[target]=function(...args) {
+					t.add_to_call_list([target,this,args]);
+					let original_function=args[1];
+					if(!t.elevated_event_handlers.includes(original_function)) {
+						/** @arg {[evt: Event]} args */
+						args[1]=function(...args) {
+							t.eventFireInterceptor(original_function,this,args);
+						};
 					}
-				}
-				return t.orig[target].call(this,...args);
-			}; break;
+					return t.orig.addEventListener.call(this,...args);
+				}; break;
 			case 'removeEventListener': t.target_prototype[target]=function(...args) {
 				t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
@@ -677,9 +680,28 @@ class AddEventListenerExt {
 			default: throw 1;
 		}
 	}
+	/**
+	 * @param {EventListenerOrEventListenerObject} arg_function
+	 * @param {[string, EventListenerOrEventListenerObject, any?]} arg_this
+	 * @param {[evt: Event]} args
+	 */
 	eventFireInterceptor(arg_function,arg_this,args) {
-		console.log(args[0]);
-		return arg_function.apply(arg_this, args);
+		if(args[0] instanceof MessageEvent) {
+			/** @type {MessageEvent<unknown>} */
+			let msg_event=args[0];
+			let d=msg_event.data;
+			if(typeof d==='object'&&d!==null&&'type' in d) {
+				if(d.type === remote_origin.post_message_connect_message_type) {
+					console.log("skip page event handler for "+d.type);
+					return;
+				}
+			}
+		}
+		if(typeof arg_function==='function') {
+			return arg_function.apply(arg_this,args);
+		} else {
+			return arg_function.handleEvent(...args);
+		}
 	}
 }
 g_api.AddEventListenerExt=AddEventListenerExt;
@@ -2597,10 +2619,11 @@ class OriginState {
 }
 g_api.OriginState=OriginState;
 
+// @Update on minor version change
+// version 0.3.0 sha1 initial commit
+const sha_1_initial="f615a9c";
+
 class RemoteOriginConnectionData {
-	// @Update on minor version change
-	// version 0.3.0 sha1 initial commit
-	sha_1_initial="f615a9c";
 	m_flags={does_proxy_to_opener: false};
 	m_transport_map=new Map;
 	max_elevate_id=0;
@@ -2657,13 +2680,14 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		this.m_connect_target=remote_event_target;
 		this.request_connection(message_object);
 	}
+	post_message_connect_message_type="ConnectOverPostMessage_"+sha_1_initial;
 	/** @arg {TransportMessageObj} transport_handler */
 	request_connection(transport_handler) {
 		if(!this.m_connect_target)
 			return false;
 		let channel=new MessageChannel;
 		this.m_connect_target.postMessage({
-			type: "ConnectOverPostMessage",
+			type: this.post_message_connect_message_type,
 			data: {
 				type: "start",
 				source: null,
@@ -2703,6 +2727,11 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event */
 	on_connect_request_message(event) {
+		if(typeof event.data !== 'object' || event.data === null || !('type' in event.data)) return false;
+		switch(event.data.type) {
+			case remote_origin.post_message_connect_message_type: break
+			default: return false;
+		}
 		let connection_port=event.ports[0];
 		let handler={
 			root: this,
@@ -2711,9 +2740,11 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				this.root.on_child_event(event);
 			},
 		};
+		add_event_listener_ext.elevated_event_handlers.push(handler);
 		connection_port.addEventListener("message",handler);
 		this.post_port_message(connection_port,{type: "listening"});
 		this.connections.push({port: connection_port});
+		return true;
 	}
 	/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
 	post_port_message(target_port,message) {
@@ -2727,13 +2758,19 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			let client_id=t.client_max_id++;
 			let message_data=event.data;
 			if(typeof message_data==='object') {
+				let misbehaved;
 				if(event.ports.length!==1) {
+					misbehaved=true;
 					console.log(`Client(${client_id}) misbehaved: connect api not followed`);
 					return;
 				}
-				console.log("Received message object",message_data);
-				console.log("Received message ports",event.ports);
-				t.on_connect_request_message(event);
+				if(!misbehaved) {
+					misbehaved=t.on_connect_request_message(event);
+				}
+				if(misbehaved) {
+					console.log("Received message object",message_data);
+					console.log("Received message ports",event.ports);
+				}
 			}
 		}
 		window.addEventListener("message",on_message_event);
@@ -2748,7 +2785,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 }
 g_api.RemoteOriginConnection=RemoteOriginConnection;
-g_api.remote_origin=new RemoteOriginConnection();
+let remote_origin=new RemoteOriginConnection();
+g_api.remote_origin=remote_origin;
 
 const html_parsing_div_element=document.createElement("div");
 /**
