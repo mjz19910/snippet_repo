@@ -2400,12 +2400,11 @@ class TransportMessageObj {
 				}
 			} break;
 			case "disconnected": {
-				this.m_current_target=null;
+				this.disconnect();
 				this.m_connection.transport_disconnected(report_info);
 				setTimeout(function(obj) {
 					obj.m_connection.request_new_port(obj);
 				},this.m_connection_timeout/8,this);
-				this.disconnect();
 			} break;
 		}
 	}
