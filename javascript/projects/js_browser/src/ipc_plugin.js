@@ -24,7 +24,8 @@ export async function import_ipc_plugin(state,plugin_key) {
 			try{
 				return await ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
 			} catch(/**@type {any}*/e) {
-				console.error("import error", e);
+				console.error("import error");
+				console.error(e);
 				// recapture the stack trace so it includes async frames
 				Error.captureStackTrace(e);
 				throw e;
