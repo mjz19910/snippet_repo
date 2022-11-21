@@ -2513,10 +2513,10 @@ class RemoteOriginConnection {
 		}
 	}
 	m_flags={does_proxy_to_opener: false};
+	m_transport_map=new Map;
 	setup_root_proxy() {
 		this.m_flags.does_proxy_to_opener=true;
 	}
-	m_transport_map=new Map;
 	/**
 	 * @param {Window} remote_event_target
 	 * @param {Window} local_event_target
@@ -2610,7 +2610,7 @@ class RemoteOriginConnection {
 		});
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
-				connection.port.postMessage({type: "disconnect"});
+				post_port_message(connection.port,{type: "disconnected"});
 			}
 		});
 		window.addEventListener("unload",function() {
