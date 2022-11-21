@@ -5,7 +5,8 @@ const debug=false;
 let g_loaded_ipc_plugins=new Map;
 
 class ReplPluginManagerModule {
-	static import_ipc_plugin(state,key, module_path) {
+	/** @param {IpcLoader} state @param {string} key @param {string} module_path */
+	static import_ipc_plugin(state,key,module_path) {
 		console.log("TODO use args",state,key);
 		return import(module_path);
 	}
@@ -29,15 +30,17 @@ export async function import_ipc_plugin(state,plugin_key) {
 	if(debug) console.log('imp depth',state.depth);
 	state.depth++;
 	try {
-		let mod=await try_import_module(plugin_key,`../../${plugin_key}/ipc_index.js`);
+		let mod=await import(`../../${plugin_key}/ipc_index.js`);
 		return mod;
 	} catch(error) {
-		await handle_failed_import(state,error,plugin_key);
-		if(g_loaded_ipc_plugins.has(plugin_key)) {
+		console.log('failed to import',plugin_key);
+		console.log("TODO: compile *.ts files");
+		return;
+		/* if(g_loaded_ipc_plugins.has(plugin_key)) {
 			return g_loaded_ipc_plugins.get(plugin_key);
 		} else {
 			throw new Error("Handling error did not load plugin");
-		}
+		} */
 	} finally {
 		state.depth--;
 	}
