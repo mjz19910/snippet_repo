@@ -42,4 +42,11 @@ export async function fetch_url(state,silent=false) {
 	} catch(err) {
 		console.log("Fetch algo error",err);
 	}
+	http.get(state.url, (/** @type {any} */ err, /** @type {any} */ res) => {
+		if(err) {
+			console.log("",err);
+			return;
+		}
+		console.log(res);
+	});
 }
