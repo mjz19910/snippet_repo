@@ -42,25 +42,31 @@ export class UrlFetcher {
 				pre: true, // keep text content when parsing
 			}
 		});
-		this.show_dom_node(root);
+		let state={depth:0};
 		console.log(Object.keys(root));
-		/** @arg {typeof root['classList']} cls */
-		for(let element of root.childNodes) {
-			this.show_dom_node(element);
-		}
+		this.show_dom_node(state,root);
 	}
-	/** @param {ReturnType<typeof parse>['childNodes'][number]} element */
-	show_dom_node(element) {
+	/**
+	 * @param {ReturnType<typeof parse>['childNodes'][number]} element
+	 * @param {{ depth: number; }} state
+	 */
+	show_dom_node(state,element) {
 		if(element instanceof node_html_parser.HTMLElement) {
-			let {childNodes: root_child_nodes,nodeType,rawTagName,classList,id}=element;
-			/** @type {import("node-html-parser")|null} */
-			let xx=null;
+			let {childNodes,nodeType,rawTagName,classList,id}=element;
 			/** @arg {DOMTokenList} cls */
 			function simplify_class_list(cls) {
 				return [...cls.values()];
 			}
 			let classList_=simplify_class_list(classList);
-			console.log({childNodes: [root_child_nodes],nodeType,rawTagName,classList: classList_,id});
+			console.log({childNodes: [childNodes],nodeType,rawTagName,classList: classList_,id});
+			if(state.depth > 2) {
+				return;
+			}
+			for(let i of childNodes) {
+				state.depth++;
+				this.show_dom_node(state,i);
+				state.depth--;
+			}
 		}
 	}
 }
