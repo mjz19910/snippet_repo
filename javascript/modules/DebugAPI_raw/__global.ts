@@ -181,6 +181,11 @@ declare global {
 	type depth_or_any=['real_holder',unknown]|json_value_id_type|depth_type;
 }
 
+declare global {
+	type RemoteOriginListening={type:"listening"};
+	type RemoteOriginMessage=RemoteOriginListening;
+}
+
 
 // DebugAPI
 interface GlobalApiObject {

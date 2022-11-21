@@ -2376,7 +2376,6 @@ class TransportMessageObj {
 	m_remote_side_connected=false;
 	/** @param {MessageEvent<{type:"listening"}>} message_event_response */
 	handleEvent(message_event_response) {
-		console.log("TransportMessageObj_handle_event", message_event_response);
 		this.m_connection.transport_init_maybe_complete({
 			event: message_event_response,
 			handler: this
@@ -2524,16 +2523,18 @@ class RemoteOriginConnection {
 	get_next_elevation_id() {
 		return this.max_elevated_id++;
 	}
-	/**
-	 * @param {any} message_event
-	 */
+	/** @arg {{event: MessageEvent<RemoteOriginMessage>;handler: TransportMessageObj;}} message_event */
 	transport_init_maybe_complete(message_event) {
-		console.log('transport connected',message_event);
+		console.log('transport connected',message_event.event);
 	}
 	/**@type {{port:MessagePort}[]} */
 	connections=[];
 	start_root_server() {
 		let t=this;
+		/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
+		function post_port_message(target_port, message) {
+			target_port.postMessage(message);
+		}
 		window.addEventListener("message",function(event) {
 			let message_data=event.data;
 			if(typeof message_data==='object') {
@@ -2552,9 +2553,7 @@ class RemoteOriginConnection {
 					},
 				};
 				connection_port.addEventListener("message",handler);
-				connection_port.postMessage({
-					type: "listening"
-				});
+				post_port_message(connection_port, {type: "listening"});
 				t.connections.push({port: connection_port});
 			}
 		});
