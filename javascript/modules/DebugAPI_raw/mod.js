@@ -2389,6 +2389,7 @@ class TransportMessageObj {
 			this.disconnect();
 			this.clear();
 		},timeout_ms);
+		this.m_com_port.start();
 		this.m_com_port.addEventListener("message",this);
 	}
 	/** @param {Window} target */
