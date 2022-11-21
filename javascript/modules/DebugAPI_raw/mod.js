@@ -109,6 +109,11 @@ class addEventListenerExt {
 			}
 			if(val instanceof Node) {
 				real_value[key]=this.generate_node_id(val);
+				continue;
+			}
+			if(val instanceof Document) {
+				real_value[key]=this.generate_node_id(val);
+				continue;
 			}
 			let is_react_element=false;
 			if(val instanceof Object&&'__reactContainer$' in val) {
@@ -136,7 +141,7 @@ class addEventListenerExt {
 				if(!this.failed_obj) {
 					this.failed_obj={v: real_value};
 				}
-				console.log("skip, will stringify circular structure", key, val);
+				console.log("skip, will stringify circular structure", real_value, key, val);
 				return;
 			}
 		}
