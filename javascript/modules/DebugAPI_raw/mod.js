@@ -320,7 +320,7 @@ function overwrite_addEventListener(prototype) {
 			return Reflect.apply(target,callback,argArray);
 		}
 	});
-	prototype.__arg_list=arg_list;
+	prototype.__arg_list_for_add_event_listeners=arg_list;
 }
 
 x.a=EventTarget.prototype;
