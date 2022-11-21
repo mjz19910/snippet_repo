@@ -70,7 +70,7 @@ export async function fetch_url(state,silent=false) {
 	} catch(err) {
 		console.log("Fetch algo error",err);
 	}
-	if(p_url.protocol==="https") {
+	if(p_url.protocol==="https:") {
 		async_https_get(state);
 		return;
 	}
