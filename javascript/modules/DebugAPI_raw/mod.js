@@ -291,6 +291,7 @@ function overwrite_addEventListener(prototype) {
 	/** @type {arg_list_item_type[][]} */
 	let arg_list=[];
 	prototype.addEventListener=new Proxy(prototype.addEventListener,{
+		/** @arg {[type: string, callback: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions | undefined]} argArray */
 		apply(target,callback,argArray) {
 			/** @type {{}[]} */
 			let cq=[callback,argArray.length,...argArray];
@@ -309,10 +310,30 @@ function overwrite_addEventListener(prototype) {
 				}
 			});
 			arg_list.push(rq);
+			if(argArray[0] === "message") {
+				console.log("message event listener");
+				let handler=argArray[1];
+				argArray[1]=do_message_handler_overwrite(handler);
+			}
 			return Reflect.apply(target,callback,argArray);
 		}
 	});
 	prototype.__arg_list_for_add_event_listeners=arg_list;
+}
+
+/** @param {EventListenerOrEventListenerObject | null} handler */
+function do_message_handler_overwrite(handler) {
+	/** @this {{}} */
+	return function (/** @type {Event} */ event) {
+		if(typeof handler==='object') {
+			if(handler === null) {
+				throw new Error("invalid handler");
+			}
+			handler.handleEvent(event);
+			return;
+		}
+		handler.call(this,event);
+	}
 }
 
 x.a=EventTarget.prototype;
