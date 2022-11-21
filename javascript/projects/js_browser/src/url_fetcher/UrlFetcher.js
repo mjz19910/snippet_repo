@@ -59,7 +59,7 @@ export class UrlFetcher {
 			}
 			let classList_=simplify_class_list(classList);
 			console.log({childNodes: [childNodes],nodeType,rawTagName,classList: classList_,id});
-			if(state.depth > 2) {
+			if(state.depth > 1) {
 				return;
 			}
 			for(let i of childNodes) {
