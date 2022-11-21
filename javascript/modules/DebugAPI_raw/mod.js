@@ -2465,7 +2465,7 @@ class RemoteOriginConnection {
 		window.addEventListener("message",function(event) {
 			let message_data=event.data;
 			if(typeof message_data==='object') {
-				console.log(`Received message object: ${message_data}`);
+				console.log(`Received message object: `,message_data);
 			}
 		});
 	}
