@@ -107,6 +107,9 @@ class addEventListenerExt {
 				real_value[key]="window:"+this.window_list.indexOf(val);
 				continue;
 			}
+			if(val instanceof Node) {
+				real_value[key]=this.generate_node_id(val);
+			}
 			let is_react_element=false;
 			if(val instanceof Object&&'__reactContainer$' in val) {
 				is_react_element=true;
@@ -133,7 +136,7 @@ class addEventListenerExt {
 				if(!this.failed_obj) {
 					this.failed_obj={v: real_value};
 				}
-				console.log("skip, will stringify circular structure");
+				console.log("skip, will stringify circular structure", real_value);
 				return;
 			}
 		}
@@ -157,6 +160,16 @@ class addEventListenerExt {
 			}
 		}
 		call_list.push(new WeakRef(info));
+	}
+	/** @type {Node[]} */
+	static node_list=[];
+	/** @param {Node} val */
+	static generate_node_id(val) {
+		let index=this.node_list.indexOf(val);
+		if(index===-1) {
+			index=this.node_list.push(val)-1;
+		}
+		return index;
 	}
 	/**
 	 * @param {Extract<keyof EventTarget,string>} target
