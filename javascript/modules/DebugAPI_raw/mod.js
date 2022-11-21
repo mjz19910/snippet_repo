@@ -41,7 +41,7 @@ class ReversePrototypeChain {
 			list.push(proto);
 			proto=Object.getPrototypeOf(proto);
 		}
-		console.log(target,dest,list);
+		console.log(dest);
 	}
 	/**
 	 * @param {{}} base
@@ -95,11 +95,8 @@ class addEventListenerExt {
 	static failed_obj=null;
 	/**@type {WeakRef<any>[]} */
 	static object_ids=[];
-	/**
-	 * @param {[any, any, any[]]} list
-	 */
-	static add_to_call_list(list) {
-		if(this.failed_obj) return;
+	/** @param {[any, any, any[]]} list */
+	static add_to_call_list_impl(list) {
 		let [target,orig_this,args]=list;
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
@@ -153,7 +150,7 @@ class addEventListenerExt {
 		}
 		let id=call_list.push(new WeakRef([real_value]));
 		let info=[value,id];
-		if(args[1]!==null) {
+		if(args[1]!==null && typeof args[1] === 'object') {
 			Object.defineProperty(args[1],'weak_inner',{
 				configurable: true,
 				enumerable: true,
@@ -165,6 +162,15 @@ class addEventListenerExt {
 			}
 		}
 		call_list.push(new WeakRef(info));
+	}
+	/** @param {[any, any, any[]]} list */
+	static add_to_call_list(list) {
+		if(this.failed_obj) return;
+		try {
+			this.add_to_call_list_impl(list);
+		} catch(e) {
+			console.log("err in add to call list", e);
+		}
 	}
 	/** @type {Node[]} */
 	static node_list=[];
