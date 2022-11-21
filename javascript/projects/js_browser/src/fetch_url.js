@@ -1,6 +1,7 @@
 import * as http from "http";
 import * as https from "https";
 import {PageLoaderState} from "./page_loader.js";
+import { parse } from 'node-html-parser';
 
 /** @param {PageLoaderState} state @param {typeof http|typeof https} cur_api */
 function async_api_use_for_get(state,cur_api) {
@@ -14,7 +15,8 @@ function async_api_use_for_get(state,cur_api) {
 
 		// The whole response has been received. Print out the result.
 		resp.on('end',() => {
-			console.log(data);
+			const root = parse(data);
+			console.log(root);
 		});
 	}).on("error",(err) => {
 		console.log("Error: "+err.message);
