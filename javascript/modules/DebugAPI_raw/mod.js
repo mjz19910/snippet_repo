@@ -233,9 +233,9 @@ class addEventListenerExt {
 		removeEventListener: x.a.removeEventListener,
 	};
 	/**
-	 * @type {WeakRef<WeakRef<any[]>[]>}
+	 * @type {WeakRef<WeakRef<any[]>[]>|undefined}
 	 */
-	static call_list=new WeakRef([]);
+	static call_list;
 	static target_prototype=x.a;
 	static init() {
 		this.init_overwrite("addEventListener");
@@ -333,7 +333,7 @@ class addEventListenerExt {
 			}
 		}
 		let value=JSON.stringify(real_value);
-		let call_list=this.call_list.deref();
+		let call_list=this.call_list?.deref();
 		if(call_list===void 0) {
 			call_list=[];
 			console.log("gc keep call_list",call_list);
