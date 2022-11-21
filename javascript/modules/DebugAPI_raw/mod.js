@@ -28,34 +28,34 @@ class ReversePrototypeChain {
 	 * @param {{}} base
 	 * @param {{}[]} targets
 	 */
-	constructor(base, targets) {
-		this.window_list = [];
-		for (let i = 0; i < window.length; i++) {
+	constructor(base,targets) {
+		this.window_list=[];
+		for(let i=0;i<window.length;i++) {
 			this.window_list.push(window[i]);
 		}
-		this.base = base;
-		this.targets = targets;
+		this.base=base;
+		this.targets=targets;
 		/** @type {{}[]} */
 		this.values=[];
 		/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
 		/** @typedef {{__proto__:null,name:string,prototype:{}|null,child:destination_child_type}} destination_index_type */
 		/** @type {{[x: string]: destination_index_type}} */
-		this.destination = Object.create(null);
+		this.destination=Object.create(null);
 		/** @type {({}|null)[]} */
 		this.object_cache=[];
-		this.null_cache_key = this.get_cache_key(null);
-		this.cache_prototype(this.null_cache_key, null);
+		this.null_cache_key=this.get_cache_key(null);
+		this.cache_prototype(this.null_cache_key,null);
 	}
 	generate() {
-		for (let i = 0; i < window.length; i++) {
+		for(let i=0;i<window.length;i++) {
 			if(this.window_list.includes(window[i]))
 				continue;
 			this.window_list.push(window[i]);
 		}
-		for (let target of this.targets) {
+		for(let target of this.targets) {
 			this.process_target(target);
 		}
-		if(top === window) {
+		if(top===window) {
 			console.log(this.destination);
 		}
 	}
@@ -68,38 +68,38 @@ class ReversePrototypeChain {
 		if(!value) {
 			return `a_null::${object_index}`;
 		}
-		if (this.window_list.includes(any(value))) {
-			return "window_id::" + this.window_list.indexOf(any(value));
+		if(this.window_list.includes(any(value))) {
+			return "window_id::"+this.window_list.indexOf(any(value));
 		}
-		if (value === g_api)
+		if(value===g_api)
 			return `self::g_api:${object_index}`;
 		let key;
 		if(Symbol.toStringTag in value) {
 			key=value[Symbol.toStringTag];
 		}
-		if (value.hasOwnProperty('constructor')) {
+		if(value.hasOwnProperty('constructor')) {
 			let constructor_name=value.constructor.name;
 			if(key) {
 				return `constructor_key::${constructor_name}:${key}:${object_index}`;
 			} else {
 				return `constructor_key::${constructor_name}:${object_index}`;
 			}
-		} else if (key) {
+		} else if(key) {
 			return `to_string_tag::${key}:${object_index}`;
 		}
 		try {
-			if (value.hasOwnProperty('constructor')) {
+			if(value.hasOwnProperty('constructor')) {
 			}
 		} catch {}
 		let index=this.object_cache.indexOf(value);
-		if(index < 0) {
+		if(index<0) {
 			index=this.object_cache.push(value)-1;
 		}
-		return "cache_id::" + index;
+		return "cache_id::"+index;
 	}
 	/** @param {string} cache_key @param {{} | null} prototype */
-	cache_prototype(cache_key, prototype) {
-		this.destination[cache_key] ??= {
+	cache_prototype(cache_key,prototype) {
+		this.destination[cache_key]??={
 			__proto__: null,
 			name: cache_key,
 			prototype,
@@ -111,28 +111,28 @@ class ReversePrototypeChain {
 		};
 	}
 	/** @param {{} | undefined} prototype @param {{} | undefined} next_proto @param {number} index */
-	add_one(prototype, next_proto, index) {
+	add_one(prototype,next_proto,index) {
 		if(!this.list)
 			throw new Error("No prototype list");
-		if (prototype === void 0)
+		if(prototype===void 0)
 			return;
-		let cache_key = this.get_cache_key(prototype);
-		this.cache_prototype(cache_key, prototype);
-		x: if (next_proto) {
-			let next = this.add_one(next_proto, this.list.at(index - 1), index - 1);
+		let cache_key=this.get_cache_key(prototype);
+		this.cache_prototype(cache_key,prototype);
+		x: if(next_proto) {
+			let next=this.add_one(next_proto,this.list.at(index-1),index-1);
 			if(!next)
 				break x;
 			let non_null_next=next;
-			let idx = this.destination[cache_key].child.prototypes.findIndex(e=>e.name === non_null_next.name)
-			if (idx < 0)
+			let idx=this.destination[cache_key].child.prototypes.findIndex(e => e.name===non_null_next.name);
+			if(idx<0)
 				this.destination[cache_key].child.prototypes.push(next);
 		}
 		return this.destination[cache_key];
 	}
 	/** @param {string} key @param {{}} value */
-	add_prototype_value(key, value) {
+	add_prototype_value(key,value) {
 		let prototypes=this.destination[key].child.prototypes;
-		let index=prototypes.findIndex(e=>e.prototype === value);
+		let index=prototypes.findIndex(e => e.prototype===value);
 		if(index>=0)
 			return;
 		let sub_key=this.get_cache_key(value);
@@ -141,16 +141,16 @@ class ReversePrototypeChain {
 			prototypes.push(dest_value);
 		} else {
 			let sub_value={
-				__proto__:null,
-				name:sub_key,
-				prototype:value,
-				child:{
-					__proto__:null,
-					prototypes:[],
-					values:[]
+				__proto__: null,
+				name: sub_key,
+				prototype: value,
+				child: {
+					__proto__: null,
+					prototypes: [],
+					values: []
 				}
 			};
-			this.destination[sub_key] = sub_value;
+			this.destination[sub_key]=sub_value;
 			prototypes.push(sub_value);
 		}
 	}
@@ -158,25 +158,25 @@ class ReversePrototypeChain {
 	 * @param {{}} target
 	 */
 	process_target(target) {
-		let proto = target;
+		let proto=target;
 		/** @type {{}[]} */
-		this.list = [];
-		while (proto) {
+		this.list=[];
+		while(proto) {
 			this.list.push(proto);
-			proto = Object.getPrototypeOf(proto);
+			proto=Object.getPrototypeOf(proto);
 		}
-		if(this.list.length === 0)
+		if(this.list.length===0)
 			return;
-		let final = this.list.at(-1);
-		if(final ===void 0) throw new Error("Unexpected");
-		this.add_prototype_value(this.null_cache_key, final);
-		let item_0 = this.list.at(-2);
-		this.add_one(final, item_0, -2);
+		let final=this.list.at(-1);
+		if(final===void 0) throw new Error("Unexpected");
+		this.add_prototype_value(this.null_cache_key,final);
+		let item_0=this.list.at(-2);
+		this.add_one(final,item_0,-2);
 		for(let x of this.values) {
 			let prototype=Object.getPrototypeOf(x);
-			let cache_key = this.get_cache_key(prototype);
+			let cache_key=this.get_cache_key(prototype);
 			if(!this.destination[cache_key]) {
-				this.cache_prototype(cache_key, prototype);
+				this.cache_prototype(cache_key,prototype);
 			}
 			let values=this.destination[cache_key].child.values;
 			if(values.includes(x)) {
@@ -187,16 +187,16 @@ class ReversePrototypeChain {
 	}
 	/** @param {{}} target */
 	add_target(target) {
-		let prototype = Object.getPrototypeOf(target);
+		let prototype=Object.getPrototypeOf(target);
 		p: {
-			if(prototype === null)
+			if(prototype===null)
 				break p;
-			if (this.targets.includes(prototype))
+			if(this.targets.includes(prototype))
 				break p;
 			this.targets.push(prototype);
 		}
 		v: {
-			if (this.values.includes(target))
+			if(this.values.includes(target))
 				break v;
 			this.values.push(target);
 		}
@@ -214,6 +214,16 @@ g_api.reversePrototypeChain=reversePrototypeChain;
 
 let x={};
 g_api.tmp=x;
+
+/** @param {{}} obj @param {PropertyKey} key @param {{}} value */
+function define_normal_value(obj,key,value) {
+	Object.defineProperty(obj,key,{
+		configurable: true,
+		enumerable: true,
+		writable: true,
+		value: value,
+	});
+}
 
 x.a=EventTarget.prototype;
 class addEventListenerExt {
@@ -236,64 +246,90 @@ class addEventListenerExt {
 	static window_list=[window];
 	/**@type {null|{v:any}} */
 	static failed_obj=null;
-	/**@type {WeakRef<any>[]} */
+	/** @type {WeakRef<{}>[]} */
 	static object_ids=[];
+	/** @readonly */
+	static namespace_key="__g_api__namespace";
+	/** @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
+	static convert_to_namespaced_string(real_value,val,key,index) {
+		if(!(this.namespace_key in val))
+		throw new Error("Unreachable");
+		if(typeof val[this.namespace_key]!=='string') {
+			console.log("unable to find namespace (not a string)",val);
+			real_value[key]=`weak_id:${index}`;
+			return;
+		}
+		real_value[key]=`weak_id:${val[this.namespace_key]}:${index}`;
+		return;
+	}
+	/** @param {unknown[]} real_value @param {number} key @param {{} | null} val */
+	static args_iter_on_object(real_value,key,val) {
+		if(val===null)
+			return;
+		if(val===window) {
+			real_value[key]="window:"+this.window_list.indexOf(window);
+			return;
+		}
+		if(val instanceof Node) {
+			real_value[key]=this.generate_node_id(val);
+			return;
+		}
+		if(val instanceof Document) {
+			real_value[key]=this.generate_node_id(val);
+			return;
+		}
+		let is_react_element=false;
+		if('__reactContainer$' in val) {
+			is_react_element=true;
+		}
+		if('__reactFiber$' in val) {
+			is_react_element=true;
+		}
+		let index=this.object_ids.findIndex(e => e.deref()===val);
+		if(index>-1) {
+			this.convert_to_namespaced_string(real_value,val,key,index);
+			return;
+		}
+		if(is_react_element) {
+			console.log("react_element");
+			index=this.object_ids.push(new WeakRef(val));
+			define_normal_value(val,this.namespace_key,"react");
+			return;
+		}
+		if(val instanceof IDBDatabase||val instanceof IDBTransaction) {
+			// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
+			index=this.object_ids.push(new WeakRef(val));
+			define_normal_value(val,this.namespace_key,"idb");
+			return;
+		}
+		if(val instanceof ServiceWorkerContainer) {
+			index=this.object_ids.push(new WeakRef(val));
+			define_normal_value(val,this.namespace_key,"service_worker");
+			return;
+		}
+		if(index===-1)
+			throw new Error("Unreachable");
+		this.convert_to_namespaced_string(real_value,val,key,index);
+		let failed=false;
+		try {JSON.stringify(val);} catch {
+			failed=true;
+		};
+		if(failed) {
+			if(!this.failed_obj) {
+				this.failed_obj={v: real_value};
+			}
+			console.log("skip, will stringify circular structure",real_value,key,val);
+			return;
+		}
+	}
 	/** @param {[any, any, any[]]} list */
 	static add_to_call_list_impl(list) {
 		let [target,orig_this,args]=list;
+		/**@type {unknown[]} */
 		let real_value=[target,args.length+1,orig_this,...args];
 		for(let [key,val] of real_value.entries()) {
-			if(val===window) {
-				real_value[key]="window:"+this.window_list.indexOf(val);
-				continue;
-			}
-			if(val instanceof Node) {
-				real_value[key]=this.generate_node_id(val);
-				continue;
-			}
-			if(val instanceof Document) {
-				real_value[key]=this.generate_node_id(val);
-				continue;
-			}
-			let is_react_element=false;
-			if(val instanceof Object&&'__reactContainer$' in val) {
-				is_react_element=true;
-			}
-			if(val instanceof Object&&'__reactFiber$' in val) {
-				is_react_element=true;
-			}
-			let index=this.object_ids.findIndex(e => e.deref()===val);
-			if(index>-1) {
-				real_value[key]="weak_id:"+index;
-				continue;
-			}
-			if(is_react_element) {
-				console.log("react_element");
-				index=this.object_ids.push(new WeakRef(val));
-				real_value[key]="react:weak_id:"+index;
-				continue;
-			}
-			if(val instanceof IDBDatabase || val instanceof IDBTransaction) {
-				// IDBDatabase might have a `closure_lm_${random}` attached on gmail;
-				index=this.object_ids.push(new WeakRef(val));
-				real_value[key]="idb:weak_id:"+index;
-				continue;
-			}
-			if(val instanceof ServiceWorkerContainer) {
-				index=this.object_ids.push(new WeakRef(val));
-				real_value[key]="service_worker:weak_id:"+index;
-				continue;
-			}
-			let failed=false;
-			try {JSON.stringify(val);} catch {
-				failed=true;
-			};
-			if(failed) {
-				if(!this.failed_obj) {
-					this.failed_obj={v: real_value};
-				}
-				console.log("skip, will stringify circular structure", real_value, key, val);
-				return;
+			if(typeof val==="object") {
+				this.args_iter_on_object(real_value,key,val);
 			}
 		}
 		let value=JSON.stringify(real_value);
@@ -304,16 +340,8 @@ class addEventListenerExt {
 		}
 		let id=call_list.push(new WeakRef([real_value]));
 		let info=[value,id];
-		if(args[1]!==null && typeof args[1] === 'object') {
-			Object.defineProperty(args[1],'weak_inner',{
-				configurable: true,
-				enumerable: true,
-				writable: true,
-				value: value,
-			});
-			if('weak_inner' in args[1]) {
-				args[1].weak_inner=info;
-			}
+		if(args[1]!==null&&typeof args[1]==='object') {
+			define_normal_value(args[1],"weak_inner",info);
 		}
 		call_list.push(new WeakRef(info));
 	}
@@ -323,7 +351,7 @@ class addEventListenerExt {
 		try {
 			this.add_to_call_list_impl(list);
 		} catch(e) {
-			console.log("err in add to call list", e);
+			console.log("err in add to call list",e);
 		}
 	}
 	/** @type {Node[]} */
@@ -2205,7 +2233,7 @@ class TransportMessageObj {
 	 * @param {RemoteOriginConnection} connection
 	 * @param {Window} target
 	 */
-	constructor(connection, target) {
+	constructor(connection,target) {
 		this.m_connection=connection;
 		this.m_elevation_id=connection.get_next_elevation_id();
 		this.m_current_target=target;
@@ -2307,10 +2335,10 @@ class RemoteOriginConnection {
 	 * @param {any} message_event
 	 */
 	transport_init_maybe_complete(message_event) {
-		console.log('transport connected', message_event);
+		console.log('transport connected',message_event);
 	}
 	start_root_server() {
-		window.addEventListener("message", function(event) {
+		window.addEventListener("message",function(event) {
 			let message_data=event.data;
 			if(typeof message_data==='object') {
 				console.log(`Received message object: ${message_data}`);
