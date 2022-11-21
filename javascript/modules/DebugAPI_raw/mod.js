@@ -2559,6 +2559,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @param {MessageEvent<unknown>} event */
 	on_child_event(event) {
+		if(this.m_flags.does_proxy_to_opener) {
+			console.log("TODO proxy message to opener");
+		}
 		console.log(event);
 	}
 	constructor() {
@@ -2646,13 +2649,26 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/**@type {{port:MessagePort}[]} */
 	connections=[];
 	client_max_id=0;
+	on_connect_request_message(event) {
+		let connection_port=event.ports[0];
+		let handler={
+			root: this,
+			/**@arg {MessageEvent<unknown>} event */
+			handleEvent(event) {
+				this.root.on_child_event(event);
+			},
+		};
+		connection_port.addEventListener("message",handler);
+		this.post_port_message(connection_port,{type: "listening"});
+		this.connections.push({port: connection_port});
+	}
+	/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
+	post_port_message(target_port,message) {
+		console.log("root_post_message",message);
+		target_port.postMessage(message);
+	}
 	start_root_server() {
 		let t=this;
-		/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
-		function post_port_message(target_port,message) {
-			console.log("root_post_message",message);
-			target_port.postMessage(message);
-		}
 		window.addEventListener("message",function(event) {
 			let client_id=t.client_max_id++;
 			let message_data=event.data;
@@ -2663,17 +2679,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				}
 				console.log("Received message object",message_data);
 				console.log("Received message ports",event.ports);
-				let connection_port=event.ports[0];
-				let handler={
-					root: t,
-					/**@arg {MessageEvent<unknown>} event */
-					handleEvent(event) {
-						this.root.on_child_event(event);
-					},
-				};
-				connection_port.addEventListener("message",handler);
-				post_port_message(connection_port,{type: "listening"});
-				t.connections.push({port: connection_port});
 			}
 		});
 		window.addEventListener("beforeunload",function() {
