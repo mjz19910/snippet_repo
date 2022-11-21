@@ -2385,10 +2385,10 @@ class TransportMessageObj {
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
 	m_remote_side_connected=false;
-	m_connect_timeout=0;
+	m_connection_timeout=0;
 	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
 	handleEvent(message_event_response) {
-		/** @type {ReportInfo<this>} */
+		/** @type {ReportInfo<TransportMessageObj>} */
 		let report_info={
 			event: message_event_response,
 			handler: this,
@@ -2402,26 +2402,34 @@ class TransportMessageObj {
 				}
 			} break;
 			case "disconnected": {
+				this.m_current_target=null;
 				this.m_connection.transport_disconnected(report_info);
 				this.m_remote_side_connected=false;
-				setTimeout(function() {
-
-				},this.m_connect_timeout/8);
+				setTimeout(function(obj) {
+					obj.m_connection.request_new_port(obj);
+				},this.m_connection_timeout/8,this);
 			} break;
 		}
 	}
-	/** @param {Window} target */
-	connect(target) {
+	/** @param {MessagePort} port @arg {Window} target */
+	connect(port,target) {
 		if(this.m_current_target!==null&&this.m_current_target!==target)
 			this.disconnect();
 		this.m_current_target=target;
+		this.m_com_port=port;
 		this.m_com_port.start();
 		this.m_com_port.addEventListener("message",this);
+		this.m_timeout_id=setTimeout(() => {
+			if(!this.m_connection) throw new Error();
+			this.disconnect();
+			this.clear();
+		},this.m_connection_timeout);
 	}
 	disconnect() {
-		if(this.m_current_target) {
+		if(this.m_current_target && this.m_com_port) {
 			this.m_com_port.removeEventListener('message',this);
 			this.m_current_target=null;
+			this.m_com_port=null;
 		}
 	}
 	clear() {
@@ -2429,23 +2437,14 @@ class TransportMessageObj {
 	}
 	/**
 	 * @param {RemoteOriginConnection} connection
-	 * @param {MessagePort} communication_port
-	 * @param {Window} target
 	 * @arg {number} connection_timeout
 	 */
-	constructor(connection,communication_port,target,connection_timeout) {
+	constructor(connection,connection_timeout) {
 		this.m_connection=connection;
-		this.m_com_port=communication_port;
 		this.m_elevation_id=connection.get_next_elevation_id();
-		this.m_current_target=target;
-		this.connect(target);
-		if(!this.m_connection) throw new Error();
-		this.m_connect_timeout=connection_timeout;
-		this.m_timeout_id=setTimeout(() => {
-			if(!this.m_connection) throw new Error();
-			this.disconnect();
-			this.clear();
-		},connection_timeout);
+		this.m_connection_timeout=connection_timeout;
+		this.m_current_target=null;
+		this.m_com_port=null;
 	}
 }
 class OriginState {
@@ -2469,6 +2468,14 @@ class OriginState {
 g_api.OriginState=OriginState;
 
 class RemoteOriginConnection {
+	/** @param {TransportMessageObj} obj */
+	request_new_port(obj) {
+		if(!this.m_connect_target) {
+			return false;
+		}
+		this.request_connection(obj);
+	}
+	/** @arg {ReportInfo<TransportMessageObj>} arg0 */
 	transport_disconnected(arg0) {
 		console.log('transport connected',arg0.event.data);
 	}
@@ -2511,12 +2518,13 @@ class RemoteOriginConnection {
 	}
 	m_transport_map=new Map;
 	/**
-	 * @param {Window} post_message_event_transport_target
-	 * @param {Window} response_message_event_transport_target
+	 * @param {Window} remote_event_target
+	 * @param {Window} local_event_target
 	 */
-	init_transport_over(post_message_event_transport_target,response_message_event_transport_target) {
+	init_transport_over(remote_event_target,local_event_target) {
+		this.m_connect_target=remote_event_target;
 		let channel=new MessageChannel;
-		post_message_event_transport_target.postMessage({
+		this.m_connect_target.postMessage({
 			type: "ConnectOverPostMessage",
 			data: {
 				type: "start",
@@ -2524,9 +2532,25 @@ class RemoteOriginConnection {
 				port_transfer_vec: null
 			}
 		},"*",[channel.port1]);
-		this.event_transport_map.set(response_message_event_transport_target,post_message_event_transport_target);
-		let message_object=new TransportMessageObj(this,channel.port2,response_message_event_transport_target,300);
+		let message_object=new TransportMessageObj(this,300);
 		this.m_transport_map.set(message_object, {connected:false});
+		message_object.connect(channel.port2,remote_event_target);
+	}
+	/** @arg {TransportMessageObj} transport_handler */
+	request_connection(transport_handler) {
+		let channel=new MessageChannel;
+		if(!this.m_connect_target) {
+			return false;
+		}
+		this.m_connect_target.postMessage({
+			type: "ConnectOverPostMessage",
+			data: {
+				type: "start",
+				source: null,
+				port_transfer_vec: null
+			}
+		},"*",[channel.port1]);
+		transport_handler.connect(channel.port2,this.m_connect_target);
 	}
 	/**
 	 * @param {number} elevated_id
