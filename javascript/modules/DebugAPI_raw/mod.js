@@ -307,20 +307,22 @@ class addEventListenerExt {
 			define_normal_value(val,this.namespace_key,"service_worker");
 			return;
 		}
-		if(index===-1)
-			throw new Error("Unreachable");
-		this.convert_to_namespaced_string(real_value,val,key,index);
-		let failed=false;
-		try {JSON.stringify(val);} catch {
-			failed=true;
-		};
-		if(failed) {
-			if(!this.failed_obj) {
-				this.failed_obj={v: real_value};
+		if(index===-1) {
+			let failed=false;
+			try {
+				JSON.stringify(val);
+			} catch {
+				failed=true;
+			};
+			if(failed) {
+				if(!this.failed_obj) {
+					this.failed_obj={v: real_value};
+				}
+				console.log("skip, will stringify circular structure",real_value,key,val);
+				return;
 			}
-			console.log("skip, will stringify circular structure",real_value,key,val);
-			return;
 		}
+		this.convert_to_namespaced_string(real_value,val,key,index);
 	}
 	/** @param {[any, any, any[]]} list */
 	static add_to_call_list_impl(list) {
