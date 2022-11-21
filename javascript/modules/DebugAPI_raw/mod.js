@@ -2381,6 +2381,10 @@ class OriginState {
 g_api.OriginState=OriginState;
 
 class RemoteOriginConnection {
+	/** @param {MessageEvent<unknown>} event */
+	on_child_event(event) {
+		console.log(event);
+	}
 	// @Update on minor version change
 	// version 0.3.0 sha1 initial commit
 	sha_1_initial="f615a9c";
@@ -2476,11 +2480,12 @@ class RemoteOriginConnection {
 					return;
 				}
 				let connection_port=event.ports[0];
-				connection_port.addEventListener("message",function(){});
 				let handler={
 					root: t,
-					/**@arg {MessageEvent} event */
-					handleEvent(event) {},
+					/**@arg {MessageEvent<unknown>} event */
+					handleEvent(event) {
+						this.root.on_child_event(event);
+					},
 				};
 				connection_port.addEventListener("message",handler);
 				t.connections.push({port: connection_port});
