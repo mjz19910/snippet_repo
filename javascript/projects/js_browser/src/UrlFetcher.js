@@ -2,6 +2,7 @@ import {parse} from 'node-html-parser';
 
 
 export class UrlFetcher {
+	/** @param {import("./page_loader").PageLoaderState} state @param {typeof import("http")} cur_api */
 	async_api_use_for_get(state,cur_api) {
 		let t=this;
 		cur_api.get(state.url,(resp) => {
@@ -14,13 +15,14 @@ export class UrlFetcher {
 
 			// The whole response has been received. Print out the result.
 			resp.on('end',() => {
-				this.on_response_end(data);
+				t.on_response_end(data);
 			});
 		}).on("error",(err) => {
 			console.log("Error: "+err.message);
 		});
 	}
 
+	/** @param {string} data */
 	on_response_end(data) {
 		const root=parse(data,{
 			lowerCaseTagName: false,
