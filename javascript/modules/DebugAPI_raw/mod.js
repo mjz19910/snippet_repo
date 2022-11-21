@@ -343,6 +343,7 @@ class AddEventListenerExt {
 	/** @private */
 	target_prototype=x.a;
 	constructor() {
+		if(!debug) return;
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
 		this.init_overwrite("removeEventListener");
