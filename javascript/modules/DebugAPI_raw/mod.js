@@ -136,7 +136,7 @@ class addEventListenerExt {
 				if(!this.failed_obj) {
 					this.failed_obj={v: real_value};
 				}
-				console.log("skip, will stringify circular structure", real_value);
+				console.log("skip, will stringify circular structure", key, val);
 				return;
 			}
 		}
