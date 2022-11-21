@@ -27,7 +27,7 @@ export async function import_ipc_plugin(state,plugin_key) {
 				console.error("import error");
 				console.error(e);
 				// recapture the stack trace so it includes async frames
-				Error.captureStackTrace(e);
+				Error.captureStackTrace(e,import_ipc_plugin);
 				throw e;
 			}
 		}
