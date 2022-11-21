@@ -83,8 +83,9 @@ export class IpcLoader {
 		this.import_target_ts=this.import_target?.replace(/(?<=.+)\.js/g,".ts");
 	}
 	async do_import() {
+		let import_debug=false;
 		let state=this;
-		if(state.args.length === 0) return;
+		if(state.args.length===0) return;
 		let [specifier,context,nextResolve]=state.args;
 		let errors=[];
 		let prev_log_dir="file://"+env.PWD||"";
@@ -102,7 +103,7 @@ export class IpcLoader {
 		}
 		if(!context.parentURL) {
 			get_parent_url_parts(specifier);
-			console.log('main_module_load 2:'+JSON.stringify([log_path]));
+			if(import_debug) console.log('main_module_load 2:'+JSON.stringify([log_path]));
 			return nextResolve(specifier,context,nextResolve);
 		}
 		if(specifier.startsWith("file:")) {
@@ -112,7 +113,7 @@ export class IpcLoader {
 			get_parent_url_parts(context.parentURL);
 			let a=[log_path,"->",path.join(log_dir,specifier)];
 			let json_str=JSON.stringify(a).replace(',"->",'," -> ");
-			console.log('main_module_load 3:'+json_str);
+			if(import_debug) console.log('main_module_load 3:'+json_str);
 			state.plugin_key=`${context.parentURL}:${specifier}`;
 		} else {
 			get_parent_url_parts(specifier);
@@ -123,6 +124,9 @@ export class IpcLoader {
 			return module_map.get(state.plugin_key);
 		}
 		if(specifier.endsWith(".js")) {
+			let fast_resolve=true;
+			if(fast_resolve)
+				return nextResolve(specifier,context,nextResolve);
 			try {
 				state.depth++;
 				if(!state.args.length) return null;

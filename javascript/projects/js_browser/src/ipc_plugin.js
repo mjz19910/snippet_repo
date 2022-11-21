@@ -1,10 +1,15 @@
-import {debug} from "../../debug.js";
-import {handle_failed_import} from "./handle_failed_import.js";
-import {IpcLoader} from "./ipc_loader_state.js";
-import {g_loaded_ipc_plugins} from "./g_loaded_ipc_plugin_map.js/index.js.js";
-import {ReplPluginManagerModule} from "./ReplPluginManagerModule.js";
-import {try_import_module} from "./try_import_module.js";
+import {IpcLoader} from "./nice_loader.js";
 
+const debug=false;
+
+let g_loaded_ipc_plugins=new Map;
+
+class ReplPluginManagerModule {
+	static import_ipc_plugin(state,key, module_path) {
+		console.log("TODO use args",state,key);
+		return import(module_path);
+	}
+}
 
 /** @arg {IpcLoader} state @arg {string} plugin_key */
 export async function import_ipc_plugin(state,plugin_key) {
