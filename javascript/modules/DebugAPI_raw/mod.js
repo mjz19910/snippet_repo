@@ -347,6 +347,7 @@ class addEventListenerExt {
 		if(args[1]!==null&&typeof args[1]==='object') {
 			define_normal_value(args[1],"weak_inner",info);
 		}
+		console.log("gc keep info", info);
 		call_list.push(new WeakRef(info));
 	}
 	/** @param {[any, any, any[]]} list */
