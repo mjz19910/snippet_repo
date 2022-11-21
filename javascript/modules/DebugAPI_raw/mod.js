@@ -387,6 +387,7 @@ class AddEventListenerExt {
 			/** @type {depth_type} */
 			let depth_info=['depth',1,new WeakRef(extract_list)];
 			call_list.length=0;
+			this.keep("depth_info", depth_info);
 			call_list.push(new WeakRef(depth_info));
 		}
 		let real_holder_ref=new WeakRef(call_list_info);
