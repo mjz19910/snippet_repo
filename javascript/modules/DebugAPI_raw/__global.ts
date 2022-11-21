@@ -209,9 +209,11 @@ declare global {
 	};
 }
 
+
 declare global {
+	type arg_list_item_type=WeakRef<{}>|bigint|boolean|string|number|symbol;
 	interface EventTarget {
-		__arg_list:WeakRef<{}>[][];
+		__arg_list:arg_list_item_type[][];
 	}
 }
 

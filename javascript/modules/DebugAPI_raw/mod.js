@@ -288,12 +288,36 @@ function define_normal_value(obj,key,value) {
 
 /** @param {EventTarget} prototype */
 function overwrite_addEventListener(prototype) {
-	/** @type {WeakRef<{}>[][]} */
+	/** @type {arg_list_item_type[][]} */
 	let arg_list=[];
 	prototype.addEventListener=new Proxy(prototype.addEventListener,{
-		apply(...args) {
-			arg_list.push(args.map(e=>new WeakRef(e)));
-			return Reflect.apply(...args);
+		apply(target,callback,argArray) {
+			/** @type {{}[]} */
+			let cq=[target,callback,argArray.length,...argArray];
+			/** @type {arg_list_item_type[]} */
+			let rq=[];
+			cq.forEach(e=>{
+				if(typeof e === 'object') {
+					rq.push(new WeakRef(e));
+					return;
+				}
+				if(typeof e === "function") {
+					rq.push(new WeakRef(e));
+					return;
+				}
+				switch(typeof e) {
+					case 'function': throw 1;
+					case 'object': throw 2;
+					case 'bigint': rq.push(e);
+					case 'boolean': rq.push(e);
+					case 'number': rq.push(e);
+					case 'string': rq.push(e);
+					case 'symbol': rq.push(e);
+					case 'undefined': rq.push(e);
+				}
+			});
+			arg_list.push(rq);
+			return Reflect.apply(target,callback,argArray);
 		}
 	});
 	prototype.__arg_list=arg_list;
