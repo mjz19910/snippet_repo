@@ -2609,16 +2609,12 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			let client_id=t.client_max_id++;
 			let message_data=event.data;
 			if(typeof message_data==='object') {
-				let misbehaved;
-				if(event.ports.length!==1) {
-					misbehaved=true;
-					console.log(`Client(${client_id}) misbehaved: connect api not followed`);
-					return;
-				}
+				let misbehaved=event.ports.length!==1;
 				if(!misbehaved) {
 					misbehaved=t.on_connect_request_message(event,client_id);
 				}
 				if(misbehaved) {
+					console.log(`Client(${client_id}) misbehaved: connect api not followed`);
 					console.log("Received message object",message_data);
 					console.log("Received message ports",event.ports);
 				}
