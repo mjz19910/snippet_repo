@@ -273,6 +273,14 @@ class AddEventListenerExt {
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
+		if('m_current_target' in val) {
+			debugger;
+			if('m_elevation_id' in val) {
+				this.convert_to_id_key(real_value,key,val,"TransportMessageObj:"+val.m_elevation_id);
+			} else {
+				this.convert_to_id_key(real_value,key,val,"TransportMessageObj:unk");
+			}
+		}
 		if(val===window) {
 			real_value[key]="window:"+this.window_list.indexOf(window);
 			return;
@@ -307,8 +315,6 @@ class AddEventListenerExt {
 			this.convert_to_id_key(real_value,key,val,"idb");
 		} else if(val instanceof ServiceWorkerContainer) {
 			this.convert_to_id_key(real_value,key,val,"service_worker");
-		} else if('m_current_target' in val && 'm_elevation_id' in val) {
-			this.convert_to_id_key(real_value,key,val,"TransportMessageObj:"+val.m_elevation_id);
 		}
 		let failed=false;
 		try {
@@ -331,19 +337,19 @@ class AddEventListenerExt {
 		for(let [key,val] of real_value.entries()) {
 			switch(typeof val) {
 				case 'object':
-				case 'function': try{JSON.stringify(val)} catch{ return [true, key]};
+				case 'function': try {JSON.stringify(val);} catch {return [true,key];};
 				default: break;
 			}
 		}
-		return [false, -1];
+		return [false,-1];
 	}
 	/** @param {[unknown,number,unknown,...unknown[]]} real_value */
 	use_tmp_non_circular(real_value) {
 		let [_tv,_a_len,_x,...args]=real_value;
 		let value;
-		let [is_circular, index]=this.calculate_circular_info(real_value);
+		let [is_circular,index]=this.calculate_circular_info(real_value);
 		if(is_circular) {
-			console.log('tried to stringify circular object', real_value[index]);
+			console.log('tried to stringify circular object',real_value[index]);
 			return;
 		}
 		x: try {
