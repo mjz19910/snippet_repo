@@ -356,6 +356,8 @@ class AddEventListenerExt {
 	object_max_id=1;
 	/** @readonly */
 	namespace_key="__g_api__namespace";
+	/** @type {CallableFunction[]} */
+	elevated_functions=[];
 	/** @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
 	convert_to_namespaced_string(real_value,val,key,index) {
 		if(!(this.namespace_key in val))
@@ -377,12 +379,8 @@ class AddEventListenerExt {
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return true;
-		if('m_com_port' in val) {
-			if('m_elevation_id' in val) {
-				this.convert_to_id_key(real_value,key,val,"TransportMessageObj:"+val.m_elevation_id);
-			} else {
-				this.convert_to_id_key(real_value,key,val,"TransportMessageObj:unk");
-			}
+		if(val instanceof TransportMessageObj) {
+			this.convert_to_id_key(real_value,key,val,"TransportMessageObj:elevated_"+val.m_elevation_id);
 			return true;
 		}
 		if(val===window) {
@@ -660,6 +658,10 @@ class AddEventListenerExt {
 		switch(target) {
 			case "addEventListener": t.target_prototype[target]=function(...args) {
 				t.add_to_call_list([target,this,args]);
+				let original_function=args[1];
+				args[1]=function(...args) {
+					t.eventFireInterceptor(original_function,this,args);
+				}
 				return t.orig[target].call(this,...args);
 			}; break;
 			case 'removeEventListener': t.target_prototype[target]=function(...args) {
@@ -672,6 +674,10 @@ class AddEventListenerExt {
 			}; return;
 			default: throw 1;
 		}
+	}
+	eventFireInterceptor(arg_function,arg_this,args) {
+		console.log(args[0]);
+		return arg_function.apply(arg_this, args);
 	}
 }
 g_api.AddEventListenerExt=AddEventListenerExt;
@@ -2498,9 +2504,11 @@ class TransportMessageObj {
 			} else {
 				timeout=this.m_connection_timeout/8;
 			}
-			this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),timeout*30);
-			this.m_tries_left--;
-			this.m_connection.request_new_port(this);
+			if(this.m_reconnecting) {
+				this.m_connection.request_new_port(this);
+				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),timeout*30);
+				this.m_tries_left--;
+			}
 		}
 	}
 	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
@@ -2527,6 +2535,7 @@ class TransportMessageObj {
 				this.m_connection.transport_disconnected(report_info);
 				this.m_tries_left=12;
 				this.m_reconnecting=true;
+				this.m_remote_side_connected=false;
 				this.m_timeout_id=setTimeout(function request_new_connection(obj) {
 					obj.process_reconnect();
 				},(this.m_connection_timeout/8)*4,this);
@@ -2711,7 +2720,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	start_root_server() {
 		let t=this;
-		window.addEventListener("message",function(event) {
+		/** @arg {MessageEvent<unknown>} event */
+		function on_message_event(event) {
 			let client_id=t.client_max_id++;
 			let message_data=event.data;
 			if(typeof message_data==='object') {
@@ -2723,7 +2733,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				console.log("Received message ports",event.ports);
 				t.on_connect_request_message(event);
 			}
-		});
+		}
+		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
 				t.post_port_message(connection.port,{type: "disconnected"});
