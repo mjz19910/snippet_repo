@@ -427,9 +427,10 @@ class AddEventListenerExt {
 			switch(typeof val) {
 				case 'object': return this.args_iter_on_object(real_value,key,val);
 				case 'function': return this.args_iter_on_function(real_value,key,val);
-				default:
+				default: break;
 			}
 		}
+		this.use_tmp_non_circular(real_value);
 	}
 	do_gc_keep_log=false;
 	/** @param {string} key @param {unknown} value */
