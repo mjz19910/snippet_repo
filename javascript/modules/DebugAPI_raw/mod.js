@@ -426,17 +426,6 @@ class AddEventListenerExt {
 		real_value[key]="cleared_out:"+this.clear_count++;
 		return true;
 	}
-	/** @private @param {[unknown,number,unknown,...unknown[]]} real_value @returns {[boolean, number]} */
-	calculate_circular_info(real_value) {
-		for(let [key,val] of real_value.entries()) {
-			switch(typeof val) {
-				case 'object':
-				case 'function': try {JSON.stringify(val);} catch {return [true,key];};
-				default: break;
-			}
-		}
-		return [false,-1];
-	}
 	is_calc_circular=false;
 	/** @private @param {[unknown,number,unknown,...unknown[]]} real_value */
 	use_tmp_non_circular(real_value) {
@@ -477,7 +466,7 @@ class AddEventListenerExt {
 		}
 		return [false,cur[index]];
 	}
-	/** @param {[unknown, unknown, unknown[]]} list */
+	/** @private @param {[unknown, unknown, unknown[]]} list */
 	add_to_call_list_impl(list) {
 		let [target,orig_this,args]=list;
 		/**@type {[unknown,number,unknown,...unknown[]]} */
@@ -516,14 +505,9 @@ class AddEventListenerExt {
 	}
 	/** @template {CallableFunction} T @param {unknown[]} real_value @param {number} key @param {T} val */
 	args_iter_on_function(real_value,key,val) {
-		let index=this.object_ids.findIndex(e => e.deref()===val);
-		if(index>-1) {
-			this.convert_to_namespaced_string(real_value,val,key,index);
-			return;
-		}
 		this.convert_to_id_key(real_value,key,val,"function");
 	}
-	/** @param {[any, any, any[]]} list */
+	/** @private @param {[any, any, any[]]} list */
 	add_to_call_list(list) {
 		if(!debug) return;
 		if(this.failed_obj) return;
@@ -540,28 +524,12 @@ class AddEventListenerExt {
 	node_id_max=0;
 	/** @param {Node} val */
 	generate_node_id(val) {
-		let lost_index=this.node_list.findIndex(e => e.deref()===void 0);
-		if(lost_index>-1) {
-			let lost_indexes=[];
-			for(let x=this.node_list.length-1;x>0;x--) {
-				if(this.node_list[x].deref()===void 0) {
-					this.node_list.splice(x,1);
-					this.node_list_ids.splice(x,1);
-					lost_indexes.unshift(x);
-				}
-			}
-			console.log("dom gc happened",lost_indexes,"new_len",this.node_list.length);
-		}
-		let index=this.node_list.findIndex(e => e.deref()===val);
-		if(index===-1) {
-			this.node_list.push(new WeakRef(val));
-			let node_id=this.node_id_max++;
-			this.node_list_ids.push(node_id);
-			return node_id;
-		}
-		return this.node_list_ids[index];
+		this.node_list.push(new WeakRef(val));
+		let node_id=this.node_id_max++;
+		this.node_list_ids.push(node_id);
+		return node_id;
 	}
-	/** @param {Extract<keyof EventTarget,string>} target */
+	/** @private @param {Extract<keyof EventTarget,string>} target */
 	init_overwrite(target) {
 		let t=this;
 		switch(target) {
