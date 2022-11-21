@@ -21,7 +21,11 @@ export async function import_ipc_plugin(state,plugin_key) {
 		case 'repl_plugin_manager/mod.js': {
 			/**@type {`../../${typeof plugin_key}`}*/
 			const module_page_loader_str=`../../${plugin_key}`;
-			return await ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
+			try{
+				return await ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
+			} catch(e) {
+				throw new AggregateError([e], "import failure");
+			}
 		}
 		case 'tiny_html_lexer': break;
 		case 'tiny_html_parser': break;
