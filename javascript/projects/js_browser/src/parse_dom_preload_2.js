@@ -1,5 +1,5 @@
 import * as path from "path";
-import * as process from "process";
+import process from "process";
 import {fetch_url} from "./fetch_url.js";
 import {import_ipc_plugin} from "./ipc_plugin.js";
 import {IpcLoader} from "./nice_loader.js";
