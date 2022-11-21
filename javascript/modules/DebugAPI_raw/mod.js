@@ -2380,8 +2380,6 @@ class TransportMessageObj {
 	m_connection;
 	/**@type {number} */
 	m_elevation_id;
-	/** @type {Window|null} */
-	m_current_target;
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
 	m_remote_side_connected=false;
@@ -2440,7 +2438,6 @@ class TransportMessageObj {
 		this.m_connection=connection;
 		this.m_elevation_id=connection.get_next_elevation_id();
 		this.m_connection_timeout=connection_timeout;
-		this.m_current_target=null;
 		this.m_com_port=null;
 	}
 }
