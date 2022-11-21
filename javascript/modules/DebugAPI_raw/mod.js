@@ -2547,6 +2547,15 @@ class TransportMessageObj {
 	m_missing_keep_alive_counter=0;
 	keep_alive_send() {
 		this.m_missing_keep_alive_counter++;
+		if(this.m_missing_keep_alive_counter > 1) {
+			console.log("missed keep alive interval");
+		}
+		if(this.m_missing_keep_alive_counter > 0) {
+			// drain it slowly
+			if(Math.random() < 0.1) {
+				this.m_missing_keep_alive_counter--;
+			}
+		}
 		this.post_message({
 			type: "keep_alive",
 			side: "client",
@@ -2651,6 +2660,7 @@ const sha_1_initial="f615a9c";
 
 class RemoteOriginConnectionData {
 	m_flags={does_proxy_to_opener: false};
+	/** @type {Map<TransportMessageObj, {port:MessagePort}>} */
 	m_transport_map=new Map;
 	max_elevate_id=0;
 	/**@type {WeakMap<MessageEventSource|Window, Window>} */
@@ -2658,6 +2668,26 @@ class RemoteOriginConnectionData {
 	state=OriginState;
 	/** @type {({}|null)[]} */
 	elevated_array=[];
+}
+
+class RemoteHandler {
+	/** @arg {RemoteOriginMessage} message_data */
+	post_message(message_data) {
+		this.connection_port.postMessage(message_data);
+	}
+	/** @type {RemoteOriginConnection} */
+    root;
+	/** @type {MessagePort} */
+    connection_port;
+	/** @arg {MessageEvent<RemoteOriginMessage>} event */
+    handleEvent(event) {
+		this.root.on_child_event(event,this);
+	};
+	/** @param {RemoteOriginConnection} root @param {MessagePort} connection_port */
+	constructor(root, connection_port) {
+		this.root=root;
+		this.connection_port=connection_port;
+	}
 }
 
 class RemoteOriginConnection extends RemoteOriginConnectionData {
@@ -2669,12 +2699,24 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	transport_disconnected(arg0) {
 		console.log('transport disconnected',arg0.event.data,arg0.event);
 	}
-	/** @param {MessageEvent<unknown>} event */
-	on_child_event(event) {
+	/** @type {RemoteOriginMessage[]} */
+	unhandled_child_events=[];
+	/** @param {MessageEvent<RemoteOriginMessage>} event @arg {RemoteHandler} remote_handler */
+	on_child_event(event, remote_handler) {
 		if(this.m_flags.does_proxy_to_opener) {
 			console.log("TODO proxy message to opener");
 		}
-		console.log(event);
+		let {data}=event;
+		switch(data.type) {
+			case 'keep_alive':{
+				remote_handler.post_message({
+					type: "keep_alive_reply",
+					side: data.side,
+				});
+			} return;
+		}
+		this.unhandled_child_events.push(data);
+		console.log(data);
 	}
 	constructor() {
 		super();
@@ -2703,6 +2745,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 */
 	init_transport_over(remote_event_target) {
 		let message_object=new TransportMessageObj(this,300);
+		this.m_transport_connection=message_object;
 		this.m_connect_target=remote_event_target;
 		this.request_connection(message_object);
 	}
@@ -2722,6 +2765,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				port_transfer_vec: null
 			}
 		},"*",[channel.port1]);
+		this.m_transport_map;
 		transport_handler.connect(channel.port2);
 		return true;
 	}
@@ -2761,13 +2805,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			default: return false;
 		}
 		let connection_port=event.ports[0];
-		let handler={
-			root: this,
-			/**@arg {MessageEvent<unknown>} event */
-			handleEvent(event) {
-				this.root.on_child_event(event);
-			},
-		};
+		let handler=new RemoteHandler(this,connection_port);
+		connection_port.start();
 		connection_port.addEventListener("message",handler);
 		this.post_port_message(connection_port,{type: "listening", client_id});
 		this.connections.push({port: connection_port});
