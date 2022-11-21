@@ -269,7 +269,7 @@ class AddEventListenerExt {
 		define_normal_value(val,this.namespace_key,namespace);
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
-	/** @param {unknown[]} real_value @param {number} key @param {{} | null} val */
+	/** @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
@@ -320,34 +320,13 @@ class AddEventListenerExt {
 			}
 			console.log("skip, will stringify circular structure",real_value,key,val);
 			return;
+		} else {
+			this.use_tmp_non_circular(real_value);
 		}
 	}
-	/**
-	 * @param {depth_or_any[]} tmp
-	 * @param {WeakRef<depth_or_any>[]} cur
-	 * @param {number} index
-	 * @returns {[true,depth_or_any]|[false,WeakRef<depth_or_any>]}
-	 */
-	use_tmp_list(tmp,cur,index) {
-		if(tmp.length>0) {
-			let value=tmp.shift();
-			if(!value) {throw new Error("Unreachable");}
-			return [true,value];
-		}
-		return [false,cur[index]];
-	}
-	/** @param {[any, any, any[]]} list */
-	add_to_call_list_impl(list) {
-		let [target,orig_this,args]=list;
-		/**@type {unknown[]} */
-		let real_value=[target,args.length+1,orig_this,...args];
-		for(let [key,val] of real_value.entries()) {
-			switch(typeof val) {
-				case 'object': this.args_iter_on_object(real_value,key,val); break;
-				case 'function': this.args_iter_on_function(real_value,key,val); break;
-				default:
-			}
-		}
+	/** @param {[unknown,number,unknown,...unknown[]]} real_value */
+	use_tmp_non_circular(real_value) {
+		let [_tv,_a_len,_x,...args]=real_value;
 		let value=JSON.stringify(real_value);
 		let call_list=this.call_list?.deref();
 		if(call_list===void 0) {
@@ -424,6 +403,33 @@ class AddEventListenerExt {
 		}
 		this.keep("json_value_id",info);
 		call_list.push(new WeakRef(info));
+	}
+	/**
+	 * @param {depth_or_any[]} tmp
+	 * @param {WeakRef<depth_or_any>[]} cur
+	 * @param {number} index
+	 * @returns {[true,depth_or_any]|[false,WeakRef<depth_or_any>]}
+	 */
+	use_tmp_list(tmp,cur,index) {
+		if(tmp.length>0) {
+			let value=tmp.shift();
+			if(!value) {throw new Error("Unreachable");}
+			return [true,value];
+		}
+		return [false,cur[index]];
+	}
+	/** @param {[unknown, unknown, unknown[]]} list */
+	add_to_call_list_impl(list) {
+		let [target,orig_this,args]=list;
+		/**@type {[unknown,number,unknown,...unknown[]]} */
+		let real_value=[target,args.length+1,orig_this,...args];
+		for(let [key,val] of real_value.entries()) {
+			switch(typeof val) {
+				case 'object': return this.args_iter_on_object(real_value,key,val);
+				case 'function': return this.args_iter_on_function(real_value,key,val);
+				default:
+			}
+		}
 	}
 	do_gc_keep_log=false;
 	/** @param {string} key @param {unknown} value */
