@@ -11,6 +11,10 @@ function main() {
 	var fnlist=[];
 	var fnname=[];
 	{
+		/**
+		 * @param {any} name
+		 * @param {{ user_run_name: any; }} func
+		 */
 		function add_func(name,func) {
 			var y=fnlist.push(func);
 			if(fnname.indexOf(name)>-1) {
@@ -23,7 +27,7 @@ function main() {
 			}
 			return x;
 		}
-		var execute=function(t,pre_exec,post_exec) {
+		function execute(t,pre_exec,post_exec) {
 			var r_fnname=fnname[t];
 			var func=fnlist[t];
 			try {
@@ -81,7 +85,7 @@ function main() {
 				}
 			} finally {}
 			return;
-		};
+		}
 		let stt=eval(`(class {
 			static #unused = this.#init()
 			static #init(){
@@ -280,6 +284,7 @@ function main() {
 		});
 		return 'done';
 	};
+	/** @param {undefined[]} e */
 	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
@@ -287,9 +292,10 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(fn) {
+		/** @param {{ argv: undefined[]; }} fn */
+		function px_fn(fn) {
 			fn.argv=e;
-		};
+		}
 		var _result=execute(i,px_fn);
 		return _result;
 	}
