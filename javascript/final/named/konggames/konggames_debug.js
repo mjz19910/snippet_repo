@@ -31,6 +31,14 @@ function main() {
 	class curTy extends stt {
 		/** @type {(undefined[])|null} */
 		argv=null;
+		/** @type {string|CustomInputMatcher|null} */
+		_ln=null;
+		value=null;
+		/** @type {(((...x:any[])=>any)&{ user_run_name: unknown; argv:any[] })[]} */
+		funcs=[];
+		/** @type {string[]} */
+		names=[];
+		self_sym=Symbol();
 		px_fn(/** @type {{ argv: any[]; }} */ fn) {
 			if(!this.argv) throw new Error("1");
 			fn.argv=this.argv;
@@ -107,7 +115,6 @@ function main() {
 				}
 			} finally {}
 		}
-		value=null;
 		/**
 		 * @param {string|CustomInputMatcher} name
 		 * @param {((...x: any[]) => any) & { user_run_name: unknown; argv: any[]}} func
@@ -125,22 +132,11 @@ function main() {
 				return x;
 			}
 		}
-		constructor() {
-			super();
-			let sym=Symbol();
-			this.self_sym=sym;
-			/** @type {(((...x:any[])=>any)&{ user_run_name: unknown; argv:any[] })[]} */
-			this.funcs=[];
-			/** @type {string[]} */
-			this.names=[];
-		}
 		/** @type {((...x:any[])=>any)} */
 		get f() {
 			if(!this._f) throw new Error("no function to get");
 			return this._f;
 		}
-		/** @type {string|CustomInputMatcher|null} */
-		_ln=null;
 		set f(f) {
 			if(!this._ln) throw new Error("no last name");
 			let cur=this._ln;
