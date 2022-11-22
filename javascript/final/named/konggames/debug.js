@@ -3,165 +3,223 @@
 v1 (spl-f): snippet_repo/javascript/final/debug_js_call_konggames.js
 */
 function main() {
+	/**
+	 * @type {any[]}
+	 */
 	var fnlist=[];
+	/**
+	 * @type {any[]}
+	 */
 	var fnname=[];
-	{
-		function add_func(name,func) {
-			var y=fnlist.push(func);
-			if(fnname.indexOf(name)>-1) {
-				throw SyntaxError("Name conflict");
-			}
-			var x=fnname.push(name);
-			func.user_run_name=name;
-			if(x!=y) {
-				throw SyntaxError("unbalanced function or name number");
-			}
-			return x;
+	/**
+	 * @param {any} name
+	 * @param {{ user_run_name: any; }} func
+	 */
+	function add_func(name,func) {
+		var y=fnlist.push(func);
+		if(fnname.indexOf(name)>-1) {
+			throw SyntaxError("Name conflict");
 		}
-		var execute=function(t,pre_exec,post_exec) {
-			var r_fnname=fnname[t];
-			var func=fnlist[t];
-			try {
-				var sf=func.toString();
-				if(sf.indexOf("/*arg_start*/")>-1) {
-					let eval_func;
-					{
-						var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
-						var no_head=func_split[4].trim().slice(1).trim().slice(1);
-						var body=no_head.slice(0,no_head.length-2);
-						var is_strict;
-						var is_strict_p1=body.split('"use strict"');
-						is_strict=is_strict_p1.length>1;
-						if(is_strict) {
-							body=is_strict_p1[1].trim();
+		var x=fnname.push(name);
+		func.user_run_name=name;
+		if(x!=y) {
+			throw SyntaxError("unbalanced function or name number");
+		}
+		return x;
+	}
+	var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
+		var r_fnname=fnname[t];
+		var func=fnlist[t];
+		try {
+			var sf=func.toString();
+			if(sf.indexOf("/*arg_start*/")>-1) {
+				let eval_func;
+				{
+					var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
+					var no_head=func_split[4].trim().slice(1).trim().slice(1);
+					var body=no_head.slice(0,no_head.length-2);
+					var is_strict;
+					var is_strict_p1=body.split('"use strict"');
+					is_strict=is_strict_p1.length>1;
+					if(is_strict) {
+						body=is_strict_p1[1].trim();
+					}
+					var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
+					let src_url='//'+'# sourceURL='+r_fnname;
+					let func_str;
+					if(is_strict) {
+						func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
+						eval_func=new Function(args,func_str);
+					} else {
+						func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
+						eval_func=new Function(args,func_str);
+					}
+					if('mc' in window&&window.mc instanceof MessageChannel) {
+						let mc=window.mc;
+						mc.port2.onmessage=function() {};
+						mc.port2.close();
+						mc.port1.onmessage=function() {};
+						mc.port1.close();
+						delete window.mc;
+						if(typeof mc!='undefined') {
+							window.mc=undefined;
 						}
-						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
-						let src_url='//'+'# sourceURL='+r_fnname;
-						let func_str;
-						if(is_strict) {
-							func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
-							eval_func=new Function(args,func_str);
-						} else {
-							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
-							eval_func=new Function(args,func_str);
-						}
-						if('mc' in window&&window.mc instanceof MessageChannel) {
-							let mc=window.mc;
-							mc.port2.onmessage=function() {};
-							mc.port2.close();
-							mc.port1.onmessage=function() {};
-							mc.port1.close();
-							delete window.mc;
-							if(typeof mc!='undefined') {
-								window.mc=undefined;
-							}
-						}
-						console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
 					}
-					if(eval_func) {
-						eval_func(func);
-					}
-					let ret=eval_func();
-					if(post_exec)
-						post_exec(ret);
-					return ret;
-				} else {
-					if(pre_exec) {
-						pre_exec(func);
-					}
-					let ret=func();
-					if(post_exec)
-						post_exec(ret);
-					return ret;
+					console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
 				}
-			} finally {}
-			return;
-		};
-		let stt=eval(`(class {
-			static #unused = this.#init()
-			static #init(){
-			}
-			static _f(){}
-			static _n = "<empty>"
-			static n_on = true
-			static f_on = true
-		})`);
-		window.CustomInputMatcher=class {
-			constructor(t_needle,t_string_getter) {
-				this.ts_get=t_string_getter;
-				this.tr=t_needle;
-			}
-			get test_string() {
-				return this.ts_get();
-			}
-			get test_needle() {
-				return this.tr;
-			}
-		};
-		var cur=class extends stt {
-			static get f() {
-				return this._f;
-			}
-			static set f(f) {
-				let cur=this._ln;
-				this._lf=f;
-				if(fnlist.indexOf(this._lf)==-1) {
-					add_func(this._ln,this._lf);
+				if(eval_func) {
+					eval_func(func);
 				}
-				if(cur instanceof CustomInputMatcher) {
-					let custom_str=cur.test_string;
-					let needle=cur.test_needle;
-					if(typeof custom_str=='string'&&custom_str.match(needle)==null) {
-						this._f=f;
-						return;
-					}
+				let ret=eval_func();
+				if(post_exec)
+					post_exec(ret);
+				return ret;
+			} else {
+				if(pre_exec) {
+					pre_exec(func);
 				}
-				if(this.f_on) {
-					this.f_on=false;
+				let ret=func();
+				if(post_exec)
+					post_exec(ret);
+				return ret;
+			}
+		} finally {}
+		return;
+	};
+	let stt=eval(`(class {
+		static #unused = this.#init()
+		static #init(){
+		}
+		static _f(){}
+		static _n = "<empty>"
+		static n_on = true
+		static f_on = true
+	})`);
+	window.CustomInputMatcher=class {
+		/**
+		 * @param {any} t_needle
+		 * @param {any} t_string_getter
+		 */
+		constructor(t_needle,t_string_getter) {
+			this.ts_get=t_string_getter;
+			this.tr=t_needle;
+		}
+		get test_string() {
+			return this.ts_get();
+		}
+		get test_needle() {
+			return this.tr;
+		}
+	};
+	var cur=new class extends stt {
+		/** @type {any} */
+		get f() {
+			return this._f;
+		}
+		set f(f) {
+			let cur=this._ln;
+			this._lf=f;
+			if(fnlist.indexOf(this._lf)==-1) {
+				add_func(this._ln,this._lf);
+			}
+			if(cur instanceof CustomInputMatcher) {
+				let custom_str=cur.test_string;
+				let needle=cur.test_needle;
+				if(typeof custom_str=='string'&&custom_str.match(needle)==null) {
 					this._f=f;
+					return;
 				}
 			}
-			static get n() {
-				return this._n;
+			if(this.f_on) {
+				this.f_on=false;
+				this._f=f;
 			}
-			static set n(n) {
-				let cur=n;
-				if(cur instanceof CustomInputMatcher) {
-					let custom_str=cur.test_string;
-					let m_needle=cur.test_needle;
-					if(m_needle instanceof RegExp&&typeof custom_str=='string') {
-						let m_match=custom_str.match(m_needle);
-						if(m_match==null) {
-							this._ln=n;
-							return;
-						} else if(this.rx_off===undefined) {
-							this.rx_off=true;
-							this.rx_lx=n;
-						}
-					}
-					if(typeof m_needle=='string'&&custom_str!=m_needle) {
+		}
+		/** @type {any} */
+		get n() {
+			return this._n;
+		}
+		set n(n) {
+			let cur=n;
+			if(cur instanceof CustomInputMatcher) {
+				let custom_str=cur.test_string;
+				let m_needle=cur.test_needle;
+				if(m_needle instanceof RegExp&&typeof custom_str=='string') {
+					let m_match=custom_str.match(m_needle);
+					if(m_match==null) {
 						this._ln=n;
 						return;
+					} else if(this.rx_off===undefined) {
+						this.rx_off=true;
+						this.rx_lx=n;
 					}
 				}
-				this._ln=n;
-				if(this.n_on) {
-					this.n_on=false;
-					this._n=n;
+				if(typeof m_needle=='string'&&custom_str!=m_needle) {
+					this._ln=n;
+					return;
 				}
 			}
-		};
-		let sym=Symbol();
-		var cur__class={[sym]: cur};
-		cur.self_sym=sym;
-		cur.funcs=fnlist;
-		cur.names=fnname;
-	}
+			this._ln=n;
+			if(this.n_on) {
+				this.n_on=false;
+				this._n=n;
+			}
+		}
+	};
+	let sym=Symbol();
+	var cur__class={[sym]: cur};
+	cur.self_sym=sym;
+	cur.funcs=fnlist;
+	cur.names=fnname;
 	cur.n="debug_js_call_konggames";
 	cur.f=function() {
+		class DebugState {
+			/**
+			 * @type {symbol}
+			 */
+			call_info=Symbol.for("Unknown");
+			/**
+			 * @type {any}
+			 */
+			breakpoint_function;
+			/**
+			 * @type {any}
+			 */
+			root;
+			/**
+			 * @type {symbol[]}
+			 */
+			info=[];
+			/**
+			 * @type {any}
+			 */
+			breakpoint_function_path;
+			/**
+			 * @type {{ abort: symbol; error: symbol; success: symbol; failure: symbol; debug: symbol; }}
+			 */
+			sym={
+				abort:Symbol('abort'),
+				error:Symbol('error'),
+				success:Symbol("success"),
+				failure:Symbol("failure"),
+				debug:Symbol("debug"),
+			};
+			/**
+			 * @type {number}
+			 */
+			depth=0;
+		}
 		class debug_class {
+			/**
+			 * @param {DebugState} state
+			 */
 			constructor(state) {
-				this.data={};
+				this.data={
+					ghost_tree:null,
+				};
+				/**
+				 * @type {any[]}
+				 */
 				this.error_array=[];
 				var id=Math.floor(Math.random()*(1<<(24))*(1<<8+8+4)).toString(16);
 				let key='_debugger_'+id;
@@ -171,12 +229,13 @@ function main() {
 				if(state.sym) {
 					this.sym=state.sym;
 				} else {
-					this.sym={};
-					this.sym.abort=Symbol('abort');
-					this.sym.error=Symbol('error');
-					this.sym.success=Symbol('success');
-					this.sym.failure=Symbol('failure');
-					this.sym.debug=Symbol('debug');
+					this.sym={
+						abort:Symbol('abort'),
+						error:Symbol('error'),
+						success:Symbol("success"),
+						failure:Symbol("failure"),
+						debug:Symbol("debug"),
+					};
 					state.sym=this.sym;
 				}
 				state.info=[];
@@ -201,7 +260,12 @@ function main() {
 					await this.promise;
 					this.clear_root();
 					if(this.next) {
-						await this.next.clear();
+						await this.next.clear(()=>{
+							console.log('prev clear done');
+						});
+						/**
+						 * @type {debug_class | null}
+						 */
 						this.next=null;
 					}
 					return;
@@ -227,14 +291,17 @@ function main() {
 					state.breakpoint_function=g;
 				}
 				this.breakpoint_function=state.breakpoint_function;
+				/**
+				 * @type {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; }[]}
+				 */
 				this.failed_check=[];
-				var make_internal_promise=function(a) {
+				var make_internal_promise=function(/** @type {(arg0: any) => void} */ a) {
 					t.on_internal_callback=function(e) {
 						a(e);
 					};
 				};
 				this.internal_promise=new Promise(make_internal_promise);
-				var make_promise=function(a) {
+				var make_promise=function(/** @type {(arg0: any) => void} */ a) {
 					t.on_breakpoint_clear=function(e) {
 						a(e);
 					};
@@ -293,6 +360,9 @@ function main() {
 					this.clear_breakpoint(info);
 				}
 			}
+			/**
+			 * @param {{ arg: any[][]; m_this: { (start?: number | undefined, end?: number | undefined): any[]; (v: PropertyKey): boolean; }; } | null | undefined} result
+			 */
 			clear_breakpoint(result) {
 				var error;
 				if(arguments.length<1) {
@@ -390,10 +460,14 @@ function main() {
 					return ([...a,c,src_url]).join("\n");
 				}
 				return ([b,...a,c]).join("\n");
-				return tmp;
 			}
 		}
 		function run_sync_code() {
+			/**
+			 * @param {()=>DebugState} pre_init
+			 * @arg {(x:debug_class,s:DebugState)=>unknown} at_init
+			 * @arg {(x:debug_class,s:DebugState)=>unknown} done_cb
+			 */
 			function dbg_init(pre_init,at_init,done_cb) {
 				var state=pre_init();
 				let _debugger=new debug_class(state);
@@ -405,7 +479,7 @@ function main() {
 			let _debugger=dbg_init(function() {
 				debug=debug;
 				undebug=undebug;
-				var state={};
+				var state=new DebugState;
 				state.breakpoint_function_path="Function.prototype.call";
 				state.root=true;
 				state.depth=0;
@@ -414,8 +488,13 @@ function main() {
 				var d_sym=_debugger.sym.debug;
 				state.info.push(d_sym);
 				state.call_info=d_sym;
-			},function(_debugger,state) {
-				var nop=function() {};
+			},function(/** @type {{ clear_root: () => void; }} */ _debugger,/** @type {{ call_info: any; }} */ state) {
+				/**
+				 * @param {any[]} x
+				 */
+				function nop(...x) {
+					x;
+				}
 				nop.call(null,[state.call_info]);
 				window.dz=_debugger;
 				_debugger.clear_root=function() {
@@ -437,14 +516,12 @@ function main() {
 				}
 				var ghost_tree=access_res[1].original;
 				let r=dbg_init(function() {
-					var state={};
+					var state=new DebugState;
 					Object.assign(state,promise_debugger.state);
 					state.breakpoint_function_path="Function.prototype.call";
-					var original_sym=state.sym;
-					state.sym={};
-					Object.assign(state.sym,original_sym);
 					state.depth++;
-					debugger; return state;
+					debugger;
+					return state;
 				},function(_debugger,state) {
 					state.breakpoint_function=ghost_tree.Function.prototype.call;
 				},function(_debugger) {
@@ -462,7 +539,7 @@ function main() {
 		if(_debugger) {
 			var run_async_code=async function() {
 				console.log('async clear');
-				await _debugger.clear(e => console.log(e));
+				await _debugger.clear((/** @type {any} */ e) => console.log(e));
 				return run_sync_code();
 			};
 			var _promise=run_async_code();
@@ -471,6 +548,9 @@ function main() {
 		var result=run_sync_code();
 		return result;
 	};
+	/**
+	 * @param {undefined[]} e
+	 */
 	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
@@ -478,7 +558,7 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(fn) {
+		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
 			fn.argv=e;
 		};
 		var _result=execute(i,px_fn);

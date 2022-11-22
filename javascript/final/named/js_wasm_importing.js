@@ -71,28 +71,26 @@ function main() {
 			if(!fr.body) throw new Error("no body on fetch");
 			let cr,rd=fr.body.getReader();
 			let u8=[];
+			let uint_8_arr=new Uint8Array(0);
 			while(!(cr=await rd.read()).done) {
 				let v=cr.value;
-				if(u8) {
-					v=u8.concat(u8,v);
-				}
-				u8=v;
+				uint_8_arr=new Uint8Array(u8.concat(u8,v));
 			}
-			u8[125]=1;
+			uint_8_arr[125]=1;
 			let u8_edx=175+3;
-			let u8_dt=u8[u8_edx];
+			let u8_dt=uint_8_arr[u8_edx];
 			console.log(u8_dt);
-			u8[175+3]=128;
-			u8[175+1]=128;
-			let u8_idx=u8.indexOf(128+40);
-			console.log(u8_idx,u8.indexOf(192,u8_idx));
-			u8[232]=128+32;
-			u8[234]=128;
-			u8[248]=128+40;
-			u8[250]=128;
-			u8[196]=128;
-			u8[194]=128;
-			window.module_bytes=u8;
+			uint_8_arr[175+3]=128;
+			uint_8_arr[175+1]=128;
+			let u8_idx=uint_8_arr.indexOf(128+40);
+			console.log(u8_idx,uint_8_arr.indexOf(192,u8_idx));
+			uint_8_arr[232]=128+32;
+			uint_8_arr[234]=128;
+			uint_8_arr[248]=128+40;
+			uint_8_arr[250]=128;
+			uint_8_arr[196]=128;
+			uint_8_arr[194]=128;
+			window.module_bytes=uint_8_arr;
 			let wasm;
 			function console_log_from_wasm() {
 				wasm.console_log_from_wasm();
@@ -101,7 +99,7 @@ function main() {
 				let varg0=getStringFromWasm(arg0,arg1);
 				console.log(varg0);
 			}
-			window.wasm_inst=await WebAssembly.instantiate(u8,{
+			window.wasm_inst=await WebAssembly.instantiate(uint_8_arr,{
 				"./importing_javascript_functions_into_webassembly": {
 					__wbg_log_f48fd9f1562bf74d: __wbg_log_f48fd9f1562bf74d
 				}
