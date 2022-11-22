@@ -119,19 +119,20 @@ function main() {
 		function get_const_eq(a,b) {
 			return Object.getPrototypeOf(a).constructor==b;
 		}
+		class JSONRepArg0 {
+			target={};
+			ns=0;
+			all_map=new Map;
+			/**@type {Set<typeof all_set_inner_type>} */
+			all_set=new Set;
+			func_map=new Map;
+			dom_map=new Map;
+		}
 		/**
 		 * @param {any} e
 		 * @param {any} o
 		 */
-		function json_rep(st={
-			target: {},
-			ns: 0,
-			all_map: new Map,
-			/**@type {Set<typeof all_set_inner_type>} */
-			all_set: new Set,
-			func_map: new Map,
-			dom_map: new Map
-		},e,o) {
+		function json_rep(st=new JSONRepArg0,e,o) {
 			void e;
 			let all_set=st.all_set;
 			let all_map=st.all_map;
@@ -190,7 +191,7 @@ function main() {
 					var dname=ret_src.id? "dom_"+ret_src.id:"dom_gen_id_"+(fc);
 					st.dom_map.set(ret_src,[dname,fc]);
 					return dname;
-				}if(ret_src instanceof Node&&(!ret_src==st.target)) {
+				} if(ret_src instanceof Node&&(!ret_src==st.target)) {
 					var fc=fid++;
 					var dname="dom_gen_id_"+(fc);
 					st.dom_map.set(ret_src,[dname,fc]);
@@ -210,7 +211,7 @@ function main() {
 				if(all_map.has(o)) {
 					return all_map.get(o);
 				}
-				for(var i in o) {
+				for(let i in o) {
 					if(typeof o[i]=="undefined") {
 						continue;
 					}
@@ -304,34 +305,34 @@ function main() {
 					}
 				}
 				if(retcp.has("offsetParent")) {
-					all_map.set(retcp.offsetParent,"f");
+					all_map.set(retcp.get("offsetParent"),"f");
 					retcp.delete("offsetParent");
 				}
 				if(is_typechecking)
-					retcp.attributeStyleMap=new StylePropertyMap;
+					retcp.set("attributeStyleMap",new StylePropertyMap);
 				if(retcp.has("attributeStyleMap")) {
 					/**
 					 * @type {any[]}
 					 */
 					var ta=[];
-					for(var i=0,sa=o.attributeStyleMap;i<sa.length;i++) {
+					for(let i=0,sa=o.attributeStyleMap;i<sa.length;i++) {
 						ta[i]=sa[i];
 					}
-					retcp.attributeStyleMap_c=ta;
+					retcp.set("attributeStyleMap_c",ta);
 					retcp.delete("attributeStyleMap");
 				}
 				if(is_typechecking)
-					retcp.attributes=HTMLElement.prototype.attributes;
+					retcp.set("attributes",HTMLElement.prototype.attributes);
 				if(retcp.has("attributes")) {
 					var ta=[];
-					for(var i=0,sa=o.attributes;i<sa.length;i++) {
+					for(let i=0,sa=o.attributes;i<sa.length;i++) {
 						ta[i]=sa[i];
 					}
-					retcp.attributes_c=ta;
+					retcp.set("attributes_c",ta);
 					retcp.delete("attributes");
 				}
 				if(is_typechecking)
-					retcp.classList=HTMLElement.prototype.classList;
+					retcp.set("classList",HTMLElement.prototype.classList);
 				if(retcp.has("classList")) {
 					let sa=retcp.get("classList");
 					if(!sa) throw 1;
@@ -374,22 +375,22 @@ function main() {
 			emp.clear();
 			try {
 				if(get_const_eq(trg,Function)) {
-					cin={
-						target: {
-							...trg
-						},
-						ns: nsl,
-						all_map: cmap,
-						all_set: emp
+					let cin=new JSONRepArg0;
+					cin.target={
+						...trg
 					};
-					js=JSON.stringify(cin.target,json_rep.bind(null,cin));
+					cin.ns=nsl;
+					cin.all_map=cmap;
+					cin.all_set=emp;
+					js=JSON.stringify(cin.target,function(...args) {
+						json_rep(cin,...args);
+					});
 				} else {
-					cin={
-						target: trg,
-						ns: nsl,
-						all_map: cmap,
-						all_set: emp
-					};
+					let cin=new JSONRepArg0;
+					cin.target=trg;
+					cin.ns=nsl;
+					cin.all_map=cmap;
+					cin.all_set=emp;
 					js=JSON.stringify(trg,json_rep.bind(null,cin));
 				}
 			} catch(e) {
