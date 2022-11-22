@@ -79,7 +79,6 @@ function main() {
 					return ret;
 				}
 			} finally {}
-			return;
 		};
 		let stt=eval(`(class {
 			static #unused = this.#init()
