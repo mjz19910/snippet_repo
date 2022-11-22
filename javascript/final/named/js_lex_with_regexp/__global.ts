@@ -12,13 +12,12 @@ declare global {
 		find_closed_dn_x: any;
 		find_closed_dn_y: any;
 		dz?: any;
-		__state: {lex_chunks: any[]; m_l_str: any; reset_count: boolean;};
+		__state: {lex_chunks: never[]; m_l_str: any;};
 	}
 	var debugApi: DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
 
-	interface DebugAPI {
-		asyncExecuteEval(gameiframe: any,_function: () => number): void;
+	class DebugAPI {
 		asyncExecuteFunction(top: Window|null,function_: any): void;
 	}
 
@@ -71,20 +70,10 @@ namespace X {
 		test_string: string|RegExp;
 		test_needle: string|RegExp;
 		ts_get: unknown;
-		str?: string;
 		constructor(test_string: string|RegExp,string_getter: unknown) {
 			this.test_string=test_string;
 			this.test_needle="";
 			this.ts_get=string_getter;
 		}
 	}
-}
-
-declare global {
-	interface Window {
-		cint?:number;
-		citv?:number;
-	}
-	var cint:ReturnType<typeof setTimeout>|undefined;
-	var citv:ReturnType<typeof setInterval>|undefined;
 }
