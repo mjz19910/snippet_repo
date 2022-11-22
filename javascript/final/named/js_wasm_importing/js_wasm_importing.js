@@ -111,10 +111,11 @@ function main() {
 			uint_8_arr[194]=128;
 			window.module_bytes=uint_8_arr;
 			/**
-			 * @type {{ console_log_from_wasm: () => void; memory: { buffer: Iterable<number>; }; }}
+			 * @type {WebAssembly.Exports}
 			 */
 			let wasm;
 			function console_log_from_wasm() {
+				if(!('console_log_from_wasm' in wasm&&typeof wasm.console_log_from_wasm=='function')) throw 1;
 				wasm.console_log_from_wasm();
 			}
 			/**
@@ -125,15 +126,18 @@ function main() {
 				let varg0=getStringFromWasm(arg0,arg1);
 				console.log(varg0);
 			}
-			window.wasm_inst=await WebAssembly.instantiate(uint_8_arr,{
+			let wasm_inst=await WebAssembly.instantiate(uint_8_arr,{
 				"./importing_javascript_functions_into_webassembly": {
 					__wbg_log_f48fd9f1562bf74d: __wbg_log_f48fd9f1562bf74d
 				}
 			});
-			wasm=window.wasm_inst.instance.exports;
+			window.wasm_inst=wasm_inst;
+			wasm=wasm_inst.instance.exports;
 			let cachedTextDecoder=new TextDecoder("utf-8");
-			let wasm_memory_cache=wasm.memory.buffer;
+			if(!('buffer' in wasm.memory)) throw 1;
+			let wasm_memory_cache=new Uint8Array(wasm.memory.buffer);
 			function getUint8Memory() {
+				if(!('buffer' in wasm.memory)) throw 1;
 				if(wasm_memory_cache.buffer!==wasm.memory.buffer) {
 					wasm_memory_cache=new Uint8Array(wasm.memory.buffer);
 				}
