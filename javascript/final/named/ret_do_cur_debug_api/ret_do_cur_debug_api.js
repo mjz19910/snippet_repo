@@ -96,7 +96,7 @@ function main() {
 			static n_on = true
 			static f_on = true
 		})`);
-		window.CustomInputMatcher=class {
+		class CustomInputMatcher {
 			/**
 			 * @param {string} t_needle
 			 * @param {any} string_getter
@@ -151,7 +151,7 @@ function main() {
 				if(cur instanceof CustomInputMatcher) {
 					let custom_str=cur.test_string;
 					let m_needle=cur.test_needle;
-					if(m_needle instanceof RegExp&&typeof custom_str=='string') {
+					if(typeof custom_str=='string') {
 						let m_match=custom_str.match(m_needle);
 						if(m_match==null) {
 							this._ln=n;
