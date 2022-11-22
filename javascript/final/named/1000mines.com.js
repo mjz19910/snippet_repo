@@ -562,7 +562,7 @@ function main() {
 								[jsfout,jsfilt]=parse_stack.pop();
 								js_tmp.forEach(e => jsfout.push(e));
 								let p_cur=parse_stack.pop();
-								['classy',is_classy,(/** @type {boolean} */ e)=>is_classy=e];
+								['classy',is_classy,(/** @type {boolean} */ e) => is_classy=e];
 								if(p_cur[0]==='classy') {
 									p_cur[2](p_cur[1]);
 								}
@@ -835,7 +835,7 @@ function main() {
 			 */
 			get_code_formatted.targets=[];
 			__nx_names=[];
-			__for_code=get_code_formatted
+			__for_code=get_code_formatted;
 			{
 				let fc=__for_code;
 				fc.targets.length=0;
@@ -893,9 +893,9 @@ function main() {
 			}
 			x.fo.push([x.f,x.o]);
 			__add_set();
-			let cmc=__for_code(__m.click)
-				//???
-				`${cmc}`;
+			let cmc=__for_code(__m.click);
+			//???
+			`${cmc}`;
 			x.f=x.o.u;
 			x(x.f,x.__all_vars);
 			x.f.call(Object.create(x.f.prototype));
