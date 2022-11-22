@@ -26,6 +26,11 @@ function main() {
 		}
 		return x;
 	}
+	/**
+	 * @param {number} t
+	 * @param {{ (fn: { argv: undefined[]; }): void; (arg0: any): void; }} pre_exec
+	 * @param {((arg0: any) => void) | undefined} [post_exec]
+	 */
 	function execute(t,pre_exec,post_exec) {
 		var r_fnname=fnname[t];
 		var func=fnlist[t];
@@ -96,6 +101,10 @@ function main() {
 		f_on=true;
 	}
 	class CustomInputMatcher {
+		/**
+		 * @param {RegExp} t_needle
+		 * @param {() => string} t_string_getter
+		 */
 		constructor(t_needle,t_string_getter) {
 			this.ts_get=t_string_getter;
 			this.tr=t_needle;
@@ -175,6 +184,10 @@ function main() {
 	if(/youtube.com/) {
 		cur.n=new CustomInputMatcher(/youtube.com/,() => location.origin);
 		let bp_class=class {
+			/**
+			 * @param {any} a
+			 * @param {any} b
+			 */
 			constructor(a,b) {
 				this.a=a;
 				this.b=b;
@@ -193,6 +206,9 @@ function main() {
 		if(!undebug) throw new Error("1");
 		debug.u=undebug;
 		debug=debug;
+		/**
+		 * @param {any[]} e
+		 */
 		function ts(e) {
 			return e[0];
 		}
@@ -206,6 +222,12 @@ function main() {
 			return;
 		}
 		(function(a,n,test_callback) {
+			/**
+			 * @param {{ [x: string]: () => void; }} proto
+			 * @param {string} name
+			 * @param {any} func_obj
+			 * @param {{ (): void; (x: any, func_obj: any): void; (arg0: debug, arg1: any): void; }} test_callback
+			 */
 			function bp_proto(proto,name,func_obj,test_callback) {
 				if(!debug) throw new Error("needs devtools open for debug function");
 				let x=debug;
@@ -236,6 +258,9 @@ function main() {
 							/** @type {{send():void}|null} */
 							this.xmhrp=null;
 						}
+						/**
+						 * @param {any} g_val
+						 */
 						run(g_val) {
 							if(!this.xmhrp) throw new Error("Missing xmhrp value");
 							this.r_get=g_val;
@@ -256,6 +281,9 @@ function main() {
 					/** @type {{send():void}|null} */
 					this.xmhrp=null;
 				}
+				/**
+				 * @param {(arg0: string) => { send(): void; } | null} g_val
+				 */
 				run(g_val) {
 					this.get=g_val;
 					this.xmhrp=g_val(a+'_prototype');
@@ -272,7 +300,7 @@ function main() {
 			debug.cb=new callback;
 			bp_proto(func_proto,n,func_obj,test_callback);
 		}
-		)('XMLHttpRequest','send',function(x,func_obj) {
+		)('XMLHttpRequest','send',function(/** @type {{ fo_test: any; }} */ x,/** @type {new () => any} */ func_obj) {
 			let tst;
 			if(x.fo_test) {
 				tst=x.fo_test;

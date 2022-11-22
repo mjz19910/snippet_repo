@@ -49,7 +49,7 @@ declare global {
 declare global {
 	var debug: debug|undefined;
 	interface debug {
-		(arg0: () => void,code: string): void;
+		(arg0: (...x:any[]) => any,code: string): void;
 		u: (arg0: any) => void;
 		f: () => void;
 		cb: {
@@ -58,7 +58,7 @@ declare global {
 	}
 	var undebug: undebug|undefined;
 	interface undebug {
-		(arg0: () => void): void;
+		(arg0: (...x:any[]) => any): void;
 	}
 }
 
