@@ -7,7 +7,7 @@ declare global {
 	var debugApi: DebugAPI;
 	interface Window {
 		debugApi: {};
-		CustomInputMatcher:{};
+		CustomInputMatcher: {};
 		find_closed_up_x: any;
 		find_closed_up_y: any;
 		find_closed_dn_x: any;
@@ -15,11 +15,20 @@ declare global {
 	}
 
 	interface undebug {
-		(fn: ()=>void): void;
+		(fn: () => void): void;
 	}
+
 	var undebug: undebug;
 
-	type ExpandoKey="jQuery_expando";
+	class has_expando {
+		["jQuery_expando_1"]: JQueryExpandoData;
+	}
+
+	type ExpandoKey=keyof has_expando;
+
+	interface Element {}
+
+	var Element: typeof Element;
 
 	interface RxType {
 		obj_field?: any;
@@ -34,12 +43,12 @@ declare global {
 
 	interface GrType {
 		m: () => any;
-}
+	}
 
 	interface debug {
 		gr: GrType;
-		(fn:(...x:any[])=>void, code:string): void;
-		u: (fn: (...x:any[])=>void) => void;
+		(fn: (...x: any[]) => void,code: string): void;
+		u: (fn: (...x: any[]) => void) => void;
 		fo: any[][];
 		st: Set<any>;
 		sarr: any[];
@@ -55,12 +64,8 @@ declare global {
 		__trg_eval: (arg0: string) => void;
 		rx: RxType;
 		o: any;
-		f: (...a:any[])=>any;
+		f: (...a: any[]) => any;
 		cb: (__eval: (arg0: string) => void) => void;
-	}
-
-	interface Element {
-		jQuery_expando:JQueryExpandoData;
 	}
 
 	var debug: debug|undefined;
@@ -70,12 +75,12 @@ declare global {
 	var __fo: any[][];
 	var __for_code: any;
 	var __lst: any[];
-	var __ret;
-	var __w;
-	var __m;
-	var __r_ret;
-	var __res;
-	var __instance;
+	var __ret: symbol|[any,any];
+	var __w: RxType;
+	var __m: unknown;
+	var __r_ret: any;
+	var __res: any[];
+	var __instance: {constructor: any;};
 }
 
 interface JQueryExpandoData {
@@ -83,18 +88,19 @@ interface JQueryExpandoData {
 }
 
 interface JQueryEvents {
-	mouseup:JQueryEventHandler[];
+	click: any;
+	mouseup: JQueryEventHandler[];
 }
 
 interface JQueryEventHandler {
-	handler: (...a:any[])=>any;
+	handler: (...a: any[]) => any;
 }
 
 namespace Impl {
 	export class CustomInputMatcher {
 		test_string: any;
 		test_needle: any;
-		constructor(t_needle: any, t_string_getter: any) {
+		constructor(t_needle: any,t_string_getter: any) {
 			t_needle;
 			t_string_getter;
 		}

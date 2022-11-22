@@ -922,6 +922,9 @@ function main() {
 			 * @type {any[]}
 			 */
 			get_code_formatted.targets=[];
+			/**
+			 * @type {[]}
+			 */
 			let __nx_names=[];
 			__nx_names;
 			__for_code=get_code_formatted;
@@ -964,7 +967,14 @@ function main() {
 			let dom=document.querySelector('#ctl-home');
 			if(!dom) throw new Error("missing element with id=ctl-home");
 			if(!('expando' in jQuery)) throw new Error("missing jQuery.expando");
-			let jq_dom_data=dom[jQuery.expando+'1'];
+			if(typeof jQuery.expando!=='string') throw new Error("wrong type for jQuery.expando");
+			let expando_str=jQuery.expando+'1';
+			/** @template {string} T @arg {T} v @returns {v is ExpandoKey} */
+			function to_expando_key(v) {
+				return v.endsWith("1");
+			}
+			if(!to_expando_key(expando_str)) throw 1;
+			let jq_dom_data=dom[expando_str];
 			x.__name_list=[];
 			x.f=jq_dom_data.events.click[0].handler;
 			__run(x.f,x.__all_vars);

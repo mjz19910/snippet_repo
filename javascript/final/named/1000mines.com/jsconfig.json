@@ -2,8 +2,10 @@
 	"compilerOptions": {
 		"allowJs": true,
 		"checkJs": true,
-		// "strict": true,
-		"strict": false,
+		"strict": true,
 		"target": "esnext",
+		"types": [
+			"jquery"
+		]
 	}
 }
