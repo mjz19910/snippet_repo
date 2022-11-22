@@ -80,7 +80,9 @@ function main() {
 	}
 	let cur=new cur_class;
 	cur.key='js_wasm_importing';
-	cur.value=function() {
+	cur.value=js_wasm_importing_main;
+	return cur.run();
+	function js_wasm_importing_main() {
 		/*location.origin==="https://wasmbyexample.dev/"*/
 		let fn=async function() {
 			let fr=await fetch('/examples/importing-javascript-functions-into-webassembly/demo/rust/pkg/importing_javascript_functions_into_webassembly_bg.wasm');
@@ -156,7 +158,6 @@ function main() {
 		let pr=fn();
 		pr.then(e => console.log(e));
 		return pr;
-	};
-	return cur.run();
+	}
 }
 window.__ret=main();
