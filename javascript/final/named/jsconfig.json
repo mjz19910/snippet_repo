@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"types": [
+			"jquery",
+		],
+		"typeRoots": [
+			"~/workspace/node_types/node_modules/@types"
+		],
+	},
+	"files": [
+		"**/*"
+	]
+}

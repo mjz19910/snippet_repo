@@ -86,6 +86,10 @@ function main() {
 			static f_on = true
 		})`);
 		window.CustomInputMatcher=class {
+			/**
+			 * @param {any} t_needle
+			 * @param {any} t_string_getter
+			 */
 			constructor(t_needle,t_string_getter) {
 				this.ts_get=t_string_getter;
 				this.tr=t_needle;
@@ -161,6 +165,7 @@ function main() {
 	cur.n='1000mines.com';
 	cur.f=function() {
 		let return_value;
+		if(!debug) throw new Error("Missing debug function (open devtools)");
 		debug=debug;
 		debug.u=undebug;
 		x: {
@@ -180,12 +185,14 @@ function main() {
 				let test_ret=test([test_fail,test_works]);
 				if(test_ret===test_fail) {
 					console.log('needs new debug function');
-					delete debug;
+					delete window.debug;
 					return null;
 				}
 			}
 			function __add_set() {
-				for(c of Object.keys(x.o)) {
+				if(!('o' in x)) throw 1;
+				if(!(x.o instanceof Object)) throw 1;
+				for(let c of Object.keys(x.o)) {
 					let v=x.o[c];
 					if(!x.st.has(v)) {
 						x.st.add(v);
@@ -309,6 +316,7 @@ function main() {
 			//x.f=$('#control')[G.expando].events.mouseup[0].handler
 			{
 				let game_ctrl=document.querySelector('#control');
+				if(!game_ctrl) throw new Error("missing element with id=control");
 				/*G:event expando{typeof T is Y;expando:string}*/
 				x.f=game_ctrl[w.jQuery.G.expando].events.mouseup[0].handler;
 			}
@@ -387,7 +395,11 @@ function main() {
 					}
 					return [js_out,js_in,js_tmp];
 				};
-				let js_parse_func_def_head=(str) => {
+				/**
+				 * @param {string} str
+				 * @returns {any[]}
+				 */
+				function js_parse_func_def_head(str) {
 					let js_out=[];
 					if(str[0].match(/\(/)&&str[1]==')') {
 						return ['(',')',str.slice(2)];
@@ -401,8 +413,8 @@ function main() {
 						js_out.push(ret[0]);
 						let cc=ret[0].length+1+1;
 						while(ret[1][0]==',') {
-							js_out.push(',')
-								([ret]=js_parse_ident([str.slice(cc)],[]));
+							js_out.push(',');
+							([ret]=js_parse_ident([str.slice(cc)],[]));
 							js_out.push(ret[0]);
 							if(ret[1][0]==')') {
 								js_out.push('()'[1]);
@@ -412,7 +424,8 @@ function main() {
 							debugger;
 						}
 					}
-				};
+					throw new Error("Failed to parse function head");
+				}
 				let js_parse_function=(e) => {
 					let fn=e.slice(0,8);
 					if(fn=='function') {
@@ -459,12 +472,12 @@ function main() {
 						jsfout.push(e[0]);
 						jsfout.push(e.slice(1));
 						let ret=js_parse_loop_whitespace(jsfout,jsfilt);
-						let js_tmp=jsfilt
+						let js_tmp=jsfilt;
 						[js_out,jsfout,jsfilt]=ret;
 						jsfout.push(...js_out,...js_tmp);
 						if(is_classy) {
-							ret=js_parse_ident(jsfout,jsfilt)
-								([js_out,jsfout,jsfilt]=ret);
+							ret=js_parse_ident(jsfout,jsfilt);
+							([js_out,jsfout,jsfilt]=ret);
 							js_func_ident=js_out[0];
 							jsfout.push(js_out[0],js_out[1]);
 							if(js_out[0]==='constructor') {
@@ -511,12 +524,12 @@ function main() {
 							loop_max_count=40;
 							function call_loop_parse_whitespace() {
 								ret=js_parse_loop_whitespace(jsfout,jsfilt);
-								js_tmp=jsfilt
+								js_tmp=jsfilt;
 								[js_out,jsfout,jsfilt]=ret;
 								jsfout.push(...js_out,...js_tmp);
 							}
 							function call_parse_ident() {
-								ret=js_parse_ident(jsfout,jsfilt)
+								ret=js_parse_ident(jsfout,jsfilt);
 								[js_out,jsfout,jsfilt]=ret;
 								jsfout.push(js_out[0],js_out[1]);
 							}
@@ -525,9 +538,10 @@ function main() {
 								call_parse_ident();
 								let js_func_ident=js_out[0];
 								parse_stack.push('frame');
-								parse_stack.push(['classy',is_classy,e => is_classy=e]);
-								is_class_function=true;
 								is_classy=false;
+								parse_stack.push(['classy',is_classy,(/** @type {boolean} */ e) => is_classy=e]);
+								let is_class_function=true;
+								parse_stack.push(['classy_extra',is_class_function,(/** @type {boolean} */ e) => is_class_function=e]);
 								let wt=jsfout.pop();
 								ret=js_parse_func_def_head(wt);
 								let js_func_args=ret.slice(0,-1);
