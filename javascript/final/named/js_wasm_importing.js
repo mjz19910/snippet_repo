@@ -70,7 +70,7 @@ function main() {
 			let fr=await fetch('/examples/importing-javascript-functions-into-webassembly/demo/rust/pkg/importing_javascript_functions_into_webassembly_bg.wasm');
 			if(!fr.body) throw new Error("no body on fetch");
 			let cr,rd=fr.body.getReader();
-			let u8;
+			let u8=[];
 			while(!(cr=await rd.read()).done) {
 				let v=cr.value;
 				if(u8) {
