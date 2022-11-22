@@ -112,7 +112,6 @@ async function x() {
 					console.log(e);
 					continue;
 				}
-
 				if(i instanceof Element) {
 					append_from_children(obj,i);
 					continue;
