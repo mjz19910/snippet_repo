@@ -533,7 +533,7 @@ class AddEventListenerExt {
 				if(debug) t.add_to_call_list([target,this,args]);
 				return t.orig[target].call(this,...args);
 			}; return;
-			default: throw 1;
+			default: throw new Error("1");
 		}
 	}
 	/**
@@ -739,7 +739,7 @@ class Repeat {
 		let d=a.get(b);
 		if(d===void 0) return null;
 		let h=this.map_1(a,b,{},{});
-		if(!h) throw 1;
+		if(!h) throw new Error("1");
 		let i=h.get(c);
 		if(i) {
 			return i;
@@ -774,7 +774,7 @@ class Repeat {
 			/**@template {RecordKey<symbol>} T @arg {T} sym */
 			return (sym) => {
 				let value=Repeat.map_sym.get(sym.key);
-				if(value===void 0) throw 1;
+				if(value===void 0) throw new Error("1");
 				return value;
 			};
 		}
@@ -1964,7 +1964,7 @@ function decode_map(value) {
 		console.log(value);
 	} else {
 		console.log("handle decode_map",value);
-		throw 1;
+		throw new Error("1");
 	}
 	return value;
 }
@@ -2836,7 +2836,7 @@ class DebugAPI {
 	 */
 	getEventListeners(element) {
 		if(!this.hasData('getEventListeners'))
-			throw 1;
+			throw new Error("1");
 		return this.get_getEventListeners('getEventListeners')(element);
 	}
 	/**
@@ -2859,7 +2859,7 @@ class DebugAPI {
 		}
 		let activate=do_activate.bind(null,func,{},[{
 			get target() {
-				throw 1;
+				throw new Error("1");
 			}
 		}]);
 		return this.debuggerGetVar_a(func,activate,name,[]);

@@ -35,7 +35,7 @@ function main() {
 			if(this.#has_value) {
 				return this.#inner_value;
 			}
-			throw 1;
+			throw new Error("1");
 		}
 	}
 	class CSSKeywordValue extends CSSStyleValue {
@@ -338,8 +338,8 @@ function main() {
 					retcp.set("classList",HTMLElement.prototype.classList);
 				if(retcp.has("classList")) {
 					let sa=retcp.get("classList");
-					if(!sa) throw 1;
-					if(!(sa instanceof DOMTokenList)) throw 1;
+					if(!sa) throw new Error("1");
+					if(!(sa instanceof DOMTokenList)) throw new Error("1");
 					let class_list_iter_items=[];
 					for(let i=0;i<sa.length;i++) {
 						class_list_iter_items.push(sa[i]);
@@ -432,7 +432,7 @@ function main() {
 			});
 			Object.defineProperty(cin,"js_o",{
 				get: function() {
-					if(!js) throw 1;
+					if(!js) throw new Error("1");
 					return JSON.parse(js);
 				},
 				set: function(e) {

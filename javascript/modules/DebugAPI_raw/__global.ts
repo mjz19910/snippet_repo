@@ -40,7 +40,7 @@ class Repeat<T> {
 		this.times=times;
 	}
 	static from_TU_entry(a: ["string",string]|["number",number],b: number): ["string",string|Repeat<string>]|["number",number|Repeat<number>] {
-		throw 1;
+		throw new Error("1");
 	}
 }
 

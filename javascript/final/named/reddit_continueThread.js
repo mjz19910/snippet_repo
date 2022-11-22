@@ -176,7 +176,7 @@ function main() {
 		dom=dom._reactRootContainer._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode;
 		var do_ar=Object.getOwnPropertyNames(dom);
 		var react_ii_=do_ar.find(e => e.indexOf("__reactInternalInstance")==0);
-		if(!react_ii_) throw 1;
+		if(!react_ii_) throw new Error("1");
 		window.react_ii=react_ii_;
 		let react_ii=react_ii_;
 		/** @param {any} x */
@@ -220,7 +220,7 @@ function main() {
 				);
 				console.log('wc',count);
 			}
-			if(!dom) throw 1;
+			if(!dom) throw new Error("1");
 			var do_ar=Object.getOwnPropertyNames(dom);
 			console.log(do_ar);
 			var root_new=dom[react_ii];
@@ -250,7 +250,7 @@ function main() {
 				console.log('ts');
 				return setTimeout(() => {
 					dom=get_dom();
-					if(!dom) throw 1;
+					if(!dom) throw new Error("1");
 					do_ar=Object.getOwnPropertyNames(dom);
 					root_new=dom[react_ii];
 					window.root_new=root_new;

@@ -180,7 +180,7 @@ function main() {
 	}
 	cur.f=function() {
 		if(!debug) throw new Error("needs devtools open for debug function");
-		if(!undebug) throw 1;
+		if(!undebug) throw new Error("1");
 		debug.u=undebug;
 		debug=debug;
 		function ts(e) {

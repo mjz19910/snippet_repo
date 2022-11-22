@@ -366,7 +366,7 @@ function main() {
 					func=() => 0;
 				}
 				func(obj,p_eval_sym);
-				if(!(m0 in obj)) throw 1;
+				if(!(m0 in obj)) throw new Error("1");
 				/** @template T @arg {T} x @returns {any} */
 				function any(x) {return x;}
 				/** @type {{[x:string]:symbol}} */
@@ -423,10 +423,10 @@ function main() {
 		function func_cont_js_lex(state) {
 			let spl_parse=js_parse_regexp;
 			let str=state.m_l_str;
-			if(!str) throw 1;
+			if(!str) throw new Error("1");
 			let r=str.split(spl_parse,2);
 			let process_result=func_process_result(state,r,spl_parse,str);
-			if(!process_result) throw 1;
+			if(!process_result) throw new Error("1");
 			state.obj=process_result;
 			let obj=state.obj;
 			if(obj.lex_cur) {
@@ -478,7 +478,7 @@ function main() {
 				if(state.obj && state.m_l_str) {
 					state.m_l_str=state.m_l_str.slice(state.obj.nx_len);
 				}
-				if(!state.m_l_str) throw 1;
+				if(!state.m_l_str) throw new Error("1");
 				if(state.m_at_eof) {
 					console.log('EOF={bytes_left:'+state.m_l_str.length+',processed:'+str.length+`,lex_count:${b_cnt}`+'}');
 					/**

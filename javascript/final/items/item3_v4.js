@@ -11,8 +11,8 @@ v5 (new): snippet_repo/javascript/group1/sub_a/item-_3.js
 	};
 	holder.use();
 	let ele=document.querySelector("#getPit");
-	if(!(ele instanceof HTMLElement)) throw 1;
-	if(!ele) throw 1;
+	if(!(ele instanceof HTMLElement)) throw new Error("1");
+	if(!ele) throw new Error("1");
 	if('cint' in ele&&typeof ele.cint==='number') clearInterval(ele.cint);
 	let pr=SharkGame.PlayerResources;
 	/**
@@ -43,10 +43,10 @@ v5 (new): snippet_repo/javascript/group1/sub_a/item-_3.js
 		"writable": true,
 		value: 0,
 	});
-	if(!('cint' in ele)) throw 1;
+	if(!('cint' in ele)) throw new Error("1");
 	ele.cint=setInterval(() => {
-		if(!ele) throw 1;
-		if(!(ele instanceof HTMLElement)) throw 1;
+		if(!ele) throw new Error("1");
+		if(!(ele instanceof HTMLElement)) throw new Error("1");
 		ele.click();
 		let eel=["eel",fmt(res_get("eel")/1e151)];
 		let pit=["pit",fmt(res_get("pit")/1e151)];

@@ -47,7 +47,7 @@ export class DebugAPI {
 	 */
 	getEventListeners(element) {
 		if(!this.hasData('getEventListeners'))
-			throw 1;
+			throw new Error("1");
 		return this.getData('getEventListeners')(element);
 	}
 	/**
@@ -70,7 +70,7 @@ export class DebugAPI {
 		}
 		let activate=do_activate.bind(null,func,{},[{
 			get target() {
-				throw 1;
+				throw new Error("1");
 			}
 		}]);
 		return this.debuggerGetVar_a(func,activate,name,[]);

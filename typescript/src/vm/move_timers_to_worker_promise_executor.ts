@@ -47,7 +47,7 @@ export function move_timers_to_worker_promise_executor(
 	if(!failed) {
 		executor_handle=new PromiseExecutorHandle(executor_accept,executor_reject);
 	}
-	if(!executor_handle) throw 1;
+	if(!executor_handle) throw new Error("1");
 	const worker_state=new WorkerState(worker_code_blob,timer,executor_handle);
 	worker_state.set_failed(failed);
 	worker_state.init();

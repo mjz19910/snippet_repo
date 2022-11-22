@@ -194,8 +194,8 @@ function main() {
 		});
 		window.HTMLIFrameExt=HTMLIFrameExt;
 		let fr=document.getElementById('frames');
-		if(!fr) throw 1;
-		if(!(fr instanceof HTMLTableElement)) throw 1;
+		if(!fr) throw new Error("1");
+		if(!(fr instanceof HTMLTableElement)) throw new Error("1");
 		let fr_table=fr;
 		if(fr.rows.length==0) {
 			fr.insertRow();

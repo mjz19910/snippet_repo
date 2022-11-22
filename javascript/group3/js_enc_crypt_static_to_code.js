@@ -1288,7 +1288,7 @@ function main() {
 				let off=c.index-iter_idx;
 				if(off>1) {
 					console.log(t.input_str.slice(iter_idx+1,c.index));
-					throw 1;
+					throw new Error("1");
 				}
 				g=c.groups;
 				c_arr.push(c[0]);
@@ -1398,7 +1398,7 @@ function main() {
 					break;
 				}
 				console.log(cur);
-				throw 1;
+				throw new Error("1");
 			}
 			t.cur_regexp.lastIndex=rx.lastIndex;
 			return {

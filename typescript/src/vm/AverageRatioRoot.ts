@@ -12,7 +12,7 @@ export class AverageRatioRoot {
 	}
 	can_average(key: string) {
 		let ratio_calc=this.map.get(key)
-		if(!ratio_calc) throw 1;
+		if(!ratio_calc) throw new Error("1");
 		return ratio_calc.can_average();
 	}
 	get_average(key: string) {

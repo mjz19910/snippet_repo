@@ -115,7 +115,7 @@ function main() {
 			 */
 			let wasm;
 			function console_log_from_wasm() {
-				if(!('console_log_from_wasm' in wasm&&typeof wasm.console_log_from_wasm=='function')) throw 1;
+				if(!('console_log_from_wasm' in wasm&&typeof wasm.console_log_from_wasm=='function')) throw new Error("1");
 				wasm.console_log_from_wasm();
 			}
 			/**
@@ -134,10 +134,10 @@ function main() {
 			window.wasm_inst=wasm_inst;
 			wasm=wasm_inst.instance.exports;
 			let cachedTextDecoder=new TextDecoder("utf-8");
-			if(!('buffer' in wasm.memory)) throw 1;
+			if(!('buffer' in wasm.memory)) throw new Error("1");
 			let wasm_memory_cache=new Uint8Array(wasm.memory.buffer);
 			function getUint8Memory() {
-				if(!('buffer' in wasm.memory)) throw 1;
+				if(!('buffer' in wasm.memory)) throw new Error("1");
 				if(wasm_memory_cache.buffer!==wasm.memory.buffer) {
 					wasm_memory_cache=new Uint8Array(wasm.memory.buffer);
 				}

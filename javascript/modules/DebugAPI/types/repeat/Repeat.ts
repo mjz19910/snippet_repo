@@ -55,7 +55,7 @@ export class Repeat<T> {
 		let d=a.get(b);
 		if(d===void 0) return null;
 		let h=this.map_1<typeof a,T,number,Repeat<T>>(a,b);
-		if(!h) throw 1;
+		if(!h) throw new Error("1");
 		let i=h.get(c);
 		if(i) {
 			return i;

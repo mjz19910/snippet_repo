@@ -173,8 +173,8 @@ function main() {
 	let do_cur_count;
 	cur.n="yet_another_merge_game";
 	cur.f=function() {
-		if(!('func_log' in Function)) throw 1;
-		if(!(Function.func_log instanceof Array)) throw 1;
+		if(!('func_log' in Function)) throw new Error("1");
+		if(!(Function.func_log instanceof Array)) throw new Error("1");
 		var lnc;
 		let cf;
 		let fi_ob;

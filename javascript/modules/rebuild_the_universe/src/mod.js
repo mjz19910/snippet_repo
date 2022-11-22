@@ -285,7 +285,7 @@ class InstructionCallImpl extends InstructionImplBase {
 			const {type,source,value,...rest}=object_box;
 			if(Object.keys(rest).length>0) {
 				console.log('unbox temporary_box with extra',type,source,value,rest);
-				throw 1;
+				throw new Error("1");
 			}
 			if(source==='get') {
 				return value;
@@ -294,7 +294,7 @@ class InstructionCallImpl extends InstructionImplBase {
 				return value;
 			}
 			console.log('unbox temporary_box',type,source,value,rest);
-			throw 1;
+			throw new Error("1");
 		}
 		if(object_box.type==='object_box') {
 			const {type,value,...rest}=object_box;
@@ -316,10 +316,10 @@ class InstructionCallImpl extends InstructionImplBase {
 				return value;
 			}
 			console.log('unbox custom_box',{type,box_type},rest);
-			throw 1;
+			throw new Error("1");
 		}
 		console.log('unbox',type,left_to_unbox);
-		throw 1;
+		throw new Error("1");
 	}
 	/** @arg {Box[]} arg_arr */
 	unbox_arr(arg_arr) {
@@ -356,7 +356,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 	/** @arg {StackVM} vm @arg {Exclude<Box, Primitives|null>} fn_obj @arg {Exclude<Box, Primitives>} target_this @arg {Box[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
-		if(fn_obj.type==='temporary_box') throw 1;
+		if(fn_obj.type==='temporary_box') throw new Error("1");
 		if(!fn_obj.as_type) {
 			console.log('!fn_obj.as_type',fn_obj);
 			throw new Error("Invalid");
@@ -517,7 +517,7 @@ class InstructionCastImpl extends InstructionImplBase {
 				return this.push_temporary_box(vm,cast_source,obj);
 			}
 			console.warn('temporary_box not handled in cast',obj);
-			throw 1;
+			throw new Error("1");
 		}
 		if(obj?.type==='object_box') {
 			if(cast_source==='object_index') {
@@ -525,17 +525,17 @@ class InstructionCastImpl extends InstructionImplBase {
 				// return this.push_box(vm, cast_source, obj.value);
 			}
 			console.warn('box does not contain a function',obj);
-			throw 1;
+			throw new Error("1");
 		}
 		if(obj?.type) {
 			console.warn('unk box',obj);
-			throw 1;
+			throw new Error("1");
 		}
 		if(typeof obj!=='object'&&typeof obj!=='function') {
-			throw 1;
+			throw new Error("1");
 		}
 		if(obj===null) {
-			throw 1;
+			throw new Error("1");
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 		this.push_box(vm,cast_source,obj);
@@ -785,10 +785,10 @@ class InstructionAppendImpl extends InstructionImplBase {
 			console.log(target,append_obj,vm.stack.slice());
 			throw new Error("Element target not object");
 		}
-		if(append_obj===null) throw 1;
-		if(target===null) throw 1;
-		if(!(append_obj.type==='instance_box'&&append_obj.instance_type==='Node')) throw 1;
-		if(!(target.type==='instance_box'&&target.instance_type==='Node')) throw 1;
+		if(append_obj===null) throw new Error("1");
+		if(target===null) throw new Error("1");
+		if(!(append_obj.type==='instance_box'&&append_obj.instance_type==='Node')) throw new Error("1");
+		if(!(target.type==='instance_box'&&target.instance_type==='Node')) throw new Error("1");
 		if(append_obj.from!=='create') console.warn('append_obj not user created',append_obj);
 		target.value.appendChild(append_obj.value);
 	}
@@ -1870,11 +1870,11 @@ class AsyncFunctionBoxImpl {
 	await_type='Box';
 	/** @returns {Box} */
 	wrap_call() {
-		throw 1;
+		throw new Error("1");
 	}
 	/** @returns {this|null} */
 	as_type() {
-		throw 1;
+		throw new Error("1");
 	}
 	/** @arg {(...a: Box[])=>Promise<Box>} value */
 	constructor(value) {
@@ -2339,8 +2339,8 @@ class AutoBuy {
 		}); this.dom_pre_init();
 	}
 	async async_pre_init() {
-		if(!this.background_audio) throw 1;
-		if(!(this.background_audio instanceof HTMLAudioElement)) throw 1;
+		if(!this.background_audio) throw new Error("1");
+		if(!(this.background_audio instanceof HTMLAudioElement)) throw new Error("1");
 		x: try {
 			return await this.background_audio.play();
 		} catch(e) {

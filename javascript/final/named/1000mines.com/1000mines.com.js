@@ -204,8 +204,8 @@ function main() {
 				}
 			}
 			function __add_set() {
-				if(!('o' in x)) throw 1;
-				if(!(x.o instanceof Object)) throw 1;
+				if(!('o' in x)) throw new Error("1");
+				if(!(x.o instanceof Object)) throw new Error("1");
 				for(let c of Object.keys(x.o)) {
 					let v=x.o[c];
 					if(!x.st.has(v)) {
@@ -344,7 +344,7 @@ function main() {
 			{
 				let game_ctrl=document.querySelector('#control');
 				if(!game_ctrl) throw new Error("missing element with id=control");
-				if(!w.jQuery) throw 1;
+				if(!w.jQuery) throw new Error("1");
 				/*G:event expando{typeof T is Y;expando:string}*/
 				x.f=game_ctrl[w.jQuery.G.expando].events.mouseup[0].handler;
 			}
@@ -397,17 +397,17 @@ function main() {
 					let m=null;
 					if(e[0].match(/ /)) {
 						let m=e.match(/^[ ]+/);
-						if(!m) throw 1;
+						if(!m) throw new Error("1");
 						jsfout.push(m[0]);
 					}
 					if(e[0].match(/\n/)) {
 						m=e.match(/^[\n]+/);
-						if(!m) throw 1;
+						if(!m) throw new Error("1");
 						jsfout.push(m[0]);
 					}
 					if(e[0].match(/\t/)) {
 						m=e.match(/^[\t]+/);
-						if(!m) throw 1;
+						if(!m) throw new Error("1");
 						jsfout.push(m[0]);
 					}
 					if(m) {
@@ -509,7 +509,7 @@ function main() {
 							break;
 						} else if(jsfilt.length>1) {
 							let nx=jsfilt.pop();
-							if(!nx) throw 1;
+							if(!nx) throw new Error("1");
 							js_out.push(...jsfilt);
 							jsfilt=[nx];
 						} else if(jsfilt.length==1) {
@@ -557,11 +557,11 @@ function main() {
 								jsfilt=[wt];
 								fe_block(js_parse_block_enter);
 								let last=jsfilt.pop();
-								if(!last) throw 1;
+								if(!last) throw new Error("1");
 								js_tmp.push(last);
 								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()]);
 								last=js_tmp.pop();
-								if(!last) throw 1;
+								if(!last) throw new Error("1");
 								jsfilt.push(last);
 								js_tmp=jsfilt;
 								[jsfout,jsfilt]=parse_stack.pop();
@@ -610,11 +610,11 @@ function main() {
 								jsfilt=[wt];
 								fe_block(js_parse_block_enter);
 								let last=jsfilt.pop();
-								if(!last) throw 1;
+								if(!last) throw new Error("1");
 								js_tmp.push(last);
 								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()]);
 								last=js_tmp.pop();
-								if(!last) throw 1;
+								if(!last) throw new Error("1");
 								jsfilt.push(last);
 								js_tmp=jsfilt;
 								[jsfout,jsfilt]=parse_stack.pop();
@@ -671,11 +671,11 @@ function main() {
 										cur_idx+=cur[0].length;
 										cs=wt.slice(cur_idx);
 										cur=cs.match(/((.|[\n])+?)?\*\//);
-										if(!cur) throw 1;
+										if(!cur) throw new Error("1");
 										cur_idx+=cur[0].length;
 										cs=wt.slice(cur_idx);
 										cur=cs.match(block_match_rx);
-										if(!cur) throw 1;
+										if(!cur) throw new Error("1");
 									}
 									while(cur[2]=='{') {
 										[cur_idx,]=parse_bracket_down(cur_idx+cur[0].length-1);
@@ -691,7 +691,7 @@ function main() {
 									cur_idx=cur_idx+cur[0].length;
 									return [cur_idx,skip_len];
 								}
-								throw 1;
+								throw new Error("1");
 							}
 							let [len,skip_len]=parse_bracket_down(0);
 							let ret=[];
@@ -802,7 +802,7 @@ function main() {
 						cs.push(e);
 						let ix2=ss_sp;
 						let isp=unwrap_pop(s_stk);
-						if(!isp) throw 1;
+						if(!isp) throw new Error("1");
 						ss_sp=isp;
 						if(ss_sp=='if') {
 							cs=unwrap_pop(stk);
@@ -938,7 +938,7 @@ function main() {
 				let bd=ret.slice(bs+1,be);
 				let sc=bd[0].split(',');
 				let __nx_name=sc[2].split(/[()]/)[0];
-				if(!__nx_name) throw 1;
+				if(!__nx_name) throw new Error("1");
 				x.f=x.o[__nx_name];
 			}
 			__run(x.f,x.__all_vars);
@@ -973,7 +973,7 @@ function main() {
 			function to_expando_key(v) {
 				return v.endsWith("1");
 			}
-			if(!to_expando_key(expando_str)) throw 1;
+			if(!to_expando_key(expando_str)) throw new Error("1");
 			let jq_dom_data=dom[expando_str];
 			x.__name_list=[];
 			x.f=jq_dom_data.events.click[0].handler;
@@ -991,16 +991,16 @@ function main() {
 				};
 			}
 			let real_return;
-			if(typeof ret==='symbol') throw 1;
-			if(!('m' in ret)) throw 1;
+			if(typeof ret==='symbol') throw new Error("1");
+			if(!('m' in ret)) throw new Error("1");
 			let __m=ret.m;
-			if(!__m) throw 1;
-			if(!(typeof __m==='object')) throw 1;
-			if(!('click' in __m)) throw 1;
-			if(!(__m.click instanceof Function)) throw 1;
+			if(!__m) throw new Error("1");
+			if(!(typeof __m==='object')) throw new Error("1");
+			if(!('click' in __m)) throw new Error("1");
+			if(!(__m.click instanceof Function)) throw new Error("1");
 			/** @template {Function} T @arg {T} x @returns {x is (...x:any[])=>any} */
 			function as_any_func(x) {return true;}
-			if(!as_any_func(__m.click)) throw 1;
+			if(!as_any_func(__m.click)) throw new Error("1");
 			x.f=__m.click;
 			let o=x.o;
 			x.u(x.f);
@@ -1118,7 +1118,7 @@ function main() {
 				if(n=='y')
 					q=s;
 				f=function(/** @type {number} */ x,/** @type {number} */ y) {
-					if(!f) throw 1;
+					if(!f) throw new Error("1");
 					if(__m.opened.field[x+'x'+y]==0) {
 						return f(x+e,y+q);
 					}
