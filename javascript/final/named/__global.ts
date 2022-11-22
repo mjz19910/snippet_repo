@@ -1,12 +1,6 @@
 
-export {};
-
-import {CustomInputMatcherKeepspace} from "./CustomInputMatcherKeepspace.js";
-
-export type KeepList=[
-	CustomInputMatcherKeepspace.Keep,
-];
-
+export {Holder} from "./Holder.js";
+export {KeepList} from "./KeepList.js";
 
 // lunar-atoms-tycoon.js
 declare global {

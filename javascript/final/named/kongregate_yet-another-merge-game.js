@@ -3,6 +3,11 @@
 v1 (spl-f): snippet_repo/javascript/final/kongregate_yet-another-merge-game.js
 */
 function main() {
+	/** @type {import("./__global.js").Holder} */
+	let holder={
+		use(){}
+	};
+	holder.use();
 	var fnlist=[];
 	var fnname=[];
 	{
