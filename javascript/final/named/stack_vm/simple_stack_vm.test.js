@@ -8,8 +8,8 @@ holder.use();
 
 class EventHandlerVMDispatch extends SimpleStackVM {
 	/**
-	 * @param {(string | number)[][]} instructions
-	 * @param {{ background_audio: { play(): void; }; }} target_obj
+	 * @param {{background_audio: {play(): void;};}} target_obj
+	 * @param {(["this"] | ["push", ...string[]] | ["get"] | ["call", number] | ["drop"])[]} instructions
 	 */
 	constructor(instructions,target_obj) {
 		super(instructions);
@@ -30,7 +30,8 @@ const test_obj={
 		}
 	}
 };
-const handler_test=new EventHandlerVMDispatch([
+/** @type {(['this']|['push',...string[]]|['get']|['call',number]|['drop'])[]} */
+let instruction_list=[
 	['this'],
 	['push','target_obj'],
 	['get'],
@@ -39,5 +40,6 @@ const handler_test=new EventHandlerVMDispatch([
 	['push','play'],
 	['call',0],
 	['drop']
-],test_obj);
+];
+const handler_test=new EventHandlerVMDispatch(instruction_list,test_obj);
 handler_test.handleEvent({});

@@ -6,7 +6,7 @@ holder.use();
 
 export class SimpleStackVM {
 	/**
-	 * @param {any} instructions
+	 * @param {(["this"] | ["push", ...string[]] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['push_args']|['push_window']|['breakpoint'])[]} instructions
 	 */
 	constructor(instructions) {
 		this.instructions=instructions;
@@ -23,7 +23,7 @@ export class SimpleStackVM {
 		this.running=false;
 	}
 	/**
-	 * @param {any[] | this | (Window & typeof globalThis)} value
+	 * @param {{}|string} value
 	 */
 	push(value) {
 		this.stack.push(value);
@@ -38,11 +38,11 @@ export class SimpleStackVM {
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
 			let cur_instruction=this.instructions[this.instruction_pointer];
-			let [cur_opcode]=cur_instruction;
-			switch(cur_opcode) {
+			switch(cur_instruction[0]) {
 				case 'push'/*Stack*/: {
-					for(let i=1;i<cur_instruction.length;i++) {
-						let item=cur_instruction[i];
+					let [,...args]=cur_instruction;
+					for(let i=0;i<args.length;i++) {
+						let item=args[i];
 						this.push(item);
 					}
 					break;
@@ -96,7 +96,7 @@ export class SimpleStackVM {
 					break;
 				}
 				default/*Debug*/: {
-					console.log('unk opcode',cur_opcode);
+					console.log('unk opcode',cur_instruction[0]);
 					throw new Error("halt");
 				}
 			}
