@@ -11,64 +11,6 @@ function main() {
 	 * @type {any[]}
 	 */
 	var fnname=[];
-	function execute(/** @type {number} */ t, /** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec, /** @type {((arg0: any) => void) | undefined} */ post_exec) {
-		var r_fnname=fnname[t];
-		var func=fnlist[t];
-		try {
-			var sf=func.toString();
-			if(sf.indexOf("/*arg_start*/")>-1) {
-				let eval_func;
-				{
-					var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
-					var no_head=func_split[4].trim().slice(1).trim().slice(1);
-					var body=no_head.slice(0,no_head.length-2);
-					var is_strict;
-					var is_strict_p1=body.split('"use strict"');
-					is_strict=is_strict_p1.length>1;
-					if(is_strict) {
-						body=is_strict_p1[1].trim();
-					}
-					var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
-					let src_url='//'+'# sourceURL='+r_fnname;
-					let func_str;
-					if(is_strict) {
-						func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
-						eval_func=new Function(args,func_str);
-					} else {
-						func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
-						eval_func=new Function(args,func_str);
-					}
-					if('mc' in window&&window.mc instanceof MessageChannel) {
-						let mc=window.mc;
-						mc.port2.onmessage=function() {};
-						mc.port2.close();
-						mc.port1.onmessage=function() {};
-						mc.port1.close();
-						delete window.mc;
-						if(typeof mc!='undefined') {
-							window.mc=undefined;
-						}
-					}
-					console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
-				}
-				if(eval_func) {
-					eval_func(func);
-				}
-				let ret=eval_func();
-				if(post_exec)
-					post_exec(ret);
-				return ret;
-			} else {
-				if(pre_exec) {
-					pre_exec(func);
-				}
-				let ret=func();
-				if(post_exec)
-					post_exec(ret);
-				return ret;
-			}
-		} finally {}
-	}
 	class stt {
 		static #unused=this.#init();
 		static #init() {
@@ -96,6 +38,92 @@ function main() {
 		}
 	};
 	class curTy extends stt {
+		/** @type {(undefined[])|null} */
+		argv=null;
+		px_fn(/** @type {{ argv: any[]; }} */ fn) {
+			if(!this.argv) throw new Error("1");
+			fn.argv=this.argv;
+		}
+		/**
+		 * @param {undefined[]} e
+		 */
+		do_cur(...e) {
+			var i;
+			this.argv=e;
+			if(cur.rx_lx) {
+				i=cur.names.indexOf(cur.rx_lx);
+			} else {
+				i=cur.names.indexOf(cur.n);
+			}
+			function px_fn(/** @type {{ argv: any[]; }} */ fn) {
+				fn.argv=e;
+			}
+			var _result=cur.execute(i,px_fn);
+			return _result;
+		}
+		/**
+		 * @param {number} t
+		 * @param {{ (fn: { argv: any[]; }): void; (arg0: any): void; }} pre_exec
+		 * @param {((arg0: any) => void) | undefined} [post_exec]
+		 */
+		execute(t,pre_exec,post_exec) {
+			var r_fnname=fnname[t];
+			var func=this.funcs[t];
+			try {
+				var sf=func.toString();
+				if(sf.indexOf("/*arg_start*/")>-1) {
+					let eval_func;
+					{
+						var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
+						var no_head=func_split[4].trim().slice(1).trim().slice(1);
+						var body=no_head.slice(0,no_head.length-2);
+						var is_strict;
+						var is_strict_p1=body.split('"use strict"');
+						is_strict=is_strict_p1.length>1;
+						if(is_strict) {
+							body=is_strict_p1[1].trim();
+						}
+						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
+						let src_url='//'+'# sourceURL='+r_fnname;
+						let func_str;
+						if(is_strict) {
+							func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
+							eval_func=new Function(args,func_str);
+						} else {
+							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
+							eval_func=new Function(args,func_str);
+						}
+						if('mc' in window&&window.mc instanceof MessageChannel) {
+							let mc=window.mc;
+							mc.port2.onmessage=function() {};
+							mc.port2.close();
+							mc.port1.onmessage=function() {};
+							mc.port1.close();
+							delete window.mc;
+							if(typeof mc!='undefined') {
+								window.mc=undefined;
+							}
+						}
+						console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
+					}
+					if(eval_func) {
+						eval_func(func);
+					}
+					let ret=eval_func();
+					if(post_exec)
+						post_exec(ret);
+					return ret;
+				} else {
+					if(pre_exec) {
+						pre_exec(func);
+					}
+					let ret=func();
+					if(post_exec)
+						post_exec(ret);
+					return ret;
+				}
+			} finally {}
+		}
 		value=null;
 		/**
 		 * @param {any} name
@@ -103,10 +131,10 @@ function main() {
 		 */
 		add_func(name,func) {
 			var y=this.funcs.push(func);
-			if(fnname.indexOf(name)>-1) {
+			if(this.names.indexOf(name)>-1) {
 				throw SyntaxError("Name conflict");
 			}
-			var x=fnname.push(name);
+			var x=this.names.push(name);
 			func.user_run_name=name;
 			if(x!=y) {
 				throw SyntaxError("unbalanced function or name number");
@@ -555,22 +583,6 @@ function main() {
 		var result=run_sync_code();
 		return result;
 	};
-	/**
-	 * @param {undefined[]} e
-	 */
-	function do_cur(...e) {
-		var i;
-		if(cur.rx_lx) {
-			i=fnname.indexOf(cur.rx_lx);
-		} else {
-			i=fnname.indexOf(cur.n);
-		}
-		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
-			fn.argv=e;
-		};
-		var _result=execute(i,px_fn);
-		return _result;
-	}
 	let ret;
 	let debug_flag=false;
 	if(top!==window) {
