@@ -3,13 +3,9 @@
 v1 (cur): snippet_repo/javascript/final/ret_do_cur_debug_api/ret_do_cur_debugApi.js
 */
 function main() {
-	/**
-	 * @type {any[]}
-	 */
+	/** @type {any[]} */
 	var fnlist=[];
-	/**
-	 * @type {any[]}
-	 */
+	/** @type {any[]} */
 	var fnname=[];
 	/**
 	 * @param {number} t
