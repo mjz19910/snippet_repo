@@ -3,15 +3,8 @@
 v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
 */
 function main() {
-
 	/** @arg {any} v */
 	function any(v){return v;}
-	class stt {
-		static _f() {}
-		static _n="<empty>";
-		static n_on=true;
-		static f_on=true;
-	}
 	class CustomInputMatcher {
 		/**
 		 * @param {any} t_needle
@@ -28,7 +21,7 @@ function main() {
 			return this.tr;
 		}
 	}
-	class curTy extends stt {
+	class curTy {
 		/** @type {(undefined[])|null} */
 		argv=null;
 		/** @type {string|CustomInputMatcher|null} */
