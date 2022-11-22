@@ -17,11 +17,6 @@ declare global {
 	var debugApi: DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
 
-	interface DebugAPI {
-		asyncExecuteEval(gameiframe: any,_function: () => number): void;
-		asyncExecuteFunction(top: Window|null,function_: any): void;
-	}
-
 	type SymbolIndexable={
 		[x: symbol]: any;
 	}
@@ -87,4 +82,15 @@ declare global {
 	}
 	var cint:ReturnType<typeof setTimeout>|undefined;
 	var citv:ReturnType<typeof setInterval>|undefined;
+}
+
+class DebugAPI {
+	asyncExecuteEval(gameiframe: any,function_: () => number): void {
+		gameiframe;
+		function_;
+	};
+	asyncExecuteFunction(top: Window|null,function_: any): void {
+		top;
+		function_;
+	};
 }
