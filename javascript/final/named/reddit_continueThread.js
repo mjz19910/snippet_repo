@@ -11,6 +11,10 @@ function main() {
 	var fnlist=[];
 	var fnname=[];
 	{
+		/**
+		 * @param {any} name
+		 * @param {{ user_run_name: any; }} func
+		 */
 		function add_func(name,func) {
 			var y=fnlist.push(func);
 			if(fnname.indexOf(name)>-1) {
@@ -23,7 +27,7 @@ function main() {
 			}
 			return x;
 		}
-		var execute=function(t,pre_exec,post_exec) {
+		var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
 			var r_fnname=fnname[t];
 			var func=fnlist[t];
 			try {
@@ -92,6 +96,10 @@ function main() {
 			static f_on = true
 		})`);
 		window.CustomInputMatcher=class {
+			/**
+			 * @param {any} t_needle
+			 * @param {any} t_string_getter
+			 */
 			constructor(t_needle,t_string_getter) {
 				this.ts_get=t_string_getter;
 				this.tr=t_needle;
@@ -164,97 +172,99 @@ function main() {
 	}
 	cur.n="reddit";
 	cur.f=function() {
-		//x: {
-		//	break x
-		//	/* cspell: disable-next-line */
-		//	document.querySelector("[id^='continueThread']").__reactInternalInstance$fh55rrshmcw
-		//}
 		var dom=document.body.children["2x-container"];
 		dom=dom._reactRootContainer._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode;
 		var do_ar=Object.getOwnPropertyNames(dom);
-		var react_ii=do_ar.find(e => e.indexOf("__reactInternalInstance")==0);
-		window.react_ii=react_ii
-			(function(f) {
-				f(f);
-			}
-			)(async function(f) {
-				console.log('en');
-				var get_dom=() => document.querySelector("[id^='continueThread']");
-				var dom=get_dom();
-				let count=0;
-				if(!dom) {
-					dom=await new Promise(function(a) {
+		var react_ii_=do_ar.find(e => e.indexOf("__reactInternalInstance")==0);
+		if(!react_ii_) throw 1;
+		window.react_ii=react_ii_;
+		let react_ii=react_ii_;
+		/** @param {any} x */
+		function any(x) {return x;}
+		(function(/** @type {(arg0: any) => void} */ f) {
+			f(f);
+		}
+		)(async function(/** @type {(arg0: any) => number | undefined} */ f) {
+			console.log('en');
+			var get_dom=() => document.querySelector("[id^='continueThread']");
+			var dom=get_dom();
+			let count=0;
+			if(!dom) {
+				dom=await new Promise(function(a,r) {
+					if(!react_ii) return r(new Error("missing react_ii"));
+					count++;
+					setTimeout(function t() {
+						if(!react_ii) return r(new Error("missing react_ii"));
+						var c_dom=get_dom();
+						if(c_dom)
+							return a(c_dom);
 						count++;
-						setTimeout(function t() {
-							var c_dom=get_dom();
-							if(c_dom) {
-								a(c_dom);
+						if(count>45) {
+							var want=[...any(document).all].filter(e => e[react_ii]).map(e => e[react_ii]).filter(e => e.key=='commentsPaneWrapper').map(e => e);
+							if(want.length==0) {
+								window.cint=setTimeout(t,33);
 								return;
 							}
-							count++;
-							if(count>45) {
-								var want=[...document.all].filter(e => e[react_ii]).map(e => e[react_ii]).filter(e => e.key=='commentsPaneWrapper').map(e => e);
-								if(want.length==0) {
-									window.cint=setTimeout(t,33);
-									return;
-								}
-								var w2=want[0].stateNode.querySelectorAll('[target=_blank][rel]:not([id])');
-								var a_link=w2.item(w2.length-1);
-								a_link.target='';
-								a_link.rel='';
-								a_link.href=a_link.href.replace("old.reddit.com","reddit.com");
-								a_link.click();
-								window.cint=setTimeout(t,12000);
-								return;
-							}
-							window.cint=setTimeout(t,33);
-						},33);
-					}
-					);
-					console.log('wc',count);
-				}
-				var do_ar=Object.getOwnPropertyNames(dom);
-				var root_new=dom[react_ii];
-				window.root_new=root_new;
-				function get_inner() {
-					try {
-						return root_new.child.sibling.child.child.child.child.child.child.child.child.child.child.child.stateNode;
-					} catch {}
-					return null;
-				}
-				count=0;
-				var n_dom=await new Promise(function(a) {
-					function t() {
-						var c_dom=get_inner();
-						if(c_dom) {
-							a(c_dom);
+							var w2=want[0].stateNode.querySelectorAll('[target=_blank][rel]:not([id])');
+							var a_link=w2.item(w2.length-1);
+							a_link.target='';
+							a_link.rel='';
+							a_link.href=a_link.href.replace("old.reddit.com","reddit.com");
+							a_link.click();
+							window.cint=setTimeout(t,12000);
 							return;
 						}
-						count++;
 						window.cint=setTimeout(t,33);
-					}
-					t();
+					},33);
 				}
 				);
-				console.log('wb',count);
-				if(n_dom) {
-					console.log('ts');
-					return setTimeout(() => {
-						dom=get_dom();
-						do_ar=Object.getOwnPropertyNames(dom);
-						root_new=dom[react_ii];
-						window.root_new=root_new;
-						n_dom=get_inner();
-						n_dom.click();
-						window.inner_dom=n_dom;
-						window.cint=setTimeout(function() {
-							window.cint=f(f);
-						},1500);
+				console.log('wc',count);
+			}
+			if(!dom) throw 1;
+			var do_ar=Object.getOwnPropertyNames(dom);
+			console.log(do_ar);
+			var root_new=dom[react_ii];
+			window.root_new=root_new;
+			function get_inner() {
+				try {
+					return root_new.child.sibling.child.child.child.child.child.child.child.child.child.child.child.stateNode;
+				} catch {}
+				return null;
+			}
+			count=0;
+			var n_dom=await new Promise(function(a) {
+				function t() {
+					var c_dom=get_inner();
+					if(c_dom) {
+						a(c_dom);
+						return;
 					}
-						,33);
+					count++;
+					window.cint=setTimeout(t,33);
 				}
+				t();
+			}
+			);
+			console.log('wb',count);
+			if(n_dom) {
+				console.log('ts');
+				return setTimeout(() => {
+					dom=get_dom();
+					if(!dom) throw 1;
+					do_ar=Object.getOwnPropertyNames(dom);
+					root_new=dom[react_ii];
+					window.root_new=root_new;
+					n_dom=get_inner();
+					n_dom.click();
+					window.inner_dom=n_dom;
+					window.cint=setTimeout(function() {
+						window.cint=f(f);
+					},1500);
+				}
+					,33);
+			}
 
-			});
+		});
 		x: {
 			let maybe=true;
 			if(maybe) {
@@ -265,6 +275,9 @@ function main() {
 		var do_ar=Object.getOwnPropertyNames(dom);
 		var root_new=dom[do_ar.find(e => e.indexOf("__reactInternalInstance")==0)];
 		let refs=[];
+		/**
+		 * @param {any[]} r
+		 */
 		function add_root(r) {
 			if(typeof root_new!='undefined') {
 				r.push(root_new);
@@ -288,47 +301,50 @@ function main() {
 				rar.push(i);
 			}
 			console.log(rar.length);
+			/** @arg {[string, PropertyDescriptor]} arg0 @returns {['get_set', PropertyDescriptor]|['refs',string,number]|['or',string,any]} */
+			function map_own_properties([n,e]) {
+				if(e.get||e.set) {
+					let n={};
+					if(e.get)
+						n.get=e.get;
+					if(e.set)
+						n.set=e.set;
+					return ['get_set',n];
+				}
+				var v=e.value;
+				var f=false;
+				/** @param {boolean} b */
+				function or(b) {f=f||b;}
+				or(typeof v=='number');
+				or(typeof v=='function');
+				or(typeof v=='string');
+				or(v===null);
+				or(v===true||v===false);
+				or(v===undefined);
+				or(v instanceof Node);
+				if(f) return ['or',n,v];
+				if(refs.indexOf(v)==-1) {
+					refs.push(v);
+				}
+				return ["refs",n,refs.indexOf(v)];
+			}
 			for(let i of rar) {
 				if(typeof i=='string') {
 					continue;
 				}
-				s_refs.push(Object.entries(Object.getOwnPropertyDescriptors(i)).map(([n,e]) => {
-					if(e.get||e.set) {
-						var n={};
-						if(e.get)
-							n.get=e.get;
-						if(e.set)
-							n.set=e.set;
-						return [n,n];
-					}
-					var v=e.value;
-					var f=false;
-					function or(b) {
-						f=f||b;
-					}
-					or(typeof v=='number');
-					or(typeof v=='function');
-					or(typeof v=='string');
-					or(v===null);
-					or(v===true||v===false);
-					or(v===undefined);
-					or(v instanceof Node);
-					if(f) {
-						return [n,v];
-					}
-					refs.indexOf(v)==-1? refs.push(v):0;
-					return {
-						n: n,
-						r: refs.indexOf(v)
-					};
-				}
-				));
+				let own_properties=Object.getOwnPropertyDescriptors(i);
+				let own_properties_entries=Object.entries(own_properties);
+				let result=own_properties_entries.map(map_own_properties);
+				s_refs.push(result);
 			}
 			console.log(j,s_refs.length);
 		}
-		window.sr=s_refs;
+		window.s_refs=s_refs;
 		return refs;
 	};
+	/**
+	 * @param {undefined[]} e
+	 */
 	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
@@ -336,7 +352,7 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(fn) {
+		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
 			fn.argv=e;
 		};
 		var _result=execute(i,px_fn);

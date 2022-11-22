@@ -67,3 +67,14 @@ declare global {
 		(arg0: ()=>void): void;
 	}
 }
+
+// reddit_continueThread.js
+declare global {
+	interface Window {
+		react_ii: string;
+		root_new: any;
+		inner_dom: any;
+		refs: any[];
+		s_refs: (["get_set", PropertyDescriptor] | ["refs", string, number] | ["or", string, any])[][]|undefined;
+	}
+}
