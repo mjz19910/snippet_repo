@@ -85,90 +85,93 @@ function main() {
 		} finally {}
 		return;
 	}
-	{
-		class stt {
-			static #unused = this.#init()
-			static #init(){
-				this.#unused;
-			}
-			static _f(){}
-			static _n = "<empty>"
-			static n_on = true
-			static f_on = true
+	class stt {
+		static #unused=this.#init();
+		static #init() {
+			this.#unused;
 		}
-		class CustomInputMatcher {
-			constructor(t_needle,t_string_getter) {
-				this.ts_get=t_string_getter;
-				this.tr=t_needle;
-			}
-			get test_string() {
-				return this.ts_get();
-			}
-			get test_needle() {
-				return this.tr;
-			}
+		_f() {}
+		_n="<empty>";
+		n_on=true;
+		f_on=true;
+	}
+	class CustomInputMatcher {
+		constructor(t_needle,t_string_getter) {
+			this.ts_get=t_string_getter;
+			this.tr=t_needle;
 		}
-		var cur=class extends stt {
-			static f_on = true
-			static n_on = true
-			static get f() {
-				return this._f;
+		get test_string() {
+			return this.ts_get();
+		}
+		get test_needle() {
+			return this.tr;
+		}
+	}
+	class cur_ extends stt {
+		value=null;
+		f_on=true;
+		n_on=true;
+		/** @type {string|CustomInputMatcher|null} */
+		_ln=null;
+		rx_lx=null;
+		get f() {
+			return this._f;
+		}
+		set f(f) {
+			let cur=this._ln;
+			this._lf=f;
+			if(fnlist.indexOf(this._lf)==-1) {
+				add_func(this._ln,this._lf);
 			}
-			static set f(f) {
-				let cur=this._ln;
-				this._lf=f;
-				if(fnlist.indexOf(this._lf)==-1) {
-					add_func(this._ln,this._lf);
-				}
-				if(cur instanceof CustomInputMatcher&&typeof cur.test_string=='string') {
-					let custom_str=cur.test_string;
-					let needle=cur.test_needle;
-					if(custom_str.match(needle)==null) {
-						this._f=f;
-						return;
-					}
-				}
-				if(this.f_on) {
-					this.f_on=false;
+			if(cur instanceof CustomInputMatcher&&typeof cur.test_string=='string') {
+				let custom_str=cur.test_string;
+				let needle=cur.test_needle;
+				if(custom_str.match(needle)==null) {
 					this._f=f;
+					return;
 				}
 			}
-			static get n() {
-				return this._n;
+			if(this.f_on) {
+				this.f_on=false;
+				this._f=f;
 			}
-			static set n(n) {
-				let cur=n;
-				if(cur instanceof CustomInputMatcher) {
-					let custom_str=cur.test_string;
-					let m_needle=cur.test_needle;
-					if(m_needle instanceof RegExp&&typeof custom_str=='string') {
-						let m_match=custom_str.match(m_needle);
-						if(m_match==null) {
-							this._ln=n;
-							return;
-						} else if(this.rx_off===undefined) {
-							this.rx_off=true;
-							this.rx_lx=n;
-						}
-					}
-					if(typeof m_needle=='string'&&custom_str!=m_needle) {
+		}
+		get n() {
+			return this._n;
+		}
+		set n(n) {
+			let cur=n;
+			if(cur instanceof CustomInputMatcher) {
+				let custom_str=cur.test_string;
+				let m_needle=cur.test_needle;
+				if(m_needle instanceof RegExp&&typeof custom_str=='string') {
+					let m_match=custom_str.match(m_needle);
+					if(m_match==null) {
 						this._ln=n;
 						return;
+					} else if(this.rx_off===undefined) {
+						this.rx_off=true;
+						this.rx_lx=n;
 					}
 				}
-				this._ln=n;
-				if(this.n_on) {
-					this.n_on=false;
-					this._n=n;
+				if(typeof m_needle=='string'&&custom_str!=m_needle) {
+					this._ln=n;
+					return;
 				}
 			}
-		};
-		let sym=Symbol();
-		var cur__class={[sym]: cur};
-		cur.self_sym=sym;
-		cur.funcs=fnlist;
-		cur.names=fnname;
-	}
+			this._ln=n;
+			if(this.n_on) {
+				this.n_on=false;
+				this._n=n;
+			}
+		}
+	};
+	let sym=Symbol();
+	var cur__class={[sym]: cur_};
+	cur_.self_sym=sym;
+	cur_.funcs=fnlist;
+	cur_.names=fnname;
+	var cur=new cur_;
 	if(/youtube.com/) {
 		cur.n=new CustomInputMatcher(/youtube.com/,() => location.origin);
 		let bp_class=class {
