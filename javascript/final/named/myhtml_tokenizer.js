@@ -1,6 +1,6 @@
 /* cspell:words
 --- version_list item 1 ---
-v1 (old-s): snippet_repo/javascript/final/myhtml_tokenizer.js
+v1 (cur): snippet_repo/javascript/final/myhtml_tokenizer.js
 */
 {
 	/** @type {import("./__global.js").Holder} */
