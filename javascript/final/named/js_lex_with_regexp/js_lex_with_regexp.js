@@ -419,9 +419,7 @@ function main() {
 				};
 			}
 		}
-		/**
-		 * @param {JSLexState} state
-		 */
+		/** @param {JSLexState_x} state */
 		function func_cont_js_lex(state) {
 			let spl_parse=js_parse_regexp;
 			let str=state.m_l_str;
