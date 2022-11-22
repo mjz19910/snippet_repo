@@ -345,7 +345,7 @@ function main() {
 		if(debug_flag) console.log('restart on top frame');
 		ret=debugApi.asyncExecuteFunction(top,main);
 	} else {
-		ret=do_cur();
+		ret=cur.do_cur();
 	}
 	if(ret instanceof Promise) {
 		ret.then(() => void 0).catch(e => console.error(e));
