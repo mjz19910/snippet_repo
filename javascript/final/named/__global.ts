@@ -5,8 +5,8 @@ declare global {
 		CustomInputMatcher: typeof CustomInputMatcher;
 		debugApi: {};
 		__ret: {};
-		event_info;
 	}
+
 	var debugApi: Impl.DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
 
@@ -25,14 +25,6 @@ declare global {
 	interface Document {
 		gameiframe: any;
 	}
-
-	var EventTarget: {
-		prototype: EventTarget;
-		new(): EventTarget;
-		events: any;
-		syms: any;
-		state;
-	};
 }
 namespace X {
 	export class CustomInputMatcher {
@@ -60,6 +52,7 @@ declare global {
 declare global {
 	var DebugAPI: typeof Impl.DebugAPI;
 }
+
 namespace Impl {
 	export class DebugAPI {
 		asyncExecuteEval(gameiframe: any,function_: () => number): void {
@@ -70,5 +63,25 @@ namespace Impl {
 			top;
 			function_;
 		};
+	}
+}
+
+// lunar-atoms-tycoon.js
+declare global {
+	interface Window {
+		event_info;
+		x2;
+	}
+
+	var EventTarget: {
+		prototype: EventTarget;
+		new(): EventTarget;
+		events: any;
+		syms: any;
+		state;
+	};
+
+	interface FunctionConstructor {
+		events;
 	}
 }

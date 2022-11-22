@@ -179,6 +179,7 @@ function main() {
 			/*class_scope*/ {
 				t.data_arr.put=function(obj,target,cur) {
 					var nv=cur.slice(1+this.off,cur[this.off]+1);
+					/** @type {any[][]} */
 					var arr_out=[];
 					var cc=-1;
 					for(let i=0;i<nv.length;i++) {
