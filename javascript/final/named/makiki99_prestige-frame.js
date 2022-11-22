@@ -244,9 +244,13 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
+		function px_fn(/** @type {{ argv: any[]; }} */ fn) {
 			fn.argv=e;
-		};
+		}
+		if(i<0) {
+			console.log("no cur function to run");
+			return null;
+		}
 		var _result=execute(i,px_fn);
 		return _result;
 	}
