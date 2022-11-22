@@ -25,7 +25,12 @@ class JSLexState {
 
 declare global {
 	class JSLexState_x {
-
+		constructor(str: string, obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;});
+		obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}|null;
+		m_l_str: string|undefined;
+		lex_chunks: any[];
+		reset_count: boolean;
+		m_at_eof: boolean;
 	}
 }
 
