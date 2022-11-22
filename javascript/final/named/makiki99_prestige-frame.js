@@ -254,11 +254,12 @@ function main() {
 		return _result;
 	}
 	let ret;
+	let debug=false;
 	if(top!==window) {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI;
 		}
-		//console.log('restart on top frame')
+		if(debug) console.log('restart on top frame');
 		ret=debugApi.asyncExecuteFunction(top,main);
 	} else {
 		ret=do_cur();
