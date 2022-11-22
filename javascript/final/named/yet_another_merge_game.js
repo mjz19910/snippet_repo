@@ -162,23 +162,29 @@ function main() {
 		cur.funcs=fnlist;
 		cur.names=fnname;
 	}
+	let do_cur_count;
 	cur.n="yet_another_merge_game";
 	cur.f=function() {
+		if(!('func_log' in Function)) throw 1;
+		if(!(Function.func_log instanceof Array)) throw 1;
 		var lnc;
+		let cf;
+		let fi_ob;
 		if(!Function.func_log) {
 			console.log("Wrong frame");
 			return;
 		}
 		if(Function.func_log.length<3&&typeof cf=='undefined') {
 			console.log("Not called from main.js:633");
-			do_cur.count=8;
+			do_cur_count=8;
+			console.log("cur_count", do_cur_count);
 			return;
 		}
 		if(typeof cf=='undefined') {
 			fi_ob=Function.func_log[2].args;
 			cf=Function.func_log[2].args[0].toString();
 			if(Math.random()>0.4) {
-				do_cur.count++;
+				do_cur_count++;
 			}
 		}
 		fi_ob=Function.func_log[Function.func_log.length-1].args;
@@ -198,6 +204,7 @@ function main() {
 		var t_idx=fs_str.lastIndexOf(String.fromCharCode(123),lnc)-1;
 		var e_js_call=d_idx;
 		console.log(fs_str.slice(t_idx,d_idx));
+		let _log_fn;
 		for(var cc=0;cc<10;cc++) {
 			let cv=fs_str.lastIndexOf(String.fromCharCode(123),t_idx);
 			let c2=fs_str.lastIndexOf(",",t_idx);
@@ -212,7 +219,7 @@ function main() {
 				continue;
 			}
 			if(fs_str.slice(cv-1,d_idx)==",") {
-				var t_idx=fs_str.lastIndexOf(String.fromCharCode(123),d_idx)+1;
+				let t_idx=fs_str.lastIndexOf(String.fromCharCode(123),d_idx)+1;
 				console.log(t_idx,cv+1==t_idx,fs_str.slice(t_idx,oi));
 				if(cv+1==t_idx) {
 					let c1=fs_str.lastIndexOf(String.fromCharCode(123),t_idx-1);
@@ -227,22 +234,19 @@ function main() {
 					};
 					var w_ext={};
 					w_ext._l=function(...a) {
-						if(a.length>0)
-							Array._log("l",...a);
+						if(a.length>0)_log_fn("l",...a);
 						return {
 							v: a
 						};
 					};
 					w_ext._v=function(...a) {
-						if(a.length>0)
-							Array._log("v",...a);
+						if(a.length>0)_log_fn("v",...a);
 						if(a.length==1)
 							return a[0];
 						return a;
 					};
 					w_ext._c=function(...a) {
-						if(a.length>0)
-							Array._log("c",...a);
+						if(a.length>0)_log_fn("c",...a);
 						return {
 							v: a
 						};
@@ -266,9 +270,10 @@ function main() {
 							w_ext[i]=fi_ob[1][i];
 						}
 					}
-					Array.tv=w_ext;
+					let wb_eval
+					// @ts-ignore
 					with(w_ext) {
-						Array._eval=function(s) {
+						wb_eval=function(s) {
 							eval(s);
 						};
 					}
@@ -278,17 +283,16 @@ function main() {
 						try {
 							let events=fs_str.slice(cc-2,end_char);
 							console.log(fs_str.slice(cc-2,end_char+32));
-							Array.s=events;
-							Array._log=(...e) => {
+							_log_fn=(...e) => {
 								console.log(...e);
 							};
-							if(!Array.s.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
+							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
 								debugger;
 							}
-							Array._log("Sl:",Array.s.length);
-							Array._eval(Array.s);
+							_log_fn("Sl:",events.length);
+							wb_eval(events);
 							cf=void 0;
-							if(!Array.s.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
+							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
 								debugger;
 							}
 							break;
