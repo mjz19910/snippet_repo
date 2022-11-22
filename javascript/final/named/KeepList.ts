@@ -1,6 +1,5 @@
-import {CustomInputMatcherKeepspace} from "./CustomInputMatcherKeepspace.js";
-
+import {CustomInputMatcherKeep as CustomInputMatcherKeep} from "./CustomInputMatcherKeep";
 
 export type KeepList=[
-	CustomInputMatcherKeepspace.Keep,
+	CustomInputMatcherKeep.Keep,
 ];

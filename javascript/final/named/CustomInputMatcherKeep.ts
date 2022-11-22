@@ -1,6 +1,6 @@
 import {Impl} from "./Impl";
 
-export namespace CustomInputMatcherKeepspace {
+export namespace CustomInputMatcherKeep {
 	export type Keep=true;
 }
 
