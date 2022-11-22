@@ -1,4 +1,4 @@
-/** @type {import("../__global.js").Holder} */
+/** @type {import("./__global.js").Holder} */
 let holder={
 	use() {}
 };

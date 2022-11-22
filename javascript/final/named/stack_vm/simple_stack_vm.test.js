@@ -1,6 +1,6 @@
 import {SimpleStackVM} from "./simple_stack_vm.js";
 
-/** @type {import("../__global.js").Holder} */
+/** @type {import("./__global.js").Holder} */
 let holder={
 	use() {}
 };
