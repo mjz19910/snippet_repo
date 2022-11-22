@@ -471,7 +471,7 @@ function main() {
 		var result=run_sync_code();
 		return result;
 	};
-	var do_cur=function(...e) {
+	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
 			i=fnname.indexOf(cur.rx_lx);
@@ -483,7 +483,7 @@ function main() {
 		};
 		var _result=execute(i,px_fn);
 		return _result;
-	};
+	}
 	let ret;
 	if(top!==window) {
 		if(window.debugApi==undefined) {

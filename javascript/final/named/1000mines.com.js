@@ -1092,7 +1092,7 @@ function main() {
 	/**@type {{[x: symbol]: typeof st_ext;} & typeof st_ext} */
 	let n_class_x=any(n_class);
 	cur__class[st_ext._ln]=n_class_x;
-	var do_cur=function(...e) {
+	function do_cur(...e) {
 		var i;
 		if(st_ext.rx_lx) {
 			i=fnname.indexOf(st_ext.rx_lx);
@@ -1104,7 +1104,7 @@ function main() {
 		};
 		var _result=execute(i,px_fn);
 		return _result;
-	};
+	}
 	let ret;
 	if(top!==window) {
 		if(window.debugApi==undefined) {

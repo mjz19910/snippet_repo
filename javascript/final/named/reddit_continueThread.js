@@ -108,7 +108,7 @@ function main() {
 				if(fnlist.indexOf(this._lf)==-1) {
 					add_func(this._ln,this._lf)
 				}
-				if(cur instanceof CustomInputMatcher) {
+				if(cur instanceof CustomInputMatcher&&typeof cur.test_string=='string') {
 					let custom_str=cur.test_string
 					let needle=cur.test_needle
 					if(custom_str.match(needle)==null) {
@@ -129,7 +129,7 @@ function main() {
 				if(cur instanceof CustomInputMatcher) {
 					let custom_str=cur.test_string
 					let m_needle=cur.test_needle
-					if(m_needle instanceof RegExp) {
+					if(m_needle instanceof RegExp&&typeof custom_str=='string') {
 						let m_match=custom_str.match(m_needle)
 						if(m_match==null) {
 							this._ln=n
@@ -324,18 +324,18 @@ function main() {
 		window.sr=s_refs
 		return refs
 	}
-	var do_cur=function(...e) {
-		var i
+	function do_cur(...e) {
+		var i;
 		if(cur.rx_lx) {
-			i=fnname.indexOf(cur.rx_lx)
+			i=fnname.indexOf(cur.rx_lx);
 		} else {
-			i=fnname.indexOf(cur.n)
+			i=fnname.indexOf(cur.n);
 		}
 		let px_fn=function(fn) {
-			fn.argv=e
-		}
-		var _result=execute(i,px_fn)
-		return _result
+			fn.argv=e;
+		};
+		var _result=execute(i,px_fn);
+		return _result;
 	}
 	let ret
 	if(top!==window) {

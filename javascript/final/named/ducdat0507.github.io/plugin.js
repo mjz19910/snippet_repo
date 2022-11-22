@@ -127,7 +127,7 @@ function main() {
 				if(fnlist.indexOf(this._lf)==-1) {
 					add_func(this._ln,this._lf);
 				}
-				if(cur instanceof CustomInputMatcher) {
+				if(cur instanceof CustomInputMatcher&&typeof cur.test_string=='string') {
 					let custom_str=cur.test_string;
 					let needle=cur.test_needle;
 					if(typeof custom_str=='string'&&custom_str.match(needle)==null) {
@@ -247,7 +247,7 @@ function main() {
 			}
 		}
 	};
-	var do_cur=function(/** @type {any} */ ...e) {
+	function do_cur(/** @type {any} */ ...e) {
 		var i;
 		if(cur.rx_lx) {
 			i=fnname.indexOf(cur.rx_lx);
@@ -259,7 +259,7 @@ function main() {
 		};
 		var _result=execute(i,px_fn);
 		return _result;
-	};
+	}
 	let ret;
 	if(top!==window) {
 		if(window.debugApi==undefined) {

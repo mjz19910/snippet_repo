@@ -130,7 +130,7 @@ function main() {
 				if(fnlist.indexOf(this._lf)==-1) {
 					add_func(this._ln,this._lf);
 				}
-				if(cur instanceof CustomInputMatcher) {
+				if(cur instanceof CustomInputMatcher&&typeof cur.test_string=='string') {
 					let custom_str=cur.test_string;
 					let needle=cur.test_needle;
 					if(custom_str.match(needle)==null) {
@@ -155,7 +155,7 @@ function main() {
 				if(cur instanceof CustomInputMatcher) {
 					let custom_str=cur.test_string;
 					let m_needle=cur.test_needle;
-					if(m_needle instanceof RegExp) {
+					if(m_needle instanceof RegExp&&typeof custom_str=='string') {
 						let m_match=custom_str.match(m_needle);
 						if(m_match==null) {
 							this._ln=n;
