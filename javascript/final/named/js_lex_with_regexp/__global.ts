@@ -1,5 +1,28 @@
 export {};
 
+class JSLexState {
+	m_l_str: string|undefined;
+	lex_chunks: any[]=[];
+	reset_count: boolean=false;
+	m_at_eof: boolean=false;
+	obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}|null={
+		break_parse:false,
+		eof:false,
+		reset_count:false,
+		nx_len:0,
+		lex_cur:null,
+	};
+	constructor(str: string, obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}) {
+		return {
+			lex_chunks: [],
+			m_l_str: str,
+			reset_count: false,
+			m_at_eof: false,
+			obj,
+		};
+	}
+}
+
 declare global {
 	interface Window {
 		CustomInputMatcher: typeof CustomInputMatcher;
@@ -12,7 +35,7 @@ declare global {
 		find_closed_dn_x: any;
 		find_closed_dn_y: any;
 		dz?: any;
-		__state: any;
+		__state: JSLexState;
 	}
 
 	var debugApi: DebugAPI;
