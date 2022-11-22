@@ -27,7 +27,7 @@ function main() {
 		}
 		return x;
 	}
-	var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
+	function execute(/** @type {number} */ t, /** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec, /** @type {((arg0: any) => void) | undefined} */ post_exec) {
 		var r_fnname=fnname[t];
 		var func=fnlist[t];
 		try {
@@ -85,7 +85,7 @@ function main() {
 			}
 		} finally {}
 		return;
-	};
+	}
 	let stt=eval(`(class {
 		static #unused = this.#init()
 		static #init(){
@@ -198,11 +198,11 @@ function main() {
 			 * @type {{ abort: symbol; error: symbol; success: symbol; failure: symbol; debug: symbol; }}
 			 */
 			sym={
-				abort:Symbol('abort'),
-				error:Symbol('error'),
-				success:Symbol("success"),
-				failure:Symbol("failure"),
-				debug:Symbol("debug"),
+				abort: Symbol('abort'),
+				error: Symbol('error'),
+				success: Symbol("success"),
+				failure: Symbol("failure"),
+				debug: Symbol("debug"),
 			};
 			/**
 			 * @type {number}
@@ -215,7 +215,7 @@ function main() {
 			 */
 			constructor(state) {
 				this.data={
-					ghost_tree:null,
+					ghost_tree: null,
 				};
 				/**
 				 * @type {any[]}
@@ -230,11 +230,11 @@ function main() {
 					this.sym=state.sym;
 				} else {
 					this.sym={
-						abort:Symbol('abort'),
-						error:Symbol('error'),
-						success:Symbol("success"),
-						failure:Symbol("failure"),
-						debug:Symbol("debug"),
+						abort: Symbol('abort'),
+						error: Symbol('error'),
+						success: Symbol("success"),
+						failure: Symbol("failure"),
+						debug: Symbol("debug"),
 					};
 					state.sym=this.sym;
 				}
@@ -260,7 +260,7 @@ function main() {
 					await this.promise;
 					this.clear_root();
 					if(this.next) {
-						await this.next.clear(()=>{
+						await this.next.clear(() => {
 							console.log('prev clear done');
 						});
 						/**
@@ -570,7 +570,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI;
 		}
-		if(debug_flag) console.log('restart on top frame')
+		if(debug_flag) console.log('restart on top frame');
 		ret=debugApi.asyncExecuteFunction(top,main);
 	} else {
 		ret=do_cur();
