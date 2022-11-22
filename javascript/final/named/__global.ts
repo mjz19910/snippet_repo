@@ -50,3 +50,20 @@ declare global {
 		HTMLIFrameExt: typeof HTMLIFrameElement;
 	}
 }
+
+// youtube.com_lazyPrepareCriticalPages
+declare global {
+	var debug: debug|undefined;
+	interface debug {
+		(arg0: ()=>void, code: string): void;
+		u: (arg0: any) => void;
+		f:()=>void;
+		cb: {
+			xmhrp: {send():void}|null;
+		};
+	}
+	var undebug: undebug|undefined;
+	interface undebug {
+		(arg0: ()=>void): void;
+	}
+}

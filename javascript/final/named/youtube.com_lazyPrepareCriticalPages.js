@@ -179,22 +179,25 @@ function main() {
 		preparePage_breakpoint.a;
 	}
 	cur.f=function() {
+		if(!debug) throw new Error("needs devtools open for debug function");
+		if(!undebug) throw 1;
 		debug.u=undebug;
 		debug=debug;
-		let ts=function(e) {
+		function ts(e) {
 			return e[0];
-		};
+		}
 		debug(ts,'e=[e[1]];0');
 		let ret=ts([0,1]);
 		console.log(ret);
 		undebug(ts);
 		if(ret!=1) {
 			console.log('old_console_api');
-			delete debug;
+			delete window.debug;
 			return;
 		}
 		(function(a,n,test_callback) {
 			function bp_proto(proto,name,func_obj,test_callback) {
+				if(!debug) throw new Error("needs devtools open for debug function");
 				let x=debug;
 				x.f=proto[name];
 				x.u(x.f);
@@ -216,12 +219,20 @@ function main() {
 			let func_obj=window[a];
 			let func_proto=func_obj.prototype;
 			function native_callback() {
+				if(!debug) throw new Error("needs devtools open for debug function");
 				if(func_proto[n].toString().indexOf('[native code]')>-1) {
-					debug.cb=function(g_val) {
-						let x=this;
-						x.r_get=g_val;
-						console.log('ncb',func_proto[n],x.xmhrp[n]);
-					};
+					class callback {
+						constructor() {
+							/** @type {{send():void}|null} */
+							this.xmhrp=null;
+						}
+						run(g_val) {
+							if(!this.xmhrp) throw new Error("Missing xmhrp value");
+							this.r_get=g_val;
+							console.log('ncb',func_proto[n],this.xmhrp[n]);
+						}
+					}
+					debug.cb=new callback;
 					bp_proto(func_proto,n,func_obj,function() {});
 					return true;
 				}
@@ -230,18 +241,25 @@ function main() {
 			if(ret) {
 				return;
 			}
-			debug.cb=function(g_val) {
-				let x=this;
-				x.get=g_val;
-				x.xmhrp=g_val(a+'_prototype');
-				let _xmhrp=func_obj.prototype
-					,xmhrp_send=x.xmhrp.send
-					,_xmhrp_send=_xmhrp.send;
-				x.xmhrp.send=_xmhrp_send;
-				_xmhrp.send=xmhrp_send;
-				console.log('ntv_val',xmhrp_send);
-				Promise.resolve().then(() => native_callback());
-			};
+			class callback {
+				constructor() {
+					/** @type {{send():void}|null} */
+					this.xmhrp=null;
+				}
+				run(g_val) {
+					this.get=g_val;
+					this.xmhrp=g_val(a+'_prototype');
+					if(!this.xmhrp) throw new Error("failed to get xmhrp from some prototype");
+					let _xmhrp=func_obj.prototype;
+					let xmhrp_send=this.xmhrp.send;
+					let _xmhrp_send=_xmhrp.send;
+					this.xmhrp.send=_xmhrp_send;
+					_xmhrp.send=xmhrp_send;
+					console.log('ntv_val',xmhrp_send);
+					Promise.resolve().then(() => native_callback());
+				}
+			}
+			debug.cb=new callback;
 			bp_proto(func_proto,n,func_obj,test_callback);
 		}
 		)('XMLHttpRequest','send',function(x,func_obj) {
