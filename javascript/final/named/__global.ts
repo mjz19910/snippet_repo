@@ -15,15 +15,10 @@ declare global {
 	interface Window {
 		event_info: any;
 		x2: any;
-	}
-
-	var EventTarget: {
-		prototype: EventTarget;
-		new(): EventTarget;
 		events: any;
 		syms: any;
 		state: any;
-	};
+	}
 
 	interface FunctionConstructor {
 		events: {[x: string]: any;};

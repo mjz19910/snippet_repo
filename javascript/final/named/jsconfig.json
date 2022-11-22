@@ -3,9 +3,7 @@
 		"allowJs": true,
 		"checkJs": true,
 		"strict": true,
-		"types": [
-			"jquery",
-		],
+		"types": [],
 		"typeRoots": [
 			"./node_modules/@types"
 		],

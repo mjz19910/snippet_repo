@@ -173,9 +173,9 @@ function main() {
 	/* cspell: disable-next-line */
 	cur.n="crazygames.com/game/lunar-atoms-tycoon";
 	cur.f=function() {
-		var etm=EventTarget.events;
+		var etm=window.events;
 		var e;
-		var t=EventTarget.syms;
+		var t=window.syms;
 		e=etm;
 		class Logger {
 			/**
@@ -190,7 +190,7 @@ function main() {
 		logger.log=console.log.bind(console);
 		var event_info=e[134];
 		window.event_info=event_info;
-		var state=EventTarget.state;
+		var state=window.state;
 		/*class_gen_scope*/ {
 			/*class_scope*/ {
 				t.data_arr.put=function(/** @type {{ [x: string]: any[][]; }} */ obj,/** @type {string | number} */ target,/** @type {string | any[]} */ cur) {
