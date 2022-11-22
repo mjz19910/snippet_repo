@@ -182,6 +182,11 @@ function main() {
 		}
 	}
 	let cur=new curTy;
+	cur.n="example";
+	cur.f=function() {
+		// example function
+		console.log("hello world!");
+	}
 	let ret;
 	let debug_flag=false;
 	if(top!==window) {
