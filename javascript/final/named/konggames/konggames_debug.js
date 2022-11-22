@@ -182,7 +182,7 @@ function main() {
 		}
 	}
 	let cur=new curTy;
-	cur.n="debug_js_call_konggames";
+	cur.n="konggames_debug";
 	cur.f=function() {
 		class DebugState {
 			/**
