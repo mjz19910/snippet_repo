@@ -127,6 +127,8 @@ function main() {
 			all_set=new Set;
 			func_map=new Map;
 			dom_map=new Map;
+			/** @type {number|undefined} */
+			l;
 		}
 		/**
 		 * @param {any} e
@@ -369,9 +371,23 @@ function main() {
 		 */
 		function do_json_stringify_iter(nsl,cmap,trg) {
 			/**
-			 * @type {string | any[]}
+			 * @type {string|null}
 			 */
-			var js,cin;
+			var js=null;
+			/**
+			 * @type {JSONRepArg0|undefined}
+			 */
+			var cin;
+			/** @arg {JSONRepArg0} v */
+			function set_cin(v) {
+				cin=v;
+			}
+			/**
+			 * @param {string} v
+			 */
+			function set_js(v) {
+				js=v;
+			}
 			emp.clear();
 			try {
 				if(get_const_eq(trg,Function)) {
@@ -382,9 +398,11 @@ function main() {
 					cin.ns=nsl;
 					cin.all_map=cmap;
 					cin.all_set=emp;
-					js=JSON.stringify(cin.target,function(...args) {
+					let js=JSON.stringify(cin.target,function(...args) {
 						json_rep(cin,...args);
 					});
+					set_js(js);
+					set_cin(cin);
 				} else {
 					let cin=new JSONRepArg0;
 					cin.target=trg;
@@ -392,12 +410,16 @@ function main() {
 					cin.all_map=cmap;
 					cin.all_set=emp;
 					js=JSON.stringify(trg,json_rep.bind(null,cin));
+					set_js(js);
+					set_cin(cin);
 				}
 			} catch(e) {
 				console.info("---ERROR---");
 				console.log("ERROR",trg,Array.from(emp),e);
 				js="Error";
 			}
+			if(!cin) throw new Error("Error 1");
+			if(!js) throw new Error("Error 2");
 			cin.l=js.length;
 			Object.defineProperty(cin,"js_g",{
 				get: function() {
