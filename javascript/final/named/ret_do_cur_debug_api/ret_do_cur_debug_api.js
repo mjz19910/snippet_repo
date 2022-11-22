@@ -204,7 +204,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI;
 		}
-		if(debug_flag) console.log('restart on top frame')
+		if(debug_flag) console.log('restart on top frame');
 		ret=debugApi.asyncExecuteFunction(top,main);
 	} else {
 		ret=do_cur();
