@@ -26,7 +26,9 @@ declare global {
 
 	type ExpandoKey=keyof has_expando;
 
-	interface Element {}
+	interface Element {
+		["jQuery_expando_1"]: JQueryExpandoData;
+	}
 
 	var Element: typeof Element;
 

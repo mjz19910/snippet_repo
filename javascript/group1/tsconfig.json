@@ -18,6 +18,7 @@
 		"strictNullChecks": true,
 		"target": "esnext",
 		"types": [],
+		"forceConsistentCasingInFileNames":true,
 	},
 	"include": [
 		"**/*"
