@@ -1,7 +1,8 @@
 /* spell:words totalAtome
 -- version_list item 4 --
 v1 (old): snippet_repo/javascript/final/items/item4_v1.js
-v2 (cur): snippet_repo/javascript/group1/sub_a/item-_4.js
+v2 (cur): snippet_repo/javascript/final/items/item4_v2.js
+v2 (new): snippet_repo/javascript/group1/sub_a/item-_4.js
 */
 function short_wait() {
 	return new Promise((a) => setTimeout(a,0))
