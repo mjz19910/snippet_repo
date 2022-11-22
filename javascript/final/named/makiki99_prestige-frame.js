@@ -234,9 +234,7 @@ function main() {
 		cd.append(rr);
 		create_iframe_cell_for_url('https://makiki99.github.io/metaprestige/');
 	};
-	/**
-	 * @param {undefined[]} e
-	 */
+	/** @param {any[]} e */
 	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
@@ -244,7 +242,8 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		function px_fn(/** @type {{ argv: any[]; }} */ fn) {
+		/** @arg {{argv:any[];}} fn */
+		function px_fn(fn) {
 			fn.argv=e;
 		}
 		if(i<0) {
