@@ -109,8 +109,8 @@ function main() {
 			}
 		};
 		var cur=class extends stt {
-			static n_on = true
 			static f_on = true
+			static n_on = true
 			static get f() {
 				return this._f;
 			}
