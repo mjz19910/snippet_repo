@@ -22,13 +22,17 @@ async function x() {
 	let text=await r.text();
 	let dom_parser=new DOMParser;
 	let xml_document=dom_parser.parseFromString(text,"application/xml");
+	/**
+	 * @param {{ [x: string]: any; }} obj
+	 * @param {{ (obj: any, key: any, p: any): any; (arg0: any, arg1: string | undefined, arg2: any[] | undefined): void; }} cb
+	 */
 	function do_iter(obj,cb,c=0,kp=[]) {
 		if(typeof obj==='string') {
 			return;
 		}
 		let kl=Object.keys(obj);
 		if(!c)
-			cb(obj);
+			cb(obj,"",{});
 		if(c>12) {
 			console.log('deep',obj);
 			return;
@@ -47,7 +51,7 @@ async function x() {
 		return;
 	}
 	obj[root_element.tagName]=root_element.children;
-	do_iter(obj,function(obj,key,p) {
+	do_iter(obj,function(/** @type {any} */ obj,/** @type {any} */ key,/** @type {any} */ p) {
 		let e=obj[key];
 		if(!p) {
 			return e;
@@ -72,6 +76,11 @@ async function x() {
 					return e[0].nodeValue;
 				}
 			}
+			/**
+			 * @param {({}[])|{}} obj
+			 * @param {string} key
+			 * @param {HTMLCollection | NodeListOf<ChildNode>} list
+			 */
 			function append_from_list(obj,key,list) {
 				let cur;
 				if(obj instanceof Array) {
@@ -81,12 +90,17 @@ async function x() {
 				}
 				cur[key]=list;
 			}
-			/**@param {Element} element */
+			/**
+			 * @param {Element} element
+			 * @param {{}} obj
+			 */
 			function append_from_children(obj,element) {
 				append_from_list(obj,element.tagName,element.children);
-
 			}
-			/**@argument {Node} node */
+			/**
+			 * @argument {Node} node
+			 * @param {{}} obj
+			 */
 			function append_from_childNodes(obj,node) {
 				append_from_list(obj,node.nodeName,node.childNodes);
 			}
@@ -100,10 +114,7 @@ async function x() {
 				}
 
 				if(i instanceof Element) {
-					let cur_value_vec=i.children;
-					for(let i=0;i<cur_value_vec.length;i++) {
-						append_from_children(obj,cur_value_vec[i]);
-					}
+					append_from_children(obj,i);
 					continue;
 				}
 				append_from_childNodes(obj,i);
@@ -116,6 +127,9 @@ async function x() {
 	});
 	const con_list=obj.libraryDescription.searchConnectorDescriptionList;
 	let binary_data,overflow,b32_data;
+	/**
+	 * @param {{ searchConnectorDescription: any; }} list_item
+	 */
 	function get_data_slice(list_item) {
 		let con_desc=list_item.searchConnectorDescription;
 		let simple_loc=con_desc.simpleLocation;
