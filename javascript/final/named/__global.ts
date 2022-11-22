@@ -30,9 +30,23 @@ declare global {
 	}
 }
 
+// kongregate_yet-another-merge-game.js
 declare global {
 	interface Window {
 		cint?: ReturnType<typeof setTimeout>;
 		citv?: ReturnType<typeof setInterval>;
+	}
+}
+
+// makiki99 prestige-frame*
+declare global {
+	// client_code
+	function activatePrestige(a,b,c): void;
+	function canActivatePrestige(a,b,c): boolean;
+	function getRequirement(a,b,c): number;
+
+	// prestige-frame
+	interface Window {
+		HTMLIFrameExt: typeof HTMLIFrameElement;
 	}
 }

@@ -76,16 +76,16 @@ if(activatePrestige.length==3) {
 	 * @param {number} prestige_2_b
 	 */
 	function nx_df(prestige_1_a,prestige_1_b,prestige_2_a,prestige_2_b) {
-		let prestige_2_requirement=getRequirement(prestige_2_a,prestige_2_b);
+		let prestige_2_requirement=getRequirement(prestige_2_a,prestige_2_b,0);
 		for(let i=0;i<=prestige_2_requirement;i++) {
-			if(canActivatePrestige(prestige_1_a,prestige_1_b)) {
-				activatePrestige(prestige_1_a,prestige_1_b);
+			if(canActivatePrestige(prestige_1_a,prestige_1_b,0)) {
+				activatePrestige(prestige_1_a,prestige_1_b,0);
 			} else {
-				activatePrestige(prestige_2_a,prestige_2_b);
+				activatePrestige(prestige_2_a,prestige_2_b,0);
 				return [i,prestige_2_requirement];
 			}
 		}
-		activatePrestige(prestige_2_a,prestige_2_b);
+		activatePrestige(prestige_2_a,prestige_2_b,0);
 		return [-1,prestige_2_requirement];
 	}
 	for(let i=0;i<6;i++) {
