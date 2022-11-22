@@ -36,7 +36,6 @@ function main() {
 							body=is_strict_p1[1].trim()
 						}
 						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/"
-						var n
 						let src_url='//'+'# sourceURL='+r_fnname
 						let func_str
 						if(is_strict) {
@@ -46,8 +45,8 @@ function main() {
 							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`
 							eval_func=new Function(args,func_str)
 						}
-						var s=eval_func.length
-						if(window.hasOwnProperty('mc')) {
+						if('mc' in window&&window.mc instanceof MessageChannel) {
+							let mc=window.mc;
 							mc.port2.onmessage=function() {}
 							mc.port2.close()
 							mc.port1.onmessage=function() {}
@@ -244,7 +243,6 @@ function main() {
 			}
 			window.func_want=eok
 			str_to_var=eok(str_to_var)
-			let t=new str_to_var()
 			debug.g=str_to_var.instance.g
 			return
 		}
@@ -280,7 +278,6 @@ function main() {
 				}
 			}
 			function w(t) {
-				var c=new timeout_class(t)
 				return new Promise(timeout_class.w_in)
 			}
 			if(game.dungeonHeroes.length<6) {
@@ -291,7 +288,6 @@ function main() {
 			let tx_div=3
 			let to=[]
 			let rr=new Map
-			let cc=0
 			let con=Symbol(0)
 			let brk=Symbol(1)
 			let a=[]

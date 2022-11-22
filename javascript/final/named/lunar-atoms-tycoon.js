@@ -36,7 +36,6 @@ function main() {
 							body=is_strict_p1[1].trim()
 						}
 						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/"
-						var n
 						let src_url='//'+'# sourceURL='+r_fnname
 						let func_str
 						if(is_strict) {
@@ -46,8 +45,8 @@ function main() {
 							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`
 							eval_func=new Function(args,func_str)
 						}
-						var s=eval_func.length
-						if(window.hasOwnProperty('mc')) {
+						if('mc' in window&&window.mc instanceof MessageChannel) {
+							let mc=window.mc;
 							mc.port2.onmessage=function() {}
 							mc.port2.close()
 							mc.port1.onmessage=function() {}
@@ -161,34 +160,10 @@ function main() {
 	/* cspell: disable-next-line */
 	cur.n="crazygames.com/game/lunar-atoms-tycoon"
 	cur.f=function() {
-		function filterDescriptors(_obj) {
-			var obj=Object.getOwnPropertyDescriptors(_obj)
-			var c_obj=Object.getPrototypeOf(_obj)
-			var ret
-			try {
-				if(c_obj.constructor===Function) {
-					ret=c_obj.constructor('"use strict"')
-				} else {
-					ret=c_obj.constructor()
-				}
-			} catch(e) {
-				ret=e
-			}
-			console.log(Object.getOwnPropertyDescriptors(ret))
-			for(let i of Object.entries(obj)) {
-				i
-				if(1) {}
-			}
-			return obj
-		}
 		var etm=EventTarget.events
-		var et_skip=EventTarget.events[0].indexOf(EventTarget.syms.data_len)+2
 		var e
 		var t=EventTarget.syms
 		e=etm
-		function reset_name(cur) {
-			return Object.values(t).indexOf(cur)
-		}
 		class Logger {
 			log(...a) {
 				console.log(...a)

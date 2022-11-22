@@ -36,7 +36,6 @@ function main() {
 							body=is_strict_p1[1].trim()
 						}
 						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/"
-						var n
 						let src_url='//'+'# sourceURL='+r_fnname
 						let func_str
 						if(is_strict) {
@@ -46,8 +45,8 @@ function main() {
 							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`
 							eval_func=new Function(args,func_str)
 						}
-						var s=eval_func.length
-						if(window.hasOwnProperty('mc')) {
+						if('mc' in window&&window.mc instanceof MessageChannel) {
+							let mc=window.mc;
 							mc.port2.onmessage=function() {}
 							mc.port2.close()
 							mc.port1.onmessage=function() {}
@@ -377,8 +376,6 @@ function main() {
 			return false
 		}
 		let func_start_js_lex=function(str) {
-			let spl_parse=js_parse_regexp
-			let obj
 			let state={}
 			state.lex_chunks=[]
 			state.m_l_str=str
@@ -398,7 +395,6 @@ function main() {
 				if(state.m_at_eof) {
 					console.log('EOF={bytes_left:'+state.m_l_str.length+',processed:'+str.length+`,lex_count:${b_cnt}`+'}')
 					let lc=state.lex_chunks
-					let lcv=lc[2]
 					{
 						let a='[]'
 						let lc_str=lc.slice(lc.indexOf(a[0]),lc.indexOf(a[1])+1).join('')

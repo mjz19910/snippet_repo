@@ -36,7 +36,6 @@ function main() {
 							body=is_strict_p1[1].trim()
 						}
 						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/"
-						var n
 						let src_url='//'+'# sourceURL='+r_fnname
 						let func_str
 						if(is_strict) {
@@ -46,8 +45,8 @@ function main() {
 							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`
 							eval_func=new Function(args,func_str)
 						}
-						var s=eval_func.length
-						if(window.hasOwnProperty('mc')) {
+						if('mc' in window&&window.mc instanceof MessageChannel) {
+							let mc=window.mc;
 							mc.port2.onmessage=function() {}
 							mc.port2.close()
 							mc.port1.onmessage=function() {}
@@ -160,15 +159,6 @@ function main() {
 	}
 	cur.n="debug_js_call_konggames"
 	cur.f=function() {
-		let raw_str=function(d,...s) {
-			var str=d.raw[0]
-			let x=1
-			for(i of s) {
-				str+=i
-				str+=d.raw[x++]
-			}
-			return str
-		}
 		var debug_class=class {
 			constructor(state) {
 				this.data={}
@@ -422,7 +412,7 @@ function main() {
 					debugger; return state
 				},function(_debugger,state) {
 					state.breakpoint_function=ghost_tree.Function.prototype.call
-				},function(_debugger,state) {
+				},function(_debugger) {
 					_debugger.data.ghost_tree=ghost_tree
 					promise_debugger.next=_debugger
 				})
