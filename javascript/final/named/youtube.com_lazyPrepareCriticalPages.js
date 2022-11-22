@@ -107,7 +107,7 @@ function main() {
 			get test_needle() {
 				return this.tr;
 			}
-		};
+		}
 		var cur=class extends stt {
 			static f_on = true
 			static n_on = true
