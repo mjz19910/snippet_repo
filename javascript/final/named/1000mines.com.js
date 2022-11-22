@@ -115,7 +115,7 @@ function main() {
 			if(cur instanceof CustomInputMatcher) {
 				let custom_str=cur.test_string;
 				let needle=cur.test_needle;
-				if(custom_str.match(needle)==null) {
+				if(typeof custom_str==='string' && custom_str.match(needle)==null) {
 					this._f=f;
 					return;
 				}
@@ -133,7 +133,7 @@ function main() {
 			if(cur instanceof CustomInputMatcher) {
 				let custom_str=cur.test_string;
 				let m_needle=cur.test_needle;
-				if(m_needle instanceof RegExp) {
+				if(m_needle instanceof RegExp && typeof custom_str=='string') {
 					let m_match=custom_str.match(m_needle);
 					if(m_match==null) {
 						this._ln=n;
@@ -919,7 +919,8 @@ function main() {
 		}
 		return return_value;
 	};
-	let n_class=class {
+	/** @extends {SymbolIndexable} */
+	class n_class {
 		constructor() {
 			this.is_init=false;
 			this.__get_m=() => null;
@@ -1086,10 +1087,12 @@ function main() {
 			};
 		}
 	};
-	/**@type {{[x: symbol]: typeof st_ext;}} */
-	let n_class_x=n_class;
-	cur__class[st_ext._ln]=n_class;
-	do_cur=function(...e) {
+	/** @arg {any} x @returns {any} */
+	function any(x) {return x;}
+	/**@type {{[x: symbol]: typeof st_ext;} & typeof st_ext} */
+	let n_class_x=any(n_class);
+	cur__class[st_ext._ln]=n_class_x;
+	var do_cur=function(...e) {
 		var i;
 		if(st_ext.rx_lx) {
 			i=fnname.indexOf(st_ext.rx_lx);

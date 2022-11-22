@@ -11,6 +11,7 @@ declare global {
 		find_closed_up_y;
 		find_closed_dn_x;
 		find_closed_dn_y;
+		dz?;
 	}
 	var debugApi: DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
@@ -65,10 +66,10 @@ declare global {
 }
 namespace X {
 	export class CustomInputMatcher {
-		test_string: string;
+		test_string: string|RegExp;
 		test_needle: string|RegExp;
 		ts_get: unknown;
-		constructor(test_string: string,string_getter: unknown) {
+		constructor(test_string: string|RegExp,string_getter: unknown) {
 			this.test_string=test_string;
 			this.test_needle="";
 			this.ts_get=string_getter;
