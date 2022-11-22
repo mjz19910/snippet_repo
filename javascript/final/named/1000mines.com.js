@@ -170,8 +170,8 @@ function main() {
 		debug.u=undebug;
 		x: {
 			let x=debug;
-			x.fo=[];
-			__fo=x.fo;
+			__fo=[];
+			x.fo=__fo;
 			x.st=new Set;
 			x.sarr=[];
 			x.ne=[];
@@ -280,6 +280,7 @@ function main() {
 				let mquery=/.+{.+?new (.+)\.fn.init\(.+,.+\)\}/;
 				let jqts=jQuery.toString();
 				let res=jqts.match(mquery);
+				if(!res) throw new Error("jQuery constructor did not match the regex designed to match it");
 				let grps=res.slice(1);
 				x.__name_list=grps;
 
@@ -322,12 +323,13 @@ function main() {
 			}
 			__run(x.f,x.__all_vars);
 			let __nx_name=null;
-			function get_code_formatted(func,dbg=false) {
+			function get_code_formatted(func) {
 				let stk=[];
 				let cs=[];
 				let s_stk=[];
 				let ss_sp='';
 				let is_classy=false;
+				let is_constructor=false;
 				let func_as_string=null;
 				if(typeof func!='function') {
 					console.log('Tried to get formatted code for non-function');
@@ -477,14 +479,15 @@ function main() {
 						jsfout.push(...js_out,...js_tmp);
 						if(is_classy) {
 							ret=js_parse_ident(jsfout,jsfilt);
-							([js_out,jsfout,jsfilt]=ret);
+							[js_out,jsfout,jsfilt]=ret;
 							js_func_ident=js_out[0];
 							jsfout.push(js_out[0],js_out[1]);
 							if(js_out[0]==='constructor') {
 								parse_stack.push('frame');
-								parse_stack.push(['classy',is_classy,e => is_classy=e]);
+								parse_stack.push(['classy',is_classy,(/** @type {boolean} */ e) => is_classy=e]);
 								is_constructor=true;
 								is_classy=false;
+								parse_stack.push(['constructor',is_constructor,(/** @type {boolean} */ e) => is_constructor=e]);
 								let wt=jsfout.pop();
 								ret=js_parse_func_def_head(wt);
 								wt=ret.pop();
@@ -494,8 +497,8 @@ function main() {
 								jsfout=[wt];
 								jsfilt=[];
 								ret=js_parse_loop_whitespace(jsfout,jsfilt);
-								js_tmp=jsfilt
-								[js_out,jsfout,jsfilt]=ret
+								js_tmp=jsfilt;
+								[js_out,jsfout,jsfilt]=ret;
 								[jsfout,jsfilt]=parse_stack.pop();
 								jsfout.push(...js_out,...js_tmp);
 								wt=jsfout.pop();
@@ -506,7 +509,7 @@ function main() {
 								js_tmp.push(jsfilt.pop());
 								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()]);
 								jsfilt.push(js_tmp.pop());
-								js_tmp=jsfilt
+								js_tmp=jsfilt;
 								[jsfout,jsfilt]=parse_stack.pop();
 								js_tmp.forEach(e => jsfout.push(e));
 								let p_cur=parse_stack.pop();
@@ -541,7 +544,7 @@ function main() {
 								is_classy=false;
 								parse_stack.push(['classy',is_classy,(/** @type {boolean} */ e) => is_classy=e]);
 								let is_class_function=true;
-								parse_stack.push(['classy_extra',is_class_function,(/** @type {boolean} */ e) => is_class_function=e]);
+								parse_stack.push(['class_function',is_class_function,(/** @type {boolean} */ e) => is_class_function=e]);
 								let wt=jsfout.pop();
 								ret=js_parse_func_def_head(wt);
 								let js_func_args=ret.slice(0,-1);
@@ -555,11 +558,11 @@ function main() {
 								js_tmp.push(jsfilt.pop());
 								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()]);
 								jsfilt.push(js_tmp.pop());
-								js_tmp=jsfilt
+								js_tmp=jsfilt;
 								[jsfout,jsfilt]=parse_stack.pop();
 								js_tmp.forEach(e => jsfout.push(e));
 								let p_cur=parse_stack.pop();
-								//['classy',is_classy,e=>is_classy=e]
+								['classy',is_classy,(/** @type {boolean} */ e)=>is_classy=e];
 								if(p_cur[0]==='classy') {
 									p_cur[2](p_cur[1]);
 								}
@@ -578,8 +581,8 @@ function main() {
 							let wt=jsfout.pop();
 							parse_stack.push([jsfout,jsfilt]);
 							ret=js_parse_loop_whitespace([wt],[]);
-							js_tmp=jsfilt
-							[js_out,jsfout,jsfilt]=ret
+							js_tmp=jsfilt;
+							[js_out,jsfout,jsfilt]=ret;
 							[jsfout]=parse_stack.pop();
 							jsfout.push(...js_out,...js_tmp);
 						} else {
@@ -782,6 +785,7 @@ function main() {
 							let en=stk.pop();
 							let ex=stk.pop();
 							let ts=statement.pop();
+							if(!ts) throw new Error("parser underflow (statement array out of elements)");
 							if(ex.length>1) {
 								ex=f_down(ex);
 							}
@@ -826,11 +830,15 @@ function main() {
 				__statement();
 				return [cs,res_code,statement];
 			}
-			//__nx_names,__for_code=get_code_formatted
+			/**
+			 * @type {any[]}
+			 */
+			get_code_formatted.targets=[];
+			__nx_names=[];
+			__for_code=get_code_formatted
 			{
-				let fc=get_code_formatted;
-				__for_code=fc;
-				fc.targets=[];
+				let fc=__for_code;
+				fc.targets.length=0;
 				fc.targets.push(debug.f);
 				let ret=fc(debug.f);
 				let bs=ret.indexOf('{');
@@ -857,8 +865,10 @@ function main() {
 			};
 			__w=w;
 			let dom=document.querySelector('#ctl-home');
+			if(!dom) throw new Error("missing element with id=ctl-home");
+			if(!('expando' in jQuery)) throw new Error("missing jQuery.expando");
 			let jq_dom_data=dom[jQuery.expando+'1'];
-			//x.__name_list
+			x.__name_list=[];
 			x.f=jq_dom_data.events.click[0].handler;
 			__run(x.f,x.__all_vars);
 			ret=x.o;

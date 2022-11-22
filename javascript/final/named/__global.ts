@@ -40,6 +40,15 @@ declare global {
 
 	var debug: debug|undefined;
 	var __fo;
+	var __for_code;
+	var __lst;
+	var __ret;
+	var __w;
+	var __m;
+	var __r_ret;
+	var __res;
+	var __instance;
+	var __nx_names;
 }
 namespace X {
 	export class CustomInputMatcher {

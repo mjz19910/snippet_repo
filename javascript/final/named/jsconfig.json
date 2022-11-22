@@ -6,7 +6,7 @@
 			"jquery",
 		],
 		"typeRoots": [
-			"~/workspace/node_types/node_modules/@types"
+			"./node_modules/@types"
 		],
 	},
 	"files": [
