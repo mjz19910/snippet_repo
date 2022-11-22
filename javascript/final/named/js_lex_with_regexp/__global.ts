@@ -12,8 +12,9 @@ declare global {
 		find_closed_dn_x: any;
 		find_closed_dn_y: any;
 		dz?: any;
-		__state: {lex_chunks: never[]; m_l_str: any;};
+		__state: any;
 	}
+
 	var debugApi: DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
 

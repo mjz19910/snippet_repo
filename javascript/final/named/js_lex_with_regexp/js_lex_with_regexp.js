@@ -379,14 +379,56 @@ function main() {
 			}
 		};
 		let js_parse_regexp=/(debugger|function|continue|break|else|var|for|if|(?:[a-zA-Z_$](?:[a-zA-Z$_0-9]+)?)|\d+|['"{}()\[\]=:!;,.?+ ])/;
+		class JSLexState {
+			/** @type {string|undefined} */
+			m_l_str;
+			/**
+			 * @type {any[]}
+			 */
+			lex_chunks=[];
+			/**
+			 * @type {boolean}
+			 */
+			reset_count=false;
+			/**
+			 * @type {boolean}
+			 */
+			m_at_eof=false;
+			/**
+			 * @type {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; } | null}
+			 */
+			obj={
+				break_parse:false,
+				eof:false,
+				reset_count:false,
+				nx_len:0,
+				lex_cur:null,
+			};
+			/**
+			 * @param {string} str
+			 * @param {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj
+			 */
+			constructor(str, obj) {
+				return {
+					lex_chunks: [],
+					m_l_str: str,
+					reset_count: false,
+					m_at_eof: false,
+					obj,
+				};
+			}
+		}
 		/**
-		 * @param {{ lex_chunks: any; m_l_str: any; reset_count: any; m_at_eof: any; obj: any; }} state
+		 * @param {JSLexState} state
 		 */
 		function func_cont_js_lex(state) {
 			let spl_parse=js_parse_regexp;
 			let str=state.m_l_str;
+			if(!str) throw 1;
 			let r=str.split(spl_parse,2);
-			state.obj=func_process_result(state,r,spl_parse,str);
+			let process_result=func_process_result(state,r,spl_parse,str);
+			if(!process_result) throw 1;
+			state.obj=process_result;
 			let obj=state.obj;
 			if(obj.lex_cur) {
 				state.lex_chunks.push(obj.lex_cur);
@@ -410,16 +452,13 @@ function main() {
 		}
 		let func_start_js_lex=function(/** @type {string} */ str) {
 			let fake_obj_={
-				nx_len: 0,
-			};
-			let state={
-				lex_chunks: [],
-				m_l_str: str,
+				break_parse: false,
+				eof:false,
 				reset_count: false,
-				m_at_eof: null,
-				/** @type {typeof fake_obj_|null} */
-				obj: fake_obj_,
+				nx_len: 0,
+				lex_cur: null,
 			};
+			let state=new JSLexState(str, fake_obj_);
 			state.obj=null;
 			window.__state=state;
 			let cont=true;
@@ -437,9 +476,10 @@ function main() {
 				}
 				if(b_cnt-b_cnt_off>100) {//console.log(state.lex_chunks[state.lex_chunks.length-1],b_cnt-b_cnt_off)
 				}
-				if(state.obj) {
+				if(state.obj && state.m_l_str) {
 					state.m_l_str=state.m_l_str.slice(state.obj.nx_len);
 				}
+				if(!state.m_l_str) throw 1;
 				if(state.m_at_eof) {
 					console.log('EOF={bytes_left:'+state.m_l_str.length+',processed:'+str.length+`,lex_count:${b_cnt}`+'}');
 					/**
