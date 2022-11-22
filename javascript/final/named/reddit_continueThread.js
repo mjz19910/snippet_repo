@@ -8,28 +8,63 @@ function main() {
 		use() {}
 	};
 	holder.use();
-	var fnlist=[];
-	var fnname=[];
-	{
+	/** @arg {any} v */
+	function any(v){return v;}
+	class CustomInputMatcher {
 		/**
-		 * @param {any} name
-		 * @param {{ user_run_name: any; }} func
+		 * @param {any} t_needle
+		 * @param {any} t_string_getter
 		 */
-		function add_func(name,func) {
-			var y=fnlist.push(func);
-			if(fnname.indexOf(name)>-1) {
-				throw SyntaxError("Name conflict");
-			}
-			var x=fnname.push(name);
-			func.user_run_name=name;
-			if(x!=y) {
-				throw SyntaxError("unbalanced function or name number");
-			}
-			return x;
+		constructor(t_needle,t_string_getter) {
+			this.ts_get=t_string_getter;
+			this.tr=t_needle;
 		}
-		var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
-			var r_fnname=fnname[t];
-			var func=fnlist[t];
+		get test_string() {
+			return this.ts_get();
+		}
+		get test_needle() {
+			return this.tr;
+		}
+	}
+	class curTy {
+		/** @type {(undefined[])|null} */
+		argv=null;
+		/** @type {string|CustomInputMatcher|null} */
+		_ln=null;
+		value=null;
+		/** @type {(((...x:any[])=>any)&{ user_run_name: unknown; argv:any[] })[]} */
+		funcs=[];
+		/** @type {string[]} */
+		names=[];
+		self_sym=Symbol();
+		px_fn(/** @type {{ argv: any[]; }} */ fn) {
+			if(!this.argv) throw new Error("1");
+			fn.argv=this.argv;
+		}
+		/**
+		 * @param {undefined[]} e
+		 */
+		do_cur(...e) {
+			var i;
+			this.argv=e;
+			if(cur.rx_lx) {
+				i=cur.names.indexOf(cur.rx_lx);
+			} else {
+				i=cur.names.indexOf(cur.n);
+			}
+			if(i<0) {
+				console.log("no function to run was matched");
+				return null;
+			}
+			var _result=cur.execute(i);
+			return _result;
+		}
+		/**
+		 * @param {number} t
+		 */
+		execute(t) {
+			var r_fnname=this.names[t];
+			var func=this.funcs[t];
 			try {
 				var sf=func.toString();
 				if(sf.indexOf("/*arg_start*/")>-1) {
@@ -67,113 +102,92 @@ function main() {
 						}
 						console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
 					}
-					if(eval_func) {
-						eval_func(func);
-					}
 					let ret=eval_func();
-					if(post_exec)
-						post_exec(ret);
 					return ret;
 				} else {
-					if(pre_exec) {
-						pre_exec(func);
-					}
+					if(!('argv' in func)) throw 1;
+					if(!(func.argv instanceof Array)) throw 1;
+					this.px_fn(func);
 					let ret=func();
-					if(post_exec)
-						post_exec(ret);
 					return ret;
 				}
 			} finally {}
-			return;
-		};
-		class stt {
-			static #unused=this.#init();
-			static #init() {
-				this.#unused;
-			}
-			static _f() {}
-			static _n="<empty>";
-			static n_on=true;
-			static f_on=true;
 		}
-		window.CustomInputMatcher=class {
-			/**
-			 * @param {any} t_needle
-			 * @param {any} t_string_getter
-			 */
-			constructor(t_needle,t_string_getter) {
-				this.ts_get=t_string_getter;
-				this.tr=t_needle;
+		/**
+		 * @param {string|CustomInputMatcher} name
+		 * @param {((...x: any[]) => any) & { user_run_name: unknown; argv: any[]}} func
+		 */
+		add_func(name,func) {
+			var y=this.funcs.push(func);
+			if(name instanceof CustomInputMatcher) {
+			} else {
+				if(this.names.indexOf(name)>-1)
+					throw SyntaxError("Name conflict");
+				var x=this.names.push(name);
+				func.user_run_name=name;
+				if(x!=y)
+					throw SyntaxError("unbalanced function or name number");
+				return x;
 			}
-			get test_string() {
-				return this.ts_get();
+		}
+		/** @type {((...x:any[])=>any)} */
+		get f() {
+			if(!this._f) throw new Error("no function to get");
+			return this._f;
+		}
+		set f(f) {
+			if(!this._ln) throw new Error("no last name");
+			let cur=this._ln;
+			this._lf=f;
+			if(this.funcs.indexOf(any(this._lf))==-1) {
+				this.add_func(this._ln,any(this._lf));
 			}
-			get test_needle() {
-				return this.tr;
-			}
-		};
-		var cur=class {
-			static do_cur() {
-				throw new Error("Method not implemented.");
-			}
-			static get f() {
-				return this._f;
-			}
-			static set f(f) {
-				let cur=this._ln;
-				this._lf=f;
-				if(fnlist.indexOf(this._lf)==-1) {
-					add_func(this._ln,this._lf);
-				}
-				if(cur instanceof CustomInputMatcher&&typeof cur.test_string=='string') {
-					let custom_str=cur.test_string;
-					let needle=cur.test_needle;
-					if(custom_str.match(needle)==null) {
-						this._f=f;
-						return;
-					}
-				}
-				if(this.f_on) {
-					this.f_on=false;
+			if(cur instanceof CustomInputMatcher) {
+				let custom_str=cur.test_string;
+				let needle=cur.test_needle;
+				if(typeof custom_str=='string'&&custom_str.match(needle)==null) {
 					this._f=f;
+					return;
 				}
 			}
-			static get n() {
-				return this._n;
+			if(this.f_on) {
+				this.f_on=false;
+				this._f=f;
 			}
-			static set n(n) {
-				let cur=n;
-				if(cur instanceof CustomInputMatcher) {
-					let custom_str=cur.test_string;
-					let m_needle=cur.test_needle;
-					if(m_needle instanceof RegExp&&typeof custom_str=='string') {
-						let m_match=custom_str.match(m_needle);
-						if(m_match==null) {
-							this._ln=n;
-							return;
-						} else if(this.rx_off===undefined) {
-							this.rx_off=true;
-							this.rx_lx=n;
-						}
-					}
-					if(typeof m_needle=='string'&&custom_str!=m_needle) {
+		}
+		/** @type {any} */
+		get n() {
+			return this._n;
+		}
+		set n(n) {
+			let cur=n;
+			if(cur instanceof CustomInputMatcher) {
+				let custom_str=cur.test_string;
+				let m_needle=cur.test_needle;
+				if(m_needle instanceof RegExp&&typeof custom_str=='string') {
+					let m_match=custom_str.match(m_needle);
+					if(m_match==null) {
 						this._ln=n;
 						return;
+					} else if(this.rx_off===undefined) {
+						this.rx_off=true;
+						this.rx_lx=n;
 					}
 				}
-				this._ln=n;
-				if(this.n_on) {
-					this.n_on=false;
-					this._n=n;
+				if(typeof m_needle=='string'&&custom_str!=m_needle) {
+					this._ln=n;
+					return;
 				}
 			}
-		};
-		let sym=Symbol();
-		var cur__class={[sym]: cur};
-		cur.self_sym=sym;
-		cur.funcs=fnlist;
-		cur.names=fnname;
+			this._ln=n;
+			if(this.n_on) {
+				this.n_on=false;
+				this._n=n;
+			}
+		}
 	}
+	let cur=new curTy;
+	var cur__class={[cur.self_sym]: cur};
 	cur.n="reddit";
 	cur.f=function() {
 		var dom=document.body.children["2x-container"];
@@ -346,22 +360,6 @@ function main() {
 		window.s_refs=s_refs;
 		return refs;
 	};
-	/**
-	 * @param {undefined[]} e
-	 */
-	function do_cur(...e) {
-		var i;
-		if(cur.rx_lx) {
-			i=fnname.indexOf(cur.rx_lx);
-		} else {
-			i=fnname.indexOf(cur.n);
-		}
-		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
-			fn.argv=e;
-		};
-		var _result=execute(i,px_fn);
-		return _result;
-	}
 	let ret;
 	let debug_flag=false;
 	if(top!==window) {

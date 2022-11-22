@@ -7,69 +7,6 @@ function main() {
 	var fnlist=[];
 	/** @type {any[]} */
 	var fnname=[];
-	/**
-	 * @param {number} t
-	 * @param {{ (fn: { argv: undefined[]; }): void; (arg0: any): void; }} pre_exec
-	 * @param {((arg0: any) => void) | undefined} [post_exec]
-	 */
-	function execute(t,pre_exec,post_exec) {
-		var r_fnname=fnname[t];
-		var func=fnlist[t];
-		try {
-			var sf=func.toString();
-			if(sf.indexOf("/*arg_start*/")>-1) {
-				let eval_func;
-				{
-					var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
-					var no_head=func_split[4].trim().slice(1).trim().slice(1);
-					var body=no_head.slice(0,no_head.length-2);
-					var is_strict;
-					var is_strict_p1=body.split('"use strict"');
-					is_strict=is_strict_p1.length>1;
-					if(is_strict) {
-						body=is_strict_p1[1].trim();
-					}
-					var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
-					let src_url='//'+'# sourceURL='+r_fnname;
-					let func_str;
-					if(is_strict) {
-						func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
-						eval_func=new Function(args,func_str);
-					} else {
-						func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
-						eval_func=new Function(args,func_str);
-					}
-					if('mc' in window&&window.mc instanceof MessageChannel) {
-						let mc=window.mc;
-						mc.port2.onmessage=function() {};
-						mc.port2.close();
-						mc.port1.onmessage=function() {};
-						mc.port1.close();
-						delete window.mc;
-						if(typeof mc!='undefined') {
-							window.mc=undefined;
-						}
-					}
-					console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
-				}
-				if(eval_func) {
-					eval_func(func);
-				}
-				let ret=eval_func();
-				if(post_exec)
-					post_exec(ret);
-				return ret;
-			} else {
-				if(pre_exec) {
-					pre_exec(func);
-				}
-				let ret=func();
-				if(post_exec)
-					post_exec(ret);
-				return ret;
-			}
-		} finally {}
-	}
 	{
 		/**
 		 * @param {any} name
@@ -86,16 +23,6 @@ function main() {
 				throw SyntaxError("unbalanced function or name number");
 			}
 			return x;
-		}
-		class stt {
-			static #unused=this.#init();
-			static #init() {
-				this.#unused;
-			}
-			static _f() {}
-			static _n="<empty>";
-			static n_on=true;
-			static f_on=true;
 		}
 		class CustomInputMatcher {
 			/**
@@ -182,25 +109,6 @@ function main() {
 		cur.self_sym=sym;
 		cur.funcs=fnlist;
 		cur.names=fnname;
-	}
-	/**
-	 * @param {undefined[]} e
-	 */
-	function do_cur(...e) {
-		var i;
-		if(cur.rx_lx) {
-			i=fnname.indexOf(cur.rx_lx);
-		} else {
-			i=fnname.indexOf(cur.n);
-		}
-		/**
-		 * @param {{ argv: undefined[]; }} fn
-		 */
-		function px_fn(fn) {
-			fn.argv=e;
-		}
-		var _result=execute(i,px_fn);
-		return _result;
 	}
 	let ret;
 	let debug_flag=false;
