@@ -41,9 +41,9 @@ declare global {
 // makiki99 prestige-frame*
 declare global {
 	// client_code
-	function activatePrestige(a,b,c): void;
-	function canActivatePrestige(a,b,c): boolean;
-	function getRequirement(a,b,c): number;
+	function activatePrestige(a: number,b: number,c: number): void;
+	function canActivatePrestige(a: number,b: number,c: number): boolean;
+	function getRequirement(a: number,b: number,c: number): number;
 
 	// prestige-frame
 	interface Window {

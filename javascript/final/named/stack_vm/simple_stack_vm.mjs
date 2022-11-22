@@ -1,4 +1,4 @@
-/** @type {import("./__global.js").Holder} */
+/** @type {import("../__global.js").Holder} */
 let holder={
 	use() {}
 };
@@ -10,6 +10,7 @@ export class SimpleStackVM {
 	 */
 	constructor(instructions) {
 		this.instructions=instructions;
+		/** @type {any[]} */
 		this.stack=[];
 		this.instruction_pointer=0;
 		this.return_value=void 0;
