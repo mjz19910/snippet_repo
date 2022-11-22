@@ -3,9 +3,85 @@
 v1 (old-f): snippet_repo/javascript/final/__ret_do_cur_debugApi.js
 */
 function main() {
+	/**
+	 * @type {any[]}
+	 */
 	var fnlist=[];
+	/**
+	 * @type {any[]}
+	 */
 	var fnname=[];
+	/**
+	 * @param {number} t
+	 * @param {{ (fn: { argv: undefined[]; }): void; (arg0: any): void; }} pre_exec
+	 * @param {((arg0: any) => void) | undefined} [post_exec]
+	 */
+	function execute(t,pre_exec,post_exec) {
+		var r_fnname=fnname[t];
+		var func=fnlist[t];
+		try {
+			var sf=func.toString();
+			if(sf.indexOf("/*arg_start*/")>-1) {
+				let eval_func;
+				{
+					var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
+					var no_head=func_split[4].trim().slice(1).trim().slice(1);
+					var body=no_head.slice(0,no_head.length-2);
+					var is_strict;
+					var is_strict_p1=body.split('"use strict"');
+					is_strict=is_strict_p1.length>1;
+					if(is_strict) {
+						body=is_strict_p1[1].trim();
+					}
+					var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
+					var n;
+					let src_url='//'+'# sourceURL='+r_fnname;
+					let func_str;
+					if(is_strict) {
+						func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
+						eval_func=new Function(args,func_str);
+					} else {
+						func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
+						eval_func=new Function(args,func_str);
+					}
+					var s=eval_func.length;
+					if('mc' in window&&window.mc instanceof MessageChannel) {
+						let mc=window.mc;
+						if(!(mc instanceof MessageChannel)) throw 1;
+						mc.port2.onmessage=function() {};
+						mc.port2.close();
+						mc.port1.onmessage=function() {};
+						mc.port1.close();
+						delete window.mc;
+						if(typeof mc!='undefined') {
+							window.mc=undefined;
+						}
+					}
+					console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
+				}
+				if(eval_func) {
+					eval_func(func);
+				}
+				let ret=eval_func();
+				if(post_exec)
+					post_exec(ret);
+				return ret;
+			} else {
+				if(pre_exec) {
+					pre_exec(func);
+				}
+				let ret=func();
+				if(post_exec)
+					post_exec(ret);
+				return ret;
+			}
+		} finally {}
+	}
 	{
+		/**
+		 * @param {any} name
+		 * @param {{ user_run_name: any; }} func
+		 */
 		function add_func(name,func) {
 			var y=fnlist.push(func);
 			if(fnname.indexOf(name)>-1) {
@@ -18,68 +94,6 @@ function main() {
 			}
 			return x;
 		}
-		var execute=function(t,pre_exec,post_exec) {
-			var r_fnname=fnname[t];
-			var func=fnlist[t];
-			try {
-				var sf=func.toString();
-				if(sf.indexOf("/*arg_start*/")>-1) {
-					let eval_func;
-					{
-						var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
-						var no_head=func_split[4].trim().slice(1).trim().slice(1);
-						var body=no_head.slice(0,no_head.length-2);
-						var is_strict;
-						var is_strict_p1=body.split('"use strict"');
-						is_strict=is_strict_p1.length>1;
-						if(is_strict) {
-							body=is_strict_p1[1].trim();
-						}
-						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
-						var n;
-						let src_url='//'+'# sourceURL='+r_fnname;
-						let func_str;
-						if(is_strict) {
-							func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
-							eval_func=new Function(args,func_str);
-						} else {
-							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
-							eval_func=new Function(args,func_str);
-						}
-						var s=eval_func.length;
-						if('mc' in window&&window.mc instanceof MessageChannel) {
-							let mc=window.mc;
-							if(!(mc instanceof MessageChannel)) throw 1;
-							mc.port2.onmessage=function() {};
-							mc.port2.close();
-							mc.port1.onmessage=function() {};
-							mc.port1.close();
-							delete window.mc;
-							if(typeof mc!='undefined') {
-								window.mc=undefined;
-							}
-						}
-						console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
-					}
-					if(eval_func) {
-						eval_func(func);
-					}
-					let ret=eval_func();
-					if(post_exec)
-						post_exec(ret);
-					return ret;
-				} else {
-					if(pre_exec) {
-						pre_exec(func);
-					}
-					let ret=func();
-					if(post_exec)
-						post_exec(ret);
-					return ret;
-				}
-			} finally {}
-			return;
-		};
 		let stt=eval(`(class {
 			static #unused = this.#init()
 			static #init(){
@@ -90,18 +104,26 @@ function main() {
 			static f_on = true
 		})`);
 		window.CustomInputMatcher=class {
-			constructor(t_needle,t_string_getter) {
-				this.ts_get=t_string_getter;
+			/**
+			 * @param {string} t_needle
+			 * @param {any} string_getter
+			 */
+			constructor(t_needle,string_getter) {
+				this.m_string_getter=string_getter;
 				this.tr=t_needle;
 			}
 			get test_string() {
-				return this.ts_get();
+				return this.m_string_getter();
 			}
 			get test_needle() {
 				return this.tr;
 			}
 		};
 		var cur=class extends stt {
+			/**
+			 * @type {any}
+			 */
+			static _f;
 			static get f() {
 				return this._f;
 			}
@@ -124,6 +146,10 @@ function main() {
 					this._f=f;
 				}
 			}
+			/**
+			 * @type {any}
+			 */
+			static _n;
 			static get n() {
 				return this._n;
 			}
@@ -160,19 +186,25 @@ function main() {
 		cur.funcs=fnlist;
 		cur.names=fnname;
 	}
-	do_cur=function(...e) {
+	/**
+	 * @param {undefined[]} e
+	 */
+	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
 			i=fnname.indexOf(cur.rx_lx);
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(fn) {
+		/**
+		 * @param {{ argv: undefined[]; }} fn
+		 */
+		function px_fn(fn) {
 			fn.argv=e;
-		};
+		}
 		var _result=execute(i,px_fn);
 		return _result;
-	};
+	}
 	let ret;
 	if(top!==window) {
 		if(window.debugApi==undefined) {
