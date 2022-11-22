@@ -3,6 +3,7 @@ let holder={
 	use() {}
 };
 holder.use();
+
 export class SimpleStackVM {
 	/**
 	 * @param {any} instructions

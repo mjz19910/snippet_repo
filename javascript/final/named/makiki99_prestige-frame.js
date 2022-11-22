@@ -1,6 +1,6 @@
 /* spell:words makiki99
 --- version_list item 2 ---
-v1 (spl-f): snippet_repo/javascript/final/makiki99_prestige-frame.js
+v1 (cur): snippet_repo/javascript/final/makiki99_prestige-frame.js
 */
 function main() {
 	/** @type {import("./__global.js").Holder} */

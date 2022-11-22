@@ -1,6 +1,6 @@
 /* spell:words debug_js_call_konggames
 --- version_list item 2 ---
-v1 (spl-f): snippet_repo/javascript/final/debug_js_call_konggames.js
+v1 (cur): snippet_repo/javascript/final/debug_js_call_konggames.js
 */
 function main() {
 	/**

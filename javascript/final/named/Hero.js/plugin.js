@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 2 ---
-v1 (spl-f): snippet_repo/javascript/final/Hero_js.js
+v1 (cur): snippet_repo/javascript/final/Hero_js.js
 */
 function main() {
 	/**

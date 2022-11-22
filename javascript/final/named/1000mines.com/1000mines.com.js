@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 2 ---
-v1 (spl-f): snippet_repo/javascript/final/1000mines.com.js
+v1 (cur): snippet_repo/javascript/final/1000mines.com.js
 */
 function main() {
 	/**

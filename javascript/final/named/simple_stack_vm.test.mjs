@@ -5,6 +5,7 @@ let holder={
 	use() {}
 };
 holder.use();
+
 class EventHandlerVMDispatch extends SimpleStackVM {
 	/**
 	 * @param {(string | number)[][]} instructions

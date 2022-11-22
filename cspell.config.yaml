@@ -113,6 +113,7 @@ words:
   - mquery
   - mult
   - mults
+  - myhtml_tokenizer
   - newcp
   - nocheckin
   - nodenext

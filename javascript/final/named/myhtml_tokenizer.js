@@ -1,4 +1,4 @@
-/* cspell:words myhtml_tokenizer rcdata rawtext
+/* cspell:words
 --- version_list item 1 ---
 v1 (old-s): snippet_repo/javascript/final/myhtml_tokenizer.js
 */
