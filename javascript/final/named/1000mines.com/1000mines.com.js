@@ -993,8 +993,14 @@ function main() {
 			let real_return;
 			if(typeof ret==='symbol') throw 1;
 			if(!('m' in ret)) throw 1;
-			__m=ret.m;
+			let __m=ret.m;
 			if(!__m) throw 1;
+			if(!(typeof __m==='object')) throw 1;
+			if(!('click' in __m)) throw 1;
+			if(!(__m.click instanceof Function)) throw 1;
+			/** @template {Function} T @arg {T} x @returns {x is (...x:any[])=>any} */
+			function as_any_func(x) {return true;}
+			if(!as_any_func(__m.click)) throw 1;
 			x.f=__m.click;
 			let o=x.o;
 			x.u(x.f);
@@ -1021,7 +1027,7 @@ function main() {
 			__ret=x.o;
 			w.obj_field={
 				__f: x.f,
-				...__ret
+				ret: __ret
 			};
 			let ret_val=[...x.st,x.o];
 			__res=ret_val;
@@ -1038,6 +1044,7 @@ function main() {
 	class n_class {
 		constructor() {
 			this.is_init=false;
+			/** @type {()=>any} */
 			this.__get_m=() => null;
 			this.created();
 		}
@@ -1045,7 +1052,7 @@ function main() {
 			let t=this;
 			if(!t.is_init)
 				t.init();
-			__m=t.__get_m();
+			let __m=t.__get_m();
 			let cur;
 			cur=[Object.keys(__m.opened.field).filter(e => __m.mines.field[e]==false)];
 			cur=cur.map(e => {
@@ -1091,11 +1098,13 @@ function main() {
 			t.__get_m=x.gr.m;
 			t.is_init=true;
 		}
+		init_if_needed() {
+			if(!this.is_init)
+				this.init();
+		}
 		run() {
-			let t=this;
-			if(!t.is_init)
-				t.init();
-			__m=this.__get_m();
+			this.init_if_needed();
+			let __m=this.__get_m();
 			/**
 			 * @param {{ (arg0: any, arg1: any): any; (x: any, y: any): any; fp?: any; } | null} f
 			 * @param {string} n
@@ -1109,6 +1118,7 @@ function main() {
 				if(n=='y')
 					q=s;
 				f=function(/** @type {number} */ x,/** @type {number} */ y) {
+					if(!f) throw 1;
 					if(__m.opened.field[x+'x'+y]==0) {
 						return f(x+e,y+q);
 					}
@@ -1241,10 +1251,8 @@ function main() {
 		ret.then(() => void 0).catch(e => console.error(e));
 	}
 	st_ext.value=ret;
-	return {
-		...st_ext,
-		_class: cur__class
-	};
+	st_ext._class=cur__class;
+	return st_ext;
 	//# sourceURL=snippet:///%24_2
 }
 window.__ret=main();
