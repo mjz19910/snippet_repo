@@ -21,7 +21,7 @@ async function x() {
 	}
 	let text=await r.text();
 	let dom_parser=new DOMParser;
-	xml_document=dom_parser.parseFromString(text,"application/xml");
+	let xml_document=dom_parser.parseFromString(text,"application/xml");
 	function do_iter(obj,cb,c=0,kp=[]) {
 		if(typeof obj==='string') {
 			return;
@@ -40,9 +40,12 @@ async function x() {
 			kp.pop();
 		}
 	}
-	window.obj??={};
-	let obj=window.obj;
+	let obj={};
 	let root_element=xml_document.firstElementChild;
+	if(!root_element) {
+		console.log("xml document missing child");
+		return;
+	}
 	obj[root_element.tagName]=root_element.children;
 	do_iter(obj,function(obj,key,p) {
 		let e=obj[key];
