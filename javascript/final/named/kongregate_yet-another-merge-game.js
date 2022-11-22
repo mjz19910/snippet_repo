@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 2 ---
-v1 (spl-f): snippet_repo/javascript/final/kongregate_yet-another-merge-game.js
+v1 (cur): snippet_repo/javascript/final/kongregate_yet-another-merge-game.js
 */
 function main() {
 	/** @type {import("./__global.js").Holder} */
