@@ -68,7 +68,6 @@ function main() {
 				return ret;
 			}
 		} finally {}
-		return;
 	}
 	class stt {
 		static #unused=this.#init();
