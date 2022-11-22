@@ -11,22 +11,6 @@ function main() {
 	 * @type {any[]}
 	 */
 	var fnname=[];
-	/**
-	 * @param {any} name
-	 * @param {{ user_run_name: any; }} func
-	 */
-	function add_func(name,func) {
-		var y=fnlist.push(func);
-		if(fnname.indexOf(name)>-1) {
-			throw SyntaxError("Name conflict");
-		}
-		var x=fnname.push(name);
-		func.user_run_name=name;
-		if(x!=y) {
-			throw SyntaxError("unbalanced function or name number");
-		}
-		return x;
-	}
 	function execute(/** @type {number} */ t, /** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec, /** @type {((arg0: any) => void) | undefined} */ post_exec) {
 		var r_fnname=fnname[t];
 		var func=fnlist[t];
@@ -86,15 +70,16 @@ function main() {
 		} finally {}
 		return;
 	}
-	let stt=eval(`(class {
-		static #unused = this.#init()
-		static #init(){
+	class stt {
+		static #unused=this.#init();
+		static #init() {
+			this.#unused;
 		}
-		static _f(){}
-		static _n = "<empty>"
-		static n_on = true
-		static f_on = true
-	})`);
+		static _f() {}
+		static _n="<empty>";
+		static n_on=true;
+		static f_on=true;
+	}
 	window.CustomInputMatcher=class {
 		/**
 		 * @param {any} t_needle
@@ -111,7 +96,33 @@ function main() {
 			return this.tr;
 		}
 	};
-	var cur=new class extends stt {
+	class curTy extends stt {
+		value=null;
+		/**
+		 * @param {any} name
+		 * @param {((...x: any[]) => any) & { user_run_name: string; }} func
+		 */
+		add_func(name,func) {
+			var y=this.funcs.push(func);
+			if(fnname.indexOf(name)>-1) {
+				throw SyntaxError("Name conflict");
+			}
+			var x=fnname.push(name);
+			func.user_run_name=name;
+			if(x!=y) {
+				throw SyntaxError("unbalanced function or name number");
+			}
+			return x;
+		}
+		constructor() {
+			super();
+			let sym=Symbol();
+			this.self_sym=sym;
+			/** @type {(((...x:any[])=>any)&{ user_run_name: string; })[]} */
+			this.funcs=[];
+			/** @type {string[]} */
+			this.names=[];
+		}
 		/** @type {any} */
 		get f() {
 			return this._f;
@@ -119,8 +130,8 @@ function main() {
 		set f(f) {
 			let cur=this._ln;
 			this._lf=f;
-			if(fnlist.indexOf(this._lf)==-1) {
-				add_func(this._ln,this._lf);
+			if(this.funcs.indexOf(this._lf)==-1) {
+				this.add_func(this._ln,this._lf);
 			}
 			if(cur instanceof CustomInputMatcher) {
 				let custom_str=cur.test_string;
@@ -165,12 +176,9 @@ function main() {
 				this._n=n;
 			}
 		}
-	};
-	let sym=Symbol();
-	var cur__class={[sym]: cur};
-	cur.self_sym=sym;
-	cur.funcs=fnlist;
-	cur.names=fnname;
+	}
+	let cur=new curTy;
+	var cur__class={[cur.self_sym]: cur};
 	cur.n="debug_js_call_konggames";
 	cur.f=function() {
 		class DebugState {

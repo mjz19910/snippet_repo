@@ -86,15 +86,16 @@ function main() {
 			} finally {}
 			return;
 		};
-		let stt=eval(`(class {
-			static #unused = this.#init()
-			static #init(){
+		class stt {
+			static #unused=this.#init();
+			static #init() {
+				this.#unused;
 			}
-			static _f(){}
-			static _n = "<empty>"
-			static n_on = true
-			static f_on = true
-		})`);
+			static _f() {}
+			static _n="<empty>";
+			static n_on=true;
+			static f_on=true;
+		}
 		window.CustomInputMatcher=class {
 			/**
 			 * @param {any} t_needle
