@@ -3,19 +3,7 @@
 v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
 */
 function main() {
-	/**
-	 * @type {any[]}
-	 */
-	var fnlist=[];
-	/**
-	 * @type {any[]}
-	 */
-	var fnname=[];
 	class stt {
-		static #unused=this.#init();
-		static #init() {
-			this.#unused;
-		}
 		static _f() {}
 		static _n="<empty>";
 		static n_on=true;
@@ -67,7 +55,7 @@ function main() {
 		 * @param {((arg0: any) => void) | undefined} [post_exec]
 		 */
 		execute(t,pre_exec,post_exec) {
-			var r_fnname=fnname[t];
+			var r_fnname=this.names[t];
 			var func=this.funcs[t];
 			try {
 				var sf=func.toString();
