@@ -24,6 +24,12 @@ class JSLexState {
 }
 
 declare global {
+	class JSLexState_x {
+
+	}
+}
+
+declare global {
 	interface Window {
 		CustomInputMatcher: typeof CustomInputMatcher;
 		debugApi: {};
