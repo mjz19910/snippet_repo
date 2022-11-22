@@ -191,7 +191,7 @@ function main() {
 					scd_c+=0.075;
 				gameFunctions.decreaseSpawnCooldown(scd_c-scd);
 			},100);
-			cint=setInterval(function() {
+			window.cint=setInterval(function() {
 				gameFunctions.maxUpgrades(game.matter,game.upgrades);
 			},150);
 			x: {
