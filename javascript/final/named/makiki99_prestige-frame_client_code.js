@@ -1,3 +1,7 @@
+/* spell:words makiki99
+--- version_list item 2 ---
+v1 (cur): snippet_repo/javascript/final/makiki99_prestige-frame_client_code.js
+*/
 {
 	/** @type {import("./__global.js").Holder} */
 	let holder={
