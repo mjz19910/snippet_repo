@@ -19,8 +19,8 @@ declare global {
 	}
 
 	interface Window {
-		event_info;
-		x2;
+		event_info: any;
+		x2: any;
 	}
 
 	var EventTarget: {
@@ -28,10 +28,17 @@ declare global {
 		new(): EventTarget;
 		events: any;
 		syms: any;
-		state;
+		state: any;
 	};
 
 	interface FunctionConstructor {
-		events;
+		events: {[x: string]: any;};
+	}
+}
+
+declare global {
+	interface Window {
+		cint?: ReturnType<typeof setTimeout>;
+		citv?: ReturnType<typeof setInterval>;
 	}
 }
