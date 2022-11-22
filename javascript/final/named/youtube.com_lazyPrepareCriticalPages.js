@@ -96,7 +96,7 @@ function main() {
 			static n_on = true
 			static f_on = true
 		}
-		window.CustomInputMatcher=class {
+		class CustomInputMatcher {
 			constructor(t_needle,t_string_getter) {
 				this.ts_get=t_string_getter;
 				this.tr=t_needle;
