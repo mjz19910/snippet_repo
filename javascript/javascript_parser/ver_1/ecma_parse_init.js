@@ -597,8 +597,6 @@ export const module_data=[[4],[
 					else if(o<1e3||!u.TYPED_ARRAY_SUPPORT)
 						for(i=0;i<o;++i)
 							e[i+t]=this[i+r];
-
-
 					else
 						Uint8Array.prototype.set.call(e,this.subarray(r,r+o),t);
 					return o;
@@ -618,7 +616,6 @@ export const module_data=[[4],[
 						if("string"==typeof n&&!u.isEncoding(n))
 							throw new TypeError("Unknown encoding: "+n);
 					}
-
 					else
 						"number"==typeof e&&(e&=255);
 					if(t<0||this.length<t||this.length<r)
@@ -982,7 +979,6 @@ export const module_data=[[4],[
 						}
 					return o<s? -1:s<o? 1:0;
 				}
-				;
 			function T(e,t,r) {
 				var n="";
 				r=Math.min(e.length,r);
@@ -1050,7 +1046,6 @@ export const module_data=[[4],[
 					i.write(e,t,r,n,52,8),
 					r+8;
 			}
-			;
 			var B=/[^+\/0-9A-Za-z-_]/g;
 			function U(e) {
 				return e<16? "0"+e.toString(16):e.toString(16);
