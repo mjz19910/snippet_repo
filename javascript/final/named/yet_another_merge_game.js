@@ -185,7 +185,7 @@ function main() {
 		if(Function.func_log.length<3&&typeof cf=='undefined') {
 			console.log("Not called from main.js:633");
 			do_cur_count=8;
-			console.log("cur_count", do_cur_count);
+			console.log("cur_count",do_cur_count);
 			return;
 		}
 		if(typeof cf=='undefined') {
@@ -237,24 +237,24 @@ function main() {
 					console.log(fs_str.slice(cc-2,e_js_call));
 					let can_try_again=true;
 					let end_char=e_js_call;
-					var ix_pc=function(/** @type {string} */ n) {
+					function ix_pc(/** @type {string} */ n) {
 						return fs_str.indexOf(n,end_char+1);
-					};
+					}
 					var w_ext={};
 					w_ext._l=function(/** @type {any[]} */ ...a) {
-						if(a.length>0)_log_fn("l",...a);
+						if(a.length>0) _log_fn("l",...a);
 						return {
 							v: a
 						};
 					};
 					w_ext._v=function(/** @type {any[]} */ ...a) {
-						if(a.length>0)_log_fn("v",...a);
+						if(a.length>0) _log_fn("v",...a);
 						if(a.length==1)
 							return a[0];
 						return a;
 					};
 					w_ext._c=function(/** @type {any[]} */ ...a) {
-						if(a.length>0)_log_fn("c",...a);
+						if(a.length>0) _log_fn("c",...a);
 						return {
 							v: a
 						};
@@ -278,12 +278,13 @@ function main() {
 							w_ext[i]=fi_ob[1][i];
 						}
 					}
-					let wb_eval
+					let wb_eval;
 					// @ts-ignore
 					with(w_ext) {
-						wb_eval=function(/** @type {any} */ s) {
+						function wb_eval_(/** @type {any} */ s) {
 							eval(s);
-						};
+						}
+						wb_eval=wb_eval_;
 					}
 					for(var ov,i=0;(ov=can_try_again,
 						can_try_again=false,
@@ -291,13 +292,13 @@ function main() {
 						try {
 							let events=fs_str.slice(cc-2,end_char);
 							console.log(fs_str.slice(cc-2,end_char+32));
-							_log_fn=(/** @type {any} */ ...e) => {
+							function _log_fn_2(/** @type {any} */ ...e) {
 								console.log(...e);
-							};
+							}
 							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
 								debugger;
 							}
-							_log_fn("Sl:",events.length);
+							_log_fn_2("Sl:",events.length);
 							wb_eval(events);
 							cf=void 0;
 							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
@@ -324,7 +325,6 @@ function main() {
 									console.log("for VUE defined:",s_name);
 									can_try_again=true;
 								}
-								//can_try_again=true
 							}
 							console.log(e.message);
 						}
@@ -338,9 +338,7 @@ function main() {
 			break;
 		}
 	};
-	/**
-	 * @param {undefined[]} e
-	 */
+	/** @param {undefined[]} e */
 	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
@@ -348,9 +346,9 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
+		function px_fn(/** @type {{ argv: any[]; }} */ fn) {
 			fn.argv=e;
-		};
+		}
 		var _result=execute(i,px_fn);
 		return _result;
 	}

@@ -1,4 +1,3 @@
-
 export {Holder} from "./Holder.js";
 export {KeepList} from "./KeepList.js";
 
@@ -50,16 +49,16 @@ declare global {
 declare global {
 	var debug: debug|undefined;
 	interface debug {
-		(arg0: ()=>void, code: string): void;
+		(arg0: () => void,code: string): void;
 		u: (arg0: any) => void;
-		f:()=>void;
+		f: () => void;
 		cb: {
-			xmhrp: {send():void}|null;
+			xmhrp: {send(): void;}|null;
 		};
 	}
 	var undebug: undebug|undefined;
 	interface undebug {
-		(arg0: ()=>void): void;
+		(arg0: () => void): void;
 	}
 }
 
@@ -70,6 +69,6 @@ declare global {
 		root_new: any;
 		inner_dom: any;
 		refs: any[];
-		s_refs: (["get_set", PropertyDescriptor] | ["refs", string, number] | ["or", string, any])[][]|undefined;
+		s_refs: (["get_set",PropertyDescriptor]|["refs",string,number]|["or",string,any])[][]|undefined;
 	}
 }
