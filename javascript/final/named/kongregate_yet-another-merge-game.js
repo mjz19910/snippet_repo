@@ -1,4 +1,4 @@
-/* spell:words kongregate
+/* spell:words
 --- version_list item 2 ---
 v1 (spl-f): snippet_repo/javascript/final/kongregate_yet-another-merge-game.js
 */
