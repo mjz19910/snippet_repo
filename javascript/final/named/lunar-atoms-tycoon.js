@@ -6,6 +6,10 @@ function main() {
 	var fnlist=[];
 	var fnname=[];
 	{
+		/**
+		 * @param {any} name
+		 * @param {{ user_run_name: any; }} func
+		 */
 		function add_func(name,func) {
 			var y=fnlist.push(func);
 			if(fnname.indexOf(name)>-1) {
@@ -18,7 +22,7 @@ function main() {
 			}
 			return x;
 		}
-		var execute=function(t,pre_exec,post_exec) {
+		var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
 			var r_fnname=fnname[t];
 			var func=fnlist[t];
 			try {
@@ -87,6 +91,10 @@ function main() {
 			static f_on = true
 		})`);
 		window.CustomInputMatcher=class {
+			/**
+			 * @param {any} t_needle
+			 * @param {any} t_string_getter
+			 */
 			constructor(t_needle,t_string_getter) {
 				this.ts_get=t_string_getter;
 				this.tr=t_needle;
@@ -165,6 +173,9 @@ function main() {
 		var t=EventTarget.syms;
 		e=etm;
 		class Logger {
+			/**
+			 * @param {any[]} a
+			 */
 			log(...a) {
 				console.log(...a);
 			}
@@ -177,7 +188,7 @@ function main() {
 		var state=EventTarget.state;
 		/*class_gen_scope*/ {
 			/*class_scope*/ {
-				t.data_arr.put=function(obj,target,cur) {
+				t.data_arr.put=function(/** @type {{ [x: string]: any[][]; }} */ obj,/** @type {string | number} */ target,/** @type {string | any[]} */ cur) {
 					var nv=cur.slice(1+this.off,cur[this.off]+1);
 					/** @type {any[][]} */
 					var arr_out=[];
@@ -214,6 +225,9 @@ function main() {
 		window.x2=x2;
 		return 'done';
 	};
+	/**
+	 * @param {undefined[]} e
+	 */
 	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
@@ -221,7 +235,7 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(fn) {
+		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
 			fn.argv=e;
 		};
 		var _result=execute(i,px_fn);
