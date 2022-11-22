@@ -1,4 +1,4 @@
-import {CustomInputMatcherKeep as CustomInputMatcherKeep} from "./CustomInputMatcherKeep";
+import {CustomInputMatcherKeep} from "./CustomInputMatcherKeep";
 
 export type KeepList=[
 	CustomInputMatcherKeep.Keep,
