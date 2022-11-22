@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 2 ---
-v1 (cur): snippet_repo/javascript/final/js_wasm_importing.js
+v1 (cur): snippet_repo/javascript/final/js_wasm_importing/js_wasm_importing.js
 */
 function main() {
 	class cur_class {

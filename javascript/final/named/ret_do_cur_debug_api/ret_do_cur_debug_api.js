@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 2 ---
-v1 (old-f): snippet_repo/javascript/final/__ret_do_cur_debugApi.js
+v1 (cur): snippet_repo/javascript/final/ret_do_cur_debug_api/ret_do_cur_debugApi.js
 */
 function main() {
 	/**

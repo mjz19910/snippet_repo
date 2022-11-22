@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 2 ---
-v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp.js
+v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp/js_lex_with_regexp.js
 */
 function main() {
 	/**

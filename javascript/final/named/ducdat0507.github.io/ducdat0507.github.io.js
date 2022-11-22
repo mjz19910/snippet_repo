@@ -1,6 +1,6 @@
 /* spell:words
 --- version_list item 2 ---
-v1 (cur): snippet_repo/javascript/final/ducdat0507.github.io.js
+v1 (cur): snippet_repo/javascript/final/ducdat0507.github.io/ducdat0507.github.io.js
 */
 function main() {
 	/**
