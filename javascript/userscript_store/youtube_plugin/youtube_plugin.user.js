@@ -1755,7 +1755,6 @@ function on_ytd_app(element) {
 	} else {
 		ytd_app.app_is_visible=0;
 	}
-	// spell:ignore cint
 	ytd_app.ytp_click_cint=setInterval(() => {
 		if(!is_watch_page_active()||!ytd_app) return;
 		if(!ytd_app.app_is_visible) {

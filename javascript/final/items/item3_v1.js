@@ -205,8 +205,8 @@ v3 (new): snippet_repo/javascript/final/items/item3_v3.js
 	let res_func_2=src_url_func(res_func_1)
 	if(does_return)
 		return res_func_2
-	if(typeof cint!="undefined") {
-		clearTimeout(cint)
+	if(typeof window.cint!="undefined") {
+		clearTimeout(window.cint)
 	}
 	function presfn(some_function) {
 		if(getPrestigePower(player.stars).div(player.prestigePower).toNumber()>100) {
@@ -226,17 +226,17 @@ v3 (new): snippet_repo/javascript/final/items/item3_v3.js
 	}
 	function nxfn(other_function) {
 		if(!window.hasOwnProperty("player")) {
-			cint=setTimeout(nxfn,70,other_function)
+			window.cint=setTimeout(nxfn,70,other_function)
 			return
 		}
 		if(player.stars.log(10)<90) {
-			cint=setTimeout(other_function,70,nxfn)
+			window.cint=setTimeout(other_function,70,nxfn)
 		} else if(player.stars.log(10)<250) {
-			cint=setTimeout(other_function,70,nxfn)
+			window.cint=setTimeout(other_function,70,nxfn)
 		} else if(player.stars.log(10)<280) {
-			cint=setTimeout(other_function,70,nxfn)
+			window.cint=setTimeout(other_function,70,nxfn)
 		} else {
-			cint=setTimeout(other_function,70,nxfn)
+			window.cint=setTimeout(other_function,70,nxfn)
 		}
 	}
 	void nxfn

@@ -190,7 +190,7 @@ function main() {
 						if(count>45) {
 							var want=[...document.all].filter(e => e[react_ii]).map(e => e[react_ii]).filter(e => e.key=='commentsPaneWrapper').map(e => e)
 							if(want.length==0) {
-								cint=setTimeout(t,33)
+								window.cint=setTimeout(t,33)
 								return
 							}
 							var w2=want[0].stateNode.querySelectorAll('[target=_blank][rel]:not([id])')
@@ -199,10 +199,10 @@ function main() {
 							a_link.rel=''
 							a_link.href=a_link.href.replace("old.reddit.com","reddit.com")
 							a_link.click()
-							cint=setTimeout(t,12000)
+							window.cint=setTimeout(t,12000)
 							return
 						}
-						cint=setTimeout(t,33)
+						window.cint=setTimeout(t,33)
 					},33)
 				}
 				)
@@ -226,7 +226,7 @@ function main() {
 						return
 					}
 					count++
-					cint=setTimeout(t,33)
+					window.cint=setTimeout(t,33)
 				}
 				t()
 			}
@@ -242,8 +242,8 @@ function main() {
 					n_dom=get_inner()
 					n_dom.click()
 					window.inner_dom=n_dom
-					cint=setTimeout(function() {
-						cint=f(f)
+					window.cint=setTimeout(function() {
+						window.cint=f(f)
 					},1500)
 				}
 					,33)
