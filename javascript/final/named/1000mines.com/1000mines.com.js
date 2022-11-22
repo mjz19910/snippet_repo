@@ -3,8 +3,18 @@
 v1 (spl-f): snippet_repo/javascript/final/1000mines.com.js
 */
 function main() {
+	/**
+	 * @type {any[]}
+	 */
 	var fnlist=[];
+	/**
+	 * @type {any[]}
+	 */
 	var fnname=[];
+	/**
+	 * @param {any} name
+	 * @param {{ user_run_name: any; }} func
+	 */
 	function add_func(name,func) {
 		var y=fnlist.push(func);
 		if(fnname.indexOf(name)>-1) {
@@ -17,7 +27,7 @@ function main() {
 		}
 		return x;
 	}
-	var execute=function(t,pre_exec,post_exec) {
+	var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
 		var r_fnname=fnname[t];
 		var func=fnlist[t];
 		try {
@@ -101,6 +111,7 @@ function main() {
 		}
 	};
 	class st_ext extends stt {
+		/** @type {any} */
 		// @ts-ignore
 		static get f() {
 			return this._f;
@@ -115,7 +126,7 @@ function main() {
 			if(cur instanceof CustomInputMatcher) {
 				let custom_str=cur.test_string;
 				let needle=cur.test_needle;
-				if(typeof custom_str==='string' && custom_str.match(needle)==null) {
+				if(typeof custom_str==='string'&&custom_str.match(needle)==null) {
 					this._f=f;
 					return;
 				}
@@ -125,6 +136,7 @@ function main() {
 				this._f=f;
 			}
 		}
+		/** @type {any} */
 		static get n() {
 			return this._n;
 		}
@@ -133,7 +145,7 @@ function main() {
 			if(cur instanceof CustomInputMatcher) {
 				let custom_str=cur.test_string;
 				let m_needle=cur.test_needle;
-				if(m_needle instanceof RegExp && typeof custom_str=='string') {
+				if(m_needle instanceof RegExp&&typeof custom_str=='string') {
 					let m_match=custom_str.match(m_needle);
 					if(m_match==null) {
 						this._ln=n;
@@ -178,7 +190,7 @@ function main() {
 			x.sarr=[];
 			x.ne=[];
 			{
-				let test=function(e) {
+				let test=function(/** @type {any[]} */ e) {
 					return e[0];
 				};
 				let test_fail=Symbol(1);
@@ -276,6 +288,7 @@ function main() {
 				}
 			};0`;
 			x.rx={};
+			/** @type {typeof x['rx']} */
 			let w={};
 			x.rx=w;
 			{
@@ -288,6 +301,12 @@ function main() {
 
 			}
 			let __nf=Symbol(2);
+			/**
+			 * @param {(...a:any[])=>any} fn
+			 * @param {string} bp_str
+			 * @param {(string | undefined)[]} args
+			 * @returns {symbol | [any,any]}
+			 */
 			function __run(fn,bp_str,...args) {
 				x.o=__nf;
 				x.u(fn);
@@ -300,13 +319,18 @@ function main() {
 					return __nf;
 				}
 			}
-			let ret;
 			//__name_list
-			ret=__run(jQuery,x.__all_vars,"");
+			let ret=__run(jQuery,x.__all_vars,"");
+			if(typeof ret==='symbol') return x.o;
 			if(ret[1]===__nf) {
 				return x.o;
 			}
 			x.rx.jQuery=ret[1];
+			/**
+			 * @param {(...arg0: any[]) => any} fn
+			 * @param {string} bp_str
+			 * @param {(number | boolean)[]} args
+			 */
 			function __run_noisy(fn,bp_str,...args) {
 				x(fn,bp_str);
 				try {
@@ -320,14 +344,26 @@ function main() {
 			{
 				let game_ctrl=document.querySelector('#control');
 				if(!game_ctrl) throw new Error("missing element with id=control");
+				if(!w.jQuery) throw 1;
 				/*G:event expando{typeof T is Y;expando:string}*/
 				x.f=game_ctrl[w.jQuery.G.expando].events.mouseup[0].handler;
 			}
 			__run(x.f,x.__all_vars);
-			let __nx_name=null;
+			/**
+			 * @param {CallableFunction} func
+			 */
 			function get_code_formatted(func) {
+				/**
+				 * @type {any[][]}
+				 */
 				let stk=[];
+				/**
+				 * @type {any[]}
+				 */
 				let cs=[];
+				/**
+				 * @type {string[]}
+				 */
 				let s_stk=[];
 				let ss_sp='';
 				let is_classy=false;
@@ -338,7 +374,6 @@ function main() {
 					return null;
 				}
 				x: {
-					/*js_get is_classy*/
 					let fd=Object.getOwnPropertyDescriptors(func);
 					let fdp=fd.prototype;
 					if(fdp.value?.constructor!==func) {
@@ -353,20 +388,26 @@ function main() {
 				}
 				func_as_string??=func.toString();
 				let jsfilt=[func.toString()];
+				/**
+				 * @type {any[]}
+				 */
 				let jsfout=[];
 				let js_out;
-				let js_parse_no_white=e => {
+				let js_parse_no_white=(/** @type {string} */ e) => {
 					let m=null;
 					if(e[0].match(/ /)) {
-						m=e.match(/^[ ]+/);
+						let m=e.match(/^[ ]+/);
+						if(!m) throw 1;
 						jsfout.push(m[0]);
 					}
 					if(e[0].match(/\n/)) {
 						m=e.match(/^[\n]+/);
+						if(!m) throw 1;
 						jsfout.push(m[0]);
 					}
 					if(e[0].match(/\t/)) {
 						m=e.match(/^[\t]+/);
+						if(!m) throw 1;
 						jsfout.push(m[0]);
 					}
 					if(m) {
@@ -375,7 +416,7 @@ function main() {
 						jsfout.push(e);
 					}
 				};
-				let js_parse_class=e => {
+				let js_parse_class=(/** @type {string} */ e) => {
 					if(e.slice(0,5)=='class') {
 						jsfout.push('class');
 						jsfout.push(e.slice(5));
@@ -383,12 +424,15 @@ function main() {
 					}
 					jsfout.push(e);
 				};
+				/**
+				 * @param {{ (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (value: any, index: number, array: any[]): void; }} func
+				 */
 				function fe_block(func) {
 					jsfilt.forEach(func);
 					jsfilt=jsfout;
 					jsfout=[];
 				}
-				let js_parse_ident=(js_in,js_tmp) => {
+				let js_parse_ident=(/** @type {any[]} */ js_in,/** @type {any[]} */ js_tmp) => {
 					let js_out=[];
 					let wt=js_in.pop();
 					let m;
@@ -430,7 +474,7 @@ function main() {
 					}
 					throw new Error("Failed to parse function head");
 				}
-				let js_parse_function=(e) => {
+				let js_parse_function=(/** @type {string | any[]} */ e) => {
 					let fn=e.slice(0,8);
 					if(fn=='function') {
 						jsfout.push(fn);
@@ -448,10 +492,13 @@ function main() {
 					fe_block(js_parse_function);
 				}
 				fe_block(js_parse_no_white);
+				/**
+				 * @type {any[]}
+				 */
 				let parse_stack=[];
 				let loop_max_count=100;
 				let loop_counter=0;
-				let js_parse_loop_whitespace=(js_in,js_tmp) => {
+				let js_parse_loop_whitespace=(/** @type {any[]} */ js_in,/** @type {any[]} */ js_tmp) => {
 					let js_out=[];
 					let top_item=js_in.pop();
 					jsfout=[];
@@ -462,6 +509,7 @@ function main() {
 							break;
 						} else if(jsfilt.length>1) {
 							let nx=jsfilt.pop();
+							if(!nx) throw 1;
 							js_out.push(...jsfilt);
 							jsfilt=[nx];
 						} else if(jsfilt.length==1) {
@@ -469,7 +517,7 @@ function main() {
 						}
 					} while(true); return [js_out,js_in,js_tmp];
 				};
-				let js_parse_block_enter=e => {
+				let js_parse_block_enter=(/** @type {string | any[]} */ e) => {
 					if(e[0].match(/{/)) {
 						let js_class_methods=[];
 						let js_func_ident,js_func_args;
@@ -508,9 +556,13 @@ function main() {
 								jsfout=[];
 								jsfilt=[wt];
 								fe_block(js_parse_block_enter);
-								js_tmp.push(jsfilt.pop());
+								let last=jsfilt.pop();
+								if(!last) throw 1;
+								js_tmp.push(last);
 								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()]);
-								jsfilt.push(js_tmp.pop());
+								last=js_tmp.pop();
+								if(!last) throw 1;
+								jsfilt.push(last);
 								js_tmp=jsfilt;
 								[jsfout,jsfilt]=parse_stack.pop();
 								js_tmp.forEach(e => jsfout.push(e));
@@ -557,9 +609,13 @@ function main() {
 								jsfout=[];
 								jsfilt=[wt];
 								fe_block(js_parse_block_enter);
-								js_tmp.push(jsfilt.pop());
+								let last=jsfilt.pop();
+								if(!last) throw 1;
+								js_tmp.push(last);
 								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()]);
-								jsfilt.push(js_tmp.pop());
+								last=js_tmp.pop();
+								if(!last) throw 1;
+								jsfilt.push(last);
 								js_tmp=jsfilt;
 								[jsfout,jsfilt]=parse_stack.pop();
 								js_tmp.forEach(e => jsfout.push(e));
@@ -590,6 +646,11 @@ function main() {
 						} else {
 							let wt=jsfout.join('');
 							let block_match_rx=/^((?![{}])(?![/][*])(?:.|[=;\n])+?)?([{}]|[\n]?\/\*)/m;
+							/**
+							 * @param {number} cur_idx
+							 * @param {number} [skip_len]
+							 * @returns {[any,any]}
+							 */
 							function parse_bracket_down(cur_idx,skip_len) {
 								let cur,cs;
 								cs=wt.slice(cur_idx);
@@ -610,9 +671,11 @@ function main() {
 										cur_idx+=cur[0].length;
 										cs=wt.slice(cur_idx);
 										cur=cs.match(/((.|[\n])+?)?\*\//);
+										if(!cur) throw 1;
 										cur_idx+=cur[0].length;
 										cs=wt.slice(cur_idx);
 										cur=cs.match(block_match_rx);
+										if(!cur) throw 1;
 									}
 									while(cur[2]=='{') {
 										[cur_idx,]=parse_bracket_down(cur_idx+cur[0].length-1);
@@ -622,12 +685,13 @@ function main() {
 										}
 										cur=cs.match(block_match_rx);
 										if(cur==null) {
-											return cur_idx;
+											return [cur_idx,null];
 										}
 									}
 									cur_idx=cur_idx+cur[0].length;
 									return [cur_idx,skip_len];
 								}
+								throw 1;
 							}
 							let [len,skip_len]=parse_bracket_down(0);
 							let ret=[];
@@ -680,7 +744,13 @@ function main() {
 				if(maybe)
 					return jsfilt;
 				maybe=false;
-				let spf=func.toString().split(/([ .,{}()=;\?\:])/).forEach((e,x) => {
+				/** @template T @param {T[]} arr */
+				function unwrap_pop(arr) {
+					let ret=arr.pop();
+					if(!ret) throw new Error("panic");
+					return ret;
+				}
+				let spf=func.toString().split(/([ .,{}()=;\?\:])/).forEach((/** @type {string} */ e,/** @type {any} */ x) => {
 					let ls;
 					if(cs.length>0) {
 						ls=cs[cs.length-1];
@@ -694,8 +764,14 @@ function main() {
 						cs.push(e);
 						return;
 					}
+					/**
+					 * @param {any} e
+					 */
 					function dn(e,bf=false) {
 						stk.push(cs);
+						/**
+						 * @type {any[]}
+						 */
 						let nx=[];
 						if(bf) {
 							cs.push(e);
@@ -725,17 +801,18 @@ function main() {
 					if(e==')') {
 						cs.push(e);
 						let ix2=ss_sp;
-						let isp=s_stk.pop();
+						let isp=unwrap_pop(s_stk);
+						if(!isp) throw 1;
 						ss_sp=isp;
 						if(ss_sp=='if') {
-							cs=stk.pop();
+							cs=unwrap_pop(stk);
 							ss_sp='ifBlock';
 							return;
 						}
 						if(ix2=='fn') {
 							return;
 						} else {
-							cs=stk.pop();
+							cs=unwrap_pop(stk);
 							return;
 						}
 					}
@@ -745,9 +822,9 @@ function main() {
 						return dn(e,true);
 					}
 					if(e=='}') {
-						ss_sp=s_stk.pop();
+						ss_sp=unwrap_pop(s_stk);
 						if(stk.length>0)
-							cs=stk.pop();
+							cs=unwrap_pop(stk);
 					}
 					cs.push(e);
 				}
@@ -755,10 +832,16 @@ function main() {
 				if(maybe)
 					return spf;
 				let fb=cs.slice(-3,-2)[0];
+				/**
+				 * @param {any[]} arr
+				 */
 				function f_down(arr) {
+					/**
+					 * @type {any[]}
+					 */
 					let stk=[];
 					let statement=[stk];
-					arr.forEach((e) => {
+					arr.forEach((/** @type {string} */ e) => {
 						stk.push(e);
 						function dep() {
 							stk=[];
@@ -769,23 +852,23 @@ function main() {
 						if(e==';')
 							dep();
 						if(e=='?') {
-							let bg=stk.pop();
+							let bg=unwrap_pop(stk);
 							statement.push([bg]);
 							dep();
 						}
 						if(e==':') {
-							let bg=stk.pop();
+							let bg=unwrap_pop(stk);
 							statement.push([bg]);
 							dep();
 						}
 						if(e=='{') {
-							let bg=stk.pop();
+							let bg=unwrap_pop(stk);
 							statement.push([bg]);
 							dep();
 						}
 						if(e=='}') {
-							let en=stk.pop();
-							let ex=stk.pop();
+							let en=unwrap_pop(stk);
+							let ex=unwrap_pop(stk);
 							let ts=statement.pop();
 							if(!ts) throw new Error("parser underflow (statement array out of elements)");
 							if(ex.length>1) {
@@ -800,6 +883,9 @@ function main() {
 					return statement;
 				}
 				let statement=f_down(fb);
+				/**
+				 * @type {any[][]}
+				 */
 				let res_code=[];
 				function __statement() {
 					for(let i=0;i<statement.length;i++) {
@@ -836,7 +922,8 @@ function main() {
 			 * @type {any[]}
 			 */
 			get_code_formatted.targets=[];
-			__nx_names=[];
+			let __nx_names=[];
+			__nx_names;
 			__for_code=get_code_formatted;
 			{
 				let fc=__for_code;
@@ -847,9 +934,10 @@ function main() {
 				let be=ret.lastIndexOf('}');
 				let bd=ret.slice(bs+1,be);
 				let sc=bd[0].split(',');
-				__nx_name=sc[2].split(/[()]/)[0];
+				let __nx_name=sc[2].split(/[()]/)[0];
+				if(!__nx_name) throw 1;
+				x.f=x.o[__nx_name];
 			}
-			x.f=x.o[__nx_name];
 			__run(x.f,x.__all_vars);
 			__lst=[];
 			__lst.push(x.o);
@@ -861,10 +949,17 @@ function main() {
 			__add_set();
 			ret=x.o;
 			__ret=ret;
-			w.I_listener={
-				__f: x.f,
-				...ret
-			};
+			if(typeof ret!=='symbol') {
+				w.I_listener={
+					__f: x.f,
+					...ret,
+				};
+			} else {
+				w.I_listener={
+					__f: x.f,
+					ret,
+				};
+			}
 			__w=w;
 			let dom=document.querySelector('#ctl-home');
 			if(!dom) throw new Error("missing element with id=ctl-home");
@@ -874,12 +969,22 @@ function main() {
 			x.f=jq_dom_data.events.click[0].handler;
 			__run(x.f,x.__all_vars);
 			ret=x.o;
-			w.game_scope={
-				__f: x.f,
-				...ret
-			};
+			if(typeof ret!=='symbol') {
+				w.game_scope={
+					__f: x.f,
+					...ret,
+				};
+			} else {
+				w.game_scope={
+					__f: x.f,
+					ret,
+				};
+			}
 			let real_return;
+			if(typeof ret==='symbol') throw 1;
+			if(!('m' in ret)) throw 1;
 			__m=ret.m;
+			if(!__m) throw 1;
 			x.f=__m.click;
 			let o=x.o;
 			x.u(x.f);
@@ -964,7 +1069,7 @@ function main() {
 			x.__replace_func.S=function() {
 				throw "no";
 			};
-			x.cb=function(__eval) {
+			x.cb=function(/** @type {(arg0: string) => void} */ __eval) {
 				__eval('(function(){S=debug.__replace_func.S})()');
 			};
 			x(x.f,x.__getter_names);
@@ -981,6 +1086,11 @@ function main() {
 			if(!t.is_init)
 				t.init();
 			__m=this.__get_m();
+			/**
+			 * @param {{ (arg0: any, arg1: any): any; (x: any, y: any): any; fp?: any; } | null} f
+			 * @param {string} n
+			 * @param {number} s
+			 */
 			function find_closed_gen(f,n,s) {
 				let e=0
 					,q=0;
@@ -988,7 +1098,7 @@ function main() {
 					e=s;
 				if(n=='y')
 					q=s;
-				f=function(x,y) {
+				f=function(/** @type {number} */ x,/** @type {number} */ y) {
 					if(__m.opened.field[x+'x'+y]==0) {
 						return f(x+e,y+q);
 					}
@@ -996,7 +1106,7 @@ function main() {
 					y-=q;
 					return f.fp(x,y);
 				};
-				f.fp=function(x,y) {
+				f.fp=function(/** @type {string} */ x,/** @type {string} */ y) {
 					if(__m.opened.field[x+'x'+y]==undefined)
 						return null;
 					return [x,y];
@@ -1092,6 +1202,9 @@ function main() {
 	/**@type {{[x: symbol]: typeof st_ext;} & typeof st_ext} */
 	let n_class_x=any(n_class);
 	cur__class[st_ext._ln]=n_class_x;
+	/**
+	 * @param {undefined[]} e
+	 */
 	function do_cur(...e) {
 		var i;
 		if(st_ext.rx_lx) {
@@ -1099,7 +1212,7 @@ function main() {
 		} else {
 			i=fnname.indexOf(st_ext.n);
 		}
-		let px_fn=function(fn) {
+		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
 			fn.argv=e;
 		};
 		var _result=execute(i,px_fn);
@@ -1110,7 +1223,6 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI;
 		}
-		//console.log('restart on top frame')
 		ret=debugApi.asyncExecuteFunction(top,main);
 	} else {
 		ret=do_cur();
