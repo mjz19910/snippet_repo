@@ -57,7 +57,7 @@ declare global {
 	var __fo: never[];
 	var __for_code: {(func: any,flag:boolean): any; targets: any[];};
 	var __lst: any[];
-	var __ret;
+	var __ret: any;
 	var __w: {I_listener: any; game_scope: any; obj_field?: any;};
 	var __m: {click: (arg0: number,arg1: number) => void; opened: {field: {[x: string]: undefined;}; get: (arg0: number,arg1: number) => boolean;}; mines: {field: {[x: string]: boolean;};};}|null;
 	var __r_ret: any;
