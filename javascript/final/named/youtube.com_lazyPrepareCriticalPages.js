@@ -221,7 +221,24 @@ function main() {
 			delete window.debug;
 			return;
 		}
-		(function(a,n,test_callback) {
+		function test_callback_root(/** @type {{ fo_test: any; }} */ x,/** @type {new () => any} */ func_obj) {
+			let tst;
+			if(x.fo_test) {
+				tst=x.fo_test;
+			} else {
+				tst=new func_obj;
+				x.fo_test=tst;
+			}
+			if(tst.is_open) {
+				tst.abort();
+				tst.is_open=false;
+			}
+			tst.open('GET',location.origin);
+			tst.is_open=true;
+			tst.send();
+		};
+		function runner(a,n,test_callback) {
+			if(!debug) throw new Error("needs devtools open for debug function");
 			/**
 			 * @param {{ [x: string]: () => void; }} proto
 			 * @param {string} name
@@ -248,6 +265,7 @@ function main() {
 				};0`);
 				test_callback(x,func_obj);
 			}
+			/** @type {any} */
 			let func_obj=window[a];
 			let func_proto=func_obj.prototype;
 			function native_callback() {
@@ -300,22 +318,7 @@ function main() {
 			debug.cb=new callback;
 			bp_proto(func_proto,n,func_obj,test_callback);
 		}
-		)('XMLHttpRequest','send',function(/** @type {{ fo_test: any; }} */ x,/** @type {new () => any} */ func_obj) {
-			let tst;
-			if(x.fo_test) {
-				tst=x.fo_test;
-			} else {
-				tst=new func_obj;
-				x.fo_test=tst;
-			}
-			if(tst.is_open) {
-				tst.abort();
-				tst.is_open=false;
-			}
-			tst.open('GET',location.origin);
-			tst.is_open=true;
-			tst.send();
-		});
+		runner('XMLHttpRequest','send',test_callback_root);
 		return 'done';
 	};
 	/** @param {undefined[]} e */
