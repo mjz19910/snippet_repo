@@ -6,10 +6,17 @@ let holder={
 };
 holder.use();
 class EventHandlerVMDispatch extends SimpleStackVM {
+	/**
+	 * @param {(string | number)[][]} instructions
+	 * @param {{ background_audio: { play(): void; }; }} target_obj
+	 */
 	constructor(instructions,target_obj) {
 		super(instructions);
 		this.target_obj=target_obj;
 	}
+	/**
+	 * @param {{}} event
+	 */
 	handleEvent(event) {
 		this.reset();
 		this.run(event);

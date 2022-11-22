@@ -4,6 +4,9 @@ let holder={
 };
 holder.use();
 export class SimpleStackVM {
+	/**
+	 * @param {any} instructions
+	 */
 	constructor(instructions) {
 		this.instructions=instructions;
 		this.stack=[];
@@ -17,12 +20,18 @@ export class SimpleStackVM {
 		this.return_value=void 0;
 		this.running=false;
 	}
+	/**
+	 * @param {any[] | this | (Window & typeof globalThis)} value
+	 */
 	push(value) {
 		this.stack.push(value);
 	}
 	pop() {
 		return this.stack.pop();
 	}
+	/**
+	 * @param {{}[]} run_arguments
+	 */
 	run(...run_arguments) {
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
