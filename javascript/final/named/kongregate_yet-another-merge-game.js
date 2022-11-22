@@ -5,7 +5,7 @@ v1 (spl-f): snippet_repo/javascript/final/kongregate_yet-another-merge-game.js
 function main() {
 	/** @type {import("./__global.js").Holder} */
 	let holder={
-		use(){}
+		use() {}
 	};
 	holder.use();
 	var fnlist=[];
@@ -297,7 +297,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI;
 		}
-		if(debug_flag) console.log('restart on top frame')
+		if(debug_flag) console.log('restart on top frame');
 		ret=debugApi.asyncExecuteFunction(top,main);
 	} else {
 		ret=do_cur();

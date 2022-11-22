@@ -2,6 +2,13 @@
 --- version_list item 1 ---
 v1 (old-s): snippet_repo/javascript/final/myhtml_tokenizer.js
 */
+{
+	/** @type {import("./__global.js").Holder} */
+	let holder={
+		use() {}
+	};
+	holder.use();
+}
 `
 // ***********
     // for ends
@@ -148,59 +155,59 @@ v1 (old-s): snippet_repo/javascript/final/myhtml_tokenizer.js
     // parse error
     object[(LAST_ENTRY
                               + PARSE_ERROR_STOP)]                          = myhtml_tokenizer_end_state_parse_error_stop
-`
+`;
 // .replace(/\n\n+/g,"\n")
-var url_arr,p_res,px_res,dp,promise_arr
+var url_arr,p_res,px_res,dp,promise_arr;
 async function run() {
 	function make_parr() {
-		let res_arr=[]
+		let res_arr=[];
 		for(let i=0;i<255;i++) {
-			let str=i.toString()
-			let pad=2-str.length
-			let pad_str=''
-			let url_str
+			let str=i.toString();
+			let pad=2-str.length;
+			let pad_str='';
+			let url_str;
 			if(pad>0) {
-				pad_str='0'.repeat(pad)
+				pad_str='0'.repeat(pad);
 			}
-			res_arr[i]=stp[0]+pad_str+str+stp[2]
+			res_arr[i]=stp[0]+pad_str+str+stp[2];
 		}
-		return res_arr
+		return res_arr;
 	}
-	stp=["https",":","//","domain.glass","/","atl,","14","s","79","-","in","-","f","31",".","1e100.net"]
+	stp=["https",":","//","domain.glass","/","atl,","14","s","79","-","in","-","f","31",".","1e100.net"];
 
-	url_arr??=make_parr()
+	url_arr??=make_parr();
 
-	promise_arr??=url_arr.map(e => fetch(e))
+	promise_arr??=url_arr.map(e => fetch(e));
 
-	p_res??=(await Promise.all(promise_arr)).map(e => e.text())
-	px_res??=(await Promise.all(p_res))
+	p_res??=(await Promise.all(promise_arr)).map(e => e.text());
+	px_res??=(await Promise.all(p_res));
 
-	dp??=new DOMParser
-	dp.doc_str=px_res.at(-1)
+	dp??=new DOMParser;
+	dp.doc_str=px_res.at(-1);
 	//dp.doc_res=dp.parseFromString(dp.doc_str, "text/html")
 	class TokenizerBase {
 		constructor(source) {
-			this.source=source
-			this.index=0
+			this.source=source;
+			this.index=0;
 		}
 	}
 	class CPPEnumParser extends TokenizerBase {
 	}
 	class HTMLParser extends TokenizerBase {
 		constructor(source) {
-			super(source)
+			super(source);
 			function iota(in_count) {
 				if(typeof in_count!='undefined') {
-					iota.count=Number(in_count)
+					iota.count=Number(in_count);
 					if(Number.isNaN(iota.count)) {
-						iota.count=0
+						iota.count=0;
 					}
 				}
-				return iota.count++
+				return iota.count++;
 			}
 			class iotaReset {
 				constructor() {
-					iota.count=0
+					iota.count=0;
 				}
 			}
 			// general
@@ -245,167 +252,167 @@ async function run() {
 			// parse error
 			//object[PARSE_ERROR]               = parse_error
 			this.static_token_obj=new class extends iotaReset {
-				DATA=iota()
-				TAG_OPEN=iota()
-				END_TAG_OPEN=iota()
-				TAG_CLOSE=iota()
-				TAG_NAME=iota()
-				SELF_CLOSING_START_TAG=iota()
-				MARKUP_DECLARATION_OPEN=iota()
-				ATTRIBUTE_NAME=iota()
-				ATTRIBUTE_VALUE=iota()
+				DATA=iota();
+				TAG_OPEN=iota();
+				END_TAG_OPEN=iota();
+				TAG_CLOSE=iota();
+				TAG_NAME=iota();
+				SELF_CLOSING_START_TAG=iota();
+				MARKUP_DECLARATION_OPEN=iota();
+				ATTRIBUTE_NAME=iota();
+				ATTRIBUTE_VALUE=iota();
 
-				WHITESPACE_TOKEN=iota()
+				WHITESPACE_TOKEN=iota();
 
-				EQUAL_TOKEN=iota()
+				EQUAL_TOKEN=iota();
 
-				STRING_DOUBLE_TOKEN=iota()
-				STRING_DOUBLE_DATA_TOKEN=iota()
-				STRING_SINGLE_TOKEN=iota()
-				STRING_SINGLE_DATA_TOKEN=iota()
-			}
+				STRING_DOUBLE_TOKEN=iota();
+				STRING_DOUBLE_DATA_TOKEN=iota();
+				STRING_SINGLE_TOKEN=iota();
+				STRING_SINGLE_DATA_TOKEN=iota();
+			};
 
 			this.static_state_obj=new class extends iotaReset {
-				DATA=iota()
-				STRING_DOUBLE=iota()
-				STRING_SINGLE=iota()
-				TAG_DATA=iota()
+				DATA=iota();
+				STRING_DOUBLE=iota();
+				STRING_SINGLE=iota();
+				TAG_DATA=iota();
 
-				MARKUP_DECLARATION_OPEN=iota()
+				MARKUP_DECLARATION_OPEN=iota();
 
-				STATE_ENUM_END=iota()
+				STATE_ENUM_END=iota();
 
-				TAG_CLOSE=iota()
+				TAG_CLOSE=iota();
 
-				TAG_OPEN=iota()
-			}
+				TAG_OPEN=iota();
+			};
 
-			this.tok_map=new Map(Object.entries(this.static_token_obj))
-			this.tok_map_rev=new Map(Object.entries(this.static_token_obj).map(e => [e[1],e[0]]))
-			this.state_map=new Map(Object.entries(this.static_state_obj))
-			this.state_map_rev=new Map(Object.entries(this.static_state_obj).map(e => [e[1],e[0]]))
+			this.tok_map=new Map(Object.entries(this.static_token_obj));
+			this.tok_map_rev=new Map(Object.entries(this.static_token_obj).map(e => [e[1],e[0]]));
+			this.state_map=new Map(Object.entries(this.static_state_obj));
+			this.state_map_rev=new Map(Object.entries(this.static_state_obj).map(e => [e[1],e[0]]));
 
-			this.tokenize_state=this.static_state_obj.DATA
+			this.tokenize_state=this.static_state_obj.DATA;
 
-			this.state_stack=[this.static_state_obj.STATE_ENUM_END]
+			this.state_stack=[this.static_state_obj.STATE_ENUM_END];
 		}
 		reset() {
-			this.index=0
+			this.index=0;
 		}
 		get(offset) {
-			return this.source[this.index+offset]
+			return this.source[this.index+offset];
 		}
 		next_token() {
-			let s_tok_obj=this.static_token_obj
-			let s_states=this.static_state_obj
+			let s_tok_obj=this.static_token_obj;
+			let s_states=this.static_state_obj;
 			if(this.tokenize_state==s_states.TAG_OPEN) {
 				if(this.get(0)==' ') {
-					this.index++
-					return [s_tok_obj.WHITESPACE_TOKEN,1]
+					this.index++;
+					return [s_tok_obj.WHITESPACE_TOKEN,1];
 				}
 				if(this.get(0)=='=') {
-					this.index++
-					return [s_tok_obj.EQUAL_TOKEN,1]
+					this.index++;
+					return [s_tok_obj.EQUAL_TOKEN,1];
 				}
 				if(this.get(0)==='>') {
-					this.index++
-					this.tokenize_state=this.state_stack.pop()
-					return [s_tok_obj.END_TAG_OPEN,1]
+					this.index++;
+					this.tokenize_state=this.state_stack.pop();
+					return [s_tok_obj.END_TAG_OPEN,1];
 				}
 				if(this.get(0)=='"') {
-					this.index++
-					this.state_stack.push(this.tokenize_state)
-					this.tokenize_state=s_states.STRING_DOUBLE
-					return [s_tok_obj.STRING_DOUBLE_TOKEN,1]
+					this.index++;
+					this.state_stack.push(this.tokenize_state);
+					this.tokenize_state=s_states.STRING_DOUBLE;
+					return [s_tok_obj.STRING_DOUBLE_TOKEN,1];
 				}
-				let offset=0
+				let offset=0;
 				while(this.get(offset).match(/[0-9a-zA-Z%,&:?()!;/|.#\-_]/)) {
-					offset++
+					offset++;
 				}
 				if(offset>0) {
-					this.index+=offset
-					return [s_tok_obj.DATA,offset]
+					this.index+=offset;
+					return [s_tok_obj.DATA,offset];
 				}
-				return
+				return;
 			}
 			if(this.tokenize_state==s_states.TAG_CLOSE) {
 				if(this.get(0)==' ') {
-					this.index++
-					return [s_tok_obj.WHITESPACE_TOKEN,1]
+					this.index++;
+					return [s_tok_obj.WHITESPACE_TOKEN,1];
 				}
 				if(this.get(0)=='=') {
-					this.index++
-					return [s_tok_obj.EQUAL_TOKEN,1]
+					this.index++;
+					return [s_tok_obj.EQUAL_TOKEN,1];
 				}
 				if(this.get(0)==='>') {
-					this.index++
-					this.tokenize_state=this.state_stack.pop()
-					return [s_tok_obj.END_TAG_OPEN,1]
+					this.index++;
+					this.tokenize_state=this.state_stack.pop();
+					return [s_tok_obj.END_TAG_OPEN,1];
 				}
 				if(this.get(0)=='"') {
-					this.index++
-					this.state_stack.push(this.tokenize_state)
-					this.tokenize_state=s_states.STRING_DOUBLE
-					return [s_tok_obj.STRING_DOUBLE_TOKEN,1]
+					this.index++;
+					this.state_stack.push(this.tokenize_state);
+					this.tokenize_state=s_states.STRING_DOUBLE;
+					return [s_tok_obj.STRING_DOUBLE_TOKEN,1];
 				}
-				let offset=0
+				let offset=0;
 				while(this.get(offset).match(/[0-9a-zA-Z=%,&:? ()!;/|.#\-_]/)) {
-					offset++
+					offset++;
 				}
 				if(offset>0) {
-					this.index+=offset
-					return [s_tok_obj.DATA,offset]
+					this.index+=offset;
+					return [s_tok_obj.DATA,offset];
 				}
-				return
+				return;
 			}
 			if(this.tokenize_state==s_states.STRING_DOUBLE) {
-				let offset=0
+				let offset=0;
 				if(this.get(0)=='"') {
-					this.index++
-					this.tokenize_state=this.state_stack.pop()
-					return [s_tok_obj.STRING_DOUBLE_TOKEN,1]
+					this.index++;
+					this.tokenize_state=this.state_stack.pop();
+					return [s_tok_obj.STRING_DOUBLE_TOKEN,1];
 				}
 				while(this.get(offset).match(/[0-9a-zA-Z=%,&:? ()!;'/|.#\-_]/)) {
-					offset++
+					offset++;
 				}
 				if(offset>0) {
-					this.index+=offset
-					return [s_tok_obj.STRING_DOUBLE_DATA_TOKEN,offset]
+					this.index+=offset;
+					return [s_tok_obj.STRING_DOUBLE_DATA_TOKEN,offset];
 				}
-				return
+				return;
 			}
 			if(this.tokenize_state==s_states.MARKUP_DECLARATION_OPEN) {
 				if(this.get(0)==' ') {
-					this.index++
-					return [s_tok_obj.WHITESPACE_TOKEN,1]
+					this.index++;
+					return [s_tok_obj.WHITESPACE_TOKEN,1];
 				}
 				if(this.get(0)==='>') {
-					this.index++
-					this.tokenize_state=this.state_stack.pop()
-					return [s_tok_obj.END_TAG_OPEN,1]
+					this.index++;
+					this.tokenize_state=this.state_stack.pop();
+					return [s_tok_obj.END_TAG_OPEN,1];
 				}
-				let offset=0
+				let offset=0;
 				while(this.get(offset).match(/[.0-9a-zA-Z\-]/)) {
-					offset++
+					offset++;
 				}
 				if(offset>0) {
-					this.index+=offset
-					return [s_tok_obj.DATA,offset]
+					this.index+=offset;
+					return [s_tok_obj.DATA,offset];
 				}
-				return
+				return;
 			}
 			if(this.tokenize_state==s_states.DATA) {
 				if(this.get(0)=='<'&&this.get(1)=='!') {
-					this.index+=2
-					this.state_stack.push(this.tokenize_state)
-					this.tokenize_state=s_states.MARKUP_DECLARATION_OPEN
-					return [s_tok_obj.MARKUP_DECLARATION_OPEN,2]
+					this.index+=2;
+					this.state_stack.push(this.tokenize_state);
+					this.tokenize_state=s_states.MARKUP_DECLARATION_OPEN;
+					return [s_tok_obj.MARKUP_DECLARATION_OPEN,2];
 				}
 				if(this.get(0)=='<'&&this.get(1)=='/') {
-					this.index+=2
-					this.state_stack.push(this.tokenize_state)
-					this.tokenize_state=s_states.TAG_CLOSE
-					return [s_tok_obj.TAG_CLOSE,2]
+					this.index+=2;
+					this.state_stack.push(this.tokenize_state);
+					this.tokenize_state=s_states.TAG_CLOSE;
+					return [s_tok_obj.TAG_CLOSE,2];
 				}
 				//if(this.get(0) == '/' && this.get(1) == '>'){
 				//	this.index += 2
@@ -413,10 +420,10 @@ async function run() {
 				//	return [s_tok_obj.SELF_CLOSING_START_TAG, 2]
 				//}
 				if(this.get(0)==='<') {
-					this.index++
-					this.state_stack.push(this.tokenize_state)
-					this.tokenize_state=s_states.TAG_OPEN
-					return [s_tok_obj.TAG_OPEN,1]
+					this.index++;
+					this.state_stack.push(this.tokenize_state);
+					this.tokenize_state=s_states.TAG_OPEN;
+					return [s_tok_obj.TAG_OPEN,1];
 				}
 				//if (this.get(0) === '>') {
 				//	this.index++
@@ -429,68 +436,68 @@ async function run() {
 				//	this.tokenize_state = s_states.STRING_DOUBLE
 				//	return [s_tok_obj.STRING_DOUBLE_TOKEN, 1]
 				//}
-				let offset=0
+				let offset=0;
 				for(;;) {
-					let is_ok=false
+					let is_ok=false;
 					if((this.index+offset+1)>this.source.length) {
-						break
+						break;
 					}
 					if(this.get(offset).charCodeAt(0)==8250) {
-						is_ok=true
+						is_ok=true;
 					}
 					if(this.get(offset).charCodeAt(0)==169) {
-						is_ok=true
+						is_ok=true;
 					}
 					if(this.get(offset).match(/[ >+"_/.0-9a-zA-Z\-|\[\]{}:!?%+&;\n*#@()=,']/)) {
-						is_ok=true
+						is_ok=true;
 					}
 					if(!is_ok) {
-						break
+						break;
 					}
-					offset++
+					offset++;
 				}
 				if(offset>0) {
-					this.index+=offset
-					return [s_tok_obj.DATA,offset]
+					this.index+=offset;
+					return [s_tok_obj.DATA,offset];
 				}
 			}
 		}
 		printable(token_item) {
-			return [this.tok_map_rev.get(token_item[0]),this.source.slice(this.index-token_item[1],this.index)]
+			return [this.tok_map_rev.get(token_item[0]),this.source.slice(this.index-token_item[1],this.index)];
 
 		}
 	}
 
-	dp.mc=new HTMLParser(dp.doc_str)
+	dp.mc=new HTMLParser(dp.doc_str);
 
-	dp.token_result_arr=[]
+	dp.token_result_arr=[];
 
-	let state={}
-	void state
+	let state={};
+	void state;
 
 	for(let does_log=false;;) {
-		let token_item=dp.mc.next_token()
+		let token_item=dp.mc.next_token();
 		if(dp.mc.index>=dp.mc.source.length) {
-			break
+			break;
 		}
 		if(!token_item) {
-			console.log('unk',JSON.stringify(dp.mc.get(0)))
-			break
+			console.log('unk',JSON.stringify(dp.mc.get(0)));
+			break;
 		}
-		let printable_token=dp.mc.printable(token_item)
-		let s_obj=dp.mc.static_state_obj
-		let sm=dp.mc.state_map
-		void sm
-		let sr=dp.mc.state_map_rev
-		let cur_st=dp.mc.tokenize_state
+		let printable_token=dp.mc.printable(token_item);
+		let s_obj=dp.mc.static_state_obj;
+		let sm=dp.mc.state_map;
+		void sm;
+		let sr=dp.mc.state_map_rev;
+		let cur_st=dp.mc.tokenize_state;
 		if(s_obj.TAG_OPEN==cur_st&&printable_token[1]==='script') {
-			dp.mc.index=dp.mc.source.indexOf('</script>')+1
+			dp.mc.index=dp.mc.source.indexOf('</script>')+1;
 		}
 		if(does_log) {
-			console.log('tok&state',cur_st,sr.get(cur_st),printable_token)
+			console.log('tok&state',cur_st,sr.get(cur_st),printable_token);
 		}
-		token_item[2]=dp.mc.index
-		dp.token_result_arr.push(token_item)
+		token_item[2]=dp.mc.index;
+		dp.token_result_arr.push(token_item);
 	}
 	//for (let i = 13; i > 0; i--) {
 	//	let token_item = dp.token_result_arr[dp.token_result_arr.length - i]
@@ -499,11 +506,11 @@ async function run() {
 	//}
 
 	dp.token_result_print_arr=dp.token_result_arr.map(token_item => {
-		dp.mc.index=token_item[2]
-		return dp.mc.printable(token_item)
+		dp.mc.index=token_item[2];
+		return dp.mc.printable(token_item);
 	}
-	)
-	console.log(dp.token_result_print_arr)
+	);
+	console.log(dp.token_result_print_arr);
 
 }
-run()
+run();

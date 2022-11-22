@@ -1,92 +1,97 @@
+/** @type {import("./__global.js").Holder} */
+let holder={
+	use() {}
+};
+holder.use();
 export class SimpleStackVM {
 	constructor(instructions) {
-		this.instructions=instructions
-		this.stack=[]
-		this.instruction_pointer=0
-		this.return_value=void 0
-		this.running=false
+		this.instructions=instructions;
+		this.stack=[];
+		this.instruction_pointer=0;
+		this.return_value=void 0;
+		this.running=false;
 	}
 	reset() {
-		this.stack.length=0
-		this.instruction_pointer=0
-		this.return_value=void 0
-		this.running=false
+		this.stack.length=0;
+		this.instruction_pointer=0;
+		this.return_value=void 0;
+		this.running=false;
 	}
 	push(value) {
-		this.stack.push(value)
+		this.stack.push(value);
 	}
 	pop() {
-		return this.stack.pop()
+		return this.stack.pop();
 	}
 	run(...run_arguments) {
-		this.running=true
+		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
-			let cur_instruction=this.instructions[this.instruction_pointer]
-			let [cur_opcode]=cur_instruction
+			let cur_instruction=this.instructions[this.instruction_pointer];
+			let [cur_opcode]=cur_instruction;
 			switch(cur_opcode) {
 				case 'push'/*Stack*/: {
 					for(let i=1;i<cur_instruction.length;i++) {
-						let item=cur_instruction[i]
-						this.push(item)
+						let item=cur_instruction[i];
+						this.push(item);
 					}
-					break
+					break;
 				}
 				case 'drop'/*Stack*/: {
-					let drop=this.pop()
-					void drop
-					break
+					let drop=this.pop();
+					void drop;
+					break;
 				}
 				case 'get'/*Object*/: {
-					let name=this.pop()
-					let obj=this.pop()
-					this.push(obj[name])
-					break
+					let name=this.pop();
+					let obj=this.pop();
+					this.push(obj[name]);
+					break;
 				}
 				case 'call'/*Call*/: {
-					let number_of_arguments=cur_instruction[1]
-					let arg_arr=[]
+					let number_of_arguments=cur_instruction[1];
+					let arg_arr=[];
 					for(let i=0;i<number_of_arguments;i++) {
-						arg_arr.unshift(this.pop())
+						arg_arr.unshift(this.pop());
 					}
-					let name_to_call=this.pop()
-					let target=this.pop()
-					let ret=target[name_to_call](...arg_arr)
-					this.push(ret)
-					break
+					let name_to_call=this.pop();
+					let target=this.pop();
+					let ret=target[name_to_call](...arg_arr);
+					this.push(ret);
+					break;
 				}
 				case 'return'/*Call*/: {
-					let ret=this.pop()
-					this.return_value=ret
-					break
+					let ret=this.pop();
+					this.return_value=ret;
+					break;
 				}
 				case 'halt'/*Running*/: {
-					this.running=false
-					break
+					this.running=false;
+					break;
 				}
 				case 'push_args'/*Special*/: {
-					this.push(run_arguments)
-					break
+					this.push(run_arguments);
+					break;
 				}
 				case 'this'/*Special*/: {
-					this.push(this)
-					break
+					this.push(this);
+					break;
 				}
 				case 'push_window'/*Special*/: {
-					this.push(window)
-					break
+					this.push(window);
+					break;
 				}
 				case 'breakpoint'/*Debug*/: {
-					debugger
-					break
+					debugger;
+					break;
 				}
 				default/*Debug*/: {
-					console.log('unk opcode',cur_opcode)
-					throw new Error("halt")
+					console.log('unk opcode',cur_opcode);
+					throw new Error("halt");
 				}
 			}
-			this.instruction_pointer++
+			this.instruction_pointer++;
 		}
-		console.assert(this.stack.length===0,"stack length is not zero, unhandled data on stack")
-		return this.return_value
+		console.assert(this.stack.length===0,"stack length is not zero, unhandled data on stack");
+		return this.return_value;
 	}
 }

@@ -1,3 +1,10 @@
+{
+	/** @type {import("./__global.js").Holder} */
+	let holder={
+		use() {}
+	};
+	holder.use();
+}
 
 if(activatePrestige.length==3) {
 	/**
@@ -41,7 +48,7 @@ if(activatePrestige.length==3) {
 	}
 	for(let i=0;i<7;i++) {
 		let r=[...nx_x(0,0,0),...nx_y(0,0,0),...nx_l(0,0,0)];
-		let zc=0
+		let zc=0;
 		let om=[];
 		for(let y=0;y<r.length;y+=2) {
 			if(r[y]==0) {
