@@ -11,6 +11,10 @@ function main() {
 	var fnlist=[];
 	var fnname=[];
 	{
+		/**
+		 * @param {any} name
+		 * @param {{ user_run_name: any; }} func
+		 */
 		function add_func(name,func) {
 			var y=fnlist.push(func);
 			if(fnname.indexOf(name)>-1) {
@@ -23,7 +27,7 @@ function main() {
 			}
 			return x;
 		}
-		var execute=function(t,pre_exec,post_exec) {
+		var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
 			var r_fnname=fnname[t];
 			var func=fnlist[t];
 			try {
@@ -92,6 +96,10 @@ function main() {
 			static f_on = true
 		})`);
 		window.CustomInputMatcher=class {
+			/**
+			 * @param {any} t_needle
+			 * @param {any} t_string_getter
+			 */
 			constructor(t_needle,t_string_getter) {
 				this.ts_get=t_string_getter;
 				this.tr=t_needle;
@@ -229,29 +237,29 @@ function main() {
 					console.log(fs_str.slice(cc-2,e_js_call));
 					let can_try_again=true;
 					let end_char=e_js_call;
-					var ix_pc=function(n) {
+					var ix_pc=function(/** @type {string} */ n) {
 						return fs_str.indexOf(n,end_char+1);
 					};
 					var w_ext={};
-					w_ext._l=function(...a) {
+					w_ext._l=function(/** @type {any[]} */ ...a) {
 						if(a.length>0)_log_fn("l",...a);
 						return {
 							v: a
 						};
 					};
-					w_ext._v=function(...a) {
+					w_ext._v=function(/** @type {any[]} */ ...a) {
 						if(a.length>0)_log_fn("v",...a);
 						if(a.length==1)
 							return a[0];
 						return a;
 					};
-					w_ext._c=function(...a) {
+					w_ext._c=function(/** @type {any[]} */ ...a) {
 						if(a.length>0)_log_fn("c",...a);
 						return {
 							v: a
 						};
 					};
-					w_ext._e=function(...a) {
+					w_ext._e=function(/** @type {any[]} */ ...a) {
 						/* cspell: disable */
 						console.log("new Empty VNode",a.length);
 						return {
@@ -259,7 +267,7 @@ function main() {
 						};
 						/* cspell: enable */
 					};
-					w_ext._s=function(...a) {
+					w_ext._s=function(/** @type {any} */ ...a) {
 						return a;
 					};
 					w_ext.getQuantumFoam=fi_ob[1].getQuantumFoam;
@@ -273,7 +281,7 @@ function main() {
 					let wb_eval
 					// @ts-ignore
 					with(w_ext) {
-						wb_eval=function(s) {
+						wb_eval=function(/** @type {any} */ s) {
 							eval(s);
 						};
 					}
@@ -283,7 +291,7 @@ function main() {
 						try {
 							let events=fs_str.slice(cc-2,end_char);
 							console.log(fs_str.slice(cc-2,end_char+32));
-							_log_fn=(...e) => {
+							_log_fn=(/** @type {any} */ ...e) => {
 								console.log(...e);
 							};
 							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
@@ -330,6 +338,9 @@ function main() {
 			break;
 		}
 	};
+	/**
+	 * @param {undefined[]} e
+	 */
 	function do_cur(...e) {
 		var i;
 		if(cur.rx_lx) {
@@ -337,7 +348,7 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(fn) {
+		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
 			fn.argv=e;
 		};
 		var _result=execute(i,px_fn);
