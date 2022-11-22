@@ -3,6 +3,9 @@
 v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
 */
 function main() {
+
+	/** @arg {any} v */
+	function any(v){return v;}
 	class stt {
 		static _f() {}
 		static _n="<empty>";
@@ -24,7 +27,7 @@ function main() {
 		get test_needle() {
 			return this.tr;
 		}
-	};
+	}
 	class curTy extends stt {
 		/** @type {(undefined[])|null} */
 		argv=null;
@@ -131,8 +134,9 @@ function main() {
 			/** @type {string[]} */
 			this.names=[];
 		}
-		/** @type {any} */
+		/** @type {((...x:any[])=>any)} */
 		get f() {
+			if(!this._f) throw new Error("no function to get");
 			return this._f;
 		}
 		/** @type {string|CustomInputMatcher|null} */
@@ -141,8 +145,8 @@ function main() {
 			if(!this._ln) throw new Error("no last name");
 			let cur=this._ln;
 			this._lf=f;
-			if(this.funcs.indexOf(this._lf)==-1) {
-				this.add_func(this._ln,this._lf);
+			if(this.funcs.indexOf(any(this._lf))==-1) {
+				this.add_func(this._ln,any(this._lf));
 			}
 			if(cur instanceof CustomInputMatcher) {
 				let custom_str=cur.test_string;
