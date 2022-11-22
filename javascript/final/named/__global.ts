@@ -5,54 +5,11 @@ declare global {
 		CustomInputMatcher: typeof CustomInputMatcher;
 		debugApi: {};
 		__ret: {};
-		debug?:debug;
-		undebug?:undebug;
-		find_closed_up_x: (arg0: number,arg1: number) => any;
-		find_closed_up_y: any;
-		find_closed_dn_x: any;
-		find_closed_dn_y: any;
-		dz?: any;
-		__state: {lex_chunks: any[]; m_l_str: any; reset_count: boolean;};
+		event_info;
 	}
-	var debugApi: DebugAPI;
+	var debugApi: Impl.DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
 
-	type SymbolIndexable={
-		[x: symbol]: any;
-	}
-
-	interface undebug {
-		(fn: ()=>void): void;
-	}
-	var undebug: undebug;
-
-	interface debug {
-		(fn:()=>void, code:string): void;
-		u:any;
-		fo:any;
-		st: Set<any>;
-		sarr: any[];
-		ne: any[];
-		__ident_start_chars: string[];
-		__ident_chars: string[];
-		__all_vars: string;
-		__getter_names: string;
-		__get_list: string;
-		__name_list: string[];
-		__replace_func: {S: () => never;};
-		__orig_func: {S: any;};
-		cb: any;
-		__trg_eval: (arg0: string) => void;
-		gr: {m: () => null;};
-		rx: {jQuery?: any; I_listener?: any; game_scope?: any; obj_field?: any;};
-		o: any;
-		f: (...x:any[])=>void;
-	}
-
-	var debug: debug|undefined;
-	var __fo: never[];
-	var __for_code: {(func: any,flag:boolean): any; targets: any[];};
-	var __lst: any[];
 	var __ret: any;
 	var __w: {I_listener: any; game_scope: any; obj_field?: any;};
 	var __m: {click: (arg0: number,arg1: number) => void; opened: {field: {[x: string]: undefined;}; get: (arg0: number,arg1: number) => boolean;}; mines: {field: {[x: string]: boolean;};};}|null;
@@ -60,6 +17,22 @@ declare global {
 	var __res: any[];
 	var __instance: {constructor: any;};
 	var __nx_names: never[];
+
+	var Upgrade: {apply: (arg0: any) => {(): any; new(): any; toNumber: {(): any; new(): any;};};};
+	var game: {upgrades: {maxObjects: any;}; mergeObjects: string|any[]; spawnTime: {cd: any;}; matter: any;};
+	var gameFunctions: {decreaseSpawnCooldown: (arg0: number) => void; maxUpgrades: (arg0: any,arg1: any) => void;};
+
+	interface Document {
+		gameiframe: any;
+	}
+
+	var EventTarget: {
+		prototype: EventTarget;
+		new(): EventTarget;
+		events: any;
+		syms: any;
+		state;
+	};
 }
 namespace X {
 	export class CustomInputMatcher {
@@ -77,20 +50,25 @@ namespace X {
 
 declare global {
 	interface Window {
-		cint?:number;
-		citv?:number;
+		cint?: number;
+		citv?: number;
 	}
-	var cint:ReturnType<typeof setTimeout>|undefined;
-	var citv:ReturnType<typeof setInterval>|undefined;
+	var cint: ReturnType<typeof setTimeout>|undefined;
+	var citv: ReturnType<typeof setInterval>|undefined;
 }
 
-class DebugAPI {
-	asyncExecuteEval(gameiframe: any,function_: () => number): void {
-		gameiframe;
-		function_;
-	};
-	asyncExecuteFunction(top: Window|null,function_: any): void {
-		top;
-		function_;
-	};
+declare global {
+	var DebugAPI: typeof Impl.DebugAPI;
+}
+namespace Impl {
+	export class DebugAPI {
+		asyncExecuteEval(gameiframe: any,function_: () => number): void {
+			gameiframe;
+			function_;
+		};
+		asyncExecuteFunction(top: Window|null,function_: any): void {
+			top;
+			function_;
+		};
+	}
 }
