@@ -4,5 +4,8 @@
 		"checkJs": true,
 		"strict": true,
 		"target": "esnext",
-	}
+	},
+	"files": [
+		"**/*"
+	]
 }
