@@ -4,7 +4,7 @@ v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp/js_lex_with_regexp.js
 */
 function main() {
 	/** @arg {any} v */
-	function any(v){return v;}
+	function any(v) {return v;}
 	class CustomInputMatcher {
 		/**
 		 * @param {any} t_needle
@@ -408,17 +408,17 @@ function main() {
 			 * @type {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; } | null}
 			 */
 			obj={
-				break_parse:false,
-				eof:false,
-				reset_count:false,
-				nx_len:0,
-				lex_cur:null,
+				break_parse: false,
+				eof: false,
+				reset_count: false,
+				nx_len: 0,
+				lex_cur: null,
 			};
 			/**
 			 * @param {string} str
 			 * @param {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj
 			 */
-			constructor(str, obj) {
+			constructor(str,obj) {
 				return {
 					lex_chunks: [],
 					m_l_str: str,
@@ -461,12 +461,12 @@ function main() {
 		let func_start_js_lex=function(/** @type {string} */ str) {
 			let fake_obj_={
 				break_parse: false,
-				eof:false,
+				eof: false,
 				reset_count: false,
 				nx_len: 0,
 				lex_cur: null,
 			};
-			let state=new JSLexState(str, fake_obj_);
+			let state=new JSLexState(str,fake_obj_);
 			state.obj=null;
 			window.__state=state;
 			let cont=true;
@@ -484,7 +484,7 @@ function main() {
 				}
 				if(b_cnt-b_cnt_off>100) {//console.log(state.lex_chunks[state.lex_chunks.length-1],b_cnt-b_cnt_off)
 				}
-				if(state.obj && state.m_l_str) {
+				if(state.obj&&state.m_l_str) {
 					state.m_l_str=state.m_l_str.slice(state.obj.nx_len);
 				}
 				if(!state.m_l_str) throw new Error("1");
@@ -516,7 +516,7 @@ function main() {
 		if(window.debugApi==undefined) {
 			debugApi=new DebugAPI;
 		}
-		if(debug_flag) console.log('restart on top frame')
+		if(debug_flag) console.log('restart on top frame');
 		ret=debugApi.asyncExecuteFunction(top,main);
 	} else {
 		ret=cur.do_cur();

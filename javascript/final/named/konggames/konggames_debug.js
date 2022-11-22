@@ -4,7 +4,7 @@ v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
 */
 function main() {
 	/** @arg {any} v */
-	function any(v){return v;}
+	function any(v) {return v;}
 	class CustomInputMatcher {
 		/**
 		 * @param {any} t_needle
