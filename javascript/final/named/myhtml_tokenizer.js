@@ -465,7 +465,7 @@ async function run() {
 		}
 		state_stack_pop() {
 			let val=this.state_stack.pop();
-			if(val === void 0) throw new Error("State stack underflow");
+			if(val===void 0) throw new Error("State stack underflow");
 			return val;
 		}
 		/** @param {[number,number]} token_item */
