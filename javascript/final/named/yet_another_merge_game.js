@@ -9,7 +9,7 @@ function main() {
 	};
 	holder.use();
 	/** @arg {any} v */
-	function any(v){return v;}
+	function any(v) {return v;}
 	class CustomInputMatcher {
 		/**
 		 * @param {any} t_needle
