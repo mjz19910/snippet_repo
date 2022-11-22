@@ -425,7 +425,11 @@ function main() {
 			let cont=true;
 			let b_cnt=0;
 			let b_cnt_off=0;
+			let do_fake_set=false;
 			while(cont) {
+				if(do_fake_set) {
+					state.obj=fake_obj_;
+				}
 				cont=func_cont_js_lex(state);
 				if(state.reset_count) {
 					b_cnt_off=b_cnt;
@@ -433,8 +437,9 @@ function main() {
 				}
 				if(b_cnt-b_cnt_off>100) {//console.log(state.lex_chunks[state.lex_chunks.length-1],b_cnt-b_cnt_off)
 				}
-				if(!state.obj) throw 1;
-				state.m_l_str=state.m_l_str.slice(state.obj.nx_len);
+				if(state.obj) {
+					state.m_l_str=state.m_l_str.slice(state.obj.nx_len);
+				}
 				if(state.m_at_eof) {
 					console.log('EOF={bytes_left:'+state.m_l_str.length+',processed:'+str.length+`,lex_count:${b_cnt}`+'}');
 					/**
