@@ -36,7 +36,6 @@ declare global {
 
 declare global {
 	interface Window {
-		CustomInputMatcher: typeof CustomInputMatcher;
 		debugApi: {};
 		__ret: {};
 		debug?:debug;
@@ -50,7 +49,6 @@ declare global {
 	}
 
 	var debugApi: DebugAPI;
-	var CustomInputMatcher: typeof X.CustomInputMatcher;
 
 	class DebugAPI {
 		asyncExecuteFunction(top: Window|null,function_: any): void;
