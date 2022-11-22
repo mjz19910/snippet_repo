@@ -1,8 +1,7 @@
 /* spell:words
 --- version_list item 1 ---
 v1 (old): snippet_repo/javascript/final/items/item_01_v1.js
-v2 (old): snippet_repo/javascript/final/items/item_01_v2.js
-v3 (unk)
+v2 (cur): snippet_repo/javascript/final/items/item_01_v2.js
 */
 class RElement {
 	/** @param {any} v */
