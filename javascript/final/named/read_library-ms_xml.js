@@ -101,10 +101,12 @@ async function x() {
 
 				if(i instanceof Element) {
 					let cur_value_vec=i.children;
-					append_from_children(obj,cur_value_vec);
+					for(let i=0;i<cur_value_vec.length;i++) {
+						append_from_children(obj,cur_value_vec[i]);
+					}
 					continue;
 				}
-				append_from_childNodes(obj,cur_value_vec);
+				append_from_childNodes(obj,i);
 			}
 			return obj;
 		}
