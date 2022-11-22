@@ -474,7 +474,7 @@ function main() {
 			return [protos,JSON.parse(js.js_g),car,JSON.parse(retv.js_g),js,repo];
 		}
 		/**
-		 * @param {any[] | Map<any, any>} cmap
+		 * @param {Map<any, any>} cmap
 		 * @param {undefined} [o_start]
 		 */
 		function exdo_user(cmap,o_start) {
@@ -549,6 +549,7 @@ function main() {
 			}
 			return js_inner;
 		}
+		if(!('$j' in window)) throw new Error("missing window.$j");
 		return do_json_stringify_iter(40000,cmap,window.$j);
 	}
 	react_find_all();
