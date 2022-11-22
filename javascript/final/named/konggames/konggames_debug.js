@@ -9,7 +9,7 @@ function main() {
 		static n_on=true;
 		static f_on=true;
 	}
-	window.CustomInputMatcher=class {
+	class CustomInputMatcher {
 		/**
 		 * @param {any} t_needle
 		 * @param {any} t_string_getter
@@ -43,18 +43,17 @@ function main() {
 			} else {
 				i=cur.names.indexOf(cur.n);
 			}
-			function px_fn(/** @type {{ argv: any[]; }} */ fn) {
-				fn.argv=e;
+			if(i<0) {
+				console.log("no function to run was matched");
+				return null;
 			}
-			var _result=cur.execute(i,px_fn);
+			var _result=cur.execute(i);
 			return _result;
 		}
 		/**
 		 * @param {number} t
-		 * @param {{ (fn: { argv: any[]; }): void; (arg0: any): void; }} pre_exec
-		 * @param {((arg0: any) => void) | undefined} [post_exec]
 		 */
-		execute(t,pre_exec,post_exec) {
+		execute(t) {
 			var r_fnname=this.names[t];
 			var func=this.funcs[t];
 			try {
@@ -94,46 +93,40 @@ function main() {
 						}
 						console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
 					}
-					if(eval_func) {
-						eval_func(func);
-					}
 					let ret=eval_func();
-					if(post_exec)
-						post_exec(ret);
 					return ret;
 				} else {
-					if(pre_exec) {
-						pre_exec(func);
-					}
+					if(!('argv' in func)) throw 1;
+					if(!(func.argv instanceof Array)) throw 1;
+					this.px_fn(func);
 					let ret=func();
-					if(post_exec)
-						post_exec(ret);
 					return ret;
 				}
 			} finally {}
 		}
 		value=null;
 		/**
-		 * @param {any} name
-		 * @param {((...x: any[]) => any) & { user_run_name: string; }} func
+		 * @param {string|CustomInputMatcher} name
+		 * @param {((...x: any[]) => any) & { user_run_name: unknown; argv: any[]}} func
 		 */
 		add_func(name,func) {
 			var y=this.funcs.push(func);
-			if(this.names.indexOf(name)>-1) {
-				throw SyntaxError("Name conflict");
+			if(name instanceof CustomInputMatcher) {
+			} else {
+				if(this.names.indexOf(name)>-1)
+					throw SyntaxError("Name conflict");
+				var x=this.names.push(name);
+				func.user_run_name=name;
+				if(x!=y)
+					throw SyntaxError("unbalanced function or name number");
+				return x;
 			}
-			var x=this.names.push(name);
-			func.user_run_name=name;
-			if(x!=y) {
-				throw SyntaxError("unbalanced function or name number");
-			}
-			return x;
 		}
 		constructor() {
 			super();
 			let sym=Symbol();
 			this.self_sym=sym;
-			/** @type {(((...x:any[])=>any)&{ user_run_name: string; })[]} */
+			/** @type {(((...x:any[])=>any)&{ user_run_name: unknown; argv:any[] })[]} */
 			this.funcs=[];
 			/** @type {string[]} */
 			this.names=[];
@@ -142,7 +135,10 @@ function main() {
 		get f() {
 			return this._f;
 		}
+		/** @type {string|CustomInputMatcher|null} */
+		_ln=null;
 		set f(f) {
+			if(!this._ln) throw new Error("no last name");
 			let cur=this._ln;
 			this._lf=f;
 			if(this.funcs.indexOf(this._lf)==-1) {

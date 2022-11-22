@@ -117,6 +117,10 @@ function main() {
 		}
 	}
 	class cur_ extends stt {
+		do_cur() {
+			throw new Error("Method not implemented.");
+		}
+		/** @type {Promise<void>|void|null} */
 		value=null;
 		f_on=true;
 		n_on=true;

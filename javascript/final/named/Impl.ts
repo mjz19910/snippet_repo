@@ -16,9 +16,10 @@ export namespace Impl {
 			gameiframe;
 			function_;
 		};
-		asyncExecuteFunction(top: Window|null,function_: any): void {
+		asyncExecuteFunction(top: Window|null,function_: any): Promise<void> {
 			top;
 			function_;
+			return Promise.resolve();
 		};
 	}
 }

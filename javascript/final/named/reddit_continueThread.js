@@ -112,7 +112,10 @@ function main() {
 				return this.tr;
 			}
 		};
-		var cur=class extends stt {
+		var cur=class {
+			static do_cur() {
+				throw new Error("Method not implemented.");
+			}
 			static get f() {
 				return this._f;
 			}

@@ -110,11 +110,16 @@ function main() {
 			return this.tr;
 		}
 	}
-	class curTy extends stt {
-		static get f() {
+	class curTy {
+		/** @type {Promise<void>|void|null} */
+		value=null;
+		do_cur() {
+			throw new Error("Method not implemented.");
+		}
+		get f() {
 			return this._f;
 		}
-		static set f(f) {
+		set f(f) {
 			let cur=this._ln;
 			this._lf=f;
 			if(fnlist.indexOf(this._lf)==-1) {
@@ -133,10 +138,10 @@ function main() {
 				this._f=f;
 			}
 		}
-		static get n() {
+		get n() {
 			return this._n;
 		}
-		static set n(n) {
+		set n(n) {
 			let cur=n;
 			if(cur instanceof CustomInputMatcher) {
 				let custom_str=cur.test_string;
@@ -163,12 +168,12 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
 	let sym=Symbol();
+	curTy.self_sym=sym;
+	curTy.funcs=fnlist;
+	curTy.names=fnname;
+	let cur=new curTy;
 	var cur__class={[sym]: cur};
-	cur.self_sym=sym;
-	cur.funcs=fnlist;
-	cur.names=fnname;
 	cur.n=new CustomInputMatcher("https://makiki99.github.io/prestige-frame/",() => location.href);
 	cur.f=function() {
 		class HTMLIFrameExt extends HTMLIFrameElement {
