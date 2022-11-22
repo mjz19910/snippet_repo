@@ -4,7 +4,7 @@ v1 (cur): snippet_repo/javascript/final/ret_do_cur_debug_api/ret_do_cur_debugApi
 */
 function main() {
 	/** @arg {any} v */
-	function any(v){return v;}
+	function any(v) {return v;}
 	class CustomInputMatcher {
 		/**
 		 * @param {any} t_needle
@@ -186,7 +186,7 @@ function main() {
 	cur.f=function() {
 		// example function
 		console.log("hello world!");
-	}
+	};
 	let ret;
 	let debug_flag=false;
 	if(top!==window) {
