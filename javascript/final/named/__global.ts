@@ -7,12 +7,20 @@ declare global {
 		__ret: {};
 		debug?:debug;
 		undebug?:undebug;
+		find_closed_up_x;
+		find_closed_up_y;
+		find_closed_dn_x;
+		find_closed_dn_y;
 	}
 	var debugApi: DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
 
 	class DebugAPI {
 		asyncExecuteFunction(top: Window|null,function_: any): void;
+	}
+
+	type SymbolIndexable={
+		[x: symbol]: any;
 	}
 
 	interface undebug {
@@ -33,6 +41,11 @@ declare global {
 		__getter_names;
 		__get_list;
 		__name_list;
+		__replace_func;
+		__orig_func;
+		cb;
+		__trg_eval;
+		gr;
 		rx;
 		o;
 		f;
