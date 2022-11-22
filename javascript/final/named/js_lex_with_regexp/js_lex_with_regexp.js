@@ -182,7 +182,6 @@ function main() {
 		}
 	}
 	let cur=new curTy;
-	var cur__class={[cur.self_sym]: cur};
 	cur.n='js_lex_with_regexp';
 	cur.f=function() {
 		if(window.debugApi===undefined) {
@@ -526,7 +525,7 @@ function main() {
 		ret.then(() => void 0).catch(e => console.error(e));
 	}
 	cur.value=ret;
-	return {...cur,_class: cur__class};
+	return cur;
 	//# sourceURL=snippet:///%24_2
 }
 window.__ret=main();
