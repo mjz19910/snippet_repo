@@ -435,7 +435,7 @@ async function run() {
 					if((this.index+offset+1)>this.source.length) {
 						break
 					}
-					; if(this.get(offset).charCodeAt(0)==8250) {
+					if(this.get(offset).charCodeAt(0)==8250) {
 						is_ok=true
 					}
 					if(this.get(offset).charCodeAt(0)==169) {

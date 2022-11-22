@@ -1070,7 +1070,7 @@ function main() {
 					console.log(e);
 					return;
 				}
-				; __w.I_listener.I(e[0],e[1]);
+				__w.I_listener.I(e[0],e[1]);
 			}
 			);
 		}

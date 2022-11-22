@@ -84,7 +84,7 @@ var z=function(fn,cbfn,ex) {
 	} else {
 		nc.reset()
 	}
-	; return nc
+	return nc
 }
 var b=async function(fn) {
 	p1()

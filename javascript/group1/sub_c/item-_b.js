@@ -85,7 +85,7 @@ var z=function(fn,cbfn,ex) {
 	} else {
 		nc.reset()
 	}
-	; return nc
+	return nc
 }
 var get_p_val=function(gid) {
 	return getPrestigeGain(player.generators[gid].prestigeAmount).logarithm
@@ -137,7 +137,7 @@ var b=async function(fn) {
 	if(!fn.run) {
 		return pd
 	}
-	; if(++ix<lim) {
+	if(++ix<lim) {
 		console.log("max",ix)
 		await fn.wait(120)
 		await fn(fn)
@@ -172,7 +172,7 @@ var b=async function(fn) {
 		if(player.generators[d+2]) {
 			d=d+1
 		}
-		; await fn.wait(150)
+		await fn.wait(150)
 		tar=player.generators[d+1]
 		tarl=tar.list
 		tlen=tarl.length

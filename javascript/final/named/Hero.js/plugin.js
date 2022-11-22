@@ -438,10 +438,10 @@ function main() {
 				if(c==-1) {
 					c=0;
 				}
-				; if(a==-1) {
+				if(a==-1) {
 					a=0;
 				}
-				; if(c>a) {
+				if(c>a) {
 					return 1;
 				}
 				if(a>c) {

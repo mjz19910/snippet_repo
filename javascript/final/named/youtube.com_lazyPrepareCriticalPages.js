@@ -247,7 +247,7 @@ function main() {
 				tst=new func_obj
 				x.fo_test=tst
 			}
-			; if(tst.is_open) {
+			if(tst.is_open) {
 				tst.abort()
 				tst.is_open=false
 			}
