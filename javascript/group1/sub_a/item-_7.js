@@ -129,6 +129,7 @@ function main() {
 			dom_map=new Map;
 			/** @type {number|undefined} */
 			l;
+			js_g="{type:\"Error\"}";
 		}
 		/**
 		 * @param {any} e
@@ -431,6 +432,7 @@ function main() {
 			});
 			Object.defineProperty(cin,"js_o",{
 				get: function() {
+					if(!js) throw 1;
 					return JSON.parse(js);
 				},
 				set: function(e) {
@@ -439,10 +441,8 @@ function main() {
 			});
 			return cin;
 		}
-		if(window.cr_getC2Runtime) {
-			do {
-				js=do_json_stringify_iter(90,cmap,cr_getC2Runtime());
-			} while(false);
+		if('cr_getC2Runtime' in window && window.cr_getC2Runtime instanceof Function) {
+			js=do_json_stringify_iter(90,cmap,window.cr_getC2Runtime());
 			var retv=exdo_user(cmap);
 			var car=[]
 				,repo=[];
@@ -471,7 +471,7 @@ function main() {
 				return get_proto_id(a)-get_proto_id(b);
 			}
 			car.sort(do_sort_by_proto);
-			return js=="Error"? [protos,"X",car,repo]:[protos,JSON.parse(js.js_g),car,JSON.parse(retv.js_g),js,repo];
+			return [protos,JSON.parse(js.js_g),car,JSON.parse(retv.js_g),js,repo];
 		}
 		/**
 		 * @param {any[] | Map<any, any>} cmap
