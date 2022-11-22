@@ -3,9 +3,19 @@
 v1 (spl-f): snippet_repo/javascript/final/history_length_logger.js
 */
 function main() {
+	/**
+	 * @type {any[]}
+	 */
 	var fnlist=[];
+	/**
+	 * @type {any[]}
+	 */
 	var fnname=[];
 	{
+		/**
+		 * @param {any} name
+		 * @param {{ user_run_name: any; }} func
+		 */
 		function add_func(name,func) {
 			var y=fnlist.push(func);
 			if(fnname.indexOf(name)>-1) {
@@ -18,7 +28,7 @@ function main() {
 			}
 			return x;
 		}
-		var execute=function(t,pre_exec,post_exec) {
+		var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
 			var r_fnname=fnname[t];
 			var func=fnlist[t];
 			try {
@@ -87,6 +97,10 @@ function main() {
 			static f_on = true
 		})`);
 		window.CustomInputMatcher=class {
+			/**
+			 * @param {any} t_needle
+			 * @param {any} t_string_getter
+			 */
 			constructor(t_needle,t_string_getter) {
 				this.ts_get=t_string_getter;
 				this.tr=t_needle;
@@ -99,6 +113,7 @@ function main() {
 			}
 		};
 		var cur=class extends stt {
+			/** @type {any} */
 			static get f() {
 				return this._f;
 			}
@@ -121,6 +136,7 @@ function main() {
 					this._f=f;
 				}
 			}
+			/** @type {any} */
 			static get n() {
 				return this._n;
 			}
@@ -170,7 +186,7 @@ function main() {
 		} else {
 			i=fnname.indexOf(cur.n);
 		}
-		let px_fn=function(fn) {
+		let px_fn=function(/** @type {{ argv: undefined[]; }} */ fn) {
 			fn.argv=e;
 		};
 		var _result=execute(i,px_fn);
