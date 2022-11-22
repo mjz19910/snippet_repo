@@ -129,7 +129,7 @@ function main() {
 			dom_map=new Map;
 			/** @type {number|undefined} */
 			l;
-			js_g="{type:\"Error\"}";
+			js_g="{\"type\":\"Error\"}";
 		}
 		/**
 		 * @param {any} e
