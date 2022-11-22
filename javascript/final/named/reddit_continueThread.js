@@ -324,7 +324,7 @@ function main() {
 		window.sr=s_refs
 		return refs
 	}
-	do_cur=function(...e) {
+	var do_cur=function(...e) {
 		var i
 		if(cur.rx_lx) {
 			i=fnname.indexOf(cur.rx_lx)

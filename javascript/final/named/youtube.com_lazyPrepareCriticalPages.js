@@ -257,7 +257,7 @@ function main() {
 		})
 		return 'done'
 	}
-	do_cur=function(...e) {
+	var do_cur=function(...e) {
 		var i
 		if(cur.rx_lx) {
 			i=fnname.indexOf(cur.rx_lx)

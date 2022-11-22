@@ -239,7 +239,7 @@ al:for(let i=0;i<6;i++){let r=[...nx_x(0,0),...nx_y(0,0)];let zc=0,om=[];for(let
 		cd.append(rr)
 		create_iframe_cell_for_url('https://makiki99.github.io/metaprestige/')
 	}
-	do_cur=function(...e) {
+	var do_cur=function(...e) {
 		var i
 		if(cur.rx_lx) {
 			i=fnname.indexOf(cur.rx_lx)
