@@ -10,7 +10,7 @@ export class SimpleStackVM {
 	 */
 	constructor(instructions) {
 		this.instructions=instructions;
-		/** @type {any[]} */
+		/** @type {({}|string)[]} */
 		this.stack=[];
 		this.instruction_pointer=0;
 		this.return_value=void 0;
@@ -55,6 +55,8 @@ export class SimpleStackVM {
 				case 'get'/*Object*/: {
 					let name=this.pop();
 					let obj=this.pop();
+					if(!obj) throw new Error();
+					if(!(typeof name==='string')) throw new Error();
 					this.push(obj[name]);
 					break;
 				}
@@ -66,6 +68,8 @@ export class SimpleStackVM {
 					}
 					let name_to_call=this.pop();
 					let target=this.pop();
+					if(!target) throw new Error();
+					if(!(typeof name_to_call==='string')) throw new Error();
 					let ret=target[name_to_call](...arg_arr);
 					this.push(ret);
 					break;
