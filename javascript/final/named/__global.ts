@@ -1,23 +1,12 @@
-import {Impl} from "./Impl";
 
 export {};
 
-declare global {
-	interface Window {
-		CustomInputMatcher: typeof CustomInputMatcher;
-		debugApi: {};
-		__ret: {};
-	}
+import {CustomInputMatcherKeepspace} from "./CustomInputMatcherKeepspace.js";
 
-	var debugApi: Impl.DebugAPI;
-	var CustomInputMatcher: typeof Impl.CustomInputMatcher;
+export type KeepList=[
+	CustomInputMatcherKeepspace.Keep,
+]
 
-	var __ret: any;
-}
-
-declare global {
-	var DebugAPI: typeof Impl.DebugAPI;
-}
 
 // lunar-atoms-tycoon.js
 declare global {
