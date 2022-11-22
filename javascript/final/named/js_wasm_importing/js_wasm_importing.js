@@ -3,7 +3,7 @@
 v1 (cur): snippet_repo/javascript/final/js_wasm_importing/js_wasm_importing.js
 */
 function main() {
-	class cur_class {
+	class curTy {
 		/**
 		 * @param {any} m_cur_key
 		 * @param {any} m_cur_value
@@ -78,7 +78,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new cur_class;
+	let cur=new curTy;
 	cur.key='js_wasm_importing';
 	cur.value=js_wasm_importing_main;
 	return cur.run();
