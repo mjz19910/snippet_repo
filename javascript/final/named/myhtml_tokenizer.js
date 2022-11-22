@@ -173,7 +173,7 @@ async function run() {
 		}
 		return res_arr;
 	}
-	stp=["https",":","//","domain.glass","/","atl,","14","s","79","-","in","-","f","31",".","1e100.net"];
+	let stp=["https",":","//","domain.glass","/","atl,","14","s","79","-","in","-","f","31",".","1e100.net"];
 
 	url_arr??=make_parr();
 
@@ -196,18 +196,19 @@ async function run() {
 	class HTMLParser extends TokenizerBase {
 		constructor(source) {
 			super(source);
+			let iota_count=0;
 			function iota(in_count) {
 				if(typeof in_count!='undefined') {
-					iota.count=Number(in_count);
-					if(Number.isNaN(iota.count)) {
-						iota.count=0;
+					iota_count=Number(in_count);
+					if(Number.isNaN(iota_count)) {
+						iota_count=0;
 					}
 				}
-				return iota.count++;
+				return iota_count++;
 			}
 			class iotaReset {
 				constructor() {
-					iota.count=0;
+					iota_count=0;
 				}
 			}
 			// general
@@ -316,7 +317,7 @@ async function run() {
 				}
 				if(this.get(0)==='>') {
 					this.index++;
-					this.tokenize_state=this.state_stack.pop();
+					this.tokenize_state=this.state_stack_pop();
 					return [s_tok_obj.END_TAG_OPEN,1];
 				}
 				if(this.get(0)=='"') {
@@ -346,7 +347,7 @@ async function run() {
 				}
 				if(this.get(0)==='>') {
 					this.index++;
-					this.tokenize_state=this.state_stack.pop();
+					this.tokenize_state=this.state_stack_pop();
 					return [s_tok_obj.END_TAG_OPEN,1];
 				}
 				if(this.get(0)=='"') {
@@ -369,7 +370,7 @@ async function run() {
 				let offset=0;
 				if(this.get(0)=='"') {
 					this.index++;
-					this.tokenize_state=this.state_stack.pop();
+					this.tokenize_state=this.state_stack_pop();
 					return [s_tok_obj.STRING_DOUBLE_TOKEN,1];
 				}
 				while(this.get(offset).match(/[0-9a-zA-Z=%,&:? ()!;'/|.#\-_]/)) {
@@ -388,7 +389,7 @@ async function run() {
 				}
 				if(this.get(0)==='>') {
 					this.index++;
-					this.tokenize_state=this.state_stack.pop();
+					this.tokenize_state=this.state_stack_pop();
 					return [s_tok_obj.END_TAG_OPEN,1];
 				}
 				let offset=0;
@@ -416,7 +417,7 @@ async function run() {
 				}
 				//if(this.get(0) == '/' && this.get(1) == '>'){
 				//	this.index += 2
-				//	this.tokenize_state = this.state_stack.pop()
+				//	this.tokenize_state = this.state_stack_pop()
 				//	return [s_tok_obj.SELF_CLOSING_START_TAG, 2]
 				//}
 				if(this.get(0)==='<') {
@@ -427,7 +428,7 @@ async function run() {
 				}
 				//if (this.get(0) === '>') {
 				//	this.index++
-				//	this.tokenize_state = this.state_stack.pop()
+				//	this.tokenize_state = this.state_stack_pop()
 				//	return [s_tok_obj.END_TAG_OPEN, 1]
 				//}
 				//if (this.get(0) == '"') {
@@ -462,9 +463,14 @@ async function run() {
 				}
 			}
 		}
+		state_stack_pop() {
+			let val=this.state_stack.pop();
+			if(val === void 0) throw new Error("State stack underflow");
+			return val;
+		}
+		/** @param {[number,number]} token_item */
 		printable(token_item) {
 			return [this.tok_map_rev.get(token_item[0]),this.source.slice(this.index-token_item[1],this.index)];
-
 		}
 	}
 
