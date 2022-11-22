@@ -4,12 +4,26 @@ v1 (spl-f): snippet_repo/javascript/final/js_wasm_importing.js
 */
 function main() {
 	class cur_class {
+		/**
+		 * @param {any} m_cur_key
+		 * @param {any} m_cur_value
+		 */
 		add_func(m_cur_key,m_cur_value) {
 			this.key_arr.push(m_cur_key);
 			this.value_arr.push(m_cur_value);
 		}
+		/**
+		 * @type {any[]}
+		 */
 		value_arr=[];
+		/**
+		 * @type {any[]}
+		 */
 		key_arr=[];
+		/**
+		 * @param {any} key
+		 * @param {any} value
+		 */
 		set(key,value) {
 			if(this.key_arr.indexOf(key)>-1) {
 				throw new Error("Key conflict");
@@ -38,6 +52,7 @@ function main() {
 			}
 			return ret;
 		}
+		/** @type {any} */
 		get value() {
 			return this.m_value;
 		}
@@ -51,6 +66,7 @@ function main() {
 				this.m_value=val;
 			}
 		}
+		/** @type {any} */
 		get key() {
 			return this.m_key;
 		}
@@ -70,6 +86,9 @@ function main() {
 			let fr=await fetch('/examples/importing-javascript-functions-into-webassembly/demo/rust/pkg/importing_javascript_functions_into_webassembly_bg.wasm');
 			if(!fr.body) throw new Error("no body on fetch");
 			let cr,rd=fr.body.getReader();
+			/**
+			 * @type {any[]}
+			 */
 			let u8=[];
 			let uint_8_arr=new Uint8Array(0);
 			while(!(cr=await rd.read()).done) {
@@ -91,10 +110,17 @@ function main() {
 			uint_8_arr[196]=128;
 			uint_8_arr[194]=128;
 			window.module_bytes=uint_8_arr;
+			/**
+			 * @type {{ console_log_from_wasm: () => void; memory: { buffer: Iterable<number>; }; }}
+			 */
 			let wasm;
 			function console_log_from_wasm() {
 				wasm.console_log_from_wasm();
 			}
+			/**
+			 * @param {any} arg0
+			 * @param {any} arg1
+			 */
 			function __wbg_log_f48fd9f1562bf74d(arg0,arg1) {
 				let varg0=getStringFromWasm(arg0,arg1);
 				console.log(varg0);
@@ -113,6 +139,10 @@ function main() {
 				}
 				return wasm_memory_cache;
 			}
+			/**
+			 * @param {any} ptr
+			 * @param {any} len
+			 */
 			function getStringFromWasm(ptr,len) {
 				return cachedTextDecoder.decode(getUint8Memory().subarray(ptr,ptr+len));
 			}
