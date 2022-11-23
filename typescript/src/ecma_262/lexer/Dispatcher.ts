@@ -7,7 +7,7 @@ import {section_12_3} from "./section_12_3.js";
 import {section_12_4} from "./section_12_4.js";
 import {section_12_5} from "./section_12_5.js";
 import {section_12_6} from "./section_12_6.js";
-import {section_12_7} from "./section_12_7.js";
+import {JSPunctuators} from "./JSPunctuators.js";
 import {section_12_8} from "./section_12_8.js";
 import {section_12_8_3} from "./section_12_8_3.js";
 import {section_12_8_4} from "./section_12_8_4.js";
@@ -22,7 +22,7 @@ export class Dispatcher {
 	ecma_12_4: section_12_4=new section_12_4(this)
 	ecma_12_5: section_12_5=new section_12_5(this)
 	ecma_12_6: section_12_6=new section_12_6(this)
-	ecma_12_7: section_12_7=new section_12_7(this)
+	ecma_12_7: JSPunctuators=new JSPunctuators(this)
 	ecma_12_8_3: section_12_8_3=new section_12_8_3(this)
 	ecma_12_8_4: section_12_8_4=new section_12_8_4(this)
 	ecma_12_8_5: section_12_8_5=new section_12_8_5(this)

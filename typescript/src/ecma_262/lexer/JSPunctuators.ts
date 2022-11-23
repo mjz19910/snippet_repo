@@ -14,7 +14,7 @@ const s_two_char_tokens=new HashMap<string,JSTokenizerTokenType>();
 // HashMap<char, TokenType> Lexer::s_single_char_tokens
 const s_single_char_tokens=new HashMap<string,JSTokenizerTokenType>();
 
-export class section_12_7 extends LexerBase {
+export class JSPunctuators extends LexerBase {
 	constructor(dis: Dispatcher) {
 		super(dis);
 		if(s_keywords.is_empty()) {
