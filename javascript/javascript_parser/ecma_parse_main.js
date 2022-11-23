@@ -24,9 +24,6 @@ export function ecma_parse_main() {
 		class ecma_12_3 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineTerminator(str,index) {
-				if(str[index]==='\n') {
-					debugger;
-				}
 				let len=0;
 				if(str[index]==='\r')
 					len=1;
