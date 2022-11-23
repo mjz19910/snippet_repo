@@ -2795,22 +2795,23 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			if(md2===null) return;
 			let is_sponsor_block=this.is_sponsor_block_event_data(md2);
 			if(is_sponsor_block) return;
-			let state={
-				did_misbehave: event.ports.length!==1,
-			};
-			if(!state.did_misbehave) {
-				this.on_connect_request_message(state,event);
-			}
+			if(event.ports.length!==1) return this.on_client_misbehaved(event);
+			let state={did_misbehave: false};
+			this.on_connect_request_message(state,event);
 			if(!state.did_misbehave) return;
-			// @RemoteOriginConnection
-			console.log(`[@RemoteOriginConnection] Client misbehaved: connect api not followed`);
-			console.group("Received message event");
-			console.log("root_ev_data",message_data);
-			console.log("root_ev_ports",event.ports);
-			console.log("root_event",event);
-			this.last_misbehaved_client_event=event;
-			console.groupEnd();
+			this.on_client_misbehaved(event);
 		}
+	}
+	// @RemoteOriginConnection
+	/** @arg {MessageEvent<unknown>} event */
+	on_client_misbehaved(event) {
+		console.log(`[@RemoteOriginConnection] Client misbehaved: connect api not followed`);
+		console.group("Received message event");
+		console.log("root_ev_data",event.data);
+		console.log("root_ev_ports",event.ports);
+		console.log("root_event",event);
+		this.last_misbehaved_client_event=event;
+		console.groupEnd();
 	}
 	// @RemoteOriginConnection
 	start_root_server() {
