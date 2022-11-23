@@ -1219,6 +1219,7 @@ export function ecma_parse_main() {
 				this.root=new ecma_root;
 			}
 			describe_token(token_value) {
+				if(!token_value) return ['undefined'];
 				let tok_str=this.str.slice(token_value[2],token_value[2]+token_value[1]);
 				return [token_value[0],tok_str];
 			}
