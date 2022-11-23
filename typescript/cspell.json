@@ -20,6 +20,7 @@
         "float_milli_from_prev",
         "Formattable",
         "get_millis_as_pretty_str",
+        "Hashbang",
         "ifneq",
         "lazyload",
         "lightgray",
