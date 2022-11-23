@@ -345,8 +345,9 @@ function main() {
 				let game_ctrl=document.querySelector('#control');
 				if(!game_ctrl) throw new Error("missing element with id=control");
 				if(!w.jQuery) throw new Error("1");
-				/*G:event expando{typeof T is Y;expando:string}*/
-				x.f=game_ctrl[w.jQuery.G.expando].events.mouseup[0].handler;
+				let expando_data=game_ctrl[w.jQuery.G.expando];
+				if(!expando_data) throw new Error("Missing jquery expando key on element");
+				x.f=expando_data.events.mouseup[0].handler;
 			}
 			__run(x.f,x.__all_vars);
 			/**
@@ -975,6 +976,7 @@ function main() {
 			}
 			if(!to_expando_key(expando_str)) throw new Error("1");
 			let jq_dom_data=dom[expando_str];
+			if(!jq_dom_data) throw 1;
 			x.__name_list=[];
 			x.f=jq_dom_data.events.click[0].handler;
 			__run(x.f,x.__all_vars);
