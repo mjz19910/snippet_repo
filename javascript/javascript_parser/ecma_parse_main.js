@@ -693,11 +693,10 @@ export function ecma_parse_main() {
 				{
 					let cur=this.DecimalIntegerLiteral(str,index);
 					len+=cur[1];
-					if(cur[1] === 1) {
-						debugger;
-					}
-					console.log(cur,JSON.stringify(str.slice(index,index+5)));
 				}
+				if(str[index+len]===".") {
+					console.error("handle numbers like 0.0");
+				};
 				if(len>max_len)max_len=len;
 				len=0;
 				return ["DecimalLiteral",max_len];
@@ -765,7 +764,7 @@ export function ecma_parse_main() {
 						if(t2[0]) {
 							tmp_len+=t2[1];
 						}
-						let res=this.DecimalDigits_Sep(str,index);
+						let res=this.DecimalDigits_Sep(str,index+tmp_len);
 						tmp_len+=res[1];
 					}
 					len+=tmp_len;
