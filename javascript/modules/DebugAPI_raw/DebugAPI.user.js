@@ -2576,7 +2576,7 @@ function is_record_with_string_type(x,k) {
 }
 
 /** @arg {unknown} x @returns {{} & Record<"type", string>|null} */
-function type_record_with_string_type(x) {
+function cast_to_record_with_string_type(x) {
 	if(x instanceof Object&&'type' in x&&is_record_with_string_type(x,"type")) {
 		return x;
 	}
@@ -2589,7 +2589,7 @@ function is_record_with_T(x,k) {
 }
 
 /** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {U & Record<T, string>|null} */
-function type_record_with_key_and_string_type(x,k) {
+function cast_to_record_with_key_and_string_type(x,k) {
 	if(is_record_with_T(x,k)&&is_record_with_string_type(x,k)) {
 		return x;
 	}
@@ -2740,7 +2740,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 */
 	on_connect_request_message(event) {
 		/** @type {{type:string}|null} */
-		let message_record=type_record_with_string_type(event.data);
+		let message_record=cast_to_record_with_string_type(event.data);
 		if(message_record===null) {
 			return this.on_client_misbehaved(event);
 		}
@@ -2769,11 +2769,11 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
-		let message_record_with_source=type_record_with_key_and_string_type(data_obj,"source");
+		let message_record_with_source=cast_to_record_with_key_and_string_type(data_obj,"source");
 		if(!message_record_with_source) return false;
 		if(message_record_with_source.source!=="sponsorblock") return false;
 		// should be a SponsorBlock event.data
-		let message_record_with_type=type_record_with_string_type(data_obj);
+		let message_record_with_type=cast_to_record_with_string_type(data_obj);
 		if(message_record_with_type===null) return false;
 		switch(message_record_with_type.type) {
 			case "data":
