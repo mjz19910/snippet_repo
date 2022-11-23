@@ -131,7 +131,13 @@ function main() {
 			}
 		}
 		/** @type {((...x:any[])=>any)&{user_run_name:unknown;argv:any[]}} */
-		_f;
+		_f=(function() {
+			function x() {};
+			x.user_run_name="";
+			/** @type {any[]} */
+			x.argv=[];
+			return x;
+		})();
 		/** @type {(...x:any[])=>any} */
 		get f() {
 			if(!this._f) throw new Error("no function to get");
@@ -190,7 +196,7 @@ function main() {
 	}
 	let cur=new curTy;
 	var cur__class={[cur.self_sym]: cur};
-	let do_cur_count;
+	let do_cur_count=0;
 	cur.n="yet_another_merge_game";
 	cur.f=function() {
 		if(!('func_log' in Function)) throw new Error("1");
@@ -233,7 +239,9 @@ function main() {
 		var t_idx=fs_str.lastIndexOf(String.fromCharCode(123),lnc)-1;
 		var e_js_call=d_idx;
 		console.log(fs_str.slice(t_idx,d_idx));
-		let _log_fn;
+		function _log_fn(/** @type {any} */ ...e) {
+			console.log(...e);
+		}
 		for(var cc=0;cc<10;cc++) {
 			let cv=fs_str.lastIndexOf(String.fromCharCode(123),t_idx);
 			let c2=fs_str.lastIndexOf(",",t_idx);
@@ -294,9 +302,23 @@ function main() {
 					w_ext.getQuantumFoam=fi_ob[1].getQuantumFoam;
 					w_ext.matterThisPrestige=fi_ob[1].matterThisPrestige;
 					{
+						/** @type {["prestigeGame","formatNumber","getQFMilestoneInfo"]} */
 						let do_def=["prestigeGame","formatNumber","getQFMilestoneInfo"];
 						for(let i of do_def) {
-							w_ext[i]=fi_ob[1][i];
+							switch(i) {
+								case 'formatNumber': {
+									if(!(i in w_ext)) continue;
+									w_ext[i]=fi_ob[1][i];
+								} break;
+								case 'getQFMilestoneInfo': {
+									if(!(i in w_ext)) continue;
+									w_ext[i]=fi_ob[1][i];
+								} break;
+								case 'prestigeGame': {
+									if(!(i in w_ext)) continue;
+									w_ext[i]=fi_ob[1][i];
+								} break;
+							}
 						}
 					}
 					let wb_eval;
@@ -313,13 +335,10 @@ function main() {
 						try {
 							let events=fs_str.slice(cc-2,end_char);
 							console.log(fs_str.slice(cc-2,end_char+32));
-							function _log_fn_2(/** @type {any} */ ...e) {
-								console.log(...e);
-							}
 							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
 								debugger;
 							}
-							_log_fn_2("Sl:",events.length);
+							_log_fn("Sl:",events.length);
 							wb_eval(events);
 							cf=void 0;
 							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
