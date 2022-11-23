@@ -745,7 +745,7 @@ export function ecma_parse_main() {
 				}
 				if(len>max_len) max_len=len;
 				len=0;
-				// NonZeroDigit NumericLiteralSeparator(opt) DecimalDigits[+Sep]
+				// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
 				{
 					let tmp_len=0;
 					let tmp=this.NonZeroDigit(str,index+tmp_len);
