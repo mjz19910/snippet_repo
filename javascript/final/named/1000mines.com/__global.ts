@@ -21,7 +21,7 @@ declare global {
 	var undebug: undebug;
 
 	class has_expando {
-		["jQuery_expando_1"]: JQueryExpandoData;
+		["jQuery_expando_1"]?: JQueryExpandoData;
 	}
 
 	type ExpandoKey=keyof has_expando;
