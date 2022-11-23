@@ -346,6 +346,10 @@ function main() {
 							}
 							break;
 						} catch(e) {
+							if(!(e instanceof Error)) {
+								console.error(e);
+								break;
+							}
 							let is_token_error=e.message=="Invalid or unexpected token";
 							let is_eoi_error=e.message=="Unexpected end of input";
 							let aal=e.message.indexOf("after argument list")>3;
