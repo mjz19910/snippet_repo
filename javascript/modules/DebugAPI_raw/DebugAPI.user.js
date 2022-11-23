@@ -2772,11 +2772,16 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @template T @arg {T} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
 		if(typeof data_obj!='object'||data_obj===null) return false;
-		let message_record_with_source=cast_to_record_with_key_and_string_type(data_obj,"source");
+		/** @type {{}} */
+		let obj=data_obj;
+		let message_record_with_source=cast_to_record_with_key_and_string_type(obj,"source");
 		if(!message_record_with_source) return false;
 		if(message_record_with_source.source!=="sponsorblock") return false;
+		/** @type {{source:string}} */
+		let obj_2=message_record_with_source;
 		// should be a SponsorBlock event.data
-		let message_record_with_type=cast_to_record_with_string_type(data_obj);
+		/** @type {{type:string,source:string}|null} */
+		let message_record_with_type=cast_to_record_with_string_type(obj_2);
 		if(message_record_with_type===null) return false;
 		switch(message_record_with_type.type) {
 			case "data":
