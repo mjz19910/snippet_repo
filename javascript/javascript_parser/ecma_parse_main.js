@@ -1478,7 +1478,24 @@ export function ecma_parse_main() {
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RegularExpressionChar(str,index) {
-				throw new Error("Method not implemented.");
+				// RegularExpressionNonTerminator but not one of \ or / or [
+				x: {
+					if(str[index]==='\\'&&str[index]==='/'||str[index]==='[]'[0]) {
+						break x;
+					}
+					let res=this.RegularExpressionNonTerminator(str,index);
+					if(res[0])
+						return ["RegularExpressionChar",res[1]];
+				}
+				// RegularExpressionBackslashSequence
+				let res=this.RegularExpressionBackslashSequence(str,index);
+				if(res[0])
+					return ["RegularExpressionChar",res[1]];
+				// RegularExpressionClass
+				res=this.RegularExpressionClass(str,index);
+				if(res[0])
+					return ["RegularExpressionChar",res[1]];
+				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RegularExpressionFirstChar(str,index) {
