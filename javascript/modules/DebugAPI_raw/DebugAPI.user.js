@@ -2737,16 +2737,14 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	client_max_id=0;
 	/**
 	 * @arg {MessageEvent<unknown>} event
-	 * @param {{ did_misbehave: boolean; }} state
 	 */
-	on_connect_request_message(state,event) {
+	on_connect_request_message(event) {
 		if(typeof event.data!=='object'||event.data===null||!('type' in event.data)) {
-			state.did_misbehave=true;
-			return;
+			return this.on_client_misbehaved(event);
 		}
 		switch(event.data.type) {
 			case remote_origin.post_message_connect_message_type: break;
-			default: state.did_misbehave=true; return;
+			default: return this.on_client_misbehaved(event);
 		}
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
@@ -2796,10 +2794,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			let is_sponsor_block=this.is_sponsor_block_event_data(md2);
 			if(is_sponsor_block) return;
 			if(event.ports.length!==1) return this.on_client_misbehaved(event);
-			let state={did_misbehave: false};
-			this.on_connect_request_message(state,event);
-			if(!state.did_misbehave) return;
-			this.on_client_misbehaved(event);
+			this.on_connect_request_message(event);
 		}
 	}
 	// @RemoteOriginConnection
