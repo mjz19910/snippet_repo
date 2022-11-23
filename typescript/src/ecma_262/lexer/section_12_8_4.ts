@@ -19,8 +19,8 @@ export class section_12_8_4 extends LexerBase {
 				return ['StringLiteral',2];
 			}
 			let single_string_len=this.SingleStringCharacters(str,index+1);
-			if(str[index+single_string_len+1]==="'") {
-				return ['StringLiteral',single_string_len+2];
+			if(str[index+single_string_len[1]+1]==="'") {
+				return ['StringLiteral',single_string_len[1]+2];
 			}
 			return [null,0];
 		}
@@ -182,26 +182,20 @@ export class section_12_8_4 extends LexerBase {
 		}
 		return 1;
 	}
-	EscapeCharacter(str: string,index: number) {
+	EscapeCharacter(str: string,index: number): LexReturnType {
 		let len0=this.SingleEscapeCharacter(str,index);
 		let len1=this.m_dispatcher.DecimalDigit(str,index);
 		if(!len1[0]) throw len1[1];
-		let act=0;
-		if(len0>len1[1]) {
-			act=1;
-		}
-		console.error("todo",act);
 		if(str[index]==='x') {
-			return 1;
+			return ["EscapeCharacter",1];
 		}
 		if(len0>0&&len0>=len1[1]) {
-			return len0;
+			return ["EscapeCharacter",len0];
 		}
 		if(len1[1]>0&&len1[1]>len0) {
-			return len1;
+			return ["EscapeCharacter",len1[1]];
 		}
-		console.error("todo",str,index);
-		throw new Error("TODO");
+		return [null,0];
 	}
 	// https://tc39.es/ecma262/#prod-LegacyOctalEscapeSequence
 	LegacyOctalEscapeSequence(str: string,index: number): LexReturnType {

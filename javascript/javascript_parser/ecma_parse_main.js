@@ -893,15 +893,16 @@ export function ecma_parse_main() {
 				if(str[index]==='x') {
 					return [null,1];
 				}
-				if(len0>0&&len0>=len1) {
+				if(len0[1]>0&&len0>=len1) {
 					return len0;
 				}
-				if(len1>0&&len1>len0) {
+				if(len1[1]>0&&len1>len0) {
 					return len1;
 				}
 				if(act===1) {
 					throw new Error("TODO");
 				}
+				return [null,0];
 			}
 			/*LegacyOctalEscapeSequence ::
 			0 [lookahead ∈ { 8, 9 }]
@@ -924,7 +925,7 @@ export function ecma_parse_main() {
 					let len=this.NonZeroOctalDigit(str,index);
 					if(len[1]>0) {
 						let n_len=this.OctalDigit(str,index+1);
-						if(n_len>0) {
+						if(n_len[1]>0) {
 							break x;
 						}
 						return [null,1];
@@ -936,7 +937,7 @@ export function ecma_parse_main() {
 						len=this.OctalDigit(str,index+1);
 						if(len[1]>0) {
 							let n_len=this.OctalDigit(str,index+2);
-							if(n_len>0) {
+							if(n_len[1]>0) {
 								break x;
 							}
 							return [null,2];
@@ -1122,16 +1123,18 @@ export function ecma_parse_main() {
 				}
 				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateTail(str,index) {
 				throw new Error("Method not implemented.");
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateMiddle(str,index) {
 				throw new Error("Method not implemented.");
 			}
 			/*Template ::
 			NoSubstitutionTemplate
 			TemplateHead*/
-			/** @returns {[string,number]|[null,number]} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Template(str,index) {
 				// NoSubstitutionTemplate
 				let ret=this.NoSubstitutionTemplate(str,index);
@@ -1145,9 +1148,11 @@ export function ecma_parse_main() {
 				}
 				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateHead(str,index) {
 				throw new Error("Method not implemented.");
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			NoSubstitutionTemplate(str,index) {
 				throw new Error("Method not implemented.");
 			}
@@ -1234,6 +1239,7 @@ export function ecma_parse_main() {
 					return [js_token_generator.EOF_TOKEN,0,this.index];
 				}
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			InputElementDiv(str,index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 				let max_item=null,max_val=0;
