@@ -2749,11 +2749,11 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				}
 				if(state.did_misbehave) {
 					console.log(`Client misbehaved: connect api not followed`);
-					console.group();
+					console.group("Received message event");
 					console.log("object",message_data);
 					console.log("Received message event ports",event.ports);
 					console.log("Received message event",event);
-					console;
+					console.groupEnd();
 				}
 			}
 		}
