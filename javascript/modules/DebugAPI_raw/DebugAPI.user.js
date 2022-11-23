@@ -2739,10 +2739,12 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @arg {MessageEvent<unknown>} event
 	 */
 	on_connect_request_message(event) {
-		if(typeof event.data!=='object'||event.data===null||!('type' in event.data)) {
+		/** @type {{type:string}|null} */
+		let message_record=type_record_with_string_type(event.data);
+		if(message_record===null) {
 			return this.on_client_misbehaved(event);
 		}
-		switch(event.data.type) {
+		switch(message_record.type) {
 			case remote_origin.post_message_connect_message_type: break;
 			default: return this.on_client_misbehaved(event);
 		}
