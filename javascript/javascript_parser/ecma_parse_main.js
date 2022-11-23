@@ -690,7 +690,7 @@ export function ecma_parse_main() {
 			DecimalLiteral(str,index) {
 				let cur=this.DecimalIntegerLiteral(str,index);
 				console.log(cur,str.slice(index,index+2));
-				return [null,0];
+				return cur;
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalDigits(str,index) {
@@ -739,12 +739,13 @@ export function ecma_parse_main() {
 				{
 					// NonZeroDigit
 					let tmp=this.NonZeroDigit(str,index);
-					if(tmp[0]&&tmp[1]>len) {
+					if(tmp[1]>len) {
 						len=tmp[1];
 					}
 				}
 				if(len>max_len) max_len=len;
-				// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
+				len=0;
+				// NonZeroDigit NumericLiteralSeparator(opt) DecimalDigits[+Sep]
 				{
 					let tmp_len=0;
 					let tmp=this.NonZeroDigit(str,index+tmp_len);
@@ -754,9 +755,12 @@ export function ecma_parse_main() {
 						if(t2[0]) {
 							tmp_len+=t2[1];
 						}
-						this.DecimalDigits_Sep(str,index);
+						let res=this.DecimalDigits_Sep(str,index);
+						tmp_len+=res[1];
 					}
+					len+=tmp_len;
 				}
+				if(len>max_len) max_len=len;
 				if(max_len===0) {
 					return [null,0];
 				}
