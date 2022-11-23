@@ -324,11 +324,16 @@ function main() {
 			/** @arg {[string, PropertyDescriptor]} arg0 @returns {['get_set', PropertyDescriptor]|['refs',string,number]|['or',string,any]} */
 			function map_own_properties([n,e]) {
 				if(e.get||e.set) {
-					let n={};
-					if(e.get)
-						n.get=e.get;
-					if(e.set)
-						n.set=e.set;
+					class xy {
+						/** @param {PropertyDescriptor} e */
+						constructor(e) {
+							if(e.get)
+								this.get=e.get;
+							if(e.set)
+								this.set=e.set;
+						}
+					}
+					let n=new xy(e);
 					return ['get_set',n];
 				}
 				var v=e.value;

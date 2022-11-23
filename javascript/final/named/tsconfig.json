@@ -6,7 +6,8 @@
 		"strict": true,
 		"types": [],
 		"lib": [
-			"ESNext"
+			"ESNext",
+			"DOM"
 		],
 		"target": "ESNext",
 		"typeRoots": [
