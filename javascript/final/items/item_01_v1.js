@@ -3,9 +3,13 @@
 v1 (cur): snippet_repo/javascript/final/items/item_01_v1.js
 */
 class RustProcess {
+	/** @type {()=>void} */
+	callable;
 	/**@arg {()=>void} value */
 	static fromCallable(value) {
-		this.callable=value
+		let obj=new this;
+		obj.callable=value;
+		return obj;
 	}
 	run() {
 		if(this.callable) {
