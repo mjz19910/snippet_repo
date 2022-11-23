@@ -1437,10 +1437,10 @@ export function ecma_parse_main() {
 		class ecma_12_8_5 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RegularExpressionLiteral(str,index) {
-				str;index;
+				str; index;
 				throw new Error("Method not implemented.");
 			}
-}
+		}
 		class ecma_root {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineTerminatorSequence(str,index) {
@@ -1519,15 +1519,19 @@ export function ecma_parse_main() {
 				this.index=0;
 				this.root=new ecma_root;
 			}
+			/**
+			 * @param {[string,number,number]|[symbol,number,number] | null} token_value
+			 */
 			describe_token(token_value) {
 				if(!token_value) return ['undefined'];
 				let tok_str=this.str.slice(token_value[2],token_value[2]+token_value[1]);
 				return [token_value[0],tok_str];
 			}
+			/** @returns {[string,number,number]|[symbol,number,number]|null} */
 			next_token() {
-				let cur;
+				/** @type {[string,number,number]} */
 				let ret;
-				cur=this.InputElementDiv(this.str,this.index);
+				let cur=this.InputElementDiv(this.str,this.index);
 				if(cur[0]!==null) {
 					if(cur[1]===0) {
 						ret=[cur[0],cur[1],this.index];
@@ -1542,11 +1546,7 @@ export function ecma_parse_main() {
 				}
 				cur=this.InputElementTemplateTail(this.str,this.index);
 				console.log("next token fallthrough",cur,this.index);
-				console.log(this.str);
-				try{var res=(0,eval)("(function(){return "+this.str+"})()")}catch(e){
-					console.log(e);
-				}
-				console.log(res);
+				return null;
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			InputElementDiv(str,index) {
