@@ -2570,6 +2570,19 @@ class RemoteSocket {
 	}
 }
 
+/** @arg {Record<"type", unknown>} x @returns {x is Record<"type",string>} */
+function is_record_with_string_type(x) {
+	return typeof x.type==='string';
+}
+
+/** @arg {unknown} x @returns {{} & Record<"type", string>|null} */
+function type_record_with_string_type(x) {
+	if(x instanceof Object&&'type' in x&&is_record_with_string_type(x)) {
+		return x;
+	}
+	return null;
+}
+
 // <RemoteOriginConnection>
 class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @param {TransportMessageObj} obj */
@@ -2749,6 +2762,11 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		function on_message_event(event) {
 			let message_data=event.data;
 			if(typeof message_data==='object') {
+				if(message_data===null) return;
+				let message_record=type_record_with_string_type(message_data);
+				if(message_record!==null) {
+					message_record.type;
+				}
 				let state={
 					did_misbehave: event.ports.length!==1,
 				};
