@@ -2570,14 +2570,27 @@ class RemoteSocket {
 	}
 }
 
-/** @arg {Record<"type", unknown>} x @returns {x is Record<"type",string>} */
-function is_record_with_string_type(x) {
-	return typeof x.type==='string';
+/** @template {string} T @arg {Record<T, unknown>} x @arg {T} k @returns {x is Record<T,string>} */
+function is_record_with_string_type(x,k) {
+	return typeof x[k]==='string';
 }
 
 /** @arg {unknown} x @returns {{} & Record<"type", string>|null} */
 function type_record_with_string_type(x) {
-	if(x instanceof Object&&'type' in x&&is_record_with_string_type(x)) {
+	if(x instanceof Object&&'type' in x&&is_record_with_string_type(x,"type")) {
+		return x;
+	}
+	return null;
+}
+
+/** @template {string} T @arg {unknown} x @arg {T} k @returns {x is Record<T,unknown>} */
+function is_record_with_T(x,k) {
+	return x instanceof Object&&k in x;
+}
+
+/** @template {string} T @arg {unknown} x @arg {T} k @returns {{} & Record<T, string>|null} */
+function type_record_with_key_and_string_type(x,k) {
+	if(is_record_with_T(x,k)&&is_record_with_string_type(x,k)) {
 		return x;
 	}
 	return null;
@@ -2765,7 +2778,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				if(message_data===null) return;
 				let message_record=type_record_with_string_type(message_data);
 				if(message_record!==null) {
-					message_record.type;
+					switch(message_record.type) {
+						// might be SponsorBlock
+						case "data":{}
+					};
 				}
 				let state={
 					did_misbehave: event.ports.length!==1,
