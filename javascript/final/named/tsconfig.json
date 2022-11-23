@@ -5,6 +5,9 @@
 		"checkJs": true,
 		"strict": true,
 		"types": [],
+		"lib": [
+			"ESNext"
+		],
 		"typeRoots": [
 			"./node_modules/@types"
 		],
