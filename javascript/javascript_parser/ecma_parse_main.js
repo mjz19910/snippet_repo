@@ -1,3 +1,5 @@
+import window from "./window_def.js";
+
 export function ecma_parse_main() {
 	'use strict';
 	{
@@ -6,7 +8,7 @@ export function ecma_parse_main() {
 			constructor(parent) {
 				this.parent=parent;
 			}
-			/** @returns {[string,number]|null} */
+			/** @returns {[string,number]|[null,0]} */
 			WhiteSpace(str,index) {
 				if(str[index]===' ') {
 					return ['WhiteSpace',1];
@@ -14,7 +16,7 @@ export function ecma_parse_main() {
 				if(str[index]==='\t') {
 					return ['WhiteSpace',1];
 				}
-				return null;
+				return [null,0];
 			}
 		}
 		class ecma_12_3 {
@@ -22,7 +24,7 @@ export function ecma_parse_main() {
 			constructor(parent) {
 				this.parent=parent;
 			}
-			/** @returns {[string,number]|null} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			LineTerminator(str,index) {
 				let len=0;
 				if(str[index]==='\r')
@@ -38,16 +40,12 @@ export function ecma_parse_main() {
 				if(len>0) {
 					return ['LineTerminator',1];
 				}
-				return null;
+				return [null,0];
 			}
-			/**
-			 * @param {string} a
-			 * @param {number} b
-			 * @returns {number}
-			 */
-			LineTerminatorSequence(a,b) {
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			LineTerminatorSequence(str,index) {
 				console.info('LineTerminatorSequence not implemented');
-				return 0;
+				return [null,0];
 			}
 		}
 		class ecma_12_4 {
@@ -383,9 +381,9 @@ export function ecma_parse_main() {
 			constructor(parent) {
 				this.parent=parent;
 			}
-			/** @param {string} str @returns {[number,null,null]|[number,["regexpNonTerm"],null]} */
-			RegularExpressionNonTerminator(str) {
-				let _val=this.parent.ecma_12_3.LineTerminator(str);
+			/** @param {string} str @arg {number} index @returns {[number,null,null]|[number,["regexpNonTerm"],null]} */
+			RegularExpressionNonTerminator(str,index) {
+				let _val=this.parent.ecma_12_3.LineTerminator(str,index);
 				if(!_val) {
 					return [1,['regexpNonTerm'],null];
 				}
@@ -504,7 +502,7 @@ export function ecma_parse_main() {
 			Hex4Digits ::
 			HexDigit HexDigit HexDigit HexDigit
 			*/
-			/** @returns {[string,number]|[null,number]} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			StringLiteral(str,index) {
 				let cur=str[index];
 				if(cur==='"') {
@@ -529,6 +527,7 @@ export function ecma_parse_main() {
 				}
 				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			DoubleStringCharacters(str,index) {
 				let off=0;
 				for(;;) {
@@ -541,6 +540,7 @@ export function ecma_parse_main() {
 				}
 				return off;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			DoubleStringCharacter(str,index) {
 				x: {
 					if(str[index]==='"') {
@@ -571,6 +571,7 @@ export function ecma_parse_main() {
 				}
 				return 1;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			SingleStringCharacters(str,index) {
 				let off=0;
 				for(;;) {
@@ -583,6 +584,7 @@ export function ecma_parse_main() {
 				}
 				return off;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			SingleStringCharacter(str,index) {
 				x: {
 					if(str[index]==="'") {
@@ -613,15 +615,15 @@ export function ecma_parse_main() {
 				}
 				return 1;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			LineContinuation(str,index) {
 				if(str[index]==='\\') {
 					let lt_len=this.parent.ecma_12_3.LineTerminatorSequence(str,index+1);
-					if(lt_len>0) {
-						return lt_len+1;
+					if(lt_len[0]&&lt_len[1]>0) {
+						return [true,lt_len[1]+1];
 					}
-					return 0;
 				}
-				return 0;
+				return [null,0];
 			}
 			/*
 			EscapeSequence ::
@@ -881,49 +883,89 @@ export function ecma_parse_main() {
 				throw new Error("Method not implemented.");
 			}
 		}
+		/** @typedef {[string,number]|[true,number]|[null,number]|[['Error',string],number]|[false,Error]} LexReturnType */
 		class ecma_12_8_6 {
 			/** @param {ecma_root} parent */
 			constructor(parent) {
 				this.parent=parent;
 			}
+			// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			TemplateSubstitutionTail(str,index) {
+				// TemplateMiddle
+				let res=this.TemplateMiddle(str,index);
+				if(res[0]) {
+					return [true,res[1]];
+				}
+				// TemplateTail
+				res=this.TemplateTail(str,index);
+				if(res[0]) {
+					return [true,res[1]];
+				}
+				return [null,0];
+			}
+			TemplateTail(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			TemplateMiddle(str,index) {
+				throw new Error("Method not implemented.");
+			}
 			/*Template ::
 			NoSubstitutionTemplate
 			TemplateHead*/
 			/** @returns {[string,number]|[null,number]} */
-			Template(str,_index) {
-				// TODO:implement template parsing without Substitution
-				if(str[0]==='`') {
-					console.info('Impl is never for Template');
-					// this is a template, but we don't know how to parse it
-					return ['Template',0];
+			Template(str,index) {
+				// NoSubstitutionTemplate
+				let ret=this.NoSubstitutionTemplate(str,index);
+				if(ret[0]) {
+					return ret;
+				}
+				// TemplateHead
+				ret=this.TemplateHead(str,index);
+				if(ret[0]) {
+					return ret;
 				}
 				return [null,0];
 			}
+			TemplateHead(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			NoSubstitutionTemplate(str,index) {
+				throw new Error("Method not implemented.");
+			}
 		}
 		class ecma_root {
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			TemplateSubstitutionTail(str,index) {
-				throw new Error("Method not implemented.");
+				return this.ecma_12_8_6.TemplateSubstitutionTail(str,index);
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			RegularExpressionLiteral(str,index) {
-				throw new Error("Method not implemented.");
+				return this.ecma_12_3.LineTerminator(str,index);
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			RightBracePunctuator(str,index) {
-				throw new Error("Method not implemented.");
+				return this.ecma_12_3.LineTerminator(str,index);
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			DivPunctuator(str,index) {
-				throw new Error("Method not implemented.");
+				return this.ecma_12_3.LineTerminator(str,index);
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			CommonToken(str,index) {
-				throw new Error("Method not implemented.");
+				return this.ecma_12_3.LineTerminator(str,index);
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			Comment(str,index) {
-				throw new Error("Method not implemented.");
+				return this.ecma_12_3.LineTerminator(str,index);
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			LineTerminator(str,index) {
-				throw new Error("Method not implemented.");
+				return this.ecma_12_3.LineTerminator(str,index);
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
 			WhiteSpace(str,index) {
-				throw new Error("Method not implemented.");
+				return this.ecma_12_2.WhiteSpace(str,index);
 			}
 			constructor() {
 				this.ecma_12_2=new ecma_12_2(this);
@@ -1134,7 +1176,7 @@ export function ecma_parse_main() {
 			}
 		}
 		let parse_str='function x(){}';
-		if('code' in window && typeof window.code==='string') {
+		if('code' in window&&typeof window.code==='string') {
 			parse_str=window.code;
 		}
 		let token_gen=new js_token_generator(parse_str);

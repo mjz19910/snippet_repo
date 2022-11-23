@@ -1,3 +1,5 @@
 /** @param {any} v */
 function any(v) {return v;}
-globalThis.window=any(globalThis);
+/** @type {Window&typeof globalThis} */
+let window=any(globalThis);
+export default window;

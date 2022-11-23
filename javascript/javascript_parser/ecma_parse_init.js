@@ -1,3 +1,5 @@
+import window from "./window_def.js";
+
 /*!
 * The buffer module from node.js, for the browser.
 *
