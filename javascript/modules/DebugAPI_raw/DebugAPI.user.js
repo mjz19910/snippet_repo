@@ -2588,7 +2588,7 @@ function is_record_with_T(x,k) {
 	return x instanceof Object&&k in x;
 }
 
-/** @template {string} T @arg {unknown} x @arg {T} k @returns {{} & Record<T, string>|null} */
+/** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {U & Record<T, string>|null} */
 function type_record_with_key_and_string_type(x,k) {
 	if(is_record_with_T(x,k)&&is_record_with_string_type(x,k)) {
 		return x;
@@ -2767,39 +2767,59 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		console.log("root_post_message",message);
 		target_port.postMessage(message);
 	}
+	/** @arg {{}} data_obj */
+	is_sponsor_block_event_data(data_obj) {
+		let message_record=type_record_with_string_type(data_obj);
+		if(message_record===null) return false;
+		switch(message_record.type) {
+			// might be SponsorBlock
+			case "data": {
+				/** @type {{type:string,source:string}|null} */
+				let res=type_record_with_key_and_string_type(message_record,"source");
+				if(res) {
+					// should be a SponsorBlock data message
+					if(res.source==="sponsorblock") {
+						return true;
+					};
+				}
+			}
+		}
+		return false;
+	}
+	/** @arg {MessageEvent<unknown>} event */
+	on_message_event(event) {
+		let message_data=event.data;
+		if(typeof message_data==='object') {
+			/** @type {{}|null} */
+			let md2=message_data;
+			if(md2===null) return;
+			let is_sponsor_block=this.is_sponsor_block_event_data(md2);
+			if(is_sponsor_block) return;
+			let state={
+				did_misbehave: event.ports.length!==1,
+			};
+			if(!state.did_misbehave) {
+				this.on_connect_request_message(state,event);
+			}
+			if(state.did_misbehave) {
+				// @RemoteOriginConnection
+				console.log(`[@RemoteOriginConnection] Client misbehaved: connect api not followed`);
+				console.group("Received message event");
+				console.log("root_ev_data",message_data);
+				console.log("root_ev_ports",event.ports);
+				console.log("root_event",event);
+				this.last_misbehaved_client_event=event;
+				console.groupEnd();
+			}
+		}
+	}
 	// @RemoteOriginConnection
 	start_root_server() {
 		let t=this;
 		// @RemoteOriginConnection
 		/** @arg {MessageEvent<unknown>} event */
 		function on_message_event(event) {
-			let message_data=event.data;
-			if(typeof message_data==='object') {
-				if(message_data===null) return;
-				let message_record=type_record_with_string_type(message_data);
-				if(message_record!==null) {
-					switch(message_record.type) {
-						// might be SponsorBlock
-						case "data":{}
-					};
-				}
-				let state={
-					did_misbehave: event.ports.length!==1,
-				};
-				if(!state.did_misbehave) {
-					t.on_connect_request_message(state,event);
-				}
-				if(state.did_misbehave) {
-					// @RemoteOriginConnection
-					console.log(`[@RemoteOriginConnection] Client misbehaved: connect api not followed`);
-					console.group("Received message event");
-					console.log("root_ev_data",message_data);
-					console.log("root_ev_ports",event.ports);
-					console.log("root_event",event);
-					t.last_misbehaved_client_event=event;
-					console.groupEnd();
-				}
-			}
+			t.on_message_event(event);
 		}
 		// @RemoteOriginConnection
 		elevate_event_handler(on_message_event);
