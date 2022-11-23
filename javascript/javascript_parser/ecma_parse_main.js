@@ -624,7 +624,6 @@ export function ecma_parse_main() {
 				});
 				if(result) return ["OtherPunctuator",2];
 				result=null;
-				debugger;
 				s_single_char_tokens.iterate(function(key,_value) {
 					// skip a DivPunctuator with length 1
 					if(key==='/') return "Continue";
@@ -1551,7 +1550,6 @@ export function ecma_parse_main() {
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			InputElementDiv(str,index) {
-				console.log("InputElementDiv")
 				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 				let max_item=null,max_val=0;
 				let cur_res=this.root.WhiteSpace(str,index);
