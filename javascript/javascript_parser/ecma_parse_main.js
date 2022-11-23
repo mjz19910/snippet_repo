@@ -1643,6 +1643,9 @@ export function ecma_parse_main() {
 			}
 			/** @returns {[string,number,number]|[symbol,number,number]|null} */
 			next_token() {
+				if(this.index>(this.str.length-1)) {
+					return [js_token_generator.EOF_TOKEN,0,this.index];
+				}
 				/** @type {[string,number,number]} */
 				let ret;
 				let cur=this.InputElementDiv(this.str,this.index);
@@ -1654,9 +1657,6 @@ export function ecma_parse_main() {
 					ret=[cur[0],cur[1],this.index];
 					this.index+=cur[1];
 					return ret;
-				}
-				if(this.index>(this.str.length-1)) {
-					return [js_token_generator.EOF_TOKEN,0,this.index];
 				}
 				cur=this.InputElementTemplateTail(this.str,this.index);
 				console.log("next token fallthrough",cur,this.index);
