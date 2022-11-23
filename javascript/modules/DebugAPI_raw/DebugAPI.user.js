@@ -2595,7 +2595,6 @@ function cast_to_record_with_string_type(x) {
 
 /** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {U & Record<T, string>|null} */
 function cast_to_record_with_key_and_string_type(x,k) {
-	if(!is_record_with_T(x,k)) return null;
 	if(!is_record_with_string_type(x,k)) return null;
 	return x;
 }
