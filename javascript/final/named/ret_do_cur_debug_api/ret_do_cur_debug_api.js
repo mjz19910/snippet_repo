@@ -5,6 +5,9 @@ v1 (cur): snippet_repo/javascript/final/ret_do_cur_debug_api/ret_do_cur_debugApi
 function main() {
 	/** @arg {any} v */
 	function any(v) {return v;}
+	/** @type {import("./__global.js").Holder} */
+	let holder={use() {} };
+	holder.use();
 	class CustomInputMatcher {
 		/**
 		 * @param {any} t_needle

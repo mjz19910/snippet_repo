@@ -197,8 +197,6 @@ function main() {
 		if(!react_ii_) throw new Error("1");
 		window.react_ii=react_ii_;
 		let react_ii=react_ii_;
-		/** @param {any} x */
-		function any(x) {return x;}
 		(function(/** @type {(arg0: any) => void} */ f) {
 			f(f);
 		}
@@ -283,7 +281,7 @@ function main() {
 			}
 
 		});
-		x: {
+		{
 			let maybe=true;
 			if(maybe) {
 				return;

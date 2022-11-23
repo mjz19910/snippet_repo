@@ -13,6 +13,12 @@ declare global {
 		asyncExecuteFunction(top: Window|null,function_: any): void;
 	}
 }
+
+export type Holder={
+	use(): void;
+};
+
+
 namespace X {
 	export class CustomInputMatcher {
 		test_string: string;
