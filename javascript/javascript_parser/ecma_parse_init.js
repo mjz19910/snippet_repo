@@ -29,11 +29,7 @@ function is_valid_utf8(/** @type {string} */ e, /** @type {number} */ t) {
 				continue;
 			}
 			r=65536+(i-55296<<10|r-56320);
-		}
-
-
-		else
-			i&&(t-=3)>-1&&o.push(239,191,189);
+		} else i&&(t-=3)>-1&&o.push(239,191,189);
 		if(i=null,
 			r<128) {
 			if((t-=1)<0)
@@ -58,7 +54,7 @@ function is_valid_utf8(/** @type {string} */ e, /** @type {number} */ t) {
 	return o;
 }
 
-export {Holder} from "./__global.js"
+export {Holder} from "./__global.js";
 
 export function ecma_parse_init() {
 	if('code' in window&&window.code) return;
