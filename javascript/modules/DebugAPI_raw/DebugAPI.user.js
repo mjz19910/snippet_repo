@@ -2570,7 +2570,7 @@ class RemoteSocket {
 	}
 }
 
-/** @template {string} T @arg {{}} x @arg {T} k @returns {x is Record<T,string>} */
+/** @template {{}} U @template {string} T @arg {U} x @arg {T} k @returns {x is U&Record<T,string>} */
 function is_record_with_string_type(x,k) {
 	if(!is_record_with_T(x,k)) return false;
 	return typeof x[k]==='string';
