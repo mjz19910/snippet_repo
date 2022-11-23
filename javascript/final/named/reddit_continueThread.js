@@ -230,13 +230,14 @@ function main() {
 				return this.m_iter_node;
 			}
 		}
-		let node_iter=new RedditNodeIter(dom._reactRootContainer);
-		dom=node_iter._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode.get_value();
-		var do_ar=Object.getOwnPropertyNames(dom);
+		let node_iter=new RedditNodeIter(dom_0._reactRootContainer);
+		let dom_state_node=node_iter._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode.get_value();
+		var do_ar=Object.getOwnPropertyNames(dom_state_node);
 		var react_ii_=do_ar.find(e => e.indexOf("__reactInternalInstance")==0);
 		if(!react_ii_) throw new Error("1");
 		window.react_ii=react_ii_;
-		let react_ii=react_ii_;
+		/** @type {"__reactInternalInstance"} */
+		let react_ii=any(react_ii_);
 		(function(/** @type {(arg0: any) => void} */ f) {
 			f(f);
 		}
@@ -250,6 +251,7 @@ function main() {
 				if(!dom)
 					throw new Error("1");
 				do_ar=Object.getOwnPropertyNames(dom);
+				if(!(react_ii in dom)) throw 1;
 				root_new=dom[react_ii];
 				window.root_new=root_new;
 				n_dom=get_inner();
@@ -293,7 +295,16 @@ function main() {
 			if(!dom) throw new Error("1");
 			var do_ar=Object.getOwnPropertyNames(dom);
 			console.log(do_ar);
-			var root_new=dom[react_ii];
+			if(!(react_ii in dom)) throw 1;
+			class InternalInstanceType {
+				get child() {return this;}
+				get sibling() {return this;}
+				get stateNode() {return this;}
+			}
+			/** @type {any} */
+			var root_new_=dom[react_ii];
+			/** @type {InternalInstanceType} */
+			let root_new=root_new_;
 			window.root_new=root_new;
 			function get_inner() {
 				try {
@@ -328,9 +339,9 @@ function main() {
 				return;
 			}
 		}
-		var dom=document.querySelector("[id^='continueThread']");
-		var do_ar=Object.getOwnPropertyNames(dom);
-		var root_new=dom[do_ar.find(e => e.indexOf("__reactInternalInstance")==0)];
+		var dom_thread=document.querySelector("[id^='continueThread']");
+		var do_ar=Object.getOwnPropertyNames(dom_thread);
+		var root_new=dom_thread[do_ar.find(e => e.indexOf("__reactInternalInstance")==0)];
 		let refs=[];
 		/**
 		 * @param {any[]} r
