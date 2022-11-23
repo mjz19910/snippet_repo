@@ -304,7 +304,7 @@ export function ecma_parse_main() {
 				let [,id_start_len]=res;
 				ecma_12_6.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
 				let id_continue_match=ecma_12_6.IdentifierName_not_start_regex.exec(str);
-				if(!id_continue_match || id_continue_match.index!=(index+1)) {
+				if(!id_continue_match||id_continue_match.index!=(index+1)) {
 					return ["IdentifierName",id_start_len];
 				}
 				let id_continue_len=0;
@@ -688,22 +688,9 @@ export function ecma_parse_main() {
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalLiteral(str,index) {
-				if(str[index]==='0') {
-					return ["DecimalLiteral",1];
-				}
-				let [,zd_len]=this.NonZeroDigit(str,index);
-				let off=0;
-				if(zd_len===1) {
-					off+=1;
-					let [,ns_len]=this.NumericLiteralSeparator(str,index+off);
-					if(ns_len>0) {
-						off++;
-					}
-					let dd_r=this.DecimalDigits(str,index+off);
-					if(!dd_r[0]) throw dd_r[1];
-					return ["DecimalLiteral",dd_r[1]+off];
-				}
-				return ["DecimalLiteral",off];
+				let cur=this.DecimalIntegerLiteral(str,index);
+				console.log(cur,str.slice(index,index+2));
+				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalDigits(str,index) {
@@ -743,11 +730,12 @@ export function ecma_parse_main() {
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalIntegerLiteral(str,index) {
-				let len=0;
+				let max_len=0;
 				// 0
 				if(str[index]==='0') {
-					len++;
+					max_len=1;
 				}
+				let len=0;
 				{
 					// NonZeroDigit
 					let tmp=this.NonZeroDigit(str,index);
@@ -755,6 +743,7 @@ export function ecma_parse_main() {
 						len=tmp[1];
 					}
 				}
+				if(len>max_len) max_len=len;
 				// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
 				{
 					let tmp_len=0;
@@ -768,7 +757,10 @@ export function ecma_parse_main() {
 						this.DecimalDigits_Sep(str,index);
 					}
 				}
-				return [null,0];
+				if(max_len===0) {
+					return [null,0];
+				}
+				return ["DecimalIntegerLiteral",max_len];
 			}
 			// DecimalDigits[+Sep]
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -1830,11 +1822,11 @@ export function ecma_parse_main() {
 		// parse_str="(function(){return function x(){}})()";
 		let token_gen=new js_token_generator(parse_str);
 		let res_item;
-		for(let i=0;i<30;i++) {
+		for(let i=0;i<120;i++) {
 			let prev_index=token_gen.index;
 			res_item=token_gen.next_token();
 			let cur_index=token_gen.index;
-			if(res_item&&cur_index !== (prev_index+res_item[1])) {
+			if(res_item&&cur_index!==(prev_index+res_item[1])) {
 				console.log("Length not updated correctly");
 			}
 			if(res_item===null) {
@@ -1842,7 +1834,7 @@ export function ecma_parse_main() {
 				break;
 			}
 			let res_description=token_gen.describe_token(res_item);
-			if(res_description[0] ==="WhiteSpace"){
+			if(res_description[0]==="WhiteSpace") {
 				i--;
 			}
 			if(res_item[0]===js_token_generator.EOF_TOKEN) {
