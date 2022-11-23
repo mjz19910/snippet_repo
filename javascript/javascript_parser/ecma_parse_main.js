@@ -75,7 +75,7 @@ export function ecma_parse_main() {
 					if(com_len===0) {
 						return [null,0];
 					}
-					console.log([str.slice(index,index+off+com_len+2)]);
+					console.log("MultiLineComment",str.slice(index,index+off+com_len+2));
 					if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {
 						return ['MultiLineComment',off+com_len+2];
 					}
@@ -307,7 +307,7 @@ export function ecma_parse_main() {
 				let [,id_start_len]=res;
 				ecma_12_6.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
 				let id_continue_match=ecma_12_6.IdentifierName_not_start_regex.exec(str);
-				if(!id_continue_match) {
+				if(!id_continue_match || id_continue_match.index!=index) {
 					console.log('IdentifierName is start only',str.slice(index,index+id_start_len));
 					return ["IdentifierName",id_start_len];
 				}
@@ -577,7 +577,6 @@ export function ecma_parse_main() {
 					len=ret[1];
 				}
 				ret=this.OtherPunctuator(str,index);
-				console.log("OtherPunctuator ret",ret);
 				if(ret[1]>len) {
 					type=ret[0];
 					len=ret[1];
@@ -637,7 +636,6 @@ export function ecma_parse_main() {
 					}
 					return "Continue";
 				});
-				console.log("OtherPunctuator",result);
 				if(result) {
 					return ['OtherPunctuator',1];
 				}
@@ -1683,7 +1681,7 @@ export function ecma_parse_main() {
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.root.CommonToken(str,index);
+				cur_res=this.root.ecma_12_5.CommonToken(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'common'
 					max_item=cur_res[0];
@@ -1726,7 +1724,7 @@ export function ecma_parse_main() {
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.root.CommonToken(str,index);
+				cur_res=this.root.ecma_12_5.CommonToken(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'common'
 					max_item=cur_res[0];
@@ -1768,7 +1766,7 @@ export function ecma_parse_main() {
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.root.CommonToken(str,index);
+				cur_res=this.root.ecma_12_5.CommonToken(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'common'
 					max_item=cur_res[0];
@@ -1810,7 +1808,7 @@ export function ecma_parse_main() {
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.root.CommonToken(str,index);
+				cur_res=this.root.ecma_12_5.CommonToken(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'common'
 					max_item=cur_res[0];
@@ -1839,12 +1837,20 @@ export function ecma_parse_main() {
 		let token_gen=new js_token_generator(parse_str);
 		let res_item;
 		for(let i=0;i<30;i++) {
+			let prev_index=token_gen.index;
 			res_item=token_gen.next_token();
+			let cur_index=token_gen.index;
+			if(res_item&&cur_index !== (prev_index+res_item[1])) {
+				console.log("Length not updated correctly");
+			}
 			if(res_item===null) {
 				console.log("parse error at ",token_gen.index);
 				break;
 			}
 			let res_description=token_gen.describe_token(res_item);
+			if(res_description[1]===" ") {
+				debugger;
+			}
 			if(res_item[0]===js_token_generator.EOF_TOKEN) {
 				console.log("EOF");
 				break;
