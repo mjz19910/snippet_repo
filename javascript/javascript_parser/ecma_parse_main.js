@@ -24,6 +24,9 @@ export function ecma_parse_main() {
 		class ecma_12_3 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineTerminator(str,index) {
+				if(str[index]==='\n') {
+					debugger;
+				}
 				let len=0;
 				if(str[index]==='\r')
 					len=1;
@@ -35,7 +38,7 @@ export function ecma_parse_main() {
 				//<PS>
 				if(str[index]==='\u{2029}')
 					len=1;
-				if(len[1]>0) {
+				if(len>0) {
 					return ['LineTerminator',1];
 				}
 				return [null,0];
