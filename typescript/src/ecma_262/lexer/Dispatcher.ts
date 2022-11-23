@@ -97,6 +97,7 @@ export class Dispatcher {
 		return this.ecma_12_8_4.HexEscapeSequence(str,index)
 	}
 	UnicodeEscapeSequence(str: string,index: number) {
+		// TODO: UnicodeEscapeSequence
 		return this.ecma_12_8_4.HexEscapeSequence(str,index)
 	}
 	RegularExpressionLiteral(str: string,index: number) {
