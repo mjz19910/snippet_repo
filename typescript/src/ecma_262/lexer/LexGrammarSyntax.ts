@@ -8,7 +8,7 @@ import {lexer_produce_input_element} from "./lexer_produce_input_element";
 
 export const debug=false;
 
-export class section_12 extends LexerBase {
+export class LexGrammarSyntax extends LexerBase {
 	InputElementDiv(str: string,index: number): LexReturnType {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator,

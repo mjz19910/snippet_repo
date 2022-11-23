@@ -3,7 +3,7 @@ import {LexerStateData} from "./LexerStateData.js";
 import {LexReturnType} from "./LexReturnType.js";
 import {lexer_produce_input_or_regexp_or_template_tail} from "./lexer_produce_input_or_regexp_or_template_tail";
 import {lex_js_input_or_div} from "./lex_js_input_or_div";
-import {debug} from "./section_12";
+import {debug} from "./LexGrammarSyntax";
 
 
 

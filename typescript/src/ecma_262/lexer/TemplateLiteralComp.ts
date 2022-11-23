@@ -2,7 +2,9 @@ import {Dispatcher} from "./Dispatcher.js";
 import {LexerBase} from "./LexerBase.js";
 import {LexReturnType} from "./LexReturnType.js";
 
-export class section_12_8_6 extends LexerBase {
+// https://tc39.es/ecma262/#sec-template-literal-lexical-components
+// Template Literal Lexical Components
+export class TemplateLiteralComp extends LexerBase {
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
 	TemplateEscapeSequence(str: string,index: number): LexReturnType {
 		let len=0;

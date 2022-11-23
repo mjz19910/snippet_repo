@@ -2,7 +2,7 @@ import {item_info_type_to_string} from "../item_info_type_to_string.js";
 import {ItemInfoType} from "../ItemInfoType.js";
 import {Dispatcher} from "./Dispatcher.js";
 import {LexReturnType} from "./LexReturnType.js";
-import {debug} from "./section_12";
+import {debug} from "./LexGrammarSyntax";
 
 
 export function lexer_produce_input_element(ecma_dispatcher: Dispatcher,str: string,index: number): LexReturnType {

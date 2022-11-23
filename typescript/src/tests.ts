@@ -1,6 +1,6 @@
-import * as section_12_8_6 from "./ecma_262/lexer/section_12_8_6.js";
-import * as section_12_6 from "./ecma_262/lexer/section_12_6.js";
-import * as section_12 from "./ecma_262/lexer/section_12.js";
+import * as section_12_8_6 from "./ecma_262/lexer/TemplateLiteralComp.js";
+import * as section_12_6 from "./ecma_262/lexer/NamesAndKeywords.js";
+import * as section_12 from "./ecma_262/lexer/LexGrammarSyntax.js";
 import {test_mod_execute_tests} from "./tests_mod/test_mod_execute_tests.js";
 
 interface RunTestType {

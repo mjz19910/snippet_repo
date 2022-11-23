@@ -1,7 +1,9 @@
 import {LexerBase} from "./LexerBase.js";
 import {LexReturnType} from "./LexReturnType.js";
 
-export class section_12_8_5 extends LexerBase {
+// https://tc39.es/ecma262/#sec-literals-regular-expression-literals
+export class RegularExpressionLiterals extends LexerBase {
+	// https://tc39.es/ecma262/#prod-RegularExpressionLiteral
 	RegularExpressionLiteral(str: string,index: number): LexReturnType {
 		let len=0
 		// / RegularExpressionBody / RegularExpressionFlags

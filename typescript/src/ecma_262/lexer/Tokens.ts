@@ -2,7 +2,9 @@ import {Dispatcher} from "./Dispatcher.js";
 import {LexerBase} from "./LexerBase.js";
 import {LexReturnType} from "./LexReturnType.js";
 
-export class section_12_5 extends LexerBase {
+// https://tc39.es/ecma262/#sec-tokens
+export class Tokens extends LexerBase {
+	// https://tc39.es/ecma262/#prod-CommonToken
 	CommonToken(str: any,index: any): LexReturnType {
 		let common_token: ['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template']=['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template'];
 		let acc=new Dispatcher("");

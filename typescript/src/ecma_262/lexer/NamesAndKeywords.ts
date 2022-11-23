@@ -1,14 +1,7 @@
-import {Dispatcher} from "./Dispatcher.js";
-import {debug_flag_override,LexerBase} from "./LexerBase.js";
+import {LexerBase} from "./LexerBase.js";
 import {LexReturnType} from "./LexReturnType.js";
 
-export class section_12_6 extends LexerBase {
-	constructor(v: Dispatcher) {
-		super(v);
-		if(debug_flag_override) {
-			this.debug=true;
-		}
-	}
+export class NamesAndKeywords extends LexerBase {
 	debug=false;
 	PrivateIdentifier(str: string,index: number): LexReturnType {
 		if(str[index]!=='#')
@@ -25,8 +18,8 @@ export class section_12_6 extends LexerBase {
 			return [null,0];
 		}
 		let [,id_start_len]=res;
-		section_12_6.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
-		let id_continue_match=section_12_6.IdentifierName_not_start_regex.exec(str);
+		NamesAndKeywords.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
+		let id_continue_match=NamesAndKeywords.IdentifierName_not_start_regex.exec(str);
 		if(!id_continue_match || id_continue_match.index!=(index+1)) {
 			if(this.debug) console.log('IdentifierName is start only',str.slice(index,index+id_start_len));
 			return ["IdentifierName",id_start_len];
@@ -51,13 +44,13 @@ export class section_12_6 extends LexerBase {
 			let res=this.m_dispatcher.UnicodeEscapeSequence(str,index+1);
 			if(res[0]) return ["IdentifierStart",res[1]+1];
 		}
-		if(str[index].match(section_12_6.id_start_regex)) {
+		if(str[index].match(NamesAndKeywords.id_start_regex)) {
 			return ["IdentifierStart",1];
 		}
 		return [null,0];
 	}
 	IdentifierPart(str: string,index: number): LexReturnType {
-		if(str[index].match(section_12_6.id_continue_regex)) {
+		if(str[index].match(NamesAndKeywords.id_continue_regex)) {
 			return ["IdentifierPart",1];
 		}
 		return [null,0];
@@ -66,7 +59,7 @@ export class section_12_6 extends LexerBase {
 	IdentifierPartChar(str: string,index: number): LexReturnType {
 		// UnicodeIDContinue
 		// FIXME: this is adhoc, it will break when tokenizing non ascii
-		if(str[index].match(section_12_6.id_continue_regex)) {
+		if(str[index].match(NamesAndKeywords.id_continue_regex)) {
 			return ["IdentifierPartChar",1];
 		}
 		// $

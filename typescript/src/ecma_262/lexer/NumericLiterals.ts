@@ -5,7 +5,8 @@ import {LexerBase} from "./LexerBase.js"
 import {LexReturnType} from "./LexReturnType.js"
 import {TokenType} from "../TokenType.js"
 
-export class section_12_8_3 extends LexerBase {
+// https://tc39.es/ecma262/#sec-literals-numeric-literals
+export class NumericLiterals extends LexerBase {
 	result_error_token: ['Error',string]|null=null
 	/*HexDigits[Sep] */
 	// https://tc39.es/ecma262/#prod-HexDigits
