@@ -1848,9 +1848,6 @@ export function ecma_parse_main() {
 				break;
 			}
 			let res_description=token_gen.describe_token(res_item);
-			if(res_description[1]===" ") {
-				debugger;
-			}
 			if(res_item[0]===js_token_generator.EOF_TOKEN) {
 				console.log("EOF");
 				break;
