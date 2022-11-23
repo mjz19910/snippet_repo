@@ -56,7 +56,7 @@ function is_valid_utf8(/** @type {string} */ e, /** @type {number} */ t) {
 	return o;
 }
 
-export function init() {
+export function ecma_parse_init() {
 	if('code' in window&&window.code) return;
 	window.code=is_valid_utf8.toString();
 }
