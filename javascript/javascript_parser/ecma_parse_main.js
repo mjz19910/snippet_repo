@@ -191,15 +191,6 @@ export function ecma_parse_main() {
 			}
 		}
 		class ecma_12_5 extends ecma_base {
-			/*
-			CommonToken ::
-				IdentifierName
-				PrivateIdentifier
-				Punctuator
-				NumericLiteral
-				StringLiteral
-				Template
-			*/
 			get ecma_12_3() {
 				return this.parent.ecma_12_3;
 			}
@@ -218,8 +209,18 @@ export function ecma_parse_main() {
 			get ecma_12_8_6() {
 				return this.parent.ecma_12_8_6;
 			}
+			/*
+			CommonToken ::
+				IdentifierName
+				PrivateIdentifier
+				Punctuator
+				NumericLiteral
+				StringLiteral
+				Template
+			*/
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			CommonToken(str,index) {
+				console.log("CommonToken");
 				let cur=null;
 				let item=null;
 				let len=0;
@@ -393,9 +394,8 @@ export function ecma_parse_main() {
 			}
 		}
 		// HashMap<FlyString, TokenType> Lexer::s_keywords
-		/** @type {HashMap<string,string>} uses enum JSTokenizerTokenType as string */
-		const s_keywords=new HashMap();
-		s_keywords;
+		/** @type {Set<string>} uses enum JSTokenizerTokenType as string */
+		const s_keywords=new Set();
 		// HashMap<String, TokenType> Lexer::s_three_char_tokens
 		/** @type {HashMap<string,string>} */
 		const s_three_char_tokens=new HashMap();
@@ -405,17 +405,178 @@ export function ecma_parse_main() {
 		// HashMap<char, TokenType> Lexer::s_single_char_tokens
 		/** @type {HashMap<string,string>} */
 		const s_single_char_tokens=new HashMap();
+		s_keywords.add("async");
+		s_keywords.add("await");
+		s_keywords.add("break");
+		s_keywords.add("case");
+		s_keywords.add("catch");
+		s_keywords.add("class");
+		s_keywords.add("const");
+		s_keywords.add("continue");
+		s_keywords.add("debugger");
+		s_keywords.add("default");
+		s_keywords.add("delete");
+		s_keywords.add("do");
+		s_keywords.add("else");
+		s_keywords.add("enum");
+		s_keywords.add("export");
+		s_keywords.add("extends");
+		s_keywords.add("false");
+		s_keywords.add("finally");
+		s_keywords.add("for");
+		s_keywords.add("function");
+		s_keywords.add("if");
+		s_keywords.add("import");
+		s_keywords.add("in");
+		s_keywords.add("instanceof");
+		s_keywords.add("let");
+		s_keywords.add("new");
+		s_keywords.add("null");
+		s_keywords.add("return");
+		s_keywords.add("super");
+		s_keywords.add("switch");
+		s_keywords.add("this");
+		s_keywords.add("throw");
+		s_keywords.add("true");
+		s_keywords.add("try");
+		s_keywords.add("typeof");
+		s_keywords.add("var");
+		s_keywords.add("void");
+		s_keywords.add("while");
+		s_keywords.add("with");
+		s_keywords.add("yield");
+		// 4 char token is only [">>>="]
+		if(s_three_char_tokens.is_empty()) {
+			// === is OtherPunctuator
+			s_three_char_tokens.set("===","EqualsEqualsEquals");
+			// !== is OtherPunctuator
+			s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
+			// **= is OtherPunctuator
+			s_three_char_tokens.set("**=","DoubleAsteriskEquals");
+			// <<= is OtherPunctuator
+			s_three_char_tokens.set("<<=","ShiftLeftEquals");
+			// >>= is OtherPunctuator
+			s_three_char_tokens.set(">>=","ShiftRightEquals");
+			// &&= is OtherPunctuator
+			s_three_char_tokens.set("&&=","DoubleAmpersandEquals");
+			// ||= is OtherPunctuator
+			s_three_char_tokens.set("||=","DoublePipeEquals");
+			// ??= is OtherPunctuator
+			s_three_char_tokens.set("\?\?=","DoubleQuestionMarkEquals");
+			// >>> is OtherPunctuator
+			s_three_char_tokens.set(">>>","UnsignedShiftRight");
+			// ... is OtherPunctuator
+			s_three_char_tokens.set("...","TripleDot");
+		}
+		if(s_two_char_tokens.is_empty()) {
+			// => is OtherPunctuator
+			s_two_char_tokens.set("=>","Arrow");
+			// += is OtherPunctuator
+			s_two_char_tokens.set("+=","PlusEquals");
+			// -= is OtherPunctuator
+			s_two_char_tokens.set("-=","MinusEquals");
+			// *= is OtherPunctuator
+			s_two_char_tokens.set("*=","AsteriskEquals");
+			// /= is DivPunctuator
+			s_two_char_tokens.set("/=","SlashEquals");
+			// %= is OtherPunctuator
+			s_two_char_tokens.set("%=","PercentEquals");
+			// &= is OtherPunctuator
+			s_two_char_tokens.set("&=","AmpersandEquals");
+			// |= is OtherPunctuator
+			s_two_char_tokens.set("|=","PipeEquals");
+			// ^= is OtherPunctuator
+			s_two_char_tokens.set("^=","CaretEquals");
+			// && is OtherPunctuator
+			s_two_char_tokens.set("&&","DoubleAmpersand");
+			// || is OtherPunctuator
+			s_two_char_tokens.set("||","DoublePipe");
+			// ?? is OtherPunctuator
+			s_two_char_tokens.set("??","DoubleQuestionMark");
+			// ** is OtherPunctuator
+			s_two_char_tokens.set("**","DoubleAsterisk");
+			// == is OtherPunctuator
+			s_two_char_tokens.set("==","EqualsEquals");
+			// <= is OtherPunctuator
+			s_two_char_tokens.set("<=","LessThanEquals");
+			// >= is OtherPunctuator
+			s_two_char_tokens.set(">=","GreaterThanEquals");
+			// != is OtherPunctuator
+			s_two_char_tokens.set("!=","ExclamationMarkEquals");
+			// ++ is OtherPunctuator
+			s_two_char_tokens.set("--","MinusMinus");
+			// -- is OtherPunctuator
+			s_two_char_tokens.set("++","PlusPlus");
+			// << is OtherPunctuator
+			s_two_char_tokens.set("<<","ShiftLeft");
+			// >> is OtherPunctuator
+			s_two_char_tokens.set(">>","ShiftRight");
+			// ?. needs special handling
+			s_two_char_tokens.set("?.","QuestionMarkPeriod");
+		}
+		if(s_single_char_tokens.is_empty()) {
+			// & is OtherPunctuator
+			s_single_char_tokens.set('&',"Ampersand");
+			// * is OtherPunctuator
+			s_single_char_tokens.set('*',"Asterisk");
+			// [ is OtherPunctuator
+			s_single_char_tokens.set('[',"BracketOpen");
+			// ] is OtherPunctuator
+			s_single_char_tokens.set(']',"BracketClose");
+			// ^ is OtherPunctuator
+			s_single_char_tokens.set('^',"Caret");
+			// : is OtherPunctuator
+			s_single_char_tokens.set(':',"Colon");
+			// , is OtherPunctuator
+			s_single_char_tokens.set(',',"Comma");
+			// { is OtherPunctuator
+			s_single_char_tokens.set('{',"CurlyOpen");
+			// } is RightBracePunctuator
+			s_single_char_tokens.set('}',"CurlyClose");
+			// = is OtherPunctuator
+			s_single_char_tokens.set('=',"Equals");
+			// ! is OtherPunctuator
+			s_single_char_tokens.set('!',"ExclamationMark");
+			// - is OtherPunctuator
+			s_single_char_tokens.set('-',"Minus");
+			// ( is OtherPunctuator
+			s_single_char_tokens.set('(',"ParenOpen");
+			// ) is OtherPunctuator
+			s_single_char_tokens.set(')',"ParenClose");
+			// % is OtherPunctuator
+			s_single_char_tokens.set('%',"Percent");
+			// . is OtherPunctuator
+			s_single_char_tokens.set('.',"Period");
+			// | is OtherPunctuator
+			s_single_char_tokens.set('|',"Pipe");
+			// + is OtherPunctuator
+			s_single_char_tokens.set('+',"Plus");
+			// ? is OtherPunctuator
+			s_single_char_tokens.set('?',"QuestionMark");
+			// ; is OtherPunctuator
+			s_single_char_tokens.set(';',"Semicolon");
+			// / is DivPunctuator
+			s_single_char_tokens.set('/',"Slash");
+			// ~ is OtherPunctuator
+			s_single_char_tokens.set('~',"Tilde");
+			// < is OtherPunctuator
+			s_single_char_tokens.set('<',"LessThan");
+			// > is OtherPunctuator
+			s_single_char_tokens.set('>',"GreaterThan");
+		}
 		class ecma_12_7 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Punctuator(str,index) {
+				console.log("Punctuator");
 				var len=0,type=null,ret;
 				ret=this.OptionalChainingPunctuator(str,index);
-				if(ret[0]&&ret[1]>len) {
+				if(ret[1]>len) {
 					type=ret[0];
 					len=ret[1];
 				}
 				ret=this.OtherPunctuator(str,index);
-				if(ret[0]&&ret[1]>len) {
+				console.log("OtherPunctuator ret",ret);
+				if(ret[1]>len) {
 					type=ret[0];
 					len=ret[1];
 				}
@@ -449,7 +610,7 @@ export function ecma_parse_main() {
 					}
 					return "Continue";
 				});
-				if(result) return [true,3];
+				if(result) return ["OtherPunctuator",3];
 				result=null;
 				s_two_char_tokens.iterate(function(key) {
 					// skip DivPunctuator with length 2
@@ -461,8 +622,9 @@ export function ecma_parse_main() {
 					}
 					return "Continue";
 				});
-				if(result) return [true,2];
+				if(result) return ["OtherPunctuator",2];
 				result=null;
+				debugger;
 				s_single_char_tokens.iterate(function(key,_value) {
 					// skip a DivPunctuator with length 1
 					if(key==='/') return "Continue";
@@ -474,6 +636,7 @@ export function ecma_parse_main() {
 					}
 					return "Continue";
 				});
+				console.log("OtherPunctuator",result);
 				if(result) {
 					return ['OtherPunctuator',1];
 				}
@@ -800,7 +963,7 @@ export function ecma_parse_main() {
 				if(str[index]==='\\') {
 					let lt_len=this.parent.ecma_12_3.LineTerminatorSequence(str,index+1);
 					if(lt_len[0]&&lt_len[1]>0) {
-						return [true,lt_len[1]+1];
+						return ["LineContinuation",lt_len[1]+1];
 					}
 				}
 				return [null,0];
@@ -1106,7 +1269,7 @@ export function ecma_parse_main() {
 				return [null,0];
 			}
 		}
-		/** @typedef {[string,number]|[true,number]|[null,number]|[['Error',string],number]} LexReturnTyShort */
+		/** @typedef {[string,number]|[null,number]} LexReturnTyShort */
 		class ecma_12_8_6 extends ecma_base {
 			// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -1114,22 +1277,113 @@ export function ecma_parse_main() {
 				// TemplateMiddle
 				let res=this.TemplateMiddle(str,index);
 				if(res[0]) {
-					return [true,res[1]];
+					return ["TemplateSubstitutionTail",res[1]];
 				}
 				// TemplateTail
 				res=this.TemplateTail(str,index);
 				if(res[0]) {
-					return [true,res[1]];
+					return ["TemplateSubstitutionTail",res[1]];
 				}
 				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateTail(str,index) {
-				throw new Error("Method not implemented.");
+				let len=0;
+				// } TemplateCharacters_opt `
+				if(str[index]==='{}'[0]) {
+					len++;
+					if(str[index+len]==='`') {
+						len++;
+						return ["TemplateTail",len];
+					}
+					let res=this.TemplateCharacters(str,index);
+					if(res[0]) {
+						len+=res[1];
+						if(str[index+len]==='`') {
+							len++;
+							return ["TemplateTail",len];
+						}
+					}
+				}
+				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateMiddle(str,index) {
-				throw new Error("Method not implemented.");
+				let len=0;
+				// } TemplateCharacters_opt ${
+				if(str[index]==='{}'[1]) {
+					len++;
+					if(str[index+len]==='$'&&str[index+len+1]==='{}'[0]) {
+						return ["TemplateMiddle",len+2];
+					}
+					let res=this.TemplateCharacters(str,index);
+					if(res[0]) {
+						len+=res[1];
+						if(str[index+len]==='$'&&str[index+len+1]==='{}'[0]) {
+							return ["TemplateMiddle",len+2];
+						}
+					}
+				}
+				return [null,0];
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			TemplateCharacters(str,index) {
+				let tmp=this.TemplateCharacter(str,index);
+				if(tmp[0]) {
+					index+=tmp[1];
+				}
+				while(tmp[1]>0&&index<str.length) {
+					tmp=this.TemplateCharacter(str,index);
+					if(tmp[0]) {
+						index+=tmp[1];
+					} else {
+						break;
+					}
+				}
+				return ['TemplateCharacters',index-index];
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			TemplateCharacter(str,index) {
+				/* $ [lookahead ≠ {]*/
+				if(str[index]==='$'&&str[index+1]!=='{') {
+					return ["TemplateCharacter",1];
+				}
+				/* \ TemplateEscapeSequence*/
+				if(str[index]==='\\') {
+					let escape_res=this.parent.TemplateEscapeSequence(str,index);
+					if(escape_res[0]) {
+						return ["TemplateCharacter",escape_res[1]];
+					}
+				}
+				/* \ NotEscapeSequence*/
+				if(str[index]==='\\') {
+					let not_esc=this.parent.NotEscapeSequence(str,index);
+					if(not_esc[1]>0) {
+						throw not_esc;
+					}
+				}
+				/* LineContinuation */
+				let res=this.parent.LineContinuation(str,index);
+				if(res[0]) {
+					return ["TemplateCharacter",res[1]];
+				}
+				/* LineTerminatorSequence */
+				res=this.parent.LineTerminatorSequence(str,index);
+				if(res[0]) {
+					return ["TemplateCharacter",res[1]];
+				}
+				/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
+				if(str[index]==='`'||str[index]==='\\'||str[index]==='$') {
+					return [null,0];
+				}
+				res=this.parent.LineTerminator(str,index);
+				if(res[0]) {
+					return [null,0];
+				}
+				/* TODO: SourceCharacter is too complex for js
+						 It requires handling all of unicode
+				*/
+				return ["TemplateCharacter",1];
 			}
 			/*Template ::
 			NoSubstitutionTemplate
@@ -1150,37 +1404,84 @@ export function ecma_parse_main() {
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateHead(str,index) {
-				throw new Error("Method not implemented.");
+				let cur_index=index;
+				// ` TemplateCharacters_opt ${
+				if(str[cur_index]==='`') {
+					cur_index++;
+					let res=this.TemplateCharacters(str,cur_index);
+					if(res[1]===0) {
+						return ["TemplateHead",cur_index];
+					}
+					if(res[1]>0) {
+						cur_index+=res[1];
+					}
+					if(str[cur_index]==='$'&&str[cur_index+1]==='{') {
+						return ["TemplateHead",cur_index+2];
+					}
+				}
+				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			NoSubstitutionTemplate(str,index) {
-				throw new Error("Method not implemented.");
+				let cur_index=index;
+				//` TemplateCharacters opt `
+				if(str[cur_index]==='`') {
+					cur_index++;
+				} else {
+					return [null,0];
+				}
+				let opt=this.TemplateCharacters(str,cur_index);
+				if(opt[1]===0) return [null,0];
+				return ['NoSubstitutionTemplate',cur_index-index+opt[1]];
 			}
 		}
+		class ecma_12_8_5 extends ecma_base {
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionLiteral(str,index) {
+				str;index;
+				throw new Error("Method not implemented.");
+			}
+}
 		class ecma_root {
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			LineTerminatorSequence(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			LineContinuation(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			NotEscapeSequence(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			TemplateEscapeSequence(str,index) {
+				throw new Error("Method not implemented.");
+			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateSubstitutionTail(str,index) {
 				return this.ecma_12_8_6.TemplateSubstitutionTail(str,index);
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RegularExpressionLiteral(str,index) {
-				return this.ecma_12_3.LineTerminator(str,index);
+				return this.ecma_12_8_5.RegularExpressionLiteral(str,index);
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RightBracePunctuator(str,index) {
-				return this.ecma_12_3.LineTerminator(str,index);
+				return this.ecma_12_7.RightBracePunctuator(str,index);
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DivPunctuator(str,index) {
-				return this.ecma_12_3.LineTerminator(str,index);
+				return this.ecma_12_7.DivPunctuator(str,index);
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			CommonToken(str,index) {
-				return this.ecma_12_3.LineTerminator(str,index);
+				return this.ecma_12_5.CommonToken(str,index);
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Comment(str,index) {
-				return this.ecma_12_3.LineTerminator(str,index);
+				return this.ecma_12_4.Comment(str,index);
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineTerminator(str,index) {
@@ -1191,6 +1492,12 @@ export function ecma_parse_main() {
 				return this.ecma_12_2.WhiteSpace(str,index);
 			}
 			constructor() {
+				this.flags={
+					sep: false,
+					is_sep() {
+						return this.sep;
+					}
+				};
 				this.ecma_12_2=new ecma_12_2(this);
 				this.ecma_12_3=new ecma_12_3(this);
 				this.ecma_12_4=new ecma_12_4(this);
@@ -1202,12 +1509,7 @@ export function ecma_parse_main() {
 				this.ecma_12_8_4=new ecma_12_9_4(this);
 				this.ecma_12_8_6=new ecma_12_8_6(this);
 				this.ecma_12_9_4=new ecma_12_9_4(this);
-				this.flags={
-					sep: false,
-					is_sep() {
-						return this.sep;
-					}
-				};
+				this.ecma_12_8_5=new ecma_12_8_5(this);
 			}
 		}
 		class js_token_generator {
@@ -1239,9 +1541,17 @@ export function ecma_parse_main() {
 				if(this.index>(this.str.length-1)) {
 					return [js_token_generator.EOF_TOKEN,0,this.index];
 				}
+				cur=this.InputElementTemplateTail(this.str,this.index);
+				console.log("next token fallthrough",cur,this.index);
+				console.log(this.str);
+				try{var res=(0,eval)("(function(){return "+this.str+"})()")}catch(e){
+					console.log(e);
+				}
+				console.log(res);
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			InputElementDiv(str,index) {
+				console.log("InputElementDiv")
 				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 				let max_item=null,max_val=0;
 				let cur_res=this.root.WhiteSpace(str,index);
@@ -1250,7 +1560,7 @@ export function ecma_parse_main() {
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.root.LineTerminator(str,index);
+				cur_res=this.root.ecma_12_3.LineTerminator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'line_term'
 					max_item=cur_res[0];
@@ -1282,6 +1592,7 @@ export function ecma_parse_main() {
 				}
 				return [max_item,max_val];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			InputElementRegExp(str,index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken,
 				// RightBracePunctuator, RegularExpressionLiteral
@@ -1292,7 +1603,7 @@ export function ecma_parse_main() {
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.root.LineTerminator(str,index);
+				cur_res=this.root.ecma_12_3.LineTerminator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'line_term'
 					max_item=cur_res[0];
@@ -1324,6 +1635,7 @@ export function ecma_parse_main() {
 				}
 				return [max_item,max_val];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			InputElementRegExpOrTemplateTail(str,index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, RegularExpressionLiteral, TemplateSubstitutionTail
 				let max_item=null,max_val=0;
@@ -1333,7 +1645,7 @@ export function ecma_parse_main() {
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.root.LineTerminator(str,index);
+				cur_res=this.root.ecma_12_3.LineTerminator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'line_term'
 					max_item=cur_res[0];
@@ -1365,6 +1677,7 @@ export function ecma_parse_main() {
 				}
 				return [max_item,max_val];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			InputElementTemplateTail(str,index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, TemplateSubstitutionTail
 				let max_item=null,max_val=0;
@@ -1374,7 +1687,7 @@ export function ecma_parse_main() {
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.root.LineTerminator(str,index);
+				cur_res=this.root.ecma_12_3.LineTerminator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'line_term'
 					max_item=cur_res[0];
@@ -1411,6 +1724,7 @@ export function ecma_parse_main() {
 		if('code' in window&&typeof window.code==='string') {
 			parse_str=window.code;
 		}
+		parse_str="(function(){return function x(){}})()";
 		let token_gen=new js_token_generator(parse_str);
 		let res_item;
 		res_item=token_gen.next_token();
