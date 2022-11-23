@@ -1658,7 +1658,6 @@ export function ecma_parse_main() {
 					this.index+=cur[1];
 					return ret;
 				}
-				cur=this.InputElementTemplateTail(this.str,this.index);
 				console.log("next token fallthrough",cur,this.index);
 				return null;
 			}
