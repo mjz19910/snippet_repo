@@ -109,6 +109,7 @@ class ReversePrototypeChain {
 		this.cache_prototype(this.null_cache_key,null);
 	}
 	generate() {
+		if(!debug) return;
 		for(let i=0;i<window.length;i++) {
 			if(this.window_list.includes(window[i]))
 				continue;
@@ -118,7 +119,7 @@ class ReversePrototypeChain {
 			this.process_target(target);
 		}
 		if(top===window) {
-			console.log(this.destination);
+			if(debug) console.log(this.destination);
 		}
 	}
 	/** @arg {{}|null} value */
