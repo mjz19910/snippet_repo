@@ -1827,12 +1827,8 @@ export function ecma_parse_main() {
 				console.log("EOF");
 				break;
 			}
-			if(res_description[1]==="return") {
-				let ret=token_gen.InputElementRegExp(token_gen.str,token_gen.index);
-				res_item=token_gen.as_next_token(ret);
-				let res_description=token_gen.describe_token(res_item);
-				console.log(res_description);
-				continue;
+			if(res_description[0]==="WhiteSpace" && res_description[1]==="o") {
+				debugger;
 			}
 			console.log(res_description);
 		}
