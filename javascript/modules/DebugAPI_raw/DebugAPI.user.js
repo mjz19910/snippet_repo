@@ -2572,8 +2572,7 @@ class RemoteSocket {
 
 /** @template {{}} U @template {string} T @arg {U} x @arg {T} k @returns {x is U&Record<T,string>} */
 function is_record_with_string_type(x,k) {
-	if(!is_record_with_T(x,k)) return false;
-	return typeof x[k]==='string';
+	return is_record_with_T(x,k)&&typeof x[k]==='string';
 }
 
 /** @template T @arg {T} x @arg {T} x @returns {x is {}} */
