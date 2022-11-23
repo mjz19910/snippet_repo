@@ -129,7 +129,7 @@ export function ecma_parse_main() {
 			PostAsteriskCommentChars(str,index) {
 				let index_offset=0;
 				let offset_1=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+index_offset);
-				if(offset_1[0]===null) throw new Error("Parse error");
+				if(offset_1[0]===null) return [null,0];
 				if(offset_1[1]>0) {
 					index_offset+=offset_1[1];
 					let la=this.MultiLineCommentChars(str,index+index_offset);
@@ -1835,7 +1835,7 @@ export function ecma_parse_main() {
 		if('code' in window&&typeof window.code==='string') {
 			parse_str=window.code;
 		}
-		parse_str="(function(){return function x(){}})()";
+		// parse_str="(function(){return function x(){}})()";
 		let token_gen=new js_token_generator(parse_str);
 		let res_item;
 		for(let i=0;i<30;i++) {
