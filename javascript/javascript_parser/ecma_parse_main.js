@@ -219,7 +219,7 @@ export function ecma_parse_main() {
 			}
 			get ecma_12_8_6() {
 				if(!this.m_ecma_12_8_6) {
-					this.m_ecma_12_8_6=new ecma_12_8_4;
+					this.m_ecma_12_8_6=new ecma_12_8_6;
 				}
 				return this.m_ecma_12_8_6;
 			}
@@ -250,7 +250,7 @@ export function ecma_parse_main() {
 					len=cur[1];
 					item=cur;
 				}
-				cur=this.ecma_12_6.Template(str,index);
+				cur=this.ecma_12_8_6.Template(str,index);
 				if(cur[1]>len) {
 					len=cur[1];
 					item=cur;
