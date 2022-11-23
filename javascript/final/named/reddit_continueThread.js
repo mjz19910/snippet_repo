@@ -190,6 +190,9 @@ function main() {
 	var cur__class={[cur.self_sym]: cur};
 	cur.n="reddit";
 	cur.f=function() {
+		function get_dom() {
+			return document.querySelector("[id^='continueThread']");
+		}
 		var dom=document.body.children["2x-container"];
 		dom=dom._reactRootContainer._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode;
 		var do_ar=Object.getOwnPropertyNames(dom);
@@ -202,9 +205,9 @@ function main() {
 		}
 		)(async function(/** @type {(arg0: any) => number | undefined} */ f) {
 			console.log('en');
-			var get_dom=() => document.querySelector("[id^='continueThread']");
 			var dom=get_dom();
 			let count=0;
+			var n_dom;
 			function ts_timeout_func() {
 				dom=get_dom();
 				if(!dom)
@@ -262,7 +265,7 @@ function main() {
 				return null;
 			}
 			count=0;
-			var n_dom=await new Promise(function(a) {
+			n_dom=await new Promise(function(a) {
 				function t() {
 					var c_dom=get_inner();
 					if(c_dom) {
