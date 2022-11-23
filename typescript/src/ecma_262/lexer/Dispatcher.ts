@@ -4,7 +4,7 @@ import {section_12} from "./section_12.js";
 import {Lexer} from "./Lexer";
 import {JSWhiteSpace} from "./JSWhiteSpace.js";
 import {JSLineTerminators} from "./JSLineTerminators.js";
-import {section_12_4} from "./section_12_4.js";
+import {LexJSComments} from "./LexJSComments.js";
 import {section_12_5} from "./section_12_5.js";
 import {section_12_6} from "./section_12_6.js";
 import {JSPunctuators} from "./JSPunctuators.js";
@@ -19,7 +19,7 @@ export class Dispatcher {
 	lexer: Lexer;
 	ecma_12_2: JSWhiteSpace=new JSWhiteSpace(this)
 	ecma_12_3: JSLineTerminators=new JSLineTerminators(this)
-	ecma_12_4: section_12_4=new section_12_4(this)
+	ecma_12_4: LexJSComments=new LexJSComments(this)
 	ecma_12_5: section_12_5=new section_12_5(this)
 	ecma_12_6: section_12_6=new section_12_6(this)
 	ecma_12_7: JSPunctuators=new JSPunctuators(this)

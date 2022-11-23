@@ -1,5 +1,6 @@
 import {LexerBase} from "./LexerBase.js"
 import {LexReturnType} from "./LexReturnType.js"
+// https://tc39.es/ecma262/#sec-line-terminators
 export class JSLineTerminators extends LexerBase {
 	// https://tc39.es/ecma262/#prod-LineTerminator
 	LineTerminator(str: string,index: number): LexReturnType {
