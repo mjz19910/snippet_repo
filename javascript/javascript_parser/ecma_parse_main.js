@@ -826,7 +826,7 @@ export function ecma_parse_main() {
 				x: {
 					if(str[index]==='0') {
 						let peek=this.parent.ecma_12_8_3.DecimalDigit(str,index);
-						if(peek>0) {
+						if(peek[1]>0) {
 							break x;
 						}
 						// \0 null escape found
@@ -882,6 +882,7 @@ export function ecma_parse_main() {
 				}
 				return [null,1];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			EscapeCharacter(str,index) {
 				let len0=this.SingleEscapeCharacter(str,index);
 				let len1=this.parent.ecma_12_8_3.DecimalDigit(str,index);
@@ -909,6 +910,7 @@ export function ecma_parse_main() {
 			FourToSeven OctalDigit
 			ZeroToThree OctalDigit OctalDigit
 			 */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LegacyOctalEscapeSequence(str,index) {
 				x: {
 					if(str[index]==='0') {
@@ -1052,7 +1054,7 @@ export function ecma_parse_main() {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			CodePoint(str,index) {
 				// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-				let res=this.parent.HexDigits(str,index);
+				let res=this.HexDigits(str,index);
 				if(res[0]) {
 					if(res[1]>0&&typeof res[0]==='string') {
 						// but only if MV of HexDigits ≤ 0x10FFFF
@@ -1084,9 +1086,23 @@ export function ecma_parse_main() {
 				}
 				return [null,4];
 			}
-			/** @returns {number} */
-			HexDigit(str,index) {
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			HexDigits(str,index) {
+				str; index;
 				throw new Error("Method not implemented.");
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			HexDigit(str,index) {
+				if(str.charCodeAt(index)>='0'.charCodeAt(0)&&str.charCodeAt(index)<='9'.charCodeAt(0)) {
+					return ["HexDigit",1];
+				}
+				if(str.charCodeAt(index)>='a'.charCodeAt(0)&&str.charCodeAt(index)<='f'.charCodeAt(0)) {
+					return ["HexDigit",1];
+				}
+				if(str.charCodeAt(index)>='A'.charCodeAt(0)&&str.charCodeAt(index)<='F'.charCodeAt(0)) {
+					return ["HexDigit",1];
+				}
+				return [null,0];
 			}
 		}
 		/** @typedef {[string,number]|[true,number]|[null,number]|[['Error',string],number]} LexReturnTyShort */
@@ -1395,3 +1411,5 @@ export function ecma_parse_main() {
 		console.log(res_description);
 	}
 }
+
+export {Holder} from "./__global.js";
