@@ -1467,7 +1467,7 @@ export function ecma_parse_main() {
 				let res=this.RegularExpressionFirstChar(str,index);
 				if(res[1]>0) {
 					let cont=this.RegularExpressionChars(str,index+1);
-					if(cont[1]=== 0) {}
+					if(cont[1]===0) {}
 				}
 				throw new Error("Method not implemented.");
 			}
@@ -1526,11 +1526,11 @@ export function ecma_parse_main() {
 			RegularExpressionBackslashSequence(str,index) {
 				// \ RegularExpressionNonTerminator
 				if(str[index]==='\\') {
-					let res=this.RegularExpressionNonTerminator(str,index+1)
+					let res=this.RegularExpressionNonTerminator(str,index+1);
 					if(res[0])
-						return ["RegularExpressionBackslashSequence",1+res[1]]
+						return ["RegularExpressionBackslashSequence",1+res[1]];
 				}
-				return [null,0]
+				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RegularExpressionNonTerminator(str,index) {
@@ -1841,10 +1841,19 @@ export function ecma_parse_main() {
 		let res_item;
 		for(let i=0;i<30;i++) {
 			res_item=token_gen.next_token();
+			if(res_item===null) {
+				console.log("parse error at ",token_gen.index);
+				break;
+			}
 			let res_description=token_gen.describe_token(res_item);
+			if(res_item[0]===js_token_generator.EOF_TOKEN) {
+				console.log("EOF");
+				break;
+			}
 			if(res_description[1]==="return") {
-				res_item=token_gen.InputElementRegExp(token_gen.str,token_gen.index);
-				let res_description=token_gen.describe_token(token_gen.as_next_token(res_item));
+				let ret=token_gen.InputElementRegExp(token_gen.str,token_gen.index);
+				res_item=token_gen.as_next_token(ret);
+				let res_description=token_gen.describe_token(res_item);
 				console.log(res_description);
 				continue;
 			}
