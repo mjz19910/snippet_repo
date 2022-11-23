@@ -2771,14 +2771,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	is_sponsor_block_event_data(data_obj) {
 		let message_record_with_source=type_record_with_key_and_string_type(data_obj,"source");
 		if(!message_record_with_source) return false;
+		if(message_record_with_source.source!=="sponsorblock") return false;
 		// should be a SponsorBlock event.data
-		if(message_record_with_source.source==="sponsorblock") {
-			let message_record_with_type=type_record_with_string_type(data_obj);
-			if(message_record_with_type===null) return false;
-			switch(message_record_with_type.type) {
-				case "data":
-				case "navigation": return true;
-			}
+		let message_record_with_type=type_record_with_string_type(data_obj);
+		if(message_record_with_type===null) return false;
+		switch(message_record_with_type.type) {
+			case "data":
+			case "navigation": return true;
 		}
 		return false;
 	}
