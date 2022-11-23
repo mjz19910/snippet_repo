@@ -2767,20 +2767,17 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		console.log("root_post_message",message);
 		target_port.postMessage(message);
 	}
-	/** @arg {{}} data_obj */
+	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
-		let message_record=type_record_with_string_type(data_obj);
-		if(message_record===null) return false;
-		switch(message_record.type) {
-			// might be SponsorBlock
-			case "data": {
-				/** @type {{type:string,source:string}|null} */
-				let res=type_record_with_key_and_string_type(message_record,"source");
-				if(res) {
-					// should be a SponsorBlock data message
-					if(res.source==="sponsorblock") {
-						return true;
-					};
+		let message_record_with_source=type_record_with_key_and_string_type(data_obj,"source");
+		if(message_record_with_source) {
+			// should be a SponsorBlock event.data
+			if(message_record_with_source.source==="sponsorblock") {
+				let message_record_with_type=type_record_with_string_type(data_obj);
+				if(message_record_with_type===null) return false;
+				switch(message_record_with_type.type) {
+					case "data":
+					case "navigation": return true;
 				}
 			}
 		}
