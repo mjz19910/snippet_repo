@@ -27,8 +27,8 @@ declare global {
 // kongregate_yet-another-merge-game.js
 declare global {
 	interface Window {
-		cint?: ReturnType<typeof setTimeout>;
-		citv?: ReturnType<typeof setInterval>;
+		cint?: ReturnType<typeof setTimeout>|number;
+		citv?: ReturnType<typeof setInterval>|number;
 	}
 }
 
