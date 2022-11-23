@@ -69,7 +69,7 @@ export class section_12_8_4 extends LexerBase {
 		}
 		return 1
 	}
-	SingleStringCharacters(str: any,index: number) {
+	SingleStringCharacters(str: string,index: number):[string|null, number] {
 		let off=0
 		for(;;) {
 			let len=this.SingleStringCharacter(str,index+off)
@@ -79,7 +79,10 @@ export class section_12_8_4 extends LexerBase {
 			}
 			break
 		}
-		return off
+		if(!off){
+			return [null,0];
+		}
+		return ["SingleStringCharacters",off];
 	}
 	SingleStringCharacter(str: string,index: number) {
 		x: {
