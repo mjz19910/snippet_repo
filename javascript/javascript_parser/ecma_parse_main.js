@@ -1827,9 +1827,6 @@ export function ecma_parse_main() {
 				console.log("EOF");
 				break;
 			}
-			if(res_description[0]==="WhiteSpace" && res_description[1]==="o") {
-				debugger;
-			}
 			console.log(res_description);
 		}
 	}
