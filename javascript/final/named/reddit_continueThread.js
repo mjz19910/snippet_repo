@@ -205,6 +205,20 @@ function main() {
 			var get_dom=() => document.querySelector("[id^='continueThread']");
 			var dom=get_dom();
 			let count=0;
+			function ts_timeout_func() {
+				dom=get_dom();
+				if(!dom)
+					throw new Error("1");
+				do_ar=Object.getOwnPropertyNames(dom);
+				root_new=dom[react_ii];
+				window.root_new=root_new;
+				n_dom=get_inner();
+				n_dom.click();
+				window.inner_dom=n_dom;
+				window.cint=setTimeout(function() {
+					window.cint=f(f);
+				},1500);
+			}
 			if(!dom) {
 				dom=await new Promise(function(a,r) {
 					if(!react_ii) return r(new Error("missing react_ii"));
@@ -264,20 +278,7 @@ function main() {
 			console.log('wb',count);
 			if(n_dom) {
 				console.log('ts');
-				return setTimeout(() => {
-					dom=get_dom();
-					if(!dom) throw new Error("1");
-					do_ar=Object.getOwnPropertyNames(dom);
-					root_new=dom[react_ii];
-					window.root_new=root_new;
-					n_dom=get_inner();
-					n_dom.click();
-					window.inner_dom=n_dom;
-					window.cint=setTimeout(function() {
-						window.cint=f(f);
-					},1500);
-				}
-					,33);
+				return setTimeout(ts_timeout_func,33);
 			}
 
 		});
