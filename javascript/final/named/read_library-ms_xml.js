@@ -26,7 +26,7 @@ async function x() {
 	 * @param {{ [x: string]: any; }} obj
 	 * @param {{ (obj: any, key: any, p: any): any; (arg0: any, arg1: string | undefined, arg2: any[] | undefined): void; }} cb
 	 */
-	function do_iter(obj,cb,c=0,kp=[]) {
+	function do_iter(obj,cb,c=0,/** @type {string[]} */kp=[]) {
 		if(typeof obj==='string') {
 			return;
 		}
@@ -44,13 +44,14 @@ async function x() {
 			kp.pop();
 		}
 	}
-	let obj={};
 	let root_element=xml_document.firstElementChild;
 	if(!root_element) {
 		console.log("xml document missing child");
 		return;
 	}
-	obj[root_element.tagName]=root_element.children;
+	let obj={
+		[root_element.tagName]: root_element.children
+	};
 	do_iter(obj,function(/** @type {any} */ obj,/** @type {any} */ key,/** @type {any} */ p) {
 		let e=obj[key];
 		if(!p) {
@@ -77,18 +78,18 @@ async function x() {
 				}
 			}
 			/**
-			 * @param {({}[])|{}} obj
+			 * @param {({[x:string]:HTMLCollection | NodeListOf<ChildNode>}[])|{[x:string]:HTMLCollection | NodeListOf<ChildNode>}} obj
 			 * @param {string} key
 			 * @param {HTMLCollection | NodeListOf<ChildNode>} list
 			 */
 			function append_from_list(obj,key,list) {
-				let cur;
 				if(obj instanceof Array) {
-					obj.push(cur={});
+					obj.push({
+						[key]:list,
+					});
 				} else {
-					cur=obj;
+					obj[key]=list;
 				}
-				cur[key]=list;
 			}
 			/**
 			 * @param {Element} element
@@ -104,7 +105,11 @@ async function x() {
 			function append_from_childNodes(obj,node) {
 				append_from_list(obj,node.nodeName,node.childNodes);
 			}
-			for(let i of e) {
+			/** @param {HTMLCollection | NodeList} e */
+			function *iterator_of_html_array(e) {
+				for(let i=0;i<e.length;i++) yield e[i];
+			}
+			for(let i of iterator_of_html_array(e)) {
 				if(count++>0) {
 					obj=[obj];
 				}
