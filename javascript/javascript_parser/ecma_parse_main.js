@@ -259,33 +259,6 @@ export function ecma_parse_main() {
 			}
 		}
 		class ecma_12_6 extends ecma_base {
-			static source=`
-			PrivateIdentifier ::
-			# IdentifierName
-			
-			IdentifierName ::
-			IdentifierStart
-			IdentifierName IdentifierPart
-			
-			IdentifierStart ::
-			UnicodeIDStart
-			$
-			_
-			\ UnicodeEscapeSequence
-			
-			IdentifierPart ::
-			UnicodeIDContinue
-			$
-			\ UnicodeEscapeSequence
-			<ZWNJ>
-			<ZWJ>
-
-			UnicodeIDStart ::
-			any Unicode code point with the Unicode property “ID_Start”
-
-			UnicodeIDContinue ::
-			any Unicode code point with the Unicode property “ID_Continue”
-			`;
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			PrivateIdentifier(str,index) {
 				if(str[index]!=='#')
