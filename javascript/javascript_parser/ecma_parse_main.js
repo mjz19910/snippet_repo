@@ -301,7 +301,6 @@ export function ecma_parse_main() {
 			IdentifierName(str,index) {
 				let res=this.IdentifierStart(str,index);
 				if(!res[0]) {
-					console.log('not IdentifierName',str[index]);
 					return [null,0];
 				}
 				let [,id_start_len]=res;
