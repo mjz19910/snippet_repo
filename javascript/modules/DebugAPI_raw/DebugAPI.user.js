@@ -2577,7 +2577,7 @@ function is_record_with_string_type(x,k) {
 
 /** @arg {unknown} x @returns {{} & Record<"type", string>|null} */
 function cast_to_record_with_string_type(x) {
-	if(x instanceof Object&&'type' in x&&is_record_with_string_type(x,"type")) {
+	if(is_record_with_T(x,"type")&&is_record_with_string_type(x,"type")) {
 		return x;
 	}
 	return null;
