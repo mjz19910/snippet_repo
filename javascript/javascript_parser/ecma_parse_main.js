@@ -759,6 +759,9 @@ export function ecma_parse_main() {
 					}
 					break;
 				}
+				if(!off) {
+					return [null,0];
+				}
 				return ["SingleStringCharacters",off];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -784,10 +787,10 @@ export function ecma_parse_main() {
 				}
 				if(str[index]==='\\') {
 					let esc_len=this.EscapeSequence(str,index);
-					return esc_len+1;
+					return ["SingleStringCharacter",esc_len[1]+1];
 				}
 				let lc_len=this.LineContinuation(str,index);
-				if(lc_len>0) {
+				if(lc_len[1]>0) {
 					return lc_len;
 				}
 				return [null,1];
@@ -968,9 +971,9 @@ export function ecma_parse_main() {
 			OctalDigit(str,index) {
 				// 0 1 2 3 4 5 6 7
 				if(str.charCodeAt(index)>='0'.charCodeAt(0)&&str.charCodeAt(index)<='7'.charCodeAt(0)) {
-					return ["OctalDigit",1]
+					return ["OctalDigit",1];
 				}
-				return [null,0]
+				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			NonZeroOctalDigit(str,index) {
@@ -1179,7 +1182,7 @@ export function ecma_parse_main() {
 				this.ecma_12_8_6=new ecma_12_8_6(this);
 				this.ecma_12_9_4=new ecma_12_9_4(this);
 				this.flags={
-					sep:false,
+					sep: false,
 					is_sep() {
 						return this.sep;
 					}
