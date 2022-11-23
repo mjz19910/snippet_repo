@@ -11,6 +11,7 @@ declare global {
 
 	var EventTarget: {
 		prototype: EventTarget;
+		new(): EventTarget;
 	}
 }
 
