@@ -3,11 +3,13 @@ import window from "./window_def.js";
 export function ecma_parse_main() {
 	'use strict';
 	{
-		class ecma_12_2 {
+		class ecma_base {
 			/** @arg {ecma_root} parent */
 			constructor(parent) {
 				this.parent=parent;
 			}
+		}
+		class ecma_12_2 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			WhiteSpace(str,index) {
 				if(str[index]===' ') {
@@ -19,11 +21,7 @@ export function ecma_parse_main() {
 				return [null,0];
 			}
 		}
-		class ecma_12_3 {
-			/** @arg {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
-			}
+		class ecma_12_3 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineTerminator(str,index) {
 				let len=0;
@@ -48,11 +46,7 @@ export function ecma_parse_main() {
 				return [null,0];
 			}
 		}
-		class ecma_12_4 {
-			/** @param {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
-			}
+		class ecma_12_4 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Comment(str,index) {
 				let ml_len=this.MultiLineComment(str,index);
@@ -196,11 +190,7 @@ export function ecma_parse_main() {
 				return ["SingleLineCommentChars",s_index-index];
 			}
 		}
-		class ecma_12_5 {
-			/** @arg {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
-			}
+		class ecma_12_5 extends ecma_base {
 			/*
 			CommonToken ::
 				IdentifierName
@@ -263,15 +253,11 @@ export function ecma_parse_main() {
 					len=cur[1];
 					item=cur;
 				}
-				if(item === null) throw new Error("Parse Error");
+				if(item===null) throw new Error("Parse Error");
 				return [item[0],len];
 			}
 		}
-		class ecma_12_6 {
-			/** @param {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
-			}
+		class ecma_12_6 extends ecma_base {
 			static source=`
 			PrivateIdentifier ::
 			# IdentifierName
@@ -340,7 +326,7 @@ export function ecma_parse_main() {
 					return [null,0];
 				}
 				if(str[index]==='\\') {
-					let res=this.parent.UnicodeEscapeSequence(str,index+1);
+					let res=this.parent.ecma_12_9_4.UnicodeEscapeSequence(str,index+1);
 					if(res[0]) return ["IdentifierStart",res[1]+1];
 				}
 				if(str[index].match(ecma_12_6.id_start_regex)) {
@@ -350,81 +336,175 @@ export function ecma_parse_main() {
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			IdentifierPart(str,index) {
-				if(str[index].match(/[a-zA-Z$_0-9]/)) {
-					return 1;
+				if(str[index].match(ecma_12_6.id_continue_regex)) {
+					return ["IdentifierPart",1];
 				}
-				return 0;
+				return [null,0];
 			}
 		}
-		class ecma_12_7 {
-			/** @param {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
+		/** @template K,V */
+		class HashMap {
+			/** @type {Map<K,V>|null} */
+			backing_map=null;
+			is_empty() {
+				if(this.backing_map===null) {
+					return true;
+				}
+				if(this.backing_map.size===0) {
+					return true;
+				}
+				return false;
 			}
+			/** @arg {K} key @arg {V} value */
+			set(key,value) {
+				if(!this.backing_map) {
+					this.backing_map=new Map;
+				}
+				this.backing_map.set(key,value);
+				return this;
+			}
+			clear() {
+				if(this.backing_map) {
+					this.backing_map.clear();
+				}
+			}
+			/** @arg {K} key */
+			get(key) {
+				return this.backing_map?.get(key);
+			}
+			/** @arg {K} key */
+			has(key) {
+				if(!this.backing_map) {
+					return false;
+				}
+				return this.backing_map.has(key);
+			}
+			/** @arg {(this: this,arg1: K,arg2: V) => "Break"|"Continue"} callback */
+			iterate(callback) {
+				// from https://github.com/SerenityOS/serenity/blob/master/Userland/DevTools/Profiler/Profile.cpp
+				// on my fs file://home/wsl2/dev/serenity/Userland/DevTools/Profiler/Profile.cpp
+				if(!this.backing_map)
+					return;
+				for(let x of this.backing_map.entries()) {
+					if(callback.apply(this,x)==="Break") {
+						break;
+					}
+				}
+			}
+		}
+		// HashMap<FlyString, TokenType> Lexer::s_keywords
+		/** @type {HashMap<string,string>} uses enum JSTokenizerTokenType as string */
+		const s_keywords=new HashMap();
+		s_keywords;
+		// HashMap<String, TokenType> Lexer::s_three_char_tokens
+		/** @type {HashMap<string,string>} */
+		const s_three_char_tokens=new HashMap();
+		// HashMap<String, TokenType> Lexer::s_two_char_tokens
+		/** @type {HashMap<string,string>} */
+		const s_two_char_tokens=new HashMap();
+		// HashMap<char, TokenType> Lexer::s_single_char_tokens
+		/** @type {HashMap<string,string>} */
+		const s_single_char_tokens=new HashMap();
+		class ecma_12_7 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Punctuator(str,index) {
-				let len=this.OptionalChainingPunctuator(str,index);
-				if(len>0) {
-					return len;
+				var len=0,type=null,ret;
+				ret=this.OptionalChainingPunctuator(str,index);
+				if(ret[0]&&ret[1]>len) {
+					type=ret[0];
+					len=ret[1];
 				}
-				return 0;
+				ret=this.OtherPunctuator(str,index);
+				if(ret[0]&&ret[1]>len) {
+					type=ret[0];
+					len=ret[1];
+				}
+				return [type,len];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			OptionalChainingPunctuator(str,index) {
 				if(str.slice(index,index+2)==='?.') {
-					let num_len=this.parent.ecma_12_8_3.DecimalDigit(str,index+2);
+					let [,num_len]=this.parent.ecma_12_8_3.DecimalDigit(str,index+2);
 					if(num_len>0) {
-						return 0;
+						return [null,0];
 					}
-					return 2;
+					return ["OptionalChainingPunctuator",2];
 				}
-				let punct_len=this.OtherPunctuator(str,index);
-				if(punct_len>0) {
-					return punct_len;
-				}
-				return 0;
+				return [null,0];
 			}
 			_OtherPunct="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			OtherPunctuator(str,index) {
-				let len=0;
-				for(let ci,i=0;i<this._OtherPunct.length;i++) {
-					ci=this._OtherPunct[i];
-					if(str.slice(index,index+ci.length)===ci) {
-						if(ci.length>len) {
-							len=ci.length;
-						}
-					}
+				// >>>= is the only production of length 4
+				if(str.startsWith('>>>=',index)) {
+					return ['OtherPunctuator',4];
 				}
-				return len;
+				/** @type {string|null} */
+				let result=null;
+				s_three_char_tokens.iterate(function(key) {
+					// I think all the 3 char tokens are valid as OtherPunctuator productions
+					if(str.startsWith(key,index)) {
+						result=key;
+						return "Break";
+					}
+					return "Continue";
+				});
+				if(result) return [true,3];
+				result=null;
+				s_two_char_tokens.iterate(function(key) {
+					// skip DivPunctuator with length 2
+					if(key==='/=') return "Continue";
+					// TODO: exclude some tokens that are parsed elsewhere
+					if(str.startsWith(key,index)) {
+						result=key;
+						return "Break";
+					}
+					return "Continue";
+				});
+				if(result) return [true,2];
+				result=null;
+				s_single_char_tokens.iterate(function(key,_value) {
+					// skip a DivPunctuator with length 1
+					if(key==='/') return "Continue";
+					// skip a RightBracePunctuator
+					if(key==='{}'[1]) return "Continue";
+					if(str[index]===key) {
+						result=key;
+						return "Break";
+					}
+					return "Continue";
+				});
+				if(result) {
+					return ['OtherPunctuator',1];
+				}
+				return [null,0];
 			}
 			_DivPunct="/ /=".split(' ');
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DivPunctuator(str,index) {
-				let len=0;
-				for(let ci,i=0;i<this._DivPunct.length;i++) {
-					ci=this._DivPunct[i];
-					if(str.slice(index,index+ci.length)===ci) {
-						if(ci.length>len) {
-							len=ci.length;
-						}
-					}
+				let char_len=0;
+				// `/`
+				if(str.startsWith('/',index)) {
+					char_len=1;
 				}
-				return len;
+				// `/=`
+				if(str.startsWith('/=',index)) {
+					char_len=2;
+				}
+				if(char_len>0) {
+					return ["DivPunctuator",char_len];
+				}
+				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RightBracePunctuator(str,index) {
 				if(str[index]==='{}'[1]) {
-					return 1;
+					return ['RightBracePunctuator',1];
 				}
-				return 0;
+				return [null,0];
 			}
 		}
-		class ecma_12_8 {
-			/** @arg {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
-			}
+		class ecma_12_8 extends ecma_base {
 			/** @param {string} str @arg {number} index @returns {[number,null,null]|[number,["regexpNonTerm"],null]} */
 			RegularExpressionNonTerminator(str,index) {
 				let _val=this.parent.ecma_12_3.LineTerminator(str,index);
@@ -434,17 +514,15 @@ export function ecma_parse_main() {
 				return [0,null,null];
 			}
 		}
-		class ecma_12_8_3 {
-			/** @param {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
-			}
+		class ecma_12_8_3 extends ecma_base {
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalDigit(str,index) {
 				if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
-					return 1;
+					return ["DecimalDigit",1];
 				}
-				return 0;
+				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			NumericLiteral(str,index) {
 				let len=this.DecimalLiteral(str,index);
 				if(len>0) {
@@ -452,64 +530,119 @@ export function ecma_parse_main() {
 				}
 				return 0;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalLiteral(str,index) {
 				if(str[index]==='0') {
-					return 1;
+					return ["DecimalLiteral",1];
 				}
-				let zd_len=this.NonZeroDigit(str,index);
+				let [,zd_len]=this.NonZeroDigit(str,index);
 				let off=0;
 				if(zd_len===1) {
 					off+=1;
-					let ns_len=this.NumericLiteralSeparator(str,index+off);
+					let [,ns_len]=this.NumericLiteralSeparator(str,index+off);
 					if(ns_len>0) {
 						off++;
 					}
-					let dd_len=this.DecimalDigits(str,index+off);
-					return dd_len+off;
+					let dd_r=this.DecimalDigits(str,index+off);
+					if(!dd_r[0]) throw dd_r[1];
+					return ["DecimalLiteral",dd_r[1]+off];
 				}
-				return off;
+				return ["DecimalLiteral",off];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalDigits(str,index) {
+				if(this.parent.flags.is_sep()) {
+					return this.DecimalDigits_Sep(str,index);
+				} else {
+					return this.DecimalDigits_NoSep(str,index);
+				}
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			DecimalDigits_NoSep(str,index) {
+				// DecimalDigit
 				let off=0;
 				for(;;) {
-					let len=this.DecimalDigit(str,index+off);
+					let [,len]=this.DecimalDigits_NoSep(str,index+off);
 					if(len>0) {
 						off++;
 						continue;
 					}
-					let s_len=this.NumericLiteralSeparator(str,index+off);
+					break;
+				}
+				return ["DecimalDigits_NoSep",off];
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			NonZeroDigit(str,index) {
+				if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
+					return ["NonZeroDigit",1];
+				}
+				return [null,0];
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			NumericLiteralSeparator(str,index) {
+				if(str[index]==='_') {
+					return ["NumericLiteralSeparator",1];
+				}
+				return [null,0];
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			DecimalIntegerLiteral(str,index) {
+				let len=0;
+				// 0
+				if(str[index]==='0') {
+					len++;
+				}
+				{
+					// NonZeroDigit
+					let tmp=this.NonZeroDigit(str,index);
+					if(tmp[0]&&tmp[1]>len) {
+						len=tmp[1];
+					}
+				}
+				// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
+				{
+					let tmp_len=0;
+					let tmp=this.NonZeroDigit(str,index+tmp_len);
+					if(tmp[0]) {
+						tmp_len+=tmp[1];
+						let t2=this.NumericLiteralSeparator(str,index+tmp_len);
+						if(t2[0]) {
+							tmp_len+=t2[1];
+						}
+						this.DecimalDigits_Sep(str,index);
+					}
+				}
+				return [null,0];
+			}
+			// DecimalDigits[+Sep]
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			DecimalDigits_Sep(str,index) {
+				let off=0;
+				for(;;) {
+					// DecimalDigit
+					let [,len]=this.DecimalDigit(str,index+off);
+					if(len>0) {
+						off++;
+						// DecimalDigits[?Sep] DecimalDigit
+						continue;
+					}
+					// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
+					let [,s_len]=this.NumericLiteralSeparator(str,index+off);
 					if(s_len>0) {
-						let exl=this.DecimalDigit(str,index+off+1);
+						let [,exl]=this.DecimalDigit(str,index+off+1);
 						if(exl>0) {
 							off++;
+							// [+Sep] (DecimalDigits[+Sep]) NumericLiteralSeparator DecimalDigit
 							continue;
 						}
 						break;
 					}
 					break;
 				}
-				return off;
-			}
-			NonZeroDigit(str,index) {
-				if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
-					return 1;
-				}
-				return 0;
-			}
-			NumericLiteralSeparator(str,index) {
-				if(str[index]==='_') {
-					return 1;
-				}
-				return 0;
-			}
-			DecimalIntegerLiteral(str,index) {
+				return ["DecimalDigits[+Sep]",off];
 			}
 		}
-		class ecma_12_8_4 {
-			/** @param {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
-			}
+		class ecma_12_9_4 extends ecma_base {
 			/*
 			EscapeCharacter ::
 			SingleEscapeCharacter
@@ -928,11 +1061,7 @@ export function ecma_parse_main() {
 			}
 		}
 		/** @typedef {[string,number]|[true,number]|[null,number]|[['Error',string],number]} LexReturnTyShort */
-		class ecma_12_8_6 {
-			/** @param {ecma_root} parent */
-			constructor(parent) {
-				this.parent=parent;
-			}
+		class ecma_12_8_6 extends ecma_base {
 			// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateSubstitutionTail(str,index) {
@@ -1020,8 +1149,15 @@ export function ecma_parse_main() {
 				this.ecma_12_7=new ecma_12_7(this);
 				this.ecma_12_8=new ecma_12_8(this);
 				this.ecma_12_8_3=new ecma_12_8_3(this);
-				this.ecma_12_8_4=new ecma_12_8_4(this);
+				this.ecma_12_8_4=new ecma_12_9_4(this);
 				this.ecma_12_8_6=new ecma_12_8_6(this);
+				this.ecma_12_9_4=new ecma_12_9_4(this);
+				this.flags={
+					sep:false,
+					is_sep() {
+						return this.sep;
+					}
+				};
 			}
 		}
 		class js_token_generator {
