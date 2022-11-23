@@ -1848,7 +1848,7 @@ export function ecma_parse_main() {
 			}
 			let res_description=token_gen.describe_token(res_item);
 			if(res_description[0]==="WhiteSpace") {
-				i--;
+				i-=3;
 			}
 			if(res_item[0]===js_token_generator.EOF_TOKEN) {
 				console.log("EOF");
