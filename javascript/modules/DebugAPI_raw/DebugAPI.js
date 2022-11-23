@@ -2569,6 +2569,7 @@ class RemoteSocket {
 	}
 }
 
+// <RemoteOriginConnection>
 class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @param {TransportMessageObj} obj */
 	request_new_port(obj) {
@@ -2618,6 +2619,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		}
 		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
 		this.init_with_next_parent(this.state.top);
+		/**
+		 * @type {MessageEvent<unknown> | undefined}
+		 */
+		this.last_misbehaved_client_event=undefined;
 	}
 	/** @param {Window} cur_window */
 	init_with_next_parent(cur_window) {
@@ -2735,8 +2740,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		console.log("root_post_message",message);
 		target_port.postMessage(message);
 	}
+	// @RemoteOriginConnection
 	start_root_server() {
 		let t=this;
+		// @RemoteOriginConnection
 		/** @arg {MessageEvent<unknown>} event */
 		function on_message_event(event) {
 			let message_data=event.data;
@@ -2748,15 +2755,18 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 					t.on_connect_request_message(state,event);
 				}
 				if(state.did_misbehave) {
-					console.log(`Client misbehaved: connect api not followed`);
+					// @RemoteOriginConnection
+					console.log(`[@RemoteOriginConnection] Client misbehaved: connect api not followed`);
 					console.group("Received message event");
 					console.log("root_ev_data",message_data);
 					console.log("root_ev_ports",event.ports);
 					console.log("root_event",event);
+					t.last_misbehaved_client_event=event;
 					console.groupEnd();
 				}
 			}
 		}
+		// @RemoteOriginConnection
 		elevate_event_handler(on_message_event);
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
@@ -2768,7 +2778,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			t.connections.length=0;
 		});
 	}
-}
+} // </RemoteOriginConnection>
 g_api.RemoteOriginConnection=RemoteOriginConnection;
 let remote_origin=new RemoteOriginConnection();
 remote_origin.init();
