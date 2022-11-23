@@ -193,8 +193,30 @@ function main() {
 		function get_dom() {
 			return document.querySelector("[id^='continueThread']");
 		}
-		var dom=document.body.children["2x-container"];
-		dom=dom._reactRootContainer._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode;
+		var dom=document.getElementById("2x-container");
+		if(!dom) throw 1;
+		if(!('_reactRootContainer' in dom)) throw 1;
+		if(!(dom._reactRootContainer instanceof Object)) throw 1;
+		class RedditNodeIter {
+			/** @param {Object} node */
+			constructor(node) {
+				this.m_iter_node=node;
+			}
+			current() {
+				if(!('current' in this.m_iter_node)) throw 1;
+				if(!(this.m_iter_node.current instanceof Object)) throw 1;
+				this.m_iter_node=this.m_iter_node.current;
+				return this;
+			}
+			_internalRoot() {
+				if(!('_internalRoot' in this.m_iter_node)) throw 1;
+				if(!(this.m_iter_node._internalRoot instanceof Object)) throw 1;
+				this.m_iter_node=this.m_iter_node._internalRoot;
+				return this;
+			}
+		}
+		let node_iter=new RedditNodeIter(dom._reactRootContainer);
+		dom=root_container._internalRoot.current.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.child.stateNode;
 		var do_ar=Object.getOwnPropertyNames(dom);
 		var react_ii_=do_ar.find(e => e.indexOf("__reactInternalInstance")==0);
 		if(!react_ii_) throw new Error("1");
