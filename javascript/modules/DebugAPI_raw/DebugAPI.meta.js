@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI and g_api
 // @namespace    https://github.com/mjz19910/
-// @version      0.4.5
+// @version      0.4.6
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/javascript/modules/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
