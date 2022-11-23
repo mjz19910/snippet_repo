@@ -525,10 +525,10 @@ export function ecma_parse_main() {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			NumericLiteral(str,index) {
 				let len=this.DecimalLiteral(str,index);
-				if(len>0) {
+				if(len[1]>0) {
 					return len;
 				}
-				return 0;
+				return [null,0];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalLiteral(str,index) {
@@ -721,7 +721,7 @@ export function ecma_parse_main() {
 			DoubleStringCharacter(str,index) {
 				x: {
 					if(str[index]==='"') {
-						return 0;
+						return [null,0];
 					}
 					if(str[index]==='\\') {
 						break x;
@@ -730,13 +730,13 @@ export function ecma_parse_main() {
 					if(len!==null) {
 						break x;
 					}
-					return 1;
+					return [null,1];
 				}
 				if(str[index]==='\u{2028}') {
-					return 1;
+					return [null,1];
 				}
 				if(str[index]==='\u{2029}') {
-					return 1;
+					return [null,1];
 				}
 				if(str[index]==='\\') {
 					let esc_len=this.EscapeSequence(str,index);
@@ -746,14 +746,14 @@ export function ecma_parse_main() {
 				if(lc_len>0) {
 					return lc_len;
 				}
-				return 1;
+				return [null,1];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			SingleStringCharacters(str,index) {
 				let off=0;
 				for(;;) {
 					let len=this.SingleStringCharacter(str,index+off);
-					if(len>0) {
+					if(len[1]>0) {
 						off++;
 						continue;
 					}
@@ -765,7 +765,7 @@ export function ecma_parse_main() {
 			SingleStringCharacter(str,index) {
 				x: {
 					if(str[index]==="'") {
-						return 0;
+						return [null,0];
 					}
 					if(str[index]==='\\') {
 						break x;
@@ -774,13 +774,13 @@ export function ecma_parse_main() {
 					if(len!==null) {
 						break x;
 					}
-					return 1;
+					return [null,1];
 				}
 				if(str[index]==='\u{2028}') {
-					return 1;
+					return [null,1];
 				}
 				if(str[index]==='\u{2029}') {
-					return 1;
+					return [null,1];
 				}
 				if(str[index]==='\\') {
 					let esc_len=this.EscapeSequence(str,index);
@@ -790,7 +790,7 @@ export function ecma_parse_main() {
 				if(lc_len>0) {
 					return lc_len;
 				}
-				return 1;
+				return [null,1];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineContinuation(str,index) {
@@ -814,9 +814,10 @@ export function ecma_parse_main() {
 			following function ignores:
 			LegacyOctalEscapeSequence
 			*/
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			EscapeSequence(str,index) {
 				let len=this.CharacterEscapeSequence(str,index);
-				if(len>0) {
+				if(len[1]>0) {
 					return len;
 				}
 				x: {
@@ -826,7 +827,7 @@ export function ecma_parse_main() {
 							break x;
 						}
 						// \0 null escape found
-						return 1;
+						return [null,1];
 					}
 				}
 				len=this.LegacyOctalEscapeSequence(str,index);
@@ -845,35 +846,38 @@ export function ecma_parse_main() {
 				if(len>0) {
 					return len;
 				}
-				return 0;
+				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			CharacterEscapeSequence(str,index) {
 				let len=this.SingleEscapeCharacter(str,index);
-				if(len>0) {
+				if(len[1]>0) {
 					return len;
 				}
 				len=this.NonEscapeCharacter(str,index);
-				if(len>0) {
+				if(len[1]>0) {
 					return len;
 				}
-				return 0;
+				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			SingleEscapeCharacter(str,index) {
 				let val=["'","\"","\\","b","f","n","r","t","v"];
 				let cur=str[index];
 				if(val.includes(cur)) {
-					return 1;
+					return [null,1];
 				}
-				return 0;
+				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			NonEscapeCharacter(str,index) {
 				if(this.EscapeCharacter(str,index)) {
-					return 0;
+					return [null,0];
 				}
 				if(this.parent.ecma_12_3.LineTerminator(str,index)) {
-					return 0;
+					return [null,0];
 				}
-				return 1;
+				return [null,1];
 			}
 			EscapeCharacter(str,index) {
 				let len0=this.SingleEscapeCharacter(str,index);
@@ -883,7 +887,7 @@ export function ecma_parse_main() {
 					act=1;
 				}
 				if(str[index]==='x') {
-					return 1;
+					return [null,1];
 				}
 				if(len0>0&&len0>=len1) {
 					return len0;
@@ -906,7 +910,7 @@ export function ecma_parse_main() {
 				x: {
 					if(str[index]==='0') {
 						if(str[index+1]==='8'||str[index+1]==='9') {
-							return 1;
+							return [null,1];
 						}
 						break x;
 					}
@@ -918,7 +922,7 @@ export function ecma_parse_main() {
 						if(n_len>0) {
 							break x;
 						}
-						return 1;
+						return [null,1];
 					}
 				}
 				x: {
@@ -930,7 +934,7 @@ export function ecma_parse_main() {
 							if(n_len>0) {
 								break x;
 							}
-							return 2;
+							return [null,2];
 						}
 					}
 				}
@@ -939,7 +943,7 @@ export function ecma_parse_main() {
 					if(len>0) {
 						len=this.OctalDigit(str,index+1);
 						if(len>0) {
-							return 2;
+							return [null,2];
 						}
 					}
 				}
@@ -956,9 +960,9 @@ export function ecma_parse_main() {
 					if(!len) {
 						break x;
 					}
-					return 3;
+					return [null,3];
 				}
-				return 0;
+				return [null,0];
 			}
 			/** @returns {number} */
 			OctalDigit(str,arg1) {
@@ -966,49 +970,49 @@ export function ecma_parse_main() {
 			}
 			NonZeroOctalDigit(str,index) {
 				if(str[index]==='0') {
-					return 0;
+					return [null,0];
 				}
 				let len=this.OctalDigit(str,index);
 				if(len>0) {
-					return 1;
+					return [null,1];
 				}
-				return 0;
+				return [null,0];
 			}
 			ZeroToThree(str,index) {
 				let cur=str[index];
 				let chk='0123';
 				if(chk.includes(cur)) {
-					return 1;
+					return [null,1];
 				}
-				return 0;
+				return [null,0];
 			}
 			FourToSeven(str,index) {
 				let cur=str[index];
 				let chk='4567';
 				if(chk.includes(cur)) {
-					return 1;
+					return [null,1];
 				}
-				return 0;
+				return [null,0];
 			}
 			NonOctalDecimalEscapeSequence(str,index) {
 				if(str[index]==='8'||str[index]==='9') {
-					return 1;
+					return [null,1];
 				}
-				return 0;
+				return [null,0];
 			}
 			HexEscapeSequence(str,index) {
 				if(str[index]==='x') {
 					let len=this.HexDigit(str,index);
 					if(!len) {
-						return 0;
+						return [null,0];
 					}
 					len=this.HexDigit(str,index+1);
 					if(!len) {
-						return 0;
+						return [null,0];
 					}
-					return 3;
+					return [null,3];
 				}
-				return 0;
+				return [null,0];
 			}
 			UnicodeEscapeSequence(str,index) {
 				let off=0;
@@ -1030,7 +1034,7 @@ export function ecma_parse_main() {
 						}
 					}
 				}
-				return 0;
+				return [null,0];
 			}
 			/** @returns {number} */
 			CodePoint(str,arg1) {
@@ -1039,21 +1043,21 @@ export function ecma_parse_main() {
 			Hex4Digits(str,index) {
 				let len=this.HexDigit(str,index);
 				if(!len) {
-					return 0;
+					return [null,0];
 				}
 				len=this.HexDigit(str,index);
 				if(!len) {
-					return 0;
+					return [null,0];
 				}
 				len=this.HexDigit(str,index);
 				if(!len) {
-					return 0;
+					return [null,0];
 				}
 				len=this.HexDigit(str,index);
 				if(!len) {
-					return 0;
+					return [null,0];
 				}
-				return 4;
+				return [null,4];
 			}
 			/** @returns {number} */
 			HexDigit(str,index) {
