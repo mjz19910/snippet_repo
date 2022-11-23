@@ -2777,10 +2777,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		let message_record_with_source=cast_to_record_with_key_and_string_type(obj,"source");
 		if(!message_record_with_source) return false;
 		if(message_record_with_source.source!=="sponsorblock") return false;
-		/** @type {{source:string}} */
+		/** @type {T&{source:string}} */
 		let obj_2=message_record_with_source;
 		// should be a SponsorBlock event.data
-		/** @type {{type:string,source:string}|null} */
+		/** @type {T&{type:string,source:string}|null} */
 		let message_record_with_type=cast_to_record_with_string_type(obj_2);
 		if(message_record_with_type===null) return false;
 		switch(message_record_with_type.type) {
