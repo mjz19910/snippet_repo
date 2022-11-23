@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"outDir": "javascript_build",
 		"allowJs": true,
 		"checkJs": true,
 		"strict": true,
@@ -8,8 +9,5 @@
 			"./node_modules/@types"
 		],
 		"noImplicitAny": true,
-	},
-	"files": [
-		"**/*"
-	]
+	}
 }
