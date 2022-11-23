@@ -75,7 +75,6 @@ export function ecma_parse_main() {
 					if(com_len===0) {
 						return [null,0];
 					}
-					console.log("MultiLineComment",str.slice(index,index+off+com_len+2));
 					if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {
 						return ['MultiLineComment',off+com_len+2];
 					}
@@ -220,7 +219,6 @@ export function ecma_parse_main() {
 			*/
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			CommonToken(str,index) {
-				console.log("CommonToken");
 				let cur=null;
 				let item=null;
 				let len=0;
@@ -314,7 +312,6 @@ export function ecma_parse_main() {
 					id_continue_len=id_continue_match[0].length;
 				}
 				if(id_continue_len>0) {
-					console.log('IdentifierName with continue',str.slice(index,index+id_start_len+id_continue_len));
 					return ["IdentifierName",id_start_len+id_continue_len];
 				}
 				return [null,0];
@@ -567,7 +564,6 @@ export function ecma_parse_main() {
 		class ecma_12_7 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Punctuator(str,index) {
-				console.log("Punctuator");
 				var len=0,type=null,ret;
 				ret=this.OptionalChainingPunctuator(str,index);
 				if(ret[1]>len) {
