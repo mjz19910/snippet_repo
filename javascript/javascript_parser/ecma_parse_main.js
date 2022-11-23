@@ -254,7 +254,9 @@ export function ecma_parse_main() {
 					len=cur[1];
 					item=cur;
 				}
-				if(item===null) throw new Error("Parse Error");
+				if(item===null) {
+					return [null,0];
+				}
 				return [item[0],len];
 			}
 		}
@@ -1437,8 +1439,89 @@ export function ecma_parse_main() {
 		class ecma_12_8_5 extends ecma_base {
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RegularExpressionLiteral(str,index) {
-				str; index;
+				let len=0;
+				// / RegularExpressionBody / RegularExpressionFlags
+				if(str[index]==='/') {
+					len++;
+				} else {
+					return [null,0];
+				}
+				let res=this.RegularExpressionBody(str,index);
+				if(!res[0]) return [null,0];
+				len+=res[1];
+				if(str[index+len]==='/') {
+					len++;
+				} else {
+					return [null,0];
+				}
+				res=this.RegularExpressionFlags(str,index);
+				return [null,0];
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionFlags(str,index) {
 				throw new Error("Method not implemented.");
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionBody(str,index) {
+				// RegularExpressionFirstChar RegularExpressionChars
+				let res=this.RegularExpressionFirstChar(str,index);
+				if(res[1]>0) {
+					let cont=this.RegularExpressionChars(str,index+1);
+					if(cont[1]=== 0) {}
+				}
+				throw new Error("Method not implemented.");
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionChars(str,index) {
+				let res=this.RegularExpressionChar(str,index);
+				return ["RegularExpressionChars",res[1]];
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionChar(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionFirstChar(str,index) {
+				// RegularExpressionNonTerminator but not one of * or \ or / or [
+				x: {
+					if(str[index]==='*'||str[index]==='\\'&&str[index]==='/'||str[index]==='[]'[0]) {
+						break x;
+					}
+					let res=this.RegularExpressionNonTerminator(str,index);
+					if(res[0])
+						return ["RegularExpressionFirstChar",res[1]];
+				}
+				// RegularExpressionBackslashSequence
+				let res=this.RegularExpressionBackslashSequence(str,index);
+				if(res[0])
+					return ["RegularExpressionFirstChar",res[1]];
+				// RegularExpressionClass
+				res=this.RegularExpressionClass(str,index);
+				if(res[0])
+					return ["RegularExpressionFirstChar",res[1]];
+				return [null,0];
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionClass(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionBackslashSequence(str,index) {
+				// \ RegularExpressionNonTerminator
+				if(str[index]==='\\') {
+					let res=this.RegularExpressionNonTerminator(str,index+1)
+					if(res[0])
+						return ["RegularExpressionBackslashSequence",1+res[1]]
+				}
+				return [null,0]
+			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+			RegularExpressionNonTerminator(str,index) {
+				// SourceCharacter but not LineTerminator
+				let vv=this.parent.LineTerminator(str,index);
+				if(vv[0])
+					return [null,0];
+				return ["RegularExpressionNonTerminator",1];
 			}
 		}
 		class ecma_root {
@@ -1526,6 +1609,20 @@ export function ecma_parse_main() {
 				if(!token_value) return ['undefined'];
 				let tok_str=this.str.slice(token_value[2],token_value[2]+token_value[1]);
 				return [token_value[0],tok_str];
+			}
+			/** @arg {LexReturnTyShort} cur @returns {[string,number,number]|[symbol,number,number]|null} */
+			as_next_token(cur) {
+				if(cur[0]!==null) {
+					if(cur[1]===0) {
+						return [cur[0],cur[1],this.index];
+					}
+					this.index+=cur[1];
+					return [cur[0],cur[1],this.index];
+				}
+				if(this.index>(this.str.length-1)) {
+					return [js_token_generator.EOF_TOKEN,0,this.index];
+				}
+				return null;
 			}
 			/** @returns {[string,number,number]|[symbol,number,number]|null} */
 			next_token() {
@@ -1725,9 +1822,17 @@ export function ecma_parse_main() {
 		parse_str="(function(){return function x(){}})()";
 		let token_gen=new js_token_generator(parse_str);
 		let res_item;
-		res_item=token_gen.next_token();
-		let res_description=token_gen.describe_token(res_item);
-		console.log(res_description);
+		for(let i=0;i<30;i++) {
+			res_item=token_gen.next_token();
+			let res_description=token_gen.describe_token(res_item);
+			if(res_description[1]==="return") {
+				res_item=token_gen.InputElementRegExp(token_gen.str,token_gen.index);
+				let res_description=token_gen.describe_token(token_gen.as_next_token(res_item));
+				console.log(res_description);
+				continue;
+			}
+			console.log(res_description);
+		}
 	}
 }
 
