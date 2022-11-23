@@ -2582,18 +2582,16 @@ function is_record_with_T(x,k) {
 
 /** @arg {unknown} x @returns {{} & Record<"type", string>|null} */
 function cast_to_record_with_string_type(x) {
-	if(is_record_with_T(x,"type")&&is_record_with_string_type(x,"type")) {
-		return x;
-	}
-	return null;
+	if(!is_record_with_T(x,"type")) return null;
+	if(!is_record_with_string_type(x,"type")) return null;
+	return x;
 }
 
 /** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {U & Record<T, string>|null} */
 function cast_to_record_with_key_and_string_type(x,k) {
-	if(is_record_with_T(x,k)&&is_record_with_string_type(x,k)) {
-		return x;
-	}
-	return null;
+	if(!is_record_with_T(x,k)) return null;
+	if(!is_record_with_string_type(x,k)) return null;
+	return x;
 }
 
 // <RemoteOriginConnection>
