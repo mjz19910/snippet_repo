@@ -2750,9 +2750,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				if(state.did_misbehave) {
 					console.log(`Client misbehaved: connect api not followed`);
 					console.group("Received message event");
-					console.log("data",message_data);
-					console.log("ports",event.ports);
-					console.log("event",event);
+					console.log("root_ev_data",message_data);
+					console.log("root_ev_ports",event.ports);
+					console.log("root_event",event);
 					console.groupEnd();
 				}
 			}
