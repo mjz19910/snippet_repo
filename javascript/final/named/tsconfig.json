@@ -8,6 +8,7 @@
 		"lib": [
 			"ESNext"
 		],
+		"target": "ESNext",
 		"typeRoots": [
 			"./node_modules/@types"
 		],
