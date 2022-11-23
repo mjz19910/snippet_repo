@@ -27,7 +27,7 @@ export class section_12_6 extends LexerBase {
 		let [,id_start_len]=res;
 		section_12_6.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
 		let id_continue_match=section_12_6.IdentifierName_not_start_regex.exec(str);
-		if(!id_continue_match) {
+		if(!id_continue_match || id_continue_match.index!=(index+1)) {
 			if(this.debug) console.log('IdentifierName is start only',str.slice(index,index+id_start_len));
 			return ["IdentifierName",id_start_len];
 		}
