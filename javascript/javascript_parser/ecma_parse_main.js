@@ -691,10 +691,10 @@ export function ecma_parse_main() {
 				let max_len=0;
 				let len=0;
 				{
-					let cur=this.DecimalIntegerLiteral(str,index);
+					let cur=this.DecimalIntegerLiteral(str,index+len);
 					len+=cur[1];
 				}
-				if(str[index+len]===".") {
+				if(len>0&&str[index+len]===".") {
 					console.error("handle numbers like 0.0");
 				};
 				if(len>max_len)max_len=len;
