@@ -252,9 +252,12 @@ function main() {
 					throw new Error("1");
 				do_ar=Object.getOwnPropertyNames(dom);
 				if(!(react_ii in dom)) throw 1;
-				root_new=dom[react_ii];
+				/** @type {any} */
+				let root_new_=dom[react_ii];
+				root_new=root_new_;
 				window.root_new=root_new;
 				n_dom=get_inner();
+				if(!n_dom) throw 1;
 				n_dom.click();
 				window.inner_dom=n_dom;
 				window.cint=setTimeout(function() {
@@ -296,7 +299,7 @@ function main() {
 			var do_ar=Object.getOwnPropertyNames(dom);
 			console.log(do_ar);
 			if(!(react_ii in dom)) throw 1;
-			class InternalInstanceType {
+			class InternalInstanceType extends HTMLElement {
 				get child() {return this;}
 				get sibling() {return this;}
 				get stateNode() {return this;}
@@ -340,8 +343,17 @@ function main() {
 			}
 		}
 		var dom_thread=document.querySelector("[id^='continueThread']");
+		if(!dom_thread) throw 1;
 		var do_ar=Object.getOwnPropertyNames(dom_thread);
-		var root_new=dom_thread[do_ar.find(e => e.indexOf("__reactInternalInstance")==0)];
+		let found_name_=do_ar.find(e => e.indexOf("__reactInternalInstance")==0);
+		if(!found_name_) throw 1;
+		/** @type {"__reactInternalInstance"} */
+		let found_name=any(found_name_);
+		if(!(found_name in dom_thread)) throw 1;
+		var root_new=dom_thread[found_name];
+		/**
+		 * @type {any[]}
+		 */
 		let refs=[];
 		/**
 		 * @param {any[]} r
@@ -350,8 +362,12 @@ function main() {
 			if(typeof root_new!='undefined') {
 				r.push(root_new);
 			} else {
-				let x=document.body.children["2x-container"];
+				let x=document.getElementById("2x-container");
+				if(!x) throw 1;
+				if(!('_reactRootContainer' in x)) throw 1;
 				let a=x._reactRootContainer;
+				if(!(a instanceof Object)) throw 1;
+				if(!('_internalRoot' in a)) throw 1;
 				r.push(a._internalRoot);
 			}
 		}
