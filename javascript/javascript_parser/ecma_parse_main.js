@@ -62,6 +62,7 @@ export function ecma_parse_main() {
 				}
 				return [null,0];
 			}
+			/** @returns {[string,number]|[null, number]} */
 			MultiLineComment(str,index) {
 				`
 				MultiLineComment ::
@@ -85,11 +86,11 @@ export function ecma_parse_main() {
 				}
 				return [null,0];
 			}
+			dep=0;
 			/**MultiLineCommentChars ::
 			MultiLineNotAsteriskChar MultiLineCommentChars opt
 			* PostAsteriskCommentChars opt */
 			MultiLineCommentChars(str,index) {
-				this.dep??=0;
 				let slen=0;
 				if(this.dep>64) {
 					throw Error('stack overflow');
@@ -161,6 +162,7 @@ export function ecma_parse_main() {
 				}
 				return 1;
 			}
+			/** @returns {[string,number]|[null, number]} */
 			SingleLineComment(str,index) {
 				if(str.slice(index,index+2)==='//') {
 					let comlen=this.SingleLineCommentChars(str,index+2);
@@ -182,46 +184,73 @@ export function ecma_parse_main() {
 			}
 		}
 		class ecma_12_5 {
-			static _attach(root) {
-				root.export(this,'12.5',['CommonToken']);
-			}
 			/*
 			CommonToken ::
-			IdentifierName
-			PrivateIdentifier
-			Punctuator
-			NumericLiteral
-			StringLiteral
-			Template
+				IdentifierName
+				PrivateIdentifier
+				Punctuator
+				NumericLiteral
+				StringLiteral
+				Template
 			*/
+			get ecma_12_6() {
+				if(!this.m_ecma_12_6) {
+					this.m_ecma_12_6=new ecma_12_6;
+				}
+				return this.m_ecma_12_6;
+			}
+			get ecma_12_7() {
+				if(!this.m_ecma_12_7) {
+					this.m_ecma_12_7=new ecma_12_7;
+				}
+				return this.m_ecma_12_7;
+			}
+			get ecma_12_8_3() {
+				if(!this.m_ecma_12_8_3) {
+					this.m_ecma_12_8_3=new ecma_12_8_3;
+				}
+				return this.m_ecma_12_8_3;
+			}
+			get ecma_12_8_4() {
+				if(!this.m_ecma_12_8_4) {
+					this.m_ecma_12_8_4=new ecma_12_8_4;
+				}
+				return this.m_ecma_12_8_4;
+			}
+			get ecma_12_8_6() {
+				if(!this.m_ecma_12_8_6) {
+					this.m_ecma_12_8_6=new ecma_12_8_4;
+				}
+				return this.m_ecma_12_8_6;
+			}
 			CommonToken(str,index) {
 				let cur=null,item=null,len=0;
-				cur=this.IdentifierName(str,index);
+				cur=this.ecma_12_6.IdentifierName(str,index);
 				if(cur[1]>len) {
 					len=cur[1];
 					item=cur;
 				}
-				cur=this.PrivateIdentifier(str,index);
+				cur=this.ecma_12_6.PrivateIdentifier(str,index);
 				if(cur[1]>len) {
 					len=cur[1];
 					item=cur;
 				}
-				cur=this.Punctuator(str,index);
+				cur=this.ecma_12_7.Punctuator(str,index);
 				if(cur[1]>len) {
 					len=cur[1];
 					item=cur;
 				}
-				cur=this.NumericLiteral(str,index);
+				cur=this.ecma_12_8_3.NumericLiteral(str,index);
 				if(cur[1]>len) {
 					len=cur[1];
 					item=cur;
 				}
-				cur=this.StringLiteral(str,index);
+				cur=this.ecma_12_8_4.StringLiteral(str,index);
 				if(cur[1]>len) {
 					len=cur[1];
 					item=cur;
 				}
-				cur=this.Template(str,index);
+				cur=this.ecma_12_6.Template(str,index);
 				if(cur[1]>len) {
 					len=cur[1];
 					item=cur;
