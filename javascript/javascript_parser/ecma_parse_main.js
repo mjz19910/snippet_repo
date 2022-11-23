@@ -296,6 +296,7 @@ export function ecma_parse_main() {
 				let cur=this.IdentifierName(src,index+1);
 				return cur[1]+1;
 			}
+			/** @returns {[string, number]|[null,number]} */
 			IdentifierName(str,index) {
 				let ids=this.IdentifierStart(str,index);
 				if(ids>0) {
