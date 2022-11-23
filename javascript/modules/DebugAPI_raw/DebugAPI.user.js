@@ -2801,16 +2801,15 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			if(!state.did_misbehave) {
 				this.on_connect_request_message(state,event);
 			}
-			if(state.did_misbehave) {
-				// @RemoteOriginConnection
-				console.log(`[@RemoteOriginConnection] Client misbehaved: connect api not followed`);
-				console.group("Received message event");
-				console.log("root_ev_data",message_data);
-				console.log("root_ev_ports",event.ports);
-				console.log("root_event",event);
-				this.last_misbehaved_client_event=event;
-				console.groupEnd();
-			}
+			if(!state.did_misbehave) return;
+			// @RemoteOriginConnection
+			console.log(`[@RemoteOriginConnection] Client misbehaved: connect api not followed`);
+			console.group("Received message event");
+			console.log("root_ev_data",message_data);
+			console.log("root_ev_ports",event.ports);
+			console.log("root_event",event);
+			this.last_misbehaved_client_event=event;
+			console.groupEnd();
 		}
 	}
 	// @RemoteOriginConnection
