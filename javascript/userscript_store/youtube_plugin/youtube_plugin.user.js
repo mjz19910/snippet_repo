@@ -1993,7 +1993,6 @@ function yt_watch_page_loaded_handler() {
 		console.log("no ytd-page-manager");
 		return;
 	}
-	debugger;
 	title_text_overlay_update();
 	init_ui_plugin();
 	if(!ytd_player) return;
