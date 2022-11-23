@@ -2769,7 +2769,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		console.log("root_post_message",message);
 		target_port.postMessage(message);
 	}
-	/** @arg {{}} data_obj @returns {boolean} */
+	/** @template {{}} T @arg {T} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
 		let message_record_with_source=cast_to_record_with_key_and_string_type(data_obj,"source");
 		if(!message_record_with_source) return false;
