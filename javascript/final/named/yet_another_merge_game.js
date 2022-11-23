@@ -365,7 +365,7 @@ function main() {
 							if(ndi>0) {
 								var s_name=e.message.slice(0,ndi);
 								if(fi_ob[1][s_name]) {
-									w_ext[s_name]=fi_ob[1][s_name];
+									any(w_ext)[s_name]=fi_ob[1][s_name];
 									console.log("for VUE defined:",s_name);
 									can_try_again=true;
 								}
