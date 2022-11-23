@@ -33,6 +33,7 @@ class RustStdLibrary {
 			if(!this.processes.length)
 				return i
 			let current_process=this.processes.shift()
+			if(!current_process) throw new Error("Unreachable");
 			current_process.run()
 		}
 	}
