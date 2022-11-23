@@ -307,7 +307,7 @@ export function ecma_parse_main() {
 				let [,id_start_len]=res;
 				ecma_12_6.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
 				let id_continue_match=ecma_12_6.IdentifierName_not_start_regex.exec(str);
-				if(!id_continue_match || id_continue_match.index!=index) {
+				if(!id_continue_match || id_continue_match.index!=(index+1)) {
 					console.log('IdentifierName is start only',str.slice(index,index+id_start_len));
 					return ["IdentifierName",id_start_len];
 				}
