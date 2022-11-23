@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         DebugAPI and g_api
-// @namespace    http://tampermonkey.net/
+// @namespace    https://github.com/mjz19910/
 // @version      0.4.5
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/javascript/modules/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
