@@ -8,7 +8,7 @@ export function ecma_parse_main() {
 			constructor(parent) {
 				this.parent=parent;
 			}
-			/** @returns {[string,number]|[null,0]} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			WhiteSpace(str,index) {
 				if(str[index]===' ') {
 					return ['WhiteSpace',1];
@@ -24,7 +24,7 @@ export function ecma_parse_main() {
 			constructor(parent) {
 				this.parent=parent;
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineTerminator(str,index) {
 				let len=0;
 				if(str[index]==='\r')
@@ -42,16 +42,18 @@ export function ecma_parse_main() {
 				}
 				return [null,0];
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineTerminatorSequence(str,index) {
 				console.info('LineTerminatorSequence not implemented');
 				return [null,0];
 			}
 		}
 		class ecma_12_4 {
+			/** @param {ecma_root} parent */
 			constructor(parent) {
 				this.parent=parent;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Comment(str,index) {
 				let ml_len=this.MultiLineComment(str,index);
 				let sl_len=this.SingleLineComment(str,index);
@@ -63,20 +65,19 @@ export function ecma_parse_main() {
 				}
 				return [null,0];
 			}
-			/** @returns {[string,number]|[null, number]} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			MultiLineComment(str,index) {
 				`
 				MultiLineComment ::
 				/* MultiLineCommentChars opt */
 				`;
 				let off=0;
-				let eof_off=str.length-1;
 				if(str.slice(index,index+2)==='/*') {
 					off+=2;
 					if(str.slice(index+off,index+off+2)==='*/') {
 						return ['MultiLineComment',4];
 					}
-					let com_len=this.MultiLineCommentChars(str,index+off);
+					let [,com_len]=this.MultiLineCommentChars(str,index+off);
 					if(com_len===0) {
 						return [null,0];
 					}
@@ -91,97 +92,108 @@ export function ecma_parse_main() {
 			/**MultiLineCommentChars ::
 			MultiLineNotAsteriskChar MultiLineCommentChars opt
 			* PostAsteriskCommentChars opt */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			MultiLineCommentChars(str,index) {
-				let slen=0;
+				let start_len=0;
 				if(this.dep>64) {
 					throw Error('stack overflow');
 				}
 				this.dep++;
-				let ml_na=this.MultiLineNotAsteriskChar(str,index+slen);
-				if(ml_na>0) {
-					slen++;
+				let ml_na=this.MultiLineNotAsteriskChar(str,index+start_len);
+				if(ml_na[1]>0) {
+					start_len++;
 					for(;;) {
-						let ml_na=this.MultiLineNotAsteriskChar(str,index+slen);
+						let [,ml_na]=this.MultiLineNotAsteriskChar(str,index+start_len);
 						if(ml_na>0) {
-							slen+=ml_na;
+							start_len+=ml_na;
 							continue;
 						}
-						if(str[index+slen]==='*') {
-							let pac=this.PostAsteriskCommentChars(str,index+slen+1);
+						if(str[index+start_len]==='*') {
+							let [,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
 							if(pac>0) {
-								slen++;
-								slen+=pac;
+								start_len++;
+								start_len+=pac;
 							}
 						}
 						break;
 					}
 				}
-				if(str[index+slen]==='*') {
-					let pac=this.PostAsteriskCommentChars(str,index+slen+1);
+				if(str[index+start_len]==='*') {
+					let [,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
 					if(pac>0) {
-						slen++;
-						slen+=pac;
+						start_len++;
+						start_len+=pac;
 					}
 				}
 				this.dep--;
-				return slen;
+				return [null,start_len];
 			}
 			/**PostAsteriskCommentChars ::
 			MultiLineNotForwardSlashOrAsteriskChar MultiLineCommentChars opt
 			* PostAsteriskCommentChars opt */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			PostAsteriskCommentChars(str,index) {
-				let idxoff=0;
-				let cxlen=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+idxoff);
-				if(cxlen>0) {
-					idxoff+=cxlen;
-					let la=this.MultiLineCommentChars(str,index+idxoff);
-					idxoff+=la;
-					return idxoff;
+				let index_offset=0;
+				let offset_1=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+index_offset);
+				if(offset_1[0]===null) throw new Error("Parse error");
+				if(offset_1[1]>0) {
+					index_offset+=offset_1[1];
+					let la=this.MultiLineCommentChars(str,index+index_offset);
+					index_offset+=la[1];
+					return ["PostAsteriskCommentChars",index_offset];
 				}
-				if(cxlen===0) {
-					if(str[index+idxoff]==='*') {
-						idxoff++;
-						let len=this.PostAsteriskCommentChars(str,index+idxoff);
-						if(len>0) {
-							return len+idxoff;
+				if(offset_1[1]===0) {
+					if(str[index+index_offset]==='*') {
+						index_offset++;
+						let offset_2=this.PostAsteriskCommentChars(str,index+index_offset);
+						if(!offset_2[0]) throw new Error("Recursive call to PostAsteriskCommentChars failed");
+						if(offset_2[0]&&offset_2[1]>0) {
+							return ["PostAsteriskCommentChars",offset_2[1]+index_offset];
 						}
 					}
 				}
-				return idxoff;
+				return ["PostAsteriskCommentChars",index_offset];
 			}
 			/**MultiLineNotAsteriskChar ::
 			SourceCharacter but not * */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			MultiLineNotAsteriskChar(str,index) {
 				if(str[index]!=='*') {
-					return 1;
+					return [str[index],1];
 				}
-				return 0;
+				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			MultiLineNotForwardSlashOrAsteriskChar(str,index) {
 				if(str[index]==='*'||str[index]==='/') {
-					return 0;
+					return [null,0];
 				}
-				return 1;
+				return [str[index],1];
 			}
-			/** @returns {[string,number]|[null, number]} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			SingleLineComment(str,index) {
 				if(str.slice(index,index+2)==='//') {
-					let comlen=this.SingleLineCommentChars(str,index+2);
-					return ['SingleLineComment',comlen+2];
+					let comment_length=this.SingleLineCommentChars(str,index+2);
+					if(!comment_length[0]) throw new Error("Failed to parse single line comment");
+					return ['SingleLineComment',comment_length[1]+2];
 				}
 				return [null,0];
 			}
 			/*SingleLineCommentChars ::
 			SingleLineCommentChar SingleLineCommentChars*/
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			SingleLineCommentChars(str,index) {
-				let sidx=index;
-				while(str[sidx]!=='\n') {
-					sidx++;
-					if(sidx>str.length) {
+				if(index>=str.length) {
+					return [null,0];
+				}
+				let s_index=index;
+				while(str[s_index]!=='\n') {
+					s_index++;
+					if(s_index>str.length) {
 						break;
 					}
 				}
-				return sidx-index;
+				return ["SingleLineCommentChars",s_index-index];
 			}
 		}
 		class ecma_12_5 {
@@ -216,8 +228,11 @@ export function ecma_parse_main() {
 			get ecma_12_8_6() {
 				return this.parent.ecma_12_8_6;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			CommonToken(str,index) {
-				let cur=null,item=null,len=0;
+				let cur=null;
+				let item=null;
+				let len=0;
 				cur=this.parent.ecma_12_6.IdentifierName(str,index);
 				if(cur[1]>len) {
 					len=cur[1];
@@ -248,7 +263,8 @@ export function ecma_parse_main() {
 					len=cur[1];
 					item=cur;
 				}
-				return item;
+				if(item === null) throw new Error("Parse Error");
+				return [item[0],len];
 			}
 		}
 		class ecma_12_6 {
@@ -283,33 +299,56 @@ export function ecma_parse_main() {
 			UnicodeIDContinue ::
 			any Unicode code point with the Unicode property “ID_Continue”
 			`;
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			PrivateIdentifier(str,index) {
-				if(str[0]!=='#')
+				if(str[index]!=='#')
 					return [null,0];
 				let cur=this.IdentifierName(str,index+1);
-				return cur[1]+1;
+				if(!cur[0]) return [null,0];
+				return ["PrivateIdentifier",cur[1]+1];
 			}
-			/** @returns {[string, number]|[null,number]} */
+			static IdentifierName_not_start_regex=/[0-9a-zA-Z$_]+/g;
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			IdentifierName(str,index) {
-				let ids=this.IdentifierStart(str,index);
-				if(ids>0) {
-					for(;;) {
-						let len=this.IdentifierPart(str,index+ids);
-						if(len===0) {
-							break;
-						}
-						ids++;
-					}
-					return ['IdentifierName',ids];
+				let res=this.IdentifierStart(str,index);
+				if(!res[0]) {
+					console.log('not IdentifierName',str[index]);
+					return [null,0];
+				}
+				let [,id_start_len]=res;
+				ecma_12_6.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
+				let id_continue_match=ecma_12_6.IdentifierName_not_start_regex.exec(str);
+				if(!id_continue_match) {
+					console.log('IdentifierName is start only',str.slice(index,index+id_start_len));
+					return ["IdentifierName",id_start_len];
+				}
+				let id_continue_len=0;
+				if(id_continue_match.index==index+id_start_len) {
+					id_continue_len=id_continue_match[0].length;
+				}
+				if(id_continue_len>0) {
+					console.log('IdentifierName with continue',str.slice(index,index+id_start_len+id_continue_len));
+					return ["IdentifierName",id_start_len+id_continue_len];
 				}
 				return [null,0];
 			}
+			static id_continue_regex=/[a-zA-Z$_0-9]/;
+			static id_start_regex=/[a-zA-Z$_]/;
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			IdentifierStart(str,index) {
-				if(str[index].match(/[a-zA-Z$_]/)) {
-					return 1;
+				if(index>=str.length) {
+					return [null,0];
 				}
-				return 0;
+				if(str[index]==='\\') {
+					let res=this.parent.UnicodeEscapeSequence(str,index+1);
+					if(res[0]) return ["IdentifierStart",res[1]+1];
+				}
+				if(str[index].match(ecma_12_6.id_start_regex)) {
+					return ["IdentifierStart",1];
+				}
+				return [null,0];
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			IdentifierPart(str,index) {
 				if(str[index].match(/[a-zA-Z$_0-9]/)) {
 					return 1;
@@ -322,6 +361,7 @@ export function ecma_parse_main() {
 			constructor(parent) {
 				this.parent=parent;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Punctuator(str,index) {
 				let len=this.OptionalChainingPunctuator(str,index);
 				if(len>0) {
@@ -329,6 +369,7 @@ export function ecma_parse_main() {
 				}
 				return 0;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			OptionalChainingPunctuator(str,index) {
 				if(str.slice(index,index+2)==='?.') {
 					let num_len=this.parent.ecma_12_8_3.DecimalDigit(str,index+2);
@@ -344,6 +385,7 @@ export function ecma_parse_main() {
 				return 0;
 			}
 			_OtherPunct="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			OtherPunctuator(str,index) {
 				let len=0;
 				for(let ci,i=0;i<this._OtherPunct.length;i++) {
@@ -357,6 +399,7 @@ export function ecma_parse_main() {
 				return len;
 			}
 			_DivPunct="/ /=".split(' ');
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DivPunctuator(str,index) {
 				let len=0;
 				for(let ci,i=0;i<this._DivPunct.length;i++) {
@@ -369,6 +412,7 @@ export function ecma_parse_main() {
 				}
 				return len;
 			}
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RightBracePunctuator(str,index) {
 				if(str[index]==='{}'[1]) {
 					return 1;
@@ -502,7 +546,7 @@ export function ecma_parse_main() {
 			Hex4Digits ::
 			HexDigit HexDigit HexDigit HexDigit
 			*/
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			StringLiteral(str,index) {
 				let cur=str[index];
 				if(cur==='"') {
@@ -527,7 +571,7 @@ export function ecma_parse_main() {
 				}
 				return [null,0];
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DoubleStringCharacters(str,index) {
 				let off=0;
 				for(;;) {
@@ -540,7 +584,7 @@ export function ecma_parse_main() {
 				}
 				return off;
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DoubleStringCharacter(str,index) {
 				x: {
 					if(str[index]==='"') {
@@ -571,7 +615,7 @@ export function ecma_parse_main() {
 				}
 				return 1;
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			SingleStringCharacters(str,index) {
 				let off=0;
 				for(;;) {
@@ -584,7 +628,7 @@ export function ecma_parse_main() {
 				}
 				return off;
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			SingleStringCharacter(str,index) {
 				x: {
 					if(str[index]==="'") {
@@ -615,7 +659,7 @@ export function ecma_parse_main() {
 				}
 				return 1;
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineContinuation(str,index) {
 				if(str[index]==='\\') {
 					let lt_len=this.parent.ecma_12_3.LineTerminatorSequence(str,index+1);
@@ -883,14 +927,14 @@ export function ecma_parse_main() {
 				throw new Error("Method not implemented.");
 			}
 		}
-		/** @typedef {[string,number]|[true,number]|[null,number]|[['Error',string],number]|[false,Error]} LexReturnType */
+		/** @typedef {[string,number]|[true,number]|[null,number]|[['Error',string],number]} LexReturnTyShort */
 		class ecma_12_8_6 {
 			/** @param {ecma_root} parent */
 			constructor(parent) {
 				this.parent=parent;
 			}
 			// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateSubstitutionTail(str,index) {
 				// TemplateMiddle
 				let res=this.TemplateMiddle(str,index);
@@ -935,35 +979,35 @@ export function ecma_parse_main() {
 			}
 		}
 		class ecma_root {
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			TemplateSubstitutionTail(str,index) {
 				return this.ecma_12_8_6.TemplateSubstitutionTail(str,index);
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RegularExpressionLiteral(str,index) {
 				return this.ecma_12_3.LineTerminator(str,index);
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			RightBracePunctuator(str,index) {
 				return this.ecma_12_3.LineTerminator(str,index);
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DivPunctuator(str,index) {
 				return this.ecma_12_3.LineTerminator(str,index);
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			CommonToken(str,index) {
 				return this.ecma_12_3.LineTerminator(str,index);
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			Comment(str,index) {
 				return this.ecma_12_3.LineTerminator(str,index);
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			LineTerminator(str,index) {
 				return this.ecma_12_3.LineTerminator(str,index);
 			}
-			/** @arg {string} str @arg {number} index @returns {LexReturnType} */
+			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			WhiteSpace(str,index) {
 				return this.ecma_12_2.WhiteSpace(str,index);
 			}
