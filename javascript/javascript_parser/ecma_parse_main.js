@@ -724,7 +724,7 @@ export function ecma_parse_main() {
 				// DecimalDigit
 				let off=0;
 				for(;;) {
-					let [,len]=this.DecimalDigits_NoSep(str,index+off);
+					let [,len]=this.DecimalDigit(str,index+off);
 					if(len[1]>0) {
 						off++;
 						continue;
