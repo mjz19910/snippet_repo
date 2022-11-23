@@ -2575,13 +2575,19 @@ function is_record_with_string_type(x,k) {
 	return typeof x[k]==='string';
 }
 
-/** @template {string} T @arg {unknown} x @arg {T} k @returns {x is Record<T,unknown>} */
+/** @template T @arg {T} x @arg {T} x @returns {x is {}} */
+function is_object(x) {
+	return typeof x==='object';
+}
+
+/** @template {string} T @arg {{}} x @arg {T} k @returns {x is Record<T,unknown>} */
 function is_record_with_T(x,k) {
-	return x instanceof Object&&k in x;
+	return k in x;
 }
 
 /** @arg {unknown} x @returns {{} & Record<"type", string>|null} */
 function cast_to_record_with_string_type(x) {
+	if(!is_object(x)) return null;
 	if(!is_record_with_T(x,"type")) return null;
 	if(!is_record_with_string_type(x,"type")) return null;
 	return x;
