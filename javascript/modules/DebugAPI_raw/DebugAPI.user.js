@@ -2570,8 +2570,9 @@ class RemoteSocket {
 	}
 }
 
-/** @template {string} T @arg {Record<T, unknown>} x @arg {T} k @returns {x is Record<T,string>} */
+/** @template {string} T @arg {{}} x @arg {T} k @returns {x is Record<T,string>} */
 function is_record_with_string_type(x,k) {
+	if(!is_record_with_T(x,k)) return false;
 	return typeof x[k]==='string';
 }
 
@@ -2580,15 +2581,14 @@ function is_object(x) {
 	return typeof x==='object';
 }
 
-/** @template {string} T @arg {{}} x @arg {T} k @returns {x is Record<T,unknown>} */
+/** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
 function is_record_with_T(x,k) {
 	return k in x;
 }
 
-/** @arg {unknown} x @returns {{} & Record<"type", string>|null} */
+/** @template T @arg {T} x @returns {{} & Record<"type", string>|null} */
 function cast_to_record_with_string_type(x) {
 	if(!is_object(x)) return null;
-	if(!is_record_with_T(x,"type")) return null;
 	if(!is_record_with_string_type(x,"type")) return null;
 	return x;
 }
