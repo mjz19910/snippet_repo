@@ -2772,7 +2772,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @template T @arg {T} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
 		if(typeof data_obj!='object'||data_obj===null) return false;
-		/** @type {{}} */
+		/** @type {T&{}} */
 		let obj=data_obj;
 		let message_record_with_source=cast_to_record_with_key_and_string_type(obj,"source");
 		if(!message_record_with_source) return false;
