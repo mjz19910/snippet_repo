@@ -18,14 +18,15 @@ const debug=false;
 
 const base_console=window.console;
 
-const console={
+/** @type {Console} */
+const console=any({
 	...Object.fromEntries(Object.entries(base_console).map(([k,v]) => {
 		if(typeof v==='function') {
 			return [k,v.bind(base_console)];
 		}
 		return [k,v];
 	})),
-};
+});
 
 /** @type {typeof window['g_api']} */
 let g_api=window.g_api??{};
@@ -2748,8 +2749,11 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				}
 				if(state.did_misbehave) {
 					console.log(`Client misbehaved: connect api not followed`);
-					console.log("Received message object",message_data);
-					console.log("Received message ports",event.ports);
+					console.group();
+					console.log("object",message_data);
+					console.log("Received message event ports",event.ports);
+					console.log("Received message event",event);
+					console;
 				}
 			}
 		}

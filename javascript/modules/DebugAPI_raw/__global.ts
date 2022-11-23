@@ -1,3 +1,13 @@
+declare global {
+	type PickByValue<T,V>=Pick<T,{[K in keyof T]: T[K] extends V? K:never}[keyof T]>;
+	type Entries<T>={
+		[K in keyof T]: [K,T[K]];
+	}[keyof T][];
+	type Entries3<T>={
+		[K in keyof T]: [keyof PickByValue<T,T[K]>,T[K]]
+	}[keyof T][];
+}
+
 //@@iterator for NodeListOf
 declare global {
 	interface NodeListOf<TNode extends Node> extends NodeList {
@@ -213,7 +223,7 @@ declare global {
 declare global {
 	type arg_list_item_type=WeakRef<{}>|bigint|boolean|string|number|symbol;
 	interface Function {
-		__arg_list_for_add_event_listeners:arg_list_item_type[][];
+		__arg_list_for_add_event_listeners: arg_list_item_type[][];
 	}
 }
 
