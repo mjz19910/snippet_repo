@@ -201,40 +201,22 @@ export function ecma_parse_main() {
 				Template
 			*/
 			get ecma_12_3() {
-				if(!this.m_ecma_12_3) {
-					this.m_ecma_12_3=new ecma_12_3(this);
-				}
 				return this.parent.ecma_12_3;
 			}
 			get ecma_12_6() {
-				if(!this.m_ecma_12_6) {
-					this.m_ecma_12_6=new ecma_12_6(this);
-				}
-				return this.m_ecma_12_6;
+				return this.parent.ecma_12_6;
 			}
 			get ecma_12_7() {
-				if(!this.m_ecma_12_7) {
-					this.m_ecma_12_7=new ecma_12_7(this);
-				}
-				return this.m_ecma_12_7;
+				return this.parent.ecma_12_7;
 			}
 			get ecma_12_8_3() {
-				if(!this.m_ecma_12_8_3) {
-					this.m_ecma_12_8_3=new ecma_12_8_3(this);
-				}
-				return this.m_ecma_12_8_3;
+				return this.parent.ecma_12_8_3;
 			}
 			get ecma_12_8_4() {
-				if(!this.m_ecma_12_8_4) {
-					this.m_ecma_12_8_4=new ecma_12_8_4(this);
-				}
-				return this.m_ecma_12_8_4;
+				return this.parent.ecma_12_8_4;
 			}
 			get ecma_12_8_6() {
-				if(!this.m_ecma_12_8_6) {
-					this.m_ecma_12_8_6=new ecma_12_8_6(this);
-				}
-				return this.m_ecma_12_8_6;
+				return this.parent.ecma_12_8_6;
 			}
 			CommonToken(str,index) {
 				let cur=null,item=null,len=0;
@@ -919,6 +901,30 @@ export function ecma_parse_main() {
 			}
 		}
 		class ecma_root {
+			TemplateSubstitutionTail(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			RegularExpressionLiteral(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			RightBracePunctuator(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			DivPunctuator(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			CommonToken(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			Comment(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			LineTerminator(str,index) {
+				throw new Error("Method not implemented.");
+			}
+			WhiteSpace(str,index) {
+				throw new Error("Method not implemented.");
+			}
 			constructor() {
 				this.ecma_12_2=new ecma_12_2(this);
 				this.ecma_12_3=new ecma_12_3(this);
@@ -964,37 +970,37 @@ export function ecma_parse_main() {
 			InputElementDiv(str,index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 				let max_item=null,max_val=0;
-				let cur_res=this.WhiteSpace(str,index);
+				let cur_res=this.root.WhiteSpace(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'whitespace'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.LineTerminator(str,index);
+				cur_res=this.root.LineTerminator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'line_term'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.Comment(str,index);
+				cur_res=this.root.Comment(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'comment'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.CommonToken(str,index);
+				cur_res=this.root.CommonToken(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'common'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.DivPunctuator(str,index);
+				cur_res=this.root.DivPunctuator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'div_punct'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.RightBracePunctuator(str,index);
+				cur_res=this.root.RightBracePunctuator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'r_brace'
 					max_item=cur_res[0];
@@ -1006,37 +1012,37 @@ export function ecma_parse_main() {
 				// WhiteSpace, LineTerminator, Comment, CommonToken,
 				// RightBracePunctuator, RegularExpressionLiteral
 				let max_item=null,max_val=0;
-				let cur_res=this.WhiteSpace(str,index);
+				let cur_res=this.root.WhiteSpace(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'whitespace'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.LineTerminator(str,index);
+				cur_res=this.root.LineTerminator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'line_term'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.Comment(str,index);
+				cur_res=this.root.Comment(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'comment'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.CommonToken(str,index);
+				cur_res=this.root.CommonToken(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'common'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.RightBracePunctuator(str,index);
+				cur_res=this.root.RightBracePunctuator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'r_brace'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.RegularExpressionLiteral(str,index);
+				cur_res=this.root.RegularExpressionLiteral(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'r_brace'
 					max_item=cur_res[0];
@@ -1047,37 +1053,37 @@ export function ecma_parse_main() {
 			InputElementRegExpOrTemplateTail(str,index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, RegularExpressionLiteral, TemplateSubstitutionTail
 				let max_item=null,max_val=0;
-				let cur_res=this.WhiteSpace(str,index);
+				let cur_res=this.root.WhiteSpace(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'whitespace'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.LineTerminator(str,index);
+				cur_res=this.root.LineTerminator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'line_term'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.Comment(str,index);
+				cur_res=this.root.Comment(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'comment'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.CommonToken(str,index);
+				cur_res=this.root.CommonToken(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'common'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.RegularExpressionLiteral(str,index);
+				cur_res=this.root.RegularExpressionLiteral(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'r_brace'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.TemplateSubstitutionTail(str,index);
+				cur_res=this.root.TemplateSubstitutionTail(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'r_brace'
 					max_item=cur_res[0];
@@ -1088,37 +1094,37 @@ export function ecma_parse_main() {
 			InputElementTemplateTail(str,index) {
 				// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, TemplateSubstitutionTail
 				let max_item=null,max_val=0;
-				let cur_res=this.WhiteSpace(str,index);
+				let cur_res=this.root.WhiteSpace(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'whitespace'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.LineTerminator(str,index);
+				cur_res=this.root.LineTerminator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'line_term'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.Comment(str,index);
+				cur_res=this.root.Comment(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'comment'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.CommonToken(str,index);
+				cur_res=this.root.CommonToken(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'common'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.DivPunctuator(str,index);
+				cur_res=this.root.DivPunctuator(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'r_brace'
 					max_item=cur_res[0];
 					max_val=cur_res[1];
 				}
-				cur_res=this.TemplateSubstitutionTail(str,index);
+				cur_res=this.root.TemplateSubstitutionTail(str,index);
 				if(cur_res[1]>max_val) {
 					//max_item = 'r_brace'
 					max_item=cur_res[0];
@@ -1126,14 +1132,12 @@ export function ecma_parse_main() {
 				}
 				return [max_item,max_val];
 			}
-			static add_proto() {
-				ecma_root.import_all_items(this);
-			}
 		}
-		js_token_generator.add_proto();
 		let parse_str='function x(){}';
-		parse_str;
-		let token_gen=new js_token_generator(code);
+		if('code' in window && typeof window.code==='string') {
+			parse_str=window.code;
+		}
+		let token_gen=new js_token_generator(parse_str);
 		let res_item;
 		res_item=token_gen.next_token();
 		let res_description=token_gen.describe_token(res_item);
