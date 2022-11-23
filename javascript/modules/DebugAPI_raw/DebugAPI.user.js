@@ -2586,7 +2586,7 @@ function is_record_with_T(x,k) {
 	return k in x;
 }
 
-/** @template T @arg {T} x @returns {{} & Record<"type", string>|null} */
+/** @template T @arg {T} x @returns {T & Record<"type", string>|null} */
 function cast_to_record_with_string_type(x) {
 	if(!is_object(x)) return null;
 	if(!is_record_with_string_type(x,"type")) return null;
