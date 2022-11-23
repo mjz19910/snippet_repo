@@ -8,6 +8,10 @@ declare global {
 	interface Window {
 		g_api: GlobalApiObject;
 	}
+
+	var EventTarget: {
+		prototype: EventTarget;
+	}
 }
 
 class VoidCallback<U extends any[],C> {
