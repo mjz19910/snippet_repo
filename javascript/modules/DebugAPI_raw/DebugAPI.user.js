@@ -8,7 +8,7 @@
 // @match        http://*/*
 // @run-at       document-start
 // @grant        none
-// @updateURL    https://github.com/mjz19910/snippet_repo/blob/master/javascript/modules/DebugAPI_raw/meta/DebugAPI.meta.js
+// @updateURL    https://github.com/mjz19910/snippet_repo/blob/master/javascript/modules/DebugAPI_raw/DebugAPI.meta.js
 // @downloadURL  https://github.com/mjz19910/snippet_repo/blob/master/javascript/modules/DebugAPI_raw/DebugAPI.user.js
 // ==/UserScript==
 /* Copyright 2019-2022 @mjz19910 */
