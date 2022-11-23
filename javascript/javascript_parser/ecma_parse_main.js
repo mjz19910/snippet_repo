@@ -688,9 +688,19 @@ export function ecma_parse_main() {
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalLiteral(str,index) {
-				let cur=this.DecimalIntegerLiteral(str,index);
-				console.log(cur,str.slice(index,index+2));
-				return cur;
+				let max_len=0;
+				let len=0;
+				{
+					let cur=this.DecimalIntegerLiteral(str,index);
+					len+=cur[1];
+					if(cur[1] === 1) {
+						debugger;
+					}
+					console.log(cur,JSON.stringify(str.slice(index,index+5)));
+				}
+				if(len>max_len)max_len=len;
+				len=0;
+				return ["DecimalLiteral",max_len];
 			}
 			/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 			DecimalDigits(str,index) {
@@ -773,7 +783,7 @@ export function ecma_parse_main() {
 				for(;;) {
 					// DecimalDigit
 					let [,len]=this.DecimalDigit(str,index+off);
-					if(len[1]>0) {
+					if(len>0) {
 						off++;
 						// DecimalDigits[?Sep] DecimalDigit
 						continue;
