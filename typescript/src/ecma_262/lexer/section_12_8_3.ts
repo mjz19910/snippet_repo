@@ -481,7 +481,7 @@ export class section_12_8_3 extends LexerBase {
 		if(str[index]==='0') {
 			len++
 		}
-		x: {
+		{
 			// NonZeroDigit
 			let tmp=this.NonZeroDigit(str,index)
 			if(tmp[0]&&tmp[1]>len) {
@@ -489,7 +489,7 @@ export class section_12_8_3 extends LexerBase {
 			}
 		}
 		// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
-		x: {
+		{
 			let tmp_len=0
 			let tmp=this.NonZeroDigit(str,index+tmp_len)
 			if(tmp[0]) {
