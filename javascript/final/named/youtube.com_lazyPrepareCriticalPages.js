@@ -227,7 +227,11 @@ function main() {
 			delete window.debug;
 			return;
 		}
-		function test_callback_root(/** @type {{ fo_test: any; }} */ x,/** @type {new () => any} */ func_obj) {
+		/**
+		 * @param {debug} x
+		 * @param {new () => any} func_obj
+		 */
+		function test_callback_root(x,func_obj) {
 			let tst;
 			if(x.fo_test) {
 				tst=x.fo_test;
@@ -243,13 +247,18 @@ function main() {
 			tst.is_open=true;
 			tst.send();
 		};
+		/**
+		 * @param {string} a
+		 * @param {"send"} n
+		 * @param {(x: debug, func_obj: new () => any)=>void} test_callback
+		 */
 		function runner(a,n,test_callback) {
 			if(!debug) throw new Error("needs devtools open for debug function");
 			/**
 			 * @param {{ [x: string]: () => void; }} proto
 			 * @param {string} name
 			 * @param {any} func_obj
-			 * @param {{ (): void; (x: any, func_obj: any): void; (arg0: debug, arg1: any): void; }} test_callback
+			 * @param {(x: debug, func_obj: new () => any)=>void} test_callback
 			 */
 			function bp_proto(proto,name,func_obj,test_callback) {
 				if(!debug) throw new Error("needs devtools open for debug function");
@@ -324,7 +333,14 @@ function main() {
 			debug.cb=new callback;
 			bp_proto(func_proto,n,func_obj,test_callback);
 		}
-		runner('XMLHttpRequest','send',test_callback_root);
+		/**
+		 * @param {debug} x
+		 * @param {new () => any} func_obj
+		 */
+		function do_test_callback_root(x,func_obj) {
+			test_callback_root(x,func_obj);
+		}
+		runner('XMLHttpRequest','send',do_test_callback_root);
 		return 'done';
 	};
 	let ret;

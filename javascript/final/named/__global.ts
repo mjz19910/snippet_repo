@@ -55,6 +55,7 @@ declare global {
 		cb: {
 			xmhrp: {send(): void;}|null;
 		};
+		fo_test: any;
 	}
 	var undebug: undebug|undefined;
 	interface undebug {
