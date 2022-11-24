@@ -547,9 +547,26 @@ class NumericLiterals extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
-	// TODO: https://tc39.es/ecma262/#prod-DecimalBigIntegerLiteral
-	// TODO: https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
-	// TODO: https://tc39.es/ecma262/#prod-BigIntLiteralSuffix
+	// https://tc39.es/ecma262/#prod-DecimalBigIntegerLiteral
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	DecimalBigIntegerLiteral(str,index) {
+		str; index;
+		throw new Error("TODO");
+	}
+	// https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NonDecimalIntegerLiteral(str,index) {
+		str; index;
+		throw new Error("TODO");
+	}
+	// https://tc39.es/ecma262/#prod-BigIntLiteralSuffix
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	BigIntLiteralSuffix(str,index) {
+		if(str[index]==="n") {
+			return [true,"",1];
+		}
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-DecimalLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalLiteral(str,index) {
@@ -566,6 +583,7 @@ class NumericLiterals extends ECMA262Base {
 		len=0;
 		return [true,"DecimalLiteral",max_len];
 	}
+	// https://tc39.es/ecma262/#prod-DecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalIntegerLiteral(str,index) {
 		let max_len=0;
@@ -608,11 +626,44 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigits(str,index) {
 		if(this.parent.flags.is_sep()) {
-			return this.DecimalDigits_Sep(str,index);
+			let off=0;
+			for(;;) {
+				// DecimalDigit
+				let [,,len]=this.DecimalDigit(str,index+off);
+				if(len>0) {
+					off++;
+					// DecimalDigits[?Sep] DecimalDigit
+					continue;
+				}
+				// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
+				let [,,s_len]=this.NumericLiteralSeparator(str,index+off);
+				if(s_len>0) {
+					let [,,exl]=this.DecimalDigit(str,index+off+1);
+					if(exl>0) {
+						off++;
+						// [+Sep] (DecimalDigits[+Sep]) NumericLiteralSeparator DecimalDigit
+						continue;
+					}
+					break;
+				}
+				break;
+			}
+			return [true,"DecimalDigits",off];
 		} else {
-			return this.DecimalDigits_NoSep(str,index);
+			// DecimalDigit
+			let off=0;
+			for(;;) {
+				let [,,len]=this.DecimalDigit(str,index+off);
+				if(len>0) {
+					off++;
+					continue;
+				}
+				break;
+			}
+			return [true,"DecimalDigits",off];
 		}
 	}
+	// https://tc39.es/ecma262/#prod-DecimalDigits
 	// DecimalDigits[+Sep]
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigits_Sep(str,index) {
@@ -640,6 +691,8 @@ class NumericLiterals extends ECMA262Base {
 		}
 		return [true,"DecimalDigits[+Sep]",off];
 	}
+	// https://tc39.es/ecma262/#prod-DecimalDigits
+	// DecimalDigits[-Sep]
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigits_NoSep(str,index) {
 		// DecimalDigit
@@ -1760,7 +1813,7 @@ class js_token_generator {
 	 * @arg {LexReturnTyShort} lex_return
 	 * @arg {string} type
 	 */
-	modify_output(state, lex_return,type) {
+	modify_output(state,lex_return,type) {
 		if(lex_return[0]&&lex_return[2]>state.length) {
 			state.type=type;
 			state.item=lex_return[1];
