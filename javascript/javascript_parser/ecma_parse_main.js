@@ -1831,10 +1831,10 @@ class js_token_generator {
 	 */
 	ParseRegularExpressionLiteral(in_state,out_state) {
 		let res=this.root.ecma_12_8_5.RegularExpressionLiteral(in_state.str,in_state.index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'RegularExpressionLiteral'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
+		if(res[0]&&res[2]>out_state.length) {
+			out_state.type="RegularExpressionLiteral";
+			out_state.item=res[1];
+			out_state.length=res[2];
 		}
 	}
 	/**
