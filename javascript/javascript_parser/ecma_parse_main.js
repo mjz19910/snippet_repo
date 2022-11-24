@@ -550,8 +550,28 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-DecimalBigIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalBigIntegerLiteral(str,index) {
-		str; index;
-		throw new Error("TODO");
+		if(str[index]==="0") {
+			let len=1;
+			let res=this.BigIntLiteralSuffix(str,index+len);
+			if(res[2]>0) {
+				len+=res[2];
+				return [true,"DecimalBigIntegerLiteral",len];
+			}
+		}
+		x: {
+			let res=this.NonZeroDigit(str,index);
+			if(!res[0]) {
+				break x;
+			}
+			let len=1;
+			res=this.DecimalDigits(str,index+len);
+			len+=res[2];
+			res=this.BigIntLiteralSuffix(str,index+len);
+			if(res[0]) {
+				len+=res[2];
+				return [true,"DecimalBigIntegerLiteral",len];
+			}
+		}
 	}
 	// https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
