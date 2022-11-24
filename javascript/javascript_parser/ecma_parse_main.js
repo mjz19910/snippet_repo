@@ -1171,33 +1171,30 @@ class ecma_12_8_6 extends ECMA262Base {
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateCharacter(str,index) {
-		/* $ [lookahead ≠ {]*/
 		if(str[index]==='$'&&str[index+1]!=='{') {
 			return [true,"TemplateCharacter",1];
 		}
-		/* \ TemplateEscapeSequence*/
 		if(str[index]==='\\') {
-			let escape_res=this.parent.TemplateEscapeSequence(str,index);
+			let escape_res=this.parent.template_literals.TemplateEscapeSequence(str,index);
 			if(escape_res[0]) {
-				return [true,"TemplateCharacter",escape_res[1]];
+				return [true,"TemplateCharacter",escape_res[2]];
 			}
 		}
-		/* \ NotEscapeSequence*/
 		if(str[index]==='\\') {
-			let not_esc=this.parent.NotEscapeSequence(str,index);
-			if(not_esc[1]>0) {
-				throw not_esc;
+			let not_esc=this.parent.template_literals.NotEscapeSequence(str,index);
+			if(not_esc[2]>0) {
+				return [false,null,0];
 			}
 		}
 		/* LineContinuation */
-		let res=this.parent.LineContinuation(str,index);
+		let res=this.parent.string_literals.LineContinuation(str,index);
 		if(res[0]) {
-			return [true,"TemplateCharacter",res[1]];
+			return [true,"TemplateCharacter",res[2]];
 		}
 		/* LineTerminatorSequence */
-		res=this.parent.LineTerminatorSequence(str,index);
+		res=this.parent.line_terminators.LineTerminatorSequence(str,index);
 		if(res[0]) {
-			return [true,"TemplateCharacter",res[1]];
+			return [true,"TemplateCharacter",res[2]];
 		}
 		/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
 		if(str[index]==='`'||str[index]==='\\'||str[index]==='$') {
@@ -1236,11 +1233,11 @@ class ecma_12_8_6 extends ECMA262Base {
 		if(str[cur_index]==='`') {
 			cur_index++;
 			let res=this.TemplateCharacters(str,cur_index);
-			if(res[1]===0) {
+			if(res[2]===0) {
 				return [true,"TemplateHead",cur_index];
 			}
-			if(res[1]>0) {
-				cur_index+=res[1];
+			if(res[2]>0) {
+				cur_index+=res[2];
 			}
 			if(str[cur_index]==='$'&&str[cur_index+1]==='{') {
 				return [true,"TemplateHead",cur_index+2];
@@ -1258,8 +1255,8 @@ class ecma_12_8_6 extends ECMA262Base {
 			return [false,null,0];
 		}
 		let opt=this.TemplateCharacters(str,cur_index);
-		if(opt[1]===0) return [false,null,0];
-		return ['NoSubstitutionTemplate',cur_index-index+opt[1]];
+		if(opt[2]===0) return [false,null,0];
+		return [true,"NoSubstitutionTemplate",cur_index-index+opt[2]];
 	}
 }
 
@@ -1276,7 +1273,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 		}
 		let res=this.RegularExpressionBody(str,index);
 		if(!res[0]) return [false,null,0];
-		len+=res[1];
+		len+=res[2];
 		if(str[index+len]==='/') {
 			len++;
 		} else {
@@ -1289,9 +1286,9 @@ class RegularExpressionLiterals extends ECMA262Base {
 	RegularExpressionBody(str,index) {
 		// RegularExpressionFirstChar RegularExpressionChars
 		let res=this.RegularExpressionFirstChar(str,index);
-		if(res[1]>0) {
+		if(res[2]>0) {
 			let cont=this.RegularExpressionChars(str,index+1);
-			if(cont[1]===0) {}
+			if(cont[2]===0) {}
 		}
 		throw new Error("Method not implemented.");
 	}
