@@ -969,8 +969,8 @@ class ecma_12_9_4 extends ECMA262Base {
 			return [false,null,0];
 		}
 		let len=this.OctalDigit(str,index);
-		if(len[1]>0) {
-			return [null,1];
+		if(len[2]>0) {
+			return [true,"NonZeroOctalDigit",1];
 		}
 		return [false,null,0];
 	}
@@ -979,7 +979,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		let cur=str[index];
 		let chk='0123';
 		if(chk.includes(cur)) {
-			return [null,1];
+			return [true,"ZeroToThree",1];
 		}
 		return [false,null,0];
 	}
@@ -988,29 +988,29 @@ class ecma_12_9_4 extends ECMA262Base {
 		let cur=str[index];
 		let chk='4567';
 		if(chk.includes(cur)) {
-			return [null,1];
+			return [true,"FourToSeven",1];
 		}
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NonOctalDecimalEscapeSequence(str,index) {
 		if(str[index]==='8'||str[index]==='9') {
-			return [null,1];
+			return [true,"NonOctalDecimalEscapeSequence",1];
 		}
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	HexEscapeSequence(str,index) {
 		if(str[index]==='x') {
-			let len=this.HexDigit(str,index);
+			let len=this.HexDigit(str,index+1);
 			if(!len) {
 				return [false,null,0];
 			}
-			len=this.HexDigit(str,index+1);
+			len=this.HexDigit(str,index+2);
 			if(!len) {
 				return [false,null,0];
 			}
-			return [null,3];
+			return [true,"HexEscapeSequence",3];
 		}
 		return [false,null,0];
 	}
