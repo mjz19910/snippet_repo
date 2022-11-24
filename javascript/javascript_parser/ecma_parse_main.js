@@ -604,14 +604,17 @@ class NumericLiterals extends ECMA262Base {
 		// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
 		{
 			let tmp_len=0;
-			let [,,tmp]=this.NonZeroDigit(str,index+tmp_len);
-			if(tmp>0) {
-				tmp_len+=tmp;
-				let [,,tmp_2]=this.NumericLiteralSeparator(str,index+tmp_len);
-				if(tmp_2>0) {
-					tmp_len+=tmp_2;
+			let [,,res]=this.NonZeroDigit(str,index+tmp_len);
+			if(res>0) {
+				tmp_len+=res;
+				[,,res]=this.NumericLiteralSeparator(str,index+tmp_len);
+				if(res>0) {
+					tmp_len+=res;
 				}
-				let [,,res]=this.DecimalDigits(str,index+tmp_len);
+				let prev_sep_flag=this.parent.flags.sep;
+				this.parent.flags.sep=true;
+				[,,res]=this.DecimalDigits(str,index+tmp_len);
+				this.parent.flags.sep=prev_sep_flag;
 				tmp_len+=res;
 			}
 			len+=tmp_len;
