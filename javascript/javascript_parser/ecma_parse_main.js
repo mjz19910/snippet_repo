@@ -1295,7 +1295,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionChars(str,index) {
 		let res=this.RegularExpressionChar(str,index);
-		return [true,"RegularExpressionChars",res[1]];
+		return [true,"RegularExpressionChars",res[2]];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionChar(str,index) {
@@ -1306,16 +1306,16 @@ class RegularExpressionLiterals extends ECMA262Base {
 			}
 			let res=this.RegularExpressionNonTerminator(str,index);
 			if(res[0])
-				return [true,"RegularExpressionChar",res[1]];
+				return [true,"RegularExpressionChar",res[2]];
 		}
 		// RegularExpressionBackslashSequence
 		let res=this.RegularExpressionBackslashSequence(str,index);
 		if(res[0])
-			return [true,"RegularExpressionChar",res[1]];
+			return [true,"RegularExpressionChar",res[2]];
 		// RegularExpressionClass
 		res=this.RegularExpressionClass(str,index);
 		if(res[0])
-			return [true,"RegularExpressionChar",res[1]];
+			return [true,"RegularExpressionChar",res[2]];
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -1327,16 +1327,16 @@ class RegularExpressionLiterals extends ECMA262Base {
 			}
 			let res=this.RegularExpressionNonTerminator(str,index);
 			if(res[0])
-				return [true,"RegularExpressionFirstChar",res[1]];
+				return [true,"RegularExpressionFirstChar",res[2]];
 		}
 		// RegularExpressionBackslashSequence
 		let res=this.RegularExpressionBackslashSequence(str,index);
 		if(res[0])
-			return [true,"RegularExpressionFirstChar",res[1]];
+			return [true,"RegularExpressionFirstChar",res[2]];
 		// RegularExpressionClass
 		res=this.RegularExpressionClass(str,index);
 		if(res[0])
-			return [true,"RegularExpressionFirstChar",res[1]];
+			return [true,"RegularExpressionFirstChar",res[2]];
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -1349,7 +1349,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 		if(str[index]==='\\') {
 			let res=this.RegularExpressionNonTerminator(str,index+1);
 			if(res[0])
-				return [true,"RegularExpressionBackslashSequence",1+res[1]];
+				return [true,"RegularExpressionBackslashSequence",res[2]+1];
 		}
 		return [false,null,0];
 	}
@@ -1387,11 +1387,9 @@ class TemplateLiterals extends ECMA262Base {
 			}
 		}
 		len=0;
-		/* HexEscapeSequence*/
-		let res=this.parent.ecma_12_8_3.HexEscapeSequence(str,index);
+		let res=this.parent.string_literals.HexEscapeSequence(str,index);
 		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
-		/* UnicodeEscapeSequence*/
-		res=this.parent.ecma_12_8_3.UnicodeEscapeSequence(str,index);
+		res=this.parent.string_literals.UnicodeEscapeSequence(str,index);
 		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
 		return [false,null,0];
 	}
@@ -1399,14 +1397,13 @@ class TemplateLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	CodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-		let res=this.parent.ecma_12_8_3.HexDigits(str,index);
-		if(res[0]) {
-			if(res[1]>0) {
-				// but only if MV of HexDigits ≤ 0x10FFFF
-				let MV=parseInt(res[0],16);
-				if(MV<=0x10FFFF) {
-					return [true,"CodePoint",res[1]];
-				}
+		let res=this.parent.string_literals.HexDigits(str,index);
+		if(res[2]>0) {
+			let mv_raw=str.slice(index,index+res[2]);
+			// but only if MV of HexDigits ≤ 0x10FFFF
+			let MV=parseInt(mv_raw,16);
+			if(MV<=0x10FFFF) {
+				return [true,"CodePoint",res[2]];
 			}
 		}
 		return [false,null,0];
@@ -1564,11 +1561,11 @@ class TemplateLiterals extends ECMA262Base {
 		len=0;
 		if(str[index]==='x') {
 			++len;
-			let lookahead=this.parent.ecma_12_8_3.HexDigit(str,index+len);
+			let lookahead=this.parent.string_literals.HexDigit(str,index+len);
 			if(!lookahead[0]) {
 				return [true,"NotEscapeSequence",len];
 			} else {
-				lookahead=this.parent.ecma_12_8_3.HexDigit(str,index+len);
+				lookahead=this.parent.string_literals.HexDigit(str,index+len);
 				if(!lookahead[0]) {
 					return [true,"NotEscapeSequence",len];
 				}
@@ -1577,44 +1574,44 @@ class TemplateLiterals extends ECMA262Base {
 		len=0;
 		if(str[index]==='u') {
 			len++;
-			let lookahead_res_1=this.parent.ecma_12_8_3.HexDigit(str,index+1);
+			let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
 			let lookahead_2=str[index+1]!=='{}'[0];
 			if(!lookahead_res_1[0]&&lookahead_2) {
 				return [true,"NotEscapeSequence",1];
 			}
-			lookahead_res_1=this.parent.ecma_12_8_3.HexDigit(str,index+1);
-			let lookahead_res_2=this.parent.ecma_12_8_3.HexDigit(str,index+1);
+			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
+			let lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
 			if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
 				return [true,"NotEscapeSequence",2];
 			}
-			lookahead_res_1=this.parent.HexDigit(str,index+1);
-			lookahead_res_2=this.parent.HexDigit(str,index+1);
+			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
+			lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
 			let lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0];
-			let lookahead_res_3=this.parent.HexDigit(str,index+1);
+			let lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
 			if(lookahead_res&&!lookahead_res_3[0]) {
 				return [true,"NotEscapeSequence",3];
 			}
-			lookahead_res_1=this.parent.HexDigit(str,index+1);
-			lookahead_res_2=this.parent.HexDigit(str,index+1);
-			lookahead_res_3=this.parent.HexDigit(str,index+1);
+			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
+			lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
+			lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
 			lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0]&&lookahead_res_3[0];
-			let lookahead_res_4=this.parent.HexDigit(str,index+1);
+			let lookahead_res_4=this.parent.string_literals.HexDigit(str,index+1);
 			if(lookahead_res&&!lookahead_res_4[0]) {
 				return [true,"NotEscapeSequence",4];
 			}
 			if(str[index+len]==='{}'[1]) {
 				++len;
-				let lookahead_res_1=this.parent.HexDigit(str,index+len);
+				let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
 				if(!lookahead_res_1[0]) {
 					return [true,"NotEscapeSequence",len];
 				}
 				lookahead_res_1=this.NotCodePoint(str,index+len);
-				lookahead_res_2=this.parent.HexDigit(str,index+len+1);
+				lookahead_res_2=this.parent.string_literals.HexDigit(str,index+len+1);
 				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
 					return [true,"NotEscapeSequence",len];
 				}
 				lookahead_res_1=this.CodePoint(str,index+len);
-				lookahead_res_2=this.parent.HexDigit(str,index+len+1);
+				lookahead_res_2=this.parent.string_literals.HexDigit(str,index+len+1);
 				let lookahead_3=str[index+len+1]!=='{}'[1];
 				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
 					return [true,"NotEscapeSequence",len+1];
@@ -1627,14 +1624,15 @@ class TemplateLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NotCodePoint
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NotCodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
-		let res=this.parent.HexDigits(str,index);
-		if(res[0]&&res[1]>0&&typeof res[0]==='string') {
+		let res=this.parent.string_literals.HexDigits(str,index);
+		if(res[0]&&res[2]>0) {
 			// but only if MV of HexDigits > 0x10FFFF
-			let MV=parseInt(res[0],16);
+			let MV=parseInt(res[1],16);
 			if(MV>0x10FFFF) {
-				return ['NotCodePoint',res[1]];
+				return [true,"NotCodePoint",res[2]];
 			}
 		}
 		return [false,null,0];
