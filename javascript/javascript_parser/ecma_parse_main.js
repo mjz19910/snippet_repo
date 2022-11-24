@@ -1825,9 +1825,20 @@ class js_token_generator {
 			out_state.length=cur_res[2];
 		}
 	}
+	/**
+	 * @param {{ str: string; index: number; }} in_state
+	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 */
+	ParseCommonElements(in_state,out_state) {
+		this.ParseWhiteSpace(in_state,out_state);
+		this.ParseLineTerminator(in_state,out_state);
+		this.ParseComment(in_state,out_state);
+		this.ParseCommonToken(in_state,out_state);
+	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementDiv(str,index) {
-		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
+		// WhiteSpace, LineTerminator, Comment, CommonToken
+		// DivPunctuator, RightBracePunctuator
 		let in_state={
 			str,
 			index,
@@ -1839,10 +1850,7 @@ class js_token_generator {
 			item: null,
 			length: 0,
 		};
-		this.ParseWhiteSpace(in_state,out_state);
-		this.ParseLineTerminator(in_state,out_state);
-		this.ParseComment(in_state,out_state);
-		this.ParseCommonToken(in_state,out_state);
+		this.ParseCommonElements(in_state,out_state);
 		this.ParseDivPunctuator(in_state,out_state);
 		this.ParseRightBracePunctuator(in_state,out_state);
 		if(!out_state.item) {
