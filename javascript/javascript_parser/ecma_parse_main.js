@@ -480,6 +480,25 @@ class Punctuators extends PunctuatorsData {
 		return [null,0];
 	}
 }
+
+// https://tc39.es/ecma262/#sec-ecmascript-language-lexical-grammar-literals
+class LexLiterals extends ECMA262Base {
+	// Null Literals
+	// https://tc39.es/ecma262/#prod-NullLiteral
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NullLiteral(str,index) {
+		if(str.slice(index,index+4) === "null") return ["NullLiteral",4];
+		return [null,0];
+	}
+	// Boolean Literals
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	BooleanLiteral(str,index) {
+		if(str.slice(index,index+4) === "true") return ["BooleanLiteral",4];
+		if(str.slice(index,index+5) === "false") return ["BooleanLiteral",5];
+	}
+}
+
+
 class ecma_12_8 extends ECMA262Base {
 	/** @param {string} str @arg {number} index @returns {[number,null,null]|[number,["regexpNonTerm"],null]} */
 	RegularExpressionNonTerminator(str,index) {
@@ -490,6 +509,8 @@ class ecma_12_8 extends ECMA262Base {
 		return [0,null,null];
 	}
 }
+
+
 class ecma_12_8_3 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigit(str,index) {
@@ -623,6 +644,8 @@ class ecma_12_8_3 extends ECMA262Base {
 		return ["DecimalDigits[+Sep]",off];
 	}
 }
+
+
 class ecma_12_9_4 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	StringLiteral(str,index) {
@@ -1051,6 +1074,8 @@ class ecma_12_9_4 extends ECMA262Base {
 		return [null,0];
 	}
 }
+
+
 /** @typedef {[string,number]|[null,number]} LexReturnTyShort */
 class ecma_12_8_6 extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
@@ -1217,6 +1242,8 @@ class ecma_12_8_6 extends ECMA262Base {
 		return ['NoSubstitutionTemplate',cur_index-index+opt[1]];
 	}
 }
+
+
 class ecma_12_8_5 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionLiteral(str,index) {
@@ -1322,6 +1349,8 @@ class ecma_12_8_5 extends ECMA262Base {
 		return ["RegularExpressionNonTerminator",1];
 	}
 }
+
+
 class TemplateLiteralComp extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
 	TemplateEscapeSequence(str,index) {
@@ -1641,23 +1670,8 @@ class TemplateLiteralComp extends ECMA262Base {
 		return ['NoSubstitutionTemplate',cur_index-index+opt[1]];
 	}
 }
+
 class ecma_root {
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LineTerminatorSequence(str,index) {
-		throw new Error("Method not implemented.");
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LineContinuation(str,index) {
-		throw new Error("Method not implemented.");
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NotEscapeSequence(str,index) {
-		throw new Error("Method not implemented.");
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateEscapeSequence(str,index) {
-		throw new Error("Method not implemented.");
-	}
 	/**
 	 * @param {{ single: any; two: any; three: any; }} char_tokens
 	 */
