@@ -1396,13 +1396,12 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	NotEscapeSequence(str,index) {
 		let len=0;
 		if(str[index]==="0") {
-			len++;
-			let res=this.parent.numeric_literals.DecimalDigit(str,index+len);
+			let res=this.parent.numeric_literals.DecimalDigit(str,index+1);
 			if(res[0]) {
 				return [true,"NotEscapeSequence",len];
 			}
 		} else {
-			let res=this.parent.numeric_literals.DecimalDigit(str,index+len);
+			let res=this.parent.numeric_literals.DecimalDigit(str,index);
 			if(res[0]) {
 				return [true,"NotEscapeSequence",res[2]];
 			}
