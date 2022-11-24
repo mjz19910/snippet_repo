@@ -1753,10 +1753,74 @@ class js_token_generator {
 		console.log("next token fallthrough",cur,this.index);
 		return null;
 	}
+	/**
+	 * @param {{ str: string; index: number; }} in_state
+	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 */
 	ParseWhiteSpace(in_state,out_state) {
 		let cur_res=this.root.white_space.WhiteSpace(in_state.str,in_state.index);
-		if(cur_res[2]>out_state.length) {
+		if(cur_res[0]&&cur_res[2]>out_state.length) {
 			out_state.type="WhiteSpace";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
+		}
+	}
+	/**
+	 * @param {{ str: string; index: number; }} in_state
+	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 */
+	ParseLineTerminator(in_state,out_state) {
+		let cur_res=this.root.line_terminators.LineTerminator(in_state.str,in_state.index);
+		if(cur_res[0]&&cur_res[2]>out_state.length) {
+			out_state.type="LineTerminator";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
+		}
+	}
+	/**
+	 * @param {{ str: string; index: number; }} in_state
+	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 */
+	ParseComment(in_state,out_state) {
+		let cur_res=this.root.comments.Comment(in_state.str,in_state.index);
+		if(cur_res[0]&&cur_res[2]>out_state.length) {
+			out_state.type="LineTerminator";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
+		}
+	}
+	/**
+	 * @param {{ str: string; index: number; }} in_state
+	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 */
+	ParseRightBracePunctuator(in_state,out_state) {
+		let cur_res=this.root.punctuators.RightBracePunctuator(in_state.str,in_state.index);
+		if(cur_res[0]&&cur_res[2]>out_state.length) {
+			out_state.type="RightBracePunctuator";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
+		}
+	}
+	/**
+	 * @param {{ str: string; index: number; }} in_state
+	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 */
+	ParseDivPunctuator(in_state,out_state) {
+		let cur_res=this.root.punctuators.DivPunctuator(in_state.str,in_state.index);
+		if(cur_res[0]&&cur_res[2]>out_state.length) {
+			out_state.type="DivPunctuator";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
+		}
+	}
+	/**
+	 * @param {{ str: string; index: number; }} in_state
+	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 */
+	ParseCommonToken(in_state,out_state) {
+		let cur_res=this.root.tokens.CommonToken(in_state.str,in_state.index);
+		if(cur_res[0]&&cur_res[2]>out_state.length) {
+			out_state.type="LineTerminator";
 			out_state.item=cur_res[1];
 			out_state.length=cur_res[2];
 		}
@@ -1775,38 +1839,12 @@ class js_token_generator {
 			item: null,
 			length: 0,
 		};
-		let cur_res=this.root.white_space.WhiteSpace(str,index);
 		this.ParseWhiteSpace(in_state,out_state);
-		cur_res=this.root.line_terminators.LineTerminator(str,index);
-		if(cur_res[0]&&cur_res[2]>out_state.length) {
-			out_state.type="LineTerminator";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
-		}
-		cur_res=this.root.comments.Comment(str,index);
-		if(cur_res[2]>out_state.length) {
-			out_state.type="Comment";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
-		}
-		cur_res=this.root.tokens.CommonToken(str,index);
-		if(cur_res[2]>out_state.length) {
-			out_state.type="CommonToken";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
-		}
-		cur_res=this.root.punctuators.DivPunctuator(str,index);
-		if(cur_res[2]>out_state.length) {
-			out_state.type="DivPunctuator";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
-		}
-		cur_res=this.root.punctuators.RightBracePunctuator(str,index);
-		if(cur_res[2]>out_state.length) {
-			out_state.type="RightBracePunctuator";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
-		}
+		this.ParseLineTerminator(in_state,out_state);
+		this.ParseComment(in_state,out_state);
+		this.ParseCommonToken(in_state,out_state);
+		this.ParseDivPunctuator(in_state,out_state);
+		this.ParseRightBracePunctuator(in_state,out_state);
 		if(!out_state.item) {
 			return [false,null,0];
 		}
