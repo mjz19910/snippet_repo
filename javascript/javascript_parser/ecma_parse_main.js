@@ -181,7 +181,7 @@ class Comments extends ECMA262Base {
 			}
 		}
 		this.dep--;
-		if(start_len === 0) {
+		if(start_len===0) {
 			return [false,null,0];
 		}
 		return [true,"MultiLineCommentChars",start_len];
@@ -1756,40 +1756,41 @@ class js_token_generator {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementDiv(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
+		let item_type=null;
 		let max_item=null,max_val=0;
 		let cur_res=this.root.white_space.WhiteSpace(str,index);
 		if(cur_res[2]>max_val) {
-			//max_item = 'whitespace'
+			item_type="WhiteSpace";
 			max_item=cur_res[1];
 			max_val=cur_res[2];
 		}
 		cur_res=this.root.line_terminators.LineTerminator(str,index);
 		if(cur_res[2]>max_val) {
-			//max_item = 'line_term'
+			item_type="LineTerminator";
 			max_item=cur_res[1];
 			max_val=cur_res[2];
 		}
 		cur_res=this.root.comments.Comment(str,index);
 		if(cur_res[2]>max_val) {
-			//max_item = 'comment'
+			item_type="Comment";
 			max_item=cur_res[1];
 			max_val=cur_res[2];
 		}
 		cur_res=this.root.tokens.CommonToken(str,index);
 		if(cur_res[2]>max_val) {
-			//max_item = 'common'
+			item_type="CommonToken";
 			max_item=cur_res[1];
 			max_val=cur_res[2];
 		}
 		cur_res=this.root.punctuators.DivPunctuator(str,index);
 		if(cur_res[2]>max_val) {
-			//max_item = 'div_punct'
+			item_type="DivPunctuator";
 			max_item=cur_res[1];
 			max_val=cur_res[2];
 		}
 		cur_res=this.root.punctuators.RightBracePunctuator(str,index);
 		if(cur_res[2]>max_val) {
-			//max_item = 'r_brace'
+			item_type="RightBracePunctuator";
 			max_item=cur_res[1];
 			max_val=cur_res[2];
 		}
