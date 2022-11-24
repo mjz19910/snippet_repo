@@ -1933,6 +1933,19 @@ class js_token_generator {
 	}
 }
 
+class CharTokens {
+	/**
+	 * @param {HashMap<string, string>} single
+	 * @param {HashMap<string, string>} two
+	 * @param {HashMap<string, string>} three
+	 */
+	constructor(single,two,three) {
+		this.single=single;
+		this.two=two;
+		this.three=three;
+	}
+}
+
 export function ecma_parse_main() {
 	// HashMap<FlyString, TokenType> Lexer::s_keywords
 	/** @type {Set<string>} uses enum JSTokenizerTokenType as string */
@@ -2004,6 +2017,7 @@ export function ecma_parse_main() {
 		s_two_char_tokens.set("+=","PlusEquals");
 		s_two_char_tokens.set("-=","MinusEquals");
 		s_two_char_tokens.set("*=","AsteriskEquals");
+		// is one of the productions by DivPunctuator
 		s_two_char_tokens.set("/=","SlashEquals");
 		s_two_char_tokens.set("%=","PercentEquals");
 		s_two_char_tokens.set("&=","AmpersandEquals");
@@ -2021,7 +2035,7 @@ export function ecma_parse_main() {
 		s_two_char_tokens.set("++","PlusPlus");
 		s_two_char_tokens.set("<<","ShiftLeft");
 		s_two_char_tokens.set(">>","ShiftRight");
-		// ?. needs special handling
+		// is one of the productions by OptionalChainingPunctuator
 		s_two_char_tokens.set("?.","QuestionMarkPeriod");
 	}
 	if(s_single_char_tokens.is_empty()) {
@@ -2041,7 +2055,7 @@ export function ecma_parse_main() {
 		s_single_char_tokens.set(',',"Comma");
 		// { is OtherPunctuator
 		s_single_char_tokens.set('{',"CurlyOpen");
-		// } is RightBracePunctuator
+		// '}' is one of the productions by RightBracePunctuator
 		s_single_char_tokens.set('}',"CurlyClose");
 		// = is OtherPunctuator
 		s_single_char_tokens.set('=',"Equals");
@@ -2065,7 +2079,7 @@ export function ecma_parse_main() {
 		s_single_char_tokens.set('?',"QuestionMark");
 		// ; is OtherPunctuator
 		s_single_char_tokens.set(';',"Semicolon");
-		// / is DivPunctuator
+		// '/' is one of the productions by DivPunctuator
 		s_single_char_tokens.set('/',"Slash");
 		// ~ is OtherPunctuator
 		s_single_char_tokens.set('~',"Tilde");
@@ -2079,11 +2093,11 @@ export function ecma_parse_main() {
 		parse_str=window.code;
 	}
 	// parse_str="(function(){return function x(){}})()";
-	let token_gen=new js_token_generator(parse_str,{
-		single: s_single_char_tokens,
-		two: s_two_char_tokens,
-		three: s_three_char_tokens,
-	});
+	let token_gen=new js_token_generator(parse_str,new CharTokens(
+		s_single_char_tokens,
+		s_two_char_tokens,
+		s_three_char_tokens,
+	));
 	let res_item;
 	for(let i=0;i<120;i++) {
 		let prev_index=token_gen.index;
