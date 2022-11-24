@@ -1714,7 +1714,7 @@ class js_token_generator {
 	describe_token(token_value) {
 		if(!token_value) return ['undefined'];
 		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
-		return [token_value[0],tok_str];
+		return [token_value[1],tok_str];
 	}
 	/** @arg {LexReturnTyShort} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
 	as_next_token(cur) {
