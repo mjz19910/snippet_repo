@@ -1365,28 +1365,29 @@ class RegularExpressionLiterals extends ECMA262Base {
 
 class TemplateLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateEscapeSequence(str,index) {
 		let len=0;
 		/* CharacterEscapeSequence */
 		let tmp=this.parent.string_literals.CharacterEscapeSequence(str,index);
 		if(tmp[0]) {
-			return [true,tmp[1]];
+			return [true,"TemplateEscapeSequence",tmp[2]];
 		}
 		/* 0 [lookahead ∉ DecimalDigit]*/
 		if(str[index]==='0') {
 			len++;
 			let la=this.parent.DecimalDigit(str,index);
 			if(!la[0]) {
-				return [true,len];
+				return [true,"TemplateEscapeSequence",len];
 			}
 		}
 		len=0;
 		/* HexEscapeSequence*/
 		let res=this.parent.HexEscapeSequence(str,index);
-		if(res[0]) return [true,res[1]];
+		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
 		/* UnicodeEscapeSequence*/
 		res=this.parent.UnicodeEscapeSequence(str,index);
-		if(res[0]) return [true,res[1]];
+		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-CodePoint
@@ -1543,98 +1544,82 @@ class TemplateLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NotEscapeSequence(str,index) {
 		let len=0;
-		// 0 DecimalDigit
 		if(str[index]==='0') {
 			len++;
 			let res=this.parent.DecimalDigit(str,index+len);
 			if(res[0]) {
-				return [true,2];
+				return [true,"NotEscapeSequence",len];
 			}
 		} else {
-			// DecimalDigit but not 0
-			// else excludes 0
-			let res=this.parent.DecimalDigit(str,index);
+			let res=this.parent.DecimalDigit(str,index+len);
 			if(res[0]) {
-				return [true,res[1]];
+				return [true,"NotEscapeSequence",res[2]];
 			}
 		}
 		len=0;
-		// x [lookahead ∉ HexDigit]
 		if(str[index]==='x') {
 			++len;
 			let lookahead=this.parent.HexDigit(str,index+len);
 			if(!lookahead[0]) {
-				return ['x [lookahead ∉ HexDigit]',len];
+				return [true,"NotEscapeSequence",len];
 			} else {
-				// x HexDigit [lookahead ∉ HexDigit]
 				lookahead=this.parent.HexDigit(str,index+len);
 				if(!lookahead[0]) {
-					return ['x HexDigit [lookahead ∉ HexDigit]',len];
+					return [true,"NotEscapeSequence",len];
 				}
 			}
 		}
 		len=0;
-		// u [lookahead ∉ HexDigit] [lookahead ≠ {]
 		if(str[index]==='u') {
 			len++;
 			let lookahead_res_1=this.parent.HexDigit(str,index+1);
 			let lookahead_2=str[index+1]!=='{}'[0];
 			if(!lookahead_res_1[0]&&lookahead_2) {
-				return ['u [lookahead ∉ HexDigit] [lookahead ≠ {]',1];
+				return [true,"NotEscapeSequence",1];
 			}
-			// u HexDigit [lookahead ∉ HexDigit]
 			lookahead_res_1=this.parent.HexDigit(str,index+1);
 			let lookahead_res_2=this.parent.HexDigit(str,index+1);
 			if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
-				return ['u HexDigit [lookahead ∉ HexDigit]',2];
+				return [true,"NotEscapeSequence",2];
 			}
-			// u HexDigit HexDigit [lookahead ∉ HexDigit]
 			lookahead_res_1=this.parent.HexDigit(str,index+1);
 			lookahead_res_2=this.parent.HexDigit(str,index+1);
 			let lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0];
 			let lookahead_res_3=this.parent.HexDigit(str,index+1);
 			if(lookahead_res&&!lookahead_res_3[0]) {
-				return ['u HexDigit2 [lookahead ∉ HexDigit]',3];
+				return [true,"NotEscapeSequence",3];
 			}
-			// u HexDigit HexDigit HexDigit [lookahead ∉ HexDigit]
 			lookahead_res_1=this.parent.HexDigit(str,index+1);
 			lookahead_res_2=this.parent.HexDigit(str,index+1);
 			lookahead_res_3=this.parent.HexDigit(str,index+1);
 			lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0]&&lookahead_res_3[0];
 			let lookahead_res_4=this.parent.HexDigit(str,index+1);
 			if(lookahead_res&&!lookahead_res_4[0]) {
-				return ['u HexDigit3 [lookahead ∉ HexDigit]',4];
+				return [true,"NotEscapeSequence",4];
 			}
-			// u { [lookahead ∉ HexDigit]
-			// u { NotCodePoint [lookahead ∉ HexDigit]
-			// u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]
 			if(str[index+len]==='{}'[1]) {
 				++len;
-				// [lookahead ∉ HexDigit]
 				let lookahead_res_1=this.parent.HexDigit(str,index+len);
 				if(!lookahead_res_1[0]) {
-					return ['u { [lookahead ∉ HexDigit]',len];
+					return [true,"NotEscapeSequence",len];
 				}
-				// NotCodePoint [lookahead ∉ HexDigit]
 				lookahead_res_1=this.NotCodePoint(str,index+len);
 				lookahead_res_2=this.parent.HexDigit(str,index+len+1);
 				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
-					return ['u { NotCodePoint [lookahead ∉ HexDigit]',len];
+					return [true,"NotEscapeSequence",len];
 				}
-				// CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]
 				lookahead_res_1=this.CodePoint(str,index+len);
 				lookahead_res_2=this.parent.HexDigit(str,index+len+1);
 				let lookahead_3=str[index+len+1]!=='{}'[1];
 				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
-					return ['u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]',len+1];
+					return [true,"NotEscapeSequence",len+1];
 				}
 				if(lookahead_res_1[0]&&lookahead_3) {
-					return ['u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]',len+1];
+					return [true,"NotEscapeSequence",len+1];
 				}
 			}
-			return [false,null,0];
 		}
-		return [false,new Error("TODO: NotEscapeSequence")];
+		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NotCodePoint
 	NotCodePoint(str,index) {
