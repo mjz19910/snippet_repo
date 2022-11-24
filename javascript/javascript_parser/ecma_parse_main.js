@@ -70,7 +70,10 @@ class JSWhiteSpace extends ecma_base {
 		return [null,0];
 	}
 }
+
+// https://tc39.es/ecma262/#sec-line-terminators
 class JSLineTerminators extends ecma_base {
+	// https://tc39.es/ecma262/#prod-LineTerminator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LineTerminator(str,index) {
 		let len=0;
@@ -89,9 +92,19 @@ class JSLineTerminators extends ecma_base {
 		}
 		return [null,0];
 	}
+	// https://tc39.es/ecma262/#prod-LineTerminatorSequence
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LineTerminatorSequence(str,index) {
-		console.info('LineTerminatorSequence not implemented');
+		// <LF>
+		if(str[index]==='\n') return ["LineTerminatorSequence",1];
+		// <CR> [lookahead ≠ <LF>]
+		if(str[index]==='\r'&&str[index+1]!=='\n') return ["LineTerminatorSequence",1];
+		// <LS>
+		if(str[index]==='\u2028') return ["LineTerminatorSequence",1];
+		// <PS>
+		if(str[index]==='\u2029') return ["LineTerminatorSequence",1];
+		// <CR> <LF>
+		if(str[index]==='\r'&&str[index+1]==='\n') return ["LineTerminatorSequence",2];
 		return [null,0];
 	}
 }
