@@ -562,42 +562,6 @@ class NumericLiterals extends ECMA262Base {
 		return [true,"DecimalLiteral",max_len];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	DecimalDigit(str,index) {
-		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
-			return [true,"DecimalDigit",1];
-		}
-		return [false,null,0];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	DecimalDigits(str,index) {
-		if(this.parent.flags.is_sep()) {
-			return this.DecimalDigits_Sep(str,index);
-		} else {
-			return this.DecimalDigits_NoSep(str,index);
-		}
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	DecimalDigits_NoSep(str,index) {
-		// DecimalDigit
-		let off=0;
-		for(;;) {
-			let [,,len]=this.DecimalDigit(str,index+off);
-			if(len>0) {
-				off++;
-				continue;
-			}
-			break;
-		}
-		return [true,"DecimalDigits_NoSep",off];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonZeroDigit(str,index) {
-		if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
-			return [true,"NonZeroDigit",1];
-		}
-		return [false,null,0];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalIntegerLiteral(str,index) {
 		let max_len=0;
 		// 0
@@ -634,6 +598,42 @@ class NumericLiterals extends ECMA262Base {
 			return [false,null,0];
 		}
 		return [true,"DecimalIntegerLiteral",max_len];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	DecimalDigit(str,index) {
+		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
+			return [true,"DecimalDigit",1];
+		}
+		return [false,null,0];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	DecimalDigits(str,index) {
+		if(this.parent.flags.is_sep()) {
+			return this.DecimalDigits_Sep(str,index);
+		} else {
+			return this.DecimalDigits_NoSep(str,index);
+		}
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	DecimalDigits_NoSep(str,index) {
+		// DecimalDigit
+		let off=0;
+		for(;;) {
+			let [,,len]=this.DecimalDigit(str,index+off);
+			if(len>0) {
+				off++;
+				continue;
+			}
+			break;
+		}
+		return [true,"DecimalDigits_NoSep",off];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NonZeroDigit(str,index) {
+		if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
+			return [true,"NonZeroDigit",1];
+		}
+		return [false,null,0];
 	}
 	// DecimalDigits[+Sep]
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
