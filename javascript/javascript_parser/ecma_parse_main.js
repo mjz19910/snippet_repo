@@ -1448,7 +1448,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			}
 			if(str[index+len]==="{}"[1]) {
 				++len;
-				let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
+				lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
 				if(!lookahead_res_1[0]) {
 					return [true,"NotEscapeSequence",len];
 				}
