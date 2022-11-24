@@ -292,7 +292,7 @@ class Tokens extends ECMA262Base {
 			len=cur[2];
 			item=cur;
 		}
-		cur=this.parent.ecma_12_8_4.StringLiteral(str,index);
+		cur=this.parent.string_literals.StringLiteral(str,index);
 		if(cur[2]>len) {
 			len=cur[2];
 			item=cur;
@@ -349,7 +349,7 @@ class NamesAndKeywords extends ECMA262Base {
 			return [false,null,0];
 		}
 		if(str[index]==='\\') {
-			let res=this.parent.ecma_12_9_4.UnicodeEscapeSequence(str,index+1);
+			let res=this.parent.string_literals.UnicodeEscapeSequence(str,index+1);
 			if(res[0]) return [true,"IdentifierStart",res[2]+1];
 		}
 		if(str[index].match(NamesAndKeywords.id_start_regex)) {
@@ -657,8 +657,9 @@ class ecma_12_8_3 extends ECMA262Base {
 	}
 }
 
-
-class ecma_12_9_4 extends ECMA262Base {
+// https://tc39.es/ecma262/#sec-literals-string-literals
+class StringLiterals extends ECMA262Base {
+	// https://tc39.es/ecma262/#prod-StringLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	StringLiteral(str,index) {
 		let cur=str[index];
@@ -684,6 +685,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-DoubleStringCharacters
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DoubleStringCharacters(str,index) {
 		let off=0;
@@ -697,6 +699,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		}
 		return [true,"DoubleStringCharacters",off];
 	}
+	// https://tc39.es/ecma262/#prod-DoubleStringCharacter
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DoubleStringCharacter(str,index) {
 		x: {
@@ -728,6 +731,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		}
 		return [true,"DoubleStringCharacter",1];
 	}
+	// https://tc39.es/ecma262/#prod-SingleStringCharacters
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	SingleStringCharacters(str,index) {
 		let off=0;
@@ -744,6 +748,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		}
 		return [true,"SingleStringCharacters",off];
 	}
+	// https://tc39.es/ecma262/#prod-SingleStringCharacter
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	SingleStringCharacter(str,index) {
 		x: {
@@ -775,6 +780,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		}
 		return [true,"SingleStringCharacter",1];
 	}
+	// https://tc39.es/ecma262/#prod-LineContinuation
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LineContinuation(str,index) {
 		if(str[index]==='\\') {
@@ -785,18 +791,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
-	/*
-	EscapeSequence ::
-	CharacterEscapeSequence
-	0 [lookahead ∉ DecimalDigit]
-	LegacyOctalEscapeSequence
-	NonOctalDecimalEscapeSequence
-	HexEscapeSequence
-	UnicodeEscapeSequence
-
-	following function ignores:
-	LegacyOctalEscapeSequence
-	*/
+	// https://tc39.es/ecma262/#prod-EscapeSequence
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	EscapeSequence(str,index) {
 		let len=this.CharacterEscapeSequence(str,index);
@@ -1368,12 +1363,12 @@ class RegularExpressionLiterals extends ECMA262Base {
 }
 
 
-class TemplateLiteralComp extends ECMA262Base {
+class TemplateLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
 	TemplateEscapeSequence(str,index) {
 		let len=0;
 		/* CharacterEscapeSequence */
-		let tmp=this.parent.CharacterEscapeSequence(str,index);
+		let tmp=this.parent.string_literals.CharacterEscapeSequence(str,index);
 		if(tmp[0]) {
 			return [true,tmp[1]];
 		}
@@ -1708,10 +1703,10 @@ class ecma_root {
 		this.punctuators=new Punctuators(this,char_tokens);
 		this.ecma_12_8=new ecma_12_8(this);
 		this.ecma_12_8_3=new ecma_12_8_3(this);
-		this.ecma_12_8_4=new ecma_12_9_4(this);
+		this.string_literals=new StringLiterals(this);
 		this.ecma_12_8_6=new ecma_12_8_6(this);
-		this.ecma_12_9_4=new ecma_12_9_4(this);
 		this.ecma_12_8_5=new RegularExpressionLiterals(this);
+		this.template_literals=new TemplateLiterals(this);
 	}
 }
 class js_token_generator {
