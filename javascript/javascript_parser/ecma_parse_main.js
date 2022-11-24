@@ -1,6 +1,5 @@
 import window from "./window_def.js";
 
-
 /** @template K,V */
 class HashMap {
 	/** @type {Map<K,V>|null} */
@@ -58,13 +57,27 @@ class ECMA262Base {
 		this.parent=parent;
 	}
 }
+
+/** @typedef {[true,string,number]|[false,null,number]} LexReturnTyShort */
+
+// https://tc39.es/ecma262/#sec-white-space
 class JSWhiteSpace extends ECMA262Base {
+	// https://tc39.es/ecma262/#prod-WhiteSpace
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	WhiteSpace(str,index) {
 		if(str[index]===" ") {
 			return [true,"WhiteSpace",1];
 		}
 		if(str[index]==="\t") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u000b") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u000c") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\uFEFF") {
 			return [true,"WhiteSpace",1];
 		}
 		return [false,null,0];
@@ -1204,7 +1217,6 @@ class StringLiterals extends ECMA262Base {
 }
 
 // https://tc39.es/ecma262/#sec-template-literal-lexical-components
-/** @typedef {[true,string,number]|[false,null,number]} LexReturnTyShort */
 class TemplateLiteralLexicalComponents extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-Template
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -1500,7 +1512,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	}
 }
 
-
+// https://tc39.es/ecma262/#sec-literals-regular-expression-literals
 class RegularExpressionLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionLiteral(str,index) {
@@ -1608,8 +1620,6 @@ class RegularExpressionLiterals extends ECMA262Base {
 }
 
 
-class TemplateLiterals extends ECMA262Base {}
-
 class ecma_root {
 	/**
 	 * @param {{ single: any; two: any; three: any; }} char_tokens
@@ -1635,7 +1645,6 @@ class ecma_root {
 			this.string_literals=new StringLiterals(this);
 		}
 		this.template_literal_lexical_components=new TemplateLiteralLexicalComponents(this);
-		this.template_literals=new TemplateLiterals(this);
 	}
 }
 class js_token_generator {
