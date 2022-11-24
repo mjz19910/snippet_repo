@@ -596,8 +596,9 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NonDecimalIntegerLiteral(str,index) {
-		str; index;
-		throw new Error("TODO");
+		let res=this.BinaryIntegerLiteral(str,index);
+		res=this.OctalIntegerLiteral(str,index);
+		res=this.HexIntegerLiteral(str,index);
 	}
 	// https://tc39.es/ecma262/#prod-BigIntLiteralSuffix
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -706,6 +707,7 @@ class NumericLiterals extends ECMA262Base {
 			return [true,"DecimalDigits",off];
 		}
 	}
+	// https://tc39.es/ecma262/#prod-DecimalDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigit(str,index) {
 		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
@@ -713,6 +715,7 @@ class NumericLiterals extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-NonZeroDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NonZeroDigit(str,index) {
 		if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
@@ -720,6 +723,33 @@ class NumericLiterals extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-ExponentPart
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	ExponentPart(str,index) {throw new Error("No impl");}
+	// https://tc39.es/ecma262/#prod-ExponentIndicator
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	ExponentIndicator(str,index) {throw new Error("No impl");}
+	// https://tc39.es/ecma262/#prod-SignedInteger
+	// https://tc39.es/ecma262/#prod-BinaryIntegerLiteral
+	// https://tc39.es/ecma262/#prod-BinaryDigits
+	// https://tc39.es/ecma262/#prod-BinaryDigit
+	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
+	// https://tc39.es/ecma262/#prod-OctalDigits
+	// https://tc39.es/ecma262/#prod-LegacyOctalIntegerLiteral
+	// https://tc39.es/ecma262/#prod-NonOctalDecimalIntegerLiteral
+	// https://tc39.es/ecma262/#prod-LegacyOctalLikeDecimalIntegerLiteral
+	// https://tc39.es/ecma262/#prod-OctalDigit
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	OctalDigit(str,index) {
+		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="7".charCodeAt(0)) {
+			return [true,"OctalDigit",1];
+		}
+		return [false,null,0];
+	}
+	// https://tc39.es/ecma262/#prod-NonOctalDigit
+	// https://tc39.es/ecma262/#prod-HexIntegerLiteral
+	// https://tc39.es/ecma262/#prod-HexDigits
+	// https://tc39.es/ecma262/#prod-HexDigit
 }
 
 // https://tc39.es/ecma262/#sec-literals-string-literals
@@ -944,13 +974,6 @@ class StringLiterals extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
-	/*LegacyOctalEscapeSequence ::
-	0 [lookahead ∈ { 8, 9 }]
-	NonZeroOctalDigit [lookahead ∉ OctalDigit]
-	ZeroToThree OctalDigit [lookahead ∉ OctalDigit]
-	FourToSeven OctalDigit
-	ZeroToThree OctalDigit OctalDigit
-	 */
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LegacyOctalEscapeSequence(str,index) {
 		x: {
@@ -1012,14 +1035,6 @@ class StringLiterals extends ECMA262Base {
 				break x;
 			}
 			return [true,"LegacyOctalEscapeSequence",3];
-		}
-		return [false,null,0];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	OctalDigit(str,index) {
-		// 0 1 2 3 4 5 6 7
-		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="7".charCodeAt(0)) {
-			return [true,"OctalDigit",1];
 		}
 		return [false,null,0];
 	}
