@@ -914,16 +914,18 @@ class ecma_12_9_4 extends ECMA262Base {
 		}
 		x: {
 			let len=this.ZeroToThree(str,index);
-			if(len[2]>0) {
-				len=this.OctalDigit(str,index+1);
-				if(len[2]>0) {
-					let n_len=this.OctalDigit(str,index+2);
-					if(n_len[2]>0) {
-						break x;
-					}
-					return [true,"LegacyOctalEscapeSequence",2];
-				}
+			if(!len[0]) {
+				break x;
 			}
+			len=this.OctalDigit(str,index+1);
+			if(!len[0]) {
+				break x;
+			}
+			len=this.OctalDigit(str,index+2);
+			if(len[2]>0) {
+				break x;
+			}
+			return [true,"LegacyOctalEscapeSequence",2];
 		}
 		x: {
 			let len=this.FourToSeven(str,index);
