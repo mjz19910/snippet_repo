@@ -1394,11 +1394,10 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-NotEscapeSequence
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NotEscapeSequence(str,index) {
-		let len=0;
 		if(str[index]==="0") {
 			let res=this.parent.numeric_literals.DecimalDigit(str,index+1);
 			if(res[0]) {
-				return [true,"NotEscapeSequence",len];
+				return [true,"NotEscapeSequence",res[2]+1];
 			}
 		} else {
 			let res=this.parent.numeric_literals.DecimalDigit(str,index);
@@ -1406,7 +1405,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 				return [true,"NotEscapeSequence",res[2]];
 			}
 		}
-		len=0;
+		let len=0;
 		if(str[index]==="x") {
 			++len;
 			let lookahead=this.parent.string_literals.HexDigit(str,index+len);
