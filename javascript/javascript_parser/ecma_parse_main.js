@@ -80,6 +80,56 @@ class JSWhiteSpace extends ECMA262Base {
 		if(str[index]==="\uFEFF") {
 			return [true,"WhiteSpace",1];
 		}
+		// Unicode Space_Separator general category
+		// NBSP
+		if(str[index]==="\u00a0") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u1680") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2000") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2001") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2002") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2003") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2004") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2005") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2006") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2007") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2008") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u2009") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u200a") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u202f") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u205f") {
+			return [true,"WhiteSpace",1];
+		}
+		if(str[index]==="\u3000") {
+			return [true,"WhiteSpace",1];
+		}
 		return [false,null,0];
 	}
 }
