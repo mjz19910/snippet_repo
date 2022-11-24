@@ -398,18 +398,20 @@ class Punctuators extends PunctuatorsData {
 	// https://tc39.es/ecma262/#prod-Punctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	Punctuator(str,index) {
-		var len=0,type=null,ret;
+		var max_len=0,type=null,ret;
+		var new_type,new_len;
 		ret=this.OptionalChainingPunctuator(str,index);
-		if(ret[1]>len) {
-			type=ret[0];
-			len=ret[1];
+		[,new_type,new_len]=ret;
+		if(new_len>max_len) {
+			type=new_type;
+			max_len=new_len;
 		}
 		ret=this.OtherPunctuator(str,index);
-		if(ret[1]>len) {
+		if(ret[1]>max_len) {
 			type=ret[0];
-			len=ret[1];
+			max_len=ret[1];
 		}
-		return [type,len];
+		return [type,max_len];
 	}
 	// https://tc39.es/ecma262/#prod-OptionalChainingPunctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
