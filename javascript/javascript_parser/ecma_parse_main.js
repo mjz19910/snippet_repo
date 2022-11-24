@@ -432,6 +432,20 @@ class NamesAndKeywords extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	IdentifierStartChar(str,index) {
+		if(str[index].match(NamesAndKeywords.id_start_regex)) {
+			return [true,"IdentifierStartChar",1];
+		}
+		return [false,null,0];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	IdentifierPartChar(str,index) {
+		if(str[index].match(NamesAndKeywords.id_continue_regex)) {
+			return [true,"IdentifierPart",1];
+		}
+		return [false,null,0];
+	}
 }
 
 class PunctuatorsData extends ECMA262Base {
@@ -1711,7 +1725,12 @@ class RegularExpressionLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-RegularExpressionFlags
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionFlags(str,index) {
-		throw new Error("Method not implemented.");
+		// [empty]
+		let len=0;
+		let is_class_chars=this.parent.names_and_keywords.IdentifierPartChar(str,index+len);
+		if(!is_class_chars[0])
+			return [true,"RegularExpressionFlags",0];
+		throw new Error("TODO");
 	}
 }
 
