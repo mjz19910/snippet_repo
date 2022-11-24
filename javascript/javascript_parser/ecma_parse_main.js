@@ -452,7 +452,6 @@ class Punctuators extends PunctuatorsData {
 		this.s_two_char_tokens.iterate(function(key) {
 			// skip DivPunctuator with length 2
 			if(key==='/=') return "Continue";
-			if(key==='?.') return "Continue";
 			// TODO: exclude some tokens that are parsed elsewhere
 			if(str.startsWith(key,index)) {
 				result=key;
