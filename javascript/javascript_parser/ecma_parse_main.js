@@ -403,6 +403,7 @@ class Punctuators extends PunctuatorsData {
 		}
 		return [null,0];
 	}
+	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
 	// https://tc39.es/ecma262/#prod-OtherPunctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OtherPunctuator(str,index) {
