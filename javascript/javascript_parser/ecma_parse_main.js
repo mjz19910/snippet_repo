@@ -1642,7 +1642,19 @@ class RegularExpressionLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-RegularExpressionClass
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionClass(str,index) {
-		throw new Error("Method not implemented.");
+		let len=0;
+		// [ RegularExpressionClassChars ]
+		if(str[index]==='[]'[0]) {
+			len++;
+			let res=this.RegularExpressionClassChars(str,index+len);
+			if(res[0]) {
+				if(str[index+res[1]]==='[]'[1]) {
+					len++;
+					return [true,"RegularExpressionClass",len+res[2]];
+				}
+			}
+		}
+		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionBackslashSequence
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -1663,6 +1675,38 @@ class RegularExpressionLiterals extends ECMA262Base {
 		if(vv[0])
 			return [false,null,0];
 		return [true,"RegularExpressionNonTerminator",1];
+	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionClassChars
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	RegularExpressionClassChars(str,index) {
+		let len=0;
+		let is_class_chars=this.RegularExpressionClassChar(str,index+len);
+		// [empty]
+		if(!is_class_chars[0])
+			return [true,"RegularExpressionClassChars",0];
+		while(is_class_chars[0]) {
+			len++;
+			is_class_chars=this.RegularExpressionClassChar(str,index+len);
+			if(!is_class_chars[0]) {
+				break;
+			}
+		}
+		return [true,"RegularExpressionClassChars",len];
+	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionClassChar
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	RegularExpressionClassChar(str,index) {
+		// RegularExpressionNonTerminator but not one of ] or \
+		if(str[index]==='[]'[1]||str[index]==='\\') {
+			return [false,null,0];
+		}
+		let res=this.RegularExpressionNonTerminator(str,index);
+		if(res[0])
+			return [true,"RegularExpressionClassChar",res[2]];
+		res=this.RegularExpressionBackslashSequence(str,index);
+		if(res[0])
+			return [true,"RegularExpressionClassChar",res[2]];
+		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-RegularExpressionFlags
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
