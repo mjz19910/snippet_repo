@@ -1424,8 +1424,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		if(str[index]==="u") {
 			len++;
 			let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
-			let lookahead_2=str[index+1]!=="{}"[0];
-			if(!lookahead_res_1[0]&&lookahead_2) {
+			if(!lookahead_res_1[0]&&str[index+1]!=="{}"[0]) {
 				return [true,"NotEscapeSequence",1];
 			}
 			let res_1=this.parent.string_literals.HexDigit(str,index+1);
@@ -1433,19 +1432,19 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			if(res_1[0]&&!lookahead_res_2[0]) {
 				return [true,"NotEscapeSequence",2];
 			}
-			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
-			lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
-			let lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0];
+			res_1=this.parent.string_literals.HexDigit(str,index+1);
+			let res_2=this.parent.string_literals.HexDigit(str,index+1);
+			let forward=res_1[0]&&res_2[0];
 			let lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
-			if(lookahead_res&&!lookahead_res_3[0]) {
+			if(forward&&!lookahead_res_3[0]) {
 				return [true,"NotEscapeSequence",3];
 			}
-			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
-			lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
-			lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
-			lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0]&&lookahead_res_3[0];
+			res_1=this.parent.string_literals.HexDigit(str,index+1);
+			res_2=this.parent.string_literals.HexDigit(str,index+1);
+			let res_3=this.parent.string_literals.HexDigit(str,index+1);
+			forward=res_1[0]&&res_2[0]&&res_3[0];
 			let lookahead_res_4=this.parent.string_literals.HexDigit(str,index+1);
-			if(lookahead_res&&!lookahead_res_4[0]) {
+			if(forward&&!lookahead_res_4[0]) {
 				return [true,"NotEscapeSequence",4];
 			}
 			if(str[index+len]==="{}"[1]) {
