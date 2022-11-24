@@ -1346,12 +1346,10 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 				return [false,null,0];
 			}
 		}
-		/* LineContinuation */
 		let res=this.parent.string_literals.LineContinuation(str,index);
 		if(res[0]) {
 			return [true,"TemplateCharacter",res[2]];
 		}
-		/* LineTerminatorSequence */
 		res=this.parent.line_terminators.LineTerminatorSequence(str,index);
 		if(res[0]) {
 			return [true,"TemplateCharacter",res[2]];
