@@ -451,6 +451,7 @@ class Punctuators extends PunctuatorsData {
 		return [null,0];
 	}
 	DivPunctuatorArray="/ /=".split(' ');
+	// https://tc39.es/ecma262/#prod-DivPunctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DivPunctuator(str,index) {
 		let char_len=0;
