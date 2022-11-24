@@ -471,6 +471,7 @@ class Punctuators extends PunctuatorsData {
 		}
 		return [null,0];
 	}
+	// https://tc39.es/ecma262/#prod-RightBracePunctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RightBracePunctuator(str,index) {
 		if(str[index]==='{}'[1]) {
