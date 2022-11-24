@@ -1428,21 +1428,20 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 				return [true,"NotEscapeSequence",1];
 			}
 			let res_1=this.parent.string_literals.HexDigit(str,index+1);
-			let lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
+			let lookahead_res_2=this.parent.string_literals.HexDigit(str,index+2);
 			if(res_1[0]&&!lookahead_res_2[0]) {
 				return [true,"NotEscapeSequence",2];
 			}
 			res_1=this.parent.string_literals.HexDigit(str,index+1);
-			let res_2=this.parent.string_literals.HexDigit(str,index+1);
-			let forward=res_1[0]&&res_2[0];
-			let lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
-			if(forward&&!lookahead_res_3[0]) {
+			let res_2=this.parent.string_literals.HexDigit(str,index+2);
+			let lookahead_res_3=this.parent.string_literals.HexDigit(str,index+3);
+			if(res_1[0]&&res_2[0]&&!lookahead_res_3[0]) {
 				return [true,"NotEscapeSequence",3];
 			}
 			res_1=this.parent.string_literals.HexDigit(str,index+1);
 			res_2=this.parent.string_literals.HexDigit(str,index+1);
 			let res_3=this.parent.string_literals.HexDigit(str,index+1);
-			forward=res_1[0]&&res_2[0]&&res_3[0];
+			let forward=res_1[0]&&res_2[0]&&res_3[0];
 			let lookahead_res_4=this.parent.string_literals.HexDigit(str,index+1);
 			if(forward&&!lookahead_res_4[0]) {
 				return [true,"NotEscapeSequence",4];
