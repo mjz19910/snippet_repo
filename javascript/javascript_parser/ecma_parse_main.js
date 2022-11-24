@@ -252,16 +252,8 @@ class Comments extends ECMA262Base {
 	}
 }
 class HashbangComments extends ECMA262Base {}
-class ecma_12_5 extends ECMA262Base {
-	/*
-	CommonToken ::
-		IdentifierName
-		PrivateIdentifier
-		Punctuator
-		NumericLiteral
-		StringLiteral
-		Template
-	*/
+class Tokens extends ECMA262Base {
+	// https://tc39.es/ecma262/#prod-CommonToken
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	CommonToken(str,index) {
 		let cur=null;
@@ -303,7 +295,7 @@ class ecma_12_5 extends ECMA262Base {
 		return [item[0],len];
 	}
 }
-class ecma_12_6 extends ECMA262Base {
+class NamesAndKeywords extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	PrivateIdentifier(str,index) {
 		if(str[index]!=='#')
@@ -320,8 +312,8 @@ class ecma_12_6 extends ECMA262Base {
 			return [null,0];
 		}
 		let [,id_start_len]=res;
-		ecma_12_6.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
-		let id_continue_match=ecma_12_6.IdentifierName_not_start_regex.exec(str);
+		NamesAndKeywords.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
+		let id_continue_match=NamesAndKeywords.IdentifierName_not_start_regex.exec(str);
 		if(!id_continue_match||id_continue_match.index!=(index+1)) {
 			return ["IdentifierName",id_start_len];
 		}
@@ -345,42 +337,45 @@ class ecma_12_6 extends ECMA262Base {
 			let res=this.parent.ecma_12_9_4.UnicodeEscapeSequence(str,index+1);
 			if(res[0]) return ["IdentifierStart",res[1]+1];
 		}
-		if(str[index].match(ecma_12_6.id_start_regex)) {
+		if(str[index].match(NamesAndKeywords.id_start_regex)) {
 			return ["IdentifierStart",1];
 		}
 		return [null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	IdentifierPart(str,index) {
-		if(str[index].match(ecma_12_6.id_continue_regex)) {
+		if(str[index].match(NamesAndKeywords.id_continue_regex)) {
 			return ["IdentifierPart",1];
 		}
 		return [null,0];
 	}
 }
-class ecma_12_7 extends ECMA262Base {
-	/**
+class PunctuatorsData extends ECMA262Base {
+		/**
 	 * @param {ecma_root} parent
 	 * @param {{ single: HashMap<string,string>; two: HashMap<string,string>; three: HashMap<string,string>; }} char_tokens
 	 */
-	constructor(parent,char_tokens) {
-		super(parent);
-		this.s_single_char_tokens=char_tokens.single;
-		this.s_two_char_tokens=char_tokens.two;
-		this.s_three_char_tokens=char_tokens.three;
-	}
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_single_char_tokens;
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_two_char_tokens;
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_three_char_tokens;
+		constructor(parent,char_tokens) {
+			super(parent);
+			this.s_single_char_tokens=char_tokens.single;
+			this.s_two_char_tokens=char_tokens.two;
+			this.s_three_char_tokens=char_tokens.three;
+		}
+		/**
+		 * @type {HashMap<string,string>}
+		 */
+		s_single_char_tokens;
+		/**
+		 * @type {HashMap<string,string>}
+		 */
+		s_two_char_tokens;
+		/**
+		 * @type {HashMap<string,string>}
+		 */
+		s_three_char_tokens;
+}
+class Punctuators extends PunctuatorsData {
+	// https://tc39.es/ecma262/#prod-Punctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	Punctuator(str,index) {
 		var len=0,type=null,ret;
@@ -396,6 +391,7 @@ class ecma_12_7 extends ECMA262Base {
 		}
 		return [type,len];
 	}
+	// https://tc39.es/ecma262/#prod-OptionalChainingPunctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OptionalChainingPunctuator(str,index) {
 		if(str.slice(index,index+2)==='?.') {
@@ -407,7 +403,6 @@ class ecma_12_7 extends ECMA262Base {
 		}
 		return [null,0];
 	}
-	_OtherPunct="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OtherPunctuator(str,index) {
 		// >>>= is the only production of length 4
@@ -482,7 +477,7 @@ class ecma_12_7 extends ECMA262Base {
 class ecma_12_8 extends ECMA262Base {
 	/** @param {string} str @arg {number} index @returns {[number,null,null]|[number,["regexpNonTerm"],null]} */
 	RegularExpressionNonTerminator(str,index) {
-		let _val=this.parent.ecma_12_3.LineTerminator(str,index);
+		let _val=this.parent.line_terminators.LineTerminator(str,index);
 		if(!_val) {
 			return [1,['regexpNonTerm'],null];
 		}
@@ -670,7 +665,7 @@ class ecma_12_9_4 extends ECMA262Base {
 			if(str[index]==='\\') {
 				break x;
 			}
-			let len=this.parent.ecma_12_3.LineTerminator(str,index);
+			let len=this.parent.line_terminators.LineTerminator(str,index);
 			if(len!==null) {
 				break x;
 			}
@@ -717,7 +712,7 @@ class ecma_12_9_4 extends ECMA262Base {
 			if(str[index]==='\\') {
 				break x;
 			}
-			let len=this.parent.ecma_12_3.LineTerminator(str,index);
+			let len=this.parent.line_terminators.LineTerminator(str,index);
 			if(len!==null) {
 				break x;
 			}
@@ -742,7 +737,7 @@ class ecma_12_9_4 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LineContinuation(str,index) {
 		if(str[index]==='\\') {
-			let lt_len=this.parent.ecma_12_3.LineTerminatorSequence(str,index+1);
+			let lt_len=this.parent.line_terminators.LineTerminatorSequence(str,index+1);
 			if(lt_len[0]&&lt_len[1]>0) {
 				return ["LineContinuation",lt_len[1]+1];
 			}
@@ -821,7 +816,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		if(this.EscapeCharacter(str,index)) {
 			return [null,0];
 		}
-		if(this.parent.ecma_12_3.LineTerminator(str,index)) {
+		if(this.parent.line_terminators.LineTerminator(str,index)) {
 			return [null,0];
 		}
 		return [null,1];
@@ -1157,7 +1152,7 @@ class ecma_12_8_6 extends ECMA262Base {
 		if(str[index]==='`'||str[index]==='\\'||str[index]==='$') {
 			return [null,0];
 		}
-		res=this.parent.LineTerminator(str,index);
+		res=this.parent.line_terminators.LineTerminator(str,index);
 		if(res[0]) {
 			return [null,0];
 		}
@@ -1315,10 +1310,329 @@ class ecma_12_8_5 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionNonTerminator(str,index) {
 		// SourceCharacter but not LineTerminator
-		let vv=this.parent.LineTerminator(str,index);
+		let vv=this.parent.line_terminators.LineTerminator(str,index);
 		if(vv[0])
 			return [null,0];
 		return ["RegularExpressionNonTerminator",1];
+	}
+}
+class TemplateLiteralComp extends ECMA262Base {
+	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
+	TemplateEscapeSequence(str, index) {
+		let len=0;
+		/* CharacterEscapeSequence */
+		let tmp=this.parent.CharacterEscapeSequence(str,index);
+		if(tmp[0]) {
+			return [true,tmp[1]];
+		}
+		/* 0 [lookahead ∉ DecimalDigit]*/
+		if(str[index]==='0') {
+			len++;
+			let la=this.parent.DecimalDigit(str,index);
+			if(!la[0]) {
+				return [true,len];
+			}
+		}
+		len=0;
+		/* HexEscapeSequence*/
+		let res=this.parent.HexEscapeSequence(str,index);
+		if(res[0]) return [true,res[1]];
+		/* UnicodeEscapeSequence*/
+		res=this.parent.UnicodeEscapeSequence(str,index);
+		if(res[0]) return [true,res[1]];
+		return [null,0];
+	}
+	// https://tc39.es/ecma262/#prod-CodePoint
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	CodePoint(str, index) {
+		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
+		let res=this.parent.HexDigits(str,index);
+		if(res[0]) {
+			if(res[1]>0&&typeof res[0]==='string') {
+				// but only if MV of HexDigits ≤ 0x10FFFF
+				let MV=parseInt(res[0],16);
+				if(MV<=0x10FFFF) {
+					return ['CodePoint',res[1]];
+				}
+			}
+		}
+		return [null,0];
+	}
+	// https://tc39.es/ecma262/#prod-TemplateHead
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	TemplateHead(str, index) {
+		let cur_index=index;
+		// ` TemplateCharacters_opt ${
+		if(str[cur_index]==='`') {
+			cur_index++;
+			let res=this.TemplateCharacters(str,cur_index);
+			if(res[0]===false) throw res[1];
+			if(res[1]>0) {
+				cur_index+=res[1];
+			}
+			if(str[cur_index]==='$'&&str[cur_index+1]==='{') {
+				return [true,cur_index+2];
+			}
+		}
+		return [null,0];
+	}
+	// https://tc39.es/ecma262/#prod-TemplateMiddle
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	TemplateMiddle(str, index) {
+		let len=0;
+		// } TemplateCharacters_opt ${
+		if(str[index]==='{}'[1]) {
+			len++;
+			if(str[index+len]==='$'&&str[index+len+1]==='{}'[0]) {
+				return [true,len+2];
+			}
+			let res=this.TemplateCharacters(str,index);
+			if(res[0]) {
+				len+=res[1];
+				if(str[index+len]==='$'&&str[index+len+1]==='{}'[0]) {
+					return [true,len+2];
+				}
+			}
+		}
+		return [null,0];
+	}
+	// https://tc39.es/ecma262/#prod-TemplateTail
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	TemplateTail(str, index) {
+		let len=0;
+		// } TemplateCharacters_opt `
+		if(str[index]==='{}'[0]) {
+			len++;
+			if(str[index+len]==='`') {
+				len++;
+				return [true,len];
+			}
+			let res=this.TemplateCharacters(str,index);
+			if(res[0]) {
+				len+=res[1];
+				if(str[index+len]==='`') {
+					len++;
+					return [true,len];
+				}
+			}
+		}
+		return [null,0];
+	}
+	// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	TemplateSubstitutionTail(str, index) {
+		// TemplateMiddle
+		let res=this.TemplateMiddle(str,index);
+		if(res[0]) {
+			return [true,res[1]];
+		}
+		// TemplateTail
+		res=this.TemplateTail(str,index);
+		if(res[0]) {
+			return [true,res[1]];
+		}
+		return [null,0];
+	}
+	// https://tc39.es/ecma262/#prod-Template
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	Template(str, index) {
+		// NoSubstitutionTemplate
+		let ret=this.NoSubstitutionTemplate(str,index);
+		if(ret[0]) {
+			return ret;
+		}
+		// TemplateHead
+		ret=this.TemplateHead(str,index);
+		if(ret[0]) {
+			return ret;
+		}
+		return [null,0];
+	}
+	// https://tc39.es/ecma262/#prod-TemplateCharacter
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	TemplateCharacter(str, index) {
+		/* $ [lookahead ≠ {]*/
+		if(str[index]==='$'&&str[index+1]!=='{') {
+			return ["TemplateCharacter",1];
+		}
+		/* \ TemplateEscapeSequence*/
+		if(str[index]==='\\') {
+			let escape_res=this.TemplateEscapeSequence(str,index);
+			if(escape_res[1]>0) {
+				return ["TemplateCharacter",escape_res[1]];
+			}
+		}
+		/* \ NotEscapeSequence*/
+		if(str[index]==='\\') {
+			let not_esc=this.NotEscapeSequence(str,index);
+			if(not_esc[1]>0) {
+				return [null,0];
+			}
+		}
+		/* LineContinuation */
+		let res=this.parent.LineContinuation(str,index);
+		if(res[0]) {
+			return ["TemplateCharacter",res[1]];
+		}
+		/* LineTerminatorSequence */
+		res=this.parent.LineTerminatorSequence(str,index);
+		if(res[0]) {
+			return ["TemplateCharacter",res[1]];
+		}
+		/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
+		if(str[index]==='`'||str[index]==='\\'||str[index]==='$') {
+			return [null,0];
+		}
+		res=this.parent.LineTerminator(str,index);
+		if(res[0]) {
+			return [null,0];
+		}
+		/* TODO: SourceCharacter is too complex for js
+				 It requires handling all of unicode
+		*/
+		return [true,1];
+	}
+	// https://tc39.es/ecma262/#prod-NotEscapeSequence
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NotEscapeSequence(str, index) {
+		let len=0;
+		// 0 DecimalDigit
+		if(str[index]==='0') {
+			len++;
+			let res=this.parent.DecimalDigit(str,index+len);
+			if(res[0]) {
+				return [true,2];
+			}
+		} else {
+			// DecimalDigit but not 0
+			// else excludes 0
+			let res=this.parent.DecimalDigit(str,index);
+			if(res[0]) {
+				return [true,res[1]];
+			}
+		}
+		len=0;
+		// x [lookahead ∉ HexDigit]
+		if(str[index]==='x') {
+			++len;
+			let lookahead=this.parent.HexDigit(str,index+len);
+			if(!lookahead[0]) {
+				return ['x [lookahead ∉ HexDigit]',len];
+			} else {
+				// x HexDigit [lookahead ∉ HexDigit]
+				lookahead=this.parent.HexDigit(str,index+len);
+				if(!lookahead[0]) {
+					return ['x HexDigit [lookahead ∉ HexDigit]',len];
+				}
+			}
+		}
+		len=0;
+		// u [lookahead ∉ HexDigit] [lookahead ≠ {]
+		if(str[index]==='u') {
+			len++;
+			let lookahead_res_1=this.parent.HexDigit(str,index+1);
+			let lookahead_2=str[index+1]!=='{}'[0];
+			if(!lookahead_res_1[0]&&lookahead_2) {
+				return ['u [lookahead ∉ HexDigit] [lookahead ≠ {]',1];
+			}
+			// u HexDigit [lookahead ∉ HexDigit]
+			lookahead_res_1=this.parent.HexDigit(str,index+1);
+			let lookahead_res_2=this.parent.HexDigit(str,index+1);
+			if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
+				return ['u HexDigit [lookahead ∉ HexDigit]',2];
+			}
+			// u HexDigit HexDigit [lookahead ∉ HexDigit]
+			lookahead_res_1=this.parent.HexDigit(str,index+1);
+			lookahead_res_2=this.parent.HexDigit(str,index+1);
+			let lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0];
+			let lookahead_res_3=this.parent.HexDigit(str,index+1);
+			if(lookahead_res&&!lookahead_res_3[0]) {
+				return ['u HexDigit2 [lookahead ∉ HexDigit]',3];
+			}
+			// u HexDigit HexDigit HexDigit [lookahead ∉ HexDigit]
+			lookahead_res_1=this.parent.HexDigit(str,index+1);
+			lookahead_res_2=this.parent.HexDigit(str,index+1);
+			lookahead_res_3=this.parent.HexDigit(str,index+1);
+			lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0]&&lookahead_res_3[0];
+			let lookahead_res_4=this.parent.HexDigit(str,index+1);
+			if(lookahead_res&&!lookahead_res_4[0]) {
+				return ['u HexDigit3 [lookahead ∉ HexDigit]',4];
+			}
+			// u { [lookahead ∉ HexDigit]
+			// u { NotCodePoint [lookahead ∉ HexDigit]
+			// u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]
+			if(str[index+len]==='{}'[1]) {
+				++len;
+				// [lookahead ∉ HexDigit]
+				let lookahead_res_1=this.parent.HexDigit(str,index+len);
+				if(!lookahead_res_1[0]) {
+					return ['u { [lookahead ∉ HexDigit]',len];
+				}
+				// NotCodePoint [lookahead ∉ HexDigit]
+				lookahead_res_1=this.NotCodePoint(str,index+len);
+				lookahead_res_2=this.parent.HexDigit(str,index+len+1);
+				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
+					return ['u { NotCodePoint [lookahead ∉ HexDigit]',len];
+				}
+				// CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]
+				lookahead_res_1=this.CodePoint(str,index+len);
+				lookahead_res_2=this.parent.HexDigit(str,index+len+1);
+				let lookahead_3=str[index+len+1]!=='{}'[1];
+				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
+					return ['u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]',len+1];
+				}
+				if(lookahead_res_1[0]&&lookahead_3) {
+					return ['u { CodePoint [lookahead ∉ HexDigit] [lookahead ≠ }]',len+1];
+				}
+			}
+			return [null,0];
+		}
+		return [false,new Error("TODO: NotEscapeSequence")];
+	}
+	// https://tc39.es/ecma262/#prod-NotCodePoint
+	NotCodePoint(str, index) {
+		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
+		let res=this.parent.HexDigits(str,index);
+		if(res[0]&&res[1]>0&&typeof res[0]==='string') {
+			// but only if MV of HexDigits > 0x10FFFF
+			let MV=parseInt(res[0],16);
+			if(MV>0x10FFFF) {
+				return ['NotCodePoint',res[1]];
+			}
+		}
+		return [null,0];
+	}
+	// https://tc39.es/ecma262/#prod-TemplateCharacters
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	TemplateCharacters(str, index) {
+		let cur_index=index;
+		let tmp=this.TemplateCharacter(str,cur_index);
+		if(tmp[0]) {
+			cur_index+=tmp[1];
+		}
+		while(tmp[0]!==false&&cur_index<str.length) {
+			tmp=this.TemplateCharacter(str,cur_index);
+			if(tmp[0]) {
+				cur_index+=tmp[1];
+			} else {
+				break;
+			}
+		}
+		return ['TemplateCharacters',cur_index-index];
+	}
+	// https://tc39.es/ecma262/#prod-Template
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NoSubstitutionTemplate(str, index) {
+		let cur_index=index;
+		//` TemplateCharacters opt `
+		if(str[cur_index]==='`') {
+			cur_index++;
+		} else {
+			return [null,0];
+		}
+		let opt=this.TemplateCharacters(str,cur_index);
+		if(opt[0]===false) throw opt[1];
+		return ['NoSubstitutionTemplate',cur_index-index+opt[1]];
 	}
 }
 class ecma_root {
@@ -1338,38 +1652,6 @@ class ecma_root {
 	TemplateEscapeSequence(str,index) {
 		throw new Error("Method not implemented.");
 	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateSubstitutionTail(str,index) {
-		return this.ecma_12_8_6.TemplateSubstitutionTail(str,index);
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	RegularExpressionLiteral(str,index) {
-		return this.ecma_12_8_5.RegularExpressionLiteral(str,index);
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	RightBracePunctuator(str,index) {
-		return this.ecma_12_7.RightBracePunctuator(str,index);
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	DivPunctuator(str,index) {
-		return this.ecma_12_7.DivPunctuator(str,index);
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	CommonToken(str,index) {
-		return this.ecma_12_5.CommonToken(str,index);
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	Comment(str,index) {
-		return this.ecma_12_4.Comment(str,index);
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LineTerminator(str,index) {
-		return this.ecma_12_3.LineTerminator(str,index);
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	WhiteSpace(str,index) {
-		return this.ecma_12_2.WhiteSpace(str,index);
-	}
 	/**
 	 * @param {{ single: any; two: any; three: any; }} char_tokens
 	 */
@@ -1380,12 +1662,13 @@ class ecma_root {
 				return this.sep;
 			}
 		};
-		this.ecma_12_2=new JSWhiteSpace(this);
-		this.ecma_12_3=new JSLineTerminators(this);
-		this.ecma_12_4=new Comments(this);
-		this.ecma_12_5=new ecma_12_5(this);
-		this.ecma_12_6=new ecma_12_6(this);
-		this.ecma_12_7=new ecma_12_7(this,char_tokens);
+		this.white_space=new JSWhiteSpace(this);
+		this.line_terminators=new JSLineTerminators(this);
+		this.comments=new Comments(this);
+		this.hashbang_comments=new HashbangComments(this);
+		this.tokens=new Tokens(this);
+		this.ecma_12_6=new NamesAndKeywords(this);
+		this.ecma_12_7=new Punctuators(this,char_tokens);
 		this.ecma_12_8=new ecma_12_8(this);
 		this.ecma_12_8_3=new ecma_12_8_3(this);
 		this.ecma_12_8_4=new ecma_12_9_4(this);
@@ -1451,37 +1734,37 @@ class js_token_generator {
 	InputElementDiv(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 		let max_item=null,max_val=0;
-		let cur_res=this.root.WhiteSpace(str,index);
+		let cur_res=this.root.white_space.WhiteSpace(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'whitespace'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.ecma_12_3.LineTerminator(str,index);
+		cur_res=this.root.line_terminators.LineTerminator(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'line_term'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.Comment(str,index);
+		cur_res=this.root.comments.Comment(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'comment'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.ecma_12_5.CommonToken(str,index);
+		cur_res=this.root.tokens.CommonToken(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'common'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.DivPunctuator(str,index);
+		cur_res=this.root.ecma_12_7.DivPunctuator(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'div_punct'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.RightBracePunctuator(str,index);
+		cur_res=this.root.ecma_12_7.RightBracePunctuator(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'r_brace'
 			max_item=cur_res[0];
@@ -1494,37 +1777,37 @@ class js_token_generator {
 		// WhiteSpace, LineTerminator, Comment, CommonToken,
 		// RightBracePunctuator, RegularExpressionLiteral
 		let max_item=null,max_val=0;
-		let cur_res=this.root.WhiteSpace(str,index);
+		let cur_res=this.root.white_space.WhiteSpace(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'whitespace'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.ecma_12_3.LineTerminator(str,index);
+		cur_res=this.root.line_terminators.LineTerminator(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'line_term'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.Comment(str,index);
+		cur_res=this.root.comments.Comment(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'comment'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.ecma_12_5.CommonToken(str,index);
+		cur_res=this.root.tokens.CommonToken(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'common'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.RightBracePunctuator(str,index);
+		cur_res=this.root.ecma_12_7.RightBracePunctuator(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'r_brace'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.RegularExpressionLiteral(str,index);
+		cur_res=this.root.ecma_12_8_5.RegularExpressionLiteral(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'r_brace'
 			max_item=cur_res[0];
@@ -1536,37 +1819,37 @@ class js_token_generator {
 	InputElementRegExpOrTemplateTail(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, RegularExpressionLiteral, TemplateSubstitutionTail
 		let max_item=null,max_val=0;
-		let cur_res=this.root.WhiteSpace(str,index);
+		let cur_res=this.root.white_space.WhiteSpace(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'whitespace'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.ecma_12_3.LineTerminator(str,index);
+		cur_res=this.root.line_terminators.LineTerminator(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'line_term'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.Comment(str,index);
+		cur_res=this.root.comments.Comment(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'comment'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.ecma_12_5.CommonToken(str,index);
+		cur_res=this.root.tokens.CommonToken(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'common'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.RegularExpressionLiteral(str,index);
+		cur_res=this.root.ecma_12_8_5.RegularExpressionLiteral(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'r_brace'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.TemplateSubstitutionTail(str,index);
+		cur_res=this.root.ecma_12_8_6.TemplateSubstitutionTail(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'r_brace'
 			max_item=cur_res[0];
@@ -1578,37 +1861,37 @@ class js_token_generator {
 	InputElementTemplateTail(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, TemplateSubstitutionTail
 		let max_item=null,max_val=0;
-		let cur_res=this.root.WhiteSpace(str,index);
+		let cur_res=this.root.white_space.WhiteSpace(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'whitespace'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.ecma_12_3.LineTerminator(str,index);
+		cur_res=this.root.line_terminators.LineTerminator(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'line_term'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.Comment(str,index);
+		cur_res=this.root.comments.Comment(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'comment'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.ecma_12_5.CommonToken(str,index);
+		cur_res=this.root.tokens.CommonToken(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'common'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.DivPunctuator(str,index);
+		cur_res=this.root.ecma_12_7.DivPunctuator(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'r_brace'
 			max_item=cur_res[0];
 			max_val=cur_res[1];
 		}
-		cur_res=this.root.TemplateSubstitutionTail(str,index);
+		cur_res=this.root.ecma_12_8_6.TemplateSubstitutionTail(str,index);
 		if(cur_res[1]>max_val) {
 			//max_item = 'r_brace'
 			max_item=cur_res[0];
