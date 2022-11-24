@@ -1,5 +1,4 @@
 import {EnvSettingsType} from "../EnvSettingsType.js";
-import {DispatcherIndexType} from "./DispatcherIndexType.js";
 import {LexGrammarSyntax} from "./LexGrammarSyntax.js";
 import {Lexer} from "./Lexer";
 import {JSWhiteSpace} from "./JSWhiteSpace.js";
@@ -16,7 +15,6 @@ import {TemplateLiteralComp} from "./TemplateLiteralComp.js";
 import {HashbangComments} from "./HashbangComments.js";
 
 export class Dispatcher {
-	[x: string]: DispatcherIndexType;
 	lexer: Lexer;
 	lex_grammar_syntax: LexGrammarSyntax=new LexGrammarSyntax(this);
 	white_space: JSWhiteSpace=new JSWhiteSpace(this);
@@ -119,5 +117,8 @@ export class Dispatcher {
 	}
 	InputElementRegExpOrTemplateTail(str: string,index: number) {
 		return this.lex_grammar_syntax.InputElementRegExpOrTemplateTail(str,index);
+	}
+	HashbangComment(str: string,index: number) {
+		return this.hashbang_comments.HashbangComment(str,index);
 	}
 }

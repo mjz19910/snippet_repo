@@ -7,5 +7,6 @@ export enum ItemInfoType {
 	LineTerminator,
 	RightBracePunctuator,
 	TemplateSubstitutionTail,
-	WhiteSpace
+	WhiteSpace,
+	HashbangComment
 }
