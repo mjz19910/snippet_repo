@@ -591,6 +591,7 @@ class NumericLiterals extends ECMA262Base {
 				return [true,"DecimalBigIntegerLiteral",len];
 			}
 		}
+		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
