@@ -462,9 +462,9 @@ class Punctuators extends PunctuatorsData {
 		if(result) return [true,"OtherPunctuator",2];
 		result=null;
 		this.s_single_char_tokens.iterate(function(key,_value) {
-			// skip a DivPunctuator with length 1
+			// skip DivPunctuator with length 1
 			if(key==='/') return "Continue";
-			// skip a RightBracePunctuator
+			// skip RightBracePunctuator
 			if(key==='{}'[1]) return "Continue";
 			if(str[index]===key) {
 				result=key;
