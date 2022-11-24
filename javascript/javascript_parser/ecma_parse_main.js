@@ -1903,55 +1903,33 @@ class js_token_generator {
 		this.ParseCommonElements(in_state,out_state);
 		this.ParseRegularExpressionLiteral(in_state,out_state);
 		this.ParseTemplateSubstitutionTail(in_state,out_state);
-		if(!max_item) {
+		if(!out_state.item) {
 			return [false,null,0];
 		}
-		return [true,max_item,max_val];
+		return [true,out_state.item,out_state.length];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementTemplateTail(str,index) {
-		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, TemplateSubstitutionTail
-		let max_item=null,max_val=0;
-		let cur_res=this.root.white_space.WhiteSpace(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'whitespace'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.line_terminators.LineTerminator(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'line_term'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.comments.Comment(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'comment'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.tokens.CommonToken(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'common'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.punctuators.DivPunctuator(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'r_brace'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.ecma_12_8_6.TemplateSubstitutionTail(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'r_brace'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		if(!max_item) {
+		// WhiteSpace, LineTerminator, Comment, CommonToken
+		// DivPunctuator, TemplateSubstitutionTail
+		let in_state={
+			str,
+			index,
+		};
+		let out_state={
+			/** @type {string|null} */
+			type: null,
+			/** @type {string|null} */
+			item: null,
+			length: 0,
+		};
+		this.ParseCommonElements(in_state,out_state);
+		this.ParseDivPunctuator(in_state,out_state);
+		this.ParseTemplateSubstitutionTail(in_state,out_state);
+		if(!out_state.item) {
 			return [false,null,0];
 		}
-		return [true,max_item,max_val];
+		return [true,out_state.item,out_state.length];
 	}
 }
 
