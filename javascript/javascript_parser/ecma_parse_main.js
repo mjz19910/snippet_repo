@@ -374,7 +374,10 @@ class PunctuatorsData extends ECMA262Base {
 	 */
 	s_three_char_tokens;
 	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(' ');
+	DivPunctuatorArray="/ /=".split(' ');
 }
+
+// https://tc39.es/ecma262/#sec-punctuators
 class Punctuators extends PunctuatorsData {
 	// https://tc39.es/ecma262/#prod-Punctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -451,7 +454,6 @@ class Punctuators extends PunctuatorsData {
 		}
 		return [null,0];
 	}
-	DivPunctuatorArray="/ /=".split(' ');
 	// https://tc39.es/ecma262/#prod-DivPunctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DivPunctuator(str,index) {
