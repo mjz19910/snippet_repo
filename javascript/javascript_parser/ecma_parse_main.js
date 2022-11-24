@@ -922,7 +922,7 @@ class ecma_12_9_4 extends ECMA262Base {
 				break x;
 			}
 			len=this.OctalDigit(str,index+2);
-			if(len[2]>0) {
+			if(len[0]) {
 				break x;
 			}
 			return [true,"LegacyOctalEscapeSequence",2];
