@@ -2103,9 +2103,7 @@ export function ecma_parse_main() {
 	let res_item;
 	let i=0;
 	for(;;i++) {
-		let prev_index=token_gen.index;
 		res_item=token_gen.next_token();
-		let cur_index=token_gen.index;
 		if(res_item===null) {
 			console.log("parse error at ",token_gen.index);
 			break;
