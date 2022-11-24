@@ -52,13 +52,13 @@ class HashMap {
 	}
 }
 
-class ecma_base {
+class ECMA262Base {
 	/** @arg {ecma_root} parent */
 	constructor(parent) {
 		this.parent=parent;
 	}
 }
-class JSWhiteSpace extends ecma_base {
+class JSWhiteSpace extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	WhiteSpace(str,index) {
 		if(str[index]===' ') {
@@ -72,7 +72,7 @@ class JSWhiteSpace extends ecma_base {
 }
 
 // https://tc39.es/ecma262/#sec-line-terminators
-class JSLineTerminators extends ecma_base {
+class JSLineTerminators extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-LineTerminator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LineTerminator(str,index) {
@@ -108,7 +108,7 @@ class JSLineTerminators extends ecma_base {
 		return [null,0];
 	}
 }
-class ecma_12_4 extends ecma_base {
+class Comments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	Comment(str,index) {
 		let ml_len=this.MultiLineComment(str,index);
@@ -251,7 +251,8 @@ class ecma_12_4 extends ecma_base {
 		return ["SingleLineCommentChars",s_index-index];
 	}
 }
-class ecma_12_5 extends ecma_base {
+class HashbangComments extends ECMA262Base {}
+class ecma_12_5 extends ECMA262Base {
 	/*
 	CommonToken ::
 		IdentifierName
@@ -302,7 +303,7 @@ class ecma_12_5 extends ecma_base {
 		return [item[0],len];
 	}
 }
-class ecma_12_6 extends ecma_base {
+class ecma_12_6 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	PrivateIdentifier(str,index) {
 		if(str[index]!=='#')
@@ -357,7 +358,7 @@ class ecma_12_6 extends ecma_base {
 		return [null,0];
 	}
 }
-class ecma_12_7 extends ecma_base {
+class ecma_12_7 extends ECMA262Base {
 	/**
 	 * @param {ecma_root} parent
 	 * @param {{ single: HashMap<string,string>; two: HashMap<string,string>; three: HashMap<string,string>; }} char_tokens
@@ -478,7 +479,7 @@ class ecma_12_7 extends ecma_base {
 		return [null,0];
 	}
 }
-class ecma_12_8 extends ecma_base {
+class ecma_12_8 extends ECMA262Base {
 	/** @param {string} str @arg {number} index @returns {[number,null,null]|[number,["regexpNonTerm"],null]} */
 	RegularExpressionNonTerminator(str,index) {
 		let _val=this.parent.ecma_12_3.LineTerminator(str,index);
@@ -488,7 +489,7 @@ class ecma_12_8 extends ecma_base {
 		return [0,null,null];
 	}
 }
-class ecma_12_8_3 extends ecma_base {
+class ecma_12_8_3 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigit(str,index) {
 		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
@@ -621,7 +622,7 @@ class ecma_12_8_3 extends ecma_base {
 		return ["DecimalDigits[+Sep]",off];
 	}
 }
-class ecma_12_9_4 extends ecma_base {
+class ecma_12_9_4 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	StringLiteral(str,index) {
 		let cur=str[index];
@@ -1050,7 +1051,7 @@ class ecma_12_9_4 extends ecma_base {
 	}
 }
 /** @typedef {[string,number]|[null,number]} LexReturnTyShort */
-class ecma_12_8_6 extends ecma_base {
+class ecma_12_8_6 extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateSubstitutionTail(str,index) {
@@ -1215,7 +1216,7 @@ class ecma_12_8_6 extends ecma_base {
 		return ['NoSubstitutionTemplate',cur_index-index+opt[1]];
 	}
 }
-class ecma_12_8_5 extends ecma_base {
+class ecma_12_8_5 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionLiteral(str,index) {
 		let len=0;
@@ -1381,7 +1382,7 @@ class ecma_root {
 		};
 		this.ecma_12_2=new JSWhiteSpace(this);
 		this.ecma_12_3=new JSLineTerminators(this);
-		this.ecma_12_4=new ecma_12_4(this);
+		this.ecma_12_4=new Comments(this);
 		this.ecma_12_5=new ecma_12_5(this);
 		this.ecma_12_6=new ecma_12_6(this);
 		this.ecma_12_7=new ecma_12_7(this,char_tokens);
