@@ -519,26 +519,33 @@ class LexLiterals extends ECMA262Base {
 	}
 }
 
-// https://tc39.es/ecma262/#sec-literals-regular-expression-literals
-class ecma_12_8 extends ECMA262Base {}
-
-
-class ecma_12_8_3 extends ECMA262Base {
+// https://tc39.es/ecma262/#sec-literals-numeric-literals
+class NumericLiterals extends ECMA262Base {
+	// https://tc39.es/ecma262/#prod-NumericLiteralSeparator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	DecimalDigit(str,index) {
-		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
-			return [true,"DecimalDigit",1];
+	NumericLiteralSeparator(str,index) {
+		if(str[index]==='_') {
+			return [true,"NumericLiteralSeparator",1];
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-NumericLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NumericLiteral(str,index) {
+		let max_len=0;
 		let len=this.DecimalLiteral(str,index);
-		if(len[2]>0) {
-			return len;
+		if(len[2]>max_len) {
+			max_len=len[2];
+		}
+		if(max_len>0) {
+			return [true,"NumericLiteral",max_len];
 		}
 		return [false,null,0];
 	}
+	// TODO: https://tc39.es/ecma262/#prod-DecimalBigIntegerLiteral
+	// TODO: https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
+	// TODO: https://tc39.es/ecma262/#prod-BigIntLiteralSuffix
+	// https://tc39.es/ecma262/#prod-DecimalLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalLiteral(str,index) {
 		let max_len=0;
@@ -553,6 +560,13 @@ class ecma_12_8_3 extends ECMA262Base {
 		if(len>max_len) max_len=len;
 		len=0;
 		return [true,"DecimalLiteral",max_len];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	DecimalDigit(str,index) {
+		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
+			return [true,"DecimalDigit",1];
+		}
+		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigits(str,index) {
@@ -580,13 +594,6 @@ class ecma_12_8_3 extends ECMA262Base {
 	NonZeroDigit(str,index) {
 		if(str.charCodeAt(index)>=49&&str.charCodeAt(index)<=57) {
 			return [true,"NonZeroDigit",1];
-		}
-		return [false,null,0];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NumericLiteralSeparator(str,index) {
-		if(str[index]==='_') {
-			return [true,"NumericLiteralSeparator",1];
 		}
 		return [false,null,0];
 	}
@@ -1376,17 +1383,17 @@ class TemplateLiterals extends ECMA262Base {
 		/* 0 [lookahead ∉ DecimalDigit]*/
 		if(str[index]==='0') {
 			len++;
-			let la=this.parent.DecimalDigit(str,index);
+			let la=this.parent.ecma_12_8_3.DecimalDigit(str,index);
 			if(!la[0]) {
 				return [true,"TemplateEscapeSequence",len];
 			}
 		}
 		len=0;
 		/* HexEscapeSequence*/
-		let res=this.parent.HexEscapeSequence(str,index);
+		let res=this.parent.ecma_12_8_3.HexEscapeSequence(str,index);
 		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
 		/* UnicodeEscapeSequence*/
-		res=this.parent.UnicodeEscapeSequence(str,index);
+		res=this.parent.ecma_12_8_3.UnicodeEscapeSequence(str,index);
 		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
 		return [false,null,0];
 	}
@@ -1394,13 +1401,13 @@ class TemplateLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	CodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-		let res=this.parent.HexDigits(str,index);
+		let res=this.parent.ecma_12_8_3.HexDigits(str,index);
 		if(res[0]) {
-			if(res[1]>0&&typeof res[0]==='string') {
+			if(res[1]>0) {
 				// but only if MV of HexDigits ≤ 0x10FFFF
 				let MV=parseInt(res[0],16);
 				if(MV<=0x10FFFF) {
-					return ['CodePoint',res[1]];
+					return [true,"CodePoint",res[1]];
 				}
 			}
 		}
@@ -1546,12 +1553,12 @@ class TemplateLiterals extends ECMA262Base {
 		let len=0;
 		if(str[index]==='0') {
 			len++;
-			let res=this.parent.DecimalDigit(str,index+len);
+			let res=this.parent.ecma_12_8_3.DecimalDigit(str,index+len);
 			if(res[0]) {
 				return [true,"NotEscapeSequence",len];
 			}
 		} else {
-			let res=this.parent.DecimalDigit(str,index+len);
+			let res=this.parent.ecma_12_8_3.DecimalDigit(str,index+len);
 			if(res[0]) {
 				return [true,"NotEscapeSequence",res[2]];
 			}
@@ -1559,11 +1566,11 @@ class TemplateLiterals extends ECMA262Base {
 		len=0;
 		if(str[index]==='x') {
 			++len;
-			let lookahead=this.parent.HexDigit(str,index+len);
+			let lookahead=this.parent.ecma_12_8_3.HexDigit(str,index+len);
 			if(!lookahead[0]) {
 				return [true,"NotEscapeSequence",len];
 			} else {
-				lookahead=this.parent.HexDigit(str,index+len);
+				lookahead=this.parent.ecma_12_8_3.HexDigit(str,index+len);
 				if(!lookahead[0]) {
 					return [true,"NotEscapeSequence",len];
 				}
@@ -1572,13 +1579,13 @@ class TemplateLiterals extends ECMA262Base {
 		len=0;
 		if(str[index]==='u') {
 			len++;
-			let lookahead_res_1=this.parent.HexDigit(str,index+1);
+			let lookahead_res_1=this.parent.ecma_12_8_3.HexDigit(str,index+1);
 			let lookahead_2=str[index+1]!=='{}'[0];
 			if(!lookahead_res_1[0]&&lookahead_2) {
 				return [true,"NotEscapeSequence",1];
 			}
-			lookahead_res_1=this.parent.HexDigit(str,index+1);
-			let lookahead_res_2=this.parent.HexDigit(str,index+1);
+			lookahead_res_1=this.parent.ecma_12_8_3.HexDigit(str,index+1);
+			let lookahead_res_2=this.parent.ecma_12_8_3.HexDigit(str,index+1);
 			if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
 				return [true,"NotEscapeSequence",2];
 			}
@@ -1686,8 +1693,8 @@ class ecma_root {
 		this.tokens=new Tokens(this);
 		this.names_and_keywords=new NamesAndKeywords(this);
 		this.punctuators=new Punctuators(this,char_tokens);
-		this.ecma_12_8=new ecma_12_8(this);
-		this.ecma_12_8_3=new ecma_12_8_3(this);
+		this.ecma_12_8=new RegularExpressionLiterals(this);
+		this.ecma_12_8_3=new NumericLiterals(this);
 		this.string_literals=new StringLiterals(this);
 		this.ecma_12_8_6=new ecma_12_8_6(this);
 		this.ecma_12_8_5=new RegularExpressionLiterals(this);
