@@ -1471,12 +1471,16 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	NotCodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
 		let res=this.parent.string_literals.HexDigits(str,index);
-		if(res[0]&&res[2]>0) {
-			// but only if MV of HexDigits > 0x10FFFF
-			let MV=parseInt(res[1],16);
-			if(MV>0x10FFFF) {
-				return [true,"NotCodePoint",res[2]];
-			}
+		if(!res[0]) {
+			return [false,null,0];
+		}
+		if(res[2]===0) {
+			return [false,null,0];
+		}
+		// but only if MV of HexDigits > 0x10FFFF
+		let MV=parseInt(res[1],16);
+		if(MV>0x10FFFF) {
+			return [true,"NotCodePoint",res[2]];
 		}
 		return [false,null,0];
 	}
