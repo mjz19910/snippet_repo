@@ -1,5 +1,5 @@
-import {get_module_data} from "./get_module_data";
-import {is_valid_utf8} from "./is_valid_utf8";
+import {get_module_data} from "./get_module_data.js";
+import {is_valid_utf8} from "./is_valid_utf8.js";
 import window from "./window_def.js";
 
 export {Holder} from "./__global.js";
