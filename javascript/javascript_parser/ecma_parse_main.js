@@ -1451,18 +1451,17 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 				if(!lookahead_res_1[0]) {
 					return [true,"NotEscapeSequence",len];
 				}
-				lookahead_res_1=this.NotCodePoint(str,index+len);
+				let res_1=this.NotCodePoint(str,index+len);
 				lookahead_res_2=this.parent.string_literals.HexDigit(str,index+len+1);
-				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
+				if(res_1[0]&&!lookahead_res_2[0]) {
 					return [true,"NotEscapeSequence",len];
 				}
-				lookahead_res_1=this.CodePoint(str,index+len);
+				res_1=this.CodePoint(str,index+len);
 				lookahead_res_2=this.parent.string_literals.HexDigit(str,index+len+1);
-				let lookahead_3=str[index+len+1]!=="{}"[1];
-				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
+				if(res_1[0]&&!lookahead_res_2[0]) {
 					return [true,"NotEscapeSequence",len+1];
 				}
-				if(lookahead_res_1[0]&&lookahead_3) {
+				if(lookahead_res_1[0]&&str[index+len+1]!=="{}"[1]) {
 					return [true,"NotEscapeSequence",len+1];
 				}
 			}
