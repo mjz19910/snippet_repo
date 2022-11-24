@@ -1417,11 +1417,11 @@ class TemplateLiterals extends ECMA262Base {
 			cur_index++;
 			let res=this.TemplateCharacters(str,cur_index);
 			if(res[0]===false) throw res[1];
-			if(res[1]>0) {
-				cur_index+=res[1];
+			if(res[2]>0) {
+				cur_index+=res[2];
 			}
 			if(str[cur_index]==='$'&&str[cur_index+1]==='{') {
-				return [true,cur_index+2];
+				return [true,"TemplateHead",cur_index+2];
 			}
 		}
 		return [false,null,0];
@@ -1434,13 +1434,13 @@ class TemplateLiterals extends ECMA262Base {
 		if(str[index]==='{}'[1]) {
 			len++;
 			if(str[index+len]==='$'&&str[index+len+1]==='{}'[0]) {
-				return [true,len+2];
+				return [true,"TemplateMiddle",len+2];
 			}
 			let res=this.TemplateCharacters(str,index);
 			if(res[0]) {
-				len+=res[1];
+				len+=res[2];
 				if(str[index+len]==='$'&&str[index+len+1]==='{}'[0]) {
-					return [true,len+2];
+					return [true,"TemplateMiddle",len+2];
 				}
 			}
 		}
@@ -1455,14 +1455,14 @@ class TemplateLiterals extends ECMA262Base {
 			len++;
 			if(str[index+len]==='`') {
 				len++;
-				return [true,len];
+				return [true,"TemplateTail",len];
 			}
 			let res=this.TemplateCharacters(str,index);
 			if(res[0]) {
-				len+=res[1];
+				len+=res[2];
 				if(str[index+len]==='`') {
 					len++;
-					return [true,len];
+					return [true,"TemplateTail",len];
 				}
 			}
 		}
@@ -1474,12 +1474,12 @@ class TemplateLiterals extends ECMA262Base {
 		// TemplateMiddle
 		let res=this.TemplateMiddle(str,index);
 		if(res[0]) {
-			return [true,res[1]];
+			return [true,"TemplateSubstitutionTail",res[2]];
 		}
 		// TemplateTail
 		res=this.TemplateTail(str,index);
 		if(res[0]) {
-			return [true,res[1]];
+			return [true,"TemplateSubstitutionTail",res[2]];
 		}
 		return [false,null,0];
 	}
@@ -1508,39 +1508,39 @@ class TemplateLiterals extends ECMA262Base {
 		/* \ TemplateEscapeSequence*/
 		if(str[index]==='\\') {
 			let escape_res=this.TemplateEscapeSequence(str,index);
-			if(escape_res[1]>0) {
-				return [true,"TemplateCharacter",escape_res[1]];
+			if(escape_res[2]>0) {
+				return [true,"TemplateCharacter",escape_res[2]];
 			}
 		}
 		/* \ NotEscapeSequence*/
 		if(str[index]==='\\') {
 			let not_esc=this.NotEscapeSequence(str,index);
-			if(not_esc[1]>0) {
+			if(not_esc[2]>0) {
 				return [false,null,0];
 			}
 		}
 		/* LineContinuation */
-		let res=this.parent.LineContinuation(str,index);
+		let res=this.parent.string_literals.LineContinuation(str,index);
 		if(res[0]) {
-			return [true,"TemplateCharacter",res[1]];
+			return [true,"TemplateCharacter",res[2]];
 		}
 		/* LineTerminatorSequence */
-		res=this.parent.LineTerminatorSequence(str,index);
+		res=this.parent.line_terminators.LineTerminatorSequence(str,index);
 		if(res[0]) {
-			return [true,"TemplateCharacter",res[1]];
+			return [true,"TemplateCharacter",res[2]];
 		}
 		/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
 		if(str[index]==='`'||str[index]==='\\'||str[index]==='$') {
 			return [false,null,0];
 		}
-		res=this.parent.LineTerminator(str,index);
+		res=this.parent.line_terminators.LineTerminator(str,index);
 		if(res[0]) {
 			return [false,null,0];
 		}
 		/* TODO: SourceCharacter is too complex for js
 				 It requires handling all of unicode
 		*/
-		return [true,1];
+		return [true,"TemplateCharacter",1];
 	}
 	// https://tc39.es/ecma262/#prod-NotEscapeSequence
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -1643,17 +1643,17 @@ class TemplateLiterals extends ECMA262Base {
 		let cur_index=index;
 		let tmp=this.TemplateCharacter(str,cur_index);
 		if(tmp[0]) {
-			cur_index+=tmp[1];
+			cur_index+=tmp[2];
 		}
 		while(tmp[0]!==false&&cur_index<str.length) {
 			tmp=this.TemplateCharacter(str,cur_index);
 			if(tmp[0]) {
-				cur_index+=tmp[1];
+				cur_index+=tmp[2];
 			} else {
 				break;
 			}
 		}
-		return ['TemplateCharacters',cur_index-index];
+		return [true,"TemplateCharacters",cur_index-index];
 	}
 	// https://tc39.es/ecma262/#prod-Template
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -1667,7 +1667,7 @@ class TemplateLiterals extends ECMA262Base {
 		}
 		let opt=this.TemplateCharacters(str,cur_index);
 		if(opt[0]===false) throw opt[1];
-		return ['NoSubstitutionTemplate',cur_index-index+opt[1]];
+		return [true,"NoSubstitutionTemplate",cur_index-index+opt[2]];
 	}
 }
 
@@ -1709,42 +1709,42 @@ class js_token_generator {
 		this.root=new ecma_root(char_tokens);
 	}
 	/**
-	 * @param {[string,number,number]|[symbol,number,number] | null} token_value
+	 * @param {[true,string,number,number]|[false,symbol,number,number] | null} token_value
 	 */
 	describe_token(token_value) {
 		if(!token_value) return ['undefined'];
-		let tok_str=this.str.slice(token_value[2],token_value[2]+token_value[1]);
+		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
 		return [token_value[0],tok_str];
 	}
-	/** @arg {LexReturnTyShort} cur @returns {[string,number,number]|[symbol,number,number]|null} */
+	/** @arg {LexReturnTyShort} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
 	as_next_token(cur) {
-		if(cur[0]!==null) {
-			if(cur[1]===0) {
-				return [cur[0],cur[1],this.index];
+		if(cur[1]!==null) {
+			if(cur[2]===0) {
+				return [cur[0],cur[1],cur[2],this.index];
 			}
-			this.index+=cur[1];
-			return [cur[0],cur[1],this.index];
+			this.index+=cur[2];
+			return [cur[0],cur[1],cur[2],this.index];
 		}
 		if(this.index>(this.str.length-1)) {
-			return [js_token_generator.EOF_TOKEN,0,this.index];
+			return [false,js_token_generator.EOF_TOKEN,0,this.index];
 		}
 		return null;
 	}
-	/** @returns {[string,number,number]|[symbol,number,number]|null} */
+	/** @returns {[true,string,number,number]|[false,symbol,number,number]|null} */
 	next_token() {
 		if(this.index>(this.str.length-1)) {
-			return [js_token_generator.EOF_TOKEN,0,this.index];
+			return [false,js_token_generator.EOF_TOKEN,0,this.index];
 		}
-		/** @type {[string,number,number]} */
+		/** @type {[true,string,number,number]} */
 		let ret;
 		let cur=this.InputElementDiv(this.str,this.index);
-		if(cur[0]!==null) {
-			if(cur[1]===0) {
-				ret=[cur[0],cur[1],this.index];
+		if(cur[1]!==null) {
+			if(cur[2]===0) {
+				ret=[cur[0],cur[1],cur[2],this.index];
 				return ret;
 			}
-			ret=[cur[0],cur[1],this.index];
-			this.index+=cur[1];
+			ret=[cur[0],cur[1],cur[2],this.index];
+			this.index+=cur[2];
 			return ret;
 		}
 		console.log("next token fallthrough",cur,this.index);
@@ -1755,42 +1755,45 @@ class js_token_generator {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
 		let max_item=null,max_val=0;
 		let cur_res=this.root.white_space.WhiteSpace(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'whitespace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.line_terminators.LineTerminator(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'line_term'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.comments.Comment(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'comment'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.tokens.CommonToken(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'common'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.punctuators.DivPunctuator(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'div_punct'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.punctuators.RightBracePunctuator(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'r_brace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
-		return [max_item,max_val];
+		if(!max_item) {
+			return [false,null,0];
+		}
+		return [true,max_item,max_val];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementRegExp(str,index) {
@@ -1798,126 +1801,135 @@ class js_token_generator {
 		// RightBracePunctuator, RegularExpressionLiteral
 		let max_item=null,max_val=0;
 		let cur_res=this.root.white_space.WhiteSpace(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'whitespace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.line_terminators.LineTerminator(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'line_term'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.comments.Comment(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'comment'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.tokens.CommonToken(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'common'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.punctuators.RightBracePunctuator(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'r_brace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.ecma_12_8_5.RegularExpressionLiteral(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'r_brace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
-		return [max_item,max_val];
+		if(!max_item) {
+			return [false,null,0];
+		}
+		return [true,max_item,max_val];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementRegExpOrTemplateTail(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, RegularExpressionLiteral, TemplateSubstitutionTail
 		let max_item=null,max_val=0;
 		let cur_res=this.root.white_space.WhiteSpace(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'whitespace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.line_terminators.LineTerminator(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'line_term'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.comments.Comment(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'comment'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.tokens.CommonToken(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'common'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.ecma_12_8_5.RegularExpressionLiteral(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'r_brace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.ecma_12_8_6.TemplateSubstitutionTail(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'r_brace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
-		return [max_item,max_val];
+		if(!max_item) {
+			return [false,null,0];
+		}
+		return [true,max_item,max_val];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementTemplateTail(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, TemplateSubstitutionTail
 		let max_item=null,max_val=0;
 		let cur_res=this.root.white_space.WhiteSpace(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'whitespace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.line_terminators.LineTerminator(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'line_term'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.comments.Comment(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'comment'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.tokens.CommonToken(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'common'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.punctuators.DivPunctuator(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'r_brace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 		cur_res=this.root.ecma_12_8_6.TemplateSubstitutionTail(str,index);
-		if(cur_res[1]>max_val) {
+		if(cur_res[2]>max_val) {
 			//max_item = 'r_brace'
-			max_item=cur_res[0];
-			max_val=cur_res[1];
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
-		return [max_item,max_val];
+		if(!max_item) {
+			return [false,null,0];
+		}
+		return [true,max_item,max_val];
 	}
 }
 
@@ -2108,7 +2120,7 @@ export function ecma_parse_main() {
 		let prev_index=token_gen.index;
 		res_item=token_gen.next_token();
 		let cur_index=token_gen.index;
-		if(res_item&&cur_index!==(prev_index+res_item[1])) {
+		if(res_item&&cur_index!==(prev_index+res_item[2])) {
 			console.log("Length not updated correctly");
 		}
 		if(res_item===null) {
@@ -2119,8 +2131,10 @@ export function ecma_parse_main() {
 		if(res_description[0]==="WhiteSpace") {
 			i-=3;
 		}
-		if(res_item[0]===js_token_generator.EOF_TOKEN) {
-			console.log("EOF");
+		if(!res_item[0]) {
+			if(res_item[1]===js_token_generator.EOF_TOKEN) {
+				console.log("EOF");
+			}
 			break;
 		}
 		console.log(res_description);
