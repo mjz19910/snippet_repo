@@ -894,22 +894,23 @@ class ecma_12_9_4 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LegacyOctalEscapeSequence(str,index) {
 		x: {
-			if(str[index]==='0') {
-				if(str[index+1]==='8'||str[index+1]==='9') {
-					return [true,"LegacyOctalEscapeSequence",1];
-				}
+			if(str[index]!=='0') {
 				break x;
+			}
+			if(str[index+1]==='8'||str[index+1]==='9') {
+				return [true,"LegacyOctalEscapeSequence",1];
 			}
 		}
 		x: {
 			let len=this.NonZeroOctalDigit(str,index);
-			if(len[2]>0) {
-				let n_len=this.OctalDigit(str,index+1);
-				if(n_len[2]>0) {
-					break x;
-				}
-				return [true,"LegacyOctalEscapeSequence",1];
+			if(!len[0]) {
+				break x;
 			}
+			let n_len=this.OctalDigit(str,index+1);
+			if(n_len[2]>0) {
+				break x;
+			}
+			return [true,"LegacyOctalEscapeSequence",1];
 		}
 		x: {
 			let len=this.ZeroToThree(str,index);
@@ -924,14 +925,16 @@ class ecma_12_9_4 extends ECMA262Base {
 				}
 			}
 		}
-		{
+		x: {
 			let len=this.FourToSeven(str,index);
-			if(len[2]>0) {
-				len=this.OctalDigit(str,index+1);
-				if(len[2]>0) {
-					return [true,"LegacyOctalEscapeSequence",2];
-				}
+			if(!len[0]) {
+				break x;
 			}
+			len=this.OctalDigit(str,index+1);
+			if(!len[0]) {
+				break x;
+			}
+			return [true,"LegacyOctalEscapeSequence",2];
 		}
 		x: {
 			let len=this.ZeroToThree(str,index);
