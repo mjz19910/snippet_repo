@@ -599,13 +599,7 @@ class NumericLiterals extends ECMA262Base {
 		}
 		return [true,"DecimalIntegerLiteral",max_len];
 	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	DecimalDigit(str,index) {
-		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
-			return [true,"DecimalDigit",1];
-		}
-		return [false,null,0];
-	}
+	// https://tc39.es/ecma262/#prod-DecimalDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigits(str,index) {
 		if(this.parent.flags.is_sep()) {
@@ -627,6 +621,13 @@ class NumericLiterals extends ECMA262Base {
 			break;
 		}
 		return [true,"DecimalDigits_NoSep",off];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	DecimalDigit(str,index) {
+		if(str.charCodeAt(index)>=48&&str.charCodeAt(index)<=57) {
+			return [true,"DecimalDigit",1];
+		}
+		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NonZeroDigit(str,index) {
