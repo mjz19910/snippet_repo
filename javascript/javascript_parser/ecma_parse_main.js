@@ -300,7 +300,7 @@ class Tokens extends ECMA262Base {
 			len=cur[2];
 			item=cur;
 		}
-		cur=this.parent.ecma_12_8_6.Template(str,index);
+		cur=this.parent.template_literal_lexical_components.Template(str,index);
 		if(cur[2]>len) {
 			len=cur[2];
 			item=cur;
@@ -507,7 +507,7 @@ class Punctuators extends PunctuatorsData {
 }
 
 // https://tc39.es/ecma262/#sec-ecmascript-language-lexical-grammar-literals
-class LexLiterals extends ECMA262Base {
+class Literals extends ECMA262Base {
 	// Null Literals
 	// https://tc39.es/ecma262/#prod-NullLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
@@ -726,7 +726,11 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-ExponentPart
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	ExponentPart(str,index) {throw new Error("No impl");}
+	ExponentPart(str,index) {
+		this.ExponentIndicator(str,index)
+		this.SignedInteger(str,index);
+		throw new Error("No impl");
+	}
 	// https://tc39.es/ecma262/#prod-ExponentIndicator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	ExponentIndicator(str,index) {throw new Error("No impl");}
@@ -1202,6 +1206,53 @@ class StringLiterals extends ECMA262Base {
 // https://tc39.es/ecma262/#sec-template-literal-lexical-components
 /** @typedef {[true,string,number]|[false,null,number]} LexReturnTyShort */
 class TemplateLiteralLexicalComponents extends ECMA262Base {
+	// https://tc39.es/ecma262/#prod-Template
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	Template(str,index) {
+		// NoSubstitutionTemplate
+		let ret=this.NoSubstitutionTemplate(str,index);
+		if(ret[0]) {
+			return ret;
+		}
+		// TemplateHead
+		ret=this.TemplateHead(str,index);
+		if(ret[0]) {
+			return ret;
+		}
+		return [false,null,0];
+	}
+	// https://tc39.es/ecma262/#prod-NoSubstitutionTemplate
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NoSubstitutionTemplate(str,index) {
+		let cur_index=index;
+		//` TemplateCharacters opt `
+		if(str[cur_index]==="`") {
+			cur_index++;
+		} else {
+			return [false,null,0];
+		}
+		let opt=this.TemplateCharacters(str,cur_index);
+		if(!opt[0]) return [false,null,0];
+		return [true,"NoSubstitutionTemplate",cur_index-index+opt[2]];
+	}
+	// https://tc39.es/ecma262/#prod-TemplateHead
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	TemplateHead(str,index) {
+		let cur_index=index;
+		// ` TemplateCharacters_opt ${
+		if(str[cur_index]==="`") {
+			cur_index++;
+			let res=this.TemplateCharacters(str,cur_index);
+			if(res[0]===false) throw res[1];
+			if(res[2]>0) {
+				cur_index+=res[2];
+			}
+			if(str[cur_index]==="$"&&str[cur_index+1]==="{") {
+				return [true,"TemplateHead",cur_index+2];
+			}
+		}
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateSubstitutionTail(str,index) {
@@ -1217,6 +1268,27 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-TemplateMiddle
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	TemplateMiddle(str,index) {
+		let len=0;
+		// } TemplateCharacters_opt ${
+		if(str[index]==="{}"[1]) {
+			len++;
+			if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {
+				return [true,"TemplateMiddle",len+2];
+			}
+			let res=this.TemplateCharacters(str,index);
+			if(res[0]) {
+				len+=res[2];
+				if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {
+					return [true,"TemplateMiddle",len+2];
+				}
+			}
+		}
+		return [false,null,0];
+	}
+	// https://tc39.es/ecma262/#prod-TemplateTail
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateTail(str,index) {
 		let len=0;
@@ -1239,25 +1311,6 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateMiddle(str,index) {
-		let len=0;
-		// } TemplateCharacters_opt ${
-		if(str[index]==="{}"[1]) {
-			len++;
-			if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {
-				return [true,"TemplateMiddle",len+2];
-			}
-			let res=this.TemplateCharacters(str,index);
-			if(res[0]) {
-				len+=res[2];
-				if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {
-					return [true,"TemplateMiddle",len+2];
-				}
-			}
-		}
-		return [false,null,0];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateCharacters(str,index) {
 		let len=0;
 		let tmp=this.TemplateCharacter(str,index);
@@ -1274,19 +1327,20 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		}
 		return [true,"TemplateCharacters",len];
 	}
+	// https://tc39.es/ecma262/#prod-TemplateCharacter
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateCharacter(str,index) {
 		if(str[index]==="$"&&str[index+1]!=="{") {
 			return [true,"TemplateCharacter",1];
 		}
 		if(str[index]==="\\") {
-			let escape_res=this.parent.template_literals.TemplateEscapeSequence(str,index);
+			let escape_res=this.TemplateEscapeSequence(str,index);
 			if(escape_res[0]) {
 				return [true,"TemplateCharacter",escape_res[2]];
 			}
 		}
 		if(str[index]==="\\") {
-			let not_esc=this.parent.template_literals.NotEscapeSequence(str,index);
+			let not_esc=this.NotEscapeSequence(str,index);
 			if(not_esc[2]>0) {
 				return [false,null,0];
 			}
@@ -1314,54 +1368,139 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		*/
 		return [true,"TemplateCharacter",1];
 	}
-	/*Template ::
-	NoSubstitutionTemplate
-	TemplateHead*/
+	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	Template(str,index) {
-		// NoSubstitutionTemplate
-		let ret=this.NoSubstitutionTemplate(str,index);
-		if(ret[0]) {
-			return ret;
+	TemplateEscapeSequence(str,index) {
+		let len=0;
+		/* CharacterEscapeSequence */
+		let tmp=this.parent.string_literals.CharacterEscapeSequence(str,index);
+		if(tmp[0]) {
+			return [true,"TemplateEscapeSequence",tmp[2]];
 		}
-		// TemplateHead
-		ret=this.TemplateHead(str,index);
-		if(ret[0]) {
-			return ret;
+		/* 0 [lookahead ∉ DecimalDigit]*/
+		if(str[index]==="0") {
+			len++;
+			let la=this.parent.numeric_literals.DecimalDigit(str,index);
+			if(!la[0]) {
+				return [true,"TemplateEscapeSequence",len];
+			}
 		}
+		len=0;
+		let res=this.parent.string_literals.HexEscapeSequence(str,index);
+		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
+		res=this.parent.string_literals.UnicodeEscapeSequence(str,index);
+		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-NotEscapeSequence
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateHead(str,index) {
-		let cur_index=index;
-		// ` TemplateCharacters_opt ${
-		if(str[cur_index]==="`") {
-			cur_index++;
-			let res=this.TemplateCharacters(str,cur_index);
-			if(res[2]===0) {
-				return [true,"TemplateHead",cur_index];
+	NotEscapeSequence(str,index) {
+		let len=0;
+		if(str[index]==="0") {
+			len++;
+			let res=this.parent.numeric_literals.DecimalDigit(str,index+len);
+			if(res[0]) {
+				return [true,"NotEscapeSequence",len];
 			}
-			if(res[2]>0) {
-				cur_index+=res[2];
-			}
-			if(str[cur_index]==="$"&&str[cur_index+1]==="{") {
-				return [true,"TemplateHead",cur_index+2];
-			}
-		}
-		return [false,null,0];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NoSubstitutionTemplate(str,index) {
-		let cur_index=index;
-		//` TemplateCharacters opt `
-		if(str[cur_index]==="`") {
-			cur_index++;
 		} else {
-			return [false,null,0];
+			let res=this.parent.numeric_literals.DecimalDigit(str,index+len);
+			if(res[0]) {
+				return [true,"NotEscapeSequence",res[2]];
+			}
 		}
-		let opt=this.TemplateCharacters(str,cur_index);
-		if(opt[2]===0) return [false,null,0];
-		return [true,"NoSubstitutionTemplate",cur_index-index+opt[2]];
+		len=0;
+		if(str[index]==="x") {
+			++len;
+			let lookahead=this.parent.string_literals.HexDigit(str,index+len);
+			if(!lookahead[0]) {
+				return [true,"NotEscapeSequence",len];
+			} else {
+				lookahead=this.parent.string_literals.HexDigit(str,index+len);
+				if(!lookahead[0]) {
+					return [true,"NotEscapeSequence",len];
+				}
+			}
+		}
+		len=0;
+		if(str[index]==="u") {
+			len++;
+			let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
+			let lookahead_2=str[index+1]!=="{}"[0];
+			if(!lookahead_res_1[0]&&lookahead_2) {
+				return [true,"NotEscapeSequence",1];
+			}
+			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
+			let lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
+			if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
+				return [true,"NotEscapeSequence",2];
+			}
+			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
+			lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
+			let lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0];
+			let lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
+			if(lookahead_res&&!lookahead_res_3[0]) {
+				return [true,"NotEscapeSequence",3];
+			}
+			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
+			lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
+			lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
+			lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0]&&lookahead_res_3[0];
+			let lookahead_res_4=this.parent.string_literals.HexDigit(str,index+1);
+			if(lookahead_res&&!lookahead_res_4[0]) {
+				return [true,"NotEscapeSequence",4];
+			}
+			if(str[index+len]==="{}"[1]) {
+				++len;
+				let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
+				if(!lookahead_res_1[0]) {
+					return [true,"NotEscapeSequence",len];
+				}
+				lookahead_res_1=this.NotCodePoint(str,index+len);
+				lookahead_res_2=this.parent.string_literals.HexDigit(str,index+len+1);
+				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
+					return [true,"NotEscapeSequence",len];
+				}
+				lookahead_res_1=this.CodePoint(str,index+len);
+				lookahead_res_2=this.parent.string_literals.HexDigit(str,index+len+1);
+				let lookahead_3=str[index+len+1]!=="{}"[1];
+				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
+					return [true,"NotEscapeSequence",len+1];
+				}
+				if(lookahead_res_1[0]&&lookahead_3) {
+					return [true,"NotEscapeSequence",len+1];
+				}
+			}
+		}
+		return [false,null,0];
+	}
+	// https://tc39.es/ecma262/#prod-CodePoint
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	CodePoint(str,index) {
+		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
+		let res=this.parent.string_literals.HexDigits(str,index);
+		if(res[2]>0) {
+			let mv_raw=str.slice(index,index+res[2]);
+			// but only if MV of HexDigits ≤ 0x10FFFF
+			let MV=parseInt(mv_raw,16);
+			if(MV<=0x10FFFF) {
+				return [true,"CodePoint",res[2]];
+			}
+		}
+		return [false,null,0];
+	}
+	// https://tc39.es/ecma262/#prod-NotCodePoint
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NotCodePoint(str,index) {
+		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
+		let res=this.parent.string_literals.HexDigits(str,index);
+		if(res[0]&&res[2]>0) {
+			// but only if MV of HexDigits > 0x10FFFF
+			let MV=parseInt(res[1],16);
+			if(MV>0x10FFFF) {
+				return [true,"NotCodePoint",res[2]];
+			}
+		}
+		return [false,null,0];
 	}
 }
 
@@ -1473,308 +1612,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 }
 
 
-class TemplateLiterals extends ECMA262Base {
-	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateEscapeSequence(str,index) {
-		let len=0;
-		/* CharacterEscapeSequence */
-		let tmp=this.parent.string_literals.CharacterEscapeSequence(str,index);
-		if(tmp[0]) {
-			return [true,"TemplateEscapeSequence",tmp[2]];
-		}
-		/* 0 [lookahead ∉ DecimalDigit]*/
-		if(str[index]==="0") {
-			len++;
-			let la=this.parent.numeric_literals.DecimalDigit(str,index);
-			if(!la[0]) {
-				return [true,"TemplateEscapeSequence",len];
-			}
-		}
-		len=0;
-		let res=this.parent.string_literals.HexEscapeSequence(str,index);
-		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
-		res=this.parent.string_literals.UnicodeEscapeSequence(str,index);
-		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-CodePoint
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	CodePoint(str,index) {
-		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-		let res=this.parent.string_literals.HexDigits(str,index);
-		if(res[2]>0) {
-			let mv_raw=str.slice(index,index+res[2]);
-			// but only if MV of HexDigits ≤ 0x10FFFF
-			let MV=parseInt(mv_raw,16);
-			if(MV<=0x10FFFF) {
-				return [true,"CodePoint",res[2]];
-			}
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-TemplateHead
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateHead(str,index) {
-		let cur_index=index;
-		// ` TemplateCharacters_opt ${
-		if(str[cur_index]==="`") {
-			cur_index++;
-			let res=this.TemplateCharacters(str,cur_index);
-			if(res[0]===false) throw res[1];
-			if(res[2]>0) {
-				cur_index+=res[2];
-			}
-			if(str[cur_index]==="$"&&str[cur_index+1]==="{") {
-				return [true,"TemplateHead",cur_index+2];
-			}
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-TemplateMiddle
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateMiddle(str,index) {
-		let len=0;
-		// } TemplateCharacters_opt ${
-		if(str[index]==="{}"[1]) {
-			len++;
-			if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {
-				return [true,"TemplateMiddle",len+2];
-			}
-			let res=this.TemplateCharacters(str,index);
-			if(res[0]) {
-				len+=res[2];
-				if(str[index+len]==="$"&&str[index+len+1]==="{}"[0]) {
-					return [true,"TemplateMiddle",len+2];
-				}
-			}
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-TemplateTail
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateTail(str,index) {
-		let len=0;
-		// } TemplateCharacters_opt `
-		if(str[index]==="{}"[0]) {
-			len++;
-			if(str[index+len]==="`") {
-				len++;
-				return [true,"TemplateTail",len];
-			}
-			let res=this.TemplateCharacters(str,index);
-			if(res[0]) {
-				len+=res[2];
-				if(str[index+len]==="`") {
-					len++;
-					return [true,"TemplateTail",len];
-				}
-			}
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-TemplateSubstitutionTail
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateSubstitutionTail(str,index) {
-		// TemplateMiddle
-		let res=this.TemplateMiddle(str,index);
-		if(res[0]) {
-			return [true,"TemplateSubstitutionTail",res[2]];
-		}
-		// TemplateTail
-		res=this.TemplateTail(str,index);
-		if(res[0]) {
-			return [true,"TemplateSubstitutionTail",res[2]];
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-Template
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	Template(str,index) {
-		// NoSubstitutionTemplate
-		let ret=this.NoSubstitutionTemplate(str,index);
-		if(ret[0]) {
-			return ret;
-		}
-		// TemplateHead
-		ret=this.TemplateHead(str,index);
-		if(ret[0]) {
-			return ret;
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-TemplateCharacter
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateCharacter(str,index) {
-		/* $ [lookahead ≠ {]*/
-		if(str[index]==="$"&&str[index+1]!=="{") {
-			return [true,"TemplateCharacter",1];
-		}
-		/* \ TemplateEscapeSequence*/
-		if(str[index]==="\\") {
-			let escape_res=this.TemplateEscapeSequence(str,index);
-			if(escape_res[2]>0) {
-				return [true,"TemplateCharacter",escape_res[2]];
-			}
-		}
-		/* \ NotEscapeSequence*/
-		if(str[index]==="\\") {
-			let not_esc=this.NotEscapeSequence(str,index);
-			if(not_esc[2]>0) {
-				return [false,null,0];
-			}
-		}
-		/* LineContinuation */
-		let res=this.parent.string_literals.LineContinuation(str,index);
-		if(res[0]) {
-			return [true,"TemplateCharacter",res[2]];
-		}
-		/* LineTerminatorSequence */
-		res=this.parent.line_terminators.LineTerminatorSequence(str,index);
-		if(res[0]) {
-			return [true,"TemplateCharacter",res[2]];
-		}
-		/* SourceCharacter but not one of ` or \ or $ or LineTerminator*/
-		if(str[index]==="`"||str[index]==="\\"||str[index]==="$") {
-			return [false,null,0];
-		}
-		res=this.parent.line_terminators.LineTerminator(str,index);
-		if(res[0]) {
-			return [false,null,0];
-		}
-		/* TODO: SourceCharacter is too complex for js
-				 It requires handling all of unicode
-		*/
-		return [true,"TemplateCharacter",1];
-	}
-	// https://tc39.es/ecma262/#prod-NotEscapeSequence
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NotEscapeSequence(str,index) {
-		let len=0;
-		if(str[index]==="0") {
-			len++;
-			let res=this.parent.numeric_literals.DecimalDigit(str,index+len);
-			if(res[0]) {
-				return [true,"NotEscapeSequence",len];
-			}
-		} else {
-			let res=this.parent.numeric_literals.DecimalDigit(str,index+len);
-			if(res[0]) {
-				return [true,"NotEscapeSequence",res[2]];
-			}
-		}
-		len=0;
-		if(str[index]==="x") {
-			++len;
-			let lookahead=this.parent.string_literals.HexDigit(str,index+len);
-			if(!lookahead[0]) {
-				return [true,"NotEscapeSequence",len];
-			} else {
-				lookahead=this.parent.string_literals.HexDigit(str,index+len);
-				if(!lookahead[0]) {
-					return [true,"NotEscapeSequence",len];
-				}
-			}
-		}
-		len=0;
-		if(str[index]==="u") {
-			len++;
-			let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
-			let lookahead_2=str[index+1]!=="{}"[0];
-			if(!lookahead_res_1[0]&&lookahead_2) {
-				return [true,"NotEscapeSequence",1];
-			}
-			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
-			let lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
-			if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
-				return [true,"NotEscapeSequence",2];
-			}
-			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
-			lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
-			let lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0];
-			let lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
-			if(lookahead_res&&!lookahead_res_3[0]) {
-				return [true,"NotEscapeSequence",3];
-			}
-			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+1);
-			lookahead_res_2=this.parent.string_literals.HexDigit(str,index+1);
-			lookahead_res_3=this.parent.string_literals.HexDigit(str,index+1);
-			lookahead_res=lookahead_res_1[0]&&lookahead_res_2[0]&&lookahead_res_3[0];
-			let lookahead_res_4=this.parent.string_literals.HexDigit(str,index+1);
-			if(lookahead_res&&!lookahead_res_4[0]) {
-				return [true,"NotEscapeSequence",4];
-			}
-			if(str[index+len]==="{}"[1]) {
-				++len;
-				let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
-				if(!lookahead_res_1[0]) {
-					return [true,"NotEscapeSequence",len];
-				}
-				lookahead_res_1=this.NotCodePoint(str,index+len);
-				lookahead_res_2=this.parent.string_literals.HexDigit(str,index+len+1);
-				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
-					return [true,"NotEscapeSequence",len];
-				}
-				lookahead_res_1=this.CodePoint(str,index+len);
-				lookahead_res_2=this.parent.string_literals.HexDigit(str,index+len+1);
-				let lookahead_3=str[index+len+1]!=="{}"[1];
-				if(lookahead_res_1[0]&&!lookahead_res_2[0]) {
-					return [true,"NotEscapeSequence",len+1];
-				}
-				if(lookahead_res_1[0]&&lookahead_3) {
-					return [true,"NotEscapeSequence",len+1];
-				}
-			}
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-NotCodePoint
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NotCodePoint(str,index) {
-		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
-		let res=this.parent.string_literals.HexDigits(str,index);
-		if(res[0]&&res[2]>0) {
-			// but only if MV of HexDigits > 0x10FFFF
-			let MV=parseInt(res[1],16);
-			if(MV>0x10FFFF) {
-				return [true,"NotCodePoint",res[2]];
-			}
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-TemplateCharacters
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	TemplateCharacters(str,index) {
-		let cur_index=index;
-		let tmp=this.TemplateCharacter(str,cur_index);
-		if(tmp[0]) {
-			cur_index+=tmp[2];
-		}
-		while(tmp[0]!==false&&cur_index<str.length) {
-			tmp=this.TemplateCharacter(str,cur_index);
-			if(tmp[0]) {
-				cur_index+=tmp[2];
-			} else {
-				break;
-			}
-		}
-		return [true,"TemplateCharacters",cur_index-index];
-	}
-	// https://tc39.es/ecma262/#prod-Template
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NoSubstitutionTemplate(str,index) {
-		let cur_index=index;
-		//` TemplateCharacters opt `
-		if(str[cur_index]==="`") {
-			cur_index++;
-		} else {
-			return [false,null,0];
-		}
-		let opt=this.TemplateCharacters(str,cur_index);
-		if(opt[0]===false) throw opt[1];
-		return [true,"NoSubstitutionTemplate",cur_index-index+opt[2]];
-	}
-}
+class TemplateLiterals extends ECMA262Base {}
 
 class ecma_root {
 	/**
@@ -1795,9 +1633,12 @@ class ecma_root {
 		this.names_and_keywords=new NamesAndKeywords(this);
 		this.punctuators=new Punctuators(this,char_tokens);
 		this.RegularExpressionLiterals=new RegularExpressionLiterals(this);
-		this.numeric_literals=new NumericLiterals(this);
-		this.string_literals=new StringLiterals(this);
-		this.ecma_12_8_6=new TemplateLiteralLexicalComponents(this);
+		{
+			this.literals=new Literals(this);
+			this.numeric_literals=new NumericLiterals(this);
+			this.string_literals=new StringLiterals(this);
+		}
+		this.template_literal_lexical_components=new TemplateLiteralLexicalComponents(this);
 		this.template_literals=new TemplateLiterals(this);
 	}
 }
@@ -1927,7 +1768,7 @@ class js_token_generator {
 	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseTemplateSubstitutionTail(in_state,out_state) {
-		let res=this.root.ecma_12_8_6.TemplateSubstitutionTail(in_state.str,in_state.index);
+		let res=this.root.template_literal_lexical_components.TemplateSubstitutionTail(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"TemplateSubstitutionTail");
 	}
 	/**
