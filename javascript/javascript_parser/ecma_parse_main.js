@@ -860,7 +860,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		if(this.parent.line_terminators.LineTerminator(str,index)) {
 			return [false,null,0];
 		}
-		return [null,1];
+		return [true,"NonEscapeCharacter",1];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	EscapeCharacter(str,index) {
@@ -871,13 +871,13 @@ class ecma_12_9_4 extends ECMA262Base {
 			act=1;
 		}
 		if(str[index]==='x') {
-			return [null,1];
+			return [true,"EscapeCharacter",1];
 		}
-		if(len0[1]>0&&len0>=len1) {
-			return len0;
+		if(len0[2]>len1[2]) {
+			return [true,"EscapeCharacter",len0[2]];
 		}
-		if(len1[1]>0&&len1>len0) {
-			return len1;
+		if(len1[2]>len0[2]) {
+			return [true,"EscapeCharacter",len1[2]];
 		}
 		if(act===1) {
 			throw new Error("TODO");
