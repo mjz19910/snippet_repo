@@ -1758,11 +1758,11 @@ class js_token_generator {
 	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseWhiteSpace(in_state,out_state) {
-		let cur_res=this.root.white_space.WhiteSpace(in_state.str,in_state.index);
-		if(cur_res[0]&&cur_res[2]>out_state.length) {
+		let res=this.root.white_space.WhiteSpace(in_state.str,in_state.index);
+		if(res[0]&&res[2]>out_state.length) {
 			out_state.type="WhiteSpace";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
+			out_state.item=res[1];
+			out_state.length=res[2];
 		}
 	}
 	/**
@@ -1770,11 +1770,11 @@ class js_token_generator {
 	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseLineTerminator(in_state,out_state) {
-		let cur_res=this.root.line_terminators.LineTerminator(in_state.str,in_state.index);
-		if(cur_res[0]&&cur_res[2]>out_state.length) {
+		let res=this.root.line_terminators.LineTerminator(in_state.str,in_state.index);
+		if(res[0]&&res[2]>out_state.length) {
 			out_state.type="LineTerminator";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
+			out_state.item=res[1];
+			out_state.length=res[2];
 		}
 	}
 	/**
@@ -1782,11 +1782,11 @@ class js_token_generator {
 	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseComment(in_state,out_state) {
-		let cur_res=this.root.comments.Comment(in_state.str,in_state.index);
-		if(cur_res[0]&&cur_res[2]>out_state.length) {
-			out_state.type="LineTerminator";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
+		let res=this.root.comments.Comment(in_state.str,in_state.index);
+		if(res[0]&&res[2]>out_state.length) {
+			out_state.type="Comment";
+			out_state.item=res[1];
+			out_state.length=res[2];
 		}
 	}
 	/**
@@ -1794,11 +1794,11 @@ class js_token_generator {
 	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseRightBracePunctuator(in_state,out_state) {
-		let cur_res=this.root.punctuators.RightBracePunctuator(in_state.str,in_state.index);
-		if(cur_res[0]&&cur_res[2]>out_state.length) {
+		let res=this.root.punctuators.RightBracePunctuator(in_state.str,in_state.index);
+		if(res[0]&&res[2]>out_state.length) {
 			out_state.type="RightBracePunctuator";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
+			out_state.item=res[1];
+			out_state.length=res[2];
 		}
 	}
 	/**
@@ -1806,11 +1806,11 @@ class js_token_generator {
 	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseDivPunctuator(in_state,out_state) {
-		let cur_res=this.root.punctuators.DivPunctuator(in_state.str,in_state.index);
-		if(cur_res[0]&&cur_res[2]>out_state.length) {
+		let res=this.root.punctuators.DivPunctuator(in_state.str,in_state.index);
+		if(res[0]&&res[2]>out_state.length) {
 			out_state.type="DivPunctuator";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
+			out_state.item=res[1];
+			out_state.length=res[2];
 		}
 	}
 	/**
@@ -1818,11 +1818,23 @@ class js_token_generator {
 	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
 	 */
 	ParseCommonToken(in_state,out_state) {
-		let cur_res=this.root.tokens.CommonToken(in_state.str,in_state.index);
-		if(cur_res[0]&&cur_res[2]>out_state.length) {
+		let res=this.root.tokens.CommonToken(in_state.str,in_state.index);
+		if(res[0]&&res[2]>out_state.length) {
 			out_state.type="LineTerminator";
-			out_state.item=cur_res[1];
-			out_state.length=cur_res[2];
+			out_state.item=res[1];
+			out_state.length=res[2];
+		}
+	}
+	/**
+	 * @param {{ str: string; index: number; }} in_state
+	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
+	 */
+	ParseRegularExpressionLiteral(in_state,out_state) {
+		let res=this.root.ecma_12_8_5.RegularExpressionLiteral(in_state.str,in_state.index);
+		if(cur_res[2]>max_val) {
+			//max_item = 'RegularExpressionLiteral'
+			max_item=cur_res[1];
+			max_val=cur_res[2];
 		}
 	}
 	/**
@@ -1862,43 +1874,19 @@ class js_token_generator {
 	InputElementRegExp(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken,
 		// RightBracePunctuator, RegularExpressionLiteral
-		let max_item=null,max_val=0;
-		let cur_res=this.root.white_space.WhiteSpace(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'whitespace'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.line_terminators.LineTerminator(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'line_term'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.comments.Comment(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'comment'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.tokens.CommonToken(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'common'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.punctuators.RightBracePunctuator(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'r_brace'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
-		cur_res=this.root.ecma_12_8_5.RegularExpressionLiteral(str,index);
-		if(cur_res[2]>max_val) {
-			//max_item = 'r_brace'
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
+		let in_state={
+			str,
+			index,
+		};
+		let out_state={
+			/** @type {string|null} */
+			type: null,
+			/** @type {string|null} */
+			item: null,
+			length: 0,
+		};
+		this.ParseCommonElements(in_state,out_state);
+		this.ParseRightBracePunctuator(in_state,out_state);
 		if(!max_item) {
 			return [false,null,0];
 		}
