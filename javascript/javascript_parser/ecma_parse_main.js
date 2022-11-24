@@ -1310,6 +1310,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-TemplateCharacters
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateCharacters(str,index) {
 		let len=0;
