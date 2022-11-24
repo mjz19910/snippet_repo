@@ -5,7 +5,7 @@ import {LexReturnType} from "./LexReturnType.js";
 export class Tokens extends LexerBase {
 	// https://tc39.es/ecma262/#prod-CommonToken
 	CommonToken(str: any,index: any): LexReturnType {
-		let common_token: ['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template']=['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template'];
+		const common_token=['IdentifierName','PrivateIdentifier','Punctuator','NumericLiteral','StringLiteral','Template'] as const;
 		let type=null,len=0;
 		for(let m_name of common_token) {
 			const cur=this.m_dispatcher[m_name](str,index);
