@@ -58,7 +58,7 @@ class ecma_base {
 		this.parent=parent;
 	}
 }
-class ecma_12_2 extends ecma_base {
+class JSWhiteSpace extends ecma_base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	WhiteSpace(str,index) {
 		if(str[index]===' ') {
@@ -70,7 +70,7 @@ class ecma_12_2 extends ecma_base {
 		return [null,0];
 	}
 }
-class ecma_12_3 extends ecma_base {
+class JSLineTerminators extends ecma_base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LineTerminator(str,index) {
 		let len=0;
@@ -1366,8 +1366,8 @@ class ecma_root {
 				return this.sep;
 			}
 		};
-		this.ecma_12_2=new ecma_12_2(this);
-		this.ecma_12_3=new ecma_12_3(this);
+		this.ecma_12_2=new JSWhiteSpace(this);
+		this.ecma_12_3=new JSLineTerminators(this);
 		this.ecma_12_4=new ecma_12_4(this);
 		this.ecma_12_5=new ecma_12_5(this);
 		this.ecma_12_6=new ecma_12_6(this);
