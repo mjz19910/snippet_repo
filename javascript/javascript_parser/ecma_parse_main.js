@@ -611,7 +611,7 @@ class NumericLiterals extends ECMA262Base {
 				if(tmp_2>0) {
 					tmp_len+=tmp_2;
 				}
-				let [,,res]=this.DecimalDigits_Sep(str,index+tmp_len);
+				let [,,res]=this.DecimalDigits(str,index+tmp_len);
 				tmp_len+=res;
 			}
 			len+=tmp_len;
@@ -662,50 +662,6 @@ class NumericLiterals extends ECMA262Base {
 			}
 			return [true,"DecimalDigits",off];
 		}
-	}
-	// https://tc39.es/ecma262/#prod-DecimalDigits
-	// DecimalDigits[+Sep]
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	DecimalDigits_Sep(str,index) {
-		let off=0;
-		for(;;) {
-			// DecimalDigit
-			let [,,len]=this.DecimalDigit(str,index+off);
-			if(len>0) {
-				off++;
-				// DecimalDigits[?Sep] DecimalDigit
-				continue;
-			}
-			// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
-			let [,,s_len]=this.NumericLiteralSeparator(str,index+off);
-			if(s_len>0) {
-				let [,,exl]=this.DecimalDigit(str,index+off+1);
-				if(exl>0) {
-					off++;
-					// [+Sep] (DecimalDigits[+Sep]) NumericLiteralSeparator DecimalDigit
-					continue;
-				}
-				break;
-			}
-			break;
-		}
-		return [true,"DecimalDigits[+Sep]",off];
-	}
-	// https://tc39.es/ecma262/#prod-DecimalDigits
-	// DecimalDigits[-Sep]
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	DecimalDigits_NoSep(str,index) {
-		// DecimalDigit
-		let off=0;
-		for(;;) {
-			let [,,len]=this.DecimalDigit(str,index+off);
-			if(len>0) {
-				off++;
-				continue;
-			}
-			break;
-		}
-		return [true,"DecimalDigits_NoSep",off];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	DecimalDigit(str,index) {
