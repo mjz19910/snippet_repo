@@ -452,6 +452,8 @@ class Punctuators extends PunctuatorsData {
 		this.s_two_char_tokens.iterate(function(key) {
 			// skip DivPunctuator with length 2
 			if(key==='/=') return "Continue";
+			// skip OptionalChainingPunctuator
+			if(key==='?.') return "Continue";
 			// TODO: exclude some tokens that are parsed elsewhere
 			if(str.startsWith(key,index)) {
 				result=key;
@@ -2017,7 +2019,7 @@ export function ecma_parse_main() {
 		s_two_char_tokens.set("+=","PlusEquals");
 		s_two_char_tokens.set("-=","MinusEquals");
 		s_two_char_tokens.set("*=","AsteriskEquals");
-		// is one of the productions by DivPunctuator
+		// "/=" is one of the productions of DivPunctuator
 		s_two_char_tokens.set("/=","SlashEquals");
 		s_two_char_tokens.set("%=","PercentEquals");
 		s_two_char_tokens.set("&=","AmpersandEquals");
@@ -2035,7 +2037,7 @@ export function ecma_parse_main() {
 		s_two_char_tokens.set("++","PlusPlus");
 		s_two_char_tokens.set("<<","ShiftLeft");
 		s_two_char_tokens.set(">>","ShiftRight");
-		// is one of the productions by OptionalChainingPunctuator
+		// "?." is the production of OptionalChainingPunctuator
 		s_two_char_tokens.set("?.","QuestionMarkPeriod");
 	}
 	if(s_single_char_tokens.is_empty()) {
@@ -2055,7 +2057,7 @@ export function ecma_parse_main() {
 		s_single_char_tokens.set(',',"Comma");
 		// { is OtherPunctuator
 		s_single_char_tokens.set('{',"CurlyOpen");
-		// '}' is one of the productions by RightBracePunctuator
+		// '}' is the production of RightBracePunctuator
 		s_single_char_tokens.set('}',"CurlyClose");
 		// = is OtherPunctuator
 		s_single_char_tokens.set('=',"Equals");
