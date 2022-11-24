@@ -1021,14 +1021,14 @@ class ecma_12_9_4 extends ECMA262Base {
 			off++;
 		}
 		let len0=this.Hex4Digits(str,index+off);
-		if(len0[1]>0) {
-			return [true,"UnicodeEscapeSequence",len0[1]+1];
+		if(len0[2]>0) {
+			return [true,"UnicodeEscapeSequence",len0[2]+1];
 		}
 		if(str[index+off]==='{}'[0]) {
 			off++;
 			let len=this.CodePoint(str,index+off);
-			if(len[1]>0) {
-				off+=len[1];
+			if(len[2]>0) {
+				off+=len[2];
 				if(str[index+off]==='{}'[1]) {
 					off++;
 					return [true,"UnicodeEscapeSequence",off];
@@ -1041,13 +1041,12 @@ class ecma_12_9_4 extends ECMA262Base {
 	CodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
 		let res=this.HexDigits(str,index);
-		if(res[0]) {
-			if(res[1]>0&&typeof res[0]==='string') {
-				// but only if MV of HexDigits ≤ 0x10FFFF
-				let MV=parseInt(res[0],16);
-				if(MV<=0x10FFFF) {
-					return ['CodePoint',res[1]];
-				}
+		if(res[2]>0) {
+			let mv_raw=str.slice(index,index+res[2]);
+			// but only if MV of HexDigits ≤ 0x10FFFF
+			let MV=parseInt(mv_raw,16);
+			if(MV<=0x10FFFF) {
+				return [true,"CodePoint",res[2]];
 			}
 		}
 		return [false,null,0];
@@ -1070,7 +1069,7 @@ class ecma_12_9_4 extends ECMA262Base {
 		if(!len) {
 			return [false,null,0];
 		}
-		return [null,4];
+		return [true,"Hex4Digits",4];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	HexDigits(str,index) {
@@ -1101,12 +1100,12 @@ class ecma_12_8_6 extends ECMA262Base {
 		// TemplateMiddle
 		let res=this.TemplateMiddle(str,index);
 		if(res[0]) {
-			return [true,"TemplateSubstitutionTail",res[1]];
+			return [true,"TemplateSubstitutionTail",res[2]];
 		}
 		// TemplateTail
 		res=this.TemplateTail(str,index);
 		if(res[0]) {
-			return [true,"TemplateSubstitutionTail",res[1]];
+			return [true,"TemplateSubstitutionTail",res[2]];
 		}
 		return [false,null,0];
 	}
@@ -1122,7 +1121,7 @@ class ecma_12_8_6 extends ECMA262Base {
 			}
 			let res=this.TemplateCharacters(str,index);
 			if(res[0]) {
-				len+=res[1];
+				len+=res[2];
 				if(str[index+len]==='`') {
 					len++;
 					return [true,"TemplateTail",len];
@@ -1142,7 +1141,7 @@ class ecma_12_8_6 extends ECMA262Base {
 			}
 			let res=this.TemplateCharacters(str,index);
 			if(res[0]) {
-				len+=res[1];
+				len+=res[2];
 				if(str[index+len]==='$'&&str[index+len+1]==='{}'[0]) {
 					return [true,"TemplateMiddle",len+2];
 				}
@@ -1152,19 +1151,20 @@ class ecma_12_8_6 extends ECMA262Base {
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateCharacters(str,index) {
+		let len=0;
 		let tmp=this.TemplateCharacter(str,index);
 		if(tmp[0]) {
-			index+=tmp[1];
+			len+=tmp[2];
 		}
-		while(tmp[1]>0&&index<str.length) {
-			tmp=this.TemplateCharacter(str,index);
+		while(tmp[2]>0&&index<str.length) {
+			tmp=this.TemplateCharacter(str,index+len);
 			if(tmp[0]) {
-				index+=tmp[1];
+				len+=tmp[2];
 			} else {
 				break;
 			}
 		}
-		return ['TemplateCharacters',index-index];
+		return [true,'TemplateCharacters',len];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	TemplateCharacter(str,index) {
