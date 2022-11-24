@@ -1769,9 +1769,6 @@ class js_token_generator {
 			max_item=cur_res[1];
 			max_val=cur_res[2];
 		}
-		if(str.slice(index,index+2)==="/*") {
-			debugger;
-		}
 		cur_res=this.root.comments.Comment(str,index);
 		if(cur_res[2]>max_val) {
 			//max_item = 'comment'
