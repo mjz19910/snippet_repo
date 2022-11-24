@@ -727,7 +727,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-ExponentPart
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	ExponentPart(str,index) {
-		this.ExponentIndicator(str,index)
+		this.ExponentIndicator(str,index);
 		this.SignedInteger(str,index);
 		throw new Error("No impl");
 	}
@@ -1421,51 +1421,53 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			}
 		}
 		len=0;
-		if(str[index]==="u") {
-			let res_1,res_2,res_3;
-			len++;
-			let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
-			if(!lookahead_res_1[0]&&str[index+1]!=="{}"[0]) {
-				return [true,"NotEscapeSequence",1];
-			}
-			res_1=this.parent.string_literals.HexDigit(str,index+len);
-			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len+1);
-			if(res_1[0]&&!lookahead_res_1[0]) {
-				return [true,"NotEscapeSequence",2];
-			}
-			res_1=this.parent.string_literals.HexDigit(str,index+len);
-			res_2=this.parent.string_literals.HexDigit(str,index+len+1);
-			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+3);
-			if(res_1[0]&&res_2[0]&&!lookahead_res_1[0]) {
-				return [true,"NotEscapeSequence",3];
-			}
-			res_1=this.parent.string_literals.HexDigit(str,index+len);
-			res_2=this.parent.string_literals.HexDigit(str,index+len+1);
-			res_3=this.parent.string_literals.HexDigit(str,index+len+2);
-			lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len+3);
-			if(res_1[0]&&res_2[0]&&res_3[0]&&!lookahead_res_1[0]) {
-				return [true,"NotEscapeSequence",4];
-			}
-			if(str[index+len]==="{}"[1]) {
-				++len;
-				lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
-				if(!lookahead_res_1[0]) {
-					return [true,"NotEscapeSequence",len];
-				}
-				let res_1=this.NotCodePoint(str,index+len);
-				lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len+1);
-				if(res_1[0]&&!lookahead_res_1[0]) {
-					return [true,"NotEscapeSequence",len];
-				}
-				res_1=this.CodePoint(str,index+len);
-				lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len+1);
-				if(res_1[0]&&!lookahead_res_1[0]) {
-					return [true,"NotEscapeSequence",len+1];
-				}
-				if(lookahead_res_1[0]&&str[index+len+1]!=="{}"[1]) {
-					return [true,"NotEscapeSequence",len+1];
-				}
-			}
+		if(str[index]!=="u") {
+			return [false,null,0];
+		}
+		let res_1,res_2,res_3;
+		len++;
+		let lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
+		if(!lookahead_res_1[0]&&str[index+1]!=="{}"[0]) {
+			return [true,"NotEscapeSequence",1];
+		}
+		res_1=this.parent.string_literals.HexDigit(str,index+len);
+		lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len+1);
+		if(res_1[0]&&!lookahead_res_1[0]) {
+			return [true,"NotEscapeSequence",2];
+		}
+		res_1=this.parent.string_literals.HexDigit(str,index+len);
+		res_2=this.parent.string_literals.HexDigit(str,index+len+1);
+		lookahead_res_1=this.parent.string_literals.HexDigit(str,index+3);
+		if(res_1[0]&&res_2[0]&&!lookahead_res_1[0]) {
+			return [true,"NotEscapeSequence",3];
+		}
+		res_1=this.parent.string_literals.HexDigit(str,index+len);
+		res_2=this.parent.string_literals.HexDigit(str,index+len+1);
+		res_3=this.parent.string_literals.HexDigit(str,index+len+2);
+		lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len+3);
+		if(res_1[0]&&res_2[0]&&res_3[0]&&!lookahead_res_1[0]) {
+			return [true,"NotEscapeSequence",4];
+		}
+		if(str[index+len]!=="{}"[1]) {
+			return [false,null,0];
+		}
+		++len;
+		lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len);
+		if(!lookahead_res_1[0]) {
+			return [true,"NotEscapeSequence",len];
+		}
+		res_1=this.NotCodePoint(str,index+len);
+		lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len+1);
+		if(res_1[0]&&!lookahead_res_1[0]) {
+			return [true,"NotEscapeSequence",len];
+		}
+		res_1=this.CodePoint(str,index+len);
+		lookahead_res_1=this.parent.string_literals.HexDigit(str,index+len+1);
+		if(res_1[0]&&!lookahead_res_1[0]) {
+			return [true,"NotEscapeSequence",len+1];
+		}
+		if(lookahead_res_1[0]&&str[index+len+1]!=="{}"[1]) {
+			return [true,"NotEscapeSequence",len+1];
 		}
 		return [false,null,0];
 	}
