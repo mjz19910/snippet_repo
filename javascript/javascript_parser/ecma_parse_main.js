@@ -405,7 +405,7 @@ class Punctuators extends PunctuatorsData {
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OtherPunctuator(str,index) {
-		// >>>= is the only production of length 4
+		// >>>= is the only OtherPunctuator production of length 4
 		if(str.startsWith('>>>=',index)) {
 			return ['OtherPunctuator',4];
 		}
