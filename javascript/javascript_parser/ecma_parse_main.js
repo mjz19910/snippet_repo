@@ -634,16 +634,16 @@ class ecma_12_8_3 extends ECMA262Base {
 		let off=0;
 		for(;;) {
 			// DecimalDigit
-			let [,len]=this.DecimalDigit(str,index+off);
+			let [,,len]=this.DecimalDigit(str,index+off);
 			if(len>0) {
 				off++;
 				// DecimalDigits[?Sep] DecimalDigit
 				continue;
 			}
 			// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
-			let [,s_len]=this.NumericLiteralSeparator(str,index+off);
+			let [,,s_len]=this.NumericLiteralSeparator(str,index+off);
 			if(s_len>0) {
-				let [,exl]=this.DecimalDigit(str,index+off+1);
+				let [,,exl]=this.DecimalDigit(str,index+off+1);
 				if(exl>0) {
 					off++;
 					// [+Sep] (DecimalDigits[+Sep]) NumericLiteralSeparator DecimalDigit
@@ -664,21 +664,21 @@ class ecma_12_9_4 extends ECMA262Base {
 		let cur=str[index];
 		if(cur==='"') {
 			if(str[index+1]==='"') {
-				return ['StringLiteral',2];
+				return [true,"StringLiteral",2];
 			}
-			let dslen=this.DoubleStringCharacters(str,index+1);
-			if(str[index+dslen[1]+1]==='"') {
-				return ['StringLiteral',dslen[1]+2];
+			let [,,dslen]=this.DoubleStringCharacters(str,index+1);
+			if(str[index+dslen+1]==='"') {
+				return [true,"StringLiteral",dslen+2];
 			}
 			return [false,null,0];
 		}
 		if(cur==="'") {
 			if(str[index+1]==="'") {
-				return ['StringLiteral',2];
+				return [true,"StringLiteral",2];
 			}
-			let sslen=this.SingleStringCharacters(str,index+1);
-			if(str[index+sslen[1]+1]==="'") {
-				return ['StringLiteral',sslen[1]+2];
+			let [,,sslen]=this.SingleStringCharacters(str,index+1);
+			if(str[index+sslen+1]==="'") {
+				return [true,"StringLiteral",sslen+2];
 			}
 			return [false,null,0];
 		}
@@ -689,8 +689,8 @@ class ecma_12_9_4 extends ECMA262Base {
 		let off=0;
 		for(;;) {
 			let len=this.DoubleStringCharacter(str,index+off);
-			if(len[1]>0) {
-				off++;
+			if(len[2]>0) {
+				off+=len[2];
 				continue;
 			}
 			break;
@@ -710,31 +710,31 @@ class ecma_12_9_4 extends ECMA262Base {
 			if(len!==null) {
 				break x;
 			}
-			return [null,1];
+			return [true,"DoubleStringCharacter",1];
 		}
 		if(str[index]==='\u{2028}') {
-			return [null,1];
+			return [true,"DoubleStringCharacter",1];
 		}
 		if(str[index]==='\u{2029}') {
-			return [null,1];
+			return [true,"DoubleStringCharacter",1];
 		}
 		if(str[index]==='\\') {
-			let esc_len=this.EscapeSequence(str,index);
-			return [true,"DoubleStringCharacter",esc_len[1]+1];
+			let [,,esc_len]=this.EscapeSequence(str,index);
+			return [true,"DoubleStringCharacter",esc_len+1];
 		}
-		let lc_len=this.LineContinuation(str,index);
-		if(lc_len[1]>0) {
-			return lc_len;
+		let [,,lc_len]=this.LineContinuation(str,index);
+		if(lc_len>0) {
+			return [true,"DoubleStringCharacter",lc_len];
 		}
-		return [null,1];
+		return [true,"DoubleStringCharacter",1];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	SingleStringCharacters(str,index) {
 		let off=0;
 		for(;;) {
 			let len=this.SingleStringCharacter(str,index+off);
-			if(len[1]>0) {
-				off++;
+			if(len[2]>0) {
+				off+=len[2];
 				continue;
 			}
 			break;
@@ -757,30 +757,30 @@ class ecma_12_9_4 extends ECMA262Base {
 			if(len!==null) {
 				break x;
 			}
-			return [null,1];
+			return [true,"SingleStringCharacter",1];
 		}
 		if(str[index]==='\u{2028}') {
-			return [null,1];
+			return [true,"SingleStringCharacter",1];
 		}
 		if(str[index]==='\u{2029}') {
-			return [null,1];
+			return [true,"SingleStringCharacter",1];
 		}
 		if(str[index]==='\\') {
 			let esc_len=this.EscapeSequence(str,index);
-			return [true,"SingleStringCharacter",esc_len[1]+1];
+			return [true,"SingleStringCharacter",esc_len[2]+1];
 		}
-		let lc_len=this.LineContinuation(str,index);
-		if(lc_len[1]>0) {
-			return lc_len;
+		let [,,lc_len]=this.LineContinuation(str,index);
+		if(lc_len>0) {
+			return [true,"SingleStringCharacter",lc_len];
 		}
-		return [null,1];
+		return [true,"SingleStringCharacter",1];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	LineContinuation(str,index) {
 		if(str[index]==='\\') {
-			let lt_len=this.parent.line_terminators.LineTerminatorSequence(str,index+1);
-			if(lt_len[0]&&lt_len[1]>0) {
-				return [true,"LineContinuation",lt_len[1]+1];
+			let [,,lt_len]=this.parent.line_terminators.LineTerminatorSequence(str,index+1);
+			if(lt_len>0) {
+				return [true,"LineContinuation",lt_len+1];
 			}
 		}
 		return [false,null,0];
@@ -800,33 +800,33 @@ class ecma_12_9_4 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	EscapeSequence(str,index) {
 		let len=this.CharacterEscapeSequence(str,index);
-		if(len[1]>0) {
+		if(len[2]>0) {
 			return len;
 		}
 		x: {
 			if(str[index]==='0') {
 				let peek=this.parent.ecma_12_8_3.DecimalDigit(str,index);
-				if(peek[1]>0) {
+				if(peek[2]>0) {
 					break x;
 				}
 				// \0 null escape found
-				return [null,1];
+				return [true,"EscapeSequence",1];
 			}
 		}
 		len=this.LegacyOctalEscapeSequence(str,index);
-		if(len[1]>0) {
+		if(len[2]>0) {
 			return len;
 		}
 		len=this.NonOctalDecimalEscapeSequence(str,index);
-		if(len[1]>0) {
+		if(len[2]>0) {
 			return len;
 		}
 		len=this.HexEscapeSequence(str,index);
-		if(len[1]>0) {
+		if(len[2]>0) {
 			return len;
 		}
 		len=this.UnicodeEscapeSequence(str,index);
-		if(len[1]>0) {
+		if(len[2]>0) {
 			return len;
 		}
 		return [false,null,0];
@@ -834,21 +834,21 @@ class ecma_12_9_4 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	CharacterEscapeSequence(str,index) {
 		let len=this.SingleEscapeCharacter(str,index);
-		if(len[1]>0) {
+		if(len[2]>0) {
 			return len;
 		}
 		len=this.NonEscapeCharacter(str,index);
-		if(len[1]>0) {
+		if(len[2]>0) {
 			return len;
 		}
 		return [false,null,0];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	SingleEscapeCharacter(str,index) {
-		let val=[true,"'","\"","\\","b","f","n","r","t","v"];
+		let val=["'","\"","\\","b","f","n","r","t","v"];
 		let cur=str[index];
 		if(val.includes(cur)) {
-			return [null,1];
+			return [true,"SingleEscapeCharacter",1];
 		}
 		return [false,null,0];
 	}
