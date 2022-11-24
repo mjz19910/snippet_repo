@@ -2101,7 +2101,8 @@ export function ecma_parse_main() {
 		s_three_char_tokens,
 	));
 	let res_item;
-	for(let i=0;i<120;i++) {
+	let i=0;
+	for(;;i++) {
 		let prev_index=token_gen.index;
 		res_item=token_gen.next_token();
 		let cur_index=token_gen.index;
@@ -2114,7 +2115,7 @@ export function ecma_parse_main() {
 		}
 		let res_description=token_gen.describe_token(res_item);
 		if(res_description[0]==="WhiteSpace") {
-			i-=3;
+			i-=1;
 		}
 		if(!res_item[0]) {
 			if(res_item[1]===js_token_generator.EOF_TOKEN) {
@@ -2124,6 +2125,7 @@ export function ecma_parse_main() {
 		}
 		console.log(res_description);
 	}
+	console.log(`parsed ${i} tokens`);
 }
 
 export {Holder} from "./__global.js";
