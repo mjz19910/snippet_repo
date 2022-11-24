@@ -1557,6 +1557,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 
 // https://tc39.es/ecma262/#sec-literals-regular-expression-literals
 class RegularExpressionLiterals extends ECMA262Base {
+	// https://tc39.es/ecma262/#prod-RegularExpressionLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionLiteral(str,index) {
 		let len=0;
@@ -1577,6 +1578,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 		res=this.RegularExpressionFlags(str,index);
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionBody
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionBody(str,index) {
 		// RegularExpressionFirstChar RegularExpressionChars
@@ -1587,11 +1589,13 @@ class RegularExpressionLiterals extends ECMA262Base {
 		}
 		throw new Error("Method not implemented.");
 	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionChars
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionChars(str,index) {
 		let res=this.RegularExpressionChar(str,index);
 		return [true,"RegularExpressionChars",res[2]];
 	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionChar
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionChar(str,index) {
 		// RegularExpressionNonTerminator but not one of \ or / or [
@@ -1613,6 +1617,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 			return [true,"RegularExpressionChar",res[2]];
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionFirstChar
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionFirstChar(str,index) {
 		// RegularExpressionNonTerminator but not one of * or \ or / or [
@@ -1634,10 +1639,12 @@ class RegularExpressionLiterals extends ECMA262Base {
 			return [true,"RegularExpressionFirstChar",res[2]];
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionClass
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionClass(str,index) {
 		throw new Error("Method not implemented.");
 	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionBackslashSequence
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionBackslashSequence(str,index) {
 		// \ RegularExpressionNonTerminator
@@ -1648,6 +1655,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionNonTerminator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionNonTerminator(str,index) {
 		// SourceCharacter but not LineTerminator
@@ -1656,6 +1664,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 			return [false,null,0];
 		return [true,"RegularExpressionNonTerminator",1];
 	}
+	// https://tc39.es/ecma262/#prod-RegularExpressionFlags
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RegularExpressionFlags(str,index) {
 		throw new Error("Method not implemented.");
