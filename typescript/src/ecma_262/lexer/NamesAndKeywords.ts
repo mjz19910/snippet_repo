@@ -36,6 +36,7 @@ export class NamesAndKeywords extends LexerBase {
 	}
 	static id_continue_regex=/[a-zA-Z$_0-9]/;
 	static id_start_regex=/[a-zA-Z$_]/;
+	// https://tc39.es/ecma262/#prod-IdentifierStart
 	IdentifierStart(str: string,index: number): LexReturnType {
 		if(index>=str.length) {
 			return [null,0];
@@ -49,6 +50,7 @@ export class NamesAndKeywords extends LexerBase {
 		}
 		return [null,0];
 	}
+	// https://tc39.es/ecma262/#prod-IdentifierPart
 	IdentifierPart(str: string,index: number): LexReturnType {
 		if(str[index].match(NamesAndKeywords.id_continue_regex)) {
 			return ["IdentifierPart",1];
