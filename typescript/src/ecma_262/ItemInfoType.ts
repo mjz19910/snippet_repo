@@ -8,5 +8,5 @@ export enum ItemInfoType {
 	RightBracePunctuator,
 	TemplateSubstitutionTail,
 	WhiteSpace,
-	HashbangComment
+	HashbangComment,
 }
