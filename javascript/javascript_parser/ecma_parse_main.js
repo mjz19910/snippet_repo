@@ -1864,7 +1864,7 @@ class js_token_generator {
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementRegExp(str,index) {
-		// WhiteSpace, LineTerminator, Comment, CommonToken,
+		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// RightBracePunctuator, RegularExpressionLiteral
 		let in_state={
 			str,
