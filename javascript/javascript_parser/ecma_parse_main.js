@@ -1753,51 +1753,64 @@ class js_token_generator {
 		console.log("next token fallthrough",cur,this.index);
 		return null;
 	}
+	ParseWhiteSpace(in_state,out_state) {
+		let cur_res=this.root.white_space.WhiteSpace(in_state.str,in_state.index);
+		if(cur_res[2]>out_state.length) {
+			out_state.type="WhiteSpace";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
+		}
+	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementDiv(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken, DivPunctuator, RightBracePunctuator
-		let item_type=null;
-		let max_item=null,max_val=0;
+		let in_state={
+			str,
+			index,
+		};
+		let out_state={
+			/** @type {string|null} */
+			type: null,
+			/** @type {string|null} */
+			item: null,
+			length: 0,
+		};
 		let cur_res=this.root.white_space.WhiteSpace(str,index);
-		if(cur_res[2]>max_val) {
-			item_type="WhiteSpace";
-			max_item=cur_res[1];
-			max_val=cur_res[2];
-		}
+		this.ParseWhiteSpace(in_state,out_state);
 		cur_res=this.root.line_terminators.LineTerminator(str,index);
-		if(cur_res[2]>max_val) {
-			item_type="LineTerminator";
-			max_item=cur_res[1];
-			max_val=cur_res[2];
+		if(cur_res[0]&&cur_res[2]>out_state.length) {
+			out_state.type="LineTerminator";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
 		}
 		cur_res=this.root.comments.Comment(str,index);
-		if(cur_res[2]>max_val) {
-			item_type="Comment";
-			max_item=cur_res[1];
-			max_val=cur_res[2];
+		if(cur_res[2]>out_state.length) {
+			out_state.type="Comment";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
 		}
 		cur_res=this.root.tokens.CommonToken(str,index);
-		if(cur_res[2]>max_val) {
-			item_type="CommonToken";
-			max_item=cur_res[1];
-			max_val=cur_res[2];
+		if(cur_res[2]>out_state.length) {
+			out_state.type="CommonToken";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
 		}
 		cur_res=this.root.punctuators.DivPunctuator(str,index);
-		if(cur_res[2]>max_val) {
-			item_type="DivPunctuator";
-			max_item=cur_res[1];
-			max_val=cur_res[2];
+		if(cur_res[2]>out_state.length) {
+			out_state.type="DivPunctuator";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
 		}
 		cur_res=this.root.punctuators.RightBracePunctuator(str,index);
-		if(cur_res[2]>max_val) {
-			item_type="RightBracePunctuator";
-			max_item=cur_res[1];
-			max_val=cur_res[2];
+		if(cur_res[2]>out_state.length) {
+			out_state.type="RightBracePunctuator";
+			out_state.item=cur_res[1];
+			out_state.length=cur_res[2];
 		}
-		if(!max_item) {
+		if(!out_state.item) {
 			return [false,null,0];
 		}
-		return [true,max_item,max_val];
+		return [true,out_state.item,out_state.length];
 	}
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	InputElementRegExp(str,index) {
