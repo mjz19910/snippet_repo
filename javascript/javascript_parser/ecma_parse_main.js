@@ -1988,69 +1988,38 @@ export function ecma_parse_main() {
 	s_keywords.add("yield");
 	// 4 char token is only >>>=
 	if(s_three_char_tokens.is_empty()) {
-		// === is OtherPunctuator
 		s_three_char_tokens.set("===","EqualsEqualsEquals");
-		// !== is OtherPunctuator
 		s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
-		// **= is OtherPunctuator
 		s_three_char_tokens.set("**=","DoubleAsteriskEquals");
-		// <<= is OtherPunctuator
 		s_three_char_tokens.set("<<=","ShiftLeftEquals");
-		// >>= is OtherPunctuator
 		s_three_char_tokens.set(">>=","ShiftRightEquals");
-		// &&= is OtherPunctuator
 		s_three_char_tokens.set("&&=","DoubleAmpersandEquals");
-		// ||= is OtherPunctuator
 		s_three_char_tokens.set("||=","DoublePipeEquals");
-		// ??= is OtherPunctuator
 		s_three_char_tokens.set("\?\?=","DoubleQuestionMarkEquals");
-		// >>> is OtherPunctuator
 		s_three_char_tokens.set(">>>","UnsignedShiftRight");
-		// ... is OtherPunctuator
 		s_three_char_tokens.set("...","TripleDot");
 	}
 	if(s_two_char_tokens.is_empty()) {
-		// => is OtherPunctuator
 		s_two_char_tokens.set("=>","Arrow");
-		// += is OtherPunctuator
 		s_two_char_tokens.set("+=","PlusEquals");
-		// -= is OtherPunctuator
 		s_two_char_tokens.set("-=","MinusEquals");
-		// *= is OtherPunctuator
 		s_two_char_tokens.set("*=","AsteriskEquals");
-		// /= is DivPunctuator
 		s_two_char_tokens.set("/=","SlashEquals");
-		// %= is OtherPunctuator
 		s_two_char_tokens.set("%=","PercentEquals");
-		// &= is OtherPunctuator
 		s_two_char_tokens.set("&=","AmpersandEquals");
-		// |= is OtherPunctuator
 		s_two_char_tokens.set("|=","PipeEquals");
-		// ^= is OtherPunctuator
 		s_two_char_tokens.set("^=","CaretEquals");
-		// && is OtherPunctuator
 		s_two_char_tokens.set("&&","DoubleAmpersand");
-		// || is OtherPunctuator
 		s_two_char_tokens.set("||","DoublePipe");
-		// ?? is OtherPunctuator
 		s_two_char_tokens.set("??","DoubleQuestionMark");
-		// ** is OtherPunctuator
 		s_two_char_tokens.set("**","DoubleAsterisk");
-		// == is OtherPunctuator
 		s_two_char_tokens.set("==","EqualsEquals");
-		// <= is OtherPunctuator
 		s_two_char_tokens.set("<=","LessThanEquals");
-		// >= is OtherPunctuator
 		s_two_char_tokens.set(">=","GreaterThanEquals");
-		// != is OtherPunctuator
 		s_two_char_tokens.set("!=","ExclamationMarkEquals");
-		// ++ is OtherPunctuator
 		s_two_char_tokens.set("--","MinusMinus");
-		// -- is OtherPunctuator
 		s_two_char_tokens.set("++","PlusPlus");
-		// << is OtherPunctuator
 		s_two_char_tokens.set("<<","ShiftLeft");
-		// >> is OtherPunctuator
 		s_two_char_tokens.set(">>","ShiftRight");
 		// ?. needs special handling
 		s_two_char_tokens.set("?.","QuestionMarkPeriod");
