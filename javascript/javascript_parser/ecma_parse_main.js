@@ -407,17 +407,19 @@ class Punctuators extends PunctuatorsData {
 			max_len=new_len;
 		}
 		ret=this.OtherPunctuator(str,index);
-		if(ret[1]>max_len) {
-			type=ret[0];
-			max_len=ret[1];
+		[,new_type,new_len]=ret;
+		if(new_len>max_len) {
+			type=new_type;
+			max_len=new_len;
 		}
-		return [type,max_len];
+		if(type===null) return [false,null,0];
+		return [true,type,max_len];
 	}
 	// https://tc39.es/ecma262/#prod-OptionalChainingPunctuator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OptionalChainingPunctuator(str,index) {
 		if(str.slice(index,index+2)==='?.') {
-			let [,num_len]=this.parent.ecma_12_8_3.DecimalDigit(str,index+2);
+			let [,,num_len]=this.parent.ecma_12_8_3.DecimalDigit(str,index+2);
 			if(num_len>0) {
 				return [false,null,0];
 			}
@@ -430,7 +432,7 @@ class Punctuators extends PunctuatorsData {
 	OtherPunctuator(str,index) {
 		// >>>= is the only OtherPunctuator production of length 4
 		if(str.startsWith('>>>=',index)) {
-			return ['OtherPunctuator',4];
+			return [true,"OtherPunctuator",4];
 		}
 		/** @type {string|null} */
 		let result=null;
@@ -468,7 +470,7 @@ class Punctuators extends PunctuatorsData {
 			return "Continue";
 		});
 		if(result) {
-			return ['OtherPunctuator',1];
+			return [true,"OtherPunctuator",1];
 		}
 		return [false,null,0];
 	}
@@ -493,7 +495,7 @@ class Punctuators extends PunctuatorsData {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	RightBracePunctuator(str,index) {
 		if(str[index]==='{}'[1]) {
-			return ['RightBracePunctuator',1];
+			return [true,"RightBracePunctuator",1];
 		}
 		return [false,null,0];
 	}
@@ -513,6 +515,7 @@ class LexLiterals extends ECMA262Base {
 	BooleanLiteral(str,index) {
 		if(str.slice(index,index+4)==="true") return [true,"BooleanLiteral",4];
 		if(str.slice(index,index+5)==="false") return [true,"BooleanLiteral",5];
+		return [false,null,0];
 	}
 }
 
@@ -531,7 +534,7 @@ class ecma_12_8_3 extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NumericLiteral(str,index) {
 		let len=this.DecimalLiteral(str,index);
-		if(len[1]>0) {
+		if(len[2]>0) {
 			return len;
 		}
 		return [false,null,0];
@@ -542,7 +545,7 @@ class ecma_12_8_3 extends ECMA262Base {
 		let len=0;
 		{
 			let cur=this.DecimalIntegerLiteral(str,index+len);
-			len+=cur[1];
+			len+=cur[2];
 		}
 		if(len>0&&str[index+len]===".") {
 			console.error("handle numbers like 0.0");
@@ -564,8 +567,8 @@ class ecma_12_8_3 extends ECMA262Base {
 		// DecimalDigit
 		let off=0;
 		for(;;) {
-			let [,len]=this.DecimalDigit(str,index+off);
-			if(len[1]>0) {
+			let [,,len]=this.DecimalDigit(str,index+off);
+			if(len>0) {
 				off++;
 				continue;
 			}
@@ -597,9 +600,9 @@ class ecma_12_8_3 extends ECMA262Base {
 		let len=0;
 		{
 			// NonZeroDigit
-			let tmp=this.NonZeroDigit(str,index);
-			if(tmp[1]>len) {
-				len=tmp[1];
+			let [,,tmp]=this.NonZeroDigit(str,index);
+			if(tmp>len) {
+				len=tmp;
 			}
 		}
 		if(len>max_len) max_len=len;
@@ -607,15 +610,15 @@ class ecma_12_8_3 extends ECMA262Base {
 		// NonZeroDigit NumericLiteralSeparator opt DecimalDigits[+Sep]
 		{
 			let tmp_len=0;
-			let tmp=this.NonZeroDigit(str,index+tmp_len);
-			if(tmp[0]) {
-				tmp_len+=tmp[1];
-				let t2=this.NumericLiteralSeparator(str,index+tmp_len);
-				if(t2[0]) {
-					tmp_len+=t2[1];
+			let [,,tmp]=this.NonZeroDigit(str,index+tmp_len);
+			if(tmp>0) {
+				tmp_len+=tmp;
+				let [,,tmp_2]=this.NumericLiteralSeparator(str,index+tmp_len);
+				if(tmp_2>0) {
+					tmp_len+=tmp_2;
 				}
-				let res=this.DecimalDigits_Sep(str,index+tmp_len);
-				tmp_len+=res[1];
+				let [,,res]=this.DecimalDigits_Sep(str,index+tmp_len);
+				tmp_len+=res;
 			}
 			len+=tmp_len;
 		}
