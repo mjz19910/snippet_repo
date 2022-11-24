@@ -181,7 +181,10 @@ class Comments extends ECMA262Base {
 			}
 		}
 		this.dep--;
-		return [false,null,start_len];
+		if(start_len === 0) {
+			return [false,null,0];
+		}
+		return [true,"MultiLineCommentChars",start_len];
 	}
 	/**PostAsteriskCommentChars ::
 	MultiLineNotForwardSlashOrAsteriskChar MultiLineCommentChars opt
