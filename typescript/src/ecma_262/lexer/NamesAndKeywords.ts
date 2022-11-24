@@ -20,7 +20,7 @@ export class NamesAndKeywords extends LexerBase {
 		let [,id_start_len]=res;
 		NamesAndKeywords.IdentifierName_not_start_regex.lastIndex=index+id_start_len;
 		let id_continue_match=NamesAndKeywords.IdentifierName_not_start_regex.exec(str);
-		if(!id_continue_match || id_continue_match.index!=(index+1)) {
+		if(!id_continue_match||id_continue_match.index!=(index+1)) {
 			if(this.debug) console.log('IdentifierName is start only',str.slice(index,index+id_start_len));
 			return ["IdentifierName",id_start_len];
 		}
@@ -74,10 +74,12 @@ export class NamesAndKeywords extends LexerBase {
 		return [null,0];
 	}
 	// https://tc39.es/ecma262/#prod-UnicodeIDContinue
-	UnicodeIDContinue(str: string,index: number) {
-		// FIXME: this is hard to support
-		console.error("todo",str,index);
-		throw new Error("TODO");
+	UnicodeIDContinue(str: string,index: number): LexReturnType {
+		let match=str[index].match(/\p{ID_Continue}/);
+		if(match) {
+			return [true,1];
+		}
+		return [null,0];
 	}
 }
 
