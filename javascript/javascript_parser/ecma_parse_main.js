@@ -1472,6 +1472,20 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-NotCodePoint
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NotCodePoint(str,index) {
+		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
+		let res=this.parent.string_literals.HexDigits(str,index);
+		if(res[0]&&res[2]>0) {
+			// but only if MV of HexDigits > 0x10FFFF
+			let MV=parseInt(res[1],16);
+			if(MV>0x10FFFF) {
+				return [true,"NotCodePoint",res[2]];
+			}
+		}
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-CodePoint
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	CodePoint(str,index) {
@@ -1483,20 +1497,6 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			let MV=parseInt(mv_raw,16);
 			if(MV<=0x10FFFF) {
 				return [true,"CodePoint",res[2]];
-			}
-		}
-		return [false,null,0];
-	}
-	// https://tc39.es/ecma262/#prod-NotCodePoint
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NotCodePoint(str,index) {
-		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
-		let res=this.parent.string_literals.HexDigits(str,index);
-		if(res[0]&&res[2]>0) {
-			// but only if MV of HexDigits > 0x10FFFF
-			let MV=parseInt(res[1],16);
-			if(MV>0x10FFFF) {
-				return [true,"NotCodePoint",res[2]];
 			}
 		}
 		return [false,null,0];
