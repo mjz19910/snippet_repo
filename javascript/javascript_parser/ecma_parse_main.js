@@ -112,11 +112,11 @@ class Comments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	Comment(str,index) {
 		let ml_len=this.MultiLineComment(str,index);
-		let sl_len=this.SingleLineComment(str,index);
-		if(ml_len[0]&&ml_len[2]>0) {
+		if(ml_len[2]>0) {
 			return ml_len;
 		}
-		if(ml_len[0]&&sl_len[2]>0) {
+		let sl_len=this.SingleLineComment(str,index);
+		if(sl_len[2]>0) {
 			return sl_len;
 		}
 		return [false,null,0];
@@ -1765,6 +1765,9 @@ class js_token_generator {
 			//max_item = 'line_term'
 			max_item=cur_res[1];
 			max_val=cur_res[2];
+		}
+		if(str.slice(index,index+2)==="/*") {
+			debugger;
 		}
 		cur_res=this.root.comments.Comment(str,index);
 		if(cur_res[2]>max_val) {
