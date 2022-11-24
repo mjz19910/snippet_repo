@@ -171,6 +171,8 @@ class JSLineTerminators extends ECMA262Base {
 		return [false,null,0];
 	}
 }
+
+// https://tc39.es/ecma262/#sec-comments
 class Comments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	Comment(str,index) {
