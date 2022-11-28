@@ -412,8 +412,8 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 }
 class InstructionConstructImpl extends InstructionImplBase {
-	/** @type {'construct'} */
-	type='construct';
+	/** @readonly */
+	type="construct";
 	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/general/Construct.js").Construct} ins */
 	run(vm,ins) {
 		let number_of_arguments=ins[1];
