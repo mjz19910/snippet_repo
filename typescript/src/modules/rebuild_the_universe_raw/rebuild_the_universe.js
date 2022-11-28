@@ -414,7 +414,7 @@ class InstructionCallImpl extends InstructionImplBase {
 class InstructionConstructImpl extends InstructionImplBase {
 	/** @type {'construct'} */
 	type='construct';
-	/** @arg {StackVMImpl} vm @arg {import("types/vm/instruction/mod.js").general.Construct} ins */
+	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/general/Construct.js").Construct} ins */
 	run(vm,ins) {
 		let number_of_arguments=ins[1];
 		if(typeof number_of_arguments!='number') throw new Error("Invalid");
