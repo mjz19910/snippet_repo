@@ -83,7 +83,7 @@ function main() {
 	let non_proto_url=page_url_no_protocol();
 	if(history.state&&history.state.real_page) {
 		do_real_page_action();
-	} else if(localStorage.justReset) {
+	} else if(localStorage["justReset"]) {
 		do_just_reset();
 	} else if(history.state&&history.state.prev) {
 		do_just_reset();
