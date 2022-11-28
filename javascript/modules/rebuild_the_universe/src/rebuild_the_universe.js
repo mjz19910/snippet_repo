@@ -947,7 +947,7 @@ class StackVM {
 	halt() {
 		this.running=false;
 	}
-	/** @arg {import("types/vm/instruction/mod.js").InstructionOpcodesList[number]} opcode */
+	/** @arg {import("../../../../typescript/src/vm/instruction/InstructionOpcodesList.js").InstructionOpcodesList[number]} opcode */
 	get_instruction(opcode) {
 		/** @type {any} */
 		let any_map=this.instruction_map_obj;
