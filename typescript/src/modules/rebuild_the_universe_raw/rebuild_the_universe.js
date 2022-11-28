@@ -27,7 +27,6 @@ import {StackVMBox} from "../../box/StackVMBox.js";
 import {StringBox} from "../../box/StringBox.js";
 import {VoidBox} from "../../box/VoidBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
-import {StackVM} from "../../vm/StackVM.js";
 
 function fetch_all_images() {
 	return Promise.all(arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
@@ -845,6 +844,7 @@ instruction_descriptor_arr;
 /**
  * @typedef {import("../../vm/instruction/InstructionType.js").InstructionType} InstructionType
  * @typedef {import("../../box/Box.js").Box} Box
+ * @typedef {import("../../vm/StackVM.js").StackVM} StackVM
 */
 /** @implements {StackVM} */
 class StackVMImpl {
