@@ -24,7 +24,6 @@ import {PromiseBox} from "../../box/PromiseBox.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {StringBox} from "../../box/StringBox.js";
 import {VoidBox} from "../../box/VoidBox.js";
-import {WindowBox} from "../../box/WindowBox.js";
 
 function fetch_all_images() {
 	return Promise.all(arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
@@ -206,6 +205,7 @@ class StackVMBoxImpl {
 		this.value=value;
 	}
 }
+/** @typedef {import("../../box/WindowBox.js").WindowBox} WindowBox */
 /** @implements {WindowBox} */
 class WindowBoxImpl {
 	/** @type {"object_box"} */
