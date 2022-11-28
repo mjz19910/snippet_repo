@@ -899,7 +899,7 @@ class StackVM {
 	stack;
 	/**
 	 * @arg {InstructionList} instruction_desc_arr
-	 * @returns {{[U in keyof typeof instruction_class_map]: InstanceType<typeof instruction_class_map[U]>;}}
+	 * @returns {{[U in typeof instruction_descriptor_arr[number]]: InstanceType<typeof instruction_descriptor_arr[U][1]>;}}
 	 * */
 	create_instruction_map(instruction_desc_arr) {
 		let obj={};
@@ -950,7 +950,7 @@ class StackVM {
 	halt() {
 		this.running=false;
 	}
-	/** @arg {import("../../../vm/instruction/InstructionOpcodesList.js").InstructionOpcodesList[number]} opcode */
+	/** @arg {import("../../vm/instruction/InstructionOpcodesList.js").InstructionOpcodesList[number]} opcode */
 	get_instruction(opcode) {
 		/** @type {any} */
 		let any_map=this.instruction_map_obj;
