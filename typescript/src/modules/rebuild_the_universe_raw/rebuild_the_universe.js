@@ -21,6 +21,7 @@
 
 import {CSSStyleSheetBox} from "../../box/CSSStyleSheetBox.js";
 import {ObjectBox} from "../../box/ObjectBox.js";
+import {PromiseBox} from "../../box/PromiseBox.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {VoidBox} from "../../box/VoidBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
@@ -181,6 +182,20 @@ class StackVMBoxImpl {
 	type="custom_box";
 	/** @type {"StackVM"} */
 	box_type="StackVM";
+	/** @readonly */
+	m_verify_name="StackVMBox";
+	verify_name() {
+		return true;
+	}
+	/**
+	 * @param {string} to_match
+	 */
+	as_type(to_match) {
+		if(typeof this.value===to_match) {
+			return this;
+		}
+		return null;
+	}
 	/** @type {StackVMImpl} */
 	value;
 	/** @arg {StackVMImpl} value */
@@ -195,6 +210,20 @@ class WindowBoxImpl {
 	extension=null;
 	/** @type {"Window"} */
 	inner_type="Window";
+	/** @readonly */
+	m_verify_name="WindowBox";
+	verify_name() {
+		return true;
+	}
+	/**
+	 * @param {string} to_match
+	 */
+	as_type(to_match) {
+		if(typeof this.value===to_match) {
+			return this;
+		}
+		return null;
+	}
 	/** @type {Window} */
 	value;
 	/** @arg {Window} value */
@@ -204,21 +233,34 @@ class WindowBoxImpl {
 }
 /** @implements {ObjectBox} */
 class ObjectBoxImpl {
-	/** @type {"object_box"} */
+	/** @readonly */
 	type="object_box";
-	/** @type {"unit"} */
-	inner_type="unit";
+	/** @readonly */
+	inner_type="Record<never, never>";
 	extension=null;
+	/** @readonly */
+	m_verify_name="ObjectBox";
+	verify_name() {
+		return true;
+	}
+	/**
+	 * @param {string} to_match
+	 */
+	as_type(to_match) {
+		if(typeof this.value===to_match) {
+			return this;
+		}
+		return null;
+	}
 	/** @type {{}} */
 	value;
 	/** @arg {{}} value */
 	constructor(value) {
-		super(null);
 		this.value=value;
 	}
 }
 class NewableFunctionBoxImpl {
-	/** @arg {import("types/vm/NewableFactory").default<{}>} value */
+	/** @arg {{}} value */
 	constructor(value) {
 		this.value=value;
 	}
@@ -238,9 +280,9 @@ class InstructionCallImpl extends InstructionImplBase {
 	debug=false;
 	/** @arg {StackVMImpl} vm @arg {Box} fn_box @arg {Box} target_this @arg {Box[]} arg_arr */
 	handle_as_fn_box(vm,fn_box,target_this,arg_arr) {
-		if(fn_box.return_type=='promise') {
-			return this.handle_as_fn(vm,fn_box.value,target_this,arg_arr);
-		} else if(fn_box.return_type===null) {
+		if('return_type' in fn_box&&fn_box.return_type=='promise_box') {
+			return this.handle_as_fn_to_promise(vm,fn_box.value,target_this,arg_arr);
+		} else if('return_type' in fn_box&&fn_box.return_type===null) {
 			console.log('fixme: make a type for this',fn_box);
 			return this.handle_as_fn(vm,fn_box.value,target_this,arg_arr);
 		} else {
@@ -248,25 +290,10 @@ class InstructionCallImpl extends InstructionImplBase {
 			throw new Error("Unexpected function box type");
 		}
 	}
-	/** @arg {Exclude<Box, Primitives>} object_box @returns {{}|Function|StackVMImpl|null} */
+	/** @arg {Box} object_box @returns {{}|Function|StackVMImpl|null} */
 	unbox_obj(object_box) {
 		if(object_box===null) return null;
 		const {type,...left_to_unbox}=object_box;
-		if(object_box.type==='temporary_box') {
-			const {type,source,value,...rest}=object_box;
-			if(Object.keys(rest).length>0) {
-				console.log('unbox temporary_box with extra',type,source,value,rest);
-				throw new Error("1");
-			}
-			if(source==='get') {
-				return value;
-			}
-			if(source==='call') {
-				return value;
-			}
-			console.log('unbox temporary_box',type,source,value,rest);
-			throw new Error("1");
-		}
 		if(object_box.type==='object_box') {
 			const {type,value,...rest}=object_box;
 			if(Object.keys(rest).length>0) {
@@ -274,8 +301,8 @@ class InstructionCallImpl extends InstructionImplBase {
 			}
 			return value;
 		}
-		if(type==='instance_box') {
-			const {value,...rest}=left_to_unbox;
+		if(object_box.type==='instance_box') {
+			const {type,value,instance_type,m_verify_name,...rest}=object_box;
 			if(Object.keys(rest).length>0) {
 				console.log('other enumerable on box',rest);
 			}
@@ -294,7 +321,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 	/** @arg {Box[]} arg_arr */
 	unbox_arr(arg_arr) {
-		/** @type {({} | Function | StackVMImpl | Primitives | null)[]} */
+		/** @type {({} | Function | StackVMImpl | null)[]} */
 		let arr=[];
 		for(let i=0;i<arg_arr.length;i++) {
 			let cur=arg_arr[i];
@@ -312,22 +339,14 @@ class InstructionCallImpl extends InstructionImplBase {
 		}
 		return arr;
 	}
-	/** @arg {StackVMImpl} vm @arg {(...a: Box[]) => Box} fn_value @arg {Exclude<Box, Primitives>} target_this @arg {Box[]} arg_arr */
+	/** @arg {StackVMImpl} vm @arg {(...a: Box[]) => Box} fn_value @arg {Box} target_this @arg {Box[]} arg_arr */
 	handle_as_fn(vm,fn_value,target_this,arg_arr) {
 		let real_this=this.unbox_obj(target_this);
 		let ret=fn_value.apply(real_this,arg_arr);
-		/** @type {{type:'temporary_box';source: 'call';extension:null;value: any;}} */
-		let ret_box={
-			type: 'temporary_box',
-			source: 'call',
-			extension: null,
-			value: ret
-		};
-		vm.stack.push(ret_box);
+		vm.stack.push(ret);
 	}
-	/** @arg {StackVMImpl} vm @arg {Exclude<Box, Primitives|null>} fn_obj @arg {Exclude<Box, Primitives>} target_this @arg {Box[]} arg_arr */
+	/** @arg {StackVMImpl} vm @arg {Box} fn_obj @arg {Box} target_this @arg {Box[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
-		if(fn_obj.type==='temporary_box') throw new Error("1");
 		if(!fn_obj.as_type) {
 			console.log('!fn_obj.as_type',fn_obj);
 			throw new Error("Invalid");
@@ -343,14 +362,17 @@ class InstructionCallImpl extends InstructionImplBase {
 		} else if(raw_fn.type=='constructor_box') {
 			throw new Error("Unexpected constructor");
 		}
-		else if(raw_fn.type==='function_box') {
-			this.handle_as_fn_box(vm,raw_fn,target_this,arg_arr);
-		}
 		else {
 			throw new Error("Unreachable (type of value is never)");
 		}
 	}
-	/** @arg {import("types/vm/instruction/mod.js").general.Call} instruction @arg {StackVMImpl} vm */
+	/** @arg {StackVMImpl} vm @arg {(...a: Box[]) => Promise<Box>} fn_value @arg {Box} target_this @arg {Box[]} arg_arr */
+	handle_as_fn_to_promise(vm,fn_value,target_this,arg_arr) {
+		let real_this=this.unbox_obj(target_this);
+		let ret=fn_value.apply(real_this,arg_arr);
+		vm.stack.push(new PromiseBox(ret));
+	}
+	/** @arg {import("../../vm/instruction/general/Call.js").Call} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
 		let number_of_arguments=instruction[1];
 		if(typeof number_of_arguments!='number') throw new Error("Invalid");
@@ -379,8 +401,6 @@ class InstructionCallImpl extends InstructionImplBase {
 			throw new Error("Invalid");
 		} else if(typeof value_box==='object'&&value_box.type==='void') {
 			throw new Error("Attempt to call a void value");
-		} else if(typeof value_box==='object'&&value_box.type==='temporary_box') {
-			this.handle_as_temporary_box(vm,value_box,target_this,arg_arr);
 		} else {
 			if(typeof value_box==='object') {
 				console.log('VM: call error value_box not handled',typeof value_box,value_box,value_box.value);
@@ -390,16 +410,6 @@ class InstructionCallImpl extends InstructionImplBase {
 			throw new Error("Invalid");
 		}
 	}
-	/** @arg {StackVMImpl} vm @arg {TemporaryBox} value_box @arg {Exclude<Box, Primitives>} target_this @arg {Box[]} arg_arr */
-	handle_as_temporary_box(vm,value_box,target_this,arg_arr) {
-		if(value_box.source==='cast') {
-			if(value_box.cast_source==='vm_function') {
-				return this.handle_as_fn(vm,value_box.value,target_this,arg_arr);
-			}
-		}
-		console.log('handle box in call instruction',value_box);
-	}
-
 }
 class InstructionConstructImpl extends InstructionImplBase {
 	/** @type {'construct'} */
@@ -474,7 +484,7 @@ class InstructionCastImpl extends InstructionImplBase {
 			value: obj.value
 		});
 	}
-	/** @arg {StackVMImpl} vm @arg {Exclude<Box, Primitives>} obj @arg {'object_index'} cast_source */
+	/** @arg {StackVMImpl} vm @arg {Box} obj @arg {'object_index'} cast_source */
 	cast_to_type(vm,obj,cast_source) {
 		if(obj?.type==='custom_box'&&obj.box_type==='StackVM') {
 			return this.push_custom_box(vm,cast_source,obj);
@@ -628,7 +638,7 @@ class InstructionGetImpl extends InstructionImplBase {
 			}
 		}
 	}
-	/** @arg {StackVMImpl} vm @arg {Exclude<Box, Primitives|null>} value_box @arg {string|number} key */
+	/** @arg {StackVMImpl} vm @arg {Box} value_box @arg {string|number} key */
 	on_get(vm,value_box,key) {
 		if(typeof key!='string') throw new Error("Invalid");
 		switch(value_box.type) {
@@ -889,6 +899,18 @@ class StackVMImpl {
 		let value=this.stack.pop();
 		if(!value) throw 1;
 		return value;
+	}
+	/**
+	 * @param {import("../../box/Box.js").Box} value
+	 */
+	push(value) {
+		this.stack.push(value);
+	}
+	/**
+	 * @param {number} distance
+	 */
+	peek_at(distance) {
+		return this.stack.at(-1-distance);
 	}
 	/** @arg {number} operand_number_of_arguments */
 	pop_arg_count(operand_number_of_arguments) {
