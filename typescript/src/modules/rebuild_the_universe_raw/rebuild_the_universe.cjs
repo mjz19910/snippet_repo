@@ -19,8 +19,6 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-import {StackVMBox} from "../../box/StackVMBox.js";
-
 function fetch_all_images() {
 	return Promise.all(arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
 		try {
@@ -174,6 +172,7 @@ class CSSStyleSheetBoxImpl {
 		this.value=value;
 	}
 }
+/** @typedef {StackVMBox} */
 /** @implements {StackVMBox} */
 class StackVMBoxImpl {
 	/** @type {"custom_box"} */
