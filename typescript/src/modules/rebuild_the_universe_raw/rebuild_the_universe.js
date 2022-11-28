@@ -19,7 +19,6 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-import {ObjectBox} from "../../box/ObjectBox.js";
 import {PromiseBox} from "../../box/PromiseBox.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {StringBox} from "../../box/StringBox.js";
@@ -234,6 +233,7 @@ class WindowBoxImpl {
 		this.value=value;
 	}
 }
+/** @typedef {import("../../box/ObjectBox.js").ObjectBox} ObjectBox */
 /** @implements {ObjectBox} */
 class ObjectBoxImpl {
 	/** @readonly */
