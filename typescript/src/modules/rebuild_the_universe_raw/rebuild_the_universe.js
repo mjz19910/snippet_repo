@@ -20,9 +20,11 @@
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 import {CSSStyleSheetBox} from "../../box/CSSStyleSheetBox.js";
+import {NumberBox} from "../../box/NumberBox.js";
 import {ObjectBox} from "../../box/ObjectBox.js";
 import {PromiseBox} from "../../box/PromiseBox.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
+import {StringBox} from "../../box/StringBox.js";
 import {VoidBox} from "../../box/VoidBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
 import {StackVM} from "../../vm/StackVM.js";
@@ -38,12 +40,15 @@ function fetch_all_images() {
 		}
 	}));
 }
+fetch_all_images;
 function fetch_all_images_full() {
 	return arrayNames.map(e => e.indexOf('cat')>-1? 'cats-eye-nebula':e).map(e => "imagesFull/"+e.replace(/\s+/g,'-')+".jpg").map(e => fetch(e));
 }
+fetch_all_images_full;
 function fetch_all_specs() {
 	return allspec.map((_e,i) => "specs/"+(i+1)+".jpg").map(e => fetch(e));
 }
+fetch_all_specs;
 
 // tampermonkey is overwriting the console...
 // grab it from window.console
@@ -452,53 +457,26 @@ class InstructionCastImpl extends InstructionImplBase {
 	/** @type {'cast'} */
 	type='cast';
 	debug=false;
-	/** @type {(vm:StackVMImpl, cast_source:"object_index", value:{[x:string]:Box})=>void} */
-	push_box(vm,cast_source,value) {
-		vm.stack.push({
-			type: 'temporary_box',
-			source: 'cast',
-			extension: null,
-			cast_source,
-			value
-		});
-	}
 	/** @arg {StackVMImpl} vm @arg {'object_index'} cast_source @arg {{value:never}} obj */
 	noisy_push_temporary_box(vm,cast_source,obj) {
 		void vm;
 		console.warn('noisy box',cast_source,obj);
 		console.log('inner',obj.value);
-		this.push_box(vm,cast_source,obj.value);
 	}
 	/** @type {(vm:StackVMImpl, cast_source:'object_index', obj:{value:{[x:string]:Box}})=>void} @arg {StackVMImpl} vm @arg {'object_index'} cast_source */
 	push_temporary_box(vm,cast_source,obj) {
-		this.push_box(vm,cast_source,obj.value);
+		void vm;
+		console.warn('push_temporary_box',cast_source,obj);
 	}
-	/** @arg {StackVMImpl} vm @arg {'object_index'} cast_source @arg {import("./support.js").StackVMBox} obj */
+	/** @arg {StackVMImpl} vm @arg {'object_index'} cast_source @arg {StackVMBox} obj */
 	push_custom_box(vm,cast_source,obj) {
-		vm.stack.push({
-			type: 'temporary_box',
-			source: 'cast',
-			extension: 'custom_box_cast',
-			custom_type: obj.box_type,
-			cast_source,
-			value: obj.value
-		});
+		void vm;
+		console.warn('push_custom_box',cast_source,obj);
 	}
 	/** @arg {StackVMImpl} vm @arg {Box} obj @arg {'object_index'} cast_source */
 	cast_to_type(vm,obj,cast_source) {
 		if(obj?.type==='custom_box'&&obj.box_type==='StackVM') {
 			return this.push_custom_box(vm,cast_source,obj);
-		}
-		if(obj?.type==='temporary_box') {
-			if(obj.source==='get') {
-				console.log('temporary_box',obj);
-				// return this.push_temporary_box(vm, cast_source, obj);
-			}
-			if(obj.source==='call') {
-				return this.push_temporary_box(vm,cast_source,obj);
-			}
-			console.warn('temporary_box not handled in cast',obj);
-			throw new Error("1");
 		}
 		if(obj?.type==='object_box') {
 			if(cast_source==='object_index') {
@@ -519,9 +497,8 @@ class InstructionCastImpl extends InstructionImplBase {
 			throw new Error("1");
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
-		this.push_box(vm,cast_source,obj);
 	}
-	/** @arg {import("types/vm/instruction/mod.js").Cast} instruction @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/Cast.js").Cast} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
@@ -540,7 +517,7 @@ class InstructionCastImpl extends InstructionImplBase {
 class InstructionJeImpl extends InstructionImplBase {
 	/** @type {'je'} */
 	type='je';
-	/** @arg {import("types/vm/instruction/mod.js").jump.Je} instruction @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/jump/Je.js").Je} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
 		let [,target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
@@ -555,7 +532,7 @@ class InstructionJeImpl extends InstructionImplBase {
 class InstructionJmpImpl extends InstructionImplBase {
 	/** @type {'jmp'} */
 	type='jmp';
-	/** @arg {import("types/vm/instruction/mod.js").jump.Jump} instruction @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/jump/Jump.js").Jump} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
 		let [,target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
@@ -568,7 +545,7 @@ class InstructionJmpImpl extends InstructionImplBase {
 class InstructionModifyOpImpl extends InstructionImplBase {
 	/** @type {'modify_operand'} */
 	type='modify_operand';
-	/** @arg {import("types/vm/instruction/mod.js").ModifyOperand} instruction @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/ModifyOperand.js").ModifyOperand} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
 		let [,target,offset]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
@@ -595,12 +572,12 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 class InstructionVMPushIPImpl extends InstructionImplBase {
 	/** @type {"vm_push_ip"} */
 	type="vm_push_ip";
-	/** @arg {import("types/vm/instruction/mod.js").vm.PushIP} _ins @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/vm/VMPushIP.js").VMPushIP} _ins @arg {StackVMImpl} vm */
 	run(vm,_ins) {
 		if(!vm.hasOwnProperty('push')) {
 			throw new Error("push_pc requires a stack");
 		} else if(vm instanceof StackVMImpl) {
-			vm.stack.push(vm.instruction_pointer);
+			vm.stack.push(new NumberBox(vm.instruction_pointer));
 		} else {
 			console.info('TODO: add instanceof check to push_pc');
 			throw new Error("Property missing or invalid");
@@ -610,10 +587,11 @@ class InstructionVMPushIPImpl extends InstructionImplBase {
 class InstructionPushImpl extends InstructionImplBase {
 	/** @type {'push'} */
 	type='push';
-	/** @arg {import("types/vm/instruction/mod.js").stack.Push} instruction @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/stack/Push.js").Push} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
 		for(let i=0;i<instruction.length-1;i++) {
-			let item=instruction[i+1];
+			let item=instruction[i];
+			if(item==="push") throw new Error("Unreachable");
 			vm.stack.push(item);
 		}
 	}
@@ -621,38 +599,38 @@ class InstructionPushImpl extends InstructionImplBase {
 class InstructionDupImpl extends InstructionImplBase {
 	/** @type {'dup'} */
 	type='dup';
-	/** @arg {import("types/vm/instruction/mod.js").stack.Dup} _ins @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/stack/Dup.js").Dup} _ins @arg {StackVMImpl} vm */
 	run(vm,_ins) {
 		if(vm.stack.length===0) throw new Error("stack underflow");
-		vm.stack.push(vm.stack.at(-1));
+		let last=vm.stack.at(-1);
+		if(!last) throw new Error("Unreachable");
+		vm.stack.push(last);
 	}
 }
 class InstructionGetImpl extends InstructionImplBase {
 	/** @type {'get'} */
 	type='get';
-	/** @arg {StackVMImpl} vm @arg {import("../../../types/vm/box/TemporaryBox.js").TemporaryBox} tmp_box @arg {string} key */
-	handle_temporary_box(vm,tmp_box,key) {
-		if(tmp_box.source==='cast') {
-			if(tmp_box.cast_source==='object_index') {
-				this.on_get(vm,tmp_box,key);
-			}
-		}
-	}
 	/** @arg {StackVMImpl} vm @arg {Box} value_box @arg {string|number} key */
 	on_get(vm,value_box,key) {
 		if(typeof key!='string') throw new Error("Invalid");
 		switch(value_box.type) {
 			case 'array_box': {
 				if(typeof key==='number') {
-					let res=value_box.value[key];
-					vm.stack.push(res);
-					return;
+					if(value_box.item_type==="Box") {
+						let res=value_box.value[key];
+						vm.stack.push(res);
+						break;
+					}
+					throw new Error("Unexpected value_box");
 				} else {
 					key=parseInt(key,10);
 					if(Number.isNaN(key)) throw new Error("Failed to parse int");
-					let res=value_box.value[key];
-					vm.stack.push(res);
-					return;
+					if(value_box.item_type==="Box") {
+						let res=value_box.value[key];
+						vm.stack.push(res);
+						break;
+					}
+					throw new Error("Unexpected value_box");
 				}
 			}
 			case 'constructor_box': {
@@ -666,18 +644,13 @@ class InstructionGetImpl extends InstructionImplBase {
 			default: console.log('on_get no handler',value_box.type);
 		}
 	}
-	/** @arg {import("types/vm/instruction/mod.js").general.Get} _ins @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/general/Get.js").Get} _ins @arg {StackVMImpl} vm */
 	run(vm,_ins) {
 		let get_key=vm.stack.pop();
 		let value_box=vm.stack.pop();
 		if(!value_box) throw new Error("Invalid");
 		if(typeof get_key!='string') throw new Error("Invalid");
 		if(typeof value_box!='object') throw new Error("Invalid");
-		if(value_box.type==='temporary_box') {
-			console.log('temp box',value_box);
-			// this.handle_temporary_box(vm, value_box, get_key);
-			return;
-		}
 		this.on_get(vm,value_box,get_key);
 		throw new Error("Update types");
 	}
@@ -685,7 +658,7 @@ class InstructionGetImpl extends InstructionImplBase {
 class InstructionHaltImpl extends InstructionImplBase {
 	/** @type {'halt'} */
 	type='halt';
-	/** @arg {import("types/vm/instruction/mod.js").turing.Halt} _i @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/turing/Halt.js").Halt} _i @arg {StackVMImpl} vm */
 	run(vm,_i) {
 		vm.halt();
 	}
@@ -693,10 +666,10 @@ class InstructionHaltImpl extends InstructionImplBase {
 class InstructionReturnImpl extends InstructionImplBase {
 	/** @type {'return'} */
 	type='return';
-	/** @arg {import("types/vm/instruction/mod.js").general.Return} _i @arg {StackVMImpl} vm */
+	/** @arg {import("../../vm/instruction/general/Return.js").Return} _i @arg {StackVMImpl} vm */
 	run(vm,_i) {
 		if(vm.stack.length>0) {
-			vm.return_value=vm.stack.pop();
+			vm.return_value=vm.pop();
 		} else {
 			throw new Error("Stack underflow on return");
 		}
@@ -705,7 +678,7 @@ class InstructionReturnImpl extends InstructionImplBase {
 class InstructionBreakpointImpl extends InstructionImplBase {
 	/** @type {'breakpoint'} */
 	type='breakpoint';
-	/** @arg {StackVMImpl} vm @arg {import("types/vm/instruction/mod.js").debug.Breakpoint} _i */
+	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/debug/Breakpoint.js").Breakpoint} _i */
 	run(vm,_i) {
 		console.log(vm.stack);
 		trigger_debug_breakpoint();
@@ -714,7 +687,7 @@ class InstructionBreakpointImpl extends InstructionImplBase {
 class InstructionPushVMObjImpl extends InstructionImplBase {
 	/** @type {"vm_push_self"} */
 	type="vm_push_self";
-	/** @arg {StackVMImpl} vm @arg {import("types/vm/instruction/mod.js").vm.PushSelf} _i */
+	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/vm/VMPushSelf.js").VMPushSelf} _i */
 	run(vm,_i) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
@@ -722,7 +695,7 @@ class InstructionPushVMObjImpl extends InstructionImplBase {
 class InstructionPushGlobalObjectImpl extends InstructionImplBase {
 	/** @type {'push_global_object'} */
 	type='push_global_object';
-	/** @arg {StackVMImpl} vm @arg {import("types/vm/instruction/mod.js").push.GlobalObject} _i */
+	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/push/WindowObject.js").PushWindowObject} _i */
 	run(vm,_i) {
 		vm.stack.push(new WindowBoxImpl(window));
 	}
@@ -746,12 +719,12 @@ class InstructionPeekImpl extends InstructionImplBase {
 		if(this.debug) console.log('VM: peek',ins,'value',at,'index',offset,vm.stack.length-offset);
 	}
 }
-/** @typedef {import("types/vm/instruction/mod.js").InstructionImplObj<"append", import("types/vm/instruction/mod.js").IAppendImpl, import("types/vm/instruction/Append.js").Append>} IInstructionAppendImplIns */
+/** @typedef {import("../../vm/instruction/InstructionImplObj.js").InstructionImplObj<"append", import("../../vm/instruction/InstructionImpl.js").IAppendImpl, import("../../vm/instruction/Append.js").Append>} IInstructionAppendImplIns */
 /** @implements {IInstructionAppendImplIns} */
 class InstructionAppendImpl extends InstructionImplBase {
 	/** @type {"append"} */
 	type="append";
-	/** @arg {StackVMImpl} vm @arg {import("types/vm/instruction/mod.js").Append} _i */
+	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/Append.js").Append} _i */
 	run(vm,_i) {
 		if(vm.stack.length<=0) {
 			throw new Error('stack underflow');
@@ -770,7 +743,6 @@ class InstructionAppendImpl extends InstructionImplBase {
 		if(target===null) throw new Error("1");
 		if(!(append_obj.type==='instance_box'&&append_obj.instance_type==='Node')) throw new Error("1");
 		if(!(target.type==='instance_box'&&target.instance_type==='Node')) throw new Error("1");
-		if(append_obj.from!=='create') console.warn('append_obj not user created',append_obj);
 		target.value.appendChild(append_obj.value);
 	}
 }
@@ -785,7 +757,7 @@ class InstructionPushArgsImpl extends InstructionImplBase {
 class InstructionDropImpl extends InstructionImplBase {
 	/** @type {'drop'} */
 	type='drop';
-	/** @arg {StackVMImpl} vm @arg {import("types/vm/instruction/mod.js").stack.Drop} _i */
+	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/stack/Drop.js").Drop} _i */
 	run(vm,_i) {
 		vm.stack.pop();
 	}
@@ -794,7 +766,7 @@ class InstructionVMReturnImpl extends InstructionImplBase {
 	/** @type {'vm_return'} */
 	type='vm_return';
 	debug=false;
-	/** @arg {StackVMImpl} vm @arg {import("types/vm/instruction/mod.js").vm.Return} _i */
+	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/vm/VMReturn.js").VMReturn} _i */
 	run(vm,_i) {
 		let start_stack=vm.stack.slice();
 		if(vm.base_ptr===null) {
@@ -817,10 +789,11 @@ class InstructionVMReturnImpl extends InstructionImplBase {
 class InstructionVMCallImpl extends InstructionImplBase {
 	/** @type {'vm_call'} */
 	type='vm_call';
-	/** @arg {StackVMImpl} vm @arg {import("types/vm/instruction/mod.js").vm.Call} ins */
+	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/vm/VMCall.js").VMCall} ins */
 	run(vm,ins) {
+		if(vm.base_ptr===null) throw new Error("BasePtr was null");
 		let prev_base=vm.base_ptr;
-		vm.stack.push(vm.base_ptr,vm.instruction_pointer);
+		vm.stack.push(new NumberBox(vm.base_ptr),new NumberBox(vm.instruction_pointer));
 		vm.base_ptr=vm.stack.length;
 		vm.jump_instruction_pointer=ins[1];
 		console.log('vm vm_call',ins[1],'stk',vm.base_ptr,prev_base,vm.stack.slice());
@@ -868,6 +841,7 @@ const instruction_descriptor_arr=[
 	['vm_push_self',InstructionPushVMObjImpl],
 	['vm_return',InstructionVMReturnImpl],
 ];
+instruction_descriptor_arr;
 /**
  * @typedef {import("../../vm/instruction/InstructionType.js").InstructionType} InstructionType
  * @typedef {import("../../box/Box.js").Box} Box
@@ -983,13 +957,14 @@ class EventHandlerVMDispatch extends StackVMImpl {
 			console.log('EventHandlerVMDispatch constructor error',e);
 		}
 	}
-	/** @arg {Box[]} args_arr */
+	/** @override @arg {Box[]} args_arr */
 	run(...args_arr) {
 		try {
 			this.args_arr=args_arr;
 			return super.run();
 		} catch(e) {
 			console.log('EventHandlerVMDispatch run error',e);
+			throw new Error("Run error");
 		}
 	}
 	/** @arg {Event} event */
@@ -1087,7 +1062,8 @@ class StackVMParser {
 			case 'push': {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				ret=[instruction[0],...push_operands];
+				let real_push_ops=push_operands.map(e => new StringBox(e));
+				ret=[instruction[0],...real_push_ops];
 			} break;
 			case 'call'/*1 argument*/: {
 				if(typeof instruction[1]==='number'&&Number.isFinite(instruction[1])) {
@@ -1106,9 +1082,8 @@ class StackVMParser {
 						num_to_parse-=2;
 						ret=[instruction[0],m_arg];
 				}
-				if(num_to_parse===0) break;
-				throw new Error("Assertion failed: cast operand `"+m_arg+"` is invalid");
-			}
+				if(num_to_parse>0) throw new Error("Assertion failed: cast operand `"+m_arg+"` is invalid");
+			} break;
 			case 'drop':/*opcode parse*/
 			case 'dup':
 			case 'get':
@@ -1116,13 +1091,12 @@ class StackVMParser {
 			case 'halt':
 			case 'vm_push_args':
 			case 'vm_push_self':
-			case 'push_global_object':
+			case 'push_window_object':
 			case 'breakpoint':
-			case 'vm_return':
-				{
-					num_to_parse--;
-					ret=[instruction[0]];
-				} break;
+			case 'vm_return': {
+				num_to_parse--;
+				ret=[instruction[0]];
+			} break;
 			default: throw new Error("Verify: Unexpected opcode, opcode was `"+instruction[0]+"`");
 		}
 		if(num_to_parse>0) throw new Error("Typechecking failure, data left when processing raw instruction stream");
@@ -1196,7 +1170,9 @@ class DocumentWriteList {
 				/** @type {Document['write']} */
 				let vv=any_var;
 				doc_1.write=vv;
+				return true;
 			}
+			return false;
 		}
 		if(this.document_write_proxy) {
 			this.document_write_proxy=null;
@@ -1210,6 +1186,7 @@ class DocumentWriteList {
 		if(should_try_to_destroy) {
 			return true;
 		}
+		return false;
 	}
 }
 class UniqueIdGenerator {
@@ -1227,6 +1204,7 @@ class UniqueIdGenerator {
 		return this.m_current++;
 	}
 }
+UniqueIdGenerator;
 class NamedIdGenerator {
 	constructor() {
 		this.state_map=new Map;
@@ -1469,6 +1447,7 @@ class PromiseTimeoutTarget {
 	}
 }
 class AsyncTimeoutTarget extends PromiseTimeoutTarget {
+	/** @override */
 	wait() {
 		return super.wait();
 	}
@@ -1497,17 +1476,19 @@ class TimeoutIdNode extends BaseNode {
 		super();
 		this.m_id=id;
 	}
+	/** @override */
 	destroy() {
 		if(this.m_id!==null) clearTimeout(this.m_id);
 		super.destroy();
 	}
 }
 class IntervalIdNode extends BaseNode {
-	/** @arg {number} id */
+	/** @arg {ReturnType<typeof setInterval>} id */
 	constructor(id) {
 		super();
 		this.m_id=id;
 	}
+	/** @override */
 	destroy() {
 		if(this.m_id!==null) clearInterval(this.m_id);
 		super.destroy();
@@ -1546,11 +1527,13 @@ class TimeoutNode extends BaseNode {
 		this.m_target=target;
 		this.set();
 	}
+	/** @override */
 	run() {
 		if(this.m_target) this.m_target.fire();
 		this.m_id=null;
 		this.remove();
 	}
+	/** @override */
 	destroy() {
 		if(this.m_id!==null) clearTimeout(this.m_id);
 	}
@@ -1575,6 +1558,7 @@ class IntervalNode extends BaseNode {
 		}
 		this.set();
 	}
+	/** @override */
 	destroy() {
 		if(this.id!==null) clearInterval(this.id);
 	}
@@ -1590,25 +1574,29 @@ class AsyncTimeoutNode extends TimeoutNode {
 		log_if(LOG_LEVEL_INFO,'p',promise);
 		await promise;
 	}
+	/** @override */
 	set() {
 		log_if(LOG_LEVEL_INFO,'set',this);
 		super.set();
 	}
+	/** @override */
 	run() {
 		log_if(LOG_LEVEL_INFO,'run',this);
 		return super.run();
 	}
+	/** @override */
 	destroy() {
 		if(this.m_target) this.m_target.destroy();
 		super.destroy();
 	}
 }
 class IntervalIdNodeRef extends IntervalIdNode {
-	/** @arg {number} interval_id @arg {() => void} destroy_cb */
+	/** @arg {ReturnType<typeof setInterval>} interval_id @arg {() => void} destroy_cb */
 	constructor(interval_id,destroy_cb) {
 		super(interval_id);
 		this.destroy_callback=destroy_cb;
 	}
+	/** @override */
 	destroy() {
 		this.destroy_callback();
 		super.destroy();
@@ -1631,12 +1619,14 @@ class AsyncNodeRoot {
 		}
 	}
 	/** @arg {number} timeout_id */
-	append_raw(timeout_id,once=true) {
-		if(once) {
-			this.append_child(new TimeoutIdNode(timeout_id));
-		} else {
-			this.append_child(new IntervalIdNode(timeout_id));
-		}
+	append_raw_timeout(timeout_id) {
+		this.append_child(new TimeoutIdNode(timeout_id));
+	}
+	/**
+	 * @param {ReturnType<typeof setInterval>} timeout_id
+	 */
+	append_raw_interval(timeout_id) {
+		this.append_child(new IntervalIdNode(timeout_id));
 	}
 	/** @arg {BaseNode} record */
 	append_child(record) {
@@ -1782,41 +1772,30 @@ function labeled_sym(name) {
 	debug_id_syms.push(new WeakRef({sym}));
 	return sym;
 }
-/** @implements {NodeBox} */
-class NodeBoxImpl {
-	/** @type {"instance_box"} */
-	type="instance_box";
-	/** @type {'Node'} */
-	instance_type='Node';
-	/** @type {"get"|"create"} */
-	from="create";
-	/** @arg {"get"|"create"|string} from @arg {Node} value */
-	constructor(from,value) {
-		super(null);
-		this.value=value;
-		if(from==='get') {
-			this.from=from;
-		} else if(from!=='create') {
-			throw new Error("Invalid constructor arguments for NodeBoxImpl");
-		}
-	}
-}
 class DataLoader {
-	static int_parser=(value) => parseInt(value,10);
+	/**
+	 * @param {string} value
+	 */
+	static int_parser(value) {
+		return parseInt(value,10);
+	}
 	/** @arg {Storage} storage */
 	constructor(storage) {
 		this.storage=storage;
 	}
+	/**
+	 * @param {string} key
+	 */
 	getItem(key) {
 		return this.storage.getItem(key);
 	}
-	/** @arg {string} key*/
+	/** @arg {string} key @returns {[true,string[]]|[false,null]} */
 	load_str_arr(key) {
 		let data=this.getItem(key);
 		if(data===null) return [false,data];
 		return [true,this.default_split(data)];
 	}
-	/**@arg {string} key*/
+	/**@arg {string} key @returns {[true,number[]]|[false,null]} */
 	load_int_arr(key) {
 		let storage_data=this.getItem(key);
 		if(storage_data===null) return [false,storage_data];
@@ -1829,43 +1808,6 @@ class DataLoader {
 	/** @arg {string} data */
 	parse_int_arr(data) {
 		return this.default_split(data).map(DataLoader.int_parser);
-	}
-}
-/** @implements {DocumentBox} */
-class DocumentBoxImpl {
-	/** @type {"document_box"} */
-	type="document_box";
-	value;
-	/** @arg {"object" | "function"} v */
-	as_type(v) {
-		if(typeof this.value===v) return this;
-		return null;
-	}
-	/** @arg {Document} value */
-	constructor(value) {
-		super(null);
-		this.value=value;
-	}
-}
-/** @implements {AsyncFunctionBox} */
-class AsyncFunctionBoxImpl {
-	/** @type {'function_box'} */
-	type="function_box";
-	/** @type {"promise_box"} */
-	return_type='promise_box';
-	/** @type {"Box"} */
-	await_type='Box';
-	/** @returns {Box} */
-	wrap_call() {
-		throw new Error("1");
-	}
-	/** @returns {this|null} */
-	as_type() {
-		throw new Error("1");
-	}
-	/** @arg {(...a: Box[])=>Promise<Box>} value */
-	constructor(value) {
-		this.value=value;
 	}
 }
 /** @type {VoidBox} */
@@ -1931,6 +1873,7 @@ class AutoBuyState {
 		//@AverageRatio
 		/** @arg {AutoBuyState} state @arg {number} i @arg {number} now_start */
 		function create_ratio(state,i,now_start) {
+			if(!state.ratio_types) throw 1;
 			let obj=new AverageRatio(state.ratio_types[i],{
 				size: ratio_counts[i],
 				history_size: mul_3(ratio_counts,i),
@@ -1948,6 +1891,7 @@ class AutoBuyState {
 		this.is_init_complete=true;
 	}
 	calc_ratio() {
+		if(!this.ratio_types) throw 1;
 		return this.avg.get_average(this.ratio_types[1]);
 	}
 	/** @arg {number} value */
@@ -2029,6 +1973,9 @@ class AutoBuyState {
 		this.ratio_mode+=mode_change_direction;
 		this.locked_cycle_count+=num_of_cycles;
 	}
+	/**
+	 * @param {number} num
+	 */
 	calc_near_val(num) {
 		let exp=0;
 		if(num<1||num>10) {
@@ -2096,7 +2043,7 @@ class AutoBuyState {
 		});
 		let json_hist=JSON.stringify(history_arr_2);
 		let json_tag="JSON_HIST";
-		let prev_hist=sessionStorage.history;
+		let prev_hist=sessionStorage["history"];
 		/** @type {string[]} */
 		let data_arr;
 		xx: if(prev_hist&&prev_hist.startsWith(json_tag)) {
@@ -2109,8 +2056,9 @@ class AutoBuyState {
 		} else {
 			data_arr=[json_hist];
 		}
-		sessionStorage.history=`${json_tag}@${data_arr.join("|")}`;
-		let time_played_data=sessionStorage.time_played_hist;
+		sessionStorage["history"]=`${json_tag}@${data_arr.join("|")}`;
+		let time_played_data=sessionStorage["time_played_hist"];
+		/** @type {(string|null)[]} */
 		let time_played_arr=data_arr.map(() => null);
 		if(time_played_data) {
 			let stored_arr=JSON.parse(time_played_data);
@@ -2121,7 +2069,7 @@ class AutoBuyState {
 		} else {
 			time_played_arr=[time_played_str];
 		}
-		sessionStorage.time_played_hist=JSON.stringify(time_played_arr);
+		sessionStorage["time_played_hist"]=JSON.stringify(time_played_arr);
 	}
 	reset() {
 		this.ratio*=0.75;
@@ -2181,6 +2129,8 @@ class AsyncAutoBuy {
 	async main_async() {
 		const log_ic=false;
 		const log_tm=false;
+		log_ic;
+		log_tm;
 		if(this.main_running) {
 			throw new Error("Already running");
 		}
@@ -2234,7 +2184,7 @@ class AsyncAutoBuy {
 		this.parent.do_fast_unit_change();
 		await this.next_timeout_async(this.parent.timeout_ms,'$');
 	}
-	/** @arg {number | undefined} timeout @arg {string} char */
+	/** @arg {number} timeout @arg {string} char */
 	async next_timeout_async(timeout,char,silent=false) {
 		let node=new AsyncTimeoutNode(timeout);
 		this.parent.root_node.append_child(node);
@@ -2247,23 +2197,25 @@ class AsyncAutoBuy {
 	}
 }
 class AutoBuy {
-	/** @type {number|undefined} */
-	timeout_ms;
 	constructor() {
 		this.root_node=new AsyncNodeRoot;
 		this.with_async=new AsyncAutoBuy(this);
-		this.timeout_ms=0; this.iter_count=0; this.epoch_len=0;
-		this.background_audio=null; this.state_history_arr=null;
-		this.skip_save=false; this.has_real_time=false;
-		/** @type {number[]} */
+		this.timeout_ms=0;
+		this.iter_count=0;
+		this.epoch_len=0;
+		this.background_audio=null;
+		this.state_history_arr=null;
+		this.skip_save=false;
+		this.has_real_time=false;
+		/** @type {([1,number]|[2,number])[]} */
 		this.cint_arr=[];
 		this.local_data_loader=new DataLoader(localStorage);
 		this.state=new AutoBuyState(this.root_node);
 		this.debug=this.state.debug;
 		this.compressor=new MulCompression;
-		let [history_load_ok,state_history_arr]=this.local_data_loader.load_str_arr('auto_buy_history_str',["S"]);
-		if(history_load_ok) {
-			this.state_history_arr=state_history_arr;
+		let history_loaded=this.local_data_loader.load_str_arr('auto_buy_history_str');
+		if(history_loaded[0]) {
+			this.state_history_arr=history_loaded[1];
 		} else {
 			this.state_history_arr=["S"];
 		}
@@ -2275,13 +2227,13 @@ class AutoBuy {
 		this.debug_arr=[];
 		this.flags=new Set();
 		try {
-			this.check_for_syms();
+			this.check_for_symbols();
 		} catch(e) {
 			console.log(e);
 		}
-		let [timeout_arr_ok,timeout_arr]=this.local_data_loader.load_int_arr('auto_buy_timeout_str');
-		if(timeout_arr_ok) {
-			this.timeout_arr=timeout_arr;
+		let timeout_arr_load=this.local_data_loader.load_int_arr('auto_buy_timeout_str');
+		if(timeout_arr_load[0]) {
+			this.timeout_arr=timeout_arr_load[1];
 		} else {
 			this.timeout_arr=[30];
 			this.timeout_arr.length=16;
@@ -2292,16 +2244,21 @@ class AutoBuy {
 			}
 		}
 	}
-	test_log(log_level,...args) {
+	/**
+	 * @param {number} log_level
+	 * @param {string} format_str
+	 * @param {string[]} args
+	 */
+	test_log(log_level,format_str,...args) {
 		if(args.length>0) {
 			args.unshift("test:");
 		} else {
 			args.unshift("test");
 		}
-		log_if(log_level,...args);
+		log_if(log_level,format_str,...args);
 	}
 	/** @arg {{ [x: string]: any; }} sym_indexed_this @arg {{ sym: any; }} val */
-	syms_iter(sym_indexed_this,val) {
+	symbols_iter(sym_indexed_this,val) {
 		if(!sym_indexed_this[val.sym]) return;
 		let obj=sym_indexed_this[val.sym];
 		if(!obj.split) return;
@@ -2310,25 +2267,23 @@ class AutoBuy {
 		let trimmed=arr.map((/** @type {string} */ e) => e.trim());
 		this.debug_arr.push(...trimmed);
 	}
-	check_for_syms() {
+	check_for_symbols() {
 		/** @type {any} */
 		let this_as_any=this;
 		/** @type {{[x:symbol]:string}} */
 		let sym_indexed_this=this_as_any;
 		for(let i=0;i<debug_id_syms.length;i++) {
 			let val=debug_id_syms[i].deref();
-			if(val) this.syms_iter(sym_indexed_this,val);
+			if(val) this.symbols_iter(sym_indexed_this,val);
 		}
 	}
 	pre_init() {
-		this.background_audio=document.querySelector("#background_audio");
-		if(!this.background_audio) throw new Error("Missing element querySelector('#background_audio')");
-		if(this.background_audio instanceof HTMLAudioElement) {
-			this.background_audio.onloadeddata=null;
-			this.background_audio.volume=AUDIO_ELEMENT_VOLUME;
-		} else {
-			throw new Error("querySelector('#background_audio') is not an instance of HTMLAudioElement");
-		}
+		let audio_element=document.querySelector("#background_audio");
+		if(!audio_element) throw new Error("Missing element querySelector('#background_audio')");
+		if(!(audio_element instanceof HTMLAudioElement)) throw new Error("querySelector('#background_audio') is not an instance of HTMLAudioElement");
+		this.background_audio=audio_element;
+		this.background_audio.onloadeddata=null;
+		this.background_audio.volume=AUDIO_ELEMENT_VOLUME;
 		this.async_pre_init().then(() => {
 			log_if(LOG_LEVEL_INFO,'pre_init done');
 		}); this.dom_pre_init();
@@ -2433,7 +2388,7 @@ class AutoBuy {
 		]);
 		try {
 			let t=this;
-			window.addEventListener('click',{
+			let handler_new={
 				handleEvent() {
 					this.run().then(() => {
 						log_if(LOG_LEVEL_INFO,'play success');
@@ -2443,9 +2398,11 @@ class AutoBuy {
 					window.removeEventListener('click',this);
 				},
 				async run() {
+					if(!t.background_audio) throw 1;
 					await t.background_audio.play();
 				}
-			});
+			};
+			window.addEventListener('click',handler_new);
 			return;
 			let handler=new EventHandlerVMDispatch(instructions,this);
 			window.addEventListener('click',handler);
@@ -2455,7 +2412,7 @@ class AutoBuy {
 	}
 	save_state_history_arr() {
 		if(this.skip_save) return;
-		localStorage.auto_buy_history_str=this.state_history_arr.join(",");
+		localStorage["auto_buy_history_str"]=this.state_history_arr.join(",");
 	}
 	/** @arg {string} forced_action */
 	get_timeout_arr_data(forced_action) {
@@ -2464,16 +2421,16 @@ class AutoBuy {
 	}
 	save_timeout_arr() {
 		let forced_action,action_count;
-		let action_data=localStorage.auto_buy_forced_action;
+		let action_data=localStorage["auto_buy_forced_action"];
 		if(action_data) [forced_action,action_count]=action_data.split(",");
-		localStorage.auto_buy_timeout_str=this.get_timeout_arr_data(forced_action);
+		localStorage["auto_buy_timeout_str"]=this.get_timeout_arr_data(forced_action);
 		if(action_count!==void 0) {
 			action_count=parseInt(action_count);
 			if(Number.isFinite(action_count)) {
 				if(action_count>0) {
-					localStorage.auto_buy_forced_action=[forced_action,action_count-1];
+					localStorage["auto_buy_forced_action"]=[forced_action,action_count-1];
 				} else if(forced_action!=="NONE") {
-					localStorage.auto_buy_forced_action="NONE,0";
+					localStorage["auto_buy_forced_action"]="NONE,0";
 				}
 			}
 		}
@@ -2492,6 +2449,13 @@ class AutoBuy {
 			font-size:22px;
 			color:lightgray;
 		}`;
+		/**
+		 * @param {any} obj
+		 * @param {HTMLElement} parent
+		 * @param {string} tag_name
+		 * @param {string} id
+		 * @param {string | undefined} [content]
+		 */
 		function create_element(obj,parent,tag_name,id,content) {
 			let ele=document.createElement(tag_name);
 			ele.id=id;
@@ -2538,10 +2502,12 @@ class AutoBuy {
 		});
 	}
 	global_init() {
-		if(window.g_auto_buy&&window.g_auto_buy!==this) {
+		/** @type {any} */
+		let this_any=this
+		if(window.g_auto_buy&&window.g_auto_buy!==this_any) {
 			window.g_auto_buy.destroy();
 		}
-		window.g_auto_buy=this;
+		window.g_auto_buy=this_any;
 	}
 	destroy() {
 		this.root_node.destroy();
@@ -2576,7 +2542,7 @@ class AutoBuy {
 		}
 		return string;
 	}
-	/** @arg {number} timeout_milli @arg {number | undefined} milli_acc */
+	/** @arg {number} timeout_milli @arg {number} milli_acc */
 	get_millis_as_pretty_str(timeout_milli,milli_acc) {
 		const number_stringify_debug=false;
 		let time_arr=[];
@@ -2752,7 +2718,7 @@ class AutoBuy {
 		}));
 	}
 	set_timeplayed_update_interval() {
-		this.root_node.append_raw(setInterval(function() {
+		this.root_node.append_raw_interval(setInterval(function() {
 			let doc=window.doc;
 			let rounding=window.rounding;
 			let totalAtome=window.totalAtome;
@@ -2766,7 +2732,7 @@ class AutoBuy {
 			if(timeplayed_e) timeplayed_e.innerHTML=(Math.round(timeplayed/30)/60).toFixed(2)+" hours";
 			let presnbr_e=doc.getElementById('presnbr');
 			if(presnbr_e) presnbr_e.innerHTML="<br>"+(calcPres()*100).toFixed(0)+" % APS boost";
-		},2000),false);
+		},2000));
 	}
 	replace_timeplayed_timer() {
 		this.set_secondinterval();
@@ -2783,12 +2749,14 @@ class AutoBuy {
 			"&& a != encrypt('pace') "+
 			"&& a != 'constel2'"
 		);
-		window.lightreset=new Function(
+		/** @type {any} */
+		let temp_function=new Function(
 			temp.substring(
 				temp.indexOf('{')+1,
 				temp.lastIndexOf('}')
 			)
 		);
+		window.lightreset=temp_function;
 	}
 	init_impl() {
 		this.init_dom();
@@ -2805,7 +2773,7 @@ class AutoBuy {
 	}
 	state_history_clear_for_reset() {
 		this.state_history_arr=["R"];
-		localStorage.auto_buy_history_str="R";
+		localStorage["auto_buy_history_str"]="R";
 	}
 	/** @arg {string} value */
 	state_history_append(value,silent=false) {
@@ -3007,7 +2975,7 @@ class AutoBuy {
 		let err=new Error;
 		this.next_timeout_async_err_log('next_timeout_async stk',err);
 	}
-	/** @arg {()=>void} trg_fn @arg {number | undefined} timeout @arg {string} char */
+	/** @arg {()=>void} trg_fn @arg {number} timeout @arg {string} char */
 	next_timeout(trg_fn,timeout,char,silent=false) {
 		let node=new TimeoutNode(timeout);
 		this.root_node.append_child(node);
@@ -3105,7 +3073,7 @@ class AutoBuy {
 		console.info('fire lightreset at %s',time_played);
 		let prestige_acc=10000;
 		let real_val=calcPres()*100;
-		let [real,num,exponent]=this.state.calc_near_val(real_val);
+		let [_real,num,exponent]=this.state.calc_near_val(real_val);
 		let near_val=(~~(num*prestige_acc))/prestige_acc;
 		if(exponent<=-2||exponent>=2) {
 			console.info('p_calc_1:expected prestige (%o,%o)%%',near_val,exponent);
@@ -3118,11 +3086,17 @@ class AutoBuy {
 		this.next_timeout(this.on_repeat_r,1*1000,'r');
 	}
 }
+/**
+ * @param {number} delay
+ */
 function wait(delay) {
 	return new Promise(function(a) {
 		setTimeout(a,delay);
 	});
 }
+/**
+ * @param {number} id
+ */
 async function tonext_async(id) {
 	var next=Find_ToNext(id);
 	if(arUnit[id][16]||arUnit[id][8]=="quantum foam") {
@@ -3132,6 +3106,7 @@ async function tonext_async(id) {
 		}
 	}
 }
+tonext_async;
 async function do_auto_unit_promote() {
 	let do_unit_see=false;
 	let arUnit=window.arUnit;
@@ -3220,7 +3195,7 @@ function lightreset_inject() {
 	window.g_auto_buy.skip_save=true;
 	window.addEventListener('unload',function() {
 		window.g_auto_buy.skip_save=false;
-		localStorage.long_wait=12000;
+		localStorage["long_wait"]=12000;
 	});
 	let original=window.g_auto_buy.original_map.get('lightreset');
 	if(!original) {
@@ -3287,7 +3262,6 @@ function got_jquery(value) {
 	use_jquery();
 }
 function use_jquery() {
-	/** @type {typeof $} */
 	let jq=window.$;
 	if(!jq) return;
 	if(typeof jq!='function') return;
@@ -3340,7 +3314,6 @@ function on_game_data_set() {
 	do_dom_filter();
 	auto_buy_obj.pre_init();
 	setTimeout(auto_buy_obj.init.bind(auto_buy_obj),300);
-	// spell:words constelOff
 	constelOff();
 }
 function wait_for_game_data() {
@@ -3461,7 +3434,7 @@ class LoadMutationObserver extends BaseMutationObserver {
 /** @type {BaseMutationObserver[]} */
 let mut_observers=[];
 window.g_mut_observers=mut_observers;
-/** @type {(this:Node, node: Node, child: Node | null)=>boolean}*/
+/** @type {(node: Node, child: Node | null)=>boolean}*/
 function insert_before_enabled(node,child) {
 	if(node instanceof HTMLScriptElement) {
 		let should_insert_1=dom_add_elm_filter(node);
@@ -3486,12 +3459,15 @@ function main() {
 			if(insert_before_enabled(...parameters)) {
 				return Reflect.apply(target,thisValue,parameters);
 			}
+			return null;
 		}
 	});
 	let document_write_list=new DocumentWriteList;
 	document_write_list.attach_proxy(document);
 	document_write_list.document_write_proxy;
-	window.document_write_list=document_write_list;
+	/** @type {any} */
+	let any_wl=document_write_list;
+	window.document_write_list=any_wl;
 	document.stop=function() {};
 	function nop_timeout() {
 		console.log('nop timeout');
@@ -3499,8 +3475,10 @@ function main() {
 	}
 	let real_st=setTimeout;
 	let real_si=setInterval;
-	window.setTimeout=nop_timeout;
-	window.setInterval=nop_timeout;
+	/** @type {any} */
+	let any_nop=nop_timeout;
+	window.setTimeout=any_nop;
+	window.setInterval=any_nop;
 	/** @arg {any[]} v */
 	function no_aev(...v) {
 		console.log('aev',v);
@@ -3533,7 +3511,7 @@ function main() {
 		x: {
 			if(skip) break x;
 			await new Promise(function(a) {
-				if(localStorage.justReset==='true') {
+				if(localStorage["justReset"]==='true') {
 					return a(null);
 				}
 				window.g_do_load=do_load_fire_promise.bind(null,a);
@@ -3562,16 +3540,11 @@ function main() {
 			let cs=document.currentScript;
 			/** @type {Element|null} */
 			let ls=null;
-			/** @type {Element|null} */
-			let rs;
 			if(!cs) return;
-			window.g_cs??=[];
-			window.g_cs.push(cs);
 			let prev=cs.previousElementSibling;
-			if(prev&&prev instanceof HTMLElement&&prev.dataset.adSlot) {
+			if(prev&&prev instanceof HTMLElement&&prev.dataset["adSlot"]) {
 				let ad_slot=cs.previousElementSibling;
 				if(prev.previousElementSibling) ls=prev.previousElementSibling;
-				if(cs.nextElementSibling) rs=cs.nextElementSibling;
 				if(ad_slot) ad_slot.remove();
 				cs.remove();
 				while(ls&&ls instanceof HTMLScriptElement&&ls.src&&ls.src.includes("adsbygoogle")) {
