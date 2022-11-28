@@ -20,7 +20,6 @@
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 import {StackVMBox} from "../../box/StackVMBox.js";
-import {StringBox} from "../../box/StringBox.js";
 
 function fetch_all_images() {
 	return Promise.all(arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
@@ -1019,6 +1018,25 @@ class EventHandlerVMDispatch extends StackVMImpl {
 		this.run(new ObjectBoxImpl(event));
 	}
 }
+class StringBoxImpl {
+	/** @readonly */
+	type="string";
+	/**
+	 * @param {string} target
+	 */
+	as_type(target) {
+		if(target==="string") {
+			return this;
+		}
+		return null;
+	}
+	/**
+	 * @param {string} string
+	 */
+	constructor(string) {
+		this.value=string;
+	}
+}
 class StackVMParser {
 	static match_regex=/(.+?)(;|$)/gm;
 	/** @arg {string[] | number[]} cur @arg {number} arg_loc*/
@@ -1108,7 +1126,7 @@ class StackVMParser {
 			case 'push': {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				let real_push_ops=push_operands.map(e => new StringBox(e));
+				let real_push_ops=push_operands.map(e => new StringBoxImpl(e));
 				ret=[instruction[0],...real_push_ops];
 			} break;
 			case 'call'/*1 argument*/: {
