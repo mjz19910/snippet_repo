@@ -19,7 +19,6 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-import {NumberBox} from "../../box/NumberBox.js";
 import {ObjectBox} from "../../box/ObjectBox.js";
 import {PromiseBox} from "../../box/PromiseBox.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
@@ -568,6 +567,26 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 		vm.instructions[target]=valid_instruction;
 	}
 }
+/** @typedef {import("../../box/NumberBox.js").NumberBox} NumberBox */
+/** @implements {NumberBox} */
+class NumberBoxImpl {
+	/** @readonly */
+	type="number";
+	/**
+	 * @returns {this | null}
+	 * @param {string} target
+	 */
+	as_type(target) {
+		if(typeof this.value===target) {
+			return this;
+		}
+		return null;
+	}
+	/** @param {number} value */
+	constructor(value) {
+		this.value=value;
+	}
+}
 class InstructionVMPushIPImpl extends InstructionImplBase {
 	/** @type {"vm_push_ip"} */
 	type="vm_push_ip";
@@ -576,7 +595,7 @@ class InstructionVMPushIPImpl extends InstructionImplBase {
 		if(!vm.hasOwnProperty('push')) {
 			throw new Error("push_pc requires a stack");
 		} else if(vm instanceof StackVMImpl) {
-			vm.stack.push(new NumberBox(vm.instruction_pointer));
+			vm.stack.push(new NumberBoxImpl(vm.instruction_pointer));
 		} else {
 			console.info('TODO: add instanceof check to push_pc');
 			throw new Error("Property missing or invalid");
@@ -792,7 +811,7 @@ class InstructionVMCallImpl extends InstructionImplBase {
 	run(vm,ins) {
 		if(vm.base_ptr===null) throw new Error("BasePtr was null");
 		let prev_base=vm.base_ptr;
-		vm.stack.push(new NumberBox(vm.base_ptr),new NumberBox(vm.instruction_pointer));
+		vm.stack.push(new NumberBoxImpl(vm.base_ptr),new NumberBoxImpl(vm.instruction_pointer));
 		vm.base_ptr=vm.stack.length;
 		vm.jump_instruction_pointer=ins[1];
 		console.log('vm vm_call',ins[1],'stk',vm.base_ptr,prev_base,vm.stack.slice());
