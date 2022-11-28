@@ -19,7 +19,6 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-import {PromiseBox} from "../../box/PromiseBox.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {StringBox} from "../../box/StringBox.js";
 import {VoidBox} from "../../box/VoidBox.js";
@@ -276,6 +275,35 @@ class InstructionImplBase {
 	/** @type {undefined} */
 	get_class_type;
 }
+class PromiseBoxImpl {
+	/** @readonly */
+	type="promise_box";
+	/**
+	 * @type {any}
+	 */
+	inner_type;
+	/**
+	 * @type {any}
+	 */
+	await_type;
+	/**
+	 * @type {any}
+	 */
+	m_verify_name;
+	verify_name() {
+		return true;
+	}
+	/**
+	 * @param {any} _to_match
+	 */
+	as_type(_to_match) {
+		return this;
+	}
+	/** @param {Promise<Box>} value */
+	constructor(value) {
+		this.value=value;
+	}
+}
 class InstructionCallImpl extends InstructionImplBase {
 	/** @type {'call'} */
 	type='call';
@@ -373,7 +401,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	handle_as_fn_to_promise(vm,fn_value,target_this,arg_arr) {
 		let real_this=this.unbox_obj(target_this);
 		let ret=fn_value.apply(real_this,arg_arr);
-		vm.stack.push(new PromiseBox(ret));
+		vm.stack.push(new PromiseBoxImpl(ret));
 	}
 	/** @arg {import("../../vm/instruction/general/Call.js").Call} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
