@@ -172,7 +172,7 @@ class CSSStyleSheetBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {StackVMBox} */
+/** @typedef {import("../../box/StackVMBox.js").StackVMBox} StackVMBox */
 /** @implements {StackVMBox} */
 class StackVMBoxImpl {
 	/** @type {"custom_box"} */
