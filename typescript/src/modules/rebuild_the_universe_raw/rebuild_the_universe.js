@@ -34,7 +34,7 @@ function fetch_all_images_full() {
 	return arrayNames.map(e => e.indexOf('cat')>-1? 'cats-eye-nebula':e).map(e => "imagesFull/"+e.replace(/\s+/g,'-')+".jpg").map(e => fetch(e));
 }
 function fetch_all_specs() {
-	return allspec.map((e,i) => "specs/"+(i+1)+".jpg").map(e => fetch(e));
+	return allspec.map((_e,i) => "specs/"+(i+1)+".jpg").map(e => fetch(e));
 }
 
 // tampermonkey is overwriting the console...
