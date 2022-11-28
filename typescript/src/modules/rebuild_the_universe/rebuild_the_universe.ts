@@ -3049,13 +3049,8 @@ function got_jquery(value: typeof $) {
 	});
 	use_jquery();
 }
-declare global {
-	interface Window {
-		$: JQueryStatic;
-	}
-}
 function use_jquery() {
-	let jq: typeof $=window.$;
+	let jq: typeof $|undefined=window.$;
 	if(!jq) return;
 	if(typeof jq!='function') return;
 	let res=jq('head');

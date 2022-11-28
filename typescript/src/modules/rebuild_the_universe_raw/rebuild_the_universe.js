@@ -851,14 +851,14 @@ class VMFlags {
 class InstructionNopImpl extends InstructionImplBase {
 	/** @type {'nop'} */
 	type='nop';
-	/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").Nop} _a */
+	/** @arg {StackVM} _vm @arg {import("../../vm/instruction/Nop.js").Nop} _a */
 	run(_vm,_a) {
 	}
 }
 class InstructionBlockTraceImpl extends InstructionImplBase {
 	/** @type {'vm_block_trace'} */
 	type='vm_block_trace';
-	/** @arg {StackVM} _vm @arg {import("types/vm/instruction/mod.js").vm.BlockTrace} _i */
+	/** @arg {StackVM} _vm @arg {import("../../vm/instruction/vm/VMBlockTrace.js").VMBlockTrace} _i */
 	run(_vm,_i) {
 	}
 }
