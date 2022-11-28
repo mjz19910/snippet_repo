@@ -19,7 +19,6 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
-import {CSSStyleSheetBox} from "../../box/CSSStyleSheetBox.js";
 import {NumberBox} from "../../box/NumberBox.js";
 import {ObjectBox} from "../../box/ObjectBox.js";
 import {PromiseBox} from "../../box/PromiseBox.js";
@@ -156,6 +155,7 @@ class CSSStyleSheetConstructorBoxImpl {
 		this.value=value;
 	}
 }
+/** @typedef {import("../../box/CSSStyleSheetBox.js").CSSStyleSheetBox} CSSStyleSheetBox */
 /** @implements {CSSStyleSheetBox} */
 class CSSStyleSheetBoxImpl {
 	/** @type {"instance_box"} */
