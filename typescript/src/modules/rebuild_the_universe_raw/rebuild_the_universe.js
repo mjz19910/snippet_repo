@@ -21,7 +21,6 @@
 
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {StringBox} from "../../box/StringBox.js";
-import {VoidBox} from "../../box/VoidBox.js";
 
 function fetch_all_images() {
 	return Promise.all(arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
@@ -1857,7 +1856,7 @@ class DataLoader {
 		return this.default_split(data).map(DataLoader.int_parser);
 	}
 }
-/** @type {VoidBox} */
+/** @typedef {import("../../box/VoidBox.js").VoidBox} VoidBox */
 /** @implements {VoidBox} */
 class VoidBoxImpl {
 	/** @type {"void"} */
