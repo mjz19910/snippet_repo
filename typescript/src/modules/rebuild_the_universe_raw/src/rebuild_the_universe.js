@@ -897,7 +897,10 @@ class StackVM {
 	base_ptr;
 	/** @type {Box[]} */
 	stack;
-	/** @arg {InstructionList} instruction_desc_arr */
+	/**
+	 * @arg {InstructionList} instruction_desc_arr
+	 * @returns {{[U in keyof typeof instruction_class_map]: InstanceType<typeof instruction_class_map[U]>;}}
+	 * */
 	create_instruction_map(instruction_desc_arr) {
 		let obj={};
 		for(let i=0;i<instruction_desc_arr.length;i++) {
