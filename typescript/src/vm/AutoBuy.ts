@@ -338,11 +338,11 @@ export class AutoBuy implements AutoBuyInterface {
 			if(this.debug_arr.includes('build_dom_from_desc'))
 				console.log('es',stack.at(-1));
 		}
-		let [left_stack,tree]=this.stack_to_instruction_tree(stack);
+		let [left_stack,instruction_tree]=this.stack_to_instruction_tree(stack);
 		if(left_stack.length>0) {
 			console.assert(false,'failed to parse everything (parse tree probably has errors)');
 		}
-		let [dom_vm_instructions,_depths]=this.instruction_tree_to_instructions(tree);
+		let [dom_vm_instructions,_depths]=this.instruction_tree_to_instructions(instruction_tree);
 		let builder_vm=new BaseStackVM(dom_vm_instructions);
 		builder_vm.run();
 	}
