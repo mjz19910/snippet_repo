@@ -402,17 +402,18 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		if(stack.length===0)
 			return [items,depths];
-		let stack_item=stack.pop();
-		if(!stack_item) throw 1;
-		const [tag,items_index,[data_depth,data]]=stack_item;
-		let log_level=this.get_logging_level('apply_dom_desc');
-		l_log_if(log_level,tag,items_index,data_depth,data);
-		let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
-		const ret_items=items.slice();
-		ret_items.splice(items_index+1,0,['dom_exec',deep_res[0]]);
-		this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
-		this.log_if('apply_dom_desc',ret_items,depths,stack);
-		return [ret_items,depths];
+		while(stack.length>0) {
+			let stack_item=stack.pop();
+			if(!stack_item) break;
+			const [tag,items_index,[data_depth,data]]=stack_item;
+			let log_level=this.get_logging_level('apply_dom_desc');
+			l_log_if(log_level,tag,items_index,data_depth,data);
+			let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
+			items.splice(items_index+1,0,['dom_exec',deep_res[0]]);
+			this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
+			this.log_if('apply_dom_desc',items,depths,stack);
+		}
+		return [items,depths];
 	}
 	init_dom() {
 		const font_size_px=22;
