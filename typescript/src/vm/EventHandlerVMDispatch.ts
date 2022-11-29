@@ -185,11 +185,6 @@ export class EventHandlerVMDispatch {
 		let ret=target_fn.apply(target_this,arg_arr);
 		this.push(ret);
 	}
-	execute_instruction_raw(instruction: InstructionType) {
-		switch(instruction[0]) {
-			default: return this.execute_instruction(instruction);
-		}
-	}
 	run(...run_arguments: [Event]) {
 		this.vm_arguments=run_arguments;
 		this.running=true;
