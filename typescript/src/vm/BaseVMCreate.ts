@@ -3,14 +3,13 @@ import {Box} from "../box/Box.js";
 import {AbstractVM} from "./AbstractVM.js";
 import {InstructionType} from "./instruction/InstructionType.js";
 
-export class BaseVMCreate extends AbstractVM {
+export class BaseVMCreate implements AbstractVM {
 	flags: Map<string,boolean>;
 	instructions;
 	instruction_pointer;
 	base_pointer;
 	running;
 	constructor(instructions: InstructionType[]) {
-		super();
 		this.flags=new Map;
 		this.instructions=instructions;
 		this.instruction_pointer=0;

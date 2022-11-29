@@ -5,12 +5,12 @@ import {Box} from "../box/Box.js";
 import {IndexBox} from "../box/IndexBox.js";
 import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
 import {NewableFunctionBox} from "../box/NewableFunctionBox.js";
-import {BaseVMCreate} from "./BaseVMCreate.js";
 import {InstructionType} from "./instruction/InstructionType.js";
 import {l_log_if} from "./l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
+import {AbstractVM} from "./AbstractVM.js";
 
-export class BaseStackVM implements BaseVMCreate {
+export class BaseStackVM implements AbstractVM {
 	flags: Map<string,boolean>;
 	instructions;
 	instruction_pointer;
