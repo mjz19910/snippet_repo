@@ -18,8 +18,9 @@
 // @grant			none
 
 import {StackVMBox} from "../../box/StackVMBox.js";
+import {Cast} from "../../vm/instruction/Cast.js";
 import {VMPushSelf} from "../../vm/instruction/vm/VMPushSelf.js";
-import {Box} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
+import {Box, InstructionType} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
 
 // ==/UserScript==
 console=globalThis.console;
@@ -243,7 +244,7 @@ class InstructionCastImpl {
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
-	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: Cast) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
 		if(this.debug) {
@@ -253,10 +254,6 @@ class InstructionCastImpl {
 		switch(instruction[1]) {
 			case 'object_index': break;
 			default: throw new Error("Missing cast to "+instruction[1]);
-		}
-		let cast_type=instruction[1];
-		if(cast_type!=='object_index') {
-			throw new Error(`Unsupported operation: Cast(${cast_type})`);
 		}
 		this.cast_to_type(vm,obj);
 	}
@@ -631,17 +628,11 @@ type InstructionMap={
 	'vm_return': ["vm_return"];
 };
 
-type InstructionType=InstructionMap[keyof InstructionMap];
-
 class StackVMFlags {
 	equal: boolean;
 	constructor() {
 		this.equal=false;
 	}
-}
-
-interface GeneralInstructionType {
-	run(this: GeneralInstructionType,a: StackVMImpl,i: InstructionType): void;
 }
 
 class StackVMImpl {
@@ -719,8 +710,14 @@ class StackVMImpl {
 		this.running=false;
 	}
 	execute_instruction(instruction: InstructionType) {
-		let run=this.instruction_map_obj[instruction[0]] as GeneralInstructionType;
-		run.run(this,instruction);
+		switch(instruction[0]) {
+			case 'append': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
+			case 'breakpoint': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
+			case 'call': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
+		}
+		switch(instruction[0]) {
+			case 'cast': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
+		}
 	}
 	run() {
 		this.running=true;
