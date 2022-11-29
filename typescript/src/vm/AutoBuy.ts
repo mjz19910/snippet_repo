@@ -49,8 +49,7 @@ declare global {
 	}
 }
 
-type TreeItemType=[number,RawDomInstructions|TreeItem[]];
-type TreeItem=RawDomInstructions|TreeItemType;
+type TreeItem=[number,RawDomInstructions|TreeItem[]];
 
 export class AutoBuy implements AutoBuyInterface {
 	state_history_arr: any;
