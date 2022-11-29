@@ -19,6 +19,7 @@
 
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {Cast} from "../../vm/instruction/Cast.js";
+import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
 import {VMPushSelf} from "../../vm/instruction/vm/VMPushSelf.js";
 import {Box,InstructionType} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
 
@@ -620,7 +621,7 @@ type InstructionMap={
 	'push_window_object': ["push_window_object"];
 	'push': ["push",...Box[]];
 	'return': ["return"];
-	'vm_block_trace': ["vm_block_trace"];
+	'vm_block_trace': VMBlockTrace;
 	'vm_call': ["vm_call",number];
 	'vm_push_args': ["vm_push_args"];
 	'vm_push_ip': ["vm_push_ip"];
