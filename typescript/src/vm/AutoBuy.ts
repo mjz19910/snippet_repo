@@ -297,7 +297,8 @@ export class AutoBuy implements AutoBuyInterface {
 				case 'get': {
 					let [,,query_arg]=cur_item;
 					const cur_element=this.decode_query_arg(query_arg);
-					stack.push([depth,"push",new DomValueBox('get',cur_element)]);
+					if(!cur_element) throw new Error("Unable to find query element");
+					stack.push([depth,"push",new DomValueBox(cur_element)]);
 				} break;
 				case 'new': {
 					const [,,class_,construct_arg_arr,callback,arg_arr]=cur_item;

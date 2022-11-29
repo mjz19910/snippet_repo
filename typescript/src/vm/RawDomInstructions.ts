@@ -1,3 +1,4 @@
+import {Box} from "../box/Box.js";
 
 export type RawDomInstructions=
 	[number,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
@@ -8,4 +9,5 @@ export type RawDomInstructions=
 	[number,'create_props','div',string,{id: string;}]|
 	[number,'append']|
 	[number,'drop']|
-	[number,'enable_dry_mode'];
+	[number,'enable_dry_mode']|
+	[number,"push",...Box[]];

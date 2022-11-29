@@ -1,3 +1,4 @@
+import {DomValueBox} from "../vm/DomValueBox.js";
 import {ArrayBox} from "./ArrayBox.js";
 import {AsyncFunctionBox} from "./AsyncFunctionBox.js";
 import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox.js";
@@ -70,4 +71,6 @@ export type Box=
 	// Box with stuff
 	BoxWithPropertiesIsBox|
 	// Generic boxes
-	NewableInstancePackObjectBox;
+	NewableInstancePackObjectBox|
+	DomValueBox;
+
