@@ -371,7 +371,7 @@ export class AutoBuy implements AutoBuyInterface {
 			}
 			tree.push(['depth',depth,item]);
 		}
-		return [stack,tree];
+		return [stack,tree] as const;
 	}
 	log_if(tag: string,...log_args: (string|number|any[])[]) {
 		if(this.debug_arr.includes(tag)) {
