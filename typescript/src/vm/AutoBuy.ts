@@ -229,10 +229,6 @@ export class AutoBuy implements AutoBuyInterface {
 		document.body.append(this.state_log_element);
 		// attach display_style_sheet
 		this.adopt_styles(this.display_style_sheet);
-		let create_state_log_arr=[
-			[0,'get','body'],
-			[1,'create','div','state_log',{id: 'state_log'}],[1,'append'],
-		];
 		function retype_promise_helper(v: PromiseSettledResult<CSSStyleSheet>): v is PromiseFulfilledResult<CSSStyleSheet> {
 			return v.status==='fulfilled';
 		}
