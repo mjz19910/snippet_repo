@@ -25,8 +25,6 @@ import {BaseStackVM} from "./BaseStackVM.js";
 import {InstructionType} from "./instruction/InstructionType.js";
 import {RawDomInstructions} from "./RawDomInstructions";
 import {NullBox} from "../box/NullBox.js";
-import {CallableFunctionBox} from "./CallableFunctionBox.js";
-import {PromiseBox} from "../box/PromiseBox.js";
 import {StringBox} from "../box/StringBox.js";
 import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
 import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
