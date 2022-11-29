@@ -369,6 +369,11 @@ export class AutoBuy implements AutoBuyInterface {
 			}
 			tree.push([cur_depth,'op',item]);
 		}
+		while(stack.length>0) {
+			let stack_item=stack.pop();
+			if(!stack_item) throw new Error("Stack underflow");
+			tree=stack_item;
+		}
 		return [stack,tree];
 	}
 	log_if(tag: string,...log_args: (string|number|any[])[]) {
