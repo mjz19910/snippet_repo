@@ -39,9 +39,8 @@ export class StackVM {
 			if(this.stack.length<=0) {
 				throw new Error('stack underflow in pop_arg_count');
 			}
-			let top = this.pop();
-			if(!top) throw new Error('stack underflow in pop_arg_count');
-			arguments_arr.unshift(top);
+			let last=this.pop();
+			arguments_arr.unshift(last);
 		}
 		return arguments_arr;
 	}
@@ -134,7 +133,7 @@ export class StackVM {
 			case 'call' /*Call*/: throw new Error("No call impl");
 			case 'construct' /*Construct*/: throw new Error("No construct impl");
 			case 'return' /*Call*/: {
-				let top = this.pop();
+				let top=this.pop();
 				if(!top) throw new Error("Stack underflow");
 				this.return_value=top;
 			} break;
