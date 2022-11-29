@@ -20,7 +20,7 @@
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {Cast} from "../../vm/instruction/Cast.js";
 import {VMPushSelf} from "../../vm/instruction/vm/VMPushSelf.js";
-import {Box, InstructionType} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
+import {Box,InstructionType} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
 
 // ==/UserScript==
 console=globalThis.console;
@@ -281,7 +281,7 @@ class InstructionJmpImpl {
 	constructor() {
 		this.type='jmp';
 	}
-	run(vm: StackVMImpl,instruction: ['jump',number]) {
+	run(vm: StackVMImpl,instruction: ['jmp',number]) {
 		let [,target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
@@ -616,7 +616,7 @@ type InstructionMap={
 	'jmp': ["jmp"];
 	'modify_operand': ["modify_operand",number,number];
 	'nop': ["nop"];
-	'peek': ["peek", number];
+	'peek': ["peek",number];
 	'push_window_object': ["push_window_object"];
 	'push': ["push",...Box[]];
 	'return': ["return"];
@@ -661,7 +661,7 @@ class StackVMImpl {
 		this.instruction_map_obj=this.create_instruction_map(instruction_class_map);
 	}
 	create_instruction_map(instruction_desc_arr: typeof instruction_class_map) {
-		let obj:{
+		let obj: {
 			[U in keyof typeof instruction_class_map]?: InstanceType<typeof instruction_class_map[keyof typeof instruction_class_map]>;
 		}={};
 		for(let i of InstructionNames) {
@@ -715,9 +715,21 @@ class StackVMImpl {
 			case 'breakpoint': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
 			case 'call': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
 		}
-		switch(instruction[0]) {
-			case 'cast': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
-		}
+		switch(instruction[0]) {case 'cast': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'construct': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'dom_create_element': throw 1;}
+		switch(instruction[0]) {case 'dom_create_element_with_props': throw 1;}
+		switch(instruction[0]) {case 'dom_exec': throw 1;}
+		switch(instruction[0]) {case 'dom_get': throw 1;}
+		switch(instruction[0]) {case 'dom_new': throw 1;}
+		switch(instruction[0]) {case 'dom_peek': throw 1;}
+		switch(instruction[0]) {case 'drop': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'dup': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'get': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'halt': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'je': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'jmp': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'modify_operand': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
 	}
 	run() {
 		this.running=true;
@@ -845,7 +857,7 @@ class StackVMParser {
 			case 'push': {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				ret=[instruction[0],...push_operands.map((e):{type: 'string',value: string} => ({type: 'string',value: e}))];
+				ret=[instruction[0],...push_operands.map((e): {type: 'string',value: string;} => ({type: 'string',value: e}))];
 			} break;
 			case 'call'/*1 argument*/: {
 				if(typeof instruction[1]==='number'&&Number.isFinite(instruction[1])) {
