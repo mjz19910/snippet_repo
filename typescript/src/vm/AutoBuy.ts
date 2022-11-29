@@ -381,19 +381,19 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		return level;
 	}
-	apply_dom_desc(tree: any) {
+	apply_dom_desc(tree: TreeItem[]) {
 		this.run_dom_desc(tree);
 	}
-	run_dom_desc(tree: string|any[],stack: (['children',number,[number,string]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
+	run_dom_desc(tree: TreeItem[],stack: (['children',number,TreeItem[]])[]=[],cur_depth=0,items: RawDomInstructions[]=[],depths: number[]=[]): [RawDomInstructions[],number[]] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
-			switch(cur[0]-cur_depth) {
-				case 1: {
+			switch(cur[1]) {
+				case 'group': {
 					this.log_if('apply_dom_desc','rdc stk');
-					stack.push(['children',items.length-1,cur]);
+					stack.push(['children',items.length-1,cur[2]]);
 				} break;
-				case 0: {
-					items.push(cur[1]);
+				case 'op': {
+					items.push(cur[2]);
 					depths.push(cur[0]);
 				} break;
 				default: {
@@ -406,9 +406,9 @@ export class AutoBuy implements AutoBuyInterface {
 			return [items,depths];
 		let stack_item=stack.pop();
 		if(!stack_item) throw 1;
-		const [tag,items_index,[data_depth,data]]=stack_item;
+		const [tag,items_index,data]=stack_item;
 		let log_level=this.get_logging_level('apply_dom_desc');
-		l_log_if(log_level,tag,items_index,data_depth,data);
+		l_log_if(log_level,tag,items_index,data);
 		let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
 		const ret_items=items.slice();
 		let off=1;
