@@ -300,8 +300,8 @@ export class AutoBuy implements AutoBuyInterface {
 					stack.push([depth,"push",new DomValueBox('get',cur_element)]);
 				} break;
 				case 'new': {
-					const [,,_class,construct_arg_arr,callback,arg_arr]=cur_item;
-					stack.push([depth,"push",null,callback,...construct_arg_arr,_class]);
+					const [,,class_,construct_arg_arr,callback,arg_arr]=cur_item;
+					stack.push([depth,"push",null,callback,...construct_arg_arr,class_]);
 					stack.push([depth,"construct",1+construct_arg_arr.length]);
 					stack.push([depth,"push",...arg_arr]);
 					stack.push([depth,"call",3+arg_arr.length]);
