@@ -1,5 +1,5 @@
-import {InstructionType} from "./instruction/InstructionType.js"
-import {AutoBuyInterface} from "./AutoBuyInterface.js"
+import {InstructionType} from "./instruction/InstructionType.js";
+import {AutoBuyInterface} from "./AutoBuyInterface.js";
 import {Call} from "./instruction/general/Call.js";
 import {construct_with_constructor_box} from "./construct_with_constructor_box.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
@@ -21,7 +21,7 @@ export class EventHandlerVMDispatch {
 	running;
 	stack: Box[];
 	return_value: Box;
-	target_obj:AutoBuyInterface;
+	target_obj: AutoBuyInterface;
 	constructor(instructions: InstructionType[],target_obj: AutoBuyInterface) {
 		this.flags=new Map;
 		this.instructions=instructions;
@@ -179,8 +179,8 @@ export class EventHandlerVMDispatch {
 		}
 	}
 	handleEvent(event: Event) {
-		this.reset()
-		this.run(event)
+		this.reset();
+		this.run(event);
 	}
 	args_vec: [Event]|null;
 	reset() {
