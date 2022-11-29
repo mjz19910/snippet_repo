@@ -1,6 +1,8 @@
 import {Append} from "./Append.js"
 import {Cast} from "./Cast.js"
 import {Breakpoint} from "./debug/Breakpoint.js"
+import {DomExec} from "./dom/DomExec";
+import {DomPeek} from "./dom/DomPeek";
 import {Call} from "./general/Call.js"
 import {Construct} from "./general/Construct.js"
 import {Get} from "./general/Get.js"
@@ -46,4 +48,6 @@ export type InstructionMap={
 	'vm_push_ip': VMPushIP
 	'vm_push_self': VMPushSelf
 	'vm_return': VMReturn
+	'dom_exec': DomExec
+	'dom_peek': DomPeek
 }
