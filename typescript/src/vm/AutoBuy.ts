@@ -41,6 +41,16 @@ declare global {
 	}
 }
 
+export type RawDomInstructions=
+[number,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
+[number,'new',NewableFunction,[],CallableFunction,[string]]|
+[number,'call',number]|
+[number,'get','body']|
+[number,'create','div',string,string]|
+[number,'create_props','div',string,{id: string;}]|
+[number,'append']|
+[number,'drop'];
+
 export class AutoBuy implements AutoBuyInterface {
 	state_history_arr: any;
 	root_node: AsyncNodeRoot;
@@ -237,15 +247,6 @@ export class AutoBuy implements AutoBuyInterface {
 			return out;
 		}
 		let call_arg_arr: []=[];
-		type RawDomInstructions=
-			[number,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
-			[number,'new',NewableFunction,[],CallableFunction,[string]]|
-			[number,'call',number]|
-			[number,'get','body']|
-			[number,'create','div',string,string]|
-			[number,'create_props','div',string,{id: string;}]|
-			[number,'append']|
-			[number,'drop'];
 		let raw_dom_arr: RawDomInstructions[]=[
 			[0,'get','body'],
 			[1,'create_props','div','state_log',{id: 'state_log'}],
