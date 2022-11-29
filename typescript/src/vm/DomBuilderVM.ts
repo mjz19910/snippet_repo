@@ -16,52 +16,11 @@ export class DomBuilderVM extends BaseStackVM {
 	execute_instruction_raw(instruction: InstructionType) {
 		l_log_if(LOG_LEVEL_VERBOSE,...instruction,null);
 		switch(instruction[0]) {
-			case 'dom_exec': {
-				this.exec_stack.push([this.stack,this.instructions]);
-				let base_ptr=this.stack.length;
-				// advance the instruction pointer, when we return we want to resume
-				// at the next instruction...
-				this.instruction_pointer++;
-				this.stack.push(new NumberBox(this.instruction_pointer));
-				this.stack.push(new NumberBox(base_ptr));
-				this.stack=[];
-				this.instructions=instruction[1];
-				this.jump_instruction_pointer=0;
-				l_log_if(LOG_LEVEL_VERBOSE,'exec',...instruction[1]);
-			} break;
-			case 'dom_peek': {
-				let [,stack_peek_distance,access_distance]=instruction;
-				let peek_stack=this.exec_stack[stack_peek_distance][0];
-				let base_ptr=peek_stack.at(-1);
-				if(!base_ptr) throw new Error("Peek stack underflow");
-				if(base_ptr.type!='number') throw new Error("Incorrect type for dom_peek");
-				let at=peek_stack.at(base_ptr.value-access_distance-1);
-				if(!at) throw new Error("Peek at underflow");
-				this.push(at);
-				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
-			} break;
 			case 'append': throw new Error("Dom box handling not implemented");
 			default: {
 				super.execute_instruction(instruction);
 			} break;
 		}
-	}
-	can_use_box(box: {from: string;}) {
-		return box.from==='get'||box.from==='create';
-	}
-	verify_dom_box(box: {
-		type: string|undefined;
-		from: any;
-		value: any;
-	}) {
-		if(box.type===void 0)
-			throw new Error("Invalid Box (no type)");
-		if(box.type!='DomValueBox')
-			throw new Error("Unbox failed not a DomValueBox");
-		if(typeof box.from!='string')
-			throw new Error("Unbox failed Box.from is not a string");
-		if(typeof box.value!='object')
-			throw new Error("Unbox failed: Box is not boxing an object");
 	}
 	override run() {
 		this.running=true;

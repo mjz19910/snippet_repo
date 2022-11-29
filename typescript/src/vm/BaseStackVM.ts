@@ -61,6 +61,31 @@ export class BaseStackVM implements AbstractVM {
 	}
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
+			case 'append': throw new Error("Dom box handling not implemented");
+			case 'dom_exec': {
+				this.exec_stack.push([this.stack,this.instructions]);
+				let base_ptr=this.stack.length;
+				// advance the instruction pointer, when we return we want to resume
+				// at the next instruction...
+				this.instruction_pointer++;
+				this.stack.push(new NumberBox(this.instruction_pointer));
+				this.stack.push(new NumberBox(base_ptr));
+				this.stack=[];
+				this.instructions=instruction[1];
+				this.jump_instruction_pointer=0;
+				l_log_if(LOG_LEVEL_VERBOSE,'exec',...instruction[1]);
+			} break;
+			case 'dom_peek': {
+				let [,stack_peek_distance,access_distance]=instruction;
+				let peek_stack=this.exec_stack[stack_peek_distance][0];
+				let base_ptr=peek_stack.at(-1);
+				if(!base_ptr) throw new Error("Peek stack underflow");
+				if(base_ptr.type!='number') throw new Error("Incorrect type for dom_peek");
+				let at=peek_stack.at(base_ptr.value-access_distance-1);
+				if(!at) throw new Error("Peek at underflow");
+				this.push(at);
+				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
+			} break;
 			case 'je': {
 				let [,target]=instruction;
 				if(this.is_ip_in_bounds(target)) {
@@ -176,12 +201,34 @@ export class BaseStackVM implements AbstractVM {
 		let ret=target_fn.apply(target_this,arg_arr);
 		this.push(ret);
 	}
-	run(): Box {
-		this.running=true;
+	run(): Box {this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
 			let instruction=this.instructions[this.instruction_pointer];
 			this.execute_instruction(instruction);
-			this.instruction_pointer++;
+			if(this.jump_instruction_pointer!=null) {
+				this.instruction_pointer=this.jump_instruction_pointer;
+				this.jump_instruction_pointer=null;
+			} else {
+				this.instruction_pointer++;
+			}
+			if(this.instruction_pointer>=this.instructions.length) {
+				if(this.exec_stack.length>0) {
+					let exec_top=this.exec_stack.pop();
+					if(!exec_top) {
+						throw new Error("Invalid");
+					}
+					[this.stack,this.instructions]=exec_top;
+					let base_ptr=this.pop();
+					let next_ip=this.pop();
+					if(base_ptr.type !== 'number') throw new Error("Invalid");
+					if(next_ip.type !== 'number') throw new Error("Invalid");
+					this.base_pointer=base_ptr.value;
+					this.instruction_pointer=next_ip.value;
+					l_log_if(LOG_LEVEL_VERBOSE,'returned to',this.instruction_pointer,this.exec_stack.length);
+					continue;
+				}
+				l_log_if(LOG_LEVEL_VERBOSE,'reached end of instruction stream, nothing to return too',instruction,this.instructions,this.instruction_pointer);
+			}
 		}
 		console.assert(this.stack.length===0,"stack length is not zero, unhandled data on stack");
 		return this.return_value;
