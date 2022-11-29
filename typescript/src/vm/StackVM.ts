@@ -36,11 +36,7 @@ export class StackVM {
 		let arguments_arr: Box[]=[];
 		let arg_count=operand_number_of_arguments;
 		for(let i=0;i<arg_count;i++) {
-			if(this.stack.length<=0) {
-				throw new Error('stack underflow in pop_arg_count');
-			}
-			let last=this.pop();
-			arguments_arr.unshift(last);
+			arguments_arr.unshift(this.pop());
 		}
 		return arguments_arr;
 	}
