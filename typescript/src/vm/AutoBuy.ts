@@ -409,7 +409,7 @@ export class AutoBuy implements AutoBuyInterface {
 			let log_level=this.get_logging_level('apply_dom_desc');
 			l_log_if(log_level,tag,items_index,data_depth,data);
 			let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
-			items.splice(items_index+1,0,['dom_exec',deep_res[0]]);
+			items.push(['dom_exec',deep_res[0]]);
 			this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
 			this.log_if('apply_dom_desc',items,depths,stack);
 		}
