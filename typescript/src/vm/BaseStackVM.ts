@@ -9,6 +9,7 @@ import {InstructionType} from "./instruction/InstructionType.js";
 import {l_log_if} from "./l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {AbstractVM} from "./AbstractVM.js";
+import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
 
 export class BaseStackVM implements AbstractVM {
 	flags: Map<string,boolean>;
@@ -170,6 +171,7 @@ export class BaseStackVM implements AbstractVM {
 			case 'vm_push_ip': {
 				this.push(new NumberBox(this.instruction_pointer));
 			} break;
+			case 'breakpoint' /*Debug*/: return trigger_debug_breakpoint();
 			default: {
 				console.info('Unknown opcode',instruction[0]);
 				throw new Error('Halt: bad opcode ('+instruction[0]+')');
