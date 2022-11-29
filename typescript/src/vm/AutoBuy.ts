@@ -323,7 +323,7 @@ export class AutoBuy implements AutoBuyInterface {
 				} break;
 				case 'append': {
 					// peek at the return stack, up 1 depth
-					stack.push([depth,"peek",depth-1,0]);
+					stack.push([depth,"dom_peek",depth-1,0]);
 					stack.push(cur_item);
 				} break;
 				case 'drop':
@@ -406,13 +406,13 @@ export class AutoBuy implements AutoBuyInterface {
 			return [items,depths];
 		let stack_item=stack.pop();
 		if(!stack_item) throw 1;
-		const [tag,items_index,data]=stack_item;
+		const [tag,items_index,[data_depth,data]]=stack_item;
 		let log_level=this.get_logging_level('apply_dom_desc');
-		l_log_if(log_level,tag,items_index,data);
+		l_log_if(log_level,tag,items_index,data_depth,data);
 		let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
 		const ret_items=items.slice();
 		let off=1;
-		let new_instr: InstructionType=['dom_exec',deep_res[0]];
+		let new_instr: ['dom_exec',RawDomInstructions[]]=['dom_exec',deep_res[0]];
 		ret_items.splice(items_index+off++,0,new_instr);
 		this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
 		this.log_if('apply_dom_desc',ret_items,depths,stack);

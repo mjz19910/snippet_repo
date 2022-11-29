@@ -2,7 +2,7 @@ import {Box} from "../box/Box.js";
 import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 
 export type RawDomInstructions=
-	['peek',number,number]|
+	['dom_peek',number,number]|
 	['construct',number]|
 	['new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]]|
 	['call',number]|
@@ -12,4 +12,5 @@ export type RawDomInstructions=
 	['append']|
 	['drop']|
 	['enable_dry_mode']|
+	['dom_exec',RawDomInstructions[]]|
 	["push",...Box[]];

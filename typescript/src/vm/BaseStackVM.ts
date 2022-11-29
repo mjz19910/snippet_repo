@@ -50,7 +50,7 @@ export class BaseStackVM implements AbstractVM {
 		}
 		return pop_value;
 	}
-	pop_arg_count(operand_number_of_arguments: any) {
+	pop_arg_count(operand_number_of_arguments: number) {
 		let arguments_arr=[];
 		let arg_count=operand_number_of_arguments;
 		for(let i=0;i<arg_count;i++) {
