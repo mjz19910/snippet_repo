@@ -286,7 +286,6 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	build_dom_from_desc(raw_arr: RawDomInstructionsWithDepth[],trg_map:Map<string,Element>=new Map,dry_run=false) {
 		let stack: RawDomInstructionsWithDepth[]=[];
-		let map=trg_map;
 		if(dry_run)
 			stack.push([0,"enable_dry_mode"]);
 		for(let i=0;i<raw_arr.length;i++) {
@@ -310,14 +309,14 @@ export class AutoBuy implements AutoBuyInterface {
 					const [,,element_type,name,content]=cur_item;
 					let cur_element=document.createElement(element_type);
 					cur_element.innerText=content;
-					map.set(name,cur_element);
+					trg_map.set(name,cur_element);
 					stack.push([depth,"push",new DomValueBox(cur_element)]);
 				} break;
 				case 'create_props': {
 					const [,,element_type,name,content]=cur_item;
 					let cur_element=document.createElement(element_type);
 					cur_element.id=content.id;
-					map.set(name,cur_element);
+					trg_map.set(name,cur_element);
 					stack.push([depth,"push",new DomValueBox(cur_element)]);
 				} break;
 				case 'append': {
