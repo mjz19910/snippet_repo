@@ -22,6 +22,7 @@ import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_s
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {SpecType} from "../SpecType.js";
 import {BaseStackVM} from "./BaseStackVM.js";
+import {InstructionType} from "./instruction/InstructionType.js";
 
 declare global {
 	interface Window {
@@ -385,13 +386,10 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		return level;
 	}
-	/* 		get [next_debug_id()](){
-		return 'apply_dom_desc'
-	} */
 	apply_dom_desc(tree: any) {
 		this.run_dom_desc(tree);
 	}
-	run_dom_desc(tree: string|any[],stack: (string|number)[][]=[],cur_depth=0,items: any[]=[],depths: number[]=[]) {
+	run_dom_desc(tree: string|any[],stack: (string|number)[][]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[0]-cur_depth) {
@@ -417,7 +415,8 @@ export class AutoBuy implements AutoBuyInterface {
 		let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
 		const ret_items=items.slice();
 		let off=1;
-		ret_items.splice(items_index+off++,0,['exec',deep_res[0]]);
+		let new_instr:InstructionType=['dom_exec',deep_res[0]];
+		ret_items.splice(items_index+off++,0,new_instr);
 		this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
 		this.log_if('apply_dom_desc',ret_items,depths,stack);
 		let builder_vm=new BaseStackVM(ret_items);
