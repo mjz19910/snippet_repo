@@ -2013,12 +2013,6 @@ function call_mute_fn() {
 	window.mute();
 }
 declare global {
-	interface Window {
-		g_auto_buy: AutoBuy;
-	}
-}
-
-declare global {
 	interface HTMLDivElement {
 		style: CSSStyleDeclaration;
 	}

@@ -30,6 +30,7 @@ import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 import {VoidBox} from "../box/VoidBox.js";
 import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
 import {InstructionType} from "./instruction/InstructionType.js";
+import {TreeItem} from "./TreeItem";
 
 declare global {
 	interface Window {
@@ -48,7 +49,11 @@ declare global {
 	}
 }
 
-type TreeItem=[number,'op',InstructionType]|[number,'group',TreeItem[]];
+declare global {
+	interface Window {
+		g_auto_buy: AutoBuy;
+	}
+}
 
 export class AutoBuy implements AutoBuyInterface {
 	do_zero_pad(value: string|number,pad_char: string,char_num: number) {
