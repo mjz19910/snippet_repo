@@ -284,7 +284,7 @@ export class AutoBuy implements AutoBuyInterface {
 			default: return document.querySelector(query);
 		}
 	}
-	build_dom_from_desc(raw_arr: RawDomInstructionsWithDepth[],trg_map=new Map,dry_run=false) {
+	build_dom_from_desc(raw_arr: RawDomInstructionsWithDepth[],trg_map:Map<string,Element>=new Map,dry_run=false) {
 		let stack: RawDomInstructionsWithDepth[]=[];
 		let map=trg_map;
 		if(dry_run)
