@@ -20,7 +20,7 @@ export class BaseStackVM implements AbstractVM {
 	base_pointer;
 	running;
 	stack: Box[];
-	return_value: Box;
+	return_slot: Box;
 	exec_stack: ([Box[],InstructionType[]])[];
 	jump_instruction_pointer: number|null;
 	constructor(instructions: InstructionType[]) {
@@ -30,7 +30,7 @@ export class BaseStackVM implements AbstractVM {
 		this.base_pointer=0;
 		this.running=false;
 		this.stack=[];
-		this.return_value=new VoidBox(void 0);
+		this.return_slot=new VoidBox(void 0);
 		this.exec_stack=[];
 		this.jump_instruction_pointer=null;
 	}
@@ -38,7 +38,7 @@ export class BaseStackVM implements AbstractVM {
 		this.instruction_pointer=0;
 		this.running=false;
 		this.stack.length=0;
-		this.return_value=new VoidBox(void 0);
+		this.return_slot=new VoidBox(void 0);
 	}
 	push(value: Box) {
 		this.stack.push(value);
@@ -154,7 +154,7 @@ export class BaseStackVM implements AbstractVM {
 			} break;
 			case 'return' /*Call*/:
 				let ret=this.pop();
-				this.return_value=ret;
+				this.return_slot=ret;
 				break;
 			case 'modify_operand': {
 				let [,target,offset]=instruction;
@@ -226,7 +226,7 @@ export class BaseStackVM implements AbstractVM {
 			if(this.instruction_pointer>=this.instructions.length) this.fell_off_instructions(instruction);
 		}
 		console.assert(this.stack.length===0,"stack length is not zero, unhandled data on stack");
-		return this.return_value;
+		return this.return_slot;
 	}
 	fell_off_instructions(instruction: InstructionType) {
 		if(this.exec_stack.length>0) {

@@ -34,6 +34,6 @@ export class DomBuilderVM extends BaseStackVM {
 			}
 		}
 		console.assert(this.stack.length===0,"stack length is not zero, unhandled data on stack");
-		return this.return_value;
+		return this.return_slot;
 	}
 }
