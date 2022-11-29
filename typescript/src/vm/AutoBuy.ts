@@ -237,38 +237,16 @@ export class AutoBuy implements AutoBuyInterface {
 			return out;
 		}
 		let call_arg_arr: []=[];
-		type CssInstructions=
-			[0,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
-			[0,'new',NewableFunction,[],CallableFunction,[string]]|
-			[0,'call',number]|
-			[0,'drop'];
-		let make_css_arr: CssInstructions[]=[
-			[0,'push',null,async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
-				// @Hack: wait for any promise to settle
-				const e=await Promise.allSettled(styles_promise_arr);
-				let fulfilled=retype_promise_settled_results(e);
-				let res=fulfilled.map(e_2 => e_2.value);
-				this.adopt_styles(...res);
-				let err=e.filter(e_3 => e_3.status!='fulfilled');
-				if(err.length>0)
-					console.log('promise failure...',...err);
-			},...call_arg_arr],
-			[0,'new',CSSStyleSheet,[],
-				(obj: {replace: (arg0: any) => any;},str: any) => obj.replace(str),
-				[css_display_style]
-			],
-			[0,'call',2+1+call_arg_arr.length],
-			// drop the promise
-			[0,'drop'],
-		];
 		type RawDomInstructions=
-		CssInstructions|
-		[number,'get','body']|
-		[number,'create','div',string,string]|
-		[number,'create_props','div',string,{id:string}]|
-		[number,'append']|
-		[number,'drop'];
-		let raw_dom_arr:RawDomInstructions[]=[
+			[number,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
+			[number,'new',NewableFunction,[],CallableFunction,[string]]|
+			[number,'call',number]|
+			[number,'get','body']|
+			[number,'create','div',string,string]|
+			[number,'create_props','div',string,{id: string;}]|
+			[number,'append']|
+			[number,'drop'];
+		let raw_dom_arr: RawDomInstructions[]=[
 			[0,'get','body'],
 			[1,'create_props','div','state_log',{id: 'state_log'}],
 			[1,'append'],
