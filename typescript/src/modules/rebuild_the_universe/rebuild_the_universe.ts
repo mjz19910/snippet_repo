@@ -16,14 +16,15 @@
 // @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real
 // @run-at			document-start
 // @grant			none
+// ==/UserScript==
 
+import {Box} from "../../box/Box.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {Cast} from "../../vm/instruction/Cast.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
 import {VMPushSelf} from "../../vm/instruction/vm/VMPushSelf.js";
-import {Box,InstructionType} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
+import {InstructionType} from "../../vm/instruction/InstructionType.js";
 
-// ==/UserScript==
 console=globalThis.console;
 
 const AUDIO_ELEMENT_VOLUME=0.58;

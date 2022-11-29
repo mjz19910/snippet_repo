@@ -296,7 +296,7 @@ class PromiseBoxImpl {
 	as_type(_to_match) {
 		return this;
 	}
-	/** @param {Promise<Box>} value */
+	/** @param {Promise<Box_CJS>} value */
 	constructor(value) {
 		this.value=value;
 	}
@@ -306,7 +306,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	type='call';
 	/** @type {boolean} */
 	debug=false;
-	/** @arg {StackVMImpl} vm @arg {Box} fn_box @arg {Box} target_this @arg {Box[]} arg_arr */
+	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_box @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_fn_box(vm,fn_box,target_this,arg_arr) {
 		if('return_type' in fn_box&&fn_box.return_type=='promise_box') {
 			return this.handle_as_fn_to_promise(vm,fn_box.value,target_this,arg_arr);
@@ -318,7 +318,7 @@ class InstructionCallImpl extends InstructionImplBase {
 			throw new Error("Unexpected function box type");
 		}
 	}
-	/** @arg {Box} object_box @returns {{}|Function|StackVMImpl|null} */
+	/** @arg {Box_CJS} object_box @returns {{}|Function|StackVMImpl|null} */
 	unbox_obj(object_box) {
 		if(object_box===null) return null;
 		const {type,...left_to_unbox}=object_box;
@@ -347,7 +347,7 @@ class InstructionCallImpl extends InstructionImplBase {
 		console.log('unbox',type,left_to_unbox);
 		throw new Error("1");
 	}
-	/** @arg {Box[]} arg_arr */
+	/** @arg {Box_CJS[]} arg_arr */
 	unbox_arr(arg_arr) {
 		/** @type {({} | Function | StackVMImpl | null)[]} */
 		let arr=[];
@@ -367,13 +367,13 @@ class InstructionCallImpl extends InstructionImplBase {
 		}
 		return arr;
 	}
-	/** @arg {StackVMImpl} vm @arg {(...a: Box[]) => Box} fn_value @arg {Box} target_this @arg {Box[]} arg_arr */
+	/** @arg {StackVMImpl} vm @arg {(...a: Box_CJS[]) => Box_CJS} fn_value @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_fn(vm,fn_value,target_this,arg_arr) {
 		let real_this=this.unbox_obj(target_this);
 		let ret=fn_value.apply(real_this,arg_arr);
 		vm.stack.push(ret);
 	}
-	/** @arg {StackVMImpl} vm @arg {Box} fn_obj @arg {Box} target_this @arg {Box[]} arg_arr */
+	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_obj @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
 		if(!('as_type' in fn_obj)) {
 			console.log('!fn_obj.as_type',fn_obj);
@@ -394,7 +394,7 @@ class InstructionCallImpl extends InstructionImplBase {
 			throw new Error("Unreachable (type of value is never)");
 		}
 	}
-	/** @arg {StackVMImpl} vm @arg {(...a: Box[]) => Promise<Box>} fn_value @arg {Box} target_this @arg {Box[]} arg_arr */
+	/** @arg {StackVMImpl} vm @arg {(...a: Box_CJS[]) => Promise<Box_CJS>} fn_value @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_fn_to_promise(vm,fn_value,target_this,arg_arr) {
 		let real_this=this.unbox_obj(target_this);
 		let ret=fn_value.apply(real_this,arg_arr);
@@ -486,7 +486,7 @@ class InstructionCastImpl extends InstructionImplBase {
 		console.warn('noisy box',cast_source,obj);
 		console.log('inner',obj.value);
 	}
-	/** @type {(vm:StackVMImpl, cast_source:'object_index', obj:{value:{[x:string]:Box}})=>void} @arg {StackVMImpl} vm @arg {'object_index'} cast_source */
+	/** @type {(vm:StackVMImpl, cast_source:'object_index', obj:{value:{[x:string]:Box_CJS}})=>void} @arg {StackVMImpl} vm @arg {'object_index'} cast_source */
 	push_temporary_box(vm,cast_source,obj) {
 		void vm;
 		console.warn('push_temporary_box',cast_source,obj);
@@ -496,7 +496,7 @@ class InstructionCastImpl extends InstructionImplBase {
 		void vm;
 		console.warn('push_custom_box',cast_source,obj);
 	}
-	/** @arg {StackVMImpl} vm @arg {Box} obj @arg {'object_index'} cast_source */
+	/** @arg {StackVMImpl} vm @arg {Box_CJS} obj @arg {'object_index'} cast_source */
 	cast_to_type(vm,obj,cast_source) {
 		if(obj?.type==='custom_box'&&obj.box_type==='StackVM') {
 			return this.push_custom_box(vm,cast_source,obj);
@@ -653,7 +653,7 @@ class InstructionDupImpl extends InstructionImplBase {
 class InstructionGetImpl extends InstructionImplBase {
 	/** @type {'get'} */
 	type='get';
-	/** @arg {StackVMImpl} vm @arg {Box} value_box @arg {string|number} key */
+	/** @arg {StackVMImpl} vm @arg {Box_CJS} value_box @arg {string|number} key */
 	on_get(vm,value_box,key) {
 		if(typeof key!='string') throw new Error("Invalid");
 		switch(value_box.type) {
@@ -886,26 +886,26 @@ const instruction_descriptor_arr=[
 ];
 instruction_descriptor_arr;
 /**
- * @typedef {import("../../vm/instruction/InstructionType.js").InstructionType} InstructionType
- * @typedef {import("../../box/Box.js").Box} Box
- * @typedef {import("../../vm/StackVM.js").StackVM} StackVM
+ * @typedef {import("../../vm/instruction/InstructionType.js").InstructionType} InstructionType_CJS
+ * @typedef {import("../../box/Box.js").Box} Box_CJS
+ * @typedef {import("../../vm/StackVM.js").StackVM} StackVM_CJS
 */
-/** @implements {StackVM} */
+/** @implements {StackVM_CJS} */
 class StackVMImpl {
-	/** @type {Box} */
+	/** @type {Box_CJS} */
 	return_value;
 	/** @type {number|null} */
 	jump_instruction_pointer;
 	/** @type {number|null} */
 	base_ptr;
-	/** @type {Box[]} */
+	/** @type {Box_CJS[]} */
 	stack;
-	/** @arg {InstructionType[]} instructions */
+	/** @arg {InstructionType_CJS[]} instructions */
 	constructor(instructions) {
 		this.instructions=instructions;
 		this.instruction_pointer=0;
 		this.running=false;
-		/** @type {Box[]} */
+		/** @type {Box_CJS[]} */
 		this.stack=[];
 		this.return_value=new VoidBoxImpl;
 		this.jump_instruction_pointer=null;
@@ -957,7 +957,7 @@ class StackVMImpl {
 	halt() {
 		this.running=false;
 	}
-	/** @arg {InstructionType} instruction */
+	/** @arg {InstructionType_CJS} instruction */
 	execute_instruction(instruction) {
 		switch(instruction[0]) {
 			case 'append': break;
@@ -992,7 +992,7 @@ class StackVMImpl {
 	}
 }
 class EventHandlerVMDispatch extends StackVMImpl {
-	/** @arg {InstructionType[]} instructions @arg {any} target_obj */
+	/** @arg {InstructionType_CJS[]} instructions @arg {any} target_obj */
 	constructor(instructions,target_obj) {
 		try {
 			super(instructions);
@@ -1001,7 +1001,7 @@ class EventHandlerVMDispatch extends StackVMImpl {
 			console.log('EventHandlerVMDispatch constructor error',e);
 		}
 	}
-	/** @override @arg {Box[]} args_arr */
+	/** @override @arg {Box_CJS[]} args_arr */
 	run(...args_arr) {
 		try {
 			this.args_arr=args_arr;
@@ -1116,10 +1116,10 @@ class StackVMParser {
 		}
 		let instructions=this.verify_raw_instructions(raw_instructions); return instructions;
 	}
-	/** @arg {string[]} instruction @returns {InstructionType}*/
+	/** @arg {string[]} instruction @returns {InstructionType_CJS}*/
 	static verify_instruction(instruction) {
 		let num_to_parse=instruction.length;
-		/** @type {InstructionType|null} */
+		/** @type {InstructionType_CJS|null} */
 		let ret=null;
 		switch(instruction[0]) {
 			case 'push': {
@@ -1168,9 +1168,9 @@ class StackVMParser {
 		}
 		throw new Error("Unreachable");
 	}
-	/** @arg {string[][]} raw_instructions @return {InstructionType[]} */
+	/** @arg {string[][]} raw_instructions @return {InstructionType_CJS[]} */
 	static verify_raw_instructions(raw_instructions) {
-		/** @type{InstructionType[]}*/
+		/** @type{InstructionType_CJS[]}*/
 		const instructions=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			instructions.push(this.verify_instruction(raw_instructions[i]));
