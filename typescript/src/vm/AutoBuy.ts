@@ -232,17 +232,17 @@ export class AutoBuy implements AutoBuyInterface {
 		let call_arg_arr: []=[];
 		let raw_dom_arr: RawDomInstructionsWithDepth[]=[
 			[0,'dom_get','body'],
-			[1,'create_props','div','state_log',{id: 'state_log'}],
+			[1,'dom_create_element_with_props','div','state_log',{id: 'state_log'}],
 			[1,'append'],
-			[2,'create','div','history',"?3"],
+			[2,'dom_create_element','div','history',"?3"],
 			[2,'append'],
-			[2,'create','div','delay',"0"],
+			[2,'dom_create_element','div','delay',"0"],
 			[2,'append'],
-			[2,'create','div','hours_played',"0.000 hours"],
+			[2,'dom_create_element','div','hours_played',"0.000 hours"],
 			[2,'append'],
-			[2,'create','div','ratio',0..toFixed(2)+"%"],
+			[2,'dom_create_element','div','ratio',0..toFixed(2)+"%"],
 			[2,'append'],
-			[2,'create','div','ratio_change',0..toExponential(3)],
+			[2,'dom_create_element','div','ratio_change',0..toExponential(3)],
 			[2,'append'],
 			[1,'drop'],
 			[0,'drop'],
@@ -307,14 +307,14 @@ export class AutoBuy implements AutoBuyInterface {
 					stack.push([depth,"push",...arg_arr.map(e => new StringBox(e))]);
 					stack.push([depth,"call",3+arg_arr.length]);
 				} break;
-				case 'create': {
+				case 'dom_create_element': {
 					const [,,element_type,name,content]=cur_item;
 					let cur_element=document.createElement(element_type);
 					cur_element.innerText=content;
 					trg_map.set(name,cur_element);
 					stack.push([depth,"push",new DomValueBox(cur_element)]);
 				} break;
-				case 'create_props': {
+				case 'dom_create_element_with_props': {
 					const [,,element_type,name,content]=cur_item;
 					let cur_element=document.createElement(element_type);
 					cur_element.id=content.id;

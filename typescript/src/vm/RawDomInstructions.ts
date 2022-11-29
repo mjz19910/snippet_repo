@@ -7,8 +7,8 @@ export type RawDomInstructions=
 	['dom_new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]]|
 	['call',number]|
 	['dom_get',string]|
-	['create','div',string,string]|
-	['create_props','div',string,{id: string;}]|
+	['dom_create_element','div',string,string]|
+	['dom_create_element_with_props','div',string,{id: string;}]|
 	['append']|
 	['drop']|
 	['enable_dry_mode']|
