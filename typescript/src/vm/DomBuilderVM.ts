@@ -3,7 +3,6 @@ import {Box} from "../box/Box.js";
 import {BaseStackVM} from "./BaseStackVM.js";
 import {l_log_if} from "./l_log_if.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
-import {is_dom_peek} from "./is_dom_peek.js";
 import {NumberBox} from "../box/NumberBox.js";
 
 export class DomBuilderVM extends BaseStackVM {
@@ -42,8 +41,7 @@ export class DomBuilderVM extends BaseStackVM {
 				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
 			} break;
 			case 'append': throw new Error("Dom box handling not implemented");
-			default /*Debug*/: {
-				if(is_dom_peek(instruction)) throw new Error("Bad");
+			default: {
 				super.execute_instruction(instruction);
 			} break;
 		}
