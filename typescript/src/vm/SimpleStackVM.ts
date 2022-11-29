@@ -1,17 +1,8 @@
 import {InstructionType} from "./instruction/InstructionType.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
 import {BaseStackVM} from "./BaseStackVM.js";
-import {FunctionConstructorBox} from "../box/FunctionConstructorBox.js";
-import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
-import {NewableFunctionBox} from "../box/NewableFunctionBox.js";
 import {Call} from "./instruction/general/Call.js";
-
-function construct_with_constructor_box<ArgsType extends any[]>(value: CSSStyleSheetConstructorBox|NewableFunctionBox|FunctionConstructorBox,arg_arr: ArgsType) {
-	switch(value.instance_type) {
-		case 'CSSStyleSheet': return value.factory(...arg_arr);
-	}
-	throw new Error("Bad");
-}
+import {construct_with_constructor_box} from "./construct_with_constructor_box";
 
 export class SimpleStackVM<T> extends BaseStackVM {
 	args_vec: (T extends Array<T>? T:[T])|null;
