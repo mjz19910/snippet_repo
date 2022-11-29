@@ -344,9 +344,8 @@ export class AutoBuy implements AutoBuyInterface {
 		this.apply_dom_desc(tree);
 	}
 	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]) {
-		type PrevType=[number,TreeItem[]];
-		type DepthType=[number,RawDomInstructions];
-		type TreeItem=RawDomInstructions|PrevType|DepthType;
+		type TreeItemType=[number,RawDomInstructions|TreeItem[]];
+		type TreeItem=RawDomInstructions|TreeItemType;
 		let tree: TreeItem[]=[];
 		let stack: TreeItem[][]=[];
 		for(let tree_depth=0,i=0;i<input_stack.length;i++) {
