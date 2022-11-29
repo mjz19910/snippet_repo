@@ -344,8 +344,9 @@ export class AutoBuy implements AutoBuyInterface {
 		this.apply_dom_desc(tree);
 	}
 	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]) {
-		let stack: RawDomInstructions[][]=[];
-		let tree=[];
+		let tree: (RawDomInstructions|['prev',number,number]|['depth',number,RawDomInstructions])[]=[];
+		let stack: (['prev',number,RawDomInstructions[]]|['tree', typeof tree])[]=[];
+		let data: typeof tree[]=[];
 		for(let tree_depth=0,i=0;i<input_stack.length;i++) {
 			let cur_stack=input_stack[i];
 			let depth:number;
@@ -354,17 +355,21 @@ export class AutoBuy implements AutoBuyInterface {
 			if(this.debug_arr.includes('parse_dom_desc'))
 				console.log(item);
 			while(depth>tree_depth) {
-				stack.push(tree);
+				stack.push(['tree',tree]);
 				tree=[];
 				tree_depth++;
 			}
 			while(depth<tree_depth) {
 				let prev=tree;
-				tree=<any>stack.pop();
-				tree.push([tree_depth,prev]);
+				let stack_item=stack.pop();
+				if(!stack_item) throw new Error("Stack underflow");
+				if(stack_item[0]!=='tree') throw new Error("Type mismatch");
+				tree=stack_item[1];
+				data.push(prev);
+				tree.push(['prev',tree_depth,data.indexOf(prev)]);
 				tree_depth--;
 			}
-			tree.push([depth,item]);
+			tree.push(['depth',depth,item]);
 		}
 		return [stack,tree];
 	}
