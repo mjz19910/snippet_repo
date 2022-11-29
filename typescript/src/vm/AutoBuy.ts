@@ -342,8 +342,8 @@ export class AutoBuy implements AutoBuyInterface {
 		if(left_stack.length>0) {
 			console.assert(false,'failed to parse everything (parse tree probably has errors)');
 		}
-		let [ret_items,_depths]=this.run_dom_desc(tree);
-		let builder_vm=new BaseStackVM(ret_items);
+		let [dom_vm_instructions,_depths]=this.tree_to_instructions(tree);
+		let builder_vm=new BaseStackVM(dom_vm_instructions);
 		builder_vm.run();
 	}
 	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]): [TreeItem[][],TreeItem[]] {
@@ -382,7 +382,7 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		return level;
 	}
-	run_dom_desc(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
+	tree_to_instructions(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[1]) {
@@ -408,7 +408,7 @@ export class AutoBuy implements AutoBuyInterface {
 			const [tag,items_index,[data_depth,data]]=stack_item;
 			let log_level=this.get_logging_level('apply_dom_desc');
 			l_log_if(log_level,tag,items_index,data_depth,data);
-			let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
+			let deep_res=this.tree_to_instructions(data,stack,cur_depth+1);
 			items.push(['dom_exec',deep_res[0]]);
 			this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
 			this.log_if('apply_dom_desc',items,depths,stack);
