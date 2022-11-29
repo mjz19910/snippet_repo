@@ -41,31 +41,7 @@ export class DomBuilderVM extends BaseStackVM {
 				this.push(at);
 				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
 			} break;
-			case 'append': {
-				if(this.stack.length<=0) {
-					throw new Error('stack underflow');
-				}
-				let target=this.pop();
-				if(this.stack.length<=0) {
-					throw new Error('stack underflow');
-				}
-				let child_to_append=this.pop();
-				this.verify_dom_box(<any>target);
-				this.verify_dom_box(<any>child_to_append);
-				if((<any>child_to_append).from!=='create') {
-					console.warn('Are you sure you want to move elements around? child_to_append was not an element you created',child_to_append);
-				}
-				if(this.can_use_box(<any>target)&&this.can_use_box(<any>child_to_append)) {
-					if((<any>target).value&&(<any>child_to_append).value) {
-						(<any>target).value.appendChild((<any>child_to_append).value);
-					} else {
-						console.assert(false,'box has no value');
-					}
-				} else {
-					console.warn('not using box');
-				}
-				l_log_if(LOG_LEVEL_VERBOSE,'append to dom',[target,child_to_append]);
-			} break;
+			case 'append': throw new Error("Dom box handling not implemented");
 			default /*Debug*/: {
 				if(is_dom_peek(instruction)) throw new Error("Bad");
 				super.execute_instruction(instruction);
