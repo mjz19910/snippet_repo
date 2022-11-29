@@ -36,7 +36,8 @@ export class DomBuilderVM extends BaseStackVM {
 				let base_ptr=peek_stack.at(-1);
 				if(!base_ptr) throw new Error("Peek stack underflow");
 				if(base_ptr.type!='number') throw new Error("Incorrect type for dom_peek");
-				let at=peek_stack[base_ptr.value-op_2-1];
+				let at=peek_stack.at(base_ptr.value-op_2-1);
+				if(!at) throw new Error("Peek at underflow");
 				this.push(at);
 				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,op_2,'base ptr',base_ptr,'ex_stack',op_1);
 			} break;
