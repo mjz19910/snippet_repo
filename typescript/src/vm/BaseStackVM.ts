@@ -44,10 +44,10 @@ export class BaseStackVM implements AbstractVM {
 		this.stack.push(value);
 	}
 	pop(): Box {
-		if(this.stack.length===0) {
-			throw new Error("stack underflow");
+		let pop_value=this.stack.pop();
+		if(!pop_value) {
+			throw new Error("Stack underflow");
 		}
-		let pop_value=this.stack.pop()!;
 		return pop_value;
 	}
 	pop_arg_count(operand_number_of_arguments: any) {

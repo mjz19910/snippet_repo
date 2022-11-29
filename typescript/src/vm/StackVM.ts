@@ -25,7 +25,9 @@ export class StackVM {
 		this.stack.push(value);
 	}
 	pop() {
-		return this.stack.pop();
+		let last=this.stack.pop();
+		if(!last) throw new Error("Stack underflow");
+		return last;
 	}
 	peek_at(distance: number) {
 		return this.stack.at(-1-distance);
@@ -85,22 +87,7 @@ export class StackVM {
 				}
 				let instruction_1=this.instructions[target];
 				let instruction_modify: [string,...any[]]=instruction_1;
-				let value=null;
-				if(this instanceof StackVM) {
-					value=this.pop();
-				} else {
-					let pop_fn=Object.getOwnPropertyDescriptor(this,'pop');
-					if(!pop_fn)
-						throw new Error("Previous check should cause this to be unreachable");
-					if(pop_fn.get) {
-						throw new Error("own property pop was a getter");
-					} else {
-						console.info(`TODO: add instanceof check`);
-						value=pop_fn.value.call(this);
-					}
-				}
-				if(instruction_modify===void 0)
-					throw new Error("Invalid");
+				let value=this.pop();
 				instruction_modify[offset]=value;
 				let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify,[0]);
 				this.instructions[target]=valid_instruction;
