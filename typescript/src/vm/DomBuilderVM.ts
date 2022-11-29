@@ -14,7 +14,7 @@ export class DomBuilderVM extends BaseStackVM {
 		this.exec_stack=[];
 		this.jump_instruction_pointer=null;
 	}
-	execute_instruction_raw(instruction: InstructionType|['exec',InstructionType[]]|['dom_peek',any,any]) {
+	execute_instruction_raw(instruction: InstructionType|['exec',InstructionType[]]|['dom_peek',number,number]) {
 		l_log_if(LOG_LEVEL_VERBOSE,...instruction,null);
 		switch(instruction[0]) {
 			case 'exec': {
@@ -32,9 +32,11 @@ export class DomBuilderVM extends BaseStackVM {
 			} break;
 			case 'dom_peek': {
 				let [,op_1,op_2]=instruction;
-				let peek_stack=this.exec_stack[<any>op_1][0];
+				let peek_stack=this.exec_stack[op_1][0];
 				let base_ptr=peek_stack.at(-1);
-				let at=peek_stack[<any>base_ptr-<any>op_2-1];
+				if(!base_ptr) throw new Error("Peek stack underflow");
+				if(base_ptr.type!='number') throw new Error("Incorrect type for dom_peek");
+				let at=peek_stack[base_ptr.value-op_2-1];
 				this.push(at);
 				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,op_2,'base ptr',base_ptr,'ex_stack',op_1);
 			} break;
