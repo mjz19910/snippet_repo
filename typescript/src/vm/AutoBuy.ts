@@ -338,15 +338,12 @@ export class AutoBuy implements AutoBuyInterface {
 			if(this.debug_arr.includes('build_dom_from_desc'))
 				console.log('es',stack.at(-1));
 		}
-		let [left_stack,instruction_tree]=this.stack_to_instruction_tree(stack);
-		if(left_stack.length>0) {
-			console.assert(false,'failed to parse everything (parse tree probably has errors)');
-		}
+		let instruction_tree=this.stack_to_instruction_tree(stack);
 		let [dom_vm_instructions,_depths]=this.instruction_tree_to_instructions(instruction_tree);
 		let builder_vm=new BaseStackVM(dom_vm_instructions);
 		builder_vm.run();
 	}
-	stack_to_instruction_tree(input_stack: RawDomInstructionsWithDepth[]): [TreeItem[][],TreeItem[]] {
+	stack_to_instruction_tree(input_stack: RawDomInstructionsWithDepth[]): TreeItem[] {
 		let tree: TreeItem[]=[];
 		let stack: TreeItem[][]=[];
 		for(let iter_depth=0,i=0;i<input_stack.length;i++) {
@@ -374,7 +371,7 @@ export class AutoBuy implements AutoBuyInterface {
 			if(!stack_item) throw new Error("Stack underflow");
 			tree=stack_item;
 		}
-		return [stack,tree];
+		return tree;
 	}
 	log_if(tag: string,...log_args: (string|number|any[])[]) {
 		if(this.debug_arr.includes(tag)) {
