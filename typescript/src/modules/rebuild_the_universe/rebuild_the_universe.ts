@@ -730,6 +730,17 @@ class StackVMImpl {
 		switch(instruction[0]) {case 'je': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
 		switch(instruction[0]) {case 'jmp': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
 		switch(instruction[0]) {case 'modify_operand': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'nop': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'peek': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'push': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'push_window_object': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'return': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'vm_block_trace': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'vm_call': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'vm_push_args': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'vm_push_ip': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'vm_push_self': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case 'vm_return': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
 	}
 	run() {
 		this.running=true;
