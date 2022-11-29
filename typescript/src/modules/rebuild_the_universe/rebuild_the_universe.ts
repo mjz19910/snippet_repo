@@ -1497,6 +1497,7 @@ class AverageRatio {
 		return this.value;
 	}
 }
+
 class AverageRatioRoot {
 	map: Map<string,AverageRatio>;
 	keys: string[];
@@ -1539,18 +1540,21 @@ class AverageRatioRoot {
 		}
 	}
 }
+
 declare global {
 	interface Window {
 		atomepersecond: number;
 		prestige: number;
 	}
 }
+
 interface SpecType {
 	name: string;
 	desc: string;
 	done: boolean;
 	cost: number;
 }
+
 declare global {
 	interface Window {
 		timeplayed: number;
@@ -1567,6 +1571,7 @@ declare global {
 		allspec: SpecType[];
 	}
 }
+
 class AutoBuyState {
 	root_node: AsyncNodeRoot;
 	debug: boolean;
@@ -1827,17 +1832,21 @@ class AutoBuyState {
 		}
 	}
 }
+
 const named_sym_gen=new NamedIdGenerator;
 const debug_id_syms: WeakRef<{sym: symbol;}>[]=[];
+
 function labeled_sym(name: string): symbol {
 	const id=named_sym_gen.next_named(name);
 	const sym=Symbol(`${name}@${id}`);
 	debug_id_syms.push(new WeakRef({sym}));
 	return sym;
 }
+
 function int_parser(value: string): number {
 	return parseInt(value,10);
 }
+
 class DataLoader {
 	store: Storage;
 	constructor(storage: Storage) {
@@ -1868,6 +1877,7 @@ class DataLoader {
 		return this.default_split(data).map(int_parser);
 	}
 }
+
 class AsyncAutoBuy {
 	parent: AutoBuy;
 	unit_upgradeable_trigger: number;
@@ -1986,6 +1996,7 @@ class AsyncAutoBuy {
 		await node.start_async(new AsyncTimeoutTarget);
 	}
 }
+
 class VoidBoxImpl {
 	type: "void";
 	extension: null;
@@ -2004,19 +2015,23 @@ class VoidBoxImpl {
 		return this.m_verify_name==='VoidBox'&&name==='VoidBox';
 	}
 }
+
 declare global {
 	interface Window {
 		mute(): void;
 	}
 }
+
 function call_mute_fn() {
 	window.mute();
 }
+
 declare global {
 	interface HTMLDivElement {
 		style: CSSStyleDeclaration;
 	}
 }
+
 class AutoBuy {
 	debug_arr: any;
 	root_node: AsyncNodeRoot;
