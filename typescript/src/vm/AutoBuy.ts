@@ -389,7 +389,7 @@ export class AutoBuy implements AutoBuyInterface {
 	apply_dom_desc(tree: any) {
 		this.run_dom_desc(tree);
 	}
-	run_dom_desc(tree: string|any[],stack: (string|number)[][]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
+	run_dom_desc(tree: string|any[],stack: InstructionType[][]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[0]-cur_depth) {
