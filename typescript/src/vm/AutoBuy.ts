@@ -419,7 +419,6 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	init_dom() {
 		const font_size_px=22;
-		let t=this;
 		// general init
 		this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1);
 		// dom element init
@@ -430,8 +429,8 @@ export class AutoBuy implements AutoBuyInterface {
 			this.timeout_element.innerText=this.timeout_arr[0];
 		// init hours_played_element
 		// init percent_ratio_element
-		this.percent_ratio_element?.addEventListener('click',function() {
-			t.state.reset();
+		this.percent_ratio_element?.addEventListener('click',()=>{
+			this.state.reset();
 		});
 		// init percent_ratio_change_element
 		// init state_log_element
@@ -439,9 +438,9 @@ export class AutoBuy implements AutoBuyInterface {
 			this.state_log_element.style.fontSize=font_size_px+"px";
 		// event listeners
 		// window unload
-		window.addEventListener('unload',function() {
-			t.save_state_history_arr();
-			t.save_timeout_arr();
+		window.addEventListener('unload',()=>{
+			this.save_state_history_arr();
+			this.save_timeout_arr();
 		});
 	}
 	global_init() {
