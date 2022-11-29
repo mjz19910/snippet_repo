@@ -29,6 +29,7 @@ import {StringBox} from "../box/StringBox.js";
 import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
 import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 import {VoidBox} from "../box/VoidBox.js";
+import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
 
 declare global {
 	interface Window {
@@ -312,28 +313,24 @@ export class AutoBuy implements AutoBuyInterface {
 				} break;
 				case 'new': {
 					const [,,class_,construct_arg_arr,callback,arg_arr]=cur_item;
-					stack.push([depth,"push",new NullBox(null),new PromiseFunctionBox(async function(css_sheet,str) {
-						let res=await callback();
-						return new CSSStyleSheetBox(res);
-					}),...construct_arg_arr,class_]);
+					stack.push([depth,"push",new NullBox(null),callback,new CSSStyleSheetConstructorBox(class_)]);
 					stack.push([depth,"construct",1+construct_arg_arr.length]);
 					stack.push([depth,"push",...arg_arr.map(e => new StringBox(e))]);
 					stack.push([depth,"call",3+arg_arr.length]);
 				} break;
 				case 'create': {
-					const [element_type,name,content]=args;
+					const [,,element_type,name,content]=cur_item;
 					let cur_element=document.createElement(element_type);
-					if(typeof content=='string') {
-						cur_element.innerText=content;
-					} else if(typeof content=='object') {
-						if(content.id)
-							cur_element.id=content.id;
-					} else {
-						console.log('typeof content=%s content=%o',typeof content,content);
-						console.info("Info: case 'create' args are",element_type,name);
-					}
+					cur_element.innerText=content;
 					map.set(name,cur_element);
-					stack.push([depth,"push",new DomValueBox('create',cur_element)]);
+					stack.push([depth,"push",new DomValueBox(cur_element)]);
+				} break;
+				case 'create_props': {
+					const [,,element_type,name,content]=cur_item;
+					let cur_element=document.createElement(element_type);
+					cur_element.id=content.id;
+					map.set(name,cur_element);
+					stack.push([depth,"push",new DomValueBox(cur_element)]);
 				} break;
 				case 'append': {
 					// peek at the return stack, up 1 depth

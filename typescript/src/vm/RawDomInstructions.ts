@@ -2,6 +2,8 @@ import {Box} from "../box/Box.js";
 import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 
 export type RawDomInstructions=
+	[number,'peek',number,number]|
+	[number,'construct',number]|
 	[number,'new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]]|
 	[number,'call',number]|
 	[number,'get','body']|
