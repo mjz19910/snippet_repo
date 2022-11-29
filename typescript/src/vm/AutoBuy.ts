@@ -24,6 +24,13 @@ import {SpecType} from "../SpecType.js";
 import {BaseStackVM} from "./BaseStackVM.js";
 import {InstructionType} from "./instruction/InstructionType.js";
 import {RawDomInstructions} from "./RawDomInstructions";
+import {NullBox} from "../box/NullBox.js";
+import {CallableFunctionBox} from "./CallableFunctionBox.js";
+import {PromiseBox} from "../box/PromiseBox.js";
+import {StringBox} from "../box/StringBox.js";
+import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
+import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
+import {VoidBox} from "../box/VoidBox.js";
 
 declare global {
 	interface Window {
@@ -251,18 +258,14 @@ export class AutoBuy implements AutoBuyInterface {
 			[1,'drop'],
 			[0,'drop'],
 			// process promise
-			[0,'push',null,async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
-				// @Hack: wait for any promise to settle
-				const e=await Promise.allSettled(styles_promise_arr);
-				let fulfilled=retype_promise_settled_results(e);
-				let res=fulfilled.map(e_2 => e_2.value);
-				this.adopt_styles(...res);
-				let err=e.filter(e_3 => e_3.status!='fulfilled');
-				if(err.length>0)
-					console.log('promise failure...',...err);
-			},...call_arg_arr],
+			[0,'push',new NullBox(null),new PromiseFunctionBox(async (style_element_promise: Box) => {
+				if(style_element_promise.type==='promise_box'&&style_element_promise.await_type==='CSSStyleSheet') {
+					this.adopt_styles(await style_element_promise.value);
+				}
+				return new VoidBox(void 0);
+			}),...call_arg_arr],
 			[0,'new',CSSStyleSheet,[],
-				(obj: {replace: (arg0: any) => any;},str: any) => obj.replace(str),
+				(obj: CSSStyleSheet,str: string) => obj.replace(str),
 				[css_display_style]
 			],
 			[0,'call',2+1+call_arg_arr.length],
@@ -286,7 +289,7 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 	}
 	build_dom_from_desc(raw_arr: RawDomInstructions[],trg_map=new Map,dry_run=false) {
-		let stack:RawDomInstructions[]=[];
+		let stack: RawDomInstructions[]=[];
 		let map=trg_map;
 		if(dry_run)
 			stack.push([0,"enable_dry_mode"]);
@@ -302,9 +305,12 @@ export class AutoBuy implements AutoBuyInterface {
 				} break;
 				case 'new': {
 					const [,,class_,construct_arg_arr,callback,arg_arr]=cur_item;
-					stack.push([depth,"push",null,callback,...construct_arg_arr,class_]);
+					stack.push([depth,"push",new NullBox(null),new PromiseFunctionBox(async function(css_sheet,str) {
+						let res=await callback();
+						return new CSSStyleSheetBox(res);
+					}),...construct_arg_arr,class_]);
 					stack.push([depth,"construct",1+construct_arg_arr.length]);
-					stack.push([depth,"push",...arg_arr]);
+					stack.push([depth,"push",...arg_arr.map(e => new StringBox(e))]);
 					stack.push([depth,"call",3+arg_arr.length]);
 				} break;
 				case 'create': {

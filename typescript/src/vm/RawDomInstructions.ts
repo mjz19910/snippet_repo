@@ -1,8 +1,8 @@
 import {Box} from "../box/Box.js";
+import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 
 export type RawDomInstructions=
-	[number,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
-	[number,'new',NewableFunction,[],CallableFunction,[string]]|
+	[number,'new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]]|
 	[number,'call',number]|
 	[number,'get','body']|
 	[number,'create','div',string,string]|
