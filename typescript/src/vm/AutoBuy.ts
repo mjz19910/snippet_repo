@@ -237,29 +237,30 @@ export class AutoBuy implements AutoBuyInterface {
 			return out;
 		}
 		let call_arg_arr: []=[];
-		let make_css_arr: (
+		type XX=
 			[0,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
 			[0,'new',NewableFunction,[],CallableFunction,[string]]|
 			[0,'call',number]|
-			[0,'drop'])[]=[
-				[0,'push',null,async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
-					// @Hack: wait for any promise to settle
-					const e=await Promise.allSettled(styles_promise_arr);
-					let fulfilled=retype_promise_settled_results(e);
-					let res=fulfilled.map(e_2 => e_2.value);
-					this.adopt_styles(...res);
-					let err=e.filter(e_3 => e_3.status!='fulfilled');
-					if(err.length>0)
-						console.log('promise failure...',...err);
-				},...call_arg_arr],
-				[0,'new',CSSStyleSheet,[],
-					(obj: {replace: (arg0: any) => any;},str: any) => obj.replace(str),
-					[css_display_style]
-				],
-				[0,'call',2+1+call_arg_arr.length],
-				// drop the promise
-				[0,'drop'],
-			];
+			[0,'drop'];
+		let make_css_arr: XX[]=[
+			[0,'push',null,async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
+				// @Hack: wait for any promise to settle
+				const e=await Promise.allSettled(styles_promise_arr);
+				let fulfilled=retype_promise_settled_results(e);
+				let res=fulfilled.map(e_2 => e_2.value);
+				this.adopt_styles(...res);
+				let err=e.filter(e_3 => e_3.status!='fulfilled');
+				if(err.length>0)
+					console.log('promise failure...',...err);
+			},...call_arg_arr],
+			[0,'new',CSSStyleSheet,[],
+				(obj: {replace: (arg0: any) => any;},str: any) => obj.replace(str),
+				[css_display_style]
+			],
+			[0,'call',2+1+call_arg_arr.length],
+			// drop the promise
+			[0,'drop'],
+		];
 		let raw_dom_arr=[
 			...create_state_log_arr,
 			[2,'create','div','history',"?3"],[2,'append'],
@@ -389,7 +390,7 @@ export class AutoBuy implements AutoBuyInterface {
 	apply_dom_desc(tree: any) {
 		this.run_dom_desc(tree);
 	}
-	run_dom_desc(tree: string|any[],stack: InstructionType[][]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
+	run_dom_desc(tree: string|any[],stack: (InstructionType|['children',number,any])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[0]-cur_depth) {
@@ -409,13 +410,15 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		if(stack.length===0)
 			return [items,depths];
-		const [tag,items_index,[data_depth,data]]=<any>stack.pop();
+		let stack_item=stack.pop();
+		if(!stack_item) throw 1;
+		const [tag,items_index,[data_depth,data]]=stack_item;
 		let log_level=this.get_logging_level('apply_dom_desc');
 		l_log_if(log_level,tag,items[items_index],data_depth,data);
 		let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
 		const ret_items=items.slice();
 		let off=1;
-		let new_instr:InstructionType=['dom_exec',deep_res[0]];
+		let new_instr: InstructionType=['dom_exec',deep_res[0]];
 		ret_items.splice(items_index+off++,0,new_instr);
 		this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
 		this.log_if('apply_dom_desc',ret_items,depths,stack);
@@ -511,7 +514,7 @@ export class AutoBuy implements AutoBuyInterface {
 			clearInterval(window.secondinterval);
 		}
 		let rate=66/(2110-110);
-		console.error("todo", rate);
+		console.error("todo",rate);
 		let time_base=performance.now();
 		window.secondinterval=setInterval(function() {
 			let real_time=performance.now();
@@ -564,7 +567,7 @@ export class AutoBuy implements AutoBuyInterface {
 			this.state_history_arr.shift();
 	}
 	history_element_click_handler(event: any) {
-		console.error("todo", event);
+		console.error("todo",event);
 		this.root_node.destroy();
 		this.dom_reset();
 		this.reset();
