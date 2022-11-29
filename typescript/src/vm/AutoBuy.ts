@@ -284,16 +284,26 @@ export class AutoBuy implements AutoBuyInterface {
 			[2,'append'],
 			[1,'drop'],
 			[0,'drop'],
-			...make_css_arr
+			// process promise
+			[0,'push',null,async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
+				// @Hack: wait for any promise to settle
+				const e=await Promise.allSettled(styles_promise_arr);
+				let fulfilled=retype_promise_settled_results(e);
+				let res=fulfilled.map(e_2 => e_2.value);
+				this.adopt_styles(...res);
+				let err=e.filter(e_3 => e_3.status!='fulfilled');
+				if(err.length>0)
+					console.log('promise failure...',...err);
+			},...call_arg_arr],
+			[0,'new',CSSStyleSheet,[],
+				(obj: {replace: (arg0: any) => any;},str: any) => obj.replace(str),
+				[css_display_style]
+			],
+			[0,'call',2+1+call_arg_arr.length],
+			// drop the promise
+			[0,'drop'],
 		];
 		try {
-			raw_dom_arr=[
-				[0,'get','body'],
-				[1,'create_props','div','state_log',{id: 'state_log'}],
-				[1,'append'],
-				[0,'drop'],
-				...make_css_arr
-			];
 			this.build_dom_from_desc(raw_dom_arr,this.dom_map);
 		} catch(e) {
 			console.log(e);
