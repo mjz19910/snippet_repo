@@ -263,7 +263,16 @@ export class AutoBuy implements AutoBuyInterface {
 				return new VoidBox(void 0);
 			}),...call_arg_arr],
 			[0,'new',CSSStyleSheet,[],
-				(obj: CSSStyleSheet,str: string) => obj.replace(str),
+				new PromiseFunctionBox(async (...args:Box[]) => {
+					if(args.length!==2) {
+						throw new Error("Failed");
+					}
+					let [obj,str]=args;
+					if(obj.type==='CSSStyleSheetBox'&&str.type==='string') {
+						return new CSSStyleSheetBox(await obj.value.replace(str.value));
+					}
+					throw new Error("Failed");
+				}),
 				[css_display_style]
 			],
 			[0,'call',2+1+call_arg_arr.length],
