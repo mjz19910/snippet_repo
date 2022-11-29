@@ -237,12 +237,12 @@ export class AutoBuy implements AutoBuyInterface {
 			return out;
 		}
 		let call_arg_arr: []=[];
-		type XX=
+		type CssInstructions=
 			[0,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
 			[0,'new',NewableFunction,[],CallableFunction,[string]]|
 			[0,'call',number]|
 			[0,'drop'];
-		let make_css_arr: XX[]=[
+		let make_css_arr: CssInstructions[]=[
 			[0,'push',null,async (...styles_promise_arr: Promise<CSSStyleSheet>[]) => {
 				// @Hack: wait for any promise to settle
 				const e=await Promise.allSettled(styles_promise_arr);
