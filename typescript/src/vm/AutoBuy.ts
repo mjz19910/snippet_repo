@@ -331,8 +331,7 @@ export class AutoBuy implements AutoBuyInterface {
 					stack.push(cur_item);
 					break;
 				default: {
-					const [,action]=cur_item;
-					console.log('might need to handle',action);
+					console.log('might need to handle',cur_item[1]);
 					debugger;
 				} break;
 			}
