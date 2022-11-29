@@ -349,25 +349,25 @@ export class AutoBuy implements AutoBuyInterface {
 	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]): [TreeItem[][],TreeItem[]] {
 		let tree: TreeItem[]=[];
 		let stack: TreeItem[][]=[];
-		for(let tree_depth=0,i=0;i<input_stack.length;i++) {
+		for(let iter_depth=0,i=0;i<input_stack.length;i++) {
 			let cur_stack=input_stack[i];
-			let [depth,...item]=cur_stack;
+			let [cur_depth,...item]=cur_stack;
 			if(this.debug_arr.includes('parse_dom_desc'))
 				console.log(item);
-			while(depth>tree_depth) {
+			while(cur_depth>iter_depth) {
 				stack.push(tree);
 				tree=[];
-				tree_depth++;
+				iter_depth++;
 			}
-			while(depth<tree_depth) {
+			while(cur_depth<iter_depth) {
 				let prev=tree;
 				let stack_item=stack.pop();
 				if(!stack_item) throw new Error("Stack underflow");
 				tree=stack_item;
-				tree.push([tree_depth,prev]);
-				tree_depth--;
+				tree.push([iter_depth,prev]);
+				iter_depth--;
 			}
-			tree.push([depth,item]);
+			tree.push([cur_depth,item]);
 		}
 		return [stack,tree];
 	}
