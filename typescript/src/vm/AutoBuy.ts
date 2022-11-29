@@ -49,7 +49,7 @@ declare global {
 	}
 }
 
-type TreeItem=[number,RawDomInstructions|TreeItem[]];
+type TreeItem=[number,'op',RawDomInstructions]|[number,'group',TreeItem[]];
 
 export class AutoBuy implements AutoBuyInterface {
 	state_history_arr: any;
@@ -363,10 +363,10 @@ export class AutoBuy implements AutoBuyInterface {
 				let stack_item=stack.pop();
 				if(!stack_item) throw new Error("Stack underflow");
 				tree=stack_item;
-				tree.push([iter_depth,prev]);
+				tree.push([iter_depth,'group',prev]);
 				iter_depth--;
 			}
-			tree.push([cur_depth,item]);
+			tree.push([cur_depth,'op',item]);
 		}
 		return [stack,tree];
 	}
