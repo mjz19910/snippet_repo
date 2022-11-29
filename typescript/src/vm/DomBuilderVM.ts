@@ -14,7 +14,7 @@ export class DomBuilderVM extends BaseStackVM {
 		this.exec_stack=[];
 		this.jump_instruction_pointer=null;
 	}
-	execute_instruction_raw(instruction: InstructionType|['exec',any]|['dom_peek',any,any]) {
+	execute_instruction_raw(instruction: InstructionType|['exec',InstructionType[]]|['dom_peek',any,any]) {
 		l_log_if(LOG_LEVEL_VERBOSE,...instruction,null);
 		switch(instruction[0]) {
 			case 'exec': {
@@ -26,7 +26,7 @@ export class DomBuilderVM extends BaseStackVM {
 				this.stack.push(new NumberBox(this.instruction_pointer));
 				this.stack.push(new NumberBox(base_ptr));
 				this.stack=[];
-				this.instructions=<any>instruction[1];
+				this.instructions=instruction[1];
 				this.jump_instruction_pointer=0;
 				l_log_if(LOG_LEVEL_VERBOSE,'exec',...<any>instruction[1]);
 			} break;
