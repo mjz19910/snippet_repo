@@ -51,6 +51,64 @@ declare global {
 type TreeItem=[number,'op',InstructionType]|[number,'group',TreeItem[]];
 
 export class AutoBuy implements AutoBuyInterface {
+	do_zero_pad(value: string|number,pad_char: string,char_num: number) {
+		let string;
+		if(typeof value==='number') {
+			string=value.toString();
+		} else {
+			string=value;
+		}
+		while(string.length<char_num) {
+			string=pad_char+string;
+		}
+		return string;
+	}
+	get_millis_as_pretty_str(timeout_milli: number,milli_acc: number) {
+		const number_stringify_debug=false;
+		let time_arr=[];
+		let float_milliseconds=timeout_milli%1000;
+		let milli_len=4+milli_acc;
+		if(milli_acc===0) {
+			milli_len=3+milli_acc;
+		}
+		if(number_stringify_debug) {
+			debugger;
+		}
+		time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc),'0',milli_len);
+		timeout_milli-=float_milliseconds;
+		timeout_milli/=1000;
+		let int_seconds=timeout_milli%60;
+		time_arr[2]=this.do_zero_pad(int_seconds,'0',2);
+		timeout_milli-=int_seconds;
+		timeout_milli/=60;
+		let int_minutes=timeout_milli%60;
+		time_arr[1]=this.do_zero_pad(int_minutes,'0',2);
+		timeout_milli-=int_minutes;
+		timeout_milli/=60;
+		let int_hours=timeout_milli;
+		time_arr[0]=this.do_zero_pad(int_hours,'0',2);
+		int_hours===0&&(time_arr.shift(),int_minutes===0&&(time_arr.shift(),int_seconds===0&&time_arr.shift()));
+		switch(time_arr.length) {
+			case 1:
+				return time_arr[0]+'ms';
+			case 2:
+				return time_arr[0]+'.'+time_arr[1];
+			case 3:
+				return time_arr.slice(0,2).join(":")+'.'+time_arr[2];
+			case 4:
+				return time_arr.slice(0,3).join(":")+'.'+time_arr[3];
+		}
+		return time_arr.join(":");
+	}
+	update_timeout_element() {
+		if(this.timeout_ms) {
+			let element=this.dom_map.get('timeout_element');
+			if(element instanceof HTMLElement) {
+				let acc=2;// 0;
+				element.innerText=this.get_millis_as_pretty_str(this.timeout_ms,acc);
+			}
+		}
+	}
 	state_history_arr: any;
 	root_node: AsyncNodeRoot;
 	extra: number;
@@ -79,7 +137,10 @@ export class AutoBuy implements AutoBuyInterface {
 	last_value: number|undefined;
 	pre_total: any;
 	m_dry_run: boolean=false;
-	[v: symbol]: string;
+	timeout_ms: number;
+	do_fast_unit_step_change() {
+		this.do_timeout_dec([1.006],40);
+	}
 	async_compress() {
 		this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
 	}
@@ -88,6 +149,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.extra=0;
 		this.iter_count=0;
 		this.epoch_len=0;
+		this.timeout_ms=30;
 		this.background_audio=null;
 		this.state_history_arr=null;
 		this.skip_save=false;
@@ -103,8 +165,9 @@ export class AutoBuy implements AutoBuyInterface {
 		this.debug_arr=[];
 		for(let i=0;i<debug_id_syms.length;i++) {
 			let val=debug_id_syms[i].deref();
-			if(val&&(<any>this)[val.sym]) {
-				let obj1=(this)[val.sym];
+			let t_obj=this as any as {[x: symbol]: string};
+			if(val&&val.sym in t_obj&&t_obj[val.sym]) {
+				let obj1=t_obj[val.sym];
 				let split_data=obj1.split(",");
 				this.debug_arr.push(...split_data.map((e: string) => e.trim()));
 			}
@@ -445,10 +508,10 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	global_init() {
 		let cur_this: AutoBuyInterface=this;
-		if((window as any).g_auto_buy&&(window as any).g_auto_buy!==cur_this) {
-			(window as any).g_auto_buy.destroy();
+		if(window.g_auto_buy&&window.g_auto_buy!==cur_this) {
+			window.g_auto_buy.destroy();
 		}
-		(window as any).g_auto_buy=this;
+		window.g_auto_buy=this;
 	}
 	destroy() {
 		this.root_node.destroy();
