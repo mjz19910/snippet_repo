@@ -147,21 +147,21 @@ export class BaseStackVM implements AbstractVM {
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
 					let instruction_modify=new InstructionTypeBox(this.instructions[target]);
-					let value=this.pop();
-					if(typeof value==='string') {
-						instruction_modify.value[offset]=value;
-					}
 					let verify_state: [number]=[instruction_modify.value.length];
-					let out_ins: string[]=[];
+					let output_instruction: string[]=[];
 					for(let i=0;i<instruction_modify.value.length;i++) {
 						let cur=instruction_modify.value[i];
 						if(typeof cur==='string') {
-							out_ins.push(cur);
+							output_instruction.push(cur);
 						} else {
 							console.log('need type for',cur);
 						}
 					}
-					let valid_instruction=SimpleStackVMParser.verify_instruction(out_ins,verify_state);
+					let value_box=this.pop();
+					if(value_box.type==='string') {
+						output_instruction[offset]=value_box.value;
+					}
+					let valid_instruction=SimpleStackVMParser.verify_instruction(output_instruction,verify_state);
 					this.instructions[target]=valid_instruction;
 					console.log('new verify state',verify_state);
 					console.assert(verify_state[0]===0,"not all of the operands typechecked");
