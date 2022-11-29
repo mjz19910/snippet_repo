@@ -29,7 +29,7 @@ import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
 import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 import {VoidBox} from "../box/VoidBox.js";
 import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
-import {RawDomInstructions} from "./RawDomInstructions.js";
+import {InstructionType} from "./instruction/InstructionType.js";
 
 declare global {
 	interface Window {
@@ -48,7 +48,7 @@ declare global {
 	}
 }
 
-type TreeItem=[number,'op',RawDomInstructions]|[number,'group',TreeItem[]];
+type TreeItem=[number,'op',InstructionType]|[number,'group',TreeItem[]];
 
 export class AutoBuy implements AutoBuyInterface {
 	state_history_arr: any;
@@ -383,7 +383,7 @@ export class AutoBuy implements AutoBuyInterface {
 	apply_dom_desc(tree: TreeItem[]) {
 		this.run_dom_desc(tree);
 	}
-	run_dom_desc(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: RawDomInstructions[]=[],depths: number[]=[]): [RawDomInstructions[],number[]] {
+	run_dom_desc(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[1]) {
@@ -411,8 +411,7 @@ export class AutoBuy implements AutoBuyInterface {
 		let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
 		const ret_items=items.slice();
 		let off=1;
-		let new_instr: ['dom_exec',RawDomInstructions[]]=['dom_exec',deep_res[0]];
-		ret_items.splice(items_index+off++,0,new_instr);
+		ret_items.splice(items_index+off++,0,['dom_exec',deep_res[0]]);
 		this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
 		this.log_if('apply_dom_desc',ret_items,depths,stack);
 		let builder_vm=new BaseStackVM(ret_items);
