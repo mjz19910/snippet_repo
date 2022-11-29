@@ -150,11 +150,11 @@ class CSSStyleSheetConstructorBoxImpl {
 /** @typedef {import("../../box/CSSStyleSheetBox.js").CSSStyleSheetBox} CSSStyleSheetBox */
 /** @implements {CSSStyleSheetBox} */
 class CSSStyleSheetBoxImpl {
-	/** @type {"instance_box"} */
-	type="instance_box";
-	/** @type {"CSSStyleSheet"} */
+	/** @readonly */
+	type="CSSStyleSheetBox";
+	/** @readonly */
 	instance_type="CSSStyleSheet";
-	/** @type {"CSSStyleSheetBox"} */
+	/** @readonly */
 	m_verify_name="CSSStyleSheetBox";
 	/** @arg {'object'|'function'} to_match */
 	as_type(to_match) {
@@ -375,7 +375,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 	/** @arg {StackVMImpl} vm @arg {Box} fn_obj @arg {Box} target_this @arg {Box[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
-		if(!fn_obj.as_type) {
+		if(!('as_type' in fn_obj)) {
 			console.log('!fn_obj.as_type',fn_obj);
 			throw new Error("Invalid");
 		}

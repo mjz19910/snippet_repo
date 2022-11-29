@@ -16,6 +16,11 @@
 // @match			https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real
 // @run-at			document-start
 // @grant			none
+
+import {StackVMBox} from "../../box/StackVMBox.js";
+import {VMPushSelf} from "../../vm/instruction/vm/VMPushSelf.js";
+import {Box} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
+
 // ==/UserScript==
 console=globalThis.console;
 
@@ -93,12 +98,12 @@ function trigger_debug_breakpoint() {
 	debugger;
 }
 
-class StackVMBoxImpl {
+class StackVMBoxImpl implements StackVMBox {
 	type: "custom_box";
 	box_type: "StackVM";
 	m_verify_name: "StackVMBox";
-	value: StackVM;
-	constructor(value: StackVM) {
+	value: StackVMImpl;
+	constructor(value: StackVMImpl) {
 		this.type='custom_box';
 		this.box_type='StackVM';
 		this.m_verify_name='StackVMBox';
@@ -154,15 +159,13 @@ class ObjectBoxImpl {
 	}
 }
 
-type Box={type: string,value: unknown;};
-
 class InstructionCallImpl {
 	debug: boolean=false;
 	type: 'call';
 	constructor() {
 		this.type='call';
 	}
-	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
 		let number_of_arguments=instruction[1];
 		if(typeof number_of_arguments!='number') throw new Error("Invalid");
 		if(number_of_arguments<=1) {
@@ -178,7 +181,7 @@ class InstructionConstructImpl {
 	constructor() {
 		this.type='construct';
 	}
-	run(vm: StackVM,ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,ins: InstructionMap[this['type']]) {
 		let number_of_arguments=ins[1];
 		if(typeof number_of_arguments!='number') throw new Error("Invalid");
 		let [construct_target,...construct_arr]=vm.pop_arg_count(number_of_arguments);
@@ -220,7 +223,7 @@ class InstructionCastImpl {
 		this.type='cast';
 		this.debug=false;
 	}
-	cast_to_type(_vm: StackVM,obj: Box) {
+	cast_to_type(_vm: StackVMImpl,obj: Box) {
 		if(obj?.type==='custom_box') {
 			throw new Error("TODO: custom_box");
 		}
@@ -240,7 +243,7 @@ class InstructionCastImpl {
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
-	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
 		if(this.debug) {
@@ -264,7 +267,7 @@ class InstructionJeImpl {
 	constructor() {
 		this.type='je';
 	}
-	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
 		let [,target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
@@ -281,7 +284,7 @@ class InstructionJmpImpl {
 	constructor() {
 		this.type='jmp';
 	}
-	run(vm: StackVM,instruction: ['jump',number]) {
+	run(vm: StackVMImpl,instruction: ['jump',number]) {
 		let [,target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
@@ -296,7 +299,7 @@ class InstructionModifyOpImpl {
 	constructor() {
 		this.type='modify_operand';
 	}
-	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
 		let [,target,offset]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
 		if(typeof offset!='number') throw new Error("Invalid");
@@ -306,7 +309,7 @@ class InstructionModifyOpImpl {
 		let instruction_1=vm.instructions[target];
 		let instruction_modify: [string,...any[]]=instruction_1;
 		let value: Box|null=null;
-		if(vm instanceof StackVM) {
+		if(vm instanceof StackVMImpl) {
 			value=vm.pop();
 		} else {
 			console.info("TODO if instanceof StackVM is not enough");
@@ -324,11 +327,11 @@ class InstructionVMPushIPImpl {
 	constructor() {
 		this.type='vm_push_ip';
 	}
-	run(vm: StackVM,_ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_ins: InstructionMap[this['type']]) {
 		if(!vm.hasOwnProperty('push')) {
 			throw new Error("push_pc requires a stack");
-		} else if(vm instanceof StackVM) {
-			vm.stack.push({type: "number_box",value: vm.instruction_pointer});
+		} else if(vm instanceof StackVMImpl) {
+			vm.stack.push({type: "number",value: vm.instruction_pointer});
 		} else {
 			console.info('TODO: add instanceof check to push_pc');
 			throw new Error("Property missing or invalid");
@@ -341,7 +344,7 @@ class InstructionPushImpl {
 	constructor() {
 		this.type='push';
 	}
-	run(vm: StackVM,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
 		let instruction_: ["push",...Box[]]=instruction;
 		let [,...rest]=instruction_;
 		for(let i=0;i<rest.length;i++) {
@@ -356,7 +359,7 @@ class InstructionDupImpl {
 	constructor() {
 		this.type='dup';
 	}
-	run(vm: StackVM,_ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_ins: InstructionMap[this['type']]) {
 		if(vm.stack.length===0) throw new Error("stack underflow");
 		let res=vm.stack.at(-1);
 		if(!res) throw new Error("bad");
@@ -369,7 +372,7 @@ class InstructionGetImpl {
 	constructor() {
 		this.type='get';
 	}
-	on_get(_vm: StackVM,value_box: Box,_key: string|number) {
+	on_get(_vm: StackVMImpl,value_box: Box,_key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
 				/* if(typeof key==='number') {
@@ -399,7 +402,7 @@ class InstructionGetImpl {
 			default: console.log('on_get no handler',value_box.type);
 		}
 	}
-	run(vm: StackVM,_ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_ins: InstructionMap[this['type']]) {
 		let get_key=vm.stack.pop();
 		let value_box=vm.stack.pop();
 		if(!value_box) throw new Error("Invalid");
@@ -412,14 +415,14 @@ class InstructionGetImpl {
 
 class InstructionHaltImpl {
 	type: 'halt'='halt';
-	run(vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		vm.halt();
 	}
 }
 
 class InstructionReturnImpl {
 	type: 'return'='return';
-	run(vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		if(vm.stack.length>0) {
 			vm.return_value=vm.stack.pop()!;
 		} else {
@@ -430,7 +433,7 @@ class InstructionReturnImpl {
 
 class InstructionBreakpointImpl {
 	type: 'breakpoint'='breakpoint';
-	run(vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		console.log(vm.stack);
 		trigger_debug_breakpoint();
 	}
@@ -438,14 +441,14 @@ class InstructionBreakpointImpl {
 
 class InstructionPushVMObjImpl {
 	type: "vm_push_self"="vm_push_self";
-	run(vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: VMPushSelf) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
 }
 
 class InstructionPushWindowObjectImpl {
 	type: 'push_window_object'='push_window_object';
-	run(vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		vm.stack.push(new WindowBoxImpl(window));
 	}
 }
@@ -453,7 +456,7 @@ class InstructionPushWindowObjectImpl {
 class InstructionPeekImpl {
 	type: 'peek'='peek';
 	debug=false;
-	run(vm: StackVM,ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,ins: InstructionMap[this['type']]) {
 		let [,distance]=ins;
 		let base_ptr=vm.base_ptr;
 		if(base_ptr===null) base_ptr=0;
@@ -470,7 +473,7 @@ class InstructionPeekImpl {
 
 class InstructionAppendImpl {
 	type: "append"="append";
-	run(vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		if(vm.stack.length<=0) {
 			throw new Error('stack underflow');
 		}
@@ -497,14 +500,14 @@ class InstructionAppendImpl {
 
 class InstructionPushArgsImpl {
 	type: 'vm_push_args'='vm_push_args';
-	run(_vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(_vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		throw new Error("Instruction not supported");
 	}
 }
 
 class InstructionDropImpl {
 	type: 'drop'='drop';
-	run(vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		vm.stack.pop();
 	}
 }
@@ -512,7 +515,7 @@ class InstructionDropImpl {
 class InstructionVMReturnImpl {
 	type: 'vm_return'='vm_return';
 	debug=false;
-	run(vm: StackVM,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		let start_stack=vm.stack.slice();
 		if(vm.base_ptr!=vm.stack.length) {
 			console.log('TODO: support returning values');
@@ -530,7 +533,7 @@ class InstructionVMReturnImpl {
 
 class InstructionVMCallImpl {
 	type: 'vm_call'='vm_call';
-	run(vm: StackVM,ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,ins: InstructionMap[this['type']]) {
 		let prev_base=vm.base_ptr;
 		vm.stack.push({type: 'number',value: vm.base_ptr});
 		vm.stack.push({type: 'number',value: vm.instruction_pointer});
@@ -542,12 +545,12 @@ class InstructionVMCallImpl {
 
 class InstructionNopImpl {
 	type: 'nop'='nop';
-	run(_vm: StackVM,_a: InstructionMap[this['type']]) {}
+	run(_vm: StackVMImpl,_a: InstructionMap[this['type']]) {}
 }
 
 class InstructionBlockTraceImpl {
 	type: 'vm_block_trace'='vm_block_trace';
-	run(_vm: StackVM,_i: InstructionMap[this['type']]) {}
+	run(_vm: StackVMImpl,_i: InstructionMap[this['type']]) {}
 }
 
 const InstructionNames=[
@@ -638,10 +641,10 @@ class StackVMFlags {
 }
 
 interface GeneralInstructionType {
-	run(this: GeneralInstructionType,a: StackVM,i: InstructionType): void;
+	run(this: GeneralInstructionType,a: StackVMImpl,i: InstructionType): void;
 }
 
-class StackVM {
+class StackVMImpl {
 	return_value: Box;
 	jump_instruction_pointer: number|null;
 	base_ptr: number;
@@ -747,7 +750,7 @@ class StackVM {
 		return this.return_value;
 	}
 }
-class EventHandlerVMDispatch extends StackVM {
+class EventHandlerVMDispatch extends StackVMImpl {
 	target_obj: any;
 	args_arr: Box[]|null;
 	constructor(instructions: InstructionType[],target_obj: any) {
@@ -845,7 +848,7 @@ class StackVMParser {
 			case 'push': {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				ret=[instruction[0],...push_operands.map(e => ({type: 'string',value: e}))];
+				ret=[instruction[0],...push_operands.map((e):{type: 'string',value: string} => ({type: 'string',value: e}))];
 			} break;
 			case 'call'/*1 argument*/: {
 				if(typeof instruction[1]==='number'&&Number.isFinite(instruction[1])) {
