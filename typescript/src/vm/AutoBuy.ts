@@ -22,7 +22,6 @@ import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_s
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {SpecType} from "../SpecType.js";
 import {BaseStackVM} from "./BaseStackVM.js";
-import {InstructionType} from "./instruction/InstructionType.js";
 import {RawDomInstructionsWithDepth} from "./RawDomInstructionsWithDepth";
 import {NullBox} from "../box/NullBox.js";
 import {StringBox} from "../box/StringBox.js";
@@ -79,6 +78,7 @@ export class AutoBuy implements AutoBuyInterface {
 	state_history_arr_max_len: number|undefined;
 	last_value: number|undefined;
 	pre_total: any;
+	m_dry_run: boolean=false;
 	[v: symbol]: string;
 	async_compress() {
 		this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
@@ -288,8 +288,7 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	build_dom_from_desc(raw_arr: RawDomInstructionsWithDepth[],trg_map: Map<string,Element>=new Map,dry_run=false) {
 		let stack: RawDomInstructionsWithDepth[]=[];
-		if(dry_run)
-			stack.push([0,"enable_dry_mode"]);
+		this.m_dry_run=dry_run;
 		for(let i=0;i<raw_arr.length;i++) {
 			let cur_item=raw_arr[i];
 			let [depth]=cur_item;

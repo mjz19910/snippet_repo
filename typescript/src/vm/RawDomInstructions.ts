@@ -11,6 +11,5 @@ export type RawDomInstructions=
 	['dom_create_element_with_props','div',string,{id: string;}]|
 	['append']|
 	['drop']|
-	['enable_dry_mode']|
 	['dom_exec',RawDomInstructions[]]|
 	["push",...Box[]];
