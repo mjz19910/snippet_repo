@@ -2566,7 +2566,7 @@ class AutoBuy {
 	}
 	global_init() {
 		/** @type {any} */
-		let this_any=this
+		let this_any=this;
 		if(window.g_auto_buy&&window.g_auto_buy!==this_any) {
 			window.g_auto_buy.destroy();
 		}
