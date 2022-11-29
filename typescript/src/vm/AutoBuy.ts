@@ -261,20 +261,36 @@ export class AutoBuy implements AutoBuyInterface {
 			// drop the promise
 			[0,'drop'],
 		];
-		let raw_dom_arr=[
-			...create_state_log_arr,
-			[2,'create','div','history',"?3"],[2,'append'],
-			[2,'create','div','delay',"0"],[2,'append'],
-			[2,'create','div','hours_played',"0.000 hours"],[2,'append'],
-			[2,'create','div','ratio',0..toFixed(2)+"%"],[2,'append'],
-			[2,'create','div','ratio_change',0..toExponential(3)],[2,'append'],
+		type RawDomInstructions=
+		CssInstructions|
+		[number,'get','body']|
+		[number,'create','div',string,string]|
+		[number,'create_props','div',string,{id:string}]|
+		[number,'append']|
+		[number,'drop'];
+		let raw_dom_arr:RawDomInstructions[]=[
+			[0,'get','body'],
+			[1,'create_props','div','state_log',{id: 'state_log'}],
+			[1,'append'],
+			[2,'create','div','history',"?3"],
+			[2,'append'],
+			[2,'create','div','delay',"0"],
+			[2,'append'],
+			[2,'create','div','hours_played',"0.000 hours"],
+			[2,'append'],
+			[2,'create','div','ratio',0..toFixed(2)+"%"],
+			[2,'append'],
+			[2,'create','div','ratio_change',0..toExponential(3)],
+			[2,'append'],
 			[1,'drop'],
 			[0,'drop'],
 			...make_css_arr
 		];
 		try {
 			raw_dom_arr=[
-				...create_state_log_arr,
+				[0,'get','body'],
+				[1,'create_props','div','state_log',{id: 'state_log'}],
+				[1,'append'],
 				[0,'drop'],
 				...make_css_arr
 			];
