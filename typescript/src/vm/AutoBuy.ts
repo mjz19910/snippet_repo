@@ -23,13 +23,14 @@ import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {SpecType} from "../SpecType.js";
 import {BaseStackVM} from "./BaseStackVM.js";
 import {InstructionType} from "./instruction/InstructionType.js";
-import {RawDomInstructions} from "./RawDomInstructions";
+import {RawDomInstructionsWithDepth} from "./RawDomInstructionsWithDepth";
 import {NullBox} from "../box/NullBox.js";
 import {StringBox} from "../box/StringBox.js";
 import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
 import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 import {VoidBox} from "../box/VoidBox.js";
 import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
+import {RawDomInstructions} from "./RawDomInstructions.js";
 
 declare global {
 	interface Window {
@@ -240,7 +241,7 @@ export class AutoBuy implements AutoBuyInterface {
 			return out;
 		}
 		let call_arg_arr: []=[];
-		let raw_dom_arr: RawDomInstructions[]=[
+		let raw_dom_arr: RawDomInstructionsWithDepth[]=[
 			[0,'get','body'],
 			[1,'create_props','div','state_log',{id: 'state_log'}],
 			[1,'append'],
@@ -296,8 +297,8 @@ export class AutoBuy implements AutoBuyInterface {
 			default: return document.querySelector(query);
 		}
 	}
-	build_dom_from_desc(raw_arr: RawDomInstructions[],trg_map=new Map,dry_run=false) {
-		let stack: RawDomInstructions[]=[];
+	build_dom_from_desc(raw_arr: RawDomInstructionsWithDepth[],trg_map=new Map,dry_run=false) {
+		let stack: RawDomInstructionsWithDepth[]=[];
 		let map=trg_map;
 		if(dry_run)
 			stack.push([0,"enable_dry_mode"]);
@@ -356,26 +357,28 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		this.apply_dom_desc(tree);
 	}
-	parse_dom_desc(input_stack: string|any[]) {
-		let stack: any[][]=[];
+	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]) {
+		let stack: RawDomInstructions[][]=[];
 		let tree=[];
-		for(let x=0,i=0;i<input_stack.length;i++) {
+		for(let tree_depth=0,i=0;i<input_stack.length;i++) {
 			let cur_stack=input_stack[i];
-			let [y,...item]=cur_stack;
+			let depth:number;
+			let item:RawDomInstructions;
+			[depth,...item]=cur_stack;
 			if(this.debug_arr.includes('parse_dom_desc'))
 				console.log(item);
-			while(y>x) {
+			while(depth>tree_depth) {
 				stack.push(tree);
 				tree=[];
-				x++;
+				tree_depth++;
 			}
-			while(y<x) {
+			while(depth<tree_depth) {
 				let prev=tree;
 				tree=<any>stack.pop();
-				tree.push([x,prev]);
-				x--;
+				tree.push([tree_depth,prev]);
+				tree_depth--;
 			}
-			tree.push([y,item]);
+			tree.push([depth,item]);
 		}
 		return [stack,tree];
 	}
@@ -393,7 +396,7 @@ export class AutoBuy implements AutoBuyInterface {
 	apply_dom_desc(tree: any) {
 		this.run_dom_desc(tree);
 	}
-	run_dom_desc(tree: string|any[],stack: (InstructionType|['children',number,any])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
+	run_dom_desc(tree: string|any[],stack: (['children',number,[number,string]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[0]-cur_depth) {
@@ -417,7 +420,7 @@ export class AutoBuy implements AutoBuyInterface {
 		if(!stack_item) throw 1;
 		const [tag,items_index,[data_depth,data]]=stack_item;
 		let log_level=this.get_logging_level('apply_dom_desc');
-		l_log_if(log_level,tag,items[items_index],data_depth,data);
+		l_log_if(log_level,tag,items_index,data_depth,data);
 		let deep_res=this.run_dom_desc(data,stack,cur_depth+1);
 		const ret_items=items.slice();
 		let off=1;
