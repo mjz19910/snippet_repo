@@ -342,7 +342,7 @@ export class AutoBuy implements AutoBuyInterface {
 		if(left_stack.length>0) {
 			console.assert(false,'failed to parse everything (parse tree probably has errors)');
 		}
-		this.apply_dom_desc(tree);
+		this.run_dom_desc(tree);
 	}
 	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]): [TreeItem[][],TreeItem[]] {
 		let tree: TreeItem[]=[];
@@ -379,9 +379,6 @@ export class AutoBuy implements AutoBuyInterface {
 			return level-1;
 		}
 		return level;
-	}
-	apply_dom_desc(tree: TreeItem[]) {
-		this.run_dom_desc(tree);
 	}
 	run_dom_desc(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
 		for(let i=0;i<tree.length;i++) {
