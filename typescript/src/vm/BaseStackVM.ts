@@ -10,16 +10,26 @@ import {InstructionType} from "./instruction/InstructionType.js";
 import {l_log_if} from "./l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 
-export class BaseStackVM extends BaseVMCreate {
+export class BaseStackVM implements BaseVMCreate {
+	flags: Map<string,boolean>;
+	instructions;
+	instruction_pointer;
+	base_pointer;
+	running;
 	stack: Box[];
 	return_value: Box;
 	constructor(instructions: InstructionType[]) {
-		super(instructions);
+		this.flags=new Map;
+		this.instructions=instructions;
+		this.instruction_pointer=0;
+		this.base_pointer=0;
+		this.running=false;
 		this.stack=[];
 		this.return_value=new VoidBox(void 0);
 	}
-	override reset() {
-		super.reset();
+	reset() {
+		this.instruction_pointer=0;
+		this.running=false;
 		this.stack.length=0;
 		this.return_value=new VoidBox(void 0);
 	}
@@ -44,8 +54,30 @@ export class BaseStackVM extends BaseVMCreate {
 		}
 		return arguments_arr;
 	}
-	override execute_instruction(instruction: InstructionType|['push_pc']) {
+	is_ip_in_bounds(value: number) {
+		return value>=0&&value<this.instructions.length;
+	}
+	execute_instruction(instruction: InstructionType|['push_pc']) {
 		switch(instruction[0]) {
+			case 'je': {
+				let [,target]=instruction;
+				if(this.is_ip_in_bounds(target)) {
+					throw new Error("RangeError: Jump target is out of instructions range");
+				}
+				if(this.flags.get('equal')) {
+					this.instruction_pointer=target;
+				}
+			} break;
+			case 'jmp': {
+				let [,target]=instruction;
+				if(this.is_ip_in_bounds(target)) {
+					throw new Error("RangeError: Jump target is out of instructions range");
+				}
+				this.instruction_pointer=target;
+			} break;
+			case 'halt' /*Running*/: {
+				this.running=false;
+			} break;
 			case 'push' /*Stack*/: {
 				for(let i=0;i<instruction.length-1;i++) {
 					let item=instruction[i+1] as Box;
@@ -111,7 +143,7 @@ export class BaseStackVM extends BaseVMCreate {
 				if(typeof offset!='number')
 					return;
 				if(typeof target==='number') {
-					if(this.is_in_instructions(target)) {
+					if(this.is_ip_in_bounds(target)) {
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
 					let instruction_modify=new InstructionTypeBox(this.instructions[target]);
@@ -139,11 +171,12 @@ export class BaseStackVM extends BaseVMCreate {
 				this.push(new NumberBox(this.instruction_pointer));
 			} break;
 			default: {
-				super.execute_instruction(instruction);
-			} break;
+				console.info('Unknown opcode',instruction[0]);
+				throw new Error('Halt: bad opcode ('+instruction[0]+')');
+			}
 		}
 	}
-	override run(): Box {
+	run(): Box {
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
 			let instruction=this.instructions[this.instruction_pointer];

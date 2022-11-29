@@ -21,7 +21,7 @@ export class BaseVMCreate extends AbstractVM {
 		this.instruction_pointer=0;
 		this.running=false;
 	}
-	is_in_instructions(value: number) {
+	is_ip_in_bounds(value: number) {
 		return value>=0&&value<this.instructions.length;
 	}
 	execute_instruction(instruction: InstructionType) {
@@ -32,7 +32,7 @@ export class BaseVMCreate extends AbstractVM {
 			}
 			case 'je': {
 				let [,target]=instruction;
-				if(this.is_in_instructions(target)) {
+				if(this.is_ip_in_bounds(target)) {
 					throw new Error("RangeError: Jump target is out of instructions range");
 				}
 				if(this.flags.get('equal')) {
@@ -41,7 +41,7 @@ export class BaseVMCreate extends AbstractVM {
 			} break;
 			case 'jmp': {
 				let [,target]=instruction;
-				if(this.is_in_instructions(target)) {
+				if(this.is_ip_in_bounds(target)) {
 					throw new Error("RangeError: Jump target is out of instructions range");
 				}
 				this.instruction_pointer=target;
