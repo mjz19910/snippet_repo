@@ -33,10 +33,10 @@ export class StackVM {
 		return this.stack.at(-1-distance);
 	}
 	pop_arg_count(operand_number_of_arguments: number) {
-		let arguments_arr: Box[]=[];
 		let arg_count=operand_number_of_arguments;
-		for(let i=0;i<arg_count;i++) {
-			arguments_arr.unshift(this.pop());
+		let arguments_arr: Box[]=new Array(arg_count);
+		for(let i=arg_count-1;i>=0;i--) {
+			arguments_arr[arg_count-i]=this.pop();
 		}
 		return arguments_arr;
 	}
