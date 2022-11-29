@@ -10,6 +10,7 @@ import {l_log_if} from "./l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {AbstractVM} from "./AbstractVM.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
+import {Call} from "./instruction/general/Call.js";
 
 export class BaseStackVM implements AbstractVM {
 	flags: Map<string,boolean>;
@@ -103,21 +104,7 @@ export class BaseStackVM implements AbstractVM {
 					this.push(target_obj.value[target_name]);
 				}
 			} break;
-			case 'call' /*Call*/: {
-				let number_of_arguments=instruction[1];
-				if(number_of_arguments===void 0)
-					return;
-				if(typeof number_of_arguments!='number')
-					return;
-				if(number_of_arguments<=1) {
-					throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
-				}
-				let [target_this,target_fn,...arg_arr]=this.pop_arg_count(number_of_arguments);
-				if(!(target_fn instanceof Function))
-					break;
-				let ret=target_fn.apply(target_this,arg_arr);
-				this.push(ret);
-			} break;
+			case 'call' /*Call*/: return this.execute_call_instruction(instruction);
 			case 'construct' /*Construct*/: {
 				let number_of_arguments=instruction[1];
 				if(typeof number_of_arguments!='number')
@@ -177,6 +164,17 @@ export class BaseStackVM implements AbstractVM {
 				throw new Error('Halt: bad opcode ('+instruction[0]+')');
 			}
 		}
+	}
+	execute_call_instruction(instruction: Call) {
+		let number_of_arguments=instruction[1];
+		if(number_of_arguments===void 0) return;
+		if(typeof number_of_arguments!='number') return;
+		if(number_of_arguments<=1)
+			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
+		let [target_this,target_fn,...arg_arr]=this.pop_arg_count(number_of_arguments);
+		if(!(target_fn instanceof Function)) return;
+		let ret=target_fn.apply(target_this,arg_arr);
+		this.push(ret);
 	}
 	run(): Box {
 		this.running=true;
