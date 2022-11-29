@@ -1,7 +1,6 @@
 import {InstructionType} from "./instruction/InstructionType.js";
 import {AutoBuyInterface} from "./AutoBuyInterface.js";
 import {Call} from "./instruction/general/Call.js";
-import {construct_with_constructor_box} from "./construct_with_constructor_box.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
 import {Box} from "../box/Box.js";
 import {VoidBox} from "../box/VoidBox.js";
@@ -104,21 +103,6 @@ export class EventHandlerVMDispatch {
 					this.push(target_obj.value[target_name]);
 				}
 			} break;
-			case 'call' /*Call*/: {
-				let number_of_arguments=instruction[1];
-				if(number_of_arguments===void 0)
-					return;
-				if(typeof number_of_arguments!='number')
-					return;
-				if(number_of_arguments<=1) {
-					throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
-				}
-				let [target_this,target_fn,...arg_arr]=this.pop_arg_count(number_of_arguments);
-				if(!(target_fn instanceof Function))
-					break;
-				let ret=target_fn.apply(target_this,arg_arr);
-				this.push(ret);
-			} break;
 			case 'construct' /*Construct*/: {
 				let number_of_arguments=instruction[1];
 				if(typeof number_of_arguments!='number')
@@ -191,32 +175,15 @@ export class EventHandlerVMDispatch {
 		this.args_vec=null;
 	}
 	execute_call_instruction(instruction: Call) {
-		// TODO: Fix the other code to use the call handling from
-		// the base class
-		// Currently we support applying functions
-		// this is closer to what you expect, not to just get
-		// the name of a member to call
 		let number_of_arguments=instruction[1];
-		let [target_obj,target_name,...arg_arr]=this.pop_arg_count(number_of_arguments);
-		if(typeof target_name=='string') {
-			switch(typeof target_obj) {
-				case 'object':
-					if(target_obj===null)
-						throw new Error("Call null func");
-					switch(target_obj.type) {
-						case 'array_box': throw new Error("Call not a function");
-						case 'constructor_box': {
-							let ret=construct_with_constructor_box(target_obj,arg_arr);
-							this.push(ret);
-						} break;
-						case 'custom_box': {
-							let ret=target_obj.as_type('function');
-							if(!ret) throw new Error("Call null func");
-							if('factory' in ret) {}
-						} break;
-					}
-			}
-		}
+		if(number_of_arguments===void 0) return;
+		if(typeof number_of_arguments!='number') return;
+		if(number_of_arguments<=1)
+			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
+		let [target_this,target_fn,...arg_arr]=this.pop_arg_count(number_of_arguments);
+		if(!(target_fn instanceof Function)) return;
+		let ret=target_fn.apply(target_this,arg_arr);
+		this.push(ret);
 	}
 	execute_instruction_raw(instruction: InstructionType) {
 		switch(instruction[0]) {

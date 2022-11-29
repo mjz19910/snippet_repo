@@ -9,6 +9,9 @@ export class StackVMBox
 	readonly type="custom_box"
 	readonly box_type="StackVM"
 	readonly m_verify_name="StackVMBox"
+	override as_type(input_typeof: 'function'|'object'): this|null {
+		return typeof this.value===input_typeof? this:null
+	}
 	verify_name(name: "StackVMBox") {
 		return this.m_verify_name==='StackVMBox'&&name==='StackVMBox'
 	}
