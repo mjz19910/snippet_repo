@@ -23,6 +23,7 @@ import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {SpecType} from "../SpecType.js";
 import {BaseStackVM} from "./BaseStackVM.js";
 import {InstructionType} from "./instruction/InstructionType.js";
+import {RawDomInstructions} from "./RawDomInstructions";
 
 declare global {
 	interface Window {
@@ -40,16 +41,6 @@ declare global {
 		allspec: SpecType[];
 	}
 }
-
-export type RawDomInstructions=
-[number,'push',null,((...v: Promise<CSSStyleSheet>[]) => Promise<void>)]|
-[number,'new',NewableFunction,[],CallableFunction,[string]]|
-[number,'call',number]|
-[number,'get','body']|
-[number,'create','div',string,string]|
-[number,'create_props','div',string,{id: string;}]|
-[number,'append']|
-[number,'drop'];
 
 export class AutoBuy implements AutoBuyInterface {
 	state_history_arr: any;
@@ -294,22 +285,22 @@ export class AutoBuy implements AutoBuyInterface {
 			default: return document.querySelector(query);
 		}
 	}
-	build_dom_from_desc(raw_arr: string|any[],trg_map=new Map,dry_run=false) {
-		let stack=[];
+	build_dom_from_desc(raw_arr: RawDomInstructions[],trg_map=new Map,dry_run=false) {
+		let stack:RawDomInstructions[]=[];
 		let map=trg_map;
 		if(dry_run)
 			stack.push([0,"enable_dry_mode"]);
 		for(let i=0;i<raw_arr.length;i++) {
 			let cur_item=raw_arr[i];
 			let [depth,action,...args]=cur_item;
-			switch(action) {
+			switch(cur_item[1]) {
 				case 'get': {
-					let [query_arg]=args;
+					let [,,query_arg]=cur_item;
 					const cur_element=this.decode_query_arg(query_arg);
 					stack.push([depth,"push",new DomValueBox('get',cur_element)]);
 				} break;
 				case 'new': {
-					const [_class,construct_arg_arr,callback,arg_arr]=args;
+					const [,,_class,construct_arg_arr,callback,arg_arr]=cur_item;
 					stack.push([depth,"push",null,callback,...construct_arg_arr,_class]);
 					stack.push([depth,"construct",1+construct_arg_arr.length]);
 					stack.push([depth,"push",...arg_arr]);
