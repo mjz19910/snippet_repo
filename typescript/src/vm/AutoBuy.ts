@@ -344,8 +344,8 @@ export class AutoBuy implements AutoBuyInterface {
 		this.apply_dom_desc(tree);
 	}
 	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]) {
-		type PrevType=['prev',number,TreeItem[]];
-		type DepthType=['depth',number,RawDomInstructions];
+		type PrevType=[number,TreeItem[]];
+		type DepthType=[number,RawDomInstructions];
 		type TreeItem=RawDomInstructions|PrevType|DepthType;
 		let tree: TreeItem[]=[];
 		let stack: TreeItem[][]=[];
@@ -366,10 +366,10 @@ export class AutoBuy implements AutoBuyInterface {
 				let stack_item=stack.pop();
 				if(!stack_item) throw new Error("Stack underflow");
 				tree=stack_item;
-				tree.push(['prev',tree_depth,prev]);
+				tree.push([tree_depth,prev]);
 				tree_depth--;
 			}
-			tree.push(['depth',depth,item]);
+			tree.push([depth,item]);
 		}
 		return [stack,tree] as const;
 	}
