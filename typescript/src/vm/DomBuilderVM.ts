@@ -28,7 +28,7 @@ export class DomBuilderVM extends BaseStackVM {
 				this.stack=[];
 				this.instructions=instruction[1];
 				this.jump_instruction_pointer=0;
-				l_log_if(LOG_LEVEL_VERBOSE,'exec',...<any>instruction[1]);
+				l_log_if(LOG_LEVEL_VERBOSE,'exec',...instruction[1]);
 			} break;
 			case 'dom_peek': {
 				let [,stack_peek_distance,access_distance]=instruction;
