@@ -384,13 +384,13 @@ export class AutoBuy implements AutoBuyInterface {
 	apply_dom_desc(tree: TreeItem[]) {
 		this.run_dom_desc(tree);
 	}
-	run_dom_desc(tree: TreeItem[],stack: (['children',number,TreeItem[]])[]=[],cur_depth=0,items: RawDomInstructions[]=[],depths: number[]=[]): [RawDomInstructions[],number[]] {
+	run_dom_desc(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: RawDomInstructions[]=[],depths: number[]=[]): [RawDomInstructions[],number[]] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[1]) {
 				case 'group': {
 					this.log_if('apply_dom_desc','rdc stk');
-					stack.push(['children',items.length-1,cur[2]]);
+					stack.push(['children',items.length-1,[cur[0],cur[2]]]);
 				} break;
 				case 'op': {
 					items.push(cur[2]);
