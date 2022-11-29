@@ -49,6 +49,9 @@ declare global {
 	}
 }
 
+type TreeItemType=[number,RawDomInstructions|TreeItem[]];
+type TreeItem=RawDomInstructions|TreeItemType;
+
 export class AutoBuy implements AutoBuyInterface {
 	state_history_arr: any;
 	root_node: AsyncNodeRoot;
@@ -343,9 +346,7 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		this.apply_dom_desc(tree);
 	}
-	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]) {
-		type TreeItemType=[number,RawDomInstructions|TreeItem[]];
-		type TreeItem=RawDomInstructions|TreeItemType;
+	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]): [TreeItem[][],TreeItem[]] {
 		let tree: TreeItem[]=[];
 		let stack: TreeItem[][]=[];
 		for(let tree_depth=0,i=0;i<input_stack.length;i++) {
@@ -368,7 +369,7 @@ export class AutoBuy implements AutoBuyInterface {
 			}
 			tree.push([depth,item]);
 		}
-		return [stack,tree] as const;
+		return [stack,tree];
 	}
 	log_if(tag: string,...log_args: (string|number|any[])[]) {
 		if(this.debug_arr.includes(tag)) {
