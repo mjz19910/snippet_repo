@@ -339,7 +339,7 @@ export class AutoBuy implements AutoBuyInterface {
 				console.log('es',stack.at(-1));
 		}
 		let instruction_tree=this.stack_to_instruction_tree(stack);
-		let [dom_vm_instructions,_depths]=this.instruction_tree_to_instructions(instruction_tree);
+		let dom_vm_instructions=this.instruction_tree_to_instructions(instruction_tree);
 		let builder_vm=new BaseStackVM(dom_vm_instructions);
 		builder_vm.run();
 	}
@@ -384,7 +384,7 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		return level;
 	}
-	instruction_tree_to_instructions(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): [InstructionType[],number[]] {
+	instruction_tree_to_instructions(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): InstructionType[] {
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[1]) {
@@ -403,7 +403,7 @@ export class AutoBuy implements AutoBuyInterface {
 			}
 		}
 		if(stack.length===0)
-			return [items,depths];
+			return items;
 		while(stack.length>0) {
 			let stack_item=stack.pop();
 			if(!stack_item) break;
@@ -411,11 +411,11 @@ export class AutoBuy implements AutoBuyInterface {
 			let log_level=this.get_logging_level('apply_dom_desc');
 			l_log_if(log_level,tag,items_index,data_depth,data);
 			let deep_res=this.instruction_tree_to_instructions(data,stack,cur_depth+1);
-			items.push(['dom_exec',deep_res[0]]);
-			this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
+			items.push(['dom_exec',deep_res]);
+			this.log_if('apply_dom_desc',deep_res);
 			this.log_if('apply_dom_desc',items,depths,stack);
 		}
-		return [items,depths];
+		return items;
 	}
 	init_dom() {
 		const font_size_px=22;
