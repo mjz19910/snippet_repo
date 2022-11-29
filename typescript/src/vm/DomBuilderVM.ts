@@ -41,7 +41,6 @@ export class DomBuilderVM extends BaseStackVM {
 				this.push(at);
 				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
 			} break;
-			case 'append': throw new Error("Dom box handling not implemented");
 			default /*Debug*/: {
 				if(is_dom_peek(instruction)) throw new Error("Bad");
 				super.execute_instruction(instruction);
