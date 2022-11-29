@@ -32,6 +32,7 @@ import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js
 import {InstructionType} from "./instruction/InstructionType.js";
 import {TreeItem} from "./TreeItem";
 
+// Imports
 declare global {
 	interface Window {
 		timeplayed: number;
@@ -49,6 +50,7 @@ declare global {
 	}
 }
 
+// Exports
 declare global {
 	interface Window {
 		g_auto_buy: AutoBuy;
