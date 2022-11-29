@@ -227,19 +227,6 @@ export class AutoBuy implements AutoBuyInterface {
 		document.body.append(this.state_log_element);
 		// attach display_style_sheet
 		this.adopt_styles(this.display_style_sheet);
-		function retype_promise_helper(v: PromiseSettledResult<CSSStyleSheet>): v is PromiseFulfilledResult<CSSStyleSheet> {
-			return v.status==='fulfilled';
-		}
-		function retype_promise_settled_results(v: PromiseSettledResult<CSSStyleSheet>[]): PromiseFulfilledResult<CSSStyleSheet>[] {
-			let out: PromiseFulfilledResult<CSSStyleSheet>[]=[];
-			for(let i=0;i<v.length;i++) {
-				let cur=v[i];
-				if(retype_promise_helper(cur)) {
-					out.push(cur);
-				}
-			}
-			return out;
-		}
 		let call_arg_arr: []=[];
 		let raw_dom_arr: RawDomInstructionsWithDepth[]=[
 			[0,'get','body'],
@@ -304,7 +291,7 @@ export class AutoBuy implements AutoBuyInterface {
 			stack.push([0,"enable_dry_mode"]);
 		for(let i=0;i<raw_arr.length;i++) {
 			let cur_item=raw_arr[i];
-			let [depth,action,...args]=cur_item;
+			let [depth]=cur_item;
 			switch(cur_item[1]) {
 				case 'get': {
 					let [,,query_arg]=cur_item;
@@ -344,6 +331,7 @@ export class AutoBuy implements AutoBuyInterface {
 					stack.push(cur_item);
 					break;
 				default: {
+					const [,action]=cur_item;
 					console.log('might need to handle',action);
 					debugger;
 				} break;
