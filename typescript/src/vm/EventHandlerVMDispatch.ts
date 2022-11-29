@@ -29,7 +29,7 @@ export class EventHandlerVMDispatch {
 		this.running=false;
 		this.stack=[];
 		this.return_value=new VoidBox(void 0);
-		this.args_vec=null;
+		this.vm_arguments=null;
 		this.target_obj=target_obj;
 	}
 	push(value: Box) {
@@ -166,13 +166,13 @@ export class EventHandlerVMDispatch {
 		this.reset();
 		this.run(event);
 	}
-	args_vec: [Event]|null;
+	vm_arguments: [Event]|null;
 	reset() {
 		this.instruction_pointer=0;
 		this.running=false;
 		this.stack.length=0;
 		this.return_value=new VoidBox(void 0);
-		this.args_vec=null;
+		this.vm_arguments=null;
 	}
 	execute_call_instruction(instruction: Call) {
 		let number_of_arguments=instruction[1];
@@ -191,7 +191,7 @@ export class EventHandlerVMDispatch {
 		}
 	}
 	run(...run_arguments: [Event]) {
-		this.args_vec=run_arguments;
+		this.vm_arguments=run_arguments;
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
 			let instruction=this.instructions[this.instruction_pointer];
