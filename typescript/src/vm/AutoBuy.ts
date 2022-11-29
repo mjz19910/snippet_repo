@@ -231,7 +231,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.adopt_styles(this.display_style_sheet);
 		let call_arg_arr: []=[];
 		let raw_dom_arr: RawDomInstructionsWithDepth[]=[
-			[0,'get','body'],
+			[0,'dom_get','body'],
 			[1,'create_props','div','state_log',{id: 'state_log'}],
 			[1,'append'],
 			[2,'create','div','history',"?3"],
@@ -253,7 +253,7 @@ export class AutoBuy implements AutoBuyInterface {
 				}
 				return new VoidBox(void 0);
 			}),...call_arg_arr],
-			[0,'new',CSSStyleSheet,[],
+			[0,'dom_new',CSSStyleSheet,[],
 				new PromiseFunctionBox(async (...args: Box[]) => {
 					if(args.length!==2) {
 						throw new Error("Failed");
@@ -294,13 +294,13 @@ export class AutoBuy implements AutoBuyInterface {
 			let cur_item=raw_arr[i];
 			let [depth]=cur_item;
 			switch(cur_item[1]) {
-				case 'get': {
+				case 'dom_get': {
 					let [,,query_arg]=cur_item;
 					const cur_element=this.decode_query_arg(query_arg);
 					if(!cur_element) throw new Error("Unable to find query element");
 					stack.push([depth,"push",new DomValueBox(cur_element)]);
 				} break;
-				case 'new': {
+				case 'dom_new': {
 					const [,,class_,construct_arg_arr,callback,arg_arr]=cur_item;
 					stack.push([depth,"push",new NullBox(null),callback,new CSSStyleSheetConstructorBox(class_)]);
 					stack.push([depth,"construct",1+construct_arg_arr.length]);

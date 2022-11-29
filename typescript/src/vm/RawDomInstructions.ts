@@ -4,9 +4,9 @@ import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 export type RawDomInstructions=
 	['dom_peek',number,number]|
 	['construct',number]|
-	['new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]]|
+	['dom_new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]]|
 	['call',number]|
-	['get','body']|
+	['dom_get',string]|
 	['create','div',string,string]|
 	['create_props','div',string,{id: string;}]|
 	['append']|

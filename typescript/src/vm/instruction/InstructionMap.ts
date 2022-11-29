@@ -51,6 +51,6 @@ export type InstructionMap={
 	'vm_return': VMReturn;
 	'dom_exec': DomExec;
 	'dom_peek': DomPeek;
-	'dom_new': ['new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
+	'dom_new': ['dom_new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
 	'dom_get': ['dom_get',string];
 };
