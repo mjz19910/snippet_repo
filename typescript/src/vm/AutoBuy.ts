@@ -4,7 +4,6 @@ import {AsyncTimeoutNode} from "./AsyncTimeoutNode.js";
 import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget.js";
 import {AutoBuyState} from "./AutoBuyState.js";
 import {Box} from "../box/Box.js";
-import {DomBuilderVM} from "./DomBuilderVM.js";
 import {DomValueBox} from "./DomValueBox.js";
 import {do_auto_unit_promote} from "./do_auto_unit_promote.js";
 import {EventHandlerDispatch} from "./EventHandlerDispatch.js";
@@ -22,6 +21,7 @@ import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
 import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_src_fn.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {SpecType} from "../SpecType.js";
+import {BaseStackVM} from "./BaseStackVM.js";
 
 declare global {
 	interface Window {
@@ -420,7 +420,7 @@ export class AutoBuy implements AutoBuyInterface {
 		ret_items.splice(items_index+off++,0,['exec',deep_res[0]]);
 		this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
 		this.log_if('apply_dom_desc',ret_items,depths,stack);
-		let builder_vm=new DomBuilderVM(ret_items);
+		let builder_vm=new BaseStackVM(ret_items);
 		builder_vm.run();
 		return [ret_items,depths];
 	}
