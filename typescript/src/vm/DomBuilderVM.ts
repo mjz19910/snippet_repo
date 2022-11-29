@@ -31,15 +31,15 @@ export class DomBuilderVM extends BaseStackVM {
 				l_log_if(LOG_LEVEL_VERBOSE,'exec',...<any>instruction[1]);
 			} break;
 			case 'dom_peek': {
-				let [,op_1,op_2]=instruction;
-				let peek_stack=this.exec_stack[op_1][0];
+				let [,stack_peek_distance,access_distance]=instruction;
+				let peek_stack=this.exec_stack[stack_peek_distance][0];
 				let base_ptr=peek_stack.at(-1);
 				if(!base_ptr) throw new Error("Peek stack underflow");
 				if(base_ptr.type!='number') throw new Error("Incorrect type for dom_peek");
-				let at=peek_stack.at(base_ptr.value-op_2-1);
+				let at=peek_stack.at(base_ptr.value-access_distance-1);
 				if(!at) throw new Error("Peek at underflow");
 				this.push(at);
-				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,op_2,'base ptr',base_ptr,'ex_stack',op_1);
+				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
 			} break;
 			case 'append': {
 				if(this.stack.length<=0) {
