@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         rebuild the universe overwrite with my version
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      5.1
 // @description  try to take over the world!
 // @author       You
 // @match        http://rebuildtheuniverse.com
