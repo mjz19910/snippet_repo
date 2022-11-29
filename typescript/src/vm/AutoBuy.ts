@@ -350,9 +350,7 @@ export class AutoBuy implements AutoBuyInterface {
 		let stack: TreeItem[][]=[];
 		for(let tree_depth=0,i=0;i<input_stack.length;i++) {
 			let cur_stack=input_stack[i];
-			let depth: number;
-			let item: RawDomInstructions;
-			[depth,...item]=cur_stack;
+			let [depth,...item]=cur_stack;
 			if(this.debug_arr.includes('parse_dom_desc'))
 				console.log(item);
 			while(depth>tree_depth) {
