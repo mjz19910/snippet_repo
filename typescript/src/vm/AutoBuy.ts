@@ -342,7 +342,9 @@ export class AutoBuy implements AutoBuyInterface {
 		if(left_stack.length>0) {
 			console.assert(false,'failed to parse everything (parse tree probably has errors)');
 		}
-		this.run_dom_desc(tree);
+		let [ret_items,_depths]=this.run_dom_desc(tree);
+		let builder_vm=new BaseStackVM(ret_items);
+		builder_vm.run();
 	}
 	parse_dom_desc(input_stack: RawDomInstructionsWithDepth[]): [TreeItem[][],TreeItem[]] {
 		let tree: TreeItem[]=[];
@@ -411,8 +413,6 @@ export class AutoBuy implements AutoBuyInterface {
 		ret_items.splice(items_index+off++,0,['dom_exec',deep_res[0]]);
 		this.log_if('apply_dom_desc',deep_res[0],deep_res[1]);
 		this.log_if('apply_dom_desc',ret_items,depths,stack);
-		let builder_vm=new BaseStackVM(ret_items);
-		builder_vm.run();
 		return [ret_items,depths];
 	}
 	init_dom() {
