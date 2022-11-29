@@ -57,7 +57,7 @@ export class BaseStackVM implements AbstractVM {
 	is_ip_in_bounds(value: number) {
 		return value>=0&&value<this.instructions.length;
 	}
-	execute_instruction(instruction: InstructionType|['push_pc']) {
+	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
 			case 'je': {
 				let [,target]=instruction;
@@ -167,7 +167,7 @@ export class BaseStackVM implements AbstractVM {
 					console.assert(verify_state[0]===0,"not all of the operands typechecked");
 				}
 			} break;
-			case 'push_pc': {
+			case 'vm_push_ip': {
 				this.push(new NumberBox(this.instruction_pointer));
 			} break;
 			default: {
