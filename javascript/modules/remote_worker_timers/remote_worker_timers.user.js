@@ -362,8 +362,8 @@
 					this.clear(tag,remote_id);
 				}
 				this.worker_state.postMessage({
-					t: g_timer_api.worker.reply.fire.single,
-					v: remote_id
+					type: g_timer_api.worker.reply.fire.single,
+					value: remote_id
 				});
 			}
 		}
@@ -397,14 +397,14 @@
 			let state=new TimerState(remote_id,tag,is_repeating,target_fn,target_args,timeout);
 			this.store_state_by_remote_id(remote_id,state);
 			this.send_worker_set_message(tag,{
-				t: remote_id,
-				v: timeout
+				type: remote_id,
+				value: timeout
 			});
 			return remote_id;
 		}
 		/**
 		 * @param {any} tag
-		 * @param {{ t: any; v: any; }} obj
+		 * @param {{ type: any; value: any; }} obj
 		 */
 		send_worker_set_message(tag,obj) {
 			this.assert_valid_worker();
@@ -415,12 +415,12 @@
 			}
 			if(!msg_id) {
 				console.assert(false,'Unknown timer_tag',tag);
-				console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
+				console.info('TypeError like: let value:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
 				return;
 			}
 			this.worker_state.postMessage({
-				t: msg_id,
-				v: obj
+				type: msg_id,
+				value: obj
 			});
 		}
 		/**
@@ -458,12 +458,12 @@
 			debugger;
 			switch(type) {
 				case g_timer_api.worker.clear.single: {
-					let remote_id=timer_result_msg.v;
+					let remote_id=timer_result_msg.value;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
 				case g_timer_api.worker.clear.repeating: {
-					let remote_id=timer_result_msg.v;
+					let remote_id=timer_result_msg.value;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
@@ -505,13 +505,13 @@
 			// we have to trust the user, go ahead and send the message anyway
 			if(tag===TIMER_SINGLE) {
 				this.worker_state.postMessage({
-					t: g_timer_api.worker.clear.single,
-					v: remote_id
+					type: g_timer_api.worker.clear.single,
+					value: remote_id
 				});
 			} else if(tag===TIMER_REPEATING) {
 				this.worker_state.postMessage({
-					t: g_timer_api.worker.clear.repeating,
-					v: remote_id
+					type: g_timer_api.worker.clear.repeating,
+					value: remote_id
 				});
 			}
 		}
@@ -526,13 +526,13 @@
 			if(state.active) {
 				if(state.type===TIMER_SINGLE&&tag===TIMER_SINGLE) {
 					this.worker_state.postMessage({
-						t: g_timer_api.worker.clear.single,
-						v: remote_id
+						type: g_timer_api.worker.clear.single,
+						value: remote_id
 					});
 				} else if(state.type===TIMER_REPEATING&&tag===TIMER_REPEATING) {
 					this.worker_state.postMessage({
-						t: g_timer_api.worker.clear.repeating,
-						v: remote_id
+						type: g_timer_api.worker.clear.repeating,
+						value: remote_id
 					});
 				}
 				state.active=false;
@@ -599,13 +599,13 @@
 					this.terminate();
 					return;
 				}
-				switch(msg.t) {
+				switch(msg.type) {
 					case TimeoutFireS/*worker_state.timer single fire*/: {
-						worker_state.timer.fire(TIMER_SINGLE,msg.v);
+						worker_state.timer.fire(TIMER_SINGLE,msg.value);
 						break;
 					}
 					case TimeoutFireR/*worker_state.timer repeating fire*/: {
-						worker_state.timer.fire(TIMER_REPEATING,msg.v);
+						worker_state.timer.fire(TIMER_REPEATING,msg.value);
 						break;
 					}
 					case WorkerDestroyMessage/*worker_state destroy*/:
@@ -618,7 +618,7 @@
 						break;
 					}
 					case ReplyFromWorker/*worker_state dispatch_message*/: {
-						worker_state.dispatch_message(msg.v);
+						worker_state.dispatch_message(msg.value);
 						break;
 					}
 					default: {
@@ -630,8 +630,8 @@
 			};
 			this.valid=true;
 			this.worker.postMessage({
-				t: g_timer_api.worker_set_types,
-				v: g_timer_api
+				type: g_timer_api.worker_set_types,
+				value: g_timer_api
 			});
 		}
 		/**
@@ -659,7 +659,7 @@
 				}
 				case g_timer_api.worker_set_types: {
 					this.worker.postMessage({
-						t: g_timer_api.worker.ready
+						type: g_timer_api.worker.ready
 					});
 				} break;
 			}
@@ -987,7 +987,7 @@
 			if(!g_timer_api.worker) throw new Error("Invalid");
 			if(!g_timer_api.reply) throw new Error("Invalid");
 			let msg=e.data;
-			switch(msg.t) {
+			switch(msg.type) {
 				case g_timer_api.reply.to_worker/*reply*/: {
 					let result=msg.value;
 					console.assert(false,"unhandled result on remote worker",result);
@@ -996,36 +996,36 @@
 				case g_timer_api.worker.ready/**/: {
 					// debugger;
 					postMessage({
-						t: g_timer_api.reply.from_worker,
-						v: {
-							t: g_timer_api.reply.ready,
-							v: msg.t
+						type: g_timer_api.reply.from_worker,
+						value: {
+							type: g_timer_api.reply.ready,
+							value: msg.type
 						}
 					});
 				} break;
 				case g_timer_api.worker.set.single/*remote timer set single*/: {
 					// debugger;
 					let user_msg=msg.value;
-					console.log('worker set single',user_msg.t,user_msg.v);
-					let local_id=remote_worker_state.set(TIMER_SINGLE,user_msg.t,user_msg.v);
+					console.log('worker set single',user_msg.type,user_msg.value);
+					let local_id=remote_worker_state.set(TIMER_SINGLE,user_msg.type,user_msg.value);
 					postMessage({
-						t: g_timer_api.reply.from_worker,
-						v: {
-							t: g_timer_api.reply.set.single,
-							v: [local_id,msg.t,user_msg.t,user_msg.v]
+						type: g_timer_api.reply.from_worker,
+						value: {
+							type: g_timer_api.reply.set.single,
+							value: [local_id,msg.type,user_msg.type,user_msg.value]
 						}
 					});
 				} break;
 				case g_timer_api.worker.set.repeating/*remote timer set repeating*/: {
 					// debugger;
 					let user_msg=msg.value;
-					console.log('worker set repeating',user_msg.t,user_msg.v);
-					let local_id=remote_worker_state.set(TIMER_REPEATING,user_msg.t,user_msg.v);
+					console.log('worker set repeating',user_msg.type,user_msg.value);
+					let local_id=remote_worker_state.set(TIMER_REPEATING,user_msg.type,user_msg.value);
 					postMessage({
-						t: g_timer_api.reply.from_worker,
-						v: {
-							t: g_timer_api.reply.set.repeating,
-							v: [local_id,msg.t,user_msg.t,user_msg.v]
+						type: g_timer_api.reply.from_worker,
+						value: {
+							type: g_timer_api.reply.set.repeating,
+							value: [local_id,msg.type,user_msg.type,user_msg.value]
 						}
 					});
 				} break;
@@ -1161,13 +1161,13 @@
 				}
 				if(!msg_id) {
 					console.assert(false,'Unknown tag in RemoteWorker.fire',tag);
-					console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
+					console.info('TypeError like: let value:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
 					return;
 				}
 				console.log('worker fire',msg_id,remote_id);
 				postMessage({
-					t: msg_id,
-					v: remote_id
+					type: msg_id,
+					value: remote_id
 				});
 			}
 			/**
@@ -1265,20 +1265,20 @@
 					case g_timer_api.worker.clear.single: {
 						// debugger;
 						postMessage({
-							t: g_timer_api.reply.from_worker,
-							v: {
-								t: g_timer_api.reply.clear.single,
-								v: [remote_id,maybe_local_id,msg.type]
+							type: g_timer_api.reply.from_worker,
+							value: {
+								type: g_timer_api.reply.clear.single,
+								value: [remote_id,maybe_local_id,msg.type]
 							}
 						});
 					} break;
 					case g_timer_api.worker.clear.repeating: {
 						// debugger;
 						postMessage({
-							t: g_timer_api.reply.from_worker,
-							v: {
-								t: g_timer_api.reply.clear.repeating,
-								v: [remote_id,maybe_local_id,msg.type]
+							type: g_timer_api.reply.from_worker,
+							value: {
+								type: g_timer_api.reply.clear.repeating,
+								value: [remote_id,maybe_local_id,msg.type]
 							}
 						});
 					} break;
