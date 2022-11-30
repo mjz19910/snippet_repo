@@ -395,7 +395,13 @@
 			}
 		}
 		activate_state(state) {
-			let value=this.m_active_state_map.get(state.id);
+			let id=state.id;
+			if(!this.m_active_state_map.has(id)) {
+				let func=new Function(state.target_fn);
+				let active_state=new ActiveTimerState(id,state.tag,state.is_repeating,func,state.target_args,state.timeout);
+				this.m_active_state_map.set(id,active_state);
+			}
+			let value=this.m_active_state_map.get(id);
 			if(!value) throw new Error("Invalid");
 			return value;
 		}
