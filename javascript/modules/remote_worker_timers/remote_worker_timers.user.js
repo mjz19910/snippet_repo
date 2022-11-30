@@ -1038,7 +1038,6 @@
 				} break;
 			}
 		}
-		/**@typedef {import("../../../typescript/src/vm/RecursivePartial.js").RecursivePartial<TimerApi>} RecursivePartialApi */
 		class RemoteTimerApi {
 			/**@type {typeof WorkerAsyncMessage|null} */
 			async=WorkerAsyncMessage;
