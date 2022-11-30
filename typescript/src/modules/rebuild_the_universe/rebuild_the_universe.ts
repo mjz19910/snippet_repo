@@ -503,7 +503,7 @@ class NewableFunctionBoxImpl {
 		throw new Error("Method not implemented.");
 	}
 	factory(...args: BoxImpl[]) {
-		return this.factory_value(this.class_value,args);
+		return this.factory_value.make_box(this.class_value,args);
 	}
 }
 

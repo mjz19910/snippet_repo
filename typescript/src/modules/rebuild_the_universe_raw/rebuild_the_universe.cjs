@@ -262,11 +262,14 @@ class ObjectBoxImpl {
 /** @template T */
 class NewableInstancePackImpl {
 	/** @arg {new (...a: Box_CJS[]) => T} box_value @arg {Box_CJS[]} construct_args @returns {Box_CJS} */
-	make_box(box_value,construct_args) {}
+	make_box(box_value,construct_args) {
+		box_value;construct_args;
+		return new VoidBoxImpl;
+	}
 }
 
 class NewableFunctionBoxImpl {
-	/** @arg {NewableInstancePackImpl<{}>} factory_value @arg {new (...a: Box[]) => {}} class_value */
+	/** @arg {NewableInstancePackImpl<{}>} factory_value @arg {new (...a: Box_CJS[]) => {}} class_value */
 	constructor(factory_value,class_value) {
 		this.factory_value=factory_value;
 		this.class_value=class_value;
