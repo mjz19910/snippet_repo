@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         setTimeout on remote worker
 // @namespace    http://tampermonkey.net/
-// @version      3.1
+// @version      3.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://rebuildtheuniverse.com/test_remote_setTimeout
