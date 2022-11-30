@@ -458,6 +458,8 @@ function bound_executor<U extends (thisArg: null,...args: any[]) => any>(this: (
 				case 'constructor_box': unboxed_args.push(inner_val_iter.factory_value); break;
 				default: throw new Error("TODO");
 			}
+		} else {
+			throw new Error("Unreachable");
 		}
 	}
 	let called_value=inner_value.call(this,thisArg.value,unboxed_args);
