@@ -217,7 +217,7 @@ class InstructionConstructImpl {
 	}
 }
 
-type CastOperandTarget="object_index"|"vm_function";
+type CastOperandTarget="object_index"|"vm_function"|"object_index_to_function";
 
 class InstructionCastImpl {
 	readonly type='cast';
