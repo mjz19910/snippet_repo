@@ -768,6 +768,7 @@
 		static has_global_state() {
 			return window.hasOwnProperty(this.global_state_key);
 		}
+		/** @returns {WorkerState} */
 		static get_global_state() {
 			/** @type {any} */
 			let any_window=window;
