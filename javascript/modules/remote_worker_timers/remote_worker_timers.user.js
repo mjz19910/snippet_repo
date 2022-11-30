@@ -598,12 +598,12 @@
 	class WorkerStateMessage {
 		/** @arg {WorkerStateMessage} msg */
 		static as_reply_type_1(msg) {
-			this.assert_as_instance(msg,ReplyMessageType1);
+			assert_as_instance(msg,ReplyMessageType1);
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
 		static as_reply_from_worker(msg) {
-			this.assert_as_instance(msg,ReplyFromWorkerMsg);
+			assert_as_instance(msg,ReplyFromWorkerMsg);
 			return msg;
 		}
 		/** @type {typeof TimeoutFireS|102|300|401|402|500} */
@@ -612,12 +612,12 @@
 		value=null;
 		/** @arg {WorkerStateMessage} msg */
 		static as_timeout_fire(msg) {
-			this.assert_as_instance(msg,TimeoutFireSMsg);
+			assert_as_instance(msg,TimeoutFireSMsg);
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
 		static as_timer_fire(msg) {
-			this.assert_as_instance(msg,TimeoutFireRMsg);
+			assert_as_instance(msg,TimeoutFireRMsg);
 			return msg;
 		}
 	}
