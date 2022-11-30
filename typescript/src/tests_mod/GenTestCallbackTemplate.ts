@@ -1,3 +1,3 @@
 import {BaseTestRunner} from "./BaseTestRunner.js";
 
-export type GenTestCallbackTemplate<T>=(test_runner: BaseTestRunner, extra_arg: T) => void
+export type GenTestCallbackTemplate<T extends any[],U>=(test_runner: BaseTestRunner, args: T) => U;

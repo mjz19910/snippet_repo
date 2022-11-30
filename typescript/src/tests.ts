@@ -2,6 +2,7 @@ import * as section_12_8_6 from "./ecma_262/lexer/TemplateLiteralComp.js";
 import * as section_12_6 from "./ecma_262/lexer/NamesAndKeywords.js";
 import * as section_12 from "./ecma_262/lexer/LexGrammarSyntax.js";
 import {test_mod_execute_tests} from "./tests_mod/test_mod_execute_tests.js";
+import {TestState} from "./TestState";
 
 interface RunTestType {
 	run_tests: () => void;
@@ -31,9 +32,16 @@ export const used_modules=[
 	section_12,
 ] satisfies (readonly RunTestType[]);
 
-test_mod_execute_tests([
+let tests=new TestState;
+
+tests.items.push(()=>["section_12",function(): Promise<typeof section_12> {
+	return do_import("./ecma_262/lexer/section_12");
+}]);
+
+test_mod_execute_tests(tests);
+([
 	//["section_12_8_6",function(): Promise<typeof section_12_8_6> {return do_import("./ecma_262/lexer/section_12_8_6");}],
 	//["section_12_6",function(): Promise<typeof section_12_6> {return do_import("./ecma_262/lexer/section_12_6");}],
-	()=>["section_12",function(): Promise<typeof section_12> {return do_import("./ecma_262/lexer/section_12");}, []],
-	()=>["test", function() {}, []]
+	()=>["section_12",function(): Promise<typeof section_12> {return do_import("./ecma_262/lexer/section_12");}, [] as []],
+	()=>["test", function() {}, [] as []]
 ]);
