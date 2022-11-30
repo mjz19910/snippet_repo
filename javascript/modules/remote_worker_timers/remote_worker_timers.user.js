@@ -316,8 +316,14 @@
 		}
 		/**@arg {TimerApi['set_names']|TimerApi['clear_names']} names */
 		set_map_names(names) {
-			this.m_api_map.set(names.single,window[names.single]);
-			this.m_api_map.set(names.repeating,window[names.repeating]);
+			this.add_one_name(names.single);
+			this.add_one_name(names.repeating);
+		}
+		/**
+		 * @param {keyof Window} key
+		 */
+		add_one_name(key) {
+			this.m_api_map.set(key,window[key]);
 		}
 		/**@arg {TimerApi['set_names']} set @arg {TimerApi['clear_names']} clear */
 		set_api_names(set,clear) {
@@ -348,14 +354,6 @@
 			let worker_state=this.weak_worker_state.deref();
 			if(!worker_state) {
 				throw new Error("Verify failed in Timer.verify_timer_state");
-			}
-		}
-		/**@arg {unknown} tag @returns {asserts tag is TimerTag} */
-		assert_valid_tag(tag) {
-			if(tag!=TIMER_SINGLE&&tag!=TIMER_REPEATING) {
-				console.assert(false,"Assertion failure in Timer.validate_tag: tag=%o is out of range");
-				console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)",tag,TIMER_SINGLE,TIMER_TAG_COUNT);
-				throw new Error("Assertion failure");
 			}
 		}
 		/**
@@ -398,7 +396,7 @@
 			return value;
 		}
 		/**
-		 * @param {number} tag
+		 * @param {1|2} tag
 		 * @param {any} target_fn
 		 * @param {number} timeout
 		 * @param {any} target_args
@@ -406,7 +404,6 @@
 		set(tag,target_fn,timeout,target_args) {
 			let remote_id=this.id_generator.next();
 			let is_repeating=false;
-			this.assert_valid_tag(tag);
 			if(tag===TIMER_REPEATING) {
 				is_repeating=true;
 			}
