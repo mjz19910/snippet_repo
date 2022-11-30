@@ -156,12 +156,17 @@
 	const WorkerAsyncMessage=801;
 	const TimerWorkerSetTypes=1001;
 	class ReplyClearMessages {
+		/** @readonly */
 		single=ReplyClearSingle;
+		/** @readonly */
 		repeating=ReplyClearRepeating;
+		/** @readonly */
 		any=ReplyClearAny;
 	}
 	class ReplySetMessages {
+		/** @readonly */
 		single=ReplySetSingle;
+		/** @readonly */
 		repeating=ReplySetRepeating;
 	};
 	class ReplyTypes {
