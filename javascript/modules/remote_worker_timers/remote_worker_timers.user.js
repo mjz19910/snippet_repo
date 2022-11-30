@@ -871,23 +871,22 @@
 				executor_reject(new Error("verify_fail called"));
 				failed=true;
 			});
+			if(failed) {
+				return;
+			}
 		} catch(e) {
 			console.log(e);
 			executor_reject(new Error("worker_code_function caused an error"));
 			failed=true;
+			return;
 		}
 		let id_generator=null;
 		let timer=null;
-		let executor_handle=null;
-		let worker_code_blob=null;
-		/** @type {WorkerState|null} */
-		let worker_state=null;
-		if(failed) return;
 		id_generator=new UniqueIdGenerator;
 		timer=new Timer(id_generator,new TimerApi);
-		executor_handle=new PromiseExecutorHandle(executor_accept,executor_reject);
-		worker_code_blob=new Blob(["(",worker_code_function.toString(),")()","\n//# sourceURL=$__.0"]);
-		worker_state=new WorkerState(worker_code_blob,timer,executor_handle);
+		let executor_handle=new PromiseExecutorHandle(executor_accept,executor_reject);
+		let worker_code_blob=new Blob(["(",worker_code_function.toString(),")()","\n//# sourceURL=$__.0"]);
+		let worker_state=new WorkerState(worker_code_blob,timer,executor_handle);
 		worker_state.init();
 		const setTimeout_global=setTimeout;
 		/**
