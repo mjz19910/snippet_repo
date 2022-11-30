@@ -45,3 +45,5 @@ tests.items.push(() => ["section_12_8_6",function(): Promise<typeof section_12_8
 }]);
 
 tests.items.push(() => ["test",function() {},[] as []]);
+
+test_mod_execute_tests(tests);
