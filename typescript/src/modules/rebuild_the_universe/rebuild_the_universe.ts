@@ -31,6 +31,7 @@ import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
 import {FunctionBox} from "../../box/FunctionBox.js";
 import {BoxTemplate} from "../../box/template/BoxTemplate.js";
 import {NewableFunctionConstructor} from "../../box/NewableFunctionConstructor.js";
+import {FunctionInstance} from "../../box/FunctionInstance.js";
 
 console=globalThis.console;
 
@@ -424,9 +425,16 @@ class NewableFunctionBoxImpl {
 	}
 }
 
+class NewableFunctionConstructorImpl implements NewableFunctionConstructor {
+	make_new: new (...a: Box[]) => FunctionInstance;
+	constructor(make_new: new (...a: Box[]) => FunctionInstance) {
+		this.make_new=make_new;
+	}
+}
+
 class FunctionConstructorFactoryImpl {
-	factory: (box_value: NewableFunctionConstructor) => FunctionBox;
-	constructor(factory: (box_value: NewableFunctionConstructor) => FunctionBox) {
+	factory: (box_value: NewableFunctionConstructorImpl) => FunctionBox;
+	constructor(factory: (box_value: NewableFunctionConstructorImpl) => FunctionBox) {
 		this.factory=factory;
 	}
 }
@@ -475,7 +483,7 @@ class FunctionBoxImpl {
 			} break;
 			case "arguments": {
 				let inner_value=this.value.arguments;
-				let push_value=new RawBoxImpl({as_any:inner_value}, Symbol.for("any"));
+				let push_value=new RawBoxImpl({as_any: inner_value},Symbol.for("any"));
 				vm.push(push_value);
 			} break;
 			case "caller":
