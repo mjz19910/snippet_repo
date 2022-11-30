@@ -808,17 +808,23 @@
 			return window.hasOwnProperty(this.global_state_key);
 		}
 		static get_global_state() {
-			return window[this.global_state_key];
+			/** @type {any} */
+			let any_window=window;
+			return any_window[this.global_state_key];
 		}
 		/**
 		 * @param {WorkerState} worker_state_value
 		 */
 		static set_global_state(worker_state_value) {
+			/** @type {any} */
+			let any_window=window;
 			this.maybe_delete_old_global_state_value(worker_state_value);
-			window[this.global_state_key]=worker_state_value;
+			any_window[this.global_state_key]=worker_state_value;
 		}
 		static delete_global_state() {
-			delete window[this.global_state_key];
+			/** @type {any} */
+			let any_window=window;
+			delete any_window[this.global_state_key];
 		}
 		destroy() {
 			if(!this.worker_url||!this.worker) {
@@ -844,7 +850,9 @@
 	 */
 	function set_timeout_on_remote_worker_executor(executor_accept,executor_reject) {
 		let failed=false;
-		if(globalThis.remote_worker_state) {
+		/** @type {any} */
+		let any_global=globalThis;
+		if(any_global.remote_worker_state) {
 			postMessage({t: WorkerDestroyMessage});
 			executor_accept(null);
 			return;
@@ -870,6 +878,7 @@
 		let timer=null;
 		let executor_handle=null;
 		let worker_code_blob=null;
+		/** @type {WorkerState|null} */
 		let worker_state=null;
 		if(failed) return;
 		id_generator=new UniqueIdGenerator;
@@ -903,7 +912,9 @@
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return clearTimeout_global(id);
 			}
-			worker_state.timer.clear(TIMER_SINGLE,id);
+			if(id) {
+				worker_state.timer.clear(TIMER_SINGLE,id);
+			}
 		}
 		const setInterval_global=setInterval;
 		/**
