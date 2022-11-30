@@ -35,6 +35,7 @@ import {BoxTemplate} from "../../box/template/BoxTemplate.js";
 import {NewableFunctionConstructor} from "../../box/NewableFunctionConstructor.js";
 import {StringBox} from "../../box/StringBox.js";
 import {NumberBox} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
+import {RawBox} from "../../box/RawBox.js";
 
 console=globalThis.console;
 
@@ -431,11 +432,11 @@ class NewableFunctionBoxImpl {
 class FunctionConstructorFactoryImpl implements FunctionConstructorFactory {
 	factory: (box_value: NewableFunctionConstructor) => FunctionBox;
 	constructor(factory: (box_value: NewableFunctionConstructor) => FunctionBox) {
-		this.factory = factory;
+		this.factory=factory;
 	}
 }
 
-class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string, any>> implements BoxMaker<TMakerArgs,TBoxRet> {
+class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> implements BoxMaker<TMakerArgs,TBoxRet> {
 	maker: (
 		make_new: (do_box: () => TBoxRet['value'],...a: TMakerArgs[]) => TBoxRet,
 		value: FunctionConstructor
@@ -448,9 +449,25 @@ class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string, any>> implemen
 class FunctionBoxImpl implements FunctionBox {
 	readonly type="function_box";
 	readonly return_type="null";
-	value:(...a: Box[]) => Box;
-	constructor(value:(...a: Box[]) => Box) {
+	value: (...a: Box[]) => Box;
+	constructor(value: (...a: Box[]) => Box) {
 		this.value=value;
+	}
+	on_get(vm: StackVMImpl,key: string) {
+		switch(key) {
+			case "toString":
+			case "apply":
+			case "call":
+			case "bind":
+			case "arguments":
+			case "caller":
+			case "constructor":
+			case "length":
+			case "name":
+		}
+	}
+	static from_box(value: (...a: Box[]) => Box) {
+		return new this(value);
 	}
 }
 
@@ -467,6 +484,16 @@ class NumberBoxImpl implements NumberBox {
 	value: number;
 	constructor(value: number) {
 		this.value=value;
+	}
+}
+
+class RawBoxImpl<T> implements RawBox<T> {
+	readonly type="raw_box";
+	value: T;
+	type_symbol: symbol;
+	constructor(value: T,symbol_: symbol) {
+		this.value=value;
+		this.type_symbol=symbol_;
 	}
 }
 
@@ -492,20 +519,20 @@ class FunctionConstructorBoxImpl implements FunctionConstructorBox {
 	}
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
-			case 'name': vm.push(new StringBoxImpl(this.value[key]));
-			case 'prototype':vm.push(this.value[key]);
+			case 'name': vm.push(new StringBoxImpl(this.value[key])); break;
+			case 'prototype': {
+				let value=new RawBoxImpl(this.value[key],Symbol.for("Function"));
+				vm.push(value);
+			} break;
 			case 'length': vm.push(new NumberBoxImpl(this.value[key]));
 			default: {
-				let return_value: {value: any;}|null=null;
 				Object.keys(Object.getOwnPropertyDescriptors(this.value)).forEach(e => {
 					if(e===key) {
 						console.log("case needed for key '"+e+"'");
-						return_value={
-							value: (this.value as any)[e]
-						};
+						vm.push((this.value as any)[e]);
 					}
 				});
-				return return_value;
+				FunctionBoxImpl.from_box(this.value as unknown as (...a: Box[]) => Box).on_get(vm,key);
 			}
 		}
 	}
@@ -553,7 +580,7 @@ class InstructionGetImpl {
 				}
 			} break;
 			case 'constructor_box': {
-				let return_value:{value:Box}|null=null;
+				let return_value: {value: Box;}|null=null;
 				switch(typeof key) {
 					case 'string': {
 						switch(value_box.instance_type) {

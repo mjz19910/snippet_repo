@@ -23,6 +23,7 @@ import {NullBox} from "./NullBox.js";
 import {NumberBox} from "./NumberBox.js";
 import {ObjectBox} from "./ObjectBox.js";
 import {PromiseBox} from "./PromiseBox.js";
+import {RawBoxes} from "./RawBoxes";
 import {RealVoidBox} from "./RealVoidBox.js";
 import {StackVMBox} from "./StackVMBox.js";
 import {StringBox} from "./StringBox.js";
@@ -31,6 +32,7 @@ import {VoidPromiseBox} from "./VoidPromiseBox.js";
 import {WindowBox} from "./WindowBox.js";
 
 export type Box=
+	RawBoxes|
 	NumberBox|
 	StringBox|
 	// function result
