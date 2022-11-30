@@ -989,7 +989,7 @@
 			let msg=e.data;
 			switch(msg.t) {
 				case g_timer_api.reply.to_worker/*reply*/: {
-					let result=msg.v;
+					let result=msg.value;
 					console.assert(false,"unhandled result on remote worker",result);
 					debugger;
 				} break;
@@ -1005,7 +1005,7 @@
 				} break;
 				case g_timer_api.worker.set.single/*remote timer set single*/: {
 					// debugger;
-					let user_msg=msg.v;
+					let user_msg=msg.value;
 					console.log('worker set single',user_msg.t,user_msg.v);
 					let local_id=remote_worker_state.set(TIMER_SINGLE,user_msg.t,user_msg.v);
 					postMessage({
@@ -1018,7 +1018,7 @@
 				} break;
 				case g_timer_api.worker.set.repeating/*remote timer set repeating*/: {
 					// debugger;
-					let user_msg=msg.v;
+					let user_msg=msg.value;
 					console.log('worker set repeating',user_msg.t,user_msg.v);
 					let local_id=remote_worker_state.set(TIMER_REPEATING,user_msg.t,user_msg.v);
 					postMessage({
@@ -1253,22 +1253,22 @@
 				return null;
 			}
 			/**
-			 * @param {{ v: any; t: any; }} msg
+			 * @param {{ type: any, value: any; }} msg
 			 */
 			do_clear(msg) {
 				if(!g_timer_api.worker) throw 1;
 				if(!g_timer_api.reply) throw 1;
-				let remote_id=msg.v;
+				let remote_id=msg.value;
 				let maybe_local_id=this.clear(remote_id);
 				// debugger;
-				switch(msg.t) {
+				switch(msg.type) {
 					case g_timer_api.worker.clear.single: {
 						// debugger;
 						postMessage({
 							t: g_timer_api.reply.from_worker,
 							v: {
 								t: g_timer_api.reply.clear.single,
-								v: [remote_id,maybe_local_id,msg.t]
+								v: [remote_id,maybe_local_id,msg.type]
 							}
 						});
 					} break;
@@ -1278,7 +1278,7 @@
 							t: g_timer_api.reply.from_worker,
 							v: {
 								t: g_timer_api.reply.clear.repeating,
-								v: [remote_id,maybe_local_id,msg.t]
+								v: [remote_id,maybe_local_id,msg.type]
 							}
 						});
 					} break;
