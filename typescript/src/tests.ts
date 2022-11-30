@@ -27,9 +27,9 @@ function module_load_failure() {
 }
 
 export const used_modules=[
-	section_12_8_6,
-	section_12_6,
 	section_12,
+	section_12_6,
+	section_12_8_6,
 ]satisfies (readonly RunTestType[]);
 
 let tests=new TestState;
