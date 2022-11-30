@@ -365,10 +365,6 @@
 		fire(tag,remote_id) {
 			this.verify_state();
 			let state=this.get_state_by_remote_id(remote_id);
-			if(!state) {
-				this.force_clear(tag,remote_id);
-				return;
-			}
 			let active_state=this.activate_state(state);
 			try {
 				if(active_state.active) {
@@ -458,7 +454,7 @@
 		/**@arg {number} remote_id */
 		get_state_by_remote_id(remote_id) {
 			let state=this.m_remote_id_to_state_map.get(remote_id);
-			if(!state) throw 1;
+			if(!state) throw new Error("No state for id");
 			return state;
 		}
 		/**
@@ -529,21 +525,18 @@
 			}
 		}
 		/**
-		 * @param {number} tag
+		 * @param {1|2} tag
 		 * @param {number} remote_id
 		 */
 		force_clear(tag,remote_id) {
-			this.assert_valid_tag(tag);
-			if(!this.weak_worker_state) throw 1;
+			this.verify_state();
 			let worker_state=this.weak_worker_state.deref();
 			if(!worker_state) throw 1;
 			let state=this.get_state_by_remote_id(remote_id);
-			if(!state) throw new Error("No state for id");
 			if(state.active) {
 				return this.clear(tag,remote_id);
 			}
-			// we have to trust the user, go ahead and send the message
-			// anyway (this can technically send structured cloneable objects)
+			// we have to trust the user, go ahead and send the message anyway
 			if(tag===TIMER_SINGLE) {
 				worker_state.postMessage({
 					t: g_timer_api.worker.clear.single,
