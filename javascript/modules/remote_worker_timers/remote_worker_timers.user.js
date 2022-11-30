@@ -760,19 +760,19 @@
 			return this.worker.postMessage(data);
 		}
 		/**
-		 * @param {any} worker_state_value
+		 * @param {WorkerState} worker_state_value
 		 */
 		static has_old_global_state_value(worker_state_value) {
 			return this.has_global_state()&&!this.equals_global_state(worker_state_value);
 		}
 		/**
-		 * @param {any} worker_state_value
+		 * @param {WorkerState} worker_state_value
 		 */
 		static equals_global_state(worker_state_value) {
 			return this.get_global_state()===worker_state_value;
 		}
 		/**
-		 * @param {any} worker_state_value
+		 * @param {WorkerState} worker_state_value
 		 */
 		static maybe_delete_old_global_state_value(worker_state_value) {
 			if(this.has_old_global_state_value(worker_state_value)) {
@@ -788,16 +788,10 @@
 		}
 		static delete_old_global_state() {
 			let old_worker_state=this.get_global_state();
-			this.destroy_old_worker_state(old_worker_state,'delete_global_state');
+			this.delete_global_state();
+			old_worker_state.destroy();
 		}
-		/**
-		 * @param {{ destroy: () => void; }} worker_state_value
-		 * @param {string} before_destroy_call_name
-		 */
-		static destroy_old_worker_state(worker_state_value,before_destroy_call_name) {
-			this[before_destroy_call_name]();
-			worker_state_value.destroy();
-		}
+		/** @readonly */
 		static global_state_key="g_worker_state";
 		static has_global_state() {
 			return window.hasOwnProperty(this.global_state_key);
@@ -806,7 +800,7 @@
 			return window[this.global_state_key];
 		}
 		/**
-		 * @param {this} worker_state_value
+		 * @param {WorkerState} worker_state_value
 		 */
 		static set_global_state(worker_state_value) {
 			this.maybe_delete_old_global_state_value(worker_state_value);
@@ -881,19 +875,19 @@
 		 */
 		function remoteSetTimeout(handler,timeout,...target_args) {
 			if(!worker_state) {
+				// @ts-expect-error
 				setTimeout=setTimeout_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return setTimeout_global(handler,timeout,...target_args);
 			}
 			if(typeof timeout==='undefined') timeout=0;
-			if(typeof timeout!='number'&&timeout.valueOf) timeout=timeout.valueOf();
-			if(typeof timeout!='number'&&timeout.toString) timeout=timeout.toString();
 			return worker_state.timer.set(TIMER_SINGLE,handler,timeout,target_args);
 		}
 		const clearTimeout_global=clearTimeout;
-		/**@arg {number} id */
-		function remoteClearTimeout(id=void 0) {
+		/**@arg {number|undefined} id */
+		function remoteClearTimeout(id) {
 			if(!worker_state) {
+				// @ts-expect-error
 				clearTimeout=clearTimeout_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return clearTimeout_global(id);
@@ -907,25 +901,26 @@
 		 */
 		function remoteSetInterval(handler,timeout=0,...target_args) {
 			if(!worker_state) {
+				// @ts-expect-error
 				setInterval=setInterval_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return setInterval_global(handler,timeout,...target_args);
 			}
 			if(typeof timeout==='undefined') timeout=0;
-			if(typeof timeout!='number'&&timeout.valueOf) timeout=timeout.valueOf();
-			if(typeof timeout!='number'&&timeout.toString) timeout=timeout.toString();
 			return worker_state.timer.set(TIMER_REPEATING,handler,timeout,target_args);
 		}
 		const clearInterval_global=clearInterval;
 		/**@arg {number} id */
 		function remoteClearInterval(id) {
 			if(!worker_state) {
+				// @ts-expect-error
 				clearInterval=clearInterval_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return clearInterval_global(id);
 			}
 			worker_state.timer.clear(TIMER_REPEATING,id);
 		}
+		// @ts-expect-error
 		window.old_local={
 			setTimeout,
 			setInterval,
@@ -941,6 +936,7 @@
 			}
 			return obj;
 		}
+		// @ts-expect-error
 		window.g_remote_timer_api=connect_local_to_remote_timer_api({
 			setTimeout: remoteSetTimeout,
 			setInterval: remoteSetInterval,
@@ -1056,19 +1052,19 @@
 				} break;
 			}
 		}
-		/**@typedef {import("./types/RecursivePartial.js").RecursivePartial<TimerApi>} RecursivePartialApi */
+		/**@typedef {import("../../../typescript/src/vm/RecursivePartial.js").RecursivePartial<TimerApi>} RecursivePartialApi */
 		class RemoteTimerApi {
 			/**@type {WorkerAsyncMessage|null} */
 			async=null;
 			/**@type {TimerWorkerSetTypes|null} */
 			worker_set_types=TimerWorkerSetTypes;
-			/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2").ReplyTypesTy} ReplyTypesTy */
+			/**@typedef {import("../../../typescript/src/vm/ReplyTypesTy.js").ReplyTypesTy} ReplyTypesTy */
 			/**@type {ReplyTypesTy|null} */
 			reply=null;
-			/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2").TimeoutFireInfoTy} TimeoutFireInfoTy */
+			/**@typedef {import("../../../typescript/src/vm/TimeoutFireInfoTy.js").TimeoutFireInfoTy} TimeoutFireInfoTy */
 			/**@type {TimeoutFireInfoTy|null} */
 			fire=null;
-			/**@typedef {import("./rebuild_the_universe_auto_typed_v0.2").TimeoutWorkerTypesTy} TimeoutWorkerTypesTy */
+			/**@typedef {import("../../../typescript/src/vm/TimeoutWorkerTypesTy.js").TimeoutWorkerTypesTy} TimeoutWorkerTypesTy */
 			/**@type {TimeoutWorkerTypesTy|null} */
 			worker=null;
 			/**@type {{single:"setTimeout",repeating:"setInterval"}} */
