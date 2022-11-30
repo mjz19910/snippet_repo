@@ -307,7 +307,7 @@
 			this.id_generator=id_generator;
 			/**@type {Map<number, TimerState>} */
 			this.m_remote_id_to_state_map=new Map;
-			this.weak_worker_state=null;
+			this.worker_state=null;
 			this.m_api_map=new Map;
 			this.m_raw_api_info=api_info;
 			this.set_api_names(g_timer_api.set_names,g_timer_api.clear_names);
@@ -337,15 +337,11 @@
 		 * @param {WorkerState} worker_state_value
 		 */
 		set_worker_state(worker_state_value) {
-			this.weak_worker_state=new WeakRef(worker_state_value);
+			this.worker_state=worker_state_value;
 		}
-		/** @returns {asserts this is {weak_worker_state: NonNullable<Timer['weak_worker_state']>}} */
+		/** @returns {asserts this is {worker_state: NonNullable<Timer['worker_state']>}} */
 		assert_valid_worker() {
-			assert_non_null(this.weak_worker_state);
-			let worker_state=this.weak_worker_state.deref();
-			if(!worker_state) {
-				throw new Error("Verify failed in Timer.verify_timer_state");
-			}
+			assert_non_null(this.worker_state);
 		}
 		/**
 		 * @arg {TimerTag} tag
@@ -364,9 +360,7 @@
 					state.active=false;
 					this.clear(tag,remote_id);
 				}
-				let worker_state=this.weak_worker_state.deref();
-				if(!worker_state) throw 1;
-				worker_state.postMessage({
+				this.worker_state.postMessage({
 					t: g_timer_api.worker.reply.fire.single,
 					v: remote_id
 				});
@@ -412,12 +406,7 @@
 		 * @param {{ t: any; v: any; }} obj
 		 */
 		send_worker_set_message(tag,obj) {
-			if(!this.weak_worker_state) throw 1;
-			let worker_state=this.weak_worker_state.deref();
-			if(!worker_state) {
-				console.assert(false,'tried to send_worker_message, but the gc collected the worker_state, referenced with a WeakRef (weak_worker_state)');
-				return;
-			}
+			this.assert_valid_worker();
 			let msg_id;
 			switch(tag) {
 				case TIMER_SINGLE: msg_id=g_timer_api.worker.set.single; break;
@@ -428,7 +417,7 @@
 				console.info('TypeError like: let v:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
 				return;
 			}
-			worker_state.postMessage({
+			this.worker_state.postMessage({
 				t: msg_id,
 				v: obj
 			});
@@ -518,7 +507,7 @@
 		 */
 		force_clear(tag,remote_id) {
 			this.assert_valid_worker();
-			let worker_state=this.weak_worker_state.deref();
+			let worker_state=this.worker_state;
 			if(!worker_state) throw 1;
 			let state=this.get_state_by_remote_id(remote_id);
 			if(state.active) {
@@ -546,8 +535,7 @@
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) return;
 			if(state.active) {
-				let worker_state=this.weak_worker_state.deref();
-				if(!worker_state) throw 1;
+				let worker_state=this.worker_state;
 				if(state.type===TIMER_SINGLE&&tag===TIMER_SINGLE) {
 					worker_state.postMessage({
 						t: g_timer_api.worker.clear.single,
