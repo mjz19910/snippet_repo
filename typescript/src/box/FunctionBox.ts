@@ -10,7 +10,7 @@ export class FunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Box
 		switch(key) {
 			case "toString": {
 				let inner_value=this.value[key];
-				function bound_executor(this:(...a: Box[]) => Box){
+				function bound_executor(this: (...a: Box[]) => Box) {
 					return new StringBox(inner_value.call(this));
 				}
 				let push_value=new FunctionBox(bound_executor.bind(this.value));

@@ -455,7 +455,14 @@ class FunctionBoxImpl implements FunctionBox {
 	}
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
-			case "toString": vm.push(new FunctionBoxImpl(this.value[key])); break;
+			case "toString": {
+				let inner_value=this.value[key];
+				function bound_executor(this: (...a: Box[]) => Box) {
+					return new StringBox(inner_value.call(this));
+				}
+				let push_value=new FunctionBox(bound_executor.bind(this.value));
+				vm.push(push_value);
+			} break;
 			case "apply":
 			case "call":
 			case "bind":
