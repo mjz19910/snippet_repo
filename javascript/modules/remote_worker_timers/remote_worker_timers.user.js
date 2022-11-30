@@ -989,7 +989,7 @@
 					if(!('worker' in msg.value)) throw 1;
 					let value=decay_to_object(msg.value);
 					let v_async=value.async;
-					if(typeof v_async==='number'||v_async===null) {
+					if(v_async===1||v_async===null) {
 						v_async;
 						g_timer_api.on_set_types({
 							async: v_async,
@@ -1105,7 +1105,7 @@
 				repeating: "clearInterval"
 			};
 			/**
-			 * @param {{ async: number | null; reply: any; fire: any; worker: any; }} types
+			 * @param {{ async: 1 | null; reply: any; fire: any; worker: any; }} types
 			 */
 			on_set_types(types) {
 				this.async=types.async;
@@ -1114,6 +1114,7 @@
 				this.worker=types.worker;
 				onmessage=message_with_types_handler;
 				for(let i=0;i<cached_messages.length;i++) {
+					// @ts-expect-error
 					onmessage(cached_messages[i]);
 				}
 			}
@@ -1124,6 +1125,7 @@
 				this.m_timer=null;
 				this.unique_script_id=1;
 			}
+			/** @arg {RemoteTimer} timer */
 			set_timer(timer) {
 				this.m_timer=timer;
 			}
@@ -1133,12 +1135,14 @@
 			 * @param {any} timeout
 			 */
 			set(tag,remote_id,timeout) {
+				if(!this.m_timer) throw 1;
 				return this.m_timer.set(tag,remote_id,timeout);
 			}
 			/**
 			 * @param {any} msg
 			 */
 			clear(msg) {
+				if(!this.m_timer) throw 1;
 				return this.m_timer.do_clear(msg);
 			}
 		}
@@ -1151,6 +1155,15 @@
 			timer.fire(remote_id);
 		}
 		const g_timer_api=new RemoteTimerApi;
+		class RemoteTimerState {
+			/**
+			 * @param {any} type
+			 */
+			constructor(type) {
+				this.type=type;
+				this.local_id=0;
+			}
+		}
 		class RemoteTimer {
 			/**
 			 * @param {undefined} [api_info]
@@ -1164,9 +1177,10 @@
 			 * @param {any} remote_id
 			 */
 			fire(remote_id) {
+				if(!g_timer_api.fire) throw 1;
 				let local_state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!local_state) return;
-				this.validate_state(local_state,remote_id);
+				this.validate_state(local_state);
 				if(!local_state.active) {
 					console.log('fire inactive',remote_id,local_state);
 					return;
@@ -1222,7 +1236,7 @@
 				}
 			}
 			/**
-			 * @param {TimerState} state
+			 * @param {RemoteTimerState} state
 			 * @param {any} remote_id
 			 */
 			verify_state(state,remote_id) {
@@ -1274,6 +1288,8 @@
 			 * @param {{ v: any; t: any; }} msg
 			 */
 			do_clear(msg) {
+				if(!g_timer_api.worker) throw 1;
+				if(!g_timer_api.reply) throw 1;
 				let remote_id=msg.v;
 				let maybe_local_id=this.clear(remote_id);
 				// debugger;
