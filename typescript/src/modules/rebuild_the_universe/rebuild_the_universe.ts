@@ -20,7 +20,6 @@
 
 import {Box} from "../../box/Box.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
-import {Cast} from "../../vm/instruction/Cast.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
 import {VMPushSelf} from "../../vm/instruction/vm/VMPushSelf.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
@@ -242,7 +241,7 @@ class InstructionCastImpl {
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
-	run(vm: StackVMImpl,instruction: Cast) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
 		if(this.debug) {
