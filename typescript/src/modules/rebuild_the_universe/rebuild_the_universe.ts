@@ -21,6 +21,7 @@
 import {ArrayBox} from "../../box/ArrayBox.js";
 import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
 import {BoxWithPropertiesIsBox} from "../../box/BoxWithPropertiesIsBox.js";
+import {CSSStyleSheetBox} from "../../box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "../../box/CSSStyleSheetConstructorBox.js";
 import {CSSStyleSheetInitBox} from "../../box/CSSStyleSheetInitBox.js";
 import {CSSStyleSheetPromiseBox} from "../../box/CSSStyleSheetPromiseBox.js";
@@ -39,17 +40,21 @@ import {NewableInstancePack} from "../../box/NewableInstancePack.js";
 import {NewableInstancePackObjectBox} from "../../box/NewableInstancePackObjectBox.js";
 import {NodeBox} from "../../box/NodeBox.js";
 import {NullBox} from "../../box/NullBox.js";
+import {NumberBox} from "../../box/NumberBox.js";
+import {ObjectBox} from "../../box/ObjectBox.js";
 import {PromiseBox} from "../../box/PromiseBox.js";
 import {RawBoxes} from "../../box/RawBoxes.js";
 import {RealVoidBox} from "../../box/RealVoidBox.js";
+import {StackVMBox} from "../../box/StackVMBox.js";
 import {StringBox} from "../../box/StringBox.js";
 import {BoxTemplate} from "../../box/template/BoxTemplate.js";
+import {VoidBox} from "../../box/VoidBox.js";
 import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
+import {WindowBox} from "../../box/WindowBox.js";
 import {DomValueBox} from "../../vm/DomValueBox.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
 import {PromiseFunctionBox} from "../../vm/PromiseFunctionBox.js";
-import {CSSStyleSheetBox,NumberBox,ObjectBox,StackVMBox,VoidBox,WindowBox} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
 
 console=globalThis.console;
 
@@ -479,7 +484,7 @@ class CSSStyleSheetConstructorBoxImpl {
 	}
 }
 
-class NewableFunctionBoxImpl implements NewableFunctionBox {
+class NewableFunctionBoxImpl {
 	readonly type="constructor_box";
 	readonly instance_type="unknown";
 	readonly arguments="box[]";

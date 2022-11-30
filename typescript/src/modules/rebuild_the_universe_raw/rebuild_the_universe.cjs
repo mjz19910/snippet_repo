@@ -147,8 +147,8 @@ class CSSStyleSheetConstructorBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("../../box/CSSStyleSheetBox.js").CSSStyleSheetBox} CSSStyleSheetBox */
-/** @implements {CSSStyleSheetBox} */
+/** @typedef {import("../../box/CSSStyleSheetBox.js").CSSStyleSheetBox} CSSStyleSheetBox_CJS */
+/** @implements {CSSStyleSheetBox_CJS} */
 class CSSStyleSheetBoxImpl {
 	/** @readonly */
 	type="CSSStyleSheetBox";
@@ -172,8 +172,8 @@ class CSSStyleSheetBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("../../box/StackVMBox.js").StackVMBox} StackVMBox */
-/** @implements {StackVMBox} */
+/** @typedef {import("../../box/StackVMBox.js").StackVMBox} StackVMBox_CJS */
+/** @implements {StackVMBox_CJS} */
 class StackVMBoxImpl {
 	/** @type {"custom_box"} */
 	type="custom_box";
@@ -200,8 +200,8 @@ class StackVMBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("../../box/WindowBox.js").WindowBox} WindowBox */
-/** @implements {WindowBox} */
+/** @typedef {import("../../box/WindowBox.js").WindowBox} WindowBox_CJS */
+/** @implements {WindowBox_CJS} */
 class WindowBoxImpl {
 	/** @type {"object_box"} */
 	type="object_box";
@@ -229,8 +229,8 @@ class WindowBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("../../box/ObjectBox.js").ObjectBox} ObjectBox */
-/** @implements {ObjectBox} */
+/** @typedef {import("../../box/ObjectBox.js").ObjectBox} ObjectBox_CJS */
+/** @implements {ObjectBox_CJS} */
 class ObjectBoxImpl {
 	/** @readonly */
 	type="object_box";
@@ -310,7 +310,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	handle_as_fn_box(vm,fn_box,target_this,arg_arr) {
 		if('return_type' in fn_box&&fn_box.return_type=='promise_box') {
 			return this.handle_as_fn_to_promise(vm,fn_box.value,target_this,arg_arr);
-		} else if('return_type' in fn_box&&fn_box.return_type===null) {
+		} else if('return_type' in fn_box&&fn_box.return_type==="null") {
 			console.log('fixme: make a type for this',fn_box);
 			return this.handle_as_fn(vm,fn_box.value,target_this,arg_arr);
 		} else {
@@ -375,19 +375,14 @@ class InstructionCallImpl extends InstructionImplBase {
 	}
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_obj @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_obj(vm,fn_obj,target_this,arg_arr) {
-		if(!('as_type' in fn_obj)) {
-			console.log('!fn_obj.as_type',fn_obj);
-			throw new Error("Invalid");
-		}
-		let raw_fn=fn_obj.as_type('function');
-		if(!raw_fn) {
+		if(!fn_obj) {
 			throw new Error("Unreachable (type of value is not 'function')");
 		}
-		if(raw_fn.type==='function_box') {
-			if(raw_fn.return_type===null) {
-				return this.handle_as_fn(vm,raw_fn.value,target_this,arg_arr);
+		if(fn_obj.type==="function_box") {
+			if(fn_obj.return_type==="null") {
+				return this.handle_as_fn(vm,fn_obj.value,target_this,arg_arr);
 			}
-		} else if(raw_fn.type=='constructor_box') {
+		} else if(fn_obj.type=="constructor_box") {
 			throw new Error("Unexpected constructor");
 		}
 		else {
@@ -430,7 +425,7 @@ class InstructionCallImpl extends InstructionImplBase {
 		} else if(typeof value_box==='object'&&value_box.type==='void') {
 			throw new Error("Attempt to call a void value");
 		} else {
-			if(typeof value_box==='object') {
+			if('value' in value_box) {
 				console.log('VM: call error value_box not handled',typeof value_box,value_box,value_box.value);
 				this.handle_as_obj(vm,value_box,target_this,arg_arr);
 			}
@@ -451,7 +446,7 @@ class InstructionConstructImpl extends InstructionImplBase {
 		if(typeof a!='object') throw new Error("Invalid");
 		if(a===null) throw new Error("Invalid");
 		if(a.type!='constructor_box') throw new Error("Invalid");
-		if(a.instance_type===null) {
+		if(a.instance_type==="unknown") {
 			let obj=a.factory(...construct_arr);
 			vm.stack.push(obj);
 		} else if(a.instance_type==='CSSStyleSheet') {
@@ -491,7 +486,7 @@ class InstructionCastImpl extends InstructionImplBase {
 		void vm;
 		console.warn('push_temporary_box',cast_source,obj);
 	}
-	/** @arg {StackVMImpl} vm @arg {'object_index'} cast_source @arg {StackVMBox} obj */
+	/** @arg {StackVMImpl} vm @arg {'object_index'} cast_source @arg {StackVMBox_CJS} obj */
 	push_custom_box(vm,cast_source,obj) {
 		void vm;
 		console.warn('push_custom_box',cast_source,obj);
@@ -592,8 +587,8 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 		vm.instructions[target]=valid_instruction;
 	}
 }
-/** @typedef {import("../../box/NumberBox.js").NumberBox} NumberBox */
-/** @implements {NumberBox} */
+/** @typedef {import("../../box/NumberBox.js").NumberBox} NumberBox_CJS */
+/** @implements {NumberBox_CJS} */
 class NumberBoxImpl {
 	/** @readonly */
 	type="number";
@@ -679,7 +674,7 @@ class InstructionGetImpl extends InstructionImplBase {
 			case 'constructor_box': {
 				switch(value_box.instance_type) {
 					case 'CSSStyleSheet': new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key); break;
-					case null: {
+					case "unknown": {
 						new NewableFunctionBoxImpl(value_box.value);
 					} break;
 				}
@@ -1873,8 +1868,8 @@ class DataLoader {
 		return this.default_split(data).map(DataLoader.int_parser);
 	}
 }
-/** @typedef {import("../../box/VoidBox.js").VoidBox} VoidBox */
-/** @implements {VoidBox} */
+/** @typedef {import("../../box/VoidBox.js").VoidBox} VoidBox_CJS */
+/** @implements {VoidBox_CJS} */
 class VoidBoxImpl {
 	/** @type {"void"} */
 	type="void";
