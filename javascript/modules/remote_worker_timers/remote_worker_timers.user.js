@@ -963,20 +963,47 @@
 			});
 		}
 		const cached_messages=[];
+		/** @template T @arg {T} value @returns {asserts value is NonNullable<T>} */
+		function assert_non_nullable_object(value) {
+			if(typeof value!=='object') throw 1;
+			if(value===null) throw 1;
+		}
+		/** @template {{[x: string]: any}} T @arg {T} value @returns {{[U in keyof T]: T[U]}} */
+		function decay_to_object(value) {
+			return value;
+		}
 		/**
-		 * @param {{ data: any; }} e
+		 * @param {MessageEvent<unknown>} e
 		 */
 		function message_without_types_handler(e) {
 			let msg=e.data;
-			switch(msg.t) {
+			assert_non_nullable_object(msg);
+			if(!('type' in msg)) throw 1;
+			switch(msg.type) {
 				case g_timer_api.worker_set_types: {
-					g_timer_api.on_set_types(msg.v);
+					if(!('value' in msg)) throw 1;
+					assert_non_nullable_object(msg.value);
+					if(!('async' in msg.value)) throw 1;
+					if(!('reply' in msg.value)) throw 1;
+					if(!('fire' in msg.value)) throw 1;
+					if(!('worker' in msg.value)) throw 1;
+					let value=decay_to_object(msg.value);
+					let v_async=value.async;
+					if(typeof v_async==='number'||v_async===null) {
+						v_async;
+						g_timer_api.on_set_types({
+							async: v_async,
+							reply: value.reply,
+							fire: value.fire,
+							worker: value.worker,
+						});
+					} else {
+						throw new Error("Invalid timer_api_types");
+					}
+					if(!g_timer_api.reply) throw new Error("Failed to set timer_api.types");
 					postMessage({
-						t: g_timer_api.reply.from_worker,
-						v: {
-							t: g_timer_api.worker_set_types,
-							v: msg.t
-						}
+						type: g_timer_api.reply.from_worker,
+						source_type: g_timer_api.worker_set_types,
 					});
 				} break;
 				default: {
