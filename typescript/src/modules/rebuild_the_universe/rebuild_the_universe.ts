@@ -36,6 +36,7 @@ import {NewableFunctionConstructor} from "../../box/NewableFunctionConstructor.j
 import {StringBox} from "../../box/StringBox.js";
 import {NumberBox} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
 import {RawBox} from "../../box/RawBox.js";
+import {NullBox} from "../../box/NullBox.js";
 
 console=globalThis.console;
 
@@ -463,7 +464,26 @@ class FunctionBoxImpl implements FunctionBox {
 				let push_value=new FunctionBox(bound_executor.bind(this.value));
 				vm.push(push_value);
 			} break;
-			case "apply":
+			case "apply": {
+				let inner_value=this.value[key];
+				function bound_executor(this: (...a: Box[]) => Box,thisArg: NullBox,...args: Box[]) {
+					let unboxed_args=[];
+					for(let i=0;i<args.length;i++) {
+						let inner_val_iter=args[i];
+						if('value' in inner_val_iter) {
+							unboxed_args.push(inner_val_iter.value);
+						}
+					}
+					let called_value=inner_value.call(this,thisArg.value,unboxed_args);
+					return new RawBoxImpl<unknown>(called_value,Symbol.for("unknown"));
+				}
+				function type_validator(this: (...a: Box[]) => Box,thisArg: Box,...args: Box[]) {
+					if(thisArg.type!=='null') throw new Error("Invalid arguments");
+					return bound_executor.call(this,thisArg,...args);
+				}
+				let push_value=new FunctionBox(type_validator.bind(this.value));
+				vm.push(push_value);
+			} break;
 			case "call":
 			case "bind":
 			case "arguments":

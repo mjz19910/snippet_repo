@@ -1,4 +1,4 @@
 import {RawBox} from "./RawBox";
 
 
-export type RawBoxes=RawBox<Function>;
+export type RawBoxes=RawBox<Function>|RawBox<unknown>;
