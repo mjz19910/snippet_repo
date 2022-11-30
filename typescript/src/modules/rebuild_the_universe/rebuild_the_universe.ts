@@ -30,7 +30,6 @@ import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
 import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
 import {FunctionBox} from "../../box/FunctionBox.js";
 import {BoxTemplate} from "../../box/template/BoxTemplate.js";
-import {NewableFunctionConstructor} from "../../box/NewableFunctionConstructor.js";
 import {FunctionInstance} from "../../box/FunctionInstance.js";
 
 console=globalThis.console;
@@ -425,7 +424,7 @@ class NewableFunctionBoxImpl {
 	}
 }
 
-class NewableFunctionConstructorImpl implements NewableFunctionConstructor {
+class NewableFunctionConstructorImpl {
 	make_new: new (...a: Box[]) => FunctionInstance;
 	constructor(make_new: new (...a: Box[]) => FunctionInstance) {
 		this.make_new=make_new;
