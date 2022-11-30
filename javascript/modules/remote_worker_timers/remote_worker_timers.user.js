@@ -533,14 +533,13 @@
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) return;
 			if(state.active) {
-				let worker_state=this.worker_state;
 				if(state.type===TIMER_SINGLE&&tag===TIMER_SINGLE) {
-					worker_state.postMessage({
+					this.worker_state.postMessage({
 						t: g_timer_api.worker.clear.single,
 						v: remote_id
 					});
 				} else if(state.type===TIMER_REPEATING&&tag===TIMER_REPEATING) {
-					worker_state.postMessage({
+					this.worker_state.postMessage({
 						t: g_timer_api.worker.clear.repeating,
 						v: remote_id
 					});
