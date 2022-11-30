@@ -1025,20 +1025,14 @@
 						args: [local_id,msg.type,user_msg.type,user_msg.value],
 					});
 				} break;
-				case g_timer_api.worker.clear.single/*remote timer do_clear single*/: {
-					// debugger;
+				case g_timer_api.worker.clear.single: {
 					remote_worker_state.clear(msg);
 				} break;
-				case g_timer_api.worker.clear.repeating/*remote timer do_clear repeating*/: {
-					// debugger;
+				case g_timer_api.worker.clear.repeating: {
 					remote_worker_state.clear(msg);
 				} break;
-				case g_timer_api.worker.reply.fire.single: {
-					// debugger;
-				} break;
-				case g_timer_api.worker.reply.fire.repeating: {
-					// debugger;
-				} break;
+				case g_timer_api.worker.reply.fire.single: break;
+				case g_timer_api.worker.reply.fire.repeating: break;
 				default: {
 					console.assert(false,"RemoteWorker: Unhandled message",msg);
 				} break;
