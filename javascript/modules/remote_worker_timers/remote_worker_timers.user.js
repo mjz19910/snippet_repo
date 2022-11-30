@@ -400,7 +400,7 @@
 			if(!this.m_active_state_map.has(id)) {
 				if(typeof state.target_fn==='string') {
 					let func=new Function(state.target_fn);
-					let active_state=new ActiveTimerState(id,state.type,state.is_repeating,func,state.target_args,state.timeout);
+					let active_state=new ActiveTimerState(id,state.type,state.repeat,func,state.target_args,state.timeout);
 					this.m_active_state_map.set(id,active_state);
 				}
 			}
