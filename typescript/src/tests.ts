@@ -30,18 +30,18 @@ export const used_modules=[
 	section_12_8_6,
 	section_12_6,
 	section_12,
-] satisfies (readonly RunTestType[]);
+]satisfies (readonly RunTestType[]);
 
 let tests=new TestState;
 
-tests.items.push(()=>["section_12",function(): Promise<typeof section_12> {
+tests.items.push(() => ["section_12",function(): Promise<typeof section_12> {
 	return do_import("./ecma_262/lexer/section_12");
 }]);
+tests.items.push(() => ["section_12_6",function(): Promise<typeof section_12_6> {
+	return do_import("./ecma_262/lexer/section_12_6");
+}]);
+tests.items.push(() => ["section_12_8_6",function(): Promise<typeof section_12_8_6> {
+	return do_import("./ecma_262/lexer/section_12_8_6");
+}]);
 
-test_mod_execute_tests(tests);
-([
-	//["section_12_8_6",function(): Promise<typeof section_12_8_6> {return do_import("./ecma_262/lexer/section_12_8_6");}],
-	//["section_12_6",function(): Promise<typeof section_12_6> {return do_import("./ecma_262/lexer/section_12_6");}],
-	()=>["section_12",function(): Promise<typeof section_12> {return do_import("./ecma_262/lexer/section_12");}, [] as []],
-	()=>["test", function() {}, [] as []]
-]);
+tests.items.push(() => ["test",function() {},[] as []]);
