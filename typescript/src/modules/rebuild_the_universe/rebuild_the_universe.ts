@@ -455,7 +455,7 @@ class FunctionBoxImpl implements FunctionBox {
 	}
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
-			case "toString":
+			case "toString": vm.push(new FunctionBoxImpl(this.value[key])); break;
 			case "apply":
 			case "call":
 			case "bind":
