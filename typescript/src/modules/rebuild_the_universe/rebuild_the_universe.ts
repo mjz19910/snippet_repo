@@ -220,12 +220,8 @@ class InstructionConstructImpl {
 type CastOperandTarget="object_index"|"vm_function";
 
 class InstructionCastImpl {
-	type: 'cast';
-	debug: boolean;
-	constructor() {
-		this.type='cast';
-		this.debug=false;
-	}
+	readonly type='cast';
+	debug=false;
 	cast_to_type(_vm: StackVMImpl,obj: Box) {
 		if(obj?.type==='custom_box') {
 			throw new Error("TODO: custom_box");
