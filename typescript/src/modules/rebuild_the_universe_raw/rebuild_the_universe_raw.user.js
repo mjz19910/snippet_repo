@@ -16,8 +16,8 @@
 // @match		https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real
 // @run-at		document-start
 // @grant		none
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/src/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.meta.cjs
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/src/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.user.cjs
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/src/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.meta.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/src/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.user.js
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
@@ -33,10 +33,12 @@ function fetch_all_images() {
 	}));
 }
 fetch_all_images;
+
 function fetch_all_images_full() {
 	return arrayNames.map(e => e.indexOf('cat')>-1? 'cats-eye-nebula':e).map(e => "imagesFull/"+e.replace(/\s+/g,'-')+".jpg").map(e => fetch(e));
 }
 fetch_all_images_full;
+
 function fetch_all_specs() {
 	return allspec.map((_e,i) => "specs/"+(i+1)+".jpg").map(e => fetch(e));
 }
