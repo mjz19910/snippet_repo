@@ -258,10 +258,7 @@ class InstructionCastImpl {
 }
 
 class InstructionJeImpl {
-	type: 'je';
-	constructor() {
-		this.type='je';
-	}
+	readonly type='je';
 	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
 		let [,target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
