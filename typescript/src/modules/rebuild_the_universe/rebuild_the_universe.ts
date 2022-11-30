@@ -462,7 +462,7 @@ class InstructionPeekImpl {
 }
 
 class InstructionAppendImpl {
-	type: "append"="append";
+	readonly type="append";
 	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		if(vm.stack.length<=0) {
 			throw new Error('stack underflow');
