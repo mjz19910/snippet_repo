@@ -490,7 +490,7 @@ class NewableFunctionBoxImpl implements NewableFunctionBox {
 		this.factory_value=factory_value;
 		this.class_value=class_value;
 	}
-	static from_box(value_box: NewableFunctionBox) {
+	static from_box(value_box: NewableFunctionBoxImpl) {
 		return new this(value_box.factory_value,value_box.class_value);
 	}
 	on_get(vm: StackVMImpl,key: string) {
