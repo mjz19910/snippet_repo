@@ -459,9 +459,13 @@ function bound_executor<U extends (thisArg: null,...args: any[]) => any>(this: (
 	return new RawBoxImpl<unknown>(called_value,Symbol.for("unknown"));
 }
 
-function type_validator<U extends (thisArg: null,...args: any[]) => any>(this: (...a: Box[]) => Box,inner_value: U,thisArg: Box,...args: Box[]) {
+function type_validator_for_callable<U extends (thisArg: null,...args: any[]) => any>(this: (...a: Box[]) => Box,inner_value: U,thisArg: Box,...args: Box[]) {
 	if(thisArg.type!=='null') throw new Error("Invalid arguments");
 	return bound_executor.call(this,inner_value,thisArg,...args);
+}
+
+function bound_to_string_executor<T extends () => string>(this: (...a: Box[]) => Box,inner_value: T) {
+	return new StringBox(inner_value.call(this));
 }
 
 class FunctionBoxImpl implements FunctionBox {
@@ -474,19 +478,17 @@ class FunctionBoxImpl implements FunctionBox {
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
 			case "toString": {
-				let inner_value=this.value[key];
-				function bound_executor(this: (...a: Box[]) => Box) {
-					return new StringBox(inner_value.call(this));
-				}
-				let push_value=new FunctionBox(bound_executor.bind(this.value));
+				let push_value=new FunctionBox(bound_to_string_executor.bind(this.value,this.value[key]));
 				vm.push(push_value);
 			} break;
 			case "apply": {
-				let inner_value=this.value[key];
-				let push_value=new FunctionBox(type_validator.bind(this.value,inner_value));
+				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
 				vm.push(push_value);
 			} break;
-			case "call":
+			case "call": {
+				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
+				vm.push(push_value);
+			} break;
 			case "bind":
 			case "arguments":
 			case "caller":
