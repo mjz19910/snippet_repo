@@ -337,24 +337,18 @@
 			this.id_generator.set_current(this.base_id);
 		}
 		/**
-		 * @param {any} worker_state_value
+		 * @param {WorkerState} worker_state_value
 		 */
 		set_worker_state(worker_state_value) {
 			this.weak_worker_state=new WeakRef(worker_state_value);
 		}
-		/**
-		 * @arg {TimerState} state
-		 * @param {number} remote_id
-		 */
-		verify_state(state,remote_id) {
-			this.validate_timer_state(state);
+		/** @returns {asserts this is {weak_worker_state: NonNullable<Timer['weak_worker_state']>}} */
+		verify_state() {
 			assert_non_null(this.weak_worker_state);
 			let worker_state=this.weak_worker_state.deref();
-			worker_state.postMessage({
-				t: g_timer_api.worker.clear.any,
-				v: remote_id
-			});
-			throw new Error("Verify failed in Timer.verify_timer_state");
+			if(!worker_state) {
+				throw new Error("Verify failed in Timer.verify_timer_state");
+			}
 		}
 		/**@arg {unknown} tag @returns {asserts tag is TimerTag} */
 		assert_valid_tag(tag) {
@@ -365,17 +359,11 @@
 			}
 		}
 		/**
-		 * @param {{ type: TimerTag; }} state
-		 */
-		validate_timer_state(state) {
-			return this.assert_valid_tag(state.type);
-		}
-		/**
 		 * @arg {TimerTag} tag
 		 * @param {number} remote_id
 		 */
 		fire(tag,remote_id) {
-			if(!this.weak_worker_state) throw new Error("No worker state");
+			this.verify_state();
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) {
 				this.force_clear(tag,remote_id);
@@ -392,6 +380,7 @@
 					this.clear(tag,remote_id);
 				}
 				let worker_state=this.weak_worker_state.deref();
+				if(!worker_state) throw 1;
 				worker_state.postMessage({
 					t: g_timer_api.worker.reply.fire.single,
 					v: remote_id
@@ -469,8 +458,7 @@
 		/**@arg {number} remote_id */
 		get_state_by_remote_id(remote_id) {
 			let state=this.m_remote_id_to_state_map.get(remote_id);
-			if(!state) return null;
-			this.verify_state(state,remote_id);
+			if(!state) throw 1;
 			return state;
 		}
 		/**
@@ -548,6 +536,7 @@
 			this.assert_valid_tag(tag);
 			if(!this.weak_worker_state) throw 1;
 			let worker_state=this.weak_worker_state.deref();
+			if(!worker_state) throw 1;
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) throw new Error("No state for id");
 			if(state.active) {
@@ -572,17 +561,18 @@
 		 * @param {number} remote_id
 		 */
 		clear(tag,remote_id) {
-			this.assert_valid_tag(tag);
-			if(!this.weak_worker_state) throw 1;
+			this.verify_state();
 			let state=this.get_state_by_remote_id(remote_id);
-			if(state?.active) {
+			if(!state) return;
+			if(state.active) {
 				let worker_state=this.weak_worker_state.deref();
-				if(state.type===TIMER_SINGLE) {
+				if(!worker_state) throw 1;
+				if(state.type===TIMER_SINGLE&&tag===TIMER_SINGLE) {
 					worker_state.postMessage({
 						t: g_timer_api.worker.clear.single,
 						v: remote_id
 					});
-				} else if(state.type===TIMER_REPEATING) {
+				} else if(state.type===TIMER_REPEATING&&tag===TIMER_REPEATING) {
 					worker_state.postMessage({
 						t: g_timer_api.worker.clear.repeating,
 						v: remote_id
