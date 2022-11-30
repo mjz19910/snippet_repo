@@ -576,32 +576,49 @@
 		type=ReplyFromWorker;
 		value={};
 	}
+	class ReplyMessageType1 {
+		/** @readonly */
+		type=ReplyMessage1;
+		value={};
+	}
+	class ReplyMessageType2 {
+		/** @readonly */
+		type=ReplyMessage2;
+		value={};
+	}
+	/**
+	 * @template T
+	 * @template {abstract new (...args: any)=>any} U
+	 * @arg {T} _obj
+	 * @arg {U} _fn
+	 * @returns {asserts _obj is InstanceType<U>}
+	 * */
+	function assert_as_instance(_obj,_fn) {}
 	/** @extends {EmptyStateMessage} */
 	class WorkerStateMessage {
-		/** @arg {WorkerStateMessage} msg @returns {ReplyFromWorkerMsg} */
-		static as_reply_from_worker(msg) {
-			this.assert_reply_from_worker_msg(msg);
+		/** @arg {WorkerStateMessage} msg */
+		static as_reply_type_1(msg) {
+			this.assert_as_instance(msg,ReplyMessageType1);
 			return msg;
 		}
-		/** @arg {WorkerStateMessage} _msg @returns {asserts _msg is ReplyFromWorkerMsg} */
-		static assert_reply_from_worker_msg(_msg) {}
+		/** @arg {WorkerStateMessage} msg */
+		static as_reply_from_worker(msg) {
+			this.assert_as_instance(msg,ReplyFromWorkerMsg);
+			return msg;
+		}
 		/** @type {typeof TimeoutFireS|102|300|401|402|500} */
 		type=TimeoutFireS;
 		/** @type {number|{}|null} */
 		value=null;
-		/** @arg {WorkerStateMessage} _value @returns {asserts _value is TimeoutFireSMsg} */
-		static assert_timeout_fire_value(_value) {}
-		/** @arg {WorkerStateMessage} value @returns {TimeoutFireSMsg} */
-		static as_timeout_fire(value) {
-			this.assert_timeout_fire_value(value);
-			return value;
+		/** @arg {WorkerStateMessage} msg */
+		static as_timeout_fire(msg) {
+			this.assert_as_instance(msg,TimeoutFireSMsg);
+			return msg;
 		}
-		/** @arg {WorkerStateMessage} _value @returns {asserts _value is TimeoutFireRMsg} */
-		static assert_timer_fire_value(_value) {}
-		/** @arg {WorkerStateMessage} value @returns {TimeoutFireRMsg} */
-		static as_timer_fire(value) {
-			this.assert_timer_fire_value(value);
-			return value;
+		/** @arg {WorkerStateMessage} msg */
+		static as_timer_fire(msg) {
+			this.assert_as_instance(msg,TimeoutFireRMsg);
+			return msg;
 		}
 	}
 	class WorkerState {
@@ -665,17 +682,18 @@
 				case TimeoutFireR/*worker_state.timer repeating fire*/: {
 					let m_msg=WorkerStateMessage.as_timer_fire(msg);
 					worker_state.timer.fire(TIMER_REPEATING,m_msg.value);
-					break;
-				}
-				case WorkerDestroyMessage/*worker_state destroy*/:
+				} break;
+				case WorkerDestroyMessage/*worker_state destroy*/: {
 					worker_state.destroy();
-					break;
-				case ReplyMessage1:
+				} break;
+				case ReplyMessage1: {
+					let m_msg=WorkerStateMessage.as_reply_type_1(msg);
+					worker_state.dispatch_message(m_msg);
+				} break;
 				case ReplyMessage2/*worker_state dispatch_message_raw*/: {
-					debugger;
-					worker_state.dispatch_message(msg);
-					break;
-				}
+					let m_msg=WorkerStateMessage.as_reply_type_2(msg);
+					worker_state.dispatch_message(m_msg);
+				} break;
 				case ReplyFromWorker/*worker_state dispatch_message*/: {
 					let m_msg=WorkerStateMessage.as_reply_from_worker(msg);
 					worker_state.dispatch_message(m_msg);
