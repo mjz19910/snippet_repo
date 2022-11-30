@@ -21,7 +21,6 @@
 import {Box} from "../../box/Box.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
-import {VMPushSelf} from "../../vm/instruction/vm/VMPushSelf.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
 
 console=globalThis.console;
@@ -432,7 +431,7 @@ class InstructionBreakpointImpl {
 
 class InstructionPushVMObjImpl {
 	type: "vm_push_self"="vm_push_self";
-	run(vm: StackVMImpl,_i: VMPushSelf) {
+	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
 }
