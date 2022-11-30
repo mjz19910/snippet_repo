@@ -1,7 +1,7 @@
 import {RootTestRunner} from "./TestRunner.js";
 import {TestState} from "../TestState.js";
 
-export async function test_mod_execute_tests(test_arr: TestState<any,any>): Promise<void> {
+export async function test_mod_execute_tests(test_arr: TestState<any[],any>): Promise<void> {
 	let test_runner=new RootTestRunner;
 	console.log(` --- Starting tests --- `);
 	test_runner.pre_start_set_test_count(test_arr.items.length);
