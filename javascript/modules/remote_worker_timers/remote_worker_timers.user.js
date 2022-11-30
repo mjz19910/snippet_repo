@@ -507,20 +507,18 @@
 		 */
 		force_clear(tag,remote_id) {
 			this.assert_valid_worker();
-			let worker_state=this.worker_state;
-			if(!worker_state) throw 1;
 			let state=this.get_state_by_remote_id(remote_id);
 			if(state.active) {
 				return this.clear(tag,remote_id);
 			}
 			// we have to trust the user, go ahead and send the message anyway
 			if(tag===TIMER_SINGLE) {
-				worker_state.postMessage({
+				this.worker_state.postMessage({
 					t: g_timer_api.worker.clear.single,
 					v: remote_id
 				});
 			} else if(tag===TIMER_REPEATING) {
-				worker_state.postMessage({
+				this.worker_state.postMessage({
 					t: g_timer_api.worker.clear.repeating,
 					v: remote_id
 				});
