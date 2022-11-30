@@ -1,9 +1,9 @@
 export class RawBox<T> {
 	readonly type="raw_box";
-	value: T;
+	raw_value: T;
 	type_symbol: symbol;
 	constructor(value: T,symbol_: symbol) {
-		this.value=value;
+		this.raw_value=value;
 		this.type_symbol=symbol_;
 	}
 }

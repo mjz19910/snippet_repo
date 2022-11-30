@@ -456,6 +456,7 @@ function bound_executor<U extends (thisArg: null,...args: any[]) => any>(this: (
 		} else if(!('value' in inner_val_iter)) {
 			switch(inner_val_iter.type) {
 				case 'constructor_box': unboxed_args.push(inner_val_iter.factory_value); break;
+				case 'raw_box': console.log('raw box',inner_val_iter); break;
 				default: throw new Error("TODO");
 			}
 		} else {
@@ -500,7 +501,7 @@ class FunctionBoxImpl implements FunctionBox {
 				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
 				vm.push(push_value);
 			} break;
-			case "arguments":{
+			case "arguments": {
 				let bound_inner=type_validator_for_callable.bind(this.value,this.value[key]);
 				let push_value=new FunctionBox(bound_inner);
 				vm.push(push_value);
@@ -534,10 +535,10 @@ class NumberBoxImpl implements NumberBox {
 
 class RawBoxImpl<T> implements RawBox<T> {
 	readonly type="raw_box";
-	value: T;
+	raw_value: T;
 	type_symbol: symbol;
 	constructor(value: T,symbol_: symbol) {
-		this.value=value;
+		this.raw_value=value;
 		this.type_symbol=symbol_;
 	}
 }
