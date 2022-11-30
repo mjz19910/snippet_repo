@@ -18,38 +18,38 @@
 // @grant			none
 // ==/UserScript==
 
-import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
-import {InstructionType} from "../../vm/instruction/InstructionType.js";
-import {NewableInstancePack} from "../../box/NewableInstancePack.js";
-import {EmptyArrayBox} from "../../box/EmptyArrayBox.js";
 import {ArrayBox} from "../../box/ArrayBox.js";
-import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
-import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
-import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
-import {FunctionBox} from "../../box/FunctionBox.js";
-import {BoxTemplate} from "../../box/template/BoxTemplate.js";
-import {FunctionInstance} from "../../box/FunctionInstance.js";
-import {NewableFunctionBox} from "../../box/NewableFunctionBox.js";
-import {PromiseFunctionBox} from "../../vm/PromiseFunctionBox.js";
-import {DomValueBox} from "../../vm/DomValueBox.js";
-import {NewableInstancePackObjectBox} from "../../box/NewableInstancePackObjectBox.js";
-import {BoxWithPropertiesIsBox} from "../../box/BoxWithPropertiesIsBox.js";
-import {RealVoidBox} from "../../box/RealVoidBox.js";
-import {CSSStyleSheetBox, NumberBox, ObjectBox, StackVMBox, VoidBox, WindowBox} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
-import {PromiseBox} from "../../box/PromiseBox.js";
-import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
-import {IndexBox} from "../../box/IndexBox.js";
-import {NullBox} from "../../box/NullBox.js";
-import {MediaListBox} from "../../box/MediaListBox.js";
-import {NodeBox} from "../../box/NodeBox.js";
-import {DocumentBox} from "../../box/DocumentBox.js";
-import {GlobalThisBox} from "../../box/GlobalThisBox.js";
-import {CSSStyleSheetPromiseBox} from "../../box/CSSStyleSheetPromiseBox.js";
 import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
+import {BoxWithPropertiesIsBox} from "../../box/BoxWithPropertiesIsBox.js";
 import {CSSStyleSheetConstructorBox} from "../../box/CSSStyleSheetConstructorBox.js";
 import {CSSStyleSheetInitBox} from "../../box/CSSStyleSheetInitBox.js";
-import {StringBox} from "../../box/StringBox.js";
+import {CSSStyleSheetPromiseBox} from "../../box/CSSStyleSheetPromiseBox.js";
+import {DocumentBox} from "../../box/DocumentBox.js";
+import {EmptyArrayBox} from "../../box/EmptyArrayBox.js";
+import {FunctionBox} from "../../box/FunctionBox.js";
+import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
+import {FunctionInstance} from "../../box/FunctionInstance.js";
+import {GlobalThisBox} from "../../box/GlobalThisBox.js";
+import {IndexBox} from "../../box/IndexBox.js";
+import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
+import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
+import {MediaListBox} from "../../box/MediaListBox.js";
+import {NewableFunctionBox} from "../../box/NewableFunctionBox.js";
+import {NewableInstancePack} from "../../box/NewableInstancePack.js";
+import {NewableInstancePackObjectBox} from "../../box/NewableInstancePackObjectBox.js";
+import {NodeBox} from "../../box/NodeBox.js";
+import {NullBox} from "../../box/NullBox.js";
+import {PromiseBox} from "../../box/PromiseBox.js";
 import {RawBoxes} from "../../box/RawBoxes.js";
+import {RealVoidBox} from "../../box/RealVoidBox.js";
+import {StringBox} from "../../box/StringBox.js";
+import {BoxTemplate} from "../../box/template/BoxTemplate.js";
+import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
+import {DomValueBox} from "../../vm/DomValueBox.js";
+import {InstructionType} from "../../vm/instruction/InstructionType.js";
+import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
+import {PromiseFunctionBox} from "../../vm/PromiseFunctionBox.js";
+import {CSSStyleSheetBox,NumberBox,ObjectBox,StackVMBox,VoidBox,WindowBox} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
 
 console=globalThis.console;
 
@@ -494,7 +494,7 @@ class NewableFunctionBoxImpl implements NewableFunctionBox {
 		return new this(value_box.factory_value,value_box.class_value);
 	}
 	on_get(vm: StackVMImpl,key: string) {
-		vm;key;
+		vm; key;
 		throw new Error("Method not implemented.");
 	}
 	factory(...args: BoxImpl[]) {
@@ -624,7 +624,7 @@ class FunctionConstructorBoxImpl implements FunctionConstructorBox {
 		switch(key) {
 			case 'name': vm.push(new StringBoxImpl(this.value[key])); break;
 			case 'prototype': {
-				let value=new RawBoxImpl({as_interface:this.value[key]},Symbol.for("Function"));
+				let value=new RawBoxImpl({as_interface: this.value[key]},Symbol.for("Function"));
 				vm.push(value);
 			} break;
 			case 'length': vm.push(new NumberBoxImpl(this.value[key]));
