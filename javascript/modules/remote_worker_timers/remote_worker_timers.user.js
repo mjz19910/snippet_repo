@@ -235,9 +235,9 @@
 		repeating=TimeoutClearStringR;
 	}
 	class TimerApi {
-		/**@type {WorkerAsyncMessage} */
+		/**@type {typeof WorkerAsyncMessage} */
 		async=WorkerAsyncMessage;
-		/**@type {TimerWorkerSetTypes} */
+		/**@type {typeof TimerWorkerSetTypes} */
 		worker_set_types=TimerWorkerSetTypes;
 		reply=new ReplyTypes;
 		fire=new TimeoutFireInfo;
@@ -995,6 +995,7 @@
 		 * @param {MessageEvent<unknown>} e
 		 */
 		function message_without_types_handler(e) {
+			if(!g_timer_api.worker_set_types) throw 1;
 			let msg=e.data;
 			assert_non_nullable_object(msg);
 			if(!('type' in msg)) throw 1;
@@ -1008,7 +1009,7 @@
 					if(!('worker' in msg.value)) throw 1;
 					let value=decay_to_object(msg.value);
 					let v_async=value.async;
-					if(v_async===1) {
+					if(v_async===WorkerAsyncMessage) {
 						g_timer_api.on_set_types({
 							async: v_async,
 							reply: value.reply,
@@ -1099,9 +1100,9 @@
 		}
 		/**@typedef {import("../../../typescript/src/vm/RecursivePartial.js").RecursivePartial<TimerApi>} RecursivePartialApi */
 		class RemoteTimerApi {
-			/**@type {WorkerAsyncMessage|null} */
+			/**@type {typeof WorkerAsyncMessage|null} */
 			async=null;
-			/**@type {TimerWorkerSetTypes|null} */
+			/**@type {typeof TimerWorkerSetTypes|null} */
 			worker_set_types=TimerWorkerSetTypes;
 			/**@typedef {import("../../../typescript/src/vm/ReplyTypesTy.js").ReplyTypesTy} ReplyTypesTy */
 			/**@type {ReplyTypesTy|null} */
