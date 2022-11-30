@@ -1,1 +1,0 @@
-export type CastToVMFunctionOperandValue="vm_function"

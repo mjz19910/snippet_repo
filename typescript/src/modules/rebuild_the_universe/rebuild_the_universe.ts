@@ -276,7 +276,7 @@ class InstructionJmpImpl {
 	constructor() {
 		this.type='jmp';
 	}
-	run(vm: StackVMImpl,instruction: ['jmp',number]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
 		let [,target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
@@ -608,7 +608,7 @@ type InstructionMap={
 	'get': ["get"];
 	'halt': ["halt"];
 	'je': ["je",number];
-	'jmp': ["jmp"];
+	'jmp': ["jmp",number];
 	'modify_operand': ["modify_operand",number,number];
 	'nop': ["nop"];
 	'peek': ["peek",number];
