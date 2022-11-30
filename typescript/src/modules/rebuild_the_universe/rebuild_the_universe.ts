@@ -404,14 +404,14 @@ class InstructionGetImpl {
 }
 
 class InstructionHaltImpl {
-	type: 'halt'='halt';
+	readonly type='halt';
 	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		vm.halt();
 	}
 }
 
 class InstructionReturnImpl {
-	type: 'return'='return';
+	readonly type='return';
 	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		if(vm.stack.length>0) {
 			vm.return_value=vm.stack.pop()!;
@@ -422,7 +422,7 @@ class InstructionReturnImpl {
 }
 
 class InstructionBreakpointImpl {
-	type: 'breakpoint'='breakpoint';
+	readonly type='breakpoint';
 	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		console.log(vm.stack);
 		trigger_debug_breakpoint();
@@ -444,7 +444,7 @@ class InstructionPushWindowObjectImpl {
 }
 
 class InstructionPeekImpl {
-	type: 'peek'='peek';
+	readonly type='peek';
 	debug=false;
 	run(vm: StackVMImpl,ins: InstructionMap[this['type']]) {
 		let [,distance]=ins;
@@ -489,21 +489,21 @@ class InstructionAppendImpl {
 }
 
 class InstructionPushArgsImpl {
-	type: 'vm_push_args'='vm_push_args';
+	readonly type='vm_push_args';
 	run(_vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		throw new Error("Instruction not supported");
 	}
 }
 
 class InstructionDropImpl {
-	type: 'drop'='drop';
+	readonly type='drop';
 	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		vm.stack.pop();
 	}
 }
 
 class InstructionVMReturnImpl {
-	type: 'vm_return'='vm_return';
+	readonly type='vm_return';
 	debug=false;
 	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		let start_stack=vm.stack.slice();
@@ -522,7 +522,7 @@ class InstructionVMReturnImpl {
 }
 
 class InstructionVMCallImpl {
-	type: 'vm_call'='vm_call';
+	readonly type='vm_call';
 	run(vm: StackVMImpl,ins: InstructionMap[this['type']]) {
 		let prev_base=vm.base_ptr;
 		vm.stack.push({type: 'number',value: vm.base_ptr});
@@ -534,12 +534,12 @@ class InstructionVMCallImpl {
 }
 
 class InstructionNopImpl {
-	type: 'nop'='nop';
+	readonly type='nop';
 	run(_vm: StackVMImpl,_a: InstructionMap[this['type']]) {}
 }
 
 class InstructionBlockTraceImpl {
-	type: 'vm_block_trace'='vm_block_trace';
+	readonly type='vm_block_trace';
 	run(_vm: StackVMImpl,_i: InstructionMap[this['type']]) {}
 }
 
