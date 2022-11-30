@@ -1,6 +1,6 @@
-import {NewableInstancePack} from "./NewableInstancePack.js";
-import {Box} from "./Box.js";
 import {StackVM} from "../vm/StackVM.js";
+import {Box} from "./Box.js";
+import {NewableInstancePack} from "./NewableInstancePack.js";
 
 export class NewableFunctionBox {
 	readonly type="constructor_box";
