@@ -1,26 +1,22 @@
-import {NewableInstancePack} from "./NewableInstancePack.js"
-import {Box} from "./Box.js"
-import {BoxTemplate} from "./template/BoxTemplate.js"
-import {BoxVerify} from "./BoxVerify.js"
+import {NewableInstancePack} from "./NewableInstancePack.js";
+import {Box} from "./Box.js";
 
-export class NewableFunctionBox
-	extends BoxTemplate<"constructor_box",NewableInstancePack<{}>>
-	implements BoxVerify<NewableFunctionBox,"NewableFunctionBox">
-{
-	readonly type="constructor_box"
-	class_value: new(...a: Box[])=>{}
-	readonly instance_type=null
-	readonly arguments="box[]"
-	readonly return="box"
+export class NewableFunctionBox {
+	readonly type="constructor_box";
+	readonly instance_type="unknown";
+	readonly arguments="box[]";
+	readonly return="box";
+	factory_value: NewableInstancePack<{}>;
+	class_value: new (...a: Box[]) => {};
 	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
-		super(factory_value)
-		this.class_value=class_value
+		this.factory_value=factory_value;
+		this.class_value=class_value;
 	}
-	readonly m_verify_name="NewableFunctionBox"
+	readonly m_verify_name="NewableFunctionBox";
 	verify_name(name: "NewableFunctionBox") {
-		return this.m_verify_name==='NewableFunctionBox'&&name==='NewableFunctionBox'
+		return this.m_verify_name==='NewableFunctionBox'&&name==='NewableFunctionBox';
 	}
 	factory(...args: Box[]) {
-		return this.value(this.class_value, args)
+		return this.factory_value(this.class_value,args);
 	}
 }

@@ -446,12 +446,10 @@ class InstructionGetImpl {
 			case 'array_box': {
 				if(typeof key==='number') {
 					this.array_box_handle_num(value_box,key,vm);
-					return;
 				} else {
 					let key_alt=parseInt(key,10);
 					if(Number.isNaN(key_alt)) throw new Error("Failed to parse int");
 					this.array_box_handle_num(value_box,key_alt,vm);
-					return;
 				}
 			} break;
 			case 'constructor_box': {
@@ -465,7 +463,8 @@ class InstructionGetImpl {
 
 					} break;
 					case null: {
-						new NewableFunctionBoxImpl(value_box.value,value_box.class_value);
+						if(typeof key!='string') throw new Error("Bad");
+						new NewableFunctionBoxImpl(value_box.value,value_box.class_value).on_get(vm,key);
 					} break;
 				}
 				if(return_value === null) {
