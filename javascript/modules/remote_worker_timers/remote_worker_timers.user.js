@@ -343,7 +343,7 @@
 			this.weak_worker_state=new WeakRef(worker_state_value);
 		}
 		/** @returns {asserts this is {weak_worker_state: NonNullable<Timer['weak_worker_state']>}} */
-		verify_state() {
+		assert_valid_worker() {
 			assert_non_null(this.weak_worker_state);
 			let worker_state=this.weak_worker_state.deref();
 			if(!worker_state) {
@@ -363,7 +363,7 @@
 		 * @param {number} remote_id
 		 */
 		fire(tag,remote_id) {
-			this.verify_state();
+			this.assert_valid_worker();
 			let state=this.get_state_by_remote_id(remote_id);
 			let active_state=this.activate_state(state);
 			try {
@@ -529,7 +529,7 @@
 		 * @param {number} remote_id
 		 */
 		force_clear(tag,remote_id) {
-			this.verify_state();
+			this.assert_valid_worker();
 			let worker_state=this.weak_worker_state.deref();
 			if(!worker_state) throw 1;
 			let state=this.get_state_by_remote_id(remote_id);
@@ -554,7 +554,7 @@
 		 * @param {number} remote_id
 		 */
 		clear(tag,remote_id) {
-			this.verify_state();
+			this.assert_valid_worker();
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) return;
 			if(state.active) {
