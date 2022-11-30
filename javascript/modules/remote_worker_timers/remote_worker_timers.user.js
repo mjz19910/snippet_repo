@@ -45,18 +45,43 @@
 	class TimerState {
 		/**
 		 * @arg {TimerTag} tag
+		 * @arg {number} id
 		 * @param {boolean} is_repeating
 		 * @param {TimerHandler} target_fn
 		 * @param {any} target_args
 		 * @param {number} timeout
 		 */
-		constructor(tag,is_repeating,target_fn,target_args,timeout) {
+		constructor(id,tag,is_repeating,target_fn,target_args,timeout) {
+			this.id=id;
 			this.active=true;
 			/**@type {TimerTag} */
 			this.type=tag;
 			/**@type {boolean} */
 			this.repeat=is_repeating;
 			/**@type {TimerHandler} */
+			this.target_fn=target_fn;
+			this.target_args=target_args;
+			/**@type {number} */
+			this.timeout=timeout;
+		}
+	}
+	class ActiveTimerState {
+		/**
+		 * @arg {TimerTag} tag
+		 * @arg {number} id
+		 * @param {boolean} is_repeating
+		 * @param {Function} target_fn
+		 * @param {any} target_args
+		 * @param {number} timeout
+		 */
+		constructor(id, tag,is_repeating,target_fn,target_args,timeout) {
+			this.id=id;
+			this.active=true;
+			/**@type {TimerTag} */
+			this.type=tag;
+			/**@type {boolean} */
+			this.repeat=is_repeating;
+			/**@type {Function} */
 			this.target_fn=target_fn;
 			this.target_args=target_args;
 			/**@type {number} */
@@ -266,6 +291,7 @@
 			throw new VerifyError(assert_message);
 		}
 	}
+	/** @arg {unknown} value @returns {asserts value is NonNullable<value>} */
 	function assert_non_null(value) {
 		if(value===null) {
 			throw new AssertionError("Failed assert non null");
@@ -281,6 +307,8 @@
 			this.m_api_map=new Map;
 			this.m_raw_api_info=api_info;
 			this.set_api_names(g_timer_api.set_names,g_timer_api.clear_names);
+			/**@type {Map<number|string, ActiveTimerState>} */
+			this.m_active_state_map=new Map;
 		}
 		/**@arg {TimerApi['set_names']|TimerApi['clear_names']} names */
 		set_map_names(names) {
@@ -348,8 +376,9 @@
 				this.force_clear(tag,remote_id);
 				return;
 			}
+			let active_state=this.activate_state(state);
 			try {
-				a: if(state.active) {
+				if(state.active) {
 					state.target_fn.apply(null,state.target_args);
 				}
 			} finally {
@@ -363,6 +392,9 @@
 					v: remote_id
 				});
 			}
+		}
+		activate_state(state) {
+			this.m_active_state_map.get(state.id);
 		}
 		/**
 		 * @param {number} tag
