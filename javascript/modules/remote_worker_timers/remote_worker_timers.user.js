@@ -600,46 +600,51 @@
 			this.connected=false;
 			this.worker.onmessage=function onmessage(e) {
 				let worker_state=WorkerState.get_global_state();
-				var msg=e.data;
 				if(!worker_state) {
 					console.log('lost worker state');
 					this.terminate();
 					return;
 				}
-				switch(msg.type) {
-					case TimeoutFireS/*worker_state.timer single fire*/: {
-						worker_state.timer.fire(TIMER_SINGLE,msg.value);
-						break;
-					}
-					case TimeoutFireR/*worker_state.timer repeating fire*/: {
-						worker_state.timer.fire(TIMER_REPEATING,msg.value);
-						break;
-					}
-					case WorkerDestroyMessage/*worker_state destroy*/:
-						worker_state.destroy();
-						break;
-					case ReplyMessage1:
-					case ReplyMessage2/*worker_state dispatch_message_raw*/: {
-						debugger;
-						worker_state.dispatch_message(msg);
-						break;
-					}
-					case ReplyFromWorker/*worker_state dispatch_message*/: {
-						worker_state.dispatch_message(msg.value);
-						break;
-					}
-					default: {
-						console.assert(false,"Main: Unhandled message",msg);
-						debugger;
-						break;
-					}
-				}
+				worker_state.handle_message(e);
 			};
 			this.valid=true;
 			this.worker.postMessage({
 				type: g_timer_api.worker_set_types,
 				value: g_timer_api
 			});
+		}
+		/** @arg {MessageEvent<any>} e */
+		handle_message(e) {
+			let msg=e.data;
+			let worker_state=this;
+			switch(msg.type) {
+			case TimeoutFireS/*worker_state.timer single fire*/: {
+				worker_state.timer.fire(TIMER_SINGLE,msg.value);
+				break;
+			}
+			case TimeoutFireR/*worker_state.timer repeating fire*/: {
+				worker_state.timer.fire(TIMER_REPEATING,msg.value);
+				break;
+			}
+			case WorkerDestroyMessage/*worker_state destroy*/:
+				worker_state.destroy();
+				break;
+			case ReplyMessage1:
+			case ReplyMessage2/*worker_state dispatch_message_raw*/: {
+				debugger;
+				worker_state.dispatch_message(msg);
+				break;
+			}
+			case ReplyFromWorker/*worker_state dispatch_message*/: {
+				worker_state.dispatch_message(msg.value);
+				break;
+			}
+			default: {
+				console.assert(false,"Main: Unhandled message",msg);
+				debugger;
+				break;
+			}
+		}
 		}
 		/**
 		 * @param {any} handle
