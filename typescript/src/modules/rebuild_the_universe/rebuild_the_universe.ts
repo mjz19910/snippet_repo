@@ -362,7 +362,7 @@ class InstructionGetImpl {
 	constructor() {
 		this.type='get';
 	}
-	on_get(_vm: StackVMImpl,value_box: Box,_key: string|number) {
+	on_get(vm: StackVMImpl,value_box: Box,_key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
 				/* if(typeof key==='number') {
@@ -394,7 +394,7 @@ class InstructionGetImpl {
 				if(return_value === null) {
 					throw new Error("TODO");
 				}
-				return return_value;
+				vm.push(return_value);
 			};
 			default: console.log('on_get no handler',value_box.type);
 		}
