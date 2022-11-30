@@ -1,5 +1,6 @@
 import {NewableInstancePack} from "./NewableInstancePack.js";
 import {Box} from "./Box.js";
+import {StackVM} from "../vm/StackVM.js";
 
 export class NewableFunctionBox {
 	readonly type="constructor_box";
@@ -11,6 +12,13 @@ export class NewableFunctionBox {
 	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
 		this.factory_value=factory_value;
 		this.class_value=class_value;
+	}
+	static from_box(value_box: NewableFunctionBox) {
+		return new this(value_box.factory_value,value_box.class_value);
+	}
+	on_get(vm: StackVM,key: string) {
+		vm;key;
+		throw new Error("Method not implemented.");
 	}
 	factory(...args: Box[]) {
 		return this.factory_value(this.class_value,args);
