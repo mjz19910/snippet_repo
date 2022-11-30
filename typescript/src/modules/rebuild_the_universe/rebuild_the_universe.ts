@@ -453,6 +453,11 @@ function bound_executor<U extends (thisArg: null,...args: any[]) => any>(this: (
 		let inner_val_iter=args[i];
 		if('value' in inner_val_iter) {
 			unboxed_args.push(inner_val_iter.value);
+		} else if(!('value' in inner_val_iter)) {
+			switch(inner_val_iter.type) {
+				case 'constructor_box': unboxed_args.push(inner_val_iter.factory_value); break;
+				default: throw new Error("TODO");
+			}
 		}
 	}
 	let called_value=inner_value.call(this,thisArg.value,unboxed_args);
@@ -493,7 +498,11 @@ class FunctionBoxImpl implements FunctionBox {
 				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
 				vm.push(push_value);
 			} break;
-			case "arguments":
+			case "arguments":{
+				let bound_inner=type_validator_for_callable.bind(this.value,this.value[key]);
+				let push_value=new FunctionBox(bound_inner);
+				vm.push(push_value);
+			} break;
 			case "caller":
 			case "constructor":
 			case "length":
