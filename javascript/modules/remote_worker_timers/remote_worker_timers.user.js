@@ -330,15 +330,6 @@
 			this.set_map_names(set);
 			this.set_map_names(clear);
 			this.base_id=window[set.single](timer_nop);
-			if(!this.base_id) {
-				throw new Error("invalid setTimeout return");
-			}
-			if(!Number.isFinite(this.base_id)) {
-				throw new Error("invalid setTimeout return");
-			}
-			if(this.base_id<=-1) {
-				throw new Error("setTimeout return was less or equal to -1");
-			}
 			window[clear.single](this.base_id);
 			this.id_generator.set_current(this.base_id);
 		}
