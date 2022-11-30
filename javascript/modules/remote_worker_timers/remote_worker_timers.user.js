@@ -1011,7 +1011,7 @@
 					postMessage({
 						type: g_timer_api.reply.from_worker,
 						from_data: g_timer_api.reply.set.single,
-						args:[local_id,msg.type,user_msg.type,user_msg.value],
+						args: [local_id,msg.type,user_msg.type,user_msg.value],
 					});
 				} break;
 				case g_timer_api.worker.set.repeating/*remote timer set repeating*/: {
@@ -1021,10 +1021,8 @@
 					let local_id=remote_worker_state.set(TIMER_REPEATING,user_msg.type,user_msg.value);
 					postMessage({
 						type: g_timer_api.reply.from_worker,
-						value: {
-							type: g_timer_api.reply.set.repeating,
-							value: [local_id,msg.type,user_msg.type,user_msg.value]
-						}
+						from_data: g_timer_api.reply.set.repeating,
+						args: [local_id,msg.type,user_msg.type,user_msg.value],
 					});
 				} break;
 				case g_timer_api.worker.clear.single/*remote timer do_clear single*/: {
