@@ -456,26 +456,22 @@
 		remote_id_to_state_entries() {
 			return this.m_remote_id_to_state_map.entries();
 		}
-		/**
-		 * @param {any} type
-		 * @param {any} timer_result_msg
-		 */
-		on_result(type,timer_result_msg) {
-			console.log(type,timer_result_msg);
-			debugger;
-			switch(type) {
+		/** @arg {any} msg */
+		on_result(msg) {
+			console.log(msg);
+			switch(msg.type) {
 				case g_timer_api.worker.clear.single: {
-					let remote_id=timer_result_msg.value;
+					let remote_id=msg.value.value;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
 				case g_timer_api.worker.clear.repeating: {
-					let remote_id=timer_result_msg.value;
+					let remote_id=msg.value.value;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
 				default:
-					console.assert(false,'on_result timer_result_msg needs a handler for',timer_result_msg);
+					console.assert(false,'on_result timer_result_msg needs a handler for',msg.value);
 			}
 		}
 		/**
@@ -565,6 +561,49 @@
 			this.m_api_map.clear();
 		}
 	}
+	class TimeoutFireSMsg {
+		/** @readonly */
+		type=TimeoutFireS;
+		value=0;
+	}
+	class TimeoutFireRMsg {
+		/** @readonly */
+		type=TimeoutFireS;
+		value=0;
+	}
+	class ReplyFromWorkerMsg {
+		/** @readonly */
+		type=ReplyFromWorker;
+		value={};
+	}
+	/** @extends {EmptyStateMessage} */
+	class WorkerStateMessage {
+		/** @arg {WorkerStateMessage} msg @returns {ReplyFromWorkerMsg} */
+		static as_reply_from_worker(msg) {
+			this.assert_reply_from_worker_msg(msg);
+			return msg;
+		}
+		/** @arg {WorkerStateMessage} _msg @returns {asserts _msg is ReplyFromWorkerMsg} */
+		static assert_reply_from_worker_msg(_msg) {}
+		/** @type {typeof TimeoutFireS|102|300|401|402|500} */
+		type=TimeoutFireS;
+		/** @type {number|{}|null} */
+		value=null;
+		/** @arg {WorkerStateMessage} _value @returns {asserts _value is TimeoutFireSMsg} */
+		static assert_timeout_fire_value(_value) {}
+		/** @arg {WorkerStateMessage} value @returns {TimeoutFireSMsg} */
+		static as_timeout_fire(value) {
+			this.assert_timeout_fire_value(value);
+			return value;
+		}
+		/** @arg {WorkerStateMessage} _value @returns {asserts _value is TimeoutFireRMsg} */
+		static assert_timer_fire_value(_value) {}
+		/** @arg {WorkerStateMessage} value @returns {TimeoutFireRMsg} */
+		static as_timer_fire(value) {
+			this.assert_timer_fire_value(value);
+			return value;
+		}
+	}
 	class WorkerState {
 		/**
 		 * @param {Blob} worker_code_blob
@@ -613,38 +652,41 @@
 				value: g_timer_api
 			});
 		}
-		/** @arg {MessageEvent<any>} e */
+		/** @arg {MessageEvent<WorkerStateMessage>} e */
 		handle_message(e) {
 			let msg=e.data;
 			let worker_state=this;
 			switch(msg.type) {
-			case TimeoutFireS/*worker_state.timer single fire*/: {
-				worker_state.timer.fire(TIMER_SINGLE,msg.value);
-				break;
+				case TimeoutFireS: {
+					let m_msg=WorkerStateMessage.as_timeout_fire(msg);
+					worker_state.timer.fire(TIMER_SINGLE,m_msg.value);
+					break;
+				}
+				case TimeoutFireR/*worker_state.timer repeating fire*/: {
+					let m_msg=WorkerStateMessage.as_timer_fire(msg);
+					worker_state.timer.fire(TIMER_REPEATING,m_msg.value);
+					break;
+				}
+				case WorkerDestroyMessage/*worker_state destroy*/:
+					worker_state.destroy();
+					break;
+				case ReplyMessage1:
+				case ReplyMessage2/*worker_state dispatch_message_raw*/: {
+					debugger;
+					worker_state.dispatch_message(msg);
+					break;
+				}
+				case ReplyFromWorker/*worker_state dispatch_message*/: {
+					let m_msg=WorkerStateMessage.as_reply_from_worker(msg);
+					worker_state.dispatch_message(m_msg);
+					break;
+				}
+				default: {
+					console.assert(false,"Main: Unhandled message",msg);
+					debugger;
+					break;
+				}
 			}
-			case TimeoutFireR/*worker_state.timer repeating fire*/: {
-				worker_state.timer.fire(TIMER_REPEATING,msg.value);
-				break;
-			}
-			case WorkerDestroyMessage/*worker_state destroy*/:
-				worker_state.destroy();
-				break;
-			case ReplyMessage1:
-			case ReplyMessage2/*worker_state dispatch_message_raw*/: {
-				debugger;
-				worker_state.dispatch_message(msg);
-				break;
-			}
-			case ReplyFromWorker/*worker_state dispatch_message*/: {
-				worker_state.dispatch_message(msg.value);
-				break;
-			}
-			default: {
-				console.assert(false,"Main: Unhandled message",msg);
-				debugger;
-				break;
-			}
-		}
 		}
 		/**
 		 * @param {any} handle
@@ -653,12 +695,11 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {any} type
-		 * @param {any} data
+		 * @param {number} msg
 		 */
-		on_result(type,data) {
+		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
-			switch(data) {
+			switch(msg.value) {
 				case g_timer_api.worker.ready: {
 					if(this.executor_handle===null||this.executor_handle.closed()) {
 						console.assert(false,"WorkerState on_result called with invalid executor_handle");
@@ -677,52 +718,38 @@
 			}
 		}
 		/**
-		 * @param {{ type: any; value: any; }} result
+		 * @param {ReplyFromWorkerMsg} msg
 		 */
-		dispatch_message(result) {
-			let msg_type;
-			let msg_data=null;
-			if(typeof result==='object') {
-				msg_type=result.type;
-				msg_data=result.value;
-			} else {
-				msg_type=result;
-			}
-			switch(result.type) {
+		dispatch_message(msg) {
+			switch(msg.type) {
 				case WorkerReadyReply: {
 					// debugger;
-					this.on_result(msg_type,msg_data);
+					this.on_result(msg);
 				} break;
 				case ReplySetSingle: {
 					// debugger;
-					this.on_result(msg_type,msg_data);
+					this.on_result(msg);
 				} break;
 				case ReplyMessage1: {
-					debugger;
-					this.on_result(msg_type,msg_data);
+					this.on_result(msg);
 				} break;
 				case ReplyMessage2: {
-					debugger;
-					this.timer.on_result(msg_type,msg_data);
+					this.timer.on_result(msg);
 				} break;
 				case ReplySetRepeating: {
-					// debugger;
-					this.timer.on_reply(result);
+					this.timer.on_reply(msg);
 				} break;
 				case g_timer_api.reply.clear.single: {
-					// debugger;
-					this.timer.on_reply(result);
+					this.timer.on_reply(msg);
 				} break;
 				case g_timer_api.reply.clear.repeating: {
-					// debugger;
-					this.timer.on_reply(result);
+					this.timer.on_reply(msg);
 				} break;
 				case g_timer_api.worker_set_types: {
-					// debugger;
 					this.on_result(msg_type,msg_data);
 				} break;
 				default: {
-					console.assert(false,"unhandled result",result);
+					console.assert(false,"unhandled result",msg);
 					debugger;
 				}
 			}
