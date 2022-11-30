@@ -134,12 +134,13 @@
 	const WorkerAsyncMessage=1;
 	const TimeoutFireS=101;
 	const TimeoutFireR=102;
-	const TimeoutMessageR=201;
-	const TimeoutSetS=202;
-	const TimeoutSetR=203;
-	const TimeoutClearS=204;
-	const TimeoutClearR=205;
-	const TimeoutClearA=206;
+	const WorkerUpdateMessageHandler=201;
+	const TimeoutMessageR=202;
+	const TimeoutSetS=203;
+	const TimeoutSetR=204;
+	const TimeoutClearS=205;
+	const TimeoutClearR=206;
+	const TimeoutClearA=207;
 	const WorkerDestroyMessage=300;
 	const WorkerReadyReply=301;
 	const ReplySetSingle=302;
@@ -210,13 +211,14 @@
 	}
 	class TimeoutWorkerTypes {
 		reply=new WorkerReplyTypes;
-		/**@type {TimeoutMessageR} */
+		/** @readonly */
+		update_message_handler=WorkerUpdateMessageHandler;
+		/** @readonly */
 		ready=TimeoutMessageR;
 		set=new TimeoutSetInfo;
 		clear=new TimeoutClearInfo;
-	}
-	class TimerMessageTypes {
-
+		/** @readonly */
+		set_types=TimerWorkerSetTypes;
 	}
 	const TimeoutSetStringS="setTimeout";
 	const TimeoutSetStringR="setInterval";
@@ -1112,7 +1114,7 @@
 			fire=null;
 			/**@typedef {import("../../../typescript/src/vm/TimeoutWorkerTypesTy.js").TimeoutWorkerTypesTy} TimeoutWorkerTypesTy */
 			/**@type {TimeoutWorkerTypesTy|null} */
-			worker=null;
+			worker=new TimeoutWorkerTypes;
 			/**@type {{single:"setTimeout",repeating:"setInterval"}} */
 			set_names={
 				single: "setTimeout",
