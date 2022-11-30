@@ -29,14 +29,8 @@ import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
 import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
 import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
 import {FunctionBox} from "../../box/FunctionBox.js";
-import {BoxMaker} from "../../box/BoxMaker.js";
-import {FunctionConstructorFactory} from "../../box/FunctionConstructorFactory.js";
 import {BoxTemplate} from "../../box/template/BoxTemplate.js";
 import {NewableFunctionConstructor} from "../../box/NewableFunctionConstructor.js";
-import {StringBox} from "../../box/StringBox.js";
-import {NumberBox} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
-import {RawBox} from "../../box/RawBox.js";
-import {NullBox} from "../../box/NullBox.js";
 
 console=globalThis.console;
 
@@ -430,14 +424,14 @@ class NewableFunctionBoxImpl {
 	}
 }
 
-class FunctionConstructorFactoryImpl implements FunctionConstructorFactory {
+class FunctionConstructorFactoryImpl {
 	factory: (box_value: NewableFunctionConstructor) => FunctionBox;
 	constructor(factory: (box_value: NewableFunctionConstructor) => FunctionBox) {
 		this.factory=factory;
 	}
 }
 
-class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> implements BoxMaker<TMakerArgs,TBoxRet> {
+class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
 	maker: (
 		make_new: (do_box: () => TBoxRet['value'],...a: TMakerArgs[]) => TBoxRet,
 		value: FunctionConstructor
@@ -447,36 +441,11 @@ class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> implement
 	}
 }
 
-function bound_executor<U extends (thisArg: null,...args: any[]) => unknown>(this: (...a: Box[]) => Box,inner_value: U,thisArg: NullBox,...args: Box[]) {
-	let unboxed_args=[];
-	for(let i=0;i<args.length;i++) {
-		let inner_val_iter=args[i];
-		if('value' in inner_val_iter) {
-			unboxed_args.push(inner_val_iter.value);
-		} else if(!('value' in inner_val_iter)) {
-			switch(inner_val_iter.type) {
-				case 'constructor_box': unboxed_args.push(inner_val_iter.factory_value); break;
-				case 'raw_box': console.log('raw box',inner_val_iter); break;
-				default: throw new Error("TODO");
-			}
-		} else {
-			throw new Error("Unreachable");
-		}
-	}
-	let called_value=inner_value.call(this,thisArg.value,unboxed_args);
-	return new RawBoxImpl<unknown>(called_value,Symbol.for("unknown"));
-}
-
-function type_validator_for_callable<U extends (thisArg: null,...args: any[]) => any>(this: (...a: Box[]) => Box,inner_value: U,thisArg: Box,...args: Box[]) {
-	if(thisArg.type!=='null') throw new Error("Invalid arguments");
-	return bound_executor.call(this,inner_value,thisArg,...args);
-}
-
 function bound_to_string_executor<T extends () => string>(this: (...a: Box[]) => Box,inner_value: T) {
-	return new StringBox(inner_value.call(this));
+	return new StringBoxImpl(inner_value.call(this));
 }
 
-class FunctionBoxImpl implements FunctionBox {
+class FunctionBoxImpl {
 	readonly type="function_box";
 	readonly return_type="null";
 	value: (...a: Box[]) => Box;
@@ -490,25 +459,23 @@ class FunctionBoxImpl implements FunctionBox {
 				vm.push(push_value);
 			} break;
 			case "apply": {
-				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
+				let inner_value=this.value[key];
+				let push_value=new FunctionBox(inner_value);
 				vm.push(push_value);
 			} break;
 			case "call": {
 				let inner_value=this.value[key];
-				let bound_1=(...args: any[]) => {
-					let called_value=inner_value.call(this.value,this.value,args);
-					return new RawBoxImpl<unknown>(called_value,Symbol.for("unknown"));
-				};
-				let push_value=new FunctionBox(bound_1.bind(this.value,this.value[key]));
+				let push_value=new FunctionBox(inner_value);
 				vm.push(push_value);
 			} break;
 			case "bind": {
-				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
+				let inner_value=this.value[key];
+				let push_value=new FunctionBox(inner_value);
 				vm.push(push_value);
 			} break;
 			case "arguments": {
-				let bound_inner=type_validator_for_callable.bind(this.value,this.value[key]);
-				let push_value=new FunctionBox(bound_inner);
+				let inner_value=this.value.arguments;
+				let push_value=new RawBoxImpl({as_any:inner_value}, Symbol.for("any"));
 				vm.push(push_value);
 			} break;
 			case "caller":
@@ -522,7 +489,7 @@ class FunctionBoxImpl implements FunctionBox {
 	}
 }
 
-class StringBoxImpl implements StringBox {
+class StringBoxImpl {
 	readonly type='string';
 	value: string;
 	constructor(value: string) {
@@ -530,7 +497,7 @@ class StringBoxImpl implements StringBox {
 	}
 }
 
-class NumberBoxImpl implements NumberBox {
+class NumberBoxImpl {
 	readonly type='number';
 	value: number;
 	constructor(value: number) {
@@ -538,7 +505,7 @@ class NumberBoxImpl implements NumberBox {
 	}
 }
 
-class RawBoxImpl<T> implements RawBox<T> {
+class RawBoxImpl<T> {
 	readonly type="raw_box";
 	raw_value: T;
 	type_symbol: symbol;
