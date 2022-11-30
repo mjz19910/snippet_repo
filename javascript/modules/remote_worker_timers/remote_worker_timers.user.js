@@ -74,7 +74,7 @@
 		 * @param {any} target_args
 		 * @param {number} timeout
 		 */
-		constructor(id, tag,is_repeating,target_fn,target_args,timeout) {
+		constructor(id,tag,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
 			this.active=true;
 			/**@type {TimerTag} */
@@ -301,13 +301,13 @@
 		/** @arg {UniqueIdGenerator} id_generator @arg {TimerApi} api_info */
 		constructor(id_generator,api_info) {
 			this.id_generator=id_generator;
-			/**@type {Map<number|string, TimerState>} */
+			/**@type {Map<number, TimerState>} */
 			this.m_remote_id_to_state_map=new Map;
 			this.weak_worker_state=null;
 			this.m_api_map=new Map;
 			this.m_raw_api_info=api_info;
 			this.set_api_names(g_timer_api.set_names,g_timer_api.clear_names);
-			/**@type {Map<number|string, ActiveTimerState>} */
+			/**@type {Map<number, ActiveTimerState>} */
 			this.m_active_state_map=new Map;
 		}
 		/**@arg {TimerApi['set_names']|TimerApi['clear_names']} names */
@@ -394,7 +394,9 @@
 			}
 		}
 		activate_state(state) {
-			this.m_active_state_map.get(state.id);
+			let value=this.m_active_state_map.get(state.id);
+			if(!value) throw new Error("Invalid");
+			return value;
 		}
 		/**
 		 * @param {number} tag
@@ -452,7 +454,7 @@
 			});
 		}
 		/**
-		 * @param {string | number} remote_id
+		 * @param {number} remote_id
 		 */
 		is_state_stored_by_remote_id(remote_id) {
 			return this.m_remote_id_to_state_map.has(remote_id);
@@ -465,13 +467,13 @@
 			return state;
 		}
 		/**
-		 * @param {string | number} remote_id
+		 * @param {number} remote_id
 		 */
 		store_state_by_remote_id(remote_id,state) {
 			this.m_remote_id_to_state_map.set(remote_id,state);
 		}
 		/**
-		 * @param {string | number} remote_id
+		 * @param {number} remote_id
 		 */
 		delete_state_by_remote_id(remote_id) {
 			this.m_remote_id_to_state_map.delete(remote_id);
@@ -681,6 +683,7 @@
 		 * @param {any} data
 		 */
 		on_result(type,data) {
+			if(!this.worker) throw new Error("No worker");
 			switch(data) {
 				case g_timer_api.worker.ready: {
 					if(this.executor_handle===null||this.executor_handle.closed()) {
@@ -813,16 +816,19 @@
 			delete window[this.global_state_key];
 		}
 		destroy() {
-			if(this.worker) {
-				this.worker.terminate();
-				this.worker=null;
-				URL.revokeObjectURL(this.worker_url);
-				this.worker_url=null;
-				if(this.executor_handle!==null&&!this.executor_handle.closed()) {
-					this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
-				}
-				this.connected=false;
-			};
+			if(!this.worker_url||!this.worker) {
+				this.timer.destroy();
+				this.valid=false;
+				return;
+			}
+			this.worker.terminate();
+			this.worker=null;
+			URL.revokeObjectURL(this.worker_url);
+			this.worker_url=null;
+			if(this.executor_handle!==null&&!this.executor_handle.closed()) {
+				this.executor_handle.reject(new Error("Worker destroyed before it was connected"));
+			}
+			this.connected=false;
 			this.timer.destroy();
 			this.valid=false;
 		}
