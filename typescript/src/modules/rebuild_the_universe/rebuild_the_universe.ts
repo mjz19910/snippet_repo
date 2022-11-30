@@ -447,6 +447,23 @@ class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> implement
 	}
 }
 
+function bound_executor<U extends (thisArg: null,...args: any[]) => any>(this: (...a: Box[]) => Box,inner_value: U,thisArg: NullBox,...args: Box[]) {
+	let unboxed_args=[];
+	for(let i=0;i<args.length;i++) {
+		let inner_val_iter=args[i];
+		if('value' in inner_val_iter) {
+			unboxed_args.push(inner_val_iter.value);
+		}
+	}
+	let called_value=inner_value.call(this,thisArg.value,unboxed_args);
+	return new RawBoxImpl<unknown>(called_value,Symbol.for("unknown"));
+}
+
+function type_validator<U extends (thisArg: null,...args: any[]) => any>(this: (...a: Box[]) => Box,inner_value: U,thisArg: Box,...args: Box[]) {
+	if(thisArg.type!=='null') throw new Error("Invalid arguments");
+	return bound_executor.call(this,inner_value,thisArg,...args);
+}
+
 class FunctionBoxImpl implements FunctionBox {
 	readonly type="function_box";
 	readonly return_type="null";
@@ -466,22 +483,7 @@ class FunctionBoxImpl implements FunctionBox {
 			} break;
 			case "apply": {
 				let inner_value=this.value[key];
-				function bound_executor(this: (...a: Box[]) => Box,thisArg: NullBox,...args: Box[]) {
-					let unboxed_args=[];
-					for(let i=0;i<args.length;i++) {
-						let inner_val_iter=args[i];
-						if('value' in inner_val_iter) {
-							unboxed_args.push(inner_val_iter.value);
-						}
-					}
-					let called_value=inner_value.call(this,thisArg.value,unboxed_args);
-					return new RawBoxImpl<unknown>(called_value,Symbol.for("unknown"));
-				}
-				function type_validator(this: (...a: Box[]) => Box,thisArg: Box,...args: Box[]) {
-					if(thisArg.type!=='null') throw new Error("Invalid arguments");
-					return bound_executor.call(this,thisArg,...args);
-				}
-				let push_value=new FunctionBox(type_validator.bind(this.value));
+				let push_value=new FunctionBox(type_validator.bind(this.value,inner_value));
 				vm.push(push_value);
 			} break;
 			case "call":
