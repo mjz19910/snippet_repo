@@ -880,10 +880,8 @@
 			failed=true;
 			return;
 		}
-		let id_generator=null;
-		let timer=null;
-		id_generator=new UniqueIdGenerator;
-		timer=new Timer(id_generator,new TimerApi);
+		let id_generator=new UniqueIdGenerator;
+		let timer=new Timer(id_generator,new TimerApi);
 		let executor_handle=new PromiseExecutorHandle(executor_accept,executor_reject);
 		let worker_code_blob=new Blob(["(",worker_code_function.toString(),")()","\n//# sourceURL=$__.0"]);
 		let worker_state=new WorkerState(worker_code_blob,timer,executor_handle);
