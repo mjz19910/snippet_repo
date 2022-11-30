@@ -1101,7 +1101,7 @@
 		/**@typedef {import("../../../typescript/src/vm/RecursivePartial.js").RecursivePartial<TimerApi>} RecursivePartialApi */
 		class RemoteTimerApi {
 			/**@type {typeof WorkerAsyncMessage|null} */
-			async=null;
+			async=WorkerAsyncMessage;
 			/**@type {typeof TimerWorkerSetTypes|null} */
 			worker_set_types=TimerWorkerSetTypes;
 			/**@typedef {import("../../../typescript/src/vm/ReplyTypesTy.js").ReplyTypesTy} ReplyTypesTy */
