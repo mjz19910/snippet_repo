@@ -25,11 +25,12 @@
 		"incremental": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
-		"noPropertyAccessFromIndexSignature": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"useUnknownInCatchVariables": true,
 		"isolatedModules": true,
+		// todo
+		"noPropertyAccessFromIndexSignature": false,
 	},
 	"ts-node": {
 		"esm": true,
