@@ -18,8 +18,6 @@
 // @grant			none
 // ==/UserScript==
 
-import {Box} from "../../box/Box.js";
-import {StackVMBox} from "../../box/StackVMBox.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
 import {NewableInstancePack} from "../../box/NewableInstancePack.js";
@@ -31,6 +29,27 @@ import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
 import {FunctionBox} from "../../box/FunctionBox.js";
 import {BoxTemplate} from "../../box/template/BoxTemplate.js";
 import {FunctionInstance} from "../../box/FunctionInstance.js";
+import {NewableFunctionBox} from "../../box/NewableFunctionBox.js";
+import {PromiseFunctionBox} from "../../vm/PromiseFunctionBox.js";
+import {DomValueBox} from "../../vm/DomValueBox.js";
+import {NewableInstancePackObjectBox} from "../../box/NewableInstancePackObjectBox.js";
+import {BoxWithPropertiesIsBox} from "../../box/BoxWithPropertiesIsBox.js";
+import {RealVoidBox} from "../../box/RealVoidBox.js";
+import {CSSStyleSheetBox, NumberBox, ObjectBox, StackVMBox, VoidBox, WindowBox} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
+import {PromiseBox} from "../../box/PromiseBox.js";
+import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
+import {IndexBox} from "../../box/IndexBox.js";
+import {NullBox} from "../../box/NullBox.js";
+import {MediaListBox} from "../../box/MediaListBox.js";
+import {NodeBox} from "../../box/NodeBox.js";
+import {DocumentBox} from "../../box/DocumentBox.js";
+import {GlobalThisBox} from "../../box/GlobalThisBox.js";
+import {CSSStyleSheetPromiseBox} from "../../box/CSSStyleSheetPromiseBox.js";
+import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
+import {CSSStyleSheetConstructorBox} from "../../box/CSSStyleSheetConstructorBox.js";
+import {CSSStyleSheetInitBox} from "../../box/CSSStyleSheetInitBox.js";
+import {StringBox} from "../../box/StringBox.js";
+import {RawBoxes} from "../../box/RawBoxes.js";
 
 console=globalThis.console;
 
@@ -108,7 +127,7 @@ function trigger_debug_breakpoint() {
 	debugger;
 }
 
-class StackVMBoxImpl implements StackVMBox {
+class StackVMBoxImpl {
 	type: "custom_box";
 	box_type: "StackVM";
 	m_verify_name: "StackVMBox";
@@ -226,10 +245,58 @@ class InstructionConstructImpl {
 
 type CastOperandTarget="object_index"|"vm_function"|"object_index_to_function";
 
+type BoxImpl=
+	RawBoxes|
+	NumberBox|
+	StringBox|
+	// function result
+	CSSStyleSheetInitBox|
+	// array
+	EmptyArrayBox|
+	ArrayBox|
+	InstructionTypeArrayBox|
+	// constructor function
+	CSSStyleSheetConstructorBox|
+	// function
+	FunctionBox|
+	NewableFunctionBox|
+	AsyncFunctionBox|
+	FunctionConstructorBox|
+	// return type
+	CSSStyleSheetPromiseBox|
+	// global
+	GlobalThisBox|
+	WindowBox|
+	DocumentBox|
+	// object instances
+	StackVMBox|
+	NodeBox|
+	CSSStyleSheetBox|
+	MediaListBox|
+	// StackVM
+	InstructionTypeBox|
+	// object
+	NullBox|
+	IndexBox|
+	ObjectBox|
+	// promise types
+	VoidPromiseBox|
+	PromiseBox|
+	// No value (Void)
+	VoidBox|
+	RealVoidBox|
+	// Box with stuff
+	BoxWithPropertiesIsBox|
+	// Generic boxes
+	NewableInstancePackObjectBox|
+	DomValueBox|
+	PromiseFunctionBox;
+
+
 class InstructionCastImpl {
 	readonly type='cast';
 	debug=false;
-	cast_to_type(_vm: StackVMImpl,obj: Box) {
+	cast_to_type(_vm: StackVMImpl,obj: BoxImpl) {
 		if(obj?.type==='custom_box') {
 			throw new Error("TODO: custom_box");
 		}
@@ -307,7 +374,7 @@ class InstructionModifyOpImpl {
 		}
 		let instruction_1=vm.instructions[target];
 		let instruction_modify: [string,...any[]]=instruction_1;
-		let value: Box|null=null;
+		let value: BoxImpl|null=null;
 		if(vm instanceof StackVMImpl) {
 			value=vm.pop();
 		} else {
@@ -344,7 +411,7 @@ class InstructionPushImpl {
 		this.type='push';
 	}
 	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
-		let instruction_: ["push",...Box[]]=instruction;
+		let instruction_: ["push",...BoxImpl[]]=instruction;
 		let [,...rest]=instruction_;
 		for(let i=0;i<rest.length;i++) {
 			let item=rest[i];
@@ -401,6 +468,9 @@ class CSSStyleSheetConstructorBoxImpl {
 		this.constructor_type="CSSStyleSheet";
 		this.value=value;
 	}
+	static from_box(value: CSSStyleSheetConstructorBox) {
+		return new this(value.value);
+	}
 	on_get(_vm: StackVMImpl,key: string) {
 		console.log('get','CSSStyleSheetConstructorBox',key);
 	}
@@ -409,24 +479,29 @@ class CSSStyleSheetConstructorBoxImpl {
 	}
 }
 
-class NewableFunctionBoxImpl {
-	value: NewableInstancePack<{}>;
-	class_value: new (...a: Box[]) => {};
-	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
-		this.value=factory_value;
+class NewableFunctionBoxImpl implements NewableFunctionBox {
+	readonly type="constructor_box";
+	readonly instance_type="unknown";
+	readonly arguments="box[]";
+	readonly return="box";
+	factory_value: NewableInstancePack<{}>;
+	class_value: new (...a: BoxImpl[]) => {};
+	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: BoxImpl[]) => {}) {
+		this.factory_value=factory_value;
 		this.class_value=class_value;
 	}
-	on_get(_vm: StackVMImpl,key: string) {
-		console.log('get','newable function',this.value,key);
+	on_get(vm: StackVMImpl,key: string) {
+		vm;key;
+		throw new Error("Method not implemented.");
 	}
-	factory(...args: Box[]) {
-		return this.value(this.class_value,args);
+	factory(...args: BoxImpl[]) {
+		return this.factory_value(this.class_value,args);
 	}
 }
 
 class NewableFunctionConstructorImpl {
-	make_new: new (...a: Box[]) => FunctionInstance;
-	constructor(make_new: new (...a: Box[]) => FunctionInstance) {
+	make_new: new (...a: BoxImpl[]) => FunctionInstance;
+	constructor(make_new: new (...a: BoxImpl[]) => FunctionInstance) {
 		this.make_new=make_new;
 	}
 }
@@ -448,15 +523,15 @@ class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
 	}
 }
 
-function bound_to_string_executor<T extends () => string>(this: (...a: Box[]) => Box,inner_value: T) {
+function bound_to_string_executor<T extends () => string>(this: (...a: BoxImpl[]) => BoxImpl,inner_value: T) {
 	return new StringBoxImpl(inner_value.call(this));
 }
 
 class FunctionBoxImpl {
 	readonly type="function_box";
 	readonly return_type="null";
-	value: (...a: Box[]) => Box;
-	constructor(value: (...a: Box[]) => Box) {
+	value: (...a: BoxImpl[]) => BoxImpl;
+	constructor(value: (...a: BoxImpl[]) => BoxImpl) {
 		this.value=value;
 	}
 	on_get(vm: StackVMImpl,key: string) {
@@ -491,7 +566,7 @@ class FunctionBoxImpl {
 			case "name":
 		}
 	}
-	static from_box(value: (...a: Box[]) => Box) {
+	static from_box(value: (...a: BoxImpl[]) => BoxImpl) {
 		return new this(value);
 	}
 }
@@ -557,11 +632,11 @@ class FunctionConstructorBoxImpl implements FunctionConstructorBox {
 						vm.push((this.value as any)[e]);
 					}
 				});
-				FunctionBoxImpl.from_box(this.value as unknown as (...a: Box[]) => Box).on_get(vm,key);
+				FunctionBoxImpl.from_box(this.value as unknown as (...a: BoxImpl[]) => BoxImpl).on_get(vm,key);
 			}
 		}
 	}
-	verify_arguments(...boxes: Box[]) {
+	verify_arguments(...boxes: BoxImpl[]) {
 		if(boxes.length===0) {
 			return true;
 		}
@@ -593,7 +668,7 @@ class InstructionGetImpl {
 			}
 		}
 	}
-	on_get(vm: StackVMImpl,value_box: Box,key: string|number) {
+	on_get(vm: StackVMImpl,value_box: BoxImpl,key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
 				if(typeof key==='number') {
@@ -605,13 +680,13 @@ class InstructionGetImpl {
 				}
 			} break;
 			case 'constructor_box': {
-				let return_value: {value: Box;}|null=null;
+				let return_value: {value: BoxImpl;}|null=null;
 				switch(typeof key) {
 					case 'string': {
 						switch(value_box.instance_type) {
 							case 'CSSStyleSheet': {
 								if(typeof key!='string') throw new Error("Bad");
-								new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key);
+								CSSStyleSheetConstructorBoxImpl.from_box(value_box).on_get(vm,key);
 							} break;
 							case "Function": {
 								FunctionConstructorBoxImpl.from_box(value_box).on_get(vm,key);
@@ -847,7 +922,7 @@ type InstructionMap={
 	'nop': ["nop"];
 	'peek': ["peek",number];
 	'push_window_object': ["push_window_object"];
-	'push': ["push",...Box[]];
+	'push': ["push",...BoxImpl[]];
 	'return': ["return"];
 	'vm_block_trace': VMBlockTrace;
 	'vm_call': ["vm_call",number];
@@ -865,10 +940,10 @@ class StackVMFlags {
 }
 
 class StackVMImpl {
-	return_value: Box;
+	return_value: BoxImpl;
 	jump_instruction_pointer: number|null;
 	base_ptr: number;
-	stack: Box[];
+	stack: BoxImpl[];
 	instructions: InstructionType[];
 	instruction_pointer: number;
 	running: boolean;
@@ -900,7 +975,7 @@ class StackVMImpl {
 			[U in keyof typeof instruction_class_map]: InstanceType<typeof instruction_class_map[U]>;
 		};
 	}
-	push(value: Box) {
+	push(value: BoxImpl) {
 		this.stack.push(value);
 	}
 	pop() {
@@ -912,7 +987,7 @@ class StackVMImpl {
 		return this.stack.at(-1-distance);
 	}
 	pop_arg_count(operand_number_of_arguments: number) {
-		let arguments_arr: Box[]=[];
+		let arguments_arr: BoxImpl[]=[];
 		let arg_count=operand_number_of_arguments;
 		for(let i=0;i<arg_count;i++) {
 			if(this.stack.length<=0) {
@@ -1001,13 +1076,13 @@ class StackVMImpl {
 }
 class EventHandlerVMDispatch extends StackVMImpl {
 	target_obj: any;
-	args_arr: Box[]|null;
+	args_arr: BoxImpl[]|null;
 	constructor(instructions: InstructionType[],target_obj: any) {
 		super(instructions);
 		this.target_obj=target_obj;
 		this.args_arr=null;
 	}
-	override run(...args_arr: Box[]) {
+	override run(...args_arr: BoxImpl[]) {
 		this.args_arr=args_arr;
 		return super.run();
 	}

@@ -12,10 +12,6 @@ export class NewableFunctionBox {
 		this.factory_value=factory_value;
 		this.class_value=class_value;
 	}
-	readonly m_verify_name="NewableFunctionBox";
-	verify_name(name: "NewableFunctionBox") {
-		return this.m_verify_name==='NewableFunctionBox'&&name==='NewableFunctionBox';
-	}
 	factory(...args: Box[]) {
 		return this.factory_value(this.class_value,args);
 	}
