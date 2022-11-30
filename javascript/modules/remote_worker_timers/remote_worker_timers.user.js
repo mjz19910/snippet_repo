@@ -1014,8 +1014,7 @@
 					if(!('worker' in msg.value)) throw 1;
 					let value=decay_to_object(msg.value);
 					let v_async=value.async;
-					if(v_async===1||v_async===null) {
-						v_async;
+					if(v_async===1) {
 						g_timer_api.on_set_types({
 							async: v_async,
 							reply: value.reply,
@@ -1130,7 +1129,7 @@
 				repeating: "clearInterval"
 			};
 			/**
-			 * @param {{ async: 1 | null; reply: any; fire: any; worker: any; }} types
+			 * @param {{ async: 1; reply: any; fire: any; worker: any; }} types
 			 */
 			on_set_types(types) {
 				this.async=types.async;
