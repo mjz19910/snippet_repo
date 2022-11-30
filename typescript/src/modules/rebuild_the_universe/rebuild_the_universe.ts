@@ -489,7 +489,10 @@ class FunctionBoxImpl implements FunctionBox {
 				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
 				vm.push(push_value);
 			} break;
-			case "bind":
+			case "bind": {
+				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
+				vm.push(push_value);
+			} break;
 			case "arguments":
 			case "caller":
 			case "constructor":
