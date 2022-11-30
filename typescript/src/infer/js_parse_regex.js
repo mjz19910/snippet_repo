@@ -80,6 +80,7 @@ function get_char_type(token_value) {
 		case "{": case "}": return "{}"
 		case "(": case ")": return "()"
 	}
+	return token_value;
 }
 /**@arg {import("./JS_SPECIAL_CHARS.js").JS_SPECIAL_CHARS} token_value @returns {token_value is import("./JS_BLOCK_OPEN_CHARS.js").JS_BLOCK_OPEN_CHARS} */
 function is_open_token(token_value) {
