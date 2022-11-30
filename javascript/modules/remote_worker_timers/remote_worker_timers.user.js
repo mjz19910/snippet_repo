@@ -477,27 +477,18 @@
 		on_reply(msg) {
 			switch(msg.type) {
 				case g_timer_api.worker.clear.single: {
-					debugger;
-					let remote_id=msg.v;
+					let remote_id=msg.value;
 					this.delete_state_by_remote_id(remote_id);
-					break;
-				}
+				} break;
 				case g_timer_api.worker.clear.repeating: {
-					debugger;
-					let remote_id=msg.v;
+					let remote_id=msg.value;
 					this.delete_state_by_remote_id(remote_id);
-					break;
-				}
-				case g_timer_api.reply.clear.single: {
-					// debugger;
 				} break;
-				case g_timer_api.reply.clear.repeating: {
-					// debugger;
+				case g_timer_api.reply.clear.single: break;
+				case g_timer_api.reply.clear.repeating: break;
+				default: {
+					console.log('reply for',msg);
 				} break;
-				default:
-					console.log('reply',msg);
-					console.assert(false,'on_result msg needs a handler for',msg);
-					debugger;
 			}
 		}
 		/**
