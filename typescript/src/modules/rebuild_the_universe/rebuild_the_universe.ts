@@ -23,6 +23,10 @@ import {StackVMBox} from "../../box/StackVMBox.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
 import {NewableInstancePack} from "../../box/NewableInstancePack.js";
+import {EmptyArrayBox} from "../../box/EmptyArrayBox.js";
+import {ArrayBox} from "../../box/ArrayBox.js";
+import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
+import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
 
 console=globalThis.console;
 
@@ -421,10 +425,26 @@ class InstructionGetImpl {
 	constructor() {
 		this.type='get';
 	}
+	array_box_handle_num(value_box: EmptyArrayBox|ArrayBox|InstructionTypeArrayBox,key: number,vm: StackVMImpl) {
+		switch(value_box.item_type) {
+			case 'Box': {
+				let res=value_box.value[key];
+				vm.push(res);
+			} break;
+			case 'instruction_type[]':{
+				let res=value_box.value[key];
+				vm.push(new InstructionTypeBox(res));
+			} break;
+			case 'none': {
+				let res=value_box.value[key];
+				vm.push(new VoidBoxImpl(res));
+			}
+		}
+	}
 	on_get(vm: StackVMImpl,value_box: Box,key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
-				/* if(typeof key==='number') {
+				if(typeof key==='number') {
 					this.array_box_handle_num(value_box,key,vm);
 					return;
 				} else {
@@ -432,7 +452,7 @@ class InstructionGetImpl {
 					if(Number.isNaN(key_alt)) throw new Error("Failed to parse int");
 					this.array_box_handle_num(value_box,key_alt,vm);
 					return;
-				} */
+				}
 			} break;
 			case 'constructor_box': {
 				let return_value=null;
