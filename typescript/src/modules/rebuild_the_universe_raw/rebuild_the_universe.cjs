@@ -258,20 +258,27 @@ class ObjectBoxImpl {
 		this.value=value;
 	}
 }
+
+/** @template T */
+class NewableInstancePackImpl {
+	/** @arg {new (...a: Box_CJS[]) => T} box_value @arg {Box_CJS[]} construct_args @returns {Box_CJS} */
+	make_box(box_value,construct_args) {}
+}
+
 class NewableFunctionBoxImpl {
-	/** @arg {{}} value */
-	constructor(value) {
-		this.value=value;
+	/** @arg {NewableInstancePackImpl<{}>} factory_value @arg {new (...a: Box[]) => {}} class_value */
+	constructor(factory_value,class_value) {
+		this.factory_value=factory_value;
+		this.class_value=class_value;
 	}
 	/** @arg {StackVMImpl} _vm @arg {string} key */
 	on_get(_vm,key) {
-		console.log('get','newable function',this.value,key);
+		console.log('get','newable function',this.factory_value,this.class_value,key);
 	}
 }
-class InstructionImplBase {
-	/** @type {undefined} */
-	get_class_type;
-}
+
+class InstructionImplBase {}
+
 class PromiseBoxImpl {
 	/** @readonly */
 	type="promise_box";
@@ -675,7 +682,7 @@ class InstructionGetImpl extends InstructionImplBase {
 				switch(value_box.instance_type) {
 					case 'CSSStyleSheet': new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key); break;
 					case "unknown": {
-						new NewableFunctionBoxImpl(value_box.value);
+						new NewableFunctionBoxImpl(...value_box.get_construct_arguments());
 					} break;
 				}
 			} break;

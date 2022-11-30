@@ -13,6 +13,9 @@ export class NewableFunctionBox {
 		this.factory_value=factory_value;
 		this.class_value=class_value;
 	}
+	get_construct_arguments(): [NewableInstancePack<{}>,new (...a: Box[]) => {}] {
+		return [this.factory_value,this.class_value];
+	}
 	static from_box(value_box: NewableFunctionBox) {
 		return new this(value_box.factory_value,value_box.class_value);
 	}
@@ -21,6 +24,6 @@ export class NewableFunctionBox {
 		throw new Error("Method not implemented.");
 	}
 	factory(...args: Box[]) {
-		return this.factory_value(this.class_value,args);
+		return this.factory_value.make_box(this.class_value,args);
 	}
 }

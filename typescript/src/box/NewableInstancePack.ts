@@ -1,4 +1,5 @@
-import {Box} from "./Box.js"
+import {Box} from "./Box.js";
 
-export type NewableInstancePack<T>=(box_value: new (...a: Box[]) => T, construct_args: Box[]) => Box
-
+export interface NewableInstancePack<T> {
+	make_box(box_value: new (...a: Box[]) => T,construct_args: Box[]): Box;
+}
