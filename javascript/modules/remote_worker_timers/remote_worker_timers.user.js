@@ -350,6 +350,7 @@
 		fire(tag,remote_id) {
 			this.assert_valid_worker();
 			let state=this.get_state_by_remote_id(remote_id);
+			if(!state) throw new Error("No state for id");
 			let active_state=this.activate_state(state);
 			try {
 				if(active_state.active) {
@@ -431,7 +432,6 @@
 		/**@arg {number} remote_id */
 		get_state_by_remote_id(remote_id) {
 			let state=this.m_remote_id_to_state_map.get(remote_id);
-			if(!state) throw new Error("No state for id");
 			return state;
 		}
 		/**
@@ -508,6 +508,7 @@
 		force_clear(tag,remote_id) {
 			this.assert_valid_worker();
 			let state=this.get_state_by_remote_id(remote_id);
+			if(!state) return;
 			if(state.active) {
 				return this.clear(tag,remote_id);
 			}
