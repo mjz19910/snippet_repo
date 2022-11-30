@@ -624,7 +624,7 @@ class FunctionConstructorBoxImpl implements FunctionConstructorBox {
 		switch(key) {
 			case 'name': vm.push(new StringBoxImpl(this.value[key])); break;
 			case 'prototype': {
-				let value=new RawBoxImpl(this.value[key],Symbol.for("Function"));
+				let value=new RawBoxImpl({as_interface:this.value[key]},Symbol.for("Function"));
 				vm.push(value);
 			} break;
 			case 'length': vm.push(new NumberBoxImpl(this.value[key]));
