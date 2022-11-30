@@ -106,15 +106,15 @@ class Parser {
 	constructor(code) {
 		let self=this
 		self.code=code
-		/**@type {TokenType[]} */
+		/**@type {import("./TokenType.js").TokenType[]} */
 		self.tokens=[]
-		/**@type {BoxedValue[]} */
+		/**@type {import("./BoxedTokensValue.js").BoxedTokensValue[]} */
 		self.stack=[]
 		/**@type {StateType[]} */
 		self.states=[]
 		self.step_index=0
 		self.cursor_pos=0
-		/**@type {((self:Parser, index:number, in_tokens?:TokenType[])=>number)[]} */
+		/**@type {((self:Parser, index:number, in_tokens?:import("./TokenType.js").TokenType[])=>number)[]} */
 		self.steps=[
 			/**@arg {Parser} self @arg {number} index*/
 			function step_1(self,index) {
