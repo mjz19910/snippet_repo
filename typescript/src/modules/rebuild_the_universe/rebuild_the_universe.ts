@@ -462,9 +462,9 @@ class InstructionGetImpl {
 					case "Function": {
 
 					} break;
-					case null: {
+					case 'unknown': {
 						if(typeof key!='string') throw new Error("Bad");
-						new NewableFunctionBoxImpl(value_box.value,value_box.class_value).on_get(vm,key);
+						new NewableFunctionBoxImpl(value_box.factory_value,value_box.class_value).on_get(vm,key);
 					} break;
 				}
 				if(return_value === null) {
