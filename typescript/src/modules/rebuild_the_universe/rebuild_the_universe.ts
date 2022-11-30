@@ -447,7 +447,7 @@ class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> implement
 	}
 }
 
-function bound_executor<U extends (thisArg: null,...args: any[]) => any>(this: (...a: Box[]) => Box,inner_value: U,thisArg: NullBox,...args: Box[]) {
+function bound_executor<U extends (thisArg: null,...args: any[]) => unknown>(this: (...a: Box[]) => Box,inner_value: U,thisArg: NullBox,...args: Box[]) {
 	let unboxed_args=[];
 	for(let i=0;i<args.length;i++) {
 		let inner_val_iter=args[i];
