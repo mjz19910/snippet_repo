@@ -1,4 +1,6 @@
 import {Box} from "./Box.js"
 import {FunctionInstance} from "./FunctionInstance.js"
 
-export type NewableFunctionConstructor=new (...a: Box[]) => FunctionInstance
+export interface NewableFunctionConstructor {
+	make_new: new (...a: Box[]) => FunctionInstance
+}

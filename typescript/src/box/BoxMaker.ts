@@ -1,5 +1,8 @@
-export type BoxMaker<A,T_Type>=
-	(
-		make_new: <T>(do_box: () => T,...a: A[]) => T_Type,
-		value: typeof Function
-	) => T_Type
+import {BoxTemplate} from "./template/BoxTemplate.js";
+
+export interface BoxMaker<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
+	maker: (
+		make_new: (do_box: () => TBoxRet['value'],...a: TMakerArgs[]) => TBoxRet,
+		value: FunctionConstructor
+	) => TBoxRet;
+}

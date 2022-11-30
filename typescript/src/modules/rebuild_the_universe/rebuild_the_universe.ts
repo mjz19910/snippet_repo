@@ -31,6 +31,10 @@ import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
 import {FunctionBox} from "../../box/FunctionBox.js";
 import {BoxMaker} from "../../box/BoxMaker.js";
 import {FunctionConstructorFactory} from "../../box/FunctionConstructorFactory.js";
+import {BoxTemplate} from "../../box/template/BoxTemplate.js";
+import {NewableFunctionConstructor} from "../../box/NewableFunctionConstructor.js";
+import {StringBox} from "../../box/StringBox.js";
+import {NumberBox} from "../rebuild_the_universe_raw/rebuild_the_universe.cjs";
 
 console=globalThis.console;
 
@@ -424,11 +428,47 @@ class NewableFunctionBoxImpl {
 	}
 }
 
-class FunctionConstructorFactoryImpl implements FunctionConstructorFactory {}
+class FunctionConstructorFactoryImpl implements FunctionConstructorFactory {
+	factory: (box_value: NewableFunctionConstructor) => FunctionBox;
+	constructor(factory: (box_value: NewableFunctionConstructor) => FunctionBox) {
+		this.factory = factory;
+	}
+}
 
-class BoxMakerImpl<T,U> implements BoxMaker<T,U> {}
+class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string, any>> implements BoxMaker<TMakerArgs,TBoxRet> {
+	maker: (
+		make_new: (do_box: () => TBoxRet['value'],...a: TMakerArgs[]) => TBoxRet,
+		value: FunctionConstructor
+	) => TBoxRet;
+	constructor(maker: BoxMakerImpl<TMakerArgs,TBoxRet>['maker']) {
+		this.maker=maker;
+	}
+}
 
-class FunctionBoxImpl implements FunctionBox {}
+class FunctionBoxImpl implements FunctionBox {
+	readonly type="function_box";
+	readonly return_type="null";
+	value:(...a: Box[]) => Box;
+	constructor(value:(...a: Box[]) => Box) {
+		this.value=value;
+	}
+}
+
+class StringBoxImpl implements StringBox {
+	readonly type='string';
+	value: string;
+	constructor(value: string) {
+		this.value=value;
+	}
+}
+
+class NumberBoxImpl implements NumberBox {
+	readonly type='number';
+	value: number;
+	constructor(value: number) {
+		this.value=value;
+	}
+}
 
 class FunctionConstructorBoxImpl implements FunctionConstructorBox {
 	readonly type="constructor_box";
@@ -450,18 +490,18 @@ class FunctionConstructorBoxImpl implements FunctionConstructorBox {
 	static from_box(value: FunctionConstructorBox) {
 		return new this(value.value,value.instance_factory,value.box_maker);
 	}
-	on_get(vm: StackVM,key: string) {
+	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
-			case 'name':
-			case 'prototype':
-			case 'length': return this.value[key];
+			case 'name': vm.push(new StringBoxImpl(this.value[key]));
+			case 'prototype':vm.push(this.value[key]);
+			case 'length': vm.push(new NumberBoxImpl(this.value[key]));
 			default: {
-				let return_value:{value:any}|null=null;
+				let return_value: {value: any;}|null=null;
 				Object.keys(Object.getOwnPropertyDescriptors(this.value)).forEach(e => {
 					if(e===key) {
 						console.log("case needed for key '"+e+"'");
 						return_value={
-							value:(this.value as any)[e]
+							value: (this.value as any)[e]
 						};
 					}
 				});
@@ -491,7 +531,7 @@ class InstructionGetImpl {
 				let res=value_box.value[key];
 				vm.push(res);
 			} break;
-			case 'instruction_type[]':{
+			case 'instruction_type[]': {
 				let res=value_box.value[key];
 				vm.push(new InstructionTypeBox(res));
 			} break;
@@ -513,21 +553,25 @@ class InstructionGetImpl {
 				}
 			} break;
 			case 'constructor_box': {
-				let return_value=null;
-				switch(value_box.instance_type) {
-					case 'CSSStyleSheet': {
-						if(typeof key!='string') throw new Error("Bad");
-						new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key);
-					} break;
-					case "Function": {
-
-					} break;
-					case 'unknown': {
-						if(typeof key!='string') throw new Error("Bad");
-						new NewableFunctionBoxImpl(value_box.factory_value,value_box.class_value).on_get(vm,key);
-					} break;
+				let return_value:{value:Box}|null=null;
+				switch(typeof key) {
+					case 'string': {
+						switch(value_box.instance_type) {
+							case 'CSSStyleSheet': {
+								if(typeof key!='string') throw new Error("Bad");
+								new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key);
+							} break;
+							case "Function": {
+								FunctionConstructorBoxImpl.from_box(value_box).on_get(vm,key);
+							} break;
+							case 'unknown': {
+								if(typeof key!='string') throw new Error("Bad");
+								new NewableFunctionBoxImpl(value_box.factory_value,value_box.class_value).on_get(vm,key);
+							} break;
+						}
+					}
 				}
-				if(return_value === null) {
+				if(return_value===null) {
 					throw new Error("TODO");
 				}
 				vm.push(return_value);
