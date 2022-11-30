@@ -170,19 +170,19 @@
 		repeating=ReplySetRepeating;
 	};
 	class ReplyTypes {
-		/**@type {typeof WorkerDestroyMessage} */
+		/** @readonly */
 		destroy_worker=WorkerDestroyMessage;
 		/** @readonly */
 		update_handler=301;
-		/**@type {typeof WorkerReadyReply} */
+		/** @readonly */
 		ready=WorkerReadyReply;
-		/**@type {typeof ReplyMessage1} */
+		/** @readonly */
 		msg1=ReplyMessage1;
-		/**@type {typeof ReplyMessage2} */
+		/** @readonly */
 		msg2=ReplyMessage2;
-		/**@type {typeof ReplyFromWorker} */
+		/** @readonly */
 		from_worker=ReplyFromWorker;
-		/**@type {typeof ReplyToWorker} */
+		/** @readonly */
 		to_worker=ReplyToWorker;
 		set=new ReplySetMessages;
 		clear=new ReplyClearMessages;
