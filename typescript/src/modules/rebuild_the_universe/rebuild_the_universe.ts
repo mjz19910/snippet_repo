@@ -490,6 +490,9 @@ class NewableFunctionBoxImpl implements NewableFunctionBox {
 		this.factory_value=factory_value;
 		this.class_value=class_value;
 	}
+	static from_box(value_box: NewableFunctionBox) {
+		return new this(value_box.factory_value,value_box.class_value);
+	}
 	on_get(vm: StackVMImpl,key: string) {
 		vm;key;
 		throw new Error("Method not implemented.");
@@ -693,7 +696,7 @@ class InstructionGetImpl {
 							} break;
 							case 'unknown': {
 								if(typeof key!='string') throw new Error("Bad");
-								new NewableFunctionBoxImpl(value_box.factory_value,value_box.class_value).on_get(vm,key);
+								NewableFunctionBoxImpl.from_box(value_box).on_get(vm,key);
 							} break;
 						}
 					}
