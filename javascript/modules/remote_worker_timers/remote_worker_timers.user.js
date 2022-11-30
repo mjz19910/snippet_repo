@@ -1037,7 +1037,7 @@
 			}
 		}
 		/**
-		 * @param {{ data: any; }} e
+		 * @param {MessageEvent<any>} e
 		 */
 		function message_with_types_handler(e) {
 			if(!g_timer_api.worker) throw new Error("Invalid");
