@@ -430,14 +430,14 @@ class InstructionBreakpointImpl {
 }
 
 class InstructionPushVMObjImpl {
-	type: "vm_push_self"="vm_push_self";
+	readonly type="vm_push_self";
 	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
 }
 
 class InstructionPushWindowObjectImpl {
-	type: 'push_window_object'='push_window_object';
+	readonly type='push_window_object';
 	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
 		vm.stack.push(new WindowBoxImpl(window));
 	}
