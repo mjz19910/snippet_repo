@@ -953,8 +953,10 @@
 		 * @param {{ [x: string]: any; setTimeout?: (handler: any, timeout: any, ...target_args: any[]) => any; setInterval?: (handler: any, timeout?: number, ...target_args: any[]) => any; clearTimeout?: (id?: number) => void; clearInterval?: (id: number) => void; }} obj
 		 */
 		function connect_local_to_remote_timer_api(obj) {
+			/** @type {any} */
+			let any_window=window;
 			for(let key in obj) {
-				window[key]=obj[key];
+				any_window[key]=obj[key];
 			}
 			return obj;
 		}
@@ -984,6 +986,7 @@
 				TimerWorkerSetTypes
 			});
 		}
+		/** @type {any[]} */
 		const cached_messages=[];
 		/** @template T @arg {T} value @returns {asserts value is NonNullable<T>} */
 		function assert_non_nullable_object(value) {
@@ -1344,7 +1347,9 @@
 			}
 		}
 		let remote_worker_state=new RemoteWorkerState;
-		globalThis.remote_worker_state=remote_worker_state;
+		/** @type {any} */
+		let any_global=globalThis;
+		any_global.remote_worker_state=remote_worker_state;
 		remote_worker_state.set_timer(new RemoteTimer);
 		onmessage=message_without_types_handler;
 	}

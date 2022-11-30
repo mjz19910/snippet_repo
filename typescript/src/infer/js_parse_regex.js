@@ -109,13 +109,13 @@ class Parser {
 		self.code=code;
 		/**@type {import("./TokenType.js").TokenType[]} */
 		self.tokens=[];
-		/**@type {import("./BoxedTokensValue.js").BoxedTokensValue[]} */
+		/**@type {(import("./BoxedTokensValue.js").BoxedTokensValue|import("./BoxedStatesValue.js").BoxedStatesValue)[]} */
 		self.stack=[];
 		/**@type {import("./StateType.js").StateType[]} */
 		self.states=[];
 		self.step_index=0;
 		self.cursor_pos=0;
-		/**@type {((self:Parser, index:number, in_tokens?:import("./TokenType.js").TokenType[])=>number)[]} */
+		/**@type {[(self:Parser, index:number)=>number,(self:Parser, index:number, in_tokens:import("./TokenType.js").TokenType[])=>number]} */
 		self.steps=[
 			/**@arg {Parser} self @arg {number} index*/
 			function step_1(self,index) {
@@ -162,6 +162,7 @@ class Parser {
 						if(cur.match(rx)) {
 							if(is_whitespace_type(cur)) {
 								let whitespace_value=convert_to_whitespace_type(cur);
+								if(!whitespace_value) throw 1;
 								self.tokens.push([TAG_TYPE_WHITESPACE,whitespace_value]);
 							} else {
 								console.log('untyped whitespace',JSON.stringify(cur));
@@ -171,11 +172,13 @@ class Parser {
 						rx=/\w+/g;
 						rx.lastIndex=index;
 						let mat=rx.exec(self.code);
+						if(!mat) throw 1;
 						if(mat.index===index) {
 							let match=mat[0];
 							if(is_keyword(match)) {
 								let keyword_value=convert_to_keyword(match);
-								/**@type {TokenTypeKeyword} */
+								if(!keyword_value) throw 1;
+								/**@type {import("./TokenTypeKeyword.js").TokenTypeKeyword} */
 								const new_item=[TAG_TYPE_KEYWORD,keyword_value];
 								self.tokens.push(new_item);
 							} else {
@@ -189,7 +192,7 @@ class Parser {
 				}
 				return ret;
 			},
-			/**@arg {Parser}self @arg {number} index @arg {TokenType[]} in_tokens */
+			/** @arg {Parser} self @arg {number} index @arg {import("./TokenType.js").TokenType[]} in_tokens */
 			function step_2(self,index,in_tokens) {
 				let ret=0;
 				let cur_tok=in_tokens[index];
