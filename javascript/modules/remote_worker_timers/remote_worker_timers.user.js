@@ -67,18 +67,18 @@
 	}
 	class ActiveTimerState {
 		/**
-		 * @arg {TimerTag} tag
+		 * @arg {TimerTag} type
 		 * @arg {number} id
 		 * @param {boolean} is_repeating
 		 * @param {Function} target_fn
 		 * @param {any} target_args
 		 * @param {number} timeout
 		 */
-		constructor(id,tag,is_repeating,target_fn,target_args,timeout) {
+		constructor(id,type,is_repeating,target_fn,target_args,timeout) {
 			this.id=id;
 			this.active=true;
 			/**@type {TimerTag} */
-			this.type=tag;
+			this.type=type;
 			/**@type {boolean} */
 			this.repeat=is_repeating;
 			/**@type {Function} */
@@ -394,12 +394,15 @@
 				});
 			}
 		}
+		/** @arg {TimerState} state */
 		activate_state(state) {
 			let id=state.id;
 			if(!this.m_active_state_map.has(id)) {
-				let func=new Function(state.target_fn);
-				let active_state=new ActiveTimerState(id,state.tag,state.is_repeating,func,state.target_args,state.timeout);
-				this.m_active_state_map.set(id,active_state);
+				if(typeof state.target_fn==='string') {
+					let func=new Function(state.target_fn);
+					let active_state=new ActiveTimerState(id,state.type,state.is_repeating,func,state.target_args,state.timeout);
+					this.m_active_state_map.set(id,active_state);
+				}
 			}
 			let value=this.m_active_state_map.get(id);
 			if(!value) throw new Error("Invalid");
