@@ -494,7 +494,12 @@ class FunctionBoxImpl implements FunctionBox {
 				vm.push(push_value);
 			} break;
 			case "call": {
-				let push_value=new FunctionBox(type_validator_for_callable.bind(this.value,this.value[key]));
+				let inner_value=this.value[key];
+				let bound_1=(...args: any[]) => {
+					let called_value=inner_value.call(this.value,this.value,args);
+					return new RawBoxImpl<unknown>(called_value,Symbol.for("unknown"));
+				};
+				let push_value=new FunctionBox(bound_1.bind(this.value,this.value[key]));
 				vm.push(push_value);
 			} break;
 			case "bind": {
