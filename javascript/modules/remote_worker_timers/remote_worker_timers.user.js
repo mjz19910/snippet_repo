@@ -895,7 +895,6 @@
 		 */
 		function remoteSetTimeout(handler,timeout,...target_args) {
 			if(!worker_state) {
-				// @ts-expect-error
 				setTimeout=setTimeout_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return setTimeout_global(handler,timeout,...target_args);
@@ -923,7 +922,6 @@
 		 */
 		function remoteSetInterval(handler,timeout=0,...target_args) {
 			if(!worker_state) {
-				// @ts-expect-error
 				setInterval=setInterval_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return setInterval_global(handler,timeout,...target_args);
