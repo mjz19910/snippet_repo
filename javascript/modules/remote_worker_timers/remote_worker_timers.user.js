@@ -906,7 +906,6 @@
 		/**@arg {number|undefined} id */
 		function remoteClearTimeout(id) {
 			if(!worker_state) {
-				// @ts-expect-error
 				clearTimeout=clearTimeout_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return clearTimeout_global(id);
@@ -933,14 +932,12 @@
 		/**@arg {number} id */
 		function remoteClearInterval(id) {
 			if(!worker_state) {
-				// @ts-expect-error
 				clearInterval=clearInterval_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return clearInterval_global(id);
 			}
 			worker_state.timer.clear(TIMER_REPEATING,id);
 		}
-		// @ts-expect-error
 		window.old_local={
 			setTimeout,
 			setInterval,
@@ -958,7 +955,6 @@
 			}
 			return obj;
 		}
-		// @ts-expect-error
 		window.g_remote_timer_api=connect_local_to_remote_timer_api({
 			setTimeout: remoteSetTimeout,
 			setInterval: remoteSetInterval,
@@ -1134,11 +1130,10 @@
 				this.reply=types.reply;
 				this.fire=types.fire;
 				this.worker=types.worker;
-				onmessage=message_with_types_handler;
 				for(let i=0;i<cached_messages.length;i++) {
-					// @ts-expect-error
-					onmessage(cached_messages[i]);
+					message_with_types_handler(cached_messages[i]);
 				}
+				onmessage=message_with_types_handler;
 			}
 		}
 		class RemoteWorkerState {
