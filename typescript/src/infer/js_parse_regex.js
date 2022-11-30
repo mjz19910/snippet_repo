@@ -115,7 +115,7 @@ class Parser {
 		self.states=[];
 		self.step_index=0;
 		self.cursor_pos=0;
-		/**@type {[(self:Parser, index:number)=>number,(self:Parser, index:number, in_tokens:import("./TokenType.js").TokenType[])=>number]} */
+		/**@type {[(self:Parser, index:number)=>number,(self:Parser, index:number, in_tokens:import("./TokenType.js").TokenType[])=>number,typeof step_template]} */
 		self.steps=[
 			/**@arg {Parser} self @arg {number} index*/
 			function step_1(self,index) {
@@ -239,11 +239,13 @@ class Parser {
 								} else if(is_close_token(token_value)) {
 									self.tokens.push([TAG_TYPE_SPECIAL,token_value]);
 									let top=self.stack.pop();
+									if(!top) throw 1;
 									let put_back;
 									while(top[0]!=TAG_BOXED_TOKENS) {
 										if(put_back) put_back.push(top);
 										else put_back=[top];
 										top=self.stack.pop();
+										if(!top) throw 1;
 									}
 									let tok_top=top[1];
 									if(put_back) self.stack.push(...put_back);
@@ -273,7 +275,7 @@ class Parser {
 				}
 				return ret;
 			},
-			step_template
+			step_template,
 		];
 	}
 	can_run() {
@@ -303,13 +305,14 @@ class Parser {
 		process.stdout.write("\n");
 		if(self.stack.length>0) {
 			let tok_top=self.stack.pop();
+			if(!tok_top) throw 1;
 			const [tag]=tok_top;
 			if(tag===TAG_BOXED_STATES) {
 				const value=tok_top[1];
 				lost_states.push(value);
 			} else if(tag===TAG_BOXED_TOKENS) {
 				const value=tok_top[1];
-				value.push([TAG_BOXED_TOKENS,self.tokens],null);
+				value.push([TAG_BOXED_TOKENS,self.tokens]);
 				self.tokens=value;
 			} else {
 				console.log('unk stack type',tok_top);
