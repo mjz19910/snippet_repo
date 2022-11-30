@@ -357,11 +357,29 @@ class InstructionDupImpl {
 	}
 }
 
+class CSSStyleSheetBoxImpl {
+	type: "instance_box";
+	m_verify_name: "CSSStyleSheetBox";
+	instance_type: "CSSStyleSheet";
+	value: CSSStyleSheet;
+	constructor(value: CSSStyleSheet) {
+		this.type='instance_box';
+		this.m_verify_name='CSSStyleSheetBox';
+		this.instance_type='CSSStyleSheet';
+		this.value=value;
+	}
+	verify_name(name: "CSSStyleSheetBox"): boolean {
+		return this.m_verify_name==='CSSStyleSheetBox'&&name==='CSSStyleSheetBox';
+	}
+	as_type(input_typeof: string): this|null {
+		return typeof this.value===input_typeof? this:null;
+	}
+}
+
 class CSSStyleSheetConstructorBoxImpl {
 	type: "constructor_box";
 	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
 	args_type: [options?: CSSStyleSheetInit|undefined];
-	m_verify_name: "CSSStyleSheetConstructorBox";
 	from: "javascript";
 	instance_type: "CSSStyleSheet";
 	constructor_type: "CSSStyleSheet";
@@ -369,26 +387,10 @@ class CSSStyleSheetConstructorBoxImpl {
 	constructor(value: typeof CSSStyleSheet) {
 		this.type="constructor_box";
 		this.args_type=[];
-		this.m_verify_name="CSSStyleSheetConstructorBox";
 		this.from="javascript";
 		this.instance_type="CSSStyleSheet";
 		this.constructor_type="CSSStyleSheet";
 		this.value=value;
-	}
-	verify_name(name: "CSSStyleSheetConstructorBox"): boolean {
-		return this.m_verify_name==='CSSStyleSheetConstructorBox'&&name==='CSSStyleSheetConstructorBox';
-	}
-	as_type(input_typeof: string): this|null {
-		switch(typeof this.value) {
-			case "bigint": return input_typeof==="bigint"? this:null;
-			case "boolean": return input_typeof==="boolean"? this:null;
-			case "function": return input_typeof==="function"? this:null;
-			case "number": return input_typeof==="number"? this:null;
-			case "object": return input_typeof==="object"? this:null;
-			case "string": return input_typeof==="string"? this:null;
-			case "symbol": return input_typeof==="symbol"? this:null;
-			case "undefined": return input_typeof==="undefined"? this:null;
-		}
 	}
 	on_get(_vm: StackVMImpl,key: string) {
 		console.log('get','CSSStyleSheetConstructorBox',key);
