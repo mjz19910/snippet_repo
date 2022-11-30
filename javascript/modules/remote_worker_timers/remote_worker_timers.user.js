@@ -32,16 +32,16 @@
 	l_log_if(LOG_LEVEL_ERROR,"Error: test");
 	l_log_if(LOG_LEVEL_NOTICE,"Notice: test");
 	l_log_if(LOG_LEVEL_DEBUG,"Debug: test");
-	class TimerTag_type_1 {
-		/**@type {1} */
-		v=1;
+	class TimerTagSingle {
+		/** @readonly */
+		value=TIMER_SINGLE;
 	}
-	class TimerTag_type_2 {
-		/**@type {2} */
-		v=2;
+	class TimerTagRepeating {
+		/** @readonly */
+		value=TIMER_REPEATING;
 	}
-	/**@typedef {TimerTag_type_1|TimerTag_type_2} TimerTag_types */
-	/**@typedef {TimerTag_types['v']} TimerTag */
+	/**@typedef {TimerTagSingle|TimerTagRepeating} TimerTagValues */
+	/**@typedef {TimerTagValues['value']} TimerTag */
 	class TimerState {
 		/**
 		 * @arg {TimerTag} tag
@@ -353,7 +353,7 @@
 			throw new Error("Verify failed in Timer.verify_timer_state");
 		}
 		/**@arg {unknown} tag @returns {asserts tag is TimerTag} */
-		verify_tag(tag) {
+		assert_valid_tag(tag) {
 			if(tag!=TIMER_SINGLE&&tag!=TIMER_REPEATING) {
 				console.assert(false,"Assertion failure in Timer.validate_tag: tag=%o is out of range");
 				console.info("Info: range is TIMER_SINGLE to TIMER_TAG_COUNT-1 (%o...%o-1)",tag,TIMER_SINGLE,TIMER_TAG_COUNT);
@@ -364,13 +364,14 @@
 		 * @param {{ type: TimerTag; }} state
 		 */
 		validate_timer_state(state) {
-			return this.verify_tag(state.type);
+			return this.assert_valid_tag(state.type);
 		}
 		/**
 		 * @arg {TimerTag} tag
 		 * @param {number} remote_id
 		 */
 		fire(tag,remote_id) {
+			if(!this.weak_worker_state) throw new Error("No worker state");
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) {
 				this.force_clear(tag,remote_id);
@@ -378,8 +379,8 @@
 			}
 			let active_state=this.activate_state(state);
 			try {
-				if(state.active) {
-					state.target_fn.apply(null,state.target_args);
+				if(active_state.active) {
+					active_state.target_fn.apply(null,state.target_args);
 				}
 			} finally {
 				if(tag===TIMER_SINGLE) {
@@ -407,20 +408,12 @@
 		set(tag,target_fn,timeout,target_args) {
 			let remote_id=this.id_generator.next();
 			let is_repeating=false;
-			this.verify_tag(tag);
+			this.assert_valid_tag(tag);
 			if(tag===TIMER_REPEATING) {
 				is_repeating=true;
 			}
 			if(timeout<0) timeout=0;
-			let state2=new TimerState(tag,is_repeating,target_fn,target_args,timeout);
-			let state={
-				active: true,
-				type: tag,
-				repeat: is_repeating,
-				target_fn,
-				target_args,
-				timeout
-			};
+			let state=new TimerState(remote_id,tag,is_repeating,target_fn,target_args,timeout);
 			this.store_state_by_remote_id(remote_id,state);
 			this.send_worker_set_message(tag,{
 				t: remote_id,
@@ -433,6 +426,7 @@
 		 * @param {{ t: any; v: any; }} obj
 		 */
 		send_worker_set_message(tag,obj) {
+			if(!this.weak_worker_state) throw 1;
 			let worker_state=this.weak_worker_state.deref();
 			if(!worker_state) {
 				console.assert(false,'tried to send_worker_message, but the gc collected the worker_state, referenced with a WeakRef (weak_worker_state)');
@@ -468,6 +462,7 @@
 		}
 		/**
 		 * @param {number} remote_id
+		 * @arg {TimerState} state
 		 */
 		store_state_by_remote_id(remote_id,state) {
 			this.m_remote_id_to_state_map.set(remote_id,state);
@@ -483,12 +478,12 @@
 		}
 		/**
 		 * @param {any} type
-		 * @param {any} data
+		 * @param {any} timer_result_msg
 		 */
-		on_result(type,data) {
-			console.log(type,data);
+		on_result(type,timer_result_msg) {
+			console.log(type,timer_result_msg);
 			debugger;
-			switch(0) {
+			switch(type) {
 				case g_timer_api.worker.clear.single: {
 					let remote_id=timer_result_msg.v;
 					this.delete_state_by_remote_id(remote_id);
@@ -504,11 +499,10 @@
 			}
 		}
 		/**
-		 * @param {any} msg_type
-		 * @param {any} msg_data
+		 * @param {any} msg
 		 */
-		on_reply(msg_type,msg_data) {
-			switch(msg_type) {
+		on_reply(msg) {
+			switch(msg.type) {
 				case g_timer_api.worker.clear.single: {
 					debugger;
 					let remote_id=msg.v;
@@ -528,7 +522,7 @@
 					// debugger;
 				} break;
 				default:
-					console.log('reply',msg_type,msg_data);
+					console.log('reply',msg);
 					console.assert(false,'on_result msg needs a handler for',msg);
 					debugger;
 			}
@@ -538,7 +532,8 @@
 		 * @param {number} remote_id
 		 */
 		force_clear(tag,remote_id) {
-			this.verify_tag(tag);
+			this.assert_valid_tag(tag);
+			if(!this.weak_worker_state) throw 1;
 			let worker_state=this.weak_worker_state.deref();
 			let state=this.get_state_by_remote_id(remote_id);
 			if(!state) throw new Error("No state for id");
@@ -560,11 +555,12 @@
 			}
 		}
 		/**
-		 * @param {any} tag
+		 * @param {TimerTag} tag
 		 * @param {number} remote_id
 		 */
 		clear(tag,remote_id) {
-			this.verify_tag(tag);
+			this.assert_valid_tag(tag);
+			if(!this.weak_worker_state) throw 1;
 			let state=this.get_state_by_remote_id(remote_id);
 			if(state?.active) {
 				let worker_state=this.weak_worker_state.deref();
@@ -592,10 +588,11 @@
 				let id=state_entry[0];
 				void id;
 				let state=state_entry[1];
-				if(state.type===TIMER_SINGLE) {
+				let active_state=this.activate_state(state);
+				if(active_state.type===TIMER_SINGLE) {
 					// if the timer might get reset when calling the function while
 					// the timer functions are reset to the underlying api
-					state.target_fn.apply(null,state.target_args);
+					active_state.target_fn.apply(null,state.target_args);
 				}
 			}
 			this.m_api_map.clear();
@@ -604,6 +601,8 @@
 	class WorkerState {
 		/**
 		 * @param {Blob} worker_code_blob
+		 * @arg {Timer} timer
+		 * @arg {PromiseExecutorHandle} executor_handle
 		 */
 		constructor(worker_code_blob,timer,executor_handle) {
 			let has_blob=false;
@@ -703,18 +702,18 @@
 			}
 		}
 		/**
-		 * @param {{ t: any; v: any; }} result
+		 * @param {{ type: any; value: any; }} result
 		 */
 		dispatch_message(result) {
 			let msg_type;
 			let msg_data=null;
 			if(typeof result==='object') {
-				msg_type=result.t;
-				msg_data=result.v;
+				msg_type=result.type;
+				msg_data=result.value;
 			} else {
 				msg_type=result;
 			}
-			switch(msg_type) {
+			switch(result.type) {
 				case WorkerReadyReply: {
 					// debugger;
 					this.on_result(msg_type,msg_data);
@@ -733,15 +732,15 @@
 				} break;
 				case ReplySetRepeating: {
 					// debugger;
-					this.timer.on_reply(msg_type,msg_data);
+					this.timer.on_reply(result);
 				} break;
 				case g_timer_api.reply.clear.single: {
 					// debugger;
-					this.timer.on_reply(msg_type,msg_data);
+					this.timer.on_reply(result);
 				} break;
 				case g_timer_api.reply.clear.repeating: {
 					// debugger;
-					this.timer.on_reply(msg_type,msg_data);
+					this.timer.on_reply(result);
 				} break;
 				case g_timer_api.worker_set_types: {
 					// debugger;
@@ -757,6 +756,7 @@
 		 * @param {any} data
 		 */
 		postMessage(data) {
+			if(!this.worker) throw 1;
 			return this.worker.postMessage(data);
 		}
 		/**
