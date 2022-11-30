@@ -141,12 +141,12 @@
 	const TimeoutClearR=206;
 	const TimeoutClearA=207;
 	const WorkerDestroyMessage=300;
-	const WorkerReadyReply=301;
-	const ReplySetSingle=302;
-	const ReplySetRepeating=303;
-	const ReplyClearSingle=304;
-	const ReplyClearRepeating=305;
-	const ReplyClearAny=306;
+	const WorkerReadyReply=302;
+	const ReplySetSingle=303;
+	const ReplySetRepeating=304;
+	const ReplyClearSingle=305;
+	const ReplyClearRepeating=306;
+	const ReplyClearAny=307;
 	const ReplyMessage1=401;
 	const ReplyMessage2=402;
 	const ReplyFromWorker=500;
@@ -165,6 +165,12 @@
 		repeating=ReplySetRepeating;
 	};
 	class ReplyTypes {
+		/**@type {typeof WorkerDestroyMessage} */
+		destroy_worker=WorkerDestroyMessage;
+		/** @readonly */
+		update_handler=301;
+		/**@type {typeof WorkerReadyReply} */
+		ready=WorkerReadyReply;
 		/**@type {typeof ReplyMessage1} */
 		msg1=ReplyMessage1;
 		/**@type {typeof ReplyMessage2} */
@@ -173,15 +179,13 @@
 		from_worker=ReplyFromWorker;
 		/**@type {typeof ReplyToWorker} */
 		to_worker=ReplyToWorker;
-		/**@type {typeof WorkerDestroyMessage} */
-		destroy_worker=WorkerDestroyMessage;
-		/**@type {typeof WorkerReadyReply} */
-		ready=WorkerReadyReply;
 		set=new ReplySetMessages;
 		clear=new ReplyClearMessages;
 	}
 	class TimeoutFireInfo {
+		/** @readonly */
 		single=TimeoutFireS;
+		/** @readonly */
 		repeating=TimeoutFireR;
 	}
 	class TimeoutSetInfo {
@@ -1045,10 +1049,10 @@
 			worker_set_types=TimerWorkerSetTypes;
 			/**@typedef {import("../../../typescript/src/vm/ReplyTypesTy.js").ReplyTypesTy} ReplyTypesTy */
 			/**@type {ReplyTypesTy|null} */
-			reply=null;
+			reply=new ReplyTypes;
 			/**@typedef {import("../../../typescript/src/vm/TimeoutFireInfoTy.js").TimeoutFireInfoTy} TimeoutFireInfoTy */
 			/**@type {TimeoutFireInfoTy|null} */
-			fire=null;
+			fire=new TimeoutFireInfo;
 			/**@typedef {import("../../../typescript/src/vm/TimeoutWorkerTypesTy.js").TimeoutWorkerTypesTy} TimeoutWorkerTypesTy */
 			/**@type {TimeoutWorkerTypesTy|null} */
 			worker=new TimeoutWorkerTypes;
