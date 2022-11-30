@@ -4,7 +4,7 @@ import {BoxMaker} from "./BoxMaker.js";
 import {FunctionConstructorFactory} from "./FunctionConstructorFactory.js";
 
 export class FunctionConstructorBox {
-	readonly type="FunctionConstructorBox";
+	readonly type="constructor_box";
 	readonly instance_type="Function";
 	readonly arguments="string[]";
 	readonly return="box";

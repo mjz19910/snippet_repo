@@ -22,6 +22,7 @@ import {Box} from "../../box/Box.js";
 import {StackVMBox} from "../../box/StackVMBox.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
+import {NewableInstancePack} from "../../box/NewableInstancePack.js";
 
 console=globalThis.console;
 
@@ -400,12 +401,27 @@ class CSSStyleSheetConstructorBoxImpl {
 	}
 }
 
+class NewableFunctionBoxImpl {
+	value: NewableInstancePack<{}>;
+	class_value: new (...a: Box[]) => {};
+	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
+		this.value=factory_value;
+		this.class_value=class_value;
+	}
+	on_get(_vm: StackVMImpl,key: string) {
+		console.log('get','newable function',this.value,key);
+	}
+	factory(...args: Box[]) {
+		return this.value(this.class_value,args);
+	}
+}
+
 class InstructionGetImpl {
 	type: 'get';
 	constructor() {
 		this.type='get';
 	}
-	on_get(vm: StackVMImpl,value_box: Box,_key: string|number) {
+	on_get(vm: StackVMImpl,value_box: Box,key: string|number) {
 		switch(value_box.type) {
 			case 'array_box': {
 				/* if(typeof key==='number') {
@@ -424,14 +440,12 @@ class InstructionGetImpl {
 					case 'CSSStyleSheet': {
 						if(typeof key!='string') throw new Error("Bad");
 						new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key);
-						return;
-					}
+					} break;
 					case "Function": {
 
 					} break;
 					case null: {
 						new NewableFunctionBoxImpl(value_box.value,value_box.class_value);
-						return;
 					} break;
 				}
 				if(return_value === null) {
