@@ -431,8 +431,7 @@
 		}
 		/**@arg {number} remote_id */
 		get_state_by_remote_id(remote_id) {
-			let state=this.m_remote_id_to_state_map.get(remote_id);
-			return state;
+			return this.m_remote_id_to_state_map.get(remote_id);
 		}
 		/**
 		 * @param {number} remote_id
