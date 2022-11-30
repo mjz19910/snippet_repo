@@ -200,19 +200,17 @@
 		repeating=TimeoutSetR;
 	}
 	class TimeoutClearInfo {
-		/**@type {TimeoutClearS} */
+		/** @readonly */
 		single=TimeoutClearS;
-		/**@type {TimeoutClearR} */
+		/** @readonly */
 		repeating=TimeoutClearR;
-		/**@type {TimeoutClearA} */
+		/** @readonly */
 		any=TimeoutClearA;
 	}
 	class WorkerFireReplyTypes {
-		// .worker.reply.fire.single
-		/**@type {TimeoutSingleReply} */
+		/** @readonly */
 		single=TimeoutSingleReply;
-		// .worker.reply.fire.repeating
-		/**@type {TimeoutRepeatingReply} */
+		/** @readonly */
 		repeating=TimeoutRepeatingReply;
 	}
 	class WorkerReplyTypes {
