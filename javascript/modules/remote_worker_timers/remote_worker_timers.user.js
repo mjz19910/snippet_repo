@@ -628,19 +628,22 @@
 			this.worker_code=worker_code_blob;
 			this.timer=timer;
 			this.executor_handle=executor_handle;
-			this.worker=null;
-			this.worker_url=null;
 			this.failed=false;
 			timer.set_worker_state(this);
 			WorkerState.set_global_state(this);
+			/** @type {string|null} */
+			this.worker_url=URL.createObjectURL(this.worker_code);
+			/** @type {Worker|null} */
+			this.worker=new Worker(this.worker_url);
 		}
 		init() {
+			if(!this.worker) {
+				return;
+			}
 			if(this.connected||this.valid) {
 				this.destroy();
 			}
 			this.connected=false;
-			this.worker_url=URL.createObjectURL(this.worker_code);
-			this.worker=new Worker(this.worker_url);
 			this.worker.onmessage=function onmessage(e) {
 				let worker_state=WorkerState.get_global_state();
 				var msg=e.data;
