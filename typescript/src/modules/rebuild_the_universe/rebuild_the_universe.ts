@@ -27,6 +27,10 @@ import {EmptyArrayBox} from "../../box/EmptyArrayBox.js";
 import {ArrayBox} from "../../box/ArrayBox.js";
 import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
 import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
+import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
+import {FunctionBox} from "../../box/FunctionBox.js";
+import {BoxMaker} from "../../box/BoxMaker.js";
+import {FunctionConstructorFactory} from "../../box/FunctionConstructorFactory.js";
 
 console=globalThis.console;
 
@@ -417,6 +421,62 @@ class NewableFunctionBoxImpl {
 	}
 	factory(...args: Box[]) {
 		return this.value(this.class_value,args);
+	}
+}
+
+class FunctionConstructorFactoryImpl implements FunctionConstructorFactory {}
+
+class BoxMakerImpl<T,U> implements BoxMaker<T,U> {}
+
+class FunctionBoxImpl implements FunctionBox {}
+
+class FunctionConstructorBoxImpl implements FunctionConstructorBox {
+	readonly type="constructor_box";
+	readonly instance_type="Function";
+	readonly arguments="string[]";
+	readonly return="box";
+	readonly instance_factory: FunctionConstructorFactoryImpl;
+	readonly value: FunctionConstructor;
+	readonly box_maker: BoxMakerImpl<string,FunctionBoxImpl>;
+	constructor(
+		value: FunctionConstructor,
+		instance_factory: FunctionConstructorFactoryImpl,
+		box_maker: BoxMakerImpl<string,FunctionBoxImpl>
+	) {
+		this.value=value;
+		this.instance_factory=instance_factory;
+		this.box_maker=box_maker;
+	}
+	static from_box(value: FunctionConstructorBox) {
+		return new this(value.value,value.instance_factory,value.box_maker);
+	}
+	on_get(vm: StackVM,key: string) {
+		switch(key) {
+			case 'name':
+			case 'prototype':
+			case 'length': return this.value[key];
+			default: {
+				let return_value:{value:any}|null=null;
+				Object.keys(Object.getOwnPropertyDescriptors(this.value)).forEach(e => {
+					if(e===key) {
+						console.log("case needed for key '"+e+"'");
+						return_value={
+							value:(this.value as any)[e]
+						};
+					}
+				});
+				return return_value;
+			}
+		}
+	}
+	verify_arguments(...boxes: Box[]) {
+		if(boxes.length===0) {
+			return true;
+		}
+		if(boxes.length===1&&boxes[0].type==="string") {
+			return true;
+		}
+		return false;
 	}
 }
 
