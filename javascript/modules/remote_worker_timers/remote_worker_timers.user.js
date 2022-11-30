@@ -131,7 +131,6 @@
 	const TIMER_SINGLE=1;
 	const TIMER_REPEATING=2;
 	const TIMER_TAG_COUNT=3;
-	const WorkerAsyncMessage=1;
 	const TimeoutFireS=101;
 	const TimeoutFireR=102;
 	const WorkerUpdateMessageHandler=201;
@@ -154,6 +153,7 @@
 	const ReplyToWorker=600;
 	const TimeoutSingleReply=700;
 	const TimeoutRepeatingReply=701;
+	const WorkerAsyncMessage=801;
 	const TimerWorkerSetTypes=1001;
 	class ReplyClearMessages {
 		single=ReplyClearSingle;
@@ -989,7 +989,7 @@
 			if(typeof value!=='object') throw 1;
 			if(value===null) throw 1;
 		}
-		/** @template {{[x: string]: any}} T @arg {T} value @returns {{[U in keyof T]: T[U]}} */
+		/** @template T @arg {T} value @returns {{[U in keyof T]: T[U]}} */
 		function decay_to_object(value) {
 			return value;
 		}
@@ -1126,7 +1126,7 @@
 				repeating: "clearInterval"
 			};
 			/**
-			 * @param {{ async: 1; reply: any; fire: any; worker: any; }} types
+			 * @param {{ async: typeof WorkerAsyncMessage; reply: any; fire: any; worker: any; }} types
 			 */
 			on_set_types(types) {
 				this.async=types.async;
