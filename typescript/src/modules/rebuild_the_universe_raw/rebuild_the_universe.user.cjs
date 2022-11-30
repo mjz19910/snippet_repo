@@ -16,8 +16,8 @@
 // @match		https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real
 // @run-at		document-start
 // @grant		none
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/javascript/modules/DebugAPI_raw/DebugAPI.user.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/javascript/modules/DebugAPI_raw/DebugAPI.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/src/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.meta.cjs
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/src/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.user.cjs
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
