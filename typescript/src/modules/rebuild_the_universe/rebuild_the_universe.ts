@@ -374,32 +374,36 @@ class InstructionGetImpl {
 					this.array_box_handle_num(value_box,key_alt,vm);
 					return;
 				} */
-			}
+			} break;
 			case 'constructor_box': {
+				let return_value=null;
 				/* switch(value_box.instance_type) {
 					case 'CSSStyleSheet': {
 						if(typeof key!='string') throw new Error("Bad");
 						new CSSStyleSheetConstructorBoxImpl(value_box.value).on_get(vm,key);
 						return;
 					}
+					case "Function": {
+
+					} break;
 					case null: {
 						new NewableFunctionBoxImpl(value_box.value,value_box.class_value);
 						return;
-					}
+					} break;
 				} */
-				throw new Error("TODO");
+				if(return_value === null) {
+					throw new Error("TODO");
+				}
+				return return_value;
 			};
 			default: console.log('on_get no handler',value_box.type);
 		}
 	}
 	run(vm: StackVMImpl,_ins: InstructionMap[this['type']]) {
-		let get_key=vm.stack.pop();
-		let value_box=vm.stack.pop();
-		if(!value_box) throw new Error("Invalid");
-		if(typeof get_key!='string') throw new Error("Invalid");
-		if(typeof value_box!='object') throw new Error("Invalid");
-		this.on_get(vm,value_box,get_key);
-		throw new Error("Update types");
+		let get_key=vm.pop();
+		let value_box=vm.pop();
+		if(get_key.type!='string') throw new Error("Invalid");
+		this.on_get(vm,value_box,get_key.value);
 	}
 }
 
