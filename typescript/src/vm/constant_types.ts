@@ -4,7 +4,14 @@ import {
 } from "../constants.js";
 import {ReplyClearMessages} from "./ReplyClearMessages.js";
 import {ReplySetMessages} from "./ReplySetMessages.js";
-import {TimeoutClearInfoTy} from "./TimeoutClearInfoTy.js";
+import {TimeoutClearATy} from "./TimeoutClearATy.js";
+import {TimeoutClearRTy} from "./TimeoutClearRTy.js";
+import {TimeoutClearSTy} from "./TimeoutClearSTy.js";
+export type TimeoutClearInfoTy={
+	single: TimeoutClearSTy;
+	repeating: TimeoutClearRTy;
+	any: TimeoutClearATy;
+};
 import {TimeoutMessageReplyTy} from "./TimeoutMessageReplyTy.js";
 import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy.js";
 import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy.js";
