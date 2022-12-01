@@ -134,12 +134,12 @@
 	const TimeoutFireSingle=101;
 	const TimeoutFireRepeating=102;
 	const WorkerUpdateMessageHandler=201;
-	const TimeoutMessageR=202;
-	const TimeoutSetS=203;
-	const TimeoutSetR=204;
+	const TimeoutMessageReady=202;
+	const TimeoutSetSingle=203;
+	const TimeoutSetRepeating=204;
 	const TimeoutClearSingle=205;
 	const TimeoutClearRepeating=206;
-	const TimeoutClearA=207;
+	const TimeoutClearAny=207;
 	const WorkerDestroyType=300;
 	const WorkerReadyReply=302;
 	const ReplySetSingle=303;
@@ -195,9 +195,9 @@
 	}
 	class TimeoutSetInfo {
 		/** @readonly */
-		single=TimeoutSetS;
+		single=TimeoutSetSingle;
 		/** @readonly */
-		repeating=TimeoutSetR;
+		repeating=TimeoutSetRepeating;
 	}
 	class TimeoutClearInfo {
 		/** @readonly */
@@ -205,7 +205,7 @@
 		/** @readonly */
 		repeating=TimeoutClearRepeating;
 		/** @readonly */
-		any=TimeoutClearA;
+		any=TimeoutClearAny;
 	}
 	class WorkerFireReplyTypes {
 		/** @readonly */
@@ -221,7 +221,7 @@
 		/** @readonly */
 		update_message_handler=WorkerUpdateMessageHandler;
 		/** @readonly */
-		ready=TimeoutMessageR;
+		ready=TimeoutMessageReady;
 		set=new TimeoutSetInfo;
 		clear=new TimeoutClearInfo;
 		/** @readonly */
@@ -585,19 +585,19 @@
 		value=0;
 	}
 	class Message_202 {
-		/** @readonly @type {202} */
-		type=202;
+		/** @readonly */
+		type=TimeoutMessageReady;
 		remote_id=0;
 	}
 	class Message_203 {
 		/** @readonly */
-		type=203;
+		type=TimeoutSetSingle;
 		remote_id=0;
 		timeout=0;
 	}
 	class Message_204 {
 		/** @readonly */
-		type=204;
+		type=TimeoutSetRepeating;
 		remote_id=0;
 		timeout=0;
 	}
