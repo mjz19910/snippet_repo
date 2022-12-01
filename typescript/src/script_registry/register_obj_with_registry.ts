@@ -8,9 +8,9 @@ import {scripts_tokens} from "./scripts_tokens.js";
 import {WeakRefWithKey} from "./WeakRefWithKey.js";
 import {Counter} from "./Counter.js";
 
-export let object_id_counter=new Counter;
+export let target_object_id_counter=new Counter;
 export let weak_target_object_arr: (WeakFinalInfo|null)[]=[];
-export let unregister_arr: {symbol: symbol;}[]=[];
+export let unregister_target_object_arr: {symbol: symbol;}[]=[];
 
 export function register_obj_with_registry<T extends object>(target: T) {
 	let target_id;
@@ -30,7 +30,7 @@ export function register_obj_with_registry<T extends object>(target: T) {
 		let unregister_token={
 			symbol: obj_symbol
 		};
-		unregister_arr.push(unregister_token);
+		unregister_target_object_arr.push(unregister_token);
 		script_registry.register(target,held_value,unregister_token);
 		console.log("Called register_obj with non-script",target);
 		return;
