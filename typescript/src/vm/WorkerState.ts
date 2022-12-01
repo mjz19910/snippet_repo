@@ -44,26 +44,15 @@ export class WorkerState {
 		this.flags.set('rejected',false);
 		this.flags.set('valid',false);
 		this.flags.set('connected',false);
-		this.flags.set('failed',false);
 		this.worker_code=worker_code_blob;
 		this.timer=timer;
 		timer.set_worker_state(this);
 		this.executor_handle=executor_handle;
 		this.worker=null;
 		this.worker_url=null;
-	}
-	set_failed(has_failed: boolean) {
-		this.flags.set('failed',has_failed);
-	}
-	init() {
-		if(this.flags.get('connected')||this.flags.get('valid')) {
-			this.destroy();
-		}
 		this.flags.set('connected',false);
 		let weak_worker_state: WeakRef<WorkerState>=new WeakRef(this);
 		this.worker_url=URL.createObjectURL(this.worker_code);
-		if(this.flags.get('failed'))
-			return;
 		this.worker=new Worker(this.worker_url);
 		this.worker.onmessage=function onmessage(e: MessageEvent<WorkerReplyTypes>) {
 			var msg=e.data;
