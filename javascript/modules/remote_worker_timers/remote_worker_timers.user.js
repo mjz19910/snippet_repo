@@ -479,16 +479,16 @@
 			}
 		}
 		/**
-		 * @param {any} msg
+		 * @param {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|ReplySetRepeatingMsg|ReplyClearSingleMsg|ReplyClearRepeatingMsg} msg
 		 */
 		on_reply(msg) {
 			switch(msg.type) {
 				case g_timer_api.worker.clear.single: {
-					let remote_id=msg.value;
+					let remote_id=msg.remote_id;
 					this.delete_state_by_remote_id(remote_id);
 				} break;
 				case g_timer_api.worker.clear.repeating: {
-					let remote_id=msg.value;
+					let remote_id=msg.remote_id;
 					this.delete_state_by_remote_id(remote_id);
 				} break;
 				case g_timer_api.reply.clear.single: break;
@@ -852,9 +852,9 @@
 			}
 		}
 		/**
-		 * @template {TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} T
+		 * @template {{}|{for_worker_state: boolean}} T
 		 * @param {T} msg
-		 * @returns {msg is {for_worker_state:any}}
+		 * @returns {msg is {for_worker_state: boolean}}
 		 */
 		is_message_for(msg) {
 			return 'for_worker_state' in msg&&msg.for_worker_state;
@@ -882,8 +882,8 @@
 				return;
 			}
 			switch(msg.type) {
-				case ReplyMessage2: {
-					this.timer.on_result(msg);
+				case 205: {
+					this.timer.on_reply(msg);
 				} break;
 				case ReplySetRepeating: {
 					this.timer.on_reply(msg);
@@ -893,6 +893,9 @@
 				} break;
 				case g_timer_api.reply.clear.repeating: {
 					this.timer.on_reply(msg);
+				} break;
+				case ReplyMessage2: {
+					this.timer.on_result(msg);
 				} break;
 				default: {
 					console.assert(false,"unhandled result",msg);
