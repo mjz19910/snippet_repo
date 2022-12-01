@@ -1,14 +1,17 @@
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {MessageTimeoutSetRepeating_OLD} from "./MessageTimeoutSetR.js";
-import {TimeoutSingleReplyMessage} from "./TimeoutSingleReplyMessage.js";
-import {MessageTimeoutClearAny} from "./MessageTimeoutClearA.js";
-import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
-import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
-import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js";
+import {TimeoutSingleReplyMessage_OLD} from "./TimeoutSingleReplyMessage.js";
+import {MessageTimeoutClearAny_OLD} from "./MessageTimeoutClearA.js";
+import {TimeoutClearRepeatingMessageT_OLD} from "./MessageTimeoutClearR.js";
+import {TimeoutClearSingleMessageT_OLD} from "./MessageTimeoutClearS.js";
+import {TimeoutFireSingleMessageT_OLD} from "./MessageTimeoutFireS.js";
 import {Timer} from "./Timer.js";
-import {ReplyFromWorker,ReplyToWorkerState,ReplyToLocalTimer,ReplySetRepeating,ReplySetSingle,TimeoutClearRepeating,TimeoutClearSingle,WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
+import {
+	ReplyFromWorker,ReplyToWorkerState,ReplyToLocalTimer,ReplySetRepeating,ReplySetSingle,
+	TimeoutClearRepeating,TimeoutClearSingle,
+	WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply
+} from "../constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
-import {DispatchMessageType, MessageTimeoutSetSingleT, TypesForWorkerReplies} from "./constant_types.js";
+import {DispatchMessageType,MessageTimeoutSetSingleT,TimeoutSetRepeatingMessageT,TypesForWorkerReplies} from "./constant_types.js";
 
 declare global {
 	interface Window {
@@ -138,9 +141,17 @@ export class WorkerState {
 			}
 		}
 	}
-	postMessage(data: MessageTimeoutFireS|MessageTimeoutClearAny|TimeoutSingleReplyMessage|MessageTimeoutClearS|MessageTimeoutSetSingleT|MessageTimeoutSetRepeating_OLD|MessageTimeoutClearR) {
-		if(this.worker)
-			return this.worker.postMessage(data);
+	postMessage(
+		data: TimeoutFireSingleMessageT_OLD|
+			MessageTimeoutClearAny_OLD|
+			TimeoutSingleReplyMessage_OLD|
+			TimeoutClearSingleMessageT_OLD|
+			MessageTimeoutSetSingleT|
+			TimeoutSetRepeatingMessageT|
+			TimeoutClearRepeatingMessageT_OLD
+	) {
+		if(!this.worker) return;
+		return this.worker.postMessage(data);
 	}
 	static has_old_global_state_value(worker_state_value: WorkerState) {
 		return this.has_global_state()&&!this.equals_global_state(worker_state_value);

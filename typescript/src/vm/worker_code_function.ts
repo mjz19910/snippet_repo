@@ -1,6 +1,6 @@
 import {MessageTimeoutSetSingleT, ReplyToWorkerT, TimeoutClearRepeatingT, TimeoutClearSingleT, TimeoutMessageReplyT, TimeoutRepeatingReplyT, TimeoutSingleReplyT, WorkerUpdateMessageHandlerT} from "./constant_types.js";
-import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
-import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
+import {TimeoutClearRepeatingMessageT_OLD} from "./MessageTimeoutClearR.js";
+import {TimeoutClearSingleMessageT_OLD} from "./MessageTimeoutClearS.js";
 import {MessageTimeoutSetRepeating_OLD} from "./MessageTimeoutSetR.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
 import {TimerApi} from "./TimerApi.js";
@@ -31,7 +31,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			if(!this.m_timer) throw new Error("Bad");
 			return this.m_timer.set(tag,remote_id,timeout);
 		}
-		clear(msg: MessageTimeoutClearS|MessageTimeoutClearR) {
+		clear(msg: TimeoutClearSingleMessageT_OLD|TimeoutClearRepeatingMessageT_OLD) {
 			if(this.m_timer)
 				return this.m_timer.do_clear(msg);
 		}
@@ -171,7 +171,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			}
 			return null;
 		}
-		do_clear(msg: MessageTimeoutClearS|MessageTimeoutClearR) {
+		do_clear(msg: TimeoutClearSingleMessageT_OLD|TimeoutClearRepeatingMessageT_OLD) {
 			let remote_id=msg.v;
 			let maybe_local_id=this.clear(remote_id);
 			if(!message_types)
@@ -241,7 +241,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		t: TimeoutMessageReplyT;
 		v: never;
 	};
-	type WorkerMessageType=MessageTimeoutClearR|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetSingleT|MessageTimeoutSetRepeating_OLD|MessageTimeoutClearS;
+	type WorkerMessageType=TimeoutClearRepeatingMessageT_OLD|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetSingleT|MessageTimeoutSetRepeating_OLD|TimeoutClearSingleMessageT_OLD;
 	type UpdateMessageHandlerType={
 		init: string;
 		onmessage: string;
