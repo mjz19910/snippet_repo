@@ -2,32 +2,21 @@ import {
 	ReplyClearAny,
 	ReplyClearRepeating,
 	ReplyClearSingle,
-	ReplyFromWorker,
-	ReplyToWorkerState,
-	ReplyToLocalTimer,
-	ReplySetRepeating,
-	ReplySetSingle,
-	ReplyToWorker,
-	TimeoutClearAny,
+	ReplyFromWorker,ReplySetRepeating,
+	ReplySetSingle,ReplyToLocalTimer,ReplyToWorker,ReplyToWorkerState,TimeoutClearAny,
 	TimeoutClearRepeating,
-	TimeoutClearSingle,
-	TimeoutFireRepeating,
+	TimeoutClearSingle,TimeoutClearStringRepeating,TimeoutClearStringSingle,TimeoutFireRepeating,
 	TimeoutFireSingle,
 	TimeoutMessageReady,
 	TimeoutRepeatingReply,
 	TimeoutSetRepeating,
-	TimeoutSetSingle,
-	TimeoutSetTypes,
+	TimeoutSetSingle,TimeoutSetStringRepeating,TimeoutSetStringSingle,TimeoutSetTypes,
 	TimeoutSingleReply,
 	WorkerAsyncMessage,
 	WorkerDestroyType,
 	WorkerReadyReply,
 	WorkerUpdateMessageHandler,
-	WorkerUpdateMessageHandlerReply,
-	TimeoutClearStringSingle,
-	TimeoutClearStringRepeating,
-	TimeoutSetStringSingle,
-	TimeoutSetStringRepeating
+	WorkerUpdateMessageHandlerReply
 } from "./constants.js";
 
 export type TimeoutMessageReadyT=typeof TimeoutMessageReady;
@@ -216,6 +205,11 @@ export type WorkerSendTypes=
 	TimeoutClearSingleMessageT|
 	TimeoutClearRepeatingMessageT;
 
+export type TimeoutSetStringsT={
+	single: typeof TimeoutSetStringSingle;
+	repeating: typeof TimeoutSetStringRepeating;
+};
+
 export type TimeoutClearStringsT={
 	single: typeof TimeoutClearStringSingle;
 	repeating: typeof TimeoutClearStringRepeating;
@@ -229,11 +223,6 @@ export type SetSingleMessageDataT={
 export type TimeoutSetSingleMessageT={
 	t: TimeoutSetSingleT;
 	v: SetSingleMessageDataT;
-};
-
-export type TimeoutSetStringsT={
-	single: typeof TimeoutSetStringSingle;
-	repeating: typeof TimeoutSetStringRepeating;
 };
 
 export type SetRepeatingMessageDataT={
