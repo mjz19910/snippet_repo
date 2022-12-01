@@ -1183,13 +1183,12 @@
 			if(!g_timer_api.reply) throw new Error("Invalid");
 			let msg=e.data;
 			switch(msg.type) {
-				case g_timer_api.reply.to_worker/*reply*/: {
+				case g_timer_api.reply.to_worker: {
 					let result=msg.value;
 					console.assert(false,"unhandled result on remote worker",result);
 					debugger;
 				} break;
-				case g_timer_api.worker.ready/**/: {
-					// debugger;
+				case g_timer_api.worker.ready: {
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
 						source_type: msg.type,
