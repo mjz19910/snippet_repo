@@ -27,61 +27,61 @@ import {
 	TimeoutClearStringSingle,
 	TimeoutClearStringRepeating
 } from "../constants.js";
-export type ReplyClearRepeatingMessage={
+export type ReplyClearRepeatingMessageT={
 	t: ReplyClearRepeatingT;
 	v: number,
 };
 
-export type MessageReplyClearSingle={
+export type ReplyClearSingleMessageT={
 	t: ReplyClearSingleT;
 	v: number;
 };
-export type MessageReplySetRepeating={
+export type ReplySetRepeatingMessageT={
 	t: ReplySetRepeatingT;
 	v: number;
 };
 
-export type MessageReplySetSingle={
+export type ReplySetSingleMessageT={
 	t: ReplySetSingleT;
 	v: number;
 };
 
-export type MessageTimeoutClearR={
+export type TimeoutClearRepeatingMessageT={
 	t: TimeoutClearRepeatingT;
 	v: number;
 };
 
-export type MessageTimeoutClearS={
+export type TimeoutClearSingleMessageT={
 	t: TimeoutClearSingleT;
 	v: number;
 };
 
-export type MessageTimeoutFireS={
+export type TimeoutFireSingleMessageT={
 	t: TimeoutFireSingleT;
 	v: number;
 };
 
-export type MessageWorkerReadyReply={
+export type ReplyWorkerReadyMessageT={
 	t: WorkerReadyReplyT;
 	v: TimeoutMessageReplyT;
 };
 
-export type MessageWorkerUpdateMessageHandlerReply={
+export type MessageWorkerUpdateMessageHandlerReplyT={
 	t: WorkerUpdateMessageHandlerReplyT;
 	v: WorkerUpdateMessageHandlerT;
 };
 
-export type ReplyToWorkerStateMessage={
+export type ReplyToWorkerStateMessageT={
 	t: ReplyToWorkerStateT;
 	v: number;
 };
 
-export type ReplyToLocalTimerMessage={
+export type ReplyToLocalTimerMessageT={
 	t: ReplyToLocalTimerT;
 	v: number;
 };
 
-export type WorkerDestroyTypeMessage={
+export type WorkerDestroyTypeMessageT={
 	t: WorkerDestroyTypeT;
 	v: number;
 };
@@ -185,24 +185,24 @@ export type ReplyFromWorkerMessage={
 };
 
 export type DispatchMessageType=
-	MessageTimeoutClearR|
-	MessageTimeoutClearS|
-	ReplyClearRepeatingMessage|
-	MessageReplyClearSingle|
-	MessageReplySetRepeating|
-	MessageReplySetSingle|
-	MessageWorkerReadyReply|
-	MessageWorkerUpdateMessageHandlerReply|
-	ReplyToWorkerStateMessage|
-	ReplyToLocalTimerMessage|
+	TimeoutClearRepeatingMessageT|
+	TimeoutClearSingleMessageT|
+	ReplyClearRepeatingMessageT|
+	ReplyClearSingleMessageT|
+	ReplySetRepeatingMessageT|
+	ReplySetSingleMessageT|
+	ReplyWorkerReadyMessageT|
+	MessageWorkerUpdateMessageHandlerReplyT|
+	ReplyToWorkerStateMessageT|
+	ReplyToLocalTimerMessageT|
 	MessageReplyFromWorkerData;
 
 export type TypesForWorkerReplies=
 	ReplyFromWorkerMessage|
-	ReplyToLocalTimerMessage|
-	ReplyToWorkerStateMessage|
-	WorkerDestroyTypeMessage|
-	MessageTimeoutFireS;
+	ReplyToLocalTimerMessageT|
+	ReplyToWorkerStateMessageT|
+	WorkerDestroyTypeMessageT|
+	TimeoutFireSingleMessageT;
 
 export type TimeoutClearStringsT={
 	single: typeof TimeoutClearStringSingle;
