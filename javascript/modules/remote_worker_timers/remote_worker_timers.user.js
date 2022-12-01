@@ -456,7 +456,7 @@
 		remote_id_to_state_entries() {
 			return this.m_remote_id_to_state_map.entries();
 		}
-		/** @arg {any} msg */
+		/** @arg {ReplyMessageType2} msg */
 		on_result(msg) {
 			console.log(msg);
 			switch(msg.type) {
@@ -561,6 +561,13 @@
 			this.m_api_map.clear();
 		}
 	}
+	class RemoteWorkerTypes {
+		/** @readonly */
+		async=WorkerAsyncMessage;
+		reply=new ReplyTypes;
+		fire=new TimeoutFireInfo;
+		worker=new TimeoutWorkerTypes;
+	}
 	class TimeoutFireSMsg {
 		/** @readonly */
 		type=TimeoutFireS;
@@ -610,13 +617,6 @@
 		/** @readonly */
 		type=ReplyClearRepeating;
 		value={};
-	}
-	class RemoteWorkerTypes {
-		/** @readonly */
-		async=WorkerAsyncMessage;
-		reply=new ReplyTypes;
-		fire=new TimeoutFireInfo;
-		worker=new TimeoutWorkerTypes;
 	}
 	class TimerWorkerSetTypesMsg {
 		/** @readonly */
