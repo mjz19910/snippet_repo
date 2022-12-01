@@ -614,7 +614,6 @@
 	class WorkerDestroyTypeMsg {
 		/** @readonly */
 		type=WorkerDestroyType;
-		value={};
 	}
 	class WorkerReadyReplyMsg {
 		/** @readonly */
@@ -988,6 +987,10 @@
 			this.valid=false;
 		}
 	}
+	/** @arg {typeof WorkerStateMessageV} msg */
+	function typed_post_message(msg) {
+		postMessage(msg);
+	}
 	/**
 	 * @param {(arg0: null) => void} executor_accept
 	 * @param {(arg0: Error) => void} executor_reject
@@ -997,7 +1000,7 @@
 		/** @type {any} */
 		let any_global=globalThis;
 		if(any_global.remote_worker_state) {
-			postMessage({t: WorkerDestroyType});
+			typed_post_message({type: WorkerDestroyType});
 			executor_accept(null);
 			return;
 		}
