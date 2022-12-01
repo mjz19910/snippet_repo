@@ -3,7 +3,6 @@ import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
 import {TimeoutSingleReplyMessage} from "./TimeoutSingleReplyMessage.js";
 import {MessageTimeoutClearA} from "./MessageTimeoutClearA.js";
-import {DispatchMessageType} from "./DispatchMessageType.js";
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
 import {TypesForWorkerReplies} from "./TypesForWorkerReplies.js";
@@ -11,6 +10,7 @@ import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js";
 import {Timer} from "./Timer.js";
 import {ReplyFromWorker,ReplyToWorkerState,ReplyToLocalTimer,ReplySetRepeating,ReplySetSingle,TimeoutClearRepeating,TimeoutClearSingle,WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
+import {DispatchMessageType} from "./constant_types.js";
 
 declare global {
 	interface Window {

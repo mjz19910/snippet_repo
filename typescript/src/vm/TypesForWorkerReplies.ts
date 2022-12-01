@@ -1,12 +1,11 @@
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js";
 import {WorkerDestroyTypeMessage} from "./WorkerDestroyTypeMessage.js";
-import {ReplyMessage1} from "./ReplyMessage1.js";
-import {ReplyMessage2} from "./ReplyMessage2.js";
 import {ReplyFromWorkerMessage} from "./MessageReplyFromWorker.js";
+import {ReplyToLocalTimerT, ReplyToWorkerStateT} from "./constant_types.js";
 
 export type TypesForWorkerReplies=
 	ReplyFromWorkerMessage|
-	ReplyMessage2|
-	ReplyMessage1|
+	ReplyToLocalTimerT|
+	ReplyToWorkerStateT|
 	WorkerDestroyTypeMessage|
 	MessageTimeoutFireS;

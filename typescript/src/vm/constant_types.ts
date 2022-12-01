@@ -25,18 +25,65 @@ import {
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
 } from "../constants.js";
-import {ReplyClearRepeatingMessage} from "./MessageReplyClearRepeating.js";
-import {MessageReplyClearSingle} from "./MessageReplyClearSingle.js";
-import {MessageReplySetRepeating} from "./MessageReplySetRepeating.js";
-import {MessageReplySetSingle} from "./MessageReplySetSingle.js";
-import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
-import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
-import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js";
-import {MessageWorkerReadyReply} from "./MessageWorkerReadyReply.js";
-import {MessageWorkerUpdateMessageHandlerReply} from "./MessageWorkerUpdateMessageHandlerReply.js";
-import {ReplyMessage1} from "./ReplyMessage1.js";
-import {ReplyMessage2} from "./ReplyMessage2.js";
-import {WorkerDestroyTypeMessage} from "./WorkerDestroyTypeMessage.js";
+export type ReplyClearRepeatingMessage={
+	t: ReplyClearRepeatingT;
+	v: number,
+};
+
+export type MessageReplyClearSingle={
+	t: ReplyClearSingleT;
+	v: number;
+};
+export type MessageReplySetRepeating={
+	t: ReplySetRepeatingT;
+	v: number;
+};
+
+export type MessageReplySetSingle={
+	t: ReplySetSingleT;
+	v: number;
+};
+
+export type MessageTimeoutClearR={
+	t: TimeoutClearRepeatingT;
+	v: number;
+};
+
+export type MessageTimeoutClearS={
+	t: TimeoutClearSingleT;
+	v: number;
+};
+
+export type MessageTimeoutFireS={
+	t: TimeoutFireSingleT;
+	v: number;
+};
+
+export type MessageWorkerReadyReply={
+	t: WorkerReadyReplyT;
+	v: TimeoutMessageReplyT;
+};
+
+export type MessageWorkerUpdateMessageHandlerReply={
+	t: WorkerUpdateMessageHandlerReplyT;
+	v: WorkerUpdateMessageHandlerT;
+};
+
+export type ReplyMessage1={
+	t: ReplyToWorkerStateT;
+	v: number;
+};
+
+export type ReplyMessage2={
+	t: ReplyToLocalTimerT;
+	v: number;
+};
+
+export type WorkerDestroyTypeMessage={
+	t: WorkerDestroyTypeT;
+	v: number
+};
+
 export type ReplySetSingleT=typeof ReplySetSingle;
 export type ReplySetRepeatingT=typeof ReplySetRepeating;
 export type ReplySetTypesT={
