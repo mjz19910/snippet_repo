@@ -679,6 +679,7 @@
 	class TimerWorkerSetTypesMsg {
 		/** @readonly */
 		type=TimerWorkerSetTypes;
+		for_worker_state=true;
 		worker_types=new RemoteWorkerTypes;
 	}
 	/**
@@ -882,19 +883,14 @@
 					case ReplyMessage1: {
 						this.on_result(msg);
 					} break;
+					case g_timer_api.worker_set_types: {
+						this.on_result(msg);
+					} break;
 					default: return;
 				}
+				return;
 			}
 			switch(msg.type) {
-				case WorkerReadyReply: {
-					this.on_result(msg);
-				} break;
-				case ReplySetSingle: {
-					this.on_result(msg);
-				} break;
-				case ReplyMessage1: {
-					this.on_result(msg);
-				} break;
 				case ReplyMessage2: {
 					this.timer.on_result(msg);
 				} break;
@@ -906,9 +902,6 @@
 				} break;
 				case g_timer_api.reply.clear.repeating: {
 					this.timer.on_reply(msg);
-				} break;
-				case g_timer_api.worker_set_types: {
-					this.on_result_ex(msg);
 				} break;
 				default: {
 					console.assert(false,"unhandled result",msg);
