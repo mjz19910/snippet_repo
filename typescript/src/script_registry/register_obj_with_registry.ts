@@ -22,6 +22,7 @@ class GCStorage<T extends {}> {
 		let held_value: HeldType={
 			type: 'held',
 			scope: "object",
+			storage_id:this.storage_id,
 			id: target_id,
 			key: obj_symbol
 		};
@@ -48,6 +49,8 @@ export let weak_target_object_arr: (WeakRefTo<{}>|null)[]=[];
 export let unregister_target_object_arr: {symbol: symbol;}[]=[];
 
 export let target_object_storage=new GCStorage<{}>();
+
+export let target_script_storage=new GCStorage<HTMLOrSVGScriptElement>();
 
 export function register_obj_with_registry<T extends {}>(target: T) {
 	let cur_storage;
