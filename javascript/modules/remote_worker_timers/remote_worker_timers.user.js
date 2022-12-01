@@ -650,6 +650,11 @@
 	/** @extends {EmptyStateMessage} */
 	class WorkerStateMessage {
 		/** @arg {WorkerStateMessage} msg */
+		static as_timeout_fire(msg) {
+			assert_as_instance(msg,TimeoutFireSMsg);
+			return msg;
+		}
+		/** @arg {WorkerStateMessage} msg */
 		static as_reply_type_1(msg) {
 			assert_as_instance(msg,ReplyMessageType1);
 			return msg;
@@ -665,11 +670,6 @@
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
-		static as_timeout_fire(msg) {
-			assert_as_instance(msg,TimeoutFireSMsg);
-			return msg;
-		}
-		/** @arg {WorkerStateMessage} msg */
 		static as_timer_fire(msg) {
 			assert_as_instance(msg,TimeoutFireRMsg);
 			return msg;
@@ -680,6 +680,7 @@
 		value=null;
 		static as_any_of() {
 			let fv=false;
+			if(fv) {return new TimeoutFireSMsg;}
 			if(fv) {return new ReplyMessageType1;}
 			if(fv) {return new ReplyMessageType2;}
 			if(fv) {return new TimeoutFireRMsg;}
