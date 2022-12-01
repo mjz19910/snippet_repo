@@ -1,15 +1,13 @@
 import {ReplyClearSingle,ReplySetRepeating,ReplySetSingle,TIMER_REPEATING,TIMER_SINGLE,TIMER_TAG_COUNT} from "./constants.js";
-import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_src_fn.js";
 import {is_in_userscript} from "../script_registry/is_in_userscript.js";
 import {DispatchMessageType} from "./constant_types.js";
 import {SetMessageData} from "./SetMessageData.js";
-import {TimeoutClearStrings_OLD} from "./TimeoutClearStrings.js";
-import {TimeoutSetStrings} from "./TimeoutSetStrings.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerState} from "./TimerState.js";
 import {TimerTag} from "./TimerTag.js";
 import {UniqueIdGenerator} from "./UniqueIdGenerator.js";
 import {WorkerState} from "./WorkerState.js";
+import {TimeoutClearStrings, TimeoutSetStrings} from "./interfaces.js";
 
 export class Timer {
 	id_generator;
@@ -31,7 +29,7 @@ export class Timer {
 		this.m_api_map.set(names.repeating,window[names.repeating]);
 	}
 	base_id: number|undefined;
-	set_api_names(set: TimeoutSetStrings,clear: TimeoutClearStrings_OLD) {
+	set_api_names(set: TimeoutSetStrings,clear: TimeoutClearStrings) {
 		this.set_map_names(set);
 		this.set_map_names(clear);
 		this.base_id=window[set.single](() => {});
@@ -82,15 +80,8 @@ export class Timer {
 		}
 		if(!this.weak_worker_state)
 			return;
-		let should_reset_ign=false;
 		try {
 			if(state.active) {
-				if((<any>state.target_fn).is_userscript_fn) {
-					if(is_in_ignored_from_src_fn.flag===false) {
-						is_in_ignored_from_src_fn.flag=true;
-						should_reset_ign=true;
-					}
-				}
 				if(state.target_fn instanceof Function) {
 					state.target_fn.apply(null,state.target_args);
 				} else {
@@ -100,8 +91,6 @@ export class Timer {
 				}
 			}
 		} finally {
-			if(should_reset_ign)
-				is_in_ignored_from_src_fn.flag=false;
 			if(tag===TIMER_SINGLE) {
 				state.active=false;
 				this.clear(tag,remote_id);
