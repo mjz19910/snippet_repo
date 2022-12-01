@@ -311,7 +311,7 @@
 			throw new VerifyError(assert_message);
 		}
 	}
-	/** @arg {unknown} value @returns {asserts value is NonNullable<value>} */
+	/** @template T @arg {T} value @returns {asserts value is NonNullable<T>} */
 	function assert_non_null(value) {
 		if(value===null) {
 			throw new AssertionError("Assertion failure: value was null");
