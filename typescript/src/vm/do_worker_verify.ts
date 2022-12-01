@@ -1,4 +1,4 @@
-import {TIMER_REPEATING,TIMER_SINGLE,TIMER_TAG_COUNT} from "../constants.js";
+import {TIMER_REPEATING,TIMER_SINGLE,TIMER_TAG_COUNT} from "./constants.js";
 import {VERIFY} from "./VERIFY.js";
 import {WorkerVerifyType} from "./WorkerVerifyType.js";
 

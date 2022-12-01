@@ -9,7 +9,7 @@ import {
 	TimeoutSetRepeating,
 	TimeoutSetSingle,
 	WorkerReadyReply
-} from "../constants.js";
+} from "./constants.js";
 import {MakeReplyData} from "./MakeReplyData.js";
 import {NoDataMsg} from "./NoDataMsg.js";
 import {NumInfoMsg} from "./NumInfoMsg.js";

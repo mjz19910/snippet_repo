@@ -1,4 +1,4 @@
-import {TimeoutClearSingle,TimeoutClearRepeating,TimeoutClearAny} from "../constants.js"
+import {TimeoutClearSingle,TimeoutClearRepeating,TimeoutClearAny} from "./constants.js"
 import {TimeoutClearAnyT, TimeoutClearInfoT, TimeoutClearRepeatingT, TimeoutClearSingleT} from "./constant_types.js";
 
 export class TimeoutClearInfo implements TimeoutClearInfoT {

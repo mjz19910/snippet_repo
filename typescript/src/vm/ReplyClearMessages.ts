@@ -1,4 +1,4 @@
-import {ReplyClearAny,ReplyClearRepeating,ReplyClearSingle} from "../constants.js";
+import {ReplyClearAny,ReplyClearRepeating,ReplyClearSingle} from "./constants.js";
 import {
 	ReplyClearAnyT,
 	ReplyClearRepeatingT,

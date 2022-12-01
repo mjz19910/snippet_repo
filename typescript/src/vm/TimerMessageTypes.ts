@@ -1,4 +1,4 @@
-import {WorkerAsyncMessage} from "../constants.js";
+import {WorkerAsyncMessage} from "./constants.js";
 import {TimerMessageTypesT,WorkerAsyncMessageT} from "./constant_types.js";
 import {ReplyTypes} from "./ReplyTypes.js";
 import {TimeoutFireInfo} from "./TimeoutFireInfo.js";

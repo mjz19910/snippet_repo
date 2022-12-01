@@ -9,7 +9,7 @@ import {
 	WorkerDestroyType,
 	WorkerUpdateMessageHandlerReply,
 	WorkerReadyReply
-} from "../constants.js";
+} from "./constants.js";
 
 import {
 	ReplyFromWorkerT,

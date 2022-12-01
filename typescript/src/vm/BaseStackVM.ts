@@ -1,6 +1,5 @@
 import {NumberBox} from "../box/NumberBox.js";
 import {VoidBox} from "../box/VoidBox.js";
-import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {Box} from "../box/Box.js";
 import {IndexBox} from "../box/IndexBox.js";
 import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
@@ -12,6 +11,7 @@ import {AbstractVM} from "./AbstractVM.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
 import {Call} from "./instruction/general/Call.js";
 import {PromiseBox} from "../box/PromiseBox.js";
+import {LOG_LEVEL_VERBOSE} from "../constants.js";
 
 export class BaseStackVM implements AbstractVM {
 	flags: Map<string,boolean>;
@@ -30,7 +30,7 @@ export class BaseStackVM implements AbstractVM {
 		this.base_pointer=0;
 		this.running=false;
 		this.stack=[];
-		this.return_slot=new VoidBox(void 0);
+		this.return_slot=new VoidBox();
 		this.exec_stack=[];
 		this.jump_instruction_pointer=null;
 	}
@@ -38,7 +38,7 @@ export class BaseStackVM implements AbstractVM {
 		this.instruction_pointer=0;
 		this.running=false;
 		this.stack.length=0;
-		this.return_slot=new VoidBox(void 0);
+		this.return_slot=new VoidBox();
 	}
 	push(value: Box) {
 		this.stack.push(value);
@@ -203,7 +203,7 @@ export class BaseStackVM implements AbstractVM {
 			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 		let [target_this,target_fn,...arg_arr]=this.pop_arg_count(number_of_arguments);
 		if(target_fn.type!='function_box') return;
-		if(target_fn.return_type===null) {
+		if(target_fn.return_type==="null") {
 			let ret=target_fn.value.apply(target_this,arg_arr);
 			this.push(ret);
 			return;

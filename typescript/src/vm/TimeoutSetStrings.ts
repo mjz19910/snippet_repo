@@ -1,4 +1,4 @@
-import {TimeoutSetStringRepeating,TimeoutSetStringSingle} from "../constants.js"
+import {TimeoutSetStringRepeating,TimeoutSetStringSingle} from "./constants.js"
 import {TimeoutSetStringsT} from "./constant_types.js";
 
 export class TimeoutSetStrings implements TimeoutSetStringsT {

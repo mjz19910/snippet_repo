@@ -28,7 +28,7 @@ export class EventHandlerVMDispatch {
 		this.base_pointer=0;
 		this.running=false;
 		this.stack=[];
-		this.return_value=new VoidBox(void 0);
+		this.return_value=new VoidBox();
 		this.vm_arguments=null;
 		this.target_obj=target_obj;
 	}
@@ -171,7 +171,7 @@ export class EventHandlerVMDispatch {
 		this.instruction_pointer=0;
 		this.running=false;
 		this.stack.length=0;
-		this.return_value=new VoidBox(void 0);
+		this.return_value=new VoidBox();
 		this.vm_arguments=null;
 	}
 	execute_call_instruction(instruction: Call) {

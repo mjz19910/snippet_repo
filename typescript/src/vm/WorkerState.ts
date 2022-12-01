@@ -4,7 +4,7 @@ import {
 	ReplyFromWorker,ReplyToWorkerState,ReplyToLocalTimer,ReplySetRepeating,ReplySetSingle,
 	TimeoutClearRepeating,TimeoutClearSingle,
 	WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply
-} from "../constants.js";
+} from "./constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
 import {DispatchMessageType,TimeoutSetSingleMessageT,TimeoutClearAnyMessageT,TimeoutClearRepeatingMessageT,TimeoutClearSingleMessageT,TimeoutFireSingleMessageT,TimeoutSetRepeatingMessageT,TypesForWorkerReplies, TimeoutSingleReplyMessageT} from "./constant_types.js";
 

@@ -1,4 +1,4 @@
-import {TimeoutMessageReady,TimeoutSetTypes,WorkerUpdateMessageHandler} from "../constants.js";
+import {TimeoutMessageReady,TimeoutSetTypes,WorkerUpdateMessageHandler} from "./constants.js";
 import {TimeoutMessageReplyT,TimeoutSetTypesT,TimeoutWorkerTypesT,WorkerUpdateMessageHandlerT} from "./constant_types.js";
 import {TimeoutClearInfo} from "./TimeoutClearInfo.js";
 import {TimeoutSetInfo} from "./TimeoutSetInfo.js";
