@@ -795,24 +795,20 @@
 			let worker_state=this;
 			switch(msg.type) {
 				case TimeoutFireSingle: {
-					let m_msg=WorkerStateMessage.as_timeout_fire(msg);
-					worker_state.timer.fire(TIMER_SINGLE,m_msg.value);
+					worker_state.timer.fire(TIMER_SINGLE,msg.value);
 					break;
 				}
 				case TimeoutFireRepeating/*worker_state.timer repeating fire*/: {
-					let m_msg=WorkerStateMessage.as_timer_fire(msg);
-					worker_state.timer.fire(TIMER_REPEATING,m_msg.value);
+					worker_state.timer.fire(TIMER_REPEATING,msg.value);
 				} break;
 				case WorkerDestroyType: {
 					worker_state.destroy();
 				} break;
 				case ReplyMessage1: {
-					let m_msg=WorkerStateMessage.as_reply_type_1(msg);
-					worker_state.dispatch_message(m_msg);
+					worker_state.dispatch_message(msg);
 				} break;
 				case ReplyMessage2: {
-					let m_msg=WorkerStateMessage.as_reply_type_2(msg);
-					worker_state.dispatch_message(m_msg);
+					worker_state.dispatch_message(msg);
 				} break;
 				case ReplyFromWorker: {
 					worker_state.dispatch_message(msg);
