@@ -1,7 +1,7 @@
+import {ReplyFromWorkerT} from "./constant_types.js";
 import {MessageReplyFromWorkerData} from "./MessageReplyFromWorkerData.js"
-import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy.js"
 
 export type ReplyFromWorkerMessage={
-	t: ReplyFromWorkerTy
+	t: ReplyFromWorkerT
 	v: MessageReplyFromWorkerData
 }
