@@ -601,6 +601,21 @@
 		type=ReplySetRepeating;
 		value={};
 	}
+	class ReplyClearSingleMsg {
+		/** @readonly */
+		type=ReplyClearSingle;
+		value={};
+	}
+	class ReplyClearRepeatingMsg {
+		/** @readonly */
+		type=ReplyClearRepeating;
+		value={};
+	}
+	class TimerWorkerSetTypesMsg {
+		/** @readonly */
+		type=TimerWorkerSetTypes;
+		value={};
+	}
 	/**
 	 * @template T
 	 * @template {abstract new (...args: any)=>any} U
@@ -733,7 +748,7 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2} msg
+		 * @param {TimerWorkerSetTypesMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
@@ -756,7 +771,7 @@
 			}
 		}
 		/**
-		 * @param {ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
+		 * @param {TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
 		 */
 		dispatch_message(msg) {
 			switch(msg.type) {
