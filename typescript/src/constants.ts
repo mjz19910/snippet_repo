@@ -1,7 +1,6 @@
 export const TIMER_SINGLE=1;
 export const TIMER_REPEATING=2;
 export const TIMER_TAG_COUNT=3;
-export const WorkerAsyncMessage=1;
 export const TimeoutFireSingle=101;
 export const TimeoutFireRepeating=102;
 export const WorkerUpdateMessageHandler=201;
@@ -25,6 +24,7 @@ export const ReplyFromWorker=500;
 export const ReplyToWorker=600;
 export const TimeoutSingleReply=700;
 export const TimeoutRepeatingReply=701;
+export const WorkerAsyncMessage=801;
 export const TimeoutSetTypes=1001;
 export const TimeoutSetStringSingle="setTimeout";
 export const TimeoutSetStringRepeating="setInterval";
