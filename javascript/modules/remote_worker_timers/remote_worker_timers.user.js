@@ -577,7 +577,6 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
-	
 	class WorkerUpdateMessageHandlerMsg {
 		/** @readonly */
 		type=WorkerUpdateMessageHandler;
