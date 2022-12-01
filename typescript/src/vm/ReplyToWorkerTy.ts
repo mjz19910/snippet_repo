@@ -1,3 +1,3 @@
 import {ReplyToWorker} from "../constants.js"
 
-export type ReplyToWorkerTy=typeof ReplyToWorker
+export type ReplyToWorkerTy_OLD=typeof ReplyToWorker

@@ -2,7 +2,7 @@ import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
-import {ReplyToWorkerTy} from "./ReplyToWorkerTy.js";
+import {ReplyToWorkerTy_OLD} from "./ReplyToWorkerTy.js";
 import {TimeoutClearRTy} from "./TimeoutClearRTy.js";
 import {TimeoutClearSTy} from "./TimeoutClearSTy.js";
 import {TimeoutMessageReplyTy} from "./TimeoutMessageReplyTy.js";
@@ -237,7 +237,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 	remote_worker_state.set_timer(new RemoteTimer(remote_api_info_instance));
 	let stored_for_later_messages: WorkerMessageType[]=[];
 	type ReplyToWorkerMessageType={
-		t: ReplyToWorkerTy;
+		t: ReplyToWorkerTy_OLD;
 		v: never;
 	};
 	type UpdateWorkerMessageHandler={

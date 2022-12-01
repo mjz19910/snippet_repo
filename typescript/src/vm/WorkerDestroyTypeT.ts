@@ -1,3 +1,3 @@
 import {WorkerDestroyType} from "../constants.js"
 
-export type WorkerDestroyTypeT=typeof WorkerDestroyType
+export type WorkerDestroyTypeT_OLD=typeof WorkerDestroyType

@@ -1,3 +1,3 @@
 import {WorkerUpdateMessageHandlerReply} from "../constants.js"
 
-export type WorkerUpdateMessageHandlerReplyTy=typeof WorkerUpdateMessageHandlerReply
+export type WorkerUpdateMessageHandlerReplyTy_OLD=typeof WorkerUpdateMessageHandlerReply
