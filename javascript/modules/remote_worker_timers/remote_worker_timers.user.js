@@ -141,6 +141,7 @@
 	const TimeoutClearRepeating=206;
 	const TimeoutClearAny=207;
 	const WorkerDestroyType=300;
+	const WorkerUpdateMessageHandlerReply=301
 	const WorkerReadyReply=302;
 	const ReplySetSingle=303;
 	const ReplySetRepeating=304;
@@ -173,7 +174,7 @@
 		/** @readonly */
 		destroy_worker=WorkerDestroyType;
 		/** @readonly */
-		update_handler=301;
+		update_handler=WorkerUpdateMessageHandlerReply;
 		/** @readonly */
 		ready=WorkerReadyReply;
 		/** @readonly */
@@ -461,7 +462,7 @@
 			console.log(msg);
 			switch(msg.type) {
 				case g_timer_api.worker.clear.single: {
-					let remote_id=msg.value;
+					let remote_id=msg.remote_id;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
@@ -584,37 +585,32 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
-	class Message_202 {
+	class TimeoutMessageReadyMsg {
 		/** @readonly */
 		type=TimeoutMessageReady;
 		remote_id=0;
 	}
-	class Message_203 {
+	class TimeoutSetSingleMsg {
 		/** @readonly */
 		type=TimeoutSetSingle;
 		remote_id=0;
 		timeout=0;
 	}
-	class Message_204 {
+	class TimeoutSetRepeatingMsg {
 		/** @readonly */
 		type=TimeoutSetRepeating;
 		remote_id=0;
 		timeout=0;
 	}
-	class Message_205 {
+	class TimeoutClearSingleMsg {
 		/** @readonly */
-		type=205;
+		type=TimeoutClearSingle;
 		remote_id=0;
 	}
 	class Message_206 {
 		/** @readonly */
 		type=206;
 		remote_id=0;
-	}
-	class TimeoutClearSingleMsg {
-		/** @readonly */
-		type=TimeoutClearSingle;
-		value=0;
 	}
 	class TimeoutClearRepeatingMsg {
 		/** @readonly */
@@ -735,10 +731,10 @@
 			let fv=false;
 			if(fv) return new TimeoutFireSMsg;
 			if(fv) return new TimeoutFireRMsg;
-			if(fv) return new Message_202;
-			if(fv) return new Message_203;
-			if(fv) return new Message_204;
-			if(fv) return new Message_205;
+			if(fv) return new TimeoutMessageReadyMsg;
+			if(fv) return new TimeoutSetSingleMsg;
+			if(fv) return new TimeoutSetRepeatingMsg;
+			if(fv) return new TimeoutClearSingleMsg;
 			if(fv) return new Message_206;
 			if(fv) return new WorkerDestroyTypeMsg;
 			if(fv) return new ReplyMessageType1;
