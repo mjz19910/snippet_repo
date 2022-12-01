@@ -1294,7 +1294,7 @@
 				globalThis[g_timer_api.clear_names.single](this.base_id);
 			}
 			/**
-			 * @param {any} remote_id
+			 * @param {number} remote_id
 			 */
 			fire(remote_id) {
 				if(!g_timer_api.fire) throw 1;
