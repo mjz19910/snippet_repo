@@ -812,8 +812,7 @@
 				} break;
 				case ReplyFromWorker: {
 					worker_state.dispatch_message(msg);
-					break;
-				}
+				} break;
 				default: {
 					console.assert(false,"Main: Unhandled message",msg);
 					debugger;
