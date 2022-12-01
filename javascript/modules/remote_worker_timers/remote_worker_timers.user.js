@@ -644,6 +644,17 @@
 		type=600;
 		value={};
 	}
+
+	class Message_700 {
+		/** @readonly */
+		type=700;
+		value={};
+	}
+	class Message_701 {
+		/** @readonly */
+		type=701;
+		value={};
+	}
 	class TimerWorkerSetTypesMsg {
 		/** @readonly */
 		type=TimerWorkerSetTypes;
@@ -695,12 +706,15 @@
 		value=null;
 		static as_any_of() {
 			let fv=false;
-			if(fv) {return new TimeoutFireSMsg;}
-			if(fv) {return new TimeoutFireRMsg;}
-			if(fv) {return new WorkerDestroyTypeMsg;}
-			if(fv) {return new ReplyMessageType1;}
-			if(fv) {return new ReplyMessageType2;}
-			if(fv) {return new ReplyFromWorkerMsg;}
+			if(fv) return new TimeoutFireSMsg;
+			if(fv) return new TimeoutFireRMsg;
+			if(fv) return new WorkerDestroyTypeMsg;
+			if(fv) return new ReplyMessageType1;
+			if(fv) return new ReplyMessageType2;
+			if(fv) return new ReplyFromWorkerMsg;
+			if(fv) return new Message_600;
+			if(fv) return new Message_700;
+			if(fv) return new Message_701;
 			return new TimerWorkerSetTypesMsg;
 		}
 	}
