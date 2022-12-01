@@ -4,8 +4,6 @@ import {script_registry} from "./script_registry.js";
 import {weak_scripts_arr} from "./weak_scripts_arr.js";
 import {script_id} from "./script_id.js";
 import {scripts_holders} from "./scripts_holders.js";
-import {scripts_tokens} from "./scripts_tokens.js";
-import {WeakRefWithKey} from "./WeakRefWithKey.js";
 import {Counter} from "./Counter.js";
 
 export let target_object_id_counter=new Counter;
@@ -50,11 +48,6 @@ export function register_obj_with_registry<T extends object>(target: T) {
 		symbol: obj_symbol
 	};
 	scripts_holders.push(held_value);
-	let token_val: WeakRefWithKey={
-		key: obj_symbol,
-		weak_ref: new WeakRef(unregister_token)
-	};
-	scripts_tokens.push(token_val);
 	weak_scripts_arr.push({
 		key: obj_symbol,
 		id: target_id,
