@@ -28,8 +28,8 @@ class GCStorage<T extends {}> {
 			id,
 			key
 		};
-		let unregister_token=new UnregisterToken(key,this.storage_id);
-		this.target_arr.push(new WeakRefTo(key,this.storage_id,id,target));
+		let unregister_token=new UnregisterToken(key,store_id);
+		this.target_arr.push(new WeakRefTo(key,store_id,id,target));
 		this.unregister_token_arr.push(unregister_token);
 		script_registry.register(target,held_value,unregister_token);
 		return id;
