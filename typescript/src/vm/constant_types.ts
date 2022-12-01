@@ -16,10 +16,10 @@ import {WorkerUpdateMessageHandlerReplyTy} from "./WorkerUpdateMessageHandlerRep
 import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy.js";
 
 export type TimeoutFireSingleT=typeof TimeoutFireSingle;
-export type TimeoutFireRT=typeof TimeoutFireRepeating;
+export type TimeoutFireRepeatingT=typeof TimeoutFireRepeating;
 export type TimeoutFireInfoT={
 	single: TimeoutFireSingleT;
-	repeating: TimeoutFireRT;
+	repeating: TimeoutFireRepeatingT;
 };
 export type ReplyTypesT={
 	msg1: ReplyMessage1Ty;
