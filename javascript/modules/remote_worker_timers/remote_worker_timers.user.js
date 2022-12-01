@@ -571,6 +571,9 @@
 		fire=new TimeoutFireInfo;
 		worker=new TimeoutWorkerTypes;
 	}
+
+
+
 	class TimeoutFireSMsg {
 		/** @readonly */
 		type=TimeoutFireS;
