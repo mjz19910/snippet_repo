@@ -650,13 +650,13 @@
 	/** @extends {EmptyStateMessage} */
 	class WorkerStateMessage {
 		/** @arg {WorkerStateMessage} msg */
-		static as_reply_type_2(msg) {
-			assert_as_instance(msg,ReplyMessageType2);
+		static as_reply_type_1(msg) {
+			assert_as_instance(msg,ReplyMessageType1);
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
-		static as_reply_type_1(msg) {
-			assert_as_instance(msg,ReplyMessageType1);
+		static as_reply_type_2(msg) {
+			assert_as_instance(msg,ReplyMessageType2);
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
@@ -686,6 +686,7 @@
 			return new TimeoutFireRMsg;
 		}
 	}
+	const WorkerStateMessageV=WorkerStateMessage.as_any_of();
 	class WorkerState {
 		/**
 		 * @param {Blob} worker_code_blob
@@ -734,7 +735,7 @@
 				value: g_timer_api
 			});
 		}
-		/** @arg {MessageEvent<WorkerStateMessage>} e */
+		/** @arg {MessageEvent<typeof WorkerStateMessageV>} e */
 		handle_message(e) {
 			let msg=e.data;
 			let worker_state=this;
