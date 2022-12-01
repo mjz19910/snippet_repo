@@ -16,7 +16,7 @@ import {
 	TimerMessageTypes,
 } from "./interfaces.js";
 import {MakeReplyData} from "./MakeReplyData.js";
-import {NoDataMsg} from "./NoDataMsg.js";
+import {NoDataMsg} from "../vm/NoDataMsg.js";
 
 export class TimerApi {
 	msg_types=new TimerMessageTypes;

@@ -1,6 +1,6 @@
 import {TIMER_REPEATING,TIMER_SINGLE,TIMER_TAG_COUNT} from "./constants.js";
 import {WorkerVerifyType} from "./constant_types.js";
-import {VERIFY} from "./VERIFY.js";
+import {VERIFY} from "../VERIFY.js";
 
 export function do_worker_verify(verify_obj: WorkerVerifyType) {
 	VERIFY(verify_obj.TIMER_SINGLE===TIMER_SINGLE,"TIMER_SINGLE constant matches")

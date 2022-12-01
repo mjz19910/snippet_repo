@@ -6,7 +6,7 @@ import {Box} from "../box/Box.js";
 import {VoidBox} from "../box/VoidBox.js";
 import {IndexBox} from "../box/IndexBox.js";
 import {NewableFunctionBox} from "../box/NewableFunctionBox.js";
-import {l_log_if} from "./l_log_if.js";
+import {l_log_if} from "../l_log_if.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
