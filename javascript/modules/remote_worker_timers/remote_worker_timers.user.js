@@ -696,6 +696,7 @@
 			if(fv) {return new WorkerDestroyTypeMsg;}
 			if(fv) {return new ReplyMessageType1;}
 			if(fv) {return new ReplyMessageType2;}
+			if(fv) {return new TimerWorkerSetTypesMsg;}
 			return new ReplyFromWorkerMsg;
 		}
 	}
@@ -1087,7 +1088,7 @@
 		}
 		decay_to_object;
 		/**
-		 * @param {MessageEvent<TimerWorkerSetTypesMsg>} e
+		 * @param {MessageEvent<typeof WorkerStateMessageV>} e
 		 */
 		function message_without_types_handler(e) {
 			if(!g_timer_api.worker_set_types) throw 1;
