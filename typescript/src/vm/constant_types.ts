@@ -25,6 +25,16 @@ import {
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
 } from "../constants.js";
+import {ReplyClearRepeatingMessage} from "./MessageReplyClearRepeating.js";
+import {MessageReplyClearSingle} from "./MessageReplyClearSingle.js";
+import {MessageReplySetRepeating} from "./MessageReplySetRepeating.js";
+import {MessageReplySetSingle} from "./MessageReplySetSingle.js";
+import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
+import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
+import {MessageWorkerReadyReply} from "./MessageWorkerReadyReply.js";
+import {MessageWorkerUpdateMessageHandlerReply} from "./MessageWorkerUpdateMessageHandlerReply.js";
+import {ReplyMessage1} from "./ReplyMessage1.js";
+import {ReplyMessage2} from "./ReplyMessage2.js";
 export type ReplySetSingleT=typeof ReplySetSingle;
 export type ReplySetRepeatingT=typeof ReplySetRepeating;
 export type ReplySetTypesT={
@@ -113,3 +123,14 @@ export type ReplyClearTypesT={
 	any: ReplyClearAnyT;
 };
 
+export type MessageReplyFromWorkerData={
+	t: 5000
+	v: number
+}
+
+export type ReplyFromWorkerMessage={
+	t: ReplyFromWorkerT
+	v: MessageReplyFromWorkerData
+}
+
+export type DispatchMessageType=MessageTimeoutClearR|MessageTimeoutClearS|ReplyClearRepeatingMessage|MessageReplyClearSingle|MessageReplySetRepeating|MessageReplySetSingle|MessageWorkerReadyReply|MessageWorkerUpdateMessageHandlerReply|ReplyMessage2|ReplyMessage1|MessageReplyFromWorkerData;
