@@ -661,20 +661,20 @@
 		/** @type {[-1]|[202]|[203,number|undefined,number,number]|[204,number|undefined,number,number]|[205,number,any]|[206,number,any]|[1001]} */
 		args=[-1];
 	}
-	class Message_600 {
+	class ReplyToWorkerMsg {
 		/** @readonly */
-		type=600;
+		type=ReplyToWorker;
 		value={};
 	}
 
-	class Message_700 {
+	class TimeoutSingleReplyMsg {
 		/** @readonly */
-		type=700;
+		type=TimeoutSingleReply;
 		value={};
 	}
-	class Message_701 {
+	class TimeoutRepeatingReplyMsg {
 		/** @readonly */
-		type=701;
+		type=TimeoutRepeatingReply;
 		value={};
 	}
 	class TimerWorkerSetTypesMsg {
@@ -736,9 +736,9 @@
 			if(fv) return new ReplyMessageType1;
 			if(fv) return new ReplyMessageType2;
 			if(fv) return new ReplyFromWorkerMsg;
-			if(fv) return new Message_600;
-			if(fv) return new Message_700;
-			if(fv) return new Message_701;
+			if(fv) return new ReplyToWorkerMsg;
+			if(fv) return new TimeoutSingleReplyMsg;
+			if(fv) return new TimeoutRepeatingReplyMsg;
 			return new TimerWorkerSetTypesMsg;
 		}
 	}
