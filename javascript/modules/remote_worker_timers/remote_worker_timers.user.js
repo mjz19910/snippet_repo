@@ -1392,7 +1392,7 @@
 			clear(remote_id) {
 				if(this.m_remote_id_to_state_map.has(remote_id)) {
 					let state=this.m_remote_id_to_state_map.get(remote_id);
-					assert_non_null(state);
+					if(!state) return null;
 					this.verify_state(state,remote_id);
 					if(state.type===TIMER_SINGLE) {
 						globalThis[g_timer_api.clear_names.single](state.local_id);
