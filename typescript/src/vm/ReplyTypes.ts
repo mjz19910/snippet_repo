@@ -8,8 +8,9 @@ import {ReplyToWorkerTy} from "./ReplyToWorkerTy.js"
 import {ReplySetMessages} from "./ReplySetMessages.js"
 import {ReplyClearMessages} from "./ReplyClearMessages.js"
 import {ReplyMessage1,ReplyMessage2,ReplyFromWorker,ReplyToWorker,WorkerDestroyType,WorkerUpdateMessageHandlerReply,WorkerReadyReply} from "../constants.js"
+import {ReplyTypesT} from "./constant_types.js";
 
-export class ReplyTypes {
+export class ReplyTypes implements ReplyTypesT {
 	msg1: ReplyMessage1Ty=ReplyMessage1
 	msg2: ReplyMessage2Ty=ReplyMessage2
 	from_worker: ReplyFromWorkerTy=ReplyFromWorker
