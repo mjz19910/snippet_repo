@@ -814,6 +814,10 @@
 				case ReplyFromWorker: {
 					worker_state.dispatch_message(msg);
 				} break;
+				case ReplyToWorker: break;
+				case TimeoutSingleReply: break;
+				case TimeoutRepeatingReply: break;
+				case TimerWorkerSetTypes: break;
 				default: {
 					console.assert(false,"Main: Unhandled message",msg);
 					debugger;
