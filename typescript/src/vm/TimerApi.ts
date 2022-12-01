@@ -1,10 +1,13 @@
 import {
-	ReplyClearRepeating,ReplyClearSingle,
+	ReplyClearRepeating,
+	ReplyClearSingle,
 	ReplyFromWorker,
-	ReplySetRepeating,ReplySetSingle,
+	ReplySetRepeating,
+	ReplySetSingle,
 	TimeoutClearSingle,
 	TimeoutMessageReady,
-	TimeoutSetRepeating,TimeoutSetSingle,
+	TimeoutSetRepeating,
+	TimeoutSetSingle,
 	WorkerReadyReply
 } from "../constants.js";
 import {MakeReplyData} from "./MakeReplyData.js";
