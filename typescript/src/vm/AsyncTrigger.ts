@@ -1,14 +1,12 @@
-import {PromiseExecutorRejectCallback} from "./PromiseExecutorRejectCallback.js"
-
 export class AsyncTrigger {
 	m_set_flag: boolean
 	trigger_handler: null
 	promise_set
-	m_set_result: (value: number) => void
-	m_set_error: PromiseExecutorRejectCallback
+	m_set_result: (value: number) => void;
+	m_set_error: (reason?: any) => void;
 	m_can_notify: boolean
-	m_notify_result: null|((value: void|PromiseLike<void>) => void)
-	m_notify_error: null|PromiseExecutorRejectCallback
+	m_notify_result: AsyncTrigger['m_set_result']|null;
+	m_notify_error: AsyncTrigger['m_set_error']|null;
 	constructor() {
 		this.notify_promise=null
 		this.m_set_flag=true
@@ -55,7 +53,7 @@ export class AsyncTrigger {
 		let ret=this.promise_set
 		return ret
 	}
-	notify(cnt: any) {
+	notify(cnt: number) {
 		if(this.m_can_notify&&this.m_notify_result) {
 			this.m_notify_result(cnt)
 			this.m_can_notify=false
@@ -67,7 +65,7 @@ export class AsyncTrigger {
 			this.m_can_notify=false
 		}
 	}
-	notify_promise: Promise<void>|null
+	notify_promise: Promise<number>|null
 	async notified() {
 		let t=this
 		this.notify_promise=new Promise(function(accept,reject) {

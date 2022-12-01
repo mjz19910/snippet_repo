@@ -1,4 +1,4 @@
-import {PromiseExecutorRejectCallback} from "./PromiseExecutorRejectCallback.js";
+import {PromiseExecutorRejectCallback} from "../vm/PromiseExecutorRejectCallback.js";
 
 export class PromiseTimeoutTarget {
 	description;
@@ -15,7 +15,7 @@ export class PromiseTimeoutTarget {
 	}
 	promise_accept: ((value: void|PromiseLike<void>) => void)|null;
 	callback: ((value: void|PromiseLike<void>) => void)|null;
-	promise_executor(accept: (value: void|PromiseLike<void>) => void,reject: PromiseExecutorRejectCallback) {
+	promise_executor(accept: (value: void|PromiseLike<void>) => void,reject: (reason?: any) => void) {
 		void reject;
 		this.promise_accept=accept;
 		this.callback=this.on_result.bind(this);

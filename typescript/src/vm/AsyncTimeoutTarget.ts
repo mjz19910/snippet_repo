@@ -1,4 +1,4 @@
-import {PromiseTimeoutTarget} from "./PromiseTimeoutTarget.js";
+import {PromiseTimeoutTarget} from "../timer_node/PromiseTimeoutTarget.js";
 
 export class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 	wait() {
