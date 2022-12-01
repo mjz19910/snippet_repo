@@ -12,26 +12,26 @@ export let object_id_counter=new Counter;
 export let weak_objects_arr: (WeakFinalInfo|null)[]=[];
 export let unregister_arr: {symbol: symbol;}[]=[];
 
-export function register_obj_with_registry<T extends object>(obj: T) {
+export function register_obj_with_registry<T extends object>(target: T) {
 	let obj_id;
-	if(!(obj instanceof HTMLScriptElement)&&!(obj instanceof SVGScriptElement)) {
-		let obj_ref=weak_objects_arr.find((e: {ref: {deref: () => any;};}|null) => e&&e.ref.deref()===obj);
+	if(!(target instanceof HTMLScriptElement)&&!(target instanceof SVGScriptElement)) {
+		let obj_ref=weak_objects_arr.find((e: {ref: {deref: () => any;};}|null) => e&&e.ref.deref()===target);
 		if(obj_ref) {
 			return obj_ref.id;
 		}
 		obj_id=script_id.next();
 		let obj_symbol=Symbol(obj_id);
-		let held_obj: HeldType={
+		let held_value: HeldType={
 			type: 'held',
 			id: obj_id,
 			key: obj_symbol
 		};
-		let token_sym={
+		let unregister_token={
 			symbol: obj_symbol
 		};
-		unregister_arr.push(token_sym);
-		script_registry.register(obj,held_obj,token_sym);
-		console.log("Called register_obj with non-script",obj);
+		unregister_arr.push(unregister_token);
+		script_registry.register(target,held_value,unregister_token);
+		console.log("Called register_obj with non-script",target);
 		return;
 	}
 	let scripts_res: WeakFinalInfo[]=[];
@@ -41,7 +41,7 @@ export function register_obj_with_registry<T extends object>(obj: T) {
 			scripts_res.push(elem);
 		}
 	}
-	let obj_ref=weak_scripts_arr.find((e: null|{ref: {deref: () => any;};}) => e&&e.ref.deref()===obj);
+	let obj_ref=weak_scripts_arr.find((e: null|{ref: {deref: () => any;};}) => e&&e.ref.deref()===target);
 	if(obj_ref) {
 		obj_id=obj_ref.id;
 		return obj_id;
@@ -61,8 +61,8 @@ export function register_obj_with_registry<T extends object>(obj: T) {
 	weak_scripts_arr.push({
 		key: held_obj.key,
 		id: obj_id,
-		ref: new WeakRef(obj)
+		ref: new WeakRef(target)
 	});
-	script_registry.register(obj,held_obj,token_sym);
+	script_registry.register(target,held_obj,token_sym);
 	return obj_id;
 }
