@@ -148,8 +148,8 @@
 	const ReplyClearSingle=305;
 	const ReplyClearRepeating=306;
 	const ReplyClearAny=307;
-	const ReplyMessage1=401;
-	const ReplyMessage2=402;
+	const ReplyToWorkerType=401;
+	const ReplyToTimerType=402;
 	const ReplyFromWorker=500;
 	const ReplyToWorker=600;
 	const TimeoutSingleReply=700;
@@ -178,9 +178,9 @@
 		/** @readonly */
 		ready=WorkerReadyReply;
 		/** @readonly */
-		msg1=ReplyMessage1;
+		msg1=ReplyToWorkerType;
 		/** @readonly */
-		msg2=ReplyMessage2;
+		msg2=ReplyToTimerType;
 		/** @readonly */
 		from_worker=ReplyFromWorker;
 		/** @readonly */
@@ -471,7 +471,7 @@
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
-				case ReplyMessage2: {
+				case ReplyToTimerType: {
 					console.assert(false,'on_result timer_result_msg needs a handler for ReplyMessage2');
 				} break;
 				default:
@@ -636,13 +636,13 @@
 	}
 	class ReplyMessageType1 {
 		/** @readonly */
-		type=ReplyMessage1;
+		type=ReplyToWorkerType;
 		for_worker_state=true;
 		value={};
 	}
 	class ReplyMessageType2 {
 		/** @readonly */
-		type=ReplyMessage2;
+		type=ReplyToTimerType;
 		value={};
 	}
 	class ReplyFromWorkerMsg {
@@ -798,10 +798,10 @@
 				case WorkerDestroyType: {
 					worker_state.destroy();
 				} break;
-				case ReplyMessage1: {
+				case ReplyToWorkerType: {
 					worker_state.dispatch_message(msg);
 				} break;
-				case ReplyMessage2: {
+				case ReplyToTimerType: {
 					worker_state.dispatch_message(msg);
 				} break;
 				case ReplyFromWorker: {
@@ -863,7 +863,7 @@
 					case ReplySetSingle: {
 						this.on_result(msg);
 					} break;
-					case ReplyMessage1: {
+					case ReplyToWorkerType: {
 						this.on_result(msg);
 					} break;
 					case g_timer_api.worker_set_types: {
@@ -889,7 +889,7 @@
 				case g_timer_api.reply.clear.repeating: {
 					this.timer.on_reply(msg);
 				} return;
-				case ReplyMessage2: {
+				case ReplyToTimerType: {
 					this.timer.on_result(msg);
 				} return;
 				case ReplyFromWorker: {
