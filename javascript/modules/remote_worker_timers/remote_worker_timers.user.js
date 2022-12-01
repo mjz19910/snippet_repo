@@ -620,16 +620,19 @@
 	class WorkerReadyReplyMsg {
 		/** @readonly */
 		type=WorkerReadyReply;
+		for_worker_state=true;
 		value={};
 	}
 	class ReplySetSingleMsg {
 		/** @readonly */
 		type=ReplySetSingle;
+		for_worker_state=true;
 		value={};
 	}
 	class ReplySetRepeatingMsg {
 		/** @readonly */
 		type=ReplySetRepeating;
+		for_worker_state=true;
 		value={};
 	}
 	class ReplyClearSingleMsg {
@@ -859,7 +862,27 @@
 		/**
 		 * @param {TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
 		 */
+		is_message_for(msg) {
+			return 'for_worker_state' in msg&&msg.for_worker_state;
+		}
+		/**
+		 * @param {TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
+		 */
 		dispatch_message(msg) {
+			if(this.is_message_for(msg)) {
+				switch(msg.type) {
+					case WorkerReadyReply: {
+						this.on_result(msg);
+					} break;
+					case ReplySetSingle: {
+						this.on_result(msg);
+					} break;
+					case ReplyMessage1: {
+						this.on_result(msg);
+					} break;
+					default: return;
+				}
+			}
 			switch(msg.type) {
 				case WorkerReadyReply: {
 					this.on_result(msg);
