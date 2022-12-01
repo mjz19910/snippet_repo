@@ -14,7 +14,7 @@ class GCStorage<T extends {}> {
 		if(target_ref) {
 			return target_ref.id;
 		}
-		let target_id=script_id.next();
+		let target_id=this.counter.next();
 		let obj_symbol=Symbol(target_id);
 		let held_value: HeldType={
 			type: 'held',
