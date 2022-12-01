@@ -581,7 +581,7 @@
 	}
 	class TimeoutFireRMsg {
 		/** @readonly */
-		type=TimeoutFireS;
+		type=TimeoutFireR;
 		value=0;
 	}
 	class ReplyFromWorkerMsg {
