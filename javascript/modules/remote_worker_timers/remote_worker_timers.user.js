@@ -584,7 +584,6 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
-	
 	class Message_202 {
 		/** @readonly @type {202} */
 		type=202;
@@ -594,11 +593,13 @@
 		/** @readonly */
 		type=203;
 		remote_id=0;
+		timeout=0;
 	}
 	class Message_204 {
 		/** @readonly */
 		type=204;
 		remote_id=0;
+		timeout=0;
 	}
 	class Message_205 {
 		/** @readonly */
@@ -735,6 +736,10 @@
 			if(fv) return new TimeoutFireSMsg;
 			if(fv) return new TimeoutFireRMsg;
 			if(fv) return new Message_202;
+			if(fv) return new Message_203;
+			if(fv) return new Message_204;
+			if(fv) return new Message_205;
+			if(fv) return new Message_206;
 			if(fv) return new WorkerDestroyTypeMsg;
 			if(fv) return new ReplyMessageType1;
 			if(fv) return new ReplyMessageType2;
@@ -1182,25 +1187,21 @@
 					});
 				} break;
 				case g_timer_api.worker.set.single/*remote timer set single*/: {
-					// debugger;
-					let user_msg=msg.value;
-					console.log('worker set single',user_msg.type,user_msg.value);
-					let local_id=remote_worker_state.set(TIMER_SINGLE,msg.remote_id,user_msg.value);
+					console.log('worker set single',msg.remote_id,msg.timeout);
+					let local_id=remote_worker_state.set(TIMER_SINGLE,msg.remote_id,msg.timeout);
 					postMessage({
 						type: g_timer_api.reply.from_worker,
 						from_data: g_timer_api.reply.set.single,
-						args: [local_id,msg.type,user_msg.type,user_msg.value],
+						args: [local_id,msg.type,msg.remote_id,msg.timeout],
 					});
 				} break;
-				case g_timer_api.worker.set.repeating/*remote timer set repeating*/: {
-					// debugger;
-					let user_msg=msg.value;
-					console.log('worker set repeating',user_msg.type,user_msg.value);
-					let local_id=remote_worker_state.set(TIMER_REPEATING,user_msg.type,user_msg.value);
+				case g_timer_api.worker.set.repeating: {
+					console.log('worker set repeating',msg.remote_id,msg.timeout);
+					let local_id=remote_worker_state.set(TIMER_REPEATING,msg.remote_id,msg.timeout);
 					postMessage({
 						type: g_timer_api.reply.from_worker,
 						from_data: g_timer_api.reply.set.repeating,
-						args: [local_id,msg.type,user_msg.type,user_msg.value],
+						args: [local_id,msg.type,msg.remote_id,msg.timeout],
 					});
 				} break;
 				case g_timer_api.worker.clear.single: {
