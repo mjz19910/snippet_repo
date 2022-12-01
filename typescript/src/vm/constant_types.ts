@@ -266,7 +266,3 @@ export type WorkerVerifyType={
 };
 
 export type WorkerVerifyCallback=(verify_obj: WorkerVerifyType) => void;
-export type TimeoutTargetObjects=AutoBuy|AutoBuyState;
-export type TimeoutTargetCallback=(this: TimeoutTargetObjects) => void;
-export type FnVoidResult=() => void;
-export type TimeoutCallbackType=TimeoutTargetCallback|FnVoidResult;
