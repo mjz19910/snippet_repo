@@ -6,8 +6,8 @@ import {MessageWorkerReadyReply} from "./MessageWorkerReadyReply.js"
 import {MessageReplySetSingle} from "./MessageReplySetSingle.js"
 import {MessageReplySetRepeating} from "./MessageReplySetRepeating.js"
 import {MessageReplyClearSingle} from "./MessageReplyClearSingle.js"
-import {MessageReplyClearRepeating} from "./MessageReplyClearRepeating.js"
+import {ReplyClearRepeatingMessage} from "./MessageReplyClearRepeating.js"
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js"
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js"
 
-export type DispatchMessageType=MessageTimeoutClearR|MessageTimeoutClearS|MessageReplyClearRepeating|MessageReplyClearSingle|MessageReplySetRepeating|MessageReplySetSingle|MessageWorkerReadyReply|MessageWorkerUpdateMessageHandlerReply|ReplyMessage2|ReplyMessage1|MessageReplyFromWorkerData
+export type DispatchMessageType=MessageTimeoutClearR|MessageTimeoutClearS|ReplyClearRepeatingMessage|MessageReplyClearSingle|MessageReplySetRepeating|MessageReplySetSingle|MessageWorkerReadyReply|MessageWorkerUpdateMessageHandlerReply|ReplyMessage2|ReplyMessage1|MessageReplyFromWorkerData
