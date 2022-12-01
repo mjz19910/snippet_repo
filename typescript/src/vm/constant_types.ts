@@ -5,7 +5,10 @@ import {
 	TimeoutClearSingle,
 	TimeoutFireRepeating,TimeoutFireSingle,WorkerAsyncMessage,WorkerDestroyType
 } from "../constants.js";
+import {ReplyClearAnyTy} from "./ReplyClearAnyTy.js";
 import {ReplyClearMessages} from "./ReplyClearMessages.js";
+import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy.js";
+import {ReplyClearSingleTy} from "./ReplyClearSingleTy.js";
 import {ReplySetMessages} from "./ReplySetMessages.js";
 export type TimeoutClearATy=typeof TimeoutClearAny;
 export type TimeoutClearRTy=typeof TimeoutClearRepeating;
@@ -60,3 +63,9 @@ export type TimerMessageTypesT={
 	fire: TimeoutFireInfoT;
 	worker: TimeoutWorkerTypesT;
 };
+export type ReplyClearTypes={
+	single: ReplyClearSingleTy;
+	repeating: ReplyClearRepeatingTy;
+	any: ReplyClearAnyTy;
+};
+
