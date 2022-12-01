@@ -1,3 +1,3 @@
 import {ReplySetSingle} from "../constants.js"
 
-export type ReplySetSingleTy=typeof ReplySetSingle
+export type ReplySetSingleTy_OLD=typeof ReplySetSingle

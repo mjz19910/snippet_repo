@@ -1,7 +1,7 @@
 import {Box} from "../box/Box.js"
-import {ReplySetSingleTy} from "./ReplySetSingleTy.js"
+import {ReplySetSingleTy_OLD} from "./ReplySetSingleTy.js"
 
 export type MessageReplySetSingle={
-	t: ReplySetSingleTy
+	t: ReplySetSingleTy_OLD
 	v: Box
 }

@@ -6,7 +6,7 @@ import {
 	ReplyClearTypesT
 } from "./constant_types.js";
 
-export class ReplyClearMessages_OLD implements ReplyClearTypesT {
+export class ReplyClearMessages implements ReplyClearTypesT {
 	single: ReplyClearSingleT=ReplyClearSingle;
 	repeating: ReplyClearRepeatingT=ReplyClearRepeating;
 	any: ReplyClearAnyT=ReplyClearAny;

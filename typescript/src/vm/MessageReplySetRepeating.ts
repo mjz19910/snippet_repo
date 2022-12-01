@@ -1,7 +1,7 @@
 import {Box} from "../box/Box.js"
-import {ReplySetRepeatingTy} from "./ReplySetRepeatingTy.js"
+import {ReplySetRepeatingTy_OLD} from "./ReplySetRepeatingTy.js"
 
 export type MessageReplySetRepeating={
-	t: ReplySetRepeatingTy
+	t: ReplySetRepeatingTy_OLD
 	v: Box
 }
