@@ -5,7 +5,7 @@ import {ReplyMessage1Ty} from "./ReplyMessage1Ty.js"
 import {ReplyMessage2Ty} from "./ReplyMessage2Ty.js"
 import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy.js"
 import {ReplyToWorkerTy} from "./ReplyToWorkerTy.js"
-import {ReplySetMessages} from "./ReplySetMessages.js"
+import {ReplySetTypes} from "./ReplySetTypes.js"
 import {ReplyClearMessages} from "./ReplyClearMessages.js"
 import {ReplyMessage1,ReplyMessage2,ReplyFromWorker,ReplyToWorker,WorkerDestroyType,WorkerUpdateMessageHandlerReply,WorkerReadyReply} from "../constants.js"
 import {ReplyTypesT} from "./constant_types.js";
@@ -18,6 +18,6 @@ export class ReplyTypes implements ReplyTypesT {
 	destroy_worker: WorkerDestroyTypeT=WorkerDestroyType
 	update_handler: WorkerUpdateMessageHandlerReplyTy=WorkerUpdateMessageHandlerReply
 	ready: WorkerReadyReplyTy=WorkerReadyReply
-	set=new ReplySetMessages
+	set=new ReplySetTypes
 	clear=new ReplyClearMessages
 }

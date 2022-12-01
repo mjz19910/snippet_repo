@@ -5,7 +5,7 @@ import {ReplyMessage1Ty} from "./ReplyMessage1Ty.js"
 import {ReplyMessage2Ty} from "./ReplyMessage2Ty.js"
 import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy.js"
 import {ReplyToWorkerTy} from "./ReplyToWorkerTy.js"
-import {ReplySetMessages} from "./ReplySetMessages.js"
+import {ReplySetTypes} from "./ReplySetTypes.js"
 import {ReplyClearMessages} from "./ReplyClearMessages.js"
 
 export type ReplyTypesTy={
@@ -16,6 +16,6 @@ export type ReplyTypesTy={
 	destroy_worker: WorkerDestroyTypeT
 	update_handler: WorkerUpdateMessageHandlerReplyTy
 	ready: WorkerReadyReplyTy
-	set: ReplySetMessages
+	set: ReplySetTypes
 	clear: ReplyClearMessages
 }
