@@ -3,7 +3,7 @@ import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_s
 import {is_in_userscript} from "../script_registry/is_in_userscript.js";
 import {DispatchMessageType} from "./constant_types.js";
 import {SetMessageData} from "./SetMessageData.js";
-import {TimeoutClearStrings} from "./TimeoutClearStrings.js";
+import {TimeoutClearStrings_OLD} from "./TimeoutClearStrings.js";
 import {TimeoutSetStrings} from "./TimeoutSetStrings.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerState} from "./TimerState.js";
@@ -31,7 +31,7 @@ export class Timer {
 		this.m_api_map.set(names.repeating,window[names.repeating]);
 	}
 	base_id: number|undefined;
-	set_api_names(set: TimeoutSetStrings,clear: TimeoutClearStrings) {
+	set_api_names(set: TimeoutSetStrings,clear: TimeoutClearStrings_OLD) {
 		this.set_map_names(set);
 		this.set_map_names(clear);
 		this.base_id=window[set.single](() => {});

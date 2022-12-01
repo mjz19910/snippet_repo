@@ -10,12 +10,14 @@ import {
 	TimeoutSetSingle,
 	WorkerReadyReply
 } from "./constants.js";
+import {
+	TimeoutClearStrings,
+	TimeoutSetStrings,
+} from "./interfaces.js";
 import {MakeReplyData} from "./MakeReplyData.js";
 import {NoDataMsg} from "./NoDataMsg.js";
 import {NumInfoMsg} from "./NumInfoMsg.js";
 import {RefVarMsg} from "./RefVarMsg.js";
-import {TimeoutClearStrings} from "./TimeoutClearStrings.js";
-import {TimeoutSetStrings} from "./TimeoutSetStrings.js";
 import {TimerMessageTypes} from "./TimerMessageTypes.js";
 
 export class TimerApi {
