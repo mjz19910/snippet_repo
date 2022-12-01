@@ -1199,8 +1199,8 @@
 		}
 		function nop_fn() {};
 		/**
-		 * @param {{ fire: (arg0: any) => void; }} timer
-		 * @param {any} remote_id
+		 * @param {RemoteTimer} timer
+		 * @param {number} remote_id
 		 */
 		function fire_timer(timer,remote_id) {
 			timer.fire(remote_id);
