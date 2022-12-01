@@ -810,11 +810,11 @@
 					let m_msg=WorkerStateMessage.as_reply_type_1(msg);
 					worker_state.dispatch_message(m_msg);
 				} break;
-				case ReplyMessage2/*worker_state dispatch_message_raw*/: {
+				case ReplyMessage2: {
 					let m_msg=WorkerStateMessage.as_reply_type_2(msg);
 					worker_state.dispatch_message(m_msg);
 				} break;
-				case ReplyFromWorker/*worker_state dispatch_message*/: {
+				case ReplyFromWorker: {
 					worker_state.dispatch_message(msg);
 					break;
 				}
