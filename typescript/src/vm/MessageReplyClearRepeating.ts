@@ -1,7 +1,6 @@
-import {Box} from "../box/Box.js"
-import {ReplyClearRepeatingTy} from "./ReplyClearRepeatingTy.js"
+import {ReplyClearRepeatingTy} from "./constant_types.js";
 
 export type MessageReplyClearRepeating={
 	t: ReplyClearRepeatingTy
-	v: Box
+	v: number,
 }
