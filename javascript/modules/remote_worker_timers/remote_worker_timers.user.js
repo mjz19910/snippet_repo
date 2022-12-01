@@ -456,22 +456,25 @@
 		remote_id_to_state_entries() {
 			return this.m_remote_id_to_state_map.entries();
 		}
-		/** @arg {ReplyMessageType2} msg */
+		/** @arg {ReplyMessageType2|TimerWorker_type_205|TimerWorker_type_206} msg */
 		on_result(msg) {
 			console.log(msg);
 			switch(msg.type) {
 				case g_timer_api.worker.clear.single: {
-					let remote_id=msg.value.value;
+					let remote_id=msg.value;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
 				case g_timer_api.worker.clear.repeating: {
-					let remote_id=msg.value.value;
+					let remote_id=msg.value;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
+				case ReplyMessage2: {
+					console.assert(false,'on_result timer_result_msg needs a handler for ReplyMessage2');
+				} break;
 				default:
-					console.assert(false,'on_result timer_result_msg needs a handler for',msg.value);
+					console.assert(false,'on_result timer_result_msg needs a handler for',msg);
 			}
 		}
 		/**
@@ -622,6 +625,16 @@
 		/** @readonly */
 		type=TimerWorkerSetTypes;
 		worker_types=new RemoteWorkerTypes;
+	}
+	class TimerWorker_type_205 {
+		/** @readonly */
+		type=205;
+		value=0;
+	}
+	class TimerWorker_type_206 {
+		/** @readonly */
+		type=206;
+		value=0;
 	}
 	/**
 	 * @template T
