@@ -1,12 +1,12 @@
-import {AbstractFire} from "./AbstractFire";
-import {BaseNode} from "./BaseNode.js";
+import {AbstractFireNode} from "../timeout_node/AbstractFireNode";
+import {BaseNode} from "../timeout_node/BaseNode.js";
 import {IntervalTargetFn} from "./IntervalTargetFn";
 
 export class IntervalNode extends BaseNode {
 	m_target_fn: CallableFunction;
 	m_timeout: number;
 	m_id: ReturnType<typeof setTimeout>|null;
-	m_target: AbstractFire|null;
+	m_target: AbstractFireNode|null;
 	constructor(target_fn: CallableFunction,timeout=0) {
 		super();
 		this.m_target_fn=target_fn;
@@ -17,7 +17,7 @@ export class IntervalNode extends BaseNode {
 	set() {
 		this.m_id=setInterval(this.run.bind(this),this.m_timeout);
 	}
-	start(target: AbstractFire|null=null) {
+	start(target: AbstractFireNode|null=null) {
 		if(target) {
 			this.m_target=target;
 		} else {

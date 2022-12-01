@@ -1,10 +1,10 @@
-import {AbstractFire} from "./AbstractFire.js";
+import {AbstractFireNode} from "./AbstractFireNode.js";
 
-export class TimeoutTarget<T> implements AbstractFire {
+export class TimeoutTargetFireNode<T> implements AbstractFireNode {
 	m_once: boolean;
 	m_obj: T;
 	m_callback: (this: T) => void;
-	constructor(obj: T,callback: TimeoutTarget<T>['m_callback']) {
+	constructor(obj: T,callback: TimeoutTargetFireNode<T>['m_callback']) {
 		this.m_once=true;
 		this.m_obj=obj;
 		this.m_callback=callback;
@@ -14,11 +14,11 @@ export class TimeoutTarget<T> implements AbstractFire {
 	}
 }
 
-export class TimeoutTargetWithDesc<T> implements AbstractFire {
+export class TimeoutTargetWithDesc<T> implements AbstractFireNode {
 	m_obj: T;
 	m_callback: (this: T) => void;
 	m_description: string;
-	constructor(obj: T,callback: TimeoutTarget<T>['m_callback'], description: string) {
+	constructor(obj: T,callback: TimeoutTargetFireNode<T>['m_callback'], description: string) {
 		this.m_obj=obj;
 		this.m_callback=callback;
 		this.m_description=description;

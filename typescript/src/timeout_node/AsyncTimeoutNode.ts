@@ -1,4 +1,4 @@
-import {AsyncTimeoutTarget} from "./AsyncTimeoutTarget.js";
+import {AsyncTimeoutTarget} from "../vm/AsyncTimeoutTarget.js";
 import {TimeoutNode} from "./TimeoutNode.js";
 
 export class AsyncTimeoutNode extends TimeoutNode {

@@ -1,5 +1,5 @@
 import {InstructionType} from "./instruction/InstructionType.js";
-import {AutoBuyInterface} from "./AutoBuyInterface.js";
+import {AutoBuyInterface} from "../auto_buy/AutoBuyInterface.js";
 import {Call} from "./instruction/general/Call.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
 import {Box} from "../box/Box.js";

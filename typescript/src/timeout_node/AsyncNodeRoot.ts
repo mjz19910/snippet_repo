@@ -1,17 +1,17 @@
 import {BaseNode} from "./BaseNode.js";
-import {IntervalIdNode} from "./IntervalIdNode";
-import {IntervalNode} from "./IntervalNode.js";
-import {IntervalTarget} from "./IntervalTarget.js";
-import {TimeoutIdNode} from "./TimeoutIdNode.js";
+import {IntervalIdNode} from "./IntervalIdNode.js";
+import {IntervalNode} from "../vm/IntervalNode.js";
+import {IntervalTarget} from "../vm/IntervalTarget.js";
+import {TimeoutIdNode} from "../vm/TimeoutIdNode.js";
 import {TimeoutNode} from "./TimeoutNode.js";
-import {TimeoutTarget} from "./TimeoutTarget.js";
+import {TimeoutTargetFireNode} from "./TimeoutTargetNode.js";
 
 export class AsyncNodeRoot extends BaseNode {
 	set(target_fn: () => void,timeout: number|undefined, once=true) {
 		let node;
 		if(once) {
 			node=new TimeoutNode(timeout);
-			node.start(new TimeoutTarget(null,target_fn));
+			node.start(new TimeoutTargetFireNode(null,target_fn));
 		} else {
 			node=new IntervalNode(target_fn,timeout);
 			node.start(new IntervalTarget(null,target_fn));
