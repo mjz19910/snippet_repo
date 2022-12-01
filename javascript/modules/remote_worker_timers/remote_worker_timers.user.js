@@ -833,7 +833,7 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplySetSingleMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|TimerWorkerSetTypesMsg} msg
+		 * @param {TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplySetSingleMsg|ReplyToWorkerStateMsg|TimerWorkerSetTypesMsg} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
