@@ -369,7 +369,7 @@
 					state.active=false;
 					this.clear(tag,remote_id);
 				}
-				this.worker_state.postMessage({
+				this.worker_state.typedPostMessage({
 					type: g_timer_api.worker.reply.fire.single,
 					value: remote_id
 				});
@@ -425,7 +425,7 @@
 				console.info('TypeError like: let value:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
 				return;
 			}
-			this.worker_state.postMessage({
+			this.worker_state.typedPostMessage({
 				type: msg_id,
 				remote_id,
 				timeout,
@@ -511,12 +511,12 @@
 			}
 			// we have to trust the user, go ahead and send the message anyway
 			if(tag===TIMER_SINGLE) {
-				this.worker_state.postMessage({
+				this.worker_state.typedPostMessage({
 					type: g_timer_api.worker.clear.single,
 					remote_id,
 				});
 			} else if(tag===TIMER_REPEATING) {
-				this.worker_state.postMessage({
+				this.worker_state.typedPostMessage({
 					type: g_timer_api.worker.clear.repeating,
 					remote_id,
 				});
@@ -532,12 +532,12 @@
 			if(!state) return;
 			if(state.active) {
 				if(state.type===TIMER_SINGLE&&tag===TIMER_SINGLE) {
-					this.worker_state.postMessage({
+					this.worker_state.typedPostMessage({
 						type: g_timer_api.worker.clear.single,
 						remote_id
 					});
 				} else if(state.type===TIMER_REPEATING&&tag===TIMER_REPEATING) {
-					this.worker_state.postMessage({
+					this.worker_state.typedPostMessage({
 						type: g_timer_api.worker.clear.repeating,
 						remote_id
 					});
@@ -783,7 +783,7 @@
 				worker_state.handle_message(e);
 			};
 			this.valid=true;
-			this.postMessage({
+			this.typedPostMessage({
 				type: g_timer_api.worker_set_types,
 				for_worker_state: true,
 				worker_types: g_timer_api
@@ -842,7 +842,7 @@
 					break;
 				}
 				case g_timer_api.worker_set_types: {
-					this.postMessage({
+					this.typedPostMessage({
 						type: g_timer_api.worker.ready
 					});
 				} break;
@@ -898,7 +898,7 @@
 			}
 		}
 		/** @arg {typeof WorkerStateMessageV} msg */
-		postMessage(msg) {
+		typedPostMessage(msg) {
 			return this.worker?.postMessage(msg);
 		}
 		/**
