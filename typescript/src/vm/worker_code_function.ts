@@ -1,17 +1,16 @@
+import {ReplyToWorkerT, WorkerUpdateMessageHandlerT} from "./constant_types.js";
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
-import {ReplyToWorkerTy_OLD} from "./ReplyToWorkerTy.js";
-import {TimeoutClearRTy} from "./TimeoutClearRTy.js";
-import {TimeoutClearSTy} from "./TimeoutClearSTy.js";
+import {TimeoutClearRTy_OLD} from "./TimeoutClearRTy.js";
+import {TimeoutClearSTy_OLD} from "./TimeoutClearSTy.js";
 import {TimeoutMessageReplyTy} from "./TimeoutMessageReplyTy.js";
 import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy.js";
 import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerTag} from "./TimerTag.js";
-import {WorkerUpdateMessageHandlerTy_OLD} from "./WorkerUpdateMessageHandlerTy.js";
 import {WorkerVerifyCallback} from "./WorkerVerifyCallback.js";
 export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 	const TIMER_SINGLE=1;
@@ -197,7 +196,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 						t: typeof reply_message_types.from_worker;
 						v: {
 							t: typeof message_types.reply.clear.single;
-							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearSTy];
+							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearSTy_OLD];
 						};
 					}={
 						t: reply_message_types.from_worker,
@@ -214,7 +213,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 						t: typeof reply_message_types.from_worker;
 						v: {
 							t: typeof message_types.reply.clear.repeating;
-							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearRTy];
+							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearRTy_OLD];
 						};
 					}={
 						t: reply_message_types.from_worker,
@@ -237,11 +236,11 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 	remote_worker_state.set_timer(new RemoteTimer(remote_api_info_instance));
 	let stored_for_later_messages: WorkerMessageType[]=[];
 	type ReplyToWorkerMessageType={
-		t: ReplyToWorkerTy_OLD;
+		t: ReplyToWorkerT;
 		v: never;
 	};
 	type UpdateWorkerMessageHandler={
-		t: WorkerUpdateMessageHandlerTy_OLD;
+		t: WorkerUpdateMessageHandlerT;
 		v: UpdateMessageHandlerType;
 	};
 	type MessageTimeoutMessageR={
