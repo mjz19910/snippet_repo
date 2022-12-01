@@ -35,13 +35,6 @@ export function register_obj_with_registry<T extends object>(target: T) {
 		console.log("Called register_obj with non-script",target);
 		return;
 	}
-	let scripts_res: WeakFinalInfo[]=[];
-	for(let i=0;i<weak_scripts_arr.length;i++) {
-		let elem=weak_scripts_arr[i];
-		if(elem!==null) {
-			scripts_res.push(elem);
-		}
-	}
 	let obj_ref=weak_scripts_arr.find((e: null|{ref: {deref: () => any;};}) => e&&e.ref.deref()===target);
 	if(obj_ref) {
 		target_id=obj_ref.id;
