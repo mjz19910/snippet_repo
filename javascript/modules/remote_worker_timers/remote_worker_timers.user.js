@@ -1133,18 +1133,18 @@
 			}
 		}
 		class RemoteTimerApi {
-			/**@type {typeof WorkerAsyncMessage|null} */
+			/**@type {typeof WorkerAsyncMessage} */
 			async=WorkerAsyncMessage;
-			/**@type {typeof TimerWorkerSetTypes|null} */
+			/**@type {typeof TimerWorkerSetTypes} */
 			worker_set_types=TimerWorkerSetTypes;
 			/**@typedef {import("../../../typescript/src/vm/ReplyTypesTy.js").ReplyTypesTy} ReplyTypesTy */
-			/**@type {ReplyTypesTy|null} */
+			/**@type {ReplyTypesTy} */
 			reply=new ReplyTypes;
 			/**@typedef {import("../../../typescript/src/vm/TimeoutFireInfoTy.js").TimeoutFireInfoTy} TimeoutFireInfoTy */
-			/**@type {TimeoutFireInfoTy|null} */
+			/**@type {TimeoutFireInfoTy} */
 			fire=new TimeoutFireInfo;
 			/**@typedef {import("../../../typescript/src/vm/TimeoutWorkerTypesTy.js").TimeoutWorkerTypesTy} TimeoutWorkerTypesTy */
-			/**@type {TimeoutWorkerTypesTy|null} */
+			/**@type {TimeoutWorkerTypesTy} */
 			worker=new TimeoutWorkerTypes;
 			/**@type {{single:"setTimeout",repeating:"setInterval"}} */
 			set_names={
