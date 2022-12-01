@@ -5,6 +5,8 @@ import {
 	ReplyFromWorker,
 	ReplyMessage1,
 	ReplyMessage2,
+	ReplySetRepeating,
+	ReplySetSingle,
 	ReplyToWorker,
 	TimeoutClearAny,
 	TimeoutClearRepeating,
@@ -23,7 +25,12 @@ import {
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
 } from "../constants.js";
-import {ReplySetTypesT} from "./ReplySetTypesT.js";
+export type ReplySetRepeatingTy=typeof ReplySetRepeating;
+export type ReplySetSingleTy=typeof ReplySetSingle;
+export type ReplySetTypesT={
+	single: ReplySetSingleTy;
+	repeating: ReplySetRepeatingTy;
+};
 export type TimeoutRepeatingReplyTy=typeof TimeoutRepeatingReply;
 export type TimeoutSingleReplyTy=typeof TimeoutSingleReply;
 export type WorkerReplyTypesTy={
