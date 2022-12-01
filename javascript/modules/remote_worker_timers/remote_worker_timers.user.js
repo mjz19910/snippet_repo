@@ -656,6 +656,7 @@
 	class ReplyFromWorkerMsg {
 		/** @readonly */
 		type=ReplyFromWorker;
+		/** @readonly @type {202|1001} */
 		source_type=1001;
 	}
 	class Message_600 {
@@ -1173,10 +1174,7 @@
 					// debugger;
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
-						value: {
-							type: g_timer_api.reply.ready,
-							value: msg.type
-						}
+						source_type: msg.type,
 					});
 				} break;
 				case g_timer_api.worker.set.single/*remote timer set single*/: {
