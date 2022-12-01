@@ -911,8 +911,7 @@
 		}
 		/** @arg {typeof WorkerStateMessageV} msg */
 		postMessage(msg) {
-			if(!this.worker) throw new Error("No worker");
-			return this.worker.postMessage(msg);
+			return this.worker?.postMessage(msg);
 		}
 		/**
 		 * @param {WorkerState} worker_state_value
