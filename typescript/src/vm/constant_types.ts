@@ -11,18 +11,28 @@ import {
 	TimeoutClearSingle,
 	TimeoutFireRepeating,
 	TimeoutFireSingle,
+	TimeoutMessageReady,
+	TimeoutSetTypes,
 	WorkerAsyncMessage,
-	WorkerDestroyType
+	WorkerDestroyType,
+	WorkerReadyReply,
+	WorkerUpdateMessageHandler,
+	WorkerUpdateMessageHandlerReply
 } from "../constants.js";
 import {ReplyClearMessages} from "./ReplyClearMessages.js";
 import {ReplySetMessages} from "./ReplySetMessages.js";
-import {TimeoutMessageReplyTy} from "./TimeoutMessageReplyTy.js";
-import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy.js";
-import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy.js";
-import {WorkerReadyReplyTy} from "./WorkerReadyReplyTy.js";
+import {TimeoutSetRTy} from "./TimeoutSetRTy.js";
+import {TimeoutSetSTy} from "./TimeoutSetSTy.js";
 import {WorkerReplyTypes} from "./WorkerReplyTypes.js";
-import {WorkerUpdateMessageHandlerReplyTy} from "./WorkerUpdateMessageHandlerReplyTy.js";
-import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy.js";
+export type TimeoutMessageReplyTy=typeof TimeoutMessageReady;
+export type TimeoutSetInfoTy={
+	single: TimeoutSetSTy;
+	repeating: TimeoutSetRTy;
+};
+export type TimeoutSetTypesTy=typeof TimeoutSetTypes;
+export type WorkerReadyReplyTy=typeof WorkerReadyReply;
+export type WorkerUpdateMessageHandlerReplyTy=typeof WorkerUpdateMessageHandlerReply;
+export type WorkerUpdateMessageHandlerTy=typeof WorkerUpdateMessageHandler;
 export type ReplyClearAnyTy=typeof ReplyClearAny;
 export type ReplyClearRepeatingTy=typeof ReplyClearRepeating;
 export type ReplyClearSingleTy=typeof ReplyClearSingle;
