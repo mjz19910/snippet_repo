@@ -577,6 +577,11 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
+	
+	class WorkerUpdateMessageHandlerMsg {
+		/** @readonly */
+		type=WorkerUpdateMessageHandler;
+	}
 	class TimeoutMessageReadyMsg {
 		/** @readonly */
 		type=TimeoutMessageReady;
@@ -719,6 +724,7 @@
 			let fv=false;
 			if(fv) return new TimeoutFireSMsg;
 			if(fv) return new TimeoutFireRMsg;
+			if(fv) return new WorkerUpdateMessageHandlerMsg;
 			if(fv) return new TimeoutMessageReadyMsg;
 			if(fv) return new TimeoutSetSingleMsg;
 			if(fv) return new TimeoutSetRepeatingMsg;
@@ -795,7 +801,7 @@
 				case TimeoutFireRepeating: {
 					worker_state.timer.fire(TIMER_REPEATING,msg.value);
 				} break;
-				// case WorkerUpdateMessageHandler: break;
+				case WorkerUpdateMessageHandler: break;
 				case TimeoutMessageReady: this.on_result(msg); break;
 				case TimeoutSetSingle: break;
 				case TimeoutSetRepeating: break;
