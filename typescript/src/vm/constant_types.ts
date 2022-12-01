@@ -260,7 +260,13 @@ export type TimeoutSingleReplyMessageT={
 };
 
 export type WorkerVerifyType={
-	TIMER_SINGLE: typeof TIMER_SINGLE
-	TIMER_REPEATING: typeof TIMER_REPEATING
-	TIMER_TAG_COUNT: typeof TIMER_TAG_COUNT
-}
+	TIMER_SINGLE: typeof TIMER_SINGLE;
+	TIMER_REPEATING: typeof TIMER_REPEATING;
+	TIMER_TAG_COUNT: typeof TIMER_TAG_COUNT;
+};
+
+export type WorkerVerifyCallback=(verify_obj: WorkerVerifyType) => void;
+export type TimeoutTargetObjects=AutoBuy|AutoBuyState;
+export type TimeoutTargetCallback=(this: TimeoutTargetObjects) => void;
+export type FnVoidResult=() => void;
+export type TimeoutCallbackType=TimeoutTargetCallback|FnVoidResult;
