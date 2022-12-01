@@ -30,3 +30,5 @@ export const TimeoutSetStringSingle="setTimeout";
 export const TimeoutSetStringRepeating="setInterval";
 export const TimeoutClearStringSingle="clearTimeout";
 export const TimeoutClearStringRepeating="clearInterval";
+
+export const GlobalWorkerApiKey="g_worker_api";

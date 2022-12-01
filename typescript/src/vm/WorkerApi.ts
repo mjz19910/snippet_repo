@@ -1,4 +1,5 @@
 import {
+	GlobalWorkerApiKey,
 	ReplyFromWorker,
 	ReplySetRepeating,
 	ReplySetSingle,
@@ -15,17 +16,16 @@ import {
 	WorkerReplyTypes,
 	WorkerSendTypes
 } from "./constant_types.js";
-import {GlobalStateKey} from "./GlobalStateKey.js";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
 import {Timer} from "./Timer.js";
 
 declare global {
 	interface Window {
-		[GlobalStateKey]?: WorkerState;
+		[GlobalWorkerApiKey]?: WorkerApi;
 	}
 }
 
-export class WorkerState {
+export class WorkerApi {
 	flags: Map<string,boolean>;
 	worker_code;
 	timer: Timer;
@@ -51,7 +51,7 @@ export class WorkerState {
 		this.worker=null;
 		this.worker_url=null;
 		this.flags.set('connected',false);
-		let weak_worker_state: WeakRef<WorkerState>=new WeakRef(this);
+		let weak_worker_state: WeakRef<WorkerApi>=new WeakRef(this);
 		this.worker_url=URL.createObjectURL(this.worker_code);
 		this.worker=new Worker(this.worker_url);
 		this.worker.onmessage=function onmessage(e: MessageEvent<WorkerReplyTypes>) {
@@ -140,13 +140,13 @@ export class WorkerState {
 		if(!this.worker) return;
 		return this.worker.postMessage(data);
 	}
-	static has_old_global_state_value(worker_state_value: WorkerState) {
+	static has_old_global_state_value(worker_state_value: WorkerApi) {
 		return this.has_global_state()&&!this.equals_global_state(worker_state_value);
 	}
-	static equals_global_state(worker_state_value: WorkerState) {
+	static equals_global_state(worker_state_value: WorkerApi) {
 		return this.get_global_state()===worker_state_value;
 	}
-	static maybe_delete_old_global_state_value(worker_state_value: WorkerState) {
+	static maybe_delete_old_global_state_value(worker_state_value: WorkerApi) {
 		if(this.has_old_global_state_value(worker_state_value)) {
 			this.delete_old_global_state();
 		}
@@ -170,17 +170,17 @@ export class WorkerState {
 		worker_state_value.destroy();
 	}
 	static has_global_state() {
-		return window.hasOwnProperty(GlobalStateKey);
+		return window.hasOwnProperty(GlobalWorkerApiKey);
 	}
-	static get_global_state(): WorkerState|undefined {
-		return window[GlobalStateKey];
+	static get_global_state(): WorkerApi|undefined {
+		return window[GlobalWorkerApiKey];
 	}
-	static set_global_state(worker_state_value: WorkerState) {
+	static set_global_state(worker_state_value: WorkerApi) {
 		this.maybe_delete_old_global_state_value(worker_state_value);
-		window[GlobalStateKey]=worker_state_value;
+		window[GlobalWorkerApiKey]=worker_state_value;
 	}
 	static delete_global_state() {
-		delete window[GlobalStateKey];
+		delete window[GlobalWorkerApiKey];
 	}
 	destroy() {
 		if(this.worker) {

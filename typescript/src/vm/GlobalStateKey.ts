@@ -1,1 +1,1 @@
-export const GlobalStateKey="global_state_key";
+export const GlobalWorkerApiKey="g_worker_api";

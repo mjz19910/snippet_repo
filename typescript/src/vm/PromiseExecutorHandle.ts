@@ -1,17 +1,17 @@
-import {WorkerState} from "./WorkerState.js"
+import {WorkerApi} from "./WorkerApi.js"
 
 export class PromiseExecutorHandle {
 	m_closed
 	destroyed
-	m_accept: ((arg0: WorkerState|null) => void)|null
+	m_accept: ((arg0: WorkerApi|null) => void)|null
 	m_reject
-	constructor(accept: (arg0: WorkerState|null) => void,reject: any) {
+	constructor(accept: (arg0: WorkerApi|null) => void,reject: any) {
 		this.m_closed=false
 		this.destroyed=false
 		this.m_accept=accept
 		this.m_reject=reject
 	}
-	accept(value: WorkerState|null) {
+	accept(value: WorkerApi|null) {
 		if(this.destroyed)
 			throw new Error("accept called on destroyed PromiseExecutorHandle")
 		let accept=this.m_accept

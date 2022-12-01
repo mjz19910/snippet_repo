@@ -1,7 +1,7 @@
 import {TimerApi} from "./TimerApi.js";
 import {UniqueIdGenerator} from "./UniqueIdGenerator.js";
 import {worker_code_function} from "./worker_code_function.js";
-import {WorkerState} from "./WorkerState.js";
+import {WorkerApi as WorkerApi} from "./WorkerApi.js";
 import {Timer} from "./Timer.js";
 import {do_worker_verify} from "./do_worker_verify.js";
 import {l_log_if} from "./l_log_if.js";
@@ -23,13 +23,13 @@ declare global {
 	}
 }
 
-export function move_timers_to_worker_promise_executor(p_accept: (arg0: WorkerState|null) => void,p_reject: () => void) {
+export function move_timers_to_worker_promise_executor(p_accept: (arg0: WorkerApi|null) => void,p_reject: () => void) {
 	if(globalThis.remote_worker_state) {
 		postMessage({t: WorkerDestroyType});
 		p_accept(null);
 		return;
 	}
-	if(WorkerState.maybe_delete_old_global_state())
+	if(WorkerApi.maybe_delete_old_global_state())
 		return;
 	try {
 		worker_code_function(do_worker_verify);
@@ -42,7 +42,7 @@ export function move_timers_to_worker_promise_executor(p_accept: (arg0: WorkerSt
 	const id_generator=new UniqueIdGenerator;
 	const timer=new Timer(id_generator,new TimerApi);
 	const executor_handle=new PromiseExecutorHandle(p_accept,p_reject);
-	const worker_api=new WorkerState(worker_code_blob,timer,executor_handle);
+	const worker_api=new WorkerApi(worker_code_blob,timer,executor_handle);
 	const setTimeout_global=setTimeout;
 	function remoteSetTimeout(handler: TimerHandler,timeout: number|undefined,...target_args: any[]) {
 		if(!worker_api.flags.get("connected")) {

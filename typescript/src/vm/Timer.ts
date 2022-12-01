@@ -6,7 +6,7 @@ import {TimerApi} from "./TimerApi.js";
 import {TimerState} from "./TimerState.js";
 import {TimerTag} from "./TimerTag.js";
 import {UniqueIdGenerator} from "./UniqueIdGenerator.js";
-import {WorkerState} from "./WorkerState.js";
+import {WorkerApi} from "./WorkerApi.js";
 import {TimeoutClearStrings, TimeoutSetStrings} from "./interfaces.js";
 
 export class Timer {
@@ -14,7 +14,7 @@ export class Timer {
 	m_remote_id_to_main_state_map: any;
 	m_api_map;
 	m_api_info: TimerApi;
-	weak_worker_state: WeakRef<WorkerState>|null;
+	weak_worker_state: WeakRef<WorkerApi>|null;
 	m_remote_id_to_state_map: Map<number|string,TimerState>;
 	constructor(id_generator: UniqueIdGenerator,api_info: TimerApi) {
 		this.id_generator=id_generator;
