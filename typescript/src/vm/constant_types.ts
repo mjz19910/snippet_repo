@@ -28,7 +28,8 @@ import {
 	TimeoutClearStringRepeating,
 	TimeoutSetStringSingle,
 	TimeoutSetStringRepeating
-} from "../constants.js";
+} from "./constants.js";
+
 export type ReplyClearRepeatingMessageT={
 	t: ReplyClearRepeatingT;
 	v: number,
