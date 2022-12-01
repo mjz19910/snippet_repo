@@ -1193,7 +1193,7 @@
 						args: [msg.type],
 					});
 				} break;
-				case g_timer_api.worker.set.single/*remote timer set single*/: {
+				case g_timer_api.worker.set.single: {
 					console.log('worker set single',msg.remote_id,msg.timeout);
 					let local_id=remote_worker_state.set(TIMER_SINGLE,msg.remote_id,msg.timeout);
 					typedPostMessage({
