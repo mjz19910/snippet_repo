@@ -321,7 +321,7 @@ export class AutoBuy implements AutoBuyInterface {
 				if(style_element_promise.type==='promise_box'&&style_element_promise.await_type==='CSSStyleSheet') {
 					this.adopt_styles(await style_element_promise.value);
 				}
-				return new VoidBox(void 0);
+				return new VoidBox();
 			}),...call_arg_arr],
 			[0,'dom_new',CSSStyleSheet,[],
 				new PromiseFunctionBox(async (...args: Box[]) => {
