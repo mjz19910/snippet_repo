@@ -153,8 +153,8 @@
 	const ReplyToLocalTimer=502;
 	const ReplyFromWorker=503;
 	const ReplyToWorker=504;
+	const WorkerAsyncMessage=600;
 	const WorkerUpdateMessageHandler=601;
-	const WorkerAsyncMessage=801;
 	const TimeoutSetTypes=700;
 	class ReplyClearTypes {
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearSingleT} */
@@ -1030,15 +1030,12 @@
 		}
 		if(WorkerState.maybe_delete_old_global_state()) return null;
 		try {
-			worker_code_function(function(/** @type {{ TIMER_REPEATING: number; TIMER_TAG_COUNT: number; TimerWorkerSetTypes: number; }} */ verify_obj) {
+			worker_code_function(function(/** @type {{ TIMER_REPEATING: 2; TIMER_TAG_COUNT: 3; TimerWorkerSetTypes: number; }} */ verify_obj) {
 				VERIFY(verify_obj.TIMER_REPEATING===TIMER_REPEATING,"TIMER_SINGLE constant matches");
 				VERIFY(verify_obj.TIMER_REPEATING===TIMER_REPEATING,"TIMER_REPEATING constant matches");
 				VERIFY(verify_obj.TIMER_TAG_COUNT===TIMER_TAG_COUNT,"TIMER_TAG_COUNT constant matches");
 				VERIFY(verify_obj.TimerWorkerSetTypes===TimeoutSetTypes,"TimerWorkerSetTypes constant matches");
 				return;
-			},function verify_fail() {
-				executor_reject(new Error("verify_fail called"));
-				failed=true;
 			});
 			if(failed) {
 				return;
@@ -1132,10 +1129,9 @@
 		return worker_state;
 	}
 	/**
-	 * @param {{ (verify_obj: any): void; (arg0: { TIMER_SINGLE: number; TIMER_REPEATING: number; TIMER_TAG_COUNT: number; TimerWorkerSetTypes: number; }): void; }} verify_callback
-	 * @param {() => void} verify_fail
+	 * @param {{(arg0: { TIMER_SINGLE: typeof TIMER_SINGLE; TIMER_REPEATING: typeof TIMER_REPEATING; TIMER_TAG_COUNT: typeof TIMER_TAG_COUNT; TimerWorkerSetTypes: typeof TimerWorkerSetTypes; }): void; }} verify_callback
 	 */
-	function worker_code_function(verify_callback,verify_fail) {
+	function worker_code_function(verify_callback) {
 		const TIMER_SINGLE=1;
 		const TIMER_REPEATING=2;
 		const TIMER_TAG_COUNT=3;
