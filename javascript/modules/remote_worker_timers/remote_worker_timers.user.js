@@ -1341,7 +1341,7 @@
 					case TIMER_SINGLE: api_name=g_timer_api.set_names.single; break;
 					case TIMER_REPEATING: api_name=g_timer_api.set_names.repeating; break;
 				}
-				if(!api_name) return;
+				if(!api_name) throw new Error("No api_name found");
 				obj.local_id=globalThis[api_name](fire_timer,timeout,this,remote_id);
 				return obj.local_id;
 			}
