@@ -25,14 +25,14 @@ import {
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
 } from "../constants.js";
-export type ReplySetRepeatingTy=typeof ReplySetRepeating;
 export type ReplySetSingleTy=typeof ReplySetSingle;
+export type ReplySetRepeatingTy=typeof ReplySetRepeating;
 export type ReplySetTypesT={
 	single: ReplySetSingleTy;
 	repeating: ReplySetRepeatingTy;
 };
-export type TimeoutRepeatingReplyTy=typeof TimeoutRepeatingReply;
 export type TimeoutSingleReplyTy=typeof TimeoutSingleReply;
+export type TimeoutRepeatingReplyTy=typeof TimeoutRepeatingReply;
 export type WorkerReplyTypesTy={
 	single: TimeoutSingleReplyTy;
 	repeating: TimeoutRepeatingReplyTy;
@@ -42,11 +42,19 @@ export type WorkerReplyTypesT={
 };
 export type TimeoutSetRTy=typeof TimeoutSetRepeating;
 export type TimeoutSetSTy=typeof TimeoutSetSingle;
-export type TimeoutMessageReplyTy=typeof TimeoutMessageReady;
 export type TimeoutSetInfoTy={
 	single: TimeoutSetSTy;
 	repeating: TimeoutSetRTy;
 };
+export type TimeoutClearSTy=typeof TimeoutClearSingle;
+export type TimeoutClearRTy=typeof TimeoutClearRepeating;
+export type TimeoutClearATy=typeof TimeoutClearAny;
+export type TimeoutClearInfoTy={
+	single: TimeoutClearSTy;
+	repeating: TimeoutClearRTy;
+	any: TimeoutClearATy;
+};
+export type TimeoutMessageReplyTy=typeof TimeoutMessageReady;
 export type TimeoutSetTypesTy=typeof TimeoutSetTypes;
 export type WorkerReadyReplyTy=typeof WorkerReadyReply;
 export type WorkerUpdateMessageHandlerReplyTy=typeof WorkerUpdateMessageHandlerReply;
@@ -54,14 +62,6 @@ export type WorkerUpdateMessageHandlerTy=typeof WorkerUpdateMessageHandler;
 export type ReplyClearAnyTy=typeof ReplyClearAny;
 export type ReplyClearRepeatingTy=typeof ReplyClearRepeating;
 export type ReplyClearSingleTy=typeof ReplyClearSingle;
-export type TimeoutClearATy=typeof TimeoutClearAny;
-export type TimeoutClearRTy=typeof TimeoutClearRepeating;
-export type TimeoutClearSTy=typeof TimeoutClearSingle;
-export type TimeoutClearInfoTy={
-	single: TimeoutClearSTy;
-	repeating: TimeoutClearRTy;
-	any: TimeoutClearATy;
-};
 
 export type TimeoutFireSingleT=typeof TimeoutFireSingle;
 export type TimeoutFireRepeatingT=typeof TimeoutFireRepeating;
