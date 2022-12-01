@@ -1,4 +1,4 @@
-import {WorkerUpdateMessageHandlerTy} from "./WorkerUpdateMessageHandlerTy.js"
+import {WorkerUpdateMessageHandlerTy_OLD} from "./WorkerUpdateMessageHandlerTy.js"
 import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy.js"
 import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy.js"
 import {WorkerReplyTypes} from "./WorkerReplyTypes.js"
@@ -9,7 +9,7 @@ import {TimeoutMessageReplyTy} from "./TimeoutMessageReplyTy.js";
 
 export class TimeoutWorkerTypes implements TimeoutWorkerTypesTy {
 	reply: WorkerReplyTypes=new WorkerReplyTypes
-	update_message_handler: WorkerUpdateMessageHandlerTy=WorkerUpdateMessageHandler
+	update_message_handler: WorkerUpdateMessageHandlerTy_OLD=WorkerUpdateMessageHandler
 	ready: TimeoutMessageReplyTy=TimeoutMessageReady
 	set: TimeoutSetInfo=new TimeoutSetInfo
 	clear: TimeoutClearInfo=new TimeoutClearInfo
