@@ -1408,8 +1408,6 @@
 			}
 			/** @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg} msg */
 			do_clear(msg) {
-				if(!g_timer_api.worker) throw 1;
-				if(!g_timer_api.reply) throw 1;
 				let remote_id=msg.remote_id;
 				let maybe_local_id=this.clear(remote_id);
 				// debugger;
