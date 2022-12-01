@@ -212,8 +212,8 @@ export type TimeoutClearStringsT={
 };
 
 export type SetSingleMessageDataT={
-	t: number
-	v: number
+	t: number;
+	v: number;
 };
 
 export type MessageTimeoutSetSingleT={
@@ -222,6 +222,16 @@ export type MessageTimeoutSetSingleT={
 };
 
 export type TimeoutSetStringsTy={
-	single: typeof TimeoutSetStringSingle
-	repeating: typeof TimeoutSetStringRepeating
-}
+	single: typeof TimeoutSetStringSingle;
+	repeating: typeof TimeoutSetStringRepeating;
+};
+
+export type SetRepeatingMessageDataT={
+	t: number;
+	v: number;
+};
+
+export type TimeoutSetRepeatingMessageT={
+	t: TimeoutSetRepeatingT;
+	v: SetRepeatingMessageDataT;
+};
