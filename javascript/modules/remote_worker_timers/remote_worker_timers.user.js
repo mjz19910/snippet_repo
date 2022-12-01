@@ -902,13 +902,12 @@
 				} return;
 				case ReplyFromWorker: {
 					// On the worker, do nothing...
-				} break;
+				} return;
 				default: {
 					console.assert(false,"unhandled result",msg);
 					debugger;
 				}
 			}
-			msg;
 		}
 		/** @arg {typeof WorkerStateMessageV} msg */
 		typedPostMessage(msg) {
