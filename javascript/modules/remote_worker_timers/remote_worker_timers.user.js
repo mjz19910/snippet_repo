@@ -611,9 +611,17 @@
 		type=ReplyClearRepeating;
 		value={};
 	}
+	class RemoteWorkerTypes {
+		/** @readonly */
+		async=WorkerAsyncMessage;
+		reply=new ReplyTypes;
+		fire=new TimeoutFireInfo;
+		worker=new TimeoutWorkerTypes;
+	}
 	class TimerWorkerSetTypesMsg {
 		/** @readonly */
 		type=TimerWorkerSetTypes;
+		worker_types=new RemoteWorkerTypes;
 		value={};
 	}
 	/**
@@ -1045,14 +1053,10 @@
 			let msg=e.data;
 			switch(msg.type) {
 				case g_timer_api.worker_set_types: {
-					let v_async=msg.async;
+					let value=msg.worker_types;
+					let v_async=value.async;
 					if(v_async===WorkerAsyncMessage) {
-						g_timer_api.on_set_types({
-							async: v_async,
-							reply: value.reply,
-							fire: value.fire,
-							worker: value.worker,
-						});
+						g_timer_api.on_set_types(value);
 					} else {
 						throw new Error("Invalid timer_api_types");
 					}
@@ -1150,7 +1154,7 @@
 				repeating: "clearInterval"
 			};
 			/**
-			 * @param {{ async: typeof WorkerAsyncMessage; reply: ReplyTypesTy; fire: any; worker: any; }} types
+			 * @param {RemoteWorkerTypes} types
 			 */
 			on_set_types(types) {
 				this.async=types.async;
