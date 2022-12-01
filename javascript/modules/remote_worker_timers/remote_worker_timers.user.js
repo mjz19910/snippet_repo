@@ -141,7 +141,7 @@
 	const TimeoutClearRepeating=206;
 	const TimeoutClearAny=207;
 	const WorkerDestroyType=300;
-	const WorkerUpdateMessageHandlerReply=301
+	const WorkerUpdateMessageHandlerReply=301;
 	const WorkerReadyReply=302;
 	const ReplySetSingle=303;
 	const ReplySetRepeating=304;
@@ -796,9 +796,8 @@
 			switch(msg.type) {
 				case TimeoutFireSingle: {
 					worker_state.timer.fire(TIMER_SINGLE,msg.value);
-					break;
-				}
-				case TimeoutFireRepeating/*worker_state.timer repeating fire*/: {
+				} break;
+				case TimeoutFireRepeating: {
 					worker_state.timer.fire(TIMER_REPEATING,msg.value);
 				} break;
 				case WorkerDestroyType: {
