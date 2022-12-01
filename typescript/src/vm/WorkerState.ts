@@ -1,30 +1,23 @@
-import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {Timer} from "./Timer.js";
 import {
 	ReplyFromWorker,
-	ReplyToWorkerState,
-	ReplyToLocalTimer,
 	ReplySetRepeating,
 	ReplySetSingle,
+	ReplyToLocalTimer,
+	ReplyToWorkerState,
 	TimeoutClearRepeating,
 	TimeoutClearSingle,
 	WorkerDestroyType,
 	WorkerReadyReply,
 	WorkerUpdateMessageHandlerReply
 } from "./constants.js";
-import {GlobalStateKey} from "./GlobalStateKey.js";
 import {
 	DispatchMessageType,
-	TimeoutSetSingleMessageT,
-	TimeoutClearAnyMessageT,
-	TimeoutClearRepeatingMessageT,
-	TimeoutClearSingleMessageT,
-	TimeoutFireSingleMessageT,
-	TimeoutSetRepeatingMessageT,
 	WorkerReplyTypes,
-	TimeoutSingleReplyMessageT,
 	WorkerSendTypes
 } from "./constant_types.js";
+import {GlobalStateKey} from "./GlobalStateKey.js";
+import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
+import {Timer} from "./Timer.js";
 
 declare global {
 	interface Window {
