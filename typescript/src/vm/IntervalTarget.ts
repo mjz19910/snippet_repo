@@ -1,4 +1,4 @@
-import {AbstractFireNode} from "../timeout_node/AbstractFireNode.js";
+import {AbstractFireNode} from "../timer_node/AbstractFireNode.js";
 
 export class IntervalTarget<T> implements AbstractFireNode {
 	m_once: boolean;

@@ -1,6 +1,6 @@
 import {BaseNode} from "./BaseNode.js";
 import {IntervalIdNode} from "./IntervalIdNode.js";
-import {IntervalNode} from "../vm/IntervalNode.js";
+import {IntervalNode} from "./IntervalNode.js";
 import {IntervalTarget} from "../vm/IntervalTarget.js";
 import {TimeoutIdNode} from "../vm/TimeoutIdNode.js";
 import {TimeoutNode} from "./TimeoutNode.js";

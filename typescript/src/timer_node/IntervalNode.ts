@@ -1,6 +1,6 @@
-import {AbstractFireNode} from "../timeout_node/AbstractFireNode";
-import {BaseNode} from "../timeout_node/BaseNode.js";
-import {IntervalTargetFn} from "./IntervalTargetFn";
+import {AbstractFireNode} from "./AbstractFireNode";
+import {BaseNode} from "./BaseNode.js";
+import {IntervalTargetFn} from "../vm/IntervalTargetFn";
 
 export class IntervalNode extends BaseNode {
 	m_target_fn: CallableFunction;

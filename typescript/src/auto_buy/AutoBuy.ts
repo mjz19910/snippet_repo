@@ -1,6 +1,6 @@
 import {array_sample_end} from "../vm/array_sample_end.js";
-import {AsyncNodeRoot} from "../timeout_node/AsyncNodeRoot.js";
-import {AsyncTimeoutNode} from "../timeout_node/AsyncTimeoutNode.js";
+import {AsyncNodeRoot} from "../timer_node/AsyncNodeRoot.js";
+import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
 import {AsyncTimeoutTarget} from "../vm/AsyncTimeoutTarget.js";
 import {AutoBuyState} from "./AutoBuyState.js";
 import {Box} from "../box/Box.js";
@@ -14,7 +14,7 @@ import {l_log_if} from "../l_log_if.js";
 import {MulCompression} from "../vm/MulCompression.js";
 import {SimpleStackVMParser} from "../vm/SimpleStackVMParser.js";
 import {specialclick_inject} from "../vm/specialclick_inject.js";
-import {TimeoutTargetWithDesc} from "../timeout_node/TimeoutTargetNode.js";
+import {TimeoutTargetWithDesc} from "../timer_node/TimeoutTargetNode.js";
 import {DataLoader} from "../vm/wasm/DataLoader.js";
 import {debug_id_syms} from "../debug_id_syms.js";
 import {AUDIO_ELEMENT_VOLUME} from "../vars.js";

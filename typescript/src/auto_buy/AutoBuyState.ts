@@ -1,6 +1,6 @@
 import {AverageRatioRoot} from "../vm/AverageRatioRoot.js";
-import {AsyncTimeoutNode} from "../timeout_node/AsyncTimeoutNode.js";
-import {TimeoutTargetWithDesc} from "../timeout_node/TimeoutTargetNode.js";
+import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
+import {TimeoutTargetWithDesc} from "../timer_node/TimeoutTargetNode.js";
 import {AverageRatio} from "../vm/AverageRatio.js";
 import {AutoBuyRootType} from "./AutoBuyRootType.js";
 
