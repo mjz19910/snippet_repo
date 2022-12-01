@@ -664,9 +664,9 @@
 	class ReplyFromWorkerMsg {
 		/** @readonly */
 		type=ReplyFromWorker;
-		/** @readonly @type {202|203|204|205|206|1001} */
-		source_type=1001;
-		/** @type {[-1]|[202]|[203,number|undefined,number,number]|[204,number|undefined,number,number]|[205,number,any]|[206,number,any]|[1001]} */
+		/** @readonly @type {202|203|204|205|206|typeof TimeoutSetTypes} */
+		source_type=TimeoutSetTypes;
+		/** @type {[-1]|[202]|[203,number|undefined,number,number]|[204,number|undefined,number,number]|[205,number,any]|[206,number,any]|[typeof TimeoutSetTypes]} */
 		args=[-1];
 	}
 	class ReplyToWorkerMsg {
@@ -1030,11 +1030,11 @@
 		}
 		if(WorkerState.maybe_delete_old_global_state()) return null;
 		try {
-			worker_code_function(function(/** @type {{ TIMER_REPEATING: 2; TIMER_TAG_COUNT: 3; TimerWorkerSetTypes: number; }} */ verify_obj) {
+			worker_code_function(function(/** @type {WorkerVars} */ verify_obj) {
 				VERIFY(verify_obj.TIMER_REPEATING===TIMER_REPEATING,"TIMER_SINGLE constant matches");
 				VERIFY(verify_obj.TIMER_REPEATING===TIMER_REPEATING,"TIMER_REPEATING constant matches");
 				VERIFY(verify_obj.TIMER_TAG_COUNT===TIMER_TAG_COUNT,"TIMER_TAG_COUNT constant matches");
-				VERIFY(verify_obj.TimerWorkerSetTypes===TimeoutSetTypes,"TimerWorkerSetTypes constant matches");
+				VERIFY(verify_obj.TimeoutSetTypes===TimeoutSetTypes,"TimerWorkerSetTypes constant matches");
 				return;
 			});
 			if(failed) {
@@ -1128,14 +1128,24 @@
 		});
 		return worker_state;
 	}
+	class WorkerVars {
+		/** @readonly */
+		TIMER_SINGLE=TIMER_SINGLE;
+		/** @readonly */
+		TIMER_REPEATING=TIMER_REPEATING;
+		/** @readonly */
+		TIMER_TAG_COUNT=TIMER_TAG_COUNT;
+		/** @readonly */
+		TimeoutSetTypes=TimeoutSetTypes;
+	}
 	/**
-	 * @param {{(arg0: { TIMER_SINGLE: typeof TIMER_SINGLE; TIMER_REPEATING: typeof TIMER_REPEATING; TIMER_TAG_COUNT: typeof TIMER_TAG_COUNT; TimerWorkerSetTypes: typeof TimerWorkerSetTypes; }): void; }} verify_callback
+	 * @param {{(arg0: WorkerVars): void; }} verify_callback
 	 */
 	function worker_code_function(verify_callback) {
 		const TIMER_SINGLE=1;
 		const TIMER_REPEATING=2;
 		const TIMER_TAG_COUNT=3;
-		const TimerWorkerSetTypes=1001;
+		const TimeoutSetTypes=700;
 		if(verify_callback) {
 			verify_callback({
 				/** @type {typeof TIMER_SINGLE} */
@@ -1144,8 +1154,8 @@
 				TIMER_REPEATING: TIMER_REPEATING,
 				/** @type {typeof TIMER_TAG_COUNT} */
 				TIMER_TAG_COUNT: TIMER_TAG_COUNT,
-				/** @type {typeof TimerWorkerSetTypes} */
-				TimerWorkerSetTypes: TimerWorkerSetTypes
+				/** @type {typeof TimeoutSetTypes} */
+				TimeoutSetTypes: TimeoutSetTypes
 			});
 		}
 		/** @type {any[]} */
@@ -1240,8 +1250,8 @@
 		class RemoteTimerApi {
 			/**@type {typeof WorkerAsyncMessage} */
 			async=WorkerAsyncMessage;
-			/**@type {typeof TimerWorkerSetTypes} */
-			worker_set_types=TimerWorkerSetTypes;
+			/**@type {typeof TimeoutSetTypes} */
+			worker_set_types=TimeoutSetTypes;
 			reply=new ReplyTypes;
 			fire=new TimeoutFireInfo;
 			worker=new TimeoutWorkerTypes;
