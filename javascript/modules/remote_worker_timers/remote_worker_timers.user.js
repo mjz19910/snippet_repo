@@ -210,7 +210,7 @@
 		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutClearAnyT} */
 		any=TimeoutClearAny;
 	}
-	class WorkerFireReplyTypes {
+	class WorkerReplyTimerFireTypes {
 		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSingleReplyT} */
 		single=TimeoutSingleReply;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutRepeatingReplyT} */
@@ -218,7 +218,7 @@
 	}
 	class WorkerReplyTypes {
 		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerReplyTimerFireTypesT} */
-		fire=new WorkerFireReplyTypes;
+		fire=new WorkerReplyTimerFireTypes;
 	}
 	class TimeoutWorkerTypes {
 		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerReplyTypesT} */
