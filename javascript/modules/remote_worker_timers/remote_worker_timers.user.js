@@ -148,8 +148,8 @@
 	const ReplyClearSingle=305;
 	const ReplyClearRepeating=306;
 	const ReplyClearAny=307;
-	const ReplyToWorkerType=401;
-	const ReplyToTimerType=402;
+	const ReplyToWorkerState=401;
+	const ReplyToLocalTimer=402;
 	const ReplyFromWorker=500;
 	const ReplyToWorker=600;
 	const TimeoutSingleReply=700;
@@ -178,9 +178,9 @@
 		/** @readonly */
 		ready=WorkerReadyReply;
 		/** @readonly */
-		msg1=ReplyToWorkerType;
+		msg1=ReplyToWorkerState;
 		/** @readonly */
-		msg2=ReplyToTimerType;
+		msg2=ReplyToLocalTimer;
 		/** @readonly */
 		from_worker=ReplyFromWorker;
 		/** @readonly */
@@ -457,7 +457,7 @@
 		remote_id_to_state_entries() {
 			return this.m_remote_id_to_state_map.entries();
 		}
-		/** @arg {ReplyMessageType2|TimeoutClearSingleMsg|TimeoutClearRepeatingMsg} msg */
+		/** @arg {ReplyToLocalTimerMsg|TimeoutClearSingleMsg|TimeoutClearRepeatingMsg} msg */
 		on_result(msg) {
 			console.log(msg);
 			switch(msg.type) {
@@ -471,7 +471,7 @@
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
-				case ReplyToTimerType: {
+				case ReplyToLocalTimer: {
 					console.assert(false,'on_result timer_result_msg needs a handler for ReplyMessage2');
 				} break;
 				default:
@@ -634,15 +634,15 @@
 		type=ReplyClearRepeating;
 		value={};
 	}
-	class ReplyMessageType1 {
+	class ReplyToWorkerStateMsg {
 		/** @readonly */
-		type=ReplyToWorkerType;
+		type=ReplyToWorkerState;
 		for_worker_state=true;
 		value={};
 	}
-	class ReplyMessageType2 {
+	class ReplyToLocalTimerMsg {
 		/** @readonly */
-		type=ReplyToTimerType;
+		type=ReplyToLocalTimer;
 		value={};
 	}
 	class ReplyFromWorkerMsg {
@@ -702,12 +702,12 @@
 		}
 		/** @arg {WorkerStateMessage} msg */
 		static as_reply_type_1(msg) {
-			assert_as_instance(msg,ReplyMessageType1);
+			assert_as_instance(msg,ReplyToWorkerStateMsg);
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
 		static as_reply_type_2(msg) {
-			assert_as_instance(msg,ReplyMessageType2);
+			assert_as_instance(msg,ReplyToLocalTimerMsg);
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
@@ -725,8 +725,8 @@
 			if(fv) return new TimeoutClearSingleMsg;
 			if(fv) return new TimeoutClearRepeatingMsg;
 			if(fv) return new WorkerDestroyTypeMsg;
-			if(fv) return new ReplyMessageType1;
-			if(fv) return new ReplyMessageType2;
+			if(fv) return new ReplyToWorkerStateMsg;
+			if(fv) return new ReplyToLocalTimerMsg;
 			if(fv) return new ReplyFromWorkerMsg;
 			if(fv) return new ReplyToWorkerMsg;
 			if(fv) return new TimeoutSingleReplyMsg;
@@ -805,10 +805,10 @@
 				case WorkerDestroyType: {
 					worker_state.destroy();
 				} break;
-				case ReplyToWorkerType: {
+				case ReplyToWorkerState: {
 					worker_state.dispatch_message(msg);
 				} break;
-				case ReplyToTimerType: {
+				case ReplyToLocalTimer: {
 					worker_state.dispatch_message(msg);
 				} break;
 				case ReplyFromWorker: {
@@ -833,7 +833,7 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {ReplySetSingleMsg|TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|TimerWorkerSetTypesMsg} msg
+		 * @param {TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplySetSingleMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|TimerWorkerSetTypesMsg} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
@@ -864,7 +864,7 @@
 			return 'for_worker_state' in msg&&msg.for_worker_state;
 		}
 		/**
-		 * @param {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
+		 * @param {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg|TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyToWorkerStateMsg|ReplyToLocalTimerMsg|ReplyFromWorkerMsg} msg
 		 */
 		dispatch_message(msg) {
 			if(this.is_message_for(msg)) {
@@ -875,7 +875,7 @@
 					case ReplySetSingle: {
 						this.on_result(msg);
 					} break;
-					case ReplyToWorkerType: {
+					case ReplyToWorkerState: {
 						this.on_result(msg);
 					} break;
 					case g_timer_api.worker_set_types: {
@@ -901,7 +901,7 @@
 				case g_timer_api.reply.clear.repeating: {
 					this.timer.on_reply(msg);
 				} return;
-				case ReplyToTimerType: {
+				case ReplyToLocalTimer: {
 					this.timer.on_result(msg);
 				} return;
 				case ReplyFromWorker: {
