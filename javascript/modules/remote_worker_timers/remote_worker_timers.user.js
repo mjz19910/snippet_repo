@@ -658,8 +658,8 @@
 		type=ReplyFromWorker;
 		/** @readonly @type {202|203|204|205|206|1001} */
 		source_type=1001;
-		/** @type {[202]|[203,number|undefined,number,number]|[204,number|undefined,number,number]|[205,number,any]|[206,number,any]|[1001]} */
-		args=[202];
+		/** @type {[-1]|[202]|[203,number|undefined,number,number]|[204,number|undefined,number,number]|[205,number,any]|[206,number,any]|[1001]} */
+		args=[-1];
 	}
 	class Message_600 {
 		/** @readonly */
