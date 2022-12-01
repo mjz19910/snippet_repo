@@ -38,15 +38,14 @@ export type WorkerReplyTypesTy={
 	single: TimeoutSingleReplyTy;
 	repeating: TimeoutRepeatingReplyTy;
 };
-export type WorkerReplyTypesT={
-	fire: WorkerReplyTypesTy;
-};
+
 export type TimeoutSetRTy=typeof TimeoutSetRepeating;
 export type TimeoutSetSTy=typeof TimeoutSetSingle;
 export type TimeoutSetInfoTy={
 	single: TimeoutSetSTy;
 	repeating: TimeoutSetRTy;
 };
+
 export type TimeoutClearSTy=typeof TimeoutClearSingle;
 export type TimeoutClearRTy=typeof TimeoutClearRepeating;
 export type TimeoutClearATy=typeof TimeoutClearAny;
@@ -63,12 +62,6 @@ export type TimeoutFireInfoT={
 	repeating: TimeoutFireRepeatingT;
 };
 
-export type TimeoutMessageReplyTy=typeof TimeoutMessageReady;
-export type TimeoutSetTypesTy=typeof TimeoutSetTypes;
-export type WorkerUpdateMessageHandlerTy=typeof WorkerUpdateMessageHandler;
-export type ReplyClearAnyTy=typeof ReplyClearAny;
-export type ReplyClearRepeatingTy=typeof ReplyClearRepeating;
-export type ReplyClearSingleTy=typeof ReplyClearSingle;
 export type ReplyMessage1Ty=typeof ReplyMessage1;
 export type ReplyMessage2Ty=typeof ReplyMessage2;
 export type ReplyFromWorkerTy=typeof ReplyFromWorker;
@@ -87,6 +80,17 @@ export type ReplyTypesT={
 	set: ReplySetTypesT;
 	clear: ReplyClearTypes;
 };
+
+export type WorkerReplyTypesT={
+	fire: WorkerReplyTypesTy;
+};
+
+export type TimeoutMessageReplyTy=typeof TimeoutMessageReady;
+export type TimeoutSetTypesTy=typeof TimeoutSetTypes;
+export type WorkerUpdateMessageHandlerTy=typeof WorkerUpdateMessageHandler;
+export type ReplyClearAnyTy=typeof ReplyClearAny;
+export type ReplyClearRepeatingTy=typeof ReplyClearRepeating;
+export type ReplyClearSingleTy=typeof ReplyClearSingle;
 export type TimeoutWorkerTypesT={
 	reply: WorkerReplyTypesT;
 	update_message_handler: WorkerUpdateMessageHandlerTy;
