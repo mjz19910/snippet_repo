@@ -909,14 +909,9 @@
 				}
 			}
 		}
-		/** @arg {TimerWorkerSetTypesMsg} msg */
-		on_result_ex(msg) {
-			if(!this.worker) throw new Error("No worker");
-			console.log("result_ex",msg);
-		}
 		/** @arg {typeof WorkerStateMessageV} msg */
 		postMessage(msg) {
-			if(!this.worker) throw 1;
+			if(!this.worker) throw new Error("No worker");
 			return this.worker.postMessage(msg);
 		}
 		/**
