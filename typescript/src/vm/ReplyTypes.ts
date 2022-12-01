@@ -1,6 +1,16 @@
 import {ReplySetTypes} from "./ReplySetTypes.js";
 import {ReplyClearMessages} from "./ReplyClearMessages.js";
-import {ReplyToWorkerState,ReplyToLocalTimer,ReplyFromWorker,ReplyToWorker,WorkerDestroyType,WorkerUpdateMessageHandlerReply,WorkerReadyReply} from "../constants.js";
+
+import {
+	ReplyToWorkerState,
+	ReplyToLocalTimer,
+	ReplyFromWorker,
+	ReplyToWorker,
+	WorkerDestroyType,
+	WorkerUpdateMessageHandlerReply,
+	WorkerReadyReply
+} from "../constants.js";
+
 import {
 	ReplyFromWorkerT,
 	ReplyToLocalTimerT,
