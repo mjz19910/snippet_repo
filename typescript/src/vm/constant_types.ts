@@ -69,12 +69,12 @@ export type MessageWorkerUpdateMessageHandlerReply={
 	v: WorkerUpdateMessageHandlerT;
 };
 
-export type ReplyMessage1={
+export type ReplyToWorkerStateMessage={
 	t: ReplyToWorkerStateT;
 	v: number;
 };
 
-export type ReplyMessage2={
+export type ReplyToLocalTimerMessage={
 	t: ReplyToLocalTimerT;
 	v: number;
 };
@@ -191,13 +191,13 @@ export type DispatchMessageType=
 	MessageReplySetSingle|
 	MessageWorkerReadyReply|
 	MessageWorkerUpdateMessageHandlerReply|
-	ReplyMessage1|
-	ReplyMessage2|
+	ReplyToWorkerStateMessage|
+	ReplyToLocalTimerMessage|
 	MessageReplyFromWorkerData;
 
 export type TypesForWorkerReplies=
 	ReplyFromWorkerMessage|
-	ReplyMessage2|
-	ReplyMessage1|
+	ReplyToLocalTimerMessage|
+	ReplyToWorkerStateMessage|
 	WorkerDestroyTypeMessage|
 	MessageTimeoutFireS;
