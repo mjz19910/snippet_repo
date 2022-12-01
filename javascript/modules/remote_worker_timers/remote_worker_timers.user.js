@@ -194,9 +194,9 @@
 		repeating=TimeoutFireR;
 	}
 	class TimeoutSetInfo {
-		/**@type {TimeoutSetS} */
+		/** @readonly */
 		single=TimeoutSetS;
-		/**@type {TimeoutSetR} */
+		/** @readonly */
 		repeating=TimeoutSetR;
 	}
 	class TimeoutClearInfo {
@@ -232,21 +232,21 @@
 	const TimeoutClearStringS="clearTimeout";
 	const TimeoutClearStringR="clearInterval";
 	class TimeoutSetStrings {
-		/**@type {TimeoutSetStringS} */
+		/** @readonly */
 		single=TimeoutSetStringS;
-		/**@type {TimeoutSetStringR} */
+		/** @readonly */
 		repeating=TimeoutSetStringR;
 	}
 	class TimeoutClearStrings {
-		/**@type {TimeoutClearStringS} */
+		/** @readonly */
 		single=TimeoutClearStringS;
-		/**@type {TimeoutClearStringR} */
+		/** @readonly */
 		repeating=TimeoutClearStringR;
 	}
 	class TimerApi {
-		/**@type {typeof WorkerAsyncMessage} */
+		/** @readonly */
 		async=WorkerAsyncMessage;
-		/**@type {typeof TimerWorkerSetTypes} */
+		/** @readonly */
 		worker_set_types=TimerWorkerSetTypes;
 		reply=new ReplyTypes;
 		fire=new TimeoutFireInfo;
@@ -586,6 +586,21 @@
 		type=ReplyMessage2;
 		value={};
 	}
+	class WorkerReadyReplyMsg {
+		/** @readonly */
+		type=WorkerReadyReply;
+		value={};
+	}
+	class ReplySetSingleMsg {
+		/** @readonly */
+		type=ReplySetSingle;
+		value={};
+	}
+	class ReplySetRepeatingMsg {
+		/** @readonly */
+		type=ReplySetRepeating;
+		value={};
+	}
 	/**
 	 * @template T
 	 * @template {abstract new (...args: any)=>any} U
@@ -718,7 +733,7 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {ReplyMessageType1|ReplyMessageType2} msg
+		 * @param {ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
@@ -741,7 +756,7 @@
 			}
 		}
 		/**
-		 * @param {ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
+		 * @param {ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
 		 */
 		dispatch_message(msg) {
 			switch(msg.type) {
