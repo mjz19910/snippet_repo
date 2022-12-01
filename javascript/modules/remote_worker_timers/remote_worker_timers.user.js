@@ -467,7 +467,7 @@
 					break;
 				}
 				case g_timer_api.worker.clear.repeating: {
-					let remote_id=msg.value;
+					let remote_id=msg.remote_id;
 					this.delete_state_by_remote_id(remote_id);
 					break;
 				}
@@ -615,7 +615,7 @@
 	class TimeoutClearRepeatingMsg {
 		/** @readonly */
 		type=TimeoutClearRepeating;
-		value=0;
+		remote_id=0;
 	}
 	class WorkerDestroyTypeMsg {
 		/** @readonly */
