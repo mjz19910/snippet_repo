@@ -664,10 +664,6 @@
 			assert_as_instance(msg,ReplyFromWorkerMsg);
 			return msg;
 		}
-		/** @type {typeof TimeoutFireSingle|typeof TimeoutFireRepeating|typeof WorkerDestroyMessage|typeof ReplyMessage1|typeof ReplyMessage2|typeof ReplyFromWorker} */
-		type=TimeoutFireSingle;
-		/** @type {number|{}|null} */
-		value=null;
 		/** @arg {WorkerStateMessage} msg */
 		static as_timeout_fire(msg) {
 			assert_as_instance(msg,TimeoutFireSMsg);
@@ -678,6 +674,10 @@
 			assert_as_instance(msg,TimeoutFireRMsg);
 			return msg;
 		}
+		/** @type {typeof TimeoutFireSingle|typeof TimeoutFireRepeating|typeof WorkerDestroyMessage|typeof ReplyMessage1|typeof ReplyMessage2|typeof ReplyFromWorker} */
+		type=TimeoutFireSingle;
+		/** @type {number|{}|null} */
+		value=null;
 		static as_any_of() {
 			let fv=false;
 			if(fv) {return new TimeoutFireRMsg;}
