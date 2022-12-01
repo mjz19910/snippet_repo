@@ -632,7 +632,6 @@
 	class ReplySetRepeatingMsg {
 		/** @readonly */
 		type=ReplySetRepeating;
-		for_worker_state=true;
 		value={};
 	}
 	class ReplyClearSingleMsg {
@@ -648,6 +647,7 @@
 	class ReplyMessageType1 {
 		/** @readonly */
 		type=ReplyMessage1;
+		for_worker_state=true;
 		value={};
 	}
 	class ReplyMessageType2 {
@@ -860,7 +860,9 @@
 			}
 		}
 		/**
-		 * @param {TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
+		 * @template {TimerWorkerSetTypesMsg|ReplyClearRepeatingMsg|ReplyClearSingleMsg|ReplySetRepeatingMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} T
+		 * @param {T} msg
+		 * @returns {msg is {for_worker_state:any}}
 		 */
 		is_message_for(msg) {
 			return 'for_worker_state' in msg&&msg.for_worker_state;
