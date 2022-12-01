@@ -1,9 +1,7 @@
-import {ReplySetSingleTy_OLD} from "./ReplySetSingleTy.js"
-import {ReplySetRepeatingTy_OLD} from "./ReplySetRepeatingTy.js"
-import {ReplySetTypesT_OLD} from "./ReplySetTypesT.js"
-import {ReplySetSingle,ReplySetRepeating} from "../constants.js"
+import {ReplySetSingle,ReplySetRepeating} from "../constants.js";
+import {ReplySetRepeatingT,ReplySetSingleT,ReplySetTypesT} from "./constant_types.js";
 
-export class ReplySetTypes implements ReplySetTypesT_OLD {
-	single: ReplySetSingleTy_OLD=ReplySetSingle
-	repeating: ReplySetRepeatingTy_OLD=ReplySetRepeating
+export class ReplySetTypes implements ReplySetTypesT {
+	single: ReplySetSingleT=ReplySetSingle;
+	repeating: ReplySetRepeatingT=ReplySetRepeating;
 }
