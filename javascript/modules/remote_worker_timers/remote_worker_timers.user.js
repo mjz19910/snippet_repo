@@ -788,9 +788,10 @@
 				worker_state.handle_message(e);
 			};
 			this.valid=true;
-			this.worker.postMessage({
+			this.postMessage({
 				type: g_timer_api.worker_set_types,
-				value: g_timer_api
+				for_worker_state: true,
+				worker_types: g_timer_api
 			});
 		}
 		/** @arg {MessageEvent<typeof WorkerStateMessageV>} e */
