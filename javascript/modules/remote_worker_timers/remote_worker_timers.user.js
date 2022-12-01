@@ -1280,15 +1280,17 @@
 		const g_timer_api=new RemoteTimerApi;
 		class RemoteTimerState {
 			/**
-			 * @param {any} type
+			 * @param {1|2} type
 			 */
 			constructor(type) {
 				this.type=type;
+				this.active=true;
 				this.local_id=0;
 			}
 		}
 		class RemoteTimer {
 			constructor() {
+				/** @type {Map<number,RemoteTimerState>} */
 				this.m_remote_id_to_state_map=new Map;
 				this.base_id=globalThis[g_timer_api.set_names.single](nop_fn);
 				globalThis[g_timer_api.clear_names.single](this.base_id);
@@ -1347,7 +1349,7 @@
 			}
 			// Please verify your type tag is valid before changing any state, or you might end up in an invalid state
 			/**
-			 * @param {any} tag
+			 * @param {1|2} tag
 			 */
 			verify_tag(tag) {
 				if(!this.validate_tag(tag)) {
@@ -1368,7 +1370,7 @@
 				}
 			}
 			/**
-			 * @param {number} tag
+			 * @param {1|2} tag
 			 */
 			validate_tag(tag) {
 				if(tag<TIMER_SINGLE||tag>=TIMER_TAG_COUNT) {
@@ -1379,7 +1381,7 @@
 				return true;
 			}
 			/**
-			 * @param {{ type: any; }} state
+			 * @param {{ type: 1|2; }} state
 			 */
 			validate_state(state) {
 				return this.validate_tag(state.type);
@@ -1390,6 +1392,7 @@
 			clear(remote_id) {
 				if(this.m_remote_id_to_state_map.has(remote_id)) {
 					let state=this.m_remote_id_to_state_map.get(remote_id);
+					assert_non_null(state);
 					this.verify_state(state,remote_id);
 					if(state.type===TIMER_SINGLE) {
 						globalThis[g_timer_api.clear_names.single](state.local_id);
