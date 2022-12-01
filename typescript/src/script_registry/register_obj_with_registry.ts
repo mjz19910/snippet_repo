@@ -30,7 +30,7 @@ class GCStorage<T extends {}> {
 			id: target_id,
 			ref: new WeakRef(target),
 		});
-		unregister_target_object_arr.push(unregister_token);
+		this.unregister_token_arr.push(unregister_token);
 		script_registry.register(target,held_value,unregister_token);
 		console.log("Called register_obj with non-script",target);
 		return target_id;
