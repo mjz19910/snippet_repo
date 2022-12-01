@@ -25,25 +25,25 @@ import {
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply
 } from "../constants.js";
-export type ReplySetSingleTy=typeof ReplySetSingle;
-export type ReplySetRepeatingTy=typeof ReplySetRepeating;
+export type ReplySetSingleT=typeof ReplySetSingle;
+export type ReplySetRepeatingT=typeof ReplySetRepeating;
 export type ReplySetTypesT={
-	single: ReplySetSingleTy;
-	repeating: ReplySetRepeatingTy;
+	single: ReplySetSingleT;
+	repeating: ReplySetRepeatingT;
 };
 
-export type TimeoutSingleReplyTy=typeof TimeoutSingleReply;
-export type TimeoutRepeatingReplyTy=typeof TimeoutRepeatingReply;
+export type TimeoutSingleReplyT=typeof TimeoutSingleReply;
+export type TimeoutRepeatingReplyT=typeof TimeoutRepeatingReply;
 export type WorkerReplyTimerFireTypesT={
-	single: TimeoutSingleReplyTy;
-	repeating: TimeoutRepeatingReplyTy;
+	single: TimeoutSingleReplyT;
+	repeating: TimeoutRepeatingReplyT;
 };
 
-export type TimeoutSetRTy=typeof TimeoutSetRepeating;
-export type TimeoutSetSTy=typeof TimeoutSetSingle;
+export type TimeoutSetRepeatingT=typeof TimeoutSetRepeating;
+export type TimeoutSetSingleT=typeof TimeoutSetSingle;
 export type TimeoutSetInfoT={
-	single: TimeoutSetSTy;
-	repeating: TimeoutSetRTy;
+	single: TimeoutSetSingleT;
+	repeating: TimeoutSetRepeatingT;
 };
 
 export type TimeoutClearSTy=typeof TimeoutClearSingle;
