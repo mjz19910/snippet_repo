@@ -3,8 +3,8 @@ import {
 	ReplyClearRepeating,
 	ReplyClearSingle,
 	ReplyFromWorker,
-	ReplyMessage1,
-	ReplyMessage2,
+	ReplyMessage1 as ReplyToWorkerState,
+	ReplyMessage2 as ReplyToLocalTimer,
 	ReplySetRepeating,
 	ReplySetSingle,
 	ReplyToWorker,
@@ -34,14 +34,14 @@ export type ReplySetTypesT={
 
 export type TimeoutSingleReplyTy=typeof TimeoutSingleReply;
 export type TimeoutRepeatingReplyTy=typeof TimeoutRepeatingReply;
-export type WorkerReplyTypesTy={
+export type WorkerReplyTimerFireTypesT={
 	single: TimeoutSingleReplyTy;
 	repeating: TimeoutRepeatingReplyTy;
 };
 
 export type TimeoutSetRTy=typeof TimeoutSetRepeating;
 export type TimeoutSetSTy=typeof TimeoutSetSingle;
-export type TimeoutSetInfoTy={
+export type TimeoutSetInfoT={
 	single: TimeoutSetSTy;
 	repeating: TimeoutSetRTy;
 };
@@ -49,7 +49,7 @@ export type TimeoutSetInfoTy={
 export type TimeoutClearSTy=typeof TimeoutClearSingle;
 export type TimeoutClearRTy=typeof TimeoutClearRepeating;
 export type TimeoutClearATy=typeof TimeoutClearAny;
-export type TimeoutClearInfoTy={
+export type TimeoutClearInfoT={
 	single: TimeoutClearSTy;
 	repeating: TimeoutClearRTy;
 	any: TimeoutClearATy;
@@ -62,39 +62,39 @@ export type TimeoutFireInfoT={
 	repeating: TimeoutFireRepeatingT;
 };
 
-export type ReplyMessage1Ty=typeof ReplyMessage1;
-export type ReplyMessage2Ty=typeof ReplyMessage2;
-export type ReplyFromWorkerTy=typeof ReplyFromWorker;
-export type ReplyToWorkerTy=typeof ReplyToWorker;
+export type ReplyToWorkerStateT=typeof ReplyToWorkerState;
+export type ReplyToLocalTimerT=typeof ReplyToLocalTimer;
+export type ReplyFromWorkerT=typeof ReplyFromWorker;
+export type ReplyToWorkerT=typeof ReplyToWorker;
 export type WorkerDestroyTypeT=typeof WorkerDestroyType;
-export type WorkerUpdateMessageHandlerReplyTy=typeof WorkerUpdateMessageHandlerReply;
-export type WorkerReadyReplyTy=typeof WorkerReadyReply;
+export type WorkerUpdateMessageHandlerReplyT=typeof WorkerUpdateMessageHandlerReply;
+export type WorkerReadyReplyT=typeof WorkerReadyReply;
 export type ReplyTypesT={
-	msg1: ReplyMessage1Ty;
-	msg2: ReplyMessage2Ty;
-	from_worker: ReplyFromWorkerTy;
-	to_worker: ReplyToWorkerTy;
+	reply_to_local: ReplyToWorkerStateT;
+	reply_to_main_timer: ReplyToLocalTimerT;
+	from_worker: ReplyFromWorkerT;
+	to_worker: ReplyToWorkerT;
 	destroy_worker: WorkerDestroyTypeT;
-	update_handler: WorkerUpdateMessageHandlerReplyTy;
-	ready: WorkerReadyReplyTy;
+	update_handler: WorkerUpdateMessageHandlerReplyT;
+	ready: WorkerReadyReplyT;
 	set: ReplySetTypesT;
 	clear: ReplyClearTypesT;
 };
 
 export type WorkerReplyTypesT={
-	fire: WorkerReplyTypesTy;
+	fire: WorkerReplyTimerFireTypesT;
 };
 
-export type WorkerUpdateMessageHandlerTy=typeof WorkerUpdateMessageHandler;
-export type TimeoutMessageReplyTy=typeof TimeoutMessageReady;
-export type TimeoutSetTypesTy=typeof TimeoutSetTypes;
+export type WorkerUpdateMessageHandlerT=typeof WorkerUpdateMessageHandler;
+export type TimeoutMessageReplyT=typeof TimeoutMessageReady;
+export type TimeoutSetTypesT=typeof TimeoutSetTypes;
 export type TimeoutWorkerTypesT={
 	reply: WorkerReplyTypesT;
-	update_message_handler: WorkerUpdateMessageHandlerTy;
-	ready: TimeoutMessageReplyTy;
-	set: TimeoutSetInfoTy;
-	clear: TimeoutClearInfoTy;
-	set_types: TimeoutSetTypesTy;
+	update_message_handler: WorkerUpdateMessageHandlerT;
+	ready: TimeoutMessageReplyT;
+	set: TimeoutSetInfoT;
+	clear: TimeoutClearInfoT;
+	set_types: TimeoutSetTypesT;
 };
 export type WorkerAsyncMessageT=typeof WorkerAsyncMessage;
 export type TimerMessageTypesT={
@@ -104,12 +104,12 @@ export type TimerMessageTypesT={
 	worker: TimeoutWorkerTypesT;
 };
 
-export type ReplyClearAnyTy=typeof ReplyClearAny;
-export type ReplyClearRepeatingTy=typeof ReplyClearRepeating;
-export type ReplyClearSingleTy=typeof ReplyClearSingle;
+export type ReplyClearAnyT=typeof ReplyClearAny;
+export type ReplyClearRepeatingT=typeof ReplyClearRepeating;
+export type ReplyClearSingleT=typeof ReplyClearSingle;
 export type ReplyClearTypesT={
-	single: ReplyClearSingleTy;
-	repeating: ReplyClearRepeatingTy;
-	any: ReplyClearAnyTy;
+	single: ReplyClearSingleT;
+	repeating: ReplyClearRepeatingT;
+	any: ReplyClearAnyT;
 };
 

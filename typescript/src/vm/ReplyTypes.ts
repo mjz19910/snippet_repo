@@ -11,8 +11,8 @@ import {ReplyMessage1,ReplyMessage2,ReplyFromWorker,ReplyToWorker,WorkerDestroyT
 import {ReplyTypesT} from "./constant_types.js";
 
 export class ReplyTypes implements ReplyTypesT {
-	msg1: ReplyMessage1Ty=ReplyMessage1
-	msg2: ReplyMessage2Ty=ReplyMessage2
+	reply_to_local: ReplyMessage1Ty=ReplyMessage1
+	reply_to_main_timer: ReplyMessage2Ty=ReplyMessage2
 	from_worker: ReplyFromWorkerTy=ReplyFromWorker
 	to_worker: ReplyToWorkerTy=ReplyToWorker
 	destroy_worker: WorkerDestroyTypeT=WorkerDestroyType

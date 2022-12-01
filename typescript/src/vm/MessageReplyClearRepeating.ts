@@ -1,6 +1,6 @@
-import {ReplyClearRepeatingTy} from "./constant_types.js";
+import {ReplyClearRepeatingT} from "./constant_types.js";
 
 export type ReplyClearRepeatingMessage={
-	t: ReplyClearRepeatingTy
+	t: ReplyClearRepeatingT
 	v: number,
 }

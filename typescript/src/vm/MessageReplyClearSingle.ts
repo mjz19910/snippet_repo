@@ -1,7 +1,7 @@
 import {Box} from "../box/Box.js";
-import {ReplyClearSingleTy} from "./constant_types.js";
+import {ReplyClearSingleT} from "./constant_types.js";
 
 export type MessageReplyClearSingle={
-	t: ReplyClearSingleTy;
+	t: ReplyClearSingleT;
 	v: Box;
 };
