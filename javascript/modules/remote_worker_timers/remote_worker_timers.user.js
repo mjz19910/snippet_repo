@@ -584,21 +584,6 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
-	class ReplyFromWorkerMsg {
-		/** @readonly */
-		type=ReplyFromWorker;
-		value={};
-	}
-	class ReplyMessageType1 {
-		/** @readonly */
-		type=ReplyMessage1;
-		value={};
-	}
-	class ReplyMessageType2 {
-		/** @readonly */
-		type=ReplyMessage2;
-		value={};
-	}
 	class WorkerReadyReplyMsg {
 		/** @readonly */
 		type=WorkerReadyReply;
@@ -622,6 +607,21 @@
 	class ReplyClearRepeatingMsg {
 		/** @readonly */
 		type=ReplyClearRepeating;
+		value={};
+	}
+	class ReplyMessageType1 {
+		/** @readonly */
+		type=ReplyMessage1;
+		value={};
+	}
+	class ReplyMessageType2 {
+		/** @readonly */
+		type=ReplyMessage2;
+		value={};
+	}
+	class ReplyFromWorkerMsg {
+		/** @readonly */
+		type=ReplyFromWorker;
 		value={};
 	}
 	class TimerWorkerSetTypesMsg {
@@ -655,6 +655,11 @@
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
+		static as_timer_fire(msg) {
+			assert_as_instance(msg,TimeoutFireRMsg);
+			return msg;
+		}
+		/** @arg {WorkerStateMessage} msg */
 		static as_reply_type_1(msg) {
 			assert_as_instance(msg,ReplyMessageType1);
 			return msg;
@@ -667,11 +672,6 @@
 		/** @arg {WorkerStateMessage} msg */
 		static as_reply_from_worker(msg) {
 			assert_as_instance(msg,ReplyFromWorkerMsg);
-			return msg;
-		}
-		/** @arg {WorkerStateMessage} msg */
-		static as_timer_fire(msg) {
-			assert_as_instance(msg,TimeoutFireRMsg);
 			return msg;
 		}
 		/** @type {typeof TimeoutFireSingle|typeof TimeoutFireRepeating|typeof WorkerDestroyMessage|typeof ReplyMessage1|typeof ReplyMessage2|typeof ReplyFromWorker} */
