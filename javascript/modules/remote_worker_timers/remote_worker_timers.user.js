@@ -901,7 +901,7 @@
 					this.timer.on_result(msg);
 				} return;
 				case ReplyFromWorker: {
-					console.assert(false,"unhandled result",msg);
+					console.assert(false,"unhandled reply from worker",msg);
 				} return;
 				default: {
 					console.assert(false,"unhandled result",msg);
