@@ -8,7 +8,7 @@ import {TimeoutWorkerTypesTy} from "./TimeoutWorkerTypesTy.js";
 import {WorkerAsyncMessageTy} from "./WorkerAsyncMessageTy.js";
 
 export namespace Type {
-	export type TimerMessageTypes={
+	export type TimerMessageTypesT={
 		async: WorkerAsyncMessageTy;
 		reply: ReplyTypes;
 		fire: TimeoutFireInfoTy;
@@ -16,7 +16,7 @@ export namespace Type {
 	};
 }
 
-export class TimerMessageTypes implements Type.TimerMessageTypes {
+export class TimerMessageTypes implements Type.TimerMessageTypesT {
 	async: WorkerAsyncMessageTy=WorkerAsyncMessage;
 	reply: ReplyTypesTy=new ReplyTypes;
 	fire: TimeoutFireInfoTy=new TimeoutFireInfo;
