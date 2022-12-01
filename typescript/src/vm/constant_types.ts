@@ -32,65 +32,6 @@ import {
 
 export type TimeoutMessageReadyT=typeof TimeoutMessageReady;
 
-export type ReplyClearRepeatingMessageT={
-	t: ReplyClearRepeatingT;
-	v: number,
-};
-
-export type ReplyClearSingleMessageT={
-	t: ReplyClearSingleT;
-	v: number;
-};
-export type ReplySetRepeatingMessageT={
-	t: ReplySetRepeatingT;
-	v: number;
-};
-
-export type ReplySetSingleMessageT={
-	t: ReplySetSingleT;
-	v: number;
-};
-
-export type TimeoutClearRepeatingMessageT={
-	t: TimeoutClearRepeatingT;
-	v: number;
-};
-
-export type TimeoutClearSingleMessageT={
-	t: TimeoutClearSingleT;
-	v: number;
-};
-
-export type TimeoutFireSingleMessageT={
-	t: TimeoutFireSingleT;
-	v: number;
-};
-
-export type ReplyWorkerReadyMessageT={
-	t: WorkerReadyReplyT;
-	v: TimeoutMessageReplyT;
-};
-
-export type MessageWorkerUpdateMessageHandlerReplyT={
-	t: WorkerUpdateMessageHandlerReplyT;
-	v: WorkerUpdateMessageHandlerT;
-};
-
-export type ReplyToWorkerStateMessageT={
-	t: ReplyToWorkerStateT;
-	v: number;
-};
-
-export type ReplyToLocalTimerMessageT={
-	t: ReplyToLocalTimerT;
-	v: number;
-};
-
-export type WorkerDestroyTypeMessageT={
-	t: WorkerDestroyTypeT;
-	v: number;
-};
-
 export type ReplySetSingleT=typeof ReplySetSingle;
 export type ReplySetRepeatingT=typeof ReplySetRepeating;
 export type ReplySetTypesT={
@@ -187,6 +128,65 @@ export type MessageReplyFromWorkerData={
 export type ReplyFromWorkerMessage={
 	t: ReplyFromWorkerT;
 	v: MessageReplyFromWorkerData;
+};
+
+export type ReplyClearRepeatingMessageT={
+	t: ReplyClearRepeatingT;
+	v: number,
+};
+
+export type ReplyClearSingleMessageT={
+	t: ReplyClearSingleT;
+	v: number;
+};
+export type ReplySetRepeatingMessageT={
+	t: ReplySetRepeatingT;
+	v: number;
+};
+
+export type ReplySetSingleMessageT={
+	t: ReplySetSingleT;
+	v: number;
+};
+
+export type TimeoutClearRepeatingMessageT={
+	t: TimeoutClearRepeatingT;
+	v: number;
+};
+
+export type TimeoutClearSingleMessageT={
+	t: TimeoutClearSingleT;
+	v: number;
+};
+
+export type TimeoutFireSingleMessageT={
+	t: TimeoutFireSingleT;
+	v: number;
+};
+
+export type ReplyWorkerReadyMessageT={
+	t: WorkerReadyReplyT;
+	v: TimeoutMessageReplyT;
+};
+
+export type MessageWorkerUpdateMessageHandlerReplyT={
+	t: WorkerUpdateMessageHandlerReplyT;
+	v: WorkerUpdateMessageHandlerT;
+};
+
+export type ReplyToWorkerStateMessageT={
+	t: ReplyToWorkerStateT;
+	v: number;
+};
+
+export type ReplyToLocalTimerMessageT={
+	t: ReplyToLocalTimerT;
+	v: number;
+};
+
+export type WorkerDestroyTypeMessageT={
+	t: WorkerDestroyTypeT;
+	v: number;
 };
 
 export type DispatchMessageType=
