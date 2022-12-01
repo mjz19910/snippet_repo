@@ -286,13 +286,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 				worker_str+=remote_worker_state.unique_script_id;
 				eval(worker_str);
 				remote_worker_state.unique_script_id++;
-				const message: {
-					t: typeof reply_message_types.from_worker;
-					v: {
-						t: 1;
-						v: typeof msg.t;
-					};
-				}={
+				const message={
 					t: reply_message_types.from_worker,
 					v: {
 						t: 1,
@@ -301,15 +295,8 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 				};
 				postMessage(message);
 			} break;
-			case message_types.worker.ready /**/: {
-				// debugger
-				const message: {
-					t: typeof reply_message_types.from_worker;
-					v: {
-						t: typeof message_types.reply.ready;
-						v: typeof msg.t;
-					};
-				}={
+			case message_types.worker.ready: {
+				const message={
 					t: reply_message_types.from_worker,
 					v: {
 						t: message_types.reply.ready,
