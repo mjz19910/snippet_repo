@@ -600,6 +600,16 @@
 		type=204;
 		remote_id=0;
 	}
+	class Message_205 {
+		/** @readonly */
+		type=205;
+		remote_id=0;
+	}
+	class Message_206 {
+		/** @readonly */
+		type=206;
+		remote_id=0;
+	}
 	class TimeoutClearSingleMsg {
 		/** @readonly */
 		type=TimeoutClearSingle;
