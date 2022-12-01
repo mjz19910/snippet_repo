@@ -9,7 +9,7 @@ import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
 import {MessageTypesForWorkerReplies} from "./MessageTypesForWorkerReplies.js";
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js";
 import {Timer} from "./Timer.js";
-import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyMessage,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
+import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
 
 declare global {
@@ -67,7 +67,7 @@ export class WorkerState {
 				return;
 			}
 			switch(msg.t) {
-				case WorkerDestroyMessage /*worker_state destroy*/:
+				case WorkerDestroyType /*worker_state destroy*/:
 					worker_state.destroy();
 					break;
 				case ReplyMessage1:

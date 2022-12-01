@@ -6,7 +6,7 @@ import {Timer} from "./Timer.js";
 import {do_worker_verify} from "./do_worker_verify.js";
 import {l_log_if} from "./l_log_if.js";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {LOG_LEVEL_WARN,TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyMessage} from "../constants.js";
+import {LOG_LEVEL_WARN,TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyType} from "../constants.js";
 import {RemoteWorkerState} from "./RemoteWorkerState.js";
 
 declare global {
@@ -27,7 +27,7 @@ export function move_timers_to_worker_promise_executor(
 	executor_reject: () => void) {
 	let failed=false;
 	if(globalThis.remote_worker_state) {
-		postMessage({t: WorkerDestroyMessage});
+		postMessage({t: WorkerDestroyType});
 		executor_accept(null);
 		return;
 	}
