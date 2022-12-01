@@ -1,6 +1,6 @@
-import {TimeoutClearATy_OLD} from "./TimeoutClearATy.js"
+import {TimeoutClearAnyT} from "./constant_types.js";
 
-export type MessageTimeoutClearA={
-	t: TimeoutClearATy_OLD
+export type MessageTimeoutClearAny={
+	t: TimeoutClearAnyT
 	v: number
 }
