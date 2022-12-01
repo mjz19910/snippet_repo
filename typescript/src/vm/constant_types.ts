@@ -23,6 +23,9 @@ import {
 	TimeoutSetStringSingle,
 	TimeoutSetTypes,
 	TimeoutSingleReply,
+	TIMER_REPEATING,
+	TIMER_SINGLE,
+	TIMER_TAG_COUNT,
 	WorkerAsyncMessage,
 	WorkerDestroyType,
 	WorkerReadyReply,
@@ -255,3 +258,9 @@ export type TimeoutSingleReplyMessageT={
 	t: TimeoutSingleReplyT;
 	v: number;
 };
+
+export type WorkerVerifyType={
+	TIMER_SINGLE: typeof TIMER_SINGLE
+	TIMER_REPEATING: typeof TIMER_REPEATING
+	TIMER_TAG_COUNT: typeof TIMER_TAG_COUNT
+}
