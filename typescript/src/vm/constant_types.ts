@@ -78,7 +78,7 @@ export type ReplyTypesT={
 	update_handler: WorkerUpdateMessageHandlerReplyTy;
 	ready: WorkerReadyReplyTy;
 	set: ReplySetTypesT;
-	clear: ReplyClearTypesT;
+	clear: ReplyClearTypes;
 };
 
 export type WorkerReplyTypesT={
@@ -107,7 +107,7 @@ export type TimerMessageTypesT={
 export type ReplyClearAnyTy=typeof ReplyClearAny;
 export type ReplyClearRepeatingTy=typeof ReplyClearRepeating;
 export type ReplyClearSingleTy=typeof ReplyClearSingle;
-export type ReplyClearTypesT={
+export type ReplyClearTypes={
 	single: ReplyClearSingleTy;
 	repeating: ReplyClearRepeatingTy;
 	any: ReplyClearAnyTy;
