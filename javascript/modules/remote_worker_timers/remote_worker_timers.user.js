@@ -1216,10 +1216,7 @@
 			}
 		}
 		class RemoteTimer {
-			/**
-			 * @param {undefined} [api_info]
-			 */
-			constructor(api_info) {
+			constructor() {
 				this.m_remote_id_to_state_map=new Map;
 				this.base_id=globalThis[g_timer_api.set_names.single](nop_fn);
 				globalThis[g_timer_api.clear_names.single](this.base_id);
