@@ -1390,21 +1390,21 @@
 			 * @param {any} remote_id
 			 */
 			clear(remote_id) {
-				if(this.m_remote_id_to_state_map.has(remote_id)) {
-					let state=this.m_remote_id_to_state_map.get(remote_id);
-					if(!state) throw new Error("Unreachable");
-					this.verify_state(state,remote_id);
-					if(state.type===TIMER_SINGLE) {
-						globalThis[g_timer_api.clear_names.single](state.local_id);
-					}
-					if(state.type===TIMER_REPEATING) {
-						globalThis[g_timer_api.clear_names.repeating](state.local_id);
-					}
-					state.active=false;
-					this.m_remote_id_to_state_map.delete(remote_id);
-					return state.local_id;
+				if(!this.m_remote_id_to_state_map.has(remote_id)) {
+					return null;
 				}
-				return null;
+				let state=this.m_remote_id_to_state_map.get(remote_id);
+				if(!state) throw new Error("Unreachable");
+				this.verify_state(state,remote_id);
+				if(state.type===TIMER_SINGLE) {
+					globalThis[g_timer_api.clear_names.single](state.local_id);
+				}
+				if(state.type===TIMER_REPEATING) {
+					globalThis[g_timer_api.clear_names.repeating](state.local_id);
+				}
+				state.active=false;
+				this.m_remote_id_to_state_map.delete(remote_id);
+				return state.local_id;
 			}
 			/** @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg} msg */
 			do_clear(msg) {
