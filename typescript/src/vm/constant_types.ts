@@ -25,7 +25,9 @@ import {
 	WorkerUpdateMessageHandler,
 	WorkerUpdateMessageHandlerReply,
 	TimeoutClearStringSingle,
-	TimeoutClearStringRepeating
+	TimeoutClearStringRepeating,
+	TimeoutSetStringSingle,
+	TimeoutSetStringRepeating
 } from "../constants.js";
 export type ReplyClearRepeatingMessageT={
 	t: ReplyClearRepeatingT;
@@ -218,3 +220,8 @@ export type MessageTimeoutSetSingleT={
 	t: TimeoutSetSingleT;
 	v: SetSingleMessageDataT;
 };
+
+export type TimeoutSetStringsTy={
+	single: typeof TimeoutSetStringSingle
+	repeating: typeof TimeoutSetStringRepeating
+}

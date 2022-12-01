@@ -1,6 +1,6 @@
-import {TimeoutSetStringS,TimeoutSetStringR} from "../constants.js"
+import {TimeoutSetStringSingle,TimeoutSetStringRepeating} from "../constants.js"
 
 export type TimeoutSetStringsTy={
-	single: typeof TimeoutSetStringS
-	repeating: typeof TimeoutSetStringR
+	single: typeof TimeoutSetStringSingle
+	repeating: typeof TimeoutSetStringRepeating
 }
