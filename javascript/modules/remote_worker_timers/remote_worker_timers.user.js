@@ -137,8 +137,8 @@
 	const TimeoutMessageR=202;
 	const TimeoutSetS=203;
 	const TimeoutSetR=204;
-	const TimeoutClearS=205;
-	const TimeoutClearR=206;
+	const TimeoutClearSingle=205;
+	const TimeoutClearRepeating=206;
 	const TimeoutClearA=207;
 	const WorkerDestroyMessage=300;
 	const WorkerReadyReply=302;
@@ -201,9 +201,9 @@
 	}
 	class TimeoutClearInfo {
 		/** @readonly */
-		single=TimeoutClearS;
+		single=TimeoutClearSingle;
 		/** @readonly */
-		repeating=TimeoutClearR;
+		repeating=TimeoutClearRepeating;
 		/** @readonly */
 		any=TimeoutClearA;
 	}
@@ -456,7 +456,7 @@
 		remote_id_to_state_entries() {
 			return this.m_remote_id_to_state_map.entries();
 		}
-		/** @arg {ReplyMessageType2|TimerWorker_type_205|TimerWorker_type_206} msg */
+		/** @arg {ReplyMessageType2|TimeoutClearSingleMsg|TimeoutClearRepeatingMsg} msg */
 		on_result(msg) {
 			console.log(msg);
 			switch(msg.type) {
@@ -626,14 +626,14 @@
 		type=TimerWorkerSetTypes;
 		worker_types=new RemoteWorkerTypes;
 	}
-	class TimerWorker_type_205 {
+	class TimeoutClearSingleMsg {
 		/** @readonly */
-		type=205;
+		type=TimeoutClearSingle;
 		value=0;
 	}
-	class TimerWorker_type_206 {
+	class TimeoutClearRepeatingMsg {
 		/** @readonly */
-		type=206;
+		type=TimeoutClearRepeating;
 		value=0;
 	}
 	/**
