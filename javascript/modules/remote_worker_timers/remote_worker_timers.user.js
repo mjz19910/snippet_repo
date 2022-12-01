@@ -584,7 +584,16 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
-	
+	class TimeoutClearSingleMsg {
+		/** @readonly */
+		type=TimeoutClearSingle;
+		value=0;
+	}
+	class TimeoutClearRepeatingMsg {
+		/** @readonly */
+		type=TimeoutClearRepeating;
+		value=0;
+	}
 	class WorkerDestroyTypeMsg {
 		/** @readonly */
 		type=WorkerDestroyType;
@@ -634,16 +643,6 @@
 		/** @readonly */
 		type=TimerWorkerSetTypes;
 		worker_types=new RemoteWorkerTypes;
-	}
-	class TimeoutClearSingleMsg {
-		/** @readonly */
-		type=TimeoutClearSingle;
-		value=0;
-	}
-	class TimeoutClearRepeatingMsg {
-		/** @readonly */
-		type=TimeoutClearRepeating;
-		value=0;
 	}
 	/**
 	 * @template T
@@ -696,8 +695,8 @@
 			if(fv) {return new WorkerDestroyTypeMsg;}
 			if(fv) {return new ReplyMessageType1;}
 			if(fv) {return new ReplyMessageType2;}
-			if(fv) {return new TimerWorkerSetTypesMsg;}
-			return new ReplyFromWorkerMsg;
+			if(fv) {return new ReplyFromWorkerMsg;}
+			return new TimerWorkerSetTypesMsg;
 		}
 	}
 	const WorkerStateMessageV=WorkerStateMessage.as_any_of();
@@ -1114,7 +1113,7 @@
 			}
 		}
 		/**
-		 * @param {MessageEvent<any>} e
+		 * @param {MessageEvent<typeof WorkerStateMessageV>} e
 		 */
 		function message_with_types_handler(e) {
 			if(!g_timer_api.worker) throw new Error("Invalid");
