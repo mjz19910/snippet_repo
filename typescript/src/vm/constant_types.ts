@@ -209,12 +209,12 @@ export type TimeoutClearStringsT={
 	repeating: typeof TimeoutClearStringRepeating;
 };
 
-export type SetSingleMessageData={
+export type SetSingleMessageDataT={
 	t: number
 	v: number
 };
 
 export type MessageTimeoutSetSingleT={
 	t: TimeoutSetSingleT;
-	v: SetSingleMessageData;
+	v: SetSingleMessageDataT;
 };
