@@ -3,7 +3,7 @@ import {script_registry} from "./script_registry.js";
 import {Counter} from "./Counter.js";
 import {WeakRefTo} from "./WeakRefTo";
 
-export let unregister_target_script_arr: {symbol: symbol;}[]=[];
+export let unregister_target_script_arr: {symbol: symbol;storage_id: number;}[]=[];
 
 export let gc_storage_id_counter=new Counter;
 
@@ -24,10 +24,12 @@ class GCStorage<T extends {}> {
 			key: obj_symbol
 		};
 		let unregister_token={
-			symbol: obj_symbol
+			symbol: obj_symbol,
+			storage_id:this.storage_id,
 		};
 		this.target_arr.push({
 			key: obj_symbol,
+			storage_id:this.storage_id,
 			id: target_id,
 			ref: new WeakRef(target),
 		});
