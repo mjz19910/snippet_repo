@@ -1,6 +1,6 @@
-import {TimeoutClearStringS,TimeoutClearStringR} from "../constants.js"
+import {TimeoutClearStringSingle,TimeoutClearStringRepeating} from "../constants.js"
 
-export type TimeoutClearStringsTy={
-	single: typeof TimeoutClearStringS
-	repeating: typeof TimeoutClearStringR
+export type TimeoutClearStringsTy_OLD={
+	single: typeof TimeoutClearStringSingle
+	repeating: typeof TimeoutClearStringRepeating
 }

@@ -23,7 +23,9 @@ import {
 	WorkerDestroyType,
 	WorkerReadyReply,
 	WorkerUpdateMessageHandler,
-	WorkerUpdateMessageHandlerReply
+	WorkerUpdateMessageHandlerReply,
+	TimeoutClearStringSingle,
+	TimeoutClearStringRepeating
 } from "../constants.js";
 export type ReplyClearRepeatingMessage={
 	t: ReplyClearRepeatingT;
@@ -81,7 +83,7 @@ export type ReplyToLocalTimerMessage={
 
 export type WorkerDestroyTypeMessage={
 	t: WorkerDestroyTypeT;
-	v: number
+	v: number;
 };
 
 export type ReplySetSingleT=typeof ReplySetSingle;
@@ -201,3 +203,8 @@ export type TypesForWorkerReplies=
 	ReplyToWorkerStateMessage|
 	WorkerDestroyTypeMessage|
 	MessageTimeoutFireS;
+
+export type TimeoutClearStringsTy_OLD={
+	single: typeof TimeoutClearStringSingle;
+	repeating: typeof TimeoutClearStringRepeating;
+};

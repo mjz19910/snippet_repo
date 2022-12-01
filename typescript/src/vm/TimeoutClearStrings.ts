@@ -1,7 +1,7 @@
-import {TimeoutClearStringR,TimeoutClearStringS} from "../constants.js"
-import {TimeoutClearStringsTy} from "./TimeoutClearStringsTy.js"
+import {TimeoutClearStringRepeating,TimeoutClearStringSingle} from "../constants.js"
+import {TimeoutClearStringsTy_OLD} from "./TimeoutClearStringsTy.js"
 
-export class TimeoutClearStrings implements TimeoutClearStringsTy {
-	single: typeof TimeoutClearStringS=TimeoutClearStringS
-	repeating: typeof TimeoutClearStringR=TimeoutClearStringR
+export class TimeoutClearStrings implements TimeoutClearStringsTy_OLD {
+	single: typeof TimeoutClearStringSingle=TimeoutClearStringSingle
+	repeating: typeof TimeoutClearStringRepeating=TimeoutClearStringRepeating
 }
