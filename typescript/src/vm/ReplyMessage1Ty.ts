@@ -1,3 +1,3 @@
-import {ReplyMessage1} from "../constants.js"
+import {ReplyToWorkerState} from "../constants.js"
 
-export type ReplyMessage1Ty=typeof ReplyMessage1
+export type ReplyMessage1Ty_OLD=typeof ReplyToWorkerState

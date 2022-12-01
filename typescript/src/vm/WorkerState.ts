@@ -9,7 +9,7 @@ import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
 import {TypesForWorkerReplies} from "./TypesForWorkerReplies.js";
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js";
 import {Timer} from "./Timer.js";
-import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearRepeating,TimeoutClearSingle,WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
+import {ReplyFromWorker,ReplyToWorkerState,ReplyToLocalTimer,ReplySetRepeating,ReplySetSingle,TimeoutClearRepeating,TimeoutClearSingle,WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
 
 declare global {
@@ -70,8 +70,8 @@ export class WorkerState {
 				case WorkerDestroyType /*worker_state destroy*/:
 					worker_state.destroy();
 					break;
-				case ReplyMessage1:
-				case ReplyMessage2 /*worker_state dispatch_message_unpacked*/: {
+				case ReplyToWorkerState:
+				case ReplyToLocalTimer /*worker_state dispatch_message_unpacked*/: {
 					debugger;
 					worker_state.dispatch_message(msg);
 					break;
@@ -110,11 +110,11 @@ export class WorkerState {
 				// debugger
 				this.on_result(result);
 			} break;
-			case ReplyMessage1: {
+			case ReplyToWorkerState: {
 				debugger;
 				this.on_result(result);
 			} break;
-			case ReplyMessage2: {
+			case ReplyToLocalTimer: {
 				debugger;
 				this.timer.on_result(result);
 			} break;
