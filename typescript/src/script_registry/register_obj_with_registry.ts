@@ -23,6 +23,7 @@ export function register_obj_with_registry<T extends object>(target: T) {
 		let obj_symbol=Symbol(target_id);
 		let held_value: HeldType={
 			type: 'held',
+			scope: "object",
 			id: target_id,
 			key: obj_symbol
 		};

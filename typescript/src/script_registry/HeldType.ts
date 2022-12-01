@@ -1,5 +1,6 @@
 export type HeldType={
-	type: "held"
-	id: number
-	key: symbol
-}
+	type: "held";
+	scope: "object";
+	id: number;
+	key: symbol;
+};
