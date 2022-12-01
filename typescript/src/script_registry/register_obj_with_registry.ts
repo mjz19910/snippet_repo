@@ -8,7 +8,10 @@ import {WeakRefTo} from "./WeakRefTo";
 
 export let unregister_target_script_arr: {symbol: symbol;}[]=[];
 
+export let gc_storage_id_counter=new Counter;
+
 class GCStorage<T extends {}> {
+	storage_id=gc_storage_id_counter.next();
 	store_gc_object(target: T) {
 		let target_ref=this.target_arr.find(e => e!==null&&e.ref.deref()===target);
 		if(target_ref) {
