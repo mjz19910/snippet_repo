@@ -884,27 +884,31 @@
 			switch(msg.type) {
 				case TimeoutClearSingle: {
 					this.timer.on_reply(msg);
-				} break;
+				} return;
 				case TimeoutClearRepeating: {
 					this.timer.on_reply(msg);
-				} break;
+				} return;
 				case ReplySetRepeating: {
 					this.timer.on_reply(msg);
-				} break;
+				} return;
 				case g_timer_api.reply.clear.single: {
 					this.timer.on_reply(msg);
-				} break;
+				} return;
 				case g_timer_api.reply.clear.repeating: {
 					this.timer.on_reply(msg);
-				} break;
+				} return;
 				case ReplyMessage2: {
 					this.timer.on_result(msg);
+				} return;
+				case ReplyFromWorker: {
+					// On the worker, do nothing...
 				} break;
 				default: {
 					console.assert(false,"unhandled result",msg);
 					debugger;
 				}
 			}
+			msg;
 		}
 		/** @arg {typeof WorkerStateMessageV} msg */
 		typedPostMessage(msg) {
