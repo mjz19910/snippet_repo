@@ -1,7 +1,7 @@
 import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy.js"
-import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy.js"
+import {TimeoutRepeatingReplyTy_OLD} from "./TimeoutRepeatingReplyTy.js"
 
 export type WorkerReplyTypesTy={
 	single: TimeoutSingleReplyTy
-	repeating: TimeoutRepeatingReplyTy
+	repeating: TimeoutRepeatingReplyTy_OLD
 }

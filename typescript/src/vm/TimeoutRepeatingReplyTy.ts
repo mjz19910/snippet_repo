@@ -1,3 +1,3 @@
 import {TimeoutRepeatingReply} from "../constants.js"
 
-export type TimeoutRepeatingReplyTy=typeof TimeoutRepeatingReply
+export type TimeoutRepeatingReplyTy_OLD=typeof TimeoutRepeatingReply

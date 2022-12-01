@@ -5,7 +5,7 @@ import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
 import {TimeoutClearSTy_OLD} from "./TimeoutClearSTy.js";
 import {TimeoutMessageReplyTy_OLD} from "./TimeoutMessageReplyTy.js";
-import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy.js";
+import {TimeoutRepeatingReplyTy_OLD} from "./TimeoutRepeatingReplyTy.js";
 import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
 import {TimerApi} from "./TimerApi.js";
@@ -83,7 +83,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			}
 			let tag=local_state.type;
 			let msg_id;
-			let reply_id!: TimeoutSingleReplyTy|TimeoutRepeatingReplyTy;
+			let reply_id!: TimeoutSingleReplyTy|TimeoutRepeatingReplyTy_OLD;
 			if(!this.m_api_info)
 				return;
 			switch(tag) {
