@@ -217,6 +217,7 @@
 		repeating=TimeoutRepeatingReply;
 	}
 	class WorkerReplyTypes {
+		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerReplyTimerFireTypesT} */
 		fire=new WorkerFireReplyTypes;
 	}
 	class TimeoutWorkerTypes {
