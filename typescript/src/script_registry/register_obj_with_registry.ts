@@ -6,9 +6,28 @@ import {script_id} from "./script_id.js";
 import {scripts_holders} from "./scripts_holders.js";
 import {scripts_tokens} from "./scripts_tokens.js";
 import {WeakRefWithKey} from "./WeakRefWithKey.js";
+import {Counter} from "./Counter.js";
+
+export let object_id_counter=new Counter;
+export let weak_objects_arr: (WeakFinalInfo|null)[]=[];
 
 export function register_obj_with_registry<T extends object>(obj: T) {
 	let obj_id;
+	if(!(obj instanceof HTMLScriptElement) && !(obj instanceof SVGScriptElement)) {
+		let obj_ref=weak_objects_arr.find((e: {ref: {deref: () => any;};}|null) => e&&e.ref.deref()===obj);
+		if(obj_ref) {
+			return obj_ref.id;
+		}
+		obj_id=script_id.next();
+		let held_obj: HeldType={
+			type: 'held',
+			id: obj_id,
+			key: Symbol(obj_id)
+		};
+		script_registry.register(obj,held_obj,token_sym);
+		console.log("Called register_obj with non-script", obj);
+		return;
+	}
 	let scripts_res: WeakFinalInfo[]=[];
 	for(let i=0;i<weak_scripts_arr.length;i++) {
 		let elem=weak_scripts_arr[i];
@@ -33,21 +52,11 @@ export function register_obj_with_registry<T extends object>(obj: T) {
 	scripts_holders.push(held_obj);
 	let token_val: WeakRefWithKey={key: held_obj.key,weak_ref: new WeakRef(token_sym)};
 	scripts_tokens.push(token_val);
-	if(obj instanceof HTMLScriptElement) {
-		weak_scripts_arr.push({
-			key: held_obj.key,
-			id: obj_id,
-			ref: new WeakRef(obj)
-		});
-	}else if(obj instanceof SVGScriptElement) {
-		weak_scripts_arr.push({
-			key: held_obj.key,
-			id: obj_id,
-			ref: new WeakRef(obj)
-		});
-	} else {
-		console.log("Called register_obj with non-script", obj);
-	}
+	weak_scripts_arr.push({
+		key: held_obj.key,
+		id: obj_id,
+		ref: new WeakRef(obj)
+	});
 	script_registry.register(obj,held_obj,token_sym);
 	return obj_id;
 }
