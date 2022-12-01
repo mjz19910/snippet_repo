@@ -584,6 +584,22 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
+	
+	class Message_202 {
+		/** @readonly @type {202} */
+		type=202;
+		remote_id=0;
+	}
+	class Message_203 {
+		/** @readonly */
+		type=203;
+		remote_id=0;
+	}
+	class Message_204 {
+		/** @readonly */
+		type=204;
+		remote_id=0;
+	}
 	class TimeoutClearSingleMsg {
 		/** @readonly */
 		type=TimeoutClearSingle;
@@ -708,6 +724,7 @@
 			let fv=false;
 			if(fv) return new TimeoutFireSMsg;
 			if(fv) return new TimeoutFireRMsg;
+			if(fv) return new Message_202;
 			if(fv) return new WorkerDestroyTypeMsg;
 			if(fv) return new ReplyMessageType1;
 			if(fv) return new ReplyMessageType2;
@@ -1158,7 +1175,7 @@
 					// debugger;
 					let user_msg=msg.value;
 					console.log('worker set single',user_msg.type,user_msg.value);
-					let local_id=remote_worker_state.set(TIMER_SINGLE,user_msg.type,user_msg.value);
+					let local_id=remote_worker_state.set(TIMER_SINGLE,msg.remote_id,user_msg.value);
 					postMessage({
 						type: g_timer_api.reply.from_worker,
 						from_data: g_timer_api.reply.set.single,
