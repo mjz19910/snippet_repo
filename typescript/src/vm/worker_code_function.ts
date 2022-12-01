@@ -11,7 +11,6 @@ import {
 	TimeoutClearRepeatingMessageT,
 	TimeoutSetRepeatingMessageT
 } from "./constant_types.js";
-import {TimeoutClearSingleMessageT_OLD} from "./MessageTimeoutClearS.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerTag} from "./TimerTag.js";
@@ -251,7 +250,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		t: TimeoutMessageReplyT;
 		v: never;
 	};
-	type WorkerMessageType=TimeoutClearRepeatingMessageT|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|TimeoutSetSingleMessageT|TimeoutSetRepeatingMessageT|TimeoutClearSingleMessageT_OLD;
+	type WorkerMessageType=TimeoutClearRepeatingMessageT|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|TimeoutSetSingleMessageT|TimeoutSetRepeatingMessageT|TimeoutClearSingleMessageT;
 	type UpdateMessageHandlerType={
 		init: string;
 		onmessage: string;

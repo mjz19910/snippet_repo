@@ -1,5 +1,6 @@
-import {WorkerReplyTimerFireTypes} from "./WorkerFireReplyTypes.js"
+import {WorkerReplyTypesT} from "./constant_types.js";
+import {WorkerReplyTimerFireTypes} from "./WorkerFireReplyTypes.js";
 
-export class WorkerReplyTypes {
-	fire=new WorkerReplyTimerFireTypes
+export class WorkerReplyTypes implements WorkerReplyTypesT {
+	fire=new WorkerReplyTimerFireTypes;
 }
