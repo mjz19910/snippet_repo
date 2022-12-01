@@ -483,14 +483,6 @@
 		 */
 		on_reply(msg) {
 			switch(msg.type) {
-				case g_timer_api.worker.clear.single: {
-					let remote_id=msg.remote_id;
-					this.delete_state_by_remote_id(remote_id);
-				} break;
-				case g_timer_api.worker.clear.repeating: {
-					let remote_id=msg.remote_id;
-					this.delete_state_by_remote_id(remote_id);
-				} break;
 				case g_timer_api.reply.clear.single: break;
 				case g_timer_api.reply.clear.repeating: break;
 				default: {
@@ -883,10 +875,10 @@
 			}
 			switch(msg.type) {
 				case TimeoutClearSingle: {
-					this.timer.on_reply(msg);
+					this.timer.on_result(msg);
 				} return;
 				case TimeoutClearRepeating: {
-					this.timer.on_reply(msg);
+					this.timer.on_result(msg);
 				} return;
 				case ReplySetRepeating: {
 					this.timer.on_reply(msg);
