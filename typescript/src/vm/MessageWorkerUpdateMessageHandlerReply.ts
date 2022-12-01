@@ -1,7 +1,6 @@
-import {WorkerUpdateMessageHandlerReplyTy_OLD} from "./WorkerUpdateMessageHandlerReplyTy.js"
-import {WorkerUpdateMessageHandlerTy_OLD} from "./WorkerUpdateMessageHandlerTy.js"
+import {WorkerUpdateMessageHandlerReplyT,WorkerUpdateMessageHandlerT} from "./constant_types.js";
 
 export type MessageWorkerUpdateMessageHandlerReply_OLD={
-	t: WorkerUpdateMessageHandlerReplyTy_OLD
-	v: WorkerUpdateMessageHandlerTy_OLD
-}
+	t: WorkerUpdateMessageHandlerReplyT;
+	v: WorkerUpdateMessageHandlerT;
+};
