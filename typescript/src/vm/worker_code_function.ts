@@ -312,13 +312,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 				let local_id=remote_worker_state.set(TIMER_SINGLE,user_msg.t,user_msg.v);
 				if(!local_id)
 					return;
-				const message: {
-					t: typeof reply_message_types.from_worker;
-					v: {
-						t: typeof message_types.reply.set.single;
-						v: [local_id: ReturnType<typeof setTimeout>,msg_t: typeof msg.t,u_msg_t: typeof user_msg.t,u_msg_v: typeof user_msg.v];
-					};
-				}={
+				const message={
 					t: reply_message_types.from_worker,
 					v: {
 						t: message_types.reply.set.single,
