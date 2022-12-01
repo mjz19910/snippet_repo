@@ -680,8 +680,9 @@
 		value=null;
 		static as_any_of() {
 			let fv=false;
-			if(fv) {return new TimeoutFireRMsg;}
+			if(fv) {return new ReplyMessageType1;}
 			if(fv) {return new ReplyMessageType2;}
+			if(fv) {return new TimeoutFireRMsg;}
 			return new TimeoutFireRMsg;
 		}
 	}
