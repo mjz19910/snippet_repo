@@ -1179,8 +1179,6 @@
 		 * @param {MessageEvent<typeof WorkerStateMessageV>} e
 		 */
 		function message_with_types_handler(e) {
-			if(!g_timer_api.worker) throw new Error("Invalid");
-			if(!g_timer_api.reply) throw new Error("Invalid");
 			let msg=e.data;
 			switch(msg.type) {
 				case g_timer_api.reply.to_worker: {
