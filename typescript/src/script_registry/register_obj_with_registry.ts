@@ -15,9 +15,9 @@ export let unregister_arr: {symbol: symbol;}[]=[];
 export function register_obj_with_registry<T extends object>(target: T) {
 	let obj_id;
 	if(!(target instanceof HTMLScriptElement)&&!(target instanceof SVGScriptElement)) {
-		let obj_ref=weak_objects_arr.find((e: {ref: {deref: () => any;};}|null) => e&&e.ref.deref()===target);
-		if(obj_ref) {
-			return obj_ref.id;
+		let target_ref=weak_objects_arr.find((e: {ref: {deref: () => any;};}|null) => e&&e.ref.deref()===target);
+		if(target_ref) {
+			return target_ref.id;
 		}
 		obj_id=script_id.next();
 		let obj_symbol=Symbol(obj_id);
