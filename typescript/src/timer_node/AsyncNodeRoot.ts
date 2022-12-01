@@ -4,7 +4,7 @@ import {IntervalNode} from "./IntervalNode.js";
 import {IntervalTargetFireNode} from "./IntervalTargetFireNode.js";
 import {TimeoutIdNode} from "../vm/TimeoutIdNode.js";
 import {TimeoutNode} from "./TimeoutNode.js";
-import {TimeoutTargetFireNode} from "./TimeoutTargetNode.js";
+import {TimeoutTargetFireNode} from "./TimeoutTargetFireNode.js";
 
 export class AsyncNodeRoot extends BaseNode {
 	set(target_fn: () => void,timeout: number|undefined, once=true) {

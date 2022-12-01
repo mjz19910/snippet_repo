@@ -14,7 +14,7 @@ import {l_log_if} from "../l_log_if.js";
 import {MulCompression} from "../vm/MulCompression.js";
 import {SimpleStackVMParser} from "../vm/SimpleStackVMParser.js";
 import {specialclick_inject} from "../vm/specialclick_inject.js";
-import {TimeoutTargetWithDesc} from "../timer_node/TimeoutTargetNode.js";
+import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode";
 import {DataLoader} from "../vm/wasm/DataLoader.js";
 import {debug_id_syms} from "../debug_id_syms.js";
 import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
@@ -821,7 +821,7 @@ export class AutoBuy implements AutoBuyInterface {
 	next_timeout(trg_fn: () => void,timeout: number,char: string,silent=false) {
 		let node=new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
-		node.start(new TimeoutTargetWithDesc(this,trg_fn,char));
+		node.start(new TimeoutTargetFireDataNode(this,trg_fn,char));
 		if(!silent&&this.timeout_element)
 			this.timeout_element.innerText=timeout.toString();
 		this.state_history_append(char,silent);

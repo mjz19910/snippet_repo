@@ -1,6 +1,4 @@
-import {AbstractFireNode} from "./AbstractFireNode.js";
-
-export class IntervalTargetFireNode<T> implements AbstractFireNode {
+export class IntervalTargetFireNode<T> {
 	m_once: boolean;
 	m_obj: T;
 	m_callback: (this: T) => void;
