@@ -22,7 +22,8 @@ import {
 	TimeoutFireSingleMessageT,
 	TimeoutSetRepeatingMessageT,
 	WorkerReplyTypes,
-	TimeoutSingleReplyMessageT
+	TimeoutSingleReplyMessageT,
+	WorkerSendTypes
 } from "./constant_types.js";
 
 declare global {
@@ -153,15 +154,7 @@ export class WorkerState {
 			}
 		}
 	}
-	postMessage(
-		data: TimeoutFireSingleMessageT|
-			TimeoutClearAnyMessageT|
-			TimeoutSingleReplyMessageT|
-			TimeoutClearSingleMessageT|
-			TimeoutSetSingleMessageT|
-			TimeoutSetRepeatingMessageT|
-			TimeoutClearRepeatingMessageT
-	) {
+	postMessage(data: WorkerSendTypes) {
 		if(!this.worker) return;
 		return this.worker.postMessage(data);
 	}
