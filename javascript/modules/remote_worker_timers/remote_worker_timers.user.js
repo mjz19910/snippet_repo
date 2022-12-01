@@ -834,7 +834,7 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2} msg
+		 * @param {ReplySetSingleMsg|TimeoutMessageReadyMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2|TimerWorkerSetTypesMsg} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
