@@ -52,6 +52,7 @@ export function register_obj_with_registry<T extends object>(target: T) {
 
 	let held_obj: HeldType={
 		type: 'held',
+		scope: "script_element",
 		id: target_id,
 		key: Symbol(target_id)
 	};

@@ -1,6 +1,6 @@
 export type HeldType={
 	type: "held";
-	scope: "object";
+	scope: "object"|"script_element";
 	id: number;
 	key: symbol;
 };
