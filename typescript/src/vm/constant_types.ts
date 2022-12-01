@@ -33,7 +33,7 @@ export type ReplyTypesT={
 	set: ReplySetMessages;
 	clear: ReplyClearMessages;
 };
-export type TimeoutWorkerTypesTy={
+export type TimeoutWorkerTypesT={
 	reply: WorkerReplyTypes
 	update_message_handler: WorkerUpdateMessageHandlerTy
 	ready: TimeoutMessageReplyTy
@@ -45,5 +45,5 @@ export type TimerMessageTypesT={
 	async: WorkerAsyncMessageTy;
 	reply: ReplyTypesT;
 	fire: TimeoutFireInfoT;
-	worker: TimeoutWorkerTypesTy;
+	worker: TimeoutWorkerTypesT;
 };
