@@ -19,9 +19,9 @@ import {TimeoutSetStrings} from "./TimeoutSetStrings.js";
 import {TimerMessageTypes} from "./TimerMessageTypes.js";
 
 export class TimerApi {
-	msg_types: TimerMessageTypes=new TimerMessageTypes;
-	set_names: TimeoutSetStrings=new TimeoutSetStrings;
-	clear_names: TimeoutClearStrings=new TimeoutClearStrings;
+	msg_types=new TimerMessageTypes;
+	set_names=new TimeoutSetStrings;
+	clear_names=new TimeoutClearStrings;
 	handled: number[]=[];
 	to_handle: (NoDataMsg|NumInfoMsg|RefVarMsg)[];
 	constructor() {
