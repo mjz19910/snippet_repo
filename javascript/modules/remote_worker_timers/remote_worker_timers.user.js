@@ -622,7 +622,6 @@
 		/** @readonly */
 		type=TimerWorkerSetTypes;
 		worker_types=new RemoteWorkerTypes;
-		value={};
 	}
 	/**
 	 * @template T
@@ -756,7 +755,7 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {TimerWorkerSetTypesMsg|ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2} msg
+		 * @param {ReplySetSingleMsg|WorkerReadyReplyMsg|ReplyMessageType1|ReplyMessageType2} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
@@ -805,13 +804,18 @@
 					this.timer.on_reply(msg);
 				} break;
 				case g_timer_api.worker_set_types: {
-					this.on_result(msg);
+					this.on_result_ex(msg);
 				} break;
 				default: {
 					console.assert(false,"unhandled result",msg);
 					debugger;
 				}
 			}
+		}
+		/** @arg {TimerWorkerSetTypesMsg} msg */
+		on_result_ex(msg) {
+			if(!this.worker) throw new Error("No worker");
+			console.log("result_ex", msg);
 		}
 		/**
 		 * @param {any} data
