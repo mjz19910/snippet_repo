@@ -404,19 +404,18 @@
 			if(timeout<0) timeout=0;
 			let state=new TimerState(remote_id,tag,is_repeating,target_fn,target_args,timeout);
 			this.store_state_by_remote_id(remote_id,state);
-			this.send_worker_set_message(tag,{
-				type: remote_id,
-				value: timeout
-			});
+			this.send_worker_set_message(tag,remote_id,timeout);
 			return remote_id;
 		}
 		/**
-		 * @param {any} tag
-		 * @param {{ type: any; value: any; }} obj
+		 * @param {1 | 2} tag
+		 * @param {number} remote_id
+		 * @param {number} timeout
 		 */
-		send_worker_set_message(tag,obj) {
+		send_worker_set_message(tag,remote_id,timeout) {
 			this.assert_valid_worker();
-			let msg_id;
+			/** @type {203|204|null} */
+			let msg_id=null;
 			switch(tag) {
 				case TIMER_SINGLE: msg_id=g_timer_api.worker.set.single; break;
 				case TIMER_REPEATING: msg_id=g_timer_api.worker.set.repeating; break;
@@ -428,7 +427,8 @@
 			}
 			this.worker_state.postMessage({
 				type: msg_id,
-				value: obj
+				remote_id,
+				timeout,
 			});
 		}
 		/**
@@ -513,12 +513,12 @@
 			if(tag===TIMER_SINGLE) {
 				this.worker_state.postMessage({
 					type: g_timer_api.worker.clear.single,
-					value: remote_id
+					remote_id,
 				});
 			} else if(tag===TIMER_REPEATING) {
 				this.worker_state.postMessage({
 					type: g_timer_api.worker.clear.repeating,
-					value: remote_id
+					remote_id,
 				});
 			}
 		}
@@ -534,12 +534,12 @@
 				if(state.type===TIMER_SINGLE&&tag===TIMER_SINGLE) {
 					this.worker_state.postMessage({
 						type: g_timer_api.worker.clear.single,
-						value: remote_id
+						remote_id
 					});
 				} else if(state.type===TIMER_REPEATING&&tag===TIMER_REPEATING) {
 					this.worker_state.postMessage({
 						type: g_timer_api.worker.clear.repeating,
-						value: remote_id
+						remote_id
 					});
 				}
 				state.active=false;
@@ -588,7 +588,6 @@
 	class TimeoutMessageReadyMsg {
 		/** @readonly */
 		type=TimeoutMessageReady;
-		remote_id=0;
 	}
 	class TimeoutSetSingleMsg {
 		/** @readonly */
@@ -854,7 +853,7 @@
 					break;
 				}
 				case g_timer_api.worker_set_types: {
-					this.worker.postMessage({
+					this.postMessage({
 						type: g_timer_api.worker.ready
 					});
 				} break;
@@ -914,12 +913,10 @@
 			if(!this.worker) throw new Error("No worker");
 			console.log("result_ex",msg);
 		}
-		/**
-		 * @param {any} data
-		 */
-		postMessage(data) {
+		/** @arg {typeof WorkerStateMessageV} msg */
+		postMessage(msg) {
 			if(!this.worker) throw 1;
-			return this.worker.postMessage(data);
+			return this.worker.postMessage(msg);
 		}
 		/**
 		 * @param {WorkerState} worker_state_value
