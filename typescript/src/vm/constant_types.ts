@@ -200,12 +200,21 @@ export type DispatchMessageType=
 	ReplyToLocalTimerMessageT|
 	MessageReplyFromWorkerData;
 
-export type WorkerReplyLikeT=
+export type WorkerReplyTypes=
 	ReplyFromWorkerMessage|
 	ReplyToLocalTimerMessageT|
 	ReplyToWorkerStateMessageT|
 	WorkerDestroyTypeMessageT|
 	TimeoutFireSingleMessageT;
+
+export type WorkerSendTypes=
+	TimeoutSetSingleMessageT|
+	TimeoutSetRepeatingMessageT|
+	TimeoutFireSingleMessageT|
+	TimeoutSingleReplyMessageT|
+	TimeoutClearAnyMessageT|
+	TimeoutClearSingleMessageT|
+	TimeoutClearRepeatingMessageT;
 
 export type TimeoutClearStringsT={
 	single: typeof TimeoutClearStringSingle;
