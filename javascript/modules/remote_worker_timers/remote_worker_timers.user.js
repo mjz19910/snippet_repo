@@ -718,7 +718,7 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {ReplyMessageType2} msg
+		 * @param {ReplyMessageType1|ReplyMessageType2} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
@@ -767,7 +767,7 @@
 					this.timer.on_reply(msg);
 				} break;
 				case g_timer_api.worker_set_types: {
-					this.on_result(msg_type,msg_data);
+					this.on_result(msg);
 				} break;
 				default: {
 					console.assert(false,"unhandled result",msg);
