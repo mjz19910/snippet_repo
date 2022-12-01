@@ -577,14 +577,11 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
-	class UpdateMessageHandlerType {
-		init="";
-		onmessage="";
-	}
 	class WorkerUpdateMessageHandlerMsg {
 		/** @readonly */
 		type=WorkerUpdateMessageHandler;
-		value=new UpdateMessageHandlerType;
+		init="";
+		onmessage="";
 	}
 	class TimeoutMessageReadyMsg {
 		/** @readonly */
