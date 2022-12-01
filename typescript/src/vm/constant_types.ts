@@ -25,6 +25,7 @@ import {
 } from "../constants.js";
 import {ReplyClearMessages} from "./ReplyClearMessages.js";
 import {ReplySetTypes} from "./ReplySetTypes.js";
+import {ReplySetTypesT} from "./ReplySetTypesT.js";
 export type TimeoutRepeatingReplyTy=typeof TimeoutRepeatingReply;
 export type TimeoutSingleReplyTy=typeof TimeoutSingleReply;
 export type WorkerReplyTypesTy={
@@ -76,7 +77,7 @@ export type ReplyTypesT={
 	destroy_worker: WorkerDestroyTypeT;
 	update_handler: WorkerUpdateMessageHandlerReplyTy;
 	ready: WorkerReadyReplyTy;
-	set: ReplySetTypes;
+	set: ReplySetTypesT;
 	clear: ReplyClearMessages;
 };
 export type TimeoutWorkerTypesT={
