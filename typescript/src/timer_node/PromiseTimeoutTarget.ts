@@ -1,5 +1,3 @@
-import {PromiseExecutorRejectCallback} from "../vm/PromiseExecutorRejectCallback.js";
-
 export class PromiseTimeoutTarget {
 	description;
 	m_promise: Promise<void>|null;
