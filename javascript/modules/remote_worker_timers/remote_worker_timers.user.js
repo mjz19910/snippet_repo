@@ -656,8 +656,10 @@
 	class ReplyFromWorkerMsg {
 		/** @readonly */
 		type=ReplyFromWorker;
-		/** @readonly @type {202|1001} */
+		/** @readonly @type {202|203|204|205|206|1001} */
 		source_type=1001;
+		/** @type {[202]|[203,number|undefined,number,number]|[204,number|undefined,number,number]|[205,number,any]|[206,number,any]|[1001]} */
+		args=[202];
 	}
 	class Message_600 {
 		/** @readonly */
@@ -1150,6 +1152,7 @@
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
 						source_type: g_timer_api.worker_set_types,
+						args:[msg.type],
 					});
 				} break;
 				default: {
@@ -1175,24 +1178,25 @@
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
 						source_type: msg.type,
+						args:[msg.type],
 					});
 				} break;
 				case g_timer_api.worker.set.single/*remote timer set single*/: {
 					console.log('worker set single',msg.remote_id,msg.timeout);
 					let local_id=remote_worker_state.set(TIMER_SINGLE,msg.remote_id,msg.timeout);
-					postMessage({
+					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
-						from_data: g_timer_api.reply.set.single,
-						args: [local_id,msg.type,msg.remote_id,msg.timeout],
+						source_type: msg.type,
+						args: [msg.type,local_id,msg.remote_id,msg.timeout],
 					});
 				} break;
 				case g_timer_api.worker.set.repeating: {
 					console.log('worker set repeating',msg.remote_id,msg.timeout);
 					let local_id=remote_worker_state.set(TIMER_REPEATING,msg.remote_id,msg.timeout);
-					postMessage({
+					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
-						from_data: g_timer_api.reply.set.repeating,
-						args: [local_id,msg.type,msg.remote_id,msg.timeout],
+						source_type: msg.type,
+						args: [msg.type,local_id,msg.remote_id,msg.timeout],
 					});
 				} break;
 				case g_timer_api.worker.clear.single: {
@@ -1259,9 +1263,7 @@
 				if(!this.m_timer) throw 1;
 				return this.m_timer.set(tag,remote_id,timeout);
 			}
-			/**
-			 * @param {any} msg
-			 */
+			/** @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg} msg */
 			clear(msg) {
 				if(!this.m_timer) throw 1;
 				return this.m_timer.do_clear(msg);
@@ -1402,34 +1404,28 @@
 				}
 				return null;
 			}
-			/**
-			 * @param {{ type: any, value: any; }} msg
-			 */
+			/** @arg {TimeoutClearSingleMsg|TimeoutClearRepeatingMsg} msg */
 			do_clear(msg) {
 				if(!g_timer_api.worker) throw 1;
 				if(!g_timer_api.reply) throw 1;
-				let remote_id=msg.value;
+				let remote_id=msg.remote_id;
 				let maybe_local_id=this.clear(remote_id);
 				// debugger;
 				switch(msg.type) {
 					case g_timer_api.worker.clear.single: {
 						// debugger;
-						postMessage({
+						typedPostMessage({
 							type: g_timer_api.reply.from_worker,
-							value: {
-								type: g_timer_api.reply.clear.single,
-								value: [remote_id,maybe_local_id,msg.type]
-							}
+							source_type: msg.type,
+							args: [msg.type,remote_id,maybe_local_id],
 						});
 					} break;
 					case g_timer_api.worker.clear.repeating: {
 						// debugger;
-						postMessage({
+						typedPostMessage({
 							type: g_timer_api.reply.from_worker,
-							value: {
-								type: g_timer_api.reply.clear.repeating,
-								value: [remote_id,maybe_local_id,msg.type]
-							}
+							source_type: msg.type,
+							args:[msg.type,remote_id,maybe_local_id],
 						});
 					} break;
 					default: {
