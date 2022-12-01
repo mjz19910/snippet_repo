@@ -9,13 +9,13 @@ import {WeakRefWithKey} from "./WeakRefWithKey.js";
 import {Counter} from "./Counter.js";
 
 export let object_id_counter=new Counter;
-export let weak_objects_arr: (WeakFinalInfo|null)[]=[];
+export let weak_target_object_arr: (WeakFinalInfo|null)[]=[];
 export let unregister_arr: {symbol: symbol;}[]=[];
 
 export function register_obj_with_registry<T extends object>(target: T) {
 	let obj_id;
 	if(!(target instanceof HTMLScriptElement)&&!(target instanceof SVGScriptElement)) {
-		let target_ref=weak_objects_arr.find((e: {ref: {deref: () => any;};}|null) => e&&e.ref.deref()===target);
+		let target_ref=weak_target_object_arr.find((e: {ref: {deref: () => any;};}|null) => e&&e.ref.deref()===target);
 		if(target_ref) {
 			return target_ref.id;
 		}
