@@ -1,6 +1,5 @@
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
-import {MessageTimeoutSetS_OLD} from "./MessageTimeoutSetS.js";
 import {TimeoutSingleReplyMessage} from "./TimeoutSingleReplyMessage.js";
 import {MessageTimeoutClearAny} from "./MessageTimeoutClearA.js";
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
@@ -9,7 +8,7 @@ import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js";
 import {Timer} from "./Timer.js";
 import {ReplyFromWorker,ReplyToWorkerState,ReplyToLocalTimer,ReplySetRepeating,ReplySetSingle,TimeoutClearRepeating,TimeoutClearSingle,WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
-import {DispatchMessageType, TypesForWorkerReplies} from "./constant_types.js";
+import {DispatchMessageType, MessageTimeoutSetSingleT, TypesForWorkerReplies} from "./constant_types.js";
 
 declare global {
 	interface Window {
@@ -139,7 +138,7 @@ export class WorkerState {
 			}
 		}
 	}
-	postMessage(data: MessageTimeoutFireS|MessageTimeoutClearAny|TimeoutSingleReplyMessage|MessageTimeoutClearS|MessageTimeoutSetS_OLD|MessageTimeoutSetR|MessageTimeoutClearR) {
+	postMessage(data: MessageTimeoutFireS|MessageTimeoutClearAny|TimeoutSingleReplyMessage|MessageTimeoutClearS|MessageTimeoutSetSingleT|MessageTimeoutSetR|MessageTimeoutClearR) {
 		if(this.worker)
 			return this.worker.postMessage(data);
 	}

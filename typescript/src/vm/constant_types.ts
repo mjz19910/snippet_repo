@@ -208,3 +208,13 @@ export type TimeoutClearStringsT={
 	single: typeof TimeoutClearStringSingle;
 	repeating: typeof TimeoutClearStringRepeating;
 };
+
+export type SetSingleMessageData={
+	t: number
+	v: number
+};
+
+export type MessageTimeoutSetSingleT={
+	t: TimeoutSetSingleT;
+	v: SetSingleMessageData;
+};
