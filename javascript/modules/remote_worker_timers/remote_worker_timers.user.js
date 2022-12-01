@@ -795,7 +795,6 @@
 				case TimeoutFireRepeating: {
 					worker_state.timer.fire(TIMER_REPEATING,msg.value);
 				} break;
-				case TimeoutMessageReady: break;
 				// case WorkerUpdateMessageHandler: break;
 				case TimeoutMessageReady: break;
 				case TimeoutSetSingle: break;
