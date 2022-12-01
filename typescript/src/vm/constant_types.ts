@@ -200,7 +200,7 @@ export type DispatchMessageType=
 	ReplyToLocalTimerMessageT|
 	MessageReplyFromWorkerData;
 
-export type TypesForWorkerReplies=
+export type WorkerReplyLikeT=
 	ReplyFromWorkerMessage|
 	ReplyToLocalTimerMessageT|
 	ReplyToWorkerStateMessageT|

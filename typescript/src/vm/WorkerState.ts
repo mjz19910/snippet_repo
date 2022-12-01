@@ -21,7 +21,7 @@ import {
 	TimeoutClearSingleMessageT,
 	TimeoutFireSingleMessageT,
 	TimeoutSetRepeatingMessageT,
-	TypesForWorkerReplies,
+	WorkerReplyLikeT,
 	TimeoutSingleReplyMessageT
 } from "./constant_types.js";
 
@@ -71,7 +71,7 @@ export class WorkerState {
 		if(this.flags.get('failed'))
 			return;
 		this.worker=new Worker(this.worker_url);
-		this.worker.onmessage=function onmessage(e: MessageEvent<TypesForWorkerReplies>) {
+		this.worker.onmessage=function onmessage(e: MessageEvent<WorkerReplyLikeT>) {
 			var msg=e.data;
 			let worker_state=weak_worker_state.deref();
 			if(!worker_state) {
