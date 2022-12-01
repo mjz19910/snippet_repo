@@ -148,42 +148,42 @@
 	const ReplyClearSingle=305;
 	const ReplyClearRepeating=306;
 	const ReplyClearAny=307;
-	const ReplyToWorkerState=401;
-	const ReplyToLocalTimer=402;
-	const ReplyFromWorker=500;
-	const ReplyToWorker=600;
+	const ReplyToWorkerState=501;
+	const ReplyToLocalTimer=502;
+	const ReplyFromWorker=503;
+	const ReplyToWorker=504;
 	const TimeoutSingleReply=700;
 	const TimeoutRepeatingReply=701;
 	const WorkerAsyncMessage=801;
 	const TimerWorkerSetTypes=1001;
 	class ReplyClearMessages {
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearSingleT} */
 		single=ReplyClearSingle;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearRepeatingT} */
 		repeating=ReplyClearRepeating;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearAnyT} */
 		any=ReplyClearAny;
 	}
 	class ReplySetMessages {
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplySetSingleT} */
 		single=ReplySetSingle;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplySetRepeatingT} */
 		repeating=ReplySetRepeating;
 	};
 	class ReplyTypes {
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerDestroyTypeT} */
 		destroy_worker=WorkerDestroyType;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerUpdateMessageHandlerReplyT} */
 		update_handler=WorkerUpdateMessageHandlerReply;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerReadyReplyT} */
 		ready=WorkerReadyReply;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyToWorkerStateT} */
 		msg1=ReplyToWorkerState;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyToLocalTimerT} */
 		msg2=ReplyToLocalTimer;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyFromWorkerT} */
 		from_worker=ReplyFromWorker;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyToWorkerT} */
 		to_worker=ReplyToWorker;
 		set=new ReplySetMessages;
 		clear=new ReplyClearMessages;
