@@ -2,9 +2,9 @@ import {ReplyClearAny,ReplyClearRepeating,ReplyClearSingle} from "../constants.j
 import {
 	ReplyClearAnyTy,
 	ReplyClearRepeatingTy,
-	ReplyClearTypesT,
+	ReplyClearSingleTy,
+	ReplyClearTypesT
 } from "./constant_types.js";
-import {ReplyClearSingleTy} from "./ReplyClearSingleTy.js";
 
 export class ReplyClearMessages implements ReplyClearTypesT {
 	single: ReplyClearSingleTy=ReplyClearSingle;
