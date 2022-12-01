@@ -1255,9 +1255,9 @@
 				this.m_timer=timer;
 			}
 			/**
-			 * @param {number} tag
-			 * @param {any} remote_id
-			 * @param {any} timeout
+			 * @param {1|2} tag
+			 * @param {number} remote_id
+			 * @param {number|undefined} timeout
 			 */
 			set(tag,remote_id,timeout) {
 				if(!this.m_timer) throw 1;
@@ -1297,7 +1297,6 @@
 			 * @param {number} remote_id
 			 */
 			fire(remote_id) {
-				if(!g_timer_api.fire) throw 1;
 				let local_state=this.m_remote_id_to_state_map.get(remote_id);
 				if(!local_state) return;
 				this.validate_state(local_state);
@@ -1323,8 +1322,8 @@
 				}
 			}
 			/**
-			 * @param {any} tag
-			 * @param {any} remote_id
+			 * @param {1|2} tag
+			 * @param {number} remote_id
 			 * @param {number | undefined} timeout
 			 */
 			set(tag,remote_id,timeout) {
