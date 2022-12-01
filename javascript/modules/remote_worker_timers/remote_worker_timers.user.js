@@ -656,7 +656,7 @@
 	class ReplyFromWorkerMsg {
 		/** @readonly */
 		type=ReplyFromWorker;
-		value={};
+		source_type=1001;
 	}
 	class Message_600 {
 		/** @readonly */
@@ -819,8 +819,7 @@
 					worker_state.dispatch_message(m_msg);
 				} break;
 				case ReplyFromWorker/*worker_state dispatch_message*/: {
-					let m_msg=WorkerStateMessage.as_reply_from_worker(msg);
-					worker_state.dispatch_message(m_msg);
+					worker_state.dispatch_message(msg);
 					break;
 				}
 				default: {
@@ -1157,7 +1156,7 @@
 						throw new Error("Invalid timer_api_types");
 					}
 					if(!g_timer_api.reply) throw new Error("Failed to set timer_api.types");
-					postMessage({
+					typed_post_message({
 						type: g_timer_api.reply.from_worker,
 						source_type: g_timer_api.worker_set_types,
 					});
