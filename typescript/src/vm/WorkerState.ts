@@ -1,5 +1,5 @@
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
+import {MessageTimeoutSetRepeating_OLD} from "./MessageTimeoutSetR.js";
 import {TimeoutSingleReplyMessage} from "./TimeoutSingleReplyMessage.js";
 import {MessageTimeoutClearAny} from "./MessageTimeoutClearA.js";
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
@@ -138,7 +138,7 @@ export class WorkerState {
 			}
 		}
 	}
-	postMessage(data: MessageTimeoutFireS|MessageTimeoutClearAny|TimeoutSingleReplyMessage|MessageTimeoutClearS|MessageTimeoutSetSingleT|MessageTimeoutSetR|MessageTimeoutClearR) {
+	postMessage(data: MessageTimeoutFireS|MessageTimeoutClearAny|TimeoutSingleReplyMessage|MessageTimeoutClearS|MessageTimeoutSetSingleT|MessageTimeoutSetRepeating_OLD|MessageTimeoutClearR) {
 		if(this.worker)
 			return this.worker.postMessage(data);
 	}

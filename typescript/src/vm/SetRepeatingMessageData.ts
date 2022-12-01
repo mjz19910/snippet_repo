@@ -1,4 +1,4 @@
-export type SetRepeatingMessageData={
+export type SetRepeatingMessageData_OLD={
 	t: number
 	v: number
 }
