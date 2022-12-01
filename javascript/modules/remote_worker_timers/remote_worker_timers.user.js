@@ -140,7 +140,7 @@
 	const TimeoutClearSingle=205;
 	const TimeoutClearRepeating=206;
 	const TimeoutClearA=207;
-	const WorkerDestroyMessage=300;
+	const WorkerDestroyType=300;
 	const WorkerReadyReply=302;
 	const ReplySetSingle=303;
 	const ReplySetRepeating=304;
@@ -171,7 +171,7 @@
 	};
 	class ReplyTypes {
 		/** @readonly */
-		destroy_worker=WorkerDestroyMessage;
+		destroy_worker=WorkerDestroyType;
 		/** @readonly */
 		update_handler=301;
 		/** @readonly */
@@ -584,6 +584,12 @@
 		type=TimeoutFireRepeating;
 		value=0;
 	}
+	
+	class WorkerDestroyTypeMsg {
+		/** @readonly */
+		type=WorkerDestroyType;
+		value={};
+	}
 	class WorkerReadyReplyMsg {
 		/** @readonly */
 		type=WorkerReadyReply;
@@ -660,6 +666,11 @@
 			return msg;
 		}
 		/** @arg {WorkerStateMessage} msg */
+		static as_worker_destroy_type(msg) {
+			assert_as_instance(msg,WorkerDestroyTypeMsg);
+			return msg;
+		}
+		/** @arg {WorkerStateMessage} msg */
 		static as_reply_type_1(msg) {
 			assert_as_instance(msg,ReplyMessageType1);
 			return msg;
@@ -674,17 +685,18 @@
 			assert_as_instance(msg,ReplyFromWorkerMsg);
 			return msg;
 		}
-		/** @type {typeof TimeoutFireSingle|typeof TimeoutFireRepeating|typeof WorkerDestroyMessage|typeof ReplyMessage1|typeof ReplyMessage2|typeof ReplyFromWorker} */
+		/** @type {typeof TimeoutFireSingle|typeof TimeoutFireRepeating|typeof WorkerDestroyType|typeof ReplyMessage1|typeof ReplyMessage2|typeof ReplyFromWorker} */
 		type=TimeoutFireSingle;
 		/** @type {number|{}|null} */
 		value=null;
 		static as_any_of() {
 			let fv=false;
 			if(fv) {return new TimeoutFireSMsg;}
+			if(fv) {return new TimeoutFireRMsg;}
+			if(fv) {return new WorkerDestroyTypeMsg;}
 			if(fv) {return new ReplyMessageType1;}
 			if(fv) {return new ReplyMessageType2;}
-			if(fv) {return new TimeoutFireRMsg;}
-			return new TimeoutFireRMsg;
+			return new ReplyFromWorkerMsg;
 		}
 	}
 	const WorkerStateMessageV=WorkerStateMessage.as_any_of();
@@ -750,7 +762,7 @@
 					let m_msg=WorkerStateMessage.as_timer_fire(msg);
 					worker_state.timer.fire(TIMER_REPEATING,m_msg.value);
 				} break;
-				case WorkerDestroyMessage/*worker_state destroy*/: {
+				case WorkerDestroyType: {
 					worker_state.destroy();
 				} break;
 				case ReplyMessage1: {
@@ -933,7 +945,7 @@
 		/** @type {any} */
 		let any_global=globalThis;
 		if(any_global.remote_worker_state) {
-			postMessage({t: WorkerDestroyMessage});
+			postMessage({t: WorkerDestroyType});
 			executor_accept(null);
 			return;
 		}
