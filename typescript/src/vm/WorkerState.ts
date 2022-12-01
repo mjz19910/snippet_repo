@@ -1,6 +1,4 @@
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {TimeoutSingleReplyMessage_OLD} from "./TimeoutSingleReplyMessage.js";
-import {MessageTimeoutClearAny_OLD} from "./MessageTimeoutClearA.js";
 import {Timer} from "./Timer.js";
 import {
 	ReplyFromWorker,ReplyToWorkerState,ReplyToLocalTimer,ReplySetRepeating,ReplySetSingle,
@@ -8,7 +6,7 @@ import {
 	WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply
 } from "../constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
-import {DispatchMessageType,MessageTimeoutSetSingleT,TimeoutClearRepeatingMessageT,TimeoutClearSingleMessageT,TimeoutFireSingleMessageT,TimeoutSetRepeatingMessageT,TypesForWorkerReplies} from "./constant_types.js";
+import {DispatchMessageType,TimeoutSetSingleMessageT,TimeoutClearAnyMessageT,TimeoutClearRepeatingMessageT,TimeoutClearSingleMessageT,TimeoutFireSingleMessageT,TimeoutSetRepeatingMessageT,TypesForWorkerReplies, TimeoutSingleReplyMessageT} from "./constant_types.js";
 
 declare global {
 	interface Window {
@@ -140,10 +138,10 @@ export class WorkerState {
 	}
 	postMessage(
 		data: TimeoutFireSingleMessageT|
-			MessageTimeoutClearAny_OLD|
-			TimeoutSingleReplyMessage_OLD|
+			TimeoutClearAnyMessageT|
+			TimeoutSingleReplyMessageT|
 			TimeoutClearSingleMessageT|
-			MessageTimeoutSetSingleT|
+			TimeoutSetSingleMessageT|
 			TimeoutSetRepeatingMessageT|
 			TimeoutClearRepeatingMessageT
 	) {

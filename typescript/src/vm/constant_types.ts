@@ -216,7 +216,7 @@ export type SetSingleMessageDataT={
 	v: number;
 };
 
-export type MessageTimeoutSetSingleT={
+export type TimeoutSetSingleMessageT={
 	t: TimeoutSetSingleT;
 	v: SetSingleMessageDataT;
 };
@@ -235,3 +235,13 @@ export type TimeoutSetRepeatingMessageT={
 	t: TimeoutSetRepeatingT;
 	v: SetRepeatingMessageDataT;
 };
+
+export type TimeoutClearAnyMessageT={
+	t: TimeoutClearAnyT;
+	v: number;
+};
+
+export type TimeoutSingleReplyMessageT={
+	t: TimeoutSingleReplyT
+	v: number
+}

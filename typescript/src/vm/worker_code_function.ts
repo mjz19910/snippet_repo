@@ -1,7 +1,17 @@
-import {MessageTimeoutSetSingleT, ReplyToWorkerT, TimeoutClearRepeatingT, TimeoutClearSingleT, TimeoutMessageReplyT, TimeoutRepeatingReplyT, TimeoutSingleReplyT, WorkerUpdateMessageHandlerT} from "./constant_types.js";
-import {TimeoutClearRepeatingMessageT_OLD} from "./MessageTimeoutClearR.js";
+import {
+	TimeoutSetSingleMessageT,
+	ReplyToWorkerT,
+	TimeoutClearRepeatingT,
+	TimeoutClearSingleT,
+	TimeoutMessageReplyT,
+	TimeoutRepeatingReplyT,
+	TimeoutSingleReplyT,
+	WorkerUpdateMessageHandlerT,
+	TimeoutClearSingleMessageT,
+	TimeoutClearRepeatingMessageT,
+	TimeoutSetRepeatingMessageT
+} from "./constant_types.js";
 import {TimeoutClearSingleMessageT_OLD} from "./MessageTimeoutClearS.js";
-import {MessageTimeoutSetRepeating_OLD} from "./MessageTimeoutSetR.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerTag} from "./TimerTag.js";
@@ -31,7 +41,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			if(!this.m_timer) throw new Error("Bad");
 			return this.m_timer.set(tag,remote_id,timeout);
 		}
-		clear(msg: TimeoutClearSingleMessageT_OLD|TimeoutClearRepeatingMessageT_OLD) {
+		clear(msg: TimeoutClearSingleMessageT|TimeoutClearRepeatingMessageT) {
 			if(this.m_timer)
 				return this.m_timer.do_clear(msg);
 		}
@@ -171,7 +181,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			}
 			return null;
 		}
-		do_clear(msg: TimeoutClearSingleMessageT_OLD|TimeoutClearRepeatingMessageT_OLD) {
+		do_clear(msg: TimeoutClearSingleMessageT|TimeoutClearRepeatingMessageT) {
 			let remote_id=msg.v;
 			let maybe_local_id=this.clear(remote_id);
 			if(!message_types)
@@ -241,7 +251,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		t: TimeoutMessageReplyT;
 		v: never;
 	};
-	type WorkerMessageType=TimeoutClearRepeatingMessageT_OLD|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetSingleT|MessageTimeoutSetRepeating_OLD|TimeoutClearSingleMessageT_OLD;
+	type WorkerMessageType=TimeoutClearRepeatingMessageT|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|TimeoutSetSingleMessageT|TimeoutSetRepeatingMessageT|TimeoutClearSingleMessageT_OLD;
 	type UpdateMessageHandlerType={
 		init: string;
 		onmessage: string;
