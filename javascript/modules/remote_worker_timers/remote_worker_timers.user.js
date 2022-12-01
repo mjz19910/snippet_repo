@@ -597,6 +597,11 @@
 	/** @extends {EmptyStateMessage} */
 	class WorkerStateMessage {
 		/** @arg {WorkerStateMessage} msg */
+		static as_reply_type_2(msg) {
+			assert_as_instance(msg,ReplyMessageType2);
+			return msg;
+		}
+		/** @arg {WorkerStateMessage} msg */
 		static as_reply_type_1(msg) {
 			assert_as_instance(msg,ReplyMessageType1);
 			return msg;
@@ -713,7 +718,7 @@
 			this.executor_handle=handle;
 		}
 		/**
-		 * @param {number} msg
+		 * @param {ReplyMessageType2} msg
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
@@ -736,16 +741,14 @@
 			}
 		}
 		/**
-		 * @param {ReplyFromWorkerMsg} msg
+		 * @param {ReplyMessageType1|ReplyMessageType2|ReplyFromWorkerMsg} msg
 		 */
 		dispatch_message(msg) {
 			switch(msg.type) {
 				case WorkerReadyReply: {
-					// debugger;
 					this.on_result(msg);
 				} break;
 				case ReplySetSingle: {
-					// debugger;
 					this.on_result(msg);
 				} break;
 				case ReplyMessage1: {
