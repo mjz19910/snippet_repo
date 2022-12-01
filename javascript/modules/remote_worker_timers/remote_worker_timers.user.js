@@ -820,9 +820,10 @@
 				case TimerWorkerSetTypes: break;
 				default: {
 					console.assert(false,"Main: Unhandled message",msg);
-					debugger;
-					break;
-				}
+					/** @type {never} */
+					let _x=msg;
+					_x;
+				} break;
 			}
 		}
 		/**
