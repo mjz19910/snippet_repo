@@ -242,6 +242,6 @@ export type TimeoutClearAnyMessageT={
 };
 
 export type TimeoutSingleReplyMessageT={
-	t: TimeoutSingleReplyT
-	v: number
-}
+	t: TimeoutSingleReplyT;
+	v: number;
+};
