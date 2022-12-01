@@ -1,15 +1,10 @@
-import {WorkerUpdateMessageHandlerTy_OLD} from "./WorkerUpdateMessageHandlerTy.js"
-import {TimeoutMessageReplyTy_OLD} from "./TimeoutMessageReplyTy.js"
-import {TimeoutSetTypesTy} from "./TimeoutSetTypesTy.js"
-import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy.js"
-import {TimeoutClearInfoTy_OLD} from "./TimeoutClearInfoTy.js"
-import {WorkerReplyTypes} from "./WorkerReplyTypes.js"
+import {TimeoutClearInfoT, TimeoutMessageReplyT, TimeoutSetInfoT, TimeoutSetTypesT, WorkerReplyTypesT, WorkerUpdateMessageHandlerT} from "./constant_types.js";
 
 export type TimeoutWorkerTypesTy_OLD={
-	reply: WorkerReplyTypes
-	update_message_handler: WorkerUpdateMessageHandlerTy_OLD
-	ready: TimeoutMessageReplyTy_OLD
-	set: TimeoutSetInfoTy
-	clear: TimeoutClearInfoTy_OLD
-	set_types: TimeoutSetTypesTy
+	reply: WorkerReplyTypesT
+	update_message_handler: WorkerUpdateMessageHandlerT
+	ready: TimeoutMessageReplyT
+	set: TimeoutSetInfoT
+	clear: TimeoutClearInfoT
+	set_types: TimeoutSetTypesT
 }
