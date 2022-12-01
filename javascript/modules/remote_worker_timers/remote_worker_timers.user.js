@@ -607,11 +607,6 @@
 		type=TimeoutClearSingle;
 		remote_id=0;
 	}
-	class Message_206 {
-		/** @readonly */
-		type=206;
-		remote_id=0;
-	}
 	class TimeoutClearRepeatingMsg {
 		/** @readonly */
 		type=TimeoutClearRepeating;
@@ -735,7 +730,7 @@
 			if(fv) return new TimeoutSetSingleMsg;
 			if(fv) return new TimeoutSetRepeatingMsg;
 			if(fv) return new TimeoutClearSingleMsg;
-			if(fv) return new Message_206;
+			if(fv) return new TimeoutClearRepeatingMsg;
 			if(fv) return new WorkerDestroyTypeMsg;
 			if(fv) return new ReplyMessageType1;
 			if(fv) return new ReplyMessageType2;
@@ -843,7 +838,7 @@
 		 */
 		on_result(msg) {
 			if(!this.worker) throw new Error("No worker");
-			switch(msg.value) {
+			switch(msg.type) {
 				case g_timer_api.worker.ready: {
 					if(this.executor_handle===null||this.executor_handle.closed()) {
 						console.assert(false,"WorkerState on_result called with invalid executor_handle");
