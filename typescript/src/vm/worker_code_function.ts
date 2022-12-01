@@ -1,11 +1,10 @@
-import {ReplyToWorkerT, WorkerUpdateMessageHandlerT} from "./constant_types.js";
+import {ReplyToWorkerT, TimeoutClearRepeatingT, WorkerUpdateMessageHandlerT} from "./constant_types.js";
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
-import {TimeoutClearRTy_OLD} from "./TimeoutClearRTy.js";
 import {TimeoutClearSTy_OLD} from "./TimeoutClearSTy.js";
-import {TimeoutMessageReplyTy} from "./TimeoutMessageReplyTy.js";
+import {TimeoutMessageReplyTy_OLD} from "./TimeoutMessageReplyTy.js";
 import {TimeoutRepeatingReplyTy} from "./TimeoutRepeatingReplyTy.js";
 import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
@@ -213,7 +212,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 						t: typeof reply_message_types.from_worker;
 						v: {
 							t: typeof message_types.reply.clear.repeating;
-							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearRTy_OLD];
+							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearRepeatingT];
 						};
 					}={
 						t: reply_message_types.from_worker,
@@ -244,7 +243,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		v: UpdateMessageHandlerType;
 	};
 	type MessageTimeoutMessageR={
-		t: TimeoutMessageReplyTy;
+		t: TimeoutMessageReplyTy_OLD;
 		v: never;
 	};
 	type WorkerMessageType=MessageTimeoutClearR|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetS|MessageTimeoutSetR|MessageTimeoutClearS;
