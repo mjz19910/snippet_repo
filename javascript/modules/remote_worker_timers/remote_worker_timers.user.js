@@ -155,7 +155,7 @@
 	const ReplyToWorker=504;
 	const WorkerUpdateMessageHandler=601;
 	const WorkerAsyncMessage=801;
-	const TimerWorkerSetTypes=700;
+	const TimeoutSetTypes=700;
 	class ReplyClearTypes {
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearSingleT} */
 		single=ReplyClearSingle;
@@ -178,9 +178,9 @@
 		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerReadyReplyT} */
 		ready=WorkerReadyReply;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyToWorkerStateT} */
-		msg1=ReplyToWorkerState;
+		reply_to_local=ReplyToWorkerState;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyToLocalTimerT} */
-		msg2=ReplyToLocalTimer;
+		reply_to_main_timer=ReplyToLocalTimer;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyFromWorkerT} */
 		from_worker=ReplyFromWorker;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyToWorkerT} */
@@ -230,8 +230,8 @@
 		set=new TimeoutSetInfo;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutClearInfoT} */
 		clear=new TimeoutClearInfo;
-		/** @type {import("../../../typescript/src/vm/constant_types.js").TimerWorkerSetTypesT} */
-		set_types=TimerWorkerSetTypes;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSetTypesT} */
+		set_types=TimeoutSetTypes;
 	}
 	const TimeoutSetStringSingle="setTimeout";
 	const TimeoutSetStringRepeating="setInterval";
@@ -253,7 +253,7 @@
 		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerAsyncMessageT} */
 		async=WorkerAsyncMessage;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSetTypesT} */
-		worker_set_types=TimerWorkerSetTypes;
+		worker_set_types=TimeoutSetTypes;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyTypesT} */
 		reply=new ReplyTypes;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutFireInfoT} */
@@ -687,7 +687,7 @@
 	}
 	class TimerWorkerSetTypesMsg {
 		/** @readonly */
-		type=TimerWorkerSetTypes;
+		type=TimeoutSetTypes;
 		for_worker_state=true;
 		worker_types=new RemoteWorkerTypes;
 	}
@@ -834,7 +834,7 @@
 				case ReplyToWorker: break;
 				case TimeoutSingleReply: break;
 				case TimeoutRepeatingReply: break;
-				case TimerWorkerSetTypes: break;
+				case TimeoutSetTypes: break;
 				default: {
 					console.assert(false,"Main: Unhandled message",msg);
 					/** @type {never} */
@@ -1034,7 +1034,7 @@
 				VERIFY(verify_obj.TIMER_REPEATING===TIMER_REPEATING,"TIMER_SINGLE constant matches");
 				VERIFY(verify_obj.TIMER_REPEATING===TIMER_REPEATING,"TIMER_REPEATING constant matches");
 				VERIFY(verify_obj.TIMER_TAG_COUNT===TIMER_TAG_COUNT,"TIMER_TAG_COUNT constant matches");
-				VERIFY(verify_obj.TimerWorkerSetTypes===TimerWorkerSetTypes,"TimerWorkerSetTypes constant matches");
+				VERIFY(verify_obj.TimerWorkerSetTypes===TimeoutSetTypes,"TimerWorkerSetTypes constant matches");
 				return;
 			},function verify_fail() {
 				executor_reject(new Error("verify_fail called"));

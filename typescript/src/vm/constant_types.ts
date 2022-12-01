@@ -30,6 +30,8 @@ import {
 	TimeoutSetStringRepeating
 } from "./constants.js";
 
+export type TimeoutMessageReadyT=typeof TimeoutMessageReady;
+
 export type ReplyClearRepeatingMessageT={
 	t: ReplyClearRepeatingT;
 	v: number,
