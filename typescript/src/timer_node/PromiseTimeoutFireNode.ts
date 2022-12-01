@@ -1,4 +1,4 @@
-export class PromiseTimeoutTarget {
+export class PromiseTimeoutFireNode {
 	description;
 	m_promise: Promise<void>|null;
 	constructor(description: string) {

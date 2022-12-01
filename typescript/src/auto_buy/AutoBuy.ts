@@ -1,7 +1,7 @@
 import {array_sample_end} from "../vm/array_sample_end.js";
 import {AsyncNodeRoot} from "../timer_node/AsyncNodeRoot.js";
 import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
-import {AsyncTimeoutTarget} from "../vm/AsyncTimeoutTarget.js";
+import {AsyncTimeoutFireNode} from "../timer_node/AsyncTimeoutFireNode.js";
 import {AutoBuyState} from "./AutoBuyState.js";
 import {Box} from "../box/Box.js";
 import {DomValueBox} from "../vm/DomValueBox.js";
@@ -814,7 +814,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.state_history_append(char,silent);
 		let node=new AsyncTimeoutNode(timeout);
 		this.root_node.append_child(node);
-		let att=new AsyncTimeoutTarget(char);
+		let att=new AsyncTimeoutFireNode(char);
 		let promise=node.start_async(att);
 		await promise;
 	}

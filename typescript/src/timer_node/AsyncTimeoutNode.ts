@@ -1,4 +1,4 @@
-import {AsyncTimeoutTarget} from "../vm/AsyncTimeoutTarget.js";
+import {AsyncTimeoutFireNode} from "./AsyncTimeoutFireNode.js";
 import {TimeoutNode} from "./TimeoutNode.js";
 
 export class AsyncTimeoutNode extends TimeoutNode {
@@ -6,7 +6,7 @@ export class AsyncTimeoutNode extends TimeoutNode {
 		super.run();
 		if(this.m_target) this.m_target.fire();
 	}
-	start_async(target: AsyncTimeoutTarget|null) {
+	start_async(target: AsyncTimeoutFireNode|null) {
 		if(target) {
 			this.m_target=target;
 			this.set();
