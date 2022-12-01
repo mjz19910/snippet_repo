@@ -156,7 +156,7 @@
 	const TimeoutRepeatingReply=701;
 	const WorkerAsyncMessage=801;
 	const TimerWorkerSetTypes=1001;
-	class ReplyClearMessages {
+	class ReplyClearTypes {
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearSingleT} */
 		single=ReplyClearSingle;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearRepeatingT} */
@@ -164,7 +164,7 @@
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearAnyT} */
 		any=ReplyClearAny;
 	}
-	class ReplySetMessages {
+	class ReplySetTypes {
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplySetSingleT} */
 		single=ReplySetSingle;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplySetRepeatingT} */
@@ -185,8 +185,10 @@
 		from_worker=ReplyFromWorker;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyToWorkerT} */
 		to_worker=ReplyToWorker;
-		set=new ReplySetMessages;
-		clear=new ReplyClearMessages;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplySetTypesT} */
+		set=new ReplySetTypes;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearTypesT} */
+		clear=new ReplyClearTypes;
 	}
 	class TimeoutFireInfo {
 		/** @readonly */
