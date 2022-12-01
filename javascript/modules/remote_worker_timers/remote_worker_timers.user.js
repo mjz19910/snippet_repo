@@ -1152,7 +1152,7 @@
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
 						source_type: g_timer_api.worker_set_types,
-						args:[msg.type],
+						args: [msg.type],
 					});
 				} break;
 				default: {
@@ -1178,7 +1178,7 @@
 					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
 						source_type: msg.type,
-						args:[msg.type],
+						args: [msg.type],
 					});
 				} break;
 				case g_timer_api.worker.set.single/*remote timer set single*/: {
@@ -1306,7 +1306,8 @@
 					return;
 				};
 				let tag=local_state.type;
-				let msg_id;
+				/** @type {101|102|null} */
+				let msg_id=null;
 				switch(tag) {
 					case TIMER_SINGLE: msg_id=g_timer_api.fire.single; break;
 					case TIMER_REPEATING: msg_id=g_timer_api.fire.repeating; break;
@@ -1317,7 +1318,7 @@
 					return;
 				}
 				console.log('worker fire',msg_id,remote_id);
-				postMessage({
+				typedPostMessage({
 					type: msg_id,
 					value: remote_id
 				});
@@ -1425,7 +1426,7 @@
 						typedPostMessage({
 							type: g_timer_api.reply.from_worker,
 							source_type: msg.type,
-							args:[msg.type,remote_id,maybe_local_id],
+							args: [msg.type,remote_id,maybe_local_id],
 						});
 					} break;
 					default: {
