@@ -977,7 +977,7 @@
 		}
 	}
 	/** @arg {typeof WorkerStateMessageV} msg */
-	function typed_post_message(msg) {
+	function typedPostMessage(msg) {
 		postMessage(msg);
 	}
 	/**
@@ -989,7 +989,7 @@
 		/** @type {any} */
 		let any_global=globalThis;
 		if(any_global.remote_worker_state) {
-			typed_post_message({type: WorkerDestroyType});
+			typedPostMessage({type: WorkerDestroyType});
 			executor_accept(null);
 			return;
 		}
@@ -1146,7 +1146,7 @@
 						throw new Error("Invalid timer_api_types");
 					}
 					if(!g_timer_api.reply) throw new Error("Failed to set timer_api.types");
-					typed_post_message({
+					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
 						source_type: g_timer_api.worker_set_types,
 					});
@@ -1171,7 +1171,7 @@
 				} break;
 				case g_timer_api.worker.ready/**/: {
 					// debugger;
-					postMessage({
+					typedPostMessage({
 						type: g_timer_api.reply.from_worker,
 						value: {
 							type: g_timer_api.reply.ready,
@@ -1215,14 +1215,8 @@
 			async=WorkerAsyncMessage;
 			/**@type {typeof TimerWorkerSetTypes} */
 			worker_set_types=TimerWorkerSetTypes;
-			/**@typedef {import("../../../typescript/src/vm/ReplyTypesTy.js").ReplyTypesTy} ReplyTypesTy */
-			/**@type {ReplyTypesTy} */
 			reply=new ReplyTypes;
-			/**@typedef {import("../../../typescript/src/vm/TimeoutFireInfoTy.js").TimeoutFireInfoTy} TimeoutFireInfoTy */
-			/**@type {TimeoutFireInfoTy} */
 			fire=new TimeoutFireInfo;
-			/**@typedef {import("../../../typescript/src/vm/TimeoutWorkerTypesTy.js").TimeoutWorkerTypesTy} TimeoutWorkerTypesTy */
-			/**@type {TimeoutWorkerTypesTy} */
 			worker=new TimeoutWorkerTypes;
 			/**@type {{single:"setTimeout",repeating:"setInterval"}} */
 			set_names={
