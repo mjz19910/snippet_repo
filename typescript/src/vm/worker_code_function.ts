@@ -16,7 +16,7 @@ import {TimeoutWorkerTypes} from "./interfaces.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerTag} from "./TimerTag.js";
 
-export function worker_code_function(verify_callback: WorkerVerifyCallback) {
+export function worker_code_function(verify_callback?: WorkerVerifyCallback) {
 	const TIMER_SINGLE=1;
 	const TIMER_REPEATING=2;
 	const TIMER_TAG_COUNT=3;
