@@ -133,7 +133,6 @@
 	const TIMER_TAG_COUNT=3;
 	const TimeoutFireSingle=101;
 	const TimeoutFireRepeating=102;
-	const WorkerUpdateMessageHandler=201;
 	const TimeoutMessageReady=202;
 	const TimeoutSetSingle=203;
 	const TimeoutSetRepeating=204;
@@ -148,14 +147,15 @@
 	const ReplyClearSingle=305;
 	const ReplyClearRepeating=306;
 	const ReplyClearAny=307;
+	const TimeoutSingleReply=400;
+	const TimeoutRepeatingReply=401;
 	const ReplyToWorkerState=501;
 	const ReplyToLocalTimer=502;
 	const ReplyFromWorker=503;
 	const ReplyToWorker=504;
-	const TimeoutSingleReply=700;
-	const TimeoutRepeatingReply=701;
+	const WorkerUpdateMessageHandler=601;
 	const WorkerAsyncMessage=801;
-	const TimerWorkerSetTypes=1001;
+	const TimerWorkerSetTypes=700;
 	class ReplyClearTypes {
 		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyClearSingleT} */
 		single=ReplyClearSingle;
@@ -191,70 +191,78 @@
 		clear=new ReplyClearTypes;
 	}
 	class TimeoutFireInfo {
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutFireSingleT} */
 		single=TimeoutFireSingle;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutFireRepeatingT} */
 		repeating=TimeoutFireRepeating;
 	}
 	class TimeoutSetInfo {
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSetSingleT} */
 		single=TimeoutSetSingle;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSetRepeatingT} */
 		repeating=TimeoutSetRepeating;
 	}
 	class TimeoutClearInfo {
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutClearSingleT} */
 		single=TimeoutClearSingle;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutClearRepeatingT} */
 		repeating=TimeoutClearRepeating;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutClearAnyT} */
 		any=TimeoutClearAny;
 	}
 	class WorkerFireReplyTypes {
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSingleReplyT} */
 		single=TimeoutSingleReply;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutRepeatingReplyT} */
 		repeating=TimeoutRepeatingReply;
 	}
 	class WorkerReplyTypes {
 		fire=new WorkerFireReplyTypes;
 	}
 	class TimeoutWorkerTypes {
+		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerReplyTypesT} */
 		reply=new WorkerReplyTypes;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerUpdateMessageHandlerT} */
 		update_message_handler=WorkerUpdateMessageHandler;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutMessageReadyT} */
 		ready=TimeoutMessageReady;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSetInfoT} */
 		set=new TimeoutSetInfo;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutClearInfoT} */
 		clear=new TimeoutClearInfo;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimerWorkerSetTypesT} */
 		set_types=TimerWorkerSetTypes;
 	}
-	const TimeoutSetStringS="setTimeout";
-	const TimeoutSetStringR="setInterval";
-	const TimeoutClearStringS="clearTimeout";
-	const TimeoutClearStringR="clearInterval";
+	const TimeoutSetStringSingle="setTimeout";
+	const TimeoutSetStringRepeating="setInterval";
+	const TimeoutClearStringSingle="clearTimeout";
+	const TimeoutClearStringRepeating="clearInterval";
 	class TimeoutSetStrings {
-		/** @readonly */
-		single=TimeoutSetStringS;
-		/** @readonly */
-		repeating=TimeoutSetStringR;
+		/** @type {import("../../../typescript/src/vm/constants.js").TimeoutSetStringSingle} */
+		single=TimeoutSetStringSingle;
+		/** @type {import("../../../typescript/src/vm/constants.js").TimeoutSetStringRepeating} */
+		repeating=TimeoutSetStringRepeating;
 	}
 	class TimeoutClearStrings {
-		/** @readonly */
-		single=TimeoutClearStringS;
-		/** @readonly */
-		repeating=TimeoutClearStringR;
+		/** @type {import("../../../typescript/src/vm/constants.js").TimeoutClearStringSingle} */
+		single=TimeoutClearStringSingle;
+		/** @type {import("../../../typescript/src/vm/constants.js").TimeoutClearStringRepeating} */
+		repeating=TimeoutClearStringRepeating;
 	}
 	class TimerApi {
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").WorkerAsyncMessageT} */
 		async=WorkerAsyncMessage;
-		/** @readonly */
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSetTypesT} */
 		worker_set_types=TimerWorkerSetTypes;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").ReplyTypesT} */
 		reply=new ReplyTypes;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutFireInfoT} */
 		fire=new TimeoutFireInfo;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutWorkerTypesT} */
 		worker=new TimeoutWorkerTypes;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutSetStringsT} */
 		set_names=new TimeoutSetStrings;
+		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutClearStringsT} */
 		clear_names=new TimeoutClearStrings;
 		validate() {
 			console.log(this.reply);
