@@ -1,4 +1,7 @@
-import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplyToWorker,TimeoutFireRepeating,TimeoutFireSingle,WorkerAsyncMessage,WorkerDestroyType} from "../constants.js";
+import {
+	ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplyToWorker,
+	TimeoutFireRepeating,TimeoutFireSingle,WorkerAsyncMessage,WorkerDestroyType
+} from "../constants.js";
 import {ReplyClearMessages} from "./ReplyClearMessages.js";
 import {ReplySetMessages} from "./ReplySetMessages.js";
 import {TimeoutClearInfoTy} from "./TimeoutClearInfoTy.js";
