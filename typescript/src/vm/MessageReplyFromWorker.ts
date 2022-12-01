@@ -1,7 +1,7 @@
 import {MessageReplyFromWorkerData} from "./MessageReplyFromWorkerData.js"
 import {ReplyFromWorkerTy} from "./ReplyFromWorkerTy.js"
 
-export type MessageReplyFromWorker={
+export type ReplyFromWorkerMessage={
 	t: ReplyFromWorkerTy
 	v: MessageReplyFromWorkerData
 }

@@ -1,5 +1,5 @@
-import {MessageReplyMessage1} from "./MessageReplyMessage1.js"
-import {MessageReplyMessage2} from "./MessageReplyMessage2.js"
+import {ReplyMessage1} from "./ReplyMessage1.js"
+import {ReplyMessage2} from "./ReplyMessage2.js"
 import {MessageWorkerUpdateMessageHandlerReply} from "./MessageWorkerUpdateMessageHandlerReply.js"
 import {MessageReplyFromWorkerData} from "./MessageReplyFromWorkerData.js"
 import {MessageWorkerReadyReply} from "./MessageWorkerReadyReply.js"
@@ -10,4 +10,4 @@ import {MessageReplyClearRepeating} from "./MessageReplyClearRepeating.js"
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js"
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js"
 
-export type DispatchMessageType=MessageTimeoutClearR|MessageTimeoutClearS|MessageReplyClearRepeating|MessageReplyClearSingle|MessageReplySetRepeating|MessageReplySetSingle|MessageWorkerReadyReply|MessageWorkerUpdateMessageHandlerReply|MessageReplyMessage2|MessageReplyMessage1|MessageReplyFromWorkerData
+export type DispatchMessageType=MessageTimeoutClearR|MessageTimeoutClearS|MessageReplyClearRepeating|MessageReplyClearSingle|MessageReplySetRepeating|MessageReplySetSingle|MessageWorkerReadyReply|MessageWorkerUpdateMessageHandlerReply|ReplyMessage2|ReplyMessage1|MessageReplyFromWorkerData
