@@ -265,9 +265,6 @@
 		set_names=new TimeoutSetStrings;
 		/** @type {import("../../../typescript/src/vm/constant_types.js").TimeoutClearStringsT} */
 		clear_names=new TimeoutClearStrings;
-		validate() {
-			console.log(this.reply);
-		}
 	}
 	let g_timer_api=new TimerApi;
 	class UniqueIdGenerator {
