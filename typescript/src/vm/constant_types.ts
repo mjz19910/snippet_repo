@@ -1,3 +1,4 @@
-import {TimeoutFireSingle} from "../constants.js"
+import {TimeoutFireRepeating,TimeoutFireSingle} from "../constants.js";
 
-export type TimeoutFireSTy=typeof TimeoutFireSingle;
+export type TimeoutFireSingleT=typeof TimeoutFireSingle;
+export type TimeoutFireRT=typeof TimeoutFireRepeating;

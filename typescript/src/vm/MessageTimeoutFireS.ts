@@ -1,7 +1,7 @@
 import {Box} from "../box/Box.js";
-import {TimeoutFireSTy} from "./constant_types.js";
+import {TimeoutFireSingleT} from "./constant_types.js";
 
 export type MessageTimeoutFireS={
-	t: TimeoutFireSTy;
+	t: TimeoutFireSingleT;
 	v: Box;
 };
