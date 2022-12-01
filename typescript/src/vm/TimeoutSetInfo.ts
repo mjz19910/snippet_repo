@@ -1,9 +1,7 @@
-import {TimeoutSetSTy} from "./TimeoutSetSTy.js"
-import {TimeoutSetRTy} from "./TimeoutSetRTy.js"
-import {TimeoutSetInfoTy} from "./TimeoutSetInfoTy.js"
 import {TimeoutSetSingle,TimeoutSetRepeating} from "../constants.js"
+import {TimeoutSetInfoT, TimeoutSetRepeatingT, TimeoutSetSingleT} from "./constant_types.js";
 
-export class TimeoutSetInfo implements TimeoutSetInfoTy {
-	single: TimeoutSetSTy=TimeoutSetSingle
-	repeating: TimeoutSetRTy=TimeoutSetRepeating
+export class TimeoutSetInfo implements TimeoutSetInfoT {
+	single: TimeoutSetSingleT=TimeoutSetSingle
+	repeating: TimeoutSetRepeatingT=TimeoutSetRepeating
 }

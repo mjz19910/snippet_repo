@@ -204,7 +204,7 @@ export type TypesForWorkerReplies=
 	WorkerDestroyTypeMessage|
 	MessageTimeoutFireS;
 
-export type TimeoutClearStringsTy_OLD={
+export type TimeoutClearStringsT={
 	single: typeof TimeoutClearStringSingle;
 	repeating: typeof TimeoutClearStringRepeating;
 };

@@ -2,7 +2,7 @@ import {ReplyToWorkerT, TimeoutClearRepeatingT, TimeoutClearSingleT, TimeoutMess
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
-import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
+import {MessageTimeoutSetS_OLD} from "./MessageTimeoutSetS.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerTag} from "./TimerTag.js";
@@ -242,7 +242,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		t: TimeoutMessageReplyT;
 		v: never;
 	};
-	type WorkerMessageType=MessageTimeoutClearR|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetS|MessageTimeoutSetR|MessageTimeoutClearS;
+	type WorkerMessageType=MessageTimeoutClearR|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetS_OLD|MessageTimeoutSetR|MessageTimeoutClearS;
 	type UpdateMessageHandlerType={
 		init: string;
 		onmessage: string;
