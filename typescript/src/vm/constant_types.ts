@@ -221,7 +221,7 @@ export type TimeoutSetSingleMessageT={
 	v: SetSingleMessageDataT;
 };
 
-export type TimeoutSetStringsTy={
+export type TimeoutSetStringsT={
 	single: typeof TimeoutSetStringSingle;
 	repeating: typeof TimeoutSetStringRepeating;
 };
