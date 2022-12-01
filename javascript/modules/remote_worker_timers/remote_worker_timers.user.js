@@ -1306,7 +1306,6 @@
 					return;
 				};
 				let tag=local_state.type;
-				let msg_id=null;
 				switch(tag) {
 					case TIMER_SINGLE: {
 						typedPostMessage({
@@ -1320,17 +1319,8 @@
 							value: remote_id
 						});
 					} break;
+					default: throw new Error("TODO");
 				}
-				if(!msg_id) {
-					console.assert(false,'Unknown tag in RemoteWorker.fire',tag);
-					console.info('TypeError like: let value:TIMER_SINGLE | TIMER_REPEATING (%o | %o) = %o',TIMER_SINGLE,TIMER_REPEATING,tag);
-					return;
-				}
-				console.log('worker fire',msg_id,remote_id);
-				typedPostMessage({
-					type: msg_id,
-					value: remote_id
-				});
 			}
 			/**
 			 * @param {any} tag
