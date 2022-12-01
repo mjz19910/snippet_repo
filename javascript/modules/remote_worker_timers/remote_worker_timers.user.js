@@ -1014,10 +1014,14 @@
 		const TimerWorkerSetTypes=1001;
 		if(verify_callback) {
 			verify_callback({
-				TIMER_SINGLE,
-				TIMER_REPEATING,
-				TIMER_TAG_COUNT,
-				TimerWorkerSetTypes
+				/** @type {typeof TIMER_SINGLE} */
+				TIMER_SINGLE: TIMER_SINGLE,
+				/** @type {typeof TIMER_REPEATING} */
+				TIMER_REPEATING: TIMER_REPEATING,
+				/** @type {typeof TIMER_TAG_COUNT} */
+				TIMER_TAG_COUNT: TIMER_TAG_COUNT,
+				/** @type {typeof TimerWorkerSetTypes} */
+				TimerWorkerSetTypes: TimerWorkerSetTypes
 			});
 		}
 		/** @type {any[]} */
