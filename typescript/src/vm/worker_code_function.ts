@@ -1,12 +1,8 @@
-import {ReplyToWorkerT, TimeoutClearRepeatingT, WorkerUpdateMessageHandlerT} from "./constant_types.js";
+import {ReplyToWorkerT, TimeoutClearRepeatingT, TimeoutClearSingleT, TimeoutMessageReplyT, TimeoutRepeatingReplyT, TimeoutSingleReplyT, WorkerUpdateMessageHandlerT} from "./constant_types.js";
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
-import {TimeoutClearSTy_OLD} from "./TimeoutClearSTy.js";
-import {TimeoutMessageReplyTy_OLD} from "./TimeoutMessageReplyTy.js";
-import {TimeoutRepeatingReplyTy_OLD} from "./TimeoutRepeatingReplyTy.js";
-import {TimeoutSingleReplyTy_OLD} from "./TimeoutSingleReplyTy.js";
 import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerTag} from "./TimerTag.js";
@@ -83,7 +79,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 			}
 			let tag=local_state.type;
 			let msg_id;
-			let reply_id!: TimeoutSingleReplyTy_OLD|TimeoutRepeatingReplyTy_OLD;
+			let reply_id!: TimeoutSingleReplyT|TimeoutRepeatingReplyT;
 			if(!this.m_api_info)
 				return;
 			switch(tag) {
@@ -195,7 +191,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 						t: typeof reply_message_types.from_worker;
 						v: {
 							t: typeof message_types.reply.clear.single;
-							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearSTy_OLD];
+							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearSingleT];
 						};
 					}={
 						t: reply_message_types.from_worker,
@@ -243,7 +239,7 @@ export function worker_code_function(verify_callback: WorkerVerifyCallback) {
 		v: UpdateMessageHandlerType;
 	};
 	type MessageTimeoutMessageR={
-		t: TimeoutMessageReplyTy_OLD;
+		t: TimeoutMessageReplyT;
 		v: never;
 	};
 	type WorkerMessageType=MessageTimeoutClearR|ReplyToWorkerMessageType|UpdateWorkerMessageHandler|MessageTimeoutMessageR|MessageTimeoutSetS|MessageTimeoutSetR|MessageTimeoutClearS;
