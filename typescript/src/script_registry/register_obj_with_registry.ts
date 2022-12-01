@@ -29,15 +29,25 @@ export function register_obj_with_registry<T extends object>(obj: T) {
 		id: obj_id,
 		key: Symbol(obj_id)
 	};
-	let token_sym={symbol: Symbol(-obj_id)};
+	let token_sym={symbol: Symbol(obj_id)};
 	scripts_holders.push(held_obj);
 	let token_val: WeakRefWithKey={key: held_obj.key,weak_ref: new WeakRef(token_sym)};
 	scripts_tokens.push(token_val);
-	weak_scripts_arr.push({
-		key: held_obj.key,
-		id: obj_id,
-		ref: new WeakRef(obj)
-	});
+	if(obj instanceof HTMLScriptElement) {
+		weak_scripts_arr.push({
+			key: held_obj.key,
+			id: obj_id,
+			ref: new WeakRef(obj)
+		});
+	}else if(obj instanceof SVGScriptElement) {
+		weak_scripts_arr.push({
+			key: held_obj.key,
+			id: obj_id,
+			ref: new WeakRef(obj)
+		});
+	} else {
+		console.log("Called register_obj with non-script", obj);
+	}
 	script_registry.register(obj,held_obj,token_sym);
 	return obj_id;
 }

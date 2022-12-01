@@ -1,14 +1,11 @@
 import {cur_event_fns} from "./constants.js";
 import {has_reg_id} from "./has_reg_id.js";
-import {is_in_ignored_from_src_fn} from "./is_in_ignored_from_src_fn.js";
-import {is_in_userscript} from "./is_in_userscript.js";
-import {is_in_userscript_fn} from "./is_in_userscript_fn.js";
+import {weak_scripts_arr} from "./weak_scripts_arr.js";
 
 export function get_nearest_script() {
 	if(document.currentScript!==null) {
 		return document.currentScript;
 	}
-	let cur_script;
 	while(cur_event_fns.at(-1)===void 0&&cur_event_fns.length>0) {
 		cur_event_fns.pop();
 	}
@@ -16,13 +13,8 @@ export function get_nearest_script() {
 	if(!script_ghost)
 		return null;
 	if(has_reg_id(script_ghost)) {
-		if(cur_script===void 0&&!is_in_userscript.flag&&!is_in_userscript_fn.flag&&!is_in_ignored_from_src_fn.flag) {
-			debugger;
-		}
+		weak_scripts_arr[script_ghost.reg_id]?.ref
 	}
-	script_ghost=cur_event_fns.at(-1);
-	if(script_ghost)
-		if(has_reg_id(script_ghost)) {}
 	let doc_script=document.currentScript;
 	if(doc_script===null) {
 		return null;
