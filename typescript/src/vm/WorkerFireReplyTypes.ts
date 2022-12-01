@@ -1,9 +1,7 @@
-import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy.js"
-import {TimeoutRepeatingReplyTy_OLD} from "./TimeoutRepeatingReplyTy.js"
-import {WorkerReplyTypesTy} from "./WorkerReplyTypesTy.js"
-import {TimeoutSingleReply,TimeoutRepeatingReply} from "../constants.js"
+import {TimeoutSingleReply,TimeoutRepeatingReply} from "../constants.js";
+import {TimeoutRepeatingReplyT,TimeoutSingleReplyT,WorkerReplyTimerFireTypesT} from "./constant_types.js";
 
-export class WorkerFireReplyTypes implements WorkerReplyTypesTy {
-	single: TimeoutSingleReplyTy=TimeoutSingleReply
-	repeating: TimeoutRepeatingReplyTy_OLD=TimeoutRepeatingReply
+export class WorkerReplyTimerFireTypes implements WorkerReplyTimerFireTypesT {
+	single: TimeoutSingleReplyT=TimeoutSingleReply;
+	repeating: TimeoutRepeatingReplyT=TimeoutRepeatingReply;
 }

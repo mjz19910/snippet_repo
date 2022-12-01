@@ -1,5 +1,5 @@
-import {WorkerFireReplyTypes} from "./WorkerFireReplyTypes.js"
+import {WorkerReplyTimerFireTypes} from "./WorkerFireReplyTypes.js"
 
 export class WorkerReplyTypes {
-	fire=new WorkerFireReplyTypes
+	fire=new WorkerReplyTimerFireTypes
 }
