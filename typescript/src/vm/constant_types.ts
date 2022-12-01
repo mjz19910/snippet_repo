@@ -1,12 +1,15 @@
 import {
 	ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplyToWorker,
+	TimeoutClearAny,
+	TimeoutClearRepeating,
+	TimeoutClearSingle,
 	TimeoutFireRepeating,TimeoutFireSingle,WorkerAsyncMessage,WorkerDestroyType
 } from "../constants.js";
 import {ReplyClearMessages} from "./ReplyClearMessages.js";
 import {ReplySetMessages} from "./ReplySetMessages.js";
-import {TimeoutClearATy} from "./TimeoutClearATy.js";
-import {TimeoutClearRTy} from "./TimeoutClearRTy.js";
-import {TimeoutClearSTy} from "./TimeoutClearSTy.js";
+export type TimeoutClearATy=typeof TimeoutClearAny;
+export type TimeoutClearRTy=typeof TimeoutClearRepeating;
+export type TimeoutClearSTy=typeof TimeoutClearSingle;
 export type TimeoutClearInfoTy={
 	single: TimeoutClearSTy;
 	repeating: TimeoutClearRTy;
