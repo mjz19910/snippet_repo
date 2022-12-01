@@ -11,7 +11,7 @@ import {
 	TimeoutClearRepeatingMessageT,
 	TimeoutSetRepeatingMessageT
 } from "./constant_types.js";
-import {TimeoutWorkerTypes} from "./TimeoutWorkerTypes.js";
+import {TimeoutWorkerTypes} from "./interfaces.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerTag} from "./TimerTag.js";
 import {WorkerVerifyCallback} from "./WorkerVerifyCallback.js";
