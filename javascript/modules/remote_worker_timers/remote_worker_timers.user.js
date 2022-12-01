@@ -314,7 +314,7 @@
 	/** @arg {unknown} value @returns {asserts value is NonNullable<value>} */
 	function assert_non_null(value) {
 		if(value===null) {
-			throw new AssertionError("Failed assert non null");
+			throw new AssertionError("Assertion failure: value was null");
 		}
 	}
 	class Timer {
