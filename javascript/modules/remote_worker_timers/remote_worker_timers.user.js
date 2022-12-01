@@ -424,7 +424,7 @@
 		 */
 		send_worker_set_message(tag,remote_id,timeout) {
 			this.assert_valid_worker();
-			/** @type {203|204|null} */
+			/** @type {typeof TimeoutSetSingle|typeof TimeoutSetRepeating|null} */
 			let msg_id=null;
 			switch(tag) {
 				case TIMER_SINGLE: msg_id=g_timer_api.worker.set.single; break;
@@ -664,9 +664,9 @@
 	class ReplyFromWorkerMsg {
 		/** @readonly */
 		type=ReplyFromWorker;
-		/** @readonly @type {202|203|204|205|206|typeof TimeoutSetTypes} */
+		/** @readonly @type {typeof TimeoutMessageReady|typeof TimeoutSetSingle|typeof TimeoutSetRepeating|typeof TimeoutClearSingle|typeof TimeoutClearRepeating|typeof TimeoutSetTypes} */
 		source_type=TimeoutSetTypes;
-		/** @type {[-1]|[202]|[203,number|undefined,number,number]|[204,number|undefined,number,number]|[205,number,any]|[206,number,any]|[typeof TimeoutSetTypes]} */
+		/** @type {[-1]|[typeof TimeoutMessageReady]|[typeof TimeoutSetSingle,number|undefined,number,number]|[typeof TimeoutSetRepeating,number|undefined,number,number]|[typeof TimeoutClearSingle,number,any]|[typeof TimeoutClearRepeating,number,any]|[typeof TimeoutSetTypes]} */
 		args=[-1];
 	}
 	class ReplyToWorkerMsg {
