@@ -1,15 +1,15 @@
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
 import {MessageTimeoutSetR} from "./MessageTimeoutSetR.js";
 import {MessageTimeoutSetS} from "./MessageTimeoutSetS.js";
-import {MessageTimeoutSingleReply} from "./MessageTimeoutSingleReply.js";
+import {TimeoutSingleReplyMessage} from "./TimeoutSingleReplyMessage.js";
 import {MessageTimeoutClearA} from "./MessageTimeoutClearA.js";
 import {DispatchMessageType} from "./DispatchMessageType.js";
 import {MessageTimeoutClearR} from "./MessageTimeoutClearR.js";
 import {MessageTimeoutClearS} from "./MessageTimeoutClearS.js";
-import {MessageTypesForWorkerReplies} from "./MessageTypesForWorkerReplies.js";
+import {TypesForWorkerReplies} from "./TypesForWorkerReplies.js";
 import {MessageTimeoutFireS} from "./MessageTimeoutFireS.js";
 import {Timer} from "./Timer.js";
-import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearR,TimeoutClearS,WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
+import {ReplyFromWorker,ReplyMessage1,ReplyMessage2,ReplySetRepeating,ReplySetSingle,TimeoutClearRepeating,TimeoutClearSingle,WorkerDestroyType,WorkerReadyReply,WorkerUpdateMessageHandlerReply} from "../constants.js";
 import {GlobalStateKey} from "./GlobalStateKey.js";
 
 declare global {
@@ -58,7 +58,7 @@ export class WorkerState {
 		if(this.flags.get('failed'))
 			return;
 		this.worker=new Worker(this.worker_url);
-		this.worker.onmessage=function onmessage(e: MessageEvent<MessageTypesForWorkerReplies>) {
+		this.worker.onmessage=function onmessage(e: MessageEvent<TypesForWorkerReplies>) {
 			var msg=e.data;
 			let worker_state=weak_worker_state.deref();
 			if(!worker_state) {
@@ -126,11 +126,11 @@ export class WorkerState {
 				// debugger
 				this.timer.on_reply(result);
 			} break;
-			case TimeoutClearR: {
+			case TimeoutClearRepeating: {
 				// debugger
 				this.timer.on_reply(result);
 			} break;
-			case TimeoutClearS: {
+			case TimeoutClearSingle: {
 				// debugger
 				this.timer.on_reply(result);
 			} break;
@@ -140,7 +140,7 @@ export class WorkerState {
 			}
 		}
 	}
-	postMessage(data: MessageTimeoutFireS|MessageTimeoutClearA|MessageTimeoutSingleReply|MessageTimeoutClearS|MessageTimeoutSetS|MessageTimeoutSetR|MessageTimeoutClearR) {
+	postMessage(data: MessageTimeoutFireS|MessageTimeoutClearA|TimeoutSingleReplyMessage|MessageTimeoutClearS|MessageTimeoutSetS|MessageTimeoutSetR|MessageTimeoutClearR) {
 		if(this.worker)
 			return this.worker.postMessage(data);
 	}

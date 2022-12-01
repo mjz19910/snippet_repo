@@ -1,3 +1,3 @@
-import {TimeoutClearS} from "../constants.js"
+import {TimeoutClearSingle} from "../constants.js"
 
-export type TimeoutClearSTy=typeof TimeoutClearS
+export type TimeoutClearSTy=typeof TimeoutClearSingle

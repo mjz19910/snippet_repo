@@ -1,6 +1,6 @@
 import {TimeoutSingleReplyTy} from "./TimeoutSingleReplyTy.js"
 
-export type MessageTimeoutSingleReply={
+export type TimeoutSingleReplyMessage={
 	t: TimeoutSingleReplyTy
 	v: number
 }

@@ -2,9 +2,9 @@ import {
 	ReplyClearRepeating,ReplyClearSingle,
 	ReplyFromWorker,
 	ReplySetRepeating,ReplySetSingle,
-	TimeoutClearS,
+	TimeoutClearSingle,
 	TimeoutMessageReady,
-	TimeoutSetR,TimeoutSetS,
+	TimeoutSetRepeating,TimeoutSetSingle,
 	WorkerReadyReply
 } from "../constants.js";
 import {MakeReplyData} from "./MakeReplyData.js";
@@ -24,9 +24,9 @@ export class TimerApi {
 	constructor() {
 		this.to_handle=[
 			{t: TimeoutMessageReady},
-			{t: TimeoutSetS},
-			{t: TimeoutSetR},
-			{t: TimeoutClearS},
+			{t: TimeoutSetSingle},
+			{t: TimeoutSetRepeating},
+			{t: TimeoutClearSingle},
 			new MakeReplyData(ReplyFromWorker,WorkerReadyReply,TimeoutMessageReady,{}),
 			// TimeoutSetTypeS
 			new MakeReplyData(ReplyFromWorker,ReplySetSingle,{

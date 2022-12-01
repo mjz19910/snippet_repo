@@ -4,7 +4,7 @@ import {ReplyMessage1} from "./ReplyMessage1.js";
 import {ReplyMessage2} from "./ReplyMessage2.js";
 import {ReplyFromWorkerMessage} from "./MessageReplyFromWorker.js";
 
-export type MessageTypesForWorkerReplies=
+export type TypesForWorkerReplies=
 	ReplyFromWorkerMessage|
 	ReplyMessage2|
 	ReplyMessage1|
