@@ -795,6 +795,14 @@
 				case TimeoutFireRepeating: {
 					worker_state.timer.fire(TIMER_REPEATING,msg.value);
 				} break;
+				case TimeoutMessageReady: break;
+				// case WorkerUpdateMessageHandler: break;
+				case TimeoutMessageReady: break;
+				case TimeoutSetSingle: break;
+				case TimeoutSetRepeating: break;
+				case TimeoutClearSingle: break;
+				case TimeoutClearRepeating: break;
+				// case TimeoutClearAny: break;
 				case WorkerDestroyType: {
 					worker_state.destroy();
 				} break;
