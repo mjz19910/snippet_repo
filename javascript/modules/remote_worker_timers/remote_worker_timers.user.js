@@ -882,7 +882,10 @@
 				return;
 			}
 			switch(msg.type) {
-				case 205: {
+				case TimeoutClearSingle: {
+					this.timer.on_reply(msg);
+				} break;
+				case TimeoutClearRepeating: {
 					this.timer.on_reply(msg);
 				} break;
 				case ReplySetRepeating: {
