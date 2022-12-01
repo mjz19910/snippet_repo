@@ -46,13 +46,13 @@ export type TimeoutSetInfoT={
 	repeating: TimeoutSetRepeatingT;
 };
 
-export type TimeoutClearSTy=typeof TimeoutClearSingle;
-export type TimeoutClearRTy=typeof TimeoutClearRepeating;
-export type TimeoutClearATy=typeof TimeoutClearAny;
+export type TimeoutClearSingleT=typeof TimeoutClearSingle;
+export type TimeoutClearRepeatingT=typeof TimeoutClearRepeating;
+export type TimeoutClearAnyT=typeof TimeoutClearAny;
 export type TimeoutClearInfoT={
-	single: TimeoutClearSTy;
-	repeating: TimeoutClearRTy;
-	any: TimeoutClearATy;
+	single: TimeoutClearSingleT;
+	repeating: TimeoutClearRepeatingT;
+	any: TimeoutClearAnyT;
 };
 
 export type TimeoutFireSingleT=typeof TimeoutFireSingle;
