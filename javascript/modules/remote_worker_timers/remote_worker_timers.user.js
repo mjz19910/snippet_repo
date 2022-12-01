@@ -905,12 +905,11 @@
 				} return;
 				default: {
 					console.assert(false,"unhandled result",msg);
-					debugger;
+					/** @type {never} */
+					let _x=msg;
+					_x;
 				}
 			}
-			/** @type {never} */
-			let _x=msg;
-			_x;
 		}
 		/** @arg {typeof WorkerStateMessageV} msg */
 		typedPostMessage(msg) {
