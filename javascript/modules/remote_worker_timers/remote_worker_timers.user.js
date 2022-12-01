@@ -131,8 +131,8 @@
 	const TIMER_SINGLE=1;
 	const TIMER_REPEATING=2;
 	const TIMER_TAG_COUNT=3;
-	const TimeoutFireS=101;
-	const TimeoutFireR=102;
+	const TimeoutFireSingle=101;
+	const TimeoutFireRepeating=102;
 	const WorkerUpdateMessageHandler=201;
 	const TimeoutMessageR=202;
 	const TimeoutSetS=203;
@@ -189,9 +189,9 @@
 	}
 	class TimeoutFireInfo {
 		/** @readonly */
-		single=TimeoutFireS;
+		single=TimeoutFireSingle;
 		/** @readonly */
-		repeating=TimeoutFireR;
+		repeating=TimeoutFireRepeating;
 	}
 	class TimeoutSetInfo {
 		/** @readonly */
@@ -576,12 +576,12 @@
 
 	class TimeoutFireSMsg {
 		/** @readonly */
-		type=TimeoutFireS;
+		type=TimeoutFireSingle;
 		value=0;
 	}
 	class TimeoutFireRMsg {
 		/** @readonly */
-		type=TimeoutFireR;
+		type=TimeoutFireRepeating;
 		value=0;
 	}
 	class ReplyFromWorkerMsg {
@@ -664,8 +664,8 @@
 			assert_as_instance(msg,ReplyFromWorkerMsg);
 			return msg;
 		}
-		/** @type {typeof TimeoutFireS|102|300|401|402|500} */
-		type=TimeoutFireS;
+		/** @type {typeof TimeoutFireSingle|typeof TimeoutFireRepeating|typeof WorkerDestroyMessage|typeof ReplyMessage1|typeof ReplyMessage2|typeof ReplyFromWorker} */
+		type=TimeoutFireSingle;
 		/** @type {number|{}|null} */
 		value=null;
 		/** @arg {WorkerStateMessage} msg */
@@ -732,12 +732,12 @@
 			let msg=e.data;
 			let worker_state=this;
 			switch(msg.type) {
-				case TimeoutFireS: {
+				case TimeoutFireSingle: {
 					let m_msg=WorkerStateMessage.as_timeout_fire(msg);
 					worker_state.timer.fire(TIMER_SINGLE,m_msg.value);
 					break;
 				}
-				case TimeoutFireR/*worker_state.timer repeating fire*/: {
+				case TimeoutFireRepeating/*worker_state.timer repeating fire*/: {
 					let m_msg=WorkerStateMessage.as_timer_fire(msg);
 					worker_state.timer.fire(TIMER_REPEATING,m_msg.value);
 				} break;
