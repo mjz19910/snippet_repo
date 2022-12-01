@@ -639,6 +639,11 @@
 		type=ReplyFromWorker;
 		value={};
 	}
+	class Message_600 {
+		/** @readonly */
+		type=600;
+		value={};
+	}
 	class TimerWorkerSetTypesMsg {
 		/** @readonly */
 		type=TimerWorkerSetTypes;
