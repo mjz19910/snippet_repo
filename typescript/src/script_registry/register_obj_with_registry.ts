@@ -10,22 +10,28 @@ import {Counter} from "./Counter.js";
 
 export let object_id_counter=new Counter;
 export let weak_objects_arr: (WeakFinalInfo|null)[]=[];
+export let unregister_arr: {symbol: symbol;}[]=[];
 
 export function register_obj_with_registry<T extends object>(obj: T) {
 	let obj_id;
-	if(!(obj instanceof HTMLScriptElement) && !(obj instanceof SVGScriptElement)) {
+	if(!(obj instanceof HTMLScriptElement)&&!(obj instanceof SVGScriptElement)) {
 		let obj_ref=weak_objects_arr.find((e: {ref: {deref: () => any;};}|null) => e&&e.ref.deref()===obj);
 		if(obj_ref) {
 			return obj_ref.id;
 		}
 		obj_id=script_id.next();
+		let obj_symbol=Symbol(obj_id);
 		let held_obj: HeldType={
 			type: 'held',
 			id: obj_id,
-			key: Symbol(obj_id)
+			key: obj_symbol
 		};
+		let token_sym={
+			symbol: obj_symbol
+		};
+		unregister_arr.push(token_sym);
 		script_registry.register(obj,held_obj,token_sym);
-		console.log("Called register_obj with non-script", obj);
+		console.log("Called register_obj with non-script",obj);
 		return;
 	}
 	let scripts_res: WeakFinalInfo[]=[];
