@@ -670,12 +670,12 @@
 	class TimeoutSingleReplyMsg {
 		/** @readonly */
 		type=TimeoutSingleReply;
-		value={};
+		value=0;
 	}
 	class TimeoutRepeatingReplyMsg {
 		/** @readonly */
 		type=TimeoutRepeatingReply;
-		value={};
+		value=0;
 	}
 	class TimerWorkerSetTypesMsg {
 		/** @readonly */
@@ -1306,11 +1306,20 @@
 					return;
 				};
 				let tag=local_state.type;
-				/** @type {101|102|null} */
 				let msg_id=null;
 				switch(tag) {
-					case TIMER_SINGLE: msg_id=g_timer_api.fire.single; break;
-					case TIMER_REPEATING: msg_id=g_timer_api.fire.repeating; break;
+					case TIMER_SINGLE: {
+						typedPostMessage({
+							type: g_timer_api.fire.single,
+							value: remote_id
+						});
+					} break;
+					case TIMER_REPEATING: {
+						typedPostMessage({
+							type: g_timer_api.fire.repeating,
+							value: remote_id
+						});
+					} break;
 				}
 				if(!msg_id) {
 					console.assert(false,'Unknown tag in RemoteWorker.fire',tag);
