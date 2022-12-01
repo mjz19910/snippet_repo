@@ -1031,28 +1031,21 @@
 			if(typeof value!=='object') throw 1;
 			if(value===null) throw 1;
 		}
+		assert_non_nullable_object;
 		/** @template T @arg {T} value @returns {{[U in keyof T]: T[U]}} */
 		function decay_to_object(value) {
 			return value;
 		}
+		decay_to_object;
 		/**
-		 * @param {MessageEvent<unknown>} e
+		 * @param {MessageEvent<TimerWorkerSetTypesMsg>} e
 		 */
 		function message_without_types_handler(e) {
 			if(!g_timer_api.worker_set_types) throw 1;
 			let msg=e.data;
-			assert_non_nullable_object(msg);
-			if(!('type' in msg)) throw 1;
 			switch(msg.type) {
 				case g_timer_api.worker_set_types: {
-					if(!('value' in msg)) throw 1;
-					assert_non_nullable_object(msg.value);
-					if(!('async' in msg.value)) throw 1;
-					if(!('reply' in msg.value)) throw 1;
-					if(!('fire' in msg.value)) throw 1;
-					if(!('worker' in msg.value)) throw 1;
-					let value=decay_to_object(msg.value);
-					let v_async=value.async;
+					let v_async=msg.async;
 					if(v_async===WorkerAsyncMessage) {
 						g_timer_api.on_set_types({
 							async: v_async,
@@ -1157,7 +1150,7 @@
 				repeating: "clearInterval"
 			};
 			/**
-			 * @param {{ async: typeof WorkerAsyncMessage; reply: any; fire: any; worker: any; }} types
+			 * @param {{ async: typeof WorkerAsyncMessage; reply: ReplyTypesTy; fire: any; worker: any; }} types
 			 */
 			on_set_types(types) {
 				this.async=types.async;
