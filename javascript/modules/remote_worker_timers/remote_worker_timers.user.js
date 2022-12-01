@@ -678,6 +678,12 @@
 			assert_as_instance(msg,TimeoutFireRMsg);
 			return msg;
 		}
+		static as_any_of() {
+			let fv=false;
+			if(fv) {return new TimeoutFireRMsg;}
+			if(fv) {return new ReplyMessageType2;}
+			return new TimeoutFireRMsg;
+		}
 	}
 	class WorkerState {
 		/**
@@ -831,7 +837,7 @@
 		/** @arg {TimerWorkerSetTypesMsg} msg */
 		on_result_ex(msg) {
 			if(!this.worker) throw new Error("No worker");
-			console.log("result_ex", msg);
+			console.log("result_ex",msg);
 		}
 		/**
 		 * @param {any} data
