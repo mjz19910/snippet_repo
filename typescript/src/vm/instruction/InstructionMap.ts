@@ -1,7 +1,7 @@
 import {Box} from "../../box/Box.js";
 import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
-import {CastOperandTarget} from "./operands/CastOperandTarget.js";
-import {VMBlockTraceOperand} from "./VMBlockTraceOperand";
+import {CastOperandTarget} from "./CastOperandTarget.js";
+import {VMBlockTraceOperand} from "./VMBlockTraceOperand.js";
 
 export type InstructionMap={
 	append: ["append"];

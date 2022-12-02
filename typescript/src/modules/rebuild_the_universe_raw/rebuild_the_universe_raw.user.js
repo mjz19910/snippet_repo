@@ -200,7 +200,8 @@ class StackVMBoxImpl {
 class WindowBoxImpl {
 	/** @type {"object_box"} */
 	type="object_box";
-	extension=null;
+	/** @readonly */
+	extension="null";
 	/** @type {"Window"} */
 	inner_type="Window";
 	/**
