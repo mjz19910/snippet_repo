@@ -9,7 +9,6 @@ import {VoidBox} from "../box/VoidBox.js";
 import {MulCompression} from "../compression/MulCompression.js";
 import {LOG_LEVEL_VERBOSE} from "../log_level_enum.js";
 import {DataLoader} from "../DataLoader.js";
-import {debug_id_syms} from "../debug_id_syms.js";
 import {EventHandlerDispatch} from "../EventHandlerDispatch.js";
 import {log_if} from "../log_if.js";
 import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_src_fn.js";
@@ -59,7 +58,7 @@ declare global {
 }
 
 export class AutoBuy implements AutoBuyInterface {
-	debug_flags: Map<string, boolean>=new Map;
+	debug_flags: Map<string,boolean>=new Map;
 	state_history_arr: any;
 	root_node: AsyncNodeRoot;
 	extra: number;
@@ -116,6 +115,12 @@ export class AutoBuy implements AutoBuyInterface {
 			}
 			return src;
 		});
+		let enable_debug_flags=false;
+		if(enable_debug_flags) {
+			this.debug_flags.set("build_dom_from_desc",true);
+			this.debug_flags.set("parse_dom_desc",true);
+			this.debug_flags.set("apply_dom_desc",true);
+		}
 	}
 	do_zero_pad(value: string|number,pad_char: string,char_num: number) {
 		let string;
