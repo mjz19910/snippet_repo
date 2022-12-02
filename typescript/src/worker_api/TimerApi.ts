@@ -15,38 +15,36 @@ import {
 	TimeoutSetStrings,
 	TimerMessageTypes,
 } from "./interfaces.js";
-import {MakeReplyData} from "./MakeReplyData.js";
-import {MakeReplyDataType} from "./MakeReplyDataType.js";
 
 export class TimerApi {
 	msg_types=new TimerMessageTypes;
 	set_names=new TimeoutSetStrings;
 	clear_names=new TimeoutClearStrings;
 	handled: number[]=[];
-	to_handle: ({t: number;}|{t: number; v: MakeReplyDataType;})[];
+	to_handle: ({t: number;}|[number,number,number]|[number,number,{var: "local_id"}]|[number,number,{var: "remote_id"}])[];
 	constructor() {
 		this.to_handle=[
 			{t: TimeoutMessageReady},
 			{t: TimeoutSetSingle},
 			{t: TimeoutSetRepeating},
 			{t: TimeoutClearSingle},
-			new MakeReplyData(ReplyFromWorker,WorkerReadyReply,TimeoutMessageReady),
+			[ReplyFromWorker,WorkerReadyReply,TimeoutMessageReady],
 			// TimeoutSetTypeS
-			new MakeReplyData(ReplyFromWorker,ReplySetSingle,{
+			[ReplyFromWorker,ReplySetSingle,{
 				var: 'local_id'
-			}),
+			}],
 			// TimeoutSetTypeR
-			new MakeReplyData(ReplyFromWorker,ReplySetRepeating,{
+			[ReplyFromWorker,ReplySetRepeating,{
 				var: 'local_id'
-			}),
+			}],
 			// TimeoutClearS
-			new MakeReplyData(ReplyFromWorker,ReplyClearSingle,{
+			[ReplyFromWorker,ReplyClearSingle,{
 				var: 'remote_id'
-			}),
+			}],
 			// TimeoutClearR
-			new MakeReplyData(ReplyFromWorker,ReplyClearRepeating,{
+			[ReplyFromWorker,ReplyClearRepeating,{
 				var: 'remote_id'
-			})
+			}]
 		];
 	}
 }
