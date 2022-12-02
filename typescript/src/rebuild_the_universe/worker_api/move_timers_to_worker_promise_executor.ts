@@ -1,12 +1,12 @@
 import {TimerApi} from "./TimerApi.js";
-import {UniqueIdGenerator} from "../UniqueIdGenerator.js";
+import {UniqueIdGenerator} from "../../UniqueIdGenerator.js";
 import {worker_code_function} from "./worker_code_function.js";
 import {WorkerApi as WorkerApi} from "./WorkerApi.js";
 import {Timer} from "./Timer.js";
 import {do_worker_verify} from "./do_worker_verify.js";
-import {log_if} from "../log_if.js";
+import {log_if} from "../../log_if.js";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
-import {LOG_LEVEL_WARN} from "../log_level_enum.js";
+import {LOG_LEVEL_WARN} from "../../log_level_enum.js";
 import {TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyType} from "./constants.js";
 import {RemoteWorkerState} from "./RemoteWorkerState.js";
 

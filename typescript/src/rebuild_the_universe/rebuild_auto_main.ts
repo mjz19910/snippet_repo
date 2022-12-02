@@ -1,9 +1,9 @@
 import {GoogleAdList} from "./GoogleAdList.js";
-import {DocumentWriteList} from "../document_write_list/DocumentWriteList.js";
+import {DocumentWriteList} from "./document_write_list/DocumentWriteList.js";
 import {dom_add_elm_filter} from "./dom_add_elm_filter.js";
-import {move_timers_to_worker_promise_executor} from "../worker_api/move_timers_to_worker_promise_executor.js";
+import {move_timers_to_worker_promise_executor} from "./worker_api/move_timers_to_worker_promise_executor.js";
 import {on_timers_moved} from "./on_timers_moved.js";
-import {proxy_jquery} from "../jquery/proxy_jquery.js";
+import {proxy_jquery} from "./jquery/proxy_jquery.js";
 import {remove_bad_dom_script_element} from "./remove_bad_dom_script_element.js";
 import {cint_arr} from "./cint_arr.js";
 
