@@ -5,7 +5,7 @@ import {register_obj_with_registry} from "./register_obj_with_registry.js";
 
 function add_own_property<T>(obj: T, key: PropertyKey) {
 	Object.defineProperty(obj, key, {
-		value: undefined,
+		value: void 0,
 		configurable: true,
 		enumerable: false,
 		writable: true,
