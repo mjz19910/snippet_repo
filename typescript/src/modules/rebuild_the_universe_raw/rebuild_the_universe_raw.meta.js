@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		rebuild the universe
 // @namespace	http://tampermonkey.net/
-// @version		4.2.1
+// @version		4.2.2
 // @description	rebuildtheuniverse.com automation
 // @author		You
 // @match		http://rebuildtheuniverse.com/?type=real
