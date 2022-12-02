@@ -957,21 +957,24 @@ class StackVMImpl {
 	/** @arg {InstructionType_CJS} instruction */
 	execute_instruction(instruction) {
 		switch(instruction[0]) {
-			case 'append': instruction_table[instruction[0]].run(this); break;
-			case "breakpoint": instruction_table[instruction[0]].run(this); break;
-			case "call": instruction_table[instruction[0]].run(this,instruction[1]); break;
-			case "cast": instruction_table[instruction[0]].run(this,instruction[1]); break;
-			case "construct": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			// 0 args
 			case "dom_create_element_with_props": instruction_table[instruction[0]].run(); break;
 			case "dom_create_element": instruction_table[instruction[0]].run(); break;
 			case "dom_exec": instruction_table[instruction[0]].run(); break;
 			case "dom_get": instruction_table[instruction[0]].run(); break;
 			case "dom_new": instruction_table[instruction[0]].run(); break;
 			case "dom_peek": instruction_table[instruction[0]].run(); break;
+			// 1 arg
+			case 'append': instruction_table[instruction[0]].run(this); break;
+			case "breakpoint": instruction_table[instruction[0]].run(this); break;
 			case "drop": instruction_table[instruction[0]].run(this); break;
 			case "dup": instruction_table[instruction[0]].run(this); break;
 			case "get": instruction_table[instruction[0]].run(this); break;
 			case "halt": instruction_table[instruction[0]].run(this); break;
+			// 2 args 1 opcode
+			case "call": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "cast": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "construct": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "je": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "jmp": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "modify_operand": instruction_table[instruction[0]].run(this,instruction[1],instruction[2]); break;
