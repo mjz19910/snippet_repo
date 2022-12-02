@@ -318,9 +318,7 @@ function parse_0f(ar) {
 	//spell:words movzx
 	if(next==0xb6) {
 		if(modrm==7) {
-			console.log(ar);
 			console.log("movzx "+map_regflags[mrm>>8&0x7]+",["+map_regflags[next&0x7]);
-			throw "n";
 			return ar.slice(4);
 		}
 		if(modrm==1) {
