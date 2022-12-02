@@ -26,7 +26,7 @@ import {RawDomInstructionsWithDepth} from "../vm/RawDomInstructionsWithDepth";
 import {NullBox} from "../box/NullBox.js";
 import {StringBox} from "../box/StringBox.js";
 import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
-import {PromiseFunctionBox} from "../vm/PromiseFunctionBox.js";
+import {PromiseFunctionBox} from "../box/PromiseFunctionBox.js";
 import {VoidBox} from "../box/VoidBox.js";
 import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
 import {InstructionType} from "../vm/instruction/InstructionType.js";

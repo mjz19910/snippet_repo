@@ -54,7 +54,7 @@ import {WindowBox} from "../../box/WindowBox.js";
 import {DomValueBox} from "../../box/DomValueBox.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
-import {PromiseFunctionBox} from "../../vm/PromiseFunctionBox.js";
+import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
 
 console=globalThis.console;
 

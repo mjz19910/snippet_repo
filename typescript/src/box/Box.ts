@@ -1,5 +1,5 @@
 import {DomValueBox} from "./DomValueBox.js";
-import {PromiseFunctionBox} from "../vm/PromiseFunctionBox.js";
+import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 import {ArrayBox} from "./ArrayBox.js";
 import {AsyncFunctionBox} from "./AsyncFunctionBox.js";
 import {BoxWithPropertiesIsBox} from "./BoxWithPropertiesIsBox.js";

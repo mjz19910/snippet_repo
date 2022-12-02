@@ -1,4 +1,4 @@
-import {Box} from "../box/Box.js";
+import {Box} from "./Box.js";
 
 export class PromiseFunctionBox {
 	readonly type="PromiseFunctionBox";

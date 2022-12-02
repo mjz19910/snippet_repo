@@ -1,4 +1,4 @@
-import {PromiseFunctionBox} from "../PromiseFunctionBox.js";
+import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
 import {Append} from "./Append.js";
 import {Cast} from "./Cast.js";
 import {Breakpoint} from "./debug/Breakpoint.js";
