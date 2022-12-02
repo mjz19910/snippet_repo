@@ -55,13 +55,13 @@ const AutoBuyMulModifierFactor=1;
 const AutoBuyRatioDiv=1;
 const calcPres_target_percent=1;
 
-const LOG_LEVEL_CRIT=1;
-const LOG_LEVEL_ERROR=2;
-const LOG_LEVEL_WARN=3;
-const LOG_LEVEL_NOTICE=4;
-const LOG_LEVEL_INFO=5;
-const LOG_LEVEL_DEBUG=6;
-const LOG_LEVEL_TRACE=7;
+const LOG_LEVEL_CRIT_IMPL=1;
+const LOG_LEVEL_ERROR_IMPL=2;
+const LOG_LEVEL_WARN_IMPL=3;
+const LOG_LEVEL_NOTICE_IMPL=4;
+const LOG_LEVEL_INFO_IMPL=5;
+const LOG_LEVEL_DEBUG_IMPL=6;
+const LOG_LEVEL_TRACE_IMPL=7;
 
 let local_logging_level=3;
 let LogErrorAsConsoleError=false;
@@ -75,15 +75,15 @@ function append_console_message(level,format_str,...args) {
 	} else {
 		format_str="[%o:%s] "+format_str;
 	}
-	if(level>=LOG_LEVEL_ERROR) {
+	if(level>=LOG_LEVEL_ERROR_IMPL) {
 		if(LogErrorAsConsoleError) {
 			console.error(format_str,level_str,...args);
 		} else {
 			console.info(format_str,level_str,...args);
 		}
-	} else if(level===LOG_LEVEL_WARN) {
+	} else if(level===LOG_LEVEL_WARN_IMPL) {
 		console.warn(format_str,level_str,...args);
-	} else if(level===LOG_LEVEL_NOTICE) {
+	} else if(level===LOG_LEVEL_NOTICE_IMPL) {
 		console.log(format_str,level_str,...args);
 	} else if(level_str==='unknown') {
 		console.info(format_str,level,level_str,...args);
@@ -95,13 +95,13 @@ function append_console_message(level,format_str,...args) {
 /** @arg {number} level*/
 function human_log_level(level) {
 	switch(level) {
-		case LOG_LEVEL_CRIT: return 'crit';
-		case LOG_LEVEL_ERROR: return 'error';
-		case LOG_LEVEL_WARN: return 'warn';
-		case LOG_LEVEL_NOTICE: return 'notice';
-		case LOG_LEVEL_INFO: return 'info';
-		case LOG_LEVEL_DEBUG: return 'debug';
-		case LOG_LEVEL_TRACE: return 'trace';
+		case LOG_LEVEL_CRIT_IMPL: return 'crit';
+		case LOG_LEVEL_ERROR_IMPL: return 'error';
+		case LOG_LEVEL_WARN_IMPL: return 'warn';
+		case LOG_LEVEL_NOTICE_IMPL: return 'notice';
+		case LOG_LEVEL_INFO_IMPL: return 'info';
+		case LOG_LEVEL_DEBUG_IMPL: return 'debug';
+		case LOG_LEVEL_TRACE_IMPL: return 'trace';
 		default: return 'unknown';
 	}
 }
@@ -454,7 +454,7 @@ class InstructionConstructImpl extends InstructionImplBase {
 			let obj=new a.value(...valid_args.s);
 			vm.stack.push(new CSSStyleSheetBoxImpl(obj));
 		}
-		log_if_impl_r(LOG_LEVEL_INFO,"",number_of_arguments,...vm.stack.slice(vm.stack.length-number_of_arguments));
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,"",number_of_arguments,...vm.stack.slice(vm.stack.length-number_of_arguments));
 	}
 }
 class InstructionCastImpl extends InstructionImplBase {
@@ -1658,21 +1658,21 @@ class AsyncTimeoutNode extends TimeoutNode {
 	/** @arg {{wait():Promise<any>;destroy():void}} target */
 	async start_async(target) {
 		if(!target) throw new Error("unable to start_async without anything to wait for");
-		log_if_impl_r(LOG_LEVEL_INFO,'start_async');
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'start_async');
 		this.m_target=target;
 		this.set();
 		let promise=this.m_target.wait();
-		log_if_impl_r(LOG_LEVEL_INFO,'p',promise);
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'p',promise);
 		await promise;
 	}
 	/** @override */
 	set() {
-		log_if_impl_r(LOG_LEVEL_INFO,'set',this);
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'set',this);
 		super.set();
 	}
 	/** @override */
 	run() {
-		log_if_impl_r(LOG_LEVEL_INFO,'run',this);
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'run',this);
 		return super.run();
 	}
 	/** @override */
@@ -2002,7 +2002,7 @@ class AutoBuyStateImplR {
 			this.locked_cycle_count--;
 			if(this.locked_cycle_count%100==0) {
 				// do_update=true;
-				log_if_impl_r(LOG_LEVEL_INFO,'ratio cycle lcc=%o',this.locked_cycle_count);
+				log_if_impl_r(LOG_LEVEL_INFO_IMPL,'ratio cycle lcc=%o',this.locked_cycle_count);
 			}
 		} else {
 			do_update=true;
@@ -2076,15 +2076,15 @@ class AutoBuyStateImplR {
 		return [num,exp];
 	}
 	log_on_update_ratio_mode_notify() {
-		log_if_impl_r(LOG_LEVEL_INFO,'update_ratio_mode_tag mode=%o total_mul=%o cycle_change=%o',this.ratio_mode,this.total_mul,this.total_cycle_count_change);
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'update_ratio_mode_tag mode=%o total_mul=%o cycle_change=%o',this.ratio_mode,this.total_mul,this.total_cycle_count_change);
 		const near_avg='30min';
 		let real_val=this.avg.get_average(near_avg);
 		let [num,exponent]=this.calc_near_val(real_val);
 		if(real_val<0.9) return;
 		if(exponent<2&&exponent>-3) {
-			log_if_impl_r(LOG_LEVEL_ERROR,'update_ratio_mode_tag -exp avg:%s=%o lcc=%o',near_avg,(~~(real_val*100000))/100000,this.locked_cycle_count);
+			log_if_impl_r(LOG_LEVEL_ERROR_IMPL,'update_ratio_mode_tag -exp avg:%s=%o lcc=%o',near_avg,(~~(real_val*100000))/100000,this.locked_cycle_count);
 		} else {
-			log_if_impl_r(LOG_LEVEL_ERROR,'update_ratio_mode_tag +exp avg:%s=(%o,%o) lcc=%o',near_avg,(~~(num*10000))/10000,exponent,this.locked_cycle_count);
+			log_if_impl_r(LOG_LEVEL_ERROR_IMPL,'update_ratio_mode_tag +exp avg:%s=(%o,%o) lcc=%o',near_avg,(~~(num*10000))/10000,exponent,this.locked_cycle_count);
 		}
 	}
 	update_not_ready() {
@@ -2371,7 +2371,7 @@ class AutoBuyImpl {
 		this.background_audio.onloadeddata=null;
 		this.background_audio.volume=AUDIO_ELEMENT_VOLUME;
 		this.async_pre_init().then(() => {
-			log_if_impl_r(LOG_LEVEL_INFO,'pre_init done');
+			log_if_impl_r(LOG_LEVEL_INFO_IMPL,'pre_init done');
 		}); this.dom_pre_init();
 	}
 	async async_pre_init() {
@@ -2380,7 +2380,7 @@ class AutoBuyImpl {
 		x: try {
 			return await this.background_audio.play();
 		} catch(e) {
-			log_if_impl_r(LOG_LEVEL_INFO,"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
+			log_if_impl_r(LOG_LEVEL_INFO_IMPL,"failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 		}
 		let raw_instructions=`
 			// [none]
@@ -2465,11 +2465,11 @@ class AutoBuyImpl {
 		let instructions=StackVMParserImplR.parse_instruction_stream_from_string(raw_instructions,[
 			function() {
 				// LOG_LEVEL_INFO
-				log_if_impl_r(LOG_LEVEL_ERROR,'play success');
+				log_if_impl_r(LOG_LEVEL_ERROR_IMPL,'play success');
 			},
 			/** @arg {any} err */
 			function(err) {
-				log_if_impl_r(LOG_LEVEL_ERROR,err);
+				log_if_impl_r(LOG_LEVEL_ERROR_IMPL,err);
 			}
 		]);
 		try {
@@ -2477,9 +2477,9 @@ class AutoBuyImpl {
 			let handler_new={
 				handleEvent() {
 					this.run().then(() => {
-						log_if_impl_r(LOG_LEVEL_INFO,'play success');
+						log_if_impl_r(LOG_LEVEL_INFO_IMPL,'play success');
 					},function(err) {
-						log_if_impl_r(LOG_LEVEL_ERROR,err);
+						log_if_impl_r(LOG_LEVEL_ERROR_IMPL,err);
 					});
 					window.removeEventListener('click',this);
 				},
@@ -2865,7 +2865,7 @@ class AutoBuyImpl {
 	state_history_append(value,silent=false) {
 		this.epoch_len++;
 		if(silent) {
-			log_if_impl_r(LOG_LEVEL_DEBUG,'state_history_append_tag silent item',value);
+			log_if_impl_r(LOG_LEVEL_DEBUG_IMPL,'state_history_append_tag silent item',value);
 			return;
 		}
 		if(!value) throw new Error("Invalid state append requested");
@@ -2874,7 +2874,7 @@ class AutoBuyImpl {
 		this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
 		this.update_history_element();
 		if(this.state.debug) console.log('history append',last,value);
-		log_if_impl_r(LOG_LEVEL_INFO,'state_history_append_tag item',value);
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'state_history_append_tag item',value);
 		while(this.state_history_arr.length>2000) this.state_history_arr.shift();
 	}
 	/** @arg {Event} _event */
@@ -2910,7 +2910,7 @@ class AutoBuyImpl {
 			}
 		};
 		const avg=total/this.timeout_arr.length;
-		log_if_impl_r(LOG_LEVEL_DEBUG,"timeout_avg",avg);
+		log_if_impl_r(LOG_LEVEL_DEBUG_IMPL,"timeout_avg",avg);
 		return [min,avg,max];
 	}
 	/** @type {number[]} */
@@ -2949,8 +2949,8 @@ class AutoBuyImpl {
 			if(e===0) return e;
 			return this.round(e*diff_want_mul);
 		});
-		log_if_impl_r(LOG_LEVEL_INFO,'calc_timeout_ms sorted_diff index',zero_idx,'diff is',this.round(diff*diff_want_mul)/diff_want_mul);
-		log_if_impl_r(LOG_LEVEL_INFO,'calc_timeout_ms l_diff %o %o\n%o',ez_log.slice(0,8),ez_log.slice(-8),ez_log.slice(zs,zero_idx+z_loss+8));
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'calc_timeout_ms sorted_diff index',zero_idx,'diff is',this.round(diff*diff_want_mul)/diff_want_mul);
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'calc_timeout_ms l_diff %o %o\n%o',ez_log.slice(0,8),ez_log.slice(-8),ez_log.slice(zs,zero_idx+z_loss+8));
 		if(val<=1) {
 			debugger;
 		}
@@ -3019,7 +3019,7 @@ class AutoBuyImpl {
 		}
 		if(!this.timeout_ms) throw new Error("Invalid");
 		let value=this.round(this.timeout_ms+change);
-		log_if_impl_r(LOG_LEVEL_INFO,'update_timeout_inc_tag inc',this.timeout_ms,value-this.timeout_ms);
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'update_timeout_inc_tag inc',this.timeout_ms,value-this.timeout_ms);
 		this.timeout_arr.push(value);
 	}
 	/** @arg {number} change */
@@ -3030,7 +3030,7 @@ class AutoBuyImpl {
 		if(!this.timeout_ms) throw new Error("Invalid");
 		let value=this.round(this.timeout_ms-change);
 		if(value<25) value=25;
-		log_if_impl_r(LOG_LEVEL_INFO,'update_timeout_dec_tag dec',this.timeout_ms,this.timeout_ms-value);
+		log_if_impl_r(LOG_LEVEL_INFO_IMPL,'update_timeout_dec_tag dec',this.timeout_ms,this.timeout_ms-value);
 		this.timeout_arr.push(value);
 	}
 	/** @arg {number} value */
@@ -3041,14 +3041,14 @@ class AutoBuyImpl {
 	/** @arg {number[]} pow_terms @arg {number} div */
 	do_timeout_dec(pow_terms,div) {
 		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
-		log_if_impl_r(LOG_LEVEL_DEBUG,"do_timeout_dec_tag dec timeout_change",change);
+		log_if_impl_r(LOG_LEVEL_DEBUG_IMPL,"do_timeout_dec_tag dec timeout_change",change);
 		this.update_timeout_dec(change+1);
 	}
 	/** @arg {number[]} pow_terms @arg {number} div */
 	do_timeout_inc(pow_terms,div) {
 		let iter_term=Math.pow(pow_terms[1],this.iter_count);
 		let change=this.get_timeout_change(pow_terms[0],Math.log(window.totalAtome),div);
-		log_if_impl_r(LOG_LEVEL_DEBUG,"do_timeout_inc_tag inc timeout_change",'change',change,'pow',pow_terms[1],'^',this.iter_count,'->',iter_term);
+		log_if_impl_r(LOG_LEVEL_DEBUG_IMPL,"do_timeout_inc_tag inc timeout_change",'change',change,'pow',pow_terms[1],'^',this.iter_count,'->',iter_term);
 		this.update_timeout_inc(change*iter_term+1);
 	}
 	/** @arg {string} msg @arg {Error} err */
@@ -3396,7 +3396,7 @@ function do_dom_filter() {
 	Array.prototype.forEach.call(document.querySelectorAll("script"),remove_html_nodes);
 }
 function on_game_data_set() {
-	log_if_impl_r(LOG_LEVEL_INFO,'game data init');
+	log_if_impl_r(LOG_LEVEL_INFO_IMPL,'game data init');
 	do_dom_filter();
 	auto_buy_obj.pre_init();
 	setTimeout(auto_buy_obj.init.bind(auto_buy_obj),300);
@@ -3410,7 +3410,7 @@ function wait_for_game_data() {
 	}
 }
 function action_1() {
-	log_if_impl_r(LOG_LEVEL_INFO,'start wait');
+	log_if_impl_r(LOG_LEVEL_INFO_IMPL,'start wait');
 	if(window._SM_Data) {
 		on_game_data_set();
 	} else {
@@ -3698,7 +3698,7 @@ function main() {
 			log_data_vec.push(document.querySelectorAll("script").length);
 			loaded_scripts_count+=added_scripts.length;
 			if(loaded_scripts_count>=script_num) {
-				log_if_impl_r(LOG_LEVEL_INFO,'observer script count',loaded_scripts_count,script_num);
+				log_if_impl_r(LOG_LEVEL_INFO_IMPL,'observer script count',loaded_scripts_count,script_num);
 				console.info('load observer ',...log_data_vec);
 				reset_global_event_handlers();
 				mut_observer.disconnect();
@@ -3777,7 +3777,7 @@ function init() {
 	window.g_log_if=log_if_impl_r;
 }
 init();
-log_if_impl_r(LOG_LEVEL_TRACE,'userscript main');
+log_if_impl_r(LOG_LEVEL_TRACE_IMPL,'userscript main');
 main();
 setInterval(function() {
 	console.clear();
