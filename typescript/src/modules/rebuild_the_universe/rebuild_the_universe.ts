@@ -389,7 +389,7 @@ export type InstructionMapImpl={
 	vm_push_ip: ["vm_push_ip"];
 	vm_push_self: ["vm_push_self"];
 	vm_return: ["vm_return"];
-	dom_exec: DomExec;
+	dom_exec: ["dom_exec",number];
 	dom_peek: ["dom_peek",number,number];
 	dom_new: ["dom_new",typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
 	dom_get: ["dom_get",string];
