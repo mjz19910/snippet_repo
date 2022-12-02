@@ -312,8 +312,8 @@ function parse_0f(ar) {
 	let m2=(mrm>>4)&0x7;
 	if(modrm==7) {
 		console.log(map_regflags[m2],map_regflags[modrm]);
-	} else if(modrm==1) {
-		console.log(map_regflags[mrm>>8&0x7],reg8[modrm]);
+	} else {
+		console.log(map_regflags[m2],map_regflags[modrm]);
 	}
 	//spell:words movzx
 	if(next==0xb6) {
@@ -430,6 +430,19 @@ function ni(ar,i) {
 }
 /**
  * @param {string[]} ar
+ * @arg {number} off
+ */
+function id(ar,off) {
+	let dword=[];
+	dword.push(ar[off+0]);
+	dword.push(ar[off+1]);
+	dword.push(ar[off+2]);
+	dword.push(ar[off+3]);
+	let dword_imm=-(0x100000000-parseInt(dword.reverse().join(""),16));
+	console.log('id dword', dword_imm);
+}
+/**
+ * @param {string[]} ar
  */
 function fn(ar) {
 	try {
@@ -512,7 +525,7 @@ function fn(ar) {
 					continue;
 				}
 				if(num==0x05) {
-
+					id(ar,1);
 				}
 				if(!parse_obj[ar[0]]) {
 					console.log(ar.slice(0,15).join(" "));
