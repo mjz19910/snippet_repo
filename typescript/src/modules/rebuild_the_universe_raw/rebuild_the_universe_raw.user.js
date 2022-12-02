@@ -548,11 +548,9 @@ class InstructionJmpImpl extends InstructionImplBase {
 class InstructionModifyOpImpl extends InstructionImplBase {
 	/** @type {'modify_operand'} */
 	type='modify_operand';
-	/** @arg {import("../../vm/instruction/ModifyOperand.js").ModifyOperand} instruction @arg {StackVMImpl} vm */
+	/** @arg {[number,number]} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
-		let [,target,offset]=instruction;
-		if(typeof target!='number') throw new Error("Invalid");
-		if(typeof offset!='number') throw new Error("Invalid");
+		let [target,offset]=instruction;
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Destination is out of instructions range");
 		}
@@ -595,8 +593,8 @@ class NumberBoxImpl {
 class InstructionVMPushIPImpl extends InstructionImplBase {
 	/** @type {"vm_push_ip"} */
 	type="vm_push_ip";
-	/** @arg {import("../../vm/instruction/vm/VMPushIP.js").VMPushIP} _ins @arg {StackVMImpl} vm */
-	run(vm,_ins) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		if(!vm.hasOwnProperty('push')) {
 			throw new Error("push_pc requires a stack");
 		} else if(vm instanceof StackVMImpl) {
@@ -610,13 +608,9 @@ class InstructionVMPushIPImpl extends InstructionImplBase {
 class InstructionPushImpl extends InstructionImplBase {
 	/** @type {'push'} */
 	type='push';
-	/** @arg {import("../../vm/instruction/stack/Push.js").Push} instruction @arg {StackVMImpl} vm */
-	run(vm,instruction) {
-		for(let i=0;i<instruction.length-1;i++) {
-			let item=instruction[i];
-			if(item==="push") throw new Error("Unreachable");
-			vm.stack.push(item);
-		}
+	/** @arg {import("../../box/Box.js").Box[]} args @arg {StackVMImpl} vm */
+	run(vm,...args) {
+		vm.stack.push(...args);
 	}
 }
 class InstructionDupImpl extends InstructionImplBase {
