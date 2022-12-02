@@ -399,7 +399,7 @@ export type InstructionMapImpl={
 export type InstructionTypeImpl=InstructionMapImpl[keyof InstructionMapImpl];
 export type DomInstructionAppendImpl=[number,"append"];
 export type DomInstructionBP=[number,"breakpoint"];
-type DomInstructionVMBlockTraceOperand=
+type VMBlockTraceOperand=
 	["begin",DomInstructionType|null]|
 	["call",DomInstructionType|null]|
 	["block",number,number]|
@@ -433,7 +433,7 @@ export type DomInstructionMapImpl={
 	push_window_object: [number,"push_window_object"];
 	push: [number,"push",...BoxImpl[]];
 	return: [number,"return"],
-	vm_block_trace: [number,"vm_block_trace",DomInstructionVMBlockTraceOperand];
+	vm_block_trace: [number,"vm_block_trace",VMBlockTraceOperand];
 	vm_call_at: [number,"vm_call_at",DomTaggedPack];
 	vm_call: [number,"vm_call",number];
 	vm_push_args: [number,"vm_push_args"],
@@ -447,13 +447,7 @@ export type DomTaggedPackImpl=
 	["dom",DomInstructionType]|
 	["vm",InstructionTypeImpl]|
 	["dom_mem",number];
-export type VMBlockTraceImpl=
-	["vm_block_trace","begin",DomInstructionType|null]|
-	["vm_block_trace","call",DomInstructionType|null]|
-	["vm_block_trace","block",number,number]|
-	["vm_block_trace","tagged",DomTaggedPackImpl|null]|
-	["vm_block_trace","tagged_begin",DomTaggedPackImpl|null]|
-	["vm_block_trace","tagged_call",DomTaggedPackImpl|null];
+export type VMBlockTraceImpl=["vm_block_trace",VMBlockTraceOperand];
 export class PromiseFunctionBoxImpl {
 	readonly type="PromiseFunctionBox";
 	value: (...args: BoxImpl[]) => Promise<BoxImpl>;
