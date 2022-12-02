@@ -306,9 +306,9 @@ export class StackVMBox extends BoxTemplateImpl<"custom_box",StackVMImpl> {
 export class StringBoxImpl extends BoxTemplateImpl<"string",string> {
 	readonly type="string";
 }
-export class VoidBox {
+export class VoidBoxImpl {
 	readonly type="void";
-	readonly extension=null;
+	readonly extension="null";
 	value=void 0;
 }
 export class VoidPromiseBox extends BoxTemplateImpl<"promise_box",Promise<void>> {
@@ -727,7 +727,7 @@ type BoxImpl=
 	VoidPromiseBox|
 	PromiseBox|
 	// No value (Void)
-	VoidBox|
+	VoidBoxImpl|
 	RealVoidBox|
 	// Box with stuff
 	BoxWithPropertiesIsBoxImpl|
@@ -912,7 +912,9 @@ class InstructionGetImpl {
 			} break;
 			case "none": {
 				let res=value_box.value[key];
-				vm.push(new VoidBoxImpl(res));
+				let _n: never=res;
+				_n;
+				vm.push(new VoidBoxImpl());
 			}
 		}
 	}
@@ -1179,7 +1181,7 @@ class StackVMImpl {
 		this.instruction_pointer=0;
 		this.running=false;
 		this.stack=[];
-		this.return_value=new VoidBoxImpl(void 0);
+		this.return_value=new VoidBoxImpl();
 		this.jump_instruction_pointer=null;
 		this.base_ptr=0;
 		this.frame_size=2;
@@ -1226,7 +1228,7 @@ class StackVMImpl {
 		this.instruction_pointer=0;
 		this.jump_instruction_pointer=null;
 		this.base_ptr=0;
-		this.return_value=new VoidBoxImpl(void 0);
+		this.return_value=new VoidBoxImpl();
 		this.stack.length=0;
 	}
 	is_in_instructions(value: number) {
@@ -2543,20 +2545,6 @@ class AsyncAutoBuy {
 		}
 		this.parent.state_history_append(char,silent);
 		await node.start_async(new AsyncTimeoutTarget);
-	}
-}
-
-class VoidBoxImpl {
-	type: "void";
-	extension: null;
-	value: undefined;
-	constructor(value: undefined) {
-		this.type="void";
-		this.extension=null;
-		this.value=value;
-	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
 	}
 }
 
