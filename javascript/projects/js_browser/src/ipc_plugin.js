@@ -18,7 +18,7 @@ class ReplPluginManagerModule {
 /** @arg {IpcLoader} state @arg {string} plugin_key */
 export async function import_ipc_plugin(state,plugin_key) {
 	switch(plugin_key) {
-		case 'repl_plugin_manager/mod.js': break;
+		case 'repl_plugin_manager': break;
 		case 'tiny_html_lexer': break;
 		case 'tiny_html_parser': break;
 		default: throw new Error("No types for "+plugin_key);
