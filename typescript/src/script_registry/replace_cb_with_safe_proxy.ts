@@ -3,21 +3,21 @@ import {is_in_ignored_from_src_fn} from "./is_in_ignored_from_src_fn.js";
 import {is_in_userscript_fn} from "./is_in_userscript_fn.js";
 import {register_obj_with_registry} from "./register_obj_with_registry.js";
 
-function add_own_property<T>(obj: T, key: PropertyKey) {
-	Object.defineProperty(obj, key, {
+function add_own_property<T>(obj: T,key: PropertyKey) {
+	Object.defineProperty(obj,key,{
 		value: void 0,
 		configurable: true,
 		enumerable: false,
 		writable: true,
 	});
+	return true;
 }
 
 export function replace_cb_with_safe_proxy(args: any[],index: number) {
 	let value=args[index];
 	if(index&&args&&value instanceof Function) {
 		let val_fn: Function=value;
-		add_own_property(val_fn,"reg_id");
-		if(document.currentScript && 'reg_id' in val_fn) {
+		if(document.currentScript&&add_own_property(val_fn,"reg_id")&&'reg_id' in val_fn) {
 			val_fn.reg_id=register_obj_with_registry(document.currentScript);
 		}
 		args[index]=new Proxy(value,{
