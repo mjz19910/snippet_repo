@@ -1,7 +1,7 @@
-import {Repeat} from "../../types/repeat/Repeat.js";
-import {stats_calculator_info} from "../../types/stats_calculator_info.js";
-import {BaseCompression} from "./BaseCompression";
-import {CompressState} from "./CompressState";
+import {Repeat} from "./Repeat.js";
+import {stats_calculator_info} from "./stats_calculator_info.js";
+import {BaseCompression} from "./BaseCompression.js";
+import {CompressState} from "./CompressState.js";
 
 export class MulCompression extends BaseCompression {
 	/**
