@@ -358,26 +358,30 @@ function parse_mov_1(ar) {
 };
 /**
  * @param {string[]} ar
+ * 0x8c
  */
-function parse_mov_2(ar) {//8c
+function parse_mov_2(ar) {
 	ar;
 };
 /**
  * @param {string[]} ar
+ * 0x8d
  */
-function parse_lea_1(ar) {//8d
+function parse_lea_1(ar) {
 	ar;
 };
 /**
  * @param {string[]} ar
+ * 0x8e
  */
-function parse_mov_3(ar) {//8e
+function parse_mov_3(ar) {
 	ar;
 };
 /**
  * @param {string[]} ar
+ * 0x8f
  */
-function parse_pop_1(ar) {//8f
+function parse_pop_1(ar) {
 	ar;
 };
 /**
