@@ -1,7 +1,7 @@
-import {InstructionType} from "../instruction/InstructionType.js"
-import {Box} from "../../box/Box.js"
-import {FormattableTypes} from "../../FormattableTypes.js"
-import {StringBox} from "../../box/StringBox.js";
+import {InstructionType} from "./instruction/InstructionType.js"
+import {Box} from "../box/Box.js"
+import {FormattableTypes} from "../FormattableTypes.js"
+import {StringBox} from "../box/StringBox.js";
 
 export class SimpleStackVMParser {
 	static match_regex=/(.+?)(;|$)/gm

@@ -1,4 +1,4 @@
-import {StackVM} from "../vm/real_vm/StackVM.js";
+import {StackVM} from "../vm/StackVM.js";
 import {Box} from "./Box.js";
 import {NewableInstancePack} from "./NewableInstancePack.js";
 
