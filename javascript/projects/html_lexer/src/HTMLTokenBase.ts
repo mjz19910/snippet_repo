@@ -1,21 +1,25 @@
-import {ak_verification_failed} from "./ak_verification_failed.js";
-import {CodePoint} from "./CodePoint";
-import {DoctypeData} from "./DoctypeData";
-import {Empty} from "./Empty";
 import {Ref} from "./from_cpp/Ref.js";
 import {move} from "./move.js";
+import {MyDocTypeData} from "./MyDocTypeData.js";
 import {Optional} from "./Optional.js";
 import {OwnPtr} from "./OwnPtr";
 import {u32} from "./u32.js";
 import {Variant} from "./Variant";
 import {Vector} from "./Vector";
 
+class CodePoint {}
+
+function ak_verification_failed(string: string) {
+    console.log("verify failure", string);
+    throw new Error("Verify failed");
+}
+
 export class HTMLTokenBase {
     opt(): Optional<HTMLTokenBase> {
         return new Optional(this);
     }
     m_type: HTMLTokenBase.Type=HTMLTokenBase.Type.Invalid;
-    m_data=new Variant<[Empty,u32,OwnPtr<DoctypeData>,OwnPtr<Vector<HTMLTokenBase.Attribute>>]>();
+    m_data=new Variant<[null,u32,OwnPtr<MyDocTypeData>,OwnPtr<Vector<HTMLTokenBase.Attribute>>]>();
     m_code_point: CodePoint|null=null;
     m_start_position: HTMLTokenBase.Position|null=null;
     m_end_position: HTMLTokenBase.Position|null=null;
@@ -24,7 +28,7 @@ export class HTMLTokenBase {
         this.m_code_point=code_point;
     }
     constructor() {
-        this.m_data.set<0>(Empty);
+        this.m_data.set<0>(null);
         this.set_code_point(new CodePoint);
     }
     set_end_position(_: "Badge<HTMLTokenizer>",arg1: HTMLTokenBase.Position) {
@@ -33,7 +37,7 @@ export class HTMLTokenBase {
     set_tag_name(arg0: string) {
         throw new Error("Method not implemented.");
     }
-    ensure_doctype_data(): DoctypeData {
+    ensure_doctype_data(): MyDocTypeData {
         throw new Error("Method not implemented.");
     }
     static from_type(type: HTMLTokenBase.Type): HTMLTokenBase {
@@ -44,7 +48,7 @@ export class HTMLTokenBase {
                 obj.m_data.set(0);
                 break;
             case HTMLTokenBase.Type.DOCTYPE:
-                obj.m_data.set(new OwnPtr<DoctypeData>());
+                obj.m_data.set(new OwnPtr<MyDocTypeData>());
                 break;
             case HTMLTokenBase.Type.StartTag:
             case HTMLTokenBase.Type.EndTag:

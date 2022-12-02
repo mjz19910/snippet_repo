@@ -23,7 +23,7 @@
 		],
 	},
 	"include": [
-		"src/**/*", "extern.ts",
+		"src/**/*", "extern.js",
 	],
 	"exclude": [
 		"node_modules",
