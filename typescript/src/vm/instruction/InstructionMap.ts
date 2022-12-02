@@ -31,6 +31,12 @@ export type InstructionMap={
 	call: Call;
 	cast: Cast;
 	construct: Construct;
+	dom_create_element_with_props: ['dom_create_element_with_props','div',string,{id: string;}];
+	dom_create_element: ['dom_create_element','div',string,string];
+	dom_exec: DomExec;
+	dom_get: ['dom_get',string];
+	dom_new: ['dom_new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
+	dom_peek: DomPeek;
 	drop: Drop;
 	dup: Dup;
 	get: Get;
@@ -49,10 +55,4 @@ export type InstructionMap={
 	vm_push_ip: VMPushIP;
 	vm_push_self: VMPushSelf;
 	vm_return: VMReturn;
-	dom_exec: DomExec;
-	dom_peek: DomPeek;
-	dom_new: ['dom_new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
-	dom_get: ['dom_get',string];
-	dom_create_element: ['dom_create_element','div',string,string];
-	dom_create_element_with_props: ['dom_create_element_with_props','div',string,{id: string;}];
 };
