@@ -16,14 +16,14 @@ import {
 	TimerMessageTypes,
 } from "./interfaces.js";
 import {MakeReplyData} from "./MakeReplyData.js";
-import {NoDataMsg} from "../vm/NoDataMsg.js";
+import {MakeReplyDataType} from "./MakeReplyDataType.js";
 
 export class TimerApi {
 	msg_types=new TimerMessageTypes;
 	set_names=new TimeoutSetStrings;
 	clear_names=new TimeoutClearStrings;
 	handled: number[]=[];
-	to_handle: (NoDataMsg|MakeReplyData)[];
+	to_handle: ({t: number;}|{t: number; v: MakeReplyDataType;})[];
 	constructor() {
 		this.to_handle=[
 			{t: TimeoutMessageReady},
