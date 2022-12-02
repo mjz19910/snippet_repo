@@ -828,6 +828,7 @@ class InstructionBlockTraceImpl extends InstructionImplBase {
 	run(_vm) {
 	}
 }
+/** @type {typeof import("./as_const.js").instruction_descriptor_arr_type} */
 const instruction_descriptor_arr=[
 	['append',InstructionAppendImpl],
 	['breakpoint',InstructionBreakpointImpl],
