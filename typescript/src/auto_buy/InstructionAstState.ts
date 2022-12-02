@@ -5,7 +5,7 @@ type StackItemType=['children',number,[number,TreeItem[]]];
 
 export class InstructionAstState {
 	clone() {
-		return new InstructionAstState(this.tree,this.functions_map,this.stack,this.cur_depth);
+		return new InstructionAstState([],this.functions_map,[],this.cur_depth);
 	}
 	constructor(
 		public tree: TreeItem[],
