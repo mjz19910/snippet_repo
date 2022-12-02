@@ -1,7 +1,5 @@
-export class DomElementBox {
+import {BoxTemplate} from "./template/BoxTemplate.js";
+
+export class DomElementBox extends BoxTemplate<"DomValueBox",Element> {
 	readonly type="DomValueBox";
-	value: Element;
-	constructor(value: Element) {
-		this.value=value;
-	}
 }

@@ -157,17 +157,13 @@ class CSSStyleSheetBoxImpl {
 	/** @readonly */
 	type="CSSStyleSheetBox";
 	/** @readonly */
-	instance_type="CSSStyleSheet";
+	next_member="instance_type";
 	/** @readonly */
-	m_verify_name="CSSStyleSheetBox";
+	instance_type="CSSStyleSheet";
 	/** @arg {'object'|'function'} to_match */
 	as_type(to_match) {
 		if(to_match==='object') return this;
 		return null;
-	}
-	/** @arg {"CSSStyleSheetBox"} name */
-	verify_name(name) {
-		return this.m_verify_name===name;
 	}
 	/** @type {CSSStyleSheet} */
 	value;
@@ -183,11 +179,6 @@ class StackVMBoxImpl {
 	type="custom_box";
 	/** @type {"StackVM"} */
 	box_type="StackVM";
-	/** @readonly */
-	m_verify_name="StackVMBox";
-	verify_name() {
-		return true;
-	}
 	/**
 	 * @param {string} to_match
 	 */
@@ -212,11 +203,6 @@ class WindowBoxImpl {
 	extension=null;
 	/** @type {"Window"} */
 	inner_type="Window";
-	/** @readonly */
-	m_verify_name="WindowBox";
-	verify_name() {
-		return true;
-	}
 	/**
 	 * @param {string} to_match
 	 */
@@ -239,13 +225,9 @@ class ObjectBoxImpl {
 	/** @readonly */
 	type="object_box";
 	/** @readonly */
-	inner_type="Record<never, never>";
-	extension=null;
+	inner_type="object";
 	/** @readonly */
-	m_verify_name="ObjectBox";
-	verify_name() {
-		return true;
-	}
+	extension="null";
 	/**
 	 * @param {string} to_match
 	 */
@@ -267,7 +249,7 @@ class ObjectBoxImpl {
 class NewableInstancePackImpl {
 	/** @arg {new (...a: Box_CJS[]) => T} box_value @arg {Box_CJS[]} construct_args @returns {Box_CJS} */
 	make_box(box_value,construct_args) {
-		box_value;construct_args;
+		box_value; construct_args;
 		return new VoidBoxImpl;
 	}
 }
@@ -297,13 +279,6 @@ class PromiseBoxImpl {
 	 * @type {any}
 	 */
 	await_type;
-	/**
-	 * @type {any}
-	 */
-	m_verify_name;
-	verify_name() {
-		return true;
-	}
 	/**
 	 * @param {any} _to_match
 	 */
@@ -344,7 +319,7 @@ class InstructionCallImpl extends InstructionImplBase {
 			return value;
 		}
 		if(object_box.type==='instance_box') {
-			const {type,value,instance_type,m_verify_name,...rest}=object_box;
+			const {type,value,instance_type,...rest}=object_box;
 			if(Object.keys(rest).length>0) {
 				console.log('other enumerable on box',rest);
 			}
@@ -1889,12 +1864,6 @@ class VoidBoxImpl {
 	type="void";
 	value=void 0;
 	extension=null;
-	/** @readonly */
-	m_verify_name="VoidBox";
-	/** @arg {"VoidBox"} name */
-	verify_name(name) {
-		return this.m_verify_name===name;
-	}
 	as_type() {
 		return null;
 	}

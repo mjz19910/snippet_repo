@@ -1,20 +1,13 @@
 import {Box} from "./Box.js";
 import {BoxTemplate} from "./template/BoxTemplate.js";
-import {BoxVerify} from "./BoxVerify.js";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";
 
-export class CSSStyleSheetConstructorBox
-	extends BoxTemplate<"constructor_box",typeof CSSStyleSheet>
-	implements BoxVerify<CSSStyleSheetConstructorBox,"CSSStyleSheetConstructorBox">
-{
+export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",typeof CSSStyleSheet> {
 	readonly type="constructor_box";
+	readonly next_member="instance_type";
 	readonly instance_type="CSSStyleSheet";
 	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
 	readonly args_type: [options?: CSSStyleSheetInit|undefined]=[];
-	readonly m_verify_name="CSSStyleSheetConstructorBox";
-	verify_name(name: "CSSStyleSheetConstructorBox") {
-		return this.m_verify_name==='CSSStyleSheetConstructorBox'&&name==='CSSStyleSheetConstructorBox';
-	}
 	factory(...arr: Box[]) {
 		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
 		for(let i=0;i<arr.length;i++) {

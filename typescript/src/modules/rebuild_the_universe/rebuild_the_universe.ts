@@ -52,7 +52,11 @@ export class BoxWithPropertiesIsBox extends BoxTemplate<'with_properties',{}> {
 export type BoxWithPropertiesObjType<T extends string[]>={
 	[U in T[number]]: Box
 }
-import {CSSStyleSheetBox} from "../../box/CSSStyleSheetBox.js";
+export class CSSStyleSheetBox extends BoxTemplate<"CSSStyleSheetBox",CSSStyleSheet> {
+	readonly type="CSSStyleSheetBox";
+	readonly next_member="instance_type";
+	readonly instance_type="CSSStyleSheet";
+}
 import {CSSStyleSheetConstructorBox} from "../../box/CSSStyleSheetConstructorBox.js";
 import {CSSStyleSheetInitBox} from "../../box/CSSStyleSheetInitBox.js";
 import {CSSStyleSheetPromiseBox} from "../../box/CSSStyleSheetPromiseBox.js";
@@ -394,16 +398,11 @@ function trigger_debug_breakpoint() {
 class StackVMBoxImpl {
 	type: "custom_box";
 	box_type: "StackVM";
-	m_verify_name: "StackVMBox";
 	value: StackVMImpl;
 	constructor(value: StackVMImpl) {
 		this.type='custom_box';
 		this.box_type='StackVM';
-		this.m_verify_name='StackVMBox';
 		this.value=value;
-	}
-	verify_name(name: "StackVMBox") {
-		return this.m_verify_name==='StackVMBox'&&name==='StackVMBox';
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
@@ -414,17 +413,12 @@ class WindowBoxImpl {
 	type: "object_box";
 	extension: null;
 	inner_type: "Window";
-	m_verify_name: "WindowBox";
 	value: Window;
 	constructor(value: Window) {
 		this.type='object_box';
 		this.extension=null;
 		this.inner_type='Window';
-		this.m_verify_name='WindowBox';
 		this.value=value;
-	}
-	verify_name(name: "WindowBox") {
-		return this.m_verify_name==='WindowBox'&&name==='WindowBox';
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
@@ -433,19 +427,14 @@ class WindowBoxImpl {
 
 class ObjectBoxImpl {
 	type: "object_box";
-	m_verify_name: "ObjectBox";
 	inner_type: "Record<never, never>";
 	extension=null;
 	value: Record<never,never>;
 	constructor(value: Record<never,never>) {
 		this.type='object_box';
-		this.m_verify_name='ObjectBox';
 		this.inner_type='Record<never, never>';
 		this.extension=null;
 		this.value=value;
-	}
-	verify_name(name: "ObjectBox"): boolean {
-		return this.m_verify_name==='ObjectBox'&&name==='ObjectBox';
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
@@ -699,17 +688,12 @@ class InstructionDupImpl {
 
 class CSSStyleSheetBoxImpl {
 	type: "instance_box";
-	m_verify_name: "CSSStyleSheetBox";
 	instance_type: "CSSStyleSheet";
 	value: CSSStyleSheet;
 	constructor(value: CSSStyleSheet) {
 		this.type='instance_box';
-		this.m_verify_name='CSSStyleSheetBox';
 		this.instance_type='CSSStyleSheet';
 		this.value=value;
-	}
-	verify_name(name: "CSSStyleSheetBox"): boolean {
-		return this.m_verify_name==='CSSStyleSheetBox'&&name==='CSSStyleSheetBox';
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
@@ -1057,9 +1041,9 @@ class InstructionAppendImpl {
 		}
 		if(append_obj===null) throw new Error("Bad");
 		if(target===null) throw new Error("Bad");
-		/* if(append_obj.type==='instance_box'&&append_obj.m_verify_name==='InstructionTypeBox') throw new Error("Bad");
+		/* if(append_obj.type==='instance_box') throw new Error("Bad");
 		if(!(append_obj.type==='instance_box'&&append_obj.instance_type==='Node')) throw new Error("Bad");
-		if(target.type==='instance_box'&&target.m_verify_name==='InstructionTypeBox') throw new Error("Bad");
+		if(target.type==='instance_box') throw new Error("Bad");
 		if(!(target.type==='instance_box'&&target.instance_type==='Node')) throw new Error("Bad");
 		target.value.appendChild(append_obj.value); */
 		throw new Error("TODO");
@@ -2568,19 +2552,14 @@ class AsyncAutoBuy {
 class VoidBoxImpl {
 	type: "void";
 	extension: null;
-	m_verify_name: "VoidBox";
 	value: undefined;
 	constructor(value: undefined) {
 		this.type='void';
 		this.extension=null;
-		this.m_verify_name='VoidBox';
 		this.value=value;
 	}
 	as_type(input_typeof: string): this|null {
 		return typeof this.value===input_typeof? this:null;
-	}
-	verify_name(name: "VoidBox"): boolean {
-		return this.m_verify_name==='VoidBox'&&name==='VoidBox';
 	}
 }
 
