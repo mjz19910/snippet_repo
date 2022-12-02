@@ -385,9 +385,8 @@ class InstructionCallImpl extends InstructionImplBase {
 		let ret=fn_value.apply(real_this,arg_arr);
 		vm.stack.push(new PromiseBoxImpl(ret));
 	}
-	/** @arg {import("../../vm/instruction/general/Call.js").Call} instruction @arg {StackVMImpl} vm */
-	run(vm,instruction) {
-		let number_of_arguments=instruction[1];
+	/** @arg {number} number_of_arguments @arg {StackVMImpl} vm */
+	run(vm,number_of_arguments) {
 		if(typeof number_of_arguments!='number') throw new Error("Invalid");
 		if(number_of_arguments<=1) {
 			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
@@ -400,11 +399,11 @@ class InstructionCallImpl extends InstructionImplBase {
 			console.log('VM: call',target_this,'fn box',value_box,arg_arr);
 		}
 		if(value_box===void 0) {
-			console.info('VM Error: Processing call instruction',instruction,target_this,value_box,arg_arr);
+			console.info('VM Error: Processing call instruction',number_of_arguments,target_this,value_box,arg_arr);
 			throw new Error("Tried to call undefined");
 		}
 		if(typeof value_box==='string') {
-			console.info('VM Error: Processing call instruction',instruction,target_this,value_box,arg_arr);
+			console.info('VM Error: Processing call instruction',number_of_arguments,target_this,value_box,arg_arr);
 			throw new Error("Tried to call a string(your asm code is outdated)");
 		}
 		if(typeof value_box==='function') {
@@ -524,9 +523,8 @@ class InstructionCastImpl extends InstructionImplBase {
 class InstructionJeImpl extends InstructionImplBase {
 	/** @type {'je'} */
 	type='je';
-	/** @arg {import("../../vm/instruction/jump/Je.js").Je} instruction @arg {StackVMImpl} vm */
-	run(vm,instruction) {
-		let [,target]=instruction;
+	/** @arg {StackVMImpl} vm  @arg {number} target */
+	run(vm,target) {
 		if(typeof target!='number') throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Jump target is out of instructions range");

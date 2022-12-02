@@ -9,7 +9,6 @@ import {l_log_if} from "../l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {AbstractVM} from "./AbstractVM.js";
 import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
-import {Call} from "./instruction/general/Call.js";
 import {PromiseBox} from "../box/PromiseBox.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 
@@ -201,7 +200,7 @@ export class BaseStackVM implements AbstractVM {
 			}
 		}
 	}
-	execute_call_instruction(instruction: Call) {
+	execute_call_instruction(instruction: ['call', number]) {
 		let number_of_arguments=instruction[1];
 		if(number_of_arguments===void 0) return;
 		if(typeof number_of_arguments!='number') return;
