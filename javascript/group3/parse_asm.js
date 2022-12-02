@@ -35,6 +35,42 @@ let parse_obj=new class ParseAsm {
 		}
 		return ar.slice(3);
 	}
+	/**
+	 * @param {string | any[]} ar
+	 */
+	"80"(ar) {
+		//cmp
+		var num=parseInt(ar[1],16);
+		let af=num&0x7;
+		let dist=ar[2];
+		let is_ptr=0;
+		let offsets=0;
+		if((num&0x80)==0x80) {
+			is_ptr=1;
+			console.log("cmp is_ptr",is_ptr);
+		}
+		if((num&0x40)==0x40) {
+			offsets=1;
+			console.log("cmp offsets",offsets);
+		}
+		if((num&0xc0)==0xc0) {
+			console.log("cmp "+map_regflags[af]+","+dist);
+		} else {
+			console.log("cmp "+"["+map_regflags[af]+"],"+dist);
+		}
+		return ar.slice(4);
+	}
+	/**
+	 * @param {string | any[]} ar
+	 * jb
+	 */
+	"72"(ar) {
+		var num=parseInt(ar[1],16);
+		if(num>0x80) {} else {
+			console.log("jb cip+"+ar[1]);
+		}
+		return ar.slice(2);
+	};
 };
 let n_regs=[];
 /**
@@ -43,36 +79,7 @@ let n_regs=[];
 function pi(n) {
 	return parseInt(n,16);
 };
-parse_obj["80"]=function(ar) {
-	//cmp
-	var num=parseInt(ar[1],16);
-	let af=num&0x7;
-	let dist=ar[2];
-	let is_ptr=0;
-	let offsets=0;
-	if((num&0x80)==0x80) {
-		is_ptr=1;
-		console.log("cmp is_ptr",is_ptr);
-	}
-	if((num&0x40)==0x40) {
-		offsets=1;
-		console.log("cmp offsets",offsets);
-	}
-	if((num&0xc0)==0xc0) {
-		console.log("cmp "+map_regflags[af]+","+dist);
-	} else {
-		console.log("cmp "+"["+map_regflags[af]+"],"+dist);
-	}
-	return ar.slice(4);
-};
-parse_obj["72"]=function(ar) {
-	//jb
-	var num=parseInt(ar[1],16);
-	if(num>0x80) {} else {
-		console.log("jb cip+"+ar[1]);
-	}
-	return ar.slice(2);
-};
+parse_obj;
 parse_obj["8a"]=function(ar) {
 	//mov
 	var num=parseInt(ar[1],16);
