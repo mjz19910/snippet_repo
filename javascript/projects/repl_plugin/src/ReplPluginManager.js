@@ -1,10 +1,10 @@
 import path from "path";
 import process,{env} from "process";
 import vm from 'vm';
-import {PageLoaderState} from "../../page_loader/src/PageLoaderState.js";
 import {bind_plugins} from "./plugins/bind_plugins.js";
 import {REPLServerRuntime} from "./REPLServerRuntime.js";
 import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
+import {Extern} from "./use_extern.js";
 
 const delete_all_javascript_api=false;
 
@@ -32,7 +32,7 @@ export class ReplPluginManager {
 	m_context=null;
 	/**@type {REPLServerRuntime|null} */
 	m_repl_runtime=null;
-	/** @arg {PageLoaderState} state */
+	/** @arg {Extern.PageLoaderState} state */
 	constructor(state) {
 		this.m_request_state=state;
 	}
@@ -123,7 +123,7 @@ export class ReplPluginManager {
 		}
 	}
 	/**
-	 * @param {PageLoaderState} state
+	 * @param {Extern.PageLoaderState} state
 	 */
 	update(state) {
 		this.m_request_state=state;
