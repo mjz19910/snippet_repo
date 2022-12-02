@@ -464,45 +464,39 @@ export class AutoBuy implements AutoBuyInterface {
 	instruction_tree_to_instructions(state: InstructionAstState): InstructionType[] {
 		let cur_function_id=this.cur_function_id;
 		this.cur_function_id++;
-		let tree=state.tree;
-		let functions_map=state.functions_map;
-		let stack=state.stack;
-		let cur_depth=state.cur_depth;
-		let items=state.items;
-		let depths=state.depths;
-		for(let i=0;i<tree.length;i++) {
-			let cur=tree[i];
+		for(let i=0;i<state.tree.length;i++) {
+			let cur=state.tree[i];
 			switch(cur[1]) {
 				case 'group': {
 					this.log_if('apply_dom_desc','rdc stk');
-					stack.push(['children',items.length-1,[cur[0],cur[2]]]);
+					state.stack.push(['children',state.items.length-1,[cur[0],cur[2]]]);
 				} break;
 				case 'op': {
-					items.push(cur[2]);
-					depths.push(cur[0]);
+					state.items.push(cur[2]);
+					state.depths.push(cur[0]);
 				} break;
 				default: {
 					console.assert(false,'handle depth change in apply_dom_desc');
-					this.log_if('apply_dom_desc',cur[0]-cur_depth);
+					this.log_if('apply_dom_desc',cur[0]-state.cur_depth);
 				}
 			}
 		}
-		if(stack.length===0)
-			return items;
-		while(stack.length>0) {
-			let stack_item=stack.pop();
+		if(state.stack.length===0)
+			return state.items;
+		while(state.stack.length>0) {
+			let stack_item=state.stack.pop();
 			if(!stack_item) break;
 			const [tag,items_index,[data_depth,rec_tree]]=stack_item;
 			let log_level=this.get_logging_level('apply_dom_desc');
 			l_log_if(log_level,tag,items_index,data_depth,rec_tree);
-			let rec_state=state.clone(rec_tree,functions_map,stack,cur_depth+1);
+			let rec_state=state.clone(rec_tree,state.functions_map,state.stack,state.cur_depth+1);
 			let deep_res=this.instruction_tree_to_instructions(rec_state);
-			functions_map.set(cur_function_id,deep_res);
-			items.push(['dom_exec',cur_function_id]);
+			state.functions_map.set(cur_function_id,deep_res);
+			state.items.push(['dom_exec',cur_function_id]);
 			this.log_if('apply_dom_desc',deep_res);
-			this.log_if('apply_dom_desc',items,depths,stack);
+			this.log_if('apply_dom_desc',state.items,state.depths,state.stack);
 		}
-		return items;
+		return state.items;
 	}
 	init_dom() {
 		const font_size_px=22;
