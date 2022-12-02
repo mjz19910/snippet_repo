@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		rebuild the universe
 // @namespace	http://tampermonkey.net/
-// @version		4.2.3
+// @version		4.2.4
 // @description	rebuildtheuniverse.com automation
 // @author		You
 // @match		http://rebuildtheuniverse.com/?type=real
@@ -20,10 +20,6 @@
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.user.js
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
-
-/** @typedef {import("./__global.js").Holder} Holder */
-/** @implements {Holder} */
-class HolderO {}
 
 function fetch_all_images() {
 	return Promise.all(arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
