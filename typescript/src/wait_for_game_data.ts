@@ -1,7 +1,7 @@
-import {cint_arr} from "../cint_arr.js";
-import {cint_arr_str} from "../cint_arr_str.js";
+import {cint_arr} from "./cint_arr.js";
+import {cint_arr_str} from "./cint_arr_str.js";
 import {on_game_data_set} from "./on_game_data_set.js"
-import {remove_cint_item} from "./remove_cint_item.js"
+import {remove_cint_item} from "./vm/remove_cint_item.js"
 
 export function wait_for_game_data(cint_item=null) {
 	if(cint_item) {
