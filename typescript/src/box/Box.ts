@@ -1,4 +1,4 @@
-import {DomValueBox} from "../vm/DomValueBox.js";
+import {DomValueBox} from "./DomValueBox.js";
 import {PromiseFunctionBox} from "../vm/PromiseFunctionBox.js";
 import {ArrayBox} from "./ArrayBox.js";
 import {AsyncFunctionBox} from "./AsyncFunctionBox.js";
