@@ -754,8 +754,7 @@ class InstructionAppendImpl extends InstructionImplBase {
 class InstructionPushArgsImpl extends InstructionImplBase {
 	/** @type {'vm_push_args'} */
 	type='vm_push_args';
-	/** @arg {StackVMImpl} _vm @arg {never} _i */
-	run(_vm,_i) {
+	run() {
 		throw new Error("Instruction not supported");
 	}
 }
@@ -980,14 +979,14 @@ class StackVMImpl {
 			case "nop": instruction_table[instruction[0]].run(); break;
 			case "peek": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "push_window_object": instruction_table[instruction[0]].run(this); break;
-			case "push": instruction_table[instruction[0]].run(this, ...instruction); break;
+			case "push": instruction_table[instruction[0]].run(this,...instruction); break;
 			case "return": instruction_table[instruction[0]].run(this); break;
-			case "vm_block_trace": break;
-			case "vm_call": break;
-			case "vm_push_args": break;
-			case "vm_push_ip": break;
-			case "vm_push_self": break;
-			case "vm_return": break;
+			case "vm_block_trace": instruction_table[instruction[0]].run(this); break;
+			case "vm_call": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "vm_push_args": instruction_table[instruction[0]].run(); break;
+			case "vm_push_ip": instruction_table[instruction[0]].run(this); break;
+			case "vm_push_self": instruction_table[instruction[0]].run(this); break;
+			case "vm_return": instruction_table[instruction[0]].run(this); break;
 		}
 	}
 	run() {
