@@ -683,8 +683,8 @@ class InstructionHaltImpl extends InstructionImplBase {
 class InstructionReturnImpl extends InstructionImplBase {
 	/** @type {'return'} */
 	type='return';
-	/** @arg {import("../../vm/instruction/general/Return.js").Return} _i @arg {StackVMImpl} vm */
-	run(vm,_i) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		if(vm.stack.length>0) {
 			vm.return_value=vm.pop();
 		} else {
@@ -695,8 +695,8 @@ class InstructionReturnImpl extends InstructionImplBase {
 class InstructionBreakpointImpl extends InstructionImplBase {
 	/** @type {'breakpoint'} */
 	type='breakpoint';
-	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/debug/Breakpoint.js").Breakpoint} _i */
-	run(vm,_i) {
+	/** @arg {StackVMImpl} vm*/
+	run(vm) {
 		console.log(vm.stack);
 		trigger_debug_breakpoint();
 	}
@@ -704,16 +704,16 @@ class InstructionBreakpointImpl extends InstructionImplBase {
 class InstructionPushVMObjImpl extends InstructionImplBase {
 	/** @type {"vm_push_self"} */
 	type="vm_push_self";
-	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/vm/VMPushSelf.js").VMPushSelf} _i */
-	run(vm,_i) {
+	/** @arg {StackVMImpl} vm*/
+	run(vm) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
 }
 class InstructionPushGlobalObjectImpl extends InstructionImplBase {
 	/** @type {'push_global_object'} */
 	type='push_global_object';
-	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/push/WindowObject.js").PushWindowObject} _i */
-	run(vm,_i) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		vm.stack.push(new WindowBoxImpl(window));
 	}
 }
@@ -772,8 +772,8 @@ class InstructionPushArgsImpl extends InstructionImplBase {
 class InstructionDropImpl extends InstructionImplBase {
 	/** @type {'drop'} */
 	type='drop';
-	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/stack/Drop.js").Drop} _i */
-	run(vm,_i) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		vm.stack.pop();
 	}
 }
@@ -781,8 +781,8 @@ class InstructionVMReturnImpl extends InstructionImplBase {
 	/** @type {'vm_return'} */
 	type='vm_return';
 	debug=false;
-	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/vm/VMReturn.js").VMReturn} _i */
-	run(vm,_i) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		let start_stack=vm.stack.slice();
 		if(vm.base_ptr===null) {
 			vm.running=false;
@@ -804,14 +804,14 @@ class InstructionVMReturnImpl extends InstructionImplBase {
 class InstructionVMCallImpl extends InstructionImplBase {
 	/** @type {'vm_call'} */
 	type='vm_call';
-	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/vm/VMCall.js").VMCall} ins */
-	run(vm,ins) {
+	/** @arg {StackVMImpl} vm @arg {number} jump_target */
+	run(vm,jump_target) {
 		if(vm.base_ptr===null) throw new Error("BasePtr was null");
 		let prev_base=vm.base_ptr;
 		vm.stack.push(new NumberBoxImpl(vm.base_ptr),new NumberBoxImpl(vm.instruction_pointer));
 		vm.base_ptr=vm.stack.length;
-		vm.jump_instruction_pointer=ins[1];
-		console.log('vm vm_call',ins[1],'stk',vm.base_ptr,prev_base,vm.stack.slice());
+		vm.jump_instruction_pointer=jump_target;
+		console.log('vm vm_call',jump_target,'stk',vm.base_ptr,prev_base,vm.stack.slice());
 	}
 }
 class VMFlags {
