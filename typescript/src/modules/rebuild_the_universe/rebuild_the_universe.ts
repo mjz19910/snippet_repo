@@ -399,73 +399,47 @@ export type InstructionMapImpl={
 export type InstructionTypeImpl=InstructionMapImpl[keyof InstructionMapImpl];
 export type DomInstructionAppendImpl=[number,"append"];
 export type DomInstructionBP=[number,"breakpoint"];
-export type DomInstructionVMBlockTrace=
-	[number,"vm_block_trace","begin",DomInstructionType|null]|
-	[number,"vm_block_trace","call",DomInstructionType|null]|
-	[number,"vm_block_trace","block",number,number]|
-	[number,"vm_block_trace","tagged",DomTaggedPack|null]|
-	[number,"vm_block_trace","tagged_begin",DomTaggedPack|null]|
-	[number,"vm_block_trace","tagged_call",DomTaggedPack|null];
+type DomInstructionVMBlockTraceOperand=
+	["begin",DomInstructionType|null]|
+	["call",DomInstructionType|null]|
+	["block",number,number]|
+	["tagged",DomTaggedPack|null]|
+	["tagged_begin",DomTaggedPack|null]|
+	["tagged_call",DomTaggedPack|null];
 export type DomTaggedPack=
 	["dom",DomInstructionType]|
 	["vm",InstructionTypeImpl]|
 	["dom_mem",number];
-export type DomInstructionVMCallAt=[number,"vm_call_at",DomTaggedPack];
-export type DomInstructionNullMarker=[number,"marker",null];
 type ArgAny4=[4,any,any,any,any];
-
-export type DomInstructionFilter=[number,"dom_filter",ArgAny4];
-export type DomInstructionCall=[number,"call",number];
-export type DomInstructionCast=[number,"cast",CastOperandTarget];
-export type DomInstructionConstruct=[number,"construct",number];
-export type DomInstructionJe=[number,"je",number];
-export type DomInstructionJmp=[number,"jmp",number];
-export type DomInstructionModifyOperand=[number,"modify_operand",number,number];
-export type DomInstructionPeek=[number,"peek",number];
-export type DomInstructionPush=[number,"push",...BoxImpl[]];
-export type DomInstructionVMCall=[number,"vm_call",number];
-export type DomInstructionDup=[number,"dup"];
-export type DomInstructionDrop=[number,"drop"];
-export type DomInstructionCreateDiv=[number,"create","div",string,string];
-export type DomInstructionCreateDivWithId=[number,"create_id","div",string];
-export type DomInstructionGet=[number,"get"];
-export type DomInstructionHalt=[number,"halt"];
-export type DomInstructionNop=[number,"nop"];
-export type DomInstructionPushWindowObject=[number,"push_window_object"];
-export type DomInstructionReturn=[number,"return"];
-export type DomInstructionVMPushArgs=[number,"vm_push_args"];
-export type DomInstructionVMPushIP=[number,"vm_push_ip"];
-export type DomInstructionVMPushSelf=[number,"vm_push_self"];
-export type DomInstructionVMReturn=[number,"vm_return"];
 export type DomInstructionMapImpl={
 	append: [number,"append"];
 	breakpoint: [number,"breakpoint"];
 	call: [number,"call",number];
 	cast: [number,"cast",CastOperandTarget];
 	construct: [number,"construct",number];
-	create_id: DomInstructionCreateDivWithId;
-	create: DomInstructionCreateDiv;
+	create_id: [number,"create_id","div",string];
+	create: [number,"create","div",string,string];
 	dom_filter: [number,"dom_filter",ArgAny4];
-	drop: DomInstructionDrop;
+	drop: [number,"drop"];
 	dup: [number,"dup"];
-	get: DomInstructionGet;
-	halt: DomInstructionHalt;
+	get: [number,"get"];
+	halt: [number,"halt"];
 	je: [number,"je",number];
 	jmp: [number,"jmp",number];
 	marker: [number,"marker",null];
 	modify_operand: [number,"modify_operand",number,number];
-	nop: DomInstructionNop;
+	nop: [number,"nop"];
 	peek: [number,"peek",number];
-	push_window_object: DomInstructionPushWindowObject;
+	push_window_object: [number,"push_window_object"];
 	push: [number,"push",...BoxImpl[]];
-	return: DomInstructionReturn,
-	vm_block_trace: DomInstructionVMBlockTrace;
+	return: [number,"return"],
+	vm_block_trace: [number,"vm_block_trace",DomInstructionVMBlockTraceOperand];
 	vm_call_at: [number,"vm_call_at",DomTaggedPack];
 	vm_call: [number,"vm_call",number];
-	vm_push_args: DomInstructionVMPushArgs,
-	vm_push_ip: DomInstructionVMPushIP,
-	vm_push_self: DomInstructionVMPushSelf,
-	vm_return: DomInstructionVMReturn;
+	vm_push_args: [number,"vm_push_args"],
+	vm_push_ip: [number,"vm_push_ip"],
+	vm_push_self: [number,"vm_push_self"],
+	vm_return: [number,"vm_return"];
 };
 export type DomInstructionType=DomInstructionMapImpl[keyof DomInstructionMapImpl];
 
