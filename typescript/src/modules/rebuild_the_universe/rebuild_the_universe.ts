@@ -252,9 +252,6 @@ export class NewableFunctionBox {
 	get_construct_arguments(): [NewableInstancePack<{}>,new (...a: BoxImpl[]) => {}] {
 		return [this.factory_value,this.class_value];
 	}
-	static from_box(value_box: NewableFunctionBox) {
-		return new this(value_box.factory_value,value_box.class_value);
-	}
 	on_get(vm: StackVMImpl,key: string) {
 		vm;key;
 		throw new Error("Method not implemented.");
