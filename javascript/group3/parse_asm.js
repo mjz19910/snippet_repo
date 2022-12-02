@@ -394,6 +394,7 @@ function parse_xchg(ar) {
 }
 /**
  * @param {string[]} ar
+ * 0x6a
  */
 function parse_push_2(ar) {
 	let num=pi(ar[1]);
@@ -408,9 +409,8 @@ function parse_push_2(ar) {
  * @param {string[]} ar
  */
 function nn(ar) {
-	//needs global ar
 	return parseInt(ar[1],16);
-};
+}
 /**
  * @param {string[]} ar
  */
