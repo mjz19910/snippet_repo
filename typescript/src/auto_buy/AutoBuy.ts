@@ -11,7 +11,7 @@ import {LOG_LEVEL_VERBOSE} from "../log_level_enum.js";
 import {DataLoader} from "../DataLoader.js";
 import {debug_id_syms} from "../debug_id_syms.js";
 import {EventHandlerDispatch} from "../EventHandlerDispatch.js";
-import {l_log_if} from "../l_log_if.js";
+import {log_if} from "../log_if.js";
 import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_src_fn.js";
 import {SpecType} from "../SpecType.js";
 import {AsyncNodeRoot} from "../timer_node/AsyncNodeRoot.js";
@@ -492,7 +492,7 @@ export class AutoBuy implements AutoBuyInterface {
 			if(!stack_item) break;
 			const [tag,items_index,[data_depth,rec_tree]]=stack_item;
 			let log_level=this.get_logging_level('apply_dom_desc');
-			l_log_if(log_level,tag,items_index,data_depth,rec_tree);
+			log_if(log_level,tag,items_index,data_depth,rec_tree);
 			let rec_state=new InstructionAstState(rec_tree,state.functions_map,[],state.cur_depth+1);;
 			let deep_res=this.instruction_tree_to_instructions(rec_state);
 			state.functions_map.set(cur_function_id,deep_res);

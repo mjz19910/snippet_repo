@@ -5,7 +5,7 @@ import {IndexBox} from "../box/IndexBox.js";
 import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
 import {NewableFunctionBox} from "../box/NewableFunctionBox.js";
 import {InstructionType} from "../instruction/InstructionType.js";
-import {l_log_if} from "../l_log_if.js";
+import {log_if} from "../log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {AbstractVM} from "./AbstractVM.js";
 import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.js";
@@ -86,7 +86,7 @@ export class BaseStackVM implements AbstractVM<[]> {
 				if(!instructions) throw new Error(`Failed to lookup function id: '${instruction[1]}'`);
 				this.instructions=instructions;
 				this.jump_instruction_pointer=0;
-				l_log_if(LOG_LEVEL_VERBOSE,'exec',instruction[1]);
+				log_if(LOG_LEVEL_VERBOSE,'exec',instruction[1]);
 			} break;
 			case 'dom_peek': {
 				let [,stack_peek_distance,access_distance]=instruction;
@@ -97,7 +97,7 @@ export class BaseStackVM implements AbstractVM<[]> {
 				let at=peek_stack.at(base_ptr.value-access_distance-1);
 				if(!at) throw new Error("Peek at underflow");
 				this.push(at);
-				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
+				log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
 			} break;
 			case 'je': {
 				let [,target]=instruction;
@@ -158,7 +158,7 @@ export class BaseStackVM implements AbstractVM<[]> {
 					console.assert(false,'try to construct non function');
 					debugger;
 				}
-				l_log_if(LOG_LEVEL_VERBOSE,instruction,...this.stack.slice(this.stack.length-number_of_arguments));
+				log_if(LOG_LEVEL_VERBOSE,instruction,...this.stack.slice(this.stack.length-number_of_arguments));
 			} break;
 			case 'return' /*Call*/:
 				let ret=this.pop();
@@ -252,10 +252,10 @@ export class BaseStackVM implements AbstractVM<[]> {
 			if(next_ip.type!=='number') throw new Error("Invalid");
 			this.base_pointer=base_ptr.value;
 			this.instruction_pointer=next_ip.value;
-			l_log_if(LOG_LEVEL_VERBOSE,'returned to',this.instruction_pointer,this.exec_stack.length);
+			log_if(LOG_LEVEL_VERBOSE,'returned to',this.instruction_pointer,this.exec_stack.length);
 			return;
 		}
-		l_log_if(LOG_LEVEL_VERBOSE,'reached end of instruction stream, nothing to return too',instruction,this.instructions,this.instruction_pointer);
+		log_if(LOG_LEVEL_VERBOSE,'reached end of instruction stream, nothing to return too',instruction,this.instructions,this.instruction_pointer);
 		this.running=false;
 	}
 }
