@@ -1,12 +1,12 @@
 import {GenericEventTarget} from "../GenericEventTarget.js";
 import {HexRandomDataGenerator} from "../vm/HexRandomDataGenerator.js";
-import {DebugDataBox} from "./DebugDataBox.js";
+import {DebugDataValue} from "./DebugDataValue.js";
 import {DebugFunctionType} from "../box/DebugFunctionType.js";
 import {ChromeDevToolsDebug} from "../dev_tools_debugger/ChromeDevToolsDebug.js";
 import {ChromeDevToolsGetEventListeners} from "../dev_tools_debugger/ChromeDevToolsGetEventListeners.js";
 import {ChromeDevToolsUnDebug} from "../dev_tools_debugger/ChromeDevToolsUnDebug.js";
-import {DebugFunctionBox} from "./DebugFunctionBox.js";
-import {DebugClassBox} from "./DebugClassBox.js";
+import {DebugFunctionValue} from "./DebugFunctionValue.js";
+import {DebugClassValue} from "./DebugClassValue.js";
 import {DebugInfoValue} from "./DebugInfoValue.js";
 import {GenericDataEvent} from "../GenericDataEvent.js";
 
@@ -75,7 +75,7 @@ export class DebugAPI {
 			};
 		}
 		__d.attach(debug,undebug,null);
-		let data: DebugFunctionBox={
+		let data: DebugFunctionValue={
 			type: 'function',callback: this.activate_function,function_: func,obj: {},args: [],
 			get_target() {
 				return this.function_;
@@ -146,8 +146,8 @@ export class DebugAPI {
 		}
 		return function_code;
 	}
-	current_debug_data: DebugDataBox|null=null;
-	debuggerGetVarArrayInternal(debug_data: DebugDataBox,var_match: string) {
+	current_debug_data: DebugDataValue|null=null;
+	debuggerGetVarArrayInternal(debug_data: DebugDataValue,var_match: string) {
 		if(!this.hasData("d")||!this.hasData("u")) {
 			return {
 				type: 'invalid-state-error',
@@ -224,7 +224,7 @@ export class DebugAPI {
 		};
 	}
 	debuggerGetVarArrayClass(class_value: new (...a: any[]) => {},target_arg_vec: any[],var_match: string) {
-		let data: DebugClassBox={
+		let data: DebugClassValue={
 			type: 'class',callback: this.activate_class,constructor_: class_value,args: target_arg_vec,
 			get_target() {
 				return this.constructor_;
@@ -232,10 +232,10 @@ export class DebugAPI {
 		};
 		return this.debuggerGetVarArrayInternal(data,var_match);
 	}
-	debuggerGetVarArray(run_box: DebugDataBox,var_match: string) {
+	debuggerGetVarArray(run_box: DebugDataValue,var_match: string) {
 		return this.debuggerGetVarArrayInternal(run_box,var_match);
 	}
-	debuggerGetVarInternal(debug_data: DebugDataBox,var_name: string) {
+	debuggerGetVarInternal(debug_data: DebugDataValue,var_name: string) {
 		if(!this.hasData("d")||!this.hasData("u")) {
 			return {
 				type: 'invalid-state-error',
@@ -288,7 +288,7 @@ export class DebugAPI {
 			}
 		};
 	}
-	debuggerGetVar(function_value: DebugDataBox,var_name: string) {
+	debuggerGetVar(function_value: DebugDataValue,var_name: string) {
 		return this.debuggerGetVarInternal(function_value,var_name);
 	}
 }
