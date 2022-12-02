@@ -67,12 +67,27 @@ import {Jump} from "../../vm/instruction/jump/Jump.js";
 import {ModifyOperand} from "../../vm/instruction/ModifyOperand.js";
 import {Nop} from "../../vm/instruction/Nop.js";
 import {PushWindowObject} from "../../vm/instruction/push/WindowObject.js";
-import {Drop} from "../../vm/instruction/stack/Drop.js";
-import {Dup} from "../../vm/instruction/stack/Dup.js";
-import {Peek} from "../../vm/instruction/stack/Peek.js";
+export type AppendOpcode='append'
+export type ArgsOpcode='vm_push_args'
+export type BreakpointOpcode='breakpoint'
+export type CallOpcode='call'
+export type CastOpcode="cast"
+export type ConstructOpcode='construct'
+export type DropOpcode='drop'
+export type DupOpcode='dup'
+export type GetOpcode='get'
+export type HaltOpcode='halt'
+export type JeOpcode='je'
+export type JumpOpcode='jmp'
+export type ModifyOperandOpcode='modify_operand'
+export type NopOpcode='nop'
+export type ReturnOpcode='return'
+export type Drop=[DropOpcode]
+export type Dup=[DupOpcode]
+export type PeekOpcode='peek'
+export type Peek=[PeekOpcode,number]
 export type PushOpcode='push'
 export type Push=[PushOpcode,...BoxImpl[]]
-export type HaltOpcode='halt'
 export type Halt=[HaltOpcode]
 export type VMBlockTrace=
 	[VMBlockTraceOpcode,'begin',DomInstructionType|null]|
