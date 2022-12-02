@@ -1,4 +1,7 @@
-import {DebugFunctionCallback} from "./DebugFunctionCallback.js"
-import {DebugFunctionType} from "./DebugFunctionType.js"
+import {DebugFunctionCallback} from "./DebugFunctionCallback.js";
+import {DebugFunctionType} from "./DebugFunctionType.js";
 
-export type DebugFunctionBox=[type:'function',callback:DebugFunctionCallback,function_:DebugFunctionType,obj:{},args:any[]]
+export class DebugFunctionBox {
+	readonly type='function';
+	constructor(public callback: DebugFunctionCallback,public function_: DebugFunctionType,public obj: {},public args: any[]) {}
+}

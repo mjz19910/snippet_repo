@@ -1,3 +1,6 @@
-import {ClassCallbackFunction} from "./ClassCallbackFunction.js"
+import {ClassCallbackFunction} from "./ClassCallbackFunction.js";
 
-export type DebugClassBox=[type:'class',callback:ClassCallbackFunction,constructor:new (...a: any[]) => {},args:any[]]
+export class DebugClassBox {
+	readonly type='class';
+	constructor(public callback: ClassCallbackFunction,public constructor_: new (...a: any[]) => {},public args: any[]) {}
+}
