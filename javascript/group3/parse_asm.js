@@ -3,11 +3,11 @@ let ar="55 8b ec 8a 4d 08 0f b6 c1 05 4b ff ff ff 83 f8 05 77 1c ff 24 85 28 fa 
 let map_regflags=["eax","ecx","edx","ebx","esp","ebp","esi","edi"];
 let reg8=["al","cl","dl","bl","ah","ch","dh","bh"];
 let parse_obj=new class ParseAsm {
-	"8b"=function(ar) {
-		void ar;
+	"8b"(/** @type {string[]} */ ar) {
+		ar;
 		//mov
 	}
-	"83"=function(/** @type {string[]} */ ar) {
+	"83"(/** @type {string[]} */ ar) {
 		//add & cmp
 		// cur 83 7e 08 00
 		var num=parseInt(ar[1],16);
