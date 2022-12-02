@@ -29,6 +29,7 @@ import {TreeItem} from "../vm/TreeItem.js";
 import {AutoBuyInterface} from "./AutoBuyInterface.js";
 import {AutoBuyState} from "./AutoBuyState.js";
 import {do_auto_unit_promote} from "./do_auto_unit_promote.js";
+import {InstructionAstState} from "./InstructionAstState.js";
 import {lightreset_inject} from "./lightreset_inject.js";
 import {specialclick_inject} from "./specialclick_inject.js";
 
@@ -412,7 +413,8 @@ export class AutoBuy implements AutoBuyInterface {
 		let functions_map:Map<number, InstructionType[]>=new Map;
 		let cur_function_id=0;
 		this.cur_function_id=cur_function_id;
-		let dom_vm_instructions=this.instruction_tree_to_instructions(instruction_tree,functions_map);
+		let state=new InstructionAstState(instruction_tree,functions_map);
+		let dom_vm_instructions=this.instruction_tree_to_instructions(state);
 		functions_map.set(cur_function_id, dom_vm_instructions);
 		let builder_vm=new BaseStackVM(functions_map);
 		builder_vm.run();
@@ -459,9 +461,15 @@ export class AutoBuy implements AutoBuyInterface {
 		return level;
 	}
 	cur_function_id=-1;
-	instruction_tree_to_instructions(tree: TreeItem[],functions_map: Map<number, InstructionType[]>,stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): InstructionType[] {
+	instruction_tree_to_instructions(state: InstructionAstState): InstructionType[] {
 		let cur_function_id=this.cur_function_id;
 		this.cur_function_id++;
+		let tree=state.tree;
+		let functions_map=state.functions_map;
+		let stack=state.stack;
+		let cur_depth=state.cur_depth;
+		let items=state.items;
+		let depths=state.depths;
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[1]) {
@@ -487,7 +495,8 @@ export class AutoBuy implements AutoBuyInterface {
 			const [tag,items_index,[data_depth,data]]=stack_item;
 			let log_level=this.get_logging_level('apply_dom_desc');
 			l_log_if(log_level,tag,items_index,data_depth,data);
-			let deep_res=this.instruction_tree_to_instructions(data,functions_map,stack,cur_depth+1);
+			let n_state=state.clone(data,functions_map,stack,cur_depth+1);
+			let deep_res=this.instruction_tree_to_instructions(n_state);
 			functions_map.set(cur_function_id,deep_res);
 			items.push(['dom_exec',cur_function_id]);
 			this.log_if('apply_dom_desc',deep_res);
