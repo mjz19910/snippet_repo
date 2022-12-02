@@ -23,8 +23,11 @@ export class BaseStackVM implements AbstractVM {
 	return_slot: Box;
 	exec_stack: ([Box[],InstructionType[]])[];
 	jump_instruction_pointer: number|null;
-	constructor(instructions: InstructionType[]) {
+	function_map: Map<number, InstructionType[]>;
+	constructor(function_map: Map<number, InstructionType[]>) {
 		this.flags=new Map;
+		let instructions=function_map.get(0);
+		if(!instructions) throw new Error("No function id 0");
 		this.instructions=instructions;
 		this.instruction_pointer=0;
 		this.base_pointer=0;
@@ -33,6 +36,7 @@ export class BaseStackVM implements AbstractVM {
 		this.return_slot=new VoidBox();
 		this.exec_stack=[];
 		this.jump_instruction_pointer=null;
+		this.function_map=function_map;
 	}
 	reset() {
 		this.instruction_pointer=0;
@@ -76,9 +80,11 @@ export class BaseStackVM implements AbstractVM {
 				this.stack.push(new NumberBox(this.instruction_pointer));
 				this.stack.push(new NumberBox(base_ptr));
 				this.stack=[];
-				this.instructions=instruction[1];
+				let instructions=this.function_map.get(instruction[1]);
+				if(!instructions) throw new Error(`Failed to lookup function id: '${instruction[1]}'`);
+				this.instructions=instructions;
 				this.jump_instruction_pointer=0;
-				l_log_if(LOG_LEVEL_VERBOSE,'exec',...instruction[1]);
+				l_log_if(LOG_LEVEL_VERBOSE,'exec',instruction[1]);
 			} break;
 			case 'dom_peek': {
 				let [,stack_peek_distance,access_distance]=instruction;
