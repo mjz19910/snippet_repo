@@ -605,7 +605,7 @@ class InstructionVMPushIPImpl extends InstructionImplBase {
 class InstructionPushImpl extends InstructionImplBase {
 	/** @type {'push'} */
 	type='push';
-	/** @arg {StackVMImpl} vm @arg {this['type']} _ @arg {import("./support/Box.js").Box[]} args */
+	/** @arg {StackVMImpl} vm @arg {this['type']} _ @arg {import("./ns.js").Box[]} args */
 	run(vm,_,...args) {
 		vm.stack.push(...args);
 	}
@@ -885,7 +885,7 @@ const instruction_descriptor_arr=[
 
 /**
  * @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS
- * @typedef {import("./support/Box.js").Box} Box_CJS
+ * @typedef {import("./ns.js").Box} Box_CJS
  * @typedef {import("./support/StackVM.js").StackVM} StackVM_CJS
 */
 
@@ -918,7 +918,7 @@ class StackVMImpl {
 		return value;
 	}
 	/**
-	 * @param {import("./support/Box.js").Box} value
+	 * @param {import("./ns.js").Box} value
 	 */
 	push(value) {
 		this.stack.push(value);
