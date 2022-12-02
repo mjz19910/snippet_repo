@@ -19,7 +19,7 @@
 // ==/UserScript==
 
 
-export abstract class BoxTemplate<T extends string,V> {
+export abstract class BoxTemplateImpl<T extends string,V> {
 	abstract readonly type: T;
 	value: V;
 	constructor(value: V) {
@@ -27,12 +27,12 @@ export abstract class BoxTemplate<T extends string,V> {
 	}
 }
 
-export class ArrayBox extends BoxTemplate<"array_box",BoxImpl[]> {
+export class ArrayBoxImpl extends BoxTemplateImpl<"array_box",BoxImpl[]> {
 	readonly type="array_box";
 	readonly item_type="Box";
 }
 
-export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: BoxImpl[]) => Promise<BoxImpl>> {
+export class AsyncFunctionBoxImpl extends BoxTemplateImpl<"function_box",(...a: BoxImpl[]) => Promise<BoxImpl>> {
 	readonly type="function_box";
 	readonly return_type="promise_box";
 	readonly await_type="Box";
@@ -41,29 +41,29 @@ export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: BoxImpl[
 		return new PromiseBox(ret);
 	}
 }
-export class BoxWithPropertiesIsBox extends BoxTemplate<"with_properties",{}> {
+export class BoxWithPropertiesIsBoxImpl extends BoxTemplateImpl<"with_properties",{}> {
 	readonly type="with_properties";
 	properties: string[];
-	constructor(value: BoxWithPropertiesObjType<BoxWithPropertiesIsBox["properties"]>,properties: string[]) {
+	constructor(value: BoxWithPropertiesObjTypeImpl<BoxWithPropertiesIsBoxImpl["properties"]>,properties: string[]) {
 		super(value);
 		this.properties=properties;
 	}
 }
-export type BoxWithPropertiesObjType<T extends string[]>={
+export type BoxWithPropertiesObjTypeImpl<T extends string[]>={
 	[U in T[number]]: BoxImpl
 };
-export class CSSStyleSheetBox extends BoxTemplate<"CSSStyleSheetBox",CSSStyleSheet> {
+export class CSSStyleSheetBoxImpl extends BoxTemplateImpl<"CSSStyleSheetBox",CSSStyleSheet> {
 	readonly type="CSSStyleSheetBox";
 	readonly next_member="instance_type";
 	readonly instance_type="CSSStyleSheet";
 }
-export interface BoxMaker<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
+export interface BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplateImpl<string,any>> {
 	maker: (
 		make_new: (do_box: () => TBoxRet["value"],...a: TMakerArgs[]) => TBoxRet,
 		value: FunctionConstructor
 	) => TBoxRet;
 }
-export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",typeof CSSStyleSheet> {
+export class CSSStyleSheetConstructorBox extends BoxTemplateImpl<"constructor_box",typeof CSSStyleSheet> {
 	readonly type="constructor_box";
 	readonly next_member="instance_type";
 	readonly instance_type="CSSStyleSheet";
@@ -79,11 +79,11 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",t
 		}
 		let value=this.value;
 		let obj: CSSStyleSheet=new value(...valid_args);
-		return new CSSStyleSheetBox(obj);
+		return new CSSStyleSheetBoxImpl(obj);
 	}
 }
 
-export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetInit> {
+export class CSSStyleSheetInitBox extends BoxTemplateImpl<"shape_box",CSSStyleSheetInit> {
 	readonly type="shape_box";
 	readonly shape="CSSStyleSheetInit";
 	set_property(key: keyof CSSStyleSheetInit,value: string|boolean|MediaListBox|undefined) {
@@ -118,15 +118,15 @@ export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetI
 		}
 	}
 }
-export class CSSStyleSheetPromiseBox extends BoxTemplate<"promise_box",Promise<CSSStyleSheet>> {
+export class CSSStyleSheetPromiseBox extends BoxTemplateImpl<"promise_box",Promise<CSSStyleSheet>> {
 	readonly type="promise_box";
 	readonly inner_type="Promise<CSSStyleSheet>";
 	readonly await_type="CSSStyleSheet";
 }
-export class DocumentBox extends BoxTemplate<"document_box",Document> {
+export class DocumentBox extends BoxTemplateImpl<"document_box",Document> {
 	readonly type="document_box";
 }
-export class EmptyArrayBox extends BoxTemplate<"array_box",[]> {
+export class EmptyArrayBox extends BoxTemplateImpl<"array_box",[]> {
 	readonly type="array_box";
 	readonly item_type="none";
 	readonly special="Unit";
@@ -137,7 +137,7 @@ export interface NewableFunctionConstructor {
 export interface FunctionConstructorFactory {
 	factory: (box_value: NewableFunctionConstructor) => FunctionBox
 }
-export class FunctionBox extends BoxTemplate<"function_box",(...a: BoxImpl[]) => BoxImpl> {
+export class FunctionBox extends BoxTemplateImpl<"function_box",(...a: BoxImpl[]) => BoxImpl> {
 	readonly type="function_box";
 	readonly return_type="null";
 	on_get(vm: StackVMImpl,key: string) {
@@ -168,11 +168,11 @@ export class FunctionConstructorBox {
 	readonly return="box";
 	readonly instance_factory: FunctionConstructorFactory;
 	readonly value: typeof Function;
-	readonly box_maker: BoxMaker<string,FunctionBox>;
+	readonly box_maker: BoxMakerImpl<string,FunctionBox>;
 	constructor(
 		value: typeof Function,
 		instance_factory: FunctionConstructorFactory,
-		box_maker: BoxMaker<string,FunctionBox>
+		box_maker: BoxMakerImpl<string,FunctionBox>
 	) {
 		this.value=value;
 		this.instance_factory=instance_factory;
@@ -189,30 +189,30 @@ export class FunctionConstructorBox {
 	}
 }
 export type FunctionInstance=(...a: BoxImpl[]) => BoxImpl;
-export class GlobalThisBox extends BoxTemplate<"value_box",typeof globalThis> {
+export class GlobalThisBox extends BoxTemplateImpl<"value_box",typeof globalThis> {
 	readonly type="value_box";
 	readonly inner_value="globalThis";
 }
 export type IndexAccess<T>={
 	[v: string]: T
 }
-export class IndexBox extends BoxTemplate<"object_box",IndexAccess<BoxImpl>> {
+export class IndexBox extends BoxTemplateImpl<"object_box",IndexAccess<BoxImpl>> {
 	readonly type="object_box";
 	readonly like_type="object_box";
 	readonly extension="index";
 	readonly index_type="Box";
 	readonly inner_type="Box";
 }
-export class InstructionTypeArrayBox extends BoxTemplate<"array_box",InstructionType[]> {
+export class InstructionTypeArrayBox extends BoxTemplateImpl<"array_box",InstructionType[]> {
 	readonly type="array_box";
 	readonly next_member="item_type";
 	readonly item_type="instruction_type[]";
 }
-export class InstructionTypeBox extends BoxTemplate<"instance_box",InstructionType> {
+export class InstructionTypeBox extends BoxTemplateImpl<"instance_box",InstructionType> {
 	readonly type="instance_box";
 	readonly instance_type="InstructionType";
 }
-export class MediaListBox extends BoxTemplate<"instance_box",MediaList> {
+export class MediaListBox extends BoxTemplateImpl<"instance_box",MediaList> {
 	readonly type="instance_box";
 	readonly instance_type="MediaList";
 }
@@ -244,25 +244,25 @@ export class NewableFunctionBox {
 export interface NewableInstancePack<T> {
 	make_box(box_value: new (...a: BoxImpl[]) => T,construct_args: BoxImpl[]): BoxImpl;
 }
-export class NewableInstancePackObjectBox extends BoxTemplate<"NewableInstancePack<{}>",NewableInstancePack<{}>> {
+export class NewableInstancePackObjectBox extends BoxTemplateImpl<"NewableInstancePack<{}>",NewableInstancePack<{}>> {
 	readonly type="NewableInstancePack<{}>";
 }
-export class NodeBox extends BoxTemplate<"instance_box",Node> {
+export class NodeBox extends BoxTemplateImpl<"instance_box",Node> {
 	readonly type="instance_box";
 	readonly instance_type="Node";
 }
-export class NullBox extends BoxTemplate<"null",null>  {
+export class NullBox extends BoxTemplateImpl<"null",null>  {
 	readonly type="null";
 }
-export class NumberBox extends BoxTemplate<"number",number>  {
+export class NumberBox extends BoxTemplateImpl<"number",number>  {
 	readonly type="number";
 }
-export class ObjectBox extends BoxTemplate<"object_box",{}> {
+export class ObjectBox extends BoxTemplateImpl<"object_box",{}> {
 	readonly type="object_box";
 	readonly inner_type="object";
 	readonly extension="null";
 }
-export class PromiseBox extends BoxTemplate<"promise_box",Promise<BoxImpl>> {
+export class PromiseBox extends BoxTemplateImpl<"promise_box",Promise<BoxImpl>> {
 	readonly type="promise_box";
 	readonly inner_type='Promise<Box>';
 	readonly await_type="Box";
@@ -277,10 +277,10 @@ export class RawBox<T> {
 	}
 }
 export type RawBoxes=RawBox<{as_interface: Function;}>|RawBox<{as_unknown: unknown;}>|RawBox<{as_any: any;}>;
-export class RealVoidBox extends BoxTemplate<"real_void",void> {
+export class RealVoidBox extends BoxTemplateImpl<"real_void",void> {
 	readonly type="real_void";
 }
-export class StackVMBox extends BoxTemplate<"custom_box",StackVMImpl> {
+export class StackVMBox extends BoxTemplateImpl<"custom_box",StackVMImpl> {
 	readonly type="custom_box";
 	readonly box_type="StackVM";
 }
@@ -296,12 +296,12 @@ export class VoidBox {
 	readonly extension=null;
 	value=void 0;
 }
-export class VoidPromiseBox extends BoxTemplate<"promise_box",Promise<void>> {
+export class VoidPromiseBox extends BoxTemplateImpl<"promise_box",Promise<void>> {
 	readonly type="promise_box";
 	readonly inner_type: 'Promise<void>'='Promise<void>';
 	readonly await_type="void";
 }
-export class WindowBox extends BoxTemplate<"object_box",Window> {
+export class WindowBox extends BoxTemplateImpl<"object_box",Window> {
 	readonly type="object_box";
 	readonly extension=null;
 	readonly inner_type="Window";
@@ -682,14 +682,14 @@ type BoxImpl=
 	CSSStyleSheetInitBox|
 	// array
 	EmptyArrayBox|
-	ArrayBox|
+	ArrayBoxImpl|
 	InstructionTypeArrayBox|
 	// constructor function
 	CSSStyleSheetConstructorBox|
 	// function
 	FunctionBox|
 	NewableFunctionBox|
-	AsyncFunctionBox|
+	AsyncFunctionBoxImpl|
 	FunctionConstructorBox|
 	// return type
 	CSSStyleSheetPromiseBox|
@@ -700,7 +700,7 @@ type BoxImpl=
 	// object instances
 	StackVMBox|
 	NodeBox|
-	CSSStyleSheetBox|
+	CSSStyleSheetBoxImpl|
 	MediaListBox|
 	// StackVM
 	InstructionTypeBox|
@@ -715,7 +715,7 @@ type BoxImpl=
 	VoidBox|
 	RealVoidBox|
 	// Box with stuff
-	BoxWithPropertiesIsBox|
+	BoxWithPropertiesIsBoxImpl|
 	// Generic boxes
 	NewableInstancePackObjectBox|
 	DomElementBox|
@@ -862,20 +862,6 @@ class InstructionDupImpl {
 	}
 }
 
-class CSSStyleSheetBoxImpl {
-	type: "instance_box";
-	instance_type: "CSSStyleSheet";
-	value: CSSStyleSheet;
-	constructor(value: CSSStyleSheet) {
-		this.type="instance_box";
-		this.instance_type="CSSStyleSheet";
-		this.value=value;
-	}
-	as_type(input_typeof: string): this|null {
-		return typeof this.value===input_typeof? this:null;
-	}
-}
-
 class CSSStyleSheetConstructorBoxImpl {
 	type: "constructor_box";
 	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
@@ -937,16 +923,6 @@ class FunctionConstructorFactoryImpl {
 	factory: (box_value: NewableFunctionConstructorImpl) => FunctionBoxImpl;
 	constructor(factory: (box_value: NewableFunctionConstructorImpl) => FunctionBoxImpl) {
 		this.factory=factory;
-	}
-}
-
-class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
-	maker: (
-		make_new: (do_box: () => TBoxRet["value"],...a: TMakerArgs[]) => TBoxRet,
-		value: FunctionConstructor
-	) => TBoxRet;
-	constructor(maker: BoxMakerImpl<TMakerArgs,TBoxRet>["maker"]) {
-		this.maker=maker;
 	}
 }
 
@@ -1079,7 +1055,7 @@ class InstructionGetImpl {
 	constructor() {
 		this.type="get";
 	}
-	array_box_handle_num(value_box: EmptyArrayBox|ArrayBox|InstructionTypeArrayBox,key: number,vm: StackVMImpl) {
+	array_box_handle_num(value_box: EmptyArrayBox|ArrayBoxImpl|InstructionTypeArrayBox,key: number,vm: StackVMImpl) {
 		switch(value_box.item_type) {
 			case "Box": {
 				let res=value_box.value[key];
