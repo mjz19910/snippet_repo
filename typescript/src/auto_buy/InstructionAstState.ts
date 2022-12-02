@@ -4,8 +4,8 @@ import {TreeItem} from "../vm/TreeItem.js";
 type StackItemType=['children',number,[number,TreeItem[]]];
 
 export class InstructionAstState {
-	clone(tree=this.tree,functions_map=this.functions_map,stack=this.stack,cur_depth=this.cur_depth) {
-		return new InstructionAstState(tree,functions_map,stack,cur_depth);
+	clone() {
+		return new InstructionAstState(this.tree,this.functions_map,this.stack,this.cur_depth);
 	}
 	constructor(
 		public tree: TreeItem[],
