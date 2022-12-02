@@ -1,6 +1,6 @@
-import {PageLoaderState} from "../../page_loader/src/PageLoaderState.js";
+import {Extern} from "./extern.js";
 
-/** @param {PageLoaderState} state */
+/** @param {Extern.PageLoaderState} state */
 export async function html_parser_callback(state) {
 	state;
 	console.log("html_parser_callback");
