@@ -353,7 +353,6 @@ export type Drop=["drop"];
 export type Dup=["dup"];
 export type Peek=["peek",number];
 export type Push=["push",...BoxImpl[]];
-export type Halt=["halt"];
 export type VMBlockTrace=
 	["vm_block_trace","begin",DomInstructionType|null]|
 	["vm_block_trace","call",DomInstructionType|null]|
