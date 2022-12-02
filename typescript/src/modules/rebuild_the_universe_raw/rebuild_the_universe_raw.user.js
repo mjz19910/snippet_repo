@@ -298,6 +298,11 @@ class InstructionCallImpl extends InstructionImplBase {
 	debug=false;
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_box @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_fn_box(vm,fn_box,target_this,arg_arr) {
+		if('return_type' in fn_box) {
+			switch(fn_box.return_type) {
+				case "Promise<Box>": return this.handle_as_fn_to_promise(vm,fn_box.value,target_this,arg_arr);
+			}
+		}
 		if('return_type' in fn_box&&fn_box.return_type=="Promise<Box>") {
 			return this.handle_as_fn_to_promise(vm,fn_box.value,target_this,arg_arr);
 		} else if('return_type' in fn_box&&fn_box.return_type==="Box") {

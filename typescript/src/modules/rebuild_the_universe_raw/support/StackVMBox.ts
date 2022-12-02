@@ -1,4 +1,4 @@
-class StackVM {}
+import {StackVM} from "./StackVM";
 import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class StackVMBox extends BoxTemplate<"custom_box",StackVM> {
