@@ -1,22 +1,22 @@
-import {HeldType} from "./HeldType.js";
-import {script_registry} from "./script_registry.js";
-import {Counter} from "./Counter.js";
-import {WeakRefTo} from "./WeakRefTo";
-import {UnregisterToken} from "./UnregisterToken";
-import {gc_store_counter} from "./gc_store_counter.js";
+import {HeldType} from "../HeldType.js";
+import {script_registry} from "../script_registry.js";
+import {Counter} from "../Counter.js";
+import {WeakRefTo} from "../WeakRefTo";
+import {UnregisterToken} from "../UnregisterToken";
+import {gc_store_counter} from "../gc_store_counter.js";
 
-export class GCStorage<T extends {}> {
-	static all_storage: GCStorage<{}>[]=[];
+export class GCStore<T extends {}> {
+	static all_storage: GCStore<{}>[]=[];
 	static cleanup_with_held(held: HeldType) {
-		for(let i=0;i<GCStorage.all_storage.length;i++) {
-			let cur_storage=GCStorage.all_storage[i];
+		for(let i=0;i<GCStore.all_storage.length;i++) {
+			let cur_storage=GCStore.all_storage[i];
 			if(cur_storage.store_id === held.store_id) {
 				cur_storage.cleanup_target_item(held);
 			}
 		}
 	}
 	constructor() {
-		GCStorage.all_storage.push(this);
+		GCStore.all_storage.push(this);
 	}
 	store_id=gc_store_counter.next();
 	store_gc_object(target: T) {

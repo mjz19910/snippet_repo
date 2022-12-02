@@ -1,3 +1,3 @@
-import {GCStorage} from "./GCStorage.js";
+import {GCStore} from "./gc_store/GCStore.js";
 
-export let target_object_storage=new GCStorage<{}>();
+export let target_object_storage=new GCStore<{}>();
