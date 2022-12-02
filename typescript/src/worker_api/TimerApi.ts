@@ -21,7 +21,7 @@ export class TimerApi {
 	set_names=new TimeoutSetStrings;
 	clear_names=new TimeoutClearStrings;
 	handled: number[]=[];
-	to_handle: ([number]|[number,number,number]|[number,number,{var: "local_id"}]|[number,number,{var: "remote_id"}])[];
+	to_handle: ([number]|[number,number,number]|[number,number,{var: "local_id";}]|[number,number,{var: "remote_id";}])[];
 	constructor() {
 		this.to_handle=[
 			[TimeoutMessageReady],

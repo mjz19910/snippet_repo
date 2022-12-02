@@ -1,8 +1,8 @@
 export class NumberPart {
-	value: number
-	bit_count: number
+	value: number;
+	bit_count: number;
 	constructor(value: number,bit_count: number) {
-		this.value=value
-		this.bit_count=bit_count
+		this.value=value;
+		this.bit_count=bit_count;
 	}
 }

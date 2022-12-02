@@ -1,6 +1,6 @@
 export class StackVMFlags {
-	equal: boolean
+	equal: boolean;
 	constructor() {
-		this.equal=false
+		this.equal=false;
 	}
 }
