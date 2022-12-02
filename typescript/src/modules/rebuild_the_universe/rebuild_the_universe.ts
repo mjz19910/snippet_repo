@@ -41,10 +41,10 @@ export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: BoxImpl[
 		return new PromiseBox(ret);
 	}
 }
-export class BoxWithPropertiesIsBox extends BoxTemplate<'with_properties',{}> {
-	readonly type='with_properties';
+export class BoxWithPropertiesIsBox extends BoxTemplate<"with_properties",{}> {
+	readonly type="with_properties";
 	readonly properties;
-	constructor(value: BoxWithPropertiesObjType<BoxWithPropertiesIsBox['properties']>,properties: string[]) {
+	constructor(value: BoxWithPropertiesObjType<BoxWithPropertiesIsBox["properties"]>,properties: string[]) {
 		super(value);
 		this.properties=properties;
 	}
@@ -59,7 +59,7 @@ export class CSSStyleSheetBox extends BoxTemplate<"CSSStyleSheetBox",CSSStyleShe
 }
 export interface BoxMaker<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
 	maker: (
-		make_new: (do_box: () => TBoxRet['value'],...a: TMakerArgs[]) => TBoxRet,
+		make_new: (do_box: () => TBoxRet["value"],...a: TMakerArgs[]) => TBoxRet,
 		value: FunctionConstructor
 	) => TBoxRet;
 }
@@ -73,8 +73,8 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",t
 		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
 		for(let i=0;i<arr.length;i++) {
 			let val=arr[i];
-			if(val.type!='shape_box') continue;
-			if(val.shape!='CSSStyleSheetInit') continue;
+			if(val.type!="shape_box") continue;
+			if(val.shape!="CSSStyleSheetInit") continue;
 			valid_args[0]=val.value;
 		}
 		let value=this.value;
@@ -87,28 +87,28 @@ export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetI
 	readonly type="shape_box";
 	readonly shape="CSSStyleSheetInit";
 	set_property(key: keyof CSSStyleSheetInit,value: string|boolean|MediaListBox|undefined) {
-		if(key==='baseURL') {
-			if(typeof value=='string') {
+		if(key==="baseURL") {
+			if(typeof value=="string") {
 				this.value[key]=value;
-			} else if(typeof value==='undefined') {
-				this.value[key]=value;
-			} else {
-				throw new Error("Invalid value for key "+key);
-			}
-		} else if(key==='disabled') {
-			if(typeof value==='boolean') {
-				this.value[key]=value;
-			} else if(typeof value==='undefined') {
+			} else if(typeof value==="undefined") {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
 			}
-		} else if(key==='media') {
-			if(typeof value==='object'&&value.instance_type==='MediaList') {
+		} else if(key==="disabled") {
+			if(typeof value==="boolean") {
+				this.value[key]=value;
+			} else if(typeof value==="undefined") {
+				this.value[key]=value;
+			} else {
+				throw new Error("Invalid value for key "+key);
+			}
+		} else if(key==="media") {
+			if(typeof value==="object"&&value.instance_type==="MediaList") {
 				this.value[key]=value.value;
-			} else if(typeof value==='string') {
+			} else if(typeof value==="string") {
 				this.value[key]=value;
-			} else if(typeof value==='undefined') {
+			} else if(typeof value==="undefined") {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
@@ -199,7 +199,7 @@ export type IndexAccess<T>={
 export class IndexBox extends BoxTemplate<"object_box",IndexAccess<BoxImpl>> {
 	readonly type="object_box";
 	readonly like_type="object_box";
-	readonly extension='index';
+	readonly extension="index";
 	readonly index_type="Box";
 	readonly inner_type="Box";
 }
@@ -285,7 +285,7 @@ export class StackVMBox extends BoxTemplate<"custom_box",StackVMImpl> {
 	readonly box_type="StackVM";
 }
 export class StringBox {
-	readonly type='string';
+	readonly type="string";
 	value: string;
 	constructor(value: string) {
 		this.value=value;
@@ -320,57 +320,57 @@ export class PromiseFunctionBox {
 		this.value=value;
 	}
 }
-export type Append=[AppendOpcode];
-export type Cast=[CastOpcode,CastOperandTarget];
-export type Breakpoint=[BreakpointOpcode];
-export type DomExec=['dom_exec',InstructionType[]];
-export type DomPeek=['dom_peek',number,number];
-export type Call=[CallOpcode,number];
-export type Construct=[ConstructOpcode,number];
-export type Get=[GetOpcode];
-export type Return=[ReturnOpcode];
-export type Je=[JeOpcode,number];
-export type Jump=[JumpOpcode,number];
-export type ModifyOperand=[ModifyOperandOpcode,number,number];
-export type Nop=[NopOpcode];
-export type PushWindowObject=[PushWindowObjectOpcode];
-export type AppendOpcode='append';
-export type ArgsOpcode='vm_push_args';
-export type BreakpointOpcode='breakpoint';
-export type CallOpcode='call';
+export type Append=["append"];
+export type Cast=["cast",CastOperandTarget];
+export type Breakpoint=["breakpoint"];
+export type DomExec=["dom_exec",InstructionType[]];
+export type DomPeek=["dom_peek",number,number];
+export type Call=["call",number];
+export type Construct=["construct",number];
+export type Get=["get"];
+export type Return=["return"];
+export type Je=["je",number];
+export type Jump=["jmp",number];
+export type ModifyOperand=["modify_operand",number,number];
+export type Nop=["nop"];
+export type PushWindowObject=["push_window_object"];
+export type AppendOpcode="append";
+export type ArgsOpcode="vm_push_args";
+export type BreakpointOpcode="breakpoint";
+export type CallOpcode="call";
 export type CastOpcode="cast";
-export type ConstructOpcode='construct';
-export type DropOpcode='drop';
-export type DupOpcode='dup';
-export type GetOpcode='get';
-export type HaltOpcode='halt';
-export type JeOpcode='je';
-export type JumpOpcode='jmp';
-export type ModifyOperandOpcode='modify_operand';
-export type NopOpcode='nop';
-export type ReturnOpcode='return';
+export type ConstructOpcode="construct";
+export type DropOpcode="drop";
+export type DupOpcode="dup";
+export type GetOpcode="get";
+export type HaltOpcode="halt";
+export type JeOpcode="je";
+export type JumpOpcode="jmp";
+export type ModifyOperandOpcode="modify_operand";
+export type NopOpcode="nop";
+export type ReturnOpcode="return";
 export type Drop=[DropOpcode];
 export type Dup=[DupOpcode];
-export type PeekOpcode='peek';
-export type Peek=[PeekOpcode,number];
-export type PushOpcode='push';
-export type Push=[PushOpcode,...BoxImpl[]];
-export type Halt=[HaltOpcode];
+export type PeekOpcode="peek";
+export type Peek=["peek",number];
+export type PushOpcode="push";
+export type Push=["push",...BoxImpl[]];
+export type Halt=["halt"];
 export type VMBlockTrace=
-	[VMBlockTraceOpcode,'begin',DomInstructionType|null]|
-	[VMBlockTraceOpcode,'call',DomInstructionType|null]|
-	[VMBlockTraceOpcode,'block',number,number]|
-	[VMBlockTraceOpcode,'tagged',DomTaggedPack|null]|
-	[VMBlockTraceOpcode,'tagged_begin',DomTaggedPack|null]|
-	[VMBlockTraceOpcode,'tagged_call',DomTaggedPack|null];
-export type VMCallOpcode='vm_call';
+	["vm_block_trace","begin",DomInstructionType|null]|
+	["vm_block_trace","call",DomInstructionType|null]|
+	["vm_block_trace","block",number,number]|
+	["vm_block_trace","tagged",DomTaggedPack|null]|
+	["vm_block_trace","tagged_begin",DomTaggedPack|null]|
+	["vm_block_trace","tagged_call",DomTaggedPack|null];
+export type VMCallOpcode="vm_call";
 export type VMCall=[VMCallOpcode,number];
-export type VMPushArgsOpcode='vm_push_args';
+export type VMPushArgsOpcode="vm_push_args";
 export type VMPushArgs=[VMPushArgsOpcode];
-export type VMPushIPOpcode='vm_push_ip';
+export type VMPushIPOpcode="vm_push_ip";
 export type VMPushIP=[VMPushIPOpcode];
-export type VMPushSelfOpcode='vm_push_self';
-export type VMReturnOpcode='vm_return';
+export type VMPushSelfOpcode="vm_push_self";
+export type VMReturnOpcode="vm_return";
 export type VMPushSelf=[VMPushSelfOpcode];
 export type VMReturn=[VMReturnOpcode];
 export type InstructionMap={
@@ -399,31 +399,30 @@ export type InstructionMap={
 	vm_return: VMReturn;
 	dom_exec: DomExec;
 	dom_peek: DomPeek;
-	dom_new: ['dom_new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
-	dom_get: ['dom_get',string];
-	dom_create_element: ['dom_create_element','div',string,string];
-	dom_create_element_with_props: ['dom_create_element_with_props','div',string,{id: string;}];
+	dom_new: ["dom_new",typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
+	dom_get: ["dom_get",string];
+	dom_create_element: ["dom_create_element","div",string,string];
+	dom_create_element_with_props: ["dom_create_element_with_props","div",string,{id: string;}];
 };
 export type InstructionType=InstructionMap[keyof InstructionMap];
 export type DomInstructionAppend=[number,"append"];
 export type DomInstructionBP=[number,"breakpoint"];
-export type VMBlockTraceOpcode='vm_block_trace';
 export type DomInstructionVMBlockTrace=
-	[number,VMBlockTraceOpcode,'begin',DomInstructionType|null]|
-	[number,VMBlockTraceOpcode,'call',DomInstructionType|null]|
-	[number,VMBlockTraceOpcode,'block',number,number]|
-	[number,VMBlockTraceOpcode,'tagged',DomTaggedPack|null]|
-	[number,VMBlockTraceOpcode,'tagged_begin',DomTaggedPack|null]|
-	[number,VMBlockTraceOpcode,'tagged_call',DomTaggedPack|null];
+	[number,"vm_block_trace","begin",DomInstructionType|null]|
+	[number,"vm_block_trace","call",DomInstructionType|null]|
+	[number,"vm_block_trace","block",number,number]|
+	[number,"vm_block_trace","tagged",DomTaggedPack|null]|
+	[number,"vm_block_trace","tagged_begin",DomTaggedPack|null]|
+	[number,"vm_block_trace","tagged_call",DomTaggedPack|null];
 export type DomTaggedPack=
-	['dom',DomInstructionType]|
-	['vm',InstructionType]|
-	['dom_mem',number];
+	["dom",DomInstructionType]|
+	["vm",InstructionType]|
+	["dom_mem",number];
 export type DomInstructionVMCallAt=[number,"vm_call_at",DomTaggedPack];
 export type DomInstructionNullMarker=[number,"marker",null];
 type ArgAny4=[4,any,any,any,any];
 
-export type DomInstructionFilter=[number,'dom_filter',ArgAny4];
+export type DomInstructionFilter=[number,"dom_filter",ArgAny4];
 export type DomInstructionCall=[number,"call",number];
 export type DomInstructionCast=[number,"cast",CastOperandTarget];
 export type DomInstructionConstruct=[number,"construct",number];
@@ -435,13 +434,12 @@ export type DomInstructionPush=[number,"push",...BoxImpl[]];
 export type DomInstructionVMCall=[number,"vm_call",number];
 export type DomInstructionDup=[number,"dup"];
 export type DomInstructionDrop=[number,"drop"];
-export type DomInstructionCreateDiv=[number,'create','div',string,string];
-export type DomInstructionCreateDivWithId=[number,'create_id','div',string];
+export type DomInstructionCreateDiv=[number,"create","div",string,string];
+export type DomInstructionCreateDivWithId=[number,"create_id","div",string];
 export type DomInstructionGet=[number,"get"];
 export type DomInstructionHalt=[number,"halt"];
 export type DomInstructionNop=[number,"nop"];
-export type PushWindowObjectOpcode='push_window_object';
-export type DomInstructionPushWindowObject=[number,PushWindowObjectOpcode];
+export type DomInstructionPushWindowObject=[number,"push_window_object"];
 export type DomInstructionReturn=[number,"return"];
 export type DomInstructionVMPushArgs=[number,"vm_push_args"];
 export type DomInstructionVMPushIP=[number,"vm_push_ip"];
@@ -479,17 +477,16 @@ export type DomInstructionType=
 	DomInstructionCreateDiv;
 
 export type DomTaggedPackImpl=
-	['dom',DomInstructionType]|
-	['vm',InstructionType]|
-	['dom_mem',number];
-export type VMBlockTraceOpcodeImpl='vm_block_trace';
+	["dom",DomInstructionType]|
+	["vm",InstructionType]|
+	["dom_mem",number];
 export type VMBlockTraceImpl=
-	[VMBlockTraceOpcodeImpl,'begin',DomInstructionType|null]|
-	[VMBlockTraceOpcodeImpl,'call',DomInstructionType|null]|
-	[VMBlockTraceOpcodeImpl,'block',number,number]|
-	[VMBlockTraceOpcodeImpl,'tagged',DomTaggedPackImpl|null]|
-	[VMBlockTraceOpcodeImpl,'tagged_begin',DomTaggedPackImpl|null]|
-	[VMBlockTraceOpcodeImpl,'tagged_call',DomTaggedPackImpl|null];
+	["vm_block_trace","begin",DomInstructionType|null]|
+	["vm_block_trace","call",DomInstructionType|null]|
+	["vm_block_trace","block",number,number]|
+	["vm_block_trace","tagged",DomTaggedPackImpl|null]|
+	["vm_block_trace","tagged_begin",DomTaggedPackImpl|null]|
+	["vm_block_trace","tagged_call",DomTaggedPackImpl|null];
 export class PromiseFunctionBoxImpl {
 	readonly type="PromiseFunctionBox";
 	value: (...args: BoxImpl[]) => Promise<BoxImpl>;
@@ -520,7 +517,7 @@ let LogErrorAsConsoleError=false;
 function append_console_message(level: number,format_str: string,...args: any[]) {
 	update_logger_vars();
 	const level_str=human_log_level(level);
-	if(level_str!=='unknown') {
+	if(level_str!=="unknown") {
 		format_str="[%s] "+format_str;
 	} else {
 		format_str="[%o:%s] "+format_str;
@@ -535,7 +532,7 @@ function append_console_message(level: number,format_str: string,...args: any[])
 		console.warn(format_str,level_str,...args);
 	} else if(level===LOG_LEVEL_NOTICE) {
 		console.log(format_str,level_str,...args);
-	} else if(level_str==='unknown') {
+	} else if(level_str==="unknown") {
 		console.info(format_str,level,level_str,...args);
 	} else {
 		console.info(format_str,level_str,...args);
@@ -544,14 +541,14 @@ function append_console_message(level: number,format_str: string,...args: any[])
 
 function human_log_level(level: number) {
 	switch(level) {
-		case LOG_LEVEL_CRIT: return 'crit';
-		case LOG_LEVEL_ERROR: return 'error';
-		case LOG_LEVEL_WARN: return 'warn';
-		case LOG_LEVEL_NOTICE: return 'notice';
-		case LOG_LEVEL_INFO: return 'info';
-		case LOG_LEVEL_DEBUG: return 'debug';
-		case LOG_LEVEL_TRACE: return 'trace';
-		default: return 'unknown';
+		case LOG_LEVEL_CRIT: return "crit";
+		case LOG_LEVEL_ERROR: return "error";
+		case LOG_LEVEL_WARN: return "warn";
+		case LOG_LEVEL_NOTICE: return "notice";
+		case LOG_LEVEL_INFO: return "info";
+		case LOG_LEVEL_DEBUG: return "debug";
+		case LOG_LEVEL_TRACE: return "trace";
+		default: return "unknown";
 	}
 }
 
@@ -563,7 +560,7 @@ function log_if(level: number,format_str: string,...args: any[]) {
 function update_logger_vars() {
 	if(!globalThis.sessionStorage) return;
 	if(globalThis.sessionStorage["LogErrorAsConsoleError"]) {
-		LogErrorAsConsoleError=sessionStorage["LogErrorAsConsoleError"]==='true';
+		LogErrorAsConsoleError=sessionStorage["LogErrorAsConsoleError"]==="true";
 	}
 	if(globalThis.sessionStorage["LoggingLevel"]) {
 		local_logging_level=parseInt(sessionStorage["LoggingLevel"],10);
@@ -579,8 +576,8 @@ class StackVMBoxImpl {
 	box_type: "StackVM";
 	value: StackVMImpl;
 	constructor(value: StackVMImpl) {
-		this.type='custom_box';
-		this.box_type='StackVM';
+		this.type="custom_box";
+		this.box_type="StackVM";
 		this.value=value;
 	}
 	as_type(input_typeof: string): this|null {
@@ -594,9 +591,9 @@ class WindowBoxImpl {
 	inner_type: "Window";
 	value: Window;
 	constructor(value: Window) {
-		this.type='object_box';
+		this.type="object_box";
 		this.extension=null;
-		this.inner_type='Window';
+		this.inner_type="Window";
 		this.value=value;
 	}
 	as_type(input_typeof: string): this|null {
@@ -610,8 +607,8 @@ class ObjectBoxImpl {
 	extension: "null";
 	value: Record<never,never>;
 	constructor(value: Record<never,never>) {
-		this.type='object_box';
-		this.inner_type='object';
+		this.type="object_box";
+		this.inner_type="object";
 		this.extension="null";
 		this.value=value;
 	}
@@ -622,13 +619,13 @@ class ObjectBoxImpl {
 
 class InstructionCallImpl {
 	debug: boolean=false;
-	type: 'call';
+	type: "call";
 	constructor() {
-		this.type='call';
+		this.type="call";
 	}
-	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this["type"]]) {
 		let number_of_arguments=instruction[1];
-		if(typeof number_of_arguments!='number') throw new Error("Invalid");
+		if(typeof number_of_arguments!="number") throw new Error("Invalid");
 		if(number_of_arguments<=1) {
 			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 		}
@@ -638,31 +635,31 @@ class InstructionCallImpl {
 }
 
 class InstructionConstructImpl {
-	type: 'construct';
+	type: "construct";
 	constructor() {
-		this.type='construct';
+		this.type="construct";
 	}
-	run(vm: StackVMImpl,ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,ins: InstructionMap[this["type"]]) {
 		let number_of_arguments=ins[1];
-		if(typeof number_of_arguments!='number') throw new Error("Invalid");
+		if(typeof number_of_arguments!="number") throw new Error("Invalid");
 		let [construct_target,...construct_arr]=vm.pop_arg_count(number_of_arguments);
 		const a=construct_target;
-		if(typeof a!='object') throw new Error("Invalid");
+		if(typeof a!="object") throw new Error("Invalid");
 		if(a===null) throw new Error("Invalid");
-		if(a.type!='constructor_box') throw new Error("Invalid");
+		if(a.type!="constructor_box") throw new Error("Invalid");
 		/* if(a.instance_type===null) {
 			let obj=a.factory(...construct_arr);
 			vm.stack.push(obj);
-		} else if(a.instance_type==='CSSStyleSheet') {
+		} else if(a.instance_type==="CSSStyleSheet") {
 			let valid_args: {s: [options?: CSSStyleSheetInit|undefined],valid_count: 1;}|{s: [],valid_count: 0;}={
 				s: [],
 				valid_count: 0
 			};
 			for(let i=0;i<construct_arr.length;i++) {
 				let val=construct_arr[i];
-				if(typeof val!='object') continue;
+				if(typeof val!="object") continue;
 				if(val===null) continue;
-				if(val.type!='shape_box') continue;
+				if(val.type!="shape_box") continue;
 				valid_args={
 					s: [val.value],
 					valid_count: 1
@@ -726,13 +723,13 @@ type BoxImpl=
 
 
 class InstructionCastImpl {
-	readonly type='cast';
+	readonly type="cast";
 	debug=false;
 	cast_to_type(_vm: StackVMImpl,obj: BoxImpl) {
-		if(obj?.type==='custom_box') {
+		if(obj?.type==="custom_box") {
 			throw new Error("TODO: custom_box");
 		}
-		if(obj?.type==='object_box') {
+		if(obj?.type==="object_box") {
 			console.warn('box does not contain a function',obj);
 			throw new Error("TODO: object_box");
 		}
@@ -740,7 +737,7 @@ class InstructionCastImpl {
 			console.warn('unk box',obj);
 			throw new Error("Bad");
 		}
-		if(typeof obj!=='object'&&typeof obj!=='function') {
+		if(typeof obj!=="object"&&typeof obj!=="function") {
 			throw new Error("Bad");
 		}
 		if(obj===null) {
@@ -748,15 +745,15 @@ class InstructionCastImpl {
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
-	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this["type"]]) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
 		if(this.debug) {
 			console.log('VM: cast',instruction[1],obj);
 		}
-		if(typeof obj!='object') throw new Error("Invalid");
+		if(typeof obj!="object") throw new Error("Invalid");
 		switch(instruction[1]) {
-			case 'object_index': break;
+			case "object_index": break;
 			default: throw new Error("Missing cast to "+instruction[1]);
 		}
 		this.cast_to_type(vm,obj);
@@ -764,10 +761,10 @@ class InstructionCastImpl {
 }
 
 class InstructionJeImpl {
-	readonly type='je';
-	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
+	readonly type="je";
+	run(vm: StackVMImpl,instruction: InstructionMap[this["type"]]) {
 		let [,target]=instruction;
-		if(typeof target!='number') throw new Error("Invalid");
+		if(typeof target!="number") throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Jump target is out of instructions range");
 		}
@@ -778,13 +775,13 @@ class InstructionJeImpl {
 }
 
 class InstructionJmpImpl {
-	type: 'jmp';
+	type: "jmp";
 	constructor() {
-		this.type='jmp';
+		this.type="jmp";
 	}
-	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this["type"]]) {
 		let [,target]=instruction;
-		if(typeof target!='number') throw new Error("Invalid");
+		if(typeof target!="number") throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Jump target is out of instructions range");
 		}
@@ -793,14 +790,14 @@ class InstructionJmpImpl {
 }
 
 class InstructionModifyOpImpl {
-	type: 'modify_operand';
+	type: "modify_operand";
 	constructor() {
-		this.type='modify_operand';
+		this.type="modify_operand";
 	}
-	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this["type"]]) {
 		let [,target,offset]=instruction;
-		if(typeof target!='number') throw new Error("Invalid");
-		if(typeof offset!='number') throw new Error("Invalid");
+		if(typeof target!="number") throw new Error("Invalid");
+		if(typeof offset!="number") throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Destination is out of instructions range");
 		}
@@ -823,10 +820,10 @@ class InstructionModifyOpImpl {
 class InstructionVMPushIPImpl {
 	type: "vm_push_ip";
 	constructor() {
-		this.type='vm_push_ip';
+		this.type="vm_push_ip";
 	}
-	run(vm: StackVMImpl,_ins: InstructionMap[this['type']]) {
-		if(!vm.hasOwnProperty('push')) {
+	run(vm: StackVMImpl,_ins: InstructionMap[this["type"]]) {
+		if(!vm.hasOwnProperty("push")) {
 			throw new Error("push_pc requires a stack");
 		} else if(vm instanceof StackVMImpl) {
 			vm.stack.push({type: "number",value: vm.instruction_pointer});
@@ -838,11 +835,11 @@ class InstructionVMPushIPImpl {
 }
 
 class InstructionPushImpl {
-	type: 'push';
+	type: "push";
 	constructor() {
-		this.type='push';
+		this.type="push";
 	}
-	run(vm: StackVMImpl,instruction: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,instruction: InstructionMap[this["type"]]) {
 		let instruction_: ["push",...BoxImpl[]]=instruction;
 		let [,...rest]=instruction_;
 		for(let i=0;i<rest.length;i++) {
@@ -853,11 +850,11 @@ class InstructionPushImpl {
 }
 
 class InstructionDupImpl {
-	type: 'dup';
+	type: "dup";
 	constructor() {
-		this.type='dup';
+		this.type="dup";
 	}
-	run(vm: StackVMImpl,_ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_ins: InstructionMap[this["type"]]) {
 		if(vm.stack.length===0) throw new Error("stack underflow");
 		let res=vm.stack.at(-1);
 		if(!res) throw new Error("bad");
@@ -870,8 +867,8 @@ class CSSStyleSheetBoxImpl {
 	instance_type: "CSSStyleSheet";
 	value: CSSStyleSheet;
 	constructor(value: CSSStyleSheet) {
-		this.type='instance_box';
-		this.instance_type='CSSStyleSheet';
+		this.type="instance_box";
+		this.instance_type="CSSStyleSheet";
 		this.value=value;
 	}
 	as_type(input_typeof: string): this|null {
@@ -899,7 +896,7 @@ class CSSStyleSheetConstructorBoxImpl {
 		return new this(value.value);
 	}
 	on_get(_vm: StackVMImpl,key: string) {
-		console.log('get','CSSStyleSheetConstructorBox',key);
+		console.log("get","CSSStyleSheetConstructorBox",key);
 	}
 	factory() {
 		return new CSSStyleSheetBoxImpl(new this.value);
@@ -945,10 +942,10 @@ class FunctionConstructorFactoryImpl {
 
 class BoxMakerImpl<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
 	maker: (
-		make_new: (do_box: () => TBoxRet['value'],...a: TMakerArgs[]) => TBoxRet,
+		make_new: (do_box: () => TBoxRet["value"],...a: TMakerArgs[]) => TBoxRet,
 		value: FunctionConstructor
 	) => TBoxRet;
-	constructor(maker: BoxMakerImpl<TMakerArgs,TBoxRet>['maker']) {
+	constructor(maker: BoxMakerImpl<TMakerArgs,TBoxRet>["maker"]) {
 		this.maker=maker;
 	}
 }
@@ -1002,7 +999,7 @@ class FunctionBoxImpl implements FunctionBox {
 }
 
 class StringBoxImpl {
-	readonly type='string';
+	readonly type="string";
 	value: string;
 	constructor(value: string) {
 		this.value=value;
@@ -1010,7 +1007,7 @@ class StringBoxImpl {
 }
 
 class NumberBoxImpl {
-	readonly type='number';
+	readonly type="number";
 	value: number;
 	constructor(value: number) {
 		this.value=value;
@@ -1049,12 +1046,12 @@ class FunctionConstructorBoxImpl {
 	}
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
-			case 'name': vm.push(new StringBoxImpl(this.value[key])); break;
-			case 'prototype': {
+			case "name": vm.push(new StringBoxImpl(this.value[key])); break;
+			case "prototype": {
 				let value=new RawBoxImpl({as_interface: this.value[key]},Symbol.for("Function"));
 				vm.push(value);
 			} break;
-			case 'length': vm.push(new NumberBoxImpl(this.value[key]));
+			case "length": vm.push(new NumberBoxImpl(this.value[key]));
 			default: {
 				Object.keys(Object.getOwnPropertyDescriptors(this.value)).forEach(e => {
 					if(e===key) {
@@ -1078,13 +1075,13 @@ class FunctionConstructorBoxImpl {
 }
 
 class InstructionGetImpl {
-	type: 'get';
+	type: "get";
 	constructor() {
-		this.type='get';
+		this.type="get";
 	}
 	array_box_handle_num(value_box: EmptyArrayBox|ArrayBox|InstructionTypeArrayBox,key: number,vm: StackVMImpl) {
 		switch(value_box.item_type) {
-			case 'Box': {
+			case "Box": {
 				let res=value_box.value[key];
 				vm.push(res);
 			} break;
@@ -1092,7 +1089,7 @@ class InstructionGetImpl {
 				let res=value_box.value[key];
 				vm.push(new InstructionTypeBox(res));
 			} break;
-			case 'none': {
+			case "none": {
 				let res=value_box.value[key];
 				vm.push(new VoidBoxImpl(res));
 			}
@@ -1100,8 +1097,8 @@ class InstructionGetImpl {
 	}
 	on_get(vm: StackVMImpl,value_box: BoxImpl,key: string|number) {
 		switch(value_box.type) {
-			case 'array_box': {
-				if(typeof key==='number') {
+			case "array_box": {
+				if(typeof key==="number") {
 					this.array_box_handle_num(value_box,key,vm);
 				} else {
 					let key_alt=parseInt(key,10);
@@ -1109,20 +1106,20 @@ class InstructionGetImpl {
 					this.array_box_handle_num(value_box,key_alt,vm);
 				}
 			} break;
-			case 'constructor_box': {
+			case "constructor_box": {
 				let return_value: {value: BoxImpl;}|null=null;
 				switch(typeof key) {
-					case 'string': {
+					case "string": {
 						switch(value_box.instance_type) {
-							case 'CSSStyleSheet': {
-								if(typeof key!='string') throw new Error("Bad");
+							case "CSSStyleSheet": {
+								if(typeof key!="string") throw new Error("Bad");
 								CSSStyleSheetConstructorBoxImpl.from_box(value_box).on_get(vm,key);
 							} break;
 							case "Function": {
 								FunctionConstructorBoxImpl.from_box(value_box).on_get(vm,key);
 							} break;
-							case 'unknown': {
-								if(typeof key!='string') throw new Error("Bad");
+							case "unknown": {
+								if(typeof key!="string") throw new Error("Bad");
 								NewableFunctionBoxImpl.from_box(value_box as NewableFunctionBoxImpl).on_get(vm,key);
 							} break;
 						}
@@ -1136,24 +1133,24 @@ class InstructionGetImpl {
 			default: console.log('on_get no handler',value_box.type);
 		}
 	}
-	run(vm: StackVMImpl,_ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_ins: InstructionMap[this["type"]]) {
 		let get_key=vm.pop();
 		let value_box=vm.pop();
-		if(get_key.type!='string') throw new Error("Invalid");
+		if(get_key.type!="string") throw new Error("Invalid");
 		this.on_get(vm,value_box,get_key.value);
 	}
 }
 
 class InstructionHaltImpl {
-	readonly type='halt';
-	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	readonly type="halt";
+	run(vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		vm.halt();
 	}
 }
 
 class InstructionReturnImpl {
-	readonly type='return';
-	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	readonly type="return";
+	run(vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		if(vm.stack.length>0) {
 			vm.return_value=vm.stack.pop()!;
 		} else {
@@ -1163,8 +1160,8 @@ class InstructionReturnImpl {
 }
 
 class InstructionBreakpointImpl {
-	readonly type='breakpoint';
-	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	readonly type="breakpoint";
+	run(vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		console.log(vm.stack);
 		trigger_debug_breakpoint();
 	}
@@ -1172,39 +1169,39 @@ class InstructionBreakpointImpl {
 
 class InstructionPushVMObjImpl {
 	readonly type="vm_push_self";
-	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
 }
 
 class InstructionPushWindowObjectImpl {
-	readonly type='push_window_object';
-	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	readonly type="push_window_object";
+	run(vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		vm.stack.push(new WindowBoxImpl(window));
 	}
 }
 
 class InstructionPeekImpl {
-	readonly type='peek';
+	readonly type="peek";
 	debug=false;
-	run(vm: StackVMImpl,ins: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,ins: InstructionMap[this["type"]]) {
 		let [,distance]=ins;
 		let base_ptr=vm.base_ptr;
 		if(base_ptr===null) base_ptr=0;
-		if(typeof vm.frame_size!=='number') {
-			console.log('vm',vm);
+		if(typeof vm.frame_size!=="number") {
+			console.log("vm",vm);
 			throw new Error("Require frame size");
 		}
 		let offset=base_ptr-distance-vm.frame_size-1;
 		let at=vm.stack[offset];
 		vm.stack.push(at);
-		if(this.debug) console.log('VM: peek',ins,'value',at,'index',offset,vm.stack.length-offset);
+		if(this.debug) console.log('VM: peek',ins,"value",at,"index",offset,vm.stack.length-offset);
 	}
 }
 
 class InstructionAppendImpl {
 	readonly type="append";
-	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		if(vm.stack.length<=0) {
 			throw new Error('stack underflow');
 		}
@@ -1213,40 +1210,40 @@ class InstructionAppendImpl {
 			throw new Error('stack underflow');
 		}
 		let append_obj=vm.stack.pop();
-		if(typeof append_obj!='object') throw new Error("Element to append not object");
-		if(typeof target!='object') {
+		if(typeof append_obj!="object") throw new Error("Element to append not object");
+		if(typeof target!="object") {
 			console.log(target,append_obj,vm.stack.slice());
 			throw new Error("Element target not object");
 		}
 		if(append_obj===null) throw new Error("Bad");
 		if(target===null) throw new Error("Bad");
-		/* if(append_obj.type==='instance_box') throw new Error("Bad");
-		if(!(append_obj.type==='instance_box'&&append_obj.instance_type==='Node')) throw new Error("Bad");
-		if(target.type==='instance_box') throw new Error("Bad");
-		if(!(target.type==='instance_box'&&target.instance_type==='Node')) throw new Error("Bad");
+		/* if(append_obj.type==="instance_box") throw new Error("Bad");
+		if(!(append_obj.type==="instance_box"&&append_obj.instance_type==="Node")) throw new Error("Bad");
+		if(target.type==="instance_box") throw new Error("Bad");
+		if(!(target.type==="instance_box"&&target.instance_type==="Node")) throw new Error("Bad");
 		target.value.appendChild(append_obj.value); */
 		throw new Error("TODO");
 	}
 }
 
 class InstructionPushArgsImpl {
-	readonly type='vm_push_args';
-	run(_vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	readonly type="vm_push_args";
+	run(_vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		throw new Error("Instruction not supported");
 	}
 }
 
 class InstructionDropImpl {
-	readonly type='drop';
-	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	readonly type="drop";
+	run(vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		vm.stack.pop();
 	}
 }
 
 class InstructionVMReturnImpl {
-	readonly type='vm_return';
+	readonly type="vm_return";
 	debug=false;
-	run(vm: StackVMImpl,_i: InstructionMap[this['type']]) {
+	run(vm: StackVMImpl,_i: InstructionMap[this["type"]]) {
 		let start_stack=vm.stack.slice();
 		if(vm.base_ptr!=vm.stack.length) {
 			console.log('TODO: support returning values');
@@ -1254,8 +1251,8 @@ class InstructionVMReturnImpl {
 		}
 		let ip=vm.stack.pop();
 		let bp=vm.stack.pop();
-		if(typeof ip!='number') throw new Error("Invalid stack frame");
-		if(typeof bp!='number') throw new Error("Invalid stack frame");
+		if(typeof ip!="number") throw new Error("Invalid stack frame");
+		if(typeof bp!="number") throw new Error("Invalid stack frame");
 		vm.instruction_pointer=ip;
 		vm.base_ptr=bp;
 		if(this.debug) console.log('vm return',vm.base_ptr,start_stack,vm.stack.slice());
@@ -1263,77 +1260,77 @@ class InstructionVMReturnImpl {
 }
 
 class InstructionVMCallImpl {
-	readonly type='vm_call';
-	run(vm: StackVMImpl,ins: InstructionMap[this['type']]) {
+	readonly type="vm_call";
+	run(vm: StackVMImpl,ins: InstructionMap[this["type"]]) {
 		let prev_base=vm.base_ptr;
-		vm.stack.push({type: 'number',value: vm.base_ptr});
-		vm.stack.push({type: 'number',value: vm.instruction_pointer});
+		vm.stack.push({type: "number",value: vm.base_ptr});
+		vm.stack.push({type: "number",value: vm.instruction_pointer});
 		vm.base_ptr=vm.stack.length;
 		vm.jump_instruction_pointer=ins[1];
-		console.log('vm vm_call',ins[1],'stk',vm.base_ptr,prev_base,vm.stack.slice());
+		console.log('vm vm_call',ins[1],"stk",vm.base_ptr,prev_base,vm.stack.slice());
 	}
 }
 
 class InstructionNopImpl {
-	readonly type='nop';
-	run(_vm: StackVMImpl,_a: InstructionMap[this['type']]) {}
+	readonly type="nop";
+	run(_vm: StackVMImpl,_a: InstructionMap[this["type"]]) {}
 }
 
 class InstructionBlockTraceImpl {
-	readonly type='vm_block_trace';
-	run(_vm: StackVMImpl,_i: InstructionMap[this['type']]) {}
+	readonly type="vm_block_trace";
+	run(_vm: StackVMImpl,_i: InstructionMap[this["type"]]) {}
 }
 
 const InstructionNames=[
-	'append',
-	'breakpoint',
-	'call',
-	'cast',
-	'construct',
-	'drop',
-	'dup',
-	'get',
-	'halt',
-	'je',
-	'jmp',
-	'modify_operand',
-	'nop',
-	'peek',
-	'push_window_object',
-	'push',
-	'return',
-	'vm_block_trace',
-	'vm_call',
-	'vm_push_args',
-	'vm_push_ip',
-	'vm_push_self',
-	'vm_return',
+	"append",
+	"breakpoint",
+	"call",
+	"cast",
+	"construct",
+	"drop",
+	"dup",
+	"get",
+	"halt",
+	"je",
+	"jmp",
+	"modify_operand",
+	"nop",
+	"peek",
+	"push_window_object",
+	"push",
+	"return",
+	"vm_block_trace",
+	"vm_call",
+	"vm_push_args",
+	"vm_push_ip",
+	"vm_push_self",
+	"vm_return",
 ] as const;
 
 const instruction_class_map={
-	'append': InstructionAppendImpl,
-	'breakpoint': InstructionBreakpointImpl,
-	'call': InstructionCallImpl,
-	'cast': InstructionCastImpl,
-	'construct': InstructionConstructImpl,
-	'drop': InstructionDropImpl,
-	'dup': InstructionDupImpl,
-	'get': InstructionGetImpl,
-	'halt': InstructionHaltImpl,
-	'je': InstructionJeImpl,
-	'jmp': InstructionJmpImpl,
-	'modify_operand': InstructionModifyOpImpl,
-	'nop': InstructionNopImpl,
-	'peek': InstructionPeekImpl,
-	'push_window_object': InstructionPushWindowObjectImpl,
-	'push': InstructionPushImpl,
-	'return': InstructionReturnImpl,
-	'vm_block_trace': InstructionBlockTraceImpl,
-	'vm_call': InstructionVMCallImpl,
-	'vm_push_args': InstructionPushArgsImpl,
-	'vm_push_ip': InstructionVMPushIPImpl,
-	'vm_push_self': InstructionPushVMObjImpl,
-	'vm_return': InstructionVMReturnImpl,
+	"append": InstructionAppendImpl,
+	"breakpoint": InstructionBreakpointImpl,
+	"call": InstructionCallImpl,
+	"cast": InstructionCastImpl,
+	"construct": InstructionConstructImpl,
+	"drop": InstructionDropImpl,
+	"dup": InstructionDupImpl,
+	"get": InstructionGetImpl,
+	"halt": InstructionHaltImpl,
+	"je": InstructionJeImpl,
+	"jmp": InstructionJmpImpl,
+	"modify_operand": InstructionModifyOpImpl,
+	"nop": InstructionNopImpl,
+	"peek": InstructionPeekImpl,
+	"push_window_object": InstructionPushWindowObjectImpl,
+	"push": InstructionPushImpl,
+	"return": InstructionReturnImpl,
+	"vm_block_trace": InstructionBlockTraceImpl,
+	"vm_call": InstructionVMCallImpl,
+	"vm_push_args": InstructionPushArgsImpl,
+	"vm_push_ip": InstructionVMPushIPImpl,
+	"vm_push_self": InstructionPushVMObjImpl,
+	"vm_return": InstructionVMReturnImpl,
 };
 
 class StackVMFlags {
@@ -1419,36 +1416,36 @@ class StackVMImpl {
 	}
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
-			case 'append': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
-			case 'breakpoint': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
-			case 'call': this.instruction_map_obj[instruction[0]].run(this,instruction); return;
+			case "append": this.instruction_map_obj[instruction[0]].run(this,instruction); return;
+			case "breakpoint": this.instruction_map_obj[instruction[0]].run(this,instruction); return;
+			case "call": this.instruction_map_obj[instruction[0]].run(this,instruction); return;
 		}
-		switch(instruction[0]) {case 'cast': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'construct': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'dom_create_element': throw 1;}
-		switch(instruction[0]) {case 'dom_create_element_with_props': throw 1;}
-		switch(instruction[0]) {case 'dom_exec': throw 1;}
-		switch(instruction[0]) {case 'dom_get': throw 1;}
-		switch(instruction[0]) {case 'dom_new': throw 1;}
-		switch(instruction[0]) {case 'dom_peek': throw 1;}
-		switch(instruction[0]) {case 'drop': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'dup': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'get': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'halt': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'je': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'jmp': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'modify_operand': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'nop': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'peek': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'push': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'push_window_object': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'return': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'vm_block_trace': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'vm_call': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'vm_push_args': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'vm_push_ip': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'vm_push_self': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
-		switch(instruction[0]) {case 'vm_return': this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "cast": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "construct": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "dom_create_element": throw 1;}
+		switch(instruction[0]) {case "dom_create_element_with_props": throw 1;}
+		switch(instruction[0]) {case "dom_exec": throw 1;}
+		switch(instruction[0]) {case "dom_get": throw 1;}
+		switch(instruction[0]) {case "dom_new": throw 1;}
+		switch(instruction[0]) {case "dom_peek": throw 1;}
+		switch(instruction[0]) {case "drop": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "dup": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "get": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "halt": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "je": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "jmp": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "modify_operand": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "nop": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "peek": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "push": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "push_window_object": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "return": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "vm_block_trace": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "vm_call": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "vm_push_args": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "vm_push_ip": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "vm_push_self": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
+		switch(instruction[0]) {case "vm_return": this.instruction_map_obj[instruction[0]].run(this,instruction); return;}
 	}
 	run() {
 		this.running=true;
@@ -1472,7 +1469,7 @@ class StackVMImpl {
 			}
 		}
 		if(this.stack.length!==0) {
-			console.log('stack',this.stack);
+			console.log("stack",this.stack);
 			console.assert(false,"stack length is not zero, unhandled data on stack");
 		}
 		return this.return_value;
@@ -1499,7 +1496,7 @@ class StackVMParser {
 	static match_regex=/(.+?)(;|$)/gm;
 	static parse_int_arg(cur: string[]|number[],arg_loc: number) {
 		let cur_item=cur[arg_loc];
-		if(typeof cur_item=='string') {
+		if(typeof cur_item=="string") {
 			let arg=cur_item;
 			if(arg[3]==='()'[0]&&arg.at(-1)==="()"[1]) {
 				let str_int=arg.slice(4,-1);
@@ -1511,7 +1508,7 @@ class StackVMParser {
 		let format_index=str.indexOf('%');
 		let format_type=str[format_index+1];
 		switch(format_type) {
-			case 'o':
+			case "o":
 				return format_list.shift();
 			default:
 				console.assert(false,"Assertion failed: %s",'unsupported format spec %'+format_type);
@@ -1521,7 +1518,7 @@ class StackVMParser {
 		let arg_loc=1;
 		let arg=cur[arg_loc];
 		while(arg) {
-			if(arg.slice(0,3)==='int') this.parse_int_arg(cur,arg_loc);
+			if(arg.slice(0,3)==="int") this.parse_int_arg(cur,arg_loc);
 			if(arg.includes('%')) {
 				let res=this.parse_string_with_format_ident(arg,format_list);
 				cur[arg_loc]=res;
@@ -1573,13 +1570,13 @@ class StackVMParser {
 		let num_to_parse=instruction.length;
 		let ret: InstructionType|null=null;
 		switch(instruction[0]) {
-			case 'push': {
+			case "push": {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				ret=[instruction[0],...push_operands.map((e): {type: 'string',value: string;} => ({type: 'string',value: e}))];
+				ret=[instruction[0],...push_operands.map((e): {type: "string",value: string;} => ({type: "string",value: e}))];
 			} break;
-			case 'call'/*1 argument*/: {
-				if(typeof instruction[1]==='number'&&Number.isFinite(instruction[1])) {
+			case "call"/*1 argument*/: {
+				if(typeof instruction[1]==="number"&&Number.isFinite(instruction[1])) {
 					num_to_parse-=2;
 					ret=[instruction[0],instruction[1]];
 				} else {
@@ -1587,27 +1584,27 @@ class StackVMParser {
 					throw new Error("Invalid operand");
 				}
 			} break;
-			case 'cast': {
+			case "cast": {
 				let m_arg=instruction[1];
 				switch(m_arg) {
-					case 'object_index':
-					case 'vm_function':
+					case "object_index":
+					case "vm_function":
 						num_to_parse-=2;
 						ret=[instruction[0],m_arg];
 				}
 				if(num_to_parse===0) break;
 				throw new Error("Assertion failed: cast operand `"+m_arg+"` is invalid");
 			}
-			case 'drop':
-			case 'dup':
-			case 'get':
-			case 'return':
-			case 'halt':
-			case 'vm_push_args':
-			case 'vm_push_self':
-			case 'push_window_object':
-			case 'breakpoint':
-			case 'vm_return': {
+			case "drop":
+			case "dup":
+			case "get":
+			case "return":
+			case "halt":
+			case "vm_push_args":
+			case "vm_push_self":
+			case "push_window_object":
+			case "breakpoint":
+			case "vm_return": {
 				num_to_parse--;
 				let v_2=instruction[0];
 				let v_1: InstructionType[0]=v_2;
@@ -1681,7 +1678,7 @@ class DocumentWriteList {
 			if(doc_1&&this.document_write) {
 				let doc_var=this.document_write;
 				let any_var: any=doc_var;
-				let vv: Document['write']=any_var;
+				let vv: Document["write"]=any_var;
 				doc_1.write=vv;
 			}
 		}
@@ -1874,7 +1871,7 @@ class TimeoutTarget<T> implements AbstractFire {
 	m_once: boolean;
 	m_obj: T;
 	m_callback: (this: T) => void;
-	constructor(obj: T,callback: TimeoutTarget<T>['m_callback']) {
+	constructor(obj: T,callback: TimeoutTarget<T>["m_callback"]) {
 		this.m_once=true;
 		this.m_obj=obj;
 		this.m_callback=callback;
@@ -1887,7 +1884,7 @@ class IntervalTarget<T> implements AbstractFire {
 	m_once: boolean;
 	m_obj: T;
 	m_callback: (this: T) => void;
-	constructor(obj: T,callback: IntervalTarget<T>['m_callback']) {
+	constructor(obj: T,callback: IntervalTarget<T>["m_callback"]) {
 		this.m_once=false;
 		this.m_obj=obj;
 		this.m_callback=callback;
@@ -2104,19 +2101,19 @@ class AsyncTimeoutNode extends BaseNode {
 	}
 	async start_async(target: AsyncFire) {
 		if(!target) throw new Error("unable to start_async without anything to wait for");
-		log_if(LOG_LEVEL_INFO,'start_async');
+		log_if(LOG_LEVEL_INFO,"start_async");
 		this.m_target=target;
 		this.set();
 		let promise=this.m_target.wait();
-		log_if(LOG_LEVEL_INFO,'p',promise);
+		log_if(LOG_LEVEL_INFO,"p",promise);
 		await promise;
 	}
 	set() {
-		log_if(LOG_LEVEL_INFO,'set',this);
+		log_if(LOG_LEVEL_INFO,"set",this);
 		this.m_id=setTimeout(this.run.bind(this),this.m_timeout);
 	}
 	override run() {
-		log_if(LOG_LEVEL_INFO,'run',this);
+		log_if(LOG_LEVEL_INFO,"run",this);
 		if(this.m_target) this.m_target.fire();
 		this.m_id=null;
 		this.destroy();
@@ -2352,7 +2349,7 @@ class AutoBuyState {
 		} else {
 			rep_val=0.75;
 		}
-		let ratio_types=['10sec','1min','5min','30min','3hour'];
+		let ratio_types=["10sec","1min","5min","30min","3hour"];
 		let ratio_duration=[10*1000,60*1000,5*60*1000,30*60*1000,3*60*60*1000];
 		let ratio_counts=[80,6,5,6,6];
 		function mul_3(arr: number[],i: number) {
@@ -2367,7 +2364,7 @@ class AutoBuyState {
 				time_start: now_start,
 				duration: ratio_duration[i],
 			});
-			if(ratio_types[i]==='1min') obj.set_history_size(7200);
+			if(ratio_types[i]==="1min") obj.set_history_size(7200);
 			target_obj.set_ratio(ratio_types[i],obj);
 		}
 		let now_start=performance.now();
@@ -2378,7 +2375,7 @@ class AutoBuyState {
 		this.is_init_complete=true;
 	}
 	calc_ratio() {
-		return this.avg.get_average('30min');
+		return this.avg.get_average("30min");
 	}
 	append_value(value: number) {
 		if(!Number.isFinite(value)) {
@@ -2480,7 +2477,7 @@ class AutoBuyState {
 	}
 	log_on_update_ratio_mode_notify() {
 		log_if(LOG_LEVEL_INFO,'update_ratio_mode_tag mode=%o total_mul=%o cycle_change=%o',this.ratio_mode,this.total_mul,this.total_cycle_count_change);
-		const near_avg='30min';
+		const near_avg="30min";
 		let real_val=this.avg.get_average(near_avg);
 		let [num,exponent]=this.calc_near_val(real_val);
 		if(real_val>0.1&&real_val<0.9) return;
@@ -2497,7 +2494,7 @@ class AutoBuyState {
 	}
 	update() {
 		let not_ready=false;
-		if(!not_ready) if(typeof window.prestige=='undefined') not_ready=true;
+		if(!not_ready) if(typeof window.prestige=="undefined") not_ready=true;
 		if(!not_ready) if(window.totalAtome<100||window.atomepersecond<100) not_ready=true;
 		if(not_ready) {
 			this.update_not_ready();
@@ -2624,7 +2621,7 @@ class AsyncAutoBuy {
 		return this.parent.timeout_ms;
 	}
 	async do_start_main_async(no_wait: boolean) {
-		if(!no_wait) await this.next_timeout_async(this.parent.timeout_ms,'A');
+		if(!no_wait) await this.next_timeout_async(this.parent.timeout_ms,"A");
 		await this.main_async();
 	}
 	async maybe_async_reset() {
@@ -2733,7 +2730,7 @@ class VoidBoxImpl {
 	extension: null;
 	value: undefined;
 	constructor(value: undefined) {
-		this.type='void';
+		this.type="void";
 		this.extension=null;
 		this.value=value;
 	}
@@ -2794,7 +2791,7 @@ class AutoBuy {
 		this.state=new AutoBuyState(this.root_node);
 		this.debug=this.state.debug;
 		this.compressor=new MulCompression;
-		this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str',["S"]);
+		this.state_history_arr=this.local_data_loader.load_str_arr("auto_buy_history_str",["S"]);
 		this.epoch_start_time=Date.now();
 		this.original_map=new Map;
 		this.dom_map=new Map;
@@ -2805,7 +2802,7 @@ class AutoBuy {
 		} catch(e) {
 			console.log(e);
 		}
-		this.timeout_arr=this.local_data_loader.load_int_arr_cb('auto_buy_timeout_str',() => {
+		this.timeout_arr=this.local_data_loader.load_int_arr_cb("auto_buy_timeout_str",() => {
 			let src=[300];
 			src.length=16;
 			let data_len=1;
@@ -2957,7 +2954,7 @@ class AutoBuy {
 					},function(err) {
 						log_if(LOG_LEVEL_ERROR,err);
 					});
-					window.removeEventListener('click',this);
+					window.removeEventListener("click",this);
 				},
 				async run() {
 					if(!t.background_audio) throw new Error("Bad");
@@ -2965,10 +2962,10 @@ class AutoBuy {
 				}
 			};
 			if(!this.use_event_vm) {
-				window.addEventListener('click',event_handler);
+				window.addEventListener("click",event_handler);
 			} else {
 				let handler=new EventHandlerVMDispatch(instructions,this);
-				window.addEventListener('click',handler);
+				window.addEventListener("click",handler);
 			}
 		} catch(e) {
 			console.log('error when setting up EventHandlerVMDispatch',e);
@@ -3015,44 +3012,44 @@ class AutoBuy {
 		let displaySheet=new CSSStyleSheet;
 		displaySheet.replaceSync(css_display_style);
 		document.adoptedStyleSheets=[...document.adoptedStyleSheets,displaySheet];
-		let state_log=document.createElement('state_log');
+		let state_log=document.createElement("state_log");
 		document.body.append(state_log);
 		let history=document.createElement("div");
 		history.textContent="?3";
 		state_log.append(history);
-		this.dom_map.set('history',history);
+		this.dom_map.set("history",history);
 		let timeout_element=document.createElement("div");
 		timeout_element.textContent="0";
 		state_log.append(timeout_element);
-		this.dom_map.set('timeout_element',timeout_element);
+		this.dom_map.set("timeout_element",timeout_element);
 		let hours_played=document.createElement("div");
 		hours_played.textContent="0.000 hours";
 		state_log.append(hours_played);
-		this.dom_map.set('hours_played',hours_played);
-		let ratio=document.createElement('div');
+		this.dom_map.set("hours_played",hours_played);
+		let ratio=document.createElement("div");
 		ratio.textContent="0.00%";
 		state_log.append(ratio);
-		this.dom_map.set('ratio',ratio);
-		let ratio_change=document.createElement('div');
+		this.dom_map.set("ratio",ratio);
+		let ratio_change=document.createElement("div");
 		ratio_change.textContent='0.000e+0';
 		state_log.append(ratio_change);
-		this.dom_map.set('ratio_change',ratio_change);
+		this.dom_map.set("ratio_change",ratio_change);
 	}
 	init_dom() {
 		const font_size_px=22;
 		let t=this;
 		this.state_history_arr_max_len=Math.floor(document.body.getClientRects()[0].width/(font_size_px*0.55)/2.1);
-		let history=this.dom_map.get('history');
-		if(history&&typeof history=='object') history.addEventListener('click',new EventHandlerDispatch(this,'history_element_click_handler'));
-		let ratio=this.dom_map.get('ratio');
-		if(ratio&&typeof ratio=='object') {
-			ratio.addEventListener('click',function() {
+		let history=this.dom_map.get("history");
+		if(history&&typeof history=="object") history.addEventListener("click",new EventHandlerDispatch(this,"history_element_click_handler"));
+		let ratio=this.dom_map.get("ratio");
+		if(ratio&&typeof ratio=="object") {
+			ratio.addEventListener("click",function() {
 				t.state.reset();
 			});
 		}
-		let state_log=this.dom_map.get('state_log');
+		let state_log=this.dom_map.get("state_log");
 		if(state_log instanceof HTMLElement) state_log.style.fontSize=font_size_px+"px";
-		window.addEventListener('unload',function() {
+		window.addEventListener("unload",function() {
 			t.save_state_history_arr();
 			t.save_timeout_arr();
 		});
@@ -3061,14 +3058,14 @@ class AutoBuy {
 		if(window.g_auto_buy) {
 			window.g_auto_buy.destroy();
 		}
-		window.g_auto_buy=this as unknown as (Window['g_auto_buy']);
+		window.g_auto_buy=this as unknown as (Window["g_auto_buy"]);
 	}
 	destroy() {
 		this.root_node.destroy();
 	}
 	update_timeout_element() {
 		if(this.timeout_ms) {
-			let element=this.dom_map.get('timeout_element');
+			let element=this.dom_map.get("timeout_element");
 			if(element instanceof HTMLElement) {
 				element.innerText=this.get_millis_as_pretty_str(this.round(this.timeout_ms),0);
 			}
@@ -3076,7 +3073,7 @@ class AutoBuy {
 	}
 	do_zero_pad(value: string|number,pad_char: string,char_num: number) {
 		let string;
-		if(typeof value==='number') {
+		if(typeof value==="number") {
 			string=value.toString();
 		} else {
 			string=value;
@@ -3093,23 +3090,23 @@ class AutoBuy {
 		if(milli_acc===0) {
 			milli_len=3;
 		}
-		time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc),'0',milli_len);
+		time_arr[3]=this.do_zero_pad(float_milliseconds.toFixed(milli_acc),"0",milli_len);
 		timeout_milli-=float_milliseconds;
 		timeout_milli/=1000;
 		let int_seconds=timeout_milli%60;
-		time_arr[2]=this.do_zero_pad(int_seconds,'0',2);
+		time_arr[2]=this.do_zero_pad(int_seconds,"0",2);
 		timeout_milli-=int_seconds;
 		timeout_milli/=60;
 		let int_minutes=timeout_milli%60;
-		time_arr[1]=this.do_zero_pad(int_minutes,'0',2);
+		time_arr[1]=this.do_zero_pad(int_minutes,"0",2);
 		timeout_milli-=int_minutes;
 		timeout_milli/=60;
 		let int_hours=timeout_milli;
-		time_arr[0]=this.do_zero_pad(int_hours,'0',2);
+		time_arr[0]=this.do_zero_pad(int_hours,"0",2);
 		int_hours===0&&(time_arr.shift(),int_minutes===0&&(time_arr.shift(),int_seconds===0&&time_arr.shift()));
 		switch(time_arr.length) {
 			case 1:
-				return time_arr[0]+'ms';
+				return time_arr[0]+"ms";
 			case 2:
 				return time_arr[0]+'.'+time_arr[1];
 			case 3:
@@ -3122,13 +3119,13 @@ class AutoBuy {
 	get_hours_num_as_pretty_str(hours_num: number) {
 		let int_hours=~~hours_num;
 		let time_arr=[];
-		time_arr[0]=this.do_zero_pad(int_hours,'0',2);
+		time_arr[0]=this.do_zero_pad(int_hours,"0",2);
 		let float_minutes=(hours_num-int_hours)*60;
 		let int_minutes=~~float_minutes;
-		time_arr[1]=this.do_zero_pad(int_minutes,'0',2);
+		time_arr[1]=this.do_zero_pad(int_minutes,"0",2);
 		let float_seconds=(float_minutes-int_minutes)*60;
 		let int_seconds=~~float_seconds;
-		time_arr[2]=this.do_zero_pad(int_seconds,'0',2);
+		time_arr[2]=this.do_zero_pad(int_seconds,"0",2);
 		let float_milliseconds=(float_seconds-int_seconds)*1000;
 		let float_milli_from_prev=float_milliseconds-1000;
 		if(float_milliseconds>100&&float_milliseconds<900) {
@@ -3151,22 +3148,22 @@ class AutoBuy {
 				if(int_minutes>=60) {
 					int_minutes=0;
 					int_hours++;
-					time_arr[0]=this.do_zero_pad(int_hours,'0',2);
+					time_arr[0]=this.do_zero_pad(int_hours,"0",2);
 					console.log('sec+ min+ hour+');
 				} else {
 					console.log('sec+ min+');
 				}
-				time_arr[1]=this.do_zero_pad(int_minutes,'0',2);
+				time_arr[1]=this.do_zero_pad(int_minutes,"0",2);
 			} else {
 				console.log('sec+');
 			}
-			time_arr[2]=this.do_zero_pad(int_seconds,'0',2);
+			time_arr[2]=this.do_zero_pad(int_seconds,"0",2);
 		}
-		time_arr[3]=this.do_zero_pad(int_milliseconds,'0',3);
+		time_arr[3]=this.do_zero_pad(int_milliseconds,"0",3);
 		int_hours===0&&(time_arr.shift(),int_minutes===0&&(time_arr.shift(),int_seconds===0&&time_arr.shift()));
 		switch(time_arr.length) {
 			case 1:
-				return time_arr[0]+'ms';
+				return time_arr[0]+"ms";
 			case 2:
 				return time_arr[0]+'.'+time_arr[1];
 			case 3:
@@ -3179,12 +3176,12 @@ class AutoBuy {
 	update_hours_played() {
 		const float_hours=((window.timeplayed/30)/60);
 		const time_played_str=this.get_hours_num_as_pretty_str(float_hours);
-		const hours_played_e=this.dom_map.get('hours_played');
+		const hours_played_e=this.dom_map.get("hours_played");
 		if(hours_played_e instanceof HTMLElement) hours_played_e.innerText=time_played_str;
-		this.dom_map.set('time_played_str',time_played_str);
+		this.dom_map.set("time_played_str",time_played_str);
 	}
 	update_ratio_element() {
-		const ratio=this.dom_map.get('ratio');
+		const ratio=this.dom_map.get("ratio");
 		if(!ratio) return;
 		if(!(ratio instanceof HTMLElement)) return;
 		ratio.innerText=(this.state.ratio*100).toFixed(2)+"%";
@@ -3195,11 +3192,11 @@ class AutoBuy {
 		const ratio_diff=cur_ratio-last_ratio;
 		let char_value="+";
 		if(ratio_diff<0) char_value='';
-		const ratio_change=this.dom_map.get('ratio_change');
+		const ratio_change=this.dom_map.get("ratio_change");
 		if(ratio_change&&ratio_change instanceof HTMLElement) ratio_change.innerText=char_value+ratio_diff.toExponential(3);
 	}
 	update_history_element() {
-		let history=this.dom_map.get('history');
+		let history=this.dom_map.get("history");
 		if(history&&history instanceof HTMLElement) {
 			let sample_len=this.state_history_arr_max_len;
 			if(!sample_len) return;
@@ -3208,14 +3205,14 @@ class AutoBuy {
 		}
 	}
 	next_update() {
-		if(this.flags.has('do_reset_dom')) {
-			this.flags.delete('do_reset_dom');
+		if(this.flags.has("do_reset_dom")) {
+			this.flags.delete("do_reset_dom");
 			return;
 		}
 		this.set_update_timeout();
 	}
 	set_update_timeout() {
-		this.next_timeout(this.update,125,'update',true);
+		this.next_timeout(this.update,125,"update",true);
 	}
 	update() {
 		this.state.update();
@@ -3229,7 +3226,7 @@ class AutoBuy {
 	update_async() {
 	}
 	init() {
-		this.next_timeout(this.init_impl,200,'init',true);
+		this.next_timeout(this.init_impl,200,"init",true);
 	}
 	set_secondinterval() {
 		const disabled=false;
@@ -3264,11 +3261,11 @@ class AutoBuy {
 			const calcPres=window.calcPres;
 			doc.title=rounding(totalAtome,false,1).toString()+" atoms";
 			//spell:words atomsaccu presnbr
-			let atomsaccu_e=doc.getElementById('atomsaccu');
+			let atomsaccu_e=doc.getElementById("atomsaccu");
 			if(atomsaccu_e) atomsaccu_e.innerHTML=rounding(window.atomsaccu,false,0);
-			let timeplayed_e=doc.getElementById('timeplayed');
+			let timeplayed_e=doc.getElementById("timeplayed");
 			if(timeplayed_e) timeplayed_e.innerHTML=(Math.round(timeplayed/30)/60).toFixed(2)+" hours";
-			let presnbr_e=doc.getElementById('presnbr');
+			let presnbr_e=doc.getElementById("presnbr");
 			if(presnbr_e) presnbr_e.innerHTML="<br>"+(calcPres()*100).toFixed(0)+" % APS boost";
 		},2000),false);
 	}
@@ -3289,7 +3286,7 @@ class AutoBuy {
 		this.next_update();
 		this.main();
 		this.edit_fns();
-		this.original_map.set('lightreset',window.lightreset);
+		this.original_map.set("lightreset",window.lightreset);
 		window.lightreset=lightreset_inject;
 		window.specialclick=specialclick_inject;
 		if(window.secondinterval) {
@@ -3389,7 +3386,7 @@ class AutoBuy {
 	}
 	start_main_async(no_wait=false) {
 		return this.with_async.do_start_main_async(no_wait).then(_e => {},e => {
-			console.log('err',e);
+			console.log("err",e);
 			console.log('canceled main_async');
 		});
 	}
@@ -3447,7 +3444,7 @@ class AutoBuy {
 		}
 		if(!this.timeout_ms) throw new Error("Invalid");
 		let value=this.round(this.timeout_ms+change);
-		log_if(LOG_LEVEL_INFO,'inc',this.timeout_ms,value-this.timeout_ms);
+		log_if(LOG_LEVEL_INFO,"inc",this.timeout_ms,value-this.timeout_ms);
 		this.timeout_arr.push(value);
 	}
 	update_timeout_dec(change: number) {
@@ -3457,7 +3454,7 @@ class AutoBuy {
 		if(!this.timeout_ms) throw new Error("Invalid");
 		let value=this.round(this.timeout_ms-change);
 		if(value<25) value=25;
-		log_if(LOG_LEVEL_INFO,'dec',this.timeout_ms,this.timeout_ms-value);
+		log_if(LOG_LEVEL_INFO,"dec",this.timeout_ms,this.timeout_ms-value);
 		this.timeout_arr.push(value);
 	}
 	round(value: number) {
@@ -3504,7 +3501,7 @@ class AutoBuy {
 		}
 	}
 	[labeled_sym("next_timeout_async")](timeout: number|undefined,char: string) {
-		console.log('next_timeout_async',char,timeout);
+		console.log("next_timeout_async",char,timeout);
 		let err=new Error;
 		this.next_timeout_async_err_log('next_timeout_async stk',err);
 	}
@@ -3563,7 +3560,7 @@ class AutoBuy {
 		if(!this.timeout_ms) {
 			this.timeout_ms=300;
 		}
-		this.next_timeout(this.game_reset_step_1,this.round(this.timeout_ms/3),'1R');
+		this.next_timeout(this.game_reset_step_1,this.round(this.timeout_ms/3),"1R");
 		this.on_repeat_r();
 	}
 	do_audio_mute_toggle() {
@@ -3577,17 +3574,17 @@ class AutoBuy {
 	game_reset_step_1() {
 		this.do_audio_mute_toggle();
 		// 60*5*1000
-		this.next_timeout(this.game_reset_step_2,15*1000,'2R');
+		this.next_timeout(this.game_reset_step_2,15*1000,"2R");
 	}
 	game_reset_step_2() {
 		this.do_audio_mute_toggle();
 		// 60*5*1000
-		this.next_timeout(this.game_reset_finish,15*1000,'3R');
+		this.next_timeout(this.game_reset_finish,15*1000,"3R");
 	}
 	game_reset_finish() {
 		this.update_hours_played();
 		let str=this.dom_map.get("time_played_str");
-		if(typeof str=='string') {
+		if(typeof str=="string") {
 			this.dispatch_on_game_reset_finish(str);
 		} else {
 			this.dispatch_on_game_reset_finish("0.000");
@@ -3611,7 +3608,7 @@ class AutoBuy {
 		window.lightreset();
 	}
 	on_repeat_r() {
-		this.next_timeout(this.on_repeat_r,1*1000,'r');
+		this.next_timeout(this.on_repeat_r,1*1000,"r");
 	}
 }
 declare global {
@@ -3714,12 +3711,12 @@ function char_len_of(arr: any[]) {
 function lightreset_inject() {
 	window.g_auto_buy.state_history_clear_for_reset();
 	window.g_auto_buy.skip_save=true;
-	window.addEventListener('unload',function() {
+	window.addEventListener("unload",function() {
 		window.g_auto_buy.skip_save=false;
 		localStorage["auto_buy_timeout_str"]="300,300,300,300";
 		localStorage["long_wait"]=12000;
 	});
-	let original=window.g_auto_buy.original_map.get('lightreset');
+	let original=window.g_auto_buy.original_map.get("lightreset");
 	if(!original) {
 		alert('unable to light reset game');
 		throw new Error("Missing original lightreset");
@@ -3746,8 +3743,8 @@ function specialclick_inject(that: number) {
 	if(window.allspec[that].done==undefined)
 		window.allspec[that].done=false;
 	if(window.allspec[that].cost<=window.totalAtome&&window.allspec[that].done==false) {
-		let specialsbought_e=window.doc.getElementById('specialsbought');
-		let atomsinvest_e=window.doc.getElementById('atomsinvest');
+		let specialsbought_e=window.doc.getElementById("specialsbought");
+		let atomsinvest_e=window.doc.getElementById("atomsinvest");
 		if(!specialsbought_e||!atomsinvest_e)
 			throw new Error("Invalid");
 		specialsbought_e.innerText=window.rounding(++window.specialsbought,false,0);
@@ -3787,8 +3784,8 @@ function got_jquery(value: typeof $) {
 function use_jquery() {
 	let jq: typeof $|undefined=window.$;
 	if(!jq) return;
-	if(typeof jq!='function') return;
-	let res=jq('head');
+	if(typeof jq!="function") return;
+	let res=jq("head");
 	let r_proto=Object.getPrototypeOf(res);
 	r_proto.lazyload=function(..._a: any[]) {};
 	return jq;
@@ -3892,7 +3889,7 @@ function page_url_no_protocol() {
 	return location.href.slice(location.protocol.length);
 }
 function popstate_event_handler(e: PopStateEvent) {
-	console.log('popstate',e.state,location.href);
+	console.log("popstate",e.state,location.href);
 	if(e.state===null) {
 		let non_proto_url=page_url_no_protocol();
 		if(non_proto_url=="//rebuildtheuniverse.com/mjz_version") {
@@ -3985,11 +3982,11 @@ declare global {
 }
 let real_st: typeof setTimeout;
 let real_si: typeof setInterval;
-let orig_aev: EventTarget['addEventListener'];
+let orig_aev: EventTarget["addEventListener"];
 function make_load_promise(a: (reason?: any) => void) {
-	window.addEventListener('load',function lis() {
+	window.addEventListener("load",function lis() {
 		setTimeout(a);
-		window.removeEventListener('load',lis);
+		window.removeEventListener("load",lis);
 	});
 }
 declare global {
@@ -3999,7 +3996,7 @@ declare global {
 }
 function create_load_with_fetch_page() {
 	return new Promise(function(a) {
-		if(localStorage["justReset"]==='true') {
+		if(localStorage["justReset"]==="true") {
 			return a(null);
 		}
 		window.g_do_load=do_load_fire_promise.bind(null,a);
@@ -4042,8 +4039,8 @@ function mutation_observe(mut_vec: string|any[],mut_observer: {disconnect: () =>
 			}
 		}
 	}
-	if(document.body) log_data_vec.push('b',document.body.children.length);
-	else log_data_vec.push('h',document.head.children.length);
+	if(document.body) log_data_vec.push("b",document.body.children.length);
+	else log_data_vec.push("h",document.head.children.length);
 	log_data_vec.push(document.querySelectorAll("script").length);
 	loaded_scripts_count+=added_scripts.length;
 	if(loaded_scripts_count>=script_num) {
@@ -4130,7 +4127,7 @@ async function do_fetch_load() {
 		return "";
 	}
 	//spell:disable-next-line
-	let json_rep_1=`"\x3Cscript>\\n  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\n  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\n  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');\\n\\n  ga('create', 'UA-63134422-1', 'auto');\\n  ga('send', 'pageview');\\n\\n\x3C/script>"`;
+	let json_rep_1=`"\x3Cscript>\\n  (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){\\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\n  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\n  })(window,document,"script",'//www.google-analytics.com/analytics.js',"ga");\\n\\n  ga("create", 'UA-63134422-1', "auto");\\n  ga("send", "pageview");\\n\\n\x3C/script>"`;
 	let rem_str_1=JSON.parse(json_rep_1);
 	while(did_rep) {
 		did_rep=false;
@@ -4155,7 +4152,7 @@ async function do_fetch_load() {
 	document.close();
 	reset_global_event_handlers();
 	window.onunload=function() {
-		console.info('unload');
+		console.info("unload");
 	};
 	window.onbeforeunload=function() {
 		console.info('before unload');
@@ -4169,7 +4166,7 @@ function on_dom_load() {
 	window.setTimeout=real_st;
 	window.setInterval=real_si;
 	EventTarget.prototype.addEventListener=orig_aev;
-	document.addEventListener('DOMContentLoaded',function() {
+	document.addEventListener("DOMContentLoaded",function() {
 		setTimeout(action_1,300);
 	});
 }
@@ -4193,7 +4190,7 @@ function nop_timer(_handler: TimerHandler,_timeout?: number|undefined,..._args: 
 }
 
 function no_aev(...v: any[]) {
-	console.log('aev',v);
+	console.log("aev",v);
 }
 declare global {
 	interface Window {
@@ -4216,12 +4213,12 @@ declare global {
 
 function main() {
 	if(!globalThis.location) return;
-	if(globalThis.location.pathname.match('test')) {
+	if(globalThis.location.pathname.match("test")) {
 		return;
 	}
 	reset_global_event_handlers();
 	enable_jquery_proxy_if_needed();
-	document.addEventListener('onContentLoaded',remove_bad_dom_script_element);
+	document.addEventListener("onContentLoaded",remove_bad_dom_script_element);
 	Node.prototype.insertBefore=new Proxy(Node.prototype.insertBefore,{
 		apply(target,thisValue,parameters: [Node,Node]) {
 			if(insert_before_enabled(...parameters)) {
