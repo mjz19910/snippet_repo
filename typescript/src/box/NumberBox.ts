@@ -1,8 +1,5 @@
-export class NumberBox {
-	type: 'number';
-	value: number;
-	constructor(value: number) {
-		this.type='number';
-		this.value=value;
-	}
+import {BoxTemplate} from "./template/BoxTemplate.js";
+
+export class NumberBox extends BoxTemplate<"number",number>  {
+	readonly type='number';
 }
