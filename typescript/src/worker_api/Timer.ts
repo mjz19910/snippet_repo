@@ -1,7 +1,6 @@
 import {ReplyClearSingle,ReplySetRepeating,ReplySetSingle,TIMER_REPEATING,TIMER_SINGLE,TIMER_TAG_COUNT} from "./constants.js";
-import {is_in_userscript} from "../script_registry/is_in_userscript.js";
 import {DispatchMessageType} from "./constant_types.js";
-import {SetMessageData} from "../vm/SetMessageData.js";
+import {SetMessageData} from "./SetMessageData.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerState} from "./TimerState.js";
 import {TimerTag} from "./TimerTag.js";
@@ -122,9 +121,6 @@ export class Timer {
 		if(!timeout||timeout<0)
 			timeout=0;
 		let state=new TimerState(tag,is_repeating,target_fn,target_args,timeout);
-		if(is_in_userscript.flag) {
-			(target_fn as {is_userscript_fn?: boolean}).is_userscript_fn=true;
-		}
 		this.store_state_by_remote_id(state,remote_id);
 		this.send_worker_set_message(tag,{
 			t: remote_id,
