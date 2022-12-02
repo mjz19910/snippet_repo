@@ -57,13 +57,86 @@ export class CSSStyleSheetBox extends BoxTemplate<"CSSStyleSheetBox",CSSStyleShe
 	readonly next_member="instance_type";
 	readonly instance_type="CSSStyleSheet";
 }
-import {BoxMaker} from "../../box/BoxMaker.js";
-import {CSSStyleSheetConstructorBox} from "../../box/CSSStyleSheetConstructorBox.js";
-import {CSSStyleSheetInitBox} from "../../box/CSSStyleSheetInitBox.js";
-import {CSSStyleSheetPromiseBox} from "../../box/CSSStyleSheetPromiseBox.js";
-import {DocumentBox} from "../../box/DocumentBox.js";
-import {EmptyArrayBox} from "../../box/EmptyArrayBox.js";
-import {FunctionConstructorFactory} from "../../box/FunctionConstructorFactory.js";
+export interface BoxMaker<TMakerArgs,TBoxRet extends BoxTemplate<string,any>> {
+	maker: (
+		make_new: (do_box: () => TBoxRet['value'],...a: TMakerArgs[]) => TBoxRet,
+		value: FunctionConstructor
+	) => TBoxRet;
+}
+export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",typeof CSSStyleSheet> {
+	readonly type="constructor_box";
+	readonly next_member="instance_type";
+	readonly instance_type="CSSStyleSheet";
+	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
+	readonly args_type: [options?: CSSStyleSheetInit|undefined]=[];
+	factory(...arr: Box[]) {
+		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
+		for(let i=0;i<arr.length;i++) {
+			let val=arr[i];
+			if(val.type!='shape_box') continue;
+			if(val.shape!='CSSStyleSheetInit') continue;
+			valid_args[0]=val.value;
+		}
+		let value=this.value;
+		let obj: CSSStyleSheet=new value(...valid_args);
+		return new CSSStyleSheetBox(obj);
+	}
+}
+
+export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetInit> {
+	readonly type="shape_box";
+	readonly shape="CSSStyleSheetInit";
+	set_property(key: keyof CSSStyleSheetInit,value: string|boolean|MediaListBox|undefined) {
+		if(key==='baseURL') {
+			if(typeof value=='string') {
+				this.value[key]=value;
+			} else if(typeof value==='undefined') {
+				this.value[key]=value;
+			} else {
+				throw new Error("Invalid value for key "+key);
+			}
+		} else if(key==='disabled') {
+			if(typeof value==='boolean') {
+				this.value[key]=value;
+			} else if(typeof value==='undefined') {
+				this.value[key]=value;
+			} else {
+				throw new Error("Invalid value for key "+key);
+			}
+		} else if(key==='media') {
+			if(typeof value==='object'&&value.instance_type==='MediaList') {
+				this.value[key]=value.value;
+			} else if(typeof value==='string') {
+				this.value[key]=value;
+			} else if(typeof value==='undefined') {
+				this.value[key]=value;
+			} else {
+				throw new Error("Invalid value for key "+key);
+			}
+		} else {
+			throw new Error("Type shenanigans afoot (You passed a value that should be impossible at runtime)");
+		}
+	}
+}
+export class CSSStyleSheetPromiseBox extends BoxTemplate<"promise_box",Promise<CSSStyleSheet>> {
+	readonly type="promise_box";
+	readonly inner_type="Promise<CSSStyleSheet>";
+	readonly await_type="CSSStyleSheet";
+}
+export class DocumentBox extends BoxTemplate<"document_box",Document> {
+	readonly type="document_box";
+}
+export class EmptyArrayBox extends BoxTemplate<"array_box",[]> {
+	readonly type="array_box";
+	readonly item_type="none";
+	readonly special="Unit";
+}
+export interface NewableFunctionConstructor {
+	make_new: new (...a: Box[]) => FunctionInstance
+}
+export interface FunctionConstructorFactory {
+	factory: (box_value: NewableFunctionConstructor) => FunctionBox
+}
 export class FunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Box> {
 	readonly type="function_box";
 	readonly return_type="null";
@@ -116,19 +189,64 @@ export class FunctionConstructorBox {
 	}
 }
 export type FunctionInstance=(...a: Box[]) => Box;
-import {GlobalThisBox} from "../../box/GlobalThisBox.js";
-import {IndexBox} from "../../box/IndexBox.js";
-import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
-import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
-import {MediaListBox} from "../../box/MediaListBox.js";
-import {NewableFunctionBox} from "../../box/NewableFunctionBox.js";
+export class GlobalThisBox extends BoxTemplate<"value_box",typeof globalThis> {
+	readonly type="value_box";
+	readonly inner_value="globalThis";
+}
+export type IndexAccess<T>={
+	[v: string]: T
+}
+export class IndexBox extends BoxTemplate<"object_box",IndexAccess<Box>> {
+	readonly type="object_box";
+	readonly like_type="object_box";
+	readonly extension='index';
+	readonly index_type="Box";
+	readonly inner_type="Box";
+}
+export class InstructionTypeArrayBox extends BoxTemplate<"array_box",InstructionType[]> {
+	readonly type="array_box";
+	readonly next_member="item_type";
+	readonly item_type="instruction_type[]";
+}
+export class InstructionTypeBox extends BoxTemplate<"instance_box",InstructionType> {
+	readonly type="instance_box";
+	readonly instance_type="InstructionType";
+}
+export class MediaListBox extends BoxTemplate<"instance_box",MediaList> {
+	readonly type="instance_box";
+	readonly instance_type="MediaList";
+}
+export class NewableFunctionBox {
+	readonly type="constructor_box";
+	readonly instance_type="unknown";
+	readonly arguments="box[]";
+	readonly return="box";
+	factory_value: NewableInstancePack<{}>;
+	class_value: new (...a: Box[]) => {};
+	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
+		this.factory_value=factory_value;
+		this.class_value=class_value;
+	}
+	get_construct_arguments(): [NewableInstancePack<{}>,new (...a: Box[]) => {}] {
+		return [this.factory_value,this.class_value];
+	}
+	static from_box(value_box: NewableFunctionBox) {
+		return new this(value_box.factory_value,value_box.class_value);
+	}
+	on_get(vm: StackVMImpl,key: string) {
+		vm;key;
+		throw new Error("Method not implemented.");
+	}
+	factory(...args: Box[]) {
+		return this.factory_value.make_box(this.class_value,args);
+	}
+}
 export interface NewableInstancePack<T> {
 	make_box(box_value: new (...a: Box[]) => T,construct_args: Box[]): Box;
 }
 export class NewableInstancePackObjectBox extends BoxTemplate<"NewableInstancePack<{}>",NewableInstancePack<{}>> {
 	readonly type="NewableInstancePack<{}>";
 }
-
 export class NodeBox extends BoxTemplate<"instance_box",Node> {
 	readonly type="instance_box";
 	readonly instance_type="Node";
