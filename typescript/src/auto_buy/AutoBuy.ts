@@ -2,7 +2,7 @@ import {array_sample_end} from "../array_sample_end.js";
 import {Box} from "../box/Box.js";
 import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
-import {DomValueBox} from "../box/DomValueBox.js";
+import {DomElementBox} from "../box/DomElementBox.js";
 import {NullBox} from "../box/NullBox.js";
 import {PromiseFunctionBox} from "../box/PromiseFunctionBox.js";
 import {StringBox} from "../box/StringBox.js";
@@ -367,7 +367,7 @@ export class AutoBuy implements AutoBuyInterface {
 					let [,,query_arg]=cur_item;
 					const cur_element=this.decode_query_arg(query_arg);
 					if(!cur_element) throw new Error("Unable to find query element");
-					stack.push([depth,"push",new DomValueBox(cur_element)]);
+					stack.push([depth,"push",new DomElementBox(cur_element)]);
 				} break;
 				case 'dom_new': {
 					const [,,class_,construct_arg_arr,callback,arg_arr]=cur_item;
@@ -381,14 +381,14 @@ export class AutoBuy implements AutoBuyInterface {
 					let cur_element=document.createElement(element_type);
 					cur_element.innerText=content;
 					trg_map.set(name,cur_element);
-					stack.push([depth,"push",new DomValueBox(cur_element)]);
+					stack.push([depth,"push",new DomElementBox(cur_element)]);
 				} break;
 				case 'dom_create_element_with_props': {
 					const [,,element_type,name,content]=cur_item;
 					let cur_element=document.createElement(element_type);
 					cur_element.id=content.id;
 					trg_map.set(name,cur_element);
-					stack.push([depth,"push",new DomValueBox(cur_element)]);
+					stack.push([depth,"push",new DomElementBox(cur_element)]);
 				} break;
 				case 'append': {
 					// peek at the return stack, up 1 depth

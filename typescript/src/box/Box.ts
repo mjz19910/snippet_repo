@@ -1,4 +1,4 @@
-import {DomValueBox} from "./DomValueBox.js";
+import {DomElementBox} from "./DomElementBox.js";
 import {PromiseFunctionBox} from "./PromiseFunctionBox.js";
 import {ArrayBox} from "./ArrayBox.js";
 import {AsyncFunctionBox} from "./AsyncFunctionBox.js";
@@ -75,6 +75,6 @@ export type Box=
 	BoxWithPropertiesIsBox|
 	// Generic boxes
 	NewableInstancePackObjectBox|
-	DomValueBox|
+	DomElementBox|
 	PromiseFunctionBox;
 

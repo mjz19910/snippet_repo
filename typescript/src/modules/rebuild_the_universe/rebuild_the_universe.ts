@@ -51,7 +51,7 @@ import {BoxTemplate} from "../../box/template/BoxTemplate.js";
 import {VoidBox} from "../../box/VoidBox.js";
 import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
-import {DomValueBox} from "../../box/DomValueBox.js";
+import {DomElementBox} from "../../box/DomElementBox.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
 import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
 import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
@@ -294,7 +294,7 @@ type BoxImpl=
 	BoxWithPropertiesIsBox|
 	// Generic boxes
 	NewableInstancePackObjectBox|
-	DomValueBox|
+	DomElementBox|
 	PromiseFunctionBox;
 
 
