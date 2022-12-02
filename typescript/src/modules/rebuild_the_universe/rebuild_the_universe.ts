@@ -438,7 +438,7 @@ export type DomInstructionVMPushIP=[number,"vm_push_ip"];
 export type DomInstructionVMPushSelf=[number,"vm_push_self"];
 export type DomInstructionVMReturn=[number,"vm_return"];
 export type DomInstructionMapImpl={
-	append: ["append", number];
+	append: [number, "append"];
 };
 export type DomInstructionType=
 	DomInstructionAppendImpl|
