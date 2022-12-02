@@ -1,4 +1,7 @@
-import {fake} from "../../../browser_fake_dom/index.js";
+export class FakeWindow {};
+export class FakeDocument {}
+export const fake={window:new FakeWindow,document: new FakeDocument};
+
 import {any} from "../any.js";
 import {ReplPluginManager} from "../ReplPluginManager.js";
 import {BrowserPluginData} from "./BrowserPluginIndexType.js";
