@@ -1,10 +1,11 @@
 import {any} from "../any.js";
-import {make_reload_page_request_handler,PageLoaderState} from "../../../page_loader/index.js";
+import {make_reload_page_request_handler} from "../../../page_loader/index.js";
 import {eval_script} from "../detail/eval.js";
 import {async_import} from "../detail/import.js";
 import {get_page_loader_dom_state} from "../get_page_loader_dom_state.js";
 import {get_vars} from "../get_vars.js";
 import {REPLPlugin} from "./REPLPlugin.js";
+import {Extern} from "../use_extern.js";
 
 class InitPluginContext {
 	get_vars=get_vars;
@@ -27,9 +28,9 @@ export class REPLContextPlugin extends REPLPlugin {
 		ctx.get_page_loader_dom_state=get_page_loader_dom_state;
 		ctx.async_import=async_import;
 		ctx.do_eval_script=eval_script;
-		/**@type {PageLoaderState} */
+		/**@type {Extern.PageLoaderState} */
 		let real_state=any(this.repl.m_request_state);
-		ctx.reload=make_reload_page_request_handler(real_state);
+		ctx.reload=Extern.make_reload_page_request_handler(real_state);
 	}
 }
 
