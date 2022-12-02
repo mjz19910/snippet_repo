@@ -7,7 +7,7 @@ import {ChromeDevToolsGetEventListeners} from "../dev_tools_debugger/ChromeDevTo
 import {ChromeDevToolsUnDebug} from "../dev_tools_debugger/ChromeDevToolsUnDebug.js";
 import {DebugFunctionBox} from "./DebugFunctionBox.js";
 import {DebugClassBox} from "./DebugClassBox.js";
-import {DebugInfoValue} from "../DebugInfoValue.js";
+import {DebugInfoValue} from "./DebugInfoValue.js";
 import {GenericDataEvent} from "../GenericDataEvent.js";
 
 declare global {
