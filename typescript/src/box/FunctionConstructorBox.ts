@@ -2,13 +2,13 @@ import {Box} from "./Box.js";
 import {FunctionBox} from "./FunctionBox.js";
 import {BoxMaker} from "./BoxMaker.js";
 import {FunctionConstructorFactory} from "./FunctionConstructorFactory.js";
+import {BoxTemplate} from "./template/BoxTemplate.js";
 
-export class FunctionConstructorBox {
+export class FunctionConstructorBox extends BoxTemplate<"constructor_box",FunctionConstructor> {
 	readonly type="constructor_box";
 	readonly instance_type="Function";
 	readonly arguments="string[]";
 	readonly return="box";
-	value: FunctionConstructor;
 	instance_factory: FunctionConstructorFactory;
 	box_maker: BoxMaker<string,FunctionBox>;
 	constructor(
@@ -16,7 +16,7 @@ export class FunctionConstructorBox {
 		instance_factory: FunctionConstructorFactory,
 		box_maker: BoxMaker<string,FunctionBox>
 	) {
-		this.value=value;
+		super(value);
 		this.instance_factory=instance_factory;
 		this.box_maker=box_maker;
 	}
