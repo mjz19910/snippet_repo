@@ -1,9 +1,9 @@
-import {debug} from "../../debug.mjs";
 import {handle_failed_import} from "./handle_failed_import.js";
 import {IpcLoader} from "./ipc_loader_state.js";
 import {g_loaded_ipc_plugin_map} from "./g_loaded_ipc_plugin_map.js";
 import {ReplPluginManagerModule} from "./ReplPluginManagerModule.js";
 import {try_import_module} from "./try_import_module.js";
+import {Extern} from "./use_extern.js";
 
 /** @arg {IpcLoader} state @arg {string} plugin_key */
 export async function import_ipc_plugin(state,plugin_key) {
@@ -20,7 +20,7 @@ export async function import_ipc_plugin(state,plugin_key) {
 	if(g_loaded_ipc_plugin_map.has(plugin_key)) {
 		return g_loaded_ipc_plugin_map.get(plugin_key);
 	}
-	if(debug) console.log('imp depth',state.depth);
+	if(Extern.debug) console.log('imp depth',state.depth);
 	state.depth++;
 	try {
 		let mod=await try_import_module(plugin_key,`../../${plugin_key}/ipc_index.js`);
