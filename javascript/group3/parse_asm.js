@@ -444,6 +444,13 @@ function id(ar,off) {
 /**
  * @param {string[]} ar
  */
+function parse_add_1(ar) {
+	id(ar,1);
+	return ar.slice(5);
+}
+/**
+ * @param {string[]} ar
+ */
 function fn(ar) {
 	try {
 		if(1) {
@@ -525,7 +532,7 @@ function fn(ar) {
 					continue;
 				}
 				if(num==0x05) {
-					id(ar,1);
+					ar=parse_add_1(ar);
 				}
 				if(!parse_obj[ar[0]]) {
 					console.log(ar.slice(0,15).join(" "));
