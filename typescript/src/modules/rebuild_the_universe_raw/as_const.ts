@@ -13,7 +13,7 @@ export const instruction_descriptor_arr_type=[
 	['modify_operand',InstructionModifyOpImpl],
 	['nop',InstructionNopImpl],
 	['peek',InstructionPeekImpl],
-	['push_global_object',InstructionPushGlobalObjectImpl],
+	['push_window_object',InstructionPushWindowObjectImpl],
 	['push',InstructionPushImpl],
 	['return',InstructionReturnImpl],
 	['vm_block_trace',InstructionBlockTraceImpl],

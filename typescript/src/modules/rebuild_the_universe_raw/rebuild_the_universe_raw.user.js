@@ -534,10 +534,8 @@ class InstructionJeImpl extends InstructionImplBase {
 class InstructionJmpImpl extends InstructionImplBase {
 	/** @type {'jmp'} */
 	type='jmp';
-	/** @arg {[number]} instruction @arg {StackVMImpl} vm */
-	run(vm,instruction) {
-		let [target]=instruction;
-		if(typeof target!='number') throw new Error("Invalid");
+	/** @arg {number} target @arg {StackVMImpl} vm */
+	run(vm,target) {
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Jump target is out of instructions range");
 		}
@@ -548,7 +546,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 	/** @type {'modify_operand'} */
 	type='modify_operand';
 	/** @arg {[number,number]} instruction @arg {StackVMImpl} vm */
-	run(vm,instruction) {
+	run(vm,...instruction) {
 		let [target,offset]=instruction;
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Destination is out of instructions range");
@@ -607,8 +605,8 @@ class InstructionVMPushIPImpl extends InstructionImplBase {
 class InstructionPushImpl extends InstructionImplBase {
 	/** @type {'push'} */
 	type='push';
-	/** @arg {import("./support/Box.js").Box[]} args @arg {StackVMImpl} vm */
-	run(vm,...args) {
+	/** @arg {StackVMImpl} vm @arg {this['type']} _ @arg {import("./support/Box.js").Box[]} args */
+	run(vm,_,...args) {
 		vm.stack.push(...args);
 	}
 }
@@ -708,9 +706,9 @@ class InstructionPushVMObjImpl extends InstructionImplBase {
 		vm.stack.push(new StackVMBoxImpl(vm));
 	}
 }
-class InstructionPushGlobalObjectImpl extends InstructionImplBase {
-	/** @type {'push_global_object'} */
-	type='push_global_object';
+class InstructionPushWindowObjectImpl extends InstructionImplBase {
+	/** @type {'push_window_object'} */
+	type='push_window_object';
 	/** @arg {StackVMImpl} vm */
 	run(vm) {
 		vm.stack.push(new WindowBoxImpl(window));
@@ -720,19 +718,12 @@ class InstructionPeekImpl extends InstructionImplBase {
 	/** @type {'peek'} */
 	type='peek';
 	debug=false;
-	/** @arg {StackVMImpl} vm @arg {[any, any]} ins */
-	run(vm,ins) {
-		let [,distance]=ins;
-		let base_ptr=vm.base_ptr;
-		if(base_ptr===null) base_ptr=0;
-		if(typeof vm.frame_size!=='number') {
-			console.log('vm',vm);
-			throw new Error("Require frame size");
-		}
-		let offset=base_ptr-distance-vm.frame_size-1;
+	/** @arg {StackVMImpl} vm @arg {number} distance */
+	run(vm,distance) {
+		let offset=vm.base_ptr-distance-vm.frame_size-1;
 		let at=vm.stack[offset];
 		vm.stack.push(at);
-		if(this.debug) console.log('VM: peek',ins,'value',at,'index',offset,vm.stack.length-offset);
+		if(this.debug) console.log('VM: peek',distance,'value',at,'index',offset,vm.stack.length-offset);
 	}
 }
 class InstructionAppendImpl extends InstructionImplBase {
@@ -828,6 +819,43 @@ class InstructionBlockTraceImpl extends InstructionImplBase {
 	run(_vm) {
 	}
 }
+class UnimplementedInstruction extends InstructionImplBase {
+	/** @arg {StackVMImpl} _vm */
+	run(_vm) {
+		throw new Error("Unimplemented instruction");
+	}
+}
+const instruction_table={
+	append: new InstructionAppendImpl,
+	breakpoint: new InstructionBreakpointImpl,
+	call: new InstructionCallImpl,
+	cast: new InstructionCastImpl,
+	construct: new InstructionConstructImpl,
+	dom_create_element_with_props: new UnimplementedInstruction,
+	dom_create_element: new UnimplementedInstruction,
+	dom_exec: new UnimplementedInstruction,
+	dom_get: new UnimplementedInstruction,
+	dom_new: new UnimplementedInstruction,
+	dom_peek: new UnimplementedInstruction,
+	drop: new InstructionDropImpl,
+	dup: new InstructionDupImpl,
+	get: new InstructionGetImpl,
+	halt: new InstructionHaltImpl,
+	je: new InstructionJeImpl,
+	jmp: new InstructionJmpImpl,
+	modify_operand: new InstructionModifyOpImpl,
+	nop: new InstructionNopImpl,
+	peek: new InstructionPeekImpl,
+	push_window_object: new InstructionPushWindowObjectImpl,
+	push: new InstructionPushImpl,
+	return: new InstructionReturnImpl,
+	vm_block_trace: new InstructionBlockTraceImpl,
+	vm_call: new InstructionVMCallImpl,
+	vm_push_args: new InstructionPushArgsImpl,
+	vm_push_ip: new InstructionVMPushIPImpl,
+	vm_push_self: new InstructionPushVMObjImpl,
+	vm_return: new InstructionVMReturnImpl,
+};
 /** @type {typeof import("./as_const.js").instruction_descriptor_arr_type} */
 const instruction_descriptor_arr=[
 	['append',InstructionAppendImpl],
@@ -844,7 +872,7 @@ const instruction_descriptor_arr=[
 	['modify_operand',InstructionModifyOpImpl],
 	['nop',InstructionNopImpl],
 	['peek',InstructionPeekImpl],
-	['push_global_object',InstructionPushGlobalObjectImpl],
+	['push_window_object',InstructionPushWindowObjectImpl],
 	['push',InstructionPushImpl],
 	['return',InstructionReturnImpl],
 	['vm_block_trace',InstructionBlockTraceImpl],
@@ -867,7 +895,7 @@ class StackVMImpl {
 	return_value;
 	/** @type {number|null} */
 	jump_instruction_pointer;
-	/** @type {number|null} */
+	/** @type {number} */
 	base_ptr;
 	/** @type {Box_CJS[]} */
 	stack;
@@ -880,7 +908,7 @@ class StackVMImpl {
 		this.stack=[];
 		this.return_value=new VoidBoxImpl;
 		this.jump_instruction_pointer=null;
-		this.base_ptr=null;
+		this.base_ptr=0;
 		this.frame_size=2;
 		this.flags=new VMFlags;
 	}
@@ -931,7 +959,35 @@ class StackVMImpl {
 	/** @arg {InstructionType_CJS} instruction */
 	execute_instruction(instruction) {
 		switch(instruction[0]) {
-			case 'append': break;
+			case 'append': instruction_table[instruction[0]].run(this); break;
+			case "breakpoint": instruction_table[instruction[0]].run(this); break;
+			case "call": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "cast": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "construct": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "dom_create_element_with_props": instruction_table[instruction[0]].run(this); break;
+			case "dom_create_element": instruction_table[instruction[0]].run(this); break;
+			case "dom_exec": instruction_table[instruction[0]].run(this); break;
+			case "dom_get": instruction_table[instruction[0]].run(this); break;
+			case "dom_new": instruction_table[instruction[0]].run(this); break;
+			case "dom_peek": instruction_table[instruction[0]].run(this); break;
+			case "drop": instruction_table[instruction[0]].run(this); break;
+			case "dup": instruction_table[instruction[0]].run(this); break;
+			case "get": instruction_table[instruction[0]].run(this); break;
+			case "halt": instruction_table[instruction[0]].run(this); break;
+			case "je": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "jmp": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "modify_operand": instruction_table[instruction[0]].run(this,instruction[1],instruction[2]); break;
+			case "nop": instruction_table[instruction[0]].run(); break;
+			case "peek": instruction_table[instruction[0]].run(this,instruction[1]); break;
+			case "push_window_object": instruction_table[instruction[0]].run(this); break;
+			case "push": instruction_table[instruction[0]].run(this, ...instruction); break;
+			case "return": instruction_table[instruction[0]].run(this); break;
+			case "vm_block_trace": break;
+			case "vm_call": break;
+			case "vm_push_args": break;
+			case "vm_push_ip": break;
+			case "vm_push_self": break;
+			case "vm_return": break;
 		}
 	}
 	run() {
