@@ -6,7 +6,7 @@ holder.use();
 
 export class SimpleStackVM {
 	/**
-	 * @param {(["this"] | ["push", ...string[]] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['push_args']|['push_window']|['breakpoint'])[]} instructions
+	 * @param {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['push_args']|['push_window']|['breakpoint'])[]} instructions
 	 */
 	constructor(instructions) {
 		this.instructions=instructions;
@@ -40,22 +40,15 @@ export class SimpleStackVM {
 			let cur_instruction=this.instructions[this.instruction_pointer];
 			switch(cur_instruction[0]) {
 				case 'push'/*Stack*/: {
-					let [,...args]=cur_instruction;
-					for(let i=0;i<args.length;i++) {
-						let item=args[i];
-						this.push(item);
-					}
-					break;
-				}
-				case 'drop'/*Stack*/: {
-					let drop=this.pop();
-					void drop;
-					break;
-				}
+					let [,value]=cur_instruction;
+					this.push(value);
+				} break;
+				case 'drop'/*Stack*/: this.pop(); break;
 				case 'get'/*Object*/: {
 					let name=this.pop();
 					let obj=this.pop();
 					if(!obj) throw new Error();
+					if(typeof obj==='string') throw new Error();
 					if(!(typeof name==='string')) throw new Error();
 					this.push(obj[name]);
 					break;
