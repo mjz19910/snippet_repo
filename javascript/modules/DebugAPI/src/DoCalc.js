@@ -7,7 +7,7 @@ export class DoCalc {
 	get_result() {
 		return this.m_return_value;
 	}
-	/** @type {import("../types/DualR.js").DualR|null} */
+	/** @type {DualR|null} */
 	m_return_value=null;
 	run() {
 		this.obj.stats_win=2;

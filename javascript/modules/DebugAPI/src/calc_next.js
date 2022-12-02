@@ -25,7 +25,7 @@ export function calc_next(stats,obj,max_id) {
 	if(next.arr_str)
 		return null;
 	let com=new CompressTU(next.arr_dual);
-	/**@type {import("../types/DualR.js").DualR} */
+	/**@type {DualR} */
 	let compress_result=com.try_compress_dual();
 	if(!compress_result[0]) {
 		/**@type {TypeAOrTypeB<string, number>[]} */
