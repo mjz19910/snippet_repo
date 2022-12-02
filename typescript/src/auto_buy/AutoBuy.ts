@@ -7,7 +7,7 @@ import {NullBox} from "../box/NullBox.js";
 import {StringBox} from "../box/StringBox.js";
 import {VoidBox} from "../box/VoidBox.js";
 import {MulCompression} from "../compression/MulCompression.js";
-import {LOG_LEVEL_VERBOSE} from "../constants.js";
+import {LOG_LEVEL_VERBOSE} from "../log_level_enum.js";
 import {DataLoader} from "../DataLoader.js";
 import {debug_id_syms} from "../debug_id_syms.js";
 import {EventHandlerDispatch} from "../EventHandlerDispatch.js";

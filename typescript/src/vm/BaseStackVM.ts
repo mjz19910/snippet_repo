@@ -10,7 +10,7 @@ import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {AbstractVM} from "./AbstractVM.js";
 import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.js";
 import {PromiseBox} from "../box/PromiseBox.js";
-import {LOG_LEVEL_VERBOSE} from "../constants.js";
+import {LOG_LEVEL_VERBOSE} from "../log_level_enum.js";
 
 export class BaseStackVM implements AbstractVM<[]> {
 	flags: Map<string,boolean>;
