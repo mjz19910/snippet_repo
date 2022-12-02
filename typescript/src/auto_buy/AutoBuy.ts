@@ -1,36 +1,36 @@
 import {array_sample_end} from "../array_sample_end.js";
-import {AsyncNodeRoot} from "../timer_node/AsyncNodeRoot.js";
-import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
-import {AsyncTimeoutFireNode} from "../timer_node/AsyncTimeoutFireNode.js";
-import {AutoBuyState} from "./AutoBuyState.js";
 import {Box} from "../box/Box.js";
+import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
+import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
 import {DomValueBox} from "../box/DomValueBox.js";
-import {do_auto_unit_promote} from "./do_auto_unit_promote.js";
-import {EventHandlerDispatch} from "../EventHandlerDispatch.js";
-import {EventHandlerVMDispatch} from "../vm/EventHandlerVMDispatch.js";
-import {AutoBuyInterface} from "./AutoBuyInterface.js";
-import {lightreset_inject} from "./lightreset_inject.js";
-import {l_log_if} from "../l_log_if.js";
+import {NullBox} from "../box/NullBox.js";
+import {PromiseFunctionBox} from "../box/PromiseFunctionBox.js";
+import {StringBox} from "../box/StringBox.js";
+import {VoidBox} from "../box/VoidBox.js";
 import {MulCompression} from "../compression/MulCompression.js";
-import {SimpleStackVMParser} from "../vm/SimpleStackVMParser.js";
-import {specialclick_inject} from "./specialclick_inject.js";
-import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode.js";
+import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {DataLoader} from "../DataLoader.js";
 import {debug_id_syms} from "../debug_id_syms.js";
-import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
+import {EventHandlerDispatch} from "../EventHandlerDispatch.js";
+import {l_log_if} from "../l_log_if.js";
 import {is_in_ignored_from_src_fn} from "../script_registry/is_in_ignored_from_src_fn.js";
-import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {SpecType} from "../SpecType.js";
+import {AsyncNodeRoot} from "../timer_node/AsyncNodeRoot.js";
+import {AsyncTimeoutFireNode} from "../timer_node/AsyncTimeoutFireNode.js";
+import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
+import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode.js";
+import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
 import {BaseStackVM} from "../vm/BaseStackVM.js";
-import {RawDomInstructionsWithDepth} from "../vm/RawDomInstructionsWithDepth";
-import {NullBox} from "../box/NullBox.js";
-import {StringBox} from "../box/StringBox.js";
-import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
-import {PromiseFunctionBox} from "../box/PromiseFunctionBox.js";
-import {VoidBox} from "../box/VoidBox.js";
-import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
+import {EventHandlerVMDispatch} from "../vm/EventHandlerVMDispatch.js";
 import {InstructionType} from "../vm/instruction/InstructionType.js";
-import {TreeItem} from "../vm/TreeItem";
+import {RawDomInstructionsWithDepth} from "../vm/RawDomInstructionsWithDepth";
+import {SimpleStackVMParser} from "../vm/SimpleStackVMParser.js";
+import {TreeItem} from "../vm/TreeItem.js";
+import {AutoBuyInterface} from "./AutoBuyInterface.js";
+import {AutoBuyState} from "./AutoBuyState.js";
+import {do_auto_unit_promote} from "./do_auto_unit_promote.js";
+import {lightreset_inject} from "./lightreset_inject.js";
+import {specialclick_inject} from "./specialclick_inject.js";
 
 // Imports
 declare global {
@@ -172,7 +172,7 @@ export class AutoBuy implements AutoBuyInterface {
 		this.debug_arr=[];
 		for(let i=0;i<debug_id_syms.length;i++) {
 			let val=debug_id_syms[i].deref();
-			let t_obj=this as any as {[x: symbol]: string};
+			let t_obj=this as any as {[x: symbol]: string;};
 			if(val&&val.sym in t_obj&&t_obj[val.sym]) {
 				let obj1=t_obj[val.sym];
 				let split_data=obj1.split(",");
@@ -499,7 +499,7 @@ export class AutoBuy implements AutoBuyInterface {
 			this.timeout_element.innerText=this.timeout_arr[0];
 		// init hours_played_element
 		// init percent_ratio_element
-		this.percent_ratio_element?.addEventListener('click',()=>{
+		this.percent_ratio_element?.addEventListener('click',() => {
 			this.state.reset();
 		});
 		// init percent_ratio_change_element
@@ -508,7 +508,7 @@ export class AutoBuy implements AutoBuyInterface {
 			this.state_log_element.style.fontSize=font_size_px+"px";
 		// event listeners
 		// window unload
-		window.addEventListener('unload',()=>{
+		window.addEventListener('unload',() => {
 			this.save_state_history_arr();
 			this.save_timeout_arr();
 		});
