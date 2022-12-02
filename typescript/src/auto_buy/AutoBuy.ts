@@ -59,6 +59,7 @@ declare global {
 }
 
 export class AutoBuy implements AutoBuyInterface {
+	debug_flags: Map<string, boolean>=new Map;
 	do_zero_pad(value: string|number,pad_char: string,char_num: number) {
 		let string;
 		if(typeof value==='number') {
@@ -406,7 +407,7 @@ export class AutoBuy implements AutoBuyInterface {
 					debugger;
 				} break;
 			}
-			if(this.debug_arr.includes('build_dom_from_desc'))
+			if(this.debug_flags.get("build_dom_from_desc"))
 				console.log('es',stack.at(-1));
 		}
 		let instruction_tree=this.stack_to_instruction_tree(stack);
