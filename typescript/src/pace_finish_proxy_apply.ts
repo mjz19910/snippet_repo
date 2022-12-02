@@ -1,4 +1,4 @@
-import {auto_buy_obj} from "../auto_buy_obj.js"
+import {auto_buy_obj} from "./auto_buy_obj.js"
 
 export function pace_finish_proxy_apply(func: Function,this_v: any,args: ArrayLike<any>) {
 	auto_buy_obj.init()
