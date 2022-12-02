@@ -630,7 +630,7 @@ class InstructionGetImpl extends InstructionImplBase {
 	on_get(vm,value_box,key) {
 		if(typeof key!='string') throw new Error("Invalid");
 		switch(value_box.type) {
-			case 'array_box': {
+			case "array_box": {
 				if(typeof key==='number') {
 					if(value_box.item_type==="Box") {
 						let res=value_box.value[key];

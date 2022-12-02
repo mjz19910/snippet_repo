@@ -10,6 +10,10 @@ import {WindowBox} from "./WindowBox.js";
 import {StackVMBox} from "./StackVMBox.js";
 import {FunctionConstructorBox} from "./FunctionConstructorBox.js";
 import {NewableFunctionBox} from "./NewableFunctionBox.js";
+import {CSSStyleSheetConstructorBox} from "./CSSStyleSheetConstructorBox.js";
+import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox.js";
+import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";
+import {ArrayBox} from "./ArrayBox.js";
 
 export type Box=
 	NumberBox|
@@ -24,4 +28,8 @@ export type Box=
 	StackVMBox|
 	FunctionConstructorBox|
 	NewableFunctionBox|
+	CSSStyleSheetConstructorBox|
+	CSSStyleSheetInitBox|
+	CSSStyleSheetBox|
+	ArrayBox|
 	never;
