@@ -115,8 +115,6 @@ let n_regs=[];
 function pi(n) {
 	return parseInt(n,16);
 };
-parse_obj;
-parse_obj;
 function parse_stack(ar) {
 	let num=parseInt(ar[0],16);
 	let af=num&0x7;
