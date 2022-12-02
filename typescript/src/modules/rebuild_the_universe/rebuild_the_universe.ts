@@ -440,32 +440,32 @@ export type DomInstructionVMReturn=[number,"vm_return"];
 export type DomInstructionMapImpl={
 	append: [number,"append"];
 	breakpoint: [number,"breakpoint"];
-	vm_block_trace: DomInstructionVMBlockTrace;
-	vm_call_at: [number,"vm_call_at",DomTaggedPack];
-	marker: [number,"marker",null];
-	dom_filter: [number,"dom_filter",ArgAny4];
 	call: [number,"call",number];
-	cast: DomInstructionCast;
-	construct: DomInstructionConstruct;
-	je: DomInstructionJe;
-	jmp: DomInstructionJmp;
-	modify_operand: DomInstructionModifyOperand;
-	peek: DomInstructionPeek;
-	push: DomInstructionPush;
-	vm_call: DomInstructionVMCall;
-	dup: DomInstructionDup;
+	cast: [number,"cast",CastOperandTarget];
+	construct: [number,"construct",number];
+	create_id: DomInstructionCreateDivWithId;
+	create: DomInstructionCreateDiv;
+	dom_filter: [number,"dom_filter",ArgAny4];
 	drop: DomInstructionDrop;
-	push_window_object: DomInstructionPushWindowObject;
-	nop: DomInstructionNop;
+	dup: [number,"dup"];
 	get: DomInstructionGet;
 	halt: DomInstructionHalt;
+	je: [number,"je",number];
+	jmp: [number,"jmp",number];
+	marker: [number,"marker",null];
+	modify_operand: [number,"modify_operand",number,number];
+	nop: DomInstructionNop;
+	peek: [number,"peek",number];
+	push_window_object: DomInstructionPushWindowObject;
+	push: [number,"push",...BoxImpl[]];
 	return: DomInstructionReturn,
+	vm_block_trace: DomInstructionVMBlockTrace;
+	vm_call_at: [number,"vm_call_at",DomTaggedPack];
+	vm_call: [number,"vm_call",number];
 	vm_push_args: DomInstructionVMPushArgs,
 	vm_push_ip: DomInstructionVMPushIP,
 	vm_push_self: DomInstructionVMPushSelf,
 	vm_return: DomInstructionVMReturn;
-	create_id: DomInstructionCreateDivWithId;
-	create: DomInstructionCreateDiv;
 };
 export type DomInstructionType=DomInstructionMapImpl[keyof DomInstructionMapImpl];
 
