@@ -1,1 +1,1 @@
-export const element_map: Map<string,HTMLElement>=new Map
+export const element_map: Map<string,HTMLElement>=new Map;

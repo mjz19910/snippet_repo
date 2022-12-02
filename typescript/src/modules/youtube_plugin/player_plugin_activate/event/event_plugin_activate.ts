@@ -12,6 +12,7 @@ export function event_plugin_activate(this: CustomEventTarget,event: CustomEvent
 		console.log('no video element list');
 		return;
 	}
-	if(is_watch_page_active())
+	if(is_watch_page_active()) {
 		exit_event_stage();
+	}
 }
