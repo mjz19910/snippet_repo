@@ -75,7 +75,12 @@ export class DebugAPI {
 			};
 		}
 		__d.attach(debug,undebug,null);
-		let data: DebugFunctionBox=['function',this.activate_function,func,{},[]];
+		let data: DebugFunctionBox={
+			type: 'function',callback: this.activate_function,function_: func,obj: {},args: [],
+			get_target() {
+				return this.function_;
+			}
+		};
 		return __d.debuggerGetVarInternal(data,name);
 	}
 	attach(debug: ChromeDevToolsDebug,undebug: ChromeDevToolsUnDebug,getEventListeners: ChromeDevToolsGetEventListeners|null) {
@@ -173,15 +178,15 @@ export class DebugAPI {
 		this.setData('__k',tmp_value);
 		let debug=this.getData('d');
 		if(!debug) throw new Error("Invalid");
-		debug(this.current_debug_data[1],`${breakpoint_code_string}`);
+		debug(this.current_debug_data.get_target(),`${breakpoint_code_string}`);
 		// ---- Activate ----
 		let exec_return=null;
-		if(this.current_debug_data[0]==='class') {
-			let [,p2,p3,p4]=this.current_debug_data;
-			p2(p3,p4);
-		} else if(this.current_debug_data[0]==='function') {
-			let [,p2,p3,p4,p5]=this.current_debug_data;
-			p2(p3,p4,p5);
+		if(this.current_debug_data.type==='class') {
+			let {callback,constructor_,args}=this.current_debug_data;
+			callback(constructor_,args);
+		} else if(this.current_debug_data.type==='function') {
+			let {callback,function_,obj,args}=this.current_debug_data;
+			callback(function_,obj,args);
 		}
 		let exec_res_arr=[];
 		if(tmp_value.valid) {
@@ -219,7 +224,12 @@ export class DebugAPI {
 		};
 	}
 	debuggerGetVarArrayClass(class_value: new (...a: any[]) => {},target_arg_vec: any[],var_match: string) {
-		let data: DebugClassBox=['class',this.activate_class,class_value,target_arg_vec];
+		let data: DebugClassBox={
+			type: 'class',callback: this.activate_class,constructor_: class_value,args: target_arg_vec,
+			get_target() {
+				return this.constructor_;
+			}
+		};
 		return this.debuggerGetVarArrayInternal(data,var_match);
 	}
 	debuggerGetVarArray(run_box: DebugDataBox,var_match: string) {
@@ -240,15 +250,15 @@ export class DebugAPI {
 		this.setData('__k',tmp_value);
 		let debug=this.getData('d');
 		if(debug===null) throw new Error("Invalid");
-		debug(this.current_debug_data[2],`${dbg_str_func}`);
+		debug(this.current_debug_data.get_target(),`${dbg_str_func}`);
 		let activate_return;
 		// ---- Activate ----
-		if(this.current_debug_data[0]==='function') {
-			let [,activate,v1,v2,v3]=this.current_debug_data;
-			activate_return=activate(v1,v2,v3);
+		if(this.current_debug_data.type==='function') {
+			let {callback,function_,obj,args}=this.current_debug_data;
+			activate_return=callback(function_,obj,args);
 		} else {
-			let [,activate,v1,v2]=this.current_debug_data;
-			activate_return=activate(v1,v2);
+			let {callback,constructor_,args}=this.current_debug_data;
+			activate_return=callback(constructor_,args);
 		}
 		let breakpoint_result=tmp_value.get(var_name);
 		this.deleteData('__k');
