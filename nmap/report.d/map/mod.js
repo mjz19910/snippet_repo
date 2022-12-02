@@ -1,5 +1,13 @@
 import {
-	DNS,DNSClassEnum,DNSTypeEnum,Host,IP,lit_value,Query,range,Status
+	DNS,
+	DNSClassEnum,
+	DNSTypeEnum,
+	Host,
+	IP,
+	lit_value,
+	Query,
+	range,
+	Status
 } from "./ns.js";
 
 export const nmap_out_216_58_192=[
