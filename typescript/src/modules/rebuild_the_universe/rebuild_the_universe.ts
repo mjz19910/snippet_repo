@@ -18,6 +18,11 @@
 // @grant			none
 // ==/UserScript==
 
+export interface AbstractVM {
+	halt(): void;
+	execute_instruction(instruction: InstructionTypeImpl): void;
+	run(): BoxImpl;
+}
 
 export abstract class BoxTemplateImpl<T extends string,V> {
 	abstract readonly type: T;
@@ -1073,7 +1078,7 @@ class StackVMFlags {
 	}
 }
 
-class StackVMImpl {
+class StackVMImpl implements AbstractVM {
 	return_value: BoxImpl;
 	jump_instruction_pointer: number|null;
 	base_ptr: number;

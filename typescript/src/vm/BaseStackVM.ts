@@ -67,6 +67,9 @@ export class BaseStackVM implements AbstractVM {
 	is_ip_in_bounds(value: number) {
 		return value>=0&&value<this.instructions.length;
 	}
+	halt() {
+		this.running=false;
+	}
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
 			case 'append': throw new Error("Dom box handling not implemented");
