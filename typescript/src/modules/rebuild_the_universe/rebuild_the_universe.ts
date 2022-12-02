@@ -335,24 +335,6 @@ export class PromiseFunctionBox {
 		this.value=value;
 	}
 }
-export type Append=["append"];
-export type Cast=["cast",CastOperandTarget];
-export type Breakpoint=["breakpoint"];
-export type DomExec=["dom_exec",number];
-export type DomPeek=["dom_peek",number,number];
-export type Call=["call",number];
-export type Construct=["construct",number];
-export type Get=["get"];
-export type Return=["return"];
-export type Je=["je",number];
-export type Jump=["jmp",number];
-export type ModifyOperand=["modify_operand",number,number];
-export type Nop=["nop"];
-export type PushWindowObject=["push_window_object"];
-export type Drop=["drop"];
-export type Dup=["dup"];
-export type Peek=["peek",number];
-export type Push=["push",...BoxImpl[]];
 export type VMBlockTrace=
 	["vm_block_trace","begin",DomInstructionType|null]|
 	["vm_block_trace","call",DomInstructionType|null]|
@@ -360,11 +342,6 @@ export type VMBlockTrace=
 	["vm_block_trace","tagged",DomTaggedPack|null]|
 	["vm_block_trace","tagged_begin",DomTaggedPack|null]|
 	["vm_block_trace","tagged_call",DomTaggedPack|null];
-export type VMCall=["vm_call",number];
-export type VMPushArgs=["vm_push_args"];
-export type VMPushIP=["vm_push_ip"];
-export type VMPushSelf=["vm_push_self"];
-export type VMReturn=["vm_return"];
 export type InstructionMapImpl={
 	append: ["append"];
 	breakpoint: ["breakpoint"];
