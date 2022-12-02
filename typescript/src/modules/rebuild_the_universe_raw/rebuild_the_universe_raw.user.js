@@ -1474,7 +1474,7 @@ class MulCompression extends BaseCompression {
 }
 window.MulCompression=MulCompression;
 class TimeoutTarget {
-	/** @arg {AutoBuyStateImplR | AutoBuyImpl | null} obj @arg {()=>void} callback */
+	/** @arg {AutoBuyStateImplR | AutoBuyImplR | null} obj @arg {()=>void} callback */
 	constructor(obj,callback) {
 		this.m_once=true;
 		this.m_obj=obj;
@@ -2168,7 +2168,7 @@ class AutoBuyStateImplR {
 	}
 }
 class AsyncAutoBuy {
-	/** @arg {AutoBuyImpl} parent */
+	/** @arg {AutoBuyImplR} parent */
 	constructor(parent) {
 		this.parent=parent;
 		this.unit_upgradeable_trigger=30;
@@ -2286,7 +2286,7 @@ class AsyncAutoBuy {
 	}
 }
 
-class AutoBuyImpl {
+class AutoBuyImplR {
 	constructor() {
 		this.root_node=new AsyncNodeRootImplR;
 		this.with_async=new AsyncAutoBuy(this);
@@ -3250,7 +3250,7 @@ async function do_auto_unit_promote() {
 		tonext(res);
 	}
 }
-const auto_buy_obj=new AutoBuyImpl;
+const auto_buy_obj=new AutoBuyImplR;
 /** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
 	/** @type {[typeof keys[0], typeof values[0]][]} */
