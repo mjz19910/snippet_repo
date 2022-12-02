@@ -423,6 +423,7 @@ function nn(ar) {
 }
 /**
  * @param {string[]} ar
+ * @arg {number} i
  */
 function ni(ar,i) {
 	return parseInt(ar[i],16);
@@ -510,8 +511,11 @@ function fn(ar) {
 					ar=parse_mov_1(ar);
 					continue;
 				}
+				if(num==0x05) {
+
+				}
 				if(!parse_obj[ar[0]]) {
-					console.log(ar);
+					console.log(ar.slice(0,15).join(" "));
 					break;
 				}
 				ar=parse_obj[ar[0]](ar);
