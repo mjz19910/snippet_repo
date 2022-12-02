@@ -1,4 +1,4 @@
-import {AnyOrRepeat2} from "../../types/repeat/AnyOrRepeat2.js";
+import {AnyOrRepeat2} from "./AnyOrRepeat2.js";
 import {is_undefined} from "./is_undefined.js";
 
 export class Repeat<T> {
