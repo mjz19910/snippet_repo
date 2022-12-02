@@ -18,19 +18,7 @@ class ReplPluginManagerModule {
 /** @arg {IpcLoader} state @arg {string} plugin_key */
 export async function import_ipc_plugin(state,plugin_key) {
 	switch(plugin_key) {
-		case 'repl_plugin_manager/mod.js': {
-			/**@type {`../../${typeof plugin_key}`}*/
-			const module_page_loader_str=`../../${plugin_key}`;
-			try{
-				return await ReplPluginManagerModule.import_ipc_plugin(state,plugin_key,module_page_loader_str);
-			} catch(/**@type {any}*/e) {
-				console.error("import error");
-				console.error(e);
-				// recapture the stack trace so it includes async frames
-				Error.captureStackTrace(e,import_ipc_plugin);
-				throw e;
-			}
-		}
+		case 'repl_plugin_manager/mod.js': break;
 		case 'tiny_html_lexer': break;
 		case 'tiny_html_parser': break;
 		default: throw new Error("No types for "+plugin_key);
@@ -41,7 +29,7 @@ export async function import_ipc_plugin(state,plugin_key) {
 	if(debug) console.log('imp depth',state.depth);
 	state.depth++;
 	try {
-		let mod=await import(`../../${plugin_key}/ipc_index.js`);
+		let mod=await import("../"+`../${plugin_key}/ipc_index.js`);
 		return mod;
 	} catch(error) {
 		console.log('failed to import',plugin_key);
