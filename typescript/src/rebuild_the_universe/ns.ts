@@ -1,3 +1,5 @@
-export * from "../ns.js";
+import {UniqueIdGenerator} from "../UniqueIdGenerator.js";
 
-export {};
+export {UniqueIdGenerator};
+
+export * from "../ns.js";

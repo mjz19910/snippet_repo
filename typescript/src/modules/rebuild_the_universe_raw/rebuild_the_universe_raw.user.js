@@ -1280,7 +1280,7 @@ class DocumentWriteListImpl_1 {
 		return false;
 	}
 }
-class UniqueIdGenerator {
+class UniqueIdGeneratorImplR {
 	constructor() {
 		this.m_current=-1;
 	}
@@ -1295,7 +1295,7 @@ class UniqueIdGenerator {
 		return this.m_current++;
 	}
 }
-UniqueIdGenerator;
+UniqueIdGeneratorImplR;
 class NamedIdGenerator {
 	constructor() {
 		this.state_map=new Map;

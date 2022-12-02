@@ -1,1 +1,3 @@
-export {};
+import {UniqueIdGenerator} from "./UniqueIdGenerator.js";
+
+export {UniqueIdGenerator};

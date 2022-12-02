@@ -1,4 +1,4 @@
-import {UniqueIdGenerator} from "../../UniqueIdGenerator.js";
+import {UniqueIdGenerator} from "./ns.js";
 import {
 	ReplyClearSingle,
 	ReplySetRepeating,
