@@ -43,7 +43,7 @@ export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: BoxImpl[
 }
 export class BoxWithPropertiesIsBox extends BoxTemplate<"with_properties",{}> {
 	readonly type="with_properties";
-	readonly properties;
+	properties: string[];
 	constructor(value: BoxWithPropertiesObjType<BoxWithPropertiesIsBox["properties"]>,properties: string[]) {
 		super(value);
 		this.properties=properties;
