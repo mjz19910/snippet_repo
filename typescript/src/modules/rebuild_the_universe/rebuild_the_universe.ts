@@ -18,7 +18,20 @@
 // @grant			none
 // ==/UserScript==
 
-import {ArrayBox} from "../../box/ArrayBox.js";
+
+export abstract class BoxTemplate<T extends string,V> {
+	abstract readonly type: T
+	value: V
+	constructor(value: V) {
+		this.value=value
+	}
+}
+
+export class ArrayBox extends BoxTemplate<"array_box",Box[]> {
+	readonly type="array_box";
+	readonly item_type="Box";
+}
+
 import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
 import {BoxWithPropertiesIsBox} from "../../box/BoxWithPropertiesIsBox.js";
 import {CSSStyleSheetBox} from "../../box/CSSStyleSheetBox.js";
@@ -43,14 +56,45 @@ import {NullBox} from "../../box/NullBox.js";
 import {NumberBox} from "../../box/NumberBox.js";
 import {ObjectBox} from "../../box/ObjectBox.js";
 import {PromiseBox} from "../../box/PromiseBox.js";
-import {RawBoxes} from "../../box/RawBoxes.js";
-import {RealVoidBox} from "../../box/RealVoidBox.js";
-import {StackVMBox} from "../../box/StackVMBox.js";
-import {StringBox} from "../../box/StringBox.js";
-import {BoxTemplate} from "../../box/template/BoxTemplate.js";
-import {VoidBox} from "../../box/VoidBox.js";
-import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
-import {WindowBox} from "../../box/WindowBox.js";
+export class RawBox<T> {
+	readonly type="raw_box";
+	raw_value: T;
+	type_symbol: symbol;
+	constructor(value: T,symbol_: symbol) {
+		this.raw_value=value;
+		this.type_symbol=symbol_;
+	}
+}
+export type RawBoxes=RawBox<{as_interface:Function}>|RawBox<{as_unknown:unknown}>|RawBox<{as_any: any;}>;
+export class RealVoidBox extends BoxTemplate<"real_void",void> {
+	readonly type="real_void";
+}
+export class StackVMBox extends BoxTemplate<"custom_box",StackVMImpl> {
+	readonly type="custom_box";
+	readonly box_type="StackVM";
+}
+export class StringBox {
+	readonly type='string';
+	value: string;
+	constructor(value: string) {
+		this.value=value;
+	}
+}
+export class VoidBox {
+	readonly type="void";
+	readonly extension=null;
+	value=void 0;
+}
+export class VoidPromiseBox extends BoxTemplate<"promise_box",Promise<void>> {
+	readonly type="promise_box";
+	readonly inner_type: 'Promise<void>'='Promise<void>';
+	readonly await_type="void";
+}
+export class WindowBox extends BoxTemplate<"object_box",Window> {
+	readonly type="object_box";
+	readonly extension=null;
+	readonly inner_type="Window";
+}
 export class DomElementBox {
 	readonly type="DomValueBox";
 	value: Element;
