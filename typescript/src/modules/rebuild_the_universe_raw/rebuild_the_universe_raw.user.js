@@ -21,6 +21,10 @@
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
+/** @typedef {import("./__global.js").Holder} Holder */
+/** @implements {Holder} */
+class HolderO {}
+
 function fetch_all_images() {
 	return Promise.all(arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
 		try {

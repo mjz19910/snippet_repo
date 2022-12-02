@@ -12,4 +12,6 @@ declare global {
 	function constelOff():void;
 }
 
+export interface Holder {}
+
 export {}

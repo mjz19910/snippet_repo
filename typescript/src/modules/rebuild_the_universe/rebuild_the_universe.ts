@@ -1269,7 +1269,10 @@ class StackVMParser {
 		return iter.split(",");
 	}
 	static parse_string_into_raw_instruction_stream(string: string) {
-		const parser_max_match_iter=300; let parts,arr=[],i=0;
+		const parser_max_match_iter=300;
+		let parts: string[]|null;
+		let arr:string[][]=[];
+		let i=0;
 		do {
 			let saved_last=this.match_regex.lastIndex;
 			let sub_str=string.slice(this.match_regex.lastIndex);
@@ -1532,7 +1535,7 @@ class MulCompression extends BaseCompression {
 		this.compression_stats=[];
 	}
 	try_compress(arr: string[]) {
-		let ret=[];
+		let ret: string[]=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
 			if(i+1<arr.length) {
@@ -1557,7 +1560,7 @@ class MulCompression extends BaseCompression {
 		return this.compress_result(arr,ret);
 	}
 	try_decompress(arr: string[]) {
-		let ret=[];
+		let ret: string[]=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
 			if(!item) continue;
