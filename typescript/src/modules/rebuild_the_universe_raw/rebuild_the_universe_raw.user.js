@@ -172,7 +172,7 @@ class CSSStyleSheetBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("../../box/StackVMBox.js").StackVMBox} StackVMBox_CJS */
+/** @typedef {import("./support/StackVMBox.js").StackVMBox} StackVMBox_CJS */
 /** @implements {StackVMBox_CJS} */
 class StackVMBoxImpl {
 	/** @type {"custom_box"} */
@@ -301,17 +301,11 @@ class InstructionCallImpl extends InstructionImplBase {
 		if('return_type' in fn_box) {
 			switch(fn_box.return_type) {
 				case "Promise<Box>": return this.handle_as_fn_to_promise(vm,fn_box.value,target_this,arg_arr);
+				case "Box": return this.handle_as_fn(vm,fn_box.value,target_this,arg_arr);
 			}
 		}
-		if('return_type' in fn_box&&fn_box.return_type=="Promise<Box>") {
-			return this.handle_as_fn_to_promise(vm,fn_box.value,target_this,arg_arr);
-		} else if('return_type' in fn_box&&fn_box.return_type==="Box") {
-			console.log('fixme: make a type for this',fn_box);
-			return this.handle_as_fn(vm,fn_box.value,target_this,arg_arr);
-		} else {
-			console.log('unexpected box value',fn_box);
-			throw new Error("Unexpected function box type");
-		}
+		console.log('unexpected box value',fn_box);
+		throw new Error("Unexpected function box type");
 	}
 	/** @arg {Box_CJS} object_box @returns {{}|Function|StackVMImpl|null} */
 	unbox_obj(object_box) {
@@ -863,7 +857,7 @@ instruction_descriptor_arr;
 /**
  * @typedef {import("../../instruction/InstructionType.js").InstructionType} InstructionType_CJS
  * @typedef {import("./support/Box.js").Box} Box_CJS
- * @typedef {import("../../vm/StackVM.js").StackVM} StackVM_CJS
+ * @typedef {import("./support/StackVM.js").StackVM} StackVM_CJS
 */
 /** @implements {StackVM_CJS} */
 class StackVMImpl {
