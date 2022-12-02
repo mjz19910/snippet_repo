@@ -20,10 +20,10 @@
 
 
 export abstract class BoxTemplate<T extends string,V> {
-	abstract readonly type: T
-	value: V
+	abstract readonly type: T;
+	value: V;
 	constructor(value: V) {
-		this.value=value
+		this.value=value;
 	}
 }
 
@@ -51,28 +51,84 @@ export class BoxWithPropertiesIsBox extends BoxTemplate<'with_properties',{}> {
 }
 export type BoxWithPropertiesObjType<T extends string[]>={
 	[U in T[number]]: Box
-}
+};
 export class CSSStyleSheetBox extends BoxTemplate<"CSSStyleSheetBox",CSSStyleSheet> {
 	readonly type="CSSStyleSheetBox";
 	readonly next_member="instance_type";
 	readonly instance_type="CSSStyleSheet";
 }
+import {BoxMaker} from "../../box/BoxMaker.js";
 import {CSSStyleSheetConstructorBox} from "../../box/CSSStyleSheetConstructorBox.js";
 import {CSSStyleSheetInitBox} from "../../box/CSSStyleSheetInitBox.js";
 import {CSSStyleSheetPromiseBox} from "../../box/CSSStyleSheetPromiseBox.js";
 import {DocumentBox} from "../../box/DocumentBox.js";
 import {EmptyArrayBox} from "../../box/EmptyArrayBox.js";
-import {FunctionBox} from "../../box/FunctionBox.js";
-import {FunctionConstructorBox} from "../../box/FunctionConstructorBox.js";
-import {FunctionInstance} from "../../box/FunctionInstance.js";
+import {FunctionConstructorFactory} from "../../box/FunctionConstructorFactory.js";
+export class FunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Box> {
+	readonly type="function_box";
+	readonly return_type="null";
+	on_get(vm: StackVMImpl,key: string) {
+		switch(key) {
+			case "toString": {
+				let inner_value=this.value[key];
+				function bound_executor(this: (...a: Box[]) => Box) {
+					return new StringBox(inner_value.call(this));
+				}
+				let push_value=new FunctionBox(bound_executor.bind(this.value));
+				vm.push(push_value);
+			} break;
+			case "apply":
+			case "call":
+			case "bind":
+			case "arguments":
+			case "caller":
+			case "constructor":
+			case "length":
+			case "name":
+		}
+	}
+}
+export class FunctionConstructorBox {
+	readonly type="constructor_box";
+	readonly instance_type="Function";
+	readonly arguments="string[]";
+	readonly return="box";
+	readonly instance_factory: FunctionConstructorFactory;
+	readonly value: typeof Function;
+	readonly box_maker: BoxMaker<string,FunctionBox>;
+	constructor(
+		value: typeof Function,
+		instance_factory: FunctionConstructorFactory,
+		box_maker: BoxMaker<string,FunctionBox>
+	) {
+		this.value=value;
+		this.instance_factory=instance_factory;
+		this.box_maker=box_maker;
+	}
+	verify_arguments(...boxes: Box[]) {
+		if(boxes.length===0) {
+			return true;
+		}
+		if(boxes.length===1&&boxes[0].type==="string") {
+			return true;
+		}
+		return false;
+	}
+}
+export type FunctionInstance=(...a: Box[]) => Box;
 import {GlobalThisBox} from "../../box/GlobalThisBox.js";
 import {IndexBox} from "../../box/IndexBox.js";
 import {InstructionTypeArrayBox} from "../../box/InstructionTypeArrayBox.js";
 import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
 import {MediaListBox} from "../../box/MediaListBox.js";
 import {NewableFunctionBox} from "../../box/NewableFunctionBox.js";
-import {NewableInstancePack} from "../../box/NewableInstancePack.js";
-import {NewableInstancePackObjectBox} from "../../box/NewableInstancePackObjectBox.js";
+export interface NewableInstancePack<T> {
+	make_box(box_value: new (...a: Box[]) => T,construct_args: Box[]): Box;
+}
+export class NewableInstancePackObjectBox extends BoxTemplate<"NewableInstancePack<{}>",NewableInstancePack<{}>> {
+	readonly type="NewableInstancePack<{}>";
+}
+
 import {NodeBox} from "../../box/NodeBox.js";
 import {NullBox} from "../../box/NullBox.js";
 import {NumberBox} from "../../box/NumberBox.js";
@@ -95,7 +151,7 @@ export class RawBox<T> {
 		this.type_symbol=symbol_;
 	}
 }
-export type RawBoxes=RawBox<{as_interface:Function}>|RawBox<{as_unknown:unknown}>|RawBox<{as_any: any;}>;
+export type RawBoxes=RawBox<{as_interface: Function;}>|RawBox<{as_unknown: unknown;}>|RawBox<{as_any: any;}>;
 export class RealVoidBox extends BoxTemplate<"real_void",void> {
 	readonly type="real_void";
 }
@@ -141,42 +197,42 @@ export class PromiseFunctionBox {
 		this.value=value;
 	}
 }
-export type Append=[AppendOpcode]
-export type Cast=[CastOpcode,CastOperandTarget]
-export type Breakpoint=[BreakpointOpcode]
+export type Append=[AppendOpcode];
+export type Cast=[CastOpcode,CastOperandTarget];
+export type Breakpoint=[BreakpointOpcode];
 export type DomExec=['dom_exec',InstructionType[]];
 export type DomPeek=['dom_peek',number,number];
-export type Call=[CallOpcode,number]
-export type Construct=[ConstructOpcode,number]
-export type Get=[GetOpcode]
-export type Return = [ReturnOpcode]
-export type Je=[JeOpcode,number]
-export type Jump=[JumpOpcode,number]
-export type ModifyOperand=[ModifyOperandOpcode,number,number]
-export type Nop=[NopOpcode]
-export type PushWindowObject=[PushWindowObjectOpcode]
-export type AppendOpcode='append'
-export type ArgsOpcode='vm_push_args'
-export type BreakpointOpcode='breakpoint'
-export type CallOpcode='call'
-export type CastOpcode="cast"
-export type ConstructOpcode='construct'
-export type DropOpcode='drop'
-export type DupOpcode='dup'
-export type GetOpcode='get'
-export type HaltOpcode='halt'
-export type JeOpcode='je'
-export type JumpOpcode='jmp'
-export type ModifyOperandOpcode='modify_operand'
-export type NopOpcode='nop'
-export type ReturnOpcode='return'
-export type Drop=[DropOpcode]
-export type Dup=[DupOpcode]
-export type PeekOpcode='peek'
-export type Peek=[PeekOpcode,number]
-export type PushOpcode='push'
-export type Push=[PushOpcode,...BoxImpl[]]
-export type Halt=[HaltOpcode]
+export type Call=[CallOpcode,number];
+export type Construct=[ConstructOpcode,number];
+export type Get=[GetOpcode];
+export type Return=[ReturnOpcode];
+export type Je=[JeOpcode,number];
+export type Jump=[JumpOpcode,number];
+export type ModifyOperand=[ModifyOperandOpcode,number,number];
+export type Nop=[NopOpcode];
+export type PushWindowObject=[PushWindowObjectOpcode];
+export type AppendOpcode='append';
+export type ArgsOpcode='vm_push_args';
+export type BreakpointOpcode='breakpoint';
+export type CallOpcode='call';
+export type CastOpcode="cast";
+export type ConstructOpcode='construct';
+export type DropOpcode='drop';
+export type DupOpcode='dup';
+export type GetOpcode='get';
+export type HaltOpcode='halt';
+export type JeOpcode='je';
+export type JumpOpcode='jmp';
+export type ModifyOperandOpcode='modify_operand';
+export type NopOpcode='nop';
+export type ReturnOpcode='return';
+export type Drop=[DropOpcode];
+export type Dup=[DupOpcode];
+export type PeekOpcode='peek';
+export type Peek=[PeekOpcode,number];
+export type PushOpcode='push';
+export type Push=[PushOpcode,...BoxImpl[]];
+export type Halt=[HaltOpcode];
 export type VMBlockTrace=
 	[VMBlockTraceOpcode,'begin',DomInstructionType|null]|
 	[VMBlockTraceOpcode,'call',DomInstructionType|null]|
@@ -184,16 +240,16 @@ export type VMBlockTrace=
 	[VMBlockTraceOpcode,'tagged',DomTaggedPack|null]|
 	[VMBlockTraceOpcode,'tagged_begin',DomTaggedPack|null]|
 	[VMBlockTraceOpcode,'tagged_call',DomTaggedPack|null];
-export type VMCallOpcode='vm_call'
-export type VMCall=[VMCallOpcode,number]
-export type VMPushArgsOpcode = 'vm_push_args';
-export type VMPushArgs=[VMPushArgsOpcode]
-export type VMPushIPOpcode='vm_push_ip'
-export type VMPushIP=[VMPushIPOpcode]
-export type VMPushSelfOpcode='vm_push_self'
-export type VMReturnOpcode='vm_return'
-export type VMPushSelf=[VMPushSelfOpcode]
-export type VMReturn=[VMReturnOpcode]
+export type VMCallOpcode='vm_call';
+export type VMCall=[VMCallOpcode,number];
+export type VMPushArgsOpcode='vm_push_args';
+export type VMPushArgs=[VMPushArgsOpcode];
+export type VMPushIPOpcode='vm_push_ip';
+export type VMPushIP=[VMPushIPOpcode];
+export type VMPushSelfOpcode='vm_push_self';
+export type VMReturnOpcode='vm_return';
+export type VMPushSelf=[VMPushSelfOpcode];
+export type VMReturn=[VMReturnOpcode];
 export type InstructionMap={
 	append: Append;
 	breakpoint: Breakpoint;
@@ -226,9 +282,9 @@ export type InstructionMap={
 	dom_create_element_with_props: ['dom_create_element_with_props','div',string,{id: string;}];
 };
 export type InstructionType=InstructionMap[keyof InstructionMap];
-export type DomInstructionAppend=[number,"append"]
-export type DomInstructionBP=[number,"breakpoint"]
-export type VMBlockTraceOpcode='vm_block_trace'
+export type DomInstructionAppend=[number,"append"];
+export type DomInstructionBP=[number,"breakpoint"];
+export type VMBlockTraceOpcode='vm_block_trace';
 export type DomInstructionVMBlockTrace=
 	[number,VMBlockTraceOpcode,'begin',DomInstructionType|null]|
 	[number,VMBlockTraceOpcode,'call',DomInstructionType|null]|
@@ -427,13 +483,13 @@ class WindowBoxImpl {
 
 class ObjectBoxImpl {
 	type: "object_box";
-	inner_type: "Record<never, never>";
-	extension=null;
+	inner_type: "object";
+	extension: "null";
 	value: Record<never,never>;
 	constructor(value: Record<never,never>) {
 		this.type='object_box';
-		this.inner_type='Record<never, never>';
-		this.extension=null;
+		this.inner_type='object';
+		this.extension="null";
 		this.value=value;
 	}
 	as_type(input_typeof: string): this|null {
@@ -758,8 +814,8 @@ class NewableFunctionConstructorImpl {
 }
 
 class FunctionConstructorFactoryImpl {
-	factory: (box_value: NewableFunctionConstructorImpl) => FunctionBox;
-	constructor(factory: (box_value: NewableFunctionConstructorImpl) => FunctionBox) {
+	factory: (box_value: NewableFunctionConstructorImpl) => FunctionBoxImpl;
+	constructor(factory: (box_value: NewableFunctionConstructorImpl) => FunctionBoxImpl) {
 		this.factory=factory;
 	}
 }
@@ -778,7 +834,7 @@ function bound_to_string_executor<T extends () => string>(this: (...a: BoxImpl[]
 	return new StringBoxImpl(inner_value.call(this));
 }
 
-class FunctionBoxImpl {
+class FunctionBoxImpl implements FunctionBox {
 	readonly type="function_box";
 	readonly return_type="null";
 	value: (...a: BoxImpl[]) => BoxImpl;
@@ -848,7 +904,7 @@ class RawBoxImpl<T> {
 	}
 }
 
-class FunctionConstructorBoxImpl implements FunctionConstructorBox {
+class FunctionConstructorBoxImpl {
 	readonly type="constructor_box";
 	readonly instance_type="Function";
 	readonly arguments="string[]";
@@ -866,7 +922,7 @@ class FunctionConstructorBoxImpl implements FunctionConstructorBox {
 		this.box_maker=box_maker;
 	}
 	static from_box(value: FunctionConstructorBox) {
-		return new this(value.value,value.instance_factory,value.box_maker);
+		return new this(value.value,value.instance_factory as FunctionConstructorFactoryImpl,value.box_maker);
 	}
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
@@ -944,7 +1000,7 @@ class InstructionGetImpl {
 							} break;
 							case 'unknown': {
 								if(typeof key!='string') throw new Error("Bad");
-								NewableFunctionBoxImpl.from_box(value_box).on_get(vm,key);
+								NewableFunctionBoxImpl.from_box(value_box as NewableFunctionBoxImpl).on_get(vm,key);
 							} break;
 						}
 					}
