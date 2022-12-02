@@ -1,9 +1,9 @@
-import {is_ascii_digit} from "../../AK/CharacterTypes.js"
 import {Dispatcher} from "./Dispatcher.js"
 import {is_octal_digit} from "../is_octal_digit.js"
 import {LexerBase} from "./LexerBase.js"
 import {LexReturnType} from "./LexReturnType.js"
 import {TokenType} from "../TokenType.js"
+import {is_ascii_digit} from "./is_ascii_digit";
 
 // https://tc39.es/ecma262/#sec-literals-numeric-literals
 export class NumericLiterals extends LexerBase {
