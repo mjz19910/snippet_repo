@@ -1,4 +1,4 @@
-import {GenericEventTarget} from "../GenericEventTarget.js";
+import {GenericEventTarget} from "./GenericEventTarget.js";
 import {HexRandomDataGenerator} from "./HexRandomDataGenerator.js";
 import {DebugDataValue} from "./DebugDataValue.js";
 import {DebugFunctionType} from "../box/DebugFunctionType.js";
@@ -8,7 +8,7 @@ import {ChromeDevToolsUnDebug} from "../dev_tools_debugger/ChromeDevToolsUnDebug
 import {DebugFunctionValue} from "./DebugFunctionValue.js";
 import {DebugClassValue} from "./DebugClassValue.js";
 import {DebugInfoValue} from "./DebugInfoValue.js";
-import {GenericDataEvent} from "../GenericDataEvent.js";
+import {GenericDataEvent} from "./GenericDataEvent.js";
 
 declare global {
 	interface Window {

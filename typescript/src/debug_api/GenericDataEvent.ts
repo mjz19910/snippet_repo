@@ -1,4 +1,4 @@
-import {Box} from "./box/Box.js"
+import {Box} from "../box/Box.js"
 import {GenericEvent} from "./GenericEvent.js"
 
 export class GenericDataEvent extends GenericEvent {
