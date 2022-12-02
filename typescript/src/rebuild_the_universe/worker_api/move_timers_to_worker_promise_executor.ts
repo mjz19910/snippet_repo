@@ -6,7 +6,7 @@ import {do_worker_verify} from "./do_worker_verify.js";
 import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
 import {TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyType} from "./constants.js";
 import {RemoteWorkerState} from "./RemoteWorkerState.js";
-import {log_if, UniqueIdGenerator} from "./ns.js";
+import {log_if, LOG_LEVEL_WARN, UniqueIdGenerator} from "./ns.js";
 
 declare global {
 	interface Window {
@@ -45,7 +45,7 @@ export function move_timers_to_worker_promise_executor(p_accept: (arg0: WorkerAp
 	function remoteSetTimeout(handler: TimerHandler,timeout: number|undefined,...target_args: any[]) {
 		if(!worker_api.flags.get("connected")) {
 			window.setTimeout=setTimeout_global;
-			log_if(LOG_LEVEL_WARN_IMPL,'worker not connected');
+			log_if(LOG_LEVEL_WARN,'worker not connected');
 			return setTimeout_global(handler,timeout,...target_args);
 		}
 		return worker_api.timer.set(TIMER_SINGLE,handler,timeout,target_args);
