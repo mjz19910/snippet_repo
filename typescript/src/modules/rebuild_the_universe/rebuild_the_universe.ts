@@ -375,7 +375,7 @@ export type InstructionMapImpl={
 	dup: ["dup"];
 	get: ["get"];
 	halt: ["halt"];
-	je: ["je", number];
+	je: ["je",number];
 	jmp: ["jmp",number];
 	modify_operand: ["modify_operand",number,number];
 	nop: ["nop"];
@@ -420,7 +420,7 @@ export type DomInstructionCast=[number,"cast",CastOperandTarget];
 export type DomInstructionConstruct=[number,"construct",number];
 export type DomInstructionJe=[number,"je",number];
 export type DomInstructionJmp=[number,"jmp",number];
-export type DomInstructionModOp=[number,"modify_operand",number,number];
+export type DomInstructionModifyOperand=[number,"modify_operand",number,number];
 export type DomInstructionPeek=[number,"peek",number];
 export type DomInstructionPush=[number,"push",...BoxImpl[]];
 export type DomInstructionVMCall=[number,"vm_call",number];
@@ -438,38 +438,36 @@ export type DomInstructionVMPushIP=[number,"vm_push_ip"];
 export type DomInstructionVMPushSelf=[number,"vm_push_self"];
 export type DomInstructionVMReturn=[number,"vm_return"];
 export type DomInstructionMapImpl={
-	append: [number, "append"];
+	append: [number,"append"];
+	breakpoint: [number,"breakpoint"];
+	vm_block_trace: DomInstructionVMBlockTrace;
+	vm_call_at: [number,"vm_call_at",DomTaggedPack];
+	marker: [number,"marker",null];
+	dom_filter: [number,"dom_filter",ArgAny4];
+	call: [number,"call",number];
+	cast: DomInstructionCast;
+	construct: DomInstructionConstruct;
+	je: DomInstructionJe;
+	jmp: DomInstructionJmp;
+	modify_operand: DomInstructionModifyOperand;
+	peek: DomInstructionPeek;
+	push: DomInstructionPush;
+	vm_call: DomInstructionVMCall;
+	dup: DomInstructionDup;
+	drop: DomInstructionDrop;
+	push_window_object: DomInstructionPushWindowObject;
+	nop: DomInstructionNop;
+	get: DomInstructionGet;
+	halt: DomInstructionHalt;
+	return: DomInstructionReturn,
+	vm_push_args: DomInstructionVMPushArgs,
+	vm_push_ip: DomInstructionVMPushIP,
+	vm_push_self: DomInstructionVMPushSelf,
+	vm_return: DomInstructionVMReturn;
+	create_id: DomInstructionCreateDivWithId;
+	create: DomInstructionCreateDiv;
 };
-export type DomInstructionType=
-	DomInstructionAppendImpl|
-	DomInstructionBP|
-	DomInstructionVMBlockTrace|
-	DomInstructionVMCallAt|
-	DomInstructionNullMarker|
-	DomInstructionFilter|
-	DomInstructionCall|
-	DomInstructionCast|
-	DomInstructionConstruct|
-	DomInstructionJe|
-	DomInstructionJmp|
-	DomInstructionModOp|
-	DomInstructionPeek|
-	DomInstructionPush|
-	DomInstructionVMCall|
-	DomInstructionDup|
-	DomInstructionDrop|
-	DomInstructionPushWindowObject|
-	DomInstructionNop|
-	DomInstructionGet|
-	DomInstructionHalt|
-	DomInstructionReturn|
-	DomInstructionVMPushArgs|
-	DomInstructionVMPushIP|
-	DomInstructionVMPushSelf|
-	DomInstructionVMReturn|
-	// DOM
-	DomInstructionCreateDivWithId|
-	DomInstructionCreateDiv;
+export type DomInstructionType=DomInstructionMapImpl[keyof DomInstructionMapImpl];
 
 export type DomTaggedPackImpl=
 	["dom",DomInstructionType]|
