@@ -459,8 +459,8 @@ function fn(ar) {
 				}
 				if(num==0x88) {
 					let next=nn(ar);
-					let modr=(next>>4)&0x7;
-					console.log("mov ["+map_regflags[next&0x7]+"],"+reg8[modr]);
+					let modrm_reg_8=(next>>4)&0x7;
+					console.log("mov ["+map_regflags[next&0x7]+"],"+reg8[modrm_reg_8]);
 					ar=ar.slice(2);
 					continue;
 				}
