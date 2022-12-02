@@ -410,8 +410,10 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		let instruction_tree=this.stack_to_instruction_tree(stack);
 		let functions_map:Map<number, InstructionType[]>=new Map;
+		let cur_function_id=0;
+		this.cur_function_id=cur_function_id;
 		let dom_vm_instructions=this.instruction_tree_to_instructions(instruction_tree,functions_map);
-		functions_map.set(0, dom_vm_instructions);
+		functions_map.set(cur_function_id, dom_vm_instructions);
 		let builder_vm=new BaseStackVM(functions_map);
 		builder_vm.run();
 	}
@@ -458,9 +460,6 @@ export class AutoBuy implements AutoBuyInterface {
 	}
 	cur_function_id=-1;
 	instruction_tree_to_instructions(tree: TreeItem[],functions_map: Map<number, InstructionType[]>,stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): InstructionType[] {
-		if(this.cur_function_id === -1) {
-			this.cur_function_id=1;
-		}
 		let cur_function_id=this.cur_function_id;
 		this.cur_function_id++;
 		for(let i=0;i<tree.length;i++) {
