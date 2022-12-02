@@ -366,7 +366,7 @@ export type InstructionMapImpl={
 	vm_return: ["vm_return"];
 	dom_exec: ["dom_exec",number];
 	dom_peek: ["dom_peek",number,number];
-	dom_new: ["dom_new",typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
+	dom_new: ["dom_new",typeof CSSStyleSheet,[],AsyncFunctionBoxImpl,[string]];
 	dom_get: ["dom_get",string];
 	dom_create_element: ["dom_create_element","div",string,string];
 	dom_create_element_with_props: ["dom_create_element_with_props","div",string,{id: string;}];
@@ -417,13 +417,6 @@ export type DomInstructionMapImpl={
 export type DomInstructionType=DomInstructionMapImpl[keyof DomInstructionMapImpl];
 
 export type DomTaggedPackImpl=["dom",DomInstructionType]|["vm",InstructionTypeImpl]|["dom_mem",number];
-export class PromiseFunctionBoxImpl {
-	readonly type="PromiseFunctionBox";
-	value: (...args: BoxImpl[]) => Promise<BoxImpl>;
-	constructor(value: (...args: BoxImpl[]) => Promise<BoxImpl>) {
-		this.value=value;
-	}
-}
 
 console=globalThis.console;
 
@@ -649,7 +642,7 @@ type BoxImpl=
 	// Generic boxes
 	NewableInstancePackObjectBox|
 	DomElementBox|
-	PromiseFunctionBoxImpl;
+	never;
 
 
 class InstructionCastImpl {

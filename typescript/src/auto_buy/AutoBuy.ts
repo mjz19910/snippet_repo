@@ -22,7 +22,6 @@ import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
 import {BaseStackVM} from "../vm/real_vm/BaseStackVM.js";
 import {EventHandlerVMDispatch} from "../vm/real_vm/EventHandlerVMDispatch.js";
 import {InstructionType} from "../vm/instruction/InstructionType.js";
-import {RawDomInstructionsWithDepth} from "../vm/RawDomInstructionsWithDepth.js";
 import {SimpleStackVMParser} from "../vm/real_vm/SimpleStackVMParser.js";
 import {TreeItem} from "./TreeItem.js";
 import {AutoBuyInterface} from "./AutoBuyInterface.js";
@@ -32,6 +31,7 @@ import {InstructionAstState} from "./InstructionAstState.js";
 import {lightreset_inject} from "./lightreset_inject.js";
 import {specialclick_inject} from "./specialclick_inject.js";
 import {AsyncFunctionBox} from "../box/AsyncFunctionBox.js";
+import {DomInstructionType} from "../vm/instruction/DomInstructionType.js";
 
 // Imports
 declare global {
@@ -301,7 +301,7 @@ export class AutoBuy implements AutoBuyInterface {
 		// attach display_style_sheet
 		this.adopt_styles(this.display_style_sheet);
 		let call_arg_arr: []=[];
-		let raw_dom_arr: RawDomInstructionsWithDepth[]=[
+		let raw_dom_arr: DomInstructionType[]=[
 			[0,'dom_get','body'],
 			[1,'dom_create_element_with_props','div','state_log',{id: 'state_log'}],
 			[1,'append'],
@@ -357,8 +357,8 @@ export class AutoBuy implements AutoBuyInterface {
 			default: return document.querySelector(query);
 		}
 	}
-	build_dom_from_desc(raw_arr: RawDomInstructionsWithDepth[],trg_map: Map<string,Element>=new Map,dry_run=false) {
-		let stack: RawDomInstructionsWithDepth[]=[];
+	build_dom_from_desc(raw_arr: DomInstructionType[],trg_map: Map<string,Element>=new Map,dry_run=false) {
+		let stack: DomInstructionType[]=[];
 		this.m_dry_run=dry_run;
 		for(let i=0;i<raw_arr.length;i++) {
 			let cur_item=raw_arr[i];
@@ -410,20 +410,24 @@ export class AutoBuy implements AutoBuyInterface {
 				console.log('es',stack.at(-1));
 		}
 		let instruction_tree=this.stack_to_instruction_tree(stack);
-		let functions_map:Map<number, InstructionType[]>=new Map;
+		let functions_map: Map<number,InstructionType[]>=new Map;
 		let cur_function_id=0;
 		this.cur_function_id=cur_function_id;
 		let state=new InstructionAstState(instruction_tree,functions_map);
 		let dom_vm_instructions=this.instruction_tree_to_instructions(state);
-		functions_map.set(cur_function_id, dom_vm_instructions);
+		functions_map.set(cur_function_id,dom_vm_instructions);
 		let builder_vm=new BaseStackVM(functions_map);
 		builder_vm.run();
 	}
-	stack_to_instruction_tree(input_stack: RawDomInstructionsWithDepth[]): TreeItem[] {
+	stack_to_instruction_tree(input_stack: DomInstructionType[]): TreeItem[] {
 		let tree: TreeItem[]=[];
 		let stack: TreeItem[][]=[];
 		for(let iter_depth=0,i=0;i<input_stack.length;i++) {
 			let cur_stack=input_stack[i];
+			if(cur_stack[1]==='marker') continue;
+			// TODO:
+			if(cur_stack[1]==='dom_filter') continue;
+			if(cur_stack[1]==='vm_call_at') continue;
 			let [cur_depth,...item]=cur_stack;
 			if(this.debug_arr.includes('parse_dom_desc'))
 				console.log(item);
@@ -440,6 +444,7 @@ export class AutoBuy implements AutoBuyInterface {
 				tree.push([iter_depth,'group',prev]);
 				iter_depth--;
 			}
+			let item_tt: [number,'op',InstructionType]=[cur_depth,"op",item];
 			tree.push([cur_depth,'op',item]);
 		}
 		while(stack.length>0) {

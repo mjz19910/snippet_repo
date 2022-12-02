@@ -2,6 +2,7 @@ import {DomTaggedPack} from "./DomTaggedPack.js";
 import {VMBlockTraceOperand} from "./VMBlockTraceOperand.js";
 import {Box} from "../../box/Box.js";
 import {CastOperandTarget} from "./CastOperandTarget.js";
+import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
 
 
 export type DomInstructionMap={
@@ -10,8 +11,11 @@ export type DomInstructionMap={
 	call: [number,"call",number];
 	cast: [number,"cast",CastOperandTarget];
 	construct: [number,"construct",number];
-	create_id: [number,"create_id","div",string];
-	create: [number,"create","div",string,string];
+	dom_get: [number,"dom_get",string];
+	dom_create_element_with_props: [number,"dom_create_element_with_props","div",string,{id: string;}];
+	dom_create_element: [number,"dom_create_element","div",string,string];
+	dom_new: [number,"dom_new",typeof CSSStyleSheet,[],AsyncFunctionBox,[string]];
+	dom_peek: [number,"dom_peek",number,number];
 	dom_filter: [number,"dom_filter",[4,any,any,any,any]];
 	drop: [number,"drop"];
 	dup: [number,"dup"];
