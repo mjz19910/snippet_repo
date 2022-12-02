@@ -535,9 +535,9 @@ class InstructionJeImpl extends InstructionImplBase {
 class InstructionJmpImpl extends InstructionImplBase {
 	/** @type {'jmp'} */
 	type='jmp';
-	/** @arg {import("../../vm/instruction/jump/Jump.js").Jump} instruction @arg {StackVMImpl} vm */
+	/** @arg {[number]} instruction @arg {StackVMImpl} vm */
 	run(vm,instruction) {
-		let [,target]=instruction;
+		let [target]=instruction;
 		if(typeof target!='number') throw new Error("Invalid");
 		if(vm.is_in_instructions(target)) {
 			throw new Error("RangeError: Jump target is out of instructions range");
@@ -616,8 +616,8 @@ class InstructionPushImpl extends InstructionImplBase {
 class InstructionDupImpl extends InstructionImplBase {
 	/** @type {'dup'} */
 	type='dup';
-	/** @arg {import("../../vm/instruction/stack/Dup.js").Dup} _ins @arg {StackVMImpl} vm */
-	run(vm,_ins) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		if(vm.stack.length===0) throw new Error("stack underflow");
 		let last=vm.stack.at(-1);
 		if(!last) throw new Error("Unreachable");
@@ -661,8 +661,8 @@ class InstructionGetImpl extends InstructionImplBase {
 			default: console.log('on_get no handler',value_box.type);
 		}
 	}
-	/** @arg {import("../../vm/instruction/general/Get.js").Get} _ins @arg {StackVMImpl} vm */
-	run(vm,_ins) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		let get_key=vm.stack.pop();
 		let value_box=vm.stack.pop();
 		if(!value_box) throw new Error("Invalid");
@@ -675,8 +675,8 @@ class InstructionGetImpl extends InstructionImplBase {
 class InstructionHaltImpl extends InstructionImplBase {
 	/** @type {'halt'} */
 	type='halt';
-	/** @arg {import("../../vm/instruction/turing/Halt.js").Halt} _i @arg {StackVMImpl} vm */
-	run(vm,_i) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		vm.halt();
 	}
 }

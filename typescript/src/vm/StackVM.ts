@@ -49,6 +49,9 @@ export class StackVM {
 	is_in_instructions(value: number) {
 		return value>=0&&value<this.instructions.length;
 	}
+	halt() {
+		this.running=false;
+	}
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
 			case 'je': {
