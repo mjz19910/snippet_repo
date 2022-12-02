@@ -1,4 +1,4 @@
-import {cur_event_fns} from "./constants.js";
+import {cur_event_fns} from "./cur_event_fns.js";
 import {has_reg_id} from "./has_reg_id.js";
 import {target_script_storage} from "./target_script_storage.js";
 

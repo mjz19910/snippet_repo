@@ -1,4 +1,4 @@
-import {cur_event_fns} from "./constants.js";
+import {cur_event_fns} from "./cur_event_fns.js";
 import {is_in_ignored_from_src_fn} from "./is_in_ignored_from_src_fn.js";
 import {is_in_userscript} from "./is_in_userscript.js";
 import {is_in_userscript_fn} from "./is_in_userscript_fn.js";
