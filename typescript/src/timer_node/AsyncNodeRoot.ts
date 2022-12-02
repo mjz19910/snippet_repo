@@ -2,7 +2,7 @@ import {BaseNode} from "./BaseNode.js";
 import {IntervalIdNode} from "./IntervalIdNode.js";
 import {IntervalNode} from "./IntervalNode.js";
 import {IntervalTargetFireNode} from "./IntervalTargetFireNode.js";
-import {TimeoutIdNode} from "../vm/TimeoutIdNode.js";
+import {TimeoutIdNode} from "./TimeoutIdNode.js";
 import {TimeoutNode} from "./TimeoutNode.js";
 import {TimeoutTargetFireNode} from "./TimeoutTargetFireNode.js";
 

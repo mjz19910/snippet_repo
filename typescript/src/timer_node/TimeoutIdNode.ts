@@ -1,4 +1,4 @@
-import {BaseNode} from "../timer_node/BaseNode.js";
+import {BaseNode} from "./BaseNode.js";
 
 export class TimeoutIdNode extends BaseNode {
 	m_id: number;

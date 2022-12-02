@@ -2,7 +2,6 @@ import {AverageRatioRoot} from "./AverageRatioRoot.js";
 import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
 import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode";
 import {AverageRatio} from "./AverageRatio.js";
-import {AutoBuyRootType} from "./AutoBuyRootType.js";
 
 declare global {
 	interface Window {
@@ -25,7 +24,7 @@ export class AutoBuyState {
 	avg;
 	ratio_multiplier: number;
 	div: number;
-	constructor(root: AutoBuyRootType) {
+	constructor(root: AsyncTimeoutNode) {
 		this.root_node=root;
 		this.debug=false;
 		this.arr=[];

@@ -1,5 +1,5 @@
-import {DebugFunctionCallback} from "./DebugFunctionCallback.js";
-import {DebugFunctionType} from "./DebugFunctionType.js";
+import {DebugFunctionCallback} from "../box/DebugFunctionCallback.js";
+import {DebugFunctionType} from "../box/DebugFunctionType.js";
 
 export class DebugFunctionBox {
 	readonly type='function';
