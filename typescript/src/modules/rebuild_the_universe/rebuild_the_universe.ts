@@ -27,16 +27,16 @@ export abstract class BoxTemplate<T extends string,V> {
 	}
 }
 
-export class ArrayBox extends BoxTemplate<"array_box",Box[]> {
+export class ArrayBox extends BoxTemplate<"array_box",BoxImpl[]> {
 	readonly type="array_box";
 	readonly item_type="Box";
 }
 
-export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Promise<Box>> {
+export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: BoxImpl[]) => Promise<BoxImpl>> {
 	readonly type="function_box";
 	readonly return_type="promise_box";
 	readonly await_type="Box";
-	wrap_call(target_this: Box,...args: Box[]): Box {
+	wrap_call(target_this: BoxImpl,...args: BoxImpl[]): BoxImpl {
 		let ret=this.value.apply(target_this,args);
 		return new PromiseBox(ret);
 	}
@@ -50,7 +50,7 @@ export class BoxWithPropertiesIsBox extends BoxTemplate<'with_properties',{}> {
 	}
 }
 export type BoxWithPropertiesObjType<T extends string[]>={
-	[U in T[number]]: Box
+	[U in T[number]]: BoxImpl
 };
 export class CSSStyleSheetBox extends BoxTemplate<"CSSStyleSheetBox",CSSStyleSheet> {
 	readonly type="CSSStyleSheetBox";
@@ -69,7 +69,7 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",t
 	readonly instance_type="CSSStyleSheet";
 	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
 	readonly args_type: [options?: CSSStyleSheetInit|undefined]=[];
-	factory(...arr: Box[]) {
+	factory(...arr: BoxImpl[]) {
 		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
 		for(let i=0;i<arr.length;i++) {
 			let val=arr[i];
@@ -132,19 +132,19 @@ export class EmptyArrayBox extends BoxTemplate<"array_box",[]> {
 	readonly special="Unit";
 }
 export interface NewableFunctionConstructor {
-	make_new: new (...a: Box[]) => FunctionInstance
+	make_new: new (...a: BoxImpl[]) => FunctionInstance
 }
 export interface FunctionConstructorFactory {
 	factory: (box_value: NewableFunctionConstructor) => FunctionBox
 }
-export class FunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Box> {
+export class FunctionBox extends BoxTemplate<"function_box",(...a: BoxImpl[]) => BoxImpl> {
 	readonly type="function_box";
 	readonly return_type="null";
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
 			case "toString": {
 				let inner_value=this.value[key];
-				function bound_executor(this: (...a: Box[]) => Box) {
+				function bound_executor(this: (...a: BoxImpl[]) => BoxImpl) {
 					return new StringBox(inner_value.call(this));
 				}
 				let push_value=new FunctionBox(bound_executor.bind(this.value));
@@ -178,7 +178,7 @@ export class FunctionConstructorBox {
 		this.instance_factory=instance_factory;
 		this.box_maker=box_maker;
 	}
-	verify_arguments(...boxes: Box[]) {
+	verify_arguments(...boxes: BoxImpl[]) {
 		if(boxes.length===0) {
 			return true;
 		}
@@ -188,7 +188,7 @@ export class FunctionConstructorBox {
 		return false;
 	}
 }
-export type FunctionInstance=(...a: Box[]) => Box;
+export type FunctionInstance=(...a: BoxImpl[]) => BoxImpl;
 export class GlobalThisBox extends BoxTemplate<"value_box",typeof globalThis> {
 	readonly type="value_box";
 	readonly inner_value="globalThis";
@@ -196,7 +196,7 @@ export class GlobalThisBox extends BoxTemplate<"value_box",typeof globalThis> {
 export type IndexAccess<T>={
 	[v: string]: T
 }
-export class IndexBox extends BoxTemplate<"object_box",IndexAccess<Box>> {
+export class IndexBox extends BoxTemplate<"object_box",IndexAccess<BoxImpl>> {
 	readonly type="object_box";
 	readonly like_type="object_box";
 	readonly extension='index';
@@ -222,12 +222,12 @@ export class NewableFunctionBox {
 	readonly arguments="box[]";
 	readonly return="box";
 	factory_value: NewableInstancePack<{}>;
-	class_value: new (...a: Box[]) => {};
-	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: Box[]) => {}) {
+	class_value: new (...a: BoxImpl[]) => {};
+	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: BoxImpl[]) => {}) {
 		this.factory_value=factory_value;
 		this.class_value=class_value;
 	}
-	get_construct_arguments(): [NewableInstancePack<{}>,new (...a: Box[]) => {}] {
+	get_construct_arguments(): [NewableInstancePack<{}>,new (...a: BoxImpl[]) => {}] {
 		return [this.factory_value,this.class_value];
 	}
 	static from_box(value_box: NewableFunctionBox) {
@@ -237,12 +237,12 @@ export class NewableFunctionBox {
 		vm;key;
 		throw new Error("Method not implemented.");
 	}
-	factory(...args: Box[]) {
+	factory(...args: BoxImpl[]) {
 		return this.factory_value.make_box(this.class_value,args);
 	}
 }
 export interface NewableInstancePack<T> {
-	make_box(box_value: new (...a: Box[]) => T,construct_args: Box[]): Box;
+	make_box(box_value: new (...a: BoxImpl[]) => T,construct_args: BoxImpl[]): BoxImpl;
 }
 export class NewableInstancePackObjectBox extends BoxTemplate<"NewableInstancePack<{}>",NewableInstancePack<{}>> {
 	readonly type="NewableInstancePack<{}>";
@@ -262,7 +262,7 @@ export class ObjectBox extends BoxTemplate<"object_box",{}> {
 	readonly inner_type="object";
 	readonly extension="null";
 }
-export class PromiseBox extends BoxTemplate<"promise_box",Promise<Box>> {
+export class PromiseBox extends BoxTemplate<"promise_box",Promise<BoxImpl>> {
 	readonly type="promise_box";
 	readonly inner_type='Promise<Box>';
 	readonly await_type="Box";
@@ -313,12 +313,10 @@ export class DomElementBox {
 		this.value=value;
 	}
 }
-// TODO: remove this
-type Box=BoxImpl;
 export class PromiseFunctionBox {
 	readonly type="PromiseFunctionBox";
-	value: (...args: Box[]) => Promise<Box>;
-	constructor(value: (...args: Box[]) => Promise<Box>) {
+	value: (...args: BoxImpl[]) => Promise<BoxImpl>;
+	constructor(value: (...args: BoxImpl[]) => Promise<BoxImpl>) {
 		this.value=value;
 	}
 }
