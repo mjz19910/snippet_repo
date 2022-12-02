@@ -1,4 +1,4 @@
-import {CompressTU} from "../../types/CompressTU.js";
+import {CompressTU} from "./CompressTU.js";
 import {max_id} from "../mod.js";
 import {range_matches} from "../range_matches.js";
 import {to_tuple_arr} from "../to_tuple_arr.js";
