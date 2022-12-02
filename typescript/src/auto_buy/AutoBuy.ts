@@ -5,7 +5,7 @@ import {AsyncTimeoutFireNode} from "../timer_node/AsyncTimeoutFireNode.js";
 import {AutoBuyState} from "./AutoBuyState.js";
 import {Box} from "../box/Box.js";
 import {DomValueBox} from "../box/DomValueBox.js";
-import {do_auto_unit_promote} from "../vm/do_auto_unit_promote.js";
+import {do_auto_unit_promote} from "./do_auto_unit_promote.js";
 import {EventHandlerDispatch} from "../vm/EventHandlerDispatch.js";
 import {EventHandlerVMDispatch} from "../vm/EventHandlerVMDispatch.js";
 import {AutoBuyInterface} from "./AutoBuyInterface.js";
