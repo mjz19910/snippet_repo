@@ -1,6 +1,6 @@
 import {cur_event_fns} from "./constants.js";
 import {has_reg_id} from "./has_reg_id.js";
-import {weak_scripts_arr} from "./weak_scripts_arr.js";
+import {target_script_storage} from "./target_script_storage.js";
 
 export function get_nearest_script() {
 	if(document.currentScript!==null) {
@@ -12,8 +12,9 @@ export function get_nearest_script() {
 	let script_ghost=cur_event_fns.at(-1);
 	if(!script_ghost)
 		return null;
-	if(has_reg_id(script_ghost)) {
-		weak_scripts_arr[script_ghost.reg_id]?.ref
+	if(has_reg_id(script_ghost) && target_script_storage.has_alive_target(script_ghost.reg_id)) {
+		let reg_script=target_script_storage.get_target_item(script_ghost.reg_id);
+		return reg_script;
 	}
 	let doc_script=document.currentScript;
 	if(doc_script===null) {
