@@ -1,6 +1,6 @@
 import {AbstractFireNode} from "./AbstractFireNode";
 import {BaseNode} from "./BaseNode.js";
-import {IntervalTargetFn} from "../vm/IntervalTargetFn";
+import {CallbackFireNode} from "./CallbackFireNode";
 
 export class IntervalNode extends BaseNode {
 	m_target_fn: CallableFunction;
@@ -21,7 +21,7 @@ export class IntervalNode extends BaseNode {
 		if(target) {
 			this.m_target=target;
 		} else {
-			this.m_target=new IntervalTargetFn(this.m_target_fn,this.m_timeout);
+			this.m_target=new CallbackFireNode(this.m_target_fn,this.m_timeout);
 		}
 		this.set();
 	}

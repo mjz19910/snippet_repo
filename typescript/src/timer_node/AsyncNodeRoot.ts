@@ -1,7 +1,7 @@
 import {BaseNode} from "./BaseNode.js";
 import {IntervalIdNode} from "./IntervalIdNode.js";
 import {IntervalNode} from "./IntervalNode.js";
-import {IntervalTargetFireNode} from "./IntervalTargetFireNode.js";
+import {BoundFireNode} from "./BoundFireNode.js";
 import {TimeoutIdNode} from "./TimeoutIdNode.js";
 import {TimeoutNode} from "./TimeoutNode.js";
 import {TimeoutTargetFireNode} from "./TimeoutTargetFireNode.js";
@@ -14,7 +14,7 @@ export class AsyncNodeRoot extends BaseNode {
 			node.start(new TimeoutTargetFireNode(null,target_fn));
 		} else {
 			node=new IntervalNode(target_fn,timeout);
-			node.start(new IntervalTargetFireNode(null,target_fn));
+			node.start(new BoundFireNode(null,target_fn));
 		}
 	}
 	create_timeout(timer_handler: CallableFunction, delay: number, ...args: any[]) {

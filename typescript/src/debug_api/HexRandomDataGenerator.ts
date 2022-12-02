@@ -1,4 +1,4 @@
-import {NumberPart} from "./NumberPart.js"
+import {NumberPart} from "../vm/NumberPart.js"
 
 export class HexRandomDataGenerator {
 	random_num=Math.random()

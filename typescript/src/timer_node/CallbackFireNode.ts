@@ -1,4 +1,6 @@
-export class IntervalTargetFn {
+import {AbstractFireNode} from "./AbstractFireNode.js";
+
+export class CallbackFireNode implements AbstractFireNode {
 	m_callback: any;
 	timeout: number;
 	constructor(callback: any,timeout: number) {
