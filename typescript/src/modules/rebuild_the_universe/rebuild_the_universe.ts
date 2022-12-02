@@ -51,22 +51,36 @@ import {BoxTemplate} from "../../box/template/BoxTemplate.js";
 import {VoidBox} from "../../box/VoidBox.js";
 import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
-import {DomElementBox} from "../../box/DomElementBox.js";
-import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
-import {Append} from "../../vm/instruction/Append.js";
-import {Cast} from "../../vm/instruction/Cast.js";
-import {Breakpoint} from "../../vm/instruction/debug/Breakpoint.js";
-import {DomExec} from "../../vm/instruction/dom/DomExec.js";
-import {DomPeek} from "../../vm/instruction/dom/DomPeek.js";
-import {Call} from "../../vm/instruction/general/Call.js";
-import {Construct} from "../../vm/instruction/general/Construct.js";
-import {Get} from "../../vm/instruction/general/Get.js";
-import {Return} from "../../vm/instruction/general/Return.js";
-import {Je} from "../../vm/instruction/jump/Je.js";
-import {Jump} from "../../vm/instruction/jump/Jump.js";
-import {ModifyOperand} from "../../vm/instruction/ModifyOperand.js";
-import {Nop} from "../../vm/instruction/Nop.js";
-import {PushWindowObject} from "../../vm/instruction/push/WindowObject.js";
+export class DomElementBox {
+	readonly type="DomValueBox";
+	value: Element;
+	constructor(value: Element) {
+		this.value=value;
+	}
+}
+// TODO: remove this
+type Box=BoxImpl;
+export class PromiseFunctionBox {
+	readonly type="PromiseFunctionBox";
+	value: (...args: Box[]) => Promise<Box>;
+	constructor(value: (...args: Box[]) => Promise<Box>) {
+		this.value=value;
+	}
+}
+export type Append=[AppendOpcode]
+export type Cast=[CastOpcode,CastOperandTarget]
+export type Breakpoint=[BreakpointOpcode]
+export type DomExec=['dom_exec',InstructionType[]];
+export type DomPeek=['dom_peek',number,number];
+export type Call=[CallOpcode,number]
+export type Construct=[ConstructOpcode,number]
+export type Get=[GetOpcode]
+export type Return = [ReturnOpcode]
+export type Je=[JeOpcode,number]
+export type Jump=[JumpOpcode,number]
+export type ModifyOperand=[ModifyOperandOpcode,number,number]
+export type Nop=[NopOpcode]
+export type PushWindowObject=[PushWindowObjectOpcode]
 export type AppendOpcode='append'
 export type ArgsOpcode='vm_push_args'
 export type BreakpointOpcode='breakpoint'
