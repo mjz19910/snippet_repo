@@ -1,3 +1,1 @@
-import {InstructionType} from "../InstructionType.js";
-
-export type DomExec=['dom_exec',InstructionType[]];
+export type DomExec=['dom_exec',number];
