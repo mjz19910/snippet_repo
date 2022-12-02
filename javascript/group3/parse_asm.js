@@ -319,6 +319,10 @@ function parse_0f(ar) {
 	if(next==0xb6) {
 		if(modrm==7) {
 			console.log("movzx "+map_regflags[mrm>>8&0x7]+",["+map_regflags[next&0x7]);
+			let complete=false;
+			if(!complete) {
+				throw new Error("TODO: not sure about movzx");
+			}
 			return ar.slice(4);
 		}
 		if(modrm==1) {
