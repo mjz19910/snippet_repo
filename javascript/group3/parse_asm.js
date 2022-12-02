@@ -131,6 +131,8 @@ function parse_stack(ar) {
 }
 /**
  * @param {string[]} ar
+ * @arg {number} num
+ * op>=0xb0 and op<0xc0
  */
 function parse_mov_b(ar,num) {
 	let af=num&0x7;
@@ -146,6 +148,7 @@ function parse_mov_b(ar,num) {
 let jumps=["jo","jno","jb","jae","je","jne","jbe","ja","js"];
 /**
  * @param {string[]} ar
+ * @arg {number} num
  */
 function parse_jumping(ar,num) {
 	let target=parseInt(ar[1],16);
