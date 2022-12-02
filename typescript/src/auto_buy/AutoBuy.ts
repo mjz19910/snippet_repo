@@ -25,7 +25,7 @@ import {EventHandlerVMDispatch} from "../vm/EventHandlerVMDispatch.js";
 import {InstructionType} from "../vm/instruction/InstructionType.js";
 import {RawDomInstructionsWithDepth} from "../vm/RawDomInstructionsWithDepth";
 import {SimpleStackVMParser} from "../vm/SimpleStackVMParser.js";
-import {TreeItem} from "../vm/TreeItem.js";
+import {TreeItem} from "./TreeItem.js";
 import {AutoBuyInterface} from "./AutoBuyInterface.js";
 import {AutoBuyState} from "./AutoBuyState.js";
 import {do_auto_unit_promote} from "./do_auto_unit_promote.js";

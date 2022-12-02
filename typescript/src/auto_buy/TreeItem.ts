@@ -1,3 +1,3 @@
-import {InstructionType} from "./instruction/InstructionType.js";
+import {InstructionType} from "../vm/instruction/InstructionType.js";
 
 export type TreeItem=[number,'op',InstructionType]|[number,'group',TreeItem[]];
