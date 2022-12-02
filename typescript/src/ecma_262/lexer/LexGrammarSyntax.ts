@@ -5,6 +5,7 @@ import {run_test_1} from "./test/run_test_1.js";
 import {run_test_2} from "./test/run_test_2.js";
 import {produce_input_element_or_div} from "./produce_input_element_or_div";
 import {lexer_produce_input_element} from "./lexer_produce_input_element";
+import {Test} from "../Test.js";
 
 export const debug=false;
 
@@ -138,6 +139,6 @@ export class LexGrammarSyntax extends LexerBase {
 }
 
 export function run_tests() {
-	run_test_1();
+	run_test_1(Test);
 	if(!!false) run_test_2();
 }

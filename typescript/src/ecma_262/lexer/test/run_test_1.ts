@@ -1,12 +1,11 @@
-import {Test} from "../../Test.js";
 import {Dispatcher} from "../Dispatcher.js";
 import {lexer_format_callback} from "../lexer_format_callback.js";
 import {lex_js} from "../lex_js";
 
-export function run_test_1() {
+export function run_test_1(test_class: any) {
 	let input=`(function(){let the_var=12;})`;
 	let dispatcher=new Dispatcher(input);
-	let test_data=new Test(input,`${input}[eof]`);
+	let test_data=new test_class(input,`${input}[eof]`);
 	let test_result=eval(test_data.input);
 	test_data.state={
 		cur_index:0,
