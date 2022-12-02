@@ -3,7 +3,7 @@ import {script_registry} from "./script_registry.js";
 import {Counter} from "./Counter.js";
 import {WeakRefTo} from "./WeakRefTo";
 import {UnregisterToken} from "./UnregisterToken";
-import {gc_storage_id_counter} from "./gc_storage_id_counter.js";
+import {gc_store_counter} from "./gc_store_counter.js";
 
 export class GCStorage<T extends {}> {
 	static all_storage: GCStorage<{}>[]=[];
@@ -18,7 +18,7 @@ export class GCStorage<T extends {}> {
 	constructor() {
 		GCStorage.all_storage.push(this);
 	}
-	store_id=gc_storage_id_counter.next();
+	store_id=gc_store_counter.next();
 	store_gc_object(target: T) {
 		let target_ref=this.target_arr.find(e => e!==null&&e.ref.deref()===target);
 		if(target_ref) {
