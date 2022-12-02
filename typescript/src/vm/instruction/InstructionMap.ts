@@ -1,7 +1,7 @@
 import {Box} from "../../box/Box.js";
 import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
 import {CastOperandTarget} from "./operands/CastOperandTarget.js";
-import {VMBlockTrace} from "./vm/VMBlockTrace.js";
+import {VMBlockTraceOperand} from "./VMBlockTraceOperand";
 
 export type InstructionMap={
 	append: ["append"];
@@ -21,7 +21,7 @@ export type InstructionMap={
 	push_window_object: ["push_window_object"];
 	push: ["push",...Box[]];
 	return: ["return"];
-	vm_block_trace: VMBlockTrace;
+	vm_block_trace: ["vm_block_trace",VMBlockTraceOperand];
 	vm_call: ["vm_call",number];
 	vm_push_args: ["vm_push_args"];
 	vm_push_ip: ["vm_push_ip"];

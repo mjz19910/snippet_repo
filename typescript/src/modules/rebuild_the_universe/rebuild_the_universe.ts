@@ -367,8 +367,6 @@ export type InstructionMapImpl={
 	dom_create_element_with_props: ["dom_create_element_with_props","div",string,{id: string;}];
 };
 export type InstructionTypeImpl=InstructionMapImpl[keyof InstructionMapImpl];
-export type DomInstructionAppendImpl=[number,"append"];
-export type DomInstructionBP=[number,"breakpoint"];
 type VMBlockTraceOperand=
 	["begin",DomInstructionType|null]|
 	["call",DomInstructionType|null]|
