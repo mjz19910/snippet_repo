@@ -426,10 +426,8 @@ class InstructionCallImpl extends InstructionImplBase {
 class InstructionConstructImpl extends InstructionImplBase {
 	/** @readonly */
 	type="construct";
-	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/general/Construct.js").Construct} ins */
-	run(vm,ins) {
-		let number_of_arguments=ins[1];
-		if(typeof number_of_arguments!='number') throw new Error("Invalid");
+	/** @arg {StackVMImpl} vm @arg {number} number_of_arguments */
+	run(vm,number_of_arguments) {
 		let [construct_target,...construct_arr]=vm.pop_arg_count(number_of_arguments);
 		const a=construct_target;
 		if(typeof a!='object') throw new Error("Invalid");
@@ -457,7 +455,7 @@ class InstructionConstructImpl extends InstructionImplBase {
 			let obj=new a.value(...valid_args.s);
 			vm.stack.push(new CSSStyleSheetBoxImpl(obj));
 		}
-		log_if(LOG_LEVEL_INFO,"",ins,...vm.stack.slice(vm.stack.length-number_of_arguments));
+		log_if(LOG_LEVEL_INFO,"",number_of_arguments,...vm.stack.slice(vm.stack.length-number_of_arguments));
 	}
 }
 class InstructionCastImpl extends InstructionImplBase {
