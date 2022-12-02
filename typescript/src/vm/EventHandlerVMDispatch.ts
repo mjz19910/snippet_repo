@@ -10,8 +10,9 @@ import {LOG_LEVEL_VERBOSE} from "../constants.js";
 import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {NumberBox} from "../box/NumberBox.js";
+import {AbstractVM} from "./AbstractVM.js";
 
-export class EventHandlerVMDispatch {
+export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 	flags: Map<string,boolean>;
 	instructions;
 	instruction_pointer;
@@ -54,6 +55,9 @@ export class EventHandlerVMDispatch {
 	}
 	is_ip_in_bounds(value: number) {
 		return value>=0&&value<this.instructions.length;
+	}
+	halt() {
+		this.running=false;
 	}
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
@@ -182,8 +186,8 @@ export class EventHandlerVMDispatch {
 		let ret=target_fn.apply(target_this,arg_arr);
 		this.push(ret);
 	}
-	run(...run_arguments: [Event]) {
-		this.vm_arguments=run_arguments;
+	run(arg: Event) {
+		this.vm_arguments=[arg];
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
 			let instruction=this.instructions[this.instruction_pointer];

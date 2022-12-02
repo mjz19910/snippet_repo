@@ -12,7 +12,7 @@ import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
 import {PromiseBox} from "../box/PromiseBox.js";
 import {LOG_LEVEL_VERBOSE} from "../constants.js";
 
-export class BaseStackVM implements AbstractVM {
+export class BaseStackVM implements AbstractVM<[]> {
 	flags: Map<string,boolean>;
 	instructions;
 	instruction_pointer;
