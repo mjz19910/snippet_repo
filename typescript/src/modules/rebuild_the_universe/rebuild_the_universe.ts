@@ -181,6 +181,25 @@ export class FunctionConstructorBox {
 		this.instance_factory=instance_factory;
 		this.box_maker=box_maker;
 	}
+	on_get(vm: StackVMImpl,key: string) {
+		switch(key) {
+			case "name": vm.push(new StringBoxImpl(this.value[key])); break;
+			case "prototype": {
+				let value=new RawBoxImpl({as_interface: this.value[key]},Symbol.for("Function"));
+				vm.push(value);
+			} break;
+			case "length": vm.push(new NumberBoxImpl(this.value[key]));
+			default: {
+				Object.keys(Object.getOwnPropertyDescriptors(this.value)).forEach(e => {
+					if(e===key) {
+						console.log("case needed for key '"+e+"'");
+						vm.push((this.value as any)[e]);
+					}
+				});
+				this.on_get(vm,key);
+			}
+		}
+	}
 	verify_arguments(...boxes: BoxImpl[]) {
 		if(boxes.length===0) {
 			return true;
@@ -865,91 +884,6 @@ class InstructionDupImpl {
 	}
 }
 
-class NewableFunctionBoxImpl {
-	readonly type="constructor_box";
-	readonly instance_type="unknown";
-	readonly arguments="box[]";
-	readonly return="box";
-	factory_value: NewableInstancePack<{}>;
-	class_value: new (...a: BoxImpl[]) => {};
-	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: BoxImpl[]) => {}) {
-		this.factory_value=factory_value;
-		this.class_value=class_value;
-	}
-	static from_box(value_box: NewableFunctionBoxImpl) {
-		return new this(value_box.factory_value,value_box.class_value);
-	}
-	on_get(vm: StackVMImpl,key: string) {
-		vm; key;
-		throw new Error("Method not implemented.");
-	}
-	factory(...args: BoxImpl[]) {
-		return this.factory_value.make_box(this.class_value,args);
-	}
-}
-
-class NewableFunctionConstructorImpl {
-	make_new: new (...a: BoxImpl[]) => FunctionInstance;
-	constructor(make_new: new (...a: BoxImpl[]) => FunctionInstance) {
-		this.make_new=make_new;
-	}
-}
-
-class FunctionConstructorFactoryImpl {
-	factory: (box_value: NewableFunctionConstructorImpl) => FunctionBoxImpl;
-	constructor(factory: (box_value: NewableFunctionConstructorImpl) => FunctionBoxImpl) {
-		this.factory=factory;
-	}
-}
-
-function bound_to_string_executor<T extends () => string>(this: (...a: BoxImpl[]) => BoxImpl,inner_value: T) {
-	return new StringBoxImpl(inner_value.call(this));
-}
-
-class FunctionBoxImpl implements FunctionBox {
-	readonly type="function_box";
-	readonly return_type="null";
-	value: (...a: BoxImpl[]) => BoxImpl;
-	constructor(value: (...a: BoxImpl[]) => BoxImpl) {
-		this.value=value;
-	}
-	on_get(vm: StackVMImpl,key: string) {
-		switch(key) {
-			case "toString": {
-				let push_value=new FunctionBox(bound_to_string_executor.bind(this.value,this.value[key]));
-				vm.push(push_value);
-			} break;
-			case "apply": {
-				let inner_value=this.value[key];
-				let push_value=new FunctionBox(inner_value);
-				vm.push(push_value);
-			} break;
-			case "call": {
-				let inner_value=this.value[key];
-				let push_value=new FunctionBox(inner_value);
-				vm.push(push_value);
-			} break;
-			case "bind": {
-				let inner_value=this.value[key];
-				let push_value=new FunctionBox(inner_value);
-				vm.push(push_value);
-			} break;
-			case "arguments": {
-				let inner_value=this.value.arguments;
-				let push_value=new RawBoxImpl({as_any: inner_value},Symbol.for("any"));
-				vm.push(push_value);
-			} break;
-			case "caller":
-			case "constructor":
-			case "length":
-			case "name":
-		}
-	}
-	static from_box(value: (...a: BoxImpl[]) => BoxImpl) {
-		return new this(value);
-	}
-}
-
 class StringBoxImpl {
 	readonly type="string";
 	value: string;
@@ -973,56 +907,6 @@ class RawBoxImpl<T> {
 	constructor(value: T,symbol_: symbol) {
 		this.raw_value=value;
 		this.type_symbol=symbol_;
-	}
-}
-
-class FunctionConstructorBoxImpl {
-	readonly type="constructor_box";
-	readonly instance_type="Function";
-	readonly arguments="string[]";
-	readonly return="box";
-	readonly instance_factory: FunctionConstructorFactoryImpl;
-	readonly value: FunctionConstructor;
-	readonly box_maker: BoxMakerImpl<string,FunctionBoxImpl>;
-	constructor(
-		value: FunctionConstructor,
-		instance_factory: FunctionConstructorFactoryImpl,
-		box_maker: BoxMakerImpl<string,FunctionBoxImpl>
-	) {
-		this.value=value;
-		this.instance_factory=instance_factory;
-		this.box_maker=box_maker;
-	}
-	static from_box(value: FunctionConstructorBox) {
-		return new this(value.value,value.instance_factory as FunctionConstructorFactoryImpl,value.box_maker);
-	}
-	on_get(vm: StackVMImpl,key: string) {
-		switch(key) {
-			case "name": vm.push(new StringBoxImpl(this.value[key])); break;
-			case "prototype": {
-				let value=new RawBoxImpl({as_interface: this.value[key]},Symbol.for("Function"));
-				vm.push(value);
-			} break;
-			case "length": vm.push(new NumberBoxImpl(this.value[key]));
-			default: {
-				Object.keys(Object.getOwnPropertyDescriptors(this.value)).forEach(e => {
-					if(e===key) {
-						console.log("case needed for key '"+e+"'");
-						vm.push((this.value as any)[e]);
-					}
-				});
-				FunctionBoxImpl.from_box(this.value as unknown as (...a: BoxImpl[]) => BoxImpl).on_get(vm,key);
-			}
-		}
-	}
-	verify_arguments(...boxes: BoxImpl[]) {
-		if(boxes.length===0) {
-			return true;
-		}
-		if(boxes.length===1&&boxes[0].type==="string") {
-			return true;
-		}
-		return false;
 	}
 }
 
@@ -1068,11 +952,11 @@ class InstructionGetImpl {
 								value_box.on_get(vm,key);
 							} break;
 							case "Function": {
-								FunctionConstructorBoxImpl.from_box(value_box).on_get(vm,key);
+								value_box.on_get(vm,key);
 							} break;
 							case "unknown": {
 								if(typeof key!="string") throw new Error("Bad");
-								NewableFunctionBoxImpl.from_box(value_box as NewableFunctionBoxImpl).on_get(vm,key);
+								value_box.on_get(vm,key);
 							} break;
 						}
 					}
