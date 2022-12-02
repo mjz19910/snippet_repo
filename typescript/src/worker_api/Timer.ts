@@ -1,12 +1,22 @@
-import {ReplyClearSingle,ReplySetRepeating,ReplySetSingle,TIMER_REPEATING,TIMER_SINGLE,TIMER_TAG_COUNT} from "./constants.js";
+import {UniqueIdGenerator} from "../UniqueIdGenerator.js";
+import {
+	ReplyClearSingle,
+	ReplySetRepeating,
+	ReplySetSingle,
+	TIMER_REPEATING,
+	TIMER_SINGLE,
+	TIMER_TAG_COUNT
+} from "./constants.js";
 import {DispatchMessageType} from "./constant_types.js";
+import {
+	TimeoutClearStrings,
+	TimeoutSetStrings
+} from "./interfaces.js";
 import {SetMessageData} from "./SetMessageData.js";
 import {TimerApi} from "./TimerApi.js";
 import {TimerState} from "./TimerState.js";
 import {TimerTag} from "./TimerTag.js";
-import {UniqueIdGenerator} from "../vm/UniqueIdGenerator.js";
 import {WorkerApi} from "./WorkerApi.js";
-import {TimeoutClearStrings, TimeoutSetStrings} from "./interfaces.js";
 
 export class Timer {
 	id_generator;

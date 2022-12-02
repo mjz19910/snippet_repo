@@ -1,3 +1,3 @@
-import {UniqueIdGenerator} from "./vm/UniqueIdGenerator.js";
+import {UniqueIdGenerator} from "./UniqueIdGenerator.js";
 
 export const debug_id_gen=new UniqueIdGenerator;

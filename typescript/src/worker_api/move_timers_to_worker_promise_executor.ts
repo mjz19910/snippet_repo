@@ -1,5 +1,5 @@
 import {TimerApi} from "./TimerApi.js";
-import {UniqueIdGenerator} from "../vm/UniqueIdGenerator.js";
+import {UniqueIdGenerator} from "../UniqueIdGenerator.js";
 import {worker_code_function} from "./worker_code_function.js";
 import {WorkerApi as WorkerApi} from "./WorkerApi.js";
 import {Timer} from "./Timer.js";
