@@ -1,5 +1,4 @@
 import {any} from "../any.js";
-import {make_reload_page_request_handler} from "../../../page_loader/index.js";
 import {eval_script} from "../detail/eval.js";
 import {async_import} from "../detail/import.js";
 import {get_page_loader_dom_state} from "../get_page_loader_dom_state.js";
