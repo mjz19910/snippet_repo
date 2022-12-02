@@ -854,12 +854,13 @@ const instruction_descriptor_arr=[
 	['vm_push_self',InstructionPushVMObjImpl],
 	['vm_return',InstructionVMReturnImpl],
 ];
-instruction_descriptor_arr;
+
 /**
  * @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS
  * @typedef {import("./support/Box.js").Box} Box_CJS
  * @typedef {import("./support/StackVM.js").StackVM} StackVM_CJS
 */
+
 /** @implements {StackVM_CJS} */
 class StackVMImpl {
 	/** @type {Box_CJS} */
