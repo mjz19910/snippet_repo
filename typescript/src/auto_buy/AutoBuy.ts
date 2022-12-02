@@ -444,7 +444,6 @@ export class AutoBuy implements AutoBuyInterface {
 				tree.push([iter_depth,'group',prev]);
 				iter_depth--;
 			}
-			let item_tt: [number,'op',InstructionType]=[cur_depth,"op",item];
 			tree.push([cur_depth,'op',item]);
 		}
 		while(stack.length>0) {
