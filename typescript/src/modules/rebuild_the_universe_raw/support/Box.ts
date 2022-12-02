@@ -9,6 +9,7 @@ import {VoidBox} from "./VoidBox.js";
 import {WindowBox} from "./WindowBox.js";
 import {StackVMBox} from "./StackVMBox.js";
 import {FunctionConstructorBox} from "./FunctionConstructorBox.js";
+import {NewableFunctionBox} from "./NewableFunctionBox.js";
 
 export type Box=
 	NumberBox|
@@ -22,4 +23,5 @@ export type Box=
 	NodeBox|
 	StackVMBox|
 	FunctionConstructorBox|
+	NewableFunctionBox|
 	never;
