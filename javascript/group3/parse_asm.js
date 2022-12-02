@@ -327,6 +327,7 @@ function parse_0f(ar) {
 };
 /**
  * @param {string[]} ar
+ * 0x8b
  */
 function parse_mov_1(ar) {
 	var num=parseInt(ar[1],16);
