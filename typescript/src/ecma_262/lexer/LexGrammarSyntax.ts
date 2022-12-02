@@ -140,5 +140,5 @@ export class LexGrammarSyntax extends LexerBase {
 
 export function run_tests() {
 	run_test_1(Test);
-	if(!!false) run_test_2();
+	if(!!false) run_test_2(Test);
 }

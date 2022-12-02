@@ -1,9 +1,8 @@
-import {Test} from "../../Test.js";
 import {Dispatcher} from "../Dispatcher.js";
 import {lexer_format_callback} from "../lexer_format_callback.js";
 import {lex_js} from "../lex_js";
 
-export function run_test_2() {
+export function run_test_2(Test: any) {
 	let input=`(class {#name=12;})`;
 	let dispatcher=new Dispatcher(input);
 	let test_data=new Test(input,"(class {#name=12;})[eof]");
