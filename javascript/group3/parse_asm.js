@@ -75,7 +75,7 @@ let parse_obj=new class ParseAsm {
 			console.log("jb cip+"+ar[1]);
 		}
 		return ar.slice(2);
-	};
+	}
 	/**
 	 * @param {string[]} ar
 	 */
@@ -106,7 +106,7 @@ let parse_obj=new class ParseAsm {
 			console.log("mov "+map_regflags[af]+","+ptr);
 			return ar.slice(2);
 		}
-	};
+	}
 };
 let n_regs=[];
 /**
@@ -114,7 +114,7 @@ let n_regs=[];
  */
 function pi(n) {
 	return parseInt(n,16);
-};
+}
 /**
  * @param {string[]} ar
  */
@@ -155,7 +155,7 @@ function parse_jumping(ar,num) {
 		console.log(jumps[trg]+" "+(target+2).toString(16));
 	}
 	return ar.slice(2);
-};
+}
 /**
  * @param {string[]} ar
  */
@@ -165,7 +165,7 @@ function parse_test(ar) {
 	let m2=(mrm>>3)&0x7;
 	console.log("test "+map_regflags[modrm]+","+map_regflags[m2]);
 	return ar.slice(2);
-};
+}
 /**
  * @param {string[]} ar
  */
@@ -178,15 +178,15 @@ function parse_push_1(ar,sz) {
 		console.log("push "+ar.slice(1,5).reverse().join(""));
 	}
 	return ar.slice(1+sz);
-};
+}
 function do_asm_reg(p,n) {
 	console.log(p+" "+"dword ptr "+map_regflags[n]);
 	return 1;
-};
+}
 function do_asm_ptr(p,n) {
 	console.log(p+" "+"dword ptr ["+map_regflags[n]+"]");
 	return 1;
-};
+}
 /** @arg {string} d */
 function do_asm_pd(p,n,d) {
 	let num=parseInt(d,16);
@@ -196,7 +196,7 @@ function do_asm_pd(p,n,d) {
 		console.log(p+" dword ptr ["+map_regflags[n]+"+"+d+"]");
 	}
 	return 0;
-};
+}
 //cspell:words do_asm_fptrd fword
 function do_asm_fptrd(p,n,d) {
 	let num=parseInt(d,16);
@@ -297,7 +297,7 @@ function parse_ff(ar) {
 		return ar.slice(3);
 	}
 	throw new Error("Unexpected flow");
-};
+}
 /**
  * @param {string[]} ar
  */
@@ -324,7 +324,7 @@ function parse_0f(ar) {
 	}
 	console.log("unk "+map_regflags[modrm]+","+map_regflags[m2]);
 	return ar.slice(3);
-};
+}
 /**
  * @param {string[]} ar
  * 0x8b
@@ -355,35 +355,35 @@ function parse_mov_1(ar) {
 		console.log("mov "+map_regflags[af]+","+ptr);
 		return ar.slice(2);
 	}
-};
+}
 /**
  * @param {string[]} ar
  * 0x8c
  */
 function parse_mov_2(ar) {
 	ar;
-};
+}
 /**
  * @param {string[]} ar
  * 0x8d
  */
 function parse_lea_1(ar) {
 	ar;
-};
+}
 /**
  * @param {string[]} ar
  * 0x8e
  */
 function parse_mov_3(ar) {
 	ar;
-};
+}
 /**
  * @param {string[]} ar
  * 0x8f
  */
 function parse_pop_1(ar) {
 	ar;
-};
+}
 /**
  * @param {string[]} ar
  * 0x90
@@ -404,7 +404,7 @@ function parse_push_2(ar) {
 		console.log("push "+num.toString(16));
 	}
 	return ar.slice(2);
-};
+}
 /**
  * @param {string[]} ar
  */
@@ -416,7 +416,7 @@ function nn(ar) {
  */
 function ni(ar,i) {
 	return parseInt(ar[i],16);
-};
+}
 /**
  * @param {string[]} ar
  */
