@@ -1,4 +1,4 @@
-import {AverageRatioRoot} from "../vm/AverageRatioRoot.js";
+import {AverageRatioRoot} from "./AverageRatioRoot.js";
 import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
 import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode";
 import {AverageRatio} from "./AverageRatio.js";

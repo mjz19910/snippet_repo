@@ -1,4 +1,4 @@
-import {AverageRatio} from "../auto_buy/AverageRatio.js"
+import {AverageRatio} from "./AverageRatio.js"
 
 export class AverageRatioRoot {
 	map: Map<string,AverageRatio>
