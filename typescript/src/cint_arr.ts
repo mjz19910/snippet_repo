@@ -1,1 +1,1 @@
-export const cint_arr: (number[])[]=[];
+export const cint_arr: number[][]=[];
