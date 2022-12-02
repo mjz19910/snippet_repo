@@ -8,11 +8,11 @@ export class FunctionConstructorBox {
 	readonly instance_type="Function";
 	readonly arguments="string[]";
 	readonly return="box";
-	readonly instance_factory: FunctionConstructorFactory;
-	readonly value: typeof Function;
-	readonly box_maker: BoxMaker<string,FunctionBox>;
+	value: FunctionConstructor;
+	instance_factory: FunctionConstructorFactory;
+	box_maker: BoxMaker<string,FunctionBox>;
 	constructor(
-		value: typeof Function,
+		value: FunctionConstructor,
 		instance_factory: FunctionConstructorFactory,
 		box_maker: BoxMaker<string,FunctionBox>
 	) {
