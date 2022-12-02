@@ -506,19 +506,18 @@ class InstructionCastImpl extends InstructionImplBase {
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
-	/** @arg {import("../../vm/instruction/Cast.js").Cast} instruction @arg {StackVMImpl} vm */
-	run(vm,instruction) {
+	/** @arg {import("../../vm/instruction/CastOperandTarget.js").CastOperandTarget} cast_type @arg {StackVMImpl} vm */
+	run(vm,cast_type) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
 		if(this.debug) {
-			console.log('VM: cast',instruction[1],obj);
+			console.log('VM: cast',cast_type,obj);
 		}
 		if(typeof obj!='object') throw new Error("Invalid");
-		switch(instruction[1]) {
+		switch(cast_type) {
 			case 'object_index': break;
-			default: throw new Error("Missing cast to "+instruction[1]);
+			default: throw new Error("Missing cast to "+cast_type);
 		}
-		let cast_type=instruction[1];
 		this.cast_to_type(vm,obj,cast_type);
 	}
 }
