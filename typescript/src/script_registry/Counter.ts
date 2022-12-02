@@ -1,5 +1,5 @@
 export class Counter {
-	next(): any {
+	next(): number {
 		let cur_id=this.id;
 		this.inc();
 		return cur_id;
