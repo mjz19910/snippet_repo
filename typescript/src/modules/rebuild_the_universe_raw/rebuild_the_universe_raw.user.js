@@ -819,8 +819,7 @@ class InstructionBlockTraceImpl extends InstructionImplBase {
 	}
 }
 class UnimplementedInstruction extends InstructionImplBase {
-	/** @arg {StackVMImpl} _vm */
-	run(_vm) {
+	run() {
 		throw new Error("Unimplemented instruction");
 	}
 }
@@ -963,12 +962,12 @@ class StackVMImpl {
 			case "call": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "cast": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "construct": instruction_table[instruction[0]].run(this,instruction[1]); break;
-			case "dom_create_element_with_props": instruction_table[instruction[0]].run(this); break;
-			case "dom_create_element": instruction_table[instruction[0]].run(this); break;
-			case "dom_exec": instruction_table[instruction[0]].run(this); break;
-			case "dom_get": instruction_table[instruction[0]].run(this); break;
-			case "dom_new": instruction_table[instruction[0]].run(this); break;
-			case "dom_peek": instruction_table[instruction[0]].run(this); break;
+			case "dom_create_element_with_props": instruction_table[instruction[0]].run(); break;
+			case "dom_create_element": instruction_table[instruction[0]].run(); break;
+			case "dom_exec": instruction_table[instruction[0]].run(); break;
+			case "dom_get": instruction_table[instruction[0]].run(); break;
+			case "dom_new": instruction_table[instruction[0]].run(); break;
+			case "dom_peek": instruction_table[instruction[0]].run(); break;
 			case "drop": instruction_table[instruction[0]].run(this); break;
 			case "dup": instruction_table[instruction[0]].run(this); break;
 			case "get": instruction_table[instruction[0]].run(this); break;
