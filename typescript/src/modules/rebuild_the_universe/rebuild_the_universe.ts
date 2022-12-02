@@ -338,7 +338,7 @@ export class PromiseFunctionBox {
 export type Append=["append"];
 export type Cast=["cast",CastOperandTarget];
 export type Breakpoint=["breakpoint"];
-export type DomExec=["dom_exec",InstructionTypeImpl[]];
+export type DomExec=["dom_exec",number];
 export type DomPeek=["dom_peek",number,number];
 export type Call=["call",number];
 export type Construct=["construct",number];
