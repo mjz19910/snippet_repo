@@ -1,6 +1,6 @@
 import {on_ytd_app} from "../found_elements/on_ytd_app.js";
 import {load_volume_range_plugin} from "../load_volume_range_plugin.js";
-import {CustomEventTarget,CustomEventType,dom_observer_next_tick_action,observer_default_action} from "../ns.js";
+import {CustomEventTarget,CustomEventType,dom_observer_next_tick_action,observer_default_action} from "./ns.js";
 
 /** ID(10) */
 export function event_find_ytd_app(this: CustomEventTarget,event: CustomEventType) {
