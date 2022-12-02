@@ -1,18 +1,11 @@
 import {cur_event_fns} from "./cur_event_fns.js";
 import {is_in_ignored_from_src_fn} from "./is_in_ignored_from_src_fn.js";
-import {is_in_userscript} from "./is_in_userscript.js";
 import {is_in_userscript_fn} from "./is_in_userscript_fn.js";
 import {register_obj_with_registry} from "./register_obj_with_registry.js";
 
 export function replace_cb_with_safe_proxy(args: any[],index: number) {
 	let value=args[index];
 	if(index&&args&&value instanceof Function) {
-		if(is_in_userscript.flag) {
-			value.is_userscript_fn=true;
-		}
-		if(is_in_userscript_fn.flag) {
-			value.is_userscript_fn=true;
-		}
 		if(document.currentScript) {
 			value.reg_id=register_obj_with_registry(document.currentScript);
 		}
