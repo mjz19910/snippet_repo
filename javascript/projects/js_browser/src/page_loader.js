@@ -6,7 +6,7 @@ import {UrlFetcher} from "./url_fetcher/UrlFetcher.js";
 export let cached_data_buffer=[];
 
 export class PageLoaderState {
-	/** @param {import("../../html_lexer/ipc_index.js").IPCPlugin} arg0 */
+	/** @param {import("../ipc_index.js").IPCPlugin} arg0 */
 	set_html_lexer(arg0) {
 		this.m_page_html_lexer=arg0;
 	}
