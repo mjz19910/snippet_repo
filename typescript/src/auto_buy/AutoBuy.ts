@@ -313,12 +313,13 @@ export class AutoBuy implements AutoBuyInterface {
 			[1,'drop'],
 			[0,'drop'],
 			// process promise
-			[0,'push',new NullBox(null),new AsyncFunctionBox(async (style_element_promise: Box) => {
+			[0,'push',new NullBox(null)],
+			[0,"push",new AsyncFunctionBox(async (style_element_promise: Box) => {
 				if(style_element_promise.type==='promise_box'&&style_element_promise.await_type==='CSSStyleSheet') {
 					this.adopt_styles(await style_element_promise.value);
 				}
 				return new VoidBox();
-			}),...call_arg_arr],
+			})],
 			[0,'dom_new',CSSStyleSheet,[],
 				new AsyncFunctionBox(async (...args: Box[]) => {
 					if(args.length!==2) {
@@ -367,9 +368,13 @@ export class AutoBuy implements AutoBuyInterface {
 				} break;
 				case 'dom_new': {
 					const [,,class_,construct_arg_arr,callback,arg_arr]=cur_item;
-					stack.push([depth,"push",new NullBox(null),callback,new CSSStyleSheetConstructorBox(class_)]);
+					stack.push([depth,"push",new NullBox(null)]);
+					stack.push([depth,"push",callback]);
+					stack.push([depth,"push",new CSSStyleSheetConstructorBox(class_)]);
 					stack.push([depth,"construct",1+construct_arg_arr.length]);
-					stack.push([depth,"push",...arg_arr.map(e => new StringBox(e))]);
+					for(let i=0;i<arg_arr.length;i++) {
+						stack.push([depth,"push",new StringBox(arg_arr[i])]);
+					}
 					stack.push([depth,"call",3+arg_arr.length]);
 				} break;
 				case 'dom_create_element': {

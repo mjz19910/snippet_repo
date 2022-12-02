@@ -28,7 +28,7 @@ export type DomInstructionMap={
 	nop: [number,"nop"];
 	peek: [number,"peek",number];
 	push_window_object: [number,"push_window_object"];
-	push: [number,"push",...Box[]];
+	push: [number,"push",Box];
 	return: [number,"return"];
 	vm_block_trace: [number,"vm_block_trace",VMBlockTraceOperand];
 	vm_call_at: [number,"vm_call_at",DomTaggedPack];
