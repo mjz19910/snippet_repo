@@ -1485,7 +1485,7 @@ class AsyncTimeoutTarget extends PromiseTimeoutTarget {
 		return super.wait();
 	}
 }
-class BaseNode {
+class BaseNodeImpl {
 	constructor() {
 		this.m_parent=null;
 	}
@@ -1503,7 +1503,7 @@ class BaseNode {
 		this.remove();
 	}
 }
-class TimeoutIdNode extends BaseNode {
+class TimeoutIdNode extends BaseNodeImpl {
 	/** @arg {number} id */
 	constructor(id) {
 		super();
@@ -1515,7 +1515,7 @@ class TimeoutIdNode extends BaseNode {
 		super.destroy();
 	}
 }
-class IntervalIdNode extends BaseNode {
+class IntervalIdNode extends BaseNodeImpl {
 	/** @arg {ReturnType<typeof setInterval>} id */
 	constructor(id) {
 		super();
@@ -1537,7 +1537,7 @@ class IntervalTargetFn {
 		this.m_callback();
 	}
 }
-class TimeoutNode extends BaseNode {
+class TimeoutNode extends BaseNodeImpl {
 	constructor(timeout=0) {
 		super();
 		this.m_timeout=timeout;
@@ -1571,7 +1571,7 @@ class TimeoutNode extends BaseNode {
 		if(this.m_id!==null) clearTimeout(this.m_id);
 	}
 }
-class IntervalNode extends BaseNode {
+class IntervalNode extends BaseNodeImpl {
 	/** @arg {CallableFunction} target_fn */
 	constructor(target_fn,timeout=0) {
 		super();
@@ -1637,7 +1637,7 @@ class IntervalIdNodeRef extends IntervalIdNode {
 }
 class AsyncNodeRootImplR {
 	constructor() {
-		/** @type {BaseNode[]} */
+		/** @type {BaseNodeImpl[]} */
 		this.children=[];
 	}
 	/** @arg {()=>void} target_fn @arg {number | undefined} timeout */
@@ -1661,13 +1661,13 @@ class AsyncNodeRootImplR {
 	append_raw_interval(timeout_id) {
 		this.append_child(new IntervalIdNode(timeout_id));
 	}
-	/** @arg {BaseNode} record */
+	/** @arg {BaseNodeImpl} record */
 	append_child(record) {
 		record.remove();
 		record.set_parent(this);
 		this.children.push(record);
 	}
-	/** @arg {BaseNode} record */
+	/** @arg {BaseNodeImpl} record */
 	remove_child(record) {
 		let index=this.children.indexOf(record);
 		this.children.splice(index,1);
