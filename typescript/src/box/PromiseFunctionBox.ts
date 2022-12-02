@@ -1,9 +1,6 @@
 import {Box} from "./Box.js";
+import {BoxTemplate} from "./template/BoxTemplate.js";
 
-export class PromiseFunctionBox {
-	readonly type="PromiseFunctionBox";
-	value: (...args: Box[]) => Promise<Box>;
-	constructor(value: (...args: Box[]) => Promise<Box>) {
-		this.value=value;
-	}
+export class PromiseFunctionBox extends BoxTemplate<"function_box",(...args: Box[]) => Promise<Box>> {
+	readonly type="function_box";
 }
