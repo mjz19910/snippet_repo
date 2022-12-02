@@ -1,8 +1,8 @@
 import {DomTaggedPack} from "./DomTaggedPack.js";
 import {VMBlockTraceOperand} from "./VMBlockTraceOperand.js";
-import {Box} from "../../box/Box.js";
+import {Box} from "../box/Box.js";
 import {CastOperandTarget} from "./CastOperandTarget.js";
-import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
+import {AsyncFunctionBox} from "../box/AsyncFunctionBox.js";
 
 
 export type DomInstructionMap={

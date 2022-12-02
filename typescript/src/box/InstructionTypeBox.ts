@@ -1,4 +1,4 @@
-import {InstructionType} from "../vm/instruction/InstructionType.js";
+import {InstructionType} from "../instruction/InstructionType.js";
 import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class InstructionTypeBox extends BoxTemplate<"instance_box",InstructionType> {

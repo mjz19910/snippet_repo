@@ -21,7 +21,7 @@ import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode
 import {AUDIO_ELEMENT_VOLUME} from "../vars.js";
 import {BaseStackVM} from "../vm/BaseStackVM.js";
 import {EventHandlerVMDispatch} from "../vm/EventHandlerVMDispatch.js";
-import {InstructionType} from "../vm/instruction/InstructionType.js";
+import {InstructionType} from "../instruction/InstructionType.js";
 import {SimpleStackVMParser} from "../vm/SimpleStackVMParser.js";
 import {TreeItem} from "./TreeItem.js";
 import {AutoBuyInterface} from "./AutoBuyInterface.js";
@@ -31,7 +31,7 @@ import {InstructionAstState} from "./InstructionAstState.js";
 import {lightreset_inject} from "./lightreset_inject.js";
 import {specialclick_inject} from "./specialclick_inject.js";
 import {AsyncFunctionBox} from "../box/AsyncFunctionBox.js";
-import {DomInstructionType} from "../vm/instruction/DomInstructionType.js";
+import {DomInstructionType} from "../instruction/DomInstructionType.js";
 
 // Imports
 declare global {

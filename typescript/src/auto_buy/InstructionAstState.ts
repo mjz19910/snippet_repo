@@ -1,4 +1,4 @@
-import {InstructionType} from "../vm/instruction/InstructionType.js";
+import {InstructionType} from "../instruction/InstructionType.js";
 import {TreeItem} from "./TreeItem.js";
 
 type StackItemType=['children',number,[number,TreeItem[]]];

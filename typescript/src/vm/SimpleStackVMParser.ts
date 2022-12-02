@@ -1,4 +1,4 @@
-import {InstructionType} from "./instruction/InstructionType.js"
+import {InstructionType} from "../instruction/InstructionType.js"
 import {Box} from "../box/Box.js"
 import {FormattableTypes} from "../FormattableTypes.js"
 import {StringBox} from "../box/StringBox.js";

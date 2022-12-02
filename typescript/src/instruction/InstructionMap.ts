@@ -1,5 +1,5 @@
-import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
-import {Box} from "../../box/Box.js";
+import {AsyncFunctionBox} from "../box/AsyncFunctionBox.js";
+import {Box} from "../box/Box.js";
 import {CastOperandTarget} from "./CastOperandTarget.js";
 import {VMBlockTraceOperand} from "./VMBlockTraceOperand.js";
 
