@@ -2,7 +2,7 @@
 let ar="55 8b ec 8a 4d 08 0f b6 c1 05 4b ff ff ff 83 f8 05 77 1c ff 24 85 28 fa 9c 66 b8 10 00 00 00 5d c3 b8 20 00 00 00 5d c3 b8 40 00 00 00 5d c3 33 c0 3a 0c c5 19 b8 9f 66 72 09 3a 0c c5 1a b8 9f 66 76 0a 40 83 f8 12 72 e8 33 c0 5d c3 66 8b 04 c5 1e b8 9f 66 5d c3".split(" ");
 let map_regflags=["eax","ecx","edx","ebx","esp","ebp","esi","edi"];
 let reg8=["al","cl","dl","bl","ah","ch","dh","bh"];
-let parse_obj=new class ParseAsm {
+class ParseAsm {
 	/**
 	 * @param {string[]} ar
 	 */
@@ -107,7 +107,8 @@ let parse_obj=new class ParseAsm {
 			return ar.slice(2);
 		}
 	}
-};
+}
+let parse_obj=new ParseAsm;
 let n_regs=[];
 /**
  * @param {string} n
