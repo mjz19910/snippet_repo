@@ -53,16 +53,77 @@ import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
 import {DomElementBox} from "../../box/DomElementBox.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
-import {DomInstructionType} from "../../vm/dom_instruction/DomInstructionType.js";
-import {DomTaggedPack} from "../../vm/dom_instruction/DomTaggedPack.js";
-export type VMBlockTraceOpcodeImpl='vm_block_trace'
+import {DomInstructionAppend} from "../../vm/dom_instruction/DomInstructionAppend.js";
+import {DomInstructionBP} from "../../vm/dom_instruction/DomInstructionBP.js";
+import {DomInstructionVMBlockTrace} from "../../vm/dom_instruction/DomInstructionVMBlockTrace.js";
+import {DomInstructionVMCallAt} from "../../vm/dom_instruction/DomInstructionVMCallAt.js";
+import {DomInstructionNullMarker} from "../../vm/dom_instruction/DomInstructionNullMarker.js";
+import {DomInstructionFilter} from "../../vm/dom_instruction/DomInstructionFilter.js";
+import {DomInstructionCall} from "../../vm/dom_instruction/DomInstructionCall.js";
+import {DomInstructionCast} from "../../vm/dom_instruction/DomInstructionCast.js";
+import {DomInstructionCons} from "../../vm/dom_instruction/DomInstructionCons.js";
+import {DomInstructionJe} from "../../vm/dom_instruction/DomInstructionJe.js";
+import {DomInstructionJmp} from "../../vm/dom_instruction/DomInstructionJmp.js";
+import {DomInstructionModOp} from "../../vm/dom_instruction/DomInstructionModOp.js";
+import {DomInstructionPeek} from "../../vm/dom_instruction/DomInstructionPeek.js";
+import {DomInstructionPush} from "../../vm/dom_instruction/DomInstructionPush.js";
+import {DomInstructionVMCall} from "../../vm/dom_instruction/DomInstructionVMCall.js";
+import {DomInstructionDup} from "../../vm/dom_instruction/DomInstructionDup.js";
+import {DomInstructionDrop} from "../../vm/dom_instruction/DomInstructionDrop.js";
+import {DomInstructionCreateDiv} from "../../vm/dom_instruction/DomInstructionCreateDiv.js";
+import {DomInstructionCreateDivWithId} from "../../vm/dom_instruction/DomInstructionCreateDivWithId.js";
+import {DomInstructionGet} from "../../vm/dom_instruction/DomInstructionGet.js";
+import {DomInstructionHalt} from "../../vm/dom_instruction/DomInstructionHalt.js";
+import {DomInstructionNop} from "../../vm/dom_instruction/DomInstructionNop.js";
+import {DomInstructionPushWindowObject} from "../../vm/dom_instruction/DomInstructionPushGlobalObject.js";
+import {DomInstructionReturn} from "../../vm/dom_instruction/DomInstructionReturn.js";
+import {DomInstructionVMPushArgs} from "../../vm/dom_instruction/DomInstructionVMPushArgs.js";
+import {DomInstructionVMPushIP} from "../../vm/dom_instruction/DomInstructionVMPushIP.js";
+import {DomInstructionVMPushSelf} from "../../vm/dom_instruction/DomInstructionVMPushSelf.js";
+import {DomInstructionVMReturn} from "../../vm/dom_instruction/DomInstructionVMReturn.js";
+export type DomInstructionType=
+	DomInstructionAppend|
+	DomInstructionBP|
+	DomInstructionVMBlockTrace|
+	DomInstructionVMCallAt|
+	DomInstructionNullMarker|
+	DomInstructionFilter|
+	DomInstructionCall|
+	DomInstructionCast|
+	DomInstructionCons|
+	DomInstructionJe|
+	DomInstructionJmp|
+	DomInstructionModOp|
+	DomInstructionPeek|
+	DomInstructionPush|
+	DomInstructionVMCall|
+	DomInstructionDup|
+	DomInstructionDrop|
+	DomInstructionPushWindowObject|
+	DomInstructionNop|
+	DomInstructionGet|
+	DomInstructionHalt|
+	DomInstructionReturn|
+	DomInstructionVMPushArgs|
+	DomInstructionVMPushIP|
+	DomInstructionVMPushSelf|
+	DomInstructionVMReturn|
+	// DOM
+	DomInstructionCreateDivWithId|
+	DomInstructionCreateDiv;
+
+export type DomTaggedPackImpl=
+	['dom',DomInstructionType]|
+	['vm',InstructionType]|
+	['dom_mem',number];
+export type VMBlockTraceOpcodeImpl='vm_block_trace';
 export type VMBlockTraceImpl=
 	[VMBlockTraceOpcodeImpl,'begin',DomInstructionType|null]|
 	[VMBlockTraceOpcodeImpl,'call',DomInstructionType|null]|
 	[VMBlockTraceOpcodeImpl,'block',number,number]|
-	[VMBlockTraceOpcodeImpl,'tagged',DomTaggedPack|null]|
-	[VMBlockTraceOpcodeImpl,'tagged_begin',DomTaggedPack|null]|
-	[VMBlockTraceOpcodeImpl,'tagged_call',DomTaggedPack|null];
+	[VMBlockTraceOpcodeImpl,'tagged',DomTaggedPackImpl|null]|
+	[VMBlockTraceOpcodeImpl,'tagged_begin',DomTaggedPackImpl|null]|
+	[VMBlockTraceOpcodeImpl,'tagged_call',DomTaggedPackImpl|null];
 export class PromiseFunctionBoxImpl {
 	readonly type="PromiseFunctionBox";
 	value: (...args: BoxImpl[]) => Promise<BoxImpl>;
