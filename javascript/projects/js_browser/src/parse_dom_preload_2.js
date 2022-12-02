@@ -1,9 +1,8 @@
 import * as path from "path";
 import process from "process";
 import {fetch_url} from "./fetch_url.js";
-import {import_ipc_plugin} from "./ipc_plugin.js";
-import {IpcLoader} from "./nice_loader.js";
 import {PageLoaderState} from "./page_loader.js";
+import {Extern} from "./use_extern.js";
 
 class UndefinedParseResult {
 	/**
@@ -52,16 +51,13 @@ async function new_FetchRequestState(url) {
 	return new PageLoaderState(url);
 }
 
-import {IPCPlugin as HtmlLexer} from "../../html_lexer/ipc_index.js";
-import {IPCPlugin as repl_plugin} from "../../repl_plugin/ipc_index.js";
-
 /**
  * @param {{url:string}} state
  */
 async function do_browse(state) {
 	let res=await new_FetchRequestState(state.url);
-	res.set_html_lexer(new HtmlLexer);
-	if(debug) console.log('repl plug',repl_plugin);
+	res.set_html_lexer(new Extern.HtmlLexerIpcPlugin);
+	if(debug) console.log('repl plug',Extern.ReplPluginIpcPlugin);
 	await Promise.resolve();
 	await fetch_url(res);
 }

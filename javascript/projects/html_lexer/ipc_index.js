@@ -1,1 +1,1 @@
-export class IPCPlugin {}
+export class HtmlLexerIpcPlugin {}
