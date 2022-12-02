@@ -747,13 +747,11 @@ class InstructionPeekImpl extends InstructionImplBase {
 		if(this.debug) console.log('VM: peek',ins,'value',at,'index',offset,vm.stack.length-offset);
 	}
 }
-/** @typedef {import("../../vm/instruction/InstructionImplObj.js").InstructionImplObj<"append", import("../../vm/instruction/InstructionImpl.js").IAppendImpl, import("../../vm/instruction/Append.js").Append>} IInstructionAppendImplIns */
-/** @implements {IInstructionAppendImplIns} */
 class InstructionAppendImpl extends InstructionImplBase {
 	/** @type {"append"} */
 	type="append";
-	/** @arg {StackVMImpl} vm @arg {import("../../vm/instruction/Append.js").Append} _i */
-	run(vm,_i) {
+	/** @arg {StackVMImpl} vm */
+	run(vm) {
 		if(vm.stack.length<=0) {
 			throw new Error('stack underflow');
 		}
@@ -833,15 +831,13 @@ class VMFlags {
 class InstructionNopImpl extends InstructionImplBase {
 	/** @type {'nop'} */
 	type='nop';
-	/** @arg {StackVMImpl} _vm @arg {import("../../vm/instruction/Nop.js").Nop} _a */
-	run(_vm,_a) {
-	}
+	run() {}
 }
 class InstructionBlockTraceImpl extends InstructionImplBase {
 	/** @type {'vm_block_trace'} */
 	type='vm_block_trace';
-	/** @arg {StackVMImpl} _vm @arg {import("../../vm/instruction/vm/VMBlockTrace.js").VMBlockTrace} _i */
-	run(_vm,_i) {
+	/** @arg {StackVMImpl} _vm */
+	run(_vm) {
 	}
 }
 const instruction_descriptor_arr=[
