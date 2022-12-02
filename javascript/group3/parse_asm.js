@@ -300,8 +300,8 @@ function parse_mov_1(ar) {
 		return ar.slice(2);
 	}
 	if(rest) {
-		dist=ar[2];
-		ptr="["+map_regflags[af]+"+"+dist+"]";
+		let dist=ar[2];
+		let ptr="["+map_regflags[af]+"+"+dist+"]";
 		console.log("mov "+map_regflags[bf]+","+ptr);
 		return ar.slice(3);
 	} else {
@@ -312,17 +312,22 @@ function parse_mov_1(ar) {
 			console.log("mov "+map_regflags[bf]+",["+[ar[5],ar[4],ar[3],ar[2]].join("")+"]");
 			return ar.slice(2+4);
 		}
+		let ptr="???";
 		console.log("mov "+map_regflags[af]+","+ptr);
 		return ar.slice(2);
 	}
 };
-parse_mov_2=function(ar) {//8c
+function parse_mov_2(ar) {//8c
+	ar;
 };
-parse_lea_1=function(ar) {//8d
+function parse_lea_1(ar) {//8d
+	ar;
 };
-parse_mov_3=function(ar) {//8e
+function parse_mov_3(ar) {//8e
+	ar;
 };
-parse_pop_1=function(ar) {//8f
+function parse_pop_1(ar) {//8f
+	ar;
 };
 //spell:words parse_xchg
 function parse_xchg(ar) {
@@ -330,8 +335,8 @@ function parse_xchg(ar) {
 	console.log("nop");
 	return ar.slice(1);
 }
-parse_push_2=function(ar) {
-	num=pi(ar[1]);
+function parse_push_2(ar) {
+	let num=pi(ar[1]);
 	if(num>0x7f) {
 		console.log("push "+(num|0xffffff00).toString(16));
 	} else {
@@ -339,15 +344,14 @@ parse_push_2=function(ar) {
 	}
 	return ar.slice(2);
 };
+function nn(ar) {
+	//needs global ar
+	return parseInt(ar[1],16);
+};
+function ni(ar,i) {
+	return parseInt(ar[i],16);
+};
 function fn(ar) {
-	var nn=function() {
-		//needs global ar
-		return parseInt(ar[1],16);
-	};
-	var ni=function(i) {
-		return parseInt(ar[i],16);
-	};
-	void ni;
 	try {
 		if(1) {
 			let arlen=ar.length;
