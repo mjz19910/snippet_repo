@@ -151,7 +151,7 @@ class CSSStyleSheetConstructorBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("../../box/CSSStyleSheetBox.js").CSSStyleSheetBox} CSSStyleSheetBox_CJS */
+/** @typedef {import("./support/CSSStyleSheetBox.js").CSSStyleSheetBox} CSSStyleSheetBox_CJS */
 /** @implements {CSSStyleSheetBox_CJS} */
 class CSSStyleSheetBoxImpl {
 	/** @readonly */
@@ -195,7 +195,7 @@ class StackVMBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("../../box/WindowBox.js").WindowBox} WindowBox_CJS */
+/** @typedef {import("./support/WindowBox.js").WindowBox} WindowBox_CJS */
 /** @implements {WindowBox_CJS} */
 class WindowBoxImpl {
 	/** @type {"object_box"} */
@@ -220,7 +220,7 @@ class WindowBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("../../box/ObjectBox.js").ObjectBox} ObjectBox_CJS */
+/** @typedef {import("./support/ObjectBox.js").ObjectBox} ObjectBox_CJS */
 /** @implements {ObjectBox_CJS} */
 class ObjectBoxImpl {
 	/** @readonly */
@@ -298,7 +298,7 @@ class InstructionCallImpl extends InstructionImplBase {
 	debug=false;
 	/** @arg {StackVMImpl} vm @arg {Box_CJS} fn_box @arg {Box_CJS} target_this @arg {Box_CJS[]} arg_arr */
 	handle_as_fn_box(vm,fn_box,target_this,arg_arr) {
-		if('return_type' in fn_box&&fn_box.return_type=='Promise<Box>') {
+		if('return_type' in fn_box&&fn_box.return_type=="Promise<Box>") {
 			return this.handle_as_fn_to_promise(vm,fn_box.value,target_this,arg_arr);
 		} else if('return_type' in fn_box&&fn_box.return_type==="Box") {
 			console.log('fixme: make a type for this',fn_box);
@@ -570,7 +570,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 		vm.instructions[target]=valid_instruction;
 	}
 }
-/** @typedef {import("../../box/NumberBox.js").NumberBox} NumberBox_CJS */
+/** @typedef {import("./support/NumberBox.js").NumberBox} NumberBox_CJS */
 /** @implements {NumberBox_CJS} */
 class NumberBoxImpl {
 	/** @readonly */
@@ -608,7 +608,7 @@ class InstructionVMPushIPImpl extends InstructionImplBase {
 class InstructionPushImpl extends InstructionImplBase {
 	/** @type {'push'} */
 	type='push';
-	/** @arg {import("../../box/Box.js").Box[]} args @arg {StackVMImpl} vm */
+	/** @arg {import("./support/Box.js").Box[]} args @arg {StackVMImpl} vm */
 	run(vm,...args) {
 		vm.stack.push(...args);
 	}
@@ -857,7 +857,7 @@ const instruction_descriptor_arr=[
 instruction_descriptor_arr;
 /**
  * @typedef {import("../../instruction/InstructionType.js").InstructionType} InstructionType_CJS
- * @typedef {import("../../box/Box.js").Box} Box_CJS
+ * @typedef {import("./support/Box.js").Box} Box_CJS
  * @typedef {import("../../vm/StackVM.js").StackVM} StackVM_CJS
 */
 /** @implements {StackVM_CJS} */
@@ -889,7 +889,7 @@ class StackVMImpl {
 		return value;
 	}
 	/**
-	 * @param {import("../../box/Box.js").Box} value
+	 * @param {import("./support/Box.js").Box} value
 	 */
 	push(value) {
 		this.stack.push(value);
@@ -1843,7 +1843,7 @@ class DataLoaderImplR {
 		return this.default_split(data).map(DataLoaderImplR.int_parser);
 	}
 }
-/** @typedef {import("../../box/VoidBox.js").VoidBox} VoidBox_CJS */
+/** @typedef {import("./support/VoidBox.js").VoidBox} VoidBox_CJS */
 /** @implements {VoidBox_CJS} */
 class VoidBoxImpl {
 	/** @type {"void"} */
