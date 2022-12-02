@@ -1,0 +1,22 @@
+{
+	"words": [
+		"AFSDB",
+		"CDNSKEY",
+		"CSYNC",
+		"DHCID",
+		"DNAME",
+		"DNSKEY",
+		"HINFO",
+		"IPSECKEY",
+		"NSEC",
+		"OPENPGPKEY",
+		"RRSIG",
+		"SMIMEA",
+		"SSHFP",
+		"SVCB",
+		"TKEY",
+		"TLSA",
+		"TSIG",
+		"ZONEMD"
+	]
+}

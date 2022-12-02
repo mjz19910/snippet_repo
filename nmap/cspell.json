@@ -1,0 +1,9 @@
+{
+    "words": [
+        "nmap",
+        "updatedb"
+    ],
+    "enableFiletypes": [
+        "!plaintext"
+    ]
+}
