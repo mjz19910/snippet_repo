@@ -6,7 +6,7 @@ import {AutoBuyState} from "./AutoBuyState.js";
 import {Box} from "../box/Box.js";
 import {DomValueBox} from "../box/DomValueBox.js";
 import {do_auto_unit_promote} from "./do_auto_unit_promote.js";
-import {EventHandlerDispatch} from "../vm/EventHandlerDispatch.js";
+import {EventHandlerDispatch} from "../EventHandlerDispatch.js";
 import {EventHandlerVMDispatch} from "../vm/EventHandlerVMDispatch.js";
 import {AutoBuyInterface} from "./AutoBuyInterface.js";
 import {lightreset_inject} from "./lightreset_inject.js";

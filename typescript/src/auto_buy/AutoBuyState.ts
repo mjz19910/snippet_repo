@@ -1,7 +1,7 @@
 import {AverageRatioRoot} from "../vm/AverageRatioRoot.js";
 import {AsyncTimeoutNode} from "../timer_node/AsyncTimeoutNode.js";
 import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode";
-import {AverageRatio} from "../vm/AverageRatio.js";
+import {AverageRatio} from "./AverageRatio.js";
 import {AutoBuyRootType} from "./AutoBuyRootType.js";
 
 declare global {
