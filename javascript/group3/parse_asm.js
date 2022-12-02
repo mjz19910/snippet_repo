@@ -438,14 +438,15 @@ function id(ar,off) {
 	dword.push(ar[off+1]);
 	dword.push(ar[off+2]);
 	dword.push(ar[off+3]);
-	let dword_imm=-(0x100000000-parseInt(dword.reverse().join(""),16));
-	console.log('id dword', dword_imm);
+	return dword.reverse().join("");
 }
 /**
  * @param {string[]} ar
  */
 function parse_add_1(ar) {
-	id(ar,1);
+	let dword_str=id(ar,1);
+	let dword_imm=-(0x100000000-parseInt(dword_str,16));
+	console.log(`add eax, `+dword_str);
 	return ar.slice(5);
 }
 /**
