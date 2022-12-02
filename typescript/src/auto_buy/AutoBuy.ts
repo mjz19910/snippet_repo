@@ -409,8 +409,10 @@ export class AutoBuy implements AutoBuyInterface {
 				console.log('es',stack.at(-1));
 		}
 		let instruction_tree=this.stack_to_instruction_tree(stack);
-		let dom_vm_instructions=this.instruction_tree_to_instructions(instruction_tree);
-		let builder_vm=new BaseStackVM(dom_vm_instructions);
+		let functions_map:Map<number, InstructionType[]>=new Map;
+		let dom_vm_instructions=this.instruction_tree_to_instructions(instruction_tree,functions_map);
+		functions_map.set(0, dom_vm_instructions);
+		let builder_vm=new BaseStackVM(functions_map);
 		builder_vm.run();
 	}
 	stack_to_instruction_tree(input_stack: RawDomInstructionsWithDepth[]): TreeItem[] {
@@ -454,7 +456,13 @@ export class AutoBuy implements AutoBuyInterface {
 		}
 		return level;
 	}
-	instruction_tree_to_instructions(tree: TreeItem[],stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): InstructionType[] {
+	cur_function_id=-1;
+	instruction_tree_to_instructions(tree: TreeItem[],functions_map: Map<number, InstructionType[]>,stack: (['children',number,[number,TreeItem[]]])[]=[],cur_depth=0,items: InstructionType[]=[],depths: number[]=[]): InstructionType[] {
+		if(this.cur_function_id === -1) {
+			this.cur_function_id=1;
+		}
+		let cur_function_id=this.cur_function_id;
+		this.cur_function_id++;
 		for(let i=0;i<tree.length;i++) {
 			let cur=tree[i];
 			switch(cur[1]) {
@@ -480,8 +488,9 @@ export class AutoBuy implements AutoBuyInterface {
 			const [tag,items_index,[data_depth,data]]=stack_item;
 			let log_level=this.get_logging_level('apply_dom_desc');
 			l_log_if(log_level,tag,items_index,data_depth,data);
-			let deep_res=this.instruction_tree_to_instructions(data,stack,cur_depth+1);
-			items.push(['dom_exec',deep_res]);
+			let deep_res=this.instruction_tree_to_instructions(data,functions_map,stack,cur_depth+1);
+			functions_map.set(cur_function_id,deep_res);
+			items.push(['dom_exec',cur_function_id]);
 			this.log_if('apply_dom_desc',deep_res);
 			this.log_if('apply_dom_desc',items,depths,stack);
 		}
