@@ -147,7 +147,7 @@ export interface FunctionConstructorFactoryImpl {
 }
 export class FunctionBoxImpl extends BoxTemplateImpl<"function_box",(...a: BoxImpl[]) => BoxImpl> {
 	readonly type="function_box";
-	readonly return_type="null";
+	readonly return_type="Box";
 	on_get(vm: StackVMImpl,key: string) {
 		switch(key) {
 			case "toString": {

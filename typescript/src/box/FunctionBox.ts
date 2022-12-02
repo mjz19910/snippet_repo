@@ -5,7 +5,7 @@ import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class FunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Box> {
 	readonly type="function_box";
-	readonly return_type="null";
+	readonly return_type="Box";
 	on_get(vm: StackVM,key: string) {
 		switch(key) {
 			case "toString": {
