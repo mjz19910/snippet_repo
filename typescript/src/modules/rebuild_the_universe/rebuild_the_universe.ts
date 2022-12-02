@@ -69,6 +69,9 @@ export class CSSStyleSheetConstructorBox extends BoxTemplateImpl<"constructor_bo
 	readonly instance_type="CSSStyleSheet";
 	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
 	readonly args_type: [options?: CSSStyleSheetInit|undefined]=[];
+	on_get(_vm: StackVMImpl,key: string) {
+		console.log("get","CSSStyleSheetConstructorBox",key);
+	}
 	factory(...arr: BoxImpl[]) {
 		let valid_args: [options?: CSSStyleSheetInit|undefined]=[];
 		for(let i=0;i<arr.length;i++) {
@@ -862,33 +865,6 @@ class InstructionDupImpl {
 	}
 }
 
-class CSSStyleSheetConstructorBoxImpl {
-	type: "constructor_box";
-	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
-	args_type: [options?: CSSStyleSheetInit|undefined];
-	from: "javascript";
-	instance_type: "CSSStyleSheet";
-	constructor_type: "CSSStyleSheet";
-	value: typeof CSSStyleSheet;
-	constructor(value: typeof CSSStyleSheet) {
-		this.type="constructor_box";
-		this.args_type=[];
-		this.from="javascript";
-		this.instance_type="CSSStyleSheet";
-		this.constructor_type="CSSStyleSheet";
-		this.value=value;
-	}
-	static from_box(value: CSSStyleSheetConstructorBox) {
-		return new this(value.value);
-	}
-	on_get(_vm: StackVMImpl,key: string) {
-		console.log("get","CSSStyleSheetConstructorBox",key);
-	}
-	factory() {
-		return new CSSStyleSheetBoxImpl(new this.value);
-	}
-}
-
 class NewableFunctionBoxImpl {
 	readonly type="constructor_box";
 	readonly instance_type="unknown";
@@ -1089,7 +1065,7 @@ class InstructionGetImpl {
 						switch(value_box.instance_type) {
 							case "CSSStyleSheet": {
 								if(typeof key!="string") throw new Error("Bad");
-								CSSStyleSheetConstructorBoxImpl.from_box(value_box).on_get(vm,key);
+								value_box.on_get(vm,key);
 							} break;
 							case "Function": {
 								FunctionConstructorBoxImpl.from_box(value_box).on_get(vm,key);
