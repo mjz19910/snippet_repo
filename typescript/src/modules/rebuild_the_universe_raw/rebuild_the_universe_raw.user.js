@@ -945,7 +945,7 @@ class StackVMImpl {
 		this.running=false;
 		this.instruction_pointer=0;
 		this.jump_instruction_pointer=null;
-		this.base_ptr=null;
+		this.base_ptr=0;
 		this.return_value=new VoidBoxImpl;
 		this.stack.length=0;
 	}
