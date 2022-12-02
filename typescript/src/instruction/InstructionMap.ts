@@ -19,7 +19,7 @@ export type InstructionMap={
 	nop: ["nop"];
 	peek: ["peek",number];
 	push_window_object: ["push_window_object"];
-	push: ["push",...Box[]];
+	push: ["push",Box];
 	return: ["return"];
 	vm_block_trace: ["vm_block_trace",VMBlockTraceOperand];
 	vm_call: ["vm_call",number];

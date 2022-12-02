@@ -964,6 +964,8 @@ class StackVMImpl {
 			case "dom_get": instruction_table[instruction[0]].run(); break;
 			case "dom_new": instruction_table[instruction[0]].run(); break;
 			case "dom_peek": instruction_table[instruction[0]].run(); break;
+			case "nop": instruction_table[instruction[0]].run(); break;
+			case "vm_push_args": instruction_table[instruction[0]].run(); break;
 			// 1 arg
 			case 'append': instruction_table[instruction[0]].run(this); break;
 			case "breakpoint": instruction_table[instruction[0]].run(this); break;
@@ -971,24 +973,23 @@ class StackVMImpl {
 			case "dup": instruction_table[instruction[0]].run(this); break;
 			case "get": instruction_table[instruction[0]].run(this); break;
 			case "halt": instruction_table[instruction[0]].run(this); break;
+			case "return": instruction_table[instruction[0]].run(this); break;
+			case "push_window_object": instruction_table[instruction[0]].run(this); break;
+			case "vm_block_trace": instruction_table[instruction[0]].run(this); break;
+			case "vm_push_ip": instruction_table[instruction[0]].run(this); break;
+			case "vm_push_self": instruction_table[instruction[0]].run(this); break;
+			case "vm_return": instruction_table[instruction[0]].run(this); break;
 			// 2 args 1 opcode
 			case "call": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "cast": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "construct": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "je": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "jmp": instruction_table[instruction[0]].run(this,instruction[1]); break;
-			case "modify_operand": instruction_table[instruction[0]].run(this,instruction[1],instruction[2]); break;
-			case "nop": instruction_table[instruction[0]].run(); break;
 			case "peek": instruction_table[instruction[0]].run(this,instruction[1]); break;
-			case "push_window_object": instruction_table[instruction[0]].run(this); break;
-			case "push": instruction_table[instruction[0]].run(this,...instruction); break;
-			case "return": instruction_table[instruction[0]].run(this); break;
-			case "vm_block_trace": instruction_table[instruction[0]].run(this); break;
 			case "vm_call": instruction_table[instruction[0]].run(this,instruction[1]); break;
-			case "vm_push_args": instruction_table[instruction[0]].run(); break;
-			case "vm_push_ip": instruction_table[instruction[0]].run(this); break;
-			case "vm_push_self": instruction_table[instruction[0]].run(this); break;
-			case "vm_return": instruction_table[instruction[0]].run(this); break;
+			case "push": instruction_table[instruction[0]].run(this,...instruction); break;
+			// 3 args 2 opcode
+			case "modify_operand": instruction_table[instruction[0]].run(this,instruction[1],instruction[2]); break;
 		}
 	}
 	run() {
@@ -1152,9 +1153,8 @@ class StackVMParserImplR {
 		switch(instruction[0]) {
 			case 'push': {
 				num_to_parse=0;
-				const [,...push_operands]=instruction;
-				let real_push_ops=push_operands.map(e => new StringBoxImpl(e));
-				ret=[instruction[0],...real_push_ops];
+				const [,push_operand]=instruction;
+				ret=[instruction[0],new StringBoxImpl(push_operand)];
 			} break;
 			case 'call'/*1 argument*/: {
 				if(typeof instruction[1]==='number'&&Number.isFinite(instruction[1])) {
