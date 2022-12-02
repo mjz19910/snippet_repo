@@ -19,7 +19,7 @@ import {DomInstructionNop} from "./DomInstructionNop.js";
 import {DomInstructionPushWindowObject} from "./DomInstructionPushGlobalObject.js";
 import {DomInstructionDup} from "./DomInstructionDup.js";
 import {DomInstructionDrop} from "./DomInstructionDrop.js";
-import {DomInstructionCons} from "./DomInstructionCons.js";
+import {DomInstructionConstruct} from "./DomInstructionConstruct.js";
 import {DomInstructionCast} from "./DomInstructionCast.js";
 import {DomInstructionCall} from "./DomInstructionCall.js";
 import {DomInstructionBP} from "./DomInstructionBP.js";
@@ -36,7 +36,7 @@ export type DomInstructionType=
 	DomInstructionFilter|
 	DomInstructionCall|
 	DomInstructionCast|
-	DomInstructionCons|
+	DomInstructionConstruct|
 	DomInstructionJe|
 	DomInstructionJmp|
 	DomInstructionModOp|

@@ -58,29 +58,32 @@ import {DomInstructionBP} from "../../vm/dom_instruction/DomInstructionBP.js";
 import {DomInstructionVMBlockTrace} from "../../vm/dom_instruction/DomInstructionVMBlockTrace.js";
 import {DomInstructionVMCallAt} from "../../vm/dom_instruction/DomInstructionVMCallAt.js";
 import {DomInstructionNullMarker} from "../../vm/dom_instruction/DomInstructionNullMarker.js";
-import {DomInstructionFilter} from "../../vm/dom_instruction/DomInstructionFilter.js";
-import {DomInstructionCall} from "../../vm/dom_instruction/DomInstructionCall.js";
-import {DomInstructionCast} from "../../vm/dom_instruction/DomInstructionCast.js";
-import {DomInstructionCons} from "../../vm/dom_instruction/DomInstructionCons.js";
-import {DomInstructionJe} from "../../vm/dom_instruction/DomInstructionJe.js";
-import {DomInstructionJmp} from "../../vm/dom_instruction/DomInstructionJmp.js";
-import {DomInstructionModOp} from "../../vm/dom_instruction/DomInstructionModOp.js";
-import {DomInstructionPeek} from "../../vm/dom_instruction/DomInstructionPeek.js";
-import {DomInstructionPush} from "../../vm/dom_instruction/DomInstructionPush.js";
-import {DomInstructionVMCall} from "../../vm/dom_instruction/DomInstructionVMCall.js";
-import {DomInstructionDup} from "../../vm/dom_instruction/DomInstructionDup.js";
-import {DomInstructionDrop} from "../../vm/dom_instruction/DomInstructionDrop.js";
-import {DomInstructionCreateDiv} from "../../vm/dom_instruction/DomInstructionCreateDiv.js";
-import {DomInstructionCreateDivWithId} from "../../vm/dom_instruction/DomInstructionCreateDivWithId.js";
-import {DomInstructionGet} from "../../vm/dom_instruction/DomInstructionGet.js";
-import {DomInstructionHalt} from "../../vm/dom_instruction/DomInstructionHalt.js";
-import {DomInstructionNop} from "../../vm/dom_instruction/DomInstructionNop.js";
-import {DomInstructionPushWindowObject} from "../../vm/dom_instruction/DomInstructionPushGlobalObject.js";
-import {DomInstructionReturn} from "../../vm/dom_instruction/DomInstructionReturn.js";
-import {DomInstructionVMPushArgs} from "../../vm/dom_instruction/DomInstructionVMPushArgs.js";
-import {DomInstructionVMPushIP} from "../../vm/dom_instruction/DomInstructionVMPushIP.js";
-import {DomInstructionVMPushSelf} from "../../vm/dom_instruction/DomInstructionVMPushSelf.js";
-import {DomInstructionVMReturn} from "../../vm/dom_instruction/DomInstructionVMReturn.js";
+type ArgAny4=[4,any,any,any,any];
+
+export type DomInstructionFilter=[number,'dom_filter',ArgAny4];
+export type DomInstructionCall=[number,"call",number]
+export type DomInstructionCast=[number,"cast",CastOperandTarget]
+export type DomInstructionConstruct=[number,"construct",number]
+export type DomInstructionJe=[number,"je",number]
+export type DomInstructionJmp=[number,"jmp",number]
+export type DomInstructionModOp=[number,"modify_operand",number,number]
+export type DomInstructionPeek=[number,"peek",number]
+export type DomInstructionPush=[number,"push",...BoxImpl[]]
+export type DomInstructionVMCall=[number,"vm_call",number]
+export type DomInstructionDup=[number,"dup"]
+export type DomInstructionDrop=[number,"drop"]
+export type DomInstructionCreateDiv=[number,'create','div',string,string];
+export type DomInstructionCreateDivWithId=[number,'create_id','div',string];
+export type DomInstructionGet=[number,"get"]
+export type DomInstructionHalt=[number,"halt"]
+export type DomInstructionNop=[number,"nop"]
+export type PushWindowObjectOpcode='push_window_object';
+export type DomInstructionPushWindowObject=[number,PushWindowObjectOpcode];
+export type DomInstructionReturn=[number,"return"];
+export type DomInstructionVMPushArgs=[number,"vm_push_args"];
+export type DomInstructionVMPushIP=[number,"vm_push_ip"];
+export type DomInstructionVMPushSelf=[number,"vm_push_self"];
+export type DomInstructionVMReturn=[number,"vm_return"];
 export type DomInstructionType=
 	DomInstructionAppend|
 	DomInstructionBP|
@@ -90,7 +93,7 @@ export type DomInstructionType=
 	DomInstructionFilter|
 	DomInstructionCall|
 	DomInstructionCast|
-	DomInstructionCons|
+	DomInstructionConstruct|
 	DomInstructionJe|
 	DomInstructionJmp|
 	DomInstructionModOp|
