@@ -386,9 +386,9 @@ function parse_pop_1(ar) {
 };
 /**
  * @param {string[]} ar
+ * 0x90
  */
 function parse_xchg(ar) {
-	//90
 	console.log("nop");
 	return ar.slice(1);
 }
