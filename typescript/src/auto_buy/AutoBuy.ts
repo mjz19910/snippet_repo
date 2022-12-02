@@ -492,11 +492,11 @@ export class AutoBuy implements AutoBuyInterface {
 		while(stack.length>0) {
 			let stack_item=stack.pop();
 			if(!stack_item) break;
-			const [tag,items_index,[data_depth,data]]=stack_item;
+			const [tag,items_index,[data_depth,rec_tree]]=stack_item;
 			let log_level=this.get_logging_level('apply_dom_desc');
-			l_log_if(log_level,tag,items_index,data_depth,data);
-			let n_state=state.clone(data,functions_map,stack,cur_depth+1);
-			let deep_res=this.instruction_tree_to_instructions(n_state);
+			l_log_if(log_level,tag,items_index,data_depth,rec_tree);
+			let rec_state=state.clone(rec_tree,functions_map,stack,cur_depth+1);
+			let deep_res=this.instruction_tree_to_instructions(rec_state);
 			functions_map.set(cur_function_id,deep_res);
 			items.push(['dom_exec',cur_function_id]);
 			this.log_if('apply_dom_desc',deep_res);
