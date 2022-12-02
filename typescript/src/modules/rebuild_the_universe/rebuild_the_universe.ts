@@ -32,8 +32,26 @@ export class ArrayBox extends BoxTemplate<"array_box",Box[]> {
 	readonly item_type="Box";
 }
 
-import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
-import {BoxWithPropertiesIsBox} from "../../box/BoxWithPropertiesIsBox.js";
+export class AsyncFunctionBox extends BoxTemplate<"function_box",(...a: Box[]) => Promise<Box>> {
+	readonly type="function_box";
+	readonly return_type="promise_box";
+	readonly await_type="Box";
+	wrap_call(target_this: Box,...args: Box[]): Box {
+		let ret=this.value.apply(target_this,args);
+		return new PromiseBox(ret);
+	}
+}
+export class BoxWithPropertiesIsBox extends BoxTemplate<'with_properties',{}> {
+	readonly type='with_properties';
+	readonly properties;
+	constructor(value: BoxWithPropertiesObjType<BoxWithPropertiesIsBox['properties']>,properties: string[]) {
+		super(value);
+		this.properties=properties;
+	}
+}
+export type BoxWithPropertiesObjType<T extends string[]>={
+	[U in T[number]]: Box
+}
 import {CSSStyleSheetBox} from "../../box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "../../box/CSSStyleSheetConstructorBox.js";
 import {CSSStyleSheetInitBox} from "../../box/CSSStyleSheetInitBox.js";
@@ -54,8 +72,16 @@ import {NewableInstancePackObjectBox} from "../../box/NewableInstancePackObjectB
 import {NodeBox} from "../../box/NodeBox.js";
 import {NullBox} from "../../box/NullBox.js";
 import {NumberBox} from "../../box/NumberBox.js";
-import {ObjectBox} from "../../box/ObjectBox.js";
-import {PromiseBox} from "../../box/PromiseBox.js";
+export class ObjectBox extends BoxTemplate<"object_box",{}> {
+	readonly type="object_box";
+	readonly inner_type="object";
+	readonly extension="null";
+}
+export class PromiseBox extends BoxTemplate<"promise_box",Promise<Box>> {
+	readonly type="promise_box";
+	readonly inner_type='Promise<Box>';
+	readonly await_type="Box";
+}
 export class RawBox<T> {
 	readonly type="raw_box";
 	raw_value: T;

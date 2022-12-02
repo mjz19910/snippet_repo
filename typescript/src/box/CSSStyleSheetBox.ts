@@ -1,14 +1,7 @@
-import {BoxTemplate} from "./template/BoxTemplate.js"
-import {BoxVerify} from "./BoxVerify.js"
+import {BoxTemplate} from "./template/BoxTemplate.js";
 
-export class CSSStyleSheetBox
-	extends BoxTemplate<"CSSStyleSheetBox",CSSStyleSheet>
-	implements BoxVerify<CSSStyleSheetBox,"CSSStyleSheetBox">
-{
-	readonly type="CSSStyleSheetBox"
-	readonly instance_type="CSSStyleSheet"
-	readonly m_verify_name="CSSStyleSheetBox"
-	verify_name(name: "CSSStyleSheetBox") {
-		return this.m_verify_name==='CSSStyleSheetBox'&&name==='CSSStyleSheetBox'
-	}
+export class CSSStyleSheetBox extends BoxTemplate<"CSSStyleSheetBox",CSSStyleSheet> {
+	readonly type="CSSStyleSheetBox";
+	readonly next_member="instance_type";
+	readonly instance_type="CSSStyleSheet";
 }
