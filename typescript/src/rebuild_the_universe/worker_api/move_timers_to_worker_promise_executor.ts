@@ -8,7 +8,7 @@ import {PromiseExecutorHandle} from "./PromiseExecutorHandle.js";
 import {LOG_LEVEL_WARN} from "../../log_level_enum.js";
 import {TIMER_REPEATING,TIMER_SINGLE,WorkerDestroyType} from "./constants.js";
 import {RemoteWorkerState} from "./RemoteWorkerState.js";
-import {UniqueIdGenerator} from "../ns.js";
+import {UniqueIdGenerator} from "./ns.js";
 
 declare global {
 	interface Window {
