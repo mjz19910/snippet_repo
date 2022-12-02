@@ -1,3 +1,3 @@
-import {AppendOpcode} from "./opcodes/AppendOpcode.js"
+import {AppendOpcode} from "./opcodes_OLD/AppendOpcode.js"
 
 export type Append=[AppendOpcode]

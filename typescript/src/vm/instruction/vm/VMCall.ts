@@ -1,4 +1,4 @@
-import {VMCallOpcode} from "../opcodes/VMCallOpcode.js"
+import {VMCallOpcode} from "../opcodes_OLD/VMCallOpcode.js"
 
 export type VMCall=[VMCallOpcode,number]
 

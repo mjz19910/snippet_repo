@@ -1,3 +1,3 @@
-import {ArgsOpcode} from "../opcodes/ArgsOpcode.js"
+import {ArgsOpcode} from "../opcodes_OLD/ArgsOpcode.js"
 
 export type Args=[ArgsOpcode]

@@ -1,4 +1,4 @@
-import {VMBlockTraceOpcode} from "../opcodes/VMBlockTraceOpcode.js"
+import {VMBlockTraceOpcode} from "../opcodes_OLD/VMBlockTraceOpcode.js"
 import {DomTaggedPack} from "../../dom_instruction/DomTaggedPack.js"
 import {DomInstructionType} from "../../dom_instruction/DomInstructionType.js"
 
