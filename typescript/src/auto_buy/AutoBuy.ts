@@ -60,6 +60,63 @@ declare global {
 
 export class AutoBuy implements AutoBuyInterface {
 	debug_flags: Map<string, boolean>=new Map;
+	state_history_arr: any;
+	root_node: AsyncNodeRoot;
+	extra: number;
+	background_audio: HTMLAudioElement|null;
+	skip_save: boolean;
+	iter_count: number;
+	epoch_len: number;
+	compressor: any;
+	cint_arr: never[];
+	local_data_loader: DataLoader;
+	state: AutoBuyState;
+	debug: boolean;
+	epoch_start_time: number;
+	original_map: Map<any,any>;
+	dom_map: Map<any,any>;
+	timeout_arr: any;
+	display_style_sheet?: CSSStyleSheet;
+	history_element?: HTMLDivElement;
+	timeout_element?: HTMLDivElement;
+	hours_played_element?: HTMLDivElement;
+	percent_ratio_element?: HTMLDivElement;
+	percent_ratio_change_element?: HTMLDivElement;
+	state_log_element?: HTMLDivElement;
+	state_history_arr_max_len: number|undefined;
+	last_value: number|undefined;
+	pre_total: any;
+	m_dry_run: boolean=false;
+	timeout_ms: number;
+	constructor() {
+		this.root_node=new AsyncNodeRoot;
+		this.extra=0;
+		this.iter_count=0;
+		this.epoch_len=0;
+		this.timeout_ms=30;
+		this.background_audio=null;
+		this.state_history_arr=null;
+		this.skip_save=false;
+		this.cint_arr=[];
+		this.local_data_loader=new DataLoader(globalThis.localStorage);
+		this.state=new AutoBuyState(this.root_node);
+		this.debug=this.state.debug;
+		this.compressor=new MulCompression;
+		this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str',["S"]);
+		this.epoch_start_time=Date.now();
+		this.original_map=new Map;
+		this.dom_map=new Map;
+		this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str',() => {
+			let src=[300];
+			src.length=16;
+			let data_len=1;
+			while(src.at(-1)!=src[0]) {
+				src.copyWithin(data_len,0);
+				data_len*=2;
+			}
+			return src;
+		});
+	}
 	do_zero_pad(value: string|number,pad_char: string,char_num: number) {
 		let string;
 		if(typeof value==='number') {
@@ -118,79 +175,11 @@ export class AutoBuy implements AutoBuyInterface {
 			}
 		}
 	}
-	state_history_arr: any;
-	root_node: AsyncNodeRoot;
-	extra: number;
-	background_audio: HTMLAudioElement|null;
-	skip_save: boolean;
-	iter_count: number;
-	epoch_len: number;
-	compressor: any;
-	cint_arr: never[];
-	local_data_loader: DataLoader;
-	state: AutoBuyState;
-	debug: boolean;
-	epoch_start_time: number;
-	original_map: Map<any,any>;
-	dom_map: Map<any,any>;
-	debug_arr: string[];
-	timeout_arr: any;
-	display_style_sheet?: CSSStyleSheet;
-	history_element?: HTMLDivElement;
-	timeout_element?: HTMLDivElement;
-	hours_played_element?: HTMLDivElement;
-	percent_ratio_element?: HTMLDivElement;
-	percent_ratio_change_element?: HTMLDivElement;
-	state_log_element?: HTMLDivElement;
-	state_history_arr_max_len: number|undefined;
-	last_value: number|undefined;
-	pre_total: any;
-	m_dry_run: boolean=false;
-	timeout_ms: number;
 	do_fast_unit_step_change() {
 		this.do_timeout_dec([1.006],40);
 	}
 	async_compress() {
 		this.state_history_arr=this.compressor.compress_array(this.state_history_arr);
-	}
-	constructor() {
-		this.root_node=new AsyncNodeRoot;
-		this.extra=0;
-		this.iter_count=0;
-		this.epoch_len=0;
-		this.timeout_ms=30;
-		this.background_audio=null;
-		this.state_history_arr=null;
-		this.skip_save=false;
-		this.cint_arr=[];
-		this.local_data_loader=new DataLoader(globalThis.localStorage);
-		this.state=new AutoBuyState(this.root_node);
-		this.debug=this.state.debug;
-		this.compressor=new MulCompression;
-		this.state_history_arr=this.local_data_loader.load_str_arr('auto_buy_history_str',["S"]);
-		this.epoch_start_time=Date.now();
-		this.original_map=new Map;
-		this.dom_map=new Map;
-		this.debug_arr=[];
-		for(let i=0;i<debug_id_syms.length;i++) {
-			let val=debug_id_syms[i].deref();
-			let t_obj=this as any as {[x: symbol]: string;};
-			if(val&&val.sym in t_obj&&t_obj[val.sym]) {
-				let obj1=t_obj[val.sym];
-				let split_data=obj1.split(",");
-				this.debug_arr.push(...split_data.map((e: string) => e.trim()));
-			}
-		}
-		this.timeout_arr=this.local_data_loader.load_int_arr('auto_buy_timeout_str',() => {
-			let src=[300];
-			src.length=16;
-			let data_len=1;
-			while(src.at(-1)!=src[0]) {
-				src.copyWithin(data_len,0);
-				data_len*=2;
-			}
-			return src;
-		});
 	}
 	pre_init() {
 		// find elements
@@ -430,7 +419,7 @@ export class AutoBuy implements AutoBuyInterface {
 			if(cur_stack[1]==='dom_filter') continue;
 			if(cur_stack[1]==='vm_call_at') continue;
 			let [cur_depth,...item]=cur_stack;
-			if(this.debug_arr.includes('parse_dom_desc'))
+			if(this.debug_flags.get("parse_dom_desc"))
 				console.log(item);
 			while(cur_depth>iter_depth) {
 				stack.push(tree);
@@ -455,12 +444,12 @@ export class AutoBuy implements AutoBuyInterface {
 		return tree;
 	}
 	log_if(tag: string,...log_args: (string|number|any[])[]) {
-		if(this.debug_arr.includes(tag)) {
+		if(this.debug_flags.get(tag)) {
 			console.log(...log_args);
 		}
 	}
 	get_logging_level(tag: string,level=LOG_LEVEL_VERBOSE) {
-		if(this.debug_arr.includes(tag)) {
+		if(this.debug_flags.get(tag)) {
 			return level-1;
 		}
 		return level;
