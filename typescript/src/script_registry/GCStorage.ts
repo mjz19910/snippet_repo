@@ -10,7 +10,7 @@ export class GCStorage<T extends {}> {
 	static cleanup_with_held(held: HeldType) {
 		for(let i=0;i<GCStorage.all_storage.length;i++) {
 			let cur_storage=GCStorage.all_storage[i];
-			if(cur_storage.storage_id === held.store_id) {
+			if(cur_storage.store_id === held.store_id) {
 				cur_storage.cleanup_target_item(held);
 			}
 		}
@@ -18,7 +18,7 @@ export class GCStorage<T extends {}> {
 	constructor() {
 		GCStorage.all_storage.push(this);
 	}
-	storage_id=gc_storage_id_counter.next();
+	store_id=gc_storage_id_counter.next();
 	store_gc_object(target: T) {
 		let target_ref=this.target_arr.find(e => e!==null&&e.ref.deref()===target);
 		if(target_ref) {
@@ -26,7 +26,7 @@ export class GCStorage<T extends {}> {
 		}
 		let id=this.counter.next();
 		let key=Symbol(id);
-		let store_id=this.storage_id;
+		let store_id=this.store_id;
 		let held_value: HeldType={
 			type: 'held',
 			scope: "object",
