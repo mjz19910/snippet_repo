@@ -1,7 +1,5 @@
-export class StringBox {
-	readonly type='string';
-	value: string;
-	constructor(value: string) {
-		this.value=value;
-	}
+import {BoxTemplate} from "./template/BoxTemplate.js";
+
+export class StringBox extends BoxTemplate<"string",string> {
+	readonly type="string";
 }

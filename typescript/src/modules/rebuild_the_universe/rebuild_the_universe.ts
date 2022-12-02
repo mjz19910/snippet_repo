@@ -137,10 +137,10 @@ export class EmptyArrayBox extends BoxTemplateImpl<"array_box",[]> {
 export interface NewableFunctionConstructor {
 	make_new: new (...a: BoxImpl[]) => FunctionInstance
 }
-export interface FunctionConstructorFactory {
-	factory: (box_value: NewableFunctionConstructor) => FunctionBox
+export interface FunctionConstructorFactoryImpl {
+	factory: (box_value: NewableFunctionConstructor) => FunctionBoxImpl
 }
-export class FunctionBox extends BoxTemplateImpl<"function_box",(...a: BoxImpl[]) => BoxImpl> {
+export class FunctionBoxImpl extends BoxTemplateImpl<"function_box",(...a: BoxImpl[]) => BoxImpl> {
 	readonly type="function_box";
 	readonly return_type="null";
 	on_get(vm: StackVMImpl,key: string) {
@@ -148,9 +148,9 @@ export class FunctionBox extends BoxTemplateImpl<"function_box",(...a: BoxImpl[]
 			case "toString": {
 				let inner_value=this.value[key];
 				function bound_executor(this: (...a: BoxImpl[]) => BoxImpl) {
-					return new StringBox(inner_value.call(this));
+					return new StringBoxImpl(inner_value.call(this));
 				}
-				let push_value=new FunctionBox(bound_executor.bind(this.value));
+				let push_value=new FunctionBoxImpl(bound_executor.bind(this.value));
 				vm.push(push_value);
 			} break;
 			case "apply":
@@ -164,18 +164,18 @@ export class FunctionBox extends BoxTemplateImpl<"function_box",(...a: BoxImpl[]
 		}
 	}
 }
-export class FunctionConstructorBox {
+export class FunctionConstructorBoxImpl {
 	readonly type="constructor_box";
 	readonly instance_type="Function";
 	readonly arguments="string[]";
 	readonly return="box";
-	readonly instance_factory: FunctionConstructorFactory;
+	readonly instance_factory: FunctionConstructorFactoryImpl;
 	readonly value: typeof Function;
-	readonly box_maker: BoxMakerImpl<string,FunctionBox>;
+	readonly box_maker: BoxMakerImpl<string,FunctionBoxImpl>;
 	constructor(
 		value: typeof Function,
-		instance_factory: FunctionConstructorFactory,
-		box_maker: BoxMakerImpl<string,FunctionBox>
+		instance_factory: FunctionConstructorFactoryImpl,
+		box_maker: BoxMakerImpl<string,FunctionBoxImpl>
 	) {
 		this.value=value;
 		this.instance_factory=instance_factory;
@@ -303,12 +303,8 @@ export class StackVMBox extends BoxTemplateImpl<"custom_box",StackVMImpl> {
 	readonly type="custom_box";
 	readonly box_type="StackVM";
 }
-export class StringBox {
+export class StringBoxImpl extends BoxTemplateImpl<"string",string> {
 	readonly type="string";
-	value: string;
-	constructor(value: string) {
-		this.value=value;
-	}
 }
 export class VoidBox {
 	readonly type="void";
@@ -696,7 +692,7 @@ type CastOperandTarget="object_index"|"vm_function"|"object_index_to_function";
 type BoxImpl=
 	RawBoxes|
 	NumberBox|
-	StringBox|
+	StringBoxImpl|
 	// function result
 	CSSStyleSheetInitBox|
 	// array
@@ -706,10 +702,10 @@ type BoxImpl=
 	// constructor function
 	CSSStyleSheetConstructorBox|
 	// function
-	FunctionBox|
+	FunctionBoxImpl|
 	NewableFunctionBox|
 	AsyncFunctionBoxImpl|
-	FunctionConstructorBox|
+	FunctionConstructorBoxImpl|
 	// return type
 	CSSStyleSheetPromiseBox|
 	// global
@@ -878,14 +874,6 @@ class InstructionDupImpl {
 		let res=vm.stack.at(-1);
 		if(!res) throw new Error("bad");
 		vm.stack.push(res);
-	}
-}
-
-class StringBoxImpl {
-	readonly type="string";
-	value: string;
-	constructor(value: string) {
-		this.value=value;
 	}
 }
 
