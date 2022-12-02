@@ -1,4 +1,4 @@
-import {Extern} from "./extern.js";
+import {Extern} from "./use_extern.js";
 
 /** @param {Extern.PageLoaderState} state */
 export async function html_parser_callback(state) {
