@@ -1,7 +1,5 @@
-import {rebuild_auto_main} from "./rebuild_auto_main.js"
-import {ScriptStateHost} from "./vm/ScriptStateHost.js"
+import {rebuild_auto_main} from "./rebuild_auto_main.js";
 
 export default function entry_point() {
-	rebuild_auto_main()
-	ScriptStateHost.event_target.dispatchEvent({type: 'userscript',state: 'done'})
+	rebuild_auto_main();
 }

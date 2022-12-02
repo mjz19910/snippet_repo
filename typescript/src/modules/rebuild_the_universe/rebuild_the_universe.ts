@@ -3671,7 +3671,7 @@ interface GoogleAdList {
 declare global {
 	interface Window {
 		adsbygoogle: GoogleAdList;
-		cint_arr: (string|number[])[];
+		cint_arr: number[][];
 		on_on_timers_moved_first: boolean;
 	}
 }

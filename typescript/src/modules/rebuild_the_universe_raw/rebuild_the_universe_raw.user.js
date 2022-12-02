@@ -597,7 +597,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 		}
 		if(instruction_modify===void 0) throw new Error("Invalid");
 		instruction_modify[offset]=value;
-		let valid_instruction=StackVMParser.verify_instruction(instruction_modify);
+		let valid_instruction=StackVMParserImplR.verify_instruction(instruction_modify);
 		vm.instructions[target]=valid_instruction;
 	}
 }
@@ -1000,7 +1000,7 @@ class StackVMImpl {
 		return this.return_value;
 	}
 }
-class EventHandlerVMDispatch extends StackVMImpl {
+class EventHandlerVMDispatchImplR extends StackVMImpl {
 	/** @arg {InstructionType_CJS[]} instructions @arg {any} target_obj */
 	constructor(instructions,target_obj) {
 		try {
@@ -1045,7 +1045,7 @@ class StringBoxImpl {
 		this.value=string;
 	}
 }
-class StackVMParser {
+class StackVMParserImplR {
 	static match_regex=/(.+?)(;|$)/gm;
 	/** @arg {string[] | number[]} cur @arg {number} arg_loc*/
 	static parse_int_arg(cur,arg_loc) {
@@ -1187,7 +1187,7 @@ class StackVMParser {
 		return instructions;
 	}
 }
-class DocumentWriteList {
+class DocumentWriteListImpl_1 {
 	/** @type {any[]} */
 	list;
 	constructor() {
@@ -1451,7 +1451,7 @@ class MulCompression extends BaseCompression {
 }
 window.MulCompression=MulCompression;
 class TimeoutTarget {
-	/** @arg {AutoBuyState | AutoBuy | null} obj @arg {()=>void} callback */
+	/** @arg {AutoBuyStateImplR | AutoBuyImpl | null} obj @arg {()=>void} callback */
 	constructor(obj,callback) {
 		this.m_once=true;
 		this.m_obj=obj;
@@ -1674,7 +1674,7 @@ class IntervalIdNodeRef extends IntervalIdNode {
 		super.destroy();
 	}
 }
-class AsyncNodeRoot {
+class AsyncNodeRootImplR {
 	constructor() {
 		/** @type {BaseNode[]} */
 		this.children=[];
@@ -1844,7 +1844,7 @@ function labeled_sym(name) {
 	debug_id_syms.push(new WeakRef({sym}));
 	return sym;
 }
-class DataLoader {
+class DataLoaderImplR {
 	/**
 	 * @param {string} value
 	 */
@@ -1879,7 +1879,7 @@ class DataLoader {
 	}
 	/** @arg {string} data */
 	parse_int_arr(data) {
-		return this.default_split(data).map(DataLoader.int_parser);
+		return this.default_split(data).map(DataLoaderImplR.int_parser);
 	}
 }
 /** @typedef {import("../../box/VoidBox.js").VoidBox} VoidBox_CJS */
@@ -1899,8 +1899,8 @@ class VoidBoxImpl {
 		return null;
 	}
 }
-class AutoBuyState {
-	/** @arg {AsyncNodeRoot} root */
+class AutoBuyStateImplR {
+	/** @arg {AsyncNodeRootImplR} root */
 	constructor(root) {
 		this.root_node=root;
 		this.debug=false;
@@ -1943,7 +1943,7 @@ class AutoBuyState {
 			return a*b*c*4;
 		}
 		//@AverageRatio
-		/** @arg {AutoBuyState} state @arg {number} i @arg {number} now_start */
+		/** @arg {AutoBuyStateImplR} state @arg {number} i @arg {number} now_start */
 		function create_ratio(state,i,now_start) {
 			if(!state.ratio_types) throw 1;
 			let obj=new AverageRatio(state.ratio_types[i],{
@@ -2151,7 +2151,7 @@ class AutoBuyState {
 	}
 }
 class AsyncAutoBuy {
-	/** @arg {AutoBuy} parent */
+	/** @arg {AutoBuyImpl} parent */
 	constructor(parent) {
 		this.parent=parent;
 		this.unit_upgradeable_trigger=30;
@@ -2268,9 +2268,10 @@ class AsyncAutoBuy {
 		await node.start_async(new AsyncTimeoutTarget);
 	}
 }
-class AutoBuy {
+
+class AutoBuyImpl {
 	constructor() {
-		this.root_node=new AsyncNodeRoot;
+		this.root_node=new AsyncNodeRootImplR;
 		this.with_async=new AsyncAutoBuy(this);
 		this.timeout_ms=0;
 		this.iter_count=0;
@@ -2281,8 +2282,8 @@ class AutoBuy {
 		this.has_real_time=false;
 		/** @type {([1,number]|[2,number])[]} */
 		this.cint_arr=[];
-		this.local_data_loader=new DataLoader(localStorage);
-		this.state=new AutoBuyState(this.root_node);
+		this.local_data_loader=new DataLoaderImplR(localStorage);
+		this.state=new AutoBuyStateImplR(this.root_node);
 		this.debug=this.state.debug;
 		this.compressor=new MulCompression;
 		let history_loaded=this.local_data_loader.load_str_arr('auto_buy_history_str');
@@ -2448,7 +2449,7 @@ class AutoBuy {
 			// [none]
 			vm_return;
 			`;
-		let instructions=StackVMParser.parse_instruction_stream_from_string(raw_instructions,[
+		let instructions=StackVMParserImplR.parse_instruction_stream_from_string(raw_instructions,[
 			function() {
 				// LOG_LEVEL_INFO
 				log_if(LOG_LEVEL_ERROR,'play success');
@@ -2476,7 +2477,7 @@ class AutoBuy {
 			};
 			window.addEventListener('click',handler_new);
 			return;
-			let handler=new EventHandlerVMDispatch(instructions,this);
+			let handler=new EventHandlerVMDispatchImplR(instructions,this);
 			window.addEventListener('click',handler);
 		} catch(e) {
 			console.log('error when setting up EventHandlerVMDispatch',e);
@@ -3232,7 +3233,7 @@ async function do_auto_unit_promote() {
 		tonext(res);
 	}
 }
-const auto_buy_obj=new AutoBuy;
+const auto_buy_obj=new AutoBuyImpl;
 /** @type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
 	/** @type {[typeof keys[0], typeof values[0]][]} */
@@ -3534,7 +3535,7 @@ function main() {
 			return null;
 		}
 	});
-	let document_write_list=new DocumentWriteList;
+	let document_write_list=new DocumentWriteListImpl_1;
 	document_write_list.attach_proxy(document);
 	document_write_list.document_write_proxy;
 	/** @type {any} */

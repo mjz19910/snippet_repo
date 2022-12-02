@@ -18,7 +18,7 @@ export class StackVM {
 		this.instruction_pointer=0;
 		this.running=false;
 		this.stack=[];
-		this.return_value=new VoidBox(void 0);
+		this.return_value=new VoidBox();
 		this.flags=new StackVMFlags;
 	}
 	push(value: Box) {
@@ -43,7 +43,7 @@ export class StackVM {
 	reset() {
 		this.running=false;
 		this.instruction_pointer=0;
-		this.return_value=new VoidBox(void 0);
+		this.return_value=new VoidBox();
 		this.stack.length=0;
 	}
 	is_in_instructions(value: number) {

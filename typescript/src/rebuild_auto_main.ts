@@ -5,8 +5,7 @@ import {move_timers_to_worker_promise_executor} from "./worker_api/move_timers_t
 import {on_timers_moved} from "./vm/on_timers_moved.js";
 import {proxy_jquery} from "./vm/proxy_jquery.js";
 import {remove_bad_dom_script_element} from "./vm/remove_bad_dom_script_element.js";
-
-export const cint_arr: (string|number[])[]=[];
+import {cint_arr} from "./cint_arr.js";
 
 export function rebuild_auto_main() {
 	let enable_proxy=true;
