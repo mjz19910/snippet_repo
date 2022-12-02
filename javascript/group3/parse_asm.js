@@ -3,11 +3,17 @@ let ar="55 8b ec 8a 4d 08 0f b6 c1 05 4b ff ff ff 83 f8 05 77 1c ff 24 85 28 fa 
 let map_regflags=["eax","ecx","edx","ebx","esp","ebp","esi","edi"];
 let reg8=["al","cl","dl","bl","ah","ch","dh","bh"];
 let parse_obj=new class ParseAsm {
-	"8b"(/** @type {string[]} */ ar) {
+	/**
+	 * @param {string[]} ar
+	 */
+	"8b"(ar) {
 		ar;
 		//mov
 	}
-	"83"(/** @type {string[]} */ ar) {
+	/**
+	 * @param {string[]} ar
+	 */
+	"83"(ar) {
 		//add & cmp
 		// cur 83 7e 08 00
 		var num=parseInt(ar[1],16);
@@ -36,7 +42,7 @@ let parse_obj=new class ParseAsm {
 		return ar.slice(3);
 	}
 	/**
-	 * @param {string | any[]} ar
+	 * @param {string[]} ar
 	 */
 	"80"(ar) {
 		//cmp
@@ -61,8 +67,7 @@ let parse_obj=new class ParseAsm {
 		return ar.slice(4);
 	}
 	/**
-	 * @param {string | any[]} ar
-	 * jb
+	 * @param {string[]} ar
 	 */
 	"72"(ar) {
 		var num=parseInt(ar[1],16);
@@ -70,6 +75,37 @@ let parse_obj=new class ParseAsm {
 			console.log("jb cip+"+ar[1]);
 		}
 		return ar.slice(2);
+	};
+	/**
+	 * @param {string[]} ar
+	 */
+	"8a"(ar) {
+		//mov
+		var num=parseInt(ar[1],16);
+		let af=num&0x7;
+		let bf=((num-af)/8)&7;
+		let rest=(num-bf*8-af)/8/8;
+		if(rest==3) {
+			console.log("mov "+map_regflags[bf]+","+map_regflags[af]);
+			return ar.slice(2);
+		}
+		if(rest) {
+			let dist=ar[2];
+			let ptr="["+map_regflags[af]+"+"+dist+"]";
+			console.log("mov "+reg8[bf]+","+ptr);
+			return ar.slice(3);
+		} else {
+			if(af==0x4) {
+				console.log("modrm");
+			}
+			if(af==5) {
+				console.log("mov "+map_regflags[bf]+",["+[ar[5],ar[4],ar[3],ar[2]].join("")+"]");
+				return ar.slice(2+4);
+			}
+			let ptr="???";
+			console.log("mov "+map_regflags[af]+","+ptr);
+			return ar.slice(2);
+		}
 	};
 };
 let n_regs=[];
@@ -80,35 +116,7 @@ function pi(n) {
 	return parseInt(n,16);
 };
 parse_obj;
-parse_obj["8a"]=function(ar) {
-	//mov
-	var num=parseInt(ar[1],16);
-	let af=num&0x7;
-	let bf=((num-af)/8)&7;
-	let rest=(num-bf*8-af)/8/8;
-	if(rest==3) {
-		console.log("mov "+map_regflags[bf]+","+map_regflags[af]);
-		return ar.slice(2);
-	}
-	if(rest) {
-		let dist=ar[2];
-		let ptr="["+map_regflags[af]+"+"+dist+"]";
-		console.log("mov "+reg8[bf]+","+ptr);
-		return ar.slice(3);
-	} else {
-		if(af==0x4) {
-			console.log("modrm");
-		}
-		if(af==5) {
-			console.log("mov "+map_regflags[bf]+",["+[ar[5],ar[4],ar[3],ar[2]].join("")+"]");
-			return ar.slice(2+4);
-		}
-		let ptr="???";
-		console.log("mov "+map_regflags[af]+","+ptr);
-		return ar.slice(2);
-	}
-
-};
+parse_obj;
 function parse_stack(ar) {
 	let num=parseInt(ar[0],16);
 	let af=num&0x7;
