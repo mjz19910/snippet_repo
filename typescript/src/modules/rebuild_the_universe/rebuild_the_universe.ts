@@ -53,8 +53,23 @@ import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
 import {DomElementBox} from "../../box/DomElementBox.js";
 import {InstructionType} from "../../vm/instruction/InstructionType.js";
-import {VMBlockTrace} from "../../vm/instruction/vm/VMBlockTrace.js";
-import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
+import {DomInstructionType} from "../../vm/dom_instruction/DomInstructionType.js";
+import {DomTaggedPack} from "../../vm/dom_instruction/DomTaggedPack.js";
+export type VMBlockTraceOpcodeImpl='vm_block_trace'
+export type VMBlockTraceImpl=
+	[VMBlockTraceOpcodeImpl,'begin',DomInstructionType|null]|
+	[VMBlockTraceOpcodeImpl,'call',DomInstructionType|null]|
+	[VMBlockTraceOpcodeImpl,'block',number,number]|
+	[VMBlockTraceOpcodeImpl,'tagged',DomTaggedPack|null]|
+	[VMBlockTraceOpcodeImpl,'tagged_begin',DomTaggedPack|null]|
+	[VMBlockTraceOpcodeImpl,'tagged_call',DomTaggedPack|null];
+export class PromiseFunctionBoxImpl {
+	readonly type="PromiseFunctionBox";
+	value: (...args: BoxImpl[]) => Promise<BoxImpl>;
+	constructor(value: (...args: BoxImpl[]) => Promise<BoxImpl>) {
+		this.value=value;
+	}
+}
 
 console=globalThis.console;
 
@@ -295,7 +310,7 @@ type BoxImpl=
 	// Generic boxes
 	NewableInstancePackObjectBox|
 	DomElementBox|
-	PromiseFunctionBox;
+	PromiseFunctionBoxImpl;
 
 
 class InstructionCastImpl {
@@ -932,7 +947,7 @@ type InstructionMap={
 	'push_window_object': ["push_window_object"];
 	'push': ["push",...BoxImpl[]];
 	'return': ["return"];
-	'vm_block_trace': VMBlockTrace;
+	'vm_block_trace': VMBlockTraceImpl;
 	'vm_call': ["vm_call",number];
 	'vm_push_args': ["vm_push_args"];
 	'vm_push_ip': ["vm_push_ip"];
