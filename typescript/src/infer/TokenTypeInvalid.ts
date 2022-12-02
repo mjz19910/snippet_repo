@@ -1,3 +1,3 @@
-import {TAG_TYPE_INVALID} from "./js_parse_regex.js"
+import {TagType} from "./js_parse_regex.js"
 
-export type TokenTypeInvalid=[typeof TAG_TYPE_INVALID]
+export type TokenTypeInvalid=[TagType.Invalid]
