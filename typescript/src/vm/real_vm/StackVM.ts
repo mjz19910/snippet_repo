@@ -1,10 +1,10 @@
-import {Box} from "../box/Box.js";
-import {NumberBox} from "../box/NumberBox.js";
+import {Box} from "../../box/Box.js";
+import {NumberBox} from "../../box/NumberBox.js";
 import {StackVMFlags} from "./StackVMFlags.js";
-import {InstructionType} from "./instruction/InstructionType.js";
-import {SimpleStackVMParser} from "./real_vm/SimpleStackVMParser.js";
-import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.js";
-import {VoidBox} from "../box/VoidBox.js";
+import {InstructionType} from "../instruction/InstructionType.js";
+import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
+import {trigger_debug_breakpoint} from "../../trigger_debug_breakpoint.js";
+import {VoidBox} from "../../box/VoidBox.js";
 
 export class StackVM {
 	instructions: InstructionType[];

@@ -1,4 +1,4 @@
-import {StackVM} from "../StackVM.js"
+import {StackVM} from "../real_vm/StackVM.js"
 
 
 export interface InstructionImplObj<T,C_Ty,I_Type> {

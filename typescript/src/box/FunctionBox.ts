@@ -1,4 +1,4 @@
-import {StackVM} from "../vm/StackVM.js";
+import {StackVM} from "../vm/real_vm/StackVM.js";
 import {Box} from "./Box.js";
 import {StringBox} from "./StringBox.js";
 import {BoxTemplate} from "./template/BoxTemplate.js";

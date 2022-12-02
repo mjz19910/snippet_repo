@@ -858,7 +858,7 @@ instruction_descriptor_arr;
 /**
  * @typedef {import("../../vm/instruction/InstructionType.js").InstructionType} InstructionType_CJS
  * @typedef {import("../../box/Box.js").Box} Box_CJS
- * @typedef {import("../../vm/StackVM.js").StackVM} StackVM_CJS
+ * @typedef {import("../../vm/real_vm/StackVM.js").StackVM} StackVM_CJS
 */
 /** @implements {StackVM_CJS} */
 class StackVMImpl {
