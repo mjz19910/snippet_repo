@@ -4,7 +4,6 @@ import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
 import {DomElementBox} from "../box/DomElementBox.js";
 import {NullBox} from "../box/NullBox.js";
-import {PromiseFunctionBox} from "../box/PromiseFunctionBox.js";
 import {StringBox} from "../box/StringBox.js";
 import {VoidBox} from "../box/VoidBox.js";
 import {MulCompression} from "../compression/MulCompression.js";
@@ -32,6 +31,7 @@ import {do_auto_unit_promote} from "./do_auto_unit_promote.js";
 import {InstructionAstState} from "./InstructionAstState.js";
 import {lightreset_inject} from "./lightreset_inject.js";
 import {specialclick_inject} from "./specialclick_inject.js";
+import {AsyncFunctionBox} from "../box/AsyncFunctionBox.js";
 
 // Imports
 declare global {
@@ -318,14 +318,14 @@ export class AutoBuy implements AutoBuyInterface {
 			[1,'drop'],
 			[0,'drop'],
 			// process promise
-			[0,'push',new NullBox(null),new PromiseFunctionBox(async (style_element_promise: Box) => {
+			[0,'push',new NullBox(null),new AsyncFunctionBox(async (style_element_promise: Box) => {
 				if(style_element_promise.type==='promise_box'&&style_element_promise.await_type==='CSSStyleSheet') {
 					this.adopt_styles(await style_element_promise.value);
 				}
 				return new VoidBox();
 			}),...call_arg_arr],
 			[0,'dom_new',CSSStyleSheet,[],
-				new PromiseFunctionBox(async (...args: Box[]) => {
+				new AsyncFunctionBox(async (...args: Box[]) => {
 					if(args.length!==2) {
 						throw new Error("Failed");
 					}

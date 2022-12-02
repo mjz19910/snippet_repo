@@ -1,5 +1,5 @@
+import {AsyncFunctionBox} from "../../box/AsyncFunctionBox.js";
 import {Box} from "../../box/Box.js";
-import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
 import {CastOperandTarget} from "./CastOperandTarget.js";
 import {VMBlockTraceOperand} from "./VMBlockTraceOperand.js";
 
@@ -29,7 +29,7 @@ export type InstructionMap={
 	vm_return: ["vm_return"];
 	dom_exec: ["dom_exec",number];
 	dom_peek: ["dom_peek",number,number];
-	dom_new: ["dom_new",typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
+	dom_new: ["dom_new",typeof CSSStyleSheet,[],AsyncFunctionBox,[string]];
 	dom_get: ["dom_get",string];
 	dom_create_element: ["dom_create_element","div",string,string];
 	dom_create_element_with_props: ["dom_create_element_with_props","div",string,{id: string;}];
