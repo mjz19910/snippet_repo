@@ -1,5 +1,5 @@
-import {Box} from "../box/Box.js"
-import {InstructionType} from "./instruction/InstructionType.js"
+import {Box} from "../../box/Box.js"
+import {InstructionType} from "../instruction/InstructionType.js"
 
 export interface AbstractVM<T extends any[]> {
 	halt(): void;

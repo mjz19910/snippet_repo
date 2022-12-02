@@ -1,48 +1,59 @@
-import {InstructionType} from "./instruction/InstructionType.js";
-import {AutoBuyInterface} from "../auto_buy/AutoBuyInterface.js";
-import {trigger_debug_breakpoint} from "./trigger_debug_breakpoint.js";
-import {Box} from "../box/Box.js";
-import {VoidBox} from "../box/VoidBox.js";
-import {IndexBox} from "../box/IndexBox.js";
-import {NewableFunctionBox} from "../box/NewableFunctionBox.js";
-import {l_log_if} from "../l_log_if.js";
-import {LOG_LEVEL_VERBOSE} from "../constants.js";
-import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
+import {NumberBox} from "../../box/NumberBox.js";
+import {VoidBox} from "../../box/VoidBox.js";
+import {Box} from "../../box/Box.js";
+import {IndexBox} from "../../box/IndexBox.js";
+import {InstructionTypeBox} from "../../box/InstructionTypeBox.js";
+import {NewableFunctionBox} from "../../box/NewableFunctionBox.js";
+import {InstructionType} from "../instruction/InstructionType.js";
+import {l_log_if} from "../../l_log_if.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
-import {NumberBox} from "../box/NumberBox.js";
 import {AbstractVM} from "./AbstractVM.js";
+import {trigger_debug_breakpoint} from "../../trigger_debug_breakpoint.js";
+import {PromiseBox} from "../../box/PromiseBox.js";
+import {LOG_LEVEL_VERBOSE} from "../../constants.js";
 
-export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
+export class BaseStackVM implements AbstractVM<[]> {
 	flags: Map<string,boolean>;
 	instructions;
 	instruction_pointer;
 	base_pointer;
 	running;
 	stack: Box[];
-	return_value: Box;
-	target_obj: AutoBuyInterface;
-	constructor(instructions: InstructionType[],target_obj: AutoBuyInterface) {
+	return_slot: Box;
+	exec_stack: ([Box[],InstructionType[]])[];
+	jump_instruction_pointer: number|null;
+	function_map: Map<number,InstructionType[]>;
+	constructor(function_map: Map<number,InstructionType[]>) {
 		this.flags=new Map;
+		let instructions=function_map.get(0);
+		if(!instructions) throw new Error("No function id 0");
 		this.instructions=instructions;
 		this.instruction_pointer=0;
 		this.base_pointer=0;
 		this.running=false;
 		this.stack=[];
-		this.return_value=new VoidBox();
-		this.vm_arguments=null;
-		this.target_obj=target_obj;
+		this.return_slot=new VoidBox();
+		this.exec_stack=[];
+		this.jump_instruction_pointer=null;
+		this.function_map=function_map;
+	}
+	reset() {
+		this.instruction_pointer=0;
+		this.running=false;
+		this.stack.length=0;
+		this.return_slot=new VoidBox();
 	}
 	push(value: Box) {
 		this.stack.push(value);
 	}
 	pop(): Box {
-		if(this.stack.length===0) {
-			throw new Error("stack underflow");
+		let pop_value=this.stack.pop();
+		if(!pop_value) {
+			throw new Error("Stack underflow");
 		}
-		let pop_value=this.stack.pop()!;
 		return pop_value;
 	}
-	pop_arg_count(operand_number_of_arguments: any) {
+	pop_arg_count(operand_number_of_arguments: number) {
 		let arguments_arr=[];
 		let arg_count=operand_number_of_arguments;
 		for(let i=0;i<arg_count;i++) {
@@ -61,8 +72,33 @@ export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 	}
 	execute_instruction(instruction: InstructionType) {
 		switch(instruction[0]) {
-			case 'breakpoint' /*Debug*/: return trigger_debug_breakpoint();
-			case 'call' /*Call*/: return this.execute_call_instruction(instruction);
+			case 'append': throw new Error("Dom box handling not implemented");
+			case 'dom_exec': {
+				this.exec_stack.push([this.stack,this.instructions]);
+				let base_ptr=this.stack.length;
+				// advance the instruction pointer, when we return we want to resume
+				// at the next instruction...
+				this.instruction_pointer++;
+				this.stack.push(new NumberBox(this.instruction_pointer));
+				this.stack.push(new NumberBox(base_ptr));
+				this.stack=[];
+				let instructions=this.function_map.get(instruction[1]);
+				if(!instructions) throw new Error(`Failed to lookup function id: '${instruction[1]}'`);
+				this.instructions=instructions;
+				this.jump_instruction_pointer=0;
+				l_log_if(LOG_LEVEL_VERBOSE,'exec',instruction[1]);
+			} break;
+			case 'dom_peek': {
+				let [,stack_peek_distance,access_distance]=instruction;
+				let peek_stack=this.exec_stack[stack_peek_distance][0];
+				let base_ptr=peek_stack.at(-1);
+				if(!base_ptr) throw new Error("Peek stack underflow");
+				if(base_ptr.type!='number') throw new Error("Incorrect type for dom_peek");
+				let at=peek_stack.at(base_ptr.value-access_distance-1);
+				if(!at) throw new Error("Peek at underflow");
+				this.push(at);
+				l_log_if(LOG_LEVEL_VERBOSE,'peek, pushed value',at,access_distance,'base ptr',base_ptr,'ex_stack',stack_peek_distance);
+			} break;
 			case 'je': {
 				let [,target]=instruction;
 				if(this.is_ip_in_bounds(target)) {
@@ -106,6 +142,7 @@ export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 					this.push(target_obj.value[target_name]);
 				}
 			} break;
+			case 'call' /*Call*/: return this.execute_call_instruction(instruction);
 			case 'construct' /*Construct*/: {
 				let number_of_arguments=instruction[1];
 				if(typeof number_of_arguments!='number')
@@ -125,7 +162,7 @@ export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 			} break;
 			case 'return' /*Call*/:
 				let ret=this.pop();
-				this.return_value=ret;
+				this.return_slot=ret;
 				break;
 			case 'modify_operand': {
 				let [,target,offset]=instruction;
@@ -159,42 +196,66 @@ export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 			case 'vm_push_ip': {
 				this.push(new NumberBox(this.instruction_pointer));
 			} break;
+			case 'breakpoint' /*Debug*/: return trigger_debug_breakpoint();
 			default: {
 				console.info('Unknown opcode',instruction[0]);
 				throw new Error('Halt: bad opcode ('+instruction[0]+')');
 			}
 		}
 	}
-	handleEvent(event: Event) {
-		this.reset();
-		this.run(event);
-	}
-	vm_arguments: [Event]|null;
-	reset() {
-		this.instruction_pointer=0;
-		this.running=false;
-		this.stack.length=0;
-		this.return_value=new VoidBox();
-		this.vm_arguments=null;
-	}
-	execute_call_instruction(instruction: ["call", number]) {
+	execute_call_instruction(instruction: ['call',number]) {
 		let number_of_arguments=instruction[1];
+		if(number_of_arguments===void 0) return;
+		if(typeof number_of_arguments!='number') return;
 		if(number_of_arguments<=1)
 			throw new Error("Not enough arguments for call (min 2, target_this, target_fn)");
 		let [target_this,target_fn,...arg_arr]=this.pop_arg_count(number_of_arguments);
-		if(!(target_fn instanceof Function)) return;
-		let ret=target_fn.apply(target_this,arg_arr);
-		this.push(ret);
+		if(target_fn.type!='function_box') return;
+		switch(target_fn.return_type) {
+			case "Box": {
+				let ret=target_fn.value.apply(target_this,arg_arr);
+				this.push(ret);
+			} return;
+			case "Promise<Box>": {
+				let ret=target_fn.value.apply(target_this,arg_arr);
+				this.push(new PromiseBox(ret));
+			} return;
+			default: let _t: never=target_fn; _t;
+		}
 	}
-	run(arg: Event) {
-		this.vm_arguments=[arg];
+	run(): Box {
 		this.running=true;
-		while(this.instruction_pointer<this.instructions.length&&this.running) {
+		while(this.running) {
 			let instruction=this.instructions[this.instruction_pointer];
 			this.execute_instruction(instruction);
-			this.instruction_pointer++;
+			if(this.jump_instruction_pointer!=null) {
+				this.instruction_pointer=this.jump_instruction_pointer;
+				this.jump_instruction_pointer=null;
+			} else {
+				this.instruction_pointer++;
+			}
+			if(this.instruction_pointer>=this.instructions.length) this.fell_off_instructions(instruction);
 		}
 		console.assert(this.stack.length===0,"stack length is not zero, unhandled data on stack");
-		return this.return_value;
+		return this.return_slot;
+	}
+	fell_off_instructions(instruction: InstructionType) {
+		if(this.exec_stack.length>0) {
+			let exec_top=this.exec_stack.pop();
+			if(!exec_top) {
+				throw new Error("Invalid");
+			}
+			[this.stack,this.instructions]=exec_top;
+			let base_ptr=this.pop();
+			let next_ip=this.pop();
+			if(base_ptr.type!=='number') throw new Error("Invalid");
+			if(next_ip.type!=='number') throw new Error("Invalid");
+			this.base_pointer=base_ptr.value;
+			this.instruction_pointer=next_ip.value;
+			l_log_if(LOG_LEVEL_VERBOSE,'returned to',this.instruction_pointer,this.exec_stack.length);
+			return;
+		}
+		l_log_if(LOG_LEVEL_VERBOSE,'reached end of instruction stream, nothing to return too',instruction,this.instructions,this.instruction_pointer);
+		this.running=false;
 	}
 }
