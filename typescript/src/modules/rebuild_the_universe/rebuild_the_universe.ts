@@ -129,15 +129,15 @@ export class NewableInstancePackObjectBox extends BoxTemplate<"NewableInstancePa
 	readonly type="NewableInstancePack<{}>";
 }
 
-import {NodeBox} from "../../box/NodeBox.js";
-import {NullBox} from "../../box/NullBox.js";
-export class NumberBox {
-	type: 'number';
-	value: number;
-	constructor(value: number) {
-		this.type='number';
-		this.value=value;
-	}
+export class NodeBox extends BoxTemplate<"instance_box",Node> {
+	readonly type="instance_box";
+	readonly instance_type="Node";
+}
+export class NullBox extends BoxTemplate<"null",null>  {
+	readonly type="null";
+}
+export class NumberBox extends BoxTemplate<"number",number>  {
+	readonly type="number";
 }
 export class ObjectBox extends BoxTemplate<"object_box",{}> {
 	readonly type="object_box";

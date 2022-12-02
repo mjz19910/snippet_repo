@@ -1,8 +1,5 @@
-export class NullBox {
-	type: 'null';
-	value: null;
-	constructor(value: null) {
-		this.type='null';
-		this.value=value;
-	}
+import {BoxTemplate} from "./template/BoxTemplate.js";
+
+export class NullBox extends BoxTemplate<"null",null>  {
+	readonly type="null";
 }
