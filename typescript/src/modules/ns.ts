@@ -1,3 +1,7 @@
-import {InstructionMap} from "../instruction/InstructionMap.js";
+import {type InstructionMap} from "../instruction/InstructionMap.js";
+import {type Box} from "../box/Box.js";
 
-export {type InstructionMap};
+export {
+	InstructionMap,
+	Box,
+};
