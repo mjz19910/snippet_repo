@@ -91,7 +91,7 @@ class ParseAsm {
 		}
 		if(rest) {
 			let dist=ar[2];
-			let ptr="["+map_regflags[af]+"+"+dist+"]";
+			let ptr="byte ptr ss:["+map_regflags[af]+"+"+dist+"]";
 			console.log("mov "+reg8[bf]+","+ptr);
 			return ar.slice(3);
 		} else {
@@ -313,7 +313,7 @@ function parse_0f(ar) {
 	if(modrm==7) {
 		console.log(map_regflags[m2],map_regflags[modrm]);
 	} else if(modrm==1) {
-		console.log(map_regflags[m2],reg8[modrm]);
+		console.log(map_regflags[mrm>>8&0x7],reg8[modrm]);
 	}
 	//spell:words movzx
 	if(next==0xb6) {
@@ -322,6 +322,10 @@ function parse_0f(ar) {
 			console.log("movzx "+map_regflags[mrm>>8&0x7]+",["+map_regflags[next&0x7]);
 			throw "n";
 			return ar.slice(4);
+		}
+		if(modrm==1) {
+			console.log("movzx "+map_regflags[mrm>>8&0x7]+","+reg8[modrm]);
+			return ar.slice(3);
 		}
 		console.log("movzx:",m2,modrm);
 		return ar.slice(3);
