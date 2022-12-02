@@ -115,6 +115,9 @@ let n_regs=[];
 function pi(n) {
 	return parseInt(n,16);
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_stack(ar) {
 	let num=parseInt(ar[0],16);
 	let af=num&0x7;
@@ -125,6 +128,9 @@ function parse_stack(ar) {
 	}
 	return ar.slice(1);
 }
+/**
+ * @param {string[]} ar
+ */
 function parse_mov_b(ar,num) {
 	let af=num&0x7;
 	let big_regs=num&0x8;
@@ -137,6 +143,9 @@ function parse_mov_b(ar,num) {
 	}
 }
 let jumps=["jo","jno","jb","jae","je","jne","jbe","ja","js"];
+/**
+ * @param {string[]} ar
+ */
 function parse_jumping(ar,num) {
 	let target=parseInt(ar[1],16);
 	let trg=num-0x70;
@@ -147,6 +156,9 @@ function parse_jumping(ar,num) {
 	}
 	return ar.slice(2);
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_test(ar) {
 	let mrm=parseInt(ar[1],16);
 	let modrm=mrm&0x7;
@@ -154,6 +166,9 @@ function parse_test(ar) {
 	console.log("test "+map_regflags[modrm]+","+map_regflags[m2]);
 	return ar.slice(2);
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_push_1(ar,sz) {
 	if(sz==1) {
 		console.log("push "+ar.slice(1,1));
@@ -192,6 +207,9 @@ function do_asm_fptrd(p,n,d) {
 	}
 	return 0;
 }
+/**
+ * @param {string[]} ar
+ */
 function parse_ff(ar) {
 	var l;
 	let next=pi(ar[1]);
@@ -278,7 +296,11 @@ function parse_ff(ar) {
 	if(l==0) {
 		return ar.slice(3);
 	}
+	throw new Error("Unexpected flow");
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_0f(ar) {
 	let next=pi(ar[1]);
 	let mrm=pi(ar[2]);
@@ -303,6 +325,9 @@ function parse_0f(ar) {
 	console.log("unk "+map_regflags[modrm]+","+map_regflags[m2]);
 	return ar.slice(3);
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_mov_1(ar) {
 	var num=parseInt(ar[1],16);
 	let af=num&0x7;
@@ -330,24 +355,41 @@ function parse_mov_1(ar) {
 		return ar.slice(2);
 	}
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_mov_2(ar) {//8c
 	ar;
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_lea_1(ar) {//8d
 	ar;
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_mov_3(ar) {//8e
 	ar;
 };
+/**
+ * @param {string[]} ar
+ */
 function parse_pop_1(ar) {//8f
 	ar;
 };
-//spell:words parse_xchg
+/**
+ * @param {string[]} ar
+ */
 function parse_xchg(ar) {
 	//90
 	console.log("nop");
 	return ar.slice(1);
 }
+/**
+ * @param {string[]} ar
+ */
 function parse_push_2(ar) {
 	let num=pi(ar[1]);
 	if(num>0x7f) {
@@ -357,13 +399,22 @@ function parse_push_2(ar) {
 	}
 	return ar.slice(2);
 };
+/**
+ * @param {string[]} ar
+ */
 function nn(ar) {
 	//needs global ar
 	return parseInt(ar[1],16);
 };
+/**
+ * @param {string[]} ar
+ */
 function ni(ar,i) {
 	return parseInt(ar[i],16);
 };
+/**
+ * @param {string[]} ar
+ */
 function fn(ar) {
 	try {
 		if(1) {
@@ -383,7 +434,7 @@ function fn(ar) {
 					continue;
 				}
 				if(num>=0xb0&&num<0xc0) {
-					ar=parse_mov_b(ar);
+					ar=parse_mov_b(ar,num);
 					continue;
 				}
 				if(num>=0x70&&num<0x80) {
@@ -391,7 +442,7 @@ function fn(ar) {
 					continue;
 				}
 				if(num==0x88) {
-					let next=nn();
+					let next=nn(ar);
 					let modr=(next>>4)&0x7;
 					console.log("mov ["+map_regflags[next&0x7]+"],"+reg8[modr]);
 					ar=ar.slice(2);
