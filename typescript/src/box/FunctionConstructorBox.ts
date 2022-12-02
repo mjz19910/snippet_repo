@@ -24,9 +24,6 @@ export class FunctionConstructorBox {
 		if(boxes.length===0) {
 			return true;
 		}
-		if(boxes.length===1&&boxes[0].type==="string") {
-			return true;
-		}
-		return false;
+		return boxes.every(e=>e.type==="string");
 	}
 }
