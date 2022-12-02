@@ -52,31 +52,112 @@ import {VoidBox} from "../../box/VoidBox.js";
 import {VoidPromiseBox} from "../../box/VoidPromiseBox.js";
 import {WindowBox} from "../../box/WindowBox.js";
 import {DomElementBox} from "../../box/DomElementBox.js";
-import {InstructionType} from "../../vm/instruction/InstructionType.js";
-import {DomInstructionAppend} from "../../vm/dom_instruction/DomInstructionAppend.js";
-import {DomInstructionBP} from "../../vm/dom_instruction/DomInstructionBP.js";
-import {DomInstructionVMBlockTrace} from "../../vm/dom_instruction/DomInstructionVMBlockTrace.js";
-import {DomInstructionVMCallAt} from "../../vm/dom_instruction/DomInstructionVMCallAt.js";
-import {DomInstructionNullMarker} from "../../vm/dom_instruction/DomInstructionNullMarker.js";
+import {PromiseFunctionBox} from "../../box/PromiseFunctionBox.js";
+import {Append} from "../../vm/instruction/Append.js";
+import {Cast} from "../../vm/instruction/Cast.js";
+import {Breakpoint} from "../../vm/instruction/debug/Breakpoint.js";
+import {DomExec} from "../../vm/instruction/dom/DomExec.js";
+import {DomPeek} from "../../vm/instruction/dom/DomPeek.js";
+import {Call} from "../../vm/instruction/general/Call.js";
+import {Construct} from "../../vm/instruction/general/Construct.js";
+import {Get} from "../../vm/instruction/general/Get.js";
+import {Return} from "../../vm/instruction/general/Return.js";
+import {Je} from "../../vm/instruction/jump/Je.js";
+import {Jump} from "../../vm/instruction/jump/Jump.js";
+import {ModifyOperand} from "../../vm/instruction/ModifyOperand.js";
+import {Nop} from "../../vm/instruction/Nop.js";
+import {PushWindowObject} from "../../vm/instruction/push/WindowObject.js";
+import {Drop} from "../../vm/instruction/stack/Drop.js";
+import {Dup} from "../../vm/instruction/stack/Dup.js";
+import {Peek} from "../../vm/instruction/stack/Peek.js";
+export type PushOpcode='push'
+export type Push=[PushOpcode,...BoxImpl[]]
+export type HaltOpcode='halt'
+export type Halt=[HaltOpcode]
+export type VMBlockTrace=
+	[VMBlockTraceOpcode,'begin',DomInstructionType|null]|
+	[VMBlockTraceOpcode,'call',DomInstructionType|null]|
+	[VMBlockTraceOpcode,'block',number,number]|
+	[VMBlockTraceOpcode,'tagged',DomTaggedPack|null]|
+	[VMBlockTraceOpcode,'tagged_begin',DomTaggedPack|null]|
+	[VMBlockTraceOpcode,'tagged_call',DomTaggedPack|null];
+export type VMCallOpcode='vm_call'
+export type VMCall=[VMCallOpcode,number]
+export type VMPushArgsOpcode = 'vm_push_args';
+export type VMPushArgs=[VMPushArgsOpcode]
+export type VMPushIPOpcode='vm_push_ip'
+export type VMPushIP=[VMPushIPOpcode]
+export type VMPushSelfOpcode='vm_push_self'
+export type VMReturnOpcode='vm_return'
+export type VMPushSelf=[VMPushSelfOpcode]
+export type VMReturn=[VMReturnOpcode]
+export type InstructionMap={
+	append: Append;
+	breakpoint: Breakpoint;
+	call: Call;
+	cast: Cast;
+	construct: Construct;
+	drop: Drop;
+	dup: Dup;
+	get: Get;
+	halt: Halt;
+	je: Je;
+	jmp: Jump;
+	modify_operand: ModifyOperand;
+	nop: Nop;
+	peek: Peek;
+	push_window_object: PushWindowObject;
+	push: Push;
+	return: Return;
+	vm_block_trace: VMBlockTrace;
+	vm_call: VMCall;
+	vm_push_args: VMPushArgs;
+	vm_push_ip: VMPushIP;
+	vm_push_self: VMPushSelf;
+	vm_return: VMReturn;
+	dom_exec: DomExec;
+	dom_peek: DomPeek;
+	dom_new: ['dom_new',typeof CSSStyleSheet,[],PromiseFunctionBox,[string]];
+	dom_get: ['dom_get',string];
+	dom_create_element: ['dom_create_element','div',string,string];
+	dom_create_element_with_props: ['dom_create_element_with_props','div',string,{id: string;}];
+};
+export type InstructionType=InstructionMap[keyof InstructionMap];
+export type DomInstructionAppend=[number,"append"]
+export type DomInstructionBP=[number,"breakpoint"]
+export type VMBlockTraceOpcode='vm_block_trace'
+export type DomInstructionVMBlockTrace=
+	[number,VMBlockTraceOpcode,'begin',DomInstructionType|null]|
+	[number,VMBlockTraceOpcode,'call',DomInstructionType|null]|
+	[number,VMBlockTraceOpcode,'block',number,number]|
+	[number,VMBlockTraceOpcode,'tagged',DomTaggedPack|null]|
+	[number,VMBlockTraceOpcode,'tagged_begin',DomTaggedPack|null]|
+	[number,VMBlockTraceOpcode,'tagged_call',DomTaggedPack|null];
+export type DomTaggedPack=
+	['dom',DomInstructionType]|
+	['vm',InstructionType]|
+	['dom_mem',number];
+export type DomInstructionVMCallAt=[number,"vm_call_at",DomTaggedPack];
+export type DomInstructionNullMarker=[number,"marker",null];
 type ArgAny4=[4,any,any,any,any];
 
 export type DomInstructionFilter=[number,'dom_filter',ArgAny4];
-export type DomInstructionCall=[number,"call",number]
-export type DomInstructionCast=[number,"cast",CastOperandTarget]
-export type DomInstructionConstruct=[number,"construct",number]
-export type DomInstructionJe=[number,"je",number]
-export type DomInstructionJmp=[number,"jmp",number]
-export type DomInstructionModOp=[number,"modify_operand",number,number]
-export type DomInstructionPeek=[number,"peek",number]
-export type DomInstructionPush=[number,"push",...BoxImpl[]]
-export type DomInstructionVMCall=[number,"vm_call",number]
-export type DomInstructionDup=[number,"dup"]
-export type DomInstructionDrop=[number,"drop"]
+export type DomInstructionCall=[number,"call",number];
+export type DomInstructionCast=[number,"cast",CastOperandTarget];
+export type DomInstructionConstruct=[number,"construct",number];
+export type DomInstructionJe=[number,"je",number];
+export type DomInstructionJmp=[number,"jmp",number];
+export type DomInstructionModOp=[number,"modify_operand",number,number];
+export type DomInstructionPeek=[number,"peek",number];
+export type DomInstructionPush=[number,"push",...BoxImpl[]];
+export type DomInstructionVMCall=[number,"vm_call",number];
+export type DomInstructionDup=[number,"dup"];
+export type DomInstructionDrop=[number,"drop"];
 export type DomInstructionCreateDiv=[number,'create','div',string,string];
 export type DomInstructionCreateDivWithId=[number,'create_id','div',string];
-export type DomInstructionGet=[number,"get"]
-export type DomInstructionHalt=[number,"halt"]
-export type DomInstructionNop=[number,"nop"]
+export type DomInstructionGet=[number,"get"];
+export type DomInstructionHalt=[number,"halt"];
+export type DomInstructionNop=[number,"nop"];
 export type PushWindowObjectOpcode='push_window_object';
 export type DomInstructionPushWindowObject=[number,PushWindowObjectOpcode];
 export type DomInstructionReturn=[number,"return"];
@@ -991,32 +1072,6 @@ const instruction_class_map={
 	'vm_push_ip': InstructionVMPushIPImpl,
 	'vm_push_self': InstructionPushVMObjImpl,
 	'vm_return': InstructionVMReturnImpl,
-};
-
-type InstructionMap={
-	'append': ["append"];
-	'breakpoint': ["breakpoint"];
-	'call': ["call",number];
-	'cast': ['cast',CastOperandTarget];
-	'construct': ["construct",number];
-	'drop': ["drop"];
-	'dup': ["dup"];
-	'get': ["get"];
-	'halt': ["halt"];
-	'je': ["je",number];
-	'jmp': ["jmp",number];
-	'modify_operand': ["modify_operand",number,number];
-	'nop': ["nop"];
-	'peek': ["peek",number];
-	'push_window_object': ["push_window_object"];
-	'push': ["push",...BoxImpl[]];
-	'return': ["return"];
-	'vm_block_trace': VMBlockTraceImpl;
-	'vm_call': ["vm_call",number];
-	'vm_push_args': ["vm_push_args"];
-	'vm_push_ip': ["vm_push_ip"];
-	'vm_push_self': ["vm_push_self"];
-	'vm_return': ["vm_return"];
 };
 
 class StackVMFlags {
