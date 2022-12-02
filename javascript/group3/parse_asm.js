@@ -2,10 +2,38 @@
 let ar="55 8b ec 8a 4d 08 0f b6 c1 05 4b ff ff ff 83 f8 05 77 1c ff 24 85 28 fa 9c 66 b8 10 00 00 00 5d c3 b8 20 00 00 00 5d c3 b8 40 00 00 00 5d c3 33 c0 3a 0c c5 19 b8 9f 66 72 09 3a 0c c5 1a b8 9f 66 76 0a 40 83 f8 12 72 e8 33 c0 5d c3 66 8b 04 c5 1e b8 9f 66 5d c3".split(" ");
 let map_regflags=["eax","ecx","edx","ebx","esp","ebp","esi","edi"];
 let reg8=["al","cl","dl","bl","ah","ch","dh","bh"];
-let parse_obj={
-	"8b": function(ar) {
+let parse_obj=new class ParseAsm {
+	"8b"=function(ar) {
 		void ar;
 		//mov
+	}
+	"83"=function(/** @type {string[]} */ ar) {
+		//add & cmp
+		// cur 83 7e 08 00
+		var num=parseInt(ar[1],16);
+		let af=num&0x7;
+		let has_reg_displacement=num&0x40;
+		let m2=(num>>3)&0x7;
+		let rest=(num>>6);
+		console.log("mrm8 "+af+" "+m2+" "+rest);
+		n_regs.push(ar[0],ar[1],ar[2],ar[3]);
+		let dist=ar[2];
+		let no_reg=0;
+		if(no_reg==15) {
+			let val=ar[3];
+			console.log("cmp ["+map_regflags[af]+"+"+dist+"],"+val);
+			return ar.slice(4);
+		}
+		if(no_reg==29) {
+			console.log("sub "+map_regflags[af]+","+dist);
+			return ar.slice(3);
+		}
+		if(!has_reg_displacement) {
+			console.log("add "+map_regflags[af]+","+dist);
+		} else {
+			console.log("add "+"["+map_regflags[af]+"],"+dist);
+		}
+		return ar.slice(3);
 	}
 };
 let n_regs=[];
@@ -14,34 +42,6 @@ let n_regs=[];
  */
 function pi(n) {
 	return parseInt(n,16);
-};
-parse_obj["83"]=function(/** @type {string[]} */ ar) {
-	//add & cmp
-	// cur 83 7e 08 00
-	var num=parseInt(ar[1],16);
-	let af=num&0x7;
-	let has_reg_displacement=num&0x40;
-	let m2=(num>>3)&0x7;
-	let rest=(num>>6);
-	console.log("mrm8 "+af+" "+m2+" "+rest);
-	n_regs.push(ar[0],ar[1],ar[2],ar[3]);
-	let dist=ar[2];
-	let no_reg=0;
-	if(no_reg==15) {
-		let val=ar[3];
-		console.log("cmp ["+map_regflags[af]+"+"+dist+"],"+val);
-		return ar.slice(4);
-	}
-	if(no_reg==29) {
-		console.log("sub "+map_regflags[af]+","+dist);
-		return ar.slice(3);
-	}
-	if(!has_reg_displacement) {
-		console.log("add "+map_regflags[af]+","+dist);
-	} else {
-		console.log("add "+"["+map_regflags[af]+"],"+dist);
-	}
-	return ar.slice(3);
 };
 parse_obj["80"]=function(ar) {
 	//cmp
@@ -52,11 +52,11 @@ parse_obj["80"]=function(ar) {
 	let offsets=0;
 	if((num&0x80)==0x80) {
 		is_ptr=1;
-		console.log("cmp is_ptr", is_ptr);
+		console.log("cmp is_ptr",is_ptr);
 	}
 	if((num&0x40)==0x40) {
 		offsets=1;
-		console.log("cmp offsets", offsets);
+		console.log("cmp offsets",offsets);
 	}
 	if((num&0xc0)==0xc0) {
 		console.log("cmp "+map_regflags[af]+","+dist);
