@@ -13,12 +13,7 @@ declare global {
 		find_closed_dn_y: any;
 		dz?: any;
 	}
-	var debugApi: DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
-
-	class DebugAPI {
-		asyncExecuteFunction(top: Window|null,function_: any): void;
-	}
 
 	type SymbolIndexable={
 		[x: symbol]: any;

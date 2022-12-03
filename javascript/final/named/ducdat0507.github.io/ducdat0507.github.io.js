@@ -166,6 +166,7 @@ function main() {
 				this._n=n;
 			}
 		}
+		value=null;
 	};
 	cur_class.funcs=fnlist;
 	cur_class.names=fnname;
@@ -253,11 +254,8 @@ function main() {
 	let ret;
 	let debug_flag=false;
 	if(top!==window) {
-		if(window.debugApi==undefined) {
-			debugApi=new DebugAPI;
-		}
 		if(debug_flag) console.log('restart on top frame');
-		ret=debugApi.asyncExecuteFunction(top,main);
+		ret=window.debugApi.asyncExecuteFunction(top,main);
 	} else {
 		ret=do_cur();
 	}
