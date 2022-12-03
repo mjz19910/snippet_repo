@@ -1,4 +1,4 @@
-import {curTy} from "./curTy.js";
+import {Runner} from "../../support/Runner.js";
 
 export {};
 
@@ -50,7 +50,7 @@ declare global {
 	var __fo: any;
 	var __for_code: any;
 	var __lst: any;
-	var __ret: curTy;
+	var __ret: Runner;
 	var __w: any;
 	var __m: any;
 	var __r_ret: any;

@@ -2,11 +2,11 @@
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/ducdat0507.github.io/ducdat0507.github.io.js
 */
-import {curTy} from "./curTy.js";
-import {CustomInputMatcher} from "./CustomInputMatcher.js";
+import {Runner} from "../../support/Runner.js";
+import {CustomInputMatcher} from "../../support/CustomInputMatcher.js";
 
 function main() {
-	let cur=new curTy;
+	let cur=new Runner;
 	cur.n=new CustomInputMatcher(/https:\/\/ducdat0507.github.io/,() => location.origin);
 	cur.f=async function() {
 		let mc=new MessageChannel;

@@ -1,6 +1,6 @@
 import {CustomInputMatcher} from "./CustomInputMatcher.js";
 
-export class curTy {
+export class Runner {
 	/** @type {(undefined[])|null} */
 	argv=null;
 	/** @type {string|CustomInputMatcher|null} */
