@@ -23,7 +23,6 @@ declare global {
 		__state: {lex_chunks: any[]; m_l_str: any; reset_count: boolean;};
 		[x: string]: any;
 	}
-	var debugApi: DebugAPI;
 	var CustomInputMatcher: typeof X.CustomInputMatcher;
 
 	class DebugAPI {

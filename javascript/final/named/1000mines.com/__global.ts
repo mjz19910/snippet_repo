@@ -1,10 +1,6 @@
 export {};
 
 declare global {
-	class DebugAPI {
-		asyncExecuteFunction(top: Window|null,function_: any): void;
-	}
-	var debugApi: DebugAPI;
 	interface Window {
 		debugApi: {};
 		CustomInputMatcher: {};

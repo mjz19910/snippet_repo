@@ -301,12 +301,12 @@ function main() {
 				return ret;
 			}
 		};
-		if(window.debugApi===undefined) {
-			debugApi=new DebugAPI;
-		}
 		if(document.gameiframe) {
-			//console.log('restart on gameiframe')
-			return debugApi.asyncExecuteEval(document.gameiframe,_function);
+			if(window.debugApi && 'asyncExecuteEval' in window.debugApi && typeof window.debugApi.asyncExecuteEval==='function') {
+				return window.debugApi.asyncExecuteEval(document.gameiframe,_function);
+			} else {
+				throw new Error("Missing debugApi");
+			}
 		} else {
 			if(top===window) {
 				console.log('no document.gameiframe');
@@ -316,11 +316,12 @@ function main() {
 	let ret;
 	let debug_flag=false;
 	if(top!==window) {
-		if(window.debugApi==undefined) {
-			debugApi=new DebugAPI;
-		}
 		if(debug_flag) console.log('restart on top frame');
-		ret=debugApi.asyncExecuteFunction(top,main);
+		if(window.debugApi) {
+			ret=window.debugApi.asyncExecuteFunction(top,main);
+		} else {
+			ret=Promise.reject(new Error("Missing debugApi"));
+		}
 	} else {
 		ret=cur.do_cur();
 	}
