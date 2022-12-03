@@ -5,6 +5,11 @@ import {Runner} from "../../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
 */
 function main() {
+	/** @type {import("../__global.js").Holder} */
+	let holder={
+		use() {}
+	};
+	holder.use();
 	let cur=new Runner;
 	cur.n="konggames_debug";
 	cur.f=function() {
@@ -83,6 +88,7 @@ function main() {
 				 */
 				this.on_breakpoint_clear=undefined;
 				this.in_callback=false;
+				state.info.push(this.sym.debug);
 			}
 			/**
 			 * @param {any} event_foward_function
@@ -314,7 +320,7 @@ function main() {
 				done_cb(_debugger,state);
 				return _debugger;
 			}
-			let _debugger=dbg_init(function() {
+			function pre_init_callback() {
 				debug=debug;
 				undebug=undebug;
 				var state=new DebugState;
@@ -322,26 +328,25 @@ function main() {
 				state.root=true;
 				state.depth=0;
 				return state;
-			},function(_debugger,state) {
-				var d_sym=_debugger.sym.debug;
+			}
+			/**
+			 * @param {debug_class} promise_debugger
+			 * @param {DebugState} state
+			 */
+			function init_callback(promise_debugger,state) {
+				var d_sym=promise_debugger.sym.debug;
 				state.info.push(d_sym);
 				state.call_info=d_sym;
-			},function(/** @type {{ clear_root: () => void; }} */ _debugger,/** @type {{ call_info: any; }} */ state) {
-				/**
-				 * @param {any[]} x
-				 */
-				function nop(...x) {
-					x;
-				}
-				nop.call(null,[state.call_info]);
-				window.dz=_debugger;
-				_debugger.clear_root=function() {
-					delete window.dz;
-				};
-			});
-			var promise_debugger=_debugger;
-			if(!_debugger.internal_promise) throw new Error("Missing internal promise (call run first)");
-			_debugger.internal_promise.then(function(z) {
+			}
+			/**
+			 * @param {debug_class} promise_debugger
+			 */
+			function done_callback(promise_debugger) {
+				console.log("promise_debugger",promise_debugger);
+			}
+			let promise_debugger=dbg_init(pre_init_callback,init_callback,done_callback);
+			if(!promise_debugger.internal_promise) throw new Error("Missing internal promise (call run first)");
+			promise_debugger.internal_promise.then(function(z) {
 				console.log([z.scope_accessor]);
 				if(promise_debugger.breakpoint_function.rep===undefined) {
 					return;
@@ -369,9 +374,9 @@ function main() {
 				console.log(r);
 				return r;
 			});
-			if(!_debugger.state.root)
-				console.log(_debugger);
-			return _debugger;
+			if(!promise_debugger.state.root)
+				console.log(promise_debugger);
+			return promise_debugger;
 		}
 		var _debugger=window.dz;
 		if(_debugger) {
