@@ -86,17 +86,18 @@ function main() {
 			eok_generate();
 			/**
 			 * @param {any} f_in
-			 * @param {(arg0: {}) => void} cb
+			 * @param {(arg0: {}) => void} [cb]
 			 */
 			function eok(f_in,cb) {
 				if(cb) {
+					let ok_cb=cb;
 					return class tb extends f_in {
 						/**
 						 * @param {any[]} a
 						 */
 						constructor(...a) {
 							super(...a);
-							cb(this);
+							ok_cb(this);
 						}
 					};
 				} else {
