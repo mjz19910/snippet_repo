@@ -274,7 +274,7 @@ function main() {
 		ret.then(() => void 0).catch(e => console.error(e));
 	}
 	cur.value=ret;
-	return {...cur,_class: cur__class};
+	return cur;
 	//# sourceURL=snippet:///%24_2
 }
 window.__ret=main();
