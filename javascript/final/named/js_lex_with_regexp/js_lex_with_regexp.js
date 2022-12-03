@@ -5,24 +5,6 @@ import {Runner} from "../../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp/js_lex_with_regexp.js
 */
 function main() {
-	/** @arg {any} v */
-	function any(v) {return v;}
-	class CustomInputMatcher {
-		/**
-		 * @param {any} t_needle
-		 * @param {any} t_string_getter
-		 */
-		constructor(t_needle,t_string_getter) {
-			this.ts_get=t_string_getter;
-			this.tr=t_needle;
-		}
-		get test_string() {
-			return this.ts_get();
-		}
-		get test_needle() {
-			return this.tr;
-		}
-	}
 	let cur=new Runner;
 	cur.n='js_lex_with_regexp';
 	cur.f=function() {

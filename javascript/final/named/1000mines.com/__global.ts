@@ -88,14 +88,3 @@ interface JQueryEvents {
 interface JQueryEventHandler {
 	handler: (...a: any[]) => any;
 }
-
-namespace Impl {
-	export class CustomInputMatcher {
-		test_string: any;
-		test_needle: any;
-		constructor(t_needle: any,t_string_getter: any) {
-			t_needle;
-			t_string_getter;
-		}
-	}
-}
