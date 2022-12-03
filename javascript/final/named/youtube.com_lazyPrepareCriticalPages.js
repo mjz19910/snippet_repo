@@ -1,3 +1,4 @@
+import {CustomInputMatcher} from "../support/CustomInputMatcher.js";
 import {Runner} from "../support/Runner.js";
 
 /* spell:words
@@ -6,10 +7,8 @@ v1 (cur): snippet_repo/javascript/final/youtube.com_lazyPrepareCriticalPages.js
 */
 function main() {
 	/** @type {import("./__global.js").Holder} */
-	let holder={
-		use() {}
-	};
-	holder.use();
+	let holder=1;
+	holder;
 	let cur=new Runner;
 	if(/youtube.com/) {
 		cur.n=new CustomInputMatcher(/youtube.com/,() => location.origin,"youtube_lazy_pages");
@@ -105,7 +104,11 @@ function main() {
 				test_callback(x,func_obj);
 			}
 			/** @type {any} */
-			let func_obj=window[a];
+			let any_win=window;
+			/** @type {{[x:string]: any}} */
+			let want_win=any_win;
+			/** @type {any} */
+			let func_obj=want_win[a];
 			let func_proto=func_obj.prototype;
 			function native_callback() {
 				if(!debug) throw new Error("needs devtools open for debug function");
