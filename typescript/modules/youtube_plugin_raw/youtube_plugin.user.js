@@ -2413,27 +2413,15 @@ class HTMLMediaElementGainController {
 		}
 	}
 }
+/**@type {HTMLMediaElementGainController} */
+let gain_controller=new HTMLMediaElementGainController;
+g_api.gain_controller=gain_controller;
 
-/**@type {HTMLMediaElementGainController | null} */
-let gain_controller=null;
-/**@returns {HTMLMediaElementGainController} */
-function on_gain_controller() {
-	if(!g_api) throw new Error();
-	/**@type {HTMLMediaElementGainController|undefined} */
-	let controller=g_api.gain_controller;
-	if(!controller) {
-		controller=new HTMLMediaElementGainController;
-		g_api.gain_controller=controller;
-	}
-	return controller;
-}
 class VolumeRange {
 	static enabled=true;
 	static create() {
 		if(!this.enabled) return;
 		if(debug) console.log('create VolumeRange');
-		if(!gain_controller) gain_controller=on_gain_controller();
-		if(!gain_controller) return;
 		gain_controller.attach_element_list(document.querySelectorAll("video"));
 		attach_volume_range_to_page();
 	}
