@@ -27,7 +27,9 @@ export class SimpleStackVM {
 		this.stack.push(value);
 	}
 	pop() {
-		return this.stack.pop();
+		let top=this.stack.pop();
+		if(!top) throw new Error("Stack underflow");
+		return top;
 	}
 	/**
 	 * @param {{}[]} run_arguments
