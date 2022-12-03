@@ -143,9 +143,7 @@ function main() {
 						}
 						wb_eval=wb_eval_;
 					}
-					for(var ov,i=0;(ov=can_try_again,
-						can_try_again=false,
-						ov&&i<120);i++) {
+					for(var i=0;i<120;i++) {
 						try {
 							let events=fs_str.slice(cc-2,end_char);
 							console.log(fs_str.slice(cc-2,end_char+32));
