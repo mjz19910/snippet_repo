@@ -187,21 +187,7 @@ function main() {
 		var _result=execute(i,px_fn);
 		return _result;
 	}
-	let ret;
-	let debug_flag=false;
-	if(top!==window) {
-		if(window.debugApi==undefined) {
-			debugApi=new DebugAPI;
-		}
-		if(debug_flag) console.log('restart on top frame')
-		ret=debugApi.asyncExecuteFunction(top,main);
-	} else {
-		ret=do_cur();
-	}
-	if(ret instanceof Promise) {
-		ret.then(() => void 0).catch(e => console.error(e));
-	}
-	cur.value=ret;
+	cur.value=cur.do_cur();
 	return cur;
 	//# sourceURL=snippet:///%24_2
 }

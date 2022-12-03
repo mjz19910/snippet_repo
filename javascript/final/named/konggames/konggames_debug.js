@@ -27,7 +27,7 @@ function main() {
 		/** @type {string|CustomInputMatcher|null} */
 		_ln=null;
 		value=null;
-		/** @type {(((...x:any[])=>any)&{ user_run_name: unknown; argv:any[] })[]} */
+		/** @type {((...x:any[])=>any)[]} */
 		funcs=[];
 		/** @type {string[]} */
 		names=[];
@@ -559,21 +559,7 @@ function main() {
 		var result=run_sync_code();
 		return result;
 	};
-	let ret;
-	let debug_flag=false;
-	if(top!==window) {
-		if(window.debugApi==undefined) {
-			debugApi=new DebugAPI;
-		}
-		if(debug_flag) console.log('restart on top frame');
-		ret=debugApi.asyncExecuteFunction(top,main);
-	} else {
-		ret=cur.do_cur();
-	}
-	if(ret instanceof Promise) {
-		ret.then(() => void 0).catch(e => console.error(e));
-	}
-	cur.value=ret;
+	cur.value=cur.do_cur();
 	return cur;
 	//# sourceURL=snippet:///%24_2
 }

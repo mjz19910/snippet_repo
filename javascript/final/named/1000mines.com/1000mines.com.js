@@ -110,7 +110,7 @@ function main() {
 			return this.tr;
 		}
 	};
-	class st_ext extends stt {
+	class cur extends stt {
 		/** @type {any} */
 		// @ts-ignore
 		static get f() {
@@ -169,15 +169,15 @@ function main() {
 	};
 	let sym=Symbol();
 	var cur__class={
-		[sym]: st_ext
+		[sym]: cur
 	};
-	st_ext.self_sym=sym;
-	st_ext.funcs=fnlist;
-	st_ext.names=fnname;
+	cur.self_sym=sym;
+	cur.funcs=fnlist;
+	cur.names=fnname;
 
-	st_ext.n='1000mines.com';
+	cur.n='1000mines.com';
 	// @ts-ignore
-	st_ext.f=function() {
+	cur.f=function() {
 		let return_value;
 		if(!debug) throw new Error("Missing debug function (open devtools)");
 		debug=debug;
@@ -1033,7 +1033,7 @@ function main() {
 			};
 			let ret_val=[...x.st,x.o];
 			__res=ret_val;
-			let _instance=new st_ext._class[st_ext._n];
+			let _instance=new cur._class[cur._n];
 			__instance=_instance;
 			ret=__for_code(__instance.constructor,true);
 			console.log(ret);
@@ -1221,18 +1221,18 @@ function main() {
 	};
 	/** @arg {any} x @returns {any} */
 	function any(x) {return x;}
-	/**@type {{[x: symbol]: typeof st_ext;} & typeof st_ext} */
+	/**@type {{[x: symbol]: typeof cur;} & typeof cur} */
 	let n_class_x=any(n_class);
-	cur__class[st_ext._ln]=n_class_x;
+	cur__class[cur._ln]=n_class_x;
 	/**
 	 * @param {undefined[]} e
 	 */
 	function do_cur(...e) {
 		var i;
-		if(st_ext.rx_lx) {
-			i=fnname.indexOf(st_ext.rx_lx);
+		if(cur.rx_lx) {
+			i=fnname.indexOf(cur.rx_lx);
 		} else {
-			i=fnname.indexOf(st_ext.n);
+			i=fnname.indexOf(cur.n);
 		}
 		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
 			fn.argv=e;
@@ -1240,21 +1240,8 @@ function main() {
 		var _result=execute(i,px_fn);
 		return _result;
 	}
-	let ret;
-	if(top!==window) {
-		if(window.debugApi==undefined) {
-			debugApi=new DebugAPI;
-		}
-		ret=debugApi.asyncExecuteFunction(top,main);
-	} else {
-		ret=do_cur();
-	}
-	if(ret instanceof Promise) {
-		ret.then(() => void 0).catch(e => console.error(e));
-	}
-	st_ext.value=ret;
-	st_ext._class=cur__class;
-	return st_ext;
+	cur.value=cur.do_cur();
+	return cur;
 	//# sourceURL=snippet:///%24_2
 }
 window.__ret=main();

@@ -27,77 +27,7 @@ function main() {
 		}
 		return x;
 	}
-	function execute(/** @type {number} */ t, /** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec, /** @type {((arg0: any) => void) | undefined} */ post_exec) {
-		var r_fnname=fnname[t];
-		var func=fnlist[t];
-		try {
-			var sf=func.toString();
-			if(sf.indexOf("/*arg_start*/")>-1) {
-				let eval_func;
-				{
-					var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
-					var no_head=func_split[4].trim().slice(1).trim().slice(1);
-					var body=no_head.slice(0,no_head.length-2);
-					var is_strict;
-					var is_strict_p1=body.split('"use strict"');
-					is_strict=is_strict_p1.length>1;
-					if(is_strict) {
-						body=is_strict_p1[1].trim();
-					}
-					var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
-					let src_url='//'+'# sourceURL='+r_fnname;
-					let func_str;
-					if(is_strict) {
-						func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
-						eval_func=new Function(args,func_str);
-					} else {
-						func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
-						eval_func=new Function(args,func_str);
-					}
-					if('mc' in window&&window.mc instanceof MessageChannel) {
-						let mc=window.mc;
-						mc.port2.onmessage=function() {};
-						mc.port2.close();
-						mc.port1.onmessage=function() {};
-						mc.port1.close();
-						delete window.mc;
-						if(typeof mc!='undefined') {
-							window.mc=undefined;
-						}
-					}
-					console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
-				}
-				if(eval_func) {
-					eval_func(func);
-				}
-				let ret=eval_func();
-				if(post_exec)
-					post_exec(ret);
-				return ret;
-			} else {
-				if(pre_exec) {
-					pre_exec(func);
-				}
-				let ret=func();
-				if(post_exec)
-					post_exec(ret);
-				return ret;
-			}
-		} finally {}
-		return;
-	}
-	class stt {
-		static #unused=this.#init();
-		static #init() {
-			this.#unused;
-		}
-		static _f() {}
-		/** @type {any} */
-		static _n="<empty>";
-		static n_on=true;
-		static f_on=true;
-	};
-	window.CustomInputMatcher=class {
+	class CustomInputMatcher {
 		/**
 		 * @param {any} t_needle
 		 * @param {any} t_string_getter
@@ -112,8 +42,8 @@ function main() {
 		get test_needle() {
 			return this.tr;
 		}
-	};
-	class stt_val extends stt {
+	}
+	class cur {
 		static n_on=true;
 		static f_on=true;
 		static _f=() => {};
@@ -172,13 +102,10 @@ function main() {
 			}
 		}
 	}
-	let sym=Symbol();
-	var cur__class={[sym]: stt_val};
-	stt_val.self_sym=sym;
-	stt_val.funcs=fnlist;
-	stt_val.names=fnname;
-	stt_val.n='Hero_js';
-	stt_val.f=function() {
+	cur.funcs=fnlist;
+	cur.names=fnname;
+	cur.n='Hero_js';
+	cur.f=function() {
 		let mode='async_map_find';
 		if(mode==='it_find_func_scope') {
 			if(!debug) throw new Error("open devtools");
@@ -474,35 +401,8 @@ function main() {
 		}
 		return run();
 	};
-	function do_cur(/** @type {undefined[]} */ ...e) {
-		var i;
-		if(stt_val.rx_lx) {
-			i=fnname.indexOf(stt_val.rx_lx);
-		} else {
-			i=fnname.indexOf(stt_val.n);
-		}
-		let px_fn=function(/** @type {{ argv: any[]; }} */ fn) {
-			fn.argv=e;
-		};
-		var _result=execute(i,px_fn);
-		return _result;
-	}
-	let ret;
-	let debug_flag=false;
-	if(top!==window) {
-		if(window.debugApi==undefined) {
-			debugApi=new DebugAPI;
-		}
-		if(debug_flag) console.log('restart on top frame')
-		ret=debugApi.asyncExecuteFunction(top,main);
-	} else {
-		ret=do_cur();
-	}
-	if(ret instanceof Promise) {
-		ret.then(() => void 0).catch(e => console.error(e));
-	}
-	stt_val.value=ret;
-	return {...stt_val,_class: cur__class};
+	cur.value=cur.do_cur();
+	return cur;
 	//# sourceURL=snippet:///%24_2
 }
 window.__ret=main();
