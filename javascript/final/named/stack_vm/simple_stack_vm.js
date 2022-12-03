@@ -67,8 +67,7 @@ export class SimpleStackVM {
 					/** @template T @arg {T} _obj @returns {asserts _obj is {[x: string]: (...args:any[])=>any}}  */
 					function assume_can_index_with_string_to_function(_obj) {}
 					assume_can_index_with_string_to_function(target);
-					let ret=target[name_to_call](...arg_arr);
-					this.push(ret);
+					this.push(target[name_to_call](...arg_arr));
 					break;
 				}
 				case 'return'/*Call*/: {
