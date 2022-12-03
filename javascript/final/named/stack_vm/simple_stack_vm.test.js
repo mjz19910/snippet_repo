@@ -7,6 +7,7 @@ class EventHandlerVMDispatch extends SimpleStackVM {
 	 */
 	constructor(instructions,target_obj) {
 		super(instructions);
+		/** @type {{background_audio: {play(): void;};}} */
 		this.target_obj=target_obj;
 	}
 	/**
