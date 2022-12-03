@@ -1,3 +1,3 @@
-export * from "../ns.js";
+export * from "../ns_import.js";
 
 export {};
