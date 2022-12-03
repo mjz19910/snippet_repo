@@ -1,15 +1,9 @@
 import {SimpleStackVM} from "./simple_stack_vm.js";
 
-/** @type {import("./__global.js").Holder} */
-let holder={
-	use() {}
-};
-holder.use();
-
 class EventHandlerVMDispatch extends SimpleStackVM {
 	/**
 	 * @param {{background_audio: {play(): void;};}} target_obj
-	 * @param {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"])[]} instructions
+	 * @param {SimpleStackVM['instructions']} instructions
 	 */
 	constructor(instructions,target_obj) {
 		super(instructions);

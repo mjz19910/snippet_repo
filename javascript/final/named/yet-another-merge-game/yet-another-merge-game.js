@@ -7,10 +7,8 @@ v1 (cur): snippet_repo/javascript/final/kongregate_yet-another-merge-game.js
 */
 function main() {
 	/** @type {import("../__global.js").Holder} */
-	let holder={
-		use() {}
-	};
-	holder.use();
+	let holder=1;
+	holder;
 	let cur=new Runner;
 	cur.n=new CustomInputMatcher(
 		/https:\/\/www\.kongregate\.com\/games\/cook1eegames\/yet-another-merge-game/,

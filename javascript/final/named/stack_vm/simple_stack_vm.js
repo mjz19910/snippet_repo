@@ -1,7 +1,3 @@
-/** @type {import("./__global.js").Holder} */
-let holder=1;
-holder;
-
 export class SimpleStackVM {
 	/** @type {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['push_args']|['push_window']|['breakpoint'])[]} */
 	instructions;
