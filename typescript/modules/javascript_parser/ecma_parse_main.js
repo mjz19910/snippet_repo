@@ -812,34 +812,49 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-ExponentIndicator
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	ExponentIndicator(str,index) {throw new Error("No impl");}
+	ExponentIndicator(str,index) {
+		if(str[index]==='e'||str[index]==='E') {
+			return [true,"ExponentIndicator",1];
+		}
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-SignedInteger
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	SignedInteger(str,index) {throw new Error("No impl");}
+	SignedInteger(str,index) {
+		let res;
+		if(str[index]==="+"||str[index]==="-") {
+			res=this.DecimalDigits(str,index+1);
+			if(res[0]) return [true,"SignedInteger",res[2]+1];
+			return [false,null,0];
+		}
+		res=this.DecimalDigits(str,index);
+		if(res[0]) return [true,"SignedInteger",res[2]];
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-BinaryIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryIntegerLiteral(str,index) {throw new Error("No impl");}
+	BinaryIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-BinaryDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryDigits(str,index) {throw new Error("No impl");}
+	BinaryDigits(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-BinaryDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryDigit(str,index) {throw new Error("No impl");}
+	BinaryDigit(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	OctalIntegerLiteral(str,index) {throw new Error("No impl");}
+	OctalIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	OctalDigits(str,index) {throw new Error("No impl");}
+	OctalDigits(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-LegacyOctalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LegacyOctalIntegerLiteral(str,index) {throw new Error("No impl");}
+	LegacyOctalIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-NonOctalDecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonOctalDecimalIntegerLiteral(str,index) {throw new Error("No impl");}
+	NonOctalDecimalIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-LegacyOctalLikeDecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LegacyOctalLikeDecimalIntegerLiteral(str,index) {throw new Error("No impl");}
+	LegacyOctalLikeDecimalIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OctalDigit(str,index) {
@@ -850,13 +865,13 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-NonOctalDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonOctalDigit(str,index) {throw new Error("No impl");}
+	NonOctalDigit(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	HexIntegerLiteral(str,index) {throw new Error("No impl");}
+	HexIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	HexDigits(str,index) {throw new Error("No impl");}
+	HexDigits(str,index) {str;index;throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	HexDigit(str,index) {
@@ -883,9 +898,9 @@ class StringLiterals extends ECMA262Base {
 			if(str[index+1]==="\"") {
 				return [true,"StringLiteral",2];
 			}
-			let [,,dslen]=this.DoubleStringCharacters(str,index+1);
-			if(str[index+dslen+1]==="\"") {
-				return [true,"StringLiteral",dslen+2];
+			let [,,double_string_chars_len]=this.DoubleStringCharacters(str,index+1);
+			if(str[index+double_string_chars_len+1]==="\"") {
+				return [true,"StringLiteral",double_string_chars_len+2];
 			}
 			return [false,null,0];
 		}
@@ -893,9 +908,9 @@ class StringLiterals extends ECMA262Base {
 			if(str[index+1]==="'") {
 				return [true,"StringLiteral",2];
 			}
-			let [,,sslen]=this.SingleStringCharacters(str,index+1);
-			if(str[index+sslen+1]==="'") {
-				return [true,"StringLiteral",sslen+2];
+			let [,,single_string_chars_len]=this.SingleStringCharacters(str,index+1);
+			if(str[index+single_string_chars_len+1]==="'") {
+				return [true,"StringLiteral",single_string_chars_len+2];
 			}
 			return [false,null,0];
 		}
@@ -1662,7 +1677,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 			len++;
 			let res=this.RegularExpressionClassChars(str,index+len);
 			if(res[0]) {
-				if(str[index+res[1]]==='[]'[1]) {
+				if(str[index+res[2]]==='[]'[1]) {
 					len++;
 					return [true,"RegularExpressionClass",len+res[2]];
 				}
