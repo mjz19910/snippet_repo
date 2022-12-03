@@ -143,7 +143,7 @@ function main() {
 						}
 						wb_eval=wb_eval_;
 					}
-					for(var i=0;i<120;i++) {
+					for(var i=0;i<4;i++) {
 						try {
 							let events=fs_str.slice(cc-2,end_char);
 							console.log(fs_str.slice(cc-2,end_char+32));
