@@ -188,7 +188,6 @@ function main() {
 		}
 	}
 	let cur=new curTy;
-	var cur__class={[cur.self_sym]: cur};
 	if("https://www.kongregate.com/games/cook1eegames/yet-another-merge-game") {
 		/* cspell: disable-next-line */
 		let rx=/https:\/\/www\.kongregate\.com\/games\/cook1eegames\/yet-another-merge-game/;

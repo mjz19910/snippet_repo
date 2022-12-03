@@ -2,8 +2,6 @@ export {};
 
 declare global {
 	interface Window {
-		CustomInputMatcher: typeof CustomInputMatcher;
-		debugApi: {};
 		__ret: {};
 		debug?:debug;
 		undebug?:undebug;
@@ -13,7 +11,6 @@ declare global {
 		find_closed_dn_y: any;
 		dz?: any;
 	}
-	var CustomInputMatcher: typeof X.CustomInputMatcher;
 
 	type SymbolIndexable={
 		[x: symbol]: any;
