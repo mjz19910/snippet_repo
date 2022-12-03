@@ -92,7 +92,7 @@ function main() {
 					gen_into.value=x;
 				}
 				let src_url='//'+'# '+'sourceURL=snippet://js/js_2.js';
-				return eval(`function x(f_in,cb){
+				return eval(`function x(f_in,cb) {
 					if(cb) {
 						return class tb extends f_in {
 							constructor(...a){
@@ -107,7 +107,8 @@ function main() {
 								tt.instance=this;
 							}
 						}
-					}${src_url}
+					}
+					${src_url}
 				};x`);
 			}
 			let eok_into_obj={
