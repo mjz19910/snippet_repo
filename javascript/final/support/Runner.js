@@ -128,6 +128,7 @@ export class Runner {
 	get n() {
 		return this._n;
 	}
+	/** @arg {string|CustomInputMatcher} n_value */
 	set n(n_value) {
 		if(n_value instanceof CustomInputMatcher) {
 			let custom_str=n_value.test_string;
