@@ -3,8 +3,10 @@ let holder=1;
 holder;
 
 export class SimpleStackVM {
+	/** @type {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['push_args']|['push_window']|['breakpoint'])[]} */
+	instructions;
 	/**
-	 * @param {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['push_args']|['push_window']|['breakpoint'])[]} instructions
+	 * @param {SimpleStackVM['instructions']} instructions
 	 */
 	constructor(instructions) {
 		this.instructions=instructions;
