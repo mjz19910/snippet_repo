@@ -45,18 +45,9 @@ declare global {
 		gr: GrType;
 		(fn: (...x: any[]) => void,code: string): void;
 		u: (fn: (...x: any[]) => void) => void;
-		fo: any[][];
 		st: Set<any>;
 		sarr: any[];
 		ne: any[];
-		__ident_start_chars: any;
-		__ident_chars: any;
-		__all_vars: any;
-		__getter_names: any;
-		__get_list: any;
-		__name_list: any;
-		__replace_func: any;
-		__orig_func: any;
 		__trg_eval: (arg0: string) => void;
 		rx: RxType;
 		o: any;
@@ -67,9 +58,8 @@ declare global {
 	var debug: debug|undefined;
 
 	var __fo: any[][];
-	var __for_code: any;
 	var __lst: any[];
-	var __ret: symbol|[any,any]|{};
+	var __ret: {};
 	var __w: RxType;
 	var __r_ret: any;
 	var __res: any[];

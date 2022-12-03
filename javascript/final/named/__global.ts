@@ -1,5 +1,4 @@
 export {Holder} from "./Holder.js";
-export {KeepList} from "./KeepList.js";
 
 // captureStackTrace
 interface ErrorStackTrace {

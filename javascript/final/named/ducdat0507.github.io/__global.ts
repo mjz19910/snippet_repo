@@ -30,14 +30,6 @@ declare global {
 		st: any;
 		sarr: any;
 		ne: any;
-		__ident_start_chars: any;
-		__ident_chars: any;
-		__all_vars: any;
-		__getter_names: any;
-		__get_list: any;
-		__name_list: any;
-		__replace_func: any;
-		__orig_func: any;
 		cb: any;
 		__trg_eval: any;
 		gr: any;
@@ -48,7 +40,6 @@ declare global {
 
 	var debug: debug|undefined;
 	var __fo: any;
-	var __for_code: any;
 	var __lst: any;
 	var __ret: Runner;
 	var __w: any;
@@ -56,7 +47,7 @@ declare global {
 	var __r_ret: any;
 	var __res: any;
 	var __instance: any;
-	var __nx_names: any;
+	var __nx_names: never[];
 	var layers: {aspTime: {buyables: {cost: (arg0: any) => any;}[];};};
 	var player: {aspTime: {buyables: any[]; points: {lt: (arg0: any) => any;};};};
 	var Decimal: new (arg0: any) => any;

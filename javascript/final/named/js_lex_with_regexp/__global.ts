@@ -1,5 +1,4 @@
 export {Holder} from "../Holder.js";
-export {KeepList} from "../KeepList.js";
 
 class JSLexState {
 	m_l_str: string|undefined;
@@ -44,16 +43,11 @@ declare global {
 		find_closed_dn_x: any;
 		find_closed_dn_y: any;
 		dz?: any;
-		__state: JSLexState;
 	}
 
 	class DebugAPI {
 		asyncExecuteFunction(top: Window|null,function_: any): void;
 	}
-
-	type SymbolIndexable={
-		[x: symbol]: any;
-	};
 
 	interface undebug {
 		(fn: () => void): void;
@@ -76,18 +70,13 @@ declare global {
 		__replace_func: {S: () => never;};
 		__orig_func: {S: any;};
 		__trg_eval: (arg0: string) => void;
-		gr: {m: () => null;};
-		rx: {jQuery?: any; I_listener?: any; game_scope?: any; obj_field?: any;};
 		o: any;
 	}
 
 	var debug: debug|undefined;
-	var __fo: never[];
 	var __for_code: {(func: any,flag: boolean): any; targets: any[];};
 	var __lst: any[];
 	var __ret: {};
-	var __w: {I_listener: any; game_scope: any; obj_field?: any;};
-	var __m: {click: (arg0: number,arg1: number) => void; opened: {field: {[x: string]: undefined;}; get: (arg0: number,arg1: number) => boolean;}; mines: {field: {[x: string]: boolean;};};}|null;
 	var __r_ret: any;
 	var __res: any[];
 	var __instance: {constructor: any;};
