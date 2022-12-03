@@ -2,8 +2,6 @@ export {};
 
 declare global {
 	interface Window {
-		CustomInputMatcher: {};
-		debugApi: {};
 		__ret: {};
 		debug?:debug;
 		undebug?:undebug;
