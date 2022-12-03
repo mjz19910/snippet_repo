@@ -186,7 +186,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
+	let cur=new Runner;
 	var cur__class={[cur.self_sym]: cur};
 	cur.n=new CustomInputMatcher("https://makiki99.github.io/prestige-frame/",() => location.href);
 	cur.f=function() {

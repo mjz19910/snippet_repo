@@ -181,7 +181,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
+	let cur=new Runner;
 	cur.n='js_lex_with_regexp';
 	cur.f=function() {
 		if(window.debugApi===undefined) {

@@ -184,7 +184,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
+	let cur=new Runner;
 	cur.n="example";
 	cur.f=function() {
 		// example function

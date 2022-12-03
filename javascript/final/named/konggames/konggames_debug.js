@@ -181,7 +181,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
+	let cur=new Runner;
 	cur.n="konggames_debug";
 	cur.f=function() {
 		class DebugState {

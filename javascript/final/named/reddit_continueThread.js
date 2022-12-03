@@ -186,7 +186,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
+	let cur=new Runner;
 	var cur__class={[cur.self_sym]: cur};
 	cur.n="reddit";
 	cur.f=function() {

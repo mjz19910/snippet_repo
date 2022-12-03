@@ -78,7 +78,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
+	let cur=new Runner;
 	cur.key='js_wasm_importing';
 	cur.value=js_wasm_importing_main;
 	return cur.run();

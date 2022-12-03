@@ -186,7 +186,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
+	let cur=new Runner;
 	if(/youtube.com/) {
 		cur.n=new CustomInputMatcher(/youtube.com/,() => location.origin);
 		let bp_class=class {

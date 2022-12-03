@@ -194,7 +194,7 @@ function main() {
 			}
 		}
 	}
-	let cur=new curTy;
+	let cur=new Runner;
 	var cur__class={[cur.self_sym]: cur};
 	let do_cur_count=0;
 	cur.n="yet_another_merge_game";
