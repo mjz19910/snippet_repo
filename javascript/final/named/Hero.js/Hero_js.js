@@ -164,8 +164,8 @@ function main() {
 			};
 			str_to_var.instance=new str_to_var;
 			window.func_want=eok;
-			str_to_var=eok(str_to_var);
-			debug.g=str_to_var.instance.g;
+			let str_to_var_with_instance=eok(str_to_var);
+			debug.g=str_to_var_with_instance.instance.g;
 			return;
 		}
 		_player=game_objects.Player;

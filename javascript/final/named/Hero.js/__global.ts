@@ -2,21 +2,23 @@ export {};
 
 declare global {
 	interface Window {
-		debug?:debug;
-		undebug?:undebug;
+		debug?: debug;
+		undebug?: undebug;
+		__ret: {};
+		func_want: {};
 	}
 
 	type SymbolIndexable={
 		[x: symbol]: any;
-	}
+	};
 
 	interface undebug {
-		(fn: ()=>void): void;
+		(fn: () => void): void;
 	}
 	var undebug: undebug;
 
 	interface debug {
-		(fn:()=>void, code:string): void;
+		(fn: () => void,code: string): void;
 		fn: () => void;
 		get_from: any;
 		g: any;
