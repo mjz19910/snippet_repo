@@ -1,6 +1,17 @@
 export {Holder} from "./Holder.js";
 export {KeepList} from "./KeepList.js";
 
+// captureStackTrace
+interface ErrorStackTrace {
+	stack?: string;
+}
+declare global {
+	interface ErrorConstructor {
+		captureStackTrace<T>(obj: ErrorStackTrace,constructorOpt?: T): void;
+	}
+}
+
+
 // lunar-atoms-tycoon.js
 declare global {
 	var Upgrade: {apply: (arg0: any) => {(): any; new(): any; toNumber: {(): any; new(): any;};};};

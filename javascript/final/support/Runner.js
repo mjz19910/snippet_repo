@@ -126,7 +126,7 @@ export class Runner {
 			this._f=f;
 		}
 	}
-	/** @type {any} */
+	/** @type {string|CustomInputMatcher|undefined} */
 	get n() {
 		return this._n;
 	}

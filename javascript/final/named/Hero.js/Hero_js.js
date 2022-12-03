@@ -1,3 +1,5 @@
+import {Runner} from "../../support/Runner.js";
+
 /* spell:words
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/Hero.js/Hero_js.js
@@ -43,67 +45,7 @@ function main() {
 			return this.tr;
 		}
 	}
-	class cur {
-		static n_on=true;
-		static f_on=true;
-		static _f=() => {};
-		/**
-		 * @param {{ (): void; (): void; }} val
-		 */
-		static set f_set(val) {
-			let cur=this._ln;
-			this._lf=val;
-			if(fnlist.indexOf(this._lf)==-1) {
-				add_func(this._ln,this._lf);
-			}
-			if(cur instanceof CustomInputMatcher&&typeof cur.test_string=='string') {
-				let custom_str=cur.test_string;
-				let needle=cur.test_needle;
-				if(custom_str.match(needle)==null) {
-					this._f=val;
-					return;
-				}
-			}
-			if(this.f_on) {
-				this.f_on=false;
-				this._f=val;
-			}
-		}
-		static get n_get() {
-			return this._n;
-		}
-		/**
-		 * @param {any} n
-		 */
-		static set n_set(n) {
-			let cur=n;
-			if(cur instanceof CustomInputMatcher) {
-				let custom_str=cur.test_string;
-				let m_needle=cur.test_needle;
-				if(m_needle instanceof RegExp&&typeof custom_str=='string') {
-					let m_match=custom_str.match(m_needle);
-					if(m_match==null) {
-						this._ln=n;
-						return;
-					} else if(this.rx_off===undefined) {
-						this.rx_off=true;
-						this.rx_lx=n;
-					}
-				}
-				if(typeof m_needle=='string'&&custom_str!=m_needle) {
-					this._ln=n;
-					return;
-				}
-			}
-			this._ln=n;
-			if(this.n_on) {
-				this.n_on=false;
-				this._n=n;
-			}
-		}
-	}
-	cur.funcs=fnlist;
-	cur.names=fnname;
+	let cur=new Runner;
 	cur.n='Hero_js';
 	cur.f=function() {
 		let mode='async_map_find';
