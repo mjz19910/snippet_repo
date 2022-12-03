@@ -18,16 +18,18 @@ export class Runner {
 		var i;
 		this.argv=e;
 		if(this.rx_lx) {
-			i=this.names.indexOf(this.rx_lx);
+			i=this.names.indexOf(this.rx_lx.result_name);
 		} else {
-			i=this.names.indexOf(this.n);
+			if(this.n instanceof CustomInputMatcher) {
+				i=this.names.indexOf(this.n.result_name);
+			} else if(typeof this.n==='string') {
+				i=this.names.indexOf(this.n);
+			} else {
+				i=-1;
+			}
 		}
-		if(i<0) {
-			console.log("no function to run was matched");
-			return null;
-		}
-		var _result=this.execute(i);
-		return _result;
+		if(i>=0) return this.execute(i);
+		return null;
 	}
 	/**
 	 * @param {number} t
