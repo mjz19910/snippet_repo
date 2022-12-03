@@ -1,3 +1,1 @@
-export interface Holder {
-	use(): void;
-}
+export type Holder=1;

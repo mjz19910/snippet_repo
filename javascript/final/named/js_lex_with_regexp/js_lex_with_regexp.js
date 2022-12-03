@@ -5,6 +5,9 @@ import {Runner} from "../../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp/js_lex_with_regexp.js
 */
 function main() {
+	/** @type {import("./__global.js").Holder} */
+	let holder=1;
+	holder;
 	let cur=new Runner;
 	cur.n='js_lex_with_regexp';
 	cur.f=function() {
@@ -209,7 +212,6 @@ function main() {
 			}
 		};
 		let js_parse_regexp=/(debugger|function|continue|break|else|var|for|if|(?:[a-zA-Z_$](?:[a-zA-Z$_0-9]+)?)|\d+|['"{}()\[\]=:!;,.?+ ])/;
-		/** @implements {JSLexState_x} */
 		class JSLexState {
 			/** @type {string|undefined} */
 			m_l_str;
@@ -249,7 +251,7 @@ function main() {
 				};
 			}
 		}
-		/** @param {JSLexState_x} state */
+		/** @param {JSLexState} state */
 		function func_cont_js_lex(state) {
 			let spl_parse=js_parse_regexp;
 			let str=state.m_l_str;

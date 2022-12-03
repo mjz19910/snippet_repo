@@ -7,10 +7,8 @@ v1 (cur): snippet_repo/javascript/final/makiki99_prestige-frame.js
 */
 function main() {
 	/** @type {import("./__global.js").Holder} */
-	let holder={
-		use() {}
-	};
-	holder.use();
+	let holder=1;
+	holder;
 	let cur=new Runner;
 	cur.n=new CustomInputMatcher("https://makiki99.github.io/prestige-frame/",() => location.href,"makiki99.prestige-frame");
 	cur.f=function() {

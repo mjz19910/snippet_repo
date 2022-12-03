@@ -6,10 +6,8 @@ v1 (cur): snippet_repo/javascript/final/lunar-atoms-tycoon.js
 */
 function main() {
 	/** @type {import("./__global.js").Holder} */
-	let holder={
-		use() {}
-	};
-	holder.use();
+	let holder=1;
+	holder;
 	let cur=new Runner;
 	/* cspell: disable-next-line */
 	cur.n="crazygames.com/game/lunar-atoms-tycoon";

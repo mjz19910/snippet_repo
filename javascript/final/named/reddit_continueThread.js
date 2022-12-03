@@ -6,10 +6,8 @@ v1 (cur): snippet_repo/javascript/final/reddit_continueThread.js
 */
 function main() {
 	/** @type {import("./__global.js").Holder} */
-	let holder={
-		use() {}
-	};
-	holder.use();
+	let holder=1;
+	holder;
 	/** @arg {any} v */
 	function any(v) {return v;}
 	let cur=new Runner;

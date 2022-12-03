@@ -6,25 +6,29 @@ v1 (cur): snippet_repo/javascript/final/yet_another_merge_game.js
 */
 function main() {
 	/** @type {import("./__global.js").Holder} */
-	let holder={
-		use() {}
-	};
-	holder.use();
+	let holder=1;
+	holder;
 	let cur=new Runner;
 	let do_cur_count=0;
 	cur.n="yet_another_merge_game";
 	cur.f=function() {
 		/** @arg {any} v */
 		function any(v) {return v;}
-		if(!('func_log' in Function)) throw new Error("1");
-		if(!(Function.func_log instanceof Array)) throw new Error("1");
-		var lnc;
-		let cf;
-		let fi_ob;
+		if(!('func_log' in Function)) {
+			console.log("Wrong frame");
+			return;
+		}
+		if(!(Function.func_log instanceof Array)) {
+			console.log("Wrong frame");
+			return;
+		}
 		if(!Function.func_log) {
 			console.log("Wrong frame");
 			return;
 		}
+		var lnc;
+		let cf;
+		let fi_ob;
 		if(Function.func_log.length<3&&typeof cf=='undefined') {
 			console.log("Not called from main.js:633");
 			do_cur_count=8;

@@ -1,4 +1,5 @@
-export {};
+export {Holder} from "../Holder.js";
+export {KeepList} from "../KeepList.js";
 
 class JSLexState {
 	m_l_str: string|undefined;
@@ -6,13 +7,13 @@ class JSLexState {
 	reset_count: boolean=false;
 	m_at_eof: boolean=false;
 	obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}|null={
-		break_parse:false,
-		eof:false,
-		reset_count:false,
-		nx_len:0,
-		lex_cur:null,
+		break_parse: false,
+		eof: false,
+		reset_count: false,
+		nx_len: 0,
+		lex_cur: null,
 	};
-	constructor(str: string, obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}) {
+	constructor(str: string,obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}) {
 		return {
 			lex_chunks: [],
 			m_l_str: str,
@@ -25,7 +26,7 @@ class JSLexState {
 
 declare global {
 	class JSLexState_x {
-		constructor(str: string, obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;});
+		constructor(str: string,obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;});
 		obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}|null;
 		m_l_str: string|undefined;
 		lex_chunks: any[];
@@ -37,8 +38,8 @@ declare global {
 declare global {
 	interface Window {
 		__ret: {};
-		debug?:debug;
-		undebug?:undebug;
+		debug?: debug;
+		undebug?: undebug;
 		find_closed_up_y: any;
 		find_closed_dn_x: any;
 		find_closed_dn_y: any;
@@ -52,17 +53,17 @@ declare global {
 
 	type SymbolIndexable={
 		[x: symbol]: any;
-	}
+	};
 
 	interface undebug {
-		(fn: ()=>void): void;
+		(fn: () => void): void;
 	}
-	var undebug: undebug;
+	var undebug: undebug|undefined;
 
 	interface debug {
-		(fn:()=>void, code:string): void;
-		u:any;
-		fo:any;
+		(fn: () => void,code: string): void;
+		u: (arg0: any) => void;
+		fo: any;
 		st: Set<any>;
 		sarr: any[];
 		ne: any[];
@@ -74,19 +75,17 @@ declare global {
 		__name_list: string[];
 		__replace_func: {S: () => never;};
 		__orig_func: {S: any;};
-		cb: any;
 		__trg_eval: (arg0: string) => void;
 		gr: {m: () => null;};
 		rx: {jQuery?: any; I_listener?: any; game_scope?: any; obj_field?: any;};
 		o: any;
-		f: (...x:any[])=>void;
 	}
 
 	var debug: debug|undefined;
 	var __fo: never[];
-	var __for_code: {(func: any,flag:boolean): any; targets: any[];};
+	var __for_code: {(func: any,flag: boolean): any; targets: any[];};
 	var __lst: any[];
-	var __ret: any;
+	var __ret: {};
 	var __w: {I_listener: any; game_scope: any; obj_field?: any;};
 	var __m: {click: (arg0: number,arg1: number) => void; opened: {field: {[x: string]: undefined;}; get: (arg0: number,arg1: number) => boolean;}; mines: {field: {[x: string]: boolean;};};}|null;
 	var __r_ret: any;
