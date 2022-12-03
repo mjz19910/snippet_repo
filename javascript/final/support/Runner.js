@@ -133,7 +133,7 @@ export class Runner {
 			if(m_needle instanceof RegExp&&typeof custom_str=='string') {
 				let m_match=custom_str.match(m_needle);
 				if(m_match==null) {
-					this._ln=n_value;
+					this._ln=n_value.result_name;
 					return;
 				} else if(this.rx_off===undefined) {
 					this.rx_off=true;

@@ -7,7 +7,7 @@ import {CustomInputMatcher} from "../../support/CustomInputMatcher.js";
 
 function main() {
 	let cur=new Runner;
-	cur.n=new CustomInputMatcher(/https:\/\/ducdat0507.github.io/,() => location.origin);
+	cur.n=new CustomInputMatcher(/https:\/\/ducdat0507.github.io/,() => location.origin,"ducdat0507");
 	cur.f=async function() {
 		let mc=new MessageChannel;
 		let msg_clk='CLOCK_RUN';

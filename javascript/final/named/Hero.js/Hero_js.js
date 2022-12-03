@@ -61,28 +61,60 @@ function main() {
 			debug.g()
 			undebug(debug.fn)
 			` +dbg_src_url);
-			let eok=(function() {
+			/**
+			 * @param {{ value: any; }} gen_into
+			 */
+			function eok_generate(gen_into) {
 				"use strict";
+				let not_eval=false;
+				if(not_eval) {
+					/**
+					 * @param {any} f_in
+					 * @param {(arg0: {}) => void} cb
+					 */
+					function x(f_in,cb){
+						if(cb){
+							return class tb extends f_in {
+								constructor(...a){
+									super(...a)
+									cb(this)
+								}
+							}
+						}else{
+							return class tt extends f_in {
+								constructor(...a){
+									super(...a)
+									tt.instance=this
+								}
+							}
+						}
+					};
+					gen_into.value=x;
+				}
 				let src_url='//'+'# '+'sourceURL=snippet://js/js_2.js';
 				return eval(`function x(f_in,cb){
-					if(cb){
-						return class tb extends f_in{
+					if(cb) {
+						return class tb extends f_in {
 							constructor(...a){
-								super(...a)
-								cb(this)
+								super(...a);
+								cb(this);
 							}
 						}
 					}else{
 						return class tt extends f_in {
 							constructor(...a){
-								super(...a)
-								tt.instance=this
+								super(...a);
+								tt.instance=this;
 							}
 						}
 					}${src_url}
 				};x`);
 			}
-			)();
+			let eok_into_obj={
+				value:null
+			};
+			eok_generate(eok_into_obj);
+			let eok=eok_into_obj.value;
 			var str_to_var=class str_to_var {
 				/**
 				 * @param {any[]} a
@@ -95,10 +127,6 @@ function main() {
 							return true;
 						}
 						if(__nxs=='i') {
-							return true;
-						}
-						if(window[__nxs]) {
-							console.log("skip_wind",__nxs);
 							return true;
 						}
 						let __x=new Function(__nxs,"return "+__nxs);

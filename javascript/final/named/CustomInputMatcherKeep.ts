@@ -6,13 +6,8 @@ export namespace CustomInputMatcherKeep {
 
 declare global {
 	interface Window {
-		CustomInputMatcher: typeof CustomInputMatcher;
-		debugApi: {};
 		__ret: {};
 	}
-
-	var debugApi: Impl.DebugAPI;
-	var CustomInputMatcher: typeof Impl.CustomInputMatcher;
 
 	var __ret: {};
 }

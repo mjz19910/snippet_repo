@@ -2,16 +2,9 @@ export {};
 
 declare global {
 	interface Window {
-		[x: string]: any;
-		CustomInputMatcher: typeof CustomInputMatcher;
+		CustomInputMatcher: {};
 		debug?:debug;
 		undebug?:undebug;
-	}
-	var debugApi: DebugAPI;
-	var CustomInputMatcher: typeof X.CustomInputMatcher;
-
-	class DebugAPI {
-		asyncExecuteFunction(top: Window|null,function_: any): void;
 	}
 
 	type SymbolIndexable={

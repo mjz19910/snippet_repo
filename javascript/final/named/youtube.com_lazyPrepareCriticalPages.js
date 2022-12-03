@@ -10,27 +10,9 @@ function main() {
 		use() {}
 	};
 	holder.use();
-	/** @arg {any} v */
-	function any(v) {return v;}
-	class CustomInputMatcher {
-		/**
-		 * @param {any} t_needle
-		 * @param {any} t_string_getter
-		 */
-		constructor(t_needle,t_string_getter) {
-			this.ts_get=t_string_getter;
-			this.tr=t_needle;
-		}
-		get test_string() {
-			return this.ts_get();
-		}
-		get test_needle() {
-			return this.tr;
-		}
-	}
 	let cur=new Runner;
 	if(/youtube.com/) {
-		cur.n=new CustomInputMatcher(/youtube.com/,() => location.origin);
+		cur.n=new CustomInputMatcher(/youtube.com/,() => location.origin,"youtube_lazy_pages");
 		let bp_class=class {
 			/**
 			 * @param {any} a

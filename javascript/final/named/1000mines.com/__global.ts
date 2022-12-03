@@ -2,8 +2,6 @@ export {};
 
 declare global {
 	interface Window {
-		debugApi: {};
-		CustomInputMatcher: {};
 		find_closed_up_x: any;
 		find_closed_up_y: any;
 		find_closed_dn_x: any;
@@ -67,8 +65,6 @@ declare global {
 	}
 
 	var debug: debug|undefined;
-
-	var CustomInputMatcher: typeof Impl.CustomInputMatcher;
 
 	var __fo: any[][];
 	var __for_code: any;

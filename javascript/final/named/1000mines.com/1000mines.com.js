@@ -5,55 +5,6 @@ import {Runner} from "../../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/1000mines.com.js
 */
 function main() {
-	/**
-	 * @type {any[]}
-	 */
-	var fnlist=[];
-	/**
-	 * @type {any[]}
-	 */
-	var fnname=[];
-	/**
-	 * @param {any} name
-	 * @param {{ user_run_name: any; }} func
-	 */
-	function add_func(name,func) {
-		var y=fnlist.push(func);
-		if(fnname.indexOf(name)>-1) {
-			throw SyntaxError("Name conflict");
-		}
-		var x=fnname.push(name);
-		func.user_run_name=name;
-		if(x!=y) {
-			throw SyntaxError("unbalanced function or name number");
-		}
-		return x;
-	}
-	let stt=eval(`(class {
-			static #unused = this.#init()
-			static #init(){
-			}
-			static _f(){}
-			static _n = "<empty>"
-			static n_on = true
-			static f_on = true
-		})`);
-	window.CustomInputMatcher=class {
-		/**
-		 * @param {any} t_needle
-		 * @param {any} t_string_getter
-		 */
-		constructor(t_needle,t_string_getter) {
-			this.ts_get=t_string_getter;
-			this.tr=t_needle;
-		}
-		get test_string() {
-			return this.ts_get();
-		}
-		get test_needle() {
-			return this.tr;
-		}
-	};
 	let cur=new Runner;
 
 	cur.n='1000mines.com';
