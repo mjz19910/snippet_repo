@@ -126,30 +126,29 @@ export class Runner {
 	get n() {
 		return this._n;
 	}
-	set n(n) {
-		let cur=n;
-		if(cur instanceof CustomInputMatcher) {
-			let custom_str=cur.test_string;
-			let m_needle=cur.test_needle;
+	set n(n_value) {
+		if(n_value instanceof CustomInputMatcher) {
+			let custom_str=n_value.test_string;
+			let m_needle=n_value.test_needle;
 			if(m_needle instanceof RegExp&&typeof custom_str=='string') {
 				let m_match=custom_str.match(m_needle);
 				if(m_match==null) {
-					this._ln=n;
+					this._ln=n_value;
 					return;
 				} else if(this.rx_off===undefined) {
 					this.rx_off=true;
-					this.rx_lx=n;
+					this.rx_lx=n_value;
 				}
 			}
 			if(typeof m_needle=='string'&&custom_str!=m_needle) {
-				this._ln=n;
+				this._ln=n_value;
 				return;
 			}
 		}
-		this._ln=n;
+		this._ln=n_value;
 		if(this.n_on) {
 			this.n_on=false;
-			this._n=n;
+			this._n=n_value;
 		}
 	}
 }
