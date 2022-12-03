@@ -24,7 +24,7 @@ const test_obj={
 		}
 	}
 };
-/** @type {(['this']|['push',string]|['get']|['call',number]|['drop'])[]} */
+/** @type {SimpleStackVM['instructions']} */
 let instruction_list=[
 	['this'],
 	['push','target_obj'],
