@@ -329,15 +329,7 @@ function main() {
 				state.depth=0;
 				return state;
 			}
-			/**
-			 * @param {debug_class} promise_debugger
-			 * @param {DebugState} state
-			 */
-			function init_callback(promise_debugger,state) {
-				var d_sym=promise_debugger.sym.debug;
-				state.info.push(d_sym);
-				state.call_info=d_sym;
-			}
+			function init_callback() {}
 			/**
 			 * @param {debug_class} promise_debugger
 			 */
@@ -374,12 +366,9 @@ function main() {
 				console.log(r);
 				return r;
 			});
-			if(!promise_debugger.state.root)
-				console.log(promise_debugger);
 			return promise_debugger;
 		}
-		var result=run_sync_code();
-		return result;
+		return run_sync_code();
 	};
 	cur.value=cur.do_cur();
 	return cur;
