@@ -1,3 +1,5 @@
+import {Runner} from "../../support/Runner.js";
+
 /* spell:words konggames
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
@@ -100,9 +102,6 @@ function main() {
 					let ret=eval_func();
 					return ret;
 				} else {
-					if(!('argv' in func)) throw 1;
-					if(!(func.argv instanceof Array)) throw 1;
-					this.px_fn(func);
 					let ret=func();
 					return ret;
 				}
@@ -376,6 +375,9 @@ function main() {
 			 */
 			clear_breakpoint(result) {
 				var error;
+				if(!undebug) {
+					throw new Error("Missing undebug function");
+				}
 				if(arguments.length<1) {
 					error=new Error("Not enough arguments");
 				}

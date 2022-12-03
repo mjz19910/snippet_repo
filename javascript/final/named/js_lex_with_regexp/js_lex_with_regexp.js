@@ -1,3 +1,5 @@
+import {Runner} from "../../support/Runner.js";
+
 /* spell:words
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp/js_lex_with_regexp.js
@@ -100,9 +102,6 @@ function main() {
 					let ret=eval_func();
 					return ret;
 				} else {
-					if(!('argv' in func)) throw 1;
-					if(!(func.argv instanceof Array)) throw 1;
-					this.px_fn(func);
 					let ret=func();
 					return ret;
 				}
@@ -184,9 +183,6 @@ function main() {
 	let cur=new Runner;
 	cur.n='js_lex_with_regexp';
 	cur.f=function() {
-		if(window.debugApi===undefined) {
-			debugApi=new DebugAPI;
-		}
 		let code='';
 		{
 			code+='var _0x550e=[';
