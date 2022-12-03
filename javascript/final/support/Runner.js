@@ -11,12 +11,8 @@ export class Runner {
 	/** @type {string[]} */
 	names=[];
 	self_sym=Symbol();
-	px_fn(/** @type {{ argv: any[]; }} */ fn) {
-		if(!this.argv) throw new Error("1");
-		fn.argv=this.argv;
-	}
 	/**
-	 * @param {undefined[]} e
+	 * @param {any[]} e
 	 */
 	do_cur(...e) {
 		var i;

@@ -899,7 +899,7 @@ function main() {
 			}
 			x.fo.push([x.f,x.o]);
 			__add_set();
-			let cmc=__for_code(__m.click);
+			let cmc=get_code_formatted(__m.click);
 			//???
 			`${cmc}`;
 			x.f=x.o.u;
@@ -914,10 +914,6 @@ function main() {
 			};
 			let ret_val=[...x.st,x.o];
 			__res=ret_val;
-			let _instance=new cur._class[cur._n];
-			__instance=_instance;
-			ret=__for_code(__instance.constructor,true);
-			console.log(ret);
 			return_value=w;
 			break x;
 		}
