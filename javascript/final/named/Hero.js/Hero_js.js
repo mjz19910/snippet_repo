@@ -72,27 +72,27 @@ function main() {
 					 * @param {any} f_in
 					 * @param {(arg0: {}) => void} cb
 					 */
-					function x(f_in,cb){
-						if(cb){
+					function x(f_in,cb) {
+						if(cb) {
 							return class tb extends f_in {
 								/**
 								 * @param {any[]} a
 								 */
-								constructor(...a){
-									super(...a)
-									cb(this)
+								constructor(...a) {
+									super(...a);
+									cb(this);
 								}
-							}
-						}else{
+							};
+						} else {
 							return class tt extends f_in {
 								/**
 								 * @param {any[]} a
 								 */
-								constructor(...a){
-									super(...a)
-									tt.instance=this
+								constructor(...a) {
+									super(...a);
+									tt.instance=this;
 								}
-							}
+							};
 						}
 					};
 					gen_into.value=x;
@@ -118,7 +118,7 @@ function main() {
 				};x`);
 			}
 			let eok_into_obj={
-				value:null
+				value: null
 			};
 			eok_generate(eok_into_obj);
 			let eok=eok_into_obj.value;
@@ -171,7 +171,7 @@ function main() {
 					}
 					return [...vvl,...v2l];
 				}
-			}
+			};
 			str_to_var.instance=new str_to_var;
 			window.func_want=eok;
 			str_to_var=eok(str_to_var);
@@ -249,7 +249,7 @@ function main() {
 				if(!rr.has(e.map)) {
 					rr.set(e.map,e);
 					e.map.setCounts();
-					console.log('t_new', dz,e.map.countFloors - e.map.countExplored, c);
+					console.log('t_new',dz,e.map.countFloors-e.map.countExplored,c);
 					ret=brk;
 				}
 				var mp_no_exp=e.map.countFloors-e.map.countExplored;
