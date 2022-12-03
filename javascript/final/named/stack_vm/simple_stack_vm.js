@@ -8,7 +8,7 @@ export class SimpleStackVM {
 	 */
 	constructor(instructions) {
 		this.instructions=instructions;
-		/** @type {({}|string)[]} */
+		/** @type {{}[]} */
 		this.stack=[];
 		this.instruction_pointer=0;
 		this.return_value=void 0;
@@ -21,7 +21,7 @@ export class SimpleStackVM {
 		this.running=false;
 	}
 	/**
-	 * @param {{}|string} value
+	 * @param {{}} value
 	 */
 	push(value) {
 		this.stack.push(value);
