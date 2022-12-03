@@ -378,16 +378,6 @@ function main() {
 				console.log(promise_debugger);
 			return promise_debugger;
 		}
-		var _debugger=window.dz;
-		if(_debugger) {
-			var run_async_code=async function() {
-				console.log('async clear');
-				await _debugger.clear((/** @type {any} */ e) => console.log(e));
-				return run_sync_code();
-			};
-			var _promise=run_async_code();
-			return _promise;
-		}
 		var result=run_sync_code();
 		return result;
 	};
