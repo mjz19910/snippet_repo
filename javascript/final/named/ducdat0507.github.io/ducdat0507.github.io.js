@@ -1,10 +1,10 @@
-import {curTy} from "./curTy.js";
-import {CustomInputMatcher} from "./CustomInputMatcher.js";
-
 /* spell:words
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/ducdat0507.github.io/ducdat0507.github.io.js
 */
+import {curTy} from "./curTy.js";
+import {CustomInputMatcher} from "./CustomInputMatcher.js";
+
 function main() {
 	let cur=new curTy;
 	cur.n=new CustomInputMatcher(/https:\/\/ducdat0507.github.io/,() => location.origin);
