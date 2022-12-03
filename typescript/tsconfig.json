@@ -37,7 +37,7 @@
 	},
 	"include": [
 		"src/**/*",
-		"modules/**/*",
+		"modules/**/*", "ns_import.ts",
 	],
 	"exclude": [
 		"node_modules",
