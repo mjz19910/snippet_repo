@@ -107,12 +107,8 @@ function main() {
 						};
 					};
 					w_ext._e=function(/** @type {any[]} */ ...a) {
-						/* cspell: disable */
 						console.log("new Empty VNode",a.length);
-						return {
-							vnode: null
-						};
-						/* cspell: enable */
+						return {vnode: null};
 					};
 					w_ext._s=function(/** @type {any} */ ...a) {
 						return a;
