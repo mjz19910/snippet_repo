@@ -6,10 +6,8 @@ v1 (cur): snippet_repo/javascript/final/konggames/konggames_debug.js
 */
 function main() {
 	/** @type {import("../__global.js").Holder} */
-	let holder={
-		use() {}
-	};
-	holder.use();
+	let holder=1;
+	holder;
 	let cur=new Runner;
 	cur.n="konggames_debug";
 	cur.f=function() {
@@ -121,7 +119,6 @@ function main() {
 			run() {
 				var t=this;
 				var state=this.state;
-				window[this.key]=this;
 				if(state&&!state.breakpoint_function) {
 					/** @type {any} */
 					let g=window;
@@ -225,7 +222,6 @@ function main() {
 					console.log('clear '+this.key);
 				}
 				undebug(this.breakpoint_function);
-				delete window[this.key];
 				if(this.on_page_unload&&result!==null) {
 					window.removeEventListener('unload',this.on_page_unload.bind(this));
 				}

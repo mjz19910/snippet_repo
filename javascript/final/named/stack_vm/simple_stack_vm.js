@@ -1,8 +1,6 @@
 /** @type {import("./__global.js").Holder} */
-let holder={
-	use() {}
-};
-holder.use();
+let holder=1;
+holder;
 
 export class SimpleStackVM {
 	/**

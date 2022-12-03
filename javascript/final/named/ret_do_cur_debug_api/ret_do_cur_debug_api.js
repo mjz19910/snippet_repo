@@ -6,8 +6,8 @@ v1 (cur): snippet_repo/javascript/final/ret_do_cur_debug_api/ret_do_cur_debugApi
 */
 function main() {
 	/** @type {import("./__global.js").Holder} */
-	let holder={use() {} };
-	holder.use();
+	let holder=1;
+	holder;
 	let cur=new Runner;
 	cur.n="example";
 	cur.f=function() {

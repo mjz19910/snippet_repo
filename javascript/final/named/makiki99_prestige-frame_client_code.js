@@ -2,14 +2,9 @@
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/makiki99_prestige-frame_client_code.js
 */
-{
-	/** @type {import("./__global.js").Holder} */
-	let holder={
-		use() {}
-	};
-	holder.use();
-}
-
+/** @type {import("./__global.js").Holder} */
+let holder=1;
+holder;
 if(activatePrestige.length==3) {
 	/**
 	 * @param {number} x
@@ -35,6 +30,14 @@ if(activatePrestige.length==3) {
 	function nx_y(x,y,l) {
 		return nx_df(x,y,l,x,y+1,l);
 	}
+	/**
+	 * @param {number} prestige_a
+	 * @param {number} prestige_b
+	 * @param {number} prestige_count
+	 * @param {number} requirement_a
+	 * @param {number} requirement_b
+	 * @param {number} requirement_count
+	 */
 	function nx_df(prestige_a,prestige_b,prestige_count,requirement_a,requirement_b,requirement_count) {
 		let ret,nx=getRequirement(requirement_a,requirement_b,requirement_count);
 		for(let i=0;i<=nx;i++) {

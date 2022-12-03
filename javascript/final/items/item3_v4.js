@@ -6,10 +6,8 @@ v5 (new): snippet_repo/javascript/group1/sub_a/item-_3.js
 */
 {
 	/** @type {import("./__global.js").Holder} */
-	let holder={
-		use(){}
-	};
-	holder.use();
+	let holder=1;
+	holder;
 	let ele=document.querySelector("#getPit");
 	if(!(ele instanceof HTMLElement)) throw new Error("1");
 	if(!ele) throw new Error("1");

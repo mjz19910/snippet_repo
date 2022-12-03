@@ -8,6 +8,4 @@ declare global {
 	};
 }
 
-export type Holder={
-	use(): void;
-};
+export type Holder=1;
