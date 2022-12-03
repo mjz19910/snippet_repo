@@ -44,9 +44,9 @@ function main() {
 		}
 		fi_ob=Function.func_log[Function.func_log.length-1].args;
 		cf=Function.func_log[Function.func_log.length-1].args[0].toString();
-		if(!cur._f) throw 1;
-		console.log("el",cur._f.argv[0].split("\n")[3]);
-		var error_line=cur._f.argv[0].split("\n")[3];
+		if(!cur.argv) throw 1;
+		console.log("el",cur.argv[0].split("\n")[3]);
+		var error_line=cur.argv[0].split("\n")[3];
 		var line_func_info;
 		if(error_line.includes("eval at createFunction")) {
 			line_func_info=error_line.split(/(\(.+\))/g)[1].slice(1,-1).split(/(\(.+\))/g)[2].slice(2).split(":");

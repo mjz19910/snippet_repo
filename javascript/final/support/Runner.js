@@ -1,7 +1,7 @@
 import {CustomInputMatcher} from "./CustomInputMatcher.js";
 
 export class Runner {
-	/** @type {(undefined[])|null} */
+	/** @type {(any[])|null} */
 	argv=null;
 	/** @type {string|CustomInputMatcher|null} */
 	_ln=null;
