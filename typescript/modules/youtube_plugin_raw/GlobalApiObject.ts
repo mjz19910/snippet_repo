@@ -1,3 +1,7 @@
+import {HTMLMediaElementGainController} from "./HTMLMediaElementGainController.js";
+import {PropertyHandler} from "./PropertyHandler.js";
+import {Seen} from "./Seen.js";
+
 // youtube_plugin
 export interface GlobalApiObject {
 	gain_controller?: HTMLMediaElementGainController;
@@ -9,5 +13,5 @@ export interface GlobalApiObject {
 	blob_create_args_arr?: {};
 	yt_state_map?: Map<string, {}>;
 	PropertyHandler?: typeof PropertyHandler;
-	Seen?: Seen;
+	Seen?: typeof Seen;
 };

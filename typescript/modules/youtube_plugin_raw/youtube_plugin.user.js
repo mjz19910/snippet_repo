@@ -2374,22 +2374,22 @@ function createDynamicsCompressor(audio_ctx,next_node) {
 	threshold.value=-24;
 	return node;
 }
+
 class HTMLMediaElementGainController {
-	/**@type {Event|undefined}*/
-	last_event;
 	/**@type {(HTMLVideoElement | HTMLAudioElement)[]} */
 	attached_element_list=[];
-	audioCtx=new AudioContext();
-	style=createStyleElement(volume_plugin_style_source);
-	/**@type {DynamicsCompressorNode} */
-	dynamics_compressor;
 	/**
 	 * @type {MediaElementAudioSourceNode[]}
 	 */
 	media_element_source_list=[];
+	/**@type {Event|null}*/
+	last_event=null;
 	constructor() {
+		this.audioCtx=new AudioContext();
 		this.gain_node=createGainNode(this.audioCtx,this.audioCtx.destination);
 		this.dynamics_compressor=createDynamicsCompressor(this.audioCtx,this.gain_node);
+
+		this.style=createStyleElement(volume_plugin_style_source);
 		document.head.append(this.style);
 	}
 	/**

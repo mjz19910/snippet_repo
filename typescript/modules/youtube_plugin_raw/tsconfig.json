@@ -8,7 +8,6 @@
 		],
 		"types": [
 			"jquery",
-			"node",
 		],
 		"declaration": true,
 		"module": "AMD",
