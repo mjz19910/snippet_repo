@@ -61,42 +61,8 @@ function main() {
 			debug.g()
 			undebug(debug.fn)
 			` +dbg_src_url);
-			/**
-			 * @param {{ value: any; }} gen_into
-			 */
-			function eok_generate(gen_into) {
+			function eok_generate() {
 				"use strict";
-				let not_eval=false;
-				if(not_eval) {
-					/**
-					 * @param {any} f_in
-					 * @param {(arg0: {}) => void} cb
-					 */
-					function x(f_in,cb) {
-						if(cb) {
-							return class tb extends f_in {
-								/**
-								 * @param {any[]} a
-								 */
-								constructor(...a) {
-									super(...a);
-									cb(this);
-								}
-							};
-						} else {
-							return class tt extends f_in {
-								/**
-								 * @param {any[]} a
-								 */
-								constructor(...a) {
-									super(...a);
-									tt.instance=this;
-								}
-							};
-						}
-					};
-					gen_into.value=x;
-				}
 				let src_url='//'+'# '+'sourceURL=snippet://js/js_2.js';
 				return eval(`function x(f_in,cb) {
 					if(cb) {
@@ -121,7 +87,33 @@ function main() {
 				value: null
 			};
 			eok_generate(eok_into_obj);
-			let eok=eok_into_obj.value;
+			/**
+			 * @param {any} f_in
+			 * @param {(arg0: {}) => void} cb
+			 */
+			function eok(f_in,cb) {
+				if(cb) {
+					return class tb extends f_in {
+						/**
+						 * @param {any[]} a
+						 */
+						constructor(...a) {
+							super(...a);
+							cb(this);
+						}
+					};
+				} else {
+					return class tt extends f_in {
+						/**
+						 * @param {any[]} a
+						 */
+						constructor(...a) {
+							super(...a);
+							tt.instance=this;
+						}
+					};
+				}
+			}
 			var str_to_var=class str_to_var {
 				/**
 				 * @param {any[]} a
