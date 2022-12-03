@@ -2413,7 +2413,6 @@ class HTMLMediaElementGainController {
 		}
 	}
 }
-/**@type {HTMLMediaElementGainController} */
 let gain_controller=new HTMLMediaElementGainController;
 g_api.gain_controller=gain_controller;
 
