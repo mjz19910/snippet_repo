@@ -2,7 +2,7 @@ export {};
 
 declare global {
 	interface Window {
-		CustomInputMatcher: typeof CustomInputMatcher;
+		CustomInputMatcher: {};
 		debugApi: {};
 		__ret: {};
 		debug?:debug;
@@ -13,11 +13,6 @@ declare global {
 		find_closed_dn_y: any;
 		dz?: any;
 		__state: {lex_chunks: any[]; m_l_str: any; reset_count: boolean;};
-	}
-	var CustomInputMatcher: typeof X.CustomInputMatcher;
-
-	class DebugAPI {
-		asyncExecuteFunction(top: Window|null,function_: any): void;
 	}
 
 	type SymbolIndexable={
@@ -63,16 +58,4 @@ declare global {
 	var __res: any[];
 	var __instance: {constructor: any;};
 	var __nx_names: never[];
-}
-namespace X {
-	export class CustomInputMatcher {
-		test_string: string|RegExp;
-		test_needle: string|RegExp;
-		ts_get: unknown;
-		constructor(test_string: string|RegExp,string_getter: unknown) {
-			this.test_string=test_string;
-			this.test_needle="";
-			this.ts_get=string_getter;
-		}
-	}
 }
