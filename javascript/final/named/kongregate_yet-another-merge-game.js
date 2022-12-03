@@ -1,3 +1,4 @@
+import {CustomInputMatcher} from "../support/CustomInputMatcher.js";
 import {Runner} from "../support/Runner.js";
 
 /* spell:words
@@ -10,33 +11,12 @@ function main() {
 		use() {}
 	};
 	holder.use();
-	class CustomInputMatcher {
-		/**
-		 * @param {any} t_needle
-		 * @param {any} t_string_getter
-		 */
-		constructor(t_needle,t_string_getter) {
-			this.ts_get=t_string_getter;
-			this.tr=t_needle;
-		}
-		get test_string() {
-			return this.ts_get();
-		}
-		get test_needle() {
-			return this.tr;
-		}
-		str="";
-	}
 	let cur=new Runner;
-	if("https://www.kongregate.com/games/cook1eegames/yet-another-merge-game") {
-		/* cspell: disable-next-line */
-		let rx=/https:\/\/www\.kongregate\.com\/games\/cook1eegames\/yet-another-merge-game/;
-		//@cspell-enable
-		let mx=() => location.origin+location.pathname;
-		let mto=new CustomInputMatcher(rx,mx);
-		cur.n=mto;
-		mto.str="https://www.kongregate.com/games/cook1eegames/yet-another-merge-game";
-	}
+	cur.n=new CustomInputMatcher(
+		/https:\/\/www\.kongregate\.com\/games\/cook1eegames\/yet-another-merge-game/,
+		() => location.origin+location.pathname,
+		"https://www.kongregate.com/games/cook1eegames/yet-another-merge-game"
+	);
 	cur.f=function() {
 		let _function=function() {
 			console.log('run');
