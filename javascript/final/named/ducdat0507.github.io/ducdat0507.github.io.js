@@ -3,17 +3,19 @@
 v1 (cur): snippet_repo/javascript/final/ducdat0507.github.io/ducdat0507.github.io.js
 */
 function main() {
-	/**
-	 * @type {any[]}
-	 */
+	/** @type {(()=>any)[]} */
 	var fnlist=[];
 	/**
 	 * @type {any[]}
 	 */
 	var fnname=[];
+	/** @template T @arg {T} obj @returns {asserts obj is {user_run_name?: string}}  */
+	function assume_has(obj) {
+		obj;
+	}
 	/**
 	 * @param {any} name
-	 * @param {{ user_run_name: any; }} func
+	 * @param {()=>any} func
 	 */
 	function add_func(name,func) {
 		var y=fnlist.push(func);
@@ -21,6 +23,7 @@ function main() {
 			throw SyntaxError("Name conflict");
 		}
 		var x=fnname.push(name);
+		assume_has(func);
 		func.user_run_name=name;
 		if(x!=y) {
 			throw SyntaxError("unbalanced function or name number");
@@ -86,15 +89,6 @@ function main() {
 		} finally {}
 		return;
 	};
-	let stt=eval(`(class {
-			static #unused = this.#init()
-			static #init(){
-			}
-			static _f(){}
-			static _n = "<empty>"
-			static n_on = true
-			static f_on = true
-		})`);
 	window.CustomInputMatcher=class {
 		/**
 		 * @param {any} t_needle
@@ -111,16 +105,18 @@ function main() {
 			return this.tr;
 		}
 	};
-	var cur=class extends stt {
+	class cur_class {
+		/** @type {never[]} */
+		funcs=[];
 		/**
-		 * @type {any}
+		 * @type {()=>any}
 		 */
 		_f;
-		/** @type {any} */
-		static get f() {
+		/** @type {()=>any} */
+		get f() {
 			return this._f;
 		}
-		static set f(f) {
+		set f(f) {
 			let cur=this._ln;
 			this._lf=f;
 			if(fnlist.indexOf(this._lf)==-1) {
@@ -144,10 +140,10 @@ function main() {
 		 */
 		_n;
 		/** @type {any} */
-		static get n() {
+		get n() {
 			return this._n;
 		}
-		static set n(n) {
+		set n(n) {
 			let cur=n;
 			if(cur instanceof CustomInputMatcher) {
 				let custom_str=cur.test_string;
@@ -174,9 +170,10 @@ function main() {
 			}
 		}
 	};
-	cur.funcs=fnlist;
-	cur.names=fnname;
+	cur_class.funcs=fnlist;
+	cur_class.names=fnname;
 
+	let cur=new cur_class;
 	cur.n=new CustomInputMatcher(/https:\/\/ducdat0507.github.io/,() => location.origin);
 	cur.f=async function() {
 		let mc=new MessageChannel;
