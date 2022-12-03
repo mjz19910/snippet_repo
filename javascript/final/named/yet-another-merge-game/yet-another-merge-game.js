@@ -61,8 +61,8 @@ function main() {
 				}
 				return performance.now()-ps;
 			}
-			let c=0
-				,tc=1000;
+			let c=0;
+			let tc=1000;
 			/**
 			 * @param {number} tc
 			 * @param {number} c
