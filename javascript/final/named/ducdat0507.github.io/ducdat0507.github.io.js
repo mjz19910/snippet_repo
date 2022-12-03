@@ -108,10 +108,7 @@ function main() {
 	class cur_class {
 		/** @type {never[]} */
 		funcs=[];
-		/**
-		 * @type {()=>any}
-		 */
-		_f;
+		_f() {};
 		/** @type {()=>any} */
 		get f() {
 			return this._f;
