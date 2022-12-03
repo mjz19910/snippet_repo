@@ -60,9 +60,6 @@ function main() {
 		var t_idx=fs_str.lastIndexOf(String.fromCharCode(123),lnc)-1;
 		var e_js_call=d_idx;
 		console.log(fs_str.slice(t_idx,d_idx));
-		function _log_fn(/** @type {any} */ ...e) {
-			console.log(...e);
-		}
 		for(var cc=0;cc<10;cc++) {
 			let cv=fs_str.lastIndexOf(String.fromCharCode(123),t_idx);
 			let c2=fs_str.lastIndexOf(",",t_idx);
@@ -92,19 +89,19 @@ function main() {
 					}
 					var w_ext={};
 					w_ext._l=function(/** @type {any[]} */ ...a) {
-						if(a.length>0) _log_fn("l",...a);
+						if(a.length>0) console.log("l",...a);
 						return {
 							v: a
 						};
 					};
 					w_ext._v=function(/** @type {any[]} */ ...a) {
-						if(a.length>0) _log_fn("v",...a);
+						if(a.length>0) console.log("v",...a);
 						if(a.length==1)
 							return a[0];
 						return a;
 					};
 					w_ext._c=function(/** @type {any[]} */ ...a) {
-						if(a.length>0) _log_fn("c",...a);
+						if(a.length>0) console.log("c",...a);
 						return {
 							v: a
 						};
@@ -159,7 +156,7 @@ function main() {
 							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
 								debugger;
 							}
-							_log_fn("Sl:",events.length);
+							console.log("Sl:",events.length);
 							wb_eval(events);
 							cf=void 0;
 							if(!events.includes("getQuantumFoam(matterThisPrestige).lte(0)")) {
