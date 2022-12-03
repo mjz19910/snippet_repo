@@ -4,6 +4,7 @@ import {Seen} from "./Seen.js";
 
 // youtube_plugin
 export interface GlobalApiObject {
+	HTMLMediaElementGainController: typeof HTMLMediaElementGainController;
 	gain_controller?: HTMLMediaElementGainController;
 	yt_watch_page_loaded_handler?: {};
 	plugin_overlay_element?: {};
