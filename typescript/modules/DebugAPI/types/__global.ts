@@ -1,4 +1,4 @@
-import {GlobalApiObject} from "./GlobalApiObject";
+import {GlobalApiObject} from "./GlobalApiObject.js";
 
 export {};
 

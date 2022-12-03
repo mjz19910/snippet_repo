@@ -77,14 +77,12 @@ declare global {
 	var __fo: any[][];
 	var __for_code: any;
 	var __lst: any[];
-	var __ret: symbol|[any,any]|st_ext;
+	var __ret: symbol|[any,any]|{};
 	var __w: RxType;
 	var __r_ret: any;
 	var __res: any[];
 	var __instance: {constructor: any;};
 }
-
-class st_ext {}
 
 interface JQueryExpandoData {
 	events: JQueryEvents;

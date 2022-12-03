@@ -1,3 +1,5 @@
+export {};
+
 interface ErrorStackTrace {
 	stack?: string;
 }
@@ -7,5 +9,3 @@ declare global {
 		captureStackTrace<T>(obj: ErrorStackTrace,constructorOpt?: T): void;
 	}
 }
-
-export {};

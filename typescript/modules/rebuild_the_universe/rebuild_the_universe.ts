@@ -4016,4 +4016,6 @@ init();
 log_if(LOG_LEVEL_TRACE,'userscript main');
 main();
 
-export {};
+export {
+	main as rebuild_the_universe_main
+};

@@ -98,15 +98,3 @@ declare global {
 	var __instance: {constructor: any;};
 	var __nx_names: never[];
 }
-namespace X {
-	export class CustomInputMatcher {
-		test_string: string|RegExp;
-		test_needle: string|RegExp;
-		ts_get: unknown;
-		constructor(test_string: string|RegExp,string_getter: unknown) {
-			this.test_string=test_string;
-			this.test_needle="";
-			this.ts_get=string_getter;
-		}
-	}
-}

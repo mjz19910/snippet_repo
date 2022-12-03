@@ -1,5 +1,3 @@
-export {};
-
 export const Holder=1;
 
 declare global {

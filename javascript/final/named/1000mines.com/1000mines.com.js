@@ -27,7 +27,7 @@ function main() {
 		}
 		return x;
 	}
-	var execute=function(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
+	function execute(/** @type {number} */ t,/** @type {{ (fn: any): void; (arg0: any): void; }} */ pre_exec,/** @type {((arg0: any) => void) | undefined} */ post_exec) {
 		var r_fnname=fnname[t];
 		var func=fnlist[t];
 		try {
