@@ -44,7 +44,6 @@ function main() {
 		window.cint=setInterval(function() {
 			gameFunctions.maxUpgrades(game.matter,game.upgrades);
 		},150);
-		return 0;
 	};
 	cur.value=cur.do_cur();
 	return cur;
