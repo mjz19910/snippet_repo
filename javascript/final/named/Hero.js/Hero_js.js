@@ -75,6 +75,9 @@ function main() {
 					function x(f_in,cb){
 						if(cb){
 							return class tb extends f_in {
+								/**
+								 * @param {any[]} a
+								 */
 								constructor(...a){
 									super(...a)
 									cb(this)
@@ -82,6 +85,9 @@ function main() {
 							}
 						}else{
 							return class tt extends f_in {
+								/**
+								 * @param {any[]} a
+								 */
 								constructor(...a){
 									super(...a)
 									tt.instance=this
