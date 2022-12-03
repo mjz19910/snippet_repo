@@ -48,6 +48,9 @@ export class SimpleStackVM {
 					if(!obj) throw new Error();
 					if(typeof obj==='string') throw new Error();
 					if(!(typeof name==='string')) throw new Error();
+					/** @template T @arg {T} _obj @returns {asserts _obj is {[x: string]: {}}}  */
+					function assume_can_index_with_string(_obj) {}
+					assume_can_index_with_string(obj);
 					this.push(obj[name]);
 					break;
 				}
@@ -61,6 +64,9 @@ export class SimpleStackVM {
 					let target=this.pop();
 					if(!target) throw new Error();
 					if(!(typeof name_to_call==='string')) throw new Error();
+					/** @template T @arg {T} _obj @returns {asserts _obj is {[x: string]: (...args:any[])=>any}}  */
+					function assume_can_index_with_string_to_function(_obj) {}
+					assume_can_index_with_string_to_function(target);
 					let ret=target[name_to_call](...arg_arr);
 					this.push(ret);
 					break;

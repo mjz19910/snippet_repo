@@ -1,87 +1,14 @@
+import {Runner} from "../../support/Runner.js";
+
 /* spell:words
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/js_wasm_importing/js_wasm_importing.js
 */
 function main() {
-	class curTy {
-		/**
-		 * @param {any} m_cur_key
-		 * @param {any} m_cur_value
-		 */
-		add_func(m_cur_key,m_cur_value) {
-			this.key_arr.push(m_cur_key);
-			this.value_arr.push(m_cur_value);
-		}
-		/**
-		 * @type {any[]}
-		 */
-		value_arr=[];
-		/**
-		 * @type {any[]}
-		 */
-		key_arr=[];
-		/**
-		 * @param {any} key
-		 * @param {any} value
-		 */
-		set(key,value) {
-			if(this.key_arr.indexOf(key)>-1) {
-				throw new Error("Key conflict");
-			}
-			var x=this.key_arr.push(key);
-			var y=this.value_arr.push(value);
-			if(x==y) {
-				return x;
-			} else if(x>y) {
-				throw new Error("Too many keys");
-			} else if(y>x) {
-				throw new Error("Too many values");
-			} else {
-				throw new Error("Unexpected result (x != y && x > y && y > x)");
-			}
-		}
-		run() {
-			let ret;
-			let index=this.key_arr.indexOf(cur.m_key);
-			let fn_value=this.value_arr[index];
-			try {
-				ret=fn_value();
-			} catch(e) {
-				console.error('user error');
-				console.log(e);
-			}
-			return ret;
-		}
-		/** @type {any} */
-		get value() {
-			return this.m_value;
-		}
-		set value(val) {
-			this.m_cur_value=val;
-			if(!this.value_arr.includes(this.m_cur_value)) {
-				this.add_func(this.m_cur_key,this.m_cur_value);
-			}
-			if(!this.m_has_value) {
-				this.m_has_value=true;
-				this.m_value=val;
-			}
-		}
-		/** @type {any} */
-		get key() {
-			return this.m_key;
-		}
-		set key(key_val) {
-			this.m_cur_key=key_val;
-			if(!this.m_has_key) {
-				this.m_has_key=true;
-				this.m_key=key_val;
-			}
-		}
-	}
 	let cur=new Runner;
-	cur.key='js_wasm_importing';
-	cur.value=js_wasm_importing_main;
-	return cur.run();
+	cur.n='js_wasm_importing';
+	cur.f=js_wasm_importing_main;
+	return cur.do_cur();
 	function js_wasm_importing_main() {
 		/*location.origin==="https://wasmbyexample.dev/"*/
 		let fn=async function() {
