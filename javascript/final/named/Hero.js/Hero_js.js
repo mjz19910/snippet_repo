@@ -83,10 +83,7 @@ function main() {
 					${src_url}
 				};x`);
 			}
-			let eok_into_obj={
-				value: null
-			};
-			eok_generate(eok_into_obj);
+			eok_generate();
 			/**
 			 * @param {any} f_in
 			 * @param {(arg0: {}) => void} cb
