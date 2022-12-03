@@ -1,3 +1,5 @@
+import {curTy} from "./curTy.js";
+
 export {};
 
 declare global {
@@ -48,7 +50,7 @@ declare global {
 	var __fo: any;
 	var __for_code: any;
 	var __lst: any;
-	var __ret: never;
+	var __ret: curTy;
 	var __w: any;
 	var __m: any;
 	var __r_ret: any;
