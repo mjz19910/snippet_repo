@@ -1147,11 +1147,32 @@ class NumericLiterals extends ECMA262Base {
 	/** @returns {LexReturnTyShort} */
 	HexIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexDigits
-	/** @returns {LexReturnTyShort} */
-	HexDigits() {throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} @param {{sep:boolean}} grammar_params @param {number} i*/
+	HexDigits(grammar_params,i) {
+		if(grammar_params.sep) {
+			
+		}
+		this.len=0;
+		let res=this.HexDigit(i);
+		while(res[0]) {
+			this.len++;
+			let res_peek_digit=this.HexDigit(i+this.len);
+			if(res_peek_digit[0]) {
+				res=res_peek_digit;
+			} else {
+				break;
+			}
+		}
+		if(!res[0]&&this.len==0) {
+			return [false,null,0];
+		}
+		if(this.len>0) return [true,"HexDigits",this.len];
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-HexDigit
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	HexDigit(str,index) {
+	/** @arg {number} index @returns {LexReturnTyShort} */
+	HexDigit(index) {
+		let str=this.str;
 		if(str.charCodeAt(index)>="0".charCodeAt(0)&&str.charCodeAt(index)<="9".charCodeAt(0)) {
 			return [true,"HexDigit",1];
 		}
@@ -1500,11 +1521,11 @@ class StringLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	HexEscapeSequence(str,index) {
 		if(str[index]==="x") {
-			let len=this.C.numeric_literals.HexDigit(str,index+1);
+			let len=this.C.numeric_literals.HexDigit(index+1);
 			if(!len) {
 				return [false,null,0];
 			}
-			len=this.C.numeric_literals.HexDigit(str,index+2);
+			len=this.C.numeric_literals.HexDigit(index+2);
 			if(!len) {
 				return [false,null,0];
 			}
@@ -1539,29 +1560,23 @@ class StringLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-Hex4Digits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	Hex4Digits(str,index) {
-		let len=this.C.numeric_literals.HexDigit(str,index);
+		let len=this.C.numeric_literals.HexDigit(index);
 		if(!len) {
 			return [false,null,0];
 		}
-		len=this.C.numeric_literals.HexDigit(str,index);
+		len=this.C.numeric_literals.HexDigit(index);
 		if(!len) {
 			return [false,null,0];
 		}
-		len=this.C.numeric_literals.HexDigit(str,index);
+		len=this.C.numeric_literals.HexDigit(index);
 		if(!len) {
 			return [false,null,0];
 		}
-		len=this.C.numeric_literals.HexDigit(str,index);
+		len=this.C.numeric_literals.HexDigit(index);
 		if(!len) {
 			return [false,null,0];
 		}
 		return [true,"Hex4Digits",4];
-	}
-	// https://tc39.es/ecma262/#prod-HexDigits
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	HexDigits(str,index) {
-		str; index;
-		throw new Error("Method not implemented.");
 	}
 }
 
@@ -1766,11 +1781,11 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			}
 		}
 		if(str[index]==="x") {
-			let lookahead=this.C.numeric_literals.HexDigit(str,index+1);
+			let lookahead=this.C.numeric_literals.HexDigit(index+1);
 			if(!lookahead[0]) {
 				return [true,"NotEscapeSequence",1];
 			} else {
-				lookahead=this.C.numeric_literals.HexDigit(str,index+1);
+				lookahead=this.C.numeric_literals.HexDigit(index+1);
 				if(!lookahead[0]) {
 					return [true,"NotEscapeSequence",1];
 				}
@@ -1781,25 +1796,25 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		}
 		let res_1,res_2,res_3;
 		let len=1;
-		let lookahead_res_1=this.C.numeric_literals.HexDigit(str,index+len);
+		let lookahead_res_1=this.C.numeric_literals.HexDigit(index+len);
 		if(!lookahead_res_1[0]&&str[index+1]!=="{}"[0]) {
 			return [true,"NotEscapeSequence",1];
 		}
-		res_1=this.C.numeric_literals.HexDigit(str,index+len);
-		lookahead_res_1=this.C.numeric_literals.HexDigit(str,index+len+1);
+		res_1=this.C.numeric_literals.HexDigit(index+len);
+		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+1);
 		if(res_1[0]&&!lookahead_res_1[0]) {
 			return [true,"NotEscapeSequence",2];
 		}
-		res_1=this.C.numeric_literals.HexDigit(str,index+len);
-		res_2=this.C.numeric_literals.HexDigit(str,index+len+1);
-		lookahead_res_1=this.C.numeric_literals.HexDigit(str,index+3);
+		res_1=this.C.numeric_literals.HexDigit(index+len);
+		res_2=this.C.numeric_literals.HexDigit(index+len+1);
+		lookahead_res_1=this.C.numeric_literals.HexDigit(index+3);
 		if(res_1[0]&&res_2[0]&&!lookahead_res_1[0]) {
 			return [true,"NotEscapeSequence",3];
 		}
-		res_1=this.C.numeric_literals.HexDigit(str,index+len);
-		res_2=this.C.numeric_literals.HexDigit(str,index+len+1);
-		res_3=this.C.numeric_literals.HexDigit(str,index+len+2);
-		lookahead_res_1=this.C.numeric_literals.HexDigit(str,index+len+3);
+		res_1=this.C.numeric_literals.HexDigit(index+len);
+		res_2=this.C.numeric_literals.HexDigit(index+len+1);
+		res_3=this.C.numeric_literals.HexDigit(index+len+2);
+		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+3);
 		if(res_1[0]&&res_2[0]&&res_3[0]&&!lookahead_res_1[0]) {
 			return [true,"NotEscapeSequence",4];
 		}
@@ -1807,17 +1822,17 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 			return [false,null,0];
 		}
 		len++;
-		lookahead_res_1=this.C.numeric_literals.HexDigit(str,index+len);
+		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len);
 		if(!lookahead_res_1[0]) {
 			return [true,"NotEscapeSequence",len];
 		}
 		res_1=this.NotCodePoint(str,index+len);
-		lookahead_res_1=this.C.numeric_literals.HexDigit(str,index+len+1);
+		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+1);
 		if(res_1[0]&&!lookahead_res_1[0]) {
 			return [true,"NotEscapeSequence",len];
 		}
 		res_1=this.CodePoint(str,index+len);
-		lookahead_res_1=this.C.numeric_literals.HexDigit(str,index+len+1);
+		lookahead_res_1=this.C.numeric_literals.HexDigit(index+len+1);
 		if(res_1[0]&&!lookahead_res_1[0]) {
 			return [true,"NotEscapeSequence",len+1];
 		}
@@ -1830,7 +1845,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NotCodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
-		let res=this.C.string_literals.HexDigits(str,index);
+		let res=this.C.numeric_literals.HexDigits({sep:false},index);
 		if(!res[0]) {
 			return [false,null,0];
 		}
@@ -1846,7 +1861,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	CodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-		let res=this.C.string_literals.HexDigits(str,index);
+		let res=this.C.numeric_literals.HexDigits({sep:false},index);
 		if(!res[0]) {
 			return [false,null,0];
 		}
