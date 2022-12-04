@@ -1892,94 +1892,6 @@ class RegularExpressionLiterals extends ECMA262Base {
 
 
 class ecma_root {
-	/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
-	describe_token(token_value) {
-		if(!token_value) return ["undefined"];
-		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
-		return [token_value[1],tok_str];
-	}
-	/** @arg {LexReturnTyShort} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
-	as_next_token(cur) {
-		if(cur[1]!==null) {
-			if(cur[2]===0) {
-				return [cur[0],cur[1],cur[2],this.index];
-			}
-			this.index+=cur[2];
-			return [cur[0],cur[1],cur[2],this.index];
-		}
-		if(this.index>(this.str.length-1)) {
-			return [false,js_token_generator.EOF_TOKEN,0,this.index];
-		}
-		return null;
-	}
-	/** @returns {[true,string,number,number]|[false,symbol,number,number]|null} */
-	next_token() {
-		if(this.index>(this.str.length-1)) {
-			return [false,js_token_generator.EOF_TOKEN,0,this.index];
-		}
-		/** @type {[true,string,number,number]} */
-		let ret;
-		let cur=this.InputElementDiv(this.str,this.index);
-		if(cur[1]!==null) {
-			if(cur[2]===0) {
-				ret=[cur[0],cur[1],cur[2],this.index];
-				return ret;
-			}
-			ret=[cur[0],cur[1],cur[2],this.index];
-			this.index+=cur[2];
-			return ret;
-		}
-		console.log("next token fallthrough",cur,this.index);
-		return null;
-	}
-	/**
-	 * @param {string} source_code
-	 * @param {number} start_index
-	 */
-	constructor(source_code,start_index) {
-		this.source_code=source_code;
-		this.start_index=start_index;
-		this.index=this.start_index;
-		this.str=this.source_code;
-		this.flags={
-			sep: false,
-			is_sep() {
-				return this.sep;
-			}
-		};
-		this.white_space=new JSWhiteSpace(this);
-		this.line_terminators=new JSLineTerminators(this);
-		this.comments=new Comments(this);
-		this.hashbang_comments=new HashbangComments(this);
-		this.tokens=new Tokens(this);
-		this.names_and_keywords=new NamesAndKeywords(this);
-		this.punctuators=new Punctuators(this);
-		this.RegularExpressionLiterals=new RegularExpressionLiterals(this);
-		{
-			this.literals=new Literals(this);
-			this.numeric_literals=new NumericLiterals(this);
-			this.string_literals=new StringLiterals(this);
-		}
-		this.template_literal_lexical_components=new TemplateLiteralLexicalComponents(this);
-	}
-}
-/** @template T @typedef {Nullable<T>} N */
-/** @typedef {{str:string;index:number}} IN_STE_T */
-/** @typedef {N<{type:string;item:string}>&{length:number}} OUT_STE_T */
-class js_token_generator {
-	get index() {
-		return this.root.index;
-	}
-	set index(value) {
-		this.root.index=value;
-	}
-	static EOF_TOKEN=Symbol();
-	/** @type {ecma_root} */
-	root;
-	/** @param {string} str */
-	constructor(str) {
-		this.root=new ecma_root(str,0);
-	}
 	/** @param {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
 	modify_output(state,lex_return,type) {
 		if(lex_return[0]&&lex_return[2]>state.length) {
@@ -1990,42 +1902,42 @@ class js_token_generator {
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseWhiteSpace(in_state,out_state) {
-		let res=this.root.white_space.WhiteSpace(in_state.str,in_state.index);
+		let res=this.white_space.WhiteSpace(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"WhiteSpace");
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseLineTerminator(in_state,out_state) {
-		let res=this.root.line_terminators.LineTerminator(in_state.str,in_state.index);
+		let res=this.line_terminators.LineTerminator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"LineTerminator");
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseComment(in_state,out_state) {
-		let res=this.root.comments.Comment(in_state.str,in_state.index);
+		let res=this.comments.Comment(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"Comment");
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseRightBracePunctuator(in_state,out_state) {
-		let res=this.root.punctuators.RightBracePunctuator(in_state.str,in_state.index);
+		let res=this.punctuators.RightBracePunctuator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"RightBracePunctuator");
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseDivPunctuator(in_state,out_state) {
-		let res=this.root.punctuators.DivPunctuator(in_state.str,in_state.index);
+		let res=this.punctuators.DivPunctuator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"DivPunctuator");
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseCommonToken(in_state,out_state) {
-		let res=this.root.tokens.CommonToken(in_state.str,in_state.index);
+		let res=this.tokens.CommonToken(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"CommonToken");
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseRegularExpressionLiteral(in_state,out_state) {
-		let res=this.root.RegularExpressionLiterals.RegularExpressionLiteral(in_state.str,in_state.index);
+		let res=this.RegularExpressionLiterals.RegularExpressionLiteral(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"RegularExpressionLiteral");
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseTemplateSubstitutionTail(in_state,out_state) {
-		let res=this.root.template_literal_lexical_components.TemplateSubstitutionTail(in_state.str,in_state.index);
+		let res=this.template_literal_lexical_components.TemplateSubstitutionTail(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"TemplateSubstitutionTail");
 	}
 	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
@@ -2126,6 +2038,94 @@ class js_token_generator {
 			return [false,null,0];
 		}
 		return [true,out_state.item,out_state.length];
+	}
+	/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
+	describe_token(token_value) {
+		if(!token_value) return ["undefined"];
+		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
+		return [token_value[1],tok_str];
+	}
+	/** @arg {LexReturnTyShort} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
+	as_next_token(cur) {
+		if(cur[1]!==null) {
+			if(cur[2]===0) {
+				return [cur[0],cur[1],cur[2],this.index];
+			}
+			this.index+=cur[2];
+			return [cur[0],cur[1],cur[2],this.index];
+		}
+		if(this.index>(this.str.length-1)) {
+			return [false,js_token_generator.EOF_TOKEN,0,this.index];
+		}
+		return null;
+	}
+	/** @returns {[true,string,number,number]|[false,symbol,number,number]|null} */
+	next_token() {
+		if(this.index>(this.str.length-1)) {
+			return [false,js_token_generator.EOF_TOKEN,0,this.index];
+		}
+		/** @type {[true,string,number,number]} */
+		let ret;
+		let cur=this.InputElementDiv(this.str,this.index);
+		if(cur[1]!==null) {
+			if(cur[2]===0) {
+				ret=[cur[0],cur[1],cur[2],this.index];
+				return ret;
+			}
+			ret=[cur[0],cur[1],cur[2],this.index];
+			this.index+=cur[2];
+			return ret;
+		}
+		console.log("next token fallthrough",cur,this.index);
+		return null;
+	}
+	/**
+	 * @param {string} source_code
+	 * @param {number} start_index
+	 */
+	constructor(source_code,start_index) {
+		this.source_code=source_code;
+		this.start_index=start_index;
+		this.index=this.start_index;
+		this.str=this.source_code;
+		this.flags={
+			sep: false,
+			is_sep() {
+				return this.sep;
+			}
+		};
+		this.white_space=new JSWhiteSpace(this);
+		this.line_terminators=new JSLineTerminators(this);
+		this.comments=new Comments(this);
+		this.hashbang_comments=new HashbangComments(this);
+		this.tokens=new Tokens(this);
+		this.names_and_keywords=new NamesAndKeywords(this);
+		this.punctuators=new Punctuators(this);
+		this.RegularExpressionLiterals=new RegularExpressionLiterals(this);
+		{
+			this.literals=new Literals(this);
+			this.numeric_literals=new NumericLiterals(this);
+			this.string_literals=new StringLiterals(this);
+		}
+		this.template_literal_lexical_components=new TemplateLiteralLexicalComponents(this);
+	}
+}
+/** @template T @typedef {Nullable<T>} N */
+/** @typedef {{str:string;index:number}} IN_STE_T */
+/** @typedef {N<{type:string;item:string}>&{length:number}} OUT_STE_T */
+class js_token_generator {
+	get index() {
+		return this.root.index;
+	}
+	set index(value) {
+		this.root.index=value;
+	}
+	static EOF_TOKEN=Symbol();
+	/** @type {ecma_root} */
+	root;
+	/** @param {string} str */
+	constructor(str) {
+		this.root=new ecma_root(str,0);
 	}
 }
 
