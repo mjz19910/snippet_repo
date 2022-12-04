@@ -1046,7 +1046,7 @@ class NumericLiterals extends ECMA262Base {
 	BinaryIntegerLiteral_Sep(index) {
 		if(this.str.startsWith("0b",index)||this.str.startsWith("0B",index)) {
 			let res=this.BinaryDigits_Sep(index);
-			if(res[0]) return [true,"SignedInteger",res[2]+2];
+			if(res[0]) return [true,"BinaryIntegerLiteral",res[2]+2];
 		}
 		return [false,null,0];
 	}
@@ -1055,7 +1055,7 @@ class NumericLiterals extends ECMA262Base {
 	BinaryIntegerLiteral(str,index) {
 		if(str.startsWith("0b",index)||str.startsWith("0B",index)) {
 			let res=this.BinaryDigits(index+2);
-			if(res[0]) return [true,"SignedInteger",res[2]+2];
+			if(res[0]) return [true,"BinaryIntegerLiteral",res[2]+2];
 		}
 		return [false,null,0];
 	}
