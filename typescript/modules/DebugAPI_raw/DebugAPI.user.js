@@ -786,12 +786,22 @@ class NumericLiterals extends ECMA262Base {
 		let res;
 		let max_len=0;
 		let max_item=null;
+		let res_len=0;
 		res=this.NonDecimalIntegerLiteral_Sep(str,index);
 		x: if(res[0]) {
 			let big_int=this.BigIntLiteralSuffix(str,index+res[2]);
 			if(big_int[0]) {
+				let res_len=res[2]+big_int[2];
+				if(res_len>max_len) {
+					max_item=[res,big_int];
+					max_len=res_len;
+				}
 				break x;
-				return [true,"NumericLiteral",res[2]+big_int[2],[res,big_int]];
+			}
+			res_len=res[2];
+			if(res_len>max_len) {
+				max_item=[res];
+				max_len=res_len;
 			}
 			return [true,"NumericLiteral",res[2],[res]];
 		}
