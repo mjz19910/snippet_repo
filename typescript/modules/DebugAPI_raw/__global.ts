@@ -1,3 +1,12 @@
+// ecma_run_parser
+interface GlobalApiObject {
+	ecma_run_parser?:((str:string)=>void);
+}
+
+// Holder
+export type Holder=1;
+
+// PickByValue & Entries
 declare global {
 	type PickByValue<T,V>=Pick<T,{[K in keyof T]: T[K] extends V? K:never}[keyof T]>;
 	type Entries<T>={
@@ -14,6 +23,8 @@ declare global {
 		[Symbol.iterator](): IterableIterator<TNode>;
 	}
 }
+
+// g_api global
 declare global {
 	interface Window {
 		g_api: GlobalApiObject;
