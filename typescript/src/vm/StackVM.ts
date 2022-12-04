@@ -83,20 +83,20 @@ export class StackVM {
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Destination is out of instructions range");
 				}
-				let instruction_modify: [string,...any[]]=this.instructions[target];
+				let lex_instruction: [string,...any[]]=this.instructions[target];
 				let value=this.pop();
 				if(offset==0) {
 					if(value.type==='string') {
-						instruction_modify[offset]=value.value;
+						lex_instruction[offset]=value.value;
 					} else {
 						throw new Error("Invalid");
 					}
 				} else if(offset>0) {
-					instruction_modify[offset]=value;
+					lex_instruction[offset]=value;
 				} else {
 					throw new Error("Unreachable");
 				}
-				this.instructions[target]=SimpleStackVMParser.typecheck_instruction(instruction_modify);
+				this.instructions[target]=SimpleStackVMParser.typecheck_instruction(lex_instruction);
 			} break;
 			case 'vm_push_ip': {
 				this.push(new NumberBox(this.instruction_pointer));
