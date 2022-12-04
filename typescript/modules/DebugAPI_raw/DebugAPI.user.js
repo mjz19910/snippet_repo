@@ -874,7 +874,7 @@ class NumericLiterals extends ECMA262Base {
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
 		res=this.OctalIntegerLiteral_Sep();
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
-		res=this.HexIntegerLiteral_Sep();
+		res=this.HexIntegerLiteral_Sep(index);
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
 		return res;
 	}
