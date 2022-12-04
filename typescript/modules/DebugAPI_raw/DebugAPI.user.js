@@ -1174,7 +1174,6 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-HexDigits
 	/** @returns {LexReturnTyShort} @param {{sep:boolean}} grammar_params @param {number} i*/
 	HexDigits(grammar_params,i) {
-		debugger;
 		if(grammar_params.sep) {
 			this.len=0;
 			let res=this.HexDigit(i+this.len);
