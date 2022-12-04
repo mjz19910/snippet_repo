@@ -2127,3 +2127,4 @@ function ecma_run_parser(code_str) {
 }
 g_api.ecma_run_parser=ecma_run_parser;
 
+/* EOF */
