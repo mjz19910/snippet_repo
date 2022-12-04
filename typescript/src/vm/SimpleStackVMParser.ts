@@ -1,21 +1,18 @@
 import {InstructionType} from "../instruction/InstructionType.js";
 import {Box} from "../box/Box.js";
-import {FormattableTypes} from "../FormattableTypes.js";
 import {StringBox} from "../box/StringBox.js";
+import {NumberBox} from "../box/NumberBox.js";
 
 export class SimpleStackVMParser {
 	static match_regex=/(.+?)(;|$)/gm;
-	static parse_int_arg(cur_item: string|number) {
-		if(typeof cur_item=='string') {
-			let arg=cur_item;
-			if(arg[3]==='()'[0]&&arg.at(-1)==="()"[1]) {
-				let str_int=arg.slice(4,-1);
-				return parseInt(str_int,10);
-			}
+	static parse_int_arg(cur_item: string) {
+		if(cur_item[3]==='()'[0]&&cur_item.at(-1)==="()"[1]) {
+			let str_int=cur_item.slice(4,-1);
+			return parseInt(str_int,10);
 		}
-		throw new Error("TODO");
+		throw new Error("Failed to find int cast");
 	}
-	static parse_string_with_format_ident(str: string,format_list: FormattableTypes[]) {
+	static parse_string_with_format_ident(str: string,format_list: Box[]) {
 		let format_index=str.indexOf('%');
 		let format_type=str[format_index+1];
 		switch(format_type) {
@@ -29,20 +26,18 @@ export class SimpleStackVMParser {
 		}
 		throw new Error("TODO");
 	}
-	static parse_current_instruction(cur: (number|string|((err: Box) => void))[],format_list: FormattableTypes[]) {
+	static parse_current_instruction(cur: (string|Box)[],format_list: Box[]) {
 		let arg_loc=1;
 		let arg=cur[arg_loc];
 		while(arg) {
-			if(typeof arg!='string') {
-				arg_loc++;
-				arg=cur[arg_loc];
-				continue;
+			if(typeof arg!=='string') {
+				throw new Error("Unexpected type in input to parse_instruction");
 			}
 			if(arg.slice(0,3)==='int') {
 				let int_res=this.parse_int_arg(arg);
 				if(!int_res)
 					throw new Error("Failed to parse int");
-				cur[arg_loc]=int_res;
+				cur[arg_loc]=new NumberBox(int_res);
 			}
 			if(arg.includes('%')) {
 				let res=this.parse_string_with_format_ident(arg,format_list);
@@ -81,7 +76,7 @@ export class SimpleStackVMParser {
 			console.assert(false,'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)',parser_max_match_iter);
 		return arr;
 	}
-	static parse_instruction_stream_from_string(string: string,format_list: FormattableTypes[]) {
+	static parse_instruction_stream_from_string(string: string,format_list: Box[]) {
 		let raw_instructions=this.parse_string_into_raw_instruction_stream(string);
 		for(let i=0;i<raw_instructions.length;i++) {
 			let raw_instruction=raw_instructions[i];
