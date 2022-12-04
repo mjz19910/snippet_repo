@@ -7,7 +7,9 @@
 			"esnext",
 			"DOM"
 		],
-		"types": [],
+		"types": [
+			"node",
+		],
 		"outDir": "./build",
 		"typeRoots": [
 			"~/workspace/node_types/node_modules/@types"
@@ -18,7 +20,7 @@
 		"experimentalDecorators": true,
 		"noImplicitAny": true,
 		"sourceMap": true,
-		"strict": false,
+		"strict": true,
 		"forceConsistentCasingInFileNames":true,
 	},
 	"include": [

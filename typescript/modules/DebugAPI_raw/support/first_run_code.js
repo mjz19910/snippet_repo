@@ -44,4 +44,6 @@ module.exports = function first_run_code ( _0x4a8e )
 
 	let result = _0xa71d1b( -0xe3, -0xaf, -0x3, -0x71, -0x19 ) + 'h';
 	console.log( 'result=', result );
+
+	process.exit(0);
 };
