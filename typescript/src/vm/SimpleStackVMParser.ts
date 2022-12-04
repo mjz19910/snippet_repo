@@ -93,8 +93,9 @@ export class SimpleStackVMParser {
 				return [m_opcode,m_operands[0]];
 			case 'call':
 				left[0]-=2;
-				if(typeof m_operands[0]==='number'&&Number.isFinite(m_operands[0]))
-					return [m_opcode,m_operands[0]];
+				let call_op_num=m_operands[0];
+				if(typeof call_op_num!=='string'&&call_op_num.type=='number'&&Number.isFinite(call_op_num.value))
+					return [m_opcode,call_op_num.value];
 				else {
 					console.info("Can't verify that call instruction is valid, argument (%o) is not a number or not finite",m_operands[0]);
 					throw new Error("TypeError: Invalid argument");
