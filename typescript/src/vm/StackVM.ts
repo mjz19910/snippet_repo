@@ -100,7 +100,6 @@ export class StackVM {
 				this.push(new NumberBox(this.instruction_pointer));
 			} break;
 			case 'halt' /*Running*/: {
-				instruction;
 				this.running=false;
 			} break;
 			case 'push' /*Stack*/: {
