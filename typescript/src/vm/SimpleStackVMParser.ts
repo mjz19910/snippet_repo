@@ -27,26 +27,24 @@ export class SimpleStackVMParser {
 		throw new Error("TODO");
 	}
 	static parse_current_instruction(cur: string[],format_list: Box[]) {
-		let arg_loc=1;
 		let target_instruction: (string|Box)[]=[];
 		target_instruction[0]=cur[0];
-		let arg=cur[arg_loc];
-		while(arg) {
+		for(let i=1;i<cur.length;i++) {
+			let arg=cur[i];
 			if(typeof arg!=='string') {
 				throw new Error("Unexpected type in input to parse_instruction");
 			}
 			if(arg.slice(0,3)==='int') {
 				let int_res=this.parse_int_arg(arg);
 				if(!int_res) throw new Error("Failed to parse int");
-				target_instruction[arg_loc]=new NumberBox(int_res);
+				target_instruction[i]=new NumberBox(int_res);
 			}
 			if(arg.includes('%')) {
 				let res=this.parse_string_with_format_ident(arg,format_list);
 				if(!res) throw new Error("Failed to parse format ident");
-				target_instruction[arg_loc]=res;
+				target_instruction[i]=res;
 			}
-			arg_loc++;
-			arg=cur[arg_loc];
+
 		}
 		return target_instruction;
 	}
