@@ -13,7 +13,7 @@ export class SimpleStackVMParser {
 		throw new Error("Failed to find int cast");
 	}
 	static parse_format_identifier(str: string,format_list: Box[]) {
-		let format_type=str[1];
+		let format_type=str[0];
 		switch(format_type) {
 			case 'o':
 				let obj=format_list.shift();
@@ -35,7 +35,7 @@ export class SimpleStackVMParser {
 				continue;
 			}
 			if(arg.startsWith('%')) {
-				let res=this.parse_format_identifier(arg,format_list);
+				let res=this.parse_format_identifier(arg.slice(1),format_list);
 				if(!res) throw new Error("Failed to parse format ident");
 				target_instruction[i]=res;
 				continue;
