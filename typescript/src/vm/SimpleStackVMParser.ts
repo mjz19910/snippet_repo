@@ -28,7 +28,7 @@ export class SimpleStackVMParser {
 	}
 	static parse_current_instruction(cur: string[],format_list: Box[]) {
 		let arg_loc=1;
-		let target_instruction:(string|Box)[]=[];
+		let target_instruction=Array<string|Box>();
 		target_instruction[0]=cur[0];
 		let arg=cur[arg_loc];
 		while(arg) {
