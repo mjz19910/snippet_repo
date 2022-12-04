@@ -85,14 +85,7 @@ export class SimpleStackVMParser {
 			console.log('match index',this.match_regex.lastIndex,'string length',string.length);
 			console.assert(false,'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)',parser_max_iter);
 		}
-		let instructions: [string,...Box[]][]=[];
-		for(let i=0;i<raw_instructions.length;i++) {
-			let raw_instruction=raw_instructions[i];
-			let formatted=this.format_instruction(raw_instruction,format_list);
-			instructions.push(formatted);
-		}
-		let ret_instructions=this.verify_instructions(instructions);
-		return ret_instructions;
+		return this.verify_instructions(raw_instructions.map(e=>this.format_instruction(e,format_list)));
 	}
 	static verify_instruction(instruction: [string,...Box[]],left: [number]): InstructionType {
 		const [m_opcode,...m_operands]=instruction;
