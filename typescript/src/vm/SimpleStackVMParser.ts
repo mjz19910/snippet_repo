@@ -18,13 +18,13 @@ export class SimpleStackVMParser {
 		}
 		let format_type=str[0];
 		switch(format_type) {
-			case 'o':
+			case "o":
 				let obj=format_list.shift();
 				if(!obj)
 					throw new Error("Format list underflow");
 				return obj;
 			default:
-				console.log("%s",'unsupported format spec %'+format_type);
+				console.log("unsupported format spec %"+format_type);
 		}
 		throw new Error("TODO");
 	}
