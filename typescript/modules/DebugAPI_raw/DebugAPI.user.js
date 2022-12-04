@@ -760,7 +760,7 @@ class NumericLiterals extends ECMA262Base {
 			max_len=len[2];
 		}
 		if(max_len>0) {
-			return [true,"NumericLiteral",max_len];
+			return [true,"NumericLiteral",max_len,[len]];
 		}
 		return [false,null,0];
 	}
