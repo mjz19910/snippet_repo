@@ -210,7 +210,7 @@ export class AutoBuy implements AutoBuyInterface {
 			is_in_ignored_from_src_fn.flag=true;
 			console.log("failed to play `#background_audio`, page was loaded without a user interaction(reload from devtools or F5 too)");
 		}
-		let instructions=SimpleStackVMParser.parse_instruction_stream_from_string(`
+		let instructions=SimpleStackVMParser.parse_instruction_stream(`
 			this;push,target_obj;get;push,background_audio;get;push,play
 				call,int(2)
 					push,then

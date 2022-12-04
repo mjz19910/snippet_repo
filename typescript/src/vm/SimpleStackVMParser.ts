@@ -70,7 +70,7 @@ export class SimpleStackVMParser {
 			console.assert(false,'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)',parser_max_match_iter);
 		return arr;
 	}
-	static parse_instruction_stream_from_string(string: string,format_list: Box[]) {
+	static parse_instruction_stream(string: string,format_list: Box[]) {
 		let raw_instructions=this.parse_raw_instruction_stream(string);
 		let cooked_instructions:[string, ...Box[]][]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
