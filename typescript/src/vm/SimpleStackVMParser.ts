@@ -73,8 +73,12 @@ export class SimpleStackVMParser {
 		return raw_instructions;
 	}
 	static parse_instruction_stream(string: string,format_list: Box[]) {
-		let raw_instructions=this.parse_raw_instruction_stream(string);
-		return this.verify_instructions(raw_instructions.map(e=>this.format_instruction(e,format_list)));
+		return this.verify_instructions(
+			this.parse_raw_instruction_stream(string)
+				.map(e =>
+					this.format_instruction(e,format_list)
+				)
+		);
 	}
 	static verify_instruction(instruction: [string,...Box[]],left: [number]): InstructionType {
 		const [m_opcode,...m_operands]=instruction;
