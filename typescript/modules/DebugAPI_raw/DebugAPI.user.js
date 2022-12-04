@@ -1004,14 +1004,14 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	BinaryIntegerLiteral(str,index) {
 		if(str.startsWith("0b",index)||str.startsWith("0B",index)) {
-			let res=this.BinaryDigits(str,index);
+			let res=this.BinaryDigits_Sep(str,index);
 			if(res[0]) return [true,"SignedInteger",res[2]+2];
 		}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-BinaryDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryDigits(str,index) {
+	BinaryDigits_Sep(str,index) {
 		this.len=0;
 		let res=this.BinaryDigit(str,index);
 		while(res[0]) {
@@ -1023,6 +1023,22 @@ class NumericLiterals extends ECMA262Base {
 				res=res_peek_digit;
 			} else if(res_sep[0]&&res_sep_peek[0]) {
 				res=res_sep;
+			} else {
+				break;
+			}
+		}
+		if(!res[0]&&this.len==0) {
+			return [false,null,0];
+		}
+	}
+	BinaryDigits() {
+		this.len=0;
+		let res=this.BinaryDigit(this.C.str,this.C.index);
+		while(res[0]) {
+			this.len++;
+			let res_peek_digit=this.BinaryDigit(this.C.str,this.C.index+this.len);
+			if(res_peek_digit[0]) {
+				res=res_peek_digit;
 			} else {
 				break;
 			}
