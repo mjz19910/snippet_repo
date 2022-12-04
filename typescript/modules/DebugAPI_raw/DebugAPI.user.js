@@ -1135,8 +1135,14 @@ class NumericLiterals extends ECMA262Base {
 	/** @returns {LexReturnTyShort} */
 	NonOctalDigit() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexIntegerLiteral
-	/** @returns {LexReturnTyShort} */
-	HexIntegerLiteral_Sep() {throw new Error("No impl");}
+	/** @arg {number} i @returns {LexReturnTyShort} */
+	HexIntegerLiteral_Sep(i) {
+		if(this.str.startsWith("0b",i)||this.str.startsWith("0B",i)) {
+			let res=this.BinaryDigits(i+2);
+			if(res[0]) return [true,"HexIntegerLiteral",res[2]+2,["sep",res]];
+		}
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-HexIntegerLiteral
 	/** @returns {LexReturnTyShort} */
 	HexIntegerLiteral() {throw new Error("No impl");}
