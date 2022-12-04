@@ -1108,7 +1108,7 @@ class NumericLiterals extends ECMA262Base {
 	BinaryDigit(_i) {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
 	/** @returns {LexReturnTyShort} */
-	OctalIntegerLiteral_Sep() {throw new Error("No impl");}
+	OctalIntegerLiteral_Sep() {console.log("No impl");return [false,null,0];}
 	/** @returns {LexReturnTyShort} */
 	OctalIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigits
