@@ -211,6 +211,8 @@ s_single_char_tokens.set("<","LessThan");
 s_single_char_tokens.set(">","GreaterThan");
 
 class ECMA262Base {
+	/** @type {ecma_root} */
+	parent;
 	/** @arg {ecma_root} parent */
 	constructor(parent) {
 		this.parent=parent;
