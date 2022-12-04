@@ -211,6 +211,9 @@ s_single_char_tokens.set("<","LessThan");
 s_single_char_tokens.set(">","GreaterThan");
 
 class ECMA262Base {
+	get len() {
+		return this.B.len;
+	}
 	/** @type {ecma_root} */
 	B;
 	/** @arg {ecma_root} base */
@@ -475,7 +478,9 @@ class Comments extends ECMA262Base {
 class HashbangComments extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	HashbangComment(str,index) {
+		this.B.len=0;
 		if(str[index]==="#"&&str[index+1]==="!") {
+			this.B.len+=2;
 			let res=this.B.comments.SingleLineCommentChars(str,index+2);
 			return [true,"HashbangComment",res[2]+2];
 		}
@@ -1947,8 +1952,8 @@ class ecma_root {
 		this.ParseComment(in_state,out_state);
 		this.ParseCommonToken(in_state,out_state);
 	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	InputElementDiv(str,index) {
+	/** @returns {LexReturnTyShort} */
+	InputElementDiv() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator, RightBracePunctuator
 		let out_state={
@@ -1981,9 +1986,9 @@ class ecma_root {
 			item: null,
 			length: 0,
 		};
-		this.ParseCommonElements(in_state,out_state);
-		this.ParseRightBracePunctuator(in_state,out_state);
-		this.ParseRegularExpressionLiteral(in_state,out_state);
+		this.ParseCommonElements(this,out_state);
+		this.ParseRightBracePunctuator(this,out_state);
+		this.ParseRegularExpressionLiteral(this,out_state);
 		if(!out_state.item) {
 			return [false,null,0];
 		}
@@ -2004,9 +2009,9 @@ class ecma_root {
 			item: null,
 			length: 0,
 		};
-		this.ParseCommonElements(in_state,out_state);
-		this.ParseRegularExpressionLiteral(in_state,out_state);
-		this.ParseTemplateSubstitutionTail(in_state,out_state);
+		this.ParseCommonElements(this,out_state);
+		this.ParseRegularExpressionLiteral(this,out_state);
+		this.ParseTemplateSubstitutionTail(this,out_state);
 		if(!out_state.item) {
 			return [false,null,0];
 		}
@@ -2027,9 +2032,9 @@ class ecma_root {
 			item: null,
 			length: 0,
 		};
-		this.ParseCommonElements(in_state,out_state);
-		this.ParseDivPunctuator(in_state,out_state);
-		this.ParseTemplateSubstitutionTail(in_state,out_state);
+		this.ParseCommonElements(this,out_state);
+		this.ParseDivPunctuator(this,out_state);
+		this.ParseTemplateSubstitutionTail(this,out_state);
 		if(!out_state.item) {
 			return [false,null,0];
 		}
@@ -2062,7 +2067,7 @@ class ecma_root {
 		}
 		/** @type {[true,string,number,number]} */
 		let ret;
-		let cur=this.InputElementDiv(this.str,this.index);
+		let cur=this.InputElementDiv();
 		if(cur[1]!==null) {
 			if(cur[2]===0) {
 				ret=[cur[0],cur[1],cur[2],this.index];
@@ -2104,6 +2109,7 @@ class ecma_root {
 			this.string_literals=new StringLiterals(this);
 		}
 		this.template_literal_lexical_components=new TemplateLiteralLexicalComponents(this);
+		this.len=0;
 	}
 }
 /** @template T @typedef {Nullable<T>} N */
