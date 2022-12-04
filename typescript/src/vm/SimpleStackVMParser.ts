@@ -78,7 +78,7 @@ export class SimpleStackVMParser {
 			let formatted=this.format_instruction(raw_instruction,format_list);
 			instructions.push(formatted);
 		}
-		let ret_instructions=this.verify_formatted_instructions(instructions);
+		let ret_instructions=this.verify_instructions(instructions);
 		return ret_instructions;
 	}
 	static verify_instruction(instruction: [string, ...Box[]],left: [number]): InstructionType {
@@ -110,7 +110,7 @@ export class SimpleStackVMParser {
 				throw new Error("Unexpected opcode");
 		}
 	}
-	static verify_formatted_instructions(raw_instructions: [string, ...Box[]][]): InstructionType[] {
+	static verify_instructions(raw_instructions: [string, ...Box[]][]): InstructionType[] {
 		const instructions: InstructionType[]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			const instruction=raw_instructions[i];
