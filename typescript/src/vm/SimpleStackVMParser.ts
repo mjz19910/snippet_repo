@@ -13,6 +13,9 @@ export class SimpleStackVMParser {
 		throw new Error("Failed to find int cast");
 	}
 	static parse_format_identifier(str: string,format_list: Box[]) {
+		if(str.length!=1) {
+			console.log("might need more processing: \""+JSON.stringify(str)+"\"");
+		}
 		let format_type=str[0];
 		switch(format_type) {
 			case 'o':
