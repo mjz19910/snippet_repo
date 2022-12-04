@@ -1108,7 +1108,7 @@ class NumericLiterals extends ECMA262Base {
 	BinaryDigit(_i) {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
 	/** @returns {LexReturnTyShort} */
-	OctalIntegerLiteral_Sep() {console.log("No impl");return [false,null,0];}
+	OctalIntegerLiteral_Sep() {console.log("No impl"); return [false,null,0];}
 	/** @returns {LexReturnTyShort} */
 	OctalIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigits
@@ -1150,15 +1150,33 @@ class NumericLiterals extends ECMA262Base {
 	/** @returns {LexReturnTyShort} @param {{sep:boolean}} grammar_params @param {number} i*/
 	HexDigits(grammar_params,i) {
 		if(grammar_params.sep) {
-			
+			this.len=0;
+			let res=this.HexDigit(i);
+			while(res[0]) {
+				this.len++;
+				let res_digit=this.HexDigit(i+this.len);
+				let num_sep=this.NumericLiteralSeparator(i+this.len);
+				if(num_sep[0]) {
+					res=num_sep;
+				} else if(res_digit[0]) {
+					res=res_digit;
+				} else {
+					break;
+				}
+			}
+			if(!res[0]&&this.len==0) {
+				return [false,null,0];
+			}
+			if(this.len>0) return [true,"HexDigits",this.len];
+			return [false,null,0];
 		}
 		this.len=0;
 		let res=this.HexDigit(i);
 		while(res[0]) {
 			this.len++;
-			let res_peek_digit=this.HexDigit(i+this.len);
-			if(res_peek_digit[0]) {
-				res=res_peek_digit;
+			let res_digit=this.HexDigit(i+this.len);
+			if(res_digit[0]) {
+				res=res_digit;
 			} else {
 				break;
 			}
@@ -1845,7 +1863,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NotCodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits > 0x10FFFF
-		let res=this.C.numeric_literals.HexDigits({sep:false},index);
+		let res=this.C.numeric_literals.HexDigits({sep: false},index);
 		if(!res[0]) {
 			return [false,null,0];
 		}
@@ -1861,7 +1879,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	CodePoint(str,index) {
 		// HexDigits[~Sep] but only if MV of HexDigits ≤ 0x10FFFF
-		let res=this.C.numeric_literals.HexDigits({sep:false},index);
+		let res=this.C.numeric_literals.HexDigits({sep: false},index);
 		if(!res[0]) {
 			return [false,null,0];
 		}
