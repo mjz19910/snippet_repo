@@ -789,7 +789,7 @@ class NumericLiterals extends ECMA262Base {
 		let max_item=[];
 		let res_len=0;
 		debugger;
-		res=this.NonDecimalIntegerLiteral_Sep(str,index);
+		res=this.NonDecimalIntegerLiteral_Sep(index);
 		if(res[0]) {
 			let big_int=this.BigIntLiteralSuffix(str,index+res[2]);
 			if(big_int[0]) {
@@ -869,11 +869,11 @@ class NumericLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonDecimalIntegerLiteral_Sep(str,index) {
-		let res=this.BinaryIntegerLiteral_Sep(str,index);
+	/** @arg {number} index @returns {LexReturnTyShort} */
+	NonDecimalIntegerLiteral_Sep(index) {
+		let res=this.BinaryIntegerLiteral_Sep(index);
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
-		res=this.OctalIntegerLiteral_Sep();
+		res=this.OctalIntegerLiteral_Sep(index);
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
 		res=this.HexIntegerLiteral_Sep(index);
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
@@ -1042,10 +1042,10 @@ class NumericLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-BinaryIntegerLiteral
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryIntegerLiteral_Sep(str,index) {
-		if(str.startsWith("0b",index)||str.startsWith("0B",index)) {
-			let res=this.BinaryDigits_Sep(str,index);
+	/** @arg {number} index @returns {LexReturnTyShort} */
+	BinaryIntegerLiteral_Sep(index) {
+		if(this.str.startsWith("0b",index)||this.str.startsWith("0B",index)) {
+			let res=this.BinaryDigits_Sep(index);
 			if(res[0]) return [true,"SignedInteger",res[2]+2];
 		}
 		return [false,null,0];
@@ -1060,8 +1060,8 @@ class NumericLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-BinaryDigits
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryDigits_Sep(str,index) {
+	/** @arg {number} index @returns {LexReturnTyShort} */
+	BinaryDigits_Sep(index) {
 		this.len=0;
 		this.C.index_stack.push(this.C.index);
 		let res=this.BinaryDigit(index);
@@ -1108,8 +1108,14 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} _i @returns {LexReturnTyShort} */
 	BinaryDigit(_i) {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
-	/** @returns {LexReturnTyShort} */
-	OctalIntegerLiteral_Sep() {console.log("No impl"); return [false,null,0];}
+	/** @arg {number} i @returns {LexReturnTyShort} */
+	OctalIntegerLiteral_Sep(i) {
+		if(this.str.startsWith("0o",i)||this.str.startsWith("0O",i)) {
+			let res=this.BinaryDigits(i+2);
+			if(res[0]) return [true,"SignedInteger",res[2]+2];
+		}
+		return [false,null,0];
+	}
 	/** @returns {LexReturnTyShort} */
 	OctalIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigits
