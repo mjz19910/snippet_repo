@@ -32,7 +32,7 @@ export class SimpleStackVMParser {
 		let target_instruction: [string,...Box[]]=[cur[0]];
 		for(let i=1;i<cur.length;i++) {
 			let arg=cur[i];
-			if(arg.startsWith("int")) {
+			if(arg.startsWith("int"+"()"[0])) {
 				let int_res=this.parse_int_cast(arg);
 				target_instruction[i]=new NumberBox(int_res);
 				continue;
