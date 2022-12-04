@@ -215,10 +215,15 @@ class ECMA262Base {
 		return this.B.len;
 	}
 	/** @type {ecma_root} */
-	B;
-	/** @arg {ecma_root} base */
+	get B() {
+		if(!this._B) {
+			throw new Error("Bad access");
+		}
+		return this._B;
+	};
+	/** @arg {ecma_root|null} base */
 	constructor(base) {
-		this.B=base;
+		this._B=base;
 	}
 }
 
