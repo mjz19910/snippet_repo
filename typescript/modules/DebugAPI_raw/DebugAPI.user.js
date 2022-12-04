@@ -1951,10 +1951,6 @@ class ecma_root {
 	InputElementDiv(str,index) {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator, RightBracePunctuator
-		let in_state={
-			str,
-			index,
-		};
 		let out_state={
 			/** @type {string|null} */
 			type: null,
@@ -1962,9 +1958,9 @@ class ecma_root {
 			item: null,
 			length: 0,
 		};
-		this.ParseCommonElements(in_state,out_state);
-		this.ParseDivPunctuator(in_state,out_state);
-		this.ParseRightBracePunctuator(in_state,out_state);
+		this.ParseCommonElements(this,out_state);
+		this.ParseDivPunctuator(this,out_state);
+		this.ParseRightBracePunctuator(this,out_state);
 		if(!out_state.item) {
 			return [false,null,0];
 		}
