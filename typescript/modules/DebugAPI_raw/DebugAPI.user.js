@@ -754,6 +754,7 @@ class NumericLiterals extends ECMA262Base {
 			if(big_int[0]) {
 				return [true, "NumericLiteral",len[2]+big_int[2],[len,big_int]];
 			}
+			return [true, "NumericLiteral",len[2],[len]];
 		}
 		len=this.DecimalLiteral(str,index);
 		if(len[2]>max_len) {
