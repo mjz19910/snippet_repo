@@ -45,7 +45,7 @@ export class SimpleStackVMParser {
 		}
 		return target_instruction;
 	}
-	static raw_parse_handle_regexp_match(m: string[]) {
+	static parse_regexp_match(m: string[]) {
 		let iter=m[1].trim();
 		if(iter.startsWith("//"))
 			return [];
@@ -64,7 +64,7 @@ export class SimpleStackVMParser {
 			parts=this.match_regex.exec(string);
 			if(!parts)
 				break;
-			let res=this.raw_parse_handle_regexp_match(parts);
+			let res=this.parse_regexp_match(parts);
 			if(res)
 				arr.push(res);
 		} while(parts&&i++<parser_max_match_iter);
