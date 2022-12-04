@@ -785,6 +785,7 @@ class NumericLiterals extends ECMA262Base {
 	NumericLiteral(str,index) {
 		let res;
 		let max_len=0;
+		let max_item=null;
 		res=this.NonDecimalIntegerLiteral_Sep(str,index);
 		if(res[0]) {
 			let big_int=this.BigIntLiteralSuffix(str,index+res[2]);
@@ -794,9 +795,18 @@ class NumericLiterals extends ECMA262Base {
 			return [true,"NumericLiteral",res[2],[res]];
 		}
 		res=this.DecimalBigIntegerLiteral(str,index);
-		if(res[0]) return [true,"NumericLiteral",res[2],[res]];
+		if(res[2]>max_len) {
+			max_item=res;
+			max_len=res[2];
+		}
 		res=this.DecimalLiteral(str,index);
-		if(res[0]) return [true,"NumericLiteral",res[2],[res]];
+		if(res[2]>max_len) {
+			max_item=res;
+			max_len=res[2];
+		}
+		if(max_len>0) {
+			return [true,"NumericLiteral",max_len,[max_item]];
+		}
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-DecimalBigIntegerLiteral
