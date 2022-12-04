@@ -1,4 +1,6 @@
 import window from "./window_def.js";
+export {Holder} from "./__global.js";
+
 
 /** @template K,V */
 class HashMap {
@@ -833,28 +835,28 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-BinaryIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
+	BinaryIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-BinaryDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryDigits(str,index) {str;index;throw new Error("No impl");}
+	BinaryDigits(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-BinaryDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryDigit(str,index) {str;index;throw new Error("No impl");}
+	BinaryDigit(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	OctalIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
+	OctalIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	OctalDigits(str,index) {str;index;throw new Error("No impl");}
+	OctalDigits(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-LegacyOctalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LegacyOctalIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
+	LegacyOctalIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-NonOctalDecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonOctalDecimalIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
+	NonOctalDecimalIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-LegacyOctalLikeDecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LegacyOctalLikeDecimalIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
+	LegacyOctalLikeDecimalIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OctalDigit(str,index) {
@@ -865,13 +867,13 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-NonOctalDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonOctalDigit(str,index) {str;index;throw new Error("No impl");}
+	NonOctalDigit(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	HexIntegerLiteral(str,index) {str;index;throw new Error("No impl");}
+	HexIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	HexDigits(str,index) {str;index;throw new Error("No impl");}
+	HexDigits(str,index) {str; index; throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	HexDigit(str,index) {
@@ -2197,5 +2199,3 @@ export function ecma_parse_main() {
 	}
 	console.log(`parsed ${i} tokens`);
 }
-
-export {Holder} from "./__global.js";
