@@ -1002,7 +1002,13 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-BinaryIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
+	BinaryIntegerLiteral(str,index) {
+		if(str.startsWith("0b",index)||str.startsWith("0B",index)) {
+			let res=this.BinaryDigits(str,index);
+			if(res[0]) return [true,"SignedInteger",res[2]+2];
+		}
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-BinaryDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	BinaryDigits(str,index) {str; index; throw new Error("No impl");}
