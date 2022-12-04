@@ -2145,7 +2145,7 @@ function parse_javascript_str(code_str) {
 			console.log("parse error at ",token_gen.index);
 			break;
 		}
-		let res_description=token_gen.describe_token(res_item);
+		let res_description=token_gen.root.describe_token(res_item);
 		if(res_description[0]==="WhiteSpace") {
 			i-=1;
 		}
