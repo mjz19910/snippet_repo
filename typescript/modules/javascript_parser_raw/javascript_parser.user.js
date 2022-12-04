@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         Javascript Parser
 // @namespace    http://tampermonkey.net/
-// @version      0.1.0
+// @version      0.1.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://dropgalaxy.com/*
 // @grant        none
 // @run-at       document-start
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/modules/javascript_parser_raw/javascript_parser.user.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/modules/javascript_parser_raw/javascript_parser.user.js
 // ==/UserScript==
 /*eslint-disable no-undef*/
 
