@@ -57,7 +57,7 @@ export class SimpleStackVMParser {
 			return [];
 		return iter.split(",");
 	}
-	static parse_raw_instruction_stream(string: string): string[][] {
+	static lex_instruction_stream(string: string): string[][] {
 		const parser_max_iter=390;
 		let raw_instructions=[];
 		for(let i=0;i<parser_max_iter;i++) {
@@ -73,8 +73,8 @@ export class SimpleStackVMParser {
 		return raw_instructions;
 	}
 	static parse_instruction_stream(string: string,format_list: Box[]) {
-		return this.verify_instructions(
-			this.parse_raw_instruction_stream(string)
+		return this.typecheck_instruction_stream(
+			this.lex_instruction_stream(string)
 				.map(e =>
 					this.format_instruction(e,format_list)
 				)
@@ -109,7 +109,7 @@ export class SimpleStackVMParser {
 				throw new Error("Unexpected opcode");
 		}
 	}
-	static verify_instructions(raw_instructions: [string,...Box[]][]): InstructionType[] {
+	static typecheck_instruction_stream(raw_instructions: [string,...Box[]][]): InstructionType[] {
 		const instructions: InstructionType[]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			const instruction=raw_instructions[i];
