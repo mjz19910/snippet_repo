@@ -82,7 +82,7 @@ export class SimpleStackVMParser {
 				)
 		);
 	}
-	static verify_instruction(instruction: (string | Box)[],left: [number]): InstructionType {
+	static verify_instruction(instruction: (string|Box)[],left: [number]): InstructionType {
 		const [m_opcode,...m_operands]=instruction;
 		switch(m_opcode) {
 			// variable argument count
