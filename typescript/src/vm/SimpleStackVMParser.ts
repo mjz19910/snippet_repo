@@ -74,7 +74,19 @@ export class SimpleStackVMParser {
 	}
 	static parse_instruction_stream(string: string,format_list: Box[]) {
 		let raw_instructions=this.parse_raw_instruction_stream(string);
-		let instructions:[string, ...Box[]][]=[];
+		const parser_max_iter=390;
+		let parts: RegExpExecArray|null=null;
+		for(let i=0;i<parser_max_iter;i++) {
+			parts=this.match_regex.exec(string);
+			if(!parts) break;
+			let res=this.parse_regexp_match(parts);
+			if(!res) break;
+			raw_instructions.push(res);
+		}
+		if(parts) {
+			console.assert(false,'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)',parser_max_iter);
+		}
+		let instructions: [string,...Box[]][]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			let raw_instruction=raw_instructions[i];
 			let formatted=this.format_instruction(raw_instruction,format_list);
@@ -83,7 +95,7 @@ export class SimpleStackVMParser {
 		let ret_instructions=this.verify_instructions(instructions);
 		return ret_instructions;
 	}
-	static verify_instruction(instruction: [string, ...Box[]],left: [number]): InstructionType {
+	static verify_instruction(instruction: [string,...Box[]],left: [number]): InstructionType {
 		const [m_opcode,...m_operands]=instruction;
 		switch(m_opcode) {
 			// variable argument count
@@ -112,7 +124,7 @@ export class SimpleStackVMParser {
 				throw new Error("Unexpected opcode");
 		}
 	}
-	static verify_instructions(raw_instructions: [string, ...Box[]][]): InstructionType[] {
+	static verify_instructions(raw_instructions: [string,...Box[]][]): InstructionType[] {
 		const instructions: InstructionType[]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			const instruction=raw_instructions[i];
