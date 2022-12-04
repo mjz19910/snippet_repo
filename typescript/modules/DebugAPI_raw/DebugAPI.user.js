@@ -796,12 +796,7 @@ class NumericLiterals extends ECMA262Base {
 		res=this.DecimalBigIntegerLiteral(str,index);
 		if(res[0]) return [true,"NumericLiteral",res[2],[res]];
 		res=this.DecimalLiteral(str,index);
-		if(res[2]>max_len) {
-			max_len=res[2];
-		}
-		if(max_len>0) {
-			return [true,"NumericLiteral",max_len,[res]];
-		}
+		if(res[0]) return [true,"NumericLiteral",res[2],[res]];
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-DecimalBigIntegerLiteral
