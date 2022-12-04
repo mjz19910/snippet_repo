@@ -1,4 +1,4 @@
-import {array_sample_end} from "../array_sample_end.js";
+import {array_sample_end} from "../z_general/array_sample_end.js";
 import {Box} from "../box/Box.js";
 import {CSSStyleSheetBox} from "../box/CSSStyleSheetBox.js";
 import {CSSStyleSheetConstructorBox} from "../box/CSSStyleSheetConstructorBox.js";
