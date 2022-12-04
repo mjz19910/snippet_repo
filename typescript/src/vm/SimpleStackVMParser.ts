@@ -82,47 +82,52 @@ export class SimpleStackVMParser {
 				)
 		);
 	}
-	static verify_instruction(instruction: (string|Box)[],left: [number]): InstructionType {
+	static verify_instruction(instruction: (string|Box)[]): InstructionType {
+		let left=[instruction.length];
 		const [m_opcode,...m_operands]=instruction;
+		let ret: InstructionType;
 		switch(m_opcode) {
-			case 'push':
+			case 'push': {
 				left[0]-=2;
 				if(typeof m_operands[0]==='string') {
-					return [m_opcode,new StringBox(m_operands[0])];
+					ret=[m_opcode,new StringBox(m_operands[0])];
+					break;
 				}
-				return [m_opcode,m_operands[0]];
-			case 'call':
+				ret=[m_opcode,m_operands[0]];
+			} break;
+			case 'call': {
 				left[0]-=2;
 				let call_op_num=m_operands[0];
-				if(typeof call_op_num!=='string'&&call_op_num.type=='number'&&Number.isFinite(call_op_num.value))
-					return [m_opcode,call_op_num.value];
-				else {
+				if(typeof call_op_num!=='string'&&call_op_num.type=='number'&&Number.isFinite(call_op_num.value)) {
+					ret=[m_opcode,call_op_num.value];
+				} else {
 					console.info("Can't verify that call instruction is valid, argument (%o) is not a number or not finite",m_operands[0]);
 					throw new Error("TypeError: Invalid argument");
 				}
+			} break;
 			case 'drop':
 			case 'get':
 			case 'return':
 			case 'halt':
 			case 'vm_push_args':
 			case 'push_window_object':
-			case 'breakpoint' /*opcode*/:
+			case 'breakpoint' /*opcode*/: {
 				left[0]--;
-				return [m_opcode];
+				ret=[m_opcode];
+			} break;
 			default:
 				console.info("Info: opcode=%o instruction_parameters=%o",m_opcode,m_operands);
 				throw new Error("Unexpected opcode");
 		}
+		if(left[0]>0) throw new Error("Typechecking failure, data left when processing raw instruction stream");
+		return ret;
 	}
 	static typecheck_instruction_stream(raw_instructions: (string|Box)[][]): InstructionType[] {
 		const instructions: InstructionType[]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			const instruction=raw_instructions[i];
-			const left: [number]=[instruction.length];
-			const valid_instruction=this.verify_instruction(instruction,left);
+			const valid_instruction=this.verify_instruction(instruction);
 			instructions.push(valid_instruction);
-			if(left[0]>0)
-				throw new Error("Typechecking failure, data left when processing raw instruction stream");
 		}
 		return instructions;
 	}
