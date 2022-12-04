@@ -85,7 +85,6 @@ export class SimpleStackVMParser {
 	static verify_instruction(instruction: (string|Box)[],left: [number]): InstructionType {
 		const [m_opcode,...m_operands]=instruction;
 		switch(m_opcode) {
-			// variable argument count
 			case 'push':
 				left[0]-=2;
 				if(typeof m_operands[0]==='string') {
