@@ -1105,8 +1105,13 @@ class NumericLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-BinaryDigit
-	/** @arg {number} _i @returns {LexReturnTyShort} */
-	BinaryDigit(_i) {throw new Error("No impl");}
+	/** @arg {number} i @returns {LexReturnTyShort} */
+	BinaryDigit(i) {
+		if(this.str[i]==="0"||this.str[i]==="1") {
+			return [true,"BinaryDigit",1];
+		}
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
 	/** @arg {number} i @returns {LexReturnTyShort} */
 	OctalIntegerLiteral_Sep(i) {
