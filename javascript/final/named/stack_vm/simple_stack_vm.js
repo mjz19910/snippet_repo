@@ -47,7 +47,7 @@ export class SimpleStackVM {
 				case 'get'/*Object*/: {
 					let name=this.pop();
 					let obj=this.pop();
-					if(!(typeof name==='string')) throw new Error();
+					if(!(typeof name==='string')) throw new Error("get arg not a string");
 					/** @template T @arg {T} _obj @returns {asserts _obj is {[x: string]: {}}}  */
 					function assume_can_index_with_string(_obj) {}
 					assume_can_index_with_string(obj);
