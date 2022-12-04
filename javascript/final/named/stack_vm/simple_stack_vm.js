@@ -41,7 +41,9 @@ export class SimpleStackVM {
 					let [,value]=cur_instruction;
 					this.push(value);
 				} break;
-				case 'drop'/*Stack*/: this.pop(); break;
+				case 'drop'/*Stack*/: {
+					this.pop();
+				} break;
 				case 'get'/*Object*/: {
 					let name=this.pop();
 					let obj=this.pop();
@@ -52,8 +54,7 @@ export class SimpleStackVM {
 					function assume_can_index_with_string(_obj) {}
 					assume_can_index_with_string(obj);
 					this.push(obj[name]);
-					break;
-				}
+				} break;
 				case 'call'/*Call*/: {
 					let number_of_arguments=cur_instruction[1];
 					let arg_arr=[];
@@ -68,33 +69,26 @@ export class SimpleStackVM {
 					function assume_can_index_with_string_to_function(_obj) {}
 					assume_can_index_with_string_to_function(target);
 					this.push(target[name_to_call](...arg_arr));
-					break;
-				}
+				} break;
 				case 'return'/*Call*/: {
 					let ret=this.pop();
 					this.return_value=ret;
-					break;
-				}
+				} break;
 				case 'halt'/*Running*/: {
 					this.running=false;
-					break;
-				}
+				} break;
 				case 'push_args'/*Special*/: {
 					this.push(run_arguments);
-					break;
-				}
+				} break;
 				case 'this'/*Special*/: {
 					this.push(this);
-					break;
-				}
+				} break;
 				case 'push_window'/*Special*/: {
 					this.push(window);
-					break;
-				}
+				} break;
 				case 'breakpoint'/*Debug*/: {
 					debugger;
-					break;
-				}
+				} break;
 				default/*Debug*/: {
 					console.log('unk opcode',cur_instruction[0]);
 					throw new Error("halt");
