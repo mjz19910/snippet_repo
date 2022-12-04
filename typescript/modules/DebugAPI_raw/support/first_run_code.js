@@ -1,7 +1,7 @@
 /**
  * @param {string[]} _0x4a8e
  */
-export function first_run_code ( _0x4a8e )
+module.exports = function first_run_code ( _0x4a8e )
 {
 	/**
 	 * @param {number} _0x348449
@@ -43,5 +43,5 @@ export function first_run_code ( _0x4a8e )
 
 
 	let result = _0xa71d1b( -0xe3, -0xaf, -0x3, -0x71, -0x19 ) + 'h';
-	console.log( result );
-}
+	console.log( 'result=', result );
+};
