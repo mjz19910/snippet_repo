@@ -75,7 +75,7 @@ export class SimpleStackVMParser {
 	static parse_instruction_stream(string: string,format_list: Box[]) {
 		let raw_instructions=this.parse_raw_instruction_stream(string);
 		const parser_max_iter=390;
-		let parts: RegExpExecArray|null=null;
+		let parts=null;
 		for(let i=0;i<parser_max_iter;i++) {
 			parts=this.match_regex.exec(string);
 			if(!parts) break;
@@ -83,7 +83,8 @@ export class SimpleStackVMParser {
 			if(!res) break;
 			raw_instructions.push(res);
 		}
-		if(parts) {
+		if(this.match_regex.lastIndex<string.length) {
+			console.log('match index',this.match_regex.lastIndex,'string length',string.length);
 			console.assert(false,'SimpleStackVM Parser: Iteration limit exceeded (limit=%o)',parser_max_iter);
 		}
 		let instructions: [string,...Box[]][]=[];
