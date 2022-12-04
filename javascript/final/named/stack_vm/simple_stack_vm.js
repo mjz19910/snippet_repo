@@ -48,8 +48,6 @@ export class SimpleStackVM {
 				case 'get'/*Object*/: {
 					let name=this.pop();
 					let obj=this.pop();
-					if(!obj) throw new Error();
-					if(typeof obj==='string') throw new Error();
 					if(!(typeof name==='string')) throw new Error();
 					/** @template T @arg {T} _obj @returns {asserts _obj is {[x: string]: {}}}  */
 					function assume_can_index_with_string(_obj) {}
