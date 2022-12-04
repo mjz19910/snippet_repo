@@ -85,6 +85,70 @@ module.exports = function first_run_code ( _0x4a8e )
 	}
 
 	result = _0x377e21( -0x13f, -0x101, -0x1cf, -0x174, -0x45 ) + _0x377e21( -0x9c, -0x103, -0x125, -0x68, -0xc8 ) + 'r';
+
+
+	/**
+	 * @param {number} _0_to_1
+	 * @param {number} _1
+	 * @param {number} _2
+	 * @param {number} _3_to_0
+	 * @param {number} _4
+	 * level 1
+	 */
+	function _0x105c91 ( _0_to_1, _1, _2, _3_to_0, _4 )
+	{
+		return _0x16d8( _3_to_0 - 0x3e6, _0_to_1 );
+	}
+
+	/**
+	 * @param {number} _0 
+	 * @param {number} _1_k 
+	 * ** -> (_1_k - 0x1ef) -> _1
+	 * ** -> (_1_k - 0x160) -> _3_to_0
+	 * @param {number} _2_k
+	 * ** = (_2_k) -> _0_to_1
+	 * ** = (_2_k - 0xd5) -> _2
+	 * @param {number} _3
+	 * ** drop()
+	 * @param {number} _4
+	 * ** = (_4 - 0x4c ) -> _4
+	 * @result
+	 * ** = (_1_k - 0x160) -> _3_to_0
+	 * ** = (_2_k)         -> _0_to_1
+	 * @level 
+	 * level 2
+	 */
+	function _0x2b5274 ( _0, _1_k, _2_k, _3, _4 )
+	{
+		return _0x105c91( _2_k, _1_k - 0x1ef, _2_k - 0xd5, _1_k - 0x160, _4 - 0x4c );
+	}
+
+	/**
+	 * @param {number} _0x18f785
+	 * @param {number} _0xf212ff
+	 * @param {number} _
+	 * @param {number} _0x1f6bdc
+	 * @param {number} _0x44bdc9
+	 * level 3
+	 */
+	function _0x5eb9c1 ( _0x18f785, _0xf212ff, _, _0x1f6bdc, _0x44bdc9 )
+	{
+		return _0x2b5274( _0x18f785 - 0x182, _0x18f785 - 0x214, _0xf212ff, _0x1f6bdc - 0x1e0, _0x44bdc9 - 0xff );
+	}
+
+	/**
+		 * @param {number} _0x54a3d6
+		 * @param {number} _0x39f112
+		 * @param {number} _
+		 * @param {number} _0x2e7c43
+		 * @param {number} _0x15fa93
+		 */
+	function _0x1f7a1b ( _0x54a3d6, _0x39f112, _, _0x2e7c43, _0x15fa93 )
+	{
+		return _0x2b5274( _0x54a3d6 - 0x1, _0x54a3d6 - 0x214, _0x39f112, _0x2e7c43 - 0x9b, _0x15fa93 - 0xd3 );
+	}
+
+	result = _0x5eb9c1( 0xa23, 0xa61, 0x993, 0x9b5, 0xa62 ) + _0x1f7a1b( 0xa21, 0xa36, 0xa06, 0xaf6, 0xa5a ) + 'r';
 	console.log( 'result=', result );
 
 	// process.exit( 0 );
