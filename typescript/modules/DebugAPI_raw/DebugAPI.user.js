@@ -773,22 +773,25 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-NumericLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NumericLiteral(str,index) {
+		let res;
 		let max_len=0;
-		let len=this.NonDecimalIntegerLiteral(str,index);
-		if(len[0]) {
-			let big_int=this.BigIntLiteralSuffix(str,index+len[2]);
-			if(big_int[0]) {
-				return [true,"NumericLiteral",len[2]+big_int[2],[len,big_int]];
+		if(this.C.flags.is_sep()) {
+			res=this.NonDecimalIntegerLiteral_Sep(str,index);
+			if(res[0]) {
+				let big_int=this.BigIntLiteralSuffix(str,index+res[2]);
+				if(big_int[0]) {
+					return [true,"NumericLiteral",res[2]+big_int[2],[res,big_int]];
+				}
+				return [true,"NumericLiteral",res[2],[res]];
 			}
-			return [true,"NumericLiteral",len[2],[len]];
 		}
-		len=this.DecimalBigIntegerLiteral(str,index);
-		len=this.DecimalLiteral(str,index);
-		if(len[2]>max_len) {
-			max_len=len[2];
+		res=this.DecimalBigIntegerLiteral(str,index);
+		res=this.DecimalLiteral(str,index);
+		if(res[2]>max_len) {
+			max_len=res[2];
 		}
 		if(max_len>0) {
-			return [true,"NumericLiteral",max_len,[len]];
+			return [true,"NumericLiteral",max_len,[res]];
 		}
 		return [false,null,0];
 	}
@@ -840,8 +843,8 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonDecimalIntegerLiteral(str,index) {
-		let res=this.BinaryIntegerLiteral(str,index);
+	NonDecimalIntegerLiteral_Sep(str,index) {
+		let res=this.BinaryIntegerLiteral_Sep(str,index);
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
 		res=this.OctalIntegerLiteral(str,index);
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
@@ -1002,7 +1005,7 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-BinaryIntegerLiteral
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryIntegerLiteral(str,index) {
+	BinaryIntegerLiteral_Sep(str,index) {
 		if(str.startsWith("0b",index)||str.startsWith("0B",index)) {
 			let res=this.BinaryDigits_Sep(str,index);
 			if(res[0]) return [true,"SignedInteger",res[2]+2];
