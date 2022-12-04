@@ -9,3 +9,4 @@ offline_notes/
 build/
 javascript_build/
 typescript_build/
+dist/
