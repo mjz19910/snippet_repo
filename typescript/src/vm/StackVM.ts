@@ -86,18 +86,18 @@ export class StackVM {
 				let instruction_1=this.instructions[target];
 				let instruction_modify: [string,...any[]]=instruction_1;
 				let value=this.pop();
-				instruction_modify[offset]=value;
+				if(offset==0) {
+					if(value.type==='string') {
+						instruction_modify[offset]=value.value;
+					} else {
+
+					}
+				}
 				let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify,[0]);
 				this.instructions[target]=valid_instruction;
 			} break;
 			case 'vm_push_ip': {
-				if(!this.hasOwnProperty('push')) {
-					throw new Error("push_pc requires a stack");
-				} else if(this instanceof StackVM) {
-					this.push(new NumberBox(this.instruction_pointer));
-				} else {
-					throw new Error("Unreachable");
-				}
+				this.push(new NumberBox(this.instruction_pointer));
 			} break;
 			case 'halt' /*Running*/: {
 				instruction;
