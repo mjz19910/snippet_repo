@@ -25,7 +25,7 @@ function _0x4aec3f ( ...[_0x51fdd1, _0x4a25bb, _0x9f1149, _0x2cb8d2, _0x5efb5c] 
 /**
  * @param {number[]} arg0
  * @define \
- * _0x3d969b
+ * #define _0x3d969b call_0x16d8_4_5
  */
 function call_0x16d8_4_5 ( ...[ , , , _4, _5 ] )
 {
