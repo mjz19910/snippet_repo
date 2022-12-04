@@ -789,7 +789,7 @@ class NumericLiterals extends ECMA262Base {
 		let max_item=[];
 		let res_len=0;
 		res=this.NonDecimalIntegerLiteral_Sep(str,index);
-		x: if(res[0]) {
+		if(res[0]) {
 			let big_int=this.BigIntLiteralSuffix(str,index+res[2]);
 			if(big_int[0]) {
 				let res_len=res[2]+big_int[2];
@@ -797,12 +797,12 @@ class NumericLiterals extends ECMA262Base {
 					max_item=[res,big_int];
 					max_len=res_len;
 				}
-				break x;
-			}
-			res_len=res[2];
-			if(res_len>max_len) {
-				max_item=[res];
-				max_len=res_len;
+			} else {
+				res_len=res[2];
+				if(res_len>max_len) {
+					max_item=[res];
+					max_len=res_len;
+				}
 			}
 		}
 		res=this.DecimalBigIntegerLiteral(str,index);
