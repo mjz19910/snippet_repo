@@ -26,8 +26,11 @@ export class SimpleStackVMParser {
 		}
 		throw new Error("TODO");
 	}
-	static parse_current_instruction(cur: (string|Box)[],format_list: Box[]) {
+	static parse_current_instruction(cur: string[],format_list: Box[]) {
 		let arg_loc=1;
+		/** @type {(string|Box)[]} */
+		let target_instruction=[];
+		target_instruction[0]=cur[0];
 		let arg=cur[arg_loc];
 		while(arg) {
 			if(typeof arg!=='string') {
@@ -35,19 +38,18 @@ export class SimpleStackVMParser {
 			}
 			if(arg.slice(0,3)==='int') {
 				let int_res=this.parse_int_arg(arg);
-				if(!int_res)
-					throw new Error("Failed to parse int");
-				cur[arg_loc]=new NumberBox(int_res);
+				if(!int_res) throw new Error("Failed to parse int");
+				target_instruction[arg_loc]=new NumberBox(int_res);
 			}
 			if(arg.includes('%')) {
 				let res=this.parse_string_with_format_ident(arg,format_list);
-				if(!res)
-					throw new Error("Failed to parse format ident");
-				cur[arg_loc]=res;
+				if(!res) throw new Error("Failed to parse format ident");
+				target_instruction[arg_loc]=res;
 			}
 			arg_loc++;
 			arg=cur[arg_loc];
 		}
+		return target_instruction;
 	}
 	static raw_parse_handle_regexp_match(m: string[]) {
 		let iter=m[1].trim();
