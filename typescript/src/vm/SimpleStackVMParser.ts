@@ -25,7 +25,7 @@ export class SimpleStackVMParser {
 		}
 		throw new Error("TODO");
 	}
-	static parse_current_instruction(cur: string[],format_list: Box[]) {
+	static format_instruction(cur: string[],format_list: Box[]) {
 		let target_instruction: [string,...Box[]]=[cur[0]];
 		for(let i=1;i<cur.length;i++) {
 			let arg=cur[i];
@@ -72,14 +72,14 @@ export class SimpleStackVMParser {
 	}
 	static parse_instruction_stream(string: string,format_list: Box[]) {
 		let raw_instructions=this.parse_raw_instruction_stream(string);
-		let cooked_instructions:[string, ...Box[]][]=[];
+		let instructions:[string, ...Box[]][]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			let raw_instruction=raw_instructions[i];
-			let cooked=this.parse_current_instruction(raw_instruction,format_list);
-			cooked_instructions.push(cooked);
+			let formatted=this.format_instruction(raw_instruction,format_list);
+			instructions.push(formatted);
 		}
-		let instructions=this.verify_raw_instructions(cooked_instructions);
-		return instructions;
+		let ret_instructions=this.verify_formatted_instructions(instructions);
+		return ret_instructions;
 	}
 	static verify_instruction(instruction: [string, ...Box[]],left: [number]): InstructionType {
 		const [m_opcode,...m_operands]=instruction;
@@ -110,7 +110,7 @@ export class SimpleStackVMParser {
 				throw new Error("Unexpected opcode");
 		}
 	}
-	static verify_raw_instructions(raw_instructions: [string, ...Box[]][]): InstructionType[] {
+	static verify_formatted_instructions(raw_instructions: [string, ...Box[]][]): InstructionType[] {
 		const instructions: InstructionType[]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			const instruction=raw_instructions[i];
