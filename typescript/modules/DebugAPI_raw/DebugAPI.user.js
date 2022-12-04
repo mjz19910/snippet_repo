@@ -2105,7 +2105,7 @@ class js_token_generator {
 }
 
 /** @param {string} code_str */
-function ecma_run_parser(code_str) {
+function parse_javascript_str(code_str) {
 	if("code" in window&&typeof window.code==="string") {
 		code_str=window.code;
 	}
@@ -2134,7 +2134,7 @@ function ecma_run_parser(code_str) {
 	}
 	console.log(`parsed ${i} tokens`);
 }
-g_api.ecma_run_parser=ecma_run_parser;
+g_api.parse_javascript_str=parse_javascript_str;
 
 
 const debug=false;

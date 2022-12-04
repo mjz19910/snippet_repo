@@ -1,6 +1,6 @@
-// ecma_run_parser
+// parse_javascript_str
 interface GlobalApiObject {
-	ecma_run_parser?:((str:string)=>void);
+	parse_javascript_str?:((str:string)=>void);
 }
 
 // Holder
