@@ -39,8 +39,7 @@ export class SimpleStackVM {
 			let err;
 			switch(cur_instruction[0]) {
 				case 'push'/*Stack*/: {
-					let [,value]=cur_instruction;
-					this.push(value);
+					this.push(cur_instruction[1]);
 				} break;
 				case 'drop'/*Stack*/: {
 					this.pop();
