@@ -97,8 +97,7 @@ export class StackVM {
 				} else {
 					throw new Error("Unreachable");
 				}
-				instruction=SimpleStackVMParser.typecheck_instruction(instruction_modify);
-				this.instructions[target]=instruction;
+				this.instructions[target]=SimpleStackVMParser.typecheck_instruction(instruction_modify);
 			} break;
 			case 'vm_push_ip': {
 				this.push(new NumberBox(this.instruction_pointer));
