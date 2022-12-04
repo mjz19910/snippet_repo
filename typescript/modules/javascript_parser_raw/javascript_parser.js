@@ -2125,5 +2125,5 @@ function ecma_run_parser(code_str) {
 	}
 	console.log(`parsed ${i} tokens`);
 }
-window.g_api.ecma_run_parser=ecma_run_parser;
+g_api.ecma_run_parser=ecma_run_parser;
 
