@@ -83,8 +83,7 @@ export class StackVM {
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Destination is out of instructions range");
 				}
-				instruction=this.instructions[target];
-				let instruction_modify: [string,...any[]]=instruction;
+				let instruction_modify: [string,...any[]]=this.instructions[target];
 				let value=this.pop();
 				if(offset==0) {
 					if(value.type==='string') {
