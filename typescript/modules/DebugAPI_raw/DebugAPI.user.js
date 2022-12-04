@@ -227,7 +227,11 @@ class ECMA262Base {
 		return this.B.str;
 	}
 	set str(value) {
-		this._str=value;
+		if(!this.B) {
+			this._str=value;
+			return;
+		}
+		this.B.str=value;
 	}
 	_len=0;
 	/** @returns {number} */
@@ -238,7 +242,11 @@ class ECMA262Base {
 		return this.B.len;
 	}
 	set len(value) {
-		this._len=value;
+		if(!this.B) {
+			this._len=value;
+			return;
+		}
+		this.B.len=value;
 	}
 	/** @type {ecma_root} */
 	C=any(null);
@@ -788,7 +796,6 @@ class NumericLiterals extends ECMA262Base {
 		/** @type {{}} */
 		let max_item=[];
 		let res_len=0;
-		debugger;
 		res=this.NonDecimalIntegerLiteral_Sep(index);
 		if(res[0]) {
 			let big_int=this.BigIntLiteralSuffix(str,index+res[2]);
@@ -1167,9 +1174,10 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-HexDigits
 	/** @returns {LexReturnTyShort} @param {{sep:boolean}} grammar_params @param {number} i*/
 	HexDigits(grammar_params,i) {
+		debugger;
 		if(grammar_params.sep) {
 			this.len=0;
-			let res=this.HexDigit(i);
+			let res=this.HexDigit(i+this.len);
 			while(res[0]&&(i+this.len)<this.str.length) {
 				this.len++;
 				let res_digit=this.HexDigit(i+this.len);
