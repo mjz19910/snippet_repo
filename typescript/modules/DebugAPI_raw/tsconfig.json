@@ -7,10 +7,7 @@
 			"esnext",
 			"DOM"
 		],
-		"types": [
-			"jquery",
-			"node",
-		],
+		"types": [],
 		"outDir": "./build",
 		"typeRoots": [
 			"~/workspace/node_types/node_modules/@types"
