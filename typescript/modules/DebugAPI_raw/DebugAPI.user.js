@@ -1892,7 +1892,55 @@ class RegularExpressionLiterals extends ECMA262Base {
 
 
 class ecma_root {
-	constructor() {
+		/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
+		describe_token(token_value) {
+			if(!token_value) return ["undefined"];
+			let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
+			return [token_value[1],tok_str];
+		}
+		/** @arg {LexReturnTyShort} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
+		as_next_token(cur) {
+			if(cur[1]!==null) {
+				if(cur[2]===0) {
+					return [cur[0],cur[1],cur[2],this.index];
+				}
+				this.index+=cur[2];
+				return [cur[0],cur[1],cur[2],this.index];
+			}
+			if(this.index>(this.str.length-1)) {
+				return [false,js_token_generator.EOF_TOKEN,0,this.index];
+			}
+			return null;
+		}
+		/** @returns {[true,string,number,number]|[false,symbol,number,number]|null} */
+		next_token() {
+			if(this.index>(this.str.length-1)) {
+				return [false,js_token_generator.EOF_TOKEN,0,this.index];
+			}
+			/** @type {[true,string,number,number]} */
+			let ret;
+			let cur=this.InputElementDiv(this.str,this.index);
+			if(cur[1]!==null) {
+				if(cur[2]===0) {
+					ret=[cur[0],cur[1],cur[2],this.index];
+					return ret;
+				}
+				ret=[cur[0],cur[1],cur[2],this.index];
+				this.index+=cur[2];
+				return ret;
+			}
+			console.log("next token fallthrough",cur,this.index);
+			return null;
+		}
+	/**
+	 * @param {string} source_code
+	 * @param {number} start_index
+	 */
+	constructor(source_code, start_index) {
+		this.source_code=source_code;
+		this.start_index=start_index;
+		this.index=this.start_index;
+		this.str=this.source_code;
 		this.flags={
 			sep: false,
 			is_sep() {
@@ -1919,52 +1967,18 @@ class ecma_root {
 /** @typedef {{str:string;index:number}} IN_STE_T */
 /** @typedef {N<{type:string;item:string}>&{length:number}} OUT_STE_T */
 class js_token_generator {
+	get index() {
+		return this.root.index;
+	}
+	set index(value) {
+		this.root.index=value;
+	}
 	static EOF_TOKEN=Symbol();
+	/** @type {ecma_root} */
+	root;
 	/** @param {string} str */
 	constructor(str) {
-		this.str=str;
-		this.index=0;
-		this.root=new ecma_root;
-	}
-	/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
-	describe_token(token_value) {
-		if(!token_value) return ["undefined"];
-		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
-		return [token_value[1],tok_str];
-	}
-	/** @arg {LexReturnTyShort} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
-	as_next_token(cur) {
-		if(cur[1]!==null) {
-			if(cur[2]===0) {
-				return [cur[0],cur[1],cur[2],this.index];
-			}
-			this.index+=cur[2];
-			return [cur[0],cur[1],cur[2],this.index];
-		}
-		if(this.index>(this.str.length-1)) {
-			return [false,js_token_generator.EOF_TOKEN,0,this.index];
-		}
-		return null;
-	}
-	/** @returns {[true,string,number,number]|[false,symbol,number,number]|null} */
-	next_token() {
-		if(this.index>(this.str.length-1)) {
-			return [false,js_token_generator.EOF_TOKEN,0,this.index];
-		}
-		/** @type {[true,string,number,number]} */
-		let ret;
-		let cur=this.InputElementDiv(this.str,this.index);
-		if(cur[1]!==null) {
-			if(cur[2]===0) {
-				ret=[cur[0],cur[1],cur[2],this.index];
-				return ret;
-			}
-			ret=[cur[0],cur[1],cur[2],this.index];
-			this.index+=cur[2];
-			return ret;
-		}
-		console.log("next token fallthrough",cur,this.index);
-		return null;
+		this.root=new ecma_root(str,0);
 	}
 	/** @param {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
 	modify_output(state,lex_return,type) {
@@ -2126,7 +2140,7 @@ function parse_javascript_str(code_str) {
 	let res_item;
 	let i=0;
 	for(;;i++) {
-		res_item=token_gen.next_token();
+		res_item=token_gen.root.next_token();
 		if(res_item===null) {
 			console.log("parse error at ",token_gen.index);
 			break;
