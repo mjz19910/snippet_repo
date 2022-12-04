@@ -36,6 +36,7 @@ export class SimpleStackVM {
 		this.running=true;
 		while(this.instruction_pointer<this.instructions.length&&this.running) {
 			let cur_instruction=this.instructions[this.instruction_pointer];
+			let err;
 			switch(cur_instruction[0]) {
 				case 'push'/*Stack*/: {
 					let [,value]=cur_instruction;
@@ -91,8 +92,8 @@ export class SimpleStackVM {
 				} break;
 				default/*Debug*/: {
 					console.log('unk opcode',cur_instruction[0]);
-					throw new Error("halt");
-				}
+					err=new Error("halt");
+				} throw err;
 			}
 			this.instruction_pointer++;
 		}
