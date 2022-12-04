@@ -1150,7 +1150,7 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} i @returns {LexReturnTyShort} */
 	HexIntegerLiteral_Sep(i) {
 		if(this.str.startsWith("0x",i)||this.str.startsWith("0x",i)) {
-			let res=this.HexDigits({sep:true},i+2);
+			let res=this.HexDigits({sep: true},i+2);
 			if(res[0]) return [true,"HexIntegerLiteral",res[2]+2,["sep",res]];
 		}
 		return [false,null,0];
@@ -1159,17 +1159,18 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} i @returns {LexReturnTyShort} */
 	HexIntegerLiteral(i) {
 		if(this.str.startsWith("0x",i)||this.str.startsWith("0x",i)) {
-		let res=this.HexDigits({sep:false},i+2);
-		if(res[0]) return [true,"HexIntegerLiteral",res[2]+2,["sep",res]];
+			let res=this.HexDigits({sep: false},i+2);
+			if(res[0]) return [true,"HexIntegerLiteral",res[2]+2,["sep",res]];
+		}
+		return [false,null,0];
 	}
-	return [false,null,0];}
 	// https://tc39.es/ecma262/#prod-HexDigits
 	/** @returns {LexReturnTyShort} @param {{sep:boolean}} grammar_params @param {number} i*/
 	HexDigits(grammar_params,i) {
 		if(grammar_params.sep) {
 			this.len=0;
 			let res=this.HexDigit(i);
-			while(res[0]) {
+			while(res[0]&&(i+this.len)<this.str.length) {
 				this.len++;
 				let res_digit=this.HexDigit(i+this.len);
 				let num_sep=this.NumericLiteralSeparator(i+this.len);
