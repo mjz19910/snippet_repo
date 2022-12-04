@@ -16,21 +16,16 @@ function _0x16d8 ( _0x348449, _0x25716d )
 	return _0x10c795;
 }
 
-/**
- * @param {number} _0x51fdd1
- * @param {number} _0x4a25bb
- * @param {number} _0x9f1149
- * @param {number} _0x2cb8d2
- * @param {number} _0x5efb5c
- */
-function _0x4aec3f ( _0x51fdd1, _0x4a25bb, _0x9f1149, _0x2cb8d2, _0x5efb5c )
+/** @param {number[]} arg0 */
+function _0x4aec3f ( ...[_0x51fdd1, _0x4a25bb, _0x9f1149, _0x2cb8d2, _0x5efb5c] )
 {
 	return _0x16d8( _0x5efb5c - -0x298, _0x2cb8d2 );
 }
 
 /**
- * @param {[number,number,number,number,number]} arg0
- * @was _0x3d969b
+ * @param {number[]} arg0
+ * @define \
+ * _0x3d969b
  */
 function call_0x16d8_4_5 ( ...[ , , , _4, _5 ] )
 {
