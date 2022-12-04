@@ -83,8 +83,8 @@ export class StackVM {
 				if(this.is_in_instructions(target)) {
 					throw new Error("RangeError: Destination is out of instructions range");
 				}
-				let instruction_1=this.instructions[target];
-				let instruction_modify: [string,...any[]]=instruction_1;
+				instruction=this.instructions[target];
+				let instruction_modify: [string,...any[]]=instruction;
 				let value=this.pop();
 				if(offset==0) {
 					if(value.type==='string') {
@@ -97,8 +97,8 @@ export class StackVM {
 				} else {
 					throw new Error("Unreachable");
 				}
-				let valid_instruction=SimpleStackVMParser.typecheck_instruction(instruction_modify);
-				this.instructions[target]=valid_instruction;
+				instruction=SimpleStackVMParser.typecheck_instruction(instruction_modify);
+				this.instructions[target]=instruction;
 			} break;
 			case 'vm_push_ip': {
 				this.push(new NumberBox(this.instruction_pointer));
