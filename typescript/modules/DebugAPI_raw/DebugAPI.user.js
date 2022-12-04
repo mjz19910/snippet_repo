@@ -1046,6 +1046,8 @@ class NumericLiterals extends ECMA262Base {
 		if(!res[0]&&this.len==0) {
 			return [false,null,0];
 		}
+		if(this.len>0) return [true,"BinaryDigits",this.len];
+		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-BinaryDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
