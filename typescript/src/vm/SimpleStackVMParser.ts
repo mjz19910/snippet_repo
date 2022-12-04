@@ -95,9 +95,9 @@ export class SimpleStackVMParser {
 		switch(m_opcode) {
 			// variable argument count
 			case 'push':
-				left[0]=0;
+				left[0]-=2;
 				return [m_opcode,new StringBox(m_operands[0])];
-			case 'call' /*1 argument*/:
+			case 'call':
 				left[0]-=2;
 				if(typeof m_operands[0]==='number'&&Number.isFinite(m_operands[0]))
 					return [m_opcode,m_operands[0]];
