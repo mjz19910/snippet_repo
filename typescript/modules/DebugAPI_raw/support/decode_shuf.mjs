@@ -2,7 +2,7 @@ import _0x4a8e from "./decrypt_js/dynamic/enc_arr.mjs";
 
 function start_process ()
 {
-	process( _0x4a8e );
+	process_00( _0x4a8e );
 	console.log( 'unshuf', _0x4a8e );
 }
 /**
@@ -52,7 +52,7 @@ function _0x314769 ( _0x3481cc, _0x6a588c, _0x484bf6, _0x35d2cd, _0x421f59 )
 /**
  * @param {(string|undefined)[]} _0x36ea8
  */
-export function process ( _0x36ea8 )
+export function process_00 ( _0x36ea8 )
 {
 	let xx = 0x85ea * -0x1 + -0x77782 + 0x35 * 0x6665;
 	let _0x206ef7 = xx;
