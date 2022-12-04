@@ -223,7 +223,7 @@ class ECMA262Base {
 	/** @returns {number} */
 	get len() {
 		if(!this.B) {
-			return this._len
+			return this._len;
 		}
 		return this.B.len;
 	}
@@ -1016,14 +1016,18 @@ class NumericLiterals extends ECMA262Base {
 		let res=this.BinaryDigit(str,index);
 		while(res[0]) {
 			this.len++;
-			let res_peek=this.BinaryDigit(str,index+this.len);
-			if(res_peek[0]) {
-				res=res_peek;
+			let res_peek_digit=this.BinaryDigit(str,index+this.len);
+			let res_sep=this.NumericLiteralSeparator(str,index+this.len);
+			let res_sep_peek=this.BinaryDigit(str,index+this.len+1);
+			if(res_peek_digit[0]) {
+				res=res_peek_digit;
+			} else if(res_sep[0]&&res_sep_peek[0]) {
+				res=res_sep;
 			} else {
 				break;
 			}
 		}
-		if(!res[0] && this.len==0) {
+		if(!res[0]&&this.len==0) {
 			return [false,null,0];
 		}
 	}
