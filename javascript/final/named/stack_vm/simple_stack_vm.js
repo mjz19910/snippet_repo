@@ -19,10 +19,10 @@ export class SimpleStackVM {
 		this.running=false;
 	}
 	/**
-	 * @param {{}} value
+	 * @param {{}[]} values
 	 */
-	push(value) {
-		this.stack.push(value);
+	push(...values) {
+		this.stack.push(...values);
 	}
 	pop() {
 		let top=this.stack.pop();
