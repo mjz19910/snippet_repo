@@ -1,6 +1,5 @@
 import {InstructionType} from "../instruction/InstructionType.js";
 import {Box} from "../box/Box.js";
-import {StringBox} from "../box/StringBox.js";
 import {NumberBox} from "../box/NumberBox.js";
 
 export class SimpleStackVMParser {
@@ -73,20 +72,22 @@ export class SimpleStackVMParser {
 	}
 	static parse_instruction_stream_from_string(string: string,format_list: Box[]) {
 		let raw_instructions=this.parse_string_into_raw_instruction_stream(string);
+		let cooked_instructions:[string, ...Box[]][]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			let raw_instruction=raw_instructions[i];
-			this.parse_current_instruction(raw_instruction,format_list);
+			let cooked=this.parse_current_instruction(raw_instruction,format_list);
+			cooked_instructions.push(cooked);
 		}
-		let instructions=this.verify_raw_instructions(raw_instructions);
+		let instructions=this.verify_raw_instructions(cooked_instructions);
 		return instructions;
 	}
-	static verify_instruction(instruction: string[],left: [number]): InstructionType {
+	static verify_instruction(instruction: [string, ...Box[]],left: [number]): InstructionType {
 		const [m_opcode,...m_operands]=instruction;
 		switch(m_opcode) {
 			// variable argument count
 			case 'push':
 				left[0]-=2;
-				return [m_opcode,new StringBox(m_operands[0])];
+				return [m_opcode,m_operands[0]];
 			case 'call':
 				left[0]-=2;
 				if(typeof m_operands[0]==='number'&&Number.isFinite(m_operands[0]))
@@ -109,7 +110,7 @@ export class SimpleStackVMParser {
 				throw new Error("Unexpected opcode");
 		}
 	}
-	static verify_raw_instructions(raw_instructions: string[][]): InstructionType[] {
+	static verify_raw_instructions(raw_instructions: [string, ...Box[]][]): InstructionType[] {
 		const instructions: InstructionType[]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			const instruction=raw_instructions[i];
