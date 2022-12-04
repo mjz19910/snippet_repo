@@ -1,8 +1,8 @@
-import {getPlaybackRateMap} from "../src/getPlaybackRateMap";
-import {CreateObjURLCache} from "../src/CreateObjURLCache";
-import {IterExtensions} from "../src/IterExtensions";
-import {to_tuple_arr} from "../src/to_tuple_arr";
-import {CompressRepeated} from "../src/CompressRepeated";
+import {getPlaybackRateMap} from "../src/getPlaybackRateMap.js";
+import {CreateObjURLCache} from "../src/CreateObjURLCache.js";
+import {IterExtensions} from "../src/IterExtensions.js";
+import {to_tuple_arr} from "../src/to_tuple_arr.js";
+import {CompressRepeated} from "../src/CompressRepeated.js";
 import {Repeat} from "../types/repeat/Repeat.js";
 import {range_matches} from "../src/range_matches.js";
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
@@ -24,34 +24,36 @@ import {GenericEvent} from "../src/GenericEvent.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
 // DebugAPI
-export interface GlobalApiObject {
-	any_api_logger: APIProxyManager;
-	parse_html_to_binary_arr: (html: string) => unknown[];
-	run_modules_plugin: VoidCallbackWith<()=>void>;
-	run_wasm_plugin: VoidCallbackWith<()=>void>;
-	compress_main: VoidCallbackWith<(stats: CompressionStatsCalculator)=>void>;
-	IterExtensions: typeof IterExtensions;
-	getPlaybackRateMap: typeof getPlaybackRateMap;
-	CreateObjURLCache: typeof CreateObjURLCache;
-	Repeat: typeof Repeat;
-	CompressRepeated: typeof CompressRepeated;
-	to_tuple_arr: typeof to_tuple_arr;
-	range_matches: typeof range_matches;
-	function_as_string_vec: string[];
-	CompressionStatsCalculator: typeof CompressionStatsCalculator;
-	HexRandomDataGenerator: typeof HexRandomDataGenerator;
-	EventListenerValue: typeof EventListenerValue;
-	GenericEvent: typeof GenericEvent;
-	GenericDataEvent: typeof GenericDataEvent;
-	GenericEventTarget: typeof GenericEventTarget;
-	Dumper: typeof Dumper;
-	RustSimpleTokenizer: typeof RustSimpleTokenizer;
-	RustSimpleParser: typeof RustTokenTreeParser;
-	WeakValueRef: typeof WeakValueRef;
-	CSSCascade: typeof CSSCascade;
-	OriginState: typeof OriginState;
-	ConnectToRemoteOrigin: typeof RemoteOriginConnection;
-	APIProxyManager: typeof APIProxyManager;
-	LoggingEventTarget: typeof LoggingEventTarget;
-	DebugAPI: typeof DebugAPI;
+declare global {
+	interface GlobalApiObject {
+		any_api_logger: APIProxyManager;
+		parse_html_to_binary_arr: (html: string) => unknown[];
+		run_modules_plugin: VoidCallbackWith<() => void>;
+		run_wasm_plugin: VoidCallbackWith<() => void>;
+		compress_main: VoidCallbackWith<(stats: CompressionStatsCalculator) => void>;
+		IterExtensions: typeof IterExtensions;
+		getPlaybackRateMap: typeof getPlaybackRateMap;
+		CreateObjURLCache: typeof CreateObjURLCache;
+		Repeat: typeof Repeat;
+		CompressRepeated: typeof CompressRepeated;
+		to_tuple_arr: typeof to_tuple_arr;
+		range_matches: typeof range_matches;
+		function_as_string_vec: string[];
+		CompressionStatsCalculator: typeof CompressionStatsCalculator;
+		HexRandomDataGenerator: typeof HexRandomDataGenerator;
+		EventListenerValue: typeof EventListenerValue;
+		GenericEvent: typeof GenericEvent;
+		GenericDataEvent: typeof GenericDataEvent;
+		GenericEventTarget: typeof GenericEventTarget;
+		Dumper: typeof Dumper;
+		RustSimpleTokenizer: typeof RustSimpleTokenizer;
+		RustSimpleParser: typeof RustTokenTreeParser;
+		WeakValueRef: typeof WeakValueRef;
+		CSSCascade: typeof CSSCascade;
+		OriginState: typeof OriginState;
+		ConnectToRemoteOrigin: typeof RemoteOriginConnection;
+		APIProxyManager: typeof APIProxyManager;
+		LoggingEventTarget: typeof LoggingEventTarget;
+		DebugAPI: typeof DebugAPI;
+	}
 }

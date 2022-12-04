@@ -6,10 +6,7 @@
 			"ESNext",
 			"DOM"
 		],
-		"types": [
-			"jquery",
-			"node",
-		],
+		"types": [],
 		"declaration": true,
 		"module": "ESNext",
 		"moduleResolution": "Node",
@@ -31,6 +28,8 @@
 		"isolatedModules": true,
 		// todo
 		"noPropertyAccessFromIndexSignature": false,
+		// windows needs this
+		"forceConsistentCasingInFileNames": true,
 	},
 	"ts-node": {
 		"esm": true,

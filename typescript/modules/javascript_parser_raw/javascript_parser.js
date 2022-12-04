@@ -1,57 +1,205 @@
-import window from "./window_def.js";
-export {Holder} from "./__global.js";
+// ==UserScript==
+// @name         Javascript Parser
+// @namespace    http://tampermonkey.net/
+// @version      0.1.0
+// @description  try to take over the world!
+// @author       You
+// @match        https://dropgalaxy.com/*
+// @grant        none
+// @run-at       document-start
+// ==/UserScript==
+/*eslint-disable no-undef*/
 
+let g_api=window.g_api;
 
 /** @template K,V */
 class HashMap {
 	/** @type {Map<K,V>|null} */
-	backing_map=null;
+	m_data=null;
 	is_empty() {
-		if(this.backing_map===null) {
+		if(this.m_data===null) {
 			return true;
 		}
-		if(this.backing_map.size===0) {
+		if(this.m_data.size===0) {
 			return true;
 		}
 		return false;
 	}
 	/** @arg {K} key @arg {V} value */
 	set(key,value) {
-		if(!this.backing_map) {
-			this.backing_map=new Map;
+		if(!this.m_data) {
+			this.m_data=new Map;
 		}
-		this.backing_map.set(key,value);
+		this.m_data.set(key,value);
 		return this;
 	}
 	clear() {
-		if(this.backing_map) {
-			this.backing_map.clear();
+		if(this.m_data) {
+			this.m_data.clear();
 		}
 	}
 	/** @arg {K} key */
 	get(key) {
-		return this.backing_map?.get(key);
+		return this.m_data?.get(key);
 	}
 	/** @arg {K} key */
 	has(key) {
-		if(!this.backing_map) {
+		if(!this.m_data) {
 			return false;
 		}
-		return this.backing_map.has(key);
+		return this.m_data.has(key);
 	}
 	/** @arg {(this: this,arg1: K,arg2: V) => "Break"|"Continue"} callback */
 	iterate(callback) {
 		// from https://github.com/SerenityOS/serenity/blob/master/Userland/DevTools/Profiler/Profile.cpp
 		// on my fs file://home/wsl2/dev/serenity/Userland/DevTools/Profiler/Profile.cpp
-		if(!this.backing_map)
+		if(!this.m_data)
 			return;
-		for(let x of this.backing_map.entries()) {
+		for(let x of this.m_data.entries()) {
 			if(callback.apply(this,x)==="Break") {
 				break;
 			}
 		}
 	}
 }
+
+/** @type {Set<string>} uses enum JSTokenizerTokenType as string */
+const s_keywords=new Set();
+/** @type {HashMap<string,string>} */
+const s_three_char_tokens=new HashMap();
+/** @type {HashMap<string,string>} */
+const s_two_char_tokens=new HashMap();
+/** @type {HashMap<string,string>} */
+const s_single_char_tokens=new HashMap();
+s_keywords.add("async");
+s_keywords.add("await");
+s_keywords.add("break");
+s_keywords.add("case");
+s_keywords.add("catch");
+s_keywords.add("class");
+s_keywords.add("const");
+s_keywords.add("continue");
+s_keywords.add("debugger");
+s_keywords.add("default");
+s_keywords.add("delete");
+s_keywords.add("do");
+s_keywords.add("else");
+s_keywords.add("enum");
+s_keywords.add("export");
+s_keywords.add("extends");
+s_keywords.add("false");
+s_keywords.add("finally");
+s_keywords.add("for");
+s_keywords.add("function");
+s_keywords.add("if");
+s_keywords.add("import");
+s_keywords.add("in");
+s_keywords.add("instanceof");
+s_keywords.add("let");
+s_keywords.add("new");
+s_keywords.add("null");
+s_keywords.add("return");
+s_keywords.add("super");
+s_keywords.add("switch");
+s_keywords.add("this");
+s_keywords.add("throw");
+s_keywords.add("true");
+s_keywords.add("try");
+s_keywords.add("typeof");
+s_keywords.add("var");
+s_keywords.add("void");
+s_keywords.add("while");
+s_keywords.add("with");
+s_keywords.add("yield");
+// 4 char token is only >>>=
+
+// Section: s_three_char_tokens
+s_three_char_tokens.set("===","EqualsEqualsEquals");
+s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
+s_three_char_tokens.set("**=","DoubleAsteriskEquals");
+s_three_char_tokens.set("<<=","ShiftLeftEquals");
+s_three_char_tokens.set(">>=","ShiftRightEquals");
+s_three_char_tokens.set("&&=","DoubleAmpersandEquals");
+s_three_char_tokens.set("||=","DoublePipeEquals");
+s_three_char_tokens.set("\?\?=","DoubleQuestionMarkEquals");
+s_three_char_tokens.set(">>>","UnsignedShiftRight");
+s_three_char_tokens.set("...","TripleDot");
+
+// Section: s_two_char_tokens
+s_two_char_tokens.set("=>","Arrow");
+s_two_char_tokens.set("+=","PlusEquals");
+s_two_char_tokens.set("-=","MinusEquals");
+s_two_char_tokens.set("*=","AsteriskEquals");
+// "/=" is one of the productions of DivPunctuator
+s_two_char_tokens.set("/=","SlashEquals");
+s_two_char_tokens.set("%=","PercentEquals");
+s_two_char_tokens.set("&=","AmpersandEquals");
+s_two_char_tokens.set("|=","PipeEquals");
+s_two_char_tokens.set("^=","CaretEquals");
+s_two_char_tokens.set("&&","DoubleAmpersand");
+s_two_char_tokens.set("||","DoublePipe");
+s_two_char_tokens.set("??","DoubleQuestionMark");
+s_two_char_tokens.set("**","DoubleAsterisk");
+s_two_char_tokens.set("==","EqualsEquals");
+s_two_char_tokens.set("<=","LessThanEquals");
+s_two_char_tokens.set(">=","GreaterThanEquals");
+s_two_char_tokens.set("!=","ExclamationMarkEquals");
+s_two_char_tokens.set("--","MinusMinus");
+s_two_char_tokens.set("++","PlusPlus");
+s_two_char_tokens.set("<<","ShiftLeft");
+s_two_char_tokens.set(">>","ShiftRight");
+// "?." is the production of OptionalChainingPunctuator
+s_two_char_tokens.set("?.","QuestionMarkPeriod");
+
+// Section: s_single_char_tokens
+// & is OtherPunctuator
+s_single_char_tokens.set("&","Ampersand");
+// * is OtherPunctuator
+s_single_char_tokens.set("*","Asterisk");
+// [ is OtherPunctuator
+s_single_char_tokens.set("[","BracketOpen");
+// ] is OtherPunctuator
+s_single_char_tokens.set("]","BracketClose");
+// ^ is OtherPunctuator
+s_single_char_tokens.set("^","Caret");
+// : is OtherPunctuator
+s_single_char_tokens.set(":","Colon");
+// , is OtherPunctuator
+s_single_char_tokens.set(",","Comma");
+// { is OtherPunctuator
+s_single_char_tokens.set("{","CurlyOpen");
+// "}" is the production of RightBracePunctuator
+s_single_char_tokens.set("}","CurlyClose");
+// = is OtherPunctuator
+s_single_char_tokens.set("=","Equals");
+// ! is OtherPunctuator
+s_single_char_tokens.set("!","ExclamationMark");
+// - is OtherPunctuator
+s_single_char_tokens.set("-","Minus");
+// ( is OtherPunctuator
+s_single_char_tokens.set("(","ParenOpen");
+// ) is OtherPunctuator
+s_single_char_tokens.set(")","ParenClose");
+// % is OtherPunctuator
+s_single_char_tokens.set("%","Percent");
+// . is OtherPunctuator
+s_single_char_tokens.set(".","Period");
+// | is OtherPunctuator
+s_single_char_tokens.set("|","Pipe");
+// + is OtherPunctuator
+s_single_char_tokens.set("+","Plus");
+// ? is OtherPunctuator
+s_single_char_tokens.set("?","QuestionMark");
+// ; is OtherPunctuator
+s_single_char_tokens.set(";","Semicolon");
+// "/" is one of the productions by DivPunctuator
+s_single_char_tokens.set("/","Slash");
+// ~ is OtherPunctuator
+s_single_char_tokens.set("~","Tilde");
+// < is OtherPunctuator
+s_single_char_tokens.set("<","LessThan");
+// > is OtherPunctuator
+s_single_char_tokens.set(">","GreaterThan");
 
 class ECMA262Base {
 	/** @arg {ecma_root} parent */
@@ -194,133 +342,123 @@ class Comments extends ECMA262Base {
 			MultiLineComment ::
 			/* MultiLineCommentChars opt */
 			`;
-		let off=0;
-		if(str.slice(index,index+2)==="/*") {
-			off+=2;
-			if(str.slice(index+off,index+off+2)==="*/") {
-				return [true,"MultiLineComment",4];
+			let off=0;
+			if(str.slice(index,index+2)==="/*") {
+				off+=2;
+				if(str.slice(index+off,index+off+2)==="*/") {
+					return [true,"MultiLineComment",4];
+				}
+				let [valid,,com_len]=this.MultiLineCommentChars(str,index+off);
+				if(!valid) {
+					return [false,null,0];
+				}
+				if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {
+					return [true,"MultiLineComment",off+com_len+2];
+				}
 			}
-			let [valid,,com_len]=this.MultiLineCommentChars(str,index+off);
-			if(!valid) {
+			return [false,null,0];
+		}
+		dep=0;
+		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+		MultiLineCommentChars(str,index) {
+			let start_len=0;
+			if(this.dep>64) {
+				throw Error("stack overflow");
+			}
+			this.dep++;
+			let ml_na=this.MultiLineNotAsteriskChar(str,index+start_len);
+			if(ml_na[2]>0) {
+				start_len++;
+				for(;;) {
+					let [,,ml_na]=this.MultiLineNotAsteriskChar(str,index+start_len);
+					if(ml_na>0) {
+						start_len+=ml_na;
+						continue;
+					}
+					if(str[index+start_len]==="*") {
+						let [,,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
+						if(pac>0) {
+							start_len++;
+							start_len+=pac;
+						}
+					}
+					break;
+				}
+			}
+			if(str[index+start_len]==="*") {
+				let [,,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
+				if(pac>0) {
+					start_len++;
+					start_len+=pac;
+				}
+			}
+			this.dep--;
+			if(start_len===0) {
 				return [false,null,0];
 			}
-			if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {
-				return [true,"MultiLineComment",off+com_len+2];
+			return [true,"MultiLineCommentChars",start_len];
+		}
+		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+		PostAsteriskCommentChars(str,index) {
+			let index_offset=0;
+			let offset_1=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+index_offset);
+			if(!offset_1[0]) return [false,null,0];
+			if(offset_1[2]>0) {
+				index_offset+=offset_1[2];
+				let la=this.MultiLineCommentChars(str,index+index_offset);
+				index_offset+=la[2];
+				return [true,"PostAsteriskCommentChars",index_offset];
 			}
-		}
-		return [false,null,0];
-	}
-	dep=0;
-	/**MultiLineCommentChars ::
-	MultiLineNotAsteriskChar MultiLineCommentChars opt
-	* PostAsteriskCommentChars opt */
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	MultiLineCommentChars(str,index) {
-		let start_len=0;
-		if(this.dep>64) {
-			throw Error("stack overflow");
-		}
-		this.dep++;
-		let ml_na=this.MultiLineNotAsteriskChar(str,index+start_len);
-		if(ml_na[2]>0) {
-			start_len++;
-			for(;;) {
-				let [,,ml_na]=this.MultiLineNotAsteriskChar(str,index+start_len);
-				if(ml_na>0) {
-					start_len+=ml_na;
-					continue;
-				}
-				if(str[index+start_len]==="*") {
-					let [,,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
-					if(pac>0) {
-						start_len++;
-						start_len+=pac;
+			if(offset_1[2]===0) {
+				if(str[index+index_offset]==="*") {
+					index_offset++;
+					let offset_2=this.PostAsteriskCommentChars(str,index+index_offset);
+					if(!offset_2[0]) throw new Error("Recursive call to PostAsteriskCommentChars failed");
+					if(offset_2[0]) {
+						return [true,"PostAsteriskCommentChars",offset_2[2]+index_offset];
 					}
 				}
-				break;
 			}
-		}
-		if(str[index+start_len]==="*") {
-			let [,,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
-			if(pac>0) {
-				start_len++;
-				start_len+=pac;
-			}
-		}
-		this.dep--;
-		if(start_len===0) {
-			return [false,null,0];
-		}
-		return [true,"MultiLineCommentChars",start_len];
-	}
-	/**PostAsteriskCommentChars ::
-	MultiLineNotForwardSlashOrAsteriskChar MultiLineCommentChars opt
-	* PostAsteriskCommentChars opt */
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	PostAsteriskCommentChars(str,index) {
-		let index_offset=0;
-		let offset_1=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+index_offset);
-		if(!offset_1[0]) return [false,null,0];
-		if(offset_1[2]>0) {
-			index_offset+=offset_1[2];
-			let la=this.MultiLineCommentChars(str,index+index_offset);
-			index_offset+=la[2];
 			return [true,"PostAsteriskCommentChars",index_offset];
 		}
-		if(offset_1[2]===0) {
-			if(str[index+index_offset]==="*") {
-				index_offset++;
-				let offset_2=this.PostAsteriskCommentChars(str,index+index_offset);
-				if(!offset_2[0]) throw new Error("Recursive call to PostAsteriskCommentChars failed");
-				if(offset_2[0]) {
-					return [true,"PostAsteriskCommentChars",offset_2[2]+index_offset];
+		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+		MultiLineNotAsteriskChar(str,index) {
+			if(str[index]!=="*") {
+				return [true,"MultiLineNotAsteriskChar",1];
+			}
+			return [false,null,0];
+		}
+		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+		MultiLineNotForwardSlashOrAsteriskChar(str,index) {
+			if(str[index]==="*"||str[index]==="/") {
+				return [false,null,0];
+			}
+			return [true,"MultiLineNotForwardSlashOrAsteriskChar",1];
+		}
+		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+		SingleLineComment(str,index) {
+			if(str.slice(index,index+2)==="//") {
+				let comment_length=this.SingleLineCommentChars(str,index+2);
+				if(!comment_length[0]) throw new Error("Failed to parse single line comment");
+				return [true,"SingleLineComment",comment_length[2]+2];
+			}
+			return [false,null,0];
+		}
+		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+		SingleLineCommentChars(str,index) {
+			if(index>=str.length) {
+				return [false,null,0];
+			}
+			let s_index=index;
+			while(str[s_index]!=="\n") {
+				s_index++;
+				if(s_index>str.length) {
+					break;
 				}
 			}
+			return [true,"SingleLineCommentChars",s_index-index];
 		}
-		return [true,"PostAsteriskCommentChars",index_offset];
 	}
-	/**MultiLineNotAsteriskChar ::
-	SourceCharacter but not * */
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	MultiLineNotAsteriskChar(str,index) {
-		if(str[index]!=="*") {
-			return [true,"MultiLineNotAsteriskChar",1];
-		}
-		return [false,null,0];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	MultiLineNotForwardSlashOrAsteriskChar(str,index) {
-		if(str[index]==="*"||str[index]==="/") {
-			return [false,null,0];
-		}
-		return [true,"MultiLineNotForwardSlashOrAsteriskChar",1];
-	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	SingleLineComment(str,index) {
-		if(str.slice(index,index+2)==="//") {
-			let comment_length=this.SingleLineCommentChars(str,index+2);
-			if(!comment_length[0]) throw new Error("Failed to parse single line comment");
-			return [true,"SingleLineComment",comment_length[2]+2];
-		}
-		return [false,null,0];
-	}
-	/*SingleLineCommentChars ::
-	SingleLineCommentChar SingleLineCommentChars*/
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	SingleLineCommentChars(str,index) {
-		if(index>=str.length) {
-			return [false,null,0];
-		}
-		let s_index=index;
-		while(str[s_index]!=="\n") {
-			s_index++;
-			if(s_index>str.length) {
-				break;
-			}
-		}
-		return [true,"SingleLineCommentChars",s_index-index];
-	}
-}
 
 // https://tc39.es/ecma262/#sec-hashbang
 class HashbangComments extends ECMA262Base {
@@ -451,28 +589,10 @@ class NamesAndKeywords extends ECMA262Base {
 }
 
 class PunctuatorsData extends ECMA262Base {
-	/**
-	 * @param {ecma_root} parent
-	 * @param {{ single: HashMap<string,string>; two: HashMap<string,string>; three: HashMap<string,string>; }} char_tokens
-	 */
-	constructor(parent,char_tokens) {
+	/** @param {ecma_root} parent */
+	constructor(parent) {
 		super(parent);
-		this.s_single_char_tokens=char_tokens.single;
-		this.s_two_char_tokens=char_tokens.two;
-		this.s_three_char_tokens=char_tokens.three;
 	}
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_single_char_tokens;
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_two_char_tokens;
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_three_char_tokens;
 	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(" ");
 	DivPunctuatorArray="/ /=".split(" ");
 }
@@ -520,7 +640,7 @@ class Punctuators extends PunctuatorsData {
 		}
 		/** @type {string|null} */
 		let result=null;
-		this.s_three_char_tokens.iterate(function(key) {
+		s_three_char_tokens.iterate(function(key) {
 			// I think all the 3 char tokens are valid as OtherPunctuator productions
 			if(str.startsWith(key,index)) {
 				result=key;
@@ -530,7 +650,7 @@ class Punctuators extends PunctuatorsData {
 		});
 		if(result) return [true,"OtherPunctuator",3];
 		result=null;
-		this.s_two_char_tokens.iterate(function(key) {
+		s_two_char_tokens.iterate(function(key) {
 			// skip DivPunctuator with length 2
 			if(key==="/=") return "Continue";
 			// skip OptionalChainingPunctuator
@@ -544,7 +664,7 @@ class Punctuators extends PunctuatorsData {
 		});
 		if(result) return [true,"OtherPunctuator",2];
 		result=null;
-		this.s_single_char_tokens.iterate(function(key,_value) {
+		s_single_char_tokens.iterate(function(key,_value) {
 			// skip DivPunctuator with length 1
 			if(key==="/") return "Continue";
 			// skip RightBracePunctuator
@@ -1448,9 +1568,8 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		if(res[0]) {
 			return [false,null,0];
 		}
-		/* TODO: SourceCharacter is too complex for js
-				 It requires handling all of unicode
-		*/
+		// TODO: SourceCharacter is too complex for js
+		//		 It requires handling all of unicode
 		return [true,"TemplateCharacter",1];
 	}
 	// https://tc39.es/ecma262/#prod-TemplateEscapeSequence
@@ -1753,10 +1872,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 
 
 class ecma_root {
-	/**
-	 * @param {{ single: any; two: any; three: any; }} char_tokens
-	 */
-	constructor(char_tokens) {
+	constructor() {
 		this.flags={
 			sep: false,
 			is_sep() {
@@ -1769,7 +1885,7 @@ class ecma_root {
 		this.hashbang_comments=new HashbangComments(this);
 		this.tokens=new Tokens(this);
 		this.names_and_keywords=new NamesAndKeywords(this);
-		this.punctuators=new Punctuators(this,char_tokens);
+		this.punctuators=new Punctuators(this);
 		this.RegularExpressionLiterals=new RegularExpressionLiterals(this);
 		{
 			this.literals=new Literals(this);
@@ -1779,20 +1895,18 @@ class ecma_root {
 		this.template_literal_lexical_components=new TemplateLiteralLexicalComponents(this);
 	}
 }
+/** @template T @typedef {Nullable<T>} N */
+/** @typedef {{str:string;index:number}} IN_STE_T */
+/** @typedef {N<{type:string;item:string}>&{length:number}} OUT_STE_T */
 class js_token_generator {
 	static EOF_TOKEN=Symbol();
-	/**
-	 * @param {string} str
-	 * @param {{ single: any; two: any; three: any; }} char_tokens
-	 */
-	constructor(str,char_tokens) {
+	/** @param {string} str */
+	constructor(str) {
 		this.str=str;
 		this.index=0;
-		this.root=new ecma_root(char_tokens);
+		this.root=new ecma_root;
 	}
-	/**
-	 * @param {[true,string,number,number]|[false,symbol,number,number] | null} token_value
-	 */
+	/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
 	describe_token(token_value) {
 		if(!token_value) return ["undefined"];
 		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
@@ -1832,11 +1946,7 @@ class js_token_generator {
 		console.log("next token fallthrough",cur,this.index);
 		return null;
 	}
-	/**
-	 * @param {{ type: string|null; item: string|null; length: number; }} state
-	 * @arg {LexReturnTyShort} lex_return
-	 * @arg {string} type
-	 */
+	/** @param {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
 	modify_output(state,lex_return,type) {
 		if(lex_return[0]&&lex_return[2]>state.length) {
 			state.type=type;
@@ -1844,74 +1954,47 @@ class js_token_generator {
 			state.length=lex_return[2];
 		}
 	}
-	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseWhiteSpace(in_state,out_state) {
 		let res=this.root.white_space.WhiteSpace(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"WhiteSpace");
 	}
-	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseLineTerminator(in_state,out_state) {
 		let res=this.root.line_terminators.LineTerminator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"LineTerminator");
 	}
-	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseComment(in_state,out_state) {
 		let res=this.root.comments.Comment(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"Comment");
 	}
-	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseRightBracePunctuator(in_state,out_state) {
 		let res=this.root.punctuators.RightBracePunctuator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"RightBracePunctuator");
 	}
-	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseDivPunctuator(in_state,out_state) {
 		let res=this.root.punctuators.DivPunctuator(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"DivPunctuator");
 	}
-	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseCommonToken(in_state,out_state) {
 		let res=this.root.tokens.CommonToken(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"CommonToken");
 	}
-	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseRegularExpressionLiteral(in_state,out_state) {
 		let res=this.root.RegularExpressionLiterals.RegularExpressionLiteral(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"RegularExpressionLiteral");
 	}
-	/**
-	 * @param {{ str: string; index: number; }} in_state
-	 * @param {{ type: string|null; item: string|null; length: number; }} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseTemplateSubstitutionTail(in_state,out_state) {
 		let res=this.root.template_literal_lexical_components.TemplateSubstitutionTail(in_state.str,in_state.index);
 		this.modify_output(out_state,res,"TemplateSubstitutionTail");
 	}
-	/**
-	 * @param {{str:string;index:number;}} in_state
-	 * @param {{type:string|null;item:string|null;length:number}} out_state
-	 */
+	/** @arg {IN_STE_T} in_state @arg {OUT_STE_T} out_state */
 	ParseCommonElements(in_state,out_state) {
 		this.ParseWhiteSpace(in_state,out_state);
 		this.ParseLineTerminator(in_state,out_state);
@@ -2012,171 +2095,14 @@ class js_token_generator {
 	}
 }
 
-class CharTokens {
-	/**
-	 * @param {HashMap<string, string>} single
-	 * @param {HashMap<string, string>} two
-	 * @param {HashMap<string, string>} three
-	 */
-	constructor(single,two,three) {
-		this.single=single;
-		this.two=two;
-		this.three=three;
-	}
-}
-
-export function ecma_parse_main() {
-	// HashMap<FlyString, TokenType> Lexer::s_keywords
-	/** @type {Set<string>} uses enum JSTokenizerTokenType as string */
-	const s_keywords=new Set();
-	// HashMap<String, TokenType> Lexer::s_three_char_tokens
-	/** @type {HashMap<string,string>} */
-	const s_three_char_tokens=new HashMap();
-	// HashMap<String, TokenType> Lexer::s_two_char_tokens
-	/** @type {HashMap<string,string>} */
-	const s_two_char_tokens=new HashMap();
-	// HashMap<char, TokenType> Lexer::s_single_char_tokens
-	/** @type {HashMap<string,string>} */
-	const s_single_char_tokens=new HashMap();
-	s_keywords.add("async");
-	s_keywords.add("await");
-	s_keywords.add("break");
-	s_keywords.add("case");
-	s_keywords.add("catch");
-	s_keywords.add("class");
-	s_keywords.add("const");
-	s_keywords.add("continue");
-	s_keywords.add("debugger");
-	s_keywords.add("default");
-	s_keywords.add("delete");
-	s_keywords.add("do");
-	s_keywords.add("else");
-	s_keywords.add("enum");
-	s_keywords.add("export");
-	s_keywords.add("extends");
-	s_keywords.add("false");
-	s_keywords.add("finally");
-	s_keywords.add("for");
-	s_keywords.add("function");
-	s_keywords.add("if");
-	s_keywords.add("import");
-	s_keywords.add("in");
-	s_keywords.add("instanceof");
-	s_keywords.add("let");
-	s_keywords.add("new");
-	s_keywords.add("null");
-	s_keywords.add("return");
-	s_keywords.add("super");
-	s_keywords.add("switch");
-	s_keywords.add("this");
-	s_keywords.add("throw");
-	s_keywords.add("true");
-	s_keywords.add("try");
-	s_keywords.add("typeof");
-	s_keywords.add("var");
-	s_keywords.add("void");
-	s_keywords.add("while");
-	s_keywords.add("with");
-	s_keywords.add("yield");
-	// 4 char token is only >>>=
-	if(s_three_char_tokens.is_empty()) {
-		s_three_char_tokens.set("===","EqualsEqualsEquals");
-		s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
-		s_three_char_tokens.set("**=","DoubleAsteriskEquals");
-		s_three_char_tokens.set("<<=","ShiftLeftEquals");
-		s_three_char_tokens.set(">>=","ShiftRightEquals");
-		s_three_char_tokens.set("&&=","DoubleAmpersandEquals");
-		s_three_char_tokens.set("||=","DoublePipeEquals");
-		s_three_char_tokens.set("\?\?=","DoubleQuestionMarkEquals");
-		s_three_char_tokens.set(">>>","UnsignedShiftRight");
-		s_three_char_tokens.set("...","TripleDot");
-	}
-	if(s_two_char_tokens.is_empty()) {
-		s_two_char_tokens.set("=>","Arrow");
-		s_two_char_tokens.set("+=","PlusEquals");
-		s_two_char_tokens.set("-=","MinusEquals");
-		s_two_char_tokens.set("*=","AsteriskEquals");
-		// "/=" is one of the productions of DivPunctuator
-		s_two_char_tokens.set("/=","SlashEquals");
-		s_two_char_tokens.set("%=","PercentEquals");
-		s_two_char_tokens.set("&=","AmpersandEquals");
-		s_two_char_tokens.set("|=","PipeEquals");
-		s_two_char_tokens.set("^=","CaretEquals");
-		s_two_char_tokens.set("&&","DoubleAmpersand");
-		s_two_char_tokens.set("||","DoublePipe");
-		s_two_char_tokens.set("??","DoubleQuestionMark");
-		s_two_char_tokens.set("**","DoubleAsterisk");
-		s_two_char_tokens.set("==","EqualsEquals");
-		s_two_char_tokens.set("<=","LessThanEquals");
-		s_two_char_tokens.set(">=","GreaterThanEquals");
-		s_two_char_tokens.set("!=","ExclamationMarkEquals");
-		s_two_char_tokens.set("--","MinusMinus");
-		s_two_char_tokens.set("++","PlusPlus");
-		s_two_char_tokens.set("<<","ShiftLeft");
-		s_two_char_tokens.set(">>","ShiftRight");
-		// "?." is the production of OptionalChainingPunctuator
-		s_two_char_tokens.set("?.","QuestionMarkPeriod");
-	}
-	if(s_single_char_tokens.is_empty()) {
-		// & is OtherPunctuator
-		s_single_char_tokens.set("&","Ampersand");
-		// * is OtherPunctuator
-		s_single_char_tokens.set("*","Asterisk");
-		// [ is OtherPunctuator
-		s_single_char_tokens.set("[","BracketOpen");
-		// ] is OtherPunctuator
-		s_single_char_tokens.set("]","BracketClose");
-		// ^ is OtherPunctuator
-		s_single_char_tokens.set("^","Caret");
-		// : is OtherPunctuator
-		s_single_char_tokens.set(":","Colon");
-		// , is OtherPunctuator
-		s_single_char_tokens.set(",","Comma");
-		// { is OtherPunctuator
-		s_single_char_tokens.set("{","CurlyOpen");
-		// "}" is the production of RightBracePunctuator
-		s_single_char_tokens.set("}","CurlyClose");
-		// = is OtherPunctuator
-		s_single_char_tokens.set("=","Equals");
-		// ! is OtherPunctuator
-		s_single_char_tokens.set("!","ExclamationMark");
-		// - is OtherPunctuator
-		s_single_char_tokens.set("-","Minus");
-		// ( is OtherPunctuator
-		s_single_char_tokens.set("(","ParenOpen");
-		// ) is OtherPunctuator
-		s_single_char_tokens.set(")","ParenClose");
-		// % is OtherPunctuator
-		s_single_char_tokens.set("%","Percent");
-		// . is OtherPunctuator
-		s_single_char_tokens.set(".","Period");
-		// | is OtherPunctuator
-		s_single_char_tokens.set("|","Pipe");
-		// + is OtherPunctuator
-		s_single_char_tokens.set("+","Plus");
-		// ? is OtherPunctuator
-		s_single_char_tokens.set("?","QuestionMark");
-		// ; is OtherPunctuator
-		s_single_char_tokens.set(";","Semicolon");
-		// "/" is one of the productions by DivPunctuator
-		s_single_char_tokens.set("/","Slash");
-		// ~ is OtherPunctuator
-		s_single_char_tokens.set("~","Tilde");
-		// < is OtherPunctuator
-		s_single_char_tokens.set("<","LessThan");
-		// > is OtherPunctuator
-		s_single_char_tokens.set(">","GreaterThan");
-	}
-	let parse_str="function x(){}";
+/** @param {string} code_str */
+function ecma_run_parser(code_str) {
 	if("code" in window&&typeof window.code==="string") {
-		parse_str=window.code;
+		code_str=window.code;
 	}
-	// parse_str="(function(){return function x(){}})()";
-	let token_gen=new js_token_generator(parse_str,new CharTokens(
-		s_single_char_tokens,
-		s_two_char_tokens,
-		s_three_char_tokens,
-	));
+	// code_str="function x(){}";
+	// code_str="(function(){return function x(){}})()";
+	let token_gen=new js_token_generator(code_str);
 	let res_item;
 	let i=0;
 	for(;;i++) {
@@ -2199,3 +2125,5 @@ export function ecma_parse_main() {
 	}
 	console.log(`parsed ${i} tokens`);
 }
+window.g_api.ecma_run_parser=ecma_run_parser;
+
