@@ -94,6 +94,8 @@ export class StackVM {
 					}
 				} else if(offset>0) {
 					instruction_modify[offset]=value;
+				} else {
+					throw new Error("Unreachable");
 				}
 				let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify,[0]);
 				this.instructions[target]=valid_instruction;
