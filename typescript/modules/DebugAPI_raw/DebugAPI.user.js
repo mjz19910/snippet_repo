@@ -1011,7 +1011,22 @@ class NumericLiterals extends ECMA262Base {
 	}
 	// https://tc39.es/ecma262/#prod-BinaryDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryDigits(str,index) {str; index; throw new Error("No impl");}
+	BinaryDigits(str,index) {
+		this.len=0;
+		let res=this.BinaryDigit(str,index);
+		while(res[0]) {
+			this.len++;
+			let res_peek=this.BinaryDigit(str,index+this.len);
+			if(res_peek[0]) {
+				res=res_peek;
+			} else {
+				break;
+			}
+		}
+		if(!res[0] && this.len==0) {
+			return [false,null,0];
+		}
+	}
 	// https://tc39.es/ecma262/#prod-BinaryDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	BinaryDigit(str,index) {str; index; throw new Error("No impl");}
