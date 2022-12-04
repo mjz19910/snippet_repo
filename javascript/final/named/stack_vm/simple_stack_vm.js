@@ -63,9 +63,8 @@ export class SimpleStackVM {
 						arg_arr.unshift(this.pop());
 					}
 					let name_to_call=this.pop();
+					if(!(typeof name_to_call==='string')) throw new Error("name_to_call not a string");
 					let target=this.pop();
-					if(!target) throw new Error();
-					if(!(typeof name_to_call==='string')) throw new Error();
 					/** @template T @arg {T} _obj @returns {asserts _obj is {[x: string]: (...args:any[])=>any}}  */
 					function assume_can_index_with_string_to_function(_obj) {}
 					assume_can_index_with_string_to_function(target);
