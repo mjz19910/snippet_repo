@@ -1196,7 +1196,7 @@ class NumericLiterals extends ECMA262Base {
 			return [false,null,0];
 		}
 		this.len=0;
-		let res=this.HexDigit(i);
+		let res=this.HexDigit(i+this.len);
 		while(res[0]) {
 			this.len++;
 			let res_digit=this.HexDigit(i+this.len);
