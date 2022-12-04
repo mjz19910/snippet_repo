@@ -99,25 +99,25 @@ export class StackVM {
 			case 'vm_push_ip': {
 				this.push(new NumberBox(this.instruction_pointer));
 			} break;
-			case 'halt' /*Running*/: {
+			case 'halt': {
 				this.running=false;
 			} break;
-			case 'push' /*Stack*/: {
+			case 'push': {
 				let [,...rest]=instruction;
 				for(let i=0;i<rest.length;i++) {
 					let item=rest[i];
 					this.push(item);
 				}
 			} break;
-			case 'drop' /*Stack*/: this.pop(); break;
-			case 'dup' /*Stack*/: {
+			case 'drop': this.pop(); break;
+			case 'dup': {
 				let top=this.peek_at(0);
 				if(!top)
 					throw new Error("Stack underflow when executing dup instruction");
 				this.push(top);
 			} break;
 			case 'cast': throw new Error("TODO");
-			case 'get' /*Object*/: {
+			case 'get': {
 				let target_name=this.pop();
 				let target_obj=this.pop();
 				if(!target_obj)
@@ -128,15 +128,15 @@ export class StackVM {
 					throw new Error("Invalid");
 				throw new Error("Unable to do box_get");
 			}
-			case 'call' /*Call*/: throw new Error("No call impl");
-			case 'construct' /*Construct*/: throw new Error("No construct impl");
-			case 'return' /*Call*/: {
+			case 'call': throw new Error("No call impl");
+			case 'construct': throw new Error("No construct impl");
+			case 'return': {
 				let top=this.pop();
 				if(!top) throw new Error("Stack underflow");
 				this.return_value=top;
 			} break;
-			case 'breakpoint' /*Debug*/: trigger_debug_breakpoint(); break;
-			default: throw new Error("Unexpected instruction: "+instruction[0]); break;
+			case 'breakpoint': trigger_debug_breakpoint(); break;
+			default: throw new Error("Unexpected instruction: "+instruction[0]);
 		}
 	}
 }
