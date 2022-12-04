@@ -1,5 +1,5 @@
 export class SimpleStackVM {
-	/** @type {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['push_args']|['push_window']|['breakpoint'])[]} */
+	/** @type {(["this"] | ["push", string] | ["get"] | ["call", number] | ["drop"]|['return']|['halt']|['get_argv']|['push_window']|['breakpoint'])[]} */
 	instructions;
 	/**
 	 * @param {SimpleStackVM['instructions']} instructions
@@ -74,7 +74,7 @@ export class SimpleStackVM {
 				case 'halt'/*Running*/: {
 					this.running=false;
 				} break;
-				case 'push_args'/*Special*/: {
+				case 'get_argv'/*Special*/: {
 					this.push(...run_arguments);
 				} break;
 				case 'this'/*Special*/: {

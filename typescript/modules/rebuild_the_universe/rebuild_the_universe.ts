@@ -308,7 +308,7 @@ export class StackVMBox extends BoxTemplateImpl<"custom_box",StackVMImpl> {
 	readonly type="custom_box";
 	readonly box_type="StackVM";
 }
-export class StringBoxImpl extends BoxTemplateImpl<"string",string> {
+export class StringBoxImpl extends BoxTemplateImpl<"string",string> implements StringBoxT {
 	readonly type="string";
 }
 export class VoidBoxImpl {
@@ -1307,7 +1307,7 @@ class StackVMParser {
 			case "push": {
 				num_to_parse=0;
 				const [,...push_operands]=instruction;
-				ret=[instruction[0],...push_operands.map((e): {type: "string",value: string;} => ({type: "string",value: e}))];
+				ret=[instruction[0],...push_operands.map(e => new StringBoxImpl(e))];
 			} break;
 			case "call"/*1 argument*/: {
 				if(typeof instruction[1]==="number"&&Number.isFinite(instruction[1])) {
