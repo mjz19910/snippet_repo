@@ -30,9 +30,6 @@ export class SimpleStackVMParser {
 		let target_instruction: [string,...Box[]]=[cur[0]];
 		for(let i=1;i<cur.length;i++) {
 			let arg=cur[i];
-			if(typeof arg!=='string') {
-				throw new Error("Unexpected type in input to parse_instruction");
-			}
 			if(arg.slice(0,3)==='int') {
 				let int_res=this.parse_int_arg(arg);
 				if(!int_res) throw new Error("Failed to parse int");
