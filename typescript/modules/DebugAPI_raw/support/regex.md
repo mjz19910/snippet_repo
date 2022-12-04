@@ -9,5 +9,7 @@
  \n\t*;
 ```
 
-
+```regexp
+var \w+ = function 
+```
 
