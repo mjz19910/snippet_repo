@@ -80,7 +80,6 @@ export class SimpleStackVMParser {
 			parts=this.match_regex.exec(string);
 			if(!parts) break;
 			let res=this.parse_regexp_match(parts);
-			if(!res) break;
 			raw_instructions.push(res);
 		}
 		if(this.match_regex.lastIndex<string.length) {
