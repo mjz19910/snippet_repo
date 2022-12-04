@@ -1,6 +1,7 @@
 import {InstructionType} from "../instruction/InstructionType.js";
 import {Box} from "../box/Box.js";
 import {NumberBox} from "../box/NumberBox.js";
+import {StringBox} from "../../modules/rebuild_the_universe/ns.js";
 
 export class SimpleStackVMParser {
 	static match_regex=/(.+?)(;|$)/gm;
@@ -40,7 +41,7 @@ export class SimpleStackVMParser {
 				target_instruction[i]=res;
 				continue;
 			}
-
+			target_instruction[i]=new StringBox(arg);
 		}
 		return target_instruction;
 	}
