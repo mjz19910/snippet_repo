@@ -55,7 +55,7 @@ export class SimpleStackVMParser {
 			return [];
 		return iter.split(",");
 	}
-	static parse_string_into_raw_instruction_stream(string: string): string[][] {
+	static parse_raw_instruction_stream(string: string): string[][] {
 		const parser_max_match_iter=390;
 		let parts: RegExpExecArray|null,arr: string[][]=[],i=0;
 		do {
@@ -71,7 +71,7 @@ export class SimpleStackVMParser {
 		return arr;
 	}
 	static parse_instruction_stream_from_string(string: string,format_list: Box[]) {
-		let raw_instructions=this.parse_string_into_raw_instruction_stream(string);
+		let raw_instructions=this.parse_raw_instruction_stream(string);
 		let cooked_instructions:[string, ...Box[]][]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			let raw_instruction=raw_instructions[i];
