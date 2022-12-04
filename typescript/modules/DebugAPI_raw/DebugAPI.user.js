@@ -230,15 +230,14 @@ class ECMA262Base {
 	set len(value) {
 		this._len=value;
 	}
-	get C() {
-		if(!this.B) {
-			throw new Error();
-		}
-		return this.B;
-	}
+	/** @type {ecma_root} */
+	C=any(null);
 	/** @arg {ecma_root|null} base */
 	constructor(base) {
 		this.B=base;
+		if(base) {
+			this.C=base;
+		}
 	}
 }
 
