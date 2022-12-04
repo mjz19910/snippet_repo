@@ -353,123 +353,123 @@ class Comments extends ECMA262Base {
 			MultiLineComment ::
 			/* MultiLineCommentChars opt */
 			`;
-			let off=0;
-			if(str.slice(index,index+2)==="/*") {
-				off+=2;
-				if(str.slice(index+off,index+off+2)==="*/") {
-					return [true,"MultiLineComment",4];
-				}
-				let [valid,,com_len]=this.MultiLineCommentChars(str,index+off);
-				if(!valid) {
-					return [false,null,0];
-				}
-				if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {
-					return [true,"MultiLineComment",off+com_len+2];
-				}
+		let off=0;
+		if(str.slice(index,index+2)==="/*") {
+			off+=2;
+			if(str.slice(index+off,index+off+2)==="*/") {
+				return [true,"MultiLineComment",4];
 			}
-			return [false,null,0];
-		}
-		dep=0;
-		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-		MultiLineCommentChars(str,index) {
-			let start_len=0;
-			if(this.dep>64) {
-				throw Error("stack overflow");
-			}
-			this.dep++;
-			let ml_na=this.MultiLineNotAsteriskChar(str,index+start_len);
-			if(ml_na[2]>0) {
-				start_len++;
-				for(;;) {
-					let [,,ml_na]=this.MultiLineNotAsteriskChar(str,index+start_len);
-					if(ml_na>0) {
-						start_len+=ml_na;
-						continue;
-					}
-					if(str[index+start_len]==="*") {
-						let [,,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
-						if(pac>0) {
-							start_len++;
-							start_len+=pac;
-						}
-					}
-					break;
-				}
-			}
-			if(str[index+start_len]==="*") {
-				let [,,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
-				if(pac>0) {
-					start_len++;
-					start_len+=pac;
-				}
-			}
-			this.dep--;
-			if(start_len===0) {
+			let [valid,,com_len]=this.MultiLineCommentChars(str,index+off);
+			if(!valid) {
 				return [false,null,0];
 			}
-			return [true,"MultiLineCommentChars",start_len];
-		}
-		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-		PostAsteriskCommentChars(str,index) {
-			let index_offset=0;
-			let offset_1=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+index_offset);
-			if(!offset_1[0]) return [false,null,0];
-			if(offset_1[2]>0) {
-				index_offset+=offset_1[2];
-				let la=this.MultiLineCommentChars(str,index+index_offset);
-				index_offset+=la[2];
-				return [true,"PostAsteriskCommentChars",index_offset];
+			if(str.slice(index+off+com_len,index+off+com_len+2)==="*/") {
+				return [true,"MultiLineComment",off+com_len+2];
 			}
-			if(offset_1[2]===0) {
-				if(str[index+index_offset]==="*") {
-					index_offset++;
-					let offset_2=this.PostAsteriskCommentChars(str,index+index_offset);
-					if(!offset_2[0]) throw new Error("Recursive call to PostAsteriskCommentChars failed");
-					if(offset_2[0]) {
-						return [true,"PostAsteriskCommentChars",offset_2[2]+index_offset];
+		}
+		return [false,null,0];
+	}
+	dep=0;
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	MultiLineCommentChars(str,index) {
+		let start_len=0;
+		if(this.dep>64) {
+			throw Error("stack overflow");
+		}
+		this.dep++;
+		let ml_na=this.MultiLineNotAsteriskChar(str,index+start_len);
+		if(ml_na[2]>0) {
+			start_len++;
+			for(;;) {
+				let [,,ml_na]=this.MultiLineNotAsteriskChar(str,index+start_len);
+				if(ml_na>0) {
+					start_len+=ml_na;
+					continue;
+				}
+				if(str[index+start_len]==="*") {
+					let [,,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
+					if(pac>0) {
+						start_len++;
+						start_len+=pac;
 					}
 				}
+				break;
 			}
+		}
+		if(str[index+start_len]==="*") {
+			let [,,pac]=this.PostAsteriskCommentChars(str,index+start_len+1);
+			if(pac>0) {
+				start_len++;
+				start_len+=pac;
+			}
+		}
+		this.dep--;
+		if(start_len===0) {
+			return [false,null,0];
+		}
+		return [true,"MultiLineCommentChars",start_len];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	PostAsteriskCommentChars(str,index) {
+		let index_offset=0;
+		let offset_1=this.MultiLineNotForwardSlashOrAsteriskChar(str,index+index_offset);
+		if(!offset_1[0]) return [false,null,0];
+		if(offset_1[2]>0) {
+			index_offset+=offset_1[2];
+			let la=this.MultiLineCommentChars(str,index+index_offset);
+			index_offset+=la[2];
 			return [true,"PostAsteriskCommentChars",index_offset];
 		}
-		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-		MultiLineNotAsteriskChar(str,index) {
-			if(str[index]!=="*") {
-				return [true,"MultiLineNotAsteriskChar",1];
-			}
-			return [false,null,0];
-		}
-		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-		MultiLineNotForwardSlashOrAsteriskChar(str,index) {
-			if(str[index]==="*"||str[index]==="/") {
-				return [false,null,0];
-			}
-			return [true,"MultiLineNotForwardSlashOrAsteriskChar",1];
-		}
-		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-		SingleLineComment(str,index) {
-			if(str.slice(index,index+2)==="//") {
-				let comment_length=this.SingleLineCommentChars(str,index+2);
-				if(!comment_length[0]) throw new Error("Failed to parse single line comment");
-				return [true,"SingleLineComment",comment_length[2]+2];
-			}
-			return [false,null,0];
-		}
-		/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-		SingleLineCommentChars(str,index) {
-			if(index>=str.length) {
-				return [false,null,0];
-			}
-			let s_index=index;
-			while(str[s_index]!=="\n") {
-				s_index++;
-				if(s_index>str.length) {
-					break;
+		if(offset_1[2]===0) {
+			if(str[index+index_offset]==="*") {
+				index_offset++;
+				let offset_2=this.PostAsteriskCommentChars(str,index+index_offset);
+				if(!offset_2[0]) throw new Error("Recursive call to PostAsteriskCommentChars failed");
+				if(offset_2[0]) {
+					return [true,"PostAsteriskCommentChars",offset_2[2]+index_offset];
 				}
 			}
-			return [true,"SingleLineCommentChars",s_index-index];
 		}
+		return [true,"PostAsteriskCommentChars",index_offset];
 	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	MultiLineNotAsteriskChar(str,index) {
+		if(str[index]!=="*") {
+			return [true,"MultiLineNotAsteriskChar",1];
+		}
+		return [false,null,0];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	MultiLineNotForwardSlashOrAsteriskChar(str,index) {
+		if(str[index]==="*"||str[index]==="/") {
+			return [false,null,0];
+		}
+		return [true,"MultiLineNotForwardSlashOrAsteriskChar",1];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	SingleLineComment(str,index) {
+		if(str.slice(index,index+2)==="//") {
+			let comment_length=this.SingleLineCommentChars(str,index+2);
+			if(!comment_length[0]) throw new Error("Failed to parse single line comment");
+			return [true,"SingleLineComment",comment_length[2]+2];
+		}
+		return [false,null,0];
+	}
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	SingleLineCommentChars(str,index) {
+		if(index>=str.length) {
+			return [false,null,0];
+		}
+		let s_index=index;
+		while(str[s_index]!=="\n") {
+			s_index++;
+			if(s_index>str.length) {
+				break;
+			}
+		}
+		return [true,"SingleLineCommentChars",s_index-index];
+	}
+}
 
 // https://tc39.es/ecma262/#sec-hashbang
 class HashbangComments extends ECMA262Base {
@@ -754,9 +754,9 @@ class NumericLiterals extends ECMA262Base {
 		if(len[0]) {
 			let big_int=this.BigIntLiteralSuffix(str,index+len[2]);
 			if(big_int[0]) {
-				return [true, "NumericLiteral",len[2]+big_int[2],[len,big_int]];
+				return [true,"NumericLiteral",len[2]+big_int[2],[len,big_int]];
 			}
-			return [true, "NumericLiteral",len[2],[len]];
+			return [true,"NumericLiteral",len[2],[len]];
 		}
 		len=this.DecimalBigIntegerLiteral(str,index);
 		len=this.DecimalLiteral(str,index);
@@ -1892,51 +1892,51 @@ class RegularExpressionLiterals extends ECMA262Base {
 
 
 class ecma_root {
-		/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
-		describe_token(token_value) {
-			if(!token_value) return ["undefined"];
-			let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
-			return [token_value[1],tok_str];
-		}
-		/** @arg {LexReturnTyShort} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
-		as_next_token(cur) {
-			if(cur[1]!==null) {
-				if(cur[2]===0) {
-					return [cur[0],cur[1],cur[2],this.index];
-				}
-				this.index+=cur[2];
+	/** @param {[true,string,number,number]|[false,symbol,number,number]|null} token_value */
+	describe_token(token_value) {
+		if(!token_value) return ["undefined"];
+		let tok_str=this.str.slice(token_value[3],token_value[3]+token_value[2]);
+		return [token_value[1],tok_str];
+	}
+	/** @arg {LexReturnTyShort} cur @returns {[boolean,string,number,number]|[false,symbol,number,number]|null} */
+	as_next_token(cur) {
+		if(cur[1]!==null) {
+			if(cur[2]===0) {
 				return [cur[0],cur[1],cur[2],this.index];
 			}
-			if(this.index>(this.str.length-1)) {
-				return [false,js_token_generator.EOF_TOKEN,0,this.index];
-			}
-			return null;
+			this.index+=cur[2];
+			return [cur[0],cur[1],cur[2],this.index];
 		}
-		/** @returns {[true,string,number,number]|[false,symbol,number,number]|null} */
-		next_token() {
-			if(this.index>(this.str.length-1)) {
-				return [false,js_token_generator.EOF_TOKEN,0,this.index];
-			}
-			/** @type {[true,string,number,number]} */
-			let ret;
-			let cur=this.InputElementDiv(this.str,this.index);
-			if(cur[1]!==null) {
-				if(cur[2]===0) {
-					ret=[cur[0],cur[1],cur[2],this.index];
-					return ret;
-				}
+		if(this.index>(this.str.length-1)) {
+			return [false,js_token_generator.EOF_TOKEN,0,this.index];
+		}
+		return null;
+	}
+	/** @returns {[true,string,number,number]|[false,symbol,number,number]|null} */
+	next_token() {
+		if(this.index>(this.str.length-1)) {
+			return [false,js_token_generator.EOF_TOKEN,0,this.index];
+		}
+		/** @type {[true,string,number,number]} */
+		let ret;
+		let cur=this.InputElementDiv(this.str,this.index);
+		if(cur[1]!==null) {
+			if(cur[2]===0) {
 				ret=[cur[0],cur[1],cur[2],this.index];
-				this.index+=cur[2];
 				return ret;
 			}
-			console.log("next token fallthrough",cur,this.index);
-			return null;
+			ret=[cur[0],cur[1],cur[2],this.index];
+			this.index+=cur[2];
+			return ret;
 		}
+		console.log("next token fallthrough",cur,this.index);
+		return null;
+	}
 	/**
 	 * @param {string} source_code
 	 * @param {number} start_index
 	 */
-	constructor(source_code, start_index) {
+	constructor(source_code,start_index) {
 		this.source_code=source_code;
 		this.start_index=start_index;
 		this.index=this.start_index;
