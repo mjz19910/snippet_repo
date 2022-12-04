@@ -842,8 +842,11 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NonDecimalIntegerLiteral(str,index) {
 		let res=this.BinaryIntegerLiteral(str,index);
+		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
 		res=this.OctalIntegerLiteral(str,index);
+		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
 		res=this.HexIntegerLiteral(str,index);
+		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
 		return res;
 	}
 	// https://tc39.es/ecma262/#prod-BigIntLiteralSuffix
