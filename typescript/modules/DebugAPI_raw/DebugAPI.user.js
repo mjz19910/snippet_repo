@@ -219,6 +219,16 @@ class ECMA262Base {
 			state.length=lex_return[2];
 		}
 	}
+	_str="";
+	get str() {
+		if(!this.B) {
+			return this._str;
+		}
+		return this.B.str;
+	}
+	set str(value) {
+		this._str=value;
+	}
 	_len=0;
 	/** @returns {number} */
 	get len() {
@@ -763,9 +773,9 @@ class Literals extends ECMA262Base {
 // https://tc39.es/ecma262/#sec-literals-numeric-literals
 class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-NumericLiteralSeparator
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NumericLiteralSeparator(str,index) {
-		if(str[index]==="_") {
+	/** @arg {number} index @returns {LexReturnTyShort} */
+	NumericLiteralSeparator(index) {
+		if(this.str[index]==="_") {
 			return [true,"NumericLiteralSeparator",1];
 		}
 		return [false,null,0];
@@ -826,7 +836,7 @@ class NumericLiterals extends ECMA262Base {
 				break x;
 			}
 			let len=1;
-			res=this.NumericLiteralSeparator(str,index+len);
+			res=this.NumericLiteralSeparator(index+len);
 			if(!res[0]) {
 				break x;
 			}
@@ -846,9 +856,20 @@ class NumericLiterals extends ECMA262Base {
 	NonDecimalIntegerLiteral_Sep(str,index) {
 		let res=this.BinaryIntegerLiteral_Sep(str,index);
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
-		res=this.OctalIntegerLiteral(str,index);
+		res=this.OctalIntegerLiteral_Sep();
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
-		res=this.HexIntegerLiteral(str,index);
+		res=this.HexIntegerLiteral_Sep();
+		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
+		return res;
+	}
+	// https://tc39.es/ecma262/#prod-NonDecimalIntegerLiteral
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	NonDecimalIntegerLiteral(str,index) {
+		let res=this.BinaryIntegerLiteral(str,index);
+		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
+		res=this.OctalIntegerLiteral();
+		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
+		res=this.HexIntegerLiteral();
 		if(res[0]) return [true,"NonDecimalIntegerLiteral",res[2]];
 		return res;
 	}
@@ -900,7 +921,7 @@ class NumericLiterals extends ECMA262Base {
 			let [,,res]=this.NonZeroDigit(str,index+tmp_len);
 			if(res>0) {
 				tmp_len+=res;
-				[,,res]=this.NumericLiteralSeparator(str,index+tmp_len);
+				[,,res]=this.NumericLiteralSeparator(index+tmp_len);
 				if(res>0) {
 					tmp_len+=res;
 				}
@@ -932,7 +953,7 @@ class NumericLiterals extends ECMA262Base {
 					continue;
 				}
 				// [+Sep] DecimalDigits[+Sep] (NumericLiteralSeparator DecimalDigit)
-				let [,,s_len]=this.NumericLiteralSeparator(str,index+off);
+				let [,,s_len]=this.NumericLiteralSeparator(index+off);
 				if(s_len>0) {
 					let [,,exl]=this.DecimalDigit(str,index+off+1);
 					if(exl>0) {
@@ -1012,16 +1033,27 @@ class NumericLiterals extends ECMA262Base {
 		}
 		return [false,null,0];
 	}
+	// https://tc39.es/ecma262/#prod-BinaryIntegerLiteral
+	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
+	BinaryIntegerLiteral(str,index) {
+		if(str.startsWith("0b",index)||str.startsWith("0B",index)) {
+			let res=this.BinaryDigits(index+2);
+			if(res[0]) return [true,"SignedInteger",res[2]+2];
+		}
+		return [false,null,0];
+	}
 	// https://tc39.es/ecma262/#prod-BinaryDigits
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	BinaryDigits_Sep(str,index) {
 		this.len=0;
-		let res=this.BinaryDigit(str,index);
+		this.C.index_stack.push(this.C.index);
+		let res=this.BinaryDigit(index);
 		while(res[0]) {
 			this.len++;
-			let res_peek_digit=this.BinaryDigit(str,index+this.len);
-			let res_sep=this.NumericLiteralSeparator(str,index+this.len);
-			let res_sep_peek=this.BinaryDigit(str,index+this.len+1);
+			this.C.index++;
+			let res_peek_digit=this.BinaryDigit(this.C.index);
+			let res_sep=this.NumericLiteralSeparator(this.C.index);
+			let res_sep_peek=this.BinaryDigit(this.C.index+1);
 			if(res_peek_digit[0]) {
 				res=res_peek_digit;
 			} else if(res_sep[0]&&res_sep_peek[0]) {
@@ -1036,12 +1068,13 @@ class NumericLiterals extends ECMA262Base {
 		if(this.len>0) return [true,"BinaryDigits",this.len];
 		return [false,null,0];
 	}
-	BinaryDigits() {
+	/** @arg {number} i @returns {LexReturnTyShort} */
+	BinaryDigits(i) {
 		this.len=0;
-		let res=this.BinaryDigit(this.C.str,this.C.index);
+		let res=this.BinaryDigit(i);
 		while(res[0]) {
 			this.len++;
-			let res_peek_digit=this.BinaryDigit(this.C.str,this.C.index+this.len);
+			let res_peek_digit=this.BinaryDigit(i+this.len);
 			if(res_peek_digit[0]) {
 				res=res_peek_digit;
 			} else {
@@ -1055,23 +1088,25 @@ class NumericLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-BinaryDigit
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	BinaryDigit(str,index) {str; index; throw new Error("No impl");}
+	/** @arg {number} _i @returns {LexReturnTyShort} */
+	BinaryDigit(_i) {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalIntegerLiteral
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	OctalIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	OctalIntegerLiteral_Sep() {throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	OctalIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigits
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	OctalDigits(str,index) {str; index; throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	OctalDigits() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-LegacyOctalIntegerLiteral
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LegacyOctalIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	LegacyOctalIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-NonOctalDecimalIntegerLiteral
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonOctalDecimalIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	NonOctalDecimalIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-LegacyOctalLikeDecimalIntegerLiteral
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	LegacyOctalLikeDecimalIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	LegacyOctalLikeDecimalIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-OctalDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	OctalDigit(str,index) {
@@ -1081,14 +1116,17 @@ class NumericLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-NonOctalDigit
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	NonOctalDigit(str,index) {str; index; throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	NonOctalDigit() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexIntegerLiteral
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	HexIntegerLiteral(str,index) {str; index; throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	HexIntegerLiteral_Sep() {throw new Error("No impl");}
+	// https://tc39.es/ecma262/#prod-HexIntegerLiteral
+	/** @returns {LexReturnTyShort} */
+	HexIntegerLiteral() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexDigits
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	HexDigits(str,index) {str; index; throw new Error("No impl");}
+	/** @returns {LexReturnTyShort} */
+	HexDigits() {throw new Error("No impl");}
 	// https://tc39.es/ecma262/#prod-HexDigit
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	HexDigit(str,index) {
@@ -1966,7 +2004,9 @@ class RegularExpressionLiterals extends ECMA262Base {
 }
 
 
-class ecma_root extends ECMA262Base {
+class ecma_root {
+	/** @type {string} */
+	str;
 	/** @param {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
 	modify_output(state,lex_return,type) {
 		if(lex_return[0]&&lex_return[2]>state.length) {
@@ -2155,7 +2195,6 @@ class ecma_root extends ECMA262Base {
 	 * @param {number} start_index
 	 */
 	constructor(source_code,start_index) {
-		super(null);
 		this.source_code=source_code;
 		this.start_index=start_index;
 		this.index=this.start_index;
@@ -2181,6 +2220,8 @@ class ecma_root extends ECMA262Base {
 		}
 		this.template_literal_lexical_components=new TemplateLiteralLexicalComponents(this);
 		this.len=0;
+		/** @type {number[]} */
+		this.index_stack=[];
 	}
 }
 /** @template T @typedef {Nullable<T>} N */
