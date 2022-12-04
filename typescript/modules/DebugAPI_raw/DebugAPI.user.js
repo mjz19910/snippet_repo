@@ -788,6 +788,7 @@ class NumericLiterals extends ECMA262Base {
 		/** @type {{}} */
 		let max_item=[];
 		let res_len=0;
+		debugger;
 		res=this.NonDecimalIntegerLiteral_Sep(str,index);
 		if(res[0]) {
 			let big_int=this.BigIntLiteralSuffix(str,index+res[2]);
@@ -1138,7 +1139,7 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {number} i @returns {LexReturnTyShort} */
 	HexIntegerLiteral_Sep(i) {
 		if(this.str.startsWith("0b",i)||this.str.startsWith("0B",i)) {
-			let res=this.BinaryDigits(i+2);
+			let res=this.HexDigits({sep:true},i+2);
 			if(res[0]) return [true,"HexIntegerLiteral",res[2]+2,["sep",res]];
 		}
 		return [false,null,0];
