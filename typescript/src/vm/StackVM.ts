@@ -90,7 +90,8 @@ export class StackVM {
 					if(value.type==='string') {
 						instruction_modify[offset]=value.value;
 					} else {
-
+						console.log('need type for',value);
+						throw new Error("Invalid");
 					}
 				}
 				let valid_instruction=SimpleStackVMParser.verify_instruction(instruction_modify,[0]);
