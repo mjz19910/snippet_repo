@@ -75,7 +75,7 @@ export class SimpleStackVM {
 					this.running=false;
 				} break;
 				case 'push_args'/*Special*/: {
-					this.push(run_arguments);
+					this.push(...run_arguments);
 				} break;
 				case 'this'/*Special*/: {
 					this.push(this);
