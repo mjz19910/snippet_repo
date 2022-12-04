@@ -87,5 +87,5 @@ module.exports = function first_run_code ( _0x4a8e )
 	result = _0x377e21( -0x13f, -0x101, -0x1cf, -0x174, -0x45 ) + _0x377e21( -0x9c, -0x103, -0x125, -0x68, -0xc8 ) + 'r';
 	console.log( 'result=', result );
 
-	process.exit( 0 );
+	// process.exit( 0 );
 };
