@@ -4,6 +4,17 @@
 export function first_run_code ( _0x4a8e )
 {
 	/**
+	 * @param {number} _0x348449
+	 * @param {number} _0x25716d
+	 *  level 0
+	 */
+	function _0x16d8 ( _0x348449, _0x25716d )
+	{
+		_0x348449 = _0x348449 - ( -0x22ee + -0x245a + -0x1 * -0x4931 );
+		var _0x10c795 = _0x4a8e[ _0x348449 ];
+		return _0x10c795;
+	}
+	/**
 	 * @param {number} _0x4703c3
 	 * @param {number} _0x104014
 	 * @param {number} _0x4f825a
@@ -23,6 +34,7 @@ export function first_run_code ( _0x4a8e )
 	 * @param {number} _0x365957
 	 * @param {number} _0x22499e
 	 * @param {number} _0x4f9951
+	 * level 2
 	 */
 	function _0xa71d1b ( _0x4d7d49, _0x2fc40f, _0x365957, _0x22499e, _0x4f9951 )
 	{
@@ -30,6 +42,6 @@ export function first_run_code ( _0x4a8e )
 	}
 
 
-	let result=_0xa71d1b( -0xe3, -0xaf, -0x3, -0x71, -0x19 ) + 'h';
-	console.log(result);
+	let result = _0xa71d1b( -0xe3, -0xaf, -0x3, -0x71, -0x19 ) + 'h';
+	console.log( result );
 }
