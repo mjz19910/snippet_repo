@@ -217,7 +217,7 @@ class ECMA262Base {
 	}
 }
 
-/** @typedef {[true,string,number]|[false,null,number]} LexReturnTyShort */
+/** @typedef {[true,string,number,...([]|[{}])]|[false,null,number]} LexReturnTyShort */
 
 // https://tc39.es/ecma262/#sec-white-space
 class JSWhiteSpace extends ECMA262Base {
@@ -748,7 +748,14 @@ class NumericLiterals extends ECMA262Base {
 	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
 	NumericLiteral(str,index) {
 		let max_len=0;
-		let len=this.DecimalLiteral(str,index);
+		let len=this.NonDecimalIntegerLiteral(str,index);
+		if(len[0]) {
+			let big_int=this.BigIntLiteralSuffix(str,index+len[2]);
+			if(big_int[0]) {
+				return [true, "NumericLiteral",len[2]+big_int[2],[len,big_int]];
+			}
+		}
+		len=this.DecimalLiteral(str,index);
 		if(len[2]>max_len) {
 			max_len=len[2];
 		}
