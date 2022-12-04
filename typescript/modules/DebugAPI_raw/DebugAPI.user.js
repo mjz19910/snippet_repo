@@ -1138,7 +1138,7 @@ class NumericLiterals extends ECMA262Base {
 	// https://tc39.es/ecma262/#prod-HexIntegerLiteral
 	/** @arg {number} i @returns {LexReturnTyShort} */
 	HexIntegerLiteral_Sep(i) {
-		if(this.str.startsWith("0b",i)||this.str.startsWith("0B",i)) {
+		if(this.str.startsWith("0x",i)||this.str.startsWith("0x",i)) {
 			let res=this.HexDigits({sep:true},i+2);
 			if(res[0]) return [true,"HexIntegerLiteral",res[2]+2,["sep",res]];
 		}
