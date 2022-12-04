@@ -5,7 +5,7 @@ import {StringBox} from "../../modules/rebuild_the_universe/ns.js";
 
 export class SimpleStackVMParser {
 	static match_regex=/(.+?)(;|$)/gm;
-	static parse_int_arg(cur_item: string) {
+	static parse_int_cast(cur_item: string) {
 		if(cur_item[3]==='()'[0]&&cur_item.at(-1)==="()"[1]) {
 			let str_int=cur_item.slice(4,-1);
 			return parseInt(str_int,10);
@@ -31,7 +31,7 @@ export class SimpleStackVMParser {
 		for(let i=1;i<cur.length;i++) {
 			let arg=cur[i];
 			if(arg.startsWith("int")) {
-				let int_res=this.parse_int_arg(arg);
+				let int_res=this.parse_int_cast(arg);
 				target_instruction[i]=new NumberBox(int_res);
 				continue;
 			}
