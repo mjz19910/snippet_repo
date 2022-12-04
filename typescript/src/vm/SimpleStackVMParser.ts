@@ -29,15 +29,16 @@ export class SimpleStackVMParser {
 		let target_instruction: [string,...Box[]]=[cur[0]];
 		for(let i=1;i<cur.length;i++) {
 			let arg=cur[i];
-			if(arg.slice(0,3)==='int') {
+			if(arg.startsWith("int")) {
 				let int_res=this.parse_int_arg(arg);
-				if(!int_res) throw new Error("Failed to parse int");
 				target_instruction[i]=new NumberBox(int_res);
+				continue;
 			}
-			if(arg.includes('%')) {
+			if(arg.startsWith('%')) {
 				let res=this.parse_string_with_format_ident(arg,format_list);
 				if(!res) throw new Error("Failed to parse format ident");
 				target_instruction[i]=res;
+				continue;
 			}
 
 		}
