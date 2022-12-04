@@ -28,11 +28,14 @@ export class SimpleStackVMParser {
 	}
 	static parse_current_instruction(cur: string[],format_list: Box[]) {
 		let target_instruction: (string|Box)[]=[];
-		target_instruction[0]=cur[0];
 		for(let i=1;i<cur.length;i++) {
 			let arg=cur[i];
 			if(typeof arg!=='string') {
 				throw new Error("Unexpected type in input to parse_instruction");
+			}
+			if(i===0) {
+				target_instruction[i]=arg;
+				continue;
 			}
 			if(arg.slice(0,3)==='int') {
 				let int_res=this.parse_int_arg(arg);
