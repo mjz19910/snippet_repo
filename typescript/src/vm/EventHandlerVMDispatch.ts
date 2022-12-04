@@ -150,7 +150,7 @@ export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 					if(value_box.type==='string') {
 						output_instruction[offset]=value_box.value;
 					}
-					let valid_instruction=SimpleStackVMParser.verify_instruction(output_instruction,verify_state);
+					let valid_instruction=SimpleStackVMParser.typecheck_instruction(output_instruction,verify_state);
 					this.instructions[target]=valid_instruction;
 					console.log('new verify state',verify_state);
 					console.assert(verify_state[0]===0,"not all of the operands typechecked");

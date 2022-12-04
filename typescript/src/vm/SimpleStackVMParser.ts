@@ -82,7 +82,7 @@ export class SimpleStackVMParser {
 				)
 		);
 	}
-	static verify_instruction(instruction: (string|Box)[]): InstructionType {
+	static typecheck_instruction(instruction: (string|Box)[]): InstructionType {
 		let left=[instruction.length];
 		const [m_opcode,...m_operands]=instruction;
 		let ret: InstructionType;
@@ -126,7 +126,7 @@ export class SimpleStackVMParser {
 		const instructions: InstructionType[]=[];
 		for(let i=0;i<raw_instructions.length;i++) {
 			const instruction=raw_instructions[i];
-			const valid_instruction=this.verify_instruction(instruction);
+			const valid_instruction=this.typecheck_instruction(instruction);
 			instructions.push(valid_instruction);
 		}
 		return instructions;
