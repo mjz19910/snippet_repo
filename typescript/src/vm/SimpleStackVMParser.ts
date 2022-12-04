@@ -10,7 +10,7 @@ export class SimpleStackVMParser {
 			let str_int=cur_item.slice(4,-1);
 			return parseInt(str_int,10);
 		}
-		throw new Error("Failed to find int cast");
+		throw new Error("Int cast not found");
 	}
 	static parse_format_identifier(str: string,format_list: Box[]) {
 		let format_index=str.indexOf('%');
