@@ -75,9 +75,8 @@ export class SimpleStackVMParser {
 	static parse_instruction_stream(string: string,format_list: Box[]) {
 		let raw_instructions=this.parse_raw_instruction_stream(string);
 		const parser_max_iter=390;
-		let parts=null;
 		for(let i=0;i<parser_max_iter;i++) {
-			parts=this.match_regex.exec(string);
+			let parts=this.match_regex.exec(string);
 			if(!parts) break;
 			let res=this.parse_regexp_match(parts);
 			raw_instructions.push(res);
