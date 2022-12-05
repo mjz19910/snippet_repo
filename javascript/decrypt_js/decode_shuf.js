@@ -1,50 +1,11 @@
-import arr from "./dynamic/enc_arr.mjs";
+import arr from "./dynamic/enc_arr.js";
 import first_run_code from "../api/first_run_code.js";
+import {get_enc_4_a, get_enc_4_b, get_enc_4_c} from "./get_enc_4.js";
 
 function start_process() {
 	process_00(arr);
 	first_run_code(arr);
 }
-/**
- * @param {number} a
- * @set _0x16d8 dx
- */
-function dx(a) {
-	return arr[a-0x1e9];
-}
-
-/**
- * @set _0x4aec3f get_enc_4_a
- * @param {number} _a
- * @param {number} _b
- * @param {number} _c
- * @param {number} _d
- * @param {number} a
- */
-function get_enc_4_a(_a,_b,_c,_d,a) {
-	return arr[a+0xaf];
-}
-
-/**
- * @set _0x3d969b get_enc_4_b
- * @param {number} _a
- * @param {number} _b
- * @param {number} _c
- * @param {number} _d
- * @param {number} a
- */
-function get_enc_4_b(_a,_b,_c,_d,a) {
-	return arr[a+0xaf];
-}
-
-/**
- * @type {(...x:number[])=>string}
- * @enc _0x314769 -> get_enc_4_c
- */
-function get_enc_4_c(_b,_c,_d,_e,a) {
-	return arr[a+0xaf];
-}
-
 /**
  * @param {(string|undefined)[]} arr
  */
