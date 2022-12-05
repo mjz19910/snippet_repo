@@ -1,5 +1,4 @@
-import {to_token_arr} from "../js/to_token_arr";
-import {raw_template} from "../raw_template";
+import {to_token_arr} from "../js/to_token_arr.js";
 import {decrypt_code_src} from "./src_template_code.js";
 
 let real_constructor=Function.prototype.constructor;
