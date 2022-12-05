@@ -20,7 +20,7 @@ function get_enc(_0x348449) {
  * @param {number[]} arg0
  * #define _0x4aec3f get_enc_4
  */
-function get_enc_4(...[_0,_1,_2,_3,_4]) {
+function get_enc_4(...[,,,,_4]) {
 	return get_enc(_4- -0x298);
 }
 
