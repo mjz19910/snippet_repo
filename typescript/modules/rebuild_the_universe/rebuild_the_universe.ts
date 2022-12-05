@@ -2020,7 +2020,7 @@ interface SpecType {
 declare global {
 	interface Window {
 		timeplayed: number;
-		secondinterval?: ReturnType<typeof setInterval>;
+		secondinterval?: ReturnType<typeof window.setInterval>;
 		doc: Document;
 		rounding(v: number,x: any,y: any): string;
 		totalAtome: number;
@@ -3484,6 +3484,7 @@ function specialclick_inject(that: number) {
 		if(window.noti)
 			window.gritter('Power-up !',window.toTitleCase(window.plurials(window.arrayNames[that]))+" X100 APS",null,"+"+window.rounding(spec_aps,false,0)+" APS","");
 		window.updateprogress(that);
+		// @ts-ignore
 		$('#spec'+that).remove();
 		if(that<74) window.seeUnit(that+1);
 		else window.seeUnit(that-1);
@@ -3492,6 +3493,7 @@ function specialclick_inject(that: number) {
 		window.achiSpec();
 	}
 }
+// @ts-ignore
 function got_jquery(value: typeof $) {
 	Object.defineProperty(window,'$',{
 		value,
@@ -3502,6 +3504,7 @@ function got_jquery(value: typeof $) {
 	use_jquery();
 }
 function use_jquery() {
+	// @ts-ignore
 	let jq: typeof $|undefined=window.$;
 	if(!jq) return;
 	if(typeof jq!="function") return;
@@ -3514,6 +3517,7 @@ function proxy_jquery() {
 	let val=use_jquery();
 	set_jq_proxy(val);
 }
+// @ts-ignore
 function set_jq_proxy(value: typeof $|undefined) {
 	let s_value=value;
 	Object.defineProperty(window,'$',{

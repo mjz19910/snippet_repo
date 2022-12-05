@@ -278,13 +278,6 @@ interface GlobalApiObject {
 	add_event_listener_ext: {};
 }
 
-// g_api on window object
-declare global {
-	interface Window {
-		g_api: GlobalApiObject;
-	}
-}
-
 // WeakRef
 declare global {
 	interface WeakRef<T extends object> {

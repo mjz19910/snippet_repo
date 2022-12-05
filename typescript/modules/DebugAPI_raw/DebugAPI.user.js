@@ -17,7 +17,7 @@
 
 // #pragma section GApi
 /** @type {typeof window['g_api']} */
-let g_api=window.g_api??{};
+let g_api=window.g_api;
 window.g_api=g_api;
 // #pragma end GApi
 
@@ -3269,6 +3269,8 @@ class W {
 		this.val=val;
 	}
 }
+g_api.saved_objects=[];
+g_api.saved_objects.push(W);
 /**@type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
 	/**@type {[typeof keys[0], typeof values[0]][]} */
@@ -3522,6 +3524,7 @@ function not_null(value) {
 	if(value===null) throw new Error("Unexpected null");
 	return value;
 }
+g_api.not_null=not_null;
 
 /** @template {any[]} T */
 class VoidCallback {

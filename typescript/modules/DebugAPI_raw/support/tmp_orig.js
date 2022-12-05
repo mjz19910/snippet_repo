@@ -19,7 +19,7 @@ function any ( v )
 	return v;
 }
 /** @type {import("./GlobalThisExt.js").GlobalThisExt} */
-let global_save = any( global );
+let global_save = any( globalThis );
 global_save.log_fn = log_fn;
 
 let skip_log = false;
@@ -39,9 +39,9 @@ function make_proxy_for_function ()
 }
 
 make_proxy_for_function();
-let original_setInterval = global.setInterval;
+let original_setInterval = globalThis.setInterval;
 original_setInterval;
-global.setInterval = new Proxy( global.setInterval, {
+globalThis.setInterval = new Proxy( globalThis.setInterval, {
 	/** @arg {[ typeof setInterval, any, [ TimerHandler, number | undefined ] ]} arg0 */
 	apply ( ...[ , , [ func, ms ] ] )
 	{

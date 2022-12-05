@@ -6,9 +6,7 @@
 			"ESNext",
 			"DOM"
 		],
-		"types": [
-			"jquery",
-		],
+		"types": [],
 		"declaration": true,
 		"module": "ESNext",
 		"moduleResolution": "Node",
