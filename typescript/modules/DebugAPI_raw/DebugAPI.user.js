@@ -3508,6 +3508,7 @@ function wasm_encode_section(id,arr) {
 	}
 	return [id,arr.length,...arr];
 }
+add_function(wasm_encode_section);
 /**
  * @param {{ name: string; }} callable
  */
