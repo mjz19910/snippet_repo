@@ -13,6 +13,7 @@ export function to_token_arr(arr,level) {
 		if(cur&&is_close(cur)) {
 			level--;
 		}
+		debugger;
 		let item=cur.split(/([;])/).filter(e => e!=="");
 		let next_regex=/([()\[\],=]|\s|var|function)/;
 		if(item.length>1) {

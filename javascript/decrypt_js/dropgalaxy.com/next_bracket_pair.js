@@ -19,13 +19,17 @@ export function next_bracket_pair(arr,start_index,callback) {
 		do {
 			count++;
 			let nx=arr.findIndex((e,idx) => {
-				if(idx<cur_index) return false;
-				return e.match(/[{}()]/);
+				if(idx<(cur_index+1)) return false;
+				return e.match(/(?<!')[{}()]/);
 			});
-			// console.log('nbp',count,depth,arr.slice(cur_index,nx).join(""));
+			if(nx ==-1) {
+				break;
+			}
+			console.log('nbp',count,depth,arr.slice(cur_index,nx).join(""));
 			if(is_open(arr[nx])) {
 				depth++;
-			} else if(is_close(arr[nx])) {
+			}
+			if(is_close(arr[nx])) {
 				depth--;
 			}
 			cur_index=nx;
