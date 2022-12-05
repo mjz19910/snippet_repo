@@ -8,12 +8,10 @@ import js_str_1 from "./src_template_decrypt_arr_str.js";
 make_proxy_for_function_constructor();
 make_proxy_for_function();
 attach_proxy_for_setInterval();
-let _0x4a8e_=js_str_1;
 
-let eq_idx=_0x4a8e_.indexOf("=");
-
-let var_def=_0x4a8e_.slice(0,eq_idx);
-let var_code=_0x4a8e_.slice(eq_idx+1,_0x4a8e_.lastIndexOf(";"));
+let eq_idx=js_str_1.indexOf("=");
+let var_def=js_str_1.slice(0,eq_idx);
+let var_code=js_str_1.slice(eq_idx+1,js_str_1.lastIndexOf(";"));
 
 let decrypt_code=js_str_2;
 
