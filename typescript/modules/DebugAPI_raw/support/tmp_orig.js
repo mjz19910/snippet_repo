@@ -151,19 +151,21 @@ function to_level(arr,level=0) {
 	return ret;
 }
 let level_data=to_level(code_lvl);
-let index=level_data.findIndex(e => e==="{");
-index=level_data.indexOf("}",index);
-if(level_data[index+1]===';') {index++;}
-console.log(level_data.slice(0,index+1).join(""));
-index=x(index+1);
+let index=x(0);
+index=x(index);
+/**
+ * @param {string} x
+ */
+function is_term(x){
+	return x===';'||x===',';
+}
 /**
  * @param {number | undefined} start_index
  */
 function x(start_index) {
 	let index=level_data.indexOf("{",start_index);
 	index=level_data.indexOf("}",index);
-	console.log(level_data[index+1]);
-	if(level_data[index+1]===';') {index++;}
+	if(is_term(level_data[index+1])) {index++;}
 	console.log(level_data.slice(start_index,index+1).join(""));
 	return index+1;
 }
