@@ -16,7 +16,7 @@ function dx(a) {
 }
 
 /**
- * @set _0x4aec3f get_enc_4
+ * @set _0x4aec3f get_enc_4_a
  * @param {number} _a
  * @param {number} _b
  * @param {number} _c
@@ -28,7 +28,7 @@ function get_enc_4_a(_a,_b,_c,_d,a) {
 }
 
 /**
- * #define _0x3d969b get_enc_5
+ * #define _0x3d969b get_enc_4_b
  * @param {number} _a
  * @param {number} _b
  * @param {number} _c
@@ -41,7 +41,7 @@ function get_enc_4_b(_a,_b,_c,_d,a) {
 
 /**
  * @type {(...x:number[])=>string}
- * @enc _0x314769 -> get_enc_4_x_1
+ * @enc _0x314769 -> get_enc_4_c
  */
 function get_enc_4_c(_b,_c,_d,_e,a) {
 	return dx(a+0x298);
