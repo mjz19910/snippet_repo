@@ -1,7 +1,13 @@
-// parse_javascript_str
+// saved_objects
 declare global {
 	interface InjectApiT {
 		saved_objects: [string, {}][];
+	}
+}
+
+// parse_javascript_str
+declare global {
+	interface InjectApiT {
 		parse_javascript_str?:((str:string)=>void);
 	}
 }
