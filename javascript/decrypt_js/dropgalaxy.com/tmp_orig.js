@@ -13,10 +13,6 @@ let eq_idx=js_str_1.indexOf("=");
 let var_def=js_str_1.slice(0,eq_idx);
 let var_code=js_str_1.slice(eq_idx+1,js_str_1.lastIndexOf(";"));
 
-let decrypt_code=js_str_2;
-
-decrypt_code=decrypt_code.replaceAll("\n","");
-
 /**
  * @param {any[]} arr
  */
@@ -27,7 +23,7 @@ function pop(arr) {
 }
 pop;
 
-let code_lvl=decrypt_code.trim().split(/(\{|\})/).filter(e => e!=="");
+let code_lvl=js_str_2.split(/(\{|\})/).filter(e => e!=="");
 let level_data=to_token_arr(code_lvl);
 let index=0;
 for(let i=0;i<6;i++) {
@@ -53,4 +49,4 @@ function x(start_index) {
 
 let v=false;
 
-if(v) eval(var_def+"="+var_code+";console.log("+var_def.split(" ")[1]+");"+decrypt_code);
+if(v) eval(var_def+"="+var_code+";console.log("+var_def.split(" ")[1]+");"+js_str_2);
