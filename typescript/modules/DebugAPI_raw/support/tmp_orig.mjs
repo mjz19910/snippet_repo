@@ -98,5 +98,3 @@ skip_log = true;
 messages.slice().map( e => e.map( e => log_fn( [e] ) ) );
 skip_log = false;
 
-start( "> " );
-
