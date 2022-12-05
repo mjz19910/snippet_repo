@@ -8,10 +8,17 @@ export function use_encrypt_code() {
 	let var_def=js_str_1.slice(0,eq_idx);
 	let var_code=js_str_1.slice(eq_idx+1,js_str_1.lastIndexOf(";"));
 	let code_lvl=js_str_2.split(/(\{|\})/).filter(e => e!=="");
-	let level_data=to_token_arr(code_lvl);
+	let arr=to_token_arr(code_lvl);
 	let index=0;
+	/**
+	 * @param {number} start_index
+	 * @param {number} index
+	 */
+	function handle_x(start_index,index) {
+		console.log("%o",arr.slice(start_index,index+1).join("").trim());
+	}
 	for(let i=0;i<6;i++) {
-		index=x(level_data,index);
+		index=x(arr,index,handle_x);
 	}
 	let do_eval=false;
 	if(do_eval) {
