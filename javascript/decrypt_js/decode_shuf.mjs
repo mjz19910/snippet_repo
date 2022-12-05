@@ -17,13 +17,13 @@ function get_enc(a) {
 
 /**
  * @set _0x4aec3f get_enc_4
+ * @param {number} _a
  * @param {number} _b
  * @param {number} _c
  * @param {number} _d
- * @param {number} _e
  * @param {number} a
  */
-function get_enc_4_a(_b,_c,_d,_e,a) {
+function get_enc_4_a(_a,_b,_c,_d,a) {
 	let expected=a- -0x298;
 	let my_ver=a+0x298;
 	console.assert(expected===my_ver,"simplify correct");
@@ -32,13 +32,13 @@ function get_enc_4_a(_b,_c,_d,_e,a) {
 
 /**
  * #define _0x3d969b get_enc_5
- * @param {number} _0
- * @param {number} _1
- * @param {number} _2
- * @param {number} _3
+ * @param {number} _a
+ * @param {number} _b
+ * @param {number} _c
+ * @param {number} _d
  * @param {number} a
  */
-function get_enc_4_b(_0,_1,_2,_3,a) {
+function get_enc_4_b(_a,_b,_c,_d,a) {
 	return get_enc(a+0x298);
 }
 
