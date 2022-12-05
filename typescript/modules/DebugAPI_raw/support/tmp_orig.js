@@ -99,10 +99,10 @@ function pop(arr) {
 }
 pop;
 
-let code_lvl=decrypt_code.split(/(\{|\})/).filter(e=>e!=="");
+let code_lvl=decrypt_code.trim().split(/(\{|\})/).filter(e=>e!=="");
 /** @arg {string[]} arr */
 function to_level(arr,level=0) {
-	/** @type {[number,string][]} */
+	/** @type {string[]} */
 	let ret=[];
 	/** @param {string} str */
 	function is_open(str) {
@@ -123,7 +123,7 @@ function to_level(arr,level=0) {
 			let next=to_level(item,level);
 			for(let i=0;i<next.length;i++) {
 				let cur=next[i];
-				let item=cur[1].split(next_regex).filter(e=>e!=="");
+				let item=cur.split(next_regex).filter(e=>e!=="");
 				let final=to_level(item,level);
 				ret.push(...final);
 			}
@@ -134,14 +134,14 @@ function to_level(arr,level=0) {
 				let cur=next;
 				let item=cur.split(next_regex).filter(e=>e!=="");
 				if(item.length === 1){
-					ret.push([level,next]);
+					ret.push(next);
 					break x;
 				}
 				let final=to_level(item,level);
 				ret.push(...final);
 				break x;
 			} else {
-				ret.push([level,next]);
+				ret.push(next);
 			}
 		}
 		if(arr[i]&&is_open(cur)) {
@@ -151,7 +151,9 @@ function to_level(arr,level=0) {
 	return ret;
 }
 let level_data=to_level(code_lvl);
-level_data;
+let index=level_data.findIndex(e=>e==="{");
+index=level_data.findIndex(e=>e==="}");
+console.log(...level_data.slice(0,index));
 
 let v=false;
 
