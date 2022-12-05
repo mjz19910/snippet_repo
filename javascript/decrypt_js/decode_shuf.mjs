@@ -7,8 +7,7 @@ function start_process() {
 }
 /**
  * @param {number} a
- * @define _0x16d8
- * @new_name get_enc
+ * @set _0x16d8 dx
  */
 function dx(a) {
 	a-=0x1e9;
@@ -28,7 +27,7 @@ function get_enc_4_a(_a,_b,_c,_d,a) {
 }
 
 /**
- * #define _0x3d969b get_enc_4_b
+ * @set _0x3d969b get_enc_4_b
  * @param {number} _a
  * @param {number} _b
  * @param {number} _c
