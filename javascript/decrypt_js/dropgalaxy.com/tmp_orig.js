@@ -18,12 +18,18 @@ let original_setInterval=globalThis.setInterval;
 original_setInterval;
 globalThis.setInterval=new Proxy(globalThis.setInterval,{
 	/** @arg {[ typeof setInterval, any, [ TimerHandler, number | undefined ] ]} arg0 */
-	apply(...[,,[func,ms]]) {
+	apply(...[,,[ha,ms]]) {
 		console.log("set_interval ms",ms);
-		return setTimeout(function() {
-			log_fn("timeout");
-			setTimeout(func,0);
-		},0);
+		if(typeof ha=='function') {
+			let func=ha;
+			return setTimeout(function() {
+				log_fn("timeout");
+				func();
+			},0);
+		} else {
+			console.log("handler is string");
+			setTimeout(ha,0);
+		}
 	}
 });
 import code_arr_str from "./src_template_decrypt_arr_str.js";
