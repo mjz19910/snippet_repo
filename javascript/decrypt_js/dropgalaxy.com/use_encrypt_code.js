@@ -15,11 +15,15 @@ export function use_encrypt_code() {
 			if(start_index>3) {
 				start_index+=2;
 			}
-			if(start_index-index > 50) {
+			if(index-start_index>60) {
 				console.log(JSON.stringify([
-					arr.slice(start_index,start_index+12).join("").trim(),
-					arr.slice(index-12,index+1).join("").trim(),
+					arr.slice(start_index,start_index+30).join("").trim(),
+					arr.slice(index-30,index+1).join("").trim(),
 				]));
+			} else {
+				console.log(JSON.stringify(
+					arr.slice(start_index,index+1).join("").trim(),
+				));
 			}
 		});
 	}
