@@ -6,15 +6,6 @@ import js_str_2 from "./src_template_code.js";
 import js_str_1 from "./src_template_decrypt_arr_str.js";
 
 make_proxy_for_function_constructor();
-let log_fn=console.log.bind(console);
-/** @template T @arg {any} v @returns {T} */
-function any(v) {
-	return v;
-}
-/** @type {import("../../../typescript/modules/DebugAPI_raw/support/GlobalThisExt.js").GlobalThisExt} */
-let global_save=any(globalThis);
-global_save.log_fn=log_fn;
-
 make_proxy_for_function();
 attach_proxy_for_setInterval();
 let _0x4a8e_=js_str_1;
