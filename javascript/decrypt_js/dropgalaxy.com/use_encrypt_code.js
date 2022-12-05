@@ -13,11 +13,8 @@ export function use_encrypt_code() {
 	for(let i=0;i<6;i++) {
 		index=x(level_data,index);
 	}
-
-
-
-	let v=false;
-
-	if(v)
+	let do_eval=false;
+	if(do_eval) {
 		eval(var_def+"="+var_code+";console.log("+var_def.split(" ")[1]+");"+js_str_2);
+	}
 }
