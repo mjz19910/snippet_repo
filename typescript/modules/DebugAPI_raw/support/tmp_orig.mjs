@@ -1,5 +1,3 @@
-import { start } from "repl";
-
 let real_constructor = Function.prototype.constructor;
 Function.prototype.constructor = function ( /** @type {string|undefined} */ fn_string )
 {
