@@ -99,7 +99,7 @@ function pop(arr) {
 }
 pop;
 
-let code_lvl=decrypt_code.split(/(\{|\})/);
+let code_lvl=decrypt_code.split(/(\{|\})/).filter(e=>e!=="");
 /** @arg {string[]} arr */
 function to_level(arr) {
 	let level=0;
