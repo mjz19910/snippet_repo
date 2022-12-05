@@ -1,8 +1,8 @@
 import {to_token_arr} from "../js/to_token_arr.js";
 import {make_proxy_for_function} from "../block/make_proxy_for_function.js";
 import {make_proxy_for_function_constructor} from "../block/make_proxy_for_function_constructor.js";
-import {decrypt_code_src} from "./src_template_code.js";
-import code_arr_str from "./src_template_decrypt_arr_str.js";
+import js_str_2 from "./src_template_code.js";
+import js_str_1 from "./src_template_decrypt_arr_str.js";
 import {attach_proxy_for_setInterval} from "../block/attach_proxy_for_setInterval.js";
 
 make_proxy_for_function_constructor();
@@ -17,14 +17,14 @@ global_save.log_fn=log_fn;
 
 make_proxy_for_function();
 attach_proxy_for_setInterval();
-let _0x4a8e_=code_arr_str;
+let _0x4a8e_=js_str_1;
 
 let eq_idx=_0x4a8e_.indexOf("=");
 
 let var_def=_0x4a8e_.slice(0,eq_idx);
 let var_code=_0x4a8e_.slice(eq_idx+1,_0x4a8e_.lastIndexOf(";"));
 
-let decrypt_code=decrypt_code_src;
+let decrypt_code=js_str_2;
 
 decrypt_code=decrypt_code.replaceAll("\n","");
 
