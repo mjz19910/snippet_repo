@@ -43,13 +43,13 @@ make_proxy_for_function();
 let original_setInterval = global.setInterval;
 original_setInterval;
 global.setInterval = new Proxy( global.setInterval, {
-	apply ( ...[ , , [ func, ms ] ] )
+	apply ( ...[ , , [ func, ms ] ]: [typeof setInterval,any,[TimerHandler, number|undefined]] )
 	{
 		console.log( "set_interval ms", ms );
 		return setTimeout( function ()
 		{
 			log_fn( "timeout" );
-			func();
+			setTimeout(func,0);
 			setTimeout( () => {}, 2000 );
 		}, 3000 );
 	}
