@@ -2922,8 +2922,10 @@ class AddEventListenerExt {
 AddEventListenerExt.attach_to_api();
 
 class IterExtensions {
-	static init() {
+	static attach_to_api() {
 		inject_api.IterExtensions=this;
+	}
+	static init() {
 		let map=new Map;
 		let val_iter=map.values();
 		let proto=Object.getPrototypeOf(val_iter);
@@ -2944,7 +2946,7 @@ class IterExtensions {
 		};
 	}
 }
-IterExtensions.init();
+IterExtensions.attach_to_api();
 
 /** @param {boolean} include_uninteresting */
 function getPlaybackRateMap(include_uninteresting) {
