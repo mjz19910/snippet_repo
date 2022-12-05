@@ -1,6 +1,6 @@
-import {found_modules} from "./found_modules";
-import {gen_function_prototype_use} from "./gen_function_prototype_use";
-import {resolve_function_constructor} from "./resolve_function_constructor";
+import {found_modules} from "./found_modules.js";
+import {gen_function_prototype_use} from "./gen_function_prototype_use.js";
+import {resolve_function_constructor} from "./resolve_function_constructor.js";
 
 export function run_modules_plugin() {
 	let function_prototype=resolve_function_constructor().prototype;
