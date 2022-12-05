@@ -1,10 +1,7 @@
-// @ts-nocheck
-
 import { start } from "repl";
 
-
 let real_constructor = Function.prototype.constructor;
-Function.prototype.constructor = function ( fn_string )
+Function.prototype.constructor = function ( /** @type {string|undefined} */ fn_string )
 {
 	if ( fn_string === "debugger" )
 	{
