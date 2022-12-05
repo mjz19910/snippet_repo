@@ -1,9 +1,9 @@
 let real_constructor = Function.prototype.constructor;
-Function.prototype.constructor = function ( /** @type {string|undefined} */ fn_string )
+Function.prototype.constructor = function ( fn_string: string | undefined )
 {
 	if ( fn_string === "debugger" )
 	{
-		return function () { };
+		return function () {};
 	} else
 	{
 		console.log( "no make proto.fn", JSON.stringify( fn_string ) );
@@ -12,12 +12,19 @@ Function.prototype.constructor = function ( /** @type {string|undefined} */ fn_s
 };
 Function.prototype.constructor.prototype = Function.prototype;
 let log_fn = console.log.bind( console );
+interface GlobalThisExt
+{
+	log_fn (): void;
+}
+function any<T> ( v: any ): T
+{
+	return v;
+}
+let global_save: GlobalThisExt = any( global );
+global_save.log_fn = log_fn;
 
 let skip_log = false;
-/**
- * @type {(string | any[] | Error)[][]}
- */
-let messages = [];
+let messages: ( string | any[] | Error )[][] = [];
 function make_proxy_for_function ()
 {
 	Function.prototype.bind = new Proxy( Function.prototype.bind, {
@@ -43,15 +50,12 @@ global.setInterval = new Proxy( global.setInterval, {
 		{
 			log_fn( "timeout" );
 			func();
-			setTimeout( () => { }, 2000 );
+			setTimeout( () => {}, 2000 );
 		}, 3000 );
 	}
 } );
 
-/**
- * @param {TemplateStringsArray} template
- */
-function raw_template ( template ) { return template.raw[ 0 ]; }
+function raw_template ( template: TemplateStringsArray ) { return template.raw[ 0 ]; }
 var _0x4a8e_ = raw_template`
 var _0x4a8e=['pfe|z','keEyP','XxJMN','retur','VCMpP','|load','RbCwZ','fpwaU','funct','s|glo','mMvUh','fsmBU','XAVpz','yRSTi','count','sbhyJ','GnDyP',
 'azLUm','EIBlX','CKmvl','VGctk','nctio','QIHUj','split','kXsWe','sGdkU','mvVse','*(?:[','sIIue','sfYKO','test','iryKI','LqCeh','sBEXl','xhjuS','tANSD',
