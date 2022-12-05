@@ -11,10 +11,10 @@ export function use_encrypt_code() {
 	let arr=to_token_arr(code_lvl);
 	let index=0;
 	/**
-	 * @param {number} start_index
-	 * @param {number} index
+	 * @param {string[]} arr
+	 * @arg {[start:number,end:number]} result
 	 */
-	function handle_x(start_index,index) {
+	function handle_x(arr,[start_index,index]) {
 		console.log("%o",arr.slice(start_index,index+1).join("").trim());
 	}
 	for(let i=0;i<6;i++) {
