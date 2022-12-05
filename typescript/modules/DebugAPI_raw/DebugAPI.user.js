@@ -2488,7 +2488,7 @@ class ReversePrototypeChain {
 			return "window_id::"+this.window_list.indexOf(any(value));
 		}
 		if(value===inject_api)
-			return `self::g_api:${object_index}`;
+			return `self::inject_api:${object_index}`;
 		let key;
 		if(Symbol.toStringTag in value) {
 			key=value[Symbol.toStringTag];
@@ -2630,10 +2630,12 @@ function define_normal_value(obj,key,value) {
 	});
 }
 
-/** @param {EventTarget} prototype */
-function overwrite_addEventListener(prototype) {
+/** @param {AddEventListenerExt} obj */
+function overwrite_addEventListener(obj) {
 	/** @type {arg_list_item_type[][]} */
 	let arg_list=[];
+	let t=obj;
+	let prototype=obj.get_target_prototype();
 	prototype.addEventListener=new Proxy(prototype.addEventListener,{
 		/** @arg {[type: string, callback: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions | undefined]} argArray */
 		apply(target,callback,argArray) {
@@ -2668,7 +2670,7 @@ function overwrite_addEventListener(prototype) {
 			x: if(argArray[0]==="message") {
 				let handler=argArray[1];
 				if(handler===null) break x;
-				if(add_event_listener_ext.elevated_event_handlers.includes(handler)) {
+				if(t.elevated_event_handlers.includes(handler)) {
 					break x;
 				}
 				console.log("message event listener");
@@ -2714,13 +2716,6 @@ class AddEventListenerExt {
 	};
 	/** @private */
 	target_prototype=EventTarget.prototype;
-	constructor() {
-		overwrite_addEventListener(this.target_prototype);
-		if(!debug) return;
-		this.init_overwrite("addEventListener");
-		this.init_overwrite("dispatchEvent");
-		this.init_overwrite("removeEventListener");
-	}
 	/** @private @type {Window[]} */
 	window_list=[window];
 	/** @private @type {null|{v:any}} */
@@ -2731,6 +2726,28 @@ class AddEventListenerExt {
 	namespace_key="__g_api__namespace";
 	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
+	/** @private */
+	clear_count=0;
+	/** @private @type {WeakRef<WeakRef<Node>[]>} */
+	node_list=new WeakRef([]);
+	/** @private @type {WeakRef<WeakRef<{value:number}>[]>} */
+	node_list_ids=new WeakRef([]);
+	/** @private */
+	node_id_max=0;
+	constructor() {
+		overwrite_addEventListener(this);
+		if(!debug) return;
+		this.init_overwrite("addEventListener");
+		this.init_overwrite("dispatchEvent");
+		this.init_overwrite("removeEventListener");
+	}
+	get_target_prototype() {
+		return this.target_prototype;
+	}
+	/** @param {EventListenersT} handler */
+	elevate_event_handler(handler) {
+		this.elevated_event_handlers.push(handler);
+	}
 	/** @private @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
 	convert_to_namespaced_string(real_value,val,key,index) {
 		if(!(this.namespace_key in val))
@@ -2748,8 +2765,6 @@ class AddEventListenerExt {
 		define_normal_value(val,this.namespace_key,namespace);
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
-	/** @private */
-	clear_count=0;
 	/** @private @returns {void} @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
@@ -2824,12 +2839,6 @@ class AddEventListenerExt {
 			console.log("err in add to call list",e);
 		}
 	}
-	/** @private @type {WeakRef<WeakRef<Node>[]>} */
-	node_list=new WeakRef([]);
-	/** @private @type {WeakRef<WeakRef<{value:number}>[]>} */
-	node_list_ids=new WeakRef([]);
-	/** @private */
-	node_id_max=0;
 	/** @private @param {Node} val */
 	generate_node_id(val) {
 		if(val.__id_holder) {
@@ -2903,10 +2912,13 @@ class AddEventListenerExt {
 			return arg_function.handleEvent(...args);
 		}
 	}
+	static attach_to_api() {
+		inject_api.AddEventListenerExt=AddEventListenerExt;
+		let add_event_listener_ext=new AddEventListenerExt;
+		inject_api.add_event_listener_ext=add_event_listener_ext;
+	}
 }
-inject_api.AddEventListenerExt=AddEventListenerExt;
-let add_event_listener_ext=new AddEventListenerExt;
-inject_api.add_event_listener_ext=add_event_listener_ext;
+AddEventListenerExt.attach_to_api();
 
 class IterExtensions {
 	static init() {
@@ -3669,8 +3681,8 @@ function run_modules_plugin() {
 			default:
 				ret=bound_apply_call(this,[thisArg,argArray]);
 		}
-		if(window.inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
-			window.inject_api.function_as_string_vec.push(this.toString());
+		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
+			inject_api.function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};
@@ -3681,8 +3693,8 @@ function run_modules_plugin() {
 	 */
 	function function_prototype_apply_inject(tv,r) {
 		let ret=bound_apply_call(this,[tv,r]);
-		if(window.inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
-			window.inject_api.function_as_string_vec.push(this.toString());
+		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
+			inject_api.function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};
@@ -4893,11 +4905,6 @@ class RemoteHandler {
 		this.root=root;
 		this.connection_port=connection_port;
 	}
-}
-
-/** @param {EventListenersT} handler */
-function elevate_event_handler(handler) {
-	add_event_listener_ext.elevated_event_handlers.push(handler);
 }
 
 class RemoteSocket {

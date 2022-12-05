@@ -27,6 +27,13 @@ declare global {
 	}
 }
 
+// inject_api global
+declare global {
+	interface Window {
+		inject_api: InjectApiT;
+	}
+}
+
 class VoidCallback<U extends any[],C> {
 	m_callback: ((...args: U) => C);
 	constructor(callback: (...args: U) => C) {
