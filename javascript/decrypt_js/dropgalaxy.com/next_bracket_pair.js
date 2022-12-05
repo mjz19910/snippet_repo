@@ -22,17 +22,16 @@ export function next_bracket_pair(arr,start_index,callback) {
 				if(idx<=cur_index) return false;
 				return e.match(/[{}]/);
 			});
-			// console.log('nbp',count,depth,arr.slice(cur_index+1,nx).join(""));
+			// console.log('nbp',count,depth,arr.slice(cur_index,nx).join(""));
 			if(is_open(arr[nx])) {
 				depth++;
 			} else if(is_close(arr[nx])) {
 				depth--;
 			}
 			cur_index=nx;
-		} while(depth>=1&&count<30);
+		} while(depth>=1&&count<5000);
 		index=cur_index;
 	}
-	if(is_term(arr[index+1])) {index++;}
 	callback(arr,[start_index,index]);
-	return index+1;
+	return index;
 }
