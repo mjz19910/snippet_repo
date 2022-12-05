@@ -22,7 +22,7 @@ function dx(a) {
  * @param {number} a
  */
 function get_enc_4_a(_a,_b,_c,_d,a) {
-	return dx(a+0x298);
+	return arr[a+0xaf];
 }
 
 /**
@@ -34,7 +34,7 @@ function get_enc_4_a(_a,_b,_c,_d,a) {
  * @param {number} a
  */
 function get_enc_4_b(_a,_b,_c,_d,a) {
-	return dx(a+0x298);
+	return arr[a+0xaf];
 }
 
 /**
@@ -42,7 +42,7 @@ function get_enc_4_b(_a,_b,_c,_d,a) {
  * @enc _0x314769 -> get_enc_4_c
  */
 function get_enc_4_c(_b,_c,_d,_e,a) {
-	return dx(a+0x298);
+	return arr[a+0xaf];
 }
 
 /**
