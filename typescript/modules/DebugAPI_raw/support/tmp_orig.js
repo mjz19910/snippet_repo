@@ -98,7 +98,7 @@ var _0x16d8=function(_0x348449,_0x25716d){_0x348449=_0x348449-(-0x22ee+-0x245a+-
 
 `;
 
-let code_lvl=decrypt_code.split(/([{}])/);
+let code_lvl=decrypt_code.split(/([{}()])/);
 /** @arg {string[]} arr */
 function to_level(arr) {
 	let level=0;
@@ -111,16 +111,24 @@ function to_level(arr) {
 		if(!v) throw new Error("stack underflow");
 		return v;
 	}
+	/** @param {string} str */
+	function is_open(str) {
+		return str==="{}"[0]||str==="()"[0];
+	}
+	/** @param {string} str */
+	function is_close(str) {
+		return str==="{}"[0]||str==="()"[0];
+	}
 	for(let i=0;i<arr.length;i++) {
-		let match=arr[i].match(/[{}]/);
-		if(match && match[0]==="{}"[1]) {
+		let match=arr[i].match(/[{}()]/);
+		if(match && is_open(match[0])) {
 			level--;
 			let prev_ret=ret;
 			ret=pop();
 			ret.push(any([level+1,prev_ret]));
 		}
 		ret.push([level,arr[i]]);
-		if(match && match[0]==="{}"[0]) {
+		if(match && is_close(match[0])) {
 			level++;
 			stack.push(ret);
 			ret=[];
