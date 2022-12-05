@@ -4,7 +4,7 @@ import {make_proxy_for_function_constructor} from "../block/make_proxy_for_funct
 import {decrypt_code_src} from "./src_template_code.js";
 
 make_proxy_for_function_constructor();
-let log_fn=console.log.bind(console);
+export let log_fn=console.log.bind(console);
 /** @template T @arg {any} v @returns {T} */
 function any(v) {
 	return v;
@@ -14,25 +14,9 @@ let global_save=any(globalThis);
 global_save.log_fn=log_fn;
 
 make_proxy_for_function();
-let original_setInterval=globalThis.setInterval;
-original_setInterval;
-globalThis.setInterval=new Proxy(globalThis.setInterval,{
-	/** @arg {[ typeof setInterval, any, [ TimerHandler, number | undefined ] ]} arg0 */
-	apply(...[,,[ha,ms]]) {
-		console.log("set_interval ms",ms);
-		if(typeof ha=='function') {
-			let func=ha;
-			return setTimeout(function() {
-				log_fn("timeout");
-				func();
-			},0);
-		} else {
-			console.log("handler is string");
-			setTimeout(ha,0);
-		}
-	}
-});
+attach_proxy_for_setInterval();
 import code_arr_str from "./src_template_decrypt_arr_str.js";
+import {attach_proxy_for_setInterval} from "./attach_proxy_for_setInterval";
 let _0x4a8e_=code_arr_str;
 
 let eq_idx=_0x4a8e_.indexOf("=");
@@ -81,5 +65,3 @@ function x(start_index) {
 let v=false;
 
 if(v) eval(var_def+"="+var_code+";console.log("+var_def.split(" ")[1]+");"+decrypt_code);
-
-
