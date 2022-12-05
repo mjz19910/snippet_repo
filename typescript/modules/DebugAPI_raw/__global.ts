@@ -247,7 +247,6 @@ declare global {
 		DoCalc: {};
 		reversePrototypeChain: {};
 		ReversePrototypeChain: {};
-		tmp: {};
 		any_api_logger: {};
 		parse_html_to_binary_arr: (html: string) => unknown[];
 		run_modules_plugin: VoidCallbackWith<() => void>;

@@ -2435,6 +2435,10 @@ function any(v) {
 }
 
 class ReversePrototypeChain {
+	static attach_to_api() {
+		g_api.ReversePrototypeChain=this;
+		g_api.reversePrototypeChain=new ReversePrototypeChain(Object.prototype,[]);
+	}
 	/**
 	 * @param {{}} base
 	 * @param {{}[]} targets
@@ -2614,12 +2618,7 @@ class ReversePrototypeChain {
 		}
 	}
 }
-g_api.ReversePrototypeChain=ReversePrototypeChain;
-let reversePrototypeChain=new ReversePrototypeChain(Object.prototype,[]);
-g_api.reversePrototypeChain=reversePrototypeChain;
-
-let x={};
-g_api.tmp=x;
+ReversePrototypeChain.attach_to_api();
 
 /** @param {{}} obj @param {PropertyKey} key @param {{}} value */
 function define_normal_value(obj,key,value) {
