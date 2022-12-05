@@ -1,9 +1,10 @@
 import _0x4a8e from "./decrypt_js/dynamic/enc_arr.mjs";
+import first_run_code from "./first_run_code.js";
 
 function start_process ()
 {
 	process_00( _0x4a8e );
-	console.log( 'unshuf', _0x4a8e );
+	first_run_code(_0x4a8e);
 }
 /**
  * @param {number} _0x348449
