@@ -3509,6 +3509,12 @@ function wasm_encode_section(id,arr) {
 	return [id,arr.length,...arr];
 }
 /**
+ * @param {{ name: string; }} callable
+ */
+function add_function(callable) {
+	g_api.saved_objects.push([callable.name,callable])
+}
+/**
  * @param {string | any[]} arr
  */
 function wasm_encode_string(arr) {
@@ -3518,13 +3524,14 @@ function wasm_encode_string(arr) {
 	}
 	return [arr.length,...arr];
 }
+add_function(wasm_encode_string);
 
 /** @type {<T>(v:T|null)=>T} */
 function not_null(value) {
 	if(value===null) throw new Error("Unexpected null");
 	return value;
 }
-g_api.saved_objects.push(["not_null",not_null]);
+add_function(not_null);
 
 /** @template {any[]} T */
 class VoidCallback {
