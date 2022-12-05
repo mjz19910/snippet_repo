@@ -18,7 +18,7 @@ let var_code=js_str_1.slice(eq_idx+1,js_str_1.lastIndexOf(";"));
  */
 function pop(arr) {
 	let v=arr.pop();
-	if(!v) throw new Error("stack underflow");
+	if(!v) throw new Error("Array underflow");
 	return v;
 }
 pop;
