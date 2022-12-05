@@ -12,17 +12,6 @@ attach_proxy_for_setInterval();
 let eq_idx=js_str_1.indexOf("=");
 let var_def=js_str_1.slice(0,eq_idx);
 let var_code=js_str_1.slice(eq_idx+1,js_str_1.lastIndexOf(";"));
-
-/**
- * @param {any[]} arr
- */
-function pop(arr) {
-	let v=arr.pop();
-	if(!v) throw new Error("Array underflow");
-	return v;
-}
-pop;
-
 let code_lvl=js_str_2.split(/(\{|\})/).filter(e => e!=="");
 let level_data=to_token_arr(code_lvl);
 let index=0;
