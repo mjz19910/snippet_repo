@@ -6,7 +6,7 @@ import js_str_2 from "./src_template_code.js";
 import js_str_1 from "./src_template_decrypt_arr_str.js";
 
 make_proxy_for_function_constructor();
-export let log_fn=console.log.bind(console);
+let log_fn=console.log.bind(console);
 /** @template T @arg {any} v @returns {T} */
 function any(v) {
 	return v;
