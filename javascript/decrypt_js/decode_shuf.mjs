@@ -1,5 +1,5 @@
 import _0x4a8e from "./dynamic/enc_arr.mjs";
-import first_run_code from "./first_run_code.js";
+import first_run_code from "../api/first_run_code.js";
 
 function start_process ()
 {

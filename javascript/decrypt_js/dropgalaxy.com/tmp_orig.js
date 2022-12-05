@@ -18,7 +18,7 @@ let log_fn=console.log.bind(console);
 function any(v) {
 	return v;
 }
-/** @type {import("../../GlobalThisExt.js").GlobalThisExt} */
+/** @type {import("../../../typescript/modules/DebugAPI_raw/support/GlobalThisExt.js").GlobalThisExt} */
 let global_save=any(globalThis);
 global_save.log_fn=log_fn;
 
