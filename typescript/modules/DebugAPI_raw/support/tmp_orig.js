@@ -1,5 +1,7 @@
 // @ts-nocheck
 
+import { start } from "repl";
+
 
 let real_constructor = Function.prototype.constructor;
 Function.prototype.constructor = function ( fn_string )
@@ -14,6 +16,7 @@ Function.prototype.constructor = function ( fn_string )
 	return real_constructor.call( this, fn_string );
 };
 Function.prototype.constructor.prototype = Function.prototype;
+let log_fn = console.log.bind( console );
 
 let skip_log = false;
 let messages = [];
@@ -28,7 +31,7 @@ function make_proxy_for_function ()
 				if ( messages.length > 8 )
 				{
 					skip_log = true;
-					messages.map( e => console.log( e ) );
+					messages.map( e => log_fn( ...e ) );
 					skip_log = false;
 					messages = [];
 				}
@@ -94,14 +97,12 @@ var _0x16d8=function(_0x348449,_0x25716d){_0x348449=_0x348449-(-0x22ee+-0x245a+-
 
 `;
 
-let log_fn = console.log.bind( console );
-
 console.log( eval( decrypt_code ) );
 
 skip_log = true;
 messages.slice().map( e => log_fn( e ) );
 skip_log = false;
 
-let cint_stop = original_setInterval( () => { }, 1000 );
-cint_stop;
+
+start("> ");
 
