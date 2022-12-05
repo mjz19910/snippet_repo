@@ -99,7 +99,7 @@ function pop(arr) {
 }
 pop;
 
-let code_lvl=decrypt_code.trim().split(/(\{|\})/).filter(e=>e!=="");
+let code_lvl=decrypt_code.trim().split(/(\{|\})/).filter(e => e!=="");
 /** @arg {string[]} arr */
 function to_level(arr,level=0) {
 	/** @type {string[]} */
@@ -117,30 +117,30 @@ function to_level(arr,level=0) {
 		if(cur&&is_close(cur)) {
 			level--;
 		}
-		let item=cur.split(/([;])/).filter(e=>e!=="");
+		let item=cur.split(/([;])/).filter(e => e!=="");
 		let next_regex=/([()\[\],=]|\s|var|function)/;
-		if(item.length > 1) {
+		if(item.length>1) {
 			let next=to_level(item,level);
 			for(let i=0;i<next.length;i++) {
 				let cur=next[i];
-				let item=cur.split(next_regex).filter(e=>e!=="");
+				let item=cur.split(next_regex).filter(e => e!=="");
 				let final=to_level(item,level);
 				ret.push(...final);
 			}
 		} else {
 			let next=item[0];
 			if(next.length>1)
-			x: {
-				let cur=next;
-				let item=cur.split(next_regex).filter(e=>e!=="");
-				if(item.length === 1){
-					ret.push(next);
+				x: {
+					let cur=next;
+					let item=cur.split(next_regex).filter(e => e!=="");
+					if(item.length===1) {
+						ret.push(next);
+						break x;
+					}
+					let final=to_level(item,level);
+					ret.push(...final);
 					break x;
-				}
-				let final=to_level(item,level);
-				ret.push(...final);
-				break x;
-			} else {
+				} else {
 				ret.push(next);
 			}
 		}
@@ -151,9 +151,17 @@ function to_level(arr,level=0) {
 	return ret;
 }
 let level_data=to_level(code_lvl);
-let index=level_data.findIndex(e=>e==="{");
-index=level_data.findIndex(e=>e==="}");
+let index=level_data.findIndex(e => e==="{");
+index=level_data.indexOf("}",index);
+if(level_data[index+1]===';') {index++;}
 console.log(level_data.slice(0,index+1).join(""));
+index=x(index+1);
+function x(start_index) {
+	let index=level_data.indexOf("{",start_index);
+	index=level_data.indexOf("}",index);
+	console.log(level_data.slice(start_index,index+1).join(""));
+	return index+1;
+}
 
 let v=false;
 
