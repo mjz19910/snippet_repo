@@ -9,7 +9,7 @@ export function use_encrypt_code() {
 	let var_def=js_str_1.slice(0,eq_idx);
 	let var_code=js_str_1.slice(eq_idx+1,js_str_1.lastIndexOf(";"));
 	let code_lvl=js_str_2.split(/(\{|\})/).filter(e => e!=="");
-	let arr=to_token_arr(code_lvl);
+	let arr=to_token_arr(code_lvl,0);
 	let index=0;
 	for(let i=0;i<6;i++) {
 		index=x(arr,index,handle_x);

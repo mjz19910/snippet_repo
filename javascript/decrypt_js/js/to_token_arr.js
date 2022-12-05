@@ -1,5 +1,8 @@
-/** @arg {string[]} arr */
-export function to_token_arr(arr,level=0) {
+/**
+ * @arg {string[]} arr
+ * @param {number} level
+ */
+export function to_token_arr(arr,level) {
 	/** @type {string[]} */
 	let ret=[];
 	/** @param {string} str */
