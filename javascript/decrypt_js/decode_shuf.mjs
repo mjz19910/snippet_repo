@@ -6,24 +6,28 @@ function start_process() {
 	first_run_code(arr);
 }
 /**
- * @param {number} i
+ * @param {number} a
  * @define _0x16d8
  * @new_name get_enc
  */
-function get_enc(i) {
-	i-=0x1e9;
-	return arr[i];
+function get_enc(a) {
+	a-=0x1e9;
+	return arr[a];
 }
 
 /**
- * @param {number[]} arg0
- * #define _0x4aec3f get_enc_4
+ * @param {number} _b
+ * @param {number} _c
+ * @param {number} _d
+ * @param {number} _e
+ * @param {number} a
+ * @set _0x4aec3f get_enc_4
  */
-function get_enc_4(...[,,,,v]) {
-	let expected=v- -0x298;
-	let my_ver=v+0x298;
+function get_enc_4(_b,_c,_d,_e,a) {
+	let expected=a- -0x298;
+	let my_ver=a+0x298;
 	console.assert(expected===my_ver,"simplify correct");
-	return get_enc(v+0x298);
+	return get_enc(a+0x298);
 }
 
 /**
