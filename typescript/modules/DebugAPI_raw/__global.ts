@@ -1,3 +1,9 @@
+// next
+declare global {
+	interface InjectApiT {
+	}
+}
+
 // saved_objects
 declare global {
 	interface InjectApiT {
