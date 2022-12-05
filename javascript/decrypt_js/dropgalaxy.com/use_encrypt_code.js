@@ -27,10 +27,9 @@ export function use_encrypt_code() {
 			}
 		});
 	}
-	for(let i=0;i<6;i++) {
+	for(let i=0;i<7;i++) {
 		index=cx();
 	}
-	index=cx();
 	let do_eval=false;
 	if(do_eval) {
 		eval(var_def+"="+var_code+";console.log("+var_def.split(" ")[1]+");"+js_str_2);
