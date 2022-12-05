@@ -15,7 +15,11 @@ Function.prototype.constructor = function ( fn_string )
 };
 Function.prototype.constructor.prototype = Function.prototype;
 
+function make_proxy_for_function() {
+	Function.prototype.bind=new Proxy(Function.prototype.bind,{});
+}
 
+make_proxy_for_function();
 global.setInterval = function ( func, ms )
 {
 	console.log( "set_interval ms", ms );
