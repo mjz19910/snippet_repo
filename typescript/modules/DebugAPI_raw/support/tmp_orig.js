@@ -120,7 +120,7 @@ function to_level(arr) {
 		return str==="{}"[0]||str==="()"[0];
 	}
 	for(let i=0;i<arr.length;i++) {
-		let match=arr[i].match(/[{}()]/);
+		let match=arr[i].match(/[{}]/);
 		if(match && is_open(match[0])) {
 			level--;
 			let prev_ret=ret;
