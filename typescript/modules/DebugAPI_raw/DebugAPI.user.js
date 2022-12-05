@@ -27,7 +27,7 @@ g_api.saved_objects=[];
  * @param {{ name: string; }} callable
  */
 function add_function(callable) {
-	g_api.saved_objects.push([callable.name,callable])
+	g_api.saved_objects.push([callable.name,callable]);
 }
 
 /** @template K,V */
@@ -89,135 +89,137 @@ const s_three_char_tokens=new HashMap();
 const s_two_char_tokens=new HashMap();
 /** @type {HashMap<string,string>} */
 const s_single_char_tokens=new HashMap();
-s_keywords.add("async");
-s_keywords.add("await");
-s_keywords.add("break");
-s_keywords.add("case");
-s_keywords.add("catch");
-s_keywords.add("class");
-s_keywords.add("const");
-s_keywords.add("continue");
-s_keywords.add("debugger");
-s_keywords.add("default");
-s_keywords.add("delete");
-s_keywords.add("do");
-s_keywords.add("else");
-s_keywords.add("enum");
-s_keywords.add("export");
-s_keywords.add("extends");
-s_keywords.add("false");
-s_keywords.add("finally");
-s_keywords.add("for");
-s_keywords.add("function");
-s_keywords.add("if");
-s_keywords.add("import");
-s_keywords.add("in");
-s_keywords.add("instanceof");
-s_keywords.add("let");
-s_keywords.add("new");
-s_keywords.add("null");
-s_keywords.add("return");
-s_keywords.add("super");
-s_keywords.add("switch");
-s_keywords.add("this");
-s_keywords.add("throw");
-s_keywords.add("true");
-s_keywords.add("try");
-s_keywords.add("typeof");
-s_keywords.add("var");
-s_keywords.add("void");
-s_keywords.add("while");
-s_keywords.add("with");
-s_keywords.add("yield");
-// 4 char token is only >>>=
+{
+	s_keywords.add("async");
+	s_keywords.add("await");
+	s_keywords.add("break");
+	s_keywords.add("case");
+	s_keywords.add("catch");
+	s_keywords.add("class");
+	s_keywords.add("const");
+	s_keywords.add("continue");
+	s_keywords.add("debugger");
+	s_keywords.add("default");
+	s_keywords.add("delete");
+	s_keywords.add("do");
+	s_keywords.add("else");
+	s_keywords.add("enum");
+	s_keywords.add("export");
+	s_keywords.add("extends");
+	s_keywords.add("false");
+	s_keywords.add("finally");
+	s_keywords.add("for");
+	s_keywords.add("function");
+	s_keywords.add("if");
+	s_keywords.add("import");
+	s_keywords.add("in");
+	s_keywords.add("instanceof");
+	s_keywords.add("let");
+	s_keywords.add("new");
+	s_keywords.add("null");
+	s_keywords.add("return");
+	s_keywords.add("super");
+	s_keywords.add("switch");
+	s_keywords.add("this");
+	s_keywords.add("throw");
+	s_keywords.add("true");
+	s_keywords.add("try");
+	s_keywords.add("typeof");
+	s_keywords.add("var");
+	s_keywords.add("void");
+	s_keywords.add("while");
+	s_keywords.add("with");
+	s_keywords.add("yield");
+	// 4 char token is only >>>=
 
-// Section: s_three_char_tokens
-s_three_char_tokens.set("===","EqualsEqualsEquals");
-s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
-s_three_char_tokens.set("**=","DoubleAsteriskEquals");
-s_three_char_tokens.set("<<=","ShiftLeftEquals");
-s_three_char_tokens.set(">>=","ShiftRightEquals");
-s_three_char_tokens.set("&&=","DoubleAmpersandEquals");
-s_three_char_tokens.set("||=","DoublePipeEquals");
-s_three_char_tokens.set("\?\?=","DoubleQuestionMarkEquals");
-s_three_char_tokens.set(">>>","UnsignedShiftRight");
-s_three_char_tokens.set("...","TripleDot");
+	// Section: s_three_char_tokens
+	s_three_char_tokens.set("===","EqualsEqualsEquals");
+	s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
+	s_three_char_tokens.set("**=","DoubleAsteriskEquals");
+	s_three_char_tokens.set("<<=","ShiftLeftEquals");
+	s_three_char_tokens.set(">>=","ShiftRightEquals");
+	s_three_char_tokens.set("&&=","DoubleAmpersandEquals");
+	s_three_char_tokens.set("||=","DoublePipeEquals");
+	s_three_char_tokens.set("\?\?=","DoubleQuestionMarkEquals");
+	s_three_char_tokens.set(">>>","UnsignedShiftRight");
+	s_three_char_tokens.set("...","TripleDot");
 
-// Section: s_two_char_tokens
-s_two_char_tokens.set("=>","Arrow");
-s_two_char_tokens.set("+=","PlusEquals");
-s_two_char_tokens.set("-=","MinusEquals");
-s_two_char_tokens.set("*=","AsteriskEquals");
-// "/=" is one of the productions of DivPunctuator
-s_two_char_tokens.set("/=","SlashEquals");
-s_two_char_tokens.set("%=","PercentEquals");
-s_two_char_tokens.set("&=","AmpersandEquals");
-s_two_char_tokens.set("|=","PipeEquals");
-s_two_char_tokens.set("^=","CaretEquals");
-s_two_char_tokens.set("&&","DoubleAmpersand");
-s_two_char_tokens.set("||","DoublePipe");
-s_two_char_tokens.set("??","DoubleQuestionMark");
-s_two_char_tokens.set("**","DoubleAsterisk");
-s_two_char_tokens.set("==","EqualsEquals");
-s_two_char_tokens.set("<=","LessThanEquals");
-s_two_char_tokens.set(">=","GreaterThanEquals");
-s_two_char_tokens.set("!=","ExclamationMarkEquals");
-s_two_char_tokens.set("--","MinusMinus");
-s_two_char_tokens.set("++","PlusPlus");
-s_two_char_tokens.set("<<","ShiftLeft");
-s_two_char_tokens.set(">>","ShiftRight");
-// "?." is the production of OptionalChainingPunctuator
-s_two_char_tokens.set("?.","QuestionMarkPeriod");
+	// Section: s_two_char_tokens
+	s_two_char_tokens.set("=>","Arrow");
+	s_two_char_tokens.set("+=","PlusEquals");
+	s_two_char_tokens.set("-=","MinusEquals");
+	s_two_char_tokens.set("*=","AsteriskEquals");
+	// "/=" is one of the productions of DivPunctuator
+	s_two_char_tokens.set("/=","SlashEquals");
+	s_two_char_tokens.set("%=","PercentEquals");
+	s_two_char_tokens.set("&=","AmpersandEquals");
+	s_two_char_tokens.set("|=","PipeEquals");
+	s_two_char_tokens.set("^=","CaretEquals");
+	s_two_char_tokens.set("&&","DoubleAmpersand");
+	s_two_char_tokens.set("||","DoublePipe");
+	s_two_char_tokens.set("??","DoubleQuestionMark");
+	s_two_char_tokens.set("**","DoubleAsterisk");
+	s_two_char_tokens.set("==","EqualsEquals");
+	s_two_char_tokens.set("<=","LessThanEquals");
+	s_two_char_tokens.set(">=","GreaterThanEquals");
+	s_two_char_tokens.set("!=","ExclamationMarkEquals");
+	s_two_char_tokens.set("--","MinusMinus");
+	s_two_char_tokens.set("++","PlusPlus");
+	s_two_char_tokens.set("<<","ShiftLeft");
+	s_two_char_tokens.set(">>","ShiftRight");
+	// "?." is the production of OptionalChainingPunctuator
+	s_two_char_tokens.set("?.","QuestionMarkPeriod");
 
-// Section: s_single_char_tokens
-// & is OtherPunctuator
-s_single_char_tokens.set("&","Ampersand");
-// * is OtherPunctuator
-s_single_char_tokens.set("*","Asterisk");
-// [ is OtherPunctuator
-s_single_char_tokens.set("[","BracketOpen");
-// ] is OtherPunctuator
-s_single_char_tokens.set("]","BracketClose");
-// ^ is OtherPunctuator
-s_single_char_tokens.set("^","Caret");
-// : is OtherPunctuator
-s_single_char_tokens.set(":","Colon");
-// , is OtherPunctuator
-s_single_char_tokens.set(",","Comma");
-// { is OtherPunctuator
-s_single_char_tokens.set("{","CurlyOpen");
-// "}" is the production of RightBracePunctuator
-s_single_char_tokens.set("}","CurlyClose");
-// = is OtherPunctuator
-s_single_char_tokens.set("=","Equals");
-// ! is OtherPunctuator
-s_single_char_tokens.set("!","ExclamationMark");
-// - is OtherPunctuator
-s_single_char_tokens.set("-","Minus");
-// ( is OtherPunctuator
-s_single_char_tokens.set("(","ParenOpen");
-// ) is OtherPunctuator
-s_single_char_tokens.set(")","ParenClose");
-// % is OtherPunctuator
-s_single_char_tokens.set("%","Percent");
-// . is OtherPunctuator
-s_single_char_tokens.set(".","Period");
-// | is OtherPunctuator
-s_single_char_tokens.set("|","Pipe");
-// + is OtherPunctuator
-s_single_char_tokens.set("+","Plus");
-// ? is OtherPunctuator
-s_single_char_tokens.set("?","QuestionMark");
-// ; is OtherPunctuator
-s_single_char_tokens.set(";","Semicolon");
-// "/" is one of the productions by DivPunctuator
-s_single_char_tokens.set("/","Slash");
-// ~ is OtherPunctuator
-s_single_char_tokens.set("~","Tilde");
-// < is OtherPunctuator
-s_single_char_tokens.set("<","LessThan");
-// > is OtherPunctuator
-s_single_char_tokens.set(">","GreaterThan");
+	// Section: s_single_char_tokens
+	// & is OtherPunctuator
+	s_single_char_tokens.set("&","Ampersand");
+	// * is OtherPunctuator
+	s_single_char_tokens.set("*","Asterisk");
+	// [ is OtherPunctuator
+	s_single_char_tokens.set("[","BracketOpen");
+	// ] is OtherPunctuator
+	s_single_char_tokens.set("]","BracketClose");
+	// ^ is OtherPunctuator
+	s_single_char_tokens.set("^","Caret");
+	// : is OtherPunctuator
+	s_single_char_tokens.set(":","Colon");
+	// , is OtherPunctuator
+	s_single_char_tokens.set(",","Comma");
+	// { is OtherPunctuator
+	s_single_char_tokens.set("{","CurlyOpen");
+	// "}" is the production of RightBracePunctuator
+	s_single_char_tokens.set("}","CurlyClose");
+	// = is OtherPunctuator
+	s_single_char_tokens.set("=","Equals");
+	// ! is OtherPunctuator
+	s_single_char_tokens.set("!","ExclamationMark");
+	// - is OtherPunctuator
+	s_single_char_tokens.set("-","Minus");
+	// ( is OtherPunctuator
+	s_single_char_tokens.set("(","ParenOpen");
+	// ) is OtherPunctuator
+	s_single_char_tokens.set(")","ParenClose");
+	// % is OtherPunctuator
+	s_single_char_tokens.set("%","Percent");
+	// . is OtherPunctuator
+	s_single_char_tokens.set(".","Period");
+	// | is OtherPunctuator
+	s_single_char_tokens.set("|","Pipe");
+	// + is OtherPunctuator
+	s_single_char_tokens.set("+","Plus");
+	// ? is OtherPunctuator
+	s_single_char_tokens.set("?","QuestionMark");
+	// ; is OtherPunctuator
+	s_single_char_tokens.set(";","Semicolon");
+	// "/" is one of the productions by DivPunctuator
+	s_single_char_tokens.set("/","Slash");
+	// ~ is OtherPunctuator
+	s_single_char_tokens.set("~","Tilde");
+	// < is OtherPunctuator
+	s_single_char_tokens.set("<","LessThan");
+	// > is OtherPunctuator
+	s_single_char_tokens.set(">","GreaterThan");
+}
 
 class ECMA262Base {
 	/** @param {OUT_STE_T} state @arg {LexReturnTyShort} lex_return @arg {string} type */
@@ -2360,7 +2362,7 @@ function parse_javascript_str(code_str) {
 		}
 		console.log(res_description);
 	}
-	console.log(`parsed ${ i } tokens`);
+	console.log(`parsed ${i} tokens`);
 }
 g_api.parse_javascript_str=parse_javascript_str;
 
@@ -2476,13 +2478,13 @@ class ReversePrototypeChain {
 		}
 		let object_index=this.object_cache.indexOf(value);
 		if(!value) {
-			return `a_null::${ object_index }`;
+			return `a_null::${object_index}`;
 		}
 		if(this.window_list.includes(any(value))) {
 			return "window_id::"+this.window_list.indexOf(any(value));
 		}
 		if(value===g_api)
-			return `self::g_api:${ object_index }`;
+			return `self::g_api:${object_index}`;
 		let key;
 		if(Symbol.toStringTag in value) {
 			key=value[Symbol.toStringTag];
@@ -2490,12 +2492,12 @@ class ReversePrototypeChain {
 		if(value.hasOwnProperty('constructor')) {
 			let constructor_name=value.constructor.name;
 			if(key) {
-				return `constructor_key::${ constructor_name }:${ key }:${ object_index }`;
+				return `constructor_key::${constructor_name}:${key}:${object_index}`;
 			} else {
-				return `constructor_key::${ constructor_name }:${ object_index }`;
+				return `constructor_key::${constructor_name}:${object_index}`;
 			}
 		} else if(key) {
-			return `to_string_tag::${ key }:${ object_index }`;
+			return `to_string_tag::${key}:${object_index}`;
 		}
 		try {
 			if(value.hasOwnProperty('constructor')) {
@@ -2743,10 +2745,10 @@ class AddEventListenerExt {
 			throw new Error("Unreachable");
 		if(typeof val[this.namespace_key]!=='string') {
 			console.log("unable to find namespace (not a string)",val);
-			real_value[key]=`weak_id:${ index }`;
+			real_value[key]=`weak_id:${index}`;
 			return;
 		}
-		real_value[key]=`weak_id:${ val[this.namespace_key] }:${ index }`;
+		real_value[key]=`weak_id:${val[this.namespace_key]}:${index}`;
 		return;
 	}
 	/** @private @param {{}} val @param {string} namespace */
@@ -2946,7 +2948,7 @@ function getPlaybackRateMap(include_uninteresting) {
 		let elem_list=document.querySelectorAll("ytd-compact-video-renderer:has(#overlays:not(* > #progress))");
 		elem_list.length>0&&progress_map.set("none",[...elem_list]);
 	}
-	let sel=(/**@type {string}*/e) => `ytd-compact-video-renderer:has(#progress[style="width: ${ e }%;"])`;
+	let sel=(/**@type {string}*/e) => `ytd-compact-video-renderer:has(#progress[style="width: ${e}%;"])`;
 	for(let i=0;i<=100;i++) {
 		if(!include_uninteresting&&i===100) continue;
 		let elem=document.querySelectorAll(sel(i.toString()));
@@ -3418,7 +3420,7 @@ class MulCompression extends BaseCompression {
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
 		if(off==1) return false;
-		state.ret.push(`${ item }${ off }`);
+		state.ret.push(`${item}${off}`);
 		state.i+=off-1;
 		return true;
 	}
@@ -5041,7 +5043,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		this.request_connection(this.m_transport_connection);
 	}
 	/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
-	post_message_connect_message_type=`ConnectOverPostMessage_${ sha_1_initial }`;
+	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 	/** @arg {TransportMessageObj} transport_handler */
 	request_connection(transport_handler) {
 		if(!this.m_connect_target)
@@ -5428,7 +5430,7 @@ class DebugAPI {
 		let tmp_value={};
 		this.setData(tmp_key,tmp_value);
 		let debug=this.getData('d');
-		debug(this.current_function_value,`${ breakpoint_code_string }`);
+		debug(this.current_function_value,`${breakpoint_code_string}`);
 		// ---- Activate ----
 		let exec_return=activate(function_value,activate_vec);
 		let exec_res_arr=[];
@@ -5552,7 +5554,7 @@ class DebugAPI {
 		}
 		let tmp_value=new DebugInfoValue;
 		this.setData(tmp_key,tmp_value);
-		this.getData('d')(this.current_function_value,`${ dbg_str_func }`);
+		this.getData('d')(this.current_function_value,`${dbg_str_func}`);
 		// ---- Activate ----
 		let activate_return=activate(function_value,activate_vec);
 		let breakpoint_result=null;
