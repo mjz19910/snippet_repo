@@ -22,7 +22,7 @@ function get_enc(i) {
 function get_enc_4(...[,,,,v]) {
 	let expected=v- -0x298;
 	let my_ver=v+0x298;
-	console.assert(expected===my_ver, "simplify correct");
+	console.assert(expected===my_ver,"simplify correct");
 	return get_enc(v+0x298);
 }
 
