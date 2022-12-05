@@ -102,15 +102,28 @@ let code_lvl=decrypt_code.split(/([{}])/);
 /** @arg {string[]} arr */
 function to_level(arr) {
 	let level=0;
+	/** @type {(string|[number,string])[]} */
 	let ret=[];
+	/** @type {(string|[number,string])[][]} */
+	let stack=[];
+	function pop() {
+		let v=stack.pop();
+		if(!v) throw new Error("stack underflow");
+		return v;
+	}
 	for(let i=0;i<arr.length;i++) {
 		let match=arr[i].match(/[{}]/);
 		if(match && match[0]==="{}"[1]) {
 			level--;
+			let prev_ret=ret;
+			ret=pop();
+			ret.push(any(prev_ret));
 		}
 		ret.push([level,arr[i]]);
 		if(match && match[0]==="{}"[0]) {
 			level++;
+			stack.push(ret);
+			ret=[];
 		}
 	};
 	return ret;
