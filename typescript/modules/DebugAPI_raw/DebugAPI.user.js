@@ -2437,7 +2437,7 @@ function any(v) {
 class ReversePrototypeChain {
 	static attach_to_api() {
 		g_api.ReversePrototypeChain=this;
-		g_api.reversePrototypeChain=new ReversePrototypeChain(Object.prototype,[]);
+		g_api.reversePrototypeChain=new this(Object.prototype,[]);
 	}
 	/**
 	 * @param {{}} base
