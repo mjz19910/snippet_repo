@@ -150,9 +150,8 @@ function to_level(arr,level=0) {
 	};
 	return ret;
 }
-to_level(code_lvl).forEach(e => {
-	console.log(e);
-});
+let level_data=to_level(code_lvl);
+level_data;
 
 let v=false;
 
