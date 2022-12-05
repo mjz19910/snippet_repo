@@ -117,18 +117,17 @@ function to_level(arr) {
 	}
 	/** @param {string} str */
 	function is_close(str) {
-		return str==="{}"[0]||str==="()"[0];
+		return str==="{}"[1]||str==="()"[1];
 	}
 	for(let i=0;i<arr.length;i++) {
-		let match=arr[i].match(/[{}]/);
-		if(match && is_open(match[0])) {
+		if(is_open(arr[i])) {
 			level--;
 			let prev_ret=ret;
 			ret=pop();
 			ret.push(any([level+1,prev_ret]));
 		}
 		ret.push([level,arr[i]]);
-		if(match && is_close(match[0])) {
+		if(is_close(arr[i])) {
 			level++;
 			stack.push(ret);
 			ret=[];
