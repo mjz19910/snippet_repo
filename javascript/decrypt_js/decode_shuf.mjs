@@ -19,8 +19,11 @@ function get_enc(i) {
  * @param {number[]} arg0
  * #define _0x4aec3f get_enc_4
  */
-function get_enc_4(...[,,,,_4]) {
-	return get_enc(_4- -0x298);
+function get_enc_4(...[,,,,v]) {
+	let expected=v- -0x298;
+	let my_ver=v+0x298;
+	console.assert(expected===my_ver, "simplify correct");
+	return get_enc(v+0x298);
 }
 
 /**
