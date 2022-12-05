@@ -2618,12 +2618,6 @@ g_api.ReversePrototypeChain=ReversePrototypeChain;
 let reversePrototypeChain=new ReversePrototypeChain(Object.prototype,[]);
 g_api.reversePrototypeChain=reversePrototypeChain;
 
-{
-	let xx=reversePrototypeChain;
-	xx.add_target(window);
-	xx.generate();
-}
-
 let x={};
 g_api.tmp=x;
 
@@ -2712,16 +2706,15 @@ function do_message_handler_overwrite(handler) {
 	};
 }
 
-x.a=EventTarget.prototype;
 class AddEventListenerExt {
 	/** @private */
 	orig={
-		addEventListener: x.a.addEventListener,
-		dispatchEvent: x.a.dispatchEvent,
-		removeEventListener: x.a.removeEventListener,
+		addEventListener: EventTarget.prototype.addEventListener,
+		dispatchEvent: EventTarget.prototype.dispatchEvent,
+		removeEventListener: EventTarget.prototype.removeEventListener,
 	};
 	/** @private */
-	target_prototype=x.a;
+	target_prototype=EventTarget.prototype;
 	constructor() {
 		overwrite_addEventListener(this.target_prototype);
 		if(!debug) return;
