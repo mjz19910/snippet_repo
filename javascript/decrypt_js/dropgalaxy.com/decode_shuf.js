@@ -1,5 +1,5 @@
-import arr from "./dynamic/enc_arr.js";
-import first_run_code from "../api/first_run_code.js";
+import arr from "../dynamic/enc_arr.js";
+import {first_run_code} from "./first_run_code.js";
 import {get_enc_4_a, get_enc_4_b, get_enc_4_c} from "./get_enc_4.js";
 
 function start_process() {

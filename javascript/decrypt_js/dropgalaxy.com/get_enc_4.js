@@ -1,4 +1,4 @@
-import arr from "./dynamic/enc_arr.js";
+import arr from "../dynamic/enc_arr.js";
 
 /**
  * @set _0x4aec3f get_enc_4_a

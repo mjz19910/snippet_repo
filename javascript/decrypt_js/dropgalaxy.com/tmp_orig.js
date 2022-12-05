@@ -1,6 +1,6 @@
 import {to_token_arr} from "../js/to_token_arr.js";
-import {make_proxy_for_function} from "./make_proxy_for_function.js";
-import {make_proxy_for_function_constructor} from "./make_proxy_for_function_constructor.js";
+import {make_proxy_for_function} from "../block/make_proxy_for_function.js";
+import {make_proxy_for_function_constructor} from "../block/make_proxy_for_function_constructor.js";
 import {decrypt_code_src} from "./src_template_code.js";
 
 make_proxy_for_function_constructor();
@@ -23,9 +23,6 @@ globalThis.setInterval=new Proxy(globalThis.setInterval,{
 		return setTimeout(function() {
 			log_fn("timeout");
 			setTimeout(func,0);
-			setTimeout(() => {
-				setTimeout(() => {},0);
-			},0);
 		},0);
 	}
 });
