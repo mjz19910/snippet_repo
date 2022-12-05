@@ -2,7 +2,8 @@
 https://jacorb90.me/The-Factory-Of-Automation/
 */
 // @no-var
-var player_nums;
+var player_nums,player={};
+class ExpantaNum {}
 
 player_nums = Object.fromEntries(
 	Object.entries(player)
@@ -18,17 +19,31 @@ element.onclick=function(){
 	ionCoreReset()
 }*/
 
-confirm = function(msg) {
+window.confirm = function(msg) {
 	console.log(msg, new Error().stack);
 	return true;
 };
 
-function buy_allSBUpg(e) {
-	let prev = SBUpgAmt(e);
+/** @param {number} e */
+function do_SBUpgAmt(e) {
+	//@ts-ignore
+	return SBUpgAmt(e);
+}
+/** @param {number} e */
+function do_buySBUpg(e) {
+	//@ts-ignore
 	buySBUpg(e);
-	let ch = SBUpgAmt(e) - prev;
+}
+
+/** @param {number} e */
+function buy_allSBUpg(e) {
+	let prev = do_SBUpgAmt(e);
+	do_buySBUpg(e);
+	let ch = do_SBUpgAmt(e) - prev;
 	while(ch > 0) {
-		prev = SBUpgAmt(e); buySBUpg(e); ch = SBUpgAmt(e) - prev;
+		prev = do_SBUpgAmt(e);
+		do_buySBUpg(e);
+		ch = do_SBUpgAmt(e) - prev;
 	}
 }; if(window.cint) clearInterval(window.cint);
 window.cint = setInterval(function() {
