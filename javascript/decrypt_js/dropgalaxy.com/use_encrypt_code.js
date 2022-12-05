@@ -1,7 +1,7 @@
 import {to_token_arr} from "../js/to_token_arr.js";
+import {next_bracket_pair as x} from "./next_bracket_pair.js";
 import js_str_2 from "./src_template_code.js";
 import js_str_1 from "./src_template_decrypt_arr_str.js";
-import {x} from "./tmp_orig";
 
 export function use_encrypt_code() {
 	let eq_idx=js_str_1.indexOf("=");
