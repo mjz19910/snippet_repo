@@ -10,7 +10,7 @@ function start_process() {
  * @define _0x16d8
  * @new_name get_enc
  */
-function get_enc(a) {
+function d(a) {
 	a-=0x1e9;
 	return arr[a];
 }
@@ -24,7 +24,7 @@ function get_enc(a) {
  * @param {number} a
  */
 function get_enc_4_a(_a,_b,_c,_d,a) {
-	return get_enc(a+0x298);
+	return d(a+0x298);
 }
 
 /**
@@ -36,7 +36,7 @@ function get_enc_4_a(_a,_b,_c,_d,a) {
  * @param {number} a
  */
 function get_enc_4_b(_a,_b,_c,_d,a) {
-	return get_enc(a+0x298);
+	return d(a+0x298);
 }
 
 /**
@@ -44,7 +44,7 @@ function get_enc_4_b(_a,_b,_c,_d,a) {
  * @enc _0x314769 -> get_enc_4_x_1
  */
 function get_enc_4_c(_b,_c,_d,_e,a) {
-	return get_enc(a+0x298);
+	return d(a+0x298);
 }
 
 /**
