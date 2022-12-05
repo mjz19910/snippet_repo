@@ -117,7 +117,7 @@ function to_level(arr) {
 			level--;
 			let prev_ret=ret;
 			ret=pop();
-			ret.push(any(prev_ret));
+			ret.push(any([level+1,prev_ret]));
 		}
 		ret.push([level,arr[i]]);
 		if(match && match[0]==="{}"[0]) {
