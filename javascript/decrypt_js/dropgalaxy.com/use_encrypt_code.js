@@ -12,7 +12,7 @@ export function use_encrypt_code() {
 	let index=0;
 	function cx() {
 		return x(arr,index,function(arr,[start_index,index]) {
-			console.log("%o",arr.slice(start_index,index+1).join("").trim());
+			console.log(JSON.stringify(arr.slice(start_index+2,index+2).join("").trim()));
 		});
 	}
 	for(let i=0;i<6;i++) {
