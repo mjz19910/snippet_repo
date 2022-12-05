@@ -156,9 +156,14 @@ index=level_data.indexOf("}",index);
 if(level_data[index+1]===';') {index++;}
 console.log(level_data.slice(0,index+1).join(""));
 index=x(index+1);
+/**
+ * @param {number | undefined} start_index
+ */
 function x(start_index) {
 	let index=level_data.indexOf("{",start_index);
 	index=level_data.indexOf("}",index);
+	console.log(level_data[index+1]);
+	if(level_data[index+1]===';') {index++;}
 	console.log(level_data.slice(start_index,index+1).join(""));
 	return index+1;
 }
