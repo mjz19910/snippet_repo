@@ -113,11 +113,11 @@ function to_level(arr,level=0) {
 	let ret=[];
 	/** @param {string} str */
 	function is_open(str) {
-		return str==="{}"[0]||str==="()"[0];
+		return str==="{}"[0]||str==="()"[0]||str==="[]"[0];
 	}
 	/** @param {string} str */
 	function is_close(str) {
-		return str==="{}"[1]||str==="()"[1];
+		return str==="{}"[1]||str==="()"[1]||str==="[]"[1];
 	}
 	for(let i=0;i<arr.length;i++) {
 		let cur=arr[i];
