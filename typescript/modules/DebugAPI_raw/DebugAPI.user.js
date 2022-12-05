@@ -2708,7 +2708,7 @@ function do_message_handler_overwrite(handler) {
 
 class AddEventListenerExt {
 	/** @private */
-	orig={
+	original_prototype={
 		addEventListener: EventTarget.prototype.addEventListener,
 		dispatchEvent: EventTarget.prototype.dispatchEvent,
 		removeEventListener: EventTarget.prototype.removeEventListener,
@@ -2867,15 +2867,15 @@ class AddEventListenerExt {
 							t.eventFireInterceptor(original_function,this,args);
 						};
 					}
-					return t.orig.addEventListener.call(this,...args);
+					return t.original_prototype.addEventListener.call(this,...args);
 				}; break;
 			case 'removeEventListener': t.target_prototype[target]=function(...args) {
 				if(debug) t.add_to_call_list([target,this,args]);
-				return t.orig[target].call(this,...args);
+				return t.original_prototype[target].call(this,...args);
 			}; break;
 			case 'dispatchEvent': t.target_prototype[target]=function(...args) {
 				if(debug) t.add_to_call_list([target,this,args]);
-				return t.orig[target].call(this,...args);
+				return t.original_prototype[target].call(this,...args);
 			}; return;
 			default: throw new Error("1");
 		}
