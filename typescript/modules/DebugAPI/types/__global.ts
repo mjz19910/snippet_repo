@@ -1,6 +1,4 @@
-import {GlobalApiObject} from "./GlobalApiObject.js";
-
-export {};
+import {} from "./GlobalApiObject.js";
 
 //@@iterator for NodeListOf
 declare global {

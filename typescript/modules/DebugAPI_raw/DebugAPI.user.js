@@ -16,8 +16,8 @@
 
 
 // #pragma section GApi
-/** @type {typeof window['g_api']} */
-let g_api=window.g_api;
+/** @type {GlobalApiObject} */
+let g_api={};
 window.g_api=g_api;
 // #pragma end GApi
 

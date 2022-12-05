@@ -1,6 +1,8 @@
 // parse_javascript_str
-interface GlobalApiObject {
-	parse_javascript_str?:((str:string)=>void);
+declare global {
+	interface GlobalApiObject {
+		parse_javascript_str?:((str:string)=>void);
+	}
 }
 
 // Holder
@@ -239,43 +241,45 @@ declare global {
 }
 
 // DebugAPI
-interface GlobalApiObject {
-	DoCalc: {};
-	reversePrototypeChain: {};
-	ReversePrototypeChain: {};
-	tmp: {};
-	any_api_logger: {};
-	parse_html_to_binary_arr: (html: string) => unknown[];
-	run_modules_plugin: VoidCallbackWith<() => void>;
-	run_wasm_plugin: VoidCallbackWith<() => void>;
-	compress_main: VoidCallbackWith<(stats: {}) => void>;
-	IterExtensions: {};
-	getPlaybackRateMap: {};
-	CreateObjURLCache: {};
-	Repeat: {};
-	CompressRepeated: {};
-	to_tuple_arr: {};
-	range_matches: {};
-	function_as_string_vec: string[];
-	CompressionStatsCalculator: {};
-	HexRandomDataGenerator: {};
-	EventListenerValue: {};
-	GenericEvent: {};
-	GenericDataEvent: {};
-	GenericEventTarget: {};
-	Dumper: {};
-	RustSimpleTokenizer: {};
-	RustSimpleParser: {};
-	WeakValueRef: {};
-	CSSCascade: {};
-	OriginState: {};
-	RemoteOriginConnection: {};
-	remote_origin: {};
-	APIProxyManager: {};
-	LoggingEventTarget: {};
-	DebugAPI: DebugAPIType;
-	AddEventListenerExt: {};
-	add_event_listener_ext: {};
+declare global {
+	interface GlobalApiObject {
+		DoCalc: {};
+		reversePrototypeChain: {};
+		ReversePrototypeChain: {};
+		tmp: {};
+		any_api_logger: {};
+		parse_html_to_binary_arr: (html: string) => unknown[];
+		run_modules_plugin: VoidCallbackWith<() => void>;
+		run_wasm_plugin: VoidCallbackWith<() => void>;
+		compress_main: VoidCallbackWith<(stats: {}) => void>;
+		IterExtensions: {};
+		getPlaybackRateMap: {};
+		CreateObjURLCache: {};
+		Repeat: {};
+		CompressRepeated: {};
+		to_tuple_arr: {};
+		range_matches: {};
+		function_as_string_vec: string[];
+		CompressionStatsCalculator: {};
+		HexRandomDataGenerator: {};
+		EventListenerValue: {};
+		GenericEvent: {};
+		GenericDataEvent: {};
+		GenericEventTarget: {};
+		Dumper: {};
+		RustSimpleTokenizer: {};
+		RustSimpleParser: {};
+		WeakValueRef: {};
+		CSSCascade: {};
+		OriginState: {};
+		RemoteOriginConnection: {};
+		remote_origin: {};
+		APIProxyManager: {};
+		LoggingEventTarget: {};
+		DebugAPI: DebugAPIType;
+		AddEventListenerExt: {};
+		add_event_listener_ext: {};
+	}
 }
 
 // WeakRef
