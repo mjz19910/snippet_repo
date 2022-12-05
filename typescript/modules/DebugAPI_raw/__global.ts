@@ -1,6 +1,7 @@
 // parse_javascript_str
 declare global {
 	interface GlobalApiObject {
+		saved_objects: [string, {}][];
 		parse_javascript_str?:((str:string)=>void);
 	}
 }
