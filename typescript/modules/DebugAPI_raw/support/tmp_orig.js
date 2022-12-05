@@ -152,7 +152,7 @@ function to_level(arr,level=0) {
 }
 let level_data=to_level(code_lvl);
 let index=0;
-for(let i=0;i<7;i++) {
+for(let i=0;i<6;i++) {
 	index=x(index);
 }
 
