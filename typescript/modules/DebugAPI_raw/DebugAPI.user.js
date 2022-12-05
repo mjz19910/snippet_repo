@@ -18,7 +18,7 @@
 // #pragma section GApi
 /** @type {GlobalApiObject} */
 let g_api={};
-window.g_api=g_api;
+window.g_api=any(g_api);
 // #pragma end GApi
 
 /** @template K,V */
@@ -2418,7 +2418,7 @@ if(do_postMessage_logging) {
 	any_api_logger.start_postMessage_proxy();
 }
 
-/** @param {any} v */
+/** @template T @param {any} v @returns {T} */
 function any(v) {
 	return v;
 }
