@@ -11,10 +11,13 @@ export function use_encrypt_code() {
 	let code_lvl=js_str_2.split(/(\{|\})/).filter(e => e!=="");
 	let arr=to_token_arr(code_lvl,0);
 	let index=0;
-	for(let i=0;i<6;i++) {
-		index=x(arr,index,handle_x);
+	function cx() {
+		return x(arr,index,handle_x);
 	}
-	index=x(arr,index,handle_x);
+	for(let i=0;i<6;i++) {
+		index=cx();
+	}
+	index=cx();
 	let do_eval=false;
 	if(do_eval) {
 		eval(var_def+"="+var_code+";console.log("+var_def.split(" ")[1]+");"+js_str_2);
