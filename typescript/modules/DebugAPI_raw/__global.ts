@@ -1,6 +1,7 @@
 // next
 declare global {
 	interface InjectApiT {
+		elevate_event_handler?: (arg0: EventListenersT) => void;
 	}
 }
 

@@ -2736,6 +2736,7 @@ class AddEventListenerExt {
 	node_id_max=0;
 	constructor() {
 		overwrite_addEventListener(this);
+		inject_api.elevate_event_handler=this.elevate_event_handler.bind(this);
 		if(!debug) return;
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
