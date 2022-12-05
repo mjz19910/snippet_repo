@@ -151,12 +151,16 @@ function to_level(arr,level=0) {
 	return ret;
 }
 let level_data=to_level(code_lvl);
-let index=x(0);
-index=x(index);
+let index=0;
+for(let i=0;i<3;i++) {
+	index=x(index);
+	index=x(index);
+}
+
 /**
  * @param {string} x
  */
-function is_term(x){
+function is_term(x) {
 	return x===';'||x===',';
 }
 /**
