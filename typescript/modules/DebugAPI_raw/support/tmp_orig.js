@@ -118,10 +118,31 @@ function to_level(arr,level=0) {
 			level--;
 		}
 		let item=cur.split(/([;])/).filter(e=>e!=="");
+		let next_regex=/([()\[\],=]|\s|var|function)/;
 		if(item.length > 1) {
-			ret.push(...to_level(item,level));
+			let next=to_level(item,level);
+			for(let i=0;i<next.length;i++) {
+				let cur=next[i];
+				let item=cur[1].split(next_regex).filter(e=>e!=="");
+				let final=to_level(item,level);
+				ret.push(...final);
+			}
 		} else {
-			ret.push([level,item[0]]);
+			let next=item[0];
+			if(next.length>1)
+			x: {
+				let cur=next;
+				let item=cur.split(next_regex).filter(e=>e!=="");
+				if(item.length === 1){
+					ret.push([level,next]);
+					break x;
+				}
+				let final=to_level(item,level);
+				ret.push(...final);
+				break x;
+			} else {
+				ret.push([level,next]);
+			}
 		}
 		if(arr[i]&&is_open(cur)) {
 			level++;
