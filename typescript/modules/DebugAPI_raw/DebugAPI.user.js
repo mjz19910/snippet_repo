@@ -2930,15 +2930,14 @@ class IterExtensions {
 		let val_iter=map.values();
 		let proto=Object.getPrototypeOf(val_iter);
 		proto.map=function(/** @type {(arg0: any) => any} */ func) {
-			let t=this;
-			function next() {
-				let iter=t.next();
-				if(iter.done) return iter;
-				iter.value=func(iter.value);
-				return iter;
-			}
 			return {
-				next,
+				b:this,
+				next() {
+					let iter=this.b.next();
+					if(iter.done) return iter;
+					iter.value=func(iter.value);
+					return iter;
+				},
 				[Symbol.iterator]() {
 					return this;
 				}
