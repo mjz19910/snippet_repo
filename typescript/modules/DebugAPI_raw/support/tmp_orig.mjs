@@ -43,6 +43,7 @@ function make_proxy_for_function ()
 
 make_proxy_for_function();
 let original_setInterval = global.setInterval;
+original_setInterval;
 global.setInterval = function ( func, ms )
 {
 	console.log( "set_interval ms", ms );
