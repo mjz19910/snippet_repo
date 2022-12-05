@@ -27,7 +27,7 @@ function make_proxy_for_function ()
 		{
 			if ( !skip_log )
 			{
-				messages.push( [ "Function bind", [ target, thisValue, parameters ] ] );
+				messages.push( [ "Function bind", new Error(), [ target, thisValue, parameters ] ] );
 			}
 			return Reflect.apply( target, thisValue, parameters );
 		}
