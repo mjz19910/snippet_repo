@@ -50,8 +50,11 @@ global.setInterval = new Proxy( global.setInterval, {
 		{
 			log_fn( "timeout" );
 			setTimeout( func, 0 );
-			setTimeout( () => { }, 500 );
-		}, 300 );
+			setTimeout( () =>
+			{
+				setTimeout( () => { }, 0 );
+			}, 0 );
+		}, 0 );
 	}
 } );
 
