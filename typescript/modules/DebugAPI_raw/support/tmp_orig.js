@@ -103,7 +103,7 @@ let code_lvl=decrypt_code.split(/(\{|\})/).filter(e=>e!=="");
 /** @arg {string[]} arr */
 function to_level(arr) {
 	let level=0;
-	/** @type {[number,{}][]} */
+	/** @type {[number,[number,string]|['other',(number|string)[]]][]} */
 	let ret=[];
 	/** @param {string} str */
 	function is_open(str) {
@@ -123,7 +123,7 @@ function to_level(arr) {
 			debugger;
 			ret.push([level,to_level(item)]);
 		} else {
-			ret.push([level,item]);
+			ret.push([level,[level,item[0]]]);
 		}
 		if(arr[i]&&is_open(cur)) {
 			level++;
