@@ -99,7 +99,7 @@ function pop(arr) {
 }
 pop;
 
-let code_lvl=decrypt_code.split(/([{}()\[\];,\n=])/).filter(e=>e);
+let code_lvl=decrypt_code.split(/([{}])/);
 /** @arg {string[]} arr */
 function to_level(arr) {
 	let level=0;
@@ -114,20 +114,17 @@ function to_level(arr) {
 		return str==="{}"[1]||str==="()"[1];
 	}
 	for(let i=0;i<arr.length;i++) {
-		if(is_close(arr[i])) {
+		if(arr[i]&&is_close(arr[i])) {
 			level--;
 		}
 		ret.push([level,arr[i]]);
-		if(is_open(arr[i])) {
+		if(arr[i]&&is_open(arr[i])) {
 			level++;
 		}
 	};
 	return ret;
 }
-to_level(code_lvl).filter(e=>{
-	if(e[0]<2) return true;
-	return false;
-}).forEach(e=>{
+to_level(code_lvl).filter(e => e[0]<2).forEach(e => {
 	console.log(e);
 });
 
