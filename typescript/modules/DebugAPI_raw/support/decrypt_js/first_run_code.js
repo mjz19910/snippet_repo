@@ -1,3 +1,5 @@
+// cspell:disable
+
 /**
  * @param {string[]} _0x4a8e
  */

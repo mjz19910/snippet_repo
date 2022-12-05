@@ -1,4 +1,5 @@
 // main shuffle and encrypt array
+//cspell:disable
 var _0x4a8e = [
 	'pfe|z', 'keEyP', 'XxJMN', 'retur', 'VCMpP', '|load', 'RbCwZ', 'fpwaU', 'funct', 's|glo', 'mMvUh', 'fsmBU', 'XAVpz', 'yRSTi', 'count',
 	'sbhyJ', 'GnDyP', 'azLUm', 'EIBlX', 'CKmvl', 'VGctk', 'nctio', 'QIHUj', 'split', 'kXsWe', 'sGdkU', 'mvVse', '*(?:[', 'sIIue', 'sfYKO',
@@ -14,6 +15,8 @@ var _0x4a8e = [
 	'HxztS', 'trace', 'nKrcp', 'to__', 'HKxND', 'goowo', 'xIlTk', 'MpAks', '636657WOaNVi', 'jrjZM', 'VThwe', 'min|j', '{}.co', 'EADze', 'SDzMl', '__pro', 'xpObN', 'QakrZ', '73849okygjI', 'acJQS', 'cQufW', 'xTgdb', 'gXkdh', 'QvMHm', 'VRIKO', '\x5cw+', '1ALriaZ', 'repla', 'SVIiA', 'jHrbX', '1|0|2', 'BUiqX', 'KOnZt', 'OzDmK', 'xzQMg', 'aKYUe', 'JvzeX', 'ytics', 'dfAWg', 'gNRim', 'n\x22){4', 'UYpwv', 'type', 'TnEfl', 'nload', 'lyDlX', 'fOvTX', 'a-zA-', 'PjYdK', 'xcboG', 'debu', 'KQmOe', '$(8).', 'qKCba', 'nGLCd', 'UCvrC', 'ljNyQ', 'UAjiG',
 	'aOfMi', 'HojqP', 'MqhNX', 'knjAK', 'HUmmE', 'actio', 'SVzRa', 'TZhGB', '2\x22).5', 'HTRym', 'jEAAv', 'WTDru', 'WpZBQ', 'OoFgF', 'LUXpR', 'kMZWr', 'NuiUm', 'pQEtP', 'fLQMI', 'busDc', 'pjRzp', 'vVxsC', 'iTpgu', 's\x20+\x20\x22', 'ZBrmW', 'tion', 'iIYiP', '(\x22#2\x22', '\x5c+\x5c+\x20', 'FgDVT', '1075679FIPcEH', 'g/9/i', 'GmvwZ', '1|4|3', 'PYnOX', 'StSIo', 'YcWbe', 'AjsJM', 'TTFiF', 'kTaYf', 'whktc', '.j.k?', 'WKFin', 'NyZwK', 'state'
 ];
+//cspell:enable
+
 /**
  * @param {number} _0x348449
  * @param {number} _0x25716d
@@ -79,6 +82,7 @@ function _0xc6b3ab ( _0x3e34a2, _0x2bae8b, _0x48423d, _0x5e8688, _0x493e12 )
 {
 	return _0x16d8( _0x5e8688 - 0x3e6, _0x3e34a2 );
 }
+//cspell:disable
 ( function ( /**@type {(string|undefined)[]} */_0x36ea8, _0x206ef7 )
 {
 	/**
@@ -1689,6 +1693,8 @@ function _0xc6b3ab ( _0x3e34a2, _0x2bae8b, _0x48423d, _0x5e8688, _0x493e12 )
 		)
 	)
 );
+//cspell:enable
+//cspell:disable
 /**
 * @param {any} _0x5336a9
 */
@@ -2004,3 +2010,4 @@ function _0x25716d ( _0x5336a9 )
 		else _0x484382[ _0x2464e3( 0x79c, 0x7f8, 0x76d, 0x820, 0x77d ) ]( _0x781e75, 0x1 * -0x1122 + -0xf * 0x126 + 0x225c );
 	} catch ( _0xd5c8bd ) { }
 }
+//cspell:enable

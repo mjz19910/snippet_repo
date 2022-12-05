@@ -1,4 +1,4 @@
-import _0x4a8e from "./decrypt_js/dynamic/enc_arr.mjs";
+import _0x4a8e from "./dynamic/enc_arr.mjs";
 import first_run_code from "./first_run_code.js";
 
 function start_process ()
