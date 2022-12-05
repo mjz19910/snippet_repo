@@ -2923,6 +2923,7 @@ AddEventListenerExt.attach_to_api();
 
 class IterExtensions {
 	static init() {
+		inject_api.IterExtensions=this;
 		let map=new Map;
 		let val_iter=map.values();
 		let proto=Object.getPrototypeOf(val_iter);
@@ -2943,7 +2944,6 @@ class IterExtensions {
 		};
 	}
 }
-inject_api.IterExtensions=IterExtensions;
 IterExtensions.init();
 
 /** @param {boolean} include_uninteresting */
