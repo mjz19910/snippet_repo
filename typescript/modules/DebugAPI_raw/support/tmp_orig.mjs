@@ -41,7 +41,7 @@ global.setInterval = new Proxy( global.setInterval, {
 		console.log( "set_interval ms", ms );
 		return setTimeout( function ()
 		{
-			console.log( "timeout" );
+			log_fn( "timeout" );
 			func();
 			setTimeout( () => { }, 2000 );
 		}, 3000 );
