@@ -30,8 +30,8 @@ function get_enc_4(...[,,,,v]) {
  * @param {number[]} arg0
  * #define _0x3d969b get_enc_5
  */
-function get_enc_5(...[,,,,_5]) {
-	return get_enc(_5- -0x298);
+function get_enc_5(...[,,,,v]) {
+	return get_enc(v+0x298);
 }
 
 /**
@@ -39,15 +39,14 @@ function get_enc_5(...[,,,,_5]) {
  * @enc _0x314769 -> get_enc_4_x_1
  */
 function get_enc_4_x_1(...[,,,,v]) {
-	return get_enc(v- -0x298);
+	return get_enc(v+0x298);
 }
 
 /**
  * @param {(string|undefined)[]} _0x36ea8
  */
 export function process_00(_0x36ea8) {
-	let xx=0x85ea*-0x1+-0x77782+0x35*0x6665;
-	let _0x206ef7=xx;
+	let _0x206ef7=0xd357d;
 	while(!![]) {
 		try {
 			//cspell:words _0x3bbefc
