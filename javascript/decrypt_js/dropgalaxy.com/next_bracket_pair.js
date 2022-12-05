@@ -12,14 +12,14 @@ export function next_bracket_pair(arr,start_index,callback) {
 	let init_index=arr.indexOf("{",start_index);
 	let next_beg_index=arr.indexOf("{",init_index+1);
 	let index=arr.indexOf("}",init_index);
-	let depth=0;
+	let depth=1;
 	let cur_index=start_index;
 	let count=0;
 	if(index>next_beg_index) {
 		do {
 			count++;
 			let nx=arr.findIndex((e,idx) => {
-				if(idx<=cur_index) return false;
+				if(idx<cur_index) return false;
 				return e.match(/[{}()]/);
 			});
 			// console.log('nbp',count,depth,arr.slice(cur_index,nx).join(""));

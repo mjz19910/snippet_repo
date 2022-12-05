@@ -28,7 +28,9 @@ export function use_encrypt_code() {
 		});
 	}
 	for(let i=0;i<7;i++) {
+		let prev_index=index;
 		index=cx();
+		eval(arr.slice(prev_index+1,index+1).join(""));
 	}
 	let do_eval=false;
 	if(do_eval) {
