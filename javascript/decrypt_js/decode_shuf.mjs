@@ -10,8 +10,7 @@ function start_process() {
  * @set _0x16d8 dx
  */
 function dx(a) {
-	a-=0x1e9;
-	return arr[a];
+	return arr[a-0x1e9];
 }
 
 /**
