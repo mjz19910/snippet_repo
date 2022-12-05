@@ -1,9 +1,9 @@
-import {to_token_arr} from "../js/to_token_arr.js";
+import {attach_proxy_for_setInterval} from "../block/attach_proxy_for_setInterval.js";
 import {make_proxy_for_function} from "../block/make_proxy_for_function.js";
 import {make_proxy_for_function_constructor} from "../block/make_proxy_for_function_constructor.js";
+import {to_token_arr} from "../js/to_token_arr.js";
 import js_str_2 from "./src_template_code.js";
 import js_str_1 from "./src_template_decrypt_arr_str.js";
-import {attach_proxy_for_setInterval} from "../block/attach_proxy_for_setInterval.js";
 
 make_proxy_for_function_constructor();
 export let log_fn=console.log.bind(console);
