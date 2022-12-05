@@ -20,7 +20,7 @@ export function next_bracket_pair(arr,start_index,callback) {
 			count++;
 			let nx=arr.findIndex((e,idx) => {
 				if(idx<=cur_index) return false;
-				return e.match(/[{}]/);
+				return e.match(/[{}()]/);
 			});
 			// console.log('nbp',count,depth,arr.slice(cur_index,nx).join(""));
 			if(is_open(arr[nx])) {
@@ -29,7 +29,7 @@ export function next_bracket_pair(arr,start_index,callback) {
 				depth--;
 			}
 			cur_index=nx;
-		} while(depth>=1&&count<5000);
+		} while(depth>=0&&count<5000);
 		index=cur_index;
 	}
 	callback(arr,[start_index,index]);

@@ -12,7 +12,15 @@ export function use_encrypt_code() {
 	let index=0;
 	function cx() {
 		return x(arr,index,function(arr,[start_index,index]) {
-			console.log(JSON.stringify(arr.slice(start_index+2,index+2).join("").trim()));
+			if(start_index>3) {
+				start_index+=2;
+			}
+			if(start_index-index > 50) {
+				console.log(JSON.stringify([
+					arr.slice(start_index,start_index+12).join("").trim(),
+					arr.slice(index-12,index+1).join("").trim(),
+				]));
+			}
 		});
 	}
 	for(let i=0;i<6;i++) {
