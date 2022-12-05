@@ -16,6 +16,9 @@ Function.prototype.constructor.prototype = Function.prototype;
 let log_fn = console.log.bind( console );
 
 let skip_log = false;
+/**
+ * @type {(string | any[] | Error)[][]}
+ */
 let messages = [];
 function make_proxy_for_function ()
 {
@@ -34,17 +37,22 @@ function make_proxy_for_function ()
 make_proxy_for_function();
 let original_setInterval = global.setInterval;
 original_setInterval;
-global.setInterval = function ( func, ms )
-{
-	console.log( "set_interval ms", ms );
-	return setTimeout( function ()
+global.setInterval = new Proxy( global.setInterval, {
+	apply ( ...[,, [ func, ms ]] )
 	{
-		console.log( "timeout" );
-		func();
-		setTimeout( () => { }, 2000 );
-	}, 3000 );
-};
+		console.log( "set_interval ms", ms );
+		return setTimeout( function ()
+		{
+			console.log( "timeout" );
+			func();
+			setTimeout( () => { }, 2000 );
+		}, 3000 );
+	}
+} );
 
+/**
+ * @param {TemplateStringsArray} template
+ */
 function raw_template ( template ) { return template.raw[ 0 ]; }
 var _0x4a8e_ = raw_template`
 var _0x4a8e=['pfe|z','keEyP','XxJMN','retur','VCMpP','|load','RbCwZ','fpwaU','funct','s|glo','mMvUh','fsmBU','XAVpz','yRSTi','count','sbhyJ','GnDyP',
@@ -84,11 +92,11 @@ var _0x16d8=function(_0x348449,_0x25716d){_0x348449=_0x348449-(-0x22ee+-0x245a+-
 
 `;
 
-eval( var_def + "=" + var_code +";console.log("+var_def.split( " " )[ 1 ]+");"+decrypt_code);
+eval( var_def + "=" + var_code + ";console.log(" + var_def.split( " " )[ 1 ] + ");" + decrypt_code );
 
 skip_log = true;
 messages.slice().map( e => log_fn( e ) );
 skip_log = false;
 
-start("> ");
+start( "> " );
 
