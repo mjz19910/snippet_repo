@@ -1,4 +1,5 @@
 import {to_token_arr} from "../js/to_token_arr.js";
+import {handle_x} from "./handle_x.js";
 import {next_bracket_pair as x} from "./next_bracket_pair.js";
 import js_str_2 from "./src_template_code.js";
 import js_str_1 from "./src_template_decrypt_arr_str.js";
@@ -10,13 +11,6 @@ export function use_encrypt_code() {
 	let code_lvl=js_str_2.split(/(\{|\})/).filter(e => e!=="");
 	let arr=to_token_arr(code_lvl);
 	let index=0;
-	/**
-	 * @param {string[]} arr
-	 * @arg {[start:number,end:number]} result
-	 */
-	function handle_x(arr,[start_index,index]) {
-		console.log("%o",arr.slice(start_index,index+1).join("").trim());
-	}
 	for(let i=0;i<6;i++) {
 		index=x(arr,index,handle_x);
 	}
