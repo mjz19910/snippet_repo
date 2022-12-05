@@ -21,6 +21,15 @@ let g_api={};
 window.g_api=any(g_api);
 // #pragma end GApi
 
+
+g_api.saved_objects=[];
+/**
+ * @param {{ name: string; }} callable
+ */
+function add_function(callable) {
+	g_api.saved_objects.push([callable.name,callable])
+}
+
 /** @template K,V */
 class HashMap {
 	/** @type {Map<K,V>|null} */
@@ -3269,8 +3278,7 @@ class W {
 		this.val=val;
 	}
 }
-g_api.saved_objects=[];
-g_api.saved_objects.push(['W',W]);
+add_function(W);
 /**@type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
 	/**@type {[typeof keys[0], typeof values[0]][]} */
@@ -3509,12 +3517,6 @@ function wasm_encode_section(id,arr) {
 	return [id,arr.length,...arr];
 }
 add_function(wasm_encode_section);
-/**
- * @param {{ name: string; }} callable
- */
-function add_function(callable) {
-	g_api.saved_objects.push([callable.name,callable])
-}
 /**
  * @param {string | any[]} arr
  */
