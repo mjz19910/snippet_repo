@@ -24,9 +24,6 @@ function get_enc(a) {
  * @param {number} a
  */
 function get_enc_4_a(_a,_b,_c,_d,a) {
-	let expected=a- -0x298;
-	let my_ver=a+0x298;
-	console.assert(expected===my_ver,"simplify correct");
 	return get_enc(a+0x298);
 }
 
