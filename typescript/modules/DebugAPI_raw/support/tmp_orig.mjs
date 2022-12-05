@@ -38,7 +38,7 @@ make_proxy_for_function();
 let original_setInterval = global.setInterval;
 original_setInterval;
 global.setInterval = new Proxy( global.setInterval, {
-	apply ( ...[,, [ func, ms ]] )
+	apply ( ...[ , , [ func, ms ] ] )
 	{
 		console.log( "set_interval ms", ms );
 		return setTimeout( function ()
@@ -95,7 +95,7 @@ var _0x16d8=function(_0x348449,_0x25716d){_0x348449=_0x348449-(-0x22ee+-0x245a+-
 eval( var_def + "=" + var_code + ";console.log(" + var_def.split( " " )[ 1 ] + ");" + decrypt_code );
 
 skip_log = true;
-messages.slice().map( e => log_fn( e ) );
+messages.slice().map( e => e.map( e => log_fn( e ) ) );
 skip_log = false;
 
 start( "> " );
