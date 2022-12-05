@@ -1,9 +1,6 @@
 /*
 https://jacorb90.me/The-Factory-Of-Automation/
 */
-// @no-var
-var player_nums,player={};
-class ExpantaNum {}
 
 player_nums = Object.fromEntries(
 	Object.entries(player)
