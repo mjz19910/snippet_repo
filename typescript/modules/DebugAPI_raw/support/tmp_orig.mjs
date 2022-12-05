@@ -28,13 +28,6 @@ function make_proxy_for_function ()
 			if ( !skip_log )
 			{
 				messages.push( [ "Function bind", [ target, thisValue, parameters ] ] );
-				if ( messages.length > 8 )
-				{
-					skip_log = true;
-					messages.map( e => log_fn( ...e ) );
-					skip_log = false;
-					messages = [];
-				}
 			}
 			return Reflect.apply( target, thisValue, parameters );
 		}
