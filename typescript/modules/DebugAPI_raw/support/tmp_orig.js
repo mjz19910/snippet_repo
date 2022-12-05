@@ -153,7 +153,7 @@ function to_level(arr,level=0) {
 let level_data=to_level(code_lvl);
 let index=level_data.findIndex(e=>e==="{");
 index=level_data.findIndex(e=>e==="}");
-console.log(...level_data.slice(0,index));
+console.log(level_data.slice(0,index+1).join(""));
 
 let v=false;
 
