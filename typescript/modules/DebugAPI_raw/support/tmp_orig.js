@@ -61,8 +61,8 @@ let eq_idx = _0x4a8e_.indexOf( "=" );
 let var_def = _0x4a8e_.slice( 0, eq_idx );
 let var_code = _0x4a8e_.slice( eq_idx + 1, _0x4a8e_.lastIndexOf( ";" ) );
 
-eval( var_def + "=console.log(" + var_code + ")" );
-console.log( var_def );
+eval( var_def + "=" + var_code );
+console.log( eval( var_def.split( " " )[ 1 ] ) );
 
 
 let decrypt_code = raw_template`
