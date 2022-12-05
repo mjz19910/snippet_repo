@@ -49,7 +49,6 @@ export function process_00(arr) {
 	let target=0xd357d;
 	while(!![]) {
 		try {
-			//cspell:words _0x3bbefc
 			var cur=
 				-parseInt(get_enc_4(0x15a,-0x1a,0x11b,-0x5,0xa6))+
 				-parseInt(get_enc_4(-0xf5,-0x36,-0x82,0x4f,-0x67))+
