@@ -1,18 +1,13 @@
-/**
+import {is_close} from "./is_close.js";
+import {is_open} from "./is_open.js";
+
+	/**
  * @arg {string[]} arr
  * @param {number} level
  */
 export function to_token_arr(arr,level) {
 	/** @type {string[]} */
 	let ret=[];
-	/** @param {string} str */
-	function is_open(str) {
-		return str==="{}"[0]||str==="()"[0]||str==="[]"[0];
-	}
-	/** @param {string} str */
-	function is_close(str) {
-		return str==="{}"[1]||str==="()"[1]||str==="[]"[1];
-	}
 	for(let i=0;i<arr.length;i++) {
 		let cur=arr[i];
 		if(cur&&is_close(cur)) {
