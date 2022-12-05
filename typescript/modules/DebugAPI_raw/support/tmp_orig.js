@@ -15,11 +15,31 @@ Function.prototype.constructor = function ( fn_string )
 };
 Function.prototype.constructor.prototype = Function.prototype;
 
-function make_proxy_for_function() {
-	Function.prototype.bind=new Proxy(Function.prototype.bind,{});
+let skip_log = false;
+let messages = [];
+function make_proxy_for_function ()
+{
+	Function.prototype.bind = new Proxy( Function.prototype.bind, {
+		apply ( target, thisValue, parameters )
+		{
+			if ( !skip_log )
+			{
+				messages.push( [ "Function bind", [ target, thisValue, parameters ] ] );
+				if ( messages.length > 8 )
+				{
+					skip_log = true;
+					messages.map( e => console.log( e ) );
+					skip_log = false;
+					messages = [];
+				}
+			}
+			return Reflect.apply( target, thisValue, parameters );
+		}
+	} );
 }
 
 make_proxy_for_function();
+let original_setInterval = global.setInterval;
 global.setInterval = function ( func, ms )
 {
 	console.log( "set_interval ms", ms );
@@ -74,6 +94,14 @@ var _0x16d8=function(_0x348449,_0x25716d){_0x348449=_0x348449-(-0x22ee+-0x245a+-
 
 `;
 
-
+let log_fn = console.log.bind( console );
 
 console.log( eval( decrypt_code ) );
+
+skip_log = true;
+messages.slice().map( e => log_fn( e ) );
+skip_log = false;
+
+let cint_stop = original_setInterval( () => { }, 1000 );
+cint_stop;
+
