@@ -16,8 +16,6 @@ export function next_bracket_pair(arr,start_index,callback) {
 	let cur_index=start_index;
 	let count=0;
 	if(index>next_beg_index) {
-		depth=0;
-		console.log('index > next_beg_index',index);
 		do {
 			count++;
 			let nx=arr.findIndex((e,idx) => {
