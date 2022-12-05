@@ -1,17 +1,9 @@
 import {to_token_arr} from "../js/to_token_arr.js";
+import {make_proxy_for_function} from "./make_proxy_for_function.js";
+import {make_proxy_for_function_constructor} from "./make_proxy_for_function_constructor.js";
 import {decrypt_code_src} from "./src_template_code.js";
 
-let real_constructor=Function.prototype.constructor;
-/** @arg {string} [fn_string] */
-Function.prototype.constructor=function(fn_string) {
-	if(fn_string==="debugger") {
-		return function() {};
-	} else {
-		console.log("no make proto.fn",JSON.stringify(fn_string));
-	}
-	return real_constructor.call(this,fn_string);
-};
-Function.prototype.constructor.prototype=Function.prototype;
+make_proxy_for_function_constructor();
 let log_fn=console.log.bind(console);
 /** @template T @arg {any} v @returns {T} */
 function any(v) {
@@ -20,19 +12,6 @@ function any(v) {
 /** @type {import("../../../typescript/modules/DebugAPI_raw/support/GlobalThisExt.js").GlobalThisExt} */
 let global_save=any(globalThis);
 global_save.log_fn=log_fn;
-
-let skip_log=false;
-let messages=[];
-function make_proxy_for_function() {
-	Function.prototype.bind=new Proxy(Function.prototype.bind,{
-		apply(target,thisValue,parameters) {
-			if(!skip_log) {
-				messages.push(["Function bind",new Error(),target,thisValue,...parameters]);
-			}
-			return Reflect.apply(target,thisValue,parameters);
-		}
-	});
-}
 
 make_proxy_for_function();
 let original_setInterval=globalThis.setInterval;
