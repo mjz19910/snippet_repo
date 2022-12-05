@@ -1,6 +1,6 @@
 // parse_javascript_str
 declare global {
-	interface GlobalApiObject {
+	interface InjectApiT {
 		saved_objects: [string, {}][];
 		parse_javascript_str?:((str:string)=>void);
 	}
@@ -24,13 +24,6 @@ declare global {
 declare global {
 	interface NodeListOf<TNode extends Node> extends NodeList {
 		[Symbol.iterator](): IterableIterator<TNode>;
-	}
-}
-
-// g_api global
-declare global {
-	interface Window {
-		g_api: GlobalApiObject;
 	}
 }
 
@@ -243,7 +236,7 @@ declare global {
 
 // DebugAPI
 declare global {
-	interface GlobalApiObject {
+	interface InjectApiT {
 		DoCalc: {};
 		reversePrototypeChain: {};
 		ReversePrototypeChain: {};

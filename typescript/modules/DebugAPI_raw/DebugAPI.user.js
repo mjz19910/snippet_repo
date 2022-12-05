@@ -16,18 +16,18 @@
 
 
 // #pragma section GApi
-/** @type {GlobalApiObject} */
-let g_api={};
-window.g_api=any(g_api);
+/** @type {InjectApiT} */
+let inject_api={};
+window.inject_api=any(inject_api);
 // #pragma end GApi
 
 
-g_api.saved_objects=[];
+inject_api.saved_objects=[];
 /**
  * @param {{ name: string; }} callable
  */
 function add_function(callable) {
-	g_api.saved_objects.push([callable.name,callable]);
+	inject_api.saved_objects.push([callable.name,callable]);
 }
 
 /** @template K,V */
@@ -2364,7 +2364,7 @@ function parse_javascript_str(code_str) {
 	}
 	console.log(`parsed ${i} tokens`);
 }
-g_api.parse_javascript_str=parse_javascript_str;
+inject_api.parse_javascript_str=parse_javascript_str;
 
 
 const debug=false;
@@ -2384,7 +2384,7 @@ const console=any({
 class LoggingEventTarget {
 	dispatchEvent=console.log.bind(console);
 }
-g_api.LoggingEventTarget=LoggingEventTarget;
+inject_api.LoggingEventTarget=LoggingEventTarget;
 
 class APIProxyManager {
 	/**
@@ -2420,7 +2420,7 @@ class APIProxyManager {
 		window.postMessage=this.create_proxy_for_function('postMessage_sent',win_post_message);
 	}
 }
-g_api.APIProxyManager=APIProxyManager;
+inject_api.APIProxyManager=APIProxyManager;
 
 let any_api_logger=new APIProxyManager(new LoggingEventTarget);
 
@@ -2436,8 +2436,8 @@ function any(v) {
 
 class ReversePrototypeChain {
 	static attach_to_api() {
-		g_api.ReversePrototypeChain=this;
-		g_api.reversePrototypeChain=new this(Object.prototype,[]);
+		inject_api.ReversePrototypeChain=this;
+		inject_api.reversePrototypeChain=new this(Object.prototype,[]);
 	}
 	/**
 	 * @param {{}} base
@@ -2487,7 +2487,7 @@ class ReversePrototypeChain {
 		if(this.window_list.includes(any(value))) {
 			return "window_id::"+this.window_list.indexOf(any(value));
 		}
-		if(value===g_api)
+		if(value===inject_api)
 			return `self::g_api:${object_index}`;
 		let key;
 		if(Symbol.toStringTag in value) {
@@ -2904,9 +2904,9 @@ class AddEventListenerExt {
 		}
 	}
 }
-g_api.AddEventListenerExt=AddEventListenerExt;
+inject_api.AddEventListenerExt=AddEventListenerExt;
 let add_event_listener_ext=new AddEventListenerExt;
-g_api.add_event_listener_ext=add_event_listener_ext;
+inject_api.add_event_listener_ext=add_event_listener_ext;
 
 class IterExtensions {
 	static init() {
@@ -2930,7 +2930,7 @@ class IterExtensions {
 		};
 	}
 }
-g_api.IterExtensions=IterExtensions;
+inject_api.IterExtensions=IterExtensions;
 IterExtensions.init();
 
 /** @param {boolean} include_uninteresting */
@@ -2951,7 +2951,7 @@ function getPlaybackRateMap(include_uninteresting) {
 		}
 	}; return progress_map;
 };
-g_api.getPlaybackRateMap=getPlaybackRateMap;
+inject_api.getPlaybackRateMap=getPlaybackRateMap;
 
 class CreateObjURLCache {
 	/** @readonly */
@@ -3006,7 +3006,7 @@ class CreateObjURLCache {
 		}
 	}
 }
-g_api.CreateObjURLCache=CreateObjURLCache;
+inject_api.CreateObjURLCache=CreateObjURLCache;
 CreateObjURLCache.enable();
 
 /**@template T @arg {T} [t] @returns {t is undefined} */
@@ -3184,7 +3184,7 @@ class Repeat {
 	}
 }
 
-g_api.Repeat=Repeat;
+inject_api.Repeat=Repeat;
 class CompressRepeated {
 	/** @template T @param {T[]} src @param {(T|Repeat<T>)[]} dst */
 	did_compress(src,dst) {
@@ -3264,7 +3264,7 @@ class CompressRepeated {
 		return arr;
 	}
 }
-g_api.CompressRepeated=CompressRepeated;
+inject_api.CompressRepeated=CompressRepeated;
 /**@template T */
 class W {
 	/**@arg {T} val */
@@ -3286,7 +3286,7 @@ function to_tuple_arr(keys,values) {
 	}
 	return ret;
 }
-g_api.to_tuple_arr=to_tuple_arr;
+inject_api.to_tuple_arr=to_tuple_arr;
 /** @param {any[]} arr @param {number} index @param {number} value */
 function range_matches(arr,value,index) {
 	for(let i=index;i<arr.length;i++) {
@@ -3555,7 +3555,7 @@ function run_wasm_plugin() {
 
 	wasm_global_memory_view.set(wasm_header,0);
 }
-g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin,[]);
+inject_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin,[]);
 
 /**@arg {SafeFunctionPrototype} safe_function_prototype */
 function gen_function_prototype_use(safe_function_prototype) {
@@ -3669,8 +3669,8 @@ function run_modules_plugin() {
 			default:
 				ret=bound_apply_call(this,[thisArg,argArray]);
 		}
-		if(window.g_api.function_as_string_vec.indexOf(this.toString())==-1) {
-			window.g_api.function_as_string_vec.push(this.toString());
+		if(window.inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
+			window.inject_api.function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};
@@ -3681,14 +3681,14 @@ function run_modules_plugin() {
 	 */
 	function function_prototype_apply_inject(tv,r) {
 		let ret=bound_apply_call(this,[tv,r]);
-		if(window.g_api.function_as_string_vec.indexOf(this.toString())==-1) {
-			window.g_api.function_as_string_vec.push(this.toString());
+		if(window.inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
+			window.inject_api.function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};
 	Function.prototype.apply=function_prototype_apply_inject;
 }
-g_api.run_modules_plugin=new VoidCallback(run_modules_plugin,[]);
+inject_api.run_modules_plugin=new VoidCallback(run_modules_plugin,[]);
 
 class CompressionStatsCalculator {
 	constructor() {
@@ -3770,7 +3770,7 @@ class CompressionStatsCalculator {
 		console.log("compressed",res);
 	}
 }
-g_api.CompressionStatsCalculator=CompressionStatsCalculator;
+inject_api.CompressionStatsCalculator=CompressionStatsCalculator;
 
 let stats_calculator_info={
 	stats_calculator: new CompressionStatsCalculator,
@@ -3778,7 +3778,7 @@ let stats_calculator_info={
 	compression_stats: [],
 };
 
-g_api.range_matches=range_matches;
+inject_api.range_matches=range_matches;
 let compressionStatsCalc=stats_calculator_info.stats_calculator;
 /** @param {[unknown, number][]} stats */
 function log_stats(stats) {
@@ -3985,7 +3985,7 @@ class DoCalc {
 		}
 	}
 }
-g_api.DoCalc=DoCalc;
+inject_api.DoCalc=DoCalc;
 
 class CompressDual {
 	/**@type {number} */
@@ -4422,7 +4422,7 @@ function compress_main(stats) {
 	g_obj_arr.value=flat_obj(obj_start);
 }
 
-g_api.compress_main=any(new VoidCallback(compress_main,[new CompressionStatsCalculator]));
+inject_api.compress_main=any(new VoidCallback(compress_main,[new CompressionStatsCalculator]));
 
 class HexRandomDataGenerator {
 	constructor() {
@@ -4488,7 +4488,7 @@ class HexRandomDataGenerator {
 		return (size+num).toString(16).slice(1);
 	}
 }
-g_api.HexRandomDataGenerator=HexRandomDataGenerator;
+inject_api.HexRandomDataGenerator=HexRandomDataGenerator;
 let random_data_generator=new HexRandomDataGenerator;
 
 class EventListenerValue {
@@ -4503,7 +4503,7 @@ class EventListenerValue {
 		this.options=options;
 	}
 }
-g_api.EventListenerValue=EventListenerValue;
+inject_api.EventListenerValue=EventListenerValue;
 
 class GenericEvent {
 	#default_prevented=false;
@@ -4521,7 +4521,7 @@ class GenericEvent {
 		return this.#default_prevented;
 	}
 }
-g_api.GenericEvent=GenericEvent;
+inject_api.GenericEvent=GenericEvent;
 
 class GenericDataEvent extends GenericEvent {
 	/**
@@ -4533,7 +4533,7 @@ class GenericDataEvent extends GenericEvent {
 		this.data=data;
 	}
 }
-g_api.GenericDataEvent=GenericDataEvent;
+inject_api.GenericDataEvent=GenericDataEvent;
 
 class GenericEventTarget {
 	constructor() {
@@ -4605,7 +4605,7 @@ class GenericEventTarget {
 		return can_handle;
 	}
 }
-g_api.GenericEventTarget=GenericEventTarget;
+inject_api.GenericEventTarget=GenericEventTarget;
 const static_event_target=new GenericEventTarget;
 
 class Dumper {
@@ -4617,7 +4617,7 @@ class Dumper {
 		this.m_dump_value=null;
 	}
 }
-g_api.Dumper=Dumper;
+inject_api.Dumper=Dumper;
 
 class WeakValueRef {
 	id=-1;
@@ -4626,7 +4626,7 @@ class WeakValueRef {
 		this.id=id;
 	}
 }
-g_api.WeakValueRef=WeakValueRef;
+inject_api.WeakValueRef=WeakValueRef;
 
 class CSSCascade {
 	/**
@@ -4709,7 +4709,7 @@ class CSSCascade {
 		yield;
 	}
 }
-g_api.CSSCascade=CSSCascade;
+inject_api.CSSCascade=CSSCascade;
 
 class TransportMessageObj {
 	/**@type {number|undefined} */
@@ -4857,7 +4857,7 @@ class OriginState {
 	 */
 	static is_root;
 }
-g_api.OriginState=OriginState;
+inject_api.OriginState=OriginState;
 
 // @Update on minor version change
 // version 0.3.0 sha1 initial commit
@@ -5181,10 +5181,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		});
 	}
 } // </RemoteOriginConnection>
-g_api.RemoteOriginConnection=RemoteOriginConnection;
+inject_api.RemoteOriginConnection=RemoteOriginConnection;
 let remote_origin=new RemoteOriginConnection();
 remote_origin.init();
-g_api.remote_origin=remote_origin;
+inject_api.remote_origin=remote_origin;
 
 const html_parsing_div_element=document.createElement("div");
 /**
@@ -5194,7 +5194,7 @@ function parse_html_to_binary_arr(html) {
 	html_parsing_div_element.innerHTML=html;
 	return Array.prototype.map.call(html_parsing_div_element.textContent,e => e.charCodeAt(0));
 }
-g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
+inject_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 
 /**
  * @typedef {{type: "data";data: {result: [string, any];return: any;};}} DATA_RES
@@ -5314,7 +5314,7 @@ class DebugAPI {
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
-		window.g_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
+		window.inject_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -5333,7 +5333,7 @@ class DebugAPI {
 				};
 			}
 		};
-		if(!window.g_api.DebugAPI.the().clearCurrentBreakpoint()) {
+		if(!window.inject_api.DebugAPI.the().clearCurrentBreakpoint()) {
 			console.log("failed to clear breakpoint");
 		}
 		0;
@@ -5660,4 +5660,4 @@ class DebugAPI {
 		};
 	}
 }
-g_api.DebugAPI=DebugAPI;
+inject_api.DebugAPI=DebugAPI;
