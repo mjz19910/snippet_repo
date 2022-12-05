@@ -193,3 +193,4 @@ class RustTokenTreeParser {
 g_api.RustSimpleParser=RustTokenTreeParser;
 
 let token_tree_parser=new RustTokenTreeParser;
+g_api.token_tree_parser=token_tree_parser;
