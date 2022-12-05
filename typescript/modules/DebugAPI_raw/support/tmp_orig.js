@@ -98,14 +98,12 @@ function pop(arr) {
 }
 pop;
 
-let code_lvl=decrypt_code.split(/([{}])/);
+let code_lvl=decrypt_code.split(/([{};])/);
 /** @arg {string[]} arr */
 function to_level(arr) {
 	let level=0;
-	/** @type {(string|[number,string])[]} */
+	/** @type {[number,string][]} */
 	let ret=[];
-	/** @type {(string|[number,string])[][]} */
-	let stack=[];
 	/** @param {string} str */
 	function is_open(str) {
 		return str==="{}"[0]||str==="()"[0];
@@ -125,7 +123,7 @@ function to_level(arr) {
 	};
 	return ret;
 }
-console.log(to_level(code_lvl));
+console.log(to_level(code_lvl).filter(e=>e[0]===0));
 let v=false;
 
 if(v) eval(var_def+"="+var_code+";console.log("+var_def.split(" ")[1]+");"+decrypt_code);
