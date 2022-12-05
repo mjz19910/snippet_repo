@@ -108,7 +108,7 @@ pop;
 
 let code_lvl=decrypt_code.trim().split(/(\{|\})/).filter(e => e!=="");
 /** @arg {string[]} arr */
-function to_level(arr,level=0) {
+function to_token_arr(arr,level=0) {
 	/** @type {string[]} */
 	let ret=[];
 	/** @param {string} str */
@@ -127,11 +127,11 @@ function to_level(arr,level=0) {
 		let item=cur.split(/([;])/).filter(e => e!=="");
 		let next_regex=/([()\[\],=]|\s|var|function)/;
 		if(item.length>1) {
-			let next=to_level(item,level);
+			let next=to_token_arr(item,level);
 			for(let i=0;i<next.length;i++) {
 				let cur=next[i];
 				let item=cur.split(next_regex).filter(e => e!=="");
-				let final=to_level(item,level);
+				let final=to_token_arr(item,level);
 				ret.push(...final);
 			}
 		} else {
@@ -144,7 +144,7 @@ function to_level(arr,level=0) {
 						ret.push(next);
 						break x;
 					}
-					let final=to_level(item,level);
+					let final=to_token_arr(item,level);
 					ret.push(...final);
 					break x;
 				} else {
@@ -157,7 +157,7 @@ function to_level(arr,level=0) {
 	};
 	return ret;
 }
-let level_data=to_level(code_lvl);
+let level_data=to_token_arr(code_lvl);
 let index=0;
 for(let i=0;i<6;i++) {
 	index=x(index);
