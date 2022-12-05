@@ -98,6 +98,26 @@ var _0x16d8=function(_0x348449,_0x25716d){_0x348449=_0x348449-(-0x22ee+-0x245a+-
 
 `;
 
-eval( var_def + "=" + var_code + ";console.log(" + var_def.split( " " )[ 1 ] + ");" + decrypt_code );
+let code_lvl=decrypt_code.split(/([{}])/);
+/** @arg {string[]} arr */
+function to_level(arr) {
+	let level=0;
+	let ret=[];
+	for(let i=0;i<arr.length;i++) {
+		let match=arr[i].match(/[{}]/);
+		if(match && match[0]==="{}"[1]) {
+			level--;
+		}
+		ret.push([level,arr[i]]);
+		if(match && match[0]==="{}"[0]) {
+			level++;
+		}
+	};
+	return ret;
+}
+console.log(to_level(code_lvl));
+let v=false;
+
+if (v) eval( var_def + "=" + var_code + ";console.log(" + var_def.split( " " )[ 1 ] + ");" + decrypt_code );
 
 
