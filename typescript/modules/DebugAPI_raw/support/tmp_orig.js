@@ -98,7 +98,7 @@ var _0x16d8=function(_0x348449,_0x25716d){_0x348449=_0x348449-(-0x22ee+-0x245a+-
 
 `;
 
-let code_lvl=decrypt_code.split(/([{}()])/);
+let code_lvl=decrypt_code.split(/([{}])/);
 /** @arg {string[]} arr */
 function to_level(arr) {
 	let level=0;
