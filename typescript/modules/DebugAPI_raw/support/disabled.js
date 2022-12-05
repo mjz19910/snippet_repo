@@ -2,7 +2,7 @@ class RustSimpleTokenizer {
 	constructor() {
 		this.index=0;
 		this.source=null;
-		let codes=this.m_separators.map(e=>e.charCodeAt(0));
+		let codes=this.m_separators.map(e => e.charCodeAt(0));
 		this.m_separator_char_codes=codes;
 	}
 	/**
@@ -53,7 +53,7 @@ class RustSimpleTokenizer {
 	m_separator_char_codes;
 	/** @param {number} char_code */
 	is_separator(char_code) {
-		return this.m_separators.findIndex(e=>e.charCodeAt(0) === char_code)>=0;
+		return this.m_separators.findIndex(e => e.charCodeAt(0)===char_code)>=0;
 	}
 	/** @param {string} str */
 	str_to_tokens(str) {
