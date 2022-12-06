@@ -5114,6 +5114,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(cast_result===null) return fail();
 		let message_data=cast_result.data;
 		if(message_data===null) return fail();
+		// for https://godbolt.org & vscode integrators
+		if('vscodeScheduleAsyncWork' in message_data) return;
 		/** @type {{type:string}|null} */
 		let message_record=cast_to_record_with_string_type(message_data);
 		if(message_record===null) return fail();
