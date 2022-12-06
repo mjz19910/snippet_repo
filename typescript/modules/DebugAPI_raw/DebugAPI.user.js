@@ -5158,16 +5158,23 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event */
 	on_message_event(event) {
 		let fail=() => this.on_client_misbehaved(event);
-		let cast_result=cast_to_object(event.data);
-		if(cast_result===null) return fail();
-		let message_data=cast_result.data;
-		if(message_data===null) return fail();
-		// for https://godbolt.org & vscode integrators
-		if('vscodeScheduleAsyncWork' in message_data) return;
-		let is_sponsor_block=this.is_sponsor_block_event_data(message_data);
-		if(is_sponsor_block) return;
-		if(event.ports.length!==1) return this.on_client_misbehaved(event);
-		this.on_connect_request_message(event);
+		if(event.ports.length===0) {
+			if(typeof event.data==='string'&&event.data==="") return;
+			let cast_result=cast_to_object(event.data);
+			if(cast_result===null) return fail();
+			let message_data=cast_result.data;
+			if(message_data===null) return fail();
+			// for https://godbolt.org & vscode integrators
+			if('vscodeScheduleAsyncWork' in message_data) return;
+			let is_sponsor_block=this.is_sponsor_block_event_data(message_data);
+			if(is_sponsor_block) return;
+			fail();
+		} else if(event.ports.length===1) {
+			this.on_connect_request_message(event);
+		} else {
+			console.log("too many ports");
+			fail();
+		}
 	}
 	// @RemoteOriginConnection
 	/** @arg {MessageEvent<unknown>} event */
