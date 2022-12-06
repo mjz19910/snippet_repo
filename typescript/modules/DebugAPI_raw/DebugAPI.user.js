@@ -2931,7 +2931,7 @@ class IterExtensions {
 		let proto=Object.getPrototypeOf(val_iter);
 		proto.map=function(/** @type {(arg0: any) => any} */ func) {
 			return {
-				b:this,
+				b: this,
 				next() {
 					let iter=this.b.next();
 					if(iter.done) return iter;
@@ -4944,14 +4944,14 @@ function is_record_with_T(x,k) {
 /** @template T @arg {T} x @returns {{data:T & ({}|null)}|null} */
 function cast_to_object(x) {
 	if(!is_object(x)) return null;
-	return {data:x};
+	return {data: x};
 }
 
 /** @template {{}} T @arg {T} x @returns {Record<"type", string>|null} */
 function cast_to_record_with_string_type(x) {
-	if('type' in x && typeof x.type==='string') {
+	if('type' in x&&typeof x.type==='string') {
 		x;
-		let y={...x,type:x.type};
+		let y={...x,type: x.type};
 		// only gets iterable properties
 	}
 	if(!is_record_with_string_type(x,"type")) return null;
@@ -5107,7 +5107,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @arg {MessageEvent<unknown>} event
 	 */
 	on_connect_request_message(event) {
-		let fail=()=>this.on_client_misbehaved(event)
+		let fail=() => this.on_client_misbehaved(event);
 		let cast_result=cast_to_object(event.data);
 		if(cast_result===null) return fail();
 		let message_data=cast_result.data;
