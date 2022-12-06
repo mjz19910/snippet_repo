@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         DebugAPI and g_api
+// @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      4.9.3
+// @version      4.9.4
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/typescript/modules/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -4931,7 +4931,7 @@ function is_record_with_string_type(x,k) {
 	return is_record_with_T(x,k)&&typeof x[k]==='string';
 }
 
-/** @template T @arg {T} x @arg {T} x @returns {x is {}} */
+/** @template T @arg {T} x @arg {T} x @returns {x is {}|null} */
 function is_object(x) {
 	return typeof x==='object';
 }
@@ -4941,9 +4941,14 @@ function is_record_with_T(x,k) {
 	return k in x;
 }
 
-/** @template T @arg {T} x @returns {T & Record<"type", string>|null} */
-function cast_to_record_with_string_type(x) {
+/** @template T @arg {T} x @returns {{data:T & ({}|null)}|null} */
+function cast_to_object(x) {
 	if(!is_object(x)) return null;
+	return {data:x};
+}
+
+/** @template {{}} T @arg {T} x @returns {T & Record<"type", string>|null} */
+function cast_to_record_with_string_type(x) {
 	if(!is_record_with_string_type(x,"type")) return null;
 	return x;
 }
@@ -5097,14 +5102,19 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @arg {MessageEvent<unknown>} event
 	 */
 	on_connect_request_message(event) {
-		/** @type {{type:string}|null} */
-		let message_record=cast_to_record_with_string_type(event.data);
-		if(message_record===null) {
+		let fail=()=>{
 			return this.on_client_misbehaved(event);
 		}
+		let cast_result=cast_to_object(event.data);
+		if(cast_result===null) return fail();
+		let message_data=cast_result.data;
+		if(message_data===null) return fail();
+		/** @type {{type:string}|null} */
+		let message_record=cast_to_record_with_string_type(message_data);
+		if(message_record===null) return fail();
 		switch(message_record.type) {
 			case remote_origin.post_message_connect_message_type: break;
-			default: return this.on_client_misbehaved(event);
+			default: return fail();
 		}
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
@@ -5163,8 +5173,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	// @RemoteOriginConnection
 	/** @arg {MessageEvent<unknown>} event */
 	on_client_misbehaved(event) {
-		console.log(`[@RemoteOriginConnection] Client misbehaved: connect api not followed`);
-		console.group("Received message event");
+		console.group("[RemoteOriginConnection.on_client_misbehaved]");
+		console.log(`Client misbehaved: Connect api not followed`);
 		console.log("root_ev_data",event.data);
 		console.log("root_ev_ports",event.ports);
 		console.log("root_event",event);
