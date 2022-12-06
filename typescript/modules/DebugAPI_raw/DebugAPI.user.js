@@ -5140,12 +5140,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		console.log("root_post_message",message);
 		target_port.postMessage(message);
 	}
-	/** @template T @arg {T} data_obj @returns {boolean} */
+	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
-		if(typeof data_obj!='object'||data_obj===null) return false;
-		/** @type {T&{}} */
-		let obj=data_obj;
-		let message_record_with_source=cast_to_record_with_key_and_string_type(obj,"source");
+		let message_record_with_source=cast_to_record_with_key_and_string_type(data_obj,"source");
 		if(!message_record_with_source) return false;
 		if(message_record_with_source.source!=="sponsorblock") return false;
 		// should be a SponsorBlock event.data
@@ -5161,8 +5158,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event */
 	on_message_event(event) {
 		let message_data=event.data;
-		let is_sponsor_block=this.is_sponsor_block_event_data(message_data);
-		if(is_sponsor_block) return;
 		if(typeof message_data==='object') {
 			/** @type {{}|null} */
 			let md2=message_data;
