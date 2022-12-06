@@ -11,6 +11,6 @@
 // @updateURL    https://github.com/mjz19910/snippet_repo/raw/master/typescript/modules/DebugAPI_raw/DebugAPI.meta.js
 // @downloadURL  https://github.com/mjz19910/snippet_repo/raw/master/typescript/modules/DebugAPI_raw/DebugAPI.user.js
 // ==/UserScript==
-// Cache bust(4) ====
+// Cache bust(4) =====
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
