@@ -4947,13 +4947,18 @@ function cast_to_object(x) {
 	return {data:x};
 }
 
-/** @template {{}} T @arg {T} x @returns {T & Record<"type", string>|null} */
+/** @template {{}} T @arg {T} x @returns {Record<"type", string>|null} */
 function cast_to_record_with_string_type(x) {
+	if('type' in x && typeof x.type==='string') {
+		x;
+		let y={...x,type:x.type};
+		// only gets iterable properties
+	}
 	if(!is_record_with_string_type(x,"type")) return null;
 	return x;
 }
 
-/** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {U & Record<T, string>|null} */
+/** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {{ [P in T]: string; }|null} */
 function cast_to_record_with_key_and_string_type(x,k) {
 	if(!is_record_with_string_type(x,k)) return null;
 	return x;
@@ -5143,11 +5148,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		let message_record_with_source=cast_to_record_with_key_and_string_type(obj,"source");
 		if(!message_record_with_source) return false;
 		if(message_record_with_source.source!=="sponsorblock") return false;
-		/** @type {T&{source:string}} */
-		let obj_2=message_record_with_source;
 		// should be a SponsorBlock event.data
-		/** @type {T&{type:string,source:string}|null} */
-		let message_record_with_type=cast_to_record_with_string_type(obj_2);
+		/** @type {{type:string}|null} */
+		let message_record_with_type=cast_to_record_with_string_type(message_record_with_source);
 		if(message_record_with_type===null) return false;
 		switch(message_record_with_type.type) {
 			case "data":
