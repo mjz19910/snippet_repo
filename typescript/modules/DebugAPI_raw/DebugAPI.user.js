@@ -16,7 +16,7 @@
 
 
 // #pragma section GApi
-/** @type {InjectApiT} */
+/** @type {typeof window['inject_api']} */
 let inject_api={};
 window.inject_api=any(inject_api);
 // #pragma end GApi
@@ -2705,6 +2705,13 @@ function do_message_handler_overwrite(handler) {
 		}
 		handler.call(this,event);
 	};
+}
+
+class ProxyTargetMap {
+	static attach_to_api() {
+		inject_api.ProxyTargetMap=this;
+		inject_api.proxyTargetMap=new this;
+	}
 }
 
 class AddEventListenerExt {

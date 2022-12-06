@@ -1,23 +1,4 @@
-// next
-declare global {
-	interface InjectApiT {
-		elevate_event_handler?: (arg0: EventListenersT) => void;
-	}
-}
-
-// saved_objects
-declare global {
-	interface InjectApiT {
-		saved_objects: [string, {}][];
-	}
-}
-
-// parse_javascript_str
-declare global {
-	interface InjectApiT {
-		parse_javascript_str?:((str:string)=>void);
-	}
-}
+import {InjectApiT} from "./support/InjectApiT.js";
 
 // Holder
 export type Holder=1;
@@ -46,19 +27,6 @@ declare global {
 		inject_api: InjectApiT;
 	}
 }
-
-class VoidCallback<U extends any[],C> {
-	m_callback: ((...args: U) => C);
-	constructor(callback: (...args: U) => C) {
-		this.m_callback=callback;
-	}
-	/** @param {U} args */
-	execute(...args: U) {
-		return this.m_callback(...args);
-	}
-}
-
-type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
 
 // SafeFunctionPrototype
 declare global {
@@ -197,15 +165,6 @@ declare global {
 	};
 }
 
-interface DebugAPI_the {
-	get_k(v: string): any;
-	clearCurrentBreakpoint(): boolean;
-}
-
-type DebugAPIType={
-	the(): DebugAPI_the;
-};
-
 type Constructor=new () => any;
 
 declare global {
@@ -251,47 +210,6 @@ declare global {
 	type arg_list_item_type=WeakRef<{}>|bigint|boolean|string|number|symbol;
 	interface Function {
 		__arg_list_for_add_event_listeners: arg_list_item_type[][];
-	}
-}
-
-// DebugAPI
-declare global {
-	interface InjectApiT {
-		DoCalc: {};
-		reversePrototypeChain: {};
-		ReversePrototypeChain: {};
-		any_api_logger: {};
-		parse_html_to_binary_arr: (html: string) => unknown[];
-		run_modules_plugin: VoidCallbackWith<() => void>;
-		run_wasm_plugin: VoidCallbackWith<() => void>;
-		compress_main: VoidCallbackWith<(stats: {}) => void>;
-		IterExtensions: {};
-		getPlaybackRateMap: {};
-		CreateObjURLCache: {};
-		Repeat: {};
-		CompressRepeated: {};
-		to_tuple_arr: {};
-		range_matches: {};
-		function_as_string_vec: string[];
-		CompressionStatsCalculator: {};
-		HexRandomDataGenerator: {};
-		EventListenerValue: {};
-		GenericEvent: {};
-		GenericDataEvent: {};
-		GenericEventTarget: {};
-		Dumper: {};
-		RustSimpleTokenizer: {};
-		RustSimpleParser: {};
-		WeakValueRef: {};
-		CSSCascade: {};
-		OriginState: {};
-		RemoteOriginConnection: {};
-		remote_origin: {};
-		APIProxyManager: {};
-		LoggingEventTarget: {};
-		DebugAPI: DebugAPIType;
-		AddEventListenerExt: {};
-		add_event_listener_ext: {};
 	}
 }
 
