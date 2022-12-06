@@ -2890,10 +2890,12 @@ class AddEventListenerExt {
 		}
 	}
 	/**
-	 * @private
-	 * @param {EventListenerOrEventListenerObject} arg_function
-	 * @param {[string, EventListenerOrEventListenerObject, any?]} arg_this
+	 * @typedef {EventListenerOrEventListenerObject} InterceptFuncType
+	 * @typedef {[string, InterceptFuncType, any?]} InterceptThis
+	 * @param {InterceptThis[1]} arg_function
+	 * @param {InterceptThis} arg_this
 	 * @param {[evt: Event]} args
+	 * @private
 	 */
 	eventFireInterceptor(arg_function,arg_this,args) {
 		if(args[0] instanceof MessageEvent) {
