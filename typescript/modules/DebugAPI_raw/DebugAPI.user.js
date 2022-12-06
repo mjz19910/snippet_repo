@@ -5157,7 +5157,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	on_message_event(event) {
-		let message_data=event.data;
+		let fail=() => this.on_client_misbehaved(event);
+		let cast_result=cast_to_object(event.data);
+		if(cast_result===null) return fail();
+		let message_data=cast_result.data;
+		if(message_data===null) return fail();
+		// for https://godbolt.org & vscode integrators
+		if('vscodeScheduleAsyncWork' in message_data) return;
 		if(typeof message_data==='object') {
 			/** @type {{}|null} */
 			let md2=message_data;
