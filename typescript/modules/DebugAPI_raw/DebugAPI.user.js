@@ -2714,6 +2714,7 @@ class ProxyTargetMap {
 	}
 	weak_map=new WeakMap();
 }
+ProxyTargetMap.attach_to_api();
 
 class AddEventListenerExt {
 	static attach_to_api() {
