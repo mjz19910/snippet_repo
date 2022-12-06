@@ -2636,7 +2636,8 @@ function overwrite_addEventListener(obj) {
 	let arg_list=[];
 	let t=obj;
 	let prototype=obj.get_target_prototype();
-	prototype.addEventListener=new Proxy(prototype.addEventListener,{
+	let target=prototype.addEventListener;
+	let new_target=new Proxy(target,{
 		/** @arg {[type: string, callback: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions | undefined]} argArray */
 		apply(target,callback,argArray) {
 			/** @type {{}[]} */
@@ -2679,6 +2680,8 @@ function overwrite_addEventListener(obj) {
 			return Reflect.apply(target,callback,argArray);
 		}
 	});
+	prototype.addEventListener=new_target;
+	inject_api.proxyTargetMap.weak_map.set(new_target,target);
 	define_normal_value(prototype.constructor,"__arg_list_for_add_event_listeners",arg_list);
 }
 
