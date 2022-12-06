@@ -2708,6 +2708,11 @@ function do_message_handler_overwrite(handler) {
 }
 
 class AddEventListenerExt {
+	static attach_to_api() {
+		inject_api.AddEventListenerExt=AddEventListenerExt;
+		let add_event_listener_ext=new AddEventListenerExt;
+		inject_api.add_event_listener_ext=add_event_listener_ext;
+	}
 	/** @private */
 	original_prototype={
 		addEventListener: EventTarget.prototype.addEventListener,
@@ -2914,11 +2919,6 @@ class AddEventListenerExt {
 		} else {
 			return arg_function.handleEvent(...args);
 		}
-	}
-	static attach_to_api() {
-		inject_api.AddEventListenerExt=AddEventListenerExt;
-		let add_event_listener_ext=new AddEventListenerExt;
-		inject_api.add_event_listener_ext=add_event_listener_ext;
 	}
 }
 AddEventListenerExt.attach_to_api();
