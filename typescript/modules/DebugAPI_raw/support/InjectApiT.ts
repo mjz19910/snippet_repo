@@ -1,12 +1,14 @@
+// next
+interface ProxyTargetMap {}
+// proxyTargetMap
 interface InjectApiT {
-	proxyTargetMap: ProxyTargetMap;
 	ProxyTargetMap: ProxyTargetMapClass;
+	proxyTargetMap: ProxyTargetMap;
 }
 interface ProxyTargetMapClass {
 	attach_to_api(): void;
 	new(): ProxyTargetMap;
 }
-interface ProxyTargetMap {}
 // saved_objects
 interface InjectApiT {
 	saved_objects: [string,{name: string;}][];
