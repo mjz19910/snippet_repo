@@ -5107,9 +5107,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @arg {MessageEvent<unknown>} event
 	 */
 	on_connect_request_message(event) {
-		let fail=()=>{
-			return this.on_client_misbehaved(event);
-		}
+		let fail=()=>this.on_client_misbehaved(event)
 		let cast_result=cast_to_object(event.data);
 		if(cast_result===null) return fail();
 		let message_data=cast_result.data;
