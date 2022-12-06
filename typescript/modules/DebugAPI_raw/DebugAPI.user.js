@@ -2712,6 +2712,7 @@ class ProxyTargetMap {
 		inject_api.ProxyTargetMap=this;
 		inject_api.proxyTargetMap=new this;
 	}
+	weak_map=new WeakMap();
 }
 
 class AddEventListenerExt {

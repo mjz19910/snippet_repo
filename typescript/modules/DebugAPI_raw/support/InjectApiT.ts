@@ -1,9 +1,12 @@
 // next
-interface ProxyTargetMap {}
+interface InjectApiT {}
 // proxyTargetMap
 interface InjectApiT {
 	ProxyTargetMap: ProxyTargetMapClass;
 	proxyTargetMap: ProxyTargetMap;
+}
+interface ProxyTargetMap {
+	weak_map: WeakMap<any,any>;
 }
 interface ProxyTargetMapClass {
 	attach_to_api(): void;
