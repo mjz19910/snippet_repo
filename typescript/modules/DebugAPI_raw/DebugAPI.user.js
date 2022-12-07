@@ -4817,16 +4817,10 @@ class LocalHandler {
 		if(this.m_tries_left<12) {
 			console.log("reconnect tries_left",this.m_tries_left);
 		}
-		if(this.m_tries_left>1) {
-			let timeout;
-			if(this.m_tries_left<7) {
-				timeout=this.m_connection_timeout/this.m_tries_left;
-			} else {
-				timeout=this.m_connection_timeout/8;
-			}
+		if(this.m_tries_left>0) {
 			if(this.m_reconnecting) {
 				this.m_root.request_new_port(this);
-				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),timeout*30);
+				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),this.m_connection_timeout/4);
 				this.m_tries_left--;
 			}
 		} else {
