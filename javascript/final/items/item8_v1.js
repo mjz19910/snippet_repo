@@ -38,16 +38,24 @@ function main() {
 					any(window).setElems();
 					any(window).updatePrestiges();
 				}
-				lsw.children[0].querySelector(".pb").click();
+				let c=a(lsw.children[0].querySelector(".pb"));
+				v(c);
+				c.click();
 				game.update();
 				any(window).setElems();
 				any(window).updatePrestiges();
-				pl.firstElementChild.nextElementSibling.click();
-				if(eb.classList.contains("green")) {
-					eb.click();
+				c=a(a(pl.firstElementChild).nextElementSibling);
+				v(c);
+				c.click();
+				let ec=a(eb);
+				if(ec.classList.contains("green")) {
+					v(ec);
+					ec.click();
 					dc=1;
 				}
+				sb=a(sb);
 				if(sb.classList.contains("green")) {
+					v(sb);
 					sb.click();
 					dc=1;
 				}
@@ -57,8 +65,9 @@ function main() {
 				game.update();
 				any(window).setElems();
 				any(window).updatePrestiges();
-				sb2=pl.children[4].lastElementChild.previousElementSibling;
-				eb2=pl.lastElementChild.lastElementChild.previousElementSibling;
+				let sb2=a(pl.children[4].lastElementChild).previousElementSibling;
+				let eb2=a(a(pl.lastElementChild).lastElementChild).previousElementSibling;
+				eb2=a(eb2);sb2=a(sb2);
 				if(eb2.classList.contains("green")) {
 					break;
 				}
@@ -66,6 +75,7 @@ function main() {
 					break;
 				}
 				if(eb2.classList.contains("green")) {
+					v(eb2);
 					eb2.click();
 					dc=1;
 				}
@@ -97,7 +107,7 @@ function main() {
 				game.update();
 				any(window).setElems();
 				any(window).updatePrestiges();
-				let c=a(a(pl.firstElementChild).nextElementSibling)
+				let c=a(a(pl.firstElementChild).nextElementSibling);
 				v(c);
 				c.click();
 				let ec=a(eb);
@@ -153,7 +163,7 @@ function main() {
 		for(var cj=chunksz;cj<lim;cj+=chunksz) {
 			for(var xj=0;xj<chunksz;xj++) {
 				let x=a(lsw.children[dim_l].firstElementChild);
-				let el=a(x.nextElementSibling);v(el);
+				let el=a(x.nextElementSibling); v(el);
 				el.click();
 				game.update();
 				any(window).setElems();
@@ -168,6 +178,8 @@ function main() {
 	function v(v) {
 		if(!(v instanceof HTMLInputElement)) throw 1;
 	}
+	/** @arg {Element} _v @returns {asserts _v is HTMLElement} */
+	function h(_v) {}
 	function max_pres_last() {
 		let lsw=document.querySelector("#layerswrapper");
 		if(!lsw) return;
@@ -197,7 +209,9 @@ function main() {
 					console.log("hit automation limit");
 					break;
 				}
-				if(lsw.children[1].querySelector(".pb").style.display=="none") {
+				let sh=a(lsw.children[1].querySelector(".pb"));
+				h(sh);
+				if(sh.style.display=="none") {
 					break;
 				}
 			}
