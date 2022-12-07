@@ -20,7 +20,7 @@ function run_d() {
 		};
 		let q=window.native_module_scope;
 		state.native_module_scope=q;
-		/** @type {({}|null)[]} */
+		/** @type {any[]} */
 		let import_arr=[];
 		if(state.back_ptr?.import_arr) {
 			import_arr=state.back_ptr.import_arr;
@@ -46,12 +46,13 @@ function run_d() {
 	class ReqSt {
 		/** @type {V8RequireState|null} */
 		back_ptr=null;
-		/** @type {{}|null} */
+		/** @type {{[x:string]: {}|null}|null} */
 		native_module_scope=null;
 		/** @type {({}|null)[]|null} */
 		import_arr=null;
+		aborted=false;
 		/**
-		 * @param {{}} f
+		 * @param {(...x:any[])=>any} f
 		 * @param {(...x:any[])=>any} b
 		 * @param {string} s
 		 */
