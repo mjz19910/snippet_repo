@@ -201,7 +201,6 @@ function get_typescript_file_to_compile(state) {
 }
 
 let ipc_load_data=new IpcLoader;
-let last_log_dir="";
 
 /**
  * @param {string} specifier
