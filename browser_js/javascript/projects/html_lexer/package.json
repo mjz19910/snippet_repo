@@ -1,0 +1,7 @@
+{
+	"type": "module",
+	"name": "html-lexer",
+	"devDependencies": {
+		"@types/node": "^18.11.9"
+	}
+}

@@ -1,0 +1,8 @@
+{
+	"type": "module",
+	"name": "project-ipc",
+	"main": "src/mod.js",
+	"files": [
+		"src/**/*.js"
+	]
+}
