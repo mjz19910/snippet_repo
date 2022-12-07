@@ -178,11 +178,11 @@ declare global {
 }
 
 declare global {
-	type RemoteOriginListening={type: "listening",client_id: number;};
+	type RemoteOriginConnected={type: "connected",client_id: number;};
 	type RemoteOriginDisconnected={type: "disconnected";};
 	type RemoteOriginKeepAlive={type: "keep_alive"|"keep_alive_reply"; side: "client"|"server";};
 	type RemoteOriginMessage=
-		RemoteOriginListening|
+		RemoteOriginConnected|
 		RemoteOriginDisconnected|
 		RemoteOriginKeepAlive;
 	interface BlockEnd {}

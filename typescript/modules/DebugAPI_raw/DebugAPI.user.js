@@ -4812,7 +4812,7 @@ class TransportMessageObj {
 			handler: this,
 		};
 		switch(message_event_response.data.type) {
-			case "listening": {
+			case "connected": {
 				remote_origin.transport_connected(report_info);
 				if(this.m_reconnecting) {
 					this.m_reconnecting=false;
@@ -4925,8 +4925,11 @@ class RemoteHandler {
 		this.connection_port.postMessage(message_data);
 	}
 	/** @param {number} client_id */
-	startListening(client_id) {
-		this.post_message({type: "listening",client_id});
+	onConnected(client_id) {
+		this.post_message({type: "connected",client_id});
+	}
+	onDisconnect() {
+		this.post_message({type: "disconnected"});
 	}
 	/** @arg {MessageEvent<RemoteOriginMessage>} event */
 	handleEvent(event) {
@@ -5150,7 +5153,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		let handler=new RemoteHandler(this.m_flags,connection_port);
 		connection_port.start();
 		connection_port.addEventListener("message",handler);
-		handler.startListening(client_id);
+		handler.onConnected(client_id);
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.first_event.source===event.source;
 		});
@@ -5224,7 +5227,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
-				connection.handler.post_message({type: "disconnected"});
+				connection.handler.onDisconnect();
 			}
 		});
 		window.addEventListener("unload",function() {
