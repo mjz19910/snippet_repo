@@ -44,85 +44,86 @@ import {to_tuple_arr} from "./to_tuple_arr";
 import {VoidCallback} from "./VoidCallback";
 import {WeakValueRef} from "./WeakValueRef";
 import {AutoBuy} from "../types/AutoBuy";
+export function main() {
+	/** @type {typeof window['g_api']} */
+	let g_api=window.g_api??{};
+	window.g_api=g_api;
+	g_api.IterExtensions=IterExtensions;
+	IterExtensions.init();
+	g_api.getPlaybackRateMap=getPlaybackRateMap;
+	g_api.CreateObjURLCache=CreateObjURLCache;
+	CreateObjURLCache.enable();
 
-/** @type {typeof window['g_api']} */
-let g_api=window.g_api??{};
-window.g_api=g_api;
-g_api.IterExtensions=IterExtensions;
-IterExtensions.init();
-g_api.getPlaybackRateMap=getPlaybackRateMap;
-g_api.CreateObjURLCache=CreateObjURLCache;
-CreateObjURLCache.enable();
+	g_api.Repeat=Repeat;
+	g_api.CompressRepeated=CompressRepeated;
+	g_api.to_tuple_arr=to_tuple_arr;
 
-g_api.Repeat=Repeat;
-g_api.CompressRepeated=CompressRepeated;
-g_api.to_tuple_arr=to_tuple_arr;
+	g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
 
-g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
+	window.g_api.function_as_string_vec=[];
 
-window.g_api.function_as_string_vec=[];
+	g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 
-g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
+	g_api.CompressionStatsCalculator=CompressionStatsCalculator;
 
-g_api.CompressionStatsCalculator=CompressionStatsCalculator;
+	g_api.range_matches=range_matches;
 
-g_api.range_matches=range_matches;
+	/** @type {NewTypeWrapper<string[]>} */
+	let ids=new NewTypeWrapper([]);
+	let max_id=new NewTypeWrapper(0);
 
-/** @type {NewTypeWrapper<string[]>} */
-export let ids=new NewTypeWrapper([]);
-export let max_id=new NewTypeWrapper(0);
+	/** @type {NewTypeWrapper<IDValue[]>} */
+	let g_obj_arr=new NewTypeWrapper([]);
+	/**
+	 * @type {any[]}
+	 */
+	let id_map=[];
 
-/** @type {NewTypeWrapper<IDValue[]>} */
-export let g_obj_arr=new NewTypeWrapper([]);
-/**
- * @type {any[]}
- */
-export let id_map=[];
-
-/**
- * @type {Map<string, any>}
- */
-export let id_map_str;
-/**
- * @type {any[]}
- */
-export let ids_dec;
-/**
- * @type {{value:(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}}
- */
-export let dr_map={value:[]};
-export function init_decode() {
-	ids_dec=ids.value.map(e => JSON.parse(e));
-	id_map_str=new Map;
+	/**
+	 * @type {Map<string, any>}
+	 */
+	let id_map_str;
+	/**
+	 * @type {any[]}
+	 */
+	let ids_dec;
+	/**
+	 * @type {{value:(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}}
+	 */
+	let dr_map={value: []};
+	function init_decode() {
+		ids_dec=ids.value.map(e => JSON.parse(e));
+		id_map_str=new Map;
+	}
+	/** @type {AutoBuy} */
+	let g_auto_buy=new AutoBuy;
+	/** @type {NewTypeWrapper<string[]>} */
+	let src_arr=new NewTypeWrapper([]);
+	/** @type {NewTypeWrapper<string[][]>} */
+	let id_groups=new NewTypeWrapper([]);
+	/** @type {NewTypeWrapper<number[]>} */
+	let el_ids;
+	g_api.compress_main=new VoidCallback(compress_main);
+	g_api.HexRandomDataGenerator=HexRandomDataGenerator;
+	let random_data_generator=new HexRandomDataGenerator;
+	g_api.EventListenerValue=EventListenerValue;
+	g_api.GenericEvent=GenericEvent;
+	g_api.GenericDataEvent=GenericDataEvent;
+	g_api.GenericEventTarget=GenericEventTarget;
+	const static_event_target=new GenericEventTarget;
+	g_api.Dumper=Dumper;
+	const local_dumper=new Dumper;
+	g_api.RustSimpleTokenizer=RustSimpleTokenizer;
+	g_api.RustSimpleParser=RustTokenTreeParser;
+	g_api.WeakValueRef=WeakValueRef;
+	g_api.CSSCascade=CSSCascade;
+	g_api.OriginState=OriginState;
+	g_api.ConnectToRemoteOrigin=RemoteOriginConnection;
+	g_api.APIProxyManager=APIProxyManager;
+	g_api.any_api_logger=new APIProxyManager(new LoggingEventTarget);
+	g_api.LoggingEventTarget=LoggingEventTarget;
+	g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
+	g_api.DebugAPI=DebugAPI;
+	const html_parsing_div_element=document.createElement("div");
+	const debug_api=DebugAPI.the();
 }
-/** @type {AutoBuy} */
-export let g_auto_buy=new AutoBuy;
-/** @type {NewTypeWrapper<string[]>} */
-export let src_arr=new NewTypeWrapper([]);
-/** @type {NewTypeWrapper<string[][]>} */
-export let id_groups=new NewTypeWrapper([]);
-/** @type {NewTypeWrapper<number[]>} */
-export let el_ids;
-g_api.compress_main=new VoidCallback(compress_main);
-g_api.HexRandomDataGenerator=HexRandomDataGenerator;
-export let random_data_generator=new HexRandomDataGenerator;
-g_api.EventListenerValue=EventListenerValue;
-g_api.GenericEvent=GenericEvent;
-g_api.GenericDataEvent=GenericDataEvent;
-g_api.GenericEventTarget=GenericEventTarget;
-export const static_event_target=new GenericEventTarget;
-g_api.Dumper=Dumper;
-export const local_dumper=new Dumper;
-g_api.RustSimpleTokenizer=RustSimpleTokenizer;
-g_api.RustSimpleParser=RustTokenTreeParser;
-g_api.WeakValueRef=WeakValueRef;
-g_api.CSSCascade=CSSCascade;
-g_api.OriginState=OriginState;
-g_api.ConnectToRemoteOrigin=RemoteOriginConnection;
-g_api.APIProxyManager=APIProxyManager;
-g_api.any_api_logger=new APIProxyManager(new LoggingEventTarget);
-g_api.LoggingEventTarget=LoggingEventTarget;
-g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
-g_api.DebugAPI=DebugAPI;
-export const html_parsing_div_element=document.createElement("div");
-export const debug_api=DebugAPI.the();
