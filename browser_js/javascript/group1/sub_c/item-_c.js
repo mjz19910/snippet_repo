@@ -65,10 +65,6 @@ function main() {
 	async function async_task() {
 		let P=this;
 		await P.wait(50);
-		if(P.run) {
-			P.reset();
-		}
-		return;
 	}
 	return z(async_task,promise_result);
 }
