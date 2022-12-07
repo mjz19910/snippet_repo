@@ -1464,6 +1464,20 @@ class MulCompressionImpl extends BaseCompressionImpl {
 		return true;
 	}
 
+	/**
+	 * @param {{i:number,arr:number[],ret:(number|Repeat_0<number>)[]}} state
+	 * @arg {number} item
+	 */
+	compress_rle_number(state,item) {
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
+		let off=1;
+		while(item===state.arr[state.i+off]) off++;
+		if(off==1) return false;
+		state.ret.push(new Repeat_0(item,off));
+		state.i+=off-1;
+		return true;
+	}
+
 	/** @arg {string[]} arr */
 	try_compress(arr) {
 		/**@type {CompressState<string, string>} */
@@ -1476,6 +1490,20 @@ class MulCompressionImpl extends BaseCompressionImpl {
 		}
 		return this.compress_result_state(state);
 	}
+
+	/** @arg {number[]} arr */
+	try_compress_number(arr) {
+		/**@type {CompressState<number, number>} */
+		let state=new CompressState(arr);
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle_number(state,item);
+			if(use_item) continue;
+			state.ret.push(item);
+		}
+		return this.compress_result_state(state);
+	}
+
 	/** @arg {string[]} arr */
 	try_decompress(arr) {
 		let ret=[];
