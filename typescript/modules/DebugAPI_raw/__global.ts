@@ -1,4 +1,4 @@
-import {InjectApiT} from "./support/InjectApiT.js";
+import {IInjectAPI} from "./support/IInjectAPI.js";
 
 // Holder
 export type Holder=1;
@@ -24,7 +24,7 @@ declare global {
 // inject_api global
 declare global {
 	interface Window {
-		inject_api: InjectApiT;
+		inject_api: IInjectAPI;
 	}
 }
 

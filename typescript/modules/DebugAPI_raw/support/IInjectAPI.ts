@@ -1,7 +1,11 @@
 // next
-interface InjectApiT {}
+interface IInjectAPI {}
+// elevate_event_handler_handlers
+interface IInjectAPI {
+	elevate_event_handler_handlers: ((arg0: EventListenersT) => void)[];
+}
 // proxyTargetMap
-interface InjectApiT {
+interface IInjectAPI {
 	ProxyTargetMap: ProxyTargetMapClass;
 	proxyTargetMap: ProxyTargetMap;
 }
@@ -13,19 +17,19 @@ interface ProxyTargetMapClass {
 	new(): ProxyTargetMap;
 }
 // saved_objects
-interface InjectApiT {
+interface IInjectAPI {
 	saved_objects: [string,{name: string;}][];
 }
 // elevate_event_handler
-interface InjectApiT {
+interface IInjectAPI {
 	elevate_event_handler?: (arg0: EventListenersT) => void;
 }
 // parse_javascript_str
-interface InjectApiT {
+interface IInjectAPI {
 	parse_javascript_str?: ((str: string) => void);
 }
 // DebugAPI
-interface InjectApiT {
+interface IInjectAPI {
 	DoCalc: {};
 	reversePrototypeChain: {};
 	ReversePrototypeChain: {};
@@ -59,8 +63,8 @@ interface InjectApiT {
 	APIProxyManager: {};
 	LoggingEventTarget: {};
 	DebugAPI: DebugAPIType;
-	AddEventListenerExt: {};
-	add_event_listener_ext: {};
+	AddEventListenerExtension: {};
+	addEventListenerExtension: {};
 }
 type DebugAPIType={
 	the(): DebugAPI_the;
@@ -81,4 +85,4 @@ class VoidCallback<U extends any[],C> {
 	}
 }
 
-export {InjectApiT};
+export {IInjectAPI};

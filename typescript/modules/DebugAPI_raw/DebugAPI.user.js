@@ -15,11 +15,11 @@
 /* eslint-disable no-undef */
 
 
-// #pragma section GApi
+// #pragma section InjectAPI
 /** @type {typeof window['inject_api']} */
 let inject_api={};
 window.inject_api=any(inject_api);
-// #pragma end GApi
+// #pragma end InjectAPI
 
 
 inject_api.saved_objects=[];
@@ -2630,7 +2630,7 @@ function define_normal_value(obj,key,value) {
 	});
 }
 
-/** @param {AddEventListenerExt} obj */
+/** @param {AddEventListenerExtension} obj */
 function overwrite_addEventListener(obj) {
 	/** @type {arg_list_item_type[][]} */
 	let arg_list=[];
@@ -2719,11 +2719,20 @@ class ProxyTargetMap {
 }
 ProxyTargetMap.attach_to_api();
 
-class AddEventListenerExt {
+/** @param {EventListenersT} event_handler */
+function elevate_event_handler(event_handler) {
+	for(let i=0;i<inject_api.elevate_event_handler_handlers.length;i++){
+		let handler=inject_api.elevate_event_handler_handlers[i];
+		handler(event_handler);
+	}
+}
+inject_api.elevate_event_handler=elevate_event_handler;
+
+class AddEventListenerExtension {
 	static attach_to_api() {
-		inject_api.AddEventListenerExt=AddEventListenerExt;
-		let add_event_listener_ext=new AddEventListenerExt;
-		inject_api.add_event_listener_ext=add_event_listener_ext;
+		inject_api.AddEventListenerExtension=this;
+		inject_api.addEventListenerExtension=new this;
+		inject_api.elevate_event_handler_handlers=[];
 	}
 	/** @private */
 	original_prototype={
@@ -2753,7 +2762,7 @@ class AddEventListenerExt {
 	node_id_max=0;
 	constructor() {
 		overwrite_addEventListener(this);
-		inject_api.elevate_event_handler=this.elevate_event_handler.bind(this);
+		inject_api.elevate_event_handler_handlers.push(this.elevate_event_handler.bind(this));
 		if(!debug) return;
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
@@ -2933,7 +2942,7 @@ class AddEventListenerExt {
 		}
 	}
 }
-AddEventListenerExt.attach_to_api();
+AddEventListenerExtension.attach_to_api();
 
 class IterExtensions {
 	static attach_to_api() {
