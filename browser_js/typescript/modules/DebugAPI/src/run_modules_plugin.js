@@ -62,7 +62,7 @@ export function run_modules_plugin() {
 		if(!g_api.function_as_string_vec) throw 1;
 		let ret;
 		switch(argArray.length) {
-			case 2:
+			case 2: {
 				if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
 					var ars=Object.entries(argArray[2]).filter(([,e]) => e instanceof Array);
 					var ars_i=ars[0][1].indexOf(this);
@@ -75,6 +75,7 @@ export function run_modules_plugin() {
 						}
 					}
 				}
+			} break;
 			default:
 				ret=bound_apply_call(this,[thisArg,argArray]);
 		}

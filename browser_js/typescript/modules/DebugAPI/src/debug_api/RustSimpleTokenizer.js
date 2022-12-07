@@ -48,11 +48,6 @@ export class RustSimpleTokenizer {
 	}
 	m_separators=["{","}","(",")","<",">"];
 	/**
-	 * @param {any} char_code
-	 */
-	is_separator(char_code) {
-	}
-	/**
 	 * @param {any} str
 	 */
 	str_to_tokens(str) {

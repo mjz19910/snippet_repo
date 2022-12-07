@@ -1,4 +1,3 @@
-import {compress_init} from "./compress_init";
 import {flat_obj} from "./flat_obj";
 import {make_group_from_item} from "./make_group_from_item";
 import {run_calc} from "./run_calc";
