@@ -41,10 +41,7 @@
 		"esm": true,
 	},
 	"include": [
-		"javascript/**/*",
-		"typescript/src/**/*",
-		"typescript/modules/**/*",
-		"typescript/ns.ts",
+		"**/*",
 	],
 	"exclude": [
 		"node_modules",
