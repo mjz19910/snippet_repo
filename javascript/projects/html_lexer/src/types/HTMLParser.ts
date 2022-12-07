@@ -1,9 +1,9 @@
-export enum Namespace {
+export enum HTMLNamespace {
     HTML
 }
 
 export abstract class ParserNode {
-    namespace_():Namespace {
+    namespace_():HTMLNamespace {
         throw new Error("Method not implemented.");
     }
 }

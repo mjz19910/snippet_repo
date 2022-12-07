@@ -3936,6 +3936,11 @@ function nop_timer(_handler: TimerHandler,_timeout?: number|undefined,..._args: 
 	console.log('nop timeout');
 	return -1;
 }
+namespace nop_timer {
+	export var __promisify__=null;
+}
+export {nop_timer};
+nop_timer.__promisify__=null;
 
 function no_aev(...v: any[]) {
 	console.log("aev",v);
