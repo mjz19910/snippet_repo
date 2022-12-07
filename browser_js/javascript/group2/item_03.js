@@ -43,8 +43,7 @@ function main() {
 			var value=this.values[id];
 			console.log("running", key);
 			try {
-				let ret=value()
-				return ret
+				return value()
 			} finally {}
 		}
 		/** @param {number} id */
