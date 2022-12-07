@@ -24,18 +24,17 @@
 		 * @param {any[]} val
 		 */
 		function fix_ref(arr,val) {
-			let dq,nc=0,rar=[];
-			dq;
-			rar;
+			let nc=0;
 			if(val.length==1)
 				return -1;
-			if((dq=val.indexOf(','))<0) {
+			if((val.indexOf(','))<0) {
 				val[1]=arr[parseInt(val[1][0],36)];
 				return -1;
 			}
 			while(nc++<32) {
 				return val.indexOf(',');
 			}
+			return -1;
 		}
 		for(let j=0;j<c.length;j++) {
 			fix_ref(c,c[j]);
