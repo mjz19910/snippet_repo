@@ -5088,8 +5088,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @param {Window} remote_target
 	 */
 	init_transport_over(remote_target) {
-		let local_handler=new LocalHandler(300);
-		this.m_local_handler=local_handler;
+		this.m_local_handler=new LocalHandler(300);
 		this.m_remote_target=remote_target;
 	}
 	init() {
