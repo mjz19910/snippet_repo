@@ -64,6 +64,6 @@ declare global {
 		yt_handlers?: {};
 		yt_watch_page_loaded_handler?: {};
 		blob_create_args_arr?: {};
-		HTMLMediaElementGainController: {};
+		HTMLMediaElementGainController?: {};
 	}
 }

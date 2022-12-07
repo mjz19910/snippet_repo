@@ -49,10 +49,10 @@ function default_from(v1,v2) {
 	if(res===void 0||res===null) throw new Error("Not null");
 	return res;
 }
-
-/**@type {import("./support/GlobalApiObject").GlobalApiObjectImplS} */
-let g_api=default_from(window.g_api,{});
-window.g_api=g_api;
+if(!window.g_api) {
+	window.g_api={};
+}
+let g_api=window.g_api;
 
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
