@@ -5203,18 +5203,32 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		return false;
 	}
 	/** @arg {MessageEvent<unknown>} event */
+	did_client_misbehave(event) {
+		// don't handle strings, too easy to get custom data that
+		// may be very hard to distinguish between
+		if(typeof event.data==='string') return false;
+	}
+	/** @arg {MessageEvent<unknown>} event */
+	can_handle_message(event) {
+		if(typeof event.data==='string') return false;
+	}
+	/** @arg {MessageEvent<unknown>} event */
+	extract_message(event) {
+		let cast_result=cast_to_object(event.data);
+		if(cast_result===null) return null;
+		let message_data=cast_result.data;
+		if(message_data===null) return null;
+		// for https://godbolt.org & vscode integrators
+		if('vscodeScheduleAsyncWork' in message_data) return null;
+		return message_data;
+	}
+	/** @arg {MessageEvent<unknown>} event */
 	on_message_event(event) {
 		let fail=() => this.on_client_misbehaved(event);
+		if(this.did_client_misbehave(event)) return fail();
 		if(event.ports.length===0) {
-			// don't handle strings, too easy to get custom data that
-			// may be very hard to distinguish between
-			if(typeof event.data==='string') return;
-			let cast_result=cast_to_object(event.data);
-			if(cast_result===null) return fail();
-			let message_data=cast_result.data;
+			let message_data=this.extract_message(event);
 			if(message_data===null) return fail();
-			// for https://godbolt.org & vscode integrators
-			if('vscodeScheduleAsyncWork' in message_data) return;
 			let is_sponsor_block=this.is_sponsor_block_event_data(message_data);
 			if(is_sponsor_block) return;
 			fail();
