@@ -5079,9 +5079,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	init_with_opener(opener) {
 		this.init_transport_over(opener);
 		this.start_root_server();
-		this.setup_root_proxy();
-	}
-	setup_root_proxy() {
 		this.m_flags.does_proxy_to_opener=true;
 	}
 	/**
