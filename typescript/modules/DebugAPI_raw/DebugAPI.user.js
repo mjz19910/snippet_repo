@@ -5192,11 +5192,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	on_message_event(event) {
 		let fail=() => this.on_client_misbehaved(event);
 		if(event.ports.length===0) {
-			if(typeof event.data==='string') {
-				if(event.data==="") return;
-				console.log("[RemoteOriginConnection.on_message_event] unexpected string as event data",[event.data]);
-				return;
-			}
+			// don't handle strings, too easy to get custom data that
+			// may be very hard to distinguish between
+			if(typeof event.data==='string') return;
 			let cast_result=cast_to_object(event.data);
 			if(cast_result===null) return fail();
 			let message_data=cast_result.data;
