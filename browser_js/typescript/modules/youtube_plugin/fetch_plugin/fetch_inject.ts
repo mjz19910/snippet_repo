@@ -5,6 +5,6 @@ export function fetch_inject(request_info: RequestInfo|URL,init: RequestInit) {
 	if(!original_fetch.value) throw new Error("No original fetch");
 	let ret=original_fetch.value(request_info,init);
 	return ret.then(function(res) {
-		fetch_promise_handler({request_info, init},res);
+		return fetch_promise_handler({request_info, init},res);
 	});
 }
