@@ -89,12 +89,12 @@ function main() {
 				state.info.push(this.sym.debug);
 			}
 			/**
-			 * @param {any} event_foward_function
+			 * @param {any} event_forward_function
 			 */
-			async clear(event_foward_function) {
+			async clear(event_forward_function) {
 				if(this.state.root) {
 					var nop=function() {};
-					this.event_foward_function=event_foward_function;
+					this.event_forward_function=event_forward_function;
 					nop.call(null);
 					await this.promise;
 					this.clear_root();
@@ -203,7 +203,7 @@ function main() {
 			 */
 			clear_breakpoint(result) {
 				var error;
-				if(!undebug) {
+				if(!window.undebug) {
 					throw new Error("Missing undebug function");
 				}
 				if(arguments.length<1) {
@@ -216,12 +216,12 @@ function main() {
 					Error.captureStackTrace(error,this.clear_breakpoint);
 					throw error;
 				}
-				if(this.event_foward_function) {
-					this.event_foward_function('clear '+this.key);
+				if(this.event_forward_function) {
+					this.event_forward_function('clear '+this.key);
 				} else {
 					console.log('clear '+this.key);
 				}
-				undebug(this.breakpoint_function);
+				window.undebug(this.breakpoint_function);
 				if(this.on_page_unload&&result!==null) {
 					window.removeEventListener('unload',this.on_page_unload.bind(this));
 				}
@@ -235,10 +235,10 @@ function main() {
 				this.on_breakpoint_clear({});
 			}
 			set_breakpoint() {
-				if(!debug) throw new Error("devtools");
+				if(!window.debug) throw new Error("devtools");
 				console.log('set debug breakpoint',this.breakpoint_function);
 				this.first=true;
-				debug(this.breakpoint_function,this.get_breakpoint_string());
+				window.debug(this.breakpoint_function,this.get_breakpoint_string());
 				this.has_breakpoint=true;
 			}
 			get_breakpoint_string() {
@@ -317,8 +317,8 @@ function main() {
 				return _debugger;
 			}
 			function pre_init_callback() {
-				debug=debug;
-				undebug=undebug;
+				window.debug=window.debug;
+				window.undebug=window.undebug;
 				var state=new DebugState;
 				state.breakpoint_function_path="Function.prototype.call";
 				state.root=true;
