@@ -647,7 +647,6 @@ var parsejs=class {
 					})
 					break
 				default:
-					var js_ident="ident"
 					var match=s.match(/^[a-zA-Z$_\d]+/)
 					if(match) {
 						var hit=match[0];
@@ -657,7 +656,7 @@ var parsejs=class {
 							data: hit
 						});
 						state.tok.push({
-							value: js_ident,
+							value: "ident",
 							data: hit,
 						})*/
 						switch (hit) {
