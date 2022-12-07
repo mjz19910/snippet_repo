@@ -10,7 +10,7 @@ declare global {
 // g_api on window object
 declare global {
 	interface Window {
-		g_api: GlobalApiObject;
+		g_api?: GlobalApiObject;
 	}
 }
 
