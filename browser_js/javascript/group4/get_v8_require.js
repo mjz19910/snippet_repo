@@ -9,7 +9,7 @@ function run_d() {
 	}
 	let w=debug;
 	w.u=undebug;
-	/** @arg {ReqSt} state @returns {{}[]|null} */
+	/** @arg {ReqSt} state @returns {({} | null)[]|null} */
 	function get_v8_require_run(state) {
 		if(!('nodeRequire' in window)||typeof window.nodeRequire!=='function') {
 			console.log("no nodeRequire");
@@ -20,17 +20,20 @@ function run_d() {
 		};
 		let q=window.native_module_scope;
 		state.native_module_scope=q;
-		/** @type {{}[]} */
+		/** @type {({}|null)[]} */
 		let import_arr=[];
 		if(state.back_ptr?.import_arr) {
 			import_arr=state.back_ptr.import_arr;
 		}
 		state.import_arr=import_arr;
 		import_arr[0]=state.m(any(q.v8).Serializer,(/** @type {new () => any} */ f) => new f,'assert');
+		if(!import_arr[0]) return null;
 		//v8.Serializer
-		import_arr[1]=state.m(import_arr[1],(/** @type {(arg0: boolean) => any} */ f) => f(true),'lazyError');
+		import_arr[1]=state.m(import_arr[0],(/** @type {(arg0: boolean) => any} */ f) => f(true),'lazyError');
+		if(!import_arr[1]) return null;
 		//assert
-		q.require=state.m(import_arr[2],(/** @type {() => any} */ f) => f(),'require');
+		q.require=state.m(import_arr[1],(/** @type {() => any} */ f) => f(),'require');
+		if(!q.require) return null;
 		import_arr[2]=q.require;
 		//lazyError
 		import_arr[3]=q.NativeModule=state.m(q.require,(/** @type {(arg0: string) => any} */ f) => f('v8'),'NativeModule');
@@ -45,7 +48,7 @@ function run_d() {
 		back_ptr=null;
 		/** @type {{}|null} */
 		native_module_scope=null;
-		/** @type {{}[]|null} */
+		/** @type {({}|null)[]|null} */
 		import_arr=null;
 		/**
 		 * @param {{}} f

@@ -2,8 +2,8 @@ declare global {
 	interface V8RequireState {
 		back_ptr: V8RequireState|null;
 		/** @type {{}[]|null} */
-		import_arr:{}[]|null;
-		native_module_scope: {[x:string]: {}}
+		import_arr:({}|null)[]|null;
+		native_module_scope: {[x:string]: {}|null}
 		aborted:boolean;
 		m: any;
 		b: any;
@@ -12,7 +12,7 @@ declare global {
 	interface Window {
 		v8_require_state?: V8RequireState;
 		get_v8_require_run?: (state: V8RequireState)=>null|{}[];
-		native_module_scope?: {[x:string]: {}};
+		native_module_scope?: V8RequireState['native_module_scope'];
 	}
 }
 
