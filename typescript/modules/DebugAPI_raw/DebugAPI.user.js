@@ -4813,14 +4813,20 @@ class LocalHandler {
 	m_remote_side_connected=false;
 	m_tries_left=0;
 	m_connection_timeout;
+	start_reconnect() {
+		this.m_root.request_new_port(this);
+		this.m_timeout_id=setTimeout(
+			this.process_reconnect.bind(this),
+			this.m_connection_timeout/4
+		);
+	}
 	process_reconnect() {
 		if(this.m_tries_left<12) {
 			console.log("reconnect tries_left",this.m_tries_left);
 		}
 		if(this.m_tries_left>0) {
 			if(this.m_reconnecting) {
-				this.m_root.request_new_port(this);
-				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),this.m_connection_timeout/4);
+				this.start_reconnect();
 				this.m_tries_left--;
 			}
 		} else {
@@ -4876,7 +4882,7 @@ class LocalHandler {
 				}
 				this.m_keep_alive_interval=setInterval(
 					this.keep_alive_send.bind(this),
-					this.m_connection_timeout/2
+					this.m_connection_timeout/4,
 				);
 			} break;
 			case "disconnected": {
