@@ -82,7 +82,7 @@ function main() {
 					let c3=fs_str.lastIndexOf(String.fromCharCode(40),t_idx-1);
 					let cc=Math.min(c1,c2,c3);
 					console.log(fs_str.slice(cc-2,e_js_call));
-					let can_try_again=true;
+					// let can_try_again=true;
 					let end_char=e_js_call;
 					function ix_pc(/** @type {string} */ n) {
 						return fs_str.indexOf(n,end_char+1);

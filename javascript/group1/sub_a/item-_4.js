@@ -44,6 +44,7 @@ function avg_up(arr,v_avg) {
 }
 class AutoState {
 	constructor() {
+		/** @type {[0|1,number][]} */
 		this.cint_arr=[]
 		this.current_generator_autobuy=0
 	}

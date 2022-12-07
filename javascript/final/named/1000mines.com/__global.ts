@@ -32,7 +32,7 @@ declare global {
 		m: () => any;
 	}
 
-	interface debug {
+	interface debugI {
 		(fn: (...x: any[]) => void,code: string): void;
 		st: Set<any>;
 		sarr: any[];
@@ -41,8 +41,6 @@ declare global {
 		o: any;
 		f: (...a: any[]) => any;
 	}
-
-	var debug: debug|undefined;
 
 	var __fo: any[][];
 	var __lst: any[];

@@ -135,6 +135,7 @@ function main() {
 					bp_proto(func_proto,n,func_obj,function() {});
 					return true;
 				}
+				return false;
 			}
 			let ret=native_callback();
 			if(ret) {
