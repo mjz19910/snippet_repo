@@ -53,22 +53,6 @@ function main() {
 		execute(id) {
 			return this.run(id);
 		}
-		/** @param {number} id */
-		execute_async(id) {
-			var key=this.keys[id];
-			var value=this.values[id];
-			console.log("running async",key);
-			let ret=value();
-			ret.then(null,e => console.error(e));
-			return ret;
-		}
-		/** @param {number} id */
-		is_async(id) {
-			if(this.values[id] instanceof AsyncFunction) {
-				return true;
-			}
-			return false;
-		}
 	}
 	let cur=new curTy;
 	cur.k='ptd-qq101';
