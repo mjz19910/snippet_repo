@@ -2723,7 +2723,7 @@ inject_api.elevate_event_handlers=[];
 
 /** @param {EventListenersT} event_handler */
 function elevate_event_handler(event_handler) {
-	for(let i=0;i<inject_api.elevate_event_handlers.length;i++){
+	for(let i=0;i<inject_api.elevate_event_handlers.length;i++) {
 		let handler=inject_api.elevate_event_handlers[i];
 		handler(event_handler);
 	}
@@ -4913,21 +4913,41 @@ class RemoteOriginConnectionData {
 }
 
 class RemoteHandler {
-	/** @arg {RemoteOriginMessage} message_data */
-	post_message(message_data) {
-		this.connection_port.postMessage(message_data);
-	}
-	/** @type {RemoteOriginConnection} */
-	root;
+	/** @type {RemoteOriginConnection['m_flags']} */
+	m_flags;
 	/** @type {MessagePort} */
 	connection_port;
+	/** @type {RemoteOriginMessage[]} */
+	unhandled_events=[];
+	/** @arg {RemoteOriginMessage} message_data */
+	post_message(message_data) {
+		console.log("RemoteHandler.post_message",message_data);
+		this.connection_port.postMessage(message_data);
+	}
+	/** @param {number} client_id */
+	startListening(client_id) {
+		this.post_message({type: "listening",client_id});
+	}
 	/** @arg {MessageEvent<RemoteOriginMessage>} event */
 	handleEvent(event) {
-		this.root.on_child_event(event,this);
-	};
-	/** @param {RemoteOriginConnection} root @param {MessagePort} connection_port */
-	constructor(root,connection_port) {
-		this.root=root;
+		if(this.m_flags.does_proxy_to_opener) {
+			console.log("TODO proxy message to opener");
+		}
+		let {data}=event;
+		switch(data.type) {
+			case 'keep_alive': {
+				this.post_message({
+					type: "keep_alive_reply",
+					side: data.side,
+				});
+			} return;
+		}
+		this.unhandled_events.push(data);
+		console.log(data);
+	}
+	/** @param {RemoteOriginConnection['m_flags']} flags @param {MessagePort} connection_port */
+	constructor(flags,connection_port) {
+		this.m_flags=flags;
 		this.connection_port=connection_port;
 	}
 }
@@ -4997,23 +5017,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @type {RemoteOriginMessage[]} */
 	unhandled_child_events=[];
-	/** @param {MessageEvent<RemoteOriginMessage>} event @arg {RemoteHandler} remote_handler */
-	on_child_event(event,remote_handler) {
-		if(this.m_flags.does_proxy_to_opener) {
-			console.log("TODO proxy message to opener");
-		}
-		let {data}=event;
-		switch(data.type) {
-			case 'keep_alive': {
-				remote_handler.post_message({
-					type: "keep_alive_reply",
-					side: data.side,
-				});
-			} return;
-		}
-		this.unhandled_child_events.push(data);
-		console.log(data);
-	}
 	constructor() {
 		super();
 		let s=this.state;
@@ -5144,10 +5147,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		}
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
-		let handler=new RemoteHandler(this,connection_port);
+		let handler=new RemoteHandler(this.m_flags,connection_port);
 		connection_port.start();
 		connection_port.addEventListener("message",handler);
-		this.post_port_message(connection_port,{type: "listening",client_id});
+		handler.startListening(client_id);
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.first_event.source===event.source;
 		});
@@ -5156,11 +5159,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		}
 		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
 	}
-	/**@arg {MessagePort} target_port @arg {RemoteOriginMessage} message */
-	post_port_message(target_port,message) {
-		console.log("root_post_message",message);
-		target_port.postMessage(message);
-	}
+	postListeningToConnection() {}
 	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
 		let message_record_with_source=cast_to_record_with_key_and_string_type(data_obj,"source");
@@ -5180,9 +5179,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	on_message_event(event) {
 		let fail=() => this.on_client_misbehaved(event);
 		if(event.ports.length===0) {
-			if(typeof event.data==='string'){
+			if(typeof event.data==='string') {
 				if(event.data==="") return;
-				console.log("[RemoteOriginConnection.on_message_event] unexpected string as event data", [event.data]);
+				console.log("[RemoteOriginConnection.on_message_event] unexpected string as event data",[event.data]);
 				return;
 			}
 			let cast_result=cast_to_object(event.data);
@@ -5225,7 +5224,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
-				t.post_port_message(connection.port,{type: "disconnected"});
+				connection.handler.post_message({type: "disconnected"});
 			}
 		});
 		window.addEventListener("unload",function() {
