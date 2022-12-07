@@ -4811,14 +4811,15 @@ class LocalHandler {
 			side: "client",
 		});
 	}
-	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
-	handleEvent(message_event_response) {
+	/** @param {MessageEvent<RemoteOriginMessage>} event */
+	handleEvent(event) {
 		/** @type {ReportInfo<LocalHandler>} */
 		let report_info={
-			event: message_event_response,
+			event: event,
 			handler: this,
 		};
-		switch(message_event_response.data.type) {
+		let data=event.data;
+		switch(data.type) {
 			case "connected": {
 				remote_origin.transport_connected(report_info);
 				if(this.m_reconnecting) {
@@ -4841,6 +4842,10 @@ class LocalHandler {
 				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),(this.m_connection_timeout/8)*4);
 			} break;
 			case "keep_alive": {
+				this.post_message({
+					type: "keep_alive_reply",
+					side: data.side,
+				});
 			} break;
 			case "keep_alive_reply": {
 				if(this.m_missing_keep_alive_counter>0) {
@@ -4986,7 +4991,7 @@ class RemoteHandler {
 		}
 		let {data}=event;
 		switch(data.type) {
-			case 'keep_alive': {
+			case "keep_alive": {
 				this.post_message({
 					type: "keep_alive_reply",
 					side: data.side,
