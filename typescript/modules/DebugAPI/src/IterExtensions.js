@@ -1,5 +1,5 @@
 export class IterExtensions {
-	static init() {
+	constructor() {
 		let map=new Map;
 		let val_iter=map.values();
 		let proto=Object.getPrototypeOf(val_iter);

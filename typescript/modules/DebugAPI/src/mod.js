@@ -48,10 +48,8 @@ export function main() {
 	let g_api=window.g_api??{};
 	window.g_api=g_api;
 	g_api.IterExtensions=IterExtensions;
-	IterExtensions.init();
 	g_api.getPlaybackRateMap=getPlaybackRateMap;
 	g_api.CreateObjURLCache=CreateObjURLCache;
-	CreateObjURLCache.enable();
 	g_api.Repeat=Repeat;
 	g_api.CompressRepeated=CompressRepeated;
 	g_api.to_tuple_arr=to_tuple_arr;

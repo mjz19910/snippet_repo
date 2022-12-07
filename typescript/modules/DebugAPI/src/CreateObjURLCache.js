@@ -1,6 +1,6 @@
 export class CreateObjURLCache {
 	/** @readonly */
-	static originalScope={
+	originalScope={
 		createObjectURL: URL.createObjectURL,
 		revokeObjectURL: URL.revokeObjectURL,
 	};
@@ -10,22 +10,22 @@ export class CreateObjURLCache {
 	static expired=[];
 	/**@type {Map<string, [(Blob | MediaSource)[], string, boolean]>} */
 	static cache=new Map;
-	static enable() {
+	enable() {
 		this.update_scope(this.getScope());
 	}
-	static disable() {
+	disable() {
 		this.update_scope(this.originalScope);
 	}
 	/**
-	 * @param {CreateObjURLCache.originalScope} scope
+	 * @param {this['originalScope']} scope
 	 */
-	static update_scope(scope) {
+	update_scope(scope) {
 		URL.createObjectURL=scope.createObjectURL;
 		URL.revokeObjectURL=scope.revokeObjectURL;
 	}
-	static getScope() {
+	getScope() {
 		let base=this.originalScope;
-		/**@type {CreateObjURLCache.originalScope} */
+		/**@type {this['originalScope']} */
 		let scope={createObjectURL,revokeObjectURL};
 		return scope;
 		/**
