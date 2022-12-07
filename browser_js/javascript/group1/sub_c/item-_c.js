@@ -47,19 +47,19 @@ function main() {
 	function z(fn,callback_fn) {
 		var rng=Math.random();
 		window.postMessage(rng);
-		var nc=new PromiseHandlerImpl(fn);
+		var promise_val=new PromiseHandlerImpl(fn);
 		/**
 		 * @param {{ data: number; }} e
 		 */
 		function msg_listener(e) {
 			if(e.data===rng) return;
-			nc.run=false;
+			promise_val.run=false;
 			window.removeEventListener("message",msg_listener);
 		}
-		nc.m_start=() => window.addEventListener("message",msg_listener);
-		nc.m_after=callback_fn;
-		nc.reset();
-		return nc;
+		promise_val.m_start=() => window.addEventListener("message",msg_listener);
+		promise_val.m_after=callback_fn;
+		promise_val.reset();
+		return promise_val;
 	}
 	/** @this {PromiseHandlerImpl}*/
 	async function async_task() {
