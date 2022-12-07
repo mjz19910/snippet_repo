@@ -55,65 +55,12 @@ function main() {
 		}
 	}
 	let cur=new curTy;
-	cur.k='ptd-qq101';
-	cur.v=function() {
-		console.clear();
-		let t={};
-		{
-			let rng_num=Math.random();
-			let used_random_nibbles=0;
-			function rng_hex_byte() {
-				let rng_size=1<<8;
-				let num;
-				if(used_random_nibbles==11) {
-					num=~~(rng_num*rng_size);
-					used_random_nibbles+=2;
-					rng_num*=rng_size;
-					rng_num-=num;
-					console.log('z',rng_num,used_random_nibbles);
-					rng_num=Math.random();
-					used_random_nibbles=0;
-				} else if(used_random_nibbles==12) {
-					let nib_size=1<<4;
-					let num_0=~~(rng_num*nib_size);
-					used_random_nibbles++;
-					rng_num*=rng_size;
-					rng_num-=num_0;
-					console.log('z',rng_num,used_random_nibbles);
-					rng_num=Math.random();
-					used_random_nibbles=0;
-					let num_1=~~(rng_num*nib_size);
-					used_random_nibbles++;
-					rng_num*=rng_size;
-					rng_num-=num_1;
-					num=num_1+num_0*16;
-					rng_size=1<<8;
-				} else {
-					num=~~(rng_num*rng_size);
-					used_random_nibbles+=2;
-					rng_num*=rng_size;
-					rng_num-=num;
-				}
-				return (rng_size+num).toString(16).slice(1);
-			}
-			let rng_bytes=Array(5).fill(rng_hex_byte).map(e => e());
-			console.log('__x_'+rng_bytes.join('')+'_r');
-		}
-	};
-	cur.k='async';
-	cur.v=async function() {
-		console.log('async');
-		return 'async done';
-	};
 	cur.k='start';
 	cur.v=function() {
 		console.log('start');
 		return 'done';
 	};
 	let target_id=0;
-	if(cur.is_async(target_id)) {
-		return cur.execute_async(target_id);
-	}
 	return cur.execute(target_id);
 }
 main();
