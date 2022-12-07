@@ -750,7 +750,7 @@ function main() {
 				fe_block(js_parse_block_enter);
 				let maybe=true;
 				if(maybe)
-					return jsfilt;
+					return null;
 				maybe=false;
 				/** @template T @param {T[]} arr */
 				function unwrap_pop(arr) {
@@ -758,7 +758,7 @@ function main() {
 					if(!ret) throw new Error("panic");
 					return ret;
 				}
-				let spf=func.toString().split(/([ .,{}()=;\?\:])/).forEach(( /** @type {string} */ e, /** @type {any} */ x) => {
+				func.toString().split(/([ .,{}()=;\?\:])/).forEach(( /** @type {string} */ e) => {
 					let ls;
 					if(cs.length>0) {
 						ls=cs[cs.length-1];
@@ -766,15 +766,13 @@ function main() {
 					if(e=='if') {
 						cs.push(e);
 						ss_sp='if';
-						return x;
+						return;
 					}
 					if(e.match(/\w/)) {
 						cs.push(e);
 						return;
 					}
-					/**
-					 * @param {any} e
-					 */
+					/** @param {string} e */
 					function dn(e,bf=false) {
 						stk.push(cs);
 						/**
@@ -837,7 +835,7 @@ function main() {
 					cs.push(e);
 				});
 				if(maybe)
-					return spf;
+					return null;
 				let fb=cs.slice(-3,-2)[0];
 				/**
 				 * @param {any[]} arr
@@ -924,7 +922,7 @@ function main() {
 					}
 				}
 				__statement();
-				return [cs,res_code,statement];
+				return {cs,res_code,statement};
 			}
 			/**
 			 * @type {any[]}
@@ -936,9 +934,9 @@ function main() {
 				fc.targets.push(debug.f);
 				let ret=fc(debug.f);
 				if(!ret) throw 1;
-				let bs=ret.indexOf('{');
-				let be=ret.lastIndexOf('}');
-				let bd=ret.slice(bs+1,be);
+				let bs=ret.cs.indexOf('{');
+				let be=ret.cs.lastIndexOf('}');
+				let bd=ret.cs.slice(bs+1,be);
 				let sc=bd[0].split(',');
 				let __nx_name=sc[2].split(/[()]/)[0];
 				if(!__nx_name) throw new Error("1");
