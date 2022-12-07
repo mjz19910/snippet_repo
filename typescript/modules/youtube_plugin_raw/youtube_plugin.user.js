@@ -49,10 +49,6 @@ function default_from(v1,v2) {
 	if(res===void 0||res===null) throw new Error("Not null");
 	return res;
 }
-if(!window.g_api) {
-	window.g_api={};
-}
-let g_api=window.g_api;
 
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
@@ -258,7 +254,7 @@ class Seen {
 		return index;
 	}
 }
-g_api.Seen=Seen;
+window.g_api.Seen=Seen;
 
 const realHTMLElement=HTMLElement;
 
@@ -596,7 +592,7 @@ class PropertyHandler {
 		}
 	}
 }
-g_api.PropertyHandler=PropertyHandler;
+window.g_api.PropertyHandler=PropertyHandler;
 /**
  * @arg {{}} object
  * @param {PropertyKey} property
@@ -635,7 +631,7 @@ class ObjectInfo {
 ObjectInfo.instance=new ObjectInfo;
 /**@type {Map<string, {}>}*/
 let yt_state_map=new Map;
-g_api.yt_state_map=yt_state_map;
+window.g_api.yt_state_map=yt_state_map;
 class YTIterateAllBase {
 	/**
 	 * @this {YTIterateAllBase & {[x:string]: any}}
@@ -849,7 +845,7 @@ class HandleRichGridRenderer {
 	/**@arg {string} path @arg {RichGridRenderer} renderer */
 	static on_contents(path,renderer) {
 		let t=this;
-		if(this.debug) console.log("on_contents", path);
+		if(this.debug) console.log("on_contents",path);
 		renderer.contents=renderer.contents.filter((content_item) => {
 			check_item_keys('.contents[]',Object.keys(content_item));
 			if('remove_content_item' in content_item) {
@@ -1064,9 +1060,9 @@ class YTFilterHandlers extends YTIterateAllBase {
  */
 let blob_create_args_arr=[];
 let leftover_args=[];
-g_api.blob_create_args_arr=blob_create_args_arr;
+window.g_api.blob_create_args_arr=blob_create_args_arr;
 let yt_handlers=new YTFilterHandlers;
-g_api.yt_handlers=yt_handlers;
+window.g_api.yt_handlers=yt_handlers;
 function setup_prototype_modify() {
 	/** @type {Map<string, Blob | MediaSource>}*/
 	let created_blobs=new Map;
@@ -1435,7 +1431,7 @@ class DomObserver extends CustomEventTarget {
 	}
 }
 let dom_observer=new DomObserver;
-g_api.dom_observer=dom_observer;
+window.g_api.dom_observer=dom_observer;
 
 window.playlist_arr??=[];
 /**@type {string[]} */
@@ -1866,7 +1862,7 @@ class MessagePortState {
 	current_event_type="find-ytd-app";
 }
 let port_state=new MessagePortState;
-g_api.port_state=port_state;
+window.g_api.port_state=port_state;
 
 let slow_message_event=false;
 const message_channel_loop_delay=80;
@@ -2148,7 +2144,7 @@ function createPluginOverlay() {
 
 /**@type {PluginOverlayElement} */
 let plugin_overlay_element=createPluginOverlay();
-g_api.plugin_overlay_element=plugin_overlay_element;
+window.g_api.plugin_overlay_element=plugin_overlay_element;
 
 function fix_offset() {
 	if(!ytd_player) return;
@@ -2420,9 +2416,9 @@ class HTMLMediaElementGainController {
 		}
 	}
 }
-g_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
+window.g_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
 let gain_controller=new HTMLMediaElementGainController;
-g_api.gain_controller=gain_controller;
+window.g_api.gain_controller=gain_controller;
 
 class VolumeRange {
 	static enabled=true;
@@ -2565,6 +2561,10 @@ function main() {
 	let a2=ar.slice();
 	ar.push('create');
 	a2.push('createAlternate');
+	if(!window.g_api) {
+		window.g_api={};
+	}
+	let g_api=window.g_api;
 	start_message_channel_loop();
 }
 main();

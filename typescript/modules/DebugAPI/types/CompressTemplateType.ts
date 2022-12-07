@@ -1,6 +1,6 @@
 import {BaseCompression} from "../src/compress/BaseCompression.js";
 import {NumType} from "../src/NumType.js";
-import {Repeat} from "./repeat/Repeat.js";
+import {Repeat_1} from "./repeat/Repeat_1.js";
 
 export class CompressTemplateType<T extends InstanceType<U>,U extends RecordKey<U>> {
 	i: number;
@@ -30,9 +30,9 @@ export class CompressTemplateType<T extends InstanceType<U>,U extends RecordKey<
 		while(item===state.arr[state.i+j]) j++;
 		if(j==1) return false;
 		let times=j;
-		let item_map=Repeat.N.get_map_T_or(this.constructor_key,item);
+		let item_map=Repeat_1.N.get_map_T_or(this.constructor_key,item);
 		console.log(item_map);
-		state.ret.push(new Repeat(item,times));
+		state.ret.push(new Repeat_1(item,times));
 		state.i+=times-1;
 		return true;
 	}

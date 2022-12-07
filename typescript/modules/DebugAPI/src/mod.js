@@ -34,7 +34,7 @@ import {OriginState} from "./OriginState";
 import {parse_html_to_binary_arr} from "../types/parse_html_to_binary_arr";
 import {range_matches} from "./range_matches";
 import {RemoteOriginConnection} from "./debug_api/RemoteOriginConnection";
-import {Repeat} from "../types/repeat/Repeat.js";
+import {Repeat_1} from "../types/repeat/Repeat_1.js";
 import {run_modules_plugin} from "./run_modules_plugin";
 import {run_wasm_plugin} from "./run_wasm_plugin";
 import {RustSimpleTokenizer} from "./debug_api/RustSimpleTokenizer";
@@ -50,7 +50,7 @@ export function main() {
 	g_api.IterExtensions=IterExtensions;
 	g_api.getPlaybackRateMap=getPlaybackRateMap;
 	g_api.CreateObjURLCache=CreateObjURLCache;
-	g_api.Repeat=Repeat;
+	g_api.Repeat=Repeat_1;
 	g_api.CompressRepeated=CompressRepeated;
 	g_api.to_tuple_arr=to_tuple_arr;
 	g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);

@@ -70,10 +70,10 @@ function calc_next(obj,max_id) {
 	let rep_val=f_val[0][1]
 	obj.next.value=[max_id,'=',...rep_val]
 	obj.next.log_val=[max_id,'=',f_val[0][0],rep_val,'*',f_val[1]]
-	obj.next.rep_arr=csc.replace_range(obj.arr,rep_val,max_id)
+	obj.next.rep_arr=compressionStatsCalc.replace_range(obj.arr,rep_val,max_id)
 	if(obj.next.arr)
 		return null
-	let compress_result=csc.comp.try_compress(obj.next.rep_arr)
+	let compress_result=compressionStatsCalc.compressor.try_compress(obj.next.rep_arr)
 	obj.next.arr=compress_result[1]
 	return compress_result
 }
@@ -266,9 +266,9 @@ function deep_includes(arr,value) {
 	return false
 }
 function compress_init() {
-	window.dr_map=[]
-	window.csc??(csc=new CompressionStatsCalculator)
-	csc.comp=new window.g_api.CompressRepeated
+	g_api.dr_map=[];
+	g_api.compressionStatsCalc??(compressionStatsCalc=new CompressionStatsCalculator)
+	compressionStatsCalc.compressor=new window.g_api.CompressRepeated
 	if(window.g_auto_buy) {
 		src_arr=g_auto_buy.compressor.try_decompress(g_auto_buy.state_history_arr)[1]
 	} else {

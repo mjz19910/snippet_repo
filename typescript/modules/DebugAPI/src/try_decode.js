@@ -1,8 +1,8 @@
-import {Repeat} from "../types/repeat/Repeat";
+import {Repeat_1} from "../types/repeat/Repeat_1";
 import {dr_map,id_map,ids_dec} from "./mod";
 import {decode_map} from "./decode_map";
 
-/** @param {string | number | Repeat<number>} e */
+/** @param {string | number | Repeat_1<number>} e */
 export function try_decode(e,deep=true) {
 	if(typeof e==='number') {
 		if(dr_map.value[e]) {
@@ -24,7 +24,7 @@ export function try_decode(e,deep=true) {
 			return ids_dec[e];
 		}
 	}
-	if(e instanceof Repeat) {
+	if(e instanceof Repeat_1) {
 		if(dr_map.value[e.value]) {
 			return dr_map.value[e.value];
 		}
@@ -35,12 +35,12 @@ export function try_decode(e,deep=true) {
 				let cur_res=decode_map(res[i]);
 				dec_res[i]=cur_res;
 			}
-			let ret=new Repeat(dec_res,e.times);
+			let ret=new Repeat_1(dec_res,e.times);
 			dr_map.value[e.value]=ret;
 			return ret;
 		}
 		if(ids_dec[e.value]) {
-			return new Repeat(ids_dec[e.value],e.times);
+			return new Repeat_1(ids_dec[e.value],e.times);
 		}
 	}
 	return null;

@@ -1,5 +1,5 @@
 import {BaseCompression} from "./BaseCompression.js";
-import {Repeat} from "./repeat/Repeat.js";
+import {Repeat_1} from "./repeat/Repeat_1.js";
 
 export class CompressTU {
 	i: number;
@@ -20,7 +20,7 @@ export class CompressTU {
 		let off=1;
 		while(item===this.arr[this.i+off]) off++;
 		if(off==1) return false;
-		this.ret.push(Repeat.from_TU_entry(item,off));
+		this.ret.push(Repeat_1.from_TU_entry(item,off));
 		this.i+=off-1;
 		return true;
 	}

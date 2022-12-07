@@ -3062,12 +3062,12 @@ function is_undefined(t) {
 }
 
 /** @template T */
-class Repeat {
-	/** @type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat<InstanceType<U>>>>} */
+class Repeat_0 {
+	/** @type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat_0<InstanceType<U>>>>} */
 	map_instance_or_d1=new Map;
-	/** @type {Map<symbol,<T,U>() => Map<T,U|Repeat<U>>>} */
+	/** @type {Map<symbol,<T,U>() => Map<T,U|Repeat_0<U>>>} */
 	map_instance_or=new Map;
-	/** @type {Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|Repeat<C>>>} */
+	/** @type {Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|Repeat_0<C>>>} */
 	static base_map=new Map;
 	/** @type {Map<any,any>} */
 	static cache_set=new Map();
@@ -3086,7 +3086,7 @@ class Repeat {
 	/**@template A @template {RecordKey<A>} B @template {InstanceType<B>} C @arg {B} constructor_key_0 @arg {C} value */
 	get_map_T_or(constructor_key_0,value) {
 		/**@type {Map<A, C>} */
-		let map=Repeat.cache_get(constructor_key_0);
+		let map=Repeat_0.cache_get(constructor_key_0);
 		if(!map) return null;
 		let res=map.get(constructor_key_0.key);
 		if(is_undefined(res)) {
@@ -3095,11 +3095,11 @@ class Repeat {
 		}
 		return res;
 	}
-	/**@arg {TypeAOrTypeB<string,number>} a @arg {number} b @returns {["string",string|Repeat<string>]|["number",number|Repeat<number>]} */
+	/**@arg {TypeAOrTypeB<string,number>} a @arg {number} b @returns {["string",string|Repeat_0<string>]|["number",number|Repeat_0<number>]} */
 	static from_TU_entry(a,b) {
 		switch(a[0]) {
-			case 'T': return ['string',Repeat.get(a[1],b)];
-			case 'U': return ['number',Repeat.get_num(a[1],b)];
+			case 'T': return ['string',Repeat_0.get(a[1],b)];
+			case 'U': return ['number',Repeat_0.get_num(a[1],b)];
 		}
 	}
 	/**@template A,B @arg {[A,B]} _args */
@@ -3124,7 +3124,7 @@ class Repeat {
 		if(x===void 0) return null;
 		return x;
 	}
-	/**@template T  @arg {Map<T,Map<number,Repeat<T>>>} a @arg {T} b @arg {number} c */
+	/**@template T  @arg {Map<T,Map<number,Repeat_0<T>>>} a @arg {T} b @arg {number} c */
 	static get_with(a,b,c) {
 		let d=a.get(b);
 		if(d===void 0) return null;
@@ -3139,16 +3139,16 @@ class Repeat {
 			return rep;
 		}
 	}
-	static N=new Repeat(null,0);
-	/**@type {Map<string,Map<number,Repeat<string>>>} */
+	static N=new Repeat_0(null,0);
+	/**@type {Map<string,Map<number,Repeat_0<string>>>} */
 	static map=new Map;
-	/**@type {Map<number,Map<number,Repeat<number>>>} */
+	/**@type {Map<number,Map<number,Repeat_0<number>>>} */
 	static map_num=new Map;
 	/**@type {Map<symbol,{}>} */
 	static map_sym=new Map;
-	/**@type {Map<symbol,<T,U>(t:T,u:U) => Map<T,Repeat<U>>>} */
+	/**@type {Map<symbol,<T,U>(t:T,u:U) => Map<T,Repeat_0<U>>>} */
 	map_T=new Map;
-	/**@type {Map<string,Map<number,Repeat<string>>>} */
+	/**@type {Map<symbol,<T,U>() => Map<T,Repeat_0<U>>>} */
 	map_instance=new Map;
 	/** @template {RecordKey<symbol>} T @arg {T} i_rec */
 	static once_getter(i_rec) {
@@ -3158,12 +3158,12 @@ class Repeat {
 	map_once=new Map;
 	/**@template {RecordKey<symbol>} U @arg {U} constructor_key @arg {InstanceType<U>} _ */
 	get_map_T(constructor_key,_) {
-		let res=Repeat.N.map_T.get(constructor_key.key);
+		let res=Repeat_0.N.map_T.get(constructor_key.key);
 		if(!res) {
-			Repeat.N.map_T.set(constructor_key.key,() => new Map);
+			Repeat_0.N.map_T.set(constructor_key.key,() => new Map);
 			/**@template {RecordKey<symbol>} T @arg {T} sym */
 			return (sym) => {
-				let value=Repeat.map_sym.get(sym.key);
+				let value=Repeat_0.map_sym.get(sym.key);
 				if(value===void 0) throw new Error("1");
 				return value;
 			};
@@ -3173,9 +3173,9 @@ class Repeat {
 	// U=RecordKey<symbol> V=InstanceType<U> C=C
 	/**@template {RecordKey<symbol>} U @template {InstanceType<U>} V @template C @arg {U} constructor_key @arg {C} key @arg {V} value*/
 	has_map_T(constructor_key,key,value) {
-		let res=Repeat.N.map_T.get(constructor_key.key);
+		let res=Repeat_0.N.map_T.get(constructor_key.key);
 		if(!res) {
-			Repeat.N.map_T.set(constructor_key.key,() => new Map);
+			Repeat_0.N.map_T.set(constructor_key.key,() => new Map);
 			return false;
 		}
 		let rq=res(key,value);
@@ -3231,22 +3231,22 @@ class Repeat {
 	}
 }
 
-inject_api.Repeat=Repeat;
+inject_api.Repeat=Repeat_0;
 class CompressRepeated {
-	/** @template T @param {T[]} src @param {(T|Repeat<T>)[]} dst */
+	/** @template T @param {T[]} src @param {(T|Repeat_0<T>)[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
-	/** @template T @param {T[]} src @param {(T|Repeat<T>)[]} dst */
+	/** @template T @param {T[]} src @param {(T|Repeat_0<T>)[]} dst */
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @param {string[]} src @param {(string|Repeat<string>)[]} dst @returns {[boolean, (string|Repeat<string>)[]]} */
+	/** @param {string[]} src @param {(string|Repeat_0<string>)[]} dst @returns {[boolean, (string|Repeat_0<string>)[]]} */
 	compress_result(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
-	/** @param {(string | Repeat<string>)[]} src @param {string[]} dst @returns {[boolean, string[]]} */
+	/** @param {(string | Repeat_0<string>)[]} src @param {string[]} dst @returns {[boolean, string[]]} */
 	decompress_result(src,dst) {
 		if(this.did_decompress(src,dst)) return [true,dst];
 		return [false,dst];
@@ -3264,7 +3264,7 @@ class CompressRepeated {
 	}
 	/** @param {string[]} arr */
 	try_compress(arr) {
-		/**@type {(string|Repeat<string>)[]} */
+		/**@type {(string|Repeat_0<string>)[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
@@ -3273,7 +3273,7 @@ class CompressRepeated {
 				while(item===arr[i+off+1]) off++;
 				if(off>0) {
 					let rep_count=off+1;
-					ret.push(Repeat.get(item,rep_count));
+					ret.push(Repeat_0.get(item,rep_count));
 					i+=off;
 					continue;
 				}
@@ -3282,14 +3282,14 @@ class CompressRepeated {
 		}
 		return this.compress_result(arr,ret);
 	}
-	/** @param {(string | Repeat<string>)[]} arr */
+	/** @param {(string | Repeat_0<string>)[]} arr */
 	try_decompress(arr) {
 		/**@type {string[]} */
 		let ret=[];
 		for(let i=0;i<arr.length;i++) {
 			let item=arr[i];
 			if(!item) continue;
-			if(item instanceof Repeat) {
+			if(item instanceof Repeat_0) {
 				let {value,times}=item;
 				for(let j=0;j<times;j++)ret.push(value);
 				continue;
@@ -3473,7 +3473,7 @@ class DisabledMulCompression extends MulCompression {
 	 * @arg {T[]} arr
 	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
 	try_compress_T(arr) {
-		/**@type {CompressState<T,T|Repeat<T>>} */
+		/**@type {CompressState<T,AnyOrRepeat<T>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -3494,7 +3494,7 @@ class DisabledMulCompression extends MulCompression {
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
 		if(off==1) return false;
-		state.ret.push(new Repeat(item,off));
+		state.ret.push(new Repeat_0(item,off));
 		state.i+=off-1;
 		return true;
 	}
@@ -4229,7 +4229,7 @@ let dr_map_num=[];
 /** @type {(string | number)[][]} */
 let ids_dec_num=[];
 
-/** @type {Repeat<(string | number)[]>[]} */
+/** @type {Repeat_0<(string | number)[]>[]} */
 let dr_map_rep=[];
 
 /** @type {(string | number)[][]} */
@@ -4241,7 +4241,7 @@ let id_map_num=[];
 /** @type {number[]} */
 let ids_dec_rep=[];
 
-/** @param {string | number | Repeat<number>} e @returns {['dr_map_num', any]|['id_map_num',any]|['dr_map_rep', any]|['ids_dec_rep',any]|['ids_dec_num',any]|null} */
+/** @param {string | number | Repeat_0<number>} e @returns {['dr_map_num', any]|['id_map_num',any]|['dr_map_rep', any]|['ids_dec_rep',any]|['ids_dec_num',any]|null} */
 function try_decode(e,deep=true) {
 	if(typeof e==='number') {
 		if(dr_map_num[e]) {
@@ -4264,7 +4264,7 @@ function try_decode(e,deep=true) {
 			return ['ids_dec_num',ids_dec_num[e]];
 		}
 	}
-	if(e instanceof Repeat) {
+	if(e instanceof Repeat_0) {
 		if(dr_map[e.value]) {
 			return ['dr_map_rep',dr_map[e.value]];
 		}
@@ -4276,12 +4276,12 @@ function try_decode(e,deep=true) {
 				let cur_res=decode_map(res[i]);
 				dec_res[i]=cur_res;
 			}
-			let ret=new Repeat(dec_res,e.times);
+			let ret=new Repeat_0(dec_res,e.times);
 			dr_map_rep[e.value]=ret;
 			return ['dr_map_rep',ret];
 		}
 		if(ids_dec_rep[e.value]) {
-			return ['ids_dec_rep',new Repeat(ids_dec_rep[e.value],e.times)];
+			return ['ids_dec_rep',new Repeat_0(ids_dec_rep[e.value],e.times)];
 		}
 	}
 	return null;
@@ -4293,7 +4293,7 @@ let id_map=[];
 let id_map_str=new Map;
 /**@type {JsonValueBox[]} */
 let ids_dec=[];
-/** @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]} */
+/** @type {(Repeat_0<string | number>|Repeat_0<(string | number)[]>|(string | number)[])[]} */
 let dr_map=[];
 add_array(ids_dec);
 

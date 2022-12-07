@@ -3,7 +3,7 @@ import {CreateObjURLCache} from "../src/CreateObjURLCache.js";
 import {IterExtensions} from "../src/IterExtensions.js";
 import {to_tuple_arr} from "../src/to_tuple_arr.js";
 import {CompressRepeated} from "../src/CompressRepeated.js";
-import {Repeat} from "../types/repeat/Repeat.js";
+import {Repeat_1} from "./repeat/Repeat_1.js";
 import {range_matches} from "../src/range_matches.js";
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 import {HexRandomDataGenerator} from "../src/HexRandomDataGenerator.js";
@@ -46,7 +46,7 @@ declare global {
 		IterExtensions?: typeof IterExtensions;
 		getPlaybackRateMap?: typeof getPlaybackRateMap;
 		CreateObjURLCache?: typeof CreateObjURLCache;
-		Repeat?: typeof Repeat;
+		Repeat?: typeof Repeat_1;
 		CompressRepeated?: typeof CompressRepeated;
 		to_tuple_arr?: typeof to_tuple_arr;
 		range_matches?: typeof range_matches;
