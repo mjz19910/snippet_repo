@@ -5214,6 +5214,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event */
 	can_handle_message(event) {
 		if(typeof event.data==='string') return false;
+		if(typeof event.data==='object') {
+			if(event.data===null) return false;
+		}
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	extract_message(event) {
