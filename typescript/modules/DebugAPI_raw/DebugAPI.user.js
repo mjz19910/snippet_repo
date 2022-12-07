@@ -4900,8 +4900,12 @@ inject_api.OriginState=OriginState;
 // version 0.3.0 sha1 initial commit
 const sha_1_initial="f615a9c";
 
+class ConnectionFlags {
+	does_proxy_to_opener=false;
+}
+
 class RemoteOriginConnectionData {
-	m_flags={does_proxy_to_opener: false};
+	m_flags=new ConnectionFlags;;
 	/** @type {Map<TransportMessageObj, {port:MessagePort}>} */
 	m_transport_map=new Map;
 	max_elevate_id=0;
