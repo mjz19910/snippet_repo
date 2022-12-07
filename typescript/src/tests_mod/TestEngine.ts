@@ -1,8 +1,5 @@
-import {CanRunTest} from "./CanRunTest.js";
 import {BaseTestRunner} from "./BaseTestRunner.js";
-export class TestEngine extends BaseTestRunner implements CanRunTest {
-	override m_test_started=false;
-	override is_running_test_set=false;
+export class TestEngine extends BaseTestRunner {
 	m_is_user_completing_tests=false;
 	is_user_reporting_completion() {
 		return this.m_is_user_completing_tests;
@@ -22,10 +19,5 @@ export class TestEngine extends BaseTestRunner implements CanRunTest {
 	async_init_promise: Promise<void>|null=null;
 	init_async_test(promise: Promise<void>) {
 		this.async_init_promise=promise;
-	}
-	constructor(parent: CanRunTest) {
-		super(parent);
-		this.is_running_test_set=false;
-		this.m_test_started=false;
 	}
 }

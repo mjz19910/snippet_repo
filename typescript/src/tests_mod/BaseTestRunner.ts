@@ -59,7 +59,7 @@ export class BaseTestRunner {
 		this.is_running_test_set=true
 		this.m_test_started=true
 	}
-	start_test<T>(name: string, value: T,test_gen: GenTestCallbackTemplate<T>): void {
+	start_test<T>(name: string, value: T,test_gen: GenTestCallbackTemplate<any,T>): void {
 		try {
 			let engine=this
 			test_gen(engine, value);
@@ -68,7 +68,7 @@ export class BaseTestRunner {
 			this.report_test_failure()
 		}
 	}
-	start_async<T>(test_gen: GenTestCallbackTemplate<T>,value: T) {
+	start_async<T>(test_gen: GenTestCallbackTemplate<any,T>,value: T) {
 		this.on_test_init();
 		test_gen(this,value);
 	}
