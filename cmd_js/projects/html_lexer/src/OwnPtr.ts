@@ -4,5 +4,10 @@ export class OwnPtr<T> {
         if(this.ptr == null) throw new Error("");
         return this.ptr;
     }
+    static from<T>(v:T) {
+        let x=new this<T>();
+        x.ptr=v;
+        return x;
+    }
     ptr: T|null=null;
 }

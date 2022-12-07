@@ -1,6 +1,8 @@
+import {OwnPtr} from "../OwnPtr.js";
+
 export class Ref<T> {
-    static wrap<T>(a: T): Ref<T> {
-        return new Ref<T>(a);
+    static wrap<T>(a: T): Ref<OwnPtr<T>> {
+        return new Ref<OwnPtr<T>>(new OwnPtr(a));
     }
     assign(value: any) {
         this.value=value;
