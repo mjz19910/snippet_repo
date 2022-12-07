@@ -403,7 +403,7 @@ remove_flags_from(gcc_set,fast_optimize);
 remove_flags_from(gcc_set,Og_opts);
 
 console.log(gcc_set);
-import repl from "repl";
+import {start} from "repl";
 
 const gcc_all_opts=gcc_opts.split(/[ ][ ]+|\n/).sort();
 
@@ -412,6 +412,6 @@ console.log(gcc_all_opts.slice(50,100));
 console.log(gcc_all_opts.slice(100,150));
 console.log(gcc_all_opts.slice(150));
 
-let repl_=repl.start("> ");
+let repl_=start("> ");
 
 repl_.context.gcc_set=gcc_set;

@@ -1,16 +1,6 @@
-import {APIProxyManager} from "./APIProxyManager";
-import {LoggingEventTarget} from "./LoggingEventTarget";
-import {RemoteOriginConnection} from "./RemoteOriginConnection";
 import {RustTokenTreeParser} from "./RustTokenTreeParser";
-import {static_event_target,random_data_generator} from "../mod";
 
 export class DebugAPI {
-	constructor() {
-		let do_postMessage_logging=false;
-		if(do_postMessage_logging) {
-			window.g_api.any_api_logger.start_postMessage_proxy();
-		}
-	}
 	next_remote_id=0;
 	data_store=new Map;
 	event_handler=static_event_target;
@@ -108,7 +98,7 @@ export class DebugAPI {
 		return Reflect.apply(function_value,target_obj,arg_vec);
 	}
 	debuggerBreakpointCode() {
-		window.g_api.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
+		window.g_api.DebugAPI&&(window.g_api.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -126,8 +116,8 @@ export class DebugAPI {
 					data: null
 				};
 			}
-		};
-		if(!window.g_api.DebugAPI.the().clearCurrentBreakpoint()) {
+		});
+		if(window.g_api.DebugAPI&&!window.g_api.DebugAPI.the().clearCurrentBreakpoint()) {
 			console.log("failed to clear breakpoint");
 		}
 		0;
