@@ -2560,7 +2560,6 @@ class VolumeRange {
 		view_parent.insertAdjacentElement("beforebegin",this.view_div);
 	}
 }
-let ar;
 function main() {
 	let ar='yt.player.Application'.split('.');
 	let a2=ar.slice();
