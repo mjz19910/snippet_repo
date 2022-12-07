@@ -189,8 +189,7 @@ function main() {
 		debug.u=undebug;
 		x: {
 			let x=debug;
-			__fo=[];
-			x.fo=__fo;
+			x.fo=[];
 			x.st=new Set;
 			x.sarr=[];
 			x.ne=[]; {
@@ -940,12 +939,11 @@ function main() {
 				let sc=bd[0].split(',');
 				let __nx_name=sc[2].split(/[()]/)[0];
 				if(!__nx_name) throw new Error("1");
-				x.f=x.o[__nx_name];
+				console.log(__nx_name);
+				// x.f=x.o[__nx_name];
 			}
 			__run(x.f,x.__all_vars);
 			__lst=[];
-			__lst.push(x.o);
-			x.f=x.o.e;
 			let cw=Math.floor(window.innerWidth/2);
 			let ch=Math.floor(window.innerHeight/2);
 			__run_noisy(x.f,x.__all_vars,cw,ch,false);

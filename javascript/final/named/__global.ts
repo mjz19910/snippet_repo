@@ -85,26 +85,31 @@ declare global {
 declare global {
 	var debug: debugI|undefined;
 	interface debugI {
-		get_from: any;
-		fn: any;
+		(fn: (...x: any[]) => void,code: string): void;
+		get_from: never;
+		fn: never;
 		__name_list: string[];
 		__get_list: string;
 		__getter_names: string;
 		__ident_chars: string[];
 		__ident_start_chars: string[];
-		fo: any[][];
-		(arg0: (...x: any[]) => any,code: string): void;
+		fo: never[][];
 		u?: (fn: (...x: any[]) => void) => void;
 		f: (...a: any[]) => any;
-		cb: () => any;
-		fo_test: any;
+		cb: () => never;
+		fo_test: never;
 		__all_vars: string;
+		st: Set<never>;
+		sarr: never[];
+		ne: never[];
+		rx: RxType;
+		o: symbol|{[x:string]:never};
 	}
-	var undebug: undebug|undefined;
+	var undebug: undebugI|undefined;
 	interface IGame {}
 	var game: IGame;
-	interface undebug {
-		(arg0: (...x: any[]) => any): void;
+	interface undebugI {
+		(fn: (...x: any[]) => any): void;
 	}
 }
 
@@ -112,11 +117,62 @@ declare global {
 declare global {
 	interface Window {
 		react_ii: string;
-		root_new: any;
-		inner_dom: any;
-		refs: any[];
-		s_refs: (["get_set",PropertyDescriptor]|["refs",string,number]|["or",string,any])[][]|undefined;
+		root_new: never;
+		inner_dom: never;
+		refs: never[];
+		s_refs?: SRefBase[][];
 	}
+	type getSet=["get_set",PropertyDescriptor];
+	type Refs=["refs",string,number];
+	type S_or=["or",string,never];
+	type SRefBase=getSet|Refs|S_or;
 }
 
 export {type Holder} from "./Holder.js";
+export {};
+
+declare global {
+	class has_expando {
+		["jQuery_expando_1"]?: JQueryExpandoData;
+	}
+
+	type ExpandoKey=keyof has_expando;
+
+	interface Element {
+		["jQuery_expando_1"]?: JQueryExpandoData;
+	}
+
+	interface RxType {
+		obj_field?: never;
+		I_listener?: never;
+		jQuery?: {
+			G: {
+				expando: ExpandoKey;
+			};
+		};
+		game_scope?: never;
+	}
+
+	interface GrType {
+		m: () => never;
+	}
+
+	var __lst: never[];
+	var __w: RxType;
+	var __r_ret: never;
+	var __res: never[];
+	var __instance: {constructor: never;};
+}
+
+interface JQueryExpandoData {
+	events: JQueryEvents;
+}
+
+interface JQueryEvents {
+	click: never;
+	mouseup: JQueryEventHandler[];
+}
+
+interface JQueryEventHandler {
+	handler: (...a: never[]) => never;
+}
