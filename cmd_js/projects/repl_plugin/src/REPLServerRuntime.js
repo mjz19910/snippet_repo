@@ -1,5 +1,5 @@
+import {start as repl_start,REPLServer} from 'repl';
 import {Interface} from 'readline';
-import repl,{REPLServer} from 'repl';
 import {XHolder} from './XHolder.js';
 
 /**@implements {NodeJS.EventEmitter} @extends {XHolder<NodeJS.EventEmitter>} */
