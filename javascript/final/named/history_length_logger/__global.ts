@@ -2,7 +2,6 @@ export {};
 
 declare global {
 	interface Window {
-		__ret: {};
 		debug?:debug;
 		undebug?:undebug;
 		find_closed_up_x: (arg0: number,arg1: number) => any;

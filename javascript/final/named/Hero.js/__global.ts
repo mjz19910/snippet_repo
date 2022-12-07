@@ -4,7 +4,6 @@ declare global {
 	interface Window {
 		debug?: debug;
 		undebug?: undebug;
-		__ret: {};
 		func_want: {};
 	}
 

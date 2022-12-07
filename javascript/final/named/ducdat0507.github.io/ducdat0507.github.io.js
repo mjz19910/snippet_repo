@@ -9,6 +9,13 @@ function main() {
 	let cur=new Runner;
 	cur.n=new CustomInputMatcher(/https:\/\/ducdat0507.github.io/,() => location.origin,"ducdat0507");
 	cur.f=async function() {
+		/** @arg {{}} player @returns {asserts player is {aspTime: {buyables: any[];points: {lt: (arg0: any) => any;};};}} */
+		function assert_is_my_player(player) {player;}
+		/** @returns {{aspTime: {buyables: any[]; points: {lt: (arg0: any) => any;};};}} */
+		function get_player() {
+			assert_is_my_player(player);
+			return player;
+		}
 		let mc=new MessageChannel;
 		let msg_clk='CLOCK_RUN';
 		let clk_priv={
@@ -46,7 +53,9 @@ function main() {
 				});
 			}
 		};
-		for(let i=0;;) {
+		let player=get_player();
+		let i=0;
+		for(;;) {
 			let lb=layers.aspTime.buyables[22];
 			let idx=player.aspTime.buyables[22].toNumber()+1
 				,sc=lb.cost(new Decimal(idx))
@@ -71,10 +80,14 @@ function main() {
 			if(player.aspTime.points.lt(layers.aspTime.buyables[21].cost(player.aspTime.buyables[21]))) {
 				break;
 			}
+			if(i>40) break;
 		}
 	};
 	cur.value=cur.do_cur();
 	return cur;
 	//# sourceURL=snippet:///%24_2
 }
-window.__ret=main();
+window.__ret={
+	type:"runner",
+	value:main(),
+};

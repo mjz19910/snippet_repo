@@ -1,10 +1,14 @@
+import {SubARet} from "../../group1/sub_a/types/item_2_support.js";
 import {Runner} from "../support/Runner.js";
 
 
 // __ret
 declare global {
-	var __ret: __RetType;
+	interface Window {
+		__ret: __RetType;
+	}
 }
+
 type __RetType={
 	type:"site",
 	from:"1000mines.com",
@@ -12,6 +16,9 @@ type __RetType={
 }|{
 	type:"runner",
 	value: Runner,
+}|{
+	type: "sub_a",
+	ret: SubARet;
 };
 
 

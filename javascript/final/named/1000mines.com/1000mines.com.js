@@ -786,8 +786,8 @@ function main() {
 			__add_set();
 			ret=x.o;
 			__ret={
-				type:"site",
-				from:"1000mines.com",
+				type: "site",
+				from: "1000mines.com",
 				ret,
 			};
 			if(typeof ret!=='symbol') {
@@ -838,7 +838,7 @@ function main() {
 			if(!('click' in __m)) throw new Error("1");
 			if(!(__m.click instanceof Function)) throw new Error("1");
 			/** @template {Function} T @arg {T} x @returns {x is (...x:any[])=>any} */
-			function as_any_func(x) {x;return true;}
+			function as_any_func(x) {x; return true;}
 			if(!as_any_func(__m.click)) throw new Error("1");
 			x.f=__m.click;
 			let o=x.o;
@@ -864,10 +864,16 @@ function main() {
 			x.f.call(Object.create(x.f.prototype));
 			x.fo.push([x.f,x.o]);
 			__add_set();
-			__ret=x.o;
+			window.__ret={
+				/** @type {"site"} */
+				type: "site",
+				/** @type {"1000mines.com"} */
+				from: "1000mines.com",
+				ret: x.o,
+			};
 			w.obj_field={
 				__f: x.f,
-				ret: __ret
+				ret: window.__ret,
 			};
 			let ret_val=[...x.st,x.o];
 			__res=ret_val;
@@ -881,6 +887,6 @@ function main() {
 	//# sourceURL=snippet:///%24_2
 }
 window.__ret={
-	type:"runner",
-	value:main(),
+	type: "runner",
+	value: main(),
 };

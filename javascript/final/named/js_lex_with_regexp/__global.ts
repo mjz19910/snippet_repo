@@ -1,25 +1,13 @@
-export {Holder} from "../Holder.js";
+export {type Holder} from "../Holder.js";
 
-class JSLexState {
-	m_l_str: string|undefined;
-	lex_chunks: any[]=[];
-	reset_count: boolean=false;
-	m_at_eof: boolean=false;
-	obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}|null={
-		break_parse: false,
-		eof: false,
-		reset_count: false,
-		nx_len: 0,
-		lex_cur: null,
-	};
-	constructor(str: string,obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}) {
-		return {
-			lex_chunks: [],
-			m_l_str: str,
-			reset_count: false,
-			m_at_eof: false,
-			obj,
-		};
+declare global {
+	class JSLexState {
+		m_l_str: string|undefined;
+		lex_chunks: any[];
+		reset_count: boolean;
+		m_at_eof: boolean;
+		obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;}|null;
+		constructor(str: string,obj: {break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any;});
 	}
 }
 
@@ -36,7 +24,6 @@ declare global {
 
 declare global {
 	interface Window {
-		__ret: {};
 		debug?: debug;
 		undebug?: undebug;
 		find_closed_up_y: any;
