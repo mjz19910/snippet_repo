@@ -36,9 +36,11 @@ function run_d() {
 		if(!q.require) return null;
 		import_arr[2]=q.require;
 		//lazyError
-		import_arr[3]=q.NativeModule=state.m(q.require,(/** @type {(arg0: string) => any} */ f) => f('v8'),'NativeModule');
+		q.NativeModule=state.m(q.require,(/** @type {(arg0: string) => any} */ f) => f('v8'),'NativeModule')
+		import_arr[3]=q.NativeModule;
 		//require
-		import_arr[4]=q.primordials=state.m(q.require,(/** @type {(arg0: string) => any} */ f) => f('v8'),'primordials');
+		q.primordials=state.m(q.require,(/** @type {(arg0: string) => any} */ f) => f('v8'),'primordials');
+		import_arr[4]=q.primordials;
 		//require
 		return import_arr;
 	}
