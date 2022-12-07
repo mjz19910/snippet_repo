@@ -1,16 +1,16 @@
 function run_d() {
 	let old_ver=null;
 	let old_state=null;
-	if(window.get_v8_require_run) {
+	if(window.get_v8_require_run&&window.v8_require_state) {
 		old_ver=window.get_v8_require_run;
 		old_state=window.v8_require_state;
 	}
-	window.get_v8_require_run=async function(a) {
+	async function get_v8_require_run(a) {
 		if(!debug) {
 			console.log("no debug");
 			return null;
 		}
-		if(!('nodeRequire' in window) || typeof window.nodeRequire!=='function') {
+		if(!('nodeRequire' in window)||typeof window.nodeRequire!=='function') {
 			console.log("no nodeRequire");
 			return null;
 		}
@@ -55,15 +55,24 @@ function run_d() {
 		l[4]=q.primordials=await w.m(q.require,f => f('v8'),'primordials');
 		//require
 		return l;
-	};
-	let state={};
-	window.v8_require_state=state;
-	state.back_ptr=old_state;
-	if(old_ver) {
-		d_run.sco=old_ver.sco;
 	}
-	d_run.d=d_run;
-	d_run.d({});
-	return d_run.sco;
+	window.get_v8_require_run=get_v8_require_run;
+	class ReqSt {
+		/** @type {V8RequireState|null} */
+		back_ptr=null;
+	}
+	let state=new ReqSt;
+	window.v8_require_state=state;
+	if(old_state) {
+		state.back_ptr=old_state;
+		if(old_state.back_ptr) {
+			state.back_ptr=old_state.back_ptr;
+		}
+	}
+	if(!state.back_ptr) {
+		state.back_ptr=new ReqSt;
+	}
+	get_v8_require_run(state);
+	return state;
 }
 run_d();
