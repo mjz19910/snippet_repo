@@ -1,0 +1,35 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"lib": [
+			"esnext",
+			"DOM",
+		],
+		"types": [
+			"node"
+		],
+		"strict": true,
+		"declaration": true,
+		"checkJs": true,
+		"allowJs": true,
+		"strictNullChecks": true,
+		"module": "ESNext",
+		"moduleResolution": "NodeNext",
+		"sourceMap": true,
+		"noImplicitAny": true,
+		"outDir": "./build",
+		"typeRoots": [
+			"~/workspace/node_types/node_modules/@types"
+		],
+		"paths": {}
+	},
+	"include": [
+		"src/**/*",
+		"index.js",
+	],
+	"exclude": [
+		"node_modules",
+		"**/*-spec.ts",
+		"./build",
+	]
+}
