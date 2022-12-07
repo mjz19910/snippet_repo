@@ -16,9 +16,11 @@ class FakeJavascriptObject {
 		if(key==='[[Realm]]') {
 			return this.vm.realm;
 		}
+		throw new Error("Bad field "+key);
 	}
 	/**
-	 * @param {any[]} var_arg
+	 * @template T
+	 * @arg {[T]} var_arg
 	 */
 	todo(...var_arg) {
 		this.vm.todo(...var_arg);
@@ -69,11 +71,11 @@ class HostObjectRc {
 }
 class RustBuilderTrait {
 	/**
-	 * @type {any[]}
+	 * @type {ExportItem[]}
 	 */
 	children=[];
 	/**
-	 * @param {any[]} build_source
+	 * @param {{children: never[]}[]} build_source
 	 */
 	build_from_vec(build_source) {
 		for(let x of build_source) {
@@ -83,7 +85,7 @@ class RustBuilderTrait {
 		}
 	}
 	/**
-	 * @param {{ item?: { type: string; export_value: RustStdCrate; } | null; export_key: string | null; type?: any; export_value?: any; }} item
+	 * @param {ExportItem} item
 	 */
 	build_from_item(item) {
 		this.children.push(item);
@@ -97,15 +99,31 @@ class RustBuilderTrait {
 class RustRootBuilder extends RustBuilderTrait {
 	constructor() {
 		super();
+		/**
+		 * @type {any[]}
+		 */
 		this.children_crate_vec=[];
 	}
 	/** @param {{ children: any[]; }} crate */
 	add_crate_child(crate) {
 		this.children_crate_vec.push(crate);
 	}
+	/**
+	 * @override
+	 */
 	build() {
 		this.build_from_vec(this.children_crate_vec);
 		return super.build();
+	}
+}
+class ExportItem {
+	/**
+	 * @param {{ type: string; export_value: RustStdCrate; } | null} [item]
+	 * @param {string | null} [key]
+	 */
+	constructor(item=null,key=null) {
+		this.item=item;
+		this.key=key;
 	}
 }
 class RustExportBuilder extends RustBuilderTrait {
@@ -130,12 +148,12 @@ class RustExportBuilder extends RustBuilderTrait {
 		};
 		return this;
 	}
+	/**
+	 * @override
+	 */
 	build() {
 		this.parent=null;
-		this.build_from_item({
-			item: this.export_item,
-			export_key: this.export_as_value
-		});
+		this.build_from_item(new ExportItem(this.export_item,this.export_as_value));
 		return super.build();
 	}
 }
@@ -146,6 +164,9 @@ class RustCrateBuilder extends RustBuilderTrait {
 	constructor(for_target) {
 		super();
 		this.for_target=for_target;
+		/**
+		 * @type {RustExportBuilder[]}
+		 */
 		this.crate_export_children_vec=[];
 	}
 	export_builder() {
@@ -153,15 +174,15 @@ class RustCrateBuilder extends RustBuilderTrait {
 		this.crate_export_children_vec.push(crate_export_builder);
 		return crate_export_builder;
 	}
+	/**
+	 * @override
+	 */
 	build() {
 		for(let x of this.crate_export_children_vec) {
 			if(x instanceof RustExportBuilder) {
 				if(x.export_item) {
 					x.export_item.export_value.build_visit(x);
-					this.build_from_item({
-						item: x.export_item,
-						export_key: x.export_as_value
-					});
+					this.build_from_item(new ExportItem(x.export_item,x.export_as_value,));
 				}
 				continue;
 			}
@@ -185,7 +206,10 @@ class FakeRealm {
 }
 class RustFakeVM {
 	constructor() {
-		this.intrinsic_data={};
+		this.intrinsic_data={
+			/** @type {RustFakeHost|null} */
+			host: null,
+		};
 		/**
 		 * @type {{ children: any[]; } | null}
 		 */
@@ -207,8 +231,9 @@ class RustFakeVM {
 	set_host_intrinsic(value) {
 		this.intrinsic_data.host=value;
 	}
+	/** @template T @arg {[T]} args */
 	todo(...args) {
-		console.log("todo-args", ...args);
+		console.log("todo-args",...args);
 		console.log(new Error('todo'));
 	}
 }
@@ -230,6 +255,9 @@ class RustFakeCrate extends RustFakeBuildTarget {
 		super();
 		this.vm=vm;
 		this.define_data=new Map;
+		/**
+		 * @type {{ children: ExportItem[]; }[]}
+		 */
 		this.children_crate_vec=[];
 	}
 	/**
@@ -243,13 +271,14 @@ class RustFakeCrate extends RustFakeBuildTarget {
 		});
 	}
 	/**
-	 * @param {any} crate
+	 * @param {{ children: ExportItem[]; }} crate
 	 */
 	add_crate_child(crate) {
 		this.children_crate_vec.push(crate);
 	}
 	/**
 	 * @param {any} builder
+	 * @override
 	 */
 	build_visit(builder) {
 		this.vm=null;
