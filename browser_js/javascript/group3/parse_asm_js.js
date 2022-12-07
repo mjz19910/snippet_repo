@@ -1,10 +1,6 @@
 //cspell:words getargs idents keyword_handlers gethandler mclass fnbody parama parast parsebody parsebracket expectraw notreg charexpr gimuy jsonlike eatnext sethandler tryblock tryobj
-if(typeof exports!="undefined") {
-	v8=require("v8")
-	util=require("util")
-}
 //console.log(util.inspect(this.state.tok[0],{depth:null,maxArrayLength:300}))
-var rx=0
+var rx=0;
 var parsejs=class {
 	constructor(s) {
 		this.state={
