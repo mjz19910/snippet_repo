@@ -70,11 +70,15 @@
 		"javascript/**/*",
 		"typescript/src/**/*",
 		"typescript/modules/**/*",
+<<<<<<< HEAD
 		"typescript/ns.ts",
 		"web/src/**/*",
 =======
 		"**/*",
 >>>>>>> e10fb913 (u)
+=======
+		"typescript/ns.ts", "../cmd_js/projects",
+>>>>>>> 19d8bcac (u)
 	],
 	"exclude": [
 		"node_modules",

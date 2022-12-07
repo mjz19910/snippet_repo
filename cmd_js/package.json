@@ -3,6 +3,8 @@
   "type": "module",
   "name": "snippet-repo-cmd",
   "version": "0.0.1",
+=======
+>>>>>>> 19d8bcac (u)
   "devDependencies": {
     "@types/jquery": "^3.5.14",
     "@types/node": "^18.11.11",
