@@ -2,18 +2,11 @@ function main() {
 	class PromiseHandlerImpl {
 		reset() {
 			var t=this;
-			if(t._run) {
+			if(t.run) {
 				t.p=t.fn(t);
 				t.after();
-			} else if(ex) {
-				t._run=1;
-				t.p.then(function() {
-					t.start();
-					t.p=t.fn(t);
-					t.after();
-				});
 			} else {
-				t._run=1;
+				t.run=1;
 				t.p=Promise.resolve(t);
 				t.p.then(function() {
 					t.start();
@@ -23,7 +16,7 @@ function main() {
 			}
 
 		}
-		_run=0;
+		run=0;
 		/** @type {(() => void)|null} */
 		m_start=null;
 		start() {
@@ -59,22 +52,13 @@ function main() {
 		};
 		var rng=Math.random();
 		window.postMessage(rng);
-		var nc=new PromiseHandlerImpl;
-		Object.defineProperty(fn,"run",{
-			get: function() {
-				return nc._run;
-			},
-			set: function(v) {
-				nc._run=v;
-			},
-			configurable: true,
-			enumerable: true
-		});
+		var nc=new PromiseHandlerImpl(fn);
+		nc.run;
 		s.o=nc;
 		s.ru=0;
 		s.timeout=function() {
 			s.ru=0;
-			s.p.then(e => console.log("timeout done"));
+			nc.p.then(() => console.log("timeout done"));
 		};
 		/**
 		 * @param {{ data: number; }} e
@@ -84,15 +68,11 @@ function main() {
 				return;
 			}
 			window.removeEventListener("message",msg_listener);
-			nc._run=0;
+			nc.run=0;
 		}
 		nc.start=() => window.addEventListener("message",msg_listener);
-		nc.after=callback_fn;
-		if(ex) {
-			nc.reset(ex);
-		} else {
-			nc.reset();
-		}
+		nc.m_after=callback_fn;
+		nc.reset();
 		return nc;
 	}
 	async function b(fn) {
