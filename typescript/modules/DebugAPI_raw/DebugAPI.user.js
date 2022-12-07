@@ -2721,18 +2721,17 @@ ProxyTargetMap.attach_to_api();
 
 /** @param {EventListenersT} event_handler */
 function elevate_event_handler(event_handler) {
-	for(let i=0;i<inject_api.elevate_event_handler_handlers.length;i++){
-		let handler=inject_api.elevate_event_handler_handlers[i];
+	for(let i=0;i<inject_api.elevate_event_handlers.length;i++){
+		let handler=inject_api.elevate_event_handlers[i];
 		handler(event_handler);
 	}
 }
-inject_api.elevate_event_handler=elevate_event_handler;
 
 class AddEventListenerExtension {
 	static attach_to_api() {
 		inject_api.AddEventListenerExtension=this;
 		inject_api.addEventListenerExtension=new this;
-		inject_api.elevate_event_handler_handlers=[];
+		inject_api.elevate_event_handlers=[];
 	}
 	/** @private */
 	original_prototype={
@@ -2762,7 +2761,7 @@ class AddEventListenerExtension {
 	node_id_max=0;
 	constructor() {
 		overwrite_addEventListener(this);
-		inject_api.elevate_event_handler_handlers.push(this.elevate_event_handler.bind(this));
+		inject_api.elevate_event_handlers.push(this.elevate_handler.bind(this));
 		if(!debug) return;
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
@@ -2772,7 +2771,7 @@ class AddEventListenerExtension {
 		return this.target_prototype;
 	}
 	/** @param {EventListenersT} handler */
-	elevate_event_handler(handler) {
+	elevate_handler(handler) {
 		this.elevated_event_handlers.push(handler);
 	}
 	/** @private @arg {unknown[]} real_value @arg {{}} val @arg {number} key @arg {number} index */
@@ -5217,9 +5216,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			t.on_message_event(event);
 		}
 		// @RemoteOriginConnection
-		if(inject_api.elevate_event_handler) {
-			inject_api.elevate_event_handler(on_message_event);
-		}
+		elevate_event_handler(on_message_event);
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {

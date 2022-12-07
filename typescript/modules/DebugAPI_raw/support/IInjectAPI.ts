@@ -2,7 +2,7 @@
 interface IInjectAPI {}
 // elevate_event_handler_handlers
 interface IInjectAPI {
-	elevate_event_handler_handlers: ((arg0: EventListenersT) => void)[];
+	elevate_event_handlers: ((arg0: EventListenersT) => void)[];
 }
 // proxyTargetMap
 interface IInjectAPI {
