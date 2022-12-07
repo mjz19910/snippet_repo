@@ -1,4 +1,4 @@
-import {sorted_comp_stats_0} from "../types/sorted_comp_stats_0";
+import {sorted_comp_stats_0} from "./sorted_comp_stats_0";
 
 /**
  * @arg {CompressionStatsCalculator} stats
