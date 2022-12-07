@@ -40,10 +40,10 @@ function main() {
 		function ts(e) {
 			return e[0];
 		}
-		debug(ts,'e=[e[1]];0');
+		window.debug(ts,'e=[e[1]];0');
 		let ret=ts([0,1]);
 		console.log(ret);
-		undebug(ts);
+		window.undebug(ts);
 		if(ret!=1) {
 			console.log('old_console_api');
 			delete window.debug;
