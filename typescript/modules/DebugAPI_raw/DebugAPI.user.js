@@ -4792,6 +4792,7 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 class LocalHandler {
+	side="server";
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
 	/** @type {number|null} */
