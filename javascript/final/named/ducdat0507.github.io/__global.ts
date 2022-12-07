@@ -30,8 +30,6 @@ declare global {
 		st: any;
 		sarr: any;
 		ne: any;
-		cb: any;
-		__trg_eval: any;
 		gr: any;
 		rx: any;
 		o: any;

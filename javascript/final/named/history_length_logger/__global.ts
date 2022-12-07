@@ -37,9 +37,6 @@ declare global {
 		__name_list: string[];
 		__replace_func: {S: () => never;};
 		__orig_func: {S: any;};
-		cb: any;
-		__trg_eval: (arg0: string) => void;
-		gr: {m: () => null;};
 		rx: {jQuery?: any; I_listener?: any; game_scope?: any; obj_field?: any;};
 		o: any;
 		f: (...x:any[])=>void;

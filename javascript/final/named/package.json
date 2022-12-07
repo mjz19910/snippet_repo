@@ -1,9 +1,0 @@
-{
-	"devDependencies": {
-		"@types/jquery": "^3.5.13",
-		"@types/node": "^18.11.9"
-	},
-	"files": [
-		"**/*"
-	]
-}

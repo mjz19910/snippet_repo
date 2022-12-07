@@ -12,8 +12,6 @@ declare global {
 		(fn: () => void): void;
 	}
 
-	var undebug: undebug;
-
 	class has_expando {
 		["jQuery_expando_1"]?: JQueryExpandoData;
 	}
@@ -42,17 +40,14 @@ declare global {
 	}
 
 	interface debug {
-		gr: GrType;
 		(fn: (...x: any[]) => void,code: string): void;
 		u: (fn: (...x: any[]) => void) => void;
 		st: Set<any>;
 		sarr: any[];
 		ne: any[];
-		__trg_eval: (arg0: string) => void;
 		rx: RxType;
 		o: any;
 		f: (...a: any[]) => any;
-		cb: (__eval: (arg0: string) => void) => void;
 	}
 
 	var debug: debug|undefined;

@@ -127,7 +127,10 @@ function main() {
 							console.log('ncb',func_proto[n],this.xmhrp[n]);
 						}
 					}
-					debug.cb=new callback;
+					let cb_obj=new callback;
+					debug.cb=()=>{
+						return cb_obj;
+					};
 					bp_proto(func_proto,n,func_obj,function() {});
 					return true;
 				}
@@ -157,7 +160,10 @@ function main() {
 					Promise.resolve().then(() => native_callback());
 				}
 			}
-			debug.cb=new callback;
+			let cb_obj=new callback;
+			debug.cb=()=>{
+				return cb_obj;
+			};
 			bp_proto(func_proto,n,func_obj,test_callback);
 		}
 		/**

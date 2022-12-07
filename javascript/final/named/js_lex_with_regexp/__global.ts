@@ -56,7 +56,7 @@ declare global {
 
 	interface debug {
 		(fn: () => void,code: string): void;
-		u: (arg0: any) => void;
+		u: (fn: (...x: any[]) => void) => void;
 		fo: any;
 		st: Set<any>;
 		sarr: any[];
@@ -69,7 +69,6 @@ declare global {
 		__name_list: string[];
 		__replace_func: {S: () => never;};
 		__orig_func: {S: any;};
-		__trg_eval: (arg0: string) => void;
 		o: any;
 	}
 
