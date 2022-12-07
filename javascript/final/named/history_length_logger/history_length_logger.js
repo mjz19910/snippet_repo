@@ -13,7 +13,8 @@ function main() {
 		history.go(-26);
 	};
 	cur.value=cur.do_cur();
-	return cur;
+	return cur.make_ret();
 	//# sourceURL=snippet:///%24_2
 }
+/** @typedef {{click: (arg0: number,arg1: number) => void; opened: {field: {[x: string]: undefined;}; get: (arg0: number,arg1: number) => boolean;}; mines: {field: {[x: string]: boolean;};};}} __MType */
 window.__ret=main();

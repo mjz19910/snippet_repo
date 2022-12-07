@@ -1,6 +1,13 @@
 import {CustomInputMatcher} from "./CustomInputMatcher.js";
 
 export class Runner {
+	/** @returns {{type:"runner",value:Runner}} */
+	make_ret() {
+		return {
+			type:"runner",
+			value:this,
+		};
+	}
 	/** @type {(any[])|null} */
 	argv=null;
 	/** @type {string|CustomInputMatcher|null} */
@@ -94,10 +101,11 @@ export class Runner {
 			function assume_has_run_name(_obj) {}
 			assume_has_run_name(func);
 			func.user_run_name=name;
-			if(x!=y)
-				throw SyntaxError("unbalanced function or name number");
+			if(x!=y) throw SyntaxError("unbalanced function or name number");
 			return x;
 		}
+		console.log("handle add_func for", name);
+		throw new Error("Unexpected type");
 	}
 	/** @type {((...x:any[])=>any)} */
 	get f() {

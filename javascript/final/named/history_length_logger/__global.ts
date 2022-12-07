@@ -4,26 +4,16 @@ declare global {
 	interface Window {
 		debug?:debug;
 		undebug?:undebug;
-		find_closed_up_x: (arg0: number,arg1: number) => any;
-		find_closed_up_y: any;
-		find_closed_dn_x: any;
-		find_closed_dn_y: any;
 		dz?: any;
 		__state: {lex_chunks: any[]; m_l_str: any; reset_count: boolean;};
-	}
-
-	type SymbolIndexable={
-		[x: symbol]: any;
 	}
 
 	interface undebug {
 		(fn: ()=>void): void;
 	}
-	var undebug: undebug;
 
 	interface debug {
 		(fn:()=>void, code:string): void;
-		u:any;
 		fo:any;
 		st: Set<any>;
 		sarr: any[];
@@ -36,17 +26,12 @@ declare global {
 		__name_list: string[];
 		__replace_func: {S: () => never;};
 		__orig_func: {S: any;};
-		rx: {jQuery?: any; I_listener?: any; game_scope?: any; obj_field?: any;};
 		o: any;
-		f: (...x:any[])=>void;
 	}
 
 	var debug: debug|undefined;
-	var __fo: never[];
 	var __for_code: {(func: any,flag:boolean): any; targets: any[];};
 	var __lst: any[];
-	var __w: {I_listener: any; game_scope: any; obj_field?: any;};
-	var __m: {click: (arg0: number,arg1: number) => void; opened: {field: {[x: string]: undefined;}; get: (arg0: number,arg1: number) => boolean;}; mines: {field: {[x: string]: boolean;};};}|null;
 	var __r_ret: any;
 	var __res: any[];
 	var __instance: {constructor: any;};

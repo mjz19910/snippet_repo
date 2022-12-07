@@ -1,6 +1,10 @@
 import {SubARet} from "../../group1/sub_a/types/item_2_support.js";
 import {Runner} from "../support/Runner.js";
 
+// __m
+declare global {
+	var __m: {}|null;
+}
 
 // __ret
 declare global {

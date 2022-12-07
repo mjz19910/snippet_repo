@@ -1,15 +1,6 @@
-import {Runner} from "../../support/Runner";
-
 export {};
 
 declare global {
-	interface Window {
-		find_closed_up_x: any;
-		find_closed_up_y: any;
-		find_closed_dn_x: any;
-		find_closed_dn_y: any;
-	}
-
 	interface undebug {
 		(fn: () => void): void;
 	}

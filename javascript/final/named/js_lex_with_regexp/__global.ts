@@ -26,14 +26,7 @@ declare global {
 	interface Window {
 		debug?: debug;
 		undebug?: undebug;
-		find_closed_up_y: any;
-		find_closed_dn_x: any;
-		find_closed_dn_y: any;
 		dz?: any;
-	}
-
-	class DebugAPI {
-		asyncExecuteFunction(top: Window|null,function_: any): void;
 	}
 
 	interface undebug {
