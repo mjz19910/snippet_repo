@@ -1,4 +1,4 @@
-declare interface DOMTokenListMore {
+export declare interface DOMTokenListMore {
     add(c: string): void;
     replace(c1: string, c2: string): void;
     remove(c: string): void;
@@ -7,3 +7,5 @@ declare interface DOMTokenListMore {
     values(): IterableIterator<string>;
     toString(): string;
 }
+
+export {};
