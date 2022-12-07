@@ -5211,7 +5211,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			if(event.data===null) return true;
 			// for https://godbolt.org & vscode integrators
 			if('vscodeScheduleAsyncWork' in event.data) return false;
+			return false;
 		}
+		return true;
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	can_handle_message(event) {
