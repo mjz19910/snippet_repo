@@ -33,16 +33,12 @@ x: {
 		try {
 			return [e,fn_map_str.indexOf(e.toString())];
 		} catch(x) {
-			return {
-				type: "error",
-				cause: e
-			};
+			throw new AggregateError([e,x],"reasons");
 		}
 	}
 	);
-	let id_t=[];
 	for(let x of ids) {
-		if(fn_map_str[x[1]]&&!fn_map_str[x[1]]?.includes("gold")) continue;
-		console.log(x[0],fn_map_str[x[1]]);
+		if(fn_map_str[any(x[1])]&&!fn_map_str[any(x[1])]?.includes("gold")) continue;
+		console.log(x[0],fn_map_str[any(x[1])]);
 	}
 }
