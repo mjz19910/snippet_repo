@@ -1,4 +1,4 @@
-import {CompressStateBase} from "./CompressStateBase";
+import {CompressStateBase} from "./CompressStateBase.js";
 
 /**@template T @template U @extends {CompressStateBase<T,U>} */
 export class CompressState extends CompressStateBase {
