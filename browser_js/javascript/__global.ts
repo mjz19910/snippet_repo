@@ -14,6 +14,9 @@ declare global {
 		get_v8_require_run?: (state: V8RequireState)=>V8RequireState['import_arr'];
 		native_module_scope?: V8RequireState['native_module_scope'];
 	}
+
+	// Out of band result (logged array in the console)
+	function queryObjects(x: any):void;
 }
 
 export {};
