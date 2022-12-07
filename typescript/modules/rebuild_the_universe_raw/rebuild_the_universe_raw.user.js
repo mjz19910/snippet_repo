@@ -1332,7 +1332,7 @@ class EventHandlerDispatch {
 		this.target_obj[this.target_name](event);
 	}
 }
-class CompressionStatsCalculator {
+class CompressionStatsCalculatorImpl {
 	constructor() {
 		/** @type {number[]} */
 		this.hit_counts=[];
@@ -1380,7 +1380,17 @@ class CompressionStatsCalculator {
 		stats_arr[index]=this.calc_compression_stats(arr,index+1);
 	}
 }
-class BaseCompression {
+/** @implements {BaseCompression} */
+class BaseCompressionImpl {
+	/** @arg {CompressDual} arg0 @returns {DualRSimple} */
+	compress_result_state_dual(arg0) {
+		return this.compress_result_dual(arg0.arr,arg0.ret);
+	}
+	/** @arg {(["string", string] | ["number", number])[]} src @arg {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} dst @returns {DualRSimple} */
+	compress_result_dual(src,dst) {
+		if(this.did_compress(src,dst)) return [true,dst];
+		return [false,src];
+	}
 	/** @arg {string | any[]} src @arg {string | any[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
@@ -1400,7 +1410,8 @@ class BaseCompression {
 		return [false,dst];
 	}
 }
-class MulCompression extends BaseCompression {
+/** @implements {MulCompression} */
+class MulCompressionImpl extends BaseCompressionImpl {
 	constructor() {
 		super();
 		this.stats_calculator=new CompressionStatsCalculator;
@@ -1408,31 +1419,31 @@ class MulCompression extends BaseCompression {
 		this.compression_stats=[];
 	}
 
+	/**
+	 * @param {{i:number,arr:string[],ret:string[]}} state
+	 * @arg {string} item
+	 */
+	compress_rle(state,item) {
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
+		let off=1;
+		while(item===state.arr[state.i+off]) off++;
+		if(off==1) return false;
+		state.ret.push(`${item}${off}`);
+		state.i+=off-1;
+		return true;
+	}
+
 	/** @arg {string[]} arr */
 	try_compress(arr) {
-		let ret=[];
-		for(let i=0;i<arr.length;i++) {
-			let item=arr[i];
-			if(i+1<arr.length) {
-				if(item===arr[i+1]) {
-					let off=1;
-					while(item===arr[i+off]) {
-						off++;
-					}
-					if(off>1) {
-						ret.push(`${item}${off}`);
-						i+=off-1;
-					} else {
-						ret.push(item);
-					}
-				} else {
-					ret.push(item);
-				}
-			} else {
-				ret.push(item);
-			}
+		/**@type {CompressState<string, string>} */
+		let state=new CompressState(arr);
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle(state,item);
+			if(use_item) continue;
+			state.ret.push(item);
 		}
-		return this.compress_result(arr,ret);
+		return this.compress_result_state(state);
 	}
 	/** @arg {string[]} arr */
 	try_decompress(arr) {
@@ -1468,7 +1479,7 @@ class MulCompression extends BaseCompression {
 		return arr;
 	}
 }
-window.MulCompression=MulCompression;
+window.MulCompression=MulCompressionImpl;
 class TimeoutTarget {
 	/** @arg {AutoBuyStateImplR | AutoBuyImplR | null} obj @arg {()=>void} callback */
 	constructor(obj,callback) {

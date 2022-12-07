@@ -86,6 +86,7 @@ function main() {
 			function bp_proto(proto,name,func_obj,test_callback) {
 				if(!debug) throw new Error("needs devtools open for debug function");
 				let x=debug;
+				if(!x.u) throw new Error("needs devtools open for debug function");
 				x.f=proto[name];
 				x.u(x.f);
 				x(x.f,`

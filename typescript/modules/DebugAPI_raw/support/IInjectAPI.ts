@@ -1,4 +1,8 @@
+import {DisabledMulCompressionT, ModuleLoadDbgT} from "../DebugAPI.user";
+
 interface IInjectAPI {
+	ModuleLoadDbg: ModuleLoadDbgT;
+	DisabledMulCompression: DisabledMulCompressionT;
 	RemoteOriginConnection: {};
 	remote_origin: {};
 }

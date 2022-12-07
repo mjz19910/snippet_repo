@@ -5,17 +5,26 @@ import {Runner} from "../../support/Runner.js";
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/kongregate_yet-another-merge-game.js
 */
+/** @arg {{}} game @returns {asserts game is import("./merge_game_type.js").MergeGameType} */
+function asserts_game(game) {game;}
+/** @returns {import("./merge_game_type.js").MergeGameType} */
+function get_game() {
+	asserts_game(game);
+	return game;
+}
 function main() {
 	/** @type {import("../__global.js").Holder} */
 	let holder=1;
 	holder;
 	let cur=new Runner;
+	// cspell:words cook1eegames
 	cur.n=new CustomInputMatcher(
 		/https:\/\/www\.kongregate\.com\/games\/cook1eegames\/yet-another-merge-game/,
 		() => location.origin+location.pathname,
 		"https://www.kongregate.com/games/cook1eegames/yet-another-merge-game"
 	);
 	cur.f=function() {
+		let game=get_game();
 		console.log('run');
 		let do_zero_spawn_timer=false;
 		if(do_zero_spawn_timer) {

@@ -3342,17 +3342,17 @@ function range_matches(arr,value,index) {
 }
 
 class BaseCompression {
-	/** @arg {CompressDual} arg0 @returns {DualR} */
-	static compress_result_state_dual(arg0) {
+	/** @arg {CompressDual} arg0 @returns {DualRSimple} */
+	compress_result_state_dual(arg0) {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	/** @arg {(["string", string] | ["number", number])[]} src @arg {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} dst @returns {DualR} */
-	static compress_result_dual(src,dst) {
+	/** @arg {(["string", string] | ["number", number])[]} src @arg {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} dst @returns {DualRSimple} */
+	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	static did_compress(src,dst) {
+	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
 	/** @template T @arg {T[]} src @arg {T[]} dst */
@@ -3360,11 +3360,11 @@ class BaseCompression {
 		return dst.length>src.length;
 	}
 	/**@template T,U @arg {CompressStateBase<T, U>} state*/
-	static compress_result_state(state) {
+	compress_result_state(state) {
 		return this.compress_result(state.arr,state.ret);
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
-	static compress_result(src,dst) {
+	compress_result(src,dst) {
 		if(this.did_compress(src,dst))
 			return [true,dst];
 		return [false,src];
@@ -3408,48 +3408,6 @@ class CompressState extends CompressStateBase {
 
 class MulCompression extends BaseCompression {
 	/**
-	 * @template T
-	 * @arg {T[]} arr
-	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
-	try_compress_T(arr) {
-		/**@type {CompressState<T,T|Repeat<T>>} */
-		let state=new CompressState(arr);
-		for(;state.i<state.arr.length;state.i++) {
-			let item=state.arr[state.i];
-			let use_item=this.compress_rle_T_X(state,item);
-			if(use_item) continue;
-			state.ret.push(item);
-		}
-		return MulCompression.compress_result_state(state);
-	}
-	/**
-	 * @template {RecordKey<symbol>} U
-	 * @template {InstanceType<U>} T
-	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
-	 * @arg {T} item
-	 * */
-	compress_rle_T_X(state,item) {
-		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
-		let off=1;
-		while(item===state.arr[state.i+off]) off++;
-		if(off==1) return false;
-		state.ret.push(new Repeat(item,off));
-		state.i+=off-1;
-		return true;
-	}
-
-	/**
-	 * @template {InstanceType<U>} T
-	 * @template {new (...args: any) => any} U
-	 * @arg {U} _
-	 * @arg {T[]} arr
-	 * @arg {AnyOrRepeat<T>[]} ret
-	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
-	compress_result_T(_,arr,ret) {
-		if(MulCompression.did_compress(arr,ret)) return [true,ret];
-		return [false,arr];
-	}
-	/**
 	 * @param {{i:number,arr:string[],ret:string[]}} state
 	 * @arg {string} item
 	 */
@@ -3472,7 +3430,7 @@ class MulCompression extends BaseCompression {
 			if(use_item) continue;
 			state.ret.push(item);
 		}
-		return MulCompression.compress_result_state(state);
+		return this.compress_result_state(state);
 	}
 	/**@arg {string[]} arr @returns {[res: boolean,dst: string[]]} */
 	try_decompress(arr) {
@@ -3507,6 +3465,59 @@ class MulCompression extends BaseCompression {
 		return arr;
 	}
 }
+class InstructionPushImpl_2 extends InstructionImplBase {
+	/** @type {'push'} */
+	type='push';
+	/** @arg {StackVMImpl} vm @arg {this['type']} _ @arg {import("./ns.js").Box[]} args */
+	run(vm,_,...args) {
+		vm.stack.push(...args);
+	}
+}
+/** @typedef {typeof DisabledMulCompression} DisabledMulCompressionT */
+class DisabledMulCompression extends MulCompression {
+	/**
+	 * @template T
+	 * @arg {T[]} arr
+	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	try_compress_T(arr) {
+		/**@type {CompressState<T,T|Repeat<T>>} */
+		let state=new CompressState(arr);
+		for(;state.i<state.arr.length;state.i++) {
+			let item=state.arr[state.i];
+			let use_item=this.compress_rle_T_X(state,item);
+			if(use_item) continue;
+			state.ret.push(item);
+		}
+		return this.compress_result_state(state);
+	}
+	/**
+	 * @template {RecordKey<symbol>} U
+	 * @template {InstanceType<U>} T
+	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
+	 * @arg {T} item
+	 * */
+	compress_rle_T_X(state,item) {
+		if(state.i+1>=state.arr.length&&item!==state.arr[state.i+1]) return false;
+		let off=1;
+		while(item===state.arr[state.i+off]) off++;
+		if(off==1) return false;
+		state.ret.push(new Repeat(item,off));
+		state.i+=off-1;
+		return true;
+	}
+	/**
+	 * @template {InstanceType<U>} T
+	 * @template {new (...args: any) => any} U
+	 * @arg {U} _
+	 * @arg {T[]} arr
+	 * @arg {AnyOrRepeat<T>[]} ret
+	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	compress_result_T(_,arr,ret) {
+		if(this.did_compress(arr,ret)) return [true,ret];
+		return [false,arr];
+	}
+}
+inject_api.DisabledMulCompression=DisabledMulCompression;
 
 
 /**
@@ -3643,6 +3654,8 @@ class ModuleLoadDbg {
 		}
 	}
 }
+/** @typedef {typeof ModuleLoadDbg} ModuleLoadDbgT */
+inject_api.ModuleLoadDbg=ModuleLoadDbg;
 
 function run_modules_plugin() {
 	let function_prototype=resolve_function_constructor().prototype;
@@ -4040,6 +4053,7 @@ class CompressDual {
 	arr=[];
 	/**@type {(["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]} */
 	ret=[];
+	m_base=new BaseCompression;
 	/**@returns {DualR} */
 	try_compress_dual() {
 		let state=this;
@@ -4049,7 +4063,7 @@ class CompressDual {
 			if(use_item) continue;
 			state.ret.push(item);
 		}
-		return BaseCompression.compress_result_state_dual(this);
+		return this.m_base.compress_result_state_dual(this);
 	}
 	/**@arg {(["string", string] | ["number", number])} item */
 	compress_rle_TU_to_TX(item) {
@@ -4443,7 +4457,8 @@ function compress_main(stats) {
 	}
 	el_ids.value=src_arr.value.map(get_ids);
 	max_id.value=new Set(el_ids.value).size;
-	let arr=stats.compressor.try_compress_T(el_ids.value);
+	let disabled_com=new DisabledMulCompression;
+	let arr=disabled_com.try_compress_T(el_ids.value);
 	let obj_start=new IDValue(0,null);
 	obj_start.arr_rep=el_ids.value;
 	if(arr[0]===true) {
