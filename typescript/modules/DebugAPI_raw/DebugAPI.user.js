@@ -4919,7 +4919,7 @@ class RemoteOriginConnectionData {
 class RemoteHandler {
 	/** @type {RemoteOriginMessage[]} */
 	unhandled_events=[];
-	/** @type {RemoteOriginConnection['m_flags']} */
+	/** @type {ConnectionFlags} */
 	m_flags;
 	/** @type {MessagePort} */
 	connection_port;
@@ -4954,14 +4954,17 @@ class RemoteHandler {
 		this.unhandled_events.push(data);
 		console.log(data);
 	}
-	/** @arg {RemoteOriginConnection['m_flags']} flags @arg {MessagePort} connection_port @arg {number} client_id */
+	connect() {
+		this.connection_port.start();
+		this.connection_port.addEventListener("message",this);
+		this.onConnected();
+	}
+	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id */
 	constructor(flags,connection_port,client_id) {
 		this.m_flags=flags;
 		this.connection_port=connection_port;
 		this.client_id=client_id;
-		connection_port.start();
-		connection_port.addEventListener("message",this);
-		this.onConnected();
+		this.connect();
 	}
 }
 
