@@ -20,12 +20,17 @@ function main() {
 		/** @type {(() => void)|null} */
 		m_start=null;
 		start() {
-			console.log("start", this);
+			console.log("start",this);
 		};
 		/** @type {(() => void)|null} */
 		m_after=null;
 		after() {
-			console.log("promise result", this);
+			console.log("promise result",this);
+		}
+		/** @param {number} dl */
+		wait(dl) {
+			this.dl=dl;
+			return new Promise(a => setTimeout(a,this.dl));
 		}
 		constructor(fn) {
 			this.p=fn(this);
@@ -75,24 +80,24 @@ function main() {
 		nc.reset();
 		return nc;
 	}
-	async function b(fn) {
+	async function b(P) {
 		p1();
-		await fn.wait(80);
+		await P.wait(80);
 		p1();
-		await fn.wait(80);
+		await P.wait(80);
 		buyRu0M();
-		await fn.wait(80);
+		await P.wait(80);
 		p1();
-		await fn.wait(80);
+		await P.wait(80);
 		buyRu2();
-		await fn.wait(80);
+		await P.wait(80);
 		p1();
-		await fn.wait(50);
+		await P.wait(50);
 		for(var i=0;i<30;i++)
 			buyRu3();
-		await fn.wait(50);
-		if(fn.run) {
-			fn.o.reset();
+		await P.wait(50);
+		if(P.run) {
+			P.o.reset();
 		}
 		return;
 	}
