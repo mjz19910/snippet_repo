@@ -1,9 +1,11 @@
 declare global {
-	type AnyOrRepeat2<T,U>=["T",AnyOrRepeat<T>]|["U",AnyOrRepeat<U>];
+	type AnyOrRepeat2_1<T,U>=["T",AnyOrRepeat_1<T>]|["U",AnyOrRepeat_1<U>];
 }
 
 declare global {
-	export type DualR=[true,AnyOrRepeat2<string,number>[]]|[false,TypeAOrTypeB<string,number>[]];
+	export type DualR_m=[true,AnyOrRepeat2_1<string,number>[]]|[false,TypeAOrTypeB<string,number>[]];
 	export type TypeAOrTypeBSimple=["string",string]|["number",number];
-	export type DualRSimple=[true,(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]]|[false,TypeAOrTypeBSimple[]];
+	export type DualRSimple=[true,(["string", AnyOrRepeat_1<string>] | ["number", AnyOrRepeat_1<number>])[]]|[false,TypeAOrTypeBSimple[]];
 }
+
+export {};
