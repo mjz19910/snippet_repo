@@ -52,11 +52,9 @@ function main() {
 		 * @param {{ data: number; }} e
 		 */
 		function msg_listener(e) {
-			if(e.data===rng) {
-				return;
-			}
-			window.removeEventListener("message",msg_listener);
+			if(e.data===rng) return;
 			nc.run=false;
+			window.removeEventListener("message",msg_listener);
 		}
 		nc.m_start=() => window.addEventListener("message",msg_listener);
 		nc.m_after=callback_fn;
