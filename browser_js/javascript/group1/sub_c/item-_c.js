@@ -6,13 +6,13 @@ function main() {
 				this.after();
 				return;
 			}
-			this.run=1;
-			this.p=Promise.resolve(this);
+			this.run=true;
+			this.p=Promise.resolve(void 0);
 			this.start();
 			this.p.then(this.reset.bind(this));
 
 		}
-		run=0;
+		run=false;
 		/** @type {(() => void)|null} */
 		m_start=null;
 		start() {
@@ -32,9 +32,12 @@ function main() {
 			this.dl=dl;
 			return new Promise(a => setTimeout(a,this.dl));
 		}
+		/**
+		 * @param {(this: PromiseHandlerImpl) => Promise<void>} fn
+		 */
 		constructor(fn) {
-			this.p=fn(this);
 			this.fn=fn;
+			this.p=this.fn();
 		}
 	}
 	/** @type {{}|undefined} */
