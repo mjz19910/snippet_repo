@@ -22,7 +22,7 @@ function rv(oc,cb) {
 	npc=Function.prototype.call=function(...r) {
 		var c;
 		switch(r.length) {
-			case 3:
+			case 3: {
 				if(r[0]===r[2]&&r[1].exports==r[0]) {
 					var ars=Object.entries(r[3]).filter(([j,e]) => e instanceof Array);
 					var ars_i=ars[0][1].indexOf(this);
@@ -35,6 +35,7 @@ function rv(oc,cb) {
 						}
 					}
 				}
+			} break;
 			default:
 				c=fa(this,r);
 		}
@@ -57,4 +58,4 @@ function rv(oc,cb) {
 	return sfunc;
 }
 rv(Function.prototype.call,found_modules)
-[rv,found_modules]
+[rv,found_modules];
