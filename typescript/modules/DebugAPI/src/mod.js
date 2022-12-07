@@ -56,7 +56,7 @@ export function main() {
 	g_api.CompressRepeated=CompressRepeated;
 	g_api.to_tuple_arr=to_tuple_arr;
 	g_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin);
-	window.g_api.function_as_string_vec=[];
+	g_api.function_as_string_vec=[];
 	g_api.run_modules_plugin=new VoidCallback(run_modules_plugin);
 	g_api.CompressionStatsCalculator=CompressionStatsCalculator;
 	g_api.range_matches=range_matches;
