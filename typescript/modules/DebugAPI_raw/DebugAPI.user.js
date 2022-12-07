@@ -4754,13 +4754,15 @@ class CSSCascade {
 inject_api.CSSCascade=CSSCascade;
 
 class LocalHandler {
-	/**@type {number|undefined} */
-	m_elevation_id;
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
+	/** @type {number|null} */
+	m_elevation_id=null;
+	/** @type {MessagePort|null} */
+	m_connection_port=null
 	m_remote_side_connected=false;
-	m_connection_timeout=0;
 	m_tries_left=0;
+	m_connection_timeout;
 	process_reconnect() {
 		if(this.m_tries_left<12) {
 			console.log("reconnect tries_left",this.m_tries_left);
@@ -4878,7 +4880,6 @@ class LocalHandler {
 	 */
 	constructor(connection_timeout) {
 		this.m_connection_timeout=connection_timeout;
-		this.m_connection_port=null;
 	}
 }
 class OriginState {
