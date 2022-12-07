@@ -73,5 +73,5 @@ function rv(oc,cb) {
 	any(window).s_func=s_func;
 	return s_func;
 }
-rv(Function.prototype.call,found_modules)
-[rv,found_modules];
+rv(Function.prototype.call,found_modules);
+console.log([rv,found_modules]);

@@ -28,10 +28,10 @@
 			dq;
 			rar;
 			if(val.length==1)
-				return;
+				return -1;
 			if((dq=val.indexOf(','))<0) {
 				val[1]=arr[parseInt(val[1][0],36)];
-				return;
+				return -1;
 			}
 			while(nc++<32) {
 				return val.indexOf(',');
