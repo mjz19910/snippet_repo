@@ -74,7 +74,6 @@ declare global {
 	var debug: debug|undefined;
 	var __for_code: {(func: any,flag: boolean): any; targets: any[];};
 	var __lst: any[];
-	var __ret: {};
 	var __r_ret: any;
 	var __res: any[];
 	var __instance: {constructor: any;};

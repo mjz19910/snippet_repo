@@ -1,3 +1,5 @@
+import {Runner} from "../../support/Runner";
+
 export {};
 
 declare global {
@@ -53,7 +55,6 @@ declare global {
 
 	var __fo: any[][];
 	var __lst: any[];
-	var __ret: {};
 	var __w: RxType;
 	var __r_ret: any;
 	var __res: any[];

@@ -140,6 +140,7 @@ function main() {
 			 * @returns {symbol | [any,any]}
 			 */
 			function __run(fn,bp_str,...args) {
+				if(!x.u) throw 1;
 				x.o=__nf;
 				x.u(fn);
 				x.f=fn;
@@ -765,7 +766,7 @@ function main() {
 				let fc=__for_code;
 				fc.targets.length=0;
 				fc.targets.push(debug.f);
-				let ret=fc(debug.f);
+				let ret=fc(debug.f,false);
 				let bs=ret.indexOf('{');
 				let be=ret.lastIndexOf('}');
 				let bd=ret.slice(bs+1,be);
@@ -837,6 +838,7 @@ function main() {
 			if(!as_any_func(__m.click)) throw new Error("1");
 			x.f=__m.click;
 			let o=x.o;
+			if(!x.u) throw 1;
 			x.u(x.f);
 			x(x.f,x.__all_vars);
 			__m.click(0,0);
@@ -874,4 +876,7 @@ function main() {
 	return cur;
 	//# sourceURL=snippet:///%24_2
 }
-window.__ret=main();
+window.__ret={
+	type:"runner",
+	value:main(),
+};

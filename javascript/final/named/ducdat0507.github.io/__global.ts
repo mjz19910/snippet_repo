@@ -39,7 +39,6 @@ declare global {
 	var debug: debug|undefined;
 	var __fo: any;
 	var __lst: any;
-	var __ret: Runner;
 	var __w: any;
 	var __m: any;
 	var __r_ret: any;

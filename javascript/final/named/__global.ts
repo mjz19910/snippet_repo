@@ -1,4 +1,11 @@
-export {Holder} from "./Holder.js";
+import {Runner} from "../support/Runner.js";
+
+
+// __ret
+declare global {
+	var __ret: {type:"runner",value:Runner};
+}
+
 
 // captureStackTrace
 interface ErrorStackTrace {
@@ -81,3 +88,5 @@ declare global {
 		s_refs: (["get_set",PropertyDescriptor]|["refs",string,number]|["or",string,any])[][]|undefined;
 	}
 }
+
+export {type Holder} from "./Holder.js";
