@@ -684,5 +684,5 @@ var parse_js=class {
 };
 let parser=new parse_js("(function() {})");
 parser.parse(parser.state);
-parser.state.tok
+console.log(parser.state.tok);
 
