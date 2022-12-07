@@ -4,15 +4,15 @@ function main() {
 			if(this.run) {
 				this.p=this.fn();
 				this.after();
-			} else {
-				this.run=1;
-				this.p=Promise.resolve(this);
-				this.p.then(()=>{
-					this.start();
-					this.p=this.fn();
-					this.after();
-				});
+				return;
 			}
+			this.run=1;
+			this.p=Promise.resolve(this);
+			this.p.then(() => {
+				this.start();
+				this.p=this.fn();
+				this.after();
+			});
 
 		}
 		run=0;
