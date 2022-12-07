@@ -1,6 +1,6 @@
-import path from "path";
-import process,{env} from "process";
-import vm from 'vm';
+import {basename as path_basename} from "path";
+import {env} from "process";
+import {runInContext} from 'vm';
 import {bind_plugins} from "./plugins/bind_plugins.js";
 import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
 import {Extern} from "./use_extern.js";
@@ -48,7 +48,7 @@ export class ReplPluginManager {
 		a: {
 			let cur_dir=env.PWD;
 			if(!cur_dir) break a;
-			let basename=path.basename(cur_dir);
+			let basename=path_basename(cur_dir);
 			console.log(basename);
 			let xxx=true;
 			if(xxx) {
@@ -63,10 +63,10 @@ export class ReplPluginManager {
 		let context=base_repl.context;
 		context.rm_all=rm_all_properties_from_obj;
 		if(delete_all_javascript_api) {
-			vm.runInContext('rm_all(this)',context);
+			runInContext('rm_all(this)',context);
 		} else {
 			// make node more like browsers
-			vm.runInContext('delete this.global',context);
+			runInContext('delete this.global',context);
 		}
 		this.m_context=context;
 		this.m_context.get_repl=() => this.m_repl_runtime;
