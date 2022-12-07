@@ -40,26 +40,14 @@ function main() {
 			this.p=this.fn();
 		}
 	}
-	/** @type {{}|undefined} */
-	var a=void 0;
 	/**
 	 * @arg {(this: PromiseHandlerImpl) => Promise<void>} fn
 	 * @arg {(()=>void) | null} callback_fn
 	 */
 	function z(fn,callback_fn) {
-		let s={};
-		s.fn=fn;
-		s.dl=500;
 		var rng=Math.random();
 		window.postMessage(rng);
 		var nc=new PromiseHandlerImpl(fn);
-		nc.run;
-		s.o=nc;
-		s.ru=0;
-		s.timeout=function() {
-			nc.run=false;
-			nc.p.then(() => console.log("timeout done"));
-		};
 		/**
 		 * @param {{ data: number; }} e
 		 */
@@ -70,7 +58,7 @@ function main() {
 			window.removeEventListener("message",msg_listener);
 			nc.run=false;
 		}
-		nc.start=() => window.addEventListener("message",msg_listener);
+		nc.m_start=() => window.addEventListener("message",msg_listener);
 		nc.m_after=callback_fn;
 		nc.reset();
 		return nc;
