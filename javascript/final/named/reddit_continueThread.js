@@ -78,11 +78,11 @@ function main() {
 				/** @type {any} */
 				let root_new_=dom[react_ii];
 				root_new=root_new_;
-				window.root_new=root_new;
+				// window.root_new=root_new;
 				n_dom=get_inner();
 				if(!n_dom) throw 1;
 				n_dom.click();
-				window.inner_dom=n_dom;
+				// window.inner_dom=n_dom;
 				window.cint=setTimeout(function() {
 					window.cint=f(f);
 				},1500);
@@ -131,7 +131,7 @@ function main() {
 			var root_new_=dom[react_ii];
 			/** @type {InternalInstanceType} */
 			let root_new=root_new_;
-			window.root_new=root_new;
+			// window.root_new=root_new;
 			function get_inner() {
 				try {
 					return root_new.child.sibling.child.child.child.child.child.child.child.child.child.child.child.stateNode;
@@ -157,7 +157,7 @@ function main() {
 				console.log('ts');
 				return setTimeout(ts_timeout_func,33);
 			}
-
+			return null;
 		});
 		{
 			let maybe=true;
@@ -195,10 +195,10 @@ function main() {
 			}
 		}
 		if(!window.refs) {
-			window.refs=refs;
+			// window.refs=refs;
 			add_root(refs);
 		} else {
-			window.refs=refs;
+			// window.refs=refs;
 			add_root(refs);
 		}
 		for(let j=0;j<2;j++) {
@@ -251,7 +251,7 @@ function main() {
 			}
 			console.log(j,s_refs.length);
 		}
-		window.s_refs=s_refs;
+		// window.s_refs=s_refs;
 		return refs;
 	};
 	cur.value=cur.do_cur();

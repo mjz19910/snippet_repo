@@ -13,9 +13,11 @@ function main() {
 	cur.n=new CustomInputMatcher("https://makiki99.github.io/prestige-frame/",() => location.href,"makiki99.prestige-frame");
 	cur.f=function() {
 		class HTMLIFrameExt extends HTMLIFrameElement {
+			/** @override */
 			get src() {
 				return super.src;
 			}
+			/** @override */
 			set src(e) {
 				switch(e) {
 					case 'https://makiki99.github.io/prestige':
