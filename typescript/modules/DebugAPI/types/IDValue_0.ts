@@ -1,6 +1,6 @@
 declare global {
-	type IDValue=IDValueI;
-	var IDValue: typeof IDValueI;
+	type IDValue_0=IDValueI;
+	var IDValue_0: typeof IDValueI;
 }
 
 // ts exports to js
@@ -15,7 +15,7 @@ export class IDValueI {
 	next: IDValueI|null;
 	arr_dual: TypeAOrTypeB<string,number>[];
 	arr_dual_x: TypeAOrTypeB<AnyOrRepeat_1<string>,AnyOrRepeat_1<number>>[];
-	arr_rep_str: AnyOrRepeat_1<string>[];
+	arr_rep_str: AnyOrRepeat_0<string>[];
 	arr_rep_num: AnyOrRepeat_0<number>[];
 	arr_str: string[];
 	arr_num: number[];

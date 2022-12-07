@@ -39,10 +39,10 @@ export class DoCalc {
 			this.br_obj.stats_win++;
 			this.obj.stats_win++;
 			calc_cur(this.stats,this.br_obj);
-			this.br_next=new IDValue(this.obj.id+1,this.br_obj);
+			this.br_next=new IDValue_0(this.obj.id+1,this.br_obj);
 			this.br_res=calc_next(this.stats,this.br_obj,max_id.value);
 			calc_cur(this.stats,this.obj);
-			this.next=new IDValue(this.obj.id+1,this.br_obj);
+			this.next=new IDValue_0(this.obj.id+1,this.br_obj);
 			this.res=calc_next(this.stats,this.obj,max_id.value);
 			if(!this.br_next.arr_str) continue;
 			let cd=br_st-this.br_next.arr_str.length;
@@ -89,10 +89,10 @@ export class DoCalc {
 				this.br_obj.stats_win++;
 				this.obj.stats_win++;
 				calc_cur(stats,this.br_obj);
-				this.br_next=new IDValue(this.obj.id+1,this.br_obj);
+				this.br_next=new IDValue_0(this.obj.id+1,this.br_obj);
 				this.br_res=calc_next(stats,this.br_obj,max_id.value);
 				calc_cur(stats,this.obj);
-				this.next=new IDValue(this.obj.id+1,this.br_obj);
+				this.next=new IDValue_0(this.obj.id+1,this.br_obj);
 				this.res=calc_next(stats,this.obj,max_id.value);
 				if(!this.br_next.arr_str) continue;
 				let cd=br_st-this.br_next.arr_str.length;

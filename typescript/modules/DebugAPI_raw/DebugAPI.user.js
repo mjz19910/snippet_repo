@@ -3695,7 +3695,7 @@ function run_modules_plugin() {
 		let ret;
 		switch(argArray.length) {
 			case 2: if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-				var ars=Object.entries(argArray[1]).filter(([j,e]) => e instanceof Array);
+				var ars=Object.entries(argArray[1]).filter(([,e]) => e instanceof Array);
 				var ars_i=ars[0][1].indexOf(this);
 				if(ars[0][1].indexOf(this)>-1) {
 					console.log("found module array:","require."+ars[0][0]);
@@ -3868,7 +3868,7 @@ function get_ids(value) {
 	return ids.value.indexOf(value);
 }
 
-/**@arg {CompressionStatsCalculator} this_ @arg {Partial<IDValue>} obj */
+/**@arg {CompressionStatsCalculator} this_ @arg {IDValue_0} obj */
 function sorted_comp_stats(this_,obj) {
 	if(obj.arr_str!=null&&obj.stats_win!=null) {
 		/**@type {[string,number][]} */
@@ -3885,7 +3885,7 @@ function sorted_comp_stats(this_,obj) {
 	}
 }
 
-/** @arg {CompressionStatsCalculator} stats @param {IDValue} obj */
+/** @arg {CompressionStatsCalculator} stats @param {IDValue_0} obj */
 function calc_cur(stats,obj) {
 	if(!obj.stats_win||obj.arr_str===void 0)
 		return;
@@ -3893,7 +3893,7 @@ function calc_cur(stats,obj) {
 }
 
 class IDValueImpl {
-	/**@arg {number} id @arg {IDValue|null} next */
+	/**@arg {number} id @arg {IDValue_0|null} next */
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
@@ -3919,7 +3919,7 @@ class IDValueImpl {
 	}
 }
 
-/**@arg {IDValue} next */
+/**@arg {IDValue_0} next */
 function get_next({next}) {
 	if(next===null)
 		throw new Error("Unexpected type");
@@ -3964,10 +3964,10 @@ class DoCalc {
 			this.br_obj.stats_win++;
 			this.obj.stats_win++;
 			calc_cur(this.stats,this.br_obj);
-			this.br_next=new IDValue(this.obj.id+1,this.br_obj);
+			this.br_next=new IDValue_0(this.obj.id+1,this.br_obj);
 			this.br_res=calc_next(this.stats,this.br_obj,max_id.value);
 			calc_cur(this.stats,this.obj);
-			this.next=new IDValue(this.obj.id+1,this.br_obj);
+			this.next=new IDValue_0(this.obj.id+1,this.br_obj);
 			this.res=calc_next(this.stats,this.obj,max_id.value);
 			if(!this.br_next.arr_str) continue;
 			let cd=br_st-this.br_next.arr_str.length;
@@ -3977,7 +3977,7 @@ class DoCalc {
 	}
 	/**
 	 * @param {CompressionStatsCalculator} stats
-	 * @param {IDValue} obj
+	 * @param {IDValue_0} obj
 	 */
 	constructor(stats,obj) {
 		this.stats=stats;
@@ -4015,10 +4015,10 @@ class DoCalc {
 				this.br_obj.stats_win++;
 				this.obj.stats_win++;
 				calc_cur(stats,this.br_obj);
-				this.br_next=new IDValue(this.obj.id+1,this.br_obj);
+				this.br_next=new IDValue_0(this.obj.id+1,this.br_obj);
 				this.br_res=calc_next(stats,this.br_obj,max_id.value);
 				calc_cur(stats,this.obj);
-				this.next=new IDValue(this.obj.id+1,this.br_obj);
+				this.next=new IDValue_0(this.obj.id+1,this.br_obj);
 				this.res=calc_next(stats,this.obj,max_id.value);
 				if(!this.br_next.arr_str) continue;
 				let cd=br_st-this.br_next.arr_str.length;
@@ -4069,7 +4069,7 @@ class CompressDual {
 
 /**
  * @param {CompressionStatsCalculator} stats
- * @param {IDValue} obj
+ * @param {IDValue_0} obj
  * @param {number} max_id
  */
 function calc_next(stats,obj,max_id) {
@@ -4081,7 +4081,7 @@ function calc_next(stats,obj,max_id) {
 	if(!obj.next) {
 		return null;
 	}
-	/**@type {IDValue} */
+	/**@type {IDValue_0} */
 	let next=obj;
 	next.value=[max_id,'=',rep_val];
 	next.log_val=[max_id,'=',f_val[0],f_val[1]];
@@ -4109,19 +4109,21 @@ function calc_next(stats,obj,max_id) {
 }
 
 /**
- * @param {IDValue} value
- * @param {IDValue} next
+ * @param {IDValue_0} value
+ * @param {IDValue_0} next
  */
 function assign_next(value,next) {
 	value.next=next;
 	return next;
 }
 add_function(assign_next);
-/**@implements {IDValue} */
+/**@implements {IDValue_0} */
 class Value {
-	set_arr_T(){}
-	arr_dual_x;
-	arr_rep_str;
+	set_arr_T() {}
+	/** @type {TypeAOrTypeB<AnyOrRepeat_1<string>,AnyOrRepeat_1<number>>[]} */
+	arr_dual_x=[];
+	/** @type {AnyOrRepeat_0<string>[]} */
+	arr_rep_str=[];
 	/** @param {number} id */
 	constructor(id) {
 		this.id=id;
@@ -4152,14 +4154,14 @@ class Value {
 add_function(Value);
 
 let max_id={value: 0};
-/** @param {IDValue} obj @param {CompressionStatsCalculator} stats */
+/** @param {IDValue_0} obj @param {CompressionStatsCalculator} stats */
 function run_calc(stats,obj) {
 	let calc_value=new DoCalc(stats,obj);
 	let res=calc_value.get_result();
 	if(!res) return [false,null];
 	return [true,res];
 }
-/** @param {IDValue} obj */
+/** @param {IDValue_0} obj */
 function flat_obj(obj) {
 	let ret=[];
 	while(obj.next) {
@@ -4171,14 +4173,15 @@ function flat_obj(obj) {
 	return ret;
 }
 /**
- * @type {{value:IDValue[]}}
+ * @type {{value:IDValue_0[]}}
  */
 let g_obj_arr={value: []};
 
 /** @param {number|string} val @param {unknown} e */
 function find_matching_value(val,e) {
 	if(typeof val==='string') {
-
+		console.log("TODO: find matching string",e,val);
+		return false;
 	} else {
 		if(typeof e==='object'&&e!==null&&'value' in e&&e.value instanceof Array) {
 			return e.value[0]===val;
@@ -4441,7 +4444,7 @@ function compress_main(stats) {
 	max_id.value=new Set(el_ids.value).size;
 	let disabled_com=new DisabledMulCompression;
 	let arr=disabled_com.try_compress_T(el_ids.value);
-	let obj_start=new IDValue(0,null);
+	let obj_start=new IDValue_0(0,null);
 	obj_start.arr_rep=el_ids.value;
 	if(arr[0]===true) {
 		obj_start.arr_rep_num=arr[1];
@@ -4457,8 +4460,8 @@ function compress_main(stats) {
 		if(cur.stats.length===0) break;
 		if(cur.stats[0][1]===1) break;
 		if(!cur.next) break;
-		if(!(cur.next instanceof IDValue)) {
-			throw new Error("Don't know how to use this type (cur.next is not IDValue)");
+		if(!(cur.next instanceof IDValue_0)) {
+			throw new Error("Don't know how to use this type (cur.next is not IDValue_0)");
 		}
 		cur=cur.next;
 	}
@@ -4779,7 +4782,12 @@ function cast_to_object(x) {
 function cast_to_record_with_string_type(x) {
 	if('type' in x&&typeof x.type==='string') {
 		x;
-		let y={...x,type: x.type};
+		let y={
+			...x,
+			type: x.type,
+			__proto__: Object.getPrototypeOf(x),
+		};
+		console.log(x,y);
 		// only gets iterable properties
 	}
 	if(!is_record_with_string_type(x,"type")) return null;

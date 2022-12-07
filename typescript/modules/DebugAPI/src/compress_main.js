@@ -24,7 +24,7 @@ export function compress_main(stats) {
 	el_ids.value=src_arr.value.map(get_ids);
 	max_id.value=new Set(el_ids.value).size;
 	let arr=stats.compressor.try_compress_T(el_ids.value);
-	let obj_start=new IDValue(0,null);
+	let obj_start=new IDValue_0(0,null);
 	obj_start.arr_rep=el_ids.value;
 	if(arr[0]===true) {
 		obj_start.arr_rep_num=arr[1];
@@ -40,7 +40,7 @@ export function compress_main(stats) {
 		if(cur.stats.length===0) break;
 		if(cur.stats[0][1]===1) break;
 		if(!cur.next) break;
-		if(!(cur.next instanceof IDValue)) {
+		if(!(cur.next instanceof IDValue_0)) {
 			throw new Error("Don't know how to use this type (cur.next is not IDValue)");
 		}
 		cur=cur.next;

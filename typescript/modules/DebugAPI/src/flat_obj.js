@@ -5,7 +5,7 @@ export function flat_obj(obj) {
 	while(obj.next) {
 		let {next}=obj;
 		ret.push(obj);
-		if(!(next instanceof IDValue)) throw new Error("Unexpected type");
+		if(!(next instanceof IDValue_0)) throw new Error("Unexpected type");
 		obj=next;
 	}
 	ret.push(obj);
