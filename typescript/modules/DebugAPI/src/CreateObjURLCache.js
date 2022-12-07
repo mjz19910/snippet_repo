@@ -1,6 +1,6 @@
 export class CreateObjURLCache {
 	/** @readonly */
-	originalScope={
+	static originalScope={
 		createObjectURL: URL.createObjectURL,
 		revokeObjectURL: URL.revokeObjectURL,
 	};
@@ -14,18 +14,18 @@ export class CreateObjURLCache {
 		this.update_scope(this.getScope());
 	}
 	disable() {
-		this.update_scope(this.originalScope);
+		this.update_scope(CreateObjURLCache.originalScope);
 	}
 	/**
-	 * @param {this['originalScope']} scope
+	 * @param {CreateObjURLCache.originalScope} scope
 	 */
 	update_scope(scope) {
 		URL.createObjectURL=scope.createObjectURL;
 		URL.revokeObjectURL=scope.revokeObjectURL;
 	}
 	getScope() {
-		let base=this.originalScope;
-		/**@type {this['originalScope']} */
+		let base=CreateObjURLCache.originalScope;
+		/**@type {CreateObjURLCache.originalScope} */
 		let scope={createObjectURL,revokeObjectURL};
 		return scope;
 		/**
