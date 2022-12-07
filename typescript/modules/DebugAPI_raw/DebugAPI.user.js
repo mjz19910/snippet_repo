@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      4.9.12
+// @version      4.9.13
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/typescript/modules/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -21,6 +21,11 @@ let inject_api={};
 window.inject_api=any(inject_api);
 // #pragma end InjectAPI
 
+// #pragma section sha_1_hash
+// @Update on minor version change
+// version <4.9.13 commit sha1
+const sha_1_initial="781ee649";
+// #pragma end sha_1_hash
 
 inject_api.saved_objects=[];
 /**
@@ -4896,9 +4901,43 @@ class OriginState {
 }
 inject_api.OriginState=OriginState;
 
-// @Update on minor version change
-// version 0.3.0 sha1 initial commit
-const sha_1_initial="f615a9c";
+/** @template {{}} U @template {string} T @arg {U} x @arg {T} k @returns {x is U&Record<T,string>} */
+function is_record_with_string_type(x,k) {
+	return is_record_with_T(x,k)&&typeof x[k]==='string';
+}
+
+/** @template T @arg {T} x @arg {T} x @returns {x is {}|null} */
+function is_object(x) {
+	return typeof x==='object';
+}
+
+/** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
+function is_record_with_T(x,k) {
+	return k in x;
+}
+
+/** @template T @arg {T} x @returns {{data:T & ({}|null)}|null} */
+function cast_to_object(x) {
+	if(!is_object(x)) return null;
+	return {data: x};
+}
+
+/** @template {{}} T @arg {T} x @returns {Record<"type", string>|null} */
+function cast_to_record_with_string_type(x) {
+	if('type' in x&&typeof x.type==='string') {
+		x;
+		let y={...x,type: x.type};
+		// only gets iterable properties
+	}
+	if(!is_record_with_string_type(x,"type")) return null;
+	return x;
+}
+
+/** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {{ [P in T]: string; }|null} */
+function cast_to_record_with_key_and_string_type(x,k) {
+	if(!is_record_with_string_type(x,k)) return null;
+	return x;
+}
 
 class ConnectionFlags {
 	does_proxy_to_opener=false;
@@ -4983,44 +5022,6 @@ class RemoteSocket {
 		this.client_id=client_id;
 		this.first_event=event;
 	}
-}
-
-/** @template {{}} U @template {string} T @arg {U} x @arg {T} k @returns {x is U&Record<T,string>} */
-function is_record_with_string_type(x,k) {
-	return is_record_with_T(x,k)&&typeof x[k]==='string';
-}
-
-/** @template T @arg {T} x @arg {T} x @returns {x is {}|null} */
-function is_object(x) {
-	return typeof x==='object';
-}
-
-/** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
-function is_record_with_T(x,k) {
-	return k in x;
-}
-
-/** @template T @arg {T} x @returns {{data:T & ({}|null)}|null} */
-function cast_to_object(x) {
-	if(!is_object(x)) return null;
-	return {data: x};
-}
-
-/** @template {{}} T @arg {T} x @returns {Record<"type", string>|null} */
-function cast_to_record_with_string_type(x) {
-	if('type' in x&&typeof x.type==='string') {
-		x;
-		let y={...x,type: x.type};
-		// only gets iterable properties
-	}
-	if(!is_record_with_string_type(x,"type")) return null;
-	return x;
-}
-
-/** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {{ [P in T]: string; }|null} */
-function cast_to_record_with_key_and_string_type(x,k) {
-	if(!is_record_with_string_type(x,k)) return null;
-	return x;
 }
 
 // <RemoteOriginConnection>
