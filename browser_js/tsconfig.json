@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
-		"experimentalDecorators": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
 		"target": "ESNext",
 		"lib": [
 			"ESNext",
@@ -9,16 +10,14 @@
 		"types": [
 			"jquery"
 		],
-		"declaration": true,
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"sourceMap": true,
-		"outDir": "./build",
-		"strict": true,
 		"typeRoots": [
 			"./node_modules/@types"
 		],
+		"outDir": "./build",
+		"sourceMap": true,
+		"strict": true,
 		"allowJs": true,
+		"declaration": true,
 		"checkJs": true,
 		"incremental": true,
 		"noImplicitOverride": true,
@@ -31,11 +30,10 @@
 		"noUnusedParameters": true,
 		"useUnknownInCatchVariables": true,
 		"isolatedModules": true,
-		// todo
 		"noPropertyAccessFromIndexSignature": false,
-		// windows needs this
 		"forceConsistentCasingInFileNames": true,
 		"exactOptionalPropertyTypes": true,
+		"experimentalDecorators": true,
 	},
 	"ts-node": {
 		"esm": true,
