@@ -184,7 +184,7 @@ function main() {
 	cur.n='1000mines.com';
 	cur.f=function() {
 		let return_value;
-		if(!debug) throw new Error("Missing debug function (open devtools)");
+		if(!debug||!undebug) throw new Error("Missing debug function (open devtools)");
 		debug=debug;
 		debug.u=undebug;
 		x: {

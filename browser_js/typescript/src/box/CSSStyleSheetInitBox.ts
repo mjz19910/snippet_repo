@@ -8,15 +8,11 @@ export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetI
 		if(key==='baseURL') {
 			if(typeof value=='string') {
 				this.value[key]=value;
-			} else if(typeof value==='undefined') {
-				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
 			}
 		} else if(key==='disabled') {
 			if(typeof value==='boolean') {
-				this.value[key]=value;
-			} else if(typeof value==='undefined') {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
@@ -25,8 +21,6 @@ export class CSSStyleSheetInitBox extends BoxTemplate<"shape_box",CSSStyleSheetI
 			if(typeof value==='object'&&value.instance_type==='MediaList') {
 				this.value[key]=value.value;
 			} else if(typeof value==='string') {
-				this.value[key]=value;
-			} else if(typeof value==='undefined') {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
