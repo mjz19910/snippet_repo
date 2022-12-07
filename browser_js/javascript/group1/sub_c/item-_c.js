@@ -76,31 +76,13 @@ function main() {
 		return nc;
 	}
 	/** @this {PromiseHandlerImpl}*/
-	async function b() {
+	async function async_task() {
 		let P=this;
-		p1();
-		await P.wait(80);
-		p1();
-		await P.wait(80);
-		buyRu0M();
-		await P.wait(80);
-		p1();
-		await P.wait(80);
-		buyRu2();
-		await P.wait(80);
-		p1();
-		await P.wait(50);
-		for(var i=0;i<30;i++)
-			buyRu3();
 		await P.wait(50);
 		if(P.run) {
 			P.reset();
 		}
 		return;
 	}
-	if(typeof a=="undefined") {
-		a=z(b,promise_result);
-	} else {
-		a=z(b,promise_result,a);
-	}
+	return z(async_task,promise_result);
 }
