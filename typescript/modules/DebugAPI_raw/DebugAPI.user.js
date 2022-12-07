@@ -4997,6 +4997,9 @@ class RemoteHandler {
 					side: data.side,
 				});
 			} return;
+			case "keep_alive_reply": {
+				console.log("unexpected keep alive reply from", data.side);
+			} return;
 		}
 		this.unhandled_events.push(data);
 		console.log(data);
