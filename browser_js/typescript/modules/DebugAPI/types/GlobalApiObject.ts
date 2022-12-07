@@ -14,7 +14,6 @@ import {RustTokenTreeParser} from "../src/debug_api/RustTokenTreeParser.js";
 import {WeakValueRef} from "../src/WeakValueRef.js";
 import {CSSCascade} from "../src/CSSCascade.js";
 import {OriginState} from "../src/OriginState.js";
-import {RemoteOriginConnection} from "../src/debug_api/RemoteOriginConnection.js";
 import {APIProxyManager} from "../src/debug_api/APIProxyManager.js";
 import {LoggingEventTarget} from "../src/debug_api/LoggingEventTarget.js";
 import {DebugAPI} from "../src/debug_api/DebugAPI.js";

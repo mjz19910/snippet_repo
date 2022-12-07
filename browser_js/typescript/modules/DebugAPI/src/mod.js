@@ -32,7 +32,6 @@ import {LoggingEventTarget} from "./debug_api/LoggingEventTarget";
 import {OriginState} from "./OriginState";
 import {parse_html_to_binary_arr} from "../types/parse_html_to_binary_arr";
 import {range_matches} from "./range_matches";
-import {RemoteOriginConnection} from "./debug_api/RemoteOriginConnection";
 import {Repeat_1} from "../types/repeat/Repeat_1.js";
 import {run_modules_plugin} from "./run_modules_plugin";
 import {run_wasm_plugin} from "./run_wasm_plugin";
