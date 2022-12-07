@@ -5207,6 +5207,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		// don't handle strings, too easy to get custom data that
 		// may be very hard to distinguish between
 		if(typeof event.data==='string') return false;
+		if(typeof event.data==='object') {
+			if(event.data===null) return true;
+		}
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	can_handle_message(event) {
