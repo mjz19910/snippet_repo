@@ -4,7 +4,7 @@ const debug=false;
 
 let g_loaded_ipc_plugins=new Map;
 
-class ReplPluginManagerModule {
+export class ReplPluginManagerModule {
 	/** @type {IpcLoader} */
 	static IPCLoader;
 	/** @param {IpcLoader} state @param {string} key @param {string} module_path */
