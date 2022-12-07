@@ -785,7 +785,11 @@ function main() {
 			x.fo.push([x.f,x.o]);
 			__add_set();
 			ret=x.o;
-			__ret=ret;
+			__ret={
+				type:"site",
+				from:"1000mines.com",
+				ret,
+			};
 			if(typeof ret!=='symbol') {
 				w.I_listener={
 					__f: x.f,

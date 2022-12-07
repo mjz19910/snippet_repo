@@ -3,8 +3,16 @@ import {Runner} from "../support/Runner.js";
 
 // __ret
 declare global {
-	var __ret: {type:"runner",value:Runner};
+	var __ret: __RetType;
 }
+type __RetType={
+	type:"site",
+	from:"1000mines.com",
+	ret:symbol|[any,any],
+}|{
+	type:"runner",
+	value: Runner,
+};
 
 
 // captureStackTrace
