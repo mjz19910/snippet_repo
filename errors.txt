@@ -8,25 +8,10 @@
     [7m   [0m [96m       ~~~[0m
     'ret' is declared here.
 
-[96mjavascript/final/named/Hero.js/__global.ts[0m:[93m17[0m:[93m6[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'undebug' must be of type 'undebug | undefined', but here has type 'undebug'.
+[96mjavascript/final/named/__global.ts[0m:[93m67[0m:[93m28[0m - [91merror[0m[90m TS4033: [0mProperty 'citv' of exported interface has or is using private name 'setInterval'.
 
-[7m17[0m  var undebug: undebug;
-[7m  [0m [91m     ~~~~~~~[0m
-
-  [96mjavascript/final/named/__global.ts[0m:[93m94[0m:[93m6[0m
-    [7m94[0m  var undebug: undebug|undefined;
-    [7m  [0m [96m     ~~~~~~~[0m
-    'undebug' was also declared here.
-
-[96mjavascript/final/named/Hero.js/__global.ts[0m:[93m25[0m:[93m6[0m - [91merror[0m[90m TS2403: [0mSubsequent variable declarations must have the same type.  Variable 'debug' must be of type 'debug | undefined', but here has type 'debug'.
-
-[7m25[0m  var debug: debug;
-[7m  [0m [91m     ~~~~~[0m
-
-  [96mjavascript/final/named/__global.ts[0m:[93m86[0m:[93m6[0m
-    [7m86[0m  var debug: debug|undefined;
-    [7m  [0m [96m     ~~~~~[0m
-    'debug' was also declared here.
+[7m67[0m   citv?: ReturnType<typeof setInterval>|number;
+[7m  [0m [91m                           ~~~~~~~~~~~[0m
 
 [96mjavascript/final/named/Hero.js/Hero_js.js[0m:[93m20[0m:[93m11[0m - [91merror[0m[90m TS6133: [0m'add_func' is declared but its value is never read.
 
@@ -13650,11 +13635,11 @@
 [7m [0m [91m        ~~~~~~[0m
 
 
-Found 2584 errors in 107 files.
+Found 2583 errors in 107 files.
 
 Errors  Files
      1  javascript/final/named/1000mines.com/1000mines.com.js[90m:788[0m
-     2  javascript/final/named/Hero.js/__global.ts[90m:17[0m
+     1  javascript/final/named/__global.ts[90m:67[0m
      6  javascript/final/named/Hero.js/Hero_js.js[90m:20[0m
      2  javascript/final/named/makiki99_prestige-frame.js[90m:16[0m
      1  javascript/final/named/reddit_continueThread.js[90m:67[0m
