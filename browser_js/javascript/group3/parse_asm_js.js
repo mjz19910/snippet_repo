@@ -670,14 +670,14 @@ var parsejs=class {
 						state.index+=hit.length;
 						continue;
 					}
-					if(s.length==0) {
-						return s
+					if(state.index>=s.length) {
+						return;
 					}
 					throw "Invalid,ctx:"+s.substr(0,20)
 			}
-			s=s.slice(len)
+			state.index+=len;
 		}
-		return s
+		return;
 	}
 	toString() {
 		return state.tok
