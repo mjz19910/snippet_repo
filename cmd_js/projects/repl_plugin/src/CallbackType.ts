@@ -1,7 +1,3 @@
-import repl from 'repl';
-import {REPLServerRuntime} from './REPLServerRuntime.js';
+import {REPLServer} from 'repl';
 
-export type CallbackType={
-	(err: Error|null,_repl: repl.REPLServer&REPLServerRuntime): void;
-	(err: Error|null,repl: repl.REPLServer): void;
-};
+export type CallbackType=(err: Error|null,_repl: REPLServer)=>void;

@@ -2,7 +2,6 @@ import path from "path";
 import process,{env} from "process";
 import vm from 'vm';
 import {bind_plugins} from "./plugins/bind_plugins.js";
-import {REPLServerRuntime} from "./REPLServerRuntime.js";
 import {rm_all_properties_from_obj} from "./rm_all_properties_from_obj.js";
 import {Extern} from "./use_extern.js";
 import {REPLServer, start as repl_start} from 'repl';

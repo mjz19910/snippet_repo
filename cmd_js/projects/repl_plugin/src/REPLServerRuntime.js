@@ -146,24 +146,13 @@ class RLInterface extends NodeEventEmitter {
 }
 
 
-/**@implements {REPLServer} */
-export class REPLServerRuntime extends RLInterface {
-	/**@arg {string | repl.ReplOptions} [options] @returns {REPLServerRuntime} */
-	static start_repl(options) {
-		console.log("start repl");
-		let repl_value=repl.start(options);
-		console.log("repl_value");
-		let repl_value_wrapped=new REPLServerRuntime(repl_value);
-		console.log("res");
-		return repl_value_wrapped;
-	}
+export class REPLServerRuntime {
 	/**@type {REPLServer} */
 	X;
 	/**
 	 * @param {REPLServer} real_value
 	 */
 	constructor(real_value) {
-		super(real_value);
 		this.X=real_value;
 	}
 	get context() {return this.X.context;}
@@ -193,27 +182,12 @@ export class REPLServerRuntime extends RLInterface {
 	}
 	get lastError() {return this.X.lastError;}
 	get completer() {return this.X.completer;}
-	/**
-	 * @arg {string} keyword
-	 * @arg {repl.REPLCommand | repl.REPLCommandAction} cmd
-	 * */
-	defineCommand(keyword,cmd) {
-		this.X.defineCommand(keyword,cmd);
-	}
 	/** @param {boolean} [preserveCursor] */
 	displayPrompt(preserveCursor) {
 		this.X.displayPrompt(preserveCursor);
 	}
 	clearBufferedCommand() {
 		this.X.clearBufferedCommand();
-	}
-	/**
-	 * @type {this['X']['setupHistory']}
-	 * @param {string} path
-	 * @param {import('./CallbackType.js').CallbackType} callback
-	 */
-	setupHistory(path,callback) {
-		this.X.setupHistory(path,callback);
 	}
 	historySize=0;
 	removeHistoryDuplicates=false;
