@@ -24,6 +24,7 @@ export class HTMLTokenBase {
     m_start_position: HTMLTokenBase.Position|null=null;
     m_end_position: HTMLTokenBase.Position|null=null;
     m_self_closing: boolean=false;
+    m_token_tag_name: string|null=null;
     set_code_point(code_point: CodePoint|null) {
         this.m_code_point=code_point;
     }
@@ -34,8 +35,8 @@ export class HTMLTokenBase {
     set_end_position(_: "Badge<HTMLTokenizer>",arg1: HTMLTokenBase.Position) {
         this.m_end_position = arg1;
     }
-    set_tag_name(arg0: string) {
-        throw new Error("Method not implemented.");
+    set_tag_name(tag_name: string) {
+        this.m_token_tag_name=tag_name;
     }
     ensure_doctype_data(): MyDocTypeData {
         throw new Error("Method not implemented.");
