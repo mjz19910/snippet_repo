@@ -8,6 +8,8 @@ function main() {
 			this.keys=[];
 			/** @type {(()=>void)[]} */
 			this.values=[];
+			this.lastKey="";
+			this.lastValue=() => {};
 		}
 		get k() {
 			return this.lastKey;
