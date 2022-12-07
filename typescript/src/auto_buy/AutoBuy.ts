@@ -31,9 +31,13 @@ import {lightreset_inject} from "./lightreset_inject.js";
 import {specialclick_inject} from "./specialclick_inject.js";
 import {AsyncFunctionBox} from "../box/AsyncFunctionBox.js";
 import {DomInstructionType} from "../instruction/DomInstructionType.js";
+import {FunctionBox} from "../box/FunctionBox.js";
 
 // Imports
 declare global {
+	namespace setInterval {
+		const __promisify__: null;
+	}
 	interface Window {
 		timeplayed: number;
 		secondinterval?: ReturnType<typeof setInterval>;
@@ -222,7 +226,10 @@ export class AutoBuy implements AutoBuyInterface {
 			global;push,removeEventListener;push,click;this
 				call,int(2)
 			drop
-			`,[function() {console.log('play success');},function(err: Box) {console.log(err);}]);
+			`,[
+				FunctionBox.wrap(function() {console.log('play success');}),
+				FunctionBox.wrap_1(function(err: Box) {console.log(err);})
+			]);
 		let handler=new EventHandlerVMDispatch(instructions,this);
 		globalThis.addEventListener('click',handler);
 		is_in_ignored_from_src_fn.flag=false;
