@@ -50,7 +50,10 @@ function main() {
 		}
 		/** @param {number} id */
 		execute_async(id) {
-			let ret=this.run(id);
+			var key=this.keys[id];
+			var value=this.values[id];
+			console.log("running async",key);
+			let ret=value();
 			ret.then(null,e => console.error(e));
 			return ret;
 		}
