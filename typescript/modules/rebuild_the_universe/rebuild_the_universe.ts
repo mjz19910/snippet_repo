@@ -243,26 +243,32 @@ export class MediaListBox extends BoxTemplateImpl<"instance_box",MediaList> {
 	readonly type="instance_box";
 	readonly instance_type="MediaList";
 }
+export class NewableInstancePackBox extends BoxTemplateImpl<"instance_box",NewableInstancePack<{}>> {
+	readonly type="instance_box";
+	readonly instance_type="NewableInstancePack<{}>";
+}
+
 export class NewableFunctionBox {
 	readonly type="constructor_box";
 	readonly instance_type="unknown";
 	readonly arguments="box[]";
 	readonly return="box";
-	factory_value: NewableInstancePack<{}>;
-	class_value: new (...a: BoxImpl[]) => {};
+	readonly value_name="[factory_value,class_value]";
+	value: {factory_value: NewableInstancePack<{}>,class_value: new (...a: BoxImpl[]) => {};};
 	constructor(factory_value: NewableInstancePack<{}>,class_value: new (...a: BoxImpl[]) => {}) {
-		this.factory_value=factory_value;
-		this.class_value=class_value;
+		this.value={factory_value,class_value};
 	}
 	get_construct_arguments(): [NewableInstancePack<{}>,new (...a: BoxImpl[]) => {}] {
-		return [this.factory_value,this.class_value];
+		return [this.value.factory_value,this.value.class_value];
 	}
 	on_get(vm: StackVMImpl,key: string) {
-		vm; key;
+		switch(key) {
+			case 'factory_value': vm.push(new NewableInstancePackBox(this.value.factory_value))
+		}
 		throw new Error("Method not implemented.");
 	}
 	factory(...args: BoxImpl[]) {
-		return this.factory_value.make_box(this.class_value,args);
+		return this.value.factory_value.make_box(this.value.class_value,args);
 	}
 }
 export interface NewableInstancePack<T> {
@@ -293,9 +299,11 @@ export class PromiseBox extends BoxTemplateImpl<"promise_box",Promise<BoxImpl>> 
 }
 export class RawBox<T> {
 	readonly type="raw_box";
+	value: null;
 	raw_value: T;
 	type_symbol: symbol;
 	constructor(value: T,symbol_: symbol) {
+		this.value=null;
 		this.raw_value=value;
 		this.type_symbol=symbol_;
 	}
@@ -617,6 +625,7 @@ type BoxImpl=
 	// function
 	FunctionBoxImpl|
 	NewableFunctionBox|
+	NewableInstancePackBox|
 	AsyncFunctionBoxImpl|
 	FunctionConstructorBoxImpl|
 	// return type
@@ -800,6 +809,7 @@ class NumberBoxImpl {
 
 class RawBoxImpl<T> {
 	readonly type="raw_box";
+	value=null;
 	raw_value: T;
 	type_symbol: symbol;
 	constructor(value: T,symbol_: symbol) {
@@ -1276,7 +1286,7 @@ class StackVMParser {
 	static parse_string_into_raw_instruction_stream(string: string) {
 		const parser_max_match_iter=300;
 		let parts: string[]|null;
-		let arr:string[][]=[];
+		let arr: string[][]=[];
 		let i=0;
 		do {
 			let saved_last=this.match_regex.lastIndex;
@@ -1524,7 +1534,7 @@ class BaseCompression {
 		return [false,src];
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst */
-	did_compress<T, 	U>(src: T[],dst: U[]) {
+	did_compress<T,U>(src: T[],dst: U[]) {
 		return dst.length<src.length;
 	}
 	/** @template T @arg {T[]} src @arg {T[]} dst */
@@ -1532,11 +1542,11 @@ class BaseCompression {
 		return dst.length>src.length;
 	}
 	/**@template T,U @arg {CompressStateBase<T, U>} state*/
-	compress_result_state<T, 	U>(state: CompressStateBase<T,U>) {
+	compress_result_state<T,U>(state: CompressStateBase<T,U>) {
 		return this.compress_result(state.arr,state.ret);
 	}
 	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
-	compress_result<T, 	U>(src: T[],dst: U[]): [true,U[]]|[false,T[]] {
+	compress_result<T,U>(src: T[],dst: U[]): [true,U[]]|[false,T[]] {
 		if(this.did_compress(src,dst))
 			return [true,dst];
 		return [false,src];
@@ -4047,3 +4057,4 @@ main();
 export {
 	main as rebuild_the_universe_main
 };
+

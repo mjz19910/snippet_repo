@@ -45,6 +45,7 @@ export type Box=
 	// function
 	FunctionBox|
 	NewableFunctionBox|
+	NewableInstancePackBox|
 	AsyncFunctionBox|
 	FunctionConstructorBox|
 	// return type
