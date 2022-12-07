@@ -15,7 +15,6 @@
 /* eslint-disable no-undef */
 
 import {APIProxyManager} from "./debug_api/APIProxyManager";
-import {CompressionStatsCalculator} from "../types/CompressionStatsCalculator";
 import {CompressRepeated} from "./CompressRepeated";
 import {compress_main} from "./compress_main";
 import {CreateObjURLCache} from "./CreateObjURLCache";

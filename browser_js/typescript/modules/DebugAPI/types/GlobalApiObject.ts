@@ -5,7 +5,6 @@ import {to_tuple_arr} from "../src/to_tuple_arr.js";
 import {CompressRepeated} from "../src/CompressRepeated.js";
 import {Repeat_1} from "./repeat/Repeat_1.js";
 import {range_matches} from "../src/range_matches.js";
-import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 import {HexRandomDataGenerator} from "../src/HexRandomDataGenerator.js";
 import {EventListenerValue} from "../src/EventListenerValue.js";
 import {GenericDataEvent} from "../src/GenericDataEvent.js";

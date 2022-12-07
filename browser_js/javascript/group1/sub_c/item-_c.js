@@ -86,7 +86,7 @@ var z=function(fn,cbfn,ex) {
 	}
 	return nc
 }
-var b=async function(fn) {
+async function b(fn) {
 	p1()
 	await fn.wait(80)
 	p1()
