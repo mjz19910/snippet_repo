@@ -1,7 +1,7 @@
 //cspell:words getargs idents keyword_handlers gethandler mclass fnbody parama parast parsebody parsebracket expectraw notreg charexpr gimuy jsonlike eatnext sethandler tryblock tryobj
 //console.log(util.inspect(this.state.tok[0],{depth:null,maxArrayLength:300}))
 var rx=0;
-var parsejs=class {
+var parse_js=class {
 	/**
 	 * @param {string} str
 	 */
@@ -682,7 +682,7 @@ var parsejs=class {
 		return this.state.tok.join("");
 	}
 };
-let parser=new parsejs("(function() {})");
+let parser=new parse_js("(function() {})");
 parser.parse(parser.state);
 parser.state.tok
 

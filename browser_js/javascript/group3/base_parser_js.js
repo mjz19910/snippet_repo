@@ -420,5 +420,5 @@ function run_code() {
 if(typeof exports=="undefined") {
 	run_code()
 } else {
-	exports.parsejs=parsejs
+	exports.parsejs=parse_js
 }
