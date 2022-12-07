@@ -5,30 +5,6 @@ import {Runner} from "../../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/Hero.js/Hero_js.js
 */
 function main() {
-	/**
-	 * @type {any[]}
-	 */
-	var fnlist=[];
-	/**
-	 * @type {any[]}
-	 */
-	var fnname=[];
-	/**
-	 * @param {any} name
-	 * @param {any} func
-	 */
-	function add_func(name,func) {
-		var y=fnlist.push(func);
-		if(fnname.indexOf(name)>-1) {
-			throw SyntaxError("Name conflict");
-		}
-		var x=fnname.push(name);
-		func.user_run_name=name;
-		if(x!=y) {
-			throw SyntaxError("unbalanced function or name number");
-		}
-		return x;
-	}
 	let cur=new Runner;
 	cur.n='Hero_js';
 	cur.f=function() {
@@ -127,6 +103,7 @@ function main() {
 					if(__x.length==1) {
 						return true;
 					}
+					return false;
 				}
 				g() {
 					var vvl=[];
@@ -193,9 +170,9 @@ function main() {
 				}
 			}
 			/**
-			 * @param {number} t
+			 * @param {number} _t
 			 */
-			function w(t) {
+			function w(_t) {
 				return new Promise(timeout_class.w_in);
 			}
 			if(game.dungeonHeroes.length<6) {

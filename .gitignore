@@ -10,3 +10,4 @@ build/
 javascript_build/
 typescript_build/
 dist/
+errors.txt

@@ -785,7 +785,7 @@ function main() {
 			x.fo.push([x.f,x.o]);
 			__add_set();
 			ret=x.o;
-			__ret={
+			window.__ret={
 				type: "site",
 				from: "1000mines.com",
 				ret,
