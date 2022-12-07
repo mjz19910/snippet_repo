@@ -2366,7 +2366,7 @@ var api_debug_enabled=false;
 const base_console=window.console;
 
 /** @type {Console} */
-const console=any({
+var console=any({
 	...Object.fromEntries(Object.entries(base_console).map(([k,v]) => {
 		if(typeof v==='function') {
 			return [k,v.bind(base_console)];

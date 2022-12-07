@@ -1,5 +1,5 @@
 
-let n_regs=[];
+let n_registers=[];
 /**
  * @param {string} n
  */
@@ -44,7 +44,7 @@ class ParseAsm {
 		let m2=(num>>3)&0x7;
 		let rest=(num>>6);
 		console.log("mrm8 "+af+" "+m2+" "+rest);
-		n_regs.push(ar[0],ar[1],ar[2],ar[3]);
+		n_registers.push(ar[0],ar[1],ar[2],ar[3]);
 		let dist=ar[2];
 		let no_reg=0;
 		if(no_reg==15) {
@@ -148,8 +148,8 @@ class ParseAsm {
 	 */
 	parse_mov_b(ar,num) {
 		let af=num&0x7;
-		let big_regs=num&0x8;
-		if(big_regs) {
+		let big_register=num&0x8;
+		if(big_register) {
 			console.log("mov "+this.map_regflags[af]+","+[ar[4],ar[3],ar[2],ar[1]].join(""));
 			return ar.slice(5);
 		} else {
