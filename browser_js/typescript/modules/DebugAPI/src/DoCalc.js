@@ -1,6 +1,6 @@
+import {IDValueI} from "../types/IDValue_0";
 import {calc_cur} from "./calc_cur";
 import {calc_next} from "./calc_next";
-import {max_id} from "./mod";
 import {get_next} from "./get_next";
 
 export class DoCalc {
@@ -48,10 +48,11 @@ export class DoCalc {
 			let cd=br_st-this.br_next.arr_str.length;
 			if(cd<=1) break;
 		}
+		return null;
 	}
 	/**
-	 * @param {import("../types/CompressionStatsCalculator").CompressionStatsCalculator} stats
-	 * @param {IDValue} obj
+	 * @param {CompressionStatsCalculator} stats
+	 * @param {IDValue_0} obj
 	 */
 	constructor(stats,obj) {
 		this.stats=stats;

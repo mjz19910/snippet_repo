@@ -2,10 +2,7 @@ import {compress_init} from "./compress_init";
 import {flat_obj} from "./flat_obj";
 import {make_group_from_item} from "./make_group_from_item";
 import {run_calc} from "./run_calc";
-import {g_auto_buy,src_arr,ids,id_groups,el_ids,max_id,g_obj_arr} from "./mod";
 import {get_ids} from "./get_ids";
-import {CompressionStatsCalculator} from "../types/CompressionStatsCalculator.js";
-import {try_decode} from "./try_decode.js";
 
 /** @param {CompressionStatsCalculator} stats */
 export function compress_main(stats) {
@@ -23,7 +20,7 @@ export function compress_main(stats) {
 	}
 	el_ids.value=src_arr.value.map(get_ids);
 	max_id.value=new Set(el_ids.value).size;
-	let arr=stats.compressor.try_compress_T(el_ids.value);
+	let arr=stats.compressor.try_compress(el_ids.value);
 	let obj_start=new IDValue_0(0,null);
 	obj_start.arr_rep=el_ids.value;
 	if(arr[0]===true) {
