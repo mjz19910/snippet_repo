@@ -37,7 +37,7 @@ export class HTMLToken extends HTMLTokenBase {
         (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","from_cpp/HTMLToken.cppts",":","10"].join("")) : void 0);
         this.ensure_tag_attributes().deref().append(move(attribute));
     }
-    ensure_tag_attributes(): Ref<Vector<HTMLTokenBase.Attribute>> {
+    override ensure_tag_attributes(): Ref<Vector<HTMLTokenBase.Attribute>> {
         (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","from_cpp/HTMLToken.cppts",":","14"].join("")) : void 0);
         // 3 == OwnPtr<Vector<Attribute>>
         let ptr: Ref<OwnPtr<Vector<HTMLTokenBase.Attribute>>> = Ref.wrap(this.m_data.get<3>().deref());
