@@ -1,41 +1,41 @@
 function run_d() {
+	if(!debug) {
+		console.log("no debug");
+		return null;
+	}
+	if(!('nodeRequire' in window)||typeof window.nodeRequire!=='function') {
+		console.log("no nodeRequire");
+		return null;
+	}
 	let old_state=null;
 	if(window.get_v8_require_run&&window.v8_require_state) {
 		old_state=window.v8_require_state;
 	}
-	/** @arg {ReqSt} state */
-	async function get_v8_require_run(state) {
-		if(!debug) {
-			console.log("no debug");
-			return null;
-		}
-		if(!('nodeRequire' in window)||typeof window.nodeRequire!=='function') {
-			console.log("no nodeRequire");
-			return null;
-		}
-		let w=debug;
-		w.u=undebug;
+	let w=debug;
+	w.u=undebug;
+	/** @arg {ReqSt} state @returns {{}[]|null} */
+	function get_v8_require_run(state) {
 		window.native_module_scope??={
 			v8: window.nodeRequire("v8"),
 		};
 		let q=window.native_module_scope;
 		state.native_module_scope=q;
+		/** @type {{}[]} */
 		let import_arr=[];
 		if(state.back_ptr?.import_arr) {
 			import_arr=state.back_ptr.import_arr;
 		}
 		state.import_arr=import_arr;
-		let x;
-		state.m=0;
-		import_arr[0]=x=await w.m(q.v8.Serializer,f => new f,'assert');
+		import_arr[0]=state.m(any(q.v8).Serializer,(/** @type {new () => any} */ f) => new f,'assert');
 		//v8.Serializer
-		import_arr[1]=x=await w.m(x,f => f(true),'lazyError');
+		import_arr[1]=state.m(import_arr[1],(/** @type {(arg0: boolean) => any} */ f) => f(true),'lazyError');
 		//assert
-		import_arr[2]=x=q.require=await w.m(x,f => f(),'require');
+		q.require=state.m(import_arr[2],(/** @type {() => any} */ f) => f(),'require');
+		import_arr[2]=q.require;
 		//lazyError
-		import_arr[3]=q.NativeModule=await w.m(x,f => f('v8'),'NativeModule');
+		import_arr[3]=q.NativeModule=state.m(q.require,(/** @type {(arg0: string) => any} */ f) => f('v8'),'NativeModule');
 		//require
-		import_arr[4]=q.primordials=await w.m(q.require,f => f('v8'),'primordials');
+		import_arr[4]=q.primordials=state.m(q.require,(/** @type {(arg0: string) => any} */ f) => f('v8'),'primordials');
 		//require
 		return import_arr;
 	}
@@ -45,6 +45,13 @@ function run_d() {
 		back_ptr=null;
 		/** @type {{}|null} */
 		native_module_scope=null;
+		/** @type {{}[]|null} */
+		import_arr=null;
+		/**
+		 * @param {{}} f
+		 * @param {(...x:any[])=>any} b
+		 * @param {string} s
+		 */
 		m(f,b,s) {
 			if(this.aborted) {
 				console.log("aborted");
