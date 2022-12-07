@@ -7,10 +7,10 @@ import {IndexBox} from "../box/IndexBox.js";
 import {NewableFunctionBox} from "../box/NewableFunctionBox.js";
 import {log_if} from "../log_if.js";
 import {LOG_LEVEL_VERBOSE} from "../log_level_enum.js";
-import {InstructionTypeBox} from "../box/InstructionTypeBox.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {NumberBox} from "../box/NumberBox.js";
 import {AbstractVM} from "./AbstractVM.js";
+import {StackVMBase} from "./StackVM.js";
 
 export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 	flags: Map<string,boolean>;
@@ -21,6 +21,7 @@ export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 	stack: Box[];
 	return_value: Box;
 	target_obj: AutoBuyInterface;
+	m_base: StackVMBase;
 	constructor(instructions: InstructionType[],target_obj: AutoBuyInterface) {
 		this.flags=new Map;
 		this.instructions=instructions;
@@ -31,6 +32,7 @@ export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 		this.return_value=new VoidBox();
 		this.vm_arguments=null;
 		this.target_obj=target_obj;
+		this.m_base=new StackVMBase;
 	}
 	push(value: Box) {
 		this.stack.push(value);
@@ -135,25 +137,9 @@ export class EventHandlerVMDispatch implements AbstractVM<[Event]> {
 					if(this.is_ip_in_bounds(target)) {
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
-					let instruction_modify=new InstructionTypeBox(this.instructions[target]);
-					let verify_state: [number]=[instruction_modify.value.length];
-					let output_instruction: string[]=[];
-					for(let i=0;i<instruction_modify.value.length;i++) {
-						let cur=instruction_modify.value[i];
-						if(typeof cur==='string') {
-							output_instruction.push(cur);
-						} else {
-							console.log('need type for',cur);
-						}
-					}
 					let value_box=this.pop();
-					if(value_box.type==='string') {
-						output_instruction[offset]=value_box.value;
-					}
-					let valid_instruction=SimpleStackVMParser.typecheck_instruction(output_instruction,verify_state);
-					this.instructions[target]=valid_instruction;
-					console.log('new verify state',verify_state);
-					console.assert(verify_state[0]===0,"not all of the operands typechecked");
+					let result_instruction=this.m_base.update_instruction(offset,value_box,this.instructions[target]);
+					this.instructions[target]=SimpleStackVMParser.typecheck_instruction(result_instruction);
 				}
 			} break;
 			case 'vm_push_ip': {

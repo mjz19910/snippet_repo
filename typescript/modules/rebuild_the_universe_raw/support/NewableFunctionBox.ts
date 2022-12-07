@@ -1,5 +1,5 @@
 import {StackVM} from "./StackVM.js";
-import {Box} from "./Box.js";
+import {Box} from "../ns.js";
 import {NewableInstancePack} from "./NewableInstancePack.js";
 
 export class NewableFunctionBox {

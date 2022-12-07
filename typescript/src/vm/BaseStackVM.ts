@@ -11,6 +11,7 @@ import {AbstractVM} from "./AbstractVM.js";
 import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.js";
 import {PromiseBox} from "../box/PromiseBox.js";
 import {LOG_LEVEL_VERBOSE} from "../log_level_enum.js";
+import {StackVMBase} from "./StackVM.js";
 
 export class BaseStackVM implements AbstractVM<[]> {
 	flags: Map<string,boolean>;
@@ -23,6 +24,7 @@ export class BaseStackVM implements AbstractVM<[]> {
 	exec_stack: ([Box[],InstructionType[]])[];
 	jump_instruction_pointer: number|null;
 	function_map: Map<number,InstructionType[]>;
+	m_base: StackVMBase;
 	constructor(function_map: Map<number,InstructionType[]>) {
 		this.flags=new Map;
 		let instructions=function_map.get(0);
@@ -36,6 +38,7 @@ export class BaseStackVM implements AbstractVM<[]> {
 		this.exec_stack=[];
 		this.jump_instruction_pointer=null;
 		this.function_map=function_map;
+		this.m_base=new StackVMBase;
 	}
 	reset() {
 		this.instruction_pointer=0;
@@ -173,8 +176,8 @@ export class BaseStackVM implements AbstractVM<[]> {
 						throw new Error("RangeError: Destination is out of instructions range");
 					}
 					let instruction_modify=new InstructionTypeBox(this.instructions[target]);
-					let output_instruction: string[]=[];
-					for(let i=0;i<instruction_modify.value.length;i++) {
+					let output_instruction: [string, ...any[]]=[instruction_modify.value[0]];
+					for(let i=1;i<instruction_modify.value.length;i++) {
 						let cur=instruction_modify.value[i];
 						if(typeof cur==='string') {
 							output_instruction.push(cur);
@@ -183,11 +186,8 @@ export class BaseStackVM implements AbstractVM<[]> {
 						}
 					}
 					let value_box=this.pop();
-					if(value_box.type==='string') {
-						output_instruction[offset]=value_box.value;
-					}
-					let valid_instruction=SimpleStackVMParser.typecheck_instruction(output_instruction);
-					this.instructions[target]=valid_instruction;
+					this.m_base.update_instruction(offset,value_box,output_instruction);
+					this.instructions[target]=SimpleStackVMParser.typecheck_instruction(output_instruction);
 				}
 			} break;
 			case 'vm_push_ip': {

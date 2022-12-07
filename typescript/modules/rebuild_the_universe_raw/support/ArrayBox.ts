@@ -1,4 +1,4 @@
-import {Box} from "./Box.js";
+import {Box} from "../ns.js";
 import {BoxTemplate} from "./template/BoxTemplate.js";
 
 export class ArrayBox extends BoxTemplate<"array_box",Box[]> {

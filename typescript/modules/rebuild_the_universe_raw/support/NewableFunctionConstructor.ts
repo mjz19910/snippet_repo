@@ -1,4 +1,4 @@
-import {Box} from "./Box.js";
+import {Box} from "../ns.js";
 import {FunctionInstance} from "./FunctionInstance.js";
 
 export interface NewableFunctionConstructor {

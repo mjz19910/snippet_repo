@@ -1,4 +1,4 @@
-import {Box} from "./Box.js";
+import {Box} from "../ns.js";
 import {BoxTemplate} from "./template/BoxTemplate.js";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";
 import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox.js";

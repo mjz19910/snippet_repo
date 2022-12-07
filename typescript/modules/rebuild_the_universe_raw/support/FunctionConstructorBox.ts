@@ -1,4 +1,4 @@
-import {Box} from "./Box.js";
+import {Box} from "../ns.js";
 import {FunctionBox} from "./FunctionBox.js";
 import {BoxMaker} from "./BoxMaker.js";
 import {FunctionConstructorFactory} from "./FunctionConstructorFactory.js";

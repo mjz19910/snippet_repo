@@ -35,12 +35,9 @@ import {FunctionBox} from "../box/FunctionBox.js";
 
 // Imports
 declare global {
-	namespace setInterval {
-		const __promisify__: null;
-	}
 	interface Window {
 		timeplayed: number;
-		secondinterval?: ReturnType<typeof setInterval>;
+		secondinterval?: number;
 		doc: Document;
 		rounding(v: number,x: any,y: any): string;
 		totalAtome: number;

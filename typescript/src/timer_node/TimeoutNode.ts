@@ -3,7 +3,7 @@ import {BaseNode} from "./BaseNode.js";
 
 export class TimeoutNode extends BaseNode {
 	m_timeout: number;
-	m_id: ReturnType<typeof setInterval>|null;
+	m_id: number|null;
 	m_target: AbstractFireNode|null;
 	constructor(timeout=0) {
 		super();

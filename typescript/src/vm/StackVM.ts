@@ -6,6 +6,23 @@ import {trigger_debug_breakpoint} from "../trigger_debug_breakpoint.js";
 import {SimpleStackVMParser} from "./SimpleStackVMParser.js";
 import {StackVMFlags} from "./StackVMFlags.js";
 
+export class StackVMBase {
+	update_instruction(offset: number, value: Box, lex_instruction: [string,...any[]]) {
+		if(offset==0) {
+			if(value.type==='string') {
+				lex_instruction[offset]=value.value;
+			} else {
+				throw new Error("Invalid");
+			}
+		} else if(offset>0) {
+			lex_instruction[offset]=value;
+		} else {
+			throw new Error("Unreachable");
+		}
+		return lex_instruction;
+	}
+}
+
 export class StackVM {
 	instructions: InstructionType[];
 	instruction_pointer: number;
@@ -13,6 +30,7 @@ export class StackVM {
 	stack: Box[];
 	return_value: Box;
 	flags: StackVMFlags;
+	m_base: StackVMBase;
 	constructor(instructions: InstructionType[]) {
 		this.instructions=instructions;
 		this.instruction_pointer=0;
@@ -20,6 +38,7 @@ export class StackVM {
 		this.stack=[];
 		this.return_value=new VoidBox();
 		this.flags=new StackVMFlags;
+		this.m_base=new StackVMBase;
 	}
 	push(value: Box) {
 		this.stack.push(value);
@@ -85,17 +104,7 @@ export class StackVM {
 				}
 				let lex_instruction: [string,...any[]]=this.instructions[target];
 				let value=this.pop();
-				if(offset==0) {
-					if(value.type==='string') {
-						lex_instruction[offset]=value.value;
-					} else {
-						throw new Error("Invalid");
-					}
-				} else if(offset>0) {
-					lex_instruction[offset]=value;
-				} else {
-					throw new Error("Unreachable");
-				}
+				this.m_base.update_instruction(offset,value,lex_instruction);
 				this.instructions[target]=SimpleStackVMParser.typecheck_instruction(lex_instruction);
 			} break;
 			case 'vm_push_ip': {

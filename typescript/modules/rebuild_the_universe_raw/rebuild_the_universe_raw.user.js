@@ -881,6 +881,9 @@ const instruction_descriptor_arr=[
 	['vm_return',InstructionVMReturnImpl],
 ];
 
+/** @typedef {import("./support/StackVMBase.js").StackVMBase} StackVMBase_CJS */
+class StackVmBaseImpl {}
+
 /**
  * @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS
  * @typedef {import("./ns.js").Box} Box_CJS
@@ -897,6 +900,8 @@ class StackVMImpl {
 	base_ptr;
 	/** @type {Box_CJS[]} */
 	stack;
+	/** @type {StackVmBaseImpl} */
+	m_base;
 	/** @arg {InstructionType_CJS[]} instructions */
 	constructor(instructions) {
 		this.instructions=instructions;
@@ -909,6 +914,7 @@ class StackVMImpl {
 		this.base_ptr=0;
 		this.frame_size=2;
 		this.flags=new VMFlags;
+		this.m_base=new StackVmBaseImpl;
 	}
 	pop() {
 		let value=this.stack.pop();
