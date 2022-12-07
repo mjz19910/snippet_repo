@@ -21,11 +21,15 @@ function main() {
 		m_start=null;
 		start() {
 			console.log("start",this);
+			if(!this.m_start) return;
+			this.m_start();
 		};
 		/** @type {(() => void)|null} */
 		m_after=null;
 		after() {
 			console.log("promise result",this);
+			if(!this.m_after) return;
+			this.m_after();
 		}
 		/** @param {number} dl */
 		wait(dl) {
