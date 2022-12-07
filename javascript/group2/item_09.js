@@ -1,5 +1,5 @@
 class RustTypeTheory {
-	/** @type {{}[]} */
+	/** @type {{type: any;description?: any}[]} */
 	types=[];
 	/** @type {{}[]} */
 	axioms=[];
@@ -7,7 +7,7 @@ class RustTypeTheory {
 	addAxiom(value) {
 		this.axioms.push(value);
 	}
-	/** @arg {{}} value */
+	/** @arg {{type: any;description?: any}} value */
 	addType(value) {
 		// @ts-ignore
 		let found_index=this.types.findIndex(e => e.type===value.type);
@@ -18,7 +18,7 @@ class RustTypeTheory {
 			this.types.push(value);
 		}
 	}
-	/** @arg {string} type_name @arg {RustTypeDescription} description */
+	/** @arg {string} type_name @arg {RustTypeDescription|NatNum} description */
 	addTypeDescription(type_name,description) {
 		description.construct();
 		this.addType({
@@ -166,8 +166,10 @@ const nat_num_ops={
 		return this.S(nat_val_m,nat_val_n);
 	}
 };
-tt_info.addTypeDescription("Nat",{
-});
+tt_info.addTypeDescription("Nat",new NatNum(0));
+/**
+ * @param {{type: string;description?:string}[]} types
+ */
 function types_to_map(types) {
 	return new Map(types.map(e => {
 		return e.description? [e.type,e.description]:[e.type,{}];
