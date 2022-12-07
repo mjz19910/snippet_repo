@@ -5222,7 +5222,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			if('vscodeScheduleAsyncWork' in event.data) return false;
 			let is_sponsor_block=this.is_sponsor_block_event_data(event.data);
 			if(is_sponsor_block) return false;
+			return true;
 		}
+		return false;
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	extract_message(event) {
