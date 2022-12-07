@@ -793,7 +793,7 @@ function check_item_keys(path,keys) {
 function filter_section_renderers_from_item_arr(items) {
 	let sections=items.map(
 		/**@return {[number,RendererContentItem]} */
-		(e,i) => [i,e]).filter(([i,e]) => e.richSectionRenderer);
+		(e,i) => [i,e]).filter(([,e]) => e.richSectionRenderer);
 	for(let i=0;i<sections.length;i++) {
 		/**@type {[a:number,b:RendererContentItem, c?:"short" | null]} */
 		let e=sections[i];

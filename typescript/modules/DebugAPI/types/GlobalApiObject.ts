@@ -26,7 +26,18 @@ import {VoidCallbackWith} from "./VoidCallbackWith.js";
 // DebugAPI
 declare global {
 	interface GlobalApiObject {
+		// yt plugin
+		Seen?: {};
+		PropertyHandler?: {};
+		dom_observer?: {};
+		port_state?: {};
+		yt_state_map?: {};
+		yt_handlers?: {};
+		yt_watch_page_loaded_handler?: {};
+		blob_create_args_arr?: {};
+		HTMLMediaElementGainController?: {};
 		plugin_overlay_element?: PluginOverlayElement;
+		gain_controller?: {};
 		any_api_logger?: APIProxyManager;
 		parse_html_to_binary_arr?: (html: string) => unknown[];
 		run_modules_plugin?: VoidCallbackWith<() => void>;
@@ -56,15 +67,5 @@ declare global {
 		APIProxyManager?: typeof APIProxyManager;
 		LoggingEventTarget?: typeof LoggingEventTarget;
 		DebugAPI?: typeof DebugAPI;
-		// yt plugin
-		Seen?: {};
-		PropertyHandler?: {};
-		dom_observer?: {};
-		port_state?: {};
-		yt_state_map?: {};
-		yt_handlers?: {};
-		yt_watch_page_loaded_handler?: {};
-		blob_create_args_arr?: {};
-		HTMLMediaElementGainController?: {};
 	}
 }
