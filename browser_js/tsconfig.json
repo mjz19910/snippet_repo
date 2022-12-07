@@ -43,7 +43,7 @@
 		"javascript/**/*",
 		"typescript/src/**/*",
 		"typescript/modules/**/*",
-		"typescript/ns.ts", "../cmd_js/notes",
+		"typescript/ns.ts",
 	],
 	"exclude": [
 		"node_modules",
