@@ -4,7 +4,7 @@ export class Ref<T> {
     static wrap<T>(a: T): Ref<OwnPtr<T>> {
         return new Ref<OwnPtr<T>>(OwnPtr.make(a));
     }
-    assign(value: any) {
+    assign(value: T|null) {
         this.value=value;
     }
     is_null() {
