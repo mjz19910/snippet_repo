@@ -1,7 +1,5 @@
 import {BaseCompression} from "./BaseCompression.js";
-import {AnyOrRepeat2} from "./repeat/AnyOrRepeat2.js";
 import {Repeat} from "./repeat/Repeat.js";
-import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB.js";
 
 export class CompressTU {
 	i: number;

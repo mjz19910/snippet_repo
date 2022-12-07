@@ -1,5 +1,6 @@
-import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB.js";
-import {AnyOrRepeat2} from "./repeat/AnyOrRepeat2.js";
+declare global {
+	type AnyOrRepeat2<T,U>=["T",AnyOrRepeat<T>]|["U",AnyOrRepeat<U>];
+}
 
 declare global {
 	export type DualR=[true,AnyOrRepeat2<string,number>[]]|[false,TypeAOrTypeB<string,number>[]];

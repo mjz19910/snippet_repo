@@ -1,10 +1,8 @@
-import {MulCompression} from "../src/compress/MulCompression";
-import {range_matches} from "../src/range_matches";
-import {to_tuple_arr} from "../src/to_tuple_arr";
-import {max_id} from "../src/mod";
+import {MulCompression} from "../src/compress/MulCompression.js";
+import {range_matches} from "../src/range_matches.js";
+import {to_tuple_arr} from "../src/to_tuple_arr.js";
+import {max_id} from "../src/mod.js";
 import {CompressTU} from "./CompressTU.js";
-import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB.js";
-import {DualR} from "./DualR.js";
 
 export class CompressionStatsCalculator {
 	/**

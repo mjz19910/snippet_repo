@@ -1,4 +1,3 @@
-import {AnyOrRepeat2} from "./AnyOrRepeat2.js";
 import {BaseCompression} from "./BaseCompression.js";
 import {Repeat} from "./Repeat.js";
 

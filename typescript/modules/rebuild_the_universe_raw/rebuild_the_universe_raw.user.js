@@ -1382,31 +1382,39 @@ class CompressionStatsCalculatorImpl {
 }
 /** @implements {BaseCompression} */
 class BaseCompressionImpl {
-	/** @arg {CompressDual} arg0 @returns {DualRSimple} */
+	/** @arg {CompressDual} arg0 @returns {DualR} */
 	compress_result_state_dual(arg0) {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	/** @arg {(["string", string] | ["number", number])[]} src @arg {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} dst @returns {DualRSimple} */
+	/** @arg {TypeAOrTypeB<string,number>[]} src @arg {AnyOrRepeat2<string,number>[]} dst @returns {DualR} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
-	/** @arg {string | any[]} src @arg {string | any[]} dst */
+	/** @template T,U @arg {T[]} src @arg {U[]} dst */
 	did_compress(src,dst) {
 		return dst.length<src.length;
 	}
-	/** @arg {string | any[]} src @arg {string | any[]} dst */
+	/** @template T @arg {T[]} src @arg {T[]} dst */
 	did_decompress(src,dst) {
 		return dst.length>src.length;
 	}
-	/** @arg {string[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
+	/**@template T,U @arg {CompressStateBase<T, U>} state*/
+	compress_result_state(state) {
+		return this.compress_result(state.arr,state.ret);
+	}
+	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
 	compress_result(src,dst) {
-		if(this.did_compress(src,dst)) return [true,dst];
+		if(this.did_compress(src,dst))
+			return [true,dst];
 		return [false,src];
 	}
-	/** @arg {string[]} src @arg {string[]} dst @returns {[boolean, string[]]} */
+	/** @arg {string[]} src @arg {string[]} dst @returns {[res: boolean,dst: string[]]} */
 	decompress_result(src,dst) {
-		if(this.did_decompress(src,dst)) return [true,dst];
+		// maybe this is not a decompression, just a modification to make
+		// later decompression work
+		if(this.did_decompress(src,dst))
+			return [true,dst];
 		return [false,dst];
 	}
 }
@@ -1414,7 +1422,7 @@ class BaseCompressionImpl {
 class MulCompressionImpl extends BaseCompressionImpl {
 	constructor() {
 		super();
-		this.stats_calculator=new CompressionStatsCalculator;
+		this.stats_calculator=new CompressionStatsCalculatorImpl;
 		/** @type {any[]} */
 		this.compression_stats=[];
 	}

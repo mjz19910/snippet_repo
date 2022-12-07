@@ -1,6 +1,4 @@
-import {AnyOrRepeat2} from "./AnyOrRepeat2";
-import {is_undefined} from "./is_undefined";
-import {TypeAOrTypeB} from "./TypeAOrTypeB.js";
+import {is_undefined} from "./is_undefined.js";
 
 export class Repeat<T> {
 	map_instance_or_d1: Map<symbol,Map<T,<U extends RecordKey<string>>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>>=new Map;

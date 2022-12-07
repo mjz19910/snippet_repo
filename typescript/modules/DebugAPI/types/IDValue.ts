@@ -1,5 +1,3 @@
-import {TypeAOrTypeB} from "./repeat/TypeAOrTypeB.js";
-
 declare global {
 	type IDValue=IDValueI;
 	var IDValue: typeof IDValueI;

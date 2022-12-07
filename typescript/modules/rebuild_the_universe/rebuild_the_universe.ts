@@ -1516,18 +1516,37 @@ class CompressionStatsCalculator {
 	}
 }
 class BaseCompression {
-	did_compress(src: string|any[],dst: string|any[]) {
-		return dst.length<src.length;
+	compress_result_state_dual(arg0: CompressDual): DualR {
+		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	did_decompress(src: string|any[],dst: string|any[]) {
-		return dst.length>src.length;
-	}
-	compress_result(src: string[],dst: string[]): [boolean,string[]] {
+	compress_result_dual(src: TypeAOrTypeB<string,number>[],dst: AnyOrRepeat2<string,number>[]): DualR {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
-	decompress_result(src: string[],dst: string[]): [boolean,string[]] {
-		if(this.did_decompress(src,dst)) return [true,dst];
+	/** @template T,U @arg {T[]} src @arg {U[]} dst */
+	did_compress<T, 	U>(src: T[],dst: U[]) {
+		return dst.length<src.length;
+	}
+	/** @template T @arg {T[]} src @arg {T[]} dst */
+	did_decompress<T>(src: T[],dst: T[]) {
+		return dst.length>src.length;
+	}
+	/**@template T,U @arg {CompressStateBase<T, U>} state*/
+	compress_result_state<T, 	U>(state: CompressStateBase<T,U>) {
+		return this.compress_result(state.arr,state.ret);
+	}
+	/** @template T,U @arg {T[]} src @arg {U[]} dst @returns {[true, U[]] | [false, T[]]} */
+	compress_result<T, 	U>(src: T[],dst: U[]): [true,U[]]|[false,T[]] {
+		if(this.did_compress(src,dst))
+			return [true,dst];
+		return [false,src];
+	}
+	/** @arg {string[]} src @arg {string[]} dst @returns {[res: boolean,dst: string[]]} */
+	decompress_result(src: string[],dst: string[]): [res: boolean,dst: string[]] {
+		// maybe this is not a decompression, just a modification to make
+		// later decompression work
+		if(this.did_decompress(src,dst))
+			return [true,dst];
 		return [false,dst];
 	}
 }

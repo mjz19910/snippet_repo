@@ -3094,11 +3094,11 @@ class Repeat {
 		}
 		return res;
 	}
-	/**@arg {["string",string]|["number",number]} a @arg {number} b @returns {["string",string|Repeat<string>]|["number",number|Repeat<number>]} */
+	/**@arg {TypeAOrTypeB<string,number>} a @arg {number} b @returns {["string",string|Repeat<string>]|["number",number|Repeat<number>]} */
 	static from_TU_entry(a,b) {
 		switch(a[0]) {
-			case 'string': return ['string',Repeat.get(a[1],b)];
-			case 'number': return ['number',Repeat.get_num(a[1],b)];
+			case 'T': return ['string',Repeat.get(a[1],b)];
+			case 'U': return ['number',Repeat.get_num(a[1],b)];
 		}
 	}
 	/**@template A,B @arg {[A,B]} _args */
@@ -3342,11 +3342,11 @@ function range_matches(arr,value,index) {
 }
 
 class BaseCompression {
-	/** @arg {CompressDual} arg0 @returns {DualRSimple} */
+	/** @arg {CompressDual} arg0 @returns {DualR} */
 	compress_result_state_dual(arg0) {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	/** @arg {(["string", string] | ["number", number])[]} src @arg {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} dst @returns {DualRSimple} */
+	/** @arg {TypeAOrTypeB<string,number>[]} src @arg {AnyOrRepeat2<string, number>[]} dst @returns {DualR} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
@@ -3463,14 +3463,6 @@ class MulCompression extends BaseCompression {
 		let res_1=this.try_compress(arr);
 		if(res_1[0]) return res_1[1];
 		return arr;
-	}
-}
-class InstructionPushImpl_2 extends InstructionImplBase {
-	/** @type {'push'} */
-	type='push';
-	/** @arg {StackVMImpl} vm @arg {this['type']} _ @arg {import("./ns.js").Box[]} args */
-	run(vm,_,...args) {
-		vm.stack.push(...args);
 	}
 }
 /** @typedef {typeof DisabledMulCompression} DisabledMulCompressionT */
@@ -3914,9 +3906,9 @@ class IDValue {
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
-		/** @type {(["string", string] | ["number", number])[]} */
+		/** @type {TypeAOrTypeB<string, number>[]} */
 		this.arr_dual=[];
-		/** @type {(["string", AnyOrRepeat<string>] | ["number", AnyOrRepeat<number>])[]} */
+		/** @type {AnyOrRepeat2<string,number>[]} */
 		this.arr_dual_compressed=[];
 		/** @type {AnyOrRepeat<number>[]} */
 		this.arr_rep_num=[];
@@ -4049,9 +4041,9 @@ inject_api.DoCalc=DoCalc;
 class CompressDual {
 	/**@type {number} */
 	i;
-	/**@type {(["string", string] | ["number", number])[]} */
+	/**@type {TypeAOrTypeB<string,number>[]} */
 	arr=[];
-	/**@type {(["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[]} */
+	/**@type {AnyOrRepeat2<string,number>[]} */
 	ret=[];
 	m_base=new BaseCompression;
 	/**@returns {DualR} */
@@ -4065,17 +4057,17 @@ class CompressDual {
 		}
 		return this.m_base.compress_result_state_dual(this);
 	}
-	/**@arg {(["string", string] | ["number", number])} item */
+	/**@arg {TypeAOrTypeB<string,number>} item */
 	compress_rle_TU_to_TX(item) {
 		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
 		let off=1;
 		while(item===this.arr[this.i+off]) off++;
 		if(off==1) return false;
-		this.ret.push(Repeat.from_TU_entry(item,off));
+		this.ret.push(item);
 		this.i+=off-1;
 		return true;
 	}
-	/**@arg {(["string", string] | ["number", number])[]} arr */
+	/**@arg {TypeAOrTypeB<string,number>[]} arr */
 	constructor(arr) {
 		this.i=0;
 		this.arr=arr;
@@ -4108,8 +4100,8 @@ function calc_next(stats,obj,max_id) {
 	next.arr_dual=[];
 	for(let i of rep_range) {
 		switch(i[0]) {
-			case 'T': next.arr_dual.push(["string",i[1]]); break;
-			case 'U': next.arr_dual.push(["number",i[1]]); break;
+			case 'T': next.arr_dual.push(["T",i[1]]); break;
+			case 'U': next.arr_dual.push(["U",i[1]]); break;
 		}
 	}
 	if(next.arr_str)
