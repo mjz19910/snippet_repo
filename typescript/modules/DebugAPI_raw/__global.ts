@@ -180,7 +180,8 @@ declare global {
 declare global {
 	type RemoteOriginConnected={type: "connected",client_id: number;};
 	type RemoteOriginDisconnected={type: "disconnected";};
-	type RemoteOriginKeepAlive={type: "keep_alive"|"keep_alive_reply"; side: "client"|"server";};
+	type OriginConnectionSide="client"|"server";
+	type RemoteOriginKeepAlive={type: "keep_alive"|"keep_alive_reply"; side: OriginConnectionSide;};
 	type RemoteOriginMessage=
 		RemoteOriginConnected|
 		RemoteOriginDisconnected|

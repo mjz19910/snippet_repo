@@ -4792,7 +4792,8 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 class LocalHandler {
-	side="server";
+	/** @type {OriginConnectionSide} */
+	m_side="server";
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
 	/** @type {number|null} */
@@ -4965,7 +4966,8 @@ class RemoteOriginConnectionData {
 }
 
 class RemoteHandler {
-	side="client";
+	/** @type {OriginConnectionSide} */
+	m_side="client";
 	/** @type {RemoteOriginMessage[]} */
 	unhandled_events=[];
 	/** @type {ConnectionFlags} */
@@ -5002,7 +5004,7 @@ class RemoteHandler {
 				});
 			} return;
 			case "keep_alive_reply": {
-				console.log("unexpected keep alive reply my side: `%o`, data side: `%o`", this.side, data.side);
+				console.log("unexpected keep alive reply my side: `%o`, data side: `%o`", this.m_side, data.side);
 			} return;
 		}
 		this.unhandled_events.push(data);
