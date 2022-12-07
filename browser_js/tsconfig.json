@@ -35,6 +35,7 @@
 		"noPropertyAccessFromIndexSignature": false,
 		// windows needs this
 		"forceConsistentCasingInFileNames": true,
+		"exactOptionalPropertyTypes": true,
 	},
 	"ts-node": {
 		"esm": true,

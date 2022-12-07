@@ -37,7 +37,7 @@ import {FunctionBox} from "../box/FunctionBox.js";
 declare global {
 	interface Window {
 		timeplayed: number;
-		secondinterval?: number;
+		secondinterval?: number|undefined;
 		doc: Document;
 		rounding(v: number,x: any,y: any): string;
 		totalAtome: number;

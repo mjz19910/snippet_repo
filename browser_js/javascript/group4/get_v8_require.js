@@ -3,6 +3,9 @@ function get_v8_require_main() {
 		console.log("no debug");
 		return null;
 	}
+	if(!undebug) {
+		return null;
+	}
 	let old_state=null;
 	if(window.get_v8_require_run&&window.v8_require_state) {
 		old_state=window.v8_require_state;

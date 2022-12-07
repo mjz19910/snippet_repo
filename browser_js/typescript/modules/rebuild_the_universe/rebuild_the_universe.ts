@@ -98,15 +98,11 @@ export class CSSStyleSheetInitBox extends BoxTemplateImpl<"shape_box",CSSStyleSh
 		if(key==="baseURL") {
 			if(typeof value=="string") {
 				this.value[key]=value;
-			} else if(typeof value==="undefined") {
-				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
 			}
 		} else if(key==="disabled") {
 			if(typeof value==="boolean") {
-				this.value[key]=value;
-			} else if(typeof value==="undefined") {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
@@ -115,8 +111,6 @@ export class CSSStyleSheetInitBox extends BoxTemplateImpl<"shape_box",CSSStyleSh
 			if(typeof value==="object"&&value.instance_type==="MediaList") {
 				this.value[key]=value.value;
 			} else if(typeof value==="string") {
-				this.value[key]=value;
-			} else if(typeof value==="undefined") {
 				this.value[key]=value;
 			} else {
 				throw new Error("Invalid value for key "+key);
@@ -2054,7 +2048,7 @@ interface SpecType {
 declare global {
 	interface Window {
 		timeplayed: number;
-		secondinterval?: ReturnType<typeof window.setInterval>;
+		secondinterval?: ReturnType<typeof window.setInterval>|undefined;
 		doc: Document;
 		rounding(v: number,x: any,y: any): string;
 		totalAtome: number;
@@ -2481,7 +2475,7 @@ class AsyncAutoBuy {
 		this.parent.do_fast_unit_change();
 		await this.next_timeout_async(this.parent.timeout_ms,'$');
 	}
-	async next_timeout_async(timeout: number|undefined,char: string,silent=false) {
+	async next_timeout_async(timeout: number,char: string,silent=false) {
 		let node=new AsyncTimeoutNode(timeout);
 		this.parent.root_node.append_child(node);
 		if(!silent) {
@@ -3254,13 +3248,13 @@ class AutoBuy {
 			}).join("\n"));
 		}
 	}
-	[labeled_sym("next_timeout_async")](timeout: number|undefined,char: string) {
+	[labeled_sym("next_timeout_async")](timeout: number,char: string) {
 		console.log("next_timeout_async",char,timeout);
 		let err=new Error;
 		this.next_timeout_async_err_log('next_timeout_async stk',err);
 	}
-	timeout_ms?: number;
-	next_timeout(trg_fn: () => void,timeout: number|undefined,char: string,silent=false) {
+	timeout_ms=50;
+	next_timeout(trg_fn: () => void,timeout: number,char: string,silent=false) {
 		let node=new TimeoutNode(timeout);
 		this.root_node.append_child(node);
 		node.start(new TimeoutTarget(this,trg_fn));
