@@ -24,7 +24,7 @@ var parsejs=class {
 			"while,with",
 			"yield",
 		].join(",").split(",");
-		this.keyword_handlers=new Map
+		this.keyword_handlers=new Map;
 		this.keyword_handlers.set("","");
 		this.state={
 			getargs: 0,
@@ -34,53 +34,53 @@ var parsejs=class {
 			parast: [],
 			tok: [],
 			idents: [],
-			keywords:new Set(kwo),
+			keywords: new Set(kwo),
 			primitives: ["null","undefined","true","false","NaN","Infinity","-Infinity","String"],
-		}
+		};
 	}
 	/**
 	 * @param {{ parast: any[]; pt: number; tok: any[]; getargs: number; parsebody: number; }} state
 	 */
 	eat_function(state) {
 		let s=this.str;
-		state.parast.push(state.pt)
-		state.pt=7
-		var save=state.tok
-		var named=0
-		state.tok=[]
+		state.parast.push(state.pt);
+		state.pt=7;
+		var save=state.tok;
+		var named=0;
+		state.tok=[];
 		if(s[0]!="()"[0])
 			while(s.length>0) {
 				if(s[0]=="()"[0]) {
-					break
+					break;
 				}
 				if(s[0].match(/^\s/)) {
-					s=s.slice(1)
+					s=s.slice(1);
 				} else {
-					named=1
-					break
+					named=1;
+					break;
 				}
 			}
-		s=this.parse(s,state,1)
-		state.pt=3
-		var parama=state.tok
+		s=this.parse(s,state,1);
+		state.pt=3;
+		var parama=state.tok;
 		if(s[0]!="{}"[0]&&s.length!=0) {
 			while(s.length>0) {
 				if(s[0]=="{}"[0]) {
-					break
+					break;
 				}
 				if(s[0].match(/^\s/)) {
-					s=s.slice(1)
+					s=s.slice(1);
 				} else {
-					throw new SyntaxError("Unexpected identifier")
+					throw new SyntaxError("Unexpected identifier");
 				}
 			}
 		}
-		s=s.slice(1)
-		state.tok=[]
-		state.getargs=0
-		state.parsebody=1
-		s=this.parse(s,state,2)
-		var fnbody=state.tok
+		s=s.slice(1);
+		state.tok=[];
+		state.getargs=0;
+		state.parsebody=1;
+		s=this.parse(s,state,2);
+		var fnbody=state.tok;
 		if(named) {
 			save.push({
 				value: "Function",
@@ -88,407 +88,407 @@ var parsejs=class {
 				body: fnbody,
 				name: parama[0].data,
 				named: true
-			})
+			});
 		} else {
 			save.push({
 				value: "Function",
 				head: parama,
 				body: fnbody,
 				named: false
-			})
+			});
 		}
-		state.tok=save
-		state.parsebody=0
+		state.tok=save;
+		state.parsebody=0;
 		if(state.parast.length>0) {
-			state.pt=state.parast.pop()
+			state.pt=state.parast.pop();
 		}
-		return s
+		return s;
 	}
 	eat_try(s,state) {
-		state.parast.push(state.pt)
-		state.pt=8
-		var save=state.tok
-		state.tok=[]
-		s=this.parse(s,state,1)
-		var tryblock=state.tok
+		state.parast.push(state.pt);
+		state.pt=8;
+		var save=state.tok;
+		state.tok=[];
+		s=this.parse(s,state,1);
+		var tryblock=state.tok;
 		var tryobj={
 			value: "Try",
 			body: tryblock
-		}
+		};
 		if(s.substr(0,5)=="catch") {
-			state.tok=[]
-			s=s.slice(5)
-			state.pt=12
-			s=this.eat_catch(s,state,tryobj)
+			state.tok=[];
+			s=s.slice(5);
+			state.pt=12;
+			s=this.eat_catch(s,state,tryobj);
 		}
 		if(s.substr(0,7)=="finally") {
-			state.tok=[]
-			s=s.slice(7)
-			state.pt=9
-			s=this.eat_finally(s,state)
-			tryobj.finally=state.tok
+			state.tok=[];
+			s=s.slice(7);
+			state.pt=9;
+			s=this.eat_finally(s,state);
+			tryobj.finally=state.tok;
 		}
 		if(state.parast.length>0) {
-			state.pt=state.parast.pop()
+			state.pt=state.parast.pop();
 		}
-		save.push(tryobj)
-		state.tok=save
-		return s
+		save.push(tryobj);
+		state.tok=save;
+		return s;
 	}
 	eat_catch(s,state,tryobj) {
 		if(state.pt!=12)
-			throw SyntaxError("Unexpected token catch")
-		state.parast.push(state.pt)
-		state.pt=6
-		var save=state.tok
-		state.tok=[]
-		s=this.parse(s,state,1)
+			throw SyntaxError("Unexpected token catch");
+		state.parast.push(state.pt);
+		state.pt=6;
+		var save=state.tok;
+		state.tok=[];
+		s=this.parse(s,state,1);
 		tryobj.catch={
 			head: state.tok
-		}
-		state.tok=[]
-		state.pt=14
-		s=this.parse(s,state,1)
-		tryobj.catch.body=state.tok
-		state.pt=state.parast.pop()
-		return s
+		};
+		state.tok=[];
+		state.pt=14;
+		s=this.parse(s,state,1);
+		tryobj.catch.body=state.tok;
+		state.pt=state.parast.pop();
+		return s;
 	}
 	eat_finally(s,state,tryobj) {
 		if(state.pt!=9)
-			throw SyntaxError("Unexpected token finally")
-		state.parast.push(state.pt)
-		state.pt=10
-		var save=state.tok
-		state.tok=[]
-		s=this.parse(s,state,1)
-		state.pt=state.parast.pop()
-		return s
+			throw SyntaxError("Unexpected token finally");
+		state.parast.push(state.pt);
+		state.pt=10;
+		var save=state.tok;
+		state.tok=[];
+		s=this.parse(s,state,1);
+		state.pt=state.parast.pop();
+		return s;
 	}
 	parse(s,state,d) {
 		while(s!="") {
-			rx++
-			var len=1
-			var td=0
+			rx++;
+			var len=1;
+			var td=0;
 			if(s=="") {
-				return
+				return;
 			}
 			if(s.charAt(0)=="/"&&s.charAt(1)=="*") {
-				var end=s.indexOf('*/')
-				var comment=s.substring(2,end)
-				s=s.slice(end+2)
+				var end=s.indexOf('*/');
+				var comment=s.substring(2,end);
+				s=s.slice(end+2);
 			}
 			switch(s.charAt(0)) {
 				case "/":
 					if(s[1]=="/") {
-						var end=s.indexOf("\n")
+						var end=s.indexOf("\n");
 						//expectraw(s,len,"\n")
-						var comment=s.substring(2,end)
+						var comment=s.substring(2,end);
 						console.log(comment)(function() {
-							debugger
-						})()
-						len=end
+							debugger;
+						})();
+						len=end;
 					} else {
-						var len=1
-						var c=s[1]
-						var off=0
-						var notreg=0
-						var charexpr=0
-						var flags=""
+						var len=1;
+						var c=s[1];
+						var off=0;
+						var notreg=0;
+						var charexpr=0;
+						var flags="";
 						do {
 							if(c=='[') {
-								charexpr=1
+								charexpr=1;
 							} else if(c==']') {
-								charexpr=0
+								charexpr=0;
 							} else if(c=='\\') {
-								len+=2
-								c=s[len]
-								continue
+								len+=2;
+								c=s[len];
+								continue;
 							} else if(!charexpr&&c=='/') {
-								len++
-								break
+								len++;
+								break;
 							}
-							c=s[++len]
-						} while(c)
+							c=s[++len];
+						} while(c);
 						while("gimuy".indexOf(s[len])>=0) {
-							flags+=s[len]
-							len++
+							flags+=s[len];
+							len++;
 						}
-						var prev=state.tok[state.tok.length-1]
+						var prev=state.tok[state.tok.length-1];
 						if((prev.value=="ident")||(prev.value=="RParan")||prev.value=="Number"||prev.value=="bracket") {
-							len=1
+							len=1;
 							state.tok.push({
 								value: "Operator",
 								data: "/"
-							})
+							});
 						} else {
-							console.log(c)
-							var regex=s.substring(1,len-flags.length)
+							console.log(c);
+							var regex=s.substring(1,len-flags.length);
 							state.tok.push({
 								value: "Regex",
 								data: new RegExp(regex,flags)
-							})
+							});
 						}
 					}
-					break
+					break;
 				case " ":
 				case "\t":
 					//state.tok.push({
 					//    value: "whitespace"
 					//})
-					var match=s.match(/^\s+/)
+					var match=s.match(/^\s+/);
 					if(match==null) {
-						len=1
+						len=1;
 					} else if(match.index>0) {
-						len=1
+						len=1;
 					} else {
-						len=match[0].length
+						len=match[0].length;
 					}
 					if(state.parast.length<3||rx<(1300/4)) {
 						if(state.tok.length<2) {} else {
-							console.log.apply(0,["ws",state.tok[state.tok.length-1],state.tok[state.tok.length-2]])
+							console.log.apply(0,["ws",state.tok[state.tok.length-1],state.tok[state.tok.length-2]]);
 						}
 						// if we found more than 40 tokens, quit telling what was before whitespace
 					}
-					break
+					break;
 				case "\n":
 				case ";":
 					if(state.tok.length==0) {
-						break
+						break;
 					}
 					if(state.tok[state.tok.length-1]) {
 						if(state.tok[state.tok.length-1].value=="Separator") {
-							state.tok.pop()
+							state.tok.pop();
 							if(state.tok.length==0) {
-								break
+								break;
 							}
 						}
 						if(state.tok[state.tok.length-1].value!="LBracket") {
 							state.tok.push({
 								value: "Separator"
-							})
+							});
 						}
 					} else {
 						state.tok.push({
 							value: "Separator"
-						})
+						});
 					}
-					break
+					break;
 				case "(":
 					if(state.pt==6||state.pt==12) {
-						state.pt=11
-						break
+						state.pt=11;
+						break;
 						// no tokens for this when in para mode 6
 					}
 					if(state.pt==7) {
-						state.parast.push(state.pt)
-						state.pt=11
-						break
+						state.parast.push(state.pt);
+						state.pt=11;
+						break;
 					}
 					state.tok.push({
 						value: "LParan"
-					})
-					break
+					});
+					break;
 				case "{":
 					if(state.pt==1||state.pt==8||state.pt==14) {
-						state.parast.push(state.pt)
-						state.pt=5
-						d++
+						state.parast.push(state.pt);
+						state.pt=5;
+						d++;
 					} else {
-						state.parast.push(state.pt)
-						state.pt=4
+						state.parast.push(state.pt);
+						state.pt=4;
 						// state parse jsonlike
 						state.tok.push({
 							value: "LBracket"
-						})
-						d++
+						});
+						d++;
 					}
-					break
+					break;
 				case "}":
 					if(state.tok.length>1&&state.tok[state.tok.length-1].value=="Separator") {
-						state.tok.pop()
+						state.tok.pop();
 					}
 					if(state.pt==0) {
-						break
+						break;
 					}
 					if(state.pt==4) {
 						state.tok.push({
 							value: "RBracket"
-						})
-						state.pt=state.parast.pop()
-						break
+						});
+						state.pt=state.parast.pop();
+						break;
 					}
 					if(state.pt==5) {
-						state.pt=state.parast.pop()
-						return s.slice(1)
+						state.pt=state.parast.pop();
+						return s.slice(1);
 					}
 					//console.log(state.tok.slice(state.tok.length > 20 ? state.tok.length - 20 : 0, state.tok.length))
-					return s.slice(1)
-					break
+					return s.slice(1);
+					break;
 				case ")":
 					if(state.pt==11) {
-						state.pt=state.parast.pop()
-						return s.slice(1)
+						state.pt=state.parast.pop();
+						return s.slice(1);
 					}
 					if(state.pt==1) {
 						state.tok.push({
 							value: "RParan"
-						})
-						return s.slice(1)
+						});
+						return s.slice(1);
 					}
 					state.tok.push({
 						value: "RParan"
-					})
-					break
+					});
+					break;
 				case "!":
 					if(s[1]=="=") {
 						if(s[2]=="=") {
 							state.tok.push({
 								value: "Operator",
 								data: "!=="
-							})
-							len=3
+							});
+							len=3;
 						} else {
 							state.tok.push({
 								value: "Operator",
 								data: "!="
-							})
-							len=2
+							});
+							len=2;
 						}
 					} else {
 						state.tok.push({
 							value: "Operator",
 							data: "!"
-						})
+						});
 					}
-					break
+					break;
 				case ",":
 					state.tok.push({
 						value: "Operator",
 						data: ","
-					})
-					break
+					});
+					break;
 				case '"':
-					var off=0
+					var off=0;
 					do {
 						if(s[off]=="\\") {
-							off++
+							off++;
 						}
-						off++
-					} while(s[off]!='"')
-					var string=s.substring(1,off)
+						off++;
+					} while(s[off]!='"');
+					var string=s.substring(1,off);
 					state.tok.push({
 						value: "primitive",
 						type: "String",
 						data: string
-					})
-					len=off+1
-					break
+					});
+					len=off+1;
+					break;
 				case "'":
-					var match=s.slice(1).match(/\'/)
+					var match=s.slice(1).match(/\'/);
 					if(match) {
 						state.tok.push({
 							value: "primitive",
 							type: "StringSingle",
 							data: s.substring(1,match.index+1)
-						})
-						len=match.index+2
+						});
+						len=match.index+2;
 					} else {
-						throw "Syntax error:unmatched quote"
+						throw "Syntax error:unmatched quote";
 					}
-					break
+					break;
 				case "=":
 					if(s[1]=="=") {
 						if(s[2]=="=") {
 							state.tok.push({
 								value: "Operator",
 								data: "==="
-							})
-							len=3
+							});
+							len=3;
 						} else {
 							state.tok.push({
 								value: "Operator",
 								data: "=="
-							})
-							len=2
+							});
+							len=2;
 						}
 					} else if(s[1]==">") {
 						state.tok.push({
 							value: "Function_def",
 							data: "=>"
-						})
-						len=2
+						});
+						len=2;
 					} else {
 						state.tok.push({
 							value: "Assignment"
-						})
+						});
 					}
-					break
+					break;
 				case "&":
 					if(s[1]=="&") {
 						state.tok.push({
 							value: "Operator",
 							data: "&&"
-						})
-						len=2
+						});
+						len=2;
 					} else {
 						state.tok.push({
 							value: "Operator",
 							data: "&"
-						})
+						});
 					}
-					break
+					break;
 				case "|":
 					if(s[1]=="|") {
 						state.tok.push({
 							value: "Operator",
 							data: "||"
-						})
-						len=2
+						});
+						len=2;
 					} else {
 						state.tok.push({
 							value: "Operator",
 							data: "|"
-						})
+						});
 					}
-					break
+					break;
 				case "^":
 					state.tok.push({
 						value: "Operator",
 						data: "^"
-					})
-					break
+					});
+					break;
 				case ".":
 					if(s[1]=="."&&s[2]==".") {
 						state.tok.push({
 							value: "Operator",
 							data: "..."
-						})
-						len=3
+						});
+						len=3;
 					} else {
 						state.tok.push({
 							value: "Operator",
 							data: "."
-						})
+						});
 					}
-					break
+					break;
 				case "?":
 					state.tok.push({
 						value: "Operator",
 						data: "?",
 						depth: td
-					})
-					td++
-					break
+					});
+					td++;
+					break;
 				case ":":
 					if(state.pt==4) {
-						state.tok[state.tok.length-1].eatnext=true
-						break
+						state.tok[state.tok.length-1].eatnext=true;
+						break;
 					}
 					state.tok.push({
 						value: "Operator",
 						data: ":"
-					})
-					break
+					});
+					break;
 				case "-":
 				case "0":
 				case "1":
@@ -500,154 +500,154 @@ var parsejs=class {
 				case "7":
 				case "8":
 				case "9":
-					var match=s.match(/^-[0-9]+/)
+					var match=s.match(/^-[0-9]+/);
 					if(match==null) {
-						match=s.match(/^[0-9]+/)
+						match=s.match(/^[0-9]+/);
 					}
 					if(match) {
 						state.tok.push({
 							value: "Number",
 							data: Number.parseInt(match[0])
-						})
-						len=match[0].length
+						});
+						len=match[0].length;
 					} else {
 						if(s[1]=="-") {
 							state.tok.push({
 								value: "Operator",
 								data: "--"
-							})
-							len=2
+							});
+							len=2;
 						} else if(s[1]=="=") {
 							state.tok.push({
 								value: "Operator",
 								data: "-="
-							})
-							len=2
+							});
+							len=2;
 						} else {
 							state.tok.push({
 								value: "Operator",
 								data: "-"
-							})
+							});
 						}
 					}
-					break
+					break;
 				case "[":
 					if(s[1]=="]") {
 						state.tok.push({
 							value: "bracket",
 							empty: true,
 							body: []
-						})
-						len=2
+						});
+						len=2;
 					} else {
 						if(state.pt!=0) {
-							state.parast.push(state.pt)
+							state.parast.push(state.pt);
 						}
-						state.pt=2
-						var save=state.tok
-						state.tok=[]
-						state.parsebracket=1
-						s=s.slice(1)
-						s=this.parse(s,state,2)
+						state.pt=2;
+						var save=state.tok;
+						state.tok=[];
+						state.parsebracket=1;
+						s=s.slice(1);
+						s=this.parse(s,state,2);
 						// We already ate one bracket, recurse while specifying
-						var bracket=state.tok
+						var bracket=state.tok;
 						save.push({
 							value: "bracket",
 							body: bracket
-						})
-						state.tok=save
-						state.parsebracket=0
+						});
+						state.tok=save;
+						state.parsebracket=0;
 						if(state.parast.length>0) {
-							state.pt=state.parast.pop()
+							state.pt=state.parast.pop();
 						}
-						continue
+						continue;
 					}
-					break
+					break;
 				case "]":
 					if(typeof d=="undefined") {
-						throw "Unbalanced bracket or array notation"
+						throw "Unbalanced bracket or array notation";
 					}
-					d--
+					d--;
 					if(d==1) {
-						return s.slice(1)
+						return s.slice(1);
 					}
-					break
+					break;
 				case ">":
 					if(s[1]==">") {
 						state.tok.push({
 							value: "Operator",
 							data: ">>"
-						})
-						len=2
+						});
+						len=2;
 					} else {
 						state.tok.push({
 							value: "Operator",
 							data: ">"
-						})
+						});
 					}
-					break
+					break;
 				case "<":
 					if(s[1]=="<") {
 						state.tok.push({
 							value: "Operator",
 							data: "<<"
-						})
-						len=2
+						});
+						len=2;
 					} else {
 						state.tok.push({
 							value: "Operator",
 							data: "<"
-						})
+						});
 					}
-					break
+					break;
 				case "+":
 					if(s[1]=="=") {
 						state.tok.push({
 							value: "Operator",
 							data: "+="
-						})
-						len=2
+						});
+						len=2;
 					} else if(s[1]=="+") {
 						state.tok.push({
 							value: "Operator",
 							data: "++"
-						})
-						len=2
+						});
+						len=2;
 					} else {
 						state.tok.push({
 							value: "Operator",
 							data: "+"
-						})
+						});
 					}
-					break
+					break;
 				case "*":
 					if(s[1]=="=") {
 						state.tok.push({
 							value: "Operator",
 							data: "*="
-						})
-						len=2
+						});
+						len=2;
 					} else {
 						state.tok.push({
 							value: "Operator",
 							data: "*"
-						})
+						});
 					}
-					break
+					break;
 				case "~":
 					state.tok.push({
 						value: "Operator",
 						data: "~"
-					})
-					break
+					});
+					break;
 				case "%":
 					state.tok.push({
 						value: "Operator",
 						data: "%"
-					})
-					break
+					});
+					break;
 				default:
-					var match=s.match(/^[a-zA-Z$_\d]+/)
+					var match=s.match(/^[a-zA-Z$_\d]+/);
 					if(match) {
 						var hit=match[0];
 						// TODO: 
@@ -659,7 +659,7 @@ var parsejs=class {
 							value: "ident",
 							data: hit,
 						})*/
-						switch (hit) {
+						switch(hit) {
 							case 'function': this.eat_function(state); break;
 							case 'try': this.eat_try(state); break;
 							case 'catch': this.eat_catch(state); break;
@@ -672,20 +672,17 @@ var parsejs=class {
 					if(state.index>=s.length) {
 						return;
 					}
-					throw "Invalid,ctx:"+s.substr(0,20)
+					throw "Invalid,ctx:"+s.substr(0,20);
 			}
 			state.index+=len;
 		}
 		return;
 	}
 	toString() {
-		return state.tok
+		return this.state.tok.join("");
 	}
-}
-if(typeof exports=="undefined") {
-	parser=new parsejs()
-	parser.parse(code,parser.state)
-	parser.state.tok
-} else {
-	exports.parsejs=parsejs
-}
+};
+let parser=new parsejs("(function() {})");
+parser.parse(parser.state);
+parser.state.tok
+
