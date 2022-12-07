@@ -2719,6 +2719,8 @@ class ProxyTargetMap {
 }
 ProxyTargetMap.attach_to_api();
 
+inject_api.elevate_event_handlers=[];
+
 /** @param {EventListenersT} event_handler */
 function elevate_event_handler(event_handler) {
 	for(let i=0;i<inject_api.elevate_event_handlers.length;i++){
@@ -2731,7 +2733,6 @@ class AddEventListenerExtension {
 	static attach_to_api() {
 		inject_api.AddEventListenerExtension=this;
 		inject_api.addEventListenerExtension=new this;
-		inject_api.elevate_event_handlers=[];
 	}
 	/** @private */
 	original_prototype={
