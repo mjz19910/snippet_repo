@@ -42,12 +42,26 @@ function avg_up(arr,v_avg) {
 	}
 	return [total/cnt,min,max]
 }
+class Item4Game {
+	money=0;
+}
 class AutoState {
 	constructor() {
 		/** @type {[0|1,number][]} */
 		this.cint_arr=[]
 		this.current_generator_autobuy=0
 	}
+	get_player() {
+		/**
+		 * @returns {asserts _v is Item4Game}
+		 * @param {any} _v
+		 */
+		function assert_type(_v) {}
+		let v=player;
+		assert_type(v);
+		return v;
+	}
+	/** @arg {[0|1,number]} item */
 	destroy_cint_item(item) {
 		switch(item[0]) {
 			case 0:
@@ -58,25 +72,34 @@ class AutoState {
 				break
 		}
 	}
-	setTimeout() {
+	/**
+	 * @param {TimerHandler} func
+	 * @param {number} delay
+	 */
+	setTimeout(func,delay) {
 		let cint=setTimeout(func,delay)
 		this.cint_arr.push([0,cint])
 	}
+	/**
+	 * @param {TimerHandler} func
+	 * @param {number} delay
+	 */
 	setInterval(func,delay) {
 		let cint=setInterval(func,delay)
 		this.cint_arr.push([1,cint])
 	}
 	start() {
-		if(!player.generators_autobuyer[0][0]) {
+		if(!this.get_player().generators_autobuyer[0][0]) {
 			let t=this
 			this.setInterval(e => tierGenerator(t.current_generator_autobuy++%8),50)
 			this.setInterval(e => tierMult(),300)
 			this.setInterval(e => buyMeta(),300)
 		}
-		let money_log=player.money.log().toNumber()
-		let sd_arr=[]
+		let money_log=this.get_player().money.log().toNumber()
+		let sd_arr=[];
+		let t=this;
 		function auto_sacrificeGen() {
-			let cur_log=player.money.log().toNumber()
+			let cur_log=t.get_player().money.log().toNumber()
 			let log_diff=cur_log-money_log
 			let mode_run=0
 			money_log=cur_log

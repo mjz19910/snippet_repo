@@ -1,12 +1,186 @@
-import {Runner} from "../../support/Runner.js";
-
-/* spell:words
---- version_list item 2 ---
-v1 (cur): snippet_repo/javascript/final/1000mines.com.js
-*/
 function main() {
+	class CustomInputMatcher {
+		/**
+		 * @param {any} t_needle
+		 * @param {any} t_string_getter
+		 * @arg {string} result_name
+		 */
+		constructor(t_needle,t_string_getter,result_name) {
+			this.ts_get=t_string_getter;
+			this.tr=t_needle;
+			this.result_name=result_name;
+		}
+		get test_string() {
+			return this.ts_get();
+		}
+		get test_needle() {
+			return this.tr;
+		}
+	}
+	class Runner {
+		/** @returns {{type:"runner",value:Runner}} */
+		make_ret() {
+			return {
+				type: "runner",
+				value: this,
+			};
+		}
+		/** @type {(any[])|null} */
+		argv=null;
+		/** @type {string|CustomInputMatcher|null} */
+		_ln=null;
+		value=null;
+		/** @type {((...x:any[])=>any)[]} */
+		funcs=[];
+		/** @type {string[]} */
+		names=[];
+		self_sym=Symbol();
+		/**
+		 * @param {any[]} e
+		 */
+		do_cur(...e) {
+			var i;
+			debugger;
+			this.argv=e;
+			if(this.rx_lx) {
+				i=this.names.indexOf(this.rx_lx.result_name);
+			} else {
+				if(this._ln instanceof CustomInputMatcher) {
+					i=this.names.indexOf(this._ln.result_name);
+				} else if(typeof this._ln==='string') {
+					i=this.names.indexOf(this._ln);
+				} else {
+					i=-1;
+				}
+			}
+			if(i>=0) return this.execute(i);
+			return null;
+		}
+		/**
+		 * @param {number} t
+		 */
+		execute(t) {
+			var r_fnname=this.names[t];
+			var func=this.funcs[t];
+			try {
+				var sf=func.toString();
+				if(sf.indexOf("/*arg_start*/")>-1) {
+					let eval_func; {
+						var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
+						var no_head=func_split[4].trim().slice(1).trim().slice(1);
+						var body=no_head.slice(0,no_head.length-2);
+						var is_strict;
+						var is_strict_p1=body.split('"use strict"');
+						is_strict=is_strict_p1.length>1;
+						if(is_strict) {
+							body=is_strict_p1[1].trim();
+						}
+						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
+						let src_url='//'+'# sourceURL='+r_fnname;
+						let func_str;
+						if(is_strict) {
+							func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
+							eval_func=new Function(args,func_str);
+						} else {
+							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
+							eval_func=new Function(args,func_str);
+						}
+						if('mc' in window&&window.mc instanceof MessageChannel) {
+							let mc=window.mc;
+							mc.port2.onmessage=function() {};
+							mc.port2.close();
+							mc.port1.onmessage=function() {};
+							mc.port1.close();
+							delete window.mc;
+							if(typeof mc!='undefined') {
+								window.mc=undefined;
+							}
+						}
+						console.log("fi:",eval_func.name=="anonymous","len:",eval_func.length);
+					}
+					return eval_func();
+				} else {
+					return func();
+				}
+			} finally {}
+		}
+		/**
+		 * @param {string|CustomInputMatcher} name
+		 * @param {((...x: any[]) => any)} func
+		 */
+		add_func(name,func) {
+			var y=this.funcs.push(func);
+			if(!(name instanceof CustomInputMatcher)) {
+				if(this.names.indexOf(name)>-1)
+					throw SyntaxError("Name conflict");
+				var x=this.names.push(name);
+				/** @template T @arg {T} _obj @returns {asserts _obj is {user_run_name?: string}}  */
+				function assume_has_run_name(_obj) {}
+				assume_has_run_name(func);
+				func.user_run_name=name;
+				if(x!=y) throw SyntaxError("unbalanced function or name number");
+				return x;
+			}
+			console.log("handle add_func for",name);
+			throw new Error("Unexpected type");
+		}
+		/** @type {((...x:any[])=>any)} */
+		get f() {
+			if(!this._f) throw new Error("no function to get");
+			return this._f;
+		}
+		set f(f) {
+			if(!this._ln) throw new Error("no last name");
+			let cur=this._ln;
+			this._lf=f;
+			if(this.funcs.indexOf(this._lf)==-1) {
+				this.add_func(this._ln,this._lf);
+			}
+			if(cur instanceof CustomInputMatcher) {
+				let custom_str=cur.test_string;
+				let needle=cur.test_needle;
+				if(typeof custom_str=='string'&&custom_str.match(needle)==null) {
+					this._f=f;
+					return;
+				}
+			}
+			if(this.f_on) {
+				this.f_on=false;
+				this._f=f;
+			}
+		}
+		/** @type {string|CustomInputMatcher|undefined} */
+		get n() {
+			return this._n;
+		}
+		/** @arg {string|CustomInputMatcher} n_value */
+		set n(n_value) {
+			if(n_value instanceof CustomInputMatcher) {
+				let custom_str=n_value.test_string;
+				let m_needle=n_value.test_needle;
+				if(m_needle instanceof RegExp&&typeof custom_str=='string') {
+					let m_match=custom_str.match(m_needle);
+					if(m_match==null) {
+						this._ln=n_value.result_name;
+						return;
+					} else if(this.rx_off===undefined) {
+						this.rx_off=true;
+						this.rx_lx=n_value;
+					}
+				}
+				if(typeof m_needle=='string'&&custom_str!=m_needle) {
+					this._ln=n_value;
+					return;
+				}
+			}
+			this._ln=n_value;
+			if(this.n_on) {
+				this.n_on=false;
+				this._n=n_value;
+			}
+		}
+	}
 	let cur=new Runner;
-
 	cur.n='1000mines.com';
 	// @ts-ignore
 	cur.f=function() {
@@ -20,9 +194,8 @@ function main() {
 			x.fo=__fo;
 			x.st=new Set;
 			x.sarr=[];
-			x.ne=[];
-			{
-				let test=function(/** @type {any[]} */ e) {
+			x.ne=[]; {
+				let test=function( /** @type {any[]} */ e) {
 					return e[0];
 				};
 				let test_fail=Symbol(1);
@@ -35,6 +208,7 @@ function main() {
 					return null;
 				}
 			}
+
 			function __add_set() {
 				if(!('o' in x)) throw new Error("1");
 				if(!(x.o instanceof Object)) throw new Error("1");
@@ -46,8 +220,7 @@ function main() {
 						x.ne.push(v);
 					}
 				}
-			}
-			{
+			} {
 				let a=[];
 				for(let i="a".charCodeAt(0);i<"z".charCodeAt(0);i++) {
 					a.push(String.fromCharCode(i));
@@ -65,65 +238,64 @@ function main() {
 			}
 			//__ident_start_chars&&__ident_chars
 			x.__all_vars=`{
-				let __nf=Symbol(1)
-				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
-				{
-					let x=debug
-					x.u(x.f)
-					x.o={}
-					let pl=x.__ident_start_chars
-					for(let i=0;i<pl.length;i++){
-						let t=x.o
-						let k=pl[i]
-						let v=__get(k)
-						if(v!==__nf){t[k]=v}
-					}
-				}
-			};0;`;
+				  let __nf=Symbol(1)
+				  let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
+				  {
+					  let x=debug
+					  x.u(x.f)
+					  x.o={}
+					  let pl=x.__ident_start_chars
+					  for(let i=0;i<pl.length;i++){
+						  let t=x.o
+						  let k=pl[i]
+						  let v=__get(k)
+						  if(v!==__nf){t[k]=v}
+					  }
+				  }
+			  };0;`;
 			x.__getter_names=`{
-				let __nf=Symbol(1)
-				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
-				debug.__error_sym=Symbol("Error")
-				debug.__result_sym=Symbol("Result")
-				debug.__trg_eval=__e=>{
-					try{
-						return [debug.__result_sym,eval(__e)]
-					}catch(e){
-						return [debug.__error_sym,e]
-					}
-				}
-				{
-					let x=debug
-					x.u(x.f)
-					let cb=x.cb
-					if(cb)cb(__get)
-					x.gr={}
-					let pl=x.__name_list
-					for(let i=0;i<pl.length;i++){
-						let t=x.gr
-						let k=pl[i]
-						let v=__get("(function(){return "+k+"})")
-						if(v!==__nf){t[k]=v}
-					}
-				}
-			};0;`;
+				  let __nf=Symbol(1)
+				  let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
+				  debug.__error_sym=Symbol("Error")
+				  debug.__result_sym=Symbol("Result")
+				  debug.__trg_eval=__e=>{
+					  try{
+						  return [debug.__result_sym,eval(__e)]
+					  }catch(e){
+						  return [debug.__error_sym,e]
+					  }
+				  }
+				  {
+					  let x=debug
+					  x.u(x.f)
+					  let cb=x.cb
+					  if(cb)cb(__get)
+					  x.gr={}
+					  let pl=x.__name_list
+					  for(let i=0;i<pl.length;i++){
+						  let t=x.gr
+						  let k=pl[i]
+						  let v=__get("(function(){return "+k+"})")
+						  if(v!==__nf){t[k]=v}
+					  }
+				  }
+			  };0;`;
 			x.__get_list=`{
-				let __nf=Symbol(1)
-				let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
-				{
-					let x=debug;x.u(x.f);x.o={}
-					for(let i of x.__name_list){
-						let t=x.o
-						let v=__get(i)
-						if(v!==__nf){t[i]=v}
-					}
-				}
-			};0`;
+				  let __nf=Symbol(1)
+				  let __get=__e=>{try{return eval(__e)}catch(e){return __nf}}
+				  {
+					  let x=debug;x.u(x.f);x.o={}
+					  for(let i of x.__name_list){
+						  let t=x.o
+						  let v=__get(i)
+						  if(v!==__nf){t[i]=v}
+					  }
+				  }
+			  };0`;
 			x.rx={};
 			/** @type {typeof x['rx']} */
 			let w={};
-			x.rx=w;
-			{
+			x.rx=w; {
 				let mquery=/.+{.+?new (.+)\.fn.init\(.+,.+\)\}/;
 				let jqts=jQuery.toString();
 				let res=jqts.match(mquery);
@@ -220,14 +392,14 @@ function main() {
 					if(func_as_string.slice(0,5)==='class')
 						is_classy=true;
 				}
-				func_as_string??=func.toString();
+				func_as_string=func.toString();
 				let jsfilt=[func.toString()];
 				/**
 				 * @type {any[]}
 				 */
 				let jsfout=[];
 				let js_out;
-				let js_parse_no_white=(/** @type {string} */ e) => {
+				let js_parse_no_white=( /** @type {string} */ e) => {
 					let m=null;
 					if(e[0].match(/ /)) {
 						let m=e.match(/^[ ]+/);
@@ -250,7 +422,7 @@ function main() {
 						jsfout.push(e);
 					}
 				};
-				let js_parse_class=(/** @type {string} */ e) => {
+				let js_parse_class=( /** @type {string} */ e) => {
 					if(e.slice(0,5)=='class') {
 						jsfout.push('class');
 						jsfout.push(e.slice(5));
@@ -266,7 +438,7 @@ function main() {
 					jsfilt=jsfout;
 					jsfout=[];
 				}
-				let js_parse_ident=(/** @type {any[]} */ js_in,/** @type {any[]} */ js_tmp) => {
+				let js_parse_ident=( /** @type {any[]} */ js_in, /** @type {any[]} */ js_tmp) => {
 					let js_out=[];
 					let wt=js_in.pop();
 					let m;
@@ -308,7 +480,7 @@ function main() {
 					}
 					throw new Error("Failed to parse function head");
 				}
-				let js_parse_function=(/** @type {string | any[]} */ e) => {
+				let js_parse_function=( /** @type {string | any[]} */ e) => {
 					let fn=e.slice(0,8);
 					if(fn=='function') {
 						jsfout.push(fn);
@@ -332,7 +504,7 @@ function main() {
 				let parse_stack=[];
 				let loop_max_count=100;
 				let loop_counter=0;
-				let js_parse_loop_whitespace=(/** @type {any[]} */ js_in,/** @type {any[]} */ js_tmp) => {
+				let js_parse_loop_whitespace=( /** @type {any[]} */ js_in, /** @type {any[]} */ js_tmp) => {
 					let js_out=[];
 					let top_item=js_in.pop();
 					jsfout=[];
@@ -349,9 +521,10 @@ function main() {
 						} else if(jsfilt.length==1) {
 							break;
 						}
-					} while(true); return [js_out,js_in,js_tmp];
+					} while(true);
+					return [js_out,js_in,js_tmp];
 				};
-				let js_parse_block_enter=(/** @type {string | any[]} */ e) => {
+				let js_parse_block_enter=( /** @type {string | any[]} */ e) => {
 					if(e[0].match(/{/)) {
 						let js_class_methods=[];
 						let js_func_ident,js_func_args;
@@ -368,10 +541,10 @@ function main() {
 							jsfout.push(js_out[0],js_out[1]);
 							if(js_out[0]==='constructor') {
 								parse_stack.push('frame');
-								parse_stack.push(['classy',is_classy,(/** @type {boolean} */ e) => is_classy=e]);
+								parse_stack.push(['classy',is_classy,( /** @type {boolean} */ e) => is_classy=e]);
 								is_constructor=true;
 								is_classy=false;
-								parse_stack.push(['constructor',is_constructor,(/** @type {boolean} */ e) => is_constructor=e]);
+								parse_stack.push(['constructor',is_constructor,( /** @type {boolean} */ e) => is_constructor=e]);
 								let wt=jsfout.pop();
 								ret=js_parse_func_def_head(wt);
 								wt=ret.pop();
@@ -413,12 +586,14 @@ function main() {
 							parse_stack.push(['loop_counter',loop_counter,loop_max_count]);
 							loop_counter=0;
 							loop_max_count=40;
+
 							function call_loop_parse_whitespace() {
 								ret=js_parse_loop_whitespace(jsfout,jsfilt);
 								js_tmp=jsfilt;
 								[js_out,jsfout,jsfilt]=ret;
 								jsfout.push(...js_out,...js_tmp);
 							}
+
 							function call_parse_ident() {
 								ret=js_parse_ident(jsfout,jsfilt);
 								[js_out,jsfout,jsfilt]=ret;
@@ -430,9 +605,9 @@ function main() {
 								let js_func_ident=js_out[0];
 								parse_stack.push('frame');
 								is_classy=false;
-								parse_stack.push(['classy',is_classy,(/** @type {boolean} */ e) => is_classy=e]);
+								parse_stack.push(['classy',is_classy,( /** @type {boolean} */ e) => is_classy=e]);
 								let is_class_function=true;
-								parse_stack.push(['class_function',is_class_function,(/** @type {boolean} */ e) => is_class_function=e]);
+								parse_stack.push(['class_function',is_class_function,( /** @type {boolean} */ e) => is_class_function=e]);
 								let wt=jsfout.pop();
 								ret=js_parse_func_def_head(wt);
 								let js_func_args=ret.slice(0,-1);
@@ -454,7 +629,7 @@ function main() {
 								[jsfout,jsfilt]=parse_stack.pop();
 								js_tmp.forEach(e => jsfout.push(e));
 								let p_cur=parse_stack.pop();
-								['classy',is_classy,(/** @type {boolean} */ e) => is_classy=e];
+								['classy',is_classy,( /** @type {boolean} */ e) => is_classy=e];
 								if(p_cur[0]==='classy') {
 									p_cur[2](p_cur[1]);
 								}
@@ -541,9 +716,9 @@ function main() {
 							if(wt.length>len) {
 								ret.push(wt.slice(len));
 							}
-							let oci=0
-								,cc=0
-								,i=0;
+							let oci=0,
+								cc=0,
+								i=0;
 							for(let o_cia=-1;i<jsfout.length;i++) {
 								let t_cur=jsfout[i];
 								let o_cur=ret[cc];
@@ -584,7 +759,7 @@ function main() {
 					if(!ret) throw new Error("panic");
 					return ret;
 				}
-				let spf=func.toString().split(/([ .,{}()=;\?\:])/).forEach((/** @type {string} */ e,/** @type {any} */ x) => {
+				let spf=func.toString().split(/([ .,{}()=;\?\:])/).forEach(( /** @type {string} */ e, /** @type {any} */ x) => {
 					let ls;
 					if(cs.length>0) {
 						ls=cs[cs.length-1];
@@ -661,8 +836,7 @@ function main() {
 							cs=unwrap_pop(stk);
 					}
 					cs.push(e);
-				}
-				);
+				});
 				if(maybe)
 					return spf;
 				let fb=cs.slice(-3,-2)[0];
@@ -675,8 +849,9 @@ function main() {
 					 */
 					let stk=[];
 					let statement=[stk];
-					arr.forEach((/** @type {string} */ e) => {
+					arr.forEach(( /** @type {string} */ e) => {
 						stk.push(e);
+
 						function dep() {
 							stk=[];
 							statement.push(stk);
@@ -712,8 +887,7 @@ function main() {
 							statement.push([en]);
 							statement.push(ts);
 						}
-					}
-					);
+					});
 					return statement;
 				}
 				let statement=f_down(fb);
@@ -721,6 +895,7 @@ function main() {
 				 * @type {any[][]}
 				 */
 				let res_code=[];
+
 				function __statement() {
 					for(let i=0;i<statement.length;i++) {
 						let e=statement[i];
@@ -755,18 +930,13 @@ function main() {
 			/**
 			 * @type {any[]}
 			 */
-			get_code_formatted.targets=[];
-			/**
-			 * @type {[]}
-			 */
-			let __nx_names=[];
-			__nx_names;
-			__for_code=get_code_formatted;
-			{
-				let fc=__for_code;
+			get_code_formatted.targets=[]; {
+				debugger;
+				let fc=get_code_formatted;
 				fc.targets.length=0;
 				fc.targets.push(debug.f);
-				let ret=fc(debug.f,false);
+				let ret=fc(debug.f);
+				if(!ret) throw 1;
 				let bs=ret.indexOf('{');
 				let be=ret.lastIndexOf('}');
 				let bd=ret.slice(bs+1,be);
@@ -838,7 +1008,10 @@ function main() {
 			if(!('click' in __m)) throw new Error("1");
 			if(!(__m.click instanceof Function)) throw new Error("1");
 			/** @template {Function} T @arg {T} x @returns {x is (...x:any[])=>any} */
-			function as_any_func(x) {x; return true;}
+			function as_any_func(x) {
+				x;
+				return true;
+			}
 			if(!as_any_func(__m.click)) throw new Error("1");
 			x.f=__m.click;
 			let o=x.o;
@@ -884,6 +1057,7 @@ function main() {
 	};
 	cur.value=cur.do_cur();
 	return cur.make_ret();
-	//# sourceURL=snippet:///%24_2
+	//# sourceURL=snippet:///1000mines.com.js
 }
+
 window.__ret=main();

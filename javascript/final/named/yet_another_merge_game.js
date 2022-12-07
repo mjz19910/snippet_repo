@@ -167,7 +167,6 @@ function main() {
 							let aal=e.message.indexOf("after argument list")>3;
 							let kno_err=is_token_error||is_eoi_error||aal;
 							if(kno_err) {
-								can_try_again=true;
 								let c1=ix_pc(String.fromCharCode(125));
 								let c2=Math.min(c1,ix_pc(String.fromCharCode(93)));
 								c1=Math.min(c2,ix_pc(String.fromCharCode(41)));
@@ -179,7 +178,6 @@ function main() {
 								if(fi_ob[1][s_name]) {
 									any(w_ext)[s_name]=fi_ob[1][s_name];
 									console.log("for VUE defined:",s_name);
-									can_try_again=true;
 								}
 							}
 							console.log(e.message);

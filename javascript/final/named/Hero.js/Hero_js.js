@@ -77,6 +77,7 @@ function main() {
 				 * @param {any[]} a
 				 */
 				fel(...a) {
+					if(!debug) throw 1;
 					try {
 						let g=debug.get_from;
 						let __nxs=String.fromCharCode(...a);
@@ -93,6 +94,7 @@ function main() {
 								out[__nxs]=__x;
 						}
 					} catch {}
+					throw 1;
 				}
 				/**
 				 * @param {number[]} a
@@ -126,7 +128,7 @@ function main() {
 			str_to_var.instance=new str_to_var;
 			window.func_want=eok;
 			let str_to_var_with_instance=eok(str_to_var);
-			debug.g=str_to_var_with_instance.instance.g;
+			console.log(str_to_var_with_instance.instance.g);
 			return;
 		}
 		_player=game_objects.Player;
@@ -305,6 +307,7 @@ function main() {
 				if(c==a) {
 					return 0;
 				}
+				throw 1;
 			}
 			);
 			a=game.dungeonHeroes.map((/** @type {{ map: { countFloors: number; countExplored: number; }; }} */ e,/** @type {any} */ dz) => {

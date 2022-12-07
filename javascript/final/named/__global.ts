@@ -14,11 +14,11 @@ declare global {
 }
 
 type __RetType={
-	type:"site",
-	from:"1000mines.com",
-	ret:symbol|[any,any],
+	type: "site",
+	from: "1000mines.com",
+	ret: symbol|[any,any],
 }|{
-	type:"runner",
+	type: "runner",
 	value: Runner,
 }|{
 	type: "sub_a",
@@ -85,16 +85,26 @@ declare global {
 declare global {
 	var debug: debugI|undefined;
 	interface debugI {
-		(arg0: (...x:any[]) => any,code: string): void;
+		get_from: any;
+		fn: any;
+		__name_list: string[];
+		__get_list: string;
+		__getter_names: string;
+		__ident_chars: string[];
+		__ident_start_chars: string[];
+		fo: any[][];
+		(arg0: (...x: any[]) => any,code: string): void;
 		u?: (fn: (...x: any[]) => void) => void;
 		f: (...a: any[]) => any;
 		cb: () => any;
 		fo_test: any;
-		__all_vars:string;
+		__all_vars: string;
 	}
 	var undebug: undebug|undefined;
+	interface IGame {}
+	var game: IGame;
 	interface undebug {
-		(arg0: (...x:any[]) => any): void;
+		(arg0: (...x: any[]) => any): void;
 	}
 }
 
