@@ -4884,7 +4884,7 @@ class LocalHandler {
 			case "keep_alive": {
 				this.post_message({
 					type: "keep_alive_reply",
-					side: data.side,
+					sides: [data.side,this.m_side],
 				});
 			} break;
 			case "keep_alive_reply": {
@@ -5000,11 +5000,11 @@ class RemoteHandler {
 			case "keep_alive": {
 				this.post_message({
 					type: "keep_alive_reply",
-					side: data.side,
+					sides: [data.side,this.m_side],
 				});
 			} return;
 			case "keep_alive_reply": {
-				console.log("unexpected keep alive reply my side: `%o`, data side: `%o`", this.m_side, data.side);
+				console.log("unexpected keep alive reply {side: `%o`, sides: `%o`}", this.m_side, data.sides);
 			} return;
 		}
 		this.unhandled_events.push(data);
