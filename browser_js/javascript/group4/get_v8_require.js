@@ -1,4 +1,4 @@
-function run_d() {
+function get_v8_require_main() {
 	if(!debug) {
 		console.log("no debug");
 		return null;
@@ -93,4 +93,4 @@ function run_d() {
 	get_v8_require_run(state);
 	return state;
 }
-run_d();
+get_v8_require_main();
