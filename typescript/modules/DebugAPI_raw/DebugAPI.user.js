@@ -2705,7 +2705,7 @@ function do_message_handler_overwrite(handler) {
 			/** @type {unknown} */
 			let d=event.data;
 			if(typeof d==='object'&&d!==null&&'type' in d) {
-				if(d.type===remote_origin.post_message_connect_message_type) {
+				if(d.type===inject_api.remote_origin.post_message_connect_message_type) {
 					if(debug) console.log("skip page event handler for "+d.type);
 					return;
 				}
@@ -2934,7 +2934,7 @@ class AddEventListenerExtension {
 			let msg_event=args[0];
 			let d=msg_event.data;
 			if(typeof d==='object'&&d!==null&&'type' in d) {
-				if(d.type===remote_origin.post_message_connect_message_type) {
+				if(d.type===inject_api.remote_origin.post_message_connect_message_type) {
 					if(debug) console.log("skip page event handler for "+d.type);
 					return;
 				}
@@ -4794,12 +4794,13 @@ function cast_to_record_with_key_and_string_type(x,k) {
 class LocalHandler {
 	/** @type {OriginConnectionSide} */
 	m_side="server";
+	m_root;
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
 	/** @type {number|null} */
 	m_elevation_id=null;
 	/** @type {MessagePort|null} */
-	m_connection_port=null
+	m_connection_port=null;
 	m_remote_side_connected=false;
 	m_tries_left=0;
 	m_connection_timeout;
@@ -4815,7 +4816,7 @@ class LocalHandler {
 				timeout=this.m_connection_timeout/8;
 			}
 			if(this.m_reconnecting) {
-				remote_origin.request_new_port(this);
+				inject_api.remote_origin.request_new_port(this);
 				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),timeout*30);
 				this.m_tries_left--;
 			}
@@ -4861,7 +4862,7 @@ class LocalHandler {
 		let data=event.data;
 		switch(data.type) {
 			case "connected": {
-				remote_origin.transport_connected(report_info);
+				this.m_root.transport_connected(report_info);
 				if(this.m_reconnecting) {
 					this.m_reconnecting=false;
 				}
@@ -4875,7 +4876,7 @@ class LocalHandler {
 			case "disconnected": {
 				if(this.m_reconnecting) return;
 				this.disconnect();
-				remote_origin.transport_disconnected(report_info);
+				this.m_root.transport_disconnected(report_info);
 				this.m_tries_left=12;
 				this.m_reconnecting=true;
 				this.m_remote_side_connected=false;
@@ -4909,7 +4910,7 @@ class LocalHandler {
 	start_timeout() {
 		this.m_timeout_id=setTimeout(() => {
 			this.disconnect();
-			remote_origin.request_new_port(this);
+			this.m_root.request_new_port(this);
 		},this.m_connection_timeout);
 	}
 	disconnect() {
@@ -4919,14 +4920,15 @@ class LocalHandler {
 		this.m_connection_port=null;
 		this.m_remote_side_connected=false;
 		clearInterval(this.m_keep_alive_interval);
-		if(this.m_elevation_id)
-			remote_origin.clear_elevation_by_id(this.m_elevation_id);
+		if(this.m_elevation_id) this.m_root.clear_elevation_by_id(this.m_elevation_id);
 	}
 	/**
 	 * @arg {number} connection_timeout
+	 * @param {RemoteOriginConnection} root
 	 */
-	constructor(connection_timeout) {
+	constructor(connection_timeout,root) {
 		this.m_connection_timeout=connection_timeout;
+		this.m_root=root;
 		elevate_event_handler(this);
 	}
 }
@@ -5007,7 +5009,7 @@ class RemoteHandler {
 				});
 			} return;
 			case "keep_alive_reply": {
-				console.log("unexpected keep alive reply {side: `%o`, sides: `%o`}", this.m_side, data.sides);
+				console.log("unexpected keep alive reply {side: `%o`, sides: `%o`}",this.m_side,data.sides);
 			} return;
 		}
 		this.unhandled_events.push(data);
@@ -5042,7 +5044,6 @@ class RemoteSocket {
 	}
 }
 
-// <RemoteOriginConnection>
 class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @param {LocalHandler} obj */
 	request_new_port(obj) {
@@ -5056,7 +5057,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	unhandled_child_events=[];
 	constructor() {
 		super();
-		this.m_local_handler=new LocalHandler(300);
+		this.m_local_handler=new LocalHandler(300,this);
 		let s=this.state;
 		s.is_top=this.state.window===this.state.top;
 		s.is_root=this.state.opener===null;
@@ -5122,8 +5123,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				port_transfer_vec: null
 			}
 		},"*",[channel.port1]);
-		this.m_transport_map.set(local_handler, {
-			port:channel.port2,
+		this.m_transport_map.set(local_handler,{
+			port: channel.port2,
 		});
 		local_handler.connect(channel.port2,this.get_next_elevation_id());
 		return true;
@@ -5224,7 +5225,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			fail();
 		}
 	}
-	// @RemoteOriginConnection
 	/** @arg {MessageEvent<unknown>} event */
 	on_client_misbehaved(event) {
 		console.group("[RemoteOriginConnection.on_client_misbehaved]");
@@ -5235,15 +5235,12 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		this.last_misbehaved_client_event=event;
 		console.groupEnd();
 	}
-	// @RemoteOriginConnection
 	start_root_server() {
 		let t=this;
-		// @RemoteOriginConnection
 		/** @arg {MessageEvent<unknown>} event */
 		function on_message_event(event) {
 			t.on_message_event(event);
 		}
-		// @RemoteOriginConnection
 		elevate_event_handler(on_message_event);
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
@@ -5255,10 +5252,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			t.connections.length=0;
 		});
 	}
-} // </RemoteOriginConnection>
-inject_api.RemoteOriginConnection=RemoteOriginConnection;
-let remote_origin=new RemoteOriginConnection();
-inject_api.remote_origin=remote_origin;
+	static connect_to_api() {
+		inject_api.RemoteOriginConnection=this;
+		let remote_origin=new this;
+		inject_api.remote_origin=remote_origin;
+	}
+}
+RemoteOriginConnection.connect_to_api();
 
 const html_parsing_div_element=document.createElement("div");
 /**
