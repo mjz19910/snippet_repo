@@ -1,8 +1,5 @@
-import {Extern} from "../use_extern.js";
-
 export class BrowserPluginData {
-	window;
-	/**@arg {Extern.FakeWindow} window */
+	/**@arg {{}} window */
 	constructor(window) {
 		this.window=window;
 	}
