@@ -5085,26 +5085,26 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		this.m_flags.does_proxy_to_opener=true;
 	}
 	/**
-	 * @param {Window} remote_event_target
+	 * @param {Window} remote_target
 	 */
-	init_transport_over(remote_event_target) {
-		let message_object=new LocalHandler(300);
-		this.m_transport_connection=message_object;
-		this.m_connect_target=remote_event_target;
+	init_transport_over(remote_target) {
+		let local_handler=new LocalHandler(300);
+		this.m_local_handler=local_handler;
+		this.m_remote_target=remote_target;
 	}
 	init() {
 		// may not need init
-		if(!this.m_transport_connection) return;
-		this.request_connection(this.m_transport_connection);
+		if(!this.m_local_handler) return;
+		this.request_connection(this.m_local_handler);
 	}
 	/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
 	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 	/** @arg {LocalHandler} local_handler */
 	request_connection(local_handler) {
-		if(!this.m_connect_target) return false;
+		if(!this.m_remote_target) return false;
 		let channel=new MessageChannel;
 		console.log("post request ConnectOverPostMessage");
-		this.m_connect_target.postMessage({
+		this.m_remote_target.postMessage({
 			type: this.post_message_connect_message_type,
 			data: {
 				type: "start",
