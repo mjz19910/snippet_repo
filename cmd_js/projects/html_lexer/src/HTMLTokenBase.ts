@@ -1,7 +1,6 @@
 import {Ref} from "./from_cpp/Ref.js";
 import {move} from "./move.js";
 import {MyDocTypeData} from "./MyDocTypeData.js";
-import {Optional} from "./Optional.js";
 import {OwnPtr} from "./OwnPtr";
 import {u32} from "./u32.js";
 import {Variant} from "./Variant";
@@ -15,9 +14,6 @@ function ak_verification_failed(string: string) {
 }
 
 export class HTMLTokenBase {
-    opt(): Optional<HTMLTokenBase> {
-        return new Optional(this);
-    }
     m_type: HTMLTokenBase.Type=HTMLTokenBase.Type.Invalid;
     m_data=new Variant<[null,u32,OwnPtr<MyDocTypeData>,OwnPtr<Vector<HTMLTokenBase.Attribute>>]>();
     m_code_point: CodePoint|null=null;
@@ -101,7 +97,10 @@ export class HTMLTokenBase {
     set_self_closing(closing: boolean): void {
         this.m_self_closing = closing;
     }
-    set_comment(value: string): void {}
+    m_comment:string|null=null;
+    set_comment(value: string): void {
+        this.m_comment=value;
+    }
 }
 
 export namespace HTMLTokenBase {

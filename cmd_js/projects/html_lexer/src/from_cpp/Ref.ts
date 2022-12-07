@@ -1,21 +1,18 @@
-import {HTMLToken} from "../HTMLToken.js";
-import {Vector} from "../Vector.js";
-
 export class Ref<T> {
-    static wrap(arg0: Vector<HTMLToken.Attribute>): any {
-        throw new Error("Method not implemented.");
+    static wrap<T>(a: T): Ref<T> {
+        return new Ref<T>(a);
     }
-    assign(arg0: any) {
-        throw new Error("Method not implemented.");
+    assign(value: any) {
+        this.value=value;
     }
     is_null() {
-        return this.type===null;
+        return this.value===null;
     }
     deref(): T {
-        if(this.type===null) throw new Error("");
-        return this.type;
+        if(this.value===null) throw new Error("");
+        return this.value;
     }
-    constructor(public type: T|null) {
-        this.type=type;
+    constructor(public value: T|null) {
+        this.value=value;
     }
 }
