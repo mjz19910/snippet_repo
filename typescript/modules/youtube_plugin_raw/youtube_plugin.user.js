@@ -1013,6 +1013,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 		let path_url=request.pathname;
 		if(path_url==="/getDatasyncIdsEndpoint") return;
 		let api_parts=request.pathname.slice(1).split("/");
+		// spell:ignore youtubei
 		if(api_parts[0]!=='youtubei') {
 			console.log(this.class_name+": "+'unknown api path',request.pathname);
 			return;
