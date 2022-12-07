@@ -4924,8 +4924,8 @@ class RemoteHandler {
 		console.log("RemoteHandler.post_message",message_data);
 		this.connection_port.postMessage(message_data);
 	}
-	/** @param {number} client_id */
-	onConnected(client_id) {
+	onConnected() {
+		let {client_id}=this;
 		this.post_message({type: "connected",client_id});
 	}
 	onDisconnect() {
@@ -4952,9 +4952,10 @@ class RemoteHandler {
 	constructor(flags,connection_port,client_id) {
 		this.m_flags=flags;
 		this.connection_port=connection_port;
+		this.client_id=client_id;
 		connection_port.start();
 		connection_port.addEventListener("message",this);
-		this.onConnected(client_id);
+		this.onConnected();
 	}
 }
 
