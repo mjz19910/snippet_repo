@@ -33,7 +33,7 @@ export class HTMLToken extends HTMLTokenBase {
     opt(): Optional<HTMLTokenBase> {
         return new Optional(this);
     }
-    add_attribute(attribute: super_.HTMLToken.Attribute) {
+    override add_attribute(attribute: super_.HTMLToken.Attribute) {
         (!(this.is_start_tag() || this.is_end_tag()) ? ak_verification_failed(["this.is_start_tag() || this.is_end_tag()","\n","from_cpp/HTMLToken.cppts",":","10"].join("")) : void 0);
         this.ensure_tag_attributes().deref().append(move(attribute));
     }
