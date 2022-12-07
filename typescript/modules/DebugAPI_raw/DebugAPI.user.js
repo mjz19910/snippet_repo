@@ -627,7 +627,7 @@ class NamesAndKeywords extends ECMA262Base {
 			return [false,null,0];
 		}
 		if(str[index]==="\\") {
-			let res=this.C.string_literals.UnicodeEscapeSequence(str,index+1);
+			let res=this.C.string_literals.UnicodeEscapeSequence(index+1);
 			if(res[0]) return [true,"IdentifierStart",res[2]+1];
 		}
 		if(str[index].match(NamesAndKeywords.id_start_regex)) {
@@ -1409,7 +1409,7 @@ class StringLiterals extends ECMA262Base {
 		if(len[2]>0) {
 			return len;
 		}
-		len=this.UnicodeEscapeSequence(str,index);
+		len=this.UnicodeEscapeSequence(index);
 		if(len[2]>0) {
 			return len;
 		}
@@ -1594,22 +1594,22 @@ class StringLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-UnicodeEscapeSequence
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	UnicodeEscapeSequence(str,index) {
+	/** @arg {number} index @returns {LexReturnTyShort} */
+	UnicodeEscapeSequence(index) {
 		let off=0;
-		if(str[index]==="u") {
+		if(this.str[index]==="u") {
 			off++;
 		}
-		let len0=this.Hex4Digits(str,index+off);
+		let len0=this.Hex4Digits(index+off);
 		if(len0[2]>0) {
 			return [true,"UnicodeEscapeSequence",len0[2]+1];
 		}
-		if(str[index+off]==="{}"[0]) {
+		if(this.str[index+off]==="{}"[0]) {
 			off++;
-			let len=this.C.template_literal_lexical_components.CodePoint(str,index+off);
+			let len=this.C.template_literal_lexical_components.CodePoint(this.str,index+off);
 			if(len[2]>0) {
 				off+=len[2];
-				if(str[index+off]==="{}"[1]) {
+				if(this.str[index+off]==="{}"[1]) {
 					off++;
 					return [true,"UnicodeEscapeSequence",off];
 				}
@@ -1618,8 +1618,8 @@ class StringLiterals extends ECMA262Base {
 		return [false,null,0];
 	}
 	// https://tc39.es/ecma262/#prod-Hex4Digits
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	Hex4Digits(str,index) {
+	/** @arg {number} index @returns {LexReturnTyShort} */
+	Hex4Digits(index) {
 		let len=this.C.numeric_literals.HexDigit(index);
 		if(!len) {
 			return [false,null,0];
@@ -1822,7 +1822,7 @@ class TemplateLiteralLexicalComponents extends ECMA262Base {
 		len=0;
 		let res=this.C.string_literals.HexEscapeSequence(str,index);
 		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
-		res=this.C.string_literals.UnicodeEscapeSequence(str,index);
+		res=this.C.string_literals.UnicodeEscapeSequence(index);
 		if(res[0]) return [true,"TemplateEscapeSequence",res[2]];
 		return [false,null,0];
 	}

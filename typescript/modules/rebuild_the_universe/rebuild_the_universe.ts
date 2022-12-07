@@ -193,7 +193,7 @@ export class FunctionConstructorBoxImpl {
 				let value=new RawBoxImpl({as_interface: this.value[key]},Symbol.for("Function"));
 				vm.push(value);
 			} break;
-			case "length": vm.push(new NumberBoxImpl(this.value[key]));
+			case "length": vm.push(new NumberBoxImpl(this.value[key])); break;
 			default: {
 				Object.keys(Object.getOwnPropertyDescriptors(this.value)).forEach(e => {
 					if(e===key) {
@@ -875,7 +875,7 @@ class InstructionGetImpl {
 					throw new Error("TODO");
 				}
 				vm.push(return_value);
-			};
+			} break;
 			default: console.log('on_get no handler',value_box.type);
 		}
 	}

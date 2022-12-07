@@ -5,21 +5,21 @@ export function check_item_keys(path:string,keys:(string | number | symbol)[]) {
 			case 'richGridRenderer.contents[]': switch(key) {
 				case 'richItemRenderer': return
 				case 'continuationItemRenderer': return
-			}
+			} break;
 			case 'richGridRenderer.contents[].richItemRenderer': switch(key) {
 				case 'richItemRenderer': return
-			}
+			} break;
 			case 'richItemRenderer.content': switch(key) {
 				case 'videoRenderer': return
 				case 'radioRenderer': return
 				case 'adSlotRenderer': return
-			}
+			} break;
 			case 'appendContinuationItemsAction.continuationItems[]': switch(key) {
 				case 'richItemRenderer': return
-			}
+			} break;
 			case 'appendContinuationItemsAction.continuationItems[]': switch(key) {
 				case 'continuationItemRenderer': return
-			}
+			} break;
 		}
 		console.log('content key',path,key)
 	} else {

@@ -13,7 +13,6 @@
 		"module": "ESNext",
 		"moduleResolution": "Node",
 		"sourceMap": true,
-		"noImplicitAny": true,
 		"outDir": "./build",
 		"strict": true,
 		"typeRoots": [
@@ -24,6 +23,10 @@
 		"incremental": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noFallthroughCasesInSwitch": true,
+		"noErrorTruncation": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"useUnknownInCatchVariables": true,

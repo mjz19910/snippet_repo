@@ -4,3 +4,5 @@ declare global {
 		g_remote_timer_api: {};
 	}
 }
+
+export {};
