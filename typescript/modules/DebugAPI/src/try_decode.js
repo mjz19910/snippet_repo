@@ -5,8 +5,8 @@ import {decode_map} from "./decode_map";
 /** @param {string | number | Repeat<number>} e */
 export function try_decode(e,deep=true) {
 	if(typeof e==='number') {
-		if(dr_map[e]) {
-			return dr_map[e];
+		if(dr_map.value[e]) {
+			return dr_map.value[e];
 		}
 		if(id_map[e]) {
 			let res=id_map[e];
@@ -17,7 +17,7 @@ export function try_decode(e,deep=true) {
 				let cur_res=decode_map(res[i]);
 				dec_res[i]=cur_res;
 			}
-			dr_map[e]=dec_res;
+			dr_map.value[e]=dec_res;
 			return dec_res;
 		}
 		if(ids_dec[e]) {
@@ -25,8 +25,8 @@ export function try_decode(e,deep=true) {
 		}
 	}
 	if(e instanceof Repeat) {
-		if(dr_map[e.value]) {
-			return dr_map[e.value];
+		if(dr_map.value[e.value]) {
+			return dr_map.value[e.value];
 		}
 		if(id_map[e.value]) {
 			let res=id_map[e.value];
@@ -36,7 +36,7 @@ export function try_decode(e,deep=true) {
 				dec_res[i]=cur_res;
 			}
 			let ret=new Repeat(dec_res,e.times);
-			dr_map[e.value]=ret;
+			dr_map.value[e.value]=ret;
 			return ret;
 		}
 		if(ids_dec[e.value]) {

@@ -88,9 +88,9 @@ export let id_map_str;
  */
 export let ids_dec;
 /**
- * @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}
+ * @type {{value:(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]}}
  */
-export let dr_map=[];
+export let dr_map={value:[]};
 export function init_decode() {
 	ids_dec=ids.value.map(e => JSON.parse(e));
 	id_map_str=new Map;
@@ -125,4 +125,4 @@ g_api.LoggingEventTarget=LoggingEventTarget;
 export const html_parsing_div_element=document.createElement("div");
 g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 g_api.DebugAPI=DebugAPI;
-export const debug_api=window.g_api.DebugAPI.the();
+export const debug_api=DebugAPI.the();
