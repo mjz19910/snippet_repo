@@ -1108,12 +1108,14 @@
 			clearInterval
 		};
 		/**
-		 * @param {{ [x: string]: any; setTimeout?: (handler: any, timeout: any, ...target_args: any[]) => any; setInterval?: (handler: any, timeout?: number, ...target_args: any[]) => any; clearTimeout?: (id?: number) => void; clearInterval?: (id: number) => void; }} obj
+		 * @param {{setTimeout: any,setInterval: any,clearTimeout: any,clearInterval: any}} obj
 		 */
 		function connect_local_to_remote_timer_api(obj) {
 			/** @type {any} */
 			let any_window=window;
-			for(let key in obj) {
+			/** @type {keyof typeof obj} */
+			let key;
+			for(key in obj) {
 				any_window[key]=obj[key];
 			}
 			return obj;
