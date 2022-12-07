@@ -85,8 +85,8 @@ export class HTMLTokenBase {
         // 3 == OwnPtr<Vector<Attribute>>
         let ptr: Ref<OwnPtr<Vector<HTMLTokenBase.Attribute>>> = Ref.wrap(this.m_data.get<3>().deref());
         if (ptr.is_null())
-            ptr.assign(Ref.wrap(new Vector<HTMLTokenBase.Attribute>()));
-        return Ref.wrap(ptr.deref().deref());
+            ptr.assign(Ref.wrap(new Vector<HTMLTokenBase.Attribute>()).deref());
+        return Ref.wrap_vec(ptr.deref().deref());
     }
     last_attribute(): HTMLTokenBase.Attribute {
         throw new Error("Method not implemented.");

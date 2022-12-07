@@ -1,6 +1,10 @@
 import {OwnPtr} from "../OwnPtr.js";
+import {Vector} from "../Vector.js";
 
 export class Ref<T> {
+    static wrap_vec<T extends Vector<any>>(arg0: T): Ref<T> {
+        return new Ref<T>(arg0);
+    }
     static wrap<T>(a: T): Ref<OwnPtr<T>> {
         return new Ref<OwnPtr<T>>(OwnPtr.make(a));
     }

@@ -53,7 +53,7 @@ export class UrlFetcher {
 	show_dom_node(state,element) {
 		if(element instanceof node_html_parser.HTMLElement) {
 			let {childNodes,nodeType,rawTagName,classList,id}=element;
-			/** @arg {DOMTokenListMore} cls */
+			/** @arg {import('./__global.js').DOMTokenListMore} cls */
 			function simplify_class_list(cls) {
 				return [...cls.values()];
 			}
