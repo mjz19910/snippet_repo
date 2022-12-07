@@ -14,7 +14,6 @@ declare global {
 	interface undebug {
 		(fn: () => void): void;
 	}
-	var undebug: undebug;
 
 	interface debug {
 		(fn: () => void,code: string): void;
@@ -22,7 +21,6 @@ declare global {
 		get_from: any;
 		g: any;
 	}
-	var debug: debug;
 
 	var game_objects: {
 		['creature.Hero']: any;
