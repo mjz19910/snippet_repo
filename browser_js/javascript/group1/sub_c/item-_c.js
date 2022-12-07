@@ -1,117 +1,129 @@
-var z=function(fn,cbfn,ex) {
-	fn.dl=500
-	var wt=function(a) {
-		setTimeout(a,fn.dl)
-	}
-	fn.wait=function(dl) {
-		fn.dl=dl
-		return new Promise(wt)
-	}
-	var rng=Math.random()
-	window.postMessage(rng)
-	var nc=(new class {
-		get run() {
-			return this.ru
-		}
-		set run(v) {
-			this.ru=v
-		}
-		reset(ex) {
-			var t=this
-			if(t.ru) {
-				t.p=fn(fn)
-				if(t.promise_result) {
-					t.promise_result()
-				}
+function main() {
+	class PromiseHandlerImpl {
+		reset() {
+			var t=this;
+			if(t._run) {
+				t.p=t.fn(t);
+				t.after();
 			} else if(ex) {
-				t.ru=1
-				ex.p.then(function() {
-					if(t.precreate) {
-						t.precreate()
-					}
-					t.p=fn(fn)
-					if(t.promise_result) {
-						t.promise_result()
-					}
-				})
-			} else {
-				t.ru=1
-				t.p=Promise.resolve(t)
+				t._run=1;
 				t.p.then(function() {
-					if(t.precreate) {
-						t.precreate()
-					}
-					t.p=fn(fn)
-					if(t.promise_result) {
-						t.promise_result()
-					}
-				})
+					t.start();
+					t.p=t.fn(t);
+					t.after();
+				});
+			} else {
+				t._run=1;
+				t.p=Promise.resolve(t);
+				t.p.then(function() {
+					t.start();
+					t.p=t.fn(t);
+					t.after();
+				});
 			}
 
 		}
-		ru=0
-		precreate=null
-		promise_result=null
-	}
-	)
-	Object.defineProperty(fn,"run",{
-		get: function() {
-			return nc.ru
-		},
-		set: function(v) {
-			nc.ru=v
-		},
-		configurable: true,
-		enumerable: true
-	})
-	fn.o=nc
-	fn.timeout=function() {
-		nc.ru=0
-		nc.p.then(e => console.log("timeout done"))
-	}
-	var mlis=function(e) {
-		if(e.data===rng) {
-			return
+		_run=0;
+		/** @type {(() => void)|null} */
+		m_start=null;
+		start() {
+			console.log("start", this);
+		};
+		/** @type {(() => void)|null} */
+		m_after=null;
+		after() {
+			console.log("promise result", this);
 		}
-		window.removeEventListener("message",mlis)
-		nc.ru=0
+		constructor(fn) {
+			this.p=fn(this);
+			this.fn=fn;
+		}
 	}
-	nc.precreate=e => window.addEventListener("message",mlis)
-	nc.promise_result=cbfn
-	var pr
-	if(ex) {
-		nc.reset(ex)
+	/** @type {{}|undefined} */
+	var a=void 0;
+	/**
+	 * @arg {(fn: any)=>Promise<void>} fn
+	 * @arg {(()=>void) | null} callback_fn
+	 * @arg {{}} ex
+	 */
+	function z(fn,callback_fn,ex) {
+		let s={};
+		s.fn=fn;
+		s.dl=500;
+		var wt=function(a) {
+			setTimeout(a,s.dl);
+		};
+		s.wait=function(dl) {
+			s.dl=dl;
+			return new Promise(wt);
+		};
+		var rng=Math.random();
+		window.postMessage(rng);
+		var nc=new PromiseHandlerImpl;
+		Object.defineProperty(fn,"run",{
+			get: function() {
+				return nc._run;
+			},
+			set: function(v) {
+				nc._run=v;
+			},
+			configurable: true,
+			enumerable: true
+		});
+		s.o=nc;
+		s.ru=0;
+		s.timeout=function() {
+			s.ru=0;
+			s.p.then(e => console.log("timeout done"));
+		};
+		/**
+		 * @param {{ data: number; }} e
+		 */
+		function msg_listener(e) {
+			if(e.data===rng) {
+				return;
+			}
+			window.removeEventListener("message",msg_listener);
+			nc._run=0;
+		}
+		nc.start=() => window.addEventListener("message",msg_listener);
+		nc.after=callback_fn;
+		if(ex) {
+			nc.reset(ex);
+		} else {
+			nc.reset();
+		}
+		return nc;
+	}
+	async function b(fn) {
+		p1();
+		await fn.wait(80);
+		p1();
+		await fn.wait(80);
+		buyRu0M();
+		await fn.wait(80);
+		p1();
+		await fn.wait(80);
+		buyRu2();
+		await fn.wait(80);
+		p1();
+		await fn.wait(50);
+		for(var i=0;i<30;i++)
+			buyRu3();
+		await fn.wait(50);
+		if(fn.run) {
+			fn.o.reset();
+		}
+		return;
+	}
+	var promise_result=function() {
+		if(a) {
+			a.p.catch(() => a=void 0);
+		}
+	};
+	if(typeof a=="undefined") {
+		a=z(b,promise_result);
 	} else {
-		nc.reset()
+		a=z(b,promise_result,a);
 	}
-	return nc
-}
-async function b(fn) {
-	p1()
-	await fn.wait(80)
-	p1()
-	await fn.wait(80)
-	buyRu0M()
-	await fn.wait(80)
-	p1()
-	await fn.wait(80)
-	buyRu2()
-	await fn.wait(80)
-	p1()
-	await fn.wait(50)
-	for(var i=0;i<30;i++)
-		buyRu3()
-	await fn.wait(50)
-	if(fn.run) {
-		fn.o.reset()
-	}
-	return
-}
-var promise_result=function() {
-	a.p.catch(e => delete a)
-}
-if(typeof a=="undefined") {
-	a=z(b,promise_result)
-} else {
-	a=z(b,promise_result,a)
 }

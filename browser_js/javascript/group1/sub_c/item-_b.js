@@ -1,4 +1,4 @@
-var z=function(fn,cbfn,ex) {
+function z(fn,cbfn,ex) {
 	fn.dl=500
 	var wt=function(a) {
 		setTimeout(a,fn.dl)
@@ -19,7 +19,6 @@ var z=function(fn,cbfn,ex) {
 		reset(ex) {
 			var t=this
 			if(t.ru) {
-				console.log("reset")
 				t.p=fn(fn)
 				if(t.promise_result) {
 					t.promise_result()
