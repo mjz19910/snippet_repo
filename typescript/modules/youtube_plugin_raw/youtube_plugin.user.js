@@ -14,7 +14,7 @@
 
 console=window.console;
 
-const debug=false;
+const debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
 	void value,_constructor_type;
@@ -395,14 +395,14 @@ function fetch_filter_text_then_data_url(request,response_obj) {
  * @arg {string} response_text
  */
 function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
-	if(debug) console.log('handle_json_parse',request,options);
+	if(debug_enabled) console.log('handle_json_parse',request,options);
 	let original_json_parse=JSON.parse;
-	if(debug) console.log('JSON.parse = new Proxy()');
+	if(debug_enabled) console.log('JSON.parse = new Proxy()');
 	JSON.parse=new Proxy(original_json_parse,{
 		apply: function(...proxy_args) {
-			if(debug) console.log('JSON.parse()');
+			if(debug_enabled) console.log('JSON.parse()');
 			let obj=Reflect.apply(...proxy_args);
-			if(debug) console.log('request.url');
+			if(debug_enabled) console.log('request.url');
 			function c1() {
 				if(typeof request=='string') {
 					return {url: to_url(request)};
@@ -416,7 +416,7 @@ function handle_json_parse(request,options,onfulfilled,on_rejected,response_text
 			if(request_1.url) {
 				fetch_filter_text_then_data_url(request_1.url,obj);
 			} else {
-				if(debug) console.log("handle_json_parse no url",request,obj);
+				if(debug_enabled) console.log("handle_json_parse no url",request,obj);
 			}
 			return obj;
 		}
@@ -443,7 +443,7 @@ function handle_json_parse(request,options,onfulfilled,on_rejected,response_text
  * @param {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
  */
 function bind_promise_handler(request,options,onfulfilled,onrejected) {
-	if(debug) console.log('handle_json_parse.bind()');
+	if(debug_enabled) console.log('handle_json_parse.bind()');
 	let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
 	return ret;
 }
@@ -483,7 +483,7 @@ function fetch_promise_handler(request,options,response) {
 	let handled_keys=['text'];
 	class FakeResponse {
 		text() {
-			if(debug) console.log('response.text()');
+			if(debug_enabled) console.log('response.text()');
 			return handle_fetch_response_2(request,options,response.text());
 		}
 	}
@@ -1867,7 +1867,7 @@ const message_channel_loop_delay=80;
  * @param {MessageEvent<number>} event
  */
 function on_port_message(event) {
-	if(debug) console.log('msg_port:message %o',event.data);
+	if(debug_enabled) console.log('msg_port:message %o',event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
 	if(slow_message_event) {
 		setTimeout(dispatch_observer_event,message_channel_loop_delay);
@@ -2219,7 +2219,7 @@ function title_display_toggle() {
 	localStorage.title_save_data=JSON.stringify({value: title_on});
 }
 function update_ui_plugin() {
-	if(debug) console.log('update_ui_plugin');
+	if(debug_enabled) console.log('update_ui_plugin');
 	setTimeout(plugin_overlay_element.onupdate.bind(plugin_overlay_element));
 }
 
@@ -2237,7 +2237,7 @@ window.addEventListener("resize",function() {
 	plugin_overlay_element&&plugin_overlay_element.onupdate();
 });
 function activate_nav() {
-	if(debug) console.log('activate_nav:fire');
+	if(debug_enabled) console.log('activate_nav:fire');
 	VolumeRange.create();
 	if(!ytd_player) return;
 	if(!has_ytd_page_mgr()) return;
@@ -2421,7 +2421,7 @@ class VolumeRange {
 	static enabled=true;
 	static create() {
 		if(!this.enabled) return;
-		if(debug) console.log('create VolumeRange');
+		if(debug_enabled) console.log('create VolumeRange');
 		gain_controller.attach_element_list(document.querySelectorAll("video"));
 		attach_volume_range_to_page();
 	}
