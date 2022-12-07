@@ -18,7 +18,7 @@ class RustTypeTheory {
 			this.types.push(value);
 		}
 	}
-	/** @arg {string} type_name @arg {{construct():void}} description */
+	/** @arg {string} type_name @arg {RustTypeDescription} description */
 	addTypeDescription(type_name,description) {
 		description.construct();
 		this.addType({
@@ -26,8 +26,9 @@ class RustTypeTheory {
 			description
 		});
 	}
+	/** @arg {{}} value */
 	prove(value) {
-		console.error("TODO: implement prove");
+		console.error("TODO: implement prove",value);
 	}
 }
 class RustSetTheory {
@@ -35,7 +36,18 @@ class RustSetTheory {
 class RustLogic {
 }
 class RustTypeInterface {
-	defineType() {//TODO
+	/** @param {string} target */
+	constructor(target) {
+		this.target=target;
+		/** @type {{}[]} */
+		this.values=[];
+	}
+	/**
+	 * @param {string} str_0
+	 * @param {{}} value
+	 */
+	defineType(str_0,value) {
+		this.values.push([str_0,value]);
 	}
 }
 let tt_info=new RustTypeTheory;
@@ -51,97 +63,110 @@ tt_info.addType({
 tt_info.addType({
 	type: "Nat"
 });
+class RustTypeDescription {
+	construct() {
+		throw new Error("Method not implemented.");
+	}
+	/** @readonly */
+	_type="Type";
+	type="";
+	interface=new RustTypeInterface("");
+	/** @type {{}[]} */
+	options=[];
+	/** @type {{}[]} */
+	values=[];
+	defineType() {
+		console.log("defineType on base");
+	}
+	/** @arg {string} type_name @arg {{}} type_value */
+	defineType_2(type_name,type_value) {
+		this.values.push([type_name,type_value]);
+	}
+}
 tt_info.addTypeDescription("Bool",{
+	_type: "Type",
 	type: "Bool",
 	interface: new RustTypeInterface("Bool"),
 	options: [],
-	defineType(type_description) {
+	values: [],
+	defineType() {
 		this.interface.defineType("true",this.type);
 	},
+	defineType_2(type_name,type_value) {
+		this.interface.defineType(type_name,type_value);
+	},
 	construct() {
-		this.defineType("true","Bool");
-		this.defineType("true","False");
+		this.defineType_2("true","Bool");
+		this.defineType_2("true","False");
 	}
 });
-tt_info.addTypeDescription("Nat",{
-	description: `
+class NatNum {
+	/** @readonly */
+	_type="Nat";
+	description=`
 	0 : Nat
 	^ : Nat -> Nat
-	`,
-	ops: {
-		S(nat_val_m,nat_val_n) {
-			if(nat_val_n==null) {
-				return nat_val_m;
-			}
-			if(nat_val_m.value==0) {
-				return nat_val_m;
-			}
-			if(nat_val_n.value==0) {
-				return {
-					value: nat_val_m.value+1
-				};
-			}
-			return this.S(nat_val_m,nat_val_n);
-		}
-	},
+	`;
+	/** @arg {NatNum} nat_val */
 	predecessor(nat_val) {
-		//TODO: sub does not exist at this level,
-		//this would be a recursive definition(sub defined with Nat and Nat)
-		return {
-			value: nat_val.value-1
-		};
-	},
-	successor(nat_val) {
-		return {
-			value: nat_val.value+1
-		};
-	},
-	construct() {
-		let t_construct=this;
-		this.functions={
-			sum_count: 0,
-			sum(nat_a,nat_b) {
-				let t=this;
-				t.sum_count++;
-				if(nat_a.value==0) {
-					return nat_b;
-				}
-				let next_a=t_construct.predecessor(nat_a);
-				let d_step=(nat_sum_res) => {
-					t.sum_count++;
-					return t_construct.successor(nat_sum_res);
-				};
-				function n_step() {
-					t.sum_count++;
-					let nat_sum_res=t.sum(next_a,nat_b);
-					if(typeof nat_sum_res=='function') {
-						return () => {
-							t.sum_count++;
-							let acc_val=nat_sum_res();
-							function n_step_1() {
-								t.sum_count++;
-								if(typeof acc_val=='function') {
-									return () => {
-										t.sum_count++;
-										acc_val=acc_val();
-										return n_step_1;
-									};
-								}
-								return d_step(acc_val);
-							}
-							return n_step_1;
-						};
-					}
-					return d_step(nat_sum_res);
-				}
-				return n_step;
-			},
-			sum_tt: `
-			sum(0, b) -> b
-			sum(^a', b) -> ^sum(a', b)
-			`
-		};
+		return new NatNum(nat_val.value-1);
 	}
+	/** @arg {NatNum} nat_val */
+	successor(nat_val) {
+		return new NatNum(nat_val.value+1);
+	}
+	construct() {}
+	/** @type {SumMonad} */
+	monad;
+	/**
+	 * @param {number} value
+	 */
+	constructor(value) {
+		this.value=value;
+		this.monad=new SumMonad(this);
+	}
+}
+class SumMonad {
+	/** @arg {NatNum} parent */
+	constructor(parent) {
+		this.parent=parent;
+	}
+	/**@readonly*/_type="Monad";
+	/**@readonly*/type="Sum";
+	sum_count=0;
+	/** @arg {NatNum} nat_a @arg {NatNum} nat_b @returns {NatNum} */
+	sum(nat_a,nat_b) {
+		let t=this;
+		t.sum_count++;
+		if(nat_a.value==0) {
+			return nat_b;
+		}
+		let next_a=this.parent.predecessor(nat_a);
+		return next_a.monad.sum(nat_b,new NatNum(0));
+	}
+	sum_tt=`
+	sum(0, b) -> b
+	sum(^a', b) -> ^sum(a', b)
+	`;
+}
+const nat_num_ops={
+	/** @type {(...x:{value:number}[])=>{value:number}} */
+	S(nat_val_m,nat_val_n) {
+		if(nat_val_n==null) {
+			return nat_val_m;
+		}
+		if(nat_val_m.value==0) {
+			return nat_val_m;
+		}
+		if(nat_val_n.value==0) {
+			return {
+				value: nat_val_m.value+1
+			};
+		}
+		return this.S(nat_val_m,nat_val_n);
+	}
+};
+tt_info.addTypeDescription("Nat",{
 });
 function types_to_map(types) {
 	return new Map(types.map(e => {
