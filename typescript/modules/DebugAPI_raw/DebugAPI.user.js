@@ -5209,6 +5209,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(typeof event.data==='string') return false;
 		if(typeof event.data==='object') {
 			if(event.data===null) return true;
+			// for https://godbolt.org & vscode integrators
+			if('vscodeScheduleAsyncWork' in event.data) return false;
 		}
 	}
 	/** @arg {MessageEvent<unknown>} event */
@@ -5216,6 +5218,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(typeof event.data==='string') return false;
 		if(typeof event.data==='object') {
 			if(event.data===null) return false;
+			// for https://godbolt.org & vscode integrators
+			if('vscodeScheduleAsyncWork' in event.data) return false;
 		}
 	}
 	/** @arg {MessageEvent<unknown>} event */
