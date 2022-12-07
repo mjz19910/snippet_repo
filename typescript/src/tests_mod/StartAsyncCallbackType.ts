@@ -1,3 +1,3 @@
+import {BaseTestRunner} from "./BaseTestRunner.js";
 import {TestLock} from "./TestLock.js"
-import {CanRunTest} from "./CanRunTest.js"
-export type StartAsyncCallbackType=(runner: CanRunTest,lock: TestLock) => Promise<void>
+export type StartAsyncCallbackType=(runner: BaseTestRunner,lock: TestLock) => Promise<void>

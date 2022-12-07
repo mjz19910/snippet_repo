@@ -57,7 +57,7 @@ export function worker_code_function(verify_callback?: WorkerVerifyCallback) {
 	let fire_pause: any[]=[];
 	class RemoteTimerItem {
 		type: TimerTag;
-		local_id: NodeJS.Timeout=-1 as unknown as NodeJS.Timeout;
+		local_id: number=-1;
 		active=true;
 		constructor(type: TimerTag) {
 			this.type=type;
@@ -163,7 +163,7 @@ export function worker_code_function(verify_callback?: WorkerVerifyCallback) {
 		validate_state(state: RemoteTimerItem,_remote_id: number) {
 			return this.validate_tag(state.type);
 		}
-		clear(remote_id: number): NodeJS.Timeout|null {
+		clear(remote_id: number): number|null {
 			if(this.m_remote_id_to_state_map.has(remote_id)) {
 				let state=this.m_remote_id_to_state_map.get(remote_id)!;
 				this.verify_state(state,remote_id);
@@ -200,7 +200,7 @@ export function worker_code_function(verify_callback?: WorkerVerifyCallback) {
 						t: typeof reply_message_types.from_worker;
 						v: {
 							t: typeof message_types.reply.clear.single;
-							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearSingleT];
+							v: [remote_id: number,local_id: number,msg_from: TimeoutClearSingleT];
 						};
 					}={
 						t: reply_message_types.from_worker,
@@ -217,7 +217,7 @@ export function worker_code_function(verify_callback?: WorkerVerifyCallback) {
 						t: typeof reply_message_types.from_worker;
 						v: {
 							t: typeof message_types.reply.clear.repeating;
-							v: [remote_id: number,local_id: NodeJS.Timeout,msg_from: TimeoutClearRepeatingT];
+							v: [remote_id: number,local_id: number,msg_from: TimeoutClearRepeatingT];
 						};
 					}={
 						t: reply_message_types.from_worker,
