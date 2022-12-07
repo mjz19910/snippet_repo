@@ -655,20 +655,20 @@ var parsejs=class {
 						/* state.tok.push({
 							value: "keyword",
 							data: hit
-						}); */
+						});
+						state.tok.push({
+							value: js_ident,
+							data: hit,
+						})*/
 						switch (hit) {
-							case 'function': this.eat_function(state); continue;
-							case 'try': this.eat_try(state); continue;
-							case 'catch': this.eat_catch(state); continue;
-							case 'finally': this.eat_finally(state); continue;
-							default: 
-							state.tok.push({
-								value: js_ident,
-								data: hit,
-							})
-							state.index+=hit.length;
-							continue;
+							case 'function': this.eat_function(state); break;
+							case 'try': this.eat_try(state); break;
+							case 'catch': this.eat_catch(state); break;
+							case 'finally': this.eat_finally(state); break;
+							default: throw "Invalid,ctx:"+s.substr(0,20);
 						}
+						state.index+=hit.length;
+						continue;
 					}
 					if(s.length==0) {
 						return s
