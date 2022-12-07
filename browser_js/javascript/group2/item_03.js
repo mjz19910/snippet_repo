@@ -58,14 +58,7 @@ function main() {
 	cur.k='ptd-qq101';
 	cur.v=function() {
 		console.clear();
-		if(window.__state) {
-			let old_state=window.__state;
-			if(old_state.dispose) {
-				old_state.dispose();
-			}
-		}
 		let t={};
-		window.__state=t;
 		{
 			let rng_num=Math.random();
 			let used_random_nibbles=0;
