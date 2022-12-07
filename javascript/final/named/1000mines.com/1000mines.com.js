@@ -182,7 +182,6 @@ function main() {
 	}
 	let cur=new Runner;
 	cur.n='1000mines.com';
-	// @ts-ignore
 	cur.f=function() {
 		let return_value;
 		if(!debug) throw new Error("Missing debug function (open devtools)");
