@@ -4948,10 +4948,13 @@ class RemoteHandler {
 		this.unhandled_events.push(data);
 		console.log(data);
 	}
-	/** @param {RemoteOriginConnection['m_flags']} flags @param {MessagePort} connection_port */
-	constructor(flags,connection_port) {
+	/** @arg {RemoteOriginConnection['m_flags']} flags @arg {MessagePort} connection_port @arg {number} client_id */
+	constructor(flags,connection_port,client_id) {
 		this.m_flags=flags;
 		this.connection_port=connection_port;
+		connection_port.start();
+		connection_port.addEventListener("message",this);
+		this.onConnected(client_id);
 	}
 }
 
@@ -5150,10 +5153,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		}
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
-		let handler=new RemoteHandler(this.m_flags,connection_port);
-		connection_port.start();
-		connection_port.addEventListener("message",handler);
-		handler.onConnected(client_id);
+		let handler=new RemoteHandler(this.m_flags,connection_port,client_id);
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.first_event.source===event.source;
 		});
