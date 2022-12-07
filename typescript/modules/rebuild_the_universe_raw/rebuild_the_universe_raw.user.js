@@ -172,7 +172,7 @@ class CSSStyleSheetBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("./support/StackVMBox.js").StackVMBox} StackVMBox_CJS */
+/** @typedef {import("./ns.js").StackVMBox} StackVMBox_CJS */
 /** @implements {StackVMBox_CJS} */
 class StackVMBoxImpl {
 	/** @type {"custom_box"} */
@@ -195,7 +195,7 @@ class StackVMBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("./support/WindowBox.js").WindowBox} WindowBox_CJS */
+/** @typedef {import("./ns.js").WindowBox} WindowBox_CJS */
 /** @implements {WindowBox_CJS} */
 class WindowBoxImpl {
 	/** @type {"object_box"} */
@@ -220,7 +220,7 @@ class WindowBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("./support/ObjectBox.js").ObjectBox} ObjectBox_CJS */
+/** @typedef {import("./ns.js").ObjectBox} ObjectBox_CJS */
 /** @implements {ObjectBox_CJS} */
 class ObjectBoxImpl {
 	/** @readonly */
@@ -567,7 +567,7 @@ class InstructionModifyOpImpl extends InstructionImplBase {
 		vm.instructions[target]=valid_instruction;
 	}
 }
-/** @typedef {import("./support/NumberBox.js").NumberBox} NumberBox_CJS */
+/** @typedef {import("./ns.js").NumberBox} NumberBox_CJS */
 /** @implements {NumberBox_CJS} */
 class NumberBoxImpl {
 	/** @readonly */
@@ -1943,7 +1943,7 @@ class DataLoaderImplR {
 		return this.default_split(data).map(DataLoaderImplR.int_parser);
 	}
 }
-/** @typedef {import("./support/VoidBox.js").VoidBox} VoidBox_CJS */
+/** @typedef {import("./ns.js").VoidBox} VoidBox_CJS */
 /** @implements {VoidBox_CJS} */
 class VoidBoxImpl {
 	/** @type {"void"} */
