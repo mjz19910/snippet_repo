@@ -3,11 +3,23 @@
 v1 (cur): snippet_repo/javascript/final/items/item8_v1.js
 */
 function main() {
+	class GameType {
+		update() {
+			throw new Error("Method not implemented.");
+		}
+}
+	/** @arg {{}} _v @returns {asserts _v is GameType} */
+	function assert_game(_v) {}
+	function get_game() {
+		assert_game(game);
+		return game;
+	}
 	// cspell: disable-next-line
 	/**
 	 * @param {number} lim
 	 */
 	function do_work_1(lim) {
+		let game=get_game();
 		// cspell: disable-next-line
 		let lsw=document.querySelector("#layerswrapper");
 		if(!lsw) return;
@@ -92,6 +104,7 @@ function main() {
 	 * @param {number} dcs
 	 */
 	function do_work_0(dcs) {
+		let game=get_game();
 		// cspell: disable-next-line
 		let lsw=document.querySelector("#layerswrapper");
 		if(!lsw) return;
@@ -155,6 +168,7 @@ function main() {
 	 * @param {number} lim
 	 */
 	function maxall_dim(dim_l,lim) {
+		let game=get_game();
 		let lsw=document.querySelector("#layerswrapper");
 		if(!lsw) return;
 		let pn=performance.now();
@@ -181,6 +195,7 @@ function main() {
 	/** @arg {Element} _v @returns {asserts _v is HTMLElement} */
 	function h(_v) {}
 	function max_pres_last() {
+		let game=get_game();
 		let lsw=document.querySelector("#layerswrapper");
 		if(!lsw) return;
 		let pn=performance.now();

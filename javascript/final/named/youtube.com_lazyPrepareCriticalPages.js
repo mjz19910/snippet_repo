@@ -51,7 +51,7 @@ function main() {
 			return;
 		}
 		/**
-		 * @param {debug} x
+		 * @param {debugI} x
 		 * @param {new () => any} func_obj
 		 */
 		function test_callback_root(x,func_obj) {
@@ -73,7 +73,7 @@ function main() {
 		/**
 		 * @param {string} a
 		 * @param {"send"} n
-		 * @param {(x: debug, func_obj: new () => any)=>void} test_callback
+		 * @param {(x: debugI, func_obj: new () => any)=>void} test_callback
 		 */
 		function runner(a,n,test_callback) {
 			if(!debug) throw new Error("needs devtools open for debug function");
@@ -81,7 +81,7 @@ function main() {
 			 * @param {{ [x: string]: () => void; }} proto
 			 * @param {string} name
 			 * @param {any} func_obj
-			 * @param {(x: debug, func_obj: new () => any)=>void} test_callback
+			 * @param {(x: debugI, func_obj: new () => any)=>void} test_callback
 			 */
 			function bp_proto(proto,name,func_obj,test_callback) {
 				if(!debug) throw new Error("needs devtools open for debug function");
@@ -169,7 +169,7 @@ function main() {
 			bp_proto(func_proto,n,func_obj,test_callback);
 		}
 		/**
-		 * @param {debug} x
+		 * @param {debugI} x
 		 * @param {new () => any} func_obj
 		 */
 		function do_test_callback_root(x,func_obj) {
