@@ -838,7 +838,7 @@ function main() {
 			if(!('click' in __m)) throw new Error("1");
 			if(!(__m.click instanceof Function)) throw new Error("1");
 			/** @template {Function} T @arg {T} x @returns {x is (...x:any[])=>any} */
-			function as_any_func(x) {return true;}
+			function as_any_func(x) {x;return true;}
 			if(!as_any_func(__m.click)) throw new Error("1");
 			x.f=__m.click;
 			let o=x.o;
