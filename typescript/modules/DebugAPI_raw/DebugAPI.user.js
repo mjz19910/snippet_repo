@@ -4886,7 +4886,7 @@ class LocalHandler {
 				if(this.m_reconnecting) return;
 				this.disconnect();
 				this.m_root.transport_disconnected(report_info);
-				this.m_tries_left=12;
+				this.m_tries_left=24;
 				this.m_reconnecting=true;
 				this.m_remote_side_connected=false;
 				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),(this.m_connection_timeout/8)*4);
