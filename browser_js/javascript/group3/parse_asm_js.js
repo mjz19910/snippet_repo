@@ -651,6 +651,11 @@ var parsejs=class {
 					var match=s.match(/^[a-zA-Z$_\d]+/)
 					if(match) {
 						var hit=match[0];
+						// TODO: 
+						/* state.tok.push({
+							value: "keyword",
+							data: hit
+						}); */
 						switch (hit) {
 							case 'function': this.eat_function(state); continue;
 							case 'try': this.eat_try(state); continue;
@@ -658,10 +663,11 @@ var parsejs=class {
 							case 'finally': this.eat_finally(state); continue;
 							default: 
 							state.tok.push({
-								value: "keyword",
-								data: hit
-							});
+								value: js_ident,
+								data: hit,
+							})
 							state.index+=hit.length;
+							continue;
 						}
 						if(state.keywords.has(hit)) {
 							if(this.keyword_handlers.has(hit)) {
