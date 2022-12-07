@@ -4886,7 +4886,7 @@ class LocalHandler {
 				this.m_tries_left=24;
 				this.m_reconnecting=true;
 				this.m_remote_side_connected=false;
-				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),this.m_connection_timeout/2);
+				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
 			} break;
 			case "keep_alive": {
 				this.post_message({
@@ -4895,6 +4895,9 @@ class LocalHandler {
 				});
 			} break;
 			case "keep_alive_reply": {
+				if(this.m_timeout_id!==null) {
+					clearTimeout(this.m_timeout_id);
+				}
 				if(this.m_missing_keep_alive_counter>0) {
 					this.m_missing_keep_alive_counter--;
 				}
