@@ -4880,7 +4880,10 @@ class LocalHandler {
 					clearTimeout(this.m_timeout_id);
 					this.m_timeout_id=null;
 				}
-				this.m_keep_alive_interval=setInterval(this.keep_alive_send.bind(this),3000);
+				this.m_keep_alive_interval=setInterval(
+					this.keep_alive_send.bind(this),
+					this.m_connection_timeout/3
+				);
 			} break;
 			case "disconnected": {
 				if(this.m_reconnecting) return;
@@ -4889,7 +4892,7 @@ class LocalHandler {
 				this.m_tries_left=24;
 				this.m_reconnecting=true;
 				this.m_remote_side_connected=false;
-				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),(this.m_connection_timeout/8)*4);
+				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),this.m_connection_timeout/2);
 			} break;
 			case "keep_alive": {
 				this.post_message({
@@ -4920,7 +4923,7 @@ class LocalHandler {
 		this.m_timeout_id=setTimeout(() => {
 			this.disconnect();
 			this.m_root.request_new_port(this);
-		},this.m_connection_timeout);
+		},this.m_connection_timeout*2);
 	}
 	disconnect() {
 		if(!this.m_connection_port)
@@ -5070,7 +5073,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	unhandled_child_events=[];
 	constructor() {
 		super();
-		this.m_local_handler=new LocalHandler(300,this);
+		this.m_local_handler=new LocalHandler(30000,this);
 		let s=this.state;
 		s.is_top=this.state.window===this.state.top;
 		s.is_root=this.state.opener===null;
