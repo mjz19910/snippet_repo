@@ -13,8 +13,15 @@ x:{
 		}
 		break x;
 	}
+	/**
+	 * @param {any} v
+	 */
+	function any(v) {return v}
+	let t=window.temp1;;
+	/** @type {{}[]} */
+	let tmp=any(window.temp1);
 	let GeneratorFunction = (function*(){}).prototype.constructor;
-	let not_proto = temp1.filter(e=>e !== Function.prototype && e !== GeneratorFunction && e !== GeneratorFunction.constructor);
+	let not_proto = tmp.filter(e=>e !== Function.prototype && e !== GeneratorFunction && e !== GeneratorFunction.constructor);
 	let fn_map_str = [...new Set(not_proto.map(e=>{
 		try {
 			return e.toString()
