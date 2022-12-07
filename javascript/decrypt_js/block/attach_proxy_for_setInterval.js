@@ -15,6 +15,7 @@ export function attach_proxy_for_setInterval() {
 				console.log("handler is string");
 				setTimeout(ha,0);
 			}
+			return -1;
 		}
 	});
 }
