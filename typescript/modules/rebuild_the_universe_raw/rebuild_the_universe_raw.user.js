@@ -502,7 +502,7 @@ class InstructionCastImpl extends InstructionImplBase {
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
-	/** @arg {import("./support/CastOperandTarget.js").CastOperandTarget} cast_type @arg {StackVMImpl} vm */
+	/** @arg {import("./ns.js").CastOperandTarget} cast_type @arg {StackVMImpl} vm */
 	run(vm,cast_type) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
@@ -902,7 +902,7 @@ class StackVmBaseImpl {
 }
 
 /**
- * @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS
+ * @typedef {import("./ns.js").InstructionType} InstructionType_CJS
  * @typedef {import("./ns.js").Box} Box_CJS
  * @typedef {import("./ns.js").StackVM} StackVM_CJS
 */
