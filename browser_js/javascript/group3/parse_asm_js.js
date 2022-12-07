@@ -669,26 +669,6 @@ var parsejs=class {
 							state.index+=hit.length;
 							continue;
 						}
-						if(state.keywords.has(hit)) {
-							if(this.keyword_handlers.has(hit)) {
-								state.hit_len=hit.length;
-								s=this.keyword_handlers.get(hit)(s,state)
-								continue
-							} else {
-								state.tok.push({
-									value: "keyword",
-									data: hit
-								})
-								s=s.slice(hit.length)
-								continue
-							}
-						}
-						state.tok.push({
-							value: js_ident,
-							data: hit
-						})
-						s=s.slice(hit.length)
-						continue
 					}
 					if(s.length==0) {
 						return s
