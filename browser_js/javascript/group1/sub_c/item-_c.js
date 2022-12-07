@@ -43,20 +43,13 @@ function main() {
 	/** @type {{}|undefined} */
 	var a=void 0;
 	/**
-	 * @arg {(fn: any)=>Promise<void>} fn
+	 * @arg {(this: PromiseHandlerImpl) => Promise<void>} fn
 	 * @arg {(()=>void) | null} callback_fn
 	 */
 	function z(fn,callback_fn) {
 		let s={};
 		s.fn=fn;
 		s.dl=500;
-		var wt=function(a) {
-			setTimeout(a,s.dl);
-		};
-		s.wait=function(dl) {
-			s.dl=dl;
-			return new Promise(wt);
-		};
 		var rng=Math.random();
 		window.postMessage(rng);
 		var nc=new PromiseHandlerImpl(fn);
