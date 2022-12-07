@@ -1,5 +1,4 @@
 import {Repeat_1} from "../types/repeat/Repeat_1";
-import {dr_map,id_map,ids_dec} from "./mod";
 import {decode_map} from "./decode_map";
 
 /** @param {string | number | Repeat_1<number>} e */
