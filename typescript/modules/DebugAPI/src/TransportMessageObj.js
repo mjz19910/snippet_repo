@@ -1,3 +1,5 @@
+import {RemoteOriginConnection} from "./debug_api/RemoteOriginConnection.js";
+
 export class TransportMessageObj {
 	/**@type {WeakRef<RemoteOriginConnection>|null} */
 	w_connection=null;
