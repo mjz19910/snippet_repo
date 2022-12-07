@@ -4962,6 +4962,7 @@ class RemoteOriginConnectionData {
 }
 
 class RemoteHandler {
+	side="client";
 	/** @type {RemoteOriginMessage[]} */
 	unhandled_events=[];
 	/** @type {ConnectionFlags} */
