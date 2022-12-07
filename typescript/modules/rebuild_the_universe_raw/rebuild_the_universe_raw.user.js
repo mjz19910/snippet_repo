@@ -881,13 +881,14 @@ const instruction_descriptor_arr=[
 	['vm_return',InstructionVMReturnImpl],
 ];
 
-/** @typedef {import("./support/StackVMBase.js").StackVMBase} StackVMBase_CJS */
+/** @typedef {import("./ns.js").StackVMBase} StackVMBase_CJS */
+/** @implements {StackVMBase_CJS} */
 class StackVmBaseImpl {}
 
 /**
  * @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS
  * @typedef {import("./ns.js").Box} Box_CJS
- * @typedef {import("./support/StackVM.js").StackVM} StackVM_CJS
+ * @typedef {import("./ns.js").StackVM} StackVM_CJS
 */
 
 /** @implements {StackVM_CJS} */
