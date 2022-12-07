@@ -57,7 +57,7 @@ function main() {
 		s.o=nc;
 		s.ru=0;
 		s.timeout=function() {
-			s.ru=0;
+			nc.run=false;
 			nc.p.then(() => console.log("timeout done"));
 		};
 		/**
