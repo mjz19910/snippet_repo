@@ -60,10 +60,10 @@ function main() {
 		 * @param {number} t
 		 */
 		execute(t) {
-			var r_fnname=this.names[t];
-			var func=this.funcs[t];
+			var function_name=this.names[t];
+			var function_value=this.funcs[t];
 			try {
-				var sf=func.toString();
+				var sf=function_value.toString();
 				if(sf.indexOf("/*arg_start*/")>-1) {
 					let eval_func; {
 						var func_split=sf.split(/(\/\*arg_start\*\/|\/\*arg_end\*\/)/);
@@ -76,13 +76,13 @@ function main() {
 							body=is_strict_p1[1].trim();
 						}
 						var args="/*arg_start*/"+func_split[2].trim()+"/*arg_end*/";
-						let src_url='//'+'# sourceURL='+r_fnname;
+						let src_url='//'+'# sourceURL='+function_name;
 						let func_str;
 						if(is_strict) {
-							func_str=`"use strict";\nconsole.log("run ${r_fnname}")\n${body}\n${src_url}`;
+							func_str=`"use strict";\nconsole.log("run ${function_name}")\n${body}\n${src_url}`;
 							eval_func=new Function(args,func_str);
 						} else {
-							func_str=`console.log("run ${r_fnname}")\n${body}\n${src_url}`;
+							func_str=`console.log("run ${function_name}")\n${body}\n${src_url}`;
 							eval_func=new Function(args,func_str);
 						}
 						if('mc' in window&&window.mc instanceof MessageChannel) {
@@ -100,7 +100,7 @@ function main() {
 					}
 					return eval_func();
 				} else {
-					return func();
+					return function_value();
 				}
 			} finally {}
 		}
@@ -184,14 +184,13 @@ function main() {
 	cur.n='1000mines.com';
 	cur.f=function() {
 		let return_value;
-		if(!debug||!undebug) throw new Error("Missing debug function (open devtools)");
-		debug=debug;
-		debug.u=undebug;
+		if(!window.debug||!window.undebug) throw new Error("Missing debug function (open devtools)");
+		window.debug.u=window.undebug;
 		x: {
-			let x=debug;
+			let x=window.debug;
 			x.fo=[];
 			x.st=new Set;
-			x.sarr=[];
+			x.set_arr=[];
 			x.ne=[]; {
 				let test=function( /** @type {any[]} */ e) {
 					return e[0];
@@ -214,7 +213,7 @@ function main() {
 					let v=x.o[c];
 					if(!x.st.has(v)) {
 						x.st.add(v);
-						x.sarr.push(v);
+						x.set_arr.push(v);
 						x.ne.push(v);
 					}
 				}
@@ -294,12 +293,12 @@ function main() {
 			/** @type {typeof x['rx']} */
 			let w={};
 			x.rx=w; {
-				let mquery=/.+{.+?new (.+)\.fn.init\(.+,.+\)\}/;
-				let jqts=jQuery.toString();
-				let res=jqts.match(mquery);
+				let match_jquery_code=/.+{.+?new (.+)\.fn.init\(.+,.+\)\}/;
+				let jquery_string=jQuery.toString();
+				let res=jquery_string.match(match_jquery_code);
 				if(!res) throw new Error("jQuery constructor did not match the regex designed to match it");
-				let grps=res.slice(1);
-				x.__name_list=grps;
+				let res_off=res.slice(1);
+				x.__name_list=res_off;
 
 			}
 			let __nf=Symbol(2);
@@ -392,50 +391,49 @@ function main() {
 						is_classy=true;
 				}
 				func_as_string=func.toString();
-				let jsfilt=[func.toString()];
+				let js_filt=[func.toString()];
 				/**
 				 * @type {any[]}
 				 */
-				let jsfout=[];
-				let js_out;
+				let js_out=[];
 				let js_parse_no_white=( /** @type {string} */ e) => {
 					let m=null;
 					if(e[0].match(/ /)) {
 						let m=e.match(/^[ ]+/);
 						if(!m) throw new Error("1");
-						jsfout.push(m[0]);
+						js_out.push(m[0]);
 					}
 					if(e[0].match(/\n/)) {
 						m=e.match(/^[\n]+/);
 						if(!m) throw new Error("1");
-						jsfout.push(m[0]);
+						js_out.push(m[0]);
 					}
 					if(e[0].match(/\t/)) {
 						m=e.match(/^[\t]+/);
 						if(!m) throw new Error("1");
-						jsfout.push(m[0]);
+						js_out.push(m[0]);
 					}
 					if(m) {
-						jsfout.push(e.slice(m[0].length));
+						js_out.push(e.slice(m[0].length));
 					} else {
-						jsfout.push(e);
+						js_out.push(e);
 					}
 				};
 				let js_parse_class=( /** @type {string} */ e) => {
 					if(e.slice(0,5)=='class') {
-						jsfout.push('class');
-						jsfout.push(e.slice(5));
+						js_out.push('class');
+						js_out.push(e.slice(5));
 						return;
 					}
-					jsfout.push(e);
+					js_out.push(e);
 				};
 				/**
 				 * @param {{ (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (e: any): void; (value: any, index: number, array: any[]): void; }} func
 				 */
 				function fe_block(func) {
-					jsfilt.forEach(func);
-					jsfilt=jsfout;
-					jsfout=[];
+					js_filt.forEach(func);
+					js_filt=js_out;
+					js_out=[];
 				}
 				let js_parse_ident=( /** @type {any[]} */ js_in, /** @type {any[]} */ js_tmp) => {
 					let js_out=[];
@@ -482,14 +480,14 @@ function main() {
 				let js_parse_function=( /** @type {string | any[]} */ e) => {
 					let fn=e.slice(0,8);
 					if(fn=='function') {
-						jsfout.push(fn);
-						jsfout.push(e.slice(8));
-						let wt=jsfout.pop();
+						js_out.push(fn);
+						js_out.push(e.slice(8));
+						let wt=js_out.pop();
 						let ret=js_parse_func_def_head(wt);
-						jsfout.push(...ret);
+						js_out.push(...ret);
 						return;
 					}
-					jsfout.push(e);
+					js_out.push(e);
 				};
 				if(is_classy) {
 					fe_block(js_parse_class);
@@ -506,18 +504,18 @@ function main() {
 				let js_parse_loop_whitespace=( /** @type {any[]} */ js_in, /** @type {any[]} */ js_tmp) => {
 					let js_out=[];
 					let top_item=js_in.pop();
-					jsfout=[];
-					jsfilt=[top_item];
+					js_out=[];
+					js_filt=[top_item];
 					do {
 						fe_block(js_parse_no_white);
 						if(loop_counter++>loop_max_count) {
 							break;
-						} else if(jsfilt.length>1) {
-							let nx=jsfilt.pop();
+						} else if(js_filt.length>1) {
+							let nx=js_filt.pop();
 							if(!nx) throw new Error("1");
-							js_out.push(...jsfilt);
-							jsfilt=[nx];
-						} else if(jsfilt.length==1) {
+							js_out.push(...js_filt);
+							js_filt=[nx];
+						} else if(js_filt.length==1) {
 							break;
 						}
 					} while(true);
@@ -527,51 +525,51 @@ function main() {
 					if(e[0].match(/{/)) {
 						let js_class_methods=[];
 						let js_func_ident,js_func_args;
-						jsfout.push(e[0]);
-						jsfout.push(e.slice(1));
-						let ret=js_parse_loop_whitespace(jsfout,jsfilt);
-						let js_tmp=jsfilt;
-						[js_out,jsfout,jsfilt]=ret;
-						jsfout.push(...js_out,...js_tmp);
+						js_out.push(e[0]);
+						js_out.push(e.slice(1));
+						let ret=js_parse_loop_whitespace(js_out,js_filt);
+						let js_tmp=js_filt;
+						[js_out,js_out,js_filt]=ret;
+						js_out.push(...js_out,...js_tmp);
 						if(is_classy) {
-							ret=js_parse_ident(jsfout,jsfilt);
-							[js_out,jsfout,jsfilt]=ret;
+							ret=js_parse_ident(js_out,js_filt);
+							[js_out,js_out,js_filt]=ret;
 							js_func_ident=js_out[0];
-							jsfout.push(js_out[0],js_out[1]);
+							js_out.push(js_out[0],js_out[1]);
 							if(js_out[0]==='constructor') {
 								parse_stack.push('frame');
 								parse_stack.push(['classy',is_classy,( /** @type {boolean} */ e) => is_classy=e]);
 								is_constructor=true;
 								is_classy=false;
 								parse_stack.push(['constructor',is_constructor,( /** @type {boolean} */ e) => is_constructor=e]);
-								let wt=jsfout.pop();
+								let wt=js_out.pop();
 								ret=js_parse_func_def_head(wt);
 								wt=ret.pop();
 								js_func_args=ret.slice();
-								jsfout.push(...ret);
-								parse_stack.push([jsfout,jsfilt]);
-								jsfout=[wt];
-								jsfilt=[];
-								ret=js_parse_loop_whitespace(jsfout,jsfilt);
-								js_tmp=jsfilt;
-								[js_out,jsfout,jsfilt]=ret;
-								[jsfout,jsfilt]=parse_stack.pop();
-								jsfout.push(...js_out,...js_tmp);
-								wt=jsfout.pop();
-								parse_stack.push([jsfout,jsfilt]);
-								jsfout=[];
-								jsfilt=[wt];
+								js_out.push(...ret);
+								parse_stack.push([js_out,js_filt]);
+								js_out=[wt];
+								js_filt=[];
+								ret=js_parse_loop_whitespace(js_out,js_filt);
+								js_tmp=js_filt;
+								[js_out,js_out,js_filt]=ret;
+								[js_out,js_filt]=parse_stack.pop();
+								js_out.push(...js_out,...js_tmp);
+								wt=js_out.pop();
+								parse_stack.push([js_out,js_filt]);
+								js_out=[];
+								js_filt=[wt];
 								fe_block(js_parse_block_enter);
-								let last=jsfilt.pop();
+								let last=js_filt.pop();
 								if(!last) throw new Error("1");
 								js_tmp.push(last);
-								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()]);
+								js_class_methods.push([js_func_ident,js_func_args,js_filt.slice()]);
 								last=js_tmp.pop();
 								if(!last) throw new Error("1");
-								jsfilt.push(last);
-								js_tmp=jsfilt;
-								[jsfout,jsfilt]=parse_stack.pop();
-								js_tmp.forEach(e => jsfout.push(e));
+								js_filt.push(last);
+								js_tmp=js_filt;
+								[js_out,js_filt]=parse_stack.pop();
+								js_tmp.forEach(e => js_out.push(e));
 								let p_cur=parse_stack.pop();
 								//['classy',is_classy,e=>is_classy=e]
 								if(p_cur[0]==='classy') {
@@ -587,18 +585,18 @@ function main() {
 							loop_max_count=40;
 
 							function call_loop_parse_whitespace() {
-								ret=js_parse_loop_whitespace(jsfout,jsfilt);
-								js_tmp=jsfilt;
-								[js_out,jsfout,jsfilt]=ret;
-								jsfout.push(...js_out,...js_tmp);
+								ret=js_parse_loop_whitespace(js_out,js_filt);
+								js_tmp=js_filt;
+								[js_out,js_out,js_filt]=ret;
+								js_out.push(...js_out,...js_tmp);
 							}
 
 							function call_parse_ident() {
-								ret=js_parse_ident(jsfout,jsfilt);
-								[js_out,jsfout,jsfilt]=ret;
-								jsfout.push(js_out[0],js_out[1]);
+								ret=js_parse_ident(js_out,js_filt);
+								[js_out,js_out,js_filt]=ret;
+								js_out.push(js_out[0],js_out[1]);
 							}
-							while(jsfout[jsfout.length-1].match(/^[ \t\n]*}/)==null) {
+							while(js_out[js_out.length-1].match(/^[ \t\n]*}/)==null) {
 								call_loop_parse_whitespace();
 								call_parse_ident();
 								let js_func_ident=js_out[0];
@@ -607,26 +605,26 @@ function main() {
 								parse_stack.push(['classy',is_classy,( /** @type {boolean} */ e) => is_classy=e]);
 								let is_class_function=true;
 								parse_stack.push(['class_function',is_class_function,( /** @type {boolean} */ e) => is_class_function=e]);
-								let wt=jsfout.pop();
+								let wt=js_out.pop();
 								ret=js_parse_func_def_head(wt);
 								let js_func_args=ret.slice(0,-1);
-								jsfout.push(...ret);
+								js_out.push(...ret);
 								call_loop_parse_whitespace();
-								wt=jsfout.pop();
-								parse_stack.push([jsfout,jsfilt]);
-								jsfout=[];
-								jsfilt=[wt];
+								wt=js_out.pop();
+								parse_stack.push([js_out,js_filt]);
+								js_out=[];
+								js_filt=[wt];
 								fe_block(js_parse_block_enter);
-								let last=jsfilt.pop();
+								let last=js_filt.pop();
 								if(!last) throw new Error("1");
 								js_tmp.push(last);
-								js_class_methods.push([js_func_ident,js_func_args,jsfilt.slice()]);
+								js_class_methods.push([js_func_ident,js_func_args,js_filt.slice()]);
 								last=js_tmp.pop();
 								if(!last) throw new Error("1");
-								jsfilt.push(last);
-								js_tmp=jsfilt;
-								[jsfout,jsfilt]=parse_stack.pop();
-								js_tmp.forEach(e => jsfout.push(e));
+								js_filt.push(last);
+								js_tmp=js_filt;
+								[js_out,js_filt]=parse_stack.pop();
+								js_tmp.forEach(e => js_out.push(e));
 								let p_cur=parse_stack.pop();
 								['classy',is_classy,( /** @type {boolean} */ e) => is_classy=e];
 								if(p_cur[0]==='classy') {
@@ -642,17 +640,17 @@ function main() {
 								}
 							}
 							let first_met=js_class_methods[0];
-							let fm_idx=jsfout.indexOf(first_met[0]);
-							jsfout=jsfout.slice(0,fm_idx).concat(js_class_methods,jsfout.slice(-1));
-							let wt=jsfout.pop();
-							parse_stack.push([jsfout,jsfilt]);
+							let fm_idx=js_out.indexOf(first_met[0]);
+							js_out=js_out.slice(0,fm_idx).concat(js_class_methods,js_out.slice(-1));
+							let wt=js_out.pop();
+							parse_stack.push([js_out,js_filt]);
 							ret=js_parse_loop_whitespace([wt],[]);
-							js_tmp=jsfilt;
-							[js_out,jsfout,jsfilt]=ret;
-							[jsfout]=parse_stack.pop();
-							jsfout.push(...js_out,...js_tmp);
+							js_tmp=js_filt;
+							[js_out,js_out,js_filt]=ret;
+							[js_out]=parse_stack.pop();
+							js_out.push(...js_out,...js_tmp);
 						} else {
-							let wt=jsfout.join('');
+							let wt=js_out.join('');
 							let block_match_rx=/^((?![{}])(?![/][*])(?:.|[=;\n])+?)?([{}]|[\n]?\/\*)/m;
 							/**
 							 * @param {number} cur_idx
@@ -718,8 +716,8 @@ function main() {
 							let oci=0,
 								cc=0,
 								i=0;
-							for(let o_cia=-1;i<jsfout.length;i++) {
-								let t_cur=jsfout[i];
+							for(let o_cia=-1;i<js_out.length;i++) {
+								let t_cur=js_out[i];
 								let o_cur=ret[cc];
 								if(o_cia<cc&&o_cur.length>t_cur.length) {
 									oci+=t_cur.length;
@@ -735,17 +733,17 @@ function main() {
 								}
 							}
 							if(got) {
-								jsfout.length=i;
+								js_out.length=i;
 								ret=ret.slice(cc);
 							} else {
-								jsfout.length=0;
+								js_out.length=0;
 							}
-							jsfout.push(...ret);
+							js_out.push(...ret);
 							return;
 						}
 						return;
 					}
-					jsfout.push(e);
+					js_out.push(e);
 				};
 				fe_block(js_parse_block_enter);
 				let maybe=true;
@@ -931,8 +929,8 @@ function main() {
 				debugger;
 				let fc=get_code_formatted;
 				fc.targets.length=0;
-				fc.targets.push(debug.f);
-				let ret=fc(debug.f);
+				fc.targets.push(window.debug.f);
+				let ret=fc(window.debug.f);
 				if(!ret) throw 1;
 				let bs=ret.cs.indexOf('{');
 				let be=ret.cs.lastIndexOf('}');

@@ -1,17 +1,17 @@
 function get_v8_require_main() {
-	if(!debug) {
+	if(!window.debug) {
 		console.log("no debug");
 		return null;
 	}
-	if(!undebug) {
+	if(!window.undebug) {
 		return null;
 	}
 	let old_state=null;
 	if(window.get_v8_require_run&&window.v8_require_state) {
 		old_state=window.v8_require_state;
 	}
-	let w=debug;
-	w.u=undebug;
+	let w=window.debug;
+	w.u=window.undebug;
 	/** @arg {ReqSt} state @returns {({} | null)[]|null} */
 	function get_v8_require_run(state) {
 		if(!('nodeRequire' in window)||typeof window.nodeRequire!=='function') {

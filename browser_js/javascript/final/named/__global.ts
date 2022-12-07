@@ -83,7 +83,10 @@ declare global {
 
 // youtube.com_lazyPrepareCriticalPages
 declare global {
-	var debug: debugI|undefined;
+	interface Window {
+		debug?: debugI|undefined;
+		undebug?: undebugI|undefined;
+	}
 	interface debugI {
 		(fn: (...x: any[]) => void,code: string): void;
 		get_from: never;
@@ -94,18 +97,17 @@ declare global {
 		__ident_chars: string[];
 		__ident_start_chars: string[];
 		fo: never[][];
-		u?: (fn: (...x: any[]) => void) => void;
+		u?: ((fn: (...x: any[]) => void) => void)|undefined;
 		f: (...a: any[]) => any;
 		cb: () => never;
 		fo_test: never;
 		__all_vars: string;
 		st: Set<never>;
-		sarr: never[];
+		set_arr: never[];
 		ne: never[];
 		rx: RxType;
 		o: symbol|{[x:string]:never};
 	}
-	var undebug: undebugI|undefined;
 	interface IGame {}
 	var game: IGame;
 	interface undebugI {

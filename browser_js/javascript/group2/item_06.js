@@ -443,8 +443,8 @@ async function kernel_main() {
 	window.__rust_runtime=runtime
 	// @ts-ignore
 	runtime.state.dbg={
-		debug,
-		undebug,
+		debug:window.debug,
+		undebug:window.undebug,
 		// @ts-ignore
 		getEventListeners
 	}

@@ -64,7 +64,7 @@ function main() {
 		(function(/** @type {(arg0: any) => void} */ f) {
 			f(f);
 		}
-		)(async function(/** @type {(arg0: any) => number | undefined} */ f) {
+		)(async function(/** @type {(arg0: any) => number} */ f) {
 			console.log('en');
 			var dom=get_dom();
 			let count=0;
