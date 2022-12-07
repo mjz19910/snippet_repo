@@ -151,7 +151,7 @@ class CSSStyleSheetConstructorBoxImpl {
 		this.value=value;
 	}
 }
-/** @typedef {import("./support/CSSStyleSheetBox.js").CSSStyleSheetBox} CSSStyleSheetBox_CJS */
+/** @typedef {import("./ns.js").CSSStyleSheetBox} CSSStyleSheetBox_CJS */
 /** @implements {CSSStyleSheetBox_CJS} */
 class CSSStyleSheetBoxImpl {
 	/** @readonly */
