@@ -1,41 +1,21 @@
-import {sha_1_initial} from "../sha1_version";
-
 interface IInjectAPI {
-	RemoteOriginConnection: new () => RemoteOriginConnection;
-	remote_origin: RemoteOriginConnection;
+	RemoteOriginConnection: {};
+	remote_origin: {};
 }
-interface RemoteOriginConnection {
-	readonly post_message_connect_message_type: `ConnectOverPostMessage_${typeof sha_1_initial}`;
-	request_new_port(obj: LocalHandler): boolean;
-}
+
 // LocalHandler
 interface IInjectAPI {
-	LocalHandler: typeof LocalHandler;
-}
-class LocalHandler {
-	m_connection_timeout: number;
-	m_root: RemoteOriginConnection;
-	constructor(timeout: number,root: RemoteOriginConnection) {
-		this.m_connection_timeout=timeout;
-		this.m_root=root;
-	}
+	LocalHandler: {};
 }
 
 // elevate_event_handlers
 interface IInjectAPI {
-	elevate_event_handlers: ((arg0: EventListenersT) => void)[];
+	elevate_event_handlers: {}[];
 }
 // proxyTargetMap
 interface IInjectAPI {
-	ProxyTargetMap: ProxyTargetMapClass;
-	proxyTargetMap: ProxyTargetMap;
-}
-interface ProxyTargetMap {
-	weak_map: WeakMap<any,any>;
-}
-interface ProxyTargetMapClass {
-	attach_to_api(): void;
-	new(): ProxyTargetMap;
+	ProxyTargetMap: {};
+	proxyTargetMap: {};
 }
 // saved_objects
 interface IInjectAPI {

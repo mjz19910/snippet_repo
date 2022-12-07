@@ -198,7 +198,7 @@ declare global {
 }
 
 declare global {
-	type EventListenersT=EventListenerOrEventListenerObject|((v: MessageEvent<any>) => void);
+	type EventListenersT=EventListenerOrEventListenerObject;
 }
 
 declare global {

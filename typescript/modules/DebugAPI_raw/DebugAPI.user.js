@@ -2686,7 +2686,7 @@ function overwrite_addEventListener(obj) {
 		}
 	});
 	prototype.addEventListener=new_target;
-	inject_api.proxyTargetMap.weak_map.set(new_target,target);
+	proxyTargetMap.weak_map.set(new_target,target);
 	define_normal_value(prototype.constructor,"__arg_list_for_add_event_listeners",arg_list);
 }
 
@@ -2705,7 +2705,7 @@ function do_message_handler_overwrite(handler) {
 			/** @type {unknown} */
 			let d=event.data;
 			if(typeof d==='object'&&d!==null&&'type' in d) {
-				if(d.type===inject_api.remote_origin.post_message_connect_message_type) {
+				if(d.type===post_message_connect_message_type) {
 					if(debug) console.log("skip page event handler for "+d.type);
 					return;
 				}
@@ -2716,20 +2716,24 @@ function do_message_handler_overwrite(handler) {
 }
 
 class ProxyTargetMap {
-	static attach_to_api() {
-		inject_api.ProxyTargetMap=this;
-		inject_api.proxyTargetMap=new this;
+	constructor() {
+		inject_api.proxyTargetMap=this;
 	}
 	weak_map=new WeakMap();
 }
-ProxyTargetMap.attach_to_api();
+inject_api.ProxyTargetMap=ProxyTargetMap;
+let proxyTargetMap=new ProxyTargetMap;
 
-inject_api.elevate_event_handlers=[];
+/**
+ * @type {((arg0: EventListenersT) => void)[]}
+ */
+let elevate_event_handlers=[];
+inject_api.elevate_event_handlers=elevate_event_handlers;
 
-/** @param {EventListenersT} event_handler */
+/** @arg {EventListenersT} event_handler */
 function elevate_event_handler(event_handler) {
-	for(let i=0;i<inject_api.elevate_event_handlers.length;i++) {
-		let handler=inject_api.elevate_event_handlers[i];
+	for(let i=0;i<elevate_event_handlers.length;i++) {
+		let handler=elevate_event_handlers[i];
 		handler(event_handler);
 	}
 }
@@ -2767,7 +2771,7 @@ class AddEventListenerExtension {
 	node_id_max=0;
 	constructor() {
 		overwrite_addEventListener(this);
-		inject_api.elevate_event_handlers.push(this.elevate_handler.bind(this));
+		elevate_event_handlers.push(this.elevate_handler.bind(this));
 		if(!debug) return;
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
@@ -2934,7 +2938,7 @@ class AddEventListenerExtension {
 			let msg_event=args[0];
 			let d=msg_event.data;
 			if(typeof d==='object'&&d!==null&&'type' in d) {
-				if(d.type===inject_api.remote_origin.post_message_connect_message_type) {
+				if(d.type===post_message_connect_message_type) {
 					if(debug) console.log("skip page event handler for "+d.type);
 					return;
 				}
@@ -4816,7 +4820,7 @@ class LocalHandler {
 				timeout=this.m_connection_timeout/8;
 			}
 			if(this.m_reconnecting) {
-				inject_api.remote_origin.request_new_port(this);
+				this.m_root.request_new_port(this);
 				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),timeout*30);
 				this.m_tries_left--;
 			}
@@ -5044,10 +5048,14 @@ class RemoteSocket {
 	}
 }
 
+
+/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
+const post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
+
 class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/** @param {LocalHandler} obj */
 	request_new_port(obj) {
-		return this.request_connection(obj);
+		this.request_connection(obj);
 	}
 	/** @arg {ReportInfo<LocalHandler>} arg0 */
 	transport_disconnected(arg0) {
@@ -5108,15 +5116,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		this.m_remote_target=remote_target;
 		this.request_connection(this.m_local_handler);
 	}
-	/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
-	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 	/** @arg {LocalHandler} local_handler */
 	request_connection(local_handler) {
 		if(!this.m_remote_target) return false;
 		let channel=new MessageChannel;
 		console.log("post request ConnectOverPostMessage");
 		this.m_remote_target.postMessage({
-			type: this.post_message_connect_message_type,
+			type: post_message_connect_message_type,
 			data: {
 				type: "start",
 				source: null,
@@ -5172,7 +5178,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		let message_record=cast_to_record_with_string_type(message_data);
 		if(message_record===null) return fail();
 		switch(message_record.type) {
-			case this.post_message_connect_message_type: break;
+			case post_message_connect_message_type: break;
 			default: return fail();
 		}
 		let client_id=this.client_max_id++;
@@ -5270,7 +5276,11 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		function on_message_event(event) {
 			t.on_message_event(event);
 		}
-		elevate_event_handler(on_message_event);
+		/** @type {any} */
+		let event_handler=on_message_event;
+		/** @type {EventListener} */
+		let handler=event_handler;
+		elevate_event_handler(handler);
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
