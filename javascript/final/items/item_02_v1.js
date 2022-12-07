@@ -202,6 +202,7 @@ class FakeRealm {
 		if(key==='[[HostDefined]]') {
 			return this.fake_host_defined_data;
 		}
+		throw 1;
 	}
 }
 class RustFakeVM {
