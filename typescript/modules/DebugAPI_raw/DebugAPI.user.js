@@ -5037,6 +5037,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	unhandled_child_events=[];
 	constructor() {
 		super();
+		this.m_local_handler=new LocalHandler(300);
 		let s=this.state;
 		this.state.is_top=this.state.window===this.state.top;
 		this.state.is_root=this.state.opener===null;
@@ -5085,7 +5086,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @param {Window} remote_target
 	 */
 	init_transport_over(remote_target) {
-		this.m_local_handler=new LocalHandler(300);
 		this.m_remote_target=remote_target;
 		this.request_connection(this.m_local_handler);
 	}
