@@ -4899,7 +4899,6 @@ class LocalHandler {
 	 * @param {number} elevation_id
 	 */
 	connect(port,elevation_id) {
-		elevate_event_handler(this);
 		this.m_elevation_id=elevation_id;
 		this.m_connection_port=port;
 		this.m_connection_port.start();
@@ -4928,6 +4927,7 @@ class LocalHandler {
 	 */
 	constructor(connection_timeout) {
 		this.m_connection_timeout=connection_timeout;
+		elevate_event_handler(this);
 	}
 }
 inject_api.LocalHandler=LocalHandler;
