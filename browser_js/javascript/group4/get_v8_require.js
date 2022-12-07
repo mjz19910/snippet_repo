@@ -3,10 +3,6 @@ function run_d() {
 		console.log("no debug");
 		return null;
 	}
-	if(!('nodeRequire' in window)||typeof window.nodeRequire!=='function') {
-		console.log("no nodeRequire");
-		return null;
-	}
 	let old_state=null;
 	if(window.get_v8_require_run&&window.v8_require_state) {
 		old_state=window.v8_require_state;
@@ -15,6 +11,10 @@ function run_d() {
 	w.u=undebug;
 	/** @arg {ReqSt} state @returns {{}[]|null} */
 	function get_v8_require_run(state) {
+		if(!('nodeRequire' in window)||typeof window.nodeRequire!=='function') {
+			console.log("no nodeRequire");
+			return null;
+		}
 		window.native_module_scope??={
 			v8: window.nodeRequire("v8"),
 		};
