@@ -104,12 +104,16 @@ async function kernel_main() {
 	"use strict"
 	class RustEventHandler {
 		constructor() {
-			/**@type {} */
+			/**@type {{[x:string]:{listener: ((x:{})=>void)|null}[]}} */
 			this._events={}
 			this.event_sem=0
 			/**@type {any[]} */
 			this.dirty_object_vec=[]
 		}
+		/**
+		 * @param {string | number} event_type
+		 * @param {any} event_listener
+		 */
 		addEventListener(event_type,event_listener) {
 			this._events[event_type]??=[]
 			let event_listener_description={
@@ -118,6 +122,10 @@ async function kernel_main() {
 			}
 			this._events[event_type].push(event_listener_description)
 		}
+		/**
+		 * @param {string | number} event_type
+		 * @param {any} event_listener
+		 */
 		removeEventListener(event_type,event_listener) {
 			if(this._events[event_type]===void 0)
 				return
@@ -136,6 +144,9 @@ async function kernel_main() {
 				}
 			}
 		}
+		/**
+		 * @param {{ type: any; }} event
+		 */
 		dispatchEvent(event) {
 			let event_type=event.type
 			let event_vec=this._events[event_type]
@@ -149,10 +160,9 @@ async function kernel_main() {
 				let cur=event_vec_clone[i]
 				if(cur.listener===null)
 					continue
-				let event_listener=cur.listener
+				let event_listener=cur.listener;
 				event_listener(event)
 			}
-			event_vec_clone=null
 			this.event_sem--
 			if(!this.event_sem&&this.dirty_object_vec.length) {
 				let dirty_vec=this.dirty_object_vec
@@ -163,7 +173,6 @@ async function kernel_main() {
 					dirty_iter_cur=null
 					dirty_vec[i]=null
 				}
-				dirty_vec=null
 				this.dirty_object_vec.length=0
 			}
 		}
@@ -171,14 +180,30 @@ async function kernel_main() {
 	class RustRuntime {
 		constructor() {
 			this.event_handler=new RustEventHandler
+			/**
+			 * @type {{ type: string; value: any; }[]}
+			 */
 			this.task_vec=[]
+			/**
+			 * @type {any[]}
+			 */
 			this.active_task_vec=[]
+			/**
+			 * @type {any[]}
+			 */
 			this.references=[]
 			this.state={}
 			this.is_shutdown=false
+			/**
+			 * @type {any[]}
+			 */
 			this.on_shutdown_vec=[]
+			/**
+			 * @type {(() => void) | null}
+			 */
 			this.shutdown_waiter=null
 		}
+		// @ts-ignore
 		spawn_class(task_class) {
 			this.task_vec.push({
 				type: 'class',
@@ -210,6 +235,9 @@ async function kernel_main() {
 			}
 			await Promise.all(task_vec)
 		}
+		/**
+		 * @param {any} func
+		 */
 		add_shutdown_callback(func) {
 			this.on_shutdown_vec.push(func)
 		}
@@ -223,29 +251,50 @@ async function kernel_main() {
 			}
 			this.is_shutdown=true
 		}
+		/**
+		 * @param {{ shutdown_waiter: (() => void) | null; }} runtime
+		 * @param {() => void} accept
+		 * @param {any} reject
+		 */
+		// @ts-ignore
 		static wait_into_promise(runtime,accept,reject) {
 			runtime.shutdown_waiter=function() {
 				runtime.shutdown_waiter=null
 				accept()
 			}
 		}
+		/** @returns {Promise<void>} */
 		wait() {
-			return new Promise(RustRuntime.wait_into_promise.bind(null,this))
+			let promise_resolver=RustRuntime.wait_into_promise.bind(null,this);
+			return new Promise((resolve,reject)=>{
+				promise_resolver(resolve,reject);
+			})
 		}
 		auto_ref() {
 			let ref_sym=Symbol()
 			this.ref(ref_sym)
 			return ref_sym
 		}
+		/**
+		 * @param {new (arg0: this) => any} class_constructor
+		 * @param {any[]} rest
+		 */
+		// @ts-ignore
 		class_ref(class_constructor,...rest) {
 			return new class_constructor(this)
 		}
+		/**
+		 * @param {symbol} task
+		 */
 		ref(task) {
 			if(this.is_shutdown) {
 				throw Error('unable to create ref to task, runtime is shutdown')
 			}
 			this.references.push(task)
 		}
+		/**
+		 * @param {{ dispose: () => void; }} task
+		 */
 		unref(task) {
 			let idx=this.references.indexOf(task)
 			if(idx>-1) {
@@ -274,6 +323,7 @@ async function kernel_main() {
 		}
 	}
 	class RustOption {
+		// @ts-ignore
 		constructor(value) {
 			this.value=value
 		}
@@ -286,6 +336,7 @@ async function kernel_main() {
 		is_none() {
 			return this.value===null
 		}
+		// @ts-ignore
 		replace(other) {
 			this.value=other.value
 		}
@@ -299,6 +350,7 @@ async function kernel_main() {
 		}
 	}
 	class RustTaskWaker {
+		// @ts-ignore
 		constructor(notifier) {
 			notifier.waker_new()
 			this.notifier=notifier
@@ -314,6 +366,12 @@ async function kernel_main() {
 		}
 	}
 	class AsyncBlocker {
+		/**
+		 * @param {any} runtime
+		 * @param {any} accept
+		 * @param {any} reject
+		 */
+		// @ts-ignore
 		constructor(runtime,accept,reject) {
 			this.accept=accept
 			this.reject=reject
@@ -323,11 +381,19 @@ async function kernel_main() {
 		}
 	}
 	class RustTaskNotifier {
+		/**
+		 * @param {any} runtime
+		 */
 		constructor(runtime) {
 			this.runtime=runtime
 		}
 		count=0
 		inner=null
+		/**
+		 * @param {any} accept
+		 * @param {any} reject
+		 */
+		// @ts-ignore
 		static create_promise(obj,accept,reject) {
 			obj.inner=new AsyncBlocker(obj.runtime,accept,reject)
 		}
@@ -338,6 +404,7 @@ async function kernel_main() {
 			return this.wait_from_promise()
 		}
 		notify_one() {
+			// @ts-ignore
 			this.inner.notify()
 		}
 		waker_new() {
@@ -348,6 +415,9 @@ async function kernel_main() {
 		}
 	}
 	class RustTaskContext {
+		/**
+		 * @param {any} runtime
+		 */
 		constructor(runtime) {
 			this.runtime=runtime
 			this.notifier=new RustTaskNotifier(runtime)
@@ -369,17 +439,22 @@ async function kernel_main() {
 		}
 	}
 	let runtime=new RustRuntime
+	// @ts-ignore
 	window.__rust_runtime=runtime
+	// @ts-ignore
 	runtime.state.dbg={
 		debug,
 		undebug,
+		// @ts-ignore
 		getEventListeners
 	}
 	class root_future {
 		static running=true
 		static poll() {
 			let min_cost_dist
-			let get_cost_ratio=cc => player.c.points.div(tmp.c.buyables[cc].cost)
+			// @ts-ignore
+			let get_cost_ratio=(/** @type {string} */ cc) => player.c.points.div(tmp.c.buyables[cc].cost)
+			// @ts-ignore
 			let c_buy_ent=Object.entries(player.c.buyables)
 			let c_buy_min=c_buy_ent.map(e => e[1].toNumber()).reduce((a,b) => a<b? a:b)
 			let c_min_ent=c_buy_ent.reduce((a,b) => {
@@ -393,17 +468,29 @@ async function kernel_main() {
 			}
 			)
 			min_cost_dist=get_cost_ratio(c_min_ent[0]).toNumber()
+			// @ts-ignore
 			let flag_not_done=[]
 			if(c_buy_min>80) {
+				// @ts-ignore
 				let fl=[+(min_cost_dist>100),+player.c.points.gt(1e30),+(player.c.points.div(tmp.c.getResetGain).toNumber()>100)]
+				// @ts-ignore
 				console.log('md',fl.join(''),min_cost_dist,temp.pointGen.div(getPointGen()).toNumber())
 			}
 			let c_buy_arr=[92,72,71,91,82,81,51,52,52,61,62]
 			let s_buy_arr=[11,12]
+			/**
+			 * @type {never[]}
+			 */
 			let c_can_buy_arr=[]
+			/**
+			 * @param {string} target
+			 * @param {number[]} src_arr
+			 * @param {any[]} target_arr
+			 */
 			function process_buyables_arr(target,src_arr,target_arr) {
 				let i=0
 				for(let x of src_arr) {
+					// @ts-ignore
 					let tb=tmp[target].buyables[x]
 					if(tb.unlocked&&tb.canAfford) {
 						i++
@@ -418,12 +505,15 @@ async function kernel_main() {
 				c_can_buy_count=0
 			}
 			ib: if(min_cost_dist>100) {
+				// @ts-ignore
 				if(player.c.points.lt(1e30)) {
 					break ib
 				}
+				// @ts-ignore
 				if(player.c.points.div(tmp.c.getResetGain).toNumber()<100) {
 					break ib
 				}
+				// @ts-ignore
 				if(player.s.points.lt(5000)) {
 					break ib
 				}
@@ -433,44 +523,64 @@ async function kernel_main() {
 				if(s_can_buy_count>0) {
 					break ib
 				}
+				// @ts-ignore
 				if(temp.pointGen.div(getPointGen()).toNumber()===1) {
 					break ib
 				}
 				return 'done'
 			}
+			/**
+			 * @param {any[]} arr
+			 * @param {string} target
+			 */
 			function buyable_iter(arr,target) {
 				for(let x of arr) {
+					// @ts-ignore
 					let tb=tmp[target].buyables[x]
 					if(tb.unlocked&&tb.canAfford) {
+						// @ts-ignore
 						buyBuyable(target,x)
 						return true
 					}
 				}
 				return false
 			}
+			/**
+			 * @param {number[]} arr
+			 * @param {string} target
+			 */
 			function upgrade_iter(arr,target) {
 				for(let x of arr) {
+					// @ts-ignore
 					if(player[target].upgrades.includes(x)) {
 						continue
 					}
+					// @ts-ignore
 					if(!tmp.a.upgrades[11].unlocked) {
 						continue
 					}
+					// @ts-ignore
 					if(player[target].points.lt(tmp[target].upgrades[x].cost)) {
 						continue
 					}
+					// @ts-ignore
 					buyUpg(target,x)
 					return true
 				}
 				return false
 			}
 			da: {
+				// @ts-ignore
 				if(Number.isNaN(player.points.toNumber())) {
+					// @ts-ignore
 					player.points=new Decimal(0)
+					// @ts-ignore
 					player.c.points=new Decimal(0)
 					break da
 				}
+				// @ts-ignore
 				if(Number.isNaN(player.c.points.toNumber())) {
+					// @ts-ignore
 					player.c.points=new Decimal(0)
 					break da
 				}
@@ -489,16 +599,21 @@ async function kernel_main() {
 				if(buyable_iter(c_can_buy_arr,'c')) {
 					break da
 				}
+				// @ts-ignore
 				ib: if(getResetGain('s').gt(50)) {
+					// @ts-ignore
 					if(player.s.points.gt(1000)&&!player.s.upgrades.includes(11)) {
 						break ib
 					}
+					// @ts-ignore
 					if(player.s.points.gt(5000)&&!player.s.upgrades.includes(12)) {
 						break ib
 					}
+					// @ts-ignore
 					if(player.s.points.gt(5000)) {
 						break ib
 					}
+					// @ts-ignore
 					doReset('s')
 					break da
 				}
@@ -506,7 +621,9 @@ async function kernel_main() {
 				if(upgrade_iter(s_upg_arr,'s')) {
 					break da
 				}
+				// @ts-ignore
 				ib: if(player.s.upgrades.includes(12)) {
+					// @ts-ignore
 					if(player.s.points.lt(5000)) {
 						break ib
 					}
@@ -518,21 +635,27 @@ async function kernel_main() {
 			if(s_can_buy_count>0) {
 				return 'slow'
 			}
+			// @ts-ignore
 			if(!player.s.points.gt(5000)) {
 				return 'fast'
 			}
 			if(c_can_buy_count>0) {
 				return 'fast'
 			}
+			// @ts-ignore
 			if(player.h.activeChallenge===12) {
 				return 'snail'
 			}
+			// @ts-ignore
 			if(player.c.buyables[82].toNumber()>120) {
+				// @ts-ignore
 				return 'cus:'+(1000+player.points.div(getPointGen()).toNumber())
 			}
+			// @ts-ignore
 			if(player.c.buyables[82].toNumber()>80) {
 				return 'snail'
 			}
+			// @ts-ignore
 			if(player.c.buyables[82].toNumber()>55) {
 				return 'slow'
 			} else {
@@ -540,9 +663,12 @@ async function kernel_main() {
 			}
 		}
 	}
+	// @ts-ignore
 	if(window.__root_future) {
+		// @ts-ignore
 		window.__root_future.running=false
 	}
+	// @ts-ignore
 	window.__root_future=root_future
 	class RustKeywordEnum {
 	}
@@ -551,8 +677,12 @@ async function kernel_main() {
 	class Poll extends RustKeywordEnum {
 		static option_vec=new RustVec
 	}
+	// @ts-ignore
 	window.Poll=Poll
 	class DelayFuture {
+		/**
+		 * @param {any} timeout
+		 */
 		constructor(timeout) {
 			this.delay=timeout
 			this.is_timed_out=false
@@ -560,6 +690,7 @@ async function kernel_main() {
 			this.cint=-1
 		}
 		dispose() {
+			// @ts-ignore
 			this.reject?.()
 			if(this.cint>-1) {
 				clearTimeout(this.cint)
@@ -568,6 +699,9 @@ async function kernel_main() {
 		finish() {
 			this.cint=-1
 		}
+		/**
+		 * @param {{ is_timed_out: boolean; waker: { is_some: () => any; take: () => { (): any; new (): any; unwrap: { (): any; new (): any; }; }; }; finish: () => void; dispose: () => void; }} self
+		 */
 		static on_timeout(self) {
 			self.is_timed_out=true
 			if(self.waker.is_some()) {
@@ -581,6 +715,7 @@ async function kernel_main() {
 		start() {
 			this.cint=setTimeout(DelayFuture.on_timeout,this.delay,this)
 		}
+		// @ts-ignore
 		poll(self,cx) {
 			if(this.is_timed_out) {
 				return ['Poll::Ready',new RustUnit]
@@ -590,13 +725,19 @@ async function kernel_main() {
 			self.waker=new RustOption(waker)
 			o.drop()
 			this.start()
+			// @ts-ignore
 			window.__active_future=this
 			return ['Poll::Pending']
 		}
 		static new() {
+			// @ts-ignore
 			return new this
 		}
 	}
+	/**
+	 * @param {any} runtime
+	 * @param {number} delay
+	 */
 	function async_delay_future(runtime,delay) {
 		let future=new DelayFuture(delay)
 		let cx=new RustTaskContext(runtime)
@@ -604,32 +745,44 @@ async function kernel_main() {
 		future.poll(future,cx)
 		return cx.wait_for()
 	}
+	/**
+	 * @param {{ auto_ref: () => any; state: any; shutdown: () => void; unref: (arg0: any) => void; }} runtime
+	 * @param {string | number} i
+	 */
 	async function async_loop_function_inner(runtime,i) {
 		let w=async_delay_future.bind(null,runtime)
 		let ref_sym=runtime.auto_ref()
 		console.log('async_iter '+i)
+		// @ts-ignore
 		try_root: try {
+			// @ts-ignore
 			let btn=document.querySelector('#app').querySelector(':scope > .tab > div > div > div > div > div > div.upgTable.instant > div.upgCol > div > div.upgTable > div.upgRow > div > div.upgAlign > div > button.buyable.can')
 			tb: try {
 				if(!btn) {
 					break tb
 				}
+				// @ts-ignore
 				if(window.TokenGenerator) {
 					break tb
 				}
 				let rt_state=runtime.state
 				let {debug,undebug,getEventListeners}=rt_state.dbg
 				let fn=getEventListeners(btn).click[0].listener
+				// @ts-ignore
 				let res=DebugAPI.get_event_listener_var_vec_1(debug,undebug,fn,'o')
 				let res_value=res.result.detail.value
+				// @ts-ignore
 				String.prototype.parseFunctionString=function() {
 					let str=this.valueOf()
+					// @ts-ignore
 					let token_generator=DebugAPI.simple_js_parser.token_generator
 					token_generator.set_str(str)
 					token_generator.reset()
+					// @ts-ignore
 					let eof=false
 					let tok_gen_class=Object.getPrototypeOf(token_generator).constructor
 					let eof_key=tok_gen_class.EOF_TOKEN
+					// @ts-ignore
 					window.TokenGenerator=tok_gen_class
 					let token_vec=[]
 					for(let i=0;i<32;i++) {
@@ -643,14 +796,20 @@ async function kernel_main() {
 					return token_vec
 				}
 				let token_vec=res_value.fns.toString().parseFunctionString()
-				let fn_start=token_vec.findIndex((e) => e[1]==='{}'[0])
+				let fn_start=token_vec.findIndex((/** @type {string[]} */ e) => e[1]==='{}'[0])
 				let fn_inner=token_vec.slice(fn_start+1,-2)
-				let fn_ref_token_vec=fn_inner.filter(e => e[0]==="IdentifierName")
-				let fn_ref_vec=fn_ref_token_vec.map(e => e[1])
+				let fn_ref_token_vec=fn_inner.filter((/** @type {string[]} */ e) => e[0]==="IdentifierName")
+				let fn_ref_vec=fn_ref_token_vec.map((/** @type {any[]} */ e) => e[1])
 				let c_name=fn_ref_vec[1]
 				let func=res_value.fns
+				// @ts-ignore
 				let __d=DebugAPI._PrivInstance
 				__d.attach(debug,undebug,null)
+				/**
+				 * @param {(this: any, ...args: readonly any[]) => any} func
+				 * @param {any} f_this
+				 * @param {readonly any[]} c_args
+				 */
 				function do_activate(func,f_this,c_args) {
 					try {
 						return Reflect.apply(func,f_this,c_args)
@@ -671,17 +830,21 @@ async function kernel_main() {
 			catch(e) {
 				console.log(e)
 			}
+			// @ts-ignore
 			nx: {
 				for(let i=0;;i++) {
 					if(!root_future.running) {
 						return
 					}
+					// @ts-ignore
 					let poll_res=root_future.poll(runtime)
+					// @ts-ignore
 					window.__export_info??={
 						arr: [],
 						start_ptr: 0,
 						length: 8
 					}
+					// @ts-ignore
 					let export_info=window.__export_info
 					export_info.arr.length=export_info.length
 					export_info.arr[export_info.start_ptr++]=poll_res
@@ -720,8 +883,12 @@ async function kernel_main() {
 			runtime.unref(ref_sym)
 		}
 	}
+	/**
+	 * @param {{ is_shutdown: any; }} runtime
+	 */
 	async function async_process(runtime) {
 		for(let i=0;i<600;i++) {
+			// @ts-ignore
 			await async_loop_function_inner(runtime,i)
 			if(!root_future.running) {
 				return
@@ -731,11 +898,15 @@ async function kernel_main() {
 			}
 		}
 	}
+	/**
+	 * @param {{ ref: (arg0: { active: null; dispose(): void; }) => void; auto_ref: () => any; unref: (arg0: { active: null; dispose(): void; }) => void; }} runtime
+	 */
 	async function async_loop_function(runtime) {
 		let w_state={
 			active: null,
 			dispose() {
 				if(this.active) {
+					// @ts-ignore
 					this.active.dispose()
 				}
 			}
@@ -746,6 +917,7 @@ async function kernel_main() {
 		runtime.unref(ref_sym)
 		try {
 			console.log('async_start')
+			// @ts-ignore
 			await async_process(runtime)
 			console.log('async_finish')
 		} /**/
@@ -753,6 +925,9 @@ async function kernel_main() {
 		runtime.unref(w_state)
 	}
 	class Ref {
+		/**
+		 * @param {any} runtime
+		 */
 		constructor(runtime) {
 			this.runtime=runtime
 			this.runtime.ref(this)
@@ -762,6 +937,9 @@ async function kernel_main() {
 		}
 	}
 	class RuntimeTask {
+		/**
+		 * @param {any} runtime
+		 */
 		constructor(runtime) {
 			this.runtime=runtime
 		}
@@ -778,14 +956,22 @@ async function kernel_main() {
 		}
 	}
 	class ExportTask {
+		/**
+		 * @param {any} runtime
+		 */
 		constructor(runtime) {
+			// @ts-ignore
 			if(window.__obj) {
+				// @ts-ignore
 				window.__obj.shutdown()
+				// @ts-ignore
 				delete window.__obj
 			}
+			// @ts-ignore
 			window.__obj=runtime
 		}
 		dispose() {
+			// @ts-ignore
 			delete window.__obj
 		}
 	}
