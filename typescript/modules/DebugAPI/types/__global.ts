@@ -7,13 +7,6 @@ declare global {
 	}
 }
 
-// g_api on window object
-declare global {
-	interface Window {
-		g_api?: GlobalApiObject;
-	}
-}
-
 declare global {
 	type TypeAOrTypeB<TypeA,TypeB>=["T",TypeA]|["U",TypeB];
 }

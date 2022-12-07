@@ -1152,10 +1152,6 @@ function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */
 function plr_raw_replace_embed() {
 	return;
 }
-let ar='yt.player.Application'.split('.');
-let a2=ar.slice();
-ar.push('create');
-a2.push('createAlternate');
 /**
  * @type {any[]}
  */
@@ -2562,7 +2558,12 @@ class VolumeRange {
 		view_parent.insertAdjacentElement("beforebegin",this.view_div);
 	}
 }
+let ar;
 function main() {
+	let ar='yt.player.Application'.split('.');
+	let a2=ar.slice();
+	ar.push('create');
+	a2.push('createAlternate');
 	start_message_channel_loop();
 }
 main();

@@ -2,10 +2,6 @@ export {};
 
 declare global {
 	interface Window {
-		g_api?: GlobalApiObject;
-	}
-
-	interface Window {
 		created_blobs: Map<string,Blob|MediaSource>;
 		active_blob_set: Set<string>;
 	}

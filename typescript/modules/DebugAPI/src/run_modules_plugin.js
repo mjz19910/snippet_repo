@@ -64,7 +64,7 @@ export function run_modules_plugin() {
 		switch(argArray.length) {
 			case 2:
 				if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-					var ars=Object.entries(argArray[2]).filter(([j,e]) => e instanceof Array);
+					var ars=Object.entries(argArray[2]).filter(([,e]) => e instanceof Array);
 					var ars_i=ars[0][1].indexOf(this);
 					if(ars[0][1].indexOf(this)>-1) {
 						console.log("found module array:","require."+ars[0][0]);
