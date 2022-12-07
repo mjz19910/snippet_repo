@@ -56,30 +56,30 @@ function main() {
 		let player=get_player();
 		let i=0;
 		for(;;) {
-			let lb=layers.aspTime.buyables[22];
-			let idx=player.aspTime.buyables[22].toNumber()+1
-				,sc=lb.cost(new Decimal(idx))
-				,ec=lb.cost(new Decimal(idx+1))
-				,r=ec.sub(sc);
-			let edc=Math.floor(r.toNumber()*20);
-			for(let j=0;j<edc;j++) {
-				buyBuyable('aspTime',21);
-			}
-			i+=edc;
+			// let lb=layers.aspTime.buyables[22];
+			// let idx=player.aspTime.buyables[22].toNumber()+1
+			// 	,sc=lb.cost(new Decimal(idx))
+			// 	,ec=lb.cost(new Decimal(idx+1))
+			// 	,r=ec.sub(sc);
+			// let edc=Math.floor(r.toNumber()*20);
+			// for(let j=0;j<edc;j++) {
+				// buyBuyable('aspTime',21);
+			// }
+			// i+=edc;
 			let d=0;
 			for(;d<30;d++) {
-				let am22=player.aspTime.buyables[22];
-				let am21=player.aspTime.buyables[21];
-				let cs22=lb.cost(am22);
-				buyBuyable('aspTime',22);
-				if(am21.lt(cs22)) {
-					break;
-				}
+				// let am22=player.aspTime.buyables[22];
+				// let am21=player.aspTime.buyables[21];
+				// let cs22=lb.cost(am22);
+				// buyBuyable('aspTime',22);
+				// if(am21.lt(cs22)) {
+				// 	break;
+				// }
 			}
 			await new Promise(clk.r);
-			if(player.aspTime.points.lt(layers.aspTime.buyables[21].cost(player.aspTime.buyables[21]))) {
-				break;
-			}
+			// if(player.aspTime.points.lt(layers.aspTime.buyables[21].cost(player.aspTime.buyables[21]))) {
+			// 	break;
+			// }
 			if(i>40) break;
 		}
 	};

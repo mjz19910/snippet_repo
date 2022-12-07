@@ -5,9 +5,6 @@ import {Runner} from "../../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp/js_lex_with_regexp.js
 */
 function main() {
-	/** @type {import("./__global.js").Holder} */
-	let holder=1;
-	holder;
 	let cur=new Runner;
 	cur.n='js_lex_with_regexp';
 	cur.f=function() {
@@ -214,8 +211,9 @@ function main() {
 		};
 		let js_parse_regexp=/(debugger|function|continue|break|else|var|for|if|(?:[a-zA-Z_$](?:[a-zA-Z$_0-9]+)?)|\d+|['"{}()\[\]=:!;,.?+ ])/;
 		class JSLexState {
+			name="JSLexState";
 			/** @type {string|undefined} */
-			m_l_str;
+			str;
 			/**
 			 * @type {any[]}
 			 */
@@ -243,19 +241,15 @@ function main() {
 			 * @param {{ break_parse: boolean; eof: boolean; reset_count: boolean; nx_len: number; lex_cur: any; }} obj
 			 */
 			constructor(str,obj) {
-				return {
-					lex_chunks: [],
-					m_l_str: str,
-					reset_count: false,
-					m_at_eof: false,
-					obj,
-				};
+				this.lex_chunks=[]
+				this.str=str;
+				this.obj=obj;
 			}
 		}
 		/** @param {JSLexState} state */
 		function func_cont_js_lex(state) {
 			let spl_parse=js_parse_regexp;
-			let str=state.m_l_str;
+			let str=state.str;
 			if(!str) throw new Error("1");
 			let r=str.split(spl_parse,2);
 			let process_result=func_process_result(r,str);
@@ -292,7 +286,7 @@ function main() {
 			};
 			let state=new JSLexState(str,fake_obj_);
 			state.obj=null;
-			window.__state=state;
+			add_function(state);
 			let cont=true;
 			let b_cnt=0;
 			let b_cnt_off=0;
@@ -308,12 +302,12 @@ function main() {
 				}
 				if(b_cnt-b_cnt_off>100) {//console.log(state.lex_chunks[state.lex_chunks.length-1],b_cnt-b_cnt_off)
 				}
-				if(state.obj&&state.m_l_str) {
-					state.m_l_str=state.m_l_str.slice(state.obj.nx_len);
+				if(state.obj&&state.str) {
+					state.str=state.str.slice(state.obj.nx_len);
 				}
-				if(!state.m_l_str) throw new Error("1");
+				if(!state.str) throw new Error("1");
 				if(state.m_at_eof) {
-					console.log('EOF={bytes_left:'+state.m_l_str.length+',processed:'+str.length+`,lex_count:${b_cnt}`+'}');
+					console.log('EOF={bytes_left:'+state.str.length+',processed:'+str.length+`,lex_count:${b_cnt}`+'}');
 					/**
 					 * @type {string[]}
 					 */

@@ -169,8 +169,8 @@ interface JQueryExpandoData {
 }
 
 interface JQueryEvents {
-	click: never;
-	mouseup: JQueryEventHandler[];
+	click?: JQueryEventHandler[];
+	mouseup?: JQueryEventHandler[];
 }
 
 interface JQueryEventHandler {

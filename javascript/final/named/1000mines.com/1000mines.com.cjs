@@ -350,6 +350,7 @@ function main() {
 				if(!w.jQuery) throw new Error("1");
 				let expando_data=game_ctrl[w.jQuery.G.expando];
 				if(!expando_data) throw new Error("Missing jquery expando key on element");
+				if(!expando_data.events.mouseup) throw 1;
 				x.f=expando_data.events.mouseup[0].handler;
 			}
 			__run(x.f,x.__all_vars);
@@ -947,24 +948,24 @@ function main() {
 			let cw=Math.floor(window.innerWidth/2);
 			let ch=Math.floor(window.innerHeight/2);
 			__run_noisy(x.f,x.__all_vars,cw,ch,false);
-			x.fo.push([x.f,x.o]);
+			// x.fo.push([x.f,x.o]);
 			__add_set();
-			ret=x.o;
+			// ret=x.o;
 			window.__ret={
 				type: "site",
 				from: "1000mines.com",
 				ret,
 			};
 			if(typeof ret!=='symbol') {
-				w.I_listener={
+				/*w.I_listener={
 					__f: x.f,
 					...ret,
-				};
+				};*/
 			} else {
-				w.I_listener={
+				/* w.I_listener={
 					__f: x.f,
 					ret,
-				};
+				}; */
 			}
 			__w=w;
 			let dom=document.querySelector('#ctl-home');
@@ -980,21 +981,22 @@ function main() {
 			let jq_dom_data=dom[expando_str];
 			if(!jq_dom_data) throw 1;
 			x.__name_list=[];
+			if(!jq_dom_data.events.click) throw 1;
 			x.f=jq_dom_data.events.click[0].handler;
 			__run(x.f,x.__all_vars);
-			ret=x.o;
+			// ret=x.o;
 			if(typeof ret!=='symbol') {
-				w.game_scope={
+				/* w.game_scope={
 					__f: x.f,
 					...ret,
-				};
+				}; */
 			} else {
-				w.game_scope={
+				/* w.game_scope={
 					__f: x.f,
 					ret,
-				};
+				}; */
 			}
-			let real_return;
+			// let real_return;
 			if(typeof ret==='symbol') throw new Error("1");
 			if(!('m' in ret)) throw new Error("1");
 			let __m=ret.m;
@@ -1015,36 +1017,36 @@ function main() {
 			x(x.f,x.__all_vars);
 			__m.click(0,0);
 			if(o===x.o) {
-				real_return={
+				/* real_return={
 					...x.o
-				};
-				__r_ret=real_return;
+				}; */
+				/* __r_ret=real_return;
 				real_return.__f=x.f;
 				return real_return;
+				*/
+				return x.o;
 			}
-			x.fo.push([x.f,x.o]);
+			// x.fo.push([x.f,x.o]);
 			__add_set();
-			let cmc=get_code_formatted(__m.click);
-			//???
-			`${cmc}`;
-			x.f=x.o.u;
+			// let cmc=get_code_formatted(__m.click);
+			// x.f=x.o.u;
 			x(x.f,x.__all_vars);
 			x.f.call(Object.create(x.f.prototype));
-			x.fo.push([x.f,x.o]);
+			// x.fo.push([x.f,x.o]);
 			__add_set();
 			window.__ret={
 				/** @type {"site"} */
 				type: "site",
 				/** @type {"1000mines.com"} */
 				from: "1000mines.com",
-				ret: x.o,
+				ret: [{},{}],
 			};
-			w.obj_field={
+			/* w.obj_field={
 				__f: x.f,
 				ret: window.__ret,
-			};
-			let ret_val=[...x.st,x.o];
-			__res=ret_val;
+			}; */
+			// let ret_val=[...x.st,x.o];
+			// __res=ret_val;
 			return_value=w;
 			break x;
 		}
