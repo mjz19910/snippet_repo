@@ -56,7 +56,6 @@ declare global {
 
 	interface debug {
 		(fn: () => void,code: string): void;
-		u: (fn: (...x: any[]) => void) => void;
 		fo: any;
 		st: Set<any>;
 		sarr: any[];

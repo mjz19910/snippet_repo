@@ -60,7 +60,7 @@ declare global {
 	var debug: debug|undefined;
 	interface debug {
 		(arg0: (...x:any[]) => any,code: string): void;
-		u: (fn: (...x: any[]) => void) => void;
+		u?: (fn: (...x: any[]) => void) => void;
 		f: (...a: any[]) => any;
 		cb: () => any;
 		fo_test: any;

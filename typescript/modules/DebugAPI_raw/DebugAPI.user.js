@@ -2372,7 +2372,7 @@ function parse_javascript_str(code_str) {
 inject_api.parse_javascript_str=parse_javascript_str;
 
 
-const debug=false;
+const debug_enabled=false;
 
 const base_console=window.console;
 
@@ -2419,7 +2419,7 @@ class APIProxyManager {
 		return new Proxy(function_value,obj);
 	}
 	start_postMessage_proxy() {
-		if(!debug) return;
+		if(!debug_enabled) return;
 		/**@type {any} */
 		let win_post_message=window.postMessage;
 		window.postMessage=this.create_proxy_for_function('postMessage_sent',win_post_message);
@@ -2467,7 +2467,7 @@ class ReversePrototypeChain {
 		this.cache_prototype(this.null_cache_key,null);
 	}
 	generate() {
-		if(!debug) return;
+		if(!debug_enabled) return;
 		for(let i=0;i<window.length;i++) {
 			if(this.window_list.includes(window[i]))
 				continue;
@@ -2477,7 +2477,7 @@ class ReversePrototypeChain {
 			this.process_target(target);
 		}
 		if(top===window) {
-			if(debug) console.log(this.destination);
+			if(debug_enabled) console.log(this.destination);
 		}
 	}
 	/** @arg {{}|null} value */
@@ -2706,7 +2706,7 @@ function do_message_handler_overwrite(handler) {
 			let d=event.data;
 			if(typeof d==='object'&&d!==null&&'type' in d) {
 				if(d.type===post_message_connect_message_type) {
-					if(debug) console.log("skip page event handler for "+d.type);
+					if(debug_enabled) console.log("skip page event handler for "+d.type);
 					return;
 				}
 			}
@@ -2772,7 +2772,7 @@ class AddEventListenerExtension {
 	constructor() {
 		overwrite_addEventListener(this);
 		elevate_event_handlers.push(this.elevate_handler.bind(this));
-		if(!debug) return;
+		if(!debug_enabled) return;
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");
 		this.init_overwrite("removeEventListener");
@@ -2867,7 +2867,7 @@ class AddEventListenerExtension {
 	}
 	/** @private @param {[any, any, any[]]} list */
 	add_to_call_list(list) {
-		if(!debug) return;
+		if(!debug_enabled) return;
 		if(this.failed_obj) return;
 		try {
 			this.add_to_call_list_impl(list);
@@ -2903,7 +2903,7 @@ class AddEventListenerExtension {
 			case "addEventListener":
 				/** @arg {[string,EventListenerOrEventListenerObject,any?]} args */
 				t.target_prototype[target]=function(...args) {
-					if(debug) t.add_to_call_list([target,this,args]);
+					if(debug_enabled) t.add_to_call_list([target,this,args]);
 					let original_function=args[1];
 					if(!t.elevated_event_handlers.includes(original_function)) {
 						/** @arg {[evt: Event]} args */
@@ -2914,11 +2914,11 @@ class AddEventListenerExtension {
 					return t.original_prototype.addEventListener.call(this,...args);
 				}; break;
 			case 'removeEventListener': t.target_prototype[target]=function(...args) {
-				if(debug) t.add_to_call_list([target,this,args]);
+				if(debug_enabled) t.add_to_call_list([target,this,args]);
 				return t.original_prototype[target].call(this,...args);
 			}; break;
 			case 'dispatchEvent': t.target_prototype[target]=function(...args) {
-				if(debug) t.add_to_call_list([target,this,args]);
+				if(debug_enabled) t.add_to_call_list([target,this,args]);
 				return t.original_prototype[target].call(this,...args);
 			}; return;
 			default: throw new Error("1");
@@ -2939,7 +2939,7 @@ class AddEventListenerExtension {
 			let d=msg_event.data;
 			if(typeof d==='object'&&d!==null&&'type' in d) {
 				if(d.type===post_message_connect_message_type) {
-					if(debug) console.log("skip page event handler for "+d.type);
+					if(debug_enabled) console.log("skip page event handler for "+d.type);
 					return;
 				}
 			}
