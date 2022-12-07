@@ -5220,6 +5220,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			if(event.data===null) return false;
 			// for https://godbolt.org & vscode integrators
 			if('vscodeScheduleAsyncWork' in event.data) return false;
+			let is_sponsor_block=this.is_sponsor_block_event_data(event.data);
+			if(is_sponsor_block) return false;
 		}
 	}
 	/** @arg {MessageEvent<unknown>} event */
@@ -5236,11 +5238,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	on_message_event(event) {
 		let fail=() => this.on_client_misbehaved(event);
 		if(this.did_client_misbehave(event)) return fail();
+		if(!this.can_handle_message(event)) return;
 		if(event.ports.length===0) {
 			let message_data=this.extract_message(event);
 			if(message_data===null) return fail();
-			let is_sponsor_block=this.is_sponsor_block_event_data(message_data);
-			if(is_sponsor_block) return;
 			fail();
 		} else if(event.ports.length===1) {
 			this.on_connect_request_message(event);
