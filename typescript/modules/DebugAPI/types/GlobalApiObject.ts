@@ -55,13 +55,15 @@ declare global {
 		APIProxyManager?: typeof APIProxyManager;
 		LoggingEventTarget?: typeof LoggingEventTarget;
 		DebugAPI?: typeof DebugAPI;
+		// yt plugin
 		Seen?: {};
-		PropertyHandler?: {}
-		dom_observer?: {}
-		port_state?: {}
-		yt_state_map?: {}
-		yt_handlers?: {}
-		yt_watch_page_loaded_handler?: {}
-		blob_create_args_arr?: {}
+		PropertyHandler?: {};
+		dom_observer?: {};
+		port_state?: {};
+		yt_state_map?: {};
+		yt_handlers?: {};
+		yt_watch_page_loaded_handler?: {};
+		blob_create_args_arr?: {};
+		HTMLMediaElementGainController: {};
 	}
 }
