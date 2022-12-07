@@ -1963,7 +1963,6 @@ class AutoBuyStateImplR {
 		this.arr=[];
 		this.ratio=0;
 		this.last_ratio=0;
-		this.compressor_stats=[];
 		this.arr_max_len=5*60;
 		this.val=1;
 		this.total_mul=1;
