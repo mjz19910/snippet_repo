@@ -1,5 +1,14 @@
-// next
-interface IInjectAPI {}
+// LocalHandler
+interface IInjectAPI {
+	LocalHandler: typeof LocalHandler;
+}
+class LocalHandler {
+	m_connection_timeout: number;
+	constructor(timeout: number) {
+		this.m_connection_timeout=timeout;
+	}
+}
+
 // elevate_event_handlers
 interface IInjectAPI {
 	elevate_event_handlers: ((arg0: EventListenersT) => void)[];

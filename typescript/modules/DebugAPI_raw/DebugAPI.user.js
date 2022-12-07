@@ -4753,6 +4753,44 @@ class CSSCascade {
 }
 inject_api.CSSCascade=CSSCascade;
 
+/** @template {{}} U @template {string} T @arg {U} x @arg {T} k @returns {x is U&Record<T,string>} */
+function is_record_with_string_type(x,k) {
+	return is_record_with_T(x,k)&&typeof x[k]==='string';
+}
+
+/** @template T @arg {T} x @arg {T} x @returns {x is {}|null} */
+function is_object(x) {
+	return typeof x==='object';
+}
+
+/** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
+function is_record_with_T(x,k) {
+	return k in x;
+}
+
+/** @template T @arg {T} x @returns {{data:T & ({}|null)}|null} */
+function cast_to_object(x) {
+	if(!is_object(x)) return null;
+	return {data: x};
+}
+
+/** @template {{}} T @arg {T} x @returns {Record<"type", string>|null} */
+function cast_to_record_with_string_type(x) {
+	if('type' in x&&typeof x.type==='string') {
+		x;
+		let y={...x,type: x.type};
+		// only gets iterable properties
+	}
+	if(!is_record_with_string_type(x,"type")) return null;
+	return x;
+}
+
+/** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {{ [P in T]: string; }|null} */
+function cast_to_record_with_key_and_string_type(x,k) {
+	if(!is_record_with_string_type(x,k)) return null;
+	return x;
+}
+
 class LocalHandler {
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
@@ -4887,6 +4925,8 @@ class LocalHandler {
 		this.m_connection_timeout=connection_timeout;
 	}
 }
+inject_api.LocalHandler=LocalHandler;
+
 class OriginState {
 	/**@readonly*/static window=window;
 	/**@readonly*/static top=window.top;
@@ -4906,44 +4946,6 @@ class OriginState {
 	static is_root;
 }
 inject_api.OriginState=OriginState;
-
-/** @template {{}} U @template {string} T @arg {U} x @arg {T} k @returns {x is U&Record<T,string>} */
-function is_record_with_string_type(x,k) {
-	return is_record_with_T(x,k)&&typeof x[k]==='string';
-}
-
-/** @template T @arg {T} x @arg {T} x @returns {x is {}|null} */
-function is_object(x) {
-	return typeof x==='object';
-}
-
-/** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
-function is_record_with_T(x,k) {
-	return k in x;
-}
-
-/** @template T @arg {T} x @returns {{data:T & ({}|null)}|null} */
-function cast_to_object(x) {
-	if(!is_object(x)) return null;
-	return {data: x};
-}
-
-/** @template {{}} T @arg {T} x @returns {Record<"type", string>|null} */
-function cast_to_record_with_string_type(x) {
-	if('type' in x&&typeof x.type==='string') {
-		x;
-		let y={...x,type: x.type};
-		// only gets iterable properties
-	}
-	if(!is_record_with_string_type(x,"type")) return null;
-	return x;
-}
-
-/** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {{ [P in T]: string; }|null} */
-function cast_to_record_with_key_and_string_type(x,k) {
-	if(!is_record_with_string_type(x,k)) return null;
-	return x;
-}
 
 class ConnectionFlags {
 	does_proxy_to_opener=false;
