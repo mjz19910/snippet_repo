@@ -4778,10 +4778,10 @@ class LocalHandler {
 	}
 	/** @arg {RemoteOriginMessage} message_data */
 	post_message(message_data) {
-		if(!this.m_com_port) {
+		if(!this.m_connection_port) {
 			throw new Error("unable to use missing port");
 		}
-		this.m_com_port.postMessage(message_data);
+		this.m_connection_port.postMessage(message_data);
 	}
 	m_missing_keep_alive_counter=0;
 	keep_alive_send() {
@@ -4844,11 +4844,11 @@ class LocalHandler {
 	}
 	/** @param {MessagePort} port */
 	connect(port) {
-		this.m_elevation_id=remote_origin.get_next_elevation_id();
-		this.m_com_port=port;
-		this.m_com_port.start();
 		elevate_event_handler(this);
-		this.m_com_port.addEventListener("message",this);
+		this.m_elevation_id=remote_origin.get_next_elevation_id();
+		this.m_connection_port=port;
+		this.m_connection_port.start();
+		this.m_connection_port.addEventListener("message",this);
 		if(this.m_timeout_id!==null) return;
 		this.start_timeout();
 	}
@@ -4859,10 +4859,10 @@ class LocalHandler {
 		},this.m_connection_timeout);
 	}
 	disconnect() {
-		if(!this.m_com_port)
+		if(!this.m_connection_port)
 			return;
-		this.m_com_port.removeEventListener('message',this);
-		this.m_com_port=null;
+		this.m_connection_port.removeEventListener('message',this);
+		this.m_connection_port=null;
 		this.m_remote_side_connected=false;
 		clearInterval(this.m_keep_alive_interval);
 		if(this.m_elevation_id)
@@ -4873,7 +4873,7 @@ class LocalHandler {
 	 */
 	constructor(connection_timeout) {
 		this.m_connection_timeout=connection_timeout;
-		this.m_com_port=null;
+		this.m_connection_port=null;
 	}
 }
 class OriginState {
@@ -5099,8 +5099,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
 	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
-	/** @arg {LocalHandler} transport_handler */
-	request_connection(transport_handler) {
+	/** @arg {LocalHandler} local_handler */
+	request_connection(local_handler) {
 		if(!this.m_connect_target)
 			return false;
 		let channel=new MessageChannel;
@@ -5113,8 +5113,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 				port_transfer_vec: null
 			}
 		},"*",[channel.port1]);
-		this.m_transport_map;
-		transport_handler.connect(channel.port2);
+		this.m_transport_map.set(local_handler, {
+			port:channel.port2,
+		});
+		local_handler.connect(channel.port2);
 		return true;
 	}
 	/**
