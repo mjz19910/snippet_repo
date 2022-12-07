@@ -4876,7 +4876,7 @@ class LocalHandler {
 				}
 				this.m_keep_alive_interval=setInterval(
 					this.keep_alive_send.bind(this),
-					this.m_connection_timeout/3
+					this.m_connection_timeout/2
 				);
 			} break;
 			case "disconnected": {
