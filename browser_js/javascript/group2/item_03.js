@@ -2,59 +2,70 @@ function main() {
 	let asyncFunctionNOP=async function() {}
 	let AsyncFunctionPrototype=Object.getPrototypeOf(asyncFunctionNOP)
 	let AsyncFunction=AsyncFunctionPrototype.constructor
-	class cur {
-		static get k() {
+	class curTy {
+		constructor() {
+			/** @type {string[]} */
+			this.keys=[];
+			/** @type {(()=>void)[]} */
+			this.values=[];
+		}
+		get k() {
 			return this.lastKey
 		}
-		static set k(key) {
+		set k(key) {
 			this.lastKey=key
 		}
-		static get v() {
+		get v() {
 			return this.lastValue
 		}
-		static set v(value) {
+		set v(value) {
 			this.lastValue=value
 			this.commit()
 		}
-		static commit() {
+		commit() {
 			this.set(this.lastKey,this.lastValue)
 		}
-		static keyIndexOf(key) {
-			return this.keys.indexOf(name)
+		/** @param {string} key  */
+		keyIndexOf(key) {
+			return this.keys.indexOf(key)
 		}
-		static set(key,value) {
-			if(this.keys===void 0) {
-				this.keys=[]
-				this.values=[]
-			}
-			if(this.keys.indexOf(name)>-1) {
+		/** @param {string} key  */
+		set(key,value) {
+			if(this.keys.indexOf(key)>-1) {
 				throw Error("Duplicate key")
 			}
 			this.keys.push(key)
 			this.values.push(value)
 		}
-		static run(id) {
-			//var m_key = this.keys[id]
-			var m_item=this.values[id]
+		/** @param {number} id */
+		run(id) {
+			var key = this.keys[id];
+			var value=this.values[id];
+			console.log("running", key);
 			try {
-				let ret=m_item()
+				let ret=value()
 				return ret
 			} finally {}
 		}
-		static execute(id) {
+		/** @param {number} id */
+		execute(id) {
 			return this.run(id)
 		}
-		static execute_async(id) {
+		/** @param {number} id */
+		execute_async(id) {
 			let ret=this.run(id)
 			ret.then(null,e => console.error(e))
 			return ret
 		}
-		static is_async(id) {
+		/** @param {number} id */
+		is_async(id) {
 			if(this.values[id] instanceof AsyncFunction) {
 				return true
 			}
+			return false;
 		}
 	}
+	let cur=new curTy;
 	cur.k='ptd-qq101'
 	cur.v=function() {
 		console.clear()
