@@ -2,7 +2,7 @@ import {GApiType} from "./GApiType.js";
 
 declare global {
 	interface Window {
-		g_api?: Partial<GlobalApiObject>;
+		g_api?: GlobalApiObject;
 	}
 }
 

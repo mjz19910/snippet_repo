@@ -26,6 +26,7 @@ import {VoidCallbackWith} from "./VoidCallbackWith.js";
 // DebugAPI
 declare global {
 	interface GlobalApiObject {
+		plugin_overlay_element?: PluginOverlayElement;
 		any_api_logger?: APIProxyManager;
 		parse_html_to_binary_arr?: (html: string) => unknown[];
 		run_modules_plugin?: VoidCallbackWith<() => void>;

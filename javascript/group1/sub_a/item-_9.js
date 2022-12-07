@@ -9,14 +9,14 @@ v2 (cur): snippet_repo/javascript/group1/sub_a/item-_9.js
 function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]))
 }
-const compressionStatsCalc=new CompressionStatsCalculator;
+const compressionStatsCalc_0=new CompressionStatsCalculator;
 /**
  * @param {any} arr
  * @param {any} calc_win
  */
 function sorted_comp_stats(arr,calc_win) {
 	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win)
-	ret.sort((/** @type {number[]} */ a,/** @type {number[]} */ b) => b[1]-a[1])
+	ret.sort((a,b) => b[1]-a[1])
 	return ret
 }
 /**
@@ -24,6 +24,7 @@ function sorted_comp_stats(arr,calc_win) {
  * @param {number} start
  */
 function next_chunk(arr,start) {
+	let c_len;
 	let s_arr
 	let last
 	for(let i=start;i<start+30;i++) {
@@ -37,19 +38,19 @@ function next_chunk(arr,start) {
 		if(diff===0)
 			continue
 		if(diff===1) {
-			clen=i
+			c_len=i
 			break
 		}
 		console.log(s_arr[0],...s_arr.slice(0,8).map((/** @type {any[]} */ e) => e[1]))
 	}
-	return clen
+	return c_len
 }
 /**
  * @param {any} e
  */
 function get_ids(e) {
 	let ss=JSON.stringify(e)
-	return ids.indexOf(ss)
+	return ids.value.indexOf(ss)
 }
 /**
  * @param {{ stats: any; arr: any; stats_win: any; }} obj

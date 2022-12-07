@@ -23,7 +23,7 @@ export class GApiType {
 	yt_watch_page_loaded_handler?: () => void;
 	gain_controller?: HTMLMediaElementGainController;
 	static create() {
-		let g_api:Partial<GlobalApiObject>={};
+		let g_api:GlobalApiObject={};
 		g_api.Seen=Seen;
 		g_api.PropertyHandler=PropertyHandler;
 		g_api.dom_observer=dom_observer;
