@@ -97,10 +97,10 @@ function main() {
 			return 1;
 		if(is_typechecking)
 			return "";
-		// return {}
+		return {};
 	}();
 	/**
-	 * @param {((Window & typeof globalThis) | HTMLIFrameElement | CSSStyleDeclaration)[]} v
+	 * @param {(Window|(Window & typeof globalThis) | HTMLIFrameElement | CSSStyleDeclaration)[]} v
 	 */
 	function log_if_noisy(...v) {
 		if(log_level>LOG_VERBOSE) {
@@ -161,6 +161,7 @@ function main() {
 					return 1;
 				if(is_typechecking)
 					return "";
+				return {};
 			}();
 			ret_src=o;
 			/** @type {Map<string,{}>} */
@@ -441,7 +442,7 @@ function main() {
 			});
 			return cin;
 		}
-		if('cr_getC2Runtime' in window && window.cr_getC2Runtime instanceof Function) {
+		if('cr_getC2Runtime' in window&&window.cr_getC2Runtime instanceof Function) {
 			js=do_json_stringify_iter(90,cmap,window.cr_getC2Runtime());
 			var retv=exdo_user(cmap);
 			var car=[]
@@ -450,6 +451,7 @@ function main() {
 				i++;
 				car.push(j.value[0]);
 				repo.push(j.value[1]);
+				if(i>30) {break;}
 			}
 			var protos=Array.from(new Set(car.map(e => Object.getPrototypeOf(e))));
 			/**
@@ -510,6 +512,7 @@ function main() {
 						cars.push(j.value);
 						sc.push(j.value);
 					}
+					if(z>40) {break;}
 				}
 				if(sb==1) {
 					return js_inner;
