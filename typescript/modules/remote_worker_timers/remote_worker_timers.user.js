@@ -1058,7 +1058,7 @@
 		 */
 		function remoteSetTimeout(handler,timeout,...target_args) {
 			if(!worker_state) {
-				setTimeout=setTimeout_global;
+				window.setTimeout=setTimeout_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return setTimeout_global(handler,timeout,...target_args);
 			}
@@ -1069,7 +1069,7 @@
 		/**@arg {number|undefined} id */
 		function remoteClearTimeout(id) {
 			if(!worker_state) {
-				clearTimeout=clearTimeout_global;
+				window.clearTimeout=clearTimeout_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return clearTimeout_global(id);
 			}
@@ -1084,7 +1084,7 @@
 		 */
 		function remoteSetInterval(handler,timeout=0,...target_args) {
 			if(!worker_state) {
-				setInterval=setInterval_global;
+				window.setInterval=setInterval_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return setInterval_global(handler,timeout,...target_args);
 			}
@@ -1095,7 +1095,7 @@
 		/**@arg {number} id */
 		function remoteClearInterval(id) {
 			if(!worker_state) {
-				clearInterval=clearInterval_global;
+				window.clearInterval=clearInterval_global;
 				l_log_if(LOG_LEVEL_WARN,'lost worker_state in timer');
 				return clearInterval_global(id);
 			}
