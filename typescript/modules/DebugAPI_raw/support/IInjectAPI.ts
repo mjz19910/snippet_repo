@@ -1,9 +1,7 @@
-import {DisabledMulCompressionT, ModuleLoadDbgT} from "../DebugAPI.user";
-
 interface IInjectAPI {
 	saved_object_arrays: {}[][];
-	ModuleLoadDbg: ModuleLoadDbgT;
-	DisabledMulCompression: DisabledMulCompressionT;
+	ModuleLoadDbg: {};
+	DisabledMulCompression: {};
 	RemoteOriginConnection: {};
 	remote_origin: {};
 }
@@ -85,4 +83,4 @@ class VoidCallback<U extends any[],C> {
 	}
 }
 
-export {IInjectAPI};
+export {type IInjectAPI};
