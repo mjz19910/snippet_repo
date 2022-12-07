@@ -31,11 +31,7 @@ export class RemoteOriginConnection {
 	 * @param {Window & typeof globalThis} window
 	 */
 	setup_root_proxy(window) {
-		//TODO
-		let todo=true;
-		if(!todo) {
-			return window;
-		}
+		console.log("todo: setup_root_proxy", window);
 	}
 	/**
 	 * @param {Window} post_message_event_transport_target

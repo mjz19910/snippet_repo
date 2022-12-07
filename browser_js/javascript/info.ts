@@ -166,3 +166,5 @@ const counting_range_2=new CountingSubRange<[ItemRange<"0","9","0">,ItemRange<"0
 	[new ItemRange("0","9","0"),new ItemRange("0","9","1")]
 );
 group_2.extend(new RangeJoiner(counting_range_2,""));
+
+export {}
