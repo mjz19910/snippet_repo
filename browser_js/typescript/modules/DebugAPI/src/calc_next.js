@@ -1,9 +1,8 @@
-import {CompressionStatsCalculator} from "../types/CompressionStatsCalculator.js";
 import {CompressTU} from "../types/CompressTU.js";
 
 /**
  * @param {CompressionStatsCalculator} stats
- * @param {IDValue} obj
+ * @param {IDValue_0} obj
  * @param {number} max_id
  */
 export function calc_next(stats,obj,max_id) {
@@ -15,7 +14,7 @@ export function calc_next(stats,obj,max_id) {
 	if(!obj.next) {
 		return null;
 	}
-	/**@type {IDValue} */
+	/**@type {IDValue_0} */
 	let next=obj;
 	next.value=[max_id,'=',rep_val];
 	next.log_val=[max_id,'=',f_val[0],f_val[1]];

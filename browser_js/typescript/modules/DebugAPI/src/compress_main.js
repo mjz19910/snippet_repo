@@ -20,7 +20,7 @@ export function compress_main(stats) {
 	}
 	el_ids.value=src_arr.value.map(get_ids);
 	max_id.value=new Set(el_ids.value).size;
-	let arr=stats.compressor.try_compress(el_ids.value);
+	let arr=stats.compressor.try_compress_number(el_ids.value);
 	let obj_start=new IDValue_0(0,null);
 	obj_start.arr_rep=el_ids.value;
 	if(arr[0]===true) {

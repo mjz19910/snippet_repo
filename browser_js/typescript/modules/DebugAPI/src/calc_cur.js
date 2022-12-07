@@ -1,4 +1,3 @@
-import {CompressionStatsCalculator} from "../types/CompressionStatsCalculator.js";
 import {sorted_comp_stats_0} from "../types/sorted_comp_stats_0";
 
 /**

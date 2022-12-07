@@ -1,5 +1,3 @@
-import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
-
 export function sorted_comp_stats_0(this_: CompressionStatsCalculator,obj: IDValue_0) {
 	if(obj.arr_str!=null&&obj.stats_win!=null) {
 		/**@type {[string,number][]} */
