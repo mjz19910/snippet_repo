@@ -2,7 +2,7 @@ export class Vector<T> extends Array<T> {
     append(arg0: T) {
         this.push(arg0);
     }
-    at(x: number): T {
+    override at(x: number): T {
 		let value=super.at(x);
 		if(value === void 0) throw new Error("");
 		return value;

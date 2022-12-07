@@ -1,5 +1,5 @@
 import * as path from "path";
-import process from "process";
+import "process";
 import {fetch_url} from "./fetch_url.js";
 import {PageLoaderState} from "./page_loader.js";
 import {Extern} from "./use_extern.js";
