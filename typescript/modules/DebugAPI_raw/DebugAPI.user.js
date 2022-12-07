@@ -4894,10 +4894,13 @@ class LocalHandler {
 			} break;
 		}
 	}
-	/** @param {MessagePort} port */
-	connect(port) {
+	/**
+	 * @param {MessagePort} port
+	 * @param {number} elevation_id
+	 */
+	connect(port,elevation_id) {
 		elevate_event_handler(this);
-		this.m_elevation_id=remote_origin.get_next_elevation_id();
+		this.m_elevation_id=elevation_id;
 		this.m_connection_port=port;
 		this.m_connection_port.start();
 		this.m_connection_port.addEventListener("message",this);
@@ -5122,7 +5125,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		this.m_transport_map.set(local_handler, {
 			port:channel.port2,
 		});
-		local_handler.connect(channel.port2);
+		local_handler.connect(channel.port2,this.get_next_elevation_id());
 		return true;
 	}
 	/**
@@ -5168,7 +5171,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		let message_record=cast_to_record_with_string_type(message_data);
 		if(message_record===null) return fail();
 		switch(message_record.type) {
-			case remote_origin.post_message_connect_message_type: break;
+			case this.post_message_connect_message_type: break;
 			default: return fail();
 		}
 		let client_id=this.client_max_id++;
