@@ -4,7 +4,7 @@ import {YtdAppElement} from "../elements/YtdAppElement.js";
 
 declare global {
 	interface Window {
-		ytd_app?: YtdAppElement|null;
+		ytd_app?: HTMLElement;
 	}
 }
 

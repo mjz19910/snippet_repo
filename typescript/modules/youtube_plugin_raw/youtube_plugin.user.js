@@ -50,7 +50,7 @@ function default_from(v1,v2) {
 	return res;
 }
 
-/**@type {typeof window.g_api} */
+/**@type {import("./support/GlobalApiObject").GlobalApiObjectImplS} */
 let g_api=default_from(window.g_api,{});
 window.g_api=g_api;
 
@@ -1733,15 +1733,21 @@ function ui_css_toggle_click_handler() {
 		ui_plugin_css_enabled=true;
 	}
 }
+/** @template {"ytd_app"} T @arg {string} element_id @arg {T} save_key @arg {HTMLElement} with_element */
+function with_element(element_id,save_key,with_element) {
+	console.log(`on ${element_id}`);
+	element_map.set(element_id,with_element);
+	if(save_key==="ytd_app") {
+		window.ytd_app=with_element;
+	}
+}
 /**
  * @param {HTMLElement} element
  */
 function on_ytd_app(element) {
 	const element_id="ytd-app";
-	console.log(`on ${element_id}`);
-	element_map.set(element_id,element);
+	with_element(element_id,"ytd_app",element);
 	ytd_app=YtdAppElement.cast(element);
-	window.ytd_app=element;
 	ytd_app.addEventListener("yt-navigate-finish",function(event) {
 		let real_event=YTNavigateFinishEvent.cast(event);
 		for(let handler of on_yt_navigate_finish) {

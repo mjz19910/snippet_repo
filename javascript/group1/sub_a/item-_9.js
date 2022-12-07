@@ -3,14 +3,26 @@
 v1 (old): snippet_repo/javascript/final/items/item9_v1.js
 v2 (cur): snippet_repo/javascript/group1/sub_a/item-_9.js
 */
+/**
+ * @param {any[]} stats
+ */
 function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]))
 }
+const compressionStatsCalc=new CompressionStatsCalculator;
+/**
+ * @param {any} arr
+ * @param {any} calc_win
+ */
 function sorted_comp_stats(arr,calc_win) {
-	let ret=csc.calc_compression_stats(arr,calc_win)
-	ret.sort((a,b) => b[1]-a[1])
+	let ret=compressionStatsCalc.calc_compression_stats(arr,calc_win)
+	ret.sort((/** @type {number[]} */ a,/** @type {number[]} */ b) => b[1]-a[1])
 	return ret
 }
+/**
+ * @param {any} arr
+ * @param {number} start
+ */
 function next_chunk(arr,start) {
 	let s_arr
 	let last
@@ -28,17 +40,27 @@ function next_chunk(arr,start) {
 			clen=i
 			break
 		}
-		console.log(s_arr[0],...s_arr.slice(0,8).map(e => e[1]))
+		console.log(s_arr[0],...s_arr.slice(0,8).map((/** @type {any[]} */ e) => e[1]))
 	}
 	return clen
 }
+/**
+ * @param {any} e
+ */
 function get_ids(e) {
 	let ss=JSON.stringify(e)
 	return ids.indexOf(ss)
 }
+/**
+ * @param {{ stats: any; arr: any; stats_win: any; }} obj
+ */
 function calc_cur(obj) {
 	obj.stats=sorted_comp_stats(obj.arr,obj.stats_win)
 }
+/**
+ * @param {{ stats: string | any[]; next: { value: any[]; log_val: any[]; rep_arr: any; arr: any; }; arr: any; }} obj
+ * @param {any} max_id
+ */
 function calc_next(obj,max_id) {
 	if(obj.stats.length===0) {
 		return null
@@ -54,6 +76,9 @@ function calc_next(obj,max_id) {
 	obj.next.arr=compress_result[1]
 	return compress_result
 }
+/**
+ * @param {{ [x: string]: any; id?: any; arr_rep?: any; arr?: any; stats_win?: any; stats?: any; next?: any; }} obj
+ */
 function run_calc(obj) {
 	obj.stats_win=2
 	calc_cur(obj)
@@ -95,6 +120,9 @@ function run_calc(obj) {
 	}
 	return [true,res]
 }
+/**
+ * @param {{ id?: number; arr_rep?: any; arr?: any; next?: any; }} obj
+ */
 function flat_obj(obj) {
 	let ret=[]
 	while(obj.next) {
@@ -105,16 +133,19 @@ function flat_obj(obj) {
 	ret.push(obj)
 	return ret
 }
+/**
+ * @param {string | number} val
+ */
 function do_decode(val) {
 	if(typeof val==='number') {
-		let fv=g_obj_arr.slice(1).find(e => e.value[0]===val)
+		let fv=g_obj_arr.slice(1).find((/** @type {{ value: number[]; }} */ e) => e.value[0]===val)
 		if(!fv) {
 			console.log('not found',val)
 			return
 		}
 		id_map[val]=fv.value.slice(2)
 	} else {
-		let fv=g_obj_arr.slice(1).find(e => e.value[0]===val.value)
+		let fv=g_obj_arr.slice(1).find((/** @type {{ value: any[]; }} */ e) => e.value[0]===val.value)
 		if(!fv) {
 			console.log('not found',val)
 			return
@@ -122,6 +153,9 @@ function do_decode(val) {
 		id_map[val.value]=fv.value.slice(2)
 	}
 }
+/**
+ * @param {string | number} e
+ */
 function try_decode(e,deep=true) {
 	if(typeof e==='number') {
 		if(dr_map[e]) {
@@ -166,9 +200,12 @@ function try_decode(e,deep=true) {
 }
 function init_decode() {
 	window.dr_map=[]
-	ids_dec=ids.map(e => JSON.parse(e))
+	ids_dec=ids.map((/** @type {string} */ e) => JSON.parse(e))
 	id_map=[]
 }
+/**
+ * @param {any} e
+ */
 function decode_map(e) {
 	if(!window.id_map)
 		init_decode()
@@ -184,6 +221,10 @@ function decode_map(e) {
 	}
 	return e
 }
+/**
+ * @param {{ [s: string]: any; }} obj_1
+ * @param {{ [s: string]: any; }} obj_2
+ */
 function deep_eq(obj_1,obj_2) {
 	if(obj_1===obj_2)
 		return true
@@ -211,6 +252,10 @@ function deep_eq(obj_1,obj_2) {
 	}
 	throw new Error("Fixme")
 }
+/**
+ * @param {string | any[]} arr
+ * @param {any} value
+ */
 function deep_includes(arr,value) {
 	for(let i=0;i<arr.length;i++) {
 		let is_eq=deep_eq(arr[i],value)
@@ -231,9 +276,9 @@ function compress_init() {
 }
 function compress_main() {
 	compress_init()
-	ids=[...new Set((src_arr.map(e => JSON.stringify(e))))]
+	ids=[...new Set((src_arr.map((/** @type {any} */ e) => JSON.stringify(e))))]
 	id_groups=[]
-	src_arr.forEach(e => {
+	src_arr.forEach((/** @type {any} */ e) => {
 		let ii=ids.indexOf(JSON.stringify(e))
 		id_groups[ii]??=[]
 		if(!deep_includes(id_groups[ii],e))

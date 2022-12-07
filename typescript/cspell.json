@@ -17,6 +17,7 @@
         "DebuggableTypes",
         "deref",
         "externref",
+        "flexy",
         "float_milli_from_prev",
         "Formattable",
         "get_millis_as_pretty_str",

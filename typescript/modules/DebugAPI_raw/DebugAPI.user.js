@@ -28,6 +28,7 @@ const sha_1_initial="781ee649";
 // #pragma end sha_1_hash
 
 inject_api.saved_objects=[];
+inject_api.saved_object_arrays=[];
 /**
  * @param {{ name: string; }} callable
  */
@@ -3835,6 +3836,7 @@ let compressionStatsCalc=stats_calculator_info.stats_calculator;
 function log_stats(stats) {
 	console.log(...stats.sort((a,b) => b[1]-a[1]));
 }
+add_function(log_stats);
 /**
  * @param {string[]} arr
  * @param {number} calc_win
@@ -3870,6 +3872,7 @@ function next_chunk(arr,start) {
 	}
 	return c_len;
 }
+add_function(next_chunk);
 /** @type {{value:string[]}} */
 let ids={value: []};
 /** @param {string} value */
@@ -4125,6 +4128,7 @@ function assign_next(value,next) {
 	value.next=next;
 	return next;
 }
+add_function(assign_next);
 /**@implements {IDValue} */
 class Value {
 	/** @param {number} id */
@@ -4154,7 +4158,7 @@ class Value {
 	/** @type {any} */
 	stats_win;
 }
-Value;
+add_function(Value);
 
 let max_id={value: 0};
 /** @param {IDValue} obj @param {CompressionStatsCalculator} stats */
@@ -4200,9 +4204,7 @@ function key_not_found(val) {
 /** @type {number[]} */
 let id_map_one=[];
 
-/**
- * @param {string | number} val
- */
+/** @param {string | number} val */
 function do_decode(val) {
 	let fv=g_obj_arr.value.slice(1).find(e => find_matching_value(val,e));
 	if(!fv) return key_not_found(val);
@@ -4224,14 +4226,10 @@ function do_decode(val) {
 /** @type {(string | number)[][]} */
 let dr_map_num=[];
 
-/**
- * @type {(string | number)[][]}
- */
+/** @type {(string | number)[][]} */
 let ids_dec_num=[];
 
-/**
- * @type {Repeat<(string | number)[]>[]}
- */
+/** @type {Repeat<(string | number)[]>[]} */
 let dr_map_rep=[];
 
 /** @type {(string | number)[][]} */
@@ -4294,9 +4292,10 @@ let id_map=[];
 /** @type {Map<string, number>} */
 let id_map_str=new Map;
 /**@type {JsonValueBox[]} */
-let ids_dec;
+let ids_dec=[];
 /** @type {(Repeat<string | number>|Repeat<(string | number)[]>|(string | number)[])[]} */
 let dr_map=[];
+add_array(ids_dec);
 
 class JsonNullBox {
 	type="null";
@@ -5777,3 +5776,8 @@ class DebugAPI {
 	}
 }
 inject_api.DebugAPI=DebugAPI;
+/** @arg {{}[]} ids_dec */
+function add_array(ids_dec) {
+	inject_api.saved_object_arrays.push(ids_dec);
+}
+

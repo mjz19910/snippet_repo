@@ -3,7 +3,7 @@ import {PropertyHandler} from "./PropertyHandler.js";
 import {Seen} from "./Seen.js";
 
 // youtube_plugin
-export interface GlobalApiObject {
+export interface GlobalApiObjectImplS {
 	HTMLMediaElementGainController: typeof HTMLMediaElementGainController;
 	gain_controller?: HTMLMediaElementGainController;
 	yt_watch_page_loaded_handler?: {};
