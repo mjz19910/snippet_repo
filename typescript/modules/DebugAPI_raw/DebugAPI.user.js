@@ -5101,8 +5101,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 	/** @arg {LocalHandler} local_handler */
 	request_connection(local_handler) {
-		if(!this.m_connect_target)
-			return false;
+		if(!this.m_connect_target) return false;
 		let channel=new MessageChannel;
 		console.log("post request ConnectOverPostMessage");
 		this.m_connect_target.postMessage({
