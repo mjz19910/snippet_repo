@@ -1,6 +1,6 @@
 // main shuffle and encrypt array
 //cspell:disable
-var _0x4a8e = [
+export var _0x4a8e = [
 	'pfe|z', 'keEyP', 'XxJMN', 'retur', 'VCMpP', '|load', 'RbCwZ', 'fpwaU', 'funct', 's|glo', 'mMvUh', 'fsmBU', 'XAVpz', 'yRSTi', 'count',
 	'sbhyJ', 'GnDyP', 'azLUm', 'EIBlX', 'CKmvl', 'VGctk', 'nctio', 'QIHUj', 'split', 'kXsWe', 'sGdkU', 'mvVse', '*(?:[', 'sIIue', 'sfYKO',
 	'test', 'iryKI', 'LqCeh', 'sBEXl', 'xhjuS', 'tANSD', 'rn\x20th', 'apfNn', 'PCDQD', 'lntHP', 'proto', 'haHzg', 'yQXzs', 'uZfUk', 'pquSR',

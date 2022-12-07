@@ -1,11 +1,10 @@
 import {BaseCompression} from "../src/compress/BaseCompression.js";
-import {NumType} from "../src/NumType.js";
 import {Repeat_1} from "./repeat/Repeat_1.js";
 
 export class CompressTemplateType<T extends InstanceType<U>,U extends RecordKey<U>> {
 	i: number;
 	arr: T[]=[];
-	ret: AnyOrRepeat<T>[]=[];
+	ret: AnyOrRepeat_1<T>[]=[];
 	constructor_key: U;
 	constructor(arr: T[],constructor_key: U) {
 		this.i=0;
