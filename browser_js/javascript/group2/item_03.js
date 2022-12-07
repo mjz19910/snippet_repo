@@ -31,7 +31,10 @@ function main() {
 		keyIndexOf(key) {
 			return this.keys.indexOf(key);
 		}
-		/** @param {string} key  */
+		/**
+		 * @param {string} key
+		 * @param {()=>void} value
+		 */
 		set(key,value) {
 			if(this.keys.indexOf(key)>-1) {
 				throw Error("Duplicate key");
