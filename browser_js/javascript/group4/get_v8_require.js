@@ -26,26 +26,7 @@ function run_d() {
 		}
 		state.import_arr=import_arr;
 		let x;
-		state.m=async function(f,b,s) {
-			if(this.aborted) {
-				console.log("aborted");
-				return null;
-			}
-			if(!w.u) {
-				console.log("lost undebug function");
-				return null;
-			}
-			w.u(f);
-			w(f,`debug.f=${s};debug.s();0`);
-			console.log(s);
-			try {
-				w.b=b(f);
-			} catch(e) {
-				this.aborted=true;
-				w.e=e;
-			}
-			return s;
-		};
+		state.m=0;
 		import_arr[0]=x=await w.m(q.v8.Serializer,f => new f,'assert');
 		//v8.Serializer
 		import_arr[1]=x=await w.m(x,f => f(true),'lazyError');
@@ -64,6 +45,26 @@ function run_d() {
 		back_ptr=null;
 		/** @type {{}|null} */
 		native_module_scope=null;
+		m(f,b,s) {
+			if(this.aborted) {
+				console.log("aborted");
+				return null;
+			}
+			if(!w.u) {
+				console.log("lost undebug function");
+				return null;
+			}
+			w.u(f);
+			w(f,`debug.f=${s};debug.s();0`);
+			console.log(s);
+			try {
+				this.b=b(f);
+			} catch(e) {
+				this.aborted=true;
+				this.e=e;
+			}
+			return s;
+		}
 	}
 	let state=new ReqSt;
 	window.v8_require_state=state;
