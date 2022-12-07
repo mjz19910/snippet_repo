@@ -8,11 +8,8 @@ function main() {
 			}
 			this.run=1;
 			this.p=Promise.resolve(this);
-			this.p.then(() => {
-				this.start();
-				this.p=this.fn();
-				this.after();
-			});
+			this.start();
+			this.p.then(this.reset.bind(this));
 
 		}
 		run=0;
