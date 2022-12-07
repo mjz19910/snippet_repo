@@ -5039,10 +5039,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		super();
 		this.m_local_handler=new LocalHandler(300);
 		let s=this.state;
-		this.state.is_top=this.state.window===this.state.top;
-		this.state.is_root=this.state.opener===null;
-		if(!s.is_top)
-			s.is_root=false;
+		s.is_top=this.state.window===this.state.top;
+		s.is_root=this.state.opener===null;
+		if(!s.is_top) s.is_root=false;
 		if(s.is_top&&s.opener===null) {
 			this.start_root_server();
 			return;
