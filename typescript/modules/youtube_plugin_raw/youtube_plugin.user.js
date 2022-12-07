@@ -849,7 +849,7 @@ class HandleRichGridRenderer {
 	/**@arg {string} path @arg {RichGridRenderer} renderer */
 	static on_contents(path,renderer) {
 		let t=this;
-		console.log("on_contents", path);
+		if(this.debug) console.log("on_contents", path);
 		renderer.contents=renderer.contents.filter((content_item) => {
 			check_item_keys('.contents[]',Object.keys(content_item));
 			if('remove_content_item' in content_item) {
