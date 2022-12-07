@@ -16,7 +16,7 @@ declare global {
 	}
 
 	// Out of band result (logged array in the console)
-	function queryObjects(x: any):void;
+	var queryObjects:((x: any)=>void)|undefined;
 }
 
 export {};
