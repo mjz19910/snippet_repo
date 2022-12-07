@@ -1,7 +1,0 @@
-{
-  "devDependencies": {
-    "@types/jquery": "^3.5.14",
-    "@types/node": "^18.11.10",
-    "ts-node": "^10.9.1"
-  }
-}
