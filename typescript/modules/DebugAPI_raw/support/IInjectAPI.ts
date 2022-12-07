@@ -1,6 +1,6 @@
 // next
 interface IInjectAPI {}
-// elevate_event_handler_handlers
+// elevate_event_handlers
 interface IInjectAPI {
 	elevate_event_handlers: ((arg0: EventListenersT) => void)[];
 }
@@ -19,10 +19,6 @@ interface ProxyTargetMapClass {
 // saved_objects
 interface IInjectAPI {
 	saved_objects: [string,{name: string;}][];
-}
-// elevate_event_handler
-interface IInjectAPI {
-	elevate_event_handler?: (arg0: EventListenersT) => void;
 }
 // parse_javascript_str
 interface IInjectAPI {
