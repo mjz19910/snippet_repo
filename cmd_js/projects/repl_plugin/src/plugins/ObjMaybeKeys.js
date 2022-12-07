@@ -20,13 +20,15 @@ export class ObjMaybeKeys {
 	 */
 	get_from_store(name) {
 		switch(this.type) {
-			case 'keys':
+			case 'keys': {
 				let nx=name;
 				switch(nx) {
 					case 'window': return this.value[nx];
 					default: console.log('case needed for',name);
 				}
-			case 'no_keys':
+			} throw new Error();
+			case 'no_keys': throw new Error();
+			default: throw 1;
 		}
 	}
 }
