@@ -2,8 +2,7 @@ function main() {
 	class PromiseHandlerImpl {
 		reset() {
 			if(this.run) {
-				this.p=this.fn();
-				this.after();
+				this.p=this.fn(this);
 				return;
 			}
 			this.run=true;
@@ -19,13 +18,6 @@ function main() {
 			console.log("start",this);
 			if(!this.m_start) return;
 			this.m_start();
-		};
-		/** @type {(() => void)|null} */
-		m_after=null;
-		after() {
-			console.log("promise result",this);
-			if(!this.m_after) return;
-			this.m_after();
 		}
 		/** @param {number} dl */
 		wait(dl) {
@@ -33,18 +25,17 @@ function main() {
 			return new Promise(a => setTimeout(a,this.dl));
 		}
 		/**
-		 * @param {(this: PromiseHandlerImpl) => Promise<void>} fn
+		 * @param {(x: PromiseHandlerImpl) => Promise<void>} fn
 		 */
 		constructor(fn) {
 			this.fn=fn;
-			this.p=this.fn();
+			this.p=this.fn(this);
 		}
 	}
 	/**
-	 * @arg {(this: PromiseHandlerImpl) => Promise<void>} fn
-	 * @arg {(()=>void) | null} callback_fn
+	 * @arg {(x: PromiseHandlerImpl) => Promise<void>} fn
 	 */
-	function z(fn,callback_fn) {
+	function z(fn) {
 		var rng=Math.random();
 		window.postMessage(rng);
 		var promise_val=new PromiseHandlerImpl(fn);
@@ -57,14 +48,13 @@ function main() {
 			window.removeEventListener("message",msg_listener);
 		}
 		promise_val.m_start=() => window.addEventListener("message",msg_listener);
-		promise_val.m_after=callback_fn;
 		promise_val.reset();
 		return promise_val;
 	}
-	/** @this {PromiseHandlerImpl}*/
-	async function async_task() {
-		let P=this;
+	/** @arg {PromiseHandlerImpl} P */
+	async function async_task(P) {
 		await P.wait(50);
+		P.run=false;
 	}
-	return z(async_task,promise_result);
+	return z(async_task);
 }
