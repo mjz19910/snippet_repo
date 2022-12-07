@@ -883,7 +883,23 @@ const instruction_descriptor_arr=[
 
 /** @typedef {import("./ns.js").StackVMBase} StackVMBase_CJS */
 /** @implements {StackVMBase_CJS} */
-class StackVmBaseImpl {}
+class StackVmBaseImpl {
+	/** @arg {number} offset @arg {import("./ns.js").Box} value @arg {[string,...any[]]} lex_instruction */
+	update_instruction(offset, value, lex_instruction) {
+		if(offset==0) {
+			if(value.type==='string') {
+				lex_instruction[offset]=value.value;
+			} else {
+				throw new Error("Invalid");
+			}
+		} else if(offset>0) {
+			lex_instruction[offset]=value;
+		} else {
+			throw new Error("Unreachable");
+		}
+		return lex_instruction;
+	}
+}
 
 /**
  * @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS
