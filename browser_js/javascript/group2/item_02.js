@@ -4,9 +4,13 @@ v1 (old): snippet_repo_v2/javascript/group2/item_02.js
 v2 (cur): snippet_repo_v2/javascript/group2/item_02.js
 */
 x:{
-	if(!window.temp1) {
-		console.log("please export the queryObjects result as temp1");
-		queryObjects(Function.prototype);
+	if(!('temp1' in window)) {
+		if(queryObjects) {
+			console.log("please export the queryObjects result as temp1");
+			queryObjects(Function.prototype);
+		} else {
+			console.log("please open the console/devtools");
+		}
 		break x;
 	}
 	let GeneratorFunction = (function*(){}).prototype.constructor;
