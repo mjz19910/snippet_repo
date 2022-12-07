@@ -83,6 +83,7 @@ function main() {
 		nc.reset();
 		return nc;
 	}
+	/** @arg {PromiseHandlerImpl} P */
 	async function b(P) {
 		p1();
 		await P.wait(80);
@@ -100,7 +101,7 @@ function main() {
 			buyRu3();
 		await P.wait(50);
 		if(P.run) {
-			P.o.reset();
+			P.reset();
 		}
 		return;
 	}
