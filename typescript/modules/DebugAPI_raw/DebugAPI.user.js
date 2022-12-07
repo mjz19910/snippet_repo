@@ -4913,12 +4913,14 @@ class RemoteOriginConnectionData {
 }
 
 class RemoteHandler {
+	/** @type {RemoteOriginMessage[]} */
+	unhandled_events=[];
 	/** @type {RemoteOriginConnection['m_flags']} */
 	m_flags;
 	/** @type {MessagePort} */
 	connection_port;
-	/** @type {RemoteOriginMessage[]} */
-	unhandled_events=[];
+	/** @type {number} */
+	client_id;
 	/** @arg {RemoteOriginMessage} message_data */
 	post_message(message_data) {
 		console.log("RemoteHandler.post_message",message_data);
