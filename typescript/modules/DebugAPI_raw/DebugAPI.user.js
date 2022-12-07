@@ -4905,7 +4905,7 @@ class ConnectionFlags {
 }
 
 class RemoteOriginConnectionData {
-	m_flags=new ConnectionFlags;;
+	m_flags=new ConnectionFlags;
 	/** @type {Map<TransportMessageObj, {port:MessagePort}>} */
 	m_transport_map=new Map;
 	max_elevate_id=0;
