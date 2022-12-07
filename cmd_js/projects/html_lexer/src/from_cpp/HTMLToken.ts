@@ -24,7 +24,9 @@ export function use_types() {
 }
 // 3 "from_cpp/HTMLToken.cppts" 2
 // 1 "from_cpp/VERIFY.cppts" 1
-import {ak_verification_failed} from "../ak_verification_failed.js";
+function ak_verification_failed(msg: string) {
+    throw new Error("Verify failure:"+msg);
+}
 // 4 "from_cpp/HTMLToken.cppts" 2
 
 export class HTMLToken extends HTMLTokenBase {
