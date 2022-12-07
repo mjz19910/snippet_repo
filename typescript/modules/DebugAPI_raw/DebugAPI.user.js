@@ -5090,10 +5090,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	init_transport_over(remote_target) {
 		this.m_local_handler=new LocalHandler(300);
 		this.m_remote_target=remote_target;
-	}
-	init() {
-		// may not need init
-		if(!this.m_local_handler) return;
 		this.request_connection(this.m_local_handler);
 	}
 	/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
@@ -5247,7 +5243,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 } // </RemoteOriginConnection>
 inject_api.RemoteOriginConnection=RemoteOriginConnection;
 let remote_origin=new RemoteOriginConnection();
-remote_origin.init();
 inject_api.remote_origin=remote_origin;
 
 const html_parsing_div_element=document.createElement("div");
