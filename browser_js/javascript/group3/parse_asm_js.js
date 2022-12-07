@@ -2,7 +2,30 @@
 //console.log(util.inspect(this.state.tok[0],{depth:null,maxArrayLength:300}))
 var rx=0;
 var parsejs=class {
-	constructor(s) {
+	/**
+	 * @param {string} str
+	 */
+	constructor(str) {
+		this.str=str;
+		let kwo=[
+			"async,await",
+			"case,catch,class,const,continue",
+			"debugger,default,delete,do",
+			"else,exports,extends",
+			"finally,for,function",
+			"if,import,in,instanceof",
+			"let",
+			"new",
+			"of",
+			"return",
+			"static,super,switch",
+			"this,throw,try,typeof",
+			"var,void",
+			"while,with",
+			"yield",
+		].join(",").split(",");
+		this.keyword_handlers=new Map
+		this.keyword_handlers.set("","");
 		this.state={
 			getargs: 0,
 			parsebody: 0,
@@ -10,73 +33,16 @@ var parsejs=class {
 			pt: 0,
 			parast: [],
 			tok: [],
-			idents: []
-		}
-		let kwo={
-			[Symbol.iterator]: function*() {
-				let tmp=Object.getOwnPropertyNames(this)
-				for(let i of tmp) {
-					yield this[i]
-				}
-			},
-			a: "async,await",
-			c: "case,catch,class,const,continue",
-			d: "debugger,default,delete,do",
-			e: "else,exports,extends",
-			f: "finally,for,function",
-			i: "if,import,in,instanceof",
-			l: "let",
-			n: "new",
-			o: "of",
-			r: "return",
-			s: "static,super,switch",
-			t: "this,throw,try,typeof",
-			v: "var,void",
-			w: "while,with",
-			y: "yield",
-			z: []
-		}
-		for(var i of kwo) {
-			if(i=="yield") {
-				kwo.z.push(i)
-				this.state.keywords=new Set(kwo.z)
-				//...kwo.z.flat()
-				break
-			}
-			if(i.indexOf(",")>0) {
-				kwo.z.push.apply(kwo.z,i.split(","))
-			} else {
-				kwo.z.push(i)
-			}
-		}
-		this.keyword_handlers=new Map
-		let m_class=this.constructor
-		for(i of Object.getOwnPropertyNames(Reflect.getPrototypeOf(this))) {
-			if(i.match(/eat_/)) {
-				this.keyword_handlers.set(i.substr(4),this[i].bind(this))
-			}
-		}
-		this.state.primitives=["null","undefined","true","false","NaN","Infinity","-Infinity","String"]
-		if(s) {
-			function set_handler(n,fn) {
-				if(!this instanceof m_class) {
-					throw RangeError("this not instance of "+m_class)
-				}
-				if(typeof fn!="function") {
-					throw TypeError("set_handler called but parameter 2 is not a function")
-				}
-				this.keyword_handlers.set(n,fn.bind(this))
-			}
-			function get_handler(g) {
-				if(!this instanceof m_class) {
-					throw RangeError("this not instance of "+m_class)
-				}
-				this.keyword_handlers.get(g)
-			}
-			s(this,set_handler,get_handler)
+			idents: [],
+			keywords:new Set(kwo),
+			primitives: ["null","undefined","true","false","NaN","Infinity","-Infinity","String"],
 		}
 	}
-	eat_function(s,state) {
+	/**
+	 * @param {{ parast: any[]; pt: number; tok: any[]; getargs: number; parsebody: number; }} state
+	 */
+	eat_function(state) {
+		let s=this.str;
 		state.parast.push(state.pt)
 		state.pt=7
 		var save=state.tok
@@ -684,10 +650,22 @@ var parsejs=class {
 					var js_ident="ident"
 					var match=s.match(/^[a-zA-Z$_\d]+/)
 					if(match) {
-						var hit=match[0]
+						var hit=match[0];
+						switch (hit) {
+							case 'function': this.eat_function(state); continue;
+							case 'try': this.eat_try(state); continue;
+							case 'catch': this.eat_catch(state); continue;
+							case 'finally': this.eat_finally(state); continue;
+							default: 
+							state.tok.push({
+								value: "keyword",
+								data: hit
+							});
+							state.index+=hit.length;
+						}
 						if(state.keywords.has(hit)) {
 							if(this.keyword_handlers.has(hit)) {
-								s=s.slice(hit.length)
+								state.hit_len=hit.length;
 								s=this.keyword_handlers.get(hit)(s,state)
 								continue
 							} else {
