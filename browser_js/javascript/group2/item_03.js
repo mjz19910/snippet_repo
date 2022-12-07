@@ -1,7 +1,4 @@
 function main() {
-	let asyncFunctionNOP=async function() {};
-	let AsyncFunctionPrototype=Object.getPrototypeOf(asyncFunctionNOP);
-	let AsyncFunction=AsyncFunctionPrototype.constructor;
 	class curTy {
 		constructor() {
 			/** @type {string[]} */
