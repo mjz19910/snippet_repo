@@ -5276,11 +5276,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		function on_message_event(event) {
 			t.on_message_event(event);
 		}
-		/** @type {any} */
-		let event_handler=on_message_event;
-		/** @type {EventListener} */
-		let handler=event_handler;
-		elevate_event_handler(handler);
+		elevate_event_handler(on_message_event);
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
