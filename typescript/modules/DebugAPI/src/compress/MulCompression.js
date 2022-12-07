@@ -1,4 +1,3 @@
-import {Repeat} from "./Repeat.js";
 import {stats_calculator_info} from "./stats_calculator_info.js";
 import {BaseCompression} from "./BaseCompression.js";
 import {CompressState} from "./CompressState.js";
@@ -7,9 +6,9 @@ export class MulCompression extends BaseCompression {
 	/**
 	 * @template T
 	 * @arg {T[]} arr
-	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	 * @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	try_compress_T(arr) {
-		/**@type {CompressState<T,AnyOrRepeat<T>>} */
+		/**@type {CompressState<T,AnyOrRepeat_0<T>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -22,7 +21,7 @@ export class MulCompression extends BaseCompression {
 	/**
 	 * @template {RecordKey<symbol>} U
 	 * @template {InstanceType<U>} T
-	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
+	 * @arg {CompressState<T, AnyOrRepeat_0<T>>} state
 	 * @arg {T} item
 	 * */
 	compress_rle_T_X(state,item) {
@@ -30,7 +29,7 @@ export class MulCompression extends BaseCompression {
 		let off=1;
 		while(item===state.arr[state.i+off]) off++;
 		if(off==1) return false;
-		state.ret.push(new Repeat(item,off));
+		state.ret.push(new Repeat_0(item,off));
 		state.i+=off-1;
 		return true;
 	}
@@ -40,8 +39,8 @@ export class MulCompression extends BaseCompression {
 	 * @template {abstract new (...args: any) => any} U
 	 * @arg {U} _
 	 * @arg {T[]} arr
-	 * @arg {AnyOrRepeat<T>[]} ret
-	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	 * @arg {AnyOrRepeat_0<T>[]} ret
+	 * @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
 		if(MulCompression.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];

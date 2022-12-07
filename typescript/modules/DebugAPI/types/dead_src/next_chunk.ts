@@ -1,8 +1,8 @@
-import {sorted_comp_stats} from "../sorted_comp_stats.js";
 import {CompressionStatsCalculator} from "../CompressionStatsCalculator.js";
+import {sorted_comp_stats_1} from "../sorted_comp_stats_1";
+import {IDValue_1} from "./IDValue_1";
 
 export function next_chunk<T>(calc_stats: CompressionStatsCalculator,arr: T[],start: number) {
-	let obj={};
 	let s_arr:number[][]=[];
 	let last;
 	let c_len;
@@ -10,10 +10,10 @@ export function next_chunk<T>(calc_stats: CompressionStatsCalculator,arr: T[],st
 		if(s_arr) {
 			last=s_arr[0][1];
 		}
-		let t=new IDValue(i,null);
+		let t=new IDValue_1(i,null);
 		t.id=i;
 		t.set_arr_T(arr);
-		sorted_comp_stats(calc_stats,t);
+		sorted_comp_stats_1(calc_stats,t);
 		s_arr=[];
 		if(!last)
 			continue;

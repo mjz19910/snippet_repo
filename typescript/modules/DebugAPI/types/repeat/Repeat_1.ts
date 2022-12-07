@@ -1,8 +1,8 @@
 import {is_undefined} from "./is_undefined.js";
 
 export class Repeat_1<T> {
-	map_instance_or_d1: Map<symbol,Map<T,<U extends RecordKey<string>>(constructor_key_2: U) => AnyOrRepeat<InstanceType<U>>>>=new Map;
-	map_instance_or: Map<symbol,<T,U>() => Map<T,AnyOrRepeat<U>>>=new Map;
+	map_instance_or_d1: Map<symbol,Map<T,<U extends RecordKey<string>>(constructor_key_2: U) => AnyOrRepeat_1<InstanceType<U>>>>=new Map;
+	map_instance_or: Map<symbol,<T,U>() => Map<T,AnyOrRepeat_1<U>>>=new Map;
 	static base_map: Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => RepeatMapType<A,B,C>>=new Map;
 	static cache_set=new Map<any,any>();
 	static cache_get<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B): Map<A,C> {
@@ -25,7 +25,7 @@ export class Repeat_1<T> {
 		}
 		return res;
 	}
-	static from_TU_entry(a: TypeAOrTypeB<string,number>,b: number): AnyOrRepeat2<string,number> {
+	static from_TU_entry(a: TypeAOrTypeB<string,number>,b: number): AnyOrRepeat2_1<string,number> {
 		switch(a[0]) {
 			case 'T': return ['T',Repeat_1.get(a[1],b)];
 			case 'U': return ['U',Repeat_1.get_num(a[1],b)];

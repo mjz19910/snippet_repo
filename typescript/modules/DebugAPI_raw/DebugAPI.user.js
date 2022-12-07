@@ -2178,14 +2178,10 @@ class ecma_root {
 		}
 		return [true,out_state.item,out_state.length];
 	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	InputElementRegExp(str,index) {
+	/** @returns {LexReturnTyShort} */
+	InputElementRegExp() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// RightBracePunctuator, RegularExpressionLiteral
-		let in_state={
-			str,
-			index,
-		};
 		let out_state={
 			/** @type {string|null} */
 			type: null,
@@ -2201,14 +2197,10 @@ class ecma_root {
 		}
 		return [true,out_state.item,out_state.length];
 	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	InputElementRegExpOrTemplateTail(str,index) {
+	/** @returns {LexReturnTyShort} */
+	InputElementRegExpOrTemplateTail() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// RegularExpressionLiteral, TemplateSubstitutionTail
-		let in_state={
-			str,
-			index,
-		};
 		let out_state={
 			/** @type {string|null} */
 			type: null,
@@ -2224,14 +2216,10 @@ class ecma_root {
 		}
 		return [true,out_state.item,out_state.length];
 	}
-	/** @arg {string} str @arg {number} index @returns {LexReturnTyShort} */
-	InputElementTemplateTail(str,index) {
+	/** @returns {LexReturnTyShort} */
+	InputElementTemplateTail() {
 		// WhiteSpace, LineTerminator, Comment, CommonToken
 		// DivPunctuator, TemplateSubstitutionTail
-		let in_state={
-			str,
-			index,
-		};
 		let out_state={
 			/** @type {string|null} */
 			type: null,
@@ -2655,7 +2643,8 @@ function overwrite_addEventListener(obj) {
 					case 'function':
 					case 'object': {
 						if(e===null) {
-							return rq.push(e);
+							rq.push(e);
+							return;
 						}
 						rq.push(new WeakRef(e));
 					} break;
@@ -3347,7 +3336,7 @@ class BaseCompression {
 	compress_result_state_dual(arg0) {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	/** @arg {TypeAOrTypeB<string,number>[]} src @arg {AnyOrRepeat2<string, number>[]} dst @returns {DualR} */
+	/** @arg {TypeAOrTypeB<string,number>[]} src @arg {AnyOrRepeat2_1<string, number>[]} dst @returns {DualR} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
@@ -3471,9 +3460,9 @@ class DisabledMulCompression extends MulCompression {
 	/**
 	 * @template T
 	 * @arg {T[]} arr
-	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	 * @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	try_compress_T(arr) {
-		/**@type {CompressState<T,AnyOrRepeat<T>>} */
+		/**@type {CompressState<T,AnyOrRepeat_0<T>>} */
 		let state=new CompressState(arr);
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -3486,7 +3475,7 @@ class DisabledMulCompression extends MulCompression {
 	/**
 	 * @template {RecordKey<symbol>} U
 	 * @template {InstanceType<U>} T
-	 * @arg {CompressState<T, AnyOrRepeat<T>>} state
+	 * @arg {CompressState<T, AnyOrRepeat_0<T>>} state
 	 * @arg {T} item
 	 * */
 	compress_rle_T_X(state,item) {
@@ -3503,8 +3492,8 @@ class DisabledMulCompression extends MulCompression {
 	 * @template {new (...args: any) => any} U
 	 * @arg {U} _
 	 * @arg {T[]} arr
-	 * @arg {AnyOrRepeat<T>[]} ret
-	 * @returns {[true, AnyOrRepeat<T>[]]|[false,T[]]} */
+	 * @arg {AnyOrRepeat_0<T>[]} ret
+	 * @returns {[true, AnyOrRepeat_0<T>[]]|[false,T[]]} */
 	compress_result_T(_,arr,ret) {
 		if(this.did_compress(arr,ret)) return [true,ret];
 		return [false,arr];
@@ -3634,7 +3623,7 @@ class ModuleLoadDbg {
 	/**@arg {any} thisArg @arg {[any,any,any]} argArray */
 	evaluate_len_3(thisArg,argArray) {
 		if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-			var ars=Object.entries(argArray[1]).filter(([j,e]) => e instanceof Array);
+			var ars=Object.entries(argArray[1]).filter(([,e]) => e instanceof Array);
 			var ars_i=ars[0][1].indexOf(this);
 			if(ars[0][1].indexOf(this)>-1) {
 				console.log("found module array:","require."+ars[0][0]);
@@ -3705,19 +3694,18 @@ function run_modules_plugin() {
 	function function_prototype_call_inject(thisArg,...argArray) {
 		let ret;
 		switch(argArray.length) {
-			case 2:
-				if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
-					var ars=Object.entries(argArray[1]).filter(([j,e]) => e instanceof Array);
-					var ars_i=ars[0][1].indexOf(this);
-					if(ars[0][1].indexOf(this)>-1) {
-						console.log("found module array:","require."+ars[0][0]);
-						var mods=Object.entries(argArray[1]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
-						if(mods.length>0) {
-							console.log("found module cache:","require."+mods[0][0]);
-							found_modules(ars[0][1],mods[0][1],argArray[2]);
-						}
+			case 2: if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
+				var ars=Object.entries(argArray[1]).filter(([j,e]) => e instanceof Array);
+				var ars_i=ars[0][1].indexOf(this);
+				if(ars[0][1].indexOf(this)>-1) {
+					console.log("found module array:","require."+ars[0][0]);
+					var mods=Object.entries(argArray[1]).filter(([_a,b]) => b.hasOwnProperty(ars_i)&&b[ars_i]===argArray[0]);
+					if(mods.length>0) {
+						console.log("found module cache:","require."+mods[0][0]);
+						found_modules(ars[0][1],mods[0][1],argArray[2]);
 					}
 				}
+			} break;
 			default:
 				ret=bound_apply_call(this,[thisArg,argArray]);
 		}
@@ -3904,16 +3892,16 @@ function calc_cur(stats,obj) {
 	sorted_comp_stats(stats,obj);
 }
 
-class IDValue {
+class IDValueImpl {
 	/**@arg {number} id @arg {IDValue|null} next */
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
 		/** @type {TypeAOrTypeB<string, number>[]} */
 		this.arr_dual=[];
-		/** @type {AnyOrRepeat2<string,number>[]} */
+		/** @type {AnyOrRepeat2_0<string,number>[]} */
 		this.arr_dual_compressed=[];
-		/** @type {AnyOrRepeat<number>[]} */
+		/** @type {AnyOrRepeat_0<number>[]} */
 		this.arr_rep_num=[];
 		/** @type {string[]} */
 		this.arr_str=[];
@@ -4046,7 +4034,7 @@ class CompressDual {
 	i;
 	/**@type {TypeAOrTypeB<string,number>[]} */
 	arr=[];
-	/**@type {AnyOrRepeat2<string,number>[]} */
+	/**@type {AnyOrRepeat2_1<string,number>[]} */
 	ret=[];
 	m_base=new BaseCompression;
 	/**@returns {DualR} */
@@ -4131,6 +4119,9 @@ function assign_next(value,next) {
 add_function(assign_next);
 /**@implements {IDValue} */
 class Value {
+	set_arr_T(){}
+	arr_dual_x;
+	arr_rep_str;
 	/** @param {number} id */
 	constructor(id) {
 		this.id=id;

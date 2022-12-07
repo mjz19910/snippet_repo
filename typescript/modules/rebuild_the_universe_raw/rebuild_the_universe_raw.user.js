@@ -1409,7 +1409,7 @@ class BaseCompressionImpl {
 	compress_result_state_dual(arg0) {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	/** @arg {TypeAOrTypeB<string,number>[]} src @arg {AnyOrRepeat2<string,number>[]} dst @returns {DualR} */
+	/** @arg {TypeAOrTypeB<string,number>[]} src @arg {AnyOrRepeat2_1<string,number>[]} dst @returns {DualR} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];

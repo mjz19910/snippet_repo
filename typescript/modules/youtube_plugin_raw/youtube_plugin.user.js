@@ -2564,7 +2564,6 @@ function main() {
 	if(!window.g_api) {
 		window.g_api={};
 	}
-	let g_api=window.g_api;
 	start_message_channel_loop();
 }
 main();

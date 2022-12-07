@@ -4,7 +4,7 @@ import {Repeat} from "./Repeat.js";
 export class CompressTU {
 	i: number;
 	arr: TypeAOrTypeB<string,number>[]=[];
-	ret: AnyOrRepeat2<string,number>[]=[];
+	ret: AnyOrRepeat2_1<string,number>[]=[];
 	try_compress_dual() {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {

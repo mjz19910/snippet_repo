@@ -1529,7 +1529,7 @@ class BaseCompression {
 	compress_result_state_dual(arg0: CompressDual): DualR {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	compress_result_dual(src: TypeAOrTypeB<string,number>[],dst: AnyOrRepeat2<string,number>[]): DualR {
+	compress_result_dual(src: TypeAOrTypeB<string,number>[],dst: AnyOrRepeat2_1<string,number>[]): DualR {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}

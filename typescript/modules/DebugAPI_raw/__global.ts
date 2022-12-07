@@ -37,52 +37,28 @@ declare global {
 	};
 }
 
-class Repeat<T> {
+export class Repeat_2<T> {
 	value;
 	times;
 	constructor(value: T,times: number) {
 		this.value=value;
 		this.times=times;
 	}
-	static from_TU_entry(a: ["string",string]|["number",number],b: number): ["string",string|Repeat<string>]|["number",number|Repeat<number>] {
+	static from_TU_entry(
+		_a: ["string",string]|["number",number],
+		_b: number
+	): ["string",string|Repeat_2<string>]|["number",number|Repeat_2<number>] {
 		throw new Error("1");
 	}
 }
 
 declare global {
-	type AnyOrRepeat<T>=T|Repeat<T>;
+	type AnyOrRepeat2_0<T,U>=["T",AnyOrRepeat_0<T>]|["U",AnyOrRepeat_0<U>];
+	type AnyOrRepeat2_1<T,U>=["T",AnyOrRepeat_1<T>]|["U",AnyOrRepeat_1<U>];
 }
 
 declare global {
-	type AnyOrRepeat2<T,U>=["T",AnyOrRepeat<T>]|["U",AnyOrRepeat<U>];
-}
-
-declare global {
-	type TypeAOrTypeB<TypeA,TypeB>=["T",TypeA]|["U",TypeB];
-}
-
-
-declare global {
-	class IDValue {
-		set_arr_T<T>(arr: T[]): void;
-		id: number;
-		next: IDValue|null;
-		arr_dual: (["string",string]|["number",number])[];
-		arr_dual_compressed: (["string",AnyOrRepeat<string>]|["number",AnyOrRepeat<number>])[];
-		arr_rep_num: AnyOrRepeat<number>[];
-		arr_str: string[];
-		arr_num: number[];
-		value: [number,'=',number]|null;
-		arr_rep: number[];
-		log_val: [number,'=',string,number]|null;
-		stats: [string,number][];
-		stats_win: number;
-		constructor(id: number,next: IDValue|null);
-	}
-}
-
-declare global {
-	type DualR=[true,AnyOrRepeat2<string,number>[]]|[false,TypeAOrTypeB<string,number>[]];
+	type DualR=[true,AnyOrRepeat2_1<string,number>[]]|[false,TypeAOrTypeB<string,number>[]];
 }
 
 declare global {
@@ -165,11 +141,7 @@ declare global {
 	};
 }
 
-type Constructor=new () => any;
-
-declare global {
-	type RecordKey<T>=Constructor&{key: T;};
-}
+export type Constructor=new () => any;
 
 declare global {
 	type depth_type=['depth',number,WeakRef<depth_or_any[]>];
