@@ -45,9 +45,8 @@ function main() {
 	/**
 	 * @arg {(fn: any)=>Promise<void>} fn
 	 * @arg {(()=>void) | null} callback_fn
-	 * @arg {{}} ex
 	 */
-	function z(fn,callback_fn,ex) {
+	function z(fn,callback_fn) {
 		let s={};
 		s.fn=fn;
 		s.dl=500;
@@ -83,8 +82,9 @@ function main() {
 		nc.reset();
 		return nc;
 	}
-	/** @arg {PromiseHandlerImpl} P */
-	async function b(P) {
+	/** @this {PromiseHandlerImpl}*/
+	async function b() {
+		let P=this;
 		p1();
 		await P.wait(80);
 		p1();
@@ -105,11 +105,6 @@ function main() {
 		}
 		return;
 	}
-	var promise_result=function() {
-		if(a) {
-			a.p.catch(() => a=void 0);
-		}
-	};
 	if(typeof a=="undefined") {
 		a=z(b,promise_result);
 	} else {
