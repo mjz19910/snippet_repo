@@ -4999,7 +4999,7 @@ class RemoteHandler {
 				});
 			} return;
 			case "keep_alive_reply": {
-				console.log("unexpected keep alive reply from", data.side);
+				console.log("unexpected keep alive reply my side: `%o`, data side: `%o`", this.side, data.side);
 			} return;
 		}
 		this.unhandled_events.push(data);
