@@ -1118,12 +1118,14 @@ function setup_prototype_modify() {
 		construct(...proxy_args) {
 			let c_cls=proxy_args[0];
 			let tc=class extends c_cls {
+				/** @override */
+				get src() {
+					return super.src;
+				}
+				/** @override */
 				set src(_src) {
 					if(_src.indexOf('/api/stats/qoe?')>-1) return;
 					super.src=_src;
-				}
-				get src() {
-					return super.src;
 				}
 			};
 			let c_args=proxy_args[1];
