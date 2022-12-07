@@ -4847,9 +4847,7 @@ class TransportMessageObj {
 		this.m_elevation_id=remote_origin.get_next_elevation_id();
 		this.m_com_port=port;
 		this.m_com_port.start();
-		if(inject_api.elevate_event_handler) {
-			inject_api.elevate_event_handler(this);
-		}
+		elevate_event_handler(this);
 		this.m_com_port.addEventListener("message",this);
 		if(this.m_timeout_id!==null) return;
 		this.start_timeout();
