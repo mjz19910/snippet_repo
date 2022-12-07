@@ -3,6 +3,10 @@ import {gen_function_prototype_use} from "./gen_function_prototype_use.js";
 import {resolve_function_constructor} from "./resolve_function_constructor.js";
 
 export function run_modules_plugin() {
+	if(!window.g_api) throw 1;
+	let g_api=window.g_api;
+	if(!g_api.function_as_string_vec) throw 1;
+	let function_as_string_vec=g_api.function_as_string_vec;
 	let function_prototype=resolve_function_constructor().prototype;
 
 	let function_prototype_call=function_prototype.call;
@@ -55,6 +59,7 @@ export function run_modules_plugin() {
 	Function.prototype.call=function_prototype_call_inject;
 	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg,...argArray) {
+		if(!g_api.function_as_string_vec) throw 1;
 		let ret;
 		switch(argArray.length) {
 			case 2:
@@ -73,8 +78,8 @@ export function run_modules_plugin() {
 			default:
 				ret=bound_apply_call(this,[thisArg,argArray]);
 		}
-		if(window.g_api.function_as_string_vec.indexOf(this.toString())==-1) {
-			window.g_api.function_as_string_vec.push(this.toString());
+		if(function_as_string_vec.indexOf(this.toString())==-1) {
+			function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};
@@ -85,8 +90,8 @@ export function run_modules_plugin() {
 	 */
 	function function_prototype_apply_inject(tv,r) {
 		let ret=bound_apply_call(this,[tv,r]);
-		if(window.g_api.function_as_string_vec.indexOf(this.toString())==-1) {
-			window.g_api.function_as_string_vec.push(this.toString());
+		if(function_as_string_vec.indexOf(this.toString())==-1) {
+			function_as_string_vec.push(this.toString());
 		}
 		return ret;
 	};

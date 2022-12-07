@@ -23,7 +23,7 @@ export class GApiType {
 	yt_watch_page_loaded_handler?: () => void;
 	gain_controller?: HTMLMediaElementGainController;
 	static create() {
-		let g_api:GApiType={};
+		let g_api:GlobalApiObject={};
 		g_api.Seen=Seen;
 		g_api.PropertyHandler=PropertyHandler;
 		g_api.dom_observer=dom_observer;
@@ -32,5 +32,6 @@ export class GApiType {
 		g_api.yt_handlers=yt_handlers;
 		g_api.yt_watch_page_loaded_handler=yt_watch_page_loaded_handler;
 		g_api.blob_create_args_arr=blob_create_args_arr;
+		return g_api;
 	}
 }
