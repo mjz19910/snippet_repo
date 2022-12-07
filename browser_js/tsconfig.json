@@ -1,13 +1,19 @@
 {
 	"compilerOptions": {
+<<<<<<< HEAD
 		"module": "None",
 		"moduleResolution": "Classic",
+		"target": "es6",
+=======
+		"experimentalDecorators": true,
 		"target": "ESNext",
+>>>>>>> e10fb913 (u)
 		"lib": [
 			"ESNext",
 			"DOM"
 		],
 		"types": [
+<<<<<<< HEAD
 			"jquery"
 		],
 		"typeRoots": [
@@ -18,6 +24,20 @@
 		"sourceMap": true,
 		"declaration": true,
 		"strict": true,
+=======
+			"jquery",
+			"node",
+		],
+		"declaration": true,
+		"module": "ESNext",
+		"moduleResolution": "NodeNext",
+		"sourceMap": true,
+		"outDir": "./build",
+		"strict": true,
+		"typeRoots": [
+			"./node_modules/@types"
+		],
+>>>>>>> e10fb913 (u)
 		"allowJs": true,
 		"checkJs": true,
 		"incremental": true,
@@ -30,17 +50,31 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"useUnknownInCatchVariables": true,
+<<<<<<< HEAD
 		"noPropertyAccessFromIndexSignature": false,
 		"forceConsistentCasingInFileNames": true,
 		"exactOptionalPropertyTypes": true,
 		"experimentalDecorators": true,
 		"isolatedModules": false,
+=======
+		"isolatedModules": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"forceConsistentCasingInFileNames": true,
+>>>>>>> e10fb913 (u)
 	},
 	"ts-node": {
 		"esm": true,
 	},
 	"include": [
+<<<<<<< HEAD
+		"javascript/**/*",
+		"typescript/src/**/*",
+		"typescript/modules/**/*",
+		"typescript/ns.ts",
+		"web/src/**/*",
+=======
 		"**/*",
+>>>>>>> e10fb913 (u)
 	],
 	"exclude": [
 		"node_modules",

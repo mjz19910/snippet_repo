@@ -1,0 +1,21 @@
+import {HTMLTokenBase} from "../HTMLTokenBase.js";
+#include "HTMLToken.pre.ts"
+#include "VERIFY.cppts"
+
+export class HTMLToken extends HTMLTokenBase {
+    opt(): Optional<HTMLTokenBase> {
+        return new Optional(this);
+    }
+    add_attribute(attribute: HTMLTokenBase.Attribute) {
+        VERIFY(this.is_start_tag() || this.is_end_tag());
+        this.ensure_tag_attributes().deref().append(move(attribute));
+    }
+    ensure_tag_attributes(): Ref<Vector<HTMLTokenBase.Attribute>> {
+        VERIFY(this.is_start_tag() || this.is_end_tag());
+        // 3 == OwnPtr<Vector<HTMLTokenBase.Attribute>>
+        let ptr: Ref<OwnPtr<Vector<HTMLTokenBase.Attribute>>> = Ref.wrap(this.m_data.get<3>().deref());
+        if (ptr.is_null())
+            ptr.assign(Ref.wrap(new Vector<HTMLTokenBase.Attribute>()));
+        return Ref.wrap(ptr.deref().deref());
+    }
+}

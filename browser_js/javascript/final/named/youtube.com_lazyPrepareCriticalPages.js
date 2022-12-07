@@ -6,7 +6,11 @@ import {Runner} from "../support/Runner.js";
 v1 (cur): snippet_repo/javascript/final/youtube.com_lazyPrepareCriticalPages.js
 */
 function main() {
+<<<<<<< HEAD
 	/** @type {import("./__global.js")} */
+=======
+	/** @type {import("./__global.js").Holder} */
+>>>>>>> e10fb913 (u)
 	let holder=1;
 	holder;
 	let cur=new Runner;
