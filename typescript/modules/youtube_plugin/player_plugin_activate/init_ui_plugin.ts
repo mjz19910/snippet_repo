@@ -9,7 +9,7 @@ export function init_ui_plugin() {
 		return;
 	if(current_timeout.value===null)
 		return;
-	if('hasRef' in current_timeout.value) {
+	if(typeof current_timeout.value==='object'&&'hasRef' in current_timeout.value) {
 		clearTimeout(current_timeout.value);
 		current_timeout.value=null;
 	} else {
