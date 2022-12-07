@@ -4,8 +4,6 @@ declare interface DOMTokenList {
     remove(c: string): void;
     toggle(c: string): void;
     contains(c: string): boolean;
-    get length(): number;
     values(): IterableIterator<string>;
-    get value(): string[];
     toString(): string;
 }
