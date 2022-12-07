@@ -418,7 +418,12 @@ export type DomInstructionType=DomInstructionMapImpl[keyof DomInstructionMapImpl
 
 export type DomTaggedPackImpl=["dom",DomInstructionType]|["vm",InstructionTypeImpl]|["dom_mem",number];
 
-console=globalThis.console;
+declare global {
+	interface Window {
+		console: Console;
+	}
+}
+console=window.console;
 
 const AUDIO_ELEMENT_VOLUME=0.58;
 const AudioMuted=true;
@@ -1447,9 +1452,9 @@ class NamedIdGenerator {
 
 	next_named(name: string) {
 		if(this.state_map.has(name)) {
-			let cur=this.state_map.get(name)+1;
-			this.state_map.set(name,cur);
-			return cur;
+			let state_item=this.state_map.get(name)+1;
+			this.state_map.set(name,state_item);
+			return state_item;
 		} else {
 			this.state_map.set(name,1);
 			return 1;
@@ -1596,7 +1601,7 @@ declare global {
 		MulCompression: typeof MulCompression;
 	}
 }
-let window=globalThis as unknown as Window;
+
 window.MulCompression=MulCompression;
 abstract class AbstractFire {
 	abstract fire(): void;

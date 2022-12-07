@@ -1312,9 +1312,9 @@ class NamedIdGenerator {
 	/** @arg {string} name */
 	next_named(name) {
 		if(this.state_map.has(name)) {
-			let cur=this.state_map.get(name)+1;
-			this.state_map.set(name,cur);
-			return cur;
+			let state_item=this.state_map.get(name)+1;
+			this.state_map.set(name,state_item);
+			return state_item;
 		} else {
 			this.state_map.set(name,1);
 			return 1;

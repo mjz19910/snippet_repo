@@ -156,7 +156,7 @@ function main() {
 			if(!r) throw new Error("failed to parse single quotes");
 			return r[0];
 		}
-		let func_process_result=function(/** @type {any} */ state,/** @type {string | any[]} */ res,/** @type {RegExp} */ spl_parse,/** @type {any} */ str) {
+		let func_process_result=function(/** @type {string | any[]} */ res,/** @type {string} */ str) {
 			let obj={};
 			if(res.length<2) {
 				obj.break_parse=true;
@@ -210,6 +210,7 @@ function main() {
 					return obj;
 				}
 			}
+			return obj;
 		};
 		let js_parse_regexp=/(debugger|function|continue|break|else|var|for|if|(?:[a-zA-Z_$](?:[a-zA-Z$_0-9]+)?)|\d+|['"{}()\[\]=:!;,.?+ ])/;
 		class JSLexState {
@@ -257,7 +258,7 @@ function main() {
 			let str=state.m_l_str;
 			if(!str) throw new Error("1");
 			let r=str.split(spl_parse,2);
-			let process_result=func_process_result(state,r,spl_parse,str);
+			let process_result=func_process_result(r,str);
 			if(!process_result) throw new Error("1");
 			state.obj=process_result;
 			let obj=state.obj;
@@ -334,7 +335,7 @@ function main() {
 		func_start_js_lex(code);
 	};
 	cur.value=cur.do_cur();
-	return cur;
+	return cur.make_ret();
 	//# sourceURL=snippet:///%24_2
 }
 window.__ret=main();

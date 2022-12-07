@@ -367,7 +367,7 @@ function main() {
 		return run_sync_code();
 	};
 	cur.value=cur.do_cur();
-	return cur;
+	return cur.make_ret();
 	//# sourceURL=snippet:///%24_2
 }
 window.__ret=main();
