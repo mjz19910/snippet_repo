@@ -1,3 +1,25 @@
+/**
+ * @param {[Blob | MediaSource]} args
+ */
+function createObjectURL(...args) {
+	let ret=CreateObjURLCache.originalScope.createObjectURL(...args);
+	CreateObjURLCache.cache.set(ret,[args,ret,true]);
+	return ret;
+}
+/**
+ * @param {[string]} args
+ */
+function revokeObjectURL(...args) {
+	let key=args[0];
+	let cache_value=CreateObjURLCache.cache.get(key);
+	CreateObjURLCache.cache.delete(key);
+	if(cache_value) {
+		CreateObjURLCache.expired.push(cache_value);
+	}
+	let ret=CreateObjURLCache.originalScope.revokeObjectURL(...args);
+	return ret;
+}
+
 export class CreateObjURLCache {
 	/** @readonly */
 	static originalScope={
@@ -24,30 +46,8 @@ export class CreateObjURLCache {
 		URL.revokeObjectURL=scope.revokeObjectURL;
 	}
 	getScope() {
-		let base=CreateObjURLCache.originalScope;
 		/**@type {CreateObjURLCache.originalScope} */
 		let scope={createObjectURL,revokeObjectURL};
 		return scope;
-		/**
-		 * @param {[Blob | MediaSource]} args
-		 */
-		function createObjectURL(...args) {
-			let ret=base.createObjectURL(...args);
-			CreateObjURLCache.cache.set(ret,[args,ret,true]);
-			return ret;
-		}
-		/**
-		 * @param {[string]} args
-		 */
-		function revokeObjectURL(...args) {
-			let key=args[0];
-			let cache_value=CreateObjURLCache.cache.get(key);
-			CreateObjURLCache.cache.delete(key);
-			if(cache_value) {
-				CreateObjURLCache.expired.push(cache_value);
-			}
-			let ret=base.revokeObjectURL(...args);
-			return ret;
-		}
 	}
 }
