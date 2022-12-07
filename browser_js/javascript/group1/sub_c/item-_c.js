@@ -1,17 +1,16 @@
 function main() {
 	class PromiseHandlerImpl {
 		reset() {
-			var t=this;
-			if(t.run) {
-				t.p=t.fn(t);
-				t.after();
+			if(this.run) {
+				this.p=this.fn();
+				this.after();
 			} else {
-				t.run=1;
-				t.p=Promise.resolve(t);
-				t.p.then(function() {
-					t.start();
-					t.p=t.fn(t);
-					t.after();
+				this.run=1;
+				this.p=Promise.resolve(this);
+				this.p.then(()=>{
+					this.start();
+					this.p=this.fn();
+					this.after();
 				});
 			}
 
