@@ -2796,7 +2796,7 @@ class AddEventListenerExtension {
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
-		if(val instanceof TransportMessageObj) {
+		if(val instanceof LocalHandler) {
 			this.convert_to_id_key(real_value,key,val,"TransportMessageObj:elevated_"+val.m_elevation_id);
 			return;
 		}
@@ -4748,7 +4748,7 @@ class CSSCascade {
 }
 inject_api.CSSCascade=CSSCascade;
 
-class TransportMessageObj {
+class LocalHandler {
 	/**@type {number|undefined} */
 	m_elevation_id;
 	/** @type {ReturnType<typeof setTimeout>|null} */
@@ -4806,7 +4806,7 @@ class TransportMessageObj {
 	}
 	/** @param {MessageEvent<RemoteOriginMessage>} message_event_response */
 	handleEvent(message_event_response) {
-		/** @type {ReportInfo<TransportMessageObj>} */
+		/** @type {ReportInfo<LocalHandler>} */
 		let report_info={
 			event: message_event_response,
 			handler: this,
@@ -4906,7 +4906,7 @@ class ConnectionFlags {
 
 class RemoteOriginConnectionData {
 	m_flags=new ConnectionFlags;
-	/** @type {Map<TransportMessageObj, {port:MessagePort}>} */
+	/** @type {Map<LocalHandler, {port:MessagePort}>} */
 	m_transport_map=new Map;
 	max_elevate_id=0;
 	/**@type {WeakMap<MessageEventSource|Window, Window>} */
@@ -5025,11 +5025,11 @@ function cast_to_record_with_key_and_string_type(x,k) {
 
 // <RemoteOriginConnection>
 class RemoteOriginConnection extends RemoteOriginConnectionData {
-	/** @param {TransportMessageObj} obj */
+	/** @param {LocalHandler} obj */
 	request_new_port(obj) {
 		return this.request_connection(obj);
 	}
-	/** @arg {ReportInfo<TransportMessageObj>} arg0 */
+	/** @arg {ReportInfo<LocalHandler>} arg0 */
 	transport_disconnected(arg0) {
 		console.log('transport disconnected',arg0.event.data,arg0.event);
 	}
@@ -5088,7 +5088,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 * @param {Window} remote_event_target
 	 */
 	init_transport_over(remote_event_target) {
-		let message_object=new TransportMessageObj(300);
+		let message_object=new LocalHandler(300);
 		this.m_transport_connection=message_object;
 		this.m_connect_target=remote_event_target;
 	}
@@ -5099,7 +5099,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
 	post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
-	/** @arg {TransportMessageObj} transport_handler */
+	/** @arg {LocalHandler} transport_handler */
 	request_connection(transport_handler) {
 		if(!this.m_connect_target)
 			return false;
@@ -5135,7 +5135,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	get_next_elevation_id() {
 		return this.max_elevated_id++;
 	}
-	/** @arg {{event: MessageEvent<RemoteOriginMessage>;handler: TransportMessageObj;}} message_event */
+	/** @arg {{event: MessageEvent<RemoteOriginMessage>;handler: LocalHandler;}} message_event */
 	transport_connected(message_event) {
 		console.log('transport connected',message_event.event.data);
 		if(message_event.event.source!==null) {
