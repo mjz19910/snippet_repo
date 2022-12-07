@@ -75,7 +75,7 @@ function main() {
 				return;
 			}
 			window.removeEventListener("message",msg_listener);
-			nc.run=0;
+			nc.run=false;
 		}
 		nc.start=() => window.addEventListener("message",msg_listener);
 		nc.m_after=callback_fn;
