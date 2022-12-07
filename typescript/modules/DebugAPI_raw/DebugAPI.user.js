@@ -4927,7 +4927,9 @@ class RemoteHandler {
 	client_id;
 	/** @arg {RemoteOriginMessage} message_data */
 	post_message(message_data) {
-		console.log("RemoteHandler.post_message",message_data);
+		if(message_data.type!=='keep_alive_reply') {
+			console.log("RemoteHandler.post_message",message_data);
+		}
 		this.connection_port.postMessage(message_data);
 	}
 	onConnected() {
