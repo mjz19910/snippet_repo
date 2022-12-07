@@ -1243,6 +1243,7 @@ function walk_key_path(cc,ms,obj,mc) {
 		mk(obj,pq,cc.value_tr+'.'+pq,cc.noisy_flag);
 		return cc.value_tr+'.'+pq;
 	}
+	throw 1;
 }
 let win_watch=new OnWindowProperty;
 /**

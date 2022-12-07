@@ -4,7 +4,6 @@ import {Optional} from "../Optional.js";
 import {OwnPtr} from "../OwnPtr.js";
 import {Vector} from "../Vector.js";
 import {Ref} from "./Ref.js";
-import {ak_verification_failed} from "../ak_verification_failed.js";
 
 export function use_types() {
     let ex=[
@@ -14,7 +13,6 @@ export function use_types() {
         OwnPtr,
         move,
         Vector,
-        ak_verification_failed,
     ] as const;
     return ex;
 }

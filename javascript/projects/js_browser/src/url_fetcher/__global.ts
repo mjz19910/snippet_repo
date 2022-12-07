@@ -1,5 +1,4 @@
-declare class DOMTokenList {
-    constructor(valuesInit?: string[], afterUpdate?: (t: DOMTokenList) => void);
+declare interface DOMTokenList {
     add(c: string): void;
     replace(c1: string, c2: string): void;
     remove(c: string): void;

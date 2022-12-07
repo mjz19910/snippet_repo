@@ -1,10 +1,17 @@
-let out=[]
-let odb=indexedDB.open("history",1)
-let list=document.createElement("ul")
+function main() {
+    /** @type {any[]} */
+    let out=[]
+    let odb=indexedDB.open("history",1)
+    let list=document.createElement("ul");
+    odb.onsuccess=()=>{
+        open_complete(list,odb,out);
+    }
+}
 /**
- * @param {{ url: string; title: string; }} item
+ * @param {{url: string;title: string;}} item
+ * @param {{ appendChild: (arg0: HTMLLIElement) => void; }} list
  */
-function ap_l(item) {
+function ap_l(list,item) {
     var i=document.createElement('li')
     var l1=document.createElement('div')
     var l2=document.createElement('div')
@@ -13,7 +20,12 @@ function ap_l(item) {
     i.append(l1,l2)
     list.appendChild(i)
 }
-function open_complete() {
+/**
+ * @param {Node} list
+ * @param {IDBOpenDBRequest} odb
+ * @param {any[]} out
+ */
+function open_complete(list,odb,out) {
     document.body.prepend(list)
     let tr=odb.result.transaction(['history'],"readonly")
     let cur=tr.objectStore("history").openCursor()
@@ -31,4 +43,4 @@ function open_complete() {
     cur.onsuccess=cursor_done
     console.log(cur)
 }
-odb.onsuccess=open_complete
+
