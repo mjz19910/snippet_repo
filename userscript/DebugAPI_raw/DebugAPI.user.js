@@ -4913,12 +4913,13 @@ class LocalHandler {
 			});
 		}
 		if(!tcp_message.data) return;
-		switch(tcp_message.data.type) {
+		let tcp_data=tcp_message.data;
+		switch(tcp_data.type) {
 			case "connected": {
 				this.client_connect(report_info);
 			} break;
 			case "disconnected": {
-				this.m_can_reconnect=tcp_message.can_reconnect;
+				this.m_can_reconnect=tcp_data.can_reconnect;
 				this.client_disconnect(report_info);
 			} break;
 			case "side":
