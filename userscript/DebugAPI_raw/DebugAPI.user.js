@@ -5025,25 +5025,35 @@ class RemoteOriginConnectionData {
 }
 
 class RemoteHandler {
+	send_ack() {
+		this.m_connection_port.postMessage({
+			type:"ack",
+			client_id:this.m_client_id,
+			side:this.side(),
+		});
+	}
 	/** @type {OriginConnectionSide} */
 	m_side="client";
 	/** @type {RemoteOriginMessage[]} */
-	unhandled_events=[];
+	m_unhandled_events=[];
 	/** @type {ConnectionFlags} */
 	m_flags;
 	/** @type {MessagePort} */
-	connection_port;
+	m_connection_port;
 	/** @type {number} */
-	client_id;
+	m_client_id;
+	side() {
+		return this.m_side;
+	}
 	/** @arg {RemoteOriginMessage} message_data */
 	post_message(message_data) {
 		if(message_data.type!=='keep_alive_reply') {
 			console.log("RemoteHandler.post_message",message_data);
 		}
-		this.connection_port.postMessage(message_data);
+		this.m_connection_port.postMessage(message_data);
 	}
 	onConnected() {
-		let {client_id}=this;
+		let {m_client_id: client_id}=this;
 		this.post_message({
 			type: "connected",
 			client_id,
@@ -5073,19 +5083,19 @@ class RemoteHandler {
 				console.log("unexpected keep alive reply {side: `%o`, sides: `%o`}",this.m_side,data.sides);
 			} return;
 		}
-		this.unhandled_events.push(data);
+		this.m_unhandled_events.push(data);
 		console.log(data);
 	}
 	connect() {
-		this.connection_port.start();
-		this.connection_port.addEventListener("message",this);
+		this.m_connection_port.start();
+		this.m_connection_port.addEventListener("message",this);
 		this.onConnected();
 	}
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id */
 	constructor(flags,connection_port,client_id) {
 		this.m_flags=flags;
-		this.connection_port=connection_port;
-		this.client_id=client_id;
+		this.m_connection_port=connection_port;
+		this.m_client_id=client_id;
 		this.connect();
 	}
 }
@@ -5132,10 +5142,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		s.is_top=this.state.window===this.state.top;
 		s.is_root=this.state.opener===null;
 		if(!s.is_top) s.is_root=false;
-		if(s.is_top&&s.opener===null) {
-			this.start_root_server();
-			return;
-		}
+		this.start_root_server();
 		if(s.is_top&&s.opener!==null) {
 			if(s.opener.top!==s.opener&&s.opener.top!==null) {
 				this.init_with_next_parent(s.opener.top);
@@ -5227,9 +5234,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	/**@type {RemoteSocket[]} */
 	connections=[];
 	client_max_id=0;
-	/**
-	 * @arg {MessageEvent<unknown>} event
-	 */
+	/** @arg {MessageEvent<unknown>} event */
 	on_connect_request_message(event) {
 		let fail=() => this.on_client_misbehaved(event);
 		let cast_result=cast_to_object(event.data);
@@ -5254,6 +5259,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
+		handler.send_ack();
 		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
 	}
 	postListeningToConnection() {}
