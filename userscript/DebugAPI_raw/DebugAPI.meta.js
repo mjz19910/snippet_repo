@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      4.9.23
+// @version      4.9.24
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
