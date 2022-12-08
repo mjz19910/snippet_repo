@@ -1,31 +1,28 @@
-declare global {
-	type IDValue_0=IDValueI;
-	var IDValue_0: typeof IDValueI;
-}
-
 // ts exports to js
-export class IDValueI {
+
+export class IDValueI_0 {
 	set_arr_T<T>(arr: T[]) {
-		if(arr.length===0) throw new Error("Unable to use zero length array");
+		if(arr.length===0)
+			throw new Error("Unable to use zero length array");
 		let item=arr[0] as any;
 		console.log('new_proto_keys',Object.keys(item));
 		console.log('new_proto',Object.getPrototypeOf(item));
 	}
 	id: number;
-	next: IDValueI|null;
+	next: IDValueI_0|null;
 	arr_dual: AltPair<string,number>[];
 	arr_dual_x: AltPair<AnyOrRepeat_0<string>,AnyOrRepeat_0<number>>[];
 	arr_rep_str: AnyOrRepeat_0<string>[];
 	arr_rep_num: AnyOrRepeat_0<number>[];
 	arr_str: string[];
 	arr_num: number[];
-	arr_dual_compressed: AnyOrRepeat2_0<string, number>[];
+	arr_dual_compressed: AnyOrRepeat2_0<string,number>[];
 	value: [number,'=',number]|null;
 	arr_rep: number[];
 	log_val: [number,'=',string,number]|null;
 	stats: [string,number][];
 	stats_win: number;
-	constructor(id: number,next: IDValueI|null) {
+	constructor(id: number,next: IDValueI_0|null) {
 		this.id=id;
 		this.next=next;
 		this.arr_dual=[];

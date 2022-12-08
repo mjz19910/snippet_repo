@@ -1,4 +1,4 @@
-import {} from "./support/ID.js";
+import {} from "./support/IDValue_0.js";
 import {IInjectAPI} from "./support/IInjectAPI.js";
 import {} from "./support/Nullable.js";
 import {} from "./support/RecordKey.js";
@@ -36,7 +36,7 @@ declare global {
 }
 
 declare global {
-	type AnyOrRepeat_0<T> = T|Repeat_0<T>;
+	type AnyOrRepeat_0<T>=T|Repeat_0<T>;
 }
 
 declare global {
