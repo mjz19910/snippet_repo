@@ -4833,20 +4833,56 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 class LocalHandler {
+	m_debug=false;
+	/** @type {Window|null} */
+	m_remote_target=null;
+	/** @type {Map<LocalHandler, {port:MessagePort}>} */
+	m_transport_map=new Map;
+	m_fake=false;
+	m_client_id;
+	m_flags;
+	// get_next_elevation_id()
+	/** @arg {Window} remote_target */
+	begin_connect(remote_target) {
+		let local_handler=this;
+		let channel=new MessageChannel;
+		if(this.m_debug){
+			console.log("post request ConnectOverPostMessage");
+		}
+		remote_target.postMessage({
+			type: post_message_connect_message_type,
+			data: {
+				type: "start",
+				source: null,
+				port_transfer_vec: null
+			}
+		},"*",[channel.port1]);
+		this.m_transport_map.set(local_handler,{
+			port: channel.port2,
+		});
+		local_handler.connect(channel.port2,this.m_elevation_id);
+		if(this.m_fake) {
+			let fake_channel=new MessageChannel;
+			local_handler.connect(fake_channel.port2,this.m_elevation_id);
+			let {m_client_id: client_id}=this;
+			new RemoteHandler(this.m_flags,fake_channel.port1,client_id).connect();
+		}
+		return true;
+	}
 	/** @type {ConnectionSide} */
 	m_side="server";
-	m_root;
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
-	/** @type {number|null} */
-	m_elevation_id=null;
+	/** @type {number} */
+	m_elevation_id;
 	/** @type {MessagePort|null} */
 	m_connection_port=null;
 	m_remote_side_connected=false;
 	m_tries_left=0;
 	m_connection_timeout;
 	start_reconnect() {
-		this.m_root.request_new_port(this);
+		if(this.m_remote_target===null) throw new Error("start reconnect has no target");
+		this.begin_connect(this.m_remote_target);
 		this.m_timeout_id=setTimeout(
 			this.process_reconnect.bind(this),
 			this.m_connection_timeout/4
@@ -4894,6 +4930,20 @@ class LocalHandler {
 		});
 	}
 	can_reconnect=false;
+	m_event_transport_map=new Map;
+	/** @arg {ReportInfo<LocalHandler>} message_event */
+	transport_connected(message_event) {
+		if(message_event.event) {
+			if(this.m_debug) {
+				console.log('transport connected',message_event.event.data);
+			}
+			if(message_event.event.source!==null) {
+				this.m_event_transport_map.set(message_event.event.source,window);
+			}
+		} else {
+			console.error("transport_connected called without an event");
+		}
+	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		/** @type {ReportInfo<this>} */
@@ -4904,7 +4954,7 @@ class LocalHandler {
 		let data=event.data;
 		switch(data.type) {
 			case "connected": {
-				this.m_root.transport_connected(report_info);
+				this.transport_connected(report_info);
 				if(this.m_reconnecting) {
 					this.m_reconnecting=false;
 				}
@@ -4958,30 +5008,45 @@ class LocalHandler {
 			});
 		},this.m_connection_timeout*2);
 	}
+	request_new_port() {
+		if(!this.m_remote_target) throw new Error("request_new_port without remote_target");
+		this.begin_connect(this.m_remote_target);
+	}
+	/** @arg {ReportInfo<LocalHandler>} arg0 */
+	transport_disconnected(arg0) {
+		if(arg0.event) {
+			console.log('transport disconnected',arg0.event.data,arg0.event);
+		} else {
+			console.log(arg0);
+		}
+	}
 	/** @param {ReportInfo<this>} report_info */
 	disconnect(report_info) {
 		if(this.m_reconnecting) return;
-		this.m_root.transport_disconnected(report_info);
+		this.transport_disconnected(report_info);
 		this.m_remote_side_connected=false;
 		if(this.can_reconnect) {
 			this.m_reconnecting=true;
 			this.m_tries_left=6;
 			this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
-			this.m_root.request_new_port(this);
+			this.request_new_port();
 		}
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
 		this.m_connection_port=null;
 		clearInterval(this.m_keep_alive_interval);
-		if(this.m_elevation_id) this.m_root.clear_elevation_by_id(this.m_elevation_id);
+		if(this.m_elevation_id) clear_elevation_by_id(this.m_elevation_id);
 	}
 	/**
 	 * @arg {number} connection_timeout
-	 * @param {RemoteOriginConnection} root
+	 * @arg {number} client_id
+	 * @arg {ConnectionFlags} flags
 	 */
-	constructor(connection_timeout,root) {
+	constructor(connection_timeout,client_id,flags) {
 		this.m_connection_timeout=connection_timeout;
-		this.m_root=root;
+		this.m_elevation_id=get_next_elevation_id();
+		this.m_client_id=client_id;
+		this.m_flags=flags;
 		elevate_event_handler(this);
 	}
 }
@@ -5111,26 +5176,33 @@ class RemoteSocket {
 /** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
 const post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 
+const global_elevated_array=[];
+let max_elevated_id=0;
+/**
+ * @param {number} elevated_id
+ */
+function clear_elevation_by_id(elevated_id) {
+	global_elevated_array[elevated_id]=null;
+}
+
+
+function get_next_elevation_id() {
+	return max_elevated_id++;
+}
+
 class RemoteOriginConnection extends RemoteOriginConnectionData {
-	/** @param {LocalHandler} obj */
-	request_new_port(obj) {
-		this.request_connection(obj);
-	}
-	/** @arg {ReportInfo<LocalHandler>} arg0 */
-	transport_disconnected(arg0) {
-		if(arg0.event) {
-			console.log('transport disconnected',arg0.event.data,arg0.event);
-		} else {
-			console.log(arg0);
-		}
-	}
 	/** @type {ConnectionMessage[]} */
 	unhandled_child_events=[];
 	/** @arg {boolean} is_fake */
 	constructor(is_fake) {
 		super();
 		elevate_event_handler(this);
-		this.m_local_handler=new LocalHandler(30000,this);
+		let client_id=this.client_max_id++;
+		this.m_local_handler=new LocalHandler(
+			30000,
+			client_id,
+			this.m_flags,
+		);
 		let s=this.state;
 		s.is_top=this.state.window===this.state.top;
 		s.is_root=this.state.opener===null;
@@ -5176,40 +5248,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	 */
 	init_transport_over(remote_target) {
 		this.m_remote_target=remote_target;
-		this.request_connection(this.m_local_handler);
-	}
-	/** @arg {LocalHandler} local_handler */
-	request_connection(local_handler) {
-		if(!this.m_remote_target) return false;
-		let channel=new MessageChannel;
-		if(this.m_debug){
-			console.log("post request ConnectOverPostMessage");
-		}
-		this.m_remote_target.postMessage({
-			type: post_message_connect_message_type,
-			data: {
-				type: "start",
-				source: null,
-				port_transfer_vec: null
-			}
-		},"*",[channel.port1]);
-		this.m_transport_map.set(local_handler,{
-			port: channel.port2,
-		});
-		local_handler.connect(channel.port2,this.get_next_elevation_id());
-		if(this.m_fake) {
-			let fake_channel=new MessageChannel;
-			local_handler.connect(fake_channel.port2,this.get_next_elevation_id());
-			let client_id=this.client_max_id++;
-			new RemoteHandler(this.m_flags,fake_channel.port1,client_id).connect();
-		}
-		return true;
-	}
-	/**
-	 * @param {number} elevated_id
-	 */
-	clear_elevation_by_id(elevated_id) {
-		this.elevated_array[elevated_id]=null;
+		this.m_local_handler.begin_connect(remote_target);
 	}
 	max_elevated_id=0;
 	/**
@@ -5220,24 +5259,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		this.elevated_array[elevated_id]=object;
 		return elevated_id;
 	}
-	get_next_elevation_id() {
-		return this.max_elevated_id++;
-	}
-	/** @arg {ReportInfo<LocalHandler>} message_event */
-	transport_connected(message_event) {
-		if(message_event.event) {
-			if(this.m_debug) {
-				console.log('transport connected',message_event.event.data);
-			}
-			if(message_event.event.source!==null) {
-				this.event_transport_map.set(message_event.event.source,window);
-			}
-		} else {
-			console.error("transport_connected called without an event");
-		}
-	}
 	/**@type {RemoteSocket[]} */
 	connections=[];
+	/**@type {LocalHandler[]} */
+	local_handlers=[];
 	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event */
 	on_connect_request_message(event) {
