@@ -2715,9 +2715,7 @@ class ProxyTargetMap {
 inject_api.ProxyTargetMap=ProxyTargetMap;
 let proxyTargetMap=new ProxyTargetMap;
 
-/**
- * @type {((arg0: EventListenersT) => void)[]}
- */
+/** @type {((arg0: EventListenersT) => void)[]} */
 let elevate_event_handlers=[];
 inject_api.elevate_event_handlers=elevate_event_handlers;
 

@@ -1,3 +1,5 @@
+import {EventListenersT} from "../src/EventListenersT";
+
 // saved_objects
 declare global {
 	interface InjectAPI {
@@ -25,9 +27,14 @@ declare global {
 	}
 }
 
+declare global {
+	interface InjectAPI {
+		elevate_event_handlers: ((arg0: EventListenersT) => void)[];
+	}
+}
+
 // inject_api global
 declare global {
-	interface InjectAPI {}
 	interface Window {
 		inject_api: InjectAPI;
 	}

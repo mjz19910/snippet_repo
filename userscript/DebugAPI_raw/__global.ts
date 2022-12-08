@@ -1,5 +1,5 @@
 import {} from "./support/IDValue_0.js";
-import {IInjectAPI} from "./support/IInjectAPI.js";
+import {} from "./support/IInjectAPI.js";
 import {} from "./support/Nullable.js";
 import {} from "./support/RecordKey.js";
 import {RepeatL_0} from "./support/Repeat_0.js";
