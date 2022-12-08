@@ -34,7 +34,7 @@ export class Repeat_0 {
 		}
 		return res;
 	}
-	/**@arg {TypeAOrTypeB<string,number>} a @arg {number} b @returns {["string",string|Repeat_0<string>]|["number",number|Repeat_0<number>]} */
+	/**@arg {AltPair<string,number>} a @arg {number} b @returns {["string",string|Repeat_0<string>]|["number",number|Repeat_0<number>]} */
 	static from_TU_entry(a,b) {
 		switch(a[0]) {
 			case 'T': return ['string',Repeat_0.get(a[1],b)];
