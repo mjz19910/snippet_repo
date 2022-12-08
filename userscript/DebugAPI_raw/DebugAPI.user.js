@@ -5007,7 +5007,7 @@ class RemoteHandler {
 	m_client_id;
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
-	server_post_message(message_data) {
+	push_tcp_message(message_data) {
 		this.m_server_connection_port.postMessage(message_data);
 	}
 	m_connected=false;
@@ -5016,7 +5016,7 @@ class RemoteHandler {
 		this.m_connected=true;
 		let {m_client_id: client_id}=this;
 		console.log('on_server_connect',client_id,this.m_event_source);
-		this.server_post_message({
+		this.push_tcp_message({
 			type: "tcp",
 			client_id,
 			flags: [],
@@ -5027,7 +5027,7 @@ class RemoteHandler {
 	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
-		this.server_post_message({
+		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
 			flags: [],
@@ -5053,8 +5053,7 @@ class RemoteHandler {
 	/** @arg {ConnectionMessage} tcp_data */
 	handle_tcp_data(tcp_data) {
 		if(tcp_data.flags.includes("syn")) {
-			debugger;
-			this.server_post_message({
+			this.push_tcp_message({
 				type: "tcp",
 				client_id: this.m_client_id,
 				flags: ["syn","ack"],
