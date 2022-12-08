@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      4.9.21
+// @version      4.9.22
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -5025,13 +5025,6 @@ class RemoteOriginConnectionData {
 }
 
 class RemoteHandler {
-	send_ack() {
-		this.post_message({
-			type:"ack",
-			client_id:this.m_client_id,
-			side:this.side(),
-		});
-	}
 	/** @type {ConnectionSide} */
 	m_side="client";
 	/** @type {ConnectionMessage[]} */
@@ -5042,9 +5035,6 @@ class RemoteHandler {
 	m_connection_port;
 	/** @type {number} */
 	m_client_id;
-	side() {
-		return this.m_side;
-	}
 	/** @arg {ConnectionMessage} message_data */
 	post_message(message_data) {
 		if(message_data.type!=='keep_alive_reply') {
@@ -5082,9 +5072,6 @@ class RemoteHandler {
 			case "keep_alive_reply": {
 				console.log("unexpected keep alive reply {side: `%o`, sides: `%o`}",this.m_side,data.sides);
 			} return;
-			case "ack": {
-				this.onConnected();
-			} break;
 		}
 		this.m_unhandled_events.push(data);
 		console.log(data);
@@ -5092,6 +5079,7 @@ class RemoteHandler {
 	connect() {
 		this.m_connection_port.start();
 		this.m_connection_port.addEventListener("message",this);
+		this.onConnected();
 	}
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id */
 	constructor(flags,connection_port,client_id) {
@@ -5261,7 +5249,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
-		handler.send_ack();
 		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
 	}
 	postListeningToConnection() {}
