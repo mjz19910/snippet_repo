@@ -3053,11 +3053,11 @@ function is_undefined(t) {
 
 /** @template T @implements {Repeat_0} */
 class RepeatImpl_0 {
-	/** @type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|RepeatImpl_0<InstanceType<U>>>>} */
+	/** @type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat_0<InstanceType<U>>>>} */
 	map_instance_or_d1=new Map;
-	/** @type {Map<symbol,<T,U>() => Map<T,U|RepeatImpl_0<U>>>} */
-	map_instance_or=new Map;
-	/** @type {Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|RepeatImpl_0<C>>>} */
+	/** @type {Map<symbol,<T,U>() => Map<T,U|Repeat_0<U>>>} */
+	static map_instance_or=new Map;
+	/** @type {Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|Repeat_0<C>>>} */
 	static base_map=new Map;
 	/** @type {Map<any,any>} */
 	static cache_set=new Map();
@@ -3085,7 +3085,7 @@ class RepeatImpl_0 {
 		}
 		return res;
 	}
-	/**@arg {AltPair<string,number>} a @arg {number} b @returns {["string",string|RepeatImpl_0<string>]|["number",number|RepeatImpl_0<number>]} */
+	/**@arg {AltPair<string,number>} a @arg {number} b @returns {["string",string|Repeat_0<string>]|["number",number|Repeat_0<number>]} */
 	static from_TU_entry(a,b) {
 		switch(a[0]) {
 			case 'T': return ['string',RepeatImpl_0.get(a[1],b)];
@@ -3114,7 +3114,7 @@ class RepeatImpl_0 {
 		if(x===void 0) return null;
 		return x;
 	}
-	/**@template T  @arg {Map<T,Map<number,RepeatImpl_0<T>>>} a @arg {T} b @arg {number} c */
+	/**@template T  @arg {Map<T,Map<number,Repeat_0<T>>>} a @arg {T} b @arg {number} c */
 	static get_with(a,b,c) {
 		let d=a.get(b);
 		if(d===void 0) return null;
@@ -3129,75 +3129,10 @@ class RepeatImpl_0 {
 			return rep;
 		}
 	}
-	static N=new RepeatImpl_0(null,0);
-	/**@type {Map<string,Map<number,RepeatImpl_0<string>>>} */
+	/**@type {Map<string,Map<number,Repeat_0<string>>>} */
 	static map=new Map;
-	/**@type {Map<number,Map<number,RepeatImpl_0<number>>>} */
+	/**@type {Map<number,Map<number,Repeat_0<number>>>} */
 	static map_num=new Map;
-	/**@type {Map<symbol,{}>} */
-	static map_sym=new Map;
-	/**@type {Map<symbol,<T,U>(t:T,u:U) => Map<T,RepeatImpl_0<U>>>} */
-	static map_T=new Map;
-	/**@type {Map<symbol,<T,U>() => Map<T,RepeatImpl_0<U>>>} */
-	map_instance=new Map;
-	/** @template {RecordKey<symbol>} T @arg {T} i_rec */
-	static once_getter(i_rec) {
-		return this.map_sym.get(i_rec.key);
-	}
-	/**@type {Map<symbol,T>} */
-	map_once=new Map;
-	/**@template {RecordKey<symbol>} U @arg {U} constructor_key @arg {InstanceType<U>} _ */
-	get_map_T(constructor_key,_) {
-		let res=RepeatImpl_0.map_T.get(constructor_key.key);
-		if(!res) {
-			/** @template T,U */
-			let m_value=() => {
-				/** @type {typeof Map<T,U>} */
-				let mv=Map;
-				let v=new mv;
-				return v;
-			};
-			RepeatImpl_0.map_T.set(constructor_key.key,m_value);
-			/**@template {RecordKey<symbol>} T @template U @arg {T} sym @arg {U} u @returns {Map<T, RepeatImpl_0<U>>} */
-			let res=(sym,u) => {
-				let value=RepeatImpl_0.map_sym.get(sym.key);
-				if(value===void 0) throw new Error("1");
-				if(value instanceof Map) {
-					return value;
-				} else if(value instanceof Array) {
-					for(let i=0;i<value.length;i++) {
-						let try_=value[i];
-						if(try_ instanceof Map) {
-							return try_;
-						}
-					}
-					let mv=new Map;
-					value.push(mv);
-					return mv;
-				} else {
-					console.log("converting", sym, "to an array");
-					let insert_value=[value];
-					RepeatImpl_0.map_sym.set(sym.key, insert_value);
-					let mv=new Map;
-					insert_value.push(mv);
-					return mv;
-				}
-			};
-			return res;
-		}
-		return res;
-	}
-	// U=RecordKey<symbol> V=InstanceType<U> C=C
-	/**@template {RecordKey<symbol>} U @template {InstanceType<U>} V @template C @arg {U} constructor_key @arg {C} key @arg {V} value*/
-	has_map_T(constructor_key,key,value) {
-		let res=RepeatImpl_0.map_T.get(constructor_key.key);
-		if(!res) {
-			RepeatImpl_0.map_T.set(constructor_key.key,() => new Map);
-			return false;
-		}
-		let rq=res(key,value);
-		return rq.has(key);
-	}
 	/**@arg {string} value @arg {number} times */
 	static get(value,times) {
 		if(!this.map.has(value)) {

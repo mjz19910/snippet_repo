@@ -2,9 +2,9 @@ import {is_undefined} from "./is_undefined";
 
 /** @template T */
 export class RepeatL_0<T> {
-	map_instance_or_d1: Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|RepeatL_0<InstanceType<U>>>>=new Map;
-	map_instance_or: Map<symbol,<T,U>() => Map<T,U|RepeatL_0<U>>>=new Map;
-	static base_map: Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|RepeatL_0<C>>>=new Map;
+	map_instance_or_d1: Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat_0<InstanceType<U>>>>=new Map;
+	static map_instance_or: Map<symbol,<T,U>() => Map<T,U|Repeat_0<U>>>=new Map;
+	static base_map: Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|Repeat_0<C>>>=new Map;
 	static cache_set: Map<any,any>=new Map();
 	static cache_get<A,B extends RecordKey<A>,C extends InstanceType<B>>(_A: A,q: B): Map<A,C> {
 		/**@type {Map<A,C>|null} */
@@ -67,41 +67,13 @@ export class RepeatL_0<T> {
 			return rep;
 		}
 	}
-	static N=new RepeatL_0(null,0);
 	static map: Map<string,Map<number,RepeatL_0<string>>>=new Map;
 	static map_num: Map<number,Map<number,RepeatL_0<number>>>=new Map;
 	static map_sym: Map<symbol,{}>=new Map;
 	static map_T: Map<symbol,<T,U>(t: T,u: U) => Map<T,RepeatL_0<U>>>=new Map;
-	map_instance: Map<symbol,<T,U>() => Map<T,RepeatL_0<U>>>=new Map;
+	static map_instance: Map<symbol,<T,U>() => Map<T,RepeatL_0<U>>>=new Map;
 	static once_getter<T extends RecordKey<symbol>>(i_rec: T) {
 		return this.map_sym.get(i_rec.key);
-	}
-	/**@type {Map<symbol,T>} */
-	map_once: Map<symbol,T>=new Map;
-	/**@template {RecordKey<symbol>} U @arg {U} constructor_key @arg {InstanceType<U>} _ */
-	get_map_T<U extends RecordKey<symbol>>(constructor_key: U,_: InstanceType<U>) {
-		let res=RepeatL_0.map_T.get(constructor_key.key);
-		if(!res) {
-			RepeatL_0.map_T.set(constructor_key.key,() => new Map);
-			/**@template {RecordKey<symbol>} T @arg {T} sym */
-			return <T extends RecordKey<symbol>>(sym: T) => {
-				let value=RepeatL_0.map_sym.get(sym.key);
-				if(value===void 0) throw new Error("1");
-				return value;
-			};
-		}
-		return res;
-	}
-	// A=RecordKey<symbol> B=InstanceType<U> C=C
-	/**@template {RecordKey<symbol>} A @template {InstanceType<U>} B @template C @arg {A} constructor_key @arg {C} key @arg {B} value*/
-	has_map_T<A extends RecordKey<symbol>,B extends InstanceType<A>,C>(constructor_key: A,key: C,value: B) {
-		let res=RepeatL_0.map_T.get(constructor_key.key);
-		if(!res) {
-			RepeatL_0.map_T.set(constructor_key.key,() => new Map);
-			return false;
-		}
-		let rq=res(key,value);
-		return rq.has(key);
 	}
 	/**@arg {string} value @arg {number} times */
 	static get(value: string,times: number) {
