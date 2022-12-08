@@ -4872,9 +4872,7 @@ class LocalHandler {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	client_post_message(message_data) {
-		if(!this.m_client_connection_port) {
-			throw new Error("unable to use missing port");
-		}
+		if(!this.m_client_connection_port) throw new Error("no connection port");
 		this.m_client_connection_port.postMessage(message_data);
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
