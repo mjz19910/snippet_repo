@@ -4909,6 +4909,7 @@ class LocalHandler {
 		this.m_remote_side_connected=false;
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
+		this.m_connection_port.close();
 		this.m_connection_port=null;
 		if(this.m_elevation_id) clear_elevation_by_id(this.m_elevation_id);
 	}
