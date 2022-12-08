@@ -5128,25 +5128,23 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		s.is_root=this.state.opener===null;
 		if(!s.is_top) s.is_root=false;
 		if(s.is_top&&s.opener===null) {
-			this.start_root_server();
 			return;
 		}
-		this.init_with_next_parent(s.window);
+		this.startup_task(s.window);
 		/**
 		 * @type {MessageEvent<unknown> | undefined}
 		 */
 		this.last_misbehaved_client_event=undefined;
 	}
 	/** @param {Window} cur_window @returns {void} */
-	init_with_next_parent(cur_window) {
+	startup_task(cur_window) {
 		if(cur_window.opener!==null) {
 			this.m_flags.does_proxy_to_opener=true;
-			this.init_transport_over(cur_window.opener);
 			this.start_root_server();
-			return;
+			return this.init_transport_over(cur_window.opener);
 		}
-		if(cur_window.top===null) return this.init_transport_over(cur_window);
-		if(cur_window.top!==cur_window) return this.init_with_next_parent(cur_window.top);
+		if(cur_window.top===null) throw new Error("cur_window.top is null");
+		if(cur_window.top!==cur_window) return this.startup_task(cur_window.top);
 		if(cur_window.top===cur_window) return this.init_transport_over(cur_window);
 		throw new Error("Bad");
 	}
