@@ -2,7 +2,7 @@ import {} from "./support/ID.js";
 import {IInjectAPI} from "./support/IInjectAPI.js";
 import {} from "./support/Nullable.js";
 import {} from "./support/RecordKey.js";
-import {Repeat_0} from "./support/Repeat_0.js";
+import {RepeatL_0} from "./support/Repeat_0.js";
 
 // Holder
 export type Holder=1;
@@ -28,6 +28,11 @@ declare global {
 		bind: (this: Function,thisArg: any,...argArray: any[]) => any;
 		call: (this: Function,thisArg: any,...argArray: any[]) => any;
 	};
+}
+
+
+declare global {
+	class Repeat_0<T> extends RepeatL_0<T> {}
 }
 
 export class Repeat_2<T> {
