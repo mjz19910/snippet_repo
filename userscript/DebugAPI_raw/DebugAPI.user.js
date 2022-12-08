@@ -5127,9 +5127,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		s.is_top=this.state.window===this.state.top;
 		s.is_root=this.state.opener===null;
 		if(!s.is_top) s.is_root=false;
-		if(s.is_top&&s.opener===null) {
-			return;
-		}
 		this.startup_task(s.window);
 		/**
 		 * @type {MessageEvent<unknown> | undefined}
