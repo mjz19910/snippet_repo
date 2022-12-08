@@ -1,68 +1,82 @@
-interface IInjectAPI {
-	saved_object_arrays: {}[][];
-	ModuleLoadDbg: {};
-	DisabledMulCompression: {};
-	RemoteOriginConnection: {};
-	remote_origin: {};
+declare global {
+	interface IInjectAPI {
+		saved_object_arrays: {}[][];
+		ModuleLoadDbg: {};
+		DisabledMulCompression: {};
+		RemoteOriginConnection: {};
+		remote_origin: {};
+	}
 }
 
 // LocalHandler
-interface IInjectAPI {
-	LocalHandler: {};
+declare global {
+	interface IInjectAPI {
+		LocalHandler: {};
+	}
 }
 
 // elevate_event_handlers
-interface IInjectAPI {
-	elevate_event_handlers: {}[];
+declare global {
+	interface IInjectAPI {
+		elevate_event_handlers: {}[];
+	}
 }
 // proxyTargetMap
-interface IInjectAPI {
-	ProxyTargetMap: {};
-	proxyTargetMap: {};
+declare global {
+	interface IInjectAPI {
+		ProxyTargetMap: {};
+		proxyTargetMap: {};
+	}
 }
 // saved_objects
-interface IInjectAPI {
-	saved_objects: [string,{name: string;}][];
+declare global {
+	interface IInjectAPI {
+		saved_objects: [string,{name: string;}][];
+	}
 }
 // parse_javascript_str
-interface IInjectAPI {
-	parse_javascript_str?: ((str: string) => void);
+declare global {
+	interface IInjectAPI {
+		parse_javascript_str?: ((str: string) => void);
+	}
 }
 // DebugAPI
-interface IInjectAPI {
-	DoCalc: {};
-	reversePrototypeChain: {};
-	ReversePrototypeChain: {};
-	any_api_logger: {};
-	parse_html_to_binary_arr: (html: string) => unknown[];
-	run_modules_plugin: VoidCallbackWith<() => void>;
-	run_wasm_plugin: VoidCallbackWith<() => void>;
-	compress_main: VoidCallbackWith<(stats: {}) => void>;
-	IterExtensions: {};
-	getPlaybackRateMap: {};
-	CreateObjURLCache: {};
-	Repeat: {};
-	CompressRepeated: {};
-	to_tuple_arr: {};
-	range_matches: {};
-	function_as_string_vec: string[];
-	CompressionStatsCalculator: {};
-	HexRandomDataGenerator: {};
-	EventListenerValue: {};
-	GenericEvent: {};
-	GenericDataEvent: {};
-	GenericEventTarget: {};
-	Dumper: {};
-	RustSimpleTokenizer: {};
-	RustSimpleParser: {};
-	WeakValueRef: {};
-	CSSCascade: {};
-	OriginState: {};
-	APIProxyManager: {};
-	LoggingEventTarget: {};
-	DebugAPI: DebugAPIType;
-	AddEventListenerExtension: {};
-	addEventListenerExtension: {};
+declare global {
+	interface IInjectAPI {
+		DoCalc: {};
+		reversePrototypeChain: {};
+		ReversePrototypeChain: {};
+		any_api_logger: {};
+		parse_html_to_binary_arr: (html: string) => unknown[];
+		run_modules_plugin: VoidCallbackWith<() => void>;
+		run_wasm_plugin: VoidCallbackWith<() => void>;
+		compress_main: VoidCallbackWith<(stats: {}) => void>;
+		IterExtensions: {};
+		getPlaybackRateMap: {};
+		CreateObjURLCache: {};
+		Repeat: {};
+		CompressRepeated: {};
+		to_tuple_arr: {};
+		range_matches: {};
+		function_as_string_vec: string[];
+		CompressionStatsCalculator: {};
+		HexRandomDataGenerator: {};
+		EventListenerValue: {};
+		GenericEvent: {};
+		GenericDataEvent: {};
+		GenericEventTarget: {};
+		Dumper: {};
+		RustSimpleTokenizer: {};
+		RustSimpleParser: {};
+		WeakValueRef: {};
+		CSSCascade: {};
+		OriginState: {};
+		APIProxyManager: {};
+		LoggingEventTarget: {};
+		DebugAPI: DebugAPIType;
+		AddEventListenerExtension: {};
+		addEventListenerExtension: {};
+	}
 }
 type DebugAPIType={
 	the(): DebugAPI_the;
@@ -83,4 +97,5 @@ class VoidCallback<U extends any[],C> {
 	}
 }
 
-export {type IInjectAPI};
+export {};
+

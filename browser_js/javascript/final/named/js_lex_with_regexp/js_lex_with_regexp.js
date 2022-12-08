@@ -1,5 +1,15 @@
 import {Runner} from "../../support/Runner.js";
 
+window.inject_api.saved_objects=[];
+window.inject_api.saved_object_arrays=[];
+/**
+ * @param {{ name: string; }} callable
+ */
+function add_function(callable) {
+	window.inject_api.saved_objects.push([callable.name,callable]);
+}
+
+
 /* spell:words
 --- version_list item 2 ---
 v1 (cur): snippet_repo/javascript/final/js_lex_with_regexp/js_lex_with_regexp.js
