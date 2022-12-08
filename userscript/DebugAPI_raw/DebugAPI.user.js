@@ -5309,6 +5309,26 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if('vscodeScheduleAsyncWork' in message_data) return null;
 		return message_data;
 	}
+	/** @arg {Event} event */
+	handleEvent(event) {
+		switch(event.type) {
+			case "message": {
+				if(event instanceof MessageEvent) {
+					this.on_message_event(event);
+				} else {
+					console.log("Possibly non trusted message event", event);
+				}
+			} break;
+			case "beforeunload": {
+				for(let connection of this.connections) {
+					connection.handler.onDisconnect(false);
+				}
+			} break;
+			case "unload": {
+				this.connections.length=0;
+			} break;
+		}
+	}
 	/** @arg {MessageEvent<unknown>} event */
 	on_message_event(event) {
 		let fail=() => this.on_client_misbehaved(event);
@@ -5337,20 +5357,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	start_root_server() {
 		let t=this;
-		/** @arg {MessageEvent<unknown>} event */
-		function on_message_event(event) {
-			t.on_message_event(event);
-		}
-		elevate_event_handler(on_message_event);
-		window.addEventListener("message",on_message_event);
-		window.addEventListener("beforeunload",function() {
-			for(let connection of t.connections) {
-				connection.handler.onDisconnect(false);
-			}
-		});
-		window.addEventListener("unload",function() {
-			t.connections.length=0;
-		});
+		elevate_event_handler(this);
+		window.addEventListener("message",this);
+		window.addEventListener("beforeunload",this);
+		window.addEventListener("unload",this);
 	}
 	static connect_to_api() {
 		inject_api.RemoteOriginConnection=this;
