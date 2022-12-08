@@ -4399,8 +4399,7 @@ function decode_map(value) {
 	return value;
 }
 /**
- * @template Mtk,Mtv
- * @template {{}|{}[]|Map<Mtk, Mtv>} T
+ * @template {{}} T
  * @arg {T} obj_1
  * @arg {T} obj_2
  * @returns {boolean}
