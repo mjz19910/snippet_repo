@@ -19,6 +19,7 @@
 // ==/UserScript==
 
 import {CompressDual} from "../DebugAPI/types/CompressDual";
+import {CompressStateBase} from "../DebugAPI/types/CompressStateBase";
 
 export interface AbstractVM {
 	halt(): void;
@@ -1525,7 +1526,7 @@ class BaseCompression {
 	compress_result_state_dual(arg0: CompressDual): DualR_m {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2_1<string,number>[]): DualR {
+	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2_1<string,number>[]): DualR_m {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
@@ -1537,7 +1538,6 @@ class BaseCompression {
 	did_decompress<T>(src: T[],dst: T[]) {
 		return dst.length>src.length;
 	}
-	/**@template T,U @arg {CompressStateBase<T, U>} state*/
 	compress_result_state<T,U>(state: CompressStateBase<T,U>) {
 		return this.compress_result(state.arr,state.ret);
 	}
