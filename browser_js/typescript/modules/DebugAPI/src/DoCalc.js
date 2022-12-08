@@ -2,7 +2,7 @@ import {calc_cur} from "./calc_cur";
 import {calc_next} from "./calc_next";
 import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator";
 import {get_next} from "./get_next";
-import {max_id} from "./x";
+import {max_id} from "./max_id";
 
 export class DoCalc {
 	get_result() {

@@ -1,6 +1,7 @@
 import {MulCompression} from "../src/compress/MulCompression.js";
 import {range_matches} from "../src/range_matches.js";
 import {to_tuple_arr} from "../src/to_tuple_arr.js";
+import {max_id} from "../src/max_id.js";
 import {CompressTU} from "./CompressTU.js";
 
 export class CompressionStatsCalculator {
@@ -81,7 +82,7 @@ export class CompressionStatsCalculator {
 			arr: [],
 		};
 		let rep_val=0.03/(100*4*1);
-		let res=this.replace_range(obj.arr,rep_val,max_id);
+		let res=this.replace_range(obj.arr,rep_val,max_id.value);
 		console.log("compressed",res);
 	}
 }
