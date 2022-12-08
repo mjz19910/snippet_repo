@@ -4970,11 +4970,9 @@ class LocalHandler {
 			this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
 			this.m_root.request_new_port(this);
 		}
-		if(!this.m_connection_port)
-			return;
+		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
 		this.m_connection_port=null;
-		this.m_remote_side_connected=false;
 		clearInterval(this.m_keep_alive_interval);
 		if(this.m_elevation_id) this.m_root.clear_elevation_by_id(this.m_elevation_id);
 	}
