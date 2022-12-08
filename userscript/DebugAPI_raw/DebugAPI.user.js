@@ -4399,7 +4399,11 @@ function decode_map(value) {
 	return value;
 }
 /**
- * @type {<T extends {}|{}[]|Map<Mtk, Mtv>,Mtk,Mtv>(v1:T, v2:T)=>boolean} obj_1
+ * @template Mtk,Mtv
+ * @template {{}|{}[]|Map<Mtk, Mtv>} T
+ * @arg {T} obj_1
+ * @arg {T} obj_2
+ * @returns {boolean}
  */
 function deep_eq(obj_1,obj_2) {
 	if(obj_1===obj_2)
