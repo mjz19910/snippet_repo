@@ -5051,7 +5051,6 @@ class RemoteSocket {
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(this.m_flags.does_proxy_to_opener) {
-			if(!event.data) return;
 			let real_data=event.data.data;
 			/** @type {[number,number,null][]} */
 			let id_path=[];
