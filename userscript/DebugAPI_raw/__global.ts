@@ -146,26 +146,22 @@ declare global {
 declare global {
 	type ConnectFlags="syn"|"ack";
 	type ConnectionMessage={
-		type:"tcp",
-		flags:ConnectFlags[],
-		client_id:number,
-		data:ConnectionSource|ConnectionConnected|ConnectionDisconnected|ConnectionSideMsg|null,
-	}
-	type ConnectionSource={
-		type:"source",
-		source:Window,
+		type: "tcp",
+		flags: ConnectFlags[],
+		client_id: number,
+		data: ConnectionConnected|ConnectionDisconnected|ConnectionSideMsg|null,
 	};
 	type ConnectionConnected={
 		type: "connect";
 	};
 	type ConnectionDisconnected={
 		type: "disconnected";
-		can_reconnect:boolean;
+		can_reconnect: boolean;
 	};
 	type ConnectionSide="client"|"server";
 	type ConnectionSideMsg={
-		type:"side",
-		side:ConnectionSide,
+		type: "side",
+		side: ConnectionSide,
 	};
 	interface BlockEnd {}
 }

@@ -4850,10 +4850,7 @@ class LocalHandler {
 			type: "tcp",
 			flags:["syn"],
 			client_id:this.m_client_id,
-			data:{
-				type:"source",
-				source:window,
-			},
+			data:null,
 		},[channel.port1]);
 		this.m_transport_map.set(this,{
 			port: channel.port2,
@@ -4921,7 +4918,6 @@ class LocalHandler {
 				this.server_disconnect(report_info);
 			} break;
 			case "side":
-			case "source": break;
 		}
 	}
 	/** @param {MessagePort} port */
