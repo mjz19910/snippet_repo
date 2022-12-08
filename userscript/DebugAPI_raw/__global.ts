@@ -7,17 +7,6 @@ import {Repeat_0} from "./support/Repeat_0.js";
 // Holder
 export type Holder=1;
 
-// PickByValue & Entries
-declare global {
-	type PickByValue<T,V>=Pick<T,{[K in keyof T]: T[K] extends V? K:never}[keyof T]>;
-	type Entries<T>={
-		[K in keyof T]: [K,T[K]];
-	}[keyof T][];
-	type Entries3<T>={
-		[K in keyof T]: [keyof PickByValue<T,T[K]>,T[K]]
-	}[keyof T][];
-}
-
 //@@iterator for NodeListOf
 declare global {
 	interface NodeListOf<TNode extends Node> extends NodeList {
