@@ -5018,8 +5018,6 @@ class RemoteHandler {
 	}
 	m_connected=false;
 	downstream_connect() {
-		this.m_connecting=false;
-		this.m_connected=true;
 		let {m_client_id: client_id}=this;
 		console.log('on_server_connect',client_id,this.m_event_source);
 		this.push_tcp_message({
@@ -5073,6 +5071,7 @@ class RemoteHandler {
 		}
 		if(tcp_data.flags.includes("ack")&&this.m_connecting) {
 			this.m_connecting=false;
+			this.m_connected=true;
 			this.downstream_connect();
 		}
 	}
