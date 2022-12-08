@@ -5053,16 +5053,17 @@ class RemoteSocket {
 		if(this.m_flags.does_proxy_to_opener) {
 			if(!event.data) return;
 			let real_data=event.data.data;
-			let path_arr=[event.data.client_id];
+			/** @type {[number,number,null][]} */
+			let id_path=[];
 			if(real_data) {
 				x: if(real_data.type==="forward") {
-					path_arr.push(...real_data.client_id_path);
+					id_path.push(...real_data.client_id_path,[event.data.client_id,this.m_client_id,null]);
 					real_data=real_data.data;
 				}
 			}
 			event.data.data={
 				type:"forward",
-				client_id_path:[this.m_client_id],
+				client_id_path:id_path,
 				data: real_data,
 			};
 			inject_api.remote_origin.push_tcp_message(event.data);
