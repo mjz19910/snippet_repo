@@ -4856,7 +4856,7 @@ class LocalHandler {
 		this.m_transport_map.set(this,{
 			port: channel.port2,
 		});
-		this.start_server_connect();
+		this.start_client_connect();
 		if(this.m_fake) {
 			let fake_channel=new MessageChannel;
 			let {m_client_id: client_id}=this;
@@ -4916,12 +4916,12 @@ class LocalHandler {
 			} break;
 			case "disconnected": {
 				this.can_reconnect=tcp_data.can_reconnect;
-				this.server_disconnect(report_info);
+				this.client_disconnect(report_info);
 			} break;
 			case "side":
 		}
 	}
-	start_server_connect() {
+	start_client_connect() {
 		if(!this.m_client_connection_port) {
 			throw new Error("No remote port to communicate with");
 		}
@@ -4929,9 +4929,9 @@ class LocalHandler {
 		this.m_client_connection_port.addEventListener("message",this);
 	}
 	/** @param {ReportInfo<this>} report_info */
-	server_disconnect(report_info) {
+	client_disconnect(report_info) {
 		console.log('on_disconnect',report_info.data);
-		this.m_remote_side_connected=false;
+		this.m_connected=false;
 		if(!this.m_client_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_client_connection_port.removeEventListener('message',this);
 		this.m_client_connection_port.close();
@@ -4946,7 +4946,7 @@ class LocalHandler {
 	m_elevation_id;
 	/** @type {MessagePort|null} */
 	m_client_connection_port=null;
-	m_remote_side_connected=false;
+	m_connected=false;
 	m_tries_left=0;
 	m_connection_timeout;
 	can_reconnect=false;
