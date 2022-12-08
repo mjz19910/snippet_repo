@@ -4894,7 +4894,7 @@ class LocalHandler {
 			handler: this,
 		};
 		this.handle_tcp_data(message_data.data,report_info);
-		if(message_data.flags.includes("syn")&&message_data.flags.includes("ack")) {
+		if(message_data.flags.includes("syn")&&message_data.flags.includes("ack")||message_data.flags.length==0) {
 			this.client_post_message({
 				type: "tcp",
 				client_id: this.m_client_id,
