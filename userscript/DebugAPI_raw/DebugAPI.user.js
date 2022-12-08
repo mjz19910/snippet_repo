@@ -4799,7 +4799,7 @@ function is_record_with_T(x,k) {
 	return k in x;
 }
 
-/** @template T @arg {T} x @returns {{tag:"cast_tag",data:({[U in T]: T[U]}|null)}|null} */
+/** @template T @arg {T} x @returns {{tag:"cast_tag",data:(T&{}|null)}|null} */
 function cast_to_object(x) {
 	if(!is_object(x)) return null;
 	return {tag:"cast_tag",data: x};
@@ -4821,6 +4821,14 @@ function cast_to_record_with_string_type(x) {
 	}
 	if(!is_record_with_string_type(x,"type")) return null;
 	return x;
+}
+/** @template T @arg {T} x @returns {T&{type:string}|null} */
+function cast_to_record_with_string_type_unk(x) {
+	let cast_result=cast_to_object(x);
+	if(!cast_result) return null;
+	if(cast_result.data===null) return null;
+	if(!is_record_with_string_type(cast_result.data,"type")) return null;
+	return cast_result.data;
 }
 
 /** @template {string} U @template {{}} T @arg {T} x @arg {U} k @returns {T&{ [P in U]: string; }|null} */
@@ -4989,11 +4997,11 @@ class RemoteHandler {
 		let cast_result=cast_to_object(_event.data);
 		if(!cast_result) return false;
 		if(cast_result.data===null) return false;
-		let message_record=cast_to_record_with_string_type(cast_result.data);
-		if(!message_record) return false;
-		if(message_record.type!==post_message_connect_message_type) return false;
-		if(!is_record_with_T(message_record,"data"))return false;
-		cast_result=cast_to_object(message_record.data);
+		let con_message_record=cast_to_record_with_string_type(cast_result.data);
+		if(!con_message_record) return false;
+		if(con_message_record.type!==post_message_connect_message_type) return false;
+		if(!is_record_with_T(con_message_record,"data"))return false;
+		cast_result=cast_to_object(con_message_record.data);
 		if(!cast_result) return false;
 		if(cast_result.data===null) return false;
 		let data_record=cast_to_record_with_string_type(cast_result.data);
