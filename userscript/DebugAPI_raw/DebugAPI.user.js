@@ -4993,9 +4993,9 @@ class RemoteHandler {
 		if(!message_record) return false;
 		if(message_record.type!==post_message_connect_message_type) return false;
 		if(!is_record_with_T(message_record,"data"))return false;
-		let data_res=cast_to_object(message_record.data);
-		if(!data_res) return false;
-		if(data_res.data===null) return false;
+		cast_result=cast_to_object(message_record.data);
+		if(!cast_result) return false;
+		if(cast_result.data===null) return false;
 		let data_record=cast_to_record_with_string_type(cast_result.data);
 		if(data_record===null) return false;
 		return data_record.type==="tcp";
