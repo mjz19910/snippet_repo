@@ -4992,16 +4992,6 @@ class CrossOriginConnectionData {
 }
 
 class RemoteHandler {
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<ConnectionMessage>} */
-	is_connection_message(event) {
-		let con_message_record=cast_to_record_with_string_type_unk(event.data);
-		if(!con_message_record) return false;
-		if(con_message_record.type!==post_message_connect_message_type) return false;
-		if(!is_record_with_T(con_message_record,"data"))return false;
-		let data_record=cast_to_record_with_string_type_unk(con_message_record.data);
-		if(data_record===null) return false;
-		return data_record.type==="tcp";
-	}
 	/** @type {ConnectionSide} */
 	m_side="server";
 	/** @type {ConnectionMessage[]} */
@@ -5163,15 +5153,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		if(cast_result===null) return fail();
 		let message_data=cast_result.data;
 		if(message_data===null) return fail();
-		// for https://godbolt.org & vscode integrators
-		if('vscodeScheduleAsyncWork' in message_data) return;
-		/** @type {{type:string}|null} */
-		let message_record=cast_to_record_with_string_type(message_data);
-		if(message_record===null) return fail();
-		switch(message_record.type) {
-			case post_message_connect_message_type: break;
-			default: return fail();
-		}
+		if(!this.is_connection_message(event)) return;
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
 		if(!event.source) throw new Error("No event source");
@@ -5179,12 +5161,21 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.first_event.origin===event.origin;
 		});
-		if(!handler.is_connection_message(event)) return fail();
 		handler.handleEvent(event);
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
 		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
+	}
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<ConnectionMessage>} */
+	is_connection_message(event) {
+		let con_message_record=cast_to_record_with_string_type_unk(event.data);
+		if(!con_message_record) return false;
+		if(con_message_record.type!==post_message_connect_message_type) return false;
+		if(!is_record_with_T(con_message_record,"data"))return false;
+		let data_record=cast_to_record_with_string_type_unk(con_message_record.data);
+		if(data_record===null) return false;
+		return data_record.type==="tcp";
 	}
 	postListeningToConnection() {}
 	/** @arg {{}} data_obj @returns {boolean} */
