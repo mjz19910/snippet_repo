@@ -4911,9 +4911,9 @@ class LocalHandler {
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	transport_connected(message_event) {
 		if(message_event.event) {
-			console.log('transport connected',message_event.event.data);
-			if(message_event.event.source!==null) {
-				this.m_event_transport_map.set(message_event.event.source,window);
+			console.log('transport connected',message_event.event.data,message_event.event.origin);
+			if(message_event.event.origin!==null) {
+				this.m_event_transport_map.set(message_event.event.origin,window);
 			}
 		} else {
 			console.error("transport_connected called without an event");
