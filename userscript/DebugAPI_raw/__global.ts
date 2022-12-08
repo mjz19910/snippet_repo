@@ -172,7 +172,7 @@ declare global {
 
 declare global {
 	type ReportInfo<T>={
-		event: MessageEvent<RemoteOriginMessage>;
+		event: MessageEvent<RemoteOriginMessage>|null;
 		handler: T;
 	};
 }

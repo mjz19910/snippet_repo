@@ -4894,6 +4894,7 @@ class LocalHandler {
 			side: "client",
 		});
 	}
+	can_reconnect=false;
 	/** @param {MessageEvent<RemoteOriginMessage>} event */
 	handleEvent(event) {
 		/** @type {ReportInfo<LocalHandler>} */
@@ -4919,15 +4920,8 @@ class LocalHandler {
 				);
 			} break;
 			case "disconnected": {
-				if(this.m_reconnecting) return;
-				this.disconnect();
-				this.m_root.transport_disconnected(report_info);
-				this.m_remote_side_connected=false;
-				if(data.can_reconnect) {
-					this.m_tries_left=24;
-					this.m_reconnecting=true;
-					this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
-				}
+				this.can_reconnect=data.can_reconnect;
+				this.disconnect(report_info);
 			} break;
 			case "keep_alive": {
 				this.post_message({
@@ -4959,11 +4953,23 @@ class LocalHandler {
 	}
 	start_timeout() {
 		this.m_timeout_id=setTimeout(() => {
-			this.disconnect();
-			this.m_root.request_new_port(this);
+			this.disconnect({
+				event:null,
+				handler:this,
+			});
 		},this.m_connection_timeout*2);
 	}
-	disconnect() {
+	/** @param {ReportInfo<this>} report_info */
+	disconnect(report_info) {
+		if(this.m_reconnecting) return;
+		this.m_root.transport_disconnected(report_info);
+		this.m_remote_side_connected=false;
+		if(this.can_reconnect) {
+			this.m_reconnecting=true;
+			this.m_tries_left=6;
+			this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
+			this.m_root.request_new_port(this);
+		}
 		if(!this.m_connection_port)
 			return;
 		this.m_connection_port.removeEventListener('message',this);
