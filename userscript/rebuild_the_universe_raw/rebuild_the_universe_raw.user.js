@@ -3462,9 +3462,11 @@ function remove_html_nodes(node) {
 	if(new URL(node.src).origin!=location.origin) return;
 	if(node.src.indexOf("ads")>-1||node.src.indexOf("track")>-1) return node.remove();
 }
+
 function do_dom_filter() {
 	Array.prototype.forEach.call(document.querySelectorAll("script"),remove_html_nodes);
 }
+
 function on_game_data_set() {
 	log_if_impl_r(LOG_LEVEL_INFO_IMPL,'game data init');
 	do_dom_filter();
@@ -3472,6 +3474,7 @@ function on_game_data_set() {
 	setTimeout(auto_buy_obj.init.bind(auto_buy_obj),300);
 	constelOff();
 }
+
 function wait_for_game_data() {
 	if(window._SM_Data) {
 		on_game_data_set();
@@ -3479,6 +3482,7 @@ function wait_for_game_data() {
 		setTimeout(wait_for_game_data,0);
 	}
 }
+
 function action_1() {
 	log_if_impl_r(LOG_LEVEL_INFO_IMPL,'start wait');
 	if(window._SM_Data) {
@@ -3488,6 +3492,7 @@ function action_1() {
 	}
 	do_dom_filter();
 }
+
 /** @arg {HTMLScriptElement} elm */
 function dom_add_elm_filter(elm) {
 	if(elm&&elm.nodeName==="SCRIPT") {
@@ -3503,12 +3508,14 @@ function dom_add_elm_filter(elm) {
 	}
 	return true;
 }
+
 function enable_jquery_proxy_if_needed() {
 	let enable_proxy=true;
 	if(enable_proxy) {
 		proxy_jquery();
 	}
 }
+
 /** @arg {(value: any) => void} promise_accept */
 function do_load_fire_promise(promise_accept) {
 	if(document.firstChild) {
@@ -3516,9 +3523,11 @@ function do_load_fire_promise(promise_accept) {
 	}
 	promise_accept(null);
 }
+
 function page_url_no_protocol() {
 	return location.href.slice(location.protocol.length);
 }
+
 /** @arg {PopStateEvent} e */
 function popstate_event_handler(e) {
 	console.log('popstate',e.state,location.href);
@@ -3534,9 +3543,11 @@ function popstate_event_handler(e) {
 	} else {
 	}
 }
+
 function reset_global_event_handlers() {
 	window.onpopstate=popstate_event_handler;
 }
+
 class BaseMutationObserver {
 	constructor() {
 		/** @type {MutationObserver|null} */
@@ -3547,6 +3558,7 @@ class BaseMutationObserver {
 		this.observer.disconnect();
 	}
 }
+
 class DetachedMutationObserver extends BaseMutationObserver {
 	/** @arg {Node} target */
 	constructor(target) {
@@ -3568,6 +3580,7 @@ class DetachedMutationObserver extends BaseMutationObserver {
 		observer.disconnect();
 	}
 }
+
 class LoadMutationObserver extends BaseMutationObserver {
 	/** @arg {Node} target @arg {(mut_vec: MutationRecord[], mut_observer: MutationObserver) => void} callback */
 	constructor(target,callback) {

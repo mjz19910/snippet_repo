@@ -1,3 +1,10 @@
+// g_mut_observers
+declare global {
+	interface Window {
+		g_mut_observers: any[];
+	}
+}
+
 declare global {
 	interface Window {
 		mute(): void;
@@ -11,8 +18,12 @@ declare global {
 	}
 }
 
+class JQueryRes {
+	remove() {}
+}
+
 declare global {
-	var $: ()=>void;
+	var $: (q: string)=>JQueryRes;
 }
 interface GoogleAdList {
 	op: any;
@@ -34,6 +45,8 @@ declare global {
 
 // on_game_data_set
 declare global {
+	function constelOff(): void;
+
 	interface Window {
 		constelOff(): void;
 	}
@@ -55,18 +68,22 @@ declare global {
 		prestige: number;
 	}
 }
+// tonext_async
+declare global {
+	function Find_ToNext(v: number): number;
+	function mainCalc(v: any): void;
+
+	var arUnit: any[];
+}
 
 // do_auto_unit_promote
 declare global {
 	interface Window {
-		arUnit: any[];
 		Get_Unit_Type(v: any): any;
 		getUnitPromoCost(v: any): number;
-		Find_ToNext(v: number): number;
 		_targets_achi: any[];
 		totalAchi(): number;
 		_targets: any[];
-		mainCalc(v: any): void;
 		tonext(v: number): void;
 	}
 }
