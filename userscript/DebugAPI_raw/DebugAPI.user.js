@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      4.9.19
+// @version      4.9.18
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -4847,7 +4847,7 @@ class LocalHandler {
 	m_tries_left=0;
 	m_connection_timeout;
 	start_reconnect() {
-		this.m_root.request_connection(this);
+		this.m_root.request_new_port(this);
 		this.m_timeout_id=setTimeout(
 			this.process_reconnect.bind(this),
 			this.m_connection_timeout/4
@@ -4968,7 +4968,7 @@ class LocalHandler {
 			this.m_reconnecting=true;
 			this.m_tries_left=6;
 			this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
-			this.start_reconnect();
+			this.m_root.request_new_port(this);
 		}
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
@@ -5110,12 +5110,16 @@ class RemoteSocket {
 const post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 
 class RemoteOriginConnection extends RemoteOriginConnectionData {
+	/** @param {LocalHandler} obj */
+	request_new_port(obj) {
+		this.request_connection(obj);
+	}
 	/** @arg {ReportInfo<LocalHandler>} arg0 */
 	transport_disconnected(arg0) {
 		if(arg0.event) {
 			console.log('transport disconnected',arg0.event.data,arg0.event);
 		} else {
-			console.log('transport disconnected',arg0);
+			console.log(arg0);
 		}
 	}
 	/** @type {RemoteOriginMessage[]} */
@@ -5127,20 +5131,43 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		s.is_top=this.state.window===this.state.top;
 		s.is_root=this.state.opener===null;
 		if(!s.is_top) s.is_root=false;
-		this.startup_task(s.window);
+		if(s.is_top&&s.opener===null) {
+			this.start_root_server();
+			return;
+		}
+		if(s.is_top&&s.opener!==null) {
+			if(s.opener.top!==s.opener&&s.opener.top!==null) {
+				this.init_with_next_parent(s.opener.top);
+				return;
+			}
+			this.init_with_opener(s.opener);
+			return;
+		}
+		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
+		this.init_with_next_parent(this.state.top);
 		/**
 		 * @type {MessageEvent<unknown> | undefined}
 		 */
 		this.last_misbehaved_client_event=undefined;
 	}
-	/** @param {Window} cur_window @returns {void} */
-	startup_task(cur_window) {
-		if(cur_window.opener) {
-			this.init_transport_over(cur_window.opener);
+	/** @param {Window} cur_window */
+	init_with_next_parent(cur_window) {
+		if(cur_window.top!==null&&cur_window.top!==cur_window) {
+			this.init_with_next_parent(cur_window.top);
 		}
-		if(cur_window.top) {
-			this.init_transport_over(cur_window.top);
+		if(cur_window.opener===null) {
+			this.init_transport_over(cur_window);
+		} else {
+			if(cur_window.opener.top!==cur_window.opener) {
+				console.log("need to go up more");
+			}
+			this.init_with_opener(cur_window.opener);
 		}
+	}
+	/** @param {Window} opener */
+	init_with_opener(opener) {
+		this.m_flags.does_proxy_to_opener=true;
+		this.init_transport_over(opener);
 		this.start_root_server();
 	}
 	/**
@@ -5149,7 +5176,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	init_transport_over(remote_target) {
 		this.m_remote_target=remote_target;
 		this.request_connection(this.m_local_handler);
-		this.start_root_server();
 	}
 	/** @arg {LocalHandler} local_handler */
 	request_connection(local_handler) {
