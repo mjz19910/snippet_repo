@@ -5088,7 +5088,7 @@ class RemoteSocket {
 		if(tcp_data.flags.includes("syn")) {
 			this.send_ack(tcp_data.flags);
 		}
-		if(!tcp_data.flags.includes("ack")) {
+		if(tcp_data.flags.length===0) {
 			this.send_ack(tcp_data.flags);
 		}
 		if(tcp_data.flags.includes("ack")&&this.m_connecting) {
