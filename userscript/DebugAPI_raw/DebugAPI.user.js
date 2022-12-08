@@ -5034,6 +5034,10 @@ class RemoteSocket {
 			},
 		});
 	}
+	/** @arg {{}} info @arg {MessageType | ConnectionForward} x */
+	downstream_handle_event(info,x) {
+		console.log(info,x);
+	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
 		this.push_tcp_message({
@@ -5095,6 +5099,10 @@ class RemoteSocket {
 			this.m_connecting=false;
 			this.m_connected=true;
 			this.downstream_connect();
+		}
+		if(tcp_data.data) {
+			let {client_id}=tcp_data;
+			this.downstream_handle_event({client_id},tcp_data.data);
 		}
 	}
 	/** @type {MessageEventSource} */
