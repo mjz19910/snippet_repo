@@ -5001,6 +5001,9 @@ class CrossOriginConnectionData {
 }
 
 class RemoteHandler {
+	source() {
+		return this.m_event_source;
+	}
 	/** @type {ConnectionSide} */
 	m_side="server";
 	/** @type {ConnectionMessage[]} */
@@ -5182,9 +5185,10 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
 		if(!event.source) throw new Error("No event source");
-		let handler=new RemoteHandler(this.m_flags,connection_port,client_id,event.source);
+		let event_source=event.source;
+		let handler=new RemoteHandler(this.m_flags,connection_port,client_id,event_source);
 		let prev_connection_index=this.connections.findIndex(e => {
-			return e.first_event.origin===event.origin;
+			return e.handler.source()===event_source;
 		});
 		handler.handle_tcp_data(event.data.data);
 		if(prev_connection_index>-1) {
