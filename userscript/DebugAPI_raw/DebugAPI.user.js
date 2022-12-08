@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      1.1.9.7
+// @version      1.1.9.8
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -4841,6 +4841,26 @@ function cast_to_record_with_key_and_string_type(x,k) {
 /** @readonly @type {`CrossOriginConnection_${typeof sha_1_initial}`} */
 const post_message_connect_message_type=`CrossOriginConnection_${sha_1_initial}`;
 
+class FlagHandler {
+	is_empty() {
+		return this.f.length===0;
+	}
+	syn() {
+		return this.f.findIndex(e => e[1]==="syn")>-1;
+	}
+	ack() {
+		return this.f.findIndex(e => e[1]==="ack")>-1;
+	}
+	flags() {
+		return this.f;
+	}
+	/** @arg {ConnectFlags[]} flags */
+	constructor(flags) {
+		this.f=flags;
+	}
+}
+
+
 class LocalHandler {
 	/** @type {Window} */
 	m_remote_target;
@@ -4871,7 +4891,7 @@ class LocalHandler {
 		}
 		this.send_init_request({
 			type: "tcp",
-			flags: ["syn"],
+			flags: [[1,"syn"]],
 			client_id: this.m_client_id,
 			data: null,
 		},[server_port]);
@@ -4912,14 +4932,15 @@ class LocalHandler {
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
-			flags: ["ack"],
+			flags: [[2,"ack"]],
 			data: null,
 		});
 	}
 	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<this>} report_info */
 	handle_tcp_data(tcp_message,report_info) {
-		console.log("local", tcp_message);
-		if(tcp_message.flags.includes("syn")&&tcp_message.flags.includes("ack")) {
+		let f=new FlagHandler(tcp_message.flags);
+		console.log("local",tcp_message);
+		if(f.syn()&&f.ack()) {
 			this.send_ack();
 		}
 		if(tcp_message.flags.length==0) {
@@ -5080,25 +5101,26 @@ class RemoteSocket {
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @param {ConnectFlags[]} flags */
-	send_ack(flags) {
-		if(flags.includes("ack")) throw new Error("ack should not be on packet we are ack'ing for");
+	/** @param {FlagHandler} f */
+	send_ack(f) {
+		if(f.ack()) throw new Error("ack should not be on packet we are ack'ing for");
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
-			flags: [...flags,"ack"],
+			flags: [...f.flags(),[2,"ack"]],
 			data: null,
 		});
 	}
 	/** @arg {ConnectionMessage} tcp_data */
 	handle_tcp_data(tcp_data) {
-		if(tcp_data.flags.includes("syn")) {
-			this.send_ack(tcp_data.flags);
+		let f=new FlagHandler(tcp_data.flags);
+		if(f.syn()) {
+			this.send_ack(f);
 		}
-		if(tcp_data.flags.length===0) {
-			this.send_ack(tcp_data.flags);
+		if(f.is_empty()) {
+			this.send_ack(f);
 		}
-		if(tcp_data.flags.includes("ack")&&this.m_connecting) {
+		if(f.ack()&&this.m_connecting) {
 			this.m_connecting=false;
 			this.m_connected=true;
 			this.downstream_connect();

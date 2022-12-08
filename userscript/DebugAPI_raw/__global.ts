@@ -144,7 +144,7 @@ declare global {
 }
 
 declare global {
-	type ConnectFlags="syn"|"ack";
+	type ConnectFlags=[1,"syn"]|[2,"ack"];
 	type WrappedMessage<T>={
 		type: typeof post_message_connect_message_type,
 		data: T,
