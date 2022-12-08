@@ -8,7 +8,7 @@ declare global {
 }
 
 declare global {
-	type TypeAOrTypeB_1<TypeA,TypeB>=["T",TypeA]|["U",TypeB];
+	type AltPair<TypeA,TypeB>=["T",TypeA]|["U",TypeB];
 }
 
 // WeakRef

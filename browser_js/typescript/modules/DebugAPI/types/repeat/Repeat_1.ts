@@ -25,7 +25,7 @@ export class Repeat_1<T> {
 		}
 		return res;
 	}
-	static from_TU_entry(a: TypeAOrTypeB_1<string,number>,b: number): AnyOrRepeat2_1<string,number> {
+	static from_TU_entry(a: AltPair<string,number>,b: number): AnyOrRepeat2_1<string,number> {
 		switch(a[0]) {
 			case 'T': return ['T',Repeat_1.get(a[1],b)];
 			case 'U': return ['U',Repeat_1.get_num(a[1],b)];

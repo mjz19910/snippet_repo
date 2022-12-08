@@ -502,7 +502,7 @@ class InstructionCastImpl extends InstructionImplBase {
 		}
 		console.warn('unk obj boxed into temporary_box<object_index>',obj);
 	}
-	/** @arg {import("./ns.js").CastOperandTarget} cast_type @arg {StackVMImpl} vm */
+	/** @arg {string} cast_type @arg {StackVMImpl} vm */
 	run(vm,cast_type) {
 		let obj=vm.stack.pop();
 		if(!obj) throw new Error("Invalid");
@@ -881,8 +881,6 @@ const instruction_descriptor_arr=[
 	['vm_return',InstructionVMReturnImpl],
 ];
 
-/** @typedef {import("./ns.js").StackVMBase} StackVMBase_CJS */
-/** @implements {StackVMBase_CJS} */
 class StackVmBaseImpl {
 	/** @arg {number} offset @arg {import("./ns.js").Box} value @arg {[string,...any[]]} lex_instruction */
 	update_instruction(offset, value, lex_instruction) {
@@ -1010,7 +1008,10 @@ class StackVMImpl {
 			case "jmp": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "peek": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "vm_call": instruction_table[instruction[0]].run(this,instruction[1]); break;
-			case "push": instruction_table[instruction[0]].run(this,...instruction); break;
+			case "push":{
+				let [infer,...rest]=instruction;
+				instruction_table[instruction[0]].run(this,infer,...rest);
+			} break;
 			// 3 args 2 opcode
 			case "modify_operand": instruction_table[instruction[0]].run(this,instruction[1],instruction[2]); break;
 		}
@@ -1405,11 +1406,11 @@ class CompressionStatsCalculatorImpl {
 }
 /** @implements {BaseCompression} */
 class BaseCompressionImpl {
-	/** @arg {CompressDual} arg0 @returns {DualR} */
+	/** @arg {CompressDual} arg0 @returns {DualR_0} */
 	compress_result_state_dual(arg0) {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	/** @arg {TypeAOrTypeB<string,number>[]} src @arg {AnyOrRepeat2_1<string,number>[]} dst @returns {DualR} */
+	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string,number>[]} dst @returns {DualR_0} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];

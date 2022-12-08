@@ -1,3 +1,4 @@
+import {CompressDual} from "./CompressDual.js";
 import {CompressStateBase} from "./CompressStateBase.js";
 
 export class BaseCompression {
@@ -21,5 +22,9 @@ export class BaseCompression {
 		if(this.did_decompress(src,dst))
 			return [true,dst];
 		return [false,dst];
+	}
+	compress_result_state_dual(v:CompressDual): DualR_m {
+		v;
+		throw new Error("Method not implemented.");
 	}
 }

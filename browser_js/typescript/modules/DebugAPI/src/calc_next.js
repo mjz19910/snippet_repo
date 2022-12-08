@@ -27,10 +27,10 @@ export function calc_next(stats,obj,max_id) {
 	/**@type {DualR_m} */
 	let compress_result=com.try_compress_dual();
 	if(!compress_result[0]) {
-		/**@type {TypeAOrTypeB_1<string, number>[]} */
+		/**@type {AltPair<string, number>[]} */
 		let res=[];
 		for(let i of compress_result[1]) {
-			/**@type {TypeAOrTypeB_1<string, number>|[]} */
+			/**@type {AltPair<string, number>|[]} */
 			let res_1=[];
 			switch(i[0]) {
 				case 'T': if(typeof i[1]==='string')

@@ -1,11 +1,10 @@
-import {BaseCompression} from "./BaseCompression.js";
-import {Repeat_1} from "./repeat/Repeat_1.js";
+import {BaseCompression} from "./BaseCompression";
 
-export class CompressTU {
-	i: number;
-	arr: AltPair<string,number>[]=[];
+export class CompressDual {
+	i: number=0;
 	ret: AnyOrRepeat2_1<string,number>[]=[];
-	try_compress_dual() {
+	m_base=new BaseCompression;
+	try_compress_dual(): DualR_m {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];
@@ -13,20 +12,16 @@ export class CompressTU {
 			if(use_item) continue;
 			state.ret.push(item);
 		}
-		return BaseCompression.compress_result_state(this);
+		return this.m_base.compress_result_state_dual(this);
 	}
 	compress_rle_TU_to_TX(item: AltPair<string,number>) {
 		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
 		let off=1;
 		while(item===this.arr[this.i+off]) off++;
 		if(off==1) return false;
-		this.ret.push(Repeat_1.from_TU_entry(item,off));
+		this.ret.push(item);
 		this.i+=off-1;
 		return true;
 	}
-	constructor(arr: AltPair<string,number>[]) {
-		this.i=0;
-		this.arr=arr;
-		this.ret=[];
-	}
+	constructor(public arr: AltPair<string,number>[]) {}
 }

@@ -9,8 +9,8 @@ export class IDValue_1 {
 	}
 	id: number;
 	next: IDValue_1|null;
-	arr_dual: TypeAOrTypeB_1<string,number>[];
-	arr_dual_x: TypeAOrTypeB_1<AnyOrRepeat_1<string>,AnyOrRepeat_1<number>>[];
+	arr_dual: AltPair<string,number>[];
+	arr_dual_x: AltPair<AnyOrRepeat_1<string>,AnyOrRepeat_1<number>>[];
 	arr_rep_str: AnyOrRepeat_1<string>[];
 	arr_rep_num: AnyOrRepeat_1<number>[];
 	arr_str: string[];

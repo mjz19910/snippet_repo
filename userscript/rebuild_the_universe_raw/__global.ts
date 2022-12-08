@@ -15,3 +15,9 @@ declare global {
 export interface Holder {}
 
 export {}
+
+declare global {
+	interface Window {
+		MulCompression: typeof MulCompression;
+	}
+}
