@@ -4845,7 +4845,6 @@ class LocalHandler {
 		elevate_event_handler(this);
 	}
 	begin_connect() {
-		let local_handler=this;
 		let channel=new MessageChannel;
 		if(this.m_debug){
 			console.log("post request ConnectOverPostMessage");
@@ -4858,13 +4857,13 @@ class LocalHandler {
 				port_transfer_vec: null
 			}
 		},"*",[channel.port1]);
-		this.m_transport_map.set(local_handler,{
+		this.m_transport_map.set(this,{
 			port: channel.port2,
 		});
-		local_handler.connect(channel.port2,this.m_elevation_id);
+		this.connect(channel.port2);
 		if(this.m_fake) {
 			let fake_channel=new MessageChannel;
-			local_handler.connect(fake_channel.port2,this.m_elevation_id);
+			this.connect(fake_channel.port2);
 			let {m_client_id: client_id}=this;
 			new RemoteHandler(this.m_flags,fake_channel.port1,client_id).connect();
 		}
@@ -4971,9 +4970,8 @@ class LocalHandler {
 			} break;
 		}
 	}
-	/** @param {MessagePort} port @param {number} elevation_id */
-	connect(port,elevation_id) {
-		this.m_elevation_id=elevation_id;
+	/** @param {MessagePort} port */
+	connect(port) {
 		this.m_connection_port=port;
 		this.m_connection_port.start();
 		this.m_connection_port.addEventListener("message",this);
