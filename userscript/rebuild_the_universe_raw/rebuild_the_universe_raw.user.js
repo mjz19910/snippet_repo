@@ -1231,7 +1231,7 @@ class StackVMParserImplR {
 	}
 }
 
-class DocumentWriteListImpl_0 {
+class DocumentWriteListImpl {
 	/** @type {any[]} */
 	list;
 	constructor() {
@@ -3632,7 +3632,7 @@ function main() {
 			return null;
 		}
 	});
-	let document_write_list=new DocumentWriteListImpl_0;
+	let document_write_list=new DocumentWriteListImpl;
 	document_write_list.attach_proxy(document);
 	document_write_list.document_write_proxy;
 	window.document_write_list=document_write_list;

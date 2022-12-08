@@ -1,6 +1,6 @@
 declare global {
 	interface Window {
-		document_write_list: DocumentWriteListImpl_0;
+		document_write_list: DocumentWriteListImpl;
 		g_do_load: () => void;
 		g_page_content: {request_content: string; cur: string;};
 	}
