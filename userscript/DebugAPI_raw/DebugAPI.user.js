@@ -4865,35 +4865,33 @@ class LocalHandler {
 		}
 	}
 	/** @arg {ConnectionMessage} message_data */
-	local_post_message(message_data) {
+	server_post_message(message_data) {
 		if(!this.m_connection_port) {
 			throw new Error("unable to use missing port");
 		}
 		this.m_connection_port.postMessage(message_data);
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
-	local_transport_connected(message_event) {
-		if(message_event.event) {
-			console.log('transport connected',message_event.event.data,window);
-		} else {
-			console.error("transport_connected called without an event");
-		}
+	server_connect(message_event) {
+		console.log('on_server_connect',message_event.data,window);
 	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
+		if(!event.source) throw new Error("No event source");
 		/** @type {ReportInfo<this>} */
 		let report_info={
-			event: event,
+			data: event.data,
+			source: event.source,
 			handler: this,
 		};
 		let data=event.data;
 		switch(data.type) {
-			case "connected": {
-				this.local_transport_connected(report_info);
+			case "connect": {
+				this.server_connect(report_info);
 			} break;
 			case "disconnected": {
 				this.can_reconnect=data.can_reconnect;
-				this.local_disconnect(report_info);
+				this.server_disconnect(report_info);
 			} break;
 		}
 	}
@@ -4904,8 +4902,8 @@ class LocalHandler {
 		this.m_connection_port.addEventListener("message",this);
 	}
 	/** @param {ReportInfo<this>} report_info */
-	local_disconnect(report_info) {
-		console.log('on_disconnect',report_info.event.data,report_info.event);
+	server_disconnect(report_info) {
+		console.log('on_disconnect',report_info.data,report_info.source);
 		this.m_remote_side_connected=false;
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
@@ -4981,17 +4979,15 @@ class RemoteHandler {
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
 	client_post_message(message_data) {
-		if(message_data.type!=='keep_alive_reply') {
-			if(this.m_debug) {
-				console.log("RemoteHandler.post_message",message_data);
-			}
+		if(this.m_debug) {
+			console.log("RemoteHandler.post_message",message_data);
 		}
 		this.m_connection_port.postMessage(message_data);
 	}
 	onConnected() {
 		let {m_client_id: client_id}=this;
 		this.client_post_message({
-			type: "connected",
+			type: "connect",
 			client_id,
 		});
 	}

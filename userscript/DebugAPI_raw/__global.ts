@@ -144,14 +144,15 @@ declare global {
 }
 
 declare global {
-	type ConnectionConnected={type: "connected",client_id: number;};
+	type ConnectionConnected={
+		type: "connect";
+		client_id: number;
+	};
 	type ConnectionDisconnected={
 		type: "disconnected";
 		can_reconnect:boolean;
 	};
 	type ConnectionSide="client"|"server";
-	type ConnectionKeepAliveReply={type: "keep_alive_reply",sides: [ConnectionSide,ConnectionSide];};
-	type ConnectionKeepAlive={type: "keep_alive"; side: ConnectionSide;};
 	type ConnectionAck={
 		type:"ack",
 		client_id:number,
@@ -160,9 +161,7 @@ declare global {
 	type ConnectionMessage=
 		ConnectionAck|
 		ConnectionConnected|
-		ConnectionDisconnected|
-		ConnectionKeepAlive|
-		ConnectionKeepAliveReply;
+		ConnectionDisconnected;
 	interface BlockEnd {}
 }
 
@@ -178,7 +177,8 @@ declare global {
 
 declare global {
 	type ReportInfo<T>={
-		event: MessageEvent<ConnectionMessage>;
+		data: ConnectionMessage,
+		source: MessageEventSource;
 		handler: T;
 	};
 }
