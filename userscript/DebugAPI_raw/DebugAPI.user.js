@@ -4911,6 +4911,7 @@ class LocalHandler {
 	}
 	/** @arg {ConnectionMessage['data']} tcp_data @arg {ReportInfo<this>} report_info */
 	handle_tcp_data(tcp_data,report_info) {
+		if(!tcp_data) return;
 		switch(tcp_data.type) {
 			case "connect": {
 				this.server_connect(report_info);
@@ -5048,7 +5049,12 @@ class RemoteHandler {
 		let {data}=event;
 		if(data.type!=="tcp") return;
 		if(data.flags.includes("syn")) {
-
+			this.client_post_message({
+				type:"tcp",
+				client_id:this.m_client_id,
+				flags:[],
+				data:null,
+			});
 		}
 		this.m_unhandled_events.push(data);
 		console.log(data);

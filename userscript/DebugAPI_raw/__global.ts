@@ -149,7 +149,7 @@ declare global {
 		type:"tcp",
 		flags:ConnectFlags[],
 		client_id:number,
-		data:ConnectionSource|ConnectionConnected|ConnectionDisconnected|ConnectionSideMsg,
+		data:ConnectionSource|ConnectionConnected|ConnectionDisconnected|ConnectionSideMsg|null,
 	}
 	type ConnectionSource={
 		type:"source",
