@@ -4869,7 +4869,7 @@ class LocalHandler {
 			data: null,
 		},[server_port]);
 		client_port.addEventListener("message",this);
-		this.m_client_connection_port=client_port;
+		this.m_port=client_port;
 	}
 	/**
 	 * @param {ConnectionMessage} data
@@ -4883,8 +4883,8 @@ class LocalHandler {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		if(!this.m_client_connection_port) throw new Error("no connection port");
-		this.m_client_connection_port.postMessage(message_data);
+		if(!this.m_port) throw new Error("no connection port");
+		this.m_port.postMessage(message_data);
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	client_connect(message_event) {
@@ -4934,7 +4934,7 @@ class LocalHandler {
 		}
 	}
 	client_start_connect() {
-		if(!this.m_client_connection_port) {
+		if(!this.m_port) {
 			throw new Error("No remote port to communicate with");
 		}
 	}
@@ -4942,10 +4942,10 @@ class LocalHandler {
 	client_disconnect(report_info) {
 		console.log('on_disconnect',report_info.data);
 		this.m_connected=false;
-		if(!this.m_client_connection_port) throw new Error("missing connection port, and disconnect was still called");
-		this.m_client_connection_port.removeEventListener('message',this);
-		this.m_client_connection_port.close();
-		this.m_client_connection_port=null;
+		if(!this.m_port) throw new Error("missing connection port, and disconnect was still called");
+		this.m_port.removeEventListener('message',this);
+		this.m_port.close();
+		this.m_port=null;
 		if(this.m_elevation_id) clear_elevation_by_id(this.m_elevation_id);
 	}
 	/** @type {"client"} */
@@ -4955,7 +4955,7 @@ class LocalHandler {
 	/** @type {number} */
 	m_elevation_id;
 	/** @type {MessagePort|null} */
-	m_client_connection_port=null;
+	m_port=null;
 	m_connected=false;
 	m_tries_left=0;
 	m_connection_timeout;
@@ -5008,13 +5008,13 @@ class RemoteHandler {
 	/** @type {ConnectionFlags} */
 	m_flags;
 	/** @type {MessagePort} */
-	m_server_connection_port;
+	m_port;
 	/** @type {number} */
 	m_client_id;
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		this.m_server_connection_port.postMessage(message_data);
+		this.m_port.postMessage(message_data);
 	}
 	m_connected=false;
 	downstream_connect() {
@@ -5077,9 +5077,9 @@ class RemoteHandler {
 		this.m_flags=flags;
 		this.m_client_id=client_id;
 		this.m_event_source=event_source;
-		this.m_server_connection_port=connection_port;
-		this.m_server_connection_port.addEventListener("message",this);
-		this.m_server_connection_port.start();
+		this.m_port=connection_port;
+		this.m_port.addEventListener("message",this);
+		this.m_port.start();
 		this.m_connecting=true;
 	}
 }
