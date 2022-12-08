@@ -4,6 +4,7 @@ import {TimeoutTargetFireDataNode} from "../timer_node/TimeoutTargetFireDataNode
 import {AverageRatio} from "./AverageRatio.js";
 import {BaseNode} from "../timer_node/BaseNode.js";
 
+// AutoBuyState
 declare global {
 	interface Window {
 		atomepersecond: number;

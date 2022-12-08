@@ -1,3 +1,4 @@
+// do_auto_unit_promote
 declare global {
 	interface Window {
 		arUnit: any[];

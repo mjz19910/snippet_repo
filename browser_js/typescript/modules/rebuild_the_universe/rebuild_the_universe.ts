@@ -2034,6 +2034,7 @@ class AverageRatioRoot {
 	}
 }
 
+// AutoBuyState
 declare global {
 	interface Window {
 		atomepersecond: number;
@@ -3581,11 +3582,14 @@ function remove_html_nodes(node: HTMLScriptElement) {
 function remove_bad_dom_script_element() {
 	Array.prototype.forEach.call(document.querySelectorAll("script"),remove_html_nodes);
 }
+
+// on_game_data_set
 declare global {
 	interface Window {
 		constelOff(): void;
 	}
 }
+
 function on_game_data_set() {
 	log_if(LOG_LEVEL_INFO,'game data init');
 	remove_bad_dom_script_element();
@@ -3959,6 +3963,8 @@ function create_document_write_list() {
 	window.document_write_list=document_write_list;
 	return document_write_list;
 }
+
+// rebuild_the_universe main
 declare global {
 	interface Document {
 		adoptedStyleSheets: CSSStyleSheet[];
