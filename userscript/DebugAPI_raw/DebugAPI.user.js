@@ -5051,6 +5051,20 @@ class RemoteSocket {
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(this.m_flags.does_proxy_to_opener) {
+			if(!event.data) return;
+			let real_data=event.data.data;
+			let path_arr=[event.data.client_id];
+			if(real_data) {
+				x: if(real_data.type==="forward") {
+					path_arr.push(...real_data.client_id_path);
+					real_data=real_data.data;
+				}
+			}
+			event.data.data={
+				type:"forward",
+				client_id_path:[this.m_client_id],
+				data: real_data,
+			};
 			inject_api.remote_origin.push_tcp_message(event.data);
 		}
 		let {data}=event;
