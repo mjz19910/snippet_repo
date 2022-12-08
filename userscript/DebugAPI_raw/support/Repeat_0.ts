@@ -92,9 +92,9 @@ export class RepeatL_0<T> {
 		}
 		return res;
 	}
-	// U=RecordKey<symbol> V=InstanceType<U> C=C
-	/**@template {RecordKey<symbol>} U @template {InstanceType<U>} V @template C @arg {U} constructor_key @arg {C} key @arg {V} value*/
-	has_map_T<U extends RecordKey<symbol>,V extends InstanceType<U>,C>(constructor_key: U,key: C,value: V) {
+	// A=RecordKey<symbol> B=InstanceType<U> C=C
+	/**@template {RecordKey<symbol>} A @template {InstanceType<U>} B @template C @arg {A} constructor_key @arg {C} key @arg {B} value*/
+	has_map_T<A extends RecordKey<symbol>,B extends InstanceType<A>,C>(constructor_key: A,key: C,value: B) {
 		let res=RepeatL_0.map_T.get(constructor_key.key);
 		if(!res) {
 			RepeatL_0.map_T.set(constructor_key.key,() => new Map);
