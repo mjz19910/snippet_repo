@@ -4872,9 +4872,9 @@ class LocalHandler {
 		this.m_connection_port.postMessage(message_data);
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
-	transport_connected(message_event) {
+	local_transport_connected(message_event) {
 		if(message_event.event) {
-			console.log('transport connected',message_event.event.data);
+			console.log('transport connected',message_event.event.data,window);
 		} else {
 			console.error("transport_connected called without an event");
 		}
@@ -4889,11 +4889,11 @@ class LocalHandler {
 		let data=event.data;
 		switch(data.type) {
 			case "connected": {
-				this.transport_connected(report_info);
+				this.local_transport_connected(report_info);
 			} break;
 			case "disconnected": {
 				this.can_reconnect=data.can_reconnect;
-				this.disconnect(report_info);
+				this.local_disconnect(report_info);
 			} break;
 		}
 	}
@@ -4904,7 +4904,7 @@ class LocalHandler {
 		this.m_connection_port.addEventListener("message",this);
 	}
 	/** @param {ReportInfo<this>} report_info */
-	disconnect(report_info) {
+	local_disconnect(report_info) {
 		console.log('on_disconnect',report_info.event.data,report_info.event);
 		this.m_remote_side_connected=false;
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
