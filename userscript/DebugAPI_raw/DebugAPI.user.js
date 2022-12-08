@@ -5140,7 +5140,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	startup_task(cur_window) {
 		if(cur_window.opener!==null) {
 			this.m_flags.does_proxy_to_opener=true;
-			this.start_root_server();
 			return this.init_transport_over(cur_window.opener);
 		}
 		if(cur_window.top===null) throw new Error("cur_window.top is null");
@@ -5148,17 +5147,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(cur_window.top===cur_window) return this.init_transport_over(cur_window);
 		throw new Error("Bad");
 	}
-	/** @param {Window} opener */
-	init_with_opener(opener) {
-		this.init_transport_over(opener);
-		this.start_root_server();
-	}
 	/**
 	 * @param {Window} remote_target
 	 */
 	init_transport_over(remote_target) {
 		this.m_remote_target=remote_target;
 		this.request_connection(this.m_local_handler);
+		this.start_root_server();
 	}
 	/** @arg {LocalHandler} local_handler */
 	request_connection(local_handler) {
