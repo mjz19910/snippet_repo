@@ -4833,28 +4833,6 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 class LocalHandler {
-	/** @type {ConnectionSide} */
-	m_side="server";
-	/** @type {ReturnType<typeof setTimeout>|null} */
-	m_timeout_id=null;
-	/** @type {number} */
-	m_elevation_id;
-	/** @type {MessagePort|null} */
-	m_connection_port=null;
-	m_remote_side_connected=false;
-	m_tries_left=0;
-	m_connection_timeout;
-	m_missing_keep_alive_counter=0;
-	can_reconnect=false;
-	m_event_transport_map=new Map;
-	m_debug=false;
-	/** @type {Window|null} */
-	m_remote_target=null;
-	/** @type {Map<LocalHandler, {port:MessagePort}>} */
-	m_transport_map=new Map;
-	m_fake=false;
-	m_client_id;
-	m_flags;
 	// get_next_elevation_id()
 	/** @arg {Window} remote_target */
 	begin_connect(remote_target) {
@@ -5034,11 +5012,7 @@ class LocalHandler {
 		clearInterval(this.m_keep_alive_interval);
 		if(this.m_elevation_id) clear_elevation_by_id(this.m_elevation_id);
 	}
-	/**
-	 * @arg {number} connection_timeout
-	 * @arg {number} client_id
-	 * @arg {ConnectionFlags} flags
-	 */
+	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags */
 	constructor(connection_timeout,client_id,flags) {
 		this.m_connection_timeout=connection_timeout;
 		this.m_elevation_id=get_next_elevation_id();
@@ -5046,6 +5020,28 @@ class LocalHandler {
 		this.m_flags=flags;
 		elevate_event_handler(this);
 	}
+	/** @type {ConnectionSide} */
+	m_side="server";
+	/** @type {ReturnType<typeof setTimeout>|null} */
+	m_timeout_id=null;
+	/** @type {number} */
+	m_elevation_id;
+	/** @type {MessagePort|null} */
+	m_connection_port=null;
+	m_remote_side_connected=false;
+	m_tries_left=0;
+	m_connection_timeout;
+	m_missing_keep_alive_counter=0;
+	can_reconnect=false;
+	m_event_transport_map=new Map;
+	m_debug=false;
+	/** @type {Window|null} */
+	m_remote_target=null;
+	/** @type {Map<LocalHandler, {port:MessagePort}>} */
+	m_transport_map=new Map;
+	m_fake=false;
+	m_client_id;
+	m_flags;
 }
 inject_api.LocalHandler=LocalHandler;
 
