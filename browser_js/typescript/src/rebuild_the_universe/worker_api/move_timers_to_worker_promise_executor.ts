@@ -55,7 +55,7 @@ export function move_timers_to_worker_promise_executor(p_accept: (arg0: WorkerAp
 	function remoteClearTimeout(id?: number) {
 		if(!worker_api.flags.get("connected")) {
 			window.clearTimeout=clearTimeout_global;
-			log_if(LOG_LEVEL_WARN_IMPL,'worker not connected');
+			log_if(LOG_LEVEL_WARN,'worker not connected');
 			return clearTimeout_global(id);
 		}
 		worker_api.timer.clear(TIMER_SINGLE,id);
@@ -65,7 +65,7 @@ export function move_timers_to_worker_promise_executor(p_accept: (arg0: WorkerAp
 	function remoteSetInterval(handler: TimerHandler,timeout?: number,...target_args: any[]) {
 		if(!worker_api.flags.get("connected")) {
 			window.setInterval=setInterval_global;
-			log_if(LOG_LEVEL_WARN_IMPL,'worker not connected');
+			log_if(LOG_LEVEL_WARN,'worker not connected');
 			return setInterval_global(handler,timeout,...target_args);
 		}
 		return worker_api.timer.set(TIMER_REPEATING,handler,timeout,target_args);
@@ -75,7 +75,7 @@ export function move_timers_to_worker_promise_executor(p_accept: (arg0: WorkerAp
 	function remoteClearInterval(id: number|undefined) {
 		if(!worker_api.flags.get("connected")) {
 			window.clearInterval=clearInterval_global;
-			log_if(LOG_LEVEL_WARN_IMPL,'worker not connected');
+			log_if(LOG_LEVEL_WARN,'worker not connected');
 			return clearInterval_global(id);
 		}
 		worker_api.timer.clear(TIMER_REPEATING,id);

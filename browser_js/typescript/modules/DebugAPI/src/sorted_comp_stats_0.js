@@ -1,3 +1,5 @@
+import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator";
+
 /** @arg {CompressionStatsCalculator} this_ @arg {IDValue_0} obj */
 export function sorted_comp_stats_0(this_,obj) {
 	if(obj.arr_str!=null&&obj.stats_win!=null) {

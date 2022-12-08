@@ -20,6 +20,9 @@ import {DebugAPI} from "../src/debug_api/DebugAPI.js";
 import {GenericEventTarget} from "../src/GenericEventTarget.js";
 import {GenericEvent} from "../src/GenericEvent.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
+import {PluginOverlayElement} from "../../youtube_plugin/player_plugin_activate/elements/PluginOverlayElement.js";
+import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
+import {RemoteOriginConnection} from "../src/RemoteOriginConnection.js";
 
 // DebugAPI
 declare global {
