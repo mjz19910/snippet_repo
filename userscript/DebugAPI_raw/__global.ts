@@ -145,7 +145,10 @@ declare global {
 
 declare global {
 	type RemoteOriginConnected={type: "connected",client_id: number;};
-	type RemoteOriginDisconnected={type: "disconnected";};
+	type RemoteOriginDisconnected={
+		type: "disconnected";
+		can_reconnect:boolean;
+	};
 	type OriginConnectionSide="client"|"server";
 	type RemoteOriginKeepAliveReply={type: "keep_alive_reply",sides: [OriginConnectionSide,OriginConnectionSide];};
 	type RemoteOriginKeepAlive={type: "keep_alive"; side: OriginConnectionSide;};

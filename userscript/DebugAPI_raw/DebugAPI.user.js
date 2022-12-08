@@ -4922,10 +4922,12 @@ class LocalHandler {
 				if(this.m_reconnecting) return;
 				this.disconnect();
 				this.m_root.transport_disconnected(report_info);
-				this.m_tries_left=24;
-				this.m_reconnecting=true;
 				this.m_remote_side_connected=false;
-				this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
+				if(data.can_reconnect) {
+					this.m_tries_left=24;
+					this.m_reconnecting=true;
+					this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
+				}
 			} break;
 			case "keep_alive": {
 				this.post_message({
@@ -5038,10 +5040,17 @@ class RemoteHandler {
 	}
 	onConnected() {
 		let {client_id}=this;
-		this.post_message({type: "connected",client_id});
+		this.post_message({
+			type: "connected",
+			client_id,
+		});
 	}
-	onDisconnect() {
-		this.post_message({type: "disconnected"});
+	/** @param {boolean} can_reconnect */
+	onDisconnect(can_reconnect) {
+		this.post_message({
+			type: "disconnected",
+			can_reconnect,
+		});
 	}
 	/** @arg {MessageEvent<RemoteOriginMessage>} event */
 	handleEvent(event) {
@@ -5324,7 +5333,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		window.addEventListener("message",on_message_event);
 		window.addEventListener("beforeunload",function() {
 			for(let connection of t.connections) {
-				connection.handler.onDisconnect();
+				connection.handler.onDisconnect(false);
 			}
 		});
 		window.addEventListener("unload",function() {
