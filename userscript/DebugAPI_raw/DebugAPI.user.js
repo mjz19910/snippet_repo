@@ -3445,8 +3445,7 @@ let cached_iframe=null;
 
 function resolve_function_constructor() {
 	if(globalThis.Node===void 0) {
-		// we are in Node, there is no DOM
-		return Function;
+		throw new Error("Javascript Runtime Without DOM not supported (node js)");
 	}
 	if(!cached_iframe) {
 		let iframe_element=document.createElement("iframe");
