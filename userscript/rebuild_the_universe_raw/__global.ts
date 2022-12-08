@@ -1,7 +1,13 @@
-// AutoBuy
 declare global {
 	interface Window {
-		g_auto_buy: AutoBuy;
+		mute(): void;
+	}
+}
+
+// AutoBuyImplR
+declare global {
+	interface Window {
+		g_auto_buy: AutoBuyImplR;
 	}
 }
 
@@ -42,6 +48,8 @@ declare global {
 
 // AutoBuyState
 declare global {
+	function calcPres(): number;
+
 	interface Window {
 		atomepersecond: number;
 		prestige: number;
@@ -84,7 +92,7 @@ declare global {
 		specialclick(that: any): void;
 		__testing__: false;
 		bonusAll(): void;
-		allspec: {}[];
+		allspec: {done:boolean;cost:number}[];
 	}
 }
 

@@ -3142,7 +3142,7 @@ class AutoBuyImplR {
 		}
 		this.state_history_append(char,silent);
 	}
-	/** @arg {{ done: any; cost: number; }} special_buyable */
+	/** @arg {{done:boolean;cost:number}} special_buyable */
 	is_special_done(special_buyable) {
 		return !special_buyable.done&&special_buyable.cost<window.totalAtome;
 	}

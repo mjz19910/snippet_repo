@@ -4449,13 +4449,7 @@ function make_group_from_item(arr_2d,key,value) {
 }
 
 
-class AutoBuy {
-	compressor=new MulCompression;
-	/**@type {string[]} */
-	state_history_arr=[];
-}
-
-/** @type {AutoBuy} */
+/** @type {AutoBuyImplR} */
 let g_auto_buy;
 /** @type {{value:string[]}} */
 let src_arr={value: []};
