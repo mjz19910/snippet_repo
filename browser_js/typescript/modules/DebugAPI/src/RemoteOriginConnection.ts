@@ -6,6 +6,7 @@ import {RemoteOriginMessage} from "./RemoteOriginMessage";
 import {ReportInfo} from "./ReportInfo";
 import {LocalHandler} from "./LocalHandler";
 import {ConnectionFlags} from "./ConnectionFlags";
+import {cast_to_object, cast_to_record_with_key_and_string_type, cast_to_record_with_string_type} from "./cast_to_object";
 
 // @Update on minor version change
 // version <4.9.13 commit sha1
