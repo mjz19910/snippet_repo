@@ -5039,8 +5039,16 @@ class RemoteHandler {
 			console.log("TODO proxy message to opener");
 		}
 		let {data}=event;
-		if(data.type!=="tcp") return;
-		if(data.flags.includes("syn")) {
+		if(data.type!=="tcp") {
+			this.m_unhandled_events.push(data);
+			console.log(data);
+			return;
+		}
+		this.handle_tcp_data(data);
+	}
+	/** @arg {ConnectionMessage} tcp_data */
+	handle_tcp_data(tcp_data) {
+		if(tcp_data.flags.includes("syn")) {
 			debugger;
 			this.server_post_message({
 				type: "tcp",
@@ -5049,11 +5057,9 @@ class RemoteHandler {
 				data: null,
 			});
 		}
-		if(data.flags.includes("ack")&&this.m_connecting) {
+		if(tcp_data.flags.includes("ack")&&this.m_connecting) {
 			this.server_connect();
 		}
-		this.m_unhandled_events.push(data);
-		console.log(data);
 	}
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
 	constructor(flags,connection_port,client_id,event_source) {
@@ -5161,21 +5167,26 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.first_event.origin===event.origin;
 		});
-		handler.handleEvent(event);
+		handler.handle_tcp_data(event.data.data);
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
 		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
 	}
-	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<ConnectionMessage>} */
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
+	is_wrapped_message(event) {
+		let data=cast_to_record_with_string_type_unk(event.data);
+		if(!data) return false;
+		return data.type!==post_message_connect_message_type;
+	}
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
-		let con_message_record=cast_to_record_with_string_type_unk(event.data);
-		if(!con_message_record) return false;
-		if(con_message_record.type!==post_message_connect_message_type) return false;
-		if(!is_record_with_T(con_message_record,"data"))return false;
-		let data_record=cast_to_record_with_string_type_unk(con_message_record.data);
+		if(!this.is_wrapped_message(event)) return false;
+		if(!is_record_with_T(event.data,"data"))return false;
+		let data_record=cast_to_record_with_string_type_unk(event.data.data);
 		if(data_record===null) return false;
-		return data_record.type==="tcp";
+		if(data_record.type!=="tcp") return false;
+		return true;
 	}
 	/** @param {ConnectionMessage} message */
 	postListeningToConnection(message) {
