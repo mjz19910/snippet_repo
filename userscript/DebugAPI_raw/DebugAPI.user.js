@@ -4847,6 +4847,7 @@ class LocalHandler {
 			port1: server_port,
 			port2: client_port,
 		}=channel;
+		client_port.start();
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
@@ -4856,9 +4857,8 @@ class LocalHandler {
 			client_id: this.m_client_id,
 			data: null,
 		},[server_port]);
-		this.m_client_connection_port=client_port;
-		client_port.start();
 		client_port.addEventListener("message",this);
+		this.m_client_connection_port=client_port;
 	}
 	/**
 	 * @param {ConnectionMessage} data
