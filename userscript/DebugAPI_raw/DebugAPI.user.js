@@ -3628,7 +3628,7 @@ async function decode_wasm_data() {
 	async function fetch_wasm_module() {
 		let fetcher=new DataFetcher("https://raw.githack.com/little-core-labs/varint-wasm/master/varint.wasm");
 		return fetcher.read_body();
-		
+
 	}
 	let wasm_module_bytes=await fetch_wasm_module();
 	console.log(wasm_module_bytes);
@@ -4408,17 +4408,15 @@ function deep_eq(obj_1,obj_2) {
 	if(obj_1===obj_2)
 		return true;
 	if(obj_1 instanceof Array&&obj_2 instanceof Array) {
-		if(obj_1.length===obj_2.length) {
-			for(let i=0;i<obj_1.length;i++) {
-				let cur=obj_1[i];
-				let cur_other=obj_2[i];
-				if(!deep_eq(cur,cur_other)) {
-					return false;
-				}
+		if(obj_1.length!==obj_2.length) return false;
+		for(let i=0;i<obj_1.length;i++) {
+			let cur=obj_1[i];
+			let cur_other=obj_2[i];
+			if(!deep_eq(cur,cur_other)) {
+				return false;
 			}
-			return true;
 		}
-		return false;
+		return true;
 	}
 	if(Object.getPrototypeOf(obj_1)===Object.prototype) {
 		let is_eq=deep_eq(Object.entries(obj_1),Object.entries(obj_2));
