@@ -3055,80 +3055,6 @@ function is_undefined(t) {
 class RepeatImpl_0 {
 	/** @type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat_0<InstanceType<U>>>>} */
 	map_instance_or_d1=new Map;
-	/** @type {Map<symbol,<T,U>() => Map<T,U|Repeat_0<U>>>} */
-	static map_instance_or=new Map;
-	/** @type {Map<"key",<A,B extends RecordKey<A>,C extends InstanceType<B>>(q: B) => Map<A,C|Repeat_0<C>>>} */
-	static base_map=new Map;
-	/** @type {Map<any,any>} */
-	static cache_set=new Map();
-	/** @template A @template {RecordKey<A>} B @template {InstanceType<B>} C @arg {B} q @returns {Map<A,C>} */
-	static cache_get(q) {
-		/**@type {Map<A,C>|null} */
-		let value=null;
-		if(this.cache_set.has(q.key)) {
-			value=this.cache_set.get(q.key);
-		}
-		if(value) return value;
-		value=new Map;
-		this.cache_set.set(q.key,value);
-		return value;
-	}
-	/**@template A @template {RecordKey<A>} B @template {InstanceType<B>} C @arg {B} constructor_key_0 @arg {C} value */
-	static get_map_T_or(constructor_key_0,value) {
-		/**@type {Map<A, C>} */
-		let map=RepeatImpl_0.cache_get(constructor_key_0);
-		if(!map) return null;
-		let res=map.get(constructor_key_0.key);
-		if(is_undefined(res)) {
-			map.set(constructor_key_0.key,value);
-			return value;
-		}
-		return res;
-	}
-	/**@arg {AltPair<string,number>} a @arg {number} b @returns {["string",string|Repeat_0<string>]|["number",number|Repeat_0<number>]} */
-	static from_TU_entry(a,b) {
-		switch(a[0]) {
-			case 'T': return ['string',RepeatImpl_0.get(a[1],b)];
-			case 'U': return ['number',RepeatImpl_0.get_num(a[1],b)];
-		}
-	}
-	/**@template A,B @arg {[A,B]} _args */
-	static drop2(..._args) {}
-	/**@template {Map<B,Map<C,D>>} A @template B,C,D @arg {A} a @arg {B} b @arg {C} c @arg {D} d */
-	static map_1(a,b,c,d) {
-		this.drop2(c,d);
-		if(a.has(b)) {
-			let v=a.get(b);
-			if(v===void 0) throw new Error("Unreachable");
-			return v;
-		}
-		/**@type {Map<C,D>} */
-		let x=new Map;
-		a.set(b,x);
-		return x;
-	}
-	/**@template {Map<any,any> extends Map<any,infer U>? U:never} U @template T @arg {Map<T,U>|null} v @arg {T} k @returns {U|null} */
-	static get_require(v,k) {
-		if(!v) return null;
-		let x=v.get(k);
-		if(x===void 0) return null;
-		return x;
-	}
-	/**@template T  @arg {Map<T,Map<number,Repeat_0<T>>>} a @arg {T} b @arg {number} c */
-	static get_with(a,b,c) {
-		let d=a.get(b);
-		if(d===void 0) return null;
-		let h=this.map_1(a,b,{},{});
-		if(!h) throw new Error("1");
-		let i=h.get(c);
-		if(i) {
-			return i;
-		} else {
-			let rep=new this(b,c);
-			h.set(c,rep);
-			return rep;
-		}
-	}
 	/**@type {Map<string,Map<number,Repeat_0<string>>>} */
 	static map=new Map;
 	/**@type {Map<number,Map<number,Repeat_0<number>>>} */
@@ -3171,7 +3097,9 @@ class RepeatImpl_0 {
 			return rep;
 		}
 	}
+	/** @type {T} */
 	value;
+	/** @type {number} */
 	times;
 	/** @arg {T} value @arg {number} times */
 	constructor(value,times) {
