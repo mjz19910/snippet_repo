@@ -4912,9 +4912,7 @@ class LocalHandler {
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	transport_connected(message_event) {
 		if(message_event.event) {
-			if(this.m_debug) {
-				console.log('transport connected',message_event.event.data);
-			}
+			console.log('transport connected',message_event.event.data);
 			if(message_event.event.source!==null) {
 				this.m_event_transport_map.set(message_event.event.source,window);
 			}
