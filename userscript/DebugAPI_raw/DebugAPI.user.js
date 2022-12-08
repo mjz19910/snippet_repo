@@ -5034,10 +5034,13 @@ class RemoteHandler {
 	m_connection_port;
 	/** @type {number} */
 	m_client_id;
+	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
 	post_message(message_data) {
 		if(message_data.type!=='keep_alive_reply') {
-			console.log("RemoteHandler.post_message",message_data);
+			if(this.m_debug) {
+				console.log("RemoteHandler.post_message",message_data);
+			}
 		}
 		this.m_connection_port.postMessage(message_data);
 	}
