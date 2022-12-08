@@ -1,4 +1,10 @@
+import {GenericEventTarget} from "../GenericEventTarget";
+import {HexRandomDataGenerator} from "../HexRandomDataGenerator";
+import {RemoteOriginConnection} from "../RemoteOriginConnection";
 import {RustTokenTreeParser} from "./RustTokenTreeParser";
+
+const static_event_target=new GenericEventTarget;
+const random_data_generator=new HexRandomDataGenerator;
 
 export class DebugAPI {
 	next_remote_id=0;

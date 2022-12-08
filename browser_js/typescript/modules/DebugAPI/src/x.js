@@ -14,5 +14,3 @@ export let src_arr=new W([]);
 /** @type {W<string[][]>} */
 export let id_groups=new W([]);
 
-/** @type {W<string[]>} */
-export let ids=new W([]);

@@ -2,6 +2,7 @@ import {Box} from "./Box.js";
 import {BoxTemplate} from "./template/BoxTemplate.js";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";
 import {CSSStyleSheetInitBox} from "./CSSStyleSheetInitBox.js";
+import {StackVM} from "../ns_import_type.js";
 
 export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",typeof CSSStyleSheet> {
 	readonly type="constructor_box";
@@ -9,7 +10,7 @@ export class CSSStyleSheetConstructorBox extends BoxTemplate<"constructor_box",t
 	readonly instance_type="CSSStyleSheet";
 	readonly arguments=[{name: "options",opt: true,value: {types: ["CSSStyleSheetInit","undefined"]}}] as const;
 	readonly args_type: [options?: CSSStyleSheetInit|undefined]=[];
-	on_get(_vm: StackVMImpl,key: string) {
+	on_get(_vm: StackVM,key: string) {
 		console.log("get","CSSStyleSheetConstructorBox",key);
 	}
 	factory(...arr: Box[]) {

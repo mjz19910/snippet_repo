@@ -1,3 +1,4 @@
+import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator";
 import {sorted_comp_stats_0} from "./sorted_comp_stats_0";
 
 /**

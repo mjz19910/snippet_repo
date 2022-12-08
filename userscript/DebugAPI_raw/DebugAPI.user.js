@@ -4568,7 +4568,7 @@ class HexRandomDataGenerator {
 	}
 }
 inject_api.HexRandomDataGenerator=HexRandomDataGenerator;
-let random_data_generator=new HexRandomDataGenerator;
+const random_data_generator=new HexRandomDataGenerator;
 
 class EventListenerValue {
 	/**

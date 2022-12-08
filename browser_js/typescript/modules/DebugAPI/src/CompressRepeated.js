@@ -1,3 +1,5 @@
+import {Repeat_0} from "./repeat/Repeat_0";
+
 export class CompressRepeated {
 	/** @template T @param {T[]} src @param {(T|Repeat_0<T>)[]} dst */
 	did_compress(src,dst) {

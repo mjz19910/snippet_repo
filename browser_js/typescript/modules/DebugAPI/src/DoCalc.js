@@ -1,12 +1,14 @@
 import {calc_cur} from "./calc_cur";
 import {calc_next} from "./calc_next";
+import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator";
 import {get_next} from "./get_next";
+import {max_id} from "./x";
 
 export class DoCalc {
 	get_result() {
 		return this.m_return_value;
 	}
-	/** @type {DualR|null} */
+	/** @type {DualR_m|null} */
 	m_return_value=null;
 	run() {
 		this.obj.stats_win=2;

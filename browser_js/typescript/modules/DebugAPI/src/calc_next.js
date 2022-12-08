@@ -1,4 +1,5 @@
 import {CompressTU} from "../types/CompressTU.js";
+import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator.js";
 
 /**
  * @param {CompressionStatsCalculator} stats

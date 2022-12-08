@@ -1,3 +1,4 @@
+import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator";
 import {DoCalc} from "./DoCalc";
 
 /**
