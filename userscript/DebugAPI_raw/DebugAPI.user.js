@@ -5052,7 +5052,7 @@ class RemoteHandler {
 			this.client_post_message({
 				type:"tcp",
 				client_id:this.m_client_id,
-				flags:[],
+				flags:["syn","ack"],
 				data:null,
 			});
 		}
