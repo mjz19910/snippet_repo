@@ -35,21 +35,6 @@ declare global {
 	class Repeat_0<T> extends RepeatL_0<T> {}
 }
 
-export class Repeat_2<T> {
-	value: T;
-	times: number;
-	constructor(value: T,times: number) {
-		this.value=value;
-		this.times=times;
-	}
-	static from_TU_entry(
-		_a: ["string",string]|["number",number],
-		_b: number
-	): ["string",string|Repeat_2<string>]|["number",number|Repeat_2<number>] {
-		throw new Error("1");
-	}
-}
-
 declare global {
 	type AnyOrRepeat_0<T> = T|Repeat_0<T>;
 }
