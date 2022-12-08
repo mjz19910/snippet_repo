@@ -3190,6 +3190,7 @@ class CompressRepeated {
 	}
 }
 inject_api.CompressRepeated=CompressRepeated;
+
 /**@template T */
 class W {
 	/**@arg {T} val */
@@ -3198,6 +3199,7 @@ class W {
 	}
 }
 add_function(W);
+
 /**@type {<T, U>(a:T[], b:U[])=>[T, U][]} */
 function to_tuple_arr(keys,values) {
 	/**@type {[typeof keys[0], typeof values[0]][]} */
@@ -3212,6 +3214,7 @@ function to_tuple_arr(keys,values) {
 	return ret;
 }
 inject_api.to_tuple_arr=to_tuple_arr;
+
 /** @param {any[]} arr @param {number} index @param {number} value */
 function range_matches(arr,value,index) {
 	for(let i=index;i<arr.length;i++) {
@@ -3369,6 +3372,7 @@ class MulCompression extends BaseCompression {
 		return arr;
 	}
 }
+
 /** @typedef {typeof DisabledMulCompression} DisabledMulCompressionT */
 class DisabledMulCompression extends MulCompression {
 	/**
@@ -3436,17 +3440,23 @@ function found_modules(a,c,m_require) {
 	void a,c,m_require;
 };
 
+/** @type {HTMLIFrameElement|null} */
+let cached_iframe=null;
+
 function resolve_function_constructor() {
 	if(globalThis.Node===void 0) {
 		// we are in Node, there is no DOM
 		return Function;
 	}
-	let iframe_element=document.createElement("iframe");
-	document.head.append(iframe_element);
+	if(!cached_iframe) {
+		let iframe_element=document.createElement("iframe");
+		document.head.append(iframe_element);
+		cached_iframe=iframe_element;
+	}
 
-	if(!iframe_element.contentWindow) throw new Error("No content window");
+	if(!cached_iframe.contentWindow) throw new Error("No content window");
 
-	let content_window_r=iframe_element.contentWindow;
+	let content_window_r=cached_iframe.contentWindow;
 	let content_window=content_window_r.self;
 
 	return content_window.Function;
