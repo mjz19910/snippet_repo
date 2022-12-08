@@ -4833,6 +4833,20 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 class LocalHandler {
+	/** @type {ConnectionSide} */
+	m_side="server";
+	/** @type {ReturnType<typeof setTimeout>|null} */
+	m_timeout_id=null;
+	/** @type {number} */
+	m_elevation_id;
+	/** @type {MessagePort|null} */
+	m_connection_port=null;
+	m_remote_side_connected=false;
+	m_tries_left=0;
+	m_connection_timeout;
+	m_missing_keep_alive_counter=0;
+	can_reconnect=false;
+	m_event_transport_map=new Map;
 	m_debug=false;
 	/** @type {Window|null} */
 	m_remote_target=null;
@@ -4869,17 +4883,6 @@ class LocalHandler {
 		}
 		return true;
 	}
-	/** @type {ConnectionSide} */
-	m_side="server";
-	/** @type {ReturnType<typeof setTimeout>|null} */
-	m_timeout_id=null;
-	/** @type {number} */
-	m_elevation_id;
-	/** @type {MessagePort|null} */
-	m_connection_port=null;
-	m_remote_side_connected=false;
-	m_tries_left=0;
-	m_connection_timeout;
 	start_reconnect() {
 		if(this.m_remote_target===null) throw new Error("start reconnect has no target");
 		this.begin_connect(this.m_remote_target);
@@ -4908,7 +4911,6 @@ class LocalHandler {
 		}
 		this.m_connection_port.postMessage(message_data);
 	}
-	m_missing_keep_alive_counter=0;
 	keep_alive_send() {
 		this.m_missing_keep_alive_counter++;
 		if(this.m_missing_keep_alive_counter>1) {
@@ -4929,8 +4931,6 @@ class LocalHandler {
 			side: "client",
 		});
 	}
-	can_reconnect=false;
-	m_event_transport_map=new Map;
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	transport_connected(message_event) {
 		if(message_event.event) {
@@ -4988,10 +4988,7 @@ class LocalHandler {
 			} break;
 		}
 	}
-	/**
-	 * @param {MessagePort} port
-	 * @param {number} elevation_id
-	 */
+	/** @param {MessagePort} port @param {number} elevation_id */
 	connect(port,elevation_id) {
 		this.m_elevation_id=elevation_id;
 		this.m_connection_port=port;
