@@ -5138,14 +5138,12 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @param {Window} cur_window @returns {void} */
 	startup_task(cur_window) {
-		if(cur_window.opener!==null) {
-			this.m_flags.does_proxy_to_opener=true;
-			return this.init_transport_over(cur_window.opener);
+		if(cur_window.opener) {
+			this.init_transport_over(cur_window.opener);
 		}
-		if(cur_window.top===null) throw new Error("cur_window.top is null");
-		if(cur_window.top!==cur_window) return this.startup_task(cur_window.top);
-		if(cur_window.top===cur_window) return this.init_transport_over(cur_window);
-		throw new Error("Bad");
+		if(cur_window.top) {
+			this.init_transport_over(cur_window.top);
+		}
 	}
 	/**
 	 * @param {Window} remote_target
