@@ -5069,6 +5069,9 @@ class RemoteHandler {
 		if(tcp_data.flags.includes("syn")) {
 			this.send_ack(tcp_data.flags);
 		}
+		if(!tcp_data.flags.includes("ack")) {
+			this.send_ack(tcp_data.flags);
+		}
 		if(tcp_data.flags.includes("ack")&&this.m_connecting) {
 			this.m_connecting=false;
 			this.m_connected=true;
