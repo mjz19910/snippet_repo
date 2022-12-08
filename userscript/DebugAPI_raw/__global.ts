@@ -56,8 +56,13 @@ declare global {
 	type AnyOrRepeat2_0<T,U>=["T",AnyOrRepeat_0<T>]|["U",AnyOrRepeat_0<U>];
 }
 
+// TagAltPair
 declare global {
-	type DualR=[true,AnyOrRepeat2_1<string,number>[]]|[false,TypeAOrTypeB<string,number>[]];
+	type TagAltPair<T,U>=["T",T]|["U",U];
+}
+
+declare global {
+	type DualR=[true,AnyOrRepeat2_0<string,number>[]]|[false,TagAltPair<string,number>[]];
 }
 
 declare global {
