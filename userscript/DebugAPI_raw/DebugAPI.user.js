@@ -5086,7 +5086,7 @@ class RemoteSocket {
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
-			flags: ["ack",...flags],
+			flags: [...flags,"ack"],
 			data: null,
 		});
 	}
