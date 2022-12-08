@@ -71,7 +71,7 @@ export class RepeatL_0<T> {
 	static map: Map<string,Map<number,RepeatL_0<string>>>=new Map;
 	static map_num: Map<number,Map<number,RepeatL_0<number>>>=new Map;
 	static map_sym: Map<symbol,{}>=new Map;
-	map_T: Map<symbol,<T,U>(t: T,u: U) => Map<T,RepeatL_0<U>>>=new Map;
+	static map_T: Map<symbol,<T,U>(t: T,u: U) => Map<T,RepeatL_0<U>>>=new Map;
 	map_instance: Map<symbol,<T,U>() => Map<T,RepeatL_0<U>>>=new Map;
 	static once_getter<T extends RecordKey<symbol>>(i_rec: T) {
 		return this.map_sym.get(i_rec.key);
@@ -80,9 +80,9 @@ export class RepeatL_0<T> {
 	map_once: Map<symbol,T>=new Map;
 	/**@template {RecordKey<symbol>} U @arg {U} constructor_key @arg {InstanceType<U>} _ */
 	get_map_T<U extends RecordKey<symbol>>(constructor_key: U,_: InstanceType<U>) {
-		let res=RepeatL_0.N.map_T.get(constructor_key.key);
+		let res=RepeatL_0.map_T.get(constructor_key.key);
 		if(!res) {
-			RepeatL_0.N.map_T.set(constructor_key.key,() => new Map);
+			RepeatL_0.map_T.set(constructor_key.key,() => new Map);
 			/**@template {RecordKey<symbol>} T @arg {T} sym */
 			return <T extends RecordKey<symbol>>(sym: T) => {
 				let value=RepeatL_0.map_sym.get(sym.key);
@@ -95,9 +95,9 @@ export class RepeatL_0<T> {
 	// U=RecordKey<symbol> V=InstanceType<U> C=C
 	/**@template {RecordKey<symbol>} U @template {InstanceType<U>} V @template C @arg {U} constructor_key @arg {C} key @arg {V} value*/
 	has_map_T<U extends RecordKey<symbol>,V extends InstanceType<U>,C>(constructor_key: U,key: C,value: V) {
-		let res=RepeatL_0.N.map_T.get(constructor_key.key);
+		let res=RepeatL_0.map_T.get(constructor_key.key);
 		if(!res) {
-			RepeatL_0.N.map_T.set(constructor_key.key,() => new Map);
+			RepeatL_0.map_T.set(constructor_key.key,() => new Map);
 			return false;
 		}
 		let rq=res(key,value);

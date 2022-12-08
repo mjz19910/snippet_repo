@@ -3137,7 +3137,7 @@ class RepeatImpl_0 {
 	/**@type {Map<symbol,{}>} */
 	static map_sym=new Map;
 	/**@type {Map<symbol,<T,U>(t:T,u:U) => Map<T,RepeatImpl_0<U>>>} */
-	map_T=new Map;
+	static map_T=new Map;
 	/**@type {Map<symbol,<T,U>() => Map<T,RepeatImpl_0<U>>>} */
 	map_instance=new Map;
 	/** @template {RecordKey<symbol>} T @arg {T} i_rec */
@@ -3148,7 +3148,7 @@ class RepeatImpl_0 {
 	map_once=new Map;
 	/**@template {RecordKey<symbol>} U @arg {U} constructor_key @arg {InstanceType<U>} _ */
 	get_map_T(constructor_key,_) {
-		let res=RepeatImpl_0.N.map_T.get(constructor_key.key);
+		let res=RepeatImpl_0.map_T.get(constructor_key.key);
 		if(!res) {
 			/** @template T,U */
 			let m_value=() => {
@@ -3157,9 +3157,9 @@ class RepeatImpl_0 {
 				let v=new mv;
 				return v;
 			};
-			RepeatImpl_0.N.map_T.set(constructor_key.key,m_value);
-			/**@template {RecordKey<symbol>} T @template U @arg {T} sym @arg {U} _u @returns {Map<T, RepeatImpl_0<U>>} */
-			let res=(sym,_u) => {
+			RepeatImpl_0.map_T.set(constructor_key.key,m_value);
+			/**@template {RecordKey<symbol>} T @template U @arg {T} sym @arg {U} u @returns {Map<T, RepeatImpl_0<U>>} */
+			let res=(sym,u) => {
 				let value=RepeatImpl_0.map_sym.get(sym.key);
 				if(value===void 0) throw new Error("1");
 				if(value instanceof Map) {
@@ -3190,9 +3190,9 @@ class RepeatImpl_0 {
 	// U=RecordKey<symbol> V=InstanceType<U> C=C
 	/**@template {RecordKey<symbol>} U @template {InstanceType<U>} V @template C @arg {U} constructor_key @arg {C} key @arg {V} value*/
 	has_map_T(constructor_key,key,value) {
-		let res=RepeatImpl_0.N.map_T.get(constructor_key.key);
+		let res=RepeatImpl_0.map_T.get(constructor_key.key);
 		if(!res) {
-			RepeatImpl_0.N.map_T.set(constructor_key.key,() => new Map);
+			RepeatImpl_0.map_T.set(constructor_key.key,() => new Map);
 			return false;
 		}
 		let rq=res(key,value);
