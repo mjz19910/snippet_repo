@@ -4841,19 +4841,24 @@ class LocalHandler {
 		this.m_remote_target=remote_target;
 		elevate_event_handler(this);
 	}
-	begin_connect() {
+	client_begin_connect() {
 		let channel=new MessageChannel;
+		let {
+			port1: server_port,
+			port2: client_port,
+		}=channel;
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
 		this.send_init_request({
 			type: "tcp",
-			flags:["syn"],
-			client_id:this.m_client_id,
-			data:null,
-		},[channel.port1]);
-		this.m_client_connection_port=channel.port2;
-		this.start_client_connect();
+			flags: ["syn"],
+			client_id: this.m_client_id,
+			data: null,
+		},[server_port]);
+		this.m_client_connection_port=client_port;
+		client_port.start();
+		client_port.addEventListener("message",this);
 	}
 	/**
 	 * @param {ConnectionMessage} data
@@ -4891,9 +4896,9 @@ class LocalHandler {
 			this.client_post_message({
 				type: "tcp",
 				client_id: this.m_client_id,
-				flags:["ack"],
+				flags: ["ack"],
 				data: {
-					type:"side",
+					type: "side",
 					side: this.m_side,
 				}
 			});
@@ -4913,12 +4918,10 @@ class LocalHandler {
 			case "side":
 		}
 	}
-	start_client_connect() {
+	client_start_connect() {
 		if(!this.m_client_connection_port) {
 			throw new Error("No remote port to communicate with");
 		}
-		this.m_client_connection_port.start();
-		this.m_client_connection_port.addEventListener("message",this);
 	}
 	/** @param {ReportInfo<this>} report_info */
 	client_disconnect(report_info) {
@@ -4930,7 +4933,7 @@ class LocalHandler {
 		this.m_client_connection_port=null;
 		if(this.m_elevation_id) clear_elevation_by_id(this.m_elevation_id);
 	}
-	/** @type {ConnectionSide} */
+	/** @type {"client"} */
 	m_side="client";
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
@@ -5011,19 +5014,19 @@ class RemoteHandler {
 		this.server_post_message({
 			type: "tcp",
 			client_id,
-			flags:[],
-			data:{
-				type:"connect",
+			flags: [],
+			data: {
+				type: "connect",
 			},
 		});
 	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
 		this.server_post_message({
-			type:"tcp",
-			client_id:this.m_client_id,
-			flags:[],
-			data:{
+			type: "tcp",
+			client_id: this.m_client_id,
+			flags: [],
+			data: {
 				type: "disconnected",
 				can_reconnect,
 			}
@@ -5039,10 +5042,10 @@ class RemoteHandler {
 		if(data.flags.includes("syn")) {
 			debugger;
 			this.server_post_message({
-				type:"tcp",
-				client_id:this.m_client_id,
-				flags:["syn","ack"],
-				data:null,
+				type: "tcp",
+				client_id: this.m_client_id,
+				flags: ["syn","ack"],
+				data: null,
 			});
 		}
 		this.m_unhandled_events.push(data);
@@ -5122,7 +5125,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			this.m_flags,
 			connect_target,
 		);
-		this.m_local_handler.begin_connect();
+		this.m_local_handler.client_begin_connect();
 	}
 	m_debug=false;
 	/** @type {MessageEvent<unknown>|null} */
