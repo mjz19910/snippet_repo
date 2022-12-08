@@ -4847,6 +4847,7 @@ class LocalHandler {
 		this.m_client_id=client_id;
 		this.m_flags=flags;
 		this.m_remote_target=remote_target;
+		this.m_event_source=remote_target;
 		elevate_event_handler(this);
 	}
 	client_begin_connect() {
@@ -4885,7 +4886,7 @@ class LocalHandler {
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	client_connect(message_event) {
-		console.log('on_server_connect',message_event.data,window);
+		console.log('on_server_connect',message_event.data,this.m_remote_target);
 	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
