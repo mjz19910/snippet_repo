@@ -5056,15 +5056,20 @@ class RemoteHandler {
 		}
 		this.handle_tcp_data(data);
 	}
+	/** @param {ConnectFlags[]} flags */
+	send_ack(flags) {
+		if(flags.includes("ack")) throw new Error("ack should not be on packet we are ack'ing for")
+		this.push_tcp_message({
+			type: "tcp",
+			client_id: this.m_client_id,
+			flags: ["ack",...flags],
+			data: null,
+		});
+	}
 	/** @arg {ConnectionMessage} tcp_data */
 	handle_tcp_data(tcp_data) {
 		if(tcp_data.flags.includes("syn")) {
-			this.push_tcp_message({
-				type: "tcp",
-				client_id: this.m_client_id,
-				flags: ["syn","ack"],
-				data: null,
-			});
+			this.send_ack(tcp_data.flags);
 		}
 		if(tcp_data.flags.includes("ack")&&this.m_connecting) {
 			this.downstream_connect();
