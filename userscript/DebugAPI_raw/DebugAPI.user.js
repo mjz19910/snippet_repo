@@ -4915,7 +4915,7 @@ class LocalHandler {
 				this.client_connect(report_info);
 			} break;
 			case "disconnected": {
-				this.can_reconnect=tcp_data.can_reconnect;
+				this.m_can_reconnect=tcp_data.can_reconnect;
 				this.client_disconnect(report_info);
 			} break;
 			case "side":
@@ -4949,7 +4949,7 @@ class LocalHandler {
 	m_connected=false;
 	m_tries_left=0;
 	m_connection_timeout;
-	can_reconnect=false;
+	m_can_reconnect=false;
 	m_event_transport_map=new Map;
 	m_debug=false;
 	/** @type {Map<LocalHandler, {port:MessagePort}>} */
