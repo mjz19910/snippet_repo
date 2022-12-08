@@ -4833,14 +4833,24 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 class LocalHandler {
-	/** @arg {Window} remote_target */
-	begin_connect(remote_target) {
+	/** @type {Window} */
+	m_remote_target;
+	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags @arg {Window} remote_target */
+	constructor(connection_timeout,client_id,flags,remote_target) {
+		this.m_connection_timeout=connection_timeout;
+		this.m_elevation_id=get_next_elevation_id();
+		this.m_client_id=client_id;
+		this.m_flags=flags;
+		this.m_remote_target=remote_target;
+		elevate_event_handler(this);
+	}
+	begin_connect() {
 		let local_handler=this;
 		let channel=new MessageChannel;
 		if(this.m_debug){
 			console.log("post request ConnectOverPostMessage");
 		}
-		remote_target.postMessage({
+		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data: {
 				type: "start",
@@ -4861,8 +4871,7 @@ class LocalHandler {
 		return true;
 	}
 	start_reconnect() {
-		if(this.m_remote_target===null) throw new Error("start reconnect has no target");
-		this.begin_connect(this.m_remote_target);
+		this.begin_connect();
 		this.m_timeout_id=setTimeout(
 			this.process_reconnect.bind(this),
 			this.m_connection_timeout/4
@@ -4981,8 +4990,7 @@ class LocalHandler {
 		},this.m_connection_timeout*2);
 	}
 	request_new_port() {
-		if(!this.m_remote_target) throw new Error("request_new_port without remote_target");
-		this.begin_connect(this.m_remote_target);
+		this.begin_connect();
 	}
 	/** @arg {ReportInfo<LocalHandler>} arg0 */
 	transport_disconnected(arg0) {
@@ -5009,14 +5017,6 @@ class LocalHandler {
 		clearInterval(this.m_keep_alive_interval);
 		if(this.m_elevation_id) clear_elevation_by_id(this.m_elevation_id);
 	}
-	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags */
-	constructor(connection_timeout,client_id,flags) {
-		this.m_connection_timeout=connection_timeout;
-		this.m_elevation_id=get_next_elevation_id();
-		this.m_client_id=client_id;
-		this.m_flags=flags;
-		elevate_event_handler(this);
-	}
 	/** @type {ConnectionSide} */
 	m_side="server";
 	/** @type {ReturnType<typeof setTimeout>|null} */
@@ -5032,8 +5032,6 @@ class LocalHandler {
 	can_reconnect=false;
 	m_event_transport_map=new Map;
 	m_debug=false;
-	/** @type {Window|null} */
-	m_remote_target=null;
 	/** @type {Map<LocalHandler, {port:MessagePort}>} */
 	m_transport_map=new Map;
 	m_fake=CrossOriginConnection.is_fake;
@@ -5183,57 +5181,31 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		super();
 		elevate_event_handler(this);
 		let client_id=this.client_max_id++;
-		this.m_local_handler=new LocalHandler(
-			30000,
-			client_id,
-			this.m_flags,
-		);
 		let s=this.state;
 		s.is_top=this.state.window===this.state.top;
 		s.is_root=this.state.opener===null;
 		if(!s.is_top) s.is_root=false;
 		this.start_root_server();
-		if(s.is_top&&s.opener!==null) {
-			if(s.opener.top!==s.opener&&s.opener.top!==null) {
-				this.init_with_next_parent(s.opener.top);
-				return;
-			}
-			this.init_with_opener(s.opener);
-			return;
+		/** @type {Window|null} */
+		let connect_target=null;
+		x: if(s.is_top&&s.opener!==null) {
+			connect_target=s.opener;
+			this.m_flags.does_proxy_to_opener=true;
+			break x;
 		}
 		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
-		this.init_with_next_parent(this.state.top);
+		connect_target=this.state.top;
+		this.m_local_handler=new LocalHandler(
+			30000,
+			client_id,
+			this.m_flags,
+			connect_target,
+		);
+		this.m_local_handler.begin_connect();
 	}
 	m_debug=false;
 	/** @type {MessageEvent<unknown>|null} */
 	last_misbehaved_client_event=null;
-	/** @param {Window} cur_window */
-	init_with_next_parent(cur_window) {
-		if(cur_window.top!==null&&cur_window.top!==cur_window) {
-			this.init_with_next_parent(cur_window.top);
-		}
-		if(cur_window.opener===null) {
-			this.init_transport_over(cur_window);
-		} else {
-			if(cur_window.opener.top!==cur_window.opener) {
-				console.log("need to go up more");
-			}
-			this.init_with_opener(cur_window.opener);
-		}
-	}
-	/** @param {Window} opener */
-	init_with_opener(opener) {
-		this.m_flags.does_proxy_to_opener=true;
-		this.init_transport_over(opener);
-		this.start_root_server();
-	}
-	/**
-	 * @param {Window} remote_target
-	 */
-	init_transport_over(remote_target) {
-		this.m_remote_target=remote_target;
-		this.m_local_handler.begin_connect(remote_target);
-	}
 	max_elevated_id=0;
 	/**
 	 * @param {any} object
