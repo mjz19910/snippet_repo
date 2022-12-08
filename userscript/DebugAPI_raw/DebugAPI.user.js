@@ -4888,7 +4888,7 @@ class LocalHandler {
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	client_connect(message_event) {
-		console.log('on_server_connect',message_event.data,this.m_remote_target);
+		console.log('on_client_connect',message_event.data,this.m_event_source);
 	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
@@ -5011,10 +5011,11 @@ class RemoteHandler {
 		this.m_server_connection_port.postMessage(message_data);
 	}
 	m_connected=false;
-	server_connect() {
+	downstream_connect() {
 		this.m_connecting=false;
 		this.m_connected=true;
 		let {m_client_id: client_id}=this;
+		console.log('on_server_connect',client_id,this.m_event_source);
 		this.server_post_message({
 			type: "tcp",
 			client_id,
@@ -5061,7 +5062,7 @@ class RemoteHandler {
 			});
 		}
 		if(tcp_data.flags.includes("ack")&&this.m_connecting) {
-			this.server_connect();
+			this.downstream_connect();
 		}
 	}
 	/** @type {MessageEventSource} */
