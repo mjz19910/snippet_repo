@@ -3053,8 +3053,6 @@ function is_undefined(t) {
 
 /** @template T @implements {Repeat_0} */
 class RepeatImpl_0 {
-	/** @type {Map<symbol,Map<T,<U extends new (...args: any) => any>(constructor_key_2: U) => InstanceType<U>|Repeat_0<InstanceType<U>>>>} */
-	map_instance_or_d1=new Map;
 	/**@type {Map<string,Map<number,Repeat_0<string>>>} */
 	static map=new Map;
 	/**@type {Map<number,Map<number,Repeat_0<number>>>} */
