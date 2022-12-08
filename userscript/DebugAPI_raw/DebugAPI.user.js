@@ -5072,6 +5072,7 @@ class RemoteHandler {
 			this.send_ack(tcp_data.flags);
 		}
 		if(tcp_data.flags.includes("ack")&&this.m_connecting) {
+			this.m_connecting=false;
 			this.downstream_connect();
 		}
 	}
