@@ -4833,7 +4833,6 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 class LocalHandler {
-	// get_next_elevation_id()
 	/** @arg {Window} remote_target */
 	begin_connect(remote_target) {
 		let local_handler=this;
