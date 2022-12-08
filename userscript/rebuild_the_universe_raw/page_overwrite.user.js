@@ -44,7 +44,7 @@ function set_jq_proxy() {
 		get() {
 			return val;
 		},
-		/**@arg {{}|undefined} value */
+		/**@arg {{}|null|undefined} value */
 		set(value) {
 			val=value;
 			if(value) use_jquery(value);
