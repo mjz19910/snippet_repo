@@ -4992,19 +4992,13 @@ class CrossOriginConnectionData {
 }
 
 class RemoteHandler {
-	/** @arg {MessageEvent<unknown>} _event @returns {_event is MessageEvent<ConnectionMessage>} */
-	is_connection_message(_event) {
-		let cast_result=cast_to_object(_event.data);
-		if(!cast_result) return false;
-		if(cast_result.data===null) return false;
-		let con_message_record=cast_to_record_with_string_type(cast_result.data);
+	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<ConnectionMessage>} */
+	is_connection_message(event) {
+		let con_message_record=cast_to_record_with_string_type_unk(event.data);
 		if(!con_message_record) return false;
 		if(con_message_record.type!==post_message_connect_message_type) return false;
 		if(!is_record_with_T(con_message_record,"data"))return false;
-		cast_result=cast_to_object(con_message_record.data);
-		if(!cast_result) return false;
-		if(cast_result.data===null) return false;
-		let data_record=cast_to_record_with_string_type(cast_result.data);
+		let data_record=cast_to_record_with_string_type_unk(con_message_record.data);
 		if(data_record===null) return false;
 		return data_record.type==="tcp";
 	}
