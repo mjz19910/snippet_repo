@@ -4906,7 +4906,7 @@ class LocalHandler {
 	handle_tcp_data(tcp_data,report_info) {
 		if(!tcp_data) return;
 		switch(tcp_data.type) {
-			case "connect": {
+			case "connected": {
 				this.client_connect(report_info);
 			} break;
 			case "disconnected": {
@@ -5007,14 +5007,17 @@ class RemoteHandler {
 	server_post_message(message_data) {
 		this.m_server_connection_port.postMessage(message_data);
 	}
-	onConnected() {
+	m_connected=false;
+	server_connect() {
+		this.m_connecting=false;
+		this.m_connected=true;
 		let {m_client_id: client_id}=this;
 		this.server_post_message({
 			type: "tcp",
 			client_id,
 			flags: [],
 			data: {
-				type: "connect",
+				type: "connected",
 			},
 		});
 	}
@@ -5046,11 +5049,11 @@ class RemoteHandler {
 				data: null,
 			});
 		}
+		if(data.flags.includes("ack")&&this.m_connecting) {
+			this.server_connect();
+		}
 		this.m_unhandled_events.push(data);
 		console.log(data);
-	}
-	server_connect() {
-		this.onConnected();
 	}
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
 	constructor(flags,connection_port,client_id,event_source) {
@@ -5060,6 +5063,7 @@ class RemoteHandler {
 		this.m_server_connection_port=connection_port;
 		this.m_server_connection_port.addEventListener("message",this);
 		this.m_server_connection_port.start();
+		this.m_connecting=true;
 	}
 }
 

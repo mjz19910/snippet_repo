@@ -152,7 +152,7 @@ declare global {
 		data: ConnectionConnected|ConnectionDisconnected|ConnectionSideMsg|null,
 	};
 	type ConnectionConnected={
-		type: "connect";
+		type: "connected";
 	};
 	type ConnectionDisconnected={
 		type: "disconnected";
