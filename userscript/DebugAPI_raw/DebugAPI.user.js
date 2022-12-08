@@ -3471,6 +3471,7 @@ function wasm_encode_section(id,arr) {
 }
 add_function(wasm_encode_section);
 
+// Looked at .zz impl for https://github.com/little-core-labs/varint-wasm
 /** @param {number[]} arr */
 function wasm_encode_string(arr) {
 	let out=[];
