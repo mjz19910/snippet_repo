@@ -5146,11 +5146,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		}
 		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
 		this.init_with_next_parent(this.state.top);
-		/**
-		 * @type {MessageEvent<unknown> | undefined}
-		 */
-		this.last_misbehaved_client_event=undefined;
 	}
+	/** @type {MessageEvent<unknown>|null} */
+	last_misbehaved_client_event=null;
 	/** @param {Window} cur_window */
 	init_with_next_parent(cur_window) {
 		if(cur_window.top!==null&&cur_window.top!==cur_window) {
