@@ -4805,7 +4805,7 @@ function cast_to_object(x) {
 	return {tag:"cast_tag",data: x};
 }
 
-/** @template {{}} T @arg {T extends {tag:"cast_tag"}?never:T} x @returns {{type: string}|null} */
+/** @template {{}} T @arg {T extends {tag:string}?never:T} x @returns {{type: string}|null} */
 function cast_to_record_with_string_type(x) {
 	x: if('type' in x) {
 		if(typeof x.type==='string'&&Object.keys(x).length==2&&'data' in x) {
