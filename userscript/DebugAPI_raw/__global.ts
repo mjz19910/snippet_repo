@@ -1,5 +1,7 @@
 import {IInjectAPI} from "./support/IInjectAPI.js";
 import {Repeat_0} from "./support/Repeat_0.js";
+import {} from "./support/RecordKey.js";
+import {} from "./support/ID.js";
 
 // Holder
 export type Holder=1;
@@ -39,8 +41,8 @@ declare global {
 }
 
 export class Repeat_2<T> {
-	value;
-	times;
+	value: T;
+	times: number;
 	constructor(value: T,times: number) {
 		this.value=value;
 		this.times=times;

@@ -16,6 +16,7 @@
 
 
 // #pragma section InjectAPI
+/** @typedef {import("./__global.js").Holder} Holder */
 /** @type {typeof window['inject_api']} */
 let inject_api={};
 window.inject_api=any(inject_api);
@@ -3084,7 +3085,7 @@ class Repeat_0 {
 		}
 		return res;
 	}
-	/**@arg {TypeAOrTypeB<string,number>} a @arg {number} b @returns {["string",string|Repeat_0<string>]|["number",number|Repeat_0<number>]} */
+	/**@arg {AltPair<string,number>} a @arg {number} b @returns {["string",string|Repeat_0<string>]|["number",number|Repeat_0<number>]} */
 	static from_TU_entry(a,b) {
 		switch(a[0]) {
 			case 'T': return ['string',Repeat_0.get(a[1],b)];
@@ -3336,7 +3337,7 @@ class BaseCompression {
 	compress_result_state_dual(arg0) {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	/** @arg {TypeAOrTypeB<string,number>[]} src @arg {AnyOrRepeat2_1<string, number>[]} dst @returns {DualR} */
+	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string, number>[]} dst @returns {DualR} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
@@ -3922,7 +3923,7 @@ class IDValueImpl {
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
-		/** @type {TypeAOrTypeB<string, number>[]} */
+		/** @type {AltPair<string, number>[]} */
 		this.arr_dual=[];
 		/** @type {AnyOrRepeat2_0<string,number>[]} */
 		this.arr_dual_compressed=[];
@@ -4057,9 +4058,9 @@ inject_api.DoCalc=DoCalc;
 class CompressDual {
 	/**@type {number} */
 	i;
-	/**@type {TypeAOrTypeB<string,number>[]} */
+	/**@type {AltPair<string,number>[]} */
 	arr=[];
-	/**@type {AnyOrRepeat2_1<string,number>[]} */
+	/**@type {AnyOrRepeat2_0<string,number>[]} */
 	ret=[];
 	m_base=new BaseCompression;
 	/**@returns {DualR} */
@@ -4073,7 +4074,7 @@ class CompressDual {
 		}
 		return this.m_base.compress_result_state_dual(this);
 	}
-	/**@arg {TypeAOrTypeB<string,number>} item */
+	/**@arg {AltPair<string,number>} item */
 	compress_rle_TU_to_TX(item) {
 		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
 		let off=1;
@@ -4083,7 +4084,7 @@ class CompressDual {
 		this.i+=off-1;
 		return true;
 	}
-	/**@arg {TypeAOrTypeB<string,number>[]} arr */
+	/**@arg {AltPair<string,number>[]} arr */
 	constructor(arr) {
 		this.i=0;
 		this.arr=arr;
@@ -4145,7 +4146,7 @@ add_function(assign_next);
 /**@implements {IDValue_0} */
 class Value {
 	set_arr_T() {}
-	/** @type {TypeAOrTypeB<AnyOrRepeat_1<string>,AnyOrRepeat_1<number>>[]} */
+	/** @type {AltPair<AnyOrRepeat_0<string>,AnyOrRepeat_0<number>>[]} */
 	arr_dual_x=[];
 	/** @type {AnyOrRepeat_0<string>[]} */
 	arr_rep_str=[];

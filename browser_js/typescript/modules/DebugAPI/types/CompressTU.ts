@@ -3,7 +3,7 @@ import {Repeat_1} from "./repeat/Repeat_1.js";
 
 export class CompressTU {
 	i: number;
-	arr: TypeAOrTypeB<string,number>[]=[];
+	arr: TypeAOrTypeB_1<string,number>[]=[];
 	ret: AnyOrRepeat2_1<string,number>[]=[];
 	try_compress_dual() {
 		let state=this;
@@ -15,7 +15,7 @@ export class CompressTU {
 		}
 		return BaseCompression.compress_result_state(this);
 	}
-	compress_rle_TU_to_TX(item: TypeAOrTypeB<string,number>) {
+	compress_rle_TU_to_TX(item: TypeAOrTypeB_1<string,number>) {
 		if(this.i+1>=this.arr.length&&item!==this.arr[this.i+1]) return false;
 		let off=1;
 		while(item===this.arr[this.i+off]) off++;
@@ -24,7 +24,7 @@ export class CompressTU {
 		this.i+=off-1;
 		return true;
 	}
-	constructor(arr: TypeAOrTypeB<string,number>[]) {
+	constructor(arr: TypeAOrTypeB_1<string,number>[]) {
 		this.i=0;
 		this.arr=arr;
 		this.ret=[];
