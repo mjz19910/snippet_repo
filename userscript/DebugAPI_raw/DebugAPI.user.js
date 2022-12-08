@@ -4846,7 +4846,7 @@ class LocalHandler {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
-		this.send_message_to_client({
+		this.send_init_request({
 			type: "tcp",
 			flags:["syn"],
 			client_id:this.m_client_id,
@@ -4866,21 +4866,21 @@ class LocalHandler {
 	 * @param {ConnectionMessage} data
 	 * @param {Transferable[]} ports
 	 */
-	send_message_to_client(data,ports) {
+	send_init_request(data,ports) {
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data,
 		},"*",ports);
 	}
 	/** @arg {ConnectionMessage} message_data */
-	server_post_message(message_data) {
+	client_post_message_1(message_data) {
 		if(!this.m_connection_port) {
 			throw new Error("unable to use missing port");
 		}
 		this.m_connection_port.postMessage(message_data);
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
-	server_connect(message_event) {
+	client_connect(message_event) {
 		console.log('on_server_connect',message_event.data,window);
 	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
@@ -4894,11 +4894,11 @@ class LocalHandler {
 			handler: this,
 		};
 		this.handle_tcp_data(message_data.data,report_info);
-		if(message_data.flags.includes("syn")) {
-			this.server_post_message({
+		if(message_data.flags.includes("syn")&&message_data.flags.includes("ack")) {
+			this.client_post_message_1({
 				type: "tcp",
 				client_id: this.m_client_id,
-				flags:["syn","ack"],
+				flags:["ack"],
 				data: {
 					type:"side",
 					side: this.m_side,
@@ -4911,7 +4911,7 @@ class LocalHandler {
 		if(!tcp_data) return;
 		switch(tcp_data.type) {
 			case "connect": {
-				this.server_connect(report_info);
+				this.client_connect(report_info);
 			} break;
 			case "disconnected": {
 				this.can_reconnect=tcp_data.can_reconnect;
@@ -5011,12 +5011,12 @@ class RemoteHandler {
 	m_client_id;
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
-	client_post_message(message_data) {
+	server_post_message_0(message_data) {
 		this.m_connection_port.postMessage(message_data);
 	}
 	onConnected() {
 		let {m_client_id: client_id}=this;
-		this.client_post_message({
+		this.server_post_message_0({
 			type: "tcp",
 			client_id,
 			flags:[],
@@ -5027,7 +5027,7 @@ class RemoteHandler {
 	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
-		this.client_post_message({
+		this.server_post_message_0({
 			type:"tcp",
 			client_id:this.m_client_id,
 			flags:[],
@@ -5046,7 +5046,7 @@ class RemoteHandler {
 		if(data.type!=="tcp") return;
 		if(data.flags.includes("syn")) {
 			debugger;
-			this.client_post_message({
+			this.server_post_message_0({
 				type:"tcp",
 				client_id:this.m_client_id,
 				flags:["syn","ack"],
@@ -5086,8 +5086,8 @@ class RemoteSocket {
 }
 
 
-/** @readonly @type {`ConnectOverPostMessage_${typeof sha_1_initial}`} */
-const post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
+/** @readonly @type {`CrossOriginConnection_${typeof sha_1_initial}`} */
+const post_message_connect_message_type=`CrossOriginConnection_${sha_1_initial}`;
 
 const global_elevated_array=[];
 let max_elevated_id=0;
