@@ -4834,7 +4834,7 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 class LocalHandler {
-	/** @type {OriginConnectionSide} */
+	/** @type {ConnectionSide} */
 	m_side="server";
 	m_root;
 	/** @type {ReturnType<typeof setTimeout>|null} */
@@ -4866,7 +4866,7 @@ class LocalHandler {
 			this.start_timeout();
 		}
 	}
-	/** @arg {RemoteOriginMessage} message_data */
+	/** @arg {ConnectionMessage} message_data */
 	post_message(message_data) {
 		if(!this.m_connection_port) {
 			throw new Error("unable to use missing port");
@@ -4895,7 +4895,7 @@ class LocalHandler {
 		});
 	}
 	can_reconnect=false;
-	/** @param {MessageEvent<RemoteOriginMessage>} event */
+	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		/** @type {ReportInfo<this>} */
 		let report_info={
@@ -5026,15 +5026,15 @@ class RemoteOriginConnectionData {
 
 class RemoteHandler {
 	send_ack() {
-		this.m_connection_port.postMessage({
+		this.post_message({
 			type:"ack",
 			client_id:this.m_client_id,
 			side:this.side(),
 		});
 	}
-	/** @type {OriginConnectionSide} */
+	/** @type {ConnectionSide} */
 	m_side="client";
-	/** @type {RemoteOriginMessage[]} */
+	/** @type {ConnectionMessage[]} */
 	m_unhandled_events=[];
 	/** @type {ConnectionFlags} */
 	m_flags;
@@ -5045,7 +5045,7 @@ class RemoteHandler {
 	side() {
 		return this.m_side;
 	}
-	/** @arg {RemoteOriginMessage} message_data */
+	/** @arg {ConnectionMessage} message_data */
 	post_message(message_data) {
 		if(message_data.type!=='keep_alive_reply') {
 			console.log("RemoteHandler.post_message",message_data);
@@ -5066,7 +5066,7 @@ class RemoteHandler {
 			can_reconnect,
 		});
 	}
-	/** @arg {MessageEvent<RemoteOriginMessage>} event */
+	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(this.m_flags.does_proxy_to_opener) {
 			console.log("TODO proxy message to opener");
@@ -5082,6 +5082,9 @@ class RemoteHandler {
 			case "keep_alive_reply": {
 				console.log("unexpected keep alive reply {side: `%o`, sides: `%o`}",this.m_side,data.sides);
 			} return;
+			case "ack": {
+				this.onConnected();
+			} break;
 		}
 		this.m_unhandled_events.push(data);
 		console.log(data);
@@ -5089,7 +5092,6 @@ class RemoteHandler {
 	connect() {
 		this.m_connection_port.start();
 		this.m_connection_port.addEventListener("message",this);
-		this.onConnected();
 	}
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id */
 	constructor(flags,connection_port,client_id) {
@@ -5132,7 +5134,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			console.log(arg0);
 		}
 	}
-	/** @type {RemoteOriginMessage[]} */
+	/** @type {ConnectionMessage[]} */
 	unhandled_child_events=[];
 	constructor() {
 		super();

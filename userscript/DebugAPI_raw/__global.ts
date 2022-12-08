@@ -144,19 +144,25 @@ declare global {
 }
 
 declare global {
-	type RemoteOriginConnected={type: "connected",client_id: number;};
-	type RemoteOriginDisconnected={
+	type ConnectionConnected={type: "connected",client_id: number;};
+	type ConnectionDisconnected={
 		type: "disconnected";
 		can_reconnect:boolean;
 	};
-	type OriginConnectionSide="client"|"server";
-	type RemoteOriginKeepAliveReply={type: "keep_alive_reply",sides: [OriginConnectionSide,OriginConnectionSide];};
-	type RemoteOriginKeepAlive={type: "keep_alive"; side: OriginConnectionSide;};
-	type RemoteOriginMessage=
-		RemoteOriginConnected|
-		RemoteOriginDisconnected|
-		RemoteOriginKeepAlive|
-		RemoteOriginKeepAliveReply;
+	type ConnectionSide="client"|"server";
+	type ConnectionKeepAliveReply={type: "keep_alive_reply",sides: [ConnectionSide,ConnectionSide];};
+	type ConnectionKeepAlive={type: "keep_alive"; side: ConnectionSide;};
+	type ConnectionAck={
+		type:"ack",
+		client_id:number,
+		side:ConnectionSide,
+	};
+	type ConnectionMessage=
+		ConnectionAck|
+		ConnectionConnected|
+		ConnectionDisconnected|
+		ConnectionKeepAlive|
+		ConnectionKeepAliveReply;
 	interface BlockEnd {}
 }
 
@@ -172,7 +178,7 @@ declare global {
 
 declare global {
 	type ReportInfo<T>={
-		event: MessageEvent<RemoteOriginMessage>|null;
+		event: MessageEvent<ConnectionMessage>|null;
 		handler: T;
 	};
 }
