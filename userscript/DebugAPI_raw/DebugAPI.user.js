@@ -4799,13 +4799,13 @@ function is_record_with_T(x,k) {
 	return k in x;
 }
 
-/** @template T @arg {T} x @returns {{data:T & ({}|null)}|null} */
+/** @template T @arg {T} x @returns {{tag:"cast_tag",data:T & ({}|null)}|null} */
 function cast_to_object(x) {
 	if(!is_object(x)) return null;
-	return {data: x};
+	return {tag:"cast_tag",data: x};
 }
 
-/** @template {{}} T @arg {T} x @returns {{type: string}|null} */
+/** @template {{}} T @arg {T extends {tag:"cast_tag"}?never:T} x @returns {{type: string}|null} */
 function cast_to_record_with_string_type(x) {
 	x: if('type' in x) {
 		if(typeof x.type==='string'&&Object.keys(x).length==2&&'data' in x) {
