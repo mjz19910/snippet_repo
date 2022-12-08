@@ -4802,7 +4802,7 @@ function is_record_with_T(x,k) {
 /** @template T @arg {T} x @returns {{tag:"cast_tag",data:(T&{}|null)}|null} */
 function cast_to_object(x) {
 	if(!is_object(x)) return null;
-	return {tag:"cast_tag",data: x};
+	return {tag: "cast_tag",data: x};
 }
 
 /** @template {{}} T @arg {T extends {tag:string}?never:T} x @returns {T&{type: string}|null} */
@@ -5062,8 +5062,8 @@ class RemoteSocket {
 				}
 			}
 			event.data.data={
-				type:"forward",
-				client_id_path:id_path,
+				type: "forward",
+				client_id_path: id_path,
 				data: real_data,
 			};
 			inject_api.remote_origin.push_tcp_message(event.data);
@@ -5078,7 +5078,7 @@ class RemoteSocket {
 	}
 	/** @param {ConnectFlags[]} flags */
 	send_ack(flags) {
-		if(flags.includes("ack")) throw new Error("ack should not be on packet we are ack'ing for")
+		if(flags.includes("ack")) throw new Error("ack should not be on packet we are ack'ing for");
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
@@ -5205,7 +5205,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if(!this.is_wrapped_message(event)) return false;
-		if(!is_record_with_T(event.data,"data"))return false;
+		if(!is_record_with_T(event.data,"data")) return false;
 		let data_record=cast_to_record_with_string_type_unk(event.data.data);
 		if(data_record===null) return false;
 		if(data_record.type!=="tcp") return false;
@@ -5213,7 +5213,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @param {ConnectionMessage} message */
 	push_tcp_message(message) {
-		if(message.flags.length>0) throw new Error("Client does not expect any flags on new messages")
+		if(message.flags.length>0) throw new Error("Client does not expect any flags on new messages");
 		this.m_local_handler.push_tcp_message(message);
 	}
 	/** @arg {{}} data_obj @returns {boolean} */
