@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      4.9.24
+// @version      4.9.25
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -5236,7 +5236,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let connection_port=event.ports[0];
 		let handler=new RemoteHandler(this.m_flags,connection_port,client_id);
 		let prev_connection_index=this.connections.findIndex(e => {
-			return e.first_event.source===event.source;
+			return e.first_event.origin===event.origin;
 		});
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
