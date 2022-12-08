@@ -5148,13 +5148,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @param {Window} cur_window @returns {void} */
 	init_with_next_parent(cur_window) {
-		if(cur_window.top===null) return this.init_transport_over(cur_window);
 		if(cur_window.opener!==null) {
 			this.m_flags.does_proxy_to_opener=true;
 			this.init_transport_over(cur_window.opener);
 			this.start_root_server();
 			return;
 		}
+		if(cur_window.top===null) return this.init_transport_over(cur_window);
 		if(cur_window.top!==cur_window) return this.init_with_next_parent(cur_window.top);
 		if(cur_window.top===cur_window) return this.init_transport_over(cur_window);
 		throw new Error("Bad");
