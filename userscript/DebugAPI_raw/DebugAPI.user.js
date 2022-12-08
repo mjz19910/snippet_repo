@@ -4853,9 +4853,6 @@ class LocalHandler {
 			data:null,
 		},[channel.port1]);
 		this.m_client_connection_port=channel.port2;
-		this.m_transport_map.set(this,{
-			port: channel.port2,
-		});
 		this.start_client_connect();
 	}
 	/**
@@ -4947,8 +4944,6 @@ class LocalHandler {
 	m_can_reconnect=false;
 	m_event_transport_map=new Map;
 	m_debug=false;
-	/** @type {Map<LocalHandler, {port:MessagePort}>} */
-	m_transport_map=new Map;
 	m_fake=CrossOriginConnection.is_fake;
 	m_client_id;
 	m_flags;
