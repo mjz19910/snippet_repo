@@ -4910,10 +4910,7 @@ class LocalHandler {
 			type: "tcp",
 			client_id: this.m_client_id,
 			flags: ["ack"],
-			data: {
-				type: "side",
-				side: this.m_side,
-			}
+			data: null,
 		});
 	}
 	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<this>} report_info */
