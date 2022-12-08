@@ -3221,11 +3221,11 @@ function range_matches(arr,value,index) {
 }
 
 class BaseCompression {
-	/** @arg {CompressDual} arg0 @returns {DualR} */
+	/** @arg {CompressDual} arg0 @returns {DualR_0} */
 	compress_result_state_dual(arg0) {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string, number>[]} dst @returns {DualR} */
+	/** @arg {AltPair<string,number>[]} src @arg {AnyOrRepeat2_0<string, number>[]} dst @returns {DualR_0} */
 	compress_result_dual(src,dst) {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
@@ -3845,7 +3845,7 @@ class DoCalc {
 		return this.m_return_value;
 	}
 	/**
-	 * @type {DualR|null}
+	 * @type {DualR_0|null}
 	 */
 	m_return_value=null;
 	run() {
@@ -3951,7 +3951,7 @@ class CompressDual {
 	/**@type {AnyOrRepeat2_0<string,number>[]} */
 	ret=[];
 	m_base=new BaseCompression;
-	/**@returns {DualR} */
+	/**@returns {DualR_0} */
 	try_compress_dual() {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
@@ -4012,7 +4012,7 @@ function calc_next(stats,obj,max_id) {
 	if(next.arr_str)
 		return null;
 	let com=new CompressDual(next.arr_dual);
-	/**@type {DualR} */
+	/**@type {DualR_0} */
 	let compress_result=com.try_compress_dual();
 	if(!compress_result[0]) {
 		next.arr_dual=compress_result[1];
