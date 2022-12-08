@@ -5126,6 +5126,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	unhandled_child_events=[];
 	constructor() {
 		super();
+		elevate_event_handler(this);
 		this.m_local_handler=new LocalHandler(30000,this);
 		let s=this.state;
 		s.is_top=this.state.window===this.state.top;
@@ -5356,8 +5357,6 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		console.groupEnd();
 	}
 	start_root_server() {
-		let t=this;
-		elevate_event_handler(this);
 		window.addEventListener("message",this);
 		window.addEventListener("beforeunload",this);
 		window.addEventListener("unload",this);
