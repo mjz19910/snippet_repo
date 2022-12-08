@@ -3815,6 +3815,7 @@ interface GoogleAdList {
 	push(v: number): void;
 }
 
+// do_fetch_load
 declare global {
 	interface Window {
 		adsbygoogle: GoogleAdList;
@@ -3822,6 +3823,7 @@ declare global {
 		on_on_timers_moved_first: boolean;
 	}
 }
+
 async function do_fetch_load() {
 	reset_global_event_handlers();
 	window.setTimeout=real_st;

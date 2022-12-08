@@ -1,3 +1,8 @@
+interface GoogleAdList {
+	op: any;
+	push(v: number): void;
+}
+
 export interface Holder {}
 
 export {}
@@ -88,6 +93,15 @@ declare global {
 		seeUnit(v: number): any;
 		checkspec(): void;
 		achiSpec(): void;
+	}
+}
+
+// do_fetch_load
+declare global {
+	interface Window {
+		adsbygoogle: GoogleAdList;
+		cint_arr: number[][];
+		on_on_timers_moved_first: boolean;
 	}
 }
 
