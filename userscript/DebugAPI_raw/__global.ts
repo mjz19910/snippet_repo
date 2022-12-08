@@ -1,4 +1,5 @@
 import {IInjectAPI} from "./support/IInjectAPI.js";
+import {Repeat_0} from "./support/Repeat_0.js";
 
 // Holder
 export type Holder=1;
@@ -54,7 +55,6 @@ export class Repeat_2<T> {
 
 declare global {
 	type AnyOrRepeat_0<T> = T|Repeat_0<T>;
-	type AnyOrRepeat_1<T> = T|Repeat_1<T>;
 }
 
 declare global {

@@ -1,5 +1,9 @@
 type Constructor=new () => any;
 
-export interface RecordKey<T> extends Constructor {
-	key: T;
+declare global {
+	interface RecordKey<T> extends Constructor {
+		key: T;
+	}
 }
+
+export {};

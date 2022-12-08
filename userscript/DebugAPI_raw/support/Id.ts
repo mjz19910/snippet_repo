@@ -19,7 +19,7 @@ export class IDValueI {
 	arr_rep_num: AnyOrRepeat_0<number>[];
 	arr_str: string[];
 	arr_num: number[];
-	arr_dual_compressed: AnyOrRepeat2_1<string, number>[];
+	arr_dual_compressed: AnyOrRepeat2_0<string, number>[];
 	value: [number,'=',number]|null;
 	arr_rep: number[];
 	log_val: [number,'=',string,number]|null;
