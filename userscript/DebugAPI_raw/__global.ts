@@ -178,7 +178,6 @@ declare global {
 declare global {
 	type ReportInfo<T>={
 		data: ConnectionMessage,
-		source: MessageEventSource;
 		handler: T;
 	};
 }

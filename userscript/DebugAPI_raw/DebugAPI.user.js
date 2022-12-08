@@ -2405,7 +2405,7 @@ class APIProxyManager {
 			let ret=Reflect.apply(...post_message_proxy_spread);
 			return ret;
 		}
-		return new Proxy(function_value,{apply:do_apply});
+		return new Proxy(function_value,{apply: do_apply});
 	}
 	start_postMessage_proxy() {
 		if(!api_debug_enabled) return;
@@ -4843,17 +4843,14 @@ class LocalHandler {
 	}
 	begin_connect() {
 		let channel=new MessageChannel;
-		if(this.m_debug){
+		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
-		this.m_remote_target.postMessage({
-			type: post_message_connect_message_type,
-			data: {
-				type: "start",
-				source: null,
-				port_transfer_vec: null
-			}
-		},"*",[channel.port1]);
+		this.send_message_to_client({
+			type: "request_connection",
+			client_id:this.m_client_id,
+			source: window,
+		},[channel.port1]);
 		this.m_transport_map.set(this,{
 			port: channel.port2,
 		});
@@ -4863,6 +4860,17 @@ class LocalHandler {
 			let {m_client_id: client_id}=this;
 			new RemoteHandler(this.m_flags,fake_channel.port1,client_id,this.m_remote_target).connect();
 		}
+	}
+	/**
+	 * @param {ConnectionMessage} data
+	 * @param {Transferable[]} ports
+	 */
+	send_message_to_client(data,ports) {
+		
+		this.m_remote_target.postMessage({
+			type: post_message_connect_message_type,
+			data,
+		},"*",ports);
 	}
 	/** @arg {ConnectionMessage} message_data */
 	server_post_message(message_data) {
@@ -4881,7 +4889,6 @@ class LocalHandler {
 		/** @type {ReportInfo<this>} */
 		let report_info={
 			data: event.data,
-			source: event.source,
 			handler: this,
 		};
 		let data=event.data;
@@ -4889,9 +4896,9 @@ class LocalHandler {
 			case "connect": {
 				this.server_connect(report_info);
 				this.server_post_message({
-					type:"ack",
-					client_id:this.m_client_id,
-					side:this.m_side,
+					type: "ack",
+					client_id: this.m_client_id,
+					side: this.m_side,
 				});
 			} break;
 			case "disconnected": {
@@ -4908,7 +4915,7 @@ class LocalHandler {
 	}
 	/** @param {ReportInfo<this>} report_info */
 	server_disconnect(report_info) {
-		console.log('on_disconnect',report_info.data,report_info.source);
+		console.log('on_disconnect',report_info.data);
 		this.m_remote_side_connected=false;
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
@@ -5190,7 +5197,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 				if(event instanceof MessageEvent) {
 					this.on_message_event(event);
 				} else {
-					console.log("Possibly non trusted message event", event);
+					console.log("Possibly non trusted message event",event);
 				}
 			} break;
 			case "beforeunload": {
