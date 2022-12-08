@@ -4866,7 +4866,6 @@ class LocalHandler {
 	 * @param {Transferable[]} ports
 	 */
 	send_message_to_client(data,ports) {
-		
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data,
