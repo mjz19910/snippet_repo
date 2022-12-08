@@ -4901,18 +4901,24 @@ class LocalHandler {
 		};
 		this.handle_tcp_data(message_data,report_info);
 	}
+	send_ack() {
+		this.client_post_message({
+			type: "tcp",
+			client_id: this.m_client_id,
+			flags: ["ack"],
+			data: {
+				type: "side",
+				side: this.m_side,
+			}
+		});
+	}
 	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<this>} report_info */
 	handle_tcp_data(tcp_message,report_info) {
-		if(tcp_message.flags.includes("syn")&&tcp_message.flags.includes("ack")||tcp_message.flags.length==0) {
-			this.client_post_message({
-				type: "tcp",
-				client_id: this.m_client_id,
-				flags: ["ack"],
-				data: {
-					type: "side",
-					side: this.m_side,
-				}
-			});
+		if(tcp_message.flags.includes("syn")&&tcp_message.flags.includes("ack")) {
+			this.send_ack();
+		}
+		if(tcp_message.flags.length==0) {
+			this.send_ack();
 		}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
