@@ -2,7 +2,7 @@ import {CompressTU} from "./CompressTU.js";
 import {range_matches} from "../range_matches.js";
 import {to_tuple_arr} from "../to_tuple_arr.js";
 import {MulCompression} from "./MulCompression.js";
-import {max_id} from "../x.js";
+import {max_id} from "../max_id.js";
 
 export class CompressionStatsCalculator {
 	/**

@@ -3,9 +3,11 @@ import {make_group_from_item} from "./make_group_from_item";
 import {run_calc} from "./run_calc";
 import {get_ids} from "./get_ids";
 import {CompressionStatsCalculator} from "./compress/CompressionStatsCalculator";
-import {el_ids, g_obj_arr, ids, id_groups, max_id, src_arr} from "./x";
+import {el_ids,g_obj_arr,id_groups,src_arr} from "./x";
 import {Repeat_1} from "../types/repeat/Repeat_1";
 import {AutoBuy} from "../types/AutoBuy";
+import {max_id} from "./max_id";
+import {ids} from "./ids";
 
 /** @type {(Repeat_1<string | number>|Repeat_1<(string | number)[]>|(string | number)[])[]} */
 export let dr_map=[];
