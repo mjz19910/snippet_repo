@@ -5145,15 +5145,17 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		s.is_root=this.state.opener===null;
 		if(!s.is_top) s.is_root=false;
 		this.start_root_server();
-		/** @type {Window|null} */
-		let connect_target=null;
-		x: if(s.is_top&&s.opener!==null) {
+		/** @type {Window} */
+		let connect_target;
+		x: if(s.opener!==null) {
 			connect_target=s.opener;
 			this.m_flags.does_proxy_to_opener=true;
 			break x;
+		} else if(this.state.top) {
+			connect_target=this.state.top;
+		} else {
+			throw new Error("Invalid state, not top and window.top is null");
 		}
-		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
-		connect_target=this.state.top;
 		this.m_local_handler=new LocalHandler(
 			30000,
 			client_id,
