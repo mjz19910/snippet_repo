@@ -3474,6 +3474,18 @@ add_function(wasm_encode_section);
 /** @param {number[]} arr */
 function wasm_encode_string(arr) {
 	if(arr.length>=128) {
+		let var_int_bits=[];
+		let cur_var_int_part=arr.length%128;
+		let more_len=(arr.length-cur_var_int_part)/128;
+		var_int_bits.push(cur_var_int_part);
+		while(more_len>0) {
+			cur_var_int_part=more_len%128;
+			var_int_bits.push(cur_var_int_part);
+			if(cur_var_int_part<128) {
+				break;
+			}
+			more_len=(arr.length-cur_var_int_part)/128;
+		}
 		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
 		throw new Error("varInt Error");
 	}
