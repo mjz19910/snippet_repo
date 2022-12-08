@@ -4840,6 +4840,8 @@ function cast_to_record_with_key_and_string_type(x,k) {
 class LocalHandler {
 	/** @type {Window} */
 	m_remote_target;
+	/** @type {MessageEventSource} */
+	m_event_source;
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,flags,remote_target) {
 		this.m_connection_timeout=connection_timeout;
