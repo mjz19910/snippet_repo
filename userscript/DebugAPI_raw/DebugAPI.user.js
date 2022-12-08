@@ -4888,6 +4888,11 @@ class LocalHandler {
 		switch(data.type) {
 			case "connect": {
 				this.server_connect(report_info);
+				this.server_post_message({
+					type:"ack",
+					client_id:this.m_client_id,
+					sid:this.m_side,
+				});
 			} break;
 			case "disconnected": {
 				this.can_reconnect=data.can_reconnect;
