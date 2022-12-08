@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      1.0.5
+// @version      1.0.6
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -5049,6 +5049,7 @@ class RemoteHandler {
 		let {data}=event;
 		if(data.type!=="tcp") return;
 		if(data.flags.includes("syn")) {
+			debugger;
 			this.client_post_message({
 				type:"tcp",
 				client_id:this.m_client_id,
