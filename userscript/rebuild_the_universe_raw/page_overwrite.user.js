@@ -17,7 +17,7 @@
 /*eslint-disable no-undef*/
 
 /**
- * @param {(arg0: string) => any} value
+ * @param {{}} value
  */
 function use_jquery(value) {
 	Object.defineProperty(window,'$',{
@@ -33,12 +33,18 @@ function use_jquery(value) {
 	r_proto.lazyload=function(/** @type {any[]} */ ..._a) {};
 }
 function set_jq_proxy() {
-	let val=window.$;
+	/** @type {{}} */
+	let e_win=window;
+	/** @type {{}|null|undefined} */
+	let val=void 0;
+	if('$' in e_win) {
+		val=e_win.$;
+	}
 	Object.defineProperty(window,'$',{
 		get() {
 			return val;
 		},
-		/**@arg {JQueryStatic|undefined} value */
+		/**@arg {{}|undefined} value */
 		set(value) {
 			val=value;
 			if(value) use_jquery(value);
