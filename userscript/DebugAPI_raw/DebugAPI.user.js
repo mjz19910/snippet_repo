@@ -4868,7 +4868,6 @@ class LocalHandler {
 			let {m_client_id: client_id}=this;
 			new RemoteHandler(this.m_flags,fake_channel.port1,client_id).connect();
 		}
-		return true;
 	}
 	start_reconnect() {
 		this.begin_connect();
