@@ -3158,8 +3158,8 @@ class RepeatImpl_0 {
 				return v;
 			};
 			RepeatImpl_0.N.map_T.set(constructor_key.key,m_value);
-			/**@template {RecordKey<symbol>} T @template U @arg {T} sym @arg {U} u @returns {Map<T, RepeatImpl_0<U>>} */
-			let res=(sym,u) => {
+			/**@template {RecordKey<symbol>} T @template U @arg {T} sym @arg {U} _u @returns {Map<T, RepeatImpl_0<U>>} */
+			let res=(sym,_u) => {
 				let value=RepeatImpl_0.map_sym.get(sym.key);
 				if(value===void 0) throw new Error("1");
 				if(value instanceof Map) {
