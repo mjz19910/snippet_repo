@@ -4852,10 +4852,11 @@ class LocalHandler {
 			client_id:this.m_client_id,
 			data:null,
 		},[channel.port1]);
+		this.m_connection_port=channel.port2;
 		this.m_transport_map.set(this,{
 			port: channel.port2,
 		});
-		this.start_server_connect(channel.port2);
+		this.start_server_connect();
 		if(this.m_fake) {
 			let fake_channel=new MessageChannel;
 			let {m_client_id: client_id}=this;
@@ -4920,9 +4921,10 @@ class LocalHandler {
 			case "side":
 		}
 	}
-	/** @param {MessagePort} port */
-	start_server_connect(port) {
-		this.m_connection_port=port;
+	start_server_connect() {
+		if(!this.m_connection_port) {
+			throw new Error("No remote port to communicate with");
+		}
 		this.m_connection_port.start();
 		this.m_connection_port.addEventListener("message",this);
 	}
