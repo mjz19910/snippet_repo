@@ -43,10 +43,6 @@ declare global {
 		ytPageType?: string;
 	}
 }
-declare global {
-	interface Window {
-	}
-}
 
 // log_current_video_data
 declare global {
@@ -55,27 +51,14 @@ declare global {
 	}
 }
 
+// Elements
 declare global {
 	interface Window {
 		ytd_player?: HTMLElement|null;
-	}
-}
-
-declare global {
-	interface Window {
 		ytd_page_manager?: HTMLElement|null;
-	}
-}
-
-declare global {
-	interface Window {
 		ytd_watch_flexy?: HTMLElement|null;
-	}
-}
-
-declare global {
-	interface Window {
 		yt_playlist_manager?: HTMLElement|null;
+		ytd_app?: HTMLElement|null;
 	}
 }
 
@@ -83,5 +66,41 @@ declare global {
 declare global {
 	interface Window {
 		page_type_changes?: string[],
+	}
+}
+
+// dom_observer
+declare global {
+	interface InjectAPI {
+		dom_observer?: {};
+	}
+}
+
+
+// YTFilterHandlers
+declare global {
+	interface InjectAPI {
+		yt_handlers?: {};
+	}
+}
+
+// URL.createObjectURL Proxy
+declare global {
+	interface InjectAPI {
+		blob_create_args_arr?: {};
+	}
+}
+
+// YTIterateAllBase.update_state
+declare global {
+	interface InjectAPI {
+		yt_state_map?: {};
+	}
+}
+
+// export
+declare global {
+	interface InjectAPI {
+		PropertyHandler?: {};
 	}
 }

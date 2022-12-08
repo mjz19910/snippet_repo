@@ -32,6 +32,7 @@ function use_jquery_overwrite(value) {
 	let r_proto=Object.getPrototypeOf(res);
 	r_proto.lazyload=function(/** @type {any[]} */ ..._a) {};
 }
+
 function set_jq_proxy_overwrite() {
 	/** @type {{}} */
 	let e_win=window;
@@ -54,6 +55,7 @@ function set_jq_proxy_overwrite() {
 		configurable: true
 	});
 }
+
 function do_real_page_action() {
 	document.stop=function() {};
 	set_jq_proxy_overwrite();

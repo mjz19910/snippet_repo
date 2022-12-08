@@ -3430,7 +3430,7 @@ function proxy_jquery() {
 	let val=use_jquery();
 	set_jq_proxy(val);
 }
-/** @arg {typeof $ | undefined} value */
+/** @arg {{} | undefined} value */
 function set_jq_proxy(value) {
 	let s_value=value;
 	Object.defineProperty(window,'$',{
@@ -3844,7 +3844,6 @@ function main() {
 function init() {
 	update_logger_vars();
 	auto_buy_obj.global_init();
-	window.g_log_if=log_if_impl_r;
 }
 init();
 log_if_impl_r(LOG_LEVEL_TRACE_IMPL,'userscript main');

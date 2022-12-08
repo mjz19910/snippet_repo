@@ -1,3 +1,6 @@
+declare global {
+	var $: ()=>void;
+}
 interface GoogleAdList {
 	op: any;
 	push(v: number): void;
