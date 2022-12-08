@@ -5046,12 +5046,14 @@ class RemoteHandler {
 			console.log("TODO proxy message to opener");
 		}
 		let {data}=event;
+		if(data.type!=="tcp") return;
+		if(data.flags.includes("syn")) {
+
+		}
 		this.m_unhandled_events.push(data);
 		console.log(data);
 	}
 	connect() {
-		this.m_connection_port.start();
-		this.m_connection_port.addEventListener("message",this);
 		this.onConnected();
 	}
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
@@ -5060,7 +5062,8 @@ class RemoteHandler {
 		this.m_connection_port=connection_port;
 		this.m_client_id=client_id;
 		this.m_event_source=event_source;
-		this.connect();
+		this.m_connection_port.start();
+		this.m_connection_port.addEventListener("message",this);
 	}
 }
 
