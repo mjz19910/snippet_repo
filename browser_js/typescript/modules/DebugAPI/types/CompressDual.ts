@@ -4,7 +4,7 @@ export class CompressDual {
 	i: number=0;
 	ret: AnyOrRepeat2_1<string,number>[]=[];
 	m_base=new BaseCompression;
-	try_compress_dual(): DualR_m {
+	try_compress_dual(): DualR_1 {
 		let state=this;
 		for(;state.i<state.arr.length;state.i++) {
 			let item=state.arr[state.i];

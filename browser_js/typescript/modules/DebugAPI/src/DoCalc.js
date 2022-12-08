@@ -8,7 +8,7 @@ export class DoCalc {
 	get_result() {
 		return this.m_return_value;
 	}
-	/** @type {DualR_m|null} */
+	/** @type {DualR_1|null} */
 	m_return_value=null;
 	run() {
 		this.obj.stats_win=2;

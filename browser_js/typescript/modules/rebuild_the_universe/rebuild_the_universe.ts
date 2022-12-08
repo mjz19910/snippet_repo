@@ -1523,10 +1523,10 @@ class CompressionStatsCalculator {
 	}
 }
 class BaseCompression {
-	compress_result_state_dual(arg0: CompressDual): DualR_m {
+	compress_result_state_dual(arg0: CompressDual): DualR_1 {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2_1<string,number>[]): DualR_m {
+	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2_1<string,number>[]): DualR_1 {
 		if(this.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}

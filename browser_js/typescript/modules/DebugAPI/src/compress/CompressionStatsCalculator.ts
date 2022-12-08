@@ -8,7 +8,7 @@ export class CompressionStatsCalculator {
 	/**
 	 * (MulCompression,try_compress_dual)
 	 */
-	try_compress_dual(arr: AltPair<string,number>[]): DualR_m {
+	try_compress_dual(arr: AltPair<string,number>[]): DualR_1 {
 		let ex=new CompressTU(arr);
 		return ex.try_compress_dual();
 	}
