@@ -4,7 +4,9 @@ declare global {
 		ModuleLoadDbg: {};
 		DisabledMulCompression: {};
 		RemoteOriginConnection: {};
-		remote_origin: {};
+		remote_origin: {
+			push_tcp_message(x: ConnectionMessage): void;
+		};
 	}
 }
 

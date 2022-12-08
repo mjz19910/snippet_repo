@@ -5051,7 +5051,7 @@ class RemoteSocket {
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(this.m_flags.does_proxy_to_opener) {
-			console.log("TODO proxy message to opener");
+			inject_api.remote_origin.push_tcp_message(event.data);
 		}
 		let {data}=event;
 		if(data.type!=="tcp") {
@@ -5197,7 +5197,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		return true;
 	}
 	/** @param {ConnectionMessage} message */
-	postListeningToConnection(message) {
+	push_tcp_message(message) {
 		if(message.flags.length>0) throw new Error("Client does not expect any flags on new messages")
 		this.m_local_handler.push_tcp_message(message);
 	}
