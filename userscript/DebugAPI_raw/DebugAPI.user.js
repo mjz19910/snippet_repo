@@ -4857,7 +4857,7 @@ class LocalHandler {
 		this.m_transport_map.set(this,{
 			port: channel.port2,
 		});
-		this.connect(channel.port2);
+		this.start_server_connect(channel.port2);
 		if(this.m_fake) {
 			let fake_channel=new MessageChannel;
 			let {m_client_id: client_id}=this;
@@ -4896,7 +4896,7 @@ class LocalHandler {
 		}
 	}
 	/** @param {MessagePort} port */
-	connect(port) {
+	start_server_connect(port) {
 		this.m_connection_port=port;
 		this.m_connection_port.start();
 		this.m_connection_port.addEventListener("message",this);
