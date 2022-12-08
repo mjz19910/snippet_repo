@@ -3158,11 +3158,30 @@ class RepeatImpl_0 {
 				return v;
 			};
 			RepeatImpl_0.N.map_T.set(constructor_key.key,m_value);
-			/**@template {RecordKey<symbol>} T @arg {T} sym */
-			let res=(sym) => {
+			/**@template {RecordKey<symbol>} T @template U @arg {T} sym @arg {U} u @returns {Map<T, RepeatImpl_0<U>>} */
+			let res=(sym,u) => {
 				let value=RepeatImpl_0.map_sym.get(sym.key);
 				if(value===void 0) throw new Error("1");
-				return value;
+				if(value instanceof Map) {
+					return value;
+				} else if(value instanceof Array) {
+					for(let i=0;i<value.length;i++) {
+						let try_=value[i];
+						if(try_ instanceof Map) {
+							return try_;
+						}
+					}
+					let mv=new Map;
+					value.push(mv);
+					return mv;
+				} else {
+					console.log("converting", sym, "to an array");
+					let insert_value=[value];
+					RepeatImpl_0.map_sym.set(sym.key, insert_value);
+					let mv=new Map;
+					insert_value.push(mv);
+					return mv;
+				}
 			};
 			return res;
 		}
