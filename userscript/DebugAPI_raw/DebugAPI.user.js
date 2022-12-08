@@ -5143,6 +5143,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
 		this.init_with_next_parent(this.state.top);
 	}
+	m_debug=false;
 	/** @type {MessageEvent<unknown>|null} */
 	last_misbehaved_client_event=null;
 	/** @param {Window} cur_window */
@@ -5176,7 +5177,9 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	request_connection(local_handler) {
 		if(!this.m_remote_target) return false;
 		let channel=new MessageChannel;
-		console.log("post request ConnectOverPostMessage");
+		if(this.m_debug){
+			console.log("post request ConnectOverPostMessage");
+		}
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data: {
