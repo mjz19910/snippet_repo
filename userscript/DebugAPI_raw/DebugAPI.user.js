@@ -4857,11 +4857,6 @@ class LocalHandler {
 			port: channel.port2,
 		});
 		this.start_client_connect();
-		if(this.m_fake) {
-			let fake_channel=new MessageChannel;
-			let {m_client_id: client_id}=this;
-			new RemoteHandler(this.m_flags,fake_channel.port1,client_id,this.m_remote_target).server_connect();
-		}
 	}
 	/**
 	 * @param {ConnectionMessage} data
