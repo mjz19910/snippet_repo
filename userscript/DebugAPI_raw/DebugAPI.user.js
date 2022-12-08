@@ -5068,8 +5068,6 @@ class ConnectionFlags {
 
 class RemoteOriginConnectionData {
 	m_flags=new ConnectionFlags;
-	/** @type {Map<LocalHandler, {port:MessagePort}>} */
-	m_transport_map=new Map;
 	max_elevate_id=0;
 	/**@type {WeakMap<MessageEventSource|Window, Window>} */
 	event_transport_map=new WeakMap;
