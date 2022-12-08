@@ -16,8 +16,9 @@ declare global {
 
 // inject_api global
 declare global {
+	interface InjectAPI extends IInjectAPI {}
 	interface Window {
-		inject_api: IInjectAPI;
+		inject_api: InjectAPI;
 	}
 }
 

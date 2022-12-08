@@ -1,4 +1,4 @@
-import {InstructionType} from "../instruction/InstructionType.js";
+import {InstructionType} from "./InstructionType.js";
 import {BoxTemplate} from "./BoxTemplate.js";
 
 export class InstructionTypeArrayBox extends BoxTemplate<"array_box",InstructionType[]> {

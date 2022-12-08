@@ -254,7 +254,7 @@ class Seen {
 		return index;
 	}
 }
-window.g_api.Seen=Seen;
+window.inject_api.Seen=Seen;
 
 const realHTMLElement=HTMLElement;
 
@@ -592,7 +592,7 @@ class PropertyHandler {
 		}
 	}
 }
-window.g_api.PropertyHandler=PropertyHandler;
+window.inject_api.PropertyHandler=PropertyHandler;
 /**
  * @arg {{}} object
  * @param {PropertyKey} property
@@ -631,7 +631,7 @@ class ObjectInfo {
 ObjectInfo.instance=new ObjectInfo;
 /**@type {Map<string, {}>}*/
 let yt_state_map=new Map;
-window.g_api.yt_state_map=yt_state_map;
+window.inject_api.yt_state_map=yt_state_map;
 class YTIterateAllBase {
 	/**
 	 * @this {YTIterateAllBase & {[x:string]: any}}
@@ -1060,9 +1060,9 @@ class YTFilterHandlers extends YTIterateAllBase {
  */
 let blob_create_args_arr=[];
 let leftover_args=[];
-window.g_api.blob_create_args_arr=blob_create_args_arr;
+window.inject_api.blob_create_args_arr=blob_create_args_arr;
 let yt_handlers=new YTFilterHandlers;
-window.g_api.yt_handlers=yt_handlers;
+window.inject_api.yt_handlers=yt_handlers;
 function setup_prototype_modify() {
 	/** @type {Map<string, Blob | MediaSource>}*/
 	let created_blobs=new Map;
@@ -1431,7 +1431,7 @@ class DomObserver extends CustomEventTarget {
 	}
 }
 let dom_observer=new DomObserver;
-window.g_api.dom_observer=dom_observer;
+window.inject_api.dom_observer=dom_observer;
 
 window.playlist_arr??=[];
 /**@type {string[]} */
@@ -1862,7 +1862,7 @@ class MessagePortState {
 	current_event_type="find-ytd-app";
 }
 let port_state=new MessagePortState;
-window.g_api.port_state=port_state;
+window.inject_api.port_state=port_state;
 
 let slow_message_event=false;
 const message_channel_loop_delay=80;
@@ -2144,7 +2144,7 @@ function createPluginOverlay() {
 
 /**@type {PluginOverlayElement} */
 let plugin_overlay_element=createPluginOverlay();
-window.g_api.plugin_overlay_element=plugin_overlay_element;
+window.inject_api.plugin_overlay_element=plugin_overlay_element;
 
 function fix_offset() {
 	if(!ytd_player) return;
@@ -2416,9 +2416,9 @@ class HTMLMediaElementGainController {
 		}
 	}
 }
-window.g_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
+window.inject_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
 let gain_controller=new HTMLMediaElementGainController;
-window.g_api.gain_controller=gain_controller;
+window.inject_api.gain_controller=gain_controller;
 
 class VolumeRange {
 	static enabled=true;
@@ -2561,8 +2561,8 @@ function main() {
 	let a2=ar.slice();
 	ar.push('create');
 	a2.push('createAlternate');
-	if(!window.g_api) {
-		window.g_api={};
+	if(!window.inject_api) {
+		throw new Error("Loaded before DebugAPI");
 	}
 	start_message_channel_loop();
 }

@@ -1,5 +1,15 @@
 export {};
 
+// Seen
+declare global {
+	interface InjectAPI {
+		Seen?: {};
+		port_state?: {};
+		plugin_overlay_element?: {};
+		HTMLMediaElementGainController?: {};
+		gain_controller: {};
+	}
+}
 declare global {
 	interface Window {
 		created_blobs: Map<string,Blob|MediaSource>;
