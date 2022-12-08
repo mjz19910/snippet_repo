@@ -1,3 +1,10 @@
+// AutoBuy
+declare global {
+	interface Window {
+		g_auto_buy: AutoBuy;
+	}
+}
+
 declare global {
 	var $: ()=>void;
 }

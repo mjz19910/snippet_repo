@@ -2,12 +2,13 @@ import {CompressTU} from "./CompressTU.js";
 import {range_matches} from "../range_matches.js";
 import {to_tuple_arr} from "../to_tuple_arr.js";
 import {MulCompression} from "./MulCompression.js";
+import {max_id} from "../x.js";
 
 export class CompressionStatsCalculator {
 	/**
 	 * (MulCompression,try_compress_dual)
 	 */
-	try_compress_dual(arr: AltPair<string,number>[]): DualR {
+	try_compress_dual(arr: AltPair<string,number>[]): DualR_m {
 		let ex=new CompressTU(arr);
 		return ex.try_compress_dual();
 	}
@@ -81,7 +82,7 @@ export class CompressionStatsCalculator {
 			arr: [],
 		};
 		let rep_val=0.03/(100*4*1);
-		let res=this.replace_range(obj.arr,rep_val,max_id);
+		let res=this.replace_range(obj.arr,rep_val,max_id.value);
 		console.log("compressed",res);
 	}
 }
