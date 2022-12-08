@@ -4889,7 +4889,6 @@ class LocalHandler {
 	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
-		if(!event.source) throw new Error("No event source");
 		let message_data=event.data;
 		if(message_data.type!=="tcp") throw new Error();
 		/** @type {ReportInfo<this>} */
