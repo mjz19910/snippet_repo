@@ -4915,6 +4915,7 @@ class LocalHandler {
 	}
 	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<this>} report_info */
 	handle_tcp_data(tcp_message,report_info) {
+		console.log("local", tcp_message);
 		if(tcp_message.flags.includes("syn")&&tcp_message.flags.includes("ack")) {
 			this.send_ack();
 		}
