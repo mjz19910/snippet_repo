@@ -5126,7 +5126,8 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	}
 	/** @type {ConnectionMessage[]} */
 	unhandled_child_events=[];
-	constructor() {
+	/** @arg {boolean} is_fake */
+	constructor(is_fake) {
 		super();
 		elevate_event_handler(this);
 		this.m_local_handler=new LocalHandler(30000,this);
@@ -5145,6 +5146,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		}
 		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
 		this.init_with_next_parent(this.state.top);
+		this.m_fake=is_fake;
 	}
 	m_debug=false;
 	/** @type {MessageEvent<unknown>|null} */
@@ -5195,6 +5197,13 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			port: channel.port2,
 		});
 		local_handler.connect(channel.port2,this.get_next_elevation_id());
+		if(this.m_fake) {
+			let fake_channel=new MessageChannel;
+			local_handler.connect(fake_channel.port2,this.get_next_elevation_id());
+			let client_id=this.client_max_id++;
+			let handler=new RemoteHandler(this.m_flags,fake_channel.port1,client_id);
+			handler.connect();
+		}
 		return true;
 	}
 	/**
@@ -5361,9 +5370,10 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		window.addEventListener("beforeunload",this);
 		window.addEventListener("unload",this);
 	}
+	static is_fake=false;
 	static connect_to_api() {
 		inject_api.RemoteOriginConnection=this;
-		let remote_origin=new this;
+		let remote_origin=new this(this.is_fake);
 		inject_api.remote_origin=remote_origin;
 	}
 }
