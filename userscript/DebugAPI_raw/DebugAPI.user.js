@@ -5069,8 +5069,6 @@ class ConnectionFlags {
 class RemoteOriginConnectionData {
 	m_flags=new ConnectionFlags;
 	max_elevate_id=0;
-	/**@type {WeakMap<MessageEventSource|Window, Window>} */
-	event_transport_map=new WeakMap;
 	state=OriginState;
 	/** @type {({}|null)[]} */
 	elevated_array=[];
