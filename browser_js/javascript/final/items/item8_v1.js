@@ -25,11 +25,7 @@ function main() {
 		if(!lsw) return;
 		wl: do {
 			var do_cont=lim;
-<<<<<<< HEAD
 			var s_count=do_cont;
-=======
-			var scount=do_cont;
->>>>>>> e10fb913 (u)
 			var pn=performance.now();
 			var ps=performance.now();
 			var pl_id=1;
@@ -98,12 +94,16 @@ function main() {
 				continue fl;
 			}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fab9656f (u)
 			pn=performance.now();
 			console.log(pn-ps);
 			ps=pn;
 			continue wl;
 		} while(do_cont<(s_count-4));
 	}
+<<<<<<< HEAD
 =======
 			continue fl
 		}
@@ -116,6 +116,8 @@ function main() {
 // cspell: disable-next-line
 function do_work_tiai_0(dcs) {
 >>>>>>> e10fb913 (u)
+=======
+>>>>>>> fab9656f (u)
 	// cspell: disable-next-line
 	/**
 	 * @param {number} dcs
@@ -196,6 +198,7 @@ function do_work_tiai_0(dcs) {
 		let pn=performance.now();
 		let ps=pn;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		var chunk_size=15;
 		for(var cj=chunk_size;cj<lim;cj+=chunk_size) {
 			for(var xj=0;xj<chunk_size;xj++) {
@@ -204,6 +207,11 @@ function do_work_tiai_0(dcs) {
 		for(var cj=chunksz;cj<lim;cj+=chunksz) {
 			for(var xj=0;xj<chunksz;xj++) {
 >>>>>>> e10fb913 (u)
+=======
+		var chunk_size=15;
+		for(var cj=chunk_size;cj<lim;cj+=chunk_size) {
+			for(var xj=0;xj<chunk_size;xj++) {
+>>>>>>> fab9656f (u)
 				let x=a(lsw.children[dim_l].firstElementChild);
 				let el=a(x.nextElementSibling); v(el);
 				el.click();
