@@ -37,15 +37,51 @@ declare global {
 	}
 }
 
-// ytd_player & ytd_page_manager
+// filter_on_initial_data
 declare global {
 	interface Window {
 		ytPageType?: string;
+	}
+}
+declare global {
+	interface Window {
+	}
+}
+
+// log_current_video_data
+declare global {
+	interface Window {
 		playlist_arr?: string[];
-		ytd_page_manager?: HTMLElement|null;
-		ytd_watch_flexy?: HTMLElement|null;
-		yt_playlist_manager?: HTMLElement|null;
+	}
+}
+
+declare global {
+	interface Window {
 		ytd_player?: HTMLElement|null;
+	}
+}
+
+declare global {
+	interface Window {
+		ytd_page_manager?: HTMLElement|null;
+	}
+}
+
+declare global {
+	interface Window {
+		ytd_watch_flexy?: HTMLElement|null;
+	}
+}
+
+declare global {
+	interface Window {
+		yt_playlist_manager?: HTMLElement|null;
+	}
+}
+
+// log_page_type_change
+declare global {
+	interface Window {
 		page_type_changes?: string[],
 	}
 }
