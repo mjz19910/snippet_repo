@@ -4809,9 +4809,14 @@ function cast_to_object(x) {
 	return {data: x};
 }
 
-/** @template {{}} T @arg {T} x @returns {Record<"type", string>|null} */
+/** @template {{}} T @arg {T} x @returns {{type: string}|null} */
 function cast_to_record_with_string_type(x) {
-	if('type' in x&&typeof x.type==='string') {
+	x: if('type' in x) {
+		/** @type {{type: unknown}} */
+		let wt=x;
+		if(typeof wt.type==='string'&&Object.keys(x).length==2&&'data' in x) {
+			break x;
+		}
 		x;
 		let y={
 			...x,
