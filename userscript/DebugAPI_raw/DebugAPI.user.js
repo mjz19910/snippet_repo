@@ -2670,7 +2670,6 @@ function overwrite_addEventListener(obj) {
 				if(t.elevated_event_handlers.includes(handler)) {
 					break x;
 				}
-				console.log("message event listener");
 				argArray[1]=do_message_handler_overwrite(handler);
 			}
 			return Reflect.apply(target,callback,argArray);
