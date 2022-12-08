@@ -2716,15 +2716,12 @@ inject_api.ProxyTargetMap=ProxyTargetMap;
 let proxyTargetMap=new ProxyTargetMap;
 
 /** @type {((arg0: EventListenersT) => void)[]} */
-let elevate_event_handlers=[];
-inject_api.elevate_event_handlers=elevate_event_handlers;
+let new_elevated_event_handlers=[];
+inject_api.elevate_event_handlers=new_elevated_event_handlers;
 
 /** @arg {EventListenersT} event_handler */
 function elevate_event_handler(event_handler) {
-	for(let i=0;i<elevate_event_handlers.length;i++) {
-		let handler=elevate_event_handlers[i];
-		handler(event_handler);
-	}
+	inject_api.addEventListenerExtension.elevate_handler(event_handler);
 }
 
 class AddEventListenerExtension {
@@ -2760,7 +2757,7 @@ class AddEventListenerExtension {
 	node_id_max=0;
 	constructor() {
 		overwrite_addEventListener(this);
-		elevate_event_handlers.push(this.elevate_handler.bind(this));
+		new_elevated_event_handlers.push(this.elevate_handler.bind(this));
 		if(!api_debug_enabled) return;
 		this.init_overwrite("addEventListener");
 		this.init_overwrite("dispatchEvent");

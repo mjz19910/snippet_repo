@@ -75,12 +75,16 @@ declare global {
 		LoggingEventTarget: {};
 		DebugAPI: DebugAPIType;
 		AddEventListenerExtension: {};
-		addEventListenerExtension: {};
+		addEventListenerExtension: {
+			elevate_handler(handler:EventListenersT):void;
+		};
 	}
 }
+
 type DebugAPIType={
 	the(): DebugAPI_the;
 };
+
 interface DebugAPI_the {
 	get_k(v: string): any;
 	clearCurrentBreakpoint(): boolean;
