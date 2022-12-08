@@ -1,14 +1,5 @@
 import {Runner} from "../../support/Runner.js";
-
-window.inject_api.saved_objects=[];
-window.inject_api.saved_object_arrays=[];
-/**
- * @param {{ name: string; }} callable
- */
-function add_function(callable) {
-	window.inject_api.saved_objects.push([callable.name,callable]);
-}
-
+import {add_function} from "./add_function.js";
 
 /* spell:words
 --- version_list item 2 ---
