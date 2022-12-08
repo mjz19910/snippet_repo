@@ -5,7 +5,7 @@ export class BaseCompression {
 	compress_result_state_dual(arg0: CompressDual): DualR_m {
 		return this.compress_result_dual(arg0.arr,arg0.ret);
 	}
-	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2_1<string,number>[]): DualR {
+	compress_result_dual(src: AltPair<string,number>[],dst: AnyOrRepeat2_1<string,number>[]): DualR_m {
 		if(BaseCompression.did_compress(src,dst)) return [true,dst];
 		return [false,src];
 	}
