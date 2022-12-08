@@ -1230,7 +1230,8 @@ class StackVMParserImplR {
 		return instructions;
 	}
 }
-class DocumentWriteListImpl_1 {
+
+class DocumentWriteListImpl_0 {
 	/** @type {any[]} */
 	list;
 	constructor() {
@@ -3631,12 +3632,10 @@ function main() {
 			return null;
 		}
 	});
-	let document_write_list=new DocumentWriteListImpl_1;
+	let document_write_list=new DocumentWriteListImpl_0;
 	document_write_list.attach_proxy(document);
 	document_write_list.document_write_proxy;
-	/** @type {any} */
-	let any_wl=document_write_list;
-	window.document_write_list=any_wl;
+	window.document_write_list=document_write_list;
 	document.stop=function() {};
 	function nop_timeout() {
 		console.log('nop timeout');
