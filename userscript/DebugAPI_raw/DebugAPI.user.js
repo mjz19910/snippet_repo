@@ -4897,8 +4897,11 @@ class LocalHandler {
 			data: message_data,
 			handler: this,
 		};
-		this.handle_tcp_data(message_data.data,report_info);
-		if(message_data.flags.includes("syn")&&message_data.flags.includes("ack")||message_data.flags.length==0) {
+		this.handle_tcp_data(message_data,report_info);
+	}
+	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<this>} report_info */
+	handle_tcp_data(tcp_message,report_info) {
+		if(tcp_message.flags.includes("syn")&&tcp_message.flags.includes("ack")||tcp_message.flags.length==0) {
 			this.client_post_message({
 				type: "tcp",
 				client_id: this.m_client_id,
@@ -4909,16 +4912,13 @@ class LocalHandler {
 				}
 			});
 		}
-	}
-	/** @arg {ConnectionMessage['data']} tcp_data @arg {ReportInfo<this>} report_info */
-	handle_tcp_data(tcp_data,report_info) {
-		if(!tcp_data) return;
-		switch(tcp_data.type) {
+		if(!tcp_message.data) return;
+		switch(tcp_message.data.type) {
 			case "connected": {
 				this.client_connect(report_info);
 			} break;
 			case "disconnected": {
-				this.m_can_reconnect=tcp_data.can_reconnect;
+				this.m_can_reconnect=tcp_message.can_reconnect;
 				this.client_disconnect(report_info);
 			} break;
 			case "side":
