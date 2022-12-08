@@ -4864,7 +4864,7 @@ class LocalHandler {
 		if(this.m_fake) {
 			let fake_channel=new MessageChannel;
 			let {m_client_id: client_id}=this;
-			new RemoteHandler(this.m_flags,fake_channel.port1,client_id).connect();
+			new RemoteHandler(this.m_flags,fake_channel.port1,client_id,this.m_remote_target).connect();
 		}
 	}
 	start_reconnect() {
@@ -4917,10 +4917,7 @@ class LocalHandler {
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	transport_connected(message_event) {
 		if(message_event.event) {
-			console.log('transport connected',message_event.event.data,message_event.event.origin);
-			if(message_event.event.origin!==null) {
-				this.m_event_transport_map.set(message_event.event.origin,window);
-			}
+			console.log('transport connected',message_event.event.data);
 		} else {
 			console.error("transport_connected called without an event");
 		}
@@ -5128,11 +5125,12 @@ class RemoteHandler {
 		this.m_connection_port.addEventListener("message",this);
 		this.onConnected();
 	}
-	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id */
-	constructor(flags,connection_port,client_id) {
+	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
+	constructor(flags,connection_port,client_id,event_source) {
 		this.m_flags=flags;
 		this.m_connection_port=connection_port;
 		this.m_client_id=client_id;
+		this.m_event_source=event_source;
 		this.connect();
 	}
 }
@@ -5234,7 +5232,8 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		}
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
-		let handler=new RemoteHandler(this.m_flags,connection_port,client_id);
+		if(!event.source) throw new Error("No event source");
+		let handler=new RemoteHandler(this.m_flags,connection_port,client_id,event.source);
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.first_event.origin===event.origin;
 		});
