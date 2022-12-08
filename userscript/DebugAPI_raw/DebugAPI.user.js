@@ -4799,13 +4799,13 @@ function is_record_with_T(x,k) {
 	return k in x;
 }
 
-/** @template T @arg {T} x @returns {{tag:"cast_tag",data:T & ({}|null)}|null} */
+/** @template T @arg {T} x @returns {{tag:"cast_tag",data:({[U in T]: T[U]}|null)}|null} */
 function cast_to_object(x) {
 	if(!is_object(x)) return null;
 	return {tag:"cast_tag",data: x};
 }
 
-/** @template {{}} T @arg {T extends {tag:string}?never:T} x @returns {{type: string}|null} */
+/** @template {{}} T @arg {T extends {tag:string}?never:T} x @returns {T&{type: string}|null} */
 function cast_to_record_with_string_type(x) {
 	x: if('type' in x) {
 		if(typeof x.type==='string'&&Object.keys(x).length==2&&'data' in x) {
@@ -4823,7 +4823,7 @@ function cast_to_record_with_string_type(x) {
 	return x;
 }
 
-/** @template {string} T @template {{}} U @arg {U} x @arg {T} k @returns {{ [P in T]: string; }|null} */
+/** @template {string} U @template {{}} T @arg {T} x @arg {U} k @returns {T&{ [P in U]: string; }|null} */
 function cast_to_record_with_key_and_string_type(x,k) {
 	if(!is_record_with_string_type(x,k)) return null;
 	return x;
@@ -4991,7 +4991,14 @@ class RemoteHandler {
 		if(cast_result.data===null) return false;
 		let message_record=cast_to_record_with_string_type(cast_result.data);
 		if(!message_record) return false;
-		return message_record.type==="tcp";
+		if(message_record.type!==post_message_connect_message_type) return false;
+		if(!is_record_with_T(message_record,"data"))return false;
+		let data_res=cast_to_object(message_record.data);
+		if(!data_res) return false;
+		if(data_res.data===null) return false;
+		let data_record=cast_to_record_with_string_type(cast_result.data);
+		if(data_record===null) return false;
+		return data_record.type==="tcp";
 	}
 	/** @type {ConnectionSide} */
 	m_side="server";
