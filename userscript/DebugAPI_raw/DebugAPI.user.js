@@ -3486,8 +3486,7 @@ function wasm_encode_string(arr) {
 			}
 			more_len=(arr.length-cur_var_int_part)/128;
 		}
-		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
-		throw new Error("varInt Error");
+		return [...var_int_bits,...arr];
 	}
 	return [arr.length,...arr];
 }
