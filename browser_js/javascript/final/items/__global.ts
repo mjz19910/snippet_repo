@@ -9,3 +9,5 @@ declare global {
 }
 
 export type Holder=1;
+
+export {any} from "./support/any";
