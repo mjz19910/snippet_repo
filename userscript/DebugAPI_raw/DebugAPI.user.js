@@ -3051,7 +3051,7 @@ function is_undefined(t) {
 	return typeof t==="undefined";
 }
 
-/** @template T @implements {Repeat_0} */
+/** @template T @implements {Repeat_0<T>} */
 class RepeatImpl_0 {
 	/**@type {Map<string,Map<number,Repeat_0<string>>>} */
 	static map=new Map;
@@ -3518,109 +3518,125 @@ function run_wasm_plugin() {
 }
 inject_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin,[]);
 
-async function decode_wasm_data() {
-	async function fetch_wasm_module() {
-		var data = await fetch("https://raw.githack.com/little-core-labs/varint-wasm/master/varint.wasm");
-		if(!data.body) {
-			 throw new Error("Fetch result has no body");
-		}
-		var body_reader = data.body.getReader();
-		let state = {
-			timeout_id:-1,
-			reader:body_reader,
-		};
-		var wasm_return = read_body(state);
-		state.gen=wasm_return;
-		let req=new Uint8Array(0);
-		let idx=0;
-		for (;;) {
-		  var cur = await wasm_return.next();
-		  if (cur.done) {
-			break;
-		  }
-		  let result=cur.value;
-		  let inner=result.value;
-		  req=new Uint8Array(idx+inner.length)
-		  req.set(inner,idx);
-		  idx+=inner.length;
-		}
-		return req;
-	  }
-	  async function remove_awaited(arr, item) {
-		let obj_idx = arr.indexOf(item);
-		if (obj_idx > -1) {
-		  arr.splice(obj_idx, 1);
-		  return;
-		}
-		for (let i = arr.length - 1; i >= 0; i--) {
-		  let ready_res = await Promise.race([arr[i], null]);
-		  if (ready_res === item) {
-			arr.splice(i, 1);
+/** @arg {(Promise<{}>|{})[]} arr @arg {Promise<{}>|{}} item */
+async function remove_awaited(arr,item) {
+	let obj_idx=arr.indexOf(item);
+	if(obj_idx>-1) {
+		arr.splice(obj_idx,1);
+		return;
+	}
+	for(let i=arr.length-1;i>=0;i--) {
+		let ready_res=await Promise.race([arr[i],null]);
+		if(ready_res===item) {
+			arr.splice(i,1);
 			return;
-		  }
 		}
-		throw new Error("Not found");
-	  }
-	  async function* read_body(state) {
-		/** @type {(Promise<any>|{type:"init"})[]} */
-		let pa = [{
-		  type: "init"
+	}
+	throw new Error("Not found");
+}
+
+class DataFetcher {
+	timeout_id=-1;
+	/** @param {string} url */
+	constructor(url) {
+		this.target_url=url;
+		this.aborted=false;
+	}
+	async begin_fetch() {
+		let data=await fetch(this.target_url);
+		if(!data.body) throw new Error("InvalidResponse: Response has no body");
+		this.reader=data.body.getReader();
+	}
+
+	async *read_body_generator() {
+		let state=this;
+		if(!state.reader) throw new Error("InvalidState: reader missing, call `DataFetcher.start` first");
+		/** @typedef {ReadableStreamReadResult<Uint8Array>} ReadRes */
+		/** @typedef {{type:"init"}|{type:"done"|"read"|"wait_start"|"wait_result"}|{type:"read_result",value:ReadRes}} Res */
+		/** @type {(Promise<Res>|Res)[]} */
+		let pa=[{
+			type: "init"
 		}];
-		for (; pa.length > 0;) {
-		  if (state.abort) {
-			break;
-		  }
-		  let iter = await Promise.race(pa);
-		  await remove_awaited(pa, iter);
-			 if (iter.type === "read_result") {
-			let inner = iter.value;
-			if (inner.done) {
-			  pa.push({
-				type: "done"
-			  });
-			  continue;
+		for(;pa.length>0;) {
+			if(state.aborted) {
+				break;
 			}
-			let value = inner.value;
-			yield {
-			  type: "read_value",
-			  value,
-			};
-			pa.push({
-			  type: "read"
-			});
-		  } else if(iter.type==="wait_result") {
-			pa.push({
-			  type:"wait_start"
-			});
-		  } else if (iter.type === "wait_start") {
-			pa.push(new Promise(function(a) {
-			state.timeout_id = setTimeout(a, 30, {
-				type: "wait_result"
-			  });
-			}));
-		  } else if (iter.type === "read") {
-			pa.push(state.reader.read().then(e => ({
-			  type: "read_result",
-			  value: e
-			})));
-		  } else if (iter.type === 'init') {
-			pa.push({
-			  type: "wait_start"
-			}, {
-			  type: "read"
-			});
-			idx = 0;
-		  } else if(iter.type==="done") {
-			break;
-		  } else {
-			console.log('unexpected',iter);
-			throw new Error("Unexpected tag type");
-		  }
+			let iter=await Promise.race(pa);
+			await remove_awaited(pa,iter);
+			if(iter.type==="read_result") {
+				let inner=iter.value;
+				if(inner.done) {
+					pa.push({
+						type: "done"
+					});
+					continue;
+				}
+				let value=inner.value;
+				yield {
+					type: "read_value",
+					value,
+				};
+				pa.push({
+					type: "read"
+				});
+			} else if(iter.type==="wait_result") {
+				pa.push({
+					type: "wait_start"
+				});
+			} else if(iter.type==="wait_start") {
+				pa.push(new Promise(function(a) {
+					state.timeout_id=setTimeout(a,30,{
+						type: "wait_result"
+					});
+				}));
+			} else if(iter.type==="read") {
+				pa.push(state.reader.read().then(e => ({
+					type: "read_result",
+					value: e
+				})));
+			} else if(iter.type==='init') {
+				pa.push({
+					type: "wait_start"
+				},{
+					type: "read"
+				});
+			} else if(iter.type==="done") {
+				break;
+			} else {
+				console.log('unexpected',iter);
+				throw new Error("Unexpected tag type");
+			}
 		}
 		return;
-	  }
-	  let wasm_module_bytes = await fetch_wasm_module();
-	  console.log(wasm_module_bytes);
+	}
+	async read_body() {
+		await this.begin_fetch();
+		var wasm_return=this.read_body_generator();
+		let req=new Uint8Array(0);
+		let idx=0;
+		for(;;) {
+			var cur=await wasm_return.next();
+			if(cur.done) {
+				break;
+			}
+			let result=cur.value;
+			let inner=result.value;
+			req=new Uint8Array(idx+inner.length);
+			req.set(inner,idx);
+			idx+=inner.length;
+		}
+		return req;
+	}
+}
+
+async function decode_wasm_data() {
+	async function fetch_wasm_module() {
+		let fetcher=new DataFetcher("https://raw.githack.com/little-core-labs/varint-wasm/master/varint.wasm");
+		return fetcher.read_body();
+		
+	}
+	let wasm_module_bytes=await fetch_wasm_module();
+	console.log(wasm_module_bytes);
 }
 
 /**@arg {SafeFunctionPrototype} safe_function_prototype */
