@@ -4847,9 +4847,13 @@ class LocalHandler {
 			console.log("post request ConnectOverPostMessage");
 		}
 		this.send_message_to_client({
-			type: "request_connection",
+			type: "tcp",
+			flags:["syn"],
 			client_id:this.m_client_id,
-			source: window,
+			data:{
+				type:"source",
+				source:window,
+			},
 		},[channel.port1]);
 		this.m_transport_map.set(this,{
 			port: channel.port2,
@@ -4885,25 +4889,38 @@ class LocalHandler {
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(!event.source) throw new Error("No event source");
+		let message_data=event.data;
+		if(message_data.type!=="tcp") throw new Error();
 		/** @type {ReportInfo<this>} */
 		let report_info={
-			data: event.data,
+			data: message_data,
 			handler: this,
 		};
-		let data=event.data;
-		switch(data.type) {
+		this.handle_tcp_data(message_data.data,report_info);
+		if(message_data.flags.includes("syn")) {
+			this.server_post_message({
+				type: "tcp",
+				client_id: this.m_client_id,
+				flags:["syn","ack"],
+				data: {
+					type:"side",
+					side: this.m_side,
+				}
+			});
+		}
+	}
+	/** @arg {ConnectionMessage['data']} tcp_data @arg {ReportInfo<this>} report_info */
+	handle_tcp_data(tcp_data,report_info) {
+		switch(tcp_data.type) {
 			case "connect": {
 				this.server_connect(report_info);
-				this.server_post_message({
-					type: "ack",
-					client_id: this.m_client_id,
-					side: this.m_side,
-				});
 			} break;
 			case "disconnected": {
-				this.can_reconnect=data.can_reconnect;
+				this.can_reconnect=tcp_data.can_reconnect;
 				this.server_disconnect(report_info);
 			} break;
+			case "side":
+			case "source": break;
 		}
 	}
 	/** @param {MessagePort} port */
@@ -4977,6 +4994,14 @@ class CrossOriginConnectionData {
 }
 
 class RemoteHandler {
+	/** @arg {MessageEvent<unknown>} _event @returns {_event is MessageEvent<ConnectionMessage>} */
+	is_connection_message(_event) {
+		let cast_result=cast_to_object(_event.data);
+		if(!cast_result) return false;
+		let message_record=cast_to_record_with_string_type(cast_result);
+		if(!message_record) return false;
+		return message_record.type==="tcp";
+	}
 	/** @type {ConnectionSide} */
 	m_side="client";
 	/** @type {ConnectionMessage[]} */
@@ -4995,15 +5020,24 @@ class RemoteHandler {
 	onConnected() {
 		let {m_client_id: client_id}=this;
 		this.client_post_message({
-			type: "connect",
+			type: "tcp",
 			client_id,
+			flags:[],
+			data:{
+				type:"connect"
+			},
 		});
 	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
 		this.client_post_message({
-			type: "disconnected",
-			can_reconnect,
+			type:"tcp",
+			client_id:this.m_client_id,
+			flags:[],
+			data:{
+				type: "disconnected",
+				can_reconnect,
+			}
 		});
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
@@ -5132,6 +5166,8 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.first_event.origin===event.origin;
 		});
+		if(!handler.is_connection_message(event)) return fail();
+		handler.handleEvent(event);
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
