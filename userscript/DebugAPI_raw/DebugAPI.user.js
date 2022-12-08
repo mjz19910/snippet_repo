@@ -4984,9 +4984,6 @@ class RemoteHandler {
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
 	client_post_message(message_data) {
-		if(this.m_debug) {
-			console.log("RemoteHandler.post_message",message_data);
-		}
 		this.m_connection_port.postMessage(message_data);
 	}
 	onConnected() {
