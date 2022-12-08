@@ -5064,6 +5064,8 @@ class RemoteHandler {
 			this.server_connect();
 		}
 	}
+	/** @type {MessageEventSource} */
+	m_event_source;
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
 	constructor(flags,connection_port,client_id,event_source) {
 		this.m_flags=flags;
