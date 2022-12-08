@@ -19,7 +19,7 @@
 /**
  * @param {{}} value
  */
-function use_jquery(value) {
+function use_jquery_overwrite(value) {
 	Object.defineProperty(window,'$',{
 		value,
 		writable: true,
@@ -32,7 +32,7 @@ function use_jquery(value) {
 	let r_proto=Object.getPrototypeOf(res);
 	r_proto.lazyload=function(/** @type {any[]} */ ..._a) {};
 }
-function set_jq_proxy() {
+function set_jq_proxy_overwrite() {
 	/** @type {{}} */
 	let e_win=window;
 	/** @type {{}|null|undefined} */
@@ -47,7 +47,7 @@ function set_jq_proxy() {
 		/**@arg {{}|null|undefined} value */
 		set(value) {
 			val=value;
-			if(value) use_jquery(value);
+			if(value) use_jquery_overwrite(value);
 			return true;
 		},
 		enumerable: true,
@@ -56,7 +56,7 @@ function set_jq_proxy() {
 }
 function do_real_page_action() {
 	document.stop=function() {};
-	set_jq_proxy();
+	set_jq_proxy_overwrite();
 	console.log('done');
 }
 function page_url_no_protocol() {
