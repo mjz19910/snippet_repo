@@ -4988,7 +4988,8 @@ class RemoteHandler {
 	is_connection_message(_event) {
 		let cast_result=cast_to_object(_event.data);
 		if(!cast_result) return false;
-		let message_record=cast_to_record_with_string_type(cast_result);
+		if(cast_result.data===null) return false;
+		let message_record=cast_to_record_with_string_type(cast_result.data);
 		if(!message_record) return false;
 		return message_record.type==="tcp";
 	}
