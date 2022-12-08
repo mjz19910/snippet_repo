@@ -4864,24 +4864,6 @@ class LocalHandler {
 			new RemoteHandler(this.m_flags,fake_channel.port1,client_id,this.m_remote_target).connect();
 		}
 	}
-	start_reconnect() {
-		this.begin_connect();
-		this.m_timeout_id=setTimeout(
-			this.process_reconnect.bind(this),
-			this.m_connection_timeout/4
-		);
-	}
-	process_reconnect() {
-		if(this.m_tries_left<12) {
-			console.log("reconnect tries_left",this.m_tries_left);
-		}
-		if(this.m_tries_left>0) {
-			if(this.m_reconnecting) {
-				this.start_reconnect();
-				this.m_tries_left--;
-			}
-		}
-	}
 	/** @arg {ConnectionMessage} message_data */
 	local_post_message(message_data) {
 		if(!this.m_connection_port) {
@@ -4921,28 +4903,10 @@ class LocalHandler {
 		this.m_connection_port.start();
 		this.m_connection_port.addEventListener("message",this);
 	}
-	request_new_port() {
-		this.begin_connect();
-	}
-	/** @arg {ReportInfo<LocalHandler>} arg0 */
-	transport_disconnected(arg0) {
-		if(arg0.event) {
-			console.log('transport disconnected',arg0.event.data,arg0.event);
-		} else {
-			console.log(arg0);
-		}
-	}
 	/** @param {ReportInfo<this>} report_info */
 	disconnect(report_info) {
-		if(this.m_reconnecting) return;
-		this.transport_disconnected(report_info);
+		console.log('on_disconnect',report_info.event.data,report_info.event);
 		this.m_remote_side_connected=false;
-		if(this.can_reconnect) {
-			this.m_reconnecting=true;
-			this.m_tries_left=6;
-			this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
-			this.request_new_port();
-		}
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
 		this.m_connection_port=null;
@@ -4959,7 +4923,6 @@ class LocalHandler {
 	m_remote_side_connected=false;
 	m_tries_left=0;
 	m_connection_timeout;
-	m_missing_keep_alive_counter=0;
 	can_reconnect=false;
 	m_event_transport_map=new Map;
 	m_debug=false;

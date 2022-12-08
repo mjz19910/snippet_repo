@@ -178,7 +178,7 @@ declare global {
 
 declare global {
 	type ReportInfo<T>={
-		event: MessageEvent<ConnectionMessage>|null;
+		event: MessageEvent<ConnectionMessage>;
 		handler: T;
 	};
 }
