@@ -5058,8 +5058,8 @@ class RemoteHandler {
 		this.m_client_id=client_id;
 		this.m_event_source=event_source;
 		this.m_server_connection_port=connection_port;
-		this.m_server_connection_port.start();
 		this.m_server_connection_port.addEventListener("message",this);
+		this.m_server_connection_port.start();
 	}
 }
 
