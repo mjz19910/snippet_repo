@@ -4857,6 +4857,9 @@ class LocalHandler {
 		elevate_event_handler(this);
 	}
 	client_begin_connect() {
+		if(this.m_remote_target===window) {
+			throw new Error("Sending messages to self is means i have a bad time");
+		}
 		let channel=new MessageChannel;
 		let {
 			port1: server_port,
