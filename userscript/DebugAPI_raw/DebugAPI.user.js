@@ -3518,6 +3518,111 @@ function run_wasm_plugin() {
 }
 inject_api.run_wasm_plugin=new VoidCallback(run_wasm_plugin,[]);
 
+async function decode_wasm_data() {
+	async function fetch_wasm_module() {
+		var data = await fetch("https://raw.githack.com/little-core-labs/varint-wasm/master/varint.wasm");
+		if(!data.body) {
+			 throw new Error("Fetch result has no body");
+		}
+		var body_reader = data.body.getReader();
+		let state = {
+			timeout_id:-1,
+			reader:body_reader,
+		};
+		var wasm_return = read_body(state);
+		state.gen=wasm_return;
+		let req=new Uint8Array(0);
+		let idx=0;
+		for (;;) {
+		  var cur = await wasm_return.next();
+		  if (cur.done) {
+			break;
+		  }
+		  let result=cur.value;
+		  let inner=result.value;
+		  req=new Uint8Array(idx+inner.length)
+		  req.set(inner,idx);
+		  idx+=inner.length;
+		}
+		return req;
+	  }
+	  async function remove_awaited(arr, item) {
+		let obj_idx = arr.indexOf(item);
+		if (obj_idx > -1) {
+		  arr.splice(obj_idx, 1);
+		  return;
+		}
+		for (let i = arr.length - 1; i >= 0; i--) {
+		  let ready_res = await Promise.race([arr[i], null]);
+		  if (ready_res === item) {
+			arr.splice(i, 1);
+			return;
+		  }
+		}
+		throw new Error("Not found");
+	  }
+	  async function* read_body(state) {
+		/** @type {(Promise<any>|{type:"init"})[]} */
+		let pa = [{
+		  type: "init"
+		}];
+		for (; pa.length > 0;) {
+		  if (state.abort) {
+			break;
+		  }
+		  let iter = await Promise.race(pa);
+		  await remove_awaited(pa, iter);
+			 if (iter.type === "read_result") {
+			let inner = iter.value;
+			if (inner.done) {
+			  pa.push({
+				type: "done"
+			  });
+			  continue;
+			}
+			let value = inner.value;
+			yield {
+			  type: "read_value",
+			  value,
+			};
+			pa.push({
+			  type: "read"
+			});
+		  } else if(iter.type==="wait_result") {
+			pa.push({
+			  type:"wait_start"
+			});
+		  } else if (iter.type === "wait_start") {
+			pa.push(new Promise(function(a) {
+			state.timeout_id = setTimeout(a, 30, {
+				type: "wait_result"
+			  });
+			}));
+		  } else if (iter.type === "read") {
+			pa.push(state.reader.read().then(e => ({
+			  type: "read_result",
+			  value: e
+			})));
+		  } else if (iter.type === 'init') {
+			pa.push({
+			  type: "wait_start"
+			}, {
+			  type: "read"
+			});
+			idx = 0;
+		  } else if(iter.type==="done") {
+			break;
+		  } else {
+			console.log('unexpected',iter);
+			throw new Error("Unexpected tag type");
+		  }
+		}
+		return;
+	  }
+	  let wasm_module_bytes = await fetch_wasm_module();
+	  console.log(wasm_module_bytes);
+}
+
 /**@arg {SafeFunctionPrototype} safe_function_prototype */
 function gen_function_prototype_use(safe_function_prototype) {
 	/** @type {["apply","bind","call"]}*/
