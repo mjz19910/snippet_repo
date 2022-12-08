@@ -4837,6 +4837,10 @@ function cast_to_record_with_key_and_string_type(x,k) {
 	return x;
 }
 
+
+/** @readonly @type {`CrossOriginConnection_${typeof sha_1_initial}`} */
+const post_message_connect_message_type=`CrossOriginConnection_${sha_1_initial}`;
+
 class LocalHandler {
 	/** @type {Window} */
 	m_remote_target;
@@ -5000,7 +5004,7 @@ class CrossOriginConnectionData {
 	elevated_array=[];
 }
 
-class RemoteHandler {
+class RemoteSocket {
 	source() {
 		return this.m_event_source;
 	}
@@ -5095,25 +5099,6 @@ class RemoteHandler {
 	}
 }
 
-class RemoteSocket {
-	/**
-	 * @param {MessagePort} port
-	 * @param {RemoteHandler} handler
-	 * @param {number} client_id
-	 * @arg {MessageEvent} event
-	 */
-	constructor(port,handler,client_id,event) {
-		this.port=port;
-		this.handler=handler;
-		this.client_id=client_id;
-		this.first_event=event;
-	}
-}
-
-
-/** @readonly @type {`CrossOriginConnection_${typeof sha_1_initial}`} */
-const post_message_connect_message_type=`CrossOriginConnection_${sha_1_initial}`;
-
 const global_elevated_array=[];
 let max_elevated_id=0;
 /**
@@ -5186,15 +5171,15 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let connection_port=event.ports[0];
 		if(!event.source) throw new Error("No event source");
 		let event_source=event.source;
-		let handler=new RemoteHandler(this.m_flags,connection_port,client_id,event_source);
+		let handler=new RemoteSocket(this.m_flags,connection_port,client_id,event_source);
 		let prev_connection_index=this.connections.findIndex(e => {
-			return e.handler.source()===event_source;
+			return e.source()===event_source;
 		});
 		handler.handle_tcp_data(event.data.data);
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
-		this.connections.push(new RemoteSocket(connection_port,handler,client_id,event));
+		this.connections.push(handler);
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
@@ -5279,7 +5264,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			} break;
 			case "beforeunload": {
 				for(let connection of this.connections) {
-					connection.handler.onDisconnect(false);
+					connection.onDisconnect(false);
 				}
 			} break;
 			case "unload": {
