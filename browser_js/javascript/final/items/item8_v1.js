@@ -25,7 +25,7 @@ function main() {
 		if(!lsw) return;
 		wl: do {
 			var do_cont=lim;
-			var scount=do_cont;
+			var s_count=do_cont;
 			var pn=performance.now();
 			var ps=performance.now();
 			var pl_id=1;
@@ -97,7 +97,7 @@ function main() {
 			console.log(pn-ps);
 			ps=pn;
 			continue wl;
-		} while(do_cont<(scount-4));
+		} while(do_cont<(s_count-4));
 	}
 	// cspell: disable-next-line
 	/**
@@ -173,9 +173,9 @@ function main() {
 		if(!lsw) return;
 		let pn=performance.now();
 		let ps=pn;
-		var chunksz=15;
-		for(var cj=chunksz;cj<lim;cj+=chunksz) {
-			for(var xj=0;xj<chunksz;xj++) {
+		var chunk_size=15;
+		for(var cj=chunk_size;cj<lim;cj+=chunk_size) {
+			for(var xj=0;xj<chunk_size;xj++) {
 				let x=a(lsw.children[dim_l].firstElementChild);
 				let el=a(x.nextElementSibling); v(el);
 				el.click();
