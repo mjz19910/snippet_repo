@@ -5131,16 +5131,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			this.start_root_server();
 			return;
 		}
-		if(s.is_top&&s.opener!==null) {
-			if(s.opener.top!==s.opener&&s.opener.top!==null) {
-				this.init_with_next_parent(s.opener.top);
-				return;
-			}
-			this.init_with_opener(s.opener);
-			return;
-		}
-		if(!this.state.top) throw new Error("Invalid state, not top and window.top is null");
-		this.init_with_next_parent(this.state.top);
+		this.init_with_next_parent(s.window);
 		/**
 		 * @type {MessageEvent<unknown> | undefined}
 		 */
