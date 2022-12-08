@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      1.0.12
+// @version      1.1.9.0
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -5177,7 +5177,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	is_wrapped_message(event) {
 		let data=cast_to_record_with_string_type_unk(event.data);
 		if(!data) return false;
-		return data.type!==post_message_connect_message_type;
+		return data.type===post_message_connect_message_type;
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
