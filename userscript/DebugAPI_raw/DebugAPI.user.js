@@ -3461,10 +3461,7 @@ function resolve_function_constructor() {
 	return content_window.Function;
 }
 
-/**
- * @param {number} id
- * @param {string | any[]} arr
- */
+/** @param {number} id @param {number[]} arr */
 function wasm_encode_section(id,arr) {
 	if(arr.length>=128) {
 		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
@@ -3473,9 +3470,8 @@ function wasm_encode_section(id,arr) {
 	return [id,arr.length,...arr];
 }
 add_function(wasm_encode_section);
-/**
- * @param {string | any[]} arr
- */
+
+/** @param {number[]} arr */
 function wasm_encode_string(arr) {
 	if(arr.length>=128) {
 		console.assert(false,"Variable length ints unsupported, length=%o is too long",arr.length);
