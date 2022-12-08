@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      1.0.3
+// @version      1.0.4
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -4891,7 +4891,7 @@ class LocalHandler {
 				this.server_post_message({
 					type:"ack",
 					client_id:this.m_client_id,
-					sid:this.m_side,
+					side:this.m_side,
 				});
 			} break;
 			case "disconnected": {
