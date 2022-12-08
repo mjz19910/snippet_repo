@@ -22,7 +22,7 @@
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
 
 function fetch_all_images() {
-	return Promise.all(arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
+	return Promise.all(window.arUnit.slice(0,-1).map(e => "images/"+e[11]).map(async e => {
 		try {
 			let f=await fetch(e);
 			let t=await f.text();
@@ -35,12 +35,12 @@ function fetch_all_images() {
 fetch_all_images;
 
 function fetch_all_images_full() {
-	return arrayNames.map(e => e.indexOf('cat')>-1? 'cats-eye-nebula':e).map(e => "imagesFull/"+e.replace(/\s+/g,'-')+".jpg").map(e => fetch(e));
+	return window.arrayNames.map(e => e.indexOf('cat')>-1? 'cats-eye-nebula':e).map(e => "imagesFull/"+e.replace(/\s+/g,'-')+".jpg").map(e => fetch(e));
 }
 fetch_all_images_full;
 
 function fetch_all_specs() {
-	return allspec.map((_e,i) => "specs/"+(i+1)+".jpg").map(e => fetch(e));
+	return window.allspec.map((_e,i) => "specs/"+(i+1)+".jpg").map(e => fetch(e));
 }
 fetch_all_specs;
 
@@ -900,7 +900,7 @@ class StackVmBaseImpl {
 }
 
 /**
- * @typedef {import("./ns.js").InstructionType} InstructionType_CJS
+ * @typedef {import("./support/InstructionType.js").InstructionType} InstructionType_CJS
  * @typedef {import("./ns.js").Box} Box_CJS
  * @typedef {import("./ns.js").StackVM} StackVM_CJS
 */

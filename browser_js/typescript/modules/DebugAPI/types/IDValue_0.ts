@@ -16,7 +16,7 @@ export class IDValueI {
 	arr_dual: AltPair<string,number>[];
 	arr_dual_x: AltPair<AnyOrRepeat_1<string>,AnyOrRepeat_1<number>>[];
 	arr_rep_str: AnyOrRepeat_0<string>[];
-	arr_rep_num: AnyOrRepeat_0<number>[];
+	arr_rep_num: AnyOrRepeat_1<number>[];
 	arr_str: string[];
 	arr_num: number[];
 	arr_dual_compressed: AnyOrRepeat2_1<string, number>[];

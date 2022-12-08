@@ -4455,9 +4455,7 @@ class AutoBuy {
 	state_history_arr=[];
 }
 
-/**
- * @type {AutoBuy}
- */
+/** @type {AutoBuy} */
 let g_auto_buy;
 /** @type {{value:string[]}} */
 let src_arr={value: []};
