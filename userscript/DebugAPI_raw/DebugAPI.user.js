@@ -4882,7 +4882,7 @@ class LocalHandler {
 		},"*",ports);
 	}
 	/** @arg {ConnectionMessage} message_data */
-	client_post_message(message_data) {
+	push_tcp_message(message_data) {
 		if(!this.m_client_connection_port) throw new Error("no connection port");
 		this.m_client_connection_port.postMessage(message_data);
 	}
@@ -4902,7 +4902,7 @@ class LocalHandler {
 		this.handle_tcp_data(message_data,report_info);
 	}
 	send_ack() {
-		this.client_post_message({
+		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
 			flags: ["ack"],
@@ -5202,7 +5202,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @param {ConnectionMessage} message */
 	postListeningToConnection(message) {
 		if(message.flags.length>0) throw new Error("Client does not expect any flags on new messages")
-		this.m_local_handler.client_post_message(message);
+		this.m_local_handler.push_tcp_message(message);
 	}
 	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
