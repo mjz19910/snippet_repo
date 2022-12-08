@@ -14,9 +14,9 @@
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
 
-
+// Use module
+/** @type {import("./__global.js")} */
 // #pragma section InjectAPI
-/** @typedef {import("./__global.js").Holder} Holder */
 /** @type {typeof window['inject_api']} */
 let inject_api={};
 window.inject_api=any(inject_api);
