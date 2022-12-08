@@ -4847,7 +4847,7 @@ class LocalHandler {
 	m_tries_left=0;
 	m_connection_timeout;
 	start_reconnect() {
-		this.m_root.request_new_port(this);
+		this.m_root.request_connection(this);
 		this.m_timeout_id=setTimeout(
 			this.process_reconnect.bind(this),
 			this.m_connection_timeout/4
@@ -4897,7 +4897,7 @@ class LocalHandler {
 	can_reconnect=false;
 	/** @param {MessageEvent<RemoteOriginMessage>} event */
 	handleEvent(event) {
-		/** @type {ReportInfo<LocalHandler>} */
+		/** @type {ReportInfo<this>} */
 		let report_info={
 			event: event,
 			handler: this,
@@ -4968,7 +4968,7 @@ class LocalHandler {
 			this.m_reconnecting=true;
 			this.m_tries_left=6;
 			this.m_timeout_id=setTimeout(this.process_reconnect.bind(this),15_000);
-			this.m_root.request_new_port(this);
+			this.start_reconnect();
 		}
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
@@ -5110,13 +5110,13 @@ class RemoteSocket {
 const post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}`;
 
 class RemoteOriginConnection extends RemoteOriginConnectionData {
-	/** @param {LocalHandler} obj */
-	request_new_port(obj) {
-		this.request_connection(obj);
-	}
 	/** @arg {ReportInfo<LocalHandler>} arg0 */
 	transport_disconnected(arg0) {
-		console.log('transport disconnected',arg0.event.data,arg0.event);
+		if(arg0.event) {
+			console.log('transport disconnected',arg0.event.data,arg0.event);
+		} else {
+			console.log('transport disconnected',arg0);
+		}
 	}
 	/** @type {RemoteOriginMessage[]} */
 	unhandled_child_events=[];
@@ -5146,23 +5146,21 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		 */
 		this.last_misbehaved_client_event=undefined;
 	}
-	/** @param {Window} cur_window */
+	/** @param {Window} cur_window @returns {void} */
 	init_with_next_parent(cur_window) {
-		if(cur_window.top!==null&&cur_window.top!==cur_window) {
-			this.init_with_next_parent(cur_window.top);
+		if(cur_window.top===null) return this.init_transport_over(cur_window);
+		if(cur_window.opener!==null) {
+			this.m_flags.does_proxy_to_opener=true;
+			this.init_transport_over(cur_window.opener);
+			this.start_root_server();
+			return;
 		}
-		if(cur_window.opener===null) {
-			this.init_transport_over(cur_window);
-		} else {
-			if(cur_window.opener.top!==cur_window.opener) {
-				console.log("need to go up more");
-			}
-			this.init_with_opener(cur_window.opener);
-		}
+		if(cur_window.top!==cur_window) return this.init_with_next_parent(cur_window.top);
+		if(cur_window.top===cur_window) return this.init_transport_over(cur_window);
+		throw new Error("Bad");
 	}
 	/** @param {Window} opener */
 	init_with_opener(opener) {
-		this.m_flags.does_proxy_to_opener=true;
 		this.init_transport_over(opener);
 		this.start_root_server();
 	}
@@ -5210,11 +5208,15 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 	get_next_elevation_id() {
 		return this.max_elevated_id++;
 	}
-	/** @arg {{event: MessageEvent<RemoteOriginMessage>;handler: LocalHandler;}} message_event */
+	/** @arg {ReportInfo<LocalHandler>} message_event */
 	transport_connected(message_event) {
-		console.log('transport connected',message_event.event.data);
-		if(message_event.event.source!==null) {
-			this.event_transport_map.set(message_event.event.source,window);
+		if(message_event.event) {
+			console.log('transport connected',message_event.event.data);
+			if(message_event.event.source!==null) {
+				this.event_transport_map.set(message_event.event.source,window);
+			}
+		} else {
+			console.error("transport_connected called without an event");
 		}
 	}
 	/**@type {RemoteSocket[]} */
