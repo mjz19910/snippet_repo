@@ -3473,16 +3473,13 @@ add_function(wasm_encode_section);
 
 /** @param {number[]} arr */
 function wasm_encode_string(arr) {
+	let out=[];
 	let n=arr.length;
-	if(n>=128) {
-		let var_int_bits=[];
-		while((n&~0x7f)!=0) {
-			var_int_bits.push(n&0xff|0x80);
-			n>>=7;
-		}
-		return [...var_int_bits,n,...arr];
+	while((n&~0x7f)!=0) {
+		out.push(n&0xff|0x80);
+		n>>=7;
 	}
-	return [n,...arr];
+	return [...out,n,...arr];
 }
 add_function(wasm_encode_string);
 
