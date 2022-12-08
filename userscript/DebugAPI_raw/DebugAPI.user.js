@@ -2389,30 +2389,27 @@ class APIProxyManager {
 		this.event_handler=event_handler;
 	}
 	/**
+	 * @template {(...x:any[])=>any} T
 	 * @param {string} message_to_send
-	 * @param {()=>void} function_value
+	 * @param {T} function_value
+	 * @returns {T}
 	 */
 	create_proxy_for_function(message_to_send,function_value) {
-		let event_handler=this.event_handler;
-		let obj={
-			event_handler,
-			/**@arg {[target: () => void, thisArg: any, argArray: any[]]} post_message_proxy_spread */
-			apply(...post_message_proxy_spread) {
-				this.event_handler.dispatchEvent({
-					type: message_to_send,
-					data: post_message_proxy_spread
-				});
-				let ret=Reflect.apply(...post_message_proxy_spread);
-				return ret;
-			}
-		};
-		return new Proxy(function_value,obj);
+		let t=this.event_handler;
+		/**@arg {[target: T, thisArg: any, argArray: any[]]} post_message_proxy_spread */
+		function do_apply(...post_message_proxy_spread) {
+			t.dispatchEvent({
+				type: message_to_send,
+				data: post_message_proxy_spread
+			});
+			let ret=Reflect.apply(...post_message_proxy_spread);
+			return ret;
+		}
+		return new Proxy(function_value,{apply:do_apply});
 	}
 	start_postMessage_proxy() {
 		if(!api_debug_enabled) return;
-		/**@type {any} */
-		let win_post_message=window.postMessage;
-		window.postMessage=this.create_proxy_for_function('postMessage_sent',win_post_message);
+		window.postMessage=this.create_proxy_for_function('postMessage_sent',window.postMessage);
 	}
 }
 inject_api.APIProxyManager=APIProxyManager;
@@ -4883,36 +4880,14 @@ class LocalHandler {
 				this.start_reconnect();
 				this.m_tries_left--;
 			}
-		} else {
-			this.start_timeout();
 		}
 	}
 	/** @arg {ConnectionMessage} message_data */
-	post_message(message_data) {
+	local_post_message(message_data) {
 		if(!this.m_connection_port) {
 			throw new Error("unable to use missing port");
 		}
 		this.m_connection_port.postMessage(message_data);
-	}
-	keep_alive_send() {
-		this.m_missing_keep_alive_counter++;
-		if(this.m_missing_keep_alive_counter>1) {
-			console.log("missed keep alive interval");
-		}
-		if(this.m_missing_keep_alive_counter>8) {
-			console.log("keep alive disabled (no replies for 8 intervals)");
-			clearInterval(this.m_keep_alive_interval);
-		}
-		if(this.m_missing_keep_alive_counter>0) {
-			// drain it slowly
-			if(Math.random()<0.1) {
-				this.m_missing_keep_alive_counter--;
-			}
-		}
-		this.post_message({
-			type: "keep_alive",
-			side: "client",
-		});
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	transport_connected(message_event) {
@@ -4933,36 +4908,10 @@ class LocalHandler {
 		switch(data.type) {
 			case "connected": {
 				this.transport_connected(report_info);
-				if(this.m_reconnecting) {
-					this.m_reconnecting=false;
-				}
-				if(!this.m_remote_side_connected&&this.m_timeout_id) {
-					this.m_remote_side_connected=true;
-					clearTimeout(this.m_timeout_id);
-					this.m_timeout_id=null;
-				}
-				this.m_keep_alive_interval=setInterval(
-					this.keep_alive_send.bind(this),
-					this.m_connection_timeout*4,
-				);
 			} break;
 			case "disconnected": {
 				this.can_reconnect=data.can_reconnect;
 				this.disconnect(report_info);
-			} break;
-			case "keep_alive": {
-				this.post_message({
-					type: "keep_alive_reply",
-					sides: [data.side,this.m_side],
-				});
-			} break;
-			case "keep_alive_reply": {
-				if(this.m_timeout_id!==null) {
-					clearTimeout(this.m_timeout_id);
-				}
-				if(this.m_missing_keep_alive_counter>0) {
-					this.m_missing_keep_alive_counter--;
-				}
 			} break;
 		}
 	}
@@ -4971,16 +4920,6 @@ class LocalHandler {
 		this.m_connection_port=port;
 		this.m_connection_port.start();
 		this.m_connection_port.addEventListener("message",this);
-		if(this.m_timeout_id!==null) return;
-		this.start_timeout();
-	}
-	start_timeout() {
-		this.m_timeout_id=setTimeout(() => {
-			this.disconnect({
-				event:null,
-				handler:this,
-			});
-		},this.m_connection_timeout*2);
 	}
 	request_new_port() {
 		this.begin_connect();
@@ -5007,7 +4946,6 @@ class LocalHandler {
 		if(!this.m_connection_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_connection_port.removeEventListener('message',this);
 		this.m_connection_port=null;
-		clearInterval(this.m_keep_alive_interval);
 		if(this.m_elevation_id) clear_elevation_by_id(this.m_elevation_id);
 	}
 	/** @type {ConnectionSide} */
@@ -5078,7 +5016,7 @@ class RemoteHandler {
 	m_client_id;
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
-	post_message(message_data) {
+	client_post_message(message_data) {
 		if(message_data.type!=='keep_alive_reply') {
 			if(this.m_debug) {
 				console.log("RemoteHandler.post_message",message_data);
@@ -5088,14 +5026,14 @@ class RemoteHandler {
 	}
 	onConnected() {
 		let {m_client_id: client_id}=this;
-		this.post_message({
+		this.client_post_message({
 			type: "connected",
 			client_id,
 		});
 	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
-		this.post_message({
+		this.client_post_message({
 			type: "disconnected",
 			can_reconnect,
 		});
@@ -5106,17 +5044,6 @@ class RemoteHandler {
 			console.log("TODO proxy message to opener");
 		}
 		let {data}=event;
-		switch(data.type) {
-			case "keep_alive": {
-				this.post_message({
-					type: "keep_alive_reply",
-					sides: [data.side,this.m_side],
-				});
-			} return;
-			case "keep_alive_reply": {
-				console.log("unexpected keep alive reply {side: `%o`, sides: `%o`}",this.m_side,data.sides);
-			} return;
-		}
 		this.m_unhandled_events.push(data);
 		console.log(data);
 	}
