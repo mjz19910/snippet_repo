@@ -5144,6 +5144,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 		if(cur_window.top) {
 			this.init_transport_over(cur_window.top);
 		}
+		this.start_root_server();
 	}
 	/**
 	 * @param {Window} remote_target
