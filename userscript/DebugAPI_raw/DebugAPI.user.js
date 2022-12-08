@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DebugAPI userscript
 // @namespace    https://github.com/mjz19910/
-// @version      1.0.10
+// @version      1.0.11
 // @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author       @mjz19910
 // @match        https://*/*
@@ -5177,7 +5177,11 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		if(data_record===null) return false;
 		return data_record.type==="tcp";
 	}
-	postListeningToConnection() {}
+	/** @param {ConnectionMessage} message */
+	postListeningToConnection(message) {
+		if(message.flags.length>0) throw new Error("Client does not expect any flags on new messages")
+		this.m_local_handler.client_post_message(message);
+	}
 	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
 		let message_record_with_source=cast_to_record_with_key_and_string_type(data_obj,"source");
