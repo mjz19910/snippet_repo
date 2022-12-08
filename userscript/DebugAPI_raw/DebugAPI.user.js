@@ -5201,8 +5201,7 @@ class RemoteOriginConnection extends RemoteOriginConnectionData {
 			let fake_channel=new MessageChannel;
 			local_handler.connect(fake_channel.port2,this.get_next_elevation_id());
 			let client_id=this.client_max_id++;
-			let handler=new RemoteHandler(this.m_flags,fake_channel.port1,client_id);
-			handler.connect();
+			new RemoteHandler(this.m_flags,fake_channel.port1,client_id).connect();
 		}
 		return true;
 	}
