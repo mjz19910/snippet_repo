@@ -53,16 +53,21 @@ export class Repeat_2<T> {
 }
 
 declare global {
+	type AnyOrRepeat_0<T> = T|Repeat_0<T>;
+	type AnyOrRepeat_1<T> = T|Repeat_1<T>;
+}
+
+declare global {
 	type AnyOrRepeat2_0<T,U>=["T",AnyOrRepeat_0<T>]|["U",AnyOrRepeat_0<U>];
 }
 
-// TagAltPair
+// AltPair
 declare global {
-	type TagAltPair<T,U>=["T",T]|["U",U];
+	type AltPair<T,U>=["T",T]|["U",U];
 }
 
 declare global {
-	type DualR=[true,AnyOrRepeat2_0<string,number>[]]|[false,TagAltPair<string,number>[]];
+	type DualR=[true,AnyOrRepeat2_0<string,number>[]]|[false,AltPair<string,number>[]];
 }
 
 declare global {
@@ -145,7 +150,9 @@ declare global {
 	};
 }
 
-export type Constructor=new () => any;
+declare global {
+	type Constructor=new () => any;
+}
 
 declare global {
 	type depth_type=['depth',number,WeakRef<depth_or_any[]>];
