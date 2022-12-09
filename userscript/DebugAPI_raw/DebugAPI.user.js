@@ -5210,10 +5210,8 @@ class ListenSocket {
 		console.log("s_port.onmessage.handleEvent ->");
 		console.log("-S> Socket",data);
 		console.groupEnd();
-		console.groupCollapsed("ListenSocket.port.msg(data.tcp())");
-		this.m_port.postMessage(data);
-		console.groupEnd();
 		console.log("<?-");
+		this.m_port.postMessage(data);
 		Socket.prototype.handleEvent(new MessageEvent("message",{data}));
 	}
 	m_connected=false;
