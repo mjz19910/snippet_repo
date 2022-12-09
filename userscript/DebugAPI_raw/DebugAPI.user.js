@@ -4950,7 +4950,7 @@ class TCPMessage {
 	}
 }
 
-let testing_tcp=true;
+let testing_tcp=false;
 
 class Socket {
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags @arg {Window} remote_target */
@@ -4987,8 +4987,9 @@ class Socket {
 	}
 	/** @param {[MessagePort]} ports */
 	send_syn(ports) {
-		// <group syn>
-		console.group("syn");
+		if(testing_tcp) {// <group syn>
+			console.group("syn");
+		}
 		this.init_handler();
 		this.send_init_request(TCPMessage.make_syn(this.m_client_id),ports);
 	}
@@ -4997,12 +4998,14 @@ class Socket {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
-		console.groupCollapsed("-tx-C-> Socket<"+data.seq+","+data.ack+">");
-		console.log("Socket ->");
-		console.log("top.onmessage.handleEvent ->");
-		console.log("-C> CrossOriginConnection",data);
-		console.groupEnd();
-		console.log("<?-");
+		if(testing_tcp) {
+			console.groupCollapsed("-tx-C-> Socket<"+data.seq+","+data.ack+">");
+			console.log("Socket ->");
+			console.log("top.onmessage.handleEvent ->");
+			console.log("-C> CrossOriginConnection",data);
+			console.groupEnd();
+			console.log("<?-");
+		}
 		this.post_wrapped(data,ports);
 	}
 	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
@@ -5016,19 +5019,23 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
-		console.groupCollapsed("-tx-L-> Socket<"+data.seq+","+data.ack+">");
-		console.log("Socket ->");
-		console.log("l_port.onmessage.handleEvent ->");
-		console.log("-L> ListenSocket",data);
-		console.groupEnd();
-		console.log("<?-");
+		if(testing_tcp) {
+			console.groupCollapsed("-tx-L-> Socket<"+data.seq+","+data.ack+">");
+			console.log("Socket ->");
+			console.log("l_port.onmessage.handleEvent ->");
+			console.log("-L> ListenSocket",data);
+			console.groupEnd();
+			console.log("<?-");
+		}
 		this.m_port.postMessage(data);
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));
 	}
 	/** @arg {ReportInfo<Socket>} message_event */
 	client_connect(message_event) {
-		console.log('on_client_connect',message_event.data,this.m_event_source);
+		if(testing_tcp) {
+			console.log('on_client_connect',message_event.data,this.m_event_source);
+		}
 	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
@@ -5040,15 +5047,16 @@ class Socket {
 			data,
 			handler: this,
 		};
-		console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags.map(e=>e[1]).join(":")+">");
-		console.log("ListenSocket ->");
-		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-?> Socket",data);
-		console.groupEnd();
-		console.groupCollapsed("Socket.tcp(event)");
+		if(testing_tcp) {
+			console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags.map(e => e[1]).join(":")+">");
+			console.log("ListenSocket ->");
+			console.log("s_port.onmessage.handleEvent ->");
+			console.log("-?> Socket",data);
+			console.groupEnd();
+			console.log("<?-");
+
+		}
 		this.handle_tcp_data(data,report_info);
-		console.groupEnd();
-		console.log("<?-");
 		if(this.m_was_connected) {
 			this.m_was_connected=false;
 			// </group syn>
@@ -5090,7 +5098,7 @@ class Socket {
 		}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
-		console.groupCollapsed("Socket.handle_tcp_data(message.data())");
+		console.log("Socket.handle_tcp_data(message.data())");
 		switch(tcp_data.type) {
 			case "connected": {
 				this.client_connect(report_info);
@@ -5107,8 +5115,6 @@ class Socket {
 			} break;
 			case "side":
 		}
-		console.groupEnd();
-		console.log("<?-");
 	}
 	client_start_connect() {
 		if(!this.m_port) {
@@ -5117,7 +5123,9 @@ class Socket {
 	}
 	/** @param {ReportInfo<this>} report_info */
 	client_disconnect(report_info) {
-		console.log('on_client_disconnect',report_info.data);
+		if(testing_tcp) {
+			console.log('on_client_disconnect',report_info.data);
+		}
 		this.m_connected=false;
 		if(!this.m_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_port.removeEventListener('message',this);
@@ -5201,12 +5209,14 @@ class ListenSocket {
 	m_debug=false;
 	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
-		console.groupCollapsed("-tx-S-> ListenSocket<"+data.seq+","+data.ack+">");
-		console.log("ListenSocket ->");
-		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-S> Socket",data);
-		console.groupEnd();
-		console.log("<?-");
+		if(testing_tcp) {
+			console.groupCollapsed("-tx-S-> ListenSocket<"+data.seq+","+data.ack+">");
+			console.log("ListenSocket ->");
+			console.log("s_port.onmessage.handleEvent ->");
+			console.log("-S> Socket",data);
+			console.groupEnd();
+			console.log("<?-");
+		}
 		this.m_port.postMessage(data);
 		Socket.prototype.handleEvent(new MessageEvent("message",{data}));
 	}
@@ -5216,12 +5226,15 @@ class ListenSocket {
 	 * @param {number} ack
 	 */
 	downstream_connect(syn,ack) {
-		console.log('on_server_connect',this.m_client_id,this.m_event_source);
+		if(testing_tcp) {
+			console.log('on_server_connect',this.m_client_id,this.m_event_source);
+		}
 		this.push_tcp_message(TCPMessage.make_message(
 			this.m_client_id,{type: "connected"},
 			syn,ack,
 		));
 	}
+	m_log_downstream=false;
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
 		if(!info.data) return;
@@ -5229,7 +5242,9 @@ class ListenSocket {
 			inject_api.remote_origin.push_tcp_message(info);
 			return;
 		}
-		console.log(info.data,info.flags,info.client_id);
+		if(this.m_log_downstream) {
+			console.log('downstream_event',info.data,info.flags,info.client_id);
+		}
 	}
 	disconnected() {
 		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{
@@ -5251,7 +5266,7 @@ class ListenSocket {
 		let {data}=event;
 		if(data.type!=="tcp") {
 			this.m_unhandled_events.push(data);
-			console.log(data);
+			console.log('unhandled event',data);
 			return;
 		}
 		if(this.m_flags.does_proxy_to_opener) {
@@ -5268,15 +5283,15 @@ class ListenSocket {
 				data: real_data,
 			};
 		}
-		console.groupCollapsed("-rx-L?-> ListenSocket<"+data.seq+","+data.ack+">");
-		console.log("Socket ->");
-		console.log("l_port.onmessage.handleEvent ->");
-		console.log("-?> ListenSocket",data);
-		console.groupEnd();
-		console.groupCollapsed("ListenSocket.tcp(event)");
+		if(testing_tcp) {
+			console.groupCollapsed("-rx-L?-> ListenSocket<"+data.seq+","+data.ack+">");
+			console.log("Socket ->");
+			console.log("l_port.onmessage.handleEvent ->");
+			console.log("-?> ListenSocket",data);
+			console.groupEnd();
+			console.log("<?-");
+		}
 		this.handle_tcp_data(data);
-		console.groupEnd();
-		console.log("<?-");
 	}
 	/**
 	 * @param {FlagHandler} f
@@ -5288,10 +5303,10 @@ class ListenSocket {
 		let msg=new TCPMessage([...f.flags(),[2,"ack"]],this.m_client_id,seq,ack,null);
 		this.push_tcp_message(msg);
 	}
-	/** @arg {ConnectionMessage} tcp_data */
-	handle_tcp_data(tcp_data) {
-		let f=new FlagHandler(tcp_data.flags);
-		let {seq: ack,ack: seq}=tcp_data;
+	/** @arg {ConnectionMessage} data */
+	handle_tcp_data(data) {
+		let f=new FlagHandler(data.flags);
+		let {seq: ack,ack: seq}=data;
 		if(f.syn()) {
 			// seq=number & ack=null;
 			seq=(Math.random()*ack_win)%ack_win|0;
@@ -5305,18 +5320,19 @@ class ListenSocket {
 			this.send_ack(f,seq,ack);
 		}
 		if(f.is_empty()&&!seq) {
-			console.log("bad tcp");
+			console.log("bad tcp",data);
 		}
 		if(f.ack()&&this.m_connecting&&seq) {
 			this.m_connecting=false;
 			this.m_connected=true;
-			this.downstream_connect(tcp_data.seq,seq);
+			this.downstream_connect(data.seq,seq);
 		}
 		if(f.ack()&&this.m_connecting&&!seq) {
 			console.log("bad tcp");
 		}
-		if(tcp_data.data) {
-			this.downstream_handle_event(tcp_data);
+		let downstream_data=data.data;
+		if(downstream_data) {
+			this.downstream_handle_event(data);
 		}
 	}
 	/** @type {MessageEventSource} */
