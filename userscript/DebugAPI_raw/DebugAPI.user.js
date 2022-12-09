@@ -4852,10 +4852,6 @@ class FlagHandler {
 
 
 class Socket {
-	/** @type {Window} */
-	m_remote_target;
-	/** @type {MessageEventSource} */
-	m_event_source;
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,flags,remote_target) {
 		this.m_connection_timeout=connection_timeout;
@@ -4974,6 +4970,8 @@ class Socket {
 	m_client_id;
 	m_flags;
 	m_port;
+	m_remote_target;
+	m_event_source;
 }
 inject_api.LocalHandler=Socket;
 
