@@ -2524,10 +2524,13 @@ class VolumeRange {
 		if(!this.use_cache) return this.max;
 		console.log('history-cache',[history.state]);
 		let c_gain=this.getGain();
-		if(!(typeof c_gain==="object"||typeof c_gain==="number")) return 1;
+		if(!(typeof c_gain==="object"||typeof c_gain==="number")) {
+			this.setGain(1);
+			return this.max;
+		}
 		let c_gain_1=c_gain;
 		if(c_gain_1===null) c_gain_1=1;
-		if(typeof c_gain_1==="object") return 1;
+		if(typeof c_gain_1==="object") throw new Error("Unexpected object");
 		return c_gain_1*this.max;
 	}
 	max_compressor_reduction=-0.00011033167538698763;
