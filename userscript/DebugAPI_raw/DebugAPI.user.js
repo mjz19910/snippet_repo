@@ -22,7 +22,7 @@
 const InjectAPIStr="inject_api";
 /** @type {typeof window[InjectAPIStr]} */
 let inject_api={};
-window[InjectAPIStr]=any(inject_api);
+window[InjectAPIStr]=inject_api;
 // #pragma end InjectAPI
 
 
