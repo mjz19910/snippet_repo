@@ -4900,6 +4900,7 @@ class Socket {
 	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
+		if(Socket.prototype===this) return;
 		let message_data=event.data;
 		if(message_data.type!=="tcp") throw new Error();
 		/** @type {ReportInfo<this>} */
