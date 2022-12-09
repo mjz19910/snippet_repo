@@ -15,6 +15,8 @@
 
 console=window.console;
 
+window.inject_api=window.inject_api??{};
+
 const yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
@@ -2423,6 +2425,7 @@ class HTMLMediaElementGainController {
 		}
 	}
 	static create() {
+		if(!window.inject_api) return;
 		gain_controller=new HTMLMediaElementGainController;
 		window.inject_api.gain_controller=gain_controller;
 	}

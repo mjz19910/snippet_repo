@@ -20,7 +20,7 @@
 // #pragma section InjectAPI
 /** @readonly */
 const InjectAPIStr="inject_api";
-/** @type {typeof window[InjectAPIStr]} */
+/** @type {Exclude<typeof window[typeof InjectAPIStr],undefined>} */
 let inject_api={};
 window[InjectAPIStr]=inject_api;
 // #pragma end InjectAPI
@@ -32,7 +32,10 @@ inject_api.saved_objects=[];
  * @param {{ name: string; }} callable
  */
 function add_function(callable) {
+	if(!inject_api) return;
+	if(!inject_api.saved_objects) return;
 	inject_api.saved_objects.push([callable.name,callable]);
+	inject_api.xxy={};
 }
 
 inject_api.saved_object_arrays=[];
@@ -5706,7 +5709,7 @@ class DebugAPI {
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
-		window.inject_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
+		window.inject_api&&(window.inject_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -5724,9 +5727,13 @@ class DebugAPI {
 					data: null
 				};
 			}
-		};
-		if(!window.inject_api.DebugAPI.the().clearCurrentBreakpoint()) {
-			console.log("failed to clear breakpoint");
+		});
+		if(window.inject_api) {
+			if(!window.inject_api.DebugAPI.the().clearCurrentBreakpoint()) {
+				console.log("failed to clear breakpoint");
+			}
+		} else {
+			console.log("missing window.inject_api");
 		}
 		0;
 	}
