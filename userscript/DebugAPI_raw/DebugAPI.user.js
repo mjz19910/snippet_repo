@@ -5078,6 +5078,7 @@ class Socket {
 		}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
+		console.group("Socket.handle_tcp_data(message.data())");
 		switch(tcp_data.type) {
 			case "connected": {
 				this.client_connect(report_info);
@@ -5094,6 +5095,7 @@ class Socket {
 			} break;
 			case "side":
 		}
+		console.groupEnd();
 	}
 	client_start_connect() {
 		if(!this.m_port) {
