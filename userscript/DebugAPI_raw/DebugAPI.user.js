@@ -40,6 +40,7 @@ function add_function(callable) {
 inject_api.saved_object_arrays=[];
 /** @arg {{}[]} ids_dec */
 function add_array(ids_dec) {
+	if(!inject_api.saved_object_arrays) return;
 	inject_api.saved_object_arrays.push(ids_dec);
 }
 // #pragma end saved
@@ -5246,6 +5247,7 @@ class ListenSocket {
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
 		if(!info.data) return;
+		if(!inject_api.remote_origin) return;
 		if(info.data.type==="forward"&&this.m_flags.does_proxy_to_opener) {
 			inject_api.remote_origin.push_tcp_message(info);
 			return;

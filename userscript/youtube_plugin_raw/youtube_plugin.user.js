@@ -268,7 +268,7 @@ class Seen {
 		return index;
 	}
 }
-window.inject_api.Seen=Seen;
+inject_api.Seen=Seen;
 
 const realHTMLElement=HTMLElement;
 
@@ -602,7 +602,7 @@ class PropertyHandler {
 		}
 	}
 }
-window.inject_api.PropertyHandler=PropertyHandler;
+inject_api.PropertyHandler=PropertyHandler;
 /**
  * @arg {{}} object
  * @param {PropertyKey} property
@@ -641,7 +641,7 @@ class ObjectInfo {
 ObjectInfo.instance=new ObjectInfo;
 /**@type {Map<string, {}>}*/
 let yt_state_map=new Map;
-window.inject_api.yt_state_map=yt_state_map;
+inject_api.yt_state_map=yt_state_map;
 class YTIterateAllBase {
 	/**
 	 * @this {YTIterateAllBase & {[x:string]: any}}
@@ -1070,9 +1070,9 @@ class YTFilterHandlers extends YTIterateAllBase {
  */
 let blob_create_args_arr=[];
 let leftover_args=[];
-window.inject_api.blob_create_args_arr=blob_create_args_arr;
+inject_api.blob_create_args_arr=blob_create_args_arr;
 let yt_handlers=new YTFilterHandlers;
-window.inject_api.yt_handlers=yt_handlers;
+inject_api.yt_handlers=yt_handlers;
 function setup_prototype_modify() {
 	/** @type {Map<string, Blob | MediaSource>}*/
 	let created_blobs=new Map;
@@ -1441,7 +1441,7 @@ class DomObserver extends CustomEventTarget {
 	}
 }
 let dom_observer=new DomObserver;
-window.inject_api.dom_observer=dom_observer;
+inject_api.dom_observer=dom_observer;
 
 window.playlist_arr??=[];
 /**@type {string[]} */
@@ -1872,7 +1872,7 @@ class MessagePortState {
 	current_event_type="find-ytd-app";
 }
 let port_state=new MessagePortState;
-window.inject_api.port_state=port_state;
+inject_api.port_state=port_state;
 
 let slow_message_event=false;
 const message_channel_loop_delay=80;
@@ -2154,7 +2154,7 @@ function createPluginOverlay() {
 
 /**@type {PluginOverlayElement} */
 let plugin_overlay_element=createPluginOverlay();
-window.inject_api.plugin_overlay_element=plugin_overlay_element;
+inject_api.plugin_overlay_element=plugin_overlay_element;
 
 function fix_offset() {
 	if(!ytd_player) return;
@@ -2431,7 +2431,7 @@ class HTMLMediaElementGainController {
 		window.inject_api.gain_controller=gain_controller;
 	}
 }
-window.inject_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
+inject_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
 /** @type {HTMLMediaElementGainController|null} */
 let gain_controller=null;
 

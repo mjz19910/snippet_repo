@@ -1,17 +1,29 @@
 declare global {
 	interface IInjectAPI {
-		saved_object_arrays: {}[][];
-		ModuleLoadDbg: {};
-		DisabledMulCompression: {};
-		RemoteOriginConnection: {};
-		remote_origin: CrossOriginConnection;
+		saved_object_arrays?: {}[][];
+	}
+}
+declare global {
+	interface IInjectAPI {
+		ModuleLoadDbg?: {};
+	}
+}
+declare global {
+	interface IInjectAPI {
+		DisabledMulCompression?: {};
+	}
+}
+declare global {
+	interface IInjectAPI {
+		RemoteOriginConnection?: {};
+		remote_origin?: CrossOriginConnection;
 	}
 }
 
 // LocalHandler
 declare global {
 	interface IInjectAPI {
-		Socket: {};
+		Socket?: {};
 	}
 }
 
