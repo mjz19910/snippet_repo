@@ -4790,9 +4790,9 @@ function is_record_with_string_type(x,k) {
 	return is_record_with_T(x,k)&&typeof x[k]==='string';
 }
 
-/** @template T @arg {T} x @arg {T} x @returns {x is {}|null} */
+/** @template T @arg {{tag:"cast_tag",data:T}} x @arg {T} x @returns {x is {tag:"cast_tag",data:{}|null}} */
 function is_object(x) {
-	return typeof x==='object';
+	return typeof x.data==='object';
 }
 
 /** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
@@ -4805,13 +4805,13 @@ function make_cast(x) {
 	return {tag:"cast_tag",data:x};
 }
 
-/** @template T @arg {T} x @returns {{tag:"cast_tag",data:(T&{}|null)}|null} */
+/** @template T @arg {{tag:"cast_tag",data:T}} x @returns {{tag:"cast_tag",data:(T&{}|null)}|null} */
 function cast_to_object(x) {
 	if(!is_object(x)) return null;
-	return make_cast(x);
+	return x;
 }
 
-/** @template T @arg {T} x @returns {{tag:"cast_tag",data:T&{type:string}|null}|null} */
+/** @template T @arg {{tag:"cast_tag",data:T}} x @returns {{tag:"cast_tag",data:T&{type:string}|null}|null} */
 function cast_to_record_with_string_type(x) {
 	let cast_result=cast_to_object(x);
 	if(!cast_result) return null;
@@ -5198,11 +5198,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event */
 	on_connect_request_message(event) {
-		let fail=() => this.on_client_misbehaved(event);
-		let cast_result=cast_to_object(event.data);
-		if(cast_result===null) return fail();
-		let message_data=cast_result.data;
-		if(message_data===null) return fail();
 		if(!this.is_connection_message(event)) return;
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
