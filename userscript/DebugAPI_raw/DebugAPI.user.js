@@ -5215,7 +5215,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
-		let data=cast_to_record_with_string_type(event.data);
+		let data=cast_to_record_with_string_type(make_cast(event.data));
 		if(!data?.data) return false;
 		return data.data.type===post_message_connect_message_type;
 	}
@@ -5223,7 +5223,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	is_connection_message(event) {
 		if(!this.is_wrapped_message(event)) return false;
 		if(!is_record_with_T(event.data,"data")) return false;
-		let data_record=cast_to_record_with_string_type(event.data.data);
+		let data_record=cast_to_record_with_string_type(make_cast(event.data.data));
 		if(!data_record?.data) return false;
 		if(data_record.data.type!=="tcp") return false;
 		return true;
@@ -5238,7 +5238,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		if(!message_record_with_source) return false;
 		if(message_record_with_source.source!=="sponsorblock") return false;
 		// should be a SponsorBlock event.data
-		let message_record_with_type=cast_to_record_with_string_type(message_record_with_source);
+		let message_record_with_type=cast_to_record_with_string_type(make_cast(message_record_with_source));
 		if(!message_record_with_type?.data) return false;
 		switch(message_record_with_type.data.type) {
 			case "data":
@@ -5274,7 +5274,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	extract_message(event) {
-		let cast_result=cast_to_object(event.data);
+		let cast_result=cast_to_object(make_cast(event.data));
 		if(cast_result===null) return null;
 		let message_data=cast_result.data;
 		if(message_data===null) return null;
