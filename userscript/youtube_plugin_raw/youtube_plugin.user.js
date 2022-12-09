@@ -15,7 +15,8 @@
 
 console=window.console;
 
-window.inject_api=window.inject_api??{};
+/** @type {Exclude<typeof window[typeof InjectAPIStr],undefined>} */
+let inject_api=window.inject_api??{};
 
 const yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */

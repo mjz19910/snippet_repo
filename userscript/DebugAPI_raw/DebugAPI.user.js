@@ -35,7 +35,6 @@ function add_function(callable) {
 	if(!inject_api) return;
 	if(!inject_api.saved_objects) return;
 	inject_api.saved_objects.push([callable.name,callable]);
-	inject_api.xxy={};
 }
 
 inject_api.saved_object_arrays=[];
