@@ -5098,7 +5098,9 @@ class Socket {
 		}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
-		console.log("Socket.handle_tcp_data(message.data())");
+		if(testing_tcp) {
+			console.log("Socket.handle_tcp_data(message.data())");
+		}
 		switch(tcp_data.type) {
 			case "connected": {
 				this.client_connect(report_info);
@@ -5420,16 +5422,16 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
-		console.groupCollapsed("-rx-C!-> CrossOriginConnection<"+event_0.data.data.seq+","+event_0.data.data.ack+">");
-		console.log("CrossOriginConnection ->");
-		console.log("ListenSocket.handle_tcp_data ->");
-		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-!> Socket",event_0.data.data);
-		console.groupEnd();
-		console.groupCollapsed("C! -> ListenSocket.tcp(event.unwrap())");
+		if(testing_tcp) {
+			console.groupCollapsed("-rx-C!-> CrossOriginConnection<"+event_0.data.data.seq+","+event_0.data.data.ack+">");
+			console.log("CrossOriginConnection ->");
+			console.log("ListenSocket.handle_tcp_data ->");
+			console.log("s_port.onmessage.handleEvent ->");
+			console.log("-!> Socket",event_0.data.data);
+			console.groupEnd();
+			console.log("<?-");
+		}
 		handler.handle_tcp_data(event_0.data.data);
-		console.groupEnd();
-		console.log("<?-");
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
