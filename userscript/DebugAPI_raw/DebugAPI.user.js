@@ -4783,6 +4783,11 @@ function is_record_with_string_type(x,k) {
 	return x.data!==null&&is_record_with_T(x.data,k)&&typeof x.data[k]==='string';
 }
 
+/** @template {{}} T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<T&Record<U,unknown>>>} */
+function is_record_with_T_msg_m(x,k) {
+	return is_record_with_T(x.data,k);
+}
+
 /** @template T @arg {CM<T>} x @returns {x is CM<T&{}>} */
 function is_object(x) {
 	if(x.data===null) return false;
@@ -4817,6 +4822,48 @@ function cast_to_record_with_string_type(x) {
 	if(!cast_result?.data) return null;
 	if(!is_record_with_string_type(cast_result,"type")) return null;
 	return cast_result;
+}
+/** @template T @arg {CM<MessageEvent<T>>} x @returns {x is CM<MessageEvent<T&{}>>} */
+function is_object_msg(x) {
+	if(x.data===null) return false;
+	if(typeof x.data!=='object') return false;
+	return true;
+}
+
+/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<{}>>|null} */
+function cast_to_object_msg(x) {
+	if(x===null) return null;
+	if(x?.data===null) return null;
+	if(!is_object_msg(x)) return null;
+	return x;
+}
+/** @template {{}} T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<Record<U,string>>>} */
+function is_record_with_string_type_msg(x,k) {
+	if(x.data===null) return false;
+	if(x.data.data===null) return false;
+	return is_record_with_string_type(new_cast_monad(x.data.data),k);
+}
+
+/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<{type:string}>>|null} */
+function cast_to_record_with_string_type_msg(x) {
+	if(!x) return null;
+	let cast_result=cast_to_object_msg(x);
+	if(!cast_result) return null;
+	if(!cast_result?.data) return null;
+	if(!cast_result.data.data) return null;
+	if(!is_record_with_string_type_msg(cast_result,"type")) return null;
+	if('type' in cast_result.data.data) {
+		return cast_result;
+	}
+	return null;
+}
+
+/** @arg {CM<MessageEvent<{type:string}>>} x @returns {CM<MessageEvent<{type:string,data:unknown}>>|null} */
+function cast_to_record_with_string_type_msg_data(x) {
+	if(!is_record_with_T_msg_m(x,"data")) return null;
+	/** @type {CM<MessageEvent<{type:string,data:unknown}>>} */
+	let xr=x;
+	return xr;
 }
 
 /** @template {string} U @template {{}} T @arg {CM<T>|null} x @arg {U} k @returns {CM<T&{[P in U]:string}>|null} */
@@ -5318,17 +5365,29 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/**@type {Socket[]} */
 	local_handlers=[];
 	client_max_id=0;
-	/** @arg {MessageEvent<unknown>} event */
-	on_connect_request_message(event) {
-		if(!this.is_connection_message(event)) return;
-		switch(event.data.type) {
+	/** @arg {MessageEvent<unknown>} event_0 */
+	on_connect_request_message(event_0) {
+		let e_monad_1=cast_to_record_with_string_type_msg(new_cast_monad(event_0));
+		if(!e_monad_1?.data) return;
+		let event_1=e_monad_1.data;
+		switch(event_1.type) {
 			case post_message_connect_message_type: break;
 			default: throw new Error("Invalid");
 		}
+		if(!this.is_with_data_decay(event_1)) return;
+		let e_monad_2=cast_to_record_with_string_type_msg_data(new_cast_monad(event_1));
+		if(!e_monad_2?.data) return;
+		let event_2=e_monad_2.data;
+		let event_message_2=event_2.data;
+		switch(event_message_2.type) {
+			case "tcp": break;
+			default: return;
+		}
+		if(!this.is_connection_message(event_0)) return;
 		let client_id=this.client_max_id++;
-		let connection_port=event.ports[0];
-		if(!event.source) throw new Error("No event source");
-		let event_source=event.source;
+		let connection_port=event_0.ports[0];
+		if(!event_0.source) throw new Error("No event source");
+		let event_source=event_0.source;
 		let handler=new ListenSocket(this.m_flags,connection_port,client_id,event_source);
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
@@ -5337,10 +5396,10 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		console.log("CrossOriginConnection ->");
 		console.log("ListenSocket.handle_tcp_data ->");
 		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-!> Socket",event.data.data);
+		console.log("-!> Socket",event_0.data.data);
 		console.groupEnd();
 		console.group("C! -> ListenSocket.tcp(event.unwrap())");
-		handler.handle_tcp_data(event.data.data);
+		handler.handle_tcp_data(event_0.data.data);
 		console.groupEnd();
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
@@ -5356,10 +5415,15 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if(!this.is_wrapped_message(event)) return false;
-		if(!is_record_with_T(event.data,"data")) return false;
+		if(!this.is_with_data_decay(event.data)) return false;
 		let data_record=cast_to_record_with_string_type(new_cast_monad(event.data.data));
 		if(!data_record?.data) return false;
 		if(data_record.data.type!=="tcp") return false;
+		return true;
+	}
+	/** @template {{type:string}} T @arg {T} data @returns {data is {type:string,data:unknown}} */
+	is_with_data_decay(data) {
+		if(!is_record_with_T(data,"data")) return false;
 		return true;
 	}
 	/** @param {ConnectionMessage} message */
