@@ -5282,7 +5282,9 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
-		console.log('CrossOriginConnection -> ListenSocket.handle_tcp_data -> s_port.onmessage.handleEvent -> Socket',event.data.data);
+		console.log("CrossOriginConnection -> ListenSocket.handle_tcp_data");
+		console.log("ListenSocket.handle_tcp_data -> s_port.onmessage.handleEvent");
+		console.log("s_port.onmessage.handleEvent -> Socket",event.data.data);
 		handler.handle_tcp_data(event.data.data);
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
