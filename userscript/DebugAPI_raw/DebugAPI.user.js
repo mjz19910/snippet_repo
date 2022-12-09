@@ -4779,7 +4779,7 @@ function is_record_with_string_type(x,k) {
 	return x.data!==null&&is_record_with_T(x.data,k)&&typeof x.data[k]==='string';
 }
 
-/** @template T @arg {CM<T>} x @returns {x is CM<T&{}}} */
+/** @template T @arg {CM<T>} x @returns {x is CM<T&{}>} */
 function is_object(x) {
 	if(x.data===null) return false;
 	if(typeof x.data!=='object') return false;
@@ -4797,7 +4797,7 @@ function is_record_with_T(x,k) {
 //#region cast_monad
 /** @template T @param {T} x @returns {CM<T>} */
 function new_cast_monad(x) {
-	return {tag:"cast_tag",data:x};
+	return {tag: "cast_tag",data: x};
 }
 
 /** @template T @arg {CM<T>|null} x @returns {CM<T&{}|null>|null} */
@@ -4899,7 +4899,7 @@ class LocalHandler {
 		if(!this.m_port) throw new Error("no connection port");
 		this.m_port.postMessage(message_data);
 		// sends message to
-		RemoteSocket.prototype.handleEvent(new MessageEvent("message",{data:message_data}));
+		RemoteSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	client_connect(message_event) {
@@ -5019,10 +5019,10 @@ class CrossOriginConnectionData {
  * @param {MessageType|null} data
  * @returns {ConnectionMessage}
  */
-function new_tcp_client_message(client_id, data) {
+function new_tcp_client_message(client_id,data) {
 	return {
-		type:"tcp",
-		flags:[],
+		type: "tcp",
+		flags: [],
 		client_id,
 		data,
 	};
@@ -5050,7 +5050,7 @@ class RemoteSocket {
 	m_connected=false;
 	downstream_connect() {
 		console.log('on_server_connect',this.m_client_id,this.m_event_source);
-		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{type:"connected"}));
+		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{type: "connected"}));
 	}
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
@@ -5063,13 +5063,13 @@ class RemoteSocket {
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
 		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{
-			type:"disconnected",
+			type: "disconnected",
 			can_reconnect,
 		}));
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
-		if(RemoteSocket.prototype === this) return;
+		if(RemoteSocket.prototype===this) return;
 		let {data: tcp_data}=event;
 		if(tcp_data.type!=="tcp") {
 			this.m_unhandled_events.push(tcp_data);
@@ -5080,17 +5080,19 @@ class RemoteSocket {
 			let real_data=tcp_data.data;
 			/** @type {[number,number,null][]} */
 			let id_path=[];
-			if(real_data) {
-				if(real_data.type==="forward") {
-					id_path.push(...real_data.client_id_path,[tcp_data.client_id,this.m_client_id,null]);
-					real_data=real_data.data;
-				}
+			if(real_data&&real_data.type==="forward") {
+				id_path.push(...real_data.client_id_path,[tcp_data.client_id,this.m_client_id,null]);
+				real_data=real_data.data;
 			}
 			tcp_data.data={
 				type: "forward",
 				client_id_path: id_path,
 				data: real_data,
 			};
+		} else {
+			if(tcp_data.data&&tcp_data.data.type==="forward") {
+				tcp_data.data=tcp_data.data.data;
+			}
 		}
 		this.handle_tcp_data(tcp_data);
 	}
