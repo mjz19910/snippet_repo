@@ -4964,8 +4964,9 @@ class Socket {
 		let message_data=event.data;
 		if(message_data.type!=="tcp") throw new Error();
 		console.group("-?-> Socket");
-		console.log("ListenSocket -> s_port.onmessage.handleEvent");
-		console.log("s_port.onmessage.handleEvent -> Socket",message_data);
+		console.log("ListenSocket ->");
+		console.log("s_port.onmessage.handleEvent ->")
+		console.log("-?-> Socket",message_data);
 		/** @type {ReportInfo<this>} */
 		let report_info={
 			data: message_data,
