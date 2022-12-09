@@ -4938,10 +4938,10 @@ class Socket {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
-		console.group("-I-> Socket");
+		console.group("-tx-C-> Socket");
 		console.log("Socket ->");
 		console.log("top.onmessage.handleEvent ->");
-		console.log("-I> CrossOriginConnection",data);
+		console.log("-C> CrossOriginConnection",data);
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data,
@@ -4950,10 +4950,10 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.group("--> Socket");
+		console.group("-tx-L-> Socket");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
-		console.log("-> ListenSocket", message_data);
+		console.log("-L> ListenSocket", message_data);
 		this.m_port.postMessage(message_data);
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
@@ -4968,7 +4968,7 @@ class Socket {
 		if(Socket.prototype===this) return;
 		let message_data=event.data;
 		if(message_data.type!=="tcp") throw new Error();
-		console.group("-?-> Socket");
+		console.group("-rx-S?-> Socket");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->")
 		console.log("-?> Socket",message_data);
@@ -5121,10 +5121,10 @@ class ListenSocket {
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.group("-> Socket");
+		console.group("-tx-S-> ListenSocket");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-> Socket", message_data);
+		console.log("-S> Socket", message_data);
 		this.m_port.postMessage(message_data);
 		Socket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 		console.groupEnd();
@@ -5187,7 +5187,7 @@ class ListenSocket {
 				data: real_data,
 			};
 		}
-		console.group("-?-> ListenSocket");
+		console.group("-rx-L?-> ListenSocket");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
 		console.log("-?> ListenSocket",tcp_data);
@@ -5305,7 +5305,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
-		console.group("-!-> CrossOriginConnection");
+		console.group("-rx-C!-> CrossOriginConnection");
 		console.log("CrossOriginConnection ->");
 		console.log("ListenSocket.handle_tcp_data ->");
 		console.log("s_port.onmessage.handleEvent ->");
