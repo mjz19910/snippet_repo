@@ -5046,6 +5046,7 @@ class RemoteSocket {
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
 		this.m_port.postMessage(message_data);
+		LocalHandler.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 	}
 	m_connected=false;
 	downstream_connect() {
