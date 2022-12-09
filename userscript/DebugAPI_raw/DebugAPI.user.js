@@ -5044,7 +5044,7 @@ class Socket {
 			data,
 			handler: this,
 		};
-		console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+">");
+		console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags.map(e=>e[1]).join(":")+">");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->");
 		console.log("-?> Socket",data);
