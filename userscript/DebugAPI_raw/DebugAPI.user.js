@@ -4947,7 +4947,6 @@ class Socket {
 		console.groupEnd();
 		console.group("Socket.remote.msg(data.tcp().wrap()) -> C!");
 		this.post_wrapped(data,ports);
-		console.groupEnd();
 	}
 	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
 	post_wrapped(data,ports) {
@@ -5322,6 +5321,10 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event */
 	on_connect_request_message(event) {
 		if(!this.is_connection_message(event)) return;
+		switch(event.data.type) {
+			case post_message_connect_message_type: break;
+			default: throw new Error("Invalid");
+		}
 		let client_id=this.client_max_id++;
 		let connection_port=event.ports[0];
 		if(!event.source) throw new Error("No event source");
