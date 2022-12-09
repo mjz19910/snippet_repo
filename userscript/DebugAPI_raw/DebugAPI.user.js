@@ -5305,7 +5305,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
-		console.group("-!-> Socket");
+		console.group("-!-> CrossOriginConnection");
 		console.log("CrossOriginConnection ->");
 		console.log("ListenSocket.handle_tcp_data ->");
 		console.log("s_port.onmessage.handleEvent ->");
