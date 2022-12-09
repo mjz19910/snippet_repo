@@ -1,15 +1,16 @@
 // ==UserScript==
-// @name         DebugAPI userscript
-// @namespace    https://github.com/mjz19910/
-// @version      1.1.9.10
-// @description  DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
-// @author       @mjz19910
-// @match        https://*/*
-// @match        http://*/*
-// @run-at       document-start
-// @grant        none
-// @updateURL    https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugAPI_raw/DebugAPI.meta.js
-// @downloadURL  https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugAPI_raw/DebugAPI.user.js
+// @name		DebugAPI userscript
+// @namespace	https://github.com/mjz19910/
+// @version		0.1.0.0
+// @description	DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
+// @author		@mjz19910
+// @match		https://*/*
+// @match		http://*/*
+// @run-at		document-start
+// @grant		none
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugAPI_raw/DebugAPI.meta.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugAPI_raw/DebugAPI.user.js
+// @sha1		aa975a29
 // ==/UserScript==
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
@@ -24,8 +25,8 @@ window.inject_api=any(inject_api);
 
 // #pragma section sha_1_hash
 // @Update on minor version change
-// version <4.9.13 commit sha1
-const sha_1_initial="781ee649";
+// version <0.1.0.0 commit sha1
+const commit_id_sha_1="aa975a29";
 // #pragma end sha_1_hash
 
 inject_api.saved_objects=[];
@@ -4843,8 +4844,8 @@ function cast_to_record_with_key_and_string_type(x,k) {
 }
 
 
-/** @readonly @type {`CrossOriginConnection_${typeof sha_1_initial}`} */
-const post_message_connect_message_type=`CrossOriginConnection_${sha_1_initial}`;
+/** @readonly @type {`CrossOriginConnection_${typeof commit_id_sha_1}`} */
+const post_message_connect_message_type=`CrossOriginConnection_${commit_id_sha_1}`;
 
 class FlagHandler {
 	is_empty() {
