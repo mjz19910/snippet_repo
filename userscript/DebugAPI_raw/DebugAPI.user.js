@@ -5302,9 +5302,10 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			return e.source()===event_source;
 		});
 		console.group("-!-> Socket");
-		console.log("CrossOriginConnection -> ListenSocket.handle_tcp_data");
-		console.log("ListenSocket.handle_tcp_data -> s_port.onmessage.handleEvent");
-		console.log("s_port.onmessage.handleEvent -> Socket",event.data.data);
+		console.log("CrossOriginConnection -> ");
+		console.log("ListenSocket.handle_tcp_data -> ");
+		console.log("s_port.onmessage.handleEvent ->");
+		console.log("-!-> Socket",event.data.data);
 		handler.handle_tcp_data(event.data.data);
 		console.groupEnd();
 		if(prev_connection_index>-1) {
