@@ -4948,7 +4948,7 @@ class Socket {
 	}
 	/** @param {ReportInfo<this>} report_info */
 	client_disconnect(report_info) {
-		console.log('on_disconnect',report_info.data);
+		console.log('on_client_disconnect',report_info.data);
 		this.m_connected=false;
 		if(!this.m_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_port.removeEventListener('message',this);
