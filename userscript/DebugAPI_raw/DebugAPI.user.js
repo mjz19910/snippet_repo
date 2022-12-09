@@ -4783,9 +4783,10 @@ function is_record_with_string_type(x,k) {
 	return x.data!==null&&is_record_with_T(x.data,k)&&typeof x.data[k]==='string';
 }
 
-/** @template {{}} T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<T&Record<U,unknown>>>} */
+/** @template T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<T>&MessageEvent<Record<U,unknown>>>} */
 function is_record_with_T_msg_m(x,k) {
-	return is_record_with_T(x.data,k);
+	if(!is_record_with_T(x.data,k)) return false;
+	return true;
 }
 
 /** @template T @arg {CM<T>} x @returns {x is CM<T&{}>} */
@@ -4830,21 +4831,21 @@ function is_object_msg(x) {
 	return true;
 }
 
-/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<{}>>|null} */
+/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<T&{}>>|null} */
 function cast_to_object_msg(x) {
 	if(x===null) return null;
 	if(x?.data===null) return null;
 	if(!is_object_msg(x)) return null;
 	return x;
 }
-/** @template {{}} T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<Record<U,string>>>} */
+/** @template {{}} T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<T&Record<U,string>>>} */
 function is_record_with_string_type_msg(x,k) {
 	if(x.data===null) return false;
 	if(x.data.data===null) return false;
 	return is_record_with_string_type(new_cast_monad(x.data.data),k);
 }
 
-/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<{type:string}>>|null} */
+/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<T&{type:string}>>|null} */
 function cast_to_record_with_string_type_msg(x) {
 	if(!x) return null;
 	let cast_result=cast_to_object_msg(x);
@@ -4855,10 +4856,10 @@ function cast_to_record_with_string_type_msg(x) {
 	return cast_result;
 }
 
-/** @arg {CM<MessageEvent<{type:string}>>} x @returns {CM<MessageEvent<{type:string,data:unknown}>>|null} */
+/** @template T @arg {CM<MessageEvent<T>>} x @returns {CM<MessageEvent<T&{data:unknown}>>|null} */
 function cast_to_record_with_string_type_msg_data(x) {
 	if(!is_record_with_T_msg_m(x,"data")) return null;
-	/** @type {CM<MessageEvent<{type:string,data:unknown}>>} */
+	/** @type {CM<MessageEvent<T&{data:unknown}>>} */
 	let xr=x;
 	return xr;
 }
