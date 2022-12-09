@@ -22,7 +22,7 @@ declare global {
 declare global {
 	interface InjectAPI extends IInjectAPI {}
 	interface Window {
-		inject_api: InjectAPI;
+		[InjectAPIStr]: InjectAPI;
 	}
 }
 
