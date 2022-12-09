@@ -4898,6 +4898,8 @@ class LocalHandler {
 	push_tcp_message(message_data) {
 		if(!this.m_port) throw new Error("no connection port");
 		this.m_port.postMessage(message_data);
+		// sends message to
+		RemoteSocket.prototype.handleEvent(new MessageEvent("message",{data:message_data}));
 	}
 	/** @arg {ReportInfo<LocalHandler>} message_event */
 	client_connect(message_event) {
@@ -5067,6 +5069,7 @@ class RemoteSocket {
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
+		if(RemoteSocket.prototype === this) return;
 		let {data: tcp_data}=event;
 		if(tcp_data.type!=="tcp") {
 			this.m_unhandled_events.push(tcp_data);
