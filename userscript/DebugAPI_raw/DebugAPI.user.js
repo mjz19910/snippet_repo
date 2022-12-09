@@ -5004,6 +5004,7 @@ class Socket {
 		console.groupEnd();
 		console.group("Socket.remote.msg(data.tcp().wrap()) -> C!");
 		this.post_wrapped(data,ports);
+		console.groupEnd();
 	}
 	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
 	post_wrapped(data,ports) {
@@ -5414,8 +5415,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		console.groupEnd();
 		console.group("C! -> ListenSocket.tcp(event.unwrap())");
 		handler.handle_tcp_data(event_0.data.data);
-		console.groupEnd();
-		// Socket.remote.close();
 		console.groupEnd();
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
