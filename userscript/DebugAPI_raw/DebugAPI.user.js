@@ -4808,7 +4808,12 @@ function cast_to_object(x) {
 /** @template {{}} T @arg {T extends {tag:string}?never:T} x @returns {T&{type: string}|null} */
 function cast_to_record_with_string_type(x) {
 	x: if('type' in x) {
-		if(typeof x.type==='string'&&Object.keys(x).length==2&&'data' in x) {
+		if(
+			Object.getPrototypeOf(x)===Object.prototype&&
+			Object.keys(x).length==2&&
+			typeof x.type==='string'&&
+			'data' in x
+		) {
 			break x;
 		}
 		let y={
