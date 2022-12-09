@@ -5058,9 +5058,11 @@ class RemoteSocket {
 			},
 		});
 	}
-	/** @arg {{}} info @arg {MessageType | ConnectionForward} x */
-	downstream_handle_event(info,x) {
-		console.log(info,x);
+	/** @arg {ConnectionMessage} info */
+	downstream_handle_event(info) {
+		if(info.data) {
+			console.log(info.data,info.flags,info.client_id);
+		}
 	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
@@ -5126,8 +5128,7 @@ class RemoteSocket {
 			this.downstream_connect();
 		}
 		if(tcp_data.data) {
-			let {client_id}=tcp_data;
-			this.downstream_handle_event({client_id},tcp_data.data);
+			this.downstream_handle_event(tcp_data);
 		}
 	}
 	/** @type {MessageEventSource} */
