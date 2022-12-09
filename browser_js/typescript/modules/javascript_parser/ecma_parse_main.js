@@ -609,26 +609,10 @@ class NamesAndKeywords extends ECMA262Base {
 class PunctuatorsData extends ECMA262Base {
 	/**
 	 * @param {ecma_root} parent
-	 * @param {{ single: HashMap<string,string>; two: HashMap<string,string>; three: HashMap<string,string>; }} char_tokens
 	 */
-	constructor(parent,char_tokens) {
+	constructor(parent) {
 		super(parent);
-		this.s_single_char_tokens=char_tokens.single;
-		this.s_two_char_tokens=char_tokens.two;
-		this.s_three_char_tokens=char_tokens.three;
 	}
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_single_char_tokens;
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_two_char_tokens;
-	/**
-	 * @type {HashMap<string,string>}
-	 */
-	s_three_char_tokens;
 	OtherPunctuatorArray="{ ( ) [ ] . ... ; , < > <= >= == != === !== + - * % ** ++ -- << >> >>> & | ^ ! ~ && || ?? ? : = += -= *= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= =>".split(" ");
 	DivPunctuatorArray="/ /=".split(" ");
 }
@@ -676,7 +660,7 @@ class Punctuators extends PunctuatorsData {
 		}
 		/** @type {string|null} */
 		let result=null;
-		this.s_three_char_tokens.iterate(function(key) {
+		s_three_char_tokens.iterate(function(key) {
 			// I think all the 3 char tokens are valid as OtherPunctuator productions
 			if(str.startsWith(key,index)) {
 				result=key;
@@ -686,7 +670,7 @@ class Punctuators extends PunctuatorsData {
 		});
 		if(result) return [true,"OtherPunctuator",3];
 		result=null;
-		this.s_two_char_tokens.iterate(function(key) {
+		s_two_char_tokens.iterate(function(key) {
 			// skip DivPunctuator with length 2
 			if(key==="/=") return "Continue";
 			// skip OptionalChainingPunctuator
@@ -700,7 +684,7 @@ class Punctuators extends PunctuatorsData {
 		});
 		if(result) return [true,"OtherPunctuator",2];
 		result=null;
-		this.s_single_char_tokens.iterate(function(key,_value) {
+		s_single_char_tokens.iterate(function(key,_value) {
 			// skip DivPunctuator with length 1
 			if(key==="/") return "Continue";
 			// skip RightBracePunctuator
@@ -1909,10 +1893,7 @@ class RegularExpressionLiterals extends ECMA262Base {
 
 
 class ecma_root {
-	/**
-	 * @param {{ single: any; two: any; three: any; }} char_tokens
-	 */
-	constructor(char_tokens) {
+	constructor() {
 		this.flags={
 			sep: false,
 			is_sep() {
@@ -1925,7 +1906,7 @@ class ecma_root {
 		this.hashbang_comments=new HashbangComments(this);
 		this.tokens=new Tokens(this);
 		this.names_and_keywords=new NamesAndKeywords(this);
-		this.punctuators=new Punctuators(this,char_tokens);
+		this.punctuators=new Punctuators(this);
 		this.RegularExpressionLiterals=new RegularExpressionLiterals(this);
 		{
 			this.literals=new Literals(this);
@@ -1939,12 +1920,11 @@ class js_token_generator {
 	static EOF_TOKEN=Symbol();
 	/**
 	 * @param {string} str
-	 * @param {{ single: any; two: any; three: any; }} char_tokens
 	 */
-	constructor(str,char_tokens) {
+	constructor(str) {
 		this.str=str;
 		this.index=0;
-		this.root=new ecma_root(char_tokens);
+		this.root=new ecma_root();
 	}
 	/**
 	 * @param {[true,string,number,number]|[false,symbol,number,number] | null} token_value
@@ -2168,18 +2148,6 @@ class js_token_generator {
 	}
 }
 
-class CharTokens {
-	/**
-	 * @param {HashMap<string, string>} single
-	 * @param {HashMap<string, string>} two
-	 * @param {HashMap<string, string>} three
-	 */
-	constructor(single,two,three) {
-		this.single=single;
-		this.two=two;
-		this.three=three;
-	}
-}
 
 export function ecma_parse_main() {
 	let parse_str="function x(){}";
@@ -2187,11 +2155,7 @@ export function ecma_parse_main() {
 		parse_str=window.code;
 	}
 	// parse_str="(function(){return function x(){}})()";
-	let token_gen=new js_token_generator(parse_str,new CharTokens(
-		s_single_char_tokens,
-		s_two_char_tokens,
-		s_three_char_tokens,
-	));
+	let token_gen=new js_token_generator(parse_str);
 	let res_item;
 	let i=0;
 	for(;;i++) {
