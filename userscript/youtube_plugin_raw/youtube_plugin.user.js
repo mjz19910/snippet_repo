@@ -2537,7 +2537,7 @@ class VolumeRange {
 	/**
 	 * @param {KeyboardEvent} event
 	 */
-	on_key_down(event) {
+	onKeyDown(event) {
 		if(!this.range_element) return;
 		this.gain_controller.last_event=event;
 		if(event.key=="f") {
@@ -2586,7 +2586,7 @@ class VolumeRange {
 				let range_value=Number.parseInt(this.range_element.value,10);
 				this.setGain(range_value/this.max);
 			};
-			this.range_element.onkeydown=(event) => this.on_key_down(event);
+			this.range_element.onkeydown=(event) => this.onKeyDown(event);
 			this.range_element.min=""+this.min;
 			this.range_element.max=""+this.overdrive;
 			let new_gain=this.calculateGain();
