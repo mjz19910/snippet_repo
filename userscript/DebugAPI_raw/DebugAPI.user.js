@@ -4852,10 +4852,7 @@ function cast_to_record_with_string_type_msg(x) {
 	if(!cast_result?.data) return null;
 	if(!cast_result.data.data) return null;
 	if(!is_record_with_string_type_msg(cast_result,"type")) return null;
-	if('type' in cast_result.data.data) {
-		return cast_result;
-	}
-	return null;
+	return cast_result;
 }
 
 /** @arg {CM<MessageEvent<{type:string}>>} x @returns {CM<MessageEvent<{type:string,data:unknown}>>|null} */
