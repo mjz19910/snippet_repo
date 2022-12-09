@@ -4868,9 +4868,6 @@ class Socket {
 			port2: client_port,
 		}=channel;
 		this.m_port=client_port;
-		if(this.m_debug) {
-			console.log("post request ConnectOverPostMessage");
-		}
 		this.m_port.addEventListener("message",this);
 		this.m_port.start();
 		elevate_event_handler(this);
@@ -4883,6 +4880,9 @@ class Socket {
 	}
 	/** @param {ConnectionMessage} data @param {Transferable[]} ports */
 	send_init_request(data,ports) {
+		if(this.m_debug) {
+			console.log("post request ConnectOverPostMessage");
+		}
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data,
