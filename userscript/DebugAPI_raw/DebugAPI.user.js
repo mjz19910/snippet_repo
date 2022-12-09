@@ -5379,7 +5379,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_connect_request_message(event_0) {
-		debugger;
 		let e_monad_1=cast_to_record_with_string_type_msg(new_cast_monad(event_0));
 		if(!e_monad_1) return;
 		if(!this.is_with_data_decay(e_monad_1)) return;
@@ -5415,6 +5414,8 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		console.groupEnd();
 		console.group("C! -> ListenSocket.tcp(event.unwrap())");
 		handler.handle_tcp_data(event_0.data.data);
+		console.groupEnd();
+		// Socket.remote.close();
 		console.groupEnd();
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
