@@ -153,17 +153,17 @@ declare global {
 		type: typeof post_message_connect_message_type,
 		data: T,
 	};
-	type MessageType=ConnectionConnected|ConnectionDisconnected|ConnectionSideMsg|null;
+	type MessageType=ConnectionConnected|ConnectionDisconnected|ConnectionSideMsg;
 	type ConnectionMessage={
 		type: "tcp",
 		flags: ConnectFlags[],
 		client_id: number,
-		data: MessageType|ConnectionForward,
+		data: MessageType|ConnectionForward|null,
 	};
 	type ConnectionForward={
 		type: "forward";
 		client_id_path: [number,number,null][];
-		data: MessageType,
+		data: MessageType|null,
 	}
 	type ConnectionConnected={
 		type: "connected";

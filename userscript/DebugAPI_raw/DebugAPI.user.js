@@ -5012,6 +5012,20 @@ class CrossOriginConnectionData {
 	elevated_array=[];
 }
 
+/**
+ * @param {number} client_id
+ * @param {MessageType|null} data
+ * @returns {ConnectionMessage}
+ */
+function new_tcp_client_message(client_id, data) {
+	return {
+		type:"tcp",
+		flags:[],
+		client_id,
+		data,
+	};
+}
+
 class RemoteSocket {
 	source() {
 		return this.m_event_source;
@@ -5033,16 +5047,8 @@ class RemoteSocket {
 	}
 	m_connected=false;
 	downstream_connect() {
-		let {m_client_id: client_id}=this;
-		console.log('on_server_connect',client_id,this.m_event_source);
-		this.push_tcp_message({
-			type: "tcp",
-			client_id,
-			flags: [],
-			data: {
-				type: "connected",
-			},
-		});
+		console.log('on_server_connect',this.m_client_id,this.m_event_source);
+		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{type:"connected"}));
 	}
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
@@ -5052,15 +5058,10 @@ class RemoteSocket {
 	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
-		this.push_tcp_message({
-			type: "tcp",
-			client_id: this.m_client_id,
-			flags: [],
-			data: {
-				type: "disconnected",
-				can_reconnect,
-			}
-		});
+		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{
+			type:"disconnected",
+			can_reconnect,
+		}));
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
