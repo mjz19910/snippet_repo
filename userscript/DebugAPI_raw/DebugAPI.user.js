@@ -4906,23 +4906,21 @@ class Socket {
 		if(this.m_remote_target===window) {
 			throw new Error("Sending messages to self is means i have a bad time");
 		}
-		let channel=new MessageChannel;
-		let {
-			port1: server_port,
-			port2: client_port,
-		}=channel;
+		let {ports,client_port}=this.init_syn_data();
 		this.m_port=client_port;
-		let ports=[server_port];
 		this.send_syn(ports);
 	}
-	reconnect() {
+	init_syn_data() {
 		let channel=new MessageChannel;
 		let {
 			port1: server_port,
 			port2: client_port,
 		}=channel;
+		return {ports: [server_port],client_port};
+	}
+	reconnect() {
+		let {ports,client_port}=this.init_syn_data();
 		this.m_port=client_port;
-		let ports=[server_port];
 		this.send_syn(ports);
 	}
 	init_handler() {
