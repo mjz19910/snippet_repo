@@ -2476,11 +2476,11 @@ class HistoryStateManager {
 	}
 	/** @param {string} key  @param {{}} value */
 	setCacheValue(key,value) {
+		console.log('history-replace',this.cur_state);
 		if(typeof this.cur_state==='object'&&this.cur_state!==null) {
 			if(!this.tmp_keys.includes(key)) this.tmp_keys.push(key);
 			history.replaceState({...this.cur_state,[key]: value},"");
 		} else {
-			console.log('history-replace',[this.cur_state]);
 			history.replaceState({[key]: value},"");
 		}
 	}
