@@ -2776,7 +2776,7 @@ class AddEventListenerExtension {
 		if(val===null)
 			return;
 		if(val instanceof LocalHandler) {
-			this.convert_to_id_key(real_value,key,val,"TransportMessageObj:elevated_"+val.m_elevation_id);
+			this.convert_to_id_key(real_value,key,val,"TransportMessageObj:client_"+val.m_client_id);
 			return;
 		}
 		if(val===window) {
@@ -4855,13 +4855,12 @@ class LocalHandler {
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,flags,remote_target) {
 		this.m_connection_timeout=connection_timeout;
-		this.m_elevation_id=get_next_elevation_id();
 		this.m_client_id=client_id;
 		this.m_flags=flags;
 		this.m_remote_target=remote_target;
 		this.m_event_source=remote_target;
 		elevate_event_handler(this);
-		
+
 		if(this.m_remote_target===window) {
 			throw new Error("Sending messages to self is means i have a bad time");
 		}
@@ -4959,14 +4958,11 @@ class LocalHandler {
 		this.m_port.removeEventListener('message',this);
 		this.m_port.close();
 		this.m_port=null;
-		if(this.m_elevation_id) clear_elevation_by_id(this.m_elevation_id);
 	}
 	/** @type {"client"} */
 	m_side="client";
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
-	/** @type {number} */
-	m_elevation_id;
 	/** @type {MessagePort|null} */
 	m_port=null;
 	m_connected=false;
@@ -5009,8 +5005,6 @@ class CrossOriginConnectionData {
 	m_flags=new ConnectionFlags;
 	max_elevate_id=0;
 	state=OriginState;
-	/** @type {({}|null)[]} */
-	elevated_array=[];
 }
 
 /**
@@ -5135,20 +5129,6 @@ class RemoteSocket {
 	}
 }
 
-const global_elevated_array=[];
-let max_elevated_id=0;
-/**
- * @param {number} elevated_id
- */
-function clear_elevation_by_id(elevated_id) {
-	global_elevated_array[elevated_id]=null;
-}
-
-
-function get_next_elevation_id() {
-	return max_elevated_id++;
-}
-
 class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @type {ConnectionMessage[]} */
 	unhandled_child_events=[];
@@ -5183,14 +5163,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @type {MessageEvent<unknown>|null} */
 	last_misbehaved_client_event=null;
 	max_elevated_id=0;
-	/**
-	 * @param {any} object
-	 */
-	elevate_object(object) {
-		let elevated_id=this.max_elevated_id++;
-		this.elevated_array[elevated_id]=object;
-		return elevated_id;
-	}
 	/**@type {RemoteSocket[]} */
 	connections=[];
 	/**@type {LocalHandler[]} */
