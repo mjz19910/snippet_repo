@@ -4789,7 +4789,8 @@ function is_object(x) {
 /** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
 function is_record_with_T(x,k) {
 	if(x===null) return false;
-	return k in x;
+	if(!(k in x)) return false;
+	return true;
 }
 //#endregion
 
