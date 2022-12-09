@@ -4997,12 +4997,12 @@ class Socket {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
-		console.group("-tx-C-> Socket");
+		console.groupCollapsed("-tx-C-> Socket");
 		console.log("Socket ->");
 		console.log("top.onmessage.handleEvent ->");
 		console.log("-C> CrossOriginConnection",data);
 		console.groupEnd();
-		console.group("Socket.remote.msg(data.tcp().wrap()) -> C!");
+		console.groupCollapsed("Socket.remote.msg(data.tcp().wrap()) -> C!");
 		this.post_wrapped(data,ports);
 		console.groupEnd();
 		console.log("<?-");
@@ -5018,12 +5018,12 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.group("-tx-L-> Socket");
+		console.groupCollapsed("-tx-L-> Socket");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
 		console.log("-L> ListenSocket",message_data);
 		console.groupEnd();
-		console.group("Socket.port.msg(data.tcp()) -> L");
+		console.groupCollapsed("Socket.port.msg(data.tcp()) -> L");
 		this.m_port.postMessage(message_data);
 		console.groupEnd();
 		console.log("<?-");
@@ -5044,12 +5044,12 @@ class Socket {
 			data: message_data,
 			handler: this,
 		};
-		console.group("-rx-S?-> Socket");
+		console.groupCollapsed("-rx-S?-> Socket");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->");
 		console.log("-?> Socket",message_data);
 		console.groupEnd();
-		console.group("Socket.tcp(event)");
+		console.groupCollapsed("Socket.tcp(event)");
 		this.handle_tcp_data(message_data,report_info);
 		console.groupEnd();
 		console.log("<?-");
@@ -5094,7 +5094,7 @@ class Socket {
 		}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
-		console.group("Socket.handle_tcp_data(message.data())");
+		console.groupCollapsed("Socket.handle_tcp_data(message.data())");
 		switch(tcp_data.type) {
 			case "connected": {
 				this.client_connect(report_info);
@@ -5205,12 +5205,12 @@ class ListenSocket {
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.group("-tx-S-> ListenSocket");
+		console.groupCollapsed("-tx-S-> ListenSocket");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->");
 		console.log("-S> Socket",message_data);
 		console.groupEnd();
-		console.group("ListenSocket.port.msg(data.tcp())");
+		console.groupCollapsed("ListenSocket.port.msg(data.tcp())");
 		this.m_port.postMessage(message_data);
 		console.groupEnd();
 		console.log("<?-");
@@ -5274,12 +5274,12 @@ class ListenSocket {
 				data: real_data,
 			};
 		}
-		console.group("-rx-L?-> ListenSocket");
+		console.groupCollapsed("-rx-L?-> ListenSocket");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
 		console.log("-?> ListenSocket",tcp_data);
 		console.groupEnd();
-		console.group("ListenSocket.tcp(event)");
+		console.groupCollapsed("ListenSocket.tcp(event)");
 		this.handle_tcp_data(tcp_data);
 		console.groupEnd();
 		console.log("<?-");
@@ -5413,13 +5413,13 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
-		console.group("-rx-C!-> CrossOriginConnection");
+		console.groupCollapsed("-rx-C!-> CrossOriginConnection");
 		console.log("CrossOriginConnection ->");
 		console.log("ListenSocket.handle_tcp_data ->");
 		console.log("s_port.onmessage.handleEvent ->");
 		console.log("-!> Socket",event_0.data.data);
 		console.groupEnd();
-		console.group("C! -> ListenSocket.tcp(event.unwrap())");
+		console.groupCollapsed("C! -> ListenSocket.tcp(event.unwrap())");
 		handler.handle_tcp_data(event_0.data.data);
 		console.groupEnd();
 		console.log("<?-");
@@ -5547,7 +5547,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	on_client_misbehaved(event) {
-		console.group("[RemoteOriginConnection.on_client_misbehaved]");
+		console.groupCollapsed("[RemoteOriginConnection.on_client_misbehaved]");
 		console.log(`Client misbehaved: Connect api not followed`);
 		console.log("root_ev_data",event.data);
 		console.log("root_ev_ports",event.ports);
