@@ -4808,11 +4808,10 @@ function cast_to_object(x) {
 	return x;
 }
 
-/** @template T @arg {{tag:"cast_tag",data:T}} x @returns {{tag:"cast_tag",data:T&{type:string}|null}|null} */
+/** @template T @arg {{tag:"cast_tag",data:T}|null} x @returns {{tag:"cast_tag",data:T&{type:string}|null}|null} */
 function cast_to_record_with_string_type(x) {
 	let cast_result=cast_to_object(x);
-	if(!cast_result) return null;
-	if(cast_result.data===null) return null;
+	if(!cast_result?.data) return null;
 	if(!is_record_with_string_type(cast_result.data,"type")) return null;
 	return make_cast(cast_result.data);
 }
