@@ -23,20 +23,29 @@ let inject_api={};
 window.inject_api=any(inject_api);
 // #pragma end InjectAPI
 
-// #pragma section sha_1_hash
-// @Update on minor version change
-// version <0.1.0.0 commit sha1
-const commit_id_sha_1="aa975a29";
-// #pragma end sha_1_hash
 
+// #pragma section saved
 inject_api.saved_objects=[];
-inject_api.saved_object_arrays=[];
 /**
  * @param {{ name: string; }} callable
  */
 function add_function(callable) {
 	inject_api.saved_objects.push([callable.name,callable]);
 }
+
+inject_api.saved_object_arrays=[];
+/** @arg {{}[]} ids_dec */
+function add_array(ids_dec) {
+	inject_api.saved_object_arrays.push(ids_dec);
+}
+// #pragma end saved
+
+
+// #pragma section sha_1_hash
+// @Update on minor version change
+// version <0.1.0.0 commit sha1
+const commit_id_sha_1="aa975a29";
+// #pragma end sha_1_hash
 
 /** @template K,V */
 class HashMap {
@@ -179,53 +188,31 @@ const s_single_char_tokens=new HashMap();
 	s_two_char_tokens.set("?.","QuestionMarkPeriod");
 
 	// Section: s_single_char_tokens
-	// & is OtherPunctuator
 	s_single_char_tokens.set("&","Ampersand");
-	// * is OtherPunctuator
 	s_single_char_tokens.set("*","Asterisk");
-	// [ is OtherPunctuator
 	s_single_char_tokens.set("[","BracketOpen");
-	// ] is OtherPunctuator
 	s_single_char_tokens.set("]","BracketClose");
-	// ^ is OtherPunctuator
 	s_single_char_tokens.set("^","Caret");
-	// : is OtherPunctuator
 	s_single_char_tokens.set(":","Colon");
-	// , is OtherPunctuator
 	s_single_char_tokens.set(",","Comma");
-	// { is OtherPunctuator
 	s_single_char_tokens.set("{","CurlyOpen");
 	// "}" is the production of RightBracePunctuator
 	s_single_char_tokens.set("}","CurlyClose");
-	// = is OtherPunctuator
 	s_single_char_tokens.set("=","Equals");
-	// ! is OtherPunctuator
 	s_single_char_tokens.set("!","ExclamationMark");
-	// - is OtherPunctuator
 	s_single_char_tokens.set("-","Minus");
-	// ( is OtherPunctuator
 	s_single_char_tokens.set("(","ParenOpen");
-	// ) is OtherPunctuator
 	s_single_char_tokens.set(")","ParenClose");
-	// % is OtherPunctuator
 	s_single_char_tokens.set("%","Percent");
-	// . is OtherPunctuator
 	s_single_char_tokens.set(".","Period");
-	// | is OtherPunctuator
 	s_single_char_tokens.set("|","Pipe");
-	// + is OtherPunctuator
 	s_single_char_tokens.set("+","Plus");
-	// ? is OtherPunctuator
 	s_single_char_tokens.set("?","QuestionMark");
-	// ; is OtherPunctuator
 	s_single_char_tokens.set(";","Semicolon");
 	// "/" is one of the productions by DivPunctuator
 	s_single_char_tokens.set("/","Slash");
-	// ~ is OtherPunctuator
 	s_single_char_tokens.set("~","Tilde");
-	// < is OtherPunctuator
 	s_single_char_tokens.set("<","LessThan");
-	// > is OtherPunctuator
 	s_single_char_tokens.set(">","GreaterThan");
 }
 
@@ -5817,8 +5804,4 @@ class DebugAPI {
 	}
 }
 inject_api.DebugAPI=DebugAPI;
-/** @arg {{}[]} ids_dec */
-function add_array(ids_dec) {
-	inject_api.saved_object_arrays.push(ids_dec);
-}
 
