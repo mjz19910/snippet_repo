@@ -18,9 +18,11 @@
 // Use module
 /** @type {import("./__global.js")} */
 // #pragma section InjectAPI
-/** @type {typeof window['inject_api']} */
+/** @readonly */
+const InjectAPIStr="inject_api";
+/** @type {typeof window[InjectAPIStr]} */
 let inject_api={};
-window.inject_api=any(inject_api);
+window[InjectAPIStr]=any(inject_api);
 // #pragma end InjectAPI
 
 
@@ -2727,8 +2729,8 @@ class AddEventListenerExtension {
 	failed_obj=null;
 	/** @private @type {WeakRef<{}>[]} */
 	object_ids=[];
-	/** @private @readonly */
-	namespace_key="__g_api__namespace";
+	/** @private @readonly @type {`__${InjectAPIStr}_${commit_id_sha_1}_namespace`} */
+	namespace_key=`__${InjectAPIStr}_${commit_id_sha_1}_namespace`;
 	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
 	/** @private */
@@ -2766,9 +2768,9 @@ class AddEventListenerExtension {
 		real_value[key]=`weak_id:${val[this.namespace_key]}:${index}`;
 		return;
 	}
-	/** @private @param {{}} val @param {string} namespace */
-	add_object_id(val,namespace) {
-		define_normal_value(val,this.namespace_key,namespace);
+	/** @private @param {{}} val */
+	add_object_id(val) {
+		if(!(this.namespace_key in val)) throw new Error("Invalid");
 		return this.object_ids.push(new WeakRef(val))-1;
 	}
 	/** @private @returns {void} @param {[unknown,number,unknown,...unknown[]]} real_value @param {number} key @param {{} | null} val */
@@ -2832,8 +2834,8 @@ class AddEventListenerExtension {
 	}
 	/** @private @param {unknown[]} real_value @param {number} key @arg {{}|CallableFunction} val @param {string} namespace */
 	convert_to_id_key(real_value,key,val,namespace) {
-		let index=this.add_object_id(val,namespace);
-		this.convert_to_namespaced_string(real_value,val,key,index);
+		define_normal_value(val,this.namespace_key,namespace);
+		this.convert_to_namespaced_string(real_value,val,key,this.add_object_id(val));
 	}
 	/** @private @template {CallableFunction} T @param {unknown[]} real_value @param {number} key @param {T} val */
 	args_iter_on_function(real_value,key,val) {
