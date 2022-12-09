@@ -4815,7 +4815,7 @@ function cast_to_record_with_string_type(x) {
 	return cast_result;
 }
 
-/** @template {string} U @template {{}} T @arg {{tag:"cast_tag",data:T}|null} x @arg {U} k @returns {{tag:"cast_tag",data:T&{ [P in U]: string; }}|null} */
+/** @template {string} U @template {{}} T @arg {{tag:"cast_tag",data:T}|null} x @arg {U} k @returns {{tag:"cast_tag",data:T&{[P in U]:string}}|null} */
 function cast_to_record_with_key_and_string_type(x,k) {
 	if(x===null) return null;
 	if(!is_record_with_string_type(x,k)) return null;
