@@ -4772,29 +4772,39 @@ class CSSCascade {
 }
 inject_api.CSSCascade=CSSCascade;
 
+
+//#region is_helpers
 /** @template {{}} U @template {string} T @arg {U} x @arg {T} k @returns {x is U&Record<T,string>} */
 function is_record_with_string_type(x,k) {
 	return is_record_with_T(x,k)&&typeof x[k]==='string';
 }
 
-/** @template T @arg {{tag:"cast_tag",data:T}} x @arg {T} x @returns {x is {tag:"cast_tag",data:{}|null}} */
+/** @template T @arg {T} x @returns {x is (T&{})|(T&null)} */
 function is_object(x) {
-	return typeof x.data==='object';
+	return typeof x==='object';
 }
 
 /** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
 function is_record_with_T(x,k) {
 	return k in x;
 }
+//#endregion
 
+//#region cast_monad
 /** @template T @param {T} x @returns {{tag:"cast_tag",data:T}} */
 function make_cast(x) {
 	return {tag:"cast_tag",data:x};
 }
 
-/** @template T @arg {{tag:"cast_tag",data:T}} x @returns {{tag:"cast_tag",data:(T&{}|null)}|null} */
+/** @template T @arg {{tag:"cast_tag",data:T}|null} x @returns {{tag:"cast_tag",data:(T&{}|null)}|null} */
 function cast_to_object(x) {
+	if(x===null) return null;
 	if(!is_object(x)) return null;
+	if(x!==null) {
+		if(typeof x.data==='object') {
+			x.data;
+		}
+	}
 	return x;
 }
 
@@ -4812,6 +4822,7 @@ function cast_to_record_with_key_and_string_type(x,k) {
 	if(!is_record_with_string_type(x,k)) return null;
 	return x;
 }
+//#endregion
 
 
 /** @readonly @type {`CrossOriginConnection_${typeof commit_id_sha_1}`} */
