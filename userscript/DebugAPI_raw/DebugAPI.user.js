@@ -2776,7 +2776,7 @@ class AddEventListenerExtension {
 		if(val===null)
 			return;
 		if(val instanceof LocalHandler) {
-			this.convert_to_id_key(real_value,key,val,"TransportMessageObj:client_"+val.m_client_id);
+			this.convert_to_id_key(real_value,key,val,"LocalHandler:client_"+val.m_client_id);
 			return;
 		}
 		if(val===window) {
