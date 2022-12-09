@@ -159,53 +159,53 @@ const s_single_char_tokens=new HashMap();
 
 // s_single_char_tokens
 {
-	// & is OtherPunctuator
+	// "&" is OtherPunctuator
 	s_single_char_tokens.set("&","Ampersand");
-	// * is OtherPunctuator
+	// "*" is OtherPunctuator
 	s_single_char_tokens.set("*","Asterisk");
-	// [ is OtherPunctuator
+	// "[" is OtherPunctuator
 	s_single_char_tokens.set("[","BracketOpen");
-	// ] is OtherPunctuator
+	// "]" is OtherPunctuator
 	s_single_char_tokens.set("]","BracketClose");
-	// ^ is OtherPunctuator
+	// "^" is OtherPunctuator
 	s_single_char_tokens.set("^","Caret");
-	// : is OtherPunctuator
+	// ":" is OtherPunctuator
 	s_single_char_tokens.set(":","Colon");
-	// , is OtherPunctuator
+	// "," is OtherPunctuator
 	s_single_char_tokens.set(",","Comma");
-	// { is OtherPunctuator
+	// "{" is OtherPunctuator
 	s_single_char_tokens.set("{","CurlyOpen");
 	// "}" is the production of RightBracePunctuator
 	s_single_char_tokens.set("}","CurlyClose");
-	// = is OtherPunctuator
+	// "=" is OtherPunctuator
 	s_single_char_tokens.set("=","Equals");
-	// ! is OtherPunctuator
+	// "!" is OtherPunctuator
 	s_single_char_tokens.set("!","ExclamationMark");
-	// - is OtherPunctuator
+	// "-" is OtherPunctuator
 	s_single_char_tokens.set("-","Minus");
-	// ( is OtherPunctuator
+	// "(" is OtherPunctuator
 	s_single_char_tokens.set("(","ParenOpen");
-	// ) is OtherPunctuator
+	// ")" is OtherPunctuator
 	s_single_char_tokens.set(")","ParenClose");
-	// % is OtherPunctuator
+	// "%" is OtherPunctuator
 	s_single_char_tokens.set("%","Percent");
-	// . is OtherPunctuator
+	// "." is OtherPunctuator
 	s_single_char_tokens.set(".","Period");
-	// | is OtherPunctuator
+	// "|" is OtherPunctuator
 	s_single_char_tokens.set("|","Pipe");
-	// + is OtherPunctuator
+	// "+" is OtherPunctuator
 	s_single_char_tokens.set("+","Plus");
-	// ? is OtherPunctuator
+	// "?" is OtherPunctuator
 	s_single_char_tokens.set("?","QuestionMark");
-	// ; is OtherPunctuator
+	// ";" is OtherPunctuator
 	s_single_char_tokens.set(";","Semicolon");
 	// "/" is one of the productions by DivPunctuator
 	s_single_char_tokens.set("/","Slash");
-	// ~ is OtherPunctuator
+	// "~" is OtherPunctuator
 	s_single_char_tokens.set("~","Tilde");
-	// < is OtherPunctuator
+	// "<" is OtherPunctuator
 	s_single_char_tokens.set("<","LessThan");
-	// > is OtherPunctuator
+	// ">" is OtherPunctuator
 	s_single_char_tokens.set(">","GreaterThan");
 }
 
