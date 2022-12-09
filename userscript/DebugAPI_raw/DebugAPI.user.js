@@ -4930,6 +4930,8 @@ class Socket {
 	}
 	/** @param {[MessagePort]} ports */
 	send_syn(ports) {
+		// <group syn>
+		console.group("syn");
 		this.init_handler();
 		this.send_init_request(TCPMessage.make_syn(this.m_client_id),ports);
 	}
@@ -4991,6 +4993,11 @@ class Socket {
 		console.group("Socket.tcp(event)");
 		this.handle_tcp_data(message_data,report_info);
 		console.groupEnd();
+		if(this.m_was_connected) {
+			this.m_was_connected=false;
+			// </group syn>
+			console.groupEnd();
+		}
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	send_ack(tcp_message) {
@@ -5012,6 +5019,7 @@ class Socket {
 		});
 	}
 	m_local_log=false;
+	m_was_connected=false;
 	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<this>} report_info */
 	handle_tcp_data(tcp_message,report_info) {
 		let f=new FlagHandler(tcp_message.flags);
@@ -5029,6 +5037,7 @@ class Socket {
 		switch(tcp_data.type) {
 			case "connected": {
 				this.client_connect(report_info);
+				this.m_was_connected=true;
 			} break;
 			case "will_disconnect": {
 				this.m_can_reconnect=tcp_data.can_reconnect;
