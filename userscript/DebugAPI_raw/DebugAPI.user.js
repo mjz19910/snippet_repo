@@ -5055,10 +5055,11 @@ class RemoteSocket {
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
 		if(!info.data) return;
-		switch(info.data.type) {
-			case "forward": inject_api.remote_origin.push_tcp_message(info); break;
-			default: console.log(info.data,info.flags,info.client_id);
+		if(info.data.type==="forward"&&this.m_flags.does_proxy_to_opener) {
+			inject_api.remote_origin.push_tcp_message(info);
+			return;
 		}
+		console.log(info.data,info.flags,info.client_id);
 	}
 	/** @param {boolean} can_reconnect */
 	onDisconnect(can_reconnect) {
@@ -5089,10 +5090,6 @@ class RemoteSocket {
 				client_id_path: id_path,
 				data: real_data,
 			};
-		} else {
-			if(tcp_data.data&&tcp_data.data.type==="forward") {
-				tcp_data.data=tcp_data.data.data;
-			}
 		}
 		this.handle_tcp_data(tcp_data);
 	}
