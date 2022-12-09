@@ -8,6 +8,13 @@ import {RepeatL_0} from "./support/Repeat_0.js";
 export type Holder=1;
 
 declare global {
+	type msg_ev_01=CM<MessageEvent<{
+		type: string;
+		data: unknown;
+	}>> | null;
+}
+
+declare global {
 	type CM<T>={tag:"cast_tag",data:T};
 }
 

@@ -5373,6 +5373,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			default: throw new Error("Invalid");
 		}
 		if(!this.is_with_data_decay(event_1)) return;
+		/** @type {msg_ev_01} */
 		let e_monad_2=cast_to_record_with_string_type_msg_data(new_cast_monad(event_1));
 		if(!e_monad_2?.data) return;
 		let event_2=e_monad_2.data;
