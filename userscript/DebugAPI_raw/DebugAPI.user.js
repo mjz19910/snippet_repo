@@ -4774,9 +4774,9 @@ inject_api.CSSCascade=CSSCascade;
 
 
 //#region is_helpers
-/** @template {{}} U @template {string} T @arg {U} x @arg {T} k @returns {x is U&Record<T,string>} */
+/** @template {{}|null} T @template {string} U @arg {{tag:"cast_tag",data:T}} x @arg {U} k @returns {x is {tag:"cast_tag",data:T&Record<U,string>}} */
 function is_record_with_string_type(x,k) {
-	return is_record_with_T(x,k)&&typeof x[k]==='string';
+	return x.data!==null&&is_record_with_T(x.data,k)&&typeof x.data[k]==='string';
 }
 
 /** @template T @arg {{tag:"cast_tag",data:T}} x @returns {x is {tag:"cast_tag",data:T&{}|T&null}} */
@@ -4786,13 +4786,14 @@ function is_object(x) {
 
 /** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is T&Record<U,unknown>} */
 function is_record_with_T(x,k) {
+	if(x===null) return false;
 	return k in x;
 }
 //#endregion
 
 //#region cast_monad
 /** @template T @param {T} x @returns {{tag:"cast_tag",data:T}} */
-function make_cast(x) {
+function new_cast_monad(x) {
 	return {tag:"cast_tag",data:x};
 }
 
@@ -4812,12 +4813,13 @@ function cast_to_object(x) {
 function cast_to_record_with_string_type(x) {
 	let cast_result=cast_to_object(x);
 	if(!cast_result?.data) return null;
-	if(!is_record_with_string_type(cast_result.data,"type")) return null;
-	return make_cast(cast_result.data);
+	if(!is_record_with_string_type(cast_result,"type")) return null;
+	return cast_result;
 }
 
-/** @template {string} U @template {{}} T @arg {T} x @arg {U} k @returns {T&{ [P in U]: string; }|null} */
+/** @template {string} U @template {{}} T @arg {{tag:"cast_tag",data:T}|null} x @arg {U} k @returns {{tag:"cast_tag",data:T&{ [P in U]: string; }}|null} */
 function cast_to_record_with_key_and_string_type(x,k) {
+	if(x===null) return null;
 	if(!is_record_with_string_type(x,k)) return null;
 	return x;
 }
@@ -5212,7 +5214,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
-		let data=cast_to_record_with_string_type(make_cast(event.data));
+		let data=cast_to_record_with_string_type(new_cast_monad(event.data));
 		if(!data?.data) return false;
 		return data.data.type===post_message_connect_message_type;
 	}
@@ -5220,7 +5222,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	is_connection_message(event) {
 		if(!this.is_wrapped_message(event)) return false;
 		if(!is_record_with_T(event.data,"data")) return false;
-		let data_record=cast_to_record_with_string_type(make_cast(event.data.data));
+		let data_record=cast_to_record_with_string_type(new_cast_monad(event.data.data));
 		if(!data_record?.data) return false;
 		if(data_record.data.type!=="tcp") return false;
 		return true;
@@ -5231,11 +5233,11 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
-		let message_record_with_source=cast_to_record_with_key_and_string_type(data_obj,"source");
+		let message_record_with_source=cast_to_record_with_key_and_string_type(new_cast_monad(data_obj),"source");
 		if(!message_record_with_source) return false;
-		if(message_record_with_source.source!=="sponsorblock") return false;
+		if(message_record_with_source.data.source!=="sponsorblock") return false;
 		// should be a SponsorBlock event.data
-		let message_record_with_type=cast_to_record_with_string_type(make_cast(message_record_with_source));
+		let message_record_with_type=cast_to_record_with_string_type(new_cast_monad(message_record_with_source));
 		if(!message_record_with_type?.data) return false;
 		switch(message_record_with_type.data.type) {
 			case "data":
@@ -5271,7 +5273,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	extract_message(event) {
-		let cast_result=cast_to_object(make_cast(event.data));
+		let cast_result=cast_to_object(new_cast_monad(event.data));
 		if(cast_result===null) return null;
 		let message_data=cast_result.data;
 		if(message_data===null) return null;
