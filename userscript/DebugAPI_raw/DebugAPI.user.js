@@ -5192,6 +5192,9 @@ class ListenSocket {
 		if(f.syn()) {
 			// seq=number & ack=null;
 			ack=(Math.random()*ack_win)%ack_win|0;
+			if(testing_tcp) {
+				ack=300;
+			}
 			this.send_ack(f,ack,seq+1);
 		}
 		if(f.is_empty()&&ack) {
