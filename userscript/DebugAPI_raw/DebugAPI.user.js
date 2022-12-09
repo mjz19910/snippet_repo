@@ -4912,7 +4912,8 @@ class Socket {
 			port2: client_port,
 		}=channel;
 		this.m_port=client_port;
-		this.send_syn(server_port);
+		let ports=[server_port];
+		this.send_syn(ports);
 	}
 	reconnect() {
 		let channel=new MessageChannel;
@@ -4921,19 +4922,20 @@ class Socket {
 			port2: client_port,
 		}=channel;
 		this.m_port=client_port;
-		this.send_syn(server_port);
+		let ports=[server_port];
+		this.send_syn(ports);
 	}
 	init_handler() {
 		this.m_port.addEventListener("message",this);
 		this.m_port.start();
 		elevate_event_handler(this);
 	}
-	/** @param {MessagePort} server_port */
-	send_syn(server_port) {
+	/** @param {MessagePort[]} ports */
+	send_syn(ports) {
 		this.init_handler();
-		this.send_init_request(TCPMessage.make_syn(this.m_client_id),[server_port]);
+		this.send_init_request(TCPMessage.make_syn(this.m_client_id),ports);
 	}
-	/** @param {ConnectionMessage} data @param {Transferable[]} ports */
+	/** @param {ConnectionMessage} data @param {MessagePort[]} ports */
 	send_init_request(data,ports) {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
@@ -4944,18 +4946,24 @@ class Socket {
 		console.log("-C> CrossOriginConnection",data);
 		console.groupEnd();
 		console.group("Socket.remote.msg(data.tcp().wrap()) -> C!");
-		this.m_remote_target.postMessage({
+		this.post_wrapped(data,ports);
+		console.groupEnd();
+	}
+	/** @param {ConnectionMessage} data @param {MessagePort[]} ports */
+	post_wrapped(data,ports) {
+		/** @type {WrappedMessage<ConnectionMessage>} */
+		let msg={
 			type: post_message_connect_message_type,
 			data,
-		},"*",ports);
-		console.groupEnd();
+		};
+		this.m_remote_target.postMessage(msg,"*",ports);
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
 		console.group("-tx-L-> Socket");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
-		console.log("-L> ListenSocket", message_data);
+		console.log("-L> ListenSocket",message_data);
 		console.groupEnd();
 		console.group("Socket.port.msg(data.tcp()) -> L");
 		this.m_port.postMessage(message_data);
@@ -4974,7 +4982,7 @@ class Socket {
 		if(message_data.type!=="tcp") throw new Error();
 		console.group("-rx-S?-> Socket");
 		console.log("ListenSocket ->");
-		console.log("s_port.onmessage.handleEvent ->")
+		console.log("s_port.onmessage.handleEvent ->");
 		console.log("-?> Socket",message_data);
 		console.groupEnd();
 		/** @type {ReportInfo<this>} */
@@ -5130,7 +5138,7 @@ class ListenSocket {
 		console.group("-tx-S-> ListenSocket");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-S> Socket", message_data);
+		console.log("-S> Socket",message_data);
 		console.groupEnd();
 		console.group("ListenSocket.port.msg(data.tcp())");
 		this.m_port.postMessage(message_data);
