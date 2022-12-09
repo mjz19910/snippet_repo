@@ -4950,7 +4950,7 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.group("--> LocalSocket");
+		console.group("--> Socket");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
 		console.log("-> ListenSocket", message_data);
