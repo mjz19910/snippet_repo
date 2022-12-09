@@ -4994,7 +4994,7 @@ class Socket {
 	m_remote_target;
 	m_event_source;
 }
-inject_api.LocalHandler=Socket;
+inject_api.Socket=Socket;
 
 class OriginState {
 	/**@readonly*/static window=window;

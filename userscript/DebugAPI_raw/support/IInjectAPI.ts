@@ -11,7 +11,7 @@ declare global {
 // LocalHandler
 declare global {
 	interface IInjectAPI {
-		LocalHandler: {};
+		Socket: {};
 	}
 }
 
