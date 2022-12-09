@@ -4804,11 +4804,6 @@ function new_cast_monad(x) {
 function cast_to_object(x) {
 	if(x===null) return null;
 	if(!is_object(x)) return null;
-	if(x!==null) {
-		if(typeof x.data==='object') {
-			x.data;
-		}
-	}
 	return x;
 }
 
