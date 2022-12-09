@@ -4938,7 +4938,7 @@ class Socket {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
-		console.group("-I-> CrossOriginConnection");
+		console.group("-I-> Socket");
 		console.log("Socket ->");
 		console.log("top.onmessage.handleEvent ->");
 		console.log("-I> CrossOriginConnection",data);
