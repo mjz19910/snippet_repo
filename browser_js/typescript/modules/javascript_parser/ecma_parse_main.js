@@ -53,6 +53,162 @@ class HashMap {
 	}
 }
 
+
+// HashMap<FlyString, TokenType> Lexer::s_keywords
+/** @type {Set<string>} uses enum JSTokenizerTokenType as string */
+const s_keywords=new Set();
+// HashMap<String, TokenType> Lexer::s_three_char_tokens
+/** @type {HashMap<string,string>} */
+const s_three_char_tokens=new HashMap();
+// HashMap<String, TokenType> Lexer::s_two_char_tokens
+/** @type {HashMap<string,string>} */
+const s_two_char_tokens=new HashMap();
+// HashMap<char, TokenType> Lexer::s_single_char_tokens
+/** @type {HashMap<string,string>} */
+const s_single_char_tokens=new HashMap();
+
+
+// s_keywords
+{
+	s_keywords.add("async");
+	s_keywords.add("await");
+	s_keywords.add("break");
+	s_keywords.add("case");
+	s_keywords.add("catch");
+	s_keywords.add("class");
+	s_keywords.add("const");
+	s_keywords.add("continue");
+	s_keywords.add("debugger");
+	s_keywords.add("default");
+	s_keywords.add("delete");
+	s_keywords.add("do");
+	s_keywords.add("else");
+	s_keywords.add("enum");
+	s_keywords.add("export");
+	s_keywords.add("extends");
+	s_keywords.add("false");
+	s_keywords.add("finally");
+	s_keywords.add("for");
+	s_keywords.add("function");
+	s_keywords.add("if");
+	s_keywords.add("import");
+	s_keywords.add("in");
+	s_keywords.add("instanceof");
+	s_keywords.add("let");
+	s_keywords.add("new");
+	s_keywords.add("null");
+	s_keywords.add("return");
+	s_keywords.add("super");
+	s_keywords.add("switch");
+	s_keywords.add("this");
+	s_keywords.add("throw");
+	s_keywords.add("true");
+	s_keywords.add("try");
+	s_keywords.add("typeof");
+	s_keywords.add("var");
+	s_keywords.add("void");
+	s_keywords.add("while");
+	s_keywords.add("with");
+	s_keywords.add("yield");
+}
+
+// tokens len=4
+// 4 char token is only >>>=
+
+// s_three_char_tokens
+{
+	s_three_char_tokens.set("===","EqualsEqualsEquals");
+	s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
+	s_three_char_tokens.set("**=","DoubleAsteriskEquals");
+	s_three_char_tokens.set("<<=","ShiftLeftEquals");
+	s_three_char_tokens.set(">>=","ShiftRightEquals");
+	s_three_char_tokens.set("&&=","DoubleAmpersandEquals");
+	s_three_char_tokens.set("||=","DoublePipeEquals");
+	s_three_char_tokens.set("\?\?=","DoubleQuestionMarkEquals");
+	s_three_char_tokens.set(">>>","UnsignedShiftRight");
+	s_three_char_tokens.set("...","TripleDot");
+}
+
+// s_two_char_tokens
+{
+	s_two_char_tokens.set("=>","Arrow");
+	s_two_char_tokens.set("+=","PlusEquals");
+	s_two_char_tokens.set("-=","MinusEquals");
+	s_two_char_tokens.set("*=","AsteriskEquals");
+	// "/=" is one of the productions of DivPunctuator
+	s_two_char_tokens.set("/=","SlashEquals");
+	s_two_char_tokens.set("%=","PercentEquals");
+	s_two_char_tokens.set("&=","AmpersandEquals");
+	s_two_char_tokens.set("|=","PipeEquals");
+	s_two_char_tokens.set("^=","CaretEquals");
+	s_two_char_tokens.set("&&","DoubleAmpersand");
+	s_two_char_tokens.set("||","DoublePipe");
+	s_two_char_tokens.set("??","DoubleQuestionMark");
+	s_two_char_tokens.set("**","DoubleAsterisk");
+	s_two_char_tokens.set("==","EqualsEquals");
+	s_two_char_tokens.set("<=","LessThanEquals");
+	s_two_char_tokens.set(">=","GreaterThanEquals");
+	s_two_char_tokens.set("!=","ExclamationMarkEquals");
+	s_two_char_tokens.set("--","MinusMinus");
+	s_two_char_tokens.set("++","PlusPlus");
+	s_two_char_tokens.set("<<","ShiftLeft");
+	s_two_char_tokens.set(">>","ShiftRight");
+	// "?." is the production of OptionalChainingPunctuator
+	s_two_char_tokens.set("?.","QuestionMarkPeriod");
+}
+
+// s_single_char_tokens
+{
+	// & is OtherPunctuator
+	s_single_char_tokens.set("&","Ampersand");
+	// * is OtherPunctuator
+	s_single_char_tokens.set("*","Asterisk");
+	// [ is OtherPunctuator
+	s_single_char_tokens.set("[","BracketOpen");
+	// ] is OtherPunctuator
+	s_single_char_tokens.set("]","BracketClose");
+	// ^ is OtherPunctuator
+	s_single_char_tokens.set("^","Caret");
+	// : is OtherPunctuator
+	s_single_char_tokens.set(":","Colon");
+	// , is OtherPunctuator
+	s_single_char_tokens.set(",","Comma");
+	// { is OtherPunctuator
+	s_single_char_tokens.set("{","CurlyOpen");
+	// "}" is the production of RightBracePunctuator
+	s_single_char_tokens.set("}","CurlyClose");
+	// = is OtherPunctuator
+	s_single_char_tokens.set("=","Equals");
+	// ! is OtherPunctuator
+	s_single_char_tokens.set("!","ExclamationMark");
+	// - is OtherPunctuator
+	s_single_char_tokens.set("-","Minus");
+	// ( is OtherPunctuator
+	s_single_char_tokens.set("(","ParenOpen");
+	// ) is OtherPunctuator
+	s_single_char_tokens.set(")","ParenClose");
+	// % is OtherPunctuator
+	s_single_char_tokens.set("%","Percent");
+	// . is OtherPunctuator
+	s_single_char_tokens.set(".","Period");
+	// | is OtherPunctuator
+	s_single_char_tokens.set("|","Pipe");
+	// + is OtherPunctuator
+	s_single_char_tokens.set("+","Plus");
+	// ? is OtherPunctuator
+	s_single_char_tokens.set("?","QuestionMark");
+	// ; is OtherPunctuator
+	s_single_char_tokens.set(";","Semicolon");
+	// "/" is one of the productions by DivPunctuator
+	s_single_char_tokens.set("/","Slash");
+	// ~ is OtherPunctuator
+	s_single_char_tokens.set("~","Tilde");
+	// < is OtherPunctuator
+	s_single_char_tokens.set("<","LessThan");
+	// > is OtherPunctuator
+	s_single_char_tokens.set(">","GreaterThan");
+}
+
 class ECMA262Base {
 	/** @arg {ecma_root} parent */
 	constructor(parent) {
@@ -2026,147 +2182,6 @@ class CharTokens {
 }
 
 export function ecma_parse_main() {
-	// HashMap<FlyString, TokenType> Lexer::s_keywords
-	/** @type {Set<string>} uses enum JSTokenizerTokenType as string */
-	const s_keywords=new Set();
-	// HashMap<String, TokenType> Lexer::s_three_char_tokens
-	/** @type {HashMap<string,string>} */
-	const s_three_char_tokens=new HashMap();
-	// HashMap<String, TokenType> Lexer::s_two_char_tokens
-	/** @type {HashMap<string,string>} */
-	const s_two_char_tokens=new HashMap();
-	// HashMap<char, TokenType> Lexer::s_single_char_tokens
-	/** @type {HashMap<string,string>} */
-	const s_single_char_tokens=new HashMap();
-	s_keywords.add("async");
-	s_keywords.add("await");
-	s_keywords.add("break");
-	s_keywords.add("case");
-	s_keywords.add("catch");
-	s_keywords.add("class");
-	s_keywords.add("const");
-	s_keywords.add("continue");
-	s_keywords.add("debugger");
-	s_keywords.add("default");
-	s_keywords.add("delete");
-	s_keywords.add("do");
-	s_keywords.add("else");
-	s_keywords.add("enum");
-	s_keywords.add("export");
-	s_keywords.add("extends");
-	s_keywords.add("false");
-	s_keywords.add("finally");
-	s_keywords.add("for");
-	s_keywords.add("function");
-	s_keywords.add("if");
-	s_keywords.add("import");
-	s_keywords.add("in");
-	s_keywords.add("instanceof");
-	s_keywords.add("let");
-	s_keywords.add("new");
-	s_keywords.add("null");
-	s_keywords.add("return");
-	s_keywords.add("super");
-	s_keywords.add("switch");
-	s_keywords.add("this");
-	s_keywords.add("throw");
-	s_keywords.add("true");
-	s_keywords.add("try");
-	s_keywords.add("typeof");
-	s_keywords.add("var");
-	s_keywords.add("void");
-	s_keywords.add("while");
-	s_keywords.add("with");
-	s_keywords.add("yield");
-	// 4 char token is only >>>=
-	if(s_three_char_tokens.is_empty()) {
-		s_three_char_tokens.set("===","EqualsEqualsEquals");
-		s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
-		s_three_char_tokens.set("**=","DoubleAsteriskEquals");
-		s_three_char_tokens.set("<<=","ShiftLeftEquals");
-		s_three_char_tokens.set(">>=","ShiftRightEquals");
-		s_three_char_tokens.set("&&=","DoubleAmpersandEquals");
-		s_three_char_tokens.set("||=","DoublePipeEquals");
-		s_three_char_tokens.set("\?\?=","DoubleQuestionMarkEquals");
-		s_three_char_tokens.set(">>>","UnsignedShiftRight");
-		s_three_char_tokens.set("...","TripleDot");
-	}
-	if(s_two_char_tokens.is_empty()) {
-		s_two_char_tokens.set("=>","Arrow");
-		s_two_char_tokens.set("+=","PlusEquals");
-		s_two_char_tokens.set("-=","MinusEquals");
-		s_two_char_tokens.set("*=","AsteriskEquals");
-		// "/=" is one of the productions of DivPunctuator
-		s_two_char_tokens.set("/=","SlashEquals");
-		s_two_char_tokens.set("%=","PercentEquals");
-		s_two_char_tokens.set("&=","AmpersandEquals");
-		s_two_char_tokens.set("|=","PipeEquals");
-		s_two_char_tokens.set("^=","CaretEquals");
-		s_two_char_tokens.set("&&","DoubleAmpersand");
-		s_two_char_tokens.set("||","DoublePipe");
-		s_two_char_tokens.set("??","DoubleQuestionMark");
-		s_two_char_tokens.set("**","DoubleAsterisk");
-		s_two_char_tokens.set("==","EqualsEquals");
-		s_two_char_tokens.set("<=","LessThanEquals");
-		s_two_char_tokens.set(">=","GreaterThanEquals");
-		s_two_char_tokens.set("!=","ExclamationMarkEquals");
-		s_two_char_tokens.set("--","MinusMinus");
-		s_two_char_tokens.set("++","PlusPlus");
-		s_two_char_tokens.set("<<","ShiftLeft");
-		s_two_char_tokens.set(">>","ShiftRight");
-		// "?." is the production of OptionalChainingPunctuator
-		s_two_char_tokens.set("?.","QuestionMarkPeriod");
-	}
-	if(s_single_char_tokens.is_empty()) {
-		// & is OtherPunctuator
-		s_single_char_tokens.set("&","Ampersand");
-		// * is OtherPunctuator
-		s_single_char_tokens.set("*","Asterisk");
-		// [ is OtherPunctuator
-		s_single_char_tokens.set("[","BracketOpen");
-		// ] is OtherPunctuator
-		s_single_char_tokens.set("]","BracketClose");
-		// ^ is OtherPunctuator
-		s_single_char_tokens.set("^","Caret");
-		// : is OtherPunctuator
-		s_single_char_tokens.set(":","Colon");
-		// , is OtherPunctuator
-		s_single_char_tokens.set(",","Comma");
-		// { is OtherPunctuator
-		s_single_char_tokens.set("{","CurlyOpen");
-		// "}" is the production of RightBracePunctuator
-		s_single_char_tokens.set("}","CurlyClose");
-		// = is OtherPunctuator
-		s_single_char_tokens.set("=","Equals");
-		// ! is OtherPunctuator
-		s_single_char_tokens.set("!","ExclamationMark");
-		// - is OtherPunctuator
-		s_single_char_tokens.set("-","Minus");
-		// ( is OtherPunctuator
-		s_single_char_tokens.set("(","ParenOpen");
-		// ) is OtherPunctuator
-		s_single_char_tokens.set(")","ParenClose");
-		// % is OtherPunctuator
-		s_single_char_tokens.set("%","Percent");
-		// . is OtherPunctuator
-		s_single_char_tokens.set(".","Period");
-		// | is OtherPunctuator
-		s_single_char_tokens.set("|","Pipe");
-		// + is OtherPunctuator
-		s_single_char_tokens.set("+","Plus");
-		// ? is OtherPunctuator
-		s_single_char_tokens.set("?","QuestionMark");
-		// ; is OtherPunctuator
-		s_single_char_tokens.set(";","Semicolon");
-		// "/" is one of the productions by DivPunctuator
-		s_single_char_tokens.set("/","Slash");
-		// ~ is OtherPunctuator
-		s_single_char_tokens.set("~","Tilde");
-		// < is OtherPunctuator
-		s_single_char_tokens.set("<","LessThan");
-		// > is OtherPunctuator
-		s_single_char_tokens.set(">","GreaterThan");
-	}
 	let parse_str="function x(){}";
 	if("code" in window&&typeof window.code==="string") {
 		parse_str=window.code;
