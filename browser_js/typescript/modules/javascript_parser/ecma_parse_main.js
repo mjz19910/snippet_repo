@@ -1,4 +1,3 @@
-import window from "./window_def.js";
 export {Holder} from "./__global.js";
 
 
