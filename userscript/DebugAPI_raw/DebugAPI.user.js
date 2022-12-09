@@ -5052,8 +5052,10 @@ class RemoteSocket {
 	}
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
-		if(info.data) {
-			console.log(info.data,info.flags,info.client_id);
+		if(!info.data) return;
+		switch(info.data.type) {
+			case "forward": inject_api.remote_origin.push_tcp_message(info); break;
+			default: console.log(info.data,info.flags,info.client_id);
 		}
 	}
 	/** @param {boolean} can_reconnect */
@@ -5065,30 +5067,29 @@ class RemoteSocket {
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
+		let {data: tcp_data}=event;
+		if(tcp_data.type!=="tcp") {
+			this.m_unhandled_events.push(tcp_data);
+			console.log(tcp_data);
+			return;
+		}
 		if(this.m_flags.does_proxy_to_opener) {
-			let real_data=event.data.data;
+			let real_data=tcp_data.data;
 			/** @type {[number,number,null][]} */
 			let id_path=[];
 			if(real_data) {
 				if(real_data.type==="forward") {
-					id_path.push(...real_data.client_id_path,[event.data.client_id,this.m_client_id,null]);
+					id_path.push(...real_data.client_id_path,[tcp_data.client_id,this.m_client_id,null]);
 					real_data=real_data.data;
 				}
 			}
-			event.data.data={
+			tcp_data.data={
 				type: "forward",
 				client_id_path: id_path,
 				data: real_data,
 			};
-			inject_api.remote_origin.push_tcp_message(event.data);
 		}
-		let {data}=event;
-		if(data.type!=="tcp") {
-			this.m_unhandled_events.push(data);
-			console.log(data);
-			return;
-		}
-		this.handle_tcp_data(data);
+		this.handle_tcp_data(tcp_data);
 	}
 	/** @param {FlagHandler} f */
 	send_ack(f) {
