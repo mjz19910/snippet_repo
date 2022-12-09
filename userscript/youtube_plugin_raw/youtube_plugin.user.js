@@ -2511,9 +2511,8 @@ class VolumeRange {
 	 */
 	setGain(gain) {
 		this.gain_controller.setGain(gain);
-		if(this.use_cache) {
-			history_state_manager.setCacheValue("filter_gain",gain);
-		}
+		if(!this.use_cache) return;
+		history_state_manager.setCacheValue("filter_gain",gain);
 	}
 	/** @private */
 	getGainCache() {
