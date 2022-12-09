@@ -4945,10 +4945,14 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.log('Socket -> l_port.onmessage.handleEvent -> ListenSocket',message_data);
+		console.group("-> LocalSocket");
+		console.log("Socket ->");
+		console.log('l_port.onmessage.handleEvent ->');
+		console.log("-> ListenSocket", message_data)
 		this.m_port.postMessage(message_data);
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
+		console.groupEnd();
 	}
 	/** @arg {ReportInfo<Socket>} message_event */
 	client_connect(message_event) {
@@ -4959,13 +4963,16 @@ class Socket {
 		if(Socket.prototype===this) return;
 		let message_data=event.data;
 		if(message_data.type!=="tcp") throw new Error();
-		console.log("ListenSocket -> s_port.onmessage.handleEvent -> Socket",message_data);
+		console.group("-?-> Socket");
+		console.log("ListenSocket -> s_port.onmessage.handleEvent");
+		console.log("s_port.onmessage.handleEvent -> Socket",message_data);
 		/** @type {ReportInfo<this>} */
 		let report_info={
 			data: message_data,
 			handler: this,
 		};
 		this.handle_tcp_data(message_data,report_info);
+		console.groupEnd();
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	send_ack(tcp_message) {
@@ -4987,10 +4994,13 @@ class Socket {
 			data: null,
 		});
 	}
+	m_local_log=false;
 	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<this>} report_info */
 	handle_tcp_data(tcp_message,report_info) {
 		let f=new FlagHandler(tcp_message.flags);
-		console.log("local",tcp_message);
+		if(this.m_local_log) {
+			console.log("local",tcp_message);
+		}
 		if(f.syn()&&f.ack()) {
 			this.send_ack(tcp_message);
 		}
@@ -5106,9 +5116,12 @@ class ListenSocket {
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.log("ListenSocket -> s_port.onmessage.handleEvent -> Socket", message_data);
+		console.group("-> Socket");
+		console.log("ListenSocket -> s_port.onmessage.handleEvent");
+		console.log("s_port.onmessage.handleEvent -> Socket", message_data);
 		this.m_port.postMessage(message_data);
 		Socket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
+		console.groupEnd();
 	}
 	m_connected=false;
 	/**
@@ -5168,8 +5181,11 @@ class ListenSocket {
 				data: real_data,
 			};
 		}
-		console.log('Socket -> l_port.onmessage.handleEvent -> ListenSocket',tcp_data);
+		console.group("-?-> ListenSocket");
+		console.log("Socket -> l_port.onmessage.handleEvent");
+		console.log("l_port.onmessage.handleEvent -> ListenSocket",tcp_data);
 		this.handle_tcp_data(tcp_data);
+		console.groupEnd();
 	}
 	/**
 	 * @param {FlagHandler} f
@@ -5282,7 +5298,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
-		console.group("-> Socket");
+		console.group("-!-> Socket");
 		console.log("CrossOriginConnection -> ListenSocket.handle_tcp_data");
 		console.log("ListenSocket.handle_tcp_data -> s_port.onmessage.handleEvent");
 		console.log("s_port.onmessage.handleEvent -> Socket",event.data.data);
