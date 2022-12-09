@@ -4897,7 +4897,6 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		if(!this.m_port) throw new Error("no connection port");
 		this.m_port.postMessage(message_data);
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
@@ -4960,14 +4959,11 @@ class Socket {
 		if(!this.m_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_port.removeEventListener('message',this);
 		this.m_port.close();
-		this.m_port=null;
 	}
 	/** @type {"client"} */
 	m_side="client";
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
-	/** @type {MessagePort|null} */
-	m_port=null;
 	m_connected=false;
 	m_tries_left=0;
 	m_connection_timeout;
@@ -4977,6 +4973,7 @@ class Socket {
 	m_fake=CrossOriginConnection.is_fake;
 	m_client_id;
 	m_flags;
+	m_port;
 }
 inject_api.LocalHandler=Socket;
 
