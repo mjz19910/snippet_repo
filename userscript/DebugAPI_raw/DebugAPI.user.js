@@ -4912,11 +4912,10 @@ class Socket {
 	}
 	/** @returns {{ports:[MessagePort],client_port:MessagePort}} */
 	init_syn_data() {
-		let channel=new MessageChannel;
 		let {
 			port1: server_port,
 			port2: client_port,
-		}=channel;
+		}=new MessageChannel;
 		return {ports: [server_port],client_port};
 	}
 	reconnect() {
