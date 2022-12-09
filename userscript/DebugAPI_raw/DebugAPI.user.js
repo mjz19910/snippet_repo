@@ -5070,7 +5070,7 @@ class RemoteSocket {
 			/** @type {[number,number,null][]} */
 			let id_path=[];
 			if(real_data) {
-				x: if(real_data.type==="forward") {
+				if(real_data.type==="forward") {
 					id_path.push(...real_data.client_id_path,[event.data.client_id,this.m_client_id,null]);
 					real_data=real_data.data;
 				}
