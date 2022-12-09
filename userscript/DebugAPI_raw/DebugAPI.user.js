@@ -4946,6 +4946,7 @@ class Socket {
 			type: post_message_connect_message_type,
 			data,
 		},"*",ports);
+		console.groupEnd();
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
