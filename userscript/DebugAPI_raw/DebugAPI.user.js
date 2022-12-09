@@ -5057,7 +5057,6 @@ class Socket {
 			this.m_was_connected=false;
 			// </group syn>
 			console.groupEnd();
-			console.log("<?-");
 		}
 	}
 	/** @arg {ConnectionMessage} tcp_message */
