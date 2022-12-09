@@ -2775,8 +2775,12 @@ class AddEventListenerExtension {
 	args_iter_on_object(real_value,key,val) {
 		if(val===null)
 			return;
-		if(val instanceof LocalHandler) {
-			this.convert_to_id_key(real_value,key,val,"LocalHandler:client_"+val.m_client_id);
+		if(val instanceof Socket) {
+			this.convert_to_id_key(real_value,key,val,"Socket:client_"+val.m_client_id);
+			return;
+		}
+		if(val instanceof ListenSocket) {
+			this.convert_to_id_key(real_value,key,val,"ListenSocket:client_"+val.m_client_id);
 			return;
 		}
 		if(val===window) {
@@ -4847,7 +4851,7 @@ class FlagHandler {
 }
 
 
-class LocalHandler {
+class Socket {
 	/** @type {Window} */
 	m_remote_target;
 	/** @type {MessageEventSource} */
@@ -4859,8 +4863,6 @@ class LocalHandler {
 		this.m_flags=flags;
 		this.m_remote_target=remote_target;
 		this.m_event_source=remote_target;
-		elevate_event_handler(this);
-
 		if(this.m_remote_target===window) {
 			throw new Error("Sending messages to self is means i have a bad time");
 		}
@@ -4887,6 +4889,7 @@ class LocalHandler {
 	 * @param {Transferable[]} ports
 	 */
 	send_init_request(data,ports) {
+		elevate_event_handler(this);
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data,
@@ -4897,9 +4900,9 @@ class LocalHandler {
 		if(!this.m_port) throw new Error("no connection port");
 		this.m_port.postMessage(message_data);
 		// sends message to
-		RemoteSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
+		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 	}
-	/** @arg {ReportInfo<LocalHandler>} message_event */
+	/** @arg {ReportInfo<Socket>} message_event */
 	client_connect(message_event) {
 		console.log('on_client_connect',message_event.data,this.m_event_source);
 	}
@@ -4975,7 +4978,7 @@ class LocalHandler {
 	m_client_id;
 	m_flags;
 }
-inject_api.LocalHandler=LocalHandler;
+inject_api.LocalHandler=Socket;
 
 class OriginState {
 	/**@readonly*/static window=window;
@@ -5021,7 +5024,7 @@ function new_tcp_client_message(client_id,data) {
 	};
 }
 
-class RemoteSocket {
+class ListenSocket {
 	source() {
 		return this.m_event_source;
 	}
@@ -5039,7 +5042,7 @@ class RemoteSocket {
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
 		this.m_port.postMessage(message_data);
-		LocalHandler.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
+		Socket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 	}
 	m_connected=false;
 	downstream_connect() {
@@ -5064,7 +5067,7 @@ class RemoteSocket {
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
-		if(RemoteSocket.prototype===this) return;
+		if(ListenSocket.prototype===this) return;
 		let {data: tcp_data}=event;
 		if(tcp_data.type!=="tcp") {
 			this.m_unhandled_events.push(tcp_data);
@@ -5152,7 +5155,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		} else {
 			throw new Error("Invalid state, not top and window.top is null");
 		}
-		this.m_local_handler=new LocalHandler(
+		this.m_local_handler=new Socket(
 			30000,
 			client_id,
 			this.m_flags,
@@ -5163,9 +5166,9 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @type {MessageEvent<unknown>|null} */
 	last_misbehaved_client_event=null;
 	max_elevated_id=0;
-	/**@type {RemoteSocket[]} */
+	/**@type {ListenSocket[]} */
 	connections=[];
-	/**@type {LocalHandler[]} */
+	/**@type {Socket[]} */
 	local_handlers=[];
 	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event */
@@ -5175,7 +5178,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let connection_port=event.ports[0];
 		if(!event.source) throw new Error("No event source");
 		let event_source=event.source;
-		let handler=new RemoteSocket(this.m_flags,connection_port,client_id,event_source);
+		let handler=new ListenSocket(this.m_flags,connection_port,client_id,event_source);
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
