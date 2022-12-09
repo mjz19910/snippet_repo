@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		DebugAPI userscript
 // @namespace	https://github.com/mjz19910/
-// @version		0.1.1.7
+// @version		0.1.1.8
 // @description	DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author		@mjz19910
 // @copyright   @mjz19910 2019-2022
@@ -4997,7 +4997,7 @@ class Socket {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
-		console.groupCollapsed("-tx-C-> Socket");
+		console.groupCollapsed("-tx-C-> Socket<"+data.seq+","+data.ack+">");
 		console.log("Socket ->");
 		console.log("top.onmessage.handleEvent ->");
 		console.log("-C> CrossOriginConnection",data);
@@ -5016,19 +5016,19 @@ class Socket {
 		};
 		this.m_remote_target.postMessage(msg,"*",ports);
 	}
-	/** @arg {ConnectionMessage} message_data */
-	push_tcp_message(message_data) {
-		console.groupCollapsed("-tx-L-> Socket");
+	/** @arg {ConnectionMessage} data */
+	push_tcp_message(data) {
+		console.groupCollapsed("-tx-L-> Socket<"+data.seq+","+data.ack+">");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
-		console.log("-L> ListenSocket",message_data);
+		console.log("-L> ListenSocket",data);
 		console.groupEnd();
 		console.groupCollapsed("Socket.port.msg(data.tcp()) -> L");
-		this.m_port.postMessage(message_data);
+		this.m_port.postMessage(data);
 		console.groupEnd();
 		console.log("<?-");
 		// sends message to
-		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
+		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));
 	}
 	/** @arg {ReportInfo<Socket>} message_event */
 	client_connect(message_event) {
@@ -5037,20 +5037,20 @@ class Socket {
 	/** @param {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(Socket.prototype===this) return;
-		let message_data=event.data;
-		if(message_data.type!=="tcp") throw new Error();
+		let data=event.data;
+		if(data.type!=="tcp") throw new Error();
 		/** @type {ReportInfo<this>} */
 		let report_info={
-			data: message_data,
+			data,
 			handler: this,
 		};
-		console.groupCollapsed("-rx-S?-> Socket");
+		console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+">");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-?> Socket",message_data);
+		console.log("-?> Socket",data);
 		console.groupEnd();
 		console.groupCollapsed("Socket.tcp(event)");
-		this.handle_tcp_data(message_data,report_info);
+		this.handle_tcp_data(data,report_info);
 		console.groupEnd();
 		console.log("<?-");
 		if(this.m_was_connected) {
@@ -5203,18 +5203,18 @@ class ListenSocket {
 	/** @type {number} */
 	m_client_id;
 	m_debug=false;
-	/** @arg {ConnectionMessage} message_data */
-	push_tcp_message(message_data) {
-		console.groupCollapsed("-tx-S-> ListenSocket");
+	/** @arg {ConnectionMessage} data */
+	push_tcp_message(data) {
+		console.groupCollapsed("-tx-S-> ListenSocket<"+data.seq+","+data.ack+">");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-S> Socket",message_data);
+		console.log("-S> Socket",data);
 		console.groupEnd();
 		console.groupCollapsed("ListenSocket.port.msg(data.tcp())");
-		this.m_port.postMessage(message_data);
+		this.m_port.postMessage(data);
 		console.groupEnd();
 		console.log("<?-");
-		Socket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
+		Socket.prototype.handleEvent(new MessageEvent("message",{data}));
 	}
 	m_connected=false;
 	/**
@@ -5254,33 +5254,33 @@ class ListenSocket {
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
 		if(ListenSocket.prototype===this) return;
-		let {data: tcp_data}=event;
-		if(tcp_data.type!=="tcp") {
-			this.m_unhandled_events.push(tcp_data);
-			console.log(tcp_data);
+		let {data}=event;
+		if(data.type!=="tcp") {
+			this.m_unhandled_events.push(data);
+			console.log(data);
 			return;
 		}
 		if(this.m_flags.does_proxy_to_opener) {
-			let real_data=tcp_data.data;
+			let real_data=data.data;
 			/** @type {[number,number,null][]} */
 			let id_path=[];
 			if(real_data&&real_data.type==="forward") {
-				id_path.push(...real_data.client_id_path,[tcp_data.client_id,this.m_client_id,null]);
+				id_path.push(...real_data.client_id_path,[data.client_id,this.m_client_id,null]);
 				real_data=real_data.data;
 			}
-			tcp_data.data={
+			data.data={
 				type: "forward",
 				client_id_path: id_path,
 				data: real_data,
 			};
 		}
-		console.groupCollapsed("-rx-L?-> ListenSocket");
+		console.groupCollapsed("-rx-L?-> ListenSocket<"+data.seq+","+data.ack+">");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
-		console.log("-?> ListenSocket",tcp_data);
+		console.log("-?> ListenSocket",data);
 		console.groupEnd();
 		console.groupCollapsed("ListenSocket.tcp(event)");
-		this.handle_tcp_data(tcp_data);
+		this.handle_tcp_data(data);
 		console.groupEnd();
 		console.log("<?-");
 	}
