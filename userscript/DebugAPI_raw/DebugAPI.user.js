@@ -4856,12 +4856,27 @@ function cast_to_record_with_string_type_msg(x) {
 	return cast_result;
 }
 
-/** @template T @arg {CM<MessageEvent<T>>} x @returns {CM<MessageEvent<T&{data:unknown}>>|null} */
+/** @template {CM<MessageEvent<any>>} T @arg {T} x @returns {CM<MessageEvent<T['data']['data']&{data:unknown}>>|null} */
 function cast_to_record_with_string_type_msg_data(x) {
 	if(!is_record_with_T_msg_m(x,"data")) return null;
 	/** @type {CM<MessageEvent<T&{data:unknown}>>} */
 	let xr=x;
 	return xr;
+}
+
+/** @arg {CM<MessageEvent<{type:string,data:unknown}>>} x @returns {x is CM<MessageEvent<WrappedMessage<unknown>>>} */
+function is_record_with_string_type_msg_data_wrapped(x) {
+	if(x.data.data.data instanceof Object&&'type' in x.data.data.data) {
+		if(x.data.data.data.type===post_message_connect_message_type) return true;
+	};
+	return false;
+}
+
+/** @arg {CM<MessageEvent<{type:string,data:unknown}>>} x @returns {CM<MessageEvent<WrappedMessage<unknown>>>|null} */
+function cast_to_record_with_string_type_msg_data_wrapped(x) {
+	if(!is_record_with_string_type_msg_data_wrapped(x)) return null;
+	if(x.data.type !== post_message_connect_message_type) return null;
+	return x;
 }
 
 /** @template {string} U @template {{}} T @arg {CM<T>|null} x @arg {U} k @returns {CM<T&{[P in U]:string}>|null} */
@@ -5368,19 +5383,16 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_connect_request_message(event_0) {
 		let e_monad_1=cast_to_record_with_string_type_msg(new_cast_monad(event_0));
-		if(!e_monad_1?.data) return;
-		let event_1=e_monad_1.data;
-		let event_message_1=event_1.data;
-		switch(event_message_1.type) {
-			case post_message_connect_message_type: break;
-			default: throw new Error("Invalid");
-		}
-		if(!this.is_with_data_decay(event_1)) return;
+		if(!e_monad_1) return;
+		if(!this.is_with_data_decay(e_monad_1)) return;
 		/** @type {msg_ev_01} */
-		let e_monad_2=cast_to_record_with_string_type_msg_data(new_cast_monad(event_1));
+		let e_monad_2=cast_to_record_with_string_type_msg_data(e_monad_1);
 		if(!e_monad_2?.data) return;
 		let event_2=e_monad_2.data;
 		let event_message_2=event_2.data;
+		if(e_monad_2.data.data.type!==post_message_connect_message_type) return;
+		let e_monad_3=cast_to_record_with_string_type_msg_data_wrapped(e_monad_2);
+		if(!e_monad_3) return;
 		let data=cast_to_record_with_string_type(new_cast_monad(event_message_2.data));
 		if(!data) return;
 		if(!data.data) return;
@@ -5420,15 +5432,14 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if(!this.is_wrapped_message(event)) return false;
-		if(!this.is_with_data_decay(event.data)) return false;
 		let data_record=cast_to_record_with_string_type(new_cast_monad(event.data.data));
 		if(!data_record?.data) return false;
 		if(data_record.data.type!=="tcp") return false;
 		return true;
 	}
-	/** @template {{type:string}} T @arg {T} data @returns {data is {type:string,data:unknown}} */
+	/** @template {CM<{type:string}>} T @arg {T} data @returns {data is CM<{type:string,data:unknown}>} */
 	is_with_data_decay(data) {
-		if(!is_record_with_T(data,"data")) return false;
+		if(!is_record_with_T(data.data,"data")) return false;
 		return true;
 	}
 	/** @param {ConnectionMessage} message */
