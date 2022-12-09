@@ -2431,7 +2431,56 @@ window.inject_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
 /** @type {HTMLMediaElementGainController|null} */
 let gain_controller=null;
 
-class HistoryStateManager {}
+class HistoryStateManager {
+	/** @param {string} key */
+	getCacheValue(key) {
+		if(typeof this.cur_state=='object'&&this.cur_state!==null) {
+			if(this.is_index_type(this.cur_state,key)) {
+				let {[key]: value}=this.cur_state;
+				return value;
+			}
+		}
+		return null;
+	}
+	/** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is {[X in U]: T[X]}} */
+	is_index_type(x,k) {
+		return k in x;
+	}
+	/** @type {{}|null} */
+	cur_state;
+	tmp_map=new Map;
+	/** @type {string[]} */
+	tmp_keys=[];
+	constructor() {
+		this.cur_state=this.getHistoryState();
+		window.addEventListener('popstate',(event) => {
+			let prev_state=this.cur_state;
+			this.cur_state=this.historyStateFromEvent(event);
+			console.log(this.cur_state,prev_state);
+		});
+	}
+	/** @arg {PopStateEvent} event */
+	historyStateFromEvent(event) {
+		/** @type {{}|null} */
+		let v=event.state;
+		return v;
+	}
+	/** @returns {{}|null} */
+	getHistoryState() {
+		return history.state;
+	}
+	/** @param {string} key  @param {{}} value */
+	setCacheValue(key,value) {
+		if(typeof this.cur_state==='object'&&this.cur_state!==null) {
+			if(!this.tmp_keys.includes(key)) this.tmp_keys.push(key);
+			history.replaceState({...this.cur_state,[key]: value},"");
+		} else {
+			console.log('history-replace',[this.cur_state]);
+			history.replaceState({[key]: value},"");
+		}
+	}
+}
+let history_state_manager=new HistoryStateManager();
 
 class VolumeRange {
 	static enabled=true;
@@ -2451,7 +2500,7 @@ class VolumeRange {
 	 * @param {HTMLMediaElementGainController} obj
 	 */
 	constructor(min,max,overdrive,obj) {
-		this.cache=true;
+		this.use_cache=true;
 		this.max=max;
 		this.min=min;
 		this.overdrive=overdrive;
@@ -2462,51 +2511,27 @@ class VolumeRange {
 	 */
 	setGain(gain) {
 		this.gain_controller.setGain(gain);
-		this.setGainCache(gain);
+		if(this.use_cache) {
+			history_state_manager.setCacheValue("filter_gain",gain);
+		}
 	}
 	/**
-	 * @param {any} gain
+	 * @private
 	 */
-	setGainCache(gain) {
-		if(!this.cache) return;
-		this.setHistoryStateCache('filter_gain',gain);
-	}
 	getGainCache() {
-		if(!this.cache) return null;
-		if(typeof history.state=='object') {
-			return this.getHistoryStateCache('filter_gain');
-		}
-		return null;
+		if(!this.use_cache) return null;
+		return history_state_manager.getCacheValue("filter_gain");
 	}
-	/**
-	 * @param {string} key
-	 * @param {any} value
-	 */
-	setHistoryStateCache(key,value) {
-		if(typeof history.state==='object') {
-			history.replaceState({...history.state,[key]: value},document.title);
-		} else {
-			console.log('history-replace',[history.state]);
-			history.replaceState({[key]: value},document.title);
-		}
-	}
-	/**
-	 * @param {string} key
-	 */
-	getHistoryStateCache(key) {
-		if(!this.cache) return null;
-		if(history.state!==null&&history.state.hasOwnProperty(key)) {
-			let {[key]: value}=history.state;
-			return value;
-		}
-		return null;
-	}
+	/** @private */
 	loadCachedGain() {
-		if(!this.cache) return 1*this.max;
+		if(!this.use_cache) return this.max;
 		console.log('history-cache',[history.state]);
 		let c_gain=this.getGainCache();
-		if(c_gain===null) c_gain=1;
-		return c_gain*this.max;
+		if(!(typeof c_gain==="object"||typeof c_gain==="number")) return 1;
+		let c_gain_1=c_gain;
+		if(c_gain_1===null) c_gain_1=1;
+		if(typeof c_gain_1==="object") return 1;
+		return c_gain_1*this.max;
 	}
 	max_compressor_reduction=-0.00011033167538698763;
 	/**
