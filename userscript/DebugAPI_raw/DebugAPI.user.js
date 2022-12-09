@@ -4860,7 +4860,7 @@ class TCPMessage {
 	 * @param {number} client_id
 	 * @param {number} seq
 	 * @param {number|null} ack
-	 * @param {null} data
+	 * @param {ConnectionMessage['data']} data
 	 */
 	constructor(flags,client_id,seq,ack,data) {
 		this.flags=flags;
@@ -4876,6 +4876,17 @@ class TCPMessage {
 	 */
 	static make_syn(client_id) {
 		return new TCPMessage([[1,"syn"]],client_id,(Math.random()*500)%500,null,null);
+	}
+	/**
+	 * @param {number} client_id
+	 * @arg {ConnectionMessage['data']} data
+	 * @arg {number} seq
+	 * @arg {number} ack
+	 * @returns {ConnectionMessage}
+	 */
+	static make_message(client_id,data,seq,ack) {
+		// new_tcp_client_message(client_id,data)
+		return new TCPMessage([[1,"syn"]],client_id,seq,ack,data);
 	}
 }
 class Socket {
@@ -4967,7 +4978,7 @@ class Socket {
 			this.send_ack(tcp_message);
 		}
 		if(tcp_message.flags.length==0) {
-			this.send_ack();
+			this.send_ack(tcp_message);
 		}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
@@ -4981,7 +4992,7 @@ class Socket {
 			} break;
 			case "disconnected": {
 				if(!this.m_disconnect_start) throw new Error("missed will_disconnect");
-				console.log("before_unload took", performance.now()-this.m_disconnect_start);
+				console.log("before_unload took",performance.now()-this.m_disconnect_start);
 				this.client_disconnect(report_info);
 			} break;
 			case "side":
@@ -5053,15 +5064,12 @@ class CrossOriginConnectionData {
 /**
  * @param {number} client_id
  * @param {MessageType|null} data
- * @returns {ConnectionMessage}
+ * @returns {TCPMessage}
+ * @param {number} seq
+ * @param {number} ack
  */
-function new_tcp_client_message(client_id,data) {
-	return {
-		type: "tcp",
-		flags: [],
-		client_id,
-		data,
-	};
+function new_tcp_client_message(client_id,data,seq,ack) {
+	return TCPMessage.make_message(client_id,data,seq,ack);
 }
 
 class ListenSocket {
@@ -5085,9 +5093,16 @@ class ListenSocket {
 		Socket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 	}
 	m_connected=false;
-	downstream_connect() {
+	/**
+	 * @param {number} syn
+	 * @param {number} ack
+	 */
+	downstream_connect(syn,ack) {
 		console.log('on_server_connect',this.m_client_id,this.m_event_source);
-		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{type: "connected"}));
+		this.push_tcp_message(TCPMessage.make_message(
+			this.m_client_id,{type: "connected"},
+			syn,ack,
+		));
 	}
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
@@ -5099,16 +5114,18 @@ class ListenSocket {
 		console.log(info.data,info.flags,info.client_id);
 	}
 	disconnected() {
-		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{
+		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{
 			type: "disconnected",
-		}));
+		},1,1));
 	}
-	/** @param {boolean} can_reconnect */
+	/**
+	 * @param {boolean} can_reconnect
+	 */
 	will_disconnect(can_reconnect) {
 		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{
 			type: "will_disconnect",
 			can_reconnect,
-		}));
+		},0,0));
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
@@ -5135,29 +5152,37 @@ class ListenSocket {
 		}
 		this.handle_tcp_data(tcp_data);
 	}
-	/** @param {FlagHandler} f */
-	send_ack(f) {
+	/**
+	 * @param {FlagHandler} f
+	 * @param {number} seq
+	 * @param {number} ack
+	 */
+	send_ack(f,seq,ack) {
 		if(f.ack()) throw new Error("ack should not be on packet we are ack'ing for");
-		this.push_tcp_message({
-			type: "tcp",
-			client_id: this.m_client_id,
-			flags: [...f.flags(),[2,"ack"]],
-			data: null,
-		});
+		let msg=new TCPMessage([...f.flags(),[2,"ack"]],this.m_client_id,seq,ack,null);
+		this.push_tcp_message(msg);
 	}
 	/** @arg {ConnectionMessage} tcp_data */
 	handle_tcp_data(tcp_data) {
 		let f=new FlagHandler(tcp_data.flags);
+		let {seq,ack}=tcp_data;
 		if(f.syn()) {
-			this.send_ack(f);
+			ack=((Math.random())*ack_win)%ack_win;
+			this.send_ack(f,ack,seq+1);
 		}
-		if(f.is_empty()) {
-			this.send_ack(f);
+		if(f.is_empty()&&ack) {
+			this.send_ack(f,seq,ack);
 		}
-		if(f.ack()&&this.m_connecting) {
+		if(f.is_empty()&&!ack) {
+			console.log("bad tcp");
+		}
+		if(f.ack()&&this.m_connecting&&ack) {
 			this.m_connecting=false;
 			this.m_connected=true;
-			this.downstream_connect();
+			this.downstream_connect(tcp_data.seq,ack);
+		}
+		if(f.ack()&&this.m_connecting&&!ack) {
+			console.log("bad tcp");
 		}
 		if(tcp_data.data) {
 			this.downstream_handle_event(tcp_data);
