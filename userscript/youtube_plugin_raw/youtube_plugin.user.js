@@ -2455,6 +2455,7 @@ class HistoryStateManager {
 	tmp_map=new Map;
 	/** @type {string[]} */
 	tmp_keys=[];
+	is_replacing_custom_state=false;
 	constructor() {
 		this.cur_state=this.getHistoryState();
 		window.addEventListener('popstate',(event) => {
