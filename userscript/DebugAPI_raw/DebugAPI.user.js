@@ -4851,6 +4851,33 @@ class FlagHandler {
 }
 
 
+const ack_win=5000;
+class TCPMessage {
+	/** @readonly */
+	type="tcp";
+	/**
+	 * @param {ConnectFlags[]} flags
+	 * @param {number} client_id
+	 * @param {number} seq
+	 * @param {number|null} ack
+	 * @param {null} data
+	 */
+	constructor(flags,client_id,seq,ack,data) {
+		this.flags=flags;
+		this.client_id=client_id;
+		this.seq=seq;
+		this.ack=ack;
+		/** @type {ConnectionMessage['data']} */
+		this.data=data;
+	}
+	/**
+	 * @param {number} client_id
+	 * @returns {ConnectionMessage}
+	 */
+	static make_syn(client_id) {
+		return new TCPMessage([[1,"syn"]],client_id,(Math.random()*500)%500,null,null);
+	}
+}
 class Socket {
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,flags,remote_target) {
@@ -4868,15 +4895,7 @@ class Socket {
 			port2: client_port,
 		}=channel;
 		this.m_port=client_port;
-		this.m_port.addEventListener("message",this);
-		this.m_port.start();
-		elevate_event_handler(this);
-		this.send_init_request({
-			type: "tcp",
-			flags: [[1,"syn"]],
-			client_id: this.m_client_id,
-			data: null,
-		},[server_port]);
+		this.send_syn(server_port);
 	}
 	reconnect() {
 		let channel=new MessageChannel;
@@ -4885,15 +4904,17 @@ class Socket {
 			port2: client_port,
 		}=channel;
 		this.m_port=client_port;
+		this.send_syn(server_port);
+	}
+	init_handler() {
 		this.m_port.addEventListener("message",this);
 		this.m_port.start();
 		elevate_event_handler(this);
-		this.send_init_request({
-			type: "tcp",
-			flags: [[1,"syn"]],
-			client_id: this.m_client_id,
-			data: null,
-		},[server_port]);
+	}
+	/** @param {MessagePort} server_port */
+	send_syn(server_port) {
+		this.init_handler();
+		this.send_init_request(TCPMessage.make_syn(this.m_client_id),[server_port]);
 	}
 	/** @param {ConnectionMessage} data @param {Transferable[]} ports */
 	send_init_request(data,ports) {
@@ -4927,10 +4948,13 @@ class Socket {
 		};
 		this.handle_tcp_data(message_data,report_info);
 	}
-	send_ack() {
+	/** @arg {ConnectionMessage} tcp_message */
+	send_ack(tcp_message) {
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
+			ack: tcp_message.seq+1,
+			seq: (Math.random()*ack_win)%ack_win,
 			flags: [[2,"ack"]],
 			data: null,
 		});
@@ -4940,7 +4964,7 @@ class Socket {
 		let f=new FlagHandler(tcp_message.flags);
 		console.log("local",tcp_message);
 		if(f.syn()&&f.ack()) {
-			this.send_ack();
+			this.send_ack(tcp_message);
 		}
 		if(tcp_message.flags.length==0) {
 			this.send_ack();

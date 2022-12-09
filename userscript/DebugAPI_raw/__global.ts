@@ -161,6 +161,8 @@ declare global {
 	type ConnectionMessage={
 		type: "tcp",
 		flags: ConnectFlags[],
+		seq:number,
+		ack:number|null,
 		client_id: number,
 		data: MessageType|ConnectionForward|null,
 	};
