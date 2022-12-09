@@ -5328,7 +5328,7 @@ class ListenSocket {
 			this.downstream_connect(data.seq,seq);
 		}
 		if(f.ack()&&this.m_connecting&&!seq) {
-			console.log("bad tcp");
+			console.log("bad tcp",data);
 		}
 		let downstream_data=data.data;
 		if(downstream_data) {
