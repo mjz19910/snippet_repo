@@ -5188,27 +5188,28 @@ class ListenSocket {
 		console.log(tcp_data.data);
 		debugger;
 		let f=new FlagHandler(tcp_data.flags);
-		let {seq,ack}=tcp_data;
+		let {seq: ack,ack: seq}=tcp_data;
 		if(f.syn()) {
 			// seq=number & ack=null;
-			ack=(Math.random()*ack_win)%ack_win|0;
+			seq=(Math.random()*ack_win)%ack_win|0;
 			if(testing_tcp) {
-				ack=300;
+				seq=300;
 			}
-			this.send_ack(f,ack,seq+1);
-		}
-		if(f.is_empty()&&ack) {
+			ack+=1;
 			this.send_ack(f,seq,ack);
 		}
-		if(f.is_empty()&&!ack) {
+		if(f.is_empty()&&seq) {
+			this.send_ack(f,seq,ack);
+		}
+		if(f.is_empty()&&!seq) {
 			console.log("bad tcp");
 		}
-		if(f.ack()&&this.m_connecting&&ack) {
+		if(f.ack()&&this.m_connecting&&seq) {
 			this.m_connecting=false;
 			this.m_connected=true;
-			this.downstream_connect(tcp_data.seq,ack);
+			this.downstream_connect(tcp_data.seq,seq);
 		}
-		if(f.ack()&&this.m_connecting&&!ack) {
+		if(f.ack()&&this.m_connecting&&!seq) {
 			console.log("bad tcp");
 		}
 		if(tcp_data.data) {
