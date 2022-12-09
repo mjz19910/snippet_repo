@@ -4947,7 +4947,7 @@ class Socket {
 	push_tcp_message(message_data) {
 		console.group("-> LocalSocket");
 		console.log("Socket ->");
-		console.log('l_port.onmessage.handleEvent ->');
+		console.log("l_port.onmessage.handleEvent ->");
 		console.log("-> ListenSocket", message_data)
 		this.m_port.postMessage(message_data);
 		// sends message to
@@ -5117,8 +5117,9 @@ class ListenSocket {
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
 		console.group("-> Socket");
-		console.log("ListenSocket -> s_port.onmessage.handleEvent");
-		console.log("s_port.onmessage.handleEvent -> Socket", message_data);
+		console.log("ListenSocket ->");
+		console.log("s_port.onmessage.handleEvent ->");
+		console.log("-> Socket", message_data);
 		this.m_port.postMessage(message_data);
 		Socket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 		console.groupEnd();
