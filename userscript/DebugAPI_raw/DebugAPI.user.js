@@ -5392,12 +5392,9 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		/** @type {msg_ev_01} */
 		let e_monad_2=cast_to_record_with_string_type_msg_data(e_monad_1);
 		if(!e_monad_2?.data) return;
-		let event_2=e_monad_2.data;
-		let event_message_2=event_2.data;
-		if(e_monad_2.data.data.type!==post_message_connect_message_type) return;
 		let e_monad_3=cast_to_record_with_string_type_msg_data_wrapped(e_monad_2);
 		if(!e_monad_3) return;
-		let data=cast_to_record_with_string_type(new_cast_monad(event_message_2.data));
+		let data=cast_to_record_with_string_type(new_cast_monad(e_monad_3.data.data.data));
 		if(!data) return;
 		if(!data.data) return;
 		switch(data.data.type) {
@@ -5413,7 +5410,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
-		console.groupCollapsed("-rx-C!-> CrossOriginConnection");
+		console.groupCollapsed("-rx-C!-> CrossOriginConnection<"+event_0.data.data.seq+","+event_0.data.data.ack+">");
 		console.log("CrossOriginConnection ->");
 		console.log("ListenSocket.handle_tcp_data ->");
 		console.log("s_port.onmessage.handleEvent ->");
