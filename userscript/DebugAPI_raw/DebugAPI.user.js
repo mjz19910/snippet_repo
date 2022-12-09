@@ -5235,9 +5235,11 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		if(!message_record_with_source) return false;
 		if(message_record_with_source.data.source!=="sponsorblock") return false;
 		// should be a SponsorBlock event.data
-		let message_record_with_type=cast_to_record_with_string_type(new_cast_monad(message_record_with_source));
+		let message_record_with_type=cast_to_record_with_string_type(message_record_with_source);
 		if(!message_record_with_type?.data) return false;
-		switch(message_record_with_type.data.type) {
+		/** @type {{ [P in keyof typeof message_record_with_type.data]: typeof message_record_with_type.data[P]; }} */
+		let decay_type=message_record_with_type.data;
+		switch(decay_type.type) {
 			case "data":
 			case "navigation": return true;
 		}
