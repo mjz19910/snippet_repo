@@ -4878,6 +4878,23 @@ class Socket {
 			data: null,
 		},[server_port]);
 	}
+	reconnect() {
+		let channel=new MessageChannel;
+		let {
+			port1: server_port,
+			port2: client_port,
+		}=channel;
+		this.m_port=client_port;
+		this.m_port.addEventListener("message",this);
+		this.m_port.start();
+		elevate_event_handler(this);
+		this.send_init_request({
+			type: "tcp",
+			flags: [[1,"syn"]],
+			client_id: this.m_client_id,
+			data: null,
+		},[server_port]);
+	}
 	/** @param {ConnectionMessage} data @param {Transferable[]} ports */
 	send_init_request(data,ports) {
 		if(this.m_debug) {
@@ -4934,8 +4951,13 @@ class Socket {
 			case "connected": {
 				this.client_connect(report_info);
 			} break;
-			case "disconnected": {
+			case "will_disconnect": {
 				this.m_can_reconnect=tcp_data.can_reconnect;
+				this.m_disconnect_start=performance.now();
+			} break;
+			case "disconnected": {
+				if(!this.m_disconnect_start) throw new Error("missed will_disconnect");
+				console.log("before_unload took", performance.now()-this.m_disconnect_start);
 				this.client_disconnect(report_info);
 			} break;
 			case "side":
@@ -4953,6 +4975,7 @@ class Socket {
 		if(!this.m_port) throw new Error("missing connection port, and disconnect was still called");
 		this.m_port.removeEventListener('message',this);
 		this.m_port.close();
+		setTimeout(this.reconnect.bind(this),20);
 	}
 	/** @readonly */
 	m_side="client";
@@ -5051,10 +5074,15 @@ class ListenSocket {
 		}
 		console.log(info.data,info.flags,info.client_id);
 	}
-	/** @param {boolean} can_reconnect */
-	onDisconnect(can_reconnect) {
+	disconnected() {
 		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{
 			type: "disconnected",
+		}));
+	}
+	/** @param {boolean} can_reconnect */
+	will_disconnect(can_reconnect) {
+		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{
+			type: "will_disconnect",
 			can_reconnect,
 		}));
 	}
@@ -5276,10 +5304,13 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			} break;
 			case "beforeunload": {
 				for(let connection of this.connections) {
-					connection.onDisconnect(false);
+					connection.will_disconnect(false);
 				}
 			} break;
 			case "unload": {
+				for(let connection of this.connections) {
+					connection.disconnected();
+				}
 				this.connections.length=0;
 			} break;
 		}

@@ -153,7 +153,11 @@ declare global {
 		type: typeof post_message_connect_message_type,
 		data: T,
 	};
-	type MessageType=ConnectionConnected|ConnectionDisconnected|ConnectionSideMsg;
+	type MessageType=
+	ConnectionConnected|
+	ConnectionDisconnected|
+	ConnectionSideMsg|
+	ConnectionWillDisconnect;
 	type ConnectionMessage={
 		type: "tcp",
 		flags: ConnectFlags[],
@@ -168,10 +172,13 @@ declare global {
 	type ConnectionConnected={
 		type: "connected";
 	};
-	type ConnectionDisconnected={
-		type: "disconnected";
+	type ConnectionWillDisconnect={
+		type: "will_disconnect";
 		can_reconnect: boolean;
 	};
+	type ConnectionDisconnected={
+		type:"disconnected";
+	}
 	type ConnectionSide="client"|"server";
 	type ConnectionSideMsg={
 		type: "side",
