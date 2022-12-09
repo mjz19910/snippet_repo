@@ -4881,10 +4881,7 @@ class Socket {
 			data: null,
 		},[server_port]);
 	}
-	/**
-	 * @param {ConnectionMessage} data
-	 * @param {Transferable[]} ports
-	 */
+	/** @param {ConnectionMessage} data @param {Transferable[]} ports */
 	send_init_request(data,ports) {
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
