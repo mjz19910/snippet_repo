@@ -5154,7 +5154,6 @@ class ListenSocket {
 			console.log(tcp_data);
 			return;
 		}
-		console.log('Socket -> l_port.onmessage.handleEvent -> ListenSocket',tcp_data);
 		if(this.m_flags.does_proxy_to_opener) {
 			let real_data=tcp_data.data;
 			/** @type {[number,number,null][]} */
@@ -5169,6 +5168,7 @@ class ListenSocket {
 				data: real_data,
 			};
 		}
+		console.log('Socket -> l_port.onmessage.handleEvent -> ListenSocket',tcp_data);
 		this.handle_tcp_data(tcp_data);
 	}
 	/**
@@ -5183,9 +5183,6 @@ class ListenSocket {
 	}
 	/** @arg {ConnectionMessage} tcp_data */
 	handle_tcp_data(tcp_data) {
-		console.log(tcp_data);
-		console.log(tcp_data.data);
-		debugger;
 		let f=new FlagHandler(tcp_data.flags);
 		let {seq: ack,ack: seq}=tcp_data;
 		if(f.syn()) {
@@ -5285,6 +5282,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let prev_connection_index=this.connections.findIndex(e => {
 			return e.source()===event_source;
 		});
+		console.log('CrossOriginConnection -> ListenSocket.handle_tcp_data -> s_port.onmessage.handleEvent -> Socket',event.data.data);
 		handler.handle_tcp_data(event.data.data);
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
