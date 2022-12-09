@@ -2390,7 +2390,6 @@ class HTMLMediaElementGainController {
 		this.dynamics_compressor=createDynamicsCompressor(this.audioCtx,this.gain_node);
 
 		this.style=createStyleElement(volume_plugin_style_source);
-		document.head.append(this.style);
 	}
 	/**
 	 * @param {number} gain
@@ -2402,9 +2401,10 @@ class HTMLMediaElementGainController {
 	 * @param {NodeListOf<HTMLMediaElement>} media_node_list
 	 */
 	attach_element_list(media_node_list) {
+		document.head.append(this.style);
 		for(let i=0;i<media_node_list.length;i++) {
 			let video_element=media_node_list[i];
-			video_element.crossOrigin='anonymous';
+			// video_element.crossOrigin='anonymous';
 			if(this.attached_element_list.includes(video_element)) continue;
 			let media_element_source=this.audioCtx.createMediaElementSource(video_element);
 			media_element_source.connect(this.dynamics_compressor);
@@ -2412,17 +2412,25 @@ class HTMLMediaElementGainController {
 			this.media_element_source_list.push(media_element_source);
 		}
 	}
+	static create() {
+		gain_controller=new HTMLMediaElementGainController
+		window.inject_api.gain_controller=gain_controller;
+	}
 }
 window.inject_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
-let gain_controller=new HTMLMediaElementGainController;
-window.inject_api.gain_controller=gain_controller;
+/** @type {HTMLMediaElementGainController|null} */
+let gain_controller=null;
+
 
 class VolumeRange {
 	static enabled=true;
 	static create() {
 		if(!this.enabled) return;
 		if(yt_debug_enabled) console.log('create VolumeRange');
-		gain_controller.attach_element_list(document.querySelectorAll("video"));
+		HTMLMediaElementGainController.create();
+		if(gain_controller) {
+			gain_controller.attach_element_list(document.querySelectorAll("video"));
+		}
 		attach_volume_range_to_page();
 	}
 	/**
