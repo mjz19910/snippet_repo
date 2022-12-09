@@ -7,6 +7,10 @@ import {RepeatL_0} from "./support/Repeat_0.js";
 // Holder
 export type Holder=1;
 
+declare global {
+	type CM<T>={tag:"cast_tag",data:T};
+}
+
 //@@iterator for NodeListOf
 declare global {
 	interface NodeListOf<TNode extends Node> extends NodeList {

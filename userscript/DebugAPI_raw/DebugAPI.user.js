@@ -4774,12 +4774,12 @@ inject_api.CSSCascade=CSSCascade;
 
 
 //#region is_helpers
-/** @template {{}|null} T @template {string} U @arg {{tag:"cast_tag",data:T}} x @arg {U} k @returns {x is {tag:"cast_tag",data:T&Record<U,string>}} */
+/** @template {{}|null} T @template {string} U @arg {CM<T>} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
 function is_record_with_string_type(x,k) {
 	return x.data!==null&&is_record_with_T(x.data,k)&&typeof x.data[k]==='string';
 }
 
-/** @template T @arg {{tag:"cast_tag",data:T}} x @returns {x is {tag:"cast_tag",data:T&{}}} */
+/** @template T @arg {CM<T>} x @returns {x is CM<T&{}}} */
 function is_object(x) {
 	if(x.data===null) return false;
 	if(typeof x.data!=='object') return false;
@@ -4795,19 +4795,19 @@ function is_record_with_T(x,k) {
 //#endregion
 
 //#region cast_monad
-/** @template T @param {T} x @returns {{tag:"cast_tag",data:T}} */
+/** @template T @param {T} x @returns {CM<T>} */
 function new_cast_monad(x) {
 	return {tag:"cast_tag",data:x};
 }
 
-/** @template T @arg {{tag:"cast_tag",data:T}|null} x @returns {{tag:"cast_tag",data:(T&{}|null)}|null} */
+/** @template T @arg {CM<T>|null} x @returns {CM<T&{}|null>|null} */
 function cast_to_object(x) {
 	if(x===null) return null;
 	if(!is_object(x)) return null;
 	return x;
 }
 
-/** @template T @arg {{tag:"cast_tag",data:T}|null} x @returns {{tag:"cast_tag",data:T&{type:string}|null}|null} */
+/** @template T @arg {CM<T>|null} x @returns {CM<T&{type:string}|null>|null} */
 function cast_to_record_with_string_type(x) {
 	let cast_result=cast_to_object(x);
 	if(!cast_result?.data) return null;
@@ -4815,7 +4815,7 @@ function cast_to_record_with_string_type(x) {
 	return cast_result;
 }
 
-/** @template {string} U @template {{}} T @arg {{tag:"cast_tag",data:T}|null} x @arg {U} k @returns {{tag:"cast_tag",data:T&{[P in U]:string}}|null} */
+/** @template {string} U @template {{}} T @arg {CM<T>|null} x @arg {U} k @returns {CM<T&{[P in U]:string}>|null} */
 function cast_to_record_with_key_and_string_type(x,k) {
 	if(x===null) return null;
 	if(!is_record_with_string_type(x,k)) return null;
@@ -5228,6 +5228,9 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @param {ConnectionMessage} message */
 	push_tcp_message(message) {
 		this.m_local_handler.push_tcp_message(message);
+	}
+	is_sponsorBlock_source() {
+
 	}
 	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
