@@ -2515,9 +2515,7 @@ class VolumeRange {
 			history_state_manager.setCacheValue("filter_gain",gain);
 		}
 	}
-	/**
-	 * @private
-	 */
+	/** @private */
 	getGainCache() {
 		if(!this.use_cache) return null;
 		return history_state_manager.getCacheValue("filter_gain");
