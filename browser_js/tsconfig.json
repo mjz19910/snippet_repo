@@ -43,7 +43,8 @@
 		"typescript/src/**/*",
 		"typescript/modules/**/*",
 		"typescript/ns.ts",
-		"web/src/**/*",
+		"web/**/*",
+		"index.js",
 	],
 	"exclude": [
 		"node_modules",
