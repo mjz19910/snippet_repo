@@ -4875,7 +4875,11 @@ class TCPMessage {
 	 * @returns {ConnectionMessage}
 	 */
 	static make_syn(client_id) {
-		return new TCPMessage([[1,"syn"]],client_id,(Math.random()*ack_win)%ack_win|0,null,null);
+		let seq=(Math.random()*ack_win)%ack_win|0;
+		if(testing_tcp) {
+			seq=100;
+		}
+		return new TCPMessage([[1,"syn"]],client_id,seq,null,null);
 	}
 	/**
 	 * @param {number} client_id
@@ -4889,6 +4893,9 @@ class TCPMessage {
 		return new TCPMessage([[1,"syn"]],client_id,seq,ack,data);
 	}
 }
+
+let testing_tcp=true;
+
 class Socket {
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,flags,remote_target) {
@@ -4963,16 +4970,20 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	send_ack(tcp_message) {
+		debugger;
 		// seq=number & ack=number;
-		let ack=tcp_message.ack;
-		if(!ack) {
-			ack=(Math.random()*ack_win)%ack_win|0;
+		let seq=tcp_message.ack;
+		if(!seq) {
+			seq=(Math.random()*ack_win)%ack_win|0;
+			if(testing_tcp) {
+				seq=300;
+			}
 		}
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
 			ack: tcp_message.seq+1,
-			seq: ack,
+			seq,
 			flags: [[2,"ack"]],
 			data: null,
 		});
