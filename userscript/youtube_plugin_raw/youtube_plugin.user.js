@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	youtube plugin
 // @namespace	https://github.com/mjz19910/
-// @version	0.1.2.1
+// @version	0.1.2.2
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2022
@@ -51,6 +51,26 @@ function default_from(v1,v2) {
 	return res;
 }
 
+class YtdMastheadContainerChildren {
+	center=new Element;
+}
+
+class YtdMastheadContainer {
+	children=new YtdMastheadContainerChildren;
+}
+
+class YtdMastheadWithContainer {
+	container=new YtdMastheadContainer;
+}
+
+class YtdMasthead {
+	$=new YtdMastheadWithContainer;
+}
+
+class ShadyChildrenOfYtdApp {
+	masthead=new YtdMasthead;
+}
+
 class YtdAppElement extends HTMLElement {
 	/**@type {HTMLStyleElement|undefined}*/
 	ui_plugin_style_element;
@@ -64,17 +84,7 @@ class YtdAppElement extends HTMLElement {
 	static cast(element) {
 		return any_c(element,YtdAppElement);
 	}
-	__shady_children={
-		masthead: {
-			$: {
-				container: {
-					children: {
-						center: new Element
-					}
-				}
-			}
-		}
-	};
+	__shady_children=new ShadyChildrenOfYtdApp;
 }
 
 class YtCurrentPage extends HTMLElement {
@@ -490,7 +500,7 @@ function fetch_promise_handler(request,options,response) {
 	return new Proxy(fake_res,{
 		get(obj,key,_proxy) {
 			for(let i=0;i<handled_keys.length;i++) {
-				if(handled_keys[i] === key) {
+				if(handled_keys[i]===key) {
 					return obj[key];
 				}
 			}
@@ -2413,7 +2423,7 @@ class HTMLMediaElementGainController {
 		}
 	}
 	static create() {
-		gain_controller=new HTMLMediaElementGainController
+		gain_controller=new HTMLMediaElementGainController;
 		window.inject_api.gain_controller=gain_controller;
 	}
 }
