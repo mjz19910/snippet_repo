@@ -2145,7 +2145,7 @@ class js_token_generator {
 }
 
 
-export function ecma_parse_main() {
+function ecma_parse_main() {
 	let parse_str="function x(){}";
 	if("code" in window&&typeof window.code==="string") {
 		parse_str=window.code;
@@ -2174,3 +2174,5 @@ export function ecma_parse_main() {
 	}
 	console.log(`parsed ${i} tokens`);
 }
+if(typeof exports)
+exports.ecma_parse_main=ecma_parse_main;
