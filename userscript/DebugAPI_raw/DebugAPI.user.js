@@ -5164,6 +5164,9 @@ class ListenSocket {
 	}
 	/** @arg {ConnectionMessage} tcp_data */
 	handle_tcp_data(tcp_data) {
+		console.log(tcp_data);
+		console.log(tcp_data.data);
+		debugger;
 		let f=new FlagHandler(tcp_data.flags);
 		let {seq,ack}=tcp_data;
 		if(f.syn()) {
