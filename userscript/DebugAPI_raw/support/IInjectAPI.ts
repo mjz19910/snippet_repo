@@ -195,7 +195,9 @@ interface DebugAPI_the {
 	get_k(v: string): any;
 	clearCurrentBreakpoint(): boolean;
 }
+
 type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
+
 class VoidCallback<U extends any[],C> {
 	m_callback: ((...args: U) => C);
 	constructor(callback: (...args: U) => C) {
