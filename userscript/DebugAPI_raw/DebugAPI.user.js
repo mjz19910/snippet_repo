@@ -4938,6 +4938,10 @@ class Socket {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
 		}
+		console.group("-I-> CrossOriginConnection");
+		console.log("Socket ->");
+		console.log("top.onmessage.handleEvent ->");
+		console.log("-I> CrossOriginConnection",data);
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data,
@@ -4948,7 +4952,7 @@ class Socket {
 		console.group("--> LocalSocket");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
-		console.log("-> ListenSocket", message_data)
+		console.log("-> ListenSocket", message_data);
 		this.m_port.postMessage(message_data);
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
@@ -4977,7 +4981,6 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	send_ack(tcp_message) {
-		debugger;
 		// seq=number & ack=number;
 		let seq=tcp_message.ack;
 		if(!seq) {
@@ -5334,9 +5337,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			throw new Error("send tcp message to non-existent connection");
 		}
 		this.m_local_handler.push_tcp_message(message);
-	}
-	is_sponsorBlock_source() {
-
 	}
 	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
