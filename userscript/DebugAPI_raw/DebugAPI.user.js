@@ -5184,8 +5184,9 @@ class ListenSocket {
 			};
 		}
 		console.group("-?-> ListenSocket");
-		console.log("Socket -> l_port.onmessage.handleEvent");
-		console.log("l_port.onmessage.handleEvent -> ListenSocket",tcp_data);
+		console.log("Socket -> ");
+		console.log("l_port.onmessage.handleEvent ->");
+		console.log("-?-> ListenSocket",tcp_data);
 		this.handle_tcp_data(tcp_data);
 		console.groupEnd();
 	}
