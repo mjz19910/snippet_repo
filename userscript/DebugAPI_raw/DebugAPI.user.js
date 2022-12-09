@@ -5054,7 +5054,6 @@ class Socket {
 		console.groupEnd();
 		console.log("<?-");
 		if(this.m_was_connected) {
-			debugger;
 			this.m_was_connected=false;
 			// </group syn>
 			console.groupEnd();
