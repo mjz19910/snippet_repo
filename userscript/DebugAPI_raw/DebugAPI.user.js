@@ -4945,7 +4945,7 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.group("-> LocalSocket");
+		console.group("--> LocalSocket");
 		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
 		console.log("-> ListenSocket", message_data)
@@ -4966,7 +4966,7 @@ class Socket {
 		console.group("-?-> Socket");
 		console.log("ListenSocket ->");
 		console.log("s_port.onmessage.handleEvent ->")
-		console.log("-?-> Socket",message_data);
+		console.log("-?> Socket",message_data);
 		/** @type {ReportInfo<this>} */
 		let report_info={
 			data: message_data,
@@ -5184,9 +5184,9 @@ class ListenSocket {
 			};
 		}
 		console.group("-?-> ListenSocket");
-		console.log("Socket -> ");
+		console.log("Socket ->");
 		console.log("l_port.onmessage.handleEvent ->");
-		console.log("-?-> ListenSocket",tcp_data);
+		console.log("-?> ListenSocket",tcp_data);
 		this.handle_tcp_data(tcp_data);
 		console.groupEnd();
 	}
@@ -5302,10 +5302,10 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			return e.source()===event_source;
 		});
 		console.group("-!-> Socket");
-		console.log("CrossOriginConnection -> ");
-		console.log("ListenSocket.handle_tcp_data -> ");
+		console.log("CrossOriginConnection ->");
+		console.log("ListenSocket.handle_tcp_data ->");
 		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-!-> Socket",event.data.data);
+		console.log("-!> Socket",event.data.data);
 		handler.handle_tcp_data(event.data.data);
 		console.groupEnd();
 		if(prev_connection_index>-1) {
