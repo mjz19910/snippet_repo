@@ -4866,9 +4866,7 @@ function cast_to_record_with_string_type_msg_data(x) {
 
 /** @arg {CM<MessageEvent<{type:string,data:unknown}>>} x @returns {x is CM<MessageEvent<WrappedMessage<unknown>>>} */
 function is_record_with_string_type_msg_data_wrapped(x) {
-	if(x.data.data.data instanceof Object&&'type' in x.data.data.data) {
-		if(x.data.data.data.type===post_message_connect_message_type) return true;
-	};
+	if(x.data.data.type===post_message_connect_message_type) return true;
 	return false;
 }
 
