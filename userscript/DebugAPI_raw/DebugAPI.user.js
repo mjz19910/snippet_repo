@@ -4956,7 +4956,7 @@ class Socket {
 		this.m_port.removeEventListener('message',this);
 		this.m_port.close();
 	}
-	/** @type {"client"} */
+	/** @readonly */
 	m_side="client";
 	/** @type {ReturnType<typeof setTimeout>|null} */
 	m_timeout_id=null;
