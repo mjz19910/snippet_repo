@@ -4873,7 +4873,6 @@ function is_record_with_string_type_msg_data_wrapped(x) {
 /** @arg {CM<MessageEvent<{type:string,data:unknown}>>} x @returns {CM<MessageEvent<WrappedMessage<unknown>>>|null} */
 function cast_to_record_with_string_type_msg_data_wrapped(x) {
 	if(!is_record_with_string_type_msg_data_wrapped(x)) return null;
-	if(x.data.type !== post_message_connect_message_type) return null;
 	return x;
 }
 
