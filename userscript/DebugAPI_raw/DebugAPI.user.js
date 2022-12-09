@@ -5231,14 +5231,14 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @arg {{}} data_obj @returns {boolean} */
 	is_sponsor_block_event_data(data_obj) {
-		let message_record_with_source=cast_to_record_with_key_and_string_type(new_cast_monad(data_obj),"source");
-		if(!message_record_with_source) return false;
-		if(message_record_with_source.data.source!=="sponsorblock") return false;
+		let cast_monad=cast_to_record_with_key_and_string_type(new_cast_monad(data_obj),"source");
+		if(!cast_monad) return false;
+		if(cast_monad.data.source!=="sponsorblock") return false;
 		// should be a SponsorBlock event.data
-		let message_record_with_type=cast_to_record_with_string_type(message_record_with_source);
-		if(!message_record_with_type?.data) return false;
-		/** @type {{ [P in keyof typeof message_record_with_type.data]: typeof message_record_with_type.data[P]; }} */
-		let decay_type=message_record_with_type.data;
+		let cast_monad_2=cast_to_record_with_string_type(cast_monad);
+		if(!cast_monad_2?.data) return false;
+		/** @type {{ [P in keyof typeof cast_monad_2.data]: typeof cast_monad_2.data[P]; }} */
+		let decay_type=cast_monad_2.data;
 		switch(decay_type.type) {
 			case "data":
 			case "navigation": return true;
