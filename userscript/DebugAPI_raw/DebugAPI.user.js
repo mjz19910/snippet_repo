@@ -5135,6 +5135,8 @@ class ListenSocket {
 class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @type {ConnectionMessage[]} */
 	unhandled_child_events=[];
+	/** @type {Socket|null} */
+	m_local_handler=null;
 	constructor() {
 		super();
 		elevate_event_handler(this);
@@ -5154,6 +5156,10 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			connect_target=this.state.top;
 		} else {
 			throw new Error("Invalid state, not top and window.top is null");
+		}
+		if(connect_target===window) {
+			this.m_local_handler=null;
+			return;
 		}
 		this.m_local_handler=new Socket(
 			30000,
@@ -5205,6 +5211,9 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	/** @param {ConnectionMessage} message */
 	push_tcp_message(message) {
+		if(!this.m_local_handler) {
+			throw new Error("send tcp message to non-existent connection");
+		}
 		this.m_local_handler.push_tcp_message(message);
 	}
 	is_sponsorBlock_source() {
