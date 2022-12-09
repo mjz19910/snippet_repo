@@ -29,11 +29,11 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"useUnknownInCatchVariables": true,
-		"isolatedModules": true,
 		"noPropertyAccessFromIndexSignature": false,
 		"forceConsistentCasingInFileNames": true,
 		"exactOptionalPropertyTypes": true,
 		"experimentalDecorators": true,
+		"isolatedModules": false,
 	},
 	"ts-node": {
 		"esm": true,
@@ -44,7 +44,7 @@
 		"typescript/modules/**/*",
 		"typescript/ns.ts",
 		"web/**/*",
-		"index.js",
+		"index.ts",
 	],
 	"exclude": [
 		"node_modules",
