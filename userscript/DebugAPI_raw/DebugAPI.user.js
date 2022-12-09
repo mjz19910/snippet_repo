@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		DebugAPI userscript
 // @namespace	https://github.com/mjz19910/
-// @version		0.1.0.2
+// @version		0.1.1.0
 // @description	DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
 // @author		@mjz19910
 // @copyright   @mjz19910 2019-2022
@@ -43,8 +43,8 @@ function add_array(ids_dec) {
 
 // #pragma section sha_1_hash
 // @Update on minor version change
-// version <0.1.0.0 commit sha1
-const commit_id_sha_1="aa975a29";
+// version <0.1.1.x commit sha1
+const commit_id_sha_1="453fc540";
 // #pragma end sha_1_hash
 
 /** @template K,V */
