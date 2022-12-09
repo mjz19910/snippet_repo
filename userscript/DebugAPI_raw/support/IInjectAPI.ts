@@ -75,9 +75,7 @@ declare global {
 		LoggingEventTarget: {};
 		DebugAPI: DebugAPIType;
 		AddEventListenerExtension: {};
-		addEventListenerExtension: {
-			elevate_handler(handler:EventListenersT):void;
-		};
+		addEventListenerExtension: AddEventListenerExtension;
 	}
 }
 
