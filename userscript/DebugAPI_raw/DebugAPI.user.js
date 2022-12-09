@@ -4889,7 +4889,6 @@ class TCPMessage {
 	 * @returns {ConnectionMessage}
 	 */
 	static make_message(client_id,data,seq,ack) {
-		// new_tcp_client_message(client_id,data)
 		return new TCPMessage([],client_id,seq,ack,data);
 	}
 }
@@ -4946,7 +4945,7 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.log('Socket -> ListenSocket',message_data);
+		console.log('Socket -> l_port.onmessage.handleEvent -> ListenSocket',message_data);
 		this.m_port.postMessage(message_data);
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
@@ -4960,7 +4959,7 @@ class Socket {
 		if(Socket.prototype===this) return;
 		let message_data=event.data;
 		if(message_data.type!=="tcp") throw new Error();
-		console.log('Event -> Socket',message_data);
+		console.log("ListenSocket -> s_port.onmessage.handleEvent -> Socket",message_data);
 		/** @type {ReportInfo<this>} */
 		let report_info={
 			data: message_data,
@@ -5107,7 +5106,7 @@ class ListenSocket {
 	m_debug=false;
 	/** @arg {ConnectionMessage} message_data */
 	push_tcp_message(message_data) {
-		console.log("ListenSocket -> Socket", message_data);
+		console.log("ListenSocket -> s_port.onmessage.handleEvent -> Socket", message_data);
 		this.m_port.postMessage(message_data);
 		Socket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 	}
@@ -5155,7 +5154,7 @@ class ListenSocket {
 			console.log(tcp_data);
 			return;
 		}
-		console.log('Event -> ListenSocket',tcp_data);
+		console.log('Socket -> l_port.onmessage.handleEvent -> ListenSocket',tcp_data);
 		if(this.m_flags.does_proxy_to_opener) {
 			let real_data=tcp_data.data;
 			/** @type {[number,number,null][]} */
