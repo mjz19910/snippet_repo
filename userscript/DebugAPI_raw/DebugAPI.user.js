@@ -4910,6 +4910,7 @@ class Socket {
 		this.m_port=client_port;
 		this.send_syn(ports);
 	}
+	/** @returns {{ports:[MessagePort],client_port:MessagePort}} */
 	init_syn_data() {
 		let channel=new MessageChannel;
 		let {
@@ -4928,12 +4929,12 @@ class Socket {
 		this.m_port.start();
 		elevate_event_handler(this);
 	}
-	/** @param {MessagePort[]} ports */
+	/** @param {[MessagePort]} ports */
 	send_syn(ports) {
 		this.init_handler();
 		this.send_init_request(TCPMessage.make_syn(this.m_client_id),ports);
 	}
-	/** @param {ConnectionMessage} data @param {MessagePort[]} ports */
+	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
 	send_init_request(data,ports) {
 		if(this.m_debug) {
 			console.log("post request ConnectOverPostMessage");
@@ -4947,7 +4948,7 @@ class Socket {
 		this.post_wrapped(data,ports);
 		console.groupEnd();
 	}
-	/** @param {ConnectionMessage} data @param {MessagePort[]} ports */
+	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
 	post_wrapped(data,ports) {
 		/** @type {WrappedMessage<ConnectionMessage>} */
 		let msg={
