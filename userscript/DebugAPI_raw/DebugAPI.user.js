@@ -4861,8 +4861,7 @@ class LocalHandler {
 		this.m_remote_target=remote_target;
 		this.m_event_source=remote_target;
 		elevate_event_handler(this);
-	}
-	client_begin_connect() {
+		
 		if(this.m_remote_target===window) {
 			throw new Error("Sending messages to self is means i have a bad time");
 		}
@@ -5179,7 +5178,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 			this.m_flags,
 			connect_target,
 		);
-		this.m_local_handler.client_begin_connect();
 	}
 	m_debug=false;
 	/** @type {MessageEvent<unknown>|null} */
