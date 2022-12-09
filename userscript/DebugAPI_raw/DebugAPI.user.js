@@ -5370,7 +5370,8 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let e_monad_1=cast_to_record_with_string_type_msg(new_cast_monad(event_0));
 		if(!e_monad_1?.data) return;
 		let event_1=e_monad_1.data;
-		switch(event_1.type) {
+		let event_message_1=event_1.data;
+		switch(event_message_1.type) {
 			case post_message_connect_message_type: break;
 			default: throw new Error("Invalid");
 		}
@@ -5380,7 +5381,10 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		if(!e_monad_2?.data) return;
 		let event_2=e_monad_2.data;
 		let event_message_2=event_2.data;
-		switch(event_message_2.type) {
+		let data=cast_to_record_with_string_type(new_cast_monad(event_message_2.data));
+		if(!data) return;
+		if(!data.data) return;
+		switch(data.data.type) {
 			case "tcp": break;
 			default: return;
 		}
@@ -5491,6 +5495,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		switch(event.type) {
 			case "message": {
 				if(event instanceof MessageEvent) {
+					debugger;
 					this.on_message_event(event);
 				} else {
 					console.log("Possibly non trusted message event",event);
