@@ -4890,7 +4890,7 @@ class TCPMessage {
 	 */
 	static make_message(client_id,data,seq,ack) {
 		// new_tcp_client_message(client_id,data)
-		return new TCPMessage([[1,"syn"]],client_id,seq,ack,data);
+		return new TCPMessage([],client_id,seq,ack,data);
 	}
 }
 
