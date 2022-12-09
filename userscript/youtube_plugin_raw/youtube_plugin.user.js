@@ -2431,6 +2431,7 @@ window.inject_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
 /** @type {HTMLMediaElementGainController|null} */
 let gain_controller=null;
 
+class HistoryStateManager {}
 
 class VolumeRange {
 	static enabled=true;
@@ -2582,6 +2583,4 @@ function main() {
 	start_message_channel_loop();
 }
 main();
-/*
 
-*/
