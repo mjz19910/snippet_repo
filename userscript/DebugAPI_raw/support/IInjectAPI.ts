@@ -50,7 +50,7 @@ declare global {
 		parse_html_to_binary_arr: (html: string) => unknown[];
 		run_modules_plugin: VoidCallbackWith<() => void>;
 		run_wasm_plugin: VoidCallbackWith<() => void>;
-		compress_main: VoidCallbackWith<(stats: {}) => void>;
+		compress_main: VoidCallback<[CompressionStatsCalculator],void>;
 		IterExtensions: {};
 		getPlaybackRateMap: {};
 		CreateObjURLCache: {};

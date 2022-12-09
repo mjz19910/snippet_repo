@@ -443,7 +443,7 @@ function bind_promise_handler(request,options,onfulfilled,onrejected) {
 	let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
 	return ret;
 }
-/**@arg {any} e @returns {any} */
+/** @template T @arg {T} e @returns {T} */
 function any(e) {
 	return e;
 }
@@ -473,31 +473,27 @@ function handle_fetch_response_2(request,options,ov) {
  * @arg {string|URL|Request} request
  * @arg {{}|undefined} options
  * @arg {Response} response
- * @returns {Promise<Response>}
+ * @returns {Response}
  */
 function fetch_promise_handler(request,options,response) {
+	/** @type {["text"]} */
 	let handled_keys=['text'];
-	class FakeResponse {
+	class FakeResponse extends Response {
+		/** @override */
 		text() {
 			if(yt_debug_enabled) console.log('response.text()');
 			return handle_fetch_response_2(request,options,response.text());
 		}
 	}
-	let fake_response=new FakeResponse;
-	let response_1=any(fake_response);
-	/**@type {Promise<Response>} */
-	let fake_as_response=response_1;
-	return new Proxy(fake_as_response,{
+	let fake_res=new FakeResponse;
+	return new Proxy(fake_res,{
 		get(obj,key,_proxy) {
-			if(typeof key=='symbol') {
-				return Reflect.get(response,key);
+			for(let i=0;i<handled_keys.length;i++) {
+				if(handled_keys[i] === key) {
+					return obj[key];
+				}
 			}
-			if(!handled_keys.includes(key)) {
-				return Reflect.get(response,key);
-			}
-			/**@type {any} */
-			let obj_1=obj;
-			return obj_1[key];
+			return Reflect.get(response,key);
 		}
 	});
 }

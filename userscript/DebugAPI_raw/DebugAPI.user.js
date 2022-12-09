@@ -256,13 +256,17 @@ class ECMA262Base {
 		}
 		this.B.len=value;
 	}
-	/** @type {ecma_root} */
-	C=any(null);
+	/** @type {ecma_root|null} */
+	_C=null;
+	get C() {
+		if(!this._C) throw 1;
+		return this._C;
+	}
 	/** @arg {ecma_root|null} base */
 	constructor(base) {
 		this.B=base;
 		if(base) {
-			this.C=base;
+			this._C=base;
 		}
 	}
 }
@@ -2357,14 +2361,8 @@ var api_debug_enabled=false;
 const base_console=window.console;
 
 /** @type {Console} */
-var console=any({
-	...Object.fromEntries(Object.entries(base_console).map(([k,v]) => {
-		if(typeof v==='function') {
-			return [k,v.bind(base_console)];
-		}
-		return [k,v];
-	})),
-});
+var console={...window.console};
+console.log=console.log.bind(window.console);
 
 class LoggingEventTarget {
 	dispatchEvent=console.log.bind(console);
@@ -2411,7 +2409,7 @@ if(do_postMessage_logging) {
 	any_api_logger.start_postMessage_proxy();
 }
 
-/** @template T @param {any} v @returns {T} */
+/** @template T @param {T} v @returns {T} */
 function any(v) {
 	return v;
 }
@@ -2466,8 +2464,8 @@ class ReversePrototypeChain {
 		if(!value) {
 			return `a_null::${object_index}`;
 		}
-		if(this.window_list.includes(any(value))) {
-			return "window_id::"+this.window_list.indexOf(any(value));
+		if(value instanceof Window&&this.window_list.includes(value)) {
+			return "window_id::"+this.window_list.indexOf(value);
 		}
 		if(value===inject_api)
 			return `self::inject_api:${object_index}`;
@@ -3476,9 +3474,9 @@ function not_null(value) {
 }
 add_function(not_null);
 
-/** @template {any[]} T */
+/** @template {any[]} T @template U */
 class VoidCallback {
-	/** @param {(...arg0:T)=>void} callback @arg {T} params */
+	/** @param {(...arg0:T)=>U} callback @arg {T} params */
 	constructor(callback,params) {
 		this.m_callback=callback;
 		this.m_params=params;
@@ -4489,7 +4487,7 @@ function compress_main(stats) {
 	g_obj_arr.value=flat_obj(obj_start);
 }
 
-inject_api.compress_main=any(new VoidCallback(compress_main,[new CompressionStatsCalculator]));
+inject_api.compress_main=new VoidCallback(compress_main,[new CompressionStatsCalculator]);
 
 class HexRandomDataGenerator {
 	constructor() {
