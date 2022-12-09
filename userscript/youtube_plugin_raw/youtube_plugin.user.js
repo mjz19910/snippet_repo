@@ -2598,10 +2598,6 @@ class VolumeRange {
 	}
 }
 function main() {
-	let ar='yt.player.Application'.split('.');
-	let a2=ar.slice();
-	ar.push('create');
-	a2.push('createAlternate');
 	if(!window.inject_api) {
 		throw new Error("Loaded before DebugAPI");
 	}
