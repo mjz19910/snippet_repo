@@ -5005,6 +5005,7 @@ class Socket {
 		console.group("Socket.remote.msg(data.tcp().wrap()) -> C!");
 		this.post_wrapped(data,ports);
 		console.groupEnd();
+		console.log("<?-");
 	}
 	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
 	post_wrapped(data,ports) {
@@ -5025,6 +5026,7 @@ class Socket {
 		console.group("Socket.port.msg(data.tcp()) -> L");
 		this.m_port.postMessage(message_data);
 		console.groupEnd();
+		console.log("<?-");
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 	}
@@ -5037,23 +5039,26 @@ class Socket {
 		if(Socket.prototype===this) return;
 		let message_data=event.data;
 		if(message_data.type!=="tcp") throw new Error();
-		console.group("-rx-S?-> Socket");
-		console.log("ListenSocket ->");
-		console.log("s_port.onmessage.handleEvent ->");
-		console.log("-?> Socket",message_data);
-		console.groupEnd();
 		/** @type {ReportInfo<this>} */
 		let report_info={
 			data: message_data,
 			handler: this,
 		};
+		console.group("-rx-S?-> Socket");
+		console.log("ListenSocket ->");
+		console.log("s_port.onmessage.handleEvent ->");
+		console.log("-?> Socket",message_data);
+		console.groupEnd();
 		console.group("Socket.tcp(event)");
 		this.handle_tcp_data(message_data,report_info);
 		console.groupEnd();
+		console.log("<?-");
 		if(this.m_was_connected) {
+			debugger;
 			this.m_was_connected=false;
 			// </group syn>
 			console.groupEnd();
+			console.log("<?-");
 		}
 	}
 	/** @arg {ConnectionMessage} tcp_message */
@@ -5109,6 +5114,7 @@ class Socket {
 			case "side":
 		}
 		console.groupEnd();
+		console.log("<?-");
 	}
 	client_start_connect() {
 		if(!this.m_port) {
@@ -5209,6 +5215,7 @@ class ListenSocket {
 		console.group("ListenSocket.port.msg(data.tcp())");
 		this.m_port.postMessage(message_data);
 		console.groupEnd();
+		console.log("<?-");
 		Socket.prototype.handleEvent(new MessageEvent("message",{data: message_data}));
 	}
 	m_connected=false;
@@ -5277,6 +5284,7 @@ class ListenSocket {
 		console.group("ListenSocket.tcp(event)");
 		this.handle_tcp_data(tcp_data);
 		console.groupEnd();
+		console.log("<?-");
 	}
 	/**
 	 * @param {FlagHandler} f
@@ -5416,6 +5424,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		console.group("C! -> ListenSocket.tcp(event.unwrap())");
 		handler.handle_tcp_data(event_0.data.data);
 		console.groupEnd();
+		console.log("<?-");
 		if(prev_connection_index>-1) {
 			this.connections.splice(prev_connection_index,1);
 		}
