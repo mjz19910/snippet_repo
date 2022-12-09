@@ -4800,13 +4800,18 @@ function is_record_with_T(x,k) {
 	return k in x;
 }
 
+/** @template T @param {T} x @returns {{tag:"cast_tag",data:T}} */
+function make_cast(x) {
+	return {tag:"cast_tag",data:x};
+}
+
 /** @template T @arg {T} x @returns {{tag:"cast_tag",data:(T&{}|null)}|null} */
 function cast_to_object(x) {
 	if(!is_object(x)) return null;
-	return {tag: "cast_tag",data: x};
+	return make_cast(x);
 }
 
-/** @template {{}} T @arg {T extends {tag:string}?never:T} x @returns {T&{type: string}|null} */
+/** @template {{}} M @template {{tag:string,data:M}} T @arg {T} x @returns {T&{type: string}|null} */
 function cast_to_record_with_string_type(x) {
 	x: if('type' in x) {
 		if(
@@ -4817,24 +4822,22 @@ function cast_to_record_with_string_type(x) {
 		) {
 			break x;
 		}
-		let y={
-			...x,
-			type: x.type,
-			__proto__: Object.getPrototypeOf(x),
-		};
-		console.log(x,y);
-		// only gets iterable properties
+		let y=structuredClone(x);
+		y;
+	}
+	if('tag' in x&&'data' in x) {
+		x;
 	}
 	if(!is_record_with_string_type(x,"type")) return null;
 	return x;
 }
-/** @template T @arg {T} x @returns {T&{type:string}|null} */
+/** @template T @arg {T} x @returns {{tag:"cast_tag",data:T&{type:string}|null}|null} */
 function cast_to_record_with_string_type_unk(x) {
 	let cast_result=cast_to_object(x);
 	if(!cast_result) return null;
 	if(cast_result.data===null) return null;
 	if(!is_record_with_string_type(cast_result.data,"type")) return null;
-	return cast_result.data;
+	return make_cast(cast_result.data);
 }
 
 /** @template {string} U @template {{}} T @arg {T} x @arg {U} k @returns {T&{ [P in U]: string; }|null} */
@@ -5238,16 +5241,16 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
 		let data=cast_to_record_with_string_type_unk(event.data);
-		if(!data) return false;
-		return data.type===post_message_connect_message_type;
+		if(!data?.data) return false;
+		return data.data.type===post_message_connect_message_type;
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if(!this.is_wrapped_message(event)) return false;
 		if(!is_record_with_T(event.data,"data")) return false;
 		let data_record=cast_to_record_with_string_type_unk(event.data.data);
-		if(data_record===null) return false;
-		if(data_record.type!=="tcp") return false;
+		if(!data_record?.data) return false;
+		if(data_record.data.type!=="tcp") return false;
 		return true;
 	}
 	/** @param {ConnectionMessage} message */
@@ -5260,10 +5263,9 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		if(!message_record_with_source) return false;
 		if(message_record_with_source.source!=="sponsorblock") return false;
 		// should be a SponsorBlock event.data
-		/** @type {{type:string}|null} */
-		let message_record_with_type=cast_to_record_with_string_type(message_record_with_source);
-		if(message_record_with_type===null) return false;
-		switch(message_record_with_type.type) {
+		let message_record_with_type=cast_to_record_with_string_type_unk(message_record_with_source);
+		if(!message_record_with_type?.data) return false;
+		switch(message_record_with_type.data.type) {
 			case "data":
 			case "navigation": return true;
 		}
