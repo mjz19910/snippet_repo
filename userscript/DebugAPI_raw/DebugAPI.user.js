@@ -2707,6 +2707,7 @@ inject_api.elevate_event_handlers=new_elevated_event_handlers;
 
 /** @arg {EventListenersT} event_handler */
 function elevate_event_handler(event_handler) {
+	if(!inject_api.addEventListenerExtension) return;
 	inject_api.addEventListenerExtension.elevate_handler(event_handler);
 }
 
@@ -3668,6 +3669,7 @@ class ModuleLoadDbg {
 inject_api.ModuleLoadDbg=ModuleLoadDbg;
 
 function run_modules_plugin() {
+	if(!inject_api.function_as_string_vec) throw 1;
 	let function_prototype=resolve_function_constructor().prototype;
 
 	let function_prototype_call=function_prototype.call;
@@ -3720,6 +3722,7 @@ function run_modules_plugin() {
 	Function.prototype.call=function_prototype_call_inject;
 	/**@this {Function} @arg {any} thisArg @arg {any[]} argArray */
 	function function_prototype_call_inject(thisArg,...argArray) {
+		if(!inject_api.function_as_string_vec) throw 1;
 		let ret;
 		switch(argArray.length) {
 			case 2: if(thisArg===argArray[1]&&argArray[0].exports==thisArg) {
@@ -3748,6 +3751,7 @@ function run_modules_plugin() {
 	 * @param {any} r
 	 */
 	function function_prototype_apply_inject(tv,r) {
+		if(!inject_api.function_as_string_vec) throw 1;
 		let ret=bound_apply_call(this,[tv,r]);
 		if(inject_api.function_as_string_vec.indexOf(this.toString())==-1) {
 			inject_api.function_as_string_vec.push(this.toString());
@@ -5708,7 +5712,7 @@ class DebugAPI {
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
-		window.inject_api&&(window.inject_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
+		window.inject_api?.DebugAPI&&(window.inject_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -5727,7 +5731,7 @@ class DebugAPI {
 				};
 			}
 		});
-		if(window.inject_api) {
+		if(window.inject_api?.DebugAPI) {
 			if(!window.inject_api.DebugAPI.the().clearCurrentBreakpoint()) {
 				console.log("failed to clear breakpoint");
 			}

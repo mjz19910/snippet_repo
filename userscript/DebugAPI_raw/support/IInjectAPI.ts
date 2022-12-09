@@ -40,11 +40,6 @@ declare global {
 		parse_javascript_str?: ((str: string) => void);
 	}
 }
-// DebugAPI
-declare global {
-	interface IInjectAPI {
-	}
-}
 declare global {
 	interface IInjectAPI {
 		DoCalc?: {};
@@ -177,13 +172,15 @@ declare global {
 }
 declare global {
 	interface IInjectAPI {
-		DebugAPI?: DebugAPIType;
-	}
-}
-declare global {
-	interface IInjectAPI {
 		AddEventListenerExtension?: {};
 		addEventListenerExtension?: AddEventListenerExtension;
+	}
+}
+
+// DebugAPI
+declare global {
+	interface IInjectAPI {
+		DebugAPI?: DebugAPIType;
 	}
 }
 
