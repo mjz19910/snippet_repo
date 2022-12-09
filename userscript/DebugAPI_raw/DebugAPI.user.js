@@ -4779,7 +4779,7 @@ function is_record_with_string_type(x,k) {
 	return is_record_with_T(x,k)&&typeof x[k]==='string';
 }
 
-/** @template T @arg {{tag:"cast_tag",data:T}} x @returns {x is {tag:"cast_tag",data:T&{}|null}} */
+/** @template T @arg {{tag:"cast_tag",data:T}} x @returns {x is {tag:"cast_tag",data:T&{}|T&null}} */
 function is_object(x) {
 	return typeof x.data==='object';
 }
