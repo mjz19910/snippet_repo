@@ -5002,10 +5002,8 @@ class Socket {
 		console.log("top.onmessage.handleEvent ->");
 		console.log("-C> CrossOriginConnection",data);
 		console.groupEnd();
-		console.groupCollapsed("Socket.remote.msg(data.tcp().wrap()) -> C!");
-		this.post_wrapped(data,ports);
-		console.groupEnd();
 		console.log("<?-");
+		this.post_wrapped(data,ports);
 	}
 	/** @param {ConnectionMessage} data @param {[MessagePort]} ports */
 	post_wrapped(data,ports) {
@@ -5023,10 +5021,8 @@ class Socket {
 		console.log("l_port.onmessage.handleEvent ->");
 		console.log("-L> ListenSocket",data);
 		console.groupEnd();
-		console.groupCollapsed("Socket.port.msg(data.tcp()) -> L");
-		this.m_port.postMessage(data);
-		console.groupEnd();
 		console.log("<?-");
+		this.m_port.postMessage(data);
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));
 	}
