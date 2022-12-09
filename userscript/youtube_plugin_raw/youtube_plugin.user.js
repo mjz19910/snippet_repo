@@ -2515,15 +2515,15 @@ class VolumeRange {
 		history_state_manager.setCacheValue("filter_gain",gain);
 	}
 	/** @private */
-	getGainCache() {
+	getGain() {
 		if(!this.use_cache) return null;
 		return history_state_manager.getCacheValue("filter_gain");
 	}
 	/** @private */
-	loadCachedGain() {
+	calculateGain() {
 		if(!this.use_cache) return this.max;
 		console.log('history-cache',[history.state]);
-		let c_gain=this.getGainCache();
+		let c_gain=this.getGain();
 		if(!(typeof c_gain==="object"||typeof c_gain==="number")) return 1;
 		let c_gain_1=c_gain;
 		if(c_gain_1===null) c_gain_1=1;
@@ -2586,7 +2586,7 @@ class VolumeRange {
 			this.range_element.onkeydown=(event) => this.on_key_down(event);
 			this.range_element.min=""+this.min;
 			this.range_element.max=""+this.overdrive;
-			let new_gain=this.loadCachedGain();
+			let new_gain=this.calculateGain();
 			this.range_element.value=""+new_gain;
 			this.setGain(new_gain/this.max);
 			this.view_div.append(this.range_element);
