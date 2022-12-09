@@ -2436,19 +2436,15 @@ inject_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
 let gain_controller=null;
 
 class HistoryStateManager {
-	/** @param {string} key */
+	/** @template {string} T @param {T} key */
 	getCacheValue(key) {
 		if(typeof this.cur_state=='object'&&this.cur_state!==null) {
-			if(this.is_index_type(this.cur_state,key)) {
+			if(key in this.cur_state) {
 				let {[key]: value}=this.cur_state;
 				return value;
 			}
 		}
 		return null;
-	}
-	/** @template {{}} T @template {string} U @arg {T} x @arg {U} k @returns {x is {[X in U]: T[X]}} */
-	is_index_type(x,k) {
-		return k in x;
 	}
 	/** @type {{}|null} */
 	cur_state;
