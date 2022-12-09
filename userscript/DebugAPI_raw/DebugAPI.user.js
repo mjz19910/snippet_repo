@@ -4943,7 +4943,7 @@ class Socket {
 		console.log("top.onmessage.handleEvent ->");
 		console.log("-C> CrossOriginConnection",data);
 		console.groupEnd();
-		console.group("Socket.remote.msg(data.tcp()) -> C!");
+		console.group("Socket.remote.msg(data.tcp().wrap()) -> C!");
 		this.m_remote_target.postMessage({
 			type: post_message_connect_message_type,
 			data,
