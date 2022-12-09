@@ -4875,7 +4875,7 @@ class TCPMessage {
 	 * @returns {ConnectionMessage}
 	 */
 	static make_syn(client_id) {
-		return new TCPMessage([[1,"syn"]],client_id,(Math.random()*500)%500,null,null);
+		return new TCPMessage([[1,"syn"]],client_id,(Math.random()*ack_win)%ack_win|0,null,null);
 	}
 	/**
 	 * @param {number} client_id
@@ -4961,11 +4961,16 @@ class Socket {
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	send_ack(tcp_message) {
+		// seq=number & ack=number;
+		let ack=tcp_message.ack;
+		if(!ack) {
+			ack=(Math.random()*ack_win)%ack_win|0;
+		}
 		this.push_tcp_message({
 			type: "tcp",
 			client_id: this.m_client_id,
 			ack: tcp_message.seq+1,
-			seq: (Math.random()*ack_win)%ack_win,
+			seq: ack,
 			flags: [[2,"ack"]],
 			data: null,
 		});
@@ -5170,7 +5175,8 @@ class ListenSocket {
 		let f=new FlagHandler(tcp_data.flags);
 		let {seq,ack}=tcp_data;
 		if(f.syn()) {
-			ack=((Math.random())*ack_win)%ack_win;
+			// seq=number & ack=null;
+			ack=(Math.random()*ack_win)%ack_win|0;
 			this.send_ack(f,ack,seq+1);
 		}
 		if(f.is_empty()&&ack) {
