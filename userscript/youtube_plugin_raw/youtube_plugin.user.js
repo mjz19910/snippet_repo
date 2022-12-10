@@ -2363,6 +2363,7 @@ class HistoryStateManager {
 			this.cur_state=new_state;
 			this.is_replacing_custom_state=true;
 			history.replaceState(new_state,"");
+			this.is_replacing_custom_state=false;
 			console.log(clone,this.cur_state,prev_state);
 		});
 		let hp=History.prototype;
@@ -2377,7 +2378,6 @@ class HistoryStateManager {
 				let new_state=argArray[0];
 				t.cur_state=new_state;
 				if(t.is_replacing_custom_state) {
-					t.is_replacing_custom_state=false;
 					return Reflect.apply(target,thisArg,argArray);
 				}
 				/** @type {{[x: string]: {}}|null} */
@@ -2418,17 +2418,18 @@ class HistoryStateManager {
 	/** @param {string} key  @param {{}} value */
 	setCacheValue(key,value) {
 		this.is_replacing_custom_state=true;
-		if(typeof this.cur_state==='object'&&this.cur_state!==null) {
+		x: if(typeof this.cur_state==='object'&&this.cur_state!==null) {
 			/** @type {{[U in typeof key]?: {}}} */
 			let state=this.cur_state;
 			if(!this.tmp_keys.includes(key)) this.tmp_keys.push(key);
 			if(key in state&&state[key]===value) {
-				return;
+				break x;
 			}
 			history.replaceState({...state,[key]: value},"");
 		} else {
 			history.replaceState({[key]: value},"");
 		}
+		this.is_replacing_custom_state=false;
 	}
 }
 let history_state_manager=new HistoryStateManager();
