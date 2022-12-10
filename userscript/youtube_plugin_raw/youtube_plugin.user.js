@@ -2343,6 +2343,7 @@ class HistoryStateManager {
 	tmp_keys=[];
 	is_replacing_custom_state=false;
 	constructor() {
+		let t=this;
 		this.cur_state=this.getHistoryState();
 		console.log('initial history state',this.cur_state);
 		window.addEventListener('popstate',(event) => {
@@ -2360,6 +2361,7 @@ class HistoryStateManager {
 		hp.replaceState=new Proxy(hp.replaceState,{
 			apply(target,thisArg,argArray) {
 				console.log('replaceState',...argArray);
+				t.cur_state=argArray[0];
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
@@ -2386,7 +2388,6 @@ class HistoryStateManager {
 	}
 	/** @param {string} key  @param {{}} value */
 	setCacheValue(key,value) {
-		debugger;
 		if(typeof this.cur_state==='object'&&this.cur_state!==null) {
 			/** @type {{[U in typeof key]?: {}}} */
 			let state=this.cur_state;
