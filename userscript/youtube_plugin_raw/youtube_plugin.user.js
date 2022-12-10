@@ -2444,7 +2444,6 @@ class VolumeRange {
 	/** @private */
 	calculateGain() {
 		if(!this.use_cache) return this.max;
-		console.log('history-cache',[history.state]);
 		let c_gain=this.getGain();
 		if(!(typeof c_gain==="object"||typeof c_gain==="number")) {
 			this.setGain(1);
