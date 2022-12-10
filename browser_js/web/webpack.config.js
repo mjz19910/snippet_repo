@@ -1,6 +1,12 @@
 const path=require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+/** @param {{ identifier: string; }} template */
+function devtool_module_template(template) {
+	if(template.identifier.includes("webpack/")) return "webpack:///"+template.identifier;
+	return "file:///"+path.resolve(path.dirname(__dirname),template.identifier);
+}
+
 module.exports={
 	mode: "production",
 	entry: {
@@ -13,8 +19,9 @@ module.exports={
     }),
   ],
 	output: {
-		filename: '[name].bundle.js',
+		filename: '[name].js',
 		path: path.resolve(__dirname,'dist'),
+		devtoolModuleFilenameTemplate:devtool_module_template,
 	},
-	devtool: "source-map",
+	devtool: "nosources-source-map",
 };
