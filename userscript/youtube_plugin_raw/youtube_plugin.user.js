@@ -2354,7 +2354,9 @@ class HistoryStateManager {
 			if(prev_state&&new_state) {
 				for(let i=0;i<t.tmp_keys.length;i++) {
 					let cur_key=t.tmp_keys[i];
-					new_state[cur_key]=prev_state[cur_key];
+					if(prev_state[cur_key]) {
+						new_state[cur_key]=prev_state[cur_key];
+					}
 				}
 			}
 			this.cur_state=new_state;
