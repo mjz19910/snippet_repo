@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name		rebuild the universe
-// @namespace	http://tampermonkey.net/
+// @namespace	https://github.com/mjz19910/
 // @version		4.2.6
 // @description	rebuildtheuniverse.com automation
 // @author		You
@@ -16,7 +16,7 @@
 // @match		https://ssh.login.local:9342/mirror/rebuildtheuniverse.com/?type=real
 // @run-at		document-start
 // @grant		none
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.meta.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/typescript/modules/rebuild_the_universe_raw/rebuild_the_universe_raw.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/rebuild_the_universe_raw/rebuild_the_universe.meta.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/rebuild_the_universe_raw/rebuild_the_universe.user.js
 // ==/UserScript==
 /* eslint-disable no-undef,no-lone-blocks,no-eval */
