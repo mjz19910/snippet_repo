@@ -44,16 +44,6 @@ function any_o(value,copy) {
 	throw new Error("Failed to cast");
 }
 
-/** @type {<T, U>(v1:T, v2: T|U)=>NonNullable<T>} */
-function default_from(v1,v2) {
-	if(v1) {
-		return v1;
-	}
-	let res=any_o(v2,v1);
-	if(res===void 0||res===null) throw new Error("Not null");
-	return res;
-}
-
 class YtdMastheadContainerChildren {
 	center=new Element;
 }
@@ -276,9 +266,9 @@ const realHTMLElement=HTMLElement;
  * @type {<T extends any[]>(value:T)=>typeof value}
  */
 function clone_array(arr) {
-	arr=any_o(arr.slice(),arr);
-	for(let i=0;i<arr.length;i++) {
-		arr[i]=deep_clone(arr[i]);
+	arr=any_o([],arr);
+	for(let [v,i] of arr.entries()) {
+		arr[i]=deep_clone(v);
 	}
 	return arr;
 }
@@ -347,9 +337,8 @@ function deep_clone(value) {
 		if(create===realHTMLElement) {
 			return seen_obj;
 		}
-		// you probably want to fix this...
 		if(str in window) {
-			debugger;
+			console.assert(false);
 		}
 		console.log('proto',str,create.toString().slice(0,32),create.toString().length);
 		return seen_obj;
@@ -368,13 +357,12 @@ function deep_clone(value) {
 	}
 	if(typeof value==='function') {
 		if(value.name in window) {
-			debugger;
+			console.assert(false);
 		}
 		return Seen.as_callable(value);
 	}
 	if(typeof value==='undefined') {
-		// undefined is the signal for a bug.
-		debugger;
+		console.assert(false);
 		return value;
 	}
 	console.log('unk',typeof value,value);
@@ -457,10 +445,7 @@ function bind_promise_handler(request,options,onfulfilled,onrejected) {
 	let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
 	return ret;
 }
-/** @template T @arg {T} e @returns {T} */
-function any(e) {
-	return e;
-}
+
 /**
  * @arg {string|URL|Request} request
  * @arg {{}|undefined} options
@@ -548,17 +533,6 @@ function fetch_inject(url_or_request,options) {
 
 fetch_inject.__proxy_target__=window.fetch;
 
-/**
- * @param {(arg0: [target: any, thisArg: any, argArray: any[]]) => void} callback
- * @param {any} value
- */
-function create_proxy(value,callback) {
-	return new Proxy(value,{
-		apply(...arr) {
-			return callback(arr);
-		}
-	});
-}
 /** @arg {any[]} args */
 function do_proxy_call_getInitialData(args) {
 	return yt_handlers.on_initial_data(args);
@@ -905,7 +879,7 @@ function filter_on_initial_data(cls,apply_args) {
 					cls.handle_page_type(ret.response,window.ytPageType,'response');
 					if(ret.playerResponse) {
 						console.log(cls.class_name+": playerResponse in ret.page === 'browse'");
-						debugger;
+						console.assert(false);
 					}
 				} else {
 					console.log(cls.class_name+': page info ret type',ret.page);
@@ -1377,17 +1351,6 @@ let yta_str='yt.player.Application';
 mk_tree_arr.push(yta_str+'.create',yta_str+'.createAlternate');
 mk(window,'yt','yt',true);
 win_watch.addEventListener('new_window_object',act_found_create_yt_player);
-const LOGGING_LEVEL=1;
-/**
- * @param {number} logging_level
- * @param {string} logger_format
- * @param {any[]} logger_args
- */
-function log_if_level(logging_level,logger_format,...logger_args) {
-	if(logging_level>LOGGING_LEVEL) {
-		console.log(logger_format,...logger_args);
-	}
-}
 
 class CustomEventType {
 	type="event_type";
@@ -1779,6 +1742,13 @@ async function async_plugin_init(event) {
 			on_ytd_page_manager(target_element);
 		}
 		x: {
+			if(yt_playlist_manager) break x;
+			const target_element=get_html_elements(document,'yt-playlist-manager')[0];
+			if(!target_element) break x;
+			found_element_count++;
+			on_yt_playlist_manager(target_element);
+		}
+		x: {
 			if(ytd_watch_flexy) break x;
 			if(!ytd_page_manager) break x;
 			let current_page_element=ytd_page_manager.getCurrentPage();
@@ -1850,11 +1820,6 @@ async function async_plugin_init(event) {
 	}
 }
 dom_observer.addEventListener("async-plugin-init",async_plugin_init);
-
-function attach_volume_range_to_page() {
-}
-
-
 
 /**
  * @type {HTMLElement | null}
@@ -1961,8 +1926,6 @@ function yt_watch_page_loaded_handler() {
 		console.log("no ytd-page-manager");
 		return;
 	}
-	debugger;
-	VolumeRange.create_if_needed();
 	title_text_overlay_update();
 	init_ui_plugin();
 	if(!ytd_player) return;
@@ -2195,12 +2158,7 @@ function update_ui_plugin() {
 class PluginOverlayElement extends HTMLDivElement {
 	onupdate() {}
 }
-/**@arg {{}} value @return {{}} */
-function cast_as_plugin_overlay(value) {
-	/**@type {any} */
-	let any=value;
-	return any;
-}
+
 window.addEventListener("resize",function() {
 	plugin_overlay_element&&plugin_overlay_element.onupdate();
 });
@@ -2568,4 +2526,3 @@ function main() {
 	start_message_channel_loop();
 }
 main();
-
