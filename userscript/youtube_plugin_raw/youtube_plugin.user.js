@@ -1873,6 +1873,7 @@ async function async_plugin_init() {
 		}
 		on_ytd_watch_flexy(current_page_element);
 		// obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
+		// obj.dispatchEvent({type: "find-ytd-player",detail,port});
 	}
 }
 
