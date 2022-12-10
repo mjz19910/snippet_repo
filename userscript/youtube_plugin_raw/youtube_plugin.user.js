@@ -2354,6 +2354,7 @@ class HistoryStateManager {
 	is_replacing_custom_state=false;
 	constructor() {
 		this.cur_state=this.getHistoryState();
+		console.log('initial history state',this.cur_state);
 		window.addEventListener('popstate',(event) => {
 			let prev_state=this.cur_state;
 			this.cur_state=this.historyStateFromEvent(event);
