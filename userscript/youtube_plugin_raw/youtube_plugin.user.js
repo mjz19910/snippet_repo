@@ -1870,6 +1870,7 @@ async function async_plugin_init() {
 			if(ytd_page_manager) break x;
 			const target_element=get_html_elements(document,'ytd-page-manager')[0];
 			if(!target_element) continue;
+			found_element_count++;
 			on_ytd_page_manager(target_element);
 		}
 		x: {
@@ -1890,6 +1891,7 @@ async function async_plugin_init() {
 				await promise;
 				continue;
 			}
+			found_element_count++;
 			on_ytd_watch_flexy(current_page_element);
 		}
 		// obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
@@ -1899,17 +1901,23 @@ async function async_plugin_init() {
 			if(!ytd_watch_flexy) break x;
 			const target_element=YTDPlayerElement.sel(ytd_watch_flexy)[0];
 			if(!target_element) break x;
+			found_element_count++;
 			on_ytd_player(target_element);
 		}
 		// obj.dispatchEvent({type: "ytd-player",detail,port});
-		{
+		x: {
 			const element_list=get_html_elements(document,'video');
-			if(element_list.length<=0) continue;
+			if(element_list.length<=0) break x;
+			found_element_count++;
 			/**@type {HTMLVideoElement[]}*/
 			let element_list_arr=[...Array.prototype.slice.call(element_list)];
 			box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
-			obj.dispatchEvent({...event,type: "video"});
 		}
+		// obj.dispatchEvent({...event,type: "video"});
+		if(!box_map.has("video-list")) {
+			continue;
+		}
+		obj.dispatchEvent({...event,type: "plugin-activate"});
 	}
 }
 
@@ -2028,10 +2036,8 @@ function start_message_channel_loop() {
 	}
 }
 
-let found_element_arr=[
-	"yt-playlist-manager",
-	"video",
-];
+/** @type {string[]} */
+let found_element_arr=[];
 /**@type {string}*/
 let find_element_tag_name='video';
 let found_element=false;
@@ -2084,7 +2090,7 @@ function event_video_element_list(event) {
 	}
 	this.dispatchEvent({type: "plugin-activate",detail,port});
 }
-dom_observer.addEventListener('video',event_video_element_list);
+dom_observer.addEventListener("video",event_video_element_list);
 
 function yt_watch_page_loaded_handler() {
 	if(!is_watch_page_active()) {
