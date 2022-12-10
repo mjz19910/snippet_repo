@@ -1449,9 +1449,9 @@ class DomObserver extends CustomEventTarget {
 			}
 		};
 	}
-	/** @param {MessagePort} port @param {number} id */
-	wait_for_port(port,id) {
-		this.next_tick_action(port,id);
+	/** @param {MessagePort} port @param {number} cur_count */
+	wait_for_port(port,cur_count) {
+		this.next_tick_action(port,cur_count);
 		this.wait_ports.add(port);
 		return new Promise((accept) => {
 			let res=this.port_to_resolvers_map.get(port);
@@ -1744,17 +1744,17 @@ let found_element_count=0;
 let expected_element_count=3;
 /** @param {CustomEventType} event */
 async function async_plugin_init(event) {
-	let current_message_id=1;
+	let cur_count=1;
 	let obj=dom_observer;
 	while(found_element_count<expected_element_count) {
-		if(current_message_id>4000) {
+		if(cur_count>4000) {
 			await new Promise((soon)=>setTimeout(soon,4000));
-			current_message_id=1;
+			cur_count=1;
 			continue;
 		}
 		VolumeRange.create_if_needed();
-		await obj.wait_for_port(event.port,current_message_id);
-		current_message_id++;
+		await obj.wait_for_port(event.port,cur_count);
+		cur_count++;
 		// obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
 		x: {
 			if(ytd_page_manager) break x;
