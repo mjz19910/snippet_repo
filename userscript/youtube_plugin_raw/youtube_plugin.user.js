@@ -1849,12 +1849,14 @@ function event_find_ytd_app(event) {
 	if(fake_events===false) return;
 }
 dom_observer.addEventListener('find-ytd-app',event_find_ytd_app);
+let found_element_count=0;
+let expected_element_count=3;
 async function async_plugin_init() {
 	let current_message_id=1;
 	let obj=dom_observer;
 	let event=new CustomEventType;
 	// let {port,detail}=event;
-	while(true) {
+	while(found_element_count<expected_element_count) {
 		VolumeRange.create_if_needed();
 		await obj.wait_for_port(event.port,current_message_id);
 		current_message_id++;
