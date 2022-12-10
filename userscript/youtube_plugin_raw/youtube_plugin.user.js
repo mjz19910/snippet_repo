@@ -2488,7 +2488,9 @@ class VolumeRange {
 	static create() {
 		if(!this.enabled) return;
 		if(yt_debug_enabled) console.log('create VolumeRange');
-		HTMLMediaElementGainController.create();
+		if(!gain_controller) {
+			HTMLMediaElementGainController.create();
+		}
 		if(gain_controller) {
 			gain_controller.attach_element_list(document.querySelectorAll("video"));
 		}
