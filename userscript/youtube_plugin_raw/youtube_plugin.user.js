@@ -1937,27 +1937,6 @@ function start_message_channel_loop() {
 	}
 }
 
-/** @type {string[]} */
-let found_element_arr=[];
-/**@type {string}*/
-let find_element_tag_name='video';
-let found_element=false;
-/**@arg {number} message_id*/
-function try_find_element(message_id) {
-	if(found_element_arr.includes(find_element_tag_name)) return;
-	if(found_element) return;
-	if(!find_element_tag_name) return;
-	let element=document.getElementsByTagName(find_element_tag_name)[0];
-	if(element) {
-		console.log('found element at message_id=%o',message_id);
-		debugger;
-		found_element=true;
-	}
-}
-/** @param {number} message_id */
-function observer_default_action(message_id) {
-	try_find_element(message_id);
-}
 /**@arg {Document|Element} node @arg {string} child_node_tag_name*/
 function get_html_elements(node,child_node_tag_name) {
 	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);
