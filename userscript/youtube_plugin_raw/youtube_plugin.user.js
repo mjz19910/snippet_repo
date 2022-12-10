@@ -1815,7 +1815,7 @@ function attach_volume_range_to_page() {
 	let player_masthead=ytd_app.__shady_children.masthead;
 	if(!player_masthead.$) return;
 	if(!ytd_app.volume_range&&audio_gain_controller) {
-		document.head.append(volume_plugin_style);
+		document.head.append(volume_plugin_style_element);
 		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
 		let container_dom_parent=player_masthead.$.container.children.center;
 		let use_container=true;
@@ -2471,7 +2471,7 @@ class HistoryStateManager {
 }
 let history_state_manager=new HistoryStateManager();
 
-let volume_plugin_style=createStyleElement(volume_plugin_style_source);
+let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
 
 class VolumeRange {
 	static enabled=true;
