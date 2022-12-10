@@ -2394,7 +2394,7 @@ class HistoryStateManager {
 			if(key in state&&state[key]===value) {
 				return;
 			}
-			history.replaceState({...this.cur_state,[key]: value},"");
+			history.replaceState({...state,[key]: value},"");
 		} else {
 			history.replaceState({[key]: value},"");
 		}
