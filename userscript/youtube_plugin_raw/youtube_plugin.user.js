@@ -1436,16 +1436,15 @@ class DomObserver extends CustomEventTarget {
 	notify_fn(_v) {};
 	/** @type {Set<MessagePort>} */
 	wait_ports=new Set;
-	/** @type {Map<MessagePort,((v:null)=>void)[]>} */
+	/** @type {Map<MessagePort,ResState[]>} */
 	port_to_resolvers_map=new Map;
 	/** @param {MessagePort} port */
 	notify_with_port(port) {
 		if(this.wait_ports.has(port)) {
-			this.wait_ports.delete(port);
 			let list=this.port_to_resolvers_map.get(port);
 			if(!list) return;
 			for(let x of list) {
-				x(null);
+				if(x.active) x.resolver();
 			}
 		};
 	}
@@ -1454,11 +1453,19 @@ class DomObserver extends CustomEventTarget {
 		this.next_tick_action(port,cur_count);
 		this.wait_ports.add(port);
 		return new Promise((accept) => {
+			let resolver=()=>{
+				this.wait_ports.delete(port);
+				accept(null);
+			};
+			let state={
+				active:true,
+				resolver,
+			};
 			let res=this.port_to_resolvers_map.get(port);
 			if(res) {
-				res.push(accept);
+				res.push(state);
 			} else {
-				this.port_to_resolvers_map.set(port,[accept]);
+				this.port_to_resolvers_map.set(port,[state]);
 			}
 		});
 	}
