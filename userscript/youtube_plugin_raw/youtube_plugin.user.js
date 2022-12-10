@@ -2416,6 +2416,7 @@ class HistoryStateManager {
 	}
 	/** @param {string} key  @param {{}} value */
 	setCacheValue(key,value) {
+		this.is_replacing_custom_state=true;
 		if(typeof this.cur_state==='object'&&this.cur_state!==null) {
 			/** @type {{[U in typeof key]?: {}}} */
 			let state=this.cur_state;
