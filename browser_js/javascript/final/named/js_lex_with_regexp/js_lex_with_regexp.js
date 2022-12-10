@@ -1,5 +1,6 @@
 import {Runner} from "../../support/Runner.js";
 import {add_function} from "./add_function.js";
+import {add_object} from "./add_object.js";
 
 /* spell:words
 --- version_list item 2 ---
