@@ -1864,23 +1864,25 @@ async function async_plugin_init() {
 			if(!target_element) continue;
 			on_ytd_page_manager(target_element);
 		}
-		let current_page_element=get_ytd_page_manager().getCurrentPage();
-		current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
-		console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
-		// obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
-		if(current_page_element.tagName!="YTD-WATCH-FLEXY") {
-			/** @type {Promise<void>} */
-			let promise=new Promise((accept) => {
-				get_ytd_page_manager().addEventListener(
-					"yt-page-type-changed",
-					() => accept(),
-					{once: true}
-				);
-			});
-			await promise;
-			continue;
+		{
+			let current_page_element=get_ytd_page_manager().getCurrentPage();
+			current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
+			// obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
+			if(current_page_element.tagName!="YTD-WATCH-FLEXY") {
+				/** @type {Promise<void>} */
+				let promise=new Promise((accept) => {
+					get_ytd_page_manager().addEventListener(
+						"yt-page-type-changed",
+						() => accept(),
+						{once: true}
+					);
+				});
+				await promise;
+				continue;
+			}
+			on_ytd_watch_flexy(current_page_element);
 		}
-		on_ytd_watch_flexy(current_page_element);
 		// obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
 		// obj.dispatchEvent({type: "find-ytd-player",detail,port});
 		x: {
