@@ -1764,8 +1764,8 @@ async function async_plugin_init(event) {
 			on_ytd_page_manager(target_element);
 		}
 		x: {
-			if(!ytd_page_manager) break x;
 			if(ytd_watch_flexy) break x;
+			if(!ytd_page_manager) break x;
 			let current_page_element=ytd_page_manager.getCurrentPage();
 			current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
