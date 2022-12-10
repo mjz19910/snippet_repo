@@ -1815,6 +1815,7 @@ function attach_volume_range_to_page() {
 	let player_masthead=ytd_app.__shady_children.masthead;
 	if(!player_masthead.$) return;
 	if(!ytd_app.volume_range&&audio_gain_controller) {
+		document.head.append(volume_plugin_style);
 		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
 		let container_dom_parent=player_masthead.$.container.children.center;
 		let use_container=true;
@@ -2369,21 +2370,27 @@ class AudioGainController {
 	constructor() {
 		this.audioCtx=new AudioContext();
 		this.gain_node=this.audioCtx.createGain();
-		this.gain_node.connect(this.audioCtx.destination);
-
-		this.dynamics_compressor=this.audioCtx.createDynamicsCompressor();
-		this.dynamics_compressor.connect(this.gain_node);
-		this.configureDynamicsCompressor(this.dynamics_compressor);
-
-		this.style=createStyleElement(volume_plugin_style_source);
+		this.dynamics_compressor=this.initCompressor(this.audioCtx.createDynamicsCompressor());
+		this.init_node_chain([
+			this.dynamics_compressor,
+			this.gain_node,
+			this.audioCtx.destination,
+		]);
+	}
+	/** @arg {AudioNode[]} node_chain */
+	init_node_chain(node_chain) {
+		for(let i=0;i<node_chain.length-1;i++) {
+			node_chain[i].connect(node_chain[i+1]);
+		}
 	}
 	/** @param {DynamicsCompressorNode} node */
-	configureDynamicsCompressor(node) {
+	initCompressor(node) {
 		node.knee.value=27;
 		node.attack.value=1;
 		node.release.value=1;
 		node.ratio.value=4;
 		node.threshold.value=-24;
+		return node;
 	}
 	/**
 	 * @param {number} gain
@@ -2395,7 +2402,6 @@ class AudioGainController {
 	 * @param {NodeListOf<HTMLMediaElement>} media_node_list
 	 */
 	attach_element_list(media_node_list) {
-		document.head.append(this.style);
 		for(let i=0;i<media_node_list.length;i++) {
 			let video_element=media_node_list[i];
 			// video_element.crossOrigin='anonymous';
@@ -2464,6 +2470,8 @@ class HistoryStateManager {
 	}
 }
 let history_state_manager=new HistoryStateManager();
+
+let volume_plugin_style=createStyleElement(volume_plugin_style_source);
 
 class VolumeRange {
 	static enabled=true;
