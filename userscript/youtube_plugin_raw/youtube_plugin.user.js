@@ -1874,6 +1874,13 @@ async function async_plugin_init() {
 		on_ytd_watch_flexy(current_page_element);
 		// obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
 		// obj.dispatchEvent({type: "find-ytd-player",detail,port});
+		if(!ytd_watch_flexy) throw new Error("Missing ytd_watch_flexy element");
+		{
+			const target_element=get_html_elements(ytd_watch_flexy,'ytd-player')[0];
+			if(!target_element) continue;
+			on_ytd_player(target_element);
+		}
+		// obj.dispatchEvent({type: "ytd-player",detail,port});
 	}
 }
 
