@@ -1748,7 +1748,7 @@ async function async_plugin_init(event) {
 	let obj=dom_observer;
 	while(found_element_count<expected_element_count) {
 		if(cur_count>4000) {
-			await new Promise((soon)=>setTimeout(soon,4000));
+			await new Promise((soon) => setTimeout(soon,4000));
 			cur_count=1;
 			continue;
 		}
@@ -1807,6 +1807,7 @@ async function async_plugin_init(event) {
 		if(!box_map.has("video-list")) {
 			continue;
 		}
+		if(!(ytd_page_manager!==null)) continue;
 		obj.dispatchEvent({...event,type: "plugin-activate"});
 	}
 }
