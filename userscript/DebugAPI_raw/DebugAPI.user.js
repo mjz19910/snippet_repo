@@ -5557,16 +5557,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let fail=() => this.on_client_misbehaved(event);
 		if(this.did_client_misbehave(event)) return fail();
 		if(!this.can_handle_message(event)) return;
-		if(event.ports.length===0) {
-			let message_data=this.extract_message(event);
-			if(message_data===null) return fail();
-			fail();
-		} else if(event.ports.length===1) {
-			this.on_connect_request_message(event);
-		} else {
-			console.log("too many ports");
-			fail();
-		}
+		this.on_connect_request_message(event);
 	}
 	/** @arg {MessageEvent<unknown>} event */
 	on_client_misbehaved(event) {
