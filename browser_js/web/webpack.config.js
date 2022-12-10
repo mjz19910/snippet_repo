@@ -1,9 +1,14 @@
 const path=require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-/** @param {{ identifier: string; }} template */
+/** @param {ModuleDesc} template */
 function devtool_module_template(template) {
-	if(template.identifier.includes("webpack/")) return "webpack:///"+template.identifier;
+	debugger;
+	if(template.identifier.includes("webpack/")) {
+		return "";
+	}
+	console.log(Object.keys(template).map(e=>[e,typeof template[e]]));
+	console.log(template.shortIdentifier);
 	return "file:///"+path.resolve(path.dirname(__dirname),template.identifier);
 }
 
