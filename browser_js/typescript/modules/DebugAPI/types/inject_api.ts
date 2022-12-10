@@ -3,14 +3,8 @@ import {EventListenersT} from "../src/EventListenersT";
 // saved_objects
 declare global {
 	interface InjectAPI {
-		saved_objects: [string,{name: string;}][];
-	}
-}
-
-// saved_object_arrays
-declare global {
-	interface InjectAPI {
-		saved_object_arrays: {}[][];
+		parse_javascript_str?: (code_str: string) => void;
+		saved_objects?: [string,{name: string;}][];
 	}
 }
 

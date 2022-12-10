@@ -2171,5 +2171,6 @@ function parse_javascript_str(code_str) {
 
 if(typeof exports==='object') {
 	exports.parse_javascript_str=parse_javascript_str;
+} else if(window.inject_api!==void 0) {
+	window.inject_api.parse_javascript_str=parse_javascript_str;
 }
-
