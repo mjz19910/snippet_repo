@@ -2336,16 +2336,6 @@ inject_api.HTMLMediaElementGainController=AudioGainController;
 let audio_gain_controller=null;
 
 class HistoryStateManager {
-	/** @template {string} T @param {T} key */
-	getCacheValue(key) {
-		if(typeof this.cur_state=='object'&&this.cur_state!==null) {
-			if(key in this.cur_state) {
-				let {[key]: value}=this.cur_state;
-				return value;
-			}
-		}
-		return null;
-	}
 	/** @type {{}|null} */
 	cur_state;
 	tmp_map=new Map;
@@ -2366,6 +2356,16 @@ class HistoryStateManager {
 		/** @type {{}|null} */
 		let v=event.state;
 		return v;
+	}
+	/** @template {string} T @param {T} key */
+	getCacheValue(key) {
+		if(typeof this.cur_state=='object'&&this.cur_state!==null) {
+			if(key in this.cur_state) {
+				let {[key]: value}=this.cur_state;
+				return value;
+			}
+		}
+		return null;
 	}
 	/** @returns {{}|null} */
 	getHistoryState() {
