@@ -25,7 +25,7 @@ declare global {
 declare global {
 	interface InjectAPI {
 		HTMLMediaElementGainController?: {};
-		gain_controller?: {};
+		audio_gain_controller?: {};
 	}
 }
 

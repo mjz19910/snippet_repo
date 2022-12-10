@@ -1814,8 +1814,8 @@ function attach_volume_range_to_page() {
 	if(!ytd_app.__shady_children.masthead) return;
 	let player_masthead=ytd_app.__shady_children.masthead;
 	if(!player_masthead.$) return;
-	if(!ytd_app.volume_range&&gain_controller) {
-		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,gain_controller);
+	if(!ytd_app.volume_range&&audio_gain_controller) {
+		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
 		let container_dom_parent=player_masthead.$.container.children.center;
 		let use_container=true;
 		if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent);
@@ -2357,38 +2357,7 @@ let volume_plugin_style_source=`
 	/\*# sourceURL=youtube_volume_plugin_style_source*\/
 `;
 
-/**
- * @param {AudioContext} audio_ctx
- * @param {AudioNode} next_node
- */
-function createGainNode(audio_ctx,next_node) {
-	let node=audio_ctx.createGain();
-	node.connect(next_node);
-	return node;
-}
-/**
- * @param {AudioContext} audio_ctx
- * @param {AudioNode} next_node
- */
-function createDynamicsCompressor(audio_ctx,next_node) {
-	let node=audio_ctx.createDynamicsCompressor();
-	node.connect(next_node);
-	let {
-		knee,
-		attack,
-		release,
-		ratio,
-		threshold,
-	}=node;
-	knee.value=27;
-	attack.value=1;
-	release.value=1;
-	ratio.value=4;
-	threshold.value=-24;
-	return node;
-}
-
-class HTMLMediaElementGainController {
+class AudioGainController {
 	/**@type {(HTMLVideoElement | HTMLAudioElement)[]} */
 	attached_element_list=[];
 	/**
@@ -2399,10 +2368,22 @@ class HTMLMediaElementGainController {
 	last_event=null;
 	constructor() {
 		this.audioCtx=new AudioContext();
-		this.gain_node=createGainNode(this.audioCtx,this.audioCtx.destination);
-		this.dynamics_compressor=createDynamicsCompressor(this.audioCtx,this.gain_node);
+		this.gain_node=this.audioCtx.createGain();
+		this.gain_node.connect(this.audioCtx.destination);
+
+		this.dynamics_compressor=this.audioCtx.createDynamicsCompressor();
+		this.dynamics_compressor.connect(this.gain_node);
+		this.configureDynamicsCompressor(this.dynamics_compressor);
 
 		this.style=createStyleElement(volume_plugin_style_source);
+	}
+	/** @param {DynamicsCompressorNode} node */
+	configureDynamicsCompressor(node) {
+		node.knee.value=27;
+		node.attack.value=1;
+		node.release.value=1;
+		node.ratio.value=4;
+		node.threshold.value=-24;
 	}
 	/**
 	 * @param {number} gain
@@ -2427,14 +2408,14 @@ class HTMLMediaElementGainController {
 	}
 	static create() {
 		if(!window.inject_api) return;
-		if(gain_controller) return;
-		gain_controller=new HTMLMediaElementGainController;
-		window.inject_api.gain_controller=gain_controller;
+		if(audio_gain_controller) return;
+		audio_gain_controller=new AudioGainController;
+		window.inject_api.audio_gain_controller=audio_gain_controller;
 	}
 }
-inject_api.HTMLMediaElementGainController=HTMLMediaElementGainController;
-/** @type {HTMLMediaElementGainController|null} */
-let gain_controller=null;
+inject_api.HTMLMediaElementGainController=AudioGainController;
+/** @type {AudioGainController|null} */
+let audio_gain_controller=null;
 
 class HistoryStateManager {
 	/** @template {string} T @param {T} key */
@@ -2489,11 +2470,11 @@ class VolumeRange {
 	static create() {
 		if(!this.enabled) return;
 		if(yt_debug_enabled) console.log('create VolumeRange');
-		if(!gain_controller) {
-			HTMLMediaElementGainController.create();
+		if(!audio_gain_controller) {
+			AudioGainController.create();
 		}
-		if(gain_controller) {
-			gain_controller.attach_element_list(document.querySelectorAll("video"));
+		if(audio_gain_controller) {
+			audio_gain_controller.attach_element_list(document.querySelectorAll("video"));
 		}
 		attach_volume_range_to_page();
 	}
@@ -2501,7 +2482,7 @@ class VolumeRange {
 	 * @param {number} min
 	 * @param {number} max
 	 * @param {number} overdrive
-	 * @param {HTMLMediaElementGainController} obj
+	 * @param {AudioGainController} obj
 	 */
 	constructor(min,max,overdrive,obj) {
 		this.use_cache=true;
