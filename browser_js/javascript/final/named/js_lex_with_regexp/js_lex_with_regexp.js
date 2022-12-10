@@ -213,7 +213,6 @@ function main() {
 		};
 		let js_parse_regexp=/(debugger|function|continue|break|else|var|for|if|(?:[a-zA-Z_$](?:[a-zA-Z$_0-9]+)?)|\d+|['"{}()\[\]=:!;,.?+ ])/;
 		class JSLexState {
-			name="JSLexState";
 			/** @type {string|undefined} */
 			str;
 			/**
