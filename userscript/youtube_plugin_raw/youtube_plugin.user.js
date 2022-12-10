@@ -1472,7 +1472,7 @@ class DomObserver extends CustomEventTarget {
 			}
 		});
 	}
-	trace=true;
+	trace=false;
 	/**@arg {MessagePort} port @arg {number} count */
 	next_tick_action(port,count) {
 		if(this.trace) console.log("tick_trace",count);
@@ -1756,12 +1756,10 @@ let expected_element_count=5;
 async function async_plugin_init(event) {
 	let cur_count=1;
 	let obj=dom_observer;
-	while(found_element_count<expected_element_count&&cur_count<500) {
-		console.log(found_element_count);
-		if(cur_count>4000) {
-			await new Promise((soon) => setTimeout(soon,4000));
-			cur_count=1;
-			continue;
+	while(true) {
+		if(cur_count>16) {
+			await new Promise((soon) => setTimeout(soon,40));
+			cur_count=0;
 		}
 		VolumeRange.create_if_needed();
 		cur_count++;
@@ -1826,14 +1824,18 @@ async function async_plugin_init(event) {
 					console.log("found extra video elements");
 				}
 			} else {
+				/**@type {HTMLVideoElement[]}*/
+				let element_list_arr=[...Array.prototype.slice.call(element_list)];
+				box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
 				console.log("found video elements");
 				found_element_count++;
 			}
-			/**@type {HTMLVideoElement[]}*/
-			let element_list_arr=[...Array.prototype.slice.call(element_list)];
-			box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
 		}
 		await obj.wait_for_port(event.port,cur_count);
+		if(found_element_count>=expected_element_count) {
+			obj.dispatchEvent({...event,type: "plugin-activate"});
+			break;
+		}
 		// obj.dispatchEvent({...event,type: "video"});
 		if(!box_map.has("video-list")) continue;
 		if(ytd_page_manager===null) continue;
