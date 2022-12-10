@@ -2140,10 +2140,6 @@ class js_token_generator {
 
 /** @param {string} code_str */
 function parse_javascript_str(code_str) {
-	if("code" in window&&typeof window.code==="string") {
-		code_str=window.code;
-	}
-	// parse_str="(function(){return function x(){}})()";
 	let token_gen=new js_token_generator(code_str);
 	let res_item;
 	let i=0;
