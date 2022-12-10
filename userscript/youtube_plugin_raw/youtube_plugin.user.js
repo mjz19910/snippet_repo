@@ -1443,6 +1443,9 @@ class DomObserver extends CustomEventTarget {
 		if(this.wait_ports.has(port)) {
 			let list=this.port_to_resolvers_map.get(port);
 			if(!list) return;
+			if(list.every(e=>!e.active)) {
+				this.port_to_resolvers_map.set(port,[]);
+			}
 			for(let x of list) {
 				if(x.active) x.resolver();
 			}
