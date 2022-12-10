@@ -2358,6 +2358,7 @@ class HistoryStateManager {
 				}
 			}
 			this.cur_state=new_state;
+			history.replaceState(new_state,"");
 			console.log(this.cur_state,prev_state);
 		});
 		let hp=History.prototype;
