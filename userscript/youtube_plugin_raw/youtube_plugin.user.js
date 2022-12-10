@@ -1509,22 +1509,6 @@ function on_ytd_page_manager(element) {
 		handler();
 	}
 }
-/**
- * @this {DomObserver}
- * @param {CustomEventType} event
- * ID(30)
- * */
-function event_find_ytd_page_manager(event) {
-	const current_message_id=30;
-	let {type,detail,port}=event;
-	observer_default_action(type,current_message_id);
-	const target_element=get_html_elements(document,'ytd-page-manager')[0];
-	if(!target_element) return this.next_tick_action(port,current_message_id);
-	on_ytd_page_manager(target_element);
-	this.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
-}
-dom_observer.addEventListener("find-ytd-page-manager",event_find_ytd_page_manager);
-
 class YtdWatchFlexyElement extends HTMLElement {
 	static sel() {
 
@@ -1549,46 +1533,6 @@ function on_ytd_watch_flexy(element) {
 		}
 	});
 }
-/**
- * @this {DomObserver}
- * @param {CustomEventType} event
- * ID(40)
- * */
-function event_find_ytd_watch_flexy(event) {
-	const current_message_id=40;
-	let {type,detail,port}=event;
-	observer_default_action(type,current_message_id);
-	let current_page_element=get_ytd_page_manager().getCurrentPage();
-	if(!current_page_element) return this.next_tick_action(port,current_message_id);
-	current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
-	console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
-	VolumeRange.create_if_needed();
-	if(current_page_element.tagName=="YTD-WATCH-FLEXY") {
-		on_ytd_watch_flexy(current_page_element);
-		this.dispatchEvent({type: "ytd-watch-flexy",detail,port});
-	} else {
-		get_ytd_page_manager().addEventListener(
-			"yt-page-type-changed",
-			() => this.dispatchEvent({type: "yt-page-type-changed",detail,port}),
-			{once: true}
-		);
-	}
-}
-dom_observer.addEventListener('find-ytd-watch-flexy',event_find_ytd_watch_flexy);
-
-/**
- * @this {DomObserver}
- * @arg {CustomEventType} event
- * ID(50)
- * */
-function event_ytd_watch_flexy(event) {
-	const current_message_id=50;
-	let {type,detail,port}=event;
-	observer_default_action(type,current_message_id);
-	this.dispatchEvent({type: "find-ytd-player",detail,port});
-}
-dom_observer.addEventListener('ytd-watch-flexy',event_ytd_watch_flexy);
-
 window.page_type_changes??=[];
 let page_type_changes=window.page_type_changes;
 
@@ -1649,41 +1593,6 @@ function on_ytd_player(element) {
 	ytd_player=any_c(element,YTDPlayerElement);
 	window.ytd_player=element;
 }
-
-/**
- * @this {DomObserver}
- * @arg {CustomEventType} event
- * ID(51)
- * */
-function event_find_ytd_player(event) {
-	const current_message_id=51;
-	let {type,detail,port}=event;
-	observer_default_action(type,current_message_id);
-	if(!ytd_watch_flexy) throw new Error("Missing ytd_watch_flexy element");
-	let target_element=YTDPlayerElement.sel(ytd_watch_flexy)[0];
-	if(!target_element) return this.next_tick_action(port,current_message_id);
-	on_ytd_player(target_element);
-	this.dispatchEvent({type: "ytd-player",detail,port});
-}
-dom_observer.addEventListener("find-ytd-player",event_find_ytd_player);
-
-/**
- * @this {DomObserver}
- * @param {CustomEventType} event
- * ID(60)
- */
-function event_ytd_player(event) {
-	const current_message_id=60;
-	let {type,port}=event;
-	observer_default_action(type,current_message_id);
-	const element_list=get_html_elements(document,'video');
-	if(element_list.length<=0) return this.next_tick_action(port,current_message_id);
-	/**@type {HTMLVideoElement[]}*/
-	let element_list_arr=[...Array.prototype.slice.call(element_list)];
-	box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
-	this.dispatchEvent({...event,type: "video"});
-}
-dom_observer.addEventListener("ytd-player",event_ytd_player);
 
 // visibilitychange handler (resume video when page is visible again)
 function fire_on_visibility_change_restart_video_playback() {
@@ -1831,31 +1740,12 @@ function on_ytd_app(element) {
 	});
 }
 
-/**
- * @this {DomObserver}
- * @arg {CustomEventType} event
- * ID(10)
- * */
-function event_find_ytd_app(event) {
-	const current_message_id=10;
-	let {port,detail,type}=event;
-	observer_default_action(type,current_message_id);
-	let target_element=get_html_elements(document,'ytd-app')[0];
-	if(!target_element) return this.next_tick_action(port,current_message_id);
-	on_ytd_app(target_element);
-	VolumeRange.create_if_needed();
-	this.dispatchEvent({type: "find-yt-playlist-manager",detail,port});
-	let fake_events=false;
-	if(fake_events===false) return;
-}
-dom_observer.addEventListener('find-ytd-app',event_find_ytd_app);
 let found_element_count=0;
 let expected_element_count=3;
-async function async_plugin_init() {
+/** @param {CustomEventType} event */
+async function async_plugin_init(event) {
 	let current_message_id=1;
 	let obj=dom_observer;
-	let event=new CustomEventType;
-	// let {port,detail}=event;
 	while(found_element_count<expected_element_count) {
 		if(current_message_id>4000) {
 			await new Promise((soon)=>setTimeout(soon,4000));
@@ -1920,6 +1810,7 @@ async function async_plugin_init() {
 		obj.dispatchEvent({...event,type: "plugin-activate"});
 	}
 }
+dom_observer.addEventListener("async-plugin-init",async_plugin_init);
 
 function attach_volume_range_to_page() {
 }
@@ -1940,21 +1831,6 @@ function on_yt_playlist_manager(element) {
 	yt_playlist_manager=element;
 	window.yt_playlist_manager=element;
 }
-/**
- * @this {DomObserver}
- * @param {CustomEventType} event
- * ID(20)
- * */
-function event_find_yt_playlist_manager(event) {
-	const current_message_id=20;
-	let {type,detail,port}=event;
-	observer_default_action(type,current_message_id);
-	const target_element=get_html_elements(document,'yt-playlist-manager')[0];
-	if(!target_element) return this.next_tick_action(port,current_message_id);
-	on_yt_playlist_manager(target_element);
-	this.dispatchEvent({type: "find-ytd-page-manager",detail,port});
-}
-dom_observer.addEventListener("find-yt-playlist-manager",event_find_yt_playlist_manager);
 
 /**@arg {number} value @returns {ReturnType<typeof setTimeout>} */
 function as_timeout_type(value) {
@@ -1970,16 +1846,15 @@ class MessagePortState {
 	cint=as_timeout_type(-1);
 	port_state_log=port_state_log;
 	time_offset=performance.now();
-	current_event_type="find-ytd-app";
+	/** @readonly */
+	current_event_type="async-plugin-init";
 }
 let port_state=new MessagePortState;
 inject_api.port_state=port_state;
 
 let slow_message_event=false;
 const message_channel_loop_delay=80;
-/**
- * @param {MessageEvent<number>} event
- */
+/** @param {MessageEvent<number>} event */
 function on_port_message(event) {
 	if(yt_debug_enabled) console.log('msg_port:message %o',event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
@@ -2005,11 +1880,6 @@ let message_channel={value: null};
 function fire_observer_event() {
 	if(!message_channel.value) throw new Error("bad");
 	dom_observer.notify_with_port(message_channel.value.port1);
-	dom_observer.dispatchEvent({
-		type: port_state.current_event_type,
-		detail: {},
-		port: message_channel.value.port1,
-	});
 }
 
 let always_dispatch_event=false;
@@ -2032,7 +1902,11 @@ function start_message_channel_loop() {
 	message_channel.value=new MessageChannel();
 	message_channel.value.port2.onmessage=on_port_message;
 	if(top===window) {
-		dispatch_observer_event();
+		dom_observer.dispatchEvent({
+			type: port_state.current_event_type,
+			detail: {},
+			port: message_channel.value.port1,
+		});
 	}
 }
 
@@ -2053,9 +1927,8 @@ function try_find_element(message_id) {
 		found_element=true;
 	}
 }
-/** @param {string} type @param {number} message_id */
-function observer_default_action(type,message_id) {
-	port_state.current_event_type=type;
+/** @param {number} message_id */
+function observer_default_action(message_id) {
 	try_find_element(message_id);
 }
 /**@arg {Document|Element} node @arg {string} child_node_tag_name*/
@@ -2073,24 +1946,6 @@ function on_yt_page_type_changed(event) {
 	});
 }
 dom_observer.addEventListener('yt-page-type-changed',on_yt_page_type_changed);
-
-/**
- * @this {DomObserver}
- * @param {CustomEventType} event
- * ID(70)
- */
-function event_video_element_list(event) {
-	const current_message_id=70;
-	let {type,detail,port}=event;
-	observer_default_action(type,current_message_id);
-	console.log("video-list");
-	if(!box_map.has("video-list")) {
-		console.log('no video element list');
-		return;
-	}
-	this.dispatchEvent({type: "plugin-activate",detail,port});
-}
-dom_observer.addEventListener("video",event_video_element_list);
 
 function yt_watch_page_loaded_handler() {
 	if(!is_watch_page_active()) {
