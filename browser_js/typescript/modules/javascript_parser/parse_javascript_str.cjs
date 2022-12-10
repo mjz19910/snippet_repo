@@ -53,18 +53,6 @@ class HashMap {
 // HashMap<FlyString, TokenType> Lexer::s_keywords
 /** @type {Set<string>} uses enum JSTokenizerTokenType as string */
 const s_keywords=new Set();
-// HashMap<String, TokenType> Lexer::s_three_char_tokens
-/** @type {HashMap<string,string>} */
-const s_three_char_tokens=new HashMap();
-// HashMap<String, TokenType> Lexer::s_two_char_tokens
-/** @type {HashMap<string,string>} */
-const s_two_char_tokens=new HashMap();
-// HashMap<char, TokenType> Lexer::s_single_char_tokens
-/** @type {HashMap<string,string>} */
-const s_single_char_tokens=new HashMap();
-
-
-// s_keywords
 {
 	s_keywords.add("async");
 	s_keywords.add("await");
@@ -111,7 +99,9 @@ const s_single_char_tokens=new HashMap();
 // tokens len=4
 // 4 char token is only >>>=
 
-// s_three_char_tokens
+// HashMap<String, TokenType> Lexer::s_three_char_tokens
+/** @type {HashMap<string,string>} */
+const s_three_char_tokens=new HashMap();
 {
 	s_three_char_tokens.set("===","EqualsEqualsEquals");
 	s_three_char_tokens.set("!==","ExclamationMarkEqualsEquals");
@@ -125,7 +115,9 @@ const s_single_char_tokens=new HashMap();
 	s_three_char_tokens.set("...","TripleDot");
 }
 
-// s_two_char_tokens
+// HashMap<String, TokenType> Lexer::s_two_char_tokens
+/** @type {HashMap<string,string>} */
+const s_two_char_tokens=new HashMap();
 {
 	s_two_char_tokens.set("=>","Arrow");
 	s_two_char_tokens.set("+=","PlusEquals");
@@ -153,7 +145,9 @@ const s_single_char_tokens=new HashMap();
 	s_two_char_tokens.set("?.","QuestionMarkPeriod");
 }
 
-// s_single_char_tokens
+// HashMap<char, TokenType> Lexer::s_single_char_tokens
+/** @type {HashMap<string,string>} */
+const s_single_char_tokens=new HashMap();
 {
 	// "&" is OtherPunctuator
 	s_single_char_tokens.set("&","Ampersand");
