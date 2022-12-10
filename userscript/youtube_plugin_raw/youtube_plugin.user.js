@@ -1457,7 +1457,7 @@ class DomObserver extends CustomEventTarget {
 		this.wait_ports.add(port);
 		return new Promise((accept) => {
 			let resolver=()=>{
-				this.wait_ports.delete(port);
+				state.active=false;
 				accept(null);
 			};
 			let state={
