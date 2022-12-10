@@ -1558,7 +1558,7 @@ function event_find_ytd_watch_flexy(event) {
 	if(!current_page_element) return this.next_tick_action(port,current_message_id);
 	current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 	console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
-	VolumeRange.create();
+	VolumeRange.create_if_needed();
 	if(current_page_element.tagName=="YTD-WATCH-FLEXY") {
 		on_ytd_watch_flexy(current_page_element);
 		this.dispatchEvent({type: "ytd-watch-flexy",detail,port});
@@ -1834,7 +1834,7 @@ function event_find_ytd_app(event) {
 	let target_element=get_html_elements(document,'ytd-app')[0];
 	if(!target_element) return this.next_tick_action(port,current_message_id);
 	on_ytd_app(target_element);
-	VolumeRange.create();
+	VolumeRange.create_if_needed();
 	this.dispatchEvent({type: "find-yt-playlist-manager",detail,port});
 	let fake_events=false;
 	if(fake_events===false) return;
@@ -1846,18 +1846,18 @@ async function async_plugin_init() {
 	let event=new CustomEventType;
 	let {port,detail}=event;
 	while(true) {
+		VolumeRange.create_if_needed();
 		await obj.wait_for_port(event.port,current_message_id);
 		current_message_id++;
-		obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
+		// obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
 		x: {
 			const target_element=get_html_elements(document,'ytd-page-manager')[0];
 			if(!target_element) continue;
-			obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
 			on_ytd_page_manager(target_element);
 			let current_page_element=get_ytd_page_manager().getCurrentPage();
 			current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
-			VolumeRange.create();
+			//obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
 			if(current_page_element.tagName=="YTD-WATCH-FLEXY") {
 				on_ytd_watch_flexy(current_page_element);
 				obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
@@ -1878,18 +1878,6 @@ async function async_plugin_init() {
 }
 
 function attach_volume_range_to_page() {
-	if(!ytd_app) return;
-	if(!ytd_app.__shady_children.masthead) return;
-	let player_masthead=ytd_app.__shady_children.masthead;
-	if(!player_masthead.$) return;
-	if(!ytd_app.volume_range&&audio_gain_controller) {
-		document.head.append(volume_plugin_style_element);
-		ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
-		let container_dom_parent=player_masthead.$.container.children.center;
-		let use_container=true;
-		if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent);
-		else ytd_app.volume_range.attach_to_element(ytd_app);
-	}
 }
 
 
@@ -2313,7 +2301,7 @@ window.addEventListener("resize",function() {
 });
 function activate_nav() {
 	if(yt_debug_enabled) console.log('activate_nav:fire');
-	VolumeRange.create();
+	VolumeRange.create_if_needed();
 	if(!ytd_player) return;
 	if(!has_ytd_page_mgr()) return;
 	if(ytd_player.active_nav) return;
@@ -2536,7 +2524,9 @@ let volume_plugin_style_element=createStyleElement(volume_plugin_style_source);
 
 class VolumeRange {
 	static enabled=true;
-	static create() {
+	static attached=false;
+	static create_if_needed() {
+		if(this.attached) return;
 		if(!this.enabled) return;
 		if(yt_debug_enabled) console.log('create VolumeRange');
 		if(!audio_gain_controller) {
@@ -2545,7 +2535,22 @@ class VolumeRange {
 		if(audio_gain_controller) {
 			audio_gain_controller.attach_element_list(document.querySelectorAll("video"));
 		}
-		attach_volume_range_to_page();
+		this.attach_to_page();
+	}
+	static attach_to_page() {
+		if(!ytd_app) return;
+		if(!ytd_app.__shady_children.masthead) return;
+		let player_masthead=ytd_app.__shady_children.masthead;
+		if(!player_masthead.$) return;
+		if(!ytd_app.volume_range&&audio_gain_controller) {
+			document.head.append(volume_plugin_style_element);
+			ytd_app.volume_range=new VolumeRange(0,100*5,100*5*2,audio_gain_controller);
+			let container_dom_parent=player_masthead.$.container.children.center;
+			let use_container=true;
+			if(use_container) ytd_app.volume_range.attach_to_element(container_dom_parent);
+			else ytd_app.volume_range.attach_to_element(ytd_app);
+			this.attached=true;
+		}
 	}
 	/**
 	 * @param {number} min
