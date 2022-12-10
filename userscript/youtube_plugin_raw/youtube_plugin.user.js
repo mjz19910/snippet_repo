@@ -1525,7 +1525,11 @@ function event_find_ytd_page_manager(event) {
 }
 dom_observer.addEventListener("find-ytd-page-manager",event_find_ytd_page_manager);
 
-class YtdWatchFlexyElement extends HTMLElement {}
+class YtdWatchFlexyElement extends HTMLElement {
+	static sel() {
+
+	}
+}
 /**
  * @type {YtdWatchFlexyElement | null}
  */
@@ -1615,6 +1619,11 @@ let element_map=new Map;
 let box_map=new Map;
 
 class YTDPlayerElement extends HTMLElement {
+	static element_selector="ytd-player";
+	/** @param {Document|Element} n */
+	static sel(n) {
+		return get_html_elements(n,this.element_selector);
+	}
 	active_nav=false;
 	/**@type {{getVideoData():{video_id:string;eventId: undefined;title: any;author: any;};getPlayerState():{}}|null} */
 	player_=null;
@@ -1651,12 +1660,12 @@ function event_find_ytd_player(event) {
 	let {type,detail,port}=event;
 	observer_default_action(type,current_message_id);
 	if(!ytd_watch_flexy) throw new Error("Missing ytd_watch_flexy element");
-	let target_element=get_html_elements(ytd_watch_flexy,'ytd-player')[0];
+	let target_element=YTDPlayerElement.sel(ytd_watch_flexy)[0];
 	if(!target_element) return this.next_tick_action(port,current_message_id);
 	on_ytd_player(target_element);
 	this.dispatchEvent({type: "ytd-player",detail,port});
 }
-dom_observer.addEventListener('find-ytd-player',event_find_ytd_player);
+dom_observer.addEventListener("find-ytd-player",event_find_ytd_player);
 
 /**
  * @this {DomObserver}
@@ -1674,7 +1683,7 @@ function event_ytd_player(event) {
 	box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
 	this.dispatchEvent({...event,type: "video"});
 }
-dom_observer.addEventListener('ytd-player',event_ytd_player);
+dom_observer.addEventListener("ytd-player",event_ytd_player);
 
 // visibilitychange handler (resume video when page is visible again)
 function fire_on_visibility_change_restart_video_playback() {
@@ -1874,13 +1883,22 @@ async function async_plugin_init() {
 		on_ytd_watch_flexy(current_page_element);
 		// obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
 		// obj.dispatchEvent({type: "find-ytd-player",detail,port});
-		if(!ytd_watch_flexy) throw new Error("Missing ytd_watch_flexy element");
-		{
-			const target_element=get_html_elements(ytd_watch_flexy,'ytd-player')[0];
-			if(!target_element) continue;
+		x: {
+			if(ytd_player) break x;
+			if(!ytd_watch_flexy) break x;
+			const target_element=YTDPlayerElement.sel(ytd_watch_flexy)[0];
+			if(!target_element) break x;
 			on_ytd_player(target_element);
 		}
 		// obj.dispatchEvent({type: "ytd-player",detail,port});
+		{
+			const element_list=get_html_elements(document,'video');
+			if(element_list.length<=0) continue;
+			/**@type {HTMLVideoElement[]}*/
+			let element_list_arr=[...Array.prototype.slice.call(element_list)];
+			box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
+			obj.dispatchEvent({...event,type: "video"});
+		}
 	}
 }
 
