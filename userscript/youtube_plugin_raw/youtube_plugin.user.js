@@ -2373,11 +2373,12 @@ class HistoryStateManager {
 		});
 		hp.replaceState=new Proxy(hp.replaceState,{
 			apply(target,thisArg,argArray) {
+				let new_state=argArray[0];
+				t.cur_state=new_state;
 				if(t.is_replacing_custom_state) {
 					t.is_replacing_custom_state=false;
 					return Reflect.apply(target,thisArg,argArray);
 				}
-				let new_state=argArray[0];
 				/** @type {{[x: string]: {}}|null} */
 				let prev_state=t.cur_state;
 				if(prev_state) {
@@ -2388,7 +2389,6 @@ class HistoryStateManager {
 						}
 					}
 				}
-				t.cur_state=new_state;
 				console.log('replaceState',...argArray);
 				return Reflect.apply(target,thisArg,argArray);
 			}
