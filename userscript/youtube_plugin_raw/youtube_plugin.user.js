@@ -2352,15 +2352,15 @@ class HistoryStateManager {
 		});
 		let hp=History.prototype;
 		hp.pushState=new Proxy(hp.pushState,{
-			apply(...x) {
-				console.log('pushState',...x);
-				return Reflect.apply(...x);
+			apply(target,thisArg,argArray) {
+				console.log('pushState',...argArray);
+				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
 		hp.replaceState=new Proxy(hp.replaceState,{
-			apply(...x) {
-				console.log('replaceState',...x);
-				return Reflect.apply(...x);
+			apply(target,thisArg,argArray) {
+				console.log('replaceState',...argArray);
+				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
 	}
