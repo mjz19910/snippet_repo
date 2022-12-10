@@ -665,7 +665,6 @@ class Punctuators extends PunctuatorsData {
 			if(key==="/=") return "Continue";
 			// skip OptionalChainingPunctuator
 			if(key==="?.") return "Continue";
-			// TODO: exclude some tokens that are parsed elsewhere
 			if(str.startsWith(key,index)) {
 				result=key;
 				return "Break";
