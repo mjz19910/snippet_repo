@@ -1857,6 +1857,11 @@ async function async_plugin_init() {
 	let event=new CustomEventType;
 	// let {port,detail}=event;
 	while(found_element_count<expected_element_count) {
+		if(current_message_id>4000) {
+			await new Promise((soon)=>setTimeout(soon,4000));
+			current_message_id=1;
+			continue;
+		}
 		VolumeRange.create_if_needed();
 		await obj.wait_for_port(event.port,current_message_id);
 		current_message_id++;
