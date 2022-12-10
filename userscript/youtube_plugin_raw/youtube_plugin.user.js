@@ -1463,11 +1463,11 @@ class DomObserver extends CustomEventTarget {
 		});
 	}
 	trace=false;
-	/**@arg {MessagePort} port @arg {number} message_id */
-	next_tick_action(port,message_id) {
-		if(this.trace) console.log("trace_id_"+message_id+":continue");
+	/**@arg {MessagePort} port @arg {number} count */
+	next_tick_action(port,count) {
+		if(this.trace) console.log("tick_trace",count);
 		// port.postMessage() -> on_port_message;
-		port.postMessage(message_id);
+		port.postMessage(count);
 	}
 }
 let dom_observer=new DomObserver;
@@ -1865,19 +1865,16 @@ function on_port_message(event) {
 	dispatch_observer_event();
 }
 
-/**@type {{value:MessageChannel|null}} */
-let message_channel={value: null};
+let message_channel=new MessageChannel();
 
 function fire_observer_event() {
-	if(!message_channel.value) throw new Error("bad");
-	dom_observer.notify_with_port(message_channel.value.port1);
+	dom_observer.notify_with_port(message_channel.port1);
 }
 
 let always_dispatch_event=false;
 let rep_count=0;
 let rep_max=300;
 function dispatch_observer_event() {
-	if(!message_channel.value) throw new Error("Bad");
 	rep_count+=1;
 	if(always_dispatch_event) {
 		return fire_observer_event();
@@ -1890,13 +1887,13 @@ function dispatch_observer_event() {
 }
 
 function start_message_channel_loop() {
-	message_channel.value=new MessageChannel();
-	message_channel.value.port2.onmessage=on_port_message;
+	message_channel=new MessageChannel();
+	message_channel.port2.onmessage=on_port_message;
 	if(top===window) {
 		dom_observer.dispatchEvent({
 			type: port_state.current_event_type,
 			detail: {},
-			port: message_channel.value.port1,
+			port: message_channel.port1,
 		});
 	}
 }
