@@ -1472,7 +1472,7 @@ class DomObserver extends CustomEventTarget {
 			}
 		});
 	}
-	trace=false;
+	trace=true;
 	/**@arg {MessagePort} port @arg {number} count */
 	next_tick_action(port,count) {
 		if(this.trace) console.log("tick_trace",count);
