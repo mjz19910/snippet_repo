@@ -1859,7 +1859,8 @@ async function async_plugin_init() {
 		await obj.wait_for_port(event.port,current_message_id);
 		current_message_id++;
 		// obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
-		{
+		x: {
+			if(ytd_page_manager) break x;
 			const target_element=get_html_elements(document,'ytd-page-manager')[0];
 			if(!target_element) continue;
 			on_ytd_page_manager(target_element);
