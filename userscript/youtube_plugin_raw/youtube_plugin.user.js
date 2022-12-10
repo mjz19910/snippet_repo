@@ -2347,8 +2347,17 @@ class HistoryStateManager {
 		this.cur_state=this.getHistoryState();
 		console.log('initial history state',this.cur_state);
 		window.addEventListener('popstate',(event) => {
+			/** @type {{[x: string]: {}}|null} */
 			let prev_state=this.cur_state;
-			this.cur_state=this.historyStateFromEvent(event);
+			/** @type {{[x: string]: {}}|null} */
+			let new_state=this.historyStateFromEvent(event);
+			if(prev_state&&new_state) {
+				for(let i=0;i<t.tmp_keys.length;i++) {
+					let cur_key=t.tmp_keys[i];
+					new_state[cur_key]=prev_state[cur_key];
+				}
+			}
+			this.cur_state=new_state;
 			console.log(this.cur_state,prev_state);
 		});
 		let hp=History.prototype;
