@@ -1714,7 +1714,7 @@ function on_ytd_app(element) {
 }
 
 let found_element_count=0;
-let expected_element_count=5;
+let expected_element_count=6;
 /** @param {CustomEventType} event */
 async function async_plugin_init(event) {
 	let cur_count=1;
@@ -1727,8 +1727,8 @@ async function async_plugin_init(event) {
 		VolumeRange.create_if_needed();
 		cur_count++;
 		x: {
-			if(ytd_page_manager) break x;
-			const target_element=get_html_elements(document,'ytd-app')[0];
+			if(ytd_app) break x;
+			const target_element=get_html_elements(document,"ytd-app")[0];
 			if(!target_element) break x;
 			found_element_count++;
 			on_ytd_app(target_element);
