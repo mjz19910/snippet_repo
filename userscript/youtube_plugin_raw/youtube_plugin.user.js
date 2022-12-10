@@ -1453,14 +1453,14 @@ class DomObserver extends CustomEventTarget {
 	wait_for_port(port,id) {
 		this.next_tick_action(port,id);
 		this.wait_ports.add(port);
-		return new Promise((accept)=>{
-			let res=this.port_to_resolvers_map.get(port)
+		return new Promise((accept) => {
+			let res=this.port_to_resolvers_map.get(port);
 			if(res) {
 				res.push(accept);
 			} else {
 				this.port_to_resolvers_map.set(port,[accept]);
 			}
-		})
+		});
 	}
 	trace=false;
 	/**@arg {MessagePort} port @arg {number} message_id */
@@ -1844,36 +1844,38 @@ async function async_plugin_init() {
 	let current_message_id=1;
 	let obj=dom_observer;
 	let event=new CustomEventType;
-	let {port,detail}=event;
+	// let {port,detail}=event;
 	while(true) {
 		VolumeRange.create_if_needed();
 		await obj.wait_for_port(event.port,current_message_id);
 		current_message_id++;
 		// obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
-		x: {
+		{
 			const target_element=get_html_elements(document,'ytd-page-manager')[0];
 			if(!target_element) continue;
 			on_ytd_page_manager(target_element);
+		}
+		x: {
 			let current_page_element=get_ytd_page_manager().getCurrentPage();
 			current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
-			//obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
+			// obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
 			if(current_page_element.tagName=="YTD-WATCH-FLEXY") {
 				on_ytd_watch_flexy(current_page_element);
-				obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
 				break x;
-			} else {
-				/** @type {Promise<void>} */
-				let promise=new Promise((accept) => {
-					get_ytd_page_manager().addEventListener(
-						"yt-page-type-changed",
-						() => accept(),
-						{once: true}
-					);
-				});
-				await promise;
 			}
+			/** @type {Promise<void>} */
+			let promise=new Promise((accept) => {
+				get_ytd_page_manager().addEventListener(
+					"yt-page-type-changed",
+					() => accept(),
+					{once: true}
+				);
+			});
+			await promise;
+			continue;
 		}
+		// obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
 	}
 }
 
