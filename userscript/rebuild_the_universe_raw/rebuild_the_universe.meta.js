@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name		rebuild the universe
 // @namespace	https://github.com/mjz19910/
-// @version		4.2.6
+// @version		0.1.0.0
 // @description	rebuildtheuniverse.com automation
 // @author		You
 // @match		http://rebuildtheuniverse.com/?type=real
