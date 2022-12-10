@@ -1741,7 +1741,7 @@ function on_ytd_app(element) {
 }
 
 let found_element_count=0;
-let expected_element_count=4;
+let expected_element_count=5;
 /** @param {CustomEventType} event */
 async function async_plugin_init(event) {
 	let cur_count=1;
@@ -1800,7 +1800,9 @@ async function async_plugin_init(event) {
 		x: {
 			const element_list=get_html_elements(document,'video');
 			if(element_list.length<=0) break x;
-			found_element_count++;
+			if(!box_map.has("video-list")) {
+				found_element_count++;
+			}
 			/**@type {HTMLVideoElement[]}*/
 			let element_list_arr=[...Array.prototype.slice.call(element_list)];
 			box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
