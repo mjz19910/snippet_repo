@@ -1869,7 +1869,7 @@ async function async_plugin_init() {
 		x: {
 			if(ytd_page_manager) break x;
 			const target_element=get_html_elements(document,'ytd-page-manager')[0];
-			if(!target_element) continue;
+			if(!target_element) break x;
 			found_element_count++;
 			on_ytd_page_manager(target_element);
 		}
