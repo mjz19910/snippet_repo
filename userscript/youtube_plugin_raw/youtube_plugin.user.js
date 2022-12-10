@@ -1406,7 +1406,7 @@ class DomObserver extends CustomEventTarget {
 		if(this.wait_ports.has(port)) {
 			let list=this.port_to_resolvers_map.get(port);
 			if(!list) return;
-			if(list.every(e=>!e.active)) {
+			if(list.every(e => !e.active)) {
 				this.port_to_resolvers_map.set(port,[]);
 			}
 			for(let x of list) {
@@ -1419,12 +1419,12 @@ class DomObserver extends CustomEventTarget {
 		this.next_tick_action(port,cur_count);
 		this.wait_ports.add(port);
 		return new Promise((accept) => {
-			let resolver=()=>{
+			let resolver=() => {
 				state.active=false;
 				accept(null);
 			};
 			let state={
-				active:true,
+				active: true,
 				resolver,
 			};
 			let res=this.port_to_resolvers_map.get(port);
@@ -2361,7 +2361,16 @@ class HistoryStateManager {
 		hp.replaceState=new Proxy(hp.replaceState,{
 			apply(target,thisArg,argArray) {
 				console.log('replaceState',...argArray);
-				t.cur_state=argArray[0];
+				let new_state=argArray[0];
+				/** @type {{[x: string]: {}}|null} */
+				let prev_state=t.cur_state;
+				if(prev_state) {
+					for(let i=0;i<t.tmp_keys.length;i++) {
+						let cur_key=t.tmp_keys[i];
+						new_state[cur_key]=prev_state[cur_key];
+					}
+				}
+				t.cur_state=new_state;
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
