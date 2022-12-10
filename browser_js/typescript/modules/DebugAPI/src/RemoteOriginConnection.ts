@@ -7,6 +7,7 @@ import {ReportInfo} from "./ReportInfo";
 import {LocalHandler} from "./LocalHandler";
 import {ConnectionFlags} from "./ConnectionFlags";
 import {cast_to_object, cast_to_record_with_key_and_string_type, cast_to_record_with_string_type} from "./cast_to_object";
+import {inject_api} from "../types/inject_api";
 
 // @Update on minor version change
 // version <4.9.13 commit sha1
@@ -268,8 +269,8 @@ export class RemoteOriginConnection {
 		});
 	}
 	static connect_to_api() {
-		window.inject_api.RemoteOriginConnection=this;
+		inject_api.RemoteOriginConnection=this;
 		let remote_origin=new this;
-		window.inject_api.remote_origin=remote_origin;
+		inject_api.remote_origin=remote_origin;
 	}
 }
