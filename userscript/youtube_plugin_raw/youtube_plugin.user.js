@@ -1432,6 +1432,35 @@ class CustomEventTarget {
 }
 
 class DomObserver extends CustomEventTarget {
+	/** @param {null} _v */
+	notify_fn(_v) {};
+	/** @type {Set<MessagePort>} */
+	wait_ports=new Set;
+	/** @type {Map<MessagePort,((v:null)=>void)[]>} */
+	port_to_resolvers_map=new Map;
+	/** @param {MessagePort} port */
+	notify_with_port(port) {
+		if(this.wait_ports.has(port)) {
+			this.wait_ports.delete(port);
+			let list=this.port_to_resolvers_map.get(port);
+			if(!list) return;
+			for(let x of list) {
+				x(null);
+			}
+		};
+	}
+	/** @param {MessagePort} port */
+	wait_for_port(port) {
+		this.wait_ports.add(port);
+		return new Promise((accept)=>{
+			let res=this.port_to_resolvers_map.get(port)
+			if(res) {
+				res.push(accept);
+			} else {
+				this.port_to_resolvers_map.set(port,[accept]);
+			}
+		})
+	}
 	trace=false;
 	/**@arg {MessagePort} port @arg {number} message_id */
 	next_tick_action(port,message_id) {
@@ -1456,7 +1485,7 @@ function has_ytd_page_mgr() {
 }
 
 /** @returns {YtdPageManagerElement}*/
-function get_ytd_page_mgr() {
+function get_ytd_page_manager() {
 	if(ytd_page_manager!==null) {
 		return ytd_page_manager;
 	}
@@ -1524,7 +1553,7 @@ function event_find_ytd_watch_flexy(event) {
 	const current_message_id=40;
 	let {type,detail,port}=event;
 	observer_default_action(type,current_message_id);
-	let current_page_element=get_ytd_page_mgr().getCurrentPage();
+	let current_page_element=get_ytd_page_manager().getCurrentPage();
 	if(!current_page_element) return this.next_tick_action(port,current_message_id);
 	current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 	console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
@@ -1533,7 +1562,7 @@ function event_find_ytd_watch_flexy(event) {
 		on_ytd_watch_flexy(current_page_element);
 		this.dispatchEvent({type: "ytd-watch-flexy",detail,port});
 	} else {
-		get_ytd_page_mgr().addEventListener(
+		get_ytd_page_manager().addEventListener(
 			"yt-page-type-changed",
 			() => this.dispatchEvent({type: "yt-page-type-changed",detail,port}),
 			{once: true}
@@ -1562,7 +1591,7 @@ let page_type_changes=window.page_type_changes;
 let last_page_type=null;
 
 function is_watch_page_active() {
-	return has_ytd_page_mgr()&&get_ytd_page_mgr().getCurrentPage()&&get_ytd_page_mgr().getCurrentPage().nodeName=="YTD-WATCH-FLEXY";
+	return has_ytd_page_mgr()&&get_ytd_page_manager().getCurrentPage()&&get_ytd_page_manager().getCurrentPage().nodeName=="YTD-WATCH-FLEXY";
 }
 
 /**
@@ -1576,7 +1605,7 @@ function page_changed_next_frame() {
 	if(!plugin_overlay_element) return;
 	if(!has_ytd_page_mgr()) return;
 	plugin_overlay_element.onupdate();
-	get_ytd_page_mgr().getCurrentPage().append(as_node(plugin_overlay_element));
+	get_ytd_page_manager().getCurrentPage().append(as_node(plugin_overlay_element));
 }
 
 /**@type {Map<string, HTMLElement>}*/
@@ -1635,14 +1664,14 @@ dom_observer.addEventListener('find-ytd-player',event_find_ytd_player);
  */
 function event_ytd_player(event) {
 	const current_message_id=60;
-	let {type,detail,port}=event;
+	let {type,port}=event;
 	observer_default_action(type,current_message_id);
 	const element_list=get_html_elements(document,'video');
 	if(element_list.length<=0) return this.next_tick_action(port,current_message_id);
 	/**@type {HTMLVideoElement[]}*/
 	let element_list_arr=[...Array.prototype.slice.call(element_list)];
 	box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
-	this.dispatchEvent({type: "video",detail,port});
+	this.dispatchEvent({...event,type: "video"});
 }
 dom_observer.addEventListener('ytd-player',event_ytd_player);
 
@@ -1689,7 +1718,7 @@ function log_page_type_change(event) {
 	if(!detail) return;
 	if(has_ytd_page_mgr()) {
 		if(last_page_type!==detail.pageType) {
-			let page_manager_current_tag_name=get_ytd_page_mgr().getCurrentPage().tagName.toLowerCase();
+			let page_manager_current_tag_name=get_ytd_page_manager().getCurrentPage().tagName.toLowerCase();
 			let nav_load_str=`last_page_type_change={current_page: "${page_manager_current_tag_name}", pageType: "${detail.pageType}"}`;
 			page_type_changes.push(nav_load_str);
 			console.log(nav_load_str);
@@ -1806,8 +1835,46 @@ function event_find_ytd_app(event) {
 	on_ytd_app(target_element);
 	VolumeRange.create();
 	this.dispatchEvent({type: "find-yt-playlist-manager",detail,port});
+	let fake_events=false;
+	if(fake_events===false) return;
 }
 dom_observer.addEventListener('find-ytd-app',event_find_ytd_app);
+async function async_plugin_init() {
+	const current_message_id=-1;
+	let obj=dom_observer;
+	let event=new CustomEventType;
+	let {port,detail}=event;
+	while(true) {
+		obj.next_tick_action(event.port,current_message_id);
+		await obj.wait_for_port(event.port);
+		obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
+		x: {
+			const target_element=get_html_elements(document,'ytd-page-manager')[0];
+			if(!target_element) continue;
+			obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
+			on_ytd_page_manager(target_element);
+			let current_page_element=get_ytd_page_manager().getCurrentPage();
+			current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
+			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
+			VolumeRange.create();
+			if(current_page_element.tagName=="YTD-WATCH-FLEXY") {
+				on_ytd_watch_flexy(current_page_element);
+				obj.dispatchEvent({type: "ytd-watch-flexy",detail,port});
+				break x;
+			} else {
+				/** @type {Promise<void>} */
+				let promise=new Promise((accept) => {
+					get_ytd_page_manager().addEventListener(
+						"yt-page-type-changed",
+						() => accept(),
+						{once: true}
+					);
+				});
+				await promise;
+			}
+		}
+	}
+}
 
 function attach_volume_range_to_page() {
 	if(!ytd_app) return;
@@ -1899,20 +1966,12 @@ class MessageChannelWithReadonlyPorts {
 	}
 }
 
-/**@type {{value:Readonly<MessageChannelWithReadonlyPorts>|null}} */
+/**@type {{value:MessageChannel|null}} */
 let message_channel={value: null};
-/**@arg {(event: MessageEvent<number>)=>void} on_port_message @returns {Readonly<MessageChannelWithReadonlyPorts>} */
-function create_message_channel(on_port_message) {
-	let channel=Object.freeze(new MessageChannel());
-	let {port1,port2}=channel;
-	port2.onmessage=on_port_message;
-	Object.freeze(port1);
-	Object.freeze(port2);
-	return channel;
-}
 
 function fire_observer_event() {
 	if(!message_channel.value) throw new Error("bad");
+	dom_observer.notify_with_port(message_channel.value.port1);
 	dom_observer.dispatchEvent({
 		type: port_state.current_event_type,
 		detail: {},
@@ -1937,7 +1996,8 @@ function dispatch_observer_event() {
 }
 
 function start_message_channel_loop() {
-	message_channel.value=create_message_channel(on_port_message);
+	message_channel.value=new MessageChannel();
+	message_channel.value.port2.onmessage=on_port_message;
 	if(top===window) {
 		dispatch_observer_event();
 	}
@@ -2260,11 +2320,11 @@ function activate_nav() {
 	ytd_player.active_nav=true;
 	plugin_overlay_element.setAttribute("style",player_overlay_style_str);
 	plugin_overlay_element.onupdate();
-	get_ytd_page_mgr().getCurrentPage().append(plugin_overlay_element);
+	get_ytd_page_manager().getCurrentPage().append(plugin_overlay_element);
 	log_current_video_data();
-	get_ytd_page_mgr().addEventListener("yt-page-type-changed",function() {
+	get_ytd_page_manager().addEventListener("yt-page-type-changed",function() {
 		if(!ytd_player) return;
-		if(get_ytd_page_mgr().getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
+		if(get_ytd_page_manager().getCurrentPage().tagName!="YTD-WATCH-FLEXY") {
 			ytd_player.is_watch_page_active=false;
 			plugin_overlay_element&&plugin_overlay_element.remove();
 			return;
