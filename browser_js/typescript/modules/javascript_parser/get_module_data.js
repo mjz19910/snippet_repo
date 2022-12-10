@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 export function get_module_data() {
-	return [[4],[function(e,t,r) {
+	return raw_template`[[4],[function(e,t,r) {
 		"use strict";
 		function n(e) {
 			for(var r in e)
@@ -1090,5 +1090,5 @@ export function get_module_data() {
 			}
 			).call(this,r(51));
 		}
-	]];
+	]]`;
 }

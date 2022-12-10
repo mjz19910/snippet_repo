@@ -2145,13 +2145,13 @@ class js_token_generator {
 }
 
 
-function ecma_parse_main() {
-	let parse_str="function x(){}";
+/** @param {string} code_str */
+function parse_javascript_str(code_str) {
 	if("code" in window&&typeof window.code==="string") {
-		parse_str=window.code;
+		code_str=window.code;
 	}
 	// parse_str="(function(){return function x(){}})()";
-	let token_gen=new js_token_generator(parse_str);
+	let token_gen=new js_token_generator(code_str);
 	let res_item;
 	let i=0;
 	for(;;i++) {
@@ -2174,5 +2174,5 @@ function ecma_parse_main() {
 	}
 	console.log(`parsed ${i} tokens`);
 }
-if(typeof exports)
-exports.ecma_parse_main=ecma_parse_main;
+
+exports.parse_javascript_str=parse_javascript_str;

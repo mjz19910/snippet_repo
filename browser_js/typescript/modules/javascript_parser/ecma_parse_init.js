@@ -1,15 +1,6 @@
-import {get_module_data} from "./get_module_data.js";
-import {is_valid_utf8} from "./is_valid_utf8.js";
-
 export {Holder} from "./__global.js";
 
+/** @deprecated */
 export function ecma_parse_init() {
-	if('code' in window&&window.code) return;
-	const module_data=[get_module_data()];
-	let use_valid_utf8_function=false;
-	if(use_valid_utf8_function) {
-		window.code=is_valid_utf8.toString();
-		return;
-	}
-	window.code=module_data.toString();
+	throw new Error("Deprecated");
 }
