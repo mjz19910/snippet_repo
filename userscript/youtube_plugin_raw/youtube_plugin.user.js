@@ -1449,8 +1449,9 @@ class DomObserver extends CustomEventTarget {
 			}
 		};
 	}
-	/** @param {MessagePort} port */
-	wait_for_port(port) {
+	/** @param {MessagePort} port @param {number} id */
+	wait_for_port(port,id) {
+		this.next_tick_action(port,id);
 		this.wait_ports.add(port);
 		return new Promise((accept)=>{
 			let res=this.port_to_resolvers_map.get(port)
@@ -1840,13 +1841,13 @@ function event_find_ytd_app(event) {
 }
 dom_observer.addEventListener('find-ytd-app',event_find_ytd_app);
 async function async_plugin_init() {
-	const current_message_id=-1;
+	let current_message_id=1;
 	let obj=dom_observer;
 	let event=new CustomEventType;
 	let {port,detail}=event;
 	while(true) {
-		obj.next_tick_action(event.port,current_message_id);
-		await obj.wait_for_port(event.port);
+		await obj.wait_for_port(event.port,current_message_id);
+		current_message_id++;
 		obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
 		x: {
 			const target_element=get_html_elements(document,'ytd-page-manager')[0];
