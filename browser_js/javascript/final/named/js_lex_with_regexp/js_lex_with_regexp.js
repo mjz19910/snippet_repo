@@ -287,7 +287,8 @@ function main() {
 			};
 			let state=new JSLexState(str,fake_obj_);
 			state.obj=null;
-			add_function(state);
+			add_function(JSLexState);
+			add_object(JSLexState,state);
 			let cont=true;
 			let b_cnt=0;
 			let b_cnt_off=0;

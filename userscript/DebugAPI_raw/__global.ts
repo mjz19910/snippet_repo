@@ -27,7 +27,9 @@ declare global {
 
 // inject_api global
 declare global {
-	interface InjectAPI extends IInjectAPI {}
+	interface InjectAPI extends IInjectAPI {
+		saved_instances: [string,{name:string},{}][];
+}
 	interface Window {
 		[InjectAPIStr]?: InjectAPI;
 	}

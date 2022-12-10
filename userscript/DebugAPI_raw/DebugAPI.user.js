@@ -43,6 +43,12 @@ function add_array(ids_dec) {
 	if(!inject_api.saved_object_arrays) return;
 	inject_api.saved_object_arrays.push(ids_dec);
 }
+
+inject_api.saved_instances=[];
+/** @param {{ name: string; }} constructable @arg {{}} object */
+function add_object(constructable,object) {
+	inject_api.saved_instances?.push([constructable.name,constructable,object]);
+}
 // #pragma end saved
 
 

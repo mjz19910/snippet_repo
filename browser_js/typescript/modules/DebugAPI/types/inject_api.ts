@@ -3,6 +3,7 @@ import {EventListenersT} from "../src/EventListenersT";
 // saved_objects
 declare global {
 	interface InjectAPI {
+		saved_instances?: [string,{name: string;},{}][];
 		parse_javascript_str?: (code_str: string) => void;
 		saved_objects?: [string,{name: string;}][];
 	}
