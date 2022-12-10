@@ -1805,10 +1805,8 @@ async function async_plugin_init(event) {
 			box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
 		}
 		// obj.dispatchEvent({...event,type: "video"});
-		if(!box_map.has("video-list")) {
-			continue;
-		}
-		if(!(ytd_page_manager!==null)) continue;
+		if(!box_map.has("video-list")) continue;
+		if(ytd_page_manager===null) continue;
 		obj.dispatchEvent({...event,type: "plugin-activate"});
 	}
 }
