@@ -2427,6 +2427,7 @@ class HTMLMediaElementGainController {
 	}
 	static create() {
 		if(!window.inject_api) return;
+		if(gain_controller) return;
 		gain_controller=new HTMLMediaElementGainController;
 		window.inject_api.gain_controller=gain_controller;
 	}
