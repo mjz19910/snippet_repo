@@ -277,7 +277,7 @@ function main() {
 			}
 			return false;
 		}
-		let func_start_js_lex=function(/** @type {string} */ str) {
+		function func_start_js_lex(/** @type {string} */ str) {
 			let fake_obj_={
 				break_parse: false,
 				eof: false,
@@ -301,12 +301,13 @@ function main() {
 					b_cnt_off=b_cnt;
 					state.reset_count=false;
 				}
-				if(b_cnt-b_cnt_off>100) {//console.log(state.lex_chunks[state.lex_chunks.length-1],b_cnt-b_cnt_off)
+				if(b_cnt-b_cnt_off>100) { //console.log(state.lex_chunks[state.lex_chunks.length-1],b_cnt-b_cnt_off)
 				}
 				if(state.obj&&state.str) {
 					state.str=state.str.slice(state.obj.nx_len);
 				}
-				if(!state.str) throw new Error("1");
+				if(!state.str)
+					throw new Error("1");
 				if(state.m_at_eof) {
 					console.log('EOF={bytes_left:'+state.str.length+',processed:'+str.length+`,lex_count:${b_cnt}`+'}');
 					/**
@@ -326,7 +327,7 @@ function main() {
 					break;
 				}
 			}
-		};
+		}
 		func_start_js_lex(code);
 	};
 	cur.value=cur.do_cur();
