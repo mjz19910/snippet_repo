@@ -1800,7 +1800,23 @@ async function async_plugin_init(event) {
 		x: {
 			const element_list=get_html_elements(document,'video');
 			if(element_list.length<=0) break x;
-			if(!box_map.has("video-list")) {
+			if(box_map.has("video-list")) {
+				let list=box_map.get("video-list");
+				if(!list) throw new Error("Unreachable");
+				let had_new_elements=false;
+				for(let i=0;i<element_list.length;i++) {
+					let item=element_list[i];
+					if(!(item instanceof HTMLVideoElement)) continue;
+					if(!list.value.includes(item)) {
+						had_new_elements=true;
+						list.value.push(item);
+					}
+				}
+				if(had_new_elements) {
+					console.log("found extra video elements");
+				}
+			} else {
+				console.log("found video elements");
 				found_element_count++;
 			}
 			/**@type {HTMLVideoElement[]}*/
