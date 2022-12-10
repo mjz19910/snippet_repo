@@ -1751,7 +1751,7 @@ function on_ytd_app(element) {
 }
 
 let found_element_count=0;
-let expected_element_count=5;
+let expected_element_count=4;
 /** @param {CustomEventType} event */
 async function async_plugin_init(event) {
 	let cur_count=1;
@@ -1975,6 +1975,8 @@ function yt_watch_page_loaded_handler() {
 		console.log("no ytd-page-manager");
 		return;
 	}
+	debugger;
+	VolumeRange.create_if_needed();
 	title_text_overlay_update();
 	init_ui_plugin();
 	if(!ytd_player) return;
