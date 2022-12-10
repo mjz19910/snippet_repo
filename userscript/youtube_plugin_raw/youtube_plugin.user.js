@@ -1741,12 +1741,12 @@ function on_ytd_app(element) {
 }
 
 let found_element_count=0;
-let expected_element_count=3;
+let expected_element_count=4;
 /** @param {CustomEventType} event */
 async function async_plugin_init(event) {
 	let cur_count=1;
 	let obj=dom_observer;
-	while(found_element_count<expected_element_count) {
+	while(found_element_count<expected_element_count&&cur_count<500) {
 		if(cur_count>4000) {
 			await new Promise((soon) => setTimeout(soon,4000));
 			cur_count=1;
@@ -1767,6 +1767,7 @@ async function async_plugin_init(event) {
 			if(ytd_watch_flexy) break x;
 			if(!ytd_page_manager) break x;
 			let current_page_element=ytd_page_manager.getCurrentPage();
+			if(!current_page_element) break x;
 			current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
 			// obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
