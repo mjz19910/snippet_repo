@@ -2350,6 +2350,19 @@ class HistoryStateManager {
 			this.cur_state=this.historyStateFromEvent(event);
 			console.log(this.cur_state,prev_state);
 		});
+		let hp=History.prototype;
+		hp.pushState=new Proxy(hp.pushState,{
+			apply(...x) {
+				console.log('pushState',...x);
+				return Reflect.apply(...x);
+			}
+		});
+		hp.replaceState=new Proxy(hp.replaceState,{
+			apply(...x) {
+				console.log('replaceState',...x);
+				return Reflect.apply(...x);
+			}
+		});
 	}
 	/** @arg {PopStateEvent} event */
 	historyStateFromEvent(event) {
