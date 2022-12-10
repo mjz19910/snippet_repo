@@ -1747,13 +1747,13 @@ async function async_plugin_init(event) {
 	let cur_count=1;
 	let obj=dom_observer;
 	while(found_element_count<expected_element_count&&cur_count<500) {
+		console.log(found_element_count);
 		if(cur_count>4000) {
 			await new Promise((soon) => setTimeout(soon,4000));
 			cur_count=1;
 			continue;
 		}
 		VolumeRange.create_if_needed();
-		await obj.wait_for_port(event.port,cur_count);
 		cur_count++;
 		// obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
 		x: {
@@ -1781,7 +1781,7 @@ async function async_plugin_init(event) {
 					);
 				});
 				await promise;
-				continue;
+				break x;
 			}
 			found_element_count++;
 			on_ytd_watch_flexy(current_page_element);
@@ -1805,6 +1805,7 @@ async function async_plugin_init(event) {
 			let element_list_arr=[...Array.prototype.slice.call(element_list)];
 			box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
 		}
+		await obj.wait_for_port(event.port,cur_count);
 		// obj.dispatchEvent({...event,type: "video"});
 		if(!box_map.has("video-list")) continue;
 		if(ytd_page_manager===null) continue;
