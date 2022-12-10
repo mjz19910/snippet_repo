@@ -1865,15 +1865,6 @@ function on_port_message(event) {
 	dispatch_observer_event();
 }
 
-class MessageChannelWithReadonlyPorts {
-	get port1() {
-		return Object.freeze(MessageChannel.prototype.port1);
-	}
-	get port2() {
-		return Object.freeze(MessageChannel.prototype.port2);
-	}
-}
-
 /**@type {{value:MessageChannel|null}} */
 let message_channel={value: null};
 
