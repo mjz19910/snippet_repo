@@ -5641,17 +5641,18 @@ class DebugAPI {
 		return this.get_getEventListeners('getEventListeners')(element);
 	}
 	/**
-	 * @param {any} debug
-	 * @param {any} undebug
+	 * @param {debugI} debug
+	 * @param {undebugI} undebug
 	 * @param {Constructor} func
-	 * @param {any} name @returns {{}}
+	 * @arg {string} name
+	 * @returns {dbg_result}
 	 */
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
 		/**
 		 * @param {Constructor} func
 		 * @param {any} f_this
-		 * @param {readonly any[]} c_args
+		 * @param {any[]} c_args
 		 */
 		function do_activate(func,f_this,c_args) {
 			try {
@@ -5663,7 +5664,7 @@ class DebugAPI {
 				throw new Error("1");
 			}
 		}]);
-		return this.debuggerGetVar_a(func,activate,name,[]);
+		return this.debuggerGetVar_a(func,{type:"activate-class",value:activate},name,[]);
 	}
 	/**
 	 * @param {any} debug
@@ -5859,7 +5860,7 @@ class DebugAPI {
 	}
 	/**
 	 * @param {Constructor} function_value
-	 * @param {any} activate
+	 * @param {{type:"activate-class",value:(fn_val:Constructor,args:any[]) => any}|{type:"activate-function",value:(fn_val:Function,thisArg:any,args:any[]) => any}} activate
 	 * @param {any} var_name
 	 * @param {any[]} activate_vec
 	 * @returns {dbg_result}

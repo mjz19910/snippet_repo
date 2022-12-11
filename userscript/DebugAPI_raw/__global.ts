@@ -4,6 +4,21 @@ import {} from "./support/Nullable.js";
 import {} from "./support/RecordKey.js";
 import {RepeatL_0} from "./support/Repeat_0.js";
 
+declare global {
+	interface Window {
+		debug?: debugI|undefined;
+		undebug?: undebugI|undefined;
+	}
+
+	interface debugI {
+		(fn: (...x: any[]) => void,code: string): void;
+	}
+
+	interface undebugI {
+		(fn: (...x: any[]) => any): void;
+	}
+}
+
 // Holder
 export type Holder=1;
 
@@ -11,11 +26,11 @@ declare global {
 	type msg_ev_01=CM<MessageEvent<{
 		type: string;
 		data: unknown;
-	}>> | null;
+	}>>|null;
 }
 
 declare global {
-	type CM<T>={tag:"cast_tag",data:T};
+	type CM<T>={tag: "cast_tag",data: T;};
 }
 
 //@@iterator for NodeListOf
@@ -28,15 +43,15 @@ declare global {
 // inject_api global
 declare global {
 	interface InjectAPI extends IInjectAPI {
-		saved_instances?: [string,{name:string},{}][];
-}
+		saved_instances?: [string,{name: string;},{}][];
+	}
 	interface Window {
 		[InjectAPIStr]?: InjectAPI;
 	}
 }
 
 function test_inject_api() {
-	let inject_api:InjectAPI={};
+	let inject_api: InjectAPI={};
 	inject_api;
 }
 test_inject_api();
@@ -161,15 +176,15 @@ declare global {
 		data: T,
 	};
 	type MessageType=
-	ConnectionConnected|
-	ConnectionDisconnected|
-	ConnectionSideMsg|
-	ConnectionWillDisconnect;
+		ConnectionConnected|
+		ConnectionDisconnected|
+		ConnectionSideMsg|
+		ConnectionWillDisconnect;
 	type ConnectionMessage={
 		type: "tcp",
 		flags: ConnectFlags[],
-		seq:number,
-		ack:number|null,
+		seq: number,
+		ack: number|null,
 		client_id: number,
 		data: MessageType|ConnectionForward|null,
 	};
@@ -177,7 +192,7 @@ declare global {
 		type: "forward";
 		client_id_path: [number,number,null][];
 		data: MessageType|null,
-	}
+	};
 	type ConnectionConnected={
 		type: "connected";
 	};
@@ -186,8 +201,8 @@ declare global {
 		can_reconnect: boolean;
 	};
 	type ConnectionDisconnected={
-		type:"disconnected";
-	}
+		type: "disconnected";
+	};
 	type ConnectionSide="client"|"server";
 	type ConnectionSideMsg={
 		type: "side",
