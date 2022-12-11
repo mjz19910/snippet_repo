@@ -5888,6 +5888,7 @@ class DebugAPI {
 		} else if(activate.type==="activate-function"&&activate_vec.type==="function-args") {
 			activate.value(function_value,...activate_vec.value);
 		} else {
+			this.getData('u')(this.current_function_value);
 			return {type: "argument-error"};
 		}
 		let breakpoint_result=null;
@@ -5944,7 +5945,7 @@ class DebugAPI {
 			};
 		}
 		if(target_arg_vec instanceof Array) {
-			let ret=this.debuggerGetVar_a(class_value,{type: "activate-class",value: this.activateClass},var_name,{type: "class-args",value:[target_arg_vec]});
+			let ret=this.debuggerGetVar_a(class_value,{type: "activate-class",value: this.activateClass},var_name,{type: "class-args",value: [target_arg_vec]});
 			switch(ret.type) {
 				case "argument-error": break;
 				case "data": break;
@@ -5971,7 +5972,7 @@ class DebugAPI {
 			};
 		}
 		if(target_arg_vec instanceof Array) {
-			let ret=this.debuggerGetVar_a(function_value,{type: "activate-function",value: this.activateApply},var_name,{ type: "function-args",value:[target_obj,target_arg_vec]});
+			let ret=this.debuggerGetVar_a(function_value,{type: "activate-function",value: this.activateApply},var_name,{type: "function-args",value: [target_obj,target_arg_vec]});
 			if(ret.type!=='data') throw new Error("Debug fail");
 			if(ret.data===null) throw new Error("Debug fail");
 			if(ret.data.result===null) throw new Error("Debug fail");
