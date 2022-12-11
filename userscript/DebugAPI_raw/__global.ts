@@ -94,7 +94,6 @@ declare global {
 				var: string;
 			}|{
 				type: 'no-var';
-				data: null;
 			};
 			return: any;
 		};

@@ -5791,12 +5791,12 @@ class DebugAPI {
 		this.current_function_value=function_value;
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode);
 		let rep_arr=[];
+		let tmp_key='__k';
 		{
 			rep_arr.push('__v','__v_'+rng_bytes);
-			rep_arr.push('__k','__k_'+rng_bytes);
+			rep_arr.push(tmp_key,'__k_'+rng_bytes);
 			rep_arr.push('__x','__x_'+rng_bytes);
 		}
-		let tmp_key='__k';
 		{
 			for(let i=0;i<rep_arr.length;i+=2) {
 				let cur0=rep_arr[i];
