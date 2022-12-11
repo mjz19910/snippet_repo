@@ -5664,7 +5664,13 @@ class DebugAPI {
 				throw new Error("1");
 			}
 		}]);
-		return this.debuggerGetVar_a({type: "constructor",value: func},{type: "activate-class",value: activate},name,{type: "class-args",value: [[]]});
+		return this.debuggerGetVar_a({
+			type: "activate-class",
+			name,
+			target: func,
+			activate,
+			activate_args:[],
+		});
 	}
 	/**
 	 * @param {any} debug
@@ -5752,7 +5758,7 @@ class DebugAPI {
 	}
 	/**
 	 * @param {Function} function_value
-	 * @param {IActivate} activate
+	 * @param {IDebugBreakpointArgs} activate
 	 * @param {string} var_match
 	 * @arg {[any,any[]]} activate_vec
 	 * @returns {dbg_result}
@@ -5854,16 +5860,13 @@ class DebugAPI {
 		return this.debuggerGetVarArray_a(function_value,{type: "activate-function",value: this.activateApply},var_match,activate_vec);
 	}
 	/**
-	 * @param {{type:"constructor",value:Constructor}|{type:"function",value:Function}} function_value
-	 * @param {IActivate} activate
-	 * @param {string} var_name
-	 * @param {{type:"class-args",value:[any[]]}|{type:"function-args",value:[any,any[]]}} activate_vec
+	 * @param {IDebugBreakpointArgs} breakpoint_arguments
 	 * @returns {dbg_result}
 	 */
-	debuggerGetVar_a(function_value,activate,var_name,activate_vec) {
+	debuggerGetVar_a(breakpoint_arguments) {
 		if(!this.hasData("d")||!this.getData("u")) return {type: "invalid-state-error"};
-		if(typeof function_value!='function') return {type: "argument-error"};
-		this.current_function_value=function_value;
+		if(typeof breakpoint_arguments.target!='function') return {type: "argument-error"};
+		this.current_function_value=breakpoint_arguments.target;
 		let dbg_str_func=this.stringifyFunction(this.debuggerBreakpointCode);
 		let tmp_key='__k';
 		class DebugInfoValue {
@@ -5880,17 +5883,17 @@ class DebugAPI {
 		debug(this.current_function_value,`${dbg_str_func}`);
 		// ---- Activate ----
 		let activate_return=null;
-		if(activate.type==="activate-class"&&activate_vec.type=="class-args") {
-			activate_return=activate.value(function_value,...activate_vec.value);
-		} else if(activate.type==="activate-function"&&activate_vec.type==="function-args") {
-			activate_return=activate.value(function_value,...activate_vec.value);
+		if(breakpoint_arguments.activate.type==="activate-class"&&breakpoint_arguments.activate_args.type=="class-args") {
+			activate_return=breakpoint_arguments.activate.value(breakpoint_arguments.target,...breakpoint_arguments.activate_args.value);
+		} else if(breakpoint_arguments.activate.type==="activate-function"&&breakpoint_arguments.activate_args.type==="function-args") {
+			activate_return=breakpoint_arguments.activate.value(breakpoint_arguments.target,...breakpoint_arguments.activate_args.value);
 		} else {
 			this.getData('u')(this.current_function_value);
 			return {type: "argument-error"};
 		}
 		let breakpoint_result=null;
 		if(tmp_value.get) {
-			breakpoint_result=tmp_value.get(var_name);
+			breakpoint_result=tmp_value.get(breakpoint_arguments.name);
 		}
 		this.deleteData(tmp_key);
 		if(breakpoint_result?.type==='var') {
@@ -5951,10 +5954,13 @@ class DebugAPI {
 			return {type: 'argument-error'};
 		}
 		let ret=this.debuggerGetVar_a(
-			{type: "function",value: function_value},
-			{type: "activate-function",value: this.activateApply},
-			var_name,
-			{type: "function-args",value: activate_vec},
+			{
+				type: "function",
+				target: function_value,
+				name: var_name,
+				activate: this.activateApply,
+				activate_args: activate_vec,
+			}
 		);
 		if(ret.type!=='data') throw new Error("Debug fail");
 		return {

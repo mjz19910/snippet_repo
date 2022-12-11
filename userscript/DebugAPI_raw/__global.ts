@@ -7,15 +7,21 @@ import {RepeatL_0} from "./support/Repeat_0.js";
 declare global {
 	type ActivateClass={
 		type: "activate-class";
-		value: (fn_val: Constructor,args: any[]) => any;
+		name: string;
+		target: Constructor;
+		activate: (fn_val: Constructor,args: any[]) => any;
+		activate_args: any[];
 	};
 
 	type ActivateFunction={
 		type: "activate-function";
-		value: (fn_val: Function,thisArg: any,args: any[]) => any;
+		name: string;
+		target: Function;
+		apply: (fn_val: Function,thisArg: any,args: any[]) => any;
+		apply_args:[any,any[]];
 	};
 
-	type IActivate=ActivateClass|ActivateFunction;
+	type IDebugBreakpointArgs=ActivateClass|ActivateFunction;
 }
 
 declare global {
