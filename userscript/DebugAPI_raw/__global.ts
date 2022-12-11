@@ -112,11 +112,11 @@ declare global {
 }
 
 declare global {
-	type dbg_AE={
+	type dbg_arg_error={
 		type: "argument-error";
 	};
 
-	type dbg_DT={
+	type dbg_data={
 		type: "data";
 		result: [string,any];
 		return: any;
@@ -159,7 +159,7 @@ declare global {
 		return: any;
 	};
 
-	type dbg_result=dbg_AE|dbg_DT|dbg_unexpected|dbg_invalid_state|dbg_data_array|dbg_no_response|dbg_var_result;
+	type dbg_result=dbg_arg_error|dbg_data|dbg_unexpected|dbg_invalid_state|dbg_data_array|dbg_no_response|dbg_var_result;
 }
 
 type dbg_eval_hidden={
