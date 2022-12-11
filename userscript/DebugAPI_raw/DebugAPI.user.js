@@ -5759,6 +5759,7 @@ class DebugAPI {
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVarArray_a(function_value,activate,var_match,target_obj,target_activate_args) {
+		/** @type {[any,any[]]} */
 		let activate_vec=[target_obj,target_activate_args];
 		if(!this.hasData("d")||!this.getData("u")) {
 			return {
@@ -5795,7 +5796,13 @@ class DebugAPI {
 		let debug=this.getData('d');
 		debug(this.current_function_value,`${breakpoint_code_string}`);
 		// ---- Activate ----
-		let exec_return=activate(function_value,activate_vec);
+		let activate_return=null;
+		if(activate.type==="activate-function") {
+			activate_return=activate.value(function_value,...activate_vec);
+		} else {
+			this.getData('u')(this.current_function_value);
+			return {type: "argument-error"};
+		}
 		let exec_res_arr=[];
 		if(tmp_value.get) {
 			for(let j of vars_arr) {
@@ -5817,7 +5824,7 @@ class DebugAPI {
 				type: 'data-arr',
 				data: {
 					result: exec_res_arr,
-					return: exec_return
+					return: activate_return
 				}
 			};
 		}
@@ -5825,7 +5832,7 @@ class DebugAPI {
 			type: 'no-response-null-result',
 			data: {
 				result: null,
-				return: exec_return
+				return: activate_return
 			}
 		};
 	}
@@ -5884,9 +5891,9 @@ class DebugAPI {
 		// ---- Activate ----
 		let activate_return=null;
 		if(activate.type==="activate-class"&&activate_vec.type=="class-args") {
-			activate.value(function_value,...activate_vec.value);
+			activate_return=activate.value(function_value,...activate_vec.value);
 		} else if(activate.type==="activate-function"&&activate_vec.type==="function-args") {
-			activate.value(function_value,...activate_vec.value);
+			activate_return=activate.value(function_value,...activate_vec.value);
 		} else {
 			this.getData('u')(this.current_function_value);
 			return {type: "argument-error"};
