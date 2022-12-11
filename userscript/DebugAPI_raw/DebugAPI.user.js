@@ -5594,11 +5594,7 @@ function parse_html_to_binary_arr(html) {
 inject_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 
 /**
- * @typedef {{type: "data";data: {result: [string, any];return: any;};}} DATA_RES
- */
-
-/**
- * @typedef {{type: "argument-error";data: null;}} ARG_ERR
+ * @typedef {{type: "data";data: {result: [string, any];return: any;};}} dbg_DT
  */
 
 /**
@@ -5999,7 +5995,7 @@ class DebugAPI {
 	 */
 	debuggerGetVar_c(class_value,target_arg_vec,var_name) {
 		if(typeof class_value!='function') {
-			/**@type {dbg_T2} */
+			/**@type {dbg_AE} */
 			let ret={
 				type: 'argument-error',
 				data: null
