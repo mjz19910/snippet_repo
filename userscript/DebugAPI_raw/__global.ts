@@ -6,7 +6,7 @@ import {RepeatL_0} from "./support/Repeat_0.js";
 
 declare global {
 	type ActivateClass={
-		type: "activate-class";
+		type: "class-breakpoint";
 		name: string;
 		target: Constructor;
 		activate: (fn_val: Constructor,args: any[]) => any;
@@ -14,11 +14,11 @@ declare global {
 	};
 
 	type ActivateFunction={
-		type: "activate-function";
+		type: "function-breakpoint";
 		name: string;
 		target: Function;
-		apply: (fn_val: Function,thisArg: any,args: any[]) => any;
-		apply_args:[any,any[]];
+		activate: (fn_val: Function,thisArg: any,args: any[]) => any;
+		activate_args:[any,any[]];
 	};
 
 	type IDebugBreakpointArgs=ActivateClass|ActivateFunction;
