@@ -5941,11 +5941,9 @@ class DebugAPI {
 	 */
 	debuggerGetVar_c(class_value,target_arg_vec,var_name) {
 		if(typeof class_value!='function') {
-			/**@type {dbg_AE} */
-			let ret={
+			return {
 				type: 'argument-error'
 			};
-			return ret;
 		}
 		if(target_arg_vec instanceof Array) {
 			let ret=this.debuggerGetVar_a(class_value,this.activateClass,var_name,target_arg_vec);
