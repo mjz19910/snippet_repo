@@ -5752,7 +5752,7 @@ class DebugAPI {
 	}
 	/**
 	 * @param {any} function_value
-	 * @param {any} activate
+	 * @param {IActivate} activate
 	 * @param {string} var_match
 	 * @arg {any} target_obj
 	 * @param {any[]} target_activate_args
@@ -5885,6 +5885,10 @@ class DebugAPI {
 		let activate_return=null;
 		if(activate.type==="activate-class"&&activate_vec.type=="class-args") {
 			activate.value(function_value,...activate_vec.value);
+		} else if(activate.type==="activate-function"&&activate_vec.type==="function-args") {
+			activate.value(function_value,...activate_vec.value);
+		} else {
+			return {type: "argument-error"};
 		}
 		let breakpoint_result=null;
 		if(tmp_value.get) {
