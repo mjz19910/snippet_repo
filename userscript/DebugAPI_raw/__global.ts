@@ -112,9 +112,8 @@ declare global {
 }
 
 declare global {
-	type dbg_arg_error={
-		type: "argument-error";
-	};
+	type dbg_arg_error={type: "argument-error";};
+	type dbg_invalid_state={type: 'invalid-state-error';};
 
 	type dbg_data={
 		type: "data";
@@ -133,10 +132,6 @@ declare global {
 			};
 			return: any;
 		};
-	};
-
-	type dbg_invalid_state={
-		type: 'invalid-state-error';
 	};
 
 	type dbg_data_array={
