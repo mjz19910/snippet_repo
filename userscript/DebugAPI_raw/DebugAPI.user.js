@@ -5794,12 +5794,12 @@ class DebugAPI {
 		}
 		let vars_arr=sr.map(e => String.fromCharCode(e));
 		this.current_function_value=function_value;
-		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode);
 		let tmp_key="__k";
 		/**@type {{get?:(val:string)=>any}} */
 		let tmp_value={};
 		this.setData(tmp_key,tmp_value);
 		let debug=this.get_d();
+		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode);
 		debug(this.current_function_value,`${breakpoint_code_string}`);
 		// ---- Activate ----
 		let activate_return=null;
