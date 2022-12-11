@@ -5317,7 +5317,7 @@ class ListenSocket {
 	 */
 	send_ack(f,seq,ack) {
 		if(f.is_ack()) throw new Error("ack should not be on packet we are ack'ing for");
-		let msg=new TCPMessage(f|tcp_ack,this.m_client_id,seq,ack,null);
+		let msg=new TCPMessage(+f|tcp_ack,this.m_client_id,seq,ack,null);
 		this.push_tcp_message(msg);
 	}
 	/** @arg {ConnectionMessage} data */
