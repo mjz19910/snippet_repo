@@ -5860,7 +5860,7 @@ class DebugAPI {
 	}
 	/**
 	 * @param {Constructor} function_value
-	 * @param {{type:"activate-class",value:(fn_val:Constructor,args:any[]) => any}|{type:"activate-function",value:(fn_val:Function,thisArg:any,args:any[]) => any}} activate
+	 * @param {IActivate} activate
 	 * @param {any} var_name
 	 * @param {{type:"class-args",value:[any[]]}|{type:"function-args",value:[any,any[]]}} activate_vec
 	 * @returns {dbg_result}

@@ -5,6 +5,20 @@ import {} from "./support/RecordKey.js";
 import {RepeatL_0} from "./support/Repeat_0.js";
 
 declare global {
+	type ActivateClass={
+		type: "activate-class";
+		value: (fn_val: Constructor,args: any[]) => any;
+	};
+
+	type ActivateFunction={
+		type: "activate-function";
+		value: (fn_val: Function,thisArg: any,args: any[]) => any;
+	};
+
+	type IActivate=ActivateClass|ActivateFunction;
+}
+
+declare global {
 	interface Window {
 		debug?: debugI|undefined;
 		undebug?: undebugI|undefined;
