@@ -5895,7 +5895,6 @@ class DebugAPI {
 		this.deleteData(tmp_key);
 		if(breakpoint_result?.type==='var') {
 			return {
-				/**@type {"data"} */
 				type: 'data',
 				data: {
 					result: breakpoint_result.data,
