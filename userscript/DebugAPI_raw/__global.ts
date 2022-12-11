@@ -162,22 +162,17 @@ declare global {
 	type dbg_result=dbg_arg_error|dbg_data|dbg_unexpected|dbg_invalid_state|dbg_data_array|dbg_no_response|dbg_var_result;
 }
 
-type dbg_eval_hidden={
-	type: "eval-hidden-var";
-};
-
-type dbg_no_var={
-	type: "no-var"
-}
-
-type TVarRes={
-	type: "var";
-	data: any[];
-};
-
 declare global {
+	type dbg_eval_hidden={type: "eval-hidden-var";};
+	type dbg_no_var={type: "no-var";};
+
+	type dbg_var={
+		type: "var";
+		data: any[];
+	};
+
 	interface dbg_get_ty {
-		get?: (__v: string) => dbg_eval_hidden|dbg_no_var|TVarRes;
+		get?: (__v: string) => dbg_eval_hidden|dbg_no_var|dbg_var;
 	}
 }
 
