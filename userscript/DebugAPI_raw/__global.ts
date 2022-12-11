@@ -211,7 +211,7 @@ declare global {
 		ConnectionWillDisconnect;
 	type ConnectionMessage={
 		type: "tcp",
-		flags: ConnectFlag[],
+		flags: ConnectFlag,
 		seq: number,
 		ack: number|null,
 		client_id: number,

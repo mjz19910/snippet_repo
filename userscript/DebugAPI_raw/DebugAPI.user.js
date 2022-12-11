@@ -4891,32 +4891,33 @@ function cast_to_record_with_key_and_string_type(x,k) {
 const post_message_connect_message_type=`CrossOriginConnection_${commit_id_sha_1}`;
 
 class FlagHandler {
-	is_empty() {
-		return this.f.length===0;
+	is_none() {
+		return this.f===0;
 	}
-	syn() {
-		return this.f.findIndex(e => (e&1)==1)>-1;
+	is_syn() {
+		return (this.f&1)==1;
 	}
-	ack() {
-		return this.f.findIndex(e => (e&2)==2)>-1;
+	is_ack() {
+		return (this.f&2)==2;
 	}
-	flags() {
+	get_flags() {
 		return this.f;
 	}
-	/** @arg {import("./__global.js").ConnectFlag[]} flags */
+	/** @arg {import("./__global.js").ConnectFlag} flags */
 	constructor(flags) {
 		this.f=flags;
-	}
-	[Symbol.iterator]() {
-		return this.f[Symbol.iterator]();
 	}
 }
 
 /** @typedef {import("./__global.js").ConnectFlag} ConnectFlag */
-/** @type {(typeof import("./__global.js").ConnectFlag)['Syn']} */
+/** @type {1} */
 const tcp_syn=1;
-/** @readonly @type {(typeof import("./__global.js").ConnectFlag)["Ack"]} */
+/** @type {(typeof import("./__global.js").ConnectFlag)['Syn']} */
+const val_tcp_syn=tcp_syn;val_tcp_syn;
+/** @type {2} */
 const tcp_ack=2;
+/** @readonly @type {(typeof import("./__global.js").ConnectFlag)["Ack"]} */
+const val_tcp_ack=tcp_ack;val_tcp_ack;
 
 const ack_win=5000;
 class TCPMessage {
@@ -5058,7 +5059,7 @@ class Socket {
 			handler: this,
 		};
 		if(testing_tcp) {
-			console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags.join(":")+">");
+			console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags+">");
 			console.log("ListenSocket ->");
 			console.log("s_port.onmessage.handleEvent ->");
 			console.log("-?> Socket",data);
@@ -5088,7 +5089,7 @@ class Socket {
 			client_id: this.m_client_id,
 			ack: tcp_message.seq+1,
 			seq,
-			flags: [2],
+			flags: tcp_message.flags|tcp_ack,
 			data: null,
 		});
 	}
@@ -5100,7 +5101,7 @@ class Socket {
 		if(this.m_local_log) {
 			console.log("local",tcp_message);
 		}
-		if(f.syn()&&f.ack()) {
+		if(f.is_syn()&&f.is_ack()) {
 			this.send_ack(tcp_message);
 		}
 		if(tcp_message.flags.length==0) {
@@ -5312,7 +5313,7 @@ class ListenSocket {
 	 * @param {number} ack
 	 */
 	send_ack(f,seq,ack) {
-		if(f.ack()) throw new Error("ack should not be on packet we are ack'ing for");
+		if(f.is_ack()) throw new Error("ack should not be on packet we are ack'ing for");
 		let msg=new TCPMessage([...f,tcp_ack],this.m_client_id,seq,ack,null);
 		this.push_tcp_message(msg);
 	}
@@ -5320,7 +5321,7 @@ class ListenSocket {
 	handle_tcp_data(data) {
 		let f=new FlagHandler(data.flags);
 		let {seq: ack,ack: seq}=data;
-		if(f.syn()) {
+		if(f.is_syn()) {
 			// seq=number & ack=null;
 			seq=(Math.random()*ack_win)%ack_win|0;
 			if(testing_tcp) {
@@ -5329,18 +5330,18 @@ class ListenSocket {
 			ack+=1;
 			this.send_ack(f,seq,ack);
 		}
-		if(f.is_empty()&&seq) {
+		if(f.is_none()&&seq) {
 			this.send_ack(f,seq,ack);
 		}
-		if(f.is_empty()&&!seq) {
+		if(f.is_none()&&!seq) {
 			console.log("bad tcp",data);
 		}
-		if(f.ack()&&this.m_connecting&&seq) {
+		if(f.is_ack()&&this.m_connecting&&seq) {
 			this.m_connecting=false;
 			this.m_connected=true;
 			this.downstream_connect(data.seq,seq);
 		}
-		if(f.ack()&&this.m_connecting&&!seq) {
+		if(f.is_ack()&&this.m_connecting&&!seq) {
 			console.log("bad tcp",data);
 		}
 		let downstream_data=data.data;
