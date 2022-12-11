@@ -5958,7 +5958,7 @@ class DebugAPI {
 		);
 		if(ret.type!=='data') throw new Error("Debug fail");
 		return {
-			type: 'debug_data',
+			type: 'var-result',
 			result: ret.result[1],
 			return: ret.return
 		};

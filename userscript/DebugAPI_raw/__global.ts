@@ -142,7 +142,13 @@ declare global {
 		return: any;
 	};
 
-	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_ISE|dbg_T6|dbg_t1;
+	type dbg_var_result={
+		type: "var-result";
+		result: any;
+		return: any;
+	};
+
+	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_ISE|dbg_T6|dbg_t1|dbg_var_result;
 }
 
 declare global {
