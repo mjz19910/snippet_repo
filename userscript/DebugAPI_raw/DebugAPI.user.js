@@ -5665,11 +5665,11 @@ class DebugAPI {
 			}
 		}]);
 		return this.debuggerGetVar_a({
-			type: "activate-class",
+			type: "class-breakpoint",
 			name,
 			target: func,
 			activate,
-			activate_args:[],
+			activate_args: [],
 		});
 	}
 	/**
@@ -5763,7 +5763,6 @@ class DebugAPI {
 	debuggerGetVarArray_a(breakpoint_arguments) {
 		let function_value=breakpoint_arguments.target;
 		let var_match=breakpoint_arguments.name;
-		let activate=breakpoint_arguments.activate;
 		if(!this.hasData("d")||!this.getData("u")) {
 			return {
 				type: 'invalid-state-error'
@@ -5800,8 +5799,10 @@ class DebugAPI {
 		debug(this.current_function_value,`${breakpoint_code_string}`);
 		// ---- Activate ----
 		let activate_return=null;
-		if(activate.type==="activate-function") {
-			activate_return=activate.value(function_value,...activate_vec);
+		if(breakpoint_arguments.type==="function-breakpoint") {
+			let activate_vec=breakpoint_arguments.activate_args;
+			let target_fn=breakpoint_arguments.target;
+			activate_return=breakpoint_arguments.activate(target_fn,...activate_vec);
 		} else {
 			this.getData('u')(this.current_function_value);
 			return {type: "argument-error"};
@@ -5844,21 +5845,27 @@ class DebugAPI {
 	 */
 	debuggerGetVarArray_c(class_value,activate_args,var_match) {
 		return this.debuggerGetVarArray_a({
-			type:"class-breakpoint",
-			name:var_match,
-			target:class_value,
-			activate:this.activateClass,
+			type: "class-breakpoint",
+			name: var_match,
+			target: class_value,
+			activate: this.activateClass,
 			activate_args,
 		});
 	}
 	/**
 	 * @param {Function} function_value
-	 * @param {[any, any[]]} activate_vec
+	 * @param {[any, any[]]} activate_args
 	 * @param {string} var_match
 	 * @returns {dbg_result}
 	 */
-	debuggerGetVarArray(function_value,activate_vec,var_match) {
-		return this.debuggerGetVarArray_a(function_value,{type: "activate-function",value: this.activateApply},var_match,activate_vec);
+	debuggerGetVarArray(function_value,activate_args,var_match) {
+		return this.debuggerGetVarArray_a({
+			type: "function-breakpoint",
+			name: var_match,
+			target: function_value,
+			activate: this.activateApply,
+			activate_args,
+		});
 	}
 	/**
 	 * @param {IDebugBreakpointArgs} breakpoint_arguments
