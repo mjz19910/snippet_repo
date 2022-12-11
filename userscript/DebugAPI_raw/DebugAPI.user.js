@@ -5664,7 +5664,7 @@ class DebugAPI {
 				throw new Error("1");
 			}
 		}]);
-		return this.debuggerGetVar_a(func,{type: "activate-class",value: activate},name,{type: "class-args",value: [[]]});
+		return this.debuggerGetVar_a({type: "constructor",value: func},{type: "activate-class",value: activate},name,{type: "class-args",value: [[]]});
 	}
 	/**
 	 * @param {any} debug
@@ -5751,16 +5751,13 @@ class DebugAPI {
 		return function_code;
 	}
 	/**
-	 * @param {any} function_value
+	 * @param {Function} function_value
 	 * @param {IActivate} activate
 	 * @param {string} var_match
-	 * @arg {any} target_obj
-	 * @param {any[]} target_activate_args
+	 * @arg {[any,any[]]} activate_vec
 	 * @returns {dbg_result}
 	 */
-	debuggerGetVarArray_a(function_value,activate,var_match,target_obj,target_activate_args) {
-		/** @type {[any,any[]]} */
-		let activate_vec=[target_obj,target_activate_args];
+	debuggerGetVarArray_a(function_value,activate,var_match,activate_vec) {
 		if(!this.hasData("d")||!this.getData("u")) {
 			return {
 				type: 'invalid-state-error'
@@ -5838,37 +5835,31 @@ class DebugAPI {
 	}
 	/**
 	 * @param {any} class_value
-	 * @param {any} target_arg_vec
+	 * @param {[any,any[]]} target_arg_vec
 	 * @param {any} var_match
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVarArray_c(class_value,target_arg_vec,var_match) {
 		if(target_arg_vec instanceof Array) {
-			return this.debuggerGetVarArray_a(class_value,{type:"activate-class",value:this.activateClass},var_match,target_arg_vec[0],target_arg_vec.slice(1));
+			return this.debuggerGetVarArray_a(class_value,{type: "activate-class",value: this.activateClass},var_match,target_arg_vec);
 		}
 		return {
 			type: 'argument-error'
 		};
 	}
 	/**
-	 * @param {any} function_value
-	 * @param {any} target_obj
-	 * @param {any} target_arg_vec
-	 * @param {any} var_match
+	 * @param {Function} function_value
+	 * @param {[any, any[]]} activate_vec
+	 * @param {string} var_match
 	 * @returns {dbg_result}
 	 */
-	debuggerGetVarArray(function_value,target_obj,target_arg_vec,var_match) {
-		if(target_arg_vec instanceof Array) {
-			return this.debuggerGetVarArray_a(function_value,{type:"activate-function",value:this.activateApply},var_match,target_obj,target_arg_vec);
-		}
-		return {
-			type: 'argument-error'
-		};
+	debuggerGetVarArray(function_value,activate_vec,var_match) {
+		return this.debuggerGetVarArray_a(function_value,{type: "activate-function",value: this.activateApply},var_match,activate_vec);
 	}
 	/**
-	 * @param {Constructor} function_value
+	 * @param {{type:"constructor",value:Constructor}|{type:"function",value:Function}} function_value
 	 * @param {IActivate} activate
-	 * @param {any} var_name
+	 * @param {string} var_name
 	 * @param {{type:"class-args",value:[any[]]}|{type:"function-args",value:[any,any[]]}} activate_vec
 	 * @returns {dbg_result}
 	 */
@@ -5954,7 +5945,7 @@ class DebugAPI {
 			};
 		}
 		if(target_arg_vec instanceof Array) {
-			let ret=this.debuggerGetVar_a(class_value,{type: "activate-class",value: this.activateClass},var_name,{type: "class-args",value: [target_arg_vec]});
+			let ret=this.debuggerGetVar_a({type: "constructor",value: class_value},{type: "activate-class",value: this.activateClass},var_name,{type: "class-args",value: [target_arg_vec]});
 			switch(ret.type) {
 				case "argument-error": break;
 				case "data": break;
