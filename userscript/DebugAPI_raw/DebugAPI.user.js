@@ -5844,7 +5844,7 @@ class DebugAPI {
 	 */
 	debuggerGetVarArray_c(class_value,target_arg_vec,var_match) {
 		if(target_arg_vec instanceof Array) {
-			return this.debuggerGetVarArray_a(class_value,this.activateClass,var_match,target_arg_vec[0],target_arg_vec.slice(1));
+			return this.debuggerGetVarArray_a(class_value,{type:"activate-class",value:this.activateClass},var_match,target_arg_vec[0],target_arg_vec.slice(1));
 		}
 		return {
 			type: 'argument-error'
@@ -5859,7 +5859,7 @@ class DebugAPI {
 	 */
 	debuggerGetVarArray(function_value,target_obj,target_arg_vec,var_match) {
 		if(target_arg_vec instanceof Array) {
-			return this.debuggerGetVarArray_a(function_value,this.activateApply,var_match,target_obj,target_arg_vec);
+			return this.debuggerGetVarArray_a(function_value,{type:"activate-function",value:this.activateApply},var_match,target_obj,target_arg_vec);
 		}
 		return {
 			type: 'argument-error'
