@@ -5956,9 +5956,6 @@ class DebugAPI {
 		if(target_arg_vec instanceof Array) {
 			let ret=this.debuggerGetVar_a(function_value,{type: "activate-function",value: this.activateApply},var_name,{type: "function-args",value: [target_obj,target_arg_vec]});
 			if(ret.type!=='data') throw new Error("Debug fail");
-			if(ret.result===null) throw new Error("Debug fail");
-			if(ret.result.length>2) return ret.result;
-			if(!ret.result.length) return ret;
 			return {
 				type: 'debug_data',
 				result: ret.result[1],
