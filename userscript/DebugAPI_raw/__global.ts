@@ -141,20 +141,10 @@ declare global {
 
 	type dbg_t1={
 		type: "no-response";
-		data: {
-			result: null,
-		};
+		return: any;
 	};
 
-	type dbg_t2={
-		type: 'no-response-null-result';
-		data: {
-			result: null;
-			return: any;
-		};
-	};
-
-	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_ISE|dbg_T6|dbg_t1|dbg_t2;
+	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_ISE|dbg_T6|dbg_t1;
 }
 
 declare global {

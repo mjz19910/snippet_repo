@@ -5826,11 +5826,8 @@ class DebugAPI {
 			};
 		}
 		return {
-			type: 'no-response-null-result',
-			data: {
-				result: null,
-				return: activate_return
-			}
+			type: 'no-response',
+			return: activate_return
 		};
 	}
 	/**
@@ -5919,9 +5916,7 @@ class DebugAPI {
 		}
 		return {
 			type: 'no-response',
-			data: {
-				return: activate_return,
-			}
+			return: activate_return,
 		};
 	}
 	/**
