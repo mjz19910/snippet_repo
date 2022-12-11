@@ -4906,10 +4906,10 @@ class FlagHandler {
 		return this.f.length===0;
 	}
 	syn() {
-		return this.f.findIndex(e => e[1]==="syn")>-1;
+		return this.f.findIndex(e => (e&1)==1)>-1;
 	}
 	ack() {
-		return this.f.findIndex(e => e[1]==="ack")>-1;
+		return this.f.findIndex(e => (e&2)==2)>-1;
 	}
 	flags() {
 		return this.f;
@@ -4926,7 +4926,7 @@ class TCPMessage {
 	/** @readonly */
 	type="tcp";
 	/**
-	 * @param {ConnectFlags[]} flags
+	 * @param {ConnectFlag[]} flags
 	 * @param {number} client_id
 	 * @param {number} seq
 	 * @param {number|null} ack
@@ -4949,7 +4949,7 @@ class TCPMessage {
 		if(testing_tcp) {
 			seq=100;
 		}
-		return new TCPMessage([[1,"syn"]],client_id,seq,null,null);
+		return new TCPMessage([ConnectFlag.Syn],client_id,seq,null,null);
 	}
 	/**
 	 * @param {number} client_id
@@ -5061,7 +5061,7 @@ class Socket {
 			handler: this,
 		};
 		if(testing_tcp) {
-			console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags.map(e => e[1]).join(":")+">");
+			console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags.join(":")+">");
 			console.log("ListenSocket ->");
 			console.log("s_port.onmessage.handleEvent ->");
 			console.log("-?> Socket",data);
@@ -5091,7 +5091,7 @@ class Socket {
 			client_id: this.m_client_id,
 			ack: tcp_message.seq+1,
 			seq,
-			flags: [[2,"ack"]],
+			flags: [2],
 			data: null,
 		});
 	}
@@ -5316,7 +5316,7 @@ class ListenSocket {
 	 */
 	send_ack(f,seq,ack) {
 		if(f.ack()) throw new Error("ack should not be on packet we are ack'ing for");
-		let msg=new TCPMessage([...f.flags(),[2,"ack"]],this.m_client_id,seq,ack,null);
+		let msg=new TCPMessage([...f.flags(),2],this.m_client_id,seq,ack,null);
 		this.push_tcp_message(msg);
 	}
 	/** @arg {ConnectionMessage} data */

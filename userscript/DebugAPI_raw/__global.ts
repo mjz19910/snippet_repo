@@ -192,7 +192,11 @@ declare global {
 }
 
 declare global {
-	type ConnectFlags=[1,"syn"]|[2,"ack"];
+	enum ConnectFlag {
+		Syn=1<<0,
+		Ack=1<<1,
+	}
+	type ConnectFlags=ConnectFlag;
 	type WrappedMessage<T>={
 		type: typeof post_message_connect_message_type,
 		data: T,
@@ -204,7 +208,7 @@ declare global {
 		ConnectionWillDisconnect;
 	type ConnectionMessage={
 		type: "tcp",
-		flags: ConnectFlags[],
+		flags: ConnectFlag[],
 		seq: number,
 		ack: number|null,
 		client_id: number,
