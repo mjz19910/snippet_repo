@@ -4923,7 +4923,7 @@ class TCPMessage {
 	/** @readonly */
 	type="tcp";
 	/**
-	 * @param {ConnectFlag[]} flags
+	 * @param {ConnectFlag} flags
 	 * @param {number} client_id
 	 * @param {number} seq
 	 * @param {number|null} ack
@@ -4946,7 +4946,7 @@ class TCPMessage {
 		if(testing_tcp) {
 			seq=100;
 		}
-		return new TCPMessage([tcp_syn],client_id,seq,null,null);
+		return new TCPMessage(tcp_syn,client_id,seq,null,null);
 	}
 	/**
 	 * @param {number} client_id
@@ -4956,7 +4956,7 @@ class TCPMessage {
 	 * @returns {ConnectionMessage}
 	 */
 	static make_message(client_id,data,seq,ack) {
-		return new TCPMessage([],client_id,seq,ack,data);
+		return new TCPMessage(0,client_id,seq,ack,data);
 	}
 }
 
