@@ -5942,7 +5942,7 @@ class DebugAPI {
 	}
 	/**
 	 * @param {Function} function_value
-	 * @param {any} activate_vec
+	 * @param {[any, any[]]} activate_vec
 	 * @param {string} var_name
 	 */
 	debuggerGetVar(function_value,activate_vec,var_name) {
