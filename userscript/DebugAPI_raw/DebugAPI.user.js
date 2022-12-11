@@ -5944,6 +5944,7 @@ class DebugAPI {
 	 * @param {Function} function_value
 	 * @param {[any, any[]]} activate_vec
 	 * @param {string} var_name
+	 * @returns {dbg_result}
 	 */
 	debuggerGetVar(function_value,activate_vec,var_name) {
 		if(typeof function_value!='function') {

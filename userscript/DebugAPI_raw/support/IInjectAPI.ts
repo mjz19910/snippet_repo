@@ -201,7 +201,7 @@ type DebugAPIType={
 };
 
 interface DebugAPI_the {
-	get_k(v: string): any;
+	get_k(v: string): dbg_get_ty;
 	clearCurrentBreakpoint(): boolean;
 }
 
