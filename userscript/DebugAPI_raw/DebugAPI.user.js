@@ -5664,7 +5664,7 @@ class DebugAPI {
 				throw new Error("1");
 			}
 		}]);
-		return this.debuggerGetVar_a(func,{type:"activate-class",value:activate},name,[]);
+		return this.debuggerGetVar_a(func,{type: "activate-class",value: activate},name,[]);
 	}
 	/**
 	 * @param {any} debug
@@ -5866,18 +5866,9 @@ class DebugAPI {
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVar_a(function_value,activate,var_name,activate_vec) {
-		if(!this.hasData("d")||!this.getData("u")) {
-			return {
-				type: 'invalid-state-error'
-			};
-		}
-		if(typeof function_value!='function') {
-			/** @type {dbg_AE} */
-			let ret={
-				type: 'argument-error'
-			};
-			return ret;
-		}
+		if(!this.hasData("d")||!this.getData("u")) return {type: "invalid-state-error"};
+		if(activate.type==="activate-function") return {type: "argument-error"};
+		if(typeof function_value!='function') return {type:"argument-error"};
 		this.current_function_value=function_value;
 		let dbg_str_func=this.stringifyFunction(this.debuggerBreakpointCode);
 		let tmp_key='__k';
@@ -5892,7 +5883,7 @@ class DebugAPI {
 		this.setData(tmp_key,tmp_value);
 		this.getData('d')(this.current_function_value,`${dbg_str_func}`);
 		// ---- Activate ----
-		let activate_return=activate(function_value,activate_vec);
+		let activate_return=activate.value(function_value,activate_vec);
 		let breakpoint_result=null;
 		if(tmp_value.get) {
 			breakpoint_result=tmp_value.get(var_name);
@@ -5947,7 +5938,7 @@ class DebugAPI {
 			};
 		}
 		if(target_arg_vec instanceof Array) {
-			let ret=this.debuggerGetVar_a(class_value,this.activateClass,var_name,target_arg_vec);
+			let ret=this.debuggerGetVar_a(class_value,{type: "activate-class",value: this.activateClass},var_name,target_arg_vec);
 			switch(ret.type) {
 				case "argument-error": break;
 				case "data": break;
@@ -5974,7 +5965,7 @@ class DebugAPI {
 			};
 		}
 		if(target_arg_vec instanceof Array) {
-			let ret=this.debuggerGetVar_a(function_value,this.activateApply,var_name,[target_obj,target_arg_vec]);
+			let ret=this.debuggerGetVar_a(function_value,{type:"activate-function",value:this.activateApply},var_name,[target_obj,target_arg_vec]);
 			if(ret.type!=='data') throw new Error("Debug fail");
 			if(ret.data===null) throw new Error("Debug fail");
 			if(ret.data.result===null) throw new Error("Debug fail");
