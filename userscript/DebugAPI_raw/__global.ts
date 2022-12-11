@@ -108,10 +108,8 @@ declare global {
 
 	type dbg_DT={
 		type: "data";
-		data: {
-			result: [string,any];
-			return: any;
-		};
+		result: [string,any];
+		return: any;
 	};
 
 	type dbg_T4={

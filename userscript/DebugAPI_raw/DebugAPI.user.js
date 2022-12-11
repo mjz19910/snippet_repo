@@ -5896,10 +5896,8 @@ class DebugAPI {
 		if(breakpoint_result?.type==='var') {
 			return {
 				type: 'data',
-				data: {
-					result: breakpoint_result.data,
-					return: activate_return
-				}
+				result: breakpoint_result.data,
+				return: activate_return,
 			};
 		}
 		if(breakpoint_result) {
@@ -5958,14 +5956,13 @@ class DebugAPI {
 		if(target_arg_vec instanceof Array) {
 			let ret=this.debuggerGetVar_a(function_value,{type: "activate-function",value: this.activateApply},var_name,{type: "function-args",value: [target_obj,target_arg_vec]});
 			if(ret.type!=='data') throw new Error("Debug fail");
-			if(ret.data===null) throw new Error("Debug fail");
-			if(ret.data.result===null) throw new Error("Debug fail");
-			if(ret.data.result.length>2) return ret.data.result;
-			if(!ret.data.result.length) return ret;
+			if(ret.result===null) throw new Error("Debug fail");
+			if(ret.result.length>2) return ret.result;
+			if(!ret.result.length) return ret;
 			return {
 				type: 'debug_data',
-				result: ret.data.result[1],
-				return: ret.data.return
+				result: ret.result[1],
+				return: ret.return
 			};
 		}
 		return {
