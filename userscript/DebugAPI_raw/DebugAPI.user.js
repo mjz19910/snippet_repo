@@ -5894,8 +5894,7 @@ class DebugAPI {
 		}
 		this.deleteData(tmp_key);
 		if(breakpoint_result?.type==='var') {
-			/**@type {{type:"data", data: {result:[string,any],return:any}}} */
-			let ret={
+			return {
 				/**@type {"data"} */
 				type: 'data',
 				data: {
@@ -5903,7 +5902,6 @@ class DebugAPI {
 					return: activate_return
 				}
 			};
-			return ret;
 		}
 		if(breakpoint_result) {
 			return {
