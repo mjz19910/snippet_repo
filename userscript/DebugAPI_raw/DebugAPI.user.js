@@ -5942,34 +5942,27 @@ class DebugAPI {
 	}
 	/**
 	 * @param {Function} function_value
-	 * @param {any} target_obj
-	 * @param {any} target_arg_vec
+	 * @param {any} activate_vec
 	 * @param {string} var_name
 	 */
-	debuggerGetVar(function_value,target_obj,target_arg_vec,var_name) {
+	debuggerGetVar(function_value,activate_vec,var_name) {
 		if(typeof function_value!='function') {
 			return {
 				type: 'argument-error',
 				value: null
 			};
 		}
-		if(target_arg_vec instanceof Array) {
-			let ret=this.debuggerGetVar_a(
-				{type: "function",value: function_value},
-				{type: "activate-function",value: this.activateApply},
-				var_name,
-				{type: "function-args",value: [target_obj,target_arg_vec]},
-			);
-			if(ret.type!=='data') throw new Error("Debug fail");
-			return {
-				type: 'debug_data',
-				result: ret.result[1],
-				return: ret.return
-			};
-		}
+		let ret=this.debuggerGetVar_a(
+			{type: "function",value: function_value},
+			{type: "activate-function",value: this.activateApply},
+			var_name,
+			{type: "function-args",value: activate_vec},
+		);
+		if(ret.type!=='data') throw new Error("Debug fail");
 		return {
-			type: 'argument-error',
-			value: null
+			type: 'debug_data',
+			result: ret.result[1],
+			return: ret.return
 		};
 	}
 }
