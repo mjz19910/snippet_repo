@@ -5787,26 +5787,9 @@ class DebugAPI {
 			}
 		}
 		let vars_arr=sr.map(e => String.fromCharCode(e));
-		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('');
 		this.current_function_value=function_value;
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode);
-		let rep_arr=[];
 		let tmp_key='__k';
-		{
-			rep_arr.push('__v','__v_'+rng_bytes);
-			rep_arr.push(tmp_key,'__k_'+rng_bytes);
-			rep_arr.push('__x','__x_'+rng_bytes);
-		}
-		{
-			for(let i=0;i<rep_arr.length;i+=2) {
-				let cur0=rep_arr[i];
-				let cur1=rep_arr[i]+1;
-				if(tmp_key===cur0) {
-					tmp_key=cur1;
-				}
-				breakpoint_code_string=breakpoint_code_string.replaceAll(cur0,cur1);
-			}
-		}
 		/**@type {{get?:(val:string)=>any}} */
 		let tmp_value={};
 		this.setData(tmp_key,tmp_value);
@@ -5904,28 +5887,9 @@ class DebugAPI {
 			};
 			return ret;
 		}
-		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('');
 		this.current_function_value=function_value;
 		let dbg_str_func=this.stringifyFunction(this.debuggerBreakpointCode);
-		let rep_arr=[];
-		{
-			rep_arr.push('__v','__v_'+rng_bytes);
-			rep_arr.push('__k','__k_'+rng_bytes);
-			rep_arr.push('__x','__x_'+rng_bytes);
-		}
-		let map_arr=[dbg_str_func];
 		let tmp_key='__k';
-		{
-			for(let i=0;i<rep_arr.length;i+=2) {
-				let cur0=rep_arr[i];
-				let cur1=rep_arr[i]+1;
-				if(tmp_key===cur0) {
-					tmp_key=cur1;
-				}
-				map_arr[0]=map_arr[0].replaceAll(cur0,cur1);
-			}
-			dbg_str_func=map_arr[0];
-		}
 		class DebugInfoValue {
 			valid=false;
 			/**@arg {string} __v @returns {{type: 'hidden-var',var: string}|{type: 'var',data: [string,any]}|{type: 'no-var', data: null}|null} */
