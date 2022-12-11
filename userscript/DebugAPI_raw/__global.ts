@@ -16,13 +16,15 @@ declare global {
 	type ActivateFunction={
 		type: "function-breakpoint";
 		name: string;
-		target: Function;
+		target: (...x: any[]) => void;
 		activate: (fn_val: Function,thisArg: any,args: any[]) => any;
 		activate_args:[any,any[]];
 	};
 
 	type IDebugBreakpointArgs=ActivateClass|ActivateFunction;
 }
+
+type DebuggableFunctions=NewableFunction|CallableFunction;
 
 declare global {
 	interface Window {
@@ -31,7 +33,7 @@ declare global {
 	}
 
 	interface I_debug {
-		(fn: (...x: any[]) => void,code: string): void;
+		(fn: DebuggableFunctions,code: string): void;
 	}
 
 	interface I_undebug {

@@ -5853,7 +5853,7 @@ class DebugAPI {
 		});
 	}
 	/**
-	 * @param {Function} function_value
+	 * @param {(...x: any[]) => void} function_value
 	 * @param {[any, any[]]} activate_args
 	 * @param {string} var_match
 	 * @returns {dbg_result}
@@ -5952,7 +5952,7 @@ class DebugAPI {
 		};
 	}
 	/**
-	 * @param {Function} function_value
+	 * @param {(...x: any[]) => void} function_value
 	 * @param {[any, any[]]} activate_vec
 	 * @param {string} var_name
 	 * @returns {dbg_result}
