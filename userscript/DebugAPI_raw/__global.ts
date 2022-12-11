@@ -75,7 +75,6 @@ declare global {
 declare global {
 	type dbg_AE={
 		type: "argument-error";
-		data: null;
 	};
 
 	type dbg_DT={
@@ -101,7 +100,6 @@ declare global {
 
 	type dbg_ISE={
 		type: 'invalid-state-error';
-		data: null;
 	};
 
 	type dbg_T6={

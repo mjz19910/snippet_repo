@@ -5761,14 +5761,12 @@ class DebugAPI {
 		let activate_vec=[target_obj,target_activate_args];
 		if(!this.hasData("d")||!this.getData("u")) {
 			return {
-				type: 'invalid-state-error',
-				data: null
+				type: 'invalid-state-error'
 			};
 		}
 		if(typeof function_value!='function') {
 			return {
-				type: 'argument-error',
-				data: null
+				type: 'argument-error'
 			};
 		}
 		let ma=var_match.matchAll(/.-.|./g);
@@ -5841,8 +5839,7 @@ class DebugAPI {
 			return this.debuggerGetVarArray_a(class_value,this.activateClass,var_match,target_arg_vec[0],target_arg_vec.slice(1));
 		}
 		return {
-			type: 'argument-error',
-			data: null
+			type: 'argument-error'
 		};
 	}
 	/**
@@ -5857,8 +5854,7 @@ class DebugAPI {
 			return this.debuggerGetVarArray_a(function_value,this.activateApply,var_match,target_obj,target_arg_vec);
 		}
 		return {
-			type: 'argument-error',
-			data: null
+			type: 'argument-error'
 		};
 	}
 	/**
@@ -5870,20 +5866,14 @@ class DebugAPI {
 	 */
 	debuggerGetVar_a(function_value,activate,var_name,activate_vec) {
 		if(!this.hasData("d")||!this.getData("u")) {
-			/** @type {dbg_ISE} */
-			let ret={
-				/**@type {"invalid-state-error"} */
-				type: 'invalid-state-error',
-				data: null
+			return {
+				type: 'invalid-state-error'
 			};
-			return ret;
 		}
 		if(typeof function_value!='function') {
-			/** @type {{type: "argument-error", data:null}} */
+			/** @type {dbg_AE} */
 			let ret={
-				/**@type {"argument-error"} */
-				type: 'argument-error',
-				data: null
+				type: 'argument-error'
 			};
 			return ret;
 		}
@@ -5953,32 +5943,22 @@ class DebugAPI {
 		if(typeof class_value!='function') {
 			/**@type {dbg_AE} */
 			let ret={
-				type: 'argument-error',
-				data: null
+				type: 'argument-error'
 			};
 			return ret;
 		}
 		if(target_arg_vec instanceof Array) {
 			let ret=this.debuggerGetVar_a(class_value,this.activateClass,var_name,target_arg_vec);
-			if(ret.type==='argument-error') {
-				return {
-					type: 'argument-error',
-					data: ret.data
-				};
+			switch(ret.type) {
+				case "argument-error": break;
+				case "data": break;
+				case "unexpected": break;
+				default: throw new Error("Invalid");
 			}
-			if(ret.type==='data') {
-				return {
-					type: 'data',
-					data: ret.data,
-				};
-			}
-			if(ret.type==='unexpected') {
-				return ret;
-			}
+			return ret;
 		}
 		return {
-			type: 'argument-error',
-			data: null
+			type: 'argument-error'
 		};
 	}
 	/**
