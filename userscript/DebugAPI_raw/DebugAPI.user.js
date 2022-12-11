@@ -5927,29 +5927,30 @@ class DebugAPI {
 	}
 	/**
 	 * @param {Constructor} class_value
-	 * @param {any[]} target_arg_vec
+	 * @param {any[]} activate_args
 	 * @param {string} var_name
 	 * @returns {dbg_result}
 	 */
-	debuggerGetVar_c(class_value,target_arg_vec,var_name) {
+	debuggerGetVar_c(class_value,activate_args,var_name) {
 		if(typeof class_value!='function') {
 			return {
 				type: 'argument-error'
 			};
 		}
-		if(target_arg_vec instanceof Array) {
-			let ret=this.debuggerGetVar_a({type: "constructor",value: class_value},{type: "activate-class",value: this.activateClass},var_name,{type: "class-args",value: [target_arg_vec]});
-			switch(ret.type) {
-				case "argument-error": break;
-				case "data": break;
-				case "unexpected": break;
-				default: throw new Error("Invalid");
-			}
-			return ret;
+		let ret=this.debuggerGetVar_a({
+			type: "class-breakpoint",
+			name: var_name,
+			target: class_value,
+			activate: this.activateClass,
+			activate_args,
+		});
+		switch(ret.type) {
+			case "argument-error": break;
+			case "data": break;
+			case "unexpected": break;
+			default: throw new Error("Invalid");
 		}
-		return {
-			type: 'argument-error'
-		};
+		return ret;
 	}
 	/**
 	 * @param {(...x: any[]) => void} function_value

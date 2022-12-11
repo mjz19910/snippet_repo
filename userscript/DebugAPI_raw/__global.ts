@@ -8,23 +8,25 @@ declare global {
 	type ActivateClass={
 		type: "class-breakpoint";
 		name: string;
-		target: Constructor;
-		activate: (fn_val: Constructor,args: any[]) => any;
+		target: DbgNewableFn;
+		activate: (fn_val: DbgNewableFn,args: any[]) => any;
 		activate_args: any[];
 	};
 
 	type ActivateFunction={
 		type: "function-breakpoint";
 		name: string;
-		target: (...x: any[]) => void;
-		activate: (fn_val: Function,thisArg: any,args: any[]) => any;
+		target: CallableFunction;
+		activate: (fn_val: CallableFunction,thisArg: any,args: any[]) => any;
 		activate_args:[any,any[]];
 	};
 
 	type IDebugBreakpointArgs=ActivateClass|ActivateFunction;
 }
 
-type DebuggableFunctions=NewableFunction|CallableFunction;
+type DbgNewableFn=new (...arg0: any[]) => any;
+
+type DebuggableFunctions=DbgNewableFn|CallableFunction;
 
 declare global {
 	interface Window {
