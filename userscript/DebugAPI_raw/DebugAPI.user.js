@@ -5932,25 +5932,13 @@ class DebugAPI {
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVar_c(class_value,activate_args,var_name) {
-		if(typeof class_value!='function') {
-			return {
-				type: 'argument-error'
-			};
-		}
-		let ret=this.debuggerGetVar_a({
+		return this.debuggerGetVar_a({
 			type: "class-breakpoint",
 			name: var_name,
 			target: class_value,
 			activate: this.activateClass,
 			activate_args,
 		});
-		switch(ret.type) {
-			case "argument-error": break;
-			case "data": break;
-			case "unexpected": break;
-			default: throw new Error("Invalid");
-		}
-		return ret;
 	}
 	/**
 	 * @param {(...x: any[]) => void} function_value
