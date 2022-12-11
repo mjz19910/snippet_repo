@@ -5950,15 +5950,13 @@ class DebugAPI {
 		if(typeof function_value!='function') {
 			return {type: 'argument-error'};
 		}
-		let ret=this.debuggerGetVar_a(
-			{
-				type: "function-breakpoint",
-				target: function_value,
-				name: var_name,
-				activate: this.activateApply,
-				activate_args: activate_vec,
-			}
-		);
+		let ret=this.debuggerGetVar_a({
+			type: "function-breakpoint",
+			target: function_value,
+			name: var_name,
+			activate: this.activateApply,
+			activate_args: activate_vec,
+		});
 		if(ret.type!=='data') throw new Error("Debug fail");
 		return {
 			type: 'var-result',
