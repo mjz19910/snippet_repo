@@ -5712,10 +5712,7 @@ class DebugAPI {
 	debuggerBreakpointCode() {
 		window.inject_api?.DebugAPI&&(window.inject_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
-				return {
-					type: 'eval-hidden-var',
-					data: null,
-				};
+				return {type: 'eval-hidden-var'};
 			}
 			try {
 				return {
@@ -5723,10 +5720,7 @@ class DebugAPI {
 					data: [__v,eval(__v)]
 				};
 			} catch {
-				return {
-					type: 'no-var',
-					data: null
-				};
+				return {type: 'no-var'};
 			}
 		});
 		if(window.inject_api?.DebugAPI) {
@@ -5795,7 +5789,7 @@ class DebugAPI {
 		let vars_arr=sr.map(e => String.fromCharCode(e));
 		this.current_function_value=function_value;
 		let tmp_key="__k";
-		/**@type {{get?:(val:string)=>any}} */
+		/**@type {dbg_get_ty} */
 		let tmp_value={};
 		this.setData(tmp_key,tmp_value);
 		let debug=this.get_d();

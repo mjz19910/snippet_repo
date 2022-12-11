@@ -18,7 +18,7 @@ declare global {
 		name: string;
 		target: CallableFunction;
 		activate: (fn_val: CallableFunction,thisArg: any,args: any[]) => any;
-		activate_args:[any,any[]];
+		activate_args: [any,any[]];
 	};
 
 	type IDebugBreakpointArgs=ActivateClass|ActivateFunction;
@@ -162,9 +162,21 @@ declare global {
 	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_ISE|dbg_T6|dbg_t1|dbg_var_result;
 }
 
+type dbg_eval_hidden={
+	type: "eval-hidden-var";
+};
+type dbg_no_var={
+	type: "no-var"
+}
+
+type TVarRes={
+	type: "var";
+	data: any[];
+};
+
 declare global {
 	interface dbg_get_ty {
-		get: (__v: string) => {type: string; data: null;}|{type: string; data: any[];};
+		get?: (__v: string) => dbg_eval_hidden|dbg_no_var|TVarRes;
 	}
 }
 
