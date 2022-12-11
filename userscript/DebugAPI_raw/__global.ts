@@ -193,12 +193,10 @@ declare global {
 }
 
 
-enum ConnectFlag {
+export enum ConnectFlag {
 	Syn=1<<0,
 	Ack=1<<1,
 }
-
-export type {ConnectFlag}
 
 declare global {
 	type WrappedMessage<T>={

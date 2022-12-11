@@ -4907,15 +4907,23 @@ class FlagHandler {
 	constructor(flags) {
 		this.f=flags;
 	}
+	[Symbol.iterator]() {
+		return this.f[Symbol.iterator]();
+	}
 }
 
+/** @typedef {import("./__global.js").ConnectFlag} ConnectFlag */
+/** @type {(typeof import("./__global.js").ConnectFlag)['Syn']} */
+const tcp_syn=1;
+/** @readonly @type {(typeof import("./__global.js").ConnectFlag)["Ack"]} */
+const tcp_ack=2;
 
 const ack_win=5000;
 class TCPMessage {
 	/** @readonly */
 	type="tcp";
 	/**
-	 * @param {import("./__global.js").ConnectFlag[]} flags
+	 * @param {ConnectFlag[]} flags
 	 * @param {number} client_id
 	 * @param {number} seq
 	 * @param {number|null} ack
@@ -4938,7 +4946,7 @@ class TCPMessage {
 		if(testing_tcp) {
 			seq=100;
 		}
-		return new TCPMessage([1],client_id,seq,null,null);
+		return new TCPMessage([tcp_syn],client_id,seq,null,null);
 	}
 	/**
 	 * @param {number} client_id
@@ -5305,7 +5313,7 @@ class ListenSocket {
 	 */
 	send_ack(f,seq,ack) {
 		if(f.ack()) throw new Error("ack should not be on packet we are ack'ing for");
-		let msg=new TCPMessage([...f.flags(),2],this.m_client_id,seq,ack,null);
+		let msg=new TCPMessage([...f,tcp_ack],this.m_client_id,seq,ack,null);
 		this.push_tcp_message(msg);
 	}
 	/** @arg {ConnectionMessage} data */
