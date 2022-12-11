@@ -1,3 +1,5 @@
+import {AddEventListenerExtension, CompressionStatsCalculator, CrossOriginConnection, DebugAPI} from "../DebugAPI.user";
+
 declare global {
 	interface IInjectAPI {
 		saved_object_arrays?: {}[][];

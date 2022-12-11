@@ -1,3 +1,4 @@
+import {InjectAPIStr, post_message_connect_message_type} from "./DebugAPI.user.js";
 import {} from "./support/IDValue_0.js";
 import {} from "./support/IInjectAPI.js";
 import {} from "./support/Nullable.js";
@@ -191,12 +192,15 @@ declare global {
 	type depth_or_any=['real_holder',unknown]|value_id_type|depth_type;
 }
 
+
+enum ConnectFlag {
+	Syn=1<<0,
+	Ack=1<<1,
+}
+
+export type {ConnectFlag}
+
 declare global {
-	enum ConnectFlag {
-		Syn=1<<0,
-		Ack=1<<1,
-	}
-	type ConnectFlags=ConnectFlag;
 	type WrappedMessage<T>={
 		type: typeof post_message_connect_message_type,
 		data: T,

@@ -49,6 +49,7 @@ inject_api.saved_instances=[];
 function add_object(constructable,object) {
 	inject_api.saved_instances?.push([constructable.name,constructable,object]);
 }
+add_function(add_object);
 // #pragma end saved
 
 
@@ -2368,6 +2369,7 @@ inject_api.parse_javascript_str=parse_javascript_str;
 var api_debug_enabled=false;
 
 const base_console=window.console;
+add_object({name:"Console"},base_console);
 
 /** @type {Console} */
 var console={...window.console};
@@ -2416,11 +2418,6 @@ let any_api_logger=new APIProxyManager(new LoggingEventTarget);
 let do_postMessage_logging=true;
 if(do_postMessage_logging) {
 	any_api_logger.start_postMessage_proxy();
-}
-
-/** @template T @param {T} v @returns {T} */
-function any(v) {
-	return v;
 }
 
 class ReversePrototypeChain {
@@ -3039,11 +3036,6 @@ class CreateObjURLCache {
 inject_api.CreateObjURLCache=CreateObjURLCache;
 CreateObjURLCache.enable();
 
-/**@template T @arg {T} [t] @returns {t is undefined} */
-function is_undefined(t) {
-	return typeof t==="undefined";
-}
-
 /** @template T @implements {Repeat_0<T>} */
 class RepeatImpl_0 {
 	/**@type {Map<string,Map<number,Repeat_0<string>>>} */
@@ -3427,6 +3419,7 @@ function do_iter(bound_function,keys) {
 		}
 	}
 }
+add_function(do_iter);
 
 /** @param {any} a @param {any} c @param {any} m_require */
 function found_modules(a,c,m_require) {
@@ -3631,6 +3624,7 @@ async function decode_wasm_data() {
 	let wasm_module_bytes=await fetch_wasm_module();
 	console.log(wasm_module_bytes);
 }
+add_function(decode_wasm_data);
 
 /**@arg {SafeFunctionPrototype} safe_function_prototype */
 function gen_function_prototype_use(safe_function_prototype) {
@@ -3957,6 +3951,7 @@ class IDValueImpl {
 		this.stats_win=0;
 	}
 }
+add_function(IDValueImpl);
 
 /**@arg {IDValue_0} next */
 function get_next({next}) {
@@ -4399,12 +4394,8 @@ function decode_map(value) {
 	}
 	return value;
 }
-/**
- * @template {{}} T
- * @arg {T} obj_1
- * @arg {T} obj_2
- * @returns {boolean}
- */
+
+/** @template {{}} T @arg {T} obj_1 @arg {T} obj_2 @returns {boolean} */
 function deep_eq(obj_1,obj_2) {
 	if(obj_1===obj_2)
 		return true;
@@ -4430,11 +4421,9 @@ function deep_eq(obj_1,obj_2) {
 	}
 	throw new Error("Fixme");
 }
-/**
- * @arg {string[][]} arr_2d
- * @arg {number} key
- * @param {string} value
- */
+add_function(deep_eq);
+
+/** @arg {string[][]} arr_2d @arg {number} key @param {string} value */
 function make_group_from_item(arr_2d,key,value) {
 	arr_2d[key]??=[];
 	let arr=arr_2d[key];
@@ -4914,7 +4903,7 @@ class FlagHandler {
 	flags() {
 		return this.f;
 	}
-	/** @arg {ConnectFlags[]} flags */
+	/** @arg {import("./__global.js").ConnectFlag[]} flags */
 	constructor(flags) {
 		this.f=flags;
 	}
@@ -4926,7 +4915,7 @@ class TCPMessage {
 	/** @readonly */
 	type="tcp";
 	/**
-	 * @param {ConnectFlag[]} flags
+	 * @param {import("./__global.js").ConnectFlag[]} flags
 	 * @param {number} client_id
 	 * @param {number} seq
 	 * @param {number|null} ack
@@ -4949,7 +4938,7 @@ class TCPMessage {
 		if(testing_tcp) {
 			seq=100;
 		}
-		return new TCPMessage([ConnectFlag.Syn],client_id,seq,null,null);
+		return new TCPMessage([1],client_id,seq,null,null);
 	}
 	/**
 	 * @param {number} client_id
@@ -5966,3 +5955,13 @@ class DebugAPI {
 }
 inject_api.DebugAPI=DebugAPI;
 
+if(typeof exports==='object') {
+	exports.inject_api=inject_api;
+	exports.DebugAPI=DebugAPI;
+	exports.post_message_connect_message_type=post_message_connect_message_type;
+	exports.CrossOriginConnection=CrossOriginConnection;
+	exports.CompressionStatsCalculator=CompressionStatsCalculator;
+	exports.InjectAPIStr=InjectAPIStr;
+	exports.AddEventListenerExtension=AddEventListenerExtension;
+	exports.random_data_generator=random_data_generator;
+}
