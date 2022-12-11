@@ -5616,7 +5616,11 @@ class DebugAPI {
 	}
 	/** @arg {"__k"} key @returns {dbg_get_ty} */
 	get_k(key) {
-		return this.data_store.get(key);
+		return this.getData(key);
+	}
+	/** @returns {I_debug} */
+	get_d() {
+		return this.getData("d");
 	}
 	/** @arg {"getEventListeners"} key @returns {(x:{})=>{[x: string]: EventListenerInternal[]}} */
 	get_getEventListeners(key) {
@@ -5679,7 +5683,7 @@ class DebugAPI {
 	 */
 	attach(debug,undebug,getEventListeners) {
 		//Attach to the chrome DebugApi functions the user specified.
-		let obj_debug=this.getData('d');
+		let obj_debug=this.get_d();
 		let obj_undebug=this.getData('u');
 		let get_ev_lis=this.getData('getEventListeners');
 		if(obj_debug!==debug||obj_undebug!==undebug||get_ev_lis!==getEventListeners) {
