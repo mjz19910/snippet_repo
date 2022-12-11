@@ -5799,7 +5799,7 @@ class DebugAPI {
 		/**@type {{get?:(val:string)=>any}} */
 		let tmp_value={};
 		this.setData(tmp_key,tmp_value);
-		let debug=this.getData('d');
+		let debug=this.get_d();
 		debug(this.current_function_value,`${breakpoint_code_string}`);
 		// ---- Activate ----
 		let activate_return=null;
