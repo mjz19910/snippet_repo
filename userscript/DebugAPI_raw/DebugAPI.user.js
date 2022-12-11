@@ -5948,10 +5948,7 @@ class DebugAPI {
 	 */
 	debuggerGetVar(function_value,activate_vec,var_name) {
 		if(typeof function_value!='function') {
-			return {
-				type: 'argument-error',
-				value: null
-			};
+			return {type: 'argument-error'};
 		}
 		let ret=this.debuggerGetVar_a(
 			{type: "function",value: function_value},
