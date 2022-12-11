@@ -5909,28 +5909,20 @@ class DebugAPI {
 			return ret;
 		}
 		if(breakpoint_result) {
-			/**@type {{type:"unexpected", data: {result:{type: 'hidden-var';var: string}|{type: 'no-var';data: null},return:any}}} */
-			let ret={
-				/**@type {"unexpected"} */
+			return {
 				type: 'unexpected',
 				data: {
 					result: breakpoint_result,
 					return: activate_return
 				}
 			};
-			return ret;
 		}
-		/**@type {{type:"no-response", data: {result:null,return:any}}} */
-		let ret={
-			/**@type {"no-response"} */
+		return {
 			type: 'no-response',
 			data: {
-				result: null,
-				return: activate_return
+				return: activate_return,
 			}
 		};
-		return ret;
-
 	}
 	/**
 	 * @param {Constructor} class_value
