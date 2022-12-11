@@ -78,7 +78,7 @@ declare global {
 		data: null;
 	};
 
-	type dbg_T3={
+	type dbg_DT={
 		type: "data";
 		data: {
 			result: [string,any];
@@ -100,7 +100,7 @@ declare global {
 		};
 	};
 
-	type dbg_T5={
+	type dbg_ISE={
 		type: 'invalid-state-error';
 		data: null;
 	};
@@ -128,7 +128,7 @@ declare global {
 		};
 	};
 
-	type dbg_result=dbg_AE|dbg_T3|dbg_T4|dbg_T5|dbg_T6|dbg_t1|dbg_t2;
+	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_ISE|dbg_T6|dbg_t1|dbg_t2;
 }
 
 declare global {

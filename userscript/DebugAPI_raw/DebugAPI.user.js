@@ -5593,14 +5593,6 @@ function parse_html_to_binary_arr(html) {
 }
 inject_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 
-/**
- * @typedef {{type: "data";data: {result: [string, any];return: any;};}} dbg_DT
- */
-
-/**
- * @typedef {{type: 'invalid-state-error';data: null;}} dbg_ISE
- */
-
 class DebugAPI {
 	next_remote_id=0;
 	data_store=new Map;
