@@ -135,11 +135,11 @@ declare global {
 		};
 	};
 
-	type dbg_ISE={
+	type dbg_invalid_state={
 		type: 'invalid-state-error';
 	};
 
-	type dbg_T6={
+	type dbg_data_array={
 		type: 'data-arr';
 		data: {
 			result: any[];
@@ -147,7 +147,7 @@ declare global {
 		};
 	};
 
-	type dbg_t1={
+	type dbg_no_response={
 		type: "no-response";
 		return: any;
 	};
@@ -159,7 +159,7 @@ declare global {
 		return: any;
 	};
 
-	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_ISE|dbg_T6|dbg_t1|dbg_var_result;
+	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_invalid_state|dbg_data_array|dbg_no_response|dbg_var_result;
 }
 
 type dbg_eval_hidden={
