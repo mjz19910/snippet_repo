@@ -192,17 +192,8 @@ declare global {
 // DebugAPI
 declare global {
 	interface IInjectAPI {
-		DebugAPI?: DebugAPIType;
+		DebugAPI?: typeof DebugAPI;
 	}
-}
-
-type DebugAPIType={
-	the(): DebugAPI_the;
-};
-
-interface DebugAPI_the {
-	get_k(v: string): dbg_get_ty;
-	clearCurrentBreakpoint(): boolean;
 }
 
 type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
