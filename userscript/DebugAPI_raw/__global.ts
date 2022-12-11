@@ -20,15 +20,15 @@ declare global {
 
 declare global {
 	interface Window {
-		debug?: debugI|undefined;
-		undebug?: undebugI|undefined;
+		debug?: I_debug|undefined;
+		undebug?: I_undebug|undefined;
 	}
 
-	interface debugI {
+	interface I_debug {
 		(fn: (...x: any[]) => void,code: string): void;
 	}
 
-	interface undebugI {
+	interface I_undebug {
 		(fn: (...x: any[]) => any): void;
 	}
 }

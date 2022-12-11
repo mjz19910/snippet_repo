@@ -5641,8 +5641,8 @@ class DebugAPI {
 		return this.get_getEventListeners('getEventListeners')(element);
 	}
 	/**
-	 * @param {debugI} debug
-	 * @param {undebugI} undebug
+	 * @param {I_debug} debug
+	 * @param {I_undebug} undebug
 	 * @param {Constructor} func
 	 * @arg {string} name
 	 * @returns {dbg_result}
@@ -5887,7 +5887,9 @@ class DebugAPI {
 		}
 		let tmp_value=new DebugInfoValue;
 		this.setData(tmp_key,tmp_value);
-		this.getData('d')(this.current_function_value,`${dbg_str_func}`);
+		/** @type {I_debug} */
+		let debug=this.getData('d');
+		debug(this.current_function_value,`${dbg_str_func}`);
 		// ---- Activate ----
 		let activate_return=null;
 		if(activate.type==="activate-class"&&activate_vec.type=="class-args") {
