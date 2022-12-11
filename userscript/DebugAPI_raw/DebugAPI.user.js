@@ -5643,13 +5643,13 @@ class DebugAPI {
 	/**
 	 * @param {any} debug
 	 * @param {any} undebug
-	 * @param {(this: any, ...args: readonly any[]) => any} func
+	 * @param {Constructor} func
 	 * @param {any} name @returns {{}}
 	 */
 	get_event_listener_var_vec_1(debug,undebug,func,name) {
 		this.attach(debug,undebug,null);
 		/**
-		 * @param {(this: any, ...args: readonly any[]) => any} func
+		 * @param {Constructor} func
 		 * @param {any} f_this
 		 * @param {readonly any[]} c_args
 		 */
@@ -5858,7 +5858,7 @@ class DebugAPI {
 		};
 	}
 	/**
-	 * @param {(this: any, ...args: readonly any[]) => any} function_value
+	 * @param {Constructor} function_value
 	 * @param {any} activate
 	 * @param {any} var_name
 	 * @param {any[]} activate_vec
@@ -5934,9 +5934,9 @@ class DebugAPI {
 
 	}
 	/**
-	 * @param {any} class_value
-	 * @param {any} target_arg_vec
-	 * @param {any} var_name
+	 * @param {Constructor} class_value
+	 * @param {any[]} target_arg_vec
+	 * @param {string} var_name
 	 * @returns {dbg_result}
 	 */
 	debuggerGetVar_c(class_value,target_arg_vec,var_name) {
