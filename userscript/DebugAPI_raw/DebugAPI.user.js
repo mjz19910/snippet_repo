@@ -5795,7 +5795,7 @@ class DebugAPI {
 		let vars_arr=sr.map(e => String.fromCharCode(e));
 		this.current_function_value=function_value;
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode);
-		let tmp_key='__k';
+		let tmp_key="__k";
 		/**@type {{get?:(val:string)=>any}} */
 		let tmp_value={};
 		this.setData(tmp_key,tmp_value);
