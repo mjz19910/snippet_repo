@@ -122,7 +122,7 @@ declare global {
 		return: any;
 	};
 
-	type dbg_T4={
+	type dbg_unexpected={
 		type: "unexpected";
 		data: {
 			result: {
@@ -159,7 +159,7 @@ declare global {
 		return: any;
 	};
 
-	type dbg_result=dbg_AE|dbg_DT|dbg_T4|dbg_invalid_state|dbg_data_array|dbg_no_response|dbg_var_result;
+	type dbg_result=dbg_AE|dbg_DT|dbg_unexpected|dbg_invalid_state|dbg_data_array|dbg_no_response|dbg_var_result;
 }
 
 type dbg_eval_hidden={
