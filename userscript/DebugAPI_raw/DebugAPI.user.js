@@ -5324,7 +5324,7 @@ class ListenSocket {
 	handle_tcp_data(data) {
 		let f=new FlagHandler(data.flags);
 		let {seq: ack,ack: seq}=data;
-		if(f.is_syn()) {
+		if(f.is_syn()&&!f.is_ack()) {
 			// seq=number & ack=null;
 			seq=(Math.random()*ack_win)%ack_win|0;
 			if(testing_tcp) {
