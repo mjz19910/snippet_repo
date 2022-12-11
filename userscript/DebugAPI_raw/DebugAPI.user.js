@@ -5104,7 +5104,7 @@ class Socket {
 		if(f.is_syn()&&f.is_ack()) {
 			this.send_ack(tcp_message);
 		}
-		if(tcp_message.flags.length==0) {
+		if(tcp_message.flags==0) {
 			this.send_ack(tcp_message);
 		}
 		if(!tcp_message.data) return;
