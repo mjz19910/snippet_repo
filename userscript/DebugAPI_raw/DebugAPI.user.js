@@ -5423,10 +5423,10 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		if(!e_monad_2?.data) return;
 		let e_monad_3=cast_to_record_with_string_type_msg_data_wrapped(e_monad_2);
 		if(!e_monad_3) return;
-		let data=cast_to_record_with_string_type(new_cast_monad(e_monad_3.data.data.data));
-		if(!data) return;
-		if(!data.data) return;
-		switch(data.data.type) {
+		let cast_monad_data=cast_to_record_with_string_type(new_cast_monad(e_monad_3.data.data.data));
+		if(!cast_monad_data?.data) return;
+		let unwrapped_event=cast_monad_data.data;
+		switch(unwrapped_event.type) {
 			case "tcp": break;
 			default: return;
 		}
