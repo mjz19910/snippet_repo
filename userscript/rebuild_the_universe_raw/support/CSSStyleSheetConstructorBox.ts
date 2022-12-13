@@ -1,3 +1,4 @@
+import {StackVMImpl} from "../rebuild_the_universe.user.js";
 import {Box} from "./Box.js";
 import {BoxTemplate} from "./BoxTemplate.js";
 import {CSSStyleSheetBox} from "./CSSStyleSheetBox.js";

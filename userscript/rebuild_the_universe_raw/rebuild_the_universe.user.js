@@ -3904,4 +3904,7 @@ if(typeof exports==='object') {
 
 
 	exports.UnimplementedInstruction=UnimplementedInstruction;
+
+	
+	exports.StackVMImpl=StackVMImpl;
 }
