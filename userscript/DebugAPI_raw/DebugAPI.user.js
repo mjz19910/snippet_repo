@@ -5041,9 +5041,11 @@ class Socket {
 			console.groupEnd();
 			console.log("<?-");
 		}
-		this.m_port.postMessage(data);
-		// sends message to
-		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));
+		if(ListenSocket.direct_message) {
+			ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));
+		} else {
+			this.m_port.postMessage(data);
+		}
 	}
 	/** @param {ConnectionMessage} message */
 	client_connect(message) {
@@ -5204,6 +5206,7 @@ class ConnectionFlags {
 }
 
 class ListenSocket {
+	static direct_message=false;
 	/** @private @type {ConnectionSide} */
 	m_side="server";
 	/** @private @type {ConnectionMessage[]} */
