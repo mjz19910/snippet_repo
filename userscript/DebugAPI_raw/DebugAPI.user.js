@@ -4435,7 +4435,7 @@ function make_group_from_item(arr_2d,key,value) {
 }
 
 
-/** @type {AutoBuyImplR} */
+/** @type {import("../rebuild_the_universe_raw/rebuild_the_universe.user").AutoBuyImplR} */
 let g_auto_buy;
 /** @type {{value:string[]}} */
 let src_arr={value: []};
@@ -5562,7 +5562,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	}
 	static is_fake=false;
 	static connect_to_api() {
-		inject_api.RemoteOriginConnection=this;
+		inject_api.CrossOriginConnection=this;
 		let remote_origin=new this();
 		inject_api.remote_origin=remote_origin;
 	}

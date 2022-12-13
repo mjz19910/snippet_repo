@@ -19,7 +19,7 @@ declare global {
 }
 declare global {
 	interface IInjectAPI {
-		RemoteOriginConnection?: {};
+		CrossOriginConnection?: {};
 		remote_origin?: CrossOriginConnection;
 	}
 }

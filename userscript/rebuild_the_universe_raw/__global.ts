@@ -2,6 +2,7 @@ import {
 	CompressState as CompressState_,
 	MulCompression as MulCompression_,
 } from "../DebugAPI_raw/DebugAPI.user";
+import {AutoBuyImplR, DocumentWriteListImpl} from "./rebuild_the_universe.user";
 
 declare global {
 	var MulCompression: typeof MulCompression_;

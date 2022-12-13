@@ -3866,3 +3866,14 @@ main();
 setInterval(function() {
 	console.clear();
 },15*60*1000);
+
+function get_exports() {
+	return exports;
+}
+
+if(typeof exports==='object') {
+	let exports=get_exports();
+	exports.AutoBuyImplR=AutoBuyImplR;
+	exports.DocumentWriteListImpl=DocumentWriteListImpl;
+	exports.instruction_descriptor_arr=instruction_descriptor_arr;
+}
