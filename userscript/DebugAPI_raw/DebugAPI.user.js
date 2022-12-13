@@ -5197,17 +5197,6 @@ class CrossOriginConnectionData {
 	state=OriginState;
 }
 
-/**
- * @param {number} client_id
- * @param {MessageType|null} data
- * @returns {TCPMessage}
- * @param {number} seq
- * @param {number} ack
- */
-function new_tcp_client_message(client_id,data,seq,ack) {
-	return TCPMessage.make_message(client_id,data,seq,ack);
-}
-
 class ListenSocket {
 	/** @private @type {ConnectionSide} */
 	m_side="server";
@@ -5295,7 +5284,7 @@ class ListenSocket {
 	 * @param {boolean} can_reconnect
 	 */
 	will_disconnect(can_reconnect) {
-		this.push_tcp_message(new_tcp_client_message(this.m_client_id,{
+		this.push_tcp_message(TCPMessage.make_message(this.m_client_id,{
 			type: "will_disconnect",
 			can_reconnect,
 		},0,0));
