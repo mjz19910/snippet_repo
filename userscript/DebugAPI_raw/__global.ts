@@ -5,10 +5,6 @@ import {} from "./support/Nullable.js";
 import {} from "./support/RecordKey.js";
 import {RepeatL_0} from "./support/Repeat_0.js";
 
-type _=IInjectAPI_;
-const _: _={};
-_;
-
 declare global {
 	type ActivateClass={
 		type: "class-breakpoint";
@@ -71,7 +67,7 @@ declare global {
 
 // inject_api global
 declare global {
-	interface InjectAPI extends IInjectAPI {
+	interface InjectAPI extends IInjectAPI_ {
 		saved_instances?: [string,{name: string;},{}][];
 	}
 	interface Window {
