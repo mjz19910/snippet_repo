@@ -5213,9 +5213,12 @@ class ListenSocket {
 	m_side="server";
 	/** @private @type {ConnectionMessage[]} */
 	m_unhandled_events=[];
-	m_debug=false;
-	m_connected=false;
+	/** @private */
+	m_is_connected=false;
+	/** @private */
 	m_log_downstream=false;
+	/** @private */
+	m_is_connecting=true;
 	/** @private @type {ConnectionFlags} */
 	m_flags;
 	/** @private @type {MessagePort} */
@@ -5232,7 +5235,6 @@ class ListenSocket {
 		this.m_port=connection_port;
 		this.m_port.addEventListener("message",this);
 		this.m_port.start();
-		this.m_connecting=true;
 	}
 	get side() {
 		return this.m_side;
@@ -5242,6 +5244,9 @@ class ListenSocket {
 	}
 	get event_source() {
 		return this.m_event_source;
+	}
+	get is_connected() {
+		return this.m_is_connected;
 	}
 	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
@@ -5357,12 +5362,12 @@ class ListenSocket {
 		if(f.is_none()&&seq==null) {
 			console.log("bad tcp",data);
 		}
-		if(f.is_ack()&&this.m_connecting&&seq) {
-			this.m_connecting=false;
+		if(f.is_ack()&&this.m_is_connecting&&seq) {
+			this.m_is_connecting=false;
 			this.m_connected=true;
 			this.downstream_connect(data.seq,seq);
 		}
-		if(f.is_ack()&&this.m_connecting&&seq==null) {
+		if(f.is_ack()&&this.m_is_connecting&&seq==null) {
 			console.log("bad tcp",data);
 		}
 		let downstream_data=data.data;
