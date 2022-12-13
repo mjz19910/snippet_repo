@@ -4968,6 +4968,7 @@ class TCPMessage {
 let testing_tcp=false;
 
 class Socket {
+	static direct_message=false;
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,remote_target) {
 		this.m_connection_timeout=connection_timeout;
@@ -5256,8 +5257,11 @@ class ListenSocket {
 			console.groupEnd();
 			console.log("<?-");
 		}
-		this.m_port.postMessage(data);
-		Socket.prototype.handleEvent(new MessageEvent("message",{data}));
+		if(Socket.direct_message) {
+			Socket.prototype.handleEvent(new MessageEvent("message",{data}));
+		} else {
+			this.m_port.postMessage(data);
+		}
 	}
 	/**
 	 * @param {number} syn
