@@ -46,7 +46,7 @@ class JQueryRes {
 }
 
 declare global {
-	var $: (q: string)=>JQueryRes;
+	var $: (q: string) => JQueryRes;
 }
 interface GoogleAdList {
 	op: any;
@@ -55,7 +55,7 @@ interface GoogleAdList {
 
 export interface Holder {}
 
-export {}
+export {};
 
 // #pragma section begin declare_global_sec
 // rebuild_the_universe main
@@ -132,7 +132,7 @@ declare global {
 		specialclick(that: any): void;
 		__testing__: false;
 		bonusAll(): void;
-		allspec: {done:boolean;cost:number}[];
+		allspec: {done: boolean; cost: number;}[];
 	}
 }
 

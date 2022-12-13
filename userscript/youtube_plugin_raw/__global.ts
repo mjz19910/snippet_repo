@@ -1,3 +1,8 @@
+import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
+
+declare global {
+	const InjectAPIStr:typeof InjectAPIStr_;
+}
 declare global {
 	type ResState={
 		active: boolean;

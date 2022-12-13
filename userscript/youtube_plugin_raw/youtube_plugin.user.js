@@ -2351,7 +2351,7 @@ class HistoryStateManager {
 			let prev_state=this.cur_state;
 			/** @type {{[x: string]: {}}|null} */
 			let new_state=this.historyStateFromEvent(event);
-			let clone=structuredClone(new_state)
+			let clone=structuredClone(new_state);
 			if(prev_state&&new_state) {
 				for(let i=0;i<t.tmp_keys.length;i++) {
 					let cur_key=t.tmp_keys[i];

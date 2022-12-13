@@ -883,7 +883,7 @@ const instruction_descriptor_arr=[
 
 class StackVmBaseImpl {
 	/** @arg {number} offset @arg {import("./ns.js").Box} value @arg {[string,...any[]]} lex_instruction */
-	update_instruction(offset, value, lex_instruction) {
+	update_instruction(offset,value,lex_instruction) {
 		if(offset==0) {
 			if(value.type==='string') {
 				lex_instruction[offset]=value.value;
@@ -1008,7 +1008,7 @@ class StackVMImpl {
 			case "jmp": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "peek": instruction_table[instruction[0]].run(this,instruction[1]); break;
 			case "vm_call": instruction_table[instruction[0]].run(this,instruction[1]); break;
-			case "push":{
+			case "push": {
 				let [infer,...rest]=instruction;
 				instruction_table[instruction[0]].run(this,infer,...rest);
 			} break;
