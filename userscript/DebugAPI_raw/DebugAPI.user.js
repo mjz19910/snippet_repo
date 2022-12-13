@@ -5209,9 +5209,6 @@ function new_tcp_client_message(client_id,data,seq,ack) {
 }
 
 class ListenSocket {
-	source() {
-		return this.m_event_source;
-	}
 	/** @type {ConnectionSide} */
 	m_side="server";
 	/** @type {ConnectionMessage[]} */
@@ -5223,6 +5220,10 @@ class ListenSocket {
 	/** @type {number} */
 	m_client_id;
 	m_debug=false;
+	m_connected=false;
+	m_log_downstream=false;
+	/** @type {MessageEventSource} */
+	m_event_source;
 	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
 		if(testing_tcp) {
@@ -5236,7 +5237,6 @@ class ListenSocket {
 		this.m_port.postMessage(data);
 		Socket.prototype.handleEvent(new MessageEvent("message",{data}));
 	}
-	m_connected=false;
 	/**
 	 * @param {number} syn
 	 * @param {number} ack
@@ -5250,7 +5250,6 @@ class ListenSocket {
 			syn,ack,
 		));
 	}
-	m_log_downstream=false;
 	/** @arg {ConnectionMessage} info */
 	downstream_handle_event(info) {
 		if(!info.data) return;
@@ -5352,8 +5351,9 @@ class ListenSocket {
 			this.downstream_handle_event(data);
 		}
 	}
-	/** @type {MessageEventSource} */
-	m_event_source;
+	source() {
+		return this.m_event_source;
+	}
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
 	constructor(flags,connection_port,client_id,event_source) {
 		this.m_flags=flags;
