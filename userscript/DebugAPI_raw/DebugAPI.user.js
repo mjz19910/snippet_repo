@@ -4980,7 +4980,6 @@ class Socket {
 	m_event_transport_map=new Map;
 	m_debug=false;
 	m_local_log=false;
-	m_was_connected=false;
 	m_client_id;
 	m_port;
 	m_remote_target;
@@ -5085,11 +5084,6 @@ class Socket {
 
 		}
 		this.handle_tcp_data(data);
-		if(this.m_was_connected) {
-			this.m_was_connected=false;
-			// </group syn>
-			console.groupEnd();
-		}
 	}
 	/** @arg {ConnectionMessage} tcp_message */
 	send_ack(tcp_message) {
@@ -5130,7 +5124,6 @@ class Socket {
 		switch(tcp_data.type) {
 			case "connected": {
 				this.client_connect(tcp_message);
-				this.m_was_connected=true;
 			} break;
 			case "will_disconnect": {
 				this.m_can_reconnect=tcp_data.can_reconnect;
