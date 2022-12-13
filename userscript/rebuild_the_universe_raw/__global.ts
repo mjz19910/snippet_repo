@@ -1,3 +1,13 @@
+import {
+	CompressState as CompressState_,
+	MulCompression as MulCompression_,
+} from "../DebugAPI_raw/DebugAPI.user";
+
+declare global {
+	var MulCompression: typeof MulCompression_;
+	type MulCompression=MulCompression_;
+}
+
 declare global {
 	interface Window {
 		document_write_list: DocumentWriteListImpl;
@@ -11,6 +21,11 @@ declare global {
 	interface Window {
 		g_mut_observers: any[];
 	}
+}
+
+declare global {
+	var CompressState: typeof CompressState_;
+	type CompressState<T,U>=CompressState_<T,U>;
 }
 
 declare global {

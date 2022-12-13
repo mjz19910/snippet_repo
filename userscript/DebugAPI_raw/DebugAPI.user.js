@@ -5414,7 +5414,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	local_handlers=[];
 	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event_0 */
-	on_connect_request_message(event_0) {
+	on_message_event(event_0) {
 		let e_monad_1=cast_to_record_with_string_type_msg(new_cast_monad(event_0));
 		if(!e_monad_1) return;
 		if(!this.is_with_data_decay(e_monad_1)) return;
@@ -5554,23 +5554,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 				this.connections.length=0;
 			} break;
 		}
-	}
-	/** @arg {MessageEvent<unknown>} event */
-	on_message_event(event) {
-		let fail=() => this.on_client_misbehaved(event);
-		if(this.did_client_misbehave(event)) return fail();
-		if(!this.can_handle_message(event)) return;
-		this.on_connect_request_message(event);
-	}
-	/** @arg {MessageEvent<unknown>} event */
-	on_client_misbehaved(event) {
-		console.groupCollapsed("[RemoteOriginConnection.on_client_misbehaved]");
-		console.log(`Client misbehaved: Connect api not followed`);
-		console.log("root_ev_data",event.data);
-		console.log("root_ev_ports",event.ports);
-		console.log("root_event",event);
-		console.groupEnd();
-		this.last_misbehaved_client_event=event;
 	}
 	start_root_server() {
 		window.addEventListener("message",this);
@@ -5969,7 +5952,12 @@ class DebugAPI {
 }
 inject_api.DebugAPI=DebugAPI;
 
+function get_exports() {
+	return exports;
+}
+
 if(typeof exports==='object') {
+	let exports=get_exports();
 	exports.inject_api=inject_api;
 	exports.DebugAPI=DebugAPI;
 	exports.post_message_connect_message_type=post_message_connect_message_type;
@@ -5978,4 +5966,9 @@ if(typeof exports==='object') {
 	exports.InjectAPIStr=InjectAPIStr;
 	exports.AddEventListenerExtension=AddEventListenerExtension;
 	exports.random_data_generator=random_data_generator;
+	exports.CompressDual=CompressDual;
+	exports.BaseCompression=BaseCompression;
+	exports.CompressStateBase=CompressStateBase;
+	exports.MulCompression=MulCompression;
+	exports.CompressState=CompressState;
 }
