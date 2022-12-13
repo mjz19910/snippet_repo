@@ -4969,6 +4969,23 @@ let testing_tcp=false;
 
 class Socket {
 	static direct_message=false;
+	/** @readonly */
+	m_side="client";
+	/** @type {ReturnType<typeof setTimeout>|null} */
+	m_timeout_id=null;
+	m_connected=false;
+	m_tries_left=0;
+	m_connection_timeout;
+	m_can_reconnect=false;
+	m_event_transport_map=new Map;
+	m_debug=false;
+	m_fake=CrossOriginConnection.is_fake;
+	m_client_id;
+	m_port;
+	m_remote_target;
+	m_event_source;
+	m_local_log=false;
+	m_was_connected=false;
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,remote_target) {
 		this.m_connection_timeout=connection_timeout;
@@ -5094,8 +5111,6 @@ class Socket {
 			data: null,
 		});
 	}
-	m_local_log=false;
-	m_was_connected=false;
 	/** @arg {ConnectionMessage} tcp_message */
 	handle_tcp_data(tcp_message) {
 		let f=new FlagHandler(tcp_message.flags);
@@ -5146,21 +5161,6 @@ class Socket {
 		this.m_port.close();
 		setTimeout(this.reconnect.bind(this),20);
 	}
-	/** @readonly */
-	m_side="client";
-	/** @type {ReturnType<typeof setTimeout>|null} */
-	m_timeout_id=null;
-	m_connected=false;
-	m_tries_left=0;
-	m_connection_timeout;
-	m_can_reconnect=false;
-	m_event_transport_map=new Map;
-	m_debug=false;
-	m_fake=CrossOriginConnection.is_fake;
-	m_client_id;
-	m_port;
-	m_remote_target;
-	m_event_source;
 }
 inject_api.Socket=Socket;
 
