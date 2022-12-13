@@ -4968,11 +4968,10 @@ class TCPMessage {
 let testing_tcp=false;
 
 class Socket {
-	/** @arg {number} connection_timeout @arg {number} client_id @arg {ConnectionFlags} flags @arg {Window} remote_target */
-	constructor(connection_timeout,client_id,flags,remote_target) {
+	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
+	constructor(connection_timeout,client_id,remote_target) {
 		this.m_connection_timeout=connection_timeout;
 		this.m_client_id=client_id;
-		this.m_flags=flags;
 		this.m_remote_target=remote_target;
 		this.m_event_source=remote_target;
 		if(this.m_remote_target===window) {
@@ -5161,7 +5160,6 @@ class Socket {
 	m_debug=false;
 	m_fake=CrossOriginConnection.is_fake;
 	m_client_id;
-	m_flags;
 	m_port;
 	m_remote_target;
 	m_event_source;
@@ -5406,7 +5404,6 @@ class CrossOriginConnection {
 			this.m_local_handler=new Socket(
 				30000,
 				client_id,
-				this.m_flags,
 				connect_target,
 			);
 		}
