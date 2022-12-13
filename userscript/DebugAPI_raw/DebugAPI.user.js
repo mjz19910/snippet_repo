@@ -5499,7 +5499,7 @@ class CrossOriginConnection {
 				if(event instanceof MessageEvent) {
 					this.on_message_event(event);
 				} else {
-					console.log("Possibly non trusted message event",event);
+					console.log("Event type is \"message\" and not an instance of MessageEvent",event);
 				}
 			} break;
 			case "beforeunload": {
