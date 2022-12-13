@@ -5380,11 +5380,12 @@ class ListenSocket {
 }
 
 class CrossOriginConnection {
+	/** @private */
 	m_flags=new ConnectionFlags;
-	max_elevate_id=0;
-	state=new OriginState;
+	/** @private */
+	m_state=new OriginState;
 	/** @type {ConnectionMessage[]} */
-	unhandled_child_events=[];
+	m_unhandled_child_events=[];
 	/** @type {Socket|null} */
 	m_local_handler=null;
 	m_debug=false;
@@ -5392,15 +5393,15 @@ class CrossOriginConnection {
 	last_misbehaved_client_event=null;
 	max_elevated_id=0;
 	/**@type {ListenSocket[]} */
-	connections=[];
+	m_connections=[];
 	/**@type {Socket[]} */
-	local_handlers=[];
-	client_max_id=0;
+	m_local_handlers=[];
+	m_client_max_id=0;
 	constructor() {
 		elevate_event_handler(this);
-		let client_id=this.client_max_id++;
+		let client_id=this.m_client_max_id++;
 		this.start_root_server();
-		let connect_target=this.state.get_connect_target(this.m_flags);
+		let connect_target=this.m_state.get_connect_target(this.m_flags);
 		if(connect_target!==window) {
 			this.m_local_handler=new Socket(
 				30000,
@@ -5428,12 +5429,12 @@ class CrossOriginConnection {
 			default: return;
 		}
 		if(!this.is_connection_message(event_0)) return;
-		let client_id=this.client_max_id++;
+		let client_id=this.m_client_max_id++;
 		let connection_port=event_0.ports[0];
 		if(!event_0.source) throw new Error("No event source");
 		let event_source=event_0.source;
 		let handler=new ListenSocket(this.m_flags,connection_port,client_id,event_source);
-		let prev_connection_index=this.connections.findIndex(e => {
+		let prev_connection_index=this.m_connections.findIndex(e => {
 			return e.event_source===event_source;
 		});
 		if(testing_tcp) {
@@ -5447,9 +5448,9 @@ class CrossOriginConnection {
 		}
 		handler.handle_tcp_data(event_0.data.data);
 		if(prev_connection_index>-1) {
-			this.connections.splice(prev_connection_index,1);
+			this.m_connections.splice(prev_connection_index,1);
 		}
-		this.connections.push(handler);
+		this.m_connections.push(handler);
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
@@ -5488,15 +5489,15 @@ class CrossOriginConnection {
 				}
 			} break;
 			case "beforeunload": {
-				for(let connection of this.connections) {
+				for(let connection of this.m_connections) {
 					connection.will_disconnect(false);
 				}
 			} break;
 			case "unload": {
-				for(let connection of this.connections) {
+				for(let connection of this.m_connections) {
 					connection.disconnected();
 				}
-				this.connections.length=0;
+				this.m_connections.length=0;
 			} break;
 		}
 	}
