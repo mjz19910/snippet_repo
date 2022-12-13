@@ -21,7 +21,8 @@ import {
 	InstructionReturnImpl,
 	InstructionVMCallImpl,
 	InstructionVMPushIPImpl,
-	InstructionVMReturnImpl
+	InstructionVMReturnImpl,
+	UnimplementedInstruction
 } from "./rebuild_the_universe.user";
 
 export const instruction_descriptor_arr_type=[

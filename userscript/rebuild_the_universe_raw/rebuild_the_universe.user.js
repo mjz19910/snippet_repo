@@ -3901,4 +3901,7 @@ if(typeof exports==='object') {
 	exports.InstructionVMPushIPImpl=InstructionVMPushIPImpl;
 	exports.InstructionPushVMObjImpl=InstructionPushVMObjImpl;
 	exports.InstructionVMReturnImpl=InstructionVMReturnImpl;
+
+
+	exports.UnimplementedInstruction=UnimplementedInstruction;
 }
