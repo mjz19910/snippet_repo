@@ -5056,7 +5056,7 @@ class Socket {
 		if(Socket.prototype===this) return;
 		let data=event.data;
 		if(data.type!=="tcp") throw new Error();
-		/** @type {ReportInfo<this>} */
+		/** @type {ReportInfo<Socket>} */
 		let report_info={
 			data,
 			handler: this,
