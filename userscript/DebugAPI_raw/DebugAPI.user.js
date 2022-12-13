@@ -5168,22 +5168,27 @@ class Socket {
 inject_api.Socket=Socket;
 
 class OriginState {
-	/**@readonly*/static window=window;
-	/**@readonly*/static top=window.top;
-	/**@readonly*/static parent=window.parent;
+	/**@readonly*/window=window;
+	/**@readonly*/top=window.top;
+	/**@readonly*/parent=window.parent;
 	/**
 	 * @type {Window|null}
 	 * @readonly
 	 * */
-	static opener=window.opener;
+	opener=window.opener;
 	/**
 	 * @type {boolean}
 	 */
-	static is_top;
+	is_top;
 	/**
 	 * @type {boolean}
 	 */
-	static is_root;
+	is_root;
+	constructor() {
+		this.is_top=this.window===this.top;
+		this.is_root=this.opener===null;
+		if(!this.is_top) this.is_root=false;
+	}
 }
 inject_api.OriginState=OriginState;
 
@@ -5192,9 +5197,6 @@ class ConnectionFlags {
 }
 
 class CrossOriginConnectionData {
-	m_flags=new ConnectionFlags;
-	max_elevate_id=0;
-	state=OriginState;
 }
 
 class ListenSocket {
@@ -5367,6 +5369,9 @@ class ListenSocket {
 }
 
 class CrossOriginConnection extends CrossOriginConnectionData {
+	m_flags=new ConnectionFlags;
+	max_elevate_id=0;
+	state=new OriginState;
 	/** @type {ConnectionMessage[]} */
 	unhandled_child_events=[];
 	/** @type {Socket|null} */
@@ -5375,15 +5380,11 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		super();
 		elevate_event_handler(this);
 		let client_id=this.client_max_id++;
-		let s=this.state;
-		s.is_top=this.state.window===this.state.top;
-		s.is_root=this.state.opener===null;
-		if(!s.is_top) s.is_root=false;
 		this.start_root_server();
 		/** @type {Window} */
 		let connect_target;
-		x: if(s.opener!==null) {
-			connect_target=s.opener;
+		x: if(this.state.opener!==null) {
+			connect_target=this.state.opener;
 			this.m_flags.does_proxy_to_opener=true;
 			break x;
 		} else if(this.state.top) {
