@@ -4981,7 +4981,6 @@ class Socket {
 	m_debug=false;
 	m_local_log=false;
 	m_was_connected=false;
-	m_fake=CrossOriginConnection.is_fake;
 	m_client_id;
 	m_port;
 	m_remote_target;
@@ -5504,7 +5503,6 @@ class CrossOriginConnection {
 		window.addEventListener("beforeunload",this);
 		window.addEventListener("unload",this);
 	}
-	static is_fake=false;
 	static connect_to_api() {
 		inject_api.CrossOriginConnection=this;
 		let remote_origin=new this();
