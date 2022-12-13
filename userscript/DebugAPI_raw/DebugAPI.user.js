@@ -5300,7 +5300,6 @@ class ListenSocket {
 	}
 	/** @arg {MessageEvent<ConnectionMessage>} event */
 	handleEvent(event) {
-		if(ListenSocket.prototype===this) return;
 		let {data}=event;
 		if(data.type!=="tcp") {
 			this.m_unhandled_events.push(data);
