@@ -2787,7 +2787,7 @@ class AddEventListenerExtension {
 			return;
 		}
 		if(val instanceof ListenSocket) {
-			this.convert_to_id_key(real_value,key,val,"ListenSocket:client_"+val.m_client_id);
+			this.convert_to_id_key(real_value,key,val,"ListenSocket:client_"+val.client_id);
 			return;
 		}
 		if(val===window) {
@@ -5209,20 +5209,20 @@ function new_tcp_client_message(client_id,data,seq,ack) {
 }
 
 class ListenSocket {
-	/** @type {ConnectionSide} */
+	/** @private @type {ConnectionSide} */
 	m_side="server";
-	/** @type {ConnectionMessage[]} */
+	/** @private @type {ConnectionMessage[]} */
 	m_unhandled_events=[];
 	m_debug=false;
 	m_connected=false;
 	m_log_downstream=false;
-	/** @type {ConnectionFlags} */
+	/** @private @type {ConnectionFlags} */
 	m_flags;
-	/** @type {MessagePort} */
+	/** @private @type {MessagePort} */
 	m_port;
-	/** @type {number} */
+	/** @private @type {number} */
 	m_client_id;
-	/** @type {MessageEventSource} */
+	/** @private @type {MessageEventSource} */
 	m_event_source;
 	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
 	constructor(flags,connection_port,client_id,event_source) {
@@ -5233,6 +5233,15 @@ class ListenSocket {
 		this.m_port.addEventListener("message",this);
 		this.m_port.start();
 		this.m_connecting=true;
+	}
+	get side() {
+		return this.m_side;
+	}
+	get client_id() {
+		return this.m_client_id;
+	}
+	get event_source() {
+		return this.m_event_source;
 	}
 	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
@@ -5361,9 +5370,6 @@ class ListenSocket {
 			this.downstream_handle_event(data);
 		}
 	}
-	source() {
-		return this.m_event_source;
-	}
 }
 
 class CrossOriginConnection extends CrossOriginConnectionData {
@@ -5435,7 +5441,7 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let event_source=event_0.source;
 		let handler=new ListenSocket(this.m_flags,connection_port,client_id,event_source);
 		let prev_connection_index=this.connections.findIndex(e => {
-			return e.source()===event_source;
+			return e.event_source===event_source;
 		});
 		if(testing_tcp) {
 			console.groupCollapsed("-rx-C!-> CrossOriginConnection<"+event_0.data.data.seq+","+event_0.data.data.ack+">");
