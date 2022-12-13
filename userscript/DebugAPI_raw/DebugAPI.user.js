@@ -2369,7 +2369,7 @@ inject_api.parse_javascript_str=parse_javascript_str;
 var api_debug_enabled=false;
 
 const base_console=window.console;
-add_object({name:"Console"},base_console);
+add_object({name: "Console"},base_console);
 
 /** @type {Console} */
 var console={...window.console};
@@ -4916,11 +4916,11 @@ class FlagHandler {
 /** @type {1} */
 const tcp_syn=1;
 /** @type {(typeof import("./__global.js").ConnectFlag)['Syn']} */
-const val_tcp_syn=tcp_syn;val_tcp_syn;
+const val_tcp_syn=tcp_syn; val_tcp_syn;
 /** @type {2} */
 const tcp_ack=2;
 /** @readonly @type {(typeof import("./__global.js").ConnectFlag)["Ack"]} */
-const val_tcp_ack=tcp_ack;val_tcp_ack;
+const val_tcp_ack=tcp_ack; val_tcp_ack;
 
 const ack_win=5000;
 class TCPMessage {
@@ -5168,25 +5168,39 @@ class Socket {
 inject_api.Socket=Socket;
 
 class OriginState {
-	/**@readonly*/window=window;
-	/**@readonly*/top=window.top;
-	/**@readonly*/parent=window.parent;
-	/**
-	 * @type {Window|null}
-	 * @readonly
-	 * */
-	opener=window.opener;
-	/**
-	 * @type {boolean}
-	 */
-	is_top;
-	/**
-	 * @type {boolean}
-	 */
-	is_root;
+	/** @private @readonly */
+	m_window=window;
+	/** @private @readonly */
+	m_top=window.top;
+	/** @private @readonly */
+	m_parent=window.parent;
+	/** @private @readonly @type {Window|null} */
+	m_opener=window.opener;
+	/** @private @type {boolean} */
+	m_is_top;
+	/** @private @type {boolean} */
+	m_is_root;
 	constructor() {
-		this.is_top=this.window===this.top;
-		this.is_root=this.is_top&&this.opener===null;
+		this.m_is_top=this.m_window===this.m_top;
+		this.m_is_root=this.m_is_top&&this.m_opener===null;
+		this.m_parent;
+	}
+	get is_top() {
+		return this.m_is_top;
+	}
+	get is_root() {
+		return this.m_is_root;
+	}
+	/** @param {ConnectionFlags} flags */
+	get_connect_target(flags) {
+		if(this.m_opener) {
+			flags.does_proxy_to_opener=true;
+			return this.m_opener;
+		} else if(this.m_top) {
+			return this.m_top;
+		} else {
+			throw new Error("Invalid state, not top and window.top is null");
+		}
 	}
 }
 inject_api.OriginState=OriginState;
@@ -5381,26 +5395,15 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		let client_id=this.client_max_id++;
 		this.start_root_server();
 		/** @type {Window} */
-		let connect_target;
-		x: if(this.state.opener!==null) {
-			connect_target=this.state.opener;
-			this.m_flags.does_proxy_to_opener=true;
-			break x;
-		} else if(this.state.top) {
-			connect_target=this.state.top;
-		} else {
-			throw new Error("Invalid state, not top and window.top is null");
+		let connect_target=this.state.get_connect_target(this.m_flags);
+		if(connect_target!==window) {
+			this.m_local_handler=new Socket(
+				30000,
+				client_id,
+				this.m_flags,
+				connect_target,
+			);
 		}
-		if(connect_target===window) {
-			this.m_local_handler=null;
-			return;
-		}
-		this.m_local_handler=new Socket(
-			30000,
-			client_id,
-			this.m_flags,
-			connect_target,
-		);
 	}
 	m_debug=false;
 	/** @type {MessageEvent<unknown>|null} */
