@@ -5394,7 +5394,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 		elevate_event_handler(this);
 		let client_id=this.client_max_id++;
 		this.start_root_server();
-		/** @type {Window} */
 		let connect_target=this.state.get_connect_target(this.m_flags);
 		if(connect_target!==window) {
 			this.m_local_handler=new Socket(
