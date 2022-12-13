@@ -5085,8 +5085,8 @@ class Socket {
 		}
 		this.handle_tcp_data(data);
 	}
-	/** @arg {ConnectionMessage} tcp_message */
-	send_ack(tcp_message) {
+	/** @arg {ConnectionMessage} tcp_message @arg {ConnectFlag} flags */
+	send_ack(tcp_message,flags) {
 		// seq=number & ack=number;
 		let seq=tcp_message.ack;
 		if(!seq) {
@@ -5100,7 +5100,7 @@ class Socket {
 			client_id: this.m_client_id,
 			ack: tcp_message.seq+1,
 			seq,
-			flags: tcp_message.flags|tcp_ack,
+			flags: flags|tcp_ack,
 			data: null,
 		});
 	}
@@ -5111,10 +5111,10 @@ class Socket {
 			console.log("local",tcp_message);
 		}
 		if(f.is_syn()&&f.is_ack()) {
-			this.send_ack(tcp_message);
+			this.send_ack(tcp_message,0);
 		}
 		if(tcp_message.flags==0) {
-			this.send_ack(tcp_message);
+			this.send_ack(tcp_message,0);
 		}
 		if(!tcp_message.data) return;
 		let tcp_data=tcp_message.data;
