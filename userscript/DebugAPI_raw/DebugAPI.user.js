@@ -4979,13 +4979,13 @@ class Socket {
 	m_can_reconnect=false;
 	m_event_transport_map=new Map;
 	m_debug=false;
+	m_local_log=false;
+	m_was_connected=false;
 	m_fake=CrossOriginConnection.is_fake;
 	m_client_id;
 	m_port;
 	m_remote_target;
 	m_event_source;
-	m_local_log=false;
-	m_was_connected=false;
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,remote_target) {
 		this.m_connection_timeout=connection_timeout;
