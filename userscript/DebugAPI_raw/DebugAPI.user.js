@@ -5213,17 +5213,27 @@ class ListenSocket {
 	m_side="server";
 	/** @type {ConnectionMessage[]} */
 	m_unhandled_events=[];
+	m_debug=false;
+	m_connected=false;
+	m_log_downstream=false;
 	/** @type {ConnectionFlags} */
 	m_flags;
 	/** @type {MessagePort} */
 	m_port;
 	/** @type {number} */
 	m_client_id;
-	m_debug=false;
-	m_connected=false;
-	m_log_downstream=false;
 	/** @type {MessageEventSource} */
 	m_event_source;
+	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
+	constructor(flags,connection_port,client_id,event_source) {
+		this.m_flags=flags;
+		this.m_client_id=client_id;
+		this.m_event_source=event_source;
+		this.m_port=connection_port;
+		this.m_port.addEventListener("message",this);
+		this.m_port.start();
+		this.m_connecting=true;
+	}
 	/** @arg {ConnectionMessage} data */
 	push_tcp_message(data) {
 		if(testing_tcp) {
@@ -5353,16 +5363,6 @@ class ListenSocket {
 	}
 	source() {
 		return this.m_event_source;
-	}
-	/** @arg {ConnectionFlags} flags @arg {MessagePort} connection_port @arg {number} client_id @param {MessageEventSource} event_source */
-	constructor(flags,connection_port,client_id,event_source) {
-		this.m_flags=flags;
-		this.m_client_id=client_id;
-		this.m_event_source=event_source;
-		this.m_port=connection_port;
-		this.m_port.addEventListener("message",this);
-		this.m_port.start();
-		this.m_connecting=true;
 	}
 }
 
