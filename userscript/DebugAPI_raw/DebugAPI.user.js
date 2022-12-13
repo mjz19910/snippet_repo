@@ -5386,6 +5386,15 @@ class CrossOriginConnection {
 	unhandled_child_events=[];
 	/** @type {Socket|null} */
 	m_local_handler=null;
+	m_debug=false;
+	/** @type {MessageEvent<unknown>|null} */
+	last_misbehaved_client_event=null;
+	max_elevated_id=0;
+	/**@type {ListenSocket[]} */
+	connections=[];
+	/**@type {Socket[]} */
+	local_handlers=[];
+	client_max_id=0;
 	constructor() {
 		elevate_event_handler(this);
 		let client_id=this.client_max_id++;
@@ -5400,15 +5409,6 @@ class CrossOriginConnection {
 			);
 		}
 	}
-	m_debug=false;
-	/** @type {MessageEvent<unknown>|null} */
-	last_misbehaved_client_event=null;
-	max_elevated_id=0;
-	/**@type {ListenSocket[]} */
-	connections=[];
-	/**@type {Socket[]} */
-	local_handlers=[];
-	client_max_id=0;
 	/** @arg {MessageEvent<unknown>} event_0 */
 	on_message_event(event_0) {
 		let e_monad_1=cast_to_record_with_string_type_msg(new_cast_monad(event_0));
