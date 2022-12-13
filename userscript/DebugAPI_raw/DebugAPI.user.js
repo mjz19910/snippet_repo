@@ -5255,17 +5255,16 @@ class ListenSocket {
 			this.m_port.postMessage(data);
 		}
 	}
-	/**
-	 * @param {number} syn
-	 * @param {number} ack
-	 */
-	downstream_connect(syn,ack) {
+	/** @arg {ConnectionMessage} tcp_message */
+	downstream_connect(tcp_message) {
+		let {seq,ack}=tcp_message;
+		if(!ack) throw new Error("Invalid message");
 		if(testing_tcp) {
 			console.log('on_server_connect',this.m_client_id,this.m_event_source);
 		}
 		this.push_tcp_message(TCPMessage.make_message(
 			this.m_client_id,{type: "connected"},
-			syn,ack,
+			seq,ack,
 		));
 	}
 	/** @arg {ConnectionMessage} info */
@@ -5326,46 +5325,48 @@ class ListenSocket {
 		}
 		this.handle_tcp_data(data);
 	}
-	/**
-	 * @param {FlagHandler} f
-	 * @param {number} seq
-	 * @param {number} ack
-	 */
-	send_ack(f,seq,ack) {
-		if(f.is_ack()) throw new Error("ack should not be on packet we are ack'ing for");
-		let msg=new TCPMessage(+f|tcp_ack,this.m_client_id,seq,ack,null);
-		this.push_tcp_message(msg);
+	/** @arg {ConnectionMessage} tcp_message @arg {ConnectFlag} flags */
+	send_ack(tcp_message,flags) {
+		let {seq: ack,ack: seq}=tcp_message;
+		seq=(Math.random()*ack_win)%ack_win|0;
+		if(testing_tcp) {
+			seq=300;
+		}
+		ack+=1;
+		this.push_tcp_message({
+			type: "tcp",
+			client_id: this.m_client_id,
+			ack,
+			seq,
+			flags: flags|tcp_ack,
+			data: null,
+		});
 	}
-	/** @arg {ConnectionMessage} data */
-	handle_tcp_data(data) {
-		let f=new FlagHandler(data.flags);
-		let {seq: ack,ack: seq}=data;
+	/** @arg {ConnectionMessage} tcp_message */
+	handle_tcp_data(tcp_message) {
+		let f=new FlagHandler(tcp_message.flags);
+		let {ack: seq}=tcp_message;
 		if(f.is_syn()&&!f.is_ack()) {
 			// seq=number & ack=null;
-			seq=(Math.random()*ack_win)%ack_win|0;
-			if(testing_tcp) {
-				seq=300;
-			}
-			ack+=1;
-			this.send_ack(f,seq,ack);
+			this.send_ack(tcp_message,tcp_syn);
 		}
-		if(f.is_none()&&seq) {
-			this.send_ack(f,seq,ack);
+		if(f.is_none()&&!f.is_syn()) {
+			this.send_ack(tcp_message,0);
 		}
 		if(f.is_none()&&seq==null) {
-			console.log("bad tcp",data);
+			console.log("bad tcp",tcp_message);
 		}
-		if(f.is_ack()&&this.m_is_connecting&&seq) {
+		if(f.is_ack()&&this.m_is_connecting) {
 			this.m_is_connecting=false;
 			this.m_connected=true;
-			this.downstream_connect(data.seq,seq);
+			this.downstream_connect(tcp_message);
 		}
 		if(f.is_ack()&&this.m_is_connecting&&seq==null) {
-			console.log("bad tcp",data);
+			console.log("bad tcp",tcp_message);
 		}
-		let downstream_data=data.data;
+		let downstream_data=tcp_message.data;
 		if(downstream_data) {
-			this.downstream_handle_event(data);
+			this.downstream_handle_event(tcp_message);
 		}
 	}
 }
