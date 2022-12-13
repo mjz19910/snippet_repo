@@ -20,9 +20,9 @@
 // #pragma section InjectAPI
 /** @readonly */
 const InjectAPIStr="inject_api";
-/** @type {Exclude<typeof window[typeof InjectAPIStr],undefined>} */
+/** @type {Exclude<typeof window.inject_api,undefined>} */
 let inject_api={};
-window[InjectAPIStr]=inject_api;
+window.inject_api=inject_api;
 // #pragma end InjectAPI
 
 

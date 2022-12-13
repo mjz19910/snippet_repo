@@ -1,9 +1,13 @@
 import {InjectAPIStr, post_message_connect_message_type} from "./DebugAPI.user.js";
 import {} from "./support/IDValue_0.js";
-import {} from "./support/IInjectAPI.js";
+import {IInjectAPI_} from "./support/IInjectAPI.js";
 import {} from "./support/Nullable.js";
 import {} from "./support/RecordKey.js";
 import {RepeatL_0} from "./support/Repeat_0.js";
+
+type _=IInjectAPI_;
+const _:_={};
+_;
 
 declare global {
 	type ActivateClass={
