@@ -3876,4 +3876,29 @@ if(typeof exports==='object') {
 	exports.AutoBuyImplR=AutoBuyImplR;
 	exports.DocumentWriteListImpl=DocumentWriteListImpl;
 	exports.instruction_descriptor_arr=instruction_descriptor_arr;
+
+	// instructions
+	exports.InstructionAppendImpl=InstructionAppendImpl;
+	exports.InstructionBreakpointImpl=InstructionBreakpointImpl;
+	exports.InstructionCallImpl=InstructionCallImpl;
+	exports.InstructionCastImpl=InstructionCastImpl;
+	exports.InstructionConstructImpl=InstructionConstructImpl;
+	exports.InstructionDropImpl=InstructionDropImpl;
+	exports.InstructionDupImpl=InstructionDupImpl;
+	exports.InstructionGetImpl=InstructionGetImpl;
+	exports.InstructionHaltImpl=InstructionHaltImpl;
+	exports.InstructionJeImpl=InstructionJeImpl;
+	exports.InstructionJmpImpl=InstructionJmpImpl;
+	exports.InstructionModifyOpImpl=InstructionModifyOpImpl;
+	exports.InstructionNopImpl=InstructionNopImpl;
+	exports.InstructionPeekImpl=InstructionPeekImpl;
+	exports.InstructionPushWindowObjectImpl=InstructionPushWindowObjectImpl;
+	exports.InstructionPushImpl=InstructionPushImpl;
+	exports.InstructionReturnImpl=InstructionReturnImpl;
+	exports.InstructionBlockTraceImpl=InstructionBlockTraceImpl;
+	exports.InstructionVMCallImpl=InstructionVMCallImpl;
+	exports.InstructionPushArgsImpl=InstructionPushArgsImpl;
+	exports.InstructionVMPushIPImpl=InstructionVMPushIPImpl;
+	exports.InstructionPushVMObjImpl=InstructionPushVMObjImpl;
+	exports.InstructionVMReturnImpl=InstructionVMReturnImpl;
 }

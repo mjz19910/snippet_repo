@@ -1,3 +1,29 @@
+import {
+	InstructionAppendImpl,
+	InstructionBlockTraceImpl,
+	InstructionBreakpointImpl,
+	InstructionCallImpl,
+	InstructionCastImpl,
+	InstructionConstructImpl,
+	InstructionDropImpl,
+	InstructionDupImpl,
+	InstructionGetImpl,
+	InstructionHaltImpl,
+	InstructionJeImpl,
+	InstructionJmpImpl,
+	InstructionModifyOpImpl,
+	InstructionNopImpl,
+	InstructionPeekImpl,
+	InstructionPushArgsImpl,
+	InstructionPushImpl,
+	InstructionPushVMObjImpl,
+	InstructionPushWindowObjectImpl,
+	InstructionReturnImpl,
+	InstructionVMCallImpl,
+	InstructionVMPushIPImpl,
+	InstructionVMReturnImpl
+} from "./rebuild_the_universe.user";
+
 export const instruction_descriptor_arr_type=[
 	['append',InstructionAppendImpl],
 	['breakpoint',InstructionBreakpointImpl],
