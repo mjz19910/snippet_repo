@@ -5209,9 +5209,6 @@ class ConnectionFlags {
 	does_proxy_to_opener=false;
 }
 
-class CrossOriginConnectionData {
-}
-
 class ListenSocket {
 	/** @private @type {ConnectionSide} */
 	m_side="server";
@@ -5381,7 +5378,7 @@ class ListenSocket {
 	}
 }
 
-class CrossOriginConnection extends CrossOriginConnectionData {
+class CrossOriginConnection {
 	m_flags=new ConnectionFlags;
 	max_elevate_id=0;
 	state=new OriginState;
@@ -5390,7 +5387,6 @@ class CrossOriginConnection extends CrossOriginConnectionData {
 	/** @type {Socket|null} */
 	m_local_handler=null;
 	constructor() {
-		super();
 		elevate_event_handler(this);
 		let client_id=this.client_max_id++;
 		this.start_root_server();
