@@ -5045,10 +5045,10 @@ class Socket {
 		// sends message to
 		ListenSocket.prototype.handleEvent(new MessageEvent("message",{data: data}));
 	}
-	/** @arg {ReportInfo<Socket>} message_event */
-	client_connect(message_event) {
+	/** @param {ConnectionMessage} message */
+	client_connect(message) {
 		if(testing_tcp) {
-			console.log('on_client_connect',message_event.data,this.m_event_source);
+			console.log('on_client_connect',message,this.m_event_source);
 		}
 	}
 	/** @param {MessageEvent<ConnectionMessage>} event */
@@ -5056,11 +5056,6 @@ class Socket {
 		if(Socket.prototype===this) return;
 		let data=event.data;
 		if(data.type!=="tcp") throw new Error();
-		/** @type {ReportInfo<Socket>} */
-		let report_info={
-			data,
-			handler: this,
-		};
 		if(testing_tcp) {
 			console.groupCollapsed("-rx-S?-> Socket<"+data.seq+","+data.ack+","+data.flags+">");
 			console.log("ListenSocket ->");
@@ -5070,7 +5065,7 @@ class Socket {
 			console.log("<?-");
 
 		}
-		this.handle_tcp_data(data,report_info);
+		this.handle_tcp_data(data);
 		if(this.m_was_connected) {
 			this.m_was_connected=false;
 			// </group syn>
@@ -5098,8 +5093,8 @@ class Socket {
 	}
 	m_local_log=false;
 	m_was_connected=false;
-	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<Socket>} report_info */
-	handle_tcp_data(tcp_message,report_info) {
+	/** @arg {ConnectionMessage} tcp_message */
+	handle_tcp_data(tcp_message) {
 		let f=new FlagHandler(tcp_message.flags);
 		if(this.m_local_log) {
 			console.log("local",tcp_message);
@@ -5117,7 +5112,7 @@ class Socket {
 		}
 		switch(tcp_data.type) {
 			case "connected": {
-				this.client_connect(report_info);
+				this.client_connect(tcp_message);
 				this.m_was_connected=true;
 			} break;
 			case "will_disconnect": {
@@ -5127,7 +5122,7 @@ class Socket {
 			case "disconnected": {
 				if(!this.m_disconnect_start) throw new Error("missed will_disconnect");
 				console.log("before_unload took",performance.now()-this.m_disconnect_start);
-				this.client_disconnect(report_info);
+				this.client_disconnect(tcp_message);
 			} break;
 			case "side":
 		}
@@ -5137,10 +5132,10 @@ class Socket {
 			throw new Error("No remote port to communicate with");
 		}
 	}
-	/** @param {ReportInfo<Socket>} report_info */
-	client_disconnect(report_info) {
+	/** @param {ConnectionMessage} message */
+	client_disconnect(message) {
 		if(testing_tcp) {
-			console.log('on_client_disconnect',report_info.data);
+			console.log('on_client_disconnect',message);
 		}
 		this.m_connected=false;
 		if(!this.m_port) throw new Error("missing connection port, and disconnect was still called");
