@@ -5336,7 +5336,7 @@ class ListenSocket {
 		if(f.is_none()&&seq) {
 			this.send_ack(f,seq,ack);
 		}
-		if(f.is_none()&&!seq) {
+		if(f.is_none()&&seq==null) {
 			console.log("bad tcp",data);
 		}
 		if(f.is_ack()&&this.m_connecting&&seq) {
