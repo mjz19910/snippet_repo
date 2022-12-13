@@ -4884,6 +4884,7 @@ function cast_to_record_with_key_and_string_type(x,k) {
 	if(!is_record_with_string_type(x,k)) return null;
 	return x;
 }
+add_function(cast_to_record_with_key_and_string_type);
 //#endregion
 
 
@@ -5475,22 +5476,6 @@ class CrossOriginConnection {
 			throw new Error("send tcp message to non-existent connection");
 		}
 		this.m_local_handler.push_tcp_message(message);
-	}
-	/** @arg {{}} data_obj @returns {boolean} */
-	is_sponsor_block_event_data(data_obj) {
-		let cast_monad=cast_to_record_with_key_and_string_type(new_cast_monad(data_obj),"source");
-		if(!cast_monad) return false;
-		if(cast_monad.data.source!=="sponsorblock") return false;
-		// should be a SponsorBlock event.data
-		let cast_monad_2=cast_to_record_with_string_type(cast_monad);
-		if(!cast_monad_2?.data) return false;
-		/** @type {{ [P in keyof typeof cast_monad_2.data]: typeof cast_monad_2.data[P]; }} */
-		let decay_type=cast_monad_2.data;
-		switch(decay_type.type) {
-			case "data":
-			case "navigation": return true;
-		}
-		return false;
 	}
 	/** @arg {Event} event */
 	handleEvent(event) {
