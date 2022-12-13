@@ -5098,7 +5098,7 @@ class Socket {
 	}
 	m_local_log=false;
 	m_was_connected=false;
-	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<this>} report_info */
+	/** @arg {ConnectionMessage} tcp_message @arg {ReportInfo<Socket>} report_info */
 	handle_tcp_data(tcp_message,report_info) {
 		let f=new FlagHandler(tcp_message.flags);
 		if(this.m_local_log) {
@@ -5137,7 +5137,7 @@ class Socket {
 			throw new Error("No remote port to communicate with");
 		}
 	}
-	/** @param {ReportInfo<this>} report_info */
+	/** @param {ReportInfo<Socket>} report_info */
 	client_disconnect(report_info) {
 		if(testing_tcp) {
 			console.log('on_client_disconnect',report_info.data);
