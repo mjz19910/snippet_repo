@@ -1,5 +1,1 @@
-declare global {
-	type Nullable<T> = { [K in keyof T]: T[K] | null };
-}
-
-export {};
+export type Nullable_<T> = { [K in keyof T]: T[K] | null };

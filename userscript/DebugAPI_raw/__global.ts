@@ -1,9 +1,17 @@
 import {post_message_connect_message_type} from "./DebugAPI.user.js";
 import {} from "./support/IDValue_0.js";
 import {IInjectAPI_} from "./support/IInjectAPI.js";
-import {} from "./support/Nullable.js";
-import {} from "./support/RecordKey.js";
+import {Nullable_} from "./support/Nullable.js";
+import {RecordKey_} from "./support/RecordKey.js";
 import {RepeatL_0} from "./support/Repeat_0.js";
+
+declare global {
+	type Nullable<T>=Nullable_<T>;
+}
+
+declare global {
+	type RecordKey<T>=RecordKey_<T>;
+}
 
 declare global {
 	type ActivateClass={
