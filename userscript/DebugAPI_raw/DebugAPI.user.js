@@ -5186,8 +5186,7 @@ class OriginState {
 	is_root;
 	constructor() {
 		this.is_top=this.window===this.top;
-		this.is_root=this.opener===null;
-		if(!this.is_top) this.is_root=false;
+		this.is_root=this.is_top&&this.opener===null;
 	}
 }
 inject_api.OriginState=OriginState;
