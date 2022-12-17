@@ -289,6 +289,7 @@ declare global {
 
 export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
 
+/** @template {any[]} U @template C */
 export class VoidCallback<U extends any[],C> {
 	m_callback: ((...args: U) => C);
 	constructor(callback: (...args: U) => C) {
