@@ -5158,28 +5158,9 @@ inject_api.Socket=Socket;
 
 class OriginState {
 	/** @private @readonly */
-	m_window=window;
-	/** @private @readonly */
 	m_top=window.top;
-	/** @private @readonly */
-	m_parent=window.parent;
 	/** @private @readonly @type {Window|null} */
 	m_opener=window.opener;
-	/** @private @type {boolean} */
-	m_is_top;
-	/** @private @type {boolean} */
-	m_is_root;
-	constructor() {
-		this.m_is_top=this.m_window===this.m_top;
-		this.m_is_root=this.m_is_top&&this.m_opener===null;
-		this.m_parent;
-	}
-	get is_top() {
-		return this.m_is_top;
-	}
-	get is_root() {
-		return this.m_is_root;
-	}
 	/** @param {ConnectionFlags} flags */
 	get_connect_target(flags) {
 		if(this.m_opener) {
