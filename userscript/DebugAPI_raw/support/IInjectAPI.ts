@@ -293,6 +293,7 @@ export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Par
 export class VoidCallback<U extends any[],C> {
 	/** @type {(...args: U)=>C} */
 	m_callback: ((...args: U) => C);
+	/** @arg {(...args: U)=>C} callback */
 	constructor(callback: (...args: U) => C) {
 		this.m_callback=callback;
 	}
