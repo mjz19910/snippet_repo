@@ -269,7 +269,7 @@ declare global {
 }
 
 // AddEventListenerExtension
-interface IAddEventListenerExtension {
+export interface IAddEventListenerExtension {
 	elevate_handler(x: any): void;
 }
 
@@ -287,9 +287,9 @@ declare global {
 	}
 }
 
-type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
+export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Parameters<T>,ReturnType<T>>;
 
-class VoidCallback<U extends any[],C> {
+export class VoidCallback<U extends any[],C> {
 	m_callback: ((...args: U) => C);
 	constructor(callback: (...args: U) => C) {
 		this.m_callback=callback;
