@@ -5438,7 +5438,7 @@ class CrossOriginConnection {
 		if(data_record.data.type!=="tcp") return false;
 		return true;
 	}
-	/** @template {CM<{type:string}>} T @arg {T} data @returns {data is CM<{type:string,data:unknown}>} */
+	/** @template {CM<{type:string}>} T @arg {T} data @returns {data is T&CM<{type:string,data:unknown}>} */
 	is_with_data_decay(data) {
 		if(!is_record_with_T(data.data,"data")) return false;
 		return true;
