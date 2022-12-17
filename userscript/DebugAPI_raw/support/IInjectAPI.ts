@@ -291,6 +291,7 @@ export type VoidCallbackWith<T extends (...args: any[]) => any>=VoidCallback<Par
 
 /** @template {any[]} U @template C */
 export class VoidCallback<U extends any[],C> {
+	/** @type {(...args: U)=>C} */
 	m_callback: ((...args: U) => C);
 	constructor(callback: (...args: U) => C) {
 		this.m_callback=callback;
