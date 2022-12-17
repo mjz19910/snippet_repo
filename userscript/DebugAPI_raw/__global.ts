@@ -5,6 +5,9 @@ import {Nullable_} from "./support/Nullable.js";
 import {RecordKey_} from "./support/RecordKey.js";
 import {RepeatL_0} from "./support/Repeat_0.js";
 
+export class Repeat_0_<T> extends RepeatL_0<T> {
+}
+
 declare global {
 	type IDValue_0=IDValueI_0;
 	var IDValue_0: typeof IDValueI_0;
@@ -105,7 +108,7 @@ declare global {
 
 
 declare global {
-	class Repeat_0<T> extends RepeatL_0<T> {}
+	class Repeat_0<T> extends Repeat_0_<T> {}
 }
 
 declare global {
