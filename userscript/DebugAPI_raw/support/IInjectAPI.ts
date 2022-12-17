@@ -1,6 +1,5 @@
 import {
 	CompressionStatsCalculator,
-	CrossOriginConnection,
 	DebugAPI,
 } from "../DebugAPI.user";
 
@@ -27,11 +26,17 @@ declare global {
 	}
 }
 
+declare global {
+	interface ICrossOriginConnection {
+		push_tcp_message(msg: any): void;
+	}
+}
+
 // CrossOriginConnection
 declare global {
 	interface IInjectAPI {
 		CrossOriginConnection?: {};
-		remote_origin?: CrossOriginConnection;
+		remote_origin?: ICrossOriginConnection;
 	}
 }
 

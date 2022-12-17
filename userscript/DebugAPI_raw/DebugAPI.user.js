@@ -5352,6 +5352,7 @@ class ListenSocket {
 	}
 }
 
+/** @implements {ICrossOriginConnection} */
 class CrossOriginConnection {
 	/** @private */
 	m_flags=new ConnectionFlags;
