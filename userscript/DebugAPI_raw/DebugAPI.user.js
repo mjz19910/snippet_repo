@@ -4791,9 +4791,9 @@ function is_record_with_T_msg_m(x,k) {
 	return true;
 }
 
-/** @template T @arg {CM<T>} x @returns {x is CM<T&{}>} */
+/** @template T @arg {CM<T>|null} x @returns {x is CM<T&{}>} */
 function is_object(x) {
-	if(x.data===null) return false;
+	if(!x?.data) return false;
 	if(typeof x.data!=='object') return false;
 	return true;
 }
@@ -4814,7 +4814,6 @@ function new_cast_monad(x) {
 
 /** @template T @arg {CM<T>|null} x @returns {CM<T&{}|null>|null} */
 function cast_to_object(x) {
-	if(x===null) return null;
 	if(!is_object(x)) return null;
 	return x;
 }
