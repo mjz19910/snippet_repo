@@ -2421,6 +2421,8 @@ if(do_postMessage_logging) {
 }
 
 class ReversePrototypeChain {
+	/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
+	/** @typedef {{__proto__:null,name:string,prototype:{}|null,child:destination_child_type}} destination_index_type */
 	/**
 	 * @param {{}} base
 	 * @param {{}[]} targets
@@ -2434,8 +2436,6 @@ class ReversePrototypeChain {
 		this.targets=targets;
 		/** @type {{}[]} */
 		this.values=[];
-		/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
-		/** @typedef {{__proto__:null,name:string,prototype:{}|null,child:destination_child_type}} destination_index_type */
 		/** @type {{[x: string]: destination_index_type}} */
 		this.destination=Object.create(null);
 		/** @type {({}|null)[]} */
@@ -2539,10 +2539,12 @@ class ReversePrototypeChain {
 		if(dest_value) {
 			prototypes.push(dest_value);
 		} else {
+			/** @type {destination_index_type} */
 			let sub_value={
 				__proto__: null,
 				name: sub_key,
 				prototype: value,
+				/** @type {destination_child_type} */
 				child: {
 					__proto__: null,
 					prototypes: [],
