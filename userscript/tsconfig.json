@@ -1,38 +1,36 @@
 {
 	"compilerOptions": {
-		"experimentalDecorators": true,
 		"target": "ESNext",
 		"lib": [
 			"ESNext",
 			"DOM"
 		],
 		"types": [],
-		"declaration": true,
 		"module": "ESNext",
 		"moduleResolution": "Node",
-		"sourceMap": true,
 		"outDir": "./build",
-		"strict": true,
 		"typeRoots": [
 			"./node_modules/@types"
 		],
 		"allowJs": true,
 		"checkJs": true,
+		"declaration": true,
+		"experimentalDecorators": true,
+		"forceConsistentCasingInFileNames": true,
 		"incremental": true,
+		"isolatedModules": true,
+		"noErrorTruncation": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
-		"noImplicitAny": true,
 		"noImplicitThis": true,
-		"noFallthroughCasesInSwitch": true,
-		"noErrorTruncation": true,
+		"noPropertyAccessFromIndexSignature": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
+		"sourceMap": true,
+		"strict": true,
 		"useUnknownInCatchVariables": true,
-		"isolatedModules": true,
-		// todo
-		"noPropertyAccessFromIndexSignature": false,
-		// windows needs this
-		"forceConsistentCasingInFileNames": true,
 	},
 	"ts-node": {
 		"esm": true,

@@ -39,3 +39,5 @@ export class IDValueI_0 {
 		this.stats_win=0;
 	}
 }
+
+export {type Holder as IDValueI_0_H} from "../__global.js";
