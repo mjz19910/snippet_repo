@@ -5386,7 +5386,7 @@ class CrossOriginConnection {
 		let e_monad_3=cast_to_record_with_string_type_msg_data_wrapped(e_monad_2);
 		if(!e_monad_3) return;
 		let cast_monad_data=cast_to_record_with_string_type(new_cast_monad(e_monad_3.data.data.data));
-		if(!cast_monad_data?.data) return;
+		if(!cast_monad_data) return;
 		let unwrapped_event=cast_monad_data.data;
 		switch(unwrapped_event.type) {
 			case "tcp": break;
