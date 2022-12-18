@@ -2525,7 +2525,8 @@ class ReversePrototypeChain {
 			if(idx<0)
 				this.destination[cache_key].child.prototypes.push(next);
 		}
-		return this.destination[cache_key];
+		let ret=this.destination[cache_key];
+		return ret;
 	}
 	/** @param {string} key @param {{}} value */
 	add_prototype_value(key,value) {
