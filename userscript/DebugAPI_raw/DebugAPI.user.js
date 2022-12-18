@@ -2552,9 +2552,7 @@ class ReversePrototypeChain {
 			prototypes.push(sub_value);
 		}
 	}
-	/**
-	 * @param {{}} target
-	 */
+	/** @param {{}} target */
 	process_target(target) {
 		let proto=target;
 		/** @type {{}[]} */
