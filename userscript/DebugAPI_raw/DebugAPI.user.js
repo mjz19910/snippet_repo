@@ -2783,7 +2783,7 @@ class AddEventListenerExtension {
 		if(val===null)
 			return;
 		if(val instanceof Socket) {
-			this.convert_to_id_key(real_value,key,val,"Socket:client_"+val.m_client_id);
+			this.convert_to_id_key(real_value,key,val,"Socket:client_"+val.client_id());
 			return;
 		}
 		if(val instanceof ListenSocket) {
@@ -4971,18 +4971,17 @@ class Socket {
 	static direct_message=false;
 	/** @readonly */
 	m_side="client";
-	/** @type {ReturnType<typeof setTimeout>|null} */
-	m_timeout_id=null;
-	m_connected=false;
-	m_tries_left=0;
-	m_connection_timeout;
-	m_can_reconnect=false;
-	m_event_transport_map=new Map;
+	/** @private */
 	m_debug=false;
+	/** @private */
 	m_local_log=false;
+	/** @private */
 	m_client_id;
+	/** @private */
 	m_port;
+	/** @private */
 	m_remote_target;
+	/** @private */
 	m_event_source;
 	/** @arg {number} connection_timeout @arg {number} client_id @arg {Window} remote_target */
 	constructor(connection_timeout,client_id,remote_target) {
@@ -4996,6 +4995,9 @@ class Socket {
 		let {ports,client_port}=this.init_syn_data();
 		this.m_port=client_port;
 		this.send_syn(ports);
+	}
+	client_id() {
+		return this.m_client_id;
 	}
 	/** @returns {{ports:[MessagePort],client_port:MessagePort}} */
 	init_syn_data() {
