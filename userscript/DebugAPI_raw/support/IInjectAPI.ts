@@ -240,13 +240,6 @@ declare global {
 	}
 }
 
-// CSSCascade
-declare global {
-	interface IInjectAPI {
-		CSSCascade?: {};
-	}
-}
-
 // OriginState
 declare global {
 	interface IInjectAPI {
