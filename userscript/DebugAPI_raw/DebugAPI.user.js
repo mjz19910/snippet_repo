@@ -4821,7 +4821,7 @@ function cast_to_object(x) {
 	return x;
 }
 
-/** @template T @arg {CM<T>|null} x @returns {CM<T&{type:string}|null>|null} */
+/** @template T @arg {CM<T>|null} x @returns {CM<T&{type:string}>|null} */
 function cast_to_record_with_string_type(x) {
 	let cast_result=cast_to_object(x);
 	if(!is_record_with_string_type(cast_result,"type")) return null;
