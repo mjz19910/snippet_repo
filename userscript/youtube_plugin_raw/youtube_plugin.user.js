@@ -2082,9 +2082,10 @@ function fix_offset() {
 	plugin_overlay_element.style.left=player_offset.left_offset+"px";
 }
 
-let title_save=localStorage.title_save_data;
+let title_save=localStorage.getItem("title_save_data");
 if(!title_save) {
-	title_save=localStorage.title_save_data='{"value":false}';
+	title_save="{\"value\":false}";
+	localStorage.setItem("title_save_data",title_save);
 }
 
 function log_current_video_data() {
@@ -2147,7 +2148,7 @@ function on_yt_action(event) {
 function title_display_toggle() {
 	title_on=!title_on;
 	title_text_overlay_update();
-	localStorage.title_save_data=JSON.stringify({value: title_on});
+	localStorage["title_save_data"]=JSON.stringify({value: title_on});
 }
 function update_ui_plugin() {
 	if(yt_debug_enabled) console.log('update_ui_plugin');
