@@ -4602,100 +4602,6 @@ class GenericDataEvent extends GenericEvent {
 }
 inject_api.GenericDataEvent=GenericDataEvent;
 
-class GenericEventTarget {
-	constructor() {
-		/**@type {Map<string,EventListenerValue[]>} */
-		this._events=new Map;
-	}
-	/**
-	 * @param {string} type
-	 * @param {EventListenerOrEventListenerObject | null} callback
-	 * @param {boolean | AddEventListenerOptions} options
-	 * @returns {void}
-	*/
-	addEventListener(type,callback,options) {
-		let cur_event_vec=this._events.get(type);
-		if(!cur_event_vec) {
-			cur_event_vec=[];
-			this._events.set(type,cur_event_vec);
-		}
-		cur_event_vec.push(new EventListenerValue(callback,options));
-	}
-	/**
-	 * @param {string} type
-	 * @param {EventListenerOrEventListenerObject|null} callback
-	 * @param {boolean | AddEventListenerOptions} options
-	 * @returns {void}
-	*/
-	removeEventListener(type,callback,options) {
-		let cur_event_vec=this._events.get(type);
-		if(!cur_event_vec)
-			return;
-		if(cur_event_vec.length==0)
-			return;
-		for(let i=cur_event_vec.length-1;i>=0;i--) {
-			let cur=cur_event_vec[i];
-			if(cur.callback!==callback)
-				continue;
-			if(cur.options!==options)
-				continue;
-			cur.callback=null;
-			cur_event_vec.splice(i,1);
-		}
-	}
-	/**
-	 * @param {Event} event
-	 * @returns {boolean}
-	 */
-	dispatchEvent(event) {
-		let event_type=event.type;
-		let cur_event_vec=this._events.get(event_type);
-		if(!cur_event_vec)
-			return false;
-		let cur_event_vec_owned=cur_event_vec.slice();
-		let can_handle=false;
-		for(let i=0;i<cur_event_vec_owned.length;i++) {
-			let cur=cur_event_vec_owned[i];
-			let callback=cur.callback;
-			if(callback===null)
-				continue;
-			if(typeof callback==='function') {
-				callback(event);
-				can_handle=true;
-				continue;
-			}
-			if(callback.handleEvent&&typeof callback.handleEvent==='function') {
-				callback.handleEvent(event);
-				can_handle=true;
-			}
-		}
-		return can_handle;
-	}
-}
-inject_api.GenericEventTarget=GenericEventTarget;
-const static_event_target=new GenericEventTarget;
-
-class Dumper {
-	/**@type {null} */
-	m_dump_value=null;
-	/**@arg {null} value */
-	dump_value(value) {
-		this.m_dump_value=value;
-		this.m_dump_value=null;
-	}
-}
-inject_api.Dumper=Dumper;
-
-class WeakValueRef {
-	id=-1;
-	/**@arg {number} id */
-	constructor(id) {
-		this.id=id;
-	}
-}
-inject_api.WeakValueRef=WeakValueRef;
-
-
 //#region is_helpers
 /** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
 function is_record_with_string_type(x,k) {
@@ -5408,7 +5314,6 @@ inject_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
 class DebugAPI {
 	next_remote_id=0;
 	data_store=new Map;
-	event_handler=static_event_target;
 	/**@type {DebugAPI|null} */
 	static m_the=null;
 	/**@returns {DebugAPI} */

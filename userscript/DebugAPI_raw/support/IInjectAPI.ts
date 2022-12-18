@@ -211,32 +211,11 @@ declare global {
 	}
 }
 
-// GenericEventTarget
-declare global {
-	interface IInjectAPI {
-		GenericEventTarget?: {};
-	}
-}
-
-// Dumper
-declare global {
-	interface IInjectAPI {
-		Dumper?: {};
-	}
-}
-
 // RustSimpleTokenizer
 declare global {
 	interface IInjectAPI {
 		RustSimpleTokenizer?: {};
 		RustSimpleParser?: {};
-	}
-}
-
-// WeakValueRef
-declare global {
-	interface IInjectAPI {
-		WeakValueRef?: {};
 	}
 }
 
