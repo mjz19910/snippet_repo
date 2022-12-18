@@ -5358,18 +5358,11 @@ class CrossOriginConnection {
 	m_flags=new ConnectionFlags;
 	/** @private */
 	m_state=new OriginState;
-	/** @type {ConnectionMessage[]} */
-	m_unhandled_child_events=[];
-	/** @type {Socket|null} */
+	/** @private @type {Socket|null} */
 	m_local_handler=null;
-	m_debug=false;
-	/** @type {MessageEvent<unknown>|null} */
-	last_misbehaved_client_event=null;
-	max_elevated_id=0;
-	/**@type {ListenSocket[]} */
+	/** @private @type {ListenSocket[]} */
 	m_connections=[];
-	/**@type {Socket[]} */
-	m_local_handlers=[];
+	/** @private */
 	m_client_max_id=0;
 	constructor() {
 		elevate_event_handler(this);

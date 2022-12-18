@@ -27,7 +27,7 @@ declare global {
 }
 
 declare global {
-	interface ICrossOriginConnection {
+	class ICrossOriginConnection {
 		push_tcp_message(msg: any): void;
 	}
 }
