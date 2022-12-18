@@ -4780,9 +4780,12 @@ inject_api.CSSCascade=CSSCascade;
 
 
 //#region is_helpers
-/** @template {{}|null} T @template {string} U @arg {CM<T>} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
+/** @template {{}|null} T @template {string} U @arg {CM<T>|null} x @arg {U} k @returns {x is CM<T&Record<U,string>>} */
 function is_record_with_string_type(x,k) {
-	return x.data!==null&&is_record_with_T(x.data,k)&&typeof x.data[k]==='string';
+	if(!x?.data) return false;
+	if(!is_record_with_T(x.data,k)) return false;
+	if(typeof x.data[k]!=='string') return false;
+	return true;
 }
 
 /** @template T @template {string} U @arg {CM<MessageEvent<T>>} x @arg {U} k @returns {x is CM<MessageEvent<T>&MessageEvent<Record<U,unknown>>>} */
@@ -4821,7 +4824,6 @@ function cast_to_object(x) {
 /** @template T @arg {CM<T>|null} x @returns {CM<T&{type:string}|null>|null} */
 function cast_to_record_with_string_type(x) {
 	let cast_result=cast_to_object(x);
-	if(!cast_result?.data) return null;
 	if(!is_record_with_string_type(cast_result,"type")) return null;
 	return cast_result;
 }
