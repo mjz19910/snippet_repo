@@ -4826,16 +4826,15 @@ function cast_to_record_with_string_type(x) {
 	if(!is_record_with_string_type(cast_result,"type")) return null;
 	return cast_result;
 }
-/** @template T @arg {CM<MessageEvent<T>>} x @returns {x is CM<MessageEvent<T&{}>>} */
+/** @template T @arg {CM<MessageEvent<T>>|null} x @returns {x is CM<MessageEvent<T&{}>>} */
 function is_object_msg(x) {
-	if(x.data===null) return false;
+	if(!x?.data) return false;
 	if(typeof x.data!=='object') return false;
 	return true;
 }
 
 /** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<T&{}>>|null} */
 function cast_to_object_msg(x) {
-	if(x===null) return null;
 	if(x?.data===null) return null;
 	if(!is_object_msg(x)) return null;
 	return x;
