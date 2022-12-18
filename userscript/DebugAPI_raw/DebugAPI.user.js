@@ -5419,14 +5419,14 @@ class CrossOriginConnection {
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<unknown>>} */
 	is_wrapped_message(event) {
 		let data=cast_to_record_with_string_type(new_cast_monad(event.data));
-		if(!data?.data) return false;
+		if(!data) return false;
 		return data.data.type===post_message_connect_message_type;
 	}
 	/** @arg {MessageEvent<unknown>} event @returns {event is MessageEvent<WrappedMessage<ConnectionMessage>>} */
 	is_connection_message(event) {
 		if(!this.is_wrapped_message(event)) return false;
 		let data_record=cast_to_record_with_string_type(new_cast_monad(event.data.data));
-		if(!data_record?.data) return false;
+		if(!data_record) return false;
 		if(data_record.data.type!=="tcp") return false;
 		return true;
 	}
