@@ -4835,7 +4835,6 @@ function is_object_msg(x) {
 
 /** @template T @arg {CM<MessageEvent<T>>|null} x @returns {CM<MessageEvent<T&{}>>|null} */
 function cast_to_object_msg(x) {
-	if(x?.data===null) return null;
 	if(!is_object_msg(x)) return null;
 	return x;
 }
