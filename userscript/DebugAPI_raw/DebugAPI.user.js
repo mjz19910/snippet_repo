@@ -2421,10 +2421,6 @@ if(do_postMessage_logging) {
 }
 
 class ReversePrototypeChain {
-	static attach_to_api() {
-		inject_api.ReversePrototypeChain=this;
-		inject_api.reversePrototypeChain=new this(Object.prototype,[]);
-	}
 	/**
 	 * @param {{}} base
 	 * @param {{}[]} targets
@@ -2602,6 +2598,10 @@ class ReversePrototypeChain {
 				break v;
 			this.values.push(target);
 		}
+	}
+	static attach_to_api() {
+		inject_api.ReversePrototypeChain=this;
+		inject_api.reversePrototypeChain=new this(Object.prototype,[]);
 	}
 }
 ReversePrototypeChain.attach_to_api();
