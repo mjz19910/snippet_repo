@@ -4851,9 +4851,7 @@ function is_record_with_string_type_msg(x,k) {
 function cast_to_record_with_string_type_msg(x) {
 	if(!x) return null;
 	let cast_result=cast_to_object_msg(x);
-	if(!cast_result) return null;
-	if(!cast_result?.data) return null;
-	if(!cast_result.data.data) return null;
+	if(!cast_result?.data?.data) return null;
 	if(!is_record_with_string_type_msg(cast_result,"type")) return null;
 	return cast_result;
 }
