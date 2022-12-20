@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	youtube plugin
 // @namespace	https://github.com/mjz19910/
-// @version	0.1.2.6
+// @version	0.1.2.7
 // @description	try to take over the world!
 // @author	@mjz19910
 // @copyright	@mjz19910 2020-2022
@@ -808,41 +808,9 @@ class HandleRichGridRenderer {
 			}
 		}
 		if(renderer.contents) {
-			this.on_contents(path,renderer);
+			if(this.debug) console.log("on_contents",path);
+			HandleRendererContentItemArray.replace_array(this,renderer,"contents");
 		}
-	}
-	/**@arg {string} path @arg {RichGridRenderer} renderer */
-	static on_contents(path,renderer) {
-		let t=this;
-		if(this.debug) console.log("on_contents",path);
-		HandleRendererContentItemArray.replace_array(this,renderer,"contents");
-		renderer.contents=renderer.contents.filter((content_item) => {
-			check_item_keys('.contents[]',Object.keys(content_item));
-			if('remove_content_item' in content_item) {
-				/**@type {any} */
-				let any_item=content_item;
-				/**@type {Record<"remove_content_item", boolean>} */
-				let record=any_item;
-				if(record.remove_content_item) {
-					return false;
-				}
-			}
-			if('richItemRenderer' in content_item) {
-				if(!content_item.richItemRenderer) return true;
-				check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
-				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
-				let {content}=content_item.richItemRenderer;
-				check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
-				if(content.adSlotRenderer) {
-					if(t.debug&&t.debug_level>2) console.log(this.class_name,'adSlotRenderer=',content.adSlotRenderer);
-					return false;
-				}
-				return true;
-			} else {
-				console.log("don't know what to do with content_item in HandleRichGridRenderer.on_contents.renderer.contents.filter.content_item",content_item);
-				return true;
-			}
-		});
 	}
 }
 class AppendContinuationItemsAction {
