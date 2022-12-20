@@ -1,5 +1,15 @@
 import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
+// ReloadContinuationItemsCommand
+declare global {
+	type SectionItem={};
+	type ReloadContinuationItemsCommand={
+		slot: "RELOAD_CONTINUATION_SLOT_BODY";
+		targetId: "browse-feedFEwhat_to_watch";
+		continuationItems: SectionItem[];
+	};
+}
+
 // CommentsSectionContinuationAction
 declare global {
 	type CommentsSectionItem={};

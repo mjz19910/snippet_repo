@@ -886,6 +886,16 @@ function filter_on_initial_data(cls,apply_args) {
 	return ret;
 }
 
+
+/** @arg {AppendContinuationItemsAction} o @returns {o is WatchNextContinuationAction} */
+function is_watch_next_feed_target(o) {
+	return o.targetId==="watch-next-feed";
+}
+/** @arg {AppendContinuationItemsAction} o @returns {o is CommentsSectionContinuationAction} */
+function is_comments_section_next(o) {
+	return o.targetId==="comments-section";
+}
+
 class YTFilterHandlers extends YTIterateAllBase {
 	debug=true;
 	/**@readonly*/
@@ -906,10 +916,6 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	appendContinuationItemsAction(_path,action) {
 		check_item_keys("appendContinuationItemsAction",Object.keys(action));
-		/** @arg {typeof action} o @returns {o is WatchNextContinuationAction} */
-		function is_watch_next_feed_target(o) {return o.targetId==="watch-next-feed";}
-		/** @arg {typeof action} o @returns {o is CommentsSectionContinuationAction} */
-		function is_comments_section_next(o) {return o.targetId==="comments-section";}
 		if(is_watch_next_feed_target(action)) {
 			/** @type {WatchNextContinuationAction} */
 			let action_t=action;
@@ -924,6 +930,13 @@ class YTFilterHandlers extends YTIterateAllBase {
 		}
 		console.log("continue action default",action.targetId);
 		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
+	}
+	/**
+	 * @param {string} _path
+	 * @param {ReloadContinuationItemsCommand} command
+	 */
+	reloadContinuationItemsCommand(_path,command) {
+		console.log("continue action default",command.targetId);
 	}
 	/**
 	 * @param {string} path
