@@ -20,9 +20,9 @@ let inject_api=window.inject_api??{};
 
 inject_api.saved_maps=new Map;
 /** @arg {string} key @arg {Map<string, {}>} map */
-function save_new_map(key, map) {
+function save_new_map(key,map) {
 	if(!inject_api.saved_maps) return;
-	inject_api.saved_maps.set(key, map);
+	inject_api.saved_maps.set(key,map);
 }
 
 const yt_debug_enabled=false;
@@ -783,28 +783,28 @@ class HandleRendererContentItemArray {
 					return false;
 				}
 				return true;
-			} else if ("richSectionRenderer" in content_item) {
+			} else if("richSectionRenderer" in content_item) {
 				let renderer=content_item.richSectionRenderer;
 				if(!('richShelfRenderer' in renderer.content)) {
-					console.log('rich section', renderer.content);
-					return true
+					console.log('rich section',renderer.content);
+					return true;
 				}
 				let rich_shelf=renderer.content.richShelfRenderer;
 				if(rich_shelf.icon) {
-					if(rich_shelf.icon.iconType === "YOUTUBE_SHORTS_BRAND_24") {
+					if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {
 						return false;
 					}
-					console.log('rich shelf icon', rich_shelf, rich_shelf.icon);
+					console.log('rich shelf icon',rich_shelf,rich_shelf.icon);
 					return true;
 				}
 				if(rich_shelf.title.runs[0]) {
 					if(rich_shelf.title.runs[0].text==="Breaking news") {
 						return false;
 					}
-					console.log('rich shelf title', rich_shelf.title.runs[0]);
+					console.log('rich shelf title',rich_shelf.title.runs[0]);
 					return true;
 				}
-				console.log('rich shelf', rich_shelf);
+				console.log('rich shelf',rich_shelf);
 				return true;
 			} else {
 				console.log("don't know what to do with content_item in HandleRichGridRenderer.on_contents.renderer.contents.filter.content_item",content_item);
@@ -892,7 +892,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	class_name="YTFilterHandlers";
 	handlers={
 		rich_grid: new HandleRichGridRenderer,
-	}
+	};
 	/**
 	 * @param {string} path
 	 * @param {RichGridRenderer} renderer
@@ -907,9 +907,9 @@ class YTFilterHandlers extends YTIterateAllBase {
 	appendContinuationItemsAction(_path,action) {
 		check_item_keys("appendContinuationItemsAction",Object.keys(action));
 		/** @arg {typeof action} o @returns {o is WatchNextContinuationAction} */
-		function is_watch_next_feed_target(o) {return o.targetId==="watch-next-feed"}
+		function is_watch_next_feed_target(o) {return o.targetId==="watch-next-feed";}
 		/** @arg {typeof action} o @returns {o is CommentsSectionContinuationAction} */
-		function is_comments_section_next(o) {return o.targetId==="comments-section"}
+		function is_comments_section_next(o) {return o.targetId==="comments-section";}
 		if(is_watch_next_feed_target(action)) {
 			/** @type {WatchNextContinuationAction} */
 			let action_t=action;
@@ -922,7 +922,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 			console.log(`continue action "${action_t.targetId}"`,action_t.continuationItems);
 			return;
 		}
-		console.log("continue action default", action.targetId);
+		console.log("continue action default",action.targetId);
 		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
 	}
 	/**
