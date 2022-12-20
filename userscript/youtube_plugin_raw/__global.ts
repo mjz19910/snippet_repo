@@ -1,8 +1,19 @@
 import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
+// ContinuationItem
 declare global {
+	type ContinuationItem=RendererContentItem;
+}
+
+// RendererContentItem
+declare global {
+	
+	class RichItemRenderer {
+		content:{adSlotRenderer?:{}};
+	}
 	type RendererContentItem={richItemRenderer:RichItemRenderer}|{richSectionRenderer:RichSectionRenderer};
 }
+
 // InjectApiStr
 declare global {
 	const InjectAPIStr:typeof InjectAPIStr_;

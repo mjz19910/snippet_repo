@@ -660,10 +660,6 @@ class YTIterateAllBase {
 		}
 	}
 }
-class RichItemRenderer {
-	/**@type {{adSlotRenderer?:{}}} */
-	content={};
-}
 class RichShelfRenderer {
 	/** @type {{iconType:string}|null} */
 	icon=null;
@@ -864,7 +860,6 @@ class HandleRichGridRenderer {
 		});
 	}
 }
-class ContinuationItem extends RendererContentItem {}
 class AppendContinuationItemsAction {
 	/**@type {ContinuationItem[]} */
 	continuationItems=[];
@@ -906,6 +901,15 @@ function filter_on_initial_data(cls,apply_args) {
 	}
 	return ret;
 }
+class HandleRendererContentItemArray {
+	/** @type {(obj:AppendContinuationItemsAction,key:"continuationItems")=>void} */
+	replace_array(obj,key) {
+		obj[key];
+		obj[key]=obj[key].filter((content_item)=> {
+			check_item_keys(`.${key}[]`,Object.keys(content_item));
+		})
+	}
+}
 class YTFilterHandlers extends YTIterateAllBase {
 	debug=true;
 	/**@readonly*/
@@ -942,7 +946,6 @@ class YTFilterHandlers extends YTIterateAllBase {
 			let {content}=content_item.richItemRenderer;
 			check_item_keys('.continuationItems[].richItemRenderer.content',Object.keys(content));
 			if(content.adSlotRenderer) {
-				if(t.debug) console.log(t.class_name+": "+path+'.adSlotRenderer=',content.adSlotRenderer);
 				return false;
 			}
 			return true;
