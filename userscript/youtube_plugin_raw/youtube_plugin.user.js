@@ -1498,7 +1498,7 @@ function page_changed_next_frame() {
 let element_map=new Map;
 /**@type {Map<string, HTMLVideoElementArrayBox>}*/
 let box_map=new Map;
-inject_api.saved_maps.set("box_map",box_map);
+save_new_map("box_map",box_map);
 
 class YTDPlayerElement extends HTMLElement {
 	static element_selector="ytd-player";
