@@ -39,7 +39,7 @@ function decode_str_tlv(binary) {
  * @param {Uint8Array} binary
  * @returns {[number,Uint8Array]}
  */
-function decode_str_tlv(binary) {
+function decode_tlv(binary) {
 	let [type,length_]=binary;
 	let rest=binary.subarray(2);
 	let data=rest.subarray(0,length_);
