@@ -865,15 +865,6 @@ class HandleRendererContentItemArray {
 		if(!arr) return;
 		obj[key]=arr.filter((content_item) => {
 			check_item_keys(`.${key}[]`,Object.keys(content_item));
-			if('remove_content_item' in content_item) {
-				/**@type {any} */
-				let any_item=content_item;
-				/**@type {Record<"remove_content_item", boolean>} */
-				let record=any_item;
-				if(record.remove_content_item) {
-					return false;
-				}
-			}
 			if('continuationItemRenderer' in content_item) {
 				return true;
 			} else if('richItemRenderer' in content_item) {
@@ -886,6 +877,21 @@ class HandleRendererContentItemArray {
 					if(base.debug) console.log(base.class_name,'adSlotRenderer=',content.adSlotRenderer);
 					return false;
 				}
+				return true;
+			} else if ("richSectionRenderer" in content_item) {
+				let rich_shelf=content_item.richSectionRenderer.content.richShelfRenderer;
+				if(rich_shelf.icon) {
+					console.log('rich shelf icon', rich_shelf, rich_shelf.icon);
+					return true;
+				}
+				if(rich_shelf.title.runs[0]) {
+					if(rich_shelf.title.runs[0].text==="Breaking news") {
+						return false;
+					}
+					console.log('rich shelf title', rich_shelf.title.runs[0]);
+					return true;
+				}
+				console.log('rich shelf', rich_shelf);
 				return true;
 			} else {
 				console.log("don't know what to do with content_item in HandleRichGridRenderer.on_contents.renderer.contents.filter.content_item",content_item);
