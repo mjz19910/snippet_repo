@@ -937,6 +937,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	reloadContinuationItemsCommand(_path,command) {
 		console.log("continue action default",command.targetId);
+		HandleRendererContentItemArray.replace_array(this,command,"continuationItems");
 	}
 	/**
 	 * @param {string} path

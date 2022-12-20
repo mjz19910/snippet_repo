@@ -2,7 +2,11 @@ import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 // ReloadContinuationItemsCommand
 declare global {
-	type SectionItem={};
+	type SectionItem={
+		richItemRenderer: RichItemRenderer;
+	}|{
+		richSectionRenderer: RichSectionRenderer;
+	};
 	type ReloadContinuationItemsCommand={
 		slot: "RELOAD_CONTINUATION_SLOT_BODY";
 		targetId: "browse-feedFEwhat_to_watch";
