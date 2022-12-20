@@ -3,8 +3,11 @@ import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 declare global {
 	type CompactVideoRenderer={};
+	type ContinuationItemRenderer={};
 	type WatchNextItem={
 		compactVideoRenderer: CompactVideoRenderer;
+	}|{
+		continuationItemRenderer: ContinuationItemRenderer
 	};
 }
 
