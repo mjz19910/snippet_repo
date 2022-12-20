@@ -19,6 +19,11 @@ console=window.console;
 let inject_api=window.inject_api??{};
 
 inject_api.saved_maps=new Map;
+/** @arg {string} key @arg {Map<string, {}>} map */
+function save_new_map(key, map) {
+	if(!inject_api.saved_maps) return;
+	inject_api.saved_maps.set(key, map);
+}
 
 const yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
