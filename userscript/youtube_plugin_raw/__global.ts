@@ -1,5 +1,11 @@
 import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
+declare global {
+	interface InjectAPI {
+		saved_maps?: SavedArrayOf<Map<string,{}>>;
+	}
+}
+
 // ContinuationItem
 declare global {
 	type ContinuationItem=RendererContentItem;
