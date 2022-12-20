@@ -881,6 +881,9 @@ class HandleRendererContentItemArray {
 			} else if ("richSectionRenderer" in content_item) {
 				let rich_shelf=content_item.richSectionRenderer.content.richShelfRenderer;
 				if(rich_shelf.icon) {
+					if(rich_shelf.icon.iconType === "YOUTUBE_SHORTS_BRAND_24") {
+						return false;
+					}
 					console.log('rich shelf icon', rich_shelf, rich_shelf.icon);
 					return true;
 				}
