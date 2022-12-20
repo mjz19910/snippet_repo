@@ -1743,27 +1743,40 @@ async function async_plugin_init(event) {
 		x: {
 			const element_list=get_html_elements(document,'video');
 			if(element_list.length<=0) break x;
-			if(box_map.has("video-list")) {
-				let list=box_map.get("video-list");
-				if(!list) throw new Error("Unreachable");
-				let new_video_elements=[];
+			/** @arg {HTMLCollectionOf<HTMLElement>} element_list */
+			function get_video_element_list(element_list) {
+				let video_elements=[];
 				for(let i=0;i<element_list.length;i++) {
 					let item=element_list[i];
 					if(!(item instanceof HTMLVideoElement)) continue;
-					if(!list.value.includes(item)) {
-						new_video_elements.push(item);
-						list.value.push(item);
-					}
+					video_elements.push(item);
 				}
-				if(new_video_elements.length>0) {
-					console.log("found extra video elements",new_video_elements);
-				}
+				return video_elements;
+			}
+			let list=box_map.get("video-list");
+			let first_run;
+			if(list) {
+				first_run=false;
 			} else {
-				/**@type {HTMLVideoElement[]}*/
-				let element_list_arr=[...Array.prototype.slice.call(element_list)];
-				box_map.set('video-list',new HTMLVideoElementArrayBox(element_list_arr));
-				console.log("found video elements");
+				list=new HTMLVideoElementArrayBox([]);
+				box_map.set('video-list',list);
+			}
+			if(!list) throw new Error("Unreachable");
+			let video_elements=get_video_element_list(element_list);
+			let new_video_elements=[];
+			for(let i=0;i<video_elements.length;i++) {
+				let item=video_elements[i];
+				if(!list.value.includes(item)) {
+					new_video_elements.push(item);
+					list.value.push(item);
+				}
+			}
+			if(!first_run&&new_video_elements.length>0) {
+				console.log("found extra video elements",new_video_elements);
+			}
+			if(first_run) {
 				found_element_count++;
+				console.log("found video elements");
 			}
 		}
 		// END(video)
