@@ -664,12 +664,16 @@ class RichItemRenderer {
 	/**@type {{adSlotRenderer?:{}}} */
 	content={};
 }
-class RendererContentItem {
-	/**@type {RichItemRenderer|undefined} */
-	richItemRenderer=new RichItemRenderer;
-	/**@type {{content:{richShelfRenderer:{icon:{iconType:string}|null}}}|undefined} */
-	richSectionRenderer={content: {richShelfRenderer: {icon: null}}};
+class RichShelfRenderer {
+	/** @type {{iconType:string}|null} */
+	icon=null;
+	/** @type {{runs:{text:string}[]}|null} */
+	title={runs: []};
 }
+class RichSectionRenderer {
+	content={richShelfRenderer: new RichShelfRenderer};
+}
+
 // { masthead: { [str: string]: any; videoMastheadAdV3Renderer?: any; }; contents: {richItemRenderer:{content:{}}}[]; }
 class RichGridRenderer {
 	/**@type {{[str:string]:any; videoMastheadAdV3Renderer?: any}} */
@@ -773,7 +777,7 @@ function check_item_keys(path,keys) {
 function filter_section_renderers_from_item_arr(items) {
 	let sections=items.map(
 		/**@return {[number,RendererContentItem]} */
-		(e,i) => [i,e]).filter(([,e]) => e.richSectionRenderer);
+		(e,i) => [i,e]).filter(([,e]) => 'richSectionRenderer' in e);
 	for(let i=0;i<sections.length;i++) {
 		/**@type {[a:number,b:RendererContentItem, c?:"short" | null]} */
 		let e=sections[i];
@@ -789,8 +793,9 @@ function filter_section_renderers_from_item_arr(items) {
 }
 /**@arg {RendererContentItem} item */
 function section_item_type(item) {
-	if(!item.richSectionRenderer) return null;
+	if(!('richSectionRenderer' in item)) return null;
 	if(!item.richSectionRenderer.content.richShelfRenderer) return null;
+	if(!item.richSectionRenderer.content.richShelfRenderer.title) return null;
 	if(!item.richSectionRenderer.content.richShelfRenderer.icon) return null;
 	let icon_type=item.richSectionRenderer.content.richShelfRenderer.icon.iconType;
 	switch(icon_type) {
@@ -841,16 +846,21 @@ class HandleRichGridRenderer {
 					return false;
 				}
 			}
-			if(!content_item.richItemRenderer) return true;
-			check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
-			console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
-			let {content}=content_item.richItemRenderer;
-			check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
-			if(content.adSlotRenderer) {
-				if(t.debug&&t.debug_level>2) console.log(this.class_name,'adSlotRenderer=',content.adSlotRenderer);
-				return false;
+			if('richItemRenderer' in content_item) {
+				if(!content_item.richItemRenderer) return true;
+				check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
+				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
+				let {content}=content_item.richItemRenderer;
+				check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
+				if(content.adSlotRenderer) {
+					if(t.debug&&t.debug_level>2) console.log(this.class_name,'adSlotRenderer=',content.adSlotRenderer);
+					return false;
+				}
+				return true;
+			} else {
+				console.log("don't know what to do with content_item in HandleRichGridRenderer.on_contents.renderer.contents.filter.content_item",content_item);
+				return true;
 			}
-			return true;
 		});
 	}
 }

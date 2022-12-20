@@ -1,8 +1,14 @@
 import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 declare global {
+	type RendererContentItem={richItemRenderer:RichItemRenderer}|{richSectionRenderer:RichSectionRenderer};
+}
+// InjectApiStr
+declare global {
 	const InjectAPIStr:typeof InjectAPIStr_;
 }
+
+// ResState
 declare global {
 	type ResState={
 		active: boolean;
