@@ -2,7 +2,7 @@ import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 declare global {
 	interface InjectAPI {
-		saved_maps?: SavedArrayOf<Map<string,{}>>;
+		saved_maps?: Map<string,Map<string,{}>>;
 	}
 }
 
