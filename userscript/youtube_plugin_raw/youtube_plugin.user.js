@@ -1743,15 +1743,18 @@ async function async_plugin_init(event) {
 		x: {
 			const element_list=get_html_elements(document,'video');
 			if(element_list.length<=0) break x;
-			/** @arg {HTMLCollectionOf<HTMLElement>} element_list */
-			function get_video_element_list(element_list) {
-				let video_elements=[];
+			/** @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
+			function get_new_video_element_list(element_list,list_box) {
+				let new_video_elements=[];
 				for(let i=0;i<element_list.length;i++) {
 					let item=element_list[i];
 					if(!(item instanceof HTMLVideoElement)) continue;
-					video_elements.push(item);
+					if(!list_box.value.includes(item)) {
+						new_video_elements.push(item);
+						list_box.value.push(item);
+					}
 				}
-				return video_elements;
+				return new_video_elements;
 			}
 			let list=box_map.get("video-list");
 			let first_run;
@@ -1761,17 +1764,9 @@ async function async_plugin_init(event) {
 				list=new HTMLVideoElementArrayBox([]);
 				box_map.set('video-list',list);
 			}
-			let video_elements=get_video_element_list(element_list);
-			let new_video_elements=[];
-			for(let i=0;i<video_elements.length;i++) {
-				let item=video_elements[i];
-				if(!list.value.includes(item)) {
-					new_video_elements.push(item);
-					list.value.push(item);
-				}
-			}
-			if(!first_run&&new_video_elements.length>0) {
-				console.log("found extra video elements",new_video_elements);
+			let new_elements=get_new_video_element_list(element_list,list);
+			if(!first_run&&new_elements.length>0) {
+				console.log("found extra video elements",new_elements);
 			}
 			if(first_run) {
 				found_element_count++;
