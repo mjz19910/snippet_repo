@@ -913,10 +913,10 @@ class YTFilterHandlers extends YTIterateAllBase {
 		if(is_watch_next_feed_target(action)) {
 			/** @type {WatchNextContinuationAction} */
 			let action_t=action;
-			console.log(`continue action ${action_t.targetId}`,action_t.continuationItems);
+			console.log(`continue action "${action_t.targetId}"`,action_t.continuationItems);
 			return;
 		}
-		console.log("continue action target", action.targetId);
+		console.log("continue action default", action.targetId);
 		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
 	}
 	/**
