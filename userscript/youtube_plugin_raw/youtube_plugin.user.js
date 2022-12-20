@@ -1765,10 +1765,12 @@ async function async_plugin_init(event) {
 				return new_video_elements;
 			}
 			let list=box_map.get("video-list");
+			/** @type {boolean} */
 			let first_run;
 			if(list) {
 				first_run=false;
 			} else {
+				first_run=true;
 				list=new HTMLVideoElementArrayBox([]);
 				box_map.set('video-list',list);
 			}
