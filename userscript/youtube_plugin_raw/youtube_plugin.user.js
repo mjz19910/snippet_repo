@@ -843,6 +843,13 @@ class AppendContinuationItemsAction {
 	continuationItems=[];
 	targetId="";
 }
+class WatchNextItem {}
+class WatchNextContinuationAction {
+	/** @readonly */
+	targetId="watch-next-feed";
+	/**@type {WatchNextItem[]} */
+	continuationItems=[];
+}
 class InitialDataType {
 	/**@type {{}|undefined} */
 	response={};
@@ -901,6 +908,14 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	appendContinuationItemsAction(_path,action) {
 		check_item_keys("appendContinuationItemsAction",Object.keys(action));
+		/** @arg {typeof action} o @returns {o is WatchNextContinuationAction} */
+		function is_h(o) {return o.targetId==="watch-next-feed"}
+		if(is_h(action)) {
+			/** @type {WatchNextContinuationAction} */
+			let action_t=action;
+			console.log(`continue action ${action_t.targetId}`,action_t.continuationItems);
+			return;
+		}
 		console.log("continue action target", action.targetId);
 		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
 	}
