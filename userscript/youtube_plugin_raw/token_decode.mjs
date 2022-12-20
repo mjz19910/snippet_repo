@@ -10,45 +10,25 @@ CCgSJRILOHppbEVnX2ZlWkEyAMgBAOABA6ICDSj___________8BQAAYACqnDDJzNkw2d3lXQ1FxVENR
 Eg0SCzh6aWxFZ19mZVpBGAYypAcK-gZnZXRfcmFua2VkX3N0cmVhbXMtLUNzY0VDSUFFRlJlMzBUZ2F2QVFLdHdRSTJGOFFnQVFZQnlLc0JBTTJJdGRWREM4WVRPSmNIeGJQdF8yOWJlV2t2Tm45aHpRd1B1b1otMl9EbXQzNnhYWk9fcnZ5cGQxUnAxLVdCVzE0V1pXa1BfM0RINFg3anljemJzY2s5NUlFajByeS1YWlpTZThhNVMxdm1tNzh4ekNNN21ieVhrLXlmbW42dlBUZGRUS2FoMThLSmZyS2gwRHRzaFk3MkpZNER6VHZab1dMQzIxU2lzZ1VIRS1yS1BXcFBzWlJaSnRMakVwU2ZrMmtiVTlTMmwzbEg3Snlta2pscHYyNl9qWDUxTVl3dlV4X2RDZTVUa09mUmpFbmtUbGY2cVczdWZWajhhSEdvMG44NTJINVJscEsyZUtYU2MzRGR0bm9jaW1YNFRCcHdXbGZNdW13U05odzBmd1FhZTVuN3k2RlZybnAxbFZhX3ZqZl9sZnNiMlloUG9TY3BqOHRueFlYaVNIN05PSEYzLVZSZXJMXy13MVI4cm5GdkxUX1F4Ty00M0pldnNyVzdJWWZwcGpMVWM5dExOT1o3NjMxSjNtTEpQazg0REJQMW1xVjdfRTdzX0o0aWVSR1c5N3hQdVhoSFBWeWVIVGNjeHhOWHJZMTl4dTJMdF9xZWhpX3NIdzh0NlZISG5pM0g5SVh3WnNzdVF3X0VCSEwyVFJQOXNYcDRGdXFyaF9XRVA1dmY4SFZoZVZCWTJHMWFaLWJUUG95eUtJekh0OWlhMjRaYVdjOUhxeldvLW54NWJCdEw5LTctbkJCUVRMMFVESDBYOVhxNEoyWWxmVExjSmpLNmFTekw4OUxMU0ZNcDYzdlZlcUNPNDdreEdsZjRtZEtFUy1OYVZCaHFmeEVZMWdhUHZvZGJ3ZWVmb2l2T1NRNV85TjN4TG1GTkxOMzI1cTQxU1hxOENXSTBKWHR0MnpaTFlud05rcDlIcnRjWmhUVzRVb0JaN3FRZnhzeEhSdHJEQ0tuMV9zdkZ5eXg2U3MtWEFBUWVCSUhDSVVnRUhnWUFSSUhDSjhnRUFBWUFCSUZDSWtnR0FBU0J3aUVJQkF0R0FFU0JRaUlJQmdBRWdVSWh5QVlBQklGQ0lZZ0dBQVNCd2lYSUJCakdBRVlBUSIRIgs4emlsRWdfZmVaQTAAeAEoeEIQY29tbWVudHMtc2VjdGlvbg%3D%3D
 `.split("--").at(-1)?.trim() ?? "";
 const text=atob(decodeURIComponent(token).replaceAll("_","/").replaceAll("-","+"));
-const binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
+export const binary=new Uint8Array([...text].map(e => e.charCodeAt(0)));
 const string_decoder=new TextDecoder('utf-8');
-/**
- * @param {Uint8Array} binary
- * @returns {[[number,number,typeof decoded],Uint8Array]}
- */
-function decode_type_18_depth_0(binary) {
-	let [type,length_]=binary;
-	let rest=binary.subarray(2);
-	let decoded=decode_str_tlv(rest.subarray(0,length_));
-	/** @type {[number,number,typeof decoded]} */
-	let data=[type,length_,decoded];
-	return [data,rest.subarray(length_)];
-}
-/**
- * @param {Uint8Array} binary
- * @returns {[number,string]}
- */
-function decode_str_tlv(binary) {
+/** @param {Uint8Array} binary @returns {[number,string]} */
+export function decode_str_tlv(binary) {
 	let [type,length_]=binary;
 	let rest=binary.subarray(2);
 	let data=rest.subarray(0,length_);
 	let str=string_decoder.decode(data);
 	return [type,str];
 }
-/**
- * @param {Uint8Array} binary
- * @returns {[number,Uint8Array]}
- */
-function decode_tlv(binary) {
+/** @param {Uint8Array} binary @returns {[number,Uint8Array]} */
+export function decode_tlv(binary) {
 	let [type,length_]=binary;
 	let rest=binary.subarray(2);
 	let data=rest.subarray(0,length_);
 	return [type,data];
 }
-/**
- * @param {Uint8Array} binary
- */
-function run(binary) {
+/** @param {Uint8Array} binary */
+export function do_token_decode(binary) {
 	let parts=[];
 	x: for(let i=0;;) {
 		switch(binary[i]) {
@@ -68,9 +48,11 @@ function run(binary) {
 			default: console.log("0x"+binary[i].toString(16),binary.subarray(i,i+32)); break x;
 		}
 	}
-	let [result,_rest]=decode_type_18_depth_0(binary);
-	console.log(result);
 	// console.log('decode run',result,[[[rest]]],encodeURIComponent(text.slice(0,rest.byteOffset)),encodeURIComponent(text.slice(rest.byteOffset)));
-	console.log(parts);
+	for(let i=0;i<parts.length;i++) {
+		switch(parts[i][0][0]) {
+			case 0x12: console.log('part_type',0x12, decode_str_tlv(parts[i][1])); continue;
+		}
+		console.log("part type",parts[i][0][0],parts[i][1]);
+	}
 }
-run(binary);
