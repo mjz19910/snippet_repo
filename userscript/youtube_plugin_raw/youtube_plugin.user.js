@@ -768,7 +768,7 @@ class HandleRendererContentItemArray {
 	static replace_array(base,obj,key) {
 		let arr=obj[key];
 		if(!arr) return;
-		obj[key]=arr.filter((content_item) => {
+		let filtered=arr.filter((content_item) => {
 			check_item_keys(`.${key}[]`,Object.keys(content_item));
 			if('continuationItemRenderer' in content_item) {
 				return true;
@@ -811,6 +811,10 @@ class HandleRendererContentItemArray {
 				return true;
 			}
 		});
+		// don't remove every item
+		if(filtered.length>0) {
+			obj[key]=filtered;
+		}
 	}
 }
 
