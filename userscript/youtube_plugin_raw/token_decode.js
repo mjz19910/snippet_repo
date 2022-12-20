@@ -68,8 +68,8 @@ function run(binary) {
 			default: console.log("0x"+binary[i].toString(16)); break x;
 		}
 	}
-	let [decode,rest]=decode_type_18_depth_0(binary);
-	console.log('decode run',decode,[[[rest]]],encodeURIComponent(text.slice(0,rest.byteOffset)),encodeURIComponent(text.slice(rest.byteOffset)));
+	let [result,rest]=decode_type_18_depth_0(binary);
+	console.log('decode run',result,[[[rest]]],encodeURIComponent(text.slice(0,rest.byteOffset)),encodeURIComponent(text.slice(rest.byteOffset)));
 	console.log(parts);
 }
 run(binary);
