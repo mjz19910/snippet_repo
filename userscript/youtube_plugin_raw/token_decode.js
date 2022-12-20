@@ -55,16 +55,14 @@ function run(binary) {
 			case 0x18: {
 				let part_len=binary[i+1];
 				let part_off=i+2;
-				parts.push(binary.subarray(i,part_off));
-				parts.push(binary.subarray(part_off,part_off+part_len));
+				parts.push([binary.subarray(i,part_off),binary.subarray(part_off,part_off+part_len)]);
 				i=part_off+part_len;
 			} break x;
 			case 0x08:
 			case 0x12: {
 				let part_len=binary[i+1];
 				let part_off=i+2;
-				parts.push(binary.subarray(i,part_off));
-				parts.push(binary.subarray(part_off,part_off+part_len));
+				parts.push([binary.subarray(i,part_off),binary.subarray(part_off,part_off+part_len)]);
 				i=part_off+part_len;
 			} break;
 			default: console.log("0x"+binary[i].toString(16),binary.subarray(i,i+32)); break x;
