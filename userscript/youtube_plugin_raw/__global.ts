@@ -3,7 +3,9 @@ import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 declare global {
 	type CompactVideoRenderer={};
-	type WatchNextItem={compactVideoRenderer: CompactVideoRenderer;};
+	type WatchNextItem={
+		compactVideoRenderer: CompactVideoRenderer;
+	};
 }
 
 // InjectAPI['saved_maps']
