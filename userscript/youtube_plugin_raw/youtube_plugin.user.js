@@ -843,7 +843,6 @@ class AppendContinuationItemsAction {
 	continuationItems=[];
 	targetId="";
 }
-class WatchNextItem {}
 class WatchNextContinuationAction {
 	/** @readonly */
 	targetId="watch-next-feed";

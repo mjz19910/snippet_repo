@@ -1,5 +1,12 @@
 import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
+
+declare global {
+	type CompactVideoRenderer={};
+	type WatchNextItem={compactVideoRenderer: CompactVideoRenderer;};
+}
+
+// InjectAPI['saved_maps']
 declare global {
 	interface InjectAPI {
 		saved_maps?: Map<string,Map<string,{}>>;
