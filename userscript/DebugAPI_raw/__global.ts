@@ -81,10 +81,13 @@ declare global {
 	}
 }
 
+type SavedArrayOf<T>=[string, T][];
+
 // inject_api global
 declare global {
 	interface InjectAPI extends IInjectAPI_ {
-		saved_instances?: [string,{name: string;},{}][];
+		saved_maps?: SavedArrayOf<Map<string,{}>>;
+		saved_instances?: SavedArrayOf<[{name: string;},{}]>;
 	}
 	interface Window {
 		inject_api?: InjectAPI;

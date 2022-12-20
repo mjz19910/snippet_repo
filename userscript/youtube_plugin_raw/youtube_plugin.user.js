@@ -18,6 +18,8 @@ console=window.console;
 /** @type {Exclude<typeof window[typeof InjectAPIStr],undefined>} */
 let inject_api=window.inject_api??{};
 
+inject_api.saved_maps=[];
+
 const yt_debug_enabled=false;
 /** @type {<T, U extends abstract new (...args: any) => any, X extends InstanceType<U>>(value: T|X, _constructor_type:U)=>value is X} */
 function cast2_c(value,_constructor_type) {
@@ -1491,6 +1493,7 @@ function page_changed_next_frame() {
 let element_map=new Map;
 /**@type {Map<string, HTMLVideoElementArrayBox>}*/
 let box_map=new Map;
+inject_api.saved_maps.push(["box_map",box_map]);
 
 class YTDPlayerElement extends HTMLElement {
 	static element_selector="ytd-player";
