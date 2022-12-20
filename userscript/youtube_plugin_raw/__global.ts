@@ -1,6 +1,6 @@
 import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
-
+// CommentsSectionContinuationAction
 declare global {
 	type CommentsSectionItem={};
 	type CommentsSectionContinuationAction={
@@ -8,7 +8,7 @@ declare global {
 		continuationItems: CommentsSectionItem[];
 	};
 }
-// WatchNextItem
+// WatchNextContinuationAction
 declare global {
 	type CompactVideoRenderer={};
 	type ContinuationItemRenderer={};
