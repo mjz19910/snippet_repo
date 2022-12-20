@@ -841,6 +841,7 @@ class HandleRichGridRenderer {
 class AppendContinuationItemsAction {
 	/**@type {ContinuationItem[]} */
 	continuationItems=[];
+	targetId="";
 }
 class InitialDataType {
 	/**@type {{}|undefined} */
@@ -899,7 +900,8 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 * @param {AppendContinuationItemsAction} action
 	 */
 	appendContinuationItemsAction(_path,action) {
-		check_item_keys('appendContinuationItemsAction',Object.keys(action));
+		check_item_keys("appendContinuationItemsAction",Object.keys(action));
+		console.log("continue action target", action.targetId);
 		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
 	}
 	/**
