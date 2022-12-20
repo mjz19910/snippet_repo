@@ -751,38 +751,57 @@ function check_item_keys(path,keys) {
 		}
 	}
 }
-/**
- * @param {RendererContentItem[]} items
- */
-function filter_section_renderers_from_item_arr(items) {
-	let sections=items.map(
-		/**@return {[number,RendererContentItem]} */
-		(e,i) => [i,e]).filter(([,e]) => 'richSectionRenderer' in e);
-	for(let i=0;i<sections.length;i++) {
-		/**@type {[a:number,b:RendererContentItem, c?:"short" | null]} */
-		let e=sections[i];
-		e[2]=section_item_type(e[1]);
-		if(e[2]==='short') {
-			/**@type {any} */
-			let any_item=e[1];
-			/**@type {Record<"remove_content_item", boolean>} */
-			let record=any_item;
-			record.remove_content_item=true;
-		}
+
+class HandleRendererContentItemArray {
+	/**
+	 * @param {typeof HandleRichGridRenderer|YTFilterHandlers} base
+	 * @param {{[U in "continuationItems"|"contents"]?: ContinuationItem[]}} obj
+	 * @param {"continuationItems"|"contents"} key
+	 */
+	static replace_array(base,obj,key) {
+		let arr=obj[key];
+		if(!arr) return;
+		obj[key]=arr.filter((content_item) => {
+			check_item_keys(`.${key}[]`,Object.keys(content_item));
+			if('continuationItemRenderer' in content_item) {
+				return true;
+			} else if('richItemRenderer' in content_item) {
+				if(!content_item.richItemRenderer) return true;
+				check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
+				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
+				let {content}=content_item.richItemRenderer;
+				check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
+				if(content.adSlotRenderer) {
+					if(base.debug) console.log(base.class_name,'adSlotRenderer=',content.adSlotRenderer);
+					return false;
+				}
+				return true;
+			} else if ("richSectionRenderer" in content_item) {
+				let rich_shelf=content_item.richSectionRenderer.content.richShelfRenderer;
+				if(rich_shelf.icon) {
+					if(rich_shelf.icon.iconType === "YOUTUBE_SHORTS_BRAND_24") {
+						return false;
+					}
+					console.log('rich shelf icon', rich_shelf, rich_shelf.icon);
+					return true;
+				}
+				if(rich_shelf.title.runs[0]) {
+					if(rich_shelf.title.runs[0].text==="Breaking news") {
+						return false;
+					}
+					console.log('rich shelf title', rich_shelf.title.runs[0]);
+					return true;
+				}
+				console.log('rich shelf', rich_shelf);
+				return true;
+			} else {
+				console.log("don't know what to do with content_item in HandleRichGridRenderer.on_contents.renderer.contents.filter.content_item",content_item);
+				return true;
+			}
+		});
 	}
 }
-/**@arg {RendererContentItem} item */
-function section_item_type(item) {
-	if(!('richSectionRenderer' in item)) return null;
-	if(!item.richSectionRenderer.content.richShelfRenderer) return null;
-	if(!item.richSectionRenderer.content.richShelfRenderer.title) return null;
-	if(!item.richSectionRenderer.content.richShelfRenderer.icon) return null;
-	let icon_type=item.richSectionRenderer.content.richShelfRenderer.icon.iconType;
-	switch(icon_type) {
-		case "YOUTUBE_SHORTS_BRAND_24": return "short";
-		default: return null;
-	}
-}
+
 class HandleRichGridRenderer {
 	static debug=true;
 	static debug_level=2;
@@ -798,7 +817,6 @@ class HandleRichGridRenderer {
 		let sub_path=path_parts.slice(-3).join(".");
 		check_item_keys(sub_path,Object.keys(renderer));
 		if(this.debug) console.log('run handler',sub_path);
-		filter_section_renderers_from_item_arr(renderer.contents);
 		if(renderer.masthead) {
 			check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
@@ -854,55 +872,7 @@ function filter_on_initial_data(cls,apply_args) {
 	}
 	return ret;
 }
-class HandleRendererContentItemArray {
-	/**
-	 * @param {typeof HandleRichGridRenderer|YTFilterHandlers} base
-	 * @param {{[U in "continuationItems"|"contents"]?: ContinuationItem[]}} obj
-	 * @param {"continuationItems"|"contents"} key
-	 */
-	static replace_array(base,obj,key) {
-		let arr=obj[key];
-		if(!arr) return;
-		obj[key]=arr.filter((content_item) => {
-			check_item_keys(`.${key}[]`,Object.keys(content_item));
-			if('continuationItemRenderer' in content_item) {
-				return true;
-			} else if('richItemRenderer' in content_item) {
-				if(!content_item.richItemRenderer) return true;
-				check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
-				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
-				let {content}=content_item.richItemRenderer;
-				check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
-				if(content.adSlotRenderer) {
-					if(base.debug) console.log(base.class_name,'adSlotRenderer=',content.adSlotRenderer);
-					return false;
-				}
-				return true;
-			} else if ("richSectionRenderer" in content_item) {
-				let rich_shelf=content_item.richSectionRenderer.content.richShelfRenderer;
-				if(rich_shelf.icon) {
-					if(rich_shelf.icon.iconType === "YOUTUBE_SHORTS_BRAND_24") {
-						return false;
-					}
-					console.log('rich shelf icon', rich_shelf, rich_shelf.icon);
-					return true;
-				}
-				if(rich_shelf.title.runs[0]) {
-					if(rich_shelf.title.runs[0].text==="Breaking news") {
-						return false;
-					}
-					console.log('rich shelf title', rich_shelf.title.runs[0]);
-					return true;
-				}
-				console.log('rich shelf', rich_shelf);
-				return true;
-			} else {
-				console.log("don't know what to do with content_item in HandleRichGridRenderer.on_contents.renderer.contents.filter.content_item",content_item);
-				return true;
-			}
-		});
-	}
-}
+
 class YTFilterHandlers extends YTIterateAllBase {
 	debug=true;
 	/**@readonly*/
@@ -920,7 +890,6 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	appendContinuationItemsAction(_path,action) {
 		check_item_keys('appendContinuationItemsAction',Object.keys(action));
-		filter_section_renderers_from_item_arr(action.continuationItems);
 		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
 	}
 	/**
