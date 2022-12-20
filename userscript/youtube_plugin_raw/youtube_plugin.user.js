@@ -1745,17 +1745,17 @@ async function async_plugin_init(event) {
 			if(box_map.has("video-list")) {
 				let list=box_map.get("video-list");
 				if(!list) throw new Error("Unreachable");
-				let had_new_elements=false;
+				let new_video_elements=[];
 				for(let i=0;i<element_list.length;i++) {
 					let item=element_list[i];
 					if(!(item instanceof HTMLVideoElement)) continue;
 					if(!list.value.includes(item)) {
-						had_new_elements=true;
+						new_video_elements.push(item);
 						list.value.push(item);
 					}
 				}
-				if(had_new_elements) {
-					console.log("found extra video elements");
+				if(new_video_elements.length>0) {
+					console.log("found extra video elements",new_video_elements);
 				}
 			} else {
 				/**@type {HTMLVideoElement[]}*/
