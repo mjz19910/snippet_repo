@@ -12,7 +12,6 @@ function decode_type_18_depth_0(binary) {
 	let decoded=decode_str_tlv(rest.subarray(0,length_));
 	/** @type {[number,number,typeof decoded]} */
 	let data=[type,length_,decoded];
-	console.log(type,length_,decoded);
 	return [data,rest.subarray(length_)];
 }
 /**
