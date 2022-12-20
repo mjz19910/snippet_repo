@@ -1761,7 +1761,6 @@ async function async_plugin_init(event) {
 				list=new HTMLVideoElementArrayBox([]);
 				box_map.set('video-list',list);
 			}
-			if(!list) throw new Error("Unreachable");
 			let video_elements=get_video_element_list(element_list);
 			let new_video_elements=[];
 			for(let i=0;i<video_elements.length;i++) {
