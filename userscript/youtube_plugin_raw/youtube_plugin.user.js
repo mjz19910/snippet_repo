@@ -770,7 +770,10 @@ class HandleRendererContentItemArray {
 		if(!arr) return;
 		let filtered=arr.filter((content_item) => {
 			check_item_keys(`.${key}[]`,Object.keys(content_item));
-			if('continuationItemRenderer' in content_item) {
+			let is_simple_key=
+				"commentThreadRenderer" in content_item||
+				"continuationItemRenderer" in content_item;
+			if(is_simple_key) {
 				return true;
 			} else if('richItemRenderer' in content_item) {
 				if(!content_item.richItemRenderer) return true;
