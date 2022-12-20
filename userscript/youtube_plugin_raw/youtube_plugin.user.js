@@ -815,6 +815,7 @@ class HandleRichGridRenderer {
 	static on_contents(path,renderer) {
 		let t=this;
 		if(this.debug) console.log("on_contents",path);
+		HandleRendererContentItemArray.replace_array(this,renderer,"contents");
 		renderer.contents=renderer.contents.filter((content_item) => {
 			check_item_keys('.contents[]',Object.keys(content_item));
 			if('remove_content_item' in content_item) {
@@ -886,12 +887,41 @@ function filter_on_initial_data(cls,apply_args) {
 	return ret;
 }
 class HandleRendererContentItemArray {
-	/** @type {(obj:AppendContinuationItemsAction,key:"continuationItems")=>void} */
-	replace_array(obj,key) {
-		obj[key];
-		obj[key]=obj[key].filter((content_item)=> {
+	/**
+	 * @param {typeof HandleRichGridRenderer|YTFilterHandlers} base
+	 * @param {{[U in "continuationItems"|"contents"]?: ContinuationItem[]}} obj
+	 * @param {"continuationItems"|"contents"} key
+	 */
+	static replace_array(base,obj,key) {
+		let arr=obj[key];
+		if(!arr) return;
+		obj[key]=arr.filter((content_item) => {
 			check_item_keys(`.${key}[]`,Object.keys(content_item));
-		})
+			if('remove_content_item' in content_item) {
+				/**@type {any} */
+				let any_item=content_item;
+				/**@type {Record<"remove_content_item", boolean>} */
+				let record=any_item;
+				if(record.remove_content_item) {
+					return false;
+				}
+			}
+			if('richItemRenderer' in content_item) {
+				if(!content_item.richItemRenderer) return true;
+				check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
+				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
+				let {content}=content_item.richItemRenderer;
+				check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
+				if(content.adSlotRenderer) {
+					if(base.debug) console.log(base.class_name,'adSlotRenderer=',content.adSlotRenderer);
+					return false;
+				}
+				return true;
+			} else {
+				console.log("don't know what to do with content_item in HandleRichGridRenderer.on_contents.renderer.contents.filter.content_item",content_item);
+				return true;
+			}
+		});
 	}
 }
 class YTFilterHandlers extends YTIterateAllBase {
@@ -906,34 +936,13 @@ class YTFilterHandlers extends YTIterateAllBase {
 		HandleRichGridRenderer.richGridRenderer(path,renderer);
 	}
 	/**
-	 * @param {string} path
+	 * @param {string} _path
 	 * @param {AppendContinuationItemsAction} action
 	 */
-	appendContinuationItemsAction(path,action) {
-		let t=this;
+	appendContinuationItemsAction(_path,action) {
 		check_item_keys('appendContinuationItemsAction',Object.keys(action));
 		filter_section_renderers_from_item_arr(action.continuationItems);
-		action.continuationItems=action.continuationItems.filter(content_item => {
-			check_item_keys('.continuationItems[]',Object.keys(content_item));
-			if('remove_content_item' in content_item) {
-				/**@type {any} */
-				let any_item=content_item;
-				/**@type {Record<"remove_content_item", boolean>} */
-				let record=any_item;
-				if(record.remove_content_item) {
-					return false;
-				}
-			}
-			if(!content_item.richItemRenderer) return true;
-			check_item_keys('.continuationItems[].richItemRenderer',Object.keys(content_item.richItemRenderer));
-			if(!content_item.richItemRenderer.content) return true;
-			let {content}=content_item.richItemRenderer;
-			check_item_keys('.continuationItems[].richItemRenderer.content',Object.keys(content));
-			if(content.adSlotRenderer) {
-				return false;
-			}
-			return true;
-		});
+		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
 	}
 	/**
 	 * @param {string} path
