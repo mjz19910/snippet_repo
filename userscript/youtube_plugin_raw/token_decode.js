@@ -69,6 +69,7 @@ function run(binary) {
 		}
 	}
 	let [result,rest]=decode_type_18_depth_0(binary);
+	result;rest;
 	// console.log('decode run',result,[[[rest]]],encodeURIComponent(text.slice(0,rest.byteOffset)),encodeURIComponent(text.slice(rest.byteOffset)));
 	console.log(parts);
 }
