@@ -24,7 +24,6 @@ function decode_str_tlv(binary) {
 	let rest=binary.slice(2);
 	let data=rest.slice(0,length_);
 	let str=string_decoder.decode(data);
-	console.log('ty',type,str);
 	return [type,str];
 }
 /**
