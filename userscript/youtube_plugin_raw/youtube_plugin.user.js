@@ -660,23 +660,7 @@ class YTIterateAllBase {
 		}
 	}
 }
-class RichShelfRenderer {
-	/** @type {{iconType:string}|null} */
-	icon=null;
-	/** @type {{runs:{text:string}[]}|null} */
-	title={runs: []};
-}
-class RichSectionRenderer {
-	content={richShelfRenderer: new RichShelfRenderer};
-}
 
-// { masthead: { [str: string]: any; videoMastheadAdV3Renderer?: any; }; contents: {richItemRenderer:{content:{}}}[]; }
-class RichGridRenderer {
-	/**@type {{[str:string]:any; videoMastheadAdV3Renderer?: any}} */
-	masthead={};
-	/**@type {RendererContentItem[]} */
-	contents=[];
-}
 /**
  * @param {string[]} keys
  * @param {string} path

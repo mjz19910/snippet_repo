@@ -7,16 +7,44 @@ declare global {
 
 // RendererContentItem
 declare global {
-	
-	class RichItemRenderer {
-		content:{adSlotRenderer?:{}};
+	class RichGridRenderer {
+		masthead: {
+			[str: string]: {}|undefined;
+			videoMastheadAdV3Renderer?: {};
+		};
+		contents: RendererContentItem[];
 	}
-	type RendererContentItem={richItemRenderer:RichItemRenderer}|{richSectionRenderer:RichSectionRenderer};
+	class RichShelfRenderer {
+		icon: {
+			iconType: string;
+		}|null;
+		title: {
+			runs: {
+				text: string;
+			}[];
+		};
+	}
+	class RichSectionRenderer {
+		content: {
+			richShelfRenderer: RichShelfRenderer;
+		};
+	}
+
+	class RichItemRenderer {
+		content: {
+			adSlotRenderer?: {};
+		};
+	}
+	type RendererContentItem={
+		richItemRenderer: RichItemRenderer;
+	}|{
+		richSectionRenderer: RichSectionRenderer;
+	};
 }
 
 // InjectApiStr
 declare global {
-	const InjectAPIStr:typeof InjectAPIStr_;
+	const InjectAPIStr: typeof InjectAPIStr_;
 }
 
 // ResState
