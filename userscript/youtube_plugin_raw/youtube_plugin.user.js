@@ -754,7 +754,7 @@ function check_item_keys(path,keys) {
 
 class HandleRendererContentItemArray {
 	/**
-	 * @param {typeof HandleRichGridRenderer|YTFilterHandlers} base
+	 * @param {HandleRichGridRenderer|YTFilterHandlers} base
 	 * @param {{[U in "continuationItems"|"contents"]?: ContinuationItem[]}} obj
 	 * @param {"continuationItems"|"contents"} key
 	 */
@@ -803,16 +803,16 @@ class HandleRendererContentItemArray {
 }
 
 class HandleRichGridRenderer {
-	static debug=true;
-	static debug_level=2;
+	debug=true;
+	debug_level=2;
 	/**@readonly*/
-	static class_name="HandleRichGridRenderer";
-	static entry="richGridRenderer";
+	class_name="HandleRichGridRenderer";
+	entry="richGridRenderer";
 	/**
 	 * @param {string} path
 	 * @param {RichGridRenderer} renderer
 	 */
-	static richGridRenderer(path,renderer) {
+	richGridRenderer(path,renderer) {
 		let path_parts=path.split(".");
 		let sub_path=path_parts.slice(-3).join(".");
 		check_item_keys(sub_path,Object.keys(renderer));
@@ -877,12 +877,15 @@ class YTFilterHandlers extends YTIterateAllBase {
 	debug=true;
 	/**@readonly*/
 	class_name="YTFilterHandlers";
+	handlers={
+		rich_grid: new HandleRichGridRenderer,
+	}
 	/**
 	 * @param {string} path
 	 * @param {RichGridRenderer} renderer
 	 */
 	richGridRenderer(path,renderer) {
-		HandleRichGridRenderer.richGridRenderer(path,renderer);
+		this.handlers.rich_grid.richGridRenderer(path,renderer);
 	}
 	/**
 	 * @param {string} _path
