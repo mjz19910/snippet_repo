@@ -2,6 +2,14 @@ import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 
 declare global {
+	type CommentsSectionItem={};
+	type CommentsSectionContinuationAction={
+		targetId: "comments-section";
+		continuationItems: CommentsSectionItem[];
+	};
+}
+// WatchNextItem
+declare global {
 	type CompactVideoRenderer={};
 	type ContinuationItemRenderer={};
 	type WatchNextItem={
@@ -9,6 +17,10 @@ declare global {
 	}|{
 		continuationItemRenderer: ContinuationItemRenderer
 	};
+	class WatchNextContinuationAction {
+		targetId:"watch-next-feed";
+		continuationItems:WatchNextItem[];
+	}
 }
 
 // InjectAPI['saved_maps']

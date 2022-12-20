@@ -843,12 +843,6 @@ class AppendContinuationItemsAction {
 	continuationItems=[];
 	targetId="";
 }
-class WatchNextContinuationAction {
-	/** @readonly */
-	targetId="watch-next-feed";
-	/**@type {WatchNextItem[]} */
-	continuationItems=[];
-}
 class InitialDataType {
 	/**@type {{}|undefined} */
 	response={};
@@ -909,8 +903,16 @@ class YTFilterHandlers extends YTIterateAllBase {
 		check_item_keys("appendContinuationItemsAction",Object.keys(action));
 		/** @arg {typeof action} o @returns {o is WatchNextContinuationAction} */
 		function is_watch_next_feed_target(o) {return o.targetId==="watch-next-feed"}
+		/** @arg {typeof action} o @returns {o is CommentsSectionContinuationAction} */
+		function is_comments_section_next(o) {return o.targetId==="comments-section"}
 		if(is_watch_next_feed_target(action)) {
 			/** @type {WatchNextContinuationAction} */
+			let action_t=action;
+			console.log(`continue action "${action_t.targetId}"`,action_t.continuationItems);
+			return;
+		}
+		if(is_comments_section_next(action)) {
+			/** @type {CommentsSectionContinuationAction} */
 			let action_t=action;
 			console.log(`continue action "${action_t.targetId}"`,action_t.continuationItems);
 			return;
