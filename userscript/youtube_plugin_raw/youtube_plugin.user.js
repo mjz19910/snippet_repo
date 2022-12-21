@@ -697,6 +697,7 @@ function check_item_keys(real_path,path,keys) {
 			for(let key of keys) {
 				switch(key) {
 					case "continuationItems": continue;
+					case 'slot': continue;
 					case "targetId": continue;
 				}
 				console.log("item_keys_tag [ci_3_10_] "+real_path+": iter content key",path,key);
@@ -729,6 +730,8 @@ function check_item_keys(real_path,path,keys) {
 					case "continuationItemRenderer": continue;
 					case "itemSectionRenderer": continue;
 					case "richItemRenderer": continue;
+					case "commentThreadRenderer": continue;
+					case "commentsHeaderRenderer": continue;
 				}
 				console.log("item_keys_tag [ci_3_40_] "+real_path+": iter content key",path,key);
 			}
