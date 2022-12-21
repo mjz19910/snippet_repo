@@ -707,6 +707,7 @@ function check_item_keys(path,keys) {
 			for(let key of keys) {
 				switch(key) {
 					case 'continuationItemRenderer': continue;
+					case 'itemSectionRenderer': continue;
 					case 'richItemRenderer': continue;
 				}
 				console.log('item_keys_tag [ci_2_10]: iter content key',path,key);
