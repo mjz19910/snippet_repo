@@ -679,7 +679,7 @@ function check_item_keys(path,keys) {
 	x: if(keys.length===2) {
 		if(path==='.contents[].richItemRenderer') break x;
 		if(path==='appendContinuationItemsAction') break x;
-		console.log('check_item_keys [0.0]: extra keys',path,keys);
+		console.log('check_item_keys [ci_0_00]: extra keys',path,keys);
 	}
 	switch(path) {
 		case 'tabRenderer.content.richGridRenderer': break;
@@ -687,7 +687,7 @@ function check_item_keys(path,keys) {
 		case '.contents[].richItemRenderer': break;
 		case '.contents[].richItemRenderer.content': break;
 		case 'appendContinuationItemsAction': break;
-		default: console.log("check_item_keys [1.0]: new path=%o",path); break;
+		default: console.log("check_item_keys [ci_1_00]: new path=%o",path); break;
 	}
 	switch(path) {
 		case 'tabRenderer.content.richGridRenderer': {
@@ -699,14 +699,14 @@ function check_item_keys(path,keys) {
 					case 'targetId': continue;
 					case 'reflowOptions': continue;
 				}
-				console.log('check_item_keys [2.0]: iter content key',path,key);
+				console.log('check_item_keys [ci_2_00]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[]': {
 			for(let key of keys) {
 				switch(key) {
 				}
-				console.log('check_item_keys [2.10]: iter content key',path,key);
+				console.log('check_item_keys [ci_2_10]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[].richItemRenderer': {
@@ -715,14 +715,14 @@ function check_item_keys(path,keys) {
 					case 'content': continue;
 					case 'trackingParams': continue;
 				}
-				console.log('check_item_keys [2.20]: iter content key',path,key);
+				console.log('check_item_keys [ci_2_20]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[].richItemRenderer.content': {
 			for(let key of keys) {
 				switch(key) {
 				}
-				console.log('check_item_keys [2.30]: iter content key',path,key);
+				console.log('check_item_keys [ci_2_30]: iter content key',path,key);
 			}
 		} break;
 		case 'appendContinuationItemsAction': {
@@ -731,10 +731,10 @@ function check_item_keys(path,keys) {
 					case 'continuationItems': continue;
 					case 'targetId': continue;
 				}
-				console.log('check_item_keys [2.40]: iter content key',path,key);
+				console.log('check_item_keys [ci_2_40]: iter content key',path,key);
 			}
 		} break;
-		default: console.log('check_item_keys [3.0]: content path',path); break;
+		default: console.log('check_item_keys [ci_3_0]: content path',path); break;
 	}
 }
 
