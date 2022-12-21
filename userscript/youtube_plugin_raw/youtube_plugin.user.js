@@ -676,15 +676,10 @@ class YTIterateAllBase {
 function check_item_keys(path,keys) {
 	/**@type {string[]|string|null} */
 	x: if(keys.length===2) {
-		if(keys[1]=='remove_content_item') {
-			let [key_0,,...keys_r]=keys;
-			keys=[key_0,...keys_r];
-		} else {
-			if(path==='.contents[].richItemRenderer') break x;
-			if(path==='.continuationItems[].richItemRenderer') break x;
-			if(path==='appendContinuationItemsAction') break x;
-			console.log('left over keys',path,keys);
-		}
+		if(path==='.contents[].richItemRenderer') break x;
+		if(path==='.continuationItems[].richItemRenderer') break x;
+		if(path==='appendContinuationItemsAction') break x;
+		console.log('check_item_keys extra keys',path,keys);
 	}
 	switch(path) {
 		case 'tabRenderer.content.richGridRenderer': break;
