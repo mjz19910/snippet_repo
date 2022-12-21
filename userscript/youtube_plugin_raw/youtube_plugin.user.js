@@ -681,7 +681,7 @@ function check_item_keys(real_path,path,keys) {
 	x: if(keys.length===2) {
 		if(path===".contents[].richItemRenderer") break x;
 		if(path==="appendContinuationItemsAction") break x;
-		console.log("item_keys_tag [ci_0_00] "+real_path+": extra keys",path,keys);
+		console.log("item_keys_tag [ci_1_10] "+real_path+": extra keys",path,keys);
 	}
 	switch(path) {
 		case "tabRenderer.content.richGridRenderer": break;
@@ -690,7 +690,7 @@ function check_item_keys(real_path,path,keys) {
 		case ".contents[].richItemRenderer.content": break;
 		case "appendContinuationItemsAction": break;
 		case "reloadContinuationItemsCommand": break;
-		default: console.log("item_keys_tag [ci_1_00] "+real_path+": new path=%o",path); break;
+		default: console.log("item_keys_tag [ci_2_10] "+real_path+": new path=%o",path); break;
 	}
 	switch(path) {
 		case "reloadContinuationItemsCommand": {
@@ -699,7 +699,7 @@ function check_item_keys(real_path,path,keys) {
 					case "continuationItems": continue;
 					case "targetId": continue;
 				}
-				console.log("item_keys_tag [ci_2_10_] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_3_10_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case "appendContinuationItemsAction": {
@@ -708,7 +708,7 @@ function check_item_keys(real_path,path,keys) {
 					case "continuationItems": continue;
 					case "targetId": continue;
 				}
-				console.log("item_keys_tag [ci_2_20_] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_3_20_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case "tabRenderer.content.richGridRenderer": {
@@ -720,7 +720,7 @@ function check_item_keys(real_path,path,keys) {
 					case "targetId": continue;
 					case "reflowOptions": continue;
 				}
-				console.log("item_keys_tag [ci_2_30_] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_3_30_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[]": {
@@ -730,7 +730,7 @@ function check_item_keys(real_path,path,keys) {
 					case "itemSectionRenderer": continue;
 					case "richItemRenderer": continue;
 				}
-				console.log("item_keys_tag [ci_2_40_] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_3_40_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[].richItemRenderer": {
@@ -739,7 +739,7 @@ function check_item_keys(real_path,path,keys) {
 					case "content": continue;
 					case "trackingParams": continue;
 				}
-				console.log("item_keys_tag [ci_2_41_] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_3_41_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[].richItemRenderer.content": {
@@ -749,10 +749,10 @@ function check_item_keys(real_path,path,keys) {
 					case "radioRenderer": continue;
 					case "videoRenderer": continue;
 				}
-				console.log("item_keys_tag [ci_2_42_] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_3_42_] "+real_path+": iter content key",path,key);
 			}
 		} break;
-		default: console.log("item_keys_tag [ci_3_10_] "+real_path+": content path",path); break;
+		default: console.log("item_keys_tag [ci_4_10_] "+real_path+": content path",path); break;
 	}
 }
 
