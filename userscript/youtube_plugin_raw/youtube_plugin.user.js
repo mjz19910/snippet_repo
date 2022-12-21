@@ -950,7 +950,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 					case 'compactRadioRenderer': return true;
 					case 'compactPlaylistRenderer': return true;
 					default:
-						console.log("section unk",key);
+						console.log("filter handler new item section from .contents[].${key}",key);
 						return true;
 				}
 			}
