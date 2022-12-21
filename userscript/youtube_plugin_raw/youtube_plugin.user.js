@@ -723,6 +723,8 @@ function check_item_keys(path,keys) {
 		case '.contents[].richItemRenderer.content': {
 			for(let key of keys) {
 				switch(key) {
+					case 'adSlotRenderer': continue;
+					case 'radioRenderer': continue;
 					case 'videoRenderer': continue;
 				}
 				console.log('check_item_keys [ci_2_30]: iter content key',path,key);
