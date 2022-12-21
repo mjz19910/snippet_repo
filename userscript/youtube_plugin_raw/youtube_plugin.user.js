@@ -919,7 +919,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
 			return true;
 		}
-		console.log("path",path,"continuation action default",action.targetId);
+		console.log("path",path,"continuation action",action.targetId);
 		return false;
 	}
 	/**
