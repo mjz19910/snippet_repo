@@ -689,65 +689,38 @@ function check_item_keys(path,keys) {
 		case 'appendContinuationItemsAction': break;
 		default: console.log("new check_item_keys path [0.0]:",path); break;
 	}
-	if(keys.length===1) {
-		let key=keys[0];
-		switch(path) {
-			case '.contents[]': switch(key) {
-				case 'richItemRenderer': return;
-				case 'richSectionRenderer': return;
-				case 'continuationItemRenderer': return;
-				case 'compactVideoRenderer': return;
-				case 'compactRadioRenderer': return;
-				case 'compactPlaylistRenderer': return;
-				case 'commentThreadRenderer': return;
-				case 'itemSectionRenderer': return;
-				default: console.log('len=1 [0.1]: iter content key',path,key);
-			} return;
-			case '.contents[].richItemRenderer': switch(key) {
-				default: console.log('len=1 [0.2]: iter content key',path,key);
-			} return;
-			case '.contents[].richItemRenderer.content': switch(key) {
-				case 'adSlotRenderer': break;
-				case 'radioRenderer': break;
-				case 'videoRenderer': break;
-				default: console.log('len=1 [0.3]: iter content key',path,key); break;
-			} return;
-			default: console.log('len=1 [0.d]: content path and key',path,key); break;
-		}
-	} else {
-		switch(path) {
-			case 'tabRenderer.content.richGridRenderer': {
-				for(let key of keys) {
-					switch(key) {
-						case 'contents': continue;
-						case 'trackingParams': continue;
-						case 'header': continue;
-						case 'targetId': continue;
-						case 'reflowOptions': continue;
-					}
-					console.log('len>1 [2.0]: iter content key',path,key);
+	switch(path) {
+		case 'tabRenderer.content.richGridRenderer': {
+			for(let key of keys) {
+				switch(key) {
+					case 'contents': continue;
+					case 'trackingParams': continue;
+					case 'header': continue;
+					case 'targetId': continue;
+					case 'reflowOptions': continue;
 				}
-			} break;
-			case '.contents[].richItemRenderer': {
-				for(let key of keys) {
-					switch(key) {
-						case 'content': continue;
-						case 'trackingParams': continue;
-					}
-					console.log('len>1 [2.1]: iter content key',path,key);
+				console.log('len>1 [2.0]: iter content key',path,key);
+			}
+		} break;
+		case '.contents[].richItemRenderer': {
+			for(let key of keys) {
+				switch(key) {
+					case 'content': continue;
+					case 'trackingParams': continue;
 				}
-			} break;
-			case 'appendContinuationItemsAction': {
-				for(let key of keys) {
-					switch(key) {
-						case 'continuationItems': continue;
-						case 'targetId': continue;
-					}
-					console.log('len>1 [2.2]: iter content key',path,key);
+				console.log('len>1 [2.1]: iter content key',path,key);
+			}
+		} break;
+		case 'appendContinuationItemsAction': {
+			for(let key of keys) {
+				switch(key) {
+					case 'continuationItems': continue;
+					case 'targetId': continue;
 				}
-			} break;
-			default: console.log('len>1 [2.d]: content path',path); break;
-		}
+				console.log('len>1 [2.2]: iter content key',path,key);
+			}
+		} break;
+		default: console.log('len>1 [2.d]: content path',path); break;
 	}
 }
 
