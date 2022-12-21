@@ -903,23 +903,23 @@ class YTFilterHandlers extends YTIterateAllBase {
 		this.handlers.rich_grid.richGridRenderer(path,renderer);
 	}
 	/**
-	 * @param {string} _path
+	 * @param {string} path
 	 * @param {AppendContinuationItemsAction} action
 	 */
-	handleAppendContinuationItemsAction(_path,action) {
+	handleAppendContinuationItemsAction(path,action) {
 		if(is_watch_next_feed_target(action)) {
 			/** @type {WatchNextContinuationAction} */
 			let action_t=action;
-			console.log(`continue action "${action_t.targetId}"`,action_t.continuationItems);
+			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
 			return true;
 		}
 		if(is_comments_section_next(action)) {
 			/** @type {CommentsSectionContinuationAction} */
 			let action_t=action;
-			console.log(`continue action "${action_t.targetId}"`,action_t.continuationItems);
+			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
 			return true;
 		}
-		console.log("continue action default",action.targetId);
+		console.log("path",path,"continuation action default",action.targetId);
 		return false;
 	}
 	/**
