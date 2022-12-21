@@ -749,10 +749,11 @@ function check_item_keys(path,keys) {
 class HandleRendererContentItemArray {
 	/**
 	 * @param {HandleRichGridRenderer|YTFilterHandlers} base
+	 * @arg {string} _path
 	 * @param {{[U in "continuationItems"|"contents"]?: ContinuationItem[]}} obj
 	 * @param {"continuationItems"|"contents"} key
 	 */
-	static replace_array(base,obj,key) {
+	static replace_array(base,_path,obj,key) {
 		let arr=obj[key];
 		if(!arr) return;
 		let filtered=arr.filter((content_item) => {
@@ -829,7 +830,7 @@ class HandleRichGridRenderer {
 		}
 		if(renderer.contents) {
 			if(this.debug) console.log("on_contents",path);
-			HandleRendererContentItemArray.replace_array(this,renderer,"contents");
+			HandleRendererContentItemArray.replace_array(this,path+".contents",renderer,"contents");
 		}
 	}
 }
@@ -927,16 +928,16 @@ class YTFilterHandlers extends YTIterateAllBase {
 	appendContinuationItemsAction(path,action) {
 		check_item_keys("appendContinuationItemsAction",Object.keys(action));
 		if(this.handleAppendContinuationItemsAction(path,action)) return;
-		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
+		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",action,"continuationItems");
 	}
 	/**
-	 * @param {string} _path
+	 * @param {string} path
 	 * @param {ReloadContinuationItemsCommand} command
 	 */
-	reloadContinuationItemsCommand(_path,command) {
+	reloadContinuationItemsCommand(path,command) {
 		check_item_keys("reloadContinuationItemsCommand",Object.keys(command));
 		console.log("continue action default",command.targetId);
-		HandleRendererContentItemArray.replace_array(this,command,"continuationItems");
+		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",command,"continuationItems");
 	}
 	whitelist_item_sections=[
 		"shelfRenderer",
