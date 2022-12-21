@@ -756,12 +756,10 @@ class HandleRendererContentItemArray {
 		if(!arr) return;
 		let filtered=arr.filter((content_item) => {
 			check_item_keys(`.${key}[]`,Object.keys(content_item));
-			let is_simple_key=
-				"commentThreadRenderer" in content_item||
-				"continuationItemRenderer" in content_item;
-			if(is_simple_key) {
-				return true;
-			} else if('richItemRenderer' in content_item) {
+			if(false) {}
+			else if("commentThreadRenderer" in content_item) return true;
+			else if("continuationItemRenderer") return true;
+			else if('richItemRenderer' in content_item) {
 				if(!content_item.richItemRenderer) return true;
 				check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
 				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
