@@ -919,16 +919,16 @@ class FilterHandlers extends IterateApiResultBase {
 	 */
 	handleAppendContinuationItemsAction(path,action) {
 		if(is_watch_next_feed_target(action)) {
-			/** @type {WatchNextContinuationAction} */
-			let action_t=action;
-			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			return true;
+			// /** @type {WatchNextContinuationAction} */
+			// let action_t=action;
+			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			return false;
 		}
 		if(is_comments_section_next(action)) {
-			/** @type {CommentsSectionContinuationAction} */
-			let action_t=action;
-			console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
-			return true;
+			// /** @type {CommentsSectionContinuationAction} */
+			// let action_t=action;
+			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			return false;
 		}
 		console.log("path",path,"continuation action",action.targetId);
 		return false;
