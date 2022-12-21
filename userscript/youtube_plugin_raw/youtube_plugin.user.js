@@ -902,6 +902,10 @@ class YTFilterHandlers extends YTIterateAllBase {
 	richGridRenderer(path,renderer) {
 		this.handlers.rich_grid.richGridRenderer(path,renderer);
 	}
+	/**
+	 * @param {string} _path
+	 * @param {AppendContinuationItemsAction} action
+	 */
 	handleAppendContinuationItemsAction(_path,action) {
 		if(is_watch_next_feed_target(action)) {
 			/** @type {WatchNextContinuationAction} */
