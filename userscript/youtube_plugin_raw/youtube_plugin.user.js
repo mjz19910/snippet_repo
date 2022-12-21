@@ -708,7 +708,7 @@ function check_item_keys(path,keys) {
 					case 'content': continue;
 					case 'trackingParams': continue;
 				}
-				console.log('len>1 [2.1]: iter content key',path,key);
+				console.log('check_item_keys [1.1]: iter content key',path,key);
 			}
 		} break;
 		case 'appendContinuationItemsAction': {
@@ -717,10 +717,10 @@ function check_item_keys(path,keys) {
 					case 'continuationItems': continue;
 					case 'targetId': continue;
 				}
-				console.log('len>1 [2.2]: iter content key',path,key);
+				console.log('check_item_keys [1.2]: iter content key',path,key);
 			}
 		} break;
-		default: console.log('len>1 [2.d]: content path',path); break;
+		default: console.log('check_item_keys [2]: content path',path); break;
 	}
 }
 
