@@ -623,9 +623,9 @@ ObjectInfo.instance=new ObjectInfo;
 /**@type {Map<string, {}>}*/
 let yt_state_map=new Map;
 inject_api.yt_state_map=yt_state_map;
-class YTIterateAllBase {
+class IterateApiResultBase {
 	/**
-	 * @this {YTIterateAllBase & {[x:string]: any}}
+	 * @this {IterateApiResultBase & {[x:string]: any}}
 	 * @param {string} path
 	 * @arg {{[str:string]:{}}} data
 	 */
@@ -758,7 +758,7 @@ function check_item_keys(real_path,path,keys) {
 
 class HandleRendererContentItemArray {
 	/**
-	 * @param {HandleRichGridRenderer|YTFilterHandlers} base
+	 * @param {HandleRichGridRenderer|FilterHandlers} base
 	 * @arg {string} path
 	 * @param {{[U in "continuationItems"|"contents"]?: ContinuationItem[]}} obj
 	 * @param {"continuationItems"|"contents"} key
@@ -858,7 +858,7 @@ class InitialDataType {
 	playerResponse="";
 }
 /**
- * @arg {YTFilterHandlers} cls
+ * @arg {FilterHandlers} cls
  * @param {[()=>InitialDataType, object, []]} apply_args
  */
 function filter_on_initial_data(cls,apply_args) {
@@ -899,10 +899,10 @@ function is_comments_section_next(o) {
 	return o.targetId==="comments-section";
 }
 
-class YTFilterHandlers extends YTIterateAllBase {
-	debug=true;
+class FilterHandlers extends IterateApiResultBase {
+	debug=false;
 	/**@readonly*/
-	class_name="YTFilterHandlers";
+	class_name="FilterHandlers";
 	handlers={
 		rich_grid: new HandleRichGridRenderer,
 	};
@@ -1068,7 +1068,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 let blob_create_args_arr=[];
 let leftover_args=[];
 inject_api.blob_create_args_arr=blob_create_args_arr;
-let yt_handlers=new YTFilterHandlers;
+let yt_handlers=new FilterHandlers;
 inject_api.yt_handlers=yt_handlers;
 function setup_prototype_modify() {
 	/** @type {Map<string, Blob | MediaSource>}*/
