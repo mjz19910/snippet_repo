@@ -672,6 +672,7 @@ class YTIterateAllBase {
  * @param {string[]} keys
  * @param {string} path
  * @return {void}
+ * @log item_keys_tag
  */
 function check_item_keys(path,keys) {
 	path=path.replace("continuationItems[]","contents[]");
@@ -679,7 +680,7 @@ function check_item_keys(path,keys) {
 	x: if(keys.length===2) {
 		if(path==='.contents[].richItemRenderer') break x;
 		if(path==='appendContinuationItemsAction') break x;
-		console.log('check_item_keys [ci_0_00]: extra keys',path,keys);
+		console.log('item_keys_tag [ci_0_00]: extra keys',path,keys);
 	}
 	switch(path) {
 		case 'tabRenderer.content.richGridRenderer': break;
@@ -687,7 +688,7 @@ function check_item_keys(path,keys) {
 		case '.contents[].richItemRenderer': break;
 		case '.contents[].richItemRenderer.content': break;
 		case 'appendContinuationItemsAction': break;
-		default: console.log("check_item_keys [ci_1_00]: new path=%o",path); break;
+		default: console.log("item_keys_tag [ci_1_00]: new path=%o",path); break;
 	}
 	switch(path) {
 		case 'tabRenderer.content.richGridRenderer': {
@@ -699,7 +700,7 @@ function check_item_keys(path,keys) {
 					case 'targetId': continue;
 					case 'reflowOptions': continue;
 				}
-				console.log('check_item_keys [ci_2_00]: iter content key',path,key);
+				console.log('item_keys_tag [ci_2_00]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[]': {
@@ -708,7 +709,7 @@ function check_item_keys(path,keys) {
 					case 'continuationItemRenderer': continue;
 					case 'richItemRenderer': continue;
 				}
-				console.log('check_item_keys [ci_2_10]: iter content key',path,key);
+				console.log('item_keys_tag [ci_2_10]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[].richItemRenderer': {
@@ -717,7 +718,7 @@ function check_item_keys(path,keys) {
 					case 'content': continue;
 					case 'trackingParams': continue;
 				}
-				console.log('check_item_keys [ci_2_20]: iter content key',path,key);
+				console.log('item_keys_tag [ci_2_20]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[].richItemRenderer.content': {
@@ -727,7 +728,7 @@ function check_item_keys(path,keys) {
 					case 'radioRenderer': continue;
 					case 'videoRenderer': continue;
 				}
-				console.log('check_item_keys [ci_2_30]: iter content key',path,key);
+				console.log('item_keys_tag [ci_2_30]: iter content key',path,key);
 			}
 		} break;
 		case 'appendContinuationItemsAction': {
@@ -736,10 +737,10 @@ function check_item_keys(path,keys) {
 					case 'continuationItems': continue;
 					case 'targetId': continue;
 				}
-				console.log('check_item_keys [ci_2_40]: iter content key',path,key);
+				console.log('item_keys_tag [ci_2_40]: iter content key',path,key);
 			}
 		} break;
-		default: console.log('check_item_keys [ci_3_00]: content path',path); break;
+		default: console.log('item_keys_tag [ci_3_00]: content path',path); break;
 	}
 }
 
@@ -901,25 +902,29 @@ class YTFilterHandlers extends YTIterateAllBase {
 	richGridRenderer(path,renderer) {
 		this.handlers.rich_grid.richGridRenderer(path,renderer);
 	}
-	/**
-	 * @param {string} _path
-	 * @param {AppendContinuationItemsAction} action
-	 */
-	appendContinuationItemsAction(_path,action) {
-		check_item_keys("appendContinuationItemsAction",Object.keys(action));
+	handleAppendContinuationItemsAction(_path,action) {
 		if(is_watch_next_feed_target(action)) {
 			/** @type {WatchNextContinuationAction} */
 			let action_t=action;
 			console.log(`continue action "${action_t.targetId}"`,action_t.continuationItems);
-			return;
+			return true;
 		}
 		if(is_comments_section_next(action)) {
 			/** @type {CommentsSectionContinuationAction} */
 			let action_t=action;
 			console.log(`continue action "${action_t.targetId}"`,action_t.continuationItems);
-			return;
+			return true;
 		}
 		console.log("continue action default",action.targetId);
+		return false;
+	}
+	/**
+	 * @param {string} path
+	 * @param {AppendContinuationItemsAction} action
+	 */
+	appendContinuationItemsAction(path,action) {
+		check_item_keys("appendContinuationItemsAction",Object.keys(action));
+		if(this.handleAppendContinuationItemsAction(path,action)) return;
 		HandleRendererContentItemArray.replace_array(this,action,"continuationItems");
 	}
 	/**
@@ -927,6 +932,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 * @param {ReloadContinuationItemsCommand} command
 	 */
 	reloadContinuationItemsCommand(_path,command) {
+		check_item_keys("reloadContinuationItemsCommand",Object.keys(command));
 		console.log("continue action default",command.targetId);
 		HandleRendererContentItemArray.replace_array(this,command,"continuationItems");
 	}
