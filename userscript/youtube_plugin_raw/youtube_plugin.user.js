@@ -679,7 +679,7 @@ function check_item_keys(path,keys) {
 	x: if(keys.length===2) {
 		if(path==='.contents[].richItemRenderer') break x;
 		if(path==='appendContinuationItemsAction') break x;
-		console.log('check_item_keys extra keys',path,keys);
+		console.log('check_item_keys [0.0]: extra keys',path,keys);
 	}
 	switch(path) {
 		case 'tabRenderer.content.richGridRenderer': break;
@@ -687,7 +687,7 @@ function check_item_keys(path,keys) {
 		case '.contents[].richItemRenderer': break;
 		case '.contents[].richItemRenderer.content': break;
 		case 'appendContinuationItemsAction': break;
-		default: console.log("check_item_keys [0.0]: new path=%o",path); break;
+		default: console.log("check_item_keys [1.0]: new path=%o",path); break;
 	}
 	switch(path) {
 		case 'tabRenderer.content.richGridRenderer': {
@@ -699,7 +699,7 @@ function check_item_keys(path,keys) {
 					case 'targetId': continue;
 					case 'reflowOptions': continue;
 				}
-				console.log('check_item_keys [1.0]: iter content key',path,key);
+				console.log('check_item_keys [2.0]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[].richItemRenderer': {
@@ -708,7 +708,7 @@ function check_item_keys(path,keys) {
 					case 'content': continue;
 					case 'trackingParams': continue;
 				}
-				console.log('check_item_keys [1.1]: iter content key',path,key);
+				console.log('check_item_keys [2.1]: iter content key',path,key);
 			}
 		} break;
 		case 'appendContinuationItemsAction': {
@@ -717,10 +717,10 @@ function check_item_keys(path,keys) {
 					case 'continuationItems': continue;
 					case 'targetId': continue;
 				}
-				console.log('check_item_keys [1.2]: iter content key',path,key);
+				console.log('check_item_keys [2.2]: iter content key',path,key);
 			}
 		} break;
-		default: console.log('check_item_keys [2]: content path',path); break;
+		default: console.log('check_item_keys [3.0]: content path',path); break;
 	}
 }
 
