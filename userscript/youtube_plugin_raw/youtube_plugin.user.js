@@ -922,12 +922,14 @@ class FilterHandlers extends IterateApiResultBase {
 			// /** @type {WatchNextContinuationAction} */
 			// let action_t=action;
 			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			// return true;
 			return false;
 		}
 		if(is_comments_section_next(action)) {
 			// /** @type {CommentsSectionContinuationAction} */
 			// let action_t=action;
 			// console.log("path",path,`continuation action "${action_t.targetId}"`,action_t.continuationItems);
+			// return true;
 			return false;
 		}
 		console.log("path",path,"continuation action",action.targetId);
