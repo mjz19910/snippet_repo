@@ -701,17 +701,17 @@ function check_item_keys(path,keys) {
 				case 'compactPlaylistRenderer': return;
 				case 'commentThreadRenderer': return;
 				case 'itemSectionRenderer': return;
-				default: console.log('len=1 [0.1]: iter content key',path,key); return;
-			} break;
+				default: console.log('len=1 [0.1]: iter content key',path,key);
+			} return;
 			case '.contents[].richItemRenderer': switch(key) {
-				default: console.log('len=1 [0.2]: iter content key',path,key); return;
-			} break;
+				default: console.log('len=1 [0.2]: iter content key',path,key);
+			} return;
 			case '.contents[].richItemRenderer.content': switch(key) {
-				case 'adSlotRenderer': return;
-				case 'radioRenderer': return;
-				case 'videoRenderer': return;
-				default: console.log('len=1 [0.3]: iter content key',path,key); return;
-			} break;
+				case 'adSlotRenderer': break;
+				case 'radioRenderer': break;
+				case 'videoRenderer': break;
+				default: console.log('len=1 [0.3]: iter content key',path,key); break;
+			} return;
 			default: console.log('len=1 [0.d]: content path and key',path,key); break;
 		}
 	} else {
