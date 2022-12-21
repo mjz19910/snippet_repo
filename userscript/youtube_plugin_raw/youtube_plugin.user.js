@@ -809,7 +809,7 @@ class HandleRendererContentItemArray {
 }
 
 class HandleRichGridRenderer {
-	debug=true;
+	debug=false;
 	debug_level=2;
 	/**@readonly*/
 	class_name="HandleRichGridRenderer";
