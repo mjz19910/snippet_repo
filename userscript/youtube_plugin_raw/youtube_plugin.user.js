@@ -674,10 +674,10 @@ class YTIterateAllBase {
  * @return {void}
  */
 function check_item_keys(path,keys) {
+	path=path.replace("continuationItems[]","contents[]");
 	/**@type {string[]|string|null} */
 	x: if(keys.length===2) {
 		if(path==='.contents[].richItemRenderer') break x;
-		if(path==='.continuationItems[].richItemRenderer') break x;
 		if(path==='appendContinuationItemsAction') break x;
 		console.log('check_item_keys extra keys',path,keys);
 	}
@@ -686,9 +686,6 @@ function check_item_keys(path,keys) {
 		case '.contents[]': break;
 		case '.contents[].richItemRenderer': break;
 		case '.contents[].richItemRenderer.content': break;
-		case '.continuationItems[]': return check_item_keys('.contents[]',keys);
-		case '.continuationItems[].richItemRenderer': return check_item_keys('.contents[].richItemRenderer',keys);
-		case '.continuationItems[].richItemRenderer.content': return check_item_keys('.contents[].richItemRenderer.content',keys);
 		case 'appendContinuationItemsAction': break;
 		default: console.log("new check_item_keys path [0.0]:",path); break;
 	}
