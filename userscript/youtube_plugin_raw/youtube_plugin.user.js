@@ -702,6 +702,7 @@ function check_item_keys(path,keys) {
 				console.log('check_item_keys [2.0]: iter content key',path,key);
 			}
 		} break;
+		case '.contents[]': break;
 		case '.contents[].richItemRenderer': {
 			for(let key of keys) {
 				switch(key) {
@@ -711,6 +712,7 @@ function check_item_keys(path,keys) {
 				console.log('check_item_keys [2.1]: iter content key',path,key);
 			}
 		} break;
+		case '.contents[].richItemRenderer.content': break;
 		case 'appendContinuationItemsAction': {
 			for(let key of keys) {
 				switch(key) {
