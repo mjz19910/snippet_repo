@@ -693,13 +693,22 @@ function check_item_keys(real_path,path,keys) {
 		default: console.log("item_keys_tag [ci_1_00] "+real_path+": new path=%o",path); break;
 	}
 	switch(path) {
+		case "reloadContinuationItemsCommand": {
+			for(let key of keys) {
+				switch(key) {
+					case "continuationItems": continue;
+					case "targetId": continue;
+				}
+				console.log("item_keys_tag [ci_2_00_] "+real_path+": iter content key",path,key);
+			}
+		} break;
 		case "appendContinuationItemsAction": {
 			for(let key of keys) {
 				switch(key) {
 					case "continuationItems": continue;
 					case "targetId": continue;
 				}
-				console.log("item_keys_tag [ci_2_40] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_2_10_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case "tabRenderer.content.richGridRenderer": {
@@ -711,7 +720,7 @@ function check_item_keys(real_path,path,keys) {
 					case "targetId": continue;
 					case "reflowOptions": continue;
 				}
-				console.log("item_keys_tag [ci_2_00] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_2_20_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[]": {
@@ -721,7 +730,7 @@ function check_item_keys(real_path,path,keys) {
 					case "itemSectionRenderer": continue;
 					case "richItemRenderer": continue;
 				}
-				console.log("item_keys_tag [ci_2_10] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_2_30_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[].richItemRenderer": {
@@ -730,7 +739,7 @@ function check_item_keys(real_path,path,keys) {
 					case "content": continue;
 					case "trackingParams": continue;
 				}
-				console.log("item_keys_tag [ci_2_20] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_2_31_] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[].richItemRenderer.content": {
@@ -740,10 +749,10 @@ function check_item_keys(real_path,path,keys) {
 					case "radioRenderer": continue;
 					case "videoRenderer": continue;
 				}
-				console.log("item_keys_tag [ci_2_30] "+real_path+": iter content key",path,key);
+				console.log("item_keys_tag [ci_2_32_] "+real_path+": iter content key",path,key);
 			}
 		} break;
-		default: console.log("item_keys_tag [ci_3_00] "+real_path+": content path",path); break;
+		default: console.log("item_keys_tag [ci_3_00_] "+real_path+": content path",path); break;
 	}
 }
 
