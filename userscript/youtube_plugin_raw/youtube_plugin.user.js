@@ -704,7 +704,10 @@ function check_item_keys(path,keys) {
 		} break;
 		case '.contents[]': {
 			for(let key of keys) {
-				switch(key) {case 'continuationItemRenderer': continue;}
+				switch(key) {
+					case 'continuationItemRenderer': continue;
+					case 'richItemRenderer': continue;
+				}
 				console.log('check_item_keys [ci_2_10]: iter content key',path,key);
 			}
 		} break;
