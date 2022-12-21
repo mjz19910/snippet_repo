@@ -706,7 +706,7 @@ function check_item_keys(path,keys) {
 			for(let key of keys) {
 				switch(key) {
 				}
-				console.log('check_item_keys [2.1]: iter content key',path,key);
+				console.log('check_item_keys [2.10]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[].richItemRenderer': {
@@ -715,17 +715,23 @@ function check_item_keys(path,keys) {
 					case 'content': continue;
 					case 'trackingParams': continue;
 				}
-				console.log('check_item_keys [2.2]: iter content key',path,key);
+				console.log('check_item_keys [2.20]: iter content key',path,key);
 			}
 		} break;
-		case '.contents[].richItemRenderer.content': break;
+		case '.contents[].richItemRenderer.content': {
+			for(let key of keys) {
+				switch(key) {
+				}
+				console.log('check_item_keys [2.30]: iter content key',path,key);
+			}
+		} break;
 		case 'appendContinuationItemsAction': {
 			for(let key of keys) {
 				switch(key) {
 					case 'continuationItems': continue;
 					case 'targetId': continue;
 				}
-				console.log('check_item_keys [2.3]: iter content key',path,key);
+				console.log('check_item_keys [2.40]: iter content key',path,key);
 			}
 		} break;
 		default: console.log('check_item_keys [3.0]: content path',path); break;
