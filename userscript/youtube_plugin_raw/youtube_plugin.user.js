@@ -704,8 +704,7 @@ function check_item_keys(path,keys) {
 		} break;
 		case '.contents[]': {
 			for(let key of keys) {
-				switch(key) {
-				}
+				switch(key) {case 'continuationItemRenderer': continue;}
 				console.log('check_item_keys [ci_2_10]: iter content key',path,key);
 			}
 		} break;
