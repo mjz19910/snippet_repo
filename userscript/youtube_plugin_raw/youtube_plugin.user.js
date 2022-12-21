@@ -810,9 +810,9 @@ class HandleRendererContentItemArray {
 
 class HandleRichGridRenderer {
 	debug=false;
-	debug_level=2;
 	/**@readonly*/
 	class_name="HandleRichGridRenderer";
+	/**@readonly*/
 	entry="richGridRenderer";
 	/**
 	 * @param {string} path
