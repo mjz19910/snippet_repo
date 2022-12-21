@@ -117,7 +117,7 @@ class Seen {
 		let weak_info,ret;
 		const [instance_index,instance_gen,ref_obj]=this.see_value(value);
 		const index_key=instance_index+"@"+instance_gen;
-		if(this.debug) console.log('any',index_key,value);
+		if(this.debug) console.log("any",index_key,value);
 		value=null;
 		if(this.all_seen_map.has(index_key)) {
 			weak_info=this.all_seen_map.get(index_key);
@@ -129,7 +129,7 @@ class Seen {
 		let obj_id=this.seen_uid_counter;
 		this.seen_uid_counter++;
 		ret={
-			type: 'any',
+			type: "any",
 			any_key: index_key,
 			obj_id,
 		};
@@ -147,13 +147,13 @@ class Seen {
 		const index_key=instance_index+"@"+instance_gen;
 		if(this.all_seen_map.has(index_key)) {
 			let seen_info=this.all_seen_map.get(index_key);
-			if(this.debug) console.log('get callable',index_key,seen_info.deref());
+			if(this.debug) console.log("get callable",index_key,seen_info.deref());
 			if(seen_info.deref()!==null) return seen_info.deref();
 		}
 		let obj_id=this.seen_uid_counter;
 		this.seen_uid_counter++;
 		let ret={
-			type: 'callable',
+			type: "callable",
 			fn_index_key: index_key,
 			obj_id
 		};
@@ -171,13 +171,13 @@ class Seen {
 		const index_key=instance_index+"@"+instance_gen;
 		if(this.all_seen_map.has(index_key)) {
 			let seen_info=this.all_seen_map.get(index_key);
-			if(this.debug) console.log('get constructor',index_key,seen_info.deref());
+			if(this.debug) console.log("get constructor",index_key,seen_info.deref());
 			if(seen_info.deref()!==null) return seen_info.deref();
 		}
 		let obj_id=this.seen_uid_counter;
 		this.seen_uid_counter++;
 		let ret={
-			type: 'constructor',
+			type: "constructor",
 			constructor_key: index_key,
 			obj_id
 		};
@@ -196,13 +196,13 @@ class Seen {
 		const index_key=instance_index+"@"+instance_gen;
 		if(this.all_seen_map.has(index_key)) {
 			let seen_info=this.all_seen_map.get(index_key);
-			if(this.debug) console.log('get instance',index_key,seen_info.deref());
+			if(this.debug) console.log("get instance",index_key,seen_info.deref());
 			if(seen_info.deref()!==null) return seen_info.deref();
 		}
 		let obj_id=this.seen_uid_counter;
 		this.seen_uid_counter++;
 		let ret={
-			type: 'instance',
+			type: "instance",
 			index_key,
 			prototype_info,
 			obj_id
@@ -302,7 +302,7 @@ class WithES5Shimmed {
  * @type {<T>(value:T)=>typeof value}
  */
 function deep_clone(value) {
-	if(typeof value==='object') {
+	if(typeof value==="object") {
 		if(value===null) {
 			// null is a primitive
 			return value;
@@ -347,32 +347,32 @@ function deep_clone(value) {
 		if(str in window) {
 			console.assert(false);
 		}
-		console.log('proto',str,create.toString().slice(0,32),create.toString().length);
+		console.log("proto",str,create.toString().slice(0,32),create.toString().length);
 		return seen_obj;
 	}
-	if(typeof value==='boolean') {
+	if(typeof value==="boolean") {
 		// booleans are primitive
 		return value;
 	}
-	if(typeof value==='string') {
+	if(typeof value==="string") {
 		// strings are constant
 		return value;
 	}
-	if(typeof value==='number') {
+	if(typeof value==="number") {
 		// numbers are constant
 		return value;
 	}
-	if(typeof value==='function') {
+	if(typeof value==="function") {
 		if(value.name in window) {
 			console.assert(false);
 		}
 		return Seen.as_callable(value);
 	}
-	if(typeof value==='undefined') {
+	if(typeof value==="undefined") {
 		console.assert(false);
 		return value;
 	}
-	console.log('unk',typeof value,value);
+	console.log("unk",typeof value,value);
 	return value;
 }
 /**@arg {string|URL} url */
@@ -388,7 +388,7 @@ function fetch_filter_text_then_data_url(request,response_obj) {
 	try {
 		yt_handlers.on_handle_api(request,response_obj);
 	} catch(err) {
-		console.log('filter error');
+		console.log("filter error");
 		console.log(err);
 	}
 }
@@ -400,16 +400,16 @@ function fetch_filter_text_then_data_url(request,response_obj) {
  * @arg {string} response_text
  */
 function handle_json_parse(request,options,onfulfilled,on_rejected,response_text) {
-	if(yt_debug_enabled) console.log('handle_json_parse',request,options);
+	if(yt_debug_enabled) console.log("handle_json_parse",request,options);
 	let original_json_parse=JSON.parse;
-	if(yt_debug_enabled) console.log('JSON.parse = new Proxy()');
+	if(yt_debug_enabled) console.log("JSON.parse = new Proxy()");
 	JSON.parse=new Proxy(original_json_parse,{
 		apply: function(...proxy_args) {
-			if(yt_debug_enabled) console.log('JSON.parse()');
+			if(yt_debug_enabled) console.log("JSON.parse()");
 			let obj=Reflect.apply(...proxy_args);
-			if(yt_debug_enabled) console.log('request.url');
+			if(yt_debug_enabled) console.log("request.url");
 			function c1() {
-				if(typeof request=='string') {
+				if(typeof request=="string") {
 					return {url: to_url(request)};
 				}
 				if(request instanceof URL) {
@@ -448,7 +448,7 @@ function handle_json_parse(request,options,onfulfilled,on_rejected,response_text
  * @param {((reason: any) => any | PromiseLike<any>)|undefined|null} onrejected
  */
 function bind_promise_handler(request,options,onfulfilled,onrejected) {
-	if(yt_debug_enabled) console.log('handle_json_parse.bind()');
+	if(yt_debug_enabled) console.log("handle_json_parse.bind()");
 	let ret=handle_json_parse.bind(null,request,options,onfulfilled,onrejected);
 	return ret;
 }
@@ -483,11 +483,11 @@ function handle_fetch_response_2(request,options,ov) {
  */
 function fetch_promise_handler(request,options,response) {
 	/** @type {["text"]} */
-	let handled_keys=['text'];
+	let handled_keys=["text"];
 	class FakeResponse extends Response {
 		/** @override */
 		text() {
-			if(yt_debug_enabled) console.log('response.text()');
+			if(yt_debug_enabled) console.log("response.text()");
 			return handle_fetch_response_2(request,options,response.text());
 		}
 	}
@@ -513,7 +513,7 @@ function fetch_rejection_handler(rejection) {
 			throw rejection;
 		}
 	}
-	console.log('fetch_rejection_handler',rejection);
+	console.log("fetch_rejection_handler",rejection);
 	console.log(rejection);
 	throw rejection;
 }
@@ -528,9 +528,9 @@ let original_fetch=null;
 function fetch_inject(url_or_request,options) {
 	if(!original_fetch) throw new Error("No original fetch");
 	if(options) {
-		console.log('fetch_log_with_options',url_or_request,options);
+		console.log("fetch_log_with_options",url_or_request,options);
 	}
-	if(typeof url_or_request==='string'&&url_or_request.startsWith('https://www.gstatic.com')) {
+	if(typeof url_or_request==="string"&&url_or_request.startsWith("https://www.gstatic.com")) {
 		return original_fetch(url_or_request,options);
 	}
 	let ret=original_fetch(url_or_request,options);
@@ -633,7 +633,7 @@ class YTIterateAllBase {
 		if(data===void 0) {
 			return;
 		}
-		if(typeof data==='string') {
+		if(typeof data==="string") {
 			this.update_state(path,data);
 			return;
 		}
@@ -678,70 +678,71 @@ function check_item_keys(path,keys) {
 	path=path.replace("continuationItems[]","contents[]");
 	/**@type {string[]|string|null} */
 	x: if(keys.length===2) {
-		if(path==='.contents[].richItemRenderer') break x;
-		if(path==='appendContinuationItemsAction') break x;
-		console.log('item_keys_tag [ci_0_00]: extra keys',path,keys);
+		if(path===".contents[].richItemRenderer") break x;
+		if(path==="appendContinuationItemsAction") break x;
+		console.log("item_keys_tag [ci_0_00]: extra keys",path,keys);
 	}
 	switch(path) {
-		case 'tabRenderer.content.richGridRenderer': break;
-		case '.contents[]': break;
-		case '.contents[].richItemRenderer': break;
-		case '.contents[].richItemRenderer.content': break;
-		case 'appendContinuationItemsAction': break;
+		case "tabRenderer.content.richGridRenderer": break;
+		case ".contents[]": break;
+		case ".contents[].richItemRenderer": break;
+		case ".contents[].richItemRenderer.content": break;
+		case "appendContinuationItemsAction": break;
+		case "reloadContinuationItemsCommand": break;
 		default: console.log("item_keys_tag [ci_1_00]: new path=%o",path); break;
 	}
 	switch(path) {
-		case 'tabRenderer.content.richGridRenderer': {
+		case "tabRenderer.content.richGridRenderer": {
 			for(let key of keys) {
 				switch(key) {
-					case 'contents': continue;
-					case 'trackingParams': continue;
-					case 'header': continue;
-					case 'targetId': continue;
-					case 'reflowOptions': continue;
+					case "contents": continue;
+					case "trackingParams": continue;
+					case "header": continue;
+					case "targetId": continue;
+					case "reflowOptions": continue;
 				}
-				console.log('item_keys_tag [ci_2_00]: iter content key',path,key);
+				console.log("item_keys_tag [ci_2_00]: iter content key",path,key);
 			}
 		} break;
-		case '.contents[]': {
+		case ".contents[]": {
 			for(let key of keys) {
 				switch(key) {
-					case 'continuationItemRenderer': continue;
-					case 'itemSectionRenderer': continue;
-					case 'richItemRenderer': continue;
+					case "continuationItemRenderer": continue;
+					case "itemSectionRenderer": continue;
+					case "richItemRenderer": continue;
 				}
-				console.log('item_keys_tag [ci_2_10]: iter content key',path,key);
+				console.log("item_keys_tag [ci_2_10]: iter content key",path,key);
 			}
 		} break;
-		case '.contents[].richItemRenderer': {
+		case ".contents[].richItemRenderer": {
 			for(let key of keys) {
 				switch(key) {
-					case 'content': continue;
-					case 'trackingParams': continue;
+					case "content": continue;
+					case "trackingParams": continue;
 				}
-				console.log('item_keys_tag [ci_2_20]: iter content key',path,key);
+				console.log("item_keys_tag [ci_2_20]: iter content key",path,key);
 			}
 		} break;
-		case '.contents[].richItemRenderer.content': {
+		case ".contents[].richItemRenderer.content": {
 			for(let key of keys) {
 				switch(key) {
-					case 'adSlotRenderer': continue;
-					case 'radioRenderer': continue;
-					case 'videoRenderer': continue;
+					case "adSlotRenderer": continue;
+					case "radioRenderer": continue;
+					case "videoRenderer": continue;
 				}
-				console.log('item_keys_tag [ci_2_30]: iter content key',path,key);
+				console.log("item_keys_tag [ci_2_30]: iter content key",path,key);
 			}
 		} break;
-		case 'appendContinuationItemsAction': {
+		case "appendContinuationItemsAction": {
 			for(let key of keys) {
 				switch(key) {
-					case 'continuationItems': continue;
-					case 'targetId': continue;
+					case "continuationItems": continue;
+					case "targetId": continue;
 				}
-				console.log('item_keys_tag [ci_2_40]: iter content key',path,key);
+				console.log("item_keys_tag [ci_2_40]: iter content key",path,key);
 			}
 		} break;
-		default: console.log('item_keys_tag [ci_3_00]: content path',path); break;
+		default: console.log("item_keys_tag [ci_3_00]: content path",path); break;
 	}
 }
 
@@ -758,21 +759,21 @@ class HandleRendererContentItemArray {
 			check_item_keys(`.${key}[]`,Object.keys(content_item));
 			if("commentThreadRenderer" in content_item) return true;
 			else if("continuationItemRenderer") return true;
-			else if('richItemRenderer' in content_item) {
+			else if("richItemRenderer" in content_item) {
 				if(!content_item.richItemRenderer) return true;
-				check_item_keys('.contents[].richItemRenderer',Object.keys(content_item.richItemRenderer));
+				check_item_keys(".contents[].richItemRenderer",Object.keys(content_item.richItemRenderer));
 				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
 				let {content}=content_item.richItemRenderer;
-				check_item_keys('.contents[].richItemRenderer.content',Object.keys(content));
+				check_item_keys(".contents[].richItemRenderer.content",Object.keys(content));
 				if(content.adSlotRenderer) {
-					if(base.debug) console.log(base.class_name,'adSlotRenderer=',content.adSlotRenderer);
+					if(base.debug) console.log(base.class_name,"adSlotRenderer=",content.adSlotRenderer);
 					return false;
 				}
 				return true;
 			} else if("richSectionRenderer" in content_item) {
 				let renderer=content_item.richSectionRenderer;
-				if(!('richShelfRenderer' in renderer.content)) {
-					console.log('rich section',renderer.content);
+				if(!("richShelfRenderer" in renderer.content)) {
+					console.log("rich section",renderer.content);
 					return true;
 				}
 				let rich_shelf=renderer.content.richShelfRenderer;
@@ -780,17 +781,17 @@ class HandleRendererContentItemArray {
 					if(rich_shelf.icon.iconType==="YOUTUBE_SHORTS_BRAND_24") {
 						return false;
 					}
-					console.log('rich shelf icon',rich_shelf,rich_shelf.icon);
+					console.log("rich shelf icon",rich_shelf,rich_shelf.icon);
 					return true;
 				}
 				if(rich_shelf.title.runs[0]) {
 					if(rich_shelf.title.runs[0].text==="Breaking news") {
 						return false;
 					}
-					console.log('rich shelf title',rich_shelf.title.runs[0]);
+					console.log("rich shelf title",rich_shelf.title.runs[0]);
 					return true;
 				}
-				console.log('rich shelf',rich_shelf);
+				console.log("rich shelf",rich_shelf);
 				return true;
 			}
 			console.log("don't know what to do with RendererContentItem",content_item);
@@ -817,12 +818,12 @@ class HandleRichGridRenderer {
 		let path_parts=path.split(".");
 		let sub_path=path_parts.slice(-3).join(".");
 		check_item_keys(sub_path,Object.keys(renderer));
-		if(this.debug) console.log('run handler',sub_path);
+		if(this.debug) console.log("run handler",sub_path);
 		if(renderer.masthead) {
 			check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
-				console.log('masthead',masthead);
+				console.log("masthead",masthead);
 				renderer.masthead=masthead;
 			}
 		}
@@ -850,19 +851,19 @@ class InitialDataType {
 function filter_on_initial_data(cls,apply_args) {
 	let ret=Reflect.apply(...apply_args);
 	if(ret.response) {
-		console.log(cls.class_name+': initial page info:',ret);
+		console.log(cls.class_name+": initial page info:",ret);
 		try {
 			if(window.ytPageType) {
 				if(ret.page==="browse") {
-					cls.handle_page_type(ret.response,window.ytPageType,'response');
+					cls.handle_page_type(ret.response,window.ytPageType,"response");
 					if(ret.playerResponse) {
-						console.log(cls.class_name+": playerResponse in ret.page === 'browse'");
+						console.log(cls.class_name+": playerResponse in ret.page === \"browse\"");
 						console.assert(false);
 					}
 				} else {
-					console.log(cls.class_name+': page info ret type',ret.page);
-					cls.handle_page_type(ret.response,window.ytPageType,'response');
-					cls.handle_page_type(ret.playerResponse,window.ytPageType,'playerResponse');
+					console.log(cls.class_name+": page info ret type",ret.page);
+					cls.handle_page_type(ret.response,window.ytPageType,"response");
+					cls.handle_page_type(ret.playerResponse,window.ytPageType,"playerResponse");
 				}
 			}
 		} catch(err) {
@@ -938,24 +939,24 @@ class YTFilterHandlers extends YTIterateAllBase {
 		HandleRendererContentItemArray.replace_array(this,command,"continuationItems");
 	}
 	whitelist_item_sections=[
-		'shelfRenderer',
-		'commentsEntryPointHeaderRenderer',
-		'shelfRenderer',
-		'commentsEntryPointHeaderRenderer',
-		'continuationItemRenderer',
-		'compactVideoRenderer',
-		'compactRadioRenderer',
-		'compactPlaylistRenderer',
-		'videoRenderer',
-		'radioRenderer',
-		'reelShelfRenderer',
-		'playlistRenderer',
-		'channelRenderer',
+		"shelfRenderer",
+		"commentsEntryPointHeaderRenderer",
+		"shelfRenderer",
+		"commentsEntryPointHeaderRenderer",
+		"continuationItemRenderer",
+		"compactVideoRenderer",
+		"compactRadioRenderer",
+		"compactPlaylistRenderer",
+		"videoRenderer",
+		"radioRenderer",
+		"reelShelfRenderer",
+		"playlistRenderer",
+		"channelRenderer",
 	];
 	blacklist_item_sections=[
-		'promotedSparklesWebRenderer',
-		'compactPromotedVideoRenderer',
-		'searchPyvRenderer',
+		"promotedSparklesWebRenderer",
+		"compactPromotedVideoRenderer",
+		"searchPyvRenderer",
 	];
 	/**
 	 * @param {string} path
@@ -980,11 +981,11 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	on_v1_player(path,data) {
 		if(data.playerAds) {
-			if(this.debug) console.log(this.class_name+": "+path+'.playerAds=',data.playerAds);
+			if(this.debug) console.log(this.class_name+": "+path+".playerAds=",data.playerAds);
 			data.playerAds=[];
 		}
 		if(data.adPlacements) {
-			if(this.debug) console.log(this.class_name+": "+path+'.adPlacements=',data.adPlacements);
+			if(this.debug) console.log(this.class_name+": "+path+".adPlacements=",data.adPlacements);
 			data.adPlacements=[];
 		}
 	}
@@ -994,7 +995,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	on_handle_api(request,data) {
 		const debug=false;
-		if(typeof request==='string') {
+		if(typeof request==="string") {
 			request=new URL(request);
 		} else if(request instanceof Request) {
 			request=new URL(request.url);
@@ -1003,34 +1004,34 @@ class YTFilterHandlers extends YTIterateAllBase {
 		if(path_url==="/getDatasyncIdsEndpoint") return;
 		let api_parts=request.pathname.slice(1).split("/");
 		// spell:ignore youtubei
-		if(api_parts[0]!=='youtubei') {
-			console.log(this.class_name+": "+'unknown api path',request.pathname);
+		if(api_parts[0]!=="youtubei") {
+			console.log(this.class_name+": "+"unknown api path",request.pathname);
 			return;
 		}
-		if(api_parts[1]!=='v1') {
-			console.log(this.class_name+": "+'unknown api path',request.pathname);
+		if(api_parts[1]!=="v1") {
+			console.log(this.class_name+": "+"unknown api path",request.pathname);
 			return;
 		}
 		let api_path=api_parts.slice(2).join(".");
-		debug&&console.log(this.class_name+": "+'on_handle_api api_path',api_parts.slice(0,2).join("/"),api_path);
+		debug&&console.log(this.class_name+": "+"on_handle_api api_path",api_parts.slice(0,2).join("/"),api_path);
 		this.handle_any_data(api_path,data);
 		switch(api_parts[2]) {
-			case 'player': this.on_v1_player(api_path,data); break;
+			case "player": this.on_v1_player(api_path,data); break;
 		}
 	}
 	/**
 	 * @arg {{}} data
 	 * @param {string} page_type
-	 * @arg {'response'|'playerResponse'} response_type
+	 * @arg {"response"|"playerResponse"} response_type
 	 */
 	handle_page_type(data,page_type,response_type) {
 		const debug=false;
 		debug&&console.log(this.class_name+": handle_page_type with page_type and response_type",page_type,response_type);
 		this.handle_any_data(page_type,data);
 		switch(response_type) {
-			case 'response': break;
-			case 'playerResponse': switch(page_type) {
-				case 'watch': this.on_v1_player(page_type,data); break;
+			case "response": break;
+			case "playerResponse": switch(page_type) {
+				case "watch": this.on_v1_player(page_type,data); break;
 			}
 		}
 	}
@@ -1065,7 +1066,7 @@ function setup_prototype_modify() {
 	window.active_blob_set=active_blob_set;
 	URL.createObjectURL=new Proxy(URL.createObjectURL,{
 		/**
-		 * @arg {typeof URL['createObjectURL']} target
+		 * @arg {typeof URL["createObjectURL"]} target
 		 * @arg {typeof URL} thisArg
 		 * @arg {[Blob | MediaSource]} args
 		*/
@@ -1083,7 +1084,7 @@ function setup_prototype_modify() {
 	});
 	URL.revokeObjectURL=new Proxy(URL.revokeObjectURL,{
 		/**
-		 * @arg {typeof URL['revokeObjectURL']} target
+		 * @arg {typeof URL["revokeObjectURL"]} target
 		 * @arg {typeof URL} thisArg
 		 * @arg {[string]} args
 		*/
@@ -1098,7 +1099,7 @@ function setup_prototype_modify() {
 	fetch_inject.__proxy_target__=original_fetch;
 	let navigator_sendBeacon=navigator.sendBeacon;
 	navigator.sendBeacon=function(...args) {
-		if(typeof args[0]==='string'&&args[0].indexOf("/api/stats/qoe")>-1) {
+		if(typeof args[0]==="string"&&args[0].indexOf("/api/stats/qoe")>-1) {
 			return true;
 		}
 		console.log("send_beacon",args[0]);
@@ -1115,7 +1116,7 @@ function setup_prototype_modify() {
 				}
 				/** @override */
 				set src(_src) {
-					if(_src.indexOf('/api/stats/qoe?')>-1) return;
+					if(_src.indexOf("/api/stats/qoe?")>-1) return;
 					super.src=_src;
 				}
 			};
@@ -1131,12 +1132,12 @@ let plr_raw_replace_debug=true;
 function plr_raw_replace(/** @type {{ args: { raw_player_response: any; }; }} */ player_config) {
 	let raw_plr_rsp=player_config.args.raw_player_response;
 	if(raw_plr_rsp===void 0) {
-		console.log('yt_cfg',player_config);
+		console.log("yt_cfg",player_config);
 		return;
 	}
-	if(plr_raw_replace_debug) console.log("plr_raw_replace","::",'args.raw_player_response.playerAds=',raw_plr_rsp.playerAds);
+	if(plr_raw_replace_debug) console.log("plr_raw_replace","::","args.raw_player_response.playerAds=",raw_plr_rsp.playerAds);
 	raw_plr_rsp.playerAds=[];
-	if(plr_raw_replace_debug) console.log("plr_raw_replace","::",'args.raw_player_response.adPlacements=',raw_plr_rsp.adPlacements);
+	if(plr_raw_replace_debug) console.log("plr_raw_replace","::","args.raw_player_response.adPlacements=",raw_plr_rsp.adPlacements);
 	raw_plr_rsp.adPlacements=[];
 	return;
 }
@@ -1149,7 +1150,7 @@ function plr_raw_replace_embed() {
 let mk_tree_arr=[];
 function act_found_create_yt_player(/** @type {{ data: { type: string; data: [any, any, any]; }; }} */ event) {
 	let tr=event.data.type;
-	if(tr!='yt.player.Application.createAlternate'&&tr!='yt.player.Application.create') return;
+	if(tr!="yt.player.Application.createAlternate"&&tr!="yt.player.Application.create") return;
 	let [,,value]=event.data.data;
 	let [,player_config,static_config]=value;
 	if(!player_config) return;
@@ -1218,7 +1219,7 @@ function walk_key_path(cc,ms,obj,mc) {
 		return mc;
 	}
 	let f2=ms.slice(fs.length+1);
-	let dx=f2.indexOf('.');
+	let dx=f2.indexOf(".");
 	let pq;
 	if(dx>-1) {
 		pq=f2.slice(0,dx);
@@ -1226,11 +1227,11 @@ function walk_key_path(cc,ms,obj,mc) {
 		pq=f2;
 	}
 	if(pq.length>0) {
-		if((cc.value_tr+'.'+pq)==mc) {
-			return cc.value_tr+'.'+pq;
+		if((cc.value_tr+"."+pq)==mc) {
+			return cc.value_tr+"."+pq;
 		}
-		mk(obj,pq,cc.value_tr+'.'+pq,cc.noisy_flag);
-		return cc.value_tr+'.'+pq;
+		mk(obj,pq,cc.value_tr+"."+pq,cc.noisy_flag);
+		return cc.value_tr+"."+pq;
 	}
 	throw 1;
 }
@@ -1242,7 +1243,7 @@ let win_watch=new OnWindowProperty;
 function new_pv_fn(val,cc, /** @type {any[]} */ ...args) {
 	let ret;
 	let act_cb_obj={fired: false,ret: ret};
-	win_watch.dispatchEvent({type: 'new_window_object',data: {type: cc.value_tr,data: [cc.function_value,val,args,act_cb_obj]}});
+	win_watch.dispatchEvent({type: "new_window_object",data: {type: cc.value_tr,data: [cc.function_value,val,args,act_cb_obj]}});
 	if(!act_cb_obj.fired&&cc.function_value) {
 		ret=cc.function_value.apply(val,args);
 	} else {
@@ -1261,7 +1262,7 @@ function on_mk_function_property(cc) {
 	cc.value=with_this;
 	ud_func.add(cc.value);
 }
-const ghost_symbol=Symbol.for('ghost');
+const ghost_symbol=Symbol.for("ghost");
 class WithGhostSymbol {
 	/**@type {boolean|undefined} */
 	[ghost_symbol]=true;
@@ -1356,10 +1357,10 @@ function mk_run(cc) {
 function mk(target,property_key,property_path,noisy=false) {
 	return new MKState({},target,property_key,property_path,noisy).run();
 }
-let yta_str='yt.player.Application';
-mk_tree_arr.push(yta_str+'.create',yta_str+'.createAlternate');
-mk(window,'yt','yt',true);
-win_watch.addEventListener('new_window_object',act_found_create_yt_player);
+let yta_str="yt.player.Application";
+mk_tree_arr.push(yta_str+".create",yta_str+".createAlternate");
+mk(window,"yt","yt",true);
+win_watch.addEventListener("new_window_object",act_found_create_yt_player);
 
 class CustomEventType {
 	type="event_type";
@@ -1692,7 +1693,7 @@ function on_ytd_app(element) {
 		}
 	});
 	ytd_app.ui_plugin_style_element=ui_plugin_style_element;
-	if(document.visibilityState==='visible') {
+	if(document.visibilityState==="visible") {
 		ytd_app.app_is_visible=1;
 		if(vis_imm) {
 			fire_on_visibility_change_restart_video_playback();
@@ -1711,7 +1712,7 @@ function on_ytd_app(element) {
 	document.addEventListener("visibilitychange",function() {
 		if(!ytd_app) throw new Error("No ytd-app");
 		if(!is_watch_page_active()) return;
-		if(document.visibilityState==='visible') {
+		if(document.visibilityState==="visible") {
 			ytd_app.app_is_visible=1;
 			if(vis_imm) {
 				fire_on_visibility_change_restart_video_playback();
@@ -1746,14 +1747,14 @@ async function async_plugin_init(event) {
 		// obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
 		x: {
 			if(ytd_page_manager) break x;
-			const target_element=get_html_elements(document,'ytd-page-manager')[0];
+			const target_element=get_html_elements(document,"ytd-page-manager")[0];
 			if(!target_element) break x;
 			found_element_count++;
 			on_ytd_page_manager(target_element);
 		}
 		x: {
 			if(yt_playlist_manager) break x;
-			const target_element=get_html_elements(document,'yt-playlist-manager')[0];
+			const target_element=get_html_elements(document,"yt-playlist-manager")[0];
 			if(!target_element) break x;
 			found_element_count++;
 			on_yt_playlist_manager(target_element);
@@ -1794,7 +1795,7 @@ async function async_plugin_init(event) {
 		// END(ytd-player): obj.dispatchEvent({type: "ytd-player",detail,port});
 		// BEGIN(video)
 		x: {
-			const element_list=get_html_elements(document,'video');
+			const element_list=get_html_elements(document,"video");
 			if(element_list.length<=0) break x;
 			/** @arg {HTMLCollectionOf<HTMLElement>} element_list @arg {HTMLVideoElementArrayBox} list_box */
 			function get_new_video_element_list(element_list,list_box) {
@@ -1817,7 +1818,7 @@ async function async_plugin_init(event) {
 			} else {
 				first_run=true;
 				list=new HTMLVideoElementArrayBox([]);
-				box_map.set('video-list',list);
+				box_map.set("video-list",list);
 			}
 			let new_elements=get_new_video_element_list(element_list,list);
 			if(!first_run&&new_elements.length>0) {
@@ -1881,7 +1882,7 @@ let slow_message_event=false;
 const message_channel_loop_delay=80;
 /** @param {MessageEvent<number>} event */
 function on_port_message(event) {
-	if(yt_debug_enabled) console.log('msg_port:message %o',event.data);
+	if(yt_debug_enabled) console.log("msg_port:message %o",event.data);
 	port_state_log.push([performance.now()-port_state.time_offset,event.data]);
 	if(slow_message_event) {
 		setTimeout(dispatch_observer_event,message_channel_loop_delay);
@@ -1937,7 +1938,7 @@ function on_yt_page_type_changed(event) {
 		port
 	});
 }
-dom_observer.addEventListener('yt-page-type-changed',on_yt_page_type_changed);
+dom_observer.addEventListener("yt-page-type-changed",on_yt_page_type_changed);
 
 function yt_watch_page_loaded_handler() {
 	if(!is_watch_page_active()) {
@@ -1953,7 +1954,7 @@ function yt_watch_page_loaded_handler() {
 	ytd_player.active_nav=false;
 	ytd_player.init_nav=true;
 }
-dom_observer.addEventListener('plugin-activate',yt_watch_page_loaded_handler);
+dom_observer.addEventListener("plugin-activate",yt_watch_page_loaded_handler);
 
 /**
  * @type {((event:{})=>void)[]}
@@ -1995,17 +1996,17 @@ function init_ui_plugin() {
 	if(waiting_for_ytd_player) return;
 	if(current_timeout===null)
 		return;
-	if(typeof current_timeout==='number') {
+	if(typeof current_timeout==="number") {
 		if(current_timeout>0) {
 			clearTimeout(current_timeout);
 			current_timeout=null;
 		}
-	} else if('hasRef' in current_timeout) {
+	} else if("hasRef" in current_timeout) {
 		clearTimeout(current_timeout);
 		current_timeout=null;
 	}
 	if(!ytd_player||!ytd_player.player_) {
-		console.log('wait for player');
+		console.log("wait for player");
 		waiting_for_ytd_player=true;
 		wait_for_yt_player().then(function() {
 			waiting_for_ytd_player=false;
@@ -2018,7 +2019,7 @@ function init_ui_plugin() {
 		return;
 	}
 	if(ytd_player.active_nav) {
-		console.log('ytd-player:active_nav = true');
+		console.log("ytd-player:active_nav = true");
 		return;
 	}
 	current_timeout=setTimeout(activate_nav,0);
@@ -2058,7 +2059,7 @@ function sumOffset(element) {
 function createOverlayContent() {
 	let element=document.createElement("div");
 	element.style.userSelect="all";
-	element.style.width='max-content';
+	element.style.width="max-content";
 	return element;
 }
 
@@ -2139,13 +2140,13 @@ function title_text_overlay_update() {
 			overlay_content_div.style.display="none";
 		}
 	} else {
-		overlay_hide_ui_input.style.color='#888';
+		overlay_hide_ui_input.style.color="#888";
 		overlay_content_div.style.display="none";
 	}
 }
 /**@type {(detail:any)=>detail is {actionName:"yt-fullscreen-change-action", args:[boolean]}}*/
 function is_yt_fullscreen_change_action(detail) {
-	return detail.actionName==='yt-fullscreen-change-action';
+	return detail.actionName==="yt-fullscreen-change-action";
 }
 /**
  * @param {CustomEvent<{actionName:"yt-fullscreen-change-action", args:[boolean]}>|CustomEvent<{actionName:string}>} event
@@ -2163,7 +2164,7 @@ function on_yt_action(event) {
 {
 	/**@type {any} */
 	let any_document=document;
-	any_document.addEventListener('yt-action',on_yt_action);
+	any_document.addEventListener("yt-action",on_yt_action);
 }
 
 function title_display_toggle() {
@@ -2172,7 +2173,7 @@ function title_display_toggle() {
 	localStorage["title_save_data"]=JSON.stringify({value: title_on});
 }
 function update_ui_plugin() {
-	if(yt_debug_enabled) console.log('update_ui_plugin');
+	if(yt_debug_enabled) console.log("update_ui_plugin");
 	setTimeout(plugin_overlay_element.onupdate.bind(plugin_overlay_element));
 }
 
@@ -2185,7 +2186,7 @@ window.addEventListener("resize",function() {
 	plugin_overlay_element&&plugin_overlay_element.onupdate();
 });
 function activate_nav() {
-	if(yt_debug_enabled) console.log('activate_nav:fire');
+	if(yt_debug_enabled) console.log("activate_nav:fire");
 	VolumeRange.create_if_needed();
 	if(!ytd_player) return;
 	if(!has_ytd_page_mgr()) return;
@@ -2338,7 +2339,7 @@ class AudioGainController {
 	attach_element_list(media_node_list) {
 		for(let i=0;i<media_node_list.length;i++) {
 			let video_element=media_node_list[i];
-			// video_element.crossOrigin='anonymous';
+			// video_element.crossOrigin="anonymous";
 			if(this.attached_element_list.includes(video_element)) continue;
 			let media_element_source=this.audioCtx.createMediaElementSource(video_element);
 			media_element_source.connect(this.dynamics_compressor);
@@ -2367,8 +2368,8 @@ class HistoryStateManager {
 	constructor() {
 		let t=this;
 		this.cur_state=this.getHistoryState();
-		console.log('initial history state',this.cur_state);
-		window.addEventListener('popstate',(event) => {
+		console.log("initial history state",this.cur_state);
+		window.addEventListener("popstate",(event) => {
 			/** @type {{[x: string]: {}}|null} */
 			let prev_state=this.cur_state;
 			/** @type {{[x: string]: {}}|null} */
@@ -2391,7 +2392,7 @@ class HistoryStateManager {
 		let hp=History.prototype;
 		hp.pushState=new Proxy(hp.pushState,{
 			apply(target,thisArg,argArray) {
-				console.log('pushState',...argArray);
+				console.log("pushState",...argArray);
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
@@ -2412,7 +2413,7 @@ class HistoryStateManager {
 						}
 					}
 				}
-				console.log('replaceState',...argArray);
+				console.log("replaceState",...argArray);
 				return Reflect.apply(target,thisArg,argArray);
 			}
 		});
@@ -2425,7 +2426,7 @@ class HistoryStateManager {
 	}
 	/** @template {string} T @param {T} key */
 	getCacheValue(key) {
-		if(typeof this.cur_state=='object'&&this.cur_state!==null) {
+		if(typeof this.cur_state=="object"&&this.cur_state!==null) {
 			if(key in this.cur_state) {
 				let {[key]: value}=this.cur_state;
 				return value;
@@ -2440,7 +2441,7 @@ class HistoryStateManager {
 	/** @param {string} key  @param {{}} value */
 	setCacheValue(key,value) {
 		this.is_replacing_custom_state=true;
-		x: if(typeof this.cur_state==='object'&&this.cur_state!==null) {
+		x: if(typeof this.cur_state==="object"&&this.cur_state!==null) {
 			/** @type {{[U in typeof key]?: {}}} */
 			let state=this.cur_state;
 			if(!this.tmp_keys.includes(key)) this.tmp_keys.push(key);
@@ -2464,7 +2465,7 @@ class VolumeRange {
 	static create_if_needed() {
 		if(this.attached) return;
 		if(!this.enabled) return;
-		if(yt_debug_enabled) console.log('create VolumeRange');
+		if(yt_debug_enabled) console.log("create VolumeRange");
 		if(!audio_gain_controller) {
 			AudioGainController.create();
 		}
@@ -2537,13 +2538,13 @@ class VolumeRange {
 		if(event.key=="f") {
 			var compressor_reduction_factor=this.gain_controller.dynamics_compressor.reduction;
 			if(compressor_reduction_factor>0) {
-				console.log('+',compressor_reduction_factor);
+				console.log("+",compressor_reduction_factor);
 				return;
 			}
 			let new_gain=Math.log((compressor_reduction_factor)*-1);
 			if(new_gain>0) return;
 			new_gain=(new_gain*-1)/(Math.log(this.max_compressor_reduction*-1)*-1/2);
-			console.log('ng',new_gain,compressor_reduction_factor);
+			console.log("ng",new_gain,compressor_reduction_factor);
 			if(new_gain>this.overdrive) new_gain=this.overdrive;
 			if(new_gain<this.min) new_gain=this.min;
 			this.range_element.value=""+Math.floor(this.max*new_gain);
@@ -2555,19 +2556,19 @@ class VolumeRange {
 	 */
 	attach_to_element(view_parent) {
 		if(!this.view_div) {
-			let element=document.getElementById('rh_css');
+			let element=document.getElementById("rh_css");
 			if(!element) {
 				element=document.createElement("div");
-				element.id='rh_css';
+				element.id="rh_css";
 			}
 			this.view_div=element;
 		}
 		if(!this.range_element) {
-			let element=document.getElementById('i_r_css');
+			let element=document.getElementById("i_r_css");
 			if(element instanceof HTMLInputElement) this.range_element=element;
 			if(!this.range_element) {
 				if(element) element.remove();
-				this.range_element=document.createElement('input');
+				this.range_element=document.createElement("input");
 				this.range_element.type="range";
 				this.range_element.id="i_r_css";
 				let range_style=this.range_element.style;
