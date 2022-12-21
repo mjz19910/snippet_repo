@@ -734,7 +734,7 @@ function check_item_keys(path,keys) {
 				console.log('check_item_keys [ci_2_40]: iter content key',path,key);
 			}
 		} break;
-		default: console.log('check_item_keys [ci_3_0]: content path',path); break;
+		default: console.log('check_item_keys [ci_3_00]: content path',path); break;
 	}
 }
 
