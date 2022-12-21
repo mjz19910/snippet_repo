@@ -942,6 +942,8 @@ class YTFilterHandlers extends YTIterateAllBase {
 		'videoRenderer',
 		'radioRenderer',
 		'reelShelfRenderer',
+		'playlistRenderer',
+		'channelRenderer',
 	];
 	blacklist_item_sections=[
 		'promotedSparklesWebRenderer',
