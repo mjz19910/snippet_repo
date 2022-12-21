@@ -796,7 +796,7 @@ class HandleRendererContentItemArray {
 				console.log('rich shelf',rich_shelf);
 				return true;
 			} else {
-				console.log("don't know what to do with content_item in HandleRichGridRenderer.on_contents.renderer.contents.filter.content_item",content_item);
+				console.log("don't know what to do with RendererContentItem",content_item);
 				return true;
 			}
 		});
