@@ -693,6 +693,15 @@ function check_item_keys(real_path,path,keys) {
 		default: console.log("item_keys_tag [ci_1_00] "+real_path+": new path=%o",path); break;
 	}
 	switch(path) {
+		case "appendContinuationItemsAction": {
+			for(let key of keys) {
+				switch(key) {
+					case "continuationItems": continue;
+					case "targetId": continue;
+				}
+				console.log("item_keys_tag [ci_2_40] "+real_path+": iter content key",path,key);
+			}
+		} break;
 		case "tabRenderer.content.richGridRenderer": {
 			for(let key of keys) {
 				switch(key) {
@@ -732,15 +741,6 @@ function check_item_keys(real_path,path,keys) {
 					case "videoRenderer": continue;
 				}
 				console.log("item_keys_tag [ci_2_30] "+real_path+": iter content key",path,key);
-			}
-		} break;
-		case "appendContinuationItemsAction": {
-			for(let key of keys) {
-				switch(key) {
-					case "continuationItems": continue;
-					case "targetId": continue;
-				}
-				console.log("item_keys_tag [ci_2_40] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		default: console.log("item_keys_tag [ci_3_00] "+real_path+": content path",path); break;
