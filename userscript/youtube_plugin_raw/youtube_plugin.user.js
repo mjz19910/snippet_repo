@@ -958,7 +958,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 					case 'promotedSparklesWebRenderer': return false;
 					case 'compactPromotedVideoRenderer': return false;
 					default:
-						console.log("filter_handlers: new item section from .contents[].${key}",key);
+						console.log("filter_handlers: new item section from .contents[].${%o}",key);
 						return true;
 				}
 			}
