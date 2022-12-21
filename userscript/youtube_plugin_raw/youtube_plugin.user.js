@@ -948,7 +948,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 */
 	reloadContinuationItemsCommand(path,command) {
 		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
-		console.log("continue action default",command.targetId);
+		if(this.handleAppendContinuationItemsAction(path,command)) return;
 		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",command,"continuationItems");
 	}
 	whitelist_item_sections=[
