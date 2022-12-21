@@ -930,6 +930,19 @@ class YTFilterHandlers extends YTIterateAllBase {
 		console.log("continue action default",command.targetId);
 		HandleRendererContentItemArray.replace_array(this,command,"continuationItems");
 	}
+	ok_item_sections=[
+		'shelfRenderer',
+		'commentsEntryPointHeaderRenderer',
+		'shelfRenderer',
+		'commentsEntryPointHeaderRenderer',
+		'continuationItemRenderer',
+		'compactVideoRenderer',
+		'compactRadioRenderer',
+		'compactPlaylistRenderer',
+		'videoRenderer',
+		'radioRenderer',
+		'reelShelfRenderer',
+	];
 	/**
 	 * @param {string} path
 	 * @param {{ contents: {}[]; }} renderer
@@ -940,15 +953,10 @@ class YTFilterHandlers extends YTIterateAllBase {
 		renderer.contents=renderer.contents.filter((item) => {
 			let keys=Object.keys(item);
 			for(let key of keys) {
+				if(this.ok_item_sections.includes(key)) return true;
 				switch(key) {
 					case 'promotedSparklesWebRenderer': return false;
 					case 'compactPromotedVideoRenderer': return false;
-					case 'shelfRenderer': return true;
-					case 'commentsEntryPointHeaderRenderer': return true;
-					case 'continuationItemRenderer': return true;
-					case 'compactVideoRenderer': return true;
-					case 'compactRadioRenderer': return true;
-					case 'compactPlaylistRenderer': return true;
 					default:
 						console.log("filter_handlers: new item section from .contents[].${key}",key);
 						return true;
