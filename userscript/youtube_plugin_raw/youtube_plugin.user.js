@@ -669,18 +669,19 @@ class YTIterateAllBase {
 }
 
 /**
+ * @arg {string} real_path
  * @param {string[]} keys
  * @param {string} path
  * @return {void}
  * @log item_keys_tag
  */
-function check_item_keys(path,keys) {
+function check_item_keys(real_path,path,keys) {
 	path=path.replace("continuationItems[]","contents[]");
 	/**@type {string[]|string|null} */
 	x: if(keys.length===2) {
 		if(path===".contents[].richItemRenderer") break x;
 		if(path==="appendContinuationItemsAction") break x;
-		console.log("item_keys_tag [ci_0_00]: extra keys",path,keys);
+		console.log("item_keys_tag [ci_0_00] "+real_path+": extra keys",path,keys);
 	}
 	switch(path) {
 		case "tabRenderer.content.richGridRenderer": break;
@@ -689,7 +690,7 @@ function check_item_keys(path,keys) {
 		case ".contents[].richItemRenderer.content": break;
 		case "appendContinuationItemsAction": break;
 		case "reloadContinuationItemsCommand": break;
-		default: console.log("item_keys_tag [ci_1_00]: new path=%o",path); break;
+		default: console.log("item_keys_tag [ci_1_00] "+real_path+": new path=%o",path); break;
 	}
 	switch(path) {
 		case "tabRenderer.content.richGridRenderer": {
@@ -701,7 +702,7 @@ function check_item_keys(path,keys) {
 					case "targetId": continue;
 					case "reflowOptions": continue;
 				}
-				console.log("item_keys_tag [ci_2_00]: iter content key",path,key);
+				console.log("item_keys_tag [ci_2_00] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[]": {
@@ -711,7 +712,7 @@ function check_item_keys(path,keys) {
 					case "itemSectionRenderer": continue;
 					case "richItemRenderer": continue;
 				}
-				console.log("item_keys_tag [ci_2_10]: iter content key",path,key);
+				console.log("item_keys_tag [ci_2_10] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[].richItemRenderer": {
@@ -720,7 +721,7 @@ function check_item_keys(path,keys) {
 					case "content": continue;
 					case "trackingParams": continue;
 				}
-				console.log("item_keys_tag [ci_2_20]: iter content key",path,key);
+				console.log("item_keys_tag [ci_2_20] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case ".contents[].richItemRenderer.content": {
@@ -730,7 +731,7 @@ function check_item_keys(path,keys) {
 					case "radioRenderer": continue;
 					case "videoRenderer": continue;
 				}
-				console.log("item_keys_tag [ci_2_30]: iter content key",path,key);
+				console.log("item_keys_tag [ci_2_30] "+real_path+": iter content key",path,key);
 			}
 		} break;
 		case "appendContinuationItemsAction": {
@@ -739,33 +740,33 @@ function check_item_keys(path,keys) {
 					case "continuationItems": continue;
 					case "targetId": continue;
 				}
-				console.log("item_keys_tag [ci_2_40]: iter content key",path,key);
+				console.log("item_keys_tag [ci_2_40] "+real_path+": iter content key",path,key);
 			}
 		} break;
-		default: console.log("item_keys_tag [ci_3_00]: content path",path); break;
+		default: console.log("item_keys_tag [ci_3_00] "+real_path+": content path",path); break;
 	}
 }
 
 class HandleRendererContentItemArray {
 	/**
 	 * @param {HandleRichGridRenderer|YTFilterHandlers} base
-	 * @arg {string} _path
+	 * @arg {string} path
 	 * @param {{[U in "continuationItems"|"contents"]?: ContinuationItem[]}} obj
 	 * @param {"continuationItems"|"contents"} key
 	 */
-	static replace_array(base,_path,obj,key) {
+	static replace_array(base,path,obj,key) {
 		let arr=obj[key];
 		if(!arr) return;
 		let filtered=arr.filter((content_item) => {
-			check_item_keys(`.${key}[]`,Object.keys(content_item));
+			check_item_keys(path,`.${key}[]`,Object.keys(content_item));
 			if("commentThreadRenderer" in content_item) return true;
 			else if("continuationItemRenderer") return true;
 			else if("richItemRenderer" in content_item) {
 				if(!content_item.richItemRenderer) return true;
-				check_item_keys(".contents[].richItemRenderer",Object.keys(content_item.richItemRenderer));
+				check_item_keys(path,".contents[].richItemRenderer",Object.keys(content_item.richItemRenderer));
 				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
 				let {content}=content_item.richItemRenderer;
-				check_item_keys(".contents[].richItemRenderer.content",Object.keys(content));
+				check_item_keys(path,".contents[].richItemRenderer.content",Object.keys(content));
 				if(content.adSlotRenderer) {
 					if(base.debug) console.log(base.class_name,"adSlotRenderer=",content.adSlotRenderer);
 					return false;
@@ -818,10 +819,10 @@ class HandleRichGridRenderer {
 	richGridRenderer(path,renderer) {
 		let path_parts=path.split(".");
 		let sub_path=path_parts.slice(-3).join(".");
-		check_item_keys(sub_path,Object.keys(renderer));
+		check_item_keys(path,sub_path,Object.keys(renderer));
 		if(this.debug) console.log("run handler",sub_path);
 		if(renderer.masthead) {
-			check_item_keys(path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead));
+			check_item_keys(path,path_parts.slice(-2).join(".")+".masthead",Object.keys(renderer.masthead));
 			if(renderer.masthead.videoMastheadAdV3Renderer) {
 				let {videoMastheadAdV3Renderer: _,...masthead}=renderer.masthead;
 				console.log("masthead",masthead);
@@ -926,7 +927,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 * @param {AppendContinuationItemsAction} action
 	 */
 	appendContinuationItemsAction(path,action) {
-		check_item_keys("appendContinuationItemsAction",Object.keys(action));
+		check_item_keys(path,"appendContinuationItemsAction",Object.keys(action));
 		if(this.handleAppendContinuationItemsAction(path,action)) return;
 		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",action,"continuationItems");
 	}
@@ -935,7 +936,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 	 * @param {ReloadContinuationItemsCommand} command
 	 */
 	reloadContinuationItemsCommand(path,command) {
-		check_item_keys("reloadContinuationItemsCommand",Object.keys(command));
+		check_item_keys(path,"reloadContinuationItemsCommand",Object.keys(command));
 		console.log("continue action default",command.targetId);
 		HandleRendererContentItemArray.replace_array(this,path+".continuationItems",command,"continuationItems");
 	}
