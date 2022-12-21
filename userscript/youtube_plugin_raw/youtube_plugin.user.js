@@ -930,7 +930,7 @@ class YTFilterHandlers extends YTIterateAllBase {
 		console.log("continue action default",command.targetId);
 		HandleRendererContentItemArray.replace_array(this,command,"continuationItems");
 	}
-	ok_item_sections=[
+	whitelist_item_sections=[
 		'shelfRenderer',
 		'commentsEntryPointHeaderRenderer',
 		'shelfRenderer',
@@ -943,6 +943,11 @@ class YTFilterHandlers extends YTIterateAllBase {
 		'radioRenderer',
 		'reelShelfRenderer',
 	];
+	blacklist_item_sections=[
+		'promotedSparklesWebRenderer',
+		'compactPromotedVideoRenderer',
+		'searchPyvRenderer',
+	];
 	/**
 	 * @param {string} path
 	 * @param {{ contents: {}[]; }} renderer
@@ -953,14 +958,9 @@ class YTFilterHandlers extends YTIterateAllBase {
 		renderer.contents=renderer.contents.filter((item) => {
 			let keys=Object.keys(item);
 			for(let key of keys) {
-				if(this.ok_item_sections.includes(key)) return true;
-				switch(key) {
-					case 'promotedSparklesWebRenderer': return false;
-					case 'compactPromotedVideoRenderer': return false;
-					default:
-						console.log("filter_handlers: new item section from .contents[].%o",key);
-						return true;
-				}
+				if(this.whitelist_item_sections.includes(key)) return true;
+				if(this.blacklist_item_sections.includes(key)) return false;
+				console.log("filter_handlers: new item section from .contents[].%o",key);
 			}
 			return true;
 		});
