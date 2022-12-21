@@ -761,7 +761,7 @@ class HandleRendererContentItemArray {
 			check_item_keys(path,`.${key}[]`,Object.keys(content_item));
 			if("commentThreadRenderer" in content_item) {
 				return true;
-			} else if("continuationItemRenderer") {
+			} else if("continuationItemRenderer" in content_item) {
 				return true;
 			} else if("richItemRenderer" in content_item) {
 				if(!content_item.richItemRenderer) return true;
