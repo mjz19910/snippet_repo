@@ -795,10 +795,9 @@ class HandleRendererContentItemArray {
 				}
 				console.log('rich shelf',rich_shelf);
 				return true;
-			} else {
-				console.log("don't know what to do with RendererContentItem",content_item);
-				return true;
 			}
+			console.log("don't know what to do with RendererContentItem",content_item);
+			return true;
 		});
 		// don't remove every item
 		if(filtered.length>0) {
