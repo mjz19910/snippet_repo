@@ -687,7 +687,7 @@ function check_item_keys(path,keys) {
 		case '.contents[].richItemRenderer': break;
 		case '.contents[].richItemRenderer.content': break;
 		case 'appendContinuationItemsAction': break;
-		default: console.log("new check_item_keys path [0.0]:",path); break;
+		default: console.log("check_item_keys [0.0]: new path=%o",path); break;
 	}
 	switch(path) {
 		case 'tabRenderer.content.richGridRenderer': {
@@ -699,7 +699,7 @@ function check_item_keys(path,keys) {
 					case 'targetId': continue;
 					case 'reflowOptions': continue;
 				}
-				console.log('len>1 [2.0]: iter content key',path,key);
+				console.log('check_item_keys [1.0]: iter content key',path,key);
 			}
 		} break;
 		case '.contents[].richItemRenderer': {
