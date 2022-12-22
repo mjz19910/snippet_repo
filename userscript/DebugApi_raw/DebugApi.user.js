@@ -96,6 +96,7 @@ add_function(add_object);
 const commit_id_sha1=/* @sha1 */"ce87fbfd";
 // #endregion sha1_hash
 
+// #region parse_javascript_str_support
 /** @template K,V */
 class HashMap {
 	/** @type {Map<K,V>|null} */
@@ -2370,7 +2371,9 @@ class js_token_generator {
 		this.root=new ecma_root(str,0);
 	}
 }
+// #endregion
 
+// #region parse_javascript_str
 /** @arg {string} code_str */
 function parse_javascript_str(code_str) {
 	if("code" in window&&typeof window.code==="string") {
@@ -2402,6 +2405,7 @@ function parse_javascript_str(code_str) {
 	console.log(`parsed ${i} tokens`);
 }
 inject_api.parse_javascript_str=parse_javascript_str;
+// #endregion
 
 
 var api_debug_enabled=false;
