@@ -945,19 +945,19 @@ class FilterHandlers extends IterateApiResultBase {
 		["commentsEntryPointHeaderRenderer",false],
 		["commentsEntryPointHeaderRenderer",false],
 		["compactPlaylistRenderer",false],
+		["compactPromotedVideoRenderer",true/*compact promoted video (is_ads=true)*/],
 		["compactRadioRenderer",false],
 		["compactVideoRenderer",false],
 		["continuationItemRenderer",false],
 		["gridRenderer",false],
 		["playlistRenderer",false],
+		["promotedSparklesWebRenderer",true/*promoted sparkles web (is_ads=true)*/],
 		["radioRenderer",false],
 		["reelShelfRenderer",false],
+		["searchPyvRenderer",true/*ads in search (is_ads=true)*/],
 		["shelfRenderer",false],
 		["shelfRenderer",false],
 		["videoRenderer",false],
-		["compactPromotedVideoRenderer",true],
-		["promotedSparklesWebRenderer",true],
-		["searchPyvRenderer",true],
 	]);
 	/**
 	 * @param {string} path
