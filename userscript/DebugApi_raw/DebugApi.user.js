@@ -16,26 +16,27 @@
 // @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
-//#region Use module constants
+// #region Use module
+// Use module constants
 const DebugApiHolders={
 	/** @type {unique symbol} */
 	InjectApi: Symbol.for("InjectApi"),
 	/** @type {unique symbol} */
 	Repeat_0: Symbol.for("Repeat_0"),
 };
-// #endregion Use module constants
 // Use module types
 /** @type {import("./__global.js")} */
-// #pragma section InjectApi
+// #endregion
+// #region InjectApi
 /** @readonly */
 const InjectApiStr="inject_api";
 /** @type {Exclude<typeof window.inject_api,undefined>} */
 let inject_api={};
 window.inject_api=inject_api;
-// #pragma end InjectApi
+// #endregion InjectApi
 
 
-// #pragma section saved
+// #region saved
 inject_api.saved_function_objects=[];
 /** @param {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
 function add_function(function_obj) {
@@ -88,12 +89,12 @@ function add_object(constructor_,object) {
 	inject_api.saved_instances.push(instance_item);
 }
 add_function(add_object);
-// #pragma end saved
+// #endregion saved
 
 
-// #pragma section sha1_hash
+// #region sha1_hash
 const commit_id_sha1=/*@sha1*/"ce87fbfd";
-// #pragma end sha1_hash
+// #endregion sha1_hash
 
 /** @template K,V */
 class HashMap {

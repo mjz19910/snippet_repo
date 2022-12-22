@@ -1,4 +1,4 @@
-// #pragma section sha1_hash
+// #region sha1_hash
 // @sha1 ce87fbfd
 export const sha1_initial="781ee649";
-// #pragma end sha1_hash
+// #endregion sha1_hash

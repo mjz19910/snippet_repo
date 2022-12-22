@@ -58,7 +58,7 @@ export interface Holder {}
 
 export {};
 
-// #pragma section begin declare_global_sec
+// #region begin declare_global_sec
 // rebuild_the_universe main
 declare global {
 	interface Document {
@@ -164,4 +164,4 @@ declare global {
 	}
 }
 
-// #pragma section end declare_global_sec
+// #region end declare_global_sec
