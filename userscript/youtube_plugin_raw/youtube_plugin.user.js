@@ -1928,17 +1928,6 @@ function start_message_channel_loop() {
 function get_html_elements(node,child_node_tag_name) {
 	return node.getElementsByTagNameNS("http://www.w3.org/1999/xhtml",child_node_tag_name);
 }
-/** @this {DomObserver} @arg {CustomEventType} event */
-function on_yt_page_type_changed(event) {
-	let {detail,port}=event;
-	if(this.trace) console.log("yt-page-type-changed");
-	this.dispatchEvent({
-		type: port_state.current_event_type,
-		detail,
-		port
-	});
-}
-dom_observer.addEventListener("yt-page-type-changed",on_yt_page_type_changed);
 
 function yt_watch_page_loaded_handler() {
 	if(!is_watch_page_active()) {
