@@ -60,7 +60,7 @@ function add_object_with_name(name,object) {
 		name,
 		prototype_meta: proto_meta,
 	};
-	/** @type {SavedInstanceItemGroupType} */
+	/** @type {SavedInstanceSubType} */
 	const instance_obj=[instance_meta,object];
 	/** @type {SavedInstanceType} */
 	const instance_item=[name,instance_obj];
