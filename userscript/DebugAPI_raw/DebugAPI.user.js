@@ -124,7 +124,8 @@ class HashMap {
 	}
 	/** @arg {K} key */
 	get(key) {
-		return this.m_data?.get(key);
+		if(!this.m_data) return;
+		return this.m_data.get(key);
 	}
 	/** @arg {K} key */
 	has(key) {
