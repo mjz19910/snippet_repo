@@ -2774,7 +2774,7 @@ class AddEventListenerExtension {
 	failed_obj=null;
 	/** @private @type {WeakRef<{}>[]} */
 	object_ids=[];
-	/** @private @readonly @type {`__${InjectAPIStr}_${commit_id_sha_1}_namespace`} */
+	/** @private @readonly @type {`__${InjectApiStr}_${commit_id_sha_1}_namespace`} */
 	namespace_key=`__${InjectApiStr}_${commit_id_sha_1}_namespace`;
 	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
