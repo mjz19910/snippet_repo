@@ -3,6 +3,7 @@ import {
 	DebugAPI,
 } from "../DebugAPI.user";
 import {IAddEventListenerExtension} from "./IAddEventListenerExtension";
+import {ICrossOriginConnection} from "./ICrossOriginConnection";
 import {VoidCallback} from "./VoidCallback.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
@@ -228,10 +229,6 @@ declare global {
 		CrossOriginConnection?: {};
 		remote_origin?: ICrossOriginConnection;
 	}
-}
-
-interface ICrossOriginConnection {
-	push_tcp_message(msg: any): void;
 }
 
 // // parse_javascript_str
