@@ -78,6 +78,13 @@ declare global {
 	}
 }
 
+// IterExtensions
+declare global {
+	interface InjectAPI {
+		IterExtensions?: {};
+	}
+}
+
 // // ModuleLoadDbg
 // declare global {
 // 	interface InjectAPI {
@@ -153,13 +160,6 @@ declare global {
 // declare global {
 // 	interface InjectAPI {
 // 		compress_main?: VoidCallback<[CompressionStatsCalculator],void>;
-// 	}
-// }
-
-// // IterExtensions
-// declare global {
-// 	interface InjectAPI {
-// 		IterExtensions?: {};
 // 	}
 // }
 
