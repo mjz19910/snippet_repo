@@ -4022,7 +4022,7 @@ class IDValueImpl_0 {
 	arr_rep_str;
 	/** @type {AnyOrRepeat_0<number>[]} */
 	arr_rep_num;
-	/** @type {} */
+	/** @type {string[]} */
 	arr_str;
 	/** @type {number[]} */
 	arr_num;
