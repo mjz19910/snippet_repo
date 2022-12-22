@@ -5,13 +5,9 @@
 			"ESNext",
 			"DOM"
 		],
-		"types": [],
 		"module": "ESNext",
 		"moduleResolution": "NodeNext",
 		"outDir": "./build",
-		"typeRoots": [
-			"./node_modules/@types"
-		],
 		"allowJs": true,
 		"checkJs": true,
 		"declaration": true,
