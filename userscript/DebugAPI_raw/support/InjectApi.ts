@@ -85,6 +85,41 @@ declare global {
 	}
 }
 
+// getPlaybackRateMap
+declare global {
+	interface InjectAPI {
+		getPlaybackRateMap?: {};
+	}
+}
+
+// CreateObjURLCache
+declare global {
+	interface InjectAPI {
+		CreateObjURLCache?: {};
+	}
+}
+
+// Repeat
+declare global {
+	interface InjectAPI {
+		Repeat?: {};
+	}
+}
+
+// CompressRepeated
+declare global {
+	interface InjectAPI {
+		CompressRepeated?: {};
+	}
+}
+
+// to_tuple_arr
+declare global {
+	interface InjectAPI {
+		to_tuple_arr?: {};
+	}
+}
+
 // // ModuleLoadDbg
 // declare global {
 // 	interface InjectAPI {
@@ -160,41 +195,6 @@ declare global {
 // declare global {
 // 	interface InjectAPI {
 // 		compress_main?: VoidCallback<[CompressionStatsCalculator],void>;
-// 	}
-// }
-
-// // getPlaybackRateMap
-// declare global {
-// 	interface InjectAPI {
-// 		getPlaybackRateMap?: {};
-// 	}
-// }
-
-// // CreateObjURLCache
-// declare global {
-// 	interface InjectAPI {
-// 		CreateObjURLCache?: {};
-// 	}
-// }
-
-// // Repeat
-// declare global {
-// 	interface InjectAPI {
-// 		Repeat?: {};
-// 	}
-// }
-
-// // CompressRepeated
-// declare global {
-// 	interface InjectAPI {
-// 		CompressRepeated?: {};
-// 	}
-// }
-
-// // to_tuple_arr
-// declare global {
-// 	interface InjectAPI {
-// 		to_tuple_arr?: {};
 // 	}
 // }
 
