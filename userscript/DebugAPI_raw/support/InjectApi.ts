@@ -1,6 +1,7 @@
 import {
 	add_function,
 	CompressionStatsCalculator,
+	_DebugApiHolders,
 } from "../DebugAPI.user";
 import {DebugApiType} from "./DebugApiType";
 import {IAddEventListenerExtension} from "./IAddEventListenerExtension";
@@ -9,7 +10,7 @@ import {SavedInstanceType} from "./SavedInstanceType";
 import {VoidCallback} from "./VoidCallback.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
-export {InjectApiHolder} from "../DebugAPI.user.js";
+export const InjectApiHolder=_DebugApiHolders['InjectApi'];
 
 // saved_instances
 declare global {

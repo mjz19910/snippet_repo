@@ -16,13 +16,12 @@
 /* eslint-disable no-undef */
 
 // Use module
-const InjectApiHolder=Symbol.for("InjectApi");
-const RepeatHolder=Symbol.for("Repeat_0");
-/** @type {import("./__global.js").DebugApiHoldersType} */
-const DebugApiHolders=[
-	InjectApiHolder,
-	RepeatHolder,
-];
+const DebugApiHolders={
+	/** @type {unique symbol} */
+	InjectApi: Symbol.for("InjectApi"),
+	/** @type {unique symbol} */
+	Repeat_0: Symbol.for("Repeat_0"),
+};
 /** @type {import("./__global.js")} */
 // #pragma section InjectAPI
 /** @readonly */
@@ -5738,10 +5737,8 @@ if(typeof exports==='object') {
 	exports.CrossOriginConnection=CrossOriginConnection;
 	exports.DebugAPI=DebugAPI;
 	exports.inject_api=inject_api;
-	exports.InjectApiHolder=InjectApiHolder;
 	exports.InjectAPIStr=InjectAPIStr;
 	exports.MulCompression=MulCompression;
 	exports.post_message_connect_message_type=post_message_connect_message_type;
 	exports.random_data_generator=random_data_generator;
-	exports.RepeatHolder=RepeatHolder;
 }
