@@ -8,7 +8,7 @@ import {ICrossOriginConnection} from "./ICrossOriginConnection";
 import {VoidCallback} from "./VoidCallback.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
-export const Holder=Symbol.for("InjectApi");
+export const InjectApiHolder=Symbol.for("InjectApi");
 
 // saved_instances
 declare global {
