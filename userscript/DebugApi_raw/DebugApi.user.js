@@ -2645,7 +2645,7 @@ class ReversePrototypeChain {
 ReversePrototypeChain.attach_to_api();
 
 /** @arg {{}} obj @arg {PropertyKey} key @arg {{}} value */
-function define_normal_value(obj,key,value) {
+function define_property_as_value(obj,key,value) {
 	Object.defineProperty(obj,key,{
 		configurable: true,
 		enumerable: true,
@@ -2706,7 +2706,7 @@ function overwrite_addEventListener(obj) {
 	});
 	prototype.addEventListener=new_target;
 	proxyTargetMap.weak_map.set(new_target,target);
-	define_normal_value(prototype.constructor,"__arg_list_for_add_event_listeners",arg_list);
+	define_property_as_value(prototype.constructor,"__arg_list_for_add_event_listeners",arg_list);
 }
 
 /** @arg {EventListenerOrEventListenerObject} handler */
@@ -2877,7 +2877,7 @@ class AddEventListenerExtension {
 	}
 	/** @private @arg {unknown[]} real_value @arg {number} key @arg {{}|CallableFunction} val @arg {string} namespace */
 	convert_to_id_key(real_value,key,val,namespace) {
-		define_normal_value(val,this.namespace_key,namespace);
+		define_property_as_value(val,this.namespace_key,namespace);
 		this.convert_to_namespaced_string(real_value,val,key,this.add_object_id(val));
 	}
 	/** @private @template {CallableFunction} T @arg {unknown[]} real_value @arg {number} key @arg {T} val */
