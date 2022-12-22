@@ -12,8 +12,13 @@ export const Holder=Symbol.for("InjectApi");
 
 // saved_instances
 declare global {
+	type SavedInstancePrototype={};
+	type SavedInstanceObject={};
+	type SavedInstanceMetaType={name: string;prototype: SavedInstancePrototype};
+	type SavedInstanceType=[SavedInstanceMetaType,SavedInstanceObject];
+	type SavedInstanceItemType=SavedArrayItemType<SavedInstanceType>;
 	interface InjectAPI {
-		saved_instances?: SavedArrayOf<[{name: string;prototype: {}},{}]>;
+		saved_instances?: SavedArrayOf<SavedInstanceType>;
 	}
 }
 

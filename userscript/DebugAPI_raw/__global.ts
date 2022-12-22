@@ -83,7 +83,8 @@ declare global {
 
 // inject_api global
 declare global {
-	type SavedArrayOf<T>=[string, T][];
+	type SavedArrayItemType<T>=[string, T];
+	type SavedArrayOf<T>=SavedArrayItemType<T>[];
 	interface Window {
 		inject_api?: InjectAPI;
 	}
