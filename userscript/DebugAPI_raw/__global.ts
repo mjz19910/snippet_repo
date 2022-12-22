@@ -3,10 +3,7 @@ import {IDValueI_0} from "./support/IDValueI_0.js";
 import {InjectApiHolder,InjectApi} from "./support/InjectApi.js";
 import {Nullable_} from "./support/Nullable.js";
 import {RecordKey_} from "./support/RecordKey.js";
-import {RepeatL_0,RepeatHolder} from "./support/Repeat_0.js";
-
-export class Repeat_0_<T> extends RepeatL_0<T> {
-}
+import {RepeatHolder} from "./support/Repeat_0.js";
 
 declare global {
 	type IDValue_0=IDValueI_0;
@@ -102,11 +99,6 @@ declare global {
 		bind: (this: Function,thisArg: any,...argArray: any[]) => any;
 		call: (this: Function,thisArg: any,...argArray: any[]) => any;
 	};
-}
-
-
-declare global {
-	class Repeat_0<T> extends Repeat_0_<T> {}
 }
 
 declare global {
