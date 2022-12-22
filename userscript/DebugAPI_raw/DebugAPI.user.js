@@ -60,9 +60,9 @@ function add_object_with_name(name,object) {
 		name,
 		prototype_meta: proto_meta,
 	};
-	/** @type {SavedInstanceType} */
+	/** @type {SavedInstanceItemGroupType} */
 	const instance_obj=[instance_meta,object];
-	/** @type {SavedInstanceItemType} */
+	/** @type {SavedInstanceType} */
 	const instance_item=[name,instance_obj];
 	inject_api.saved_instances?.push(instance_item);
 }

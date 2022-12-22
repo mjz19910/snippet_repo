@@ -22,10 +22,10 @@ declare global {
 		name: string;
 		prototype_meta: SavedInstancePrototypeMeta;
 	};
-	type SavedInstanceType=[SavedInstanceMetaType,SavedInstanceObject];
-	type SavedInstanceItemType=SavedArrayItemType<SavedInstanceType>;
+	type SavedInstanceItemGroupType=[SavedInstanceMetaType,SavedInstanceObject];
+	type SavedInstanceType=SavedArrayItemType<SavedInstanceItemGroupType>;
 	interface InjectAPI {
-		saved_instances?: SavedInstanceItemType[];
+		saved_instances?: SavedInstanceType[];
 	}
 }
 
