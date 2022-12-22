@@ -3941,7 +3941,7 @@ function get_ids(value) {
 	return ids.value.indexOf(value);
 }
 
-/**@arg {CompressionStatsCalculator} this_ @arg {IDValue_0} obj */
+/**@arg {CompressionStatsCalculator} this_ @arg {IDValueImpl_0} obj */
 function sorted_comp_stats(this_,obj) {
 	if(obj.arr_str!=null&&obj.stats_win!=null) {
 		/**@type {[string,number][]} */
@@ -3958,7 +3958,7 @@ function sorted_comp_stats(this_,obj) {
 	}
 }
 
-/** @arg {CompressionStatsCalculator} stats @param {IDValue_0} obj */
+/** @arg {CompressionStatsCalculator} stats @param {IDValueImpl_0} obj */
 function calc_cur(stats,obj) {
 	if(!obj.stats_win||obj.arr_str===void 0)
 		return;
@@ -3966,7 +3966,7 @@ function calc_cur(stats,obj) {
 }
 
 class IDValueImpl {
-	/**@arg {number} id @arg {IDValue_0|null} next */
+	/**@arg {number} id @arg {IDValueImpl_0|null} next */
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
@@ -3993,14 +3993,15 @@ class IDValueImpl {
 }
 add_function(IDValueImpl);
 
-/**@arg {IDValue_0} next */
+/**@arg {IDValueImpl_0} next */
 function get_next({next}) {
 	if(next===null)
 		throw new Error("Unexpected type");
 	return next;
 }
 
-class IDValue_0 {
+/** @implements {IDValue_0} */
+class IDValueImpl_0 {
 	/** @template {{}} T @arg {T[]} arr */
 	set_arr_T(arr) {
 		if(arr.length===0)
@@ -4011,7 +4012,7 @@ class IDValue_0 {
 	}
 	/** @type {number} */
 	id;
-	/** @type {IDValue_0|null} */
+	/** @type {IDValueImpl_0|null} */
 	next;
 	/** @type {AltPair<string,number>[]} */
 	arr_dual;
@@ -4036,7 +4037,7 @@ class IDValue_0 {
 	/** @type {[string,number][]} */
 	stats;
 	stats_win=0;
-	/** @arg {number} id @arg {IDValue_0|null} next */
+	/** @arg {number} id @arg {IDValueImpl_0|null} next */
 	constructor(id,next) {
 		this.id=id;
 		this.next=next;
@@ -4092,10 +4093,10 @@ class DoCalc {
 			this.br_obj.stats_win++;
 			this.obj.stats_win++;
 			calc_cur(this.stats,this.br_obj);
-			this.br_next=new IDValue_0(this.obj.id+1,this.br_obj);
+			this.br_next=new IDValueImpl_0(this.obj.id+1,this.br_obj);
 			this.br_res=calc_next(this.stats,this.br_obj,max_id.value);
 			calc_cur(this.stats,this.obj);
-			this.next=new IDValue_0(this.obj.id+1,this.br_obj);
+			this.next=new IDValueImpl_0(this.obj.id+1,this.br_obj);
 			this.res=calc_next(this.stats,this.obj,max_id.value);
 			if(!this.br_next.arr_str) continue;
 			let cd=br_st-this.br_next.arr_str.length;
@@ -4105,7 +4106,7 @@ class DoCalc {
 	}
 	/**
 	 * @param {CompressionStatsCalculator} stats
-	 * @param {IDValue_0} obj
+	 * @param {IDValueImpl_0} obj
 	 */
 	constructor(stats,obj) {
 		this.stats=stats;
@@ -4143,10 +4144,10 @@ class DoCalc {
 				this.br_obj.stats_win++;
 				this.obj.stats_win++;
 				calc_cur(stats,this.br_obj);
-				this.br_next=new IDValue_0(this.obj.id+1,this.br_obj);
+				this.br_next=new IDValueImpl_0(this.obj.id+1,this.br_obj);
 				this.br_res=calc_next(stats,this.br_obj,max_id.value);
 				calc_cur(stats,this.obj);
-				this.next=new IDValue_0(this.obj.id+1,this.br_obj);
+				this.next=new IDValueImpl_0(this.obj.id+1,this.br_obj);
 				this.res=calc_next(stats,this.obj,max_id.value);
 				if(!this.br_next.arr_str) continue;
 				let cd=br_st-this.br_next.arr_str.length;
@@ -4197,7 +4198,7 @@ class CompressDual {
 
 /**
  * @param {CompressionStatsCalculator} stats
- * @param {IDValue_0} obj
+ * @param {IDValueImpl_0} obj
  * @param {number} max_id
  */
 function calc_next(stats,obj,max_id) {
@@ -4209,7 +4210,7 @@ function calc_next(stats,obj,max_id) {
 	if(!obj.next) {
 		return null;
 	}
-	/**@type {IDValue_0} */
+	/**@type {IDValueImpl_0} */
 	let next=obj;
 	next.value=[max_id,'=',rep_val];
 	next.log_val=[max_id,'=',f_val[0],f_val[1]];
@@ -4237,15 +4238,15 @@ function calc_next(stats,obj,max_id) {
 }
 
 /**
- * @param {IDValue_0} value
- * @param {IDValue_0} next
+ * @param {IDValueImpl_0} value
+ * @param {IDValueImpl_0} next
  */
 function assign_next(value,next) {
 	value.next=next;
 	return next;
 }
 add_function(assign_next);
-/**@implements {IDValue_0} */
+/**@implements {IDValueImpl_0} */
 class Value {
 	set_arr_T() {}
 	/** @type {AltPair<AnyOrRepeat_0<string>,AnyOrRepeat_0<number>>[]} */
@@ -4282,14 +4283,14 @@ class Value {
 add_function(Value);
 
 let max_id={value: 0};
-/** @param {IDValue_0} obj @param {CompressionStatsCalculator} stats */
+/** @param {IDValueImpl_0} obj @param {CompressionStatsCalculator} stats */
 function run_calc(stats,obj) {
 	let calc_value=new DoCalc(stats,obj);
 	let res=calc_value.get_result();
 	if(!res) return [false,null];
 	return [true,res];
 }
-/** @param {IDValue_0} obj */
+/** @param {IDValueImpl_0} obj */
 function flat_obj(obj) {
 	let ret=[];
 	while(obj.next) {
@@ -4301,7 +4302,7 @@ function flat_obj(obj) {
 	return ret;
 }
 /**
- * @type {{value:IDValue_0[]}}
+ * @type {{value:IDValueImpl_0[]}}
  */
 let g_obj_arr={value: []};
 
@@ -4559,7 +4560,7 @@ function compress_main(stats) {
 	max_id.value=new Set(el_ids.value).size;
 	let disabled_com=new DisabledMulCompression;
 	let arr=disabled_com.try_compress_T(el_ids.value);
-	let obj_start=new IDValue_0(0,null);
+	let obj_start=new IDValueImpl_0(0,null);
 	obj_start.arr_rep=el_ids.value;
 	if(arr[0]===true) {
 		obj_start.arr_rep_num=arr[1];
@@ -4575,7 +4576,7 @@ function compress_main(stats) {
 		if(cur.stats.length===0) break;
 		if(cur.stats[0][1]===1) break;
 		if(!cur.next) break;
-		if(!(cur.next instanceof IDValue_0)) {
+		if(!(cur.next instanceof IDValueImpl_0)) {
 			throw new Error("Don't know how to use this type (cur.next is not IDValue_0)");
 		}
 		cur=cur.next;

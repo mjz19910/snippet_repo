@@ -1,8 +1,14 @@
 import {post_message_connect_message_type} from "./DebugAPI.user.js";
+import {IDValue_0 as IDValue_0_import} from "./support/IDValueI_0.js";
 import {InjectApiHolder,InjectApi} from "./support/InjectApi.js";
 import {Nullable_} from "./support/Nullable.js";
 import {RecordKey_} from "./support/RecordKey.js";
 import {RepeatHolder} from "./support/Repeat_0.js";
+
+declare global {
+	type IDValue_0=IDValue_0_import;
+	var IDValue_0: typeof IDValue_0_import;
+}
 
 declare global {
 	type Nullable<T>=Nullable_<T>;
