@@ -49,19 +49,22 @@ inject_api.add_array=add_array;
 inject_api.saved_instances=[];
 /** @param {string} name @arg {{}} object */
 function add_object_with_name(name,object) {
-	const c={
-		name,
-		prototype: {
-			/**@type {"any_from_prototype_of"}*/
-			_tag: "any_from_prototype_of",
-			value: Object.getPrototypeOf(object),
-		},
+	/** @type {SavedInstancePrototypeMeta} */
+	const proto_meta={
+		/**@type {"any_from_prototype_of"}*/
+		_tag: "any_from_prototype_of",
+		prototype: Object.getPrototypeOf(object),
 	};
-	/** @type {[typeof c,{}]} */
-	const b=[c,object];
-	/** @type {[string,typeof b]} */
-	const a=[name,b];
-	inject_api.saved_instances?.push(a);
+	/** @type {SavedInstanceMetaType} */
+	const instance_meta={
+		name,
+		prototype_meta: proto_meta,
+	};
+	/** @type {SavedInstanceType} */
+	const instance_obj=[instance_meta,object];
+	/** @type {SavedInstanceItemType} */
+	const instance_item=[name,instance_obj];
+	inject_api.saved_instances?.push(instance_item);
 }
 inject_api.add_object_with_name=add_object_with_name;
 // #pragma end saved
