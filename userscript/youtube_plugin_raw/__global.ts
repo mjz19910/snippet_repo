@@ -2,10 +2,10 @@ import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 // YtdPageManagerElement
 declare global {
-	class YtdPageManagerElement extends HTMLElement {
+	interface YtdPageManagerElement extends HTMLElement {
 		getCurrentPage(): YtCurrentPage;
 	}
-	class YtCurrentPage extends HTMLElement {
+	interface YtCurrentPage extends HTMLElement {
 		getPlayer(): YTDPlayerElement;
 	}
 }
@@ -41,7 +41,7 @@ declare global {
 	}|{
 		continuationItemRenderer: ContinuationItemRenderer;
 	};
-	class WatchNextContinuationAction {
+	interface WatchNextContinuationAction {
 		targetId: "watch-next-feed";
 		continuationItems: WatchNextItem[];
 	}
@@ -61,14 +61,14 @@ declare global {
 
 // RendererContentItem
 declare global {
-	class RichGridRenderer {
+	interface RichGridRenderer {
 		masthead: {
 			[str: string]: {}|undefined;
 			videoMastheadAdV3Renderer?: {};
 		};
 		contents: RendererContentItem[];
 	}
-	class RichShelfRenderer {
+	interface RichShelfRenderer {
 		icon: {
 			iconType: string;
 		}|null;
@@ -78,13 +78,13 @@ declare global {
 			}[];
 		};
 	}
-	class RichSectionRenderer {
+	interface RichSectionRenderer {
 		content: {
 			richShelfRenderer: RichShelfRenderer;
 		};
 	}
 
-	class RichItemRenderer {
+	interface RichItemRenderer {
 		content: {
 			adSlotRenderer?: {};
 		};
