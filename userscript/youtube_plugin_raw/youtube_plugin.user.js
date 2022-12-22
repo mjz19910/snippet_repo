@@ -1752,6 +1752,7 @@ async function async_plugin_init(event) {
 			found_element_count++;
 			on_yt_playlist_manager(target_element);
 		}
+		// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
 		x: {
 			if(ytd_watch_flexy) break x;
 			if(!ytd_page_manager) break x;
@@ -1762,7 +1763,6 @@ async function async_plugin_init(event) {
 				current_page_element.__has_theater_handler_plugin=true;
 			}
 			console.log("PageManager:current_page:"+current_page_element.tagName.toLowerCase());
-			// BEGIN(ytd-watch-flexy): obj.dispatchEvent({type: "find-ytd-watch-flexy",detail,port});
 			if(current_page_element.tagName!="YTD-WATCH-FLEXY") {
 				/** @type {Promise<void>} */
 				let promise=new Promise((accept) => {
