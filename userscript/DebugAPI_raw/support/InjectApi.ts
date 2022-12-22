@@ -2,7 +2,9 @@ import {
 	CompressionStatsCalculator,
 	DebugAPI,
 } from "../DebugAPI.user";
-import {VoidCallbackWith} from "./VoidCallbackWith";
+import {IAddEventListenerExtension} from "./IAddEventListenerExtension";
+import {VoidCallback} from "./VoidCallback.js";
+import {VoidCallbackWith} from "./VoidCallbackWith.js";
 
 export const Holder=Symbol.for("InjectApi");
 
@@ -157,6 +159,27 @@ declare global {
 	}
 }
 
+// range_matches
+declare global {
+	interface InjectAPI {
+		range_matches?: {};
+	}
+}
+
+// DoCalc
+declare global {
+	interface InjectAPI {
+		DoCalc?: {};
+	}
+}
+
+// compress_main
+declare global {
+	interface InjectAPI {
+		compress_main?: VoidCallback<[CompressionStatsCalculator],void>;
+	}
+}
+
 // declare global {
 // 	class ICrossOriginConnection {
 // 		push_tcp_message(msg: any): void;
@@ -185,13 +208,6 @@ declare global {
 // 	}
 // }
 
-// // DoCalc
-// declare global {
-// 	interface InjectAPI {
-// 		DoCalc?: {};
-// 	}
-// }
-
 // // any_api_logger
 // declare global {
 // 	interface InjectAPI {
@@ -203,20 +219,6 @@ declare global {
 // declare global {
 // 	interface InjectAPI {
 // 		parse_html_to_binary_arr?: (html: string) => unknown[];
-// 	}
-// }
-
-// // compress_main
-// declare global {
-// 	interface InjectAPI {
-// 		compress_main?: VoidCallback<[CompressionStatsCalculator],void>;
-// 	}
-// }
-
-// // range_matches
-// declare global {
-// 	interface InjectAPI {
-// 		range_matches?: {};
 // 	}
 // }
 
@@ -263,10 +265,9 @@ declare global {
 // 	}
 // }
 
-// export interface IAddEventListenerExtension {
-// 	elevate_handler(x: any): void;
-// }
-
+declare global {
+	type DebugApiType=typeof DebugAPI;
+}
 // // DebugAPI
 // declare global {
 // 	interface InjectAPI {
