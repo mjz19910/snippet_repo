@@ -12,6 +12,7 @@ export class Repeat_0<T> {
 		this.times=times;
 	}
 }
+
 const Ty=Repeat_0;
 type TyT<T>=Repeat_0<T>;
 
