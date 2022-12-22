@@ -3442,10 +3442,10 @@ class DisabledMulCompression extends MulCompression {
 }
 inject_api.DisabledMulCompression=DisabledMulCompression;
 
-
+/** @typedef {"apply"|"bind"|"call"} DI0 */
 /**
- * @arg {(key:"apply"|"bind"|"call")=>void} bound_function
- * @arg {("apply"|"bind"|"call"|symbol)[]} keys
+ * @arg {(key:DI0)=>void} bound_function
+ * @arg {DI0[]} keys
  */
 function do_iter(bound_function,keys) {
 	for(let key of keys) {
