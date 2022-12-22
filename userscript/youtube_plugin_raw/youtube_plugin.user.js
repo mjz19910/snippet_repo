@@ -1730,6 +1730,7 @@ async function async_plugin_init(event) {
 		}
 		VolumeRange.create_if_needed();
 		cur_count++;
+		// BEGIN(ytd-app)
 		x: {
 			if(ytd_app) break x;
 			const target_element=get_html_elements(document,"ytd-app")[0];
@@ -1737,7 +1738,8 @@ async function async_plugin_init(event) {
 			found_element_count++;
 			on_ytd_app(target_element);
 		}
-		// obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
+		// END(ytd-app)
+		// BEGIN(ytd-page-manager): obj.dispatchEvent({type: "find-ytd-page-manager",detail,port});
 		x: {
 			if(ytd_page_manager) break x;
 			const target_element=get_html_elements(document,"ytd-page-manager")[0];
@@ -1745,6 +1747,8 @@ async function async_plugin_init(event) {
 			found_element_count++;
 			on_ytd_page_manager(target_element);
 		}
+		// END(ytd-page-manager)
+		// BEGIN(yt-playlist-manager)
 		x: {
 			if(yt_playlist_manager) break x;
 			const target_element=get_html_elements(document,"yt-playlist-manager")[0];
