@@ -143,6 +143,13 @@ declare global {
 	}
 }
 
+// function_as_string_vec
+declare global {
+	interface InjectAPI {
+		function_as_string_vec?: string[];
+	}
+}
+
 // declare global {
 // 	class ICrossOriginConnection {
 // 		push_tcp_message(msg: any): void;
@@ -203,13 +210,6 @@ declare global {
 // declare global {
 // 	interface InjectAPI {
 // 		range_matches?: {};
-// 	}
-// }
-
-// // function_as_string_vec
-// declare global {
-// 	interface InjectAPI {
-// 		function_as_string_vec?: string[];
 // 	}
 // }
 
