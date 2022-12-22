@@ -15,6 +15,11 @@
 
 console=window.console;
 
+
+// #section Use module types
+/** @type {import("./__global.js")} */
+// #section end
+
 /** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
 /** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 let inject_api=window.inject_api??{};

@@ -16,13 +16,15 @@
 // @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
-// Use module
+//#region Use module constants
 const DebugApiHolders={
 	/** @type {unique symbol} */
 	InjectApi: Symbol.for("InjectApi"),
 	/** @type {unique symbol} */
 	Repeat_0: Symbol.for("Repeat_0"),
 };
+// #endregion Use module constants
+// Use module types
 /** @type {import("./__global.js")} */
 // #pragma section InjectApi
 /** @readonly */
@@ -35,9 +37,7 @@ window.inject_api=inject_api;
 
 // #pragma section saved
 inject_api.saved_function_objects=[];
-/**
- * @param {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj
- */
+/** @param {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj */
 function add_function(function_obj) {
 	if(!inject_api.saved_function_objects) return;
 	inject_api.saved_function_objects.push([function_obj.name,function_obj]);
