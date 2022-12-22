@@ -6,14 +6,15 @@ import {RemoteOriginConnection} from "./RemoteOriginConnection";
 
 export class LocalHandler {
 	m_side: OriginConnectionSide="server";
-	m_root;
 	m_timeout_id: ReturnType<typeof setTimeout>|null=null;
 	m_elevation_id: number|null=null;
 	m_connection_port: MessagePort|null=null;
 	m_remote_side_connected=false;
 	m_tries_left=0;
 	m_reconnecting=false;
-	m_connection_timeout;
+	constructor(private m_root: RemoteOriginConnection,private m_connection_timeout: number) {
+		elevate_event_handler(this);
+	}
 	start_reconnect() {
 		this.m_root.request_new_port(this);
 		this.m_timeout_id=setTimeout(
@@ -135,10 +136,5 @@ export class LocalHandler {
 		}
 		if(this.m_elevation_id)
 			this.m_root.clear_elevation_by_id(this.m_elevation_id);
-	}
-	constructor(connection_timeout: number,root: RemoteOriginConnection) {
-		this.m_connection_timeout=connection_timeout;
-		this.m_root=root;
-		elevate_event_handler(this);
 	}
 }
