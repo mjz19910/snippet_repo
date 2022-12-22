@@ -778,7 +778,6 @@ class HandleRendererContentItemArray {
 			} else if("commentsHeaderRenderer" in content_item) {
 				return true;
 			} else if("richItemRenderer" in content_item) {
-				if(!content_item.richItemRenderer) return true;
 				check_item_keys(path,".contents[].richItemRenderer",Object.keys(content_item.richItemRenderer));
 				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
 				let {content}=content_item.richItemRenderer;
