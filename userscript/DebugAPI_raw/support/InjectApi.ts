@@ -32,6 +32,20 @@ declare global {
 	}
 }
 
+// add_array
+declare global {
+	interface InjectAPI {
+		add_array?: {};
+	}
+}
+
+// add_object_with_name
+declare global {
+	interface InjectAPI {
+		add_object_with_name?: {};
+	}
+}
+
 // LoggingEventTarget
 declare global {
 	interface InjectAPI {
