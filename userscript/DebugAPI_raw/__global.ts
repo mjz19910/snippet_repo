@@ -1,6 +1,6 @@
 import {post_message_connect_message_type} from "./DebugAPI.user.js";
 import {IDValueI_0} from "./support/IDValueI_0.js";
-import {IInjectAPI_} from "./support/IInjectAPI.js";
+import {Holder as InjectApiHolder} from "./support/InjectApi.js";
 import {Nullable_} from "./support/Nullable.js";
 import {RecordKey_} from "./support/RecordKey.js";
 import {RepeatL_0} from "./support/Repeat_0.js";
@@ -84,10 +84,6 @@ declare global {
 // inject_api global
 declare global {
 	type SavedArrayOf<T>=[string, T][];
-
-	interface InjectAPI extends IInjectAPI_ {
-		saved_instances?: SavedArrayOf<[{name: string;},{}]>;
-	}
 	interface Window {
 		inject_api?: InjectAPI;
 	}
@@ -282,6 +278,10 @@ declare global {
 		__arg_list_for_add_event_listeners: arg_list_item_type[][];
 	}
 }
+
+export const DebugApiHolders=[
+	InjectApiHolder,
+];
 
 // WeakRef
 declare global {
