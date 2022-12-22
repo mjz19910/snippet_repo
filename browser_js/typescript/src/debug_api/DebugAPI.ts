@@ -12,16 +12,16 @@ import {GenericDataEvent} from "./GenericDataEvent.js";
 
 declare global {
 	interface Window {
-		DebugAPI: DebugAPI;
+		DebugApi: DebugApi;
 		GenericDataEvent: typeof GenericDataEvent;
 	}
 }
 
-export class DebugAPI {
+export class DebugApi {
 	static hex_generator=new HexRandomDataGenerator();
 	static static_event_target=new GenericEventTarget();
-	static the_instance: DebugAPI|null=null;
-	static the(): DebugAPI {
+	static the_instance: DebugApi|null=null;
+	static the(): DebugApi {
 		if(!this.the_instance) {
 			this.the_instance=new this;
 		}
@@ -29,9 +29,9 @@ export class DebugAPI {
 	}
 	next_remote_id=0;
 	data_store: Map<string,any>=new Map;
-	event_handler=DebugAPI.static_event_target;
-	root: DebugAPI|null=null;
-	constructor(root: DebugAPI|null=null) {
+	event_handler=DebugApi.static_event_target;
+	root: DebugApi|null=null;
+	constructor(root: DebugApi|null=null) {
 		if(root) {
 			this.root=root;
 		} else {
@@ -105,9 +105,9 @@ export class DebugAPI {
 	}
 	debuggerBreakpointCode() {
 		bp_code: {
-			if(!window.DebugAPI) break bp_code;
-			if(!window.DebugAPI.getData('__k')) break bp_code;
-			window.DebugAPI.getData('__k')!.get=(__v) => {
+			if(!window.DebugApi) break bp_code;
+			if(!window.DebugApi.getData('__k')) break bp_code;
+			window.DebugApi.getData('__k')!.get=(__v) => {
 				if(__v=='__v') {
 					return {type: 'hidden-var',var: __v};
 				}
@@ -117,8 +117,8 @@ export class DebugAPI {
 					return {type: 'no-var',data: null};
 				}
 			};
-			window.DebugAPI.getData('__k')!.valid=true;
-			if(!window.DebugAPI.clearCurrentBreakpoint()) {
+			window.DebugApi.getData('__k')!.valid=true;
+			if(!window.DebugApi.clearCurrentBreakpoint()) {
 				console.log("failed to clear breakpoint");
 			}
 		}
@@ -170,7 +170,7 @@ export class DebugAPI {
 			}
 		}
 		let vars_arr=sr.map(e => String.fromCharCode(e));
-		let rng_bytes=Array(5).fill('').map(() => DebugAPI.hex_generator.next_byte()).join('');
+		let rng_bytes=Array(5).fill('').map(() => DebugApi.hex_generator.next_byte()).join('');
 		this.current_debug_data=debug_data;
 		let breakpoint_code_string=this.stringifyFunction(this.debuggerBreakpointCode);
 		breakpoint_code_string=breakpoint_code_string.replaceAll('__v','__v_'+rng_bytes);
@@ -242,7 +242,7 @@ export class DebugAPI {
 				data: null
 			};
 		}
-		let rng_bytes=Array(5).fill('').map(() => DebugAPI.hex_generator.next_byte()).join('');
+		let rng_bytes=Array(5).fill('').map(() => DebugApi.hex_generator.next_byte()).join('');
 		this.current_debug_data=debug_data;
 		let dbg_str_func=this.stringifyFunction(this.debuggerBreakpointCode);
 		dbg_str_func=dbg_str_func.replaceAll('__v','__v_'+rng_bytes);

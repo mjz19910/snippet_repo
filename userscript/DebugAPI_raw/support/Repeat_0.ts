@@ -1,4 +1,4 @@
-import {_DebugApiHolders} from "../DebugAPI.user.js";
+import {_DebugApiHolders} from "../DebugApi.user.js";
 
 export const RepeatHolder=_DebugApiHolders['Repeat_0'];
 

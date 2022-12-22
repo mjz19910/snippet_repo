@@ -16,7 +16,7 @@ import {CSSCascade} from "../src/CSSCascade.js";
 import {OriginState} from "../src/OriginState.js";
 import {APIProxyManager} from "../src/debug_api/APIProxyManager.js";
 import {LoggingEventTarget} from "../src/debug_api/LoggingEventTarget.js";
-import {DebugAPI} from "../src/debug_api/DebugAPI.js";
+import {DebugApi} from "../src/debug_api/DebugApi.js";
 import {GenericEventTarget} from "../src/GenericEventTarget.js";
 import {GenericEvent} from "../src/GenericEvent.js";
 import {VoidCallbackWith} from "./VoidCallbackWith.js";
@@ -24,7 +24,7 @@ import {PluginOverlayElement} from "../../youtube_plugin/player_plugin_activate/
 import {CompressionStatsCalculator} from "./CompressionStatsCalculator.js";
 import {RemoteOriginConnection} from "../src/RemoteOriginConnection.js";
 
-// DebugAPI
+// DebugApi
 declare global {
 	interface GlobalApiObject {
 		// yt plugin
@@ -67,6 +67,6 @@ declare global {
 		ConnectToRemoteOrigin?: typeof RemoteOriginConnection;
 		APIProxyManager?: typeof APIProxyManager;
 		LoggingEventTarget?: typeof LoggingEventTarget;
-		DebugAPI?: typeof DebugAPI;
+		DebugApi?: typeof DebugApi;
 	}
 }

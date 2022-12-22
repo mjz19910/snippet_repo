@@ -769,13 +769,13 @@ async function kernel_main() {
 				let {debug,undebug,getEventListeners}=rt_state.dbg
 				let fn=getEventListeners(btn).click[0].listener
 				// @ts-ignore
-				let res=DebugAPI.get_event_listener_var_vec_1(debug,undebug,fn,'o')
+				let res=DebugApi.get_event_listener_var_vec_1(debug,undebug,fn,'o')
 				let res_value=res.result.detail.value
 				// @ts-ignore
 				String.prototype.parseFunctionString=function() {
 					let str=this.valueOf()
 					// @ts-ignore
-					let token_generator=DebugAPI.simple_js_parser.token_generator
+					let token_generator=DebugApi.simple_js_parser.token_generator
 					token_generator.set_str(str)
 					token_generator.reset()
 					// @ts-ignore
@@ -803,7 +803,7 @@ async function kernel_main() {
 				let c_name=fn_ref_vec[1]
 				let func=res_value.fns
 				// @ts-ignore
-				let __d=DebugAPI._PrivInstance
+				let __d=DebugApi._PrivInstance
 				__d.attach(debug,undebug,null)
 				/**
 				 * @param {(this: any, ...args: readonly any[]) => any} func

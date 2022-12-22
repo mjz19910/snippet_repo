@@ -15,7 +15,7 @@
 
 console=window.console;
 
-/** @typedef {import("../DebugAPI_raw/DebugAPI.user").InjectApiStr} */
+/** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} */
 /** @type {Exclude<typeof window[typeof InjectApiStr],undefined>} */
 let inject_api=window.inject_api??{};
 
@@ -2583,7 +2583,7 @@ class VolumeRange {
 }
 function main() {
 	if(!window.inject_api) {
-		throw new Error("Loaded before DebugAPI");
+		throw new Error("Loaded before DebugApi");
 	}
 	start_message_channel_loop();
 }

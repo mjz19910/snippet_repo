@@ -2,7 +2,7 @@ import {
 	add_function,
 	CompressionStatsCalculator,
 	_DebugApiHolders,
-} from "../DebugAPI.user";
+} from "../DebugApi.user";
 import {DebugApiType} from "./DebugApiType";
 import {IAddEventListenerExtension} from "./IAddEventListenerExtension";
 import {ICrossOriginConnection} from "./ICrossOriginConnection";
@@ -257,10 +257,10 @@ declare global {
 	}
 }
 
-// DebugAPI
+// DebugApi
 declare global {
 	interface InjectApi {
-		DebugAPI?: DebugApiType;
+		DebugApi?: DebugApiType;
 	}
 }
 

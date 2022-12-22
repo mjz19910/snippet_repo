@@ -18,8 +18,8 @@
 // @grant			none
 // ==/UserScript==
 
-import {CompressDual} from "../DebugAPI/types/CompressDual";
-import {CompressStateBase} from "../DebugAPI/types/CompressStateBase";
+import {CompressDual} from "../DebugApi/types/CompressDual";
+import {CompressStateBase} from "../DebugApi/types/CompressStateBase";
 
 export interface AbstractVM {
 	halt(): void;

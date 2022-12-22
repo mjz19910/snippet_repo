@@ -1,4 +1,4 @@
-import {InjectApiStr as InjectApiStr_} from "../DebugAPI_raw/DebugAPI.user";
+import {InjectApiStr as InjectApiStr_} from "../DebugApi_raw/DebugApi.user";
 
 // YtdPageManagerElement
 declare global {

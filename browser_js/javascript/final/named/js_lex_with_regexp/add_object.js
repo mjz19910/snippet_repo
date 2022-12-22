@@ -1,4 +1,4 @@
-import {inject_api} from "../../../../typescript/modules/DebugAPI/types/inject_api";
+import {inject_api} from "../../../../typescript/modules/DebugApi/types/inject_api.js";
 
 inject_api.saved_instances=[];
 

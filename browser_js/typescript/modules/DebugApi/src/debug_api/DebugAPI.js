@@ -6,15 +6,15 @@ import {RustTokenTreeParser} from "./RustTokenTreeParser";
 const static_event_target=new GenericEventTarget;
 const random_data_generator=new HexRandomDataGenerator;
 
-export class DebugAPI {
+export class DebugApi {
 	next_remote_id=0;
 	data_store=new Map;
 	event_handler=static_event_target;
 	static udp_like_remote_origin_connection=new RemoteOriginConnection();
 	static token_tree_parser=new RustTokenTreeParser;
-	/**@type {DebugAPI|null} */
+	/**@type {DebugApi|null} */
 	static m_the=null;
-	/**@returns {DebugAPI} */
+	/**@returns {DebugApi} */
 	static the() {
 		if(!this.m_the) {
 			this.m_the=new this;
@@ -104,7 +104,7 @@ export class DebugAPI {
 		return Reflect.apply(function_value,target_obj,arg_vec);
 	}
 	debuggerBreakpointCode() {
-		window.g_api.DebugAPI&&(window.g_api.DebugAPI.the().getData("__k").get=(/** @type {string} */ __v) => {
+		window.g_api.DebugApi&&(window.g_api.DebugApi.the().getData("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {
 					type: 'eval-hidden-var',
@@ -123,7 +123,7 @@ export class DebugAPI {
 				};
 			}
 		});
-		if(window.g_api.DebugAPI&&!window.g_api.DebugAPI.the().clearCurrentBreakpoint()) {
+		if(window.g_api.DebugApi&&!window.g_api.DebugApi.the().clearCurrentBreakpoint()) {
 			console.log("failed to clear breakpoint");
 		}
 		0;

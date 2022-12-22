@@ -1,15 +1,15 @@
 // ==UserScript==
-// @name         DebugAPI/src/mod.ts userscript
+// @name         DebugApi/src/mod.ts userscript
 // @namespace    http://tampermonkey.net/
 // @version      0.1.0
-// @description  DebugAPI/src/mod.ts userscript snippet from https://github.com/mjz19910/snippet_repo/raw/master/browser_js/typescript/modules/DebugAPI/src/mod.ts
+// @description  DebugApi/src/mod.ts userscript snippet from https://github.com/mjz19910/snippet_repo/raw/master/browser_js/typescript/modules/DebugApi/src/mod.ts
 // @author       @mjz19910
 // @match        https://*/*
 // @match        http://*/*
 // @run-at       document-start
 // @grant        none
-// @updateURL    https://github.com/mjz19910/snippet_repo/raw/master/browser_js/typescript/modules/DebugAPI/src/mod.meta.ts
-// @downloadURL  https://github.com/mjz19910/snippet_repo/raw/master/browser_js/typescript/modules/DebugAPI/src/mod.ts
+// @updateURL    https://github.com/mjz19910/snippet_repo/raw/master/browser_js/typescript/modules/DebugApi/src/mod.meta.ts
+// @downloadURL  https://github.com/mjz19910/snippet_repo/raw/master/browser_js/typescript/modules/DebugApi/src/mod.ts
 // ==/UserScript==
 /* Copyright 2019-2022 @mjz19910 */
 /* eslint-disable no-undef */
@@ -19,7 +19,7 @@ import {CompressRepeated} from "./CompressRepeated";
 import {compress_main} from "./compress_main";
 import {CreateObjURLCache} from "./CreateObjURLCache";
 import {CSSCascade} from "./CSSCascade";
-import {DebugAPI} from "./debug_api/DebugAPI";
+import {DebugApi} from "./debug_api/DebugApi";
 import {Dumper} from "./Dumper";
 import {EventListenerValue} from "./EventListenerValue";
 import {GenericDataEvent} from "./GenericDataEvent";
@@ -76,5 +76,5 @@ export function main() {
 	g_api.any_api_logger=new APIProxyManager(new LoggingEventTarget);
 	g_api.LoggingEventTarget=LoggingEventTarget;
 	g_api.parse_html_to_binary_arr=parse_html_to_binary_arr;
-	g_api.DebugAPI=DebugAPI;
+	g_api.DebugApi=DebugApi;
 }

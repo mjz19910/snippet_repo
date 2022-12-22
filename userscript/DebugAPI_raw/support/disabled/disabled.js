@@ -1,4 +1,4 @@
-import {random_data_generator} from "../../DebugAPI.user";
+import {random_data_generator} from "../../DebugApi.user";
 
 export function disable_vars() {
 		let rng_bytes=Array(5).fill('').map(() => random_data_generator.next_byte()).join('');

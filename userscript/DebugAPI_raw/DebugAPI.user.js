@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name		DebugAPI userscript
+// @name		DebugApi userscript
 // @namespace	https://github.com/mjz19910/
 // @version		0.1.2.7
-// @description	DebugAPI.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugAPI_raw/DebugAPI.user.js
+// @description	DebugApi.js from https://github.com/mjz19910/snippet_repo/blob/master/userscript/DebugApi_raw/DebugApi.user.js
 // @author		@mjz19910
 // @copyright   @mjz19910 2019-2022
 // @match		https://*/*
 // @match		http://*/*
 // @run-at		document-start
 // @grant		none
-// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugAPI_raw/DebugAPI.meta.js
-// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugAPI_raw/DebugAPI.user.js
+// @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugApi_raw/DebugApi.meta.js
+// @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugApi_raw/DebugApi.user.js
 // ==/UserScript==
 // @sha1		aa975a29
 /* eslint-disable no-undef */
@@ -5521,7 +5521,7 @@ class DebugApi {
 	}
 	/** @returns {void} */
 	debuggerBreakpointCode() {
-		window.inject_api?.DebugAPI&&(window.inject_api.DebugAPI.the().get_k("__k").get=(/** @type {string} */ __v) => {
+		window.inject_api?.DebugApi&&(window.inject_api.DebugApi.the().get_k("__k").get=(/** @type {string} */ __v) => {
 			if(__v==='__v') {
 				return {type: 'eval-hidden-var'};
 			}
@@ -5534,8 +5534,8 @@ class DebugApi {
 				return {type: 'no-var'};
 			}
 		});
-		if(window.inject_api?.DebugAPI) {
-			if(!window.inject_api.DebugAPI.the().clearCurrentBreakpoint()) {
+		if(window.inject_api?.DebugApi) {
+			if(!window.inject_api.DebugApi.the().clearCurrentBreakpoint()) {
 				console.log("failed to clear breakpoint");
 			}
 		} else {
@@ -5775,7 +5775,7 @@ class DebugApi {
 		};
 	}
 }
-inject_api.DebugAPI=DebugApi;
+inject_api.DebugApi=DebugApi;
 
 function get_exports() {
 	return exports;
