@@ -66,9 +66,10 @@ inject_api.add_object_with_name=add_object_with_name;
 /** @template {{}} U @template {new (...args: any) => U} T @param {T} constructor_ @arg {U} object */
 function add_object(constructor_,object) {
 	const name=constructor_.name;
+	/** @type {MetaTagForConstructor} */
 	const instance_meta={
-		/**@type {"constructor"}*/
-		_tag: "constructor",
+		/**@type {"for_constructor"}*/
+		_tag: "for_constructor",
 		name,
 		constructor_meta: constructor_,
 	};
