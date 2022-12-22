@@ -150,6 +150,13 @@ declare global {
 	}
 }
 
+// CompressionStatsCalculator
+declare global {
+	interface InjectAPI {
+		CompressionStatsCalculator?: {};
+	}
+}
+
 // declare global {
 // 	class ICrossOriginConnection {
 // 		push_tcp_message(msg: any): void;
@@ -210,13 +217,6 @@ declare global {
 // declare global {
 // 	interface InjectAPI {
 // 		range_matches?: {};
-// 	}
-// }
-
-// // CompressionStatsCalculator
-// declare global {
-// 	interface InjectAPI {
-// 		CompressionStatsCalculator?: {};
 // 	}
 // }
 
