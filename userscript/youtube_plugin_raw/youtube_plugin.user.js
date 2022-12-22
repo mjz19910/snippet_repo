@@ -15,8 +15,8 @@
 
 console=window.console;
 
-/** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} */
-/** @type {Exclude<typeof window[typeof InjectApiStr],undefined>} */
+/** @typedef {import("../DebugApi_raw/DebugApi.user").InjectApiStr} InjectApiStr */
+/** @type {Exclude<typeof window[InjectApiStr],undefined>} */
 let inject_api=window.inject_api??{};
 
 inject_api.saved_maps=new Map;

@@ -1,5 +1,3 @@
-import {InjectApiStr as InjectApiStr_} from "../DebugApi_raw/DebugApi.user";
-
 // YtdPageManagerElement
 declare global {
 	interface YtdPageManagerElementInterface extends HTMLElement {
