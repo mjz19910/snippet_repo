@@ -1463,6 +1463,12 @@ function get_ytd_page_manager() {
 	throw new Error("No ytd_page_manager");
 }
 
+/** @implements {YtdPageManagerElementInterface} */
+class YtdPageManagerElement extends HTMLElement {
+	/** @returns {YtCurrentPage} */
+	getCurrentPage() {throw 1;}
+}
+
 /** @type {(()=>void)[]}*/
 let on_ytd_page_mgr_found=[];
 
@@ -1751,7 +1757,7 @@ async function async_plugin_init(event) {
 			if(!ytd_page_manager) break x;
 			let current_page_element=ytd_page_manager.getCurrentPage();
 			if(!current_page_element) break x;
-			if('__has_theater_handler_plugin' in current_page_element) {} else {
+			if(typeof current_page_element.__has_theater_handler_plugin==='undefined') {} else {
 				current_page_element.addEventListener("yt-set-theater-mode-enabled",update_ui_plugin);
 				current_page_element.__has_theater_handler_plugin=true;
 			}

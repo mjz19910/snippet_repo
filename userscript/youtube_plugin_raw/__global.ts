@@ -2,11 +2,12 @@ import {InjectAPIStr as InjectAPIStr_} from "../DebugAPI_raw/DebugAPI.user";
 
 // YtdPageManagerElement
 declare global {
-	interface YtdPageManagerElement extends HTMLElement {
+	interface YtdPageManagerElementInterface extends HTMLElement {
 		getCurrentPage(): YtCurrentPage;
 	}
 	interface YtCurrentPage extends HTMLElement {
 		getPlayer(): YTDPlayerElement;
+		__has_theater_handler_plugin: boolean|undefined;
 	}
 }
 
