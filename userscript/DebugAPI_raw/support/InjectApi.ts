@@ -16,6 +16,9 @@ declare global {
 	type SavedInstancePrototypeMeta={
 		_tag:"any_from_prototype_of";
 		prototype:SavedInstancePrototype;
+	}|{
+		_tag:"constructor";
+		constructor: new ()=>{};
 	};
 	type SavedInstanceObject={};
 	type SavedInstanceMetaType={

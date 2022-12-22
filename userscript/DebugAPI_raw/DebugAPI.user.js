@@ -67,6 +67,27 @@ function add_object_with_name(name,object) {
 	inject_api.saved_instances?.push(instance_item);
 }
 inject_api.add_object_with_name=add_object_with_name;
+/** @template {{}} U @template {new (...args: any) => U} T @param {T} constructor_ @arg {U} object */
+function add_object(constructor_,object) {
+	const name=constructor_.name;
+	/** @type {SavedInstancePrototypeMeta} */
+	const proto_meta={
+		/**@type {"constructor"}*/
+		_tag: "constructor",
+		constructor: constructor_,
+	};
+	/** @type {SavedInstanceMetaType} */
+	const instance_meta={
+		name,
+		prototype_meta: proto_meta,
+	};
+	/** @type {SavedInstanceSubType} */
+	const instance_obj=[instance_meta,object];
+	/** @type {SavedInstanceType} */
+	const instance_item=[name,instance_obj];
+	inject_api.saved_instances?.push(instance_item);
+}
+add_function(add_object);
 // #pragma end saved
 
 
