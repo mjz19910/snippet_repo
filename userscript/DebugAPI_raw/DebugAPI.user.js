@@ -5727,21 +5727,21 @@ function get_exports() {
 
 if(typeof exports==='object') {
 	let exports=get_exports();
-	exports.inject_api=inject_api;
-	exports.add_function=add_function;
-	exports.DebugAPI=DebugAPI;
-	exports.post_message_connect_message_type=post_message_connect_message_type;
-	exports.CrossOriginConnection=CrossOriginConnection;
-	exports.CompressionStatsCalculator=CompressionStatsCalculator;
-	exports.InjectAPIStr=InjectAPIStr;
-	exports.AddEventListenerExtension=AddEventListenerExtension;
-	exports.random_data_generator=random_data_generator;
-	exports.CompressDual=CompressDual;
-	exports.BaseCompression=BaseCompression;
-	exports.CompressStateBase=CompressStateBase;
-	exports.MulCompression=MulCompression;
-	exports.CompressState=CompressState;
 	exports._DebugApiHolders=DebugApiHolders;
+	exports.add_function=add_function;
+	exports.AddEventListenerExtension=AddEventListenerExtension;
+	exports.BaseCompression=BaseCompression;
+	exports.CompressDual=CompressDual;
+	exports.CompressionStatsCalculator=CompressionStatsCalculator;
+	exports.CompressState=CompressState;
+	exports.CompressStateBase=CompressStateBase;
+	exports.CrossOriginConnection=CrossOriginConnection;
+	exports.DebugAPI=DebugAPI;
+	exports.inject_api=inject_api;
 	exports.InjectApiHolder=InjectApiHolder;
+	exports.InjectAPIStr=InjectAPIStr;
+	exports.MulCompression=MulCompression;
+	exports.post_message_connect_message_type=post_message_connect_message_type;
+	exports.random_data_generator=random_data_generator;
 	exports.RepeatHolder=RepeatHolder;
 }
