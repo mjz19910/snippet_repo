@@ -127,13 +127,13 @@ declare global {
 	}
 }
 
-// // run_wasm_plugin
-// declare global {
-// 	interface InjectAPI {
-// 		run_modules_plugin?: VoidCallbackWith<() => void>;
-// 		run_wasm_plugin?: VoidCallbackWith<() => void>;
-// 	}
-// }
+// run_wasm_plugin
+declare global {
+	interface InjectAPI {
+		run_modules_plugin?: VoidCallbackWith<() => void>;
+		run_wasm_plugin?: VoidCallbackWith<() => void>;
+	}
+}
 
 // // ModuleLoadDbg
 // declare global {
