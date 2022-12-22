@@ -1,12 +1,4 @@
-import {SavedInstancePrototype} from "./SavedInstancePrototype";
-import {SavedInstanceObject} from "./SavedInstanceObject";
+import {MetaTagForPrototypeOf} from "./MetaTagForPrototypeOf";
+import {MetaTagForConstructor} from "./MetaTagForConstructor";
 
-export type SavedInstanceMetaType={
-	_tag: "any_from_prototype_of";
-	name: string;
-	prototype_meta: SavedInstancePrototype;
-}|{
-	_tag: "constructor";
-	name: string;
-	constructor_meta: new () => SavedInstanceObject;
-};
+export type SavedInstanceMetaType=MetaTagForPrototypeOf|MetaTagForConstructor;
