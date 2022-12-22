@@ -13,7 +13,7 @@ export const Holder=Symbol.for("InjectApi");
 // saved_instances
 declare global {
 	interface InjectAPI {
-		saved_instances?: SavedArrayOf<[{name: string;},{}]>;
+		saved_instances?: SavedArrayOf<[{name: string;prototype: {}},{}]>;
 	}
 }
 
@@ -24,17 +24,11 @@ declare global {
 	}
 }
 
-// saved_objects
-declare global {
-	interface InjectAPI {
-		saved_function_objects?: [string,{name: string;}][];
-	}
-}
-
-// saved_objects
+// add_function
 declare global {
 	interface InjectAPI {
 		add_function?: typeof add_function;
+		saved_function_objects?: [string,{name: string;}][];
 	}
 }
 

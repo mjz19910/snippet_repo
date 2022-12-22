@@ -44,13 +44,14 @@ function add_array(ids_dec) {
 	if(!inject_api.saved_object_arrays) return;
 	inject_api.saved_object_arrays.push(ids_dec);
 }
+inject_api.add_array=add_array;
 
 inject_api.saved_instances=[];
-/** @param {{ name: string; }} constructable @arg {{}} object */
-function add_object(constructable,object) {
-	inject_api.saved_instances?.push([constructable.name,[constructable,object]]);
+/** @param {string} name @arg {{}} object */
+function add_object_with_name(name,object) {
+	inject_api.saved_instances?.push([name,[{name,prototype: Object.getPrototypeOf(object)},object]]);
 }
-add_function(add_object);
+inject_api.add_object_with_name=add_object_with_name;
 // #pragma end saved
 
 
@@ -2370,7 +2371,7 @@ inject_api.parse_javascript_str=parse_javascript_str;
 var api_debug_enabled=false;
 
 const base_console=window.console;
-add_object({name: "Console"},base_console);
+add_object_with_name("Console",base_console);
 
 /** @type {Console} */
 var console={...window.console};
