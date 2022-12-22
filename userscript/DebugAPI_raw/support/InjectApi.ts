@@ -1,7 +1,7 @@
 import {
 	CompressionStatsCalculator,
-	DebugAPI,
 } from "../DebugAPI.user";
+import {DebugApiType} from "./DebugApiType";
 import {IAddEventListenerExtension} from "./IAddEventListenerExtension";
 import {ICrossOriginConnection} from "./ICrossOriginConnection";
 import {VoidCallback} from "./VoidCallback.js";
@@ -245,6 +245,13 @@ declare global {
 	}
 }
 
+// DebugAPI
+declare global {
+	interface InjectAPI {
+		DebugAPI?: DebugApiType;
+	}
+}
+
 // // any_api_logger
 // declare global {
 // 	interface InjectAPI {
@@ -259,14 +266,3 @@ declare global {
 // 		RustSimpleParser?: {};
 // 	}
 // }
-
-declare global {
-	type DebugApiType=typeof DebugAPI;
-}
-// // DebugAPI
-// declare global {
-// 	interface InjectAPI {
-// 		DebugAPI?: typeof DebugAPI;
-// 	}
-// }
-
