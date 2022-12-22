@@ -49,16 +49,12 @@ inject_api.add_array=add_array;
 inject_api.saved_instances=[];
 /** @param {string} name @arg {{}} object */
 function add_object_with_name(name,object) {
-	/** @type {SavedInstancePrototypeMeta} */
-	const proto_meta={
-		/**@type {"any_from_prototype_of"}*/
-		_tag: "any_from_prototype_of",
-		prototype: Object.getPrototypeOf(object),
-	};
 	/** @type {SavedInstanceMetaType} */
 	const instance_meta={
+		/**@type {"any_from_prototype_of"}*/
+		_tag: "any_from_prototype_of",
 		name,
-		prototype_meta: proto_meta,
+		prototype: Object.getPrototypeOf(object),
 	};
 	/** @type {SavedInstanceSubType} */
 	const instance_obj=[instance_meta,object];
@@ -70,16 +66,12 @@ inject_api.add_object_with_name=add_object_with_name;
 /** @template {{}} U @template {new (...args: any) => U} T @param {T} constructor_ @arg {U} object */
 function add_object(constructor_,object) {
 	const name=constructor_.name;
-	/** @type {SavedInstancePrototypeMeta} */
-	const proto_meta={
-		/**@type {"constructor"}*/
-		_tag: "constructor",
-		constructor: constructor_,
-	};
 	/** @type {SavedInstanceMetaType} */
 	const instance_meta={
+		/**@type {"constructor"}*/
+		_tag: "constructor",
 		name,
-		prototype_meta: proto_meta,
+		constructor: constructor_,
 	};
 	/** @type {SavedInstanceSubType} */
 	const instance_obj=[instance_meta,object];

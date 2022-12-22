@@ -13,17 +13,15 @@ export const Holder=Symbol.for("InjectApi");
 // saved_instances
 declare global {
 	type SavedInstancePrototype={};
-	type SavedInstancePrototypeMeta={
+	type SavedInstanceObject={};
+	type SavedInstanceMetaType={
 		_tag:"any_from_prototype_of";
+		name: string;
 		prototype:SavedInstancePrototype;
 	}|{
 		_tag:"constructor";
-		constructor: new ()=>{};
-	};
-	type SavedInstanceObject={};
-	type SavedInstanceMetaType={
 		name: string;
-		prototype_meta: SavedInstancePrototypeMeta;
+		constructor: new ()=>SavedInstanceObject;
 	};
 	type SavedInstanceSubType=[SavedInstanceMetaType,SavedInstanceObject];
 	type SavedInstanceType=SavedArrayItemType<SavedInstanceSubType>;
