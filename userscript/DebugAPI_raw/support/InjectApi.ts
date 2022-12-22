@@ -136,12 +136,12 @@ declare global {
 	}
 }
 
-// // ModuleLoadDbg
-// declare global {
-// 	interface InjectAPI {
-// 		ModuleLoadDbg?: {};
-// 	}
-// }
+// ModuleLoadDbg
+declare global {
+	interface InjectAPI {
+		ModuleLoadDbg?: {};
+	}
+}
 
 // declare global {
 // 	class ICrossOriginConnection {
