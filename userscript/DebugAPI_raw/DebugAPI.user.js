@@ -54,7 +54,7 @@ function add_object_with_name(name,object) {
 		/**@type {"any_from_prototype_of"}*/
 		_tag: "any_from_prototype_of",
 		name,
-		prototype: Object.getPrototypeOf(object),
+		prototype_meta: Object.getPrototypeOf(object),
 	};
 	/** @type {SavedInstanceSubType} */
 	const instance_obj=[instance_meta,object];
@@ -71,7 +71,7 @@ function add_object(constructor_,object) {
 		/**@type {"constructor"}*/
 		_tag: "constructor",
 		name,
-		constructor: constructor_,
+		constructor_meta: constructor_,
 	};
 	/** @type {SavedInstanceSubType} */
 	const instance_obj=[instance_meta,object];

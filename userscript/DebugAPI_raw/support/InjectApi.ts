@@ -17,11 +17,11 @@ declare global {
 	type SavedInstanceMetaType={
 		_tag:"any_from_prototype_of";
 		name: string;
-		prototype:SavedInstancePrototype;
+		prototype_meta:SavedInstancePrototype;
 	}|{
 		_tag:"constructor";
 		name: string;
-		constructor: new ()=>SavedInstanceObject;
+		constructor_meta: new ()=>SavedInstanceObject;
 	};
 	type SavedInstanceSubType=[SavedInstanceMetaType,SavedInstanceObject];
 	type SavedInstanceType=SavedArrayItemType<SavedInstanceSubType>;
