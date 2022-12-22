@@ -120,17 +120,17 @@ declare global {
 	}
 }
 
+// DisabledMulCompression
+declare global {
+	interface InjectAPI {
+		DisabledMulCompression?: {};
+	}
+}
+
 // // ModuleLoadDbg
 // declare global {
 // 	interface InjectAPI {
 // 		ModuleLoadDbg?: {};
-// 	}
-// }
-
-// // DisabledMulCompression
-// declare global {
-// 	interface InjectAPI {
-// 		DisabledMulCompression?: {};
 // 	}
 // }
 
