@@ -2447,7 +2447,7 @@ class ApiProxyManager {
 		window.postMessage=this.create_proxy_for_function('postMessage_sent',window.postMessage);
 	}
 	static do_postMessage_logging=true;
-	static attach_api() {
+	static attach_to_api() {
 		inject_api.ApiProxyManager=this;
 		let any_api_logger=new this(new LoggingEventTarget);
 		inject_api.any_api_logger=any_api_logger;
@@ -2455,7 +2455,7 @@ class ApiProxyManager {
 		any_api_logger.start_postMessage_proxy();
 	}
 }
-ApiProxyManager.attach_api();
+ApiProxyManager.attach_to_api();
 
 class ReversePrototypeChain {
 	/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
