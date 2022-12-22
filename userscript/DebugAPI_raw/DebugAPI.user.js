@@ -2418,7 +2418,7 @@ class LoggingEventTarget {
 }
 inject_api.LoggingEventTarget=LoggingEventTarget;
 
-class APIProxyManager {
+class ApiProxyManager {
 	/**
 	 * @param {LoggingEventTarget} event_handler
 	 */
@@ -2450,14 +2450,14 @@ class APIProxyManager {
 	}
 	static do_postMessage_logging=true;
 	static attach_api() {
-		inject_api.APIProxyManager=this;
+		inject_api.ApiProxyManager=this;
 		let any_api_logger=new this(new LoggingEventTarget);
 		inject_api.any_api_logger=any_api_logger;
 		if(!this.do_postMessage_logging) return;
 		any_api_logger.start_postMessage_proxy();
 	}
 }
-APIProxyManager.attach_api();
+ApiProxyManager.attach_api();
 
 class ReversePrototypeChain {
 	/** @typedef {{__proto__:null,prototypes:destination_index_type[],values:{}[]}} destination_child_type */
