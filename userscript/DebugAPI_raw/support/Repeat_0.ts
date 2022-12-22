@@ -1,3 +1,4 @@
+export const RepeatHolder=Symbol.for("Repeat_0");
 /** @template T */
 export class RepeatL_0<T> {
 	value: T;

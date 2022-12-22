@@ -3,7 +3,7 @@ import {IDValueI_0} from "./support/IDValueI_0.js";
 import {InjectApiHolder,InjectApi} from "./support/InjectApi.js";
 import {Nullable_} from "./support/Nullable.js";
 import {RecordKey_} from "./support/RecordKey.js";
-import {RepeatL_0} from "./support/Repeat_0.js";
+import {RepeatL_0,RepeatHolder} from "./support/Repeat_0.js";
 
 export class Repeat_0_<T> extends RepeatL_0<T> {
 }
@@ -279,8 +279,9 @@ declare global {
 	}
 }
 
-export const DebugApiHolders=[
-	InjectApiHolder,
+export type DebugApiHolders=[
+	typeof InjectApiHolder,
+	typeof RepeatHolder,
 ];
 
 // WeakRef
