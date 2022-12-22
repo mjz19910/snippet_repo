@@ -231,12 +231,12 @@ declare global {
 	}
 }
 
-// // parse_javascript_str
-// declare global {
-// 	interface InjectAPI {
-// 		parse_javascript_str?: ((str: string) => void);
-// 	}
-// }
+// parse_javascript_str
+declare global {
+	interface InjectAPI {
+		parse_javascript_str?: ((str: string) => void);
+	}
+}
 
 // // any_api_logger
 // declare global {
