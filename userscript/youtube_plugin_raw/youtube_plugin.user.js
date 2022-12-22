@@ -677,12 +677,6 @@ class IterateApiResultBase {
  */
 function check_item_keys(real_path,path,keys) {
 	path=path.replace("continuationItems[]","contents[]");
-	/**@type {string[]|string|null} */
-	x: if(keys.length===2) {
-		if(path===".contents[].richItemRenderer") break x;
-		if(path==="appendContinuationItemsAction") break x;
-		console.log("item_keys_tag [ci_1_10] "+real_path+": extra keys",path,keys);
-	}
 	switch(path) {
 		case "tabRenderer.content.richGridRenderer": break;
 		case ".contents[]": break;
@@ -696,9 +690,9 @@ function check_item_keys(real_path,path,keys) {
 		case "reloadContinuationItemsCommand": {
 			for(let key of keys) {
 				switch(key) {
-					case "continuationItems": continue;
-					case 'slot': continue;
-					case "targetId": continue;
+					case "continuationItems": break;
+					case 'slot': break;
+					case "targetId": break;
 				}
 				console.log("item_keys_tag [ci_3_10_] "+real_path+": iter content key",path,key);
 			}
@@ -706,8 +700,8 @@ function check_item_keys(real_path,path,keys) {
 		case "appendContinuationItemsAction": {
 			for(let key of keys) {
 				switch(key) {
-					case "continuationItems": continue;
-					case "targetId": continue;
+					case "continuationItems": break;
+					case "targetId": break;
 				}
 				console.log("item_keys_tag [ci_3_20_] "+real_path+": iter content key",path,key);
 			}
@@ -715,11 +709,11 @@ function check_item_keys(real_path,path,keys) {
 		case "tabRenderer.content.richGridRenderer": {
 			for(let key of keys) {
 				switch(key) {
-					case "contents": continue;
-					case "trackingParams": continue;
-					case "header": continue;
-					case "targetId": continue;
-					case "reflowOptions": continue;
+					case "contents": break;
+					case "trackingParams": break;
+					case "header": break;
+					case "targetId": break;
+					case "reflowOptions": break;
 				}
 				console.log("item_keys_tag [ci_3_30_] "+real_path+": iter content key",path,key);
 			}
@@ -727,14 +721,14 @@ function check_item_keys(real_path,path,keys) {
 		case ".contents[]": {
 			for(let key of keys) {
 				switch(key) {
-					case "commentsHeaderRenderer": continue;
-					case "commentThreadRenderer": continue;
-					case "compactPlaylistRenderer": continue;
-					case "compactRadioRenderer": continue;
-					case "compactVideoRenderer": continue;
-					case "continuationItemRenderer": continue;
-					case "itemSectionRenderer": continue;
-					case "richItemRenderer": continue;
+					case "commentsHeaderRenderer": break;
+					case "commentThreadRenderer": break;
+					case "compactPlaylistRenderer": break;
+					case "compactRadioRenderer": break;
+					case "compactVideoRenderer": break;
+					case "continuationItemRenderer": break;
+					case "itemSectionRenderer": break;
+					case "richItemRenderer": break;
 				}
 				console.log("item_keys_tag [ci_3_40_] "+real_path+": iter content key",path,key);
 			}
@@ -780,6 +774,8 @@ class HandleRendererContentItemArray {
 				switch(key) {
 					case "commentsHeaderRenderer": break;
 					case "commentThreadRenderer": return_=true; break;
+					case "compactPlaylistRenderer": continue;
+					case "compactRadioRenderer": continue;
 					case "compactVideoRenderer": break;
 					case "continuationItemRenderer": break;
 					case "itemSectionRenderer": return_=true; break;
