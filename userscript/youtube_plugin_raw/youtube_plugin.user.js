@@ -810,7 +810,7 @@ class HandleRendererContentItemArray {
 				console.log("rich shelf",rich_shelf);
 				return true;
 			}
-			console.log("don't know what to do with RendererContentItem",content_item);
+			console.log("RendererContentItem: new item type",content_item);
 			return true;
 		});
 		// don't remove every item
