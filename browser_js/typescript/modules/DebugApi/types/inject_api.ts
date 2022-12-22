@@ -2,7 +2,7 @@ import {EventListenersT} from "../src/EventListenersT";
 
 // saved_objects
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		saved_instances?: [string,{name: string;},{}][];
 		parse_javascript_str?: (code_str: string) => void;
 		saved_objects?: [string,{name: string;}][];
@@ -10,14 +10,14 @@ declare global {
 }
 
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		RemoteOriginConnection?: {};
 		remote_origin?: {};
 	}
 }
 
 declare global {
-	interface InjectAPI {
+	interface InjectApi {
 		elevate_event_handlers?: ((arg0: EventListenersT) => void)[];
 	}
 }
@@ -25,10 +25,10 @@ declare global {
 // inject_api global
 declare global {
 	interface Window {
-		inject_api?: InjectAPI;
+		inject_api?: InjectApi;
 	}
 }
 
-export const inject_api: InjectAPI={};
+export const inject_api: InjectApi={};
 
 export {};

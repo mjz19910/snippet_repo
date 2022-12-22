@@ -48,7 +48,7 @@ declare global {
 	}
 }
 
-// InjectAPI['saved_maps']
+// InjectApi['saved_maps']
 declare global {
 	interface InjectApi {
 		saved_maps?: Map<string,Map<string,{}>>;
