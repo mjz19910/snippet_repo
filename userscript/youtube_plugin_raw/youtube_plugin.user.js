@@ -801,7 +801,7 @@ class HandleRendererContentItemArray {
 			if("richSectionRenderer" in content_item) {
 				let renderer=content_item.richSectionRenderer;
 				if(!("richShelfRenderer" in renderer.content)) {
-					console.log("rich section",renderer.content);
+					console.log("rich section content",renderer.content);
 					return true;
 				}
 				let rich_shelf=renderer.content.richShelfRenderer;
