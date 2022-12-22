@@ -26,14 +26,14 @@ declare global {
 // saved_objects
 declare global {
 	interface InjectAPI {
-		saved_objects?: [string,{name: string;}][];
+		saved_function_objects?: [string,{name: string;}][];
 	}
 }
 
 // saved_objects
 declare global {
 	interface InjectAPI {
-		add_function?: (callable: {name: string;}) => void;
+		add_function?: (callable: ()=>any) => void;
 	}
 }
 

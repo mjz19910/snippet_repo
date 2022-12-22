@@ -27,14 +27,14 @@ window.inject_api=inject_api;
 
 
 // #pragma section saved
-inject_api.saved_objects=[];
+inject_api.saved_function_objects=[];
 /**
- * @param {{ name: string; }} callable
+ * @param {((...x:any[])=>{}|null|undefined)|(new (...x:any[])=>{})} function_obj
  */
-function add_function(callable) {
+function add_function(function_obj) {
 	if(!inject_api) return;
-	if(!inject_api.saved_objects) return;
-	inject_api.saved_objects.push([callable.name,callable]);
+	if(!inject_api.saved_function_objects) return;
+	inject_api.saved_function_objects.push([function_obj.name,function_obj]);
 }
 inject_api.add_function=add_function;
 
