@@ -9,11 +9,11 @@ import {ConnectionFlags} from "./ConnectionFlags";
 import {cast_to_object, cast_to_record_with_key_and_string_type, cast_to_record_with_string_type} from "./cast_to_object";
 import {inject_api} from "../types/inject_api";
 
-// @Update on minor version change
-// version <4.9.13 commit sha1
-const sha_1_initial="781ee649";
+// @sha1		ce87fbfd
+// @hash_for_version typescript_DebugApi.1.0.0
+const sha1_initial="781ee649";
 
-export const post_message_connect_message_type=`ConnectOverPostMessage_${sha_1_initial}` as const;
+export const post_message_connect_message_type=`ConnectOverPostMessage_${sha1_initial}` as const;
 
 export class RemoteOriginConnection {
 	m_flags=new ConnectionFlags;

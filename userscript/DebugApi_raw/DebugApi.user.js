@@ -12,7 +12,8 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugApi_raw/DebugApi.meta.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugApi_raw/DebugApi.user.js
 // ==/UserScript==
-// @sha1		aa975a29
+// @sha1		ce87fbfd
+// @hash_for_version 0.1.2
 /* eslint-disable no-undef */
 
 // Use module
@@ -90,11 +91,9 @@ add_function(add_object);
 // #pragma end saved
 
 
-// #pragma section sha_1_hash
-// @Update on minor version change
-// version <0.1.1.x commit sha1
-const commit_id_sha_1="453fc540";
-// #pragma end sha_1_hash
+// #pragma section sha1_hash
+const commit_id_sha1=/*@sha1*/"ce87fbfd";
+// #pragma end sha1_hash
 
 /** @template K,V */
 class HashMap {
@@ -2774,8 +2773,8 @@ class AddEventListenerExtension {
 	failed_obj=null;
 	/** @private @type {WeakRef<{}>[]} */
 	object_ids=[];
-	/** @private @readonly @type {`__${InjectApiStr}_${commit_id_sha_1}_namespace`} */
-	namespace_key=`__${InjectApiStr}_${commit_id_sha_1}_namespace`;
+	/** @private @readonly @type {`__${InjectApiStr}_${commit_id_sha1}_namespace`} */
+	namespace_key=`__${InjectApiStr}_${commit_id_sha1}_namespace`;
 	/** @type {EventListenersT[]} */
 	elevated_event_handlers=[];
 	/** @private */
@@ -4802,8 +4801,8 @@ add_function(cast_to_record_with_key_and_string_type);
 //#endregion
 
 
-/** @readonly @type {`CrossOriginConnection_${typeof commit_id_sha_1}`} */
-const post_message_connect_message_type=`CrossOriginConnection_${commit_id_sha_1}`;
+/** @readonly @type {`CrossOriginConnection_${typeof commit_id_sha1}`} */
+const post_message_connect_message_type=`CrossOriginConnection_${commit_id_sha1}`;
 
 class FlagHandler {
 	is_none() {

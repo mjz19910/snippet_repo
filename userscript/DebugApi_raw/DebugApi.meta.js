@@ -12,5 +12,5 @@
 // @updateURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugApi_raw/DebugApi.meta.js
 // @downloadURL	https://github.com/mjz19910/snippet_repo/raw/master/userscript/DebugApi_raw/DebugApi.user.js
 // ==/UserScript==
-// @sha1		aa975a29
+// @sha1		ce87fbfd
 /* eslint-disable no-undef */
