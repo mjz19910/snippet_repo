@@ -238,17 +238,17 @@ declare global {
 	}
 }
 
+// parse_html_to_binary_arr
+declare global {
+	interface InjectAPI {
+		parse_html_to_binary_arr?: (html: string) => unknown[];
+	}
+}
+
 // // any_api_logger
 // declare global {
 // 	interface InjectAPI {
 // 		any_api_logger?: {};
-// 	}
-// }
-
-// // parse_html_to_binary_arr
-// declare global {
-// 	interface InjectAPI {
-// 		parse_html_to_binary_arr?: (html: string) => unknown[];
 // 	}
 // }
 
