@@ -729,6 +729,8 @@ function check_item_keys(real_path,path,keys) {
 				switch(key) {
 					case "commentsHeaderRenderer": continue;
 					case "commentThreadRenderer": continue;
+					case "compactPlaylistRenderer": continue;
+					case "compactRadioRenderer": continue;
 					case "compactVideoRenderer": continue;
 					case "continuationItemRenderer": continue;
 					case "itemSectionRenderer": continue;
@@ -771,16 +773,21 @@ class HandleRendererContentItemArray {
 		let arr=obj[key];
 		if(!arr) return;
 		let filtered=arr.filter((content_item) => {
-			check_item_keys(path,`.${key}[]`,Object.keys(content_item));
-			if("commentThreadRenderer" in content_item) {
-				return true;
-			} else if("continuationItemRenderer" in content_item) {
-				return true;
-			} else if("commentsHeaderRenderer" in content_item) {
-				return true;
-			} else if("compactVideoRenderer" in content_item) {
-				return true;
-			} else if("richItemRenderer" in content_item) {
+			let keys=Object.keys(content_item);
+			check_item_keys(path,`.${key}[]`,keys);
+			let return_=null;
+			for(let key of keys) {
+				switch(key) {
+					case "commentsHeaderRenderer": continue;
+					case "commentThreadRenderer": continue;
+					case "compactVideoRenderer": continue;
+					case "continuationItemRenderer": continue;
+					case "itemSectionRenderer": return_=true; break;
+					case "richItemRenderer": break;
+				}
+			}
+			if(return_!==null) return true;
+			if("richItemRenderer" in content_item) {
 				check_item_keys(path,".contents[].richItemRenderer",Object.keys(content_item.richItemRenderer));
 				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
 				let {content}=content_item.richItemRenderer;
@@ -790,7 +797,8 @@ class HandleRendererContentItemArray {
 					return false;
 				}
 				return true;
-			} else if("richSectionRenderer" in content_item) {
+			}
+			if("richSectionRenderer" in content_item) {
 				let renderer=content_item.richSectionRenderer;
 				if(!("richShelfRenderer" in renderer.content)) {
 					console.log("rich section",renderer.content);
