@@ -778,6 +778,8 @@ class HandleRendererContentItemArray {
 				return true;
 			} else if("commentsHeaderRenderer" in content_item) {
 				return true;
+			} else if("compactVideoRenderer" in content_item) {
+				return true;
 			} else if("richItemRenderer" in content_item) {
 				check_item_keys(path,".contents[].richItemRenderer",Object.keys(content_item.richItemRenderer));
 				console.assert(content_item.richItemRenderer.content!=void 0,"richItemRenderer has content");
