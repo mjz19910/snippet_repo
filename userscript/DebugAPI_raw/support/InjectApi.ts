@@ -33,6 +33,51 @@ declare global {
 	}
 }
 
+// LoggingEventTarget
+declare global {
+	interface InjectAPI {
+		LoggingEventTarget?: {};
+	}
+}
+
+// APIProxyManager
+declare global {
+	interface InjectAPI {
+		APIProxyManager?: {};
+	}
+}
+
+// ReversePrototypeChain
+declare global {
+	interface InjectAPI {
+		ReversePrototypeChain?: {};
+		reversePrototypeChain?: {};
+	}
+}
+
+// ProxyTargetMap
+declare global {
+	interface InjectAPI {
+		ProxyTargetMap?: {};
+		proxyTargetMap?: {};
+	}
+}
+
+// elevate_event_handlers
+declare global {
+	interface InjectAPI {
+		elevate_event_handlers?: {}[];
+	}
+}
+
+// AddEventListenerExtension
+declare global {
+	interface InjectAPI {
+		AddEventListenerExtension?: {};
+		addEventListenerExtension?: IAddEventListenerExtension;
+	}
+}
+
 // // ModuleLoadDbg
 // declare global {
 // 	interface InjectAPI {
@@ -68,21 +113,6 @@ declare global {
 // 	}
 // }
 
-// // elevate_event_handlers
-// declare global {
-// 	interface InjectAPI {
-// 		elevate_event_handlers?: {}[];
-// 	}
-// }
-
-// // ProxyTargetMap
-// declare global {
-// 	interface InjectAPI {
-// 		ProxyTargetMap?: {};
-// 		proxyTargetMap?: {};
-// 	}
-// }
-
 // // parse_javascript_str
 // declare global {
 // 	interface InjectAPI {
@@ -94,14 +124,6 @@ declare global {
 // declare global {
 // 	interface InjectAPI {
 // 		DoCalc?: {};
-// 	}
-// }
-
-// // ReversePrototypeChain
-// declare global {
-// 	interface InjectAPI {
-// 		ReversePrototypeChain?: {};
-// 		reversePrototypeChain?: {};
 // 	}
 // }
 
@@ -240,30 +262,8 @@ declare global {
 // 	}
 // }
 
-// // APIProxyManager
-// declare global {
-// 	interface InjectAPI {
-// 		APIProxyManager?: {};
-// 	}
-// }
-
-// // LoggingEventTarget
-// declare global {
-// 	interface InjectAPI {
-// 		LoggingEventTarget?: {};
-// 	}
-// }
-
-// // AddEventListenerExtension
 // export interface IAddEventListenerExtension {
 // 	elevate_handler(x: any): void;
-// }
-
-// declare global {
-// 	interface InjectAPI {
-// 		AddEventListenerExtension?: {};
-// 		addEventListenerExtension?: IAddEventListenerExtension;
-// 	}
 // }
 
 // // DebugAPI
