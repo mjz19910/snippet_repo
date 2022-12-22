@@ -778,12 +778,13 @@ class HandleRendererContentItemArray {
 			let return_=null;
 			for(let key of keys) {
 				switch(key) {
-					case "commentsHeaderRenderer": continue;
-					case "commentThreadRenderer": continue;
-					case "compactVideoRenderer": continue;
-					case "continuationItemRenderer": continue;
+					case "commentsHeaderRenderer": break;
+					case "commentThreadRenderer": return_=true; break;
+					case "compactVideoRenderer": break;
+					case "continuationItemRenderer": break;
 					case "itemSectionRenderer": return_=true; break;
 					case "richItemRenderer": break;
+					default: console.log("RendererContentItem: new item type",content_item); break;
 				}
 			}
 			if(return_!==null) return true;
@@ -822,7 +823,6 @@ class HandleRendererContentItemArray {
 				console.log("rich shelf",rich_shelf);
 				return true;
 			}
-			console.log("RendererContentItem: new item type",content_item);
 			return true;
 		});
 		// don't remove every item
